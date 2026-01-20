@@ -1,132 +1,134 @@
-﻿module("modules.logic.versionactivity1_5.aizila.view.game.AiZiLaGameEventResult", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/aizila/view/game/AiZiLaGameEventResult.lua
 
-local var_0_0 = class("AiZiLaGameEventResult", BaseView)
+module("modules.logic.versionactivity1_5.aizila.view.game.AiZiLaGameEventResult", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._simagePanelBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "content/#simage_PanelBG")
-	arg_1_0._scrollDescr = gohelper.findChildScrollRect(arg_1_0.viewGO, "content/#scroll_Descr")
-	arg_1_0._txtDescr = gohelper.findChildText(arg_1_0.viewGO, "content/#scroll_Descr/Viewport/Content/#txt_Descr")
-	arg_1_0._simagePanelBGMask = gohelper.findChildSingleImage(arg_1_0.viewGO, "content/#simage_PanelBGMask")
-	arg_1_0._simageLevelPic = gohelper.findChildSingleImage(arg_1_0.viewGO, "content/#simage_LevelPic")
-	arg_1_0._scrollrewards = gohelper.findChildScrollRect(arg_1_0.viewGO, "content/Reward/#scroll_rewards")
-	arg_1_0._gorewards = gohelper.findChild(arg_1_0.viewGO, "content/Reward/#scroll_rewards/Viewport/#go_rewards")
-	arg_1_0._btnleave = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "content/Reward/Btn/#btn_leave")
-	arg_1_0._txtTips = gohelper.findChildText(arg_1_0.viewGO, "content/#txt_Tips")
-	arg_1_0._goTagBG = gohelper.findChild(arg_1_0.viewGO, "content/#go_TagBG")
-	arg_1_0._goBackBtns = gohelper.findChild(arg_1_0.viewGO, "#go_BackBtns")
+local AiZiLaGameEventResult = class("AiZiLaGameEventResult", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function AiZiLaGameEventResult:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._simagePanelBG = gohelper.findChildSingleImage(self.viewGO, "content/#simage_PanelBG")
+	self._scrollDescr = gohelper.findChildScrollRect(self.viewGO, "content/#scroll_Descr")
+	self._txtDescr = gohelper.findChildText(self.viewGO, "content/#scroll_Descr/Viewport/Content/#txt_Descr")
+	self._simagePanelBGMask = gohelper.findChildSingleImage(self.viewGO, "content/#simage_PanelBGMask")
+	self._simageLevelPic = gohelper.findChildSingleImage(self.viewGO, "content/#simage_LevelPic")
+	self._scrollrewards = gohelper.findChildScrollRect(self.viewGO, "content/Reward/#scroll_rewards")
+	self._gorewards = gohelper.findChild(self.viewGO, "content/Reward/#scroll_rewards/Viewport/#go_rewards")
+	self._btnleave = gohelper.findChildButtonWithAudio(self.viewGO, "content/Reward/Btn/#btn_leave")
+	self._txtTips = gohelper.findChildText(self.viewGO, "content/#txt_Tips")
+	self._goTagBG = gohelper.findChild(self.viewGO, "content/#go_TagBG")
+	self._goBackBtns = gohelper.findChild(self.viewGO, "#go_BackBtns")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnleave:AddClickListener(arg_2_0._btnleaveOnClick, arg_2_0)
+function AiZiLaGameEventResult:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnleave:AddClickListener(self._btnleaveOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnleave:RemoveClickListener()
+function AiZiLaGameEventResult:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btnleave:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
+function AiZiLaGameEventResult:_btncloseOnClick()
 	AiZiLaGameController.instance:leaveEventResult()
 end
 
-function var_0_0._btnleaveOnClick(arg_5_0)
+function AiZiLaGameEventResult:_btnleaveOnClick()
 	AiZiLaGameController.instance:leaveEventResult()
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._goodsItemGo = arg_6_0:getResInst(AiZiLaGoodsItem.prefabPath, arg_6_0.viewGO)
+function AiZiLaGameEventResult:_editableInitView()
+	self._goodsItemGo = self:getResInst(AiZiLaGoodsItem.prefabPath, self.viewGO)
 
-	gohelper.setActive(arg_6_0._goodsItemGo, false)
+	gohelper.setActive(self._goodsItemGo, false)
 
-	arg_6_0._goRewardBG = gohelper.findChild(arg_6_0.viewGO, "content/Reward/image_RewardBG")
-	arg_6_0._goTexReward = gohelper.findChild(arg_6_0.viewGO, "content/Reward/txt_Reward")
+	self._goRewardBG = gohelper.findChild(self.viewGO, "content/Reward/image_RewardBG")
+	self._goTexReward = gohelper.findChild(self.viewGO, "content/Reward/txt_Reward")
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function AiZiLaGameEventResult:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0._animator = arg_8_0.viewGO:GetComponent(AiZiLaEnum.ComponentType.Animator)
+function AiZiLaGameEventResult:onOpen()
+	self._animator = self.viewGO:GetComponent(AiZiLaEnum.ComponentType.Animator)
 
-	arg_8_0:addEventCb(AiZiLaController.instance, AiZiLaEvent.ExitGame, arg_8_0.closeThis, arg_8_0)
+	self:addEventCb(AiZiLaController.instance, AiZiLaEvent.ExitGame, self.closeThis, self)
 
-	if arg_8_0.viewContainer then
-		NavigateMgr.instance:addEscape(arg_8_0.viewContainer.viewName, arg_8_0._btncloseOnClick, arg_8_0)
+	if self.viewContainer then
+		NavigateMgr.instance:addEscape(self.viewContainer.viewName, self._btncloseOnClick, self)
 	end
 
-	arg_8_0._eventId = arg_8_0.viewParam.eventId
-	arg_8_0._actId = arg_8_0.viewParam.actId
-	arg_8_0._optionId = arg_8_0.viewParam.optionId
-	arg_8_0._optionResultId = arg_8_0.viewParam.optionResultId
-	arg_8_0._itemMOList = arg_8_0.viewParam.itemMOList
-	arg_8_0._eventCfg = AiZiLaConfig.instance:getEventCo(arg_8_0._actId, arg_8_0._eventId)
-	arg_8_0._optionCfg = AiZiLaConfig.instance:getOptionCo(arg_8_0._actId, arg_8_0._optionId)
-	arg_8_0._episodeCfg = AiZiLaConfig.instance:getEpisodeCo(arg_8_0._actId, AiZiLaGameModel.instance:getEpisodeId())
-	arg_8_0._optionResultCfg = AiZiLaConfig.instance:getOptionResultCo(arg_8_0._actId, arg_8_0._optionResultId)
+	self._eventId = self.viewParam.eventId
+	self._actId = self.viewParam.actId
+	self._optionId = self.viewParam.optionId
+	self._optionResultId = self.viewParam.optionResultId
+	self._itemMOList = self.viewParam.itemMOList
+	self._eventCfg = AiZiLaConfig.instance:getEventCo(self._actId, self._eventId)
+	self._optionCfg = AiZiLaConfig.instance:getOptionCo(self._actId, self._optionId)
+	self._episodeCfg = AiZiLaConfig.instance:getEpisodeCo(self._actId, AiZiLaGameModel.instance:getEpisodeId())
+	self._optionResultCfg = AiZiLaConfig.instance:getOptionResultCo(self._actId, self._optionResultId)
 
-	if not arg_8_0._eventCfg then
-		logError("export_事件 配置找不到: activityId:%s eventId:%s", arg_8_0._actId, arg_8_0._eventId)
+	if not self._eventCfg then
+		logError("export_事件 配置找不到: activityId:%s eventId:%s", self._actId, self._eventId)
 	end
 
-	if not arg_8_0._optionCfg then
-		logError("export_事件选项 配置找不到: activityId:%s optionId:%s", arg_8_0._actId, arg_8_0._optionId)
+	if not self._optionCfg then
+		logError("export_事件选项 配置找不到: activityId:%s optionId:%s", self._actId, self._optionId)
 	end
 
-	if not arg_8_0._optionResultCfg then
-		logError("export_选项结果 配置找不到: activityId:%s optionId:%s", arg_8_0._actId, arg_8_0._optionResultId)
+	if not self._optionResultCfg then
+		logError("export_选项结果 配置找不到: activityId:%s optionId:%s", self._actId, self._optionResultId)
 	end
 
-	arg_8_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.onClose(arg_9_0)
+function AiZiLaGameEventResult:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	arg_10_0._simageLevelPic:UnLoadImage()
+function AiZiLaGameEventResult:onDestroyView()
+	self._simageLevelPic:UnLoadImage()
 end
 
-function var_0_0.playViewAnimator(arg_11_0, arg_11_1)
-	if arg_11_0._animator then
-		arg_11_0._animator.enabled = true
+function AiZiLaGameEventResult:playViewAnimator(animName)
+	if self._animator then
+		self._animator.enabled = true
 
-		arg_11_0._animator:Play(arg_11_1, 0, 0)
+		self._animator:Play(animName, 0, 0)
 	end
 end
 
-function var_0_0.refreshUI(arg_12_0)
-	if not arg_12_0._eventCfg or not arg_12_0._optionCfg then
+function AiZiLaGameEventResult:refreshUI()
+	if not self._eventCfg or not self._optionCfg then
 		return
 	end
 
-	if arg_12_0._episodeCfg and not string.nilorempty(arg_12_0._episodeCfg.picture) then
-		arg_12_0._simageLevelPic:LoadImage(string.format("%s.png", arg_12_0._episodeCfg.picture))
+	if self._episodeCfg and not string.nilorempty(self._episodeCfg.picture) then
+		self._simageLevelPic:LoadImage(string.format("%s.png", self._episodeCfg.picture))
 	end
 
-	local var_12_0 = arg_12_0._itemMOList and #arg_12_0._itemMOList > 0
+	local isHasward = self._itemMOList and #self._itemMOList > 0
 
-	gohelper.setActive(arg_12_0._goRewardBG, var_12_0)
-	gohelper.setActive(arg_12_0._goTexReward, var_12_0)
-	gohelper.setActive(arg_12_0._goTagBG, arg_12_0._eventCfg.eventType == AiZiLaEnum.EventType.BranchLine)
-	gohelper.CreateObjList(arg_12_0, arg_12_0._onRewardItem, arg_12_0._itemMOList, arg_12_0._gorewards, arg_12_0._goodsItemGo, AiZiLaGoodsItem)
+	gohelper.setActive(self._goRewardBG, isHasward)
+	gohelper.setActive(self._goTexReward, isHasward)
+	gohelper.setActive(self._goTagBG, self._eventCfg.eventType == AiZiLaEnum.EventType.BranchLine)
+	gohelper.CreateObjList(self, self._onRewardItem, self._itemMOList, self._gorewards, self._goodsItemGo, AiZiLaGoodsItem)
 
-	arg_12_0._txtDescr.text = arg_12_0._optionCfg.conditionDesc
+	self._txtDescr.text = self._optionCfg.conditionDesc
 
-	local var_12_1 = arg_12_0._optionResultCfg and arg_12_0._optionResultCfg.desc or arg_12_0._optionCfg.desc
+	local desc = self._optionResultCfg and self._optionResultCfg.desc or self._optionCfg.desc
 
-	arg_12_0._txtTips.text = string.format("%s\n<color=#8f5501>%s</color>", arg_12_0._optionCfg.name, var_12_1)
+	self._txtTips.text = string.format("%s\n<color=#8f5501>%s</color>", self._optionCfg.name, desc)
 end
 
-function var_0_0._onRewardItem(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	arg_13_1:onUpdateMO(arg_13_2)
+function AiZiLaGameEventResult:_onRewardItem(cell_component, data, index)
+	cell_component:onUpdateMO(data)
 end
 
-return var_0_0
+return AiZiLaGameEventResult

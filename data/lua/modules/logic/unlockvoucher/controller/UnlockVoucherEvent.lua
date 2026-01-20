@@ -1,7 +1,10 @@
-﻿module("modules.logic.unlockvoucher.controller.UnlockVoucherEvent", package.seeall)
+﻿-- chunkname: @modules/logic/unlockvoucher/controller/UnlockVoucherEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.unlockvoucher.controller.UnlockVoucherEvent", package.seeall)
 
-var_0_0.OnUpdateUnlockVoucherInfo = GameUtil.getUniqueTb()()
+local UnlockVoucherEvent = _M
+local _get = GameUtil.getUniqueTb()
 
-return var_0_0
+UnlockVoucherEvent.OnUpdateUnlockVoucherInfo = _get()
+
+return UnlockVoucherEvent

@@ -1,22 +1,24 @@
-﻿module("modules.logic.scene.common.CommonSceneDirector", package.seeall)
+﻿-- chunkname: @modules/logic/scene/common/CommonSceneDirector.lua
 
-local var_0_0 = class("CommonSceneDirector", BaseSceneComp)
+module("modules.logic.scene.common.CommonSceneDirector", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._scene = arg_1_0:getCurScene()
+local CommonSceneDirector = class("CommonSceneDirector", BaseSceneComp)
+
+function CommonSceneDirector:onInit()
+	self._scene = self:getCurScene()
 end
 
-function var_0_0.onSceneStart(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._scene.level:registerCallback(CommonSceneLevelComp.OnLevelLoaded, arg_2_0._onLevelLoaded, arg_2_0)
+function CommonSceneDirector:onSceneStart(sceneId, levelId)
+	self._scene.level:registerCallback(CommonSceneLevelComp.OnLevelLoaded, self._onLevelLoaded, self)
 end
 
-function var_0_0.onSceneClose(arg_3_0)
-	arg_3_0._scene.level:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, arg_3_0._onLevelLoaded, arg_3_0)
+function CommonSceneDirector:onSceneClose()
+	self._scene.level:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, self._onLevelLoaded, self)
 end
 
-function var_0_0._onLevelLoaded(arg_4_0, arg_4_1)
-	arg_4_0._scene.level:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, arg_4_0._onLevelLoaded, arg_4_0)
-	arg_4_0._scene:onPrepared()
+function CommonSceneDirector:_onLevelLoaded(levelId)
+	self._scene.level:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, self._onLevelLoaded, self)
+	self._scene:onPrepared()
 end
 
-return var_0_0
+return CommonSceneDirector

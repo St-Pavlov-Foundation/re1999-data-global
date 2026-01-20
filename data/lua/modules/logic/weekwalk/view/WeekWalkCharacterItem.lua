@@ -1,78 +1,81 @@
-﻿module("modules.logic.weekwalk.view.WeekWalkCharacterItem", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk/view/WeekWalkCharacterItem.lua
 
-local var_0_0 = class("WeekWalkCharacterItem", ListScrollCell)
+module("modules.logic.weekwalk.view.WeekWalkCharacterItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._heroGOParent = gohelper.findChild(arg_1_1, "hero")
-	arg_1_0._heroItem = IconMgr.instance:getCommonHeroItem(arg_1_0._heroGOParent)
+local WeekWalkCharacterItem = class("WeekWalkCharacterItem", ListScrollCell)
 
-	arg_1_0._heroItem:addClickListener(arg_1_0._onItemClick, arg_1_0)
-	arg_1_0._heroItem:setStyle_CharacterBackpack()
+function WeekWalkCharacterItem:init(go)
+	self._heroGOParent = gohelper.findChild(go, "hero")
+	self._heroItem = IconMgr.instance:getCommonHeroItem(self._heroGOParent)
 
-	arg_1_0._goAnim = arg_1_0._heroItem.go:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._hpbg = gohelper.findChild(arg_1_1, "hpbg")
+	self._heroItem:addClickListener(self._onItemClick, self)
+	self._heroItem:setStyle_CharacterBackpack()
 
-	gohelper.setActive(arg_1_0._hpbg, false)
+	self._goAnim = self._heroItem.go:GetComponent(typeof(UnityEngine.Animator))
+	self._hpbg = gohelper.findChild(go, "hpbg")
 
-	arg_1_0._hptextwhite = gohelper.findChildText(arg_1_1, "hpbg/hptextwhite")
-	arg_1_0._hptextred = gohelper.findChildText(arg_1_1, "hpbg/hptextred")
-	arg_1_0._hpimage = gohelper.findChildImage(arg_1_1, "hpbg/hp")
+	gohelper.setActive(self._hpbg, false)
 
-	arg_1_0:_initObj()
+	self._hptextwhite = gohelper.findChildText(go, "hpbg/hptextwhite")
+	self._hptextred = gohelper.findChildText(go, "hpbg/hptextred")
+	self._hpimage = gohelper.findChildImage(go, "hpbg/hp")
+
+	self:_initObj()
 end
 
-function var_0_0._initObj(arg_2_0)
+function WeekWalkCharacterItem:_initObj()
 	return
 end
 
-function var_0_0.addEventListeners(arg_3_0)
+function WeekWalkCharacterItem:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
+function WeekWalkCharacterItem:removeEventListeners()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
-	arg_5_0._mo = arg_5_1
+function WeekWalkCharacterItem:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_5_0._heroItem:onUpdateMO(arg_5_1)
+	self._heroItem:onUpdateMO(mo)
 
-	local var_5_0 = 1
-	local var_5_1 = WeekWalkModel.instance:getInfo()
+	local hpPercent = 1
+	local info = WeekWalkModel.instance:getInfo()
 
-	if var_5_1 then
-		local var_5_2 = var_5_1:getHeroHp(arg_5_0._mo.config.id)
+	if info then
+		local hp = info:getHeroHp(self._mo.config.id)
 
-		if var_5_2 then
-			var_5_0 = var_5_2 / arg_5_0._mo.baseAttr.hp
+		if hp then
+			hpPercent = hp / self._mo.baseAttr.hp
 		end
 	end
 
-	local var_5_3 = math.min(var_5_0, 1)
+	hpPercent = math.min(hpPercent, 1)
 
-	arg_5_0._heroItem:setInjury(var_5_3 <= 0)
+	self._heroItem:setInjury(hpPercent <= 0)
 
-	local var_5_4 = var_5_1:getHeroBuff(arg_5_0._mo.heroId)
+	local buff = info:getHeroBuff(self._mo.heroId)
 
-	arg_5_0._heroItem:setAdventureBuff(var_5_4)
+	self._heroItem:setAdventureBuff(buff)
 end
 
-function var_0_0._onItemClick(arg_6_0)
+function WeekWalkCharacterItem:_onItemClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
 
-	local var_6_0 = {}
-	local var_6_1 = arg_6_0._mo
+	local o = {}
 
-	CharacterController.instance:openCharacterView(arg_6_0._mo)
+	o = self._mo
+
+	CharacterController.instance:openCharacterView(self._mo)
 end
 
-function var_0_0.getAnimator(arg_7_0)
-	return arg_7_0._goAnim
+function WeekWalkCharacterItem:getAnimator()
+	return self._goAnim
 end
 
-function var_0_0.onDestroy(arg_8_0)
+function WeekWalkCharacterItem:onDestroy()
 	return
 end
 
-return var_0_0
+return WeekWalkCharacterItem

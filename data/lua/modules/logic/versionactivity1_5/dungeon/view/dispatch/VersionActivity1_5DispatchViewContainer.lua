@@ -1,33 +1,35 @@
-﻿module("modules.logic.versionactivity1_5.dungeon.view.dispatch.VersionActivity1_5DispatchViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/dungeon/view/dispatch/VersionActivity1_5DispatchViewContainer.lua
 
-local var_0_0 = class("VersionActivity1_5DispatchViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_5.dungeon.view.dispatch.VersionActivity1_5DispatchViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = ListScrollParam.New()
+local VersionActivity1_5DispatchViewContainer = class("VersionActivity1_5DispatchViewContainer", BaseViewContainer)
 
-	var_1_0.scrollGOPath = "container/left/#go_herocontainer/#scroll_hero"
-	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_0.prefabUrl = "container/left/#go_herocontainer/#scroll_hero/Viewport/Content/#go_heroitem"
-	var_1_0.cellClass = VersionActivity1_5DispatchHeroItem
-	var_1_0.scrollDir = ScrollEnum.ScrollDirV
-	var_1_0.lineCount = 4
-	var_1_0.cellWidth = 154
-	var_1_0.cellHeight = 164
-	var_1_0.cellSpaceH = 25
-	var_1_0.cellSpaceV = 25
+function VersionActivity1_5DispatchViewContainer:buildViews()
+	local scrollParam = ListScrollParam.New()
+
+	scrollParam.scrollGOPath = "container/left/#go_herocontainer/#scroll_hero"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "container/left/#go_herocontainer/#scroll_hero/Viewport/Content/#go_heroitem"
+	scrollParam.cellClass = VersionActivity1_5DispatchHeroItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 4
+	scrollParam.cellWidth = 154
+	scrollParam.cellHeight = 164
+	scrollParam.cellSpaceH = 25
+	scrollParam.cellSpaceV = 25
 
 	return {
 		VersionActivity1_5DispatchView.New(),
-		LuaListScrollView.New(VersionActivity1_5HeroListModel.instance, var_1_0)
+		LuaListScrollView.New(VersionActivity1_5HeroListModel.instance, scrollParam)
 	}
 end
 
-function var_0_0.onContainerInit(arg_2_0)
+function VersionActivity1_5DispatchViewContainer:onContainerInit()
 	AudioMgr.instance:trigger(AudioEnum.Meilanni.play_ui_mln_page_turn)
 end
 
-function var_0_0.onContainerCloseFinish(arg_3_0)
+function VersionActivity1_5DispatchViewContainer:onContainerCloseFinish()
 	VersionActivity1_5HeroListModel.instance:clear()
 end
 
-return var_0_0
+return VersionActivity1_5DispatchViewContainer

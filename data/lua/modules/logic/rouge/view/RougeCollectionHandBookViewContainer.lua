@@ -1,44 +1,46 @@
-﻿module("modules.logic.rouge.view.RougeCollectionHandBookViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeCollectionHandBookViewContainer.lua
 
-local var_0_0 = class("RougeCollectionHandBookViewContainer", BaseViewContainer)
+module("modules.logic.rouge.view.RougeCollectionHandBookViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = ListScrollParam.New()
+local RougeCollectionHandBookViewContainer = class("RougeCollectionHandBookViewContainer", BaseViewContainer)
 
-	var_1_0.scrollGOPath = "Left/#scroll_collection"
-	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_0.prefabUrl = "Left/#scroll_collection/Viewport/Content/#go_collectionitem"
-	var_1_0.cellClass = RougeCollectionHandBookItem
-	var_1_0.scrollDir = ScrollEnum.ScrollDirV
-	var_1_0.lineCount = 4
-	var_1_0.cellWidth = 224
-	var_1_0.cellHeight = 224
-	var_1_0.cellSpaceH = 10
-	var_1_0.cellSpaceV = 0
-	var_1_0.startSpace = 20
-	var_1_0.endSpace = 0
+function RougeCollectionHandBookViewContainer:buildViews()
+	local scrollParam = ListScrollParam.New()
 
-	local var_1_1 = {}
+	scrollParam.scrollGOPath = "Left/#scroll_collection"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "Left/#scroll_collection/Viewport/Content/#go_collectionitem"
+	scrollParam.cellClass = RougeCollectionHandBookItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 4
+	scrollParam.cellWidth = 224
+	scrollParam.cellHeight = 224
+	scrollParam.cellSpaceH = 10
+	scrollParam.cellSpaceV = 0
+	scrollParam.startSpace = 20
+	scrollParam.endSpace = 0
 
-	table.insert(var_1_1, RougeCollectionHandBookView.New())
-	table.insert(var_1_1, TabViewGroup.New(1, "#go_topleft"))
-	table.insert(var_1_1, LuaListScrollView.New(RougeCollectionHandBookListModel.instance, var_1_0))
+	local views = {}
 
-	return var_1_1
+	table.insert(views, RougeCollectionHandBookView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_topleft"))
+	table.insert(views, LuaListScrollView.New(RougeCollectionHandBookListModel.instance, scrollParam))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function RougeCollectionHandBookViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-return var_0_0
+return RougeCollectionHandBookViewContainer

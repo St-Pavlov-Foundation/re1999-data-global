@@ -1,118 +1,120 @@
-﻿module("modules.logic.dialogue.view.DialogueChessView", package.seeall)
+﻿-- chunkname: @modules/logic/dialogue/view/DialogueChessView.lua
 
-local var_0_0 = class("DialogueChessView", BaseView)
+module("modules.logic.dialogue.view.DialogueChessView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gochesscontainer = gohelper.findChild(arg_1_0.viewGO, "#go_chesscontainer")
-	arg_1_0._gochessitem = gohelper.findChild(arg_1_0.viewGO, "#go_chesscontainer/#go_chessitem")
+local DialogueChessView = class("DialogueChessView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function DialogueChessView:onInitView()
+	self._gochesscontainer = gohelper.findChild(self.viewGO, "#go_chesscontainer")
+	self._gochessitem = gohelper.findChild(self.viewGO, "#go_chesscontainer/#go_chessitem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function DialogueChessView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function DialogueChessView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	gohelper.setActive(arg_4_0._gochessitem, false)
+function DialogueChessView:_editableInitView()
+	gohelper.setActive(self._gochessitem, false)
 
-	arg_4_0.chessItemList = {}
+	self.chessItemList = {}
 
-	arg_4_0:addEventCb(DialogueController.instance, DialogueEvent.BeforePlayStep, arg_4_0.onBeforePlayStep, arg_4_0)
+	self:addEventCb(DialogueController.instance, DialogueEvent.BeforePlayStep, self.onBeforePlayStep, self)
 end
 
-function var_0_0.onOpenFinish(arg_5_0)
-	arg_5_0.openFinishDone = true
+function DialogueChessView:onOpenFinish()
+	self.openFinishDone = true
 
-	arg_5_0:onBeforePlayStep(arg_5_0.tempStepCo)
+	self:onBeforePlayStep(self.tempStepCo)
 
-	arg_5_0.tempStepCo = nil
+	self.tempStepCo = nil
 end
 
-function var_0_0.initChessItem(arg_6_0)
-	if arg_6_0.dialogueId then
+function DialogueChessView:initChessItem()
+	if self.dialogueId then
 		return
 	end
 
-	arg_6_0.dialogueId = arg_6_0.viewContainer.viewParam.dialogueId
+	self.dialogueId = self.viewContainer.viewParam.dialogueId
 
-	local var_6_0 = DialogueConfig.instance:getChessCoList(arg_6_0.dialogueId)
+	local chessCoList = DialogueConfig.instance:getChessCoList(self.dialogueId)
 
-	if not var_6_0 then
+	if not chessCoList then
 		return
 	end
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
-		arg_6_0:createChessItem(iter_6_1)
+	for _, chessCo in ipairs(chessCoList) do
+		self:createChessItem(chessCo)
 	end
 end
 
-function var_0_0.onBeforePlayStep(arg_7_0, arg_7_1)
-	arg_7_0:initChessItem()
+function DialogueChessView:onBeforePlayStep(stepCo)
+	self:initChessItem()
 
-	if not arg_7_0.openFinishDone then
-		arg_7_0.tempStepCo = arg_7_1
+	if not self.openFinishDone then
+		self.tempStepCo = stepCo
 
 		return
 	end
 
-	local var_7_0 = arg_7_1.chessId
+	local talkingChessId = stepCo.chessId
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0.chessItemList) do
-		local var_7_1 = iter_7_1.chessCo.id == var_7_0
+	for _, chessItem in ipairs(self.chessItemList) do
+		local talking = chessItem.chessCo.id == talkingChessId
 
-		gohelper.setActive(iter_7_1.goTalking, var_7_1)
-		gohelper.setActive(iter_7_1.goFootShadow, var_7_1)
+		gohelper.setActive(chessItem.goTalking, talking)
+		gohelper.setActive(chessItem.goFootShadow, talking)
 
-		if var_7_1 then
-			iter_7_1.animator:Play("jump", 0, 0)
+		if talking then
+			chessItem.animator:Play("jump", 0, 0)
 		end
 	end
 end
 
-function var_0_0.createChessItem(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0:getUserDataTb_()
+function DialogueChessView:createChessItem(chessCo)
+	local chessItem = self:getUserDataTb_()
 
-	var_8_0.go = gohelper.cloneInPlace(arg_8_0._gochessitem, arg_8_1.id)
+	chessItem.go = gohelper.cloneInPlace(self._gochessitem, chessCo.id)
 
-	gohelper.setActive(var_8_0.go, true)
+	gohelper.setActive(chessItem.go, true)
 
-	var_8_0.animator = var_8_0.go:GetComponent(gohelper.Type_Animator)
-	var_8_0.imageChess = gohelper.findChildSingleImage(var_8_0.go, "#chess")
+	chessItem.animator = chessItem.go:GetComponent(gohelper.Type_Animator)
+	chessItem.imageChess = gohelper.findChildSingleImage(chessItem.go, "#chess")
 
-	var_8_0.imageChess:LoadImage(ResUrl.getChessDialogueSingleBg(arg_8_1.res))
+	chessItem.imageChess:LoadImage(ResUrl.getChessDialogueSingleBg(chessCo.res))
 
-	var_8_0.goTalking = gohelper.findChild(var_8_0.go, "#go_talking")
-	var_8_0.goFootShadow = gohelper.findChild(var_8_0.go, "light2")
+	chessItem.goTalking = gohelper.findChild(chessItem.go, "#go_talking")
+	chessItem.goFootShadow = gohelper.findChild(chessItem.go, "light2")
 
-	gohelper.setActive(var_8_0.goTalking, false)
-	gohelper.setActive(var_8_0.goFootShadow, false)
+	gohelper.setActive(chessItem.goTalking, false)
+	gohelper.setActive(chessItem.goFootShadow, false)
 
-	var_8_0.chessCo = arg_8_1
+	chessItem.chessCo = chessCo
 
-	table.insert(arg_8_0.chessItemList, var_8_0)
+	table.insert(self.chessItemList, chessItem)
 
-	local var_8_1 = string.splitToNumber(arg_8_1.pos, "#")
+	local anchor = string.splitToNumber(chessCo.pos, "#")
 
-	recthelper.setAnchor(var_8_0.go.transform, var_8_1[1], var_8_1[2])
+	recthelper.setAnchor(chessItem.go.transform, anchor[1], anchor[2])
 
-	return var_8_0
+	return chessItem
 end
 
-function var_0_0.onClose(arg_9_0)
+function DialogueChessView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0.chessItemList) do
-		iter_10_1.imageChess:UnLoadImage()
+function DialogueChessView:onDestroyView()
+	for _, chessItem in ipairs(self.chessItemList) do
+		chessItem.imageChess:UnLoadImage()
 	end
 end
 
-return var_0_0
+return DialogueChessView

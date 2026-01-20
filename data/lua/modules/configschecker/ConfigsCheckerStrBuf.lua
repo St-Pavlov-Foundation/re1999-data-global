@@ -1,95 +1,97 @@
-﻿module("modules.configschecker.ConfigsCheckerStrBuf", package.seeall)
+﻿-- chunkname: @modules/configschecker/ConfigsCheckerStrBuf.lua
 
-local var_0_0 = table.insert
-local var_0_1 = string.format
-local var_0_2 = debug.getinfo
-local var_0_3 = table.concat
-local var_0_4 = class("ConfigsCheckerStrBuf")
+module("modules.configschecker.ConfigsCheckerStrBuf", package.seeall)
 
-function var_0_4.ctor(arg_1_0, arg_1_1)
-	arg_1_0:init(arg_1_1)
+local ti = table.insert
+local sf = string.format
+local debug_getinfo = debug.getinfo
+local tc = table.concat
+local ConfigsCheckerStrBuf = class("ConfigsCheckerStrBuf")
+
+function ConfigsCheckerStrBuf:ctor(source)
+	self:init(source)
 end
 
-function var_0_4.init(arg_2_0, arg_2_1)
-	arg_2_0:clean()
+function ConfigsCheckerStrBuf:init(source)
+	self:clean()
 
-	local var_2_0 = var_0_2(5, "Slf")
+	local info = debug_getinfo(5, "Slf")
 
-	arg_2_0._srcloc = var_0_1("%s : line %s", var_2_0.source, var_2_0.currentline)
-	arg_2_0._source = arg_2_1 or arg_2_0._source
+	self._srcloc = sf("%s : line %s", info.source, info.currentline)
+	self._source = source or self._source
 end
 
-function var_0_4.clean(arg_3_0)
-	arg_3_0._list = {}
-	arg_3_0._srcloc = "[Unknown]"
-	arg_3_0._source = "[Unknown]"
+function ConfigsCheckerStrBuf:clean()
+	self._list = {}
+	self._srcloc = "[Unknown]"
+	self._source = "[Unknown]"
 end
 
-function var_0_4.empty(arg_4_0)
-	return #arg_4_0._list == 0
+function ConfigsCheckerStrBuf:empty()
+	return #self._list == 0
 end
 
-function var_0_4._beginOnce(arg_5_0)
-	if not arg_5_0:empty() then
+function ConfigsCheckerStrBuf:_beginOnce()
+	if not self:empty() then
 		return
 	end
 
-	var_0_0(arg_5_0._list, var_0_1("%s =========== begin", arg_5_0._srcloc))
-	var_0_0(arg_5_0._list, var_0_1("source: %s", arg_5_0._source))
+	ti(self._list, sf("%s =========== begin", self._srcloc))
+	ti(self._list, sf("source: %s", self._source))
 end
 
-function var_0_4._endOnce(arg_6_0)
-	if arg_6_0._list[-11235] then
+function ConfigsCheckerStrBuf:_endOnce()
+	if self._list[-11235] then
 		return
 	end
 
-	arg_6_0._list[-11235] = true
+	self._list[-11235] = true
 
-	arg_6_0:appendLine(var_0_1("%s =========== end", arg_6_0._srcloc))
+	self:appendLine(sf("%s =========== end", self._srcloc))
 end
 
-function var_0_4._logIfGot(arg_7_0, arg_7_1, arg_7_2)
-	if arg_7_0:empty() then
+function ConfigsCheckerStrBuf:_logIfGot(logFunc, isKeep)
+	if self:empty() then
 		return
 	end
 
-	arg_7_0:_endOnce()
-	arg_7_1(var_0_3(arg_7_0._list, "\n"))
+	self:_endOnce()
+	logFunc(tc(self._list, "\n"))
 
-	if not arg_7_2 then
-		arg_7_0:clean()
+	if not isKeep then
+		self:clean()
 	end
 end
 
-function var_0_4.appendLine(arg_8_0, arg_8_1)
-	if type(arg_8_1) == type(true) then
-		arg_8_1 = tostring(arg_8_1)
-	elseif arg_8_1 == nil then
-		arg_8_1 = "nil"
+function ConfigsCheckerStrBuf:appendLine(lineStr)
+	if type(lineStr) == type(true) then
+		lineStr = tostring(lineStr)
+	elseif lineStr == nil then
+		lineStr = "nil"
 	end
 
-	arg_8_0:_beginOnce()
-	var_0_0(arg_8_0._list, arg_8_1)
+	self:_beginOnce()
+	ti(self._list, lineStr)
 end
 
-function var_0_4.appendLineIfOK(arg_9_0, arg_9_1, arg_9_2)
-	if not arg_9_1 then
+function ConfigsCheckerStrBuf:appendLineIfOK(ok, lineStr)
+	if not ok then
 		return
 	end
 
-	arg_9_0:appendLine(arg_9_2)
+	self:appendLine(lineStr)
 end
 
-function var_0_4.logErrorIfGot(arg_10_0, arg_10_1)
-	arg_10_0:_logIfGot(logError, arg_10_1)
+function ConfigsCheckerStrBuf:logErrorIfGot(isKeep)
+	self:_logIfGot(logError, isKeep)
 end
 
-function var_0_4.logWarnIfGot(arg_11_0, arg_11_1)
-	arg_11_0:_logIfGot(logWarn, arg_11_1)
+function ConfigsCheckerStrBuf:logWarnIfGot(isKeep)
+	self:_logIfGot(logWarn, isKeep)
 end
 
-function var_0_4.logNormalIfGot(arg_12_0, arg_12_1)
-	arg_12_0:_logIfGot(logNormal, arg_12_1)
+function ConfigsCheckerStrBuf:logNormalIfGot(isKeep)
+	self:_logIfGot(logNormal, isKeep)
 end
 
-return var_0_4
+return ConfigsCheckerStrBuf

@@ -1,23 +1,25 @@
-﻿module("modules.logic.scene.explore.ExploreScene", package.seeall)
+﻿-- chunkname: @modules/logic/scene/explore/ExploreScene.lua
 
-local var_0_0 = class("ExploreScene", BaseScene)
+module("modules.logic.scene.explore.ExploreScene", package.seeall)
 
-function var_0_0._createAllComps(arg_1_0)
-	arg_1_0:_addComp("camera", ExploreSceneCameraComp)
-	arg_1_0:_addComp("director", ExploreSceneDirector)
-	arg_1_0:_addComp("spineMat", ExploreSceneSpineMat)
-	arg_1_0:_addComp("preloader", ExploreScenePreloader)
-	arg_1_0:_addComp("map", ExploreSceneMap)
-	arg_1_0:_addComp("level", ExploreSceneLevel)
-	arg_1_0:_addComp("view", ExploreSceneViewComp)
-	arg_1_0:_addComp("graphics", ExploreSceneGraphicsComp)
-	arg_1_0:_addComp("volume", ExploreScenePPVolume)
-	arg_1_0:_addComp("stat", ExploreStatComp)
-	arg_1_0:_addComp("audio", ExploreAudioComp)
+local ExploreScene = class("ExploreScene", BaseScene)
+
+function ExploreScene:_createAllComps()
+	self:_addComp("camera", ExploreSceneCameraComp)
+	self:_addComp("director", ExploreSceneDirector)
+	self:_addComp("spineMat", ExploreSceneSpineMat)
+	self:_addComp("preloader", ExploreScenePreloader)
+	self:_addComp("map", ExploreSceneMap)
+	self:_addComp("level", ExploreSceneLevel)
+	self:_addComp("view", ExploreSceneViewComp)
+	self:_addComp("graphics", ExploreSceneGraphicsComp)
+	self:_addComp("volume", ExploreScenePPVolume)
+	self:_addComp("stat", ExploreStatComp)
+	self:_addComp("audio", ExploreAudioComp)
 end
 
-function var_0_0.onPrepared(arg_2_0)
-	var_0_0.super.onPrepared(arg_2_0)
+function ExploreScene:onPrepared()
+	ExploreScene.super.onPrepared(self)
 end
 
-return var_0_0
+return ExploreScene

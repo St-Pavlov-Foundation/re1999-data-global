@@ -1,251 +1,266 @@
-﻿module("modules.logic.fight.system.work.FightWorkItem", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkItem.lua
 
-local var_0_0 = class("FightWorkItem", FightBaseClass)
+module("modules.logic.fight.system.work.FightWorkItem", package.seeall)
 
-var_0_0.IS_FIGHT_WORK = true
+local FightWorkItem = class("FightWorkItem", FightBaseClass)
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0.CALLBACK = {}
-	arg_1_0.SAFETIME = 0.5
-	arg_1_0.WORK_IS_FINISHED = nil
-	arg_1_0.STARTED = nil
-	arg_1_0.SAFETIMER = nil
-	arg_1_0.FIGHT_WORK_ENTRUSTED = nil
-	arg_1_0.SUCCEEDED = nil
+FightWorkItem.IS_FIGHT_WORK = true
+
+function FightWorkItem:onConstructor()
+	self.CALLBACK = {}
+	self.SAFETIME = 0.5
+	self.WORK_IS_FINISHED = nil
+	self.STARTED = nil
+	self.SAFETIMER = nil
+	self.FIGHT_WORK_ENTRUSTED = nil
+	self.SUCCEEDED = nil
 end
 
-function var_0_0.start(arg_2_0, arg_2_1)
-	return xpcall(var_0_0.__start, __G__TRACKBACK__, arg_2_0, arg_2_1)
+function FightWorkItem:start(context)
+	return xpcall(FightWorkItem.__start, __G__TRACKBACK__, self, context)
 end
 
-function var_0_0.__start(arg_3_0, arg_3_1)
-	if arg_3_0.WORK_IS_FINISHED then
-		logError("work已经结束了,但是又被调用了start,请检查代码,类名:" .. arg_3_0.__cname)
+function FightWorkItem:__start(context)
+	if self.WORK_IS_FINISHED then
+		logError("work已经结束了,但是又被调用了start,请检查代码,类名:" .. self.__cname)
 
 		return
 	end
 
-	if arg_3_0.STARTED then
-		logError("work已经开始了,但是又被调用了start,请检查代码,类名:" .. arg_3_0.__cname)
+	if self.STARTED then
+		logError("work已经开始了,但是又被调用了start,请检查代码,类名:" .. self.__cname)
 
 		return
 	end
 
-	if arg_3_0.IS_DISPOSED then
-		logError("work已经被释放了,但是又被调用了start,请检查代码,类名:" .. arg_3_0.__cname)
+	if self.IS_DISPOSED then
+		logError("work已经被释放了,但是又被调用了start,请检查代码,类名:" .. self.__cname)
 
 		return
 	end
 
-	arg_3_0.context = arg_3_0.context or arg_3_1
-	arg_3_0.STARTED = true
-	arg_3_0.EXCLUSIVETIMER = {}
-	arg_3_0.SAFETIMER = arg_3_0:com_registTimer(arg_3_0._fightWorkSafeTimer, arg_3_0.SAFETIME)
+	if self.IS_RELEASING then
+		logError("work正在被释放中,但是又被调用了start,请检查代码,类名:" .. self.__cname)
 
-	table.insert(arg_3_0.EXCLUSIVETIMER, arg_3_0.SAFETIMER)
-	arg_3_0:beforeStart()
-
-	return arg_3_0:onStart()
-end
-
-function var_0_0.cancelFightWorkSafeTimer(arg_4_0)
-	return arg_4_0:com_cancelTimer(arg_4_0.SAFETIMER)
-end
-
-function var_0_0._fightWorkSafeTimer(arg_5_0)
-	logError("战斗保底 fightwork ondone, className = " .. arg_5_0.__cname)
-
-	return arg_5_0:onDone(false)
-end
-
-function var_0_0._delayAfterPerformance(arg_6_0)
-	return arg_6_0:onDone(true)
-end
-
-function var_0_0._delayDone(arg_7_0)
-	return arg_7_0:onDone(true)
-end
-
-function var_0_0.finishWork(arg_8_0)
-	return arg_8_0:onDone(true)
-end
-
-function var_0_0.playWorkAndDone(arg_9_0, arg_9_1, arg_9_2)
-	if not arg_9_1 then
-		return arg_9_0:onDone(true)
+		return
 	end
 
-	arg_9_1:registFinishCallback(arg_9_0.finishWork, arg_9_0)
-	arg_9_0:cancelFightWorkSafeTimer()
-	arg_9_1:start(arg_9_2)
+	self.context = self.context or context
+	self.STARTED = true
+	self.EXCLUSIVETIMER = {}
+	self.SAFETIMER = self:com_registTimer(self._fightWorkSafeTimer, self.SAFETIME)
+
+	table.insert(self.EXCLUSIVETIMER, self.SAFETIMER)
+	self:beforeStart()
+
+	return self:onStart()
 end
 
-function var_0_0.com_registTimer(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	if arg_10_1 == arg_10_0._delayDone or arg_10_1 == arg_10_0._delayAfterPerformance or arg_10_1 == arg_10_0.finishWork then
-		arg_10_0:releaseExclusiveTimer()
+function FightWorkItem:cancelFightWorkSafeTimer()
+	return self:com_cancelTimer(self.SAFETIMER)
+end
 
-		local var_10_0 = var_0_0.super.com_registTimer(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+function FightWorkItem:_fightWorkSafeTimer()
+	logError("战斗保底 fightwork ondone, className = " .. self.__cname)
 
-		table.insert(arg_10_0.EXCLUSIVETIMER, var_10_0)
+	return self:onDone(false)
+end
 
-		return var_10_0
+function FightWorkItem:_delayAfterPerformance()
+	return self:onDone(true)
+end
+
+function FightWorkItem:_delayDone()
+	return self:onDone(true)
+end
+
+function FightWorkItem:finishWork()
+	return self:onDone(true)
+end
+
+function FightWorkItem:playWorkAndDone(work, context)
+	if not work then
+		return self:onDone(true)
 	end
 
-	return var_0_0.super.com_registTimer(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	work:registFinishCallback(self.finishWork, self)
+	self:cancelFightWorkSafeTimer()
+
+	if work.STARTED then
+		return
+	end
+
+	work:start(context)
 end
 
-function var_0_0.releaseExclusiveTimer(arg_11_0)
-	if arg_11_0.EXCLUSIVETIMER then
-		for iter_11_0 = #arg_11_0.EXCLUSIVETIMER, 1, -1 do
-			arg_11_0:com_cancelTimer(arg_11_0.EXCLUSIVETIMER[iter_11_0])
-			table.remove(arg_11_0.EXCLUSIVETIMER, iter_11_0)
+function FightWorkItem:com_registTimer(callBack, time, param)
+	if callBack == self._delayDone or callBack == self._delayAfterPerformance or callBack == self.finishWork then
+		self:releaseExclusiveTimer()
+
+		local timer = FightWorkItem.super.com_registTimer(self, callBack, time, param)
+
+		table.insert(self.EXCLUSIVETIMER, timer)
+
+		return timer
+	end
+
+	return FightWorkItem.super.com_registTimer(self, callBack, time, param)
+end
+
+function FightWorkItem:releaseExclusiveTimer()
+	if self.EXCLUSIVETIMER then
+		for i = #self.EXCLUSIVETIMER, 1, -1 do
+			self:com_cancelTimer(self.EXCLUSIVETIMER[i])
+			table.remove(self.EXCLUSIVETIMER, i)
 		end
 	end
 end
 
-function var_0_0.com_registWorkDoneFlowSequence(arg_12_0)
-	local var_12_0 = arg_12_0:com_registCustomFlow(FightWorkDoneFlowSequence)
+function FightWorkItem:com_registWorkDoneFlowSequence()
+	local flow = self:com_registCustomFlow(FightWorkDoneFlowSequence)
 
-	var_12_0:registFinishCallback(arg_12_0.finishWork, arg_12_0)
+	flow:registFinishCallback(self.finishWork, self)
 
-	return var_12_0
+	return flow
 end
 
-function var_0_0.com_registWorkDoneFlowParallel(arg_13_0)
-	local var_13_0 = arg_13_0:com_registCustomFlow(FightWorkDoneFlowParallel)
+function FightWorkItem:com_registWorkDoneFlowParallel()
+	local flow = self:com_registCustomFlow(FightWorkDoneFlowParallel)
 
-	var_13_0:registFinishCallback(arg_13_0.finishWork, arg_13_0)
+	flow:registFinishCallback(self.finishWork, self)
 
-	return var_13_0
+	return flow
 end
 
-function var_0_0.beforeStart(arg_14_0)
+function FightWorkItem:beforeStart()
 	return
 end
 
-function var_0_0.onStart(arg_15_0)
+function FightWorkItem:onStart()
 	return
 end
 
-function var_0_0.beforeClearWork(arg_16_0)
+function FightWorkItem:beforeClearWork()
 	return
 end
 
-function var_0_0.clearWork(arg_17_0)
+function FightWorkItem:clearWork()
 	return
 end
 
-function var_0_0.registFinishCallback(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	if arg_18_0.IS_DISPOSED or arg_18_0.WORK_IS_FINISHED then
-		return arg_18_1(arg_18_2, arg_18_3)
+function FightWorkItem:registFinishCallback(callback, handle, param)
+	if self.IS_DISPOSED or self.WORK_IS_FINISHED then
+		return callback(handle, param)
 	end
 
-	table.insert(arg_18_0.CALLBACK, {
-		callback = arg_18_1,
-		handle = arg_18_2,
-		param = arg_18_3
+	table.insert(self.CALLBACK, {
+		callback = callback,
+		handle = handle,
+		param = param
 	})
 end
 
-function var_0_0.onDestructor(arg_19_0)
-	if arg_19_0.STARTED then
-		arg_19_0:beforeClearWork()
+function FightWorkItem:onDestructor()
+	if self.STARTED then
+		self:beforeClearWork()
 
-		return arg_19_0:clearWork()
+		return self:clearWork()
 	end
 end
 
-function var_0_0.onDestructorFinish(arg_20_0)
-	arg_20_0:playCallback(arg_20_0.CALLBACK)
+function FightWorkItem:onDestructorFinish()
+	self:playCallback(self.CALLBACK)
 
-	arg_20_0.CALLBACK = nil
+	self.CALLBACK = nil
 end
 
-function var_0_0.playCallback(arg_21_0, arg_21_1)
-	if arg_21_0.WORK_IS_FINISHED or arg_21_0.STARTED then
-		local var_21_0 = arg_21_0.SUCCEEDED and true or false
-		local var_21_1 = #arg_21_1
+function FightWorkItem:playCallback(callbackList)
+	if self.WORK_IS_FINISHED or self.STARTED then
+		local succeeded = self.SUCCEEDED and true or false
+		local count = #callbackList
 
-		for iter_21_0, iter_21_1 in ipairs(arg_21_1) do
-			local var_21_2 = arg_21_0.WORK_IS_FINISHED or arg_21_0.FIGHT_WORK_ENTRUSTED
+		for i, v in ipairs(callbackList) do
+			local playCallback = self.WORK_IS_FINISHED or self.FIGHT_WORK_ENTRUSTED
 
-			if arg_21_0.CALLBACK_EVEN_IF_UNFINISHED and not arg_21_0.WORK_IS_FINISHED and arg_21_0.STARTED then
-				var_21_2 = true
+			if self.CALLBACK_EVEN_IF_UNFINISHED and not self.WORK_IS_FINISHED and self.STARTED then
+				playCallback = true
 			end
 
-			if var_21_2 then
-				local var_21_3 = iter_21_1.handle
-				local var_21_4 = iter_21_1.callback
-				local var_21_5 = iter_21_1.param
+			if playCallback then
+				local handle = v.handle
+				local callback = v.callback
+				local param = v.param
 
-				if var_21_3 then
-					if not var_21_3.IS_DISPOSED then
-						if iter_21_0 == var_21_1 then
-							return var_21_4(var_21_3, var_21_5, var_21_0)
+				if handle then
+					if not handle.IS_DISPOSED then
+						if i == count then
+							return callback(handle, param, succeeded)
 						else
-							var_21_4(var_21_3, var_21_5, var_21_0)
+							callback(handle, param, succeeded)
 						end
 					end
-				elseif iter_21_0 == var_21_1 then
-					return var_21_4(var_21_5, var_21_0)
+				elseif i == count then
+					return callback(param, succeeded)
 				else
-					var_21_4(var_21_5, var_21_0)
+					callback(param, succeeded)
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.onDone(arg_22_0, arg_22_1)
-	if arg_22_0.FIGHT_WORK_ENTRUSTED then
-		arg_22_0.FIGHT_WORK_ENTRUSTED = nil
+function FightWorkItem:onDone(succeeded)
+	if self.FIGHT_WORK_ENTRUSTED then
+		self.FIGHT_WORK_ENTRUSTED = nil
 	end
 
-	if arg_22_0.IS_DISPOSED then
-		logError("work已经被释放了,但是又被调用了onDone,请检查代码,类名:" .. arg_22_0.__cname)
+	if self.IS_DISPOSED then
+		logError("work已经被释放了,但是又被调用了onDone,请检查代码,类名:" .. self.__cname)
 
 		return
 	end
 
-	if arg_22_0.WORK_IS_FINISHED then
-		logError("work已经完成了,但是又被调用了onDone,请检查代码,类名:" .. arg_22_0.__cname)
+	if self.WORK_IS_FINISHED then
+		logError("work已经完成了,但是又被调用了onDone,请检查代码,类名:" .. self.__cname)
 
 		return
 	end
 
-	arg_22_0.WORK_IS_FINISHED = true
-	arg_22_0.SUCCEEDED = arg_22_1
+	self.WORK_IS_FINISHED = true
+	self.SUCCEEDED = succeeded
 
-	return arg_22_0:disposeSelf()
+	return self:disposeSelf()
 end
 
-function var_0_0.onDoneAndKeepPlay(arg_23_0)
-	if not FightMsgMgr.sendMsg(FightMsgId.EntrustFightWork, arg_23_0) then
-		logError("托管fightwork未成功,类名:" .. arg_23_0.__cname)
-		arg_23_0:onDone(true)
+function FightWorkItem:onDoneAndKeepPlay()
+	local reply = FightMsgMgr.sendMsg(FightMsgId.EntrustFightWork, self)
+
+	if not reply then
+		logError("托管fightwork未成功,类名:" .. self.__cname)
+		self:onDone(true)
 
 		return
 	end
 
-	arg_23_0.SUCCEEDED = true
+	self.SUCCEEDED = true
 
-	local var_23_0 = tabletool.copy(arg_23_0.CALLBACK)
+	local callbackList = tabletool.copy(self.CALLBACK)
 
-	arg_23_0.CALLBACK = {}
+	self.CALLBACK = {}
 
-	arg_23_0:playCallback(var_23_0)
+	self:playCallback(callbackList)
 end
 
-function var_0_0.isAlive(arg_24_0)
-	return not arg_24_0.IS_DISPOSED and not arg_24_0.WORK_IS_FINISHED
+function FightWorkItem:isAlive()
+	return not self.IS_DISPOSED and not self.WORK_IS_FINISHED
 end
 
-function var_0_0.disposeSelf(arg_25_0)
-	if arg_25_0.FIGHT_WORK_ENTRUSTED then
+function FightWorkItem:disposeSelf()
+	if self.FIGHT_WORK_ENTRUSTED then
 		return
 	end
 
-	var_0_0.super.disposeSelf(arg_25_0)
+	FightWorkItem.super.disposeSelf(self)
 end
 
-return var_0_0
+return FightWorkItem

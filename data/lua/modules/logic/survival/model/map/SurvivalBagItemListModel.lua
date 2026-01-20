@@ -1,7 +1,9 @@
-﻿module("modules.logic.survival.model.map.SurvivalBagItemListModel", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/map/SurvivalBagItemListModel.lua
 
-local var_0_0 = class("SurvivalBagItemListModel", ListScrollModel)
+module("modules.logic.survival.model.map.SurvivalBagItemListModel", package.seeall)
 
-var_0_0.instance = var_0_0.New()
+local SurvivalBagItemListModel = class("SurvivalBagItemListModel", ListScrollModel)
 
-return var_0_0
+SurvivalBagItemListModel.instance = SurvivalBagItemListModel.New()
+
+return SurvivalBagItemListModel

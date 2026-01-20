@@ -1,47 +1,49 @@
-﻿module("modules.logic.story.view.bgTrans.StoryBgTransBase", package.seeall)
+﻿-- chunkname: @modules/logic/story/view/bgTrans/StoryBgTransBase.lua
 
-local var_0_0 = class("StoryBgTransBase", LuaCompBase)
+module("modules.logic.story.view.bgTrans.StoryBgTransBase", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._resList = {}
-	arg_1_0._transInTime = 0
-	arg_1_0._transOutTime = 0
-	arg_1_0._loader = MultiAbLoader.New()
+local StoryBgTransBase = class("StoryBgTransBase", LuaCompBase)
+
+function StoryBgTransBase:ctor()
+	self._resList = {}
+	self._transInTime = 0
+	self._transOutTime = 0
+	self._loader = MultiAbLoader.New()
 end
 
-function var_0_0.init(arg_2_0)
+function StoryBgTransBase:init()
 	return
 end
 
-function var_0_0.start(arg_3_0)
+function StoryBgTransBase:start()
 	return
 end
 
-function var_0_0.loadRes(arg_4_0)
-	arg_4_0._loader:setPathList(arg_4_0._resList)
-	arg_4_0._loader:startLoad(arg_4_0.onLoadFinished, arg_4_0)
+function StoryBgTransBase:loadRes()
+	self._loader:setPathList(self._resList)
+	self._loader:startLoad(self.onLoadFinished, self)
 end
 
-function var_0_0.onLoadFinished(arg_5_0)
+function StoryBgTransBase:onLoadFinished()
 	return
 end
 
-function var_0_0.onSwitchBg(arg_6_0)
+function StoryBgTransBase:onSwitchBg()
 	StoryController.instance:dispatchEvent(StoryEvent.RefreshBackground)
 end
 
-function var_0_0.onTransFinished(arg_7_0)
+function StoryBgTransBase:onTransFinished()
 	return
 end
 
-function var_0_0.destroy(arg_8_0)
-	if arg_8_0._loader then
-		arg_8_0._loader:dispose()
+function StoryBgTransBase:destroy()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_8_0._loader = nil
+		self._loader = nil
 	end
 
-	arg_8_0._resList = nil
+	self._resList = nil
 end
 
-return var_0_0
+return StoryBgTransBase

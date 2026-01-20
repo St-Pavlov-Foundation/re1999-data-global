@@ -1,395 +1,402 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotTeamItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/view/V1a6_CachotTeamItem.lua
 
-local var_0_0 = class("V1a6_CachotTeamItem", ListScrollCellExtend)
+module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotTeamItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gorole = gohelper.findChild(arg_1_0.viewGO, "#go_role")
-	arg_1_0._gorolenone = gohelper.findChild(arg_1_0.viewGO, "#go_role/#go_rolenone")
-	arg_1_0._goroleunselect = gohelper.findChild(arg_1_0.viewGO, "#go_role/#go_roleunselect")
-	arg_1_0._goroledead = gohelper.findChild(arg_1_0.viewGO, "#go_role/#go_roledead")
-	arg_1_0._goroleselect = gohelper.findChild(arg_1_0.viewGO, "#go_role/#go_roleselect")
-	arg_1_0._simagerolehead = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_role/#go_roleselect/mask/#simage_rolehead")
-	arg_1_0._godeadmask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_role/#go_roleselect/mask/deadmask")
-	arg_1_0._careericon = gohelper.findChildImage(arg_1_0.viewGO, "#go_role/#go_roleselect/mask/career")
-	arg_1_0._txtroleLv1 = gohelper.findChildText(arg_1_0.viewGO, "#go_role/#go_roleselect/#txt_roleLv1")
-	arg_1_0._txtroleLv2 = gohelper.findChildText(arg_1_0.viewGO, "#go_role/#go_roleselect/#txt_roleLv2")
-	arg_1_0._txtrolename = gohelper.findChildText(arg_1_0.viewGO, "#go_role/#go_roleselect/#txt_rolename")
-	arg_1_0._gotalentnone = gohelper.findChild(arg_1_0.viewGO, "#go_role/#go_roleselect/none")
-	arg_1_0._gohp = gohelper.findChild(arg_1_0.viewGO, "#go_role/#go_roleselect/#go_hp")
-	arg_1_0._sliderhp = gohelper.findChildSlider(arg_1_0.viewGO, "#go_role/#go_roleselect/#go_hp/#slider_hp")
-	arg_1_0._btnroleclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_role/#btn_roleclick")
-	arg_1_0._goheart = gohelper.findChild(arg_1_0.viewGO, "#go_heart")
-	arg_1_0._goheartnone = gohelper.findChild(arg_1_0.viewGO, "#go_heart/#go_heartnone")
-	arg_1_0._goheartunselect = gohelper.findChild(arg_1_0.viewGO, "#go_heart/#go_heartunselect")
-	arg_1_0._goheartselect = gohelper.findChild(arg_1_0.viewGO, "#go_heart/#go_heartselect")
-	arg_1_0._simageheart = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_heart/#go_heartselect/#simage_heart")
-	arg_1_0._txtheartLv = gohelper.findChildText(arg_1_0.viewGO, "#go_heart/#go_heartselect/#simage_heart/#txt_heartLv")
-	arg_1_0._btnheartclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_heart/#btn_heartclick")
-	arg_1_0._gocost = gohelper.findChild(arg_1_0.viewGO, "#go_cost")
-	arg_1_0._txtcost = gohelper.findChildText(arg_1_0.viewGO, "#go_cost/#txt_cost")
-	arg_1_0._txtmax = gohelper.findChildText(arg_1_0.viewGO, "#go_cost/#txt_max")
-	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "#go_select")
-	arg_1_0._goselect2 = gohelper.findChild(arg_1_0.viewGO, "#go_select2")
+local V1a6_CachotTeamItem = class("V1a6_CachotTeamItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V1a6_CachotTeamItem:onInitView()
+	self._gorole = gohelper.findChild(self.viewGO, "#go_role")
+	self._gorolenone = gohelper.findChild(self.viewGO, "#go_role/#go_rolenone")
+	self._goroleunselect = gohelper.findChild(self.viewGO, "#go_role/#go_roleunselect")
+	self._goroledead = gohelper.findChild(self.viewGO, "#go_role/#go_roledead")
+	self._goroleselect = gohelper.findChild(self.viewGO, "#go_role/#go_roleselect")
+	self._simagerolehead = gohelper.findChildSingleImage(self.viewGO, "#go_role/#go_roleselect/mask/#simage_rolehead")
+	self._godeadmask = gohelper.findChildSingleImage(self.viewGO, "#go_role/#go_roleselect/mask/deadmask")
+	self._careericon = gohelper.findChildImage(self.viewGO, "#go_role/#go_roleselect/mask/career")
+	self._txtroleLv1 = gohelper.findChildText(self.viewGO, "#go_role/#go_roleselect/#txt_roleLv1")
+	self._txtroleLv2 = gohelper.findChildText(self.viewGO, "#go_role/#go_roleselect/#txt_roleLv2")
+	self._txtrolename = gohelper.findChildText(self.viewGO, "#go_role/#go_roleselect/#txt_rolename")
+	self._gotalentnone = gohelper.findChild(self.viewGO, "#go_role/#go_roleselect/none")
+	self._gohp = gohelper.findChild(self.viewGO, "#go_role/#go_roleselect/#go_hp")
+	self._sliderhp = gohelper.findChildSlider(self.viewGO, "#go_role/#go_roleselect/#go_hp/#slider_hp")
+	self._btnroleclick = gohelper.findChildButtonWithAudio(self.viewGO, "#go_role/#btn_roleclick")
+	self._goheart = gohelper.findChild(self.viewGO, "#go_heart")
+	self._goheartnone = gohelper.findChild(self.viewGO, "#go_heart/#go_heartnone")
+	self._goheartunselect = gohelper.findChild(self.viewGO, "#go_heart/#go_heartunselect")
+	self._goheartselect = gohelper.findChild(self.viewGO, "#go_heart/#go_heartselect")
+	self._simageheart = gohelper.findChildSingleImage(self.viewGO, "#go_heart/#go_heartselect/#simage_heart")
+	self._txtheartLv = gohelper.findChildText(self.viewGO, "#go_heart/#go_heartselect/#simage_heart/#txt_heartLv")
+	self._btnheartclick = gohelper.findChildButtonWithAudio(self.viewGO, "#go_heart/#btn_heartclick")
+	self._gocost = gohelper.findChild(self.viewGO, "#go_cost")
+	self._txtcost = gohelper.findChildText(self.viewGO, "#go_cost/#txt_cost")
+	self._txtmax = gohelper.findChildText(self.viewGO, "#go_cost/#txt_max")
+	self._goselect = gohelper.findChild(self.viewGO, "#go_select")
+	self._goselect2 = gohelper.findChild(self.viewGO, "#go_select2")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnroleclick:AddClickListener(arg_2_0._btnroleclickOnClick, arg_2_0)
-	arg_2_0._btnheartclick:AddClickListener(arg_2_0._btnheartclickOnClick, arg_2_0)
+function V1a6_CachotTeamItem:addEvents()
+	self._btnroleclick:AddClickListener(self._btnroleclickOnClick, self)
+	self._btnheartclick:AddClickListener(self._btnheartclickOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnroleclick:RemoveClickListener()
-	arg_3_0._btnheartclick:RemoveClickListener()
+function V1a6_CachotTeamItem:removeEvents()
+	self._btnroleclick:RemoveClickListener()
+	self._btnheartclick:RemoveClickListener()
 end
 
-function var_0_0._btnselectOnClick(arg_4_0)
-	V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.OnClickTeamItem, arg_4_0._mo)
+function V1a6_CachotTeamItem:_btnselectOnClick()
+	V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.OnClickTeamItem, self._mo)
 end
 
-function var_0_0._btnheartclickOnClick(arg_5_0)
-	arg_5_0:_onClickEquip()
+function V1a6_CachotTeamItem:_btnheartclickOnClick()
+	self:_onClickEquip()
 end
 
-function var_0_0._btnroleclickOnClick(arg_6_0)
-	arg_6_0:_openHeroGroupEditView()
+function V1a6_CachotTeamItem:_btnroleclickOnClick()
+	self:_openHeroGroupEditView()
 end
 
-function var_0_0._onClickEquip(arg_7_0)
+function V1a6_CachotTeamItem:_onClickEquip()
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Equip) then
 		AudioMgr.instance:trigger(AudioEnum.HeroGroupUI.Play_UI_Inking_Addmood)
 
-		local var_7_0 = V1a6_CachotHeroSingleGroupModel.instance:getCurGroupMO()
-		local var_7_1 = {
-			seatLevel = arg_7_0._seatLevel,
-			heroGroupMo = var_7_0,
-			heroMo = arg_7_0._heroMO,
-			equipMo = arg_7_0._equipMO,
-			posIndex = arg_7_0._mo.id - 1,
+		local heroGroupMO = V1a6_CachotHeroSingleGroupModel.instance:getCurGroupMO()
+		local param = {
+			seatLevel = self._seatLevel,
+			heroGroupMo = heroGroupMO,
+			heroMo = self._heroMO,
+			equipMo = self._equipMO,
+			posIndex = self._mo.id - 1,
 			fromView = EquipEnum.FromViewEnum.FromCachotHeroGroupView
 		}
 
-		V1a6_CachotEquipInfoTeamListModel.instance:setSeatLevel(arg_7_0._seatLevel)
-		V1a6_CachotController.instance:openV1a6_CachotEquipInfoTeamShowView(var_7_1)
+		V1a6_CachotEquipInfoTeamListModel.instance:setSeatLevel(self._seatLevel)
+		V1a6_CachotController.instance:openV1a6_CachotEquipInfoTeamShowView(param)
 	else
 		GameFacade.showToast(OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.Equip))
 	end
 end
 
-function var_0_0._openHeroGroupEditView(arg_8_0)
-	local var_8_0 = arg_8_0._mo.id
-	local var_8_1 = V1a6_CachotHeroSingleGroupModel.instance:getCurGroupMO():getPosEquips(var_8_0 - 1).equipUid
-	local var_8_2 = {
-		singleGroupMOId = var_8_0,
-		originalHeroUid = V1a6_CachotHeroSingleGroupModel.instance:getHeroUid(var_8_0),
-		equips = var_8_1,
-		heroGroupEditType = V1a6_CachotEnum.HeroGroupEditType.Init,
-		seatLevel = arg_8_0._seatLevel
-	}
+function V1a6_CachotTeamItem:_openHeroGroupEditView()
+	local id = self._mo.id
+	local heroGroupMO = V1a6_CachotHeroSingleGroupModel.instance:getCurGroupMO()
+	local equips = heroGroupMO:getPosEquips(id - 1).equipUid
+	local param = {}
 
-	ViewMgr.instance:openView(ViewName.V1a6_CachotHeroGroupEditView, var_8_2)
+	param.singleGroupMOId = id
+	param.originalHeroUid = V1a6_CachotHeroSingleGroupModel.instance:getHeroUid(id)
+	param.equips = equips
+	param.heroGroupEditType = V1a6_CachotEnum.HeroGroupEditType.Init
+	param.seatLevel = self._seatLevel
+
+	ViewMgr.instance:openView(ViewName.V1a6_CachotHeroGroupEditView, param)
 end
 
-function var_0_0.setHpVisible(arg_9_0, arg_9_1)
-	gohelper.setActive(arg_9_0._gohp, arg_9_1)
+function V1a6_CachotTeamItem:setHpVisible(value)
+	gohelper.setActive(self._gohp, value)
 end
 
-function var_0_0.setInteractable(arg_10_0, arg_10_1)
-	arg_10_0._interactable = arg_10_1
+function V1a6_CachotTeamItem:setInteractable(value)
+	self._interactable = value
 end
 
-function var_0_0.setSelectEnable(arg_11_0, arg_11_1)
-	if not arg_11_0._btnselect then
-		arg_11_0._btnselect = gohelper.findChildButtonWithAudio(arg_11_0.viewGO, "btn_select")
+function V1a6_CachotTeamItem:setSelectEnable(value)
+	if not self._btnselect then
+		self._btnselect = gohelper.findChildButtonWithAudio(self.viewGO, "btn_select")
 
-		arg_11_0._btnselect:AddClickListener(arg_11_0._btnselectOnClick, arg_11_0)
+		self._btnselect:AddClickListener(self._btnselectOnClick, self)
 	end
 
-	gohelper.setActive(arg_11_0._btnselect, arg_11_1)
+	gohelper.setActive(self._btnselect, value)
 end
 
-function var_0_0.setSelected(arg_12_0, arg_12_1)
-	gohelper.setActive(arg_12_0._goselect, arg_12_1)
+function V1a6_CachotTeamItem:setSelected(value)
+	gohelper.setActive(self._goselect, value)
 end
 
-function var_0_0.setCost(arg_13_0, arg_13_1)
-	gohelper.setActive(arg_13_0._txtcost, arg_13_1)
-	gohelper.setActive(arg_13_0._txtmax, not arg_13_1)
+function V1a6_CachotTeamItem:setCost(value)
+	gohelper.setActive(self._txtcost, value)
+	gohelper.setActive(self._txtmax, not value)
 
-	arg_13_0._txtcost.text = arg_13_1
+	self._txtcost.text = value
 
-	gohelper.setActive(arg_13_0._gocost, true)
+	gohelper.setActive(self._gocost, true)
 end
 
-function var_0_0._setSeatIndex(arg_14_0, arg_14_1)
-	arg_14_0._seatIndex = arg_14_1
+function V1a6_CachotTeamItem:_setSeatIndex(value)
+	self._seatIndex = value
 end
 
-function var_0_0.getSeatIndex(arg_15_0)
-	return arg_15_0._seatIndex
+function V1a6_CachotTeamItem:getSeatIndex()
+	return self._seatIndex
 end
 
-function var_0_0._setSeatLevel(arg_16_0, arg_16_1)
-	arg_16_0._qualityLevel = arg_16_1
+function V1a6_CachotTeamItem:_setSeatLevel(level)
+	self._qualityLevel = level
 
-	if not arg_16_0._quality then
-		arg_16_0._quality = gohelper.findChildImage(arg_16_0.viewGO, "quality")
-		arg_16_0._qualityEffectList = arg_16_0:getUserDataTb_()
+	if not self._quality then
+		self._quality = gohelper.findChildImage(self.viewGO, "quality")
+		self._qualityEffectList = self:getUserDataTb_()
 
-		local var_16_0 = gohelper.findChild(arg_16_0.viewGO, "quality_effect").transform
-		local var_16_1 = var_16_0.childCount
+		local qualityeffect = gohelper.findChild(self.viewGO, "quality_effect")
+		local transform = qualityeffect.transform
+		local childCount = transform.childCount
 
-		for iter_16_0 = 1, var_16_1 do
-			local var_16_2 = var_16_0:GetChild(iter_16_0 - 1)
+		for i = 1, childCount do
+			local child = transform:GetChild(i - 1)
 
-			arg_16_0._qualityEffectList[var_16_2.name] = var_16_2
+			self._qualityEffectList[child.name] = child
 		end
 	end
 
-	UISpriteSetMgr.instance:setV1a6CachotSprite(arg_16_0._quality, "v1a6_cachot_quality_0" .. arg_16_1)
+	UISpriteSetMgr.instance:setV1a6CachotSprite(self._quality, "v1a6_cachot_quality_0" .. level)
 
-	local var_16_3 = "effect_0" .. arg_16_1
+	local targetName = "effect_0" .. level
 
-	for iter_16_1, iter_16_2 in pairs(arg_16_0._qualityEffectList) do
-		gohelper.setActive(iter_16_2, iter_16_1 == var_16_3)
+	for k, v in pairs(self._qualityEffectList) do
+		gohelper.setActive(v, k == targetName)
 	end
 end
 
-function var_0_0.showSelectEffect(arg_17_0)
-	if not arg_17_0._selectedEffect then
-		arg_17_0._selectedEffect = gohelper.findChild(arg_17_0.viewGO, "effect_select")
+function V1a6_CachotTeamItem:showSelectEffect()
+	if not self._selectedEffect then
+		self._selectedEffect = gohelper.findChild(self.viewGO, "effect_select")
 	end
 
-	gohelper.setActive(arg_17_0._selectedEffect, false)
-	gohelper.setActive(arg_17_0._selectedEffect, true)
+	gohelper.setActive(self._selectedEffect, false)
+	gohelper.setActive(self._selectedEffect, true)
 end
 
-function var_0_0._editableInitView(arg_18_0)
-	arg_18_0._heartImg = gohelper.findChildImage(arg_18_0.viewGO, "#go_heart/#go_heartselect/#simage_heart")
-	arg_18_0._goStarList = arg_18_0:getUserDataTb_()
+function V1a6_CachotTeamItem:_editableInitView()
+	self._heartImg = gohelper.findChildImage(self.viewGO, "#go_heart/#go_heartselect/#simage_heart")
+	self._goStarList = self:getUserDataTb_()
 
-	for iter_18_0 = 1, 6 do
-		local var_18_0 = gohelper.findChild(arg_18_0.viewGO, "#go_role/#go_roleselect/rare/go_rare" .. iter_18_0)
+	for i = 1, 6 do
+		local starGO = gohelper.findChild(self.viewGO, "#go_role/#go_roleselect/rare/go_rare" .. i)
 
-		table.insert(arg_18_0._goStarList, var_18_0)
+		table.insert(self._goStarList, starGO)
 	end
 
-	arg_18_0._rankList = arg_18_0:getUserDataTb_()
+	self._rankList = self:getUserDataTb_()
 
-	for iter_18_1 = 1, 3 do
-		local var_18_1 = gohelper.findChildImage(arg_18_0.viewGO, "#go_role/#go_roleselect/rankobj/rank" .. iter_18_1)
+	for i = 1, 3 do
+		local starImg = gohelper.findChildImage(self.viewGO, "#go_role/#go_roleselect/rankobj/rank" .. i)
 
-		table.insert(arg_18_0._rankList, var_18_1)
+		table.insert(self._rankList, starImg)
 	end
 
-	gohelper.setActive(arg_18_0._gohp, false)
+	gohelper.setActive(self._gohp, false)
 end
 
-function var_0_0._editableAddEvents(arg_19_0)
-	arg_19_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.ChangeEquip, arg_19_0._changeEquip, arg_19_0)
+function V1a6_CachotTeamItem:_editableAddEvents()
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.ChangeEquip, self._changeEquip, self)
 end
 
-function var_0_0._editableRemoveEvents(arg_20_0)
-	arg_20_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.ChangeEquip, arg_20_0._changeEquip, arg_20_0)
+function V1a6_CachotTeamItem:_editableRemoveEvents()
+	self:removeEventCb(HeroGroupController.instance, HeroGroupEvent.ChangeEquip, self._changeEquip, self)
 end
 
-function var_0_0._changeEquip(arg_21_0, arg_21_1)
-	arg_21_0:_updateEquip()
+function V1a6_CachotTeamItem:_changeEquip(index)
+	self:_updateEquip()
 end
 
-function var_0_0.getMo(arg_22_0)
-	return arg_22_0._mo
+function V1a6_CachotTeamItem:getMo()
+	return self._mo
 end
 
-function var_0_0.getHeroMo(arg_23_0)
-	return arg_23_0._heroMO
+function V1a6_CachotTeamItem:getHeroMo()
+	return self._heroMO
 end
 
-function var_0_0.onUpdateMO(arg_24_0, arg_24_1)
-	arg_24_0._mo = arg_24_1
-	arg_24_0._heroMO = arg_24_1:getHeroMO()
+function V1a6_CachotTeamItem:onUpdateMO(mo)
+	self._mo = mo
+	self._heroMO = mo:getHeroMO()
 
-	local var_24_0 = V1a6_CachotTeamModel.instance:getSeatInfo(arg_24_1)
+	local seatInfo = V1a6_CachotTeamModel.instance:getSeatInfo(mo)
 
-	if var_24_0 then
-		arg_24_0:_setSeatIndex(var_24_0[1])
+	if seatInfo then
+		self:_setSeatIndex(seatInfo[1])
 
-		arg_24_0._seatLevel = var_24_0[2]
+		self._seatLevel = seatInfo[2]
 
-		arg_24_0:_setSeatLevel(arg_24_0._seatLevel)
+		self:_setSeatLevel(self._seatLevel)
 	else
-		arg_24_0._seatLevel = nil
+		self._seatLevel = nil
 	end
 
-	arg_24_0:_updateHero()
-	arg_24_0:_updateEquip()
+	self:_updateHero()
+	self:_updateEquip()
 end
 
-function var_0_0._updateHp(arg_25_0)
-	if not arg_25_0._heroMO then
-		arg_25_0:setHpVisible(false)
+function V1a6_CachotTeamItem:_updateHp()
+	if not self._heroMO then
+		self:setHpVisible(false)
 
 		return
 	end
 
-	arg_25_0:setHpVisible(true)
+	self:setHpVisible(true)
 
-	local var_25_0 = V1a6_CachotModel.instance:getTeamInfo():getHeroHp(arg_25_0._heroMO.heroId)
-	local var_25_1 = var_25_0 and var_25_0.life or 0
+	local teamInfo = V1a6_CachotModel.instance:getTeamInfo()
+	local hpInfo = teamInfo:getHeroHp(self._heroMO.heroId)
+	local hpValue = hpInfo and hpInfo.life or 0
 
-	arg_25_0._sliderhp:SetValue(var_25_1 / 1000)
-	arg_25_0:_showDeadStatus(var_25_1 <= 0)
+	self._sliderhp:SetValue(hpValue / 1000)
+	self:_showDeadStatus(hpValue <= 0)
 end
 
-function var_0_0._showDeadStatus(arg_26_0, arg_26_1)
-	gohelper.setActive(arg_26_0._goroledead, arg_26_1)
-	gohelper.setActive(arg_26_0._godeadmask, arg_26_1)
+function V1a6_CachotTeamItem:_showDeadStatus(isDead)
+	gohelper.setActive(self._goroledead, isDead)
+	gohelper.setActive(self._godeadmask, isDead)
 
-	local var_26_0, var_26_1, var_26_2 = transformhelper.getLocalPos(arg_26_0._simagerolehead.transform)
+	local x, y, z = transformhelper.getLocalPos(self._simagerolehead.transform)
 
-	transformhelper.setLocalPos(arg_26_0._simagerolehead.transform, var_26_0, var_26_1, arg_26_1 and 1 or 0)
+	transformhelper.setLocalPos(self._simagerolehead.transform, x, y, isDead and 1 or 0)
 end
 
-function var_0_0.tweenHp(arg_27_0, arg_27_1, arg_27_2, arg_27_3)
-	if arg_27_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_27_0._tweenId)
+function V1a6_CachotTeamItem:tweenHp(startValue, endValue, duration)
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_27_0._tweenId = nil
+		self._tweenId = nil
 	end
 
-	arg_27_0._tweenStartValue = arg_27_1
-	arg_27_0._tweenEndValue = arg_27_2
-	arg_27_0._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, arg_27_3, arg_27_0._tweenUpdate, arg_27_0._tweenEnd, arg_27_0, nil, EaseType.Linear)
+	self._tweenStartValue = startValue
+	self._tweenEndValue = endValue
+	self._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, duration, self._tweenUpdate, self._tweenEnd, self, nil, EaseType.Linear)
 
-	arg_27_0:_tweenUpdate(0)
+	self:_tweenUpdate(0)
 end
 
-function var_0_0._tweenUpdate(arg_28_0, arg_28_1)
-	arg_28_0._sliderhp:SetValue(Mathf.Lerp(arg_28_0._tweenStartValue, arg_28_0._tweenEndValue, arg_28_1) / 1000)
+function V1a6_CachotTeamItem:_tweenUpdate(val)
+	self._sliderhp:SetValue(Mathf.Lerp(self._tweenStartValue, self._tweenEndValue, val) / 1000)
 end
 
-function var_0_0._updateHero(arg_29_0)
-	gohelper.setActive(arg_29_0._btnroleclick, arg_29_0._interactable)
+function V1a6_CachotTeamItem:_updateHero()
+	gohelper.setActive(self._btnroleclick, self._interactable)
 
-	local var_29_0 = not arg_29_0._heroMO and not arg_29_0._interactable
+	local showNone = not self._heroMO and not self._interactable
 
-	gohelper.setActive(arg_29_0._gorolenone, var_29_0)
-	gohelper.setActive(arg_29_0._goroleunselect, not var_29_0 and not arg_29_0._heroMO)
-	gohelper.setActive(arg_29_0._goroleselect, not var_29_0 and arg_29_0._heroMO)
+	gohelper.setActive(self._gorolenone, showNone)
+	gohelper.setActive(self._goroleunselect, not showNone and not self._heroMO)
+	gohelper.setActive(self._goroleselect, not showNone and self._heroMO)
 
-	if not arg_29_0._heroMO then
+	if not self._heroMO then
 		return
 	end
 
-	local var_29_1 = arg_29_0._heroMO.level
-	local var_29_2 = arg_29_0._heroMO.talent
-	local var_29_3, var_29_4 = V1a6_CachotTeamModel.instance:getHeroMaxLevel(arg_29_0._heroMO, arg_29_0._seatLevel)
-	local var_29_5 = var_29_1 ~= var_29_3
-	local var_29_6 = var_29_2 ~= var_29_4
-	local var_29_7 = SkinConfig.instance:getSkinCo(arg_29_0._heroMO.skin)
+	local originalLevel = self._heroMO.level
+	local originalTalentLevel = self._heroMO.talent
+	local level, talentLevel = V1a6_CachotTeamModel.instance:getHeroMaxLevel(self._heroMO, self._seatLevel)
+	local convertLevel = originalLevel ~= level
+	local convertTalentLevel = originalTalentLevel ~= talentLevel
+	local skinCo = SkinConfig.instance:getSkinCo(self._heroMO.skin)
 
-	arg_29_0._simagerolehead:LoadImage(ResUrl.getRoomHeadIcon(var_29_7.headIcon))
-	UISpriteSetMgr.instance:setV1a6CachotSprite(arg_29_0._careericon, "v1a6_cachot_career_" .. arg_29_0._heroMO.config.career)
+	self._simagerolehead:LoadImage(ResUrl.getRoomHeadIcon(skinCo.headIcon))
+	UISpriteSetMgr.instance:setV1a6CachotSprite(self._careericon, "v1a6_cachot_career_" .. self._heroMO.config.career)
 
-	arg_29_0._txtrolename.text = arg_29_0._heroMO.config.name
-	arg_29_0._talentIcon = arg_29_0._talentIcon or gohelper.findChildImage(arg_29_0._txtroleLv2.gameObject, "icon")
-	arg_29_0._talentIcon.color = var_29_6 and GameUtil.parseColor("#81abe5") or Color.white
-	arg_29_0._txtroleLv2.text = "<size=17>LV</size>." .. tostring(var_29_4)
+	self._txtrolename.text = self._heroMO.config.name
+	self._talentIcon = self._talentIcon or gohelper.findChildImage(self._txtroleLv2.gameObject, "icon")
+	self._talentIcon.color = convertTalentLevel and GameUtil.parseColor("#81abe5") or Color.white
+	self._txtroleLv2.text = "<size=17>LV</size>." .. tostring(talentLevel)
 
-	if var_29_6 then
-		SLFramework.UGUI.GuiHelper.SetColor(arg_29_0._txtroleLv2, "#bfdaff")
+	if convertTalentLevel then
+		SLFramework.UGUI.GuiHelper.SetColor(self._txtroleLv2, "#bfdaff")
 	else
-		SLFramework.UGUI.GuiHelper.SetColor(arg_29_0._txtroleLv2, "#e6e6e6")
+		SLFramework.UGUI.GuiHelper.SetColor(self._txtroleLv2, "#e6e6e6")
 	end
 
-	local var_29_8 = CharacterEnum.Star[arg_29_0._heroMO.config.rare]
+	local starCount = CharacterEnum.Star[self._heroMO.config.rare]
 
-	for iter_29_0, iter_29_1 in ipairs(arg_29_0._goStarList) do
-		gohelper.setActive(iter_29_1, iter_29_0 <= var_29_8)
+	for i, starGO in ipairs(self._goStarList) do
+		gohelper.setActive(starGO, i <= starCount)
 	end
 
-	local var_29_9, var_29_10 = HeroConfig.instance:getShowLevel(var_29_3)
-	local var_29_11 = var_29_10 >= CharacterEnum.TalentRank and OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Talent)
+	local showLevel, rank = HeroConfig.instance:getShowLevel(level)
+	local showTalent = rank >= CharacterEnum.TalentRank and OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Talent)
 
-	gohelper.setActive(arg_29_0._txtroleLv2, var_29_11)
-	gohelper.setActive(arg_29_0._gotalentnone, not var_29_11)
+	gohelper.setActive(self._txtroleLv2, showTalent)
+	gohelper.setActive(self._gotalentnone, not showTalent)
 
-	arg_29_0._txtroleLv1.text = "<size=17>LV</size>." .. tostring(var_29_9)
+	self._txtroleLv1.text = "<size=17>LV</size>." .. tostring(showLevel)
 
-	if var_29_5 then
-		SLFramework.UGUI.GuiHelper.SetColor(arg_29_0._txtroleLv1, "#bfdaff")
+	if convertLevel then
+		SLFramework.UGUI.GuiHelper.SetColor(self._txtroleLv1, "#bfdaff")
 	else
-		SLFramework.UGUI.GuiHelper.SetColor(arg_29_0._txtroleLv1, "#e6e6e6")
+		SLFramework.UGUI.GuiHelper.SetColor(self._txtroleLv1, "#e6e6e6")
 	end
 
-	for iter_29_2, iter_29_3 in ipairs(arg_29_0._rankList) do
-		local var_29_12 = iter_29_2 == var_29_10 - 1
+	for i, img in ipairs(self._rankList) do
+		local visible = i == rank - 1
 
-		gohelper.setActive(iter_29_3, var_29_12)
+		gohelper.setActive(img, visible)
 
-		if var_29_12 then
-			iter_29_3.color = var_29_5 and GameUtil.parseColor("#81abe5") or Color.white
+		if visible then
+			img.color = convertLevel and GameUtil.parseColor("#81abe5") or Color.white
 		end
 	end
 end
 
-function var_0_0._getEquipMO(arg_30_0)
-	if arg_30_0._mo then
-		local var_30_0 = V1a6_CachotHeroSingleGroupModel.instance:getCurGroupMO():getPosEquips(arg_30_0._mo.id - 1).equipUid[1]
+function V1a6_CachotTeamItem:_getEquipMO()
+	if self._mo then
+		local curGroupMO = V1a6_CachotHeroSingleGroupModel.instance:getCurGroupMO()
+		local equips = curGroupMO:getPosEquips(self._mo.id - 1).equipUid
+		local equipId = equips[1]
 
-		arg_30_0._equipMO = EquipModel.instance:getEquip(var_30_0)
+		self._equipMO = EquipModel.instance:getEquip(equipId)
 	end
 end
 
-function var_0_0.hideEquipNone(arg_31_0)
-	arg_31_0._hideEquipNone = true
+function V1a6_CachotTeamItem:hideEquipNone()
+	self._hideEquipNone = true
 end
 
-function var_0_0._updateEquip(arg_32_0)
-	gohelper.setActive(arg_32_0._btnheartclick, arg_32_0._interactable)
-	arg_32_0:_getEquipMO()
+function V1a6_CachotTeamItem:_updateEquip()
+	gohelper.setActive(self._btnheartclick, self._interactable)
+	self:_getEquipMO()
 
-	local var_32_0 = not arg_32_0._equipMO and not arg_32_0._interactable
+	local showNone = not self._equipMO and not self._interactable
 
-	gohelper.setActive(arg_32_0._goheartnone, var_32_0 and not arg_32_0._hideEquipNone)
-	gohelper.setActive(arg_32_0._goheartunselect, not var_32_0 and not arg_32_0._equipMO)
-	gohelper.setActive(arg_32_0._goheartselect, not var_32_0 and arg_32_0._equipMO)
+	gohelper.setActive(self._goheartnone, showNone and not self._hideEquipNone)
+	gohelper.setActive(self._goheartunselect, not showNone and not self._equipMO)
+	gohelper.setActive(self._goheartselect, not showNone and self._equipMO)
 
-	if arg_32_0._equipMO then
-		local var_32_1 = V1a6_CachotTeamModel.instance:getEquipMaxLevel(arg_32_0._equipMO, arg_32_0._seatLevel)
-		local var_32_2 = arg_32_0._equipMO.level ~= var_32_1
+	if self._equipMO then
+		local level = V1a6_CachotTeamModel.instance:getEquipMaxLevel(self._equipMO, self._seatLevel)
+		local convertLevel = self._equipMO.level ~= level
 
-		arg_32_0._txtheartLv.text = "LV." .. var_32_1
+		self._txtheartLv.text = "LV." .. level
 
-		UISpriteSetMgr.instance:setHerogroupEquipIconSprite(arg_32_0._heartImg, arg_32_0._equipMO.config.icon)
+		UISpriteSetMgr.instance:setHerogroupEquipIconSprite(self._heartImg, self._equipMO.config.icon)
 
-		if var_32_2 then
-			SLFramework.UGUI.GuiHelper.SetColor(arg_32_0._txtheartLv, "#bfdaff")
+		if convertLevel then
+			SLFramework.UGUI.GuiHelper.SetColor(self._txtheartLv, "#bfdaff")
 		else
-			SLFramework.UGUI.GuiHelper.SetColor(arg_32_0._txtheartLv, "#A8A8A8")
+			SLFramework.UGUI.GuiHelper.SetColor(self._txtheartLv, "#A8A8A8")
 		end
 	end
 end
 
-function var_0_0.onSelect(arg_33_0, arg_33_1)
+function V1a6_CachotTeamItem:onSelect(isSelect)
 	return
 end
 
-function var_0_0.onDestroyView(arg_34_0)
-	arg_34_0._simagerolehead:UnLoadImage()
+function V1a6_CachotTeamItem:onDestroyView()
+	self._simagerolehead:UnLoadImage()
 
-	if arg_34_0._btnselect then
-		arg_34_0._btnselect:RemoveClickListener()
+	if self._btnselect then
+		self._btnselect:RemoveClickListener()
 	end
 
-	if arg_34_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_34_0._tweenId)
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_34_0._tweenId = nil
+		self._tweenId = nil
 	end
 end
 
-return var_0_0
+return V1a6_CachotTeamItem

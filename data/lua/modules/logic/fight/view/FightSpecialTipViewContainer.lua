@@ -1,15 +1,17 @@
-﻿module("modules.logic.fight.view.FightSpecialTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightSpecialTipViewContainer.lua
 
-local var_0_0 = class("FightSpecialTipViewContainer", BaseViewContainer)
+module("modules.logic.fight.view.FightSpecialTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local FightSpecialTipViewContainer = class("FightSpecialTipViewContainer", BaseViewContainer)
+
+function FightSpecialTipViewContainer:buildViews()
 	return {
 		FightSpecialTipView.New()
 	}
 end
 
-function var_0_0.onContainerCloseFinish(arg_2_0)
+function FightSpecialTipViewContainer:onContainerCloseFinish()
 	FightController.instance:dispatchEvent(FightEvent.SetPlayCardPartOriginPos)
 end
 
-return var_0_0
+return FightSpecialTipViewContainer

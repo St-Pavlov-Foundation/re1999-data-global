@@ -1,83 +1,93 @@
-﻿module("modules.common.global.screen.GameScreenBrightness", package.seeall)
+﻿-- chunkname: @modules/common/global/screen/GameScreenBrightness.lua
 
-local var_0_0 = class("GameScreenBrightness")
+module("modules.common.global.screen.GameScreenBrightness", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local GameScreenBrightness = class("GameScreenBrightness")
+
+function GameScreenBrightness:ctor()
 	if BootNativeUtil.isAndroid() or BootNativeUtil.isIOS() then
-		arg_1_0:_setScreenLightingOff(false)
-		GameSceneMgr.instance:registerCallback(SceneEventName.EnterSceneFinish, arg_1_0._onEnterOneSceneFinish, arg_1_0)
-		StoryController.instance:registerCallback(StoryEvent.RefreshStep, arg_1_0._onRefreshState, arg_1_0)
-		StoryController.instance:registerCallback(StoryEvent.Auto, arg_1_0._refreshAutoState, arg_1_0)
-		StoryController.instance:registerCallback(StoryEvent.Finish, arg_1_0._onStoryFinished, arg_1_0)
-		StoryController.instance:registerCallback(StoryEvent.Log, arg_1_0._refreshAutoState, arg_1_0)
-		SettingsController.instance:registerCallback(SettingsEvent.OnChangeEnergyMode, arg_1_0._onChangeEnergyMode, arg_1_0)
+		self:_setScreenLightingOff(false)
+		GameSceneMgr.instance:registerCallback(SceneEventName.EnterSceneFinish, self._onEnterOneSceneFinish, self)
+		StoryController.instance:registerCallback(StoryEvent.RefreshStep, self._onRefreshState, self)
+		StoryController.instance:registerCallback(StoryEvent.Auto, self._refreshAutoState, self)
+		StoryController.instance:registerCallback(StoryEvent.Finish, self._onStoryFinished, self)
+		StoryController.instance:registerCallback(StoryEvent.Log, self._refreshAutoState, self)
+		SettingsController.instance:registerCallback(SettingsEvent.OnChangeEnergyMode, self._onChangeEnergyMode, self)
 	end
 end
 
-function var_0_0._onChangeEnergyMode(arg_2_0)
-	local var_2_0 = GameSceneMgr.instance:getCurSceneType()
+function GameScreenBrightness:_onChangeEnergyMode()
+	local sceneType = GameSceneMgr.instance:getCurSceneType()
 
-	arg_2_0:_setScreenLightingOff(var_2_0 == SceneType.Fight)
+	self:_setScreenLightingOff(sceneType == SceneType.Fight)
 end
 
-function var_0_0._onEnterOneSceneFinish(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0:_setScreenLightingOff(arg_3_1 == SceneType.Fight)
+function GameScreenBrightness:_onEnterOneSceneFinish(sceneType, sceneId)
+	self:_setScreenLightingOff(sceneType == SceneType.Fight)
 end
 
-function var_0_0._onRefreshState(arg_4_0, arg_4_1)
-	if GameSceneMgr.instance:getCurSceneType() == SceneType.Fight then
+function GameScreenBrightness:_onRefreshState(param)
+	local sceneType = GameSceneMgr.instance:getCurSceneType()
+
+	if sceneType == SceneType.Fight then
 		return
 	end
 
-	if #arg_4_1.branches > 0 then
-		arg_4_0:_setScreenLightingOff(true)
-
-		return
-	end
-
-	arg_4_0._stepCo = StoryStepModel.instance:getStepListById(arg_4_1.stepId)
-
-	arg_4_0:_refreshAutoState()
-end
-
-function var_0_0._refreshAutoState(arg_5_0)
-	if GameSceneMgr.instance:getCurSceneType() == SceneType.Fight then
-		return
-	end
-
-	if StoryModel.instance:isStoryAuto() then
-		arg_5_0:_setScreenLightingOff(true)
+	if #param.branches > 0 then
+		self:_setScreenLightingOff(true)
 
 		return
 	end
 
-	local var_5_0 = false
+	self._stepCo = StoryStepModel.instance:getStepListById(param.stepId)
 
-	if arg_5_0._stepCo then
-		local var_5_1 = StoryModel.instance:isLimitNoInteractLock(arg_5_0._stepCo)
+	self:_refreshAutoState()
+end
 
-		if arg_5_0._stepCo.conversation.type == StoryEnum.ConversationType.None or arg_5_0._stepCo.conversation.type == StoryEnum.ConversationType.ScreenDialog or arg_5_0._stepCo.conversation.type == StoryEnum.ConversationType.NoInteract or var_5_1 then
-			var_5_0 = true
+function GameScreenBrightness:_refreshAutoState()
+	local sceneType = GameSceneMgr.instance:getCurSceneType()
+
+	if sceneType == SceneType.Fight then
+		return
+	end
+
+	local auto = StoryModel.instance:isStoryAuto()
+
+	if auto then
+		self:_setScreenLightingOff(true)
+
+		return
+	end
+
+	local off = false
+
+	if self._stepCo then
+		local isLimitNoInteractLock = StoryModel.instance:isLimitNoInteractLock(self._stepCo)
+
+		if self._stepCo.conversation.type == StoryEnum.ConversationType.None or self._stepCo.conversation.type == StoryEnum.ConversationType.ScreenDialog or self._stepCo.conversation.type == StoryEnum.ConversationType.NoInteract or isLimitNoInteractLock then
+			off = true
 		end
 	end
 
-	arg_5_0:_setScreenLightingOff(var_5_0)
+	self:_setScreenLightingOff(off)
 end
 
-function var_0_0._onStoryFinished(arg_6_0)
-	if GameSceneMgr.instance:getCurSceneType() == SceneType.Fight then
+function GameScreenBrightness:_onStoryFinished()
+	local sceneType = GameSceneMgr.instance:getCurSceneType()
+
+	if sceneType == SceneType.Fight then
 		return
 	end
 
-	arg_6_0:_setScreenLightingOff(false)
+	self:_setScreenLightingOff(false)
 end
 
-function var_0_0._setScreenLightingOff(arg_7_0, arg_7_1)
+function GameScreenBrightness:_setScreenLightingOff(needLightingOff)
 	if SettingsModel.instance:getEnergyMode() == 0 then
 		SDKMgr.instance:setScreenLightingOff(true)
 	else
-		SDKMgr.instance:setScreenLightingOff(arg_7_1)
+		SDKMgr.instance:setScreenLightingOff(needLightingOff)
 	end
 end
 
-return var_0_0
+return GameScreenBrightness

@@ -1,67 +1,72 @@
-﻿module("modules.logic.open.controller.OpenHelper", package.seeall)
+﻿-- chunkname: @modules/logic/open/controller/OpenHelper.lua
 
-local var_0_0 = class("OpenHelper")
+module("modules.logic.open.controller.OpenHelper", package.seeall)
 
-function var_0_0.getToastIdAndParam(arg_1_0)
-	local var_1_0 = OpenConfig.instance:getOpenCo(arg_1_0)
-	local var_1_1 = var_1_0.dec
+local OpenHelper = class("OpenHelper")
 
-	return (var_0_0.ToastId2FuncDict[var_1_1] or var_0_0.defaultGetToast)(var_1_0)
+function OpenHelper.getToastIdAndParam(openId)
+	local openCo = OpenConfig.instance:getOpenCo(openId)
+	local toastId = openCo.dec
+	local getToastFunc = OpenHelper.ToastId2FuncDict[toastId]
+
+	getToastFunc = getToastFunc or OpenHelper.defaultGetToast
+
+	return getToastFunc(openCo)
 end
 
-function var_0_0.defaultGetToast(arg_2_0)
-	return arg_2_0 and arg_2_0.dec
+function OpenHelper.defaultGetToast(openCo)
+	return openCo and openCo.dec
 end
 
-function var_0_0.getDungeonToast(arg_3_0)
-	local var_3_0 = arg_3_0.dec
-	local var_3_1 = VersionValidator.instance:isInReviewing() and arg_3_0.verifingEpisodeId or arg_3_0.episodeId
+function OpenHelper.getDungeonToast(openCo)
+	local toastId = openCo.dec
+	local episodeId = VersionValidator.instance:isInReviewing() and openCo.verifingEpisodeId or openCo.episodeId
 
-	if not var_3_1 or var_3_1 == 0 then
-		return var_3_0
+	if not episodeId or episodeId == 0 then
+		return toastId
 	end
 
-	local var_3_2 = DungeonConfig.instance:getEpisodeDisplay(var_3_1)
+	local episodeDisplay = DungeonConfig.instance:getEpisodeDisplay(episodeId)
 
-	return var_3_0, {
-		var_3_2
+	return toastId, {
+		episodeDisplay
 	}
 end
 
-function var_0_0.getActivityDungeonToast(arg_4_0)
-	local var_4_0 = arg_4_0.dec
-	local var_4_1 = DungeonConfig.instance:getEpisodeCO(arg_4_0.episodeId)
-	local var_4_2 = DungeonConfig.instance:getChapterCO(var_4_1 and var_4_1.chapterId)
-	local var_4_3 = ActivityConfig.instance:getActivityCo(var_4_2 and var_4_2.actId)
-	local var_4_4 = DungeonConfig.instance:getEpisodeDisplay(arg_4_0.episodeId)
+function OpenHelper.getActivityDungeonToast(openCo)
+	local toastId = openCo.dec
+	local episodeCo = DungeonConfig.instance:getEpisodeCO(openCo.episodeId)
+	local chapterCo = DungeonConfig.instance:getChapterCO(episodeCo and episodeCo.chapterId)
+	local actCo = ActivityConfig.instance:getActivityCo(chapterCo and chapterCo.actId)
+	local episodeDisplay = DungeonConfig.instance:getEpisodeDisplay(openCo.episodeId)
 
-	return var_4_0, {
-		var_4_3 and var_4_3.name,
-		var_4_4
+	return toastId, {
+		actCo and actCo.name,
+		episodeDisplay
 	}
 end
 
-function var_0_0.getActivityDungeon1Toast(arg_5_0)
-	local var_5_0 = arg_5_0.dec
-	local var_5_1 = DungeonConfig.instance:getEpisodeDisplay(arg_5_0.episodeId)
+function OpenHelper.getActivityDungeon1Toast(openCo)
+	local toastId = openCo.dec
+	local episodeDisplay = DungeonConfig.instance:getEpisodeDisplay(openCo.episodeId)
 
-	return var_5_0, {
+	return toastId, {
 		luaLang("v1a2_enterview_activitytip"),
-		var_5_1
+		episodeDisplay
 	}
 end
 
-function var_0_0.getActivityUnlockTxt(arg_6_0)
-	local var_6_0 = OpenConfig.instance:getOpenCo(arg_6_0)
-	local var_6_1 = DungeonConfig.instance:getEpisodeDisplay(var_6_0.episodeId)
+function OpenHelper.getActivityUnlockTxt(openId)
+	local openCo = OpenConfig.instance:getOpenCo(openId)
+	local episodeDisplay = DungeonConfig.instance:getEpisodeDisplay(openCo.episodeId)
 
-	return string.format(luaLang("versionactivity1_3_hardlocktip"), var_6_1)
+	return string.format(luaLang("versionactivity1_3_hardlocktip"), episodeDisplay)
 end
 
-var_0_0.ToastId2FuncDict = {
-	[ToastEnum.DungeonMapLevel] = var_0_0.getDungeonToast,
-	[ToastEnum.ActivityDungeon] = var_0_0.getActivityDungeonToast,
-	[ToastEnum.ActivityDungeon1] = var_0_0.getActivityDungeon1Toast
+OpenHelper.ToastId2FuncDict = {
+	[ToastEnum.DungeonMapLevel] = OpenHelper.getDungeonToast,
+	[ToastEnum.ActivityDungeon] = OpenHelper.getActivityDungeonToast,
+	[ToastEnum.ActivityDungeon1] = OpenHelper.getActivityDungeon1Toast
 }
 
-return var_0_0
+return OpenHelper

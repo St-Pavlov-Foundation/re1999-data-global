@@ -1,11 +1,13 @@
-﻿module("modules.logic.explore.view.ExploreInteractViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/explore/view/ExploreInteractViewContainer.lua
 
-local var_0_0 = class("ExploreInteractViewContainer", BaseViewContainer)
+module("modules.logic.explore.view.ExploreInteractViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local ExploreInteractViewContainer = class("ExploreInteractViewContainer", BaseViewContainer)
+
+function ExploreInteractViewContainer:buildViews()
 	return {
 		ExploreInteractView.New()
 	}
 end
 
-return var_0_0
+return ExploreInteractViewContainer

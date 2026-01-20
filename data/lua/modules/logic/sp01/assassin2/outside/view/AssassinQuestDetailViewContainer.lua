@@ -1,17 +1,19 @@
-﻿module("modules.logic.sp01.assassin2.outside.view.AssassinQuestDetailViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/outside/view/AssassinQuestDetailViewContainer.lua
 
-local var_0_0 = class("AssassinQuestDetailViewContainer", BaseViewContainer)
+module("modules.logic.sp01.assassin2.outside.view.AssassinQuestDetailViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local AssassinQuestDetailViewContainer = class("AssassinQuestDetailViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, AssassinQuestDetailView.New())
+function AssassinQuestDetailViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, AssassinQuestDetailView.New())
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	arg_2_0:closeThis()
+function AssassinQuestDetailViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return AssassinQuestDetailViewContainer

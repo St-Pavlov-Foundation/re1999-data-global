@@ -1,31 +1,33 @@
-﻿module("modules.logic.sp01.assassin2.controller.stealthgameflow.StealthEnemyArcheryWork", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/controller/stealthgameflow/StealthEnemyArcheryWork.lua
 
-local var_0_0 = class("StealthEnemyArcheryWork", BaseWork)
+module("modules.logic.sp01.assassin2.controller.stealthgameflow.StealthEnemyArcheryWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = AssassinStealthGameModel.instance:getEnemyOperationData()
-	local var_1_1 = var_1_0 and var_1_0.attacks
+local StealthEnemyArcheryWork = class("StealthEnemyArcheryWork", BaseWork)
 
-	if var_1_1 and #var_1_1 > 0 then
-		for iter_1_0, iter_1_1 in ipairs(var_1_1) do
-			AssassinStealthGameController.instance:updateHero(iter_1_1.hero, AssassinEnum.EffectId.EnemyAttack)
+function StealthEnemyArcheryWork:onStart(context)
+	local enemyOperationData = AssassinStealthGameModel.instance:getEnemyOperationData()
+	local attackDataList = enemyOperationData and enemyOperationData.attacks
+
+	if attackDataList and #attackDataList > 0 then
+		for _, attackData in ipairs(attackDataList) do
+			AssassinStealthGameController.instance:updateHero(attackData.hero, AssassinEnum.EffectId.EnemyAttack)
 		end
 
-		local var_1_2 = AssassinConfig.instance:getAssassinEffectDuration(AssassinEnum.EffectId.EnemyAttack)
+		local duration = AssassinConfig.instance:getAssassinEffectDuration(AssassinEnum.EffectId.EnemyAttack)
 
-		TaskDispatcher.cancelTask(arg_1_0.playAttackEffFinished, arg_1_0)
-		TaskDispatcher.runDelay(arg_1_0.playAttackEffFinished, arg_1_0, var_1_2)
+		TaskDispatcher.cancelTask(self.playAttackEffFinished, self)
+		TaskDispatcher.runDelay(self.playAttackEffFinished, self, duration)
 	else
-		arg_1_0:playAttackEffFinished()
+		self:playAttackEffFinished()
 	end
 end
 
-function var_0_0.playAttackEffFinished(arg_2_0)
-	arg_2_0:onDone(true)
+function StealthEnemyArcheryWork:playAttackEffFinished()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0.playAttackEffFinished, arg_3_0)
+function StealthEnemyArcheryWork:clearWork()
+	TaskDispatcher.cancelTask(self.playAttackEffFinished, self)
 end
 
-return var_0_0
+return StealthEnemyArcheryWork

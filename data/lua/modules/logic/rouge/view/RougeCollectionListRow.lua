@@ -1,88 +1,90 @@
-﻿module("modules.logic.rouge.view.RougeCollectionListRow", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeCollectionListRow.lua
 
-local var_0_0 = class("RougeCollectionListRow", ListScrollCellExtend)
+module("modules.logic.rouge.view.RougeCollectionListRow", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gotitle = gohelper.findChild(arg_1_0.viewGO, "#go_title")
-	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "#go_title/#txt_Title")
-	arg_1_0._txtTitleEn = gohelper.findChildText(arg_1_0.viewGO, "#go_title/#txt_Title/#txt_TitleEn")
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "#go_title/#image_icon")
-	arg_1_0._gocollectionitem = gohelper.findChild(arg_1_0.viewGO, "#go_collectionitem")
+local RougeCollectionListRow = class("RougeCollectionListRow", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeCollectionListRow:onInitView()
+	self._gotitle = gohelper.findChild(self.viewGO, "#go_title")
+	self._txtTitle = gohelper.findChildText(self.viewGO, "#go_title/#txt_Title")
+	self._txtTitleEn = gohelper.findChildText(self.viewGO, "#go_title/#txt_Title/#txt_TitleEn")
+	self._imageicon = gohelper.findChildImage(self.viewGO, "#go_title/#image_icon")
+	self._gocollectionitem = gohelper.findChild(self.viewGO, "#go_collectionitem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RougeCollectionListRow:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RougeCollectionListRow:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	gohelper.setActive(arg_4_0._gocollectionitem, false)
-	gohelper.setActive(arg_4_0._txtTitleEn, false)
+function RougeCollectionListRow:_editableInitView()
+	gohelper.setActive(self._gocollectionitem, false)
+	gohelper.setActive(self._txtTitleEn, false)
 
-	arg_4_0._itemList = arg_4_0:getUserDataTb_()
+	self._itemList = self:getUserDataTb_()
 
-	for iter_4_0 = 1, RougeEnum.CollectionListRowNum do
-		local var_4_0 = gohelper.cloneInPlace(arg_4_0._gocollectionitem)
-		local var_4_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_4_0, RougeCollectionListItem)
+	for i = 1, RougeEnum.CollectionListRowNum do
+		local go = gohelper.cloneInPlace(self._gocollectionitem)
+		local comp = MonoHelper.addNoUpdateLuaComOnceToGo(go, RougeCollectionListItem)
 
-		table.insert(arg_4_0._itemList, var_4_1)
+		table.insert(self._itemList, comp)
 	end
 
-	arg_4_0._gridLayout = arg_4_0.viewGO:GetComponentInChildren(gohelper.Type_GridLayoutGroup)
+	self._gridLayout = self.viewGO:GetComponentInChildren(gohelper.Type_GridLayoutGroup)
 end
 
-function var_0_0._editableAddEvents(arg_5_0)
+function RougeCollectionListRow:_editableAddEvents()
 	return
 end
 
-function var_0_0._editableRemoveEvents(arg_6_0)
+function RougeCollectionListRow:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_7_0, arg_7_1)
-	arg_7_0._mo = arg_7_1
+function RougeCollectionListRow:onUpdateMO(mo)
+	self._mo = mo
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0._itemList) do
-		iter_7_1:onUpdateMO(arg_7_1[iter_7_0])
+	for i, v in ipairs(self._itemList) do
+		v:onUpdateMO(mo[i])
 	end
 
-	local var_7_0 = arg_7_1.type ~= nil
+	local isShowTitle = mo.type ~= nil
 
-	gohelper.setActive(arg_7_0._gotitle, var_7_0)
+	gohelper.setActive(self._gotitle, isShowTitle)
 
-	local var_7_1 = arg_7_0._gridLayout.padding
+	local padding = self._gridLayout.padding
 
-	var_7_1.top = var_7_0 and 61 or 0
-	arg_7_0._gridLayout.padding = var_7_1
+	padding.top = isShowTitle and 61 or 0
+	self._gridLayout.padding = padding
 
-	if not var_7_0 then
+	if not isShowTitle then
 		return
 	end
 
-	local var_7_2 = RougeCollectionConfig.instance:getTagConfig(arg_7_1.type)
+	local tagConfig = RougeCollectionConfig.instance:getTagConfig(mo.type)
 
-	if not var_7_2 then
+	if not tagConfig then
 		return
 	end
 
-	arg_7_0._txtTitle.text = var_7_2.name
+	self._txtTitle.text = tagConfig.name
 
-	UISpriteSetMgr.instance:setRougeSprite(arg_7_0._imageicon, var_7_2.iconUrl)
+	UISpriteSetMgr.instance:setRougeSprite(self._imageicon, tagConfig.iconUrl)
 end
 
-function var_0_0.onSelect(arg_8_0, arg_8_1)
+function RougeCollectionListRow:onSelect(isSelect)
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
+function RougeCollectionListRow:onDestroyView()
 	return
 end
 
-return var_0_0
+return RougeCollectionListRow

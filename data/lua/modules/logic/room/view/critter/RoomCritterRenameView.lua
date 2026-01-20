@@ -1,43 +1,45 @@
-﻿module("modules.logic.room.view.critter.RoomCritterRenameView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/critter/RoomCritterRenameView.lua
 
-local var_0_0 = class("RoomCritterRenameView", RoomLayoutInputBaseView)
+module("modules.logic.room.view.critter.RoomCritterRenameView", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	var_0_0.super._editableInitView(arg_1_0)
+local RoomCritterRenameView = class("RoomCritterRenameView", RoomLayoutInputBaseView)
 
-	arg_1_0._txttips = gohelper.findChildText(arg_1_0.viewGO, "tips/txt_tips")
+function RoomCritterRenameView:_editableInitView()
+	RoomCritterRenameView.super._editableInitView(self)
+
+	self._txttips = gohelper.findChildText(self.viewGO, "tips/txt_tips")
 end
 
-function var_0_0._btnsureOnClick(arg_2_0)
-	local var_2_0 = arg_2_0._inputsignature:GetText()
+function RoomCritterRenameView:_btnsureOnClick()
+	local inputStr = self._inputsignature:GetText()
 
-	if string.nilorempty(var_2_0) then
+	if string.nilorempty(inputStr) then
 		GameFacade.showToast(ToastEnum.RoomCritterRenameEmpty)
 
 		return
 	end
 
-	if arg_2_0._critterMO then
-		RoomCritterController.instance:sendCritterRename(arg_2_0._critterMO.id, var_2_0)
+	if self._critterMO then
+		RoomCritterController.instance:sendCritterRename(self._critterMO.id, inputStr)
 	end
 end
 
-function var_0_0._getInputLimit(arg_3_0)
+function RoomCritterRenameView:_getInputLimit()
 	return CommonConfig.instance:getConstNum(ConstEnum.RoomCritterNameLimit)
 end
 
-function var_0_0._refreshInitUI(arg_4_0)
-	local var_4_0 = arg_4_0.viewParam.critterMO
+function RoomCritterRenameView:_refreshInitUI()
+	local critterMO = self.viewParam.critterMO
 
-	arg_4_0._critterMO = var_4_0
+	self._critterMO = critterMO
 
-	if var_4_0 then
-		arg_4_0._inputsignature:SetText(var_4_0:getName())
+	if critterMO then
+		self._inputsignature:SetText(critterMO:getName())
 	end
 
-	arg_4_0._txttitlecn.text = luaLang("room_critter_inputtip_rename_title")
-	arg_4_0._txttitleen.text = "RENAME"
-	arg_4_0._txttips.text = luaLang("room_critter_rename_fontcount_desc")
+	self._txttitlecn.text = luaLang("room_critter_inputtip_rename_title")
+	self._txttitleen.text = "RENAME"
+	self._txttips.text = luaLang("room_critter_rename_fontcount_desc")
 end
 
-return var_0_0
+return RoomCritterRenameView

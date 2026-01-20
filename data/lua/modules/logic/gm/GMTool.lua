@@ -1,143 +1,145 @@
-﻿local var_0_0 = "Partial_GMTool"
-local var_0_1 = _G.debug.getupvalue
-local var_0_2 = _G.tostring
-local var_0_3 = _G.tonumber
-local var_0_4 = _G.assert
-local var_0_5 = _G.string.find
-local var_0_6 = _G.type
-local var_0_7 = table.concat
-local var_0_8 = "#00FF00"
-local var_0_9 = "#FFFFFF"
-local var_0_10 = "#FFFF00"
+﻿-- chunkname: @modules/logic/gm/GMTool.lua
 
-local function var_0_11(arg_1_0)
-	UpdateBeat:Remove(arg_1_0._update, arg_1_0)
+local kName11235 = "Partial_GMTool"
+local debug_getupvalue = _G.debug.getupvalue
+local tostring = _G.tostring
+local tonumber = _G.tonumber
+local assert = _G.assert
+local string_find = _G.string.find
+local type = _G.type
+local tc = table.concat
+local kGreen = "#00FF00"
+local kWhite = "#FFFFFF"
+local kYellow = "#FFFF00"
 
-	for iter_1_0, iter_1_1 in pairs(arg_1_0) do
-		if var_0_6(iter_1_1) == "table" and iter_1_1.onClear then
-			iter_1_1:onClear()
-			logNormal(iter_1_0 .. "<color=#00FF00> clear finished </color>")
+local function _clear(Self)
+	UpdateBeat:Remove(Self._update, Self)
+
+	for k, v in pairs(Self) do
+		if type(v) == "table" and v.onClear then
+			v:onClear()
+			logNormal(k .. "<color=#00FF00> clear finished </color>")
 		end
 	end
 end
 
-local function var_0_12(arg_2_0, arg_2_1)
-	if arg_2_0 ~= nil and var_0_6(arg_2_0) ~= "string" then
-		arg_2_0 = var_0_2(arg_2_0)
+local function _setColorDesc(desc, hexColor)
+	if desc ~= nil and type(desc) ~= "string" then
+		desc = tostring(desc)
 	end
 
-	if string.nilorempty(arg_2_0) then
-		arg_2_0 = "[None]"
+	if string.nilorempty(desc) then
+		desc = "[None]"
 	end
 
-	return gohelper.getRichColorText(arg_2_0, arg_2_1 or var_0_9)
+	return gohelper.getRichColorText(desc, hexColor or kWhite)
 end
 
-local function var_0_13(arg_3_0)
-	return arg_3_0 and var_0_12("true", var_0_8) or var_0_12("false", var_0_10)
+local function _colorBoolStr(isTrue)
+	return isTrue and _setColorDesc("true", kGreen) or _setColorDesc("false", kYellow)
 end
 
-local function var_0_14(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	var_0_4(arg_4_1)
+local function _getUpvalue(func, varName, st, ed)
+	assert(varName)
 
-	if arg_4_3 then
-		var_0_4(var_0_3(arg_4_2) ~= nil)
+	if ed then
+		assert(tonumber(st) ~= nil)
 	end
 
-	for iter_4_0 = arg_4_2 or 1, arg_4_3 or math.huge do
-		local var_4_0, var_4_1 = var_0_1(arg_4_0, iter_4_0)
+	for i = st or 1, ed or math.huge do
+		local key, val = debug_getupvalue(func, i)
 
-		if not var_4_0 then
+		if not key then
 			break
 		end
 
-		if var_4_0 == arg_4_1 then
-			return var_4_1
+		if key == varName then
+			return val
 		end
 	end
 end
 
-local function var_0_15(arg_5_0, arg_5_1)
-	if string.nilorempty(arg_5_0) or string.nilorempty(arg_5_1) then
+local function _startsWith(str, targetStr)
+	if string.nilorempty(str) or string.nilorempty(targetStr) then
 		return false
 	end
 
-	local var_5_0, var_5_1 = var_0_5(arg_5_0, arg_5_1)
+	local s, _ = string_find(str, targetStr)
 
-	return var_5_0 == 1
+	return s == 1
 end
 
-local function var_0_16(arg_6_0, arg_6_1)
-	if string.nilorempty(arg_6_0) or string.nilorempty(arg_6_1) then
+local function _endsWith(str, targetStr)
+	if string.nilorempty(str) or string.nilorempty(targetStr) then
 		return false
 	end
 
-	local var_6_0 = #arg_6_0 - #arg_6_1 + 1
+	local n = #str - #targetStr + 1
 
-	if var_6_0 < 1 then
+	if n < 1 then
 		return false
 	end
 
-	return arg_6_0:sub(var_6_0) == arg_6_1
+	return str:sub(n) == targetStr
 end
 
-local function var_0_17(arg_7_0)
-	ZProj.UGUIHelper.CopyText(arg_7_0)
+local function _saveClipboard(str)
+	ZProj.UGUIHelper.CopyText(str)
 end
 
-local function var_0_18()
-	local var_8_0 = {}
+local function _usage()
+	local sb = {}
 
-	local function var_8_1(arg_9_0, arg_9_1)
-		if not arg_9_1 then
-			table.insert(var_8_0, arg_9_0)
+	local function __add(shortCutKey, desc)
+		if not desc then
+			table.insert(sb, shortCutKey)
 		else
-			table.insert(var_8_0, var_0_12(arg_9_0, var_0_8) .. ": " .. var_0_12(arg_9_1, var_0_10))
+			table.insert(sb, _setColorDesc(shortCutKey, kGreen) .. ": " .. _setColorDesc(desc, kYellow))
 		end
 	end
 
-	var_8_1("================= (海外GM) 使用方式 =================")
-	var_8_1("LCtrl(x2)", "                             可打印玩家信息")
-	var_8_1("Ctrl + 鼠标左键 + 点击UI", "可查看UI最顶层点击到的节点路径")
-	var_8_1("Ctrl + Alt + 4", "                            通关所有关卡")
-	var_8_1("F12", "                                       退出登录")
-	var_8_1("Ctrl + Alt + 3", "                      开/关资源加载耗时Log")
-	var_8_1("Ctrl + Alt + 2", "                      查看正在打开的ViewNames")
-	var_8_1("Ctrl + Alt + 1", "                      显示/隐藏LangKey")
+	__add("================= (海外GM) 使用方式 =================")
+	__add("LCtrl(x2)", "                             可打印玩家信息")
+	__add("Ctrl + 鼠标左键 + 点击UI", "可查看UI最顶层点击到的节点路径")
+	__add("Ctrl + Alt + 4", "                            通关所有关卡")
+	__add("F12", "                                       退出登录")
+	__add("Ctrl + Alt + 3", "                      开/关资源加载耗时Log")
+	__add("Ctrl + Alt + 2", "                      查看正在打开的ViewNames")
+	__add("Ctrl + Alt + 1", "                      显示/隐藏LangKey")
 
-	return var_0_7(var_8_0, "\n")
+	return tc(sb, "\n")
 end
 
-local var_0_19 = getGlobal(var_0_0)
+local _oldM = getGlobal(kName11235)
 
-if var_0_19 then
+if _oldM then
 	logNormal("<color=#00FF00> hotfix finished </color>")
-	var_0_11(var_0_19)
+	_clear(_oldM)
 else
-	logNormal("<color=#00FF00>Hello World!</color>\n" .. var_0_18())
+	logNormal("<color=#00FF00>Hello World!</color>\n" .. _usage())
 end
 
-local var_0_20 = var_0_19 or {}
+local M = _oldM or {}
 
-setGlobal(var_0_0, var_0_20)
+setGlobal(kName11235, M)
 
-function var_0_20._update()
-	var_0_20._accountDummper:onUpdate()
-	var_0_20._input:onUpdate()
+function M._update()
+	M._accountDummper:onUpdate()
+	M._input:onUpdate()
 end
 
-var_0_20.util = {
-	setColorDesc = var_0_12,
-	getUpvalue = var_0_14,
-	startsWith = var_0_15,
-	endsWith = var_0_16,
-	colorBoolStr = var_0_13,
-	saveClipboard = var_0_17
+M.util = {
+	setColorDesc = _setColorDesc,
+	getUpvalue = _getUpvalue,
+	startsWith = _startsWith,
+	endsWith = _endsWith,
+	colorBoolStr = _colorBoolStr,
+	saveClipboard = _saveClipboard
 }
 
 require("modules/logic/gm/GMTool__Input")
 require("modules/logic/gm/GMTool__AccountDummper")
 require("modules/logic/gm/GMTool__ViewHooker")
-UpdateBeat:Add(var_0_20._update, var_0_20)
+UpdateBeat:Add(M._update, M)
 
 return {}

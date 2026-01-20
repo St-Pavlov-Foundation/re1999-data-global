@@ -1,109 +1,111 @@
-﻿module("modules.logic.scene.newbie.comp.NewbieSceneLevelComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/newbie/comp/NewbieSceneLevelComp.lua
 
-local var_0_0 = class("NewbieSceneLevelComp", BaseSceneComp)
+module("modules.logic.scene.newbie.comp.NewbieSceneLevelComp", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._scene = arg_1_0:getCurScene()
+local NewbieSceneLevelComp = class("NewbieSceneLevelComp", BaseSceneComp)
+
+function NewbieSceneLevelComp:onInit()
+	self._scene = self:getCurScene()
 end
 
-function var_0_0.onSceneStart(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0.animSuccess = false
-	arg_2_0.switchSuccess = false
+function NewbieSceneLevelComp:onSceneStart(sceneId, levelId)
+	self.animSuccess = false
+	self.switchSuccess = false
 
-	arg_2_0:_loadMainScene(arg_2_2, function()
-		arg_2_0._scene:onPrepared()
+	self:_loadMainScene(levelId, function()
+		self._scene:onPrepared()
 	end)
 end
 
-function var_0_0._loadMainScene(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	arg_4_0._callback = arg_4_2
-	arg_4_0._callbackTarget = arg_4_3
+function NewbieSceneLevelComp:_loadMainScene(levelId, callback, callbackTarget)
+	self._callback = callback
+	self._callbackTarget = callbackTarget
 
-	if arg_4_0._resPath then
-		arg_4_0:doCallback()
+	if self._resPath then
+		self:doCallback()
 
 		return
 	end
 
-	arg_4_0._levelId = arg_4_1
-	arg_4_0._resPath = ResUrl.getSceneLevelUrl(arg_4_0._levelId)
+	self._levelId = levelId
+	self._resPath = ResUrl.getSceneLevelUrl(self._levelId)
 
-	loadAbAsset(arg_4_0._resPath, false, arg_4_0._onLoadCallback, arg_4_0)
+	loadAbAsset(self._resPath, false, self._onLoadCallback, self)
 end
 
-function var_0_0._onLoadCallback(arg_5_0, arg_5_1)
-	if arg_5_1.IsLoadSuccess then
-		local var_5_0 = arg_5_0._assetItem
+function NewbieSceneLevelComp:_onLoadCallback(assetItem)
+	if assetItem.IsLoadSuccess then
+		local oldAsstet = self._assetItem
 
-		arg_5_0._assetItem = arg_5_1
+		self._assetItem = assetItem
 
-		arg_5_0._assetItem:Retain()
+		self._assetItem:Retain()
 
-		if var_5_0 then
-			var_5_0:Release()
+		if oldAsstet then
+			oldAsstet:Release()
 		end
 
-		local var_5_1 = GameSceneMgr.instance:getScene(SceneType.Main):getSceneContainerGO()
+		local sceneGO = GameSceneMgr.instance:getScene(SceneType.Main):getSceneContainerGO()
 
-		arg_5_0._instGO = gohelper.clone(arg_5_0._assetItem:GetResource(arg_5_0._resPath), var_5_1)
+		self._instGO = gohelper.clone(self._assetItem:GetResource(self._resPath), sceneGO)
 
-		WeatherController.instance:initSceneGo(arg_5_0._instGO, arg_5_0._onSwitchResLoaded, arg_5_0)
-		arg_5_0._scene.yearAnimation:initAnimationCurve(arg_5_0._onAnimationCurveLoaded, arg_5_0)
-		arg_5_0:dispatchEvent(CommonSceneLevelComp.OnLevelLoaded, arg_5_0._levelId)
+		WeatherController.instance:initSceneGo(self._instGO, self._onSwitchResLoaded, self)
+		self._scene.yearAnimation:initAnimationCurve(self._onAnimationCurveLoaded, self)
+		self:dispatchEvent(CommonSceneLevelComp.OnLevelLoaded, self._levelId)
 	end
 end
 
-function var_0_0._onAnimationCurveLoaded(arg_6_0)
-	arg_6_0.animSuccess = true
+function NewbieSceneLevelComp:_onAnimationCurveLoaded()
+	self.animSuccess = true
 
-	arg_6_0:_check()
+	self:_check()
 end
 
-function var_0_0._onSwitchResLoaded(arg_7_0)
-	arg_7_0.switchSuccess = true
+function NewbieSceneLevelComp:_onSwitchResLoaded()
+	self.switchSuccess = true
 
-	arg_7_0:_check()
+	self:_check()
 end
 
-function var_0_0._check(arg_8_0)
-	if arg_8_0.animSuccess and arg_8_0.switchSuccess then
-		arg_8_0:doCallback()
+function NewbieSceneLevelComp:_check()
+	if self.animSuccess and self.switchSuccess then
+		self:doCallback()
 	end
 end
 
-function var_0_0.doCallback(arg_9_0)
-	if arg_9_0._callback then
-		arg_9_0._callback(arg_9_0._callbackTarget)
+function NewbieSceneLevelComp:doCallback()
+	if self._callback then
+		self._callback(self._callbackTarget)
 
-		arg_9_0._callback = nil
-		arg_9_0._callbackTarget = nil
+		self._callback = nil
+		self._callbackTarget = nil
 	end
 end
 
-function var_0_0.onSceneClose(arg_10_0)
-	if arg_10_0._assetItem then
-		if arg_10_0._instGO then
-			gohelper.destroy(arg_10_0._instGO)
+function NewbieSceneLevelComp:onSceneClose()
+	if self._assetItem then
+		if self._instGO then
+			gohelper.destroy(self._instGO)
 		end
 
-		arg_10_0._assetItem:Release()
+		self._assetItem:Release()
 
-		arg_10_0._assetItem = nil
+		self._assetItem = nil
 	end
 
-	arg_10_0._resPath = nil
-	arg_10_0.animSuccess = false
-	arg_10_0.switchSuccess = false
+	self._resPath = nil
+	self.animSuccess = false
+	self.switchSuccess = false
 
 	WeatherController.instance:onSceneClose()
 end
 
-function var_0_0._onLevelLoaded(arg_11_0, arg_11_1)
+function NewbieSceneLevelComp:_onLevelLoaded(levelId)
 	return
 end
 
-function var_0_0.getSceneGo(arg_12_0)
-	return arg_12_0._instGO
+function NewbieSceneLevelComp:getSceneGo()
+	return self._instGO
 end
 
-return var_0_0
+return NewbieSceneLevelComp

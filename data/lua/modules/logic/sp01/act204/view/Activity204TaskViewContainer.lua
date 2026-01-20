@@ -1,62 +1,64 @@
-﻿module("modules.logic.sp01.act204.view.Activity204TaskViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/act204/view/Activity204TaskViewContainer.lua
 
-local var_0_0 = class("Activity204TaskViewContainer", BaseViewContainer)
+module("modules.logic.sp01.act204.view.Activity204TaskViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Activity204TaskViewContainer = class("Activity204TaskViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Activity204TaskView.New())
-	table.insert(var_1_0, Activity204MileStoneView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
+function Activity204TaskViewContainer:buildViews()
+	local views = {}
 
-	local var_1_1 = ListScrollParam.New()
+	table.insert(views, Activity204TaskView.New())
+	table.insert(views, Activity204MileStoneView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_topleft"))
 
-	var_1_1.scrollGOPath = "root/taskList/ScrollView"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes.itemRes
-	var_1_1.cellClass = Activity204TaskItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirH
-	var_1_1.lineCount = 1
-	var_1_1.cellWidth = 400
-	var_1_1.cellHeight = 600
-	var_1_1.cellSpaceH = 20
-	var_1_1.cellSpaceV = 0
-	var_1_1.startSpace = 15
-	var_1_1.endSpace = 50
+	local scrollParam = ListScrollParam.New()
 
-	table.insert(var_1_0, LuaListScrollView.New(Activity204TaskListModel.instance, var_1_1))
+	scrollParam.scrollGOPath = "root/taskList/ScrollView"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes.itemRes
+	scrollParam.cellClass = Activity204TaskItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirH
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 400
+	scrollParam.cellHeight = 600
+	scrollParam.cellSpaceH = 20
+	scrollParam.cellSpaceV = 0
+	scrollParam.startSpace = 15
+	scrollParam.endSpace = 50
 
-	local var_1_2 = ListScrollParam.New()
+	table.insert(views, LuaListScrollView.New(Activity204TaskListModel.instance, scrollParam))
 
-	var_1_2.scrollGOPath = "root/bonusNode/#scroll_reward"
-	var_1_2.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_2.prefabUrl = "root/bonusNode/#scroll_reward/Viewport/#go_content/rewarditem"
-	var_1_2.cellClass = Activity204MileStoneItem
-	var_1_2.scrollDir = ScrollEnum.ScrollDirH
-	var_1_2.lineCount = 1
-	var_1_2.cellWidth = 487
-	var_1_2.cellHeight = 285
-	var_1_2.cellSpaceH = -57
-	var_1_2.startSpace = 0
-	arg_1_0.mileStoneScrollView = LuaMixScrollView.New(Activity204MileStoneListModel.instance, var_1_2)
+	local scrollParam2 = ListScrollParam.New()
 
-	table.insert(var_1_0, arg_1_0.mileStoneScrollView)
+	scrollParam2.scrollGOPath = "root/bonusNode/#scroll_reward"
+	scrollParam2.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam2.prefabUrl = "root/bonusNode/#scroll_reward/Viewport/#go_content/rewarditem"
+	scrollParam2.cellClass = Activity204MileStoneItem
+	scrollParam2.scrollDir = ScrollEnum.ScrollDirH
+	scrollParam2.lineCount = 1
+	scrollParam2.cellWidth = 487
+	scrollParam2.cellHeight = 285
+	scrollParam2.cellSpaceH = -57
+	scrollParam2.startSpace = 0
+	self.mileStoneScrollView = LuaMixScrollView.New(Activity204MileStoneListModel.instance, scrollParam2)
 
-	return var_1_0
+	table.insert(views, self.mileStoneScrollView)
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function Activity204TaskViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-return var_0_0
+return Activity204TaskViewContainer

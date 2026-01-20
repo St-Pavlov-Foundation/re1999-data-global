@@ -1,233 +1,240 @@
-﻿module("modules.logic.room.model.map.RoomCharacterPlaceListModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/map/RoomCharacterPlaceListModel.lua
 
-local var_0_0 = class("RoomCharacterPlaceListModel", ListScrollModel)
+module("modules.logic.room.model.map.RoomCharacterPlaceListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:_clearData()
+local RoomCharacterPlaceListModel = class("RoomCharacterPlaceListModel", ListScrollModel)
+
+function RoomCharacterPlaceListModel:onInit()
+	self:_clearData()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:_clearData()
+function RoomCharacterPlaceListModel:reInit()
+	self:_clearData()
 end
 
-function var_0_0.clear(arg_3_0)
-	var_0_0.super.clear(arg_3_0)
-	arg_3_0:_clearData()
+function RoomCharacterPlaceListModel:clear()
+	RoomCharacterPlaceListModel.super.clear(self)
+	self:_clearData()
 end
 
-function var_0_0._clearData(arg_4_0)
-	arg_4_0:clearMapData()
-	arg_4_0:clearFilterData()
+function RoomCharacterPlaceListModel:_clearData()
+	self:clearMapData()
+	self:clearFilterData()
 end
 
-function var_0_0.clearMapData(arg_5_0)
-	var_0_0.super.clear(arg_5_0)
+function RoomCharacterPlaceListModel:clearMapData()
+	RoomCharacterPlaceListModel.super.clear(self)
 
-	arg_5_0._selectHeroId = nil
+	self._selectHeroId = nil
 end
 
-function var_0_0.clearFilterData(arg_6_0)
-	arg_6_0._filterCareerDict = {}
-	arg_6_0._order = RoomCharacterEnum.CharacterOrderType.RareDown
+function RoomCharacterPlaceListModel:clearFilterData()
+	self._filterCareerDict = {}
+	self._order = RoomCharacterEnum.CharacterOrderType.RareDown
 
-	arg_6_0:setIsFilterOnBirthday()
+	self:setIsFilterOnBirthday()
 end
 
-function var_0_0.setCharacterPlaceList(arg_7_0)
-	local var_7_0 = {}
-	local var_7_1 = HeroModel.instance:getList()
+function RoomCharacterPlaceListModel:setCharacterPlaceList()
+	local moList = {}
+	local heroMOList = HeroModel.instance:getList()
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_1) do
-		local var_7_2 = iter_7_1.config.career
+	for i, heroMO in ipairs(heroMOList) do
+		local career = heroMO.config.career
+		local roomCharacterConfig = RoomConfig.instance:getRoomCharacterConfig(heroMO.skin)
 
-		if RoomConfig.instance:getRoomCharacterConfig(iter_7_1.skin) then
-			local var_7_3 = arg_7_0:isFilterCareer(var_7_2)
+		if roomCharacterConfig then
+			local isFilterCareer = self:isFilterCareer(career)
+			local isFilterBirthday = self:isFilterBirthday(heroMO.heroId)
 
-			if arg_7_0:isFilterBirthday(iter_7_1.heroId) and var_7_3 then
-				local var_7_4 = RoomCharacterModel.instance:getCharacterMOById(iter_7_1.heroId)
-				local var_7_5 = var_7_4 and var_7_4:isPlaceSourceState() and (var_7_4.characterState == RoomCharacterEnum.CharacterState.Map or var_7_4.characterState == RoomCharacterEnum.CharacterState.Revert)
-				local var_7_6 = RoomCharacterPlaceMO.New()
+			if isFilterBirthday and isFilterCareer then
+				local roomCharacterMO = RoomCharacterModel.instance:getCharacterMOById(heroMO.heroId)
+				local use = roomCharacterMO and roomCharacterMO:isPlaceSourceState() and (roomCharacterMO.characterState == RoomCharacterEnum.CharacterState.Map or roomCharacterMO.characterState == RoomCharacterEnum.CharacterState.Revert)
+				local CharacterPlaceMO = RoomCharacterPlaceMO.New()
 
-				var_7_6:init({
-					heroId = iter_7_1.heroId,
-					use = var_7_5
+				CharacterPlaceMO:init({
+					heroId = heroMO.heroId,
+					use = use
 				})
-				table.insert(var_7_0, var_7_6)
+				table.insert(moList, CharacterPlaceMO)
 			end
 		end
 	end
 
-	table.sort(var_7_0, arg_7_0._sortFunction)
-	arg_7_0:setList(var_7_0)
-	arg_7_0:_refreshSelect()
+	table.sort(moList, self._sortFunction)
+	self:setList(moList)
+	self:_refreshSelect()
 end
 
-function var_0_0._sortFunction(arg_8_0, arg_8_1)
-	if arg_8_0.use and not arg_8_1.use then
+function RoomCharacterPlaceListModel._sortFunction(x, y)
+	if x.use and not y.use then
 		return true
-	elseif not arg_8_0.use and arg_8_1.use then
+	elseif not x.use and y.use then
 		return false
 	end
 
-	local var_8_0 = var_0_0.instance._selectHeroId
+	local selectHeroId = RoomCharacterPlaceListModel.instance._selectHeroId
 
-	if var_8_0 and not arg_8_0.use and not arg_8_1.use then
-		if arg_8_0.heroId == var_8_0 and arg_8_1.heroId ~= var_8_0 then
+	if selectHeroId and not x.use and not y.use then
+		if x.heroId == selectHeroId and y.heroId ~= selectHeroId then
 			return true
-		elseif arg_8_0.heroId ~= var_8_0 and arg_8_1.heroId == var_8_0 then
+		elseif x.heroId ~= selectHeroId and y.heroId == selectHeroId then
 			return false
 		end
 	end
 
-	local var_8_1 = var_0_0.instance:getOrder()
+	local order = RoomCharacterPlaceListModel.instance:getOrder()
 
-	if var_8_1 == RoomCharacterEnum.CharacterOrderType.RareUp and arg_8_0.heroConfig.rare ~= arg_8_1.heroConfig.rare then
-		return arg_8_0.heroConfig.rare < arg_8_1.heroConfig.rare
-	elseif var_8_1 == RoomCharacterEnum.CharacterOrderType.RareDown and arg_8_0.heroConfig.rare ~= arg_8_1.heroConfig.rare then
-		return arg_8_0.heroConfig.rare > arg_8_1.heroConfig.rare
+	if order == RoomCharacterEnum.CharacterOrderType.RareUp and x.heroConfig.rare ~= y.heroConfig.rare then
+		return x.heroConfig.rare < y.heroConfig.rare
+	elseif order == RoomCharacterEnum.CharacterOrderType.RareDown and x.heroConfig.rare ~= y.heroConfig.rare then
+		return x.heroConfig.rare > y.heroConfig.rare
 	end
 
-	local var_8_2 = HeroConfig.instance:getFaithPercent(arg_8_0.heroMO.faith)[1]
-	local var_8_3 = HeroConfig.instance:getFaithPercent(arg_8_1.heroMO.faith)[1]
+	local xFaith = HeroConfig.instance:getFaithPercent(x.heroMO.faith)[1]
+	local yFaith = HeroConfig.instance:getFaithPercent(y.heroMO.faith)[1]
 
-	if var_8_1 == RoomCharacterEnum.CharacterOrderType.FaithUp then
-		if var_8_2 ~= var_8_3 then
-			return var_8_2 < var_8_3
+	if order == RoomCharacterEnum.CharacterOrderType.FaithUp then
+		if xFaith ~= yFaith then
+			return xFaith < yFaith
 		end
 
-		if arg_8_0.heroConfig.rare ~= arg_8_1.heroConfig.rare then
-			return arg_8_0.heroConfig.rare > arg_8_1.heroConfig.rare
+		if x.heroConfig.rare ~= y.heroConfig.rare then
+			return x.heroConfig.rare > y.heroConfig.rare
 		end
-	elseif var_8_1 == RoomCharacterEnum.CharacterOrderType.FaithDown then
-		if var_8_2 ~= var_8_3 then
-			return var_8_3 < var_8_2
+	elseif order == RoomCharacterEnum.CharacterOrderType.FaithDown then
+		if xFaith ~= yFaith then
+			return yFaith < xFaith
 		end
 
-		if arg_8_0.heroConfig.rare ~= arg_8_1.heroConfig.rare then
-			return arg_8_0.heroConfig.rare > arg_8_1.heroConfig.rare
-		end
-	end
-
-	local var_8_4 = RoomCharacterModel.instance:isOnBirthday(arg_8_0.heroId)
-
-	if var_8_4 ~= RoomCharacterModel.instance:isOnBirthday(arg_8_1.heroId) then
-		return var_8_4
-	end
-
-	return arg_8_0.id < arg_8_1.id
-end
-
-function var_0_0.setOrder(arg_9_0, arg_9_1)
-	arg_9_0._order = arg_9_1
-end
-
-function var_0_0.getOrder(arg_10_0)
-	return arg_10_0._order
-end
-
-function var_0_0.setFilterCareer(arg_11_0, arg_11_1)
-	arg_11_0._filterCareerDict = {}
-
-	if arg_11_1 and #arg_11_1 > 0 then
-		for iter_11_0, iter_11_1 in ipairs(arg_11_1) do
-			arg_11_0._filterCareerDict[iter_11_1] = true
+		if x.heroConfig.rare ~= y.heroConfig.rare then
+			return x.heroConfig.rare > y.heroConfig.rare
 		end
 	end
 
-	arg_11_0:setIsFilterOnBirthday()
+	local xIsOnBirthday = RoomCharacterModel.instance:isOnBirthday(x.heroId)
+	local yIsOnBirthday = RoomCharacterModel.instance:isOnBirthday(y.heroId)
+
+	if xIsOnBirthday ~= yIsOnBirthday then
+		return xIsOnBirthday
+	end
+
+	return x.id < y.id
 end
 
-function var_0_0.getFilterCareer(arg_12_0)
-	for iter_12_0, iter_12_1 in pairs(arg_12_0._filterCareerDict) do
-		if iter_12_1 == true then
-			return iter_12_0
+function RoomCharacterPlaceListModel:setOrder(order)
+	self._order = order
+end
+
+function RoomCharacterPlaceListModel:getOrder()
+	return self._order
+end
+
+function RoomCharacterPlaceListModel:setFilterCareer(careerList)
+	self._filterCareerDict = {}
+
+	if careerList and #careerList > 0 then
+		for i, career in ipairs(careerList) do
+			self._filterCareerDict[career] = true
+		end
+	end
+
+	self:setIsFilterOnBirthday()
+end
+
+function RoomCharacterPlaceListModel:getFilterCareer()
+	for k, v in pairs(self._filterCareerDict) do
+		if v == true then
+			return k
 		end
 	end
 end
 
-function var_0_0.isFilterCareer(arg_13_0, arg_13_1)
-	return arg_13_0:isFilterCareerEmpty() or arg_13_0._filterCareerDict[arg_13_1]
+function RoomCharacterPlaceListModel:isFilterCareer(career)
+	return self:isFilterCareerEmpty() or self._filterCareerDict[career]
 end
 
-function var_0_0.isFilterCareerEmpty(arg_14_0)
-	return not LuaUtil.tableNotEmpty(arg_14_0._filterCareerDict)
+function RoomCharacterPlaceListModel:isFilterCareerEmpty()
+	return not LuaUtil.tableNotEmpty(self._filterCareerDict)
 end
 
-function var_0_0.getIsFilterOnBirthday(arg_15_0)
-	return arg_15_0._isFilterOnBirthday
+function RoomCharacterPlaceListModel:getIsFilterOnBirthday()
+	return self._isFilterOnBirthday
 end
 
-function var_0_0.setIsFilterOnBirthday(arg_16_0, arg_16_1)
-	arg_16_0._isFilterOnBirthday = arg_16_1
+function RoomCharacterPlaceListModel:setIsFilterOnBirthday(isFilter)
+	self._isFilterOnBirthday = isFilter
 end
 
-function var_0_0.isFilterBirthday(arg_17_0, arg_17_1)
-	local var_17_0 = true
-	local var_17_1 = arg_17_0:getIsFilterOnBirthday()
+function RoomCharacterPlaceListModel:isFilterBirthday(heroId)
+	local result = true
+	local isFilterOnBirthday = self:getIsFilterOnBirthday()
 
-	if arg_17_1 and var_17_1 then
-		var_17_0 = RoomCharacterModel.instance:isOnBirthday(arg_17_1)
+	if heroId and isFilterOnBirthday then
+		result = RoomCharacterModel.instance:isOnBirthday(heroId)
 	end
 
-	return var_17_0
+	return result
 end
 
-function var_0_0.hasHeroOnBirthday(arg_18_0)
-	local var_18_0 = false
-	local var_18_1 = arg_18_0:getList()
+function RoomCharacterPlaceListModel:hasHeroOnBirthday()
+	local result = false
+	local moList = self:getList()
 
-	for iter_18_0, iter_18_1 in ipairs(var_18_1) do
-		if RoomCharacterModel.instance:isOnBirthday(iter_18_1.id) then
-			var_18_0 = true
+	for _, mo in ipairs(moList) do
+		local isOnBirthday = RoomCharacterModel.instance:isOnBirthday(mo.id)
+
+		if isOnBirthday then
+			result = true
 
 			break
 		end
 	end
 
-	return var_18_0
+	return result
 end
 
-function var_0_0.clearSelect(arg_19_0)
-	for iter_19_0, iter_19_1 in ipairs(arg_19_0._scrollViews) do
-		iter_19_1:setSelect(nil)
+function RoomCharacterPlaceListModel:clearSelect()
+	for i, view in ipairs(self._scrollViews) do
+		view:setSelect(nil)
 	end
 
-	arg_19_0._selectHeroId = nil
+	self._selectHeroId = nil
 end
 
-function var_0_0._refreshSelect(arg_20_0)
-	local var_20_0
-	local var_20_1 = arg_20_0:getList()
+function RoomCharacterPlaceListModel:_refreshSelect()
+	local selectMO
+	local moList = self:getList()
 
-	for iter_20_0, iter_20_1 in ipairs(var_20_1) do
-		if iter_20_1.id == arg_20_0._selectHeroId then
-			var_20_0 = iter_20_1
+	for i, mo in ipairs(moList) do
+		if mo.id == self._selectHeroId then
+			selectMO = mo
 		end
 	end
 
-	for iter_20_2, iter_20_3 in ipairs(arg_20_0._scrollViews) do
-		iter_20_3:setSelect(var_20_0)
+	for i, view in ipairs(self._scrollViews) do
+		view:setSelect(selectMO)
 	end
 end
 
-function var_0_0.setSelect(arg_21_0, arg_21_1)
-	arg_21_0._selectHeroId = arg_21_1
+function RoomCharacterPlaceListModel:setSelect(characterUid)
+	self._selectHeroId = characterUid
 
-	arg_21_0:_refreshSelect()
+	self:_refreshSelect()
 end
 
-function var_0_0.initCharacterPlace(arg_22_0)
-	arg_22_0:setCharacterPlaceList()
+function RoomCharacterPlaceListModel:initCharacterPlace()
+	self:setCharacterPlaceList()
 end
 
-function var_0_0.initFilter(arg_23_0)
-	arg_23_0:setFilterCareer()
+function RoomCharacterPlaceListModel:initFilter()
+	self:setFilterCareer()
 end
 
-function var_0_0.initOrder(arg_24_0)
-	arg_24_0._order = RoomCharacterEnum.CharacterOrderType.RareDown
+function RoomCharacterPlaceListModel:initOrder()
+	self._order = RoomCharacterEnum.CharacterOrderType.RareDown
 end
 
-var_0_0.instance = var_0_0.New()
+RoomCharacterPlaceListModel.instance = RoomCharacterPlaceListModel.New()
 
-return var_0_0
+return RoomCharacterPlaceListModel

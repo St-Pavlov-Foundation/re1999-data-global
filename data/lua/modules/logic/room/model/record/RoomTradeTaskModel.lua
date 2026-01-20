@@ -1,74 +1,78 @@
-﻿module("modules.logic.room.model.record.RoomTradeTaskModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/record/RoomTradeTaskModel.lua
 
-local var_0_0 = class("RoomTradeTaskModel", BaseModel)
+module("modules.logic.room.model.record.RoomTradeTaskModel", package.seeall)
 
-function var_0_0.onGetTradeTaskInfo(arg_1_0, arg_1_1)
-	arg_1_0:onRefeshTaskMo(arg_1_1.infos)
+local RoomTradeTaskModel = class("RoomTradeTaskModel", BaseModel)
 
-	arg_1_0.hasGetSupportBonus = arg_1_1.hasGetSupportBonus or {}
-	arg_1_0.canGetExtraBonus = arg_1_1.canGetExtraBonus
+function RoomTradeTaskModel:onGetTradeTaskInfo(msg)
+	self:onRefeshTaskMo(msg.infos)
+
+	self.hasGetSupportBonus = msg.hasGetSupportBonus or {}
+	self.canGetExtraBonus = msg.canGetExtraBonus
 
 	RoomTradeController.instance:dispatchEvent(RoomTradeEvent.OnGetTradeTaskInfo)
 end
 
-function var_0_0.onRefeshTaskMo(arg_2_0, arg_2_1)
-	if not arg_2_0._taskMos then
-		arg_2_0._taskMos = {}
+function RoomTradeTaskModel:onRefeshTaskMo(infos)
+	if not self._taskMos then
+		self._taskMos = {}
 	end
 
-	for iter_2_0 = 1, #arg_2_1 do
-		local var_2_0 = arg_2_1[iter_2_0]
-		local var_2_1 = var_2_0.id
-		local var_2_2 = RoomTradeConfig.instance:getTaskCoById(var_2_1)
+	for i = 1, #infos do
+		local info = infos[i]
+		local id = info.id
+		local co = RoomTradeConfig.instance:getTaskCoById(id)
 
-		if var_2_2 then
-			local var_2_3 = var_2_2.tradeLevel
-			local var_2_4 = arg_2_0._taskMos[var_2_3]
+		if co then
+			local level = co.tradeLevel
+			local mos = self._taskMos[level]
 
-			if not var_2_4 then
-				var_2_4 = {}
-				arg_2_0._taskMos[var_2_3] = var_2_4
+			if not mos then
+				mos = {}
+				self._taskMos[level] = mos
 			end
 
-			if not var_2_4[var_2_1] then
-				var_2_4[var_2_1] = RoomTradeTaskMo.New()
+			if not mos[id] then
+				mos[id] = RoomTradeTaskMo.New()
 			end
 
-			var_2_4[var_2_1]:initMo(var_2_0, var_2_2)
+			mos[id]:initMo(info, co)
 		end
 	end
 end
 
-function var_0_0.onReadNewTradeTask(arg_3_0, arg_3_1)
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
-		arg_3_0:getTaskMo(iter_3_1):setNew(false)
+function RoomTradeTaskModel:onReadNewTradeTask(ids)
+	for i, id in ipairs(ids) do
+		local mo = self:getTaskMo(id)
+
+		mo:setNew(false)
 	end
 
 	RoomTradeController.instance:dispatchEvent(RoomTradeEvent.OnReadNewTradeTaskReply)
 end
 
-function var_0_0.getTaskMaxLevel(arg_4_0)
+function RoomTradeTaskModel:getTaskMaxLevel()
 	return RoomTradeConfig.instance:getTaskMaxLevel()
 end
 
-function var_0_0.getLevelTaskMo(arg_5_0, arg_5_1)
-	local var_5_0 = {}
+function RoomTradeTaskModel:getLevelTaskMo(level)
+	local moList = {}
 
-	if arg_5_0._taskMos then
-		if arg_5_1 then
-			if arg_5_0._taskMos[arg_5_1] then
-				for iter_5_0, iter_5_1 in pairs(arg_5_0._taskMos[arg_5_1]) do
-					if iter_5_1:isNormalTask() then
-						table.insert(var_5_0, iter_5_1)
+	if self._taskMos then
+		if level then
+			if self._taskMos[level] then
+				for _, mo in pairs(self._taskMos[level]) do
+					if mo:isNormalTask() then
+						table.insert(moList, mo)
 					end
 				end
 			end
 		else
-			for iter_5_2, iter_5_3 in pairs(arg_5_0._taskMos) do
-				if iter_5_3 then
-					for iter_5_4, iter_5_5 in pairs(iter_5_3) do
-						if iter_5_5:isNormalTask() then
-							table.insert(var_5_0, iter_5_5)
+			for _, mos in pairs(self._taskMos) do
+				if mos then
+					for _, mo in pairs(mos) do
+						if mo:isNormalTask() then
+							table.insert(moList, mo)
 						end
 					end
 				end
@@ -76,308 +80,321 @@ function var_0_0.getLevelTaskMo(arg_5_0, arg_5_1)
 		end
 	end
 
-	return var_5_0
+	return moList
 end
 
-function var_0_0.getTaskMo(arg_6_0, arg_6_1)
-	for iter_6_0, iter_6_1 in pairs(arg_6_0._taskMos) do
-		for iter_6_2, iter_6_3 in pairs(iter_6_1) do
-			if iter_6_3.id == arg_6_1 then
-				return iter_6_3
+function RoomTradeTaskModel:getTaskMo(id)
+	for _, mos in pairs(self._taskMos) do
+		for _, mo in pairs(mos) do
+			if mo.id == id then
+				return mo
 			end
 		end
 	end
 end
 
-function var_0_0.getFinishLevelTaskCount(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0:getLevelTaskMo(arg_7_1)
+function RoomTradeTaskModel:getFinishLevelTaskCount(level)
+	local moList = self:getLevelTaskMo(level)
 
-	if not var_7_0 then
+	if not moList then
 		return 0
 	end
 
-	local var_7_1 = 0
+	local count = 0
 
-	for iter_7_0, iter_7_1 in pairs(var_7_0) do
-		if iter_7_1.hasFinish then
-			var_7_1 = var_7_1 + 1
+	for _, mo in pairs(moList) do
+		if mo.hasFinish then
+			count = count + 1
 		end
 	end
 
-	return var_7_1
+	return count
 end
 
-function var_0_0.getTaskReward(arg_8_0)
-	return arg_8_0.hasGetSupportBonus
+function RoomTradeTaskModel:getTaskReward()
+	return self.hasGetSupportBonus
 end
 
-function var_0_0.getOpenSupportLevel(arg_9_0)
-	return (ManufactureConfig.instance:getUnlockSystemTradeLevel(RoomTradeEnum.LevelUnlock.LevelBonus))
+function RoomTradeTaskModel:getOpenSupportLevel()
+	local level = ManufactureConfig.instance:getUnlockSystemTradeLevel(RoomTradeEnum.LevelUnlock.LevelBonus)
+
+	return level
 end
 
-function var_0_0.getOpenOrderLevel(arg_10_0)
-	return (ManufactureConfig.instance:getUnlockSystemTradeLevel(RoomTradeEnum.LevelUnlock.Order))
+function RoomTradeTaskModel:getOpenOrderLevel()
+	local level = ManufactureConfig.instance:getUnlockSystemTradeLevel(RoomTradeEnum.LevelUnlock.Order)
+
+	return level
 end
 
-function var_0_0.getOpenCritterIncubateLevel(arg_11_0)
-	return (ManufactureConfig.instance:getUnlockSystemTradeLevel(RoomTradeEnum.LevelUnlock.CritterIncubate))
+function RoomTradeTaskModel:getOpenCritterIncubateLevel()
+	local level = ManufactureConfig.instance:getUnlockSystemTradeLevel(RoomTradeEnum.LevelUnlock.CritterIncubate)
+
+	return level
 end
 
-function var_0_0.getOpenBuildingLevelUpLevel(arg_12_0)
-	return (ManufactureConfig.instance:getUnlockSystemTradeLevel(RoomTradeEnum.LevelUnlock.BuildingLevelUp))
+function RoomTradeTaskModel:getOpenBuildingLevelUpLevel()
+	local level = ManufactureConfig.instance:getUnlockSystemTradeLevel(RoomTradeEnum.LevelUnlock.BuildingLevelUp)
+
+	return level
 end
 
-function var_0_0.onGetLevelBonus(arg_13_0, arg_13_1)
-	if not LuaUtil.tableContains(arg_13_0.hasGetSupportBonus, arg_13_1) then
-		table.insert(arg_13_0.hasGetSupportBonus, arg_13_1)
+function RoomTradeTaskModel:onGetLevelBonus(id)
+	if not LuaUtil.tableContains(self.hasGetSupportBonus, id) then
+		table.insert(self.hasGetSupportBonus, id)
 	end
 end
 
-function var_0_0.isCanLevelBonus(arg_14_0, arg_14_1)
-	local var_14_0 = LuaUtil.tableContains(arg_14_0.hasGetSupportBonus, arg_14_1)
+function RoomTradeTaskModel:isCanLevelBonus(id)
+	local isGot = LuaUtil.tableContains(self.hasGetSupportBonus, id)
+	local finishCount = self:getTaskFinishPointCount()
+	local co = RoomTradeConfig.instance:getSupportBonusById(id)
+	local needTask = co.needTask
 
-	return arg_14_0:getTaskFinishPointCount() >= RoomTradeConfig.instance:getSupportBonusById(arg_14_1).needTask, var_14_0
+	return needTask <= finishCount, isGot
 end
 
-function var_0_0.getAllTaskRewards(arg_15_0)
-	local var_15_0 = RoomTradeConfig.instance:getSupportBonusConfig()
-	local var_15_1 = {}
+function RoomTradeTaskModel:getAllTaskRewards()
+	local coList = RoomTradeConfig.instance:getSupportBonusConfig()
+	local reward = {}
 
-	if var_15_0 then
-		for iter_15_0, iter_15_1 in ipairs(var_15_0) do
-			local var_15_2 = iter_15_1.bonus
-			local var_15_3 = GameUtil.splitString2(var_15_2, true, "|", "#")
+	if coList then
+		for _, co in ipairs(coList) do
+			local bonus = co.bonus
+			local rewardList = GameUtil.splitString2(bonus, true, "|", "#")
 
-			var_15_1[iter_15_1.id] = var_15_3
+			reward[co.id] = rewardList
 		end
 	end
 
-	return var_15_1
+	return reward
 end
 
-function var_0_0.getTaskPointMaxCount(arg_16_0)
-	local var_16_0 = RoomTradeConfig.instance:getSupportBonusConfig()
-	local var_16_1 = 0
-	local var_16_2 = 0
+function RoomTradeTaskModel:getTaskPointMaxCount()
+	local coList = RoomTradeConfig.instance:getSupportBonusConfig()
+	local count = 0
+	local page = 0
 
-	if var_16_0 then
-		for iter_16_0, iter_16_1 in ipairs(var_16_0) do
-			var_16_1 = math.max(var_16_1, iter_16_1.needTask)
-			var_16_2 = var_16_2 + 1
+	if coList then
+		for _, co in ipairs(coList) do
+			count = math.max(count, co.needTask)
+			page = page + 1
 		end
 	end
 
-	return var_16_1, var_16_2
+	return count, page
 end
 
-function var_0_0.getTaskFinishPointCount(arg_17_0, arg_17_1)
-	return #RoomTradeTaskListModel.instance:getFinishOrNotTaskIds(arg_17_1, true)
+function RoomTradeTaskModel:getTaskFinishPointCount(level)
+	local ids = RoomTradeTaskListModel.instance:getFinishOrNotTaskIds(level, true)
+
+	return #ids
 end
 
-function var_0_0.isCanLevelUp(arg_18_0)
-	local var_18_0 = RoomTradeConfig.instance:getMaxLevel()
-	local var_18_1 = ManufactureModel.instance:getTradeLevel()
+function RoomTradeTaskModel:isCanLevelUp()
+	local maxLevel = RoomTradeConfig.instance:getMaxLevel()
+	local level = ManufactureModel.instance:getTradeLevel()
 
-	if var_18_0 <= var_18_1 then
-		return false, var_18_1, true
+	if maxLevel <= level then
+		return false, level, true
 	end
 
-	local var_18_2, var_18_3 = arg_18_0:getLevelTaskCount(var_18_1)
+	local curFinishTaskCount, needTaskCount = self:getLevelTaskCount(level)
 
-	return var_18_3 <= var_18_2, var_18_1, false
+	return needTaskCount <= curFinishTaskCount, level, false
 end
 
-function var_0_0.getLevelTaskCount(arg_19_0, arg_19_1)
-	local var_19_0 = arg_19_0:getFinishLevelTaskCount(arg_19_1)
-	local var_19_1 = RoomTradeConfig.instance:getLevelCo(arg_19_1 + 1)
-	local var_19_2 = var_19_1 and var_19_1.levelUpNeedTask or 0
+function RoomTradeTaskModel:getLevelTaskCount(level)
+	local curFinishTaskCount = self:getFinishLevelTaskCount(level)
+	local bounsCo = RoomTradeConfig.instance:getLevelCo(level + 1)
+	local needTaskCount = bounsCo and bounsCo.levelUpNeedTask or 0
 
-	return var_19_0, var_19_2
+	return curFinishTaskCount, needTaskCount
 end
 
-function var_0_0.getLevelUnlock(arg_20_0, arg_20_1)
-	local var_20_0 = {}
+function RoomTradeTaskModel:getLevelUnlock(level)
+	local unlockList = {}
 
-	if arg_20_1 < 2 then
-		return var_20_0
+	if level < 2 then
+		return unlockList
 	end
 
-	local var_20_1 = ManufactureConfig.instance:getAllLevelUnlockInfo(arg_20_1)
+	local levelUnlockInfo = ManufactureConfig.instance:getAllLevelUnlockInfo(level)
 
-	if var_20_1 then
-		local var_20_2 = var_20_1[RoomTradeEnum.LevelUnlock.NewBuilding]
+	if levelUnlockInfo then
+		local newBuilding = levelUnlockInfo[RoomTradeEnum.LevelUnlock.NewBuilding]
 
-		if var_20_2 then
-			for iter_20_0, iter_20_1 in ipairs(var_20_2) do
-				local var_20_3 = {
+		if newBuilding then
+			for i, buildingId in ipairs(newBuilding) do
+				local mo = {
 					type = RoomTradeEnum.LevelUnlock.NewBuilding,
-					buildingId = iter_20_1
+					buildingId = buildingId
 				}
 
-				table.insert(var_20_0, var_20_3)
+				table.insert(unlockList, mo)
 			end
 		end
 
-		local var_20_4 = var_20_1[RoomTradeEnum.LevelUnlock.BuildingMaxLevel]
+		local buildingMaxLevel = levelUnlockInfo[RoomTradeEnum.LevelUnlock.BuildingMaxLevel]
 
-		if var_20_4 then
-			for iter_20_2, iter_20_3 in ipairs(var_20_4) do
-				local var_20_5 = iter_20_3.groupId
-				local var_20_6 = ManufactureConfig.instance:getBuildingIdsByGroup(var_20_5)
+		if buildingMaxLevel then
+			for _, info in ipairs(buildingMaxLevel) do
+				local groupId = info.groupId
+				local buildingIds = ManufactureConfig.instance:getBuildingIdsByGroup(groupId)
 
-				for iter_20_4, iter_20_5 in ipairs(var_20_6) do
-					local var_20_7 = {
+				for _, buildingId in ipairs(buildingIds) do
+					local mo = {
 						type = RoomTradeEnum.LevelUnlock.BuildingMaxLevel,
-						buildingId = iter_20_5,
+						buildingId = buildingId,
 						num = {
-							last = iter_20_3.Level - 1,
-							cur = iter_20_3.Level
+							last = info.Level - 1,
+							cur = info.Level
 						}
 					}
 
-					table.insert(var_20_0, var_20_7)
+					table.insert(unlockList, mo)
 				end
 			end
 		end
 	end
 
-	local var_20_8 = RoomTradeConfig.instance:getLevelCo(arg_20_1)
-	local var_20_9 = RoomTradeConfig.instance:getLevelCo(arg_20_1 - 1)
+	local tradeLevelCo = RoomTradeConfig.instance:getLevelCo(level)
+	local preTradeLevelCo = RoomTradeConfig.instance:getLevelCo(level - 1)
 
-	if var_20_8 then
-		if not string.nilorempty(var_20_8.bonus) then
-			local var_20_10 = string.split(var_20_8.bonus, "|")
+	if tradeLevelCo then
+		if not string.nilorempty(tradeLevelCo.bonus) then
+			local split = string.split(tradeLevelCo.bonus, "|")
 
-			for iter_20_6, iter_20_7 in ipairs(var_20_10) do
-				local var_20_11 = {
+			for i, v in ipairs(split) do
+				local mo = {
 					type = RoomTradeEnum.LevelUnlock.GetBouns,
-					bouns = iter_20_7
+					bouns = v
 				}
 
-				table.insert(var_20_0, var_20_11)
+				table.insert(unlockList, mo)
 			end
 		end
 
-		if var_20_9 then
-			if var_20_8.maxTrainSlotCount > var_20_9.maxTrainSlotCount then
-				local var_20_12 = {
+		if preTradeLevelCo then
+			if tradeLevelCo.maxTrainSlotCount > preTradeLevelCo.maxTrainSlotCount then
+				local mo = {
 					type = RoomTradeEnum.LevelUnlock.TrainSlotCount,
 					num = {
-						last = var_20_9.maxTrainSlotCount,
-						cur = var_20_8.maxTrainSlotCount
+						last = preTradeLevelCo.maxTrainSlotCount,
+						cur = tradeLevelCo.maxTrainSlotCount
 					}
 				}
 
-				table.insert(var_20_0, var_20_12)
+				table.insert(unlockList, mo)
 			end
 
-			if var_20_8.addBlockMax > var_20_9.addBlockMax then
-				local var_20_13 = {
+			if tradeLevelCo.addBlockMax > preTradeLevelCo.addBlockMax then
+				local mo = {
 					type = RoomTradeEnum.LevelUnlock.BlockMax,
 					num = {
-						last = var_20_9.addBlockMax,
-						cur = var_20_8.addBlockMax
+						last = preTradeLevelCo.addBlockMax,
+						cur = tradeLevelCo.addBlockMax
 					}
 				}
 
-				table.insert(var_20_0, var_20_13)
+				table.insert(unlockList, mo)
 			end
 
-			if var_20_8.trainsRoundCount > var_20_9.trainsRoundCount then
-				local var_20_14 = {
+			if tradeLevelCo.trainsRoundCount > preTradeLevelCo.trainsRoundCount then
+				local mo = {
 					type = RoomTradeEnum.LevelUnlock.TrainsRoundCount
 				}
 
-				table.insert(var_20_0, var_20_14)
+				table.insert(unlockList, mo)
 			end
 
-			local var_20_15 = ManufactureConfig.instance:getTrainsBuildingCos()
-			local var_20_16
+			local trainsBuildings = ManufactureConfig.instance:getTrainsBuildingCos()
+			local minLevel
 
-			for iter_20_8, iter_20_9 in ipairs(var_20_15) do
-				if var_20_16 then
-					var_20_16 = math.min(var_20_16, iter_20_9.placeTradeLevel)
+			for _, co in ipairs(trainsBuildings) do
+				if minLevel then
+					minLevel = math.min(minLevel, co.placeTradeLevel)
 				else
-					var_20_16 = iter_20_9.placeTradeLevel
+					minLevel = co.placeTradeLevel
 				end
 			end
 
-			if arg_20_1 == var_20_16 then
-				local var_20_17 = {
+			if level == minLevel then
+				local mo = {
 					type = RoomTradeEnum.LevelUnlock.TransportSystemOpen
 				}
 
-				table.insert(var_20_0, var_20_17)
+				table.insert(unlockList, mo)
 			end
 		end
 	end
 
-	if arg_20_1 == arg_20_0:getOpenSupportLevel() then
-		local var_20_18 = {
+	if level == self:getOpenSupportLevel() then
+		local mo = {
 			type = RoomTradeEnum.LevelUnlock.LevelBonus
 		}
 
-		table.insert(var_20_0, var_20_18)
+		table.insert(unlockList, mo)
 	end
 
-	if arg_20_1 == arg_20_0:getOpenOrderLevel() then
-		local var_20_19 = {
+	if level == self:getOpenOrderLevel() then
+		local mo = {
 			type = RoomTradeEnum.LevelUnlock.Order
 		}
 
-		table.insert(var_20_0, var_20_19)
+		table.insert(unlockList, mo)
 	end
 
-	if arg_20_1 == arg_20_0:getOpenCritterIncubateLevel() then
-		local var_20_20 = {
+	if level == self:getOpenCritterIncubateLevel() then
+		local mo = {
 			type = RoomTradeEnum.LevelUnlock.CritterIncubate
 		}
 
-		table.insert(var_20_0, var_20_20)
+		table.insert(unlockList, mo)
 	end
 
-	if arg_20_1 == arg_20_0:getOpenBuildingLevelUpLevel() then
-		local var_20_21 = {
+	if level == self:getOpenBuildingLevelUpLevel() then
+		local mo = {
 			type = RoomTradeEnum.LevelUnlock.BuildingLevelUp
 		}
 
-		table.insert(var_20_0, var_20_21)
+		table.insert(unlockList, mo)
 	end
 
-	table.sort(var_20_0, arg_20_0.sortLevelUnlock)
+	table.sort(unlockList, self.sortLevelUnlock)
 
-	return var_20_0
+	return unlockList
 end
 
-function var_0_0.sortLevelUnlock(arg_21_0, arg_21_1)
-	if arg_21_0.type == arg_21_1.type then
+function RoomTradeTaskModel.sortLevelUnlock(a, b)
+	if a.type == b.type then
 		return
 	end
 
-	local var_21_0 = RoomTradeConfig.instance:getLevelUnlockCo(arg_21_0.type)
-	local var_21_1 = RoomTradeConfig.instance:getLevelUnlockCo(arg_21_1.type)
+	local a_co = RoomTradeConfig.instance:getLevelUnlockCo(a.type)
+	local b_co = RoomTradeConfig.instance:getLevelUnlockCo(b.type)
 
-	if var_21_0 and var_21_1 then
-		return var_21_0.sort < var_21_1.sort
+	if a_co and b_co then
+		return a_co.sort < b_co.sort
 	end
 
-	return arg_21_0.type < arg_21_1.type
+	return a.type < b.type
 end
 
-function var_0_0.getBuildingTaskIcon(arg_22_0, arg_22_1)
-	local var_22_0 = ItemModel.instance:getItemConfig(MaterialEnum.MaterialType.Building, arg_22_1)
+function RoomTradeTaskModel:getBuildingTaskIcon(buildingId)
+	local co = ItemModel.instance:getItemConfig(MaterialEnum.MaterialType.Building, buildingId)
 
-	return var_22_0 and ResUrl.getRoomCritterIcon(var_22_0.icon)
+	return co and ResUrl.getRoomCritterIcon(co.icon)
 end
 
-function var_0_0.getCanGetExtraBonus(arg_23_0)
-	return arg_23_0.canGetExtraBonus
+function RoomTradeTaskModel:getCanGetExtraBonus()
+	return self.canGetExtraBonus
 end
 
-function var_0_0.setCanGetExtraBonus(arg_24_0)
-	arg_24_0.canGetExtraBonus = false
+function RoomTradeTaskModel:setCanGetExtraBonus()
+	self.canGetExtraBonus = false
 end
 
-var_0_0.instance = var_0_0.New()
+RoomTradeTaskModel.instance = RoomTradeTaskModel.New()
 
-return var_0_0
+return RoomTradeTaskModel

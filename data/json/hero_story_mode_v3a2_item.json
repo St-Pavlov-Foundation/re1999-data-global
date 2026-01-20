@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "language_10098215",
+    "image": "1",
+    "desc": "language_10098216",
+    "sourceDesc": "language_10098217",
+    "unlock": "1#1"
+  },
+  {
+    "id": 2,
+    "name": "language_10098218",
+    "image": "2",
+    "desc": "language_10098219",
+    "sourceDesc": "language_10098220",
+    "unlock": "2#304103#1"
+  },
+  {
+    "id": 3,
+    "name": "language_10098221",
+    "image": "3",
+    "desc": "language_10098222",
+    "sourceDesc": "language_10098223",
+    "unlock": "2#304105#2"
+  }
+]

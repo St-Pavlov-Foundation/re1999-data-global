@@ -1,218 +1,226 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotProgressView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/view/V1a6_CachotProgressView.lua
 
-local var_0_0 = class("V1a6_CachotProgressView", BaseView)
+module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotProgressView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg")
-	arg_1_0._txtdetail = gohelper.findChildText(arg_1_0.viewGO, "Left/#txt_detail")
-	arg_1_0._txtscore = gohelper.findChildText(arg_1_0.viewGO, "Left/#txt_score")
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "Left/#txt_score/#simage_icon")
-	arg_1_0._goprogress = gohelper.findChild(arg_1_0.viewGO, "Left/#go_progress")
-	arg_1_0._scrollview = gohelper.findChildScrollRect(arg_1_0.viewGO, "Left/#go_progress/#scroll_view")
-	arg_1_0._gofillbg = gohelper.findChild(arg_1_0.viewGO, "Left/#go_progress/#scroll_view/Viewport/Content/#go_fillbg")
-	arg_1_0._gofill = gohelper.findChild(arg_1_0.viewGO, "Left/#go_progress/#scroll_view/Viewport/Content/#go_fillbg/#go_fill")
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
-	arg_1_0._gonextstagetips = gohelper.findChild(arg_1_0.viewGO, "Left/#go_nextstagetips")
-	arg_1_0._txtnextstageopentime = gohelper.findChildText(arg_1_0.viewGO, "Left/#go_nextstagetips/nextstage/#txt_nextstageopentime")
-	arg_1_0._txtreamindoulescore = gohelper.findChildText(arg_1_0.viewGO, "Left/#txt_score/#txt_remaindoublescore")
-	arg_1_0._btnback = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_back")
+local V1a6_CachotProgressView = class("V1a6_CachotProgressView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V1a6_CachotProgressView:onInitView()
+	self._simagefullbg = gohelper.findChildSingleImage(self.viewGO, "#simage_fullbg")
+	self._txtdetail = gohelper.findChildText(self.viewGO, "Left/#txt_detail")
+	self._txtscore = gohelper.findChildText(self.viewGO, "Left/#txt_score")
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "Left/#txt_score/#simage_icon")
+	self._goprogress = gohelper.findChild(self.viewGO, "Left/#go_progress")
+	self._scrollview = gohelper.findChildScrollRect(self.viewGO, "Left/#go_progress/#scroll_view")
+	self._gofillbg = gohelper.findChild(self.viewGO, "Left/#go_progress/#scroll_view/Viewport/Content/#go_fillbg")
+	self._gofill = gohelper.findChild(self.viewGO, "Left/#go_progress/#scroll_view/Viewport/Content/#go_fillbg/#go_fill")
+	self._gotopleft = gohelper.findChild(self.viewGO, "#go_topleft")
+	self._gonextstagetips = gohelper.findChild(self.viewGO, "Left/#go_nextstagetips")
+	self._txtnextstageopentime = gohelper.findChildText(self.viewGO, "Left/#go_nextstagetips/nextstage/#txt_nextstageopentime")
+	self._txtreamindoulescore = gohelper.findChildText(self.viewGO, "Left/#txt_score/#txt_remaindoublescore")
+	self._btnback = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_back")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(V1a6_CachotController.instance, V1a6_CachotEvent.OnUpdateRogueStateInfo, arg_2_0.onRogueSateInfoUpdate, arg_2_0)
-	arg_2_0:addEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, arg_2_0._onWeekRefresh, arg_2_0)
-	arg_2_0._btnback:AddClickListener(arg_2_0._btnbackOnClick, arg_2_0)
+function V1a6_CachotProgressView:addEvents()
+	self:addEventCb(V1a6_CachotController.instance, V1a6_CachotEvent.OnUpdateRogueStateInfo, self.onRogueSateInfoUpdate, self)
+	self:addEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, self._onWeekRefresh, self)
+	self._btnback:AddClickListener(self._btnbackOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(V1a6_CachotController.instance, V1a6_CachotEvent.OnUpdateRogueStateInfo, arg_3_0.onRogueSateInfoUpdate, arg_3_0)
-	arg_3_0:removeEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, arg_3_0._onWeekRefresh, arg_3_0)
-	arg_3_0._btnback:RemoveClickListener()
+function V1a6_CachotProgressView:removeEvents()
+	self:removeEventCb(V1a6_CachotController.instance, V1a6_CachotEvent.OnUpdateRogueStateInfo, self.onRogueSateInfoUpdate, self)
+	self:removeEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, self._onWeekRefresh, self)
+	self._btnback:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function V1a6_CachotProgressView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function V1a6_CachotProgressView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
+function V1a6_CachotProgressView:onOpen()
 	V1a6_CachotProgressListModel.instance:initDatas()
-	arg_6_0:refreshScoreUI()
+	self:refreshScoreUI()
 end
 
-function var_0_0.refreshScoreUI(arg_7_0)
-	arg_7_0:refreshScoreInfo()
-	arg_7_0:refreshStageInfo()
-	arg_7_0:setProgressBarWidth()
-	arg_7_0:setProgressHorizontalPos()
-	arg_7_0:refreshRedDot()
+function V1a6_CachotProgressView:refreshScoreUI()
+	self:refreshScoreInfo()
+	self:refreshStageInfo()
+	self:setProgressBarWidth()
+	self:setProgressHorizontalPos()
+	self:refreshRedDot()
 end
 
-function var_0_0.refreshStageInfo(arg_8_0)
-	arg_8_0:updateUnLockNextStageRemainTime()
+function V1a6_CachotProgressView:refreshStageInfo()
+	self:updateUnLockNextStageRemainTime()
 end
 
-function var_0_0.refreshUnLockNextStageTimeUI(arg_9_0, arg_9_1, arg_9_2)
-	if arg_9_1 > 0 then
-		arg_9_0._txtnextstageopentime.text = formatLuaLang("cachotprogressview_remainDay", arg_9_1)
+function V1a6_CachotProgressView:refreshUnLockNextStageTimeUI(remainDay, remainHour)
+	if remainDay > 0 then
+		self._txtnextstageopentime.text = formatLuaLang("cachotprogressview_remainDay", remainDay)
 	else
-		arg_9_0._txtnextstageopentime.text = formatLuaLang("cachotprogressview_remainHour", arg_9_2)
+		self._txtnextstageopentime.text = formatLuaLang("cachotprogressview_remainHour", remainHour)
 	end
 end
 
-function var_0_0.refreshScoreInfo(arg_10_0)
-	local var_10_0 = V1a6_CachotProgressListModel.instance:getCurGetTotalScore()
-	local var_10_1 = lua_rogue_const.configDict[V1a6_CachotEnum.Const.DoubleScoreLimit]
-	local var_10_2 = tonumber(var_10_1 and var_10_1.value or 0)
-	local var_10_3 = V1a6_CachotProgressListModel.instance:getWeekScore()
-	local var_10_4 = var_10_2 <= var_10_3
+function V1a6_CachotProgressView:refreshScoreInfo()
+	local curGetScore = V1a6_CachotProgressListModel.instance:getCurGetTotalScore()
+	local weekScoreConstConfig = lua_rogue_const.configDict[V1a6_CachotEnum.Const.DoubleScoreLimit]
+	local weekScoreRange = tonumber(weekScoreConstConfig and weekScoreConstConfig.value or 0)
+	local weekScore = V1a6_CachotProgressListModel.instance:getWeekScore()
+	local isGetWholeDoubleScore = weekScoreRange <= weekScore
 
-	arg_10_0._txtscore.text = var_10_0 or ""
+	self._txtscore.text = curGetScore or ""
 
-	gohelper.setActive(arg_10_0._txtreamindoulescore.gameObject, not var_10_4)
+	gohelper.setActive(self._txtreamindoulescore.gameObject, not isGetWholeDoubleScore)
 
-	if not var_10_4 then
-		local var_10_5 = {
-			var_10_3,
-			var_10_2
+	if not isGetWholeDoubleScore then
+		local tag = {
+			weekScore,
+			weekScoreRange
 		}
 
-		arg_10_0._txtreamindoulescore.text = GameUtil.getSubPlaceholderLuaLang(luaLang("cachot_progressview_remaindoublescore"), var_10_5)
+		self._txtreamindoulescore.text = GameUtil.getSubPlaceholderLuaLang(luaLang("cachot_progressview_remaindoublescore"), tag)
 	end
 end
 
-var_0_0.SingleRewardtWidth = 240
+V1a6_CachotProgressView.SingleRewardtWidth = 240
 
-function var_0_0.setProgressBarWidth(arg_11_0)
-	local var_11_0 = V1a6_CachotProgressListModel.instance:getUnLockedRewardCount()
+function V1a6_CachotProgressView:setProgressBarWidth()
+	local unlockedRewardCount = V1a6_CachotProgressListModel.instance:getUnLockedRewardCount()
 
-	arg_11_0:setScrollFillBgWidth(var_11_0)
-	arg_11_0:setScrollFillWidth()
+	self:setScrollFillBgWidth(unlockedRewardCount)
+	self:setScrollFillWidth()
 end
 
-function var_0_0.setScrollFillBgWidth(arg_12_0, arg_12_1)
-	local var_12_0 = 0
-	local var_12_1 = arg_12_1 - 1
-	local var_12_2 = Mathf.Clamp(var_12_1, 0, var_12_1) * var_0_0.SingleRewardtWidth
+function V1a6_CachotProgressView:setScrollFillBgWidth(unlockRewardNum)
+	local fillBgWidth = 0
+	local unlockRewardCountExceptFirst = unlockRewardNum - 1
 
-	recthelper.setWidth(arg_12_0._gofillbg.transform, var_12_2)
+	fillBgWidth = Mathf.Clamp(unlockRewardCountExceptFirst, 0, unlockRewardCountExceptFirst) * V1a6_CachotProgressView.SingleRewardtWidth
+
+	recthelper.setWidth(self._gofillbg.transform, fillBgWidth)
 end
 
-function var_0_0.setScrollFillWidth(arg_13_0)
-	if V1a6_CachotProgressListModel.instance:getCurrentStage() <= 0 then
-		recthelper.setWidth(arg_13_0._gofill.transform, 0)
+function V1a6_CachotProgressView:setScrollFillWidth()
+	local curStage = V1a6_CachotProgressListModel.instance:getCurrentStage()
+
+	if curStage <= 0 then
+		recthelper.setWidth(self._gofill.transform, 0)
 
 		return
 	end
 
-	local var_13_0 = V1a6_CachotProgressListModel.instance:getCurFinishRewardCount()
-	local var_13_1 = V1a6_CachotProgressListModel.instance:getCurGetTotalScore()
-	local var_13_2, var_13_3 = V1a6_CachotScoreConfig.instance:getStagePartRange(var_13_1)
-	local var_13_4 = V1a6_CachotScoreConfig.instance:getStagePartScore(var_13_2)
-	local var_13_5 = V1a6_CachotScoreConfig.instance:getStagePartScore(var_13_3) - var_13_4
-	local var_13_6 = var_13_5 > 0 and (var_13_1 - var_13_4) / var_13_5 or 0
+	local finishPartCount = V1a6_CachotProgressListModel.instance:getCurFinishRewardCount()
+	local curScore = V1a6_CachotProgressListModel.instance:getCurGetTotalScore()
+	local lastRewardId, nextRewardId = V1a6_CachotScoreConfig.instance:getStagePartRange(curScore)
+	local lastRewardScore = V1a6_CachotScoreConfig.instance:getStagePartScore(lastRewardId)
+	local nextRewardScore = V1a6_CachotScoreConfig.instance:getStagePartScore(nextRewardId)
+	local rewardScoreRange = nextRewardScore - lastRewardScore
+	local rewardPartProgress = rewardScoreRange > 0 and (curScore - lastRewardScore) / rewardScoreRange or 0
 
-	if var_13_6 >= 1 then
-		var_13_6 = 0
+	if rewardPartProgress >= 1 then
+		rewardPartProgress = 0
 	end
 
-	local var_13_7 = var_13_0 + var_13_6
-	local var_13_8 = Mathf.Clamp(var_13_7 - 1, 0, var_13_7) * var_0_0.SingleRewardtWidth
+	local totalProgress = finishPartCount + rewardPartProgress
+	local fillWidth = Mathf.Clamp(totalProgress - 1, 0, totalProgress) * V1a6_CachotProgressView.SingleRewardtWidth
 
-	recthelper.setWidth(arg_13_0._gofill.transform, var_13_8)
+	recthelper.setWidth(self._gofill.transform, fillWidth)
 end
 
-function var_0_0.setProgressHorizontalPos(arg_14_0)
-	local var_14_0 = arg_14_0.viewContainer._scrollView:getCsScroll()
-	local var_14_1 = V1a6_CachotProgressListModel.instance:getHasFinishedMoList()
-	local var_14_2 = 0
+function V1a6_CachotProgressView:setProgressHorizontalPos()
+	local csListView = self.viewContainer._scrollView:getCsScroll()
+	local finishMoList = V1a6_CachotProgressListModel.instance:getHasFinishedMoList()
+	local offset = 0
 
-	if var_14_1 and #var_14_1 > 0 then
-		var_14_2 = var_14_2 + (arg_14_0.viewContainer._scrollParam.startSpace or 0)
+	if finishMoList and #finishMoList > 0 then
+		offset = offset + (self.viewContainer._scrollParam.startSpace or 0)
 
-		for iter_14_0 = 1, #var_14_1 - 1 do
-			var_14_2 = var_14_2 + (var_14_1[iter_14_0]:getLineWidth() or 0)
+		for i = 1, #finishMoList - 1 do
+			local singleItemWidth = finishMoList[i]:getLineWidth() or 0
+
+			offset = offset + singleItemWidth
 		end
 	end
 
-	arg_14_0.viewContainer._scrollView:refreshScroll()
+	self.viewContainer._scrollView:refreshScroll()
 
-	var_14_0.HorizontalScrollPixel = math.max(0, var_14_2)
+	csListView.HorizontalScrollPixel = math.max(0, offset)
 end
 
-function var_0_0.updateUnLockNextStageRemainTime(arg_15_0)
-	local var_15_0 = V1a6_CachotProgressListModel.instance:isAllRewardUnLocked()
+function V1a6_CachotProgressView:updateUnLockNextStageRemainTime()
+	local isAllRewardUnLocked = V1a6_CachotProgressListModel.instance:isAllRewardUnLocked()
 
-	gohelper.setActive(arg_15_0._gonextstagetips, not var_15_0)
+	gohelper.setActive(self._gonextstagetips, not isAllRewardUnLocked)
 
-	if not var_15_0 then
-		TaskDispatcher.cancelTask(arg_15_0.onOneMinutesPassCallBack, arg_15_0)
-		TaskDispatcher.runRepeat(arg_15_0.onOneMinutesPassCallBack, arg_15_0, TimeUtil.OneMinuteSecond)
-		arg_15_0:checkIsArriveUnLockNextStageTime()
+	if not isAllRewardUnLocked then
+		TaskDispatcher.cancelTask(self.onOneMinutesPassCallBack, self)
+		TaskDispatcher.runRepeat(self.onOneMinutesPassCallBack, self, TimeUtil.OneMinuteSecond)
+		self:checkIsArriveUnLockNextStageTime()
 	end
 end
 
-function var_0_0.onOneMinutesPassCallBack(arg_16_0)
+function V1a6_CachotProgressView:onOneMinutesPassCallBack()
 	V1a6_CachotProgressListModel.instance:updateUnLockNextStageRemainTime(TimeUtil.OneMinuteSecond)
-	arg_16_0:checkIsArriveUnLockNextStageTime()
+	self:checkIsArriveUnLockNextStageTime()
 end
 
-function var_0_0.checkIsArriveUnLockNextStageTime(arg_17_0)
-	local var_17_0 = V1a6_CachotProgressListModel.instance:getUnLockNextStageRemainTime()
+function V1a6_CachotProgressView:checkIsArriveUnLockNextStageTime()
+	local unLockNextStageRemainTime = V1a6_CachotProgressListModel.instance:getUnLockNextStageRemainTime()
 
-	if var_17_0 and var_17_0 > 0 then
-		local var_17_1, var_17_2 = TimeUtil.secondsToDDHHMMSS(var_17_0)
+	if unLockNextStageRemainTime and unLockNextStageRemainTime > 0 then
+		local remainDay, remainHour = TimeUtil.secondsToDDHHMMSS(unLockNextStageRemainTime)
 
-		arg_17_0:refreshUnLockNextStageTimeUI(var_17_1, var_17_2)
+		self:refreshUnLockNextStageTimeUI(remainDay, remainHour)
 	else
-		TaskDispatcher.cancelTask(arg_17_0.onOneMinutesPassCallBack, arg_17_0)
+		TaskDispatcher.cancelTask(self.onOneMinutesPassCallBack, self)
 		RogueRpc.instance:sendGetRogueStateRequest()
 	end
 end
 
-function var_0_0.onRogueSateInfoUpdate(arg_18_0)
+function V1a6_CachotProgressView:onRogueSateInfoUpdate()
 	V1a6_CachotProgressListModel.instance:initDatas()
-	arg_18_0:refreshScoreUI()
+	self:refreshScoreUI()
 end
 
-function var_0_0._onWeekRefresh(arg_19_0)
+function V1a6_CachotProgressView:_onWeekRefresh()
 	RogueRpc.instance:sendGetRogueStateRequest()
 end
 
-function var_0_0.refreshRedDot(arg_20_0)
-	local var_20_0 = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.ActivityStageKey) .. PlayerPrefsKey.V1a6RogueDoubleScore
-	local var_20_1 = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.ActivityStageKey) .. PlayerPrefsKey.V1a6RogueRewardStage
-	local var_20_2 = ServerTime.now()
-	local var_20_3 = V1a6_CachotProgressListModel.instance:getCurrentStage()
+function V1a6_CachotProgressView:refreshRedDot()
+	local doublekey = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.ActivityStageKey) .. PlayerPrefsKey.V1a6RogueDoubleScore
+	local stagekey = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.ActivityStageKey) .. PlayerPrefsKey.V1a6RogueRewardStage
+	local time = ServerTime.now()
+	local stage = V1a6_CachotProgressListModel.instance:getCurrentStage()
 
 	if V1a6_CachotProgressListModel.instance:checkRewardStageChange() then
-		PlayerPrefsHelper.setNumber(var_20_1, var_20_3)
+		PlayerPrefsHelper.setNumber(stagekey, stage)
 		V1a6_CachotProgressListModel.instance:checkRewardStageChangeRed()
 	end
 
 	if V1a6_CachotProgressListModel.instance:checkDoubleStoreRefresh() then
-		PlayerPrefsHelper.setString(var_20_0, var_20_2)
+		PlayerPrefsHelper.setString(doublekey, time)
 		V1a6_CachotProgressListModel.instance:checkDoubleStoreRefreshRed()
 	end
 end
 
-function var_0_0._btnbackOnClick(arg_21_0)
-	arg_21_0:closeThis()
+function V1a6_CachotProgressView:_btnbackOnClick()
+	self:closeThis()
 end
 
-function var_0_0.onClose(arg_22_0)
+function V1a6_CachotProgressView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_23_0)
-	TaskDispatcher.cancelTask(arg_23_0.onOneMinutesPassCallBack, arg_23_0)
+function V1a6_CachotProgressView:onDestroyView()
+	TaskDispatcher.cancelTask(self.onOneMinutesPassCallBack, self)
 end
 
-return var_0_0
+return V1a6_CachotProgressView

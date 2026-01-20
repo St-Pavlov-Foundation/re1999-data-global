@@ -1,163 +1,168 @@
-﻿module("modules.logic.versionactivity2_5.challenge.controller.Act183JumpController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/controller/Act183JumpController.lua
 
-local var_0_0 = class("Act183JumpController", BaseController)
-local var_0_1 = VersionActivity2_8Enum.ActivityId.Challenge
-local var_0_2 = VersionActivity2_8Enum.ActivityId.EnterView
+module("modules.logic.versionactivity2_5.challenge.controller.Act183JumpController", package.seeall)
 
-function var_0_0.fightExitHandleFunc(arg_1_0, arg_1_1)
-	local var_1_0 = DungeonModel.instance.curSendEpisodeId
+local Act183JumpController = class("Act183JumpController", BaseController)
+local actId = VersionActivity2_8Enum.ActivityId.Challenge
+local enterActId = VersionActivity2_8Enum.ActivityId.EnterView
 
-	DungeonModel.instance.lastSendEpisodeId = var_1_0
+function Act183JumpController.fightExitHandleFunc(forceStarting, exitFightGroup)
+	local episodeId = DungeonModel.instance.curSendEpisodeId
+
+	DungeonModel.instance.lastSendEpisodeId = episodeId
 	DungeonModel.instance.curSendEpisodeId = nil
 
-	MainController.instance:enterMainScene(arg_1_0)
+	MainController.instance:enterMainScene(forceStarting)
 	SceneHelper.instance:waitSceneDone(SceneType.Main, function()
 		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.Act183MainView)
 
-		local var_2_0 = Act183Config.instance:getEpisodeCo(var_1_0)
-		local var_2_1 = var_2_0 and var_2_0.activityId
+		local episodeCo = Act183Config.instance:getEpisodeCo(episodeId)
+		local activityId = episodeCo and episodeCo.activityId
 
-		VersionActivity2_8EnterController.instance:openVersionActivityEnterViewIfNotOpened(nil, nil, var_2_1)
+		VersionActivity2_8EnterController.instance:openVersionActivityEnterViewIfNotOpened(nil, nil, activityId)
 		Act183Controller.instance:openAct183MainView(nil, function()
-			local var_3_0 = Act183Helper.generateDungeonViewParams2(var_1_0)
+			local viewParam = Act183Helper.generateDungeonViewParams2(episodeId)
 
-			Act183Controller.instance:openAct183DungeonView(var_3_0)
+			Act183Controller.instance:openAct183DungeonView(viewParam)
 		end)
 	end)
 end
 
-function var_0_0.canJumpToAct183(arg_4_0, arg_4_1)
-	local var_4_0, var_4_1, var_4_2 = ActivityHelper.getActivityStatusAndToast(var_0_2)
+function Act183JumpController:canJumpToAct183(jumpParamArray)
+	local status, toastId, toastParamList = ActivityHelper.getActivityStatusAndToast(enterActId)
 
-	if var_4_0 ~= ActivityEnum.ActivityStatus.Normal then
-		return false, var_4_1, var_4_2
+	if status ~= ActivityEnum.ActivityStatus.Normal then
+		return false, toastId, toastParamList
 	end
 
-	local var_4_3, var_4_4, var_4_5 = ActivityHelper.getActivityStatusAndToast(var_0_1)
+	local actStatus, actToastId, actToastParamList = ActivityHelper.getActivityStatusAndToast(actId)
 
-	if var_4_3 ~= ActivityEnum.ActivityStatus.Normal then
-		return false, var_4_4, var_4_5
+	if actStatus ~= ActivityEnum.ActivityStatus.Normal then
+		return false, actToastId, actToastParamList
 	end
 
-	local var_4_6 = string.splitToNumber(arg_4_1, "#")
-	local var_4_7 = var_4_6 and var_4_6[2]
+	local splitJumpParamArray = string.splitToNumber(jumpParamArray, "#")
+	local groupId = splitJumpParamArray and splitJumpParamArray[2]
+	local isGroupExist = Act183Config.instance:isGroupExist(actId, groupId)
 
-	if not Act183Config.instance:isGroupExist(var_0_1, var_4_7) then
+	if not isGroupExist then
 		return false, ToastEnum.EpisodeNotExist, JumpController.DefaultToastParam
 	end
 
-	local var_4_8 = Act183Model.instance:getActInfo():getGroupEpisodeMo(var_4_7)
+	local actInfo = Act183Model.instance:getActInfo()
+	local groupMo = actInfo:getGroupEpisodeMo(groupId)
+	local status = groupMo and groupMo:getStatus()
 
-	if (var_4_8 and var_4_8:getStatus()) == Act183Enum.GroupStatus.Locked then
+	if status == Act183Enum.GroupStatus.Locked then
 		return false, ToastEnum.Act183GroupNotOpen, JumpController.DefaultToastParam
 	end
 
 	return true, JumpController.DefaultToastId, JumpController.DefaultToastParam
 end
 
-function var_0_0.jumpToAct183(arg_5_0, arg_5_1)
-	table.insert(arg_5_0.waitOpenViewNames, ViewName.VersionActivity2_8EnterView)
-	table.insert(arg_5_0.waitOpenViewNames, ViewName.Act183MainView)
-	table.insert(arg_5_0.waitOpenViewNames, ViewName.Act183DungeonView)
-	table.insert(arg_5_0.closeViewNames, ViewName.Act183TaskView)
+function Act183JumpController:jumpToAct183(paramsList)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity2_8EnterView)
+	table.insert(self.waitOpenViewNames, ViewName.Act183MainView)
+	table.insert(self.waitOpenViewNames, ViewName.Act183DungeonView)
+	table.insert(self.closeViewNames, ViewName.Act183TaskView)
 	VersionActivity2_8EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
-		local var_6_0 = string.splitToNumber(arg_5_1, "#")
-		local var_6_1 = var_6_0 and var_6_0[2]
-		local var_6_2 = Act183Helper.generateDungeonViewParams3(var_0_1, var_6_1)
+		local splitParamsList = string.splitToNumber(paramsList, "#")
+		local groupId = splitParamsList and splitParamsList[2]
+		local viewParam = Act183Helper.generateDungeonViewParams3(actId, groupId)
 
 		if not ViewMgr.instance:isOpen(ViewName.Act183MainView) then
 			Act183Controller.instance:openAct183MainView(nil, function()
-				Act183Controller.instance:openAct183DungeonView(var_6_2)
+				Act183Controller.instance:openAct183DungeonView(viewParam)
 			end)
 		else
-			Act183Controller.instance:openAct183DungeonView(var_6_2)
+			Act183Controller.instance:openAct183DungeonView(viewParam)
 		end
 	end)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.canJumpToEnterView(arg_8_0, arg_8_1)
-	local var_8_0, var_8_1, var_8_2 = ActivityHelper.getActivityStatusAndToast(var_0_2)
+function Act183JumpController:canJumpToEnterView(jumpParamArray)
+	local status, toastId, toastParamList = ActivityHelper.getActivityStatusAndToast(enterActId)
 
-	if var_8_0 ~= ActivityEnum.ActivityStatus.Normal then
-		return false, var_8_1, var_8_2
+	if status ~= ActivityEnum.ActivityStatus.Normal then
+		return false, toastId, toastParamList
 	end
 
-	local var_8_3, var_8_4, var_8_5 = ActivityHelper.getActivityStatusAndToast(var_0_1)
+	local actStatus, actToastId, actToastParamList = ActivityHelper.getActivityStatusAndToast(actId)
 
-	if var_8_3 ~= ActivityEnum.ActivityStatus.Normal then
-		return false, var_8_4, var_8_5
+	if actStatus ~= ActivityEnum.ActivityStatus.Normal then
+		return false, actToastId, actToastParamList
 	end
 
 	return true, JumpController.DefaultToastId, JumpController.DefaultToastParam
 end
 
-function var_0_0.jumpToEnterView(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_1[2]
+function Act183JumpController:jumpToEnterView(paramsList)
+	local actId = paramsList[2]
 
-	VersionActivityFixedHelper.getVersionActivityEnterController().instance:openVersionActivityEnterViewIfNotOpened(nil, nil, var_9_0)
+	VersionActivityFixedHelper.getVersionActivityEnterController().instance:openVersionActivityEnterViewIfNotOpened(nil, nil, actId)
 
 	return JumpEnum.JumpResult.Success
 end
 
-local function var_0_3()
-	local var_10_0 = DungeonConfig.instance:getChapterCOListByType(DungeonEnum.ChapterType.Act183)
-	local var_10_1 = var_0_1 == nil
+local function addFightExitHandleFunc()
+	local chapterCoList = DungeonConfig.instance:getChapterCOListByType(DungeonEnum.ChapterType.Act183)
+	local isCurActConfig = actId == nil
 
-	for iter_10_0, iter_10_1 in ipairs(var_10_0) do
-		local var_10_2 = iter_10_1.actId
+	for _, chapterCo in ipairs(chapterCoList) do
+		local chapterActId = chapterCo.actId
 
-		if var_10_2 ~= 0 then
-			EnterActivityViewOnExitFightSceneHelper["enterActivity" .. var_10_2] = var_0_0.fightExitHandleFunc
-			var_10_1 = var_10_1 or var_10_2 == var_0_1
+		if chapterActId ~= 0 then
+			EnterActivityViewOnExitFightSceneHelper["enterActivity" .. chapterActId] = Act183JumpController.fightExitHandleFunc
+			isCurActConfig = isCurActConfig or chapterActId == actId
 		end
 	end
 
-	if not var_10_1 then
-		logError(string.format("挑战玩法添加战斗返回跳转方法失败!!!失败原因:副本表缺少对应活动项 actId = %s", var_0_1))
+	if not isCurActConfig then
+		logError(string.format("挑战玩法添加战斗返回跳转方法失败!!!失败原因:副本表缺少对应活动项 actId = %s", actId))
 	end
 end
 
-local function var_0_4()
-	if not var_0_1 then
+local function addActJumpHandleFunc()
+	if not actId then
 		return
 	end
 
-	local var_11_0 = ActivityHelper.getActivityVersion(var_0_1)
+	local version = ActivityHelper.getActivityVersion(actId)
 
-	if not var_11_0 then
+	if not version then
 		return
 	end
 
-	local var_11_1 = string.format("VersionActivity%sCanJumpFunc", var_11_0)
-	local var_11_2 = _G[var_11_1]
+	local canJumpClsName = string.format("VersionActivity%sCanJumpFunc", version)
+	local canJumpCls = _G[canJumpClsName]
 
-	if var_11_2 then
-		var_11_2["canJumpTo" .. var_0_1] = var_0_0.canJumpToEnterView
+	if canJumpCls then
+		canJumpCls["canJumpTo" .. actId] = Act183JumpController.canJumpToEnterView
 	else
-		logError(string.format("缺少活动跳转检查脚本 cls = %s, actId = %s", var_11_1, var_0_1))
+		logError(string.format("缺少活动跳转检查脚本 cls = %s, actId = %s", canJumpClsName, actId))
 	end
 
-	local var_11_3 = string.format("VersionActivity%sJumpHandleFunc", var_11_0)
-	local var_11_4 = _G[var_11_3]
+	local jumpHandleClsName = string.format("VersionActivity%sJumpHandleFunc", version)
+	local jumpHandleCls = _G[jumpHandleClsName]
 
-	if var_11_4 then
-		var_11_4["jumpTo" .. var_0_1] = var_0_0.jumpToEnterView
+	if jumpHandleCls then
+		jumpHandleCls["jumpTo" .. actId] = Act183JumpController.jumpToEnterView
 	else
-		logError(string.format("缺少活动跳转脚本 cls = %s, actId = %s", var_11_3, var_0_1))
+		logError(string.format("缺少活动跳转脚本 cls = %s, actId = %s", jumpHandleClsName, actId))
 	end
 end
 
-function var_0_0.addConstEvents(arg_12_0)
-	LoginController.instance:registerCallback(LoginEvent.OnGetInfoFinish, arg_12_0._onGetInfoFinish, arg_12_0)
+function Act183JumpController:addConstEvents()
+	LoginController.instance:registerCallback(LoginEvent.OnGetInfoFinish, self._onGetInfoFinish, self)
 end
 
-function var_0_0._onGetInfoFinish(arg_13_0)
-	var_0_3()
-	var_0_4()
+function Act183JumpController:_onGetInfoFinish()
+	addFightExitHandleFunc()
+	addActJumpHandleFunc()
 end
 
-var_0_0.instance = var_0_0.New()
+Act183JumpController.instance = Act183JumpController.New()
 
-return var_0_0
+return Act183JumpController

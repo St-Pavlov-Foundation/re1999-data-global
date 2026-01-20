@@ -1,103 +1,107 @@
-﻿module("modules.logic.versionactivity2_7.act191.view.Act191EnhanceView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/act191/view/Act191EnhanceView.lua
 
-local var_0_0 = class("Act191EnhanceView", BaseView)
+module("modules.logic.versionactivity2_7.act191.view.Act191EnhanceView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclosetip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_closetip")
-	arg_1_0._goscrolltips = gohelper.findChild(arg_1_0.viewGO, "#go_scrolltips")
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "#go_scrolltips/viewport/content/go_title/#txt_title")
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "#go_scrolltips/viewport/content/go_title/#image_icon")
-	arg_1_0._goskillitem = gohelper.findChild(arg_1_0.viewGO, "#go_scrolltips/viewport/content/#go_skillitem")
+local Act191EnhanceView = class("Act191EnhanceView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Act191EnhanceView:onInitView()
+	self._btnclosetip = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_closetip")
+	self._goscrolltips = gohelper.findChild(self.viewGO, "#go_scrolltips")
+	self._txttitle = gohelper.findChildText(self.viewGO, "#go_scrolltips/viewport/content/go_title/#txt_title")
+	self._imageicon = gohelper.findChildImage(self.viewGO, "#go_scrolltips/viewport/content/go_title/#image_icon")
+	self._goskillitem = gohelper.findChild(self.viewGO, "#go_scrolltips/viewport/content/#go_skillitem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclosetip:AddClickListener(arg_2_0._btnclosetipOnClick, arg_2_0)
+function Act191EnhanceView:addEvents()
+	self._btnclosetip:AddClickListener(self._btnclosetipOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclosetip:RemoveClickListener()
+function Act191EnhanceView:removeEvents()
+	self._btnclosetip:RemoveClickListener()
 end
 
-function var_0_0._btnclosetipOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function Act191EnhanceView:_btnclosetipOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0.actId = Activity191Model.instance:getCurActId()
-	arg_5_0._goContent = gohelper.findChild(arg_5_0.viewGO, "#go_scrolltips/viewport/content")
+function Act191EnhanceView:_editableInitView()
+	self.actId = Activity191Model.instance:getCurActId()
+	self._goContent = gohelper.findChild(self.viewGO, "#go_scrolltips/viewport/content")
 end
 
-function var_0_0.onOpen(arg_6_0)
+function Act191EnhanceView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_souvenir_open)
 
-	if not arg_6_0.viewParam then
+	if not self.viewParam then
 		return
 	end
 
-	arg_6_0.enhanceIds = Activity191Model.instance:getActInfo():getGameInfo().warehouseInfo.enhanceId
+	local gameInfo = Activity191Model.instance:getActInfo():getGameInfo()
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0.enhanceIds) do
-		local var_6_0 = gohelper.cloneInPlace(arg_6_0._goskillitem)
-		local var_6_1 = Activity191Config.instance:getEnhanceCo(arg_6_0.actId, iter_6_1)
+	self.enhanceIds = gameInfo.warehouseInfo.enhanceId
 
-		if var_6_1 then
-			local var_6_2 = gohelper.findChildText(var_6_0, "txt_skill")
-			local var_6_3 = gohelper.findChildSingleImage(var_6_0, "skillicon")
+	for _, id in ipairs(self.enhanceIds) do
+		local go = gohelper.cloneInPlace(self._goskillitem)
+		local enhanceCo = Activity191Config.instance:getEnhanceCo(self.actId, id)
 
-			var_6_2.text = var_6_1.desc
+		if enhanceCo then
+			local txtSkill = gohelper.findChildText(go, "txt_skill")
+			local buffIcon = gohelper.findChildSingleImage(go, "skillicon")
 
-			var_6_3:LoadImage(ResUrl.getAct174BuffIcon(var_6_1.icon))
+			txtSkill.text = enhanceCo.desc
 
-			local var_6_4 = SkillHelper.addLink(var_6_1.desc)
-			local var_6_5 = string.splitToNumber(var_6_1.effects, "|")[1]
-			local var_6_6 = lua_activity191_effect.configDict[var_6_5]
+			buffIcon:LoadImage(ResUrl.getAct174BuffIcon(enhanceCo.icon))
 
-			if var_6_6 then
-				if var_6_6.type == Activity191Enum.EffectType.EnhanceHero then
-					var_6_2.text = Activity191Helper.buildDesc(var_6_4, Activity191Enum.HyperLinkPattern.EnhanceDestiny, var_6_6.typeParam)
+			local desc = SkillHelper.addLink(enhanceCo.desc)
+			local effectId = string.splitToNumber(enhanceCo.effects, "|")[1]
+			local effectCo = lua_activity191_effect.configDict[effectId]
 
-					SkillHelper.addHyperLinkClick(var_6_2, Activity191Helper.clickHyperLinkDestiny)
-				elseif var_6_6.type == Activity191Enum.EffectType.Item then
-					var_6_2.text = Activity191Helper.buildDesc(var_6_4, Activity191Enum.HyperLinkPattern.EnhanceItem, var_6_6.typeParam .. "#")
+			if effectCo then
+				if effectCo.type == Activity191Enum.EffectType.EnhanceHero then
+					txtSkill.text = Activity191Helper.buildDesc(desc, Activity191Enum.HyperLinkPattern.EnhanceDestiny, effectCo.typeParam)
 
-					SkillHelper.addHyperLinkClick(var_6_2, Activity191Helper.clickHyperLinkItem)
-				elseif var_6_6.type == Activity191Enum.EffectType.Hero then
-					var_6_2.text = Activity191Helper.buildDesc(var_6_4, Activity191Enum.HyperLinkPattern.Hero, var_6_6.typeParam)
+					SkillHelper.addHyperLinkClick(txtSkill, Activity191Helper.clickHyperLinkDestiny)
+				elseif effectCo.type == Activity191Enum.EffectType.Item then
+					txtSkill.text = Activity191Helper.buildDesc(desc, Activity191Enum.HyperLinkPattern.EnhanceItem, effectCo.typeParam .. "#")
 
-					SkillHelper.addHyperLinkClick(var_6_2, Activity191Helper.clickHyperLinkRole)
+					SkillHelper.addHyperLinkClick(txtSkill, Activity191Helper.clickHyperLinkItem)
+				elseif effectCo.type == Activity191Enum.EffectType.Hero then
+					txtSkill.text = Activity191Helper.buildDesc(desc, Activity191Enum.HyperLinkPattern.Hero, effectCo.typeParam)
+
+					SkillHelper.addHyperLinkClick(txtSkill, Activity191Helper.clickHyperLinkRole)
 				else
-					var_6_2.text = var_6_4
+					txtSkill.text = desc
 				end
 			else
-				var_6_2.text = var_6_4
+				txtSkill.text = desc
 			end
 		end
 	end
 
-	gohelper.setActive(arg_6_0._goskillitem, false)
-	TaskDispatcher.runDelay(arg_6_0.refreshAnchor, arg_6_0, 0.01)
+	gohelper.setActive(self._goskillitem, false)
+	TaskDispatcher.runDelay(self.refreshAnchor, self, 0.01)
 end
 
-function var_0_0.refreshAnchor(arg_7_0)
-	local var_7_0 = arg_7_0._goscrolltips.transform
-	local var_7_1 = recthelper.getHeight(var_7_0)
-	local var_7_2 = recthelper.getHeight(arg_7_0._goContent.transform)
-	local var_7_3 = var_7_1 < var_7_2 and var_7_1 or var_7_2
-	local var_7_4 = arg_7_0.viewParam.pos
+function Act191EnhanceView:refreshAnchor()
+	local rectTrs = self._goscrolltips.transform
+	local heightA = recthelper.getHeight(rectTrs)
+	local heightB = recthelper.getHeight(self._goContent.transform)
+	local height = heightA < heightB and heightA or heightB
+	local pos = self.viewParam.pos
 
-	if arg_7_0.viewParam.isDown then
-		recthelper.setAnchor(var_7_0, var_7_4.x, var_7_4.y + var_7_3)
+	if self.viewParam.isDown then
+		recthelper.setAnchor(rectTrs, pos.x, pos.y + height)
 	else
-		recthelper.setAnchor(var_7_0, var_7_4.x, var_7_4.y)
+		recthelper.setAnchor(rectTrs, pos.x, pos.y)
 	end
 end
 
-function var_0_0.onDestroyView(arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0.refreshAnchor, arg_8_0)
+function Act191EnhanceView:onDestroyView()
+	TaskDispatcher.cancelTask(self.refreshAnchor, self)
 end
 
-return var_0_0
+return Act191EnhanceView

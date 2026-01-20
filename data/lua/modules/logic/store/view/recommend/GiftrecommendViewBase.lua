@@ -1,203 +1,205 @@
-﻿module("modules.logic.store.view.recommend.GiftrecommendViewBase", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/recommend/GiftrecommendViewBase.lua
 
-local var_0_0 = class("GiftrecommendViewBase", StoreRecommendBaseSubView)
+module("modules.logic.store.view.recommend.GiftrecommendViewBase", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/#simage_bg")
-	arg_1_0._txtduration = gohelper.findChildText(arg_1_0.viewGO, "view/txt_tips/#txt_duration")
-	arg_1_0._txtprice1 = gohelper.findChildText(arg_1_0.viewGO, "view/left/#txt_price1")
-	arg_1_0._btnbuy1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/left/#btn_buy1")
-	arg_1_0._txtprice2 = gohelper.findChildText(arg_1_0.viewGO, "view/middle/#txt_price2")
-	arg_1_0._btnbuy2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/middle/#btn_buy2")
-	arg_1_0._txtprice3 = gohelper.findChildText(arg_1_0.viewGO, "view/right/#txt_price3")
-	arg_1_0._btnbuy3 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/right/#btn_buy3")
+local GiftrecommendViewBase = class("GiftrecommendViewBase", StoreRecommendBaseSubView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function GiftrecommendViewBase:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "view/#simage_bg")
+	self._txtduration = gohelper.findChildText(self.viewGO, "view/txt_tips/#txt_duration")
+	self._txtprice1 = gohelper.findChildText(self.viewGO, "view/left/#txt_price1")
+	self._btnbuy1 = gohelper.findChildButtonWithAudio(self.viewGO, "view/left/#btn_buy1")
+	self._txtprice2 = gohelper.findChildText(self.viewGO, "view/middle/#txt_price2")
+	self._btnbuy2 = gohelper.findChildButtonWithAudio(self.viewGO, "view/middle/#btn_buy2")
+	self._txtprice3 = gohelper.findChildText(self.viewGO, "view/right/#txt_price3")
+	self._btnbuy3 = gohelper.findChildButtonWithAudio(self.viewGO, "view/right/#btn_buy3")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnbuy1:AddClickListener(arg_2_0._btnbuy1OnClick, arg_2_0)
-	arg_2_0._btnbuy2:AddClickListener(arg_2_0._btnbuy2OnClick, arg_2_0)
-	arg_2_0._btnbuy3:AddClickListener(arg_2_0._btnbuy3OnClick, arg_2_0)
+function GiftrecommendViewBase:addEvents()
+	self._btnbuy1:AddClickListener(self._btnbuy1OnClick, self)
+	self._btnbuy2:AddClickListener(self._btnbuy2OnClick, self)
+	self._btnbuy3:AddClickListener(self._btnbuy3OnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnbuy1:RemoveClickListener()
-	arg_3_0._btnbuy2:RemoveClickListener()
-	arg_3_0._btnbuy3:RemoveClickListener()
+function GiftrecommendViewBase:removeEvents()
+	self._btnbuy1:RemoveClickListener()
+	self._btnbuy2:RemoveClickListener()
+	self._btnbuy3:RemoveClickListener()
 end
 
-function var_0_0._btnbuy1OnClick(arg_4_0)
-	if arg_4_0._isBought1 then
+function GiftrecommendViewBase:_btnbuy1OnClick()
+	if self._isBought1 then
 		GameFacade.showToast(ToastEnum.ActivityNoRemainBuyCount)
 
 		return
 	end
 
-	if arg_4_0._systemJumpCode1 then
-		arg_4_0:statClick()
+	if self._systemJumpCode1 then
+		self:statClick()
 
-		local var_4_0 = string.splitToNumber(arg_4_0._systemJumpCode1, "#")[2]
-		local var_4_1 = StoreConfig.instance:getChargeGoodsConfig(var_4_0)
+		local goodsId = string.splitToNumber(self._systemJumpCode1, "#")[2]
+		local chargeConfig = StoreConfig.instance:getChargeGoodsConfig(goodsId)
 
-		if var_4_1 and var_4_1.type == StoreEnum.StoreChargeType.Optional then
+		if chargeConfig and chargeConfig.type == StoreEnum.StoreChargeType.Optional then
 			module_views_preloader.OptionalChargeView(function()
-				GameFacade.jumpByAdditionParam(arg_4_0._systemJumpCode1)
+				GameFacade.jumpByAdditionParam(self._systemJumpCode1)
 			end)
 		else
-			arg_4_0:_jumpToStoreGoodView(arg_4_0._systemJumpCode1)
+			self:_jumpToStoreGoodView(self._systemJumpCode1)
 		end
 	end
 end
 
-function var_0_0._btnbuy2OnClick(arg_6_0)
-	if arg_6_0._isBought2 then
+function GiftrecommendViewBase:_btnbuy2OnClick()
+	if self._isBought2 then
 		GameFacade.showToast(ToastEnum.ActivityNoRemainBuyCount)
 
 		return
 	end
 
-	if arg_6_0._systemJumpCode2 then
-		arg_6_0:statClick()
-		arg_6_0:_jumpToStoreGoodView(arg_6_0._systemJumpCode2)
+	if self._systemJumpCode2 then
+		self:statClick()
+		self:_jumpToStoreGoodView(self._systemJumpCode2)
 	end
 end
 
-function var_0_0._btnbuy3OnClick(arg_7_0)
-	if arg_7_0._isBought3 then
+function GiftrecommendViewBase:_btnbuy3OnClick()
+	if self._isBought3 then
 		GameFacade.showToast(ToastEnum.ActivityNoRemainBuyCount)
 
 		return
 	end
 
-	if arg_7_0._systemJumpCode3 then
-		arg_7_0:statClick()
-		arg_7_0:_jumpToStoreGoodView(arg_7_0._systemJumpCode3)
+	if self._systemJumpCode3 then
+		self:statClick()
+		self:_jumpToStoreGoodView(self._systemJumpCode3)
 	end
 end
 
-function var_0_0._jumpToStoreGoodView(arg_8_0, arg_8_1)
-	local var_8_0 = string.splitToNumber(arg_8_1, "#")[2]
-	local var_8_1 = StoreModel.instance:getGoodsMO(var_8_0)
+function GiftrecommendViewBase:_jumpToStoreGoodView(jumpCode)
+	local goodId = string.splitToNumber(jumpCode, "#")[2]
+	local goodMo = StoreModel.instance:getGoodsMO(goodId)
 
-	StoreController.instance:openPackageStoreGoodsView(var_8_1)
+	StoreController.instance:openPackageStoreGoodsView(goodMo)
 end
 
-function var_0_0.statClick(arg_9_0)
+function GiftrecommendViewBase:statClick()
 	StatController.instance:track(StatEnum.EventName.ClickRecommendPage, {
 		[StatEnum.EventProperties.RecommendPageType] = StatEnum.RecommendType.Store,
-		[StatEnum.EventProperties.RecommendPageId] = tostring(arg_9_0.config and arg_9_0.config.id or ""),
-		[StatEnum.EventProperties.RecommendPageName] = arg_9_0.config and arg_9_0.config.name or arg_9_0.__cname,
-		[StatEnum.EventProperties.RecommendPageRank] = arg_9_0:getTabIndex()
+		[StatEnum.EventProperties.RecommendPageId] = tostring(self.config and self.config.id or ""),
+		[StatEnum.EventProperties.RecommendPageName] = self.config and self.config.name or self.__cname,
+		[StatEnum.EventProperties.RecommendPageRank] = self:getTabIndex()
 	})
 end
 
-function var_0_0._getCostSymbolAndPrice(arg_10_0, arg_10_1)
-	if not arg_10_1 or arg_10_1 == "" then
+function GiftrecommendViewBase:_getCostSymbolAndPrice(systemJumpCode)
+	if not systemJumpCode or systemJumpCode == "" then
 		return
 	end
 
-	local var_10_0 = string.splitToNumber(arg_10_1, "#")
+	local paramsList = string.splitToNumber(systemJumpCode, "#")
 
-	if type(var_10_0) ~= "table" and #var_10_0 < 2 then
+	if type(paramsList) ~= "table" and #paramsList < 2 then
 		return
 	end
 
-	local var_10_1 = var_10_0[2]
+	local jumpGoodsId = paramsList[2]
 
-	return PayModel.instance:getProductPrice(var_10_1), ""
+	return PayModel.instance:getProductPrice(jumpGoodsId), ""
 end
 
-function var_0_0._getIsBought(arg_11_0, arg_11_1)
-	if not arg_11_1 then
+function GiftrecommendViewBase:_getIsBought(relation)
+	if not relation then
 		return false
 	end
 
-	local var_11_0 = arg_11_1[1]
-	local var_11_1 = arg_11_1[2]
+	local relationType = relation[1]
+	local relationId = relation[2]
 
-	if not var_11_0 or not var_11_1 then
+	if not relationType or not relationId then
 		return false
 	end
 
-	local var_11_2 = StoreModel.instance:getGoodsMO(var_11_1)
+	local storePackageGoodsMO = StoreModel.instance:getGoodsMO(relationId)
 
-	if var_11_2 == nil or var_11_2:isSoldOut() then
+	if storePackageGoodsMO == nil or storePackageGoodsMO:isSoldOut() then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0._editableInitView(arg_12_0)
-	arg_12_0._animator = arg_12_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_12_0._animatorPlayer = SLFramework.AnimatorPlayer.Get(arg_12_0.viewGO)
+function GiftrecommendViewBase:_editableInitView()
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._animatorPlayer = SLFramework.AnimatorPlayer.Get(self.viewGO)
 end
 
-function var_0_0.onOpen(arg_13_0)
-	var_0_0.super.onOpen(arg_13_0)
-	arg_13_0:addEventCb(StoreController.instance, StoreEvent.UpdatePackageStore, arg_13_0.refreshUI, arg_13_0)
-	arg_13_0:addEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, arg_13_0.refreshUI, arg_13_0)
-	arg_13_0:refreshUI()
+function GiftrecommendViewBase:onOpen()
+	GiftrecommendViewBase.super.onOpen(self)
+	self:addEventCb(StoreController.instance, StoreEvent.UpdatePackageStore, self.refreshUI, self)
+	self:addEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, self.refreshUI, self)
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_14_0)
-	arg_14_0._txtprice1.text = ""
-	arg_14_0._txtprice2.text = ""
-	arg_14_0._txtprice3.text = ""
+function GiftrecommendViewBase:refreshUI()
+	self._txtprice1.text = ""
+	self._txtprice2.text = ""
+	self._txtprice3.text = ""
 
-	if arg_14_0.config == nil then
+	if self.config == nil then
 		return
 	end
 
-	local var_14_0 = string.split(arg_14_0.config.systemJumpCode, " ")
+	local jumpCodeParamsList = string.split(self.config.systemJumpCode, " ")
 
-	if var_14_0 then
-		arg_14_0._systemJumpCode1 = var_14_0[1]
-		arg_14_0._systemJumpCode2 = var_14_0[2]
-		arg_14_0._systemJumpCode3 = var_14_0[3]
+	if jumpCodeParamsList then
+		self._systemJumpCode1 = jumpCodeParamsList[1]
+		self._systemJumpCode2 = jumpCodeParamsList[2]
+		self._systemJumpCode3 = jumpCodeParamsList[3]
 
-		local var_14_1, var_14_2 = arg_14_0:_getCostSymbolAndPrice(var_14_0[1])
+		local symbol1, price1 = self:_getCostSymbolAndPrice(jumpCodeParamsList[1])
 
-		if var_14_1 then
-			arg_14_0._txtprice1.text = string.format("%s%s", var_14_1, var_14_2)
+		if symbol1 then
+			self._txtprice1.text = string.format("%s%s", symbol1, price1)
 		end
 
-		local var_14_3, var_14_4 = arg_14_0:_getCostSymbolAndPrice(var_14_0[2])
+		local symbol2, price2 = self:_getCostSymbolAndPrice(jumpCodeParamsList[2])
 
-		if var_14_3 then
-			arg_14_0._txtprice2.text = string.format("%s%s", var_14_3, var_14_4)
+		if symbol2 then
+			self._txtprice2.text = string.format("%s%s", symbol2, price2)
 		end
 
-		local var_14_5, var_14_6 = arg_14_0:_getCostSymbolAndPrice(var_14_0[3])
+		local symbol3, price3 = self:_getCostSymbolAndPrice(jumpCodeParamsList[3])
 
-		if var_14_5 then
-			arg_14_0._txtprice3.text = string.format("%s%s", var_14_5, var_14_6)
-		end
-	end
-
-	if not string.nilorempty(arg_14_0.config.relations) then
-		local var_14_7 = GameUtil.splitString2(arg_14_0.config.relations, true)
-
-		if type(var_14_7) == "table" then
-			arg_14_0._isBought1 = arg_14_0:_getIsBought(var_14_7[1])
-			arg_14_0._isBought2 = arg_14_0:_getIsBought(var_14_7[2])
-			arg_14_0._isBought3 = arg_14_0:_getIsBought(var_14_7[3])
+		if symbol3 then
+			self._txtprice3.text = string.format("%s%s", symbol3, price3)
 		end
 	end
 
-	arg_14_0._txtduration.text = StoreController.instance:getRecommendStoreTime(arg_14_0.config)
+	if not string.nilorempty(self.config.relations) then
+		local relations = GameUtil.splitString2(self.config.relations, true)
+
+		if type(relations) == "table" then
+			self._isBought1 = self:_getIsBought(relations[1])
+			self._isBought2 = self:_getIsBought(relations[2])
+			self._isBought3 = self:_getIsBought(relations[3])
+		end
+	end
+
+	self._txtduration.text = StoreController.instance:getRecommendStoreTime(self.config)
 end
 
-function var_0_0.onClose(arg_15_0)
-	arg_15_0:removeEventCb(StoreController.instance, StoreEvent.UpdatePackageStore, arg_15_0.refreshUI, arg_15_0)
-	arg_15_0:removeEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, arg_15_0.refreshUI, arg_15_0)
+function GiftrecommendViewBase:onClose()
+	self:removeEventCb(StoreController.instance, StoreEvent.UpdatePackageStore, self.refreshUI, self)
+	self:removeEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, self.refreshUI, self)
 end
 
-function var_0_0.onDestroyView(arg_16_0)
+function GiftrecommendViewBase:onDestroyView()
 	return
 end
 
-return var_0_0
+return GiftrecommendViewBase

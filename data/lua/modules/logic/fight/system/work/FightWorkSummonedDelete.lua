@@ -1,43 +1,45 @@
-﻿module("modules.logic.fight.system.work.FightWorkSummonedDelete", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkSummonedDelete.lua
 
-local var_0_0 = class("FightWorkSummonedDelete", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkSummonedDelete", package.seeall)
 
-function var_0_0.beforePlayEffectData(arg_1_0)
-	arg_1_0._entityId = arg_1_0.actEffectData.targetId
-	arg_1_0._uid = arg_1_0.actEffectData.reserveId
-	arg_1_0._entityMO = FightDataHelper.entityMgr:getById(arg_1_0._entityId)
+local FightWorkSummonedDelete = class("FightWorkSummonedDelete", FightEffectBase)
 
-	local var_1_0 = arg_1_0._entityMO and arg_1_0._entityMO:getSummonedInfo()
+function FightWorkSummonedDelete:beforePlayEffectData()
+	self._entityId = self.actEffectData.targetId
+	self._uid = self.actEffectData.reserveId
+	self._entityMO = FightDataHelper.entityMgr:getById(self._entityId)
 
-	arg_1_0._oldValue = var_1_0 and var_1_0:getData(arg_1_0._uid)
+	local summonedInfo = self._entityMO and self._entityMO:getSummonedInfo()
+
+	self._oldValue = summonedInfo and summonedInfo:getData(self._uid)
 end
 
-function var_0_0.onStart(arg_2_0)
-	if not arg_2_0._oldValue then
-		arg_2_0:onDone(true)
+function FightWorkSummonedDelete:onStart()
+	if not self._oldValue then
+		self:onDone(true)
 
 		return
 	end
 
-	local var_2_0 = FightConfig.instance:getSummonedConfig(arg_2_0._oldValue.summonedId, arg_2_0._oldValue.level)
+	local config = FightConfig.instance:getSummonedConfig(self._oldValue.summonedId, self._oldValue.level)
 
-	if var_2_0 then
-		arg_2_0:com_registTimer(arg_2_0._delayDone, var_2_0.closeTime / 1000 / FightModel.instance:getSpeed())
-		FightController.instance:dispatchEvent(FightEvent.PlayRemoveSummoned, arg_2_0._entityId, arg_2_0._uid)
+	if config then
+		self:com_registTimer(self._delayDone, config.closeTime / 1000 / FightModel.instance:getSpeed())
+		FightController.instance:dispatchEvent(FightEvent.PlayRemoveSummoned, self._entityId, self._uid)
 
 		return
 	end
 
-	logError("挂件表找不到id:" .. arg_2_0._oldValue.summonedId .. "  等级:" .. arg_2_0._oldValue.level)
-	arg_2_0:onDone(true)
+	logError("挂件表找不到id:" .. self._oldValue.summonedId .. "  等级:" .. self._oldValue.level)
+	self:onDone(true)
 end
 
-function var_0_0._delayDone(arg_3_0)
-	arg_3_0:onDone(true)
+function FightWorkSummonedDelete:_delayDone()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	FightController.instance:dispatchEvent(FightEvent.SummonedDelete, arg_4_0._entityId, arg_4_0._uid)
+function FightWorkSummonedDelete:clearWork()
+	FightController.instance:dispatchEvent(FightEvent.SummonedDelete, self._entityId, self._uid)
 end
 
-return var_0_0
+return FightWorkSummonedDelete

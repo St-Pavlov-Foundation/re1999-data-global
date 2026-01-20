@@ -1,216 +1,234 @@
-﻿module("modules.logic.versionactivity1_6.act147.model.FurnaceTreasureModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/act147/model/FurnaceTreasureModel.lua
 
-local var_0_0 = class("FurnaceTreasureModel", BaseModel)
+module("modules.logic.versionactivity1_6.act147.model.FurnaceTreasureModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:resetData()
+local FurnaceTreasureModel = class("FurnaceTreasureModel", BaseModel)
+
+function FurnaceTreasureModel:onInit()
+	self:resetData()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:resetData()
+function FurnaceTreasureModel:reInit()
+	self:resetData()
 end
 
-function var_0_0._checkServerData(arg_3_0, arg_3_1)
-	local var_3_0 = false
+function FurnaceTreasureModel:_checkServerData(serverData)
+	local result = false
 
-	if arg_3_1 then
-		local var_3_1 = arg_3_1.activityId
+	if serverData then
+		local serverActId = serverData.activityId
 
-		var_3_0 = arg_3_0:_checkActId(var_3_1)
+		result = self:_checkActId(serverActId)
 	end
 
-	return var_3_0
+	return result
 end
 
-function var_0_0._checkActId(arg_4_0, arg_4_1)
-	local var_4_0 = false
+function FurnaceTreasureModel:_checkActId(serverActId)
+	local result = false
 
-	if arg_4_1 then
-		var_4_0 = arg_4_1 == arg_4_0:getActId()
+	if serverActId then
+		local localActId = self:getActId()
+
+		result = serverActId == localActId
 	end
 
-	return var_4_0
+	return result
 end
 
-function var_0_0.getActId(arg_5_0)
-	local var_5_0 = ActivityModel.instance:getOnlineActIdByType(ActivityEnum.ActivityTypeID.Act147)
+function FurnaceTreasureModel:getActId()
+	local list = ActivityModel.instance:getOnlineActIdByType(ActivityEnum.ActivityTypeID.Act147)
 
-	return var_5_0 and var_5_0[1]
+	return list and list[1]
 end
 
-function var_0_0.isActivityOpen(arg_6_0)
-	local var_6_0 = arg_6_0:getActId()
+function FurnaceTreasureModel:isActivityOpen()
+	local actId = self:getActId()
+	local result = ActivityModel.instance:isActOnLine(actId)
 
-	return (ActivityModel.instance:isActOnLine(var_6_0))
+	return result
 end
 
-function var_0_0._checkGoodsData(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = false
-	local var_7_1 = arg_7_0:isActivityOpen()
+function FurnaceTreasureModel:_checkGoodsData(storeId, goodsId)
+	local result = false
+	local isOpen = self:isActivityOpen()
 
-	if not arg_7_1 or not arg_7_2 and not var_7_1 then
-		return var_7_0
+	if not storeId or not goodsId and not isOpen then
+		return result
 	end
 
-	if arg_7_0._store2GoodsData[arg_7_1] and arg_7_0._store2GoodsData[arg_7_1][arg_7_2] then
-		var_7_0 = true
+	if self._store2GoodsData[storeId] and self._store2GoodsData[storeId][goodsId] then
+		result = true
 	else
-		logError(string.format("FurnaceTreasureModel:_checkGoodsData error,data is nil, storeId:%s, goodsId:%s", arg_7_1, arg_7_2))
+		logError(string.format("FurnaceTreasureModel:_checkGoodsData error,data is nil, storeId:%s, goodsId:%s", storeId, goodsId))
 	end
 
-	return var_7_0
+	return result
 end
 
-function var_0_0.getGoodsPoolId(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = 0
+function FurnaceTreasureModel:getGoodsPoolId(storeId, goodsId)
+	local result = 0
 
-	if not arg_8_0:_checkGoodsData(arg_8_1, arg_8_2) then
-		return var_8_0
+	if not self:_checkGoodsData(storeId, goodsId) then
+		return result
 	end
 
-	return arg_8_0._store2GoodsData[arg_8_1][arg_8_2].poolId
+	result = self._store2GoodsData[storeId][goodsId].poolId
+
+	return result
 end
 
-function var_0_0.getGoodsRemainCount(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = 0
+function FurnaceTreasureModel:getGoodsRemainCount(storeId, goodsId)
+	local result = 0
 
-	if not arg_9_0:_checkGoodsData(arg_9_1, arg_9_2) then
-		return var_9_0
+	if not self:_checkGoodsData(storeId, goodsId) then
+		return result
 	end
 
-	return arg_9_0._store2GoodsData[arg_9_1][arg_9_2].remainCount
+	result = self._store2GoodsData[storeId][goodsId].remainCount
+
+	return result
 end
 
-function var_0_0.getGoodsListByStoreId(arg_10_0, arg_10_1)
-	local var_10_0 = {}
-	local var_10_1 = arg_10_0:isActivityOpen()
+function FurnaceTreasureModel:getGoodsListByStoreId(storeId)
+	local result = {}
+	local isOpen = self:isActivityOpen()
 
-	if arg_10_1 and var_10_1 and arg_10_0._store2GoodsData[arg_10_1] then
-		for iter_10_0, iter_10_1 in pairs(arg_10_0._store2GoodsData[arg_10_1]) do
-			var_10_0[#var_10_0 + 1] = iter_10_0
+	if storeId and isOpen and self._store2GoodsData[storeId] then
+		for goodsId, _ in pairs(self._store2GoodsData[storeId]) do
+			result[#result + 1] = goodsId
 		end
 	end
 
-	return var_10_0
+	return result
 end
 
-function var_0_0.getCostItem(arg_11_0, arg_11_1)
-	local var_11_0 = FurnaceTreasureEnum.StoreId2CostItem[arg_11_1]
+function FurnaceTreasureModel:getCostItem(storeId)
+	local result = FurnaceTreasureEnum.StoreId2CostItem[storeId]
 
-	if not var_11_0 then
-		logError(string.format("FurnaceTreasureModel:getCostItem error, no store cost item, storeId:%s", arg_11_1))
+	if not result then
+		logError(string.format("FurnaceTreasureModel:getCostItem error, no store cost item, storeId:%s", storeId))
 	end
 
-	return var_11_0
+	return result
 end
 
-function var_0_0.getTotalRemainCount(arg_12_0)
-	return arg_12_0._totalRemainCount
+function FurnaceTreasureModel:getTotalRemainCount()
+	return self._totalRemainCount
 end
 
-function var_0_0.getSpinePlayData(arg_13_0, arg_13_1)
-	local var_13_0 = {
-		motion = FurnaceTreasureEnum.BeginnerViewSpinePlayData
-	}
+function FurnaceTreasureModel:getSpinePlayData(poolId)
+	local co = {}
 
-	if arg_13_1 and FurnaceTreasureEnum.Pool2SpinePlayData[arg_13_1] then
-		var_13_0.motion = FurnaceTreasureEnum.Pool2SpinePlayData[arg_13_1]
+	co.motion = FurnaceTreasureEnum.BeginnerViewSpinePlayData
+
+	if poolId and FurnaceTreasureEnum.Pool2SpinePlayData[poolId] then
+		co.motion = FurnaceTreasureEnum.Pool2SpinePlayData[poolId]
 	end
 
-	return var_13_0
+	return co
 end
 
-function var_0_0.setServerData(arg_14_0, arg_14_1, arg_14_2)
-	if not arg_14_0:_checkServerData(arg_14_1) then
+function FurnaceTreasureModel:setServerData(serverData, isResetData)
+	local checkResult = self:_checkServerData(serverData)
+
+	if not checkResult then
 		return
 	end
 
-	if arg_14_2 then
-		arg_14_0:resetData()
+	if isResetData then
+		self:resetData()
 	end
 
-	if arg_14_1.act147Goods then
-		for iter_14_0, iter_14_1 in ipairs(arg_14_1.act147Goods) do
-			arg_14_0:setGoodsData(iter_14_1)
+	if serverData.act147Goods then
+		for _, goodsData in ipairs(serverData.act147Goods) do
+			self:setGoodsData(goodsData)
 		end
 	end
 
-	arg_14_0:setTotalRemainCount(arg_14_1.totalRemainCount)
+	self:setTotalRemainCount(serverData.totalRemainCount)
 	FurnaceTreasureController.instance:dispatchEvent(FurnaceTreasureEvent.onFurnaceTreasureGoodsUpdate)
 end
 
-function var_0_0.setGoodsData(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_1.belongStoreId
-	local var_15_1 = arg_15_1.id
-	local var_15_2 = arg_15_1.remainCount
-	local var_15_3 = arg_15_1.poolId
-	local var_15_4 = arg_15_0._store2GoodsData[var_15_0]
+function FurnaceTreasureModel:setGoodsData(serverGoodsData)
+	local storeId = serverGoodsData.belongStoreId
+	local goodsId = serverGoodsData.id
+	local remainCount = serverGoodsData.remainCount
+	local poolId = serverGoodsData.poolId
+	local storeGoodsData = self._store2GoodsData[storeId]
 
-	if not var_15_4 then
-		var_15_4 = {}
-		arg_15_0._store2GoodsData[var_15_0] = var_15_4
+	if not storeGoodsData then
+		storeGoodsData = {}
+		self._store2GoodsData[storeId] = storeGoodsData
 	end
 
-	if not var_15_4[var_15_1] then
-		var_15_4[var_15_1] = {
-			poolId = var_15_3
+	local goodsData = storeGoodsData[goodsId]
+
+	if not goodsData then
+		goodsData = {
+			poolId = poolId
 		}
+		storeGoodsData[goodsId] = goodsData
 	end
 
-	arg_15_0:setGoodsRemainCount(var_15_0, var_15_1, var_15_2)
+	self:setGoodsRemainCount(storeId, goodsId, remainCount)
 end
 
-function var_0_0.updateGoodsData(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_1.activityId
+function FurnaceTreasureModel:updateGoodsData(serverData)
+	local serverActId = serverData.activityId
+	local checkResult = self:_checkActId(serverActId)
 
-	if not arg_16_0:_checkActId(var_16_0) then
+	if not checkResult then
 		return
 	end
 
-	local var_16_1 = arg_16_1.goodsId
-	local var_16_2 = arg_16_1.remainCount
-	local var_16_3 = arg_16_1.storeId
+	local serverGoodsId = serverData.goodsId
+	local serverRemainCount = serverData.remainCount
+	local serverStoreId = serverData.storeId
 
-	arg_16_0:setGoodsRemainCount(var_16_3, var_16_1, var_16_2)
+	self:setGoodsRemainCount(serverStoreId, serverGoodsId, serverRemainCount)
 	FurnaceTreasureController.instance:dispatchEvent(FurnaceTreasureEvent.onFurnaceTreasureGoodsUpdate)
 end
 
-function var_0_0.setGoodsRemainCount(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	local var_17_0 = arg_17_0._store2GoodsData[arg_17_1]
-	local var_17_1 = var_17_0 and var_17_0[arg_17_2] or nil
+function FurnaceTreasureModel:setGoodsRemainCount(storeId, goodsId, remainCount)
+	local storeGoodsData = self._store2GoodsData[storeId]
+	local goodsData = storeGoodsData and storeGoodsData[goodsId] or nil
 
-	if not var_17_1 then
+	if not goodsData then
 		return
 	end
 
-	var_17_1.remainCount = arg_17_3
+	goodsData.remainCount = remainCount
 end
 
-function var_0_0.setTotalRemainCount(arg_18_0, arg_18_1)
-	arg_18_1 = arg_18_1 or 0
-	arg_18_0._totalRemainCount = arg_18_1
+function FurnaceTreasureModel:setTotalRemainCount(count)
+	count = count or 0
+	self._totalRemainCount = count
 end
 
-function var_0_0.decreaseTotalRemainCount(arg_19_0, arg_19_1)
-	if arg_19_0:_checkActId(arg_19_1) then
-		local var_19_0 = arg_19_0:getActId()
-		local var_19_1 = arg_19_0:getTotalRemainCount(var_19_0) - 1
+function FurnaceTreasureModel:decreaseTotalRemainCount(serverActId)
+	local checkResult = self:_checkActId(serverActId)
 
-		arg_19_0:setTotalRemainCount(var_19_1)
+	if checkResult then
+		local localActId = self:getActId()
+		local originalCount = self:getTotalRemainCount(localActId)
+		local newCount = originalCount - 1
+
+		self:setTotalRemainCount(newCount)
 		FurnaceTreasureController.instance:dispatchEvent(FurnaceTreasureEvent.onFurnaceTreasureGoodsUpdate)
 	end
 end
 
-function var_0_0.resetData(arg_20_0, arg_20_1)
-	arg_20_0._store2GoodsData = {}
+function FurnaceTreasureModel:resetData(dispatchEvent)
+	self._store2GoodsData = {}
 
-	arg_20_0:setTotalRemainCount()
+	self:setTotalRemainCount()
 
-	if arg_20_1 then
+	if dispatchEvent then
 		FurnaceTreasureController.instance:dispatchEvent(FurnaceTreasureEvent.onFurnaceTreasureGoodsUpdate)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+FurnaceTreasureModel.instance = FurnaceTreasureModel.New()
 
-return var_0_0
+return FurnaceTreasureModel

@@ -1,16 +1,18 @@
-﻿module("modules.logic.activity.view.V1a5_Role_FullSignView_Part2", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/V1a5_Role_FullSignView_Part2.lua
 
-local var_0_0 = class("V1a5_Role_FullSignView_Part2", V1a5_Role_FullSignView)
+module("modules.logic.activity.view.V1a5_Role_FullSignView_Part2", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	arg_1_0._simageTitle:LoadImage(ResUrl.getV1a5SignSingleBgLang("v1a5_sign_aizila_title"))
-	arg_1_0._simageFullBG:LoadImage(ResUrl.getV1a5SignSingleBg("v1a5_aizila_sign_fullbg"))
+local V1a5_Role_FullSignView_Part2 = class("V1a5_Role_FullSignView_Part2", V1a5_Role_FullSignView)
 
-	local var_1_0 = gohelper.findChild(arg_1_0.viewGO, "Root/vx_effect1")
-	local var_1_1 = gohelper.findChild(arg_1_0.viewGO, "Root/vx_effect2")
+function V1a5_Role_FullSignView_Part2:_editableInitView()
+	self._simageTitle:LoadImage(ResUrl.getV1a5SignSingleBgLang("v1a5_sign_aizila_title"))
+	self._simageFullBG:LoadImage(ResUrl.getV1a5SignSingleBg("v1a5_aizila_sign_fullbg"))
 
-	gohelper.setActive(var_1_0, false)
-	gohelper.setActive(var_1_1, true)
+	local go1 = gohelper.findChild(self.viewGO, "Root/vx_effect1")
+	local go2 = gohelper.findChild(self.viewGO, "Root/vx_effect2")
+
+	gohelper.setActive(go1, false)
+	gohelper.setActive(go2, true)
 end
 
-return var_0_0
+return V1a5_Role_FullSignView_Part2

@@ -1,188 +1,197 @@
-﻿module("modules.logic.survival.view.reputation.SurvivalReputationSelectView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/reputation/SurvivalReputationSelectView.lua
 
-local var_0_0 = class("SurvivalReputationSelectView", BaseView)
+module("modules.logic.survival.view.reputation.SurvivalReputationSelectView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._scrollbuild = gohelper.findChildScrollRect(arg_1_0.viewGO, "build/#scroll_build")
-	arg_1_0._gobuildcontent = gohelper.findChild(arg_1_0.viewGO, "build/#scroll_build/Viewport/#go_build_content")
-	arg_1_0._txtscore = gohelper.findChildText(arg_1_0.viewGO, "Btn/score/#txt_score")
-	arg_1_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Btn/#btn_confirm")
-	arg_1_0._btnconfirmgrey = gohelper.findChild(arg_1_0.viewGO, "Btn/#btn_confirm_grey")
-	arg_1_0._scrollitem = gohelper.findChildScrollRect(arg_1_0.viewGO, "item/#scroll_item")
-	arg_1_0.txt_tips = gohelper.findChildTextMesh(arg_1_0.viewGO, "titlebg/txt_tips")
-	arg_1_0.customItems = {}
+local SurvivalReputationSelectView = class("SurvivalReputationSelectView", BaseView)
 
-	arg_1_0:createItemScroll()
+function SurvivalReputationSelectView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._scrollbuild = gohelper.findChildScrollRect(self.viewGO, "build/#scroll_build")
+	self._gobuildcontent = gohelper.findChild(self.viewGO, "build/#scroll_build/Viewport/#go_build_content")
+	self._txtscore = gohelper.findChildText(self.viewGO, "Btn/score/#txt_score")
+	self._btnconfirm = gohelper.findChildButtonWithAudio(self.viewGO, "Btn/#btn_confirm")
+	self._btnconfirmgrey = gohelper.findChild(self.viewGO, "Btn/#btn_confirm_grey")
+	self._scrollitem = gohelper.findChildScrollRect(self.viewGO, "item/#scroll_item")
+	self.txt_tips = gohelper.findChildTextMesh(self.viewGO, "titlebg/txt_tips")
+	self.customItems = {}
 
-	arg_1_0._sequence = FlowSequence.New()
+	self:createItemScroll()
+
+	self._sequence = FlowSequence.New()
 end
 
-function var_0_0.createItemScroll(arg_2_0)
-	local var_2_0 = SurvivalSimpleListParam.New()
+function SurvivalReputationSelectView:createItemScroll()
+	local scrollParam = SurvivalSimpleListParam.New()
 
-	var_2_0.cellClass = SurvivalReputationSelectBagItem
-	var_2_0.lineCount = 1
-	var_2_0.cellWidth = 200
-	var_2_0.cellHeight = 200
-	var_2_0.cellSpaceH = 0
-	var_2_0.cellSpaceV = 0
+	scrollParam.cellClass = SurvivalReputationSelectBagItem
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 200
+	scrollParam.cellHeight = 200
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 0
 
-	local var_2_1 = arg_2_0.viewContainer:getSetting().otherRes.survivalreputationselectbagitem
+	local res = self.viewContainer:getSetting().otherRes.survivalreputationselectbagitem
 
-	arg_2_0.survivalSimpleListComp = SurvivalHelper.instance:createLuaSimpleListComp(arg_2_0._scrollitem.gameObject, var_2_0, var_2_1, arg_2_0.viewContainer)
+	self.survivalSimpleListComp = SurvivalHelper.instance:createLuaSimpleListComp(self._scrollitem.gameObject, scrollParam, res, self.viewContainer)
 end
 
-function var_0_0.addEvents(arg_3_0)
-	arg_3_0:addClickCb(arg_3_0._btnconfirm, arg_3_0.onClickBtnConfirm, arg_3_0)
-	arg_3_0:addEventCb(SurvivalController.instance, SurvivalEvent.OnReceiveSurvivalReputationExpReply, arg_3_0.onReceiveSurvivalReputationExpReply, arg_3_0)
+function SurvivalReputationSelectView:addEvents()
+	self:addClickCb(self._btnconfirm, self.onClickBtnConfirm, self)
+	self:addEventCb(SurvivalController.instance, SurvivalEvent.OnReceiveSurvivalReputationExpReply, self.onReceiveSurvivalReputationExpReply, self)
 end
 
-function var_0_0.onOpen(arg_4_0)
-	arg_4_0.isReceiveMsg = nil
-	arg_4_0.items = SurvivalShelterModel.instance:getWeekInfo():getBag(SurvivalEnum.ItemSource.Shelter):getReputationItem()
-	arg_4_0.score = SurvivalReputationModel.instance:getSelectViewReputationAdd(arg_4_0.items)
-	arg_4_0._txtscore.text = arg_4_0.score
+function SurvivalReputationSelectView:onOpen()
+	self.isReceiveMsg = nil
 
-	arg_4_0:refreshItemList()
-	arg_4_0:refreshBuildList()
-	arg_4_0:refreshBtnConfirm()
-	arg_4_0:refreshTextTip()
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+
+	self.items = weekInfo:getBag(SurvivalEnum.ItemSource.Shelter):getReputationItem()
+	self.score = SurvivalReputationModel.instance:getSelectViewReputationAdd(self.items)
+	self._txtscore.text = self.score
+
+	self:refreshItemList()
+	self:refreshBuildList()
+	self:refreshBtnConfirm()
+	self:refreshTextTip()
 	SurvivalController.instance:dispatchEvent(SurvivalEvent.GuideSurvivalReputationSelectViewOpen)
 end
 
-function var_0_0.onClose(arg_5_0)
+function SurvivalReputationSelectView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_6_0)
-	if arg_6_0._sequence and arg_6_0._sequence.status == WorkStatus.Running then
-		arg_6_0._sequence:stop()
+function SurvivalReputationSelectView:onDestroyView()
+	if self._sequence and self._sequence.status == WorkStatus.Running then
+		self._sequence:stop()
 	end
 end
 
-function var_0_0.refreshItemList(arg_7_0)
-	arg_7_0.survivalSimpleListComp:setList(arg_7_0.items)
+function SurvivalReputationSelectView:refreshItemList()
+	self.survivalSimpleListComp:setList(self.items)
 end
 
-function var_0_0.refreshBtnConfirm(arg_8_0)
-	gohelper.setActive(arg_8_0._btnconfirm.gameObject, arg_8_0.curSelect ~= nil)
-	gohelper.setActive(arg_8_0._btnconfirmgrey, arg_8_0.curSelect == nil)
+function SurvivalReputationSelectView:refreshBtnConfirm()
+	gohelper.setActive(self._btnconfirm.gameObject, self.curSelect ~= nil)
+	gohelper.setActive(self._btnconfirmgrey, self.curSelect == nil)
 end
 
-function var_0_0.onClickBtnConfirm(arg_9_0)
-	if arg_9_0.isReceiveMsg then
+function SurvivalReputationSelectView:onClickBtnConfirm()
+	if self.isReceiveMsg then
 		return
 	end
 
-	local var_9_0 = arg_9_0.customItems[arg_9_0.curSelect].reputationId
+	local reputationId = self.customItems[self.curSelect].reputationId
 
-	SurvivalWeekRpc.instance:sendSurvivalReputationExpRequest(var_9_0)
+	SurvivalWeekRpc.instance:sendSurvivalReputationExpRequest(reputationId)
 end
 
-function var_0_0.onReceiveSurvivalReputationExpReply(arg_10_0, arg_10_1)
-	arg_10_0.isReceiveMsg = true
+function SurvivalReputationSelectView:onReceiveSurvivalReputationExpReply(param)
+	self.isReceiveMsg = true
 
-	local var_10_0 = arg_10_1.msg.building
-	local var_10_1
+	local msg = param.msg
+	local survivalBuilding = msg.building
+	local customItem
 
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0.customItems) do
-		if iter_10_1.buildingCfgId == var_10_0.buildingId then
-			var_10_1 = arg_10_0.customItems[iter_10_0]
+	for i, v in ipairs(self.customItems) do
+		if v.buildingCfgId == survivalBuilding.buildingId then
+			customItem = self.customItems[i]
 		end
 	end
 
-	local var_10_2 = FlowSequence.New()
+	local flow = FlowSequence.New()
 
-	var_10_2:addWork(FunctionWork.New(arg_10_0.playItemAnim, arg_10_0))
-	var_10_2:addWork(AnimatorWork.New({
+	flow:addWork(FunctionWork.New(self.playItemAnim, self))
+	flow:addWork(AnimatorWork.New({
 		animName = "uiclose",
-		go = arg_10_0.viewGO
+		go = self.viewGO
 	}))
-	var_10_2:addWork(var_10_1:playUpAnim(var_10_0))
-	var_10_2:addWork(TimerWork.New(0.5))
-	arg_10_0._sequence:addWork(var_10_2)
-	arg_10_0._sequence:registerDoneListener(arg_10_0.onAnimalPlayCallBack, arg_10_0)
-	arg_10_0._sequence:start()
+	flow:addWork(customItem:playUpAnim(survivalBuilding))
+	flow:addWork(TimerWork.New(0.5))
+	self._sequence:addWork(flow)
+	self._sequence:registerDoneListener(self.onAnimalPlayCallBack, self)
+	self._sequence:start()
 end
 
-function var_0_0.playItemAnim(arg_11_0)
-	local var_11_0 = arg_11_0.survivalSimpleListComp:getItems()
+function SurvivalReputationSelectView:playItemAnim()
+	local items = self.survivalSimpleListComp:getItems()
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
-		iter_11_1:playSearch()
+	for i, v in ipairs(items) do
+		v:playSearch()
 	end
 end
 
-function var_0_0.onAnimalPlayCallBack(arg_12_0)
-	arg_12_0:closeThis()
+function SurvivalReputationSelectView:onAnimalPlayCallBack()
+	self:closeThis()
 end
 
-function var_0_0.refreshBuildList(arg_13_0)
-	local var_13_0 = arg_13_0.viewContainer:getSetting().otherRes.survivalreputationbuilditem
-	local var_13_1 = SurvivalShelterModel.instance:getWeekInfo():getReputationBuilds()
-	local var_13_2 = #arg_13_0.customItems
-	local var_13_3 = #var_13_1
+function SurvivalReputationSelectView:refreshBuildList()
+	local resPath = self.viewContainer:getSetting().otherRes.survivalreputationbuilditem
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local list = weekInfo:getReputationBuilds()
+	local customItemAmount = #self.customItems
+	local listLength = #list
 
-	for iter_13_0 = 1, var_13_3 do
-		local var_13_4 = var_13_1[iter_13_0]
+	for i = 1, listLength do
+		local mo = list[i]
 
-		if var_13_2 < iter_13_0 then
-			local var_13_5 = arg_13_0:getResInst(var_13_0, arg_13_0._gobuildcontent)
+		if customItemAmount < i then
+			local obj = self:getResInst(resPath, self._gobuildcontent)
 
-			arg_13_0.customItems[iter_13_0] = MonoHelper.addNoUpdateLuaComOnceToGo(var_13_5, SurvivalReputationBuildItem)
+			self.customItems[i] = MonoHelper.addNoUpdateLuaComOnceToGo(obj, SurvivalReputationBuildItem)
 		end
 
-		arg_13_0.customItems[iter_13_0]:setData({
-			score = arg_13_0.score,
-			mo = var_13_4,
-			index = iter_13_0,
-			onClickCallBack = arg_13_0.onClickCallBack,
-			onClickContext = arg_13_0,
-			onAnimalPlayCallBack = arg_13_0.onAnimalPlayCallBack
+		self.customItems[i]:setData({
+			score = self.score,
+			mo = mo,
+			index = i,
+			onClickCallBack = self.onClickCallBack,
+			onClickContext = self,
+			onAnimalPlayCallBack = self.onAnimalPlayCallBack
 		})
 	end
 
-	for iter_13_1 = var_13_3 + 1, var_13_2 do
-		arg_13_0.customItems[iter_13_1]:setData(nil)
+	for i = listLength + 1, customItemAmount do
+		self.customItems[i]:setData(nil)
 	end
 end
 
-function var_0_0.onClickCallBack(arg_14_0, arg_14_1)
-	if not arg_14_1.isMaxLevel then
-		arg_14_0:setSelect(arg_14_1.index)
+function SurvivalReputationSelectView:onClickCallBack(item)
+	if not item.isMaxLevel then
+		self:setSelect(item.index)
 	end
 end
 
-function var_0_0.setSelect(arg_15_0, arg_15_1)
-	if arg_15_0.isReceiveMsg then
+function SurvivalReputationSelectView:setSelect(tarSelect)
+	if self.isReceiveMsg then
 		return
 	end
 
-	if (not arg_15_1 or not arg_15_0.curSelect or arg_15_0.curSelect ~= arg_15_1) and (not not arg_15_1 or not not arg_15_0.curSelect) then
-		if arg_15_0.curSelect then
-			arg_15_0.customItems[arg_15_0.curSelect]:setSelect(false)
+	local haveChange = (not tarSelect or not self.curSelect or self.curSelect ~= tarSelect) and (not not tarSelect or not not self.curSelect)
+
+	if haveChange then
+		if self.curSelect then
+			self.customItems[self.curSelect]:setSelect(false)
 		end
 
-		arg_15_0.curSelect = arg_15_1
+		self.curSelect = tarSelect
 
-		if arg_15_0.curSelect then
-			arg_15_0.customItems[arg_15_0.curSelect]:setSelect(true)
+		if self.curSelect then
+			self.customItems[self.curSelect]:setSelect(true)
 		end
 	end
 
-	arg_15_0:refreshBtnConfirm()
-	arg_15_0:refreshTextTip()
+	self:refreshBtnConfirm()
+	self:refreshTextTip()
 end
 
-function var_0_0.refreshTextTip(arg_16_0)
-	if arg_16_0.curSelect then
-		local var_16_0 = arg_16_0.customItems[arg_16_0.curSelect]
+function SurvivalReputationSelectView:refreshTextTip()
+	if self.curSelect then
+		local survivalReputationBuildItem = self.customItems[self.curSelect]
 
-		arg_16_0.txt_tips.text = var_16_0.buildCfg.desc
+		self.txt_tips.text = survivalReputationBuildItem.buildCfg.desc
 	else
-		arg_16_0.txt_tips.text = ""
+		self.txt_tips.text = ""
 	end
 end
 
-return var_0_0
+return SurvivalReputationSelectView

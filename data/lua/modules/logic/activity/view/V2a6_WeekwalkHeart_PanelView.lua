@@ -1,195 +1,197 @@
-﻿module("modules.logic.activity.view.V2a6_WeekwalkHeart_PanelView", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/V2a6_WeekwalkHeart_PanelView.lua
 
-local var_0_0 = class("V2a6_WeekwalkHeart_PanelView", Activity189BaseView)
+module("modules.logic.activity.view.V2a6_WeekwalkHeart_PanelView", package.seeall)
 
-var_0_0.SigninId = 530007
-var_0_0.ConstItemId = 1261301
+local V2a6_WeekwalkHeart_PanelView = class("V2a6_WeekwalkHeart_PanelView", Activity189BaseView)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._btnreward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/Left/reward/btn_reward")
-	arg_1_0._btnright = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/Right/rightbg/reward/btn")
-	arg_1_0._goreceive = gohelper.findChild(arg_1_0.viewGO, "Root/Left/go_receive")
-	arg_1_0._gohasget = gohelper.findChild(arg_1_0.viewGO, "Root/Left/go_receive/go_hasget")
-	arg_1_0._animGet = arg_1_0._gohasget:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._gocanget = gohelper.findChild(arg_1_0.viewGO, "Root/Left/go_canget")
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Root/Top/#txt_LimitTime")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/Top/#btn_close")
-	arg_1_0._btngoto = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/Right/#btn_goto")
+V2a6_WeekwalkHeart_PanelView.SigninId = 530007
+V2a6_WeekwalkHeart_PanelView.ConstItemId = 1261301
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V2a6_WeekwalkHeart_PanelView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._btnreward = gohelper.findChildButtonWithAudio(self.viewGO, "Root/Left/reward/btn_reward")
+	self._btnright = gohelper.findChildButtonWithAudio(self.viewGO, "Root/Right/rightbg/reward/btn")
+	self._goreceive = gohelper.findChild(self.viewGO, "Root/Left/go_receive")
+	self._gohasget = gohelper.findChild(self.viewGO, "Root/Left/go_receive/go_hasget")
+	self._animGet = self._gohasget:GetComponent(typeof(UnityEngine.Animator))
+	self._gocanget = gohelper.findChild(self.viewGO, "Root/Left/go_canget")
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "Root/Top/#txt_LimitTime")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "Root/Top/#btn_close")
+	self._btngoto = gohelper.findChildButtonWithAudio(self.viewGO, "Root/Right/#btn_goto")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btngoto:AddClickListener(arg_2_0._btngotoOnClick, arg_2_0)
-	arg_2_0._btnreward:AddClickListener(arg_2_0._btnrewardOnClick, arg_2_0)
-	arg_2_0._btnright:AddClickListener(arg_2_0._btnrightOnClick, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0._onCloseViewFinish, arg_2_0)
+function V2a6_WeekwalkHeart_PanelView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btngoto:AddClickListener(self._btngotoOnClick, self)
+	self._btnreward:AddClickListener(self._btnrewardOnClick, self)
+	self._btnright:AddClickListener(self._btnrightOnClick, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseViewFinish, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btngoto:RemoveClickListener()
-	arg_3_0._btnreward:RemoveClickListener()
-	arg_3_0._btnright:RemoveClickListener()
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0._onCloseViewFinish, arg_3_0)
+function V2a6_WeekwalkHeart_PanelView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btngoto:RemoveClickListener()
+	self._btnreward:RemoveClickListener()
+	self._btnright:RemoveClickListener()
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseViewFinish, self)
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function V2a6_WeekwalkHeart_PanelView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btngotoOnClick(arg_5_0)
-	ActivityModel.instance:setTargetActivityCategoryId(arg_5_0:actId())
+function V2a6_WeekwalkHeart_PanelView:_btngotoOnClick()
+	ActivityModel.instance:setTargetActivityCategoryId(self:actId())
 	ActivityController.instance:openActivityBeginnerView()
 end
 
-function var_0_0._btnrewardOnClick(arg_6_0)
-	if arg_6_0.rewardMo.hasFinished and not (arg_6_0.rewardMo.finishCount > 0) then
-		TaskRpc.instance:sendFinishTaskRequest(var_0_0.SigninId)
+function V2a6_WeekwalkHeart_PanelView:_btnrewardOnClick()
+	if self.rewardMo.hasFinished and not (self.rewardMo.finishCount > 0) then
+		TaskRpc.instance:sendFinishTaskRequest(V2a6_WeekwalkHeart_PanelView.SigninId)
 	end
 end
 
-function var_0_0._btnrightOnClick(arg_7_0)
-	MaterialTipController.instance:showMaterialInfo(arg_7_0._itemCo[1], arg_7_0._itemCo[2])
+function V2a6_WeekwalkHeart_PanelView:_btnrightOnClick()
+	MaterialTipController.instance:showMaterialInfo(self._itemCo[1], self._itemCo[2])
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0:_initTip()
+function V2a6_WeekwalkHeart_PanelView:_editableInitView()
+	self:_initTip()
 end
 
-function var_0_0._initTip(arg_9_0)
-	local var_9_0 = arg_9_0:getUserDataTb_()
+function V2a6_WeekwalkHeart_PanelView:_initTip()
+	local item = self:getUserDataTb_()
 
-	var_9_0.go = gohelper.findChild(arg_9_0.viewGO, "Root/Left")
-	var_9_0.isLike = false
-	var_9_0.isUnLike = false
-	var_9_0.golike = gohelper.findChild(var_9_0.go, "like")
-	var_9_0.txtlike = gohelper.findChildText(var_9_0.golike, "num")
-	var_9_0.likenum = math.random(50, 99)
-	var_9_0.txtlike.text = var_9_0.likenum
-	var_9_0.govxlike = gohelper.findChild(var_9_0.golike, "vx_like")
-	var_9_0.golikeSelect = gohelper.findChild(var_9_0.golike, "go_selected")
-	var_9_0.btnlikeclick = gohelper.findChildButton(var_9_0.golike, "#btn_click")
+	item.go = gohelper.findChild(self.viewGO, "Root/Left")
+	item.isLike = false
+	item.isUnLike = false
+	item.golike = gohelper.findChild(item.go, "like")
+	item.txtlike = gohelper.findChildText(item.golike, "num")
+	item.likenum = math.random(50, 99)
+	item.txtlike.text = item.likenum
+	item.govxlike = gohelper.findChild(item.golike, "vx_like")
+	item.golikeSelect = gohelper.findChild(item.golike, "go_selected")
+	item.btnlikeclick = gohelper.findChildButton(item.golike, "#btn_click")
 
-	local function var_9_1()
-		if not var_9_0.isUnLike then
-			if var_9_0.isLike then
-				var_9_0.likenum = var_9_0.likenum - 1
+	local function likefunc()
+		if not item.isUnLike then
+			if item.isLike then
+				item.likenum = item.likenum - 1
 			else
-				var_9_0.likenum = var_9_0.likenum + 1
+				item.likenum = item.likenum + 1
 			end
 
-			var_9_0.isLike = not var_9_0.isLike
+			item.isLike = not item.isLike
 		end
 
-		gohelper.setActive(var_9_0.govxlike, var_9_0.isLike)
-		gohelper.setActive(var_9_0.golikeSelect, var_9_0.isLike)
+		gohelper.setActive(item.govxlike, item.isLike)
+		gohelper.setActive(item.golikeSelect, item.isLike)
 
-		var_9_0.txtlike.text = var_9_0.likenum
+		item.txtlike.text = item.likenum
 
 		AudioMgr.instance:trigger(AudioEnum.NewTurnabck.play_ui_call_back_nameplate_switch)
 	end
 
-	var_9_0.btnlikeclick:AddClickListener(var_9_1, arg_9_0, var_9_0)
+	item.btnlikeclick:AddClickListener(likefunc, self, item)
 
-	var_9_0.gounlike = gohelper.findChild(var_9_0.go, "unlike")
-	var_9_0.txtunlike = gohelper.findChildText(var_9_0.gounlike, "num")
-	var_9_0.unlikenum = math.random(50, 99)
-	var_9_0.txtunlike.text = var_9_0.unlikenum
-	var_9_0.govxunlike = gohelper.findChild(var_9_0.gounlike, "vx_unlike")
-	var_9_0.gounlikeSelect = gohelper.findChild(var_9_0.gounlike, "go_selected")
-	var_9_0.btnunlikeclick = gohelper.findChildButton(var_9_0.gounlike, "#btn_click")
+	item.gounlike = gohelper.findChild(item.go, "unlike")
+	item.txtunlike = gohelper.findChildText(item.gounlike, "num")
+	item.unlikenum = math.random(50, 99)
+	item.txtunlike.text = item.unlikenum
+	item.govxunlike = gohelper.findChild(item.gounlike, "vx_unlike")
+	item.gounlikeSelect = gohelper.findChild(item.gounlike, "go_selected")
+	item.btnunlikeclick = gohelper.findChildButton(item.gounlike, "#btn_click")
 
-	local function var_9_2()
-		if not var_9_0.isLike then
-			if var_9_0.isUnLike then
-				var_9_0.unlikenum = var_9_0.unlikenum - 1
+	local function unlikefunc()
+		if not item.isLike then
+			if item.isUnLike then
+				item.unlikenum = item.unlikenum - 1
 			else
-				var_9_0.unlikenum = var_9_0.unlikenum + 1
+				item.unlikenum = item.unlikenum + 1
 			end
 
-			var_9_0.isUnLike = not var_9_0.isUnLike
+			item.isUnLike = not item.isUnLike
 		end
 
-		gohelper.setActive(var_9_0.govxunlike, var_9_0.isUnLike)
-		gohelper.setActive(var_9_0.gounlikeSelect, var_9_0.isUnLike)
+		gohelper.setActive(item.govxunlike, item.isUnLike)
+		gohelper.setActive(item.gounlikeSelect, item.isUnLike)
 
-		var_9_0.txtunlike.text = var_9_0.unlikenum
+		item.txtunlike.text = item.unlikenum
 
 		AudioMgr.instance:trigger(AudioEnum.NewTurnabck.play_ui_call_back_nameplate_switch)
 	end
 
-	var_9_0.btnunlikeclick:AddClickListener(var_9_2, arg_9_0, var_9_0)
-	gohelper.setActive(var_9_0.govxlike, var_9_0.isLike)
-	gohelper.setActive(var_9_0.golikeSelect, var_9_0.isLike)
-	gohelper.setActive(var_9_0.govxunlike, var_9_0.isUnLike)
-	gohelper.setActive(var_9_0.gounlikeSelect, var_9_0.isUnLike)
+	item.btnunlikeclick:AddClickListener(unlikefunc, self, item)
+	gohelper.setActive(item.govxlike, item.isLike)
+	gohelper.setActive(item.golikeSelect, item.isLike)
+	gohelper.setActive(item.govxunlike, item.isUnLike)
+	gohelper.setActive(item.gounlikeSelect, item.isUnLike)
 
-	arg_9_0._rewardItem = var_9_0
+	self._rewardItem = item
 end
 
-function var_0_0.onUpdateParam(arg_12_0)
+function V2a6_WeekwalkHeart_PanelView:onUpdateParam()
 	return
 end
 
-function var_0_0._onCloseViewFinish(arg_13_0, arg_13_1)
-	if arg_13_1 == ViewName.CommonPropView then
-		arg_13_0:_refresh()
-		arg_13_0._animGet:Play("open")
+function V2a6_WeekwalkHeart_PanelView:_onCloseViewFinish(viewName)
+	if viewName == ViewName.CommonPropView then
+		self:_refresh()
+		self._animGet:Play("open")
 	end
 end
 
-function var_0_0._refresh(arg_14_0)
-	arg_14_0._txtLimitTime.text = arg_14_0:getRemainTimeStr()
+function V2a6_WeekwalkHeart_PanelView:_refresh()
+	self._txtLimitTime.text = self:getRemainTimeStr()
 
-	local var_14_0 = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.Activity189, arg_14_0:actId())
+	local moList = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.Activity189, self:actId())
 
-	if var_14_0 and #var_14_0 > 0 then
-		for iter_14_0, iter_14_1 in ipairs(var_14_0) do
-			if iter_14_1.id == var_0_0.SigninId then
-				arg_14_0.rewardMo = iter_14_1
+	if moList and #moList > 0 then
+		for index, rewardmo in ipairs(moList) do
+			if rewardmo.id == V2a6_WeekwalkHeart_PanelView.SigninId then
+				self.rewardMo = rewardmo
 
 				break
 			end
 		end
 	end
 
-	if arg_14_0.rewardMo.finishCount > 0 then
-		gohelper.setActive(arg_14_0._gocanget, false)
-		gohelper.setActive(arg_14_0._goreceive, true)
-		gohelper.setActive(arg_14_0._btnreward.gameObject, false)
-	elseif arg_14_0.rewardMo.hasFinished then
-		gohelper.setActive(arg_14_0._gocanget, true)
-		gohelper.setActive(arg_14_0._goreceive, false)
-		gohelper.setActive(arg_14_0._btnreward.gameObject, true)
+	if self.rewardMo.finishCount > 0 then
+		gohelper.setActive(self._gocanget, false)
+		gohelper.setActive(self._goreceive, true)
+		gohelper.setActive(self._btnreward.gameObject, false)
+	elseif self.rewardMo.hasFinished then
+		gohelper.setActive(self._gocanget, true)
+		gohelper.setActive(self._goreceive, false)
+		gohelper.setActive(self._btnreward.gameObject, true)
 	else
-		gohelper.setActive(arg_14_0._gocanget, false)
-		gohelper.setActive(arg_14_0._goreceive, false)
-		gohelper.setActive(arg_14_0._btnreward.gameObject, false)
+		gohelper.setActive(self._gocanget, false)
+		gohelper.setActive(self._goreceive, false)
+		gohelper.setActive(self._btnreward.gameObject, false)
 	end
 end
 
-function var_0_0.onOpen(arg_15_0)
-	local var_15_0 = Activity189Config.instance:getConstCoById(var_0_0.ConstItemId)
+function V2a6_WeekwalkHeart_PanelView:onOpen()
+	local constValue = Activity189Config.instance:getConstCoById(V2a6_WeekwalkHeart_PanelView.ConstItemId)
 
 	AudioMgr.instance:trigger(AudioEnum.NewTurnabck.play_ui_call_back_Interface_entry_04)
 
-	arg_15_0._itemCo = string.split(var_15_0.numValue, "#")
+	self._itemCo = string.split(constValue.numValue, "#")
 
-	arg_15_0:_refresh()
+	self:_refresh()
 end
 
-function var_0_0.onClose(arg_16_0)
-	arg_16_0._rewardItem.btnlikeclick:RemoveClickListener()
-	arg_16_0._rewardItem.btnunlikeclick:RemoveClickListener()
+function V2a6_WeekwalkHeart_PanelView:onClose()
+	self._rewardItem.btnlikeclick:RemoveClickListener()
+	self._rewardItem.btnunlikeclick:RemoveClickListener()
 end
 
-function var_0_0.onDestroyView(arg_17_0)
+function V2a6_WeekwalkHeart_PanelView:onDestroyView()
 	return
 end
 
-return var_0_0
+return V2a6_WeekwalkHeart_PanelView

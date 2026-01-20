@@ -1,71 +1,73 @@
-﻿module("modules.logic.chessgame.model.ChessModel", package.seeall)
+﻿-- chunkname: @modules/logic/chessgame/model/ChessModel.lua
 
-local var_0_0 = class("ChessModel", BaseModel)
+module("modules.logic.chessgame.model.ChessModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local ChessModel = class("ChessModel", BaseModel)
+
+function ChessModel:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function ChessModel:reInit()
 	return
 end
 
-function var_0_0.setEpisodeId(arg_3_0, arg_3_1)
-	arg_3_0._currentEpisodeId = arg_3_1
+function ChessModel:setEpisodeId(episodeId)
+	self._currentEpisodeId = episodeId
 
-	if not arg_3_1 then
-		arg_3_0._currentMapId = nil
+	if not episodeId then
+		self._currentMapId = nil
 
 		return
 	end
 
-	local var_3_0 = ChessConfig.instance:getEpisodeCo(arg_3_0._activityId, arg_3_1)
+	local episodeCfg = ChessConfig.instance:getEpisodeCo(self._activityId, episodeId)
 
-	if var_3_0 then
-		if var_3_0.mapIds then
-			arg_3_0._currentMapId = var_3_0.mapIds
-		elseif var_3_0.mapIds then
-			local var_3_1 = string.split(var_3_0.mapIds, "#")
+	if episodeCfg then
+		if episodeCfg.mapIds then
+			self._currentMapId = episodeCfg.mapIds
+		elseif episodeCfg.mapIds then
+			local mapIds = string.split(episodeCfg.mapIds, "#")
 
-			arg_3_0._currentMapId = tonumber(var_3_1[1])
+			self._currentMapId = tonumber(mapIds[1])
 		end
 	else
-		arg_3_0._currentMapId = nil
+		self._currentMapId = nil
 	end
 end
 
-function var_0_0.setActId(arg_4_0, arg_4_1)
-	arg_4_0._activityId = arg_4_1
+function ChessModel:setActId(actId)
+	self._activityId = actId
 end
 
-function var_0_0.getActId(arg_5_0)
-	return arg_5_0._activityId
+function ChessModel:getActId()
+	return self._activityId
 end
 
-function var_0_0.getEpisodeId(arg_6_0)
-	return arg_6_0._currentEpisodeId
+function ChessModel:getEpisodeId()
+	return self._currentEpisodeId
 end
 
-function var_0_0.getCurrMapId(arg_7_0)
-	return arg_7_0._currentMapId
+function ChessModel:getCurrMapId()
+	return self._currentMapId
 end
 
-function var_0_0.setNowMapIndex(arg_8_0, arg_8_1)
-	arg_8_0._currMapIndex = arg_8_1
+function ChessModel:setNowMapIndex(mapIndex)
+	self._currMapIndex = mapIndex
 end
 
-function var_0_0.getNowMapIndex(arg_9_0)
-	return arg_9_0._currMapIndex
+function ChessModel:getNowMapIndex()
+	return self._currMapIndex
 end
 
-function var_0_0.getEpisodeData(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0:_getModelIns(arg_10_0._activityId)
+function ChessModel:getEpisodeData(episodeId)
+	local modelIns = self:_getModelIns(self._activityId)
 
-	if var_10_0 then
-		return var_10_0:getEpisodeData(arg_10_1)
+	if modelIns then
+		return modelIns:getEpisodeData(episodeId)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+ChessModel.instance = ChessModel.New()
 
-return var_0_0
+return ChessModel

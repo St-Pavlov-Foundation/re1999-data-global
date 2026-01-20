@@ -1,65 +1,67 @@
-﻿module("modules.logic.summon.view.variant.SummonCharacterProbUpVer156", package.seeall)
+﻿-- chunkname: @modules/logic/summon/view/variant/SummonCharacterProbUpVer156.lua
 
-local var_0_0 = class("SummonCharacterProbUpVer156", SummonMainCharacterProbUp)
+module("modules.logic.summon.view.variant.SummonCharacterProbUpVer156", package.seeall)
 
-var_0_0.preloadList = {
+local SummonCharacterProbUpVer156 = class("SummonCharacterProbUpVer156", SummonMainCharacterProbUp)
+
+SummonCharacterProbUpVer156.preloadList = {
 	"singlebg/summon/heroversion_1_3/rabbit/full/v1a3_rabbit_bg.png"
 }
 
-function var_0_0._editableInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/#simage_bg")
-	arg_1_0._simagedog = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/#simage_dog")
-	arg_1_0._simageround = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/5role/#simage_round")
-	arg_1_0._simagerole1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/5role/#simage_role1")
-	arg_1_0._simagerole2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/5role/#simage_role2")
-	arg_1_0._simagecircle = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/5role/#simage_circle")
-	arg_1_0._g = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/tip/bg")
-	arg_1_0._rrow = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/tip/arrow/arrow")
-	arg_1_0._charaterItemCount = 1
+function SummonCharacterProbUpVer156:_editableInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#go_ui/current/#simage_bg")
+	self._simagedog = gohelper.findChildSingleImage(self.viewGO, "#go_ui/current/#simage_dog")
+	self._simageround = gohelper.findChildSingleImage(self.viewGO, "#go_ui/current/5role/#simage_round")
+	self._simagerole1 = gohelper.findChildSingleImage(self.viewGO, "#go_ui/current/5role/#simage_role1")
+	self._simagerole2 = gohelper.findChildSingleImage(self.viewGO, "#go_ui/current/5role/#simage_role2")
+	self._simagecircle = gohelper.findChildSingleImage(self.viewGO, "#go_ui/current/5role/#simage_circle")
+	self._g = gohelper.findChildSingleImage(self.viewGO, "#go_ui/current/tip/bg")
+	self._rrow = gohelper.findChildSingleImage(self.viewGO, "#go_ui/current/tip/arrow/arrow")
+	self._charaterItemCount = 1
 
-	var_0_0.super._editableInitView(arg_1_0)
+	SummonCharacterProbUpVer156.super._editableInitView(self)
 end
 
-function var_0_0.refreshSingleImage(arg_2_0)
-	arg_2_0._simageline:LoadImage(ResUrl.getSummonHeroIcon("title_img_deco"))
+function SummonCharacterProbUpVer156:refreshSingleImage()
+	self._simageline:LoadImage(ResUrl.getSummonHeroIcon("title_img_deco"))
 end
 
-function var_0_0.unloadSingleImage(arg_3_0)
-	arg_3_0._simagebg:UnLoadImage()
-	arg_3_0._simagedog:UnLoadImage()
-	arg_3_0._simageround:UnLoadImage()
-	arg_3_0._simagerole1:UnLoadImage()
-	arg_3_0._simagerole2:UnLoadImage()
-	arg_3_0._simagecircle:UnLoadImage()
-	arg_3_0._g:UnLoadImage()
-	arg_3_0._rrow:UnLoadImage()
-	arg_3_0._simageline:UnLoadImage()
-	arg_3_0._simagecurrency1:UnLoadImage()
-	arg_3_0._simagecurrency10:UnLoadImage()
+function SummonCharacterProbUpVer156:unloadSingleImage()
+	self._simagebg:UnLoadImage()
+	self._simagedog:UnLoadImage()
+	self._simageround:UnLoadImage()
+	self._simagerole1:UnLoadImage()
+	self._simagerole2:UnLoadImage()
+	self._simagecircle:UnLoadImage()
+	self._g:UnLoadImage()
+	self._rrow:UnLoadImage()
+	self._simageline:UnLoadImage()
+	self._simagecurrency1:UnLoadImage()
+	self._simagecurrency10:UnLoadImage()
 end
 
-function var_0_0._refreshOpenTime(arg_4_0)
-	arg_4_0._txtdeadline.text = ""
+function SummonCharacterProbUpVer156:_refreshOpenTime()
+	self._txtdeadline.text = ""
 
-	local var_4_0 = SummonMainModel.instance:getCurPool()
+	local curPool = SummonMainModel.instance:getCurPool()
 
-	if not var_4_0 then
+	if not curPool then
 		return
 	end
 
-	local var_4_1 = SummonMainModel.instance:getPoolServerMO(var_4_0.id)
+	local poolMO = SummonMainModel.instance:getPoolServerMO(curPool.id)
 
-	if not var_4_1 then
+	if not poolMO then
 		return
 	end
 
-	local var_4_2, var_4_3 = var_4_1:onOffTimestamp()
+	local onTs, offTs = poolMO:onOffTimestamp()
 
-	if var_4_2 < var_4_3 and var_4_3 > 0 then
-		local var_4_4 = var_4_3 - ServerTime.now()
+	if onTs < offTs and offTs > 0 then
+		local remainTime = offTs - ServerTime.now()
 
-		arg_4_0._txtdeadline.text = formatLuaLang("summonmainequipprobup_deadline", SummonModel.formatRemainTime(var_4_4))
+		self._txtdeadline.text = formatLuaLang("summonmainequipprobup_deadline", SummonModel.formatRemainTime(remainTime))
 	end
 end
 
-return var_0_0
+return SummonCharacterProbUpVer156

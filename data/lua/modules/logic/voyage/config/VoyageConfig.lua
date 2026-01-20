@@ -1,15 +1,17 @@
-﻿module("modules.logic.voyage.config.VoyageConfig", package.seeall)
+﻿-- chunkname: @modules/logic/voyage/config/VoyageConfig.lua
 
-local var_0_0 = class("VoyageConfig", Activity1001Config)
+module("modules.logic.voyage.config.VoyageConfig", package.seeall)
 
-function var_0_0.getTaskList(arg_1_0)
-	return arg_1_0:_createOrGetShowTaskList()
+local VoyageConfig = class("VoyageConfig", Activity1001Config)
+
+function VoyageConfig:getTaskList()
+	return self:_createOrGetShowTaskList()
 end
 
-function var_0_0.getRewardStrList(arg_2_0, arg_2_1)
-	return string.split(arg_2_0:getRewardStr(arg_2_1), "|")
+function VoyageConfig:getRewardStrList(id)
+	return string.split(self:getRewardStr(id), "|")
 end
 
-var_0_0.instance = var_0_0.New(ActivityEnum.Activity.ActivityGiftForTheVoyage)
+VoyageConfig.instance = VoyageConfig.New(ActivityEnum.Activity.ActivityGiftForTheVoyage)
 
-return var_0_0
+return VoyageConfig

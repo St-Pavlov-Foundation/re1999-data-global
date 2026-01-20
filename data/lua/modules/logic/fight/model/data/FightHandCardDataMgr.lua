@@ -1,65 +1,67 @@
-﻿module("modules.logic.fight.model.data.FightHandCardDataMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightHandCardDataMgr.lua
 
-local var_0_0 = FightDataClass("FightHandCardDataMgr", FightDataMgrBase)
+module("modules.logic.fight.model.data.FightHandCardDataMgr", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0.handCard = {}
-	arg_1_0.originCard = {}
-	arg_1_0.redealCard = {}
+local FightHandCardDataMgr = FightDataClass("FightHandCardDataMgr", FightDataMgrBase)
+
+function FightHandCardDataMgr:onConstructor()
+	self.handCard = {}
+	self.originCard = {}
+	self.redealCard = {}
 end
 
-function var_0_0.onStageChanged(arg_2_0, arg_2_1, arg_2_2)
-	for iter_2_0 = 1, #arg_2_0.handCard do
-		arg_2_0.handCard[iter_2_0].originHandCardIndex = iter_2_0
+function FightHandCardDataMgr:onStageChanged(curStage, preStage)
+	for i = 1, #self.handCard do
+		self.handCard[i].originHandCardIndex = i
 	end
 
-	FightDataUtil.coverData(arg_2_0.handCard, arg_2_0.originCard)
+	FightDataUtil.coverData(self.handCard, self.originCard)
 end
 
-function var_0_0.onCancelOperation(arg_3_0)
-	FightDataUtil.coverData(arg_3_0.originCard, arg_3_0.handCard)
+function FightHandCardDataMgr:onCancelOperation()
+	FightDataUtil.coverData(self.originCard, self.handCard)
 end
 
-function var_0_0.getHandCard(arg_4_0)
-	return arg_4_0.handCard
+function FightHandCardDataMgr:getHandCard()
+	return self.handCard
 end
 
-function var_0_0.coverCard(arg_5_0, arg_5_1)
-	FightDataUtil.coverData(arg_5_1, arg_5_0.handCard)
+function FightHandCardDataMgr:coverCard(cardList)
+	FightDataUtil.coverData(cardList, self.handCard)
 end
 
-function var_0_0.setOriginCard(arg_6_0)
-	FightDataUtil.coverData(arg_6_0.handCard, arg_6_0.originCard)
+function FightHandCardDataMgr:setOriginCard()
+	FightDataUtil.coverData(self.handCard, self.originCard)
 end
 
-function var_0_0.updateHandCardByProto(arg_7_0, arg_7_1)
-	local var_7_0 = FightCardDataHelper.newCardList(arg_7_1)
+function FightHandCardDataMgr:updateHandCardByProto(proto)
+	local cards = FightCardDataHelper.newCardList(proto)
 
-	FightDataUtil.coverData(var_7_0, arg_7_0.handCard)
+	FightDataUtil.coverData(cards, self.handCard)
 end
 
-function var_0_0.cacheDistributeCard(arg_8_0, arg_8_1)
-	arg_8_0.beforeCards1 = FightCardDataHelper.newCardList(arg_8_1.beforeCards1)
-	arg_8_0.teamACards1 = FightCardDataHelper.newCardList(arg_8_1.teamACards1)
-	arg_8_0.beforeCards2 = FightCardDataHelper.newCardList(arg_8_1.beforeCards2)
-	arg_8_0.teamACards2 = FightCardDataHelper.newCardList(arg_8_1.teamACards2)
+function FightHandCardDataMgr:cacheDistributeCard(round)
+	self.beforeCards1 = FightCardDataHelper.newCardList(round.beforeCards1)
+	self.teamACards1 = FightCardDataHelper.newCardList(round.teamACards1)
+	self.beforeCards2 = FightCardDataHelper.newCardList(round.beforeCards2)
+	self.teamACards2 = FightCardDataHelper.newCardList(round.teamACards2)
 end
 
-function var_0_0.cacheRedealCard(arg_9_0, arg_9_1)
-	table.insert(arg_9_0.redealCard, FightCardDataHelper.newCardList(arg_9_1))
+function FightHandCardDataMgr:cacheRedealCard(proto)
+	table.insert(self.redealCard, FightCardDataHelper.newCardList(proto))
 end
 
-function var_0_0.getRedealCard(arg_10_0)
-	return table.remove(arg_10_0.redealCard, 1)
+function FightHandCardDataMgr:getRedealCard()
+	return table.remove(self.redealCard, 1)
 end
 
-function var_0_0.distribute(arg_11_0, arg_11_1, arg_11_2)
-	FightDataUtil.coverData(arg_11_1, arg_11_0.handCard)
+function FightHandCardDataMgr:distribute(beforeCards, distribute)
+	FightDataUtil.coverData(beforeCards, self.handCard)
 
-	arg_11_2 = FightDataUtil.coverData(arg_11_2)
+	distribute = FightDataUtil.coverData(distribute)
 
-	tabletool.addValues(arg_11_0.handCard, arg_11_2)
-	FightCardDataHelper.combineCardList(arg_11_0.handCard, arg_11_0.dataMgr.entityMgr)
+	tabletool.addValues(self.handCard, distribute)
+	FightCardDataHelper.combineCardList(self.handCard, self.dataMgr.entityMgr)
 end
 
-return var_0_0
+return FightHandCardDataMgr

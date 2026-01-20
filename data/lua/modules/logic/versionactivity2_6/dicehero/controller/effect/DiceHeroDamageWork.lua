@@ -1,57 +1,59 @@
-﻿module("modules.logic.versionactivity2_6.dicehero.controller.effect.DiceHeroDamageWork", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/dicehero/controller/effect/DiceHeroDamageWork.lua
 
-local var_0_0 = class("DiceHeroDamageWork", DiceHeroBaseEffectWork)
+module("modules.logic.versionactivity2_6.dicehero.controller.effect.DiceHeroDamageWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = DiceHeroFightModel.instance:getGameData()
+local DiceHeroDamageWork = class("DiceHeroDamageWork", DiceHeroBaseEffectWork)
 
-	arg_1_0._isFromCard = arg_1_0._effectMo.parent.isByCard
-	arg_1_0._isByHero = var_1_0.allyHero.uid == arg_1_0._effectMo.fromId
+function DiceHeroDamageWork:onStart(context)
+	local gameData = DiceHeroFightModel.instance:getGameData()
 
-	local var_1_1 = DiceHeroHelper.instance:getEntity(arg_1_0._effectMo.fromId)
-	local var_1_2 = DiceHeroHelper.instance:getEntity(arg_1_0._effectMo.targetId)
+	self._isFromCard = self._effectMo.parent.isByCard
+	self._isByHero = gameData.allyHero.uid == self._effectMo.fromId
 
-	arg_1_0._targetPos = var_1_2:getPos()
-	arg_1_0._targetItem = var_1_2
+	local fromItem = DiceHeroHelper.instance:getEntity(self._effectMo.fromId)
+	local targetItem = DiceHeroHelper.instance:getEntity(self._effectMo.targetId)
 
-	if arg_1_0._isByHero and arg_1_0._isFromCard and string.nilorempty(arg_1_0._effectMo.extraData) then
-		local var_1_3 = DiceHeroHelper.instance:getCard(tonumber(arg_1_0._effectMo.parent.reasonId))
+	self._targetPos = targetItem:getPos()
+	self._targetItem = targetItem
 
-		arg_1_0._effectItem = DiceHeroHelper.instance:doEffect(2, var_1_3:getPos(), arg_1_0._targetPos)
+	if self._isByHero and self._isFromCard and string.nilorempty(self._effectMo.extraData) then
+		local cardItem = DiceHeroHelper.instance:getCard(tonumber(self._effectMo.parent.reasonId))
+
+		self._effectItem = DiceHeroHelper.instance:doEffect(2, cardItem:getPos(), self._targetPos)
 	else
-		arg_1_0._effectItem = DiceHeroHelper.instance:doEffect(arg_1_0._isByHero and 2 or 3, var_1_1:getPos(), arg_1_0._targetPos)
+		self._effectItem = DiceHeroHelper.instance:doEffect(self._isByHero and 2 or 3, fromItem:getPos(), self._targetPos)
 	end
 
 	AudioMgr.instance:trigger(AudioEnum2_6.DiceHero.play_ui_wenming_shot)
-	TaskDispatcher.runDelay(arg_1_0._delayShowDamage, arg_1_0, 0.5)
+	TaskDispatcher.runDelay(self._delayShowDamage, self, 0.5)
 end
 
-function var_0_0._delayShowDamage(arg_2_0)
-	DiceHeroController.instance:dispatchEvent(DiceHeroEvent.OnDamage, arg_2_0._isByHero)
+function DiceHeroDamageWork:_delayShowDamage()
+	DiceHeroController.instance:dispatchEvent(DiceHeroEvent.OnDamage, self._isByHero)
 	AudioMgr.instance:trigger(AudioEnum2_6.DiceHero.play_ui_wenming_shotimp)
-	arg_2_0._targetItem:showEffect(4)
-	TaskDispatcher.runDelay(arg_2_0._delayShowNum, arg_2_0, 0.5)
-	TaskDispatcher.runDelay(arg_2_0._delayFinish, arg_2_0, 1)
+	self._targetItem:showEffect(4)
+	TaskDispatcher.runDelay(self._delayShowNum, self, 0.5)
+	TaskDispatcher.runDelay(self._delayFinish, self, 1)
 end
 
-function var_0_0._delayShowNum(arg_3_0)
-	arg_3_0._effectItem:initData(1, arg_3_0._targetPos, nil, arg_3_0._effectMo.effectNum)
+function DiceHeroDamageWork:_delayShowNum()
+	self._effectItem:initData(1, self._targetPos, nil, self._effectMo.effectNum)
 end
 
-function var_0_0._delayFinish(arg_4_0)
-	arg_4_0:onDone(true)
+function DiceHeroDamageWork:_delayFinish()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_5_0)
-	if arg_5_0._effectItem then
-		DiceHeroHelper.instance:returnEffectItemToPool(arg_5_0._effectItem)
+function DiceHeroDamageWork:clearWork()
+	if self._effectItem then
+		DiceHeroHelper.instance:returnEffectItemToPool(self._effectItem)
 
-		arg_5_0._effectItem = nil
+		self._effectItem = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_5_0._delayShowDamage, arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0._delayShowNum, arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0._delayFinish, arg_5_0)
+	TaskDispatcher.cancelTask(self._delayShowDamage, self)
+	TaskDispatcher.cancelTask(self._delayShowNum, self)
+	TaskDispatcher.cancelTask(self._delayFinish, self)
 end
 
-return var_0_0
+return DiceHeroDamageWork

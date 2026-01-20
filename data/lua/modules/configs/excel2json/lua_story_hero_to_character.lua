@@ -1,17 +1,19 @@
-﻿module("modules.configs.excel2json.lua_story_hero_to_character", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_story_hero_to_character.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_story_hero_to_character", package.seeall)
+
+local lua_story_hero_to_character = {}
+local fields = {
 	heroIndex = 1,
 	heroId = 2
 }
-local var_0_2 = {
+local primaryKey = {
 	"heroIndex"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_story_hero_to_character.onLoad(json)
+	lua_story_hero_to_character.configList, lua_story_hero_to_character.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_story_hero_to_character

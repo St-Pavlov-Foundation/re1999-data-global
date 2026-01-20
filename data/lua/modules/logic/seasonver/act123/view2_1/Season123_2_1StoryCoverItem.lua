@@ -1,85 +1,87 @@
-﻿module("modules.logic.seasonver.act123.view2_1.Season123_2_1StoryCoverItem", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view2_1/Season123_2_1StoryCoverItem.lua
 
-local var_0_0 = class("Season123_2_1StoryCoverItem", LuaCompBase)
+module("modules.logic.seasonver.act123.view2_1.Season123_2_1StoryCoverItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.param = arg_1_1
+local Season123_2_1StoryCoverItem = class("Season123_2_1StoryCoverItem", LuaCompBase)
+
+function Season123_2_1StoryCoverItem:ctor(param)
+	self.param = param
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0:__onInit()
+function Season123_2_1StoryCoverItem:init(go)
+	self:__onInit()
 
-	arg_2_0.go = arg_2_1
-	arg_2_0.storyId = arg_2_0.param.storyId
-	arg_2_0.config = arg_2_0.param.storyConfig
-	arg_2_0.actId = arg_2_0.param.actId
-	arg_2_0.canvasGroup = gohelper.findChild(arg_2_0.go, "go_root"):GetComponent(typeof(UnityEngine.CanvasGroup))
-	arg_2_0.txtStageNum = gohelper.findChildText(arg_2_0.go, "go_root/NumMask/txt_Num")
-	arg_2_0.txtTitle = gohelper.findChildText(arg_2_0.go, "go_root/txt_Title")
-	arg_2_0.txtTitleEn = gohelper.findChildText(arg_2_0.go, "go_root/txt_TitleEn")
-	arg_2_0.goArrow = gohelper.findChild(arg_2_0.go, "go_root/go_arrow")
-	arg_2_0.goLocked = gohelper.findChild(arg_2_0.go, "go_Locked")
-	arg_2_0.animLocked = ZProj.ProjAnimatorPlayer.Get(arg_2_0.goLocked)
-	arg_2_0.btnClick = gohelper.findChildButtonWithAudio(arg_2_0.go, "btn_click")
+	self.go = go
+	self.storyId = self.param.storyId
+	self.config = self.param.storyConfig
+	self.actId = self.param.actId
+	self.canvasGroup = gohelper.findChild(self.go, "go_root"):GetComponent(typeof(UnityEngine.CanvasGroup))
+	self.txtStageNum = gohelper.findChildText(self.go, "go_root/NumMask/txt_Num")
+	self.txtTitle = gohelper.findChildText(self.go, "go_root/txt_Title")
+	self.txtTitleEn = gohelper.findChildText(self.go, "go_root/txt_TitleEn")
+	self.goArrow = gohelper.findChild(self.go, "go_root/go_arrow")
+	self.goLocked = gohelper.findChild(self.go, "go_Locked")
+	self.animLocked = ZProj.ProjAnimatorPlayer.Get(self.goLocked)
+	self.btnClick = gohelper.findChildButtonWithAudio(self.go, "btn_click")
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	arg_3_0.btnClick:AddClickListener(arg_3_0.onClickCoverItem, arg_3_0)
+function Season123_2_1StoryCoverItem:addEventListeners()
+	self.btnClick:AddClickListener(self.onClickCoverItem, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	arg_4_0.btnClick:RemoveClickListener()
+function Season123_2_1StoryCoverItem:removeEventListeners()
+	self.btnClick:RemoveClickListener()
 end
 
-var_0_0.unlockDelayTime = 1.16
+Season123_2_1StoryCoverItem.unlockDelayTime = 1.16
 
-function var_0_0.refreshItem(arg_5_0)
-	local var_5_0 = Season123Model.instance:getActInfo(arg_5_0.actId).stageMap[arg_5_0.config.condition]
+function Season123_2_1StoryCoverItem:refreshItem()
+	local stageMO = Season123Model.instance:getActInfo(self.actId).stageMap[self.config.condition]
 
-	arg_5_0.isPass = var_5_0 and var_5_0.isPass
-	arg_5_0.isUnlock = Season123ProgressUtils.isStageUnlock(arg_5_0.actId, arg_5_0.config.condition) and arg_5_0.isPass == true
-	arg_5_0.canvasGroup.alpha = arg_5_0.isUnlock and 1 or 0.5
-	arg_5_0.txtStageNum.text = arg_5_0.config.storyId
-	arg_5_0.txtTitle.text = arg_5_0.config.title
-	arg_5_0.txtTitleEn.text = arg_5_0.config.titleEn
+	self.isPass = stageMO and stageMO.isPass
+	self.isUnlock = Season123ProgressUtils.isStageUnlock(self.actId, self.config.condition) and self.isPass == true
+	self.canvasGroup.alpha = self.isUnlock and 1 or 0.5
+	self.txtStageNum.text = self.config.storyId
+	self.txtTitle.text = self.config.title
+	self.txtTitleEn.text = self.config.titleEn
 end
 
-function var_0_0.onClickCoverItem(arg_6_0)
-	if arg_6_0.isUnlock then
+function Season123_2_1StoryCoverItem:onClickCoverItem()
+	if self.isUnlock then
 		Season123Controller.instance:dispatchEvent(Season123Event.OnCoverItemClick, {
-			storyId = arg_6_0.storyId
+			storyId = self.storyId
 		})
 	else
 		GameFacade.showToast(ToastEnum.SeasonStageNotPass)
 	end
 end
 
-function var_0_0.refreshUnlockState(arg_7_0, arg_7_1)
-	if arg_7_0.isUnlock and arg_7_0.isUnlock ~= arg_7_1 then
-		gohelper.setActive(arg_7_0.goLocked, not arg_7_1)
+function Season123_2_1StoryCoverItem:refreshUnlockState(unlockState)
+	if self.isUnlock and self.isUnlock ~= unlockState then
+		gohelper.setActive(self.goLocked, not unlockState)
 		UIBlockMgr.instance:endBlock("playCoverItemUnlockAnim")
 		UIBlockMgr.instance:startBlock("playCoverItemUnlockAnim")
-		TaskDispatcher.runDelay(arg_7_0.playUnlockAnim, arg_7_0, var_0_0.unlockDelayTime)
+		TaskDispatcher.runDelay(self.playUnlockAnim, self, Season123_2_1StoryCoverItem.unlockDelayTime)
 		UIBlockMgrExtend.setNeedCircleMv(false)
 	else
-		gohelper.setActive(arg_7_0.goLocked, not arg_7_0.isUnlock)
+		gohelper.setActive(self.goLocked, not self.isUnlock)
 	end
 end
 
-function var_0_0.playUnlockAnim(arg_8_0)
-	arg_8_0.animLocked:Play(UIAnimationName.Unlock, arg_8_0.onUnlockAnimDone, arg_8_0)
+function Season123_2_1StoryCoverItem:playUnlockAnim()
+	self.animLocked:Play(UIAnimationName.Unlock, self.onUnlockAnimDone, self)
 	AudioMgr.instance:trigger(AudioEnum.Season123.play_ui_jinye_tale_unlock)
 end
 
-function var_0_0.onUnlockAnimDone(arg_9_0)
-	gohelper.setActive(arg_9_0.goLocked, not arg_9_0.isUnlock)
+function Season123_2_1StoryCoverItem:onUnlockAnimDone()
+	gohelper.setActive(self.goLocked, not self.isUnlock)
 	UIBlockMgr.instance:endBlock("playCoverItemUnlockAnim")
 end
 
-function var_0_0.destroy(arg_10_0)
-	arg_10_0:__onDispose()
+function Season123_2_1StoryCoverItem:destroy()
+	self:__onDispose()
 	UIBlockMgr.instance:endBlock("playCoverItemUnlockAnim")
-	TaskDispatcher.cancelTask(arg_10_0.playUnlockAnim, arg_10_0)
+	TaskDispatcher.cancelTask(self.playUnlockAnim, self)
 end
 
-return var_0_0
+return Season123_2_1StoryCoverItem

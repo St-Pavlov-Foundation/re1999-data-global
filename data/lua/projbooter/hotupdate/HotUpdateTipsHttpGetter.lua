@@ -1,9 +1,11 @@
-﻿module("projbooter.hotupdate.HotUpdateTipsHttpGetter", package.seeall)
+﻿-- chunkname: @projbooter/hotupdate/HotUpdateTipsHttpGetter.lua
 
-local var_0_0 = class("HotUpdateTipsHttpGetter")
-local var_0_1 = 5
-local var_0_2 = 2
-local var_0_3 = {
+module("projbooter.hotupdate.HotUpdateTipsHttpGetter", package.seeall)
+
+local HotUpdateTipsHttpGetter = class("HotUpdateTipsHttpGetter")
+local Timeout = 5
+local RetryCount = 2
+local LangAihelpKey = {
 	"zh-CN",
 	"zh-TW",
 	nil,
@@ -25,149 +27,155 @@ local var_0_3 = {
 	[64] = "fr"
 }
 
-local function var_0_4(arg_1_0)
-	return cjson.decode(arg_1_0)
+local function func_json_decode(jsonStr)
+	return cjson.decode(jsonStr)
 end
 
-function var_0_0.ctor(arg_2_0)
+function HotUpdateTipsHttpGetter:ctor()
 	return
 end
 
-function var_0_0.start(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0._onGetFinish = arg_3_1
-	arg_3_0._onGetFinishObj = arg_3_2
-	arg_3_0._retryCount = 0
-	arg_3_0._useBackupUrl = false
+function HotUpdateTipsHttpGetter:start(onFinish, finishObj)
+	self._onGetFinish = onFinish
+	self._onGetFinishObj = finishObj
+	self._retryCount = 0
+	self._useBackupUrl = false
 
-	arg_3_0:_httpGet()
+	self:_httpGet()
 end
 
-function var_0_0.stop(arg_4_0)
-	if arg_4_0._requestId then
-		SLFramework.SLWebRequest.Instance:Stop(arg_4_0._requestId)
+function HotUpdateTipsHttpGetter:stop()
+	if self._requestId then
+		SLFramework.SLWebRequestClient.Instance:Stop(self._requestId)
 
-		arg_4_0._requestId = nil
+		self._requestId = nil
 	end
 
-	arg_4_0:_stopRetryTimer()
+	self:_stopRetryTimer()
 end
 
-function var_0_0._httpGet(arg_5_0)
-	local var_5_0 = arg_5_0:_getUrl()
+function HotUpdateTipsHttpGetter:_httpGet()
+	local url = self:_getUrl()
 
-	logNormal(var_5_0)
+	logNormal(url)
 
-	local var_5_1 = UnityEngine.Networking.UnityWebRequest.Get(var_5_0)
-	local var_5_2 = SLFramework.GameUpdate.HotUpdateInfoMgr.SLInfoBase64
+	local webRequest = UnityEngine.Networking.UnityWebRequest.Get(url)
+	local slInfoBase64 = SLFramework.GameUpdate.HotUpdateInfoMgr.SLInfoBase64
 
-	var_5_1:SetRequestHeader("x-sl-info", var_5_2)
+	webRequest:SetRequestHeader("x-sl-info", slInfoBase64)
 
-	arg_5_0._requestId = SLFramework.SLWebRequest.Instance:SendRequest(var_5_1, arg_5_0._onWebResponse, arg_5_0, var_0_1)
+	self._requestId = SLFramework.SLWebRequestClient.Instance:SendRequest(webRequest, self._onWebResponse, self, Timeout, {
+		"x-sl-info"
+	})
 
-	arg_5_0:_stopRetryTimer()
+	self:_stopRetryTimer()
 end
 
-function var_0_0._onWebResponse(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	if arg_6_1 then
-		if arg_6_2 and arg_6_2 ~= "" then
-			logNormal("获取更新提示语返回:" .. arg_6_2)
+function HotUpdateTipsHttpGetter:_onWebResponse(isSuccess, msg, errorMsg)
+	if isSuccess then
+		if msg and msg ~= "" then
+			logNormal("获取更新提示语返回:" .. msg)
 
-			local var_6_0, var_6_1 = xpcall(var_0_4, __G__TRACKBACK__, arg_6_2)
+			local isOk, result = xpcall(func_json_decode, __G__TRACKBACK__, msg)
 
-			arg_6_0._result = nil
+			self._result = nil
 
-			if var_6_0 then
-				arg_6_0._result = var_6_1
+			if isOk then
+				self._result = result
 			end
 		else
 			logNormal("获取更新提示语返回")
 		end
 
-		arg_6_0:_runCallblck(true)
-		arg_6_0:_stopRetryTimer()
+		self:_runCallblck(true)
+		self:_stopRetryTimer()
 	else
-		arg_6_0:_stopRetryTimer()
+		self:_stopRetryTimer()
 
-		arg_6_0._retryTimer = Timer.New(function()
-			arg_6_0._retryTimer = nil
+		self._retryTimer = Timer.New(function()
+			self._retryTimer = nil
 
-			if arg_6_0._retryCount >= var_0_2 then
-				arg_6_0._useBackupUrl = not arg_6_0._useBackupUrl
-				arg_6_0._retryCount = 0
+			if self._retryCount >= RetryCount and not self._useBackupUrl then
+				self._useBackupUrl = true
+				self._retryCount = 0
+			end
 
-				arg_6_0:_runCallblck(false)
+			if self._retryCount >= RetryCount then
+				self:_runCallblck(false)
 			else
-				arg_6_0._retryCount = arg_6_0._retryCount + 1
+				self._retryCount = self._retryCount + 1
 
-				arg_6_0:_httpGet()
+				self:_httpGet()
 			end
 		end, 1)
 
-		arg_6_0._retryTimer:Start()
+		self._retryTimer:Start()
 	end
 end
 
-function var_0_0._stopRetryTimer(arg_8_0)
-	if arg_8_0._retryTimer then
-		local var_8_0 = arg_8_0._retryTimer
+function HotUpdateTipsHttpGetter:_stopRetryTimer()
+	if self._retryTimer then
+		local timer = self._retryTimer
 
-		arg_8_0._retryTimer = nil
+		self._retryTimer = nil
 
-		var_8_0:Stop()
+		timer:Stop()
 	end
 end
 
-function var_0_0._runCallblck(arg_9_0, arg_9_1)
-	if arg_9_0._onGetFinish == nil then
+function HotUpdateTipsHttpGetter:_runCallblck(isSuccess)
+	if self._onGetFinish == nil then
 		return
 	end
 
-	local var_9_0 = arg_9_0._onGetFinish
-	local var_9_1 = arg_9_0._onGetFinishObj
+	local cb = self._onGetFinish
+	local cbObj = self._onGetFinishObj
 
-	arg_9_0._onGetFinish = nil
-	arg_9_0._onGetFinishObj = nil
+	self._onGetFinish = nil
+	self._onGetFinishObj = nil
 
-	var_9_0(var_9_1, arg_9_1, arg_9_0)
+	cb(cbObj, isSuccess, self)
 end
 
-function var_0_0.getHttpResult(arg_10_0)
-	return arg_10_0._result
+function HotUpdateTipsHttpGetter:getHttpResult()
+	return self._result
 end
 
-function var_0_0.getTipsStr(arg_11_0)
-	local var_11_0 = arg_11_0._result
+function HotUpdateTipsHttpGetter:getTipsStr()
+	local result = self._result
 
-	if var_11_0 and var_11_0.code == 200 and var_11_0.data and var_11_0.data.prompt then
-		return var_11_0.data.prompt
+	if result and result.code == 200 and result.data and result.data.prompt then
+		return result.data.prompt
 	end
 
 	return nil
 end
 
-function var_0_0._getUrl(arg_12_0)
-	local var_12_0 = {}
-	local var_12_1, var_12_2 = GameUrlConfig.getHotUpdateUrl()
-	local var_12_3 = arg_12_0._useBackupUrl and var_12_2 or var_12_1
-	local var_12_4 = SLFramework.FrameworkSettings.CurPlatform
+function HotUpdateTipsHttpGetter:_getUrl()
+	local param = {}
+	local url1, url2 = GameUrlConfig.getHotUpdateUrl()
+	local url = self._useBackupUrl and url2 or url1
+	local osType = SLFramework.FrameworkSettings.CurPlatform
 
 	if SLFramework.FrameworkSettings.IsEditor then
-		var_12_4 = 0
+		osType = 0
 	end
 
-	local var_12_5 = GameConfig:GetDefaultLangType()
-	local var_12_6 = GameChannelConfig.getServerType()
-	local var_12_7 = UnityEngine.Application.version
+	local defaultLang = GameConfig:GetDefaultLangType()
+	local serverType = GameChannelConfig.getServerType()
+	local versionName = UnityEngine.Application.version
 
-	table.insert(var_12_0, string.format("gameId=%s", SDKMgr.instance:getGameId()))
-	table.insert(var_12_0, string.format("osType=%s", var_12_4))
-	table.insert(var_12_0, string.format("currentVersion=%s", var_12_7))
-	table.insert(var_12_0, string.format("channelId=%s", SDKMgr.instance:getChannelId()))
-	table.insert(var_12_0, string.format("subChannelId=%s", SDKMgr.instance:getSubChannelId()))
-	table.insert(var_12_0, string.format("serverType=%s", var_12_6))
-	table.insert(var_12_0, string.format("lang=%s", var_0_3[var_12_5]))
+	table.insert(param, string.format("gameId=%s", SDKMgr.instance:getGameId()))
+	table.insert(param, string.format("osType=%s", osType))
+	table.insert(param, string.format("currentVersion=%s", versionName))
+	table.insert(param, string.format("channelId=%s", SDKMgr.instance:getChannelId()))
+	table.insert(param, string.format("subChannelId=%s", SDKMgr.instance:getSubChannelId()))
+	table.insert(param, string.format("serverType=%s", serverType))
+	table.insert(param, string.format("lang=%s", LangAihelpKey[defaultLang]))
 
-	return var_12_3 .. "/prompt/get?" .. table.concat(var_12_0, "&")
+	local url = url .. "/prompt/get?" .. table.concat(param, "&")
+
+	return url
 end
 
-return var_0_0
+return HotUpdateTipsHttpGetter

@@ -1,18 +1,20 @@
-﻿module("modules.logic.reddot.model.RedDotInfoMo", package.seeall)
+﻿-- chunkname: @modules/logic/reddot/model/RedDotInfoMo.lua
 
-local var_0_0 = pureTable("RedDotInfoMo")
+module("modules.logic.reddot.model.RedDotInfoMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.uid = tonumber(arg_1_1.id)
-	arg_1_0.value = tonumber(arg_1_1.value)
-	arg_1_0.time = arg_1_1.time
-	arg_1_0.ext = arg_1_1.ext
+local RedDotInfoMo = pureTable("RedDotInfoMo")
+
+function RedDotInfoMo:init(info)
+	self.uid = tonumber(info.id)
+	self.value = tonumber(info.value)
+	self.time = info.time
+	self.ext = info.ext
 end
 
-function var_0_0.reset(arg_2_0, arg_2_1)
-	arg_2_0.value = tonumber(arg_2_1.value)
-	arg_2_0.time = arg_2_1.time
-	arg_2_0.ext = arg_2_1.ext
+function RedDotInfoMo:reset(info)
+	self.value = tonumber(info.value)
+	self.time = info.time
+	self.ext = info.ext
 end
 
-return var_0_0
+return RedDotInfoMo

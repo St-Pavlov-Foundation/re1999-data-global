@@ -1,10 +1,12 @@
-﻿module("modules.logic.versionactivity2_2.tianshinana.controller.step.TianShiNaNaGuideStep", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/tianshinana/controller/step/TianShiNaNaGuideStep.lua
 
-local var_0_0 = class("TianShiNaNaGuideStep", TianShiNaNaStepBase)
+module("modules.logic.versionactivity2_2.tianshinana.controller.step.TianShiNaNaGuideStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	TianShiNaNaController.instance:dispatchEvent(TianShiNaNaEvent.OnGuideTrigger, tostring(arg_1_0._data.guideId))
-	arg_1_0:onDone(true)
+local TianShiNaNaGuideStep = class("TianShiNaNaGuideStep", TianShiNaNaStepBase)
+
+function TianShiNaNaGuideStep:onStart(context)
+	TianShiNaNaController.instance:dispatchEvent(TianShiNaNaEvent.OnGuideTrigger, tostring(self._data.guideId))
+	self:onDone(true)
 end
 
-return var_0_0
+return TianShiNaNaGuideStep

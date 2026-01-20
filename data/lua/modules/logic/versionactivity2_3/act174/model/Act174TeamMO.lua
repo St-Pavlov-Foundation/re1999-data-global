@@ -1,28 +1,32 @@
-﻿module("modules.logic.versionactivity2_3.act174.model.Act174TeamMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/act174/model/Act174TeamMO.lua
 
-local var_0_0 = pureTable("Act174TeamMO")
+module("modules.logic.versionactivity2_3.act174.model.Act174TeamMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.index = arg_1_1.index
-	arg_1_0.battleHeroInfo = {}
+local Act174TeamMO = pureTable("Act174TeamMO")
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1.battleHeroInfo) do
-		arg_1_0.battleHeroInfo[iter_1_0] = arg_1_0:creatBattleHero(iter_1_1)
+function Act174TeamMO:init(info)
+	self.index = info.index
+	self.battleHeroInfo = {}
+
+	for i, battleHero in ipairs(info.battleHeroInfo) do
+		self.battleHeroInfo[i] = self:creatBattleHero(battleHero)
 	end
 end
 
-function var_0_0.creatBattleHero(arg_2_0, arg_2_1)
-	return {
-		index = arg_2_1.index,
-		heroId = arg_2_1.heroId,
-		itemId = arg_2_1.itemId,
-		priorSkill = arg_2_1.priorSkill
-	}
+function Act174TeamMO:creatBattleHero(info)
+	local hero = {}
+
+	hero.index = info.index
+	hero.heroId = info.heroId
+	hero.itemId = info.itemId
+	hero.priorSkill = info.priorSkill
+
+	return hero
 end
 
-function var_0_0.notEmpty(arg_3_0)
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0.battleHeroInfo) do
-		if iter_3_1.heroId and iter_3_1.heroId ~= 0 then
+function Act174TeamMO:notEmpty()
+	for _, hero in ipairs(self.battleHeroInfo) do
+		if hero.heroId and hero.heroId ~= 0 then
 			return true
 		end
 	end
@@ -30,4 +34,4 @@ function var_0_0.notEmpty(arg_3_0)
 	return false
 end
 
-return var_0_0
+return Act174TeamMO

@@ -1,115 +1,119 @@
-﻿module("modules.logic.versionactivity1_5.act142.view.game.Activity142GameScene", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/act142/view/game/Activity142GameScene.lua
 
-local var_0_0 = class("Activity142GameScene", Va3ChessGameScene)
+module("modules.logic.versionactivity1_5.act142.view.game.Activity142GameScene", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	arg_1_0._baffleItems = {}
-	arg_1_0._baffleItemPools = {}
+local Activity142GameScene = class("Activity142GameScene", Va3ChessGameScene)
 
-	var_0_0.super._editableInitView(arg_1_0)
+function Activity142GameScene:_editableInitView()
+	self._baffleItems = {}
+	self._baffleItemPools = {}
+
+	Activity142GameScene.super._editableInitView(self)
 end
 
-function var_0_0.addEvents(arg_2_0)
-	var_0_0.super.addEvents(arg_2_0)
-	arg_2_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.TileTriggerUpdate, arg_2_0._onTileTriggerUpdate, arg_2_0)
-	arg_2_0:addEventCb(Activity142Controller.instance, Activity142Event.Back2CheckPoint, arg_2_0._onMapChange, arg_2_0)
-	arg_2_0:addEventCb(Activity142Controller.instance, Activity142Event.PlaySwitchPlayerEff, arg_2_0.playSwitchPlayerEff, arg_2_0)
-	arg_2_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.EnterNextMap, arg_2_0._onMapChange, arg_2_0)
+function Activity142GameScene:addEvents()
+	Activity142GameScene.super.addEvents(self)
+	self:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.TileTriggerUpdate, self._onTileTriggerUpdate, self)
+	self:addEventCb(Activity142Controller.instance, Activity142Event.Back2CheckPoint, self._onMapChange, self)
+	self:addEventCb(Activity142Controller.instance, Activity142Event.PlaySwitchPlayerEff, self.playSwitchPlayerEff, self)
+	self:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.EnterNextMap, self._onMapChange, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	var_0_0.super.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(Va3ChessGameController.instance, Va3ChessEvent.TileTriggerUpdate, arg_3_0._onTileTriggerUpdate, arg_3_0)
-	arg_3_0:removeEventCb(Activity142Controller.instance, Activity142Event.Back2CheckPoint, arg_3_0._onMapChange, arg_3_0)
-	arg_3_0:removeEventCb(Activity142Controller.instance, Activity142Event.PlaySwitchPlayerEff, arg_3_0.playSwitchPlayerEff, arg_3_0)
-	arg_3_0:removeEventCb(Va3ChessGameController.instance, Va3ChessEvent.EnterNextMap, arg_3_0._onMapChange, arg_3_0)
+function Activity142GameScene:removeEvents()
+	Activity142GameScene.super.removeEvents(self)
+	self:removeEventCb(Va3ChessGameController.instance, Va3ChessEvent.TileTriggerUpdate, self._onTileTriggerUpdate, self)
+	self:removeEventCb(Activity142Controller.instance, Activity142Event.Back2CheckPoint, self._onMapChange, self)
+	self:removeEventCb(Activity142Controller.instance, Activity142Event.PlaySwitchPlayerEff, self.playSwitchPlayerEff, self)
+	self:removeEventCb(Va3ChessGameController.instance, Va3ChessEvent.EnterNextMap, self._onMapChange, self)
 end
 
-function var_0_0._onTileTriggerUpdate(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	local var_4_0 = Va3ChessGameModel.instance:getTileMO(arg_4_1, arg_4_2)
+function Activity142GameScene:_onTileTriggerUpdate(x, y, triggerType)
+	local tileMO = Va3ChessGameModel.instance:getTileMO(x, y)
 
-	if not var_4_0 or not var_4_0:isHasTrigger(arg_4_3) then
+	if not tileMO or not tileMO:isHasTrigger(triggerType) then
 		return
 	end
 
-	local var_4_1 = arg_4_0:getBaseTile(arg_4_1, arg_4_2)
+	local tileObj = self:getBaseTile(x, y)
 
-	if arg_4_3 == Va3ChessEnum.TileTrigger.Broken then
-		arg_4_0:updateBrokenTile(var_4_1, var_4_0, true)
+	if triggerType == Va3ChessEnum.TileTrigger.Broken then
+		self:updateBrokenTile(tileObj, tileMO, true)
 	end
 end
 
-function var_0_0._onMapChange(arg_5_0)
-	arg_5_0:resetTiles()
-	arg_5_0:resetBaffle()
+function Activity142GameScene:_onMapChange()
+	self:resetTiles()
+	self:resetBaffle()
 	Va3ChessGameController.instance:setSelectObj(nil)
 	Va3ChessGameController.instance:autoSelectPlayer(true)
 end
 
-function var_0_0.onResetMapView(arg_6_0)
-	arg_6_0:resetBaffle()
-	var_0_0.super.onResetMapView(arg_6_0)
+function Activity142GameScene:onResetMapView()
+	self:resetBaffle()
+	Activity142GameScene.super.onResetMapView(self)
 end
 
-function var_0_0.onResetGame(arg_7_0)
-	arg_7_0:resetBaffle()
-	var_0_0.super.onResetGame(arg_7_0)
+function Activity142GameScene:onResetGame()
+	self:resetBaffle()
+	Activity142GameScene.super.onResetGame(self)
 end
 
-function var_0_0.onLoadRes(arg_8_0)
-	local var_8_0 = arg_8_0:_getGroundItemUrlList()
+function Activity142GameScene:onLoadRes()
+	local urlList = self:_getGroundItemUrlList()
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_0) do
-		arg_8_0._loader:addPath(iter_8_1)
+	for _, resPath in ipairs(urlList) do
+		self._loader:addPath(resPath)
 	end
 
-	arg_8_0._loader:addPath(Activity142Enum.BrokenGroundItemPath)
-	arg_8_0._loader:addPath(Activity142Enum.SwitchPlayerEffPath)
+	self._loader:addPath(Activity142Enum.BrokenGroundItemPath)
+	self._loader:addPath(Activity142Enum.SwitchPlayerEffPath)
 end
 
-function var_0_0._getGroundItemUrlList(arg_9_0)
-	local var_9_0 = Va3ChessGameModel.instance:getMapId()
-	local var_9_1 = Va3ChessGameModel.instance:getActId()
-	local var_9_2 = Activity142Config.instance:getGroundItemUrlList(var_9_1, var_9_0)
+function Activity142GameScene:_getGroundItemUrlList()
+	local mapId = Va3ChessGameModel.instance:getMapId()
+	local actId = Va3ChessGameModel.instance:getActId()
+	local urlList = Activity142Config.instance:getGroundItemUrlList(actId, mapId)
 
-	if not var_9_2 or #var_9_2 < 0 then
-		var_9_2 = {
+	if not urlList or #urlList < 0 then
+		urlList = {
 			Va3ChessEnum.SceneResPath.GroundItem
 		}
 	end
 
-	return var_9_2
+	return urlList
 end
 
-function var_0_0.getGroundItemUrl(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0
-	local var_10_1 = arg_10_0:_getGroundItemUrlList()
+function Activity142GameScene:getGroundItemUrl(x, y)
+	local result
+	local urlList = self:_getGroundItemUrlList()
 
-	if arg_10_1 and arg_10_2 then
-		local var_10_2 = Va3ChessGameModel.instance:getTileMO(arg_10_1, arg_10_2)
+	if x and y then
+		local tileMO = Va3ChessGameModel.instance:getTileMO(x, y)
 
-		if var_10_2 and var_10_2:isHasTrigger(Va3ChessEnum.TileTrigger.Broken) then
-			var_10_0 = Activity142Enum.BrokenGroundItemPath
+		if tileMO and tileMO:isHasTrigger(Va3ChessEnum.TileTrigger.Broken) then
+			result = Activity142Enum.BrokenGroundItemPath
 		end
 	end
 
-	if string.nilorempty(var_10_0) then
-		var_10_0 = var_10_1[math.random(1, #var_10_1)]
+	if string.nilorempty(result) then
+		local index = math.random(1, #urlList)
+
+		result = urlList[index]
 	end
 
-	return var_10_0
+	return result
 end
 
-function var_0_0.onTileItemCreate(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	arg_11_3.animator = arg_11_3.go:GetComponent(Va3ChessEnum.ComponentType.Animator)
+function Activity142GameScene:onTileItemCreate(x, y, tileItem)
+	tileItem.animator = tileItem.go:GetComponent(Va3ChessEnum.ComponentType.Animator)
 
-	local var_11_0 = Va3ChessGameModel.instance:getTileMO(arg_11_1, arg_11_2)
+	local tileMO = Va3ChessGameModel.instance:getTileMO(x, y)
 
-	arg_11_0:updateBrokenTile(arg_11_3, var_11_0)
+	self:updateBrokenTile(tileItem, tileMO)
 end
 
-local var_0_1 = "CtoD"
-local var_0_2 = {
+local BrokenAnim = "CtoD"
+local BrokenTileAnima = {
 	{
 		idle = "xianjing_b",
 		tween = "xianjing_b"
@@ -120,187 +124,188 @@ local var_0_2 = {
 	},
 	{
 		idle = "xianjing_d",
-		tween = var_0_1
+		tween = BrokenAnim
 	}
 }
 
-function var_0_0.updateBrokenTile(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	local var_12_0 = Va3ChessEnum.TileTrigger.Broken
+function Activity142GameScene:updateBrokenTile(tileItem, tileMO, isPlayTween)
+	local triggerType = Va3ChessEnum.TileTrigger.Broken
 
-	if not arg_12_1 or not arg_12_2 or not arg_12_2:isHasTrigger(var_12_0) then
+	if not tileItem or not tileMO or not tileMO:isHasTrigger(triggerType) then
 		return
 	end
 
-	local var_12_1 = arg_12_2:getTriggerBrokenStatus()
-	local var_12_2 = var_0_2[var_12_1]
+	local brokenStatus = tileMO:getTriggerBrokenStatus()
+	local statusAnimaDict = BrokenTileAnima[brokenStatus]
 
-	if not var_12_2 then
+	if not statusAnimaDict then
 		return
 	end
 
-	local var_12_3
+	local animName
 
-	if arg_12_3 then
-		var_12_3 = var_12_2.tween
+	if isPlayTween then
+		animName = statusAnimaDict.tween
 	else
-		var_12_3 = var_12_2.idle
+		animName = statusAnimaDict.idle
 	end
 
-	if var_12_3 and arg_12_1.animator then
-		arg_12_1.animator:Play(var_12_3, 0, 0)
+	if animName and tileItem.animator then
+		tileItem.animator:Play(animName, 0, 0)
 
-		if var_12_3 == var_0_1 then
+		if animName == BrokenAnim then
 			AudioMgr.instance:trigger(AudioEnum.chess_activity142.TileBroken)
 		end
 	end
 end
 
-function var_0_0.onloadResCompleted(arg_13_0, arg_13_1)
-	arg_13_0:createAllBaffleObj()
+function Activity142GameScene:onloadResCompleted(loader)
+	self:createAllBaffleObj()
 end
 
-function var_0_0.createAllBaffleObj(arg_14_0)
-	for iter_14_0, iter_14_1 in pairs(arg_14_0._baseTiles) do
-		for iter_14_2, iter_14_3 in pairs(iter_14_1) do
-			local var_14_0 = Va3ChessGameModel.instance:getTileMO(iter_14_0 - 1, iter_14_2 - 1):getBaffleDataList()
+function Activity142GameScene:createAllBaffleObj()
+	for x, yList in pairs(self._baseTiles) do
+		for y, _ in pairs(yList) do
+			local tileData = Va3ChessGameModel.instance:getTileMO(x - 1, y - 1)
+			local baffleDataList = tileData:getBaffleDataList()
 
-			if var_14_0 and #var_14_0 >= 0 then
-				arg_14_0:createBaffleItem(iter_14_0 - 1, iter_14_2 - 1, var_14_0)
+			if baffleDataList and #baffleDataList >= 0 then
+				self:createBaffleItem(x - 1, y - 1, baffleDataList)
 			end
 		end
 	end
 end
 
-function var_0_0.createBaffleItem(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	if not arg_15_3 or #arg_15_3 <= 0 then
+function Activity142GameScene:createBaffleItem(x, y, baffleDataList)
+	if not baffleDataList or #baffleDataList <= 0 then
 		return
 	end
 
-	for iter_15_0, iter_15_1 in ipairs(arg_15_3) do
-		local var_15_0
-		local var_15_1 = Activity142Helper.getBaffleResPath(iter_15_1)
+	for _, baffleData in ipairs(baffleDataList) do
+		local baffleItem
+		local resPath = Activity142Helper.getBaffleResPath(baffleData)
 
-		if var_15_1 then
-			local var_15_2 = arg_15_0._baffleItemPools[var_15_1]
-			local var_15_3 = var_15_2 and #var_15_2 or 0
+		if resPath then
+			local pool = self._baffleItemPools[resPath]
+			local poolLen = pool and #pool or 0
 
-			if var_15_3 > 0 then
-				var_15_0 = var_15_2[var_15_3]
-				var_15_2[var_15_3] = nil
+			if poolLen > 0 then
+				baffleItem = pool[poolLen]
+				pool[poolLen] = nil
 			end
 		end
 
-		if not var_15_0 then
-			var_15_0 = Activity142BaffleObject.New(arg_15_0._sceneContainer.transform)
+		if not baffleItem then
+			baffleItem = Activity142BaffleObject.New(self._sceneContainer.transform)
 
-			var_15_0:init()
+			baffleItem:init()
 		end
 
-		iter_15_1.x = arg_15_1
-		iter_15_1.y = arg_15_2
+		baffleData.x = x
+		baffleData.y = y
 
-		var_15_0:updatePos(iter_15_1)
-		table.insert(arg_15_0._baffleItems, var_15_0)
+		baffleItem:updatePos(baffleData)
+		table.insert(self._baffleItems, baffleItem)
 	end
 end
 
-function var_0_0.resetBaffle(arg_16_0)
-	arg_16_0:recycleAllBaffleItem()
-	arg_16_0:createAllBaffleObj()
+function Activity142GameScene:resetBaffle()
+	self:recycleAllBaffleItem()
+	self:createAllBaffleObj()
 end
 
-function var_0_0.recycleAllBaffleItem(arg_17_0)
-	local var_17_0
+function Activity142GameScene:recycleAllBaffleItem()
+	local baffleObj
 
-	for iter_17_0 = 1, #arg_17_0._baffleItems do
-		local var_17_1 = arg_17_0._baffleItems[iter_17_0]
+	for i = 1, #self._baffleItems do
+		baffleObj = self._baffleItems[i]
 
-		var_17_1:recycle()
+		baffleObj:recycle()
 
-		local var_17_2 = var_17_1:getBaffleResPath()
+		local resPath = baffleObj:getBaffleResPath()
 
-		if var_17_2 then
-			local var_17_3 = arg_17_0._baffleItemPools[var_17_2]
+		if resPath then
+			local pool = self._baffleItemPools[resPath]
 
-			if not var_17_3 then
-				var_17_3 = {}
-				arg_17_0._baffleItemPools[var_17_2] = var_17_3
+			if not pool then
+				pool = {}
+				self._baffleItemPools[resPath] = pool
 			end
 
-			table.insert(var_17_3, var_17_1)
+			table.insert(pool, baffleObj)
 		else
-			var_17_1:dispose()
+			baffleObj:dispose()
 		end
 
-		arg_17_0._baffleItems[iter_17_0] = nil
+		self._baffleItems[i] = nil
 	end
 end
 
-function var_0_0.playSwitchPlayerEff(arg_18_0, arg_18_1, arg_18_2)
-	local var_18_0 = arg_18_0:getSwitchEffGO()
+function Activity142GameScene:playSwitchPlayerEff(x, y)
+	local effGO = self:getSwitchEffGO()
 
-	if gohelper.isNil(var_18_0) or not arg_18_1 or not arg_18_2 then
+	if gohelper.isNil(effGO) or not x or not y then
 		return
 	end
 
 	Activity142Helper.setAct142UIBlock(true, Activity142Enum.SWITCH_PLAYER)
 
-	local var_18_1, var_18_2, var_18_3 = Va3ChessGameController.instance:calcTilePosInScene(arg_18_1, arg_18_2)
+	local sceneX, sceneY, sceneZ = Va3ChessGameController.instance:calcTilePosInScene(x, y)
 
-	transformhelper.setLocalPos(var_18_0.transform, var_18_1, var_18_2, var_18_3)
-	gohelper.setActive(var_18_0, false)
-	gohelper.setActive(var_18_0, true)
+	transformhelper.setLocalPos(effGO.transform, sceneX, sceneY, sceneZ)
+	gohelper.setActive(effGO, false)
+	gohelper.setActive(effGO, true)
 	AudioMgr.instance:trigger(AudioEnum.chess_activity142.SwitchPlayer)
-	TaskDispatcher.cancelTask(arg_18_0.switchPlayerFinish, arg_18_0)
-	TaskDispatcher.runDelay(arg_18_0.switchPlayerFinish, arg_18_0, Activity142Enum.PLAYER_SWITCH_TIME)
+	TaskDispatcher.cancelTask(self.switchPlayerFinish, self)
+	TaskDispatcher.runDelay(self.switchPlayerFinish, self, Activity142Enum.PLAYER_SWITCH_TIME)
 end
 
-function var_0_0.getSwitchEffGO(arg_19_0)
-	if not arg_19_0._switchEffGO then
-		local var_19_0 = arg_19_0._loader:getAssetItem(Activity142Enum.SwitchPlayerEffPath)
+function Activity142GameScene:getSwitchEffGO()
+	if not self._switchEffGO then
+		local assetItem = self._loader:getAssetItem(Activity142Enum.SwitchPlayerEffPath)
 
-		if var_19_0 then
-			arg_19_0._switchEffGO = gohelper.clone(var_19_0:GetResource(), arg_19_0._sceneContainer, "switchEff")
+		if assetItem then
+			self._switchEffGO = gohelper.clone(assetItem:GetResource(), self._sceneContainer, "switchEff")
 
-			gohelper.setActive(arg_19_0._switchEffGO, false)
+			gohelper.setActive(self._switchEffGO, false)
 		end
 	end
 
-	return arg_19_0._switchEffGO
+	return self._switchEffGO
 end
 
-function var_0_0.switchPlayerFinish(arg_20_0)
+function Activity142GameScene:switchPlayerFinish()
 	Activity142Helper.setAct142UIBlock(false, Activity142Enum.SWITCH_PLAYER)
 end
 
-function var_0_0.onDestroyView(arg_21_0)
-	TaskDispatcher.cancelTask(arg_21_0.switchPlayerFinish, arg_21_0)
-	arg_21_0:switchPlayerFinish()
+function Activity142GameScene:onDestroyView()
+	TaskDispatcher.cancelTask(self.switchPlayerFinish, self)
+	self:switchPlayerFinish()
 
-	if arg_21_0._switchEffGO then
-		gohelper.destroy(arg_21_0._switchEffGO)
+	if self._switchEffGO then
+		gohelper.destroy(self._switchEffGO)
 
-		arg_21_0._switchEffGO = nil
+		self._switchEffGO = nil
 	end
 
-	arg_21_0:removeEvents()
-	arg_21_0:disposeBaffle()
-	var_0_0.super.onDestroyView(arg_21_0)
+	self:removeEvents()
+	self:disposeBaffle()
+	Activity142GameScene.super.onDestroyView(self)
 end
 
-function var_0_0.disposeBaffle(arg_22_0)
-	for iter_22_0, iter_22_1 in ipairs(arg_22_0._baffleItems) do
-		iter_22_1:dispose()
+function Activity142GameScene:disposeBaffle()
+	for _, baffleObj in ipairs(self._baffleItems) do
+		baffleObj:dispose()
 	end
 
-	for iter_22_2, iter_22_3 in pairs(arg_22_0._baffleItemPools) do
-		for iter_22_4, iter_22_5 in ipairs(iter_22_3) do
-			iter_22_5:dispose()
+	for _, pool in pairs(self._baffleItemPools) do
+		for _, baffleObj in ipairs(pool) do
+			baffleObj:dispose()
 		end
 	end
 
-	arg_22_0._baffleItems = {}
-	arg_22_0._baffleItemPools = {}
+	self._baffleItems = {}
+	self._baffleItemPools = {}
 end
 
-return var_0_0
+return Activity142GameScene

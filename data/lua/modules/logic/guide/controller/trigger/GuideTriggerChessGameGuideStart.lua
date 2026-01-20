@@ -1,18 +1,20 @@
-﻿module("modules.logic.guide.controller.trigger.GuideTriggerChessGameGuideStart", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/trigger/GuideTriggerChessGameGuideStart.lua
 
-local var_0_0 = class("GuideTriggerChessGameGuideStart", BaseGuideTrigger)
+module("modules.logic.guide.controller.trigger.GuideTriggerChessGameGuideStart", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0, arg_1_1)
-	ChessGameController.instance:registerCallback(ChessGameEvent.GuideStart, arg_1_0._onGuideStart, arg_1_0)
+local GuideTriggerChessGameGuideStart = class("GuideTriggerChessGameGuideStart", BaseGuideTrigger)
+
+function GuideTriggerChessGameGuideStart:ctor(triggerKey)
+	GuideTriggerChessGameGuideStart.super.ctor(self, triggerKey)
+	ChessGameController.instance:registerCallback(ChessGameEvent.GuideStart, self._onGuideStart, self)
 end
 
-function var_0_0.assertGuideSatisfy(arg_2_0, arg_2_1, arg_2_2)
-	return arg_2_1 == arg_2_2
+function GuideTriggerChessGameGuideStart:assertGuideSatisfy(param, configParam)
+	return param == configParam
 end
 
-function var_0_0._onGuideStart(arg_3_0, arg_3_1)
-	arg_3_0:checkStartGuide(arg_3_1)
+function GuideTriggerChessGameGuideStart:_onGuideStart(guideId)
+	self:checkStartGuide(guideId)
 end
 
-return var_0_0
+return GuideTriggerChessGameGuideStart

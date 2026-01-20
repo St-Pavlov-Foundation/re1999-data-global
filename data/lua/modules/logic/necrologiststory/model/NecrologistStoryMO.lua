@@ -1,96 +1,100 @@
-﻿module("modules.logic.necrologiststory.model.NecrologistStoryMO", package.seeall)
+﻿-- chunkname: @modules/logic/necrologiststory/model/NecrologistStoryMO.lua
 
-local var_0_0 = pureTable("NecrologistStoryMO")
+module("modules.logic.necrologiststory.model.NecrologistStoryMO", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.id = nil
-	arg_1_0.mainSection = 0
+local NecrologistStoryMO = pureTable("NecrologistStoryMO")
+
+function NecrologistStoryMO:ctor()
+	self.id = nil
+	self.mainSection = 0
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.id = arg_2_1
-	arg_2_0.config = NecrologistStoryConfig.instance:getPlotGroupCo(arg_2_1)
+function NecrologistStoryMO:init(id)
+	self.id = id
+	self.config = NecrologistStoryConfig.instance:getPlotGroupCo(id)
 end
 
-function var_0_0.initData(arg_3_0)
-	arg_3_0._isAuto = false
-	arg_3_0.situationValueDict = {}
+function NecrologistStoryMO:initData()
+	self._isAuto = false
+	self.situationValueDict = {}
 
-	local var_3_0 = NecrologistStoryConfig.instance:getStoryListByGroupId(arg_3_0.id)
+	local storyGroup = NecrologistStoryConfig.instance:getStoryListByGroupId(self.id)
 
-	arg_3_0._storyGroup = var_3_0
-	arg_3_0._stepIndexDict = {}
-	arg_3_0._skipNum = 0
+	self._storyGroup = storyGroup
+	self._stepIndexDict = {}
+	self._skipNum = 0
 
-	if not var_3_0 then
+	if not storyGroup then
 		return
 	end
 
-	arg_3_0:setSection(arg_3_0.mainSection)
+	self:setSection(self.mainSection)
 end
 
-function var_0_0.setSection(arg_4_0, arg_4_1)
-	arg_4_0._sectionId = arg_4_1
-	arg_4_0._storyList = arg_4_0._storyGroup[arg_4_0._sectionId]
-	arg_4_0._stepCount = #arg_4_0._storyList
-	arg_4_0._stepIndex = arg_4_0._stepIndexDict[arg_4_0._sectionId] or 0
-	arg_4_0._stepIndexDict[arg_4_0._sectionId] = arg_4_0._stepIndex
+function NecrologistStoryMO:setSection(sectionId)
+	self._sectionId = sectionId
+	self._storyList = self._storyGroup[self._sectionId]
+	self._stepCount = #self._storyList
+	self._stepIndex = self._stepIndexDict[self._sectionId] or 0
+	self._stepIndexDict[self._sectionId] = self._stepIndex
 end
 
-function var_0_0.getStoryList(arg_5_0)
-	return arg_5_0._storyList, arg_5_0._stepIndex
+function NecrologistStoryMO:getStoryList()
+	return self._storyList, self._stepIndex
 end
 
-function var_0_0.isEmptyStory(arg_6_0)
-	return arg_6_0._storyGroup == nil
+function NecrologistStoryMO:isEmptyStory()
+	return self._storyGroup == nil
 end
 
-function var_0_0.isStoryFinish(arg_7_0)
-	if arg_7_0:isEmptyStory() then
+function NecrologistStoryMO:isStoryFinish()
+	if self:isEmptyStory() then
 		return true
 	end
 
-	if arg_7_0._sectionId ~= 0 then
+	if self._sectionId ~= 0 then
 		return false
 	end
 
-	return arg_7_0._stepIndex >= arg_7_0._stepCount
+	return self._stepIndex >= self._stepCount
 end
 
-function var_0_0.isNextStepNeedDelay(arg_8_0)
-	if not arg_8_0:getIsAuto() then
+function NecrologistStoryMO:isNextStepNeedDelay()
+	if not self:getIsAuto() then
 		return false
 	end
 
-	local var_8_0 = arg_8_0._stepIndex
-	local var_8_1 = arg_8_0._stepCount
-	local var_8_2 = arg_8_0._storyList
-	local var_8_3 = arg_8_0._sectionId
+	local stepIndex = self._stepIndex
+	local stepCount = self._stepCount
+	local storyList = self._storyList
+	local sectionId = self._sectionId
 
-	if var_8_1 <= var_8_0 then
-		var_8_3 = arg_8_0.mainSection
-		var_8_2 = arg_8_0._storyGroup[var_8_3]
-		var_8_1 = #var_8_2
-		var_8_0 = arg_8_0._stepIndexDict[var_8_3] or 0
+	if stepCount <= stepIndex then
+		sectionId = self.mainSection
+		storyList = self._storyGroup[sectionId]
+		stepCount = #storyList
+		stepIndex = self._stepIndexDict[sectionId] or 0
 	end
 
-	local var_8_4 = var_8_0 + 1
+	stepIndex = stepIndex + 1
 
-	if var_8_3 == 0 and var_8_1 <= var_8_4 then
+	local isStoryFinish = sectionId == 0 and stepCount <= stepIndex
+
+	if isStoryFinish then
 		return false
 	end
 
-	local var_8_5 = var_8_2[var_8_4]
+	local storyConfig = storyList[stepIndex]
 
-	if not var_8_5 then
+	if not storyConfig then
 		return false
 	end
 
-	if var_8_5.type == "control" then
-		local var_8_6 = string.splitToNumber(var_8_5.addControl, "|")
+	if storyConfig.type == "control" then
+		local controlTypes = string.splitToNumber(storyConfig.addControl, "|")
 
-		for iter_8_0, iter_8_1 in ipairs(var_8_6) do
-			if NecrologistStoryEnum.NeedDelayControlType[iter_8_1] ~= nil then
+		for _, controlType in ipairs(controlTypes) do
+			if NecrologistStoryEnum.NeedDelayControlType[controlType] ~= nil then
 				return true
 			end
 		end
@@ -98,87 +102,121 @@ function var_0_0.isNextStepNeedDelay(arg_8_0)
 		return false
 	end
 
-	return NecrologistStoryEnum.NeedDelayType[var_8_5.type] ~= nil
+	local needDelayType = NecrologistStoryEnum.NeedDelayType[storyConfig.type]
+
+	return needDelayType ~= nil
 end
 
-function var_0_0.runNextStep(arg_9_0)
-	if arg_9_0._stepIndex >= arg_9_0._stepCount then
-		arg_9_0:setSection(arg_9_0.mainSection)
+function NecrologistStoryMO:runNextStep()
+	if self._stepIndex >= self._stepCount then
+		NecrologistStoryController.instance:dispatchEvent(NecrologistStoryEvent.OnSectionEnd, self._sectionId)
+		self:setSection(self.mainSection)
 	end
 
-	arg_9_0._stepIndex = arg_9_0._stepIndex + 1
-	arg_9_0._stepIndexDict[arg_9_0._sectionId] = arg_9_0._stepIndex
+	self._stepIndex = self._stepIndex + 1
+	self._stepIndexDict[self._sectionId] = self._stepIndex
 end
 
-function var_0_0.getCurStoryConfig(arg_10_0)
-	return arg_10_0._storyList[arg_10_0._stepIndex]
+function NecrologistStoryMO:getCurStoryConfig()
+	local storyConfig = self._storyList[self._stepIndex]
+
+	return storyConfig
 end
 
-function var_0_0.addSituationValue(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = arg_11_0:getSituationValue(arg_11_1)
+function NecrologistStoryMO:addSituationValue(key, value)
+	local oldValue = self:getSituationValue(key)
 
-	arg_11_0.situationValueDict[arg_11_1] = var_11_0 + arg_11_2
+	self.situationValueDict[key] = oldValue + value
 end
 
-function var_0_0.getSituationValue(arg_12_0, arg_12_1)
-	return arg_12_0.situationValueDict[arg_12_1] or 0
+function NecrologistStoryMO:getSituationValue(key)
+	local value = self.situationValueDict[key] or 0
+
+	return value
 end
 
-function var_0_0.saveSituation(arg_13_0)
-	NecrologistStoryModel.instance:getGameMO(arg_13_0.config.storyId):setPlotSituationTab(arg_13_0.id, arg_13_0.situationValueDict)
+function NecrologistStoryMO:saveSituation()
+	local storyMo = NecrologistStoryModel.instance:getGameMO(self.config.storyId)
+	local tab = {}
+
+	for key, value in pairs(self.situationValueDict) do
+		tab[key] = value
+	end
+
+	storyMo:setPlotSituationTab(self.id, tab)
 end
 
-function var_0_0.compareSituationValue(arg_14_0, arg_14_1)
-	local var_14_0 = NecrologistStoryHelper.loadSituationFunc(arg_14_1)
+function NecrologistStoryMO:compareSituationValue(compareStr)
+	local func = NecrologistStoryHelper.loadSituationFunc(compareStr)
 
-	if not var_14_0 then
+	if not func then
 		return false
 	end
 
-	local var_14_1 = NecrologistStoryModel.instance:getGameMO(arg_14_0.config.storyId):getPlotSituationTab()
+	local storyMo = NecrologistStoryModel.instance:getGameMO(self.config.storyId)
+	local dict = self:getSituationGlobalData()
 
-	setfenv(var_14_0, var_14_1)
+	setfenv(func, dict)
 
-	local var_14_2, var_14_3 = pcall(var_14_0)
+	local result, resultSection = pcall(func)
 
-	if var_14_2 then
-		return var_14_3
+	if result then
+		return resultSection or 0
 	else
-		logError("执行表达式错误" .. arg_14_1)
+		logError("执行表达式错误" .. compareStr)
 
 		return nil
 	end
 end
 
-function var_0_0.getIsAuto(arg_15_0)
-	return arg_15_0._isAuto
+function NecrologistStoryMO:getSituationGlobalData()
+	local storyMo = NecrologistStoryModel.instance:getGameMO(self.config.storyId)
+	local data = storyMo:getPlotSituationTab(self.id)
+
+	for key, value in pairs(self.situationValueDict) do
+		data[key] = data[key] + value
+	end
+
+	return data
 end
 
-function var_0_0.setIsAuto(arg_16_0, arg_16_1)
-	if arg_16_0._isAuto == arg_16_1 then
+function NecrologistStoryMO:getIsAuto()
+	return self._isAuto
+end
+
+function NecrologistStoryMO:setIsAuto(isAuto)
+	if self._isAuto == isAuto then
 		return
 	end
 
-	arg_16_0._isAuto = arg_16_1
+	self._isAuto = isAuto
 
 	NecrologistStoryController.instance:dispatchEvent(NecrologistStoryEvent.OnAutoChange)
 end
 
-function var_0_0.onSkip(arg_17_0)
-	arg_17_0._skipNum = arg_17_0._skipNum + 1
+function NecrologistStoryMO:onSkip()
+	self._skipNum = self._skipNum + 1
 end
 
-function var_0_0.getSkipNum(arg_18_0)
-	return arg_18_0._skipNum
+function NecrologistStoryMO:getSkipNum()
+	return self._skipNum
 end
 
-function var_0_0.getStatParam(arg_19_0, arg_19_1)
-	return {
-		heroStoryId = arg_19_0.config.storyId,
-		plotGroup = arg_19_0.id,
-		skipNum = arg_19_0:getSkipNum(),
-		entrance = arg_19_1 and StatEnum.HeroStoryEntrance.Review or StatEnum.HeroStoryEntrance.Normal
+function NecrologistStoryMO:markSpecial(plotId)
+	local key = string.format("mark_%s", plotId)
+
+	self:addSituationValue(key, 1)
+end
+
+function NecrologistStoryMO:getStatParam(isReview)
+	local param = {
+		heroStoryId = self.config.storyId,
+		plotGroup = self.id,
+		skipNum = self:getSkipNum(),
+		entrance = isReview and StatEnum.HeroStoryEntrance.Review or StatEnum.HeroStoryEntrance.Normal
 	}
+
+	return param
 end
 
-return var_0_0
+return NecrologistStoryMO

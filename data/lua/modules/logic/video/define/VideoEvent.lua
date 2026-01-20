@@ -1,10 +1,12 @@
-﻿module("modules.logic.video.define.VideoEvent", package.seeall)
+﻿-- chunkname: @modules/logic/video/define/VideoEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.video.define.VideoEvent", package.seeall)
 
-var_0_0.OnVideoPlayFinished = 1
-var_0_0.OnVideoPlayOverTime = 2
-var_0_0.OnVideoStarted = 3
-var_0_0.OnVideoFirstFrameReady = 4
+local VideoEvent = _M
 
-return var_0_0
+VideoEvent.OnVideoPlayFinished = 1
+VideoEvent.OnVideoPlayOverTime = 2
+VideoEvent.OnVideoStarted = 3
+VideoEvent.OnVideoFirstFrameReady = 4
+
+return VideoEvent

@@ -1,31 +1,33 @@
-﻿module("modules.logic.fight.system.work.FightWorkChangeToTempCard", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkChangeToTempCard.lua
 
-local var_0_0 = class("FightWorkChangeToTempCard", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkChangeToTempCard", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	if not FightCardDataHelper.cardChangeIsMySide(arg_1_0.actEffectData) then
-		arg_1_0:onDone(true)
+local FightWorkChangeToTempCard = class("FightWorkChangeToTempCard", FightEffectBase)
+
+function FightWorkChangeToTempCard:onStart()
+	if not FightCardDataHelper.cardChangeIsMySide(self.actEffectData) then
+		self:onDone(true)
 
 		return
 	end
 
-	local var_1_0 = string.splitToNumber(arg_1_0.actEffectData.reserveStr, "#")
+	local indexes = string.splitToNumber(self.actEffectData.reserveStr, "#")
 
-	if #var_1_0 > 0 then
-		local var_1_1 = FightDataHelper.handCardMgr.handCard
+	if #indexes > 0 then
+		local handCard = FightDataHelper.handCardMgr.handCard
 
-		for iter_1_0, iter_1_1 in ipairs(var_1_0) do
-			if var_1_1[iter_1_1] then
-				FightController.instance:dispatchEvent(FightEvent.ChangeToTempCard, iter_1_1)
+		for i, v in ipairs(indexes) do
+			if handCard[v] then
+				FightController.instance:dispatchEvent(FightEvent.ChangeToTempCard, v)
 			end
 		end
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkChangeToTempCard:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkChangeToTempCard

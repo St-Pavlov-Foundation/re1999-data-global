@@ -1,10 +1,12 @@
-﻿module("modules.logic.defines.MaterialEnum", package.seeall)
+﻿-- chunkname: @modules/logic/defines/MaterialEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.defines.MaterialEnum", package.seeall)
 
-var_0_0.MaterialType = {
+local MaterialEnum = _M
+
+MaterialEnum.MaterialType = {
 	Bp = 25,
-	PlayerCloth = 7,
+	SpecialExpiredItem = 29,
 	HeroSkin = 5,
 	SpecialBlock = 14,
 	Exp = 3,
@@ -24,13 +26,15 @@ var_0_0.MaterialType = {
 	PowerPotion = 10,
 	PlayerClothExp = 8,
 	Explore = 15,
+	PlayerCloth = 7,
 	Currency = 2,
 	RoomTheme = 1001,
 	UnlockVoucher = 28,
+	TalentItem = 31,
 	V1a5AiZiLa = 1002,
 	None = 0
 }
-var_0_0.JumpProbability = {
+MaterialEnum.JumpProbability = {
 	Small = 3,
 	Little = 5,
 	Large = 2,
@@ -38,8 +42,8 @@ var_0_0.JumpProbability = {
 	VerySmall = 4,
 	Normal = 0
 }
-var_0_0.GetApproach = {
-	RoomGainFaith = 46,
+MaterialEnum.GetApproach = {
+	Birthday = 153,
 	RoomProductLine = 34,
 	v2a2Act169SummonNewPick = 119,
 	Act1_6SkillReset = 85,
@@ -48,42 +52,50 @@ var_0_0.GetApproach = {
 	Activity = 25,
 	v1a8Act157ComponentReward = 96,
 	Act1_6SkillLvDown = 84,
-	AutoChessRankReward = 134,
+	SeasonCard = 129,
 	Charge = 31,
 	SkinCoupon = 139,
 	RoomInteraction = 47,
+	RoomGainFaith = 46,
 	AutoChessPveReward = 127,
 	Activity197View = 138,
 	DungeonRewardPoint = 28,
 	Task = 8,
 	TaskAct = 13,
+	SmallMonthCard = 125,
 	Explore = 45,
 	BattlePass = 49,
+	AutoChessRankReward = 134,
 	AstrologyStarReward = 62,
 	SignIn = 20,
 	LifeCircleSign = 133,
 	NoviceStageReward = 54
 }
-var_0_0.SubTypePackages = {
+MaterialEnum.SubTypePackages = {
 	[48] = true,
 	[50] = true,
 	[52] = true,
 	[53] = true
 }
-var_0_0.JumpProbabilityDisplay = {
-	[var_0_0.JumpProbability.Normal] = "material_jump_probability_normal",
-	[var_0_0.JumpProbability.Must] = "material_jump_probability_must",
-	[var_0_0.JumpProbability.Large] = "material_jump_probability_large",
-	[var_0_0.JumpProbability.Small] = "material_jump_probability_small",
-	[var_0_0.JumpProbability.VerySmall] = "material_jump_probability_verysmall",
-	[var_0_0.JumpProbability.Little] = "material_jump_probability_little"
+MaterialEnum.SubTypeInPack = {
+	[ItemEnum.SubType.RoomBlockGiftNew] = true,
+	[ItemEnum.SubType.RoomBlockGift] = true,
+	[ItemEnum.SubType.EquipSelectGift] = true
 }
-var_0_0.ItemSubType16 = 16
-var_0_0.ItemRareN = 2
-var_0_0.ItemRareR = 3
-var_0_0.ItemRareSR = 4
-var_0_0.ItemRareSSR = 5
-var_0_0.PowerId = {
+MaterialEnum.JumpProbabilityDisplay = {
+	[MaterialEnum.JumpProbability.Normal] = "material_jump_probability_normal",
+	[MaterialEnum.JumpProbability.Must] = "material_jump_probability_must",
+	[MaterialEnum.JumpProbability.Large] = "material_jump_probability_large",
+	[MaterialEnum.JumpProbability.Small] = "material_jump_probability_small",
+	[MaterialEnum.JumpProbability.VerySmall] = "material_jump_probability_verysmall",
+	[MaterialEnum.JumpProbability.Little] = "material_jump_probability_little"
+}
+MaterialEnum.ItemSubType16 = 16
+MaterialEnum.ItemRareN = 2
+MaterialEnum.ItemRareR = 3
+MaterialEnum.ItemRareSR = 4
+MaterialEnum.ItemRareSSR = 5
+MaterialEnum.PowerId = {
 	BigPower_Expire = 11,
 	SmallPower = 20,
 	ActPowerId = 30,
@@ -91,23 +103,23 @@ var_0_0.PowerId = {
 	SmallPower_Expire = 10,
 	BigPower = 21
 }
-var_0_0.PowerType = {
+MaterialEnum.PowerType = {
 	Big = 2,
 	Overflow = 4,
 	Act = 3,
 	Small = 1
 }
-var_0_0.ItemSubType = {
+MaterialEnum.ItemSubType = {
 	MainScene = 24,
 	Icon = 17,
 	SelfCard = 21
 }
-var_0_0.PowerMakerStatus = {
+MaterialEnum.PowerMakerStatus = {
 	Making = 1,
 	Pause = 0
 }
-var_0_0.PowerMakerItemId = 140055
-var_0_0.PowerMakerFixedPauseTime = 43200
-var_0_0.ActPowerBindActId = 11904
+MaterialEnum.PowerMakerItemId = 140055
+MaterialEnum.PowerMakerFixedPauseTime = 43200
+MaterialEnum.ActPowerBindActId = 11904
 
-return var_0_0
+return MaterialEnum

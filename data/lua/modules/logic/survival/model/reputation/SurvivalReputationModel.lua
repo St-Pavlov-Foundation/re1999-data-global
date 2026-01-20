@@ -1,29 +1,31 @@
-﻿module("modules.logic.survival.model.reputation.SurvivalReputationModel", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/reputation/SurvivalReputationModel.lua
 
-local var_0_0 = class("SurvivalReputationModel", BaseModel)
+module("modules.logic.survival.model.reputation.SurvivalReputationModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local SurvivalReputationModel = class("SurvivalReputationModel", BaseModel)
+
+function SurvivalReputationModel:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function SurvivalReputationModel:reInit()
 	return
 end
 
-function var_0_0.clear(arg_3_0)
-	var_0_0.super.clear(arg_3_0)
+function SurvivalReputationModel:clear()
+	SurvivalReputationModel.super.clear(self)
 end
 
-function var_0_0.getSelectViewReputationAdd(arg_4_0, arg_4_1)
-	local var_4_0 = 0
+function SurvivalReputationModel:getSelectViewReputationAdd(items)
+	local amount = 0
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
-		var_4_0 = var_4_0 + iter_4_1:getExchangeReputationAmountTotal()
+	for i, itemMo in ipairs(items) do
+		amount = amount + itemMo:getExchangeReputationAmountTotal()
 	end
 
-	return var_4_0
+	return amount
 end
 
-var_0_0.instance = var_0_0.New()
+SurvivalReputationModel.instance = SurvivalReputationModel.New()
 
-return var_0_0
+return SurvivalReputationModel

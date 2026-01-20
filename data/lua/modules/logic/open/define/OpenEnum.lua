@@ -1,8 +1,10 @@
-﻿module("modules.logic.open.define.OpenEnum", package.seeall)
+﻿-- chunkname: @modules/logic/open/define/OpenEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.open.define.OpenEnum", package.seeall)
 
-var_0_0.UnlockFunc = {
+local OpenEnum = _M
+
+OpenEnum.UnlockFunc = {
 	SummonEquip = 38,
 	EquipDungeon = 18,
 	Summon = 11,
@@ -44,7 +46,7 @@ var_0_0.UnlockFunc = {
 	RoomAccelerate = 40,
 	DiceHero = 270101,
 	FastDungeon = 32,
-	AssassinOutside = 3050101,
+	Rouge2 = 85,
 	TestTask = 53,
 	Rouge1 = 74,
 	Survival = 280001,
@@ -54,7 +56,9 @@ var_0_0.UnlockFunc = {
 	Critter = 220104,
 	Task = 1,
 	CommandStation = 300001,
+	Udimo = 320001,
 	Storage = 3,
+	AssassinOutside = 3050101,
 	FightAutoFocus = 27,
 	BGMSwitch = 76,
 	Act130OpenTips = 66,
@@ -90,4 +94,4 @@ var_0_0.UnlockFunc = {
 	AudioDownload = 39
 }
 
-return var_0_0
+return OpenEnum

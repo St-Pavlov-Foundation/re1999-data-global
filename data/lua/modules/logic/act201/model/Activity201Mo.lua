@@ -1,34 +1,36 @@
-﻿module("modules.logic.act201.model.Activity201Mo", package.seeall)
+﻿-- chunkname: @modules/logic/act201/model/Activity201Mo.lua
 
-local var_0_0 = pureTable("Activity201Mo")
+module("modules.logic.act201.model.Activity201Mo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.invitePlayers = {}
+local Activity201Mo = pureTable("Activity201Mo")
+
+function Activity201Mo:ctor()
+	self.invitePlayers = {}
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.activityId = arg_2_1.activityId
-	arg_2_0.isTurnBack = arg_2_1.isTurnback
-	arg_2_0.inviteCode = arg_2_1.inviteCode
+function Activity201Mo:init(info)
+	self.activityId = info.activityId
+	self.isTurnBack = info.isTurnback
+	self.inviteCode = info.inviteCode
 
-	arg_2_0:refreshInvitaPlayerInfo(arg_2_1.invitePlayers)
+	self:refreshInvitaPlayerInfo(info.invitePlayers)
 end
 
-function var_0_0.refreshInvitaPlayerInfo(arg_3_0, arg_3_1)
-	tabletool.clear(arg_3_0.invitePlayers)
+function Activity201Mo:refreshInvitaPlayerInfo(invitePlayers)
+	tabletool.clear(self.invitePlayers)
 
-	if arg_3_1 and #arg_3_1 > 0 then
-		for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
-			local var_3_0 = {
-				name = iter_3_1.name,
-				userId = iter_3_1.userId,
-				portrait = iter_3_1.portrait,
-				roleType = iter_3_1.roleType
-			}
+	if invitePlayers and #invitePlayers > 0 then
+		for _, inviteInfo in ipairs(invitePlayers) do
+			local infoMo = {}
 
-			table.insert(arg_3_0.invitePlayers, var_3_0)
+			infoMo.name = inviteInfo.name
+			infoMo.userId = inviteInfo.userId
+			infoMo.portrait = inviteInfo.portrait
+			infoMo.roleType = inviteInfo.roleType
+
+			table.insert(self.invitePlayers, infoMo)
 		end
 	end
 end
 
-return var_0_0
+return Activity201Mo

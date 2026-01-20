@@ -1,51 +1,55 @@
-﻿module("modules.logic.seasonver.act123.view2_3.Season123_2_3PickAssistViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view2_3/Season123_2_3PickAssistViewContainer.lua
 
-local var_0_0 = class("Season123_2_3PickAssistViewContainer", BaseViewContainer)
+module("modules.logic.seasonver.act123.view2_3.Season123_2_3PickAssistViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	arg_1_0.viewOpenAnimTime = 0.4
-	arg_1_0.scrollView = arg_1_0:instantiateListScrollView()
+local Season123_2_3PickAssistViewContainer = class("Season123_2_3PickAssistViewContainer", BaseViewContainer)
+
+function Season123_2_3PickAssistViewContainer:buildViews()
+	self.viewOpenAnimTime = 0.4
+	self.scrollView = self:instantiateListScrollView()
 
 	return {
 		Season123_2_3PickAssistView.New(),
-		arg_1_0.scrollView,
+		self.scrollView,
 		TabViewGroup.New(1, "#go_lefttopbtns")
 	}
 end
 
-function var_0_0.instantiateListScrollView(arg_2_0)
-	local var_2_0 = ListScrollParam.New()
+function Season123_2_3PickAssistViewContainer:instantiateListScrollView()
+	local scrollParam = ListScrollParam.New()
 
-	var_2_0.scrollGOPath = "#scroll_selection"
-	var_2_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_2_0.prefabUrl = arg_2_0._viewSetting.otherRes[1]
-	var_2_0.cellClass = Season123_2_3PickAssistItem
-	var_2_0.scrollDir = ScrollEnum.ScrollDirV
-	var_2_0.lineCount = 6
-	var_2_0.cellWidth = 296
-	var_2_0.cellHeight = 636
+	scrollParam.scrollGOPath = "#scroll_selection"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = Season123_2_3PickAssistItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 6
+	scrollParam.cellWidth = 296
+	scrollParam.cellHeight = 636
 
-	local var_2_1 = {}
+	local animationDelayTimes = {}
 
-	for iter_2_0 = 1, 15 do
-		var_2_1[iter_2_0] = math.ceil((iter_2_0 - 1) % 6) * 0.03 + arg_2_0.viewOpenAnimTime
+	for i = 1, 15 do
+		local delayTime = math.ceil((i - 1) % 6) * 0.03 + self.viewOpenAnimTime
+
+		animationDelayTimes[i] = delayTime
 	end
 
-	return LuaListScrollViewWithAnimator.New(Season123PickAssistListModel.instance, var_2_0, var_2_1)
+	return LuaListScrollViewWithAnimator.New(Season123PickAssistListModel.instance, scrollParam, animationDelayTimes)
 end
 
-function var_0_0.buildTabViews(arg_3_0, arg_3_1)
-	if arg_3_1 == 1 then
-		arg_3_0._navigateButtonView = NavigateButtonsView.New({
+function Season123_2_3PickAssistViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			arg_3_0._navigateButtonView
+			self._navigateButtonView
 		}
 	end
 end
 
-return var_0_0
+return Season123_2_3PickAssistViewContainer

@@ -1,22 +1,24 @@
-﻿module("modules.logic.login.controller.work.LogoutVoicePackageDonwloadWork", package.seeall)
+﻿-- chunkname: @modules/logic/login/controller/work/LogoutVoicePackageDonwloadWork.lua
 
-local var_0_0 = class("LogoutVoicePackageDonwloadWork", BaseWork)
+module("modules.logic.login.controller.work.LogoutVoicePackageDonwloadWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local LogoutVoicePackageDonwloadWork = class("LogoutVoicePackageDonwloadWork", BaseWork)
+
+function LogoutVoicePackageDonwloadWork:ctor()
 	return
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	if arg_2_1.isVoicePackageDonwload then
+function LogoutVoicePackageDonwloadWork:onStart(context)
+	if context.isVoicePackageDonwload then
 		GameSceneMgr.instance:dispatchEvent(SceneEventName.CloseLoading)
-		SettingsVoicePackageController.instance:initData(arg_2_0.onVoicePackageLoadDone, arg_2_0)
+		SettingsVoicePackageController.instance:initData(self.onVoicePackageLoadDone, self)
 	else
-		arg_2_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0.onVoicePackageLoadDone(arg_3_0)
-	arg_3_0:onDone(true)
+function LogoutVoicePackageDonwloadWork:onVoicePackageLoadDone()
+	self:onDone(true)
 end
 
-return var_0_0
+return LogoutVoicePackageDonwloadWork

@@ -1,83 +1,88 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.dungeon.detail.Act183DungeonRepressResultComp", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/dungeon/detail/Act183DungeonRepressResultComp.lua
 
-local var_0_0 = class("Act183DungeonRepressResultComp", Act183DungeonBaseComp)
+module("modules.logic.versionactivity2_5.challenge.view.dungeon.detail.Act183DungeonRepressResultComp", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	var_0_0.super.init(arg_1_0, arg_1_1)
+local Act183DungeonRepressResultComp = class("Act183DungeonRepressResultComp", Act183DungeonBaseComp)
 
-	arg_1_0._gohasrepress = gohelper.findChild(arg_1_0.go, "#go_hasrepress")
-	arg_1_0._gounrepress = gohelper.findChild(arg_1_0.go, "#go_unrepress")
-	arg_1_0._gorepressruleitem = gohelper.findChild(arg_1_0.go, "#go_repressrules/#go_repressruleitem")
-	arg_1_0._gorepressheropos = gohelper.findChild(arg_1_0.go, "#go_hasrepress/#go_repressheropos")
-	arg_1_0._repressRuleItemTab = arg_1_0:getUserDataTb_()
+function Act183DungeonRepressResultComp:init(go)
+	Act183DungeonRepressResultComp.super.init(self, go)
+
+	self._gohasrepress = gohelper.findChild(self.go, "#go_hasrepress")
+	self._gounrepress = gohelper.findChild(self.go, "#go_unrepress")
+	self._gorepressruleitem = gohelper.findChild(self.go, "#go_repressrules/#go_repressruleitem")
+	self._gorepressheropos = gohelper.findChild(self.go, "#go_hasrepress/#go_repressheropos")
+	self._repressRuleItemTab = self:getUserDataTb_()
 end
 
-function var_0_0.addEventListeners(arg_2_0)
+function Act183DungeonRepressResultComp:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
+function Act183DungeonRepressResultComp:removeEventListeners()
 	return
 end
 
-function var_0_0.updateInfo(arg_4_0, arg_4_1)
-	var_0_0.super.updateInfo(arg_4_0, arg_4_1)
+function Act183DungeonRepressResultComp:updateInfo(episodeMo)
+	Act183DungeonRepressResultComp.super.updateInfo(self, episodeMo)
 
-	arg_4_0._baseRules = Act183Config.instance:getEpisodeAllRuleDesc(arg_4_0._episodeId)
+	self._baseRules = Act183Config.instance:getEpisodeAllRuleDesc(self._episodeId)
 end
 
-function var_0_0.checkIsVisible(arg_5_0)
-	local var_5_0 = arg_5_0._status == Act183Enum.EpisodeStatus.Finished
-	local var_5_1 = arg_5_0._episodeType == Act183Enum.EpisodeType.Sub
-	local var_5_2 = Act183Helper.isLastPassEpisodeInType(arg_5_0._episodeMo)
+function Act183DungeonRepressResultComp:checkIsVisible()
+	local isFinished = self._status == Act183Enum.EpisodeStatus.Finished
+	local isSubEpisode = self._episodeType == Act183Enum.EpisodeType.Sub
+	local isLastEpisode = Act183Helper.isLastPassEpisodeInType(self._episodeMo)
+	local isRepressDone = isFinished and isSubEpisode and not isLastEpisode
 
-	return var_5_0 and var_5_1 and not var_5_2
+	return isRepressDone
 end
 
-function var_0_0.show(arg_6_0)
-	var_0_0.super.show(arg_6_0)
-	gohelper.setActive(arg_6_0._gohasrepress, false)
-	gohelper.setActive(arg_6_0._gounrepress, true)
-	arg_6_0:createObjList(arg_6_0._baseRules, arg_6_0._repressRuleItemTab, arg_6_0._gorepressruleitem, arg_6_0._initRepressRuleItemFunc, arg_6_0._refreshRepressResultFunc, arg_6_0._defaultItemFreeFunc)
+function Act183DungeonRepressResultComp:show()
+	Act183DungeonRepressResultComp.super.show(self)
+	gohelper.setActive(self._gohasrepress, false)
+	gohelper.setActive(self._gounrepress, true)
+	self:createObjList(self._baseRules, self._repressRuleItemTab, self._gorepressruleitem, self._initRepressRuleItemFunc, self._refreshRepressResultFunc, self._defaultItemFreeFunc)
 end
 
-function var_0_0._initRepressRuleItemFunc(arg_7_0, arg_7_1)
-	arg_7_1.txtdesc = gohelper.findChildText(arg_7_1.go, "txt_desc")
-	arg_7_1.imageicon = gohelper.findChildImage(arg_7_1.go, "image_icon")
-	arg_7_1.godisable = gohelper.findChild(arg_7_1.go, "image_icon/go_disable")
-	arg_7_1.goescape = gohelper.findChild(arg_7_1.go, "image_icon/go_escape")
-	arg_7_1.gorepressbg = gohelper.findChild(arg_7_1.go, "#go_Disable")
+function Act183DungeonRepressResultComp:_initRepressRuleItemFunc(goItem)
+	goItem.txtdesc = gohelper.findChildText(goItem.go, "txt_desc")
+	goItem.imageicon = gohelper.findChildImage(goItem.go, "image_icon")
+	goItem.godisable = gohelper.findChild(goItem.go, "image_icon/go_disable")
+	goItem.goescape = gohelper.findChild(goItem.go, "image_icon/go_escape")
+	goItem.gorepressbg = gohelper.findChild(goItem.go, "#go_Disable")
 
-	SkillHelper.addHyperLinkClick(arg_7_1.txtdesc)
+	SkillHelper.addHyperLinkClick(goItem.txtdesc)
 end
 
-function var_0_0._refreshRepressResultFunc(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	local var_8_0 = arg_8_0._episodeMo:getRuleStatus(arg_8_3) == Act183Enum.RuleStatus.Repress
+function Act183DungeonRepressResultComp:_refreshRepressResultFunc(resultItem, desc, index)
+	local ruleStatus = self._episodeMo:getRuleStatus(index)
+	local hasRepress = ruleStatus == Act183Enum.RuleStatus.Repress
 
-	arg_8_1.txtdesc.text = SkillHelper.buildDesc(arg_8_2)
+	resultItem.txtdesc.text = SkillHelper.buildDesc(desc)
 
-	gohelper.setActive(arg_8_1.godisable, var_8_0)
-	gohelper.setActive(arg_8_1.gorepressbg, var_8_0)
-	gohelper.setActive(arg_8_1.goescape, not var_8_0)
-	Act183Helper.setRuleIcon(arg_8_0._episodeId, arg_8_3, arg_8_1.imageicon)
+	gohelper.setActive(resultItem.godisable, hasRepress)
+	gohelper.setActive(resultItem.gorepressbg, hasRepress)
+	gohelper.setActive(resultItem.goescape, not hasRepress)
+	Act183Helper.setRuleIcon(self._episodeId, index, resultItem.imageicon)
 
-	if var_8_0 then
-		local var_8_1 = arg_8_0._episodeMo:getRepressHeroMo():getHeroId()
+	if hasRepress then
+		local repressHeroMo = self._episodeMo:getRepressHeroMo()
+		local heroId = repressHeroMo:getHeroId()
 
-		if not arg_8_0._repressHeroItem then
-			arg_8_0._repressHeroItem = IconMgr.instance:getCommonHeroIconNew(arg_8_0._gorepressheropos)
+		if not self._repressHeroItem then
+			self._repressHeroItem = IconMgr.instance:getCommonHeroIconNew(self._gorepressheropos)
 
-			arg_8_0._repressHeroItem:isShowLevel(false)
+			self._repressHeroItem:isShowLevel(false)
 		end
 
-		arg_8_0._repressHeroItem:onUpdateHeroId(var_8_1)
-		gohelper.setActive(arg_8_0._gohasrepress, true)
-		gohelper.setActive(arg_8_0._gounrepress, false)
+		self._repressHeroItem:onUpdateHeroId(heroId)
+		gohelper.setActive(self._gohasrepress, true)
+		gohelper.setActive(self._gounrepress, false)
 	end
 end
 
-function var_0_0.onDestroy(arg_9_0)
-	var_0_0.super.onDestroy(arg_9_0)
+function Act183DungeonRepressResultComp:onDestroy()
+	Act183DungeonRepressResultComp.super.onDestroy(self)
 end
 
-return var_0_0
+return Act183DungeonRepressResultComp

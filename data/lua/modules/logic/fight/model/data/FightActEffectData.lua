@@ -1,114 +1,120 @@
-﻿module("modules.logic.fight.model.data.FightActEffectData", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightActEffectData.lua
 
-local var_0_0 = FightDataClass("FightActEffectData")
-local var_0_1 = 1
+module("modules.logic.fight.model.data.FightActEffectData", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1)
-	arg_1_0.clientId = var_0_1
-	var_0_1 = var_0_1 + 1
+local FightActEffectData = FightDataClass("FightActEffectData")
+local idCounter = 1
 
-	arg_1_0:initClientData()
+function FightActEffectData:onConstructor(proto)
+	self.clientId = idCounter
+	idCounter = idCounter + 1
 
-	if not arg_1_1 then
+	self:initClientData()
+
+	if not proto then
 		return
 	end
 
-	arg_1_0.targetId = arg_1_1.targetId
-	arg_1_0.effectType = arg_1_1.effectType
-	arg_1_0.effectNum = arg_1_1.effectNum
+	self.targetId = proto.targetId
+	self.effectType = proto.effectType
+	self.effectNum = proto.effectNum
 
-	if arg_1_1:HasField("buff") then
-		arg_1_0.buff = FightBuffInfoData.New(arg_1_1.buff, arg_1_0.targetId)
+	if proto:HasField("buff") then
+		self.buff = FightBuffInfoData.New(proto.buff, self.targetId)
 	end
 
-	if arg_1_1:HasField("entity") then
-		arg_1_0.entity = FightEntityInfoData.New(arg_1_1.entity)
+	if proto:HasField("entity") then
+		self.entity = FightEntityInfoData.New(proto.entity)
 	end
 
-	arg_1_0.configEffect = arg_1_1.configEffect
-	arg_1_0.buffActId = arg_1_1.buffActId
-	arg_1_0.reserveId = arg_1_1.reserveId
-	arg_1_0.reserveStr = arg_1_1.reserveStr
+	self.configEffect = proto.configEffect
+	self.buffActId = proto.buffActId
+	self.reserveId = proto.reserveId
+	self.reserveStr = proto.reserveStr
 
-	if arg_1_1:HasField("summoned") then
-		arg_1_0.summoned = FightSummonedInfoData.New(arg_1_1.summoned)
+	if proto:HasField("summoned") then
+		self.summoned = FightSummonedInfoData.New(proto.summoned)
 	end
 
-	if arg_1_1:HasField("magicCircle") then
-		arg_1_0.magicCircle = FightMagicCircleInfoData.New(arg_1_1.magicCircle)
+	if proto:HasField("magicCircle") then
+		self.magicCircle = FightMagicCircleInfoData.New(proto.magicCircle)
 	end
 
-	if arg_1_1:HasField("cardInfo") then
-		arg_1_0.cardInfo = FightCardInfoData.New(arg_1_1.cardInfo)
+	if proto:HasField("cardInfo") then
+		self.cardInfo = FightCardInfoData.New(proto.cardInfo)
 	end
 
-	arg_1_0.cardInfoList = {}
+	self.cardInfoList = {}
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1.cardInfoList) do
-		table.insert(arg_1_0.cardInfoList, FightCardInfoData.New(iter_1_1))
+	for i, v in ipairs(proto.cardInfoList) do
+		table.insert(self.cardInfoList, FightCardInfoData.New(v))
 	end
 
-	arg_1_0.teamType = arg_1_1.teamType
+	self.teamType = proto.teamType
 
-	if arg_1_1:HasField("fightStep") then
-		arg_1_0.fightStep = FightStepData.New(arg_1_1.fightStep)
+	if proto:HasField("fightStep") then
+		self.fightStep = FightStepData.New(proto.fightStep)
 	end
 
-	if arg_1_1:HasField("assistBossInfo") then
-		arg_1_0.assistBossInfo = FightAssistBossInfoData.New(arg_1_1.assistBossInfo)
+	if proto:HasField("assistBossInfo") then
+		self.assistBossInfo = FightAssistBossInfoData.New(proto.assistBossInfo)
 	end
 
-	arg_1_0.effectNum1 = arg_1_1.effectNum1
+	self.effectNum1 = proto.effectNum1
 
-	if arg_1_1:HasField("emitterInfo") then
-		arg_1_0.emitterInfo = FightEmitterInfoData.New(arg_1_1.emitterInfo)
+	if proto:HasField("emitterInfo") then
+		self.emitterInfo = FightEmitterInfoData.New(proto.emitterInfo)
 	end
 
-	if arg_1_1:HasField("playerFinisherInfo") then
-		arg_1_0.playerFinisherInfo = FightPlayerFinisherInfoData.New(arg_1_1.playerFinisherInfo)
+	if proto:HasField("playerFinisherInfo") then
+		self.playerFinisherInfo = FightPlayerFinisherInfoData.New(proto.playerFinisherInfo)
 	end
 
-	if arg_1_1:HasField("powerInfo") then
-		arg_1_0.powerInfo = FightPowerInfoData.New(arg_1_1.powerInfo)
+	if proto:HasField("powerInfo") then
+		self.powerInfo = FightPowerInfoData.New(proto.powerInfo)
 	end
 
-	if arg_1_1:HasField("cardHeatValue") then
-		arg_1_0.cardHeatValue = FightCardHeatValueData.New(arg_1_1.cardHeatValue)
+	if proto:HasField("cardHeatValue") then
+		self.cardHeatValue = FightCardHeatValueData.New(proto.cardHeatValue)
 	end
 
-	arg_1_0.fightTasks = {}
+	self.fightTasks = {}
 
-	for iter_1_2, iter_1_3 in ipairs(arg_1_1.fightTasks) do
-		table.insert(arg_1_0.fightTasks, FightTaskData.New(iter_1_3))
+	for i, v in ipairs(proto.fightTasks) do
+		table.insert(self.fightTasks, FightTaskData.New(v))
 	end
 
-	if arg_1_1:HasField("fight") then
-		arg_1_0.fight = FightData.New(arg_1_1.fight)
+	if proto:HasField("fight") then
+		self.fight = FightData.New(proto.fight)
 	end
 
-	if arg_1_1:HasField("buffActInfo") then
-		arg_1_0.buffActInfo = FightBuffActInfoData.New(arg_1_1.buffActInfo)
+	if proto:HasField("buffActInfo") then
+		self.buffActInfo = FightBuffActInfoData.New(proto.buffActInfo)
 	end
 
-	if arg_1_1:HasField("hurtInfo") then
-		arg_1_0.hurtInfo = FightHurtInfoData.New(arg_1_1.hurtInfo)
+	if proto:HasField("hurtInfo") then
+		self.hurtInfo = FightHurtInfoData.New(proto.hurtInfo)
+	end
+
+	if proto:HasField("rouge2FightMusicInfo") then
+		self.rouge2MusicInfo = FightRouge2MusicInfo.New(proto.rouge2FightMusicInfo)
 	end
 end
 
-function var_0_0.isDone(arg_2_0)
-	return arg_2_0.CUSTOM_ISDONE
+function FightActEffectData:isDone()
+	return self.CUSTOM_ISDONE
 end
 
-function var_0_0.setDone(arg_3_0)
-	arg_3_0.CUSTOM_ISDONE = true
+function FightActEffectData:setDone()
+	self.CUSTOM_ISDONE = true
 end
 
-function var_0_0.revertDone(arg_4_0)
-	arg_4_0.CUSTOM_ISDONE = false
+function FightActEffectData:revertDone()
+	self.CUSTOM_ISDONE = false
 end
 
-function var_0_0.initClientData(arg_5_0)
-	arg_5_0.custom_nuoDiKaDamageSign = nil
+function FightActEffectData:initClientData()
+	self.custom_nuoDiKaDamageSign = nil
 end
 
-return var_0_0
+return FightActEffectData

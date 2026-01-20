@@ -1,26 +1,28 @@
-﻿module("modules.logic.room.view.common.RoomStoreGoodsTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/common/RoomStoreGoodsTipViewContainer.lua
 
-local var_0_0 = class("RoomStoreGoodsTipViewContainer", BaseViewContainer)
+module("modules.logic.room.view.common.RoomStoreGoodsTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoomStoreGoodsTipViewContainer = class("RoomStoreGoodsTipViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RoomStoreGoodsTipView.New())
-	table.insert(var_1_0, RoomStroreGoodsTipViewBanner.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topright"))
+function RoomStoreGoodsTipViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RoomStoreGoodsTipView.New())
+	table.insert(views, RoomStroreGoodsTipViewBanner.New())
+	table.insert(views, TabViewGroup.New(1, "#go_topright"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	local var_2_0 = CurrencyEnum.CurrencyType
-	local var_2_1 = {
-		var_2_0.FreeDiamondCoupon,
+function RoomStoreGoodsTipViewContainer:buildTabViews(tabContainerId)
+	local currencyType = CurrencyEnum.CurrencyType
+	local currencyParam = {
+		currencyType.FreeDiamondCoupon,
 		23
 	}
 
 	if ItemModel.instance:getItemCount(StoreEnum.NormalRoomTicket) > 0 then
-		table.insert(var_2_1, {
+		table.insert(currencyParam, {
 			isCurrencySprite = true,
 			id = StoreEnum.NormalRoomTicket,
 			type = MaterialEnum.MaterialType.Item
@@ -28,7 +30,7 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	end
 
 	if ItemModel.instance:getItemCount(StoreEnum.TopRoomTicket) > 0 then
-		table.insert(var_2_1, {
+		table.insert(currencyParam, {
 			isCurrencySprite = true,
 			id = StoreEnum.TopRoomTicket,
 			type = MaterialEnum.MaterialType.Item
@@ -36,12 +38,12 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	end
 
 	return {
-		CurrencyView.New(var_2_1)
+		CurrencyView.New(currencyParam)
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_3_0)
+function RoomStoreGoodsTipViewContainer:onContainerClickModalMask()
 	ViewMgr.instance:closeView(ViewName.RoomStoreGoodsTipView, nil, true)
 end
 
-return var_0_0
+return RoomStoreGoodsTipViewContainer

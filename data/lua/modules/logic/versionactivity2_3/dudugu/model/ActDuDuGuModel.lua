@@ -1,79 +1,85 @@
-﻿module("modules.logic.versionactivity2_3.dudugu.model.ActDuDuGuModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/dudugu/model/ActDuDuGuModel.lua
 
-local var_0_0 = class("ActDuDuGuModel", BaseModel)
+module("modules.logic.versionactivity2_3.dudugu.model.ActDuDuGuModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local ActDuDuGuModel = class("ActDuDuGuModel", BaseModel)
+
+function ActDuDuGuModel:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._curLvIndex = 0
+function ActDuDuGuModel:reInit()
+	self._curLvIndex = 0
 end
 
-function var_0_0.setCurLvIndex(arg_3_0, arg_3_1)
-	arg_3_0._curLvIndex = arg_3_1
+function ActDuDuGuModel:setCurLvIndex(index)
+	self._curLvIndex = index
 end
 
-function var_0_0.getCurLvIndex(arg_4_0)
-	return arg_4_0._curLvIndex or 0
+function ActDuDuGuModel:getCurLvIndex()
+	return self._curLvIndex or 0
 end
 
-function var_0_0.initData(arg_5_0, arg_5_1)
-	RoleActivityModel.instance:initData(arg_5_1)
+function ActDuDuGuModel:initData(actId)
+	RoleActivityModel.instance:initData(actId)
 end
 
-function var_0_0.updateData(arg_6_0, arg_6_1)
-	RoleActivityModel.instance:updateData(arg_6_1)
+function ActDuDuGuModel:updateData(actId)
+	RoleActivityModel.instance:updateData(actId)
 end
 
-function var_0_0.isLevelUnlock(arg_7_0, arg_7_1, arg_7_2)
-	return (RoleActivityModel.instance:isLevelUnlock(arg_7_1, arg_7_2))
+function ActDuDuGuModel:isLevelUnlock(actId, episodeId)
+	local isUnlock = RoleActivityModel.instance:isLevelUnlock(actId, episodeId)
+
+	return isUnlock
 end
 
-function var_0_0.isLevelPass(arg_8_0, arg_8_1, arg_8_2)
-	return (RoleActivityModel.instance:isLevelPass(arg_8_1, arg_8_2))
+function ActDuDuGuModel:isLevelPass(actId, episodeId)
+	local isPass = RoleActivityModel.instance:isLevelPass(actId, episodeId)
+
+	return isPass
 end
 
-function var_0_0.getNewFinishStoryLvl(arg_9_0)
-	local var_9_0 = VersionActivity2_3Enum.ActivityId.DuDuGu
-	local var_9_1 = RoleActivityConfig.instance:getStoryLevelList(var_9_0)
-	local var_9_2 = var_9_1[arg_9_0._curLvIndex].id
+function ActDuDuGuModel:getNewFinishStoryLvl()
+	local actId = VersionActivity2_3Enum.ActivityId.DuDuGu
+	local episodeCos = RoleActivityConfig.instance:getStoryLevelList(actId)
+	local episodeId = episodeCos[self._curLvIndex].id
 
-	if not var_9_2 or var_9_2 <= 0 then
+	if not episodeId or episodeId <= 0 then
 		return
 	end
 
-	local var_9_3 = arg_9_0._curLvIndex + 1 <= #var_9_1 and var_9_1[arg_9_0._curLvIndex + 1].id or 0
+	local nextEpisode = self._curLvIndex + 1 <= #episodeCos and episodeCos[self._curLvIndex + 1].id or 0
 
-	if var_9_3 > 0 then
-		local var_9_4 = arg_9_0:isLevelPass(var_9_0, var_9_2)
-		local var_9_5 = true
-		local var_9_6 = var_9_1[arg_9_0._curLvIndex].afterStory
+	if nextEpisode > 0 then
+		local isPass = self:isLevelPass(actId, episodeId)
+		local storyFinished = true
+		local storyId = episodeCos[self._curLvIndex].afterStory
 
-		if var_9_6 > 0 then
-			var_9_5 = StoryModel.instance:isStoryFinished(var_9_6)
+		if storyId > 0 then
+			storyFinished = StoryModel.instance:isStoryFinished(storyId)
 		end
 
-		local var_9_7 = arg_9_0:isLevelUnlock(var_9_0, var_9_3)
+		local isUnlock = self:isLevelUnlock(actId, nextEpisode)
 
-		if var_9_4 and not var_9_7 and var_9_5 then
-			arg_9_0.newFinishStoryLvlId = var_9_2
+		if isPass and not isUnlock and storyFinished then
+			self.newFinishStoryLvlId = episodeId
 
-			return arg_9_0.newFinishStoryLvlId
+			return self.newFinishStoryLvlId
 		end
 	end
 
-	arg_9_0.newFinishStoryLvlId = RoleActivityModel.instance:getNewFinishStoryLvl()
+	self.newFinishStoryLvlId = RoleActivityModel.instance:getNewFinishStoryLvl()
 
-	return arg_9_0.newFinishStoryLvlId
+	return self.newFinishStoryLvlId
 end
 
-function var_0_0.clearNewFinishStoryLvl(arg_10_0)
+function ActDuDuGuModel:clearNewFinishStoryLvl()
 	RoleActivityModel.instance:clearNewFinishStoryLvl()
 
-	return arg_10_0.newFinishStoryLvlId
+	return self.newFinishStoryLvlId
 end
 
-var_0_0.instance = var_0_0.New()
+ActDuDuGuModel.instance = ActDuDuGuModel.New()
 
-return var_0_0
+return ActDuDuGuModel

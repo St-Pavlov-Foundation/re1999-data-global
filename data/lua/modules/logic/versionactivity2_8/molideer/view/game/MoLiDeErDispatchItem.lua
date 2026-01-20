@@ -1,535 +1,554 @@
-﻿module("modules.logic.versionactivity2_8.molideer.view.game.MoLiDeErDispatchItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/molideer/view/game/MoLiDeErDispatchItem.lua
 
-local var_0_0 = class("MoLiDeErDispatchItem", LuaCompBase)
+module("modules.logic.versionactivity2_8.molideer.view.game.MoLiDeErDispatchItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0._goItemList = gohelper.findChild(arg_1_0.viewGO, "#go_ItemList")
-	arg_1_0._goItem = gohelper.findChild(arg_1_0.viewGO, "#go_ItemList/#go_Item")
-	arg_1_0._simageProp = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ItemList/#go_Item/#simage_Prop")
-	arg_1_0._txtNum = gohelper.findChildText(arg_1_0.viewGO, "#go_ItemList/#go_Item/#txt_Num")
-	arg_1_0._goAction = gohelper.findChild(arg_1_0.viewGO, "#go_Action")
-	arg_1_0._goLightBG = gohelper.findChild(arg_1_0.viewGO, "#go_Action/#go_LightBG")
-	arg_1_0._goLightBgFx = gohelper.findChild(arg_1_0.viewGO, "#go_Action/#go_LightBG/#go_LightBgFx")
-	arg_1_0._txtActionNum = gohelper.findChildText(arg_1_0.viewGO, "#go_Action/#txt_ActionNum")
-	arg_1_0._txtActionNumChange = gohelper.findChildText(arg_1_0.viewGO, "#go_Action/#txt_ActionNum/#txt_ActionNumChange")
-	arg_1_0._goDispatch = gohelper.findChild(arg_1_0.viewGO, "#go_Dispatch")
-	arg_1_0._goExpand = gohelper.findChild(arg_1_0.viewGO, "#go_Dispatch/#go_Expand")
-	arg_1_0._goSelectRole = gohelper.findChild(arg_1_0.viewGO, "#go_Dispatch/#go_Expand/#go_SelectRole")
-	arg_1_0._goSelected = gohelper.findChild(arg_1_0.viewGO, "#go_Dispatch/#go_Expand/#go_SelectRole/image_HeadBG/#go_Selected")
-	arg_1_0._simageHead = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_Dispatch/#go_Expand/#go_SelectRole/image_HeadBG/image/#simage_Head")
-	arg_1_0._goCD = gohelper.findChild(arg_1_0.viewGO, "#go_Dispatch/#go_Expand/#go_SelectRole/image_HeadBG/#go_CD")
-	arg_1_0._txtTeamDescr = gohelper.findChildText(arg_1_0.viewGO, "#go_Dispatch/#go_Expand/#txt_TeamDescr")
-	arg_1_0._txtTeamName = gohelper.findChildText(arg_1_0.viewGO, "#go_Dispatch/#go_Expand/#txt_TeamDescr/#txt_TeamName")
-	arg_1_0._goRole = gohelper.findChild(arg_1_0.viewGO, "#go_Dispatch/#go_Role")
-	arg_1_0._btnDispatch = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_Dispatch/#btn_Dispatch")
-	arg_1_0._btnWithdraw = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_Dispatch/#btn_Withdraw")
-	arg_1_0._goBG1 = gohelper.findChild(arg_1_0.viewGO, "#go_Dispatch/#btn_Dispatch/#go_BG1")
-	arg_1_0._goBG2 = gohelper.findChild(arg_1_0.viewGO, "#go_Dispatch/#btn_Dispatch/#go_BG2")
-	arg_1_0._goTips = gohelper.findChild(arg_1_0.viewGO, "#go_Tips")
-	arg_1_0._btnUseItem = gohelper.findChildButton(arg_1_0.viewGO, "#go_Tips/#btn_Use")
-	arg_1_0._txtTips = gohelper.findChildText(arg_1_0.viewGO, "#go_Tips/#txt_Tips")
-	arg_1_0._goDispatchTitle = gohelper.findChild(arg_1_0.viewGO, "#go_Dispatch/#go_DispatchTitle")
-	arg_1_0._goWithdrawTitle = gohelper.findChild(arg_1_0.viewGO, "#go_Dispatch/#go_Expand/#go_WithdrawTitle")
-	arg_1_0._btnResetSelect = gohelper.findChildButton(arg_1_0.viewGO, "#btn_ResetSelect")
-	arg_1_0._imageBg = gohelper.findChildImage(arg_1_0.viewGO, "#go_Dispatch")
-	arg_1_0._imageBgFrame = gohelper.findChildImage(arg_1_0.viewGO, "#go_Dispatch/image_Frame")
-	arg_1_0._goActionChangeItem = gohelper.findChildText(arg_1_0.viewGO, "#go_Action/#go_Num/#txt_Num")
+local MoLiDeErDispatchItem = class("MoLiDeErDispatchItem", LuaCompBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function MoLiDeErDispatchItem:init(go)
+	self.viewGO = go
+	self._goItemList = gohelper.findChild(self.viewGO, "#go_ItemList")
+	self._goItem = gohelper.findChild(self.viewGO, "#go_ItemList/#go_Item")
+	self._simageProp = gohelper.findChildSingleImage(self.viewGO, "#go_ItemList/#go_Item/#simage_Prop")
+	self._txtNum = gohelper.findChildText(self.viewGO, "#go_ItemList/#go_Item/#txt_Num")
+	self._goAction = gohelper.findChild(self.viewGO, "#go_Action")
+	self._goLightBG = gohelper.findChild(self.viewGO, "#go_Action/#go_LightBG")
+	self._goLightBgFx = gohelper.findChild(self.viewGO, "#go_Action/#go_LightBG/#go_LightBgFx")
+	self._txtActionNum = gohelper.findChildText(self.viewGO, "#go_Action/#txt_ActionNum")
+	self._txtActionNumChange = gohelper.findChildText(self.viewGO, "#go_Action/#txt_ActionNum/#txt_ActionNumChange")
+	self._goDispatch = gohelper.findChild(self.viewGO, "#go_Dispatch")
+	self._goExpand = gohelper.findChild(self.viewGO, "#go_Dispatch/#go_Expand")
+	self._goSelectRole = gohelper.findChild(self.viewGO, "#go_Dispatch/#go_Expand/#go_SelectRole")
+	self._goSelected = gohelper.findChild(self.viewGO, "#go_Dispatch/#go_Expand/#go_SelectRole/image_HeadBG/#go_Selected")
+	self._simageHead = gohelper.findChildSingleImage(self.viewGO, "#go_Dispatch/#go_Expand/#go_SelectRole/image_HeadBG/image/#simage_Head")
+	self._goCD = gohelper.findChild(self.viewGO, "#go_Dispatch/#go_Expand/#go_SelectRole/image_HeadBG/#go_CD")
+	self._txtTeamDescr = gohelper.findChildText(self.viewGO, "#go_Dispatch/#go_Expand/#txt_TeamDescr")
+	self._txtTeamName = gohelper.findChildText(self.viewGO, "#go_Dispatch/#go_Expand/#txt_TeamDescr/#txt_TeamName")
+	self._goRole = gohelper.findChild(self.viewGO, "#go_Dispatch/#go_Role")
+	self._btnDispatch = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Dispatch/#btn_Dispatch")
+	self._btnWithdraw = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Dispatch/#btn_Withdraw")
+	self._goBG1 = gohelper.findChild(self.viewGO, "#go_Dispatch/#btn_Dispatch/#go_BG1")
+	self._goBG2 = gohelper.findChild(self.viewGO, "#go_Dispatch/#btn_Dispatch/#go_BG2")
+	self._goTips = gohelper.findChild(self.viewGO, "#go_Tips")
+	self._btnUseItem = gohelper.findChildButton(self.viewGO, "#go_Tips/#btn_Use")
+	self._txtTips = gohelper.findChildText(self.viewGO, "#go_Tips/#txt_Tips")
+	self._goDispatchTitle = gohelper.findChild(self.viewGO, "#go_Dispatch/#go_DispatchTitle")
+	self._goWithdrawTitle = gohelper.findChild(self.viewGO, "#go_Dispatch/#go_Expand/#go_WithdrawTitle")
+	self._btnResetSelect = gohelper.findChildButton(self.viewGO, "#btn_ResetSelect")
+	self._imageBg = gohelper.findChildImage(self.viewGO, "#go_Dispatch")
+	self._imageBgFrame = gohelper.findChildImage(self.viewGO, "#go_Dispatch/image_Frame")
+	self._goActionChangeItem = gohelper.findChildText(self.viewGO, "#go_Action/#go_Num/#txt_Num")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._btnDispatch:AddClickListener(arg_2_0._btnDispatchOnClick, arg_2_0)
-	arg_2_0._btnWithdraw:AddClickListener(arg_2_0._btnWithdrawOnClick, arg_2_0)
-	arg_2_0._btnResetSelect:AddClickListener(arg_2_0._btnResetSelectOnClick, arg_2_0)
-	arg_2_0._btnUseItem:AddClickListener(arg_2_0._btnUseItemOnClick, arg_2_0)
-	arg_2_0:addEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameItemSelect, arg_2_0.onItemSelect, arg_2_0)
-	arg_2_0:addEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameTeamSelect, arg_2_0.onTeamSelect, arg_2_0)
-	arg_2_0:addEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameOptionSelect, arg_2_0.onOptionSelect, arg_2_0)
-	arg_2_0:addEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameUseItem, arg_2_0.onUseItem, arg_2_0)
+function MoLiDeErDispatchItem:addEventListeners()
+	self._btnDispatch:AddClickListener(self._btnDispatchOnClick, self)
+	self._btnWithdraw:AddClickListener(self._btnWithdrawOnClick, self)
+	self._btnResetSelect:AddClickListener(self._btnResetSelectOnClick, self)
+	self._btnUseItem:AddClickListener(self._btnUseItemOnClick, self)
+	self:addEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameItemSelect, self.onItemSelect, self)
+	self:addEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameTeamSelect, self.onTeamSelect, self)
+	self:addEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameOptionSelect, self.onOptionSelect, self)
+	self:addEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameUseItem, self.onUseItem, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btnDispatch:RemoveClickListener()
-	arg_3_0._btnWithdraw:RemoveClickListener()
-	arg_3_0._btnResetSelect:RemoveClickListener()
-	arg_3_0._btnUseItem:RemoveClickListener()
-	arg_3_0:removeEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameItemSelect, arg_3_0.onItemSelect, arg_3_0)
-	arg_3_0:removeEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameTeamSelect, arg_3_0.onTeamSelect, arg_3_0)
-	arg_3_0:removeEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameOptionSelect, arg_3_0.onOptionSelect, arg_3_0)
-	arg_3_0:removeEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameUseItem, arg_3_0.onUseItem, arg_3_0)
+function MoLiDeErDispatchItem:removeEventListeners()
+	self._btnDispatch:RemoveClickListener()
+	self._btnWithdraw:RemoveClickListener()
+	self._btnResetSelect:RemoveClickListener()
+	self._btnUseItem:RemoveClickListener()
+	self:removeEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameItemSelect, self.onItemSelect, self)
+	self:removeEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameTeamSelect, self.onTeamSelect, self)
+	self:removeEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameOptionSelect, self.onOptionSelect, self)
+	self:removeEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameUseItem, self.onUseItem, self)
 end
 
-function var_0_0._btnDispatchOnClick(arg_4_0)
-	local var_4_0 = MoLiDeErModel.instance:getCurActId()
-	local var_4_1 = MoLiDeErModel.instance:getCurEpisodeId()
-	local var_4_2 = MoLiDeErGameModel.instance:getSelectTeamId()
-	local var_4_3 = MoLiDeErGameModel.instance:getSelectOptionId()
-	local var_4_4 = MoLiDeErGameModel.instance:getSelectEventId()
+function MoLiDeErDispatchItem:_btnDispatchOnClick()
+	local actId = MoLiDeErModel.instance:getCurActId()
+	local episodeId = MoLiDeErModel.instance:getCurEpisodeId()
+	local teamId = MoLiDeErGameModel.instance:getSelectTeamId()
+	local optionId = MoLiDeErGameModel.instance:getSelectOptionId()
+	local eventId = MoLiDeErGameModel.instance:getSelectEventId()
 
-	MoLiDeErGameController.instance:dispatchTeam(var_4_0, var_4_1, var_4_4, var_4_2, var_4_3, var_4_4)
+	MoLiDeErGameController.instance:dispatchTeam(actId, episodeId, eventId, teamId, optionId, eventId)
 end
 
-function var_0_0._btnWithdrawOnClick(arg_5_0)
-	local var_5_0 = MoLiDeErGameModel.instance:getSelectEventId()
-	local var_5_1 = MoLiDeErGameModel.instance:getCurGameInfo():getEventInfo(var_5_0)
+function MoLiDeErDispatchItem:_btnWithdrawOnClick()
+	local eventId = MoLiDeErGameModel.instance:getSelectEventId()
+	local curGameInfoMo = MoLiDeErGameModel.instance:getCurGameInfo()
+	local eventInfo = curGameInfoMo:getEventInfo(eventId)
 
-	if not var_5_1 or var_5_1.teamId == nil or var_5_1.teamId == 0 then
+	if not eventInfo or eventInfo.teamId == nil or eventInfo.teamId == 0 then
 		logError("莫莉德尔 角色活动 撤回小队id为空")
 
 		return
 	end
 
-	local var_5_2 = var_5_1.teamId
+	local teamId = eventInfo.teamId
 
-	MoLiDeErGameController.instance:withDrawTeam(var_5_2)
+	MoLiDeErGameController.instance:withDrawTeam(teamId)
 end
 
-function var_0_0._btnResetSelectOnClick(arg_6_0)
+function MoLiDeErDispatchItem:_btnResetSelectOnClick()
 	MoLiDeErGameModel.instance:setSelectItemId(nil)
 
-	if arg_6_0._state == MoLiDeErEnum.DispatchState.Main or arg_6_0._state == MoLiDeErEnum.DispatchState.Dispatch and arg_6_0._optionId == nil then
+	if self._state == MoLiDeErEnum.DispatchState.Main or self._state == MoLiDeErEnum.DispatchState.Dispatch and self._optionId == nil then
 		MoLiDeErGameModel.instance:setSelectTeamId(nil)
 	end
 end
 
-function var_0_0._btnUseItemOnClick(arg_7_0)
-	local var_7_0 = MoLiDeErGameModel.instance:getSelectItemId()
+function MoLiDeErDispatchItem:_btnUseItemOnClick()
+	local selectItemId = MoLiDeErGameModel.instance:getSelectItemId()
 
-	if var_7_0 == nil then
+	if selectItemId == nil then
 		return
 	end
 
-	if MoLiDeErGameModel.instance:getCurGameInfo():canEquipUse(var_7_0) == false then
+	local info = MoLiDeErGameModel.instance:getCurGameInfo()
+
+	if info:canEquipUse(selectItemId) == false then
 		GameFacade.showToast(ToastEnum.Act194EquipCountNotEnough)
 
 		return
 	end
 
-	local var_7_1 = MoLiDeErModel.instance:getCurActId()
-	local var_7_2 = MoLiDeErModel.instance:getCurEpisodeId()
+	local actId = MoLiDeErModel.instance:getCurActId()
+	local episodeId = MoLiDeErModel.instance:getCurEpisodeId()
 
-	MoLiDeErGameController.instance:useItem(var_7_1, var_7_2, var_7_0)
+	MoLiDeErGameController.instance:useItem(actId, episodeId, selectItemId)
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0._equipItemList = {}
-	arg_8_0._teamItemList = {}
-	arg_8_0._useActionChangeItemList = {}
-	arg_8_0._unUseActionChangeItemList = {}
-	arg_8_0._expandTeamItem = MonoHelper.addNoUpdateLuaComOnceToGo(arg_8_0._goSelectRole, MoLiDeErTeamItem)
-	arg_8_0._showItemList = {}
+function MoLiDeErDispatchItem:_editableInitView()
+	self._equipItemList = {}
+	self._teamItemList = {}
+	self._useActionChangeItemList = {}
+	self._unUseActionChangeItemList = {}
+	self._expandTeamItem = MonoHelper.addNoUpdateLuaComOnceToGo(self._goSelectRole, MoLiDeErTeamItem)
+	self._showItemList = {}
 
-	arg_8_0:_initState()
+	self:_initState()
 end
 
-function var_0_0._initState(arg_9_0)
-	gohelper.setActive(arg_9_0._goItem, false)
-	gohelper.setActive(arg_9_0._goRole, false)
-	gohelper.setActive(arg_9_0._goExpand, false)
-	gohelper.setActive(arg_9_0._goTips, false)
-	gohelper.setActive(arg_9_0._goBG2.gameObject, false)
-	gohelper.setActive(arg_9_0._btnResetSelect.gameObject, false)
-	gohelper.setActive(arg_9_0._imageBgFrame.gameObject, true)
-	gohelper.setActive(arg_9_0._goActionChangeItem.transform.parent.gameObject, false)
+function MoLiDeErDispatchItem:_initState()
+	gohelper.setActive(self._goItem, false)
+	gohelper.setActive(self._goRole, false)
+	gohelper.setActive(self._goExpand, false)
+	gohelper.setActive(self._goTips, false)
+	gohelper.setActive(self._goBG2.gameObject, false)
+	gohelper.setActive(self._btnResetSelect.gameObject, false)
+	gohelper.setActive(self._imageBgFrame.gameObject, true)
+	gohelper.setActive(self._goActionChangeItem.transform.parent.gameObject, false)
 
-	arg_9_0._imageBg.enabled = false
+	self._imageBg.enabled = false
 end
 
-function var_0_0.setData(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	arg_10_0._state = arg_10_1
-	arg_10_0._eventId = arg_10_2
-	arg_10_0._optionId = arg_10_3
+function MoLiDeErDispatchItem:setData(state, eventId, optionId)
+	self._state = state
+	self._eventId = eventId
+	self._optionId = optionId
 
-	arg_10_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.onOptionSelect(arg_11_0, arg_11_1)
-	arg_11_0._optionId = arg_11_1
+function MoLiDeErDispatchItem:onOptionSelect(optionId)
+	self._optionId = optionId
 end
 
-function var_0_0.refreshUI(arg_12_0)
-	arg_12_0:refreshItem()
-	arg_12_0:refreshTeam()
-	arg_12_0:refreshState()
+function MoLiDeErDispatchItem:refreshUI()
+	self:refreshItem()
+	self:refreshTeam()
+	self:refreshState()
 end
 
-function var_0_0.refreshState(arg_13_0)
-	local var_13_0 = arg_13_0._optionId ~= nil and arg_13_0._optionId ~= 0
+function MoLiDeErDispatchItem:refreshState()
+	local selectOptionID = self._optionId ~= nil and self._optionId ~= 0
 
-	gohelper.setActive(arg_13_0._goBG2, var_13_0 and arg_13_0._selectTeamId ~= nil)
+	gohelper.setActive(self._goBG2, selectOptionID and self._selectTeamId ~= nil)
 
-	local var_13_1 = arg_13_0._state == MoLiDeErEnum.DispatchState.Dispatch and var_13_0
+	local canDispatch = self._state == MoLiDeErEnum.DispatchState.Dispatch and selectOptionID
 
-	gohelper.setActive(arg_13_0._btnDispatch, var_13_1)
-	gohelper.setActive(arg_13_0._txtActionNumChange, var_13_1)
-	gohelper.setActive(arg_13_0._goDispatchTitle, var_13_1)
-	gohelper.setActive(arg_13_0._goAction, var_13_1 or arg_13_0._state == MoLiDeErEnum.DispatchState.Main)
+	gohelper.setActive(self._btnDispatch, canDispatch)
+	gohelper.setActive(self._txtActionNumChange, canDispatch)
+	gohelper.setActive(self._goDispatchTitle, canDispatch)
+	gohelper.setActive(self._goAction, canDispatch or self._state == MoLiDeErEnum.DispatchState.Main)
 
-	local var_13_2 = arg_13_0._state == MoLiDeErEnum.DispatchState.Dispatching and var_13_0
+	local canWithdraw = self._state == MoLiDeErEnum.DispatchState.Dispatching and selectOptionID
 
-	gohelper.setActive(arg_13_0._btnWithdraw, var_13_2)
-	gohelper.setActive(arg_13_0._goWithdrawTitle, var_13_2)
+	gohelper.setActive(self._btnWithdraw, canWithdraw)
+	gohelper.setActive(self._goWithdrawTitle, canWithdraw)
 
-	arg_13_0._imageBg.enabled = arg_13_0._state == MoLiDeErEnum.DispatchState.Dispatch or arg_13_0._state == MoLiDeErEnum.DispatchState.Dispatching
+	self._imageBg.enabled = self._state == MoLiDeErEnum.DispatchState.Dispatch or self._state == MoLiDeErEnum.DispatchState.Dispatching
 
-	if var_13_1 then
-		local var_13_3 = MoLiDeErGameModel.instance:getCurExecutionCost()
+	if canDispatch then
+		local executionCost = MoLiDeErGameModel.instance:getCurExecutionCost()
 
-		arg_13_0._txtActionNumChange.text = MoLiDeErHelper.getExecutionCostStr(var_13_3)
+		self._txtActionNumChange.text = MoLiDeErHelper.getExecutionCostStr(executionCost)
 
-		gohelper.setActive(arg_13_0._goLightBgFx, var_13_3 ~= 0)
+		gohelper.setActive(self._goLightBgFx, executionCost ~= 0)
 	else
-		gohelper.setActive(arg_13_0._goLightBgFx, false)
+		gohelper.setActive(self._goLightBgFx, false)
 	end
 
-	arg_13_0:refreshActionCount()
+	self:refreshActionCount()
 end
 
-function var_0_0.refreshActionCount(arg_14_0)
-	local var_14_0 = MoLiDeErGameModel.instance:getCurGameInfo()
-	local var_14_1 = var_14_0.leftRoundEnergy
-	local var_14_2 = var_14_0.previousRoundEnergy
-	local var_14_3 = arg_14_0._goActionChangeItem
+function MoLiDeErDispatchItem:refreshActionCount()
+	local gameInfoMo = MoLiDeErGameModel.instance:getCurGameInfo()
+	local executionCount = gameInfoMo.leftRoundEnergy
+	local previousExecutionCount = gameInfoMo.previousRoundEnergy
+	local txtItem = self._goActionChangeItem
 
-	if arg_14_0._state == MoLiDeErEnum.DispatchState.Main and var_14_2 and var_14_2 ~= var_14_1 then
-		TaskDispatcher.cancelTask(arg_14_0.onActionNumChangeEnd, arg_14_0)
+	if self._state == MoLiDeErEnum.DispatchState.Main and previousExecutionCount and previousExecutionCount ~= executionCount then
+		TaskDispatcher.cancelTask(self.onActionNumChangeEnd, self)
 
-		var_14_3.text = MoLiDeErHelper.getExecutionCostStr(var_14_1 - var_14_2)
+		txtItem.text = MoLiDeErHelper.getExecutionCostStr(executionCount - previousExecutionCount)
 
-		gohelper.setActive(var_14_3.transform.parent.gameObject, true)
-		TaskDispatcher.runDelay(arg_14_0.onActionNumChangeEnd, arg_14_0, 1)
+		gohelper.setActive(txtItem.transform.parent.gameObject, true)
+		TaskDispatcher.runDelay(self.onActionNumChangeEnd, self, 1)
 
-		var_14_0.previousRoundEnergy = var_14_0.leftRoundEnergy
+		gameInfoMo.previousRoundEnergy = gameInfoMo.leftRoundEnergy
 
 		AudioMgr.instance:trigger(AudioEnum2_8.MoLiDeEr.play_ui_gudu_bubble_click)
 	else
-		gohelper.setActive(var_14_3.transform.parent.gameObject, false)
+		gohelper.setActive(txtItem.transform.parent.gameObject, false)
 	end
 
-	arg_14_0._txtActionNum.text = tostring(var_14_1)
+	self._txtActionNum.text = tostring(executionCount)
 end
 
-function var_0_0.onActionNumChangeEnd(arg_15_0)
-	TaskDispatcher.cancelTask(arg_15_0.onActionNumChangeEnd, arg_15_0)
-	gohelper.setActive(arg_15_0._goActionChangeItem.transform.parent.gameObject, false)
+function MoLiDeErDispatchItem:onActionNumChangeEnd()
+	TaskDispatcher.cancelTask(self.onActionNumChangeEnd, self)
+	gohelper.setActive(self._goActionChangeItem.transform.parent.gameObject, false)
 end
 
-function var_0_0.refreshItem(arg_16_0)
-	if arg_16_0._showItemList and arg_16_0._showItemList[1] then
-		arg_16_0:refreshItemCount()
-		TaskDispatcher.cancelTask(arg_16_0.refreshItemWithHide, arg_16_0)
+function MoLiDeErDispatchItem:refreshItem()
+	if self._showItemList and self._showItemList[1] then
+		self:refreshItemCount()
+		TaskDispatcher.cancelTask(self.refreshItemWithHide, self)
 
-		if arg_16_0._state ~= MoLiDeErEnum.DispatchState.Main then
-			local var_16_0 = MoLiDeErGameModel.instance:getCurGameInfo()
+		if self._state ~= MoLiDeErEnum.DispatchState.Main then
+			local gameInfo = MoLiDeErGameModel.instance:getCurGameInfo()
 
-			if var_16_0 and var_16_0.newFinishEventList and var_16_0.newFinishEventList[1] then
+			if gameInfo and gameInfo.newFinishEventList and gameInfo.newFinishEventList[1] then
 				return
 			end
 		end
 
-		TaskDispatcher.runDelay(arg_16_0.refreshItemWithHide, arg_16_0, MoLiDeErEnum.DelayTime.ItemHideOrAppear)
+		TaskDispatcher.runDelay(self.refreshItemWithHide, self, MoLiDeErEnum.DelayTime.ItemHideOrAppear)
 	else
-		arg_16_0:refreshItemWithHide()
+		self:refreshItemWithHide()
 	end
 end
 
-function var_0_0.refreshItemCount(arg_17_0, arg_17_1)
-	local var_17_0 = MoLiDeErGameModel.instance:getCurGameInfo()
+function MoLiDeErDispatchItem:refreshItemCount(hideUseFx)
+	local gameInfo = MoLiDeErGameModel.instance:getCurGameInfo()
 
-	for iter_17_0, iter_17_1 in ipairs(arg_17_0._showItemList) do
-		local var_17_1 = iter_17_1.itemId
+	for _, item in ipairs(self._showItemList) do
+		local itemId = item.itemId
+		local info = gameInfo:getEquipInfo(itemId)
 
-		if var_17_0:getEquipInfo(var_17_1) == nil then
-			iter_17_1:reset()
+		if info == nil then
+			item:reset()
 
 			return
 		end
 
-		iter_17_1:refreshUI()
+		item:refreshUI()
 
-		if arg_17_1 then
-			iter_17_1:setUseFxState(false)
+		if hideUseFx then
+			item:setUseFxState(false)
 		end
 	end
 end
 
-function var_0_0.refreshItemWithHide(arg_18_0)
-	arg_18_0._showItemList = {}
+function MoLiDeErDispatchItem:refreshItemWithHide()
+	self._showItemList = {}
 
-	local var_18_0 = MoLiDeErGameModel.instance:getCurGameInfo().itemInfos
+	local gameInfo = MoLiDeErGameModel.instance:getCurGameInfo()
+	local equipInfoList = gameInfo.itemInfos
 
-	if var_18_0 == nil then
-		gohelper.setActive(arg_18_0._goItemList, false)
-
-		return
-	end
-
-	local var_18_1 = #var_18_0
-
-	if var_18_1 <= 0 then
-		gohelper.setActive(arg_18_0._goItemList, false)
+	if equipInfoList == nil then
+		gohelper.setActive(self._goItemList, false)
 
 		return
 	end
 
-	local var_18_2 = {}
-	local var_18_3 = 0
+	local equipCount = #equipInfoList
 
-	for iter_18_0 = 1, var_18_1 do
-		local var_18_4 = var_18_0[iter_18_0]
+	if equipCount <= 0 then
+		gohelper.setActive(self._goItemList, false)
 
-		if var_18_4.quantity > 0 then
-			table.insert(var_18_2, var_18_4)
+		return
+	end
 
-			var_18_3 = var_18_3 + 1
+	local tempList = {}
+	local showCount = 0
+
+	for i = 1, equipCount do
+		local info = equipInfoList[i]
+
+		if info.quantity > 0 then
+			table.insert(tempList, info)
+
+			showCount = showCount + 1
 		end
 	end
 
-	if var_18_3 <= 0 then
-		gohelper.setActive(arg_18_0._goItemList, false)
-		gohelper.setActive(arg_18_0._goTips, false)
+	if showCount <= 0 then
+		gohelper.setActive(self._goItemList, false)
+		gohelper.setActive(self._goTips, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_18_0._goItemList, true)
+	gohelper.setActive(self._goItemList, true)
 
-	local var_18_5 = arg_18_0._equipItemList
-	local var_18_6 = #var_18_5
+	local itemList = self._equipItemList
+	local equipItemCount = #itemList
 
-	for iter_18_1 = 1, var_18_3 do
-		local var_18_7
+	for i = 1, showCount do
+		local item
 
-		if var_18_6 < iter_18_1 then
-			local var_18_8 = gohelper.clone(arg_18_0._goItem, arg_18_0._goItemList)
+		if equipItemCount < i then
+			local itemGo = gohelper.clone(self._goItem, self._goItemList)
 
-			var_18_7 = MonoHelper.addNoUpdateLuaComOnceToGo(var_18_8, MoLiDeErEquipItem)
+			item = MonoHelper.addNoUpdateLuaComOnceToGo(itemGo, MoLiDeErEquipItem)
 
-			table.insert(var_18_5, var_18_7)
+			table.insert(itemList, item)
 		else
-			var_18_7 = var_18_5[iter_18_1]
+			item = itemList[i]
 		end
 
-		local var_18_9 = var_18_2[iter_18_1]
+		local info = tempList[i]
 
-		var_18_7:setActive(true)
-		var_18_7:setData(var_18_9.itemId)
-		var_18_7:setUseFxState(false)
-		table.insert(arg_18_0._showItemList, var_18_7)
+		item:setActive(true)
+		item:setData(info.itemId)
+		item:setUseFxState(false)
+		table.insert(self._showItemList, item)
 	end
 
-	if var_18_3 < var_18_6 then
-		for iter_18_2 = var_18_3 + 1, var_18_6 do
-			var_18_5[iter_18_2]:reset()
+	if showCount < equipItemCount then
+		for i = showCount + 1, equipItemCount do
+			local item = itemList[i]
+
+			item:reset()
 		end
 	end
 end
 
-function var_0_0.onUseItem(arg_19_0, arg_19_1)
-	if arg_19_0.viewGO.activeSelf == false then
+function MoLiDeErDispatchItem:onUseItem(useItemId)
+	if self.viewGO.activeSelf == false then
 		return
 	end
 
-	local var_19_0 = arg_19_0._equipItemList
-	local var_19_1 = #var_19_0
+	local itemList = self._equipItemList
+	local equipItemCount = #itemList
 
-	for iter_19_0 = 1, var_19_1 do
-		local var_19_2 = var_19_0[iter_19_0]
+	for i = 1, equipItemCount do
+		local item = itemList[i]
 
-		if var_19_2.viewGO.activeSelf and var_19_2.itemId == arg_19_1 then
-			var_19_2:setUseFxState(true)
+		if item.viewGO.activeSelf and item.itemId == useItemId then
+			item:setUseFxState(true)
 			AudioMgr.instance:trigger(AudioEnum2_8.MoLiDeEr.play_ui_molu_exit_appear)
 		end
 	end
 
-	if MoLiDeErGameModel.instance:getCurGameInfo():getEquipInfo(arg_19_1).quantity <= 0 then
-		gohelper.setActive(arg_19_0._goTips, false)
+	local gameInfo = MoLiDeErGameModel.instance:getCurGameInfo()
+	local itemInfo = gameInfo:getEquipInfo(useItemId)
+
+	if itemInfo.quantity <= 0 then
+		gohelper.setActive(self._goTips, false)
 	end
 
-	if arg_19_0._state == MoLiDeErEnum.DispatchState.Main then
+	if self._state == MoLiDeErEnum.DispatchState.Main then
 		return
 	end
 
-	arg_19_0:refreshItem()
-	arg_19_0:refreshState()
+	self:refreshItem()
+	self:refreshState()
 end
 
-function var_0_0.refreshTeam(arg_20_0)
-	if arg_20_0._state == MoLiDeErEnum.DispatchState.Dispatching then
-		arg_20_0:refreshDispatchingTeam()
+function MoLiDeErDispatchItem:refreshTeam()
+	local state = self._state
+
+	if state == MoLiDeErEnum.DispatchState.Dispatching then
+		self:refreshDispatchingTeam()
 	else
-		arg_20_0:refreshDispatchTeam()
+		self:refreshDispatchTeam()
 	end
 end
 
-function var_0_0.refreshDispatchTeam(arg_21_0)
-	local var_21_0 = MoLiDeErGameModel.instance:getCurGameInfo().teamInfos
+function MoLiDeErDispatchItem:refreshDispatchTeam()
+	local gameInfo = MoLiDeErGameModel.instance:getCurGameInfo()
+	local teamInfoList = gameInfo.teamInfos
 
-	if var_21_0 == nil then
-		gohelper.setActive(arg_21_0._goDispatch, false)
-
-		return
-	end
-
-	local var_21_1 = #var_21_0
-
-	if var_21_1 <= 0 then
-		gohelper.setActive(arg_21_0._goDispatch, false)
+	if teamInfoList == nil then
+		gohelper.setActive(self._goDispatch, false)
 
 		return
 	end
 
-	local var_21_2 = arg_21_0._teamItemList
-	local var_21_3 = #var_21_2
+	local teamCount = #teamInfoList
 
-	for iter_21_0 = 1, var_21_1 do
-		local var_21_4
+	if teamCount <= 0 then
+		gohelper.setActive(self._goDispatch, false)
 
-		if var_21_3 < iter_21_0 then
-			local var_21_5 = gohelper.clone(arg_21_0._goRole, arg_21_0._goDispatch)
+		return
+	end
 
-			gohelper.setSiblingBefore(var_21_5, arg_21_0._btnDispatch.gameObject)
+	local teamItemList = self._teamItemList
+	local itemCount = #teamItemList
 
-			var_21_4 = MonoHelper.addNoUpdateLuaComOnceToGo(var_21_5, MoLiDeErTeamItem)
+	for i = 1, teamCount do
+		local item
 
-			table.insert(var_21_2, var_21_4)
+		if itemCount < i then
+			local itemGo = gohelper.clone(self._goRole, self._goDispatch)
+
+			gohelper.setSiblingBefore(itemGo, self._btnDispatch.gameObject)
+
+			item = MonoHelper.addNoUpdateLuaComOnceToGo(itemGo, MoLiDeErTeamItem)
+
+			table.insert(teamItemList, item)
 		else
-			var_21_4 = var_21_2[iter_21_0]
+			item = teamItemList[i]
 		end
 
-		local var_21_6 = var_21_0[iter_21_0]
+		local info = teamInfoList[i]
 
-		var_21_4:setActive(true)
-		var_21_4:setData(var_21_6, arg_21_0._state)
-		var_21_4:setSelect(false)
+		item:setActive(true)
+		item:setData(info, self._state)
+		item:setSelect(false)
 	end
 
-	if var_21_1 < var_21_3 then
-		for iter_21_1 = var_21_1 + 1, var_21_3 do
-			local var_21_7 = var_21_2[iter_21_1]
+	if teamCount < itemCount then
+		for i = teamCount + 1, itemCount do
+			local item = teamItemList[i]
 
-			var_21_7:setActive(false)
-			var_21_7:clear()
+			item:setActive(false)
+			item:clear()
 		end
 	end
 end
 
-function var_0_0.refreshDispatchingTeam(arg_22_0)
-	for iter_22_0, iter_22_1 in ipairs(arg_22_0._teamItemList) do
-		iter_22_1:setActive(false)
+function MoLiDeErDispatchItem:refreshDispatchingTeam()
+	for _, item in ipairs(self._teamItemList) do
+		item:setActive(false)
 	end
 
-	local var_22_0 = MoLiDeErGameModel.instance:getSelectEventId()
-	local var_22_1 = MoLiDeErGameModel.instance:getCurGameInfo():getEventInfo(var_22_0)
+	local eventId = MoLiDeErGameModel.instance:getSelectEventId()
+	local curGameInfoMo = MoLiDeErGameModel.instance:getCurGameInfo()
+	local eventInfo = curGameInfoMo:getEventInfo(eventId)
 
-	if var_22_1 then
-		arg_22_0:showTeamTips(true, var_22_1.teamId)
+	if eventInfo then
+		self:showTeamTips(true, eventInfo.teamId)
 	end
 end
 
-function var_0_0.onItemSelect(arg_23_0, arg_23_1)
-	arg_23_0:showItemTips(arg_23_1 ~= nil, arg_23_1)
+function MoLiDeErDispatchItem:onItemSelect(selectItemId)
+	self:showItemTips(selectItemId ~= nil, selectItemId)
 
-	arg_23_0._selectItemId = arg_23_1
+	self._selectItemId = selectItemId
 
-	if arg_23_0.viewGO.activeSelf == false then
+	if self.viewGO.activeSelf == false then
 		return
 	end
 
-	arg_23_0:refreshState()
+	self:refreshState()
 end
 
-function var_0_0.onTeamSelect(arg_24_0, arg_24_1)
-	if arg_24_0.viewGO.activeSelf == false then
+function MoLiDeErDispatchItem:onTeamSelect(selectTeamId)
+	if self.viewGO.activeSelf == false then
 		return
 	end
 
-	arg_24_0:showTeamTips(arg_24_1 ~= nil, arg_24_1)
+	self:showTeamTips(selectTeamId ~= nil, selectTeamId)
 
-	if arg_24_0._state == MoLiDeErEnum.DispatchState.Dispatch then
-		for iter_24_0, iter_24_1 in ipairs(arg_24_0._teamItemList) do
-			iter_24_1:refreshState()
+	if self._state == MoLiDeErEnum.DispatchState.Dispatch then
+		for _, item in ipairs(self._teamItemList) do
+			item:refreshState()
 		end
 	end
 
-	arg_24_0._selectTeamId = arg_24_1
+	self._selectTeamId = selectTeamId
 
-	arg_24_0:refreshState()
+	self:refreshState()
 end
 
-function var_0_0.showItemTips(arg_25_0, arg_25_1, arg_25_2)
-	gohelper.setActive(arg_25_0._goTips, arg_25_1)
-	gohelper.setActive(arg_25_0._btnResetSelect, arg_25_1)
+function MoLiDeErDispatchItem:showItemTips(active, selectItemId)
+	gohelper.setActive(self._goTips, active)
+	gohelper.setActive(self._btnResetSelect, active)
 
-	if arg_25_1 == false then
+	if active == false then
 		return
 	end
 
-	local var_25_0 = MoLiDeErConfig.instance:getItemConfig(arg_25_2)
-	local var_25_1 = var_25_0.isUse == MoLiDeErEnum.ItemType.Initiative
+	local itemConfig = MoLiDeErConfig.instance:getItemConfig(selectItemId)
+	local canUse = itemConfig.isUse == MoLiDeErEnum.ItemType.Initiative
 
-	gohelper.setActive(arg_25_0._btnUseItem, var_25_1)
+	gohelper.setActive(self._btnUseItem, canUse)
 
-	local var_25_2 = MoLiDeErConfig.instance:getBuffConfig(tonumber(var_25_0.buffId))
+	local buffConfig = MoLiDeErConfig.instance:getBuffConfig(tonumber(itemConfig.buffId))
 
-	arg_25_0._txtTips.text = var_25_2.effectDesc
+	self._txtTips.text = buffConfig.effectDesc
 end
 
-function var_0_0.setTeamSelect(arg_26_0, arg_26_1)
-	for iter_26_0, iter_26_1 in ipairs(arg_26_0._teamItemList) do
-		local var_26_0 = iter_26_1.teamId == arg_26_1
+function MoLiDeErDispatchItem:setTeamSelect(selectId)
+	for _, item in ipairs(self._teamItemList) do
+		local isSelect = item.teamId == selectId
 
-		if var_26_0 then
-			gohelper.setSiblingAfter(arg_26_0._goExpand, iter_26_1.viewGO)
+		if isSelect then
+			gohelper.setSiblingAfter(self._goExpand, item.viewGO)
 		end
 
-		iter_26_1:setSelect(var_26_0)
+		item:setSelect(isSelect)
 	end
 end
 
-function var_0_0.showTeamTips(arg_27_0, arg_27_1, arg_27_2)
-	gohelper.setActive(arg_27_0._goExpand, arg_27_1)
+function MoLiDeErDispatchItem:showTeamTips(active, selectTeamId)
+	gohelper.setActive(self._goExpand, active)
 
-	if arg_27_0._state == MoLiDeErEnum.DispatchState.Main or arg_27_0._state == MoLiDeErEnum.DispatchState.Dispatch and arg_27_0._optionId == nil and arg_27_0._optionId ~= 0 then
-		gohelper.setActive(arg_27_0._btnResetSelect, arg_27_1)
+	if self._state == MoLiDeErEnum.DispatchState.Main or self._state == MoLiDeErEnum.DispatchState.Dispatch and self._optionId == nil and self._optionId ~= 0 then
+		gohelper.setActive(self._btnResetSelect, active)
 	end
 
-	arg_27_0:setTeamSelect(arg_27_2)
+	self:setTeamSelect(selectTeamId)
 
-	if arg_27_1 == false then
+	if active == false then
 		return
 	end
 
-	local var_27_0 = MoLiDeErConfig.instance:getTeamConfig(arg_27_2)
+	local teamConfig = MoLiDeErConfig.instance:getTeamConfig(selectTeamId)
 
-	arg_27_0._txtTeamName.text = var_27_0.name
+	self._txtTeamName.text = teamConfig.name
 
-	local var_27_1 = arg_27_0._expandTeamItem
+	local teamItem = self._expandTeamItem
 
-	var_27_1:setActive(true)
+	teamItem:setActive(true)
 
-	local var_27_2 = MoLiDeErGameModel.instance:getCurGameInfo():getTeamInfo(arg_27_2)
+	local gameInfo = MoLiDeErGameModel.instance:getCurGameInfo()
+	local teamInfo = gameInfo:getTeamInfo(selectTeamId)
 
-	var_27_1:setData(var_27_2, arg_27_0._state)
+	teamItem:setData(teamInfo, self._state)
 
-	if not not string.nilorempty(var_27_0.buffId) then
-		arg_27_0._txtTeamDescr.text = ""
+	local haveBuff = not string.nilorempty(teamConfig.buffId)
+
+	if not haveBuff then
+		self._txtTeamDescr.text = ""
 
 		return
 	end
 
-	local var_27_3 = MoLiDeErConfig.instance:getBuffConfig(tonumber(var_27_0.buffId))
+	local buffConfig = MoLiDeErConfig.instance:getBuffConfig(tonumber(teamConfig.buffId))
 
-	arg_27_0._txtTeamDescr.text = var_27_3.effectDesc
+	self._txtTeamDescr.text = buffConfig.effectDesc
 end
 
-function var_0_0.onDestroy(arg_28_0)
-	TaskDispatcher.cancelTask(arg_28_0.onActionNumChangeEnd, arg_28_0)
-	TaskDispatcher.cancelTask(arg_28_0.refreshItemWithHide, arg_28_0)
+function MoLiDeErDispatchItem:onDestroy()
+	TaskDispatcher.cancelTask(self.onActionNumChangeEnd, self)
+	TaskDispatcher.cancelTask(self.refreshItemWithHide, self)
 end
 
-return var_0_0
+return MoLiDeErDispatchItem

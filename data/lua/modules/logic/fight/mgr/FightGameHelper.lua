@@ -1,20 +1,22 @@
-﻿module("modules.logic.fight.mgr.FightGameHelper", package.seeall)
+﻿-- chunkname: @modules/logic/fight/mgr/FightGameHelper.lua
 
-local var_0_0 = {}
-local var_0_1
+module("modules.logic.fight.mgr.FightGameHelper", package.seeall)
 
-function var_0_0.initGameMgr()
-	var_0_0.disposeGameMgr()
+local FightGameHelper = {}
+local curMgr
 
-	var_0_1 = FightGameMgr.New()
+function FightGameHelper.initGameMgr()
+	FightGameHelper.disposeGameMgr()
+
+	curMgr = FightGameMgr.New()
 end
 
-function var_0_0.disposeGameMgr()
-	if var_0_1 then
-		var_0_1:disposeSelf()
+function FightGameHelper.disposeGameMgr()
+	if curMgr then
+		curMgr:disposeSelf()
 
-		var_0_1 = nil
+		curMgr = nil
 	end
 end
 
-return var_0_0
+return FightGameHelper

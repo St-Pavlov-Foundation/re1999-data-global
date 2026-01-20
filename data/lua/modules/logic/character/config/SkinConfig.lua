@@ -1,115 +1,118 @@
-﻿module("modules.logic.character.config.SkinConfig", package.seeall)
+﻿-- chunkname: @modules/logic/character/config/SkinConfig.lua
 
-local var_0_0 = class("SkinConfig", BaseConfig)
+module("modules.logic.character.config.SkinConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._skinConfig = nil
-	arg_1_0._skinStoreTagConfig = nil
+local SkinConfig = class("SkinConfig", BaseConfig)
+
+function SkinConfig:ctor()
+	self._skinConfig = nil
+	self._skinStoreTagConfig = nil
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function SkinConfig:reqConfigNames()
 	return {
 		"skin",
 		"skin_special_act",
 		"skin_ui_effect",
 		"skin_ui_bloom",
 		"skin_monster_scale",
+		"skin_body_camera",
 		"skin_monster_hide_buff_effect",
 		"skin_store_tag",
 		"skin_fullscreen_effect"
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "skin" then
-		arg_3_0._skinConfig = arg_3_2
+function SkinConfig:onConfigLoaded(configName, configTable)
+	if configName == "skin" then
+		self._skinConfig = configTable
 
-		arg_3_0:_initSkinConfig()
-	elseif arg_3_1 == "skin_store_tag" then
-		arg_3_0._skinStoreTagConfig = arg_3_2
+		self:_initSkinConfig()
+	elseif configName == "skin_store_tag" then
+		self._skinStoreTagConfig = configTable
 	end
 end
 
-function var_0_0._initSkinConfig(arg_4_0)
-	if not arg_4_0._characterSkinCoList then
-		arg_4_0._characterSkinCoList = {}
-		arg_4_0._live2dSkinDic = {}
-		arg_4_0._skinFolderNameMap = {}
-		arg_4_0._skinStoreGoodsDict = {}
+function SkinConfig:_initSkinConfig()
+	if not self._characterSkinCoList then
+		self._characterSkinCoList = {}
+		self._live2dSkinDic = {}
+		self._skinFolderNameMap = {}
+		self._skinStoreGoodsDict = {}
 
-		local var_4_0 = arg_4_0._skinConfig.configList
+		local configList = self._skinConfig.configList
 
-		for iter_4_0, iter_4_1 in ipairs(var_4_0) do
-			if not string.nilorempty(iter_4_1.live2d) and not string.nilorempty(iter_4_1.verticalDrawing) then
-				arg_4_0._live2dSkinDic[iter_4_1.verticalDrawing] = iter_4_1.live2d
+		for _, config in ipairs(configList) do
+			if not string.nilorempty(config.live2d) and not string.nilorempty(config.verticalDrawing) then
+				self._live2dSkinDic[config.verticalDrawing] = config.live2d
 			end
 
-			if not string.nilorempty(iter_4_1.folderName) then
-				if not string.nilorempty(iter_4_1.live2d) then
-					arg_4_0:_setFolderName(iter_4_1.live2d, iter_4_1.folderName)
-				elseif not string.nilorempty(iter_4_1.verticalDrawing) then
-					arg_4_0:_setFolderName(iter_4_1.verticalDrawing, iter_4_1.folderName)
+			if not string.nilorempty(config.folderName) then
+				if not string.nilorempty(config.live2d) then
+					self:_setFolderName(config.live2d, config.folderName)
+				elseif not string.nilorempty(config.verticalDrawing) then
+					self:_setFolderName(config.verticalDrawing, config.folderName)
 				end
 			end
 
-			local var_4_1 = arg_4_0._characterSkinCoList[iter_4_1.characterId]
+			local skinCoList = self._characterSkinCoList[config.characterId]
 
-			if not var_4_1 then
-				var_4_1 = {}
-				arg_4_0._characterSkinCoList[iter_4_1.characterId] = var_4_1
+			if not skinCoList then
+				skinCoList = {}
+				self._characterSkinCoList[config.characterId] = skinCoList
 			end
 
-			table.insert(var_4_1, iter_4_1)
+			table.insert(skinCoList, config)
 
-			if iter_4_1.skinStoreId ~= 0 then
-				arg_4_0._skinStoreGoodsDict[iter_4_1.skinStoreId] = iter_4_1.id
+			if config.skinStoreId ~= 0 then
+				self._skinStoreGoodsDict[config.skinStoreId] = config.id
 			end
 		end
 	end
 end
 
-function var_0_0.isSkinStoreGoods(arg_5_0, arg_5_1)
-	if arg_5_0._skinStoreGoodsDict then
-		return arg_5_0._skinStoreGoodsDict[arg_5_1] ~= nil, arg_5_0._skinStoreGoodsDict[arg_5_1]
+function SkinConfig:isSkinStoreGoods(goodsId)
+	if self._skinStoreGoodsDict then
+		return self._skinStoreGoodsDict[goodsId] ~= nil, self._skinStoreGoodsDict[goodsId]
 	end
 end
 
-function var_0_0._setFolderName(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_0:_checkFolderName(arg_6_1)
+function SkinConfig:_setFolderName(resName, folderName)
+	self:_checkFolderName(resName)
 
-	arg_6_0._skinFolderNameMap[arg_6_1] = arg_6_2
+	self._skinFolderNameMap[resName] = folderName
 
-	if not string.match(arg_6_2, "v%d+a%d+_") and not string.match(arg_6_2, "s01_") then
-		logError(string.format("SkinConfig folderName:%s 不符合版本格式", arg_6_2))
+	if not string.match(folderName, "v%d+a%d+_") and not string.match(folderName, "s01_") then
+		logError(string.format("SkinConfig folderName:%s 不符合版本格式", folderName))
 	end
 end
 
-function var_0_0._checkFolderName(arg_7_0, arg_7_1)
-	if arg_7_0._skinFolderNameMap[arg_7_1] then
-		logError(string.format("SkinConfig repeat folderName:%s,resName:%s", arg_7_0._skinFolderNameMap[arg_7_1], arg_7_1))
+function SkinConfig:_checkFolderName(resName)
+	if self._skinFolderNameMap[resName] then
+		logError(string.format("SkinConfig repeat folderName:%s,resName:%s", self._skinFolderNameMap[resName], resName))
 	end
 end
 
-function var_0_0.getFolderName(arg_8_0, arg_8_1)
-	return arg_8_0._skinFolderNameMap[arg_8_1] or arg_8_1
+function SkinConfig:getFolderName(resName)
+	return self._skinFolderNameMap[resName] or resName
 end
 
-function var_0_0.getLive2dSkin(arg_9_0, arg_9_1)
-	return arg_9_0._live2dSkinDic[arg_9_1]
+function SkinConfig:getLive2dSkin(name)
+	return self._live2dSkinDic[name]
 end
 
-function var_0_0.getSkinCo(arg_10_0, arg_10_1)
-	return arg_10_0._skinConfig.configDict[arg_10_1]
+function SkinConfig:getSkinCo(id)
+	return self._skinConfig.configDict[id]
 end
 
-function var_0_0.getAllSkinCoList(arg_11_0)
-	return arg_11_0._skinConfig.configList
+function SkinConfig:getAllSkinCoList()
+	return self._skinConfig.configList
 end
 
-function var_0_0.getSkinOffset(arg_12_0, arg_12_1, arg_12_2)
-	if string.nilorempty(arg_12_1) then
-		if arg_12_2 then
-			return arg_12_2, true
+function SkinConfig:getSkinOffset(offset, defaultOffset)
+	if string.nilorempty(offset) then
+		if defaultOffset then
+			return defaultOffset, true
 		end
 
 		return {
@@ -119,32 +122,32 @@ function var_0_0.getSkinOffset(arg_12_0, arg_12_1, arg_12_2)
 		}, true
 	end
 
-	return string.splitToNumber(arg_12_1, "#"), false
+	return string.splitToNumber(offset, "#"), false
 end
 
-function var_0_0.getAfterRelativeOffset(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0 = CommonConfig.instance:getConstStr(arg_13_1)
-	local var_13_1, var_13_2 = arg_13_0:getSkinOffset(var_13_0)
+function SkinConfig:getAfterRelativeOffset(constId, baseOffset)
+	local constVal = CommonConfig.instance:getConstStr(constId)
+	local relativeOffset, isNil = self:getSkinOffset(constVal)
 
-	if var_13_2 then
-		return arg_13_2
+	if isNil then
+		return baseOffset
 	end
 
-	arg_13_2[1] = arg_13_2[1] + var_13_1[1]
-	arg_13_2[2] = arg_13_2[2] + var_13_1[2]
-	arg_13_2[3] = arg_13_2[3] + var_13_1[3]
+	baseOffset[1] = baseOffset[1] + relativeOffset[1]
+	baseOffset[2] = baseOffset[2] + relativeOffset[2]
+	baseOffset[3] = baseOffset[3] + relativeOffset[3]
 
-	return arg_13_2
+	return baseOffset
 end
 
-function var_0_0.getCharacterSkinCoList(arg_14_0, arg_14_1)
-	return arg_14_0._characterSkinCoList[arg_14_1]
+function SkinConfig:getCharacterSkinCoList(characterId)
+	return self._characterSkinCoList[characterId]
 end
 
-function var_0_0.getSkinStoreTagConfig(arg_15_0, arg_15_1)
-	return arg_15_0._skinStoreTagConfig.configDict[arg_15_1]
+function SkinConfig:getSkinStoreTagConfig(tag)
+	return self._skinStoreTagConfig.configDict[tag]
 end
 
-var_0_0.instance = var_0_0.New()
+SkinConfig.instance = SkinConfig.New()
 
-return var_0_0
+return SkinConfig

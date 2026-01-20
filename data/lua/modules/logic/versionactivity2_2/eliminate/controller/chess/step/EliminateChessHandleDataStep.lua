@@ -1,29 +1,33 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.controller.chess.step.EliminateChessHandleDataStep", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/controller/chess/step/EliminateChessHandleDataStep.lua
 
-local var_0_0 = class("EliminateChessHandleDataStep", EliminateChessStepBase)
+module("modules.logic.versionactivity2_2.eliminate.controller.chess.step.EliminateChessHandleDataStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = EliminateChessController.instance:getCurTurn()
+local EliminateChessHandleDataStep = class("EliminateChessHandleDataStep", EliminateChessStepBase)
 
-	if var_1_0 == nil then
-		local var_1_1 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.ShowEvaluate)
+function EliminateChessHandleDataStep:onStart()
+	local data = EliminateChessController.instance:getCurTurn()
 
-		EliminateChessController.instance:buildSeqFlow(var_1_1)
+	if data == nil then
+		local step = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.ShowEvaluate)
 
-		if EliminateChessModel.instance:getNeedResetData() ~= nil then
-			local var_1_2 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.RefreshEliminate)
+		EliminateChessController.instance:buildSeqFlow(step)
 
-			EliminateChessController.instance:buildSeqFlow(var_1_2)
+		local cacheData = EliminateChessModel.instance:getNeedResetData()
+
+		if cacheData ~= nil then
+			local step = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.RefreshEliminate)
+
+			EliminateChessController.instance:buildSeqFlow(step)
 		end
 
-		arg_1_0:onDone(true)
+		self:onDone(true)
 
 		return
 	end
 
-	EliminateChessController.instance:handleEliminate(var_1_0.eliminate)
-	EliminateChessController.instance:handleDrop(var_1_0.tidyUp, var_1_0.fillChessBoard)
-	arg_1_0:onDone(true)
+	EliminateChessController.instance:handleEliminate(data.eliminate)
+	EliminateChessController.instance:handleDrop(data.tidyUp, data.fillChessBoard)
+	self:onDone(true)
 end
 
-return var_0_0
+return EliminateChessHandleDataStep

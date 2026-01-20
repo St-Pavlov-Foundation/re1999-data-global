@@ -1,85 +1,87 @@
-﻿module("modules.logic.timer.controller.FrameTimerController", package.seeall)
+﻿-- chunkname: @modules/logic/timer/controller/FrameTimerController.lua
 
-local var_0_0 = class("FrameTimerController", BaseController)
-local var_0_1 = _G.FrameTimer
-local var_0_2 = table.insert
-local var_0_3 = _G.rawset
-local var_0_4 = _G.callWithCatch
-local var_0_5 = {}
-local var_0_6 = {}
+module("modules.logic.timer.controller.FrameTimerController", package.seeall)
 
-local function var_0_7(arg_1_0)
-	if not arg_1_0 then
+local FrameTimerController = class("FrameTimerController", BaseController)
+local FrameTimer = _G.FrameTimer
+local tinsert = table.insert
+local rawset = _G.rawset
+local callWithCatch = _G.callWithCatch
+local sTimerPool = {}
+local sRunningTimer = {}
+
+local function _putBackToPool(timer)
+	if not timer then
 		return
 	end
 
-	if not arg_1_0.func then
+	if not timer.func then
 		return
 	end
 
-	arg_1_0:Stop()
-	var_0_3(var_0_6, arg_1_0.func, nil)
+	timer:Stop()
+	rawset(sRunningTimer, timer.func, nil)
 
-	arg_1_0.func = nil
+	timer.func = nil
 
-	var_0_2(var_0_5, arg_1_0)
+	tinsert(sTimerPool, timer)
 end
 
-local function var_0_8()
-	for iter_2_0, iter_2_1 in pairs(var_0_6) do
-		var_0_7(iter_2_1)
+local function _stopAll()
+	for _, timer in pairs(sRunningTimer) do
+		_putBackToPool(timer)
 	end
 end
 
-function var_0_0.onInit(arg_3_0)
-	arg_3_0:reInit()
+function FrameTimerController:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_4_0)
-	var_0_8()
+function FrameTimerController:reInit()
+	_stopAll()
 end
 
-function var_0_0.register(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
-	arg_5_3 = arg_5_3 or 3
-	arg_5_4 = arg_5_4 or 1
+function FrameTimerController:register(cb, cbObj, frameCount, times)
+	frameCount = frameCount or 3
+	times = times or 1
 
-	local var_5_0
+	local timer
 
-	local function var_5_1()
-		if arg_5_1 then
-			var_0_4(arg_5_1, arg_5_2)
+	local function wrapperFunc()
+		if cb then
+			callWithCatch(cb, cbObj)
 		end
 
-		if var_5_0.loop <= 0 then
-			var_0_7(var_5_0)
+		if timer.loop <= 0 then
+			_putBackToPool(timer)
 		end
 	end
 
-	if #var_0_5 > 0 then
-		var_5_0 = table.remove(var_0_5)
+	if #sTimerPool > 0 then
+		timer = table.remove(sTimerPool)
 
-		var_5_0:Reset(var_5_1, arg_5_3, arg_5_4)
+		timer:Reset(wrapperFunc, frameCount, times)
 	else
-		var_5_0 = var_0_1.New(var_5_1, arg_5_3, arg_5_4)
+		timer = FrameTimer.New(wrapperFunc, frameCount, times)
 	end
 
-	var_0_6[var_5_1] = var_5_0
+	sRunningTimer[wrapperFunc] = timer
 
-	return var_5_0
+	return timer
 end
 
-function var_0_0.unregister(arg_7_0, arg_7_1)
-	var_0_7(arg_7_1)
+function FrameTimerController:unregister(timer)
+	_putBackToPool(timer)
 end
 
-function var_0_0.onDestroyViewMember(arg_8_0, arg_8_1)
-	if arg_8_0[arg_8_1] then
-		var_0_7(arg_8_0[arg_8_1])
+function FrameTimerController.onDestroyViewMember(Self, mamberName)
+	if Self[mamberName] then
+		_putBackToPool(Self[mamberName])
 
-		arg_8_0[arg_8_1] = nil
+		Self[mamberName] = nil
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+FrameTimerController.instance = FrameTimerController.New()
 
-return var_0_0
+return FrameTimerController

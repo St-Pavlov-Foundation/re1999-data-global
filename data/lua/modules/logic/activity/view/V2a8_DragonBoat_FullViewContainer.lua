@@ -1,15 +1,17 @@
-﻿module("modules.logic.activity.view.V2a8_DragonBoat_FullViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/V2a8_DragonBoat_FullViewContainer.lua
 
-local var_0_0 = class("V2a8_DragonBoat_FullViewContainer", V2a8_DragonBoat_RewardItemViewContainer)
+module("modules.logic.activity.view.V2a8_DragonBoat_FullViewContainer", package.seeall)
 
-function var_0_0.onModifyListScrollParam(arg_1_0, arg_1_1)
-	V2a8_DragonBoat_RewardItemViewContainer.onModifyListScrollParam(arg_1_0, arg_1_1)
+local V2a8_DragonBoat_FullViewContainer = class("V2a8_DragonBoat_FullViewContainer", V2a8_DragonBoat_RewardItemViewContainer)
 
-	arg_1_1.scrollGOPath = "#scroll_ItemList"
+function V2a8_DragonBoat_FullViewContainer:onModifyListScrollParam(refListScrollParam)
+	V2a8_DragonBoat_RewardItemViewContainer.onModifyListScrollParam(self, refListScrollParam)
+
+	refListScrollParam.scrollGOPath = "#scroll_ItemList"
 end
 
-function var_0_0.onGetMainViewClassType(arg_2_0)
+function V2a8_DragonBoat_FullViewContainer:onGetMainViewClassType()
 	return V2a8_DragonBoat_FullView
 end
 
-return var_0_0
+return V2a8_DragonBoat_FullViewContainer

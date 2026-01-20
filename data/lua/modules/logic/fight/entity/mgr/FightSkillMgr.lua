@@ -1,67 +1,69 @@
-﻿module("modules.logic.fight.entity.mgr.FightSkillMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/mgr/FightSkillMgr.lua
 
-local var_0_0 = class("FightSkillMgr")
+module("modules.logic.fight.entity.mgr.FightSkillMgr", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._playingEntityId2StepData = {}
-	arg_1_0._playingSkillCount = 0
+local FightSkillMgr = class("FightSkillMgr")
+
+function FightSkillMgr:ctor()
+	self._playingEntityId2StepData = {}
+	self._playingSkillCount = 0
 end
 
-function var_0_0.init(arg_2_0)
+function FightSkillMgr:init()
 	return
 end
 
-function var_0_0.dispose(arg_3_0)
-	arg_3_0._playingEntityId2StepData = {}
-	arg_3_0._playingSkillCount = 0
+function FightSkillMgr:dispose()
+	self._playingEntityId2StepData = {}
+	self._playingSkillCount = 0
 end
 
-function var_0_0.beforeTimeline(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0._playingSkillCount = arg_4_0._playingSkillCount + 1
-	arg_4_0._playingEntityId2StepData[arg_4_1.id] = arg_4_2 or 1
+function FightSkillMgr:beforeTimeline(entity, fightStepData)
+	self._playingSkillCount = self._playingSkillCount + 1
+	self._playingEntityId2StepData[entity.id] = fightStepData or 1
 
-	arg_4_1:resetEntity()
-	FightController.instance:dispatchEvent(FightEvent.BeforePlayTimeline, arg_4_1.id, arg_4_2)
+	entity:resetEntity()
+	FightController.instance:dispatchEvent(FightEvent.BeforePlayTimeline, entity.id, fightStepData)
 
-	if FightCardDataHelper.isBigSkill(arg_4_2.actId) then
-		FightController.instance:dispatchEvent(FightEvent.BeforePlayUniqueSkill, arg_4_1.id)
+	if FightCardDataHelper.isBigSkill(fightStepData.actId) then
+		FightController.instance:dispatchEvent(FightEvent.BeforePlayUniqueSkill, entity.id)
 	end
 end
 
-function var_0_0.afterTimeline(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0._playingSkillCount = arg_5_0._playingSkillCount - 1
+function FightSkillMgr:afterTimeline(entity, fightStepData)
+	self._playingSkillCount = self._playingSkillCount - 1
 
-	if arg_5_0._playingSkillCount < 0 then
-		arg_5_0._playingSkillCount = 0
+	if self._playingSkillCount < 0 then
+		self._playingSkillCount = 0
 	end
 
-	arg_5_0._playingEntityId2StepData[arg_5_1.id] = nil
+	self._playingEntityId2StepData[entity.id] = nil
 
-	if arg_5_2 and FightCardDataHelper.isBigSkill(arg_5_2.actId) then
-		FightController.instance:dispatchEvent(FightEvent.AfterPlayUniqueSkill, arg_5_1.id)
+	if fightStepData and FightCardDataHelper.isBigSkill(fightStepData.actId) then
+		FightController.instance:dispatchEvent(FightEvent.AfterPlayUniqueSkill, entity.id)
 
-		local var_5_0 = FightHelper.getAllEntitys()
+		local all = FightHelper.getAllEntitys()
 
-		for iter_5_0, iter_5_1 in ipairs(var_5_0) do
-			iter_5_1:resetEntity()
+		for _, oneEntity in ipairs(all) do
+			oneEntity:resetEntity()
 		end
 	else
-		arg_5_1:resetEntity()
+		entity:resetEntity()
 	end
 
-	if not arg_5_0:isPlayingAnyTimeline() then
+	if not self:isPlayingAnyTimeline() then
 		FightTLEventUIVisible.resetLatestStepUid()
 	end
 end
 
-function var_0_0.isEntityPlayingTimeline(arg_6_0, arg_6_1)
-	return arg_6_0._playingEntityId2StepData[arg_6_1] ~= nil
+function FightSkillMgr:isEntityPlayingTimeline(entityId)
+	return self._playingEntityId2StepData[entityId] ~= nil
 end
 
-function var_0_0.isPlayingAnyTimeline(arg_7_0)
-	return arg_7_0._playingSkillCount > 0
+function FightSkillMgr:isPlayingAnyTimeline()
+	return self._playingSkillCount > 0
 end
 
-var_0_0.instance = var_0_0.New()
+FightSkillMgr.instance = FightSkillMgr.New()
 
-return var_0_0
+return FightSkillMgr

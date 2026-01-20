@@ -1,11 +1,13 @@
-﻿module("modules.logic.seasonver.act123.view1_9.Season123_1_9EpisodeLoadingViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view1_9/Season123_1_9EpisodeLoadingViewContainer.lua
 
-local var_0_0 = class("Season123_1_9EpisodeLoadingViewContainer", BaseViewContainer)
+module("modules.logic.seasonver.act123.view1_9.Season123_1_9EpisodeLoadingViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local Season123_1_9EpisodeLoadingViewContainer = class("Season123_1_9EpisodeLoadingViewContainer", BaseViewContainer)
+
+function Season123_1_9EpisodeLoadingViewContainer:buildViews()
 	return {
 		Season123_1_9EpisodeLoadingView.New()
 	}
 end
 
-return var_0_0
+return Season123_1_9EpisodeLoadingViewContainer

@@ -1,58 +1,60 @@
-﻿module("modules.logic.permanent.controller.PermanentController", package.seeall)
+﻿-- chunkname: @modules/logic/permanent/controller/PermanentController.lua
 
-local var_0_0 = class("PermanentController", BaseController)
+module("modules.logic.permanent.controller.PermanentController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local PermanentController = class("PermanentController", BaseController)
+
+function PermanentController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function PermanentController:reInit()
 	return
 end
 
-function var_0_0.enterActivity(arg_3_0, arg_3_1)
-	local var_3_0 = PlayerModel.instance:getMyUserId()
-	local var_3_1 = ActivityConfig.instance:getActivityCo(arg_3_1)
-	local var_3_2 = "PermanentStoryRecord" .. var_3_1.storyId .. var_3_0
+function PermanentController:enterActivity(actId)
+	local userid = PlayerModel.instance:getMyUserId()
+	local activityCo = ActivityConfig.instance:getActivityCo(actId)
+	local prefsKey = "PermanentStoryRecord" .. activityCo.storyId .. userid
 
-	if PlayerPrefsHelper.getNumber(var_3_2, 0) == 0 then
-		local var_3_3 = {}
+	if PlayerPrefsHelper.getNumber(prefsKey, 0) == 0 then
+		local param = {}
 
-		var_3_3.isVersionActivityPV = true
+		param.isVersionActivityPV = true
 
-		StoryController.instance:playStory(var_3_1.storyId, var_3_3, arg_3_0.storyCallback, arg_3_0, {
-			_actId = arg_3_1
+		StoryController.instance:playStory(activityCo.storyId, param, self.storyCallback, self, {
+			_actId = actId
 		})
-		PlayerPrefsHelper.setNumber(var_3_2, 1)
+		PlayerPrefsHelper.setNumber(prefsKey, 1)
 	else
-		arg_3_0:storyCallback({
-			_actId = arg_3_1
+		self:storyCallback({
+			_actId = actId
 		})
 	end
 end
 
-function var_0_0.storyCallback(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = arg_4_1._actId
-	local var_4_1 = PermanentConfig.instance:getPermanentCO(var_4_0)
+function PermanentController:storyCallback(param, viewParam)
+	local actId = param._actId
+	local permanentCo = PermanentConfig.instance:getPermanentCO(actId)
 
-	if var_4_1 then
-		ViewMgr.instance:openView(ViewName[var_4_1.enterview], arg_4_2)
+	if permanentCo then
+		ViewMgr.instance:openView(ViewName[permanentCo.enterview], viewParam)
 	end
 end
 
-function var_0_0.jump2Activity(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = PermanentConfig.instance:getPermanentCO(arg_5_1)
+function PermanentController:jump2Activity(actId, viewParam)
+	local permanentCo = PermanentConfig.instance:getPermanentCO(actId)
 
-	if var_5_0 then
+	if permanentCo then
 		DungeonController.instance:openDungeonView()
-		ViewMgr.instance:openView(ViewName[var_5_0.enterview], arg_5_2)
+		ViewMgr.instance:openView(ViewName[permanentCo.enterview], viewParam)
 	end
 end
 
-function var_0_0.unlockPermanent(arg_6_0, arg_6_1)
-	ActivityRpc.instance:sendUnlockPermanentRequest(arg_6_1)
+function PermanentController:unlockPermanent(actId)
+	ActivityRpc.instance:sendUnlockPermanentRequest(actId)
 end
 
-var_0_0.instance = var_0_0.New()
+PermanentController.instance = PermanentController.New()
 
-return var_0_0
+return PermanentController

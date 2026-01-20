@@ -1,13 +1,15 @@
-﻿module("modules.logic.fight.system.work.FightWorkEffectSummonContainer", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkEffectSummonContainer.lua
 
-local var_0_0 = class("FightWorkEffectSummonContainer", FightStepEffectFlow)
+module("modules.logic.fight.system.work.FightWorkEffectSummonContainer", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0:playAdjacentParallelEffect(nil, true)
+local FightWorkEffectSummonContainer = class("FightWorkEffectSummonContainer", FightStepEffectFlow)
+
+function FightWorkEffectSummonContainer:onStart()
+	self:playAdjacentParallelEffect(nil, true)
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkEffectSummonContainer:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkEffectSummonContainer

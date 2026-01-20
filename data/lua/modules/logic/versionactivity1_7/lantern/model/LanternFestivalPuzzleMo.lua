@@ -1,31 +1,33 @@
-﻿module("modules.logic.versionactivity1_7.lantern.model.LanternFestivalPuzzleMo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_7/lantern/model/LanternFestivalPuzzleMo.lua
 
-local var_0_0 = pureTable("LanternFestivalPuzzleMo")
+module("modules.logic.versionactivity1_7.lantern.model.LanternFestivalPuzzleMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.puzzleId = 0
-	arg_1_0.state = 0
-	arg_1_0.answerRecords = {}
+local LanternFestivalPuzzleMo = pureTable("LanternFestivalPuzzleMo")
+
+function LanternFestivalPuzzleMo:ctor()
+	self.puzzleId = 0
+	self.state = 0
+	self.answerRecords = {}
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.puzzleId = arg_2_1.puzzleId
-	arg_2_0.state = arg_2_1.state
-	arg_2_0.answerRecords = {}
+function LanternFestivalPuzzleMo:init(info)
+	self.puzzleId = info.puzzleId
+	self.state = info.state
+	self.answerRecords = {}
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_1.answerRecords) do
-		table.insert(arg_2_0.answerRecords, iter_2_1)
+	for _, v in ipairs(info.answerRecords) do
+		table.insert(self.answerRecords, v)
 	end
 end
 
-function var_0_0.reset(arg_3_0, arg_3_1)
-	arg_3_0.puzzleId = arg_3_1.puzzleId
-	arg_3_0.state = arg_3_1.state
-	arg_3_0.answerRecords = {}
+function LanternFestivalPuzzleMo:reset(info)
+	self.puzzleId = info.puzzleId
+	self.state = info.state
+	self.answerRecords = {}
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1.answerRecords) do
-		table.insert(arg_3_0.answerRecords, iter_3_1)
+	for _, v in ipairs(info.answerRecords) do
+		table.insert(self.answerRecords, v)
 	end
 end
 
-return var_0_0
+return LanternFestivalPuzzleMo

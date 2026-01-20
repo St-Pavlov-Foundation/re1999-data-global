@@ -1,142 +1,146 @@
-﻿module("modules.logic.custompickchoice.view.CustomPickChoiceView", package.seeall)
+﻿-- chunkname: @modules/logic/custompickchoice/view/CustomPickChoiceView.lua
 
-local var_0_0 = class("CustomPickChoiceView", BaseView)
+module("modules.logic.custompickchoice.view.CustomPickChoiceView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gobg = gohelper.findChild(arg_1_0.viewGO, "mask")
-	arg_1_0._gomask = gohelper.findChild(arg_1_0.viewGO, "bg")
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "Title")
-	arg_1_0._goTips = gohelper.findChild(arg_1_0.viewGO, "Tips2")
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "Tips2/#txt_num")
-	arg_1_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_confirm")
-	arg_1_0._btncancel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_cancel")
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#scroll_rule/Viewport/#go_storeItem")
-	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_rule/Viewport/#go_storeItem/selfselectsixchoiceitem")
-	arg_1_0._gonogain = gohelper.findChild(arg_1_0.viewGO, "#scroll_rule/Viewport/#go_storeItem/#go_nogain")
-	arg_1_0._goown = gohelper.findChild(arg_1_0.viewGO, "#scroll_rule/Viewport/#go_storeItem/#go_own")
+local CustomPickChoiceView = class("CustomPickChoiceView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CustomPickChoiceView:onInitView()
+	self._gobg = gohelper.findChild(self.viewGO, "mask")
+	self._gomask = gohelper.findChild(self.viewGO, "bg")
+	self._txttitle = gohelper.findChildText(self.viewGO, "Title")
+	self._goTips = gohelper.findChild(self.viewGO, "Tips2")
+	self._txtnum = gohelper.findChildText(self.viewGO, "Tips2/#txt_num")
+	self._btnconfirm = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_confirm")
+	self._btncancel = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_cancel")
+	self._gocontent = gohelper.findChild(self.viewGO, "#scroll_rule/Viewport/#go_storeItem")
+	self._goitem = gohelper.findChild(self.viewGO, "#scroll_rule/Viewport/#go_storeItem/selfselectsixchoiceitem")
+	self._gonogain = gohelper.findChild(self.viewGO, "#scroll_rule/Viewport/#go_storeItem/#go_nogain")
+	self._goown = gohelper.findChild(self.viewGO, "#scroll_rule/Viewport/#go_storeItem/#go_own")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnconfirm:AddClickListener(arg_2_0._btnconfirmOnClick, arg_2_0)
-	arg_2_0._btncancel:AddClickListener(arg_2_0.closeThis, arg_2_0)
-	arg_2_0:addEventCb(CustomPickChoiceController.instance, CustomPickChoiceEvent.onCustomPickListChanged, arg_2_0.refreshUI, arg_2_0)
-	arg_2_0:addEventCb(CustomPickChoiceController.instance, CustomPickChoiceEvent.onCustomPickComplete, arg_2_0.closeThis, arg_2_0)
+function CustomPickChoiceView:addEvents()
+	self._btnconfirm:AddClickListener(self._btnconfirmOnClick, self)
+	self._btncancel:AddClickListener(self.closeThis, self)
+	self:addEventCb(CustomPickChoiceController.instance, CustomPickChoiceEvent.onCustomPickListChanged, self.refreshUI, self)
+	self:addEventCb(CustomPickChoiceController.instance, CustomPickChoiceEvent.onCustomPickComplete, self.closeThis, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnconfirm:RemoveClickListener()
-	arg_3_0._btncancel:RemoveClickListener()
-	arg_3_0:removeEventCb(CustomPickChoiceController.instance, CustomPickChoiceEvent.onCustomPickListChanged, arg_3_0.refreshUI, arg_3_0)
-	arg_3_0:removeEventCb(CustomPickChoiceController.instance, CustomPickChoiceEvent.onCustomPickComplete, arg_3_0.closeThis, arg_3_0)
+function CustomPickChoiceView:removeEvents()
+	self._btnconfirm:RemoveClickListener()
+	self._btncancel:RemoveClickListener()
+	self:removeEventCb(CustomPickChoiceController.instance, CustomPickChoiceEvent.onCustomPickListChanged, self.refreshUI, self)
+	self:removeEventCb(CustomPickChoiceController.instance, CustomPickChoiceEvent.onCustomPickComplete, self.closeThis, self)
 end
 
-function var_0_0._btnconfirmOnClick(arg_4_0)
-	CustomPickChoiceController.instance:tryChoice(arg_4_0.viewParam)
+function CustomPickChoiceView:_btnconfirmOnClick()
+	CustomPickChoiceController.instance:tryChoice(self.viewParam)
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._noGainHeroes = {}
-	arg_5_0._ownHeroes = {}
-	arg_5_0._goTitleNoGain = gohelper.findChild(arg_5_0.viewGO, "#scroll_rule/Viewport/#go_storeItem/Title1")
-	arg_5_0._goTitleOwn = gohelper.findChild(arg_5_0.viewGO, "#scroll_rule/Viewport/#go_storeItem/Title2")
-	arg_5_0._transcontent = arg_5_0._gocontent.transform
+function CustomPickChoiceView:_editableInitView()
+	self._noGainHeroes = {}
+	self._ownHeroes = {}
+	self._goTitleNoGain = gohelper.findChild(self.viewGO, "#scroll_rule/Viewport/#go_storeItem/Title1")
+	self._goTitleOwn = gohelper.findChild(self.viewGO, "#scroll_rule/Viewport/#go_storeItem/Title2")
+	self._transcontent = self._gocontent.transform
 
-	gohelper.setActive(arg_5_0._goitem, false)
+	gohelper.setActive(self._goitem, false)
 end
 
-function var_0_0.onOpen(arg_6_0)
+function CustomPickChoiceView:onOpen()
 	logNormal("CustomPickChoiceView onOpen")
 	CustomPickChoiceController.instance:onOpenView()
 
-	local var_6_0 = arg_6_0.viewParam and arg_6_0.viewParam.styleId
-	local var_6_1 = var_6_0 and CustomPickChoiceEnum.FixedText[var_6_0]
+	local styleId = self.viewParam and self.viewParam.styleId
+	local fixedTexts = styleId and CustomPickChoiceEnum.FixedText[styleId]
 
-	if var_6_1 then
-		for iter_6_0, iter_6_1 in pairs(var_6_1) do
-			if arg_6_0[iter_6_0] then
-				arg_6_0[iter_6_0].text = luaLang(iter_6_1)
+	if fixedTexts then
+		for com, fixedText in pairs(fixedTexts) do
+			if self[com] then
+				self[com].text = luaLang(fixedText)
 			end
 		end
 	end
 
-	local var_6_2 = var_6_0 and CustomPickChoiceEnum.ComponentVisible[var_6_0]
+	local compVisible = styleId and CustomPickChoiceEnum.ComponentVisible[styleId]
 
-	if var_6_2 then
-		for iter_6_2, iter_6_3 in pairs(var_6_2) do
-			if arg_6_0[iter_6_2] then
-				gohelper.setActive(arg_6_0[iter_6_2], iter_6_3)
+	if compVisible then
+		for com, visible in pairs(compVisible) do
+			if self[com] then
+				gohelper.setActive(self[com], visible)
 			end
 		end
 	end
 end
 
-function var_0_0.refreshUI(arg_7_0)
-	arg_7_0:refreshSelectCount()
-	arg_7_0:refreshList()
+function CustomPickChoiceView:refreshUI()
+	self:refreshSelectCount()
+	self:refreshList()
 end
 
-function var_0_0.refreshSelectCount(arg_8_0)
-	local var_8_0 = CustomPickChoiceListModel.instance:getSelectCount()
-	local var_8_1 = CustomPickChoiceListModel.instance:getMaxSelectCount()
+function CustomPickChoiceView:refreshSelectCount()
+	local selectCount = CustomPickChoiceListModel.instance:getSelectCount()
+	local maxCount = CustomPickChoiceListModel.instance:getMaxSelectCount()
 
-	arg_8_0._txtnum.text = GameUtil.getSubPlaceholderLuaLang(luaLang("summon_custompick_selectnum"), {
-		var_8_0,
-		var_8_1
+	self._txtnum.text = GameUtil.getSubPlaceholderLuaLang(luaLang("summon_custompick_selectnum"), {
+		selectCount,
+		maxCount
 	})
 
-	ZProj.UGUIHelper.SetGrayscale(arg_8_0._btnconfirm.gameObject, var_8_0 ~= var_8_1)
+	ZProj.UGUIHelper.SetGrayscale(self._btnconfirm.gameObject, selectCount ~= maxCount)
 end
 
-function var_0_0.refreshList(arg_9_0)
-	arg_9_0:refreshItems(CustomPickChoiceListModel.instance.noGainList, arg_9_0._noGainHeroes, arg_9_0._gonogain, arg_9_0._goTitleNoGain)
-	arg_9_0:refreshItems(CustomPickChoiceListModel.instance.ownList, arg_9_0._ownHeroes, arg_9_0._goown, arg_9_0._goTitleOwn)
-	ZProj.UGUIHelper.RebuildLayout(arg_9_0._transcontent)
+function CustomPickChoiceView:refreshList()
+	self:refreshItems(CustomPickChoiceListModel.instance.noGainList, self._noGainHeroes, self._gonogain, self._goTitleNoGain)
+	self:refreshItems(CustomPickChoiceListModel.instance.ownList, self._ownHeroes, self._goown, self._goTitleOwn)
+	ZProj.UGUIHelper.RebuildLayout(self._transcontent)
 end
 
-function var_0_0.refreshItems(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4)
-	if arg_10_1 and #arg_10_1 > 0 then
-		gohelper.setActive(arg_10_3, true)
-		gohelper.setActive(arg_10_4, true)
+function CustomPickChoiceView:refreshItems(datas, items, goRoot, goTitle)
+	if datas and #datas > 0 then
+		gohelper.setActive(goRoot, true)
+		gohelper.setActive(goTitle, true)
 
-		for iter_10_0, iter_10_1 in ipairs(arg_10_1) do
-			arg_10_0:getOrCreateItem(iter_10_0, arg_10_2, arg_10_3).component:onUpdateMO(iter_10_1)
+		for index, mo in ipairs(datas) do
+			local item = self:getOrCreateItem(index, items, goRoot)
+
+			item.component:onUpdateMO(mo)
 		end
 	else
-		gohelper.setActive(arg_10_3, false)
-		gohelper.setActive(arg_10_4, false)
+		gohelper.setActive(goRoot, false)
+		gohelper.setActive(goTitle, false)
 	end
 end
 
-function var_0_0.getOrCreateItem(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	local var_11_0 = arg_11_2[arg_11_1]
+function CustomPickChoiceView:getOrCreateItem(index, items, goRoot)
+	local item = items[index]
 
-	if not var_11_0 then
-		var_11_0 = arg_11_0:getUserDataTb_()
-		var_11_0.go = gohelper.clone(arg_11_0._goitem, arg_11_3, "item" .. tostring(arg_11_1))
+	if not item then
+		item = self:getUserDataTb_()
+		item.go = gohelper.clone(self._goitem, goRoot, "item" .. tostring(index))
 
-		gohelper.setActive(var_11_0.go, true)
+		gohelper.setActive(item.go, true)
 
-		var_11_0.component = MonoHelper.addNoUpdateLuaComOnceToGo(var_11_0.go, CustomPickChoiceItem)
+		item.component = MonoHelper.addNoUpdateLuaComOnceToGo(item.go, CustomPickChoiceItem)
 
-		var_11_0.component:init(var_11_0.go)
-		var_11_0.component:addEvents()
+		item.component:init(item.go)
+		item.component:addEvents()
 
-		arg_11_2[arg_11_1] = var_11_0
+		items[index] = item
 	end
 
-	return var_11_0
+	return item
 end
 
-function var_0_0.onClose(arg_12_0)
+function CustomPickChoiceView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_13_0)
+function CustomPickChoiceView:onDestroyView()
 	CustomPickChoiceController.instance:onCloseView()
 end
 
-return var_0_0
+return CustomPickChoiceView

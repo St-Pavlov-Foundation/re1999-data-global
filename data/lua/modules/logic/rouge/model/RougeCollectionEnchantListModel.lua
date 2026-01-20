@@ -1,80 +1,85 @@
-﻿module("modules.logic.rouge.model.RougeCollectionEnchantListModel", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/model/RougeCollectionEnchantListModel.lua
 
-local var_0_0 = class("RougeCollectionEnchantListModel", ListScrollModel)
+module("modules.logic.rouge.model.RougeCollectionEnchantListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._enchantList = nil
-	arg_1_0._curSelectEnchantId = nil
+local RougeCollectionEnchantListModel = class("RougeCollectionEnchantListModel", ListScrollModel)
+
+function RougeCollectionEnchantListModel:onInit()
+	self._enchantList = nil
+	self._curSelectEnchantId = nil
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:onInit()
-	arg_2_0:clear()
+function RougeCollectionEnchantListModel:reInit()
+	self:onInit()
+	self:clear()
 end
 
-function var_0_0.onInitData(arg_3_0, arg_3_1)
-	arg_3_0._enchantList = arg_3_0:buildEnchantDataTab(arg_3_1)
+function RougeCollectionEnchantListModel:onInitData(isExcuteEnchantSort)
+	self._enchantList = self:buildEnchantDataTab(isExcuteEnchantSort)
 
-	arg_3_0:setList(arg_3_0._enchantList)
+	self:setList(self._enchantList)
 
-	local var_3_0 = arg_3_0:getCurSelectEnchantId()
+	local curSelectEnchantId = self:getCurSelectEnchantId()
+	local curSelectEnchantMO = self:getById(curSelectEnchantId)
 
-	if arg_3_0:getById(var_3_0) then
-		arg_3_0:selectCell(var_3_0, true)
+	if curSelectEnchantMO then
+		self:selectCell(curSelectEnchantId, true)
 	end
 end
 
-function var_0_0.buildEnchantDataTab(arg_4_0, arg_4_1)
-	local var_4_0 = RougeCollectionModel.instance:getSlotAreaCollection()
-	local var_4_1 = RougeCollectionModel.instance:getBagAreaCollection()
-	local var_4_2 = arg_4_0:buildEnchantMOList(var_4_0, var_4_1)
-	local var_4_3 = arg_4_1 and arg_4_0.sortFunc or arg_4_0.sortFunc2
+function RougeCollectionEnchantListModel:buildEnchantDataTab(isExcuteEnchantSort)
+	local slotCollections = RougeCollectionModel.instance:getSlotAreaCollection()
+	local bagCollections = RougeCollectionModel.instance:getBagAreaCollection()
+	local enchantList = self:buildEnchantMOList(slotCollections, bagCollections)
+	local listSortFunc = isExcuteEnchantSort and self.sortFunc or self.sortFunc2
 
-	table.sort(var_4_2, var_4_3)
+	table.sort(enchantList, listSortFunc)
 
-	return var_4_2
+	return enchantList
 end
 
-function var_0_0.buildEnchantMOList(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = {}
+function RougeCollectionEnchantListModel:buildEnchantMOList(slotCollections, bagCollections)
+	local enchantList = {}
 
-	if arg_5_1 then
-		for iter_5_0, iter_5_1 in pairs(arg_5_1) do
-			arg_5_0:dealCollectionInfo(iter_5_1, var_5_0)
+	if slotCollections then
+		for _, collection in pairs(slotCollections) do
+			self:dealCollectionInfo(collection, enchantList)
 		end
 	end
 
-	if arg_5_2 then
-		for iter_5_2, iter_5_3 in pairs(arg_5_2) do
-			arg_5_0:dealCollectionInfo(iter_5_3, var_5_0)
+	if bagCollections then
+		for _, collection in pairs(bagCollections) do
+			self:dealCollectionInfo(collection, enchantList)
 		end
 	end
 
-	return var_5_0
+	return enchantList
 end
 
-function var_0_0.dealCollectionInfo(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = RougeCollectionConfig.instance:getCollectionCfg(arg_6_1.cfgId).type == RougeEnum.CollectionType.Enchant
-	local var_6_1
+function RougeCollectionEnchantListModel:dealCollectionInfo(collection, enchantList)
+	local collectionCfg = RougeCollectionConfig.instance:getCollectionCfg(collection.cfgId)
+	local isEnchantType = collectionCfg.type == RougeEnum.CollectionType.Enchant
+	local createCollection
 
-	if var_6_0 then
-		local var_6_2 = arg_6_0:createRougeEnchantMO(arg_6_1.id, arg_6_1.cfgId)
+	if isEnchantType then
+		createCollection = self:createRougeEnchantMO(collection.id, collection.cfgId)
 
-		table.insert(arg_6_2, var_6_2)
+		table.insert(enchantList, createCollection)
 	else
-		local var_6_3 = arg_6_1:getAllEnchantId()
-		local var_6_4 = arg_6_1:getAllEnchantCfgId()
+		local enchantIds = collection:getAllEnchantId()
+		local enchantCfgIds = collection:getAllEnchantCfgId()
 
-		if var_6_3 then
-			for iter_6_0, iter_6_1 in pairs(var_6_3) do
-				if iter_6_1 > 0 then
-					local var_6_5 = var_6_4[iter_6_0]
+		if enchantIds then
+			for holeIndex, enchantId in pairs(enchantIds) do
+				if enchantId > 0 then
+					local enchantCfgId = enchantCfgIds[holeIndex]
+					local enchantCfg = RougeCollectionConfig.instance:getCollectionCfg(enchantCfgId)
 
-					if RougeCollectionConfig.instance:getCollectionCfg(var_6_5) then
-						local var_6_6 = arg_6_0:createRougeEnchantMO(iter_6_1, var_6_5)
+					if enchantCfg then
+						createCollection = self:createRougeEnchantMO(enchantId, enchantCfgId)
 
-						var_6_6:updateEnchantTargetId(arg_6_1.id)
-						table.insert(arg_6_2, var_6_6)
+						createCollection:updateEnchantTargetId(collection.id)
+						table.insert(enchantList, createCollection)
 					end
 				end
 			end
@@ -82,94 +87,96 @@ function var_0_0.dealCollectionInfo(arg_6_0, arg_6_1, arg_6_2)
 	end
 end
 
-function var_0_0.createRougeEnchantMO(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = RougeCollectionMO.New()
+function RougeCollectionEnchantListModel:createRougeEnchantMO(enchantId, enchantCfgId)
+	local createCollection = RougeCollectionMO.New()
 
-	var_7_0:init({
-		id = arg_7_1,
-		itemId = arg_7_2
+	createCollection:init({
+		id = enchantId,
+		itemId = enchantCfgId
 	})
 
-	return var_7_0
+	return createCollection
 end
 
-function var_0_0.sortFunc(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0:isEnchant2Collection()
+function RougeCollectionEnchantListModel.sortFunc(a, b)
+	local aIsEnchant = a:isEnchant2Collection()
+	local bIsEnchant = b:isEnchant2Collection()
 
-	if var_8_0 ~= arg_8_1:isEnchant2Collection() then
-		return not var_8_0
+	if aIsEnchant ~= bIsEnchant then
+		return not aIsEnchant
 	end
 
-	local var_8_1 = RougeCollectionConfig.instance:getCollectionCfg(arg_8_0.cfgId)
-	local var_8_2 = RougeCollectionConfig.instance:getCollectionCfg(arg_8_1.cfgId)
-	local var_8_3 = var_8_1 and var_8_1.showRare or 0
-	local var_8_4 = var_8_2 and var_8_2.showRare or 0
+	local aCfg = RougeCollectionConfig.instance:getCollectionCfg(a.cfgId)
+	local bCfg = RougeCollectionConfig.instance:getCollectionCfg(b.cfgId)
+	local aShowRare = aCfg and aCfg.showRare or 0
+	local bShowRare = bCfg and bCfg.showRare or 0
 
-	if var_8_3 ~= var_8_4 then
-		return var_8_4 < var_8_3
+	if aShowRare ~= bShowRare then
+		return bShowRare < aShowRare
 	end
 
-	return arg_8_0.id < arg_8_1.id
+	return a.id < b.id
 end
 
-function var_0_0.sortFunc2(arg_9_0, arg_9_1)
-	local var_9_0 = var_0_0.instance:getById(arg_9_0.id)
-	local var_9_1 = var_0_0.instance:getById(arg_9_1.id)
-	local var_9_2 = var_9_0 ~= nil
-	local var_9_3 = var_9_1 ~= nil
+function RougeCollectionEnchantListModel.sortFunc2(a, b)
+	local originAMO = RougeCollectionEnchantListModel.instance:getById(a.id)
+	local originBMO = RougeCollectionEnchantListModel.instance:getById(b.id)
+	local isOriginAExit = originAMO ~= nil
+	local isOriginBExit = originBMO ~= nil
 
-	if var_9_2 ~= var_9_3 then
-		return var_9_2
+	if isOriginAExit ~= isOriginBExit then
+		return isOriginAExit
 	end
 
-	if var_9_2 and var_9_3 then
-		local var_9_4 = var_0_0.instance:getIndex(var_9_0)
-		local var_9_5 = var_0_0.instance:getIndex(var_9_1)
+	if isOriginAExit and isOriginBExit then
+		local originAIndex = RougeCollectionEnchantListModel.instance:getIndex(originAMO)
+		local originBIndex = RougeCollectionEnchantListModel.instance:getIndex(originBMO)
 
-		if var_9_4 ~= var_9_5 then
-			return var_9_4 < var_9_5
+		if originAIndex ~= originBIndex then
+			return originAIndex < originBIndex
 		end
 	end
 
-	return arg_9_0.id < arg_9_1.id
+	return a.id < b.id
 end
 
-function var_0_0.executeSortFunc(arg_10_0)
-	table.sort(arg_10_0._enchantList, arg_10_0.sortFunc)
-	arg_10_0:setList(arg_10_0._enchantList)
+function RougeCollectionEnchantListModel:executeSortFunc()
+	table.sort(self._enchantList, self.sortFunc)
+	self:setList(self._enchantList)
 end
 
-function var_0_0.isEnchantEmpty(arg_11_0)
-	return arg_11_0:getCount() <= 0
+function RougeCollectionEnchantListModel:isEnchantEmpty()
+	return self:getCount() <= 0
 end
 
-function var_0_0.selectCell(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = arg_12_0._curSelectEnchantId
+function RougeCollectionEnchantListModel:selectCell(enchantId, isSelect)
+	local lastSelectCollectionId = self._curSelectEnchantId
 
-	if arg_12_1 and arg_12_1 > 0 then
-		arg_12_0:_selectCellInternal(arg_12_1, arg_12_2)
+	if enchantId and enchantId > 0 then
+		self:_selectCellInternal(enchantId, isSelect)
 	else
-		arg_12_0:_selectCellInternal(var_12_0, false)
+		self:_selectCellInternal(lastSelectCollectionId, false)
 	end
 end
 
-function var_0_0._selectCellInternal(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0 = arg_13_0:getById(arg_13_1)
-	local var_13_1
+function RougeCollectionEnchantListModel:_selectCellInternal(enchantId, isSelect)
+	local collectionMO = self:getById(enchantId)
+	local curSelectEnchantId
 
-	if var_13_0 then
-		local var_13_2 = arg_13_0:getIndex(var_13_0)
+	if collectionMO then
+		local selectIndex = self:getIndex(collectionMO)
 
-		var_0_0.super.selectCell(arg_13_0, var_13_2, arg_13_2)
+		RougeCollectionEnchantListModel.super.selectCell(self, selectIndex, isSelect)
 
-		arg_13_0._curSelectEnchantId = arg_13_2 and var_13_0.id or nil
+		curSelectEnchantId = isSelect and collectionMO.id or nil
+		self._curSelectEnchantId = curSelectEnchantId
 	end
 end
 
-function var_0_0.getCurSelectEnchantId(arg_14_0)
-	return arg_14_0._curSelectEnchantId
+function RougeCollectionEnchantListModel:getCurSelectEnchantId()
+	return self._curSelectEnchantId
 end
 
-var_0_0.instance = var_0_0.New()
+RougeCollectionEnchantListModel.instance = RougeCollectionEnchantListModel.New()
 
-return var_0_0
+return RougeCollectionEnchantListModel

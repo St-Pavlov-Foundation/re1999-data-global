@@ -1,18 +1,20 @@
-﻿module("modules.logic.versionactivity2_5.act186.define.Activity186Enum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/act186/define/Activity186Enum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity2_5.act186.define.Activity186Enum", package.seeall)
 
-var_0_0.VoiceType = {
+local Activity186Enum = _M
+
+Activity186Enum.VoiceType = {
 	EnterView = 1,
 	ClickSkin = 2
 }
-var_0_0.ViewEffect = {
+Activity186Enum.ViewEffect = {
 	Yanhua = 2,
 	Xiangyun = 4,
 	Jinsha = 3,
 	Caidai = 1
 }
-var_0_0.LocalPrefsKey = {
+Activity186Enum.LocalPrefsKey = {
 	MainActivityStageAnim = "MainActivityStageAnim",
 	Question = "Question",
 	GameMark = "GameMark",
@@ -20,7 +22,7 @@ var_0_0.LocalPrefsKey = {
 	SignMark = "SignMark",
 	AvgMark = "Activity186AvgMark"
 }
-var_0_0.ConstId = {
+Activity186Enum.ConstId = {
 	CurrencyId = 1,
 	AvgOpenTime = 6,
 	AvgReward = 3,
@@ -29,33 +31,33 @@ var_0_0.ConstId = {
 	AvgStoryId = 7,
 	BaseLikeValue = 8
 }
-var_0_0.RewardStatus = {
+Activity186Enum.RewardStatus = {
 	Canget = 2,
 	Hasget = 3,
 	None = 1
 }
-var_0_0.TaskStatus = {
+Activity186Enum.TaskStatus = {
 	None = 2,
 	Hasget = 3,
 	Canget = 1
 }
-var_0_0.SignStatus = {
+Activity186Enum.SignStatus = {
 	Canget = 3,
 	Hasget = 4,
 	Canplay = 2,
 	None = 1
 }
-var_0_0.GameStatus = {
+Activity186Enum.GameStatus = {
 	Result = 3,
 	Start = 1,
 	Playing = 2
 }
-var_0_0.ReadTaskId = {
+Activity186Enum.ReadTaskId = {
 	Task2 = 500022,
 	Task4 = 500024,
 	Task1 = 500021,
 	Task3 = 500023
 }
-var_0_0.RolePath = "rolesstory/rolesprefab/v1a6_623801_hzd_p/623801_hzd_p.prefab"
+Activity186Enum.RolePath = "rolesstory/rolesprefab/v1a6_623801_hzd_p/623801_hzd_p.prefab"
 
-return var_0_0
+return Activity186Enum

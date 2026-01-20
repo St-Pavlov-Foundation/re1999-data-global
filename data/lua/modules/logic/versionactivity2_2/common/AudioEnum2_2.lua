@@ -1,18 +1,20 @@
-﻿module("modules.logic.versionactivity2_2.common.AudioEnum2_2", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/common/AudioEnum2_2.lua
 
-local var_0_0 = AudioEnum
+module("modules.logic.versionactivity2_2.common.AudioEnum2_2", package.seeall)
 
-var_0_0.VersionActivity2_2Store = {
+local AudioEnum = AudioEnum
+
+AudioEnum.VersionActivity2_2Store = {
 	play_ui_jinye_chess_talk = 20170010,
 	play_ui_jinye_click_stage = 20170011,
 	stop_ui_jinye_chess_talk = 20170012,
 	play_ui_jinye_chess_enter = 20170009
 }
-var_0_0.VersionActivity2_2Enter = {
+AudioEnum.VersionActivity2_2Enter = {
 	play_ui_jinye_open = 20220005,
 	play_ui_jinye_unfold = 20220006
 }
-var_0_0.Season166 = {
+AudioEnum.Season166 = {
 	play_ui_checkpoint_light = 20220306,
 	play_ui_checkpoint_aekn_piaozi = 20247006,
 	play_ui_checkpoint_result = 20220308,
@@ -25,12 +27,12 @@ var_0_0.Season166 = {
 	play_ui_wangshi_argus_level_open = 20220311
 }
 
-local var_0_1 = {
+local bgm = {
 	play_activitymusic_sadness = 3200170,
 	play_battle_youyui_2_2_bossfight = 3220202,
 	play_battle_youyui_2_2_normalfight = 3220201
 }
-local var_0_2 = {
+local UI = {
 	play_ui_youyu_yure_release_20220216 = 20220216,
 	play_ui_youyu_yure_horn_20220218 = 20220218,
 	play_ui_common_click_20220217 = 20220217,
@@ -49,7 +51,7 @@ local var_0_2 = {
 	decalog_present_full_view = 20220187
 }
 
-var_0_0.VersionActivity2_2EliminateChess = {
+AudioEnum.VersionActivity2_2EliminateChess = {
 	play_ui_mln_receive = 25001015,
 	play_ui_youyu_adverse_buff = 20220049,
 	play_ui_youyu_pawn_deadwords = 20220047,
@@ -93,7 +95,7 @@ var_0_0.VersionActivity2_2EliminateChess = {
 	play_ui_youyu_pawn_put = 20220045,
 	play_ui_activity_switch = 20220009
 }
-var_0_0.VersionActivity2_2Investigate = {
+AudioEnum.VersionActivity2_2Investigate = {
 	play_ui_leimi_theft_open = 20220028,
 	play_ui_shuori_dreamsong_receive_open = 20220026,
 	play_ui_mln_day_night = 20220027,
@@ -107,7 +109,7 @@ var_0_0.VersionActivity2_2Investigate = {
 	play_ui_activity_course_open = 20220029,
 	play_ui_molu_jlbn_open = 20220024
 }
-var_0_0.VersionActivity2_2TianShiNaNa = {
+AudioEnum.VersionActivity2_2TianShiNaNa = {
 	play_ui_youyu_deploy = 20220168,
 	play_ui_youyu_unfold = 20220167,
 	play_ui_youyu_death = 20220169,
@@ -116,19 +118,19 @@ var_0_0.VersionActivity2_2TianShiNaNa = {
 	play_ui_youyu_foot = 20220165,
 	stop_ui_youyu_foot = 20220166
 }
-var_0_0.VersionActivity2_2TurnBackH5 = {
+AudioEnum.VersionActivity2_2TurnBackH5 = {
 	play_ui_rolesopen = 20221105
 }
-var_0_0.VersionActivity2_2SummonSimulation = {
+AudioEnum.VersionActivity2_2SummonSimulation = {
 	play_ui_checkpoint_doom_disappear = 20220182,
 	play_ui_mln_day_night = 20220027
 }
-var_0_0.VersionActivity2_2BPSP = {
+AudioEnum.VersionActivity2_2BPSP = {
 	play_ui_youyu_liuxing_give = 20220181,
 	play_ui_checkpoint_doom_disappear = 20220182,
 	play_ui_mln_unlock = 20220183
 }
-var_0_0.VersionActivity2_2Lopera = {
+AudioEnum.VersionActivity2_2Lopera = {
 	play_ui_youyu_steps_jungle = 20220201,
 	play_ui_molu_exit_appear = 20220205,
 	play_ui_pkls_challenge_fail = 20220209,
@@ -143,31 +145,31 @@ var_0_0.VersionActivity2_2Lopera = {
 	play_ui_checkpoint_elementappear = 20220204,
 	play_ui_mIn_unlock = 20220206
 }
-var_0_0.VersionActivity2_2Season166 = {
+AudioEnum.VersionActivity2_2Season166 = {
 	play_ui_resonate_fm = 20200203,
 	play_ui_wangshi_argus_level_open = 20211503,
 	play_ui_wulu_kerandian_enter_level = 20220301,
 	play_ui_shiji_tv_noise = 20180001
 }
 
-for iter_0_0, iter_0_1 in pairs(var_0_1) do
-	if isDebugBuild and var_0_0.Bgm[iter_0_0] then
-		logError("AudioEnum.Bgm重复定义" .. iter_0_0)
+for key, value in pairs(bgm) do
+	if isDebugBuild and AudioEnum.Bgm[key] then
+		logError("AudioEnum.Bgm重复定义" .. key)
 	end
 
-	var_0_0.Bgm[iter_0_0] = iter_0_1
+	AudioEnum.Bgm[key] = value
 end
 
-for iter_0_2, iter_0_3 in pairs(var_0_2) do
-	if isDebugBuild and var_0_0.UI[iter_0_2] then
-		logError("AudioEnum.UI重复定义" .. iter_0_2)
+for key, value in pairs(UI) do
+	if isDebugBuild and AudioEnum.UI[key] then
+		logError("AudioEnum.UI重复定义" .. key)
 	end
 
-	var_0_0.UI[iter_0_2] = iter_0_3
+	AudioEnum.UI[key] = value
 end
 
-function var_0_0.activate()
+function AudioEnum.activate()
 	return
 end
 
-return var_0_0
+return AudioEnum

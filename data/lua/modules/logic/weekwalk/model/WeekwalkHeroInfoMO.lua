@@ -1,10 +1,12 @@
-﻿module("modules.logic.weekwalk.model.WeekwalkHeroInfoMO", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk/model/WeekwalkHeroInfoMO.lua
 
-local var_0_0 = pureTable("WeekwalkHeroInfoMO")
+module("modules.logic.weekwalk.model.WeekwalkHeroInfoMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.heroId = arg_1_1.heroId
-	arg_1_0.cd = arg_1_1.cd
+local WeekwalkHeroInfoMO = pureTable("WeekwalkHeroInfoMO")
+
+function WeekwalkHeroInfoMO:init(info)
+	self.heroId = info.heroId
+	self.cd = info.cd
 end
 
-return var_0_0
+return WeekwalkHeroInfoMO

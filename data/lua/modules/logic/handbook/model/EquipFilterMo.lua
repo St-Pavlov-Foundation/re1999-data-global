@@ -1,32 +1,34 @@
-﻿module("modules.logic.handbook.model.EquipFilterMo", package.seeall)
+﻿-- chunkname: @modules/logic/handbook/model/EquipFilterMo.lua
 
-local var_0_0 = pureTable("EquipFilterMo")
+module("modules.logic.handbook.model.EquipFilterMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.viewName = arg_1_1
+local EquipFilterMo = pureTable("EquipFilterMo")
 
-	arg_1_0:reset()
+function EquipFilterMo:init(viewName)
+	self.viewName = viewName
+
+	self:reset()
 end
 
-function var_0_0.reset(arg_2_0)
-	arg_2_0.obtainShowType = EquipFilterModel.ObtainEnum.All
-	arg_2_0.selectTagList = {}
-	arg_2_0.filtering = false
+function EquipFilterMo:reset()
+	self.obtainShowType = EquipFilterModel.ObtainEnum.All
+	self.selectTagList = {}
+	self.filtering = false
 end
 
-function var_0_0.getObtainType(arg_3_0)
-	return arg_3_0.obtainShowType
+function EquipFilterMo:getObtainType()
+	return self.obtainShowType
 end
 
-function var_0_0.checkIsIncludeTag(arg_4_0, arg_4_1)
-	if arg_4_0.selectTagList and not next(arg_4_0.selectTagList) then
+function EquipFilterMo:checkIsIncludeTag(equipConfig)
+	if self.selectTagList and not next(self.selectTagList) then
 		return true
 	end
 
-	local var_4_0 = EquipConfig.instance:getTagList(arg_4_1)
+	local tagList = EquipConfig.instance:getTagList(equipConfig)
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_0) do
-		if tabletool.indexOf(arg_4_0.selectTagList, iter_4_1) then
+	for _, tagId in ipairs(tagList) do
+		if tabletool.indexOf(self.selectTagList, tagId) then
 			return true
 		end
 	end
@@ -34,31 +36,31 @@ function var_0_0.checkIsIncludeTag(arg_4_0, arg_4_1)
 	return false
 end
 
-function var_0_0.updateIsFiltering(arg_5_0)
-	arg_5_0.filtering = arg_5_0.obtainShowType ~= EquipFilterModel.ObtainEnum.All or arg_5_0.selectTagList and next(arg_5_0.selectTagList)
+function EquipFilterMo:updateIsFiltering()
+	self.filtering = self.obtainShowType ~= EquipFilterModel.ObtainEnum.All or self.selectTagList and next(self.selectTagList)
 end
 
-function var_0_0.updateMo(arg_6_0, arg_6_1)
-	arg_6_0.obtainShowType = arg_6_1.obtainShowType
-	arg_6_0.selectTagList = arg_6_1.selectTagList
+function EquipFilterMo:updateMo(filterMo)
+	self.obtainShowType = filterMo.obtainShowType
+	self.selectTagList = filterMo.selectTagList
 
-	arg_6_0:updateIsFiltering()
+	self:updateIsFiltering()
 end
 
-function var_0_0.isFiltering(arg_7_0)
-	return arg_7_0.filtering
+function EquipFilterMo:isFiltering()
+	return self.filtering
 end
 
-function var_0_0.clone(arg_8_0)
-	local var_8_0 = var_0_0.New()
+function EquipFilterMo:clone()
+	local filterMo = EquipFilterMo.New()
 
-	var_8_0:init(arg_8_0.viewName)
+	filterMo:init(self.viewName)
 
-	var_8_0.obtainShowType = arg_8_0.obtainShowType
-	var_8_0.selectTagList = tabletool.copy(arg_8_0.selectTagList)
-	var_8_0.filtering = arg_8_0.filtering
+	filterMo.obtainShowType = self.obtainShowType
+	filterMo.selectTagList = tabletool.copy(self.selectTagList)
+	filterMo.filtering = self.filtering
 
-	return var_8_0
+	return filterMo
 end
 
-return var_0_0
+return EquipFilterMo

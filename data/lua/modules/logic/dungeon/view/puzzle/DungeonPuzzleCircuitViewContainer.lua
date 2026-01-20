@@ -1,12 +1,14 @@
-﻿module("modules.logic.dungeon.view.puzzle.DungeonPuzzleCircuitViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/puzzle/DungeonPuzzleCircuitViewContainer.lua
 
-local var_0_0 = class("DungeonPuzzleCircuitViewContainer", BaseViewContainer)
+module("modules.logic.dungeon.view.puzzle.DungeonPuzzleCircuitViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local DungeonPuzzleCircuitViewContainer = class("DungeonPuzzleCircuitViewContainer", BaseViewContainer)
+
+function DungeonPuzzleCircuitViewContainer:buildViews()
 	return {
 		DungeonPuzzleCircuit.New(),
 		DungeonPuzzleCircuitView.New()
 	}
 end
 
-return var_0_0
+return DungeonPuzzleCircuitViewContainer

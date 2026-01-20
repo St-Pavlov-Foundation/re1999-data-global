@@ -1,15 +1,17 @@
-﻿module("modules.logic.rouge.model.rpcmo.RougeHeroLifeMO", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/model/rpcmo/RougeHeroLifeMO.lua
 
-local var_0_0 = pureTable("RougeHeroLifeMO")
+module("modules.logic.rouge.model.rpcmo.RougeHeroLifeMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.heroId = arg_1_1.heroId
-	arg_1_0.life = arg_1_1.life
+local RougeHeroLifeMO = pureTable("RougeHeroLifeMO")
+
+function RougeHeroLifeMO:init(info)
+	self.heroId = info.heroId
+	self.life = info.life
 end
 
-function var_0_0.update(arg_2_0, arg_2_1)
-	arg_2_0.heroId = arg_2_1.heroId
-	arg_2_0.life = arg_2_1.life
+function RougeHeroLifeMO:update(info)
+	self.heroId = info.heroId
+	self.life = info.life
 end
 
-return var_0_0
+return RougeHeroLifeMO

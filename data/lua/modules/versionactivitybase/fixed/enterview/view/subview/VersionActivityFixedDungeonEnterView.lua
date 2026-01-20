@@ -1,172 +1,176 @@
-﻿module("modules.versionactivitybase.fixed.enterview.view.subview.VersionActivityFixedDungeonEnterView", package.seeall)
+﻿-- chunkname: @modules/versionactivitybase/fixed/enterview/view/subview/VersionActivityFixedDungeonEnterView.lua
 
-local var_0_0 = class("VersionActivityFixedDungeonEnterView", BaseView)
+module("modules.versionactivitybase.fixed.enterview.view.subview.VersionActivityFixedDungeonEnterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "logo/#txt_dec")
-	arg_1_0._gotime = gohelper.findChild(arg_1_0.viewGO, "logo/actbg")
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "logo/time/#txt_time")
-	arg_1_0._btnstore = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "entrance/#btn_store")
-	arg_1_0._txtStoreNum = gohelper.findChildText(arg_1_0.viewGO, "entrance/#btn_store/normal/#txt_num")
-	arg_1_0._txtStoreTime = gohelper.findChildText(arg_1_0.viewGO, "entrance/#btn_store/#go_time/#txt_time")
-	arg_1_0._btnenter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "entrance/#btn_enter")
-	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "entrance/#btn_enter/#go_reddot")
-	arg_1_0._gohardModeUnLock = gohelper.findChild(arg_1_0.viewGO, "entrance/#btn_enter/#go_hardModeUnLock")
-	arg_1_0._btnFinished = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "entrance/#btn_Finished")
-	arg_1_0._btnLocked = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "entrance/#btn_Locked")
+local VersionActivityFixedDungeonEnterView = class("VersionActivityFixedDungeonEnterView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivityFixedDungeonEnterView:onInitView()
+	self._txtdesc = gohelper.findChildText(self.viewGO, "logo/#txt_dec")
+	self._gotime = gohelper.findChild(self.viewGO, "logo/actbg")
+	self._txttime = gohelper.findChildText(self.viewGO, "logo/time/#txt_time")
+	self._btnstore = gohelper.findChildButtonWithAudio(self.viewGO, "entrance/#btn_store")
+	self._txtStoreNum = gohelper.findChildText(self.viewGO, "entrance/#btn_store/normal/#txt_num")
+	self._txtStoreTime = gohelper.findChildText(self.viewGO, "entrance/#btn_store/#go_time/#txt_time")
+	self._btnenter = gohelper.findChildButtonWithAudio(self.viewGO, "entrance/#btn_enter")
+	self._goreddot = gohelper.findChild(self.viewGO, "entrance/#btn_enter/#go_reddot")
+	self._gohardModeUnLock = gohelper.findChild(self.viewGO, "entrance/#btn_enter/#go_hardModeUnLock")
+	self._btnFinished = gohelper.findChildButtonWithAudio(self.viewGO, "entrance/#btn_Finished")
+	self._btnLocked = gohelper.findChildButtonWithAudio(self.viewGO, "entrance/#btn_Locked")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_2_0.refreshStoreCurrency, arg_2_0)
-	arg_2_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_2_0.onRefreshActivity, arg_2_0)
-	arg_2_0:addEventCb(RedDotController.instance, RedDotEvent.UpdateRelateDotInfo, arg_2_0.refreshRedDot, arg_2_0, LuaEventSystem.Low)
-	arg_2_0._btnstore:AddClickListener(arg_2_0._btnstoreOnClick, arg_2_0)
-	arg_2_0._btnenter:AddClickListener(arg_2_0._btnenterOnClick, arg_2_0)
-	arg_2_0._btnFinished:AddClickListener(arg_2_0._btnFinishedOnClick, arg_2_0)
-	arg_2_0._btnLocked:AddClickListener(arg_2_0._btnLockedOnClick, arg_2_0)
+function VersionActivityFixedDungeonEnterView:addEvents()
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self.refreshStoreCurrency, self)
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self.onRefreshActivity, self)
+	self:addEventCb(RedDotController.instance, RedDotEvent.UpdateRelateDotInfo, self.refreshRedDot, self, LuaEventSystem.Low)
+	self._btnstore:AddClickListener(self._btnstoreOnClick, self)
+	self._btnenter:AddClickListener(self._btnenterOnClick, self)
+	self._btnFinished:AddClickListener(self._btnFinishedOnClick, self)
+	self._btnLocked:AddClickListener(self._btnLockedOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_3_0.refreshStoreCurrency, arg_3_0)
-	arg_3_0:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_3_0.onRefreshActivity, arg_3_0)
-	arg_3_0:removeEventCb(RedDotController.instance, RedDotEvent.UpdateRelateDotInfo, arg_3_0.refreshRedDot, arg_3_0, LuaEventSystem.Low)
-	arg_3_0._btnstore:RemoveClickListener()
-	arg_3_0._btnenter:RemoveClickListener()
-	arg_3_0._btnFinished:RemoveClickListener()
-	arg_3_0._btnLocked:RemoveClickListener()
+function VersionActivityFixedDungeonEnterView:removeEvents()
+	self:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self.refreshStoreCurrency, self)
+	self:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self.onRefreshActivity, self)
+	self:removeEventCb(RedDotController.instance, RedDotEvent.UpdateRelateDotInfo, self.refreshRedDot, self, LuaEventSystem.Low)
+	self._btnstore:RemoveClickListener()
+	self._btnenter:RemoveClickListener()
+	self._btnFinished:RemoveClickListener()
+	self._btnLocked:RemoveClickListener()
 end
 
-function var_0_0.onRefreshActivity(arg_4_0, arg_4_1)
-	if arg_4_1 ~= arg_4_0.actId then
+function VersionActivityFixedDungeonEnterView:onRefreshActivity(actId)
+	if actId ~= self.actId then
 		return
 	end
 
-	arg_4_0:refreshActivityState()
+	self:refreshActivityState()
 end
 
-function var_0_0._btnstoreOnClick(arg_5_0)
-	VersionActivityFixedHelper.getVersionActivityDungeonController(arg_5_0._bigVersion, arg_5_0._smallVersion).instance:openStoreView()
+function VersionActivityFixedDungeonEnterView:_btnstoreOnClick()
+	VersionActivityFixedHelper.getVersionActivityDungeonController(self._bigVersion, self._smallVersion).instance:openStoreView()
 end
 
-function var_0_0._btnenterOnClick(arg_6_0)
-	VersionActivityFixedHelper.getVersionActivityDungeonController(arg_6_0._bigVersion, arg_6_0._smallVersion).instance:openVersionActivityDungeonMapView()
+function VersionActivityFixedDungeonEnterView:_btnenterOnClick()
+	VersionActivityFixedHelper.getVersionActivityDungeonController(self._bigVersion, self._smallVersion).instance:openVersionActivityDungeonMapView()
 end
 
-function var_0_0._btnFinishedOnClick(arg_7_0)
+function VersionActivityFixedDungeonEnterView:_btnFinishedOnClick()
 	GameFacade.showToast(ToastEnum.ActivityEnd)
 end
 
-function var_0_0._btnLockedOnClick(arg_8_0)
+function VersionActivityFixedDungeonEnterView:_btnLockedOnClick()
 	GameFacade.showToast(ToastEnum.ActivityNotOpen)
 end
 
-function var_0_0._editableInitView(arg_9_0)
-	arg_9_0._txtstorename = gohelper.findChildText(arg_9_0.viewGO, "entrance/#btn_store/normal/txt_shop")
-	arg_9_0._bigVersion, arg_9_0._smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
-	arg_9_0.actId = VersionActivityFixedHelper.getVersionActivityEnum(arg_9_0._bigVersion, arg_9_0._smallVersion).ActivityId.Dungeon
-	arg_9_0.animComp = VersionActivityFixedHelper.getVersionActivitySubAnimatorComp().get(arg_9_0.viewGO, arg_9_0)
-	arg_9_0.goEnter = arg_9_0._btnenter.gameObject
-	arg_9_0.goFinish = arg_9_0._btnFinished.gameObject
-	arg_9_0.goStore = arg_9_0._btnstore.gameObject
-	arg_9_0.goLock = arg_9_0._btnLocked.gameObject
-	arg_9_0.actId = VersionActivityFixedHelper.getVersionActivityEnum(arg_9_0._bigVersion, arg_9_0._smallVersion).ActivityId.Dungeon
-	arg_9_0.actCo = ActivityConfig.instance:getActivityCo(arg_9_0.actId)
+function VersionActivityFixedDungeonEnterView:_editableInitView()
+	self._txtstorename = gohelper.findChildText(self.viewGO, "entrance/#btn_store/normal/txt_shop")
+	self._bigVersion, self._smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
+	self.actId = VersionActivityFixedHelper.getVersionActivityEnum(self._bigVersion, self._smallVersion).ActivityId.Dungeon
+	self.animComp = VersionActivityFixedHelper.getVersionActivitySubAnimatorComp().get(self.viewGO, self)
+	self.goEnter = self._btnenter.gameObject
+	self.goFinish = self._btnFinished.gameObject
+	self.goStore = self._btnstore.gameObject
+	self.goLock = self._btnLocked.gameObject
+	self.actId = VersionActivityFixedHelper.getVersionActivityEnum(self._bigVersion, self._smallVersion).ActivityId.Dungeon
+	self.actCo = ActivityConfig.instance:getActivityCo(self.actId)
 
-	arg_9_0:_setDesc()
-	RedDotController.instance:addRedDot(arg_9_0._goreddot, VersionActivityFixedHelper.getVersionActivityDungeonEnterReddotId(arg_9_0._bigVersion, arg_9_0._smallVersion))
+	self:_setDesc()
+	RedDotController.instance:addRedDot(self._goreddot, VersionActivityFixedHelper.getVersionActivityDungeonEnterReddotId(self._bigVersion, self._smallVersion))
 end
 
-function var_0_0._setDesc(arg_10_0)
-	if not arg_10_0.actCo or not arg_10_0._txtdesc then
+function VersionActivityFixedDungeonEnterView:_setDesc()
+	if not self.actCo or not self._txtdesc then
 		return
 	end
 
-	arg_10_0._txtdesc.text = arg_10_0.actCo.actDesc
+	self._txtdesc.text = self.actCo.actDesc
 end
 
-function var_0_0.onUpdateParam(arg_11_0)
-	arg_11_0:refreshUI()
+function VersionActivityFixedDungeonEnterView:onUpdateParam()
+	self:refreshUI()
 end
 
-function var_0_0.onOpen(arg_12_0)
-	arg_12_0:refreshUI()
-	arg_12_0.animComp:playOpenAnim()
-	TaskDispatcher.runRepeat(arg_12_0.everyMinuteCall, arg_12_0, TimeUtil.OneMinuteSecond)
-	arg_12_0:refreshRedDot()
+function VersionActivityFixedDungeonEnterView:onOpen()
+	self:refreshUI()
+	self.animComp:playOpenAnim()
+	TaskDispatcher.runRepeat(self.everyMinuteCall, self, TimeUtil.OneMinuteSecond)
+	self:refreshRedDot()
 end
 
-function var_0_0.everyMinuteCall(arg_13_0)
-	arg_13_0:refreshUI()
+function VersionActivityFixedDungeonEnterView:everyMinuteCall()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_14_0)
-	arg_14_0:refreshRemainTime()
-	arg_14_0:refreshActivityState()
-	arg_14_0:refreshStoreCurrency()
+function VersionActivityFixedDungeonEnterView:refreshUI()
+	self:refreshRemainTime()
+	self:refreshActivityState()
+	self:refreshStoreCurrency()
 end
 
-function var_0_0.refreshRemainTime(arg_15_0)
-	local var_15_0 = ActivityModel.instance:getActivityInfo()[arg_15_0.actId]:getRealEndTimeStamp() - ServerTime.now()
+function VersionActivityFixedDungeonEnterView:refreshRemainTime()
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[self.actId]
+	local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
 
-	if var_15_0 > 0 then
-		local var_15_1 = TimeUtil.SecondToActivityTimeFormat(var_15_0)
+	if offsetSecond > 0 then
+		local dateStr = TimeUtil.SecondToActivityTimeFormat(offsetSecond)
 
-		arg_15_0._txttime.text = var_15_1
+		self._txttime.text = dateStr
 
-		gohelper.setActive(arg_15_0._txttime, true)
+		gohelper.setActive(self._txttime, true)
 	else
-		gohelper.setActive(arg_15_0._txttime, false)
+		gohelper.setActive(self._txttime, false)
 	end
 
-	local var_15_2 = ActivityModel.instance:getActivityInfo()[VersionActivityFixedHelper.getVersionActivityEnum(arg_15_0._bigVersion, arg_15_0._smallVersion).ActivityId.DungeonStore]
+	local storeActInfoMo = ActivityModel.instance:getActivityInfo()[VersionActivityFixedHelper.getVersionActivityEnum(self._bigVersion, self._smallVersion).ActivityId.DungeonStore]
 
-	arg_15_0._txtstorename.text = var_15_2.config.name
-	arg_15_0._txtStoreTime.text = var_15_2:getRemainTimeStr2ByEndTime(true)
+	self._txtstorename.text = storeActInfoMo.config.name
+	self._txtStoreTime.text = storeActInfoMo:getRemainTimeStr2ByEndTime(true)
 end
 
-function var_0_0.refreshActivityState(arg_16_0)
-	local var_16_0 = ActivityHelper.getActivityStatusAndToast(arg_16_0.actId)
-	local var_16_1 = var_16_0 == ActivityEnum.ActivityStatus.Normal
-	local var_16_2 = var_16_0 == ActivityEnum.ActivityStatus.NotOpen
+function VersionActivityFixedDungeonEnterView:refreshActivityState()
+	local status = ActivityHelper.getActivityStatusAndToast(self.actId)
+	local isNormal = status == ActivityEnum.ActivityStatus.Normal
+	local isNotOpen = status == ActivityEnum.ActivityStatus.NotOpen
 
-	gohelper.setActive(arg_16_0.goEnter, var_16_1)
-	gohelper.setActive(arg_16_0.goFinish, not var_16_2 and not var_16_1)
-	gohelper.setActive(arg_16_0.goLock, var_16_2)
+	gohelper.setActive(self.goEnter, isNormal)
+	gohelper.setActive(self.goFinish, not isNotOpen and not isNormal)
+	gohelper.setActive(self.goLock, isNotOpen)
 
-	local var_16_3 = var_16_0 == ActivityEnum.ActivityStatus.Expired
+	local isExpired = status == ActivityEnum.ActivityStatus.Expired
 
-	gohelper.setActive(arg_16_0._gotime, not var_16_3)
+	gohelper.setActive(self._gotime, not isExpired)
 
-	local var_16_4 = ActivityHelper.getActivityStatusAndToast(VersionActivityFixedHelper.getVersionActivityEnum(arg_16_0._bigVersion, arg_16_0._smallVersion).ActivityId.DungeonStore) == ActivityEnum.ActivityStatus.Normal
+	local storeStatus = ActivityHelper.getActivityStatusAndToast(VersionActivityFixedHelper.getVersionActivityEnum(self._bigVersion, self._smallVersion).ActivityId.DungeonStore)
+	local isStoreNormal = storeStatus == ActivityEnum.ActivityStatus.Normal
 
-	gohelper.setActive(arg_16_0.goStore, var_16_4)
+	gohelper.setActive(self.goStore, isStoreNormal)
 end
 
-function var_0_0.refreshStoreCurrency(arg_17_0)
-	local var_17_0 = CurrencyModel.instance:getCurrency(VersionActivityFixedHelper.getVersionActivityCurrencyType(arg_17_0._bigVersion, arg_17_0._smallVersion))
-	local var_17_1 = var_17_0 and var_17_0.quantity or 0
+function VersionActivityFixedDungeonEnterView:refreshStoreCurrency()
+	local currencyMO = CurrencyModel.instance:getCurrency(VersionActivityFixedHelper.getVersionActivityCurrencyType(self._bigVersion, self._smallVersion))
+	local quantity = currencyMO and currencyMO.quantity or 0
 
-	arg_17_0._txtStoreNum.text = GameUtil.numberDisplay(var_17_1)
+	self._txtStoreNum.text = GameUtil.numberDisplay(quantity)
 end
 
-function var_0_0.refreshRedDot(arg_18_0)
-	local var_18_0 = VersionActivityFixedHelper.getVersionActivityEnum(arg_18_0._bigVersion, arg_18_0._smallVersion).ActivityId.Dungeon
-	local var_18_1 = VersionActivityDungeonBaseController.instance:isOpenActivityHardDungeonChapter(var_18_0)
-	local var_18_2 = ActivityHelper.getActivityStatus(var_18_0) == ActivityEnum.ActivityStatus.Normal
+function VersionActivityFixedDungeonEnterView:refreshRedDot()
+	local dungeonActId = VersionActivityFixedHelper.getVersionActivityEnum(self._bigVersion, self._smallVersion).ActivityId.Dungeon
+	local isOpen = VersionActivityDungeonBaseController.instance:isOpenActivityHardDungeonChapter(dungeonActId)
+	local isNormalStatus = ActivityHelper.getActivityStatus(dungeonActId) == ActivityEnum.ActivityStatus.Normal
 
-	gohelper.setActive(arg_18_0._gohardModeUnLock, var_18_1 and var_18_2)
+	gohelper.setActive(self._gohardModeUnLock, isOpen and isNormalStatus)
 end
 
-function var_0_0.onClose(arg_19_0)
-	TaskDispatcher.cancelTask(arg_19_0.everyMinuteCall, arg_19_0)
+function VersionActivityFixedDungeonEnterView:onClose()
+	TaskDispatcher.cancelTask(self.everyMinuteCall, self)
 end
 
-function var_0_0.onDestroyView(arg_20_0)
-	arg_20_0.animComp:destroy()
+function VersionActivityFixedDungeonEnterView:onDestroyView()
+	self.animComp:destroy()
 end
 
-return var_0_0
+return VersionActivityFixedDungeonEnterView

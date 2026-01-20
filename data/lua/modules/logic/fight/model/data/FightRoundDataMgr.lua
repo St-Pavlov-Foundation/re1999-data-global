@@ -1,57 +1,59 @@
-﻿module("modules.logic.fight.model.data.FightRoundDataMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightRoundDataMgr.lua
 
-local var_0_0 = FightDataClass("FightRoundDataMgr", FightDataMgrBase)
+module("modules.logic.fight.model.data.FightRoundDataMgr", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0.dataList = {}
+local FightRoundDataMgr = FightDataClass("FightRoundDataMgr", FightDataMgrBase)
+
+function FightRoundDataMgr:onConstructor()
+	self.dataList = {}
 
 	if isDebugBuild then
-		arg_1_0.originDataList = {}
+		self.originDataList = {}
 	end
 
-	arg_1_0.curRoundData = nil
-	arg_1_0.originCurRoundData = nil
-	arg_1_0.enterData = nil
+	self.curRoundData = nil
+	self.originCurRoundData = nil
+	self.enterData = nil
 end
 
-function var_0_0.setRoundData(arg_2_0, arg_2_1)
-	arg_2_0.curRoundData = arg_2_1
+function FightRoundDataMgr:setRoundData(roundData)
+	self.curRoundData = roundData
 
-	table.insert(arg_2_0.dataList, arg_2_1)
+	table.insert(self.dataList, roundData)
 end
 
-function var_0_0.setOriginRoundData(arg_3_0, arg_3_1)
-	arg_3_0.originCurRoundData = arg_3_1
+function FightRoundDataMgr:setOriginRoundData(originRoundData)
+	self.originCurRoundData = originRoundData
 
-	table.insert(arg_3_0.originDataList, arg_3_0.originCurRoundData)
+	table.insert(self.originDataList, self.originCurRoundData)
 end
 
-function var_0_0.getRoundData(arg_4_0)
-	return arg_4_0.curRoundData
+function FightRoundDataMgr:getRoundData()
+	return self.curRoundData
 end
 
-function var_0_0.getPreRoundData(arg_5_0)
-	return arg_5_0.dataList[#arg_5_0.dataList - 1]
+function FightRoundDataMgr:getPreRoundData()
+	return self.dataList[#self.dataList - 1]
 end
 
-function var_0_0.getOriginRoundData(arg_6_0)
-	return arg_6_0.originCurRoundData
+function FightRoundDataMgr:getOriginRoundData()
+	return self.originCurRoundData
 end
 
-function var_0_0.getOriginPreRoundData(arg_7_0)
-	return arg_7_0.originDataList[#arg_7_0.originDataList - 1]
+function FightRoundDataMgr:getOriginPreRoundData()
+	return self.originDataList[#self.originDataList - 1]
 end
 
-function var_0_0.getAllOriginRoundData(arg_8_0)
-	return arg_8_0.originDataList
+function FightRoundDataMgr:getAllOriginRoundData()
+	return self.originDataList
 end
 
-function var_0_0.onCancelOperation(arg_9_0)
+function FightRoundDataMgr:onCancelOperation()
 	return
 end
 
-function var_0_0.onStageChanged(arg_10_0)
+function FightRoundDataMgr:onStageChanged()
 	return
 end
 
-return var_0_0
+return FightRoundDataMgr

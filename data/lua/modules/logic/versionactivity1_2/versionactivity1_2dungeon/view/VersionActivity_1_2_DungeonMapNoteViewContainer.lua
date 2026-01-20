@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity_1_2_DungeonMapNoteViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/versionactivity1_2dungeon/view/VersionActivity_1_2_DungeonMapNoteViewContainer.lua
 
-local var_0_0 = class("VersionActivity_1_2_DungeonMapNoteViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity_1_2_DungeonMapNoteViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local VersionActivity_1_2_DungeonMapNoteViewContainer = class("VersionActivity_1_2_DungeonMapNoteViewContainer", BaseViewContainer)
+
+function VersionActivity_1_2_DungeonMapNoteViewContainer:buildViews()
 	return {
 		VersionActivity_1_2_DungeonMapNoteView.New()
 	}
 end
 
-return var_0_0
+return VersionActivity_1_2_DungeonMapNoteViewContainer

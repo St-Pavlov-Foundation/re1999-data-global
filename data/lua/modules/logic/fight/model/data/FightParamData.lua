@@ -1,8 +1,10 @@
-﻿module("modules.logic.fight.model.data.FightParamData", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightParamData.lua
 
-local var_0_0 = FightDataClass("FightParamData")
+module("modules.logic.fight.model.data.FightParamData", package.seeall)
 
-var_0_0.ParamKey = {
+local FightParamData = FightDataClass("FightParamData")
+
+FightParamData.ParamKey = {
 	ProgressId = 2,
 	DoomsdayClock_Range1 = 4,
 	ACT191_CUR_HP_RATE = 12,
@@ -12,27 +14,29 @@ var_0_0.ParamKey = {
 	ACT191_MIN_HP_RATE = 9,
 	ACT191_COIN = 11,
 	DoomsdayClock_Offset = 8,
+	ROUGE2_COIN = 14,
 	ProgressSkill = 1,
+	ROUGE2_REVIVAL_COIN = 15,
 	DoomsdayClock_Value = 3,
 	DoomsdayClock_Range2 = 5
 }
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1)
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1) do
-		arg_1_0[iter_1_1.key] = iter_1_1.value
+function FightParamData:onConstructor(proto)
+	for i, v in ipairs(proto) do
+		self[v.key] = v.value
 	end
 end
 
-function var_0_0.getKey(arg_2_0, arg_2_1)
-	return arg_2_0[arg_2_1]
+function FightParamData:getKey(key)
+	return self[key]
 end
 
-function var_0_0.isInit(arg_3_0, arg_3_1)
-	return arg_3_0.initDict[arg_3_1]
+function FightParamData:isInit(key)
+	return self.initDict[key]
 end
 
-function var_0_0.setInit(arg_4_0, arg_4_1)
+function FightParamData:setInit(key)
 	return
 end
 
-return var_0_0
+return FightParamData

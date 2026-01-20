@@ -1,15 +1,17 @@
-﻿module("modules.logic.login.controller.LoginEvent", package.seeall)
+﻿-- chunkname: @modules/logic/login/controller/LoginEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.login.controller.LoginEvent", package.seeall)
 
-var_0_0.SelectServerItem = 1
-var_0_0.OnGetInfoFinish = 2
-var_0_0.OnLoginEnterMainScene = 3
-var_0_0.OnLogout = 4
-var_0_0.OnSdkLoginReturn = 5
-var_0_0.SystemLoginFail = 6
-var_0_0.OnBeginLogout = 7
-var_0_0.OnLoginBgLoaded = 8
-var_0_0.OnLoginVideoSwitch = 10001
+local LoginEvent = _M
 
-return var_0_0
+LoginEvent.SelectServerItem = 1
+LoginEvent.OnGetInfoFinish = 2
+LoginEvent.OnLoginEnterMainScene = 3
+LoginEvent.OnLogout = 4
+LoginEvent.OnSdkLoginReturn = 5
+LoginEvent.SystemLoginFail = 6
+LoginEvent.OnBeginLogout = 7
+LoginEvent.OnLoginBgLoaded = 8
+LoginEvent.OnLoginVideoSwitch = 10001
+
+return LoginEvent

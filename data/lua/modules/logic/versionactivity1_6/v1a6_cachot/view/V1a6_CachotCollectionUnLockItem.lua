@@ -1,46 +1,48 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotCollectionUnLockItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/view/V1a6_CachotCollectionUnLockItem.lua
 
-local var_0_0 = class("V1a6_CachotCollectionUnLockItem", ListScrollCellExtend)
+module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotCollectionUnLockItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagecollection = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_collection")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "top/#txt_name")
+local V1a6_CachotCollectionUnLockItem = class("V1a6_CachotCollectionUnLockItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V1a6_CachotCollectionUnLockItem:onInitView()
+	self._simagecollection = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_collection")
+	self._txtname = gohelper.findChildText(self.viewGO, "top/#txt_name")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function V1a6_CachotCollectionUnLockItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function V1a6_CachotCollectionUnLockItem:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function V1a6_CachotCollectionUnLockItem:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
-	arg_5_0._mo = arg_5_1
+function V1a6_CachotCollectionUnLockItem:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_5_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_6_0)
-	local var_6_0 = V1a6_CachotCollectionConfig.instance:getCollectionConfig(arg_6_0._mo.id)
+function V1a6_CachotCollectionUnLockItem:refreshUI()
+	local collectionCfg = V1a6_CachotCollectionConfig.instance:getCollectionConfig(self._mo.id)
 
-	if var_6_0 then
-		arg_6_0._simagecollection:LoadImage(ResUrl.getV1a6CachotIcon("collection/" .. var_6_0.icon))
+	if collectionCfg then
+		self._simagecollection:LoadImage(ResUrl.getV1a6CachotIcon("collection/" .. collectionCfg.icon))
 
-		arg_6_0._txtname.text = tostring(var_6_0.name)
+		self._txtname.text = tostring(collectionCfg.name)
 	end
 end
 
-function var_0_0.onDestroyView(arg_7_0)
-	arg_7_0._simagecollection:UnLoadImage()
+function V1a6_CachotCollectionUnLockItem:onDestroyView()
+	self._simagecollection:UnLoadImage()
 end
 
-return var_0_0
+return V1a6_CachotCollectionUnLockItem

@@ -1,108 +1,119 @@
-﻿module("modules.logic.store.view.StoreSkinGoodsItem", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/StoreSkinGoodsItem.lua
 
-local var_0_0 = class("StoreSkinGoodsItem", ListScrollCellExtend)
-local var_0_1 = {
+module("modules.logic.store.view.StoreSkinGoodsItem", package.seeall)
+
+local StoreSkinGoodsItem = class("StoreSkinGoodsItem", ListScrollCellExtend)
+local spineDefaultPos = {
 	30,
 	15,
 	0
 }
-local var_0_2 = "singlebg/characterskin/bg_beijing.png"
-local var_0_3 = {
+local spineDefaultBg = "singlebg/characterskin/bg_beijing.png"
+local spineDefaultSize = {
 	260,
 	600
 }
-local var_0_4 = "singlebg/signature/color/img_dressing1.png"
+local defaultSignaturePng = "singlebg/signature/color/img_dressing1.png"
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_NormalSkin/image_bg")
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_NormalSkin/#simage_icon")
-	arg_1_0._goNormalSkin = gohelper.findChild(arg_1_0.viewGO, "#go_NormalSkin")
-	arg_1_0._advanceImagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_AdvancedSkin/#simage_bg")
-	arg_1_0._advanceImageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_AdvancedSkin/#simage_icon")
-	arg_1_0._advanceImage1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_AdvancedSkin/#image_D")
-	arg_1_0._advanceImage2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_AdvancedSkin/#image_A")
-	arg_1_0._goAdvanceSkin = gohelper.findChild(arg_1_0.viewGO, "#go_AdvancedSkin")
-	arg_1_0._goUniqueSkinsImage = gohelper.findChild(arg_1_0.viewGO, "#go_UniqueSkin/#simage_icon")
-	arg_1_0._goUniqueSkin = gohelper.findChild(arg_1_0.viewGO, "#go_UniqueSkin")
-	arg_1_0._uniqueSingleImageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_UniqueSkin/#simage_icon")
-	arg_1_0._uniqueImagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_UniqueSkin/#simage_iconbg")
-	arg_1_0._goUniqueSkinBubble = gohelper.findChild(arg_1_0.viewGO, "#go_UniqueSkin/#simage_bubble")
-	arg_1_0._xtIconbg = gohelper.findChild(arg_1_0.viewGO, "#go_UniqueSkin/#xingti_iconbg")
-	arg_1_0._goLinkageLetterG = gohelper.findChild(arg_1_0.viewGO, "#go_Linkage/#simage_g")
-	arg_1_0._goLinkageLetterA = gohelper.findChild(arg_1_0.viewGO, "#go_Linkage/#image_A")
-	arg_1_0._goLinkageBgG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_Linkage/#simage_bg")
-	arg_1_0._goLinkageBgA = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_Linkage/#simage_bgA")
-	arg_1_0._gocostline = gohelper.findChild(arg_1_0.viewGO, "cost/line")
-	arg_1_0._goprice = gohelper.findChild(arg_1_0.viewGO, "cost/#go_price")
-	arg_1_0._goowned = gohelper.findChild(arg_1_0.viewGO, "cost/#go_owned")
-	arg_1_0._txtoriginalprice = gohelper.findChildText(arg_1_0.viewGO, "cost/#txt_original_price")
-	arg_1_0._goCharge = gohelper.findChild(arg_1_0.viewGO, "cost/#go_charge")
-	arg_1_0._txtCharge = gohelper.findChildText(arg_1_0.viewGO, "cost/#go_charge/txt_chargeNum")
-	arg_1_0._txtOriginalCharge = gohelper.findChildText(arg_1_0.viewGO, "cost/#go_charge/txt_originalChargeNum")
-	arg_1_0._goremaintime = gohelper.findChild(arg_1_0.viewGO, "#go_tag/#go_remaintime")
-	arg_1_0._txtremaintime = gohelper.findChildText(arg_1_0.viewGO, "#go_tag/#go_remaintime/bg/icon/#txt_remaintime")
-	arg_1_0._gotag = gohelper.findChild(arg_1_0.viewGO, "#go_tag")
-	arg_1_0._gonewtag = gohelper.findChild(arg_1_0.viewGO, "#go_newtag")
-	arg_1_0._godiscount = gohelper.findChild(arg_1_0.viewGO, "#go_tag/#go_discount")
-	arg_1_0._txtdiscount = gohelper.findChildText(arg_1_0.viewGO, "#go_tag/#go_discount/#txt_discount")
-	arg_1_0._godeduction = gohelper.findChild(arg_1_0.viewGO, "#go_tag/#go_deduction")
-	arg_1_0._txtdeduction = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_tag/#go_deduction/txt_materialNum")
-	arg_1_0._goSkinTips = gohelper.findChild(arg_1_0.viewGO, "#go_SkinTips")
-	arg_1_0._imgProp = gohelper.findChildImage(arg_1_0.viewGO, "#go_SkinTips/image/#txt_Tips/#txt_Num/#image_Prop")
-	arg_1_0._txtPropNum = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_SkinTips/image/#txt_Tips/#txt_Num")
-	arg_1_0.goSelect = gohelper.findChild(arg_1_0.viewGO, "#go_select")
+function StoreSkinGoodsItem:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#go_NormalSkin/image_bg")
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "#go_NormalSkin/#simage_icon")
+	self._goNormalSkin = gohelper.findChild(self.viewGO, "#go_NormalSkin")
+	self._advanceImagebg = gohelper.findChildSingleImage(self.viewGO, "#go_AdvancedSkin/#simage_bg")
+	self._advanceImageicon = gohelper.findChildSingleImage(self.viewGO, "#go_AdvancedSkin/#simage_icon")
+	self._advanceImage1 = gohelper.findChildSingleImage(self.viewGO, "#go_AdvancedSkin/#image_D")
+	self._advanceImage2 = gohelper.findChildSingleImage(self.viewGO, "#go_AdvancedSkin/#image_A")
+	self._goAdvanceSkin = gohelper.findChild(self.viewGO, "#go_AdvancedSkin")
+	self._goUniqueSkinsImage = gohelper.findChild(self.viewGO, "#go_UniqueSkin/#simage_icon")
+	self._goUniqueSkin = gohelper.findChild(self.viewGO, "#go_UniqueSkin")
+	self._uniqueSingleImageicon = gohelper.findChildSingleImage(self.viewGO, "#go_UniqueSkin/#simage_icon")
+	self._uniqueImagebg = gohelper.findChildSingleImage(self.viewGO, "#go_UniqueSkin/#simage_iconbg")
+	self._goUniqueSkinBubble = gohelper.findChild(self.viewGO, "#go_UniqueSkin/#simage_bubble")
+	self._xtIconbg = gohelper.findChild(self.viewGO, "#go_UniqueSkin/#xingti_iconbg")
+	self._goLinkageLetterG = gohelper.findChild(self.viewGO, "#go_Linkage/#simage_g")
+	self._goLinkageLetterA = gohelper.findChild(self.viewGO, "#go_Linkage/#image_A")
+	self._goLinkageBgG = gohelper.findChildSingleImage(self.viewGO, "#go_Linkage/#simage_bg")
+	self._goLinkageBgA = gohelper.findChildSingleImage(self.viewGO, "#go_Linkage/#simage_bgA")
+	self._gocostline = gohelper.findChild(self.viewGO, "cost/line")
+	self._goprice = gohelper.findChild(self.viewGO, "cost/#go_price")
+	self._goowned = gohelper.findChild(self.viewGO, "cost/#go_owned")
+	self._txtoriginalprice = gohelper.findChildText(self.viewGO, "cost/#txt_original_price")
+	self._goCharge = gohelper.findChild(self.viewGO, "cost/#go_charge")
+	self._txtCharge = gohelper.findChildText(self.viewGO, "cost/#go_charge/txt_chargeNum")
+	self._txtOriginalCharge = gohelper.findChildText(self.viewGO, "cost/#go_charge/txt_originalChargeNum")
+	self._goremaintime = gohelper.findChild(self.viewGO, "#go_tag/#go_remaintime")
+	self._txtremaintime = gohelper.findChildText(self.viewGO, "#go_tag/#go_remaintime/bg/icon/#txt_remaintime")
+	self._gotag = gohelper.findChild(self.viewGO, "#go_tag")
+	self._gonewtag = gohelper.findChild(self.viewGO, "#go_newtag")
+	self._godiscount = gohelper.findChild(self.viewGO, "#go_tag/#go_discount")
+	self._txtdiscount = gohelper.findChildText(self.viewGO, "#go_tag/#go_discount/#txt_discount")
+	self._godeduction = gohelper.findChild(self.viewGO, "#go_tag/#go_deduction")
+	self._txtdeduction = gohelper.findChildTextMesh(self.viewGO, "#go_tag/#go_deduction/txt_materialNum")
+	self._goSkinTips = gohelper.findChild(self.viewGO, "#go_SkinTips")
+	self._imgProp = gohelper.findChildImage(self.viewGO, "#go_SkinTips/image/#txt_Tips/#txt_Num/#image_Prop")
+	self._txtPropNum = gohelper.findChildTextMesh(self.viewGO, "#go_SkinTips/image/#txt_Tips/#txt_Num")
+	self.goSelect = gohelper.findChild(self.viewGO, "#go_select")
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(StoreController.instance, StoreEvent.SkinChargePackageUpdate, arg_2_0.refreshChargeInfo, arg_2_0)
-	arg_2_0:addEventCb(StoreController.instance, StoreEvent.SkinPreviewChanged, arg_2_0._onSkinPreviewChanged, arg_2_0)
+function StoreSkinGoodsItem:addEvents()
+	self:addEventCb(StoreController.instance, StoreEvent.SkinChargePackageUpdate, self.refreshChargeInfo, self)
+	self:addEventCb(StoreController.instance, StoreEvent.SkinPreviewChanged, self._onSkinPreviewChanged, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(StoreController.instance, StoreEvent.SkinChargePackageUpdate, arg_3_0.refreshChargeInfo, arg_3_0)
-	arg_3_0:removeEventCb(StoreController.instance, StoreEvent.SkinPreviewChanged, arg_3_0._onSkinPreviewChanged, arg_3_0)
+function StoreSkinGoodsItem:removeEvents()
+	self:removeEventCb(StoreController.instance, StoreEvent.SkinChargePackageUpdate, self.refreshChargeInfo, self)
+	self:removeEventCb(StoreController.instance, StoreEvent.SkinPreviewChanged, self._onSkinPreviewChanged, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._simagebg:LoadImage(ResUrl.getCharacterSkinIcon("img_card_bg"))
+function StoreSkinGoodsItem:_editableInitView()
+	self._simagebg:LoadImage(ResUrl.getCharacterSkinIcon("img_card_bg"))
 
-	arg_4_0._txtmaterialNum = gohelper.findChildText(arg_4_0._goprice, "txt_materialNum")
-	arg_4_0._simagematerial = gohelper.findChildImage(arg_4_0._goprice, "simage_material")
-	arg_4_0._goLinkage = gohelper.findChild(arg_4_0.viewGO, "#go_Linkage")
-	arg_4_0._goLinkageLogo = gohelper.findChild(arg_4_0.viewGO, "#go_Linkage/image_Logo")
-	arg_4_0._linkage_simageicon = gohelper.findChildSingleImage(arg_4_0._goLinkage, "#simage_icon")
-	arg_4_0._btnGO = gohelper.findChild(arg_4_0.viewGO, "clickArea")
-	arg_4_0._btn = gohelper.getClickWithAudio(arg_4_0._btnGO, AudioEnum.UI.play_ui_rolesopen)
+	self._txtmaterialNum = gohelper.findChildText(self._goprice, "txt_materialNum")
+	self._simagematerial = gohelper.findChildImage(self._goprice, "simage_material")
+	self._goLinkage = gohelper.findChild(self.viewGO, "#go_Linkage")
+	self._goLinkageLogo = gohelper.findChild(self.viewGO, "#go_Linkage/image_Logo")
+	self._linkage_simageicon = gohelper.findChildSingleImage(self._goLinkage, "#simage_icon")
+	self._btnGO = gohelper.findChild(self.viewGO, "clickArea")
+	self._btn = gohelper.getClickWithAudio(self._btnGO, AudioEnum.UI.play_ui_rolesopen)
 
-	arg_4_0._btn:AddClickListener(arg_4_0._onClick, arg_4_0)
+	self._btn:AddClickListener(self._onClick, self)
 
-	arg_4_0._animator = arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_4_0.viewGOTrs = arg_4_0.viewGO.transform
-	arg_4_0.parentViewGO = arg_4_0.viewGO.transform.parent.gameObject
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self.viewGOTrs = self.viewGO.transform
+	self.parentViewGO = self.viewGO.transform.parent.gameObject
 end
 
-function var_0_0._onSkinPreviewChanged(arg_5_0)
-	arg_5_0:updateSelect()
-	arg_5_0:updateNew()
+function StoreSkinGoodsItem:_onSkinPreviewChanged()
+	self:updateSelect()
+	self:updateNew()
 end
 
-function var_0_0.updateNew(arg_6_0)
-	local var_6_0 = arg_6_0._mo:checkShowNewRedDot()
+function StoreSkinGoodsItem:updateNew()
+	local alreadyHas = self._mo:alreadyHas() and not StoreModel.instance:isSkinGoodsCanRepeatBuy(self._mo)
 
-	gohelper.setActive(arg_6_0._gonewtag, var_6_0)
+	if alreadyHas then
+		gohelper.setActive(self._gonewtag, false)
+
+		return
+	end
+
+	local needNew = self._mo:checkShowNewRedDot()
+
+	gohelper.setActive(self._gonewtag, needNew)
 end
 
-function var_0_0.updateSelect(arg_7_0)
-	local var_7_0 = StoreClothesGoodsItemListModel.instance:getSelectGoods() == arg_7_0._mo
+function StoreSkinGoodsItem:updateSelect()
+	local selectGoods = StoreClothesGoodsItemListModel.instance:getSelectGoods()
+	local isSelect = selectGoods == self._mo
 
-	gohelper.setActive(arg_7_0.goSelect, var_7_0)
+	gohelper.setActive(self.goSelect, isSelect)
 
-	if arg_7_0._mo:checkShowNewRedDot() then
-		arg_7_0._mo:setNewRedDotKey()
+	if self._mo:checkShowNewRedDot() then
+		self._mo:setNewRedDotKey()
 		RedDotController.instance:dispatchEvent(RedDotEvent.UpdateRelateDotInfo, {
 			[RedDotEnum.DotNode.StoreBtn] = true
 		})
@@ -110,243 +121,244 @@ function var_0_0.updateSelect(arg_7_0)
 	end
 end
 
-function var_0_0._onClick(arg_8_0)
-	StoreClothesGoodsItemListModel.instance:setSelectIndex(arg_8_0._index)
+function StoreSkinGoodsItem:_onClick()
+	StoreClothesGoodsItemListModel.instance:setSelectIndex(self._index)
 end
 
-function var_0_0._openStoreSkinView(arg_9_0)
+function StoreSkinGoodsItem:_openStoreSkinView()
 	ViewMgr.instance:openView(ViewName.StoreSkinPreviewView, {
-		goodsMO = arg_9_0._mo
+		goodsMO = self._mo
 	})
 end
 
-function var_0_0._onDraggingBegin(arg_10_0)
+function StoreSkinGoodsItem:_onDraggingBegin()
 	return
 end
 
-function var_0_0._onDragging(arg_11_0)
+function StoreSkinGoodsItem:_onDragging()
 	return
 end
 
-function var_0_0._onDraggingEnd(arg_12_0)
+function StoreSkinGoodsItem:_onDraggingEnd()
 	return
 end
 
-function var_0_0.checkItemInGoodsList(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0, var_13_1 = recthelper.uiPosToScreenPos2(arg_13_2)
+function StoreSkinGoodsItem:checkItemInGoodsList(rectTrans, itemRectTrans)
+	local screenPosX, screenPosY = recthelper.uiPosToScreenPos2(itemRectTrans)
 
-	return recthelper.screenPosInRect(arg_13_1, CameraMgr.instance:getUICamera(), var_13_0, var_13_1)
+	return recthelper.screenPosInRect(rectTrans, CameraMgr.instance:getUICamera(), screenPosX, screenPosY)
 end
 
-function var_0_0.onUpdateMO(arg_14_0, arg_14_1)
-	arg_14_0._mo = arg_14_1
+function StoreSkinGoodsItem:onUpdateMO(mo)
+	self._mo = mo
 
-	local var_14_0 = arg_14_0:_isLinkageSkin()
-	local var_14_1 = not var_14_0 and arg_14_0:_isNormalSkin()
-	local var_14_2 = not var_14_0 and arg_14_0:_isAdvanceSkin()
-	local var_14_3 = not var_14_0 and arg_14_0:_isUniqueSkin()
-	local var_14_4 = arg_14_0._mo.config.product
-	local var_14_5 = string.splitToNumber(var_14_4, "#")[2]
+	local isShowLinkageSkin = self:_isLinkageSkin()
+	local isShowNormalSkin = not isShowLinkageSkin and self:_isNormalSkin()
+	local isShowAdvancedSkin = not isShowLinkageSkin and self:_isAdvanceSkin()
+	local isShowUniqueSkin = not isShowLinkageSkin and self:_isUniqueSkin()
+	local product = self._mo.config.product
+	local productInfo = string.splitToNumber(product, "#")
+	local skinId = productInfo[2]
 
-	arg_14_0._skinId = var_14_5
-	arg_14_0.skinCo = SkinConfig.instance:getSkinCo(var_14_5)
+	self._skinId = skinId
+	self.skinCo = SkinConfig.instance:getSkinCo(skinId)
 
-	local var_14_6 = HeroConfig.instance:getHeroCO(arg_14_0.skinCo.characterId)
+	local heroConfig = HeroConfig.instance:getHeroCO(self.skinCo.characterId)
 
-	arg_14_0:clearSpine()
-	gohelper.setActive(arg_14_0._goNormalSkin, var_14_1)
-	gohelper.setActive(arg_14_0._goAdvanceSkin, var_14_2)
-	gohelper.setActive(arg_14_0._goUniqueSkin, var_14_3)
-	gohelper.setActive(arg_14_0._goLinkage, var_14_0)
-	gohelper.setActive(arg_14_0._goLinkageLogo, arg_14_0:_isShowLinkageLogo())
+	self:clearSpine()
+	gohelper.setActive(self._goNormalSkin, isShowNormalSkin)
+	gohelper.setActive(self._goAdvanceSkin, isShowAdvancedSkin)
+	gohelper.setActive(self._goUniqueSkin, isShowUniqueSkin)
+	gohelper.setActive(self._goLinkage, isShowLinkageSkin)
+	gohelper.setActive(self._goLinkageLogo, self:_isShowLinkageLogo())
 
-	if var_14_3 then
-		arg_14_0:_onUpdateMO_uniqueSkin()
+	if isShowUniqueSkin then
+		self:_onUpdateMO_uniqueSkin()
 	else
-		local var_14_7
+		local imageIcon
 
-		if var_14_0 then
-			var_14_7 = arg_14_0._linkage_simageicon
+		if isShowLinkageSkin then
+			imageIcon = self._linkage_simageicon
 
-			gohelper.setActive(arg_14_0._goLinkageBgA, arg_14_0:_isAdvanceSkin())
-			gohelper.setActive(arg_14_0._goLinkageBgG, arg_14_0:_isNormalSkin())
-			gohelper.setActive(arg_14_0._goLinkageLetterA, arg_14_0:_isAdvanceSkin())
-			gohelper.setActive(arg_14_0._goLinkageLetterG, arg_14_0:_isNormalSkin())
-		elseif var_14_2 then
-			var_14_7 = arg_14_0._advanceImageicon
+			gohelper.setActive(self._goLinkageBgA, self:_isAdvanceSkin())
+			gohelper.setActive(self._goLinkageBgG, self:_isNormalSkin())
+			gohelper.setActive(self._goLinkageLetterA, self:_isAdvanceSkin())
+			gohelper.setActive(self._goLinkageLetterG, self:_isNormalSkin())
+		elseif isShowAdvancedSkin then
+			imageIcon = self._advanceImageicon
 		else
-			var_14_7 = arg_14_0._simageicon
+			imageIcon = self._simageicon
 		end
 
-		if string.nilorempty(arg_14_0._mo.config.bigImg) == false then
-			var_14_7:LoadImage(arg_14_0._mo.config.bigImg)
+		if string.nilorempty(self._mo.config.bigImg) == false then
+			imageIcon:LoadImage(self._mo.config.bigImg)
 		else
-			var_14_7:LoadImage(ResUrl.getHeadSkinIconMiddle(303202))
+			imageIcon:LoadImage(ResUrl.getHeadSkinIconMiddle(303202))
 		end
 	end
 
-	local var_14_8 = arg_14_1:alreadyHas() and not StoreModel.instance:isSkinGoodsCanRepeatBuy(arg_14_1)
+	local alreadyHas = mo:alreadyHas() and not StoreModel.instance:isSkinGoodsCanRepeatBuy(mo)
 
-	if var_14_8 then
-		gohelper.setActive(arg_14_0._goowned, true)
-		gohelper.setActive(arg_14_0._goprice, false)
-		gohelper.setActive(arg_14_0._godeduction, false)
-		gohelper.setActive(arg_14_0._gocostline, false)
+	if alreadyHas then
+		gohelper.setActive(self._goowned, true)
+		gohelper.setActive(self._goprice, false)
+		gohelper.setActive(self._godeduction, false)
+		gohelper.setActive(self._gocostline, false)
 	else
-		gohelper.setActive(arg_14_0._goowned, false)
-		gohelper.setActive(arg_14_0._goprice, true)
-		gohelper.setActive(arg_14_0._gocostline, true)
+		gohelper.setActive(self._goowned, false)
+		gohelper.setActive(self._goprice, true)
+		gohelper.setActive(self._gocostline, true)
 
-		local var_14_9 = 0
+		local deductionItemCount = 0
 
-		if not string.nilorempty(arg_14_0._mo.config.deductionItem) then
-			local var_14_10 = GameUtil.splitString2(arg_14_0._mo.config.deductionItem, true)
+		if not string.nilorempty(self._mo.config.deductionItem) then
+			local info = GameUtil.splitString2(self._mo.config.deductionItem, true)
 
-			var_14_9 = ItemModel.instance:getItemCount(var_14_10[1][2])
-			arg_14_0._txtdeduction.text = -var_14_10[2][1]
+			deductionItemCount = ItemModel.instance:getItemCount(info[1][2])
+			self._txtdeduction.text = -info[2][1]
 		end
 
-		gohelper.setActive(arg_14_0._godeduction, var_14_9 > 0)
+		gohelper.setActive(self._godeduction, deductionItemCount > 0)
 	end
 
-	local var_14_11 = string.splitToNumber(arg_14_0._mo.config.cost, "#")
+	local costInfo = string.splitToNumber(self._mo.config.cost, "#")
 
-	arg_14_0._costType = var_14_11[1]
-	arg_14_0._costId = var_14_11[2]
-	arg_14_0._costQuantity = var_14_11[3]
+	self._costType = costInfo[1]
+	self._costId = costInfo[2]
+	self._costQuantity = costInfo[3]
 
-	local var_14_12, var_14_13 = ItemModel.instance:getItemConfigAndIcon(arg_14_0._costType, arg_14_0._costId)
-	local var_14_14 = var_14_12.icon
-	local var_14_15 = string.format("%s_1", var_14_14)
+	local costConfig, costIcon = ItemModel.instance:getItemConfigAndIcon(self._costType, self._costId)
+	local id = costConfig.icon
+	local str = string.format("%s_1", id)
 
-	UISpriteSetMgr.instance:setCurrencyItemSprite(arg_14_0._simagematerial, var_14_15, true)
+	UISpriteSetMgr.instance:setCurrencyItemSprite(self._simagematerial, str, true)
 
-	arg_14_0._txtmaterialNum.text = arg_14_0._costQuantity
+	self._txtmaterialNum.text = self._costQuantity
 
-	gohelper.setActive(arg_14_0._godiscount, arg_14_1.config.originalCost > 0)
-	gohelper.setActive(arg_14_0._txtoriginalprice.gameObject, arg_14_1.config.originalCost > 0)
+	gohelper.setActive(self._godiscount, mo.config.originalCost > 0)
+	gohelper.setActive(self._txtoriginalprice.gameObject, mo.config.originalCost > 0)
 
-	local var_14_16 = arg_14_0._costQuantity / arg_14_1.config.originalCost
-	local var_14_17 = math.ceil(var_14_16 * 100)
+	local offTag = self._costQuantity / mo.config.originalCost
 
-	arg_14_0._txtdiscount.text = string.format("-%d%%", 100 - var_14_17)
-	arg_14_0._txtoriginalprice.text = arg_14_1.config.originalCost
+	offTag = math.ceil(offTag * 100)
+	self._txtdiscount.text = string.format("-%d%%", 100 - offTag)
+	self._txtoriginalprice.text = mo.config.originalCost
 
-	local var_14_18 = arg_14_1:getOfflineTime()
-	local var_14_19 = var_14_18 - ServerTime.now()
+	local offlineTime = mo:getOfflineTime()
+	local offEndTime = offlineTime - ServerTime.now()
 
-	gohelper.setActive(arg_14_0._goremaintime, var_14_18 > 0 and var_14_8 == false)
+	gohelper.setActive(self._goremaintime, offlineTime > 0 and alreadyHas == false)
 
-	if var_14_19 > 3600 then
-		arg_14_0._txtremaintime.text = TimeUtil.getFormatTime1(var_14_19)
+	if offEndTime > 3600 then
+		self._txtremaintime.text = TimeUtil.getFormatTime1(offEndTime)
 	else
-		arg_14_0._txtremaintime.text = luaLang("not_enough_one_hour")
+		self._txtremaintime.text = luaLang("not_enough_one_hour")
 	end
 
-	arg_14_0:refreshChargeInfo()
-	arg_14_0:refreshSkinTips()
-	arg_14_0:updateNew()
-	arg_14_0:updateSelect()
+	self:refreshChargeInfo()
+	self:refreshSkinTips()
+	self:updateNew()
+	self:updateSelect()
 
-	if arg_14_0._view and arg_14_0._view.viewContainer then
-		arg_14_0._view.viewContainer:dispatchEvent(StoreEvent.SkinGoodsItemChanged)
+	if self._view and self._view.viewContainer then
+		self._view.viewContainer:dispatchEvent(StoreEvent.SkinGoodsItemChanged)
 	end
 end
 
-function var_0_0.refreshChargeInfo(arg_15_0)
-	local var_15_0
-	local var_15_1
+function StoreSkinGoodsItem:refreshChargeInfo()
+	local price, originalPrice
 
-	if arg_15_0.skinCo then
-		local var_15_2 = arg_15_0.skinCo.id
+	if self.skinCo then
+		local skinId = self.skinCo.id
+		local isChargePackageValid = StoreModel.instance:isStoreSkinChargePackageValid(skinId)
 
-		if StoreModel.instance:isStoreSkinChargePackageValid(var_15_2) then
-			var_15_0, var_15_1 = StoreConfig.instance:getSkinChargePrice(var_15_2)
+		if isChargePackageValid then
+			price, originalPrice = StoreConfig.instance:getSkinChargePrice(skinId)
 		end
 	end
 
-	if var_15_0 then
-		local var_15_3 = string.format("%s%s", StoreModel.instance:getCostStr(var_15_0))
+	if price then
+		local priceStr = string.format("%s%s", StoreModel.instance:getCostStr(price))
 
-		arg_15_0._txtCharge.text = var_15_3
+		self._txtCharge.text = priceStr
 
-		if var_15_1 then
-			arg_15_0._txtOriginalCharge.text = var_15_1
+		if originalPrice then
+			self._txtOriginalCharge.text = originalPrice
 		end
 
-		gohelper.setActive(arg_15_0._txtOriginalCharge.gameObject, var_15_1)
+		gohelper.setActive(self._txtOriginalCharge.gameObject, originalPrice)
 	end
 
-	local var_15_4 = false
+	local alreadyHas = false
 
-	if arg_15_0._mo then
-		var_15_4 = arg_15_0._mo:alreadyHas() and not StoreModel.instance:isSkinGoodsCanRepeatBuy(arg_15_0._mo)
+	if self._mo then
+		alreadyHas = self._mo:alreadyHas() and not StoreModel.instance:isSkinGoodsCanRepeatBuy(self._mo)
 	end
 
-	gohelper.setActive(arg_15_0._goCharge, var_15_0 and not var_15_4)
-	ZProj.UGUIHelper.RebuildLayout(arg_15_0._goCharge.transform)
+	gohelper.setActive(self._goCharge, price and not alreadyHas)
+	ZProj.UGUIHelper.RebuildLayout(self._goCharge.transform)
 end
 
-function var_0_0.getAnimator(arg_16_0)
-	return arg_16_0._animator
+function StoreSkinGoodsItem:getAnimator()
+	return self._animator
 end
 
-function var_0_0.refreshSkinTips(arg_17_0)
-	gohelper.setActive(arg_17_0._goSkinTips, false)
+function StoreSkinGoodsItem:refreshSkinTips()
+	gohelper.setActive(self._goSkinTips, false)
 end
 
-function var_0_0.clearSpine(arg_18_0)
-	GameUtil.doClearMember(arg_18_0, "_skinSpine")
-	GameUtil.doClearMember(arg_18_0, "_skinSpine2")
+function StoreSkinGoodsItem:clearSpine()
+	GameUtil.doClearMember(self, "_skinSpine")
+	GameUtil.doClearMember(self, "_skinSpine2")
 end
 
-function var_0_0.onDestroyView(arg_19_0)
-	arg_19_0._btn:RemoveClickListener()
-	arg_19_0._simagebg:UnLoadImage()
-	arg_19_0._uniqueSingleImageicon:UnLoadImage()
-	arg_19_0._uniqueImagebg:UnLoadImage()
-	GameUtil.doClearMember(arg_19_0, "_skinSpine")
-	GameUtil.doClearMember(arg_19_0, "_skinSpine2")
+function StoreSkinGoodsItem:onDestroyView()
+	self._btn:RemoveClickListener()
+	self._simagebg:UnLoadImage()
+	self._uniqueSingleImageicon:UnLoadImage()
+	self._uniqueImagebg:UnLoadImage()
+	GameUtil.doClearMember(self, "_skinSpine")
+	GameUtil.doClearMember(self, "_skinSpine2")
 
-	if arg_19_0:_isUniqueSkin() then
-		arg_19_0:removeEventCb(StoreController.instance, StoreEvent.DragSkinListBegin, arg_19_0._onDraggingBegin, arg_19_0)
-		arg_19_0:removeEventCb(StoreController.instance, StoreEvent.DragSkinListEnd, arg_19_0._onDraggingEnd, arg_19_0)
-		arg_19_0:removeEventCb(StoreController.instance, StoreEvent.DraggingSkinList, arg_19_0._onDragging, arg_19_0)
+	if self:_isUniqueSkin() then
+		self:removeEventCb(StoreController.instance, StoreEvent.DragSkinListBegin, self._onDraggingBegin, self)
+		self:removeEventCb(StoreController.instance, StoreEvent.DragSkinListEnd, self._onDraggingEnd, self)
+		self:removeEventCb(StoreController.instance, StoreEvent.DraggingSkinList, self._onDragging, self)
 	end
 end
 
-function var_0_0._onUpdateMO_uniqueSkin(arg_20_0)
-	arg_20_0:addEventCb(StoreController.instance, StoreEvent.DragSkinListBegin, arg_20_0._onDraggingBegin, arg_20_0)
-	arg_20_0:addEventCb(StoreController.instance, StoreEvent.DragSkinListEnd, arg_20_0._onDraggingEnd, arg_20_0)
-	arg_20_0:addEventCb(StoreController.instance, StoreEvent.DraggingSkinList, arg_20_0._onDragging, arg_20_0)
+function StoreSkinGoodsItem:_onUpdateMO_uniqueSkin()
+	self:addEventCb(StoreController.instance, StoreEvent.DragSkinListBegin, self._onDraggingBegin, self)
+	self:addEventCb(StoreController.instance, StoreEvent.DragSkinListEnd, self._onDraggingEnd, self)
+	self:addEventCb(StoreController.instance, StoreEvent.DraggingSkinList, self._onDragging, self)
 
-	local var_20_0 = arg_20_0._mo.config.bigImg
-	local var_20_1 = arg_20_0._mo.config.spineParams
+	local resPath = self._mo.config.bigImg
+	local spineParams = self._mo.config.spineParams
 
-	gohelper.setActive(arg_20_0._xtIconbg, false)
-	gohelper.setActive(arg_20_0._goUniqueSkinBubble, false)
-	arg_20_0._uniqueImagebg:LoadImage(ResUrl.getCharacterSkinIcon(arg_20_0._skinId))
-	arg_20_0._uniqueSingleImageicon:LoadImage(ResUrl.getHeadSkinIconUnique(arg_20_0._skinId))
+	gohelper.setActive(self._xtIconbg, false)
+	gohelper.setActive(self._goUniqueSkinBubble, false)
+	self._uniqueImagebg:LoadImage(ResUrl.getCharacterSkinIcon(self._skinId))
+	self._uniqueSingleImageicon:LoadImage(ResUrl.getHeadSkinIconUnique(self._skinId))
 end
 
-function var_0_0._isNormalSkin(arg_21_0)
-	return arg_21_0._mo.config.skinLevel == 0
+function StoreSkinGoodsItem:_isNormalSkin()
+	return self._mo.config.skinLevel == 0
 end
 
-function var_0_0._isAdvanceSkin(arg_22_0)
-	return arg_22_0._mo.config.isAdvancedSkin or arg_22_0._mo.config.skinLevel == 1
+function StoreSkinGoodsItem:_isAdvanceSkin()
+	return self._mo.config.isAdvancedSkin or self._mo.config.skinLevel == 1
 end
 
-function var_0_0._isUniqueSkin(arg_23_0)
-	return arg_23_0._mo.config.skinLevel == 2
+function StoreSkinGoodsItem:_isUniqueSkin()
+	return self._mo.config.skinLevel == 2
 end
 
-function var_0_0._isLinkageSkin(arg_24_0)
-	return arg_24_0._mo.config.islinkageSkin or false
+function StoreSkinGoodsItem:_isLinkageSkin()
+	return self._mo.config.islinkageSkin or false
 end
 
-function var_0_0._isShowLinkageLogo(arg_25_0)
-	return arg_25_0._mo.config.showLinkageLogo or false
+function StoreSkinGoodsItem:_isShowLinkageLogo()
+	return self._mo.config.showLinkageLogo or false
 end
 
-return var_0_0
+return StoreSkinGoodsItem

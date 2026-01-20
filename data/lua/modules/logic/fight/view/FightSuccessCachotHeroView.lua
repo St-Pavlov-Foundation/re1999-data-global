@@ -1,66 +1,69 @@
-﻿module("modules.logic.fight.view.FightSuccessCachotHeroView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightSuccessCachotHeroView.lua
 
-local var_0_0 = class("FightSuccessCachotHeroView", BaseView)
+module("modules.logic.fight.view.FightSuccessCachotHeroView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goroot = gohelper.findChild(arg_1_0.viewGO, "#go_cachot_herogroup")
-	arg_1_0._heroItemParent = gohelper.findChild(arg_1_0._goroot, "layout")
-	arg_1_0._heroItem = gohelper.findChild(arg_1_0._goroot, "layout/heroitem")
-	arg_1_0._txtLv = gohelper.findChild(arg_1_0.viewGO, "goalcontent/txtLv")
+local FightSuccessCachotHeroView = class("FightSuccessCachotHeroView", BaseView)
+
+function FightSuccessCachotHeroView:onInitView()
+	self._goroot = gohelper.findChild(self.viewGO, "#go_cachot_herogroup")
+	self._heroItemParent = gohelper.findChild(self._goroot, "layout")
+	self._heroItem = gohelper.findChild(self._goroot, "layout/heroitem")
+	self._txtLv = gohelper.findChild(self.viewGO, "goalcontent/txtLv")
 end
 
-function var_0_0.onOpen(arg_2_0)
-	gohelper.setActive(arg_2_0._txtLv, false)
-	gohelper.setActive(arg_2_0._goroot, true)
+function FightSuccessCachotHeroView:onOpen()
+	gohelper.setActive(self._txtLv, false)
+	gohelper.setActive(self._goroot, true)
 
-	local var_2_0 = {}
-	local var_2_1 = V1a6_CachotModel.instance:getTeamInfo()
+	local allHeros = {}
+	local teamInfo = V1a6_CachotModel.instance:getTeamInfo()
 
-	if not var_2_1 then
+	if not teamInfo then
 		return
 	end
 
-	local var_2_2 = var_2_1:getCurGroupInfo()
+	local groupInfo = teamInfo:getCurGroupInfo()
 
-	if var_2_2 then
-		for iter_2_0, iter_2_1 in ipairs(var_2_2.heroList) do
-			local var_2_3 = HeroModel.instance:getById(iter_2_1)
+	if groupInfo then
+		for _, v in ipairs(groupInfo.heroList) do
+			local heroMo = HeroModel.instance:getById(v)
 
-			if var_2_3 then
-				local var_2_4 = var_2_1:getHeroHp(var_2_3.heroId)
+			if heroMo then
+				local nowHp = teamInfo:getHeroHp(heroMo.heroId)
+				local skinId = heroMo.skin
 
-				if var_2_3.skin == 0 then
-					local var_2_5 = lua_character.configDict[var_2_3.heroId].skinId
+				if skinId == 0 then
+					skinId = lua_character.configDict[heroMo.heroId].skinId
 				end
 
-				table.insert(var_2_0, {
-					skinId = var_2_3.skin,
-					nowHp = var_2_4.life / 1000,
-					heroId = var_2_3.heroId
+				table.insert(allHeros, {
+					skinId = heroMo.skin,
+					nowHp = nowHp.life / 1000,
+					heroId = heroMo.heroId
 				})
 			end
 		end
 	end
 
-	gohelper.CreateObjList(arg_2_0, arg_2_0._onHeroItemCreate, var_2_0, arg_2_0._heroItemParent, arg_2_0._heroItem)
+	gohelper.CreateObjList(self, self._onHeroItemCreate, allHeros, self._heroItemParent, self._heroItem)
 end
 
-function var_0_0._onHeroItemCreate(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	local var_3_0 = gohelper.findChildSlider(arg_3_1, "#slider_hp")
-	local var_3_1 = gohelper.findChildSingleImage(arg_3_1, "hero/#simage_rolehead")
-	local var_3_2 = gohelper.findChild(arg_3_1, "#dead")
+function FightSuccessCachotHeroView:_onHeroItemCreate(obj, data, index)
+	local slider = gohelper.findChildSlider(obj, "#slider_hp")
+	local icon = gohelper.findChildSingleImage(obj, "hero/#simage_rolehead")
+	local dead = gohelper.findChild(obj, "#dead")
 
-	var_3_0:SetValue(arg_3_2.nowHp)
-	gohelper.setActive(var_3_2, arg_3_2.nowHp <= 0)
+	slider:SetValue(data.nowHp)
+	gohelper.setActive(dead, data.nowHp <= 0)
 
-	local var_3_3 = lua_skin.configDict[arg_3_2.skinId]
+	local skinCo = lua_skin.configDict[data.skinId]
 
-	var_3_1:LoadImage(ResUrl.getHeadIconSmall(var_3_3.headIcon))
-	ZProj.UGUIHelper.SetGrayscale(var_3_1.gameObject, arg_3_2.nowHp <= 0)
+	icon:LoadImage(ResUrl.getHeadIconSmall(skinCo.headIcon))
+	ZProj.UGUIHelper.SetGrayscale(icon.gameObject, data.nowHp <= 0)
 end
 
-function var_0_0.onClose(arg_4_0)
+function FightSuccessCachotHeroView:onClose()
 	return
 end
 
-return var_0_0
+return FightSuccessCachotHeroView

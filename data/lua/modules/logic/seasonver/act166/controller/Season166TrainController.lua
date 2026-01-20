@@ -1,35 +1,37 @@
-﻿module("modules.logic.seasonver.act166.controller.Season166TrainController", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act166/controller/Season166TrainController.lua
 
-local var_0_0 = class("Season166TrainController", BaseController)
+module("modules.logic.seasonver.act166.controller.Season166TrainController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local Season166TrainController = class("Season166TrainController", BaseController)
+
+function Season166TrainController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function Season166TrainController:reInit()
 	return
 end
 
-function var_0_0.enterTrainFightScene(arg_3_0)
-	local var_3_0 = Season166Model.instance:getCurSeasonId()
-	local var_3_1 = Season166TrainModel.instance.curEpisodeId
+function Season166TrainController:enterTrainFightScene()
+	local actId = Season166Model.instance:getCurSeasonId()
+	local episodeId = Season166TrainModel.instance.curEpisodeId
 
-	if var_3_1 then
-		arg_3_0:startBattle(var_3_0, var_3_1)
+	if episodeId then
+		self:startBattle(actId, episodeId)
 	end
 end
 
-function var_0_0.startBattle(arg_4_0, arg_4_1, arg_4_2)
-	logNormal(string.format("startBattle with actId = %s, episodeId = %s", arg_4_1, arg_4_2))
+function Season166TrainController:startBattle(actId, episodeId)
+	logNormal(string.format("startBattle with actId = %s, episodeId = %s", actId, episodeId))
 
-	local var_4_0 = DungeonConfig.instance:getEpisodeCO(arg_4_2)
-	local var_4_1 = Season166TrainModel.instance.curTrainId
-	local var_4_2 = Season166Model.getPrefsTalent()
+	local episodeCo = DungeonConfig.instance:getEpisodeCO(episodeId)
+	local trainId = Season166TrainModel.instance.curTrainId
+	local talentId = Season166Model.getPrefsTalent()
 
-	Season166Model.instance:setBattleContext(arg_4_1, arg_4_2, nil, var_4_2, var_4_1)
-	DungeonFightController.instance:enterSeasonFight(var_4_0.chapterId, arg_4_2)
+	Season166Model.instance:setBattleContext(actId, episodeId, nil, talentId, trainId)
+	DungeonFightController.instance:enterSeasonFight(episodeCo.chapterId, episodeId)
 end
 
-var_0_0.instance = var_0_0.New()
+Season166TrainController.instance = Season166TrainController.New()
 
-return var_0_0
+return Season166TrainController

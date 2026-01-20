@@ -1,251 +1,253 @@
-﻿module("modules.logic.versionactivity1_2.trade.view.ActivityQuoteTradeItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/trade/view/ActivityQuoteTradeItem.lua
 
-local var_0_0 = class("ActivityQuoteTradeItem", UserDataDispose)
+module("modules.logic.versionactivity1_2.trade.view.ActivityQuoteTradeItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+local ActivityQuoteTradeItem = class("ActivityQuoteTradeItem", UserDataDispose)
 
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0._godemanditem = gohelper.findChild(arg_1_1, "#go_demanditem")
-	arg_1_0.content = gohelper.findChild(arg_1_1, "mask/content")
-	arg_1_0.scroll = gohelper.findChild(arg_1_0.content, "#scroll_trade"):GetComponent(typeof(ZProj.LimitedScrollRect))
-	arg_1_0.scrollMask = gohelper.findChild(arg_1_0.content, "#scroll_trade/Viewport"):GetComponent(typeof(UnityEngine.UI.RectMask2D))
-	arg_1_0.scrollcontent = gohelper.findChild(arg_1_0.content, "#scroll_trade/Viewport/Content")
-	arg_1_0.txtTips = gohelper.findChildTextMesh(arg_1_0.content, "#go_tips/#txt_tips")
-	arg_1_0._simagetipsbg = gohelper.findChildSingleImage(arg_1_0.content, "#go_tips/#simage_tipsbg")
+function ActivityQuoteTradeItem:ctor(go)
+	self:__onInit()
 
-	arg_1_0._simagetipsbg:LoadImage(ResUrl.getVersionTradeBargainBg("img_datiao9"))
+	self.viewGO = go
+	self._godemanditem = gohelper.findChild(go, "#go_demanditem")
+	self.content = gohelper.findChild(go, "mask/content")
+	self.scroll = gohelper.findChild(self.content, "#scroll_trade"):GetComponent(typeof(ZProj.LimitedScrollRect))
+	self.scrollMask = gohelper.findChild(self.content, "#scroll_trade/Viewport"):GetComponent(typeof(UnityEngine.UI.RectMask2D))
+	self.scrollcontent = gohelper.findChild(self.content, "#scroll_trade/Viewport/Content")
+	self.txtTips = gohelper.findChildTextMesh(self.content, "#go_tips/#txt_tips")
+	self._simagetipsbg = gohelper.findChildSingleImage(self.content, "#go_tips/#simage_tipsbg")
 
-	arg_1_0.goClose = gohelper.findChild(arg_1_1, "#go_close")
-	arg_1_0._simageclosebg = gohelper.findChildSingleImage(arg_1_1, "#go_close/#simage_closebg")
+	self._simagetipsbg:LoadImage(ResUrl.getVersionTradeBargainBg("img_datiao9"))
 
-	arg_1_0._simageclosebg:LoadImage(ResUrl.getVersionTradeBargainBg("img_dayang"))
+	self.goClose = gohelper.findChild(go, "#go_close")
+	self._simageclosebg = gohelper.findChildSingleImage(go, "#go_close/#simage_closebg")
 
-	arg_1_0._gobargain = gohelper.findChild(arg_1_1, "mask/content/#scroll_trade/Viewport/Content/#go_bargain")
-	arg_1_0._animbargain = arg_1_0._gobargain:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._goquoteitem = gohelper.findChild(arg_1_0._gobargain, "#scroll_info/Viewport/Content/#go_quoteitem")
-	arg_1_0._items = {}
+	self._simageclosebg:LoadImage(ResUrl.getVersionTradeBargainBg("img_dayang"))
 
-	arg_1_0:addEvents()
+	self._gobargain = gohelper.findChild(go, "mask/content/#scroll_trade/Viewport/Content/#go_bargain")
+	self._animbargain = self._gobargain:GetComponent(typeof(UnityEngine.Animator))
+	self._goquoteitem = gohelper.findChild(self._gobargain, "#scroll_info/Viewport/Content/#go_quoteitem")
+	self._items = {}
+
+	self:addEvents()
 end
 
-function var_0_0.addEvents(arg_2_0)
+function ActivityQuoteTradeItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function ActivityQuoteTradeItem:removeEvents()
 	return
 end
 
-function var_0_0.refresh(arg_4_0, arg_4_1)
-	arg_4_0.actId = arg_4_1
+function ActivityQuoteTradeItem:refresh(actId)
+	self.actId = actId
 
-	arg_4_0:refreshTrade(arg_4_0.refreshQuote, arg_4_0)
+	self:refreshTrade(self.refreshQuote, self)
 end
 
-function var_0_0.refreshTrade(arg_5_0, arg_5_1)
-	arg_5_0.refreshCallback = arg_5_1
+function ActivityQuoteTradeItem:refreshTrade(callback)
+	self.refreshCallback = callback
 
-	TaskDispatcher.cancelTask(arg_5_0.onAllAnimFinish, arg_5_0)
+	TaskDispatcher.cancelTask(self.onAllAnimFinish, self)
 
-	local var_5_0, var_5_1 = Activity117Model.instance:getFinishOrderCount(arg_5_0.actId)
+	local finishCount, limitCount = Activity117Model.instance:getFinishOrderCount(self.actId)
 
-	arg_5_0.allFinish = var_5_1 <= var_5_0
+	self.allFinish = limitCount <= finishCount
 
-	local var_5_2 = {
-		var_5_0,
-		var_5_1
+	local tag = {
+		finishCount,
+		limitCount
 	}
 
-	if arg_5_0.allFinish then
-		arg_5_0.txtTips.text = GameUtil.getSubPlaceholderLuaLang(luaLang("v1a2_tradequoteview_tips2"), var_5_2)
+	if self.allFinish then
+		self.txtTips.text = GameUtil.getSubPlaceholderLuaLang(luaLang("v1a2_tradequoteview_tips2"), tag)
 	else
-		arg_5_0.txtTips.text = GameUtil.getSubPlaceholderLuaLang(luaLang("v1a2_tradequoteview_tips1"), var_5_2)
+		self.txtTips.text = GameUtil.getSubPlaceholderLuaLang(luaLang("v1a2_tradequoteview_tips1"), tag)
 	end
 
-	gohelper.setActive(arg_5_0.goClose, arg_5_0.allFinish or false)
+	gohelper.setActive(self.goClose, self.allFinish or false)
 
-	local var_5_3 = Activity117Model.instance:getOrderList(arg_5_0.actId)
+	local dataList = Activity117Model.instance:getOrderList(self.actId)
 
-	arg_5_0.dataList = var_5_3
-	arg_5_0.index = 0
+	self.dataList = dataList
+	self.index = 0
 
-	local var_5_4 = math.max(#var_5_3, #arg_5_0._items)
+	local refreshCount = math.max(#dataList, #self._items)
 
-	TaskDispatcher.cancelTask(arg_5_0.refreshIndex, arg_5_0)
+	TaskDispatcher.cancelTask(self.refreshIndex, self)
 
-	if #arg_5_0._items >= #var_5_3 then
-		for iter_5_0 = 1, var_5_4 do
-			arg_5_0:refreshIndex(iter_5_0)
+	if #self._items >= #dataList then
+		for i = 1, refreshCount do
+			self:refreshIndex(i)
 		end
 	else
-		TaskDispatcher.runRepeat(arg_5_0.refreshIndex, arg_5_0, 0.02, var_5_4)
+		TaskDispatcher.runRepeat(self.refreshIndex, self, 0.02, refreshCount)
 	end
 end
 
-function var_0_0.refreshIndex(arg_6_0, arg_6_1)
-	arg_6_1 = arg_6_1 or arg_6_0.index + 1
-	arg_6_0.index = arg_6_1
+function ActivityQuoteTradeItem:refreshIndex(index)
+	index = index or self.index + 1
+	self.index = index
 
-	local var_6_0 = arg_6_0._items[arg_6_1]
+	local item = self._items[index]
 
-	if not var_6_0 then
-		local var_6_1 = gohelper.clone(arg_6_0._godemanditem, arg_6_0.scrollcontent, "trade_item" .. tostring(arg_6_1))
+	if not item then
+		local go = gohelper.clone(self._godemanditem, self.scrollcontent, "trade_item" .. tostring(index))
 
-		var_6_0 = ActivityQuoteDemandItem.New(var_6_1)
-		arg_6_0._items[arg_6_1] = var_6_0
+		item = ActivityQuoteDemandItem.New(go)
+		self._items[index] = item
 	end
 
-	local var_6_2 = arg_6_0.dataList[arg_6_1]
+	local data = self.dataList[index]
 
-	var_6_0:setData(var_6_2, arg_6_0.allFinish, arg_6_1, #arg_6_0.dataList, arg_6_0._onAllAnimFinish, arg_6_0)
+	item:setData(data, self.allFinish, index, #self.dataList, self._onAllAnimFinish, self)
 
-	if var_6_2 and var_6_2.id == arg_6_0:getSelectOrderId() then
-		arg_6_0.selectIndex = arg_6_1
+	if data and data.id == self:getSelectOrderId() then
+		self.selectIndex = index
 
-		arg_6_0._gobargain.transform:SetSiblingIndex(arg_6_1)
+		self._gobargain.transform:SetSiblingIndex(index)
 	end
 
-	if arg_6_0.index == #arg_6_0.dataList and arg_6_0.refreshCallback then
-		arg_6_0.refreshCallback(arg_6_0)
+	if self.index == #self.dataList and self.refreshCallback then
+		self.refreshCallback(self)
 	end
 end
 
-function var_0_0.onAllAnimFinish(arg_7_0)
-	if arg_7_0._items then
-		for iter_7_0, iter_7_1 in pairs(arg_7_0._items) do
-			iter_7_1:onAllAnimFinish()
+function ActivityQuoteTradeItem:onAllAnimFinish()
+	if self._items then
+		for k, v in pairs(self._items) do
+			v:onAllAnimFinish()
 		end
 	end
 end
 
-function var_0_0._onAllAnimFinish(arg_8_0)
-	TaskDispatcher.runDelay(arg_8_0.onAllAnimFinish, arg_8_0, 1)
+function ActivityQuoteTradeItem:_onAllAnimFinish()
+	TaskDispatcher.runDelay(self.onAllAnimFinish, self, 1)
 end
 
-function var_0_0.refreshQuote(arg_9_0)
-	TaskDispatcher.cancelTask(arg_9_0._animCallback, arg_9_0)
+function ActivityQuoteTradeItem:refreshQuote()
+	TaskDispatcher.cancelTask(self._animCallback, self)
 
-	local var_9_0 = not arg_9_0:noSelectOrder()
-	local var_9_1 = false
+	local isSelect = not self:noSelectOrder()
+	local reset = false
 
-	if arg_9_0.inSelect ~= var_9_0 then
-		var_9_1 = true
-		arg_9_0.inSelect = var_9_0
+	if self.inSelect ~= isSelect then
+		reset = true
+		self.inSelect = isSelect
 
-		if var_9_0 then
-			arg_9_0:playShowQuoteAnim()
+		if isSelect then
+			self:playShowQuoteAnim()
 		else
-			arg_9_0:playHideQuoteAnim()
+			self:playHideQuoteAnim()
 		end
 	end
 
-	if not var_9_0 then
+	if not isSelect then
 		return
 	end
 
-	arg_9_0.scroll.enabled = false
-	arg_9_0.scrollMask.enabled = false
+	self.scroll.enabled = false
+	self.scrollMask.enabled = false
 
-	gohelper.setActive(arg_9_0._gobargain, true)
+	gohelper.setActive(self._gobargain, true)
 
-	local var_9_2 = Activity117Model.instance:getOrderDataById(arg_9_0.actId, arg_9_0:getSelectOrderId())
+	local mo = Activity117Model.instance:getOrderDataById(self.actId, self:getSelectOrderId())
 
-	if not arg_9_0.quoteItem then
-		arg_9_0.quoteItem = ActivityQuoteItem.New(arg_9_0._goquoteitem)
+	if not self.quoteItem then
+		self.quoteItem = ActivityQuoteItem.New(self._goquoteitem)
 	end
 
-	if var_9_1 then
-		arg_9_0.quoteItem:resetData()
+	if reset then
+		self.quoteItem:resetData()
 	end
 
-	arg_9_0.quoteItem:setData(var_9_2)
+	self.quoteItem:setData(mo)
 end
 
-function var_0_0.playShowQuoteAnim(arg_10_0)
-	if arg_10_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_10_0._tweenId)
+function ActivityQuoteTradeItem:playShowQuoteAnim()
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_10_0._tweenId = nil
+		self._tweenId = nil
 	end
 
-	local var_10_0 = arg_10_0._items[arg_10_0.selectIndex]
-	local var_10_1 = recthelper.getAnchorY(arg_10_0.scrollcontent.transform)
-	local var_10_2 = -recthelper.getAnchorY(var_10_0.go.transform) + 215 - var_10_1
+	local item = self._items[self.selectIndex]
+	local contentPosY = recthelper.getAnchorY(self.scrollcontent.transform)
+	local posY = -recthelper.getAnchorY(item.go.transform) + 215 - contentPosY
 
-	arg_10_0._tweenId = ZProj.TweenHelper.DOAnchorPosY(arg_10_0.content.transform, var_10_2, 0.3)
+	self._tweenId = ZProj.TweenHelper.DOAnchorPosY(self.content.transform, posY, 0.3)
 
-	arg_10_0._animbargain:Play(UIAnimationName.Open)
+	self._animbargain:Play(UIAnimationName.Open)
 end
 
-function var_0_0.playHideQuoteAnim(arg_11_0)
-	if arg_11_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_11_0._tweenId)
+function ActivityQuoteTradeItem:playHideQuoteAnim()
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_11_0._tweenId = nil
+		self._tweenId = nil
 	end
 
-	arg_11_0._tweenId = ZProj.TweenHelper.DOAnchorPosY(arg_11_0.content.transform, 0, 0.3)
+	self._tweenId = ZProj.TweenHelper.DOAnchorPosY(self.content.transform, 0, 0.3)
 
-	arg_11_0._animbargain:Play(UIAnimationName.Close)
-	TaskDispatcher.runDelay(arg_11_0._animCallback, arg_11_0, 0.6)
+	self._animbargain:Play(UIAnimationName.Close)
+	TaskDispatcher.runDelay(self._animCallback, self, 0.6)
 
-	arg_11_0.scroll.enabled = true
-	arg_11_0.scrollMask.enabled = true
+	self.scroll.enabled = true
+	self.scrollMask.enabled = true
 end
 
-function var_0_0._animCallback(arg_12_0)
-	if not arg_12_0.inSelect then
-		gohelper.setActive(arg_12_0._gobargain, false)
-	end
-end
-
-function var_0_0.getSelectOrderId(arg_13_0)
-	return Activity117Model.instance:getSelectOrder(arg_13_0.actId)
-end
-
-function var_0_0.noSelectOrder(arg_14_0)
-	return not arg_14_0:getSelectOrderId()
-end
-
-function var_0_0.onNegotiate(arg_15_0)
-	arg_15_0:refreshTrade()
-
-	local var_15_0 = Activity117Model.instance:getOrderDataById(arg_15_0.actId, arg_15_0:getSelectOrderId())
-
-	if arg_15_0.quoteItem then
-		arg_15_0.quoteItem:onNegotiate(var_15_0)
+function ActivityQuoteTradeItem:_animCallback()
+	if not self.inSelect then
+		gohelper.setActive(self._gobargain, false)
 	end
 end
 
-function var_0_0.destory(arg_16_0)
-	TaskDispatcher.cancelTask(arg_16_0.refreshIndex, arg_16_0)
-	TaskDispatcher.cancelTask(arg_16_0.onAllAnimFinish, arg_16_0)
-	TaskDispatcher.cancelTask(arg_16_0._animCallback, arg_16_0)
-
-	if arg_16_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_16_0._tweenId)
-
-		arg_16_0._tweenId = nil
-	end
-
-	arg_16_0._simagetipsbg:UnLoadImage()
-	arg_16_0._simageclosebg:UnLoadImage()
-
-	for iter_16_0, iter_16_1 in pairs(arg_16_0._items) do
-		iter_16_1:destory()
-	end
-
-	arg_16_0._items = nil
-
-	if arg_16_0.quoteItem then
-		arg_16_0.quoteItem:destory()
-
-		arg_16_0.quoteItem = nil
-	end
-
-	arg_16_0:removeEvents()
-	arg_16_0:__onDispose()
+function ActivityQuoteTradeItem:getSelectOrderId()
+	return Activity117Model.instance:getSelectOrder(self.actId)
 end
 
-return var_0_0
+function ActivityQuoteTradeItem:noSelectOrder()
+	return not self:getSelectOrderId()
+end
+
+function ActivityQuoteTradeItem:onNegotiate()
+	self:refreshTrade()
+
+	local mo = Activity117Model.instance:getOrderDataById(self.actId, self:getSelectOrderId())
+
+	if self.quoteItem then
+		self.quoteItem:onNegotiate(mo)
+	end
+end
+
+function ActivityQuoteTradeItem:destory()
+	TaskDispatcher.cancelTask(self.refreshIndex, self)
+	TaskDispatcher.cancelTask(self.onAllAnimFinish, self)
+	TaskDispatcher.cancelTask(self._animCallback, self)
+
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
+
+		self._tweenId = nil
+	end
+
+	self._simagetipsbg:UnLoadImage()
+	self._simageclosebg:UnLoadImage()
+
+	for k, v in pairs(self._items) do
+		v:destory()
+	end
+
+	self._items = nil
+
+	if self.quoteItem then
+		self.quoteItem:destory()
+
+		self.quoteItem = nil
+	end
+
+	self:removeEvents()
+	self:__onDispose()
+end
+
+return ActivityQuoteTradeItem

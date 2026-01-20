@@ -1,30 +1,32 @@
-﻿module("modules.logic.sp01.assassin2.story.littlegame.AssassinDialogWork", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/story/littlegame/AssassinDialogWork.lua
 
-local var_0_0 = class("AssassinDialogWork", BaseWork)
+module("modules.logic.sp01.assassin2.story.littlegame.AssassinDialogWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	arg_1_0._dialogId = arg_1_1
-	arg_1_0._callback = arg_1_2
-	arg_1_0._callbackObj = arg_1_3
-	arg_1_0._callbackParams = arg_1_4
+local AssassinDialogWork = class("AssassinDialogWork", BaseWork)
+
+function AssassinDialogWork:ctor(dialogId, callback, callbackObj, callbackParams)
+	self._dialogId = dialogId
+	self._callback = callback
+	self._callbackObj = callbackObj
+	self._callbackParams = callbackParams
 end
 
-function var_0_0.onStart(arg_2_0)
-	if not arg_2_0._dialogId then
-		arg_2_0:onDone(false)
+function AssassinDialogWork:onStart()
+	if not self._dialogId then
+		self:onDone(false)
 
 		return
 	end
 
-	VersionActivity2_9DungeonController.instance:openAssassinStoryDialogView(arg_2_0._dialogId, arg_2_0._onDialogDone, arg_2_0)
+	VersionActivity2_9DungeonController.instance:openAssassinStoryDialogView(self._dialogId, self._onDialogDone, self)
 end
 
-function var_0_0._onDialogDone(arg_3_0)
-	if arg_3_0._callback then
-		arg_3_0._callback(arg_3_0._callbackObj, arg_3_0._callbackParams)
+function AssassinDialogWork:_onDialogDone()
+	if self._callback then
+		self._callback(self._callbackObj, self._callbackParams)
 	end
 
-	arg_3_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return AssassinDialogWork

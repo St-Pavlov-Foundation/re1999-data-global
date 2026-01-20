@@ -1,49 +1,53 @@
-﻿module("modules.logic.rouge.view.RougeTeamViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeTeamViewContainer.lua
 
-local var_0_0 = class("RougeTeamViewContainer", BaseViewContainer)
+module("modules.logic.rouge.view.RougeTeamViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = ListScrollParam.New()
+local RougeTeamViewContainer = class("RougeTeamViewContainer", BaseViewContainer)
 
-	var_1_0.scrollGOPath = "#go_rolecontainer/#scroll_view"
-	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_0.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_0.cellClass = RougeTeamHeroItem
-	var_1_0.scrollDir = ScrollEnum.ScrollDirV
-	var_1_0.lineCount = 6
-	var_1_0.cellWidth = 250
-	var_1_0.cellHeight = 555
-	var_1_0.cellSpaceH = 20
-	var_1_0.cellSpaceV = 56
-	var_1_0.startSpace = 50
+function RougeTeamViewContainer:buildViews()
+	local scrollParam = ListScrollParam.New()
 
-	local var_1_1 = {}
+	scrollParam.scrollGOPath = "#go_rolecontainer/#scroll_view"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = RougeTeamHeroItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 6
+	scrollParam.cellWidth = 250
+	scrollParam.cellHeight = 555
+	scrollParam.cellSpaceH = 20
+	scrollParam.cellSpaceV = 56
+	scrollParam.startSpace = 50
 
-	for iter_1_0 = 1, 21 do
-		var_1_1[iter_1_0] = math.ceil((iter_1_0 - 1) % 6) * 0.03
+	local animationDelayTimes = {}
+
+	for i = 1, 21 do
+		local delayTime = math.ceil((i - 1) % 6) * 0.03
+
+		animationDelayTimes[i] = delayTime
 	end
 
-	local var_1_2 = {}
+	local views = {}
 
-	table.insert(var_1_2, RougeTeamView.New())
-	table.insert(var_1_2, LuaListScrollViewWithAnimator.New(RougeTeamListModel.instance, var_1_0, var_1_1))
-	table.insert(var_1_2, TabViewGroup.New(1, "#go_lefttop"))
+	table.insert(views, RougeTeamView.New())
+	table.insert(views, LuaListScrollViewWithAnimator.New(RougeTeamListModel.instance, scrollParam, animationDelayTimes))
+	table.insert(views, TabViewGroup.New(1, "#go_lefttop"))
 
-	return var_1_2
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function RougeTeamViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-return var_0_0
+return RougeTeamViewContainer

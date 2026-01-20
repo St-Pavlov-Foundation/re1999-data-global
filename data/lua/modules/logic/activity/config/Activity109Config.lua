@@ -1,14 +1,16 @@
-﻿module("modules.logic.activity.config.Activity109Config", package.seeall)
+﻿-- chunkname: @modules/logic/activity/config/Activity109Config.lua
 
-local var_0_0 = class("Activity109Config", BaseConfig)
+module("modules.logic.activity.config.Activity109Config", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._act109Objects = nil
-	arg_1_0._act109Map = nil
-	arg_1_0._act109Episode = nil
+local Activity109Config = class("Activity109Config", BaseConfig)
+
+function Activity109Config:ctor()
+	self._act109Objects = nil
+	self._act109Map = nil
+	self._act109Episode = nil
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function Activity109Config:reqConfigNames()
 	return {
 		"activity109_map",
 		"activity109_interact_object",
@@ -17,86 +19,86 @@ function var_0_0.reqConfigNames(arg_2_0)
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity109_interact_object" then
-		arg_3_0._act109Objects = arg_3_2
-	elseif arg_3_1 == "activity109_map" then
-		arg_3_0._act109Map = arg_3_2
-	elseif arg_3_1 == "activity109_episode" then
-		arg_3_0._act109Episode = arg_3_2
+function Activity109Config:onConfigLoaded(configName, configTable)
+	if configName == "activity109_interact_object" then
+		self._act109Objects = configTable
+	elseif configName == "activity109_map" then
+		self._act109Map = configTable
+	elseif configName == "activity109_episode" then
+		self._act109Episode = configTable
 	end
 end
 
-function var_0_0.getInteractObjectCo(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_0._act109Objects.configDict[arg_4_1] then
-		return arg_4_0._act109Objects.configDict[arg_4_1][arg_4_2]
+function Activity109Config:getInteractObjectCo(actId, id)
+	if self._act109Objects.configDict[actId] then
+		return self._act109Objects.configDict[actId][id]
 	end
 
 	return nil
 end
 
-function var_0_0.getMapCo(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_0._act109Map.configDict[arg_5_1] then
-		return arg_5_0._act109Map.configDict[arg_5_1][arg_5_2]
+function Activity109Config:getMapCo(actId, id)
+	if self._act109Map.configDict[actId] then
+		return self._act109Map.configDict[actId][id]
 	end
 
 	return nil
 end
 
-function var_0_0.getEpisodeCo(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_0._act109Episode.configDict[arg_6_1] then
-		return arg_6_0._act109Episode.configDict[arg_6_1][arg_6_2]
+function Activity109Config:getEpisodeCo(actId, id)
+	if self._act109Episode.configDict[actId] then
+		return self._act109Episode.configDict[actId][id]
 	end
 
 	return nil
 end
 
-function var_0_0.getEpisodeList(arg_7_0, arg_7_1)
-	if arg_7_0._episode_list then
-		return arg_7_0._episode_list, arg_7_0._chapter_id_list
+function Activity109Config:getEpisodeList(act_id)
+	if self._episode_list then
+		return self._episode_list, self._chapter_id_list
 	end
 
-	arg_7_0._episode_list = {}
-	arg_7_0._chapter_id_list = {}
+	self._episode_list = {}
+	self._chapter_id_list = {}
 
-	for iter_7_0, iter_7_1 in pairs(lua_activity109_episode.configDict[arg_7_1]) do
-		table.insert(arg_7_0._episode_list, iter_7_1)
+	for k, v in pairs(lua_activity109_episode.configDict[act_id]) do
+		table.insert(self._episode_list, v)
 
-		if not tabletool.indexOf(arg_7_0._chapter_id_list, iter_7_1.chapterId) and iter_7_1.chapterId then
-			table.insert(arg_7_0._chapter_id_list, iter_7_1.chapterId)
+		if not tabletool.indexOf(self._chapter_id_list, v.chapterId) and v.chapterId then
+			table.insert(self._chapter_id_list, v.chapterId)
 		end
 	end
 
-	table.sort(arg_7_0._episode_list, var_0_0.sortEpisode)
-	table.sort(arg_7_0._chapter_id_list, var_0_0.sortChapter)
+	table.sort(self._episode_list, Activity109Config.sortEpisode)
+	table.sort(self._chapter_id_list, Activity109Config.sortChapter)
 
-	return arg_7_0._episode_list, arg_7_0._chapter_id_list
+	return self._episode_list, self._chapter_id_list
 end
 
-function var_0_0.sortEpisode(arg_8_0, arg_8_1)
-	return arg_8_0.id < arg_8_1.id
+function Activity109Config.sortEpisode(item1, item2)
+	return item1.id < item2.id
 end
 
-function var_0_0.sortChapter(arg_9_0, arg_9_1)
-	return arg_9_0 < arg_9_1
+function Activity109Config.sortChapter(item1, item2)
+	return item1 < item2
 end
 
-function var_0_0.getTaskList(arg_10_0)
-	if arg_10_0._task_list then
-		return arg_10_0._task_list
+function Activity109Config:getTaskList()
+	if self._task_list then
+		return self._task_list
 	end
 
-	arg_10_0._task_list = {}
+	self._task_list = {}
 
-	for iter_10_0, iter_10_1 in pairs(lua_activity109_task.configDict) do
-		if Activity109Model.instance:getCurActivityID() == iter_10_1.activityId then
-			table.insert(arg_10_0._task_list, iter_10_1)
+	for k, v in pairs(lua_activity109_task.configDict) do
+		if Activity109Model.instance:getCurActivityID() == v.activityId then
+			table.insert(self._task_list, v)
 		end
 	end
 
-	return arg_10_0._task_list
+	return self._task_list
 end
 
-var_0_0.instance = var_0_0.New()
+Activity109Config.instance = Activity109Config.New()
 
-return var_0_0
+return Activity109Config

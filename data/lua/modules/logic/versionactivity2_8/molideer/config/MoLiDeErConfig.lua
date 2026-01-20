@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity2_8.molideer.config.MoLiDeErConfig", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/molideer/config/MoLiDeErConfig.lua
 
-local var_0_0 = class("MoLiDeErConfig", BaseConfig)
+module("modules.logic.versionactivity2_8.molideer.config.MoLiDeErConfig", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local MoLiDeErConfig = class("MoLiDeErConfig", BaseConfig)
+
+function MoLiDeErConfig:reqConfigNames()
 	return {
 		"activity194_const",
 		"activity194_episode",
@@ -19,378 +21,378 @@ function var_0_0.reqConfigNames(arg_1_0)
 	}
 end
 
-function var_0_0.onInit(arg_2_0)
-	arg_2_0._taskDict = {}
-	arg_2_0._eventGroupDic = {}
-	arg_2_0._eventCostDic = {}
-	arg_2_0._optionResultCostDic = {}
-	arg_2_0._optionConditionDic = {}
-	arg_2_0._optionCostDic = {}
+function MoLiDeErConfig:onInit()
+	self._taskDict = {}
+	self._eventGroupDic = {}
+	self._eventCostDic = {}
+	self._optionResultCostDic = {}
+	self._optionConditionDic = {}
+	self._optionCostDic = {}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity194_const" then
-		arg_3_0._constConfig = arg_3_2
-	elseif arg_3_1 == "activity194_episode" then
-		arg_3_0._episodeConfig = arg_3_2
-	elseif arg_3_1 == "activity194_game" then
-		arg_3_0._gameConfig = arg_3_2
-	elseif arg_3_1 == "activity194_event" then
-		arg_3_0._eventConfig = arg_3_2
+function MoLiDeErConfig:onConfigLoaded(configName, configTable)
+	if configName == "activity194_const" then
+		self._constConfig = configTable
+	elseif configName == "activity194_episode" then
+		self._episodeConfig = configTable
+	elseif configName == "activity194_game" then
+		self._gameConfig = configTable
+	elseif configName == "activity194_event" then
+		self._eventConfig = configTable
 
-		arg_3_0:_initEventConfig()
-	elseif arg_3_1 == "activity194_option" then
-		arg_3_0._optionConfig = arg_3_2
+		self:_initEventConfig()
+	elseif configName == "activity194_option" then
+		self._optionConfig = configTable
 
-		arg_3_0:_initOptionConfig()
-	elseif arg_3_1 == "activity194_option_result" then
-		arg_3_0._optionResultConfig = arg_3_2
+		self:_initOptionConfig()
+	elseif configName == "activity194_option_result" then
+		self._optionResultConfig = configTable
 
-		arg_3_0:_initOptionResultConfig()
-	elseif arg_3_1 == "activity194_item" then
-		arg_3_0._itemConfig = arg_3_2
-	elseif arg_3_1 == "activity194_team" then
-		arg_3_0._teamConfig = arg_3_2
-	elseif arg_3_1 == "activity194_buff" then
-		arg_3_0._buffConfig = arg_3_2
-	elseif arg_3_1 == "activity194_task" then
-		arg_3_0._taskConfig = arg_3_2
-	elseif arg_3_1 == "activity194_progress" then
-		arg_3_0._progressConfig = arg_3_2
-	elseif arg_3_1 == "activity194_progress_desc" then
-		arg_3_0._progressDescConfig = arg_3_2
+		self:_initOptionResultConfig()
+	elseif configName == "activity194_item" then
+		self._itemConfig = configTable
+	elseif configName == "activity194_team" then
+		self._teamConfig = configTable
+	elseif configName == "activity194_buff" then
+		self._buffConfig = configTable
+	elseif configName == "activity194_task" then
+		self._taskConfig = configTable
+	elseif configName == "activity194_progress" then
+		self._progressConfig = configTable
+	elseif configName == "activity194_progress_desc" then
+		self._progressDescConfig = configTable
 
-		arg_3_0:_initProgressDescConfig()
+		self:_initProgressDescConfig()
 	end
 end
 
-function var_0_0.getTaskByActId(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0._taskDict[arg_4_1]
+function MoLiDeErConfig:getTaskByActId(activityId)
+	local list = self._taskDict[activityId]
 
-	if not var_4_0 then
-		var_4_0 = {}
+	if not list then
+		list = {}
 
-		for iter_4_0, iter_4_1 in ipairs(arg_4_0._taskConfig.configList) do
-			if iter_4_1.activityId == arg_4_1 then
-				table.insert(var_4_0, iter_4_1)
+		for _, co in ipairs(self._taskConfig.configList) do
+			if co.activityId == activityId then
+				table.insert(list, co)
 			end
 		end
 
-		arg_4_0._taskDict[arg_4_1] = var_4_0
+		self._taskDict[activityId] = list
 	end
 
-	return var_4_0
+	return list
 end
 
-function var_0_0.getEventConfigByGroupId(arg_5_0, arg_5_1)
-	if arg_5_0._eventGroupDic == nil or arg_5_0._eventGroupDic[arg_5_1] == nil then
-		logError("莫莉德尔角色活动 没有对应事件库数据 id:" .. arg_5_1)
+function MoLiDeErConfig:getEventConfigByGroupId(groupId)
+	if self._eventGroupDic == nil or self._eventGroupDic[groupId] == nil then
+		logError("莫莉德尔角色活动 没有对应事件库数据 id:" .. groupId)
 
 		return nil
 	end
 
-	return arg_5_0._eventGroupDic[arg_5_1]
+	return self._eventGroupDic[groupId]
 end
 
-function var_0_0.getEpisodeConfig(arg_6_0, arg_6_1, arg_6_2)
-	return arg_6_0:_get2PrimarykeyCo(arg_6_0._episodeConfig, arg_6_1, arg_6_2)
+function MoLiDeErConfig:getEpisodeConfig(actId, episodeId)
+	return self:_get2PrimarykeyCo(self._episodeConfig, actId, episodeId)
 end
 
-function var_0_0.getConstConfig(arg_7_0, arg_7_1, arg_7_2)
-	return arg_7_0:_get2PrimarykeyCo(arg_7_0._constConfig, arg_7_1, arg_7_2)
+function MoLiDeErConfig:getConstConfig(actId, episodeId)
+	return self:_get2PrimarykeyCo(self._constConfig, actId, episodeId)
 end
 
-function var_0_0.getGameConfig(arg_8_0, arg_8_1)
-	if arg_8_0._gameConfig == nil or arg_8_0._gameConfig.configDict == nil then
+function MoLiDeErConfig:getGameConfig(gameId)
+	if self._gameConfig == nil or self._gameConfig.configDict == nil then
 		return nil
 	end
 
-	return arg_8_0._gameConfig.configDict[arg_8_1]
+	return self._gameConfig.configDict[gameId]
 end
 
-function var_0_0.getOptionConfig(arg_9_0, arg_9_1)
-	if arg_9_0._optionConfig == nil or arg_9_0._optionConfig.configDict == nil then
+function MoLiDeErConfig:getOptionConfig(optionId)
+	if self._optionConfig == nil or self._optionConfig.configDict == nil then
 		return nil
 	end
 
-	return arg_9_0._optionConfig.configDict[arg_9_1]
+	return self._optionConfig.configDict[optionId]
 end
 
-function var_0_0.getOptionResultConfig(arg_10_0, arg_10_1)
-	if arg_10_0._optionResultConfig == nil or arg_10_0._optionResultConfig.configDict == nil then
+function MoLiDeErConfig:getOptionResultConfig(optionResultId)
+	if self._optionResultConfig == nil or self._optionResultConfig.configDict == nil then
 		return nil
 	end
 
-	return arg_10_0._optionResultConfig.configDict[arg_10_1]
+	return self._optionResultConfig.configDict[optionResultId]
 end
 
-function var_0_0.getItemConfig(arg_11_0, arg_11_1)
-	if arg_11_0._itemConfig == nil or arg_11_0._itemConfig.configDict == nil then
+function MoLiDeErConfig:getItemConfig(itemId)
+	if self._itemConfig == nil or self._itemConfig.configDict == nil then
 		return nil
 	end
 
-	return arg_11_0._itemConfig.configDict[arg_11_1]
+	return self._itemConfig.configDict[itemId]
 end
 
-function var_0_0.getTeamConfig(arg_12_0, arg_12_1)
-	if arg_12_0._teamConfig == nil or arg_12_0._teamConfig.configDict == nil then
+function MoLiDeErConfig:getTeamConfig(teamId)
+	if self._teamConfig == nil or self._teamConfig.configDict == nil then
 		return nil
 	end
 
-	return arg_12_0._teamConfig.configDict[arg_12_1]
+	return self._teamConfig.configDict[teamId]
 end
 
-function var_0_0.getEventConfig(arg_13_0, arg_13_1)
-	if arg_13_0._eventConfig == nil or arg_13_0._eventConfig.configDict == nil then
+function MoLiDeErConfig:getEventConfig(eventId)
+	if self._eventConfig == nil or self._eventConfig.configDict == nil then
 		return nil
 	end
 
-	return arg_13_0._eventConfig.configDict[arg_13_1]
+	return self._eventConfig.configDict[eventId]
 end
 
-function var_0_0.getBuffConfig(arg_14_0, arg_14_1)
-	if arg_14_0._buffConfig == nil or arg_14_0._buffConfig.configDict == nil then
+function MoLiDeErConfig:getBuffConfig(buffId)
+	if self._buffConfig == nil or self._buffConfig.configDict == nil then
 		return nil
 	end
 
-	return arg_14_0._buffConfig.configDict[arg_14_1]
+	return self._buffConfig.configDict[buffId]
 end
 
-function var_0_0.getItemConfig(arg_15_0, arg_15_1)
-	if arg_15_0._itemConfig == nil or arg_15_0._itemConfig.configDict == nil then
+function MoLiDeErConfig:getItemConfig(itemId)
+	if self._itemConfig == nil or self._itemConfig.configDict == nil then
 		return nil
 	end
 
-	return arg_15_0._itemConfig.configDict[arg_15_1]
+	return self._itemConfig.configDict[itemId]
 end
 
-function var_0_0.getProgressConfig(arg_16_0, arg_16_1)
-	if arg_16_0._progressConfig == nil or arg_16_0._progressConfig.configDict == nil then
+function MoLiDeErConfig:getProgressConfig(optionId)
+	if self._progressConfig == nil or self._progressConfig.configDict == nil then
 		return nil
 	end
 
-	return arg_16_0._progressConfig.configDict[arg_16_1]
+	return self._progressConfig.configDict[optionId]
 end
 
-function var_0_0.getProgressDescConfigById(arg_17_0, arg_17_1, arg_17_2)
-	if arg_17_0._progressDescDic == nil or arg_17_0._progressDescDic[arg_17_1] == nil then
+function MoLiDeErConfig:getProgressDescConfigById(gameId, targetId)
+	if self._progressDescDic == nil or self._progressDescDic[gameId] == nil then
 		return nil
 	end
 
-	return arg_17_0._progressDescDic[arg_17_1][arg_17_2]
+	return self._progressDescDic[gameId][targetId]
 end
 
-function var_0_0.getProgressDescConfig(arg_18_0, arg_18_1)
-	if arg_18_0._progressDescConfig == nil or arg_18_0._progressDescConfig.configDict == nil then
+function MoLiDeErConfig:getProgressDescConfig(condition)
+	if self._progressDescConfig == nil or self._progressDescConfig.configDict == nil then
 		return nil
 	end
 
-	return arg_18_0._progressDescConfig.configDict[arg_18_1]
+	return self._progressDescConfig.configDict[condition]
 end
 
-function var_0_0.getEpisodeDicById(arg_19_0, arg_19_1)
-	return arg_19_0:_get2PrimarykeyDic(arg_19_0._episodeConfig, arg_19_1)
+function MoLiDeErConfig:getEpisodeDicById(actId)
+	return self:_get2PrimarykeyDic(self._episodeConfig, actId)
 end
 
-function var_0_0.getEpisodeListById(arg_20_0, arg_20_1)
-	return arg_20_0:_findListByActId(arg_20_0._episodeConfig, arg_20_1)
+function MoLiDeErConfig:getEpisodeListById(actId)
+	return self:_findListByActId(self._episodeConfig, actId)
 end
 
-function var_0_0._findListByActId(arg_21_0, arg_21_1, arg_21_2)
-	if arg_21_1 and arg_21_1.configList then
-		local var_21_0 = {}
+function MoLiDeErConfig:_findListByActId(configTable, actId)
+	if configTable and configTable.configList then
+		local list = {}
 
-		for iter_21_0, iter_21_1 in ipairs(arg_21_1.configList) do
-			if iter_21_1.activityId == arg_21_2 then
-				table.insert(var_21_0, iter_21_1)
+		for _, co in ipairs(configTable.configList) do
+			if co.activityId == actId then
+				table.insert(list, co)
 			end
 		end
 
-		return var_21_0
+		return list
 	end
 
 	return nil
 end
 
-function var_0_0.getOptionResultCost(arg_22_0, arg_22_1, arg_22_2)
-	if arg_22_0._optionResultCostDic == nil or arg_22_0._optionResultCostDic[arg_22_1] == nil then
+function MoLiDeErConfig:getOptionResultCost(optionResultId, type)
+	if self._optionResultCostDic == nil or self._optionResultCostDic[optionResultId] == nil then
 		return 0
 	end
 
-	return arg_22_0._optionResultCostDic[arg_22_1][arg_22_2] or 0
+	return self._optionResultCostDic[optionResultId][type] or 0
 end
 
-function var_0_0.getOptionCost(arg_23_0, arg_23_1, arg_23_2)
-	if arg_23_0._optionCostDic == nil or arg_23_0._optionCostDic[arg_23_1] == nil then
+function MoLiDeErConfig:getOptionCost(optionId, type)
+	if self._optionCostDic == nil or self._optionCostDic[optionId] == nil then
 		return 0
 	end
 
-	return arg_23_0._optionCostDic[arg_23_1][arg_23_2] or 0
+	return self._optionCostDic[optionId][type] or 0
 end
 
-function var_0_0.getOptionCondition(arg_24_0, arg_24_1, arg_24_2)
-	if arg_24_0._optionConditionDic == nil or arg_24_0._optionConditionDic[arg_24_1] == nil then
+function MoLiDeErConfig:getOptionCondition(optionId, type)
+	if self._optionConditionDic == nil or self._optionConditionDic[optionId] == nil then
 		return nil
 	end
 
-	return arg_24_0._optionConditionDic[arg_24_1][arg_24_2]
+	return self._optionConditionDic[optionId][type]
 end
 
-function var_0_0._get2PrimarykeyCo(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
-	if arg_25_1 and arg_25_1.configDict then
-		local var_25_0 = arg_25_1.configDict[arg_25_2]
+function MoLiDeErConfig:_get2PrimarykeyCo(configTable, key1, key2)
+	if configTable and configTable.configDict then
+		local configDict = configTable.configDict[key1]
 
-		return var_25_0 and var_25_0[arg_25_3]
+		return configDict and configDict[key2]
 	end
 
 	return nil
 end
 
-function var_0_0._get2PrimarykeyDic(arg_26_0, arg_26_1, arg_26_2)
-	if arg_26_1 and arg_26_1.configDict then
-		local var_26_0 = arg_26_1.configDict[arg_26_2]
+function MoLiDeErConfig:_get2PrimarykeyDic(configTable, key1)
+	if configTable and configTable.configDict then
+		local configDict = configTable.configDict[key1]
 
-		return var_26_0 and var_26_0.configDict
+		return configDict and configDict.configDict
 	end
 
 	return nil
 end
 
-function var_0_0._initEventConfig(arg_27_0)
-	if arg_27_0._eventConfig then
-		for iter_27_0, iter_27_1 in ipairs(arg_27_0._eventConfig.configList) do
-			local var_27_0 = tonumber(iter_27_1.eventGroup)
-			local var_27_1
+function MoLiDeErConfig:_initEventConfig()
+	if self._eventConfig then
+		for _, config in ipairs(self._eventConfig.configList) do
+			local eventGroupId = tonumber(config.eventGroup)
+			local eventGroupDic
 
-			if arg_27_0._eventGroupDic[var_27_0] == nil then
-				var_27_1 = {}
-				arg_27_0._eventGroupDic[var_27_0] = var_27_1
+			if self._eventGroupDic[eventGroupId] == nil then
+				eventGroupDic = {}
+				self._eventGroupDic[eventGroupId] = eventGroupDic
 			else
-				var_27_1 = arg_27_0._eventGroupDic[var_27_0]
+				eventGroupDic = self._eventGroupDic[eventGroupId]
 			end
 
-			if var_27_1[iter_27_1.eventId] == nil then
-				var_27_1[iter_27_1.eventId] = iter_27_1
+			if eventGroupDic[config.eventId] == nil then
+				eventGroupDic[config.eventId] = config
 			else
-				logError("莫莉德尔角色活动 事件id重复" .. iter_27_1.eventId)
+				logError("莫莉德尔角色活动 事件id重复" .. config.eventId)
 			end
 		end
 	end
 end
 
-function var_0_0._initOptionResultConfig(arg_28_0)
-	if arg_28_0._optionResultConfig then
-		local var_28_0 = arg_28_0._optionResultCostDic
+function MoLiDeErConfig:_initOptionResultConfig()
+	if self._optionResultConfig then
+		local optionCostDic = self._optionResultCostDic
 
-		for iter_28_0, iter_28_1 in ipairs(arg_28_0._optionResultConfig.configList) do
-			local var_28_1 = string.split(iter_28_1.effect, "|")
+		for _, config in ipairs(self._optionResultConfig.configList) do
+			local costParam = string.split(config.effect, "|")
 
-			if var_28_0[iter_28_1.resultId] == nil then
-				local var_28_2 = {}
+			if optionCostDic[config.resultId] == nil then
+				local singleCostDic = {}
 
-				for iter_28_2, iter_28_3 in ipairs(var_28_1) do
-					local var_28_3 = string.splitToNumber(iter_28_3, "#")
-					local var_28_4 = var_28_3[1]
+				for _, singleParam in ipairs(costParam) do
+					local data = string.splitToNumber(singleParam, "#")
+					local type = data[1]
 
-					if var_28_4 == MoLiDeErEnum.OptionCostType.Execution then
-						local var_28_5 = var_28_3[2]
+					if type == MoLiDeErEnum.OptionCostType.Execution then
+						local num = data[2]
 
-						if var_28_2[var_28_4] == nil then
-							var_28_2[var_28_4] = -var_28_5
+						if singleCostDic[type] == nil then
+							singleCostDic[type] = -num
 						else
-							logError("莫莉德尔角色活动 选项效果id重复 id:" .. iter_28_1.resultId .. "typeId:" .. var_28_4)
+							logError("莫莉德尔角色活动 选项效果id重复 id:" .. config.resultId .. "typeId:" .. type)
 						end
 					end
 				end
 
-				var_28_0[iter_28_1.resultId] = var_28_2
+				optionCostDic[config.resultId] = singleCostDic
 			else
-				logError("莫莉德尔角色活动 选项结果id重复" .. iter_28_1.resultId)
+				logError("莫莉德尔角色活动 选项结果id重复" .. config.resultId)
 			end
 		end
 
-		arg_28_0._optionResultCostDic = var_28_0
+		self._optionResultCostDic = optionCostDic
 	end
 end
 
-function var_0_0._initOptionConfig(arg_29_0)
-	if arg_29_0._optionConfig then
-		local var_29_0 = arg_29_0._optionConditionDic
-		local var_29_1 = arg_29_0._optionCostDic
+function MoLiDeErConfig:_initOptionConfig()
+	if self._optionConfig then
+		local optionConditionDic = self._optionConditionDic
+		local optionCostDic = self._optionCostDic
 
-		for iter_29_0, iter_29_1 in ipairs(arg_29_0._optionConfig.configList) do
-			local var_29_2 = iter_29_1.optionId
-			local var_29_3 = string.split(iter_29_1.optionRestriction, "|")
+		for _, config in ipairs(self._optionConfig.configList) do
+			local optionId = config.optionId
+			local conditionParam = string.split(config.optionRestriction, "|")
 
-			if var_29_0[var_29_2] == nil then
-				local var_29_4 = {}
+			if optionConditionDic[optionId] == nil then
+				local singleConditionDic = {}
 
-				for iter_29_2, iter_29_3 in ipairs(var_29_3) do
-					local var_29_5 = string.splitToNumber(iter_29_3, "#")
-					local var_29_6 = {}
-					local var_29_7 = var_29_5[1]
+				for _, singleParam in ipairs(conditionParam) do
+					local data = string.splitToNumber(singleParam, "#")
+					local typeConditionDic = {}
+					local type = data[1]
 
-					if var_29_7 == MoLiDeErEnum.OptionConditionType.Team or var_29_7 == MoLiDeErEnum.OptionConditionType.Item and var_29_4[var_29_7] == nil then
-						var_29_4[var_29_7] = var_29_6
+					if type == MoLiDeErEnum.OptionConditionType.Team or type == MoLiDeErEnum.OptionConditionType.Item and singleConditionDic[type] == nil then
+						singleConditionDic[type] = typeConditionDic
 
-						for iter_29_4 = 2, #var_29_5 do
-							local var_29_8 = var_29_5[iter_29_4]
+						for i = 2, #data do
+							local id = data[i]
 
-							var_29_6[var_29_8] = var_29_8
+							typeConditionDic[id] = id
 						end
 					end
 				end
 
-				var_29_0[var_29_2] = var_29_4
+				optionConditionDic[optionId] = singleConditionDic
 			else
-				logError("莫莉德尔角色活动 选项id重复" .. var_29_2)
+				logError("莫莉德尔角色活动 选项id重复" .. optionId)
 			end
 
-			if iter_29_1.effect ~= nil and not string.nilorempty(iter_29_1.effect) and var_29_1[var_29_2] == nil then
-				local var_29_9 = string.split(iter_29_1.effect, "|")
+			if config.effect ~= nil and not string.nilorempty(config.effect) and optionCostDic[optionId] == nil then
+				local costParams = string.split(config.effect, "|")
 
-				for iter_29_5, iter_29_6 in ipairs(var_29_9) do
-					local var_29_10 = string.splitToNumber(iter_29_6, "#")
-					local var_29_11 = var_29_10[1]
+				for _, param in ipairs(costParams) do
+					local data = string.splitToNumber(param, "#")
+					local type = data[1]
 
-					if var_29_1[var_29_2] == nil then
-						var_29_1[var_29_2] = {}
+					if optionCostDic[optionId] == nil then
+						optionCostDic[optionId] = {}
 					end
 
-					var_29_1[var_29_2][var_29_11] = var_29_10[2]
+					optionCostDic[optionId][type] = data[2]
 				end
 			end
 		end
 	end
 end
 
-function var_0_0._initProgressDescConfig(arg_30_0)
-	local var_30_0 = {}
+function MoLiDeErConfig:_initProgressDescConfig()
+	local progressDescDic = {}
 
-	for iter_30_0, iter_30_1 in ipairs(arg_30_0._progressDescConfig.configList) do
-		local var_30_1 = string.splitToNumber(iter_30_1.condition, "#")
+	for _, config in ipairs(self._progressDescConfig.configList) do
+		local conditionData = string.splitToNumber(config.condition, "#")
 
-		if var_30_1[2] then
-			local var_30_2 = var_30_1[1]
-			local var_30_3 = var_30_1[2]
-			local var_30_4
+		if conditionData[2] then
+			local gameId = conditionData[1]
+			local targetId = conditionData[2]
+			local targetDic
 
-			if var_30_0[var_30_2] == nil then
-				var_30_4 = {}
-				var_30_0[var_30_2] = var_30_4
+			if progressDescDic[gameId] == nil then
+				targetDic = {}
+				progressDescDic[gameId] = targetDic
 			else
-				var_30_4 = var_30_0[var_30_2]
+				targetDic = progressDescDic[gameId]
 			end
 
-			var_30_4[var_30_3] = iter_30_1
+			targetDic[targetId] = config
 		else
-			logError("莫莉德尔 角色活动 玩法目标提示文本 主键数据缺失" .. iter_30_1.condition)
+			logError("莫莉德尔 角色活动 玩法目标提示文本 主键数据缺失" .. config.condition)
 		end
 	end
 
-	arg_30_0._progressDescDic = var_30_0
+	self._progressDescDic = progressDescDic
 end
 
-var_0_0.instance = var_0_0.New()
+MoLiDeErConfig.instance = MoLiDeErConfig.New()
 
-return var_0_0
+return MoLiDeErConfig

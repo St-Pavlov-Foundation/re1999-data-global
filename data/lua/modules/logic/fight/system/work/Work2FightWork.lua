@@ -1,35 +1,37 @@
-﻿module("modules.logic.fight.system.work.Work2FightWork", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/Work2FightWork.lua
 
-local var_0_0 = class("Work2FightWork", FightWorkItem)
+module("modules.logic.fight.system.work.Work2FightWork", package.seeall)
 
-function var_0_0.onLogicEnter(arg_1_0, arg_1_1, ...)
-	arg_1_0._class = arg_1_1
-	arg_1_0._param = {
+local Work2FightWork = class("Work2FightWork", FightWorkItem)
+
+function Work2FightWork:onLogicEnter(class, ...)
+	self._class = class
+	self._param = {
 		...
 	}
-	arg_1_0._paramCount = select("#", ...)
+	self._paramCount = select("#", ...)
 end
 
-function var_0_0.onStart(arg_2_0)
-	arg_2_0._work = arg_2_0._class.New(unpack(arg_2_0._param, 1, arg_2_0._paramCount))
+function Work2FightWork:onStart()
+	self._work = self._class.New(unpack(self._param, 1, self._paramCount))
 
-	arg_2_0._work:registerDoneListener(arg_2_0.onWorkItemDone, arg_2_0)
-	arg_2_0:cancelFightWorkSafeTimer()
+	self._work:registerDoneListener(self.onWorkItemDone, self)
+	self:cancelFightWorkSafeTimer()
 
-	return arg_2_0._work:onStartInternal(arg_2_0.context)
+	return self._work:onStartInternal(self.context)
 end
 
-function var_0_0.onWorkItemDone(arg_3_0)
-	return arg_3_0:onDone(true)
+function Work2FightWork:onWorkItemDone()
+	return self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	if arg_4_0._work then
-		arg_4_0._work:unregisterDoneListener(arg_4_0.onWorkItemDone, arg_4_0)
-		arg_4_0._work:onDestroy()
+function Work2FightWork:clearWork()
+	if self._work then
+		self._work:unregisterDoneListener(self.onWorkItemDone, self)
+		self._work:onDestroy()
 
-		arg_4_0._work = nil
+		self._work = nil
 	end
 end
 
-return var_0_0
+return Work2FightWork

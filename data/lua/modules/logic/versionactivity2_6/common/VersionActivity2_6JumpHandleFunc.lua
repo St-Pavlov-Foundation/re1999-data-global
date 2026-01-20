@@ -1,100 +1,102 @@
-﻿module("modules.logic.versionactivity2_6.common.VersionActivity2_6JumpHandleFunc", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/common/VersionActivity2_6JumpHandleFunc.lua
 
-local var_0_0 = class("VersionActivity2_6JumpHandleFunc")
+module("modules.logic.versionactivity2_6.common.VersionActivity2_6JumpHandleFunc", package.seeall)
 
-function var_0_0.jumpTo11815(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_1 and arg_1_1[3] == 2
+local VersionActivity2_6JumpHandleFunc = class("VersionActivity2_6JumpHandleFunc")
 
-	table.insert(arg_1_0.waitOpenViewNames, ViewName.VersionActivity2_6EnterView)
-	table.insert(arg_1_0.waitOpenViewNames, ViewName.VersionActivity1_8DungeonMapView)
-	table.insert(arg_1_0.waitOpenViewNames, ViewName.VersionActivity1_8FactoryMapView)
+function VersionActivity2_6JumpHandleFunc:jumpTo11815(paramsList)
+	local isOpenFactoryBlueprint = paramsList and paramsList[3] == 2
 
-	if not var_1_0 then
-		table.insert(arg_1_0.closeViewNames, ViewName.VersionActivity1_8FactoryBlueprintView)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity2_6EnterView)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_8DungeonMapView)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_8FactoryMapView)
+
+	if not isOpenFactoryBlueprint then
+		table.insert(self.closeViewNames, ViewName.VersionActivity1_8FactoryBlueprintView)
 	end
 
-	local function var_1_1()
-		Activity157Controller.instance:openFactoryMapView(var_1_0)
+	local function openFactoryFunc()
+		Activity157Controller.instance:openFactoryMapView(isOpenFactoryBlueprint)
 	end
 
-	local function var_1_2()
+	local function openDungeonMapFunc()
 		if ViewMgr.instance:isOpen(ViewName.VersionActivity1_8DungeonMapView) then
-			var_1_1()
+			openFactoryFunc()
 		else
-			VersionActivity1_8DungeonController.instance:openVersionActivityDungeonMapView(nil, nil, var_1_1)
+			VersionActivity1_8DungeonController.instance:openVersionActivityDungeonMapView(nil, nil, openFactoryFunc)
 		end
 	end
 
-	VersionActivity2_6EnterController.instance:openVersionActivityEnterViewIfNotOpened(var_1_2, nil, nil, true)
+	VersionActivity2_6EnterController.instance:openVersionActivityEnterViewIfNotOpened(openDungeonMapFunc, nil, nil, true)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpTo11804(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_1[2]
-	local var_4_1 = arg_4_1[3]
+function VersionActivity2_6JumpHandleFunc:jumpTo11804(paramsList)
+	local actId = paramsList[2]
+	local episodeId = paramsList[3]
 
-	table.insert(arg_4_0.waitOpenViewNames, ViewName.VersionActivity2_6EnterView)
-	table.insert(arg_4_0.closeViewNames, ViewName.VersionActivity1_8DungeonMapLevelView)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity2_6EnterView)
+	table.insert(self.closeViewNames, ViewName.VersionActivity1_8DungeonMapLevelView)
 
-	if var_4_1 then
+	if episodeId then
 		VersionActivity2_6EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
-			VersionActivity1_8DungeonController.instance:openVersionActivityDungeonMapView(nil, var_4_1, function()
+			VersionActivity1_8DungeonController.instance:openVersionActivityDungeonMapView(nil, episodeId, function()
 				ViewMgr.instance:openView(ViewName.VersionActivity1_8DungeonMapLevelView, {
 					isJump = true,
-					episodeId = var_4_1
+					episodeId = episodeId
 				})
 			end)
-		end, nil, var_4_0, true)
+		end, nil, actId, true)
 	else
-		VersionActivity2_6EnterController.instance:openVersionActivityEnterViewIfNotOpened(VersionActivity1_8DungeonController.openVersionActivityDungeonMapView, VersionActivity1_8DungeonController.instance, var_4_0, true)
+		VersionActivity2_6EnterController.instance:openVersionActivityEnterViewIfNotOpened(VersionActivity1_8DungeonController.openVersionActivityDungeonMapView, VersionActivity1_8DungeonController.instance, actId, true)
 	end
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpTo12601(arg_7_0)
+function VersionActivity2_6JumpHandleFunc:jumpTo12601()
 	VersionActivity2_6EnterController.instance:openVersionActivityEnterView()
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpTo12602(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_1[2]
+function VersionActivity2_6JumpHandleFunc:jumpTo12602(paramsList)
+	local actId = paramsList[2]
 
-	VersionActivity2_6EnterController.instance:openVersionActivityEnterView(nil, nil, var_8_0)
-
-	return JumpEnum.JumpResult.Success
-end
-
-function var_0_0.jumpTo12605(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_1[2]
-
-	VersionActivity2_6EnterController.instance:openVersionActivityEnterView(nil, nil, var_9_0)
+	VersionActivity2_6EnterController.instance:openVersionActivityEnterView(nil, nil, actId)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpTo12603(arg_10_0, arg_10_1)
+function VersionActivity2_6JumpHandleFunc:jumpTo12605(paramsList)
+	local actId = paramsList[2]
+
+	VersionActivity2_6EnterController.instance:openVersionActivityEnterView(nil, nil, actId)
+
+	return JumpEnum.JumpResult.Success
+end
+
+function VersionActivity2_6JumpHandleFunc:jumpTo12603(paramsList)
 	VersionActivity2_6DungeonController.instance:openStoreView()
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpTo12606(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_1[2]
+function VersionActivity2_6JumpHandleFunc:jumpTo12606(paramsList)
+	local actId = paramsList[2]
 
-	VersionActivity2_6EnterController.instance:openVersionActivityEnterView(nil, nil, var_11_0)
-
-	return JumpEnum.JumpResult.Success
-end
-
-function var_0_0.jumpTo12618(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_1[2]
-
-	VersionActivity2_6EnterController.instance:openVersionActivityEnterView(nil, nil, var_12_0)
+	VersionActivity2_6EnterController.instance:openVersionActivityEnterView(nil, nil, actId)
 
 	return JumpEnum.JumpResult.Success
 end
 
-return var_0_0
+function VersionActivity2_6JumpHandleFunc:jumpTo12618(paramsList)
+	local actId = paramsList[2]
+
+	VersionActivity2_6EnterController.instance:openVersionActivityEnterView(nil, nil, actId)
+
+	return JumpEnum.JumpResult.Success
+end
+
+return VersionActivity2_6JumpHandleFunc

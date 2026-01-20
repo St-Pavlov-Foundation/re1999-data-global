@@ -1,32 +1,34 @@
-﻿module("modules.logic.rouge.view.RougeOpenGuideView", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeOpenGuideView.lua
 
-local var_0_0 = class("RougeOpenGuideView", BaseView)
+module("modules.logic.rouge.view.RougeOpenGuideView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "commen/#simage_bg")
-	arg_1_0._btnlook = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_look")
-	arg_1_0._simagedecorate1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "commen/#simage_decorate1")
-	arg_1_0._simagedecorate3 = gohelper.findChildSingleImage(arg_1_0.viewGO, "commen/#simage_decorate3")
+local RougeOpenGuideView = class("RougeOpenGuideView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeOpenGuideView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "commen/#simage_bg")
+	self._btnlook = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_look")
+	self._simagedecorate1 = gohelper.findChildSingleImage(self.viewGO, "commen/#simage_decorate1")
+	self._simagedecorate3 = gohelper.findChildSingleImage(self.viewGO, "commen/#simage_decorate3")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnlook:AddClickListener(arg_2_0._btnlookOnClick, arg_2_0)
+function RougeOpenGuideView:addEvents()
+	self._btnlook:AddClickListener(self._btnlookOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnlook:RemoveClickListener()
+function RougeOpenGuideView:removeEvents()
+	self._btnlook:RemoveClickListener()
 end
 
-function var_0_0._btnlookOnClick(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._delayClick, arg_4_0)
-	TaskDispatcher.runDelay(arg_4_0._delayClick, arg_4_0, 0.015)
+function RougeOpenGuideView:_btnlookOnClick()
+	TaskDispatcher.cancelTask(self._delayClick, self)
+	TaskDispatcher.runDelay(self._delayClick, self, 0.015)
 end
 
-function var_0_0._delayClick(arg_5_0)
+function RougeOpenGuideView:_delayClick()
 	if ViewMgr.instance:hasOpenFullView() then
 		ViewMgr.instance:openView(ViewName.GuideTransitionBlackView)
 	else
@@ -36,50 +38,50 @@ function var_0_0._delayClick(arg_5_0)
 	JumpController.instance:jumpTo("5#1")
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._simagebg:LoadImage(ResUrl.getCommonIcon("yd_yindaodi_2"))
-	arg_6_0._simagedecorate1:LoadImage(ResUrl.getCommonIcon("yd_biaoti_di"))
-	arg_6_0._simagedecorate3:LoadImage(ResUrl.getCommonIcon("yd_blxian"))
+function RougeOpenGuideView:_editableInitView()
+	self._simagebg:LoadImage(ResUrl.getCommonIcon("yd_yindaodi_2"))
+	self._simagedecorate1:LoadImage(ResUrl.getCommonIcon("yd_biaoti_di"))
+	self._simagedecorate3:LoadImage(ResUrl.getCommonIcon("yd_blxian"))
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function RougeOpenGuideView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
+function RougeOpenGuideView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_artificial_ui_openfunction)
 
-	local var_8_0 = lua_open.configDict[OpenEnum.UnlockFunc.EquipDungeon].episodeId
-	local var_8_1 = DungeonConfig.instance:getEpisodeCO(var_8_0)
-	local var_8_2 = lua_bonus.configDict[var_8_1.firstBonus]
-	local var_8_3 = string.splitToNumber(var_8_2.fixBonus, "#")
+	local openEpisodeId = lua_open.configDict[OpenEnum.UnlockFunc.EquipDungeon].episodeId
+	local episodeCfg = DungeonConfig.instance:getEpisodeCO(openEpisodeId)
+	local bonusCfg = lua_bonus.configDict[episodeCfg.firstBonus]
+	local params = string.splitToNumber(bonusCfg.fixBonus, "#")
 
-	arg_8_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_8_0._onOpenViewFinish, arg_8_0)
-	arg_8_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_8_0._onCloseViewFinish, arg_8_0, LuaEventSystem.Low)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self, LuaEventSystem.Low)
 end
 
-function var_0_0._onOpenViewFinish(arg_9_0, arg_9_1)
+function RougeOpenGuideView:_onOpenViewFinish(viewName)
 	return
 end
 
-function var_0_0._onCloseViewFinish(arg_10_0, arg_10_1)
-	if arg_10_1 == ViewName.RougeOpenGuideView then
+function RougeOpenGuideView:_onCloseViewFinish(viewName)
+	if viewName == ViewName.RougeOpenGuideView then
 		ViewMgr.instance:closeView(ViewName.GuideTransitionBlackView)
 	end
 end
 
-function var_0_0.onOpenFinish(arg_11_0)
+function RougeOpenGuideView:onOpenFinish()
 	return
 end
 
-function var_0_0.onClose(arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0._delayClick, arg_12_0)
+function RougeOpenGuideView:onClose()
+	TaskDispatcher.cancelTask(self._delayClick, self)
 end
 
-function var_0_0.onDestroyView(arg_13_0)
-	arg_13_0._simagebg:UnLoadImage()
-	arg_13_0._simagedecorate1:UnLoadImage()
-	arg_13_0._simagedecorate3:UnLoadImage()
+function RougeOpenGuideView:onDestroyView()
+	self._simagebg:UnLoadImage()
+	self._simagedecorate1:UnLoadImage()
+	self._simagedecorate3:UnLoadImage()
 end
 
-return var_0_0
+return RougeOpenGuideView

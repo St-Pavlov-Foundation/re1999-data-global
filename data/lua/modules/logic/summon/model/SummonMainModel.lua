@@ -1,66 +1,68 @@
-﻿module("modules.logic.summon.model.SummonMainModel", package.seeall)
+﻿-- chunkname: @modules/logic/summon/model/SummonMainModel.lua
 
-local var_0_0 = class("SummonMainModel", BaseModel)
+module("modules.logic.summon.model.SummonMainModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:releaseViewData()
+local SummonMainModel = class("SummonMainModel", BaseModel)
 
-	arg_1_0.flagModel = SummonFlagSubModel.New()
+function SummonMainModel:onInit()
+	self:releaseViewData()
+
+	self.flagModel = SummonFlagSubModel.New()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:releaseViewData()
-	arg_2_0:releaseServerData()
+function SummonMainModel:reInit()
+	self:releaseViewData()
+	self:releaseServerData()
 
-	arg_2_0.flagModel = SummonFlagSubModel.New()
+	self.flagModel = SummonFlagSubModel.New()
 end
 
-function var_0_0.releaseServerData(arg_3_0)
-	arg_3_0._hasNewbiePool = nil
-	arg_3_0._newbieProgress = nil
-	arg_3_0._curPoolIndex = nil
-	arg_3_0._curPoolId = nil
-	arg_3_0._curPool = nil
-	arg_3_0._validServerPoolMap = nil
+function SummonMainModel:releaseServerData()
+	self._hasNewbiePool = nil
+	self._newbieProgress = nil
+	self._curPoolIndex = nil
+	self._curPoolId = nil
+	self._curPool = nil
+	self._validServerPoolMap = nil
 end
 
-function var_0_0.releaseViewData(arg_4_0)
-	arg_4_0:clear()
+function SummonMainModel:releaseViewData()
+	self:clear()
 
-	arg_4_0._poolList = nil
-	arg_4_0._isFirstTimeOpen = true
+	self._poolList = nil
+	self._isFirstTimeOpen = true
 end
 
-function var_0_0.initCategory(arg_5_0, arg_5_1)
-	arg_5_0:releaseViewData()
+function SummonMainModel:initCategory(keepSelected)
+	self:releaseViewData()
 
-	arg_5_0._poolList = var_0_0.getValidPools()
+	self._poolList = SummonMainModel.getValidPools()
 
-	arg_5_0:setList(arg_5_0._poolList)
+	self:setList(self._poolList)
 
-	if arg_5_0:getCount() > 0 then
-		arg_5_0._curPoolIndex = 1
-		arg_5_0._curPool = arg_5_0:getByIndex(1)
-		arg_5_0._curPoolId = arg_5_0._curPool.id
+	if self:getCount() > 0 then
+		self._curPoolIndex = 1
+		self._curPool = self:getByIndex(1)
+		self._curPoolId = self._curPool.id
 	else
 		logError("summon pool config is empty!")
 	end
 
-	arg_5_0:_updateSummonDiamondStatus()
+	self:_updateSummonDiamondStatus()
 end
 
-function var_0_0.updateByServerData(arg_6_0)
-	arg_6_0:releaseViewData()
+function SummonMainModel:updateByServerData()
+	self:releaseViewData()
 
-	arg_6_0._poolList = var_0_0.getValidPools()
+	self._poolList = SummonMainModel.getValidPools()
 
-	arg_6_0:setList(arg_6_0._poolList)
+	self:setList(self._poolList)
 
-	if arg_6_0:getCount() > 0 then
-		if arg_6_0._curPoolId == nil or not arg_6_0:trySetSelectPoolId(arg_6_0._curPoolId) then
-			arg_6_0._curPoolIndex = 1
-			arg_6_0._curPool = arg_6_0:getByIndex(1)
-			arg_6_0._curPoolId = arg_6_0._curPool.id
+	if self:getCount() > 0 then
+		if self._curPoolId == nil or not self:trySetSelectPoolId(self._curPoolId) then
+			self._curPoolIndex = 1
+			self._curPool = self:getByIndex(1)
+			self._curPoolId = self._curPool.id
 		end
 	else
 		logError("no summon pool available!")
@@ -69,103 +71,103 @@ function var_0_0.updateByServerData(arg_6_0)
 	SummonMainCategoryListModel.instance:initCategory()
 end
 
-function var_0_0.updateLastPoolId(arg_7_0)
-	if arg_7_0._curPoolId then
-		SummonController.instance:setLastPoolId(arg_7_0._curPoolId)
+function SummonMainModel:updateLastPoolId()
+	if self._curPoolId then
+		SummonController.instance:setLastPoolId(self._curPoolId)
 	end
 end
 
-function var_0_0.getPoolsWithServer(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = {
-		callback = arg_8_1,
-		callbackObj = arg_8_2
+function SummonMainModel:getPoolsWithServer(callback, callbackObj)
+	local param = {
+		callback = callback,
+		callbackObj = callbackObj
 	}
 
-	SummonRpc.instance:sendGetSummonInfoRequest(var_0_0.onGetPoolsWithServer, var_8_0)
+	SummonRpc.instance:sendGetSummonInfoRequest(SummonMainModel.onGetPoolsWithServer, param)
 end
 
-function var_0_0.onGetPoolsWithServer(arg_9_0)
-	local var_9_0 = arg_9_0.callback
-	local var_9_1 = arg_9_0.callbackObj
+function SummonMainModel.onGetPoolsWithServer(param)
+	local callback = param.callback
+	local callbackObj = param.callbackObj
 
-	if var_9_0 then
-		local var_9_2 = var_0_0.getValidPools()
+	if callback then
+		local pools = SummonMainModel.getValidPools()
 
-		if var_9_1 then
-			var_9_0(var_9_1, var_9_2)
+		if callbackObj then
+			callback(callbackObj, pools)
 		else
-			var_9_0(var_9_2)
+			callback(pools)
 		end
 	end
 end
 
-function var_0_0.equipPoolIsValid()
-	local var_10_0 = SummonConfig.instance:getValidPoolList()
+function SummonMainModel.equipPoolIsValid()
+	local list = SummonConfig.instance:getValidPoolList()
 
-	for iter_10_0, iter_10_1 in ipairs(var_10_0) do
-		if var_0_0.getResultType(iter_10_1) == SummonEnum.ResultType.Equip and OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.SummonEquip) then
+	for i, co in ipairs(list) do
+		if SummonMainModel.getResultType(co) == SummonEnum.ResultType.Equip and OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.SummonEquip) then
 			return true
 		end
 	end
 end
 
-function var_0_0.getValidPools()
-	local var_11_0 = SummonConfig.instance:getValidPoolList()
-	local var_11_1 = {}
-	local var_11_2 = false
+function SummonMainModel.getValidPools()
+	local list = SummonConfig.instance:getValidPoolList()
+	local result = {}
+	local needCreate = false
 
-	for iter_11_0, iter_11_1 in pairs(var_11_0) do
-		local var_11_3 = var_0_0.instance:getPoolServerMO(iter_11_1.id)
+	for i, co in pairs(list) do
+		local mo = SummonMainModel.instance:getPoolServerMO(co.id)
 
-		if var_11_3 and var_11_3:isOpening() then
-			local var_11_4 = true
+		if mo and mo:isOpening() then
+			needCreate = true
 
-			if var_0_0.getResultType(iter_11_1) == SummonEnum.ResultType.Equip and not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.SummonEquip) then
-				var_11_4 = false
-			elseif var_0_0.getADPageTabIndex(iter_11_1) == SummonEnum.TabContentIndex.CharNewbie and not var_0_0.instance:getNewbiePoolExist() then
-				var_11_4 = false
+			if SummonMainModel.getResultType(co) == SummonEnum.ResultType.Equip and not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.SummonEquip) then
+				needCreate = false
+			elseif SummonMainModel.getADPageTabIndex(co) == SummonEnum.TabContentIndex.CharNewbie and not SummonMainModel.instance:getNewbiePoolExist() then
+				needCreate = false
 			end
 
-			if var_11_4 then
-				table.insert(var_11_1, iter_11_1)
+			if needCreate then
+				table.insert(result, co)
 			end
 		end
 	end
 
-	table.sort(var_11_1, var_0_0.sortSummonCategory)
+	table.sort(result, SummonMainModel.sortSummonCategory)
 
-	return var_11_1
+	return result
 end
 
-function var_0_0.validContinueTenPool(arg_12_0)
-	local var_12_0 = SummonConfig.instance:getValidPoolList()
-	local var_12_1 = true
+function SummonMainModel.validContinueTenPool(poolId)
+	local list = SummonConfig.instance:getValidPoolList()
+	local isValid = true
 
-	for iter_12_0, iter_12_1 in pairs(var_12_0) do
-		if iter_12_1.id == arg_12_0 then
-			local var_12_2 = var_0_0.instance:getPoolServerMO(iter_12_1.id)
+	for _, co in pairs(list) do
+		if co.id == poolId then
+			local mo = SummonMainModel.instance:getPoolServerMO(co.id)
 
-			if var_12_2 and var_12_2:isOpening() then
-				if var_0_0.getResultType(iter_12_1) == SummonEnum.ResultType.Equip and not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.SummonEquip) then
-					var_12_1 = false
-
-					break
-				end
-
-				if var_0_0.getADPageTabIndex(iter_12_1) == SummonEnum.TabContentIndex.CharNewbie and not var_0_0.instance:getNewbiePoolExist() then
-					var_12_1 = false
+			if mo and mo:isOpening() then
+				if SummonMainModel.getResultType(co) == SummonEnum.ResultType.Equip and not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.SummonEquip) then
+					isValid = false
 
 					break
 				end
 
-				if SummonConfig.poolIsLuckyBag(arg_12_0) then
-					local var_12_3 = var_0_0.instance:getPoolServerMO(arg_12_0)
+				if SummonMainModel.getADPageTabIndex(co) == SummonEnum.TabContentIndex.CharNewbie and not SummonMainModel.instance:getNewbiePoolExist() then
+					isValid = false
 
-					if var_12_3 and var_12_3.luckyBagMO then
-						local var_12_4 = SummonLuckyBagModel.instance:getGachaRemainTimes(arg_12_0)
+					break
+				end
 
-						if not var_12_4 or var_12_4 < 10 then
-							var_12_1 = false
+				if SummonConfig.poolIsLuckyBag(poolId) then
+					local summonServerMO = SummonMainModel.instance:getPoolServerMO(poolId)
+
+					if summonServerMO and summonServerMO.luckyBagMO then
+						local gachaMaxTimes = SummonLuckyBagModel.instance:getGachaRemainTimes(poolId)
+
+						if not gachaMaxTimes or gachaMaxTimes < 10 then
+							isValid = false
 						end
 					end
 				end
@@ -175,10 +177,10 @@ function var_0_0.validContinueTenPool(arg_12_0)
 		end
 	end
 
-	return var_12_1
+	return isValid
 end
 
-var_0_0.defaultSettings = {
+SummonMainModel.defaultSettings = {
 	[SummonEnum.TabContentIndex.DoubleSsrUp] = {
 		"ui/viewres/summon/summonmaincharacterprobup.prefab"
 	},
@@ -198,7 +200,7 @@ var_0_0.defaultSettings = {
 		"ui/viewres/summon/summonmainequipprobup.prefab"
 	}
 }
-var_0_0.defaultUIClzMap = {
+SummonMainModel.defaultUIClzMap = {
 	[SummonEnum.TabContentIndex.DoubleSsrUp] = SummonCharacterProbDoubleUpBase,
 	SummonMainCharacterView,
 	SummonMainEquipView,
@@ -206,137 +208,139 @@ var_0_0.defaultUIClzMap = {
 	SummonMainCharacterProbUp,
 	SummonMainEquipProbUp
 }
-var_0_0.defaultUIClzMapByType = {
+SummonMainModel.defaultUIClzMapByType = {
 	[SummonEnum.Type.ProbUp] = SummonMainCharacterProbUp,
 	[SummonEnum.Type.Limit] = SummonMainCharacterProbUp,
 	[SummonEnum.Type.StrongCustomOnePick] = SummonStrongOneCustomPickView,
 	[SummonEnum.Type.CoBranding] = SummonMainCharacterCoBranding
 }
 
-function var_0_0.resetTabResSettings(arg_13_0)
-	local var_13_0 = tabletool.copy(var_0_0.defaultSettings)
-	local var_13_1 = tabletool.copy(var_0_0.defaultUIClzMap)
-	local var_13_2 = SummonConfig.instance:getValidPoolList()
+function SummonMainModel:resetTabResSettings()
+	local summonSettings = tabletool.copy(SummonMainModel.defaultSettings)
+	local clzMap = tabletool.copy(SummonMainModel.defaultUIClzMap)
+	local allPoolList = SummonConfig.instance:getValidPoolList()
 
-	arg_13_0._poolIDTabMap = {}
+	self._poolIDTabMap = {}
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_2) do
-		local var_13_3 = var_0_0.defaultUIClzMapByType[iter_13_1.type]
-		local var_13_4 = var_0_0.getADPageTabIndex(iter_13_1)
-		local var_13_5 = var_0_0.defaultUIClzMap[var_13_4]
+	for _, co in ipairs(allPoolList) do
+		local clz = SummonMainModel.defaultUIClzMapByType[co.type]
+		local tabIndexByType = SummonMainModel.getADPageTabIndex(co)
+		local defaultClz = SummonMainModel.defaultUIClzMap[tabIndexByType]
 
-		if var_13_3 == nil and not string.nilorempty(iter_13_1.customClz) then
-			var_13_3 = _G[iter_13_1.customClz]
+		if clz == nil and not string.nilorempty(co.customClz) then
+			clz = _G[co.customClz]
 		end
 
-		var_13_3 = var_13_3 or var_13_5
+		clz = clz or defaultClz
 
-		local var_13_6 = var_0_0.defaultSettings[var_13_4][1]
-		local var_13_7
+		local defaultPrefabPath = SummonMainModel.defaultSettings[tabIndexByType][1]
+		local path
 
-		if not string.nilorempty(iter_13_1.prefabPath) then
-			var_13_7 = string.format("ui/viewres/summon/%s.prefab", iter_13_1.prefabPath)
+		if not string.nilorempty(co.prefabPath) then
+			local tmpPath = string.format("ui/viewres/summon/%s.prefab", co.prefabPath)
+
+			path = tmpPath
 		end
 
-		var_13_7 = var_13_7 or var_13_6
+		path = path or defaultPrefabPath
 
-		if var_13_3 ~= var_13_5 or var_13_7 ~= var_13_6 then
-			table.insert(var_13_0, {
-				var_13_7
+		if clz ~= defaultClz or path ~= defaultPrefabPath then
+			table.insert(summonSettings, {
+				path
 			})
-			table.insert(var_13_1, var_13_3)
+			table.insert(clzMap, clz)
 
-			arg_13_0._poolIDTabMap[iter_13_1.id] = #var_13_0
+			self._poolIDTabMap[co.id] = #summonSettings
 		end
 	end
 
-	module_views.SummonADView.tabRes[3] = var_13_0
-	arg_13_0._tab2UIClassDef = var_13_1
+	module_views.SummonADView.tabRes[3] = summonSettings
+	self._tab2UIClassDef = clzMap
 end
 
-function var_0_0.sortSummonCategory(arg_14_0, arg_14_1)
-	if arg_14_0.priority ~= arg_14_1.priority then
-		return arg_14_0.priority > arg_14_1.priority
+function SummonMainModel.sortSummonCategory(a, b)
+	if a.priority ~= b.priority then
+		return a.priority > b.priority
 	else
-		return arg_14_0.id < arg_14_1.id
+		return a.id < b.id
 	end
 end
 
-function var_0_0.setFirstTimeSwitch(arg_15_0, arg_15_1)
-	arg_15_0._isFirstTimeSwitch = arg_15_1
+function SummonMainModel:setFirstTimeSwitch(value)
+	self._isFirstTimeSwitch = value
 end
 
-function var_0_0.getFirstTimeSwitch(arg_16_0)
-	return arg_16_0._isFirstTimeSwitch
+function SummonMainModel:getFirstTimeSwitch()
+	return self._isFirstTimeSwitch
 end
 
-function var_0_0.getCurPool(arg_17_0)
-	return arg_17_0:getById(arg_17_0._curPoolId)
+function SummonMainModel:getCurPool()
+	return self:getById(self._curPoolId)
 end
 
-function var_0_0.createUIClassTab(arg_18_0)
-	local var_18_0 = {}
+function SummonMainModel:createUIClassTab()
+	local uiInsts = {}
 
-	for iter_18_0, iter_18_1 in ipairs(arg_18_0._tab2UIClassDef) do
-		var_18_0[iter_18_0] = iter_18_1.New()
+	for index, clz in ipairs(self._tab2UIClassDef) do
+		uiInsts[index] = clz.New()
 	end
 
-	return var_18_0
+	return uiInsts
 end
 
-function var_0_0.getUIClassDef(arg_19_0, arg_19_1)
-	return arg_19_0._tab2UIClassDef[arg_19_1]
+function SummonMainModel:getUIClassDef(tabIndex)
+	return self._tab2UIClassDef[tabIndex]
 end
 
-function var_0_0.getCurADPageIndex(arg_20_0)
-	local var_20_0 = arg_20_0:getCurPool()
+function SummonMainModel:getCurADPageIndex()
+	local curPool = self:getCurPool()
 
-	if var_20_0 == nil then
+	if curPool == nil then
 		return nil
 	end
 
-	local var_20_1 = arg_20_0._poolIDTabMap[var_20_0.id]
+	local poolSpecIndex = self._poolIDTabMap[curPool.id]
 
-	if var_20_1 then
-		return var_20_1
+	if poolSpecIndex then
+		return poolSpecIndex
 	else
-		return var_0_0.getADPageTabIndex(var_20_0)
+		return SummonMainModel.getADPageTabIndex(curPool)
 	end
 end
 
-function var_0_0.getADPageTabIndexForUI(arg_21_0, arg_21_1)
-	if arg_21_1 == nil or arg_21_0._poolIDTabMap == nil then
+function SummonMainModel:getADPageTabIndexForUI(poolCfg)
+	if poolCfg == nil or self._poolIDTabMap == nil then
 		return nil
 	end
 
-	local var_21_0 = arg_21_0._poolIDTabMap[arg_21_1.id]
+	local poolSpecIndex = self._poolIDTabMap[poolCfg.id]
 
-	if var_21_0 then
-		return var_21_0
+	if poolSpecIndex then
+		return poolSpecIndex
 	else
-		return var_0_0.getADPageTabIndex(arg_21_1)
+		return SummonMainModel.getADPageTabIndex(poolCfg)
 	end
 end
 
-function var_0_0.getADPageTabIndex(arg_22_0)
-	return SummonEnum.Type2PageIndex[arg_22_0.type] or SummonEnum.TabContentIndex.CharNormal
+function SummonMainModel.getADPageTabIndex(poolCfg)
+	return SummonEnum.Type2PageIndex[poolCfg.type] or SummonEnum.TabContentIndex.CharNormal
 end
 
-function var_0_0.hasPoolAvailable(arg_23_0, arg_23_1)
-	if arg_23_1 == nil then
-		return arg_23_0:getCount() > 0
+function SummonMainModel:hasPoolAvailable(poolId)
+	if poolId == nil then
+		return self:getCount() > 0
 	else
-		return arg_23_0:getById(arg_23_1) ~= nil
+		return self:getById(poolId) ~= nil
 	end
 end
 
-function var_0_0.hasPoolGroupAvailable(arg_24_0, arg_24_1)
-	local var_24_0 = arg_24_0:getList()
+function SummonMainModel:hasPoolGroupAvailable(poolGroupId)
+	local list = self:getList()
 
-	if var_24_0 and #var_24_0 > 0 then
-		for iter_24_0, iter_24_1 in pairs(var_24_0) do
-			if iter_24_1.jumpGroupId == arg_24_1 then
-				return iter_24_1
+	if list and #list > 0 then
+		for _, poolCo in pairs(list) do
+			if poolCo.jumpGroupId == poolGroupId then
+				return poolCo
 			end
 		end
 	end
@@ -344,49 +348,51 @@ function var_0_0.hasPoolGroupAvailable(arg_24_0, arg_24_1)
 	return nil
 end
 
-function var_0_0.getPoolServerMO(arg_25_0, arg_25_1)
-	if arg_25_0._validServerPoolMap then
-		return arg_25_0._validServerPoolMap[arg_25_1]
+function SummonMainModel:getPoolServerMO(poolId)
+	if self._validServerPoolMap then
+		return self._validServerPoolMap[poolId]
 	end
 end
 
-function var_0_0.getServerMOMap(arg_26_0)
-	return arg_26_0._validServerPoolMap
+function SummonMainModel:getServerMOMap()
+	return self._validServerPoolMap
 end
 
-function var_0_0.trySetSelectPoolIndex(arg_27_0, arg_27_1)
-	local var_27_0 = arg_27_0:getCount()
+function SummonMainModel:trySetSelectPoolIndex(index)
+	local len = self:getCount()
 
-	if var_27_0 == 0 then
+	if len == 0 then
 		return false
-	elseif arg_27_1 < 1 then
-		arg_27_1 = var_27_0
-	elseif var_27_0 < arg_27_1 then
-		arg_27_1 = 1
+	elseif index < 1 then
+		index = len
+	elseif len < index then
+		index = 1
 	end
 
-	local var_27_1 = arg_27_0:getByIndex(arg_27_1)
+	local co = self:getByIndex(index)
 
-	arg_27_0._curPoolIndex = arg_27_1
-	arg_27_0._curPoolId = var_27_1.id
-	arg_27_0._curPool = var_27_1
+	self._curPoolIndex = index
+	self._curPoolId = co.id
+	self._curPool = co
 
-	SummonController.instance:setLastPoolId(arg_27_0._curPoolId)
-	arg_27_0:_updateSummonDiamondStatus()
+	SummonController.instance:setLastPoolId(self._curPoolId)
+	self:_updateSummonDiamondStatus()
 
 	return true
 end
 
-function var_0_0.trySetSelectPoolId(arg_28_0, arg_28_1)
-	local var_28_0 = arg_28_0:getById(arg_28_1)
+function SummonMainModel:trySetSelectPoolId(id)
+	local co = self:getById(id)
 
-	if var_28_0 then
-		arg_28_0._curPoolIndex = arg_28_0:getIndex(var_28_0)
-		arg_28_0._curPoolId = arg_28_1
-		arg_28_0._curPool = var_28_0
+	if co then
+		local index = self:getIndex(co)
 
-		SummonController.instance:setLastPoolId(arg_28_0._curPoolId)
-		arg_28_0:_updateSummonDiamondStatus()
+		self._curPoolIndex = index
+		self._curPoolId = id
+		self._curPool = co
+
+		SummonController.instance:setLastPoolId(self._curPoolId)
+		self:_updateSummonDiamondStatus()
 
 		return true
 	end
@@ -394,121 +400,124 @@ function var_0_0.trySetSelectPoolId(arg_28_0, arg_28_1)
 	return false
 end
 
-function var_0_0._updateSummonDiamondStatus(arg_29_0)
-	local var_29_0 = string.splitToNumber(CommonConfig.instance:getConstStr(ConstEnum.SingleSummonPer), "#")
-	local var_29_1 = var_29_0[1]
-	local var_29_2 = var_29_0[2]
+function SummonMainModel:_updateSummonDiamondStatus()
+	local arr = string.splitToNumber(CommonConfig.instance:getConstStr(ConstEnum.SingleSummonPer), "#")
+	local costType, costId, count = arr[1], arr[2], arr[3]
 
-	arg_29_0.everyCostCount = var_29_0[3]
-	arg_29_0.costCurrencyType = var_29_1
-	arg_29_0.costCurrencyId = var_29_2
+	self.everyCostCount = count
+	self.costCurrencyType = costType
+	self.costCurrencyId = costId
 end
 
-function var_0_0.getOwnCostCurrencyNum(arg_30_0)
-	return ItemModel.instance:getItemQuantity(arg_30_0.costCurrencyType, arg_30_0.costCurrencyId)
+function SummonMainModel:getOwnCostCurrencyNum()
+	return ItemModel.instance:getItemQuantity(self.costCurrencyType, self.costCurrencyId)
 end
 
-var_0_0.EmptyDetailDict = {}
+SummonMainModel.EmptyDetailDict = {}
 
-function var_0_0.getEquipDetailListByPool(arg_31_0, arg_31_1)
-	if arg_31_1 then
-		return SummonConfig.instance:getEquipDetailByPoolId(arg_31_1.id) or var_0_0.EmptyDetailDict
+function SummonMainModel:getEquipDetailListByPool(poolCo)
+	if poolCo then
+		local coDict = SummonConfig.instance:getEquipDetailByPoolId(poolCo.id) or SummonMainModel.EmptyDetailDict
+
+		return coDict
 	else
-		return var_0_0.EmptyDetailDict
+		return SummonMainModel.EmptyDetailDict
 	end
 end
 
-function var_0_0.sortDetailByLocation(arg_32_0, arg_32_1)
-	if arg_32_0.detailCo.location ~= arg_32_1.detailCo.location then
-		return arg_32_0.detailCo.location < arg_32_1.detailCo.location
+function SummonMainModel.sortDetailByLocation(a, b)
+	if a.detailCo.location ~= b.detailCo.location then
+		return a.detailCo.location < b.detailCo.location
 	else
-		return arg_32_0.detailCo.id < arg_32_1.detailCo.id
+		return a.detailCo.id < b.detailCo.id
 	end
 end
 
-function var_0_0.getCurIndex(arg_33_0)
-	return arg_33_0._curPoolIndex
+function SummonMainModel:getCurIndex()
+	return self._curPoolIndex
 end
 
-function var_0_0.getCurId(arg_34_0)
-	return arg_34_0._curPoolId
+function SummonMainModel:getCurId()
+	return self._curPoolId
 end
 
-function var_0_0.setNewbiePoolExist(arg_35_0, arg_35_1)
-	arg_35_0._hasNewbiePool = arg_35_1
+function SummonMainModel:setNewbiePoolExist(val)
+	self._hasNewbiePool = val
 end
 
-function var_0_0.getNewbiePoolExist(arg_36_0)
-	return arg_36_0._hasNewbiePool
+function SummonMainModel:getNewbiePoolExist()
+	return self._hasNewbiePool
 end
 
-function var_0_0.setNewbieProgress(arg_37_0, arg_37_1)
-	arg_37_0._newbieProgress = arg_37_1
+function SummonMainModel:setNewbieProgress(val)
+	self._newbieProgress = val
 end
 
-function var_0_0.getNewbieProgress(arg_38_0)
-	return arg_38_0._newbieProgress
+function SummonMainModel:getNewbieProgress()
+	return self._newbieProgress
 end
 
-function var_0_0.setServerPoolInfos(arg_39_0, arg_39_1)
-	arg_39_0._validServerPoolMap = arg_39_0._validServerPoolMap or {}
+function SummonMainModel:setServerPoolInfos(infos)
+	self._validServerPoolMap = self._validServerPoolMap or {}
 
-	local var_39_0 = {}
+	local infoSet = {}
 
-	for iter_39_0, iter_39_1 in ipairs(arg_39_1) do
-		var_39_0[iter_39_1.poolId] = iter_39_1
+	for _, info in ipairs(infos) do
+		infoSet[info.poolId] = info
 
-		local var_39_1 = arg_39_0._validServerPoolMap[iter_39_1.poolId]
+		local mo = self._validServerPoolMap[info.poolId]
 
-		if not var_39_1 then
-			var_39_1 = SummonMainPoolMO.New()
+		if not mo then
+			mo = SummonMainPoolMO.New()
 
-			var_39_1:init(iter_39_1)
+			mo:init(info)
 
-			arg_39_0._validServerPoolMap[iter_39_1.poolId] = var_39_1
+			self._validServerPoolMap[info.poolId] = mo
 		else
-			var_39_1:update(iter_39_1)
+			mo:update(info)
 		end
 	end
 
-	for iter_39_2, iter_39_3 in pairs(arg_39_0._validServerPoolMap) do
-		if not var_39_0[iter_39_3.id] then
-			arg_39_0._validServerPoolMap[iter_39_2] = nil
+	for k, mo in pairs(self._validServerPoolMap) do
+		if not infoSet[mo.id] then
+			self._validServerPoolMap[k] = nil
 		end
 	end
 
-	arg_39_0:refreshRecord()
+	self:refreshRecord()
 end
 
-function var_0_0.getFirstValidPool(arg_40_0)
-	if arg_40_0._poolList then
-		return arg_40_0._poolList[1]
+function SummonMainModel:getFirstValidPool()
+	if self._poolList then
+		return self._poolList[1]
 	end
 end
 
-function var_0_0.refreshRecord(arg_41_0)
-	local var_41_0 = var_0_0.getValidPools()
+function SummonMainModel:refreshRecord()
+	local poolCfgs = SummonMainModel.getValidPools()
 
-	arg_41_0.flagModel:init()
-	arg_41_0.flagModel:compareRecord(var_41_0)
+	self.flagModel:init()
+	self.flagModel:compareRecord(poolCfgs)
 end
 
-function var_0_0.categoryHasNew(arg_42_0, arg_42_1)
-	local var_42_0 = false
+function SummonMainModel:categoryHasNew(poolId)
+	local isNew = false
 
-	if arg_42_0.flagModel then
-		var_42_0 = arg_42_0.flagModel:isNew(arg_42_1)
+	if self.flagModel then
+		isNew = self.flagModel:isNew(poolId)
 	end
 
-	return var_42_0
+	return isNew
 end
 
-function var_0_0.hasNextDayFree(arg_43_0, arg_43_1)
-	if SummonConfig.instance:canShowSingleFree(arg_43_1) then
-		local var_43_0 = SummonConfig.instance:getSummonPool(arg_43_1)
-		local var_43_1 = arg_43_0:getPoolServerMO(arg_43_1)
+function SummonMainModel:hasNextDayFree(poolId)
+	local hasFree = SummonConfig.instance:canShowSingleFree(poolId)
 
-		if var_43_1 and var_43_1.usedFreeCount < var_43_0.totalFreeCount then
+	if hasFree then
+		local poolCO = SummonConfig.instance:getSummonPool(poolId)
+		local poolMO = self:getPoolServerMO(poolId)
+
+		if poolMO and poolMO.usedFreeCount < poolCO.totalFreeCount then
 			return true
 		end
 	end
@@ -516,21 +525,21 @@ function var_0_0.hasNextDayFree(arg_43_0, arg_43_1)
 	return false
 end
 
-function var_0_0.entryHasNew(arg_44_0)
-	if arg_44_0.flagModel then
-		return arg_44_0.flagModel:hasNew()
+function SummonMainModel:entryHasNew()
+	if self.flagModel then
+		return self.flagModel:hasNew()
 	end
 
 	return false
 end
 
-function var_0_0.entryHasFree(arg_45_0)
-	local var_45_0 = var_0_0.getValidPools()
+function SummonMainModel:entryHasFree()
+	local result = SummonMainModel.getValidPools()
 
-	for iter_45_0, iter_45_1 in ipairs(var_45_0) do
-		local var_45_1 = arg_45_0:getPoolServerMO(iter_45_1.id)
+	for i, co in ipairs(result) do
+		local summonMO = self:getPoolServerMO(co.id)
 
-		if var_45_1 and var_45_1.haveFree then
+		if summonMO and summonMO.haveFree then
 			return true
 		end
 	end
@@ -538,24 +547,24 @@ function var_0_0.entryHasFree(arg_45_0)
 	return false
 end
 
-function var_0_0.getCustomPickProbability(arg_46_0, arg_46_1)
-	local var_46_0 = SummonConfig.instance:getSummonPool(arg_46_1)
+function SummonMainModel:getCustomPickProbability(poolId)
+	local co = SummonConfig.instance:getSummonPool(poolId)
 
-	if var_46_0 and var_46_0.type == SummonEnum.Type.CustomPick then
-		local var_46_1 = string.split(var_46_0.param, "|")
-		local var_46_2 = tonumber(var_46_1[1])
-		local var_46_3 = string.splitToNumber(var_46_1[2], "#")
-		local var_46_4 = 0
+	if co and co.type == SummonEnum.Type.CustomPick then
+		local params = string.split(co.param, "|")
+		local count = tonumber(params[1])
+		local probability = string.splitToNumber(params[2], "#")
+		local totalprob = 0
 
-		for iter_46_0 = 1, #var_46_3 do
-			var_46_4 = var_46_4 + var_46_3[iter_46_0]
+		for i = 1, #probability do
+			totalprob = totalprob + probability[i]
 		end
 
-		return var_46_4 * 0.001 / var_46_2 * 100, var_46_0.totalPosibility, false
+		return totalprob * 0.001 / count * 100, co.totalPosibility, false
 	end
 
-	if var_46_0 and var_46_0.type == SummonEnum.Type.StrongCustomOnePick then
-		if SummonCustomPickModel.instance:isHaveFirstSSR(arg_46_1) then
+	if co and co.type == SummonEnum.Type.StrongCustomOnePick then
+		if SummonCustomPickModel.instance:isHaveFirstSSR(poolId) then
 			return 50, 0, false
 		else
 			return 100, 0, true
@@ -565,28 +574,28 @@ function var_0_0.getCustomPickProbability(arg_46_0, arg_46_1)
 	return 0, 0, false
 end
 
-function var_0_0.getDiscountTime10Server(arg_47_0, arg_47_1)
-	local var_47_0 = arg_47_0:getPoolServerMO(arg_47_1)
+function SummonMainModel:getDiscountTime10Server(poolId)
+	local serverPool = self:getPoolServerMO(poolId)
 
-	if var_47_0 then
-		return var_47_0.discountTime
+	if serverPool then
+		return serverPool.discountTime
 	end
 
 	return 0
 end
 
-function var_0_0.getDiscountCostId(arg_48_0, arg_48_1)
-	local var_48_0 = SummonConfig.instance:getSummonPool(arg_48_1)
+function SummonMainModel:getDiscountCostId(poolId)
+	local co = SummonConfig.instance:getSummonPool(poolId)
 
-	if var_48_0 then
-		local var_48_1 = var_48_0.discountCost10
-		local var_48_2 = string.split(var_48_1, "|")
+	if co then
+		local discountCost10 = co.discountCost10
+		local discountCost10Str = string.split(discountCost10, "|")
 
-		for iter_48_0, iter_48_1 in ipairs(var_48_2) do
-			local var_48_3 = string.splitToNumber(iter_48_1, "#")
+		for i, costStr in ipairs(discountCost10Str) do
+			local cost = string.splitToNumber(costStr, "#")
 
-			if var_48_3 then
-				return var_48_3[2]
+			if cost then
+				return cost[2]
 			end
 		end
 	end
@@ -594,29 +603,30 @@ function var_0_0.getDiscountCostId(arg_48_0, arg_48_1)
 	return 0
 end
 
-function var_0_0.getDiscountTime10(arg_49_0, arg_49_1)
-	local var_49_0 = SummonConfig.instance:getSummonPool(arg_49_1)
+function SummonMainModel:getDiscountTime10(poolId)
+	local co = SummonConfig.instance:getSummonPool(poolId)
 
-	if var_49_0 then
-		return var_49_0.discountTime10
+	if co then
+		return co.discountTime10
 	end
 
 	return 0
 end
 
-function var_0_0.getDiscountCost10(arg_50_0, arg_50_1, arg_50_2)
-	local var_50_0 = arg_50_0:getDiscountTime10(arg_50_1)
-	local var_50_1 = arg_50_0:getDiscountTime10Server(arg_50_1)
+function SummonMainModel:getDiscountCost10(poolId, index)
+	local disCountTimeconfig = self:getDiscountTime10(poolId)
+	local disCountTimeServer = self:getDiscountTime10Server(poolId)
+	local disTime = index or disCountTimeconfig - disCountTimeServer + 1
 
-	if var_50_0 >= (arg_50_2 or var_50_0 - var_50_1 + 1) then
-		local var_50_2 = SummonConfig.instance:getSummonPool(arg_50_1)
+	if disTime <= disCountTimeconfig then
+		local co = SummonConfig.instance:getSummonPool(poolId)
 
-		if var_50_2 then
-			local var_50_3 = var_50_2.discountCost10
-			local var_50_4 = string.splitToNumber(var_50_3, "#")
+		if co then
+			local discountCost10 = co.discountCost10
+			local cost = string.splitToNumber(discountCost10, "#")
 
-			if var_50_4 then
-				return var_50_4[3]
+			if cost then
+				return cost[3]
 			end
 		end
 	end
@@ -624,213 +634,217 @@ function var_0_0.getDiscountCost10(arg_50_0, arg_50_1, arg_50_2)
 	return -1
 end
 
-function var_0_0.getCostByConfig(arg_51_0, arg_51_1)
-	if string.nilorempty(arg_51_0) then
+function SummonMainModel.getCostByConfig(costs, isGetFirstCost)
+	if string.nilorempty(costs) then
 		logError("no summon cost config")
 
 		return
 	end
 
-	arg_51_1 = arg_51_1 == true
+	isGetFirstCost = isGetFirstCost == true
 
-	local var_51_0 = string.split(arg_51_0, "|")
-	local var_51_1 = {}
-	local var_51_2 = {}
-	local var_51_3 = arg_51_1 and {} or nil
-	local var_51_4 = arg_51_1 and {} or nil
+	local costs = string.split(costs, "|")
+	local costsNumDict = {}
+	local itemCostFlagDict = {}
+	local firstIdDict = isGetFirstCost and {} or nil
+	local firstTypeDict = isGetFirstCost and {} or nil
 
-	for iter_51_0, iter_51_1 in ipairs(var_51_0) do
-		local var_51_5 = string.splitToNumber(iter_51_1, "#")
-		local var_51_6 = var_51_5[1]
-		local var_51_7 = var_51_5[2]
-		local var_51_8 = var_51_5[3]
-		local var_51_9 = ItemModel.instance:getItemQuantity(var_51_6, var_51_7)
-		local var_51_10 = (var_51_1[var_51_8] or 0) + var_51_9
+	for i, costStr in ipairs(costs) do
+		local cost = string.splitToNumber(costStr, "#")
+		local cost_type, cost_id, cost_num = cost[1], cost[2], cost[3]
+		local count = ItemModel.instance:getItemQuantity(cost_type, cost_id)
+		local ownNum = (costsNumDict[cost_num] or 0) + count
 
-		if arg_51_1 and var_51_9 > 0 and not var_51_3[var_51_8] then
-			var_51_3[var_51_8] = var_51_7
-			var_51_4[var_51_8] = var_51_6
+		if isGetFirstCost and count > 0 and not firstIdDict[cost_num] then
+			firstIdDict[cost_num] = cost_id
+			firstTypeDict[cost_num] = cost_type
 		end
 
-		if iter_51_0 >= #var_51_0 or var_51_8 <= var_51_10 then
-			if arg_51_1 then
-				var_51_7 = var_51_3[var_51_8] or var_51_7
-				var_51_6 = var_51_4[var_51_8] or var_51_6
+		if i >= #costs or cost_num <= ownNum then
+			if isGetFirstCost then
+				cost_id = firstIdDict[cost_num] or cost_id
+				cost_type = firstTypeDict[cost_num] or cost_type
 			end
 
-			return var_51_6, var_51_7, var_51_8, var_51_10
+			return cost_type, cost_id, cost_num, ownNum
 		end
 
-		if not var_51_2[iter_51_1] then
-			var_51_2[iter_51_1] = true
-			var_51_1[var_51_8] = var_51_10
+		if not itemCostFlagDict[costStr] then
+			itemCostFlagDict[costStr] = true
+			costsNumDict[cost_num] = ownNum
 		end
 	end
 end
 
-function var_0_0.getLastCostByConfig(arg_52_0)
-	if string.nilorempty(arg_52_0) then
+function SummonMainModel.getLastCostByConfig(costs)
+	if string.nilorempty(costs) then
 		logError("no summon cost config")
 
 		return
 	end
 
-	local var_52_0 = string.split(arg_52_0, "|")
-	local var_52_1 = string.splitToNumber(var_52_0[#var_52_0], "#")
-	local var_52_2 = var_52_1[1]
-	local var_52_3 = var_52_1[2]
-	local var_52_4 = var_52_1[3]
+	local costs = string.split(costs, "|")
+	local cost = string.splitToNumber(costs[#costs], "#")
+	local cost_type, cost_id, cost_num = cost[1], cost[2], cost[3]
 
-	return var_52_2, var_52_3, var_52_4
+	return cost_type, cost_id, cost_num
 end
 
-function var_0_0.getSummonItemIcon(arg_53_0, arg_53_1)
-	arg_53_0 = tonumber(arg_53_0)
-	arg_53_1 = tonumber(arg_53_1)
+function SummonMainModel.getSummonItemIcon(itemType, id)
+	itemType = tonumber(itemType)
+	id = tonumber(id)
 
-	local var_53_0 = ItemModel.instance:getItemConfig(arg_53_0, arg_53_1)
+	local config = ItemModel.instance:getItemConfig(itemType, id)
 
-	if not var_53_0 then
-		logError(string.format("getSummonItemIcon no config itemType:%s,id:%s", arg_53_0, arg_53_1))
+	if not config then
+		logError(string.format("getSummonItemIcon no config itemType:%s,id:%s", itemType, id))
 
 		return
 	end
 
-	local var_53_1
+	local icon
 
-	if arg_53_0 == MaterialEnum.MaterialType.Item then
-		var_53_1 = ItemModel.instance:getItemSmallIcon(arg_53_1)
-	elseif arg_53_0 == MaterialEnum.MaterialType.Currency then
-		var_53_1 = ResUrl.getCurrencyItemIcon(var_53_0.icon)
+	if itemType == MaterialEnum.MaterialType.Item then
+		icon = ItemModel.instance:getItemSmallIcon(id)
+	elseif itemType == MaterialEnum.MaterialType.Currency then
+		icon = ResUrl.getCurrencyItemIcon(config.icon)
 	else
-		var_53_1 = ResUrl.getSpecialPropItemIcon(var_53_0.icon)
+		icon = ResUrl.getSpecialPropItemIcon(config.icon)
 	end
 
-	return var_53_1
+	return icon
 end
 
-function var_0_0.getResultType(arg_54_0)
-	return SummonEnum.Type2Result[arg_54_0.type] or SummonEnum.ResultType.Char
+function SummonMainModel.getResultType(co)
+	local tabIndex = SummonEnum.Type2Result[co.type]
+
+	tabIndex = tabIndex or SummonEnum.ResultType.Char
+
+	return tabIndex
 end
 
-function var_0_0.getResultTypeById(arg_55_0)
-	if arg_55_0 then
-		local var_55_0 = SummonConfig.instance:getSummonPool(arg_55_0)
+function SummonMainModel.getResultTypeById(poolId)
+	if poolId then
+		local co = SummonConfig.instance:getSummonPool(poolId)
 
-		if var_55_0 then
-			return (var_0_0.getResultType(var_55_0))
+		if co then
+			local resultType = SummonMainModel.getResultType(co)
+
+			return resultType
 		else
-			logError("can't find summon pool config : [" .. tostring(arg_55_0) .. "]")
+			logError("can't find summon pool config : [" .. tostring(poolId) .. "]")
 		end
 	end
 
 	return SummonEnum.ResultType.Char
 end
 
-function var_0_0.isProbUp(arg_56_0)
-	local var_56_0 = var_0_0.getADPageTabIndex(arg_56_0)
+function SummonMainModel.isProbUp(poolCo)
+	local tabIndex = SummonMainModel.getADPageTabIndex(poolCo)
 
-	return var_56_0 == SummonEnum.TabContentIndex.CharProbUp or var_56_0 == SummonEnum.TabContentIndex.EquipProbUp or var_56_0 == SummonEnum.TabContentIndex.DoubleSsrUp
+	return tabIndex == SummonEnum.TabContentIndex.CharProbUp or tabIndex == SummonEnum.TabContentIndex.EquipProbUp or tabIndex == SummonEnum.TabContentIndex.DoubleSsrUp
 end
 
-function var_0_0.getCostCurrencyParam(arg_57_0)
-	local var_57_0 = {}
+function SummonMainModel.getCostCurrencyParam(pool)
+	local result = {}
 
-	if arg_57_0 then
-		local var_57_1 = {}
+	if pool then
+		local costSet = {}
 
-		var_0_0.addCurrencyByCostStr(var_57_0, arg_57_0.cost1, var_57_1)
+		SummonMainModel.addCurrencyByCostStr(result, pool.cost1, costSet)
 	else
-		table.insert(var_57_0, {
+		table.insert(result, {
 			id = 140001,
 			isIcon = true,
 			type = MaterialEnum.MaterialType.Item,
-			jumpFunc = var_0_0.jumpToSummonCostShop
+			jumpFunc = SummonMainModel.jumpToSummonCostShop
 		})
-		table.insert(var_57_0, {
+		table.insert(result, {
 			id = 140002,
 			isIcon = true,
 			type = MaterialEnum.MaterialType.Item,
-			jumpFunc = var_0_0.jumpToSummonCostShop
+			jumpFunc = SummonMainModel.jumpToSummonCostShop
 		})
 	end
 
-	table.insert(var_57_0, CurrencyEnum.CurrencyType.Diamond)
-	table.insert(var_57_0, CurrencyEnum.CurrencyType.FreeDiamondCoupon)
+	table.insert(result, CurrencyEnum.CurrencyType.Diamond)
+	table.insert(result, CurrencyEnum.CurrencyType.FreeDiamondCoupon)
 
-	return var_57_0
+	return result
 end
 
-function var_0_0.jumpToSummonCostShop()
+function SummonMainModel.jumpToSummonCostShop()
 	StoreController.instance:checkAndOpenStoreView(StoreEnum.StoreId.SummonCost)
 end
 
-function var_0_0._isCurrencyHideAddBtn(arg_59_0)
-	if tabletool.indexOf(SummonEnum.CurrencyShowAddItemIds, arg_59_0) then
+function SummonMainModel._isCurrencyHideAddBtn(itemId)
+	if tabletool.indexOf(SummonEnum.CurrencyShowAddItemIds, itemId) then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0._isCurrencyShow(arg_60_0, arg_60_1)
-	if tabletool.indexOf(SummonEnum.CurrencyShowAddItemIds, arg_60_1) then
+function SummonMainModel._isCurrencyShow(itemType, itemId)
+	if tabletool.indexOf(SummonEnum.CurrencyShowAddItemIds, itemId) then
 		return true
 	end
 
-	local var_60_0 = ItemModel.instance:getItemQuantity(arg_60_0, arg_60_1)
+	local count = ItemModel.instance:getItemQuantity(itemType, itemId)
 
-	if var_60_0 and var_60_0 > 0 then
+	if count and count > 0 then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.addCurrencyByCostStr(arg_61_0, arg_61_1, arg_61_2)
-	if not string.nilorempty(arg_61_1) then
-		local var_61_0 = string.split(arg_61_1, "|")
+function SummonMainModel.addCurrencyByCostStr(result, costCfgStr, costSet)
+	if not string.nilorempty(costCfgStr) then
+		local costs = string.split(costCfgStr, "|")
 
-		for iter_61_0, iter_61_1 in ipairs(var_61_0) do
-			local var_61_1 = string.splitToNumber(iter_61_1, "#")
-			local var_61_2 = var_61_1[1]
-			local var_61_3 = var_61_1[2]
-			local var_61_4 = var_61_1[3]
+		for _, costStr in ipairs(costs) do
+			local cost = string.splitToNumber(costStr, "#")
+			local cost_type, cost_id, cost_num = cost[1], cost[2], cost[3]
 
-			if not arg_61_2[var_61_3] then
-				if var_0_0._isCurrencyShow(var_61_2, var_61_3) then
-					local var_61_5 = var_0_0._isCurrencyHideAddBtn(var_61_3)
+			if not costSet[cost_id] then
+				if SummonMainModel._isCurrencyShow(cost_type, cost_id) then
+					local isHideAddBtn = SummonMainModel._isCurrencyHideAddBtn(cost_id)
 
-					table.insert(arg_61_0, {
+					table.insert(result, {
 						isIcon = true,
-						id = var_61_3,
-						type = var_61_2,
-						isHideAddBtn = var_61_5,
-						jumpFunc = var_0_0.jumpToSummonCostShop
+						id = cost_id,
+						type = cost_type,
+						isHideAddBtn = isHideAddBtn,
+						jumpFunc = SummonMainModel.jumpToSummonCostShop
 					})
 				end
 
-				arg_61_2[var_61_3] = true
+				costSet[cost_id] = true
 			end
 		end
 	end
 end
 
-function var_0_0.getCurrencyByCost(arg_62_0, arg_62_1)
-	return {
+function SummonMainModel.getCurrencyByCost(cost_type, cost_id)
+	local data = {
 		isIcon = true,
-		id = arg_62_1,
-		type = arg_62_0,
-		jumpFunc = var_0_0.jumpToSummonCostShop
+		id = cost_id,
+		type = cost_type,
+		jumpFunc = SummonMainModel.jumpToSummonCostShop
 	}
+
+	return data
 end
 
-function var_0_0.entryNeedReddot(arg_63_0)
-	local var_63_0 = arg_63_0:getServerMOMap()
+function SummonMainModel:entryNeedReddot()
+	local serverMap = self:getServerMOMap()
 
-	if var_63_0 then
-		for iter_63_0, iter_63_1 in pairs(var_63_0) do
-			if var_0_0.needShowReddot(iter_63_1) then
+	if serverMap then
+		for poolId, summonMO in pairs(serverMap) do
+			local needShow = SummonMainModel.needShowReddot(summonMO)
+
+			if needShow then
 				return true
 			end
 		end
@@ -839,40 +853,40 @@ function var_0_0.entryNeedReddot(arg_63_0)
 	return false
 end
 
-function var_0_0.needShowReddot(arg_64_0)
-	if not arg_64_0:isOpening() then
+function SummonMainModel.needShowReddot(summonMO)
+	if not summonMO:isOpening() then
 		return false
 	end
 
-	if arg_64_0.luckyBagMO and arg_64_0.luckyBagMO:isGot() and not arg_64_0.luckyBagMO:isOpened() then
+	if summonMO.luckyBagMO and summonMO.luckyBagMO:isGot() and not summonMO.luckyBagMO:isOpened() then
 		return true
 	end
 
-	if arg_64_0.haveFree then
+	if summonMO.haveFree then
 		return true
 	end
 
-	if arg_64_0:isHasProgressReward() then
+	if summonMO:isHasProgressReward() then
 		return true
 	end
 
-	local var_64_0 = StoreConfig.instance:getCharageGoodsCfgListByPoolId(arg_64_0.id)
+	local goodsCfgList = StoreConfig.instance:getCharageGoodsCfgListByPoolId(summonMO.id)
 
-	if var_64_0 then
-		for iter_64_0, iter_64_1 in ipairs(var_64_0) do
-			if StoreCharageConditionalHelper.isHasCanFinishGoodsTask(iter_64_1.id) then
+	if goodsCfgList then
+		for _, goodsCfg in ipairs(goodsCfgList) do
+			if StoreCharageConditionalHelper.isHasCanFinishGoodsTask(goodsCfg.id) then
 				return true
 			end
 		end
 	end
 
-	if StoreGoodsTaskController.instance:isHasNewRedDotByPoolId(arg_64_0.id) then
+	if StoreGoodsTaskController.instance:isHasNewRedDotByPoolId(summonMO.id) then
 		return true
 	end
 
 	return false
 end
 
-var_0_0.instance = var_0_0.New()
+SummonMainModel.instance = SummonMainModel.New()
 
-return var_0_0
+return SummonMainModel

@@ -1,50 +1,53 @@
-﻿module("modules.logic.guide.controller.action.impl.GuideActionPlayEffect", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/GuideActionPlayEffect.lua
 
-local var_0_0 = class("GuideActionPlayEffect", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.GuideActionPlayEffect", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+local GuideActionPlayEffect = class("GuideActionPlayEffect", BaseGuideAction)
 
-	local var_1_0 = string.split(arg_1_0.actionParam, "#")
+function GuideActionPlayEffect:onStart(context)
+	GuideActionPlayEffect.super.onStart(self, context)
 
-	arg_1_0._effectRoot = var_1_0[1]
-	arg_1_0._effectPathList = string.split(var_1_0[2], ",")
-	arg_1_0._effectGoList = {}
+	local temp = string.split(self.actionParam, "#")
 
-	local var_1_1 = MultiAbLoader.New()
+	self._effectRoot = temp[1]
+	self._effectPathList = string.split(temp[2], ",")
+	self._effectGoList = {}
 
-	arg_1_0._loader = var_1_1
+	local loader = MultiAbLoader.New()
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_0._effectPathList) do
-		var_1_1:addPath(iter_1_1)
+	self._loader = loader
+
+	for i, v in ipairs(self._effectPathList) do
+		loader:addPath(v)
 	end
 
-	var_1_1:startLoad(arg_1_0._loadedFinish, arg_1_0)
-	arg_1_0:onDone(true)
+	loader:startLoad(self._loadedFinish, self)
+	self:onDone(true)
 end
 
-function var_0_0._loadedFinish(arg_2_0, arg_2_1)
-	local var_2_0 = gohelper.find(arg_2_0._effectRoot)
+function GuideActionPlayEffect:_loadedFinish(multiAbLoader)
+	local rootGo = gohelper.find(self._effectRoot)
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0._effectPathList) do
-		local var_2_1 = arg_2_0._loader:getAssetItem(iter_2_1):GetResource(iter_2_1)
+	for i, v in ipairs(self._effectPathList) do
+		local assetItem = self._loader:getAssetItem(v)
+		local mainPrefab = assetItem:GetResource(v)
 
-		table.insert(arg_2_0._effectGoList, gohelper.clone(var_2_1, var_2_0))
+		table.insert(self._effectGoList, gohelper.clone(mainPrefab, rootGo))
 	end
 end
 
-function var_0_0.onDestroy(arg_3_0)
-	var_0_0.super.onDestroy(arg_3_0)
+function GuideActionPlayEffect:onDestroy()
+	GuideActionPlayEffect.super.onDestroy(self)
 
-	if arg_3_0._loader then
-		arg_3_0._loader:dispose()
+	if self._loader then
+		self._loader:dispose()
 	end
 
-	if arg_3_0._effectGoList then
-		for iter_3_0, iter_3_1 in ipairs(arg_3_0._effectGoList) do
-			UnityEngine.GameObject.Destroy(iter_3_1)
+	if self._effectGoList then
+		for i, v in ipairs(self._effectGoList) do
+			UnityEngine.GameObject.Destroy(v)
 		end
 	end
 end
 
-return var_0_0
+return GuideActionPlayEffect

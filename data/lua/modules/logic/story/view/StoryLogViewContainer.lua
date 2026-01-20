@@ -1,21 +1,23 @@
-﻿module("modules.logic.story.view.StoryLogViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/story/view/StoryLogViewContainer.lua
 
-local var_0_0 = class("StoryLogViewContainer", BaseViewContainer)
+module("modules.logic.story.view.StoryLogViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = MixScrollParam.New()
+local StoryLogViewContainer = class("StoryLogViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "#scroll_log"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_1.cellClass = StoryLogItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
+function StoryLogViewContainer:buildViews()
+	local views = {}
+	local scrollParam = MixScrollParam.New()
 
-	table.insert(var_1_0, LuaMixScrollView.New(StoryLogListModel.instance, var_1_1))
-	table.insert(var_1_0, StoryLogView.New())
+	scrollParam.scrollGOPath = "#scroll_log"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = StoryLogItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
 
-	return var_1_0
+	table.insert(views, LuaMixScrollView.New(StoryLogListModel.instance, scrollParam))
+	table.insert(views, StoryLogView.New())
+
+	return views
 end
 
-return var_0_0
+return StoryLogViewContainer

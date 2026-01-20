@@ -1,26 +1,28 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114WaitStoryCloseEndWork", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/system/work/Activity114WaitStoryCloseEndWork.lua
 
-local var_0_0 = class("Activity114WaitStoryCloseEndWork", Activity114BaseWork)
+module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114WaitStoryCloseEndWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
+local Activity114WaitStoryCloseEndWork = class("Activity114WaitStoryCloseEndWork", Activity114BaseWork)
+
+function Activity114WaitStoryCloseEndWork:onStart(context)
 	if ViewMgr.instance:isOpen(ViewName.StoryView) or ViewMgr.instance:isOpen(ViewName.StoryHeroView) then
-		ViewMgr.instance:registerCallback(ViewEvent.DestroyViewFinish, arg_1_0._onCloseViewFinish, arg_1_0)
+		ViewMgr.instance:registerCallback(ViewEvent.DestroyViewFinish, self._onCloseViewFinish, self)
 	else
-		arg_1_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._onCloseViewFinish(arg_2_0)
+function Activity114WaitStoryCloseEndWork:_onCloseViewFinish()
 	if ViewMgr.instance:isOpen(ViewName.StoryView) or ViewMgr.instance:isOpen(ViewName.StoryHeroView) then
 		return
 	end
 
-	Activity114Controller.instance:unregisterCallback(Activity114Event.StoryFinish, arg_2_0._onCloseViewFinish, arg_2_0)
-	arg_2_0:onDone(true)
+	Activity114Controller.instance:unregisterCallback(Activity114Event.StoryFinish, self._onCloseViewFinish, self)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
-	Activity114Controller.instance:unregisterCallback(Activity114Event.StoryFinish, arg_3_0._onCloseViewFinish, arg_3_0)
+function Activity114WaitStoryCloseEndWork:clearWork()
+	Activity114Controller.instance:unregisterCallback(Activity114Event.StoryFinish, self._onCloseViewFinish, self)
 end
 
-return var_0_0
+return Activity114WaitStoryCloseEndWork

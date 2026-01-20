@@ -1,43 +1,45 @@
-﻿module("modules.logic.fight.controller.replay.FightReplyWorkBloodPoolSkill", package.seeall)
+﻿-- chunkname: @modules/logic/fight/controller/replay/FightReplyWorkBloodPoolSkill.lua
 
-local var_0_0 = class("FightReplyWorkBloodPoolSkill", BaseWork)
+module("modules.logic.fight.controller.replay.FightReplyWorkBloodPoolSkill", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._beginRoundOp = arg_1_1
+local FightReplyWorkBloodPoolSkill = class("FightReplyWorkBloodPoolSkill", BaseWork)
+
+function FightReplyWorkBloodPoolSkill:ctor(beginRoundOp)
+	self._beginRoundOp = beginRoundOp
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
+function FightReplyWorkBloodPoolSkill:onStart(entity)
 	if FightDataHelper.operationDataMgr:isCardOpEnd() then
-		arg_2_0:onDone(true)
+		self:onDone(true)
 
 		return
 	end
 
-	if not arg_2_0._beginRoundOp then
-		return arg_2_0:onDone(true)
+	if not self._beginRoundOp then
+		return self:onDone(true)
 	end
 
-	FightController.instance:dispatchEvent(FightEvent.AutoToSelectSkillTarget, arg_2_0._beginRoundOp.toId)
-	TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 3)
+	FightController.instance:dispatchEvent(FightEvent.AutoToSelectSkillTarget, self._beginRoundOp.toId)
+	TaskDispatcher.runDelay(self._delayDone, self, 3)
 
-	local var_2_0 = FightHelper.getBloodPoolSkillId()
-	local var_2_1 = FightDataHelper.operationDataMgr:newOperation()
+	local bloodPoolSkillId = FightHelper.getBloodPoolSkillId()
+	local op = FightDataHelper.operationDataMgr:newOperation()
 
-	var_2_1:playBloodPoolCard(var_2_0)
-	FightController.instance:dispatchEvent(FightEvent.AddPlayOperationData, var_2_1)
+	op:playBloodPoolCard(bloodPoolSkillId)
+	FightController.instance:dispatchEvent(FightEvent.AddPlayOperationData, op)
 	FightController.instance:dispatchEvent(FightEvent.onNoActCostMoveFlowOver)
-	FightController.instance:dispatchEvent(FightEvent.RefreshPlayCardRoundOp, var_2_1)
-	FightController.instance:dispatchEvent(FightEvent.OnPlayAssistBossCardFlowDone, var_2_1)
+	FightController.instance:dispatchEvent(FightEvent.RefreshPlayCardRoundOp, op)
+	FightController.instance:dispatchEvent(FightEvent.OnPlayAssistBossCardFlowDone, op)
 	FightDataHelper.bloodPoolDataMgr:playBloodPoolCard()
-	arg_2_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0._delayDone(arg_3_0)
-	arg_3_0:onDone(true)
+function FightReplyWorkBloodPoolSkill:_delayDone()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._delayDone, arg_4_0)
+function FightReplyWorkBloodPoolSkill:clearWork()
+	TaskDispatcher.cancelTask(self._delayDone, self)
 end
 
-return var_0_0
+return FightReplyWorkBloodPoolSkill

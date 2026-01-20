@@ -1,123 +1,125 @@
-﻿module("modules.logic.store.controller.StoreGoodsTaskController", package.seeall)
+﻿-- chunkname: @modules/logic/store/controller/StoreGoodsTaskController.lua
 
-local var_0_0 = class("StoreGoodsTaskController", BaseController)
+module("modules.logic.store.controller.StoreGoodsTaskController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local StoreGoodsTaskController = class("StoreGoodsTaskController", BaseController)
+
+function StoreGoodsTaskController:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function StoreGoodsTaskController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
-	TaskController.instance:registerCallback(TaskEvent.UpdateTaskList, arg_3_0._onUpdateTaskList, arg_3_0)
-	StoreController.instance:registerCallback(StoreEvent.StoreInfoChanged, arg_3_0._onStoreInfoChanged, arg_3_0)
-	OpenController.instance:registerCallback(OpenEvent.GetOpenInfoSuccess, arg_3_0._onStoreInfoChanged, arg_3_0)
-	TaskController.instance:registerCallback(TaskEvent.OnFinishTask, arg_3_0._onFinishTask, arg_3_0)
-	SummonController.instance:registerCallback(SummonEvent.onSummonProgressRewards, arg_3_0.waitUpdateRedDot, arg_3_0)
-	SummonController.instance:registerCallback(SummonEvent.onReceiveSummonReply, arg_3_0._onCancelWaitRewardTask, arg_3_0)
+function StoreGoodsTaskController:addConstEvents()
+	TaskController.instance:registerCallback(TaskEvent.UpdateTaskList, self._onUpdateTaskList, self)
+	StoreController.instance:registerCallback(StoreEvent.StoreInfoChanged, self._onStoreInfoChanged, self)
+	OpenController.instance:registerCallback(OpenEvent.GetOpenInfoSuccess, self._onStoreInfoChanged, self)
+	TaskController.instance:registerCallback(TaskEvent.OnFinishTask, self._onFinishTask, self)
+	SummonController.instance:registerCallback(SummonEvent.onSummonProgressRewards, self.waitUpdateRedDot, self)
+	SummonController.instance:registerCallback(SummonEvent.onReceiveSummonReply, self._onCancelWaitRewardTask, self)
 end
 
-function var_0_0.reInit(arg_4_0)
-	arg_4_0._isRunUdateInfo = false
-	arg_4_0._waitRewardtaskIdList = nil
-	arg_4_0._lockSendTaskTimeDict = nil
+function StoreGoodsTaskController:reInit()
+	self._isRunUdateInfo = false
+	self._waitRewardtaskIdList = nil
+	self._lockSendTaskTimeDict = nil
 end
 
-function var_0_0._onStoreInfoChanged(arg_5_0)
-	if not arg_5_0._isRunUdateInfo then
-		arg_5_0._isRunUdateInfo = true
+function StoreGoodsTaskController:_onStoreInfoChanged()
+	if not self._isRunUdateInfo then
+		self._isRunUdateInfo = true
 
-		arg_5_0:requestGoodsTaskList()
+		self:requestGoodsTaskList()
 	end
 end
 
-function var_0_0._onFinishTask(arg_6_0, arg_6_1)
-	if StoreConfig.instance:getChargeConditionalConfig(arg_6_1) then
-		arg_6_0:waitUpdateRedDot()
+function StoreGoodsTaskController:_onFinishTask(taskId)
+	if StoreConfig.instance:getChargeConditionalConfig(taskId) then
+		self:waitUpdateRedDot()
 	end
 end
 
-function var_0_0._onCancelWaitRewardTask(arg_7_0)
-	if arg_7_0._waitRewardtaskIdList then
-		arg_7_0._waitRewardtaskIdList = nil
+function StoreGoodsTaskController:_onCancelWaitRewardTask()
+	if self._waitRewardtaskIdList then
+		self._waitRewardtaskIdList = nil
 
-		TaskDispatcher.cancelTask(arg_7_0._onRunwaitRewardTask, arg_7_0)
+		TaskDispatcher.cancelTask(self._onRunwaitRewardTask, self)
 	end
 end
 
-function var_0_0._onUpdateTaskList(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_1 and arg_8_1.taskInfo
+function StoreGoodsTaskController:_onUpdateTaskList(msg)
+	local taskInfoList = msg and msg.taskInfo
 
-	if not var_8_0 then
+	if not taskInfoList then
 		return
 	end
 
-	local var_8_1 = StoreConfig.instance
+	local tStoreConfig = StoreConfig.instance
 
-	for iter_8_0 = 1, #var_8_0 do
-		local var_8_2 = var_8_0[iter_8_0]
+	for i = 1, #taskInfoList do
+		local taskInfo = taskInfoList[i]
 
-		if var_8_1:getChargeConditionalConfig(var_8_2.id) then
-			if var_8_2.progress > var_8_2.finishCount then
-				if arg_8_0._waitRewardtaskIdList == nil then
-					arg_8_0._waitRewardtaskIdList = {}
+		if tStoreConfig:getChargeConditionalConfig(taskInfo.id) then
+			if taskInfo.progress > taskInfo.finishCount then
+				if self._waitRewardtaskIdList == nil then
+					self._waitRewardtaskIdList = {}
 
-					TaskDispatcher.runDelay(arg_8_0._onRunwaitRewardTask, arg_8_0, 0.1)
+					TaskDispatcher.runDelay(self._onRunwaitRewardTask, self, 0.1)
 				end
 
-				if not tabletool.indexOf(arg_8_0._waitRewardtaskIdList) then
-					table.insert(arg_8_0._waitRewardtaskIdList, var_8_2.id)
+				if not tabletool.indexOf(self._waitRewardtaskIdList) then
+					table.insert(self._waitRewardtaskIdList, taskInfo.id)
 				end
 			end
 
-			arg_8_0:waitUpdateRedDot()
+			self:waitUpdateRedDot()
 		end
 	end
 end
 
-function var_0_0._onRunwaitRewardTask(arg_9_0)
-	local var_9_0 = arg_9_0._waitRewardtaskIdList
+function StoreGoodsTaskController:_onRunwaitRewardTask()
+	local taskIdList = self._waitRewardtaskIdList
 
-	arg_9_0._waitRewardtaskIdList = nil
+	self._waitRewardtaskIdList = nil
 
-	if var_9_0 then
-		for iter_9_0, iter_9_1 in ipairs(var_9_0) do
-			arg_9_0:_sendFinishTaskRequest(iter_9_1)
+	if taskIdList then
+		for _, taskid in ipairs(taskIdList) do
+			self:_sendFinishTaskRequest(taskid)
 		end
 	end
 end
 
-function var_0_0._sendFinishTaskRequest(arg_10_0, arg_10_1)
-	arg_10_0._lockSendTaskTimeDict = arg_10_0._lockSendTaskTimeDict or {}
+function StoreGoodsTaskController:_sendFinishTaskRequest(taskid)
+	self._lockSendTaskTimeDict = self._lockSendTaskTimeDict or {}
 
-	if not arg_10_0._lockSendTaskTimeDict[arg_10_1] or arg_10_0._lockSendTaskTimeDict[arg_10_1] < Time.time then
-		arg_10_0._lockSendTaskTimeDict[arg_10_1] = Time.time + 3
+	if not self._lockSendTaskTimeDict[taskid] or self._lockSendTaskTimeDict[taskid] < Time.time then
+		self._lockSendTaskTimeDict[taskid] = Time.time + 3
 
-		TaskRpc.instance:sendFinishTaskRequest(arg_10_1)
+		TaskRpc.instance:sendFinishTaskRequest(taskid)
 	end
 end
 
-function var_0_0._getKeyPoolId(arg_11_0, arg_11_1)
-	arg_11_1 = arg_11_1 or 0
+function StoreGoodsTaskController:_getKeyPoolId(poolId)
+	poolId = poolId or 0
 
-	return PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.StoreGoodsTaskPoolNewRed .. arg_11_1)
+	return PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.StoreGoodsTaskPoolNewRed .. poolId)
 end
 
-function var_0_0.clearNewRedDotByPoolId(arg_12_0, arg_12_1)
-	PlayerPrefsHelper.setNumber(arg_12_0:_getKeyPoolId(arg_12_1), 1)
+function StoreGoodsTaskController:clearNewRedDotByPoolId(poolId)
+	PlayerPrefsHelper.setNumber(self:_getKeyPoolId(poolId), 1)
 end
 
-function var_0_0.isHasNewRedDotByPoolId(arg_13_0, arg_13_1)
-	local var_13_0 = StoreConfig.instance:getCharageGoodsCfgListByPoolId(arg_13_1)
+function StoreGoodsTaskController:isHasNewRedDotByPoolId(poolId)
+	local goodsCfgList = StoreConfig.instance:getCharageGoodsCfgListByPoolId(poolId)
 
-	if var_13_0 and PlayerPrefsHelper.getNumber(arg_13_0:_getKeyPoolId(arg_13_1), 0) == 0 and not SummonModel.instance:getSummonFullExSkillHero(arg_13_1) then
-		for iter_13_0, iter_13_1 in ipairs(var_13_0) do
-			local var_13_1 = iter_13_1.id
-			local var_13_2 = StoreModel.instance:getGoodsMO(var_13_1)
+	if goodsCfgList and PlayerPrefsHelper.getNumber(self:_getKeyPoolId(poolId), 0) == 0 and not SummonModel.instance:getSummonFullExSkillHero(poolId) then
+		for _, goodsCfg in ipairs(goodsCfgList) do
+			local goodsId = goodsCfg.id
+			local storePackageGoodsMO = StoreModel.instance:getGoodsMO(goodsId)
 
-			if var_13_2 and var_13_2.buyCount == 0 and StoreCharageConditionalHelper.isCharageCondition(var_13_1) then
+			if storePackageGoodsMO and storePackageGoodsMO.buyCount == 0 and StoreCharageConditionalHelper.isCharageCondition(goodsId) then
 				return true
 			end
 		end
@@ -126,26 +128,26 @@ function var_0_0.isHasNewRedDotByPoolId(arg_13_0, arg_13_1)
 	return false
 end
 
-function var_0_0.waitUpdateRedDot(arg_14_0)
-	if not arg_14_0._isHasWaitUpdateRedDoTask then
-		arg_14_0._isHasWaitUpdateRedDoTask = true
+function StoreGoodsTaskController:waitUpdateRedDot()
+	if not self._isHasWaitUpdateRedDoTask then
+		self._isHasWaitUpdateRedDoTask = true
 
-		TaskDispatcher.runDelay(arg_14_0._onWaitUpdateRedDot, arg_14_0, 0.2)
+		TaskDispatcher.runDelay(self._onWaitUpdateRedDot, self, 0.2)
 	end
 end
 
-function var_0_0._onWaitUpdateRedDot(arg_15_0)
-	arg_15_0._isHasWaitUpdateRedDoTask = false
+function StoreGoodsTaskController:_onWaitUpdateRedDot()
+	self._isHasWaitUpdateRedDoTask = false
 
 	RedDotController.instance:dispatchEvent(RedDotEvent.RefreshClientCharacterDot)
 end
 
-function var_0_0.isHasCanFinishTaskByPoolId(arg_16_0, arg_16_1)
-	local var_16_0 = StoreConfig.instance:getCharageGoodsCfgListByPoolId(arg_16_1)
+function StoreGoodsTaskController:isHasCanFinishTaskByPoolId(poolId)
+	local goodsCfgList = StoreConfig.instance:getCharageGoodsCfgListByPoolId(poolId)
 
-	if var_16_0 then
-		for iter_16_0, iter_16_1 in ipairs(var_16_0) do
-			if StoreCharageConditionalHelper.isHasCanFinishGoodsTask(iter_16_1.id) then
+	if goodsCfgList then
+		for _, goodsCfg in ipairs(goodsCfgList) do
+			if StoreCharageConditionalHelper.isHasCanFinishGoodsTask(goodsCfg.id) then
 				return true
 			end
 		end
@@ -154,35 +156,35 @@ function var_0_0.isHasCanFinishTaskByPoolId(arg_16_0, arg_16_1)
 	return false
 end
 
-function var_0_0.autoFinishTaskByPoolId(arg_17_0, arg_17_1)
-	local var_17_0 = false
-	local var_17_1 = StoreConfig.instance:getCharageGoodsCfgListByPoolId(arg_17_1)
+function StoreGoodsTaskController:autoFinishTaskByPoolId(poolId)
+	local flag = false
+	local goodsCfgList = StoreConfig.instance:getCharageGoodsCfgListByPoolId(poolId)
 
-	if var_17_1 then
-		for iter_17_0, iter_17_1 in ipairs(var_17_1) do
-			if StoreCharageConditionalHelper.isHasCanFinishGoodsTask(iter_17_1.id) then
-				var_17_0 = true
+	if goodsCfgList then
+		for _, goodsCfg in ipairs(goodsCfgList) do
+			if StoreCharageConditionalHelper.isHasCanFinishGoodsTask(goodsCfg.id) then
+				flag = true
 
-				arg_17_0:_sendFinishTaskRequest(iter_17_1.taskid)
+				self:_sendFinishTaskRequest(goodsCfg.taskid)
 			end
 		end
 	end
 
-	if var_17_0 then
-		arg_17_0:requestGoodsTaskList()
+	if flag then
+		self:requestGoodsTaskList()
 	end
 
-	return var_17_0
+	return flag
 end
 
-function var_0_0.requestGoodsTaskList(arg_18_0, arg_18_1, arg_18_2)
-	local var_18_0 = {
+function StoreGoodsTaskController:requestGoodsTaskList(callback, callbackObj)
+	local typeIds = {
 		TaskEnum.TaskType.StoreLinkPackage
 	}
 
-	TaskRpc.instance:sendGetTaskInfoRequest(var_18_0, arg_18_1, arg_18_2)
+	TaskRpc.instance:sendGetTaskInfoRequest(typeIds, callback, callbackObj)
 end
 
-var_0_0.instance = var_0_0.New()
+StoreGoodsTaskController.instance = StoreGoodsTaskController.New()
 
-return var_0_0
+return StoreGoodsTaskController

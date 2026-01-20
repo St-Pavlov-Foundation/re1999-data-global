@@ -1,12 +1,14 @@
-﻿module("modules.logic.room.utils.pathfinding.RoomAStarHelper", package.seeall)
+﻿-- chunkname: @modules/logic/room/utils/pathfinding/RoomAStarHelper.lua
 
-local var_0_0 = {}
+module("modules.logic.room.utils.pathfinding.RoomAStarHelper", package.seeall)
 
-var_0_0._walkableTagCondition = nil
+local RoomAStarHelper = {}
 
-function var_0_0.walkableTag(arg_1_0, arg_1_1)
-	if not var_0_0._walkableTagCondition then
-		var_0_0._walkableTagCondition = {
+RoomAStarHelper._walkableTagCondition = nil
+
+function RoomAStarHelper.walkableTag(resId, tagId)
+	if not RoomAStarHelper._walkableTagCondition then
+		RoomAStarHelper._walkableTagCondition = {
 			[RoomResourceEnum.ResourceId.Empty] = {
 				RoomEnum.AStarLayerTag.Water,
 				RoomEnum.AStarLayerTag.Default
@@ -41,82 +43,83 @@ function var_0_0.walkableTag(arg_1_0, arg_1_1)
 		}
 	end
 
-	local var_1_0 = var_0_0._walkableTagCondition[arg_1_0]
+	local list = RoomAStarHelper._walkableTagCondition[resId]
 
-	if var_1_0 and tabletool.indexOf(var_1_0, arg_1_1) then
+	if list and tabletool.indexOf(list, tagId) then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.resourcePoint2HollowHexPoint(arg_2_0)
-	local var_2_0 = arg_2_0.x * 3
-	local var_2_1 = arg_2_0.y * 3
-	local var_2_2 = arg_2_0.direction
+function RoomAStarHelper.resourcePoint2HollowHexPoint(resourcePoint)
+	local q = resourcePoint.x * 3
+	local r = resourcePoint.y * 3
+	local direction = resourcePoint.direction
 
-	if var_2_2 == 1 then
-		var_2_1 = var_2_1 - 1
-	elseif var_2_2 == 2 then
-		var_2_0 = var_2_0 + 1
-		var_2_1 = var_2_1 - 1
-	elseif var_2_2 == 3 then
-		var_2_0 = var_2_0 + 1
-	elseif var_2_2 == 4 then
-		var_2_1 = var_2_1 + 1
-	elseif var_2_2 == 5 then
-		var_2_0 = var_2_0 - 1
-		var_2_1 = var_2_1 + 1
-	elseif var_2_2 == 6 then
-		var_2_0 = var_2_0 - 1
+	if direction == 1 then
+		r = r - 1
+	elseif direction == 2 then
+		q = q + 1
+		r = r - 1
+	elseif direction == 3 then
+		q = q + 1
+	elseif direction == 4 then
+		r = r + 1
+	elseif direction == 5 then
+		q = q - 1
+		r = r + 1
+	elseif direction == 6 then
+		q = q - 1
 	end
 
-	return HexPoint(var_2_0, var_2_1)
+	return HexPoint(q, r)
 end
 
-function var_0_0.hollowHexPoint2ResourcePoint(arg_3_0)
-	local var_3_0 = math.floor(arg_3_0.q / 3)
-	local var_3_1 = math.floor(arg_3_0.r / 3)
-	local var_3_2 = 0
-	local var_3_3 = RoomRotateHelper.getMod(arg_3_0.q, 3)
-	local var_3_4 = RoomRotateHelper.getMod(arg_3_0.r, 3)
+function RoomAStarHelper.hollowHexPoint2ResourcePoint(hollowHexPoint)
+	local x = math.floor(hollowHexPoint.q / 3)
+	local y = math.floor(hollowHexPoint.r / 3)
+	local direction = 0
+	local modQ = RoomRotateHelper.getMod(hollowHexPoint.q, 3)
+	local modR = RoomRotateHelper.getMod(hollowHexPoint.r, 3)
 
-	if var_3_3 == 0 then
-		if var_3_4 == 1 then
-			var_3_2 = 4
-		elseif var_3_4 == 2 then
-			var_3_1 = var_3_1 + 1
-			var_3_2 = 1
+	if modQ == 0 then
+		if modR == 1 then
+			direction = 4
+		elseif modR == 2 then
+			y = y + 1
+			direction = 1
 		end
-	elseif var_3_3 == 1 then
-		if var_3_4 == 0 then
-			var_3_2 = 3
-		elseif var_3_4 == 1 then
+	elseif modQ == 1 then
+		if modR == 0 then
+			direction = 3
+		elseif modR == 1 then
 			return nil
-		elseif var_3_4 == 2 then
-			var_3_1 = var_3_1 + 1
-			var_3_2 = 2
+		elseif modR == 2 then
+			y = y + 1
+			direction = 2
 		end
-	elseif var_3_3 == 2 then
-		if var_3_4 == 0 then
-			var_3_0 = var_3_0 + 1
-			var_3_2 = 6
-		elseif var_3_4 == 1 then
-			var_3_0 = var_3_0 + 1
-			var_3_2 = 5
-		elseif var_3_4 == 2 then
+	elseif modQ == 2 then
+		if modR == 0 then
+			x = x + 1
+			direction = 6
+		elseif modR == 1 then
+			x = x + 1
+			direction = 5
+		elseif modR == 2 then
 			return nil
 		end
 	end
 
-	return ResourcePoint(HexPoint(var_3_0, var_3_1), var_3_2)
+	return ResourcePoint(HexPoint(x, y), direction)
 end
 
-function var_0_0.heuristic(arg_4_0, arg_4_1)
-	local var_4_0 = var_0_0.resourcePoint2HollowHexPoint(arg_4_0)
-	local var_4_1 = var_0_0.resourcePoint2HollowHexPoint(arg_4_1)
+function RoomAStarHelper.heuristic(point, targetPoint)
+	local startHollowHexPoint = RoomAStarHelper.resourcePoint2HollowHexPoint(point)
+	local targetHollowHexPoint = RoomAStarHelper.resourcePoint2HollowHexPoint(targetPoint)
+	local heuristic = HexPoint.Distance(startHollowHexPoint, targetHollowHexPoint)
 
-	return (HexPoint.Distance(var_4_0, var_4_1))
+	return heuristic
 end
 
-return var_0_0
+return RoomAStarHelper

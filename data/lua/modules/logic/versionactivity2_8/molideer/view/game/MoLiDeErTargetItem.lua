@@ -1,111 +1,113 @@
-﻿module("modules.logic.versionactivity2_8.molideer.view.game.MoLiDeErTargetItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/molideer/view/game/MoLiDeErTargetItem.lua
 
-local var_0_0 = class("MoLiDeErTargetItem", MoLiDeErTargetResultItem)
+module("modules.logic.versionactivity2_8.molideer.view.game.MoLiDeErTargetItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0._txtTarget = gohelper.findChildText(arg_1_0.viewGO, "#txt_Target")
-	arg_1_0._txtState1 = gohelper.findChildText(arg_1_0.viewGO, "#txt_Target/State1/#txt_State1")
-	arg_1_0._goState1 = gohelper.findChild(arg_1_0.viewGO, "#txt_Target/State1")
-	arg_1_0._goLine = gohelper.findChild(arg_1_0.viewGO, "#txt_Target/State1/image_Line")
-	arg_1_0._imageActionIcon = gohelper.findChildImage(arg_1_0.viewGO, "#txt_Target/State1/#txt_State1/#image_ActionIcon")
-	arg_1_0._txtState2 = gohelper.findChildText(arg_1_0.viewGO, "#txt_Target/State2/#txt_State2")
-	arg_1_0._goState2 = gohelper.findChild(arg_1_0.viewGO, "#txt_Target/State2")
-	arg_1_0._imageActionIcon2 = gohelper.findChildImage(arg_1_0.viewGO, "#txt_Target/State2/#txt_State2/#image_ActionIcon")
-	arg_1_0._imageIcon = gohelper.findChildImage(arg_1_0.viewGO, "#txt_Target/#img_Icon")
-	arg_1_0._sliderProgress = gohelper.findChildSlider(arg_1_0.viewGO, "#txt_Target/Slider")
-	arg_1_0._goIconFx = gohelper.findChild(arg_1_0.viewGO, "#txt_Target/#img_Icon/#Star_ani")
-	arg_1_0._goTitleFx = gohelper.findChild(arg_1_0.viewGO, "#txt_Target/#saoguang")
+local MoLiDeErTargetItem = class("MoLiDeErTargetItem", MoLiDeErTargetResultItem)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function MoLiDeErTargetItem:init(go)
+	self.viewGO = go
+	self._txtTarget = gohelper.findChildText(self.viewGO, "#txt_Target")
+	self._txtState1 = gohelper.findChildText(self.viewGO, "#txt_Target/State1/#txt_State1")
+	self._goState1 = gohelper.findChild(self.viewGO, "#txt_Target/State1")
+	self._goLine = gohelper.findChild(self.viewGO, "#txt_Target/State1/image_Line")
+	self._imageActionIcon = gohelper.findChildImage(self.viewGO, "#txt_Target/State1/#txt_State1/#image_ActionIcon")
+	self._txtState2 = gohelper.findChildText(self.viewGO, "#txt_Target/State2/#txt_State2")
+	self._goState2 = gohelper.findChild(self.viewGO, "#txt_Target/State2")
+	self._imageActionIcon2 = gohelper.findChildImage(self.viewGO, "#txt_Target/State2/#txt_State2/#image_ActionIcon")
+	self._imageIcon = gohelper.findChildImage(self.viewGO, "#txt_Target/#img_Icon")
+	self._sliderProgress = gohelper.findChildSlider(self.viewGO, "#txt_Target/Slider")
+	self._goIconFx = gohelper.findChild(self.viewGO, "#txt_Target/#img_Icon/#Star_ani")
+	self._goTitleFx = gohelper.findChild(self.viewGO, "#txt_Target/#saoguang")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0._editableInitView(arg_2_0)
-	arg_2_0._sliderAnimator = gohelper.findChildComponent(arg_2_0._sliderProgress.gameObject, "", gohelper.Type_Animator)
-	arg_2_0._goStateFxRed1 = gohelper.findChild(arg_2_0.viewGO, "#txt_Target/State1/#txt_State1/#saoguang_red")
-	arg_2_0._goStateFxGreen1 = gohelper.findChild(arg_2_0.viewGO, "#txt_Target/State1/#txt_State1/#saoguang_green")
-	arg_2_0._goStateFxYellow1 = gohelper.findChild(arg_2_0.viewGO, "#txt_Target/State1/#txt_State1/#saoguang_yellow")
-	arg_2_0._goStateFxRed2 = gohelper.findChild(arg_2_0.viewGO, "#txt_Target/State2/#txt_State2/#saoguang_red")
-	arg_2_0._goStateFxGreen2 = gohelper.findChild(arg_2_0.viewGO, "#txt_Target/State2/#txt_State2/#saoguang_green")
-	arg_2_0._goStateFxYellow2 = gohelper.findChild(arg_2_0.viewGO, "#txt_Target/State2/#txt_State2/#saoguang_yellow")
-	arg_2_0._stateFx1 = {
-		arg_2_0._goStateFxGreen1,
-		arg_2_0._goStateFxYellow1,
-		arg_2_0._goStateFxRed1
+function MoLiDeErTargetItem:_editableInitView()
+	self._sliderAnimator = gohelper.findChildComponent(self._sliderProgress.gameObject, "", gohelper.Type_Animator)
+	self._goStateFxRed1 = gohelper.findChild(self.viewGO, "#txt_Target/State1/#txt_State1/#saoguang_red")
+	self._goStateFxGreen1 = gohelper.findChild(self.viewGO, "#txt_Target/State1/#txt_State1/#saoguang_green")
+	self._goStateFxYellow1 = gohelper.findChild(self.viewGO, "#txt_Target/State1/#txt_State1/#saoguang_yellow")
+	self._goStateFxRed2 = gohelper.findChild(self.viewGO, "#txt_Target/State2/#txt_State2/#saoguang_red")
+	self._goStateFxGreen2 = gohelper.findChild(self.viewGO, "#txt_Target/State2/#txt_State2/#saoguang_green")
+	self._goStateFxYellow2 = gohelper.findChild(self.viewGO, "#txt_Target/State2/#txt_State2/#saoguang_yellow")
+	self._stateFx1 = {
+		self._goStateFxGreen1,
+		self._goStateFxYellow1,
+		self._goStateFxRed1
 	}
-	arg_2_0._stateFx2 = {
-		arg_2_0._goStateFxGreen2,
-		arg_2_0._goStateFxYellow2,
-		arg_2_0._goStateFxRed2
+	self._stateFx2 = {
+		self._goStateFxGreen2,
+		self._goStateFxYellow2,
+		self._goStateFxRed2
 	}
 end
 
-function var_0_0.addEventListeners(arg_3_0)
+function MoLiDeErTargetItem:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
+function MoLiDeErTargetItem:removeEventListeners()
 	return
 end
 
-function var_0_0.getFxTargetTran(arg_5_0)
-	return arg_5_0._sliderProgress.transform
+function MoLiDeErTargetItem:getFxTargetTran()
+	return self._sliderProgress.transform
 end
 
-function var_0_0.refreshState(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
-	local var_6_0 = arg_6_2.leftRoundEnergy
-	local var_6_1 = arg_6_2.currentRound
-	local var_6_2 = arg_6_2:getTargetProgress(arg_6_1)
+function MoLiDeErTargetItem:refreshState(targetId, gameInfoMo, realRound, showAnim)
+	local curExecution = gameInfoMo.leftRoundEnergy
+	local curRound = gameInfoMo.currentRound
+	local curProgress = gameInfoMo:getTargetProgress(targetId)
 
-	arg_6_0._sliderProgress:SetValue(var_6_2 * 0.01)
+	self._sliderProgress:SetValue(curProgress * 0.01)
 
-	local var_6_3 = MoLiDeErHelper.getTargetState(var_6_2)
-	local var_6_4 = MoLiDeErConfig.instance:getProgressDescConfigById(arg_6_2.gameId, arg_6_1)
-	local var_6_5, var_6_6 = MoLiDeErHelper.getRangeDesc(var_6_0, var_6_4.energyRange, var_6_4.energyDesc)
-	local var_6_7 = MoLiDeErEnum.TargetTitleColor[var_6_6]
+	local progressState = MoLiDeErHelper.getTargetState(curProgress)
+	local descConfig = MoLiDeErConfig.instance:getProgressDescConfigById(gameInfoMo.gameId, targetId)
+	local executionDesc, executionState = MoLiDeErHelper.getRangeDesc(curExecution, descConfig.energyRange, descConfig.energyDesc)
+	local executionColor = MoLiDeErEnum.TargetTitleColor[executionState]
 
-	arg_6_0._txtState1.text = string.format("<color=%s>%s</color>", var_6_7, var_6_5)
+	self._txtState1.text = string.format("<color=%s>%s</color>", executionColor, executionDesc)
 
-	UISpriteSetMgr.instance:setMoLiDeErSprite(arg_6_0._imageIcon, string.format("v2a8_molideer_game_targeticon_0%s_%s", arg_6_1, var_6_3))
-	UIColorHelper.set(arg_6_0._imageActionIcon, var_6_7)
+	UISpriteSetMgr.instance:setMoLiDeErSprite(self._imageIcon, string.format("v2a8_molideer_game_targeticon_0%s_%s", targetId, progressState))
+	UIColorHelper.set(self._imageActionIcon, executionColor)
 
-	if arg_6_0._previousExecutionState and arg_6_0._previousExecutionState ~= var_6_3 then
-		for iter_6_0, iter_6_1 in ipairs(arg_6_0._stateFx1) do
-			gohelper.setActive(iter_6_1, iter_6_0 == var_6_3)
+	if self._previousExecutionState and self._previousExecutionState ~= progressState then
+		for state, go in ipairs(self._stateFx1) do
+			gohelper.setActive(go, state == progressState)
 		end
 	end
 
-	arg_6_0._previousExecutionState = var_6_3
+	self._previousExecutionState = progressState
 
-	local var_6_8 = arg_6_3 ~= nil and arg_6_3 ~= 0
+	local showRoundState = realRound ~= nil and realRound ~= 0
 
-	gohelper.setActive(arg_6_0._goState2, var_6_8)
-	gohelper.setActive(arg_6_0._goLine, var_6_8)
+	gohelper.setActive(self._goState2, showRoundState)
+	gohelper.setActive(self._goLine, showRoundState)
 
-	if var_6_8 then
-		local var_6_9, var_6_10 = MoLiDeErHelper.getRangeDesc(math.max(0, arg_6_3 - var_6_1), var_6_4.roundRange, var_6_4.roundDesc)
-		local var_6_11 = MoLiDeErEnum.TargetTitleColor[var_6_10]
+	if showRoundState then
+		local roundDesc, roundState = MoLiDeErHelper.getRangeDesc(math.max(0, realRound - curRound), descConfig.roundRange, descConfig.roundDesc)
+		local roundColor = MoLiDeErEnum.TargetTitleColor[roundState]
 
-		arg_6_0._txtState2.text = string.format("<color=%s>%s</color>", var_6_11, var_6_9)
+		self._txtState2.text = string.format("<color=%s>%s</color>", roundColor, roundDesc)
 
-		UIColorHelper.set(arg_6_0._imageActionIcon2, var_6_11)
+		UIColorHelper.set(self._imageActionIcon2, roundColor)
 
-		if arg_6_0._previousRoundState and arg_6_0._previousRoundState ~= var_6_10 then
-			for iter_6_2, iter_6_3 in ipairs(arg_6_0._stateFx2) do
-				gohelper.setActive(iter_6_3, iter_6_2 == var_6_10)
+		if self._previousRoundState and self._previousRoundState ~= roundState then
+			for state, go in ipairs(self._stateFx2) do
+				gohelper.setActive(go, state == roundState)
 			end
 		end
 
-		arg_6_0._previousRoundState = var_6_10
+		self._previousRoundState = roundState
 	end
 
-	if arg_6_4 then
-		arg_6_0._sliderAnimator:Play("light", 0, 0)
+	if showAnim then
+		self._sliderAnimator:Play("light", 0, 0)
 	else
-		arg_6_0._sliderAnimator:Play("idle", 0, 0)
+		self._sliderAnimator:Play("idle", 0, 0)
 	end
 end
 
-return var_0_0
+return MoLiDeErTargetItem

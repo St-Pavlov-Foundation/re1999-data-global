@@ -1,439 +1,453 @@
-﻿module("modules.logic.room.view.building.RoomFormulaView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/building/RoomFormulaView.lua
 
-local var_0_0 = class("RoomFormulaView", BaseView)
-local var_0_1 = "#FF7C40"
-local var_0_2 = "#787878"
+module("modules.logic.room.view.building.RoomFormulaView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/bg/#simage_bg1")
-	arg_1_0._simagebg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/bg/#simage_bg2")
-	arg_1_0._scrollcategory = gohelper.findChildScrollRect(arg_1_0.viewGO, "view/#scroll_category")
-	arg_1_0._goshowtypeitem = gohelper.findChild(arg_1_0.viewGO, "view/#scroll_category/viewport/content/#go_showtypeitem")
-	arg_1_0._scrollformula = gohelper.findChildScrollRect(arg_1_0.viewGO, "view/#scroll_formula")
-	arg_1_0._scrollRectFormula = arg_1_0._scrollformula:GetComponent(typeof(ZProj.LimitedScrollRect))
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/#btn_close")
-	arg_1_0._btnquality = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/sortBtn/#btn_quality")
-	arg_1_0._btnconsumetime = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/sortBtn/#btn_consumetime")
-	arg_1_0._btnorder = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/sortBtn/#btn_order")
-	arg_1_0._btnList = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/ListBtn")
-	arg_1_0._imageBtnList = gohelper.findChildImage(arg_1_0.viewGO, "view/ListBtn/image_ListBtn")
-	arg_1_0._goNeed = gohelper.findChild(arg_1_0.viewGO, "view/#go_NeedProp")
-	arg_1_0._txtNeed = gohelper.findChildText(arg_1_0.viewGO, "view/#go_NeedProp/#txt_NeedProp")
-	arg_1_0._btnNeedClick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/#go_NeedProp/btnClick")
+local RoomFormulaView = class("RoomFormulaView", BaseView)
+local BTN_LIST_HIGHLIGHT_COLOR = "#FF7C40"
+local BTN_LIST_DISABLE_COLOR = "#787878"
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomFormulaView:onInitView()
+	self._simagebg1 = gohelper.findChildSingleImage(self.viewGO, "view/bg/#simage_bg1")
+	self._simagebg2 = gohelper.findChildSingleImage(self.viewGO, "view/bg/#simage_bg2")
+	self._scrollcategory = gohelper.findChildScrollRect(self.viewGO, "view/#scroll_category")
+	self._goshowtypeitem = gohelper.findChild(self.viewGO, "view/#scroll_category/viewport/content/#go_showtypeitem")
+	self._scrollformula = gohelper.findChildScrollRect(self.viewGO, "view/#scroll_formula")
+	self._scrollRectFormula = self._scrollformula:GetComponent(typeof(ZProj.LimitedScrollRect))
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "view/#btn_close")
+	self._btnquality = gohelper.findChildButtonWithAudio(self.viewGO, "view/sortBtn/#btn_quality")
+	self._btnconsumetime = gohelper.findChildButtonWithAudio(self.viewGO, "view/sortBtn/#btn_consumetime")
+	self._btnorder = gohelper.findChildButtonWithAudio(self.viewGO, "view/sortBtn/#btn_order")
+	self._btnList = gohelper.findChildButtonWithAudio(self.viewGO, "view/ListBtn")
+	self._imageBtnList = gohelper.findChildImage(self.viewGO, "view/ListBtn/image_ListBtn")
+	self._goNeed = gohelper.findChild(self.viewGO, "view/#go_NeedProp")
+	self._txtNeed = gohelper.findChildText(self.viewGO, "view/#go_NeedProp/#txt_NeedProp")
+	self._btnNeedClick = gohelper.findChildButtonWithAudio(self.viewGO, "view/#go_NeedProp/btnClick")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnquality:AddClickListener(arg_2_0._btnqualityOnClick, arg_2_0)
-	arg_2_0._btnconsumetime:AddClickListener(arg_2_0._btnconsumetimeOnClick, arg_2_0)
-	arg_2_0._btnorder:AddClickListener(arg_2_0._btnorderOnClick, arg_2_0)
-	arg_2_0._btnList:AddClickListener(arg_2_0._btnListOnClick, arg_2_0)
-	arg_2_0._btnNeedClick:AddClickListener(arg_2_0._btnNeedOnClick, arg_2_0)
-	arg_2_0:addEventCb(RoomBuildingController.instance, RoomEvent.NewFormulaPush, arg_2_0._newFormulaPush, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0._onCloseView, arg_2_0)
-	arg_2_0:addEventCb(RoomController.instance, RoomEvent.ProduceLineLevelUp, arg_2_0._onProduceLineLevelUp, arg_2_0)
-	arg_2_0:addEventCb(RoomMapController.instance, RoomEvent.SelectFormulaIdChanged, arg_2_0._onSelectFormulaIdChanged, arg_2_0)
-	arg_2_0:addEventCb(RoomMapController.instance, RoomEvent.RefreshNeedFormula, arg_2_0._onNeedFormulaRefresh, arg_2_0)
-	arg_2_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_2_0._refreshNeedText, arg_2_0)
-	gohelper.addUIClickAudio(arg_2_0._btnList.gameObject, AudioEnum.UI.play_ui_screenplay_photo_click)
+function RoomFormulaView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnquality:AddClickListener(self._btnqualityOnClick, self)
+	self._btnconsumetime:AddClickListener(self._btnconsumetimeOnClick, self)
+	self._btnorder:AddClickListener(self._btnorderOnClick, self)
+	self._btnList:AddClickListener(self._btnListOnClick, self)
+	self._btnNeedClick:AddClickListener(self._btnNeedOnClick, self)
+	self:addEventCb(RoomBuildingController.instance, RoomEvent.NewFormulaPush, self._newFormulaPush, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
+	self:addEventCb(RoomController.instance, RoomEvent.ProduceLineLevelUp, self._onProduceLineLevelUp, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.SelectFormulaIdChanged, self._onSelectFormulaIdChanged, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.RefreshNeedFormula, self._onNeedFormulaRefresh, self)
+	self:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._refreshNeedText, self)
+	gohelper.addUIClickAudio(self._btnList.gameObject, AudioEnum.UI.play_ui_screenplay_photo_click)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnquality:RemoveClickListener()
-	arg_3_0._btnconsumetime:RemoveClickListener()
-	arg_3_0._btnorder:RemoveClickListener()
-	arg_3_0._btnList:RemoveClickListener()
-	arg_3_0._btnNeedClick:RemoveClickListener()
-	arg_3_0:removeEventCb(RoomBuildingController.instance, RoomEvent.NewFormulaPush, arg_3_0._newFormulaPush, arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0._onCloseView, arg_3_0)
-	arg_3_0:removeEventCb(RoomController.instance, RoomEvent.ProduceLineLevelUp, arg_3_0._onProduceLineLevelUp, arg_3_0)
-	arg_3_0:removeEventCb(RoomMapController.instance, RoomEvent.SelectFormulaIdChanged, arg_3_0._onSelectFormulaIdChanged, arg_3_0)
-	arg_3_0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_3_0._refreshNeedText, arg_3_0)
+function RoomFormulaView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btnquality:RemoveClickListener()
+	self._btnconsumetime:RemoveClickListener()
+	self._btnorder:RemoveClickListener()
+	self._btnList:RemoveClickListener()
+	self._btnNeedClick:RemoveClickListener()
+	self:removeEventCb(RoomBuildingController.instance, RoomEvent.NewFormulaPush, self._newFormulaPush, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
+	self:removeEventCb(RoomController.instance, RoomEvent.ProduceLineLevelUp, self._onProduceLineLevelUp, self)
+	self:removeEventCb(RoomMapController.instance, RoomEvent.SelectFormulaIdChanged, self._onSelectFormulaIdChanged, self)
+	self:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._refreshNeedText, self)
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function RoomFormulaView:_btncloseOnClick()
+	self:closeThis()
 	RoomFormulaListModel.instance:changeSelectFormulaToTopLevel()
 	RoomMapController.instance:dispatchEvent(RoomEvent.ShowInitBuildingChangeTitle)
 end
 
-function var_0_0._btnqualityOnClick(arg_5_0)
-	if RoomFormulaListModel.instance:getOrder() == RoomBuildingEnum.FormulaOrderType.RareDown then
+function RoomFormulaView:_btnqualityOnClick()
+	local order = RoomFormulaListModel.instance:getOrder()
+
+	if order == RoomBuildingEnum.FormulaOrderType.RareDown then
 		RoomFormulaListModel.instance:setOrder(RoomBuildingEnum.FormulaOrderType.RareUp)
 	else
 		RoomFormulaListModel.instance:setOrder(RoomBuildingEnum.FormulaOrderType.RareDown)
 	end
 
 	RoomFormulaListModel.instance:changeSelectFormulaToTopLevel()
-	RoomFormulaListModel.instance:setFormulaList(arg_5_0._lineMO.level)
-	arg_5_0:_refreshOrderSelect()
+	RoomFormulaListModel.instance:setFormulaList(self._lineMO.level)
+	self:_refreshOrderSelect()
 end
 
-function var_0_0._btnconsumetimeOnClick(arg_6_0)
-	if RoomFormulaListModel.instance:getOrder() == RoomBuildingEnum.FormulaOrderType.CostTimeDown then
+function RoomFormulaView:_btnconsumetimeOnClick()
+	local order = RoomFormulaListModel.instance:getOrder()
+
+	if order == RoomBuildingEnum.FormulaOrderType.CostTimeDown then
 		RoomFormulaListModel.instance:setOrder(RoomBuildingEnum.FormulaOrderType.CostTimeUp)
 	else
 		RoomFormulaListModel.instance:setOrder(RoomBuildingEnum.FormulaOrderType.CostTimeDown)
 	end
 
 	RoomFormulaListModel.instance:changeSelectFormulaToTopLevel()
-	RoomFormulaListModel.instance:setFormulaList(arg_6_0._lineMO.level)
-	arg_6_0:_refreshOrderSelect()
+	RoomFormulaListModel.instance:setFormulaList(self._lineMO.level)
+	self:_refreshOrderSelect()
 end
 
-function var_0_0._btnorderOnClick(arg_7_0)
-	if RoomFormulaListModel.instance:getOrder() == RoomBuildingEnum.FormulaOrderType.OrderDown then
+function RoomFormulaView:_btnorderOnClick()
+	local order = RoomFormulaListModel.instance:getOrder()
+
+	if order == RoomBuildingEnum.FormulaOrderType.OrderDown then
 		RoomFormulaListModel.instance:setOrder(RoomBuildingEnum.FormulaOrderType.OrderUp)
 	else
 		RoomFormulaListModel.instance:setOrder(RoomBuildingEnum.FormulaOrderType.OrderDown)
 	end
 
 	RoomFormulaListModel.instance:changeSelectFormulaToTopLevel()
-	RoomFormulaListModel.instance:setFormulaList(arg_7_0._lineMO.level)
-	arg_7_0:_refreshOrderSelect()
+	RoomFormulaListModel.instance:setFormulaList(self._lineMO.level)
+	self:_refreshOrderSelect()
 end
 
-function var_0_0._btnclickOnClick(arg_8_0, arg_8_1)
-	if arg_8_0._selectIndex == arg_8_1 then
+function RoomFormulaView:_btnclickOnClick(index)
+	if self._selectIndex == index then
 		return
 	end
 
-	local var_8_0 = arg_8_0._showTypeItemList[arg_8_1]
+	local showTypeItem = self._showTypeItemList[index]
 
-	if not var_8_0 then
+	if not showTypeItem then
 		return
 	end
 
-	if var_8_0.unlockLevel > arg_8_0._lineMO.level then
-		GameFacade.showToast(ToastEnum.MaterialItemLockOnClick, arg_8_0._lineMO.config.name, var_8_0.unlockLevel)
+	if showTypeItem.unlockLevel > self._lineMO.level then
+		GameFacade.showToast(ToastEnum.MaterialItemLockOnClick, self._lineMO.config.name, showTypeItem.unlockLevel)
 
 		return
 	end
 
-	arg_8_0._selectIndex = arg_8_1
+	self._selectIndex = index
 
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_vertical_first_tabs_click)
 	RoomFormulaListModel.instance:changeSelectFormulaToTopLevel()
-	arg_8_0:_refreshShowTypeSelect()
-	arg_8_0:focusPos()
+	self:_refreshShowTypeSelect()
+	self:focusPos()
 end
 
-function var_0_0._btnListOnClick(arg_9_0)
-	local var_9_0 = not RoomFormulaListModel.instance:getIsInList()
+function RoomFormulaView:_btnListOnClick()
+	local newIsInList = not RoomFormulaListModel.instance:getIsInList()
 
-	RoomFormulaListModel.instance:setIsInList(var_9_0)
+	RoomFormulaListModel.instance:setIsInList(newIsInList)
 
-	if var_9_0 then
-		arg_9_0._imageBtnList.color = GameUtil.parseColor(var_0_1)
+	if newIsInList then
+		self._imageBtnList.color = GameUtil.parseColor(BTN_LIST_HIGHLIGHT_COLOR)
 	else
-		arg_9_0._imageBtnList.color = GameUtil.parseColor(var_0_2)
+		self._imageBtnList.color = GameUtil.parseColor(BTN_LIST_DISABLE_COLOR)
 	end
 
 	RoomFormulaListModel.instance:changeSelectFormulaToTopLevel()
-	RoomFormulaListModel.instance:setFormulaList(arg_9_0._lineMO.level)
-	arg_9_0:focusPos()
+	RoomFormulaListModel.instance:setFormulaList(self._lineMO.level)
+	self:focusPos()
 end
 
-function var_0_0._btnNeedOnClick(arg_10_0)
-	if arg_10_0._needFormulaShowType then
-		for iter_10_0, iter_10_1 in ipairs(arg_10_0._showTypeItemList) do
-			if iter_10_1.unlockLevel <= arg_10_0._lineMO.level and iter_10_1.formulaShowType == arg_10_0._needFormulaShowType and arg_10_0._selectIndex ~= iter_10_1.index then
-				arg_10_0._selectIndex = iter_10_1.index
+function RoomFormulaView:_btnNeedOnClick()
+	if self._needFormulaShowType then
+		for _, showTypeItem in ipairs(self._showTypeItemList) do
+			local isUnlock = showTypeItem.unlockLevel <= self._lineMO.level
+
+			if isUnlock and showTypeItem.formulaShowType == self._needFormulaShowType and self._selectIndex ~= showTypeItem.index then
+				self._selectIndex = showTypeItem.index
 
 				RoomFormulaListModel.instance:changeSelectFormulaToTopLevel()
-				arg_10_0:_refreshShowTypeSelect()
+				self:_refreshShowTypeSelect()
 			end
 		end
 	end
 
-	arg_10_0._scrollRectFormula.velocity = Vector2(0, 0)
+	self._scrollRectFormula.velocity = Vector2(0, 0)
 
-	if arg_10_0._needFormulaStrId then
-		local var_10_0 = RoomFormulaListModel.instance:getSelectFormulaStrId()
+	if self._needFormulaStrId then
+		local selectFormulaStrId = RoomFormulaListModel.instance:getSelectFormulaStrId()
 
-		if arg_10_0._needFormulaStrId ~= var_10_0 then
-			RoomBuildingFormulaController.instance:setSelectFormulaStrId(arg_10_0._needFormulaStrId)
+		if self._needFormulaStrId ~= selectFormulaStrId then
+			RoomBuildingFormulaController.instance:setSelectFormulaStrId(self._needFormulaStrId)
 		end
 
-		arg_10_0:focusPos()
+		self:focusPos()
 	end
 end
 
-function var_0_0._onEscapeBtnClick(arg_11_0)
-	if arg_11_0.viewParam and arg_11_0.viewParam.openInOutside then
+function RoomFormulaView:_onEscapeBtnClick()
+	if self.viewParam and self.viewParam.openInOutside then
 		ViewMgr.instance:closeView(ViewName.RoomInitBuildingView, true)
 	else
-		arg_11_0:_btncloseOnClick()
+		self:_btncloseOnClick()
 	end
 end
 
-function var_0_0._onCloseView(arg_12_0, arg_12_1)
-	if arg_12_1 == ViewName.RoomInitBuildingView then
-		ViewMgr.instance:closeView(arg_12_0.viewName, true, true)
+function RoomFormulaView:_onCloseView(viewName)
+	if viewName == ViewName.RoomInitBuildingView then
+		ViewMgr.instance:closeView(self.viewName, true, true)
 	end
 end
 
-function var_0_0._onProduceLineLevelUp(arg_13_0)
-	arg_13_0:_refreshUI()
+function RoomFormulaView:_onProduceLineLevelUp()
+	self:_refreshUI()
 end
 
-function var_0_0._newFormulaPush(arg_14_0)
-	RoomFormulaListModel.instance:setFormulaList(arg_14_0._lineMO.level)
+function RoomFormulaView:_newFormulaPush()
+	RoomFormulaListModel.instance:setFormulaList(self._lineMO.level)
 
-	arg_14_0._scrollformula.verticalNormalizedPosition = 1
+	self._scrollformula.verticalNormalizedPosition = 1
 end
 
-function var_0_0._onSelectFormulaIdChanged(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0 = RoomFormulaListModel.instance:getSelectFormulaStrId()
+function RoomFormulaView:_onSelectFormulaIdChanged(preFormulaStrId, isCollapse)
+	local selectFormulaStrId = RoomFormulaListModel.instance:getSelectFormulaStrId()
+	local isInList = RoomFormulaListModel.instance:getIsInList()
 
-	if not RoomFormulaListModel.instance:getIsInList() then
+	if not isInList then
 		return
 	end
 
-	local var_15_1 = false
+	local isFocus = false
 
-	if not string.nilorempty(var_15_0) then
-		if arg_15_1 then
-			local var_15_2 = RoomFormulaListModel.instance:getSelectFormulaMo()
+	if not string.nilorempty(selectFormulaStrId) then
+		if preFormulaStrId then
+			local selectFormulaMo = RoomFormulaListModel.instance:getSelectFormulaMo()
 
-			if var_15_2 then
-				local var_15_3 = var_15_2:getFormulaTreeLevel()
-				local var_15_4 = var_15_2:getIsExpandTree()
+			if selectFormulaMo then
+				local selectFormulaTreeLevel = selectFormulaMo:getFormulaTreeLevel()
+				local selectFormulaIsExpand = selectFormulaMo:getIsExpandTree()
 
-				var_15_1 = var_15_3 == RoomFormulaModel.DEFAULT_TREE_LEVEL and not var_15_4
+				isFocus = selectFormulaTreeLevel == RoomFormulaModel.DEFAULT_TREE_LEVEL and not selectFormulaIsExpand
 			end
 		else
-			var_15_1 = true
+			isFocus = true
 		end
 	end
 
-	local var_15_5 = RoomFormulaListModel.instance:expandOrHideTreeFormulaList(arg_15_1, arg_15_2)
+	local isDelay = RoomFormulaListModel.instance:expandOrHideTreeFormulaList(preFormulaStrId, isCollapse)
 
-	if var_15_1 then
-		if var_15_5 then
-			TaskDispatcher.runDelay(arg_15_0.focusPos, arg_15_0, RoomFormulaListModel.ANIMATION_WAIT_TIME)
+	if isFocus then
+		if isDelay then
+			TaskDispatcher.runDelay(self.focusPos, self, RoomFormulaListModel.ANIMATION_WAIT_TIME)
 		else
-			arg_15_0:focusPos()
+			self:focusPos()
 		end
 	end
 end
 
-function var_0_0._onNeedFormulaRefresh(arg_16_0)
-	arg_16_0._needFormulaShowType, arg_16_0._needFormulaStrId = RoomProductionHelper.getNeedFormulaShowTypeAndFormulaStrId(arg_16_0._lineMO)
+function RoomFormulaView:_onNeedFormulaRefresh()
+	self._needFormulaShowType, self._needFormulaStrId = RoomProductionHelper.getNeedFormulaShowTypeAndFormulaStrId(self._lineMO)
 
-	arg_16_0:_refreshNeedText()
-	arg_16_0:_btnNeedOnClick()
+	self:_refreshNeedText()
+	self:_btnNeedOnClick()
 end
 
-function var_0_0.focusPos(arg_17_0)
-	if not arg_17_0.viewportHeight or not arg_17_0.viewportCapacity or not arg_17_0.viewContainer or gohelper.isNil(arg_17_0._scrollcontent) then
+function RoomFormulaView:focusPos()
+	if not self.viewportHeight or not self.viewportCapacity or not self.viewContainer or gohelper.isNil(self._scrollcontent) then
 		return
 	end
 
-	local var_17_0 = RoomFormulaListModel.instance:getSelectFormulaStrIdIndex()
-	local var_17_1 = RoomFormulaListModel.instance:getCount()
+	local index = RoomFormulaListModel.instance:getSelectFormulaStrIdIndex()
+	local totalCount = RoomFormulaListModel.instance:getCount()
 
-	if var_17_0 > 0 and var_17_1 > arg_17_0.viewportCapacity then
-		local var_17_2 = 0
+	if index > 0 and totalCount > self.viewportCapacity then
+		local padding = 0
 
-		if var_17_1 - var_17_0 < arg_17_0.viewportCapacity - 1 then
-			var_17_2 = arg_17_0.viewportCapacity * arg_17_0.viewContainer.cellHeightSize - arg_17_0.viewportHeight
-			var_17_0 = var_17_1 - arg_17_0.viewportCapacity + 1
+		if totalCount - index < self.viewportCapacity - 1 then
+			padding = self.viewportCapacity * self.viewContainer.cellHeightSize - self.viewportHeight
+			index = totalCount - self.viewportCapacity + 1
 		end
 
-		local var_17_3 = (var_17_0 - 1) * arg_17_0.viewContainer.cellHeightSize + var_17_2
+		local posY = (index - 1) * self.viewContainer.cellHeightSize + padding
 
-		recthelper.setAnchorY(arg_17_0._scrollcontent.transform, var_17_3)
-		arg_17_0.viewContainer:getCsListScroll():UpdateCells(false)
+		recthelper.setAnchorY(self._scrollcontent.transform, posY)
+
+		local csListView = self.viewContainer:getCsListScroll()
+
+		csListView:UpdateCells(false)
 	end
 end
 
-function var_0_0._editableInitView(arg_18_0)
-	arg_18_0._simagebg1:LoadImage(ResUrl.getCommonIcon("bg_1"))
-	arg_18_0._simagebg2:LoadImage(ResUrl.getCommonIcon("bg_2"))
+function RoomFormulaView:_editableInitView()
+	self._simagebg1:LoadImage(ResUrl.getCommonIcon("bg_1"))
+	self._simagebg2:LoadImage(ResUrl.getCommonIcon("bg_2"))
 
-	arg_18_0._scrollcontent = gohelper.findChild(arg_18_0._scrollformula.gameObject, "viewport/content")
-	arg_18_0._scrollViewport = gohelper.findChild(arg_18_0._scrollformula.gameObject, "viewport")
-	arg_18_0._scrollHeight = recthelper.getHeight(arg_18_0._scrollformula.transform)
-	arg_18_0._goNeedHeight = recthelper.getHeight(arg_18_0._goNeed.transform)
+	self._scrollcontent = gohelper.findChild(self._scrollformula.gameObject, "viewport/content")
+	self._scrollViewport = gohelper.findChild(self._scrollformula.gameObject, "viewport")
+	self._scrollHeight = recthelper.getHeight(self._scrollformula.transform)
+	self._goNeedHeight = recthelper.getHeight(self._goNeed.transform)
 
-	gohelper.setActive(arg_18_0._btnconsumetime.gameObject, false)
+	gohelper.setActive(self._btnconsumetime.gameObject, false)
 
-	arg_18_0._showTypeItemList = {}
+	self._showTypeItemList = {}
 
-	gohelper.setActive(arg_18_0._goshowtypeitem, false)
+	gohelper.setActive(self._goshowtypeitem, false)
 
-	arg_18_0._rareItem = arg_18_0:getUserDataTb_()
-	arg_18_0._costTimeItem = arg_18_0:getUserDataTb_()
-	arg_18_0._orderItem = arg_18_0:getUserDataTb_()
-	arg_18_0._rareItem.go = arg_18_0._btnquality.gameObject
-	arg_18_0._costTimeItem.go = arg_18_0._btnconsumetime.gameObject
-	arg_18_0._orderItem.go = arg_18_0._btnorder.gameObject
+	self._rareItem = self:getUserDataTb_()
+	self._costTimeItem = self:getUserDataTb_()
+	self._orderItem = self:getUserDataTb_()
+	self._rareItem.go = self._btnquality.gameObject
+	self._costTimeItem.go = self._btnconsumetime.gameObject
+	self._orderItem.go = self._btnorder.gameObject
 
-	arg_18_0:_initSortItem(arg_18_0._rareItem)
-	arg_18_0:_initSortItem(arg_18_0._costTimeItem)
-	arg_18_0:_initSortItem(arg_18_0._orderItem)
+	self:_initSortItem(self._rareItem)
+	self:_initSortItem(self._costTimeItem)
+	self:_initSortItem(self._orderItem)
 	RoomFormulaListModel.instance:resetIsInList()
-	gohelper.addUIClickAudio(arg_18_0._btnquality.gameObject, AudioEnum.UI.UI_vertical_second_tabs_click)
-	gohelper.addUIClickAudio(arg_18_0._btnconsumetime.gameObject, AudioEnum.UI.UI_vertical_second_tabs_click)
-	gohelper.addUIClickAudio(arg_18_0._btnorder.gameObject, AudioEnum.UI.UI_vertical_second_tabs_click)
-	gohelper.removeUIClickAudio(arg_18_0._btnclose.gameObject)
+	gohelper.addUIClickAudio(self._btnquality.gameObject, AudioEnum.UI.UI_vertical_second_tabs_click)
+	gohelper.addUIClickAudio(self._btnconsumetime.gameObject, AudioEnum.UI.UI_vertical_second_tabs_click)
+	gohelper.addUIClickAudio(self._btnorder.gameObject, AudioEnum.UI.UI_vertical_second_tabs_click)
+	gohelper.removeUIClickAudio(self._btnclose.gameObject)
 end
 
-function var_0_0._initSortItem(arg_19_0, arg_19_1)
-	arg_19_1.gounselect = gohelper.findChild(arg_19_1.go, "btn1")
-	arg_19_1.goselect = gohelper.findChild(arg_19_1.go, "btn2")
-	arg_19_1.selectArrow = gohelper.findChild(arg_19_1.go, "btn2/txt/arrow")
-	arg_19_1.unselectArrow = gohelper.findChild(arg_19_1.go, "btn1/txt/arrow")
+function RoomFormulaView:_initSortItem(sortItem)
+	sortItem.gounselect = gohelper.findChild(sortItem.go, "btn1")
+	sortItem.goselect = gohelper.findChild(sortItem.go, "btn2")
+	sortItem.selectArrow = gohelper.findChild(sortItem.go, "btn2/txt/arrow")
+	sortItem.unselectArrow = gohelper.findChild(sortItem.go, "btn1/txt/arrow")
 end
 
-function var_0_0.onOpen(arg_20_0)
-	arg_20_0._lineMO = arg_20_0.viewParam.lineMO
-	arg_20_0._buildingType = arg_20_0.viewParam.buildingType
-	arg_20_0._needFormulaShowType = nil
-	arg_20_0._needFormulaStrId = nil
-	arg_20_0._needFormulaShowType, arg_20_0._needFormulaStrId = RoomProductionHelper.getNeedFormulaShowTypeAndFormulaStrId(arg_20_0._lineMO)
+function RoomFormulaView:onOpen()
+	self._lineMO = self.viewParam.lineMO
+	self._buildingType = self.viewParam.buildingType
+	self._needFormulaShowType = nil
+	self._needFormulaStrId = nil
+	self._needFormulaShowType, self._needFormulaStrId = RoomProductionHelper.getNeedFormulaShowTypeAndFormulaStrId(self._lineMO)
 
-	if arg_20_0.viewParam.openInOutside then
-		gohelper.setActive(arg_20_0._btnclose.gameObject, false)
-		PostProcessingMgr.instance:setViewBlur(arg_20_0.viewName, 1)
+	if self.viewParam.openInOutside then
+		gohelper.setActive(self._btnclose.gameObject, false)
+		PostProcessingMgr.instance:setViewBlur(self.viewName, 1)
 	else
-		PostProcessingMgr.instance:setViewBlur(arg_20_0.viewName, 2)
-		gohelper.setActive(arg_20_0._btnclose.gameObject, true)
+		PostProcessingMgr.instance:setViewBlur(self.viewName, 2)
+		gohelper.setActive(self._btnclose.gameObject, true)
 	end
 
-	NavigateMgr.instance:addEscape(ViewName.RoomFormulaView, arg_20_0._onEscapeBtnClick, arg_20_0)
+	NavigateMgr.instance:addEscape(ViewName.RoomFormulaView, self._onEscapeBtnClick, self)
 	RoomFormulaListModel.instance:setOrder(RoomBuildingEnum.FormulaOrderType.RareDown)
-	arg_20_0:_refreshUI()
+	self:_refreshUI()
 end
 
-function var_0_0.onUpdateParam(arg_21_0)
-	arg_21_0._lineMO = arg_21_0.viewParam.lineMO
-	arg_21_0._buildingType = arg_21_0.viewParam.buildingType
+function RoomFormulaView:onUpdateParam()
+	self._lineMO = self.viewParam.lineMO
+	self._buildingType = self.viewParam.buildingType
 
 	RoomFormulaListModel.instance:setOrder(RoomBuildingEnum.FormulaOrderType.RareDown)
-	arg_21_0:_refreshUI()
+	self:_refreshUI()
 end
 
-function var_0_0._refreshUI(arg_22_0)
-	arg_22_0:_refreshShowType()
-	arg_22_0:_refreshOrderSelect()
-	arg_22_0:_refreshNeedText()
-	TaskDispatcher.runDelay(arg_22_0._refreshScrollContent, arg_22_0, 0.01)
+function RoomFormulaView:_refreshUI()
+	self:_refreshShowType()
+	self:_refreshOrderSelect()
+	self:_refreshNeedText()
+	TaskDispatcher.runDelay(self._refreshScrollContent, self, 0.01)
 
-	if arg_22_0._needFormulaStrId then
-		RoomBuildingFormulaController.instance:setSelectFormulaStrId(arg_22_0._needFormulaStrId, true)
-		arg_22_0:focusPos()
+	if self._needFormulaStrId then
+		RoomBuildingFormulaController.instance:setSelectFormulaStrId(self._needFormulaStrId, true)
+		self:focusPos()
 	end
 end
 
-function var_0_0._refreshShowType(arg_23_0)
-	arg_23_0._selectIndex = nil
+function RoomFormulaView:_refreshShowType()
+	self._selectIndex = nil
 
-	local var_23_0 = {}
+	local showTypeList = {}
 
-	for iter_23_0, iter_23_1 in ipairs(lua_formula_showtype.configList) do
-		if iter_23_1.buildingType == arg_23_0._buildingType then
-			table.insert(var_23_0, iter_23_1)
+	for _, showTypeConfig in ipairs(lua_formula_showtype.configList) do
+		if showTypeConfig.buildingType == self._buildingType then
+			table.insert(showTypeList, showTypeConfig)
 		end
 	end
 
-	table.sort(var_23_0, function(arg_24_0, arg_24_1)
-		local var_24_0 = RoomFormulaModel.instance:getTopTreeLevelFormulaCount(arg_24_0.id) > 0
-		local var_24_1 = RoomFormulaModel.instance:getTopTreeLevelFormulaCount(arg_24_1.id) > 0
+	table.sort(showTypeList, function(x, y)
+		local xUnlock = RoomFormulaModel.instance:getTopTreeLevelFormulaCount(x.id) > 0
+		local yUnlock = RoomFormulaModel.instance:getTopTreeLevelFormulaCount(y.id) > 0
 
-		if var_24_0 and not var_24_1 then
+		if xUnlock and not yUnlock then
 			return true
-		elseif var_24_1 and not var_24_0 then
+		elseif yUnlock and not xUnlock then
 			return false
 		else
-			return arg_24_0.id < arg_24_1.id
+			return x.id < y.id
 		end
 	end)
 
-	for iter_23_2, iter_23_3 in ipairs(var_23_0) do
-		local var_23_1 = arg_23_0._showTypeItemList[iter_23_2]
+	for i, showTypeConfig in ipairs(showTypeList) do
+		local showTypeItem = self._showTypeItemList[i]
 
-		if not var_23_1 then
-			var_23_1 = arg_23_0:getUserDataTb_()
-			var_23_1.index = iter_23_2
-			var_23_1.go = gohelper.cloneInPlace(arg_23_0._goshowtypeitem, "showtypeitem" .. iter_23_2)
-			var_23_1.goselect = gohelper.findChild(var_23_1.go, "go_select")
-			var_23_1.goitem = gohelper.findChild(var_23_1.go, "go_item")
-			var_23_1.goline = gohelper.findChild(var_23_1.go, "go_item/go_line")
-			var_23_1.gofirstline = gohelper.findChild(var_23_1.go, "go_item/go_firstline")
-			var_23_1.golock = gohelper.findChild(var_23_1.go, "go_lock")
-			var_23_1.imageicon = gohelper.findChildImage(var_23_1.go, "go_item/image_recipe")
-			var_23_1.txtname = gohelper.findChildText(var_23_1.go, "go_item/txt_recipeName")
-			var_23_1.txtnameEn = gohelper.findChildText(var_23_1.go, "go_item/txt_recipeName/txt_recipeNameEn")
-			var_23_1.btnclick = gohelper.findChildButton(var_23_1.go, "btn_click")
+		if not showTypeItem then
+			showTypeItem = self:getUserDataTb_()
+			showTypeItem.index = i
+			showTypeItem.go = gohelper.cloneInPlace(self._goshowtypeitem, "showtypeitem" .. i)
+			showTypeItem.goselect = gohelper.findChild(showTypeItem.go, "go_select")
+			showTypeItem.goitem = gohelper.findChild(showTypeItem.go, "go_item")
+			showTypeItem.goline = gohelper.findChild(showTypeItem.go, "go_item/go_line")
+			showTypeItem.gofirstline = gohelper.findChild(showTypeItem.go, "go_item/go_firstline")
+			showTypeItem.golock = gohelper.findChild(showTypeItem.go, "go_lock")
+			showTypeItem.imageicon = gohelper.findChildImage(showTypeItem.go, "go_item/image_recipe")
+			showTypeItem.txtname = gohelper.findChildText(showTypeItem.go, "go_item/txt_recipeName")
+			showTypeItem.txtnameEn = gohelper.findChildText(showTypeItem.go, "go_item/txt_recipeName/txt_recipeNameEn")
+			showTypeItem.btnclick = gohelper.findChildButton(showTypeItem.go, "btn_click")
 
-			var_23_1.btnclick:AddClickListener(arg_23_0._btnclickOnClick, arg_23_0, var_23_1.index)
-			table.insert(arg_23_0._showTypeItemList, var_23_1)
+			showTypeItem.btnclick:AddClickListener(self._btnclickOnClick, self, showTypeItem.index)
+			table.insert(self._showTypeItemList, showTypeItem)
 		end
 
-		var_23_1.formulaShowType = iter_23_3.id
-		var_23_1.unlockLevel = RoomProductionHelper.isFormulaShowTypeUnlock(var_23_1.formulaShowType)
+		showTypeItem.formulaShowType = showTypeConfig.id
+		showTypeItem.unlockLevel = RoomProductionHelper.isFormulaShowTypeUnlock(showTypeItem.formulaShowType)
 
-		local var_23_2 = var_23_1.unlockLevel <= arg_23_0._lineMO.level
-		local var_23_3 = false
+		local isUnlock = showTypeItem.unlockLevel <= self._lineMO.level
+		local isNeedShowType = false
 
-		if arg_23_0._needFormulaShowType then
-			var_23_3 = var_23_1.formulaShowType == arg_23_0._needFormulaShowType
+		if self._needFormulaShowType then
+			isNeedShowType = showTypeItem.formulaShowType == self._needFormulaShowType
 		end
 
-		if var_23_2 and (not arg_23_0._selectIndex or var_23_3) then
-			arg_23_0._selectIndex = var_23_1.index
+		if isUnlock and (not self._selectIndex or isNeedShowType) then
+			self._selectIndex = showTypeItem.index
 		end
 
-		var_23_1.goitem:GetComponent(typeof(UnityEngine.CanvasGroup)).alpha = var_23_1.unlockLevel <= arg_23_0._lineMO.level and 1 or 0.3
+		showTypeItem.goitem:GetComponent(typeof(UnityEngine.CanvasGroup)).alpha = showTypeItem.unlockLevel <= self._lineMO.level and 1 or 0.3
 
-		gohelper.setActive(var_23_1.golock, var_23_1.unlockLevel > arg_23_0._lineMO.level)
-		ZProj.UGUIHelper.SetColorAlpha(var_23_1.imageicon, var_23_1.unlockLevel > arg_23_0._lineMO.level and 0.5 or 1)
-		ZProj.UGUIHelper.SetColorAlpha(var_23_1.txtname, var_23_1.unlockLevel > arg_23_0._lineMO.level and 0.5 or 1)
+		gohelper.setActive(showTypeItem.golock, showTypeItem.unlockLevel > self._lineMO.level)
+		ZProj.UGUIHelper.SetColorAlpha(showTypeItem.imageicon, showTypeItem.unlockLevel > self._lineMO.level and 0.5 or 1)
+		ZProj.UGUIHelper.SetColorAlpha(showTypeItem.txtname, showTypeItem.unlockLevel > self._lineMO.level and 0.5 or 1)
 
-		var_23_1.txtname.text = iter_23_3.name
-		var_23_1.txtnameEn.text = iter_23_3.nameEn
+		showTypeItem.txtname.text = showTypeConfig.name
+		showTypeItem.txtnameEn.text = showTypeConfig.nameEn
 
-		UISpriteSetMgr.instance:setRoomSprite(var_23_1.imageicon, "formulate_" .. iter_23_3.icon)
-		gohelper.setActive(var_23_1.go, true)
+		UISpriteSetMgr.instance:setRoomSprite(showTypeItem.imageicon, "formulate_" .. showTypeConfig.icon)
+		gohelper.setActive(showTypeItem.go, true)
 	end
 
-	for iter_23_4 = #var_23_0 + 1, #arg_23_0._showTypeItemList do
-		local var_23_4 = arg_23_0._showTypeItemList[iter_23_4]
+	for i = #showTypeList + 1, #self._showTypeItemList do
+		local showTypeItem = self._showTypeItemList[i]
 
-		gohelper.setActive(var_23_4.go, false)
+		gohelper.setActive(showTypeItem.go, false)
 	end
 
-	arg_23_0._scrollcategory.verticalNormalizedPosition = 1
+	self._scrollcategory.verticalNormalizedPosition = 1
 
-	arg_23_0:_refreshShowTypeSelect()
+	self:_refreshShowTypeSelect()
 end
 
-function var_0_0._refreshShowTypeSelect(arg_25_0)
-	for iter_25_0, iter_25_1 in ipairs(arg_25_0._showTypeItemList) do
-		gohelper.setActive(iter_25_1.goselect, iter_25_1.index == arg_25_0._selectIndex)
-		gohelper.setActive(iter_25_1.gofirstline, iter_25_1.index ~= arg_25_0._selectIndex and iter_25_0 == 1)
-		gohelper.setActive(arg_25_0._showTypeItemList[arg_25_0._selectIndex].goline, iter_25_1.index ~= arg_25_0._selectIndex)
+function RoomFormulaView:_refreshShowTypeSelect()
+	for i, showTypeItem in ipairs(self._showTypeItemList) do
+		gohelper.setActive(showTypeItem.goselect, showTypeItem.index == self._selectIndex)
+		gohelper.setActive(showTypeItem.gofirstline, showTypeItem.index ~= self._selectIndex and i == 1)
+		gohelper.setActive(self._showTypeItemList[self._selectIndex].goline, showTypeItem.index ~= self._selectIndex)
 
-		if arg_25_0._selectIndex > 1 then
-			gohelper.setActive(arg_25_0._showTypeItemList[arg_25_0._selectIndex - 1].goline, iter_25_1.index ~= arg_25_0._selectIndex)
+		if self._selectIndex > 1 then
+			gohelper.setActive(self._showTypeItemList[self._selectIndex - 1].goline, showTypeItem.index ~= self._selectIndex)
 		end
 
-		SLFramework.UGUI.GuiHelper.SetColor(iter_25_1.txtname, iter_25_1.index == arg_25_0._selectIndex and "E99B56" or "#CAC8C5")
-		SLFramework.UGUI.GuiHelper.SetColor(iter_25_1.txtnameEn, iter_25_1.index == arg_25_0._selectIndex and "E99B56" or "#CAC8C5")
+		SLFramework.UGUI.GuiHelper.SetColor(showTypeItem.txtname, showTypeItem.index == self._selectIndex and "E99B56" or "#CAC8C5")
+		SLFramework.UGUI.GuiHelper.SetColor(showTypeItem.txtnameEn, showTypeItem.index == self._selectIndex and "E99B56" or "#CAC8C5")
 	end
 
-	if arg_25_0._selectIndex then
-		local var_25_0 = arg_25_0._showTypeItemList[arg_25_0._selectIndex]
+	if self._selectIndex then
+		local showTypeItem = self._showTypeItemList[self._selectIndex]
 
-		if var_25_0 and var_25_0.unlockLevel <= arg_25_0._lineMO.level then
-			RoomFormulaListModel.instance:setFormulaShowType(var_25_0.formulaShowType)
+		if showTypeItem and showTypeItem.unlockLevel <= self._lineMO.level then
+			RoomFormulaListModel.instance:setFormulaShowType(showTypeItem.formulaShowType)
 		else
 			RoomFormulaListModel.instance:setFormulaShowType(nil)
 		end
@@ -441,143 +455,145 @@ function var_0_0._refreshShowTypeSelect(arg_25_0)
 		RoomFormulaListModel.instance:setFormulaShowType(nil)
 	end
 
-	RoomFormulaListModel.instance:setFormulaList(arg_25_0._lineMO.level)
+	RoomFormulaListModel.instance:setFormulaList(self._lineMO.level)
 
-	arg_25_0._scrollformula.verticalNormalizedPosition = 1
+	self._scrollformula.verticalNormalizedPosition = 1
 
-	arg_25_0:_refreshScrollContent()
+	self:_refreshScrollContent()
 end
 
-function var_0_0._refreshOrderSelect(arg_26_0)
-	local var_26_0 = RoomFormulaListModel.instance:getOrder()
+function RoomFormulaView:_refreshOrderSelect()
+	local order = RoomFormulaListModel.instance:getOrder()
 
-	if var_26_0 == RoomBuildingEnum.FormulaOrderType.RareUp then
-		arg_26_0:_setSortItemUp(arg_26_0._rareItem)
-	elseif var_26_0 == RoomBuildingEnum.FormulaOrderType.RareDown then
-		arg_26_0:_setSortItemDown(arg_26_0._rareItem)
+	if order == RoomBuildingEnum.FormulaOrderType.RareUp then
+		self:_setSortItemUp(self._rareItem)
+	elseif order == RoomBuildingEnum.FormulaOrderType.RareDown then
+		self:_setSortItemDown(self._rareItem)
 	else
-		arg_26_0:_setSortItemDefault(arg_26_0._rareItem)
+		self:_setSortItemDefault(self._rareItem)
 	end
 
-	if var_26_0 == RoomBuildingEnum.FormulaOrderType.CostTimeUp then
-		arg_26_0:_setSortItemUp(arg_26_0._costTimeItem)
-	elseif var_26_0 == RoomBuildingEnum.FormulaOrderType.CostTimeDown then
-		arg_26_0:_setSortItemDown(arg_26_0._costTimeItem)
+	if order == RoomBuildingEnum.FormulaOrderType.CostTimeUp then
+		self:_setSortItemUp(self._costTimeItem)
+	elseif order == RoomBuildingEnum.FormulaOrderType.CostTimeDown then
+		self:_setSortItemDown(self._costTimeItem)
 	else
-		arg_26_0:_setSortItemDefault(arg_26_0._costTimeItem)
+		self:_setSortItemDefault(self._costTimeItem)
 	end
 
-	if var_26_0 == RoomBuildingEnum.FormulaOrderType.OrderUp then
-		arg_26_0:_setSortItemUp(arg_26_0._orderItem)
-	elseif var_26_0 == RoomBuildingEnum.FormulaOrderType.OrderDown then
-		arg_26_0:_setSortItemDown(arg_26_0._orderItem)
+	if order == RoomBuildingEnum.FormulaOrderType.OrderUp then
+		self:_setSortItemUp(self._orderItem)
+	elseif order == RoomBuildingEnum.FormulaOrderType.OrderDown then
+		self:_setSortItemDown(self._orderItem)
 	else
-		arg_26_0:_setSortItemDefault(arg_26_0._orderItem)
+		self:_setSortItemDefault(self._orderItem)
 	end
 end
 
-function var_0_0._setSortItemDefault(arg_27_0, arg_27_1)
-	gohelper.setActive(arg_27_1.gounselect, true)
-	gohelper.setActive(arg_27_1.goselect, false)
+function RoomFormulaView:_setSortItemDefault(sortItem)
+	gohelper.setActive(sortItem.gounselect, true)
+	gohelper.setActive(sortItem.goselect, false)
 end
 
-function var_0_0._setSortItemDown(arg_28_0, arg_28_1)
-	gohelper.setActive(arg_28_1.gounselect, false)
-	gohelper.setActive(arg_28_1.goselect, true)
+function RoomFormulaView:_setSortItemDown(sortItem)
+	gohelper.setActive(sortItem.gounselect, false)
+	gohelper.setActive(sortItem.goselect, true)
 
-	local var_28_0, var_28_1, var_28_2 = transformhelper.getLocalScale(arg_28_1.selectArrow.transform)
+	local scaleX, scaleY, scaleZ = transformhelper.getLocalScale(sortItem.selectArrow.transform)
 
-	transformhelper.setLocalScale(arg_28_1.selectArrow.transform, var_28_0, math.abs(var_28_1), var_28_2)
-	transformhelper.setLocalScale(arg_28_1.unselectArrow.transform, var_28_0, math.abs(var_28_1), var_28_2)
+	transformhelper.setLocalScale(sortItem.selectArrow.transform, scaleX, math.abs(scaleY), scaleZ)
+	transformhelper.setLocalScale(sortItem.unselectArrow.transform, scaleX, math.abs(scaleY), scaleZ)
 end
 
-function var_0_0._setSortItemUp(arg_29_0, arg_29_1)
-	gohelper.setActive(arg_29_1.gounselect, false)
-	gohelper.setActive(arg_29_1.goselect, true)
+function RoomFormulaView:_setSortItemUp(sortItem)
+	gohelper.setActive(sortItem.gounselect, false)
+	gohelper.setActive(sortItem.goselect, true)
 
-	local var_29_0, var_29_1, var_29_2 = transformhelper.getLocalScale(arg_29_1.selectArrow.transform)
+	local scaleX, scaleY, scaleZ = transformhelper.getLocalScale(sortItem.selectArrow.transform)
 
-	transformhelper.setLocalScale(arg_29_1.selectArrow.transform, var_29_0, -math.abs(var_29_1), var_29_2)
-	transformhelper.setLocalScale(arg_29_1.unselectArrow.transform, var_29_0, -math.abs(var_29_1), var_29_2)
+	transformhelper.setLocalScale(sortItem.selectArrow.transform, scaleX, -math.abs(scaleY), scaleZ)
+	transformhelper.setLocalScale(sortItem.unselectArrow.transform, scaleX, -math.abs(scaleY), scaleZ)
 end
 
-function var_0_0._refreshNeedText(arg_30_0)
-	local var_30_0 = false
-	local var_30_1 = JumpModel.instance:getRecordFarmItem()
+function RoomFormulaView:_refreshNeedText()
+	local isShowNeed = false
+	local recordFarmItem = JumpModel.instance:getRecordFarmItem()
 
-	if var_30_1 then
-		var_30_0 = true
+	if recordFarmItem then
+		isShowNeed = true
 
-		local var_30_2 = ItemModel.instance:getItemConfig(var_30_1.type, var_30_1.id)
-		local var_30_3 = ItemModel.instance:getItemQuantity(var_30_1.type, var_30_1.id)
-		local var_30_4 = ""
+		local config = ItemModel.instance:getItemConfig(recordFarmItem.type, recordFarmItem.id)
+		local quantity = ItemModel.instance:getItemQuantity(recordFarmItem.type, recordFarmItem.id)
+		local strShowQuantity = ""
 
-		if var_30_1.quantity and var_30_1.quantity ~= 0 then
-			local var_30_5 = "#D97373"
+		if recordFarmItem.quantity and recordFarmItem.quantity ~= 0 then
+			local color = "#D97373"
 
-			if var_30_3 >= var_30_1.quantity then
-				var_30_5 = "#81ce83"
+			if quantity >= recordFarmItem.quantity then
+				color = "#81ce83"
 			end
 
-			local var_30_6 = GameUtil.numberDisplay(var_30_3)
-			local var_30_7 = GameUtil.numberDisplay(var_30_1.quantity)
+			local strQuantity = GameUtil.numberDisplay(quantity)
+			local strRecordFarmItemQuantity = GameUtil.numberDisplay(recordFarmItem.quantity)
 
-			var_30_4 = string.format("<color=%s>%s</color>/%s", var_30_5, var_30_6, var_30_7)
+			strShowQuantity = string.format("<color=%s>%s</color>/%s", color, strQuantity, strRecordFarmItemQuantity)
 		end
 
-		local var_30_8 = {
-			var_30_2.name,
-			var_30_4
+		local tag = {
+			config.name,
+			strShowQuantity
 		}
 
-		arg_30_0._txtNeed.text = GameUtil.getSubPlaceholderLuaLang(luaLang("room_formula_need_desc"), var_30_8)
+		self._txtNeed.text = GameUtil.getSubPlaceholderLuaLang(luaLang("room_formula_need_desc"), tag)
 
-		local var_30_9 = arg_30_0._txtNeed.preferredWidth
+		local preferredWidth = self._txtNeed.preferredWidth
 
-		recthelper.setWidth(arg_30_0._btnNeedClick.transform, var_30_9)
+		recthelper.setWidth(self._btnNeedClick.transform, preferredWidth)
 	end
 
-	local var_30_10 = arg_30_0._scrollHeight
+	local scrollHeight = self._scrollHeight
 
-	if var_30_0 then
-		var_30_10 = arg_30_0._scrollHeight - arg_30_0._goNeedHeight
+	if isShowNeed then
+		scrollHeight = self._scrollHeight - self._goNeedHeight
 	end
 
-	recthelper.setHeight(arg_30_0._scrollformula.transform, var_30_10)
-	gohelper.setActive(arg_30_0._goNeed, var_30_0)
+	recthelper.setHeight(self._scrollformula.transform, scrollHeight)
+	gohelper.setActive(self._goNeed, isShowNeed)
 
-	arg_30_0.viewportHeight = recthelper.getHeight(arg_30_0._scrollViewport.transform)
-	arg_30_0.viewportCapacity = math.ceil(arg_30_0.viewportHeight / arg_30_0.viewContainer.cellHeightSize)
+	self.viewportHeight = recthelper.getHeight(self._scrollViewport.transform)
+	self.viewportCapacity = math.ceil(self.viewportHeight / self.viewContainer.cellHeightSize)
 end
 
-function var_0_0._refreshScrollContent(arg_31_0)
-	if not arg_31_0._scrollHeight or gohelper.isNil(arg_31_0._scrollcontent) then
+function RoomFormulaView:_refreshScrollContent()
+	if not self._scrollHeight or gohelper.isNil(self._scrollcontent) then
 		return
 	end
 
-	ZProj.UGUIHelper.RebuildLayout(arg_31_0._scrollcontent.transform)
+	ZProj.UGUIHelper.RebuildLayout(self._scrollcontent.transform)
 
-	arg_31_0._couldScroll = recthelper.getHeight(arg_31_0._scrollcontent.transform) > arg_31_0._scrollHeight and true or false
+	local contentHeight = recthelper.getHeight(self._scrollcontent.transform)
+
+	self._couldScroll = contentHeight > self._scrollHeight and true or false
 end
 
-function var_0_0.onClose(arg_32_0)
-	TaskDispatcher.cancelTask(arg_32_0.focusPos, arg_32_0)
-	TaskDispatcher.cancelTask(arg_32_0._refreshScrollContent, arg_32_0)
+function RoomFormulaView:onClose()
+	TaskDispatcher.cancelTask(self.focusPos, self)
+	TaskDispatcher.cancelTask(self._refreshScrollContent, self)
 
-	if arg_32_0.viewContainer:isManualClose() then
+	if self.viewContainer:isManualClose() then
 		AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 	end
 end
 
-function var_0_0.onDestroyView(arg_33_0)
-	arg_33_0._simagebg1:UnLoadImage()
-	arg_33_0._simagebg2:UnLoadImage()
+function RoomFormulaView:onDestroyView()
+	self._simagebg1:UnLoadImage()
+	self._simagebg2:UnLoadImage()
 
-	for iter_33_0, iter_33_1 in ipairs(arg_33_0._showTypeItemList) do
-		iter_33_1.btnclick:RemoveClickListener()
+	for i, showTypeItem in ipairs(self._showTypeItemList) do
+		showTypeItem.btnclick:RemoveClickListener()
 	end
 
 	RoomFormulaListModel.instance:resetIsInList()
 end
 
-return var_0_0
+return RoomFormulaView

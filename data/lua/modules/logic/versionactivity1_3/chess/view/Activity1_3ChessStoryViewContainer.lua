@@ -1,48 +1,50 @@
-﻿module("modules.logic.versionactivity1_3.chess.view.Activity1_3ChessStoryViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/chess/view/Activity1_3ChessStoryViewContainer.lua
 
-local var_0_0 = class("Activity1_3ChessStoryViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_3.chess.view.Activity1_3ChessStoryViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+local Activity1_3ChessStoryViewContainer = class("Activity1_3ChessStoryViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "#scroll_ChapterList"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = Activity1_3ChessStoryViewItem.prefabPath
-	var_1_1.cellClass = Activity1_3ChessStoryViewItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirH
-	var_1_1.lineCount = 1
-	var_1_1.cellWidth = 500
-	var_1_1.cellHeight = 720
-	var_1_1.cellSpaceH = 0
-	var_1_1.cellSpaceV = 0
-	var_1_1.startSpace = 0
+function Activity1_3ChessStoryViewContainer:buildViews()
+	local views = {}
+	local scrollParam = ListScrollParam.New()
 
-	table.insert(var_1_0, LuaListScrollView.New(Activity122StoryListModel.instance, var_1_1))
-	table.insert(var_1_0, Activity1_3ChessStoryView.New())
+	scrollParam.scrollGOPath = "#scroll_ChapterList"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = Activity1_3ChessStoryViewItem.prefabPath
+	scrollParam.cellClass = Activity1_3ChessStoryViewItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirH
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 500
+	scrollParam.cellHeight = 720
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 0
+	scrollParam.startSpace = 0
 
-	arg_1_0._storyReviewScene = Va3ChessStoryReviewScene.New()
+	table.insert(views, LuaListScrollView.New(Activity122StoryListModel.instance, scrollParam))
+	table.insert(views, Activity1_3ChessStoryView.New())
 
-	table.insert(var_1_0, arg_1_0._storyReviewScene)
+	self._storyReviewScene = Va3ChessStoryReviewScene.New()
 
-	return var_1_0
+	table.insert(views, self._storyReviewScene)
+
+	return views
 end
 
-function var_0_0.onContainerInit(arg_2_0)
+function Activity1_3ChessStoryViewContainer:onContainerInit()
 	Activity1_3ChessController.instance:setReviewStory(true)
 end
 
-function var_0_0.onContainerClose(arg_3_0)
+function Activity1_3ChessStoryViewContainer:onContainerClose()
 	Activity1_3ChessController.instance:setReviewStory(false)
 end
 
-function var_0_0.onContainerClickModalMask(arg_4_0)
+function Activity1_3ChessStoryViewContainer:onContainerClickModalMask()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	arg_4_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.buildTabViews(arg_5_0, arg_5_1)
-	if arg_5_1 == 1 then
+function Activity1_3ChessStoryViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -53,16 +55,16 @@ function var_0_0.buildTabViews(arg_5_0, arg_5_1)
 	end
 end
 
-function var_0_0._setVisible(arg_6_0, arg_6_1)
-	var_0_0.super._setVisible(arg_6_0, arg_6_1)
+function Activity1_3ChessStoryViewContainer:_setVisible(isVisible)
+	Activity1_3ChessStoryViewContainer.super._setVisible(self, isVisible)
 
-	if arg_6_0._storyReviewScene and arg_6_0._storyReviewSceneVisible ~= arg_6_1 then
-		arg_6_0._storyReviewSceneVisible = arg_6_1
+	if self._storyReviewScene and self._storyReviewSceneVisible ~= isVisible then
+		self._storyReviewSceneVisible = isVisible
 
-		if arg_6_1 then
-			arg_6_0._storyReviewScene:resetOpenAnim()
+		if isVisible then
+			self._storyReviewScene:resetOpenAnim()
 		end
 	end
 end
 
-return var_0_0
+return Activity1_3ChessStoryViewContainer

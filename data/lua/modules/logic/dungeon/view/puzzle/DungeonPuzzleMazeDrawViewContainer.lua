@@ -1,8 +1,10 @@
-﻿module("modules.logic.dungeon.view.puzzle.DungeonPuzzleMazeDrawViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/puzzle/DungeonPuzzleMazeDrawViewContainer.lua
 
-local var_0_0 = class("DungeonPuzzleMazeDrawViewContainer", BaseViewContainer)
+module("modules.logic.dungeon.view.puzzle.DungeonPuzzleMazeDrawViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local DungeonPuzzleMazeDrawViewContainer = class("DungeonPuzzleMazeDrawViewContainer", BaseViewContainer)
+
+function DungeonPuzzleMazeDrawViewContainer:buildViews()
 	return {
 		DungeonPuzzleMazeDraw.New(),
 		DungeonPuzzleMazeDrawView.New(),
@@ -10,7 +12,7 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function DungeonPuzzleMazeDrawViewContainer:buildTabViews(tabContainerId)
 	return {
 		NavigateButtonsView.New({
 			true,
@@ -20,4 +22,4 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	}
 end
 
-return var_0_0
+return DungeonPuzzleMazeDrawViewContainer

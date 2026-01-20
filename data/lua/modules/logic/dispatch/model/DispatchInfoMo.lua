@@ -1,46 +1,48 @@
-﻿module("modules.logic.dispatch.model.DispatchInfoMo", package.seeall)
+﻿-- chunkname: @modules/logic/dispatch/model/DispatchInfoMo.lua
 
-local var_0_0 = pureTable("DispatchInfoMo")
+module("modules.logic.dispatch.model.DispatchInfoMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1.elementId
+local DispatchInfoMo = pureTable("DispatchInfoMo")
 
-	arg_1_0:updateMO(arg_1_1)
+function DispatchInfoMo:init(dispatchInfo)
+	self.id = dispatchInfo.elementId
+
+	self:updateMO(dispatchInfo)
 end
 
-function var_0_0.updateMO(arg_2_0, arg_2_1)
-	arg_2_0.dispatchId = arg_2_1.dispatchId
-	arg_2_0.endTime = Mathf.Floor(tonumber(arg_2_1.endTime) / 1000)
-	arg_2_0.heroIdList = arg_2_1.heroIdList
+function DispatchInfoMo:updateMO(dispatchInfo)
+	self.dispatchId = dispatchInfo.dispatchId
+	self.endTime = Mathf.Floor(tonumber(dispatchInfo.endTime) / 1000)
+	self.heroIdList = dispatchInfo.heroIdList
 end
 
-function var_0_0.getDispatchId(arg_3_0)
-	return arg_3_0.dispatchId
+function DispatchInfoMo:getDispatchId()
+	return self.dispatchId
 end
 
-function var_0_0.getHeroIdList(arg_4_0)
-	return arg_4_0.heroIdList
+function DispatchInfoMo:getHeroIdList()
+	return self.heroIdList
 end
 
-function var_0_0.getRemainTime(arg_5_0)
-	return Mathf.Max(arg_5_0.endTime - ServerTime.now(), 0)
+function DispatchInfoMo:getRemainTime()
+	return Mathf.Max(self.endTime - ServerTime.now(), 0)
 end
 
-function var_0_0.getRemainTimeStr(arg_6_0)
-	local var_6_0 = arg_6_0:getRemainTime()
-	local var_6_1 = math.floor(var_6_0 / TimeUtil.OneHourSecond)
-	local var_6_2 = math.floor(var_6_0 % TimeUtil.OneHourSecond / TimeUtil.OneMinuteSecond)
-	local var_6_3 = var_6_0 % TimeUtil.OneMinuteSecond
+function DispatchInfoMo:getRemainTimeStr()
+	local remainSecond = self:getRemainTime()
+	local hours = math.floor(remainSecond / TimeUtil.OneHourSecond)
+	local minutes = math.floor(remainSecond % TimeUtil.OneHourSecond / TimeUtil.OneMinuteSecond)
+	local seconds = remainSecond % TimeUtil.OneMinuteSecond
 
-	return string.format("%02d : %02d : %02d", var_6_1, var_6_2, var_6_3)
+	return string.format("%02d : %02d : %02d", hours, minutes, seconds)
 end
 
-function var_0_0.isRunning(arg_7_0)
-	return arg_7_0.endTime > ServerTime.now()
+function DispatchInfoMo:isRunning()
+	return self.endTime > ServerTime.now()
 end
 
-function var_0_0.isFinish(arg_8_0)
-	return arg_8_0.endTime <= ServerTime.now()
+function DispatchInfoMo:isFinish()
+	return self.endTime <= ServerTime.now()
 end
 
-return var_0_0
+return DispatchInfoMo

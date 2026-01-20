@@ -1,19 +1,21 @@
-﻿module("modules.logic.social.controller.SocialEvent", package.seeall)
+﻿-- chunkname: @modules/logic/social/controller/SocialEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.social.controller.SocialEvent", package.seeall)
 
-var_0_0.FriendsInfoChanged = 101
-var_0_0.BlackListInfoChanged = 102
-var_0_0.SearchInfoChanged = 103
-var_0_0.RequestInfoChanged = 104
-var_0_0.RecommendChanged = 105
-var_0_0.AddUnknownFriend = 111
-var_0_0.AddUnknownBlackList = 112
-var_0_0.MessageInfoChanged = 201
-var_0_0.SelectFriend = 301
-var_0_0.SubTabSwitch = 401
-var_0_0.InformSuccessReply = 501
-var_0_0.InformFailReply = 502
-var_0_0.FriendDescChange = 601
+local SocialEvent = _M
 
-return var_0_0
+SocialEvent.FriendsInfoChanged = 101
+SocialEvent.BlackListInfoChanged = 102
+SocialEvent.SearchInfoChanged = 103
+SocialEvent.RequestInfoChanged = 104
+SocialEvent.RecommendChanged = 105
+SocialEvent.AddUnknownFriend = 111
+SocialEvent.AddUnknownBlackList = 112
+SocialEvent.MessageInfoChanged = 201
+SocialEvent.SelectFriend = 301
+SocialEvent.SubTabSwitch = 401
+SocialEvent.InformSuccessReply = 501
+SocialEvent.InformFailReply = 502
+SocialEvent.FriendDescChange = 601
+
+return SocialEvent

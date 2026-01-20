@@ -1,750 +1,772 @@
-﻿module("modules.logic.versionactivity2_8.nuodika.view.NuoDiKaGameMapNodeItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/nuodika/view/NuoDiKaGameMapNodeItem.lua
 
-local var_0_0 = class("NuoDiKaGameMapNodeItem", LuaCompBase)
+module("modules.logic.versionactivity2_8.nuodika.view.NuoDiKaGameMapNodeItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.go = arg_1_1
-	arg_1_0.topGo = arg_1_2
-	arg_1_0._goroot = gohelper.findChild(arg_1_1, "goroot")
-	arg_1_0._btnnode = gohelper.findChildButtonWithAudio(arg_1_1, "goroot/btn_node")
-	arg_1_0._golocked = gohelper.findChild(arg_1_1, "goroot/go_locked")
-	arg_1_0._gounlocked = gohelper.findChild(arg_1_1, "goroot/go_unlocked")
-	arg_1_0._gointeractable = gohelper.findChild(arg_1_1, "goroot/go_interactable")
-	arg_1_0._goplaceable = gohelper.findChild(arg_1_1, "goroot/go_placeable")
-	arg_1_0._godamage = gohelper.findChild(arg_1_1, "goroot/go_damage")
-	arg_1_0._goselected = gohelper.findChild(arg_1_1, "goroot/go_selected")
-	arg_1_0._gocloud = gohelper.findChild(arg_1_1, "goroot/go_cloud")
-	arg_1_0._gouninteractable = gohelper.findChild(arg_1_1, "goroot/go_uninteractable")
-	arg_1_0._gouninteractableenemy = gohelper.findChild(arg_1_1, "goroot/go_uninteractableenemy")
-	arg_1_0._goenemyicon = gohelper.findChild(arg_1_1, "goroot/go_enemyicon")
-	arg_1_0._goenemy = gohelper.findChild(arg_1_1, "goroot/go_enemy")
-	arg_1_0._simageenemy = gohelper.findChildSingleImage(arg_1_1, "goroot/go_enemy/image_enemy")
-	arg_1_0._goitem = gohelper.findChild(arg_1_1, "goroot/go_item")
-	arg_1_0._simageitem = gohelper.findChildSingleImage(arg_1_1, "goroot/go_item/image_item")
-	arg_1_0._topgoroot = gohelper.findChild(arg_1_2, "goroot")
-	arg_1_0._gostate1 = gohelper.findChild(arg_1_2, "goroot/go_state1")
-	arg_1_0._gohp1 = gohelper.findChild(arg_1_2, "goroot/go_state1/gohp1")
-	arg_1_0._txthpnum1 = gohelper.findChildText(arg_1_2, "goroot/go_state1/gohp1/txt_hpnum1")
-	arg_1_0._goattack1 = gohelper.findChild(arg_1_2, "goroot/go_state1/goattack1")
-	arg_1_0._txtattacknum1 = gohelper.findChildText(arg_1_2, "goroot/go_state1/goattack1/txt_attcknum1")
-	arg_1_0._gostate2 = gohelper.findChild(arg_1_2, "goroot/go_state2")
-	arg_1_0._gohp2 = gohelper.findChild(arg_1_2, "goroot/go_state2/gohp2")
-	arg_1_0._txthpnum2 = gohelper.findChildText(arg_1_2, "goroot/go_state2/gohp2/txt_hpnum2")
-	arg_1_0._goattack2 = gohelper.findChild(arg_1_2, "goroot/go_state2/goattack2")
-	arg_1_0._txtattacknum2 = gohelper.findChildText(arg_1_2, "goroot/go_state2/goattack2/txt_attcknum2")
-	arg_1_0._goturns = gohelper.findChild(arg_1_2, "goroot/go_turns")
-	arg_1_0._txtturns = gohelper.findChildText(arg_1_2, "goroot/go_turns/txt_turns")
-	arg_1_0._gowarn = gohelper.findChild(arg_1_2, "goroot/vx_warn")
-	arg_1_0._goheal = gohelper.findChild(arg_1_2, "goroot/vx_heal")
-	arg_1_0._godead = gohelper.findChild(arg_1_2, "goroot/vx_dead")
-	arg_1_0._txtaffected = gohelper.findChildText(arg_1_2, "goroot/txt_affected")
-	arg_1_0._goattack = gohelper.findChild(arg_1_2, "goroot/vx_attack")
-	arg_1_0._goscan = gohelper.findChild(arg_1_2, "goroot/vx_scan")
-	arg_1_0._godeadbuff = gohelper.findChild(arg_1_2, "goroot/vx_deadbuff")
-	arg_1_0._goendless = gohelper.findChild(arg_1_2, "goroot/vx_endless")
-	arg_1_0._goitemtip = gohelper.findChild(arg_1_2, "goroot/go_itemtip")
-	arg_1_0._txtitemdesc = gohelper.findChildText(arg_1_2, "goroot/go_itemtip/txt_itemdesc")
-	arg_1_0._txtitemname = gohelper.findChildText(arg_1_2, "goroot/go_itemtip/txt_itemdesc/txt_itemname")
-	arg_1_0._btnitemuse = gohelper.findChildButtonWithAudio(arg_1_2, "goroot/go_itemtip/txt_itemdesc/btn_itemuse")
-	arg_1_0._goenemytip = gohelper.findChild(arg_1_2, "goroot/go_enemytip")
-	arg_1_0._txtenemydesc = gohelper.findChildText(arg_1_2, "goroot/go_enemytip/txt_enemydesc")
-	arg_1_0._txtenemyname = gohelper.findChildText(arg_1_2, "goroot/go_enemytip/txt_enemydesc/txt_enemyname")
-	arg_1_0._btnenemyattack = gohelper.findChildButtonWithAudio(arg_1_2, "goroot/go_enemytip/txt_enemydesc/btn_enemyattack")
+local NuoDiKaGameMapNodeItem = class("NuoDiKaGameMapNodeItem", LuaCompBase)
 
-	arg_1_0:_initNode()
-	arg_1_0:_addEvents()
+function NuoDiKaGameMapNodeItem:init(go, topGo)
+	self.go = go
+	self.topGo = topGo
+	self._goroot = gohelper.findChild(go, "goroot")
+	self._btnnode = gohelper.findChildButtonWithAudio(go, "goroot/btn_node")
+	self._golocked = gohelper.findChild(go, "goroot/go_locked")
+	self._gounlocked = gohelper.findChild(go, "goroot/go_unlocked")
+	self._gointeractable = gohelper.findChild(go, "goroot/go_interactable")
+	self._goplaceable = gohelper.findChild(go, "goroot/go_placeable")
+	self._godamage = gohelper.findChild(go, "goroot/go_damage")
+	self._goselected = gohelper.findChild(go, "goroot/go_selected")
+	self._gocloud = gohelper.findChild(go, "goroot/go_cloud")
+	self._gouninteractable = gohelper.findChild(go, "goroot/go_uninteractable")
+	self._gouninteractableenemy = gohelper.findChild(go, "goroot/go_uninteractableenemy")
+	self._goenemyicon = gohelper.findChild(go, "goroot/go_enemyicon")
+	self._goenemy = gohelper.findChild(go, "goroot/go_enemy")
+	self._simageenemy = gohelper.findChildSingleImage(go, "goroot/go_enemy/image_enemy")
+	self._goitem = gohelper.findChild(go, "goroot/go_item")
+	self._simageitem = gohelper.findChildSingleImage(go, "goroot/go_item/image_item")
+	self._topgoroot = gohelper.findChild(topGo, "goroot")
+	self._gostate1 = gohelper.findChild(topGo, "goroot/go_state1")
+	self._gohp1 = gohelper.findChild(topGo, "goroot/go_state1/gohp1")
+	self._txthpnum1 = gohelper.findChildText(topGo, "goroot/go_state1/gohp1/txt_hpnum1")
+	self._goattack1 = gohelper.findChild(topGo, "goroot/go_state1/goattack1")
+	self._txtattacknum1 = gohelper.findChildText(topGo, "goroot/go_state1/goattack1/txt_attcknum1")
+	self._gostate2 = gohelper.findChild(topGo, "goroot/go_state2")
+	self._gohp2 = gohelper.findChild(topGo, "goroot/go_state2/gohp2")
+	self._txthpnum2 = gohelper.findChildText(topGo, "goroot/go_state2/gohp2/txt_hpnum2")
+	self._goattack2 = gohelper.findChild(topGo, "goroot/go_state2/goattack2")
+	self._txtattacknum2 = gohelper.findChildText(topGo, "goroot/go_state2/goattack2/txt_attcknum2")
+	self._goturns = gohelper.findChild(topGo, "goroot/go_turns")
+	self._txtturns = gohelper.findChildText(topGo, "goroot/go_turns/txt_turns")
+	self._gowarn = gohelper.findChild(topGo, "goroot/vx_warn")
+	self._goheal = gohelper.findChild(topGo, "goroot/vx_heal")
+	self._godead = gohelper.findChild(topGo, "goroot/vx_dead")
+	self._txtaffected = gohelper.findChildText(topGo, "goroot/txt_affected")
+	self._goattack = gohelper.findChild(topGo, "goroot/vx_attack")
+	self._goscan = gohelper.findChild(topGo, "goroot/vx_scan")
+	self._godeadbuff = gohelper.findChild(topGo, "goroot/vx_deadbuff")
+	self._goendless = gohelper.findChild(topGo, "goroot/vx_endless")
+	self._goitemtip = gohelper.findChild(topGo, "goroot/go_itemtip")
+	self._txtitemdesc = gohelper.findChildText(topGo, "goroot/go_itemtip/txt_itemdesc")
+	self._txtitemname = gohelper.findChildText(topGo, "goroot/go_itemtip/txt_itemdesc/txt_itemname")
+	self._btnitemuse = gohelper.findChildButtonWithAudio(topGo, "goroot/go_itemtip/txt_itemdesc/btn_itemuse")
+	self._goenemytip = gohelper.findChild(topGo, "goroot/go_enemytip")
+	self._txtenemydesc = gohelper.findChildText(topGo, "goroot/go_enemytip/txt_enemydesc")
+	self._txtenemyname = gohelper.findChildText(topGo, "goroot/go_enemytip/txt_enemydesc/txt_enemyname")
+	self._btnenemyattack = gohelper.findChildButtonWithAudio(topGo, "goroot/go_enemytip/txt_enemydesc/btn_enemyattack")
+
+	self:_initNode()
+	self:_addEvents()
 end
 
-function var_0_0._addEvents(arg_2_0)
-	arg_2_0._btnnode:AddClickListener(arg_2_0._btnnodeOnClick, arg_2_0)
-	arg_2_0._btnenemyattack:AddClickListener(arg_2_0._btnenemyattackOnClick, arg_2_0)
-	arg_2_0._btnitemuse:AddClickListener(arg_2_0._btnitemuseOnClick, arg_2_0)
-	NuoDiKaController.instance:registerCallback(NuoDiKaEvent.NodeClicked, arg_2_0._onNodeClick, arg_2_0)
-	NuoDiKaController.instance:registerCallback(NuoDiKaEvent.AttackEnemy, arg_2_0._onStartAttack, arg_2_0)
-	NuoDiKaController.instance:registerCallback(NuoDiKaEvent.WarnEnemyNode, arg_2_0._onWarnEnemyNode, arg_2_0)
-	NuoDiKaController.instance:registerCallback(NuoDiKaEvent.UnlockAllNodesEnemyDead, arg_2_0._onUnlockAllNodesEnemyDead, arg_2_0)
-	NuoDiKaController.instance:registerCallback(NuoDiKaEvent.UnlockSuccessItem, arg_2_0._onUnlockSuccessItem, arg_2_0)
-	NuoDiKaController.instance:registerCallback(NuoDiKaEvent.ItemWarnAttackEnemy, arg_2_0._onItemWarnAttackEnemy, arg_2_0)
-	NuoDiKaController.instance:registerCallback(NuoDiKaEvent.ClearNodeItem, arg_2_0._onClearNodeItem, arg_2_0)
-	NuoDiKaController.instance:registerCallback(NuoDiKaEvent.HideOtherNodeTips, arg_2_0._onHideOtherNodeTips, arg_2_0)
-	NuoDiKaController.instance:registerCallback(NuoDiKaEvent.ShowInteractAttackWarn, arg_2_0._onShowInteractAttackWarn, arg_2_0)
-	NuoDiKaController.instance:registerCallback(NuoDiKaEvent.ShowItemScan, arg_2_0._onCheckShowScan, arg_2_0)
-	NuoDiKaController.instance:registerCallback(NuoDiKaEvent.MapResetClicked, arg_2_0._onResetNode, arg_2_0)
-	NuoDiKaController.instance:registerCallback(NuoDiKaEvent.GameRestart, arg_2_0._onResetNode, arg_2_0)
-	NuoDiKaController.instance:registerCallback(NuoDiKaEvent.GameFailed, arg_2_0._onGameFailed, arg_2_0)
-	NuoDiKaController.instance:registerCallback(NuoDiKaEvent.GameSuccess, arg_2_0._onGameSuccess, arg_2_0)
+function NuoDiKaGameMapNodeItem:_addEvents()
+	self._btnnode:AddClickListener(self._btnnodeOnClick, self)
+	self._btnenemyattack:AddClickListener(self._btnenemyattackOnClick, self)
+	self._btnitemuse:AddClickListener(self._btnitemuseOnClick, self)
+	NuoDiKaController.instance:registerCallback(NuoDiKaEvent.NodeClicked, self._onNodeClick, self)
+	NuoDiKaController.instance:registerCallback(NuoDiKaEvent.AttackEnemy, self._onStartAttack, self)
+	NuoDiKaController.instance:registerCallback(NuoDiKaEvent.WarnEnemyNode, self._onWarnEnemyNode, self)
+	NuoDiKaController.instance:registerCallback(NuoDiKaEvent.UnlockAllNodesEnemyDead, self._onUnlockAllNodesEnemyDead, self)
+	NuoDiKaController.instance:registerCallback(NuoDiKaEvent.UnlockSuccessItem, self._onUnlockSuccessItem, self)
+	NuoDiKaController.instance:registerCallback(NuoDiKaEvent.ItemWarnAttackEnemy, self._onItemWarnAttackEnemy, self)
+	NuoDiKaController.instance:registerCallback(NuoDiKaEvent.ClearNodeItem, self._onClearNodeItem, self)
+	NuoDiKaController.instance:registerCallback(NuoDiKaEvent.HideOtherNodeTips, self._onHideOtherNodeTips, self)
+	NuoDiKaController.instance:registerCallback(NuoDiKaEvent.ShowInteractAttackWarn, self._onShowInteractAttackWarn, self)
+	NuoDiKaController.instance:registerCallback(NuoDiKaEvent.ShowItemScan, self._onCheckShowScan, self)
+	NuoDiKaController.instance:registerCallback(NuoDiKaEvent.MapResetClicked, self._onResetNode, self)
+	NuoDiKaController.instance:registerCallback(NuoDiKaEvent.GameRestart, self._onResetNode, self)
+	NuoDiKaController.instance:registerCallback(NuoDiKaEvent.GameFailed, self._onGameFailed, self)
+	NuoDiKaController.instance:registerCallback(NuoDiKaEvent.GameSuccess, self._onGameSuccess, self)
 end
 
-function var_0_0._removeEvents(arg_3_0)
-	arg_3_0._btnnode:RemoveClickListener()
-	arg_3_0._btnenemyattack:RemoveClickListener()
-	arg_3_0._btnitemuse:RemoveClickListener()
-	NuoDiKaController.instance:unregisterCallback(NuoDiKaEvent.NodeClicked, arg_3_0._onNodeClick, arg_3_0)
-	NuoDiKaController.instance:unregisterCallback(NuoDiKaEvent.AttackEnemy, arg_3_0._onStartAttack, arg_3_0)
-	NuoDiKaController.instance:unregisterCallback(NuoDiKaEvent.WarnEnemyNode, arg_3_0._onWarnEnemyNode, arg_3_0)
-	NuoDiKaController.instance:unregisterCallback(NuoDiKaEvent.UnlockAllNodesEnemyDead, arg_3_0._onUnlockAllNodesEnemyDead, arg_3_0)
-	NuoDiKaController.instance:unregisterCallback(NuoDiKaEvent.UnlockSuccessItem, arg_3_0._onUnlockSuccessItem, arg_3_0)
-	NuoDiKaController.instance:unregisterCallback(NuoDiKaEvent.ItemWarnAttackEnemy, arg_3_0._onItemWarnAttackEnemy, arg_3_0)
-	NuoDiKaController.instance:unregisterCallback(NuoDiKaEvent.ClearNodeItem, arg_3_0._onClearNodeItem, arg_3_0)
-	NuoDiKaController.instance:unregisterCallback(NuoDiKaEvent.HideOtherNodeTips, arg_3_0._onHideOtherNodeTips, arg_3_0)
-	NuoDiKaController.instance:unregisterCallback(NuoDiKaEvent.ShowInteractAttackWarn, arg_3_0._onShowInteractAttackWarn, arg_3_0)
-	NuoDiKaController.instance:unregisterCallback(NuoDiKaEvent.ShowItemScan, arg_3_0._onCheckShowScan, arg_3_0)
-	NuoDiKaController.instance:unregisterCallback(NuoDiKaEvent.MapResetClicked, arg_3_0._onResetNode, arg_3_0)
-	NuoDiKaController.instance:unregisterCallback(NuoDiKaEvent.GameRestart, arg_3_0._onResetNode, arg_3_0)
-	NuoDiKaController.instance:unregisterCallback(NuoDiKaEvent.GameSuccess, arg_3_0._onGameSuccess, arg_3_0)
+function NuoDiKaGameMapNodeItem:_removeEvents()
+	self._btnnode:RemoveClickListener()
+	self._btnenemyattack:RemoveClickListener()
+	self._btnitemuse:RemoveClickListener()
+	NuoDiKaController.instance:unregisterCallback(NuoDiKaEvent.NodeClicked, self._onNodeClick, self)
+	NuoDiKaController.instance:unregisterCallback(NuoDiKaEvent.AttackEnemy, self._onStartAttack, self)
+	NuoDiKaController.instance:unregisterCallback(NuoDiKaEvent.WarnEnemyNode, self._onWarnEnemyNode, self)
+	NuoDiKaController.instance:unregisterCallback(NuoDiKaEvent.UnlockAllNodesEnemyDead, self._onUnlockAllNodesEnemyDead, self)
+	NuoDiKaController.instance:unregisterCallback(NuoDiKaEvent.UnlockSuccessItem, self._onUnlockSuccessItem, self)
+	NuoDiKaController.instance:unregisterCallback(NuoDiKaEvent.ItemWarnAttackEnemy, self._onItemWarnAttackEnemy, self)
+	NuoDiKaController.instance:unregisterCallback(NuoDiKaEvent.ClearNodeItem, self._onClearNodeItem, self)
+	NuoDiKaController.instance:unregisterCallback(NuoDiKaEvent.HideOtherNodeTips, self._onHideOtherNodeTips, self)
+	NuoDiKaController.instance:unregisterCallback(NuoDiKaEvent.ShowInteractAttackWarn, self._onShowInteractAttackWarn, self)
+	NuoDiKaController.instance:unregisterCallback(NuoDiKaEvent.ShowItemScan, self._onCheckShowScan, self)
+	NuoDiKaController.instance:unregisterCallback(NuoDiKaEvent.MapResetClicked, self._onResetNode, self)
+	NuoDiKaController.instance:unregisterCallback(NuoDiKaEvent.GameRestart, self._onResetNode, self)
+	NuoDiKaController.instance:unregisterCallback(NuoDiKaEvent.GameSuccess, self._onGameSuccess, self)
 end
 
-function var_0_0._onGameFailed(arg_4_0)
-	arg_4_0:_endBlock()
+function NuoDiKaGameMapNodeItem:_onGameFailed()
+	self:_endBlock()
 end
 
-function var_0_0._onGameSuccess(arg_5_0)
-	arg_5_0:_endBlock()
+function NuoDiKaGameMapNodeItem:_onGameSuccess()
+	self:_endBlock()
 end
 
-function var_0_0._onResetNode(arg_6_0)
-	arg_6_0:hideItemTip()
-	arg_6_0:hideEnemyTip()
-	arg_6_0._enemyAnim:Play("open", 0, 1)
-	arg_6_0._enemyTopAni:Play("open", 0, 1)
+function NuoDiKaGameMapNodeItem:_onResetNode()
+	self:hideItemTip()
+	self:hideEnemyTip()
+	self._enemyAnim:Play("open", 0, 1)
+	self._enemyTopAni:Play("open", 0, 1)
 end
 
-function var_0_0._onCheckShowScan(arg_7_0, arg_7_1)
-	if arg_7_0._nodeMo.id ~= arg_7_1.id then
+function NuoDiKaGameMapNodeItem:_onCheckShowScan(nodeMo)
+	if self._nodeMo.id ~= nodeMo.id then
 		return
 	end
 
-	arg_7_0:_onShowScan()
+	self:_onShowScan()
 end
 
-function var_0_0._onShowInteractAttackWarn(arg_8_0, arg_8_1)
-	if arg_8_0._nodeMo.id ~= arg_8_1.id then
+function NuoDiKaGameMapNodeItem:_onShowInteractAttackWarn(nodeMo)
+	if self._nodeMo.id ~= nodeMo.id then
 		return
 	end
 
-	gohelper.setActive(arg_8_0._gowarn, true)
+	gohelper.setActive(self._gowarn, true)
 	AudioMgr.instance:trigger(AudioEnum2_8.NuoDiKa.play_ui_interact_attack)
 	UIBlockMgr.instance:startBlock("interactAttack")
-	TaskDispatcher.runDelay(arg_8_0._showInteractWarnFinished, arg_8_0, 1)
+	TaskDispatcher.runDelay(self._showInteractWarnFinished, self, 1)
 end
 
-function var_0_0._showInteractWarnFinished(arg_9_0)
-	gohelper.setActive(arg_9_0._gowarn, false)
+function NuoDiKaGameMapNodeItem:_showInteractWarnFinished()
+	gohelper.setActive(self._gowarn, false)
 	UIBlockMgr.instance:endBlock("interactAttack")
 end
 
-function var_0_0._onHideOtherNodeTips(arg_10_0, arg_10_1)
-	if arg_10_0._nodeMo.id == arg_10_1 then
+function NuoDiKaGameMapNodeItem:_onHideOtherNodeTips(nodeId)
+	if self._nodeMo.id == nodeId then
 		return
 	end
 
-	arg_10_0:hideItemTip()
-	arg_10_0:hideEnemyTip()
+	self:hideItemTip()
+	self:hideEnemyTip()
 end
 
-function var_0_0._onClearNodeItem(arg_11_0, arg_11_1)
-	if arg_11_0._nodeMo.id ~= arg_11_1.id then
+function NuoDiKaGameMapNodeItem:_onClearNodeItem(nodeMo)
+	if self._nodeMo.id ~= nodeMo.id then
 		return
 	end
 
-	arg_11_1:clearEvent()
-	arg_11_0:hideItemTip()
+	nodeMo:clearEvent()
+	self:hideItemTip()
 end
 
-function var_0_0._onItemWarnAttackEnemy(arg_12_0, arg_12_1)
-	if not arg_12_0._nodeMo:isNodeUnlock() then
+function NuoDiKaGameMapNodeItem:_onItemWarnAttackEnemy(nodeMo)
+	local isUnlock = self._nodeMo:isNodeUnlock()
+
+	if not isUnlock then
 		return
 	end
 
-	if not (arg_12_0._nodeMo:getEvent() and arg_12_0._nodeMo:isNodeHasEnemy()) then
+	local eventCo = self._nodeMo:getEvent()
+	local hasEnemy = eventCo and self._nodeMo:isNodeHasEnemy()
+
+	if not hasEnemy then
 		return
 	end
 
-	arg_12_0._warnAttackNode = arg_12_1
+	self._warnAttackNode = nodeMo
 
-	gohelper.setActive(arg_12_0._goplaceable, true)
+	gohelper.setActive(self._goplaceable, true)
 end
 
-function var_0_0._onUnlockAllNodesEnemyDead(arg_13_0, arg_13_1)
-	if arg_13_0._nodeMo.id ~= arg_13_1 then
+function NuoDiKaGameMapNodeItem:_onUnlockAllNodesEnemyDead(id)
+	if self._nodeMo.id ~= id then
 		return
 	end
 
-	gohelper.setActive(arg_13_0._godeadbuff, true)
+	gohelper.setActive(self._godeadbuff, true)
 	UIBlockMgrExtend.setNeedCircleMv(false)
 	UIBlockMgr.instance:startBlock("enemyDeadUnlock")
-	TaskDispatcher.runDelay(arg_13_0._enemyDeadUnlockFinished, arg_13_0, 1.5)
+	TaskDispatcher.runDelay(self._enemyDeadUnlockFinished, self, 1.5)
 end
 
-function var_0_0._onUnlockSuccessItem(arg_14_0, arg_14_1)
-	if arg_14_0._nodeMo.id ~= arg_14_1 then
+function NuoDiKaGameMapNodeItem:_onUnlockSuccessItem(id)
+	if self._nodeMo.id ~= id then
 		return
 	end
 
-	gohelper.setActive(arg_14_0._goendless, true)
+	gohelper.setActive(self._goendless, true)
 end
 
-function var_0_0._enemyDeadUnlockFinished(arg_15_0)
+function NuoDiKaGameMapNodeItem:_enemyDeadUnlockFinished()
 	UIBlockMgr.instance:endBlock("enemyDeadUnlock")
-	gohelper.setActive(arg_15_0._godeadbuff, false)
+	gohelper.setActive(self._godeadbuff, false)
 end
 
-function var_0_0._btnnodeOnClick(arg_16_0)
-	NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.HideOtherNodeTips, arg_16_0._nodeMo.id)
+function NuoDiKaGameMapNodeItem:_btnnodeOnClick()
+	NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.HideOtherNodeTips, self._nodeMo.id)
 
-	if NuoDiKaMapModel.instance:isNodeEnemyLock(arg_16_0._nodeMo.id) then
+	local isEnemyLock = NuoDiKaMapModel.instance:isNodeEnemyLock(self._nodeMo.id)
+
+	if isEnemyLock then
 		GameFacade.showToast(ToastEnum.NuoDiKaGameNodeLocked)
 
 		return
 	end
 
-	if not arg_16_0._nodeMo:isNodeUnlock() then
-		if not NuoDiKaMapModel.instance:isNodeCouldUnlock(arg_16_0._nodeMo.id, arg_16_0._mapId) then
+	local isUnlock = self._nodeMo:isNodeUnlock()
+
+	if not isUnlock then
+		local isCouldUnlock = NuoDiKaMapModel.instance:isNodeCouldUnlock(self._nodeMo.id, self._mapId)
+
+		if not isCouldUnlock then
 			return
 		end
 
-		gohelper.setActive(arg_16_0._gounlocked, true)
-		arg_16_0._cloudAnim:Play("close", 0, 0)
-		arg_16_0._interactAnim:Play("close", 0, 0)
+		gohelper.setActive(self._gounlocked, true)
+		self._cloudAnim:Play("close", 0, 0)
+		self._interactAnim:Play("close", 0, 0)
 		UIBlockMgrExtend.setNeedCircleMv(false)
 		UIBlockMgr.instance:startBlock("cloudUnlock")
-		TaskDispatcher.runDelay(arg_16_0._unlockFinished, arg_16_0, 0.4)
-		NuoDiKaMapModel.instance:setCurSelectNode(arg_16_0._nodeMo.id)
-		NuoDiKaMapModel.instance:setNodeUnlock(arg_16_0._nodeMo.id, arg_16_0._mapId)
+		TaskDispatcher.runDelay(self._unlockFinished, self, 0.4)
+		NuoDiKaMapModel.instance:setCurSelectNode(self._nodeMo.id)
+		NuoDiKaMapModel.instance:setNodeUnlock(self._nodeMo.id, self._mapId)
 
-		local var_16_0 = arg_16_0._nodeMo:getEvent()
-		local var_16_1 = var_16_0 and arg_16_0._nodeMo:isNodeHasEnemy()
-		local var_16_2 = var_16_0 and arg_16_0._nodeMo:isNodeHasItem()
+		local eventCo = self._nodeMo:getEvent()
+		local hasEnemy = eventCo and self._nodeMo:isNodeHasEnemy()
+		local hasItem = eventCo and self._nodeMo:isNodeHasItem()
 
 		AudioMgr.instance:trigger(AudioEnum2_8.NuoDiKa.play_ui_unlock_node)
 
-		if var_16_1 or var_16_2 then
+		if hasEnemy or hasItem then
 			AudioMgr.instance:trigger(AudioEnum2_8.NuoDiKa.play_ui_unlock_unit)
 		end
 
-		NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.OnUnlockGuideNode, tostring(arg_16_0._nodeMo.id))
+		NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.OnUnlockGuideNode, tostring(self._nodeMo.id))
 	else
-		if arg_16_0._warnAttackNode then
+		if self._warnAttackNode then
 			NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.StartInteract)
-			NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.ItemStartSkill, arg_16_0._nodeMo, arg_16_0._warnAttackNode)
+			NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.ItemStartSkill, self._nodeMo, self._warnAttackNode)
 
-			arg_16_0._warnAttackNode = nil
+			self._warnAttackNode = nil
 
-			NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.NodeClicked, arg_16_0._nodeMo.id)
+			NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.NodeClicked, self._nodeMo.id)
 
 			return
 		end
 
-		NuoDiKaMapModel.instance:setCurSelectNode(arg_16_0._nodeMo.id)
+		NuoDiKaMapModel.instance:setCurSelectNode(self._nodeMo.id)
 
-		local var_16_3 = arg_16_0._nodeMo:getEvent()
+		local eventCo = self._nodeMo:getEvent()
 
-		arg_16_0:_refreshNodeState()
+		self:_refreshNodeState()
 
-		if var_16_3 and arg_16_0._nodeMo:isNodeHasEnemy() then
-			arg_16_0:showEnemyTip()
+		local hasEnemy = eventCo and self._nodeMo:isNodeHasEnemy()
+
+		if hasEnemy then
+			self:showEnemyTip()
 		end
 
-		if var_16_3 and arg_16_0._nodeMo:isNodeHasItem() then
-			arg_16_0:showItemTip()
+		local hasItem = eventCo and self._nodeMo:isNodeHasItem()
+
+		if hasItem then
+			self:showItemTip()
 		end
 
-		NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.NodeClicked, arg_16_0._nodeMo.id)
+		NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.NodeClicked, self._nodeMo.id)
 	end
 end
 
-function var_0_0._unlockFinished(arg_17_0)
-	NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.NodeClicked, arg_17_0._nodeMo.id)
+function NuoDiKaGameMapNodeItem:_unlockFinished()
+	NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.NodeClicked, self._nodeMo.id)
 	NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.StartInteract)
 	NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.MapRefresh)
-	TaskDispatcher.runDelay(arg_17_0._unlockAnimFinished, arg_17_0, 0.6)
+	TaskDispatcher.runDelay(self._unlockAnimFinished, self, 0.6)
 end
 
-function var_0_0._unlockAnimFinished(arg_18_0)
+function NuoDiKaGameMapNodeItem:_unlockAnimFinished()
 	UIBlockMgr.instance:endBlock("cloudUnlock")
 
-	local var_18_0 = arg_18_0._nodeMo:getEvent()
+	local eventCo = self._nodeMo:getEvent()
+	local hasEnemy = eventCo and self._nodeMo:isNodeHasEnemy()
 
-	if var_18_0 and arg_18_0._nodeMo:isNodeHasEnemy() then
-		NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.CheckShowEnemyDetail, var_18_0.eventParam)
+	if hasEnemy then
+		NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.CheckShowEnemyDetail, eventCo.eventParam)
 	end
 
-	if var_18_0 and arg_18_0._nodeMo:isNodeHasItem() then
-		NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.CheckShowItemDetail, var_18_0.eventParam)
+	local hasItem = eventCo and self._nodeMo:isNodeHasItem()
+
+	if hasItem then
+		NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.CheckShowItemDetail, eventCo.eventParam)
 	end
 end
 
-function var_0_0._btnenemyattackOnClick(arg_19_0)
-	if not arg_19_0._nodeMo:getEvent() then
+function NuoDiKaGameMapNodeItem:_btnenemyattackOnClick()
+	if not self._nodeMo:getEvent() then
 		return
 	end
 
-	local var_19_0 = NuoDiKaMapModel.instance:getMapMainRole().enemyId
-	local var_19_1 = NuoDiKaConfig.instance:getEnemyCo(var_19_0).atk
+	local mainRole = NuoDiKaMapModel.instance:getMapMainRole().enemyId
+	local hurtCount = NuoDiKaConfig.instance:getEnemyCo(mainRole).atk
 
-	if var_19_1 <= 0 then
+	if hurtCount <= 0 then
 		return
 	end
 
 	NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.StartInteract)
 
-	if var_19_1 >= arg_19_0._nodeMo.hp then
+	if hurtCount >= self._nodeMo.hp then
 		AudioMgr.instance:trigger(AudioEnum2_8.NuoDiKa.play_ui_enemy_dead)
-		arg_19_0._enemyAnim:Play("dead", 0, 0)
-		arg_19_0._enemyTopAni:Play("dead", 0, 0)
+		self._enemyAnim:Play("dead", 0, 0)
+		self._enemyTopAni:Play("dead", 0, 0)
 		UIBlockMgrExtend.setNeedCircleMv(false)
 		UIBlockMgr.instance:startBlock("enemyDead")
-		arg_19_0:hideEnemyTip()
-		NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.AttackMainRole, arg_19_0._nodeMo.atk)
-		arg_19_0._nodeMo:clearEvent()
-		TaskDispatcher.runDelay(arg_19_0._deadFinished, arg_19_0, 1.5)
+		self:hideEnemyTip()
+		NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.AttackMainRole, self._nodeMo.atk)
+		self._nodeMo:clearEvent()
+		TaskDispatcher.runDelay(self._deadFinished, self, 1.5)
 
 		return
 	end
 
-	local var_19_2 = NuoDiKaMapModel.instance:getMapMainRole().enemyId
-	local var_19_3 = NuoDiKaConfig.instance:getEnemyCo(var_19_2).atk
+	local mainRole = NuoDiKaMapModel.instance:getMapMainRole().enemyId
+	local hurtCount = NuoDiKaConfig.instance:getEnemyCo(mainRole).atk
 
-	if var_19_3 <= 0 then
+	if hurtCount <= 0 then
 		return
 	end
 
-	arg_19_0:_onStartAttack(arg_19_0._nodeMo, var_19_3, false)
-	NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.AttackMainRole, arg_19_0._nodeMo.atk)
+	self:_onStartAttack(self._nodeMo, hurtCount, false)
+	NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.AttackMainRole, self._nodeMo.atk)
 end
 
-function var_0_0._deadFinished(arg_20_0)
-	gohelper.setActive(arg_20_0._goattack, false)
+function NuoDiKaGameMapNodeItem:_deadFinished()
+	gohelper.setActive(self._goattack, false)
 	UIBlockMgr.instance:endBlock("enemyDead")
-	NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.EnemyDead, arg_20_0._nodeMo)
+	NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.EnemyDead, self._nodeMo)
 
-	local var_20_0 = arg_20_0._nodeMo:getInitEvent().eventParam
-	local var_20_1 = NuoDiKaConfig.instance:getEnemyCo(var_20_0)
+	local enemyId = self._nodeMo:getInitEvent().eventParam
+	local enemyCo = NuoDiKaConfig.instance:getEnemyCo(enemyId)
 
-	if var_20_1 and var_20_1.eventID and var_20_1.eventID > 0 then
+	if enemyCo and enemyCo.eventID and enemyCo.eventID > 0 then
 		return
 	end
 
 	NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.MapRefresh)
 end
 
-function var_0_0._btnitemuseOnClick(arg_21_0)
-	local var_21_0 = arg_21_0._nodeMo:getEvent()
+function NuoDiKaGameMapNodeItem:_btnitemuseOnClick()
+	local eventCo = self._nodeMo:getEvent()
 
-	if not var_21_0 then
+	if not eventCo then
 		return
 	end
 
-	if var_21_0.eventParam == 2002 then
-		arg_21_0:hideItemTip()
-		NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.ItemWarnAttackEnemy, arg_21_0._nodeMo)
+	if eventCo.eventParam == 2002 then
+		self:hideItemTip()
+		NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.ItemWarnAttackEnemy, self._nodeMo)
 
 		return
 	end
 
-	if var_21_0.eventParam == 2005 then
-		arg_21_0:_onShowScan()
+	if eventCo.eventParam == 2005 then
+		self:_onShowScan()
 	end
 
 	NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.StartInteract)
-	NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.ItemStartSkill, arg_21_0._nodeMo, arg_21_0._nodeMo)
+	NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.ItemStartSkill, self._nodeMo, self._nodeMo)
 end
 
-function var_0_0._onShowScan(arg_22_0)
-	arg_22_0:hideItemTip()
-	gohelper.setActive(arg_22_0._goscan, true)
+function NuoDiKaGameMapNodeItem:_onShowScan()
+	self:hideItemTip()
+	gohelper.setActive(self._goscan, true)
 	UIBlockMgrExtend.setNeedCircleMv(false)
 	AudioMgr.instance:trigger(AudioEnum2_8.NuoDiKa.play_ui_item_detection)
 	UIBlockMgr.instance:startBlock("itemScan")
-	TaskDispatcher.runDelay(arg_22_0._scanFinished, arg_22_0, 2)
+	TaskDispatcher.runDelay(self._scanFinished, self, 2)
 end
 
-function var_0_0._scanFinished(arg_23_0)
-	gohelper.setActive(arg_23_0._goscan, false)
+function NuoDiKaGameMapNodeItem:_scanFinished()
+	gohelper.setActive(self._goscan, false)
 	UIBlockMgr.instance:endBlock("itemScan")
 end
 
-function var_0_0._onNodeClick(arg_24_0, arg_24_1)
-	arg_24_0._warnAttackNode = nil
+function NuoDiKaGameMapNodeItem:_onNodeClick(nodeId)
+	self._warnAttackNode = nil
 
-	gohelper.setActive(arg_24_0._goplaceable, false)
+	gohelper.setActive(self._goplaceable, false)
 
-	if arg_24_0._nodeMo.id ~= arg_24_1 then
-		arg_24_0:hideItemTip()
-		arg_24_0:hideEnemyTip()
-		arg_24_0:refreshNode()
+	if self._nodeMo.id ~= nodeId then
+		self:hideItemTip()
+		self:hideEnemyTip()
+		self:refreshNode()
 	end
 end
 
-function var_0_0._onStartAttack(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
-	if not arg_25_0._nodeMo:getEvent() then
+function NuoDiKaGameMapNodeItem:_onStartAttack(nodeMo, hurtCount, isItemAttack)
+	if not self._nodeMo:getEvent() then
 		return
 	end
 
-	if arg_25_0._nodeMo.id ~= arg_25_1.id then
+	if self._nodeMo.id ~= nodeMo.id then
 		return
 	end
 
-	if arg_25_3 then
-		gohelper.setActive(arg_25_0._goattack, true)
+	if isItemAttack then
+		gohelper.setActive(self._goattack, true)
 	end
 
-	arg_25_0._hurtValue = arg_25_2
+	self._hurtValue = hurtCount
 
-	arg_25_0._nodeMo:reduceHp(arg_25_0._hurtValue)
+	self._nodeMo:reduceHp(self._hurtValue)
 	AudioMgr.instance:trigger(AudioEnum2_8.NuoDiKa.play_ui_enemy_hurt)
 
-	if arg_25_0._nodeMo.hp <= 0 then
+	if self._nodeMo.hp <= 0 then
 		AudioMgr.instance:trigger(AudioEnum2_8.NuoDiKa.play_ui_enemy_dead)
-		arg_25_0._enemyAnim:Play("dead", 0, 0)
-		arg_25_0._enemyTopAni:Play("dead", 0, 0)
+		self._enemyAnim:Play("dead", 0, 0)
+		self._enemyTopAni:Play("dead", 0, 0)
 		UIBlockMgrExtend.setNeedCircleMv(false)
 		UIBlockMgr.instance:startBlock("enemyDead")
-		arg_25_0:hideEnemyTip()
-		TaskDispatcher.runDelay(arg_25_0._deadFinished, arg_25_0, 1.5)
+		self:hideEnemyTip()
+		TaskDispatcher.runDelay(self._deadFinished, self, 1.5)
 
 		return
 	end
 
-	arg_25_0._enemyAnim:Play("hurt", 0, 0)
-	arg_25_0._enemyTopAni:Play("hurt", 0, 0)
+	self._enemyAnim:Play("hurt", 0, 0)
+	self._enemyTopAni:Play("hurt", 0, 0)
 
-	if arg_25_0._txtaffected.gameObject.activeSelf then
-		local var_25_0 = arg_25_2 - tonumber(arg_25_0._txtaffected.text)
+	if self._txtaffected.gameObject.activeSelf then
+		local totalHurt = hurtCount - tonumber(self._txtaffected.text)
 
-		arg_25_0._txtaffected.text = "-" .. var_25_0
+		self._txtaffected.text = "-" .. totalHurt
 	else
-		gohelper.setActive(arg_25_0._txtaffected.gameObject, true)
+		gohelper.setActive(self._txtaffected.gameObject, true)
 
-		arg_25_0._txtaffected.text = "-" .. arg_25_2
+		self._txtaffected.text = "-" .. hurtCount
 	end
 
 	UIBlockMgrExtend.setNeedCircleMv(false)
 	UIBlockMgr.instance:startBlock("enemyHurt")
-	TaskDispatcher.runDelay(arg_25_0._hurtFinished, arg_25_0, 1)
+	TaskDispatcher.runDelay(self._hurtFinished, self, 1)
 end
 
-function var_0_0._hurtFinished(arg_26_0)
-	gohelper.setActive(arg_26_0._goattack, false)
-	gohelper.setActive(arg_26_0._txtaffected.gameObject, false)
+function NuoDiKaGameMapNodeItem:_hurtFinished()
+	gohelper.setActive(self._goattack, false)
+	gohelper.setActive(self._txtaffected.gameObject, false)
 	UIBlockMgr.instance:endBlock("enemyHurt")
 	NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.MapRefresh)
 end
 
-function var_0_0._onWarnEnemyNode(arg_27_0, arg_27_1)
-	if arg_27_0._nodeMo.id ~= arg_27_1.id then
+function NuoDiKaGameMapNodeItem:_onWarnEnemyNode(targetNodeMo)
+	if self._nodeMo.id ~= targetNodeMo.id then
 		return
 	end
 
-	if not arg_27_0._nodeMo:isNodeHasEnemy() then
+	if not self._nodeMo:isNodeHasEnemy() then
 		return
 	end
 
-	arg_27_0._nodeMo:setWarn(true)
-	arg_27_0:_refreshNodeState()
+	self._nodeMo:setWarn(true)
+	self:_refreshNodeState()
 end
 
-function var_0_0._initNode(arg_28_0)
-	gohelper.setActive(arg_28_0.go, true)
-	gohelper.setActive(arg_28_0.topGo, true)
-	gohelper.setActive(arg_28_0._golocked, false)
-	gohelper.setActive(arg_28_0._gounlocked, false)
-	gohelper.setActive(arg_28_0._gointeractable, false)
-	gohelper.setActive(arg_28_0._goplaceable, false)
-	gohelper.setActive(arg_28_0._godamage, false)
-	gohelper.setActive(arg_28_0._goselected, false)
-	gohelper.setActive(arg_28_0._gouninteractable, false)
-	gohelper.setActive(arg_28_0._gocloud, false)
-	gohelper.setActive(arg_28_0._gouninteractableenemy, false)
-	gohelper.setActive(arg_28_0._goenemyicon, false)
-	gohelper.setActive(arg_28_0._goenemy, false)
-	gohelper.setActive(arg_28_0._gostate1, false)
-	gohelper.setActive(arg_28_0._gostate2, false)
-	gohelper.setActive(arg_28_0._goenemytip, false)
-	gohelper.setActive(arg_28_0._txtaffected.gameObject, false)
-	gohelper.setActive(arg_28_0._goitem, false)
-	gohelper.setActive(arg_28_0._goitemtip, false)
+function NuoDiKaGameMapNodeItem:_initNode()
+	gohelper.setActive(self.go, true)
+	gohelper.setActive(self.topGo, true)
+	gohelper.setActive(self._golocked, false)
+	gohelper.setActive(self._gounlocked, false)
+	gohelper.setActive(self._gointeractable, false)
+	gohelper.setActive(self._goplaceable, false)
+	gohelper.setActive(self._godamage, false)
+	gohelper.setActive(self._goselected, false)
+	gohelper.setActive(self._gouninteractable, false)
+	gohelper.setActive(self._gocloud, false)
+	gohelper.setActive(self._gouninteractableenemy, false)
+	gohelper.setActive(self._goenemyicon, false)
+	gohelper.setActive(self._goenemy, false)
+	gohelper.setActive(self._gostate1, false)
+	gohelper.setActive(self._gostate2, false)
+	gohelper.setActive(self._goenemytip, false)
+	gohelper.setActive(self._txtaffected.gameObject, false)
+	gohelper.setActive(self._goitem, false)
+	gohelper.setActive(self._goitemtip, false)
 
-	arg_28_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_28_0._btnnode.gameObject)
+	self._drag = SLFramework.UGUI.UIDragListener.Get(self._btnnode.gameObject)
 
-	arg_28_0._drag:AddDragBeginListener(arg_28_0._onBeginDrag, arg_28_0, arg_28_0._goitem.transform)
-	arg_28_0._drag:AddDragListener(arg_28_0._onDrag, arg_28_0)
-	arg_28_0._drag:AddDragEndListener(arg_28_0._onEndDrag, arg_28_0, arg_28_0._goitem.transform)
+	self._drag:AddDragBeginListener(self._onBeginDrag, self, self._goitem.transform)
+	self._drag:AddDragListener(self._onDrag, self)
+	self._drag:AddDragEndListener(self._onEndDrag, self, self._goitem.transform)
 
-	arg_28_0._enemyAnim = arg_28_0._goenemy:GetComponent(typeof(UnityEngine.Animator))
-	arg_28_0._enemyTopAni = arg_28_0._topgoroot:GetComponent(typeof(UnityEngine.Animator))
-	arg_28_0._cloudAnim = arg_28_0._gocloud:GetComponent(typeof(UnityEngine.Animator))
-	arg_28_0._lockAnim = arg_28_0._golocked:GetComponent(typeof(UnityEngine.Animator))
-	arg_28_0._unlockAnim = arg_28_0._gounlocked:GetComponent(typeof(UnityEngine.Animator))
-	arg_28_0._interactAnim = arg_28_0._gointeractable:GetComponent(typeof(UnityEngine.Animator))
+	self._enemyAnim = self._goenemy:GetComponent(typeof(UnityEngine.Animator))
+	self._enemyTopAni = self._topgoroot:GetComponent(typeof(UnityEngine.Animator))
+	self._cloudAnim = self._gocloud:GetComponent(typeof(UnityEngine.Animator))
+	self._lockAnim = self._golocked:GetComponent(typeof(UnityEngine.Animator))
+	self._unlockAnim = self._gounlocked:GetComponent(typeof(UnityEngine.Animator))
+	self._interactAnim = self._gointeractable:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function var_0_0._onBeginDrag(arg_29_0, arg_29_1, arg_29_2)
-	arg_29_0:hideItemTip()
-	arg_29_0:hideEnemyTip()
+function NuoDiKaGameMapNodeItem:_onBeginDrag(unitTransform, pointerEventData)
+	self:hideItemTip()
+	self:hideEnemyTip()
 
-	if not arg_29_0._nodeMo then
+	if not self._nodeMo then
 		return
 	end
 
-	if not arg_29_0._nodeMo:isNodeHasEnemy() and not arg_29_0._nodeMo:isNodeHasItem() then
+	if not self._nodeMo:isNodeHasEnemy() and not self._nodeMo:isNodeHasItem() then
 		return
 	end
 
-	local var_29_0 = NuoDiKaConfig.instance:getItemCo(arg_29_0._nodeMo:getEvent().eventParam)
+	local itemCo = NuoDiKaConfig.instance:getItemCo(self._nodeMo:getEvent().eventParam)
 
-	if var_29_0 and var_29_0.canMove ~= NuoDiKaEnum.ItemDragType.CanMove then
+	if itemCo and itemCo.canMove ~= NuoDiKaEnum.ItemDragType.CanMove then
 		return
 	end
 
-	arg_29_0._goDrag = gohelper.clone(arg_29_0._goitem)
+	self._goDrag = gohelper.clone(self._goitem)
 
-	arg_29_0._goDrag.transform:SetParent(arg_29_0.go.transform.parent.parent)
-	transformhelper.setLocalScale(arg_29_0._goDrag.transform, 1, 1, 1)
+	self._goDrag.transform:SetParent(self.go.transform.parent.parent)
+	transformhelper.setLocalScale(self._goDrag.transform, 1, 1, 1)
 
-	local var_29_1 = arg_29_2.position
-	local var_29_2 = recthelper.screenPosToAnchorPos(var_29_1, arg_29_0._goDrag.transform.parent)
+	local pos = pointerEventData.position
+	local anchorPos = recthelper.screenPosToAnchorPos(pos, self._goDrag.transform.parent)
 
-	recthelper.setAnchor(arg_29_0._goDrag.transform, var_29_2.x, var_29_2.y)
+	recthelper.setAnchor(self._goDrag.transform, anchorPos.x, anchorPos.y)
 end
 
-function var_0_0._onDrag(arg_30_0, arg_30_1, arg_30_2)
-	if not arg_30_0._nodeMo then
+function NuoDiKaGameMapNodeItem:_onDrag(param, pointerEventData)
+	if not self._nodeMo then
 		return
 	end
 
-	if not arg_30_0._nodeMo:isNodeHasEnemy() and not arg_30_0._nodeMo:isNodeHasItem() then
+	if not self._nodeMo:isNodeHasEnemy() and not self._nodeMo:isNodeHasItem() then
 		return
 	end
 
-	local var_30_0 = NuoDiKaConfig.instance:getItemCo(arg_30_0._nodeMo:getEvent().eventParam)
+	local itemCo = NuoDiKaConfig.instance:getItemCo(self._nodeMo:getEvent().eventParam)
 
-	if var_30_0 and var_30_0.canMove ~= NuoDiKaEnum.ItemDragType.CanMove then
+	if itemCo and itemCo.canMove ~= NuoDiKaEnum.ItemDragType.CanMove then
 		return
 	end
 
-	local var_30_1 = arg_30_2.position
-	local var_30_2 = recthelper.screenPosToAnchorPos(var_30_1, arg_30_0._goDrag.transform.parent)
+	local pos = pointerEventData.position
+	local anchorPos = recthelper.screenPosToAnchorPos(pos, self._goDrag.transform.parent)
 
-	recthelper.setAnchor(arg_30_0._goDrag.transform, var_30_2.x, var_30_2.y)
-	NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.NodeUnitDraging, var_30_1, arg_30_0._nodeMo)
+	recthelper.setAnchor(self._goDrag.transform, anchorPos.x, anchorPos.y)
+	NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.NodeUnitDraging, pos, self._nodeMo)
 end
 
-function var_0_0._onEndDrag(arg_31_0, arg_31_1, arg_31_2)
-	if not arg_31_0._nodeMo then
+function NuoDiKaGameMapNodeItem:_onEndDrag(equipTransform, pointerEventData)
+	if not self._nodeMo then
 		return
 	end
 
-	if not arg_31_0._nodeMo:isNodeHasEnemy() and not arg_31_0._nodeMo:isNodeHasItem() then
+	if not self._nodeMo:isNodeHasEnemy() and not self._nodeMo:isNodeHasItem() then
 		return
 	end
 
-	local var_31_0 = NuoDiKaConfig.instance:getItemCo(arg_31_0._nodeMo:getEvent().eventParam)
+	local itemCo = NuoDiKaConfig.instance:getItemCo(self._nodeMo:getEvent().eventParam)
 
-	if var_31_0 and var_31_0.canMove ~= NuoDiKaEnum.ItemDragType.CanMove then
+	if itemCo and itemCo.canMove ~= NuoDiKaEnum.ItemDragType.CanMove then
 		return
 	end
 
-	local var_31_1 = arg_31_2.position
-	local var_31_2 = recthelper.screenPosToAnchorPos(var_31_1, arg_31_0._goDrag.transform.parent)
+	local pos = pointerEventData.position
+	local anchorPos = recthelper.screenPosToAnchorPos(pos, self._goDrag.transform.parent)
 
-	recthelper.setAnchor(arg_31_0._goDrag.transform, var_31_2.x, var_31_2.y)
+	recthelper.setAnchor(self._goDrag.transform, anchorPos.x, anchorPos.y)
 
-	if arg_31_0._goDrag then
-		gohelper.destroy(arg_31_0._goDrag)
+	if self._goDrag then
+		gohelper.destroy(self._goDrag)
 
-		arg_31_0._goDrag = nil
+		self._goDrag = nil
 	end
 
-	NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.NodeUnitDragEnd, var_31_1, arg_31_0._nodeMo)
+	NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.NodeUnitDragEnd, pos, self._nodeMo)
 end
 
-function var_0_0.setItem(arg_32_0, arg_32_1)
-	arg_32_0._nodeMo = arg_32_1
-	arg_32_0.go.name = arg_32_1.x .. "_" .. arg_32_1.y
-	arg_32_0.topGo.name = arg_32_1.x .. "_" .. arg_32_1.y
+function NuoDiKaGameMapNodeItem:setItem(mo)
+	self._nodeMo = mo
+	self.go.name = mo.x .. "_" .. mo.y
+	self.topGo.name = mo.x .. "_" .. mo.y
 
-	arg_32_0:refreshNode()
+	self:refreshNode()
 end
 
-function var_0_0.refreshNode(arg_33_0)
-	arg_33_0:_refreshNodeState()
-	arg_33_0:_refreshEnemy()
-	arg_33_0:_refreshItem()
+function NuoDiKaGameMapNodeItem:refreshNode()
+	self:_refreshNodeState()
+	self:_refreshEnemy()
+	self:_refreshItem()
 end
 
-function var_0_0._refreshNodeState(arg_34_0)
-	local var_34_0 = arg_34_0._nodeMo:isNodeUnlock()
-	local var_34_1 = NuoDiKaMapModel.instance:isNodeCouldUnlock(arg_34_0._nodeMo.id)
-	local var_34_2 = NuoDiKaMapModel.instance:isNodeEnemyLock(arg_34_0._nodeMo.id)
-	local var_34_3 = NuoDiKaMapModel.instance:isNodeSelected(arg_34_0._nodeMo.id)
-	local var_34_4 = arg_34_0._nodeMo:isNodeHasItem() or arg_34_0._nodeMo:isNodeHasEnemy()
+function NuoDiKaGameMapNodeItem:_refreshNodeState()
+	local isUnlock = self._nodeMo:isNodeUnlock()
+	local isInteractable = NuoDiKaMapModel.instance:isNodeCouldUnlock(self._nodeMo.id)
+	local isEnemyLock = NuoDiKaMapModel.instance:isNodeEnemyLock(self._nodeMo.id)
+	local isSelected = NuoDiKaMapModel.instance:isNodeSelected(self._nodeMo.id)
+	local hasItem = self._nodeMo:isNodeHasItem() or self._nodeMo:isNodeHasEnemy()
 
-	if not var_34_0 and var_34_1 and not arg_34_0._gointeractable.activeSelf then
-		gohelper.setActive(arg_34_0._gointeractable, true)
-		arg_34_0._interactAnim:Play("open", 0, 0)
-		arg_34_0._lockAnim:Play("close", 0, 0)
+	if not isUnlock and isInteractable and not self._gointeractable.activeSelf then
+		gohelper.setActive(self._gointeractable, true)
+		self._interactAnim:Play("open", 0, 0)
+		self._lockAnim:Play("close", 0, 0)
 	end
 
-	gohelper.setActive(arg_34_0._gounlocked, var_34_0)
-	gohelper.setActive(arg_34_0._golocked, not var_34_0 and not var_34_1)
-	gohelper.setActive(arg_34_0._gointeractable, not var_34_0 and var_34_1)
-	gohelper.setActive(arg_34_0._gocloud, not var_34_0 and var_34_1)
-	gohelper.setActive(arg_34_0._gouninteractable, not var_34_0 and var_34_2 and not arg_34_0._nodeMo.isWarn)
-	gohelper.setActive(arg_34_0._gouninteractableenemy, not var_34_0 and var_34_2 and arg_34_0._nodeMo.isWarn)
-	gohelper.setActive(arg_34_0._goenemyicon, not var_34_0 and not var_34_2 and arg_34_0._nodeMo.isWarn)
-	gohelper.setActive(arg_34_0._goselected, var_34_3 and var_34_4)
+	gohelper.setActive(self._gounlocked, isUnlock)
+	gohelper.setActive(self._golocked, not isUnlock and not isInteractable)
+	gohelper.setActive(self._gointeractable, not isUnlock and isInteractable)
+	gohelper.setActive(self._gocloud, not isUnlock and isInteractable)
+	gohelper.setActive(self._gouninteractable, not isUnlock and isEnemyLock and not self._nodeMo.isWarn)
+	gohelper.setActive(self._gouninteractableenemy, not isUnlock and isEnemyLock and self._nodeMo.isWarn)
+	gohelper.setActive(self._goenemyicon, not isUnlock and not isEnemyLock and self._nodeMo.isWarn)
+	gohelper.setActive(self._goselected, isSelected and hasItem)
 end
 
-function var_0_0._refreshEnemy(arg_35_0)
-	local var_35_0 = arg_35_0._nodeMo:isNodeUnlock()
-	local var_35_1 = arg_35_0._nodeMo:getEvent() and arg_35_0._nodeMo:isNodeHasEnemy()
+function NuoDiKaGameMapNodeItem:_refreshEnemy()
+	local isUnlock = self._nodeMo:isNodeUnlock()
+	local hasEnemy = self._nodeMo:getEvent() and self._nodeMo:isNodeHasEnemy()
 
-	gohelper.setActive(arg_35_0._goenemy, var_35_0 and var_35_1)
+	gohelper.setActive(self._goenemy, isUnlock and hasEnemy)
 
-	local var_35_2 = NuoDiKaEnum.EnemyState.Normal
+	local enemyState = NuoDiKaEnum.EnemyState.Normal
 
-	gohelper.setActive(arg_35_0._gostate1, var_35_0 and var_35_1 and var_35_2 ~= NuoDiKaEnum.EnemyState.Freeze)
-	gohelper.setActive(arg_35_0._gostate2, var_35_0 and var_35_1 and var_35_2 == NuoDiKaEnum.EnemyState.Freeze)
-	gohelper.setActive(arg_35_0._goturns, var_35_0 and var_35_1 and arg_35_0._nodeMo:isTriggerTypeEnemy())
+	gohelper.setActive(self._gostate1, isUnlock and hasEnemy and enemyState ~= NuoDiKaEnum.EnemyState.Freeze)
+	gohelper.setActive(self._gostate2, isUnlock and hasEnemy and enemyState == NuoDiKaEnum.EnemyState.Freeze)
+	gohelper.setActive(self._goturns, isUnlock and hasEnemy and self._nodeMo:isTriggerTypeEnemy())
 
-	if var_35_0 and var_35_1 then
-		local var_35_3 = arg_35_0._nodeMo:getEvent()
-		local var_35_4 = NuoDiKaConfig.instance:getEnemyCo(var_35_3.eventParam)
+	if isUnlock and hasEnemy then
+		local eventCo = self._nodeMo:getEvent()
+		local enemyCo = NuoDiKaConfig.instance:getEnemyCo(eventCo.eventParam)
 
-		arg_35_0._txthpnum1.text = arg_35_0._nodeMo.hp
-		arg_35_0._txthpnum2.text = arg_35_0._nodeMo.hp
-		arg_35_0._txtattacknum1.text = arg_35_0._nodeMo.atk
-		arg_35_0._txtattacknum2.text = arg_35_0._nodeMo.atk
-		arg_35_0._txtenemyname.text = var_35_4.name
-		arg_35_0._txtenemydesc.text = var_35_4.desc
+		self._txthpnum1.text = self._nodeMo.hp
+		self._txthpnum2.text = self._nodeMo.hp
+		self._txtattacknum1.text = self._nodeMo.atk
+		self._txtattacknum2.text = self._nodeMo.atk
+		self._txtenemyname.text = enemyCo.name
+		self._txtenemydesc.text = enemyCo.desc
 
-		arg_35_0._simageenemy:LoadImage(ResUrl.getNuoDiKaMonsterIcon(var_35_4.picture))
+		self._simageenemy:LoadImage(ResUrl.getNuoDiKaMonsterIcon(enemyCo.picture))
 
-		arg_35_0._txtturns.text = arg_35_0._nodeMo.interactTimes
-	end
-end
-
-function var_0_0._refreshItem(arg_36_0)
-	local var_36_0 = arg_36_0._nodeMo:isNodeUnlock()
-	local var_36_1 = arg_36_0._nodeMo:getEvent() and arg_36_0._nodeMo:isNodeHasItem()
-
-	gohelper.setActive(arg_36_0._goitem, var_36_0 and var_36_1)
-
-	if var_36_0 and var_36_1 then
-		local var_36_2 = arg_36_0._nodeMo:getEvent()
-		local var_36_3 = NuoDiKaConfig.instance:getItemCo(var_36_2.eventParam)
-
-		arg_36_0._txtitemname.text = var_36_3.name
-		arg_36_0._txtitemdesc.text = var_36_3.desc
-
-		arg_36_0._simageitem:LoadImage(ResUrl.getNuoDiKaItemIcon(var_36_3.picture))
+		self._txtturns.text = self._nodeMo.interactTimes
 	end
 end
 
-function var_0_0.showPlaceable(arg_37_0, arg_37_1)
-	gohelper.setActive(arg_37_0._goplaceable, arg_37_1)
-end
+function NuoDiKaGameMapNodeItem:_refreshItem()
+	local isUnlock = self._nodeMo:isNodeUnlock()
+	local hasItem = self._nodeMo:getEvent() and self._nodeMo:isNodeHasItem()
 
-function var_0_0.showDamage(arg_38_0, arg_38_1)
-	gohelper.setActive(arg_38_0._godamage, arg_38_1)
-end
+	gohelper.setActive(self._goitem, isUnlock and hasItem)
 
-function var_0_0._showAffect(arg_39_0, arg_39_1, arg_39_2)
-	gohelper.setActive(arg_39_0._txtaffected.gameObject, arg_39_1)
+	if isUnlock and hasItem then
+		local eventCo = self._nodeMo:getEvent()
+		local itemCo = NuoDiKaConfig.instance:getItemCo(eventCo.eventParam)
 
-	if arg_39_1 then
-		arg_39_0._txtaffected.text = arg_39_2 or 0
+		self._txtitemname.text = itemCo.name
+		self._txtitemdesc.text = itemCo.desc
+
+		self._simageitem:LoadImage(ResUrl.getNuoDiKaItemIcon(itemCo.picture))
 	end
 end
 
-function var_0_0.showEnemyTip(arg_40_0)
-	if arg_40_0._goenemytip.activeSelf then
+function NuoDiKaGameMapNodeItem:showPlaceable(show)
+	gohelper.setActive(self._goplaceable, show)
+end
+
+function NuoDiKaGameMapNodeItem:showDamage(show)
+	gohelper.setActive(self._godamage, show)
+end
+
+function NuoDiKaGameMapNodeItem:_showAffect(show, affectValue)
+	gohelper.setActive(self._txtaffected.gameObject, show)
+
+	if show then
+		self._txtaffected.text = affectValue or 0
+	end
+end
+
+function NuoDiKaGameMapNodeItem:showEnemyTip()
+	if self._goenemytip.activeSelf then
 		return
 	end
 
-	gohelper.setActive(arg_40_0._goenemytip, true)
+	gohelper.setActive(self._goenemytip, true)
 	TaskDispatcher.runDelay(function()
-		local var_41_0 = recthelper.getHeight(arg_40_0._goenemytip.transform)
-		local var_41_1 = recthelper.uiPosToScreenPos(arg_40_0._goenemytip.transform).y + var_41_0
-		local var_41_2 = var_41_1 <= UnityEngine.Screen.height and 160 or 160 - (var_41_1 - UnityEngine.Screen.height)
+		local tipHeight = recthelper.getHeight(self._goenemytip.transform)
+		local uiPosY = recthelper.uiPosToScreenPos(self._goenemytip.transform).y
+		local offsetY = uiPosY + tipHeight
+		local posY = offsetY <= UnityEngine.Screen.height and 160 or 160 - (offsetY - UnityEngine.Screen.height)
 
-		transformhelper.setLocalPos(arg_40_0._goenemytip.transform, 0, var_41_2, 0)
-	end, arg_40_0, 0.01)
+		transformhelper.setLocalPos(self._goenemytip.transform, 0, posY, 0)
+	end, self, 0.01)
 end
 
-function var_0_0.hideEnemyTip(arg_42_0)
-	gohelper.setActive(arg_42_0._goenemytip, false)
-	transformhelper.setLocalPos(arg_42_0._goenemytip.transform, 0, 160, 0)
+function NuoDiKaGameMapNodeItem:hideEnemyTip()
+	gohelper.setActive(self._goenemytip, false)
+	transformhelper.setLocalPos(self._goenemytip.transform, 0, 160, 0)
 end
 
-function var_0_0.showItemTip(arg_43_0)
-	if arg_43_0._goitemtip.activeSelf then
+function NuoDiKaGameMapNodeItem:showItemTip()
+	if self._goitemtip.activeSelf then
 		return
 	end
 
-	gohelper.setActive(arg_43_0._goitemtip, true)
+	gohelper.setActive(self._goitemtip, true)
 	TaskDispatcher.runDelay(function()
-		local var_44_0 = recthelper.getHeight(arg_43_0._goitemtip.transform)
-		local var_44_1 = recthelper.uiPosToScreenPos(arg_43_0._goitemtip.transform).y + var_44_0
-		local var_44_2 = var_44_1 <= UnityEngine.Screen.height and 160 or 160 - (var_44_1 - UnityEngine.Screen.height)
+		local tipHeight = recthelper.getHeight(self._goitemtip.transform)
+		local uiPosY = recthelper.uiPosToScreenPos(self._goitemtip.transform).y
+		local offsetY = uiPosY + tipHeight
+		local posY = offsetY <= UnityEngine.Screen.height and 160 or 160 - (offsetY - UnityEngine.Screen.height)
 
-		transformhelper.setLocalPos(arg_43_0._goitemtip.transform, 0, var_44_2, 0)
-	end, arg_43_0, 0.01)
+		transformhelper.setLocalPos(self._goitemtip.transform, 0, posY, 0)
+	end, self, 0.01)
 end
 
-function var_0_0.hideItemTip(arg_45_0)
-	gohelper.setActive(arg_45_0._goitemtip, false)
-	transformhelper.setLocalPos(arg_45_0._goitemtip.transform, 0, 160, 0)
+function NuoDiKaGameMapNodeItem:hideItemTip()
+	gohelper.setActive(self._goitemtip, false)
+	transformhelper.setLocalPos(self._goitemtip.transform, 0, 160, 0)
 end
 
-function var_0_0.setNodeOffset(arg_46_0, arg_46_1, arg_46_2)
-	transformhelper.setLocalPos(arg_46_0._goroot.transform, arg_46_1, arg_46_2, 0)
-	transformhelper.setLocalPos(arg_46_0._topgoroot.transform, arg_46_1, arg_46_2, 0)
+function NuoDiKaGameMapNodeItem:setNodeOffset(x, y)
+	transformhelper.setLocalPos(self._goroot.transform, x, y, 0)
+	transformhelper.setLocalPos(self._topgoroot.transform, x, y, 0)
 end
 
-function var_0_0.showFade(arg_47_0, arg_47_1)
-	if arg_47_1 then
-		arg_47_0._enemyAnim:Play("fade", 0, 0)
-		arg_47_0._enemyTopAni:Play("fade", 0, 0)
+function NuoDiKaGameMapNodeItem:showFade(fade)
+	if fade then
+		self._enemyAnim:Play("fade", 0, 0)
+		self._enemyTopAni:Play("fade", 0, 0)
 	else
-		arg_47_0._enemyAnim:Play("idle", 0, 0)
-		arg_47_0._enemyTopAni:Play("idle", 0, 0)
+		self._enemyAnim:Play("idle", 0, 0)
+		self._enemyTopAni:Play("idle", 0, 0)
 	end
 end
 
-function var_0_0.getNodeRoot(arg_48_0)
-	return arg_48_0._goroot
+function NuoDiKaGameMapNodeItem:getNodeRoot()
+	return self._goroot
 end
 
-function var_0_0.getNodeMo(arg_49_0)
-	return arg_49_0._nodeMo
+function NuoDiKaGameMapNodeItem:getNodeMo()
+	return self._nodeMo
 end
 
-function var_0_0._endBlock(arg_50_0)
+function NuoDiKaGameMapNodeItem:_endBlock()
 	UIBlockMgr.instance:endBlock("interactAttack")
 	UIBlockMgr.instance:endBlock("enemyDeadUnlock")
 	UIBlockMgr.instance:endBlock("cloudUnlock")
 	UIBlockMgr.instance:endBlock("enemyDead")
 	UIBlockMgr.instance:endBlock("itemScan")
 	UIBlockMgr.instance:endBlock("enemyHurt")
-	TaskDispatcher.cancelTask(arg_50_0._deadFinished, arg_50_0)
-	TaskDispatcher.cancelTask(arg_50_0._scanFinished, arg_50_0)
-	TaskDispatcher.cancelTask(arg_50_0._hurtFinished, arg_50_0)
-	TaskDispatcher.cancelTask(arg_50_0._unlockAnimFinished, arg_50_0)
-	TaskDispatcher.cancelTask(arg_50_0._unlockFinished, arg_50_0)
-	TaskDispatcher.cancelTask(arg_50_0._enemyDeadUnlockFinished, arg_50_0)
-	TaskDispatcher.cancelTask(arg_50_0._showInteractWarnFinished, arg_50_0)
+	TaskDispatcher.cancelTask(self._deadFinished, self)
+	TaskDispatcher.cancelTask(self._scanFinished, self)
+	TaskDispatcher.cancelTask(self._hurtFinished, self)
+	TaskDispatcher.cancelTask(self._unlockAnimFinished, self)
+	TaskDispatcher.cancelTask(self._unlockFinished, self)
+	TaskDispatcher.cancelTask(self._enemyDeadUnlockFinished, self)
+	TaskDispatcher.cancelTask(self._showInteractWarnFinished, self)
 end
 
-function var_0_0.destroy(arg_51_0)
-	arg_51_0:_endBlock()
-	arg_51_0:_removeEvents()
-	arg_51_0._simageenemy:UnLoadImage()
-	arg_51_0._simageitem:UnLoadImage()
-	arg_51_0._drag:RemoveDragListener()
-	arg_51_0._drag:RemoveDragBeginListener()
-	arg_51_0._drag:RemoveDragEndListener()
+function NuoDiKaGameMapNodeItem:destroy()
+	self:_endBlock()
+	self:_removeEvents()
+	self._simageenemy:UnLoadImage()
+	self._simageitem:UnLoadImage()
+	self._drag:RemoveDragListener()
+	self._drag:RemoveDragBeginListener()
+	self._drag:RemoveDragEndListener()
 end
 
-return var_0_0
+return NuoDiKaGameMapNodeItem

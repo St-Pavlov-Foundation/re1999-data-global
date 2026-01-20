@@ -1,69 +1,71 @@
-﻿module("modules.logic.dungeon.view.DungeonMonsterView", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/DungeonMonsterView.lua
 
-local var_0_0 = class("DungeonMonsterView", BaseView)
+module("modules.logic.dungeon.view.DungeonMonsterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagequality = gohelper.findChildImage(arg_1_0.viewGO, "desc/#simage_quality")
-	arg_1_0._simageicon = gohelper.findChildImage(arg_1_0.viewGO, "desc/#simage_icon")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "desc/#txt_name")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "desc/#txt_desc")
-	arg_1_0._simagecareericon = gohelper.findChildImage(arg_1_0.viewGO, "desc/#simage_careericon")
-	arg_1_0._scrollmonster = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_monster")
-	arg_1_0._goselected = gohelper.findChild(arg_1_0.viewGO, "content_prefab/#go_selected")
+local DungeonMonsterView = class("DungeonMonsterView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function DungeonMonsterView:onInitView()
+	self._simagequality = gohelper.findChildImage(self.viewGO, "desc/#simage_quality")
+	self._simageicon = gohelper.findChildImage(self.viewGO, "desc/#simage_icon")
+	self._txtname = gohelper.findChildText(self.viewGO, "desc/#txt_name")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "desc/#txt_desc")
+	self._simagecareericon = gohelper.findChildImage(self.viewGO, "desc/#simage_careericon")
+	self._scrollmonster = gohelper.findChildScrollRect(self.viewGO, "#scroll_monster")
+	self._goselected = gohelper.findChild(self.viewGO, "content_prefab/#go_selected")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function DungeonMonsterView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function DungeonMonsterView:removeEvents()
 	return
 end
 
-function var_0_0._btnbackOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function DungeonMonsterView:_btnbackOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function DungeonMonsterView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function DungeonMonsterView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	DungeonMonsterListModel.instance:setMonsterList(arg_7_0.viewParam.monsterDisplayList)
-	arg_7_0.viewContainer:getScrollView():setSelect(DungeonMonsterListModel.instance.initSelectMO)
-	arg_7_0:addEventCb(DungeonController.instance, DungeonEvent.OnChangeMonster, arg_7_0._onChangeMonster, arg_7_0)
+function DungeonMonsterView:onOpen()
+	DungeonMonsterListModel.instance:setMonsterList(self.viewParam.monsterDisplayList)
+	self.viewContainer:getScrollView():setSelect(DungeonMonsterListModel.instance.initSelectMO)
+	self:addEventCb(DungeonController.instance, DungeonEvent.OnChangeMonster, self._onChangeMonster, self)
 end
 
-function var_0_0.onClose(arg_8_0)
+function DungeonMonsterView:onClose()
 	return
 end
 
-function var_0_0._onChangeMonster(arg_9_0, arg_9_1)
-	arg_9_0._txtname.text = arg_9_1.name
-	arg_9_0._txtdesc.text = arg_9_1.des
+function DungeonMonsterView:_onChangeMonster(monsterConfig)
+	self._txtname.text = monsterConfig.name
+	self._txtdesc.text = monsterConfig.des
 
-	UISpriteSetMgr.instance:setCommonSprite(arg_9_0._simagecareericon, "lssx_" .. tostring(arg_9_1.career))
+	UISpriteSetMgr.instance:setCommonSprite(self._simagecareericon, "lssx_" .. tostring(monsterConfig.career))
 
-	local var_9_0 = FightConfig.instance:getSkinCO(arg_9_1.skinId)
-	local var_9_1 = var_9_0 and var_9_0.headIcon or nil
+	local skinCO = FightConfig.instance:getSkinCO(monsterConfig.skinId)
+	local icon = skinCO and skinCO.headIcon or nil
 
-	if var_9_1 then
-		gohelper.getSingleImage(arg_9_0._simageicon.gameObject):LoadImage(ResUrl.monsterHeadIcon(var_9_1))
+	if icon then
+		gohelper.getSingleImage(self._simageicon.gameObject):LoadImage(ResUrl.monsterHeadIcon(icon))
 	end
 
-	UISpriteSetMgr.instance:setCommonSprite(arg_9_0._simagequality, "bp_quality_01")
+	UISpriteSetMgr.instance:setCommonSprite(self._simagequality, "bp_quality_01")
 end
 
-function var_0_0.onDestroyView(arg_10_0)
+function DungeonMonsterView:onDestroyView()
 	return
 end
 
-return var_0_0
+return DungeonMonsterView

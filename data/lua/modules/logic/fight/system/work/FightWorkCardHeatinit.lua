@@ -1,9 +1,11 @@
-﻿module("modules.logic.fight.system.work.FightWorkCardHeatinit", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkCardHeatinit.lua
 
-local var_0_0 = class("FightWorkCardHeatinit", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkCardHeatinit", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0:onDone(true)
+local FightWorkCardHeatinit = class("FightWorkCardHeatinit", FightEffectBase)
+
+function FightWorkCardHeatinit:onStart()
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkCardHeatinit

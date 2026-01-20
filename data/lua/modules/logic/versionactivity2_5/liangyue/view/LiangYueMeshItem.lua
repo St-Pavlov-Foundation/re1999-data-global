@@ -1,29 +1,31 @@
-﻿module("modules.logic.versionactivity2_5.liangyue.view.LiangYueMeshItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/liangyue/view/LiangYueMeshItem.lua
 
-local var_0_0 = class("LiangYueMeshItem", LuaCompBase)
+module("modules.logic.versionactivity2_5.liangyue.view.LiangYueMeshItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._go = arg_1_1
-	arg_1_0._rectTran = gohelper.findChildComponent(arg_1_0._go, "", gohelper.Type_RectTransform)
-	arg_1_0._goEnableBg = gohelper.findChild(arg_1_1, "lattice")
-	arg_1_0._imageEnableBg = gohelper.findChildImage(arg_1_1, "lattice")
+local LiangYueMeshItem = class("LiangYueMeshItem", LuaCompBase)
+
+function LiangYueMeshItem:init(go)
+	self._go = go
+	self._rectTran = gohelper.findChildComponent(self._go, "", gohelper.Type_RectTransform)
+	self._goEnableBg = gohelper.findChild(go, "lattice")
+	self._imageEnableBg = gohelper.findChildImage(go, "lattice")
 end
 
-function var_0_0.setActive(arg_2_0, arg_2_1)
-	gohelper.setActive(arg_2_0._goEnableBg, arg_2_1)
+function LiangYueMeshItem:setActive(active)
+	gohelper.setActive(self._goEnableBg, active)
 end
 
-function var_0_0.setBgColor(arg_3_0, arg_3_1)
-	SLFramework.UGUI.GuiHelper.SetColor(arg_3_0._imageEnableBg, arg_3_1)
-	ZProj.UGUIHelper.SetColorAlpha(arg_3_0._imageEnableBg, LiangYueEnum.MeshAlpha)
+function LiangYueMeshItem:setBgColor(color)
+	SLFramework.UGUI.GuiHelper.SetColor(self._imageEnableBg, color)
+	ZProj.UGUIHelper.SetColorAlpha(self._imageEnableBg, LiangYueEnum.MeshAlpha)
 end
 
-function var_0_0.setPos(arg_4_0, arg_4_1, arg_4_2)
-	recthelper.setAnchor(arg_4_0._rectTran, arg_4_1, arg_4_2)
+function LiangYueMeshItem:setPos(x, y)
+	recthelper.setAnchor(self._rectTran, x, y)
 end
 
-function var_0_0.onDestroy(arg_5_0)
+function LiangYueMeshItem:onDestroy()
 	return
 end
 
-return var_0_0
+return LiangYueMeshItem

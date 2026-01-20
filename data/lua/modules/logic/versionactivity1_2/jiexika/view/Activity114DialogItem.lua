@@ -1,7 +1,9 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.view.Activity114DialogItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/view/Activity114DialogItem.lua
 
-local var_0_0 = class("Activity114DialogItem", Activity114DialogBaseItem)
-local var_0_1 = {
+module("modules.logic.versionactivity1_2.jiexika.view.Activity114DialogItem", package.seeall)
+
+local Activity114DialogItem = class("Activity114DialogItem", Activity114DialogBaseItem)
+local stepCo = {
 	1,
 	"",
 	{
@@ -192,37 +194,37 @@ local var_0_1 = {
 		}
 	}
 }
-local var_0_2 = StoryStepMo.New()
+local stepMo = StoryStepMo.New()
 
-function var_0_0.showTxt(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	gohelper.setActive(arg_1_0._conGo, true)
+function Activity114DialogItem:showTxt(txt, endCallBack, callObj)
+	gohelper.setActive(self._conGo, true)
 
-	var_0_1[3][15][1] = arg_1_1
+	stepCo[3][15][1] = txt
 
-	var_0_2:init(var_0_1)
+	stepMo:init(stepCo)
 
-	arg_1_0._endCallBack = arg_1_2
-	arg_1_0._endCallObj = arg_1_3
+	self._endCallBack = endCallBack
+	self._endCallObj = callObj
 
-	arg_1_0:playDialog(arg_1_1, var_0_2)
+	self:playDialog(txt, stepMo)
 end
 
-function var_0_0.skipDialog(arg_2_0)
-	if arg_2_0._conTweenId then
-		ZProj.TweenHelper.KillById(arg_2_0._conTweenId)
+function Activity114DialogItem:skipDialog()
+	if self._conTweenId then
+		ZProj.TweenHelper.KillById(self._conTweenId)
 
-		arg_2_0._conTweenId = nil
+		self._conTweenId = nil
 	end
 
-	arg_2_0:conFinished()
+	self:conFinished()
 end
 
-function var_0_0.conFinished(arg_3_0, ...)
-	if arg_3_0._endCallBack then
-		arg_3_0._endCallBack(arg_3_0._endCallObj)
+function Activity114DialogItem:conFinished(...)
+	if self._endCallBack then
+		self._endCallBack(self._endCallObj)
 	end
 
-	var_0_0.super.conFinished(arg_3_0, ...)
+	Activity114DialogItem.super.conFinished(self, ...)
 end
 
-return var_0_0
+return Activity114DialogItem

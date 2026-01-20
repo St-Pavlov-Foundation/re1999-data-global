@@ -1,14 +1,16 @@
-﻿module("modules.logic.dungeon.view.rolestory.RoleStoryHeroGroupFightViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/rolestory/RoleStoryHeroGroupFightViewContainer.lua
 
-local var_0_0 = class("RoleStoryHeroGroupFightViewContainer", HeroGroupFightViewContainer)
+module("modules.logic.dungeon.view.rolestory.RoleStoryHeroGroupFightViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	arg_1_0._heroGroupFairyLandView = HeroGroupFairyLandView.New()
-	arg_1_0._heroGroupFightView = RoleStoryHeroGroupFightView.New()
+local RoleStoryHeroGroupFightViewContainer = class("RoleStoryHeroGroupFightViewContainer", HeroGroupFightViewContainer)
 
-	return {
-		arg_1_0._heroGroupFairyLandView,
-		arg_1_0._heroGroupFightView,
+function RoleStoryHeroGroupFightViewContainer:buildViews()
+	self._heroGroupFairyLandView = HeroGroupFairyLandView.New()
+	self._heroGroupFightView = RoleStoryHeroGroupFightView.New()
+
+	local views = {
+		self._heroGroupFairyLandView,
+		self._heroGroupFightView,
 		HeroGroupAnimView.New(),
 		HeroGroupListView.New(),
 		RoleStoryHeroGroupFightViewLevel.New(),
@@ -18,61 +20,63 @@ function var_0_0.buildViews(arg_1_0)
 		TabViewGroup.New(1, "#go_container/btnContain/commonBtns"),
 		TabViewGroup.New(2, "#go_righttop/#go_power")
 	}
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		local var_2_0 = arg_2_0:getHelpId()
-		local var_2_1 = not arg_2_0:_checkHideHomeBtn()
+function RoleStoryHeroGroupFightViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		local helpId = self:getHelpId()
+		local showHome = not self:_checkHideHomeBtn()
 
-		arg_2_0._navigateButtonsView = NavigateButtonsView.New({
+		self._navigateButtonsView = NavigateButtonsView.New({
 			true,
-			var_2_1,
-			var_2_0 ~= nil
-		}, var_2_0, arg_2_0._closeCallback, nil, nil, arg_2_0)
+			showHome,
+			helpId ~= nil
+		}, helpId, self._closeCallback, nil, nil, self)
 
-		arg_2_0._navigateButtonsView:setCloseCheck(arg_2_0.defaultOverrideCloseCheck, arg_2_0)
+		self._navigateButtonsView:setCloseCheck(self.defaultOverrideCloseCheck, self)
 
 		return {
-			arg_2_0._navigateButtonsView
+			self._navigateButtonsView
 		}
-	elseif arg_2_1 == 2 then
-		local var_2_2 = arg_2_0:getCurrencyParam()
-		local var_2_3 = CurrencyView.New(var_2_2)
+	elseif tabContainerId == 2 then
+		local currencyParam = self:getCurrencyParam()
+		local currencyView = CurrencyView.New(currencyParam)
 
-		var_2_3.foreHideBtn = true
+		currencyView.foreHideBtn = true
 
 		return {
-			var_2_3
+			currencyView
 		}
 	end
 end
 
-function var_0_0.getCurrencyParam(arg_3_0)
-	local var_3_0 = arg_3_0:_checkHidePowerCurrencyBtn()
-	local var_3_1 = {}
+function RoleStoryHeroGroupFightViewContainer:getCurrencyParam()
+	local hidePower = self:_checkHidePowerCurrencyBtn()
+	local param = {}
 
-	if not var_3_0 then
-		local var_3_2 = HeroGroupModel.instance.episodeId
-		local var_3_3 = DungeonConfig.instance:getEpisodeCO(var_3_2)
-		local var_3_4 = GameUtil.splitString2(var_3_3.cost, true)
+	if not hidePower then
+		local episodeId = HeroGroupModel.instance.episodeId
+		local episodeConfig = DungeonConfig.instance:getEpisodeCO(episodeId)
+		local costs = GameUtil.splitString2(episodeConfig.cost, true)
 
-		if var_3_4 then
-			for iter_3_0, iter_3_1 in ipairs(var_3_4) do
-				if iter_3_1[1] == MaterialEnum.MaterialType.Currency then
-					table.insert(var_3_1, iter_3_1[2])
+		if costs then
+			for i, v in ipairs(costs) do
+				if v[1] == MaterialEnum.MaterialType.Currency then
+					table.insert(param, v[2])
 				else
-					table.insert(var_3_1, {
+					table.insert(param, {
 						isIcon = true,
-						type = iter_3_1[1],
-						id = iter_3_1[2]
+						type = v[1],
+						id = v[2]
 					})
 				end
 			end
 		end
 	end
 
-	return var_3_1
+	return param
 end
 
-return var_0_0
+return RoleStoryHeroGroupFightViewContainer

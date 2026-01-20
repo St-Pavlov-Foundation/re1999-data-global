@@ -1,11 +1,13 @@
-﻿module("modules.logic.survival.controller.work.step.SurvivalStopMoveWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/step/SurvivalStopMoveWork.lua
 
-local var_0_0 = class("SurvivalStopMoveWork", SurvivalStepBaseWork)
+module("modules.logic.survival.controller.work.step.SurvivalStopMoveWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
+local SurvivalStopMoveWork = class("SurvivalStopMoveWork", SurvivalStepBaseWork)
+
+function SurvivalStopMoveWork:onStart(context)
 	SurvivalMapModel.instance:setMoveToTarget()
 	SurvivalMapModel.instance:setShowTarget()
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return SurvivalStopMoveWork

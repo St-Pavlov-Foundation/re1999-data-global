@@ -1,25 +1,28 @@
-﻿module("modules.logic.chessgame.game.step.ChessStepTransport", package.seeall)
+﻿-- chunkname: @modules/logic/chessgame/game/step/ChessStepTransport.lua
 
-local var_0_0 = class("ChessStepTransport", BaseWork)
+module("modules.logic.chessgame.game.step.ChessStepTransport", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.originData = arg_1_1
+local ChessStepTransport = class("ChessStepTransport", BaseWork)
+
+function ChessStepTransport:init(stepData)
+	self.originData = stepData
 end
 
-function var_0_0.onStart(arg_2_0)
-	arg_2_0:_transPortMap()
+function ChessStepTransport:onStart()
+	self:_transPortMap()
 end
 
-function var_0_0._transPortMap(arg_3_0)
-	local var_3_0 = arg_3_0.originData.interact
+function ChessStepTransport:_transPortMap()
+	local interact = self.originData.interact
+	local newMapIndex = self.originData.newMapId + 1
 
-	if arg_3_0.originData.newMapId + 1 ~= ChessGameModel.instance:getNowMapIndex() then
-		ChessGameController.instance:deleteInteractObj(var_3_0.id)
+	if newMapIndex ~= ChessGameModel.instance:getNowMapIndex() then
+		ChessGameController.instance:deleteInteractObj(interact.id)
 	else
-		ChessGameController.instance:addInteractObj(var_3_0)
+		ChessGameController.instance:addInteractObj(interact)
 	end
 
-	arg_3_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return ChessStepTransport

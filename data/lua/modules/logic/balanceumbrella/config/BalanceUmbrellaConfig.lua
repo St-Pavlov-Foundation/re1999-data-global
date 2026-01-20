@@ -1,13 +1,15 @@
-﻿module("modules.logic.balanceumbrella.config.BalanceUmbrellaConfig", package.seeall)
+﻿-- chunkname: @modules/logic/balanceumbrella/config/BalanceUmbrellaConfig.lua
 
-local var_0_0 = class("BalanceUmbrellaConfig", BaseConfig)
+module("modules.logic.balanceumbrella.config.BalanceUmbrellaConfig", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local BalanceUmbrellaConfig = class("BalanceUmbrellaConfig", BaseConfig)
+
+function BalanceUmbrellaConfig:reqConfigNames()
 	return {
 		"balance_umbrella"
 	}
 end
 
-var_0_0.instance = var_0_0.New()
+BalanceUmbrellaConfig.instance = BalanceUmbrellaConfig.New()
 
-return var_0_0
+return BalanceUmbrellaConfig

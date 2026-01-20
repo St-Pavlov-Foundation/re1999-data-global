@@ -1,163 +1,170 @@
-﻿module("modules.logic.store.model.StoreNormalGoodsItemListModel", package.seeall)
+﻿-- chunkname: @modules/logic/store/model/StoreNormalGoodsItemListModel.lua
 
-local var_0_0 = class("StoreNormalGoodsItemListModel", ListScrollModel)
+module("modules.logic.store.model.StoreNormalGoodsItemListModel", package.seeall)
 
-function var_0_0.setMOList(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._moList = {}
+local StoreNormalGoodsItemListModel = class("StoreNormalGoodsItemListModel", ListScrollModel)
 
-	if arg_1_2 then
-		local var_1_0 = FurnaceTreasureModel.instance:getGoodsListByStoreId(arg_1_2)
+function StoreNormalGoodsItemListModel:setMOList(moList, storeId)
+	self._moList = {}
 
-		for iter_1_0, iter_1_1 in ipairs(var_1_0) do
-			local var_1_1 = FurnaceTreasureModel.instance:getGoodsRemainCount(arg_1_2, iter_1_1)
+	if storeId then
+		local extraActGoodsList = FurnaceTreasureModel.instance:getGoodsListByStoreId(storeId)
 
-			if var_1_1 and var_1_1 > 0 then
-				local var_1_2 = FurnaceTreasureModel.instance:getGoodsPoolId(arg_1_2, iter_1_1)
-				local var_1_3 = StoreGoodsMO.New()
+		for _, actGoodsId in ipairs(extraActGoodsList) do
+			local goodsRemainBuyCount = FurnaceTreasureModel.instance:getGoodsRemainCount(storeId, actGoodsId)
 
-				var_1_3:intiActGoods(arg_1_2, iter_1_1, var_1_2)
+			if goodsRemainBuyCount and goodsRemainBuyCount > 0 then
+				local poolId = FurnaceTreasureModel.instance:getGoodsPoolId(storeId, actGoodsId)
+				local storeGoodsMO = StoreGoodsMO.New()
 
-				arg_1_0._moList[#arg_1_0._moList + 1] = var_1_3
+				storeGoodsMO:intiActGoods(storeId, actGoodsId, poolId)
+
+				self._moList[#self._moList + 1] = storeGoodsMO
 			end
 		end
 	end
 
-	if arg_1_1 then
-		for iter_1_2, iter_1_3 in pairs(arg_1_1) do
-			table.insert(arg_1_0._moList, iter_1_3)
+	if moList then
+		for _, mo in pairs(moList) do
+			table.insert(self._moList, mo)
 		end
 	end
 
-	var_0_0.StoreId = arg_1_2
+	StoreNormalGoodsItemListModel.StoreId = storeId
 
-	arg_1_0:allHeroRecommendEquip()
+	self:allHeroRecommendEquip()
 
-	if #arg_1_0._moList > 1 then
-		table.sort(arg_1_0._moList, arg_1_0._sortFunction)
+	if #self._moList > 1 then
+		table.sort(self._moList, self._sortFunction)
 	end
 
-	arg_1_0:setList(arg_1_0._moList)
+	self:setList(self._moList)
 end
 
-function var_0_0._sortFunction(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_0:getIsActGoods()
+function StoreNormalGoodsItemListModel._sortFunction(x, y)
+	local xIsActGoods = x:getIsActGoods()
+	local yIsActGoods = y:getIsActGoods()
 
-	if var_2_0 ~= arg_2_1:getIsActGoods() then
-		return var_2_0
+	if xIsActGoods ~= yIsActGoods then
+		return xIsActGoods
 	end
 
-	if var_2_0 then
-		return arg_2_0:getActGoodsId() < arg_2_1:getActGoodsId()
+	if xIsActGoods then
+		local xActGoodsId = x:getActGoodsId()
+		local yActGoodsId = y:getActGoodsId()
+
+		return xActGoodsId < yActGoodsId
 	end
 
-	local var_2_1 = StoreConfig.instance:getGoodsConfig(arg_2_0.goodsId)
-	local var_2_2 = StoreConfig.instance:getGoodsConfig(arg_2_1.goodsId)
-	local var_2_3 = var_0_0._isStoreItemCountLimit(arg_2_0)
-	local var_2_4 = var_0_0._isStoreItemCountLimit(arg_2_1)
+	local xConfig = StoreConfig.instance:getGoodsConfig(x.goodsId)
+	local yConfig = StoreConfig.instance:getGoodsConfig(y.goodsId)
+	local xCountLimit = StoreNormalGoodsItemListModel._isStoreItemCountLimit(x)
+	local yCountLimit = StoreNormalGoodsItemListModel._isStoreItemCountLimit(y)
 
-	if var_2_3 and not var_2_4 then
+	if xCountLimit and not yCountLimit then
 		return false
-	elseif not var_2_3 and var_2_4 then
+	elseif not xCountLimit and yCountLimit then
 		return true
 	end
 
-	local var_2_5 = var_0_0._isStoreItemSoldOut(arg_2_0.goodsId)
-	local var_2_6 = var_0_0._isStoreItemSoldOut(arg_2_1.goodsId)
-	local var_2_7 = var_0_0._isStoreItemUnlock(arg_2_0.goodsId)
-	local var_2_8 = var_0_0._isStoreItemUnlock(arg_2_1.goodsId)
+	local xSoldOut = StoreNormalGoodsItemListModel._isStoreItemSoldOut(x.goodsId)
+	local ySoldOut = StoreNormalGoodsItemListModel._isStoreItemSoldOut(y.goodsId)
+	local xUnlock = StoreNormalGoodsItemListModel._isStoreItemUnlock(x.goodsId)
+	local yUnlock = StoreNormalGoodsItemListModel._isStoreItemUnlock(y.goodsId)
 
-	if not var_2_5 and var_2_6 then
+	if not xSoldOut and ySoldOut then
 		return true
-	elseif var_2_5 and not var_2_6 then
+	elseif xSoldOut and not ySoldOut then
 		return false
 	end
 
-	local var_2_9 = arg_2_0:alreadyHas()
-	local var_2_10 = arg_2_1:alreadyHas()
+	local xHas = x:alreadyHas()
+	local yHas = y:alreadyHas()
 
-	if var_2_9 ~= var_2_10 then
-		return var_2_10
+	if xHas ~= yHas then
+		return yHas
 	end
 
-	if var_2_7 and not var_2_8 then
+	if xUnlock and not yUnlock then
 		return true
-	elseif not var_2_7 and var_2_8 then
+	elseif not xUnlock and yUnlock then
 		return false
 	end
 
-	if var_0_0.IsEquipSort and var_0_0.StoreId == StoreEnum.StoreId.SummonEquipExchange and not var_2_9 and not var_2_10 and not var_2_5 and not var_2_6 then
-		local var_2_11 = string.splitToNumber(var_2_1.product, "#")
-		local var_2_12 = string.splitToNumber(var_2_2.product, "#")
-		local var_2_13 = false
-		local var_2_14 = false
+	if StoreNormalGoodsItemListModel.IsEquipSort and StoreNormalGoodsItemListModel.StoreId == StoreEnum.StoreId.SummonEquipExchange and not xHas and not yHas and not xSoldOut and not ySoldOut then
+		local xProduct = string.splitToNumber(xConfig.product, "#")
+		local yProduct = string.splitToNumber(yConfig.product, "#")
+		local xRecommondEquip = false
+		local yRecommondEquip = false
 
-		if var_2_11[1] == MaterialEnum.MaterialType.Equip then
-			if var_2_11[2] == 1000 then
+		if xProduct[1] == MaterialEnum.MaterialType.Equip then
+			if xProduct[2] == 1000 then
 				return true
 			end
 
-			var_2_13 = LuaUtil.tableContains(var_0_0._recommendEquips, var_2_11[2])
+			xRecommondEquip = LuaUtil.tableContains(StoreNormalGoodsItemListModel._recommendEquips, xProduct[2])
 		end
 
-		if var_2_12[1] == MaterialEnum.MaterialType.Equip then
-			if var_2_12[2] == 1000 then
+		if yProduct[1] == MaterialEnum.MaterialType.Equip then
+			if yProduct[2] == 1000 then
 				return false
 			end
 
-			var_2_14 = LuaUtil.tableContains(var_0_0._recommendEquips, var_2_12[2])
+			yRecommondEquip = LuaUtil.tableContains(StoreNormalGoodsItemListModel._recommendEquips, yProduct[2])
 		end
 
-		if var_2_13 ~= var_2_14 then
-			local var_2_15 = ItemModel.instance:getItemConfig(var_2_11[1], var_2_11[2])
-			local var_2_16 = ItemModel.instance:getItemConfig(var_2_12[1], var_2_12[2])
+		if xRecommondEquip ~= yRecommondEquip then
+			local xItemCo = ItemModel.instance:getItemConfig(xProduct[1], xProduct[2])
+			local yItemCo = ItemModel.instance:getItemConfig(yProduct[1], yProduct[2])
 
-			if var_2_15.rare ~= var_2_16.rare then
-				return var_2_1.order < var_2_2.order
+			if xItemCo.rare ~= yItemCo.rare then
+				return xConfig.order < yConfig.order
 			else
-				return var_2_13
+				return xRecommondEquip
 			end
-		elseif var_2_13 == true and var_2_14 == true then
-			return var_2_11[2] > var_2_12[2]
+		elseif xRecommondEquip == true and yRecommondEquip == true then
+			return xProduct[2] > yProduct[2]
 		end
 	end
 
-	local var_2_17 = var_0_0.needWeekWalkLayerUnlock(arg_2_0.goodsId)
+	local xWeekWalkLock = StoreNormalGoodsItemListModel.needWeekWalkLayerUnlock(x.goodsId)
+	local yWeekWalkLock = StoreNormalGoodsItemListModel.needWeekWalkLayerUnlock(y.goodsId)
 
-	if var_2_17 ~= var_0_0.needWeekWalkLayerUnlock(arg_2_1.goodsId) then
-		if var_2_17 then
+	if xWeekWalkLock ~= yWeekWalkLock then
+		if xWeekWalkLock then
 			return false
 		end
 
 		return true
 	end
 
-	if var_2_1.order < var_2_2.order then
+	if xConfig.order < yConfig.order then
 		return true
-	elseif var_2_1.order > var_2_2.order then
+	elseif xConfig.order > yConfig.order then
 		return false
 	end
 
-	if var_2_1.id < var_2_2.id then
+	if xConfig.id < yConfig.id then
 		return true
-	elseif var_2_1.id > var_2_2.id then
+	elseif xConfig.id > yConfig.id then
 		return false
 	end
 end
 
-function var_0_0._isStoreItemUnlock(arg_3_0)
-	local var_3_0 = StoreConfig.instance:getGoodsConfig(arg_3_0).needEpisodeId
+function StoreNormalGoodsItemListModel._isStoreItemUnlock(goodsId)
+	local episodeId = StoreConfig.instance:getGoodsConfig(goodsId).needEpisodeId
 
-	if not var_3_0 or var_3_0 == 0 then
+	if not episodeId or episodeId == 0 then
 		return true
 	end
 
-	return DungeonModel.instance:hasPassLevelAndStory(var_3_0)
+	return DungeonModel.instance:hasPassLevelAndStory(episodeId)
 end
 
-function var_0_0.needWeekWalkLayerUnlock(arg_4_0)
-	local var_4_0 = StoreConfig.instance:getGoodsConfig(arg_4_0).needWeekwalkLayer
+function StoreNormalGoodsItemListModel.needWeekWalkLayerUnlock(goodsId)
+	local needWeekwalkLayer = StoreConfig.instance:getGoodsConfig(goodsId).needWeekwalkLayer
 
-	if var_4_0 <= 0 then
+	if needWeekwalkLayer <= 0 then
 		return false
 	end
 
@@ -165,70 +172,76 @@ function var_0_0.needWeekWalkLayerUnlock(arg_4_0)
 		return true
 	end
 
-	return var_4_0 > WeekWalkModel.instance:getMaxLayerId()
+	local maxLayer = WeekWalkModel.instance:getMaxLayerId()
+
+	return maxLayer < needWeekwalkLayer
 end
 
-function var_0_0._isStoreItemSoldOut(arg_5_0)
-	return StoreModel.instance:getGoodsMO(arg_5_0):isSoldOut()
+function StoreNormalGoodsItemListModel._isStoreItemSoldOut(goodsId)
+	local mo = StoreModel.instance:getGoodsMO(goodsId)
+
+	return mo:isSoldOut()
 end
 
-function var_0_0._isStoreItemCountLimit(arg_6_0)
-	local var_6_0 = arg_6_0:getLimitSoldNum()
+function StoreNormalGoodsItemListModel._isStoreItemCountLimit(goodItemMo)
+	local limitNum = goodItemMo:getLimitSoldNum()
 
-	if not var_6_0 or var_6_0 == 0 then
+	if not limitNum or limitNum == 0 then
 		return false
 	end
 
-	local var_6_1 = arg_6_0.config.product
-	local var_6_2 = GameUtil.splitString2(var_6_1, true)
-	local var_6_3 = var_6_2[1][1]
-	local var_6_4 = var_6_2[1][2]
+	local product = goodItemMo.config.product
+	local productArr = GameUtil.splitString2(product, true)
+	local itemType = productArr[1][1]
+	local itemId = productArr[1][2]
 
-	if var_6_3 == MaterialEnum.MaterialType.Equip then
-		return var_6_0 <= EquipModel.instance:getEquipQuantity(var_6_4)
+	if itemType == MaterialEnum.MaterialType.Equip then
+		local hasEquipNum = EquipModel.instance:getEquipQuantity(itemId)
+
+		return limitNum <= hasEquipNum
 	end
 end
 
-function var_0_0.initSortEquip(arg_7_0)
-	var_0_0.IsEquipSort = false
+function StoreNormalGoodsItemListModel:initSortEquip()
+	StoreNormalGoodsItemListModel.IsEquipSort = false
 
-	arg_7_0:_sortEquip()
+	self:_sortEquip()
 
-	return var_0_0.IsEquipSort
+	return StoreNormalGoodsItemListModel.IsEquipSort
 end
 
-function var_0_0.setSortEquip(arg_8_0)
-	var_0_0.IsEquipSort = not var_0_0.IsEquipSort
+function StoreNormalGoodsItemListModel:setSortEquip()
+	StoreNormalGoodsItemListModel.IsEquipSort = not StoreNormalGoodsItemListModel.IsEquipSort
 
-	arg_8_0:_sortEquip()
+	self:_sortEquip()
 
-	return var_0_0.IsEquipSort
+	return StoreNormalGoodsItemListModel.IsEquipSort
 end
 
-function var_0_0._sortEquip(arg_9_0)
-	if arg_9_0._moList and #arg_9_0._moList > 1 then
-		table.sort(arg_9_0._moList, arg_9_0._sortFunction)
+function StoreNormalGoodsItemListModel:_sortEquip()
+	if self._moList and #self._moList > 1 then
+		table.sort(self._moList, self._sortFunction)
 	end
 
-	arg_9_0:setList(arg_9_0._moList)
+	self:setList(self._moList)
 end
 
-function var_0_0.allHeroRecommendEquip(arg_10_0)
-	if not var_0_0._recommendEquips then
-		var_0_0._recommendEquips = {}
+function StoreNormalGoodsItemListModel:allHeroRecommendEquip()
+	if not StoreNormalGoodsItemListModel._recommendEquips then
+		StoreNormalGoodsItemListModel._recommendEquips = {}
 	end
 
-	local var_10_0 = HeroModel.instance:getAllHero()
+	local allHero = HeroModel.instance:getAllHero()
 
-	if var_10_0 then
-		for iter_10_0, iter_10_1 in pairs(var_10_0) do
-			if iter_10_1.config.rare == 5 then
-				local var_10_1 = iter_10_1:getRecommendEquip()
+	if allHero then
+		for _, heroMo in pairs(allHero) do
+			if heroMo.config.rare == 5 then
+				local recommondEquips = heroMo:getRecommendEquip()
 
-				if var_10_1 then
-					for iter_10_2, iter_10_3 in ipairs(var_10_1) do
-						if not LuaUtil.tableContains(var_0_0._recommendEquips, iter_10_3) then
-							table.insert(var_0_0._recommendEquips, iter_10_3)
+				if recommondEquips then
+					for _, equip in ipairs(recommondEquips) do
+						if not LuaUtil.tableContains(StoreNormalGoodsItemListModel._recommendEquips, equip) then
+							table.insert(StoreNormalGoodsItemListModel._recommendEquips, equip)
 						end
 					end
 				end
@@ -237,6 +250,6 @@ function var_0_0.allHeroRecommendEquip(arg_10_0)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+StoreNormalGoodsItemListModel.instance = StoreNormalGoodsItemListModel.New()
 
-return var_0_0
+return StoreNormalGoodsItemListModel

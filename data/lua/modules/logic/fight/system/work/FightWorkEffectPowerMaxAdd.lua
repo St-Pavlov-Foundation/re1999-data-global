@@ -1,36 +1,39 @@
-﻿module("modules.logic.fight.system.work.FightWorkEffectPowerMaxAdd", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkEffectPowerMaxAdd.lua
 
-local var_0_0 = class("FightWorkEffectPowerMaxAdd", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkEffectPowerMaxAdd", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0.actEffectData.targetId
-	local var_1_1 = FightHelper.getEntity(var_1_0)
+local FightWorkEffectPowerMaxAdd = class("FightWorkEffectPowerMaxAdd", FightEffectBase)
 
-	if not var_1_1 then
-		arg_1_0:onDone(true)
+function FightWorkEffectPowerMaxAdd:onStart()
+	local entityId = self.actEffectData.targetId
+	local entity = FightHelper.getEntity(entityId)
 
-		return
-	end
-
-	local var_1_2 = var_1_1:getMO()
-
-	if not var_1_2 then
-		arg_1_0:onDone(true)
+	if not entity then
+		self:onDone(true)
 
 		return
 	end
 
-	local var_1_3 = arg_1_0.actEffectData.configEffect
+	local entity_mo = entity:getMO()
 
-	if var_1_2:getPowerInfo(var_1_3) then
-		FightController.instance:dispatchEvent(FightEvent.PowerMaxChange, var_1_0, var_1_3, arg_1_0.actEffectData.effectNum)
+	if not entity_mo then
+		self:onDone(true)
+
+		return
 	end
 
-	arg_1_0:onDone(true)
+	local powerId = self.actEffectData.configEffect
+	local powerData = entity_mo:getPowerInfo(powerId)
+
+	if powerData then
+		FightController.instance:dispatchEvent(FightEvent.PowerMaxChange, entityId, powerId, self.actEffectData.effectNum)
+	end
+
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkEffectPowerMaxAdd:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkEffectPowerMaxAdd

@@ -1,99 +1,103 @@
-﻿module("modules.logic.reactivity.model.ReactivityTaskModel", package.seeall)
+﻿-- chunkname: @modules/logic/reactivity/model/ReactivityTaskModel.lua
 
-local var_0_0 = class("ReactivityTaskModel", ListScrollModel)
+module("modules.logic.reactivity.model.ReactivityTaskModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local ReactivityTaskModel = class("ReactivityTaskModel", ListScrollModel)
+
+function ReactivityTaskModel:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function ReactivityTaskModel:reInit()
 	return
 end
 
-function var_0_0.sortTaskMoList(arg_3_0)
-	local var_3_0 = {}
-	local var_3_1 = {}
-	local var_3_2 = {}
+function ReactivityTaskModel:sortTaskMoList()
+	local finishNotGetRewardMoList = {}
+	local notFinishMoList = {}
+	local finishAndGetRewardMoList = {}
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0.taskMoList) do
-		if iter_3_1.finishCount >= iter_3_1.config.maxFinishCount then
-			table.insert(var_3_2, iter_3_1)
-		elseif iter_3_1.hasFinished then
-			table.insert(var_3_0, iter_3_1)
+	for _, taskMo in ipairs(self.taskMoList) do
+		if taskMo.finishCount >= taskMo.config.maxFinishCount then
+			table.insert(finishAndGetRewardMoList, taskMo)
+		elseif taskMo.hasFinished then
+			table.insert(finishNotGetRewardMoList, taskMo)
 		else
-			table.insert(var_3_1, iter_3_1)
+			table.insert(notFinishMoList, taskMo)
 		end
 	end
 
-	table.sort(var_3_0, var_0_0._sortFunc)
-	table.sort(var_3_1, var_0_0._sortFunc)
-	table.sort(var_3_2, var_0_0._sortFunc)
+	table.sort(finishNotGetRewardMoList, ReactivityTaskModel._sortFunc)
+	table.sort(notFinishMoList, ReactivityTaskModel._sortFunc)
+	table.sort(finishAndGetRewardMoList, ReactivityTaskModel._sortFunc)
 
-	arg_3_0.taskMoList = {}
+	self.taskMoList = {}
 
-	tabletool.addValues(arg_3_0.taskMoList, var_3_0)
-	tabletool.addValues(arg_3_0.taskMoList, var_3_1)
-	tabletool.addValues(arg_3_0.taskMoList, var_3_2)
+	tabletool.addValues(self.taskMoList, finishNotGetRewardMoList)
+	tabletool.addValues(self.taskMoList, notFinishMoList)
+	tabletool.addValues(self.taskMoList, finishAndGetRewardMoList)
 end
 
-function var_0_0._sortFunc(arg_4_0, arg_4_1)
-	return arg_4_0.id < arg_4_1.id
+function ReactivityTaskModel._sortFunc(a, b)
+	return a.id < b.id
 end
 
-function var_0_0.refreshList(arg_5_0, arg_5_1)
-	arg_5_0.taskMoList = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.ActivityDungeon, arg_5_1)
+function ReactivityTaskModel:refreshList(actId)
+	self.taskMoList = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.ActivityDungeon, actId)
 
-	arg_5_0:sortTaskMoList()
+	self:sortTaskMoList()
 
-	if arg_5_0:getFinishTaskCount() > 1 then
-		local var_5_0 = tabletool.copy(arg_5_0.taskMoList)
+	local finishTaskCount = self:getFinishTaskCount()
 
-		table.insert(var_5_0, 1, {
+	if finishTaskCount > 1 then
+		local moList = tabletool.copy(self.taskMoList)
+
+		table.insert(moList, 1, {
 			getAll = true,
-			activityId = arg_5_1
+			activityId = actId
 		})
-		arg_5_0:setList(var_5_0)
+		self:setList(moList)
 	else
-		arg_5_0:setList(arg_5_0.taskMoList)
+		self:setList(self.taskMoList)
 	end
 end
 
-function var_0_0.getFinishTaskCount(arg_6_0)
-	local var_6_0 = 0
+function ReactivityTaskModel:getFinishTaskCount()
+	local count = 0
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0.taskMoList) do
-		if iter_6_1.hasFinished and iter_6_1.finishCount < iter_6_1.config.maxFinishCount then
-			var_6_0 = var_6_0 + 1
+	for _, taskMo in ipairs(self.taskMoList) do
+		if taskMo.hasFinished and taskMo.finishCount < taskMo.config.maxFinishCount then
+			count = count + 1
 		end
 	end
 
-	return var_6_0
+	return count
 end
 
-function var_0_0.getFinishTaskActivityCount(arg_7_0)
-	local var_7_0 = 0
+function ReactivityTaskModel:getFinishTaskActivityCount()
+	local count = 0
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0.taskMoList) do
-		if iter_7_1.hasFinished and iter_7_1.finishCount < iter_7_1.config.maxFinishCount then
-			var_7_0 = var_7_0 + iter_7_1.config.activity
+	for _, taskMo in ipairs(self.taskMoList) do
+		if taskMo.hasFinished and taskMo.finishCount < taskMo.config.maxFinishCount then
+			count = count + taskMo.config.activity
 		end
 	end
 
-	return var_7_0
+	return count
 end
 
-function var_0_0.getGetRewardTaskCount(arg_8_0)
-	local var_8_0 = 0
+function ReactivityTaskModel:getGetRewardTaskCount()
+	local count = 0
 
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0.taskMoList) do
-		if iter_8_1.finishCount >= iter_8_1.config.maxFinishCount then
-			var_8_0 = var_8_0 + 1
+	for _, taskMo in ipairs(self.taskMoList) do
+		if taskMo.finishCount >= taskMo.config.maxFinishCount then
+			count = count + 1
 		end
 	end
 
-	return var_8_0
+	return count
 end
 
-var_0_0.instance = var_0_0.New()
+ReactivityTaskModel.instance = ReactivityTaskModel.New()
 
-return var_0_0
+return ReactivityTaskModel

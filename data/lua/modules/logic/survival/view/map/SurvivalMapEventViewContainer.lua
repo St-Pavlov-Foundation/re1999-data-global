@@ -1,12 +1,14 @@
-﻿module("modules.logic.survival.view.map.SurvivalMapEventViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/SurvivalMapEventViewContainer.lua
 
-local var_0_0 = class("SurvivalMapEventViewContainer", BaseViewContainer)
+module("modules.logic.survival.view.map.SurvivalMapEventViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local SurvivalMapEventViewContainer = class("SurvivalMapEventViewContainer", BaseViewContainer)
+
+function SurvivalMapEventViewContainer:buildViews()
 	return {
 		SurvivalMapEventView.New(),
 		SurvivalShrinkView.New()
 	}
 end
 
-return var_0_0
+return SurvivalMapEventViewContainer

@@ -1,0 +1,42 @@
+[
+  {
+    "gameId": 1001,
+    "gameType": 1
+  },
+  {
+    "gameId": 1002,
+    "gameType": 1
+  },
+  {
+    "gameId": 1003,
+    "gameType": 1
+  },
+  {
+    "gameId": 1004,
+    "gameType": 1
+  },
+  {
+    "gameId": 2002,
+    "gameType": 2
+  },
+  {
+    "gameId": 2003,
+    "gameType": 2
+  },
+  {
+    "gameId": 2004,
+    "gameType": 2
+  },
+  {
+    "gameId": 2006,
+    "gameType": 2
+  },
+  {
+    "gameId": 2007,
+    "gameType": 2
+  },
+  {
+    "gameId": 2008,
+    "gameType": 2
+  }
+]

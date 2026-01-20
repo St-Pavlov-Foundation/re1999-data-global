@@ -1,25 +1,27 @@
-﻿module("modules.logic.backpack.model.ItemMo", package.seeall)
+﻿-- chunkname: @modules/logic/backpack/model/ItemMo.lua
 
-local var_0_0 = pureTable("ItemMo")
+module("modules.logic.backpack.model.ItemMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.id = 0
-	arg_1_0.quantity = 0
-	arg_1_0.lastUseTime = 0
+local ItemMo = pureTable("ItemMo")
+
+function ItemMo:ctor()
+	self.id = 0
+	self.quantity = 0
+	self.lastUseTime = 0
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.id = arg_2_1.itemId
-	arg_2_0.quantity = arg_2_1.quantity
-	arg_2_0.lastUseTime = arg_2_1.lastUseTime
-	arg_2_0.lastUpdateTime = arg_2_1.lastUpdateTime
+function ItemMo:init(info)
+	self.id = info.itemId
+	self.quantity = info.quantity
+	self.lastUseTime = info.lastUseTime
+	self.lastUpdateTime = info.lastUpdateTime
 end
 
-function var_0_0.initFromMaterialData(arg_3_0, arg_3_1)
-	arg_3_0.id = arg_3_1.materilId
-	arg_3_0.quantity = arg_3_1.quantity
-	arg_3_0.lastUseTime = nil
-	arg_3_0.lastUpdateTime = nil
+function ItemMo:initFromMaterialData(info)
+	self.id = info.materilId
+	self.quantity = info.quantity
+	self.lastUseTime = nil
+	self.lastUpdateTime = nil
 end
 
-return var_0_0
+return ItemMo

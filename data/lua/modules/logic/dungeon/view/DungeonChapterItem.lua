@@ -1,41 +1,43 @@
-﻿module("modules.logic.dungeon.view.DungeonChapterItem", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/DungeonChapterItem.lua
 
-local var_0_0 = class("DungeonChapterItem", ListScrollCellExtend)
+module("modules.logic.dungeon.view.DungeonChapterItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagechapterIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "anim/#simage_chapterIcon")
-	arg_1_0._golock = gohelper.findChild(arg_1_0.viewGO, "anim/#go_lock")
-	arg_1_0._simagechapterIconLock = gohelper.findChildSingleImage(arg_1_0.viewGO, "anim/#go_lock/#simage_chapterIconLock")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "anim/#txt_name")
-	arg_1_0._gobgdot = gohelper.findChild(arg_1_0.viewGO, "anim/bg_dot")
-	arg_1_0._gobgdot2 = gohelper.findChild(arg_1_0.viewGO, "anim/bg_glow02")
-	arg_1_0._gobgdot3 = gohelper.findChild(arg_1_0.viewGO, "anim/bg_glow03")
-	arg_1_0._gobgdot4 = gohelper.findChild(arg_1_0.viewGO, "anim/bg_glow04")
-	arg_1_0._imagelockicon = gohelper.findChildImage(arg_1_0.viewGO, "anim/#go_lock/icon")
-	arg_1_0._txtchapterNum = gohelper.findChildText(arg_1_0.viewGO, "anim/#go_lock/#txt_chapterNum")
-	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "anim/#go_reddot")
-	arg_1_0._gopreview = gohelper.findChild(arg_1_0.viewGO, "anim/#go_first")
-	arg_1_0._gostorytrace = gohelper.findChild(arg_1_0.viewGO, "anim/#go_trace")
+local DungeonChapterItem = class("DungeonChapterItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function DungeonChapterItem:onInitView()
+	self._simagechapterIcon = gohelper.findChildSingleImage(self.viewGO, "anim/#simage_chapterIcon")
+	self._golock = gohelper.findChild(self.viewGO, "anim/#go_lock")
+	self._simagechapterIconLock = gohelper.findChildSingleImage(self.viewGO, "anim/#go_lock/#simage_chapterIconLock")
+	self._txtname = gohelper.findChildText(self.viewGO, "anim/#txt_name")
+	self._gobgdot = gohelper.findChild(self.viewGO, "anim/bg_dot")
+	self._gobgdot2 = gohelper.findChild(self.viewGO, "anim/bg_glow02")
+	self._gobgdot3 = gohelper.findChild(self.viewGO, "anim/bg_glow03")
+	self._gobgdot4 = gohelper.findChild(self.viewGO, "anim/bg_glow04")
+	self._imagelockicon = gohelper.findChildImage(self.viewGO, "anim/#go_lock/icon")
+	self._txtchapterNum = gohelper.findChildText(self.viewGO, "anim/#go_lock/#txt_chapterNum")
+	self._goreddot = gohelper.findChild(self.viewGO, "anim/#go_reddot")
+	self._gopreview = gohelper.findChild(self.viewGO, "anim/#go_first")
+	self._gostorytrace = gohelper.findChild(self.viewGO, "anim/#go_trace")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function DungeonChapterItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function DungeonChapterItem:removeEvents()
 	return
 end
 
-function var_0_0._btncategoryOnClick(arg_4_0)
-	arg_4_0._isLock, arg_4_0._lockCode, arg_4_0._lockToast, arg_4_0._lockToastParam = DungeonModel.instance:chapterIsLock(arg_4_0._mo.id)
+function DungeonChapterItem:_btncategoryOnClick()
+	self._isLock, self._lockCode, self._lockToast, self._lockToastParam = DungeonModel.instance:chapterIsLock(self._mo.id)
 
-	if arg_4_0._isLock then
-		if arg_4_0._lockToast then
-			GameFacade.showToast(arg_4_0._lockToast, arg_4_0._lockToastParam)
+	if self._isLock then
+		if self._lockToast then
+			GameFacade.showToast(self._lockToast, self._lockToastParam)
 		end
 
 		return
@@ -43,260 +45,264 @@ function var_0_0._btncategoryOnClick(arg_4_0)
 
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Copies)
 
-	if arg_4_0._showPreviewChapterFlag then
-		local var_4_0 = DungeonMainStoryModel.getKey(PlayerPrefsKey.OpenDungeonPreviewChapter, arg_4_0._mo.id)
+	if self._showPreviewChapterFlag then
+		local key = DungeonMainStoryModel.getKey(PlayerPrefsKey.OpenDungeonPreviewChapter, self._mo.id)
 
-		if not PlayerPrefsHelper.hasKey(var_4_0) then
+		if not PlayerPrefsHelper.hasKey(key) then
 			GameFacade.showMessageBox(MessageBoxIdDefine.PreviewChapterOpenTip, MsgBoxEnum.BoxType.Yes_No, function()
-				PlayerPrefsHelper.setNumber(var_4_0, 1)
-				arg_4_0:_openDungeonChapterView()
+				PlayerPrefsHelper.setNumber(key, 1)
+				self:_openDungeonChapterView()
 			end, nil, nil)
 
 			return
 		end
 	end
 
-	arg_4_0:_openDungeonChapterView()
+	self:_openDungeonChapterView()
 end
 
-function var_0_0._openDungeonChapterView(arg_6_0)
-	DungeonMainStoryModel.instance:saveClickChapterId(arg_6_0._mo.id)
+function DungeonChapterItem:_openDungeonChapterView()
+	DungeonMainStoryModel.instance:saveClickChapterId(self._mo.id)
 
-	local var_6_0 = {
-		chapterId = arg_6_0._mo.id
-	}
+	local param = {}
 
-	DungeonController.instance:openDungeonChapterView(var_6_0)
-	arg_6_0:_setDotState(false)
+	param.chapterId = self._mo.id
+
+	DungeonController.instance:openDungeonChapterView(param)
+	self:_setDotState(false)
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	local var_7_0 = gohelper.findChild(arg_7_0.viewGO, "anim")
+function DungeonChapterItem:_editableInitView()
+	local animGo = gohelper.findChild(self.viewGO, "anim")
 
-	arg_7_0._anim = var_7_0:GetComponent(typeof(UnityEngine.Animation))
-	arg_7_0._canvasGroup = var_7_0:GetComponent(typeof(UnityEngine.CanvasGroup))
+	self._anim = animGo:GetComponent(typeof(UnityEngine.Animation))
+	self._canvasGroup = animGo:GetComponent(typeof(UnityEngine.CanvasGroup))
 
-	local var_7_1 = DungeonChapterListModel.instance.firstShowNormalTime
+	local firstShowNormalTime = DungeonChapterListModel.instance.firstShowNormalTime
 
-	arg_7_0._canPlayEnterAnim = var_7_1 and Time.time - var_7_1 < 0.5
-	arg_7_0._click = SLFramework.UGUI.UIClickListener.Get(arg_7_0.viewGO)
+	self._canPlayEnterAnim = firstShowNormalTime and Time.time - firstShowNormalTime < 0.5
+	self._click = SLFramework.UGUI.UIClickListener.Get(self.viewGO)
 
-	gohelper.setActive(arg_7_0._gopreview, false)
+	gohelper.setActive(self._gopreview, false)
 
-	local var_7_2 = GameConfig:GetCurLangType() == LangSettings.en
+	local isEn = GameConfig:GetCurLangType() == LangSettings.en
 
-	if arg_7_0._txtname.gameObject:GetComponent(gohelper.Type_TextMesh) then
-		arg_7_0._txtname.alignment = var_7_2 and TMPro.TextAlignmentOptions.Top or TMPro.TextAlignmentOptions.Center
+	if self._txtname.gameObject:GetComponent(gohelper.Type_TextMesh) then
+		self._txtname.alignment = isEn and TMPro.TextAlignmentOptions.Top or TMPro.TextAlignmentOptions.Center
 	end
 end
 
-function var_0_0._editableAddEvents(arg_8_0)
-	arg_8_0._click:AddClickListener(arg_8_0._btncategoryOnClick, arg_8_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_8_0._onCloseViewFinish, arg_8_0)
-	DungeonController.instance:registerCallback(DungeonEvent.OnGetPointReward, arg_8_0._updateMapTip, arg_8_0)
-	DungeonController.instance:registerCallback(DungeonEvent.OnGuidePlayUnlockAnim, arg_8_0._onGuidePlayUnlockAnim, arg_8_0)
-	StoryController.instance:registerCallback(StoryEvent.Start, arg_8_0._onStart, arg_8_0)
-	StoryController.instance:registerCallback(StoryEvent.Finish, arg_8_0._onFinish, arg_8_0)
-	DungeonController.instance:registerCallback(DungeonEvent.OnShowStoryView, arg_8_0._setEnterAnimState, arg_8_0)
-	DungeonController.instance:registerCallback(DungeonEvent.OnUpdateDungeonInfo, arg_8_0._onUpdateDungeonInfo, arg_8_0)
-	arg_8_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_8_0.onRefreshActivity, arg_8_0)
-	arg_8_0:addEventCb(CharacterRecommedController.instance, CharacterRecommedEvent.OnRefreshTraced, arg_8_0._refreshTraced, arg_8_0)
+function DungeonChapterItem:_editableAddEvents()
+	self._click:AddClickListener(self._btncategoryOnClick, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	DungeonController.instance:registerCallback(DungeonEvent.OnGetPointReward, self._updateMapTip, self)
+	DungeonController.instance:registerCallback(DungeonEvent.OnGuidePlayUnlockAnim, self._onGuidePlayUnlockAnim, self)
+	StoryController.instance:registerCallback(StoryEvent.Start, self._onStart, self)
+	StoryController.instance:registerCallback(StoryEvent.Finish, self._onFinish, self)
+	DungeonController.instance:registerCallback(DungeonEvent.OnShowStoryView, self._setEnterAnimState, self)
+	DungeonController.instance:registerCallback(DungeonEvent.OnUpdateDungeonInfo, self._onUpdateDungeonInfo, self)
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self.onRefreshActivity, self)
+	self:addEventCb(CharacterRecommedController.instance, CharacterRecommedEvent.OnRefreshTraced, self._refreshTraced, self)
 end
 
-function var_0_0._editableRemoveEvents(arg_9_0)
-	arg_9_0._click:RemoveClickListener()
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_9_0._onCloseViewFinish, arg_9_0)
-	DungeonController.instance:unregisterCallback(DungeonEvent.OnGetPointReward, arg_9_0._updateMapTip, arg_9_0)
-	DungeonController.instance:unregisterCallback(DungeonEvent.OnGuidePlayUnlockAnim, arg_9_0._onGuidePlayUnlockAnim, arg_9_0)
-	StoryController.instance:unregisterCallback(StoryEvent.Start, arg_9_0._onStart, arg_9_0)
-	StoryController.instance:unregisterCallback(StoryEvent.Finish, arg_9_0._onFinish, arg_9_0)
-	DungeonController.instance:unregisterCallback(DungeonEvent.OnShowStoryView, arg_9_0._setEnterAnimState, arg_9_0)
-	DungeonController.instance:unregisterCallback(DungeonEvent.OnUpdateDungeonInfo, arg_9_0._onUpdateDungeonInfo, arg_9_0)
-	arg_9_0:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_9_0.onRefreshActivity, arg_9_0)
-	arg_9_0:removeEventCb(CharacterRecommedController.instance, CharacterRecommedEvent.OnRefreshTraced, arg_9_0._refreshTraced, arg_9_0)
+function DungeonChapterItem:_editableRemoveEvents()
+	self._click:RemoveClickListener()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	DungeonController.instance:unregisterCallback(DungeonEvent.OnGetPointReward, self._updateMapTip, self)
+	DungeonController.instance:unregisterCallback(DungeonEvent.OnGuidePlayUnlockAnim, self._onGuidePlayUnlockAnim, self)
+	StoryController.instance:unregisterCallback(StoryEvent.Start, self._onStart, self)
+	StoryController.instance:unregisterCallback(StoryEvent.Finish, self._onFinish, self)
+	DungeonController.instance:unregisterCallback(DungeonEvent.OnShowStoryView, self._setEnterAnimState, self)
+	DungeonController.instance:unregisterCallback(DungeonEvent.OnUpdateDungeonInfo, self._onUpdateDungeonInfo, self)
+	self:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self.onRefreshActivity, self)
+	self:removeEventCb(CharacterRecommedController.instance, CharacterRecommedEvent.OnRefreshTraced, self._refreshTraced, self)
 end
 
-function var_0_0._onStart(arg_10_0, arg_10_1)
+function DungeonChapterItem:_onStart(storyId)
 	if ViewMgr.instance:isOpen(ViewName.DungeonMapView) then
-		arg_10_0._simagechapterIcon:UnLoadImage()
+		self._simagechapterIcon:UnLoadImage()
 	end
 end
 
-function var_0_0._onFinish(arg_11_0, arg_11_1)
+function DungeonChapterItem:_onFinish(storyId)
 	if ViewMgr.instance:isOpen(ViewName.DungeonMapView) then
-		arg_11_0._simagechapterIcon:LoadImage(ResUrl.getDungeonIcon(arg_11_0._mo.chapterpic))
+		self._simagechapterIcon:LoadImage(ResUrl.getDungeonIcon(self._mo.chapterpic))
 	end
 end
 
-function var_0_0._onGuidePlayUnlockAnim(arg_12_0)
-	if arg_12_0:_isNewChapter() then
+function DungeonChapterItem:_onGuidePlayUnlockAnim()
+	if self:_isNewChapter() then
 		DungeonModel.instance.chapterTriggerNewChapter = true
 
-		arg_12_0:_doShowUnlockAnim()
+		self:_doShowUnlockAnim()
 	end
 end
 
-function var_0_0._onCloseViewFinish(arg_13_0, arg_13_1, arg_13_2)
-	if arg_13_1 == ViewName.DungeonMapView then
-		arg_13_0:_updateMapTip()
-		arg_13_0:_doShowUnlockAnim()
+function DungeonChapterItem:_onCloseViewFinish(viewName, viewParam)
+	if viewName == ViewName.DungeonMapView then
+		self:_updateMapTip()
+		self:_doShowUnlockAnim()
 	end
 end
 
-function var_0_0.onUpdateMO(arg_14_0, arg_14_1)
-	arg_14_0._mo = arg_14_1
+function DungeonChapterItem:onUpdateMO(mo)
+	self._mo = mo
 
-	local var_14_0 = arg_14_1.id
-	local var_14_1 = ResUrl.getDungeonIcon(arg_14_1.chapterpic)
+	local chapterId = mo.id
+	local imagePath = ResUrl.getDungeonIcon(mo.chapterpic)
 
-	arg_14_0._simagechapterIcon:LoadImage(var_14_1)
-	arg_14_0._simagechapterIconLock:LoadImage(ResUrl.getDungeonIcon(arg_14_1.chapterpic .. "_lock"))
+	self._simagechapterIcon:LoadImage(imagePath)
+	self._simagechapterIconLock:LoadImage(ResUrl.getDungeonIcon(mo.chapterpic .. "_lock"))
 
-	arg_14_0._isLock, arg_14_0._lockCode, arg_14_0._lockToast, arg_14_0._lockToastParam = DungeonModel.instance:chapterIsLock(arg_14_0._mo.id)
-	arg_14_0._txtname.text = arg_14_1.name
+	self._isLock, self._lockCode, self._lockToast, self._lockToastParam = DungeonModel.instance:chapterIsLock(self._mo.id)
+	self._txtname.text = mo.name
 
-	local var_14_2 = DungeonChapterListModel.instance:getChapterIndex(var_14_0)
+	local index = DungeonChapterListModel.instance:getChapterIndex(chapterId)
 
-	if var_14_2 then
-		arg_14_0._txtchapterNum.text = string.format("CHAPTER %s", var_14_2)
+	if index then
+		self._txtchapterNum.text = string.format("CHAPTER %s", index)
 	else
-		arg_14_0._txtchapterNum.text = "CHAPTER"
+		self._txtchapterNum.text = "CHAPTER"
 	end
 
-	local var_14_3, var_14_4 = DungeonModel.instance:getLastEpisodeConfigAndInfo()
+	local config, _ = DungeonModel.instance:getLastEpisodeConfigAndInfo()
 
-	gohelper.setActive(arg_14_0._gopointLight, var_14_0 == var_14_3.chapterId)
+	gohelper.setActive(self._gopointLight, chapterId == config.chapterId)
 
-	if not arg_14_0:_doShowUnlockAnim() then
-		arg_14_0:_setLockStatus(arg_14_0:IsLock())
+	if not self:_doShowUnlockAnim() then
+		self:_setLockStatus(self:IsLock())
 	end
 
-	arg_14_0:_setEnterAnim()
-	arg_14_0:_updateMapTip()
-	arg_14_0:refreshRed()
-	arg_14_0:_updatePreviewFlag()
-	arg_14_0:_refreshTraced()
+	self:_setEnterAnim()
+	self:_updateMapTip()
+	self:refreshRed()
+	self:_updatePreviewFlag()
+	self:_refreshTraced()
 end
 
-function var_0_0._updatePreviewFlag(arg_15_0)
-	arg_15_0._showPreviewChapterFlag = DungeonMainStoryModel.instance:showPreviewChapterFlag(arg_15_0._mo.id)
+function DungeonChapterItem:_updatePreviewFlag()
+	self._showPreviewChapterFlag = DungeonMainStoryModel.instance:showPreviewChapterFlag(self._mo.id)
 
-	gohelper.setActive(arg_15_0._gopreview, arg_15_0._showPreviewChapterFlag)
+	gohelper.setActive(self._gopreview, self._showPreviewChapterFlag)
 end
 
-function var_0_0._setEnterAnim(arg_16_0)
-	if arg_16_0._canPlayEnterAnim then
-		local var_16_0 = arg_16_0:_getInAnimName()
-		local var_16_1 = arg_16_0._anim:GetClip(var_16_0)
+function DungeonChapterItem:_setEnterAnim()
+	if self._canPlayEnterAnim then
+		local animName = self:_getInAnimName()
+		local enterClip = self._anim:GetClip(animName)
 
-		if var_16_1 then
-			arg_16_0._anim:Play(var_16_0)
+		if enterClip then
+			self._anim:Play(animName)
 
-			arg_16_0._canvasGroup.alpha = 0
+			self._canvasGroup.alpha = 0
 
-			TaskDispatcher.cancelTask(arg_16_0._onEnterAnimFinished, arg_16_0)
-			TaskDispatcher.runDelay(arg_16_0._onEnterAnimFinished, arg_16_0, var_16_1.length)
+			TaskDispatcher.cancelTask(self._onEnterAnimFinished, self)
+			TaskDispatcher.runDelay(self._onEnterAnimFinished, self, enterClip.length)
 
 			return
 		end
 	end
 
-	arg_16_0:playIdleAnim()
+	self:playIdleAnim()
 end
 
-function var_0_0.playIdleAnim(arg_17_0)
-	local var_17_0 = arg_17_0:_getInAnimName()
+function DungeonChapterItem:playIdleAnim()
+	local animName = self:_getInAnimName()
 
-	if not var_17_0 then
+	if not animName then
 		return
 	end
 
-	if arg_17_0._anim:GetClip(var_17_0) then
-		arg_17_0._canvasGroup.alpha = 1
+	local enterClip = self._anim:GetClip(animName)
 
-		arg_17_0._anim:Play(var_17_0)
+	if enterClip then
+		self._canvasGroup.alpha = 1
+
+		self._anim:Play(animName)
 	end
 end
 
-function var_0_0.playCloseAnim(arg_18_0)
-	arg_18_0._isPlayCloseAnim = true
+function DungeonChapterItem:playCloseAnim()
+	self._isPlayCloseAnim = true
 
-	local var_18_0 = arg_18_0:_getCloseAnimName()
+	local animName = self:_getCloseAnimName()
 
-	arg_18_0._anim:Play(var_18_0)
+	self._anim:Play(animName)
 end
 
-function var_0_0.getIsPlayCloseAnim(arg_19_0)
-	return arg_19_0._isPlayCloseAnim
+function DungeonChapterItem:getIsPlayCloseAnim()
+	return self._isPlayCloseAnim
 end
 
-function var_0_0._getInAnimName(arg_20_0)
+function DungeonChapterItem:_getInAnimName()
 	return "dungeonchapteritem_in"
 end
 
-function var_0_0._getCloseAnimName(arg_21_0)
+function DungeonChapterItem:_getCloseAnimName()
 	return "dungeonchapteritem_close"
 end
 
-function var_0_0._onEnterAnimFinished(arg_22_0)
-	arg_22_0._canPlayEnterAnim = false
+function DungeonChapterItem:_onEnterAnimFinished()
+	self._canPlayEnterAnim = false
 end
 
-function var_0_0._setEnterAnimState(arg_23_0)
-	arg_23_0._canPlayEnterAnim = true
+function DungeonChapterItem:_setEnterAnimState()
+	self._canPlayEnterAnim = true
 
-	arg_23_0:_setDotState(false)
-	arg_23_0:_setEnterAnim()
+	self:_setDotState(false)
+	self:_setEnterAnim()
 end
 
-function var_0_0._onUpdateDungeonInfo(arg_24_0)
-	if arg_24_0._showPreviewChapterFlag then
-		arg_24_0:_updatePreviewFlag()
+function DungeonChapterItem:_onUpdateDungeonInfo()
+	if self._showPreviewChapterFlag then
+		self:_updatePreviewFlag()
 	end
 end
 
-function var_0_0.onRefreshActivity(arg_25_0)
-	if arg_25_0._showPreviewChapterFlag then
-		arg_25_0:_updatePreviewFlag()
+function DungeonChapterItem:onRefreshActivity()
+	if self._showPreviewChapterFlag then
+		self:_updatePreviewFlag()
 
-		if not arg_25_0._showPreviewChapterFlag then
-			arg_25_0._isLock, arg_25_0._lockCode, arg_25_0._lockToast, arg_25_0._lockToastParam = DungeonModel.instance:chapterIsLock(arg_25_0._mo.id)
+		if not self._showPreviewChapterFlag then
+			self._isLock, self._lockCode, self._lockToast, self._lockToastParam = DungeonModel.instance:chapterIsLock(self._mo.id)
 
-			arg_25_0:_setLockStatus(arg_25_0:IsLock())
+			self:_setLockStatus(self:IsLock())
 		end
 	end
 end
 
-function var_0_0.IsLock(arg_26_0)
-	return arg_26_0._isLock or arg_26_0:_isNewChapter()
+function DungeonChapterItem:IsLock()
+	return self._isLock or self:_isNewChapter()
 end
 
-function var_0_0._isShowBtnGift(arg_27_0)
+function DungeonChapterItem:_isShowBtnGift()
 	return OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.ChapterReward)
 end
 
-function var_0_0._updateMapTip(arg_28_0)
+function DungeonChapterItem:_updateMapTip()
 	return
 end
 
-function var_0_0._isNewChapter(arg_29_0)
-	return arg_29_0._mo.id == DungeonModel.instance.unlockNewChapterId or DungeonModel.instance:needUnlockChapterAnim(arg_29_0._mo.id)
+function DungeonChapterItem:_isNewChapter()
+	return self._mo.id == DungeonModel.instance.unlockNewChapterId or DungeonModel.instance:needUnlockChapterAnim(self._mo.id)
 end
 
-function var_0_0._doShowUnlockAnim(arg_30_0)
+function DungeonChapterItem:_doShowUnlockAnim()
 	if ViewMgr.instance:isOpen(ViewName.DungeonMapView) then
 		return false
 	end
 
-	local var_30_0 = GameGlobalMgr.instance:getLoadingState()
+	local loadingState = GameGlobalMgr.instance:getLoadingState()
 
-	if var_30_0 and var_30_0:getLoadingViewName() then
+	if loadingState and loadingState:getLoadingViewName() then
 		return false
 	end
 
-	if DungeonModel.instance.chapterTriggerNewChapter and arg_30_0:_isNewChapter() or DungeonModel.instance:needUnlockChapterAnim(arg_30_0._mo.id) then
-		arg_30_0:_setLockStatus(true)
-		TaskDispatcher.runDelay(arg_30_0.showUnlockAnim, arg_30_0, 0.5)
+	local isNewChapter = DungeonModel.instance.chapterTriggerNewChapter and self:_isNewChapter()
+
+	if isNewChapter or DungeonModel.instance:needUnlockChapterAnim(self._mo.id) then
+		self:_setLockStatus(true)
+		TaskDispatcher.runDelay(self.showUnlockAnim, self, 0.5)
 
 		return true
 	end
@@ -304,140 +310,140 @@ function var_0_0._doShowUnlockAnim(arg_30_0)
 	return false
 end
 
-function var_0_0._setLockStatus(arg_31_0, arg_31_1)
-	arg_31_0._golock:SetActive(arg_31_1)
-	gohelper.setActive(arg_31_0._txtname.gameObject, not arg_31_1)
+function DungeonChapterItem:_setLockStatus(isLock)
+	self._golock:SetActive(isLock)
+	gohelper.setActive(self._txtname.gameObject, not isLock)
 end
 
-function var_0_0._onAnimFinished(arg_32_0)
-	arg_32_0:_endBlock()
-	arg_32_0:_setLockStatus(false)
+function DungeonChapterItem:_onAnimFinished()
+	self:_endBlock()
+	self:_setLockStatus(false)
 	DungeonController.instance:dispatchEvent(DungeonEvent.OnUnlockNewChapterAnimFinish)
 end
 
-function var_0_0._endBlock(arg_33_0)
+function DungeonChapterItem:_endBlock()
 	UIBlockMgrExtend.setNeedCircleMv(true)
-	UIBlockMgr.instance:endBlock(arg_33_0:_getBlockName())
+	UIBlockMgr.instance:endBlock(self:_getBlockName())
 
-	arg_33_0._startBlock = false
+	self._startBlock = false
 end
 
-function var_0_0._getBlockName(arg_34_0)
-	arg_34_0._blockName = arg_34_0._blockName or "UnlockNewChapterAnim" .. tostring(arg_34_0._mo.id)
+function DungeonChapterItem:_getBlockName()
+	self._blockName = self._blockName or "UnlockNewChapterAnim" .. tostring(self._mo.id)
 
-	return arg_34_0._blockName
+	return self._blockName
 end
 
-function var_0_0.showUnlockAnim(arg_35_0)
+function DungeonChapterItem:showUnlockAnim()
 	if ViewMgr.instance:isOpen(ViewName.DungeonMapView) then
-		arg_35_0:_setLockStatus(arg_35_0:IsLock())
+		self:_setLockStatus(self:IsLock())
 
 		return
 	end
 
-	local var_35_0 = DungeonModel.instance.chapterTriggerNewChapter and arg_35_0:_isNewChapter()
+	local isNewChapter = DungeonModel.instance.chapterTriggerNewChapter and self:_isNewChapter()
 
-	if var_35_0 or DungeonModel.instance:needUnlockChapterAnim(arg_35_0._mo.id) then
-		if var_35_0 then
+	if isNewChapter or DungeonModel.instance:needUnlockChapterAnim(self._mo.id) then
+		if isNewChapter then
 			DungeonModel.instance.chapterTriggerNewChapter = nil
 			DungeonModel.instance.unlockNewChapterId = nil
 		end
 
-		DungeonModel.instance:clearUnlockChapterAnim(arg_35_0._mo.id)
+		DungeonModel.instance:clearUnlockChapterAnim(self._mo.id)
 
-		if not gohelper.isNil(arg_35_0._anim) then
-			local var_35_1 = arg_35_0:_getUnlockAnimName()
-			local var_35_2 = arg_35_0._anim:GetClip(var_35_1)
+		if not gohelper.isNil(self._anim) then
+			local unlockAnimName = self:_getUnlockAnimName()
+			local clip = self._anim:GetClip(unlockAnimName)
 
-			if var_35_2 then
+			if clip then
 				UIBlockMgr.instance:endAll()
 				UIBlockMgrExtend.setNeedCircleMv(false)
-				UIBlockMgr.instance:startBlock(arg_35_0:_getBlockName())
+				UIBlockMgr.instance:startBlock(self:_getBlockName())
 
-				arg_35_0._startBlock = true
+				self._startBlock = true
 
-				TaskDispatcher.runDelay(arg_35_0._onAnimFinished, arg_35_0, var_35_2.length)
-				gohelper.setActive(arg_35_0._txtname.gameObject, true)
+				TaskDispatcher.runDelay(self._onAnimFinished, self, clip.length)
+				gohelper.setActive(self._txtname.gameObject, true)
 			end
 
-			arg_35_0._canvasGroup.alpha = 1
+			self._canvasGroup.alpha = 1
 
-			arg_35_0._anim:Play(var_35_1)
+			self._anim:Play(unlockAnimName)
 			AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoin_chapter_unlock)
 		end
 	end
 end
 
-function var_0_0._getUnlockAnimName(arg_36_0)
+function DungeonChapterItem:_getUnlockAnimName()
 	return "dungeonchapteritem_unlock"
 end
 
-function var_0_0.onSelect(arg_37_0, arg_37_1)
+function DungeonChapterItem:onSelect(isSelect)
 	return
 end
 
-function var_0_0._setDotState(arg_38_0, arg_38_1)
-	gohelper.setActive(arg_38_0._gobgdot, arg_38_1)
-	gohelper.setActive(arg_38_0._gobgdot2, arg_38_1)
-	gohelper.setActive(arg_38_0._gobgdot3, arg_38_1)
-	gohelper.setActive(arg_38_0._gobgdot4, arg_38_1)
-	ZProj.UGUIHelper.SetColorAlpha(arg_38_0._imagelockicon, 1)
+function DungeonChapterItem:_setDotState(state)
+	gohelper.setActive(self._gobgdot, state)
+	gohelper.setActive(self._gobgdot2, state)
+	gohelper.setActive(self._gobgdot3, state)
+	gohelper.setActive(self._gobgdot4, state)
+	ZProj.UGUIHelper.SetColorAlpha(self._imagelockicon, 1)
 end
 
-function var_0_0.refreshRed(arg_39_0)
-	local var_39_0 = DungeonModel.instance:getChapterRedId(arg_39_0._mo.id)
+function DungeonChapterItem:refreshRed()
+	local redId = DungeonModel.instance:getChapterRedId(self._mo.id)
 
-	if var_39_0 and var_39_0 > 0 then
-		if not arg_39_0.redDot then
-			arg_39_0.redDot = RedDotController.instance:addRedDot(arg_39_0._goreddot, var_39_0, 0)
+	if redId and redId > 0 then
+		if not self.redDot then
+			self.redDot = RedDotController.instance:addRedDot(self._goreddot, redId, 0)
 		else
-			arg_39_0.redDot:refreshDot()
+			self.redDot:refreshDot()
 		end
 	end
 end
 
-function var_0_0._refreshTraced(arg_40_0)
-	arg_40_0:_refreshTracedIcon()
+function DungeonChapterItem:_refreshTraced()
+	self:_refreshTracedIcon()
 end
 
-function var_0_0._refreshTracedIcon(arg_41_0)
-	if not arg_41_0._mo then
+function DungeonChapterItem:_refreshTracedIcon()
+	if not self._mo then
 		return
 	end
 
-	if DungeonModel.instance:chapterIsLock(arg_41_0._mo.id) then
+	if DungeonModel.instance:chapterIsLock(self._mo.id) then
 		return
 	end
 
-	local var_41_0 = CharacterRecommedModel.instance:isTradeChapter(arg_41_0._mo.id)
+	local isTrade = CharacterRecommedModel.instance:isTradeChapter(self._mo.id)
 
-	if var_41_0 then
-		local var_41_1 = CharacterRecommedController.instance:getTradeIcon()
+	if isTrade then
+		local tradeIconPrefab = CharacterRecommedController.instance:getTradeIcon()
 
-		if not var_41_1 then
+		if not tradeIconPrefab then
 			return
 		end
 
-		if not arg_41_0._tracedIcon then
-			arg_41_0._tracedIcon = gohelper.clone(var_41_1, arg_41_0._gostorytrace)
+		if not self._tracedIcon then
+			self._tracedIcon = gohelper.clone(tradeIconPrefab, self._gostorytrace)
 		end
 	end
 
-	if arg_41_0._tracedIcon then
-		gohelper.setActive(arg_41_0._tracedIcon, var_41_0)
+	if self._tracedIcon then
+		gohelper.setActive(self._tracedIcon, isTrade)
 	end
 end
 
-function var_0_0.onDestroyView(arg_42_0)
-	arg_42_0._simagechapterIcon:UnLoadImage()
-	arg_42_0._simagechapterIconLock:UnLoadImage()
-	TaskDispatcher.cancelTask(arg_42_0._onEnterAnimFinished, arg_42_0)
-	TaskDispatcher.cancelTask(arg_42_0._onAnimFinished, arg_42_0)
-	TaskDispatcher.cancelTask(arg_42_0.showUnlockAnim, arg_42_0)
+function DungeonChapterItem:onDestroyView()
+	self._simagechapterIcon:UnLoadImage()
+	self._simagechapterIconLock:UnLoadImage()
+	TaskDispatcher.cancelTask(self._onEnterAnimFinished, self)
+	TaskDispatcher.cancelTask(self._onAnimFinished, self)
+	TaskDispatcher.cancelTask(self.showUnlockAnim, self)
 
-	if arg_42_0._startBlock then
-		arg_42_0:_endBlock()
+	if self._startBlock then
+		self:_endBlock()
 	end
 end
 
-return var_0_0
+return DungeonChapterItem

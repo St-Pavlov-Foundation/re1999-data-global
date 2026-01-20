@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity2_3.act174.define.Activity174Enum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/act174/define/Activity174Enum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity2_3.act174.define.Activity174Enum", package.seeall)
 
-var_0_0.GameState = {
+local Activity174Enum = _M
+
+Activity174Enum.GameState = {
 	AfterFight = 4,
 	Init = 1,
 	BeforeFight = 3,
@@ -11,13 +13,13 @@ var_0_0.GameState = {
 	EnterEndless = 998,
 	None = 0
 }
-var_0_0.FightResult = {
+Activity174Enum.FightResult = {
 	Win = 1,
 	Lose = 2,
 	Draw = 3,
 	None = 0
 }
-var_0_0.BagType = {
+Activity174Enum.BagType = {
 	Collection = "collection",
 	Enhance = "enhance",
 	StartCareer = "startCareer",
@@ -26,12 +28,12 @@ var_0_0.BagType = {
 	Hero = "hero",
 	StartRare = "startRare"
 }
-var_0_0.WareType = {
+Activity174Enum.WareType = {
 	Collection = 2,
 	Hero = 1
 }
-var_0_0.MaxWareItemSinglePage = 12
-var_0_0.ConstKey = {
+Activity174Enum.MaxWareItemSinglePage = 12
+Activity174Enum.ConstKey = {
 	BetHealth = 3,
 	FreshRoundShopCost = 6,
 	MatchTxt = 16,
@@ -42,37 +44,37 @@ var_0_0.ConstKey = {
 	FreshShopCost = 4,
 	ShopSlot = 2
 }
-var_0_0.PrefabPath = {
+Activity174Enum.PrefabPath = {
 	BattleHero = "ui/viewres/versionactivity_2_3/act174/act174fightheroitem.prefab"
 }
-var_0_0.ItemTipType = {
+Activity174Enum.ItemTipType = {
 	Character2 = 5,
 	Buff = 3,
 	Character1 = 4,
 	Character3 = 6,
-	Character = var_0_0.WareType.Hero,
-	Collection = var_0_0.WareType.Collection
+	Character = Activity174Enum.WareType.Hero,
+	Collection = Activity174Enum.WareType.Collection
 }
-var_0_0.CollectionColor = {
+Activity174Enum.CollectionColor = {
 	"587FA1",
 	"8D6993",
 	"B8945F"
 }
-var_0_0.heroBagIcon = {
+Activity174Enum.heroBagIcon = {
 	"act174_icon_1",
 	"act174_icon_2",
 	"act174_icon_3"
 }
-var_0_0.CharacterType = {
+Activity174Enum.CharacterType = {
 	Monster = "monster",
 	Hero = "hero"
 }
-var_0_0.BadgeState = {
+Activity174Enum.BadgeState = {
 	Sp = 3,
 	Light = 2,
 	Normal = 1
 }
-var_0_0.EffectType = {
+Activity174Enum.EffectType = {
 	Rebirth = 17,
 	MaybeAddCoin = 18,
 	BuyAddCoin = 3,
@@ -84,4 +86,4 @@ var_0_0.EffectType = {
 	ReduceHpAddCoin = 4
 }
 
-return var_0_0
+return Activity174Enum

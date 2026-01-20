@@ -1,69 +1,71 @@
-﻿module("modules.logic.fight.system.work.FightWorkNuoDikaLostLifeTimeline", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkNuoDikaLostLifeTimeline.lua
 
-local var_0_0 = class("FightWorkNuoDikaLostLifeTimeline", FightWorkItem)
+module("modules.logic.fight.system.work.FightWorkNuoDikaLostLifeTimeline", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.actEffectData = arg_1_1
-	arg_1_0.fightStepData = arg_1_2
-	arg_1_0.timelineName = arg_1_3
+local FightWorkNuoDikaLostLifeTimeline = class("FightWorkNuoDikaLostLifeTimeline", FightWorkItem)
+
+function FightWorkNuoDikaLostLifeTimeline:onConstructor(actEffectData, fightStepData, timelineName)
+	self.actEffectData = actEffectData
+	self.fightStepData = fightStepData
+	self.timelineName = timelineName
 end
 
-function var_0_0.onStart(arg_2_0)
-	local var_2_0 = arg_2_0.actEffectData
-	local var_2_1 = var_2_0.targetId
-	local var_2_2 = arg_2_0.fightStepData
+function FightWorkNuoDikaLostLifeTimeline:onStart()
+	local actEffectData = self.actEffectData
+	local targetId = actEffectData.targetId
+	local fightStepData = self.fightStepData
 
-	FightDataHelper.playEffectData(var_2_0)
+	FightDataHelper.playEffectData(actEffectData)
 
-	local var_2_3 = FightEnum.FloatType.damage
+	local floatType = FightEnum.FloatType.damage
 
-	if var_2_0.effectType == FightEnum.EffectType.CRIT then
-		var_2_3 = FightEnum.FloatType.crit_damage
+	if actEffectData.effectType == FightEnum.EffectType.CRIT then
+		floatType = FightEnum.FloatType.crit_damage
 	end
 
-	local var_2_4 = FightHelper.getEntity(var_2_1)
+	local entity = FightHelper.getEntity(targetId)
 
-	if var_2_4 then
-		local var_2_5 = var_2_0.effectNum
+	if entity then
+		local effectNum = actEffectData.effectNum
 
-		if var_2_5 > 0 then
-			local var_2_6 = var_2_4:isMySide() and -var_2_5 or var_2_5
+		if effectNum > 0 then
+			local floatNum = entity:isMySide() and -effectNum or effectNum
 
-			FightFloatMgr.instance:float(var_2_4.id, var_2_3, var_2_6)
+			FightFloatMgr.instance:float(entity.id, floatType, floatNum)
 
-			if var_2_4.nameUI then
-				var_2_4.nameUI:addHp(-var_2_5)
+			if entity.nameUI then
+				entity.nameUI:addHp(-effectNum)
 			end
 
-			FightController.instance:dispatchEvent(FightEvent.OnHpChange, var_2_4, -var_2_5)
+			FightController.instance:dispatchEvent(FightEvent.OnHpChange, entity, -effectNum)
 		end
 	end
 
-	local var_2_7 = var_2_1
+	local toId = targetId
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0.fightStepData.actEffect) do
-		if iter_2_1.configEffect == 60216 then
-			var_2_7 = iter_2_1.targetId
+	for i, v in ipairs(self.fightStepData.actEffect) do
+		if v.configEffect == 60216 then
+			toId = v.targetId
 
 			break
 		end
 	end
 
-	local var_2_8 = FightStepData.New(FightDef_pb.FightStep())
+	local fakeStepData = FightStepData.New(FightDef_pb.FightStep())
 
-	var_2_8.isFakeStep = true
-	var_2_8.fromId = var_2_1
-	var_2_8.toId = var_2_7
-	var_2_8.actType = FightEnum.ActType.SKILL
-	var_2_0.targetId = var_2_7
+	fakeStepData.isFakeStep = true
+	fakeStepData.fromId = targetId
+	fakeStepData.toId = toId
+	fakeStepData.actType = FightEnum.ActType.SKILL
+	actEffectData.targetId = toId
 
-	table.insert(var_2_8.actEffect, var_2_0)
+	table.insert(fakeStepData.actEffect, actEffectData)
 
-	local var_2_9 = var_2_4.skill:registTimelineWork(arg_2_0.timelineName, var_2_8)
+	local work = entity.skill:registTimelineWork(self.timelineName, fakeStepData)
 
-	var_2_9.CALLBACK_EVEN_IF_UNFINISHED = true
+	work.CALLBACK_EVEN_IF_UNFINISHED = true
 
-	arg_2_0:playWorkAndDone(var_2_9)
+	self:playWorkAndDone(work)
 end
 
-return var_0_0
+return FightWorkNuoDikaLostLifeTimeline

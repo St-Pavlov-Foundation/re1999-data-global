@@ -1,164 +1,166 @@
-﻿module("modules.logic.versionactivity1_5.aizila.controller.AiZiLaController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/aizila/controller/AiZiLaController.lua
 
-local var_0_0 = class("AiZiLaController", BaseController)
+module("modules.logic.versionactivity1_5.aizila.controller.AiZiLaController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	ViewMgr.instance:registerCallback(ViewEvent.DestroyViewFinish, arg_1_0._onDestroyViewFinish, arg_1_0)
+local AiZiLaController = class("AiZiLaController", BaseController)
 
-	arg_1_0._reShowViewAnim = {
+function AiZiLaController:onInit()
+	ViewMgr.instance:registerCallback(ViewEvent.DestroyViewFinish, self._onDestroyViewFinish, self)
+
+	self._reShowViewAnim = {
 		AiZiLaMapView = UIAnimationName.Open
 	}
 
-	arg_1_0:reInit()
+	self:reInit()
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function AiZiLaController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function AiZiLaController:addConstEvents()
 	return
 end
 
-function var_0_0._onDestroyViewFinish(arg_4_0)
-	local var_4_0 = ViewMgr.instance:getOpenViewNameList()
+function AiZiLaController:_onDestroyViewFinish()
+	local openViewNameList = ViewMgr.instance:getOpenViewNameList()
 
-	if #var_4_0 > 0 then
-		local var_4_1 = var_4_0[#var_4_0]
+	if #openViewNameList > 0 then
+		local oneViewName = openViewNameList[#openViewNameList]
 
-		if arg_4_0._reShowViewAnim[var_4_1] then
-			AiZiLaHelper.playViewAnimator(var_4_1, arg_4_0._reShowViewAnim[var_4_1])
+		if self._reShowViewAnim[oneViewName] then
+			AiZiLaHelper.playViewAnimator(oneViewName, self._reShowViewAnim[oneViewName])
 		end
 	end
 end
 
-function var_0_0.reInit(arg_5_0)
-	arg_5_0._openStoryIds = nil
+function AiZiLaController:reInit()
+	self._openStoryIds = nil
 end
 
-function var_0_0.openStoryView(arg_6_0, arg_6_1)
-	local var_6_0 = {
-		episodeId = arg_6_1,
+function AiZiLaController:openStoryView(episodeId)
+	local viewParam = {
+		episodeId = episodeId,
 		actId = VersionActivity1_5Enum.ActivityId.AiZiLa
 	}
 
-	ViewMgr.instance:openView(ViewName.AiZiLaStoryView, var_6_0)
+	ViewMgr.instance:openView(ViewName.AiZiLaStoryView, viewParam)
 end
 
-function var_0_0.openMapView(arg_7_0)
-	arg_7_0._enterStoryFinish = true
-	arg_7_0._openInfosFinish = false
+function AiZiLaController:openMapView()
+	self._enterStoryFinish = true
+	self._openInfosFinish = false
 
-	local var_7_0 = arg_7_0:_getOpenStoryIds()
+	local storyIds = self:_getOpenStoryIds()
 
-	if not arg_7_0:_checkStoryIds(var_7_0) then
-		arg_7_0._enterStoryFinish = false
+	if not self:_checkStoryIds(storyIds) then
+		self._enterStoryFinish = false
 
-		arg_7_0:_playStoryIds(var_7_0, arg_7_0._afterPlayEnterStory, arg_7_0)
+		self:_playStoryIds(storyIds, self._afterPlayEnterStory, self)
 	end
 
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.RoleAiZiLa
-	}, arg_7_0._onTaskGet, arg_7_0)
+	}, self._onTaskGet, self)
 end
 
-function var_0_0._onTaskGet(arg_8_0)
-	Activity144Rpc.instance:sendGet144InfosRequest(VersionActivity1_5Enum.ActivityId.AiZiLa, arg_8_0._onOpenMapViewRequest, arg_8_0)
+function AiZiLaController:_onTaskGet()
+	Activity144Rpc.instance:sendGet144InfosRequest(VersionActivity1_5Enum.ActivityId.AiZiLa, self._onOpenMapViewRequest, self)
 end
 
-function var_0_0.playOpenStory(arg_9_0)
-	local var_9_0 = arg_9_0:_getOpenStoryIds()
+function AiZiLaController:playOpenStory()
+	local storyIds = self:_getOpenStoryIds()
 
-	arg_9_0:_playStoryIds(var_9_0)
+	self:_playStoryIds(storyIds)
 end
 
-function var_0_0._playStoryIds(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	local var_10_0 = {
+function AiZiLaController:_playStoryIds(storyIds, callback, callbackObj)
+	local storyParams = {
 		mark = true,
 		isReplay = false,
 		hideStartAndEndDark = true
 	}
 
-	StoryController.instance:playStories(arg_10_1, var_10_0, arg_10_2, arg_10_3)
+	StoryController.instance:playStories(storyIds, storyParams, callback, callbackObj)
 end
 
-function var_0_0._afterPlayEnterStory(arg_11_0)
-	arg_11_0._enterStoryFinish = true
+function AiZiLaController:_afterPlayEnterStory()
+	self._enterStoryFinish = true
 
-	arg_11_0:_checkOpenMapView()
+	self:_checkOpenMapView()
 end
 
-function var_0_0._onOpenMapViewRequest(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	if arg_12_2 == 0 then
-		arg_12_0._openInfosFinish = true
-		arg_12_0._isInfoSettle = arg_12_3.Act144InfoNO and arg_12_3.Act144InfoNO.isSettle
+function AiZiLaController:_onOpenMapViewRequest(cmd, resultCode, msg)
+	if resultCode == 0 then
+		self._openInfosFinish = true
+		self._isInfoSettle = msg.Act144InfoNO and msg.Act144InfoNO.isSettle
 
-		arg_12_0:_checkOpenMapView()
+		self:_checkOpenMapView()
 	end
 end
 
-var_0_0.OPEN_MAPVIEW_INFO_SETTLE = "AiZiLaController.OPEN_MAPVIEW_INFO_SETTLE"
+AiZiLaController.OPEN_MAPVIEW_INFO_SETTLE = "AiZiLaController.OPEN_MAPVIEW_INFO_SETTLE"
 
-function var_0_0._checkOpenMapView(arg_13_0)
-	if arg_13_0._enterStoryFinish and arg_13_0._openInfosFinish then
+function AiZiLaController:_checkOpenMapView()
+	if self._enterStoryFinish and self._openInfosFinish then
 		PermanentController.instance:jump2Activity(VersionActivity1_5Enum.ActivityId.EnterView)
-		arg_13_0:_onEnterViewIfNotOpened()
+		self:_onEnterViewIfNotOpened()
 	end
 end
 
-function var_0_0._onEnterViewIfNotOpened(arg_14_0)
+function AiZiLaController:_onEnterViewIfNotOpened()
 	ViewMgr.instance:openView(ViewName.AiZiLaMapView)
 
-	if arg_14_0._isInfoSettle then
-		arg_14_0._isInfoSettle = false
+	if self._isInfoSettle then
+		self._isInfoSettle = false
 
-		AiZiLaHelper.startBlock(var_0_0.OPEN_MAPVIEW_INFO_SETTLE)
-		TaskDispatcher.runDelay(arg_14_0._onInfoSettle, arg_14_0, AiZiLaEnum.AnimatorTime.MapViewOpen)
+		AiZiLaHelper.startBlock(AiZiLaController.OPEN_MAPVIEW_INFO_SETTLE)
+		TaskDispatcher.runDelay(self._onInfoSettle, self, AiZiLaEnum.AnimatorTime.MapViewOpen)
 	end
 end
 
-function var_0_0._onInfoSettle(arg_15_0)
+function AiZiLaController:_onInfoSettle()
 	AiZiLaGameModel.instance:reInit()
-	Activity144Rpc.instance:sendAct144SettleEpisodeRequest(VersionActivity1_5Enum.ActivityId.AiZiLa, arg_15_0._onInfoSettleRequest, arg_15_0)
+	Activity144Rpc.instance:sendAct144SettleEpisodeRequest(VersionActivity1_5Enum.ActivityId.AiZiLa, self._onInfoSettleRequest, self)
 end
 
-function var_0_0._onInfoSettleRequest(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
-	AiZiLaHelper.endBlock(var_0_0.OPEN_MAPVIEW_INFO_SETTLE)
+function AiZiLaController:_onInfoSettleRequest(cmd, resultCode, msg)
+	AiZiLaHelper.endBlock(AiZiLaController.OPEN_MAPVIEW_INFO_SETTLE)
 
-	if arg_16_2 == 0 then
-		AiZiLaGameModel.instance:setEpisodeId(arg_16_3.act144Episode.episodeId)
-		AiZiLaGameModel.instance:settleEpisodeReply(arg_16_3)
+	if resultCode == 0 then
+		AiZiLaGameModel.instance:setEpisodeId(msg.act144Episode.episodeId)
+		AiZiLaGameModel.instance:settleEpisodeReply(msg)
 
-		if arg_16_0._lastSettlePushMsg and arg_16_0._lastSettlePushMsg.episodeId == arg_16_3.act144Episode.episodeId then
-			AiZiLaGameModel.instance:settlePush(arg_16_0._lastSettlePushMsg)
+		if self._lastSettlePushMsg and self._lastSettlePushMsg.episodeId == msg.act144Episode.episodeId then
+			AiZiLaGameModel.instance:settlePush(self._lastSettlePushMsg)
 		end
 
 		AiZiLaGameController.instance:gameResult()
 	end
 end
 
-function var_0_0._getOpenStoryIds(arg_17_0)
-	if not arg_17_0._openStoryIds then
-		arg_17_0._openStoryIds = {}
+function AiZiLaController:_getOpenStoryIds()
+	if not self._openStoryIds then
+		self._openStoryIds = {}
 
-		local var_17_0 = AiZiLaConfig.instance:getStoryList(VersionActivity1_5Enum.ActivityId.AiZiLa)
+		local storyCos = AiZiLaConfig.instance:getStoryList(VersionActivity1_5Enum.ActivityId.AiZiLa)
 
-		if var_17_0 then
-			for iter_17_0, iter_17_1 in ipairs(var_17_0) do
-				if iter_17_1.episodeId == AiZiLaEnum.OpenStoryEpisodeId then
-					table.insert(arg_17_0._openStoryIds, iter_17_1.id)
+		if storyCos then
+			for index, storyCo in ipairs(storyCos) do
+				if storyCo.episodeId == AiZiLaEnum.OpenStoryEpisodeId then
+					table.insert(self._openStoryIds, storyCo.id)
 				end
 			end
 		end
 	end
 
-	return arg_17_0._openStoryIds
+	return self._openStoryIds
 end
 
-function var_0_0._checkStoryIds(arg_18_0, arg_18_1)
-	if arg_18_1 then
-		for iter_18_0, iter_18_1 in ipairs(arg_18_1) do
-			if not StoryModel.instance:isStoryHasPlayed(iter_18_1) then
+function AiZiLaController:_checkStoryIds(ids)
+	if ids then
+		for _, storyId in ipairs(ids) do
+			if not StoryModel.instance:isStoryHasPlayed(storyId) then
 				return false
 			end
 		end
@@ -167,18 +169,18 @@ function var_0_0._checkStoryIds(arg_18_0, arg_18_1)
 	return true
 end
 
-function var_0_0.openEpsiodeDetailView(arg_19_0, arg_19_1)
+function AiZiLaController:openEpsiodeDetailView(episodeId)
 	ViewMgr.instance:openView(ViewName.AiZiLaEpsiodeDetailView, {
-		episodeId = arg_19_1,
+		episodeId = episodeId,
 		actId = VersionActivity1_5Enum.ActivityId.AiZiLa
 	})
 end
 
-function var_0_0.delayReward(arg_20_0, arg_20_1, arg_20_2)
-	if arg_20_0._actTaskMO == nil and arg_20_2 then
-		arg_20_0._actTaskMO = arg_20_2
+function AiZiLaController:delayReward(delayTime, taskMO)
+	if self._actTaskMO == nil and taskMO then
+		self._actTaskMO = taskMO
 
-		TaskDispatcher.runDelay(arg_20_0._onPreFinish, arg_20_0, arg_20_1)
+		TaskDispatcher.runDelay(self._onPreFinish, self, delayTime)
 
 		return true
 	end
@@ -186,98 +188,98 @@ function var_0_0.delayReward(arg_20_0, arg_20_1, arg_20_2)
 	return false
 end
 
-function var_0_0._onPreFinish(arg_21_0)
-	local var_21_0 = arg_21_0._actTaskMO
+function AiZiLaController:_onPreFinish()
+	local actTaskMO = self._actTaskMO
 
-	arg_21_0._actTaskMO = nil
+	self._actTaskMO = nil
 
-	if var_21_0 and (var_21_0.id == AiZiLaEnum.TaskMOAllFinishId or var_21_0:alreadyGotReward()) then
-		AiZiLaTaskListModel.instance:preFinish(var_21_0)
+	if actTaskMO and (actTaskMO.id == AiZiLaEnum.TaskMOAllFinishId or actTaskMO:alreadyGotReward()) then
+		AiZiLaTaskListModel.instance:preFinish(actTaskMO)
 
-		arg_21_0._actTaskId = var_21_0.id
+		self._actTaskId = actTaskMO.id
 
-		TaskDispatcher.runDelay(arg_21_0._onRewardTask, arg_21_0, AiZiLaEnum.AnimatorTime.TaskRewardMoveUp)
+		TaskDispatcher.runDelay(self._onRewardTask, self, AiZiLaEnum.AnimatorTime.TaskRewardMoveUp)
 	end
 end
 
-function var_0_0._onRewardTask(arg_22_0)
-	local var_22_0 = arg_22_0._actTaskId
+function AiZiLaController:_onRewardTask()
+	local actTaskId = self._actTaskId
 
-	arg_22_0._actTaskId = nil
+	self._actTaskId = nil
 
-	if var_22_0 then
-		if var_22_0 == AiZiLaEnum.TaskMOAllFinishId then
+	if actTaskId then
+		if actTaskId == AiZiLaEnum.TaskMOAllFinishId then
 			TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.RoleAiZiLa)
 		else
-			TaskRpc.instance:sendFinishTaskRequest(var_22_0)
+			TaskRpc.instance:sendFinishTaskRequest(actTaskId)
 		end
 	end
 end
 
-function var_0_0.getInfosReply(arg_23_0, arg_23_1)
-	AiZiLaModel.instance:getInfosReply(arg_23_1)
+function AiZiLaController:getInfosReply(msg)
+	AiZiLaModel.instance:getInfosReply(msg)
 end
 
-function var_0_0.enterEpisodeReply(arg_24_0, arg_24_1)
-	AiZiLaModel.instance:enterEpisodeReply(arg_24_1)
+function AiZiLaController:enterEpisodeReply(msg)
+	AiZiLaModel.instance:enterEpisodeReply(msg)
 end
 
-function var_0_0.selectOptionReply(arg_25_0, arg_25_1)
-	AiZiLaModel.instance:selectOptionReply(arg_25_1)
+function AiZiLaController:selectOptionReply(msg)
+	AiZiLaModel.instance:selectOptionReply(msg)
 end
 
-function var_0_0.nextDayReply(arg_26_0, arg_26_1)
-	AiZiLaModel.instance:nextDayReply(arg_26_1)
+function AiZiLaController:nextDayReply(msg)
+	AiZiLaModel.instance:nextDayReply(msg)
 end
 
-function var_0_0.settleEpisodeReply(arg_27_0, arg_27_1)
-	local var_27_0 = AiZiLaGameModel.instance:getEpisodeId()
-	local var_27_1 = arg_27_1.act144Episode.episodeId
+function AiZiLaController:settleEpisodeReply(msg)
+	local curEpsiodeId = AiZiLaGameModel.instance:getEpisodeId()
+	local tempEpsiodeId = msg.act144Episode.episodeId
 
-	if var_27_0 ~= 0 and var_27_0 == var_27_1 then
-		AiZiLaGameModel.instance:settleEpisodeReply(arg_27_1)
+	if curEpsiodeId ~= 0 and curEpsiodeId == tempEpsiodeId then
+		AiZiLaGameModel.instance:settleEpisodeReply(msg)
 		AiZiLaGameController.instance:gameResult()
 	end
 end
 
-function var_0_0.settlePush(arg_28_0, arg_28_1)
-	AiZiLaModel.instance:settlePush(arg_28_1)
+function AiZiLaController:settlePush(msg)
+	AiZiLaModel.instance:settlePush(msg)
 
-	local var_28_0 = AiZiLaGameModel.instance:getEpisodeId()
-	local var_28_1 = arg_28_1.episodeId
+	local curEpsiodeId = AiZiLaGameModel.instance:getEpisodeId()
+	local tempEpsiodeId = msg.episodeId
 
-	arg_28_0._lastSettlePushMsg = nil
+	self._lastSettlePushMsg = nil
 
-	if var_28_0 ~= 0 and var_28_0 == var_28_1 then
-		AiZiLaGameModel.instance:settlePush(arg_28_1)
+	if curEpsiodeId ~= 0 and curEpsiodeId == tempEpsiodeId then
+		AiZiLaGameModel.instance:settlePush(msg)
 		AiZiLaGameController.instance:gameResult()
 	else
-		arg_28_0._lastSettlePushMsg = arg_28_1
+		self._lastSettlePushMsg = msg
 	end
 end
 
-function var_0_0.upgradeEquipReply(arg_29_0, arg_29_1)
-	AiZiLaModel.instance:upgradeEquipReply(arg_29_1)
-	arg_29_0:dispatchEvent(AiZiLaEvent.OnEquipUpLevel, arg_29_1.newEquipId)
+function AiZiLaController:upgradeEquipReply(msg)
+	AiZiLaModel.instance:upgradeEquipReply(msg)
+	self:dispatchEvent(AiZiLaEvent.OnEquipUpLevel, msg.newEquipId)
 end
 
-function var_0_0.episodePush(arg_30_0, arg_30_1)
-	AiZiLaModel.instance:episodePush(arg_30_1)
+function AiZiLaController:episodePush(msg)
+	AiZiLaModel.instance:episodePush(msg)
 
-	local var_30_0 = AiZiLaGameModel.instance:getEpisodeId()
+	local curEpsiodeId = AiZiLaGameModel.instance:getEpisodeId()
 
-	if var_30_0 ~= 0 and var_30_0 == arg_30_1.act144Episode.episodeId then
-		AiZiLaGameModel.instance:updateEpisode(arg_30_1.act144Episode)
+	if curEpsiodeId ~= 0 and curEpsiodeId == msg.act144Episode.episodeId then
+		AiZiLaGameModel.instance:updateEpisode(msg.act144Episode)
 		AiZiLaGameController.instance:dispatchEvent(AiZiLaEvent.RefreshGameEpsiode)
 	end
 
-	arg_30_0:dispatchEvent(AiZiLaEvent.EpisodePush)
+	self:dispatchEvent(AiZiLaEvent.EpisodePush)
 end
 
-function var_0_0.itemChangePush(arg_31_0, arg_31_1)
-	AiZiLaModel.instance:itemChangePush(arg_31_1)
+function AiZiLaController:itemChangePush(msg)
+	AiZiLaModel.instance:itemChangePush(msg)
 end
 
-var_0_0.instance = var_0_0.New()
+AiZiLaController.instance = AiZiLaController.New()
 
-return var_0_0
+return AiZiLaController

@@ -1,67 +1,71 @@
-﻿module("modules.logic.character.model.extra.CharacterExtraMO", package.seeall)
+﻿-- chunkname: @modules/logic/character/model/extra/CharacterExtraMO.lua
 
-local var_0_0 = class("CharacterExtraMO")
+module("modules.logic.character.model.extra.CharacterExtraMO", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.heroMo = arg_1_1
+local CharacterExtraMO = class("CharacterExtraMO")
+
+function CharacterExtraMO:ctor(heroMo)
+	self.heroMo = heroMo
 end
 
-function var_0_0.refreshMo(arg_2_0, arg_2_1)
-	arg_2_0._extra = {}
+function CharacterExtraMO:refreshMo(extraStr)
+	self._extra = {}
 
-	if arg_2_0:hasTalentSkill() then
-		arg_2_0._skillTalentMo = arg_2_0._skillTalentMo or CharacterExtraSkillTalentMO.New()
+	if self:hasTalentSkill() then
+		self._skillTalentMo = self._skillTalentMo or CharacterExtraSkillTalentMO.New()
 
-		arg_2_0._skillTalentMo:refreshMo(arg_2_1, arg_2_0.heroMo)
+		self._skillTalentMo:refreshMo(extraStr, self.heroMo)
 	end
 
-	if arg_2_0:hasWeapon() then
-		arg_2_0._weaponMo = arg_2_0._weaponMo or CharacterExtraWeaponMO.New()
+	if self:hasWeapon() then
+		self._weaponMo = self._weaponMo or CharacterExtraWeaponMO.New()
 
-		arg_2_0._weaponMo:refreshMo(arg_2_1, arg_2_0.heroMo)
+		self._weaponMo:refreshMo(extraStr, self.heroMo)
 	end
 end
 
-function var_0_0.hasTalentSkill(arg_3_0)
-	return arg_3_0.heroMo.heroId == 3124
+function CharacterExtraMO:hasTalentSkill()
+	return self.heroMo.heroId == 3124
 end
 
-function var_0_0.hasWeapon(arg_4_0)
-	return arg_4_0.heroMo.heroId == 3123
+function CharacterExtraMO:hasWeapon()
+	return self.heroMo.heroId == 3123
 end
 
-function var_0_0.getSkillTalentMo(arg_5_0)
-	return arg_5_0._skillTalentMo
+function CharacterExtraMO:getSkillTalentMo()
+	return self._skillTalentMo
 end
 
-function var_0_0.getWeaponMo(arg_6_0)
-	return arg_6_0._weaponMo
+function CharacterExtraMO:getWeaponMo()
+	return self._weaponMo
 end
 
-function var_0_0.showReddot(arg_7_0)
-	if arg_7_0._skillTalentMo then
-		return arg_7_0._skillTalentMo:showReddot()
+function CharacterExtraMO:showReddot()
+	if self._skillTalentMo then
+		return self._skillTalentMo:showReddot()
 	end
 
-	if arg_7_0._weaponMo then
-		for iter_7_0, iter_7_1 in ipairs(CharacterExtraEnum.WeaponParams) do
-			if arg_7_0._weaponMo:isShowWeaponReddot(iter_7_0) then
+	if self._weaponMo then
+		for type, _ in ipairs(CharacterExtraEnum.WeaponParams) do
+			local isShow = self._weaponMo:isShowWeaponReddot(type)
+
+			if isShow then
 				return true
 			end
 		end
 	end
 end
 
-function var_0_0.getReplaceSkills(arg_8_0, arg_8_1)
-	if arg_8_0._weaponMo then
-		arg_8_1 = arg_8_0._weaponMo:getReplacePassiveSkills(arg_8_1)
+function CharacterExtraMO:getReplaceSkills(skillIdList)
+	if self._weaponMo then
+		skillIdList = self._weaponMo:getReplacePassiveSkills(skillIdList)
 	end
 
-	if arg_8_0._skillTalentMo then
-		arg_8_1 = arg_8_0._skillTalentMo:getReplaceSkills(arg_8_1)
+	if self._skillTalentMo then
+		skillIdList = self._skillTalentMo:getReplaceSkills(skillIdList)
 	end
 
-	return arg_8_1
+	return skillIdList
 end
 
-return var_0_0
+return CharacterExtraMO

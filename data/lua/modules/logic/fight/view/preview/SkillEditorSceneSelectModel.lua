@@ -1,27 +1,29 @@
-﻿module("modules.logic.fight.view.preview.SkillEditorSceneSelectModel", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/preview/SkillEditorSceneSelectModel.lua
 
-local var_0_0 = class("SkillEditorSceneSelectModel", ListScrollModel)
+module("modules.logic.fight.view.preview.SkillEditorSceneSelectModel", package.seeall)
 
-function var_0_0.setSelect(arg_1_0, arg_1_1)
-	local var_1_0 = {}
-	local var_1_1 = lua_scene_level.configList
+local SkillEditorSceneSelectModel = class("SkillEditorSceneSelectModel", ListScrollModel)
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_1) do
-		local var_1_2 = lua_scene.configDict[iter_1_1.sceneId]
+function SkillEditorSceneSelectModel:setSelect(searchText)
+	local list = {}
+	local coList = lua_scene_level.configList
 
-		if string.find(tostring(iter_1_1.id), arg_1_1) or var_1_2 and string.find(var_1_2.name or "", arg_1_1) then
-			local var_1_3 = {
-				id = iter_1_0,
-				co = iter_1_1
+	for i, co in ipairs(coList) do
+		local sceneCO = lua_scene.configDict[co.sceneId]
+
+		if string.find(tostring(co.id), searchText) or sceneCO and string.find(sceneCO.name or "", searchText) then
+			local mo = {
+				id = i,
+				co = co
 			}
 
-			table.insert(var_1_0, var_1_3)
+			table.insert(list, mo)
 		end
 	end
 
-	arg_1_0:setList(var_1_0)
+	self:setList(list)
 end
 
-var_0_0.instance = var_0_0.New()
+SkillEditorSceneSelectModel.instance = SkillEditorSceneSelectModel.New()
 
-return var_0_0
+return SkillEditorSceneSelectModel

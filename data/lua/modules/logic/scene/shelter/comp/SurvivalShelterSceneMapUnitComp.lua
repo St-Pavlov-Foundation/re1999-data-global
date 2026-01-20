@@ -1,174 +1,176 @@
-﻿module("modules.logic.scene.shelter.comp.SurvivalShelterSceneMapUnitComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/shelter/comp/SurvivalShelterSceneMapUnitComp.lua
 
-local var_0_0 = class("SurvivalShelterSceneMapUnitComp", BaseSceneComp)
+module("modules.logic.scene.shelter.comp.SurvivalShelterSceneMapUnitComp", package.seeall)
 
-function var_0_0.onScenePrepared(arg_1_0)
-	arg_1_0._sceneGo = arg_1_0:getCurScene().level:getSceneGo()
-	arg_1_0._unitRoot = gohelper.create3d(arg_1_0._sceneGo, "UnitRoot")
-	arg_1_0._allUnits = {}
+local SurvivalShelterSceneMapUnitComp = class("SurvivalShelterSceneMapUnitComp", BaseSceneComp)
 
-	for iter_1_0, iter_1_1 in pairs(SurvivalEnum.ShelterUnitType) do
-		arg_1_0._allUnits[iter_1_1] = {}
+function SurvivalShelterSceneMapUnitComp:onScenePrepared()
+	self._sceneGo = self:getCurScene().level:getSceneGo()
+	self._unitRoot = gohelper.create3d(self._sceneGo, "UnitRoot")
+	self._allUnits = {}
+
+	for _, value in pairs(SurvivalEnum.ShelterUnitType) do
+		self._allUnits[value] = {}
 	end
 
-	arg_1_0._unitParent = {}
-	arg_1_0._unitType2Cls = {
+	self._unitParent = {}
+	self._unitType2Cls = {
 		[SurvivalEnum.ShelterUnitType.Npc] = SurvivalShelterNpcEntity,
 		[SurvivalEnum.ShelterUnitType.Monster] = SurvivalShelterMonsterEntity,
 		[SurvivalEnum.ShelterUnitType.Player] = SurvivalShelterPlayerEntity,
 		[SurvivalEnum.ShelterUnitType.Build] = SurvivalShelterBuildingEntity
 	}
 
-	arg_1_0:addEvents()
-	arg_1_0:refreshAllEntity()
+	self:addEvents()
+	self:refreshAllEntity()
 end
 
-function var_0_0.refreshAllEntity(arg_2_0)
-	arg_2_0:refreshEntity(SurvivalEnum.ShelterUnitType.Player, 0, true)
-	arg_2_0:refreshMonster()
-	arg_2_0:refreshNpcList()
-	arg_2_0:refreshBuild()
+function SurvivalShelterSceneMapUnitComp:refreshAllEntity()
+	self:refreshEntity(SurvivalEnum.ShelterUnitType.Player, 0, true)
+	self:refreshMonster()
+	self:refreshNpcList()
+	self:refreshBuild()
 end
 
-function var_0_0.addEvents(arg_3_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnRecruitDataUpdate, arg_3_0.onBuildingInfoUpdate, arg_3_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnBuildingInfoUpdate, arg_3_0.onBuildingInfoUpdate, arg_3_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnNpcPostionChange, arg_3_0.onNpcPostionChange, arg_3_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnWeekInfoUpdate, arg_3_0.onWeekInfoUpdate, arg_3_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.AbandonFight, arg_3_0.refreshMonster, arg_3_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.BossFightSuccessShowFinish, arg_3_0.refreshMonster, arg_3_0)
+function SurvivalShelterSceneMapUnitComp:addEvents()
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnRecruitDataUpdate, self.onBuildingInfoUpdate, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnBuildingInfoUpdate, self.onBuildingInfoUpdate, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnNpcPostionChange, self.onNpcPostionChange, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnWeekInfoUpdate, self.onWeekInfoUpdate, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.AbandonFight, self.refreshMonster, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.BossFightSuccessShowFinish, self.refreshMonster, self)
 end
 
-function var_0_0.removeEvents(arg_4_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnRecruitDataUpdate, arg_4_0.onBuildingInfoUpdate, arg_4_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnBuildingInfoUpdate, arg_4_0.onBuildingInfoUpdate, arg_4_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnNpcPostionChange, arg_4_0.onNpcPostionChange, arg_4_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnWeekInfoUpdate, arg_4_0.onWeekInfoUpdate, arg_4_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.AbandonFight, arg_4_0.refreshMonster, arg_4_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.BossFightSuccessShowFinish, arg_4_0.refreshMonster, arg_4_0)
+function SurvivalShelterSceneMapUnitComp:removeEvents()
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnRecruitDataUpdate, self.onBuildingInfoUpdate, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnBuildingInfoUpdate, self.onBuildingInfoUpdate, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnNpcPostionChange, self.onNpcPostionChange, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnWeekInfoUpdate, self.onWeekInfoUpdate, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.AbandonFight, self.refreshMonster, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.BossFightSuccessShowFinish, self.refreshMonster, self)
 end
 
-function var_0_0.onWeekInfoUpdate(arg_5_0)
-	arg_5_0:refreshAllEntity()
+function SurvivalShelterSceneMapUnitComp:onWeekInfoUpdate()
+	self:refreshAllEntity()
 end
 
-function var_0_0.onBuildingInfoUpdate(arg_6_0, arg_6_1)
-	if arg_6_1 then
-		local var_6_0 = arg_6_0:getEntity(SurvivalEnum.ShelterUnitType.Build, arg_6_1, true)
+function SurvivalShelterSceneMapUnitComp:onBuildingInfoUpdate(buildingId)
+	if buildingId then
+		local entity = self:getEntity(SurvivalEnum.ShelterUnitType.Build, buildingId, true)
 
-		if var_6_0 then
-			var_6_0:showBuildEffect()
+		if entity then
+			entity:showBuildEffect()
 		end
 
 		return
 	end
 
-	arg_6_0:refreshBuild()
-	arg_6_0:refreshNpcList()
+	self:refreshBuild()
+	self:refreshNpcList()
 end
 
-function var_0_0.onNpcPostionChange(arg_7_0)
-	arg_7_0:refreshNpcList()
+function SurvivalShelterSceneMapUnitComp:onNpcPostionChange()
+	self:refreshNpcList()
 end
 
-function var_0_0.getPlayer(arg_8_0)
-	return arg_8_0:getEntity(SurvivalEnum.ShelterUnitType.Player, 0)
+function SurvivalShelterSceneMapUnitComp:getPlayer()
+	return self:getEntity(SurvivalEnum.ShelterUnitType.Player, 0)
 end
 
-function var_0_0.refreshBuild(arg_9_0)
-	local var_9_0 = SurvivalConfig.instance:getShelterMapCo()
-	local var_9_1 = SurvivalShelterModel.instance:getWeekInfo()
+function SurvivalShelterSceneMapUnitComp:refreshBuild()
+	local mapCo = SurvivalConfig.instance:getShelterMapCo()
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_0.allBuildings) do
-		local var_9_2 = var_9_1:getBuildingInfo(iter_9_1.id)
+	for i, v in ipairs(mapCo.allBuildings) do
+		local buildingInfo = weekInfo:getBuildingInfo(v.id)
 
-		arg_9_0:refreshEntity(SurvivalEnum.ShelterUnitType.Build, iter_9_1.id, var_9_2 ~= nil)
+		self:refreshEntity(SurvivalEnum.ShelterUnitType.Build, v.id, buildingInfo ~= nil)
 	end
 end
 
-function var_0_0.getBuildEntity(arg_10_0, arg_10_1, arg_10_2)
-	return arg_10_0:getEntity(SurvivalEnum.ShelterUnitType.Build, arg_10_1, arg_10_2)
+function SurvivalShelterSceneMapUnitComp:getBuildEntity(id, createIfNotExist)
+	return self:getEntity(SurvivalEnum.ShelterUnitType.Build, id, createIfNotExist)
 end
 
-function var_0_0.refreshNpcList(arg_11_0)
-	local var_11_0 = SurvivalShelterModel.instance:getWeekInfo()
-	local var_11_1 = var_11_0.npcDict
-	local var_11_2 = SurvivalConfig.instance:getShelterCfg()
-	local var_11_3 = 30
+function SurvivalShelterSceneMapUnitComp:refreshNpcList()
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local dict = weekInfo.npcDict
+	local shelterCfg = SurvivalConfig.instance:getShelterCfg()
+	local maxNpcNum = 30
 
-	if not string.nilorempty(var_11_2.maxNpcNum) then
-		var_11_3 = tonumber(var_11_2.maxNpcNum)
+	if not string.nilorempty(shelterCfg.maxNpcNum) then
+		maxNpcNum = tonumber(shelterCfg.maxNpcNum)
 	end
 
-	local var_11_4 = {}
+	local list = {}
 
-	for iter_11_0, iter_11_1 in pairs(var_11_1) do
-		table.insert(var_11_4, iter_11_1)
+	for i, v in pairs(dict) do
+		table.insert(list, v)
 	end
 
-	table.sort(var_11_4, arg_11_0.npcShowSort)
+	table.sort(list, self.npcShowSort)
 
-	local var_11_5 = math.min(var_11_3, #var_11_4)
+	maxNpcNum = math.min(maxNpcNum, #list)
 
-	for iter_11_2 = 1, var_11_5 do
-		local var_11_6 = var_11_4[iter_11_2].id
-		local var_11_7 = var_11_0:canShowNpcInShelter(var_11_6)
+	for i = 1, maxNpcNum do
+		local id = list[i].id
+		local canShow = weekInfo:canShowNpcInShelter(id)
 
-		arg_11_0:refreshEntity(SurvivalEnum.ShelterUnitType.Npc, var_11_6, var_11_7)
+		self:refreshEntity(SurvivalEnum.ShelterUnitType.Npc, id, canShow)
 	end
 end
 
-function var_0_0.npcShowSort(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0.id
-	local var_12_1 = arg_12_1.id
-	local var_12_2 = SurvivalConfig.instance:getNpcConfig(var_12_0)
-	local var_12_3 = SurvivalConfig.instance:getNpcConfig(var_12_1)
+function SurvivalShelterSceneMapUnitComp.npcShowSort(a, b)
+	local aId = a.id
+	local bId = b.id
+	local aCo = SurvivalConfig.instance:getNpcConfig(aId)
+	local bCo = SurvivalConfig.instance:getNpcConfig(bId)
 
-	return var_12_2.rare > var_12_3.rare
+	return aCo.rare > bCo.rare
 end
 
-function var_0_0.getNpcEntity(arg_13_0, arg_13_1, arg_13_2)
-	return arg_13_0:getEntity(SurvivalEnum.ShelterUnitType.Npc, arg_13_1, arg_13_2)
+function SurvivalShelterSceneMapUnitComp:getNpcEntity(id, createIfNotExist)
+	return self:getEntity(SurvivalEnum.ShelterUnitType.Npc, id, createIfNotExist)
 end
 
-function var_0_0.addUsedPos(arg_14_0, arg_14_1, arg_14_2)
-	if not arg_14_2 then
-		local var_14_0 = arg_14_0:getPlayer()
+function SurvivalShelterSceneMapUnitComp:addUsedPos(dict, isJumpPlayer)
+	if not isJumpPlayer then
+		local player = self:getPlayer()
 
-		if var_14_0 then
-			local var_14_1 = var_14_0:getPos()
+		if player then
+			local node = player:getPos()
 
-			if var_14_1 then
-				SurvivalHelper.instance:addNodeToDict(arg_14_1, var_14_1)
+			if node then
+				SurvivalHelper.instance:addNodeToDict(dict, node)
 			end
 		end
 	end
 
-	for iter_14_0, iter_14_1 in pairs(arg_14_0._allUnits[SurvivalEnum.ShelterUnitType.Monster]) do
-		if iter_14_1.ponitRange then
-			for iter_14_2, iter_14_3 in pairs(iter_14_1.ponitRange) do
-				for iter_14_4, iter_14_5 in pairs(iter_14_3) do
-					SurvivalHelper.instance:addNodeToDict(arg_14_1, iter_14_5)
+	for k, v in pairs(self._allUnits[SurvivalEnum.ShelterUnitType.Monster]) do
+		if v.ponitRange then
+			for q, vv in pairs(v.ponitRange) do
+				for r, node in pairs(vv) do
+					SurvivalHelper.instance:addNodeToDict(dict, node)
 				end
 			end
 		end
 	end
 
-	for iter_14_6, iter_14_7 in pairs(arg_14_0._allUnits[SurvivalEnum.ShelterUnitType.Npc]) do
-		local var_14_2 = iter_14_7.pos
+	for k, v in pairs(self._allUnits[SurvivalEnum.ShelterUnitType.Npc]) do
+		local node = v.pos
 
-		if var_14_2 then
-			SurvivalHelper.instance:addNodeToDict(arg_14_1, var_14_2)
+		if node then
+			SurvivalHelper.instance:addNodeToDict(dict, node)
 		end
 	end
 end
 
-function var_0_0.checkClickUnit(arg_15_0, arg_15_1)
-	for iter_15_0, iter_15_1 in pairs(arg_15_0._allUnits) do
-		if iter_15_0 ~= SurvivalEnum.ShelterUnitType.Player then
-			for iter_15_2, iter_15_3 in pairs(iter_15_1) do
-				if iter_15_3:checkClick(arg_15_1) then
-					SurvivalMapHelper.instance:gotoUnit(iter_15_0, iter_15_2, arg_15_1)
+function SurvivalShelterSceneMapUnitComp:checkClickUnit(hexPoint)
+	for unitType, dict in pairs(self._allUnits) do
+		if unitType ~= SurvivalEnum.ShelterUnitType.Player then
+			for unitId, v in pairs(dict) do
+				if v:checkClick(hexPoint) then
+					SurvivalMapHelper.instance:gotoUnit(unitType, unitId, hexPoint)
 
 					return true
 				end
@@ -177,105 +179,108 @@ function var_0_0.checkClickUnit(arg_15_0, arg_15_1)
 	end
 end
 
-function var_0_0.refreshMonster(arg_16_0)
-	local var_16_0 = SurvivalShelterModel.instance:getWeekInfo():getMonsterFight()
+function SurvivalShelterSceneMapUnitComp:refreshMonster()
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local masterFight = weekInfo:getMonsterFight()
 
-	if var_16_0 then
-		local var_16_1 = var_16_0:canShowEntity()
-		local var_16_2, var_16_3 = SurvivalShelterModel.instance:getNeedShowFightSuccess()
+	if masterFight then
+		local canShow = masterFight:canShowEntity()
+		local needShowDestroy, fightId = SurvivalShelterModel.instance:getNeedShowFightSuccess()
 
-		if var_16_1 or var_16_3 == nil then
-			var_16_3 = var_16_0.fightId
+		if canShow or fightId == nil then
+			fightId = masterFight.fightId
 		end
 
-		if var_16_2 then
-			local var_16_4 = ViewMgr.instance:getUILayer(UILayerName.PopUpTop)
+		if needShowDestroy then
+			local popLayer = ViewMgr.instance:getUILayer(UILayerName.PopUpTop)
 
-			gohelper.setActive(var_16_4, false)
+			gohelper.setActive(popLayer, false)
 			PopupController.instance:setPause(ViewName.SurvivalGetRewardView, true)
 		end
 
-		arg_16_0:refreshEntity(SurvivalEnum.ShelterUnitType.Monster, var_16_3, var_16_1 or var_16_2)
+		self:refreshEntity(SurvivalEnum.ShelterUnitType.Monster, fightId, canShow or needShowDestroy)
 
-		if var_16_2 ~= nil and not var_16_2 then
-			local var_16_5 = ViewMgr.instance:getUILayer(UILayerName.PopUpTop)
+		if needShowDestroy ~= nil and not needShowDestroy then
+			local popLayer = ViewMgr.instance:getUILayer(UILayerName.PopUpTop)
 
-			gohelper.setActive(var_16_5, true)
+			gohelper.setActive(popLayer, true)
 			PopupController.instance:setPause(ViewName.SurvivalGetRewardView, false)
-			arg_16_0:refreshEntity(SurvivalEnum.ShelterUnitType.Player, 0, true)
+			self:refreshEntity(SurvivalEnum.ShelterUnitType.Player, 0, true)
 			SurvivalController.instance:dispatchEvent(SurvivalEvent.BossPerformFinish)
 			SurvivalShelterModel.instance:setNeedShowFightSuccess(nil, nil)
 		end
 	end
 end
 
-function var_0_0.getMonsterEntity(arg_17_0, arg_17_1, arg_17_2)
-	return arg_17_0:getEntity(SurvivalEnum.ShelterUnitType.Monster, arg_17_1, arg_17_2)
+function SurvivalShelterSceneMapUnitComp:getMonsterEntity(id, createIfNotExist)
+	return self:getEntity(SurvivalEnum.ShelterUnitType.Monster, id, createIfNotExist)
 end
 
-function var_0_0.getEntity(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	local var_18_0 = arg_18_0._allUnits[arg_18_1][arg_18_2]
+function SurvivalShelterSceneMapUnitComp:getEntity(unitType, unitId, createIfNotExist)
+	local entity = self._allUnits[unitType][unitId]
 
-	if not var_18_0 and arg_18_3 then
-		local var_18_1 = arg_18_0._unitType2Cls[arg_18_1]
-		local var_18_2 = arg_18_0:getUnitParentGO(arg_18_1)
+	if not entity and createIfNotExist then
+		local cls = self._unitType2Cls[unitType]
+		local goParent = self:getUnitParentGO(unitType)
 
-		var_18_0 = var_18_1.Create(arg_18_1, arg_18_2, var_18_2)
+		entity = cls.Create(unitType, unitId, goParent)
 	end
 
-	return var_18_0
+	return entity
 end
 
-function var_0_0.addEntity(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
-	if not arg_19_3 then
+function SurvivalShelterSceneMapUnitComp:addEntity(unitType, unitId, entity)
+	if not entity then
 		return
 	end
 
-	arg_19_0._allUnits[arg_19_1][arg_19_2] = arg_19_3
+	self._allUnits[unitType][unitId] = entity
 end
 
-function var_0_0.delEntity(arg_20_0, arg_20_1, arg_20_2)
-	local var_20_0 = arg_20_0:getEntity(arg_20_1, arg_20_2)
+function SurvivalShelterSceneMapUnitComp:delEntity(unitType, unitId)
+	local entity = self:getEntity(unitType, unitId)
 
-	if not var_20_0 then
+	if not entity then
 		return
 	end
 
-	gohelper.destroy(var_20_0.go)
+	gohelper.destroy(entity.go)
 
-	arg_20_0._allUnits[arg_20_1][arg_20_2] = nil
+	self._allUnits[unitType][unitId] = nil
 end
 
-function var_0_0.refreshEntity(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
-	if arg_21_3 then
-		arg_21_0:getEntity(arg_21_1, arg_21_2, true):updateEntity()
+function SurvivalShelterSceneMapUnitComp:refreshEntity(unitType, unitId, isVisible)
+	if isVisible then
+		local entity = self:getEntity(unitType, unitId, true)
+
+		entity:updateEntity()
 	else
-		arg_21_0:delEntity(arg_21_1, arg_21_2)
+		self:delEntity(unitType, unitId)
 	end
 end
 
-function var_0_0.getAllEntity(arg_22_0)
-	return arg_22_0._allUnits
+function SurvivalShelterSceneMapUnitComp:getAllEntity()
+	return self._allUnits
 end
 
-function var_0_0.getUnitParentGO(arg_23_0, arg_23_1)
-	local var_23_0 = arg_23_0._unitParent[arg_23_1]
+function SurvivalShelterSceneMapUnitComp:getUnitParentGO(unitType)
+	local goParent = self._unitParent[unitType]
 
-	if not var_23_0 then
-		var_23_0 = gohelper.create3d(arg_23_0._unitRoot, SurvivalEnum.ShelterUnitTypeToName[arg_23_1])
-		arg_23_0._unitParent[arg_23_1] = var_23_0
+	if not goParent then
+		goParent = gohelper.create3d(self._unitRoot, SurvivalEnum.ShelterUnitTypeToName[unitType])
+		self._unitParent[unitType] = goParent
 	end
 
-	return var_23_0
+	return goParent
 end
 
-function var_0_0.onSceneClose(arg_24_0)
-	arg_24_0:removeEvents()
-	gohelper.destroy(arg_24_0._unitRoot)
+function SurvivalShelterSceneMapUnitComp:onSceneClose()
+	self:removeEvents()
+	gohelper.destroy(self._unitRoot)
 
-	arg_24_0._unitRoot = nil
-	arg_24_0._sceneGo = nil
-	arg_24_0._allUnits = {}
+	self._unitRoot = nil
+	self._sceneGo = nil
+	self._allUnits = {}
 end
 
-return var_0_0
+return SurvivalShelterSceneMapUnitComp

@@ -1,245 +1,247 @@
-﻿module("modules.logic.necrologiststory.view.comp.NecrologistStoryTextComp", package.seeall)
+﻿-- chunkname: @modules/logic/necrologiststory/view/comp/NecrologistStoryTextComp.lua
 
-local var_0_0 = class("NecrologistStoryTextComp", LuaCompBase)
+module("modules.logic.necrologiststory.view.comp.NecrologistStoryTextComp", package.seeall)
 
-function var_0_0._onSetMarksTop(arg_1_0)
-	if arg_1_0._txtmarktop and not gohelper.isNil(arg_1_0._txtmarktopGo) then
-		arg_1_0._txtConMark:SetMarksTop(arg_1_0._markTopList)
+local NecrologistStoryTextComp = class("NecrologistStoryTextComp", LuaCompBase)
+
+function NecrologistStoryTextComp:_onSetMarksTop()
+	if self._txtmarktop and not gohelper.isNil(self._txtmarktopGo) then
+		self._txtConMark:SetMarksTop(self._markTopList)
 	end
 end
 
-function var_0_0._setMarksTop(arg_2_0, arg_2_1)
-	FrameTimerController.instance:unregister(arg_2_0._fTimer)
+function NecrologistStoryTextComp:_setMarksTop(isClear)
+	FrameTimerController.instance:unregister(self._fTimer)
 
-	if arg_2_1 or #arg_2_0._markTopList == 0 then
-		gohelper.setActive(arg_2_0._txtmarktopGo, false)
+	if isClear or #self._markTopList == 0 then
+		gohelper.setActive(self._txtmarktopGo, false)
 	else
-		arg_2_0._fTimer = FrameTimerController.instance:register(function()
-			arg_2_0:_onSetMarksTop()
+		self._fTimer = FrameTimerController.instance:register(function()
+			self:_onSetMarksTop()
 		end, nil, 2)
 
-		arg_2_0._fTimer:Start()
+		self._fTimer:Start()
 	end
 end
 
-function var_0_0.init(arg_4_0, arg_4_1)
-	arg_4_0._markTopList = {}
-	arg_4_0._txtmarktopGo = IconMgr.instance:getCommonTextMarkTop(arg_4_1)
-	arg_4_0._txtmarktop = arg_4_0._txtmarktopGo:GetComponent(gohelper.Type_TextMesh)
-	arg_4_0._txtConMark = gohelper.onceAddComponent(arg_4_1, typeof(ZProj.TMPMark))
+function NecrologistStoryTextComp:init(go)
+	self._markTopList = {}
+	self._txtmarktopGo = IconMgr.instance:getCommonTextMarkTop(go)
+	self._txtmarktop = self._txtmarktopGo:GetComponent(gohelper.Type_TextMesh)
+	self._txtConMark = gohelper.onceAddComponent(go, typeof(ZProj.TMPMark))
 
-	arg_4_0._txtConMark:SetMarkTopGo(arg_4_0._txtmarktopGo)
-	arg_4_0._txtConMark:SetTopOffset(0, -2)
+	self._txtConMark:SetMarkTopGo(self._txtmarktopGo)
+	self._txtConMark:SetTopOffset(0, -2)
 
-	arg_4_0.txtGO = arg_4_1
-	arg_4_0.transform = arg_4_1.transform
-	arg_4_0.textComponent = gohelper.findChildTextMesh(arg_4_1, "")
-	arg_4_0.txtHyperLink = NecrologistStoryHelper.addHyperLinkClick(arg_4_0.textComponent)
-	arg_4_0.typewriterSpeed = 30
-	arg_4_0.typewriterTime = 1 / arg_4_0.typewriterSpeed
+	self.txtGO = go
+	self.transform = go.transform
+	self.textComponent = gohelper.findChildTextMesh(go, "")
+	self.txtHyperLink = NecrologistStoryHelper.addHyperLinkClick(self.textComponent)
+	self.typewriterSpeed = 30
+	self.typewriterTime = 1 / self.typewriterSpeed
 end
 
-function var_0_0.setTextNormal(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	arg_5_0._markTopList = StoryTool.getMarkTopTextList(arg_5_1) or {}
-	arg_5_0.metaText = StoryTool.filterMarkTop(arg_5_1)
-	arg_5_0.finishCallback = arg_5_2
-	arg_5_0.callbackObj = arg_5_3
+function NecrologistStoryTextComp:setTextNormal(text, finishCallback, callbackObj)
+	self._markTopList = StoryTool.getMarkTopTextList(text) or {}
+	self.metaText = StoryTool.filterMarkTop(text)
+	self.finishCallback = finishCallback
+	self.callbackObj = callbackObj
 
-	arg_5_0:onTextFinish()
+	self:onTextFinish()
 end
 
-function var_0_0.setTextWithTypewriter(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
-	arg_6_0._markTopList = StoryTool.getMarkTopTextList(arg_6_1) or {}
+function NecrologistStoryTextComp:setTextWithTypewriter(text, frameCallback, finishCallback, callbackObj)
+	self._markTopList = StoryTool.getMarkTopTextList(text) or {}
 
-	arg_6_0:clearTextTimer()
+	self:clearTextTimer()
 
-	arg_6_0.metaText = StoryTool.filterMarkTop(arg_6_1)
-	arg_6_0.charList = arg_6_0:getUCharArr(arg_6_0.metaText)
-	arg_6_0.charIndex = 1
-	arg_6_0.charCount = #arg_6_0.charList
-	arg_6_0.tagStack = {}
-	arg_6_0.tagCount = 0
-	arg_6_0.frameCallback = arg_6_2
-	arg_6_0.finishCallback = arg_6_3
-	arg_6_0.callbackObj = arg_6_4
+	self.metaText = StoryTool.filterMarkTop(text)
+	self.charList = self:getUCharArr(self.metaText)
+	self.charIndex = 1
+	self.charCount = #self.charList
+	self.tagStack = {}
+	self.tagCount = 0
+	self.frameCallback = frameCallback
+	self.finishCallback = finishCallback
+	self.callbackObj = callbackObj
 
-	arg_6_0:setText(LuaUtil.emptyStr)
-	TaskDispatcher.runRepeat(arg_6_0._showTypewriterText, arg_6_0, arg_6_0.typewriterTime)
+	self:setText(LuaUtil.emptyStr)
+	TaskDispatcher.runRepeat(self._showTypewriterText, self, self.typewriterTime)
 end
 
-function var_0_0._showTypewriterText(arg_7_0)
-	if arg_7_0:isDone() then
-		arg_7_0:onTextFinish()
+function NecrologistStoryTextComp:_showTypewriterText()
+	if self:isDone() then
+		self:onTextFinish()
 
 		return
 	end
 
-	local var_7_0 = arg_7_0:getTypewriterShowText()
+	local text = self:getTypewriterShowText()
 
-	if var_7_0 then
-		arg_7_0.curText = var_7_0
-		arg_7_0.textComponent.text = var_7_0
+	if text then
+		self.curText = text
+		self.textComponent.text = text
 
-		if arg_7_0.frameCallback then
-			arg_7_0.frameCallback(arg_7_0.callbackObj)
+		if self.frameCallback then
+			self.frameCallback(self.callbackObj)
 		end
 	else
-		arg_7_0:_showTypewriterText()
+		self:_showTypewriterText()
 	end
 end
 
-function var_0_0.setText(arg_8_0, arg_8_1)
-	arg_8_0.curText = arg_8_1
-	arg_8_0.textComponent.text = arg_8_1
+function NecrologistStoryTextComp:setText(text)
+	self.curText = text
+	self.textComponent.text = text
 end
 
-function var_0_0.isDone(arg_9_0)
-	return arg_9_0.charIndex > arg_9_0.charCount
+function NecrologistStoryTextComp:isDone()
+	return self.charIndex > self.charCount
 end
 
-function var_0_0.onTextFinish(arg_10_0)
-	arg_10_0:clearTextTimer()
+function NecrologistStoryTextComp:onTextFinish()
+	self:clearTextTimer()
 
-	if not arg_10_0.charCount then
-		arg_10_0.charCount = 0
+	if not self.charCount then
+		self.charCount = 0
 	end
 
-	arg_10_0.charIndex = arg_10_0.charCount + 1
+	self.charIndex = self.charCount + 1
 
-	arg_10_0:setText(arg_10_0.metaText)
-	arg_10_0:_setMarksTop()
-	arg_10_0:doFinishCallback()
+	self:setText(self.metaText)
+	self:_setMarksTop()
+	self:doFinishCallback()
 end
 
-function var_0_0.doFinishCallback(arg_11_0)
-	local var_11_0 = arg_11_0.finishCallback
-	local var_11_1 = arg_11_0.callbackObj
+function NecrologistStoryTextComp:doFinishCallback()
+	local callback = self.finishCallback
+	local callbackObj = self.callbackObj
 
-	if var_11_0 then
-		var_11_0(var_11_1)
+	if callback then
+		callback(callbackObj)
 	end
 end
 
-function var_0_0.getTypewriterShowText(arg_12_0)
-	if arg_12_0:isDone() then
-		return arg_12_0.metaText
+function NecrologistStoryTextComp:getTypewriterShowText()
+	if self:isDone() then
+		return self.metaText
 	end
 
-	local var_12_0
-	local var_12_1 = arg_12_0.charIndex
-	local var_12_2 = arg_12_0.charList[var_12_1]
-	local var_12_3 = #arg_12_0.tagStack
+	local retText
+	local index = self.charIndex
+	local char = self.charList[index]
+	local tagStackCount = #self.tagStack
 
-	if string.sub(var_12_2, 1, 1) == "<" then
-		if string.sub(var_12_2, 2, 2) ~= "/" then
-			table.insert(arg_12_0.tagStack, var_12_2)
-		elseif var_12_3 > 0 then
-			table.remove(arg_12_0.tagStack)
+	if string.sub(char, 1, 1) == "<" then
+		if string.sub(char, 2, 2) ~= "/" then
+			table.insert(self.tagStack, char)
+		elseif tagStackCount > 0 then
+			table.remove(self.tagStack)
 		end
 	else
-		var_12_0 = arg_12_0.curText
+		retText = self.curText
 
-		if var_12_3 > 0 then
-			if arg_12_0.tagCount == var_12_3 then
-				local var_12_4 = ""
+		if tagStackCount > 0 then
+			if self.tagCount == tagStackCount then
+				local ends = ""
 
-				for iter_12_0 = var_12_3, 1, -1 do
-					local var_12_5 = arg_12_0.tagStack[iter_12_0]
+				for j = tagStackCount, 1, -1 do
+					local tag = self.tagStack[j]
 
-					var_12_4 = var_12_4 .. string.gsub(var_12_5, "<", "</")
+					ends = ends .. string.gsub(tag, "<", "</")
 				end
 
-				local var_12_6 = -string.len(var_12_4) - 1
+				local len = -string.len(ends) - 1
 
-				var_12_0 = string.format("%s%s%s", string.sub(var_12_0, 1, var_12_6), var_12_2, var_12_4)
+				retText = string.format("%s%s%s", string.sub(retText, 1, len), char, ends)
 			else
-				for iter_12_1, iter_12_2 in ipairs(arg_12_0.tagStack) do
-					var_12_0 = var_12_0 .. iter_12_2
+				for _, tag in ipairs(self.tagStack) do
+					retText = retText .. tag
 				end
 
-				var_12_0 = var_12_0 .. var_12_2
+				retText = retText .. char
 
-				for iter_12_3 = var_12_3, 1, -1 do
-					local var_12_7 = arg_12_0.tagStack[iter_12_3]
+				for j = tagStackCount, 1, -1 do
+					local tag = self.tagStack[j]
 
-					var_12_0 = var_12_0 .. string.gsub(var_12_7, "<", "</")
+					retText = retText .. string.gsub(tag, "<", "</")
 				end
 			end
 		else
-			var_12_0 = var_12_0 .. var_12_2
+			retText = retText .. char
 		end
 
-		arg_12_0.tagCount = var_12_3
+		self.tagCount = tagStackCount
 	end
 
-	arg_12_0.charIndex = arg_12_0.charIndex + 1
+	self.charIndex = self.charIndex + 1
 
-	return var_12_0
+	return retText
 end
 
-function var_0_0.getUCharArr(arg_13_0, arg_13_1)
-	local var_13_0 = {}
+function NecrologistStoryTextComp:getUCharArr(ucharStr)
+	local ret = {}
 
-	if LuaUtil.isEmptyStr(arg_13_1) then
-		return var_13_0
+	if LuaUtil.isEmptyStr(ucharStr) then
+		return ret
 	end
 
-	local var_13_1 = 1
-	local var_13_2 = #arg_13_1
+	local i = 1
+	local len = #ucharStr
 
-	while var_13_1 <= var_13_2 do
-		if string.sub(arg_13_1, var_13_1, var_13_1) == "<" then
-			local var_13_3 = string.find(arg_13_1, ">", var_13_1)
+	while i <= len do
+		if string.sub(ucharStr, i, i) == "<" then
+			local tagEnd = string.find(ucharStr, ">", i)
 
-			if var_13_3 then
-				table.insert(var_13_0, string.sub(arg_13_1, var_13_1, var_13_3))
+			if tagEnd then
+				table.insert(ret, string.sub(ucharStr, i, tagEnd))
 
-				var_13_1 = var_13_3 + 1
+				i = tagEnd + 1
 			else
-				table.insert(var_13_0, string.sub(arg_13_1, var_13_1, var_13_1))
+				table.insert(ret, string.sub(ucharStr, i, i))
 
-				var_13_1 = var_13_1 + 1
+				i = i + 1
 			end
 		else
-			local var_13_4 = string.sub(arg_13_1, var_13_1, var_13_1)
+			local char = string.sub(ucharStr, i, i)
 
-			if string.byte(var_13_4) > 127 then
-				local var_13_5 = string.byte(var_13_4)
-				local var_13_6 = 1
+			if string.byte(char) > 127 then
+				local byte = string.byte(char)
+				local charLen = 1
 
-				if var_13_5 >= 194 and var_13_5 <= 223 then
-					var_13_6 = 2
-				elseif var_13_5 >= 224 and var_13_5 <= 239 then
-					var_13_6 = 3
-				elseif var_13_5 >= 240 and var_13_5 <= 244 then
-					var_13_6 = 4
+				if byte >= 194 and byte <= 223 then
+					charLen = 2
+				elseif byte >= 224 and byte <= 239 then
+					charLen = 3
+				elseif byte >= 240 and byte <= 244 then
+					charLen = 4
 				end
 
-				var_13_4 = string.sub(arg_13_1, var_13_1, var_13_1 + var_13_6 - 1)
-				var_13_1 = var_13_1 + var_13_6
+				char = string.sub(ucharStr, i, i + charLen - 1)
+				i = i + charLen
 			else
-				var_13_1 = var_13_1 + 1
+				i = i + 1
 			end
 
-			table.insert(var_13_0, var_13_4)
+			table.insert(ret, char)
 		end
 	end
 
-	return var_13_0
+	return ret
 end
 
-function var_0_0.clearTextTimer(arg_14_0)
-	arg_14_0:_setMarksTop(true)
-	TaskDispatcher.cancelTask(arg_14_0._showTypewriterText, arg_14_0)
+function NecrologistStoryTextComp:clearTextTimer()
+	self:_setMarksTop(true)
+	TaskDispatcher.cancelTask(self._showTypewriterText, self)
 end
 
-function var_0_0.getTextStr(arg_15_0)
-	return arg_15_0.curText
+function NecrologistStoryTextComp:getTextStr()
+	return self.curText
 end
 
-function var_0_0.onDestroy(arg_16_0)
-	FrameTimerController.instance:unregister(arg_16_0._fTimer)
-	arg_16_0:clearTextTimer()
+function NecrologistStoryTextComp:onDestroy()
+	FrameTimerController.instance:unregister(self._fTimer)
+	self:clearTextTimer()
 end
 
-return var_0_0
+return NecrologistStoryTextComp

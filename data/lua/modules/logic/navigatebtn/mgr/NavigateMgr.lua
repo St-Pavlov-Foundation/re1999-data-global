@@ -1,7 +1,9 @@
-﻿module("modules.logic.navigatebtn.mgr.NavigateMgr", package.seeall)
+﻿-- chunkname: @modules/logic/navigatebtn/mgr/NavigateMgr.lua
 
-local var_0_0 = class("NavigateMgr")
-local var_0_1 = {
+module("modules.logic.navigatebtn.mgr.NavigateMgr", package.seeall)
+
+local NavigateMgr = class("NavigateMgr")
+local IgnoreEscViewNameDict = {
 	[ViewName.ToastView] = true,
 	[ViewName.StorySceneView] = true,
 	[ViewName.FightDiceView] = true,
@@ -9,86 +11,92 @@ local var_0_1 = {
 	[ViewName.PlayerChangeBgListView] = true,
 	[ViewName.GMErrorView] = true,
 	[ViewName.RougeMapTipView] = true,
+	[ViewName.Rouge2_MapTipView] = true,
 	[ViewName.SurvivalToastView] = true
 }
-local var_0_2 = {
+local IgnoreTopLayerViewDict = {
 	[ViewName.RougeMapTipView] = true,
+	[ViewName.Rouge2_MapTipView] = true,
 	[ViewName.GMToolView2] = true
 }
 
-function var_0_0.init(arg_1_0)
-	arg_1_0._eventSystemGO = gohelper.find("EventSystem")
+function NavigateMgr:init()
+	self._eventSystemGO = gohelper.find("EventSystem")
 
-	if arg_1_0._eventSystemGO then
-		arg_1_0._eventSystem = arg_1_0._eventSystemGO:GetComponent(typeof(UnityEngine.EventSystems.EventSystem))
+	if self._eventSystemGO then
+		self._eventSystem = self._eventSystemGO:GetComponent(typeof(UnityEngine.EventSystems.EventSystem))
 	end
 
-	arg_1_0:setNavigationEnabled(false)
+	self:setNavigationEnabled(false)
 
-	arg_1_0._escapeParamDict = {}
-	arg_1_0._escapeParamDictForNavigate = {}
-	arg_1_0._spaceParamDict = {}
+	self._escapeParamDict = {}
+	self._escapeParamDictForNavigate = {}
+	self._spaceParamDict = {}
 
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_1_0._onCloseView, arg_1_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_1_0._onOpenView, arg_1_0)
-	TaskDispatcher.runRepeat(arg_1_0._onFrame, arg_1_0, 0.001)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, self._onCloseView, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, self._onOpenView, self)
+	TaskDispatcher.runRepeat(self._onFrame, self, 0.001)
 end
 
-function var_0_0.onEscapeBtnClick(arg_2_0)
-	arg_2_0:_onEscapeBtnClick()
+function NavigateMgr:onEscapeBtnClick()
+	self:_onEscapeBtnClick()
 end
 
-function var_0_0._onFrame(arg_3_0)
+function NavigateMgr:_onFrame()
 	if UnityEngine.Input.GetKeyUp(UnityEngine.KeyCode.Escape) then
-		arg_3_0:_onEscapeBtnClick()
+		self:_onEscapeBtnClick()
 	end
 
 	if UnityEngine.Input.GetKeyUp(UnityEngine.KeyCode.Space) then
-		arg_3_0:_onSpaceBtnClick()
+		self:_onSpaceBtnClick()
 	end
 end
 
-function var_0_0._onOpenView(arg_4_0, arg_4_1)
-	arg_4_0:_modifyScroll(arg_4_1)
+function NavigateMgr:_onOpenView(viewName)
+	self:_modifyScroll(viewName)
 end
 
-function var_0_0._onCloseView(arg_5_0, arg_5_1)
-	arg_5_0:removeEscape(arg_5_1)
-	arg_5_0:removeEscape(arg_5_1, true)
-	arg_5_0:removeSpace(arg_5_1)
+function NavigateMgr:_onCloseView(viewName)
+	self:removeEscape(viewName)
+	self:removeEscape(viewName, true)
+	self:removeSpace(viewName)
 end
 
-function var_0_0.addEscape(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
-	(arg_6_4 and arg_6_0._escapeParamDictForNavigate or arg_6_0._escapeParamDict)[arg_6_1] = {
-		callback = arg_6_2,
-		callbackObj = arg_6_3
+function NavigateMgr:addEscape(viewName, callback, callbackObj, isNavigate)
+	local dict = isNavigate and self._escapeParamDictForNavigate or self._escapeParamDict
+
+	dict[viewName] = {
+		callback = callback,
+		callbackObj = callbackObj
 	}
 end
 
-function var_0_0.removeEscape(arg_7_0, arg_7_1, arg_7_2)
-	(arg_7_2 and arg_7_0._escapeParamDictForNavigate or arg_7_0._escapeParamDict)[arg_7_1] = nil
+function NavigateMgr:removeEscape(viewName, isNavigate)
+	local dict = isNavigate and self._escapeParamDictForNavigate or self._escapeParamDict
+
+	dict[viewName] = nil
 end
 
-function var_0_0.addSpace(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	arg_8_0._spaceParamDict[arg_8_1] = {
-		callback = arg_8_2,
-		callbackObj = arg_8_3
+function NavigateMgr:addSpace(viewName, callback, callbackObj)
+	self._spaceParamDict[viewName] = {
+		callback = callback,
+		callbackObj = callbackObj
 	}
 end
 
-function var_0_0.removeSpace(arg_9_0, arg_9_1)
-	arg_9_0._spaceParamDict[arg_9_1] = nil
+function NavigateMgr:removeSpace(viewName)
+	self._spaceParamDict[viewName] = nil
 end
 
-var_0_0.EscapeToLoginGuideID = 108
+NavigateMgr.EscapeToLoginGuideID = 108
 
-function var_0_0._onEscapeBtnClick(arg_10_0)
+function NavigateMgr:_onEscapeBtnClick()
 	if BootNativeUtil.isAndroid() or SLFramework.FrameworkSettings.IsEditor then
-		local var_10_0 = GuideModel.instance:getById(var_0_0.EscapeToLoginGuideID)
+		local guideMO = GuideModel.instance:getById(NavigateMgr.EscapeToLoginGuideID)
 
 		if ViewMgr.instance:isOpen(ViewName.LoginView) then
 			-- block empty
-		elseif var_10_0 == nil or var_10_0.isFinish == false or GuideModel.instance:getDoingGuideId() == var_0_0.EscapeToLoginGuideID then
+		elseif guideMO == nil or guideMO.isFinish == false or GuideModel.instance:getDoingGuideId() == NavigateMgr.EscapeToLoginGuideID then
 			if ViewMgr.instance:isOpen(ViewName.StoryLogView) then
 				ViewMgr.instance:closeView(ViewName.StoryLogView)
 			elseif ViewMgr.instance:isOpen(ViewName.NicknameConfirmView) then
@@ -97,22 +105,24 @@ function var_0_0._onEscapeBtnClick(arg_10_0)
 			elseif ViewMgr.instance:isOpen(ViewName.MessageBoxView) then
 				ViewMgr.instance:closeView(ViewName.MessageBoxView)
 			else
-				local var_10_1 = ViewMgr.instance:getOpenViewNameList()
-				local var_10_2 = var_0_0.sortOpenViewNameList(var_10_1)
-				local var_10_3 = var_10_2[#var_10_2]
+				local openViewNameList = ViewMgr.instance:getOpenViewNameList()
 
-				if var_10_3 == ViewName.MainView and GameSceneMgr.instance:getCurSceneType() == SceneType.Main then
+				openViewNameList = NavigateMgr.sortOpenViewNameList(openViewNameList)
+
+				local openViewName = openViewNameList[#openViewNameList]
+
+				if openViewName == ViewName.MainView and GameSceneMgr.instance:getCurSceneType() == SceneType.Main then
 					SDKMgr.instance:exitSdk()
-				elseif var_10_3 == ViewName.SDKExitGameTopView then
+				elseif openViewName == ViewName.SDKExitGameTopView then
 					ViewMgr.instance:closeView(ViewName.SDKExitGameTopView)
-				elseif var_10_3 == ViewName.FightTechniqueTipsView then
+				elseif openViewName == ViewName.FightTechniqueTipsView then
 					ViewMgr.instance:closeView(ViewName.FightTechniqueTipsView)
-				elseif var_10_3 == ViewName.FightGuideView then
+				elseif openViewName == ViewName.FightGuideView then
 					ViewMgr.instance:closeView(ViewName.FightGuideView)
 				else
-					local var_10_4 = {}
+					local param = {}
 
-					ViewMgr.instance:openView(ViewName.SDKExitGameTopView, var_10_4)
+					ViewMgr.instance:openView(ViewName.SDKExitGameTopView, param)
 				end
 			end
 
@@ -120,7 +130,7 @@ function var_0_0._onEscapeBtnClick(arg_10_0)
 		end
 	end
 
-	if not arg_10_0:isEventSystemActive() then
+	if not self:isEventSystemActive() then
 		return
 	end
 
@@ -132,28 +142,29 @@ function var_0_0._onEscapeBtnClick(arg_10_0)
 		return
 	end
 
-	local var_10_5 = ViewMgr.instance:getUIRoot()
-	local var_10_6 = ViewMgr.instance:getOpenViewNameList()
-	local var_10_7 = var_0_0.sortOpenViewNameList(var_10_6)
+	local uiRootGO = ViewMgr.instance:getUIRoot()
+	local openViewNameList = ViewMgr.instance:getOpenViewNameList()
 
-	for iter_10_0, iter_10_1 in ipairs(var_10_7) do
-		local var_10_8 = ViewMgr.instance:getSetting(iter_10_1)
+	openViewNameList = NavigateMgr.sortOpenViewNameList(openViewNameList)
 
-		if var_10_8.layer == "TOP" and not var_0_2[iter_10_1] then
+	for i, openViewName in ipairs(openViewNameList) do
+		local viewSetting = ViewMgr.instance:getSetting(openViewName)
+
+		if viewSetting.layer == "TOP" and not IgnoreTopLayerViewDict[openViewName] then
 			return
 		end
 
-		if var_10_8.layer == "GUIDE" then
+		if viewSetting.layer == "GUIDE" then
 			return
 		end
 	end
 
-	for iter_10_2 = #var_10_7, 1, -1 do
-		local var_10_9 = var_10_7[iter_10_2]
-		local var_10_10 = ViewMgr.instance:getSetting(var_10_9)
-		local var_10_11 = ViewMgr.instance:getContainer(var_10_9)
+	for i = #openViewNameList, 1, -1 do
+		local openViewName = openViewNameList[i]
+		local viewSetting = ViewMgr.instance:getSetting(openViewName)
+		local viewContainer = ViewMgr.instance:getContainer(openViewName)
 
-		if var_10_9 == ViewName.MainView then
+		if openViewName == ViewName.MainView then
 			if GameSceneMgr.instance:getCurSceneType() == SceneType.Main then
 				if BootNativeUtil.isAndroid() then
 					SDKMgr.instance:exitSdk()
@@ -163,11 +174,12 @@ function var_0_0._onEscapeBtnClick(arg_10_0)
 			end
 
 			return
-		elseif not var_0_1[var_10_9] then
-			local var_10_12 = var_10_11 and var_10_11.viewGO
+		elseif not IgnoreEscViewNameDict[openViewName] then
+			local viewGO = viewContainer and viewContainer.viewGO
+			local parentTr = viewGO and viewGO.transform.parent.parent
 
-			if (var_10_12 and var_10_12.transform.parent.parent) == var_10_5.transform then
-				arg_10_0:_dispatchEscape(var_10_9)
+			if parentTr == uiRootGO.transform then
+				self:_dispatchEscape(openViewName)
 
 				return
 			end
@@ -175,36 +187,38 @@ function var_0_0._onEscapeBtnClick(arg_10_0)
 	end
 end
 
-function var_0_0.isMainViewInTop(arg_11_0)
-	local var_11_0 = ViewMgr.instance:getUIRoot()
-	local var_11_1 = ViewMgr.instance:getOpenViewNameList()
-	local var_11_2 = var_0_0.sortOpenViewNameList(var_11_1)
+function NavigateMgr:isMainViewInTop()
+	local uiRootGO = ViewMgr.instance:getUIRoot()
+	local openViewNameList = ViewMgr.instance:getOpenViewNameList()
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_2) do
-		local var_11_3 = ViewMgr.instance:getSetting(iter_11_1)
+	openViewNameList = NavigateMgr.sortOpenViewNameList(openViewNameList)
 
-		if var_11_3.layer == "TOP" and iter_11_1 ~= ViewName.GMToolView2 then
+	for i, openViewName in ipairs(openViewNameList) do
+		local viewSetting = ViewMgr.instance:getSetting(openViewName)
+
+		if viewSetting.layer == "TOP" and openViewName ~= ViewName.GMToolView2 then
 			return false
 		end
 
-		if var_11_3.layer == "GUIDE" then
+		if viewSetting.layer == "GUIDE" then
 			return false
 		end
 	end
 
-	for iter_11_2 = #var_11_2, 1, -1 do
-		local var_11_4 = var_11_2[iter_11_2]
-		local var_11_5 = ViewMgr.instance:getSetting(var_11_4)
-		local var_11_6 = ViewMgr.instance:getContainer(var_11_4)
+	for i = #openViewNameList, 1, -1 do
+		local openViewName = openViewNameList[i]
+		local viewSetting = ViewMgr.instance:getSetting(openViewName)
+		local viewContainer = ViewMgr.instance:getContainer(openViewName)
 
-		if var_11_4 == ViewName.MainView then
+		if openViewName == ViewName.MainView then
 			if GameSceneMgr.instance:getCurSceneType() == SceneType.Main then
 				return true
 			end
-		elseif not var_0_1[var_11_4] then
-			local var_11_7 = var_11_6 and var_11_6.viewGO
+		elseif not IgnoreEscViewNameDict[openViewName] then
+			local viewGO = viewContainer and viewContainer.viewGO
+			local parentTr = viewGO and viewGO.transform.parent.parent
 
-			if (var_11_7 and var_11_7.transform.parent.parent) == var_11_0.transform then
+			if parentTr == uiRootGO.transform then
 				return false
 			end
 		end
@@ -213,27 +227,27 @@ function var_0_0.isMainViewInTop(arg_11_0)
 	return false
 end
 
-function var_0_0._dispatchEscape(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0._escapeParamDict[arg_12_1]
+function NavigateMgr:_dispatchEscape(viewName)
+	local escapeParam = self._escapeParamDict[viewName]
 
-	if var_12_0 and var_12_0.callback then
-		var_12_0.callback(var_12_0.callbackObj)
-
-		return
-	end
-
-	local var_12_1 = arg_12_0._escapeParamDictForNavigate[arg_12_1]
-
-	if var_12_1 and var_12_1.callback then
-		var_12_1.callback(var_12_1.callbackObj)
+	if escapeParam and escapeParam.callback then
+		escapeParam.callback(escapeParam.callbackObj)
 
 		return
 	end
 
-	local var_12_2 = ViewMgr.instance:getSetting(arg_12_1)
-	local var_12_3 = ViewMgr.instance:getContainer(arg_12_1)
+	local escapeParamForNavigate = self._escapeParamDictForNavigate[viewName]
 
-	if not var_12_3 then
+	if escapeParamForNavigate and escapeParamForNavigate.callback then
+		escapeParamForNavigate.callback(escapeParamForNavigate.callbackObj)
+
+		return
+	end
+
+	local viewSetting = ViewMgr.instance:getSetting(viewName)
+	local viewContainer = ViewMgr.instance:getContainer(viewName)
+
+	if not viewContainer then
 		return
 	end
 
@@ -241,40 +255,41 @@ function var_0_0._dispatchEscape(arg_12_0, arg_12_1)
 		return
 	end
 
-	if var_12_2.viewType == ViewType.Modal then
-		var_12_3:onClickModalMaskInternal()
-	elseif var_12_2.layer == "POPUP_TOP" then
-		if not arg_12_0._dontCloseViewNameDict then
-			arg_12_0._dontCloseViewNameDict = {}
-			arg_12_0._dontCloseViewNameDict[ViewName.FightLoadingView] = true
-			arg_12_0._dontCloseViewNameDict[ViewName.WeekWalkSelectTarotView] = true
-			arg_12_0._dontCloseViewNameDict[ViewName.FightFailTipsView] = true
+	if viewSetting.viewType == ViewType.Modal then
+		viewContainer:onClickModalMaskInternal()
+	elseif viewSetting.layer == "POPUP_TOP" then
+		if not self._dontCloseViewNameDict then
+			self._dontCloseViewNameDict = {}
+			self._dontCloseViewNameDict[ViewName.FightLoadingView] = true
+			self._dontCloseViewNameDict[ViewName.WeekWalkSelectTarotView] = true
+			self._dontCloseViewNameDict[ViewName.FightFailTipsView] = true
 
-			local var_12_4 = SeasonViewHelper.getViewName(nil, Activity104Enum.ViewName.EquipSelfChoiceView)
+			local seasonChoiceView = SeasonViewHelper.getViewName(nil, Activity104Enum.ViewName.EquipSelfChoiceView)
 
-			arg_12_0._dontCloseViewNameDict[var_12_4] = true
-			arg_12_0._dontCloseViewNameDict[ViewName.ExploreInteractView] = true
-			arg_12_0._dontCloseViewNameDict[ViewName.ExploreGuideDialogueView] = true
-			arg_12_0._dontCloseViewNameDict[ViewName.VersionActivity1_6EnterVideoView] = true
-			arg_12_0._dontCloseViewNameDict[ViewName.FullScreenVideoView] = true
-			arg_12_0._dontCloseViewNameDict[ViewName.ToughBattleLoadingView] = true
-			arg_12_0._dontCloseViewNameDict[ViewName.RougeResultView] = true
+			self._dontCloseViewNameDict[seasonChoiceView] = true
+			self._dontCloseViewNameDict[ViewName.ExploreInteractView] = true
+			self._dontCloseViewNameDict[ViewName.ExploreGuideDialogueView] = true
+			self._dontCloseViewNameDict[ViewName.VersionActivity1_6EnterVideoView] = true
+			self._dontCloseViewNameDict[ViewName.FullScreenVideoView] = true
+			self._dontCloseViewNameDict[ViewName.ToughBattleLoadingView] = true
+			self._dontCloseViewNameDict[ViewName.RougeResultView] = true
+			self._dontCloseViewNameDict[ViewName.CruiseGameResultView] = true
 
-			for iter_12_0, iter_12_1 in pairs(V1a6_CachotEventController.instance:getNoCloseViews()) do
-				arg_12_0._dontCloseViewNameDict[iter_12_1] = true
+			for _, viewName in pairs(V1a6_CachotEventController.instance:getNoCloseViews()) do
+				self._dontCloseViewNameDict[viewName] = true
 			end
 
-			Season123Controller.instance:addDontNavigateBtn(arg_12_0._dontCloseViewNameDict)
+			Season123Controller.instance:addDontNavigateBtn(self._dontCloseViewNameDict)
 		end
 
-		if not arg_12_0._dontCloseViewNameDict[arg_12_1] then
-			ViewMgr.instance:closeView(arg_12_1, false, true)
+		if not self._dontCloseViewNameDict[viewName] then
+			ViewMgr.instance:closeView(viewName, false, true)
 		end
 	end
 end
 
-function var_0_0._onSpaceBtnClick(arg_13_0)
-	if not arg_13_0:isEventSystemActive() then
+function NavigateMgr:_onSpaceBtnClick()
+	if not self:isEventSystemActive() then
 		return
 	end
 
@@ -286,34 +301,36 @@ function var_0_0._onSpaceBtnClick(arg_13_0)
 		return
 	end
 
-	local var_13_0 = ViewMgr.instance:getUIRoot()
-	local var_13_1 = ViewMgr.instance:getOpenViewNameList()
-	local var_13_2 = var_0_0.sortOpenViewNameList(var_13_1)
+	local uiRootGO = ViewMgr.instance:getUIRoot()
+	local openViewNameList = ViewMgr.instance:getOpenViewNameList()
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_2) do
-		local var_13_3 = ViewMgr.instance:getSetting(iter_13_1)
+	openViewNameList = NavigateMgr.sortOpenViewNameList(openViewNameList)
 
-		if var_13_3.layer == "TOP" and not var_0_2[iter_13_1] then
+	for i, openViewName in ipairs(openViewNameList) do
+		local viewSetting = ViewMgr.instance:getSetting(openViewName)
+
+		if viewSetting.layer == "TOP" and not IgnoreTopLayerViewDict[openViewName] then
 			return
 		end
 
-		if var_13_3.layer == "GUIDE" then
-			arg_13_0:_dispatchSpace(iter_13_1)
+		if viewSetting.layer == "GUIDE" then
+			self:_dispatchSpace(openViewName)
 
 			return
 		end
 	end
 
-	for iter_13_2 = #var_13_2, 1, -1 do
-		local var_13_4 = var_13_2[iter_13_2]
-		local var_13_5 = ViewMgr.instance:getSetting(var_13_4)
-		local var_13_6 = ViewMgr.instance:getContainer(var_13_4)
+	for i = #openViewNameList, 1, -1 do
+		local openViewName = openViewNameList[i]
+		local viewSetting = ViewMgr.instance:getSetting(openViewName)
+		local viewContainer = ViewMgr.instance:getContainer(openViewName)
 
-		if var_13_4 ~= ViewName.ToastView and var_13_4 ~= ViewName.StorySceneView and not var_0_2[var_13_4] then
-			local var_13_7 = var_13_6 and var_13_6.viewGO
+		if openViewName ~= ViewName.ToastView and openViewName ~= ViewName.StorySceneView and not IgnoreTopLayerViewDict[openViewName] then
+			local viewGO = viewContainer and viewContainer.viewGO
+			local parentTr = viewGO and viewGO.transform.parent.parent
 
-			if (var_13_7 and var_13_7.transform.parent.parent) == var_13_0.transform then
-				arg_13_0:_dispatchSpace(var_13_4)
+			if parentTr == uiRootGO.transform then
+				self:_dispatchSpace(openViewName)
 
 				return
 			end
@@ -321,11 +338,11 @@ function var_0_0._onSpaceBtnClick(arg_13_0)
 	end
 end
 
-function var_0_0._dispatchSpace(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_0._spaceParamDict[arg_14_1]
+function NavigateMgr:_dispatchSpace(viewName)
+	local spaceParam = self._spaceParamDict[viewName]
 
-	if var_14_0 and var_14_0.callback then
-		var_14_0.callback(var_14_0.callbackObj)
+	if spaceParam and spaceParam.callback then
+		spaceParam.callback(spaceParam.callbackObj)
 	end
 
 	if not LoginModel.instance:isDoneLogin() then
@@ -333,36 +350,38 @@ function var_0_0._dispatchSpace(arg_14_0, arg_14_1)
 	end
 end
 
-function var_0_0.setNavigationEnabled(arg_15_0, arg_15_1)
-	if arg_15_0._eventSystem then
-		arg_15_0._eventSystem.sendNavigationEvents = arg_15_1
+function NavigateMgr:setNavigationEnabled(isEnabled)
+	if self._eventSystem then
+		self._eventSystem.sendNavigationEvents = isEnabled
 	end
 end
 
-function var_0_0.isEventSystemActive(arg_16_0)
-	return arg_16_0._eventSystemGO and arg_16_0._eventSystemGO.activeInHierarchy
+function NavigateMgr:isEventSystemActive()
+	return self._eventSystemGO and self._eventSystemGO.activeInHierarchy
 end
 
-function var_0_0._modifyScroll(arg_17_0, arg_17_1)
-	local var_17_0 = ViewMgr.instance:getContainer(arg_17_1)
-	local var_17_1 = var_17_0 and var_17_0.viewGO
+function NavigateMgr:_modifyScroll(viewName)
+	local viewContainer = ViewMgr.instance:getContainer(viewName)
+	local viewGO = viewContainer and viewContainer.viewGO
 
-	if not var_17_1 then
+	if not viewGO then
 		return
 	end
 
-	local var_17_2 = var_17_1:GetComponentsInChildren(typeof(UnityEngine.UI.ScrollRect), true)
+	local scrollList = viewGO:GetComponentsInChildren(typeof(UnityEngine.UI.ScrollRect), true)
 
-	if var_17_2 then
-		local var_17_3 = var_17_2:GetEnumerator()
+	if scrollList then
+		local iter = scrollList:GetEnumerator()
 
-		while var_17_3:MoveNext() do
-			var_17_3.Current.scrollSensitivity = 50
+		while iter:MoveNext() do
+			local scroll = iter.Current
+
+			scroll.scrollSensitivity = 50
 		end
 	end
 end
 
-local var_0_3 = {
+local LayerOrder = {
 	GUIDE = 4,
 	POPUP = 2,
 	HUD = 1,
@@ -371,44 +390,45 @@ local var_0_3 = {
 	POPUP_TOP = 3
 }
 
-function var_0_0.sortOpenViewNameList(arg_18_0)
-	local var_18_0 = {}
+function NavigateMgr.sortOpenViewNameList(openViewNameList)
+	local openViewNameTableList = {}
 
-	for iter_18_0, iter_18_1 in ipairs(arg_18_0) do
-		local var_18_1 = {
-			openViewName = iter_18_1,
-			originOrder = iter_18_0
-		}
-		local var_18_2 = ViewMgr.instance:getSetting(iter_18_1)
+	for i, openViewName in ipairs(openViewNameList) do
+		local openViewNameTable = {}
 
-		var_18_1.layerOrder = var_0_3.POPUP_TOP
+		openViewNameTable.openViewName = openViewName
+		openViewNameTable.originOrder = i
 
-		if var_18_2 and var_0_3[var_18_2.layer] then
-			var_18_1.layerOrder = var_0_3[var_18_2.layer]
+		local viewSetting = ViewMgr.instance:getSetting(openViewName)
+
+		openViewNameTable.layerOrder = LayerOrder.POPUP_TOP
+
+		if viewSetting and LayerOrder[viewSetting.layer] then
+			openViewNameTable.layerOrder = LayerOrder[viewSetting.layer]
 		end
 
-		table.insert(var_18_0, var_18_1)
+		table.insert(openViewNameTableList, openViewNameTable)
 	end
 
-	table.sort(var_18_0, function(arg_19_0, arg_19_1)
-		if arg_19_0.layerOrder ~= arg_19_1.layerOrder then
-			return arg_19_0.layerOrder < arg_19_1.layerOrder
+	table.sort(openViewNameTableList, function(x, y)
+		if x.layerOrder ~= y.layerOrder then
+			return x.layerOrder < y.layerOrder
 		end
 
-		return arg_19_0.originOrder < arg_19_1.originOrder
+		return x.originOrder < y.originOrder
 	end)
 
-	local var_18_3 = {}
+	local newOpenViewNameList = {}
 
-	for iter_18_2, iter_18_3 in ipairs(var_18_0) do
-		table.insert(var_18_3, iter_18_3.openViewName)
+	for i, openViewNameTable in ipairs(openViewNameTableList) do
+		table.insert(newOpenViewNameList, openViewNameTable.openViewName)
 	end
 
-	return var_18_3
+	return newOpenViewNameList
 end
 
-var_0_0.instance = var_0_0.New()
+NavigateMgr.instance = NavigateMgr.New()
 
-LuaEventSystem.addEventMechanism(var_0_0.instance)
+LuaEventSystem.addEventMechanism(NavigateMgr.instance)
 
-return var_0_0
+return NavigateMgr

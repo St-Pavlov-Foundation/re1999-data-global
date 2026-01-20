@@ -1,45 +1,47 @@
-﻿module("modules.logic.gm.work.GmUpgradeAllHeroToMaxTalent", package.seeall)
+﻿-- chunkname: @modules/logic/gm/work/GmUpgradeAllHeroToMaxTalent.lua
 
-local var_0_0 = class("GmUpgradeAllHeroToMaxTalent", BaseWork)
+module("modules.logic.gm.work.GmUpgradeAllHeroToMaxTalent", package.seeall)
 
-var_0_0.BlockKey = "send max talent msg ing"
+local GmUpgradeAllHeroToMaxTalent = class("GmUpgradeAllHeroToMaxTalent", BaseWork)
 
-function var_0_0.onStart(arg_1_0)
-	UIBlockMgr.instance:startBlock(var_0_0.BlockKey)
+GmUpgradeAllHeroToMaxTalent.BlockKey = "send max talent msg ing"
 
-	arg_1_0.heroList = HeroModel.instance:getList()
-	arg_1_0.curIndex = 0
-	arg_1_0.maxCount = #arg_1_0.heroList
+function GmUpgradeAllHeroToMaxTalent:onStart()
+	UIBlockMgr.instance:startBlock(GmUpgradeAllHeroToMaxTalent.BlockKey)
 
-	local var_1_0 = 50
+	self.heroList = HeroModel.instance:getList()
+	self.curIndex = 0
+	self.maxCount = #self.heroList
 
-	TaskDispatcher.runRepeat(arg_1_0.senMsg, arg_1_0, 1 / var_1_0)
+	local everySecondSendMsgCount = 50
+
+	TaskDispatcher.runRepeat(self.senMsg, self, 1 / everySecondSendMsgCount)
 end
 
-function var_0_0.senMsg(arg_2_0)
-	arg_2_0.curIndex = arg_2_0.curIndex + 1
+function GmUpgradeAllHeroToMaxTalent:senMsg()
+	self.curIndex = self.curIndex + 1
 
-	local var_2_0 = arg_2_0.heroList[arg_2_0.curIndex]
+	local heroMo = self.heroList[self.curIndex]
 
-	if not var_2_0 then
-		return arg_2_0:senMsgDone()
+	if not heroMo then
+		return self:senMsgDone()
 	end
 
-	local var_2_1 = HeroResonanceConfig.instance:getHeroMaxTalentLv(var_2_0.heroId)
-	local var_2_2 = string.format("add heroAttr %d#%d#%d#%d#%d", var_2_0.heroId, var_2_0.level, 0, var_2_1, var_2_0.exSkillLevel)
+	local maxTalent = HeroResonanceConfig.instance:getHeroMaxTalentLv(heroMo.heroId)
+	local msg = string.format("add heroAttr %d#%d#%d#%d#%d", heroMo.heroId, heroMo.level, 0, maxTalent, heroMo.exSkillLevel)
 
-	GMRpc.instance:sendGMRequest(var_2_2)
-	GameFacade.showToastString(string.format("设置最大共鸣进度  %s / %s", arg_2_0.curIndex, arg_2_0.maxCount))
+	GMRpc.instance:sendGMRequest(msg)
+	GameFacade.showToastString(string.format("设置最大共鸣进度  %s / %s", self.curIndex, self.maxCount))
 end
 
-function var_0_0.senMsgDone(arg_3_0)
-	arg_3_0:clearWork()
-	arg_3_0:onDone(true)
+function GmUpgradeAllHeroToMaxTalent:senMsgDone()
+	self:clearWork()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0.senMsg, arg_4_0)
-	UIBlockMgr.instance:endBlock(var_0_0.BlockKey)
+function GmUpgradeAllHeroToMaxTalent:clearWork()
+	TaskDispatcher.cancelTask(self.senMsg, self)
+	UIBlockMgr.instance:endBlock(GmUpgradeAllHeroToMaxTalent.BlockKey)
 end
 
-return var_0_0
+return GmUpgradeAllHeroToMaxTalent

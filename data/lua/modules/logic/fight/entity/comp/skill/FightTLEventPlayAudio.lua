@@ -1,9 +1,11 @@
-﻿module("modules.logic.fight.entity.comp.skill.FightTLEventPlayAudio", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skill/FightTLEventPlayAudio.lua
 
-local var_0_0 = class("FightTLEventPlayAudio", FightTimelineTrackItem)
+module("modules.logic.fight.entity.comp.skill.FightTLEventPlayAudio", package.seeall)
 
-function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	if FightWorkBFSGSkillStart.BeiFangShaoGeUniqueSkill and arg_1_3[2] == "1" then
+local FightTLEventPlayAudio = class("FightTLEventPlayAudio", FightTimelineTrackItem)
+
+function FightTLEventPlayAudio:onTrackStart(fightStepData, duration, paramsArr)
+	if FightWorkBFSGSkillStart.BeiFangShaoGeUniqueSkill and paramsArr[2] == "1" then
 		if FightWorkBFSGSkillStart.BeiFangShaoGeUniqueSkill <= 0 then
 			return
 		end
@@ -11,48 +13,48 @@ function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 		FightWorkBFSGSkillStart.BeiFangShaoGeUniqueSkill = FightWorkBFSGSkillStart.BeiFangShaoGeUniqueSkill - 1
 	end
 
-	local var_1_0 = tonumber(arg_1_3[1])
-	local var_1_1 = FightHelper.getEntity(arg_1_1.fromId)
+	local audioId = tonumber(paramsArr[1])
+	local entity = FightHelper.getEntity(fightStepData.fromId)
 
-	if not var_1_1 then
+	if not entity then
 		return
 	end
 
-	local var_1_2 = var_1_1:getMO()
-	local var_1_3 = arg_1_1.supportHeroId ~= 0 and arg_1_1.supportHeroId or var_1_2 and var_1_2.modelId
-	local var_1_4 = var_1_1:isMySide()
-	local var_1_5
+	local entityMO = entity:getMO()
+	local modelId = fightStepData.supportHeroId ~= 0 and fightStepData.supportHeroId or entityMO and entityMO.modelId
+	local isMySide = entity:isMySide()
+	local customAudioLang
 
-	if var_1_3 then
-		if var_1_4 then
-			local var_1_6, var_1_7, var_1_8 = SettingsRoleVoiceModel.instance:getCharVoiceLangPrefValue(var_1_3)
+	if modelId then
+		if isMySide then
+			local charVoiceLangId, langStr, usingDefaultLang = SettingsRoleVoiceModel.instance:getCharVoiceLangPrefValue(modelId)
 
-			if var_1_8 then
-				FightAudioMgr.instance:playAudio(var_1_0)
+			if usingDefaultLang then
+				FightAudioMgr.instance:playAudio(audioId)
 			else
-				local var_1_9 = LangSettings.shortcutTab[var_1_6]
+				local charVoiceLang = LangSettings.shortcutTab[charVoiceLangId]
 
-				if not string.nilorempty(var_1_9) then
-					var_1_5 = var_1_9
+				if not string.nilorempty(charVoiceLang) then
+					customAudioLang = charVoiceLang
 				end
 
-				FightAudioMgr.instance:playAudioWithLang(var_1_0, var_1_5)
+				FightAudioMgr.instance:playAudioWithLang(audioId, customAudioLang)
 			end
 		else
-			local var_1_10 = GameConfig:GetCurVoiceShortcut()
+			customAudioLang = GameConfig:GetCurVoiceShortcut()
 
-			FightAudioMgr.instance:playAudioWithLang(var_1_0, var_1_10)
+			FightAudioMgr.instance:playAudioWithLang(audioId, customAudioLang)
 		end
 	else
-		FightAudioMgr.instance:playAudio(var_1_0)
+		FightAudioMgr.instance:playAudio(audioId)
 	end
 
-	arg_1_1.atkAudioId = var_1_0
-	arg_1_0._audioId = var_1_0
+	fightStepData.atkAudioId = audioId
+	self._audioId = audioId
 end
 
-function var_0_0.skipSkill(arg_2_0)
-	FightAudioMgr.instance:stopAudio(arg_2_0._audioId)
+function FightTLEventPlayAudio:skipSkill()
+	FightAudioMgr.instance:stopAudio(self._audioId)
 end
 
-return var_0_0
+return FightTLEventPlayAudio

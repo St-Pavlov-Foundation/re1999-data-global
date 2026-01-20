@@ -1,356 +1,367 @@
-﻿module("modules.logic.room.entity.comp.RoomAtmosphereComp", package.seeall)
+﻿-- chunkname: @modules/logic/room/entity/comp/RoomAtmosphereComp.lua
 
-local var_0_0 = class("RoomAtmosphereComp", LuaCompBase)
+module("modules.logic.room.entity.comp.RoomAtmosphereComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.entity = arg_1_1
-	arg_1_0._buildingId = arg_1_0.entity.id
+local RoomAtmosphereComp = class("RoomAtmosphereComp", LuaCompBase)
 
-	if arg_1_0.entity.getMO then
-		arg_1_0._buildingId = arg_1_0.entity:getMO().buildingId
+function RoomAtmosphereComp:ctor(entity)
+	self.entity = entity
+	self._buildingId = self.entity.id
+
+	if self.entity.getMO then
+		local buildingMO = self.entity:getMO()
+
+		self._buildingId = buildingMO.buildingId
 	end
 
-	arg_1_0._atmosphereDict = {}
+	self._atmosphereDict = {}
 
-	arg_1_0:setIsBlockAtmosphere(false)
+	self:setIsBlockAtmosphere(false)
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
+function RoomAtmosphereComp:init(go)
+	self.go = go
 
-	local var_2_0 = {}
-	local var_2_1 = {}
-	local var_2_2 = RoomConfig.instance:getBuildingAtmospheres(arg_2_0._buildingId)
+	local effectPathList = {}
+	local effectPathDict = {}
+	local atmosphereList = RoomConfig.instance:getBuildingAtmospheres(self._buildingId)
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_2) do
-		local var_2_3 = RoomConfig.instance:getAtmosphereAllEffectPathList(iter_2_1)
+	for _, atmosphereId in ipairs(atmosphereList) do
+		local pathList = RoomConfig.instance:getAtmosphereAllEffectPathList(atmosphereId)
 
-		for iter_2_2, iter_2_3 in ipairs(var_2_3) do
-			if not var_2_1[iter_2_3] then
-				var_2_0[#var_2_0 + 1] = iter_2_3
-				var_2_1[iter_2_3] = true
+		for _, path in ipairs(pathList) do
+			if not effectPathDict[path] then
+				effectPathList[#effectPathList + 1] = path
+				effectPathDict[path] = true
 			end
 		end
 	end
 
-	GameSceneMgr.instance:getCurScene().loader:makeSureLoaded(var_2_0, arg_2_0.beginCheckAtmosphere, arg_2_0)
+	local sceneLoader = GameSceneMgr.instance:getCurScene().loader
+
+	sceneLoader:makeSureLoaded(effectPathList, self.beginCheckAtmosphere, self)
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	arg_3_0:addEventCb(RoomMapController.instance, RoomEvent.BlockAtmosphereEffect, arg_3_0.onBlockAtmosphere, arg_3_0)
-	arg_3_0:addEventCb(RoomMapController.instance, RoomEvent.ResumeAtmosphereEffect, arg_3_0.onResumeAtmosphere, arg_3_0)
-	arg_3_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_3_0.onOpenViewFinish, arg_3_0)
-	arg_3_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0.onCloseView, arg_3_0)
-	arg_3_0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, arg_3_0.refreshManufactureState, arg_3_0)
-	arg_3_0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, arg_3_0.refreshManufactureState, arg_3_0)
+function RoomAtmosphereComp:addEventListeners()
+	self:addEventCb(RoomMapController.instance, RoomEvent.BlockAtmosphereEffect, self.onBlockAtmosphere, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.ResumeAtmosphereEffect, self.onResumeAtmosphere, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, self.onOpenViewFinish, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self.onCloseView, self)
+	self:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, self.refreshManufactureState, self)
+	self:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, self.refreshManufactureState, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	arg_4_0:removeEventCb(RoomMapController.instance, RoomEvent.BlockAtmosphereEffect, arg_4_0.onBlockAtmosphere, arg_4_0)
-	arg_4_0:removeEventCb(RoomMapController.instance, RoomEvent.ResumeAtmosphereEffect, arg_4_0.onResumeAtmosphere, arg_4_0)
-	arg_4_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_4_0.onOpenViewFinish, arg_4_0)
-	arg_4_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_4_0.onCloseView, arg_4_0)
-	arg_4_0:removeEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, arg_4_0.refreshManufactureState, arg_4_0)
-	arg_4_0:removeEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, arg_4_0.refreshManufactureState, arg_4_0)
+function RoomAtmosphereComp:removeEventListeners()
+	self:removeEventCb(RoomMapController.instance, RoomEvent.BlockAtmosphereEffect, self.onBlockAtmosphere, self)
+	self:removeEventCb(RoomMapController.instance, RoomEvent.ResumeAtmosphereEffect, self.onResumeAtmosphere, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, self.onOpenViewFinish, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self.onCloseView, self)
+	self:removeEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, self.refreshManufactureState, self)
+	self:removeEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, self.refreshManufactureState, self)
 end
 
-function var_0_0.onBlockAtmosphere(arg_5_0)
-	arg_5_0:setIsBlockAtmosphere(true)
-	TaskDispatcher.cancelTask(arg_5_0.repeatCheckAtmosphere, arg_5_0)
-	arg_5_0:stopAllAtmosphere()
+function RoomAtmosphereComp:onBlockAtmosphere()
+	self:setIsBlockAtmosphere(true)
+	TaskDispatcher.cancelTask(self.repeatCheckAtmosphere, self)
+	self:stopAllAtmosphere()
 end
 
-function var_0_0.onResumeAtmosphere(arg_6_0)
-	arg_6_0:setIsBlockAtmosphere(false)
-	arg_6_0:beginCheckAtmosphere()
+function RoomAtmosphereComp:onResumeAtmosphere()
+	self:setIsBlockAtmosphere(false)
+	self:beginCheckAtmosphere()
 end
 
-function var_0_0.onOpenViewFinish(arg_7_0, arg_7_1)
-	if RoomEnum.AtmosphereAudioFadeView[arg_7_1] then
-		arg_7_0:setAtmosphereAudioIsFade(true)
+function RoomAtmosphereComp:onOpenViewFinish(viewName)
+	if RoomEnum.AtmosphereAudioFadeView[viewName] then
+		self:setAtmosphereAudioIsFade(true)
 	end
 end
 
-function var_0_0.onCloseView(arg_8_0, arg_8_1)
-	if RoomEnum.AtmosphereAudioFadeView[arg_8_1] then
-		arg_8_0:setAtmosphereAudioIsFade(false)
+function RoomAtmosphereComp:onCloseView(viewName)
+	if RoomEnum.AtmosphereAudioFadeView[viewName] then
+		self:setAtmosphereAudioIsFade(false)
 	end
 end
 
-function var_0_0.setAtmosphereAudioIsFade(arg_9_0, arg_9_1)
-	for iter_9_0, iter_9_1 in pairs(arg_9_0._atmosphereDict) do
-		local var_9_0 = arg_9_0:_getAtmosphereFlow(iter_9_0)
+function RoomAtmosphereComp:setAtmosphereAudioIsFade(isFade)
+	for atmosphereId, _ in pairs(self._atmosphereDict) do
+		local atmosphereFlow = self:_getAtmosphereFlow(atmosphereId)
 
-		if var_9_0 then
-			var_9_0:setAllWorkAudioIsFade(arg_9_1)
+		if atmosphereFlow then
+			atmosphereFlow:setAllWorkAudioIsFade(isFade)
 		end
 	end
 end
 
-function var_0_0.setIsBlockAtmosphere(arg_10_0, arg_10_1)
-	arg_10_0._isBlockAtmosphere = arg_10_1
+function RoomAtmosphereComp:setIsBlockAtmosphere(isBlock)
+	self._isBlockAtmosphere = isBlock
 end
 
-function var_0_0._getAtmosphere(arg_11_0, arg_11_1)
-	if not arg_11_0._atmosphereDict then
-		arg_11_0._atmosphereDict = {}
+function RoomAtmosphereComp:_getAtmosphere(atmosphereId)
+	if not self._atmosphereDict then
+		self._atmosphereDict = {}
 	end
 
-	local var_11_0 = arg_11_0._atmosphereDict[arg_11_1]
+	local atmosphere = self._atmosphereDict[atmosphereId]
 
-	if not var_11_0 then
-		var_11_0 = {}
+	if not atmosphere then
+		atmosphere = {}
 
-		arg_11_0:_resetAtmosphere(var_11_0)
+		self:_resetAtmosphere(atmosphere)
 
-		arg_11_0._atmosphereDict[arg_11_1] = var_11_0
+		self._atmosphereDict[atmosphereId] = atmosphere
 	end
 
-	return var_11_0
+	return atmosphere
 end
 
-function var_0_0._getAtmosphereFlow(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = arg_12_0:_getAtmosphere(arg_12_1)
-	local var_12_1 = var_12_0.flow
+function RoomAtmosphereComp:_getAtmosphereFlow(atmosphereId, autoNew)
+	local atmosphere = self:_getAtmosphere(atmosphereId)
+	local atmosphereFlow = atmosphere.flow
 
-	if not var_12_1 and arg_12_2 then
-		var_12_1 = RoomAtmosphereFlowSequence.New(arg_12_1)
+	if not atmosphereFlow and autoNew then
+		atmosphereFlow = RoomAtmosphereFlowSequence.New(atmosphereId)
 
-		local var_12_2 = RoomConfig.instance:getAtmosphereEffectIdList(arg_12_1)
+		local effectIdList = RoomConfig.instance:getAtmosphereEffectIdList(atmosphereId)
 
-		for iter_12_0, iter_12_1 in ipairs(var_12_2) do
-			local var_12_3 = RoomAtmosphereEffectWork.New(iter_12_1, arg_12_0.go)
+		for _, effectId in ipairs(effectIdList) do
+			local work = RoomAtmosphereEffectWork.New(effectId, self.go)
 
-			var_12_1:addWork(var_12_3)
+			atmosphereFlow:addWork(work)
 		end
 
-		var_12_0.flow = var_12_1
+		atmosphere.flow = atmosphereFlow
 
-		var_12_1:registerDoneListener(arg_12_0.atmosphereSequenceFinish, arg_12_0)
+		atmosphereFlow:registerDoneListener(self.atmosphereSequenceFinish, self)
 	end
 
-	return var_12_1
+	return atmosphereFlow
 end
 
-function var_0_0._getAtmosphereResidentEffGO(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0 = RoomConfig.instance:getAtmosphereResidentEffect(arg_13_1)
+function RoomAtmosphereComp:_getAtmosphereResidentEffGO(atmosphereId, autoNew)
+	local residentEffectId = RoomConfig.instance:getAtmosphereResidentEffect(atmosphereId)
 
-	if not var_13_0 or var_13_0 == 0 then
+	if not residentEffectId or residentEffectId == 0 then
 		return
 	end
 
-	local var_13_1 = arg_13_0:_getAtmosphere(arg_13_1)
-	local var_13_2 = var_13_1.residentEffGO
+	local atmosphere = self:_getAtmosphere(atmosphereId)
+	local residentEffGO = atmosphere.residentEffGO
 
-	if gohelper.isNil(var_13_2) and arg_13_2 then
-		local var_13_3 = RoomConfig.instance:getRoomEffectPath(var_13_0)
-		local var_13_4
+	if gohelper.isNil(residentEffGO) and autoNew then
+		local residentPath = RoomConfig.instance:getRoomEffectPath(residentEffectId)
+		local abPath
 
 		if not GameResMgr.IsFromEditorDir then
-			var_13_4 = FightHelper.getEffectAbPath(var_13_3)
+			abPath = FightHelper.getEffectAbPath(residentPath)
 		end
 
-		var_13_2 = RoomGOPool.getInstance(var_13_3, arg_13_0.go, "residentEffect_" .. var_13_0, var_13_4)
-		var_13_1.residentEffGO = var_13_2
+		residentEffGO = RoomGOPool.getInstance(residentPath, self.go, "residentEffect_" .. residentEffectId, abPath)
+		atmosphere.residentEffGO = residentEffGO
 	end
 
-	return var_13_2
+	return residentEffGO
 end
 
-function var_0_0._resetAtmosphere(arg_14_0, arg_14_1)
-	if not arg_14_1 then
+function RoomAtmosphereComp:_resetAtmosphere(atmosphere)
+	if not atmosphere then
 		return
 	end
 
-	arg_14_1.cyclesTimes = 0
-	arg_14_1.isPlaying = false
-	arg_14_1.isFlowPlaying = false
+	atmosphere.cyclesTimes = 0
+	atmosphere.isPlaying = false
+	atmosphere.isFlowPlaying = false
 end
 
-function var_0_0.beginCheckAtmosphere(arg_15_0)
-	arg_15_0:repeatCheckAtmosphere()
-	TaskDispatcher.cancelTask(arg_15_0.repeatCheckAtmosphere, arg_15_0)
-	TaskDispatcher.runRepeat(arg_15_0.repeatCheckAtmosphere, arg_15_0, 1)
+function RoomAtmosphereComp:beginCheckAtmosphere()
+	self:repeatCheckAtmosphere()
+	TaskDispatcher.cancelTask(self.repeatCheckAtmosphere, self)
+	TaskDispatcher.runRepeat(self.repeatCheckAtmosphere, self, 1)
 end
 
-function var_0_0.repeatCheckAtmosphere(arg_16_0)
-	if arg_16_0._isBlockAtmosphere then
+function RoomAtmosphereComp:repeatCheckAtmosphere()
+	if self._isBlockAtmosphere then
 		return
 	end
 
-	local var_16_0, var_16_1 = RoomModel.instance:getOpenAndEndAtmosphereList(arg_16_0._buildingId)
+	local openList, endList = RoomModel.instance:getOpenAndEndAtmosphereList(self._buildingId)
 
-	for iter_16_0, iter_16_1 in ipairs(var_16_1) do
-		arg_16_0:stopAtmosphere(iter_16_1)
+	for _, atmosphereId in ipairs(endList) do
+		self:stopAtmosphere(atmosphereId)
 	end
 
-	if not var_16_0 or #var_16_0 <= 0 then
+	if not openList or #openList <= 0 then
 		return
 	end
 
-	for iter_16_2, iter_16_3 in ipairs(var_16_0) do
-		if not arg_16_0:_getAtmosphere(iter_16_3).isFlowPlaying then
-			arg_16_0:beginAtmosphere(iter_16_3)
+	for _, atmosphereId in ipairs(openList) do
+		local atmosphere = self:_getAtmosphere(atmosphereId)
+
+		if not atmosphere.isFlowPlaying then
+			self:beginAtmosphere(atmosphereId)
 		end
 	end
 end
 
-function var_0_0.beginAtmosphere(arg_17_0, arg_17_1)
-	local var_17_0 = arg_17_0:_getAtmosphere(arg_17_1)
+function RoomAtmosphereComp:beginAtmosphere(atmosphereId)
+	local atmosphere = self:_getAtmosphere(atmosphereId)
 
-	var_17_0.cyclesTimes = 1
-	var_17_0.isFlowPlaying = true
+	atmosphere.cyclesTimes = 1
+	atmosphere.isFlowPlaying = true
 
-	local var_17_1 = arg_17_0:_getAtmosphereResidentEffGO(arg_17_1, true)
+	local residentEffGO = self:_getAtmosphereResidentEffGO(atmosphereId, true)
 
-	gohelper.setActive(var_17_1, false)
-	gohelper.setActive(var_17_1, true)
+	gohelper.setActive(residentEffGO, false)
+	gohelper.setActive(residentEffGO, true)
 
-	var_17_0.isPlaying = true
+	atmosphere.isPlaying = true
 
-	local var_17_2 = arg_17_0:_getAtmosphereFlow(arg_17_1, true)
+	local atmosphereFlow = self:_getAtmosphereFlow(atmosphereId, true)
 
-	var_17_2:reset()
-	var_17_2:start()
+	atmosphereFlow:reset()
+	atmosphereFlow:start()
 end
 
-function var_0_0.atmosphereSequenceFinish(arg_18_0, arg_18_1, arg_18_2)
-	local var_18_0 = arg_18_2 and arg_18_0:_getAtmosphere(arg_18_2) or nil
+function RoomAtmosphereComp:atmosphereSequenceFinish(isSuccess, atmosphereId)
+	local atmosphere = atmosphereId and self:_getAtmosphere(atmosphereId) or nil
 
-	if not var_18_0 then
+	if not atmosphere then
 		return
 	end
 
-	if not arg_18_1 then
-		arg_18_0:stopAtmosphere(arg_18_2)
+	if not isSuccess then
+		self:stopAtmosphere(atmosphereId)
 
 		return
 	end
 
-	local var_18_1 = RoomConfig.instance:getAtmosphereCyclesTimes(arg_18_2)
-	local var_18_2 = RoomConfig.instance:getAtmosphereCfg(arg_18_2)
-	local var_18_3 = var_18_2 and var_18_2.cdtimes or 0
-	local var_18_4 = var_18_0.cyclesTimes
-	local var_18_5 = var_18_1 == 0 or var_18_4 < var_18_1
-	local var_18_6 = arg_18_0:_getAtmosphereFlow(arg_18_2)
+	local cfgCyclesTimes = RoomConfig.instance:getAtmosphereCyclesTimes(atmosphereId)
+	local cfg = RoomConfig.instance:getAtmosphereCfg(atmosphereId)
+	local cfgCdTime = cfg and cfg.cdtimes or 0
+	local curCyclesTimes = atmosphere.cyclesTimes
+	local isCanCycles = cfgCyclesTimes == 0 or curCyclesTimes < cfgCyclesTimes
+	local atmosphereFlow = self:_getAtmosphereFlow(atmosphereId)
 
-	if var_18_6 and var_18_5 and var_18_3 == 0 then
-		var_18_6:start()
+	if atmosphereFlow and isCanCycles and cfgCdTime == 0 then
+		atmosphereFlow:start()
 
-		var_18_0.cyclesTimes = var_18_4 + 1
+		atmosphere.cyclesTimes = curCyclesTimes + 1
 	else
-		if var_18_6 then
-			var_18_6:reset()
+		if atmosphereFlow then
+			atmosphereFlow:reset()
 		end
 
-		arg_18_0:stopAtmosphere(arg_18_2)
-		RoomModel.instance:setAtmosphereHasPlay(arg_18_2)
+		self:stopAtmosphere(atmosphereId)
+		RoomModel.instance:setAtmosphereHasPlay(atmosphereId)
 	end
 end
 
-function var_0_0.stopAllAtmosphere(arg_19_0)
-	for iter_19_0, iter_19_1 in pairs(arg_19_0._atmosphereDict) do
-		arg_19_0:stopAtmosphere(iter_19_0)
+function RoomAtmosphereComp:stopAllAtmosphere()
+	for atmosphereId, _ in pairs(self._atmosphereDict) do
+		self:stopAtmosphere(atmosphereId)
 	end
 end
 
-function var_0_0.stopAtmosphere(arg_20_0, arg_20_1)
-	local var_20_0 = arg_20_0:_getAtmosphere(arg_20_1)
+function RoomAtmosphereComp:stopAtmosphere(atmosphereId)
+	local atmosphere = self:_getAtmosphere(atmosphereId)
 
-	if not var_20_0.isPlaying then
+	if not atmosphere.isPlaying then
 		return
 	end
 
-	local var_20_1 = arg_20_0:_getAtmosphereFlow(arg_20_1)
+	local atmosphereFlow = self:_getAtmosphereFlow(atmosphereId)
 
-	if var_20_1 then
-		var_20_1:stop()
+	if atmosphereFlow then
+		atmosphereFlow:stop()
 	end
 
-	arg_20_0:_resetAtmosphere(var_20_0)
+	self:_resetAtmosphere(atmosphere)
 
-	local var_20_2 = arg_20_0:_getAtmosphereResidentEffGO(arg_20_1)
+	local residentEffGO = self:_getAtmosphereResidentEffGO(atmosphereId)
 
-	gohelper.setActive(var_20_2, false)
+	gohelper.setActive(residentEffGO, false)
 end
 
-function var_0_0.onEffectRebuild(arg_21_0)
-	if arg_21_0.__willDestroy then
+function RoomAtmosphereComp:onEffectRebuild()
+	if self.__willDestroy then
 		return
 	end
 
-	arg_21_0:refreshManufactureState()
+	self:refreshManufactureState()
 end
 
-function var_0_0.refreshManufactureState(arg_22_0)
-	local var_22_0
+function RoomAtmosphereComp:refreshManufactureState()
+	local buildingMO
 
-	if arg_22_0.entity.getMO then
-		var_22_0 = arg_22_0.entity:getMO()
+	if self.entity.getMO then
+		buildingMO = self.entity:getMO()
 	end
 
-	if not var_22_0 then
+	if not buildingMO then
 		return
 	end
 
-	if not ManufactureConfig.instance:isManufactureBuilding(arg_22_0._buildingId) then
+	local isManuBuilding = ManufactureConfig.instance:isManufactureBuilding(self._buildingId)
+
+	if not isManuBuilding then
 		return
 	end
 
-	local var_22_1 = var_22_0:getManufactureState() == RoomManufactureEnum.ManufactureState.Running
-	local var_22_2 = RoomBuildingEnum.AnimName.Idel
+	local manuState = buildingMO:getManufactureState()
+	local isRunning = manuState == RoomManufactureEnum.ManufactureState.Running
+	local anim = RoomBuildingEnum.AnimName.Idel
 
-	if var_22_1 then
-		var_22_2 = RoomBuildingEnum.AnimName.Produce
+	if isRunning then
+		anim = RoomBuildingEnum.AnimName.Produce
 	end
 
-	local var_22_3 = arg_22_0.entity:getMainEffectKey()
+	local effectKey = self.entity:getMainEffectKey()
 
-	arg_22_0.entity.effect:playEffectAnimator(var_22_3, var_22_2)
+	self.entity.effect:playEffectAnimator(effectKey, anim)
 
-	local var_22_4 = arg_22_0.entity.effect:getGameObjectsByName(var_22_3, RoomEnum.EntityChildKey.ProduceGOKey)
+	local goList = self.entity.effect:getGameObjectsByName(effectKey, RoomEnum.EntityChildKey.ProduceGOKey)
 
-	if var_22_4 then
-		for iter_22_0, iter_22_1 in ipairs(var_22_4) do
-			gohelper.setActive(iter_22_1, var_22_1)
+	if goList then
+		for _, go in ipairs(goList) do
+			gohelper.setActive(go, isRunning)
 		end
 	end
 end
 
-function var_0_0.beforeDestroy(arg_23_0)
-	arg_23_0.__willDestroy = true
+function RoomAtmosphereComp:beforeDestroy()
+	self.__willDestroy = true
 
-	arg_23_0:removeEventListeners()
+	self:removeEventListeners()
 end
 
-function var_0_0.onDestroy(arg_24_0)
-	TaskDispatcher.cancelTask(arg_24_0.repeatCheckAtmosphere, arg_24_0)
+function RoomAtmosphereComp:onDestroy()
+	TaskDispatcher.cancelTask(self.repeatCheckAtmosphere, self)
 
-	arg_24_0.entity = nil
-	arg_24_0.go = nil
-	arg_24_0._buildingId = nil
+	self.entity = nil
+	self.go = nil
+	self._buildingId = nil
 
-	for iter_24_0, iter_24_1 in pairs(arg_24_0._atmosphereDict) do
-		if not gohelper.isNil(iter_24_1.residentEffGO) then
-			local var_24_0 = RoomConfig.instance:getAtmosphereResidentEffect(iter_24_0)
-			local var_24_1 = RoomConfig.instance:getRoomEffectPath(var_24_0)
+	for atmosphereId, atmosphere in pairs(self._atmosphereDict) do
+		if not gohelper.isNil(atmosphere.residentEffGO) then
+			local residentEffectId = RoomConfig.instance:getAtmosphereResidentEffect(atmosphereId)
+			local residentPath = RoomConfig.instance:getRoomEffectPath(residentEffectId)
 
-			RoomGOPool.returnInstance(var_24_1, iter_24_1.residentEffGO)
+			RoomGOPool.returnInstance(residentPath, atmosphere.residentEffGO)
 		end
 
-		local var_24_2 = iter_24_1.flow
+		local atmosphereFlow = atmosphere.flow
 
-		if var_24_2 then
-			var_24_2:unregisterDoneListener(arg_24_0.atmosphereSequenceFinish, arg_24_0)
-			var_24_2:destroy()
+		if atmosphereFlow then
+			atmosphereFlow:unregisterDoneListener(self.atmosphereSequenceFinish, self)
+			atmosphereFlow:destroy()
 		end
 
-		arg_24_0:_resetAtmosphere(iter_24_1)
+		self:_resetAtmosphere(atmosphere)
 	end
 
-	arg_24_0._atmosphereDict = nil
+	self._atmosphereDict = nil
 
-	arg_24_0:setIsBlockAtmosphere(false)
+	self:setIsBlockAtmosphere(false)
 end
 
-return var_0_0
+return RoomAtmosphereComp

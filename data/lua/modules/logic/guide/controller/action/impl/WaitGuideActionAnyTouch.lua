@@ -1,25 +1,27 @@
-﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionAnyTouch", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/WaitGuideActionAnyTouch.lua
 
-local var_0_0 = class("WaitGuideActionAnyTouch", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.WaitGuideActionAnyTouch", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	var_0_0.super.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+local WaitGuideActionAnyTouch = class("WaitGuideActionAnyTouch", BaseGuideAction)
+
+function WaitGuideActionAnyTouch:ctor(guideId, stepId, actionParam)
+	WaitGuideActionAnyTouch.super.ctor(self, guideId, stepId, actionParam)
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	var_0_0.super.onStart(arg_2_0, arg_2_1)
-	GameStateMgr.instance:registerCallback(GameStateEvent.OnTouchScreen, arg_2_0._onTouchScreen, arg_2_0)
+function WaitGuideActionAnyTouch:onStart(context)
+	WaitGuideActionAnyTouch.super.onStart(self, context)
+	GameStateMgr.instance:registerCallback(GameStateEvent.OnTouchScreen, self._onTouchScreen, self)
 end
 
-function var_0_0.clearWork(arg_3_0)
-	GameStateMgr.instance:unregisterCallback(GameStateEvent.OnTouchScreen, arg_3_0._onTouchScreen, arg_3_0)
+function WaitGuideActionAnyTouch:clearWork()
+	GameStateMgr.instance:unregisterCallback(GameStateEvent.OnTouchScreen, self._onTouchScreen, self)
 end
 
-function var_0_0._onTouchScreen(arg_4_0)
-	GameStateMgr.instance:unregisterCallback(GameStateEvent.OnTouchScreen, arg_4_0._onTouchScreen, arg_4_0)
+function WaitGuideActionAnyTouch:_onTouchScreen()
+	GameStateMgr.instance:unregisterCallback(GameStateEvent.OnTouchScreen, self._onTouchScreen, self)
 	TaskDispatcher.runDelay(function()
-		arg_4_0:onDone(true)
+		self:onDone(true)
 	end, nil, 0.1)
 end
 
-return var_0_0
+return WaitGuideActionAnyTouch

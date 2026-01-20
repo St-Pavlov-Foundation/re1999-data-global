@@ -1,11 +1,13 @@
-﻿module("modules.logic.battlepass.view.BpPropView2Container", package.seeall)
+﻿-- chunkname: @modules/logic/battlepass/view/BpPropView2Container.lua
 
-local var_0_0 = class("BpPropView2Container", BaseViewContainer)
+module("modules.logic.battlepass.view.BpPropView2Container", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local BpPropView2Container = class("BpPropView2Container", BaseViewContainer)
+
+function BpPropView2Container:buildViews()
 	return {
 		BpPropView2.New()
 	}
 end
 
-return var_0_0
+return BpPropView2Container

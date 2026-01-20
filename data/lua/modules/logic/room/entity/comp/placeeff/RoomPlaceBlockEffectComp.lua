@@ -1,93 +1,94 @@
-﻿module("modules.logic.room.entity.comp.placeeff.RoomPlaceBlockEffectComp", package.seeall)
+﻿-- chunkname: @modules/logic/room/entity/comp/placeeff/RoomPlaceBlockEffectComp.lua
 
-local var_0_0 = class("RoomPlaceBlockEffectComp", RoomBaseBlockEffectComp)
+module("modules.logic.room.entity.comp.placeeff.RoomPlaceBlockEffectComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0, arg_1_1)
+local RoomPlaceBlockEffectComp = class("RoomPlaceBlockEffectComp", RoomBaseBlockEffectComp)
 
-	arg_1_0._hexPointList = {}
+function RoomPlaceBlockEffectComp:ctor(entity)
+	RoomPlaceBlockEffectComp.super.ctor(self, entity)
 
-	tabletool.addValues(arg_1_0._hexPointList, RoomMapHexPointModel.instance:getHexPointList())
+	self._hexPointList = {}
+
+	tabletool.addValues(self._hexPointList, RoomMapHexPointModel.instance:getHexPointList())
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	RoomMapController.instance:registerCallback(RoomEvent.SelectBlock, arg_2_0._refreshCanPlaceEffect, arg_2_0)
-	RoomMapController.instance:registerCallback(RoomEvent.TransportPathViewShowChanged, arg_2_0._refreshCanPlaceEffect, arg_2_0)
-	RoomWaterReformController.instance:registerCallback(RoomEvent.WaterReformShowChanged, arg_2_0._refreshCanPlaceEffect, arg_2_0)
+function RoomPlaceBlockEffectComp:addEventListeners()
+	RoomMapController.instance:registerCallback(RoomEvent.SelectBlock, self._refreshCanPlaceEffect, self)
+	RoomMapController.instance:registerCallback(RoomEvent.TransportPathViewShowChanged, self._refreshCanPlaceEffect, self)
+	RoomWaterReformController.instance:registerCallback(RoomEvent.WaterReformShowChanged, self._refreshCanPlaceEffect, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.SelectBlock, arg_3_0._refreshCanPlaceEffect, arg_3_0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.TransportPathViewShowChanged, arg_3_0._refreshCanPlaceEffect, arg_3_0)
-	RoomWaterReformController.instance:unregisterCallback(RoomEvent.WaterReformShowChanged, arg_3_0._refreshCanPlaceEffect, arg_3_0)
+function RoomPlaceBlockEffectComp:removeEventListeners()
+	RoomMapController.instance:unregisterCallback(RoomEvent.SelectBlock, self._refreshCanPlaceEffect, self)
+	RoomMapController.instance:unregisterCallback(RoomEvent.TransportPathViewShowChanged, self._refreshCanPlaceEffect, self)
+	RoomWaterReformController.instance:unregisterCallback(RoomEvent.WaterReformShowChanged, self._refreshCanPlaceEffect, self)
 end
 
-function var_0_0._refreshCanPlaceEffect(arg_4_0)
-	local var_4_0 = arg_4_0:_isCanShowPlaceEffect()
-	local var_4_1 = RoomMapBlockModel.instance
-	local var_4_2
-	local var_4_3
-	local var_4_4 = arg_4_0.entity.effect
+function RoomPlaceBlockEffectComp:_refreshCanPlaceEffect()
+	local canPlaceEffect = self:_isCanShowPlaceEffect()
+	local tRoomMapBlockModel = RoomMapBlockModel.instance
+	local addParams, removeParams
+	local effectComp = self.entity.effect
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_0._hexPointList) do
-		local var_4_5 = arg_4_0:getEffectKeyById(iter_4_0)
+	for index, hexPoint in ipairs(self._hexPointList) do
+		local effectKey = self:getEffectKeyById(index)
 
-		if var_4_0 and arg_4_0:_checkByXY(iter_4_1.x, iter_4_1.y, var_4_1) then
-			if not var_4_4:isHasKey(var_4_5) then
-				if var_4_2 == nil then
-					var_4_2 = {}
+		if canPlaceEffect and self:_checkByXY(hexPoint.x, hexPoint.y, tRoomMapBlockModel) then
+			if not effectComp:isHasKey(effectKey) then
+				if addParams == nil then
+					addParams = {}
 				end
 
-				local var_4_6 = HexMath.hexToPosition(iter_4_1, RoomBlockEnum.BlockSize)
+				local vec2 = HexMath.hexToPosition(hexPoint, RoomBlockEnum.BlockSize)
 
-				var_4_2[var_4_5] = {
+				addParams[effectKey] = {
 					res = RoomScenePreloader.ResEffectD03,
-					localPos = Vector3(var_4_6.x, -0.12, var_4_6.y)
+					localPos = Vector3(vec2.x, -0.12, vec2.y)
 				}
 			end
-		elseif var_4_4:getEffectRes(var_4_5) then
-			if var_4_3 == nil then
-				var_4_3 = {}
+		elseif effectComp:getEffectRes(effectKey) then
+			if removeParams == nil then
+				removeParams = {}
 			end
 
-			table.insert(var_4_3, var_4_5)
+			table.insert(removeParams, effectKey)
 		end
 	end
 
-	if var_4_2 then
-		var_4_4:addParams(var_4_2)
-		var_4_4:refreshEffect()
+	if addParams then
+		effectComp:addParams(addParams)
+		effectComp:refreshEffect()
 	end
 
-	if var_4_3 then
-		arg_4_0:removeParamsAndPlayAnimator(var_4_3, "close", RoomBlockEnum.PlaceEffectAnimatorCloseTime)
+	if removeParams then
+		self:removeParamsAndPlayAnimator(removeParams, "close", RoomBlockEnum.PlaceEffectAnimatorCloseTime)
 	end
 end
 
-function var_0_0._checkByBlockMO(arg_5_0, arg_5_1)
+function RoomPlaceBlockEffectComp:_checkByBlockMO(blockMO)
 	if RoomEnum.IsBlockNeedConnInit then
-		if arg_5_1 and arg_5_1:canPlace() then
+		if blockMO and blockMO:canPlace() then
 			return true
 		end
-	elseif not arg_5_1 or arg_5_1:canPlace() then
+	elseif not blockMO or blockMO:canPlace() then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0._checkByXY(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	local var_6_0 = arg_6_3:getBlockMO(arg_6_1, arg_6_2)
+function RoomPlaceBlockEffectComp:_checkByXY(x, y, tRoomMapBlockModel)
+	local blockMO = tRoomMapBlockModel:getBlockMO(x, y)
 
-	if var_6_0 and var_6_0.blockState == RoomBlockEnum.BlockState.Map then
+	if blockMO and blockMO.blockState == RoomBlockEnum.BlockState.Map then
 		return false
 	end
 
-	for iter_6_0 = 1, 6 do
-		local var_6_1 = HexPoint.directions[iter_6_0]
-		local var_6_2 = arg_6_3:getBlockMO(arg_6_1 + var_6_1.x, arg_6_2 + var_6_1.y)
+	for i = 1, 6 do
+		local tempHexPoint = HexPoint.directions[i]
+		local neighborMO = tRoomMapBlockModel:getBlockMO(x + tempHexPoint.x, y + tempHexPoint.y)
 
-		if var_6_2 and var_6_2.blockState == RoomBlockEnum.BlockState.Map then
+		if neighborMO and neighborMO.blockState == RoomBlockEnum.BlockState.Map then
 			return true
 		end
 	end
@@ -95,11 +96,11 @@ function var_0_0._checkByXY(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
 	return false
 end
 
-function var_0_0._isCanShowPlaceEffect(arg_7_0)
+function RoomPlaceBlockEffectComp:_isCanShowPlaceEffect()
 	if RoomBlockHelper.isCanPlaceBlock() then
-		local var_7_0 = RoomInventoryBlockModel.instance:getSelectInventoryBlockId()
+		local selectInventoryBlockId = RoomInventoryBlockModel.instance:getSelectInventoryBlockId()
 
-		if var_7_0 and var_7_0 > 0 then
+		if selectInventoryBlockId and selectInventoryBlockId > 0 then
 			return true
 		end
 	end
@@ -107,8 +108,8 @@ function var_0_0._isCanShowPlaceEffect(arg_7_0)
 	return false
 end
 
-function var_0_0.formatEffectKey(arg_8_0, arg_8_1)
-	return arg_8_1
+function RoomPlaceBlockEffectComp:formatEffectKey(index)
+	return index
 end
 
-return var_0_0
+return RoomPlaceBlockEffectComp

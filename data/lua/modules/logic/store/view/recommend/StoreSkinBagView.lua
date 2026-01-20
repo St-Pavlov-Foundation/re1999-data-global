@@ -1,89 +1,91 @@
-﻿module("modules.logic.store.view.recommend.StoreSkinBagView", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/recommend/StoreSkinBagView.lua
 
-local var_0_0 = class("StoreSkinBagView", GiftrecommendViewBase)
+module("modules.logic.store.view.recommend.StoreSkinBagView", package.seeall)
 
-function var_0_0._getCostSymbolAndPrice(arg_1_0, arg_1_1)
-	if not arg_1_1 or arg_1_1 == "" then
+local StoreSkinBagView = class("StoreSkinBagView", GiftrecommendViewBase)
+
+function StoreSkinBagView:_getCostSymbolAndPrice(systemJumpCode)
+	if not systemJumpCode or systemJumpCode == "" then
 		return
 	end
 
-	local var_1_0 = string.splitToNumber(arg_1_1, "#")
+	local paramsList = string.splitToNumber(systemJumpCode, "#")
 
-	if type(var_1_0) ~= "table" and #var_1_0 < 2 then
+	if type(paramsList) ~= "table" and #paramsList < 2 then
 		return
 	end
 
-	local var_1_1 = var_1_0[2]
-	local var_1_2 = PayModel.instance:getProductOriginPriceSymbol(var_1_1)
-	local var_1_3, var_1_4, var_1_5 = PayModel.instance:getProductOriginPriceNum(var_1_1)
+	local jumpGoodsId = paramsList[2]
+	local symbol = PayModel.instance:getProductOriginPriceSymbol(jumpGoodsId)
+	local num, numStr, isNoDecimalsCurrency = PayModel.instance:getProductOriginPriceNum(jumpGoodsId)
 
-	return var_1_2, var_1_4
+	return symbol, numStr
 end
 
-function var_0_0.onInitView(arg_2_0)
-	arg_2_0._simagebg = gohelper.findChildSingleImage(arg_2_0.viewGO, "view/#simage_bg")
-	arg_2_0._txtdurationTime = gohelper.findChildText(arg_2_0.viewGO, "view/time/#txt_durationTime")
-	arg_2_0._btnbuy = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "view/#btn_buy")
+function StoreSkinBagView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "view/#simage_bg")
+	self._txtdurationTime = gohelper.findChildText(self.viewGO, "view/time/#txt_durationTime")
+	self._btnbuy = gohelper.findChildButtonWithAudio(self.viewGO, "view/#btn_buy")
 
-	if arg_2_0._editableInitView then
-		arg_2_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_3_0)
-	arg_3_0._btnbuy:AddClickListener(arg_3_0._btnbuyOnClick, arg_3_0)
+function StoreSkinBagView:addEvents()
+	self._btnbuy:AddClickListener(self._btnbuyOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_4_0)
-	arg_4_0._btnbuy:RemoveClickListener()
+function StoreSkinBagView:removeEvents()
+	self._btnbuy:RemoveClickListener()
 end
 
-function var_0_0._btnbuyOnClick(arg_5_0)
+function StoreSkinBagView:_btnbuyOnClick()
 	StatController.instance:track(StatEnum.EventName.ClickRecommendPage, {
 		[StatEnum.EventProperties.RecommendPageType] = StatEnum.RecommendType.Store,
-		[StatEnum.EventProperties.RecommendPageId] = tostring(arg_5_0.config and arg_5_0.config.id or ""),
-		[StatEnum.EventProperties.RecommendPageName] = arg_5_0.config and arg_5_0.config.name or "StoreSkinBagView",
-		[StatEnum.EventProperties.RecommendPageRank] = arg_5_0:getTabIndex()
+		[StatEnum.EventProperties.RecommendPageId] = tostring(self.config and self.config.id or ""),
+		[StatEnum.EventProperties.RecommendPageName] = self.config and self.config.name or "StoreSkinBagView",
+		[StatEnum.EventProperties.RecommendPageRank] = self:getTabIndex()
 	})
-	GameFacade.jumpByAdditionParam(arg_5_0.config.systemJumpCode)
+	GameFacade.jumpByAdditionParam(self.config.systemJumpCode)
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	var_0_0.super._editableInitView(arg_6_0)
+function StoreSkinBagView:_editableInitView()
+	StoreSkinBagView.super._editableInitView(self)
 
-	arg_6_0._pricetxtnum = gohelper.findChildText(arg_6_0.viewGO, "view/pricetxt/pricetxtnum")
-	arg_6_0._pricetxticon = gohelper.findChildText(arg_6_0.viewGO, "view/pricetxt/pricetxtnum/pricetxticon")
+	self._pricetxtnum = gohelper.findChildText(self.viewGO, "view/pricetxt/pricetxtnum")
+	self._pricetxticon = gohelper.findChildText(self.viewGO, "view/pricetxt/pricetxtnum/pricetxticon")
 
-	local var_6_0, var_6_1 = arg_6_0:_getCostSymbolAndPrice(arg_6_0.config.systemJumpCode)
+	local symbol, price = self:_getCostSymbolAndPrice(self.config.systemJumpCode)
 
-	arg_6_0._pricetxtnum.text = ""
-	arg_6_0._pricetxticon.text = ""
+	self._pricetxtnum.text = ""
+	self._pricetxticon.text = ""
 
-	if not string.nilorempty(var_6_0) then
-		arg_6_0._pricetxticon.text = var_6_0
+	if not string.nilorempty(symbol) then
+		self._pricetxticon.text = symbol
 	end
 
-	if not string.nilorempty(var_6_1) then
-		arg_6_0._pricetxtnum.text = var_6_1
+	if not string.nilorempty(price) then
+		self._pricetxtnum.text = price
 	end
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0.config = arg_7_0.config or StoreConfig.instance:getStoreRecommendConfig(StoreEnum.RecommendSubStoreId.StoreSkinBagView)
+function StoreSkinBagView:onOpen()
+	self.config = self.config or StoreConfig.instance:getStoreRecommendConfig(StoreEnum.RecommendSubStoreId.StoreSkinBagView)
 
-	var_0_0.super.onOpen(arg_7_0)
+	StoreSkinBagView.super.onOpen(self)
 end
 
-function var_0_0.onClose(arg_8_0)
-	var_0_0.super.onClose(arg_8_0)
+function StoreSkinBagView:onClose()
+	StoreSkinBagView.super.onClose(self)
 end
 
-function var_0_0.refreshUI(arg_9_0)
-	arg_9_0._txtdurationTime.text = StoreController.instance:getRecommendStoreTime(arg_9_0.config)
+function StoreSkinBagView:refreshUI()
+	self._txtdurationTime.text = StoreController.instance:getRecommendStoreTime(self.config)
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	var_0_0.super.onDestroyView(arg_10_0)
+function StoreSkinBagView:onDestroyView()
+	StoreSkinBagView.super.onDestroyView(self)
 end
 
-return var_0_0
+return StoreSkinBagView

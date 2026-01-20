@@ -1,104 +1,106 @@
-﻿module("modules.logic.season.view1_6.Season1_6EquipSpineView", package.seeall)
+﻿-- chunkname: @modules/logic/season/view1_6/Season1_6EquipSpineView.lua
 
-local var_0_0 = class("Season1_6EquipSpineView", BaseView)
+module("modules.logic.season.view1_6.Season1_6EquipSpineView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gospine = gohelper.findChild(arg_1_0.viewGO, "left/hero/#go_herocontainer/dynamiccontainer/#go_spine")
+local Season1_6EquipSpineView = class("Season1_6EquipSpineView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Season1_6EquipSpineView:onInitView()
+	self._gospine = gohelper.findChild(self.viewGO, "left/hero/#go_herocontainer/dynamiccontainer/#go_spine")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function Season1_6EquipSpineView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Season1_6EquipSpineView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._uiSpine = GuiModelAgent.Create(arg_4_0._gospine, true)
+function Season1_6EquipSpineView:_editableInitView()
+	self._uiSpine = GuiModelAgent.Create(self._gospine, true)
 
-	arg_4_0:createSpine()
+	self:createSpine()
 end
 
-function var_0_0.onDestroyView(arg_5_0)
-	if arg_5_0._uiSpine then
-		arg_5_0._uiSpine:onDestroy()
+function Season1_6EquipSpineView:onDestroyView()
+	if self._uiSpine then
+		self._uiSpine:onDestroy()
 
-		arg_5_0._uiSpine = nil
+		self._uiSpine = nil
 	end
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:refreshHeroSkin()
+function Season1_6EquipSpineView:onOpen()
+	self:refreshHeroSkin()
 end
 
-function var_0_0.onClose(arg_7_0)
-	if arg_7_0._uiSpine then
-		arg_7_0._uiSpine:setModelVisible(false)
+function Season1_6EquipSpineView:onClose()
+	if self._uiSpine then
+		self._uiSpine:setModelVisible(false)
 	end
 end
 
-function var_0_0.createSpine(arg_8_0, arg_8_1)
-	if arg_8_1 then
-		arg_8_0._uiSpine:useRT()
+function Season1_6EquipSpineView:createSpine(skinConfig)
+	if skinConfig then
+		self._uiSpine:useRT()
 
-		local var_8_0 = ViewMgr.instance:getUIRoot()
+		local root = ViewMgr.instance:getUIRoot()
 
-		arg_8_0._uiSpine:setImgSize(var_8_0.transform.sizeDelta.x * 1.25, var_8_0.transform.sizeDelta.y * 1.25)
-		arg_8_0._uiSpine:setResPath(arg_8_1, arg_8_0.onSpineLoaded, arg_8_0)
+		self._uiSpine:setImgSize(root.transform.sizeDelta.x * 1.25, root.transform.sizeDelta.y * 1.25)
+		self._uiSpine:setResPath(skinConfig, self.onSpineLoaded, self)
 
-		local var_8_1, var_8_2 = SkinConfig.instance:getSkinOffset(arg_8_1.characterGetViewOffset)
+		local offsets, isNil = SkinConfig.instance:getSkinOffset(skinConfig.characterGetViewOffset)
 
-		if var_8_2 then
-			var_8_1, _ = SkinConfig.instance:getSkinOffset(arg_8_1.characterViewOffset)
-			var_8_1 = SkinConfig.instance:getAfterRelativeOffset(505, var_8_1)
+		if isNil then
+			offsets, _ = SkinConfig.instance:getSkinOffset(skinConfig.characterViewOffset)
+			offsets = SkinConfig.instance:getAfterRelativeOffset(505, offsets)
 		end
 
-		logNormal(string.format("offset = %s, %s, scale = %s", tonumber(var_8_1[1]), tonumber(var_8_1[2]), tonumber(var_8_1[3])))
-		recthelper.setAnchor(arg_8_0._gospine.transform, tonumber(var_8_1[1]), tonumber(var_8_1[2]))
-		transformhelper.setLocalScale(arg_8_0._gospine.transform, tonumber(var_8_1[3]), tonumber(var_8_1[3]), tonumber(var_8_1[3]))
+		logNormal(string.format("offset = %s, %s, scale = %s", tonumber(offsets[1]), tonumber(offsets[2]), tonumber(offsets[3])))
+		recthelper.setAnchor(self._gospine.transform, tonumber(offsets[1]), tonumber(offsets[2]))
+		transformhelper.setLocalScale(self._gospine.transform, tonumber(offsets[3]), tonumber(offsets[3]), tonumber(offsets[3]))
 	end
 end
 
-function var_0_0.refreshHeroSkin(arg_9_0)
-	local var_9_0 = Activity104EquipItemListModel.instance.curPos
-	local var_9_1 = Activity104EquipItemListModel.instance:getPosHeroUid(var_9_0)
+function Season1_6EquipSpineView:refreshHeroSkin()
+	local curPos = Activity104EquipItemListModel.instance.curPos
+	local heroUid = Activity104EquipItemListModel.instance:getPosHeroUid(curPos)
 
-	if not var_9_1 or var_9_1 == Activity104EquipItemListModel.EmptyUid then
-		gohelper.setActive(arg_9_0._gospine, false)
-
-		return nil
-	end
-
-	local var_9_2 = HeroModel.instance:getById(tostring(var_9_1)) or HeroGroupTrialModel.instance:getById(var_9_1)
-
-	if not var_9_2 then
-		logError(string.format("pos heroId [%s] can't find MO", tostring(var_9_1)))
-		gohelper.setActive(arg_9_0._gospine, false)
+	if not heroUid or heroUid == Activity104EquipItemListModel.EmptyUid then
+		gohelper.setActive(self._gospine, false)
 
 		return nil
 	end
 
-	local var_9_3 = false
-	local var_9_4 = var_9_2.skin
-	local var_9_5 = SkinConfig.instance:getSkinCo(var_9_4)
+	local heroMO = HeroModel.instance:getById(tostring(heroUid)) or HeroGroupTrialModel.instance:getById(heroUid)
 
-	if var_9_5 then
-		gohelper.setActive(arg_9_0._gospine, true)
-		arg_9_0:createSpine(var_9_5)
+	if not heroMO then
+		logError(string.format("pos heroId [%s] can't find MO", tostring(heroUid)))
+		gohelper.setActive(self._gospine, false)
+
+		return nil
+	end
+
+	local needActive = false
+	local heroSkinId = heroMO.skin
+	local skinCo = SkinConfig.instance:getSkinCo(heroSkinId)
+
+	if skinCo then
+		gohelper.setActive(self._gospine, true)
+		self:createSpine(skinCo)
 	else
-		logError("skin config nil ! skin Id = " .. tostring(var_9_4))
+		logError("skin config nil ! skin Id = " .. tostring(heroSkinId))
 	end
 end
 
-function var_0_0.onSpineLoaded(arg_10_0)
-	arg_10_0._spineLoaded = true
+function Season1_6EquipSpineView:onSpineLoaded()
+	self._spineLoaded = true
 
-	arg_10_0._uiSpine:setUIMask(true)
+	self._uiSpine:setUIMask(true)
 end
 
-return var_0_0
+return Season1_6EquipSpineView

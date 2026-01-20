@@ -1,37 +1,39 @@
-﻿module("modules.logic.turnback.invitation.controller.TurnBackInvitationController", package.seeall)
+﻿-- chunkname: @modules/logic/turnback/invitation/controller/TurnBackInvitationController.lua
 
-local var_0_0 = class("TurnBackInvitationController", BaseController)
+module("modules.logic.turnback.invitation.controller.TurnBackInvitationController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local TurnBackInvitationController = class("TurnBackInvitationController", BaseController)
+
+function TurnBackInvitationController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function TurnBackInvitationController:reInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_3_0)
+function TurnBackInvitationController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_4_0)
+function TurnBackInvitationController:addConstEvents()
 	return
 end
 
-function var_0_0.getInvitationInfo(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	TurnBackInvitationRpc.instance:sendGet171InfoRequest(arg_5_1, arg_5_2, arg_5_3)
+function TurnBackInvitationController:getInvitationInfo(activityId, callBack, callBackObj)
+	TurnBackInvitationRpc.instance:sendGet171InfoRequest(activityId, callBack, callBackObj)
 end
 
-function var_0_0.openMainView(arg_6_0, arg_6_1)
-	arg_6_0:getInvitationInfo(arg_6_1, arg_6_0.onReceiveMsg, arg_6_0)
+function TurnBackInvitationController:openMainView(activityId)
+	self:getInvitationInfo(activityId, self.onReceiveMsg, self)
 end
 
-function var_0_0.onReceiveMsg(arg_7_0, arg_7_1, arg_7_2)
-	if arg_7_1 == 0 then
-		ViewMgr.instance:openView(ViewName.TurnBackInvitationMainView, arg_7_2.activityId, true)
+function TurnBackInvitationController:onReceiveMsg(resultCode, msg)
+	if resultCode == 0 then
+		ViewMgr.instance:openView(ViewName.TurnBackInvitationMainView, msg.activityId, true)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+TurnBackInvitationController.instance = TurnBackInvitationController.New()
 
-return var_0_0
+return TurnBackInvitationController

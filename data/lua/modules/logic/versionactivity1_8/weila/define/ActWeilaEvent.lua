@@ -1,10 +1,12 @@
-﻿module("modules.logic.versionactivity1_8.weila.define.ActWeilaEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_8/weila/define/ActWeilaEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_8.weila.define.ActWeilaEvent", package.seeall)
 
-var_0_0.OneClickClaimReward = 1
-var_0_0.StoryItemClick = 2
-var_0_0.FightItemClick = 3
-var_0_0.TabSwitch = 4
+local ActWeilaEvent = _M
 
-return var_0_0
+ActWeilaEvent.OneClickClaimReward = 1
+ActWeilaEvent.StoryItemClick = 2
+ActWeilaEvent.FightItemClick = 3
+ActWeilaEvent.TabSwitch = 4
+
+return ActWeilaEvent

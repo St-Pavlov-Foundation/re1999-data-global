@@ -1,197 +1,203 @@
-﻿module("modules.logic.versionactivity1_7.v1a7_warmup.view.VersionActivity1_7WarmUpMapView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_7/v1a7_warmup/view/VersionActivity1_7WarmUpMapView.lua
 
-local var_0_0 = class("VersionActivity1_7WarmUpMapView", BaseView)
+module("modules.logic.versionactivity1_7.v1a7_warmup.view.VersionActivity1_7WarmUpMapView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gomap = gohelper.findChild(arg_1_0.viewGO, "#go_map")
-	arg_1_0._gomapcontent = gohelper.findChild(arg_1_0.viewGO, "#go_map/Viewport/Content")
+local VersionActivity1_7WarmUpMapView = class("VersionActivity1_7WarmUpMapView", BaseView)
 
-	local var_1_0 = arg_1_0.viewContainer:getSetting().otherRes.mapRes
+function VersionActivity1_7WarmUpMapView:onInitView()
+	self._gomap = gohelper.findChild(self.viewGO, "#go_map")
+	self._gomapcontent = gohelper.findChild(self.viewGO, "#go_map/Viewport/Content")
 
-	arg_1_0._gomaproot = arg_1_0.viewContainer:getResInst(var_1_0, arg_1_0._gomapcontent, "mapRoot")
-	arg_1_0.lineAnimator = gohelper.findChildComponent(arg_1_0._gomaproot, "Line", typeof(UnityEngine.Animator))
+	local setting = self.viewContainer:getSetting()
+	local resPath = setting.otherRes.mapRes
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	self._gomaproot = self.viewContainer:getResInst(resPath, self._gomapcontent, "mapRoot")
+	self.lineAnimator = gohelper.findChildComponent(self._gomaproot, "Line", typeof(UnityEngine.Animator))
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(Activity125Controller.instance, Activity125Event.DataUpdate, arg_2_0.refreshUI, arg_2_0)
-	arg_2_0:addEventCb(Activity125Controller.instance, Activity125Event.EpisodeUnlock, arg_2_0.unlockLine, arg_2_0)
+function VersionActivity1_7WarmUpMapView:addEvents()
+	self:addEventCb(Activity125Controller.instance, Activity125Event.DataUpdate, self.refreshUI, self)
+	self:addEventCb(Activity125Controller.instance, Activity125Event.EpisodeUnlock, self.unlockLine, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(Activity125Controller.instance, Activity125Event.DataUpdate, arg_3_0.refreshUI, arg_3_0)
-	arg_3_0:removeEventCb(Activity125Controller.instance, Activity125Event.EpisodeUnlock, arg_3_0.unlockLine, arg_3_0)
+function VersionActivity1_7WarmUpMapView:removeEvents()
+	self:removeEventCb(Activity125Controller.instance, Activity125Event.DataUpdate, self.refreshUI, self)
+	self:removeEventCb(Activity125Controller.instance, Activity125Event.EpisodeUnlock, self.unlockLine, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function VersionActivity1_7WarmUpMapView:_editableInitView()
 	return
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0._actId = ActivityEnum.Activity.Activity1_7WarmUp
+function VersionActivity1_7WarmUpMapView:onOpen()
+	self._actId = ActivityEnum.Activity.Activity1_7WarmUp
 
-	if Activity125Model.instance:getById(arg_5_0._actId) then
-		arg_5_0:refreshUI()
+	local mo = Activity125Model.instance:getById(self._actId)
+
+	if mo then
+		self:refreshUI()
 	end
 end
 
-function var_0_0.refreshUI(arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0.unlockLineCallback, arg_6_0)
-	arg_6_0:initItemList()
-	arg_6_0:updateEpisodes()
-	arg_6_0:updateMapPos(arg_6_0.notFirst)
+function VersionActivity1_7WarmUpMapView:refreshUI()
+	TaskDispatcher.cancelTask(self.unlockLineCallback, self)
+	self:initItemList()
+	self:updateEpisodes()
+	self:updateMapPos(self.notFirst)
 end
 
-function var_0_0.unlockLine(arg_7_0, arg_7_1)
-	local var_7_0 = Activity125Model.instance:getLastEpisode(arg_7_0._actId)
-	local var_7_1 = Activity125Model.instance:checkLocalIsPlay(arg_7_0._actId, var_7_0)
+function VersionActivity1_7WarmUpMapView:unlockLine(noAnim)
+	local episodeId = Activity125Model.instance:getLastEpisode(self._actId)
+	local isPlay = Activity125Model.instance:checkLocalIsPlay(self._actId, episodeId)
 
-	if var_7_0 == 1 and not var_7_1 then
-		gohelper.setActive(arg_7_0.lineAnimator, false)
+	if episodeId == 1 and not isPlay then
+		gohelper.setActive(self.lineAnimator, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_7_0.lineAnimator, true)
+	gohelper.setActive(self.lineAnimator, true)
 
-	if arg_7_1 then
-		arg_7_0.lineAnimator:Play(string.format("go%s", var_7_0 - 1), 0, 1)
+	if noAnim then
+		self.lineAnimator:Play(string.format("go%s", episodeId - 1), 0, 1)
 	else
-		arg_7_0.unlockEpisode = var_7_0
+		self.unlockEpisode = episodeId
 
-		arg_7_0.lineAnimator:Play(string.format("go%s", var_7_0 - 1))
-		TaskDispatcher.runDelay(arg_7_0.unlockLineCallback, arg_7_0, 0.84)
+		self.lineAnimator:Play(string.format("go%s", episodeId - 1))
+		TaskDispatcher.runDelay(self.unlockLineCallback, self, 0.84)
 	end
 end
 
-function var_0_0.unlockLineCallback(arg_8_0)
-	local var_8_0 = arg_8_0.unlockEpisode
+function VersionActivity1_7WarmUpMapView:unlockLineCallback()
+	local episode = self.unlockEpisode
 
-	arg_8_0.unlockEpisode = nil
+	self.unlockEpisode = nil
 
-	local var_8_1 = arg_8_0.itemList[var_8_0]
+	local item = self.itemList[episode]
 
-	if var_8_1 then
-		var_8_1:refreshItem()
+	if item then
+		item:refreshItem()
 	end
 end
 
-function var_0_0.updateMapPos(arg_9_0, arg_9_1)
-	if arg_9_0._movetweenId then
-		ZProj.TweenHelper.KillById(arg_9_0._movetweenId)
+function VersionActivity1_7WarmUpMapView:updateMapPos(tween)
+	if self._movetweenId then
+		ZProj.TweenHelper.KillById(self._movetweenId)
 
-		arg_9_0._movetweenId = nil
+		self._movetweenId = nil
 	end
 
-	local var_9_0 = math.max(recthelper.getWidth(arg_9_0._gomapcontent.transform) - recthelper.getWidth(arg_9_0._gomap.transform), 0)
-	local var_9_1 = Activity125Model.instance:getSelectEpisodeId(arg_9_0._actId)
+	local max = math.max(recthelper.getWidth(self._gomapcontent.transform) - recthelper.getWidth(self._gomap.transform), 0)
+	local selectId = Activity125Model.instance:getSelectEpisodeId(self._actId)
 
-	if arg_9_0.selectId == var_9_1 then
+	if self.selectId == selectId then
 		return
 	end
 
-	arg_9_0.selectId = var_9_1
+	self.selectId = selectId
 
-	local var_9_2 = arg_9_0:getItemPos(var_9_1)
-	local var_9_3 = -math.min(var_9_2, var_9_0)
+	local pos = self:getItemPos(selectId)
+	local endX = -math.min(pos, max)
 
-	if arg_9_1 then
-		local var_9_4 = recthelper.getAnchorX(arg_9_0._gomapcontent.transform)
-		local var_9_5 = math.abs(var_9_3 - var_9_4)
+	if tween then
+		local startX = recthelper.getAnchorX(self._gomapcontent.transform)
+		local distance = math.abs(endX - startX)
 
-		if var_9_5 > 1 then
-			local var_9_6 = var_9_5 / 1000
+		if distance > 1 then
+			local speed = 1000
+			local time = distance / speed
 
-			arg_9_0._movetweenId = ZProj.TweenHelper.DOAnchorPosX(arg_9_0._gomapcontent.transform, var_9_3, var_9_6)
+			self._movetweenId = ZProj.TweenHelper.DOAnchorPosX(self._gomapcontent.transform, endX, time)
 		end
 	else
-		recthelper.setAnchorX(arg_9_0._gomapcontent.transform, var_9_3)
+		recthelper.setAnchorX(self._gomapcontent.transform, endX)
 	end
 
-	arg_9_0.notFirst = true
+	self.notFirst = true
 end
 
-function var_0_0.getItemPos(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0.itemList[arg_10_1]
+function VersionActivity1_7WarmUpMapView:getItemPos(index)
+	local item = self.itemList[index]
 
-	if not var_10_0 then
+	if not item then
 		return 0
 	end
 
-	local var_10_1 = recthelper.getWidth(arg_10_0._gomapcontent.transform)
-	local var_10_2 = recthelper.getWidth(arg_10_0._gomap.transform) * 0.5
-	local var_10_3 = var_10_1 * 0.5
-	local var_10_4 = var_10_2 - 200
-	local var_10_5 = var_10_3 + var_10_0:getPos() - var_10_4
+	local contentWidth = recthelper.getWidth(self._gomapcontent.transform)
+	local screenWidth = recthelper.getWidth(self._gomap.transform) * 0.5
+	local width = contentWidth * 0.5
+	local center = screenWidth - 200
+	local pos = width + item:getPos() - center
 
-	return math.max(var_10_5, 0)
+	return math.max(pos, 0)
 end
 
-function var_0_0.initItemList(arg_11_0)
-	if arg_11_0.itemList then
+function VersionActivity1_7WarmUpMapView:initItemList()
+	if self.itemList then
 		return
 	end
 
-	local var_11_0 = Activity125Model.instance:getEpisodeCount(arg_11_0._actId)
+	local count = Activity125Model.instance:getEpisodeCount(self._actId)
 
-	arg_11_0.itemList = arg_11_0:getUserDataTb_()
+	self.itemList = self:getUserDataTb_()
 
-	for iter_11_0 = 1, var_11_0 do
-		local var_11_1 = gohelper.findChild(arg_11_0._gomaproot, string.format("mapitem%s", iter_11_0))
+	for i = 1, count do
+		local go = gohelper.findChild(self._gomaproot, string.format("mapitem%s", i))
 
-		arg_11_0.itemList[iter_11_0] = arg_11_0:createEpisodeItem(var_11_1)
+		self.itemList[i] = self:createEpisodeItem(go)
 	end
 end
 
-function var_0_0.createEpisodeItem(arg_12_0, arg_12_1)
-	local var_12_0 = VersionActivity1_7WarmUpEpisodeItem.New()
+function VersionActivity1_7WarmUpMapView:createEpisodeItem(go)
+	local item = VersionActivity1_7WarmUpEpisodeItem.New()
 
-	var_12_0.viewContainer = arg_12_0.viewContainer
+	item.viewContainer = self.viewContainer
 
-	var_12_0:onInit(arg_12_1)
+	item:onInit(go)
 
-	return var_12_0
+	return item
 end
 
-function var_0_0.updateEpisodes(arg_13_0)
-	local var_13_0 = Activity125Model.instance:getEpisodeList(arg_13_0._actId)
+function VersionActivity1_7WarmUpMapView:updateEpisodes()
+	local list = Activity125Model.instance:getEpisodeList(self._actId)
 
-	if var_13_0 then
-		for iter_13_0, iter_13_1 in ipairs(var_13_0) do
-			local var_13_1 = arg_13_0.itemList[iter_13_0]
+	if list then
+		for i, v in ipairs(list) do
+			local item = self.itemList[i]
 
-			if var_13_1 then
-				var_13_1:updateData(iter_13_1)
+			if item then
+				item:updateData(v)
 			end
 		end
 	end
 
-	if not arg_13_0.unlockEpisode then
-		arg_13_0:unlockLine(true)
+	if not self.unlockEpisode then
+		self:unlockLine(true)
 	end
 end
 
-function var_0_0.onClose(arg_14_0)
+function VersionActivity1_7WarmUpMapView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_15_0)
-	TaskDispatcher.cancelTask(arg_15_0.unlockLineCallback, arg_15_0)
+function VersionActivity1_7WarmUpMapView:onDestroyView()
+	TaskDispatcher.cancelTask(self.unlockLineCallback, self)
 
-	if arg_15_0.itemList then
-		for iter_15_0, iter_15_1 in ipairs(arg_15_0.itemList) do
-			iter_15_1:onDestroy()
+	if self.itemList then
+		for i, v in ipairs(self.itemList) do
+			v:onDestroy()
 		end
 	end
 
-	if arg_15_0._movetweenId then
-		ZProj.TweenHelper.KillById(arg_15_0._movetweenId)
+	if self._movetweenId then
+		ZProj.TweenHelper.KillById(self._movetweenId)
 
-		arg_15_0._movetweenId = nil
+		self._movetweenId = nil
 	end
 end
 
-return var_0_0
+return VersionActivity1_7WarmUpMapView

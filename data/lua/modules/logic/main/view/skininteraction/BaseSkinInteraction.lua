@@ -1,114 +1,142 @@
-﻿module("modules.logic.main.view.skininteraction.BaseSkinInteraction", package.seeall)
+﻿-- chunkname: @modules/logic/main/view/skininteraction/BaseSkinInteraction.lua
 
-local var_0_0 = class("BaseSkinInteraction")
+module("modules.logic.main.view.skininteraction.BaseSkinInteraction", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._view = arg_1_1
-	arg_1_0._skinId = arg_1_2
+local BaseSkinInteraction = class("BaseSkinInteraction")
 
-	arg_1_0:_onInit()
+function BaseSkinInteraction:init(view, skinId)
+	self._view = view
+	self._skinId = skinId
+	self._behaviorList = {}
+
+	self:_onInit()
 end
 
-function var_0_0.getSkinId(arg_2_0)
-	return arg_2_0._skinId
+function BaseSkinInteraction:getSkinId()
+	return self._skinId
 end
 
-function var_0_0.needRespond(arg_3_0)
+function BaseSkinInteraction:onBodyChange(prevBodyName, curBodyName)
+	self:_callBehavior("_onBodyChange", prevBodyName, curBodyName)
+	self:_onBodyChange(prevBodyName, curBodyName)
+end
+
+function BaseSkinInteraction:_onBodyChange(prevBodyName, curBodyName)
+	return
+end
+
+function BaseSkinInteraction:isCustomDrag()
 	return false
 end
 
-function var_0_0.canPlay(arg_4_0, arg_4_1)
+function BaseSkinInteraction:needRespond()
+	return false
+end
+
+function BaseSkinInteraction:canPlay(config)
 	return true
 end
 
-function var_0_0.isPlayingVoice(arg_5_0)
+function BaseSkinInteraction:isPlayingVoice()
 	return false
 end
 
-function var_0_0.beginDrag(arg_6_0)
+function BaseSkinInteraction:beginDrag()
 	return
 end
 
-function var_0_0.endDrag(arg_7_0)
+function BaseSkinInteraction:endDrag()
 	return
 end
 
-function var_0_0.onCloseFullView(arg_8_0)
+function BaseSkinInteraction:onCloseFullView()
 	return
 end
 
-function var_0_0._checkPosInBound(arg_9_0, arg_9_1)
-	return arg_9_0._view:_checkPosInBound(arg_9_1)
+function BaseSkinInteraction:_checkPosInBound(pos)
+	return self._view:_checkPosInBound(pos)
 end
 
-function var_0_0._clickDefault(arg_10_0, arg_10_1)
-	arg_10_0._view:_clickDefault(arg_10_1)
+function BaseSkinInteraction:_clickDefault(pos)
+	self._view:_clickDefault(pos)
 end
 
-function var_0_0._onInit(arg_11_0)
+function BaseSkinInteraction:_onInit()
 	return
 end
 
-function var_0_0.onClick(arg_12_0, arg_12_1)
-	arg_12_0:_onClick(arg_12_1)
+function BaseSkinInteraction:_callBehavior(funcName, funcParam1, funcParam2)
+	for _, behavior in ipairs(self._behaviorList) do
+		behavior[funcName](behavior, funcParam1, funcParam2)
+	end
 end
 
-function var_0_0.beforePlayVoice(arg_13_0, arg_13_1)
-	arg_13_0:_beforePlayVoice(arg_13_1)
+function BaseSkinInteraction:_addBehavior(behavior)
+	table.insert(self._behaviorList, behavior)
+	behavior:init(self._view, self._skinId)
 end
 
-function var_0_0._beforePlayVoice(arg_14_0, arg_14_1)
+function BaseSkinInteraction:onClick(pos)
+	self:_onClick(pos)
+end
+
+function BaseSkinInteraction:beforePlayVoice(config)
+	self:_beforePlayVoice(config)
+end
+
+function BaseSkinInteraction:_beforePlayVoice(config)
 	return
 end
 
-function var_0_0.afterPlayVoice(arg_15_0, arg_15_1)
-	arg_15_0:_afterPlayVoice(arg_15_1)
+function BaseSkinInteraction:afterPlayVoice(config)
+	self:_afterPlayVoice(config)
 end
 
-function var_0_0._afterPlayVoice(arg_16_0, arg_16_1)
+function BaseSkinInteraction:_afterPlayVoice(config)
 	return
 end
 
-function var_0_0.playVoiceFinish(arg_17_0, arg_17_1)
-	arg_17_0:_onPlayVoiceFinish(arg_17_1)
+function BaseSkinInteraction:playVoiceFinish(config)
+	self:_onPlayVoiceFinish(config)
 end
 
-function var_0_0._onPlayVoiceFinish(arg_18_0, arg_18_1)
+function BaseSkinInteraction:_onPlayVoiceFinish(config)
 	return
 end
 
-function var_0_0.playVoice(arg_19_0, arg_19_1)
-	arg_19_0._view:playVoice(arg_19_1)
+function BaseSkinInteraction:playVoice(config)
+	self._view:playVoice(config)
 end
 
-function var_0_0.onPlayVoice(arg_20_0, arg_20_1)
-	arg_20_0._voiceConfig = arg_20_1
+function BaseSkinInteraction:onPlayVoice(config)
+	self._voiceConfig = config
 
-	arg_20_0:_onPlayVoice()
+	self:_onPlayVoice()
 end
 
-function var_0_0._onPlayVoice(arg_21_0)
+function BaseSkinInteraction:_onPlayVoice()
 	return
 end
 
-function var_0_0.onStopVoice(arg_22_0)
-	arg_22_0:_onStopVoice()
+function BaseSkinInteraction:onStopVoice()
+	self:_onStopVoice()
 end
 
-function var_0_0._onStopVoice(arg_23_0)
+function BaseSkinInteraction:_onStopVoice()
 	return
 end
 
-function var_0_0._onClick(arg_24_0, arg_24_1)
+function BaseSkinInteraction:_onClick(pos)
 	return
 end
 
-function var_0_0.onDestroy(arg_25_0)
-	arg_25_0:_onDestroy()
+function BaseSkinInteraction:onDestroy()
+	self:_callBehavior("_onDestroy")
+	self:_onDestroy()
 end
 
-function var_0_0._onDestroy(arg_26_0)
+function BaseSkinInteraction:_onDestroy()
 	return
 end
 
-return var_0_0
+return BaseSkinInteraction

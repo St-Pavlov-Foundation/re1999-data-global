@@ -1,8 +1,10 @@
-﻿module("modules.logic.common.config.CommonConfig", package.seeall)
+﻿-- chunkname: @modules/logic/common/config/CommonConfig.lua
 
-local var_0_0 = class("CommonConfig", BaseConfig)
+module("modules.logic.common.config.CommonConfig", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local CommonConfig = class("CommonConfig", BaseConfig)
+
+function CommonConfig:reqConfigNames()
 	return {
 		"const",
 		"cpu_level",
@@ -15,116 +17,116 @@ function var_0_0.reqConfigNames(arg_1_0)
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 == "cpu_level" then
-		arg_2_0._cpuLevelDict = {}
+function CommonConfig:onConfigLoaded(configName, configTable)
+	if configName == "cpu_level" then
+		self._cpuLevelDict = {}
 
-		for iter_2_0, iter_2_1 in ipairs(arg_2_2.configList) do
-			local var_2_0 = arg_2_0:_getStr(iter_2_1.name)
+		for _, co in ipairs(configTable.configList) do
+			local name = self:_getStr(co.name)
 
-			arg_2_0._cpuLevelDict[var_2_0] = iter_2_1.level
+			self._cpuLevelDict[name] = co.level
 		end
-	elseif arg_2_1 == "gpu_level" then
-		arg_2_0._gpuLevelDict = {}
+	elseif configName == "gpu_level" then
+		self._gpuLevelDict = {}
 
-		for iter_2_2, iter_2_3 in ipairs(arg_2_2.configList) do
-			local var_2_1 = arg_2_0:_getStr(iter_2_3.name)
+		for _, co in ipairs(configTable.configList) do
+			local name = self:_getStr(co.name)
 
-			arg_2_0._gpuLevelDict[var_2_1] = iter_2_3.level
+			self._gpuLevelDict[name] = co.level
 		end
 	end
 end
 
-function var_0_0.getCPULevel(arg_3_0, arg_3_1)
-	arg_3_1 = arg_3_0:_getStr(arg_3_1)
+function CommonConfig:getCPULevel(cpuName)
+	cpuName = self:_getStr(cpuName)
 
-	if LuaUtil.isEmptyStr(arg_3_1) then
+	if LuaUtil.isEmptyStr(cpuName) then
 		return ModuleEnum.Performance.Undefine
 	end
 
-	local var_3_0 = arg_3_0._cpuLevelDict[arg_3_1]
+	local level = self._cpuLevelDict[cpuName]
 
-	if var_3_0 then
-		return var_3_0
+	if level then
+		return level
 	end
 
-	for iter_3_0, iter_3_1 in pairs(arg_3_0._cpuLevelDict) do
-		if string.find(iter_3_0, arg_3_1) or string.find(arg_3_1, iter_3_0) then
-			return iter_3_1
+	for oneName, level in pairs(self._cpuLevelDict) do
+		if string.find(oneName, cpuName) or string.find(cpuName, oneName) then
+			return level
 		end
 	end
 
 	return ModuleEnum.Performance.Undefine
 end
 
-function var_0_0.getGPULevel(arg_4_0, arg_4_1)
-	arg_4_1 = arg_4_0:_getStr(arg_4_1)
+function CommonConfig:getGPULevel(gpuName)
+	gpuName = self:_getStr(gpuName)
 
-	if LuaUtil.isEmptyStr(arg_4_1) then
+	if LuaUtil.isEmptyStr(gpuName) then
 		return ModuleEnum.Performance.Undefine
 	end
 
-	local var_4_0 = arg_4_0._gpuLevelDict[arg_4_1]
+	local level = self._gpuLevelDict[gpuName]
 
-	if var_4_0 then
-		return var_4_0
+	if level then
+		return level
 	end
 
-	for iter_4_0, iter_4_1 in pairs(arg_4_0._gpuLevelDict) do
-		if string.find(iter_4_0, arg_4_1) or string.find(arg_4_1, iter_4_0) then
-			return iter_4_1
+	for oneName, level in pairs(self._gpuLevelDict) do
+		if string.find(oneName, gpuName) or string.find(gpuName, oneName) then
+			return level
 		end
 	end
 
 	return ModuleEnum.Performance.Undefine
 end
 
-function var_0_0._getStr(arg_5_0, arg_5_1)
-	return string.gsub(string.lower(arg_5_1), "%s+", "")
+function CommonConfig:_getStr(str)
+	return string.gsub(string.lower(str), "%s+", "")
 end
 
-function var_0_0.getConstNum(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0:getConstStr(arg_6_1)
+function CommonConfig:getConstNum(constId)
+	local constStr = self:getConstStr(constId)
 
-	if string.nilorempty(var_6_0) then
+	if string.nilorempty(constStr) then
 		return 0
 	else
-		return tonumber(var_6_0)
+		return tonumber(constStr)
 	end
 end
 
-function var_0_0.getConstStr(arg_7_0, arg_7_1)
-	local var_7_0 = lua_const.configDict[arg_7_1]
+function CommonConfig:getConstStr(constId)
+	local constCO = lua_const.configDict[constId]
 
-	if not var_7_0 then
-		printError("const not exist: ", arg_7_1)
+	if not constCO then
+		printError("const not exist: ", constId)
 
 		return nil
 	end
 
-	local var_7_1 = var_7_0.value
+	local value = constCO.value
 
-	if not string.nilorempty(var_7_1) then
-		return var_7_1
+	if not string.nilorempty(value) then
+		return value
 	end
 
-	return var_7_0.value2
+	return constCO.value2
 end
 
-function var_0_0.getAct155CurrencyRatio(arg_8_0)
-	local var_8_0 = lua_activity155_const.configDict[1]
-	local var_8_1 = string.splitToNumber(var_8_0.value2, "#")
+function CommonConfig:getAct155CurrencyRatio()
+	local co = lua_activity155_const.configDict[1]
+	local ratio = string.splitToNumber(co.value2, "#")
 
-	return var_8_1 and var_8_1[2] or 0
+	return ratio and ratio[2] or 0
 end
 
-function var_0_0.getAct155EpisodeDisplay(arg_9_0)
-	local var_9_0 = lua_activity155_const.configDict[3]
-	local var_9_1 = string.splitToNumber(var_9_0.value2, "#")
+function CommonConfig:getAct155EpisodeDisplay()
+	local co = lua_activity155_const.configDict[3]
+	local ratio = string.splitToNumber(co.value2, "#")
 
-	return var_9_1[1], var_9_1[2]
+	return ratio[1], ratio[2]
 end
 
-var_0_0.instance = var_0_0.New()
+CommonConfig.instance = CommonConfig.New()
 
-return var_0_0
+return CommonConfig

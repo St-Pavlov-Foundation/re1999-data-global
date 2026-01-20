@@ -1,132 +1,137 @@
-﻿module("modules.logic.enemyinfo.comp.FightEntityResistanceComp", package.seeall)
+﻿-- chunkname: @modules/logic/enemyinfo/comp/FightEntityResistanceComp.lua
 
-local var_0_0 = class("FightEntityResistanceComp", UserDataDispose)
+module("modules.logic.enemyinfo.comp.FightEntityResistanceComp", package.seeall)
 
-var_0_0.FightResistancePath = "ui/viewres/fight/fightresistance.prefab"
+local FightEntityResistanceComp = class("FightEntityResistanceComp", UserDataDispose)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0:__onInit()
+FightEntityResistanceComp.FightResistancePath = "ui/viewres/fight/fightresistance.prefab"
 
-	arg_1_0.goContainer = arg_1_1
-	arg_1_0.viewContainer = arg_1_2
+function FightEntityResistanceComp:ctor(go, viewContainer)
+	self:__onInit()
+
+	self.goContainer = go
+	self.viewContainer = viewContainer
 end
 
-var_0_0.ScreenPosIntervalX = 0
+FightEntityResistanceComp.ScreenPosIntervalX = 0
 
-function var_0_0.onInitView(arg_2_0)
-	arg_2_0.go = arg_2_0.viewContainer:getResInst(var_0_0.FightResistancePath, arg_2_0.goContainer)
-	arg_2_0.scroll = gohelper.findChild(arg_2_0.go, "scroll_view"):GetComponent(typeof(ZProj.LimitedScrollRect))
-	arg_2_0.goResistanceItem = gohelper.findChild(arg_2_0.go, "scroll_view/Viewport/Content/#go_resistanceitem")
+function FightEntityResistanceComp:onInitView()
+	self.go = self.viewContainer:getResInst(FightEntityResistanceComp.FightResistancePath, self.goContainer)
+	self.scroll = gohelper.findChild(self.go, "scroll_view"):GetComponent(typeof(ZProj.LimitedScrollRect))
+	self.goResistanceItem = gohelper.findChild(self.go, "scroll_view/Viewport/Content/#go_resistanceitem")
 
-	gohelper.setActive(arg_2_0.goResistanceItem, false)
+	gohelper.setActive(self.goResistanceItem, false)
 
-	arg_2_0.click = gohelper.getClickWithDefaultAudio(arg_2_0.go)
+	self.click = gohelper.getClickWithDefaultAudio(self.go)
 
-	arg_2_0.click:AddClickListener(arg_2_0.onClickResistance, arg_2_0)
+	self.click:AddClickListener(self.onClickResistance, self)
 
-	arg_2_0.resistanceItemList = {}
-	arg_2_0.rect = arg_2_0.go:GetComponent(gohelper.Type_RectTransform)
+	self.resistanceItemList = {}
+	self.rect = self.go:GetComponent(gohelper.Type_RectTransform)
 end
 
-function var_0_0.setParent(arg_3_0, arg_3_1)
-	arg_3_0.scroll.parentGameObject = arg_3_1
+function FightEntityResistanceComp:setParent(parent)
+	self.scroll.parentGameObject = parent
 end
 
-function var_0_0.onClickResistance(arg_4_0)
-	if not arg_4_0.resistanceDict then
+function FightEntityResistanceComp:onClickResistance()
+	if not self.resistanceDict then
 		return
 	end
 
-	arg_4_0.screenPos = recthelper.uiPosToScreenPos(arg_4_0.rect)
-	arg_4_0.screenPos.x = arg_4_0.screenPos.x - var_0_0.ScreenPosIntervalX
+	self.screenPos = recthelper.uiPosToScreenPos(self.rect)
+	self.screenPos.x = self.screenPos.x - FightEntityResistanceComp.ScreenPosIntervalX
 
-	FightResistanceTipController.instance:openFightResistanceTipView(arg_4_0.resistanceDict, arg_4_0.screenPos)
+	FightResistanceTipController.instance:openFightResistanceTipView(self.resistanceDict, self.screenPos)
 end
 
-function var_0_0.refresh(arg_5_0, arg_5_1)
-	arg_5_0.resistanceDict = arg_5_1
+function FightEntityResistanceComp:refresh(resistanceDict)
+	self.resistanceDict = resistanceDict
 
-	if not arg_5_1 then
-		gohelper.setActive(arg_5_0.goContainer, false)
+	if not resistanceDict then
+		gohelper.setActive(self.goContainer, false)
 
 		return
 	end
 
-	arg_5_0.showResistanceList = arg_5_0.showResistanceList or {}
+	self.showResistanceList = self.showResistanceList or {}
 
-	tabletool.clear(arg_5_0.showResistanceList)
+	tabletool.clear(self.showResistanceList)
 
-	for iter_5_0, iter_5_1 in pairs(FightEnum.Resistance) do
-		local var_5_0 = arg_5_0.resistanceDict[iter_5_0] or 0
+	for resistanceKey, resistanceId in pairs(FightEnum.Resistance) do
+		local value = self.resistanceDict[resistanceKey] or 0
 
-		if var_5_0 > 0 then
-			table.insert(arg_5_0.showResistanceList, {
-				resistanceId = iter_5_1,
-				value = var_5_0
+		if value > 0 then
+			table.insert(self.showResistanceList, {
+				resistanceId = resistanceId,
+				value = value
 			})
 		end
 	end
 
-	table.sort(arg_5_0.showResistanceList, var_0_0.sortResistance)
+	table.sort(self.showResistanceList, FightEntityResistanceComp.sortResistance)
 
-	for iter_5_2, iter_5_3 in ipairs(arg_5_0.showResistanceList) do
-		local var_5_1 = arg_5_0.resistanceItemList[iter_5_2] or arg_5_0:createResistanceItem()
+	for index, resistance in ipairs(self.showResistanceList) do
+		local resistanceItem = self.resistanceItemList[index]
 
-		gohelper.setActive(var_5_1.go, true)
+		resistanceItem = resistanceItem or self:createResistanceItem()
 
-		local var_5_2 = lua_character_attribute.configDict[iter_5_3.resistanceId]
+		gohelper.setActive(resistanceItem.go, true)
 
-		if var_5_2 then
-			UISpriteSetMgr.instance:setBuffSprite(var_5_1.icon, var_5_2.icon)
+		local attributeCo = lua_character_attribute.configDict[resistance.resistanceId]
+
+		if attributeCo then
+			UISpriteSetMgr.instance:setBuffSprite(resistanceItem.icon, attributeCo.icon)
 		end
 	end
 
-	local var_5_3 = #arg_5_0.showResistanceList
+	local len = #self.showResistanceList
 
-	if var_5_3 > 0 then
-		for iter_5_4 = var_5_3 + 1, #arg_5_0.resistanceItemList do
-			gohelper.setActive(arg_5_0.resistanceItemList[iter_5_4].go, false)
+	if len > 0 then
+		for i = len + 1, #self.resistanceItemList do
+			gohelper.setActive(self.resistanceItemList[i].go, false)
 		end
 
-		arg_5_0.scroll.horizontalNormalizedPosition = 0
+		self.scroll.horizontalNormalizedPosition = 0
 
-		gohelper.setActive(arg_5_0.goContainer, true)
+		gohelper.setActive(self.goContainer, true)
 	else
-		gohelper.setActive(arg_5_0.goContainer, false)
+		gohelper.setActive(self.goContainer, false)
 	end
 end
 
-function var_0_0.getResistanceValue(arg_6_0, arg_6_1)
-	local var_6_0 = FightHelper.getResistanceKeyById(arg_6_1)
+function FightEntityResistanceComp:getResistanceValue(resistanceId)
+	local key = FightHelper.getResistanceKeyById(resistanceId)
+	local value = key and self.resistanceDict[key]
 
-	return var_6_0 and arg_6_0.resistanceDict[var_6_0] or 0
+	return value or 0
 end
 
-function var_0_0.createResistanceItem(arg_7_0)
-	local var_7_0 = arg_7_0:getUserDataTb_()
+function FightEntityResistanceComp:createResistanceItem()
+	local item = self:getUserDataTb_()
 
-	var_7_0.go = gohelper.cloneInPlace(arg_7_0.goResistanceItem)
-	var_7_0.icon = gohelper.findChildImage(var_7_0.go, "normal/#image_icon")
+	item.go = gohelper.cloneInPlace(self.goResistanceItem)
+	item.icon = gohelper.findChildImage(item.go, "normal/#image_icon")
 
-	table.insert(arg_7_0.resistanceItemList, var_7_0)
+	table.insert(self.resistanceItemList, item)
 
-	return var_7_0
+	return item
 end
 
-function var_0_0.sortResistance(arg_8_0, arg_8_1)
-	local var_8_0 = lua_character_attribute.configDict[arg_8_0.resistanceId]
-	local var_8_1 = lua_character_attribute.configDict[arg_8_1.resistanceId]
+function FightEntityResistanceComp.sortResistance(aResistance, bResistance)
+	local aCo = lua_character_attribute.configDict[aResistance.resistanceId]
+	local bCo = lua_character_attribute.configDict[bResistance.resistanceId]
 
-	return var_8_0.sortId < var_8_1.sortId
+	return aCo.sortId < bCo.sortId
 end
 
-function var_0_0.destroy(arg_9_0)
-	arg_9_0.click:RemoveClickListener()
+function FightEntityResistanceComp:destroy()
+	self.click:RemoveClickListener()
 
-	arg_9_0.click = nil
-	arg_9_0.resistanceItemList = nil
+	self.click = nil
+	self.resistanceItemList = nil
 
-	arg_9_0:__onDispose()
+	self:__onDispose()
 end
 
-return var_0_0
+return FightEntityResistanceComp

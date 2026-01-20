@@ -1,90 +1,92 @@
-﻿module("modules.logic.season.view.SeasonEquipFloatTouch", package.seeall)
+﻿-- chunkname: @modules/logic/season/view/SeasonEquipFloatTouch.lua
 
-local var_0_0 = class("SeasonEquipFloatTouch", BaseView)
+module("modules.logic.season.view.SeasonEquipFloatTouch", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local SeasonEquipFloatTouch = class("SeasonEquipFloatTouch", BaseView)
+
+function SeasonEquipFloatTouch:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function SeasonEquipFloatTouch:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function SeasonEquipFloatTouch:removeEvents()
 	return
 end
 
-function var_0_0.init(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0._goctrlPath = arg_4_1
-	arg_4_0._gotouchPath = arg_4_2
+function SeasonEquipFloatTouch:init(ctrlGOPath, touchGOPath)
+	self._goctrlPath = ctrlGOPath
+	self._gotouchPath = touchGOPath
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._goctrl = gohelper.findChild(arg_5_0.viewGO, arg_5_0._goctrlPath)
-	arg_5_0._gotouch = gohelper.findChild(arg_5_0.viewGO, arg_5_0._gotouchPath)
-	arg_5_0._tfTouch = arg_5_0._gotouch.transform
-	arg_5_0._tfCtrl = arg_5_0._goctrl.transform
-	arg_5_0._originX, arg_5_0._originY, arg_5_0._originZ = transformhelper.getLocalRotation(arg_5_0._tfTouch)
-	arg_5_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_5_0._gotouch)
+function SeasonEquipFloatTouch:_editableInitView()
+	self._goctrl = gohelper.findChild(self.viewGO, self._goctrlPath)
+	self._gotouch = gohelper.findChild(self.viewGO, self._gotouchPath)
+	self._tfTouch = self._gotouch.transform
+	self._tfCtrl = self._goctrl.transform
+	self._originX, self._originY, self._originZ = transformhelper.getLocalRotation(self._tfTouch)
+	self._drag = SLFramework.UGUI.UIDragListener.Get(self._gotouch)
 
-	arg_5_0._drag:AddDragBeginListener(arg_5_0.onDragBegin, arg_5_0)
-	arg_5_0._drag:AddDragListener(arg_5_0.onDrag, arg_5_0)
-	arg_5_0._drag:AddDragEndListener(arg_5_0.onDragEnd, arg_5_0)
+	self._drag:AddDragBeginListener(self.onDragBegin, self)
+	self._drag:AddDragListener(self.onDrag, self)
+	self._drag:AddDragEndListener(self.onDragEnd, self)
 end
 
-function var_0_0.onDestroyView(arg_6_0)
-	arg_6_0:killTween()
+function SeasonEquipFloatTouch:onDestroyView()
+	self:killTween()
 
-	if arg_6_0._drag then
-		arg_6_0._drag:RemoveDragBeginListener()
-		arg_6_0._drag:RemoveDragListener()
-		arg_6_0._drag:RemoveDragEndListener()
+	if self._drag then
+		self._drag:RemoveDragBeginListener()
+		self._drag:RemoveDragListener()
+		self._drag:RemoveDragEndListener()
 
-		arg_6_0._drag = nil
+		self._drag = nil
 	end
 end
 
-function var_0_0.onDragBegin(arg_7_0, arg_7_1, arg_7_2)
+function SeasonEquipFloatTouch:onDragBegin(param, pointerEventData)
 	return
 end
 
-function var_0_0.onDragEnd(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = arg_8_2.position
+function SeasonEquipFloatTouch:onDragEnd(param, pointerEventData)
+	local pos = pointerEventData.position
 
-	arg_8_0:killTween()
+	self:killTween()
 
-	local var_8_1 = recthelper.screenPosToAnchorPos(var_8_0, arg_8_0._tfTouch)
+	local screenPos = recthelper.screenPosToAnchorPos(pos, self._tfTouch)
 
-	arg_8_0._tweenRotationId = ZProj.TweenHelper.DOLocalRotate(arg_8_0._tfCtrl, 0, 0, 0, 0.7, nil, nil, nil, EaseType.OutCirc)
+	self._tweenRotationId = ZProj.TweenHelper.DOLocalRotate(self._tfCtrl, 0, 0, 0, 0.7, nil, nil, nil, EaseType.OutCirc)
 end
 
-var_0_0.Range_Rotaion_Min_X = -25
-var_0_0.Range_Rotaion_Max_X = 25
-var_0_0.Range_Rotaion_Min_Y = -25
-var_0_0.Range_Rotaion_Max_Y = 25
+SeasonEquipFloatTouch.Range_Rotaion_Min_X = -25
+SeasonEquipFloatTouch.Range_Rotaion_Max_X = 25
+SeasonEquipFloatTouch.Range_Rotaion_Min_Y = -25
+SeasonEquipFloatTouch.Range_Rotaion_Max_Y = 25
 
-function var_0_0.onDrag(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = arg_9_2.position
-	local var_9_1 = 250
-	local var_9_2 = recthelper.screenPosToAnchorPos(var_9_0, arg_9_0._tfTouch)
-	local var_9_3 = Mathf.Clamp(var_9_2.x / var_9_1, -1, 1) * 0.5 + 0.5
-	local var_9_4 = Mathf.Clamp(-var_9_2.y / var_9_1, -1, 1) * 0.5 + 0.5
-	local var_9_5 = Mathf.Lerp(var_0_0.Range_Rotaion_Min_X, var_0_0.Range_Rotaion_Max_X, var_9_3)
-	local var_9_6 = Mathf.Lerp(var_0_0.Range_Rotaion_Min_Y, var_0_0.Range_Rotaion_Max_Y, var_9_4)
+function SeasonEquipFloatTouch:onDrag(param, pointerEventData)
+	local pos = pointerEventData.position
+	local halfSize = 250
+	local anchorPos = recthelper.screenPosToAnchorPos(pos, self._tfTouch)
+	local anchorPosRateX = Mathf.Clamp(anchorPos.x / halfSize, -1, 1) * 0.5 + 0.5
+	local anchorPosRateY = Mathf.Clamp(-anchorPos.y / halfSize, -1, 1) * 0.5 + 0.5
+	local rotationX = Mathf.Lerp(SeasonEquipFloatTouch.Range_Rotaion_Min_X, SeasonEquipFloatTouch.Range_Rotaion_Max_X, anchorPosRateX)
+	local rotationY = Mathf.Lerp(SeasonEquipFloatTouch.Range_Rotaion_Min_Y, SeasonEquipFloatTouch.Range_Rotaion_Max_Y, anchorPosRateY)
 
-	arg_9_0:killTween()
+	self:killTween()
 
-	arg_9_0._tweenRotationId = ZProj.TweenHelper.DOLocalRotate(arg_9_0._tfCtrl, var_9_6, var_9_5, 0, 0.3, nil, nil, nil, EaseType.Linear)
+	self._tweenRotationId = ZProj.TweenHelper.DOLocalRotate(self._tfCtrl, rotationY, rotationX, 0, 0.3, nil, nil, nil, EaseType.Linear)
 end
 
-function var_0_0.killTween(arg_10_0)
-	if arg_10_0._tweenRotationId then
-		ZProj.TweenHelper.KillById(arg_10_0._tweenRotationId)
+function SeasonEquipFloatTouch:killTween()
+	if self._tweenRotationId then
+		ZProj.TweenHelper.KillById(self._tweenRotationId)
 
-		arg_10_0._tweenRotationId = nil
+		self._tweenRotationId = nil
 	end
 end
 
-return var_0_0
+return SeasonEquipFloatTouch

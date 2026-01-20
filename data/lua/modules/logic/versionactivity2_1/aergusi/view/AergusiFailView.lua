@@ -1,70 +1,72 @@
-﻿module("modules.logic.versionactivity2_1.aergusi.view.AergusiFailView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_1/aergusi/view/AergusiFailView.lua
 
-local var_0_0 = class("AergusiFailView", BaseView)
+module("modules.logic.versionactivity2_1.aergusi.view.AergusiFailView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._gofail = gohelper.findChild(arg_1_0.viewGO, "#go_fail")
-	arg_1_0._txtclassnum = gohelper.findChildText(arg_1_0.viewGO, "txtFbName/#txt_classnum")
-	arg_1_0._txtclassname = gohelper.findChildText(arg_1_0.viewGO, "txtFbName/#txt_classname")
-	arg_1_0._btnquitgame = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btn/#btn_quitgame")
-	arg_1_0._btnrestart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btn/#btn_restart")
+local AergusiFailView = class("AergusiFailView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function AergusiFailView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._gofail = gohelper.findChild(self.viewGO, "#go_fail")
+	self._txtclassnum = gohelper.findChildText(self.viewGO, "txtFbName/#txt_classnum")
+	self._txtclassname = gohelper.findChildText(self.viewGO, "txtFbName/#txt_classname")
+	self._btnquitgame = gohelper.findChildButtonWithAudio(self.viewGO, "btn/#btn_quitgame")
+	self._btnrestart = gohelper.findChildButtonWithAudio(self.viewGO, "btn/#btn_restart")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnquitgame:AddClickListener(arg_2_0._btnquitgameOnClick, arg_2_0)
-	arg_2_0._btnrestart:AddClickListener(arg_2_0._btnrestartOnClick, arg_2_0)
+function AergusiFailView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnquitgame:AddClickListener(self._btnquitgameOnClick, self)
+	self._btnrestart:AddClickListener(self._btnrestartOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnquitgame:RemoveClickListener()
-	arg_3_0._btnrestart:RemoveClickListener()
+function AergusiFailView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btnquitgame:RemoveClickListener()
+	self._btnrestart:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
+function AergusiFailView:_btncloseOnClick()
 	return
 end
 
-function var_0_0._btnquitgameOnClick(arg_5_0)
-	arg_5_0:closeThis()
+function AergusiFailView:_btnquitgameOnClick()
+	self:closeThis()
 	ViewMgr.instance:closeView(ViewName.AergusiDialogView)
 end
 
-function var_0_0._btnrestartOnClick(arg_6_0)
-	arg_6_0:closeThis()
+function AergusiFailView:_btnrestartOnClick()
+	self:closeThis()
 	ViewMgr.instance:closeView(ViewName.AergusiDialogView)
 	AergusiController.instance:dispatchEvent(AergusiEvent.RestartEvidence)
 end
 
-function var_0_0._editableInitView(arg_7_0)
+function AergusiFailView:_editableInitView()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
+function AergusiFailView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_settleaccounts_lose)
-	arg_8_0:refreshTips()
+	self:refreshTips()
 end
 
-function var_0_0.refreshTips(arg_9_0)
-	local var_9_0 = AergusiConfig.instance:getEpisodeConfig(nil, arg_9_0.viewParam.episodeId)
-	local var_9_1 = AergusiModel.instance:getEpisodeIndex(arg_9_0.viewParam.episodeId)
+function AergusiFailView:refreshTips()
+	local episodeCo = AergusiConfig.instance:getEpisodeConfig(nil, self.viewParam.episodeId)
+	local index = AergusiModel.instance:getEpisodeIndex(self.viewParam.episodeId)
 
-	arg_9_0._txtclassnum.text = string.format("STAGE %02d", var_9_1)
-	arg_9_0._txtclassname.text = var_9_0.name
+	self._txtclassnum.text = string.format("STAGE %02d", index)
+	self._txtclassname.text = episodeCo.name
 end
 
-function var_0_0.onClose(arg_10_0)
+function AergusiFailView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0._realRestart, arg_11_0)
+function AergusiFailView:onDestroyView()
+	TaskDispatcher.cancelTask(self._realRestart, self)
 end
 
-return var_0_0
+return AergusiFailView

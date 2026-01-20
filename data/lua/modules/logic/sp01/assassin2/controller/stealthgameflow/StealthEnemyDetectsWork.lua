@@ -1,70 +1,79 @@
-﻿module("modules.logic.sp01.assassin2.controller.stealthgameflow.StealthEnemyDetectsWork", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/controller/stealthgameflow/StealthEnemyDetectsWork.lua
 
-local var_0_0 = class("StealthEnemyDetectsWork", BaseWork)
+module("modules.logic.sp01.assassin2.controller.stealthgameflow.StealthEnemyDetectsWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = {}
-	local var_1_1 = AssassinStealthGameModel.instance:getHeroUidList()
+local StealthEnemyDetectsWork = class("StealthEnemyDetectsWork", BaseWork)
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_1) do
-		if AssassinStealthGameHelper.isHeroCanBeScan(iter_1_1) then
-			local var_1_2 = AssassinStealthGameModel.instance:getHeroMo(iter_1_1, true):getPos()
+function StealthEnemyDetectsWork:onStart(context)
+	local playScanGridIdDict = {}
+	local heroUidList = AssassinStealthGameModel.instance:getHeroUidList()
 
-			if not var_1_0[var_1_2] and AssassinStealthGameHelper.isGridEnemyWillScan(var_1_2) then
-				var_1_0[var_1_2] = true
+	for _, heroUid in ipairs(heroUidList) do
+		local isCanBeScan = AssassinStealthGameHelper.isHeroCanBeScan(heroUid)
+
+		if isCanBeScan then
+			local heroGameMo = AssassinStealthGameModel.instance:getHeroMo(heroUid, true)
+			local gridId = heroGameMo:getPos()
+
+			if not playScanGridIdDict[gridId] then
+				local enemyWillScan = AssassinStealthGameHelper.isGridEnemyWillScan(gridId)
+
+				if enemyWillScan then
+					playScanGridIdDict[gridId] = true
+				end
 			end
 		end
 	end
 
-	if next(var_1_0) then
-		for iter_1_2, iter_1_3 in pairs(var_1_0) do
-			AssassinStealthGameEntityMgr.instance:playGridScanEff(iter_1_2)
+	if next(playScanGridIdDict) then
+		for gridId, _ in pairs(playScanGridIdDict) do
+			AssassinStealthGameEntityMgr.instance:playGridScanEff(gridId)
 		end
 
-		local var_1_3 = AssassinConfig.instance:getAssassinEffectDuration(AssassinEnum.EffectId.ScanEffectId)
+		local duration = AssassinConfig.instance:getAssassinEffectDuration(AssassinEnum.EffectId.ScanEffectId)
 
-		TaskDispatcher.cancelTask(arg_1_0._playScanEffFinished, arg_1_0)
-		TaskDispatcher.runDelay(arg_1_0._playScanEffFinished, arg_1_0, var_1_3)
+		TaskDispatcher.cancelTask(self._playScanEffFinished, self)
+		TaskDispatcher.runDelay(self._playScanEffFinished, self, duration)
 	else
-		arg_1_0:_playScanEffFinished()
+		self:_playScanEffFinished()
 	end
 end
 
-local var_0_1 = 3
+local OVER_TIME = 3
 
-function var_0_0._playScanEffFinished(arg_2_0)
-	local var_2_0 = {}
-	local var_2_1 = AssassinStealthGameModel.instance:getEnemyOperationData()
-	local var_2_2 = var_2_1 and var_2_1.hero
+function StealthEnemyDetectsWork:_playScanEffFinished()
+	local exposeHeroUidList = {}
+	local enemyOperationData = AssassinStealthGameModel.instance:getEnemyOperationData()
+	local exposeHeroList = enemyOperationData and enemyOperationData.hero
 
-	if var_2_2 then
-		AssassinStealthGameController.instance:updateHeroes(var_2_2)
+	if exposeHeroList then
+		AssassinStealthGameController.instance:updateHeroes(exposeHeroList)
 
-		for iter_2_0, iter_2_1 in ipairs(var_2_2) do
-			var_2_0[#var_2_0 + 1] = iter_2_1.uid
+		for _, heroUint in ipairs(exposeHeroList) do
+			exposeHeroUidList[#exposeHeroUidList + 1] = heroUint.uid
 		end
 	end
 
-	if #var_2_0 > 0 then
-		AssassinStealthGameController.instance:registerCallback(AssassinEvent.PlayExposeTipFinished, arg_2_0._showExposedTipFinished, arg_2_0)
-		AssassinStealthGameController.instance:heroBeExposed(var_2_0, arg_2_0._showExposedTipFinished, arg_2_0)
-		TaskDispatcher.cancelTask(arg_2_0._showExposedTipFinished, arg_2_0)
-		TaskDispatcher.runDelay(arg_2_0._showExposedTipFinished, arg_2_0, var_0_1)
+	if #exposeHeroUidList > 0 then
+		AssassinStealthGameController.instance:registerCallback(AssassinEvent.PlayExposeTipFinished, self._showExposedTipFinished, self)
+		AssassinStealthGameController.instance:heroBeExposed(exposeHeroUidList, self._showExposedTipFinished, self)
+		TaskDispatcher.cancelTask(self._showExposedTipFinished, self)
+		TaskDispatcher.runDelay(self._showExposedTipFinished, self, OVER_TIME)
 	else
-		arg_2_0:_showExposedTipFinished()
+		self:_showExposedTipFinished()
 	end
 end
 
-function var_0_0._showExposedTipFinished(arg_3_0)
-	AssassinStealthGameController.instance:unregisterCallback(AssassinEvent.PlayExposeTipFinished, arg_3_0._showExposedTipFinished, arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0._showExposedTipFinished, arg_3_0)
-	arg_3_0:onDone(true)
+function StealthEnemyDetectsWork:_showExposedTipFinished()
+	AssassinStealthGameController.instance:unregisterCallback(AssassinEvent.PlayExposeTipFinished, self._showExposedTipFinished, self)
+	TaskDispatcher.cancelTask(self._showExposedTipFinished, self)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	AssassinStealthGameController.instance:unregisterCallback(AssassinEvent.PlayExposeTipFinished, arg_4_0._showExposedTipFinished, arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._showExposedTipFinished, arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._playScanEffFinished, arg_4_0)
+function StealthEnemyDetectsWork:clearWork()
+	AssassinStealthGameController.instance:unregisterCallback(AssassinEvent.PlayExposeTipFinished, self._showExposedTipFinished, self)
+	TaskDispatcher.cancelTask(self._showExposedTipFinished, self)
+	TaskDispatcher.cancelTask(self._playScanEffFinished, self)
 end
 
-return var_0_0
+return StealthEnemyDetectsWork

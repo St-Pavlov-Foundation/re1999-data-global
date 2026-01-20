@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.view.Activity114EventSelectViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/view/Activity114EventSelectViewContainer.lua
 
-local var_0_0 = class("Activity114EventSelectViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_2.jiexika.view.Activity114EventSelectViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local Activity114EventSelectViewContainer = class("Activity114EventSelectViewContainer", BaseViewContainer)
+
+function Activity114EventSelectViewContainer:buildViews()
 	return {
 		Activity114EventSelectView.New()
 	}
 end
 
-return var_0_0
+return Activity114EventSelectViewContainer

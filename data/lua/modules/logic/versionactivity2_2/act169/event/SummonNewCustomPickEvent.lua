@@ -1,10 +1,12 @@
-﻿module("modules.logic.versionactivity2_2.act169.event.SummonNewCustomPickEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/act169/event/SummonNewCustomPickEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity2_2.act169.event.SummonNewCustomPickEvent", package.seeall)
 
-var_0_0.OnGetServerInfoReply = 1
-var_0_0.OnGetReward = 2
-var_0_0.OnSummonCustomGet = 3
-var_0_0.OnCustomPickListChanged = 4
+local SummonNewCustomPickEvent = _M
 
-return var_0_0
+SummonNewCustomPickEvent.OnGetServerInfoReply = 1
+SummonNewCustomPickEvent.OnGetReward = 2
+SummonNewCustomPickEvent.OnSummonCustomGet = 3
+SummonNewCustomPickEvent.OnCustomPickListChanged = 4
+
+return SummonNewCustomPickEvent

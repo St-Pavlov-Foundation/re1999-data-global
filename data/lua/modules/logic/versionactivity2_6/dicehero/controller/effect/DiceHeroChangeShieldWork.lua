@@ -1,68 +1,70 @@
-﻿module("modules.logic.versionactivity2_6.dicehero.controller.effect.DiceHeroChangeShieldWork", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/dicehero/controller/effect/DiceHeroChangeShieldWork.lua
 
-local var_0_0 = class("DiceHeroChangeShieldWork", DiceHeroBaseEffectWork)
+module("modules.logic.versionactivity2_6.dicehero.controller.effect.DiceHeroChangeShieldWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_0._effectMo.targetId
-	local var_1_1 = DiceHeroHelper.instance:getEntity(var_1_0)
+local DiceHeroChangeShieldWork = class("DiceHeroChangeShieldWork", DiceHeroBaseEffectWork)
 
-	if not var_1_1 then
-		logError("找不到实体" .. var_1_0)
-		arg_1_0:onDone(true)
+function DiceHeroChangeShieldWork:onStart(context)
+	local targetId = self._effectMo.targetId
+	local targetEntity = DiceHeroHelper.instance:getEntity(targetId)
+
+	if not targetEntity then
+		logError("找不到实体" .. targetId)
+		self:onDone(true)
 
 		return
 	end
 
-	arg_1_0._targetEntity = var_1_1
-	arg_1_0._isFromCard = arg_1_0._effectMo.parent.isByCard
-	arg_1_0._targetPos = arg_1_0._targetEntity:getPos(1)
+	self._targetEntity = targetEntity
+	self._isFromCard = self._effectMo.parent.isByCard
+	self._targetPos = self._targetEntity:getPos(1)
 
-	if arg_1_0._isFromCard and string.nilorempty(arg_1_0._effectMo.extraData) and arg_1_0._effectMo.effectNum > 0 then
-		local var_1_2 = DiceHeroHelper.instance:getCard(tonumber(arg_1_0._effectMo.parent.reasonId))
+	if self._isFromCard and string.nilorempty(self._effectMo.extraData) and self._effectMo.effectNum > 0 then
+		local cardItem = DiceHeroHelper.instance:getCard(tonumber(self._effectMo.parent.reasonId))
 
-		arg_1_0._effectItem = DiceHeroHelper.instance:doEffect(6, var_1_2:getPos(), arg_1_0._targetPos)
+		self._effectItem = DiceHeroHelper.instance:doEffect(6, cardItem:getPos(), self._targetPos)
 
 		AudioMgr.instance:trigger(AudioEnum2_6.DiceHero.play_ui_wenming_shot)
-		TaskDispatcher.runDelay(arg_1_0.showEffectNum, arg_1_0, 0.5)
+		TaskDispatcher.runDelay(self.showEffectNum, self, 0.5)
 	else
-		arg_1_0:showEffectNum()
+		self:showEffectNum()
 	end
 end
 
-function var_0_0.showEffectNum(arg_2_0)
-	arg_2_0._targetEntity:addShield(arg_2_0._effectMo.effectNum)
+function DiceHeroChangeShieldWork:showEffectNum()
+	self._targetEntity:addShield(self._effectMo.effectNum)
 
-	if arg_2_0._effectMo.effectNum > 0 then
+	if self._effectMo.effectNum > 0 then
 		AudioMgr.instance:trigger(AudioEnum2_6.DiceHero.play_ui_wenming_defense)
-		arg_2_0._targetEntity:showEffect(3)
+		self._targetEntity:showEffect(3)
 
-		if arg_2_0._effectItem then
-			arg_2_0._effectItem:initData(4, arg_2_0._targetPos, nil, string.format("%+d", arg_2_0._effectMo.effectNum))
+		if self._effectItem then
+			self._effectItem:initData(4, self._targetPos, nil, string.format("%+d", self._effectMo.effectNum))
 		else
-			arg_2_0._effectItem = DiceHeroHelper.instance:doEffect(4, arg_2_0._targetPos, nil, string.format("%+d", arg_2_0._effectMo.effectNum))
+			self._effectItem = DiceHeroHelper.instance:doEffect(4, self._targetPos, nil, string.format("%+d", self._effectMo.effectNum))
 		end
 
-		TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 1)
+		TaskDispatcher.runDelay(self._delayDone, self, 1)
 	else
-		arg_2_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._delayDone(arg_3_0)
-	arg_3_0:onDone(true)
+function DiceHeroChangeShieldWork:_delayDone()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	arg_4_0._targetEntity = nil
+function DiceHeroChangeShieldWork:clearWork()
+	self._targetEntity = nil
 
-	if arg_4_0._effectItem then
-		DiceHeroHelper.instance:returnEffectItemToPool(arg_4_0._effectItem)
+	if self._effectItem then
+		DiceHeroHelper.instance:returnEffectItemToPool(self._effectItem)
 
-		arg_4_0._effectItem = nil
+		self._effectItem = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_4_0._delayDone, arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0.showEffectNum, arg_4_0)
+	TaskDispatcher.cancelTask(self._delayDone, self)
+	TaskDispatcher.cancelTask(self.showEffectNum, self)
 end
 
-return var_0_0
+return DiceHeroChangeShieldWork

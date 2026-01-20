@@ -1,103 +1,107 @@
-﻿module("modules.logic.activity.view.LinkageActivity_BaseViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/LinkageActivity_BaseViewContainer.lua
 
-local var_0_0 = class("LinkageActivity_BaseViewContainer", BaseViewContainer)
+module("modules.logic.activity.view.LinkageActivity_BaseViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local LinkageActivity_BaseViewContainer = class("LinkageActivity_BaseViewContainer", BaseViewContainer)
+
+function LinkageActivity_BaseViewContainer:buildViews()
 	assert(false, "please override this function")
 end
 
-function var_0_0.view(arg_2_0)
+function LinkageActivity_BaseViewContainer:view()
 	assert(false, "please override this function")
 end
 
-function var_0_0.switchPage(arg_3_0, arg_3_1)
-	arg_3_0:view():selectedPage(arg_3_1)
+function LinkageActivity_BaseViewContainer:switchPage(pageIndex)
+	local viewObj = self:view()
+
+	viewObj:selectedPage(pageIndex)
 end
 
-function var_0_0.itemCo2TIQ(arg_4_0, arg_4_1)
-	if string.nilorempty(arg_4_1) then
+function LinkageActivity_BaseViewContainer:itemCo2TIQ(itemCo)
+	if string.nilorempty(itemCo) then
 		return
 	end
 
-	local var_4_0 = string.split(arg_4_1, "#")
+	local strList = string.split(itemCo, "#")
 
-	assert(#var_4_0 >= 2, "[LinkageActivity_BaseViewContainer] invalid itemCo=" .. tostring(arg_4_1))
+	assert(#strList >= 2, "[LinkageActivity_BaseViewContainer] invalid itemCo=" .. tostring(itemCo))
 
-	local var_4_1 = string.split(arg_4_1, "#")
-	local var_4_2 = tonumber(var_4_1[1])
-	local var_4_3 = tonumber(var_4_1[2])
-	local var_4_4 = tonumber(var_4_1[3])
+	local list = string.split(itemCo, "#")
+	local type = tonumber(list[1])
+	local id = tonumber(list[2])
+	local quantity = tonumber(list[3])
 
-	return var_4_2, var_4_3, var_4_4
+	return type, id, quantity
 end
 
-function var_0_0.getItemConfig(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = ItemConfigGetDefine.instance:getItemConfigFunc(arg_5_1)
+function LinkageActivity_BaseViewContainer:getItemConfig(materialType, id)
+	local func = ItemConfigGetDefine.instance:getItemConfigFunc(materialType)
 
-	assert(var_5_0, "[LinkageActivity_BaseViewContainer] ItemIconGetDefine-getItemConfigFunc unsupported materialType: " .. tostring(arg_5_1))
+	assert(func, "[LinkageActivity_BaseViewContainer] ItemIconGetDefine-getItemConfigFunc unsupported materialType: " .. tostring(materialType))
 
-	local var_5_1 = var_5_0(arg_5_2)
+	local config = func(id)
 
-	assert(var_5_1, "[LinkageActivity_BaseViewContainer] item config not found materialType=" .. tostring(arg_5_1) .. " id=" .. tostring(arg_5_2))
+	assert(config, "[LinkageActivity_BaseViewContainer] item config not found materialType=" .. tostring(materialType) .. " id=" .. tostring(id))
 
-	return var_5_1
+	return config
 end
 
-function var_0_0.getItemIconResUrl(arg_6_0, arg_6_1, arg_6_2)
-	if not arg_6_1 or not arg_6_2 then
+function LinkageActivity_BaseViewContainer:getItemIconResUrl(materialType, id)
+	if not materialType or not id then
 		return ""
 	end
 
-	local var_6_0 = ItemIconGetDefine.instance:getItemIconFunc(arg_6_1)
+	local func = ItemIconGetDefine.instance:getItemIconFunc(materialType)
 
-	assert(var_6_0, "[LinkageActivity_BaseViewContainer] ItemIconGetDefine-getItemIconFunc unsupported materialType: " .. tostring(arg_6_1))
+	assert(func, "[LinkageActivity_BaseViewContainer] ItemIconGetDefine-getItemIconFunc unsupported materialType: " .. tostring(materialType))
 
-	local var_6_1 = arg_6_0:getItemConfig(arg_6_1, arg_6_2)
+	local config = self:getItemConfig(materialType, id)
 
-	return var_6_0(var_6_1) or ""
+	return func(config) or ""
 end
 
-function var_0_0.getAssetItem_VideoLoadingPng(arg_7_0)
-	local var_7_0 = arg_7_0._viewSetting.otherRes
+function LinkageActivity_BaseViewContainer:getAssetItem_VideoLoadingPng()
+	local otherRes = self._viewSetting.otherRes
 
-	return arg_7_0:getRes(var_7_0[1])
+	return self:getRes(otherRes[1])
 end
 
-function var_0_0.Vxax_LinkageActivity_xxxView_Container(arg_8_0, arg_8_1)
-	function arg_8_0.buildViews(arg_9_0)
-		arg_9_0._view = arg_8_1.New()
+function LinkageActivity_BaseViewContainer.Vxax_LinkageActivity_xxxView_Container(T, viewCls)
+	function T.buildViews(Self)
+		Self._view = viewCls.New()
 
 		return {
-			arg_9_0._view
+			Self._view
 		}
 	end
 
-	function arg_8_0.view(arg_10_0)
-		return arg_10_0._view
+	function T.view(Self)
+		return Self._view
 	end
 end
 
-function var_0_0.Vxax_LinkageActivity_FullView(arg_11_0, arg_11_1, arg_11_2)
+function LinkageActivity_BaseViewContainer.Vxax_LinkageActivity_FullView(T, major, minor)
 	return
 end
 
-function var_0_0.Vxax_LinkageActivity_PanelView(arg_12_0, arg_12_1, arg_12_2)
+function LinkageActivity_BaseViewContainer.Vxax_LinkageActivity_PanelView(T, major, minor)
 	return
 end
 
-local function var_0_1(arg_13_0)
-	local var_13_0 = GameBranchMgr.instance:getMajorVer()
-	local var_13_1 = GameBranchMgr.instance:getMinorVer()
+local function _Vxax_Special_xxxSignView_ContainerImpl(fmt)
+	local major = GameBranchMgr.instance:getMajorVer()
+	local minor = GameBranchMgr.instance:getMinorVer()
 
-	return _G[string.format(arg_13_0, var_13_0, var_13_1)]
+	return _G[string.format(fmt, major, minor)]
 end
 
-function var_0_0.Vxax_LinkageActivity_FullView_ContainerImpl()
-	return var_0_1("V%sa%s_LinkageActivity_FullViewContainer")
+function LinkageActivity_BaseViewContainer.Vxax_LinkageActivity_FullView_ContainerImpl()
+	return _Vxax_Special_xxxSignView_ContainerImpl("V%sa%s_LinkageActivity_FullViewContainer")
 end
 
-function var_0_0.Vxax_LinkageActivity_PanelView_ContainerImpl()
-	return var_0_1("V%sa%s_LinkageActivity_PanelViewContainer")
+function LinkageActivity_BaseViewContainer.Vxax_LinkageActivity_PanelView_ContainerImpl()
+	return _Vxax_Special_xxxSignView_ContainerImpl("V%sa%s_LinkageActivity_PanelViewContainer")
 end
 
-return var_0_0
+return LinkageActivity_BaseViewContainer

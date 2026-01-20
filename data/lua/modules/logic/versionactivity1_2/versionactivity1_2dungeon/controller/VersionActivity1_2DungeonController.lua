@@ -1,58 +1,60 @@
-﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.controller.VersionActivity1_2DungeonController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/versionactivity1_2dungeon/controller/VersionActivity1_2DungeonController.lua
 
-local var_0_0 = class("VersionActivity1_2DungeonController", BaseController)
+module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.controller.VersionActivity1_2DungeonController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local VersionActivity1_2DungeonController = class("VersionActivity1_2DungeonController", BaseController)
+
+function VersionActivity1_2DungeonController:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function VersionActivity1_2DungeonController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function VersionActivity1_2DungeonController:addConstEvents()
 	return
 end
 
-function var_0_0.reInit(arg_4_0)
+function VersionActivity1_2DungeonController:reInit()
 	return
 end
 
-function var_0_0.setDungeonSelectedEpisodeId(arg_5_0, arg_5_1)
-	arg_5_0.dungeonSelectedEpisodeId = arg_5_1
+function VersionActivity1_2DungeonController:setDungeonSelectedEpisodeId(episodeId)
+	self.dungeonSelectedEpisodeId = episodeId
 end
 
-function var_0_0.getDungeonSelectedEpisodeId(arg_6_0)
-	return arg_6_0.dungeonSelectedEpisodeId
+function VersionActivity1_2DungeonController:getDungeonSelectedEpisodeId()
+	return self.dungeonSelectedEpisodeId
 end
 
-function var_0_0.getEpisodeMapConfig(arg_7_0, arg_7_1)
-	local var_7_0 = DungeonConfig.instance:getEpisodeCO(arg_7_1)
-	local var_7_1 = VersionActivity1_2DungeonEnum.DungeonChapterId.Activity1_2DungeonNormal1
+function VersionActivity1_2DungeonController:getEpisodeMapConfig(episodeId)
+	local episodeCo = DungeonConfig.instance:getEpisodeCO(episodeId)
+	local start_chapter_id = VersionActivity1_2DungeonEnum.DungeonChapterId.Activity1_2DungeonNormal1
 
-	while var_7_0.chapterId ~= var_7_1 do
-		var_7_0 = DungeonConfig.instance:getEpisodeCO(var_7_0.preEpisode)
+	while episodeCo.chapterId ~= start_chapter_id do
+		episodeCo = DungeonConfig.instance:getEpisodeCO(episodeCo.preEpisode)
 	end
 
-	return DungeonConfig.instance:getChapterMapCfg(var_7_1, var_7_0.preEpisode)
+	return DungeonConfig.instance:getChapterMapCfg(start_chapter_id, episodeCo.preEpisode)
 end
 
-function var_0_0._onFinishStory(arg_8_0)
-	arg_8_0:openDungeonView(arg_8_0._enterChapterId, arg_8_0._enterEpisodeId, arg_8_0._showMapLevelView, arg_8_0._focusCamp)
+function VersionActivity1_2DungeonController:_onFinishStory()
+	self:openDungeonView(self._enterChapterId, self._enterEpisodeId, self._showMapLevelView, self._focusCamp)
 end
 
-function var_0_0.openDungeonView(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4, arg_9_5)
+function VersionActivity1_2DungeonController:openDungeonView(chapterId, episodeId, showMapLevelView, focusCamp, jumpParam)
 	if not VersionActivityBaseController.instance:isPlayedActivityVideo(VersionActivity1_2Enum.ActivityId.Dungeon) then
-		local var_9_0 = ActivityConfig.instance:getActivityCo(VersionActivity1_2Enum.ActivityId.Dungeon)
-		local var_9_1 = var_9_0 and var_9_0.storyId
+		local activityCo = ActivityConfig.instance:getActivityCo(VersionActivity1_2Enum.ActivityId.Dungeon)
+		local storyId = activityCo and activityCo.storyId
 
-		if var_9_1 and var_9_1 ~= 0 then
-			arg_9_0._enterChapterId = arg_9_1
-			arg_9_0._enterEpisodeId = arg_9_2
-			arg_9_0._showMapLevelView = arg_9_3
-			arg_9_0._focusCamp = arg_9_4
+		if storyId and storyId ~= 0 then
+			self._enterChapterId = chapterId
+			self._enterEpisodeId = episodeId
+			self._showMapLevelView = showMapLevelView
+			self._focusCamp = focusCamp
 
-			StoryController.instance:playStory(var_9_1, nil, arg_9_0._onFinishStory, arg_9_0)
+			StoryController.instance:playStory(storyId, nil, self._onFinishStory, self)
 
 			return
 		end
@@ -60,54 +62,54 @@ function var_0_0.openDungeonView(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4, ar
 
 	Activity113Rpc.instance:sendGetAct113InfoRequest(VersionActivity1_7Enum.ActivityId.Reactivity, function()
 		ViewMgr.instance:openView(ViewName.VersionActivity1_2DungeonView, {
-			chapterId = arg_9_1,
-			episodeId = arg_9_2,
-			showMapLevelView = arg_9_3,
-			focusCamp = arg_9_4,
-			jumpParam = arg_9_5
+			chapterId = chapterId,
+			episodeId = episodeId,
+			showMapLevelView = showMapLevelView,
+			focusCamp = focusCamp,
+			jumpParam = jumpParam
 		})
 	end)
 end
 
-function var_0_0._getDefaultFocusEpisode(arg_11_0, arg_11_1)
-	local var_11_0 = DungeonConfig.instance:getChapterEpisodeCOList(arg_11_1)
-	local var_11_1 = true
-	local var_11_2
+function VersionActivity1_2DungeonController:_getDefaultFocusEpisode(ChapterId)
+	local episodeList = DungeonConfig.instance:getChapterEpisodeCOList(ChapterId)
+	local allPassed = true
+	local lastEpisodeId
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
-		if not DungeonModel.instance:hasPassLevel(iter_11_1.id) then
-			var_11_1 = false
+	for i, v in ipairs(episodeList) do
+		if not DungeonModel.instance:hasPassLevel(v.id) then
+			allPassed = false
 		end
 
-		if DungeonModel.instance:isUnlock(iter_11_1) and DungeonModel.instance:isFinishElementList(iter_11_1) then
-			var_11_2 = iter_11_1.id
-		end
-	end
-
-	if var_11_1 then
-		local var_11_3 = VersionActivity1_2DungeonMapEpisodeBaseView.getlastBattleEpisodeId(arg_11_1)
-
-		if var_11_3 > 0 then
-			return var_11_3
+		if DungeonModel.instance:isUnlock(v) and DungeonModel.instance:isFinishElementList(v) then
+			lastEpisodeId = v.id
 		end
 	end
 
-	return var_11_2 or var_11_0[1].id
+	if allPassed then
+		local episodeId = VersionActivity1_2DungeonMapEpisodeBaseView.getlastBattleEpisodeId(ChapterId)
+
+		if episodeId > 0 then
+			return episodeId
+		end
+	end
+
+	return lastEpisodeId or episodeList[1].id
 end
 
-function var_0_0.getNowEpisodeId(arg_12_0)
-	local var_12_0 = DungeonConfig.instance:getChapterEpisodeCOList(VersionActivity1_2DungeonEnum.DungeonChapterId.Activity1_2DungeonNormal1)
-	local var_12_1 = var_12_0[1].id
+function VersionActivity1_2DungeonController:getNowEpisodeId()
+	local episodeList = DungeonConfig.instance:getChapterEpisodeCOList(VersionActivity1_2DungeonEnum.DungeonChapterId.Activity1_2DungeonNormal1)
+	local lastEpisodeId = episodeList[1].id
 
-	for iter_12_0, iter_12_1 in ipairs(var_12_0) do
-		if DungeonModel.instance:isUnlock(iter_12_1) and DungeonModel.instance:isFinishElementList(iter_12_1) then
-			var_12_1 = iter_12_1.id
+	for i, v in ipairs(episodeList) do
+		if DungeonModel.instance:isUnlock(v) and DungeonModel.instance:isFinishElementList(v) then
+			lastEpisodeId = v.id
 		end
 	end
 
-	return var_12_1
+	return lastEpisodeId
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity1_2DungeonController.instance = VersionActivity1_2DungeonController.New()
 
-return var_0_0
+return VersionActivity1_2DungeonController

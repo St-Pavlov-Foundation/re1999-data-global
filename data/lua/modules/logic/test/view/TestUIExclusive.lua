@@ -1,41 +1,43 @@
-﻿module("modules.logic.test.view.TestUIExclusive", package.seeall)
+﻿-- chunkname: @modules/logic/test/view/TestUIExclusive.lua
 
-local var_0_0 = class("TestUIExclusive", BaseViewExtended)
+module("modules.logic.test.view.TestUIExclusive", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.text = gohelper.findChildTextMesh(arg_1_0.viewGO, "#txt_des")
+local TestUIExclusive = class("TestUIExclusive", BaseViewExtended)
+
+function TestUIExclusive:onInitView()
+	self.text = gohelper.findChildTextMesh(self.viewGO, "#txt_des")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(gohelper.getClick(gohelper.findChild(arg_2_0.viewGO, "#btn_close_exclusive")), arg_2_0._onClick, arg_2_0)
+function TestUIExclusive:addEvents()
+	self:addClickCb(gohelper.getClick(gohelper.findChild(self.viewGO, "#btn_close_exclusive")), self._onClick, self)
 end
 
-function var_0_0._onOpenSubView(arg_3_0)
+function TestUIExclusive:_onOpenSubView()
 	return
 end
 
-function var_0_0.onSetExclusiveViewVisible(arg_4_0, arg_4_1)
-	if not arg_4_1 then
+function TestUIExclusive:onSetExclusiveViewVisible(state)
+	if not state then
 		GameFacade.showToast(ToastEnum.ClassShow)
 	end
 
-	arg_4_0:setViewVisibleInternal(arg_4_1)
+	self:setViewVisibleInternal(state)
 end
 
-function var_0_0._onClick(arg_5_0)
-	arg_5_0:getParentView():hideExclusiveView(arg_5_0)
+function TestUIExclusive:_onClick()
+	self:getParentView():hideExclusiveView(self)
 end
 
-function var_0_0.onRefreshViewParam(arg_6_0, arg_6_1)
-	arg_6_0.str = arg_6_1
+function TestUIExclusive:onRefreshViewParam(str)
+	self.str = str
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0.text.text = arg_7_0.str
+function TestUIExclusive:onOpen()
+	self.text.text = self.str
 end
 
-function var_0_0.onClose(arg_8_0)
+function TestUIExclusive:onClose()
 	return
 end
 
-return var_0_0
+return TestUIExclusive

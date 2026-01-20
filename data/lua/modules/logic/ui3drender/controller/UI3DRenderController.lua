@@ -1,55 +1,57 @@
-﻿module("modules.logic.ui3drender.controller.UI3DRenderController", package.seeall)
+﻿-- chunkname: @modules/logic/ui3drender/controller/UI3DRenderController.lua
 
-local var_0_0 = class("UI3DRenderController", BaseController)
+module("modules.logic.ui3drender.controller.UI3DRenderController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0.curPosIndex = 0
-	arg_1_0.startPos = {
+local UI3DRenderController = class("UI3DRenderController", BaseController)
+
+function UI3DRenderController:onInit()
+	self.curPosIndex = 0
+	self.startPos = {
 		8000,
 		10000
 	}
-	arg_1_0.distance = 500
-	arg_1_0.curPos = {
-		arg_1_0.startPos[1],
-		arg_1_0.startPos[2]
+	self.distance = 500
+	self.curPos = {
+		self.startPos[1],
+		self.startPos[2]
 	}
 end
 
-function var_0_0.getSurvivalUI3DRender(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	arg_2_0:_addIndex()
+function UI3DRenderController:getSurvivalUI3DRender(texW, texH, pos)
+	self:_addIndex()
 
-	local var_2_0 = SurvivalUI3DRender.New(arg_2_1, arg_2_2, {
-		arg_2_3 and arg_2_3.x or arg_2_0.curPos[1],
-		arg_2_3 and arg_2_3.y or 0,
-		arg_2_3 and arg_2_3.z or arg_2_0.curPos[2]
+	local survivalUI3DRender = SurvivalUI3DRender.New(texW, texH, {
+		pos and pos.x or self.curPos[1],
+		pos and pos.y or 0,
+		pos and pos.z or self.curPos[2]
 	})
 
-	var_2_0:init()
+	survivalUI3DRender:init()
 
-	return var_2_0
+	return survivalUI3DRender
 end
 
-function var_0_0.removeSurvivalUI3DRender(arg_3_0, arg_3_1)
-	arg_3_1:dispose()
-	arg_3_0:_reduceIndex()
+function UI3DRenderController:removeSurvivalUI3DRender(survivalUI3DRender)
+	survivalUI3DRender:dispose()
+	self:_reduceIndex()
 end
 
-function var_0_0._addIndex(arg_4_0)
-	arg_4_0.curPosIndex = arg_4_0.curPosIndex + 1
-	arg_4_0.curPos[1] = arg_4_0.curPos[1] + arg_4_0.distance
+function UI3DRenderController:_addIndex()
+	self.curPosIndex = self.curPosIndex + 1
+	self.curPos[1] = self.curPos[1] + self.distance
 end
 
-function var_0_0._reduceIndex(arg_5_0)
-	arg_5_0.curPosIndex = arg_5_0.curPosIndex - 1
+function UI3DRenderController:_reduceIndex()
+	self.curPosIndex = self.curPosIndex - 1
 
-	if arg_5_0.curPosIndex <= 0 then
-		arg_5_0.curPos = {
-			arg_5_0.startPos[1],
-			arg_5_0.startPos[2]
+	if self.curPosIndex <= 0 then
+		self.curPos = {
+			self.startPos[1],
+			self.startPos[2]
 		}
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+UI3DRenderController.instance = UI3DRenderController.New()
 
-return var_0_0
+return UI3DRenderController

@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_nfc_recognize", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_nfc_recognize.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_nfc_recognize", package.seeall)
+
+local lua_nfc_recognize = {}
+local fields = {
 	param = 3,
 	unlockId = 5,
 	unclaimedId = 6,
@@ -9,13 +11,13 @@ local var_0_1 = {
 	id = 1,
 	notMainTipsId = 4
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_nfc_recognize.onLoad(json)
+	lua_nfc_recognize.configList, lua_nfc_recognize.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_nfc_recognize

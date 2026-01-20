@@ -1,16 +1,18 @@
-﻿module("modules.logic.test.view.TestUIViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/test/view/TestUIViewContainer.lua
 
-local var_0_0 = class("TestUIViewContainer", BaseViewContainer)
+module("modules.logic.test.view.TestUIViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local TestUIViewContainer = class("TestUIViewContainer", BaseViewContainer)
+
+function TestUIViewContainer:buildViews()
 	return {
 		TabViewGroup.New(1, "#go_lefttopbtns"),
 		TestUIView.New()
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
+function TestUIViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -23,4 +25,4 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	end
 end
 
-return var_0_0
+return TestUIViewContainer

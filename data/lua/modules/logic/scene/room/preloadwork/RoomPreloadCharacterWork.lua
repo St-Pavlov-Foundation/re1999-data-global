@@ -1,76 +1,78 @@
-﻿module("modules.logic.scene.room.preloadwork.RoomPreloadCharacterWork", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/preloadwork/RoomPreloadCharacterWork.lua
 
-local var_0_0 = class("RoomPreloadCharacterWork", BaseWork)
+module("modules.logic.scene.room.preloadwork.RoomPreloadCharacterWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_0:_getUrlList()
+local RoomPreloadCharacterWork = class("RoomPreloadCharacterWork", BaseWork)
 
-	if var_1_0 and #var_1_0 > 0 then
-		arg_1_0._loader = MultiAbLoader.New()
+function RoomPreloadCharacterWork:onStart(context)
+	local urlList = self:_getUrlList()
 
-		for iter_1_0, iter_1_1 in ipairs(var_1_0) do
-			arg_1_0._loader:addPath(iter_1_1)
+	if urlList and #urlList > 0 then
+		self._loader = MultiAbLoader.New()
+
+		for _, resPath in ipairs(urlList) do
+			self._loader:addPath(resPath)
 		end
 
-		arg_1_0._loader:setLoadFailCallback(arg_1_0._onPreloadOneFail)
-		arg_1_0._loader:startLoad(arg_1_0._onPreloadFinish, arg_1_0)
+		self._loader:setLoadFailCallback(self._onPreloadOneFail)
+		self._loader:startLoad(self._onPreloadFinish, self)
 	else
-		arg_1_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._onPreloadFinish(arg_2_0, arg_2_1)
-	arg_2_0:onDone(true)
+function RoomPreloadCharacterWork:_onPreloadFinish(loader)
+	self:onDone(true)
 end
 
-function var_0_0._onPreloadOneFail(arg_3_0, arg_3_1, arg_3_2)
-	logError("RoomPreloadCharacterWork: 加载失败, url: " .. arg_3_2.ResPath)
+function RoomPreloadCharacterWork:_onPreloadOneFail(loader, assetItem)
+	logError("RoomPreloadCharacterWork: 加载失败, url: " .. assetItem.ResPath)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	if arg_4_0._loader then
-		arg_4_0._loader:dispose()
+function RoomPreloadCharacterWork:clearWork()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_4_0._loader = nil
+		self._loader = nil
 	end
 end
 
-function var_0_0._getUrlList(arg_5_0)
+function RoomPreloadCharacterWork:_getUrlList()
 	if not RoomController.instance:isObMode() and not RoomController.instance:isVisitMode() then
 		return nil
 	end
 
-	local var_5_0 = {
+	local urlList = {
 		RoomCharacterEnum.MaterialPath
 	}
-	local var_5_1 = RoomCharacterModel.instance:getList()
+	local characterMOList = RoomCharacterModel.instance:getList()
 
-	for iter_5_0, iter_5_1 in pairs(var_5_1) do
-		arg_5_0:_addListUrl(var_5_0, RoomResHelper.getCharacterPath(iter_5_1.skinId))
-		arg_5_0:_addListUrl(var_5_0, RoomResHelper.getCharacterCameraAnimABPath(iter_5_1.roomCharacterConfig.cameraAnimPath))
-		arg_5_0:_addListUrl(var_5_0, RoomResHelper.getCharacterEffectABPath(iter_5_1.roomCharacterConfig.effectPath))
-		arg_5_0:_addCharacterEffectUrl(var_5_0, iter_5_1.skinId)
+	for _, roomCharacterMO in pairs(characterMOList) do
+		self:_addListUrl(urlList, RoomResHelper.getCharacterPath(roomCharacterMO.skinId))
+		self:_addListUrl(urlList, RoomResHelper.getCharacterCameraAnimABPath(roomCharacterMO.roomCharacterConfig.cameraAnimPath))
+		self:_addListUrl(urlList, RoomResHelper.getCharacterEffectABPath(roomCharacterMO.roomCharacterConfig.effectPath))
+		self:_addCharacterEffectUrl(urlList, roomCharacterMO.skinId)
 	end
 
-	return var_5_0
+	return urlList
 end
 
-function var_0_0._addListUrl(arg_6_0, arg_6_1, arg_6_2)
-	if not string.nilorempty(arg_6_2) then
-		table.insert(arg_6_1, arg_6_2)
+function RoomPreloadCharacterWork:_addListUrl(urlList, url)
+	if not string.nilorempty(url) then
+		table.insert(urlList, url)
 	end
 end
 
-function var_0_0._addCharacterEffectUrl(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = RoomConfig.instance:getCharacterEffectList(arg_7_2)
+function RoomPreloadCharacterWork:_addCharacterEffectUrl(urlList, skinId)
+	local cfgList = RoomConfig.instance:getCharacterEffectList(skinId)
 
-	if var_7_0 then
-		for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-			if not RoomCharacterEnum.maskInteractAnim[iter_7_1.animName] then
-				arg_7_0:_addListUrl(arg_7_1, RoomResHelper.getCharacterEffectABPath(iter_7_1.effectRes))
+	if cfgList then
+		for i, cfg in ipairs(cfgList) do
+			if not RoomCharacterEnum.maskInteractAnim[cfg.animName] then
+				self:_addListUrl(urlList, RoomResHelper.getCharacterEffectABPath(cfg.effectRes))
 			end
 		end
 	end
 end
 
-return var_0_0
+return RoomPreloadCharacterWork

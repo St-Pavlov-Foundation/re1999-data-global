@@ -1,133 +1,137 @@
-﻿module("modules.logic.seasonver.act123.model.Season123PickAssistListModel", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/model/Season123PickAssistListModel.lua
 
-local var_0_0 = class("Season123PickAssistListModel", ListScrollModel)
-local var_0_1 = CharacterEnum.CareerType.Yan
+module("modules.logic.seasonver.act123.model.Season123PickAssistListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:setCareer()
+local Season123PickAssistListModel = class("Season123PickAssistListModel", ListScrollModel)
+local DEFAULT_CAREER = CharacterEnum.CareerType.Yan
+
+function Season123PickAssistListModel:onInit()
+	self:setCareer()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:setCareer()
+function Season123PickAssistListModel:reInit()
+	self:setCareer()
 end
 
-function var_0_0.release(arg_3_0)
-	arg_3_0:clear()
+function Season123PickAssistListModel:release()
+	self:clear()
 
-	arg_3_0.activityId = nil
+	self.activityId = nil
 
-	arg_3_0:setHeroSelect()
+	self:setHeroSelect()
 end
 
-function var_0_0.init(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0.activityId = arg_4_1
+function Season123PickAssistListModel:init(actId, selectedHeroUid)
+	self.activityId = actId
 
-	if not arg_4_0.career then
-		arg_4_0:setCareer(var_0_1)
+	if not self.career then
+		self:setCareer(DEFAULT_CAREER)
 	end
 
-	arg_4_0:initSelectedMO(arg_4_2)
-	arg_4_0:updateDatas()
+	self:initSelectedMO(selectedHeroUid)
+	self:updateDatas()
 end
 
-function var_0_0.initSelectedMO(arg_5_0, arg_5_1)
-	arg_5_0:setHeroSelect()
+function Season123PickAssistListModel:initSelectedMO(selectedHeroUid)
+	self:setHeroSelect()
 
-	local var_5_0 = DungeonAssistModel.instance:getAssistList(DungeonEnum.AssistType.Season123)
+	local dungeonAssistList = DungeonAssistModel.instance:getAssistList(DungeonEnum.AssistType.Season123)
 
-	if var_5_0 then
-		for iter_5_0, iter_5_1 in ipairs(var_5_0) do
-			if iter_5_1:getHeroUid() == arg_5_1 then
-				local var_5_1 = Season123HeroUtils.createSeasonPickAssistMO(iter_5_1)
+	if dungeonAssistList then
+		for _, dungeonAssistHeroMo in ipairs(dungeonAssistList) do
+			local assistUid = dungeonAssistHeroMo:getHeroUid()
 
-				arg_5_0:setHeroSelect(var_5_1, true)
+			if assistUid == selectedHeroUid then
+				local mo = Season123HeroUtils.createSeasonPickAssistMO(dungeonAssistHeroMo)
+
+				self:setHeroSelect(mo, true)
 			end
 		end
 	end
 end
 
-function var_0_0.updateDatas(arg_6_0)
-	if not arg_6_0.activityId or not arg_6_0.career then
+function Season123PickAssistListModel:updateDatas()
+	if not self.activityId or not self.career then
 		return
 	end
 
-	arg_6_0:setListByCareer()
+	self:setListByCareer()
 end
 
-function var_0_0.setListByCareer(arg_7_0)
-	local var_7_0 = {}
-	local var_7_1 = arg_7_0:getSelectedMO()
+function Season123PickAssistListModel:setListByCareer()
+	local list = {}
+	local lastSelectMO = self:getSelectedMO()
 
-	arg_7_0:setHeroSelect()
+	self:setHeroSelect()
 
-	local var_7_2 = DungeonAssistModel.instance:getAssistList(DungeonEnum.AssistType.Season123, arg_7_0.career)
+	local dungeonAssistList = DungeonAssistModel.instance:getAssistList(DungeonEnum.AssistType.Season123, self.career)
 
-	if var_7_2 then
-		for iter_7_0, iter_7_1 in ipairs(var_7_2) do
-			local var_7_3 = Season123HeroUtils.createSeasonPickAssistMO(iter_7_1)
+	if dungeonAssistList then
+		for _, dungeonAssistHeroMo in ipairs(dungeonAssistList) do
+			local mo = Season123HeroUtils.createSeasonPickAssistMO(dungeonAssistHeroMo)
 
-			if var_7_3 and var_7_3.heroMO and var_7_3.heroMO.config and var_7_3.heroMO.config.career == arg_7_0.career then
-				table.insert(var_7_0, var_7_3)
+			if mo and mo.heroMO and mo.heroMO.config and mo.heroMO.config.career == self.career then
+				table.insert(list, mo)
 
-				if var_7_1 and var_7_1:isSameHero(var_7_3) then
-					arg_7_0:setHeroSelect(var_7_3, true)
+				if lastSelectMO and lastSelectMO:isSameHero(mo) then
+					self:setHeroSelect(mo, true)
 				end
 			end
 		end
 	end
 
-	arg_7_0:setList(var_7_0)
+	self:setList(list)
 	Season123Controller.instance:dispatchEvent(Season123Event.SetCareer)
 end
 
-function var_0_0.getCareer(arg_8_0)
-	return arg_8_0.career
+function Season123PickAssistListModel:getCareer()
+	return self.career
 end
 
-function var_0_0.getSelectedMO(arg_9_0)
-	return arg_9_0.selectMO
+function Season123PickAssistListModel:getSelectedMO()
+	return self.selectMO
 end
 
-function var_0_0.isHeroSelected(arg_10_0, arg_10_1)
-	local var_10_0 = false
-	local var_10_1 = arg_10_0:getSelectedMO()
+function Season123PickAssistListModel:isHeroSelected(assistMO)
+	local result = false
+	local selectMO = self:getSelectedMO()
 
-	if var_10_1 then
-		var_10_0 = var_10_1:isSameHero(arg_10_1)
+	if selectMO then
+		result = selectMO:isSameHero(assistMO)
 	end
 
-	return var_10_0
+	return result
 end
 
-function var_0_0.isHasAssistList(arg_11_0)
-	local var_11_0 = false
-	local var_11_1 = arg_11_0:getList()
+function Season123PickAssistListModel:isHasAssistList()
+	local isHasAssists = false
+	local assistList = self:getList()
 
-	if var_11_1 then
-		var_11_0 = #var_11_1 > 0
+	if assistList then
+		isHasAssists = #assistList > 0
 	end
 
-	return var_11_0
+	return isHasAssists
 end
 
-function var_0_0.setCareer(arg_12_0, arg_12_1)
-	if arg_12_0.career ~= arg_12_1 then
-		arg_12_0.career = arg_12_1
+function Season123PickAssistListModel:setCareer(career)
+	if self.career ~= career then
+		self.career = career
 
-		arg_12_0:updateDatas()
+		self:updateDatas()
 	end
 end
 
-function var_0_0.setHeroSelect(arg_13_0, arg_13_1, arg_13_2)
-	if arg_13_2 then
-		arg_13_0.selectMO = arg_13_1
+function Season123PickAssistListModel:setHeroSelect(assistMO, value)
+	if value then
+		self.selectMO = assistMO
 	else
-		arg_13_0.selectMO = nil
+		self.selectMO = nil
 	end
 
 	Season123Controller.instance:dispatchEvent(Season123Event.RefreshSelectAssistHero)
 end
 
-var_0_0.instance = var_0_0.New()
+Season123PickAssistListModel.instance = Season123PickAssistListModel.New()
 
-return var_0_0
+return Season123PickAssistListModel

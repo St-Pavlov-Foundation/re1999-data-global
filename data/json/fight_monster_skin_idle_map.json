@@ -17,7 +17,7 @@
     "skinId": 6404012,
     "idleAnimName": "idle3",
     "hitAnimName": "hit3",
-    "freezeAnimName": "",
+    "freezeAnimName": "hit3",
     "sleepAnimName": ""
   },
   {

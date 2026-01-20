@@ -1,103 +1,107 @@
-﻿module("modules.logic.main.controller.work.WeekwalkHeart_PanelViewPatFaceWork", package.seeall)
+﻿-- chunkname: @modules/logic/main/controller/work/WeekwalkHeart_PanelViewPatFaceWork.lua
 
-local var_0_0 = class("WeekwalkHeart_PanelViewPatFaceWork", PatFaceWorkBase)
+module("modules.logic.main.controller.work.WeekwalkHeart_PanelViewPatFaceWork", package.seeall)
 
-var_0_0.SigninId = 530007
+local WeekwalkHeart_PanelViewPatFaceWork = class("WeekwalkHeart_PanelViewPatFaceWork", PatFaceWorkBase)
 
-function var_0_0._viewName(arg_1_0)
-	return PatFaceConfig.instance:getPatFaceViewName(arg_1_0._patFaceId)
+WeekwalkHeart_PanelViewPatFaceWork.SigninId = 530007
+
+function WeekwalkHeart_PanelViewPatFaceWork:_viewName()
+	return PatFaceConfig.instance:getPatFaceViewName(self._patFaceId)
 end
 
-function var_0_0._actId(arg_2_0)
-	return PatFaceConfig.instance:getPatFaceActivityId(arg_2_0._patFaceId)
+function WeekwalkHeart_PanelViewPatFaceWork:_actId()
+	return PatFaceConfig.instance:getPatFaceActivityId(self._patFaceId)
 end
 
-function var_0_0.checkCanPat(arg_3_0)
-	local var_3_0 = arg_3_0:_actId()
-	local var_3_1 = false
+function WeekwalkHeart_PanelViewPatFaceWork:checkCanPat()
+	local actId = self:_actId()
+	local canPat = false
 
-	if ActivityHelper.getActivityStatus(var_3_0, true) == ActivityEnum.ActivityStatus.Normal then
-		local var_3_2 = TaskModel.instance:getTaskById(var_0_0.SigninId)
+	if ActivityHelper.getActivityStatus(actId, true) == ActivityEnum.ActivityStatus.Normal then
+		local taskmo = TaskModel.instance:getTaskById(WeekwalkHeart_PanelViewPatFaceWork.SigninId)
 
-		if var_3_2 and not (var_3_2.finishCount > 0) then
-			var_3_1 = true
+		if taskmo and not (taskmo.finishCount > 0) then
+			canPat = true
 		end
 	end
 
-	return var_3_1
+	return canPat
 end
 
-function var_0_0.startPat(arg_4_0)
-	arg_4_0:_startBlock()
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_4_0._onOpenViewFinish, arg_4_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_4_0._onCloseViewFinish, arg_4_0)
-	Activity189Controller.instance:registerCallback(Activity189Event.onReceiveGetAct189InfoReply, arg_4_0._onReceiveGetAct189InfoReply, arg_4_0)
-	Activity189Controller.instance:sendGetAct189InfoRequest(arg_4_0:_actId())
+function WeekwalkHeart_PanelViewPatFaceWork:startPat()
+	self:_startBlock()
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	Activity189Controller.instance:registerCallback(Activity189Event.onReceiveGetAct189InfoReply, self._onReceiveGetAct189InfoReply, self)
+	Activity189Controller.instance:sendGetAct189InfoRequest(self:_actId())
 end
 
-function var_0_0.clearWork(arg_5_0)
-	arg_5_0:_endBlock()
-	Activity189Controller.instance:unregisterCallback(Activity189Event.onReceiveGetAct189InfoReply, arg_5_0._onReceiveGetAct189InfoReply, arg_5_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_5_0._onCloseViewFinish, arg_5_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_5_0._onOpenViewFinish, arg_5_0)
+function WeekwalkHeart_PanelViewPatFaceWork:clearWork()
+	self:_endBlock()
+	Activity189Controller.instance:unregisterCallback(Activity189Event.onReceiveGetAct189InfoReply, self._onReceiveGetAct189InfoReply, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
 end
 
-function var_0_0._onOpenViewFinish(arg_6_0, arg_6_1)
-	if arg_6_1 ~= arg_6_0:_viewName() then
+function WeekwalkHeart_PanelViewPatFaceWork:_onOpenViewFinish(openingViewName)
+	local viewName = self:_viewName()
+
+	if openingViewName ~= viewName then
 		return
 	end
 
-	arg_6_0:_endBlock()
+	self:_endBlock()
 end
 
-function var_0_0._onCloseViewFinish(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0:_viewName()
+function WeekwalkHeart_PanelViewPatFaceWork:_onCloseViewFinish(closingViewName)
+	local viewName = self:_viewName()
 
-	if arg_7_1 ~= var_7_0 then
+	if closingViewName ~= viewName then
 		return
 	end
 
-	if ViewMgr.instance:isOpen(var_7_0) then
+	if ViewMgr.instance:isOpen(viewName) then
 		return
 	end
 
-	arg_7_0:patComplete()
+	self:patComplete()
 end
 
-function var_0_0._onReceiveGetAct189InfoReply(arg_8_0)
-	local var_8_0 = arg_8_0:_viewName()
+function WeekwalkHeart_PanelViewPatFaceWork:_onReceiveGetAct189InfoReply()
+	local viewName = self:_viewName()
 
-	if not arg_8_0:_isClaimable() then
-		arg_8_0:patComplete()
+	if not self:_isClaimable() then
+		self:patComplete()
 
 		return
 	end
 
-	ViewMgr.instance:openView(var_8_0)
+	ViewMgr.instance:openView(viewName)
 end
 
-function var_0_0._endBlock(arg_9_0)
-	if not arg_9_0:_isBlock() then
+function WeekwalkHeart_PanelViewPatFaceWork:_endBlock()
+	if not self:_isBlock() then
 		return
 	end
 
 	UIBlockMgr.instance:endBlock()
 end
 
-function var_0_0._startBlock(arg_10_0)
-	if arg_10_0:_isBlock() then
+function WeekwalkHeart_PanelViewPatFaceWork:_startBlock()
+	if self:_isBlock() then
 		return
 	end
 
 	UIBlockMgr.instance:startBlock()
 end
 
-function var_0_0._isBlock(arg_11_0)
+function WeekwalkHeart_PanelViewPatFaceWork:_isBlock()
 	return UIBlockMgr.instance:isBlock() and true or false
 end
 
-function var_0_0._isClaimable(arg_12_0)
-	return Activity189Model.instance:isClaimable(arg_12_0:_actId())
+function WeekwalkHeart_PanelViewPatFaceWork:_isClaimable()
+	return Activity189Model.instance:isClaimable(self:_actId())
 end
 
-return var_0_0
+return WeekwalkHeart_PanelViewPatFaceWork

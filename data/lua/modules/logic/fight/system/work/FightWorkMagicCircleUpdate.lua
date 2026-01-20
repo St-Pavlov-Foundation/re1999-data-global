@@ -1,33 +1,37 @@
-﻿module("modules.logic.fight.system.work.FightWorkMagicCircleUpdate", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkMagicCircleUpdate.lua
 
-local var_0_0 = class("FightWorkMagicCircleUpdate", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkMagicCircleUpdate", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = FightModel.instance:getMagicCircleInfo()
+local FightWorkMagicCircleUpdate = class("FightWorkMagicCircleUpdate", FightEffectBase)
 
-	if var_1_0 then
-		local var_1_1 = arg_1_0.actEffectData.magicCircle.magicCircleId
+function FightWorkMagicCircleUpdate:onStart()
+	local magicData = FightModel.instance:getMagicCircleInfo()
 
-		if var_1_0.magicCircleId == var_1_1 then
-			var_1_0:refreshData(arg_1_0.actEffectData.magicCircle)
+	if magicData then
+		local magicCircleId = self.actEffectData.magicCircle.magicCircleId
+
+		if magicData.magicCircleId == magicCircleId then
+			magicData:refreshData(self.actEffectData.magicCircle)
 		end
 
-		if lua_magic_circle.configDict[var_1_1] then
-			FightController.instance:dispatchEvent(FightEvent.UpdateMagicCircile, var_1_1, arg_1_0.fightStepData.fromId)
+		local config = lua_magic_circle.configDict[magicCircleId]
+
+		if config then
+			FightController.instance:dispatchEvent(FightEvent.UpdateMagicCircile, magicCircleId, self.fightStepData.fromId)
 		else
-			logError("术阵表找不到id:" .. var_1_1)
+			logError("术阵表找不到id:" .. magicCircleId)
 		end
 	end
 
-	arg_1_0:_delayDone()
+	self:_delayDone()
 end
 
-function var_0_0._delayDone(arg_2_0)
-	arg_2_0:onDone(true)
+function FightWorkMagicCircleUpdate:_delayDone()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
+function FightWorkMagicCircleUpdate:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkMagicCircleUpdate

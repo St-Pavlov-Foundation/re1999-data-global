@@ -1,12 +1,14 @@
-﻿module("modules.logic.clickuiswitch.controller.ClickUISwitchEvent", package.seeall)
+﻿-- chunkname: @modules/logic/clickuiswitch/controller/ClickUISwitchEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.clickuiswitch.controller.ClickUISwitchEvent", package.seeall)
 
-var_0_0.UseClickUI = GameUtil.getEventId()
-var_0_0.SwitchClickUI = GameUtil.getEventId()
-var_0_0.SwitchVisible = GameUtil.getEventId()
-var_0_0.PreviewSwitchVisible = GameUtil.getEventId()
-var_0_0.CancelReddot = GameUtil.getEventId()
-var_0_0.LoadUIPrefabs = GameUtil.getEventId()
+local ClickUISwitchEvent = _M
 
-return var_0_0
+ClickUISwitchEvent.UseClickUI = GameUtil.getEventId()
+ClickUISwitchEvent.SwitchClickUI = GameUtil.getEventId()
+ClickUISwitchEvent.SwitchVisible = GameUtil.getEventId()
+ClickUISwitchEvent.PreviewSwitchVisible = GameUtil.getEventId()
+ClickUISwitchEvent.CancelReddot = GameUtil.getEventId()
+ClickUISwitchEvent.LoadUIPrefabs = GameUtil.getEventId()
+
+return ClickUISwitchEvent

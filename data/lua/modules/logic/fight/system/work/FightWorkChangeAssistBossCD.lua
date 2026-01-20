@@ -1,14 +1,16 @@
-﻿module("modules.logic.fight.system.work.FightWorkChangeAssistBossCD", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkChangeAssistBossCD.lua
 
-local var_0_0 = class("FightWorkChangeAssistBossCD", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkChangeAssistBossCD", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
+local FightWorkChangeAssistBossCD = class("FightWorkChangeAssistBossCD", FightEffectBase)
+
+function FightWorkChangeAssistBossCD:onStart()
 	FightController.instance:dispatchEvent(FightEvent.OnAssistBossCDChange)
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkChangeAssistBossCD:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkChangeAssistBossCD

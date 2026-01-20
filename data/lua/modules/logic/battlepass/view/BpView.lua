@@ -1,86 +1,98 @@
-﻿module("modules.logic.battlepass.view.BpView", package.seeall)
+﻿-- chunkname: @modules/logic/battlepass/view/BpView.lua
 
-local var_0_0 = class("BpView", BaseView)
+module("modules.logic.battlepass.view.BpView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "left/#simage_icon")
-	arg_1_0._simagesignature = gohelper.findChildSingleImage(arg_1_0.viewGO, "left/desc/#simage_signature")
-	arg_1_0._simagerewardbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "right/#simage_rewardbg")
-	arg_1_0._txtLevel = gohelper.findChildText(arg_1_0.viewGO, "right/level/#txtLevel")
-	arg_1_0._txtScore = gohelper.findChildText(arg_1_0.viewGO, "right/score/#txtScore")
-	arg_1_0._goWeeklyLimit = gohelper.findChild(arg_1_0.viewGO, "right/weeklimit")
-	arg_1_0._txtWeeklyLimit = gohelper.findChildText(arg_1_0.viewGO, "right/weeklimit/#txtWeeklyLimit")
-	arg_1_0._sliderScore = gohelper.findChildSlider(arg_1_0.viewGO, "right/Slider")
-	arg_1_0._sliderImage = gohelper.findChildImage(arg_1_0.viewGO, "right/slidervx")
-	arg_1_0._sliderAnim = gohelper.findChild(arg_1_0.viewGO, "right/slidervx/ani")
-	arg_1_0._sliderBg = gohelper.findChild(arg_1_0.viewGO, "right/Slider/Fill Area/Fill")
-	arg_1_0._goToggleGroup = gohelper.findChild(arg_1_0.viewGO, "right/toggleGroup")
-	arg_1_0._bonusRedDot = gohelper.findChild(arg_1_0.viewGO, "right/redDot/#go_bonus_reddot")
-	arg_1_0._taskRedDot = gohelper.findChild(arg_1_0.viewGO, "right/redDot/#go_task_reddot")
-	arg_1_0._btnUpgrade = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#btnUpgrade", AudioEnum.UI.play_ui_role_pieces_open)
-	arg_1_0._gomax = gohelper.findChild(arg_1_0.viewGO, "right/#go_max")
-	arg_1_0._btnInfo = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_info", AudioEnum.UI.UI_role_introduce_open)
-	arg_1_0._btnRule = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_rule")
-	arg_1_0._btnDetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left/desc/#txt_skinname/#btn_faj", AudioEnum.UI.play_artificial_ui_carddisappear)
-	arg_1_0._goexpup = gohelper.findChild(arg_1_0.viewGO, "right/title/#go_expup")
-	arg_1_0._btntitleClick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/title/#btn_titleClick")
+local BpView = class("BpView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function BpView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "left/#simage_icon")
+	self._simagesignature = gohelper.findChildSingleImage(self.viewGO, "left/desc/#simage_signature")
+	self._simagerewardbg = gohelper.findChildSingleImage(self.viewGO, "right/#simage_rewardbg")
+	self._txtLevel = gohelper.findChildText(self.viewGO, "right/level/#txtLevel")
+	self._txtScore = gohelper.findChildText(self.viewGO, "right/score/#txtScore")
+	self._goWeeklyLimit = gohelper.findChild(self.viewGO, "right/weeklimit")
+	self._txtWeeklyLimit = gohelper.findChildText(self.viewGO, "right/weeklimit/#txtWeeklyLimit")
+	self._sliderScore = gohelper.findChildSlider(self.viewGO, "right/Slider")
+	self._sliderImage = gohelper.findChildImage(self.viewGO, "right/slidervx")
+	self._sliderAnim = gohelper.findChild(self.viewGO, "right/slidervx/ani")
+	self._sliderBg = gohelper.findChild(self.viewGO, "right/Slider/Fill Area/Fill")
+	self._goToggleGroup = gohelper.findChild(self.viewGO, "right/toggleGroup")
+	self._bonusRedDot = gohelper.findChild(self.viewGO, "right/redDot/#go_bonus_reddot")
+	self._taskRedDot = gohelper.findChild(self.viewGO, "right/redDot/#go_task_reddot")
+	self._btnUpgrade = gohelper.findChildButtonWithAudio(self.viewGO, "right/#btnUpgrade", AudioEnum.UI.play_ui_role_pieces_open)
+	self._gomax = gohelper.findChild(self.viewGO, "right/#go_max")
+	self._btnInfo = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_info", AudioEnum.UI.UI_role_introduce_open)
+	self._btnRule = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_rule")
+	self._btnDetail = gohelper.findChildButtonWithAudio(self.viewGO, "left/desc/#txt_skinname/#btn_faj", AudioEnum.UI.play_artificial_ui_carddisappear)
+	self._goexpup = gohelper.findChild(self.viewGO, "right/title/#go_expup")
+	self._btntitleClick = gohelper.findChildButtonWithAudio(self.viewGO, "right/title/#btn_titleClick")
+	self._rewardContainer = gohelper.findChild(self.viewGO, "right/btngroup/#rewardContainer")
+	self._btnreward = gohelper.findChildButtonWithAudio(self._rewardContainer, "#btn_reward")
+	self._hasget = gohelper.findChild(self._rewardContainer, "#btn_reward/#hasget")
+	self._txt_num = gohelper.findChildTextMesh(self._rewardContainer, "#btn_reward/numbg/#txt_num")
+	self._btn_claim = gohelper.findChild(self._rewardContainer, "#btn_reward/rewardbg/#btn_claim")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnUpgrade:AddClickListener(arg_2_0._btnUpgradeOnClick, arg_2_0)
-	arg_2_0._btnInfo:AddClickListener(arg_2_0.openStoryTips, arg_2_0)
-	arg_2_0._btnRule:AddClickListener(arg_2_0.openTips, arg_2_0)
-	arg_2_0._btnDetail:AddClickListener(arg_2_0._btndetailOnClick, arg_2_0)
-	arg_2_0:addEventCb(BpController.instance, BpEvent.OnGetInfo, arg_2_0._updateLevelScore, arg_2_0)
-	arg_2_0:addEventCb(BpController.instance, BpEvent.OnUpdateScore, arg_2_0._updateLevelScore, arg_2_0)
-	arg_2_0:addEventCb(BpController.instance, BpEvent.OnUpdatePayStatus, arg_2_0._updateLevelScore, arg_2_0)
-	arg_2_0:addEventCb(BpController.instance, BpEvent.OnBuyLevel, arg_2_0._updateLevelScore, arg_2_0)
-	arg_2_0:addEventCb(BpController.instance, BpEvent.ForcePlayBonusAnim, arg_2_0._forcePlayBonusAnim, arg_2_0)
-	arg_2_0.viewContainer:registerCallback(ViewEvent.ToSwitchTab, arg_2_0._toSwitchTab, arg_2_0)
-	arg_2_0.viewContainer:registerCallback(BpEvent.TaskTabChange, arg_2_0._taskTabChange, arg_2_0)
-	arg_2_0._btntitleClick:AddClickListener(arg_2_0._btntitleClickOnClick, arg_2_0)
+function BpView:addEvents()
+	self._btnUpgrade:AddClickListener(self._btnUpgradeOnClick, self)
+	self._btnInfo:AddClickListener(self.openStoryTips, self)
+	self._btnRule:AddClickListener(self.openTips, self)
+	self._btnDetail:AddClickListener(self._btndetailOnClick, self)
+	self:addEventCb(BpController.instance, BpEvent.OnGetInfo, self._updateLevelScore, self)
+	self:addEventCb(BpController.instance, BpEvent.OnUpdateScore, self._updateLevelScore, self)
+	self:addEventCb(BpController.instance, BpEvent.OnUpdatePayStatus, self._updateLevelScore, self)
+	self:addEventCb(BpController.instance, BpEvent.OnBuyLevel, self._updateLevelScore, self)
+	self:addEventCb(BpController.instance, BpEvent.ForcePlayBonusAnim, self._forcePlayBonusAnim, self)
+	self.viewContainer:registerCallback(ViewEvent.ToSwitchTab, self._toSwitchTab, self)
+	self.viewContainer:registerCallback(BpEvent.TaskTabChange, self._taskTabChange, self)
+	self._btntitleClick:AddClickListener(self._btntitleClickOnClick, self)
+	self:addClickCb(self._btnreward, self._btnrewardOnClick, self)
+	self:addEventCb(self.viewContainer, BpEvent.TapViewCloseAnimBegin, self.closeAnimBegin, self)
+	self:addEventCb(self.viewContainer, BpEvent.TapViewCloseAnimEnd, self.closeAnimEnd, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnUpgrade:RemoveClickListener()
-	arg_3_0._btnInfo:RemoveClickListener()
-	arg_3_0._btnRule:RemoveClickListener()
-	arg_3_0._btnDetail:RemoveClickListener()
-	arg_3_0:removeEventCb(BpController.instance, BpEvent.OnGetInfo, arg_3_0._updateLevelScore, arg_3_0)
-	arg_3_0:removeEventCb(BpController.instance, BpEvent.OnUpdateScore, arg_3_0._updateLevelScore, arg_3_0)
-	arg_3_0:removeEventCb(BpController.instance, BpEvent.OnUpdatePayStatus, arg_3_0._updateLevelScore, arg_3_0)
-	arg_3_0:removeEventCb(BpController.instance, BpEvent.OnBuyLevel, arg_3_0._updateLevelScore, arg_3_0)
-	arg_3_0:removeEventCb(BpController.instance, BpEvent.ForcePlayBonusAnim, arg_3_0._forcePlayBonusAnim, arg_3_0)
-	arg_3_0.viewContainer:unregisterCallback(ViewEvent.ToSwitchTab, arg_3_0._toSwitchTab, arg_3_0)
-	arg_3_0.viewContainer:unregisterCallback(BpEvent.TaskTabChange, arg_3_0._taskTabChange, arg_3_0)
-	arg_3_0._btntitleClick:RemoveClickListener()
+function BpView:removeEvents()
+	self._btnUpgrade:RemoveClickListener()
+	self._btnInfo:RemoveClickListener()
+	self._btnRule:RemoveClickListener()
+	self._btnDetail:RemoveClickListener()
+	self:removeEventCb(BpController.instance, BpEvent.OnGetInfo, self._updateLevelScore, self)
+	self:removeEventCb(BpController.instance, BpEvent.OnUpdateScore, self._updateLevelScore, self)
+	self:removeEventCb(BpController.instance, BpEvent.OnUpdatePayStatus, self._updateLevelScore, self)
+	self:removeEventCb(BpController.instance, BpEvent.OnBuyLevel, self._updateLevelScore, self)
+	self:removeEventCb(BpController.instance, BpEvent.ForcePlayBonusAnim, self._forcePlayBonusAnim, self)
+	self.viewContainer:unregisterCallback(ViewEvent.ToSwitchTab, self._toSwitchTab, self)
+	self.viewContainer:unregisterCallback(BpEvent.TaskTabChange, self._taskTabChange, self)
+	self._btntitleClick:RemoveClickListener()
+	self:removeEventCb(self.viewContainer, BpEvent.TapViewCloseAnimBegin, self.closeAnimBegin, self)
+	self:removeEventCb(self.viewContainer, BpEvent.TapViewCloseAnimEnd, self.closeAnimEnd, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	gohelper.addUIClickAudio(gohelper.findChild(arg_4_0.viewGO, "right/toggleGroup/toggleBonus1"), AudioEnum.UI.UI_vertical_first_tabs_click)
-	gohelper.addUIClickAudio(gohelper.findChild(arg_4_0.viewGO, "right/toggleGroup/toggleTask2"), AudioEnum.UI.UI_vertical_first_tabs_click)
+function BpView:_editableInitView()
+	gohelper.addUIClickAudio(gohelper.findChild(self.viewGO, "right/toggleGroup/toggleBonus1"), AudioEnum.UI.UI_vertical_first_tabs_click)
+	gohelper.addUIClickAudio(gohelper.findChild(self.viewGO, "right/toggleGroup/toggleTask2"), AudioEnum.UI.UI_vertical_first_tabs_click)
 
-	local var_4_0 = BpConfig.instance:getCurSkinId(BpModel.instance.id)
-	local var_4_1 = lua_skin.configDict[var_4_0].characterId
-	local var_4_2 = lua_character.configDict[var_4_1]
+	local skinId = BpConfig.instance:getCurSkinId(BpModel.instance.id)
+	local heroId = lua_skin.configDict[skinId].characterId
+	local heroCo = lua_character.configDict[heroId]
 
-	arg_4_0._simagesignature:LoadImage(ResUrl.getSignature(var_4_2.signature))
+	self._simagesignature:LoadImage(ResUrl.getSignature(heroCo.signature))
 
-	local var_4_3 = BpConfig.instance:getBpCO(BpModel.instance.id)
+	local co = BpConfig.instance:getBpCO(BpModel.instance.id)
 
-	if var_4_3 then
-		local var_4_4 = gohelper.findChildTextMesh(arg_4_0.viewGO, "left/desc/#txt_skinname")
-		local var_4_5 = gohelper.findChildTextMesh(arg_4_0.viewGO, "left/desc/#txt_skinname/#txt_name")
-		local var_4_6 = gohelper.findChildTextMesh(arg_4_0.viewGO, "left/desc/#txt_skinname/#txt_name/#txt_enname")
+	if co then
+		local skinname = gohelper.findChildTextMesh(self.viewGO, "left/desc/#txt_skinname")
+		local name = gohelper.findChildTextMesh(self.viewGO, "left/desc/#txt_skinname/#txt_name")
+		local nameEn = gohelper.findChildTextMesh(self.viewGO, "left/desc/#txt_skinname/#txt_name/#txt_enname")
 
-		var_4_4.text = var_4_3.bpSkinDesc
-		var_4_5.text = var_4_3.bpSkinNametxt
-		var_4_6.text = var_4_3.bpSkinEnNametxt
+		skinname.text = co.bpSkinDesc
+		name.text = co.bpSkinNametxt
+		nameEn.text = co.bpSkinEnNametxt
 	end
 
 	if BpModel.instance.firstShow then
@@ -91,171 +103,202 @@ function var_0_0._editableInitView(arg_4_0)
 		BpRpc.instance:sendBpMarkFirstShowRequest()
 	end
 
-	RedDotController.instance:addRedDot(arg_4_0._taskRedDot, RedDotEnum.DotNode.BattlePassTaskMain)
-	RedDotController.instance:addRedDot(arg_4_0._bonusRedDot, RedDotEnum.DotNode.BattlePassBonus)
-	arg_4_0:_initToggle()
-	gohelper.setActive(arg_4_0._goexpup, BpModel.instance:isShowExpUp())
+	RedDotController.instance:addRedDot(self._taskRedDot, RedDotEnum.DotNode.BattlePassTaskMain)
+	RedDotController.instance:addRedDot(self._bonusRedDot, RedDotEnum.DotNode.BattlePassBonus)
+	self:_initToggle()
+	gohelper.setActive(self._goexpup, BpModel.instance:isShowExpUp())
 end
 
-function var_0_0._forcePlayBonusAnim(arg_5_0)
-	if not arg_5_0._toggleWraps[1].toggleWrap.isOn then
-		arg_5_0._toggleWraps[1].toggleWrap.isOn = true
+function BpView:_forcePlayBonusAnim()
+	if not self._toggleWraps[1].toggleWrap.isOn then
+		self._toggleWraps[1].toggleWrap.isOn = true
 	else
 		BpController.instance:dispatchEvent(BpEvent.ShowUnlockBonusAnim)
 	end
 end
 
-function var_0_0._initToggle(arg_6_0)
-	arg_6_0._toggleWraps = arg_6_0:getUserDataTb_()
+function BpView:_initToggle()
+	self._toggleWraps = self:getUserDataTb_()
 
-	local var_6_0 = arg_6_0._goToggleGroup.transform.childCount
+	local toggleCount = self._goToggleGroup.transform.childCount
 
-	for iter_6_0 = 1, var_6_0 do
-		local var_6_1 = arg_6_0._goToggleGroup.transform:GetChild(iter_6_0 - 1).gameObject
+	for i = 1, toggleCount do
+		local toggleGo = self._goToggleGroup.transform:GetChild(i - 1).gameObject
+		local toggleGomp = toggleGo:GetComponent(gohelper.Type_Toggle)
 
-		if var_6_1:GetComponent(gohelper.Type_Toggle) then
-			local var_6_2 = {
-				toggleWrap = gohelper.onceAddComponent(var_6_1, typeof(SLFramework.UGUI.ToggleWrap)),
-				label = gohelper.findChildText(var_6_1, "Label"),
-				image = gohelper.findChildImage(var_6_1, "Label/Image"),
-				mask = gohelper.findChild(var_6_1, "Background/Checkmark")
-			}
+		if toggleGomp then
+			local toggle = {}
 
-			arg_6_0._toggleWraps[iter_6_0] = var_6_2
+			toggle.toggleWrap = gohelper.onceAddComponent(toggleGo, typeof(SLFramework.UGUI.ToggleWrap))
+			toggle.label = gohelper.findChildText(toggleGo, "Label")
+			toggle.image = gohelper.findChildImage(toggleGo, "Label/Image")
+			toggle.mask = gohelper.findChild(toggleGo, "Background/Checkmark")
+			self._toggleWraps[i] = toggle
 		end
 	end
 end
 
-function var_0_0._toSwitchTab(arg_7_0, arg_7_1, arg_7_2)
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0._toggleWraps) do
-		SLFramework.UGUI.GuiHelper.SetColor(iter_7_1.label, iter_7_0 == arg_7_2 and "#ffffff" or "#888888")
-		SLFramework.UGUI.GuiHelper.SetColor(iter_7_1.image, iter_7_0 == arg_7_2 and "#ffffff" or "#888888")
-		gohelper.setActive(iter_7_1.mask, iter_7_0 == arg_7_2)
+function BpView:_toSwitchTab(tabContainerId, toggleId)
+	for k, v in ipairs(self._toggleWraps) do
+		SLFramework.UGUI.GuiHelper.SetColor(v.label, k == toggleId and "#ffffff" or "#888888")
+		SLFramework.UGUI.GuiHelper.SetColor(v.image, k == toggleId and "#ffffff" or "#888888")
+		gohelper.setActive(v.mask, k == toggleId)
 	end
 
-	arg_7_0._tabIndex = arg_7_2
+	self._tabIndex = toggleId
 
-	arg_7_0:_checkLimitShow()
+	self:_checkLimitShow()
 end
 
-function var_0_0._taskTabChange(arg_8_0, arg_8_1)
-	arg_8_0._taskIndex = arg_8_1
+function BpView:_taskTabChange(tabIndex)
+	self._taskIndex = tabIndex
 
-	arg_8_0:_checkLimitShow()
+	self:_checkLimitShow()
 end
 
-function var_0_0._checkLimitShow(arg_9_0)
-	gohelper.setActive(arg_9_0._goWeeklyLimit, arg_9_0._tabIndex ~= 2 or arg_9_0._tabIndex == 2 and arg_9_0._taskIndex ~= 3)
+function BpView:_checkLimitShow()
+	gohelper.setActive(self._goWeeklyLimit, self._tabIndex ~= 2 or self._tabIndex == 2 and self._taskIndex ~= 3)
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	arg_10_0._simagebg:UnLoadImage()
-	arg_10_0._simageicon:UnLoadImage()
-	arg_10_0._simagesignature:UnLoadImage()
-	arg_10_0._simagerewardbg:UnLoadImage()
+function BpView:onDestroyView()
+	self._simagebg:UnLoadImage()
+	self._simageicon:UnLoadImage()
+	self._simagesignature:UnLoadImage()
+	self._simagerewardbg:UnLoadImage()
 end
 
-function var_0_0.onOpen(arg_11_0)
-	arg_11_0:_updateLevelScore(true)
+function BpView:onOpen()
+	self:_updateLevelScore(true)
 
-	local var_11_0 = 1
+	local tabIndex = 1
 
-	if arg_11_0.viewParam and arg_11_0.viewParam.defaultTabIds and arg_11_0.viewParam.defaultTabIds[2] then
-		var_11_0 = arg_11_0.viewParam.defaultTabIds[2]
+	if self.viewParam and self.viewParam.defaultTabIds and self.viewParam.defaultTabIds[2] then
+		tabIndex = self.viewParam.defaultTabIds[2]
 	end
 
-	arg_11_0:_toSwitchTab(2, var_11_0)
+	self:_toSwitchTab(2, tabIndex)
+
+	self.haveSpecialBonus = BpModel.instance:haveSpecialBonus()
+
+	gohelper.setActive(self._rewardContainer, self.haveSpecialBonus)
+	self:refreshBtnReward()
 end
 
-function var_0_0.onOpenFinish(arg_12_0)
+function BpView:closeAnimBegin()
+	return
+end
+
+function BpView:closeAnimEnd()
+	return
+end
+
+function BpView:refreshBtnReward()
+	if self.haveSpecialBonus then
+		gohelper.setActive(self._btn_claim, BpModel.instance.payStatus == BpEnum.PayStatus.NotPay)
+		gohelper.setActive(self._hasget, BpModel.instance.payStatus ~= BpEnum.PayStatus.NotPay)
+
+		local bonus = BpModel.instance:getSpecialBonus()[1]
+
+		self._txt_num.text = luaLang("multiple") .. bonus[3]
+	end
+end
+
+function BpView:onOpenFinish()
 	BpModel.instance.isViewLoading = nil
 
 	BpController.instance:dispatchEvent(BpEvent.OnViewOpenFinish)
 end
 
-function var_0_0.onClose(arg_13_0)
-	if arg_13_0._addScoreTween then
-		ZProj.TweenHelper.KillById(arg_13_0._addScoreTween)
+function BpView:onClose()
+	if self._addScoreTween then
+		ZProj.TweenHelper.KillById(self._addScoreTween)
 
-		arg_13_0._addScoreTween = nil
+		self._addScoreTween = nil
 	end
 end
 
-function var_0_0._btnUpgradeOnClick(arg_14_0)
-	local var_14_0 = BpConfig.instance:getLevelScore(BpModel.instance.id)
+function BpView:_btnUpgradeOnClick()
+	local levelScore = BpConfig.instance:getLevelScore(BpModel.instance.id)
+	local curLevel = math.floor(BpModel.instance.score / levelScore)
+	local maxLevel = #BpConfig.instance:getBonusCOList(BpModel.instance.id)
 
-	if math.floor(BpModel.instance.score / var_14_0) < #BpConfig.instance:getBonusCOList(BpModel.instance.id) then
+	if curLevel < maxLevel then
 		ViewMgr.instance:openView(ViewName.BpBuyView)
 	end
 end
 
-function var_0_0._btndetailOnClick(arg_15_0)
+function BpView:_btndetailOnClick()
 	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.HeroSkin, BpConfig.instance:getCurSkinId(BpModel.instance.id), false, nil, false)
 end
 
-function var_0_0.openStoryTips(arg_16_0)
+function BpView:openStoryTips()
 	ViewMgr.instance:openView(ViewName.BpInformationView)
 end
 
-function var_0_0.openTips(arg_17_0)
+function BpView:openTips()
 	ViewMgr.instance:openView(ViewName.BpRuleTipsView)
 end
 
-function var_0_0._updateLevelScore(arg_18_0, arg_18_1)
-	local var_18_0 = BpConfig.instance:getLevelScore(BpModel.instance.id)
-	local var_18_1 = math.floor(BpModel.instance.score / var_18_0)
-	local var_18_2 = BpModel.instance.score % var_18_0
-	local var_18_3 = BpModel.instance.weeklyScore
-	local var_18_4 = BpModel.instance:getWeeklyMaxScore()
+function BpView:_updateLevelScore(init)
+	local levelScore = BpConfig.instance:getLevelScore(BpModel.instance.id)
+	local level = math.floor(BpModel.instance.score / levelScore)
+	local scoreInThisLevel = BpModel.instance.score % levelScore
+	local weeklyScore = BpModel.instance.weeklyScore
+	local weeklyMaxScore = BpModel.instance:getWeeklyMaxScore()
 
-	arg_18_0._txtLevel.text = var_18_1
-	arg_18_0._txtScore.text = var_18_2 .. "/" .. var_18_0
+	self._txtLevel.text = level
+	self._txtScore.text = scoreInThisLevel .. "/" .. levelScore
 
-	if var_18_4 <= var_18_3 then
-		arg_18_0._txtWeeklyLimit.text = var_18_3 .. "/" .. var_18_4
+	if weeklyMaxScore <= weeklyScore then
+		self._txtWeeklyLimit.text = weeklyScore .. "/" .. weeklyMaxScore
 	else
-		arg_18_0._txtWeeklyLimit.text = "<color=#CAC8C5>" .. var_18_3 .. "/" .. var_18_4
+		self._txtWeeklyLimit.text = "<color=#CAC8C5>" .. weeklyScore .. "/" .. weeklyMaxScore
 	end
 
-	local var_18_5 = var_18_2 / var_18_0
-	local var_18_6 = arg_18_0._sliderScore:GetValue()
+	local toValue = scoreInThisLevel / levelScore
+	local fromValue = self._sliderScore:GetValue()
 
-	if arg_18_1 then
-		arg_18_0:setSliderValue(var_18_5)
-	elseif math.abs(var_18_6 - var_18_5) > 0.01 then
-		if arg_18_0._addScoreTween then
-			ZProj.TweenHelper.KillById(arg_18_0._addScoreTween)
+	if init then
+		self:setSliderValue(toValue)
+	elseif math.abs(fromValue - toValue) > 0.01 then
+		if self._addScoreTween then
+			ZProj.TweenHelper.KillById(self._addScoreTween)
 
-			arg_18_0._addScoreTween = nil
+			self._addScoreTween = nil
 		end
 
-		if var_18_5 < var_18_6 then
-			var_18_6 = var_18_6 - 1
+		if toValue < fromValue then
+			fromValue = fromValue - 1
 		end
 
-		arg_18_0._addScoreTween = ZProj.TweenHelper.DOTweenFloat(var_18_6, var_18_5, BpEnum.AddScoreTime, arg_18_0.setSliderValue, nil, arg_18_0, nil, EaseType.OutQuart)
+		self._addScoreTween = ZProj.TweenHelper.DOTweenFloat(fromValue, toValue, BpEnum.AddScoreTime, self.setSliderValue, nil, self, nil, EaseType.OutQuart)
 	end
 
-	local var_18_7 = BpModel.instance:isMaxLevel()
+	local ismax = BpModel.instance:isMaxLevel()
 
-	gohelper.setActive(arg_18_0._btnUpgrade.gameObject, not var_18_7)
-	gohelper.setActive(arg_18_0._gomax, var_18_7)
+	gohelper.setActive(self._btnUpgrade.gameObject, not ismax)
+	gohelper.setActive(self._gomax, ismax)
+	self:refreshBtnReward()
 end
 
-function var_0_0.setSliderValue(arg_19_0, arg_19_1)
-	if arg_19_1 < 0 then
-		arg_19_1 = arg_19_1 + 1
+function BpView:setSliderValue(value)
+	if value < 0 then
+		value = value + 1
 	end
 
-	arg_19_0._sliderScore:SetValue(arg_19_1)
+	self._sliderScore:SetValue(value)
 
-	arg_19_0._sliderImage.fillAmount = arg_19_1
+	self._sliderImage.fillAmount = value
 end
 
-function var_0_0._btntitleClickOnClick(arg_20_0)
+function BpView:_btntitleClickOnClick()
 	if BpModel.instance:isShowExpUp() then
 		ToastController.instance:showToast(ToastEnum.BpExpUp)
 	end
 end
 
-return var_0_0
+function BpView:_btnrewardOnClick()
+	BpController.instance:showSpecialBonusMaterialInfo()
+end
+
+return BpView

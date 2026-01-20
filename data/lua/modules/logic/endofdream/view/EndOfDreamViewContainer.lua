@@ -1,26 +1,28 @@
-﻿module("modules.logic.endofdream.view.EndOfDreamViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/endofdream/view/EndOfDreamViewContainer.lua
 
-local var_0_0 = class("EndOfDreamViewContainer", BaseViewContainer)
+module("modules.logic.endofdream.view.EndOfDreamViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local EndOfDreamViewContainer = class("EndOfDreamViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
-	table.insert(var_1_0, EndOfDreamView.New())
+function EndOfDreamViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, TabViewGroup.New(1, "#go_btns"))
+	table.insert(views, EndOfDreamView.New())
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	arg_2_0.navigationView = NavigateButtonsView.New({
+function EndOfDreamViewContainer:buildTabViews(tabContainerId)
+	self.navigationView = NavigateButtonsView.New({
 		true,
 		true,
 		false
 	})
 
 	return {
-		arg_2_0.navigationView
+		self.navigationView
 	}
 end
 
-return var_0_0
+return EndOfDreamViewContainer

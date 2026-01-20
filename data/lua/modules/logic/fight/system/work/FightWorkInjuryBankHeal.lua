@@ -1,90 +1,93 @@
-﻿module("modules.logic.fight.system.work.FightWorkInjuryBankHeal", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkInjuryBankHeal.lua
 
-local var_0_0 = class("FightWorkInjuryBankHeal", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkInjuryBankHeal", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = 2 / FightModel.instance:getSpeed()
-	local var_1_1 = FightHelper.getEntity(arg_1_0.actEffectData.targetId)
+local FightWorkInjuryBankHeal = class("FightWorkInjuryBankHeal", FightEffectBase)
 
-	if var_1_1 then
-		if var_1_1.nameUI then
-			local var_1_2 = arg_1_0.actEffectData.effectNum
-			local var_1_3 = FightEnum.FloatType.heal
+function FightWorkInjuryBankHeal:onStart()
+	local performanceTime = 2 / FightModel.instance:getSpeed()
+	local entity = FightHelper.getEntity(self.actEffectData.targetId)
 
-			FightFloatMgr.instance:float(var_1_1.id, var_1_3, var_1_2, nil, arg_1_0.actEffectData.effectNum1 == 1)
-			var_1_1.nameUI:addHp(var_1_2)
-			FightController.instance:dispatchEvent(FightEvent.OnHpChange, var_1_1, var_1_2)
+	if entity then
+		if entity.nameUI then
+			local effectNum = self.actEffectData.effectNum
+			local floatType = FightEnum.FloatType.heal
+
+			FightFloatMgr.instance:float(entity.id, floatType, effectNum, nil, self.actEffectData.effectNum1 == 1)
+			entity.nameUI:addHp(effectNum)
+			FightController.instance:dispatchEvent(FightEvent.OnHpChange, entity, effectNum)
 		end
 
-		local var_1_4 = var_1_1.spine and var_1_1.spine:getSpineGO()
+		local spineGO = entity.spine and entity.spine:getSpineGO()
 
-		if not var_1_4 then
-			arg_1_0:onDone(true)
+		if not spineGO then
+			self:onDone(true)
 
 			return
 		end
 
-		if not var_1_1.effect then
-			arg_1_0:onDone(true)
+		if not entity.effect then
+			self:onDone(true)
 
 			return
 		end
 
-		local var_1_5 = var_1_1.effect:addHangEffect("buff/buff_jiaxue", nil, nil, var_1_0)
+		local effectWrap = entity.effect:addHangEffect("buff/buff_jiaxue", nil, nil, performanceTime)
 
-		FightRenderOrderMgr.instance:onAddEffectWrap(var_1_1.id, var_1_5)
-		var_1_5:setLocalPos(0, 0, 0)
+		FightRenderOrderMgr.instance:onAddEffectWrap(entity.id, effectWrap)
+		effectWrap:setLocalPos(0, 0, 0)
 		FightAudioMgr.instance:playAudio(410000015)
 
-		local var_1_6 = FightDataHelper.entityMgr:getById(var_1_1.id)
+		local entityMO = FightDataHelper.entityMgr:getById(entity.id)
 
-		if not var_1_6 then
-			arg_1_0:onDone(true)
+		if not entityMO then
+			self:onDone(true)
 
 			return
 		end
 
-		local var_1_7 = var_1_6:getBuffDic()
-		local var_1_8 = false
+		local buffDic = entityMO:getBuffDic()
+		local hasFeature = false
 
-		for iter_1_0, iter_1_1 in pairs(var_1_7) do
-			if FightConfig.instance:hasBuffFeature(iter_1_1.buffId, FightEnum.BuffFeature.InjuryBank) then
-				var_1_8 = true
+		for i, buffMO in pairs(buffDic) do
+			if FightConfig.instance:hasBuffFeature(buffMO.buffId, FightEnum.BuffFeature.InjuryBank) then
+				hasFeature = true
 
 				break
 			end
 		end
 
-		if var_1_8 then
-			local var_1_9 = gohelper.findChild(var_1_4, ModuleEnum.SpineHangPointRoot)
+		if hasFeature then
+			local root = gohelper.findChild(spineGO, ModuleEnum.SpineHangPointRoot)
+			local special1 = root and gohelper.findChild(root, "special1")
 
-			if not (var_1_9 and gohelper.findChild(var_1_9, "special1")) then
-				arg_1_0:onDone(true)
-
-				return
-			end
-
-			local var_1_10 = lua_fight_sp_effect_kkny_heal.configDict[var_1_6.skin]
-
-			if not var_1_10 then
-				arg_1_0:onDone(true)
+			if not special1 then
+				self:onDone(true)
 
 				return
 			end
 
-			local var_1_11 = var_1_1.effect:addHangEffect(var_1_10.path, var_1_10.hangPoint, nil, var_1_0)
+			local effectConfig = lua_fight_sp_effect_kkny_heal.configDict[entityMO.skin]
 
-			FightRenderOrderMgr.instance:onAddEffectWrap(var_1_1.id, var_1_11)
-			var_1_11:setLocalPos(0, 0, 0)
-			FightAudioMgr.instance:playAudio(var_1_10.audio)
+			if not effectConfig then
+				self:onDone(true)
+
+				return
+			end
+
+			local effectWrap = entity.effect:addHangEffect(effectConfig.path, effectConfig.hangPoint, nil, performanceTime)
+
+			FightRenderOrderMgr.instance:onAddEffectWrap(entity.id, effectWrap)
+			effectWrap:setLocalPos(0, 0, 0)
+			FightAudioMgr.instance:playAudio(effectConfig.audio)
 		end
 	end
 
-	arg_1_0:com_registTimer(arg_1_0._delayAfterPerformance, var_1_0)
+	self:com_registTimer(self._delayAfterPerformance, performanceTime)
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkInjuryBankHeal:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkInjuryBankHeal

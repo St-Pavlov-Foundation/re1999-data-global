@@ -1,94 +1,98 @@
-﻿module("modules.logic.sp01.linkgift.view.V2a9_LinkGiftItem", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/linkgift/view/V2a9_LinkGiftItem.lua
 
-local var_0_0 = class("V2a9_LinkGiftItem", LuaCompBase)
+module("modules.logic.sp01.linkgift.view.V2a9_LinkGiftItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0.go = arg_1_1
-	arg_1_0._txtprice = gohelper.findChildText(arg_1_0.viewGO, "#txt_price")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_click")
-	arg_1_0._gosoldout = gohelper.findChild(arg_1_0.viewGO, "#go_soldout")
-	arg_1_0._gocanget = gohelper.findChild(arg_1_0.viewGO, "#go_canget")
+local V2a9_LinkGiftItem = class("V2a9_LinkGiftItem", LuaCompBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V2a9_LinkGiftItem:init(go)
+	self.viewGO = go
+	self.go = go
+	self._txtprice = gohelper.findChildText(self.viewGO, "#txt_price")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_click")
+	self._gosoldout = gohelper.findChild(self.viewGO, "#go_soldout")
+	self._gocanget = gohelper.findChild(self.viewGO, "#go_canget")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 
-	arg_1_0:addEvents()
+	self:addEvents()
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+function V2a9_LinkGiftItem:addEvents()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	if arg_3_0._btnclick then
-		arg_3_0._btnclick:RemoveClickListener()
+function V2a9_LinkGiftItem:removeEvents()
+	if self._btnclick then
+		self._btnclick:RemoveClickListener()
 	end
 end
 
-function var_0_0._btnclickOnClick(arg_4_0)
-	if arg_4_0._charageGoodsCfg and arg_4_0._packageGoodsMO then
+function V2a9_LinkGiftItem:_btnclickOnClick()
+	if self._charageGoodsCfg and self._packageGoodsMO then
 		if ViewMgr.instance:isOpen(ViewName.SummonADView) then
-			StoreController.instance:openPackageStoreGoodsView(arg_4_0._packageGoodsMO)
+			StoreController.instance:openPackageStoreGoodsView(self._packageGoodsMO)
 		else
-			StoreController.instance:openStoreView(arg_4_0._charageGoodsCfg.belongStoreId, arg_4_0._charageGoodsCfg.id)
+			StoreController.instance:openStoreView(self._charageGoodsCfg.belongStoreId, self._charageGoodsCfg.id)
 		end
 	end
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function V2a9_LinkGiftItem:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_6_0, arg_6_1)
-	arg_6_0._charageGoodsCfg = arg_6_1
-	arg_6_0._packageGoodsMO = arg_6_1 and StoreModel.instance:getGoodsMO(arg_6_1.id)
+function V2a9_LinkGiftItem:onUpdateMO(charageGoodsCfg)
+	self._charageGoodsCfg = charageGoodsCfg
+	self._packageGoodsMO = charageGoodsCfg and StoreModel.instance:getGoodsMO(charageGoodsCfg.id)
 
-	gohelper.setActive(arg_6_0.go, arg_6_1 ~= nil)
+	gohelper.setActive(self.go, charageGoodsCfg ~= nil)
 
-	local var_6_0 = arg_6_0._packageGoodsMO and arg_6_0._packageGoodsMO.buyCount > 0
-	local var_6_1 = arg_6_0._packageGoodsMO and arg_6_0._packageGoodsMO.id
-	local var_6_2 = var_6_0 and StoreCharageConditionalHelper.isCharageTaskFinish(var_6_1)
-	local var_6_3 = var_6_0 and StoreCharageConditionalHelper.isCharageTaskNotFinish(var_6_1)
+	local isBuy = self._packageGoodsMO and self._packageGoodsMO.buyCount > 0
+	local goodsId = self._packageGoodsMO and self._packageGoodsMO.id
+	local isTaskFinsish = isBuy and StoreCharageConditionalHelper.isCharageTaskFinish(goodsId)
+	local isCanGet = isBuy and StoreCharageConditionalHelper.isCharageTaskNotFinish(goodsId)
 
-	gohelper.setActive(arg_6_0._gosoldout, var_6_2)
-	gohelper.setActive(arg_6_0._gocanget, var_6_3)
+	gohelper.setActive(self._gosoldout, isTaskFinsish)
+	gohelper.setActive(self._gocanget, isCanGet)
 
-	if var_6_1 and arg_6_0._txtprice then
-		arg_6_0._txtprice.text = StoreModel.instance:getCostPriceFull(var_6_1)
+	if goodsId and self._txtprice then
+		self._txtprice.text = StoreModel.instance:getCostPriceFull(goodsId)
 	end
 
-	if var_6_0 and var_6_1 then
-		local var_6_4 = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.V2a9_LinkGiftItemGoodsAnim .. var_6_1)
+	if isBuy and goodsId then
+		local key = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.V2a9_LinkGiftItemGoodsAnim .. goodsId)
 
-		if var_6_3 then
-			arg_6_0:_playGoAnimByKey(arg_6_0._gocanget, var_6_4 .. "_gocanget")
+		if isCanGet then
+			self:_playGoAnimByKey(self._gocanget, key .. "_gocanget")
 		end
 
-		if var_6_2 then
-			arg_6_0:_playGoAnimByKey(arg_6_0._gosoldout, var_6_4 .. "_gosoldout")
+		if isTaskFinsish then
+			self:_playGoAnimByKey(self._gosoldout, key .. "_gosoldout")
 		end
 	end
 end
 
-function var_0_0._playGoAnimByKey(arg_7_0, arg_7_1, arg_7_2)
-	if PlayerPrefsHelper.getNumber(arg_7_2, 0) ~= 1 then
-		PlayerPrefsHelper.setNumber(arg_7_2, 1)
+function V2a9_LinkGiftItem:_playGoAnimByKey(go, key)
+	local num = PlayerPrefsHelper.getNumber(key, 0)
 
-		if arg_7_1 then
-			local var_7_0 = arg_7_1:GetComponent(gohelper.Type_Animator)
+	if num ~= 1 then
+		PlayerPrefsHelper.setNumber(key, 1)
 
-			if var_7_0 then
-				var_7_0:Play("open", 0, 0)
+		if go then
+			local animator = go:GetComponent(gohelper.Type_Animator)
+
+			if animator then
+				animator:Play("open", 0, 0)
 			end
 		end
 	end
 end
 
-function var_0_0.onDestroy(arg_8_0)
-	arg_8_0:removeEvents()
-	arg_8_0:__onDispose()
+function V2a9_LinkGiftItem:onDestroy()
+	self:removeEvents()
+	self:__onDispose()
 end
 
-return var_0_0
+return V2a9_LinkGiftItem

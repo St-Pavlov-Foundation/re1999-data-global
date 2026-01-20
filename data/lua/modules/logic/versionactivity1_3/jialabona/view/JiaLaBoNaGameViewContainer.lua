@@ -1,59 +1,61 @@
-﻿module("modules.logic.versionactivity1_3.jialabona.view.JiaLaBoNaGameViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/jialabona/view/JiaLaBoNaGameViewContainer.lua
 
-local var_0_0 = class("JiaLaBoNaGameViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_3.jialabona.view.JiaLaBoNaGameViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local JiaLaBoNaGameViewContainer = class("JiaLaBoNaGameViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, JiaLaBoNaGameView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_BackBtns"))
-	table.insert(var_1_0, TabViewGroup.New(2, "gamescene"))
+function JiaLaBoNaGameViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, JiaLaBoNaGameView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_BackBtns"))
+	table.insert(views, TabViewGroup.New(2, "gamescene"))
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
+function JiaLaBoNaGameViewContainer:onContainerClickModalMask()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	arg_2_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.buildTabViews(arg_3_0, arg_3_1)
-	if arg_3_1 == 1 then
-		local var_3_0 = NavigateButtonsView.New({
+function JiaLaBoNaGameViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		local navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			true
 		}, HelpEnum.HelpId.VersionActivity_1_3Role1Chess)
 
-		var_3_0:setOverrideClose(arg_3_0._overrideCloseFunc, arg_3_0)
+		navigateView:setOverrideClose(self._overrideCloseFunc, self)
 
 		return {
-			var_3_0
+			navigateView
 		}
-	elseif arg_3_1 == 2 then
+	elseif tabContainerId == 2 then
 		return {
 			JiaLaBoNaGameScene.New()
 		}
 	end
 end
 
-function var_0_0._overrideCloseFunc(arg_4_0)
+function JiaLaBoNaGameViewContainer:_overrideCloseFunc()
 	if Va3ChessGameController.instance:isNeedBlock() then
 		return
 	end
 
-	if not arg_4_0._yesExitFunc then
-		function arg_4_0._yesExitFunc()
+	if not self._yesExitFunc then
+		function self._yesExitFunc()
 			Stat1_3Controller.instance:jiaLaBoNaStatAbort()
-			arg_4_0:closeThis()
+			self:closeThis()
 		end
 	end
 
-	GameFacade.showMessageBox(MessageBoxIdDefine.QuitPushBoxEpisode, MsgBoxEnum.BoxType.Yes_No, arg_4_0._yesExitFunc)
+	GameFacade.showMessageBox(MessageBoxIdDefine.QuitPushBoxEpisode, MsgBoxEnum.BoxType.Yes_No, self._yesExitFunc)
 end
 
-function var_0_0._onEscape(arg_6_0)
-	arg_6_0:_overrideCloseFunc()
+function JiaLaBoNaGameViewContainer:_onEscape()
+	self:_overrideCloseFunc()
 end
 
-return var_0_0
+return JiaLaBoNaGameViewContainer

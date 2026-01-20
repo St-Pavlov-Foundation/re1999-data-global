@@ -1,107 +1,114 @@
-﻿module("modules.logic.versionactivity2_5.challenge.model.Act183InfoMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/model/Act183InfoMO.lua
 
-local var_0_0 = pureTable("Act183InfoMO")
+module("modules.logic.versionactivity2_5.challenge.model.Act183InfoMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0:_onGetGroupListInfo(arg_1_1.groupList)
-	arg_1_0:_onGetBadgeNum(arg_1_1.badgeNum)
+local Act183InfoMO = pureTable("Act183InfoMO")
 
-	arg_1_0._params = arg_1_1.params
+function Act183InfoMO:init(info)
+	self:_onGetGroupListInfo(info.groupList)
+	self:_onGetBadgeNum(info.badgeNum)
+
+	self._params = info.params
 end
 
-function var_0_0._onGetGroupListInfo(arg_2_0, arg_2_1)
-	arg_2_0._groupList = {}
-	arg_2_0._groupMap = {}
-	arg_2_0._groupTypeMap = {}
+function Act183InfoMO:_onGetGroupListInfo(groupList)
+	self._groupList = {}
+	self._groupMap = {}
+	self._groupTypeMap = {}
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_1) do
-		local var_2_0 = Act183GroupEpisodeMO.New()
+	for _, groupInfo in ipairs(groupList) do
+		local groupMo = Act183GroupEpisodeMO.New()
 
-		var_2_0:init(iter_2_1)
-		table.insert(arg_2_0._groupList, var_2_0)
+		groupMo:init(groupInfo)
+		table.insert(self._groupList, groupMo)
 
-		local var_2_1 = var_2_0:getGroupId()
+		local groupId = groupMo:getGroupId()
 
-		arg_2_0._groupMap[var_2_1] = var_2_0
+		self._groupMap[groupId] = groupMo
 
-		local var_2_2 = var_2_0:getGroupType()
+		local groupType = groupMo:getGroupType()
 
-		arg_2_0._groupTypeMap[var_2_2] = arg_2_0._groupTypeMap[var_2_2] or {}
+		self._groupTypeMap[groupType] = self._groupTypeMap[groupType] or {}
 
-		table.insert(arg_2_0._groupTypeMap[var_2_2], var_2_0)
+		table.insert(self._groupTypeMap[groupType], groupMo)
 	end
 
-	table.sort(arg_2_0._groupList, arg_2_0._sortGroupMoById)
+	table.sort(self._groupList, self._sortGroupMoById)
 
-	for iter_2_2, iter_2_3 in pairs(arg_2_0._groupTypeMap) do
-		table.sort(iter_2_3, arg_2_0._sortGroupMoById)
-	end
-end
-
-function var_0_0._sortGroupMoById(arg_3_0, arg_3_1)
-	return arg_3_0:getGroupId() < arg_3_1:getGroupId()
-end
-
-function var_0_0._onGetBadgeNum(arg_4_0, arg_4_1)
-	arg_4_0._badgeNum = arg_4_1 or 0
-	arg_4_0._unlockSupportHeros = {}
-	arg_4_0._unlockSupportHeroIds = {}
-
-	local var_4_0 = Act183Model.instance:getActivityId()
-	local var_4_1 = Act183Helper.getUnlockSupportHeroIds(var_4_0, arg_4_1)
-
-	for iter_4_0, iter_4_1 in ipairs(var_4_1) do
-		local var_4_2 = HeroMo.New()
-
-		var_4_2:initFromTrial(iter_4_1)
-		table.insert(arg_4_0._unlockSupportHeros, var_4_2)
-		table.insert(arg_4_0._unlockSupportHeroIds, iter_4_1)
+	for _, typeGroupMos in pairs(self._groupTypeMap) do
+		table.sort(typeGroupMos, self._sortGroupMoById)
 	end
 end
 
-function var_0_0.getGroupEpisodes(arg_5_0)
-	return arg_5_0._groupList
+function Act183InfoMO._sortGroupMoById(aGroupMo, bGroupMo)
+	local aGroupId = aGroupMo:getGroupId()
+	local bGroupId = bGroupMo:getGroupId()
+
+	return aGroupId < bGroupId
 end
 
-function var_0_0.getBadgeNum(arg_6_0)
-	return arg_6_0._badgeNum
-end
+function Act183InfoMO:_onGetBadgeNum(badgeNum)
+	self._badgeNum = badgeNum or 0
+	self._unlockSupportHeros = {}
+	self._unlockSupportHeroIds = {}
 
-function var_0_0.updateBadgeNum(arg_7_0, arg_7_1)
-	arg_7_0:_onGetBadgeNum(arg_7_1)
-end
+	local activityId = Act183Model.instance:getActivityId()
+	local unlockHeroIds = Act183Helper.getUnlockSupportHeroIds(activityId, badgeNum)
 
-function var_0_0.getGroupEpisodeMos(arg_8_0, arg_8_1)
-	return arg_8_0._groupTypeMap[arg_8_1]
-end
+	for _, unlockSupportHeroId in ipairs(unlockHeroIds) do
+		local heroMo = HeroMo.New()
 
-function var_0_0.getGroupEpisodeMo(arg_9_0, arg_9_1)
-	if arg_9_1 then
-		return arg_9_0._groupMap and arg_9_0._groupMap[arg_9_1]
+		heroMo:initFromTrial(unlockSupportHeroId)
+		table.insert(self._unlockSupportHeros, heroMo)
+		table.insert(self._unlockSupportHeroIds, unlockSupportHeroId)
 	end
 end
 
-function var_0_0.getUnlockSupportHeros(arg_10_0)
-	return arg_10_0._unlockSupportHeros
+function Act183InfoMO:getGroupEpisodes()
+	return self._groupList
 end
 
-function var_0_0.getUnlockSupportHeroIds(arg_11_0)
-	return arg_11_0._unlockSupportHeroIds
+function Act183InfoMO:getBadgeNum()
+	return self._badgeNum
 end
 
-function var_0_0.updateGroupMo(arg_12_0, arg_12_1)
-	local var_12_0 = Act183GroupEpisodeMO.New()
+function Act183InfoMO:updateBadgeNum(newBadgeNum)
+	self:_onGetBadgeNum(newBadgeNum)
+end
 
-	var_12_0:init(arg_12_1)
+function Act183InfoMO:getGroupEpisodeMos(typeId)
+	local groupEpisodeMos = self._groupTypeMap[typeId]
 
-	local var_12_1 = var_12_0:getGroupId()
-	local var_12_2 = arg_12_0:getGroupEpisodeMo(var_12_1)
+	return groupEpisodeMos
+end
 
-	if var_12_2 then
-		var_12_2:init(arg_12_1)
+function Act183InfoMO:getGroupEpisodeMo(groupId)
+	if groupId then
+		return self._groupMap and self._groupMap[groupId]
+	end
+end
+
+function Act183InfoMO:getUnlockSupportHeros()
+	return self._unlockSupportHeros
+end
+
+function Act183InfoMO:getUnlockSupportHeroIds()
+	return self._unlockSupportHeroIds
+end
+
+function Act183InfoMO:updateGroupMo(groupInfo)
+	local groupMo = Act183GroupEpisodeMO.New()
+
+	groupMo:init(groupInfo)
+
+	local groupId = groupMo:getGroupId()
+	local groupMo = self:getGroupEpisodeMo(groupId)
+
+	if groupMo then
+		groupMo:init(groupInfo)
 	end
 
-	return var_12_2
+	return groupMo
 end
 
-return var_0_0
+return Act183InfoMO

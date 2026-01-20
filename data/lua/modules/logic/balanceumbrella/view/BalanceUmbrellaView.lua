@@ -1,176 +1,175 @@
-﻿module("modules.logic.balanceumbrella.view.BalanceUmbrellaView", package.seeall)
+﻿-- chunkname: @modules/logic/balanceumbrella/view/BalanceUmbrellaView.lua
 
-local var_0_0 = class("BalanceUmbrellaView", BaseView)
+module("modules.logic.balanceumbrella.view.BalanceUmbrellaView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gonofull = gohelper.findChild(arg_1_0.viewGO, "#simage_title_normal")
-	arg_1_0._gofull = gohelper.findChild(arg_1_0.viewGO, "#simage_title_finished")
+local BalanceUmbrellaView = class("BalanceUmbrellaView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function BalanceUmbrellaView:onInitView()
+	self._gonofull = gohelper.findChild(self.viewGO, "#simage_title_normal")
+	self._gofull = gohelper.findChild(self.viewGO, "#simage_title_finished")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0._editableInitView(arg_2_0)
-	arg_2_0._clues = arg_2_0:getUserDataTb_()
-	arg_2_0._lines = arg_2_0:getUserDataTb_()
-	arg_2_0._points = arg_2_0:getUserDataTb_()
+function BalanceUmbrellaView:_editableInitView()
+	self._clues = self:getUserDataTb_()
+	self._lines = self:getUserDataTb_()
+	self._points = self:getUserDataTb_()
 
-	local var_2_0 = gohelper.findChild(arg_2_0.viewGO, "Clue").transform
+	local clueRoot = gohelper.findChild(self.viewGO, "Clue").transform
 
-	for iter_2_0 = 0, var_2_0.childCount - 1 do
-		local var_2_1 = var_2_0:GetChild(iter_2_0)
-		local var_2_2 = string.match(var_2_1.name, "clue([0-9]+)")
+	for i = 0, clueRoot.childCount - 1 do
+		local child = clueRoot:GetChild(i)
+		local index = string.match(child.name, "clue([0-9]+)")
 
-		if var_2_2 then
-			local var_2_3 = tonumber(var_2_2)
+		if index then
+			index = tonumber(index)
+			self._clues[index] = child:GetComponent(typeof(UnityEngine.Animator))
 
-			arg_2_0._clues[var_2_3] = var_2_1:GetComponent(typeof(UnityEngine.Animator))
+			local btn = gohelper.findChildButtonWithAudio(child.gameObject, "")
 
-			local var_2_4 = gohelper.findChildButtonWithAudio(var_2_1.gameObject, "")
-
-			arg_2_0:addClickCb(var_2_4, arg_2_0._showDetail, arg_2_0, var_2_3)
+			self:addClickCb(btn, self._showDetail, self, index)
 		end
 	end
 
-	local var_2_5 = gohelper.findChild(arg_2_0.viewGO, "Line").transform
+	local lineRoot = gohelper.findChild(self.viewGO, "Line").transform
 
-	for iter_2_1 = 0, var_2_5.childCount - 1 do
-		local var_2_6 = var_2_5:GetChild(iter_2_1)
-		local var_2_7, var_2_8 = string.match(var_2_6.name, "line([0-9]+)_([0-9]+)")
+	for i = 0, lineRoot.childCount - 1 do
+		local child = lineRoot:GetChild(i)
+		local lineStartIndex, lineEndIndex = string.match(child.name, "line([0-9]+)_([0-9]+)")
 
-		if var_2_7 then
-			local var_2_9 = tonumber(var_2_7)
-			local var_2_10 = tonumber(var_2_8)
-
-			arg_2_0._lines[var_2_6.name] = {
-				anim = var_2_6:GetComponent(typeof(UnityEngine.Animator)),
-				startIndex = var_2_9,
-				endIndex = var_2_10
+		if lineStartIndex then
+			lineStartIndex = tonumber(lineStartIndex)
+			lineEndIndex = tonumber(lineEndIndex)
+			self._lines[child.name] = {
+				anim = child:GetComponent(typeof(UnityEngine.Animator)),
+				startIndex = lineStartIndex,
+				endIndex = lineEndIndex
 			}
 		end
 
-		local var_2_11 = string.match(var_2_6.name, "point([0-9]+)")
+		local pointIndex = string.match(child.name, "point([0-9]+)")
 
-		if var_2_11 then
-			local var_2_12 = tonumber(var_2_11)
-
-			arg_2_0._points[var_2_12] = var_2_6
+		if pointIndex then
+			pointIndex = tonumber(pointIndex)
+			self._points[pointIndex] = child
 		end
 	end
 end
 
-function var_0_0._showDetail(arg_3_0, arg_3_1)
+function BalanceUmbrellaView:_showDetail(index)
 	ViewMgr.instance:openView(ViewName.BalanceUmbrellaClueView, {
-		id = arg_3_1
+		id = index
 	})
 end
 
-function var_0_0.onOpen(arg_4_0)
+function BalanceUmbrellaView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.Meilanni.play_ui_mln_unlock)
 
-	local var_4_0 = BalanceUmbrellaModel.instance:isGetAllClue()
+	local isFull = BalanceUmbrellaModel.instance:isGetAllClue()
 
-	gohelper.setActive(arg_4_0._gofull, var_4_0)
-	gohelper.setActive(arg_4_0._gonofull, not var_4_0)
+	gohelper.setActive(self._gofull, isFull)
+	gohelper.setActive(self._gonofull, not isFull)
 
-	arg_4_0._newIds = BalanceUmbrellaModel.instance:getAllNoPlayIds()
+	self._newIds = BalanceUmbrellaModel.instance:getAllNoPlayIds()
 
-	UIBlockHelper.instance:startBlock("BalanceUmbrellaView_playclue", 999, arg_4_0.viewName)
+	UIBlockHelper.instance:startBlock("BalanceUmbrellaView_playclue", 999, self.viewName)
 	UIBlockMgrExtend.setNeedCircleMv(false)
 
-	for iter_4_0, iter_4_1 in pairs(arg_4_0._clues) do
-		if BalanceUmbrellaModel.instance:isClueUnlock(iter_4_0) and not tabletool.indexOf(arg_4_0._newIds, iter_4_0) then
-			gohelper.setActive(iter_4_1, true)
+	for id, image in pairs(self._clues) do
+		if BalanceUmbrellaModel.instance:isClueUnlock(id) and not tabletool.indexOf(self._newIds, id) then
+			gohelper.setActive(image, true)
 		else
-			gohelper.setActive(iter_4_1, false)
+			gohelper.setActive(image, false)
 		end
 	end
 
-	for iter_4_2, iter_4_3 in pairs(arg_4_0._points) do
-		if BalanceUmbrellaModel.instance:isClueUnlock(iter_4_2) and not tabletool.indexOf(arg_4_0._newIds, iter_4_2) then
-			gohelper.setActive(iter_4_3, true)
+	for id, point in pairs(self._points) do
+		if BalanceUmbrellaModel.instance:isClueUnlock(id) and not tabletool.indexOf(self._newIds, id) then
+			gohelper.setActive(point, true)
 		else
-			gohelper.setActive(iter_4_3, false)
+			gohelper.setActive(point, false)
 		end
 	end
 
-	for iter_4_4, iter_4_5 in pairs(arg_4_0._lines) do
-		local var_4_1 = iter_4_5.startIndex
-		local var_4_2 = iter_4_5.endIndex
+	for _, lineInfo in pairs(self._lines) do
+		local startIndex = lineInfo.startIndex
+		local endIndex = lineInfo.endIndex
 
-		if BalanceUmbrellaModel.instance:isClueUnlock(var_4_1) and not tabletool.indexOf(arg_4_0._newIds, var_4_1) and BalanceUmbrellaModel.instance:isClueUnlock(var_4_2) and not tabletool.indexOf(arg_4_0._newIds, var_4_2) then
-			gohelper.setActive(iter_4_5.anim, true)
+		if BalanceUmbrellaModel.instance:isClueUnlock(startIndex) and not tabletool.indexOf(self._newIds, startIndex) and BalanceUmbrellaModel.instance:isClueUnlock(endIndex) and not tabletool.indexOf(self._newIds, endIndex) then
+			gohelper.setActive(lineInfo.anim, true)
 		else
-			gohelper.setActive(iter_4_5.anim, false)
+			gohelper.setActive(lineInfo.anim, false)
 		end
 	end
 
-	arg_4_0:beginPlayNew()
+	self:beginPlayNew()
 	BalanceUmbrellaModel.instance:markAllNoPlayIds()
 end
 
-function var_0_0.beginPlayNew(arg_5_0)
-	local var_5_0 = table.remove(arg_5_0._newIds, 1)
+function BalanceUmbrellaView:beginPlayNew()
+	local newId = table.remove(self._newIds, 1)
 
-	if var_5_0 then
-		arg_5_0._playingId = var_5_0
+	if newId then
+		self._playingId = newId
 
-		arg_5_0:playLineAnim(var_5_0)
+		self:playLineAnim(newId)
 	else
-		arg_5_0:endPlayNew()
+		self:endPlayNew()
 	end
 end
 
-function var_0_0.playLineAnim(arg_6_0, arg_6_1)
-	local var_6_0 = {}
+function BalanceUmbrellaView:playLineAnim(id)
+	local allNewLine = {}
 
-	for iter_6_0, iter_6_1 in pairs(arg_6_0._lines) do
-		if iter_6_1.endIndex == arg_6_1 then
-			gohelper.setActive(iter_6_1.anim, true)
-			table.insert(var_6_0, iter_6_1)
+	for _, lineInfo in pairs(self._lines) do
+		if lineInfo.endIndex == id then
+			gohelper.setActive(lineInfo.anim, true)
+			table.insert(allNewLine, lineInfo)
 		end
 	end
 
-	if #var_6_0 > 0 then
-		arg_6_0._newLines = var_6_0
+	if #allNewLine > 0 then
+		self._newLines = allNewLine
 
-		for iter_6_2, iter_6_3 in pairs(arg_6_0._newLines) do
-			iter_6_3.anim:Play("open", 0, 0)
+		for _, lineInfo in pairs(self._newLines) do
+			lineInfo.anim:Play("open", 0, 0)
 		end
 
-		TaskDispatcher.runDelay(arg_6_0._onFinishLineAnim, arg_6_0, 0.667)
+		TaskDispatcher.runDelay(self._onFinishLineAnim, self, 0.667)
 	else
-		arg_6_0:playImgAnim(arg_6_1)
+		self:playImgAnim(id)
 	end
 end
 
-function var_0_0._onFinishLineAnim(arg_7_0)
-	arg_7_0:playImgAnim(arg_7_0._playingId)
+function BalanceUmbrellaView:_onFinishLineAnim()
+	self:playImgAnim(self._playingId)
 end
 
-function var_0_0.playImgAnim(arg_8_0, arg_8_1)
-	gohelper.setActive(arg_8_0._clues[arg_8_1], true)
-	arg_8_0._clues[arg_8_1]:Play("open", 0, 0)
-	TaskDispatcher.runDelay(arg_8_0._imageAnimEnd, arg_8_0, 0.667)
+function BalanceUmbrellaView:playImgAnim(id)
+	gohelper.setActive(self._clues[id], true)
+	self._clues[id]:Play("open", 0, 0)
+	TaskDispatcher.runDelay(self._imageAnimEnd, self, 0.667)
 end
 
-function var_0_0._imageAnimEnd(arg_9_0)
-	gohelper.setActive(arg_9_0._points[arg_9_0._playingId], true)
-	arg_9_0:beginPlayNew()
+function BalanceUmbrellaView:_imageAnimEnd()
+	gohelper.setActive(self._points[self._playingId], true)
+	self:beginPlayNew()
 end
 
-function var_0_0.endPlayNew(arg_10_0)
-	arg_10_0._playingId = nil
+function BalanceUmbrellaView:endPlayNew()
+	self._playingId = nil
 
-	TaskDispatcher.cancelTask(arg_10_0._onFinishLineAnim, arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._imageAnimEnd, arg_10_0)
+	TaskDispatcher.cancelTask(self._onFinishLineAnim, self)
+	TaskDispatcher.cancelTask(self._imageAnimEnd, self)
 	UIBlockMgrExtend.setNeedCircleMv(true)
 	UIBlockHelper.instance:endBlock("BalanceUmbrellaView_playclue")
 end
 
-function var_0_0.onClose(arg_11_0)
-	arg_11_0:endPlayNew()
+function BalanceUmbrellaView:onClose()
+	self:endPlayNew()
 end
 
-return var_0_0
+return BalanceUmbrellaView

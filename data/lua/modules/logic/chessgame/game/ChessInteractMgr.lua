@@ -1,38 +1,40 @@
-﻿module("modules.logic.chessgame.game.ChessInteractMgr", package.seeall)
+﻿-- chunkname: @modules/logic/chessgame/game/ChessInteractMgr.lua
 
-local var_0_0 = class("ChessInteractMgr")
+module("modules.logic.chessgame.game.ChessInteractMgr", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._list = {}
-	arg_1_0._dict = {}
-	arg_1_0._showList = {}
+local ChessInteractMgr = class("ChessInteractMgr")
+
+function ChessInteractMgr:ctor()
+	self._list = {}
+	self._dict = {}
+	self._showList = {}
 end
 
-function var_0_0.add(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_1.id
+function ChessInteractMgr:add(interactObj)
+	local id = interactObj.id
 
-	arg_2_0:remove(var_2_0)
+	self:remove(id)
 
-	arg_2_0._dict[var_2_0] = arg_2_1
+	self._dict[id] = interactObj
 
-	table.insert(arg_2_0._list, arg_2_1)
+	table.insert(self._list, interactObj)
 
-	if arg_2_1:isShow() and arg_2_1:checkHaveAvatarPath() then
-		table.insert(arg_2_0._showList, arg_2_1)
+	if interactObj:isShow() and interactObj:checkHaveAvatarPath() then
+		table.insert(self._showList, interactObj)
 	end
 end
 
-function var_0_0.remove(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_0._dict[arg_3_1]
+function ChessInteractMgr:remove(id)
+	local interactObj = self._dict[id]
 
-	if var_3_0 then
-		arg_3_0._dict[arg_3_1] = nil
+	if interactObj then
+		self._dict[id] = nil
 
-		for iter_3_0, iter_3_1 in ipairs(arg_3_0._list) do
-			if iter_3_1 == var_3_0 then
-				table.remove(arg_3_0._list, iter_3_0)
-				table.remove(arg_3_0._showList, iter_3_0)
-				iter_3_1:dispose()
+		for index, obj in ipairs(self._list) do
+			if obj == interactObj then
+				table.remove(self._list, index)
+				table.remove(self._showList, index)
+				obj:dispose()
 
 				return true
 			end
@@ -42,75 +44,75 @@ function var_0_0.remove(arg_3_0, arg_3_1)
 	return false
 end
 
-function var_0_0.getList(arg_4_0)
-	return arg_4_0._list
+function ChessInteractMgr:getList()
+	return self._list
 end
 
-function var_0_0.get(arg_5_0, arg_5_1)
-	if arg_5_0._dict then
-		return arg_5_0._dict[arg_5_1]
+function ChessInteractMgr:get(id)
+	if self._dict then
+		return self._dict[id]
 	end
 
 	return nil
 end
 
-function var_0_0.hideCompById(arg_6_0, arg_6_1)
-	if arg_6_0._dict and arg_6_0._dict[arg_6_1] then
-		arg_6_0._dict[arg_6_1]:hideSelf()
+function ChessInteractMgr:hideCompById(id)
+	if self._dict and self._dict[id] then
+		self._dict[id]:hideSelf()
 	end
 end
 
-function var_0_0.getMainPlayer(arg_7_0)
-	local var_7_0
+function ChessInteractMgr:getMainPlayer()
+	local assistPlayer
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0._list) do
-		if iter_7_1.objType == ChessGameEnum.InteractType.Role then
-			return iter_7_1
+	for _, obj in ipairs(self._list) do
+		if obj.objType == ChessGameEnum.InteractType.Role then
+			return obj
 		end
 	end
 
-	return var_7_0
+	return assistPlayer
 end
 
-function var_0_0.removeAll(arg_8_0)
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0._list) do
-		iter_8_1:dispose()
+function ChessInteractMgr:removeAll()
+	for _, obj in ipairs(self._list) do
+		obj:dispose()
 	end
 
-	arg_8_0._list = {}
-	arg_8_0._dict = {}
-	arg_8_0._showList = {}
+	self._list = {}
+	self._dict = {}
+	self._showList = {}
 end
 
-function var_0_0.checkCompleletedLoaded(arg_9_0, arg_9_1)
-	arg_9_0._checkDict = arg_9_0._checkDict or {}
+function ChessInteractMgr:checkCompleletedLoaded(id)
+	self._checkDict = self._checkDict or {}
 
-	table.insert(arg_9_0._checkDict, arg_9_1)
+	table.insert(self._checkDict, id)
 
-	if #arg_9_0._checkDict == #arg_9_0._showList then
-		arg_9_0:_onAllInteractLoadCompleleted()
-	end
-end
-
-function var_0_0._onAllInteractLoadCompleleted(arg_10_0)
-	arg_10_0._checkDict = nil
-
-	local var_10_0 = arg_10_0:getMainPlayer()
-
-	if var_10_0 then
-		var_10_0:getHandler():calCanWalkArea()
+	if #self._checkDict == #self._showList then
+		self:_onAllInteractLoadCompleleted()
 	end
 end
 
-function var_0_0.dispose(arg_11_0)
-	if arg_11_0._list then
-		for iter_11_0, iter_11_1 in ipairs(arg_11_0._list) do
-			iter_11_1:dispose()
+function ChessInteractMgr:_onAllInteractLoadCompleleted()
+	self._checkDict = nil
+
+	local player = self:getMainPlayer()
+
+	if player then
+		player:getHandler():calCanWalkArea()
+	end
+end
+
+function ChessInteractMgr:dispose()
+	if self._list then
+		for _, obj in ipairs(self._list) do
+			obj:dispose()
 		end
 
-		arg_11_0._list = nil
-		arg_11_0._dict = nil
+		self._list = nil
+		self._dict = nil
 	end
 end
 
-return var_0_0
+return ChessInteractMgr

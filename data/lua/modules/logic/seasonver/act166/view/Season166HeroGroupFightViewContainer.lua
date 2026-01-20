@@ -1,8 +1,10 @@
-﻿module("modules.logic.seasonver.act166.view.Season166HeroGroupFightViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act166/view/Season166HeroGroupFightViewContainer.lua
 
-local var_0_0 = class("Season166HeroGroupFightViewContainer", BaseViewContainer)
+module("modules.logic.seasonver.act166.view.Season166HeroGroupFightViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local Season166HeroGroupFightViewContainer = class("Season166HeroGroupFightViewContainer", BaseViewContainer)
+
+function Season166HeroGroupFightViewContainer:buildViews()
 	return {
 		Season166HeroGroupFightLayoutView.New(),
 		Season166HeroGroupFightView.New(),
@@ -12,31 +14,31 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._navigateButtonsView = NavigateButtonsView.New({
+function Season166HeroGroupFightViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonsView = NavigateButtonsView.New({
 			true,
 			true,
 			false
-		}, nil, arg_2_0._closeCallback, nil, nil, arg_2_0)
+		}, nil, self._closeCallback, nil, nil, self)
 
 		return {
-			arg_2_0._navigateButtonsView
+			self._navigateButtonsView
 		}
 	end
 end
 
-function var_0_0._closeCallback(arg_3_0)
-	arg_3_0:closeThis()
+function Season166HeroGroupFightViewContainer:_closeCallback()
+	self:closeThis()
 
-	if arg_3_0:handleVersionActivityCloseCall() then
+	if self:handleVersionActivityCloseCall() then
 		return
 	end
 
 	MainController.instance:enterMainScene(true, false)
 end
 
-function var_0_0.handleVersionActivityCloseCall(arg_4_0)
+function Season166HeroGroupFightViewContainer:handleVersionActivityCloseCall()
 	if EnterActivityViewOnExitFightSceneHelper.checkCurrentIsActivityFight() then
 		EnterActivityViewOnExitFightSceneHelper.enterCurrentActivity(true, true)
 
@@ -44,4 +46,4 @@ function var_0_0.handleVersionActivityCloseCall(arg_4_0)
 	end
 end
 
-return var_0_0
+return Season166HeroGroupFightViewContainer

@@ -1,33 +1,35 @@
-﻿module("modules.logic.handbook.view.HandbookWeekWalkMapViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/handbook/view/HandbookWeekWalkMapViewContainer.lua
 
-local var_0_0 = class("HandbookWeekWalkMapViewContainer", BaseViewContainer)
+module("modules.logic.handbook.view.HandbookWeekWalkMapViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local HandbookWeekWalkMapViewContainer = class("HandbookWeekWalkMapViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, HandbookWeekWalkMapView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
+function HandbookWeekWalkMapViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, HandbookWeekWalkMapView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_btns"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function HandbookWeekWalkMapViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-function var_0_0.onContainerOpenFinish(arg_3_0)
-	arg_3_0.navigateView:resetCloseBtnAudioId(AudioEnum.UI.UI_checkpoint_story_close)
-	arg_3_0.navigateView:resetHomeBtnAudioId(AudioEnum.UI.UI_checkpoint_story_close)
+function HandbookWeekWalkMapViewContainer:onContainerOpenFinish()
+	self.navigateView:resetCloseBtnAudioId(AudioEnum.UI.UI_checkpoint_story_close)
+	self.navigateView:resetHomeBtnAudioId(AudioEnum.UI.UI_checkpoint_story_close)
 end
 
-return var_0_0
+return HandbookWeekWalkMapViewContainer

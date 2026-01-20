@@ -1,40 +1,42 @@
-﻿module("modules.logic.room.view.building.RoomFormulaMsgBoxViewViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/building/RoomFormulaMsgBoxViewViewContainer.lua
 
-local var_0_0 = class("RoomFormulaMsgBoxViewViewContainer", BaseViewContainer)
+module("modules.logic.room.view.building.RoomFormulaMsgBoxViewViewContainer", package.seeall)
 
-var_0_0.lineCount = 4
+local RoomFormulaMsgBoxViewViewContainer = class("RoomFormulaMsgBoxViewViewContainer", BaseViewContainer)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+RoomFormulaMsgBoxViewViewContainer.lineCount = 4
 
-	var_1_1.scrollGOPath = "Exchange/Left/ScrollView"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_1.prefabUrl = "Exchange/Left/ScrollView/Viewport/Content/#go_PropItem"
-	var_1_1.cellClass = RoomFormulaMsgBoxItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.cellWidth = 120
-	var_1_1.cellHeight = 106
-	var_1_1.cellSpaceH = 70
-	var_1_1.lineCount = arg_1_0.lineCount
+function RoomFormulaMsgBoxViewViewContainer:buildViews()
+	local views = {}
+	local listScrollParam = ListScrollParam.New()
 
-	table.insert(var_1_0, RoomFormulaMsgBoxView.New())
-	table.insert(var_1_0, LuaListScrollView.New(RoomFormulaMsgBoxModel.instance, var_1_1))
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topright"))
+	listScrollParam.scrollGOPath = "Exchange/Left/ScrollView"
+	listScrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	listScrollParam.prefabUrl = "Exchange/Left/ScrollView/Viewport/Content/#go_PropItem"
+	listScrollParam.cellClass = RoomFormulaMsgBoxItem
+	listScrollParam.scrollDir = ScrollEnum.ScrollDirV
+	listScrollParam.cellWidth = 120
+	listScrollParam.cellHeight = 106
+	listScrollParam.cellSpaceH = 70
+	listScrollParam.lineCount = self.lineCount
 
-	return var_1_0
+	table.insert(views, RoomFormulaMsgBoxView.New())
+	table.insert(views, LuaListScrollView.New(RoomFormulaMsgBoxModel.instance, listScrollParam))
+	table.insert(views, TabViewGroup.New(1, "#go_topright"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		local var_2_0 = {
+function RoomFormulaMsgBoxViewViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		local currencyParam = {
 			CurrencyEnum.CurrencyType.Gold
 		}
 
 		return {
-			CurrencyView.New(var_2_0, nil, nil, nil, true)
+			CurrencyView.New(currencyParam, nil, nil, nil, true)
 		}
 	end
 end
 
-return var_0_0
+return RoomFormulaMsgBoxViewViewContainer

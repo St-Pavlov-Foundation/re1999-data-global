@@ -1,15 +1,17 @@
-﻿module("modules.logic.versionactivity.view.VersionActivityVideoViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity/view/VersionActivityVideoViewContainer.lua
 
-local var_0_0 = class("VersionActivityVideoViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity.view.VersionActivityVideoViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local VersionActivityVideoViewContainer = class("VersionActivityVideoViewContainer", BaseViewContainer)
+
+function VersionActivityVideoViewContainer:buildViews()
 	return {
 		VersionActivityVideoView.New()
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function VersionActivityVideoViewContainer:buildTabViews(tabContainerId)
 	return
 end
 
-return var_0_0
+return VersionActivityVideoViewContainer

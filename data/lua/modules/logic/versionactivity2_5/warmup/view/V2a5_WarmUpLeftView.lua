@@ -1,239 +1,245 @@
-﻿module("modules.logic.versionactivity2_5.warmup.view.V2a5_WarmUpLeftView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/warmup/view/V2a5_WarmUpLeftView.lua
 
-local var_0_0 = class("V2a5_WarmUpLeftView", BaseView)
+module("modules.logic.versionactivity2_5.warmup.view.V2a5_WarmUpLeftView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goopen = gohelper.findChild(arg_1_0.viewGO, "Middle/#go_open")
-	arg_1_0._godrag = gohelper.findChild(arg_1_0.viewGO, "Middle/#go_open/#go_drag")
+local V2a5_WarmUpLeftView = class("V2a5_WarmUpLeftView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V2a5_WarmUpLeftView:onInitView()
+	self._goopen = gohelper.findChild(self.viewGO, "Middle/#go_open")
+	self._godrag = gohelper.findChild(self.viewGO, "Middle/#go_open/#go_drag")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function V2a5_WarmUpLeftView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function V2a5_WarmUpLeftView:removeEvents()
 	return
 end
 
-local var_0_1 = -1
-local var_0_2 = 0
-local var_0_3 = 1
-local var_0_4 = SLFramework.AnimatorPlayer
-local var_0_5 = {
+local kFirstLocked = -1
+local kFirstUnlocked = 0
+local kHasDragged = 1
+local csAnimatorPlayer = SLFramework.AnimatorPlayer
+local States = {
 	SwipeDone = 1
 }
-local var_0_6 = 5
-local var_0_7 = "onShowDay"
+local kCount = 5
+local kAnimEvt = "onShowDay"
 
-function var_0_0.ctor(arg_4_0, ...)
-	var_0_0.super.ctor(arg_4_0, ...)
+function V2a5_WarmUpLeftView:ctor(...)
+	V2a5_WarmUpLeftView.super.ctor(self, ...)
 
-	arg_4_0._lastEpisodeId = nil
-	arg_4_0._needWaitCount = 0
-	arg_4_0._draggedState = var_0_1
-	arg_4_0._dayItemList = {}
-	arg_4_0._drag = UIDragListenerHelper.New()
+	self._lastEpisodeId = nil
+	self._needWaitCount = 0
+	self._draggedState = kFirstLocked
+	self._dayItemList = {}
+	self._drag = UIDragListenerHelper.New()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._middleGo = gohelper.findChild(arg_5_0.viewGO, "Middle")
-	arg_5_0._guideGo = gohelper.findChild(arg_5_0._middleGo, "guide")
-	arg_5_0._animatorPlayer = var_0_4.Get(arg_5_0._middleGo)
-	arg_5_0._animtor = arg_5_0._animatorPlayer.animator
-	arg_5_0._animEvent = gohelper.onceAddComponent(arg_5_0._middleGo, gohelper.Type_AnimationEventWrap)
+function V2a5_WarmUpLeftView:_editableInitView()
+	self._middleGo = gohelper.findChild(self.viewGO, "Middle")
+	self._guideGo = gohelper.findChild(self._middleGo, "guide")
+	self._animatorPlayer = csAnimatorPlayer.Get(self._middleGo)
+	self._animtor = self._animatorPlayer.animator
+	self._animEvent = gohelper.onceAddComponent(self._middleGo, gohelper.Type_AnimationEventWrap)
 
-	arg_5_0._drag:create(arg_5_0._godrag)
-	arg_5_0._drag:registerCallback(arg_5_0._drag.EventBegin, arg_5_0._onDragBegin, arg_5_0)
-	arg_5_0._drag:registerCallback(arg_5_0._drag.EventEnd, arg_5_0._onDragEnd, arg_5_0)
-	arg_5_0:_editableInitView_days()
-	arg_5_0:_setActive_drag(true)
-	arg_5_0._animEvent:AddEventListener(var_0_7, arg_5_0._onShowDay, arg_5_0)
+	self._drag:create(self._godrag)
+	self._drag:registerCallback(self._drag.EventBegin, self._onDragBegin, self)
+	self._drag:registerCallback(self._drag.EventEnd, self._onDragEnd, self)
+	self:_editableInitView_days()
+	self:_setActive_drag(true)
+	self._animEvent:AddEventListener(kAnimEvt, self._onShowDay, self)
 end
 
-function var_0_0._editableInitView_days(arg_6_0)
-	for iter_6_0 = 1, var_0_6 do
-		local var_6_0 = gohelper.findChild(arg_6_0._middleGo, "#go_day" .. iter_6_0)
-		local var_6_1 = V2a5_WarmUpLeftView_Day.New({
-			parent = arg_6_0,
-			baseViewContainer = arg_6_0.viewContainer
+function V2a5_WarmUpLeftView:_editableInitView_days()
+	for i = 1, kCount do
+		local go = gohelper.findChild(self._middleGo, "#go_day" .. i)
+		local item = V2a5_WarmUpLeftView_Day.New({
+			parent = self,
+			baseViewContainer = self.viewContainer
 		})
 
-		var_6_1:setIndex(iter_6_0)
-		var_6_1:_internal_setEpisode(iter_6_0)
-		var_6_1:init(var_6_0)
+		item:setIndex(i)
+		item:_internal_setEpisode(i)
+		item:init(go)
 
-		arg_6_0._dayItemList[iter_6_0] = var_6_1
+		self._dayItemList[i] = item
 	end
 end
 
-function var_0_0.onOpen(arg_7_0)
+function V2a5_WarmUpLeftView:onOpen()
 	return
 end
 
-function var_0_0.onClose(arg_8_0)
-	arg_8_0._animEvent:RemoveEventListener(var_0_7)
-	GameUtil.onDestroyViewMember(arg_8_0, "_drag")
-	GameUtil.onDestroyViewMemberList(arg_8_0, "_dayItemList")
+function V2a5_WarmUpLeftView:onClose()
+	self._animEvent:RemoveEventListener(kAnimEvt)
+	GameUtil.onDestroyViewMember(self, "_drag")
+	GameUtil.onDestroyViewMemberList(self, "_dayItemList")
 end
 
-function var_0_0.onDestroyView(arg_9_0)
-	GameUtil.onDestroyViewMember(arg_9_0, "_drag")
-	GameUtil.onDestroyViewMemberList(arg_9_0, "_dayItemList")
+function V2a5_WarmUpLeftView:onDestroyView()
+	GameUtil.onDestroyViewMember(self, "_drag")
+	GameUtil.onDestroyViewMemberList(self, "_dayItemList")
 end
 
-function var_0_0.onDataUpdateFirst(arg_10_0)
+function V2a5_WarmUpLeftView:onDataUpdateFirst()
 	if isDebugBuild then
-		assert(arg_10_0.viewContainer:getEpisodeCount() <= var_0_6, "invalid config json_activity125 actId: " .. arg_10_0.viewContainer:actId())
+		assert(self.viewContainer:getEpisodeCount() <= kCount, "invalid config json_activity125 actId: " .. self.viewContainer:actId())
 	end
 
-	arg_10_0._draggedState = arg_10_0:_checkIsDone() and var_0_2 or var_0_1
+	local isDone = self:_checkIsDone()
+
+	self._draggedState = isDone and kFirstUnlocked or kFirstLocked
 end
 
-function var_0_0.onDataUpdate(arg_11_0)
-	arg_11_0:_setActive_curEpisode(false)
-	arg_11_0:_refresh()
+function V2a5_WarmUpLeftView:onDataUpdate()
+	self:_setActive_curEpisode(false)
+	self:_refresh()
 end
 
-function var_0_0.onSwitchEpisode(arg_12_0)
-	local var_12_0 = arg_12_0:_checkIsDone()
+function V2a5_WarmUpLeftView:onSwitchEpisode()
+	local isDone = self:_checkIsDone()
 
-	if arg_12_0._draggedState == var_0_2 and not var_12_0 then
-		arg_12_0._draggedState = var_0_1 - 1
-	elseif arg_12_0._draggedState < var_0_1 and var_12_0 then
-		arg_12_0._draggedState = var_0_2
+	if self._draggedState == kFirstUnlocked and not isDone then
+		self._draggedState = kFirstLocked - 1
+	elseif self._draggedState < kFirstLocked and isDone then
+		self._draggedState = kFirstUnlocked
 	end
 
-	arg_12_0:_setActive_curEpisode(false)
-	arg_12_0:_refresh()
+	self:_setActive_curEpisode(false)
+	self:_refresh()
 end
 
-function var_0_0._episodeId(arg_13_0)
-	return arg_13_0.viewContainer:getCurSelectedEpisode()
+function V2a5_WarmUpLeftView:_episodeId()
+	return self.viewContainer:getCurSelectedEpisode()
 end
 
-function var_0_0._episode2Index(arg_14_0, arg_14_1)
-	return arg_14_0.viewContainer:episode2Index(arg_14_1 or arg_14_0:_episodeId())
+function V2a5_WarmUpLeftView:_episode2Index(episodeId)
+	return self.viewContainer:episode2Index(episodeId or self:_episodeId())
 end
 
-function var_0_0._checkIsDone(arg_15_0, arg_15_1)
-	return arg_15_0.viewContainer:checkIsDone(arg_15_1 or arg_15_0:_episodeId())
+function V2a5_WarmUpLeftView:_checkIsDone(episodeId)
+	return self.viewContainer:checkIsDone(episodeId or self:_episodeId())
 end
 
-function var_0_0._saveStateDone(arg_16_0, arg_16_1, arg_16_2)
-	arg_16_0.viewContainer:saveStateDone(arg_16_2 or arg_16_0:_episodeId(), arg_16_1)
+function V2a5_WarmUpLeftView:_saveStateDone(isDone, episodeId)
+	self.viewContainer:saveStateDone(episodeId or self:_episodeId(), isDone)
 end
 
-function var_0_0._saveState(arg_17_0, arg_17_1, arg_17_2)
-	assert(arg_17_1 ~= 1999, "please call _saveStateDone instead")
-	arg_17_0.viewContainer:saveState(arg_17_2 or arg_17_0:_episodeId(), arg_17_1)
+function V2a5_WarmUpLeftView:_saveState(value, episodeId)
+	assert(value ~= 1999, "please call _saveStateDone instead")
+	self.viewContainer:saveState(episodeId or self:_episodeId(), value)
 end
 
-function var_0_0._getState(arg_18_0, arg_18_1, arg_18_2)
-	return arg_18_0.viewContainer:getState(arg_18_2 or arg_18_0:_episodeId(), arg_18_1)
+function V2a5_WarmUpLeftView:_getState(defaultValue, episodeId)
+	return self.viewContainer:getState(episodeId or self:_episodeId(), defaultValue)
 end
 
-function var_0_0._setActive_drag(arg_19_0, arg_19_1)
-	gohelper.setActive(arg_19_0._godrag, arg_19_1)
+function V2a5_WarmUpLeftView:_setActive_drag(isActive)
+	gohelper.setActive(self._godrag, isActive)
 end
 
-function var_0_0._setActive_guide(arg_20_0, arg_20_1)
-	gohelper.setActive(arg_20_0._guideGo, arg_20_1)
+function V2a5_WarmUpLeftView:_setActive_guide(isActive)
+	gohelper.setActive(self._guideGo, isActive)
 end
 
-function var_0_0._refresh(arg_21_0)
-	local var_21_0 = arg_21_0:_checkIsDone()
+function V2a5_WarmUpLeftView:_refresh()
+	local isDone = self:_checkIsDone()
 
-	if var_21_0 then
-		arg_21_0:_playAnimOpend()
-		arg_21_0:_setActive_drag(false)
-		arg_21_0:_setActive_guide(false)
+	if isDone then
+		self:_playAnimOpend()
+		self:_setActive_drag(false)
+		self:_setActive_guide(false)
 	else
-		local var_21_1 = arg_21_0:_getState()
+		local state = self:_getState()
 
-		if var_21_1 == 0 then
-			arg_21_0:_setActive_guide(not var_21_0 and arg_21_0._draggedState <= var_0_1)
-			arg_21_0:_setActive_drag(true)
-			arg_21_0:_playAnimIdle()
-		elseif var_0_5.SwipeDone == var_21_1 then
-			arg_21_0:_setActive_guide(false)
-			arg_21_0:_setActive_drag(false)
-			arg_21_0:_playAnimAfterSwipe()
+		if state == 0 then
+			self:_setActive_guide(not isDone and self._draggedState <= kFirstLocked)
+			self:_setActive_drag(true)
+			self:_playAnimIdle()
+		elseif States.SwipeDone == state then
+			self:_setActive_guide(false)
+			self:_setActive_drag(false)
+			self:_playAnimAfterSwipe()
 		else
-			logError("[V2a5_WarmUpLeftView] invalid state:" .. var_21_1)
+			logError("[V2a5_WarmUpLeftView] invalid state:" .. state)
 		end
 	end
 end
 
-function var_0_0._getItem(arg_22_0, arg_22_1)
-	local var_22_0 = arg_22_0:_episode2Index(arg_22_1)
+function V2a5_WarmUpLeftView:_getItem(episodeId)
+	local index = self:_episode2Index(episodeId)
 
-	return arg_22_0._dayItemList[var_22_0]
+	return self._dayItemList[index]
 end
 
-function var_0_0._setActive_curEpisode(arg_23_0, arg_23_1)
-	arg_23_0:_setActiveByEpisode(arg_23_0:_episodeId(), arg_23_1)
+function V2a5_WarmUpLeftView:_setActive_curEpisode(isActive)
+	self:_setActiveByEpisode(self:_episodeId(), isActive)
 end
 
-function var_0_0._setActiveByEpisode(arg_24_0, arg_24_1, arg_24_2)
-	if arg_24_0._lastEpisodeId then
-		arg_24_0:_getItem(arg_24_0._lastEpisodeId):setActive(false)
+function V2a5_WarmUpLeftView:_setActiveByEpisode(episodeId, isActive)
+	if self._lastEpisodeId then
+		local item = self:_getItem(self._lastEpisodeId)
+
+		item:setActive(false)
 	end
 
-	arg_24_0._lastEpisodeId = arg_24_1
+	self._lastEpisodeId = episodeId
 
-	arg_24_0:_getItem(arg_24_1):setActive(arg_24_2)
+	self:_getItem(episodeId):setActive(isActive)
 end
 
-function var_0_0._onDragBegin(arg_25_0)
-	arg_25_0:_setActive_guide(false)
+function V2a5_WarmUpLeftView:_onDragBegin()
+	self:_setActive_guide(false)
 end
 
-function var_0_0._onDragEnd(arg_26_0)
-	if arg_26_0:_checkIsDone() then
+function V2a5_WarmUpLeftView:_onDragEnd()
+	if self:_checkIsDone() then
 		return
 	end
 
-	if arg_26_0._drag:isSwipeLT() or arg_26_0._drag:isSwipeRB() then
-		arg_26_0:_saveState(var_0_5.SwipeDone)
-		arg_26_0:_playAnimAfterSwipe()
-		arg_26_0.viewContainer:setLocalIsPlayCurByUser()
+	if self._drag:isSwipeLT() or self._drag:isSwipeRB() then
+		self:_saveState(States.SwipeDone)
+		self:_playAnimAfterSwipe()
+		self.viewContainer:setLocalIsPlayCurByUser()
 	end
 end
 
-function var_0_0._playAnimAfterSwipe(arg_27_0)
-	arg_27_0:_playAnimOpen(function()
-		arg_27_0:_saveStateDone(true)
-		arg_27_0.viewContainer:openDesc()
+function V2a5_WarmUpLeftView:_playAnimAfterSwipe()
+	self:_playAnimOpen(function()
+		self:_saveStateDone(true)
+		self.viewContainer:openDesc()
 	end)
 end
 
-function var_0_0._playAnimIdle(arg_29_0)
-	arg_29_0:_playAnim(UIAnimationName.Idle)
+function V2a5_WarmUpLeftView:_playAnimIdle()
+	self:_playAnim(UIAnimationName.Idle)
 end
 
-function var_0_0._playAnimOpen(arg_30_0, arg_30_1, arg_30_2)
-	arg_30_0:_setActive_curEpisode(true)
+function V2a5_WarmUpLeftView:_playAnimOpen(cb, cbObj)
+	self:_setActive_curEpisode(true)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_tangren_scissors_cut_25251415)
-	arg_30_0:_playAnim(UIAnimationName.Open, arg_30_1, arg_30_2)
+	self:_playAnim(UIAnimationName.Open, cb, cbObj)
 end
 
-function var_0_0._playAnimOpend(arg_31_0)
-	arg_31_0:_setActive_curEpisode(true)
-	arg_31_0:_playAnim("finishidle")
+function V2a5_WarmUpLeftView:_playAnimOpend()
+	self:_setActive_curEpisode(true)
+	self:_playAnim("finishidle")
 end
 
-function var_0_0._playAnim(arg_32_0, arg_32_1, arg_32_2, arg_32_3)
-	arg_32_0._animatorPlayer:Play(arg_32_1, arg_32_2 or function()
+function V2a5_WarmUpLeftView:_playAnim(name, cb, cbObj)
+	self._animatorPlayer:Play(name, cb or function()
 		return
-	end, arg_32_3)
+	end, cbObj)
 end
 
-function var_0_0._onShowDay(arg_34_0)
+function V2a5_WarmUpLeftView:_onShowDay()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_activity_dog_page_25001215)
 end
 
-return var_0_0
+return V2a5_WarmUpLeftView

@@ -1,29 +1,33 @@
-﻿module("modules.logic.guide.controller.trigger.GuideTriggerPlayerLv", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/trigger/GuideTriggerPlayerLv.lua
 
-local var_0_0 = class("GuideTriggerPlayerLv", BaseGuideTrigger)
+module("modules.logic.guide.controller.trigger.GuideTriggerPlayerLv", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0, arg_1_1)
-	PlayerController.instance:registerCallback(PlayerEvent.PlayerLevelUp, arg_1_0._checkStartGuide, arg_1_0)
-	GameSceneMgr.instance:registerCallback(SceneType.Main, arg_1_0._onMainScene, arg_1_0)
+local GuideTriggerPlayerLv = class("GuideTriggerPlayerLv", BaseGuideTrigger)
+
+function GuideTriggerPlayerLv:ctor(triggerKey)
+	GuideTriggerPlayerLv.super.ctor(self, triggerKey)
+	PlayerController.instance:registerCallback(PlayerEvent.PlayerLevelUp, self._checkStartGuide, self)
+	GameSceneMgr.instance:registerCallback(SceneType.Main, self._onMainScene, self)
 end
 
-function var_0_0.assertGuideSatisfy(arg_2_0, arg_2_1, arg_2_2)
-	return tonumber(arg_2_2) <= arg_2_0:getParam()
+function GuideTriggerPlayerLv:assertGuideSatisfy(param, configParam)
+	local configLv = tonumber(configParam)
+
+	return configLv <= self:getParam()
 end
 
-function var_0_0.getParam(arg_3_0)
+function GuideTriggerPlayerLv:getParam()
 	return PlayerModel.instance:getPlayinfo().level
 end
 
-function var_0_0._onMainScene(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_2 == 1 then
-		arg_4_0:checkStartGuide()
+function GuideTriggerPlayerLv:_onMainScene(sceneLevelId, Exit0Enter1)
+	if Exit0Enter1 == 1 then
+		self:checkStartGuide()
 	end
 end
 
-function var_0_0._checkStartGuide(arg_5_0)
-	arg_5_0:checkStartGuide()
+function GuideTriggerPlayerLv:_checkStartGuide()
+	self:checkStartGuide()
 end
 
-return var_0_0
+return GuideTriggerPlayerLv

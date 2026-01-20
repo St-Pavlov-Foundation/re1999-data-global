@@ -1,145 +1,146 @@
-﻿module("modules.logic.versionactivity.view.VersionActivityTaskBonusItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity/view/VersionActivityTaskBonusItem.lua
 
-local var_0_0 = class("VersionActivityTaskBonusItem", ListScrollCell)
+module("modules.logic.versionactivity.view.VersionActivityTaskBonusItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0.txtIndex = gohelper.findChildText(arg_1_0.viewGO, "index")
-	arg_1_0.imagePoint = gohelper.findChildImage(arg_1_0.viewGO, "progress/point")
-	arg_1_0.scrollRewards = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_rewards")
-	arg_1_0.goRewardRoot = gohelper.findChild(arg_1_0.viewGO, "#scroll_rewards/Viewport/rewardsroot")
-	arg_1_0.goFinish = gohelper.findChild(arg_1_0.viewGO, "go_finish")
+local VersionActivityTaskBonusItem = class("VersionActivityTaskBonusItem", ListScrollCell)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivityTaskBonusItem:init(go)
+	self.viewGO = go
+	self.txtIndex = gohelper.findChildText(self.viewGO, "index")
+	self.imagePoint = gohelper.findChildImage(self.viewGO, "progress/point")
+	self.scrollRewards = gohelper.findChildScrollRect(self.viewGO, "#scroll_rewards")
+	self.goRewardRoot = gohelper.findChild(self.viewGO, "#scroll_rewards/Viewport/rewardsroot")
+	self.goFinish = gohelper.findChild(self.viewGO, "go_finish")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0._editableInitView(arg_2_0)
-	arg_2_0.pointItemList = {}
-	arg_2_0.rewardItems = {}
-	arg_2_0._animator = arg_2_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function VersionActivityTaskBonusItem:_editableInitView()
+	self.pointItemList = {}
+	self.rewardItems = {}
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	gohelper.setActive(arg_2_0.imagePoint.gameObject, false)
-	gohelper.setActive(arg_2_0.goFinish, false)
-	arg_2_0:addEventCb(VersionActivityController.instance, VersionActivityEvent.AddTaskActivityBonus, arg_2_0.addActivityPoints, arg_2_0)
+	gohelper.setActive(self.imagePoint.gameObject, false)
+	gohelper.setActive(self.goFinish, false)
+	self:addEventCb(VersionActivityController.instance, VersionActivityEvent.AddTaskActivityBonus, self.addActivityPoints, self)
 end
 
-function var_0_0.onUpdateMO(arg_3_0, arg_3_1)
-	arg_3_0.co = arg_3_1
+function VersionActivityTaskBonusItem:onUpdateMO(taskBonusCo)
+	self.co = taskBonusCo
 
-	arg_3_0:show()
+	self:show()
 
-	arg_3_0.txtIndex.text = string.format("%2d", arg_3_0.co.id)
-	arg_3_0.taskActivityMo = TaskModel.instance:getTaskActivityMO(TaskEnum.TaskType.ActivityDungeon)
+	self.txtIndex.text = string.format("%2d", self.co.id)
+	self.taskActivityMo = TaskModel.instance:getTaskActivityMO(TaskEnum.TaskType.ActivityDungeon)
 
-	arg_3_0:refreshPoints()
-	arg_3_0:refreshRewardItems()
+	self:refreshPoints()
+	self:refreshRewardItems()
 end
 
-function var_0_0.refreshPoints(arg_4_0)
-	local var_4_0
-	local var_4_1 = arg_4_0.taskActivityMo
-	local var_4_2 = 0
+function VersionActivityTaskBonusItem:refreshPoints()
+	local pointItem
+	local taskActivityMo = self.taskActivityMo
+	local lightPointCount = 0
 
-	gohelper.setActive(arg_4_0.goFinish, false)
+	gohelper.setActive(self.goFinish, false)
 
-	if arg_4_0.co.id <= var_4_1.defineId then
-		var_4_2 = arg_4_0.co.needActivity
+	if self.co.id <= taskActivityMo.defineId then
+		lightPointCount = self.co.needActivity
 
-		gohelper.setActive(arg_4_0.goFinish, true)
-	elseif arg_4_0.co.id == var_4_1.defineId + 1 then
-		var_4_2 = var_4_1.value - var_4_1.gainValue
+		gohelper.setActive(self.goFinish, true)
+	elseif self.co.id == taskActivityMo.defineId + 1 then
+		lightPointCount = taskActivityMo.value - taskActivityMo.gainValue
 	end
 
-	for iter_4_0 = 1, arg_4_0.co.needActivity do
-		local var_4_3 = arg_4_0.pointItemList[iter_4_0]
+	for i = 1, self.co.needActivity do
+		pointItem = self.pointItemList[i]
 
-		if not var_4_3 then
-			var_4_3 = arg_4_0:getUserDataTb_()
-			var_4_3.go = gohelper.cloneInPlace(arg_4_0.imagePoint.gameObject)
-			var_4_3.image = var_4_3.go:GetComponent(gohelper.Type_Image)
-			var_4_3.playGo = gohelper.findChild(var_4_3.go, "play")
+		if not pointItem then
+			pointItem = self:getUserDataTb_()
+			pointItem.go = gohelper.cloneInPlace(self.imagePoint.gameObject)
+			pointItem.image = pointItem.go:GetComponent(gohelper.Type_Image)
+			pointItem.playGo = gohelper.findChild(pointItem.go, "play")
 
-			table.insert(arg_4_0.pointItemList, var_4_3)
+			table.insert(self.pointItemList, pointItem)
 		end
 
-		gohelper.setActive(var_4_3.go, true)
-		gohelper.setActive(var_4_3.playGo, false)
-		UISpriteSetMgr.instance:setVersionActivitySprite(var_4_3.image, iter_4_0 <= var_4_2 and "img_li1" or "img_li2")
+		gohelper.setActive(pointItem.go, true)
+		gohelper.setActive(pointItem.playGo, false)
+		UISpriteSetMgr.instance:setVersionActivitySprite(pointItem.image, i <= lightPointCount and "img_li1" or "img_li2")
 	end
 
-	for iter_4_1 = arg_4_0.co.needActivity + 1, #arg_4_0.pointItemList do
-		gohelper.setActive(arg_4_0.pointItemList[iter_4_1].go, false)
+	for i = self.co.needActivity + 1, #self.pointItemList do
+		gohelper.setActive(self.pointItemList[i].go, false)
 	end
 end
 
-function var_0_0.refreshRewardItems(arg_5_0)
-	local var_5_0
-	local var_5_1
-	local var_5_2 = string.split(arg_5_0.co.bonus, "|")
+function VersionActivityTaskBonusItem:refreshRewardItems()
+	local rewardItem, infos
+	local rewards = string.split(self.co.bonus, "|")
 
-	for iter_5_0 = 1, #var_5_2 do
-		local var_5_3 = arg_5_0.rewardItems[iter_5_0]
-		local var_5_4 = string.splitToNumber(var_5_2[iter_5_0], "#")
+	for i = 1, #rewards do
+		rewardItem = self.rewardItems[i]
+		infos = string.splitToNumber(rewards[i], "#")
 
-		if not var_5_3 then
-			var_5_3 = IconMgr.instance:getCommonPropItemIcon(arg_5_0.goRewardRoot)
+		if not rewardItem then
+			rewardItem = IconMgr.instance:getCommonPropItemIcon(self.goRewardRoot)
 
-			table.insert(arg_5_0.rewardItems, var_5_3)
-			transformhelper.setLocalScale(var_5_3.go.transform, 0.62, 0.62, 1)
-			var_5_3:setMOValue(var_5_4[1], var_5_4[2], var_5_4[3], nil, true)
-			var_5_3:setCountFontSize(50)
-			var_5_3:showStackableNum2()
-			var_5_3:isShowEffect(true)
-			var_5_3:setHideLvAndBreakFlag(true)
-			var_5_3:hideEquipLvAndBreak(true)
+			table.insert(self.rewardItems, rewardItem)
+			transformhelper.setLocalScale(rewardItem.go.transform, 0.62, 0.62, 1)
+			rewardItem:setMOValue(infos[1], infos[2], infos[3], nil, true)
+			rewardItem:setCountFontSize(50)
+			rewardItem:showStackableNum2()
+			rewardItem:isShowEffect(true)
+			rewardItem:setHideLvAndBreakFlag(true)
+			rewardItem:hideEquipLvAndBreak(true)
 		else
-			var_5_3:setMOValue(var_5_4[1], var_5_4[2], var_5_4[3], nil, true)
+			rewardItem:setMOValue(infos[1], infos[2], infos[3], nil, true)
 		end
 
-		gohelper.setActive(var_5_3.go, true)
+		gohelper.setActive(rewardItem.go, true)
 	end
 
-	for iter_5_1 = #var_5_2 + 1, #arg_5_0.rewardItems do
-		gohelper.setActive(arg_5_0.rewardItems[iter_5_1].go, false)
+	for i = #rewards + 1, #self.rewardItems do
+		gohelper.setActive(self.rewardItems[i].go, false)
 	end
 
-	arg_5_0.scrollRewards.horizontalNormalizedPosition = 0
+	self.scrollRewards.horizontalNormalizedPosition = 0
 end
 
-function var_0_0.addActivityPoints(arg_6_0)
+function VersionActivityTaskBonusItem:addActivityPoints()
 	if not VersionActivityTaskBonusListModel.instance:checkActivityPointCountHasChange() then
 		return
 	end
 
-	for iter_6_0 = 1, #arg_6_0.pointItemList do
-		if VersionActivityTaskBonusListModel.instance:checkNeedPlayEffect(arg_6_0.co.id, iter_6_0) then
-			local var_6_0 = arg_6_0.pointItemList[iter_6_0]
+	for i = 1, #self.pointItemList do
+		if VersionActivityTaskBonusListModel.instance:checkNeedPlayEffect(self.co.id, i) then
+			local pointItem = self.pointItemList[i]
 
-			gohelper.setActive(var_6_0.playGo, true)
+			gohelper.setActive(pointItem.playGo, true)
 		end
 	end
 end
 
-function var_0_0.playAnimation(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_0._animator:Play(arg_7_1, 0, -arg_7_2)
+function VersionActivityTaskBonusItem:playAnimation(animationName, delayTime)
+	self._animator:Play(animationName, 0, -delayTime)
 end
 
-function var_0_0.getAnimator(arg_8_0)
-	return arg_8_0._animator
+function VersionActivityTaskBonusItem:getAnimator()
+	return self._animator
 end
 
-function var_0_0.show(arg_9_0)
-	gohelper.setActive(arg_9_0.viewGO, true)
+function VersionActivityTaskBonusItem:show()
+	gohelper.setActive(self.viewGO, true)
 end
 
-function var_0_0.hide(arg_10_0)
-	gohelper.setActive(arg_10_0.viewGO, false)
+function VersionActivityTaskBonusItem:hide()
+	gohelper.setActive(self.viewGO, false)
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function VersionActivityTaskBonusItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return VersionActivityTaskBonusItem

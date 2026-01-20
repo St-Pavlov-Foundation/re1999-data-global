@@ -1,104 +1,166 @@
-﻿module("modules.logic.fight.view.preview.SkillEditorHeroSelectModel", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/preview/SkillEditorHeroSelectModel.lua
 
-local var_0_0 = class("SkillEditorHeroSelectModel", ListScrollModel)
+module("modules.logic.fight.view.preview.SkillEditorHeroSelectModel", package.seeall)
 
-function var_0_0.setSelect(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	arg_1_0.side = arg_1_1
-	arg_1_0.selectType = arg_1_2
-	arg_1_0.stancePosId = arg_1_3
+local SkillEditorHeroSelectModel = class("SkillEditorHeroSelectModel", ListScrollModel)
 
-	local var_1_0 = arg_1_0:_getCOList()
-	local var_1_1 = {}
+SkillEditorHeroSelectModel.selectedCharacterTagDict = {}
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
-		if string.find(tostring(iter_1_1.id), arg_1_4) or string.find(tostring(iter_1_1.skinId), arg_1_4) or string.find(iter_1_1.name or "", arg_1_4) or string.find(FightConfig.instance:getSkinCO(iter_1_1.skinId) and FightConfig.instance:getSkinCO(iter_1_1.skinId).name or "", arg_1_4) then
-			local var_1_2 = {
-				id = iter_1_0,
-				co = iter_1_1
+function SkillEditorHeroSelectModel:setSelect(side, selectType, stancePosId, searchText)
+	self.side = side
+	self.selectType = selectType
+	self.stancePosId = stancePosId
+
+	local coList = self:_getCOList()
+	local list = {}
+
+	for i, co in ipairs(coList) do
+		if string.find(tostring(co.id), searchText) or string.find(tostring(co.skinId), searchText) or string.find(co.name or "", searchText) or string.find(FightConfig.instance:getSkinCO(co.skinId) and FightConfig.instance:getSkinCO(co.skinId).name or "", searchText) then
+			local mo = {
+				id = i,
+				co = co
 			}
 
-			table.insert(var_1_1, var_1_2)
-		elseif arg_1_0.selectType == SkillEditorMgr.SelectType.Group then
-			arg_1_0:_cacheGroupNames()
+			table.insert(list, mo)
+		elseif self.selectType == SkillEditorMgr.SelectType.Group then
+			self:_cacheGroupNames()
 
-			local var_1_3 = arg_1_0._groupId2NameDict[iter_1_1.id]
+			local groupMonsterName = self._groupId2NameDict[co.id]
 
-			if var_1_3 and string.find(var_1_3, arg_1_4) then
-				local var_1_4 = {
-					id = iter_1_0,
-					co = iter_1_1
+			if groupMonsterName and string.find(groupMonsterName, searchText) then
+				local mo = {
+					id = i,
+					co = co
 				}
 
-				table.insert(var_1_1, var_1_4)
+				table.insert(list, mo)
 			end
 		end
 	end
 
-	arg_1_0:setList(var_1_1)
+	self:setList(list)
 end
 
-function var_0_0._getCOList(arg_2_0)
-	if arg_2_0.selectType == SkillEditorMgr.SelectType.Hero then
-		return lua_character.configList
-	elseif arg_2_0.selectType == SkillEditorMgr.SelectType.SubHero then
-		return lua_character.configList
-	elseif arg_2_0.selectType == SkillEditorMgr.SelectType.Monster then
-		local var_2_0 = {}
-		local var_2_1 = {}
+function SkillEditorHeroSelectModel:_getCOList()
+	if self.selectType == SkillEditorMgr.SelectType.Hero then
+		local hasTag = false
 
-		for iter_2_0, iter_2_1 in ipairs(lua_monster.configList) do
-			if not var_2_0[iter_2_1.skinId] then
-				var_2_0[iter_2_1.skinId] = {}
-			end
-
-			if not string.nilorempty(iter_2_1.activeSkill) then
-				table.insert(var_2_0[iter_2_1.skinId], 1, iter_2_1)
-			else
-				table.insert(var_2_0[iter_2_1.skinId], iter_2_1)
-			end
-		end
-
-		for iter_2_2, iter_2_3 in pairs(var_2_0) do
-			table.insert(var_2_1, iter_2_3[1])
-		end
-
-		table.sort(var_2_1, function(arg_3_0, arg_3_1)
-			return arg_3_0.skinId < arg_3_1.skinId
-		end)
-
-		return var_2_1
-	elseif arg_2_0.selectType == SkillEditorMgr.SelectType.Group then
-		arg_2_0:_cacheGroupNames()
-
-		return lua_monster_group.configList
-	elseif arg_2_0.selectType == SkillEditorMgr.SelectType.MonsterId then
-		return lua_monster.configList
-	end
-end
-
-function var_0_0._cacheGroupNames(arg_4_0)
-	if arg_4_0._groupId2NameDict then
-		return
-	end
-
-	arg_4_0._groupId2NameDict = {}
-
-	for iter_4_0, iter_4_1 in ipairs(lua_monster_group.configList) do
-		local var_4_0 = string.splitToNumber(iter_4_1.monster, "#")
-		local var_4_1 = lua_monster.configDict[var_4_0[1]]
-
-		for iter_4_2 = 2, #var_4_0 do
-			if tabletool.indexOf(string.splitToNumber(iter_4_1.bossId, "#"), var_4_0[iter_4_2]) then
-				var_4_1 = lua_monster.configDict[var_4_0[iter_4_2]]
+		for k, v in pairs(SkillEditorHeroSelectModel.selectedCharacterTagDict) do
+			if v then
+				hasTag = true
 
 				break
 			end
 		end
 
-		arg_4_0._groupId2NameDict[iter_4_1.id] = var_4_1 and var_4_1.name
+		if not hasTag then
+			return lua_character.configList
+		else
+			if not self.tag2CharacterList then
+				self.tag2CharacterList = {}
+
+				for i, config in ipairs(lua_character.configList) do
+					local skillList = FightHelper._buildHeroSkills(config)
+
+					if skillList and #skillList > 0 then
+						local skillConfig = lua_skill.configDict[skillList[1]]
+
+						if skillConfig then
+							self.tag2CharacterList[skillConfig.showTag] = self.tag2CharacterList[skillConfig.showTag] or {}
+
+							table.insert(self.tag2CharacterList[skillConfig.showTag], config)
+						end
+					end
+
+					local editorRoleConfig = lua_editor_role_sources.configDict[config.id]
+
+					if editorRoleConfig then
+						local skillArr = string.splitToNumber(editorRoleConfig.exSkill, "#")
+
+						for i, v in ipairs(skillArr) do
+							local skillConfig = lua_skill.configDict[v]
+
+							if skillConfig then
+								self.tag2CharacterList[skillConfig.showTag] = self.tag2CharacterList[skillConfig.showTag] or {}
+
+								table.insert(self.tag2CharacterList[skillConfig.showTag], config)
+							end
+						end
+					end
+				end
+			end
+
+			local retList = {}
+
+			for tag, coList in pairs(self.tag2CharacterList) do
+				if SkillEditorHeroSelectModel.selectedCharacterTagDict[tag] then
+					for i, co in ipairs(coList) do
+						table.insert(retList, co)
+					end
+				end
+			end
+
+			return retList
+		end
+	elseif self.selectType == SkillEditorMgr.SelectType.SubHero then
+		return lua_character.configList
+	elseif self.selectType == SkillEditorMgr.SelectType.Monster then
+		local dict = {}
+		local list = {}
+
+		for _, monsterCO in ipairs(lua_monster.configList) do
+			if not dict[monsterCO.skinId] then
+				dict[monsterCO.skinId] = {}
+			end
+
+			if not string.nilorempty(monsterCO.activeSkill) then
+				table.insert(dict[monsterCO.skinId], 1, monsterCO)
+			else
+				table.insert(dict[monsterCO.skinId], monsterCO)
+			end
+		end
+
+		for k, v in pairs(dict) do
+			table.insert(list, v[1])
+		end
+
+		table.sort(list, function(item1, item2)
+			return item1.skinId < item2.skinId
+		end)
+
+		return list
+	elseif self.selectType == SkillEditorMgr.SelectType.Group then
+		self:_cacheGroupNames()
+
+		return lua_monster_group.configList
+	elseif self.selectType == SkillEditorMgr.SelectType.MonsterId then
+		return lua_monster.configList
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+function SkillEditorHeroSelectModel:_cacheGroupNames()
+	if self._groupId2NameDict then
+		return
+	end
 
-return var_0_0
+	self._groupId2NameDict = {}
+
+	for _, co in ipairs(lua_monster_group.configList) do
+		local monsterIds = string.splitToNumber(co.monster, "#")
+		local monsterCO = lua_monster.configDict[monsterIds[1]]
+
+		for i = 2, #monsterIds do
+			if tabletool.indexOf(string.splitToNumber(co.bossId, "#"), monsterIds[i]) then
+				monsterCO = lua_monster.configDict[monsterIds[i]]
+
+				break
+			end
+		end
+
+		self._groupId2NameDict[co.id] = monsterCO and monsterCO.name
+	end
+end
+
+SkillEditorHeroSelectModel.instance = SkillEditorHeroSelectModel.New()
+
+return SkillEditorHeroSelectModel

@@ -1,58 +1,60 @@
-﻿module("modules.logic.fight.entity.comp.skill.FightTLEventSetTimelineTime", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skill/FightTLEventSetTimelineTime.lua
 
-local var_0_0 = class("FightTLEventSetTimelineTime", FightTimelineTrackItem)
+module("modules.logic.fight.entity.comp.skill.FightTLEventSetTimelineTime", package.seeall)
 
-function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = tonumber(arg_1_3[1])
-	local var_1_1 = var_1_0
-	local var_1_2 = FightDataHelper.entityMgr:getById(arg_1_1.fromId)
+local FightTLEventSetTimelineTime = class("FightTLEventSetTimelineTime", FightTimelineTrackItem)
 
-	if var_1_2 then
-		local var_1_3 = string.splitToNumber(arg_1_3[2], "#")
+function FightTLEventSetTimelineTime:onTrackStart(fightStepData, duration, paramsArr)
+	local time = tonumber(paramsArr[1])
+	local canJump = time
+	local entityMO = FightDataHelper.entityMgr:getById(fightStepData.fromId)
 
-		if #var_1_3 > 0 then
-			for iter_1_0, iter_1_1 in ipairs(var_1_3) do
-				for iter_1_2, iter_1_3 in pairs(var_1_2:getBuffDic()) do
-					if iter_1_3.buffId == iter_1_1 then
-						var_1_1 = false
+	if entityMO then
+		local buffs = string.splitToNumber(paramsArr[2], "#")
+
+		if #buffs > 0 then
+			for i, v in ipairs(buffs) do
+				for index, buffMO in pairs(entityMO:getBuffDic()) do
+					if buffMO.buffId == v then
+						canJump = false
 
 						break
 					end
 				end
 
-				if not var_1_1 then
+				if not canJump then
 					break
 				end
 			end
 		end
 	end
 
-	if not string.nilorempty(arg_1_3[3]) then
-		local var_1_4 = string.splitToNumber(arg_1_3[3], "#")
-		local var_1_5 = false
+	if not string.nilorempty(paramsArr[3]) then
+		local skillArr = string.splitToNumber(paramsArr[3], "#")
+		local find = false
 
-		for iter_1_4, iter_1_5 in ipairs(var_1_4) do
-			if iter_1_5 == arg_1_1.actId then
-				var_1_5 = true
+		for i, skillId in ipairs(skillArr) do
+			if skillId == fightStepData.actId then
+				find = true
 			end
 		end
 
-		if not var_1_5 then
-			var_1_1 = false
+		if not find then
+			canJump = false
 		end
 	end
 
-	if var_1_1 then
-		arg_1_0.binder:SetTime(var_1_0)
+	if canJump then
+		self.binder:SetTime(time)
 	end
 end
 
-function var_0_0.onTrackEnd(arg_2_0)
+function FightTLEventSetTimelineTime:onTrackEnd()
 	return
 end
 
-function var_0_0.onDestructor(arg_3_0)
+function FightTLEventSetTimelineTime:onDestructor()
 	return
 end
 
-return var_0_0
+return FightTLEventSetTimelineTime

@@ -1,17 +1,19 @@
-﻿module("modules.logic.sp01.assassin2.outside.view.AssassinStatsViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/outside/view/AssassinStatsViewContainer.lua
 
-local var_0_0 = class("AssassinStatsViewContainer", BaseViewContainer)
+module("modules.logic.sp01.assassin2.outside.view.AssassinStatsViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local AssassinStatsViewContainer = class("AssassinStatsViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, AssassinStatsView.New())
+function AssassinStatsViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, AssassinStatsView.New())
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	arg_2_0:closeThis()
+function AssassinStatsViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return AssassinStatsViewContainer

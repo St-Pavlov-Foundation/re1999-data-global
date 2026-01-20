@@ -1,0 +1,366 @@
+[
+  {
+    "id": 105102011,
+    "type": 1,
+    "param": "50",
+    "desc": "language_10101101",
+    "resultDesc": ""
+  },
+  {
+    "id": 105102024,
+    "type": 1,
+    "param": "150",
+    "desc": "language_10101751",
+    "resultDesc": ""
+  },
+  {
+    "id": 105102031,
+    "type": 1,
+    "param": "300",
+    "desc": "language_10101104",
+    "resultDesc": ""
+  },
+  {
+    "id": 105103024,
+    "type": 1,
+    "param": "150",
+    "desc": "language_10101131",
+    "resultDesc": ""
+  },
+  {
+    "id": 105103035,
+    "type": 1,
+    "param": "300",
+    "desc": "language_10101104",
+    "resultDesc": ""
+  },
+  {
+    "id": 101201001,
+    "type": 2,
+    "param": "50",
+    "desc": "language_10101752",
+    "resultDesc": ""
+  },
+  {
+    "id": 101201002,
+    "type": 3,
+    "param": "11#2#3|3",
+    "desc": "language_10101753",
+    "resultDesc": ""
+  },
+  {
+    "id": 105101021,
+    "type": 3,
+    "param": "9|3",
+    "desc": "language_10101077",
+    "resultDesc": ""
+  },
+  {
+    "id": 105102021,
+    "type": 3,
+    "param": "11#2#3|3",
+    "desc": "language_10101102",
+    "resultDesc": ""
+  },
+  {
+    "id": 105103013,
+    "type": 3,
+    "param": "11#2#3|1",
+    "desc": "language_10101130",
+    "resultDesc": ""
+  },
+  {
+    "id": 105103021,
+    "type": 3,
+    "param": "11#2#3|3",
+    "desc": "language_10101102",
+    "resultDesc": ""
+  },
+  {
+    "id": 105203011,
+    "type": 3,
+    "param": "9|10",
+    "desc": "language_10101754",
+    "resultDesc": ""
+  },
+  {
+    "id": 105101012,
+    "type": 4,
+    "param": "",
+    "desc": "language_10101074",
+    "resultDesc": ""
+  },
+  {
+    "id": 105102014,
+    "type": 4,
+    "param": "",
+    "desc": "language_10101755",
+    "resultDesc": ""
+  },
+  {
+    "id": 105101032,
+    "type": 5,
+    "param": "100026",
+    "desc": "language_10101082",
+    "resultDesc": ""
+  },
+  {
+    "id": 105101033,
+    "type": 5,
+    "param": "100028",
+    "desc": "language_10101083",
+    "resultDesc": ""
+  },
+  {
+    "id": 105102033,
+    "type": 5,
+    "param": "100030",
+    "desc": "language_10101106",
+    "resultDesc": ""
+  },
+  {
+    "id": 105102034,
+    "type": 5,
+    "param": "100032",
+    "desc": "language_10101756",
+    "resultDesc": ""
+  },
+  {
+    "id": 105103032,
+    "type": 3,
+    "param": "11#2#3|5",
+    "desc": "language_10101138",
+    "resultDesc": ""
+  },
+  {
+    "id": 105103034,
+    "type": 5,
+    "param": "100034",
+    "desc": "language_10101140",
+    "resultDesc": ""
+  },
+  {
+    "id": 105101011,
+    "type": 6,
+    "param": "2",
+    "desc": "language_10101073",
+    "resultDesc": ""
+  },
+  {
+    "id": 105102012,
+    "type": 6,
+    "param": "2",
+    "desc": "language_10101073",
+    "resultDesc": ""
+  },
+  {
+    "id": 105101022,
+    "type": 7,
+    "param": "2|2",
+    "desc": "language_10101078",
+    "resultDesc": ""
+  },
+  {
+    "id": 105101034,
+    "type": 7,
+    "param": "2|5",
+    "desc": "language_10101757",
+    "resultDesc": ""
+  },
+  {
+    "id": 105102022,
+    "type": 7,
+    "param": "2|2",
+    "desc": "language_10101078",
+    "resultDesc": ""
+  },
+  {
+    "id": 105103022,
+    "type": 7,
+    "param": "2|2",
+    "desc": "language_10101078",
+    "resultDesc": ""
+  },
+  {
+    "id": 105103036,
+    "type": 7,
+    "param": "3|2",
+    "desc": "language_10101141",
+    "resultDesc": ""
+  },
+  {
+    "id": 105101031,
+    "type": 8,
+    "param": "2|2",
+    "desc": "language_10101081",
+    "resultDesc": ""
+  },
+  {
+    "id": 105101013,
+    "type": 9,
+    "param": "2",
+    "desc": "language_10101075",
+    "resultDesc": ""
+  },
+  {
+    "id": 105101023,
+    "type": 9,
+    "param": "3",
+    "desc": "language_10101079",
+    "resultDesc": ""
+  },
+  {
+    "id": 105102013,
+    "type": 9,
+    "param": "2",
+    "desc": "language_10101075",
+    "resultDesc": ""
+  },
+  {
+    "id": 105102023,
+    "type": 10,
+    "param": "7",
+    "desc": "language_10101103",
+    "resultDesc": ""
+  },
+  {
+    "id": 105103011,
+    "type": 10,
+    "param": "3",
+    "desc": "language_10101128",
+    "resultDesc": ""
+  },
+  {
+    "id": 105103023,
+    "type": 10,
+    "param": "7",
+    "desc": "language_10101103",
+    "resultDesc": ""
+  },
+  {
+    "id": 105103033,
+    "type": 10,
+    "param": "15",
+    "desc": "language_10101139",
+    "resultDesc": ""
+  },
+  {
+    "id": 101201003,
+    "type": 11,
+    "param": "6|101",
+    "desc": "language_10101758",
+    "resultDesc": ""
+  },
+  {
+    "id": 105103025,
+    "type": 11,
+    "param": "6|101",
+    "desc": "language_10101132",
+    "resultDesc": ""
+  },
+  {
+    "id": 105103026,
+    "type": 11,
+    "param": "6|102",
+    "desc": "language_10101133",
+    "resultDesc": ""
+  },
+  {
+    "id": 105103027,
+    "type": 11,
+    "param": "6|103",
+    "desc": "language_10101134",
+    "resultDesc": ""
+  },
+  {
+    "id": 105103028,
+    "type": 11,
+    "param": "6|104",
+    "desc": "language_10101135",
+    "resultDesc": ""
+  },
+  {
+    "id": 105103029,
+    "type": 11,
+    "param": "6|105",
+    "desc": "language_10101136",
+    "resultDesc": ""
+  },
+  {
+    "id": 105103037,
+    "type": 11,
+    "param": "10|103",
+    "desc": "language_10101142",
+    "resultDesc": ""
+  },
+  {
+    "id": 105103038,
+    "type": 11,
+    "param": "10|104",
+    "desc": "language_10101143",
+    "resultDesc": ""
+  },
+  {
+    "id": 105103039,
+    "type": 11,
+    "param": "10|105",
+    "desc": "language_10101144",
+    "resultDesc": ""
+  },
+  {
+    "id": 105101035,
+    "type": 12,
+    "param": "5",
+    "desc": "language_10101759",
+    "resultDesc": ""
+  },
+  {
+    "id": 105102035,
+    "type": 12,
+    "param": "5",
+    "desc": "language_10101760",
+    "resultDesc": ""
+  },
+  {
+    "id": 105103012,
+    "type": 12,
+    "param": "1",
+    "desc": "language_10101761",
+    "resultDesc": ""
+  },
+  {
+    "id": 105102032,
+    "type": 13,
+    "param": "1",
+    "desc": "language_10101105",
+    "resultDesc": ""
+  },
+  {
+    "id": 105103031,
+    "type": 14,
+    "param": "1",
+    "desc": "language_10101137",
+    "resultDesc": ""
+  },
+  {
+    "id": 105202011,
+    "type": 15,
+    "param": "",
+    "desc": "language_10101762",
+    "resultDesc": ""
+  },
+  {
+    "id": 105202012,
+    "type": 15,
+    "param": "",
+    "desc": "language_10101763",
+    "resultDesc": ""
+  },
+  {
+    "id": 105202013,
+    "type": 15,
+    "param": "",
+    "desc": "language_10101764",
+    "resultDesc": ""
+  }
+]

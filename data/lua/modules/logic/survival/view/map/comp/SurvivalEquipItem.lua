@@ -1,250 +1,254 @@
-﻿module("modules.logic.survival.view.map.comp.SurvivalEquipItem", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/comp/SurvivalEquipItem.lua
 
-local var_0_0 = class("SurvivalEquipItem", LuaCompBase)
+module("modules.logic.survival.view.map.comp.SurvivalEquipItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._golight = gohelper.findChild(arg_1_1, "#light")
-	arg_1_0._godrag = gohelper.findChild(arg_1_1, "#go_drag")
-	arg_1_0._goitem = gohelper.findChild(arg_1_1, "#go_drag/item")
-	arg_1_0._goempty = gohelper.findChild(arg_1_1, "#go_drag/empty")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_1, "#btn_click")
-	arg_1_0._golock = gohelper.findChild(arg_1_1, "#go_lock")
-	arg_1_0._gonew = gohelper.findChild(arg_1_1, "#go_new")
-	arg_1_0._goput = gohelper.findChild(arg_1_1, "#put")
-	arg_1_0._goFrequency = gohelper.findChild(arg_1_1, "#go_drag/Frequency")
-	arg_1_0._imageFrequency = gohelper.findChildImage(arg_1_1, "#go_drag/Frequency/image_NumBG/#txt_Num/image_FrequencyIcon")
-	arg_1_0._txtFrequency = gohelper.findChildTextMesh(arg_1_1, "#go_drag/Frequency/image_NumBG/#txt_Num")
+local SurvivalEquipItem = class("SurvivalEquipItem", LuaCompBase)
+
+function SurvivalEquipItem:init(go)
+	self.go = go
+	self._golight = gohelper.findChild(go, "#light")
+	self._godrag = gohelper.findChild(go, "#go_drag")
+	self._goitem = gohelper.findChild(go, "#go_drag/item")
+	self._goempty = gohelper.findChild(go, "#go_drag/empty")
+	self._btnclick = gohelper.findChildButtonWithAudio(go, "#btn_click")
+	self._golock = gohelper.findChild(go, "#go_lock")
+	self._gonew = gohelper.findChild(go, "#go_new")
+	self._goput = gohelper.findChild(go, "#put")
+	self._goFrequency = gohelper.findChild(go, "#go_drag/Frequency")
+	self._imageFrequency = gohelper.findChildImage(go, "#go_drag/Frequency/image_NumBG/#txt_Num/image_FrequencyIcon")
+	self._txtFrequency = gohelper.findChildTextMesh(go, "#go_drag/Frequency/image_NumBG/#txt_Num")
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	CommonDragHelper.instance:registerDragObj(arg_2_0.go, arg_2_0._beginDrag, arg_2_0._onDrag, arg_2_0._onEndDrag, arg_2_0._checkDrag, arg_2_0, nil, true)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._onClick, arg_2_0)
+function SurvivalEquipItem:addEventListeners()
+	CommonDragHelper.instance:registerDragObj(self.go, self._beginDrag, self._onDrag, self._onEndDrag, self._checkDrag, self, nil, true)
+	self._btnclick:AddClickListener(self._onClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	CommonDragHelper.instance:unregisterDragObj(arg_3_0.go)
-	arg_3_0._btnclick:RemoveClickListener()
+function SurvivalEquipItem:removeEventListeners()
+	CommonDragHelper.instance:unregisterDragObj(self.go)
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0.initIndex(arg_4_0, arg_4_1)
-	arg_4_0._index = arg_4_1
+function SurvivalEquipItem:initIndex(index)
+	self._index = index
 end
 
-function var_0_0.setClickCallback(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0._callback = arg_5_1
-	arg_5_0._callobj = arg_5_2
+function SurvivalEquipItem:setClickCallback(callback, callobj)
+	self._callback = callback
+	self._callobj = callobj
 end
 
-function var_0_0._onClick(arg_6_0)
-	if not arg_6_0.mo then
+function SurvivalEquipItem:_onClick()
+	if not self.mo then
 		return
 	end
 
-	if not arg_6_0.mo.unlock then
+	if not self.mo.unlock then
 		GameFacade.showToast(ToastEnum.SurvivalEquipLock)
 
 		return
 	end
 
-	if arg_6_0.mo.newFlag then
+	if self.mo.newFlag then
 		SurvivalWeekRpc.instance:sendSurvivalEquipSetNewFlagRequest({
-			arg_6_0.mo.slotId
+			self.mo.slotId
 		})
 
-		arg_6_0.mo.newFlag = false
+		self.mo.newFlag = false
 
-		gohelper.setActive(arg_6_0._gonew, false)
+		gohelper.setActive(self._gonew, false)
 	end
 
-	arg_6_0._callback(arg_6_0._callobj, arg_6_0._index)
+	self._callback(self._callobj, self._index)
 end
 
-function var_0_0.setItemRes(arg_7_0, arg_7_1)
-	local var_7_0 = gohelper.clone(arg_7_1, arg_7_0._goitem)
+function SurvivalEquipItem:setItemRes(itemRes)
+	local itemGO = gohelper.clone(itemRes, self._goitem)
 
-	gohelper.setActive(var_7_0, true)
+	gohelper.setActive(itemGO, true)
 
-	arg_7_0._item = MonoHelper.addNoUpdateLuaComOnceToGo(var_7_0, SurvivalBagItem)
+	self._item = MonoHelper.addNoUpdateLuaComOnceToGo(itemGO, SurvivalBagItem)
 end
 
-function var_0_0.initData(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = false
+function SurvivalEquipItem:initData(mo, isFirst)
+	local isPlayPut = false
 
-	if not arg_8_2 and arg_8_0.mo and arg_8_1 and not arg_8_1.item:isEmpty() and arg_8_0.mo.item.uid ~= arg_8_1.item.uid then
-		var_8_0 = true
+	if not isFirst and self.mo and mo and not mo.item:isEmpty() and self.mo.item.uid ~= mo.item.uid then
+		isPlayPut = true
 	end
 
-	arg_8_0.mo = arg_8_1
+	self.mo = mo
 
-	gohelper.setActive(arg_8_0.go, arg_8_1)
+	gohelper.setActive(self.go, mo)
 
-	local var_8_1 = not arg_8_1 or arg_8_1.item:isEmpty()
-	local var_8_2 = arg_8_1 and arg_8_1.unlock
+	local isEmpty = not mo or mo.item:isEmpty()
+	local isUnLock = mo and mo.unlock
 
-	gohelper.setActive(arg_8_0._goitem, not var_8_1 and var_8_2)
-	gohelper.setActive(arg_8_0._goempty, var_8_1 and var_8_2)
-	gohelper.setActive(arg_8_0._golock, not var_8_2)
-	gohelper.setActive(arg_8_0._goFrequency, false)
+	gohelper.setActive(self._goitem, not isEmpty and isUnLock)
+	gohelper.setActive(self._goempty, isEmpty and isUnLock)
+	gohelper.setActive(self._golock, not isUnLock)
+	gohelper.setActive(self._goFrequency, false)
 
-	if not var_8_1 then
-		arg_8_0._isSp = arg_8_0.mo.item.equipCo.equipType == 1
+	if not isEmpty then
+		self._isSp = self.mo.item.equipCo.equipType == 1
 
-		arg_8_0:updateItemMo()
+		self:updateItemMo()
 
-		if arg_8_0._goFrequency then
-			local var_8_3 = arg_8_1.parent.maxTagId
-			local var_8_4 = lua_survival_equip_found.configDict[var_8_3]
+		if self._goFrequency then
+			local equipBox = mo.parent
+			local maxTagId = equipBox.maxTagId
+			local tagCo = lua_survival_equip_found.configDict[maxTagId]
 
-			if var_8_4 then
-				gohelper.setActive(arg_8_0._goFrequency, true)
-				UISpriteSetMgr.instance:setSurvivalSprite(arg_8_0._imageFrequency, var_8_4.value)
+			if tagCo then
+				gohelper.setActive(self._goFrequency, true)
+				UISpriteSetMgr.instance:setSurvivalSprite(self._imageFrequency, tagCo.value)
 
-				arg_8_0._txtFrequency.text = arg_8_0.mo.values[var_8_4.value] or 0
+				self._txtFrequency.text = self.mo.values[tagCo.value] or 0
 			end
 		end
 	end
 
-	if arg_8_1 then
-		gohelper.setActive(arg_8_0._gonew, arg_8_1.newFlag)
+	if mo then
+		gohelper.setActive(self._gonew, mo.newFlag)
 	end
 
-	if var_8_0 then
+	if isPlayPut then
 		AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_fuleyuan_tansuo_put_2)
-		gohelper.setActive(arg_8_0._goput, false)
-		gohelper.setActive(arg_8_0._goput, true)
+		gohelper.setActive(self._goput, false)
+		gohelper.setActive(self._goput, true)
 	end
 end
 
-function var_0_0.updateItemMo(arg_9_0)
-	arg_9_0._item:updateMo(arg_9_0.mo.item)
+function SurvivalEquipItem:updateItemMo()
+	self._item:updateMo(self.mo.item)
 end
 
-function var_0_0.setParentRoot(arg_10_0, arg_10_1)
-	arg_10_0._root = arg_10_1
-	arg_10_0._rawRoot = arg_10_0.go.transform.parent
+function SurvivalEquipItem:setParentRoot(root)
+	self._root = root
+	self._rawRoot = self.go.transform.parent
 end
 
-function var_0_0._beginDrag(arg_11_0)
-	arg_11_0.go.transform:SetParent(arg_11_0._root, true)
+function SurvivalEquipItem:_beginDrag()
+	self.go.transform:SetParent(self._root, true)
 end
 
-function var_0_0._onDrag(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = arg_12_2.position
-	local var_12_1 = recthelper.screenPosToAnchorPos(var_12_0, arg_12_0.go.transform)
-	local var_12_2 = arg_12_0._godrag.transform
-	local var_12_3, var_12_4 = recthelper.getAnchor(var_12_2)
+function SurvivalEquipItem:_onDrag(_, pointerEventData)
+	local position = pointerEventData.position
+	local anchorPos = recthelper.screenPosToAnchorPos(position, self.go.transform)
+	local trans = self._godrag.transform
+	local curAnchorX, curAnchorY = recthelper.getAnchor(trans)
 
-	if math.abs(var_12_3 - var_12_1.x) > 10 or math.abs(var_12_4 - var_12_1.y) > 10 then
-		ZProj.TweenHelper.DOAnchorPos(var_12_2, var_12_1.x, var_12_1.y, 0.2)
+	if math.abs(curAnchorX - anchorPos.x) > 10 or math.abs(curAnchorY - anchorPos.y) > 10 then
+		ZProj.TweenHelper.DOAnchorPos(trans, anchorPos.x, anchorPos.y, 0.2)
 	else
-		recthelper.setAnchor(var_12_2, var_12_1.x, var_12_1.y)
+		recthelper.setAnchor(trans, anchorPos.x, anchorPos.y)
 	end
 
-	local var_12_5, var_12_6 = arg_12_0._parentView:getDragIndex(arg_12_2.position, arg_12_0._isSp)
+	local index, equipItem = self._parentView:getDragIndex(pointerEventData.position, self._isSp)
 
-	if var_12_6 ~= arg_12_0 and var_12_6 ~= arg_12_0._curOverEquip then
-		if arg_12_0._curOverEquip then
-			arg_12_0._curOverEquip:setLightActive(false)
+	if equipItem ~= self and equipItem ~= self._curOverEquip then
+		if self._curOverEquip then
+			self._curOverEquip:setLightActive(false)
 		end
 
-		arg_12_0._curOverEquip = var_12_6
+		self._curOverEquip = equipItem
 
-		if arg_12_0._curOverEquip then
-			arg_12_0._curOverEquip:setLightActive(true)
+		if self._curOverEquip then
+			self._curOverEquip:setLightActive(true)
 		end
 	end
 end
 
-function var_0_0.setLightActive(arg_13_0, arg_13_1)
-	if not arg_13_0.mo or not arg_13_0.mo.unlock then
+function SurvivalEquipItem:setLightActive(isActive)
+	if not self.mo or not self.mo.unlock then
 		return
 	end
 
-	gohelper.setActive(arg_13_0._golight, arg_13_1)
+	gohelper.setActive(self._golight, isActive)
 end
 
-function var_0_0._onEndDrag(arg_14_0, arg_14_1, arg_14_2)
-	if arg_14_0._curOverEquip then
-		arg_14_0._curOverEquip:setLightActive(false)
+function SurvivalEquipItem:_onEndDrag(_, pointerEventData)
+	if self._curOverEquip then
+		self._curOverEquip:setLightActive(false)
 
-		arg_14_0._curOverEquip = nil
+		self._curOverEquip = nil
 	end
 
-	local var_14_0, var_14_1 = arg_14_0._parentView:getDragIndex(arg_14_2.position, arg_14_0._isSp)
+	local index, equipItem = self._parentView:getDragIndex(pointerEventData.position, self._isSp)
 
-	if var_14_0 == -1 then
-		local var_14_2 = arg_14_0._godrag.transform
+	if index == -1 then
+		local trans = self._godrag.transform
 
-		ZProj.TweenHelper.DOAnchorPos(var_14_2, 0, 0, 0.2)
+		ZProj.TweenHelper.DOAnchorPos(trans, 0, 0, 0.2)
 
-		if not arg_14_0._isSp then
-			SurvivalWeekRpc.instance:sendSurvivalEquipDemount(arg_14_0._index)
+		if not self._isSp then
+			SurvivalWeekRpc.instance:sendSurvivalEquipDemount(self._index)
 		else
-			SurvivalWeekRpc.instance:sendSurvivalJewelryEquipDemount(arg_14_0._index)
+			SurvivalWeekRpc.instance:sendSurvivalJewelryEquipDemount(self._index)
 		end
-	elseif not var_14_0 or var_14_0 == arg_14_0._index or not arg_14_0:canMoveToIndex(var_14_0) then
-		local var_14_3 = arg_14_0._godrag.transform
+	elseif not index or index == self._index or not self:canMoveToIndex(index) then
+		local trans = self._godrag.transform
 
-		ZProj.TweenHelper.DOAnchorPos(var_14_3, 0, 0, 0.2)
+		ZProj.TweenHelper.DOAnchorPos(trans, 0, 0, 0.2)
 	else
-		arg_14_0._tweenToIndex = var_14_0
-		arg_14_0._tweenToItem = var_14_1
+		self._tweenToIndex = index
+		self._tweenToItem = equipItem
 
 		UIBlockHelper.instance:startBlock("SurvivalEquipItem_Tween", 0.2)
-		var_14_1:moveTo(arg_14_0)
-		arg_14_0:moveTo(var_14_1, arg_14_0.moveEnd, arg_14_0)
+		equipItem:moveTo(self)
+		self:moveTo(equipItem, self.moveEnd, self)
 	end
 
-	arg_14_0.go.transform:SetParent(arg_14_0._rawRoot, true)
+	self.go.transform:SetParent(self._rawRoot, true)
 end
 
-function var_0_0.moveTo(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	local var_15_0 = recthelper.uiPosToScreenPos(arg_15_1.go.transform)
-	local var_15_1 = recthelper.screenPosToAnchorPos(var_15_0, arg_15_0.go.transform)
-	local var_15_2 = arg_15_0._godrag.transform
+function SurvivalEquipItem:moveTo(item, callback, callobj)
+	local position = recthelper.uiPosToScreenPos(item.go.transform)
+	local anchorPos = recthelper.screenPosToAnchorPos(position, self.go.transform)
+	local trans = self._godrag.transform
 
-	ZProj.TweenHelper.DOAnchorPos(var_15_2, var_15_1.x, var_15_1.y, 0.2, arg_15_2, arg_15_3)
+	ZProj.TweenHelper.DOAnchorPos(trans, anchorPos.x, anchorPos.y, 0.2, callback, callobj)
 end
 
-function var_0_0.moveEnd(arg_16_0)
-	if arg_16_0._isSp then
-		SurvivalWeekRpc.instance:sendSurvivalJewelryEquipWear(arg_16_0._tweenToIndex, arg_16_0.mo.item.uid, arg_16_0._onRecvMsg, arg_16_0)
+function SurvivalEquipItem:moveEnd()
+	if self._isSp then
+		SurvivalWeekRpc.instance:sendSurvivalJewelryEquipWear(self._tweenToIndex, self.mo.item.uid, self._onRecvMsg, self)
 	else
-		SurvivalWeekRpc.instance:sendSurvivalEquipWear(arg_16_0._tweenToIndex, arg_16_0.mo.item.uid, arg_16_0._onRecvMsg, arg_16_0)
+		SurvivalWeekRpc.instance:sendSurvivalEquipWear(self._tweenToIndex, self.mo.item.uid, self._onRecvMsg, self)
 	end
 end
 
-function var_0_0._onRecvMsg(arg_17_0)
-	local var_17_0 = arg_17_0._godrag.transform
+function SurvivalEquipItem:_onRecvMsg()
+	local trans = self._godrag.transform
 
-	recthelper.setAnchor(var_17_0, 0, 0)
+	recthelper.setAnchor(trans, 0, 0)
 
-	local var_17_1 = arg_17_0._tweenToItem._godrag.transform
+	local trans2 = self._tweenToItem._godrag.transform
 
-	recthelper.setAnchor(var_17_1, 0, 0)
+	recthelper.setAnchor(trans2, 0, 0)
 end
 
-function var_0_0.canMoveToIndex(arg_18_0, arg_18_1)
-	local var_18_0 = SurvivalShelterModel.instance:getWeekInfo().equipBox.slots
+function SurvivalEquipItem:canMoveToIndex(index)
+	local equipBox = SurvivalShelterModel.instance:getWeekInfo().equipBox
+	local slots = equipBox.slots
 
-	if not var_18_0[arg_18_1] then
+	if not slots[index] then
 		return false
 	end
 
-	if not var_18_0[arg_18_1].unlock then
+	if not slots[index].unlock then
 		GameFacade.showToast(ToastEnum.SurvivalEquipLock)
 
 		return false
 	end
 
-	if arg_18_0.mo.item.equipLevel > var_18_0[arg_18_1].level then
+	if self.mo.item.equipLevel > slots[index].level then
 		GameFacade.showToast(ToastEnum.SurvivalEquipLevelLimit)
 
 		return false
 	end
 
-	if not var_18_0[arg_18_1].item:isEmpty() and var_18_0[arg_18_1].item.equipLevel > arg_18_0.mo.level then
+	if not slots[index].item:isEmpty() and slots[index].item.equipLevel > self.mo.level then
 		GameFacade.showToast(ToastEnum.SurvivalEquipLevelLimit)
 
 		return false
@@ -253,14 +257,14 @@ function var_0_0.canMoveToIndex(arg_18_0, arg_18_1)
 	return true
 end
 
-function var_0_0._checkDrag(arg_19_0)
-	if not arg_19_0.mo or arg_19_0.mo.item:isEmpty() then
+function SurvivalEquipItem:_checkDrag()
+	if not self.mo or self.mo.item:isEmpty() then
 		return true
 	end
 end
 
-function var_0_0.setParentView(arg_20_0, arg_20_1)
-	arg_20_0._parentView = arg_20_1
+function SurvivalEquipItem:setParentView(view)
+	self._parentView = view
 end
 
-return var_0_0
+return SurvivalEquipItem

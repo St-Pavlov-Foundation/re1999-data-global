@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity2_5.feilinshiduo.view.FeiLinShiDuoResultViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/feilinshiduo/view/FeiLinShiDuoResultViewContainer.lua
 
-local var_0_0 = class("FeiLinShiDuoResultViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_5.feilinshiduo.view.FeiLinShiDuoResultViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local FeiLinShiDuoResultViewContainer = class("FeiLinShiDuoResultViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, FeiLinShiDuoResultView.New())
+function FeiLinShiDuoResultViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, FeiLinShiDuoResultView.New())
+
+	return views
 end
 
-return var_0_0
+return FeiLinShiDuoResultViewContainer

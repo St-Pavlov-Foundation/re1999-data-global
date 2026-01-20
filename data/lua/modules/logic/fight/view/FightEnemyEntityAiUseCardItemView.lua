@@ -1,130 +1,137 @@
-﻿module("modules.logic.fight.view.FightEnemyEntityAiUseCardItemView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightEnemyEntityAiUseCardItemView.lua
 
-local var_0_0 = class("FightEnemyEntityAiUseCardItemView", FightBaseView)
+module("modules.logic.fight.view.FightEnemyEntityAiUseCardItemView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	local var_1_0 = arg_1_0.viewGO
+local FightEnemyEntityAiUseCardItemView = class("FightEnemyEntityAiUseCardItemView", FightBaseView)
 
-	arg_1_0.go = var_1_0
-	arg_1_0.tr = arg_1_0.viewGO.transform
-	arg_1_0._imgMat = gohelper.findChildImage(var_1_0, "imgMat")
-	arg_1_0._imgTag = gohelper.findChildImage(var_1_0, "imgTag")
-	arg_1_0._imgBgs = arg_1_0:getUserDataTb_()
-	arg_1_0._imgBgGos = arg_1_0:getUserDataTb_()
+function FightEnemyEntityAiUseCardItemView:onInitView()
+	local go = self.viewGO
 
-	for iter_1_0 = 0, 4 do
-		arg_1_0._imgBgs[iter_1_0] = gohelper.findChildImage(var_1_0, "imgBg/" .. iter_1_0)
-		arg_1_0._imgBgGos[iter_1_0] = gohelper.findChild(var_1_0, "imgBg/" .. iter_1_0)
+	self.go = go
+	self.tr = self.viewGO.transform
+	self._imgMat = gohelper.findChildImage(go, "imgMat")
+	self._imgTag = gohelper.findChildImage(go, "imgTag")
+	self._imgBgs = self:getUserDataTb_()
+	self._imgBgGos = self:getUserDataTb_()
+
+	for i = 0, 4 do
+		self._imgBgs[i] = gohelper.findChildImage(go, "imgBg/" .. i)
+		self._imgBgGos[i] = gohelper.findChild(go, "imgBg/" .. i)
 	end
 
-	arg_1_0._imgBg2 = gohelper.findChildImage(var_1_0, "forbid/mask")
+	self._imgBg2 = gohelper.findChildImage(go, "forbid/mask")
 
 	if isDebugBuild then
-		arg_1_0._imgTag.raycastTarget = true
-		arg_1_0._click = gohelper.getClick(arg_1_0.go)
+		self._imgTag.raycastTarget = true
+		self._click = gohelper.getClick(self.go)
 
-		arg_1_0:com_registClick(arg_1_0._click, arg_1_0._onClickOp)
+		self:com_registClick(self._click, self._onClickOp)
 	end
 
-	arg_1_0.topPosRectTr = gohelper.findChildComponent(var_1_0, "topPos", gohelper.Type_RectTransform)
-	arg_1_0.goEmitNormal = gohelper.findChild(var_1_0, "#emit_normal")
-	arg_1_0.goEmitUitimate = gohelper.findChild(var_1_0, "#emit_uitimate")
-	arg_1_0.animator = gohelper.onceAddComponent(arg_1_0.viewGO, typeof(UnityEngine.Animator))
+	self.topPosRectTr = gohelper.findChildComponent(go, "topPos", gohelper.Type_RectTransform)
+	self.goEmitNormal = gohelper.findChild(go, "#emit_normal")
+	self.goEmitUitimate = gohelper.findChild(go, "#emit_uitimate")
+	self.animator = gohelper.onceAddComponent(self.viewGO, typeof(UnityEngine.Animator))
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:com_registMsg(FightMsgId.DiscardUnUsedEnemyAiCard, arg_2_0.onDiscardUnUsedEnemyAiCard)
-	arg_2_0:com_registEvent(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0.onCloseView)
-	arg_2_0:com_registFightEvent(FightEvent.OnSelectMonsterCardMo, arg_2_0.onSelectMonsterCardMo)
-	arg_2_0:com_registFightEvent(FightEvent.OnSkillPlayStart, arg_2_0.onSkillPlayStart)
-	arg_2_0:com_registFightEvent(FightEvent.OnInvokeSkill, arg_2_0.onInvokeSkill)
-	arg_2_0:com_registFightEvent(FightEvent.OnBuffUpdate, arg_2_0.onBuffUpdate)
-	arg_2_0:com_registFightEvent(FightEvent.OnExPointChange, arg_2_0.onExPointChange)
-	arg_2_0:com_registFightEvent(FightEvent.InvalidEnemyUsedCard, arg_2_0.onInvalidEnemyUsedCard)
+function FightEnemyEntityAiUseCardItemView:addEvents()
+	self:com_registMsg(FightMsgId.DiscardUnUsedEnemyAiCard, self.onDiscardUnUsedEnemyAiCard)
+	self:com_registEvent(ViewMgr.instance, ViewEvent.OnCloseView, self.onCloseView)
+	self:com_registFightEvent(FightEvent.OnSelectMonsterCardMo, self.onSelectMonsterCardMo)
+	self:com_registFightEvent(FightEvent.OnSkillPlayStart, self.onSkillPlayStart)
+	self:com_registFightEvent(FightEvent.OnInvokeSkill, self.onInvokeSkill)
+	self:com_registFightEvent(FightEvent.OnBuffUpdate, self.onBuffUpdate)
+	self:com_registFightEvent(FightEvent.OnExPointChange, self.onExPointChange)
+	self:com_registFightEvent(FightEvent.InvalidEnemyUsedCard, self.onInvalidEnemyUsedCard)
 end
 
-function var_0_0.onSelectMonsterCardMo(arg_3_0, arg_3_1)
-	local var_3_0 = FightHelper.isSameCardMo(arg_3_1, arg_3_0.cardData)
+function FightEnemyEntityAiUseCardItemView:onSelectMonsterCardMo(cardMo)
+	local select = FightHelper.isSameCardMo(cardMo, self.cardData)
 
-	gohelper.setActive(arg_3_0.goEmitNormal, var_3_0 and not arg_3_0.isBigSkill)
-	gohelper.setActive(arg_3_0.goEmitUitimate, var_3_0 and arg_3_0.isBigSkill)
+	gohelper.setActive(self.goEmitNormal, select and not self.isBigSkill)
+	gohelper.setActive(self.goEmitUitimate, select and self.isBigSkill)
 end
 
-function var_0_0.onCloseView(arg_4_0, arg_4_1)
-	if arg_4_1 == ViewName.FightEnemyActionView then
-		gohelper.setActive(arg_4_0.goEmitNormal, false)
-		gohelper.setActive(arg_4_0.goEmitUitimate, false)
+function FightEnemyEntityAiUseCardItemView:onCloseView(viewName)
+	if viewName == ViewName.FightEnemyActionView then
+		gohelper.setActive(self.goEmitNormal, false)
+		gohelper.setActive(self.goEmitUitimate, false)
 	end
 end
 
-function var_0_0.onRefreshItemData(arg_5_0, arg_5_1)
-	arg_5_0.cardData = arg_5_1
-	arg_5_0.entityId = arg_5_0.cardData.uid
-	arg_5_0.skillId = arg_5_0.cardData.skillId
-	arg_5_0.entityData = FightDataHelper.entityMgr:getById(arg_5_0.entityId)
-	arg_5_0.isBigSkill = FightCardDataHelper.isBigSkill(arg_5_0.skillId)
+function FightEnemyEntityAiUseCardItemView:onRefreshItemData(data)
+	self.cardData = data
+	self.entityId = self.cardData.uid
+	self.skillId = self.cardData.skillId
+	self.entityData = FightDataHelper.entityMgr:getById(self.entityId)
+	self.isBigSkill = FightCardDataHelper.isBigSkill(self.skillId)
 
-	if lua_skill_next.configDict[arg_5_0.skillId] then
-		arg_5_0.isBigSkill = false
+	if lua_skill_next.configDict[self.skillId] then
+		self.isBigSkill = false
 	end
 
-	arg_5_0:refreshCanUseCardState()
+	self:refreshCanUseCardState()
 
-	local var_5_0 = lua_skill.configDict[arg_5_1.skillId]
+	local skillCO = lua_skill.configDict[data.skillId]
 
-	gohelper.setActive(arg_5_0.go, var_5_0 ~= nil)
+	gohelper.setActive(self.go, skillCO ~= nil)
 
-	if not var_5_0 then
+	if not skillCO then
 		return
 	end
 
-	local var_5_1 = FightCardDataHelper.getSkillLv(arg_5_0.entityId, arg_5_0.skillId)
+	local skillLv = FightCardDataHelper.getSkillLv(self.entityId, self.skillId)
 
-	var_5_1 = arg_5_0.isBigSkill and FightEnum.UniqueSkillCardLv or var_5_1 == FightEnum.UniqueSkillCardLv and 1 or var_5_1
+	skillLv = self.isBigSkill and FightEnum.UniqueSkillCardLv or skillLv == FightEnum.UniqueSkillCardLv and 1 or skillLv
 
-	UISpriteSetMgr.instance:setFightSprite(arg_5_0._imgTag, "jnk_gj" .. var_5_0.showTag)
+	UISpriteSetMgr.instance:setFightSprite(self._imgTag, "jnk_gj" .. skillCO.showTag)
 
-	for iter_5_0, iter_5_1 in pairs(arg_5_0._imgBgs) do
-		gohelper.setActive(iter_5_1.gameObject, iter_5_0 == var_5_1)
+	for level, img in pairs(self._imgBgs) do
+		gohelper.setActive(img.gameObject, level == skillLv)
 	end
 
-	if arg_5_0._imgBg2 and arg_5_0._imgBgs[var_5_1] then
-		arg_5_0._imgBg2.sprite = arg_5_0._imgBgs[var_5_1].sprite
+	if self._imgBg2 and self._imgBgs[skillLv] then
+		self._imgBg2.sprite = self._imgBgs[skillLv].sprite
 	end
 
-	gohelper.setActive(arg_5_0._imgTag.gameObject, var_5_1 ~= FightEnum.UniqueSkillCardLv)
-	arg_5_0.animator:Play(arg_5_0.canUseCard and "fightname_op_in" or "fightname_forbid_in", 0, 0)
-	arg_5_0.animator:Update(0)
+	gohelper.setActive(self._imgTag.gameObject, skillLv ~= FightEnum.UniqueSkillCardLv)
+	self.animator:Play(self.canUseCard and "fightname_op_in" or "fightname_forbid_in", 0, 0)
+	self.animator:Update(0)
 end
 
-function var_0_0.refreshCanUseCardState(arg_6_0)
-	if arg_6_0.forceCanNotUse then
-		arg_6_0.canUseCard = false
+function FightEnemyEntityAiUseCardItemView:refreshCanUseCardState()
+	if self.forceCanNotUse then
+		self.canUseCard = false
 
 		return
 	end
 
-	arg_6_0.canUseCard = arg_6_0:checkCanUseCard()
+	self.canUseCard = self:checkCanUseCard()
 
-	if arg_6_0.isBigSkill and arg_6_0.entityData.exPoint < arg_6_0.entityData:getUniqueSkillPoint() then
-		arg_6_0.canUseCard = false
+	if self.isBigSkill then
+		local exPoint = self.entityData.exPoint
+		local uniqueSkillCost = self.entityData:getUniqueSkillPoint()
+
+		if exPoint < uniqueSkillCost then
+			self.canUseCard = false
+		end
 	end
 end
 
-function var_0_0.checkCanUseCard(arg_7_0)
+function FightEnemyEntityAiUseCardItemView:checkCanUseCard()
 	if not FightModel.instance:isSeason2() then
-		return FightViewHandCardItemLock.canUseCardSkill(arg_7_0.entityId, arg_7_0.skillId)
+		return FightViewHandCardItemLock.canUseCardSkill(self.entityId, self.skillId)
 	end
 
-	local var_7_0 = arg_7_0.entityData:getBuffList()
-	local var_7_1 = false
-	local var_7_2 = arg_7_0:getSelfIndex()
+	local buffList = self.entityData:getBuffList()
+	local needRemove832400103 = false
+	local itemIndex = self:getSelfIndex()
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-		if iter_7_1.buffId == 832400103 then
-			var_7_1 = true
+	for i, buff in ipairs(buffList) do
+		if buff.buffId == 832400103 then
+			needRemove832400103 = true
 
-			if var_7_2 == 1 then
+			if itemIndex == 1 then
 				return false
 			end
 
@@ -132,119 +139,121 @@ function var_0_0.checkCanUseCard(arg_7_0)
 		end
 	end
 
-	if var_7_1 then
-		var_7_0 = FightDataUtil.coverData(var_7_0)
+	if needRemove832400103 then
+		buffList = FightDataUtil.coverData(buffList)
 
-		for iter_7_2 = #var_7_0, 1, -1 do
-			if var_7_0[iter_7_2].buffId == 832400103 then
-				table.remove(var_7_0, iter_7_2)
+		for i = #buffList, 1, -1 do
+			local buff = buffList[i]
+
+			if buff.buffId == 832400103 then
+				table.remove(buffList, i)
 			end
 		end
 	end
 
-	return FightViewHandCardItemLock.canUseCardSkill(arg_7_0.entityId, arg_7_0.skillId, var_7_0)
+	return FightViewHandCardItemLock.canUseCardSkill(self.entityId, self.skillId, buffList)
 end
 
-function var_0_0.onSkillPlayStart(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	if arg_8_1.id ~= arg_8_0.entityId then
+function FightEnemyEntityAiUseCardItemView:onSkillPlayStart(entity, curSkillId, fightStepData)
+	if entity.id ~= self.entityId then
 		return
 	end
 
-	if arg_8_3.cardIndex == arg_8_0.cardData.clientData.custom_enemyCardIndex then
-		arg_8_0.animator:Play("fightname_op_play", 0, 0)
-		arg_8_0.animator:Update(0)
-		arg_8_0:com_registSingleTimer(arg_8_0.onPlayEnd, 0.5)
+	if fightStepData.cardIndex == self.cardData.clientData.custom_enemyCardIndex then
+		self.animator:Play("fightname_op_play", 0, 0)
+		self.animator:Update(0)
+		self:com_registSingleTimer(self.onPlayEnd, 0.5)
 
-		arg_8_0.played = true
+		self.played = true
 	end
 end
 
-function var_0_0.onInvokeSkill(arg_9_0, arg_9_1)
-	if arg_9_1.fromId ~= arg_9_0.entityId then
+function FightEnemyEntityAiUseCardItemView:onInvokeSkill(fightStepData)
+	if fightStepData.fromId ~= self.entityId then
 		return
 	end
 
-	if arg_9_1.cardIndex == arg_9_0.cardData.clientData.custom_enemyCardIndex then
-		arg_9_0.animator:Play("fightname_op_play", 0, 0)
-		arg_9_0.animator:Update(0)
-		arg_9_0:com_registSingleTimer(arg_9_0.onPlayEnd, 0.5)
+	if fightStepData.cardIndex == self.cardData.clientData.custom_enemyCardIndex then
+		self.animator:Play("fightname_op_play", 0, 0)
+		self.animator:Update(0)
+		self:com_registSingleTimer(self.onPlayEnd, 0.5)
 
-		arg_9_0.played = true
+		self.played = true
 	end
 end
 
-function var_0_0.onPlayEnd(arg_10_0)
-	arg_10_0:removeSelf()
+function FightEnemyEntityAiUseCardItemView:onPlayEnd()
+	self:removeSelf()
 end
 
-function var_0_0.onBuffUpdate(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	if arg_11_1 ~= arg_11_0.entityId then
+function FightEnemyEntityAiUseCardItemView:onBuffUpdate(entityId, effectType, buffId)
+	if entityId ~= self.entityId then
 		return
 	end
 
-	if arg_11_2 == FightEnum.EffectType.BUFFADD or arg_11_2 == FightEnum.EffectType.BUFFDEL then
-		arg_11_0:refreshLockState()
+	if effectType == FightEnum.EffectType.BUFFADD or effectType == FightEnum.EffectType.BUFFDEL then
+		self:refreshLockState()
 	end
 end
 
-function var_0_0.onDiscardUnUsedEnemyAiCard(arg_12_0)
-	if not arg_12_0.played then
-		local var_12_0 = arg_12_0:com_registWork(FightWorkPlayAnimator, arg_12_0.viewGO, "fightname_forbid_imprison", FightModel.instance:getUISpeed())
+function FightEnemyEntityAiUseCardItemView:onDiscardUnUsedEnemyAiCard()
+	if not self.played then
+		local work = self:com_registWork(FightWorkPlayAnimator, self.viewGO, "fightname_forbid_imprison", FightModel.instance:getUISpeed())
 
-		FightMsgMgr.replyMsg(FightMsgId.DiscardUnUsedEnemyAiCard, var_12_0)
+		FightMsgMgr.replyMsg(FightMsgId.DiscardUnUsedEnemyAiCard, work)
 
-		local var_12_1 = FightCardDataHelper.getSkillLv(arg_12_0.entityId, arg_12_0.skillId)
-		local var_12_2 = arg_12_0._imgBgGos[var_12_1]
+		local skillLv = FightCardDataHelper.getSkillLv(self.entityId, self.skillId)
+		local go = self._imgBgGos[skillLv]
 
-		if var_12_2 then
-			local var_12_3 = var_12_2:GetComponent(typeof(UnityEngine.Animation))
+		if go then
+			local imgBgAnimation = go:GetComponent(typeof(UnityEngine.Animation))
 
-			gohelper.onceAddComponent(var_12_2, typeof(ZProj.EffectTimeScale)):SetTimeScale(FightModel.instance:getUISpeed())
+			gohelper.onceAddComponent(go, typeof(ZProj.EffectTimeScale)):SetTimeScale(FightModel.instance:getUISpeed())
 
-			if var_12_3 then
-				var_12_3:Play("fightname_forbid_dissvelop")
+			if imgBgAnimation then
+				imgBgAnimation:Play("fightname_forbid_dissvelop")
 			end
 
-			arg_12_0._imgBgs[var_12_1].material = arg_12_0._imgMat.material
+			self._imgBgs[skillLv].material = self._imgMat.material
 		end
 	end
 end
 
-function var_0_0.onExPointChange(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	if arg_13_1 == arg_13_0.entityId then
-		arg_13_0:refreshLockState()
+function FightEnemyEntityAiUseCardItemView:onExPointChange(entityId, oldExPoint, newExPoint)
+	if entityId == self.entityId then
+		self:refreshLockState()
 	end
 end
 
-function var_0_0.refreshLockState(arg_14_0)
-	local var_14_0 = arg_14_0.canUseCard
+function FightEnemyEntityAiUseCardItemView:refreshLockState()
+	local oldCanUse = self.canUseCard
 
-	arg_14_0:refreshCanUseCardState()
+	self:refreshCanUseCardState()
 
-	if var_14_0 ~= arg_14_0.canUseCard then
-		arg_14_0.animator:Play(arg_14_0.canUseCard and "fightname_forbid_unlock" or "fightname_forbid_in", 0, 0)
-		arg_14_0.animator:Update(0)
+	if oldCanUse ~= self.canUseCard then
+		self.animator:Play(self.canUseCard and "fightname_forbid_unlock" or "fightname_forbid_in", 0, 0)
+		self.animator:Update(0)
 	end
 end
 
-function var_0_0.onInvalidEnemyUsedCard(arg_15_0, arg_15_1)
-	if arg_15_1 == arg_15_0.cardData.clientData.custom_enemyCardIndex then
-		arg_15_0.forceCanNotUse = true
+function FightEnemyEntityAiUseCardItemView:onInvalidEnemyUsedCard(index)
+	if index == self.cardData.clientData.custom_enemyCardIndex then
+		self.forceCanNotUse = true
 
-		arg_15_0:refreshLockState()
+		self:refreshLockState()
 	end
 end
 
-function var_0_0._onClickOp(arg_16_0)
-	if arg_16_0.cardData then
-		logNormal(arg_16_0.cardData.skillId .. " " .. lua_skill.configDict[arg_16_0.cardData.skillId].name)
+function FightEnemyEntityAiUseCardItemView:_onClickOp()
+	if self.cardData then
+		logNormal(self.cardData.skillId .. " " .. lua_skill.configDict[self.cardData.skillId].name)
 	end
 end
 
-function var_0_0.onDestructor(arg_17_0)
-	for iter_17_0, iter_17_1 in pairs(arg_17_0._imgBgs) do
-		iter_17_1.material = nil
+function FightEnemyEntityAiUseCardItemView:onDestructor()
+	for level, img in pairs(self._imgBgs) do
+		img.material = nil
 	end
 end
 
-return var_0_0
+return FightEnemyEntityAiUseCardItemView

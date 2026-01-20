@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity1_5.dungeon.view.building.V1a5BuildingViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/dungeon/view/building/V1a5BuildingViewContainer.lua
 
-local var_0_0 = class("V1a5BuildingViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_5.dungeon.view.building.V1a5BuildingViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local V1a5BuildingViewContainer = class("V1a5BuildingViewContainer", BaseViewContainer)
+
+function V1a5BuildingViewContainer:buildViews()
 	return {
 		V1a5BuildingView.New(),
 		TabViewGroup.New(1, "#go_BackBtns"),
@@ -10,20 +12,20 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		local var_2_0 = NavigateButtonsView.New({
+function V1a5BuildingViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		local navigateButtonsView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
-		var_2_0:setHelpId(HelpEnum.HelpId.Dungeon1_5BuildingHelp)
+		navigateButtonsView:setHelpId(HelpEnum.HelpId.Dungeon1_5BuildingHelp)
 
 		return {
-			var_2_0
+			navigateButtonsView
 		}
-	elseif arg_2_1 == 2 then
+	elseif tabContainerId == 2 then
 		return {
 			CurrencyView.New({
 				CurrencyEnum.CurrencyType.V1a5DungeonBuild
@@ -32,8 +34,10 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	end
 end
 
-function var_0_0.playOpenTransition(arg_3_0)
-	SLFramework.AnimatorPlayer.Get(arg_3_0.viewGO):Play("v1a5_buildingview_open", arg_3_0.onPlayOpenTransitionFinish, arg_3_0)
+function V1a5BuildingViewContainer:playOpenTransition()
+	local animatorPlayer = SLFramework.AnimatorPlayer.Get(self.viewGO)
+
+	animatorPlayer:Play("v1a5_buildingview_open", self.onPlayOpenTransitionFinish, self)
 end
 
-return var_0_0
+return V1a5BuildingViewContainer

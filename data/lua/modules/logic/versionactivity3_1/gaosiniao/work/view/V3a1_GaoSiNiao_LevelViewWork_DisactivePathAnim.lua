@@ -1,139 +1,144 @@
-﻿module("modules.logic.versionactivity3_1.gaosiniao.work.view.V3a1_GaoSiNiao_LevelViewWork_DisactivePathAnim", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/gaosiniao/work/view/V3a1_GaoSiNiao_LevelViewWork_DisactivePathAnim.lua
 
-local var_0_0 = class("V3a1_GaoSiNiao_LevelViewWork_DisactivePathAnim", V3a1_GaoSiNiao_LevelViewFlow_WorkBase)
+module("modules.logic.versionactivity3_1.gaosiniao.work.view.V3a1_GaoSiNiao_LevelViewWork_DisactivePathAnim", package.seeall)
 
-function var_0_0.s_create(arg_1_0, arg_1_1)
-	local var_1_0 = var_0_0.New()
+local V3a1_GaoSiNiao_LevelViewWork_DisactivePathAnim = class("V3a1_GaoSiNiao_LevelViewWork_DisactivePathAnim", V3a1_GaoSiNiao_LevelViewFlow_WorkBase)
 
-	if arg_1_0 or arg_1_1 then
-		var_1_0._viewObj = arg_1_0
-		var_1_0._viewContainer = arg_1_1
+function V3a1_GaoSiNiao_LevelViewWork_DisactivePathAnim.s_create(viewObj, viewContainer)
+	local res = V3a1_GaoSiNiao_LevelViewWork_DisactivePathAnim.New()
+
+	if viewObj or viewContainer then
+		res._viewObj = viewObj
+		res._viewContainer = viewContainer
 	else
-		local var_1_1 = ViewName.V3a1_GaoSiNiao_LevelView
-		local var_1_2 = ViewMgr.instance:getContainer(var_1_1)
+		local kViewName = ViewName.V3a1_GaoSiNiao_LevelView
+		local _viewContainer = ViewMgr.instance:getContainer(kViewName)
 
-		if not var_1_2 then
+		if not _viewContainer then
 			return nil
 		end
 
-		var_1_0._viewContainer = var_1_2
-		var_1_0._viewObj = var_1_2:mainView()
+		res._viewContainer = _viewContainer
+		res._viewObj = _viewContainer:mainView()
 	end
 
-	if not var_1_0._viewObj then
+	if not res._viewObj then
 		return nil
 	end
 
-	return var_1_0
+	return res
 end
 
-function var_0_0.viewObj(arg_2_0)
-	if arg_2_0._viewObj then
-		return arg_2_0._viewObj
+function V3a1_GaoSiNiao_LevelViewWork_DisactivePathAnim:viewObj()
+	if self._viewObj then
+		return self._viewObj
 	end
 
-	return var_0_0.super.viewObj(arg_2_0)
+	return V3a1_GaoSiNiao_LevelViewWork_DisactivePathAnim.super.viewObj(self)
 end
 
-function var_0_0.baseViewContainer(arg_3_0)
-	if arg_3_0._viewContainer then
-		return arg_3_0._viewContainer
+function V3a1_GaoSiNiao_LevelViewWork_DisactivePathAnim:baseViewContainer()
+	if self._viewContainer then
+		return self._viewContainer
 	end
 
-	return var_0_0.super.baseViewContainer(arg_3_0)
+	return V3a1_GaoSiNiao_LevelViewWork_DisactivePathAnim.super.baseViewContainer(self)
 end
 
-function var_0_0.onStart(arg_4_0)
-	arg_4_0:clearWork()
+function V3a1_GaoSiNiao_LevelViewWork_DisactivePathAnim:onStart()
+	self:clearWork()
 
-	if not arg_4_0:viewObj() then
-		arg_4_0:onFail()
+	local viewObj = self:viewObj()
+
+	if not viewObj then
+		self:onFail()
 
 		return
 	end
 
-	arg_4_0._needWaitCount = 0
-	arg_4_0._episodeId = arg_4_0:currentPassedEpisodeId()
+	self._needWaitCount = 0
+	self._episodeId = self:currentPassedEpisodeId()
 
-	local var_4_0, var_4_1 = arg_4_0:_getEpisodeCO_disactiveEpisodeInfoDict()
+	local disactiveEpisodeInfoDict, isPlayedOnce = self:_getEpisodeCO_disactiveEpisodeInfoDict()
 
-	if not arg_4_0._episodeId or arg_4_0._episodeId == 0 then
-		arg_4_0:onSucc()
+	if not self._episodeId or self._episodeId == 0 then
+		self:onSucc()
 
 		return
 	end
 
-	local var_4_2 = arg_4_0:viewObj()._itemObjList
+	local _itemObjList = self:viewObj()._itemObjList
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_2 or {}) do
-		local var_4_3 = var_4_0[iter_4_1:episodeId()]
+	for _, stageItemObj in ipairs(_itemObjList or {}) do
+		local episodeId = stageItemObj:episodeId()
+		local goMarkIndex = disactiveEpisodeInfoDict[episodeId]
 
-		if var_4_3 then
-			if var_4_1 then
-				iter_4_1:playAnim_MarkIdle(var_4_3)
+		if goMarkIndex then
+			if isPlayedOnce then
+				stageItemObj:playAnim_MarkIdle(goMarkIndex)
 			else
-				arg_4_0._needWaitCount = arg_4_0._needWaitCount + 1
+				self._needWaitCount = self._needWaitCount + 1
 
-				iter_4_1:playAnim_MarkFinish(var_4_3, arg_4_0._onItemAnimDone, arg_4_0)
+				stageItemObj:playAnim_MarkFinish(goMarkIndex, self._onItemAnimDone, self)
 			end
 		else
-			iter_4_1:setActive_goMark(nil)
+			stageItemObj:setActive_goMark(nil)
 		end
 	end
 
-	if var_4_1 then
-		arg_4_0:onSucc()
-	elseif arg_4_0._needWaitCount == 0 then
-		arg_4_0:saveHasPlayedDisactiveAnimPath(arg_4_0._episodeId)
-		arg_4_0:onSucc()
+	if isPlayedOnce then
+		self:onSucc()
+	elseif self._needWaitCount == 0 then
+		self:saveHasPlayedDisactiveAnimPath(self._episodeId)
+		self:onSucc()
 	end
 end
 
-function var_0_0._getEpisodeCO_disactiveEpisodeInfoDict(arg_5_0)
-	local var_5_0 = arg_5_0:getEpisodeCO_disactiveEpisodeInfoDict(arg_5_0._episodeId)
-	local var_5_1 = arg_5_0:hasPlayedDisactiveAnimPath(arg_5_0._episodeId)
+function V3a1_GaoSiNiao_LevelViewWork_DisactivePathAnim:_getEpisodeCO_disactiveEpisodeInfoDict()
+	local disactiveEpisodeInfoDict = self:getEpisodeCO_disactiveEpisodeInfoDict(self._episodeId)
+	local isPlayedOnce = self:hasPlayedDisactiveAnimPath(self._episodeId)
 
-	if not var_5_1 then
-		local var_5_2 = arg_5_0:getPreEpisodeId(arg_5_0._episodeId)
-		local var_5_3 = arg_5_0:getEpisodeCO_disactiveEpisodeInfoDict(var_5_2)
+	if not isPlayedOnce then
+		local preEpisodeId = self:getPreEpisodeId(self._episodeId)
+		local preDisactiveEpisodeInfoDict = self:getEpisodeCO_disactiveEpisodeInfoDict(preEpisodeId)
 
-		if next(var_5_3) then
-			var_5_1 = true
+		if next(preDisactiveEpisodeInfoDict) then
+			isPlayedOnce = true
 
-			for iter_5_0, iter_5_1 in pairs(var_5_0) do
-				if var_5_3[iter_5_0] ~= iter_5_1 then
-					var_5_1 = false
+			for episodeId, goMarkIndex in pairs(disactiveEpisodeInfoDict) do
+				if preDisactiveEpisodeInfoDict[episodeId] ~= goMarkIndex then
+					isPlayedOnce = false
 				end
 
-				var_5_3[iter_5_0] = nil
+				preDisactiveEpisodeInfoDict[episodeId] = nil
 			end
 
-			if var_5_1 then
-				var_5_1 = next(var_5_3) == nil
+			if isPlayedOnce then
+				isPlayedOnce = next(preDisactiveEpisodeInfoDict) == nil
 
-				arg_5_0:saveHasPlayedDisactiveAnimPath(arg_5_0._episodeId)
+				self:saveHasPlayedDisactiveAnimPath(self._episodeId)
 			end
 		end
 	end
 
-	return var_5_0, var_5_1
+	return disactiveEpisodeInfoDict, isPlayedOnce
 end
 
-function var_0_0._onItemAnimDone(arg_6_0)
-	arg_6_0._needWaitCount = arg_6_0._needWaitCount - 1
+function V3a1_GaoSiNiao_LevelViewWork_DisactivePathAnim:_onItemAnimDone()
+	self._needWaitCount = self._needWaitCount - 1
 
-	if arg_6_0._needWaitCount <= 0 then
-		arg_6_0:saveHasPlayedDisactiveAnimPath(arg_6_0._episodeId)
-		arg_6_0:onSucc()
+	if self._needWaitCount <= 0 then
+		self:saveHasPlayedDisactiveAnimPath(self._episodeId)
+		self:onSucc()
 	end
 end
 
-function var_0_0.clearWork(arg_7_0)
-	arg_7_0._viewObj = nil
-	arg_7_0._viewContainer = nil
-	arg_7_0._needWaitCount = 0
+function V3a1_GaoSiNiao_LevelViewWork_DisactivePathAnim:clearWork()
+	self._viewObj = nil
+	self._viewContainer = nil
+	self._needWaitCount = 0
 
-	var_0_0.super.clearWork(arg_7_0)
+	V3a1_GaoSiNiao_LevelViewWork_DisactivePathAnim.super.clearWork(self)
 end
 
-return var_0_0
+return V3a1_GaoSiNiao_LevelViewWork_DisactivePathAnim

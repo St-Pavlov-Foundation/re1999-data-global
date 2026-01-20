@@ -1,13 +1,15 @@
-﻿module("modules.logic.room.entity.RoomBaseVehicleEntity", package.seeall)
+﻿-- chunkname: @modules/logic/room/entity/RoomBaseVehicleEntity.lua
 
-local var_0_0 = class("RoomBaseVehicleEntity", RoomBaseEntity)
+module("modules.logic.room.entity.RoomBaseVehicleEntity", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0)
+local RoomBaseVehicleEntity = class("RoomBaseVehicleEntity", RoomBaseEntity)
 
-	arg_1_0.id = arg_1_1
-	arg_1_0.entityId = arg_1_0.id
-	arg_1_0._pathfindingEnabled = false
+function RoomBaseVehicleEntity:ctor(entityId)
+	RoomBaseVehicleEntity.super.ctor(self)
+
+	self.id = entityId
+	self.entityId = self.id
+	self._pathfindingEnabled = false
 end
 
-return var_0_0
+return RoomBaseVehicleEntity

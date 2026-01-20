@@ -1,83 +1,85 @@
-﻿module("modules.logic.fight.entity.comp.buff.FightBuffSpecialCountCastBuff", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/buff/FightBuffSpecialCountCastBuff.lua
 
-local var_0_0 = class("FightBuffSpecialCountCastBuff", FightBuffHandleClsBase)
+module("modules.logic.fight.entity.comp.buff.FightBuffSpecialCountCastBuff", package.seeall)
 
-function var_0_0.onBuffStart(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.entityMo = arg_1_1:getMO()
-	arg_1_0.entity = arg_1_1
-	arg_1_0.buffId = arg_1_2.buffId
-	arg_1_0.buffCo = arg_1_2:getCO()
-	arg_1_0.buffTypeId = arg_1_0.buffCo.typeId
-	arg_1_0.entityId = arg_1_1.id
+local FightBuffSpecialCountCastBuff = class("FightBuffSpecialCountCastBuff", FightBuffHandleClsBase)
 
-	local var_1_0 = lua_fight_sp_effect_wuerlixi.configDict[arg_1_0.buffTypeId]
+function FightBuffSpecialCountCastBuff:onBuffStart(entity, buffMo)
+	self.entityMo = entity:getMO()
+	self.entity = entity
+	self.buffId = buffMo.buffId
+	self.buffCo = buffMo:getCO()
+	self.buffTypeId = self.buffCo.typeId
+	self.entityId = entity.id
 
-	if not var_1_0 then
-		logError(string.format("buffId : %s, buffTypeId 不存在 ： %s", arg_1_0.buffId, arg_1_0.buffTypeId))
+	local spCoDict = lua_fight_sp_effect_wuerlixi.configDict[self.buffTypeId]
+
+	if not spCoDict then
+		logError(string.format("buffId : %s, buffTypeId 不存在 ： %s", self.buffId, self.buffTypeId))
 
 		return
 	end
 
-	local var_1_1 = var_1_0 and var_1_0[arg_1_0.entityMo.skin]
+	local spCo = spCoDict and spCoDict[self.entityMo.skin]
 
-	if not var_1_1 then
+	if not spCo then
 		return
 	end
 
-	arg_1_0.spCo = var_1_1
+	self.spCo = spCo
 
-	local var_1_2 = arg_1_0:getCurEffectPoint()
+	local hangPoint = self:getCurEffectPoint()
 
-	arg_1_0.effectWrap = arg_1_1.effect:addHangEffect(arg_1_0.spCo.effect, var_1_2)
+	self.effectWrap = entity.effect:addHangEffect(self.spCo.effect, hangPoint)
 
-	FightRenderOrderMgr.instance:onAddEffectWrap(arg_1_1.id, arg_1_0.effectWrap)
-	arg_1_0.effectWrap:setLocalPos(0, 0, 0)
-	arg_1_0.entity.buff:addLoopBuff(arg_1_0.effectWrap)
+	FightRenderOrderMgr.instance:onAddEffectWrap(entity.id, self.effectWrap)
+	self.effectWrap:setLocalPos(0, 0, 0)
+	self.entity.buff:addLoopBuff(self.effectWrap)
 
-	arg_1_0.preHangPoint = var_1_2
+	self.preHangPoint = hangPoint
 
-	FightController.instance:registerCallback(FightEvent.OnBuffUpdate, arg_1_0.onUpdateBuff, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.OnBuffUpdate, self.onUpdateBuff, self)
 end
 
-function var_0_0.onUpdateBuff(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
-	if arg_2_1 ~= arg_2_0.entityId then
+function FightBuffSpecialCountCastBuff:onUpdateBuff(entityId, effectType, buffId, buffUid)
+	if entityId ~= self.entityId then
 		return
 	end
 
-	local var_2_0 = arg_2_0:getCurEffectPoint()
+	local curHangPoint = self:getCurEffectPoint()
 
-	if var_2_0 == arg_2_0.preHangPoint then
+	if curHangPoint == self.preHangPoint then
 		return
 	end
 
-	arg_2_0.preHangPoint = var_2_0
+	self.preHangPoint = curHangPoint
 
-	local var_2_1 = arg_2_0.entity:getHangPoint(var_2_0)
+	local hangPointGO = self.entity:getHangPoint(curHangPoint)
 
-	arg_2_0.effectWrap:setHangPointGO(var_2_1)
-	arg_2_0.effectWrap:setLocalPos(0, 0, 0)
+	self.effectWrap:setHangPointGO(hangPointGO)
+	self.effectWrap:setLocalPos(0, 0, 0)
 end
 
-function var_0_0.getCurEffectPoint(arg_3_0)
-	if arg_3_0.entityMo:hasBuffFeature(FightEnum.BuffType_SpecialCountCastChannel) then
-		return arg_3_0.spCo.channelHangPoint
+function FightBuffSpecialCountCastBuff:getCurEffectPoint()
+	if self.entityMo:hasBuffFeature(FightEnum.BuffType_SpecialCountCastChannel) then
+		return self.spCo.channelHangPoint
 	else
-		return arg_3_0.spCo.hangPoint
+		return self.spCo.hangPoint
 	end
 end
 
-function var_0_0.clear(arg_4_0)
-	if not arg_4_0.effectWrap then
+function FightBuffSpecialCountCastBuff:clear()
+	if not self.effectWrap then
 		return
 	end
 
-	arg_4_0.entity.buff:removeLoopBuff(arg_4_0.effectWrap)
-	arg_4_0.entity.effect:removeEffect(arg_4_0.effectWrap)
-	FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_4_0.entity.id, arg_4_0.effectWrap)
+	self.entity.buff:removeLoopBuff(self.effectWrap)
+	self.entity.effect:removeEffect(self.effectWrap)
+	FightRenderOrderMgr.instance:onRemoveEffectWrap(self.entity.id, self.effectWrap)
 
-	arg_4_0.effectWrap = nil
+	self.effectWrap = nil
 
-	FightController.instance:unregisterCallback(FightEvent.OnBuffUpdate, arg_4_0.onUpdateBuff, arg_4_0)
+	FightController.instance:unregisterCallback(FightEvent.OnBuffUpdate, self.onUpdateBuff, self)
 end
 
-return var_0_0
+return FightBuffSpecialCountCastBuff

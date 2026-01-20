@@ -1,24 +1,26 @@
-﻿module("modules.logic.chessgame.game.step.ChessStepPass", package.seeall)
+﻿-- chunkname: @modules/logic/chessgame/game/step/ChessStepPass.lua
 
-local var_0_0 = class("ChessStepPass", BaseWork)
+module("modules.logic.chessgame.game.step.ChessStepPass", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.originData = arg_1_1
+local ChessStepPass = class("ChessStepPass", BaseWork)
+
+function ChessStepPass:init(stepData)
+	self.originData = stepData
 end
 
-function var_0_0.onStart(arg_2_0)
-	arg_2_0:processSelectObj()
-	arg_2_0:onWin()
+function ChessStepPass:onStart()
+	self:processSelectObj()
+	self:onWin()
 end
 
-function var_0_0.processSelectObj(arg_3_0)
+function ChessStepPass:processSelectObj()
 	ChessGameController.instance:setSelectObj(nil)
 end
 
-function var_0_0.onWin(arg_4_0)
+function ChessStepPass:onWin()
 	ChessGameController.instance:dispatchEvent(ChessGameEvent.OnVictory)
 	ChessGameController.instance:gameWin()
-	arg_4_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return ChessStepPass

@@ -1,98 +1,100 @@
-﻿module("modules.logic.versionactivity1_3.chess.view.Activity1_3ChessMapViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/chess/view/Activity1_3ChessMapViewContainer.lua
 
-local var_0_0 = class("Activity1_3ChessMapViewContainer", BaseViewContainer)
-local var_0_1 = "ChessMapViewColseBlockKey"
-local var_0_2 = 0.8
-local var_0_3 = 0.3
+module("modules.logic.versionactivity1_3.chess.view.Activity1_3ChessMapViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Activity1_3ChessMapViewContainer = class("Activity1_3ChessMapViewContainer", BaseViewContainer)
+local COLSE_BLOCK_KEY = "ChessMapViewColseBlockKey"
+local OpenMapViewTime = 0.8
+local CloseMapViewTime = 0.3
 
-	arg_1_0._mapViewScene = Activity1_3ChessMapScene.New()
-	arg_1_0._mapView = Activity1_3ChessMapView.New()
-	arg_1_0._viewAnim = Activity1_3ChessMapViewAnim.New()
-	arg_1_0._viewAudio = Activity1_3ChessMapViewAudio.New()
-	var_1_0[#var_1_0 + 1] = arg_1_0._mapViewScene
-	var_1_0[#var_1_0 + 1] = arg_1_0._mapView
-	var_1_0[#var_1_0 + 1] = arg_1_0._viewAnim
-	var_1_0[#var_1_0 + 1] = arg_1_0._viewAudio
-	var_1_0[#var_1_0 + 1] = TabViewGroup.New(1, "#go_BackBtns")
+function Activity1_3ChessMapViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	self._mapViewScene = Activity1_3ChessMapScene.New()
+	self._mapView = Activity1_3ChessMapView.New()
+	self._viewAnim = Activity1_3ChessMapViewAnim.New()
+	self._viewAudio = Activity1_3ChessMapViewAudio.New()
+	views[#views + 1] = self._mapViewScene
+	views[#views + 1] = self._mapView
+	views[#views + 1] = self._viewAnim
+	views[#views + 1] = self._viewAudio
+	views[#views + 1] = TabViewGroup.New(1, "#go_BackBtns")
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		local var_2_0 = NavigateButtonsView.New({
+function Activity1_3ChessMapViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		local navigateButtonsView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
-		var_2_0:setOverrideClose(arg_2_0._overrideCloseFunc, arg_2_0)
+		navigateButtonsView:setOverrideClose(self._overrideCloseFunc, self)
 
 		return {
-			var_2_0
+			navigateButtonsView
 		}
 	end
 end
 
-function var_0_0._overrideCloseFunc(arg_3_0)
-	UIBlockMgr.instance:startBlock(var_0_1)
-	arg_3_0._mapView:playViewAnimation(UIAnimationName.Close)
-	TaskDispatcher.runDelay(arg_3_0._onDelayCloseView, arg_3_0, var_0_3)
+function Activity1_3ChessMapViewContainer:_overrideCloseFunc()
+	UIBlockMgr.instance:startBlock(COLSE_BLOCK_KEY)
+	self._mapView:playViewAnimation(UIAnimationName.Close)
+	TaskDispatcher.runDelay(self._onDelayCloseView, self, CloseMapViewTime)
 end
 
-function var_0_0._onDelayCloseView(arg_4_0)
-	UIBlockMgr.instance:endBlock(var_0_1)
-	arg_4_0._viewAnim:closeThis()
+function Activity1_3ChessMapViewContainer:_onDelayCloseView()
+	UIBlockMgr.instance:endBlock(COLSE_BLOCK_KEY)
+	self._viewAnim:closeThis()
 end
 
-function var_0_0.onContainerInit(arg_5_0)
+function Activity1_3ChessMapViewContainer:onContainerInit()
 	ActivityEnterMgr.instance:enterActivity(VersionActivity1_3Enum.ActivityId.Act304)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
 		VersionActivity1_3Enum.ActivityId.Act304
 	})
 end
 
-function var_0_0.switchStage(arg_6_0, arg_6_1)
-	if arg_6_0._mapViewScene then
-		arg_6_0._mapViewScene:switchStage(arg_6_1)
+function Activity1_3ChessMapViewContainer:switchStage(stage)
+	if self._mapViewScene then
+		self._mapViewScene:switchStage(stage)
 	end
 end
 
-function var_0_0.playPathAnim(arg_7_0)
-	if arg_7_0._viewAnim then
-		arg_7_0._viewAnim:playPathAnim()
+function Activity1_3ChessMapViewContainer:playPathAnim()
+	if self._viewAnim then
+		self._viewAnim:playPathAnim()
 	end
 end
 
-function var_0_0.showEnterSceneView(arg_8_0, arg_8_1)
-	if arg_8_0._mapViewScene then
-		arg_8_0._mapViewScene:playSceneEnterAni(arg_8_1)
+function Activity1_3ChessMapViewContainer:showEnterSceneView(stage)
+	if self._mapViewScene then
+		self._mapViewScene:playSceneEnterAni(stage)
 	end
 end
 
-function var_0_0._setVisible(arg_9_0, arg_9_1)
-	BaseViewContainer._setVisible(arg_9_0, arg_9_1)
+function Activity1_3ChessMapViewContainer:_setVisible(isVisible)
+	BaseViewContainer._setVisible(self, isVisible)
 
-	local var_9_0 = Activity1_3ChessController.instance:isReviewStory()
+	local isReviewingStory = Activity1_3ChessController.instance:isReviewStory()
 
-	if arg_9_0._mapViewScene then
-		arg_9_0._mapViewScene:onSetVisible(arg_9_1)
+	if self._mapViewScene then
+		self._mapViewScene:onSetVisible(isVisible)
 
-		if not var_9_0 then
-			arg_9_0._mapViewScene:setSceneActive(arg_9_1)
+		if not isReviewingStory then
+			self._mapViewScene:setSceneActive(isVisible)
 		end
 	end
 
-	if arg_9_0._mapView then
-		arg_9_0._mapView:onSetVisible(arg_9_1, var_9_0)
+	if self._mapView then
+		self._mapView:onSetVisible(isVisible, isReviewingStory)
 
-		if not var_9_0 and arg_9_1 then
-			arg_9_0._mapView:playViewAnimation(UIAnimationName.Open)
+		if not isReviewingStory and isVisible then
+			self._mapView:playViewAnimation(UIAnimationName.Open)
 		end
 	end
 end
 
-return var_0_0
+return Activity1_3ChessMapViewContainer

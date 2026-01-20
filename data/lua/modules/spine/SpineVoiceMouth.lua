@@ -1,228 +1,232 @@
-﻿module("modules.spine.SpineVoiceMouth", package.seeall)
+﻿-- chunkname: @modules/spine/SpineVoiceMouth.lua
 
-local var_0_0 = class("SpineVoiceMouth")
-local var_0_1 = "pause"
-local var_0_2 = "auto_bizui|"
+module("modules.spine.SpineVoiceMouth", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	local var_1_0 = AudioMgr.instance
+local SpineVoiceMouth = class("SpineVoiceMouth")
+local pauseFlag = "pause"
+local autoBizuiFlag = "auto_bizui|"
 
-	arg_1_0._audioGroup = var_1_0:getIdFromString("PlotVoice")
-	arg_1_0._mouthActionList = {
-		[var_1_0:getIdFromString("Smallmouth")] = "xiao",
-		[var_1_0:getIdFromString("Mediumsizedmouth")] = "zhong",
-		[var_1_0:getIdFromString("Largemouth")] = "da"
+function SpineVoiceMouth:ctor()
+	local audioMgr = AudioMgr.instance
+
+	self._audioGroup = audioMgr:getIdFromString("PlotVoice")
+	self._mouthActionList = {
+		[audioMgr:getIdFromString("Smallmouth")] = "xiao",
+		[audioMgr:getIdFromString("Mediumsizedmouth")] = "zhong",
+		[audioMgr:getIdFromString("Largemouth")] = "da"
 	}
 end
 
-function var_0_0.onDestroy(arg_2_0)
-	arg_2_0:removeTaskActions()
+function SpineVoiceMouth:onDestroy()
+	self:removeTaskActions()
 
-	arg_2_0._spineVoice = nil
-	arg_2_0._voiceConfig = nil
-	arg_2_0._spine = nil
+	self._spineVoice = nil
+	self._voiceConfig = nil
+	self._spine = nil
 end
 
-function var_0_0._onMouthEnd(arg_3_0)
-	if arg_3_0._setComponentStop then
+function SpineVoiceMouth:_onMouthEnd()
+	if self._setComponentStop then
 		return
 	end
 
-	arg_3_0._setComponentStop = true
+	self._setComponentStop = true
 
-	if arg_3_0._spineVoice then
-		arg_3_0._spineVoice:_onComponentStop(arg_3_0)
+	if self._spineVoice then
+		self._spineVoice:_onComponentStop(self)
 	end
 end
 
-function var_0_0.forceNoMouth(arg_4_0)
-	arg_4_0._forceNoMouth = true
+function SpineVoiceMouth:forceNoMouth()
+	self._forceNoMouth = true
 end
 
-function var_0_0.init(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	arg_5_0._specialConfig = CharacterDataConfig.instance:getMotionSpecial(arg_5_3 and arg_5_3:getResPath() or "")
-	arg_5_0._spineVoice = arg_5_1
-	arg_5_0._voiceConfig = arg_5_2
-	arg_5_0._spine = arg_5_3
-	arg_5_0._hasAudio = AudioConfig.instance:getAudioCOById(arg_5_2.audio)
-	arg_5_0._setComponentStop = false
-	arg_5_0._playLastOne = nil
+function SpineVoiceMouth:init(spineVoice, voiceConfig, spine)
+	self._specialConfig = CharacterDataConfig.instance:getMotionSpecial(spine and spine:getResPath() or "")
+	self._spineVoice = spineVoice
+	self._voiceConfig = voiceConfig
+	self._spine = spine
+	self._hasAudio = AudioConfig.instance:getAudioCOById(voiceConfig.audio)
+	self._setComponentStop = false
+	self._playLastOne = nil
 
-	local var_5_0 = arg_5_0:getMouth(arg_5_2)
+	local mouth = self:getMouth(voiceConfig)
 
-	if string.nilorempty(var_5_0) and arg_5_0._spineVoice:getInStory() and arg_5_0._mouthStopDelayCallbackList then
-		local var_5_1 = arg_5_0._mouthStopDelayCallbackList[1]
+	if string.nilorempty(mouth) and self._spineVoice:getInStory() and self._mouthStopDelayCallbackList then
+		local firstCallback = self._mouthStopDelayCallbackList[1]
 
-		if var_5_1 then
-			var_5_1()
+		if firstCallback then
+			firstCallback()
 		end
 	end
 
-	arg_5_0:removeTaskActions()
-	arg_5_0:_checkPlayMouthActionList(var_5_0)
+	self:removeTaskActions()
+	self:_checkPlayMouthActionList(mouth)
 end
 
-function var_0_0._checkPlayMouthActionList(arg_6_0, arg_6_1)
-	arg_6_0:_playMouthActionList(arg_6_1)
+function SpineVoiceMouth:_checkPlayMouthActionList(mouth)
+	self:_playMouthActionList(mouth)
 end
 
-function var_0_0.getMouth(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0._spineVoice:getVoiceLang()
+function SpineVoiceMouth:getMouth(voiceCo)
+	local shortcut = self._spineVoice:getVoiceLang()
 
-	if var_7_0 == "zh" then
-		return arg_7_1.mouth
+	if shortcut == "zh" then
+		return voiceCo.mouth
 	else
-		return arg_7_1[var_7_0 .. "mouth"] or arg_7_1.mouth
+		return voiceCo[shortcut .. "mouth"] or voiceCo.mouth
 	end
 end
 
-function var_0_0.getFace(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0._spineVoice:getVoiceLang()
+function SpineVoiceMouth:getFace(voiceCo)
+	local shortcut = self._spineVoice:getVoiceLang()
 
-	if var_8_0 == "zh" then
-		return arg_8_1.face
+	if shortcut == "zh" then
+		return voiceCo.face
 	else
-		return arg_8_1[var_8_0 .. "face"] or arg_8_1.face
+		return voiceCo[shortcut .. "face"] or voiceCo.face
 	end
 end
 
-function var_0_0._getFaceEndTime(arg_9_0)
-	local var_9_0 = arg_9_0:getFace(arg_9_0._voiceConfig)
-	local var_9_1 = string.split(var_9_0, "|")
-	local var_9_2 = var_9_1[#var_9_1]
+function SpineVoiceMouth:_getFaceEndTime()
+	local langFace = self:getFace(self._voiceConfig)
+	local faceList = string.split(langFace, "|")
+	local action = faceList[#faceList]
 
-	if not var_9_2 then
+	if not action then
 		return
 	end
 
-	local var_9_3 = string.split(var_9_2, "#")
+	local actionParam = string.split(action, "#")
 
-	if #var_9_3 >= 3 then
-		return (tonumber(var_9_3[3]))
+	if #actionParam >= 3 then
+		local endTime = tonumber(actionParam[3])
+
+		return endTime
 	end
 end
 
-function var_0_0._stopMouthRepeat(arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._mouthRepeat, arg_10_0)
+function SpineVoiceMouth:_stopMouthRepeat()
+	TaskDispatcher.cancelTask(self._mouthRepeat, self)
 end
 
-function var_0_0._configValidity(arg_11_0, arg_11_1, arg_11_2)
-	for iter_11_0 = #arg_11_1, 1, -1 do
-		local var_11_0 = arg_11_1[iter_11_0]
-		local var_11_1 = string.split(var_11_0, "#")
-		local var_11_2 = true
+function SpineVoiceMouth:_configValidity(list, spine)
+	for i = #list, 1, -1 do
+		local action = list[i]
+		local actionParam = string.split(action, "#")
+		local invalid = true
 
-		if #var_11_1 == 3 then
-			local var_11_3 = "t_" .. var_11_1[1]
+		if #actionParam == 3 then
+			local str = "t_" .. actionParam[1]
 
-			if arg_11_2:hasAnimation(var_11_3) then
-				var_11_2 = false
+			if spine:hasAnimation(str) then
+				invalid = false
 			end
-		elseif string.find(var_11_0, var_0_1) then
-			var_11_2 = false
+		elseif string.find(action, pauseFlag) then
+			invalid = false
 		end
 
-		if var_11_2 then
-			logError(string.format("id：%s spine:%s,语音 mouth 无效的配置：%s mouth:%s", arg_11_0._voiceConfig.audio, arg_11_0._spine and arg_11_0._spine:getResPath(), var_11_0, arg_11_0._voiceConfig.mouth))
-			table.remove(arg_11_1, iter_11_0)
+		if invalid then
+			logError(string.format("id：%s spine:%s,语音 mouth 无效的配置：%s mouth:%s", self._voiceConfig.audio, self._spine and self._spine:getResPath(), action, self._voiceConfig.mouth))
+			table.remove(list, i)
 		end
 	end
 end
 
-function var_0_0._playMouthActionList(arg_12_0, arg_12_1)
-	arg_12_0._lastMouthId = nil
-	arg_12_0._pauseMouth = nil
-	arg_12_0._voiceStartTime = Time.time
-	arg_12_0._autoBizui = false
+function SpineVoiceMouth:_playMouthActionList(mouth)
+	self._lastMouthId = nil
+	self._pauseMouth = nil
+	self._voiceStartTime = Time.time
+	self._autoBizui = false
 
-	if arg_12_0._forceNoMouth then
-		arg_12_0:_onMouthEnd()
+	if self._forceNoMouth then
+		self:_onMouthEnd()
 
 		return
 	end
 
-	if arg_12_0._voiceConfig.heroId == 3038 and not arg_12_0._hasAudio then
-		arg_12_0:_onMouthEnd()
+	if self._voiceConfig.heroId == 3038 and not self._hasAudio then
+		self:_onMouthEnd()
 	end
 
-	if LuaUtil.isEmptyStr(arg_12_1) then
-		if arg_12_0._hasAudio then
-			TaskDispatcher.runRepeat(arg_12_0._mouthRepeat, arg_12_0, 0.03)
+	if LuaUtil.isEmptyStr(mouth) then
+		if self._hasAudio then
+			TaskDispatcher.runRepeat(self._mouthRepeat, self, 0.03)
 		else
-			arg_12_0:_onMouthEnd()
+			self:_onMouthEnd()
 		end
 	else
-		arg_12_0._mouthDelayCallbackList = {}
-		arg_12_0._mouthStopDelayCallbackList = {}
+		self._mouthDelayCallbackList = {}
+		self._mouthStopDelayCallbackList = {}
 
-		if string.find(arg_12_1, var_0_2) then
-			arg_12_0._faceEndTime = arg_12_0:_getFaceEndTime()
-			arg_12_0._autoBizui = arg_12_0._faceEndTime
-			arg_12_1 = string.gsub(arg_12_1, var_0_2, "")
+		if string.find(mouth, autoBizuiFlag) then
+			self._faceEndTime = self:_getFaceEndTime()
+			self._autoBizui = self._faceEndTime
+			mouth = string.gsub(mouth, autoBizuiFlag, "")
 		end
 
-		local var_12_0
+		local mouthActionList
 
-		if not string.nilorempty(arg_12_1) then
-			var_12_0 = string.split(arg_12_1, "|")
+		if not string.nilorempty(mouth) then
+			mouthActionList = string.split(mouth, "|")
 
-			arg_12_0:_configValidity(var_12_0, arg_12_0._spine)
+			self:_configValidity(mouthActionList, self._spine)
 		else
-			var_12_0 = {}
+			mouthActionList = {}
 		end
 
-		local var_12_1 = #var_12_0
-		local var_12_2 = 0
-		local var_12_3 = SLFramework.FrameworkSettings.IsEditor
+		local count = #mouthActionList
+		local lastMouthEnd = 0
+		local isEditor = SLFramework.FrameworkSettings.IsEditor
 
-		for iter_12_0, iter_12_1 in ipairs(var_12_0) do
-			local var_12_4 = string.split(iter_12_1, "#")
+		for i, v in ipairs(mouthActionList) do
+			local param = string.split(v, "#")
 
-			if arg_12_0:_checkMouthParam(var_12_4) then
-				local var_12_5 = var_12_4[1]
-				local var_12_6 = tonumber(var_12_4[2])
-				local var_12_7 = tonumber(var_12_4[3])
+			if self:_checkMouthParam(param) then
+				local mouthAction = param[1]
+				local mouthStart = tonumber(param[2])
+				local mouthEnd = tonumber(param[3])
 
-				if var_12_3 then
-					if var_12_7 < var_12_6 then
-						logError(string.format("SpineVoiceMouth audio:%s mouth配置后面的时间比前面的时间还小, mouthStart:%s > mouthEnd:%s", arg_12_0._voiceConfig.audio, var_12_6, var_12_7))
+				if isEditor then
+					if mouthEnd < mouthStart then
+						logError(string.format("SpineVoiceMouth audio:%s mouth配置后面的时间比前面的时间还小, mouthStart:%s > mouthEnd:%s", self._voiceConfig.audio, mouthStart, mouthEnd))
 					end
 
-					if var_12_6 < var_12_2 then
-						logError(string.format("SpineVoiceMouth audio:%s mouth配置后面的时间比前面的时间还小, mouthStart:%s < lastMouthEnd:%s", arg_12_0._voiceConfig.audio, var_12_6, var_12_2))
+					if mouthStart < lastMouthEnd then
+						logError(string.format("SpineVoiceMouth audio:%s mouth配置后面的时间比前面的时间还小, mouthStart:%s < lastMouthEnd:%s", self._voiceConfig.audio, mouthStart, lastMouthEnd))
 					end
 				end
 
-				if arg_12_0._autoBizui and var_12_7 ~= var_12_6 then
-					arg_12_0:_addMouthBizui(false, var_12_2, var_12_6)
+				if self._autoBizui and mouthEnd ~= mouthStart then
+					self:_addMouthBizui(false, lastMouthEnd, mouthStart)
 				end
 
-				arg_12_0:_addMouth(iter_12_0 == var_12_1 and not arg_12_0._autoBizui, var_12_5, var_12_6, var_12_7)
+				self:_addMouth(i == count and not self._autoBizui, mouthAction, mouthStart, mouthEnd)
 
-				var_12_2 = var_12_7
+				lastMouthEnd = mouthEnd
 			end
 		end
 
-		if arg_12_0._autoBizui then
-			local var_12_8 = arg_12_0._faceEndTime
+		if self._autoBizui then
+			local faceEndTime = self._faceEndTime
 
-			if var_12_8 < var_12_2 then
-				var_12_8 = var_12_2
+			if faceEndTime < lastMouthEnd then
+				faceEndTime = lastMouthEnd
 			end
 
-			arg_12_0:_addMouthBizui(false, var_12_2, var_12_8)
-			arg_12_0:_addMouthBizui(true, var_12_8, var_12_8 + 1)
+			self:_addMouthBizui(false, lastMouthEnd, faceEndTime)
+			self:_addMouthBizui(true, faceEndTime, faceEndTime + 1)
 		end
 
-		if var_12_1 <= 0 then
-			arg_12_0:_onMouthEnd()
+		if count <= 0 then
+			self:_onMouthEnd()
 		end
 	end
 end
 
-function var_0_0._checkMouthParam(arg_13_0, arg_13_1)
-	if arg_13_1[1] == var_0_1 then
-		arg_13_0._pauseMouth = arg_13_1[2]
+function SpineVoiceMouth:_checkMouthParam(param)
+	if param[1] == pauseFlag then
+		self._pauseMouth = param[2]
 
 		return false
 	end
@@ -230,179 +234,179 @@ function var_0_0._checkMouthParam(arg_13_0, arg_13_1)
 	return true
 end
 
-function var_0_0._addMouth(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4)
-	local function var_14_0()
-		if arg_14_0._spine then
-			arg_14_0._curMouth = "t_" .. arg_14_2
-			arg_14_0._curMouthEnd = nil
+function SpineVoiceMouth:_addMouth(lastOne, mouthAction, mouthStart, mouthEnd)
+	local function startCallback()
+		if self._spine then
+			self._curMouth = "t_" .. mouthAction
+			self._curMouthEnd = nil
 
-			arg_14_0._spine:setMouthAnimation(arg_14_0._curMouth, true, 0)
+			self._spine:setMouthAnimation(self._curMouth, true, 0)
 		end
 	end
 
-	local var_14_1
+	local stopCallback
 
-	local function var_14_2()
-		if arg_14_0._mouthStopDelayCallbackList then
-			tabletool.removeValue(arg_14_0._mouthStopDelayCallbackList, var_14_2)
+	function stopCallback()
+		if self._mouthStopDelayCallbackList then
+			tabletool.removeValue(self._mouthStopDelayCallbackList, stopCallback)
 		end
 
-		if arg_14_0._spine then
-			arg_14_0._playLastOne = true
+		if self._spine then
+			self._playLastOne = true
 
-			if arg_14_1 then
-				arg_14_0:stopMouthCallback()
+			if lastOne then
+				self:stopMouthCallback()
 			else
-				arg_14_0:stopMouthCallback(true)
+				self:stopMouthCallback(true)
 			end
 		end
 	end
 
-	table.insert(arg_14_0._mouthDelayCallbackList, var_14_0)
-	table.insert(arg_14_0._mouthStopDelayCallbackList, var_14_2)
-	TaskDispatcher.runDelay(var_14_0, nil, arg_14_3)
-	TaskDispatcher.runDelay(var_14_2, nil, arg_14_4)
+	table.insert(self._mouthDelayCallbackList, startCallback)
+	table.insert(self._mouthStopDelayCallbackList, stopCallback)
+	TaskDispatcher.runDelay(startCallback, nil, mouthStart)
+	TaskDispatcher.runDelay(stopCallback, nil, mouthEnd)
 end
 
-function var_0_0._addMouthBizui(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	local function var_17_0()
-		if arg_17_0._spine then
-			local var_18_0 = arg_17_0._spine:getCurFace()
-			local var_18_1 = string.gsub(var_18_0, "e_", "")
-			local var_18_2 = "t_" .. var_18_1 .. "_bizui"
+function SpineVoiceMouth:_addMouthBizui(lastOne, mouthStart, mouthEnd)
+	local function startCallback()
+		if self._spine then
+			local curFace = self._spine:getCurFace()
+			local faceName = string.gsub(curFace, "e_", "")
+			local faceBizui = "t_" .. faceName .. "_bizui"
 
-			if arg_17_0._spine:hasAnimation(var_18_2) then
-				arg_17_0._curMouth = var_18_2
+			if self._spine:hasAnimation(faceBizui) then
+				self._curMouth = faceBizui
 
-				arg_17_0._spine:setMouthAnimation(arg_17_0._curMouth, true, 0)
+				self._spine:setMouthAnimation(self._curMouth, true, 0)
 
 				return
 			end
 
-			if arg_17_0._spine:hasAnimation(StoryAnimName.T_BiZui) then
-				arg_17_0._curMouth = StoryAnimName.T_BiZui
+			if self._spine:hasAnimation(StoryAnimName.T_BiZui) then
+				self._curMouth = StoryAnimName.T_BiZui
 
-				arg_17_0._spine:setMouthAnimation(arg_17_0._curMouth, true, 0)
+				self._spine:setMouthAnimation(self._curMouth, true, 0)
 			end
 		end
 	end
 
-	local var_17_1
+	local stopCallback
 
-	local function var_17_2()
-		if arg_17_0._mouthStopDelayCallbackList then
-			tabletool.removeValue(arg_17_0._mouthStopDelayCallbackList, var_17_2)
+	function stopCallback()
+		if self._mouthStopDelayCallbackList then
+			tabletool.removeValue(self._mouthStopDelayCallbackList, stopCallback)
 		end
 
-		if arg_17_0._spine then
-			arg_17_0._playLastOne = true
+		if self._spine then
+			self._playLastOne = true
 
-			if arg_17_1 then
-				arg_17_0:stopMouthCallback()
+			if lastOne then
+				self:stopMouthCallback()
 			else
-				arg_17_0:stopMouthCallback(true)
+				self:stopMouthCallback(true)
 			end
 		end
 	end
 
-	table.insert(arg_17_0._mouthDelayCallbackList, var_17_0)
-	table.insert(arg_17_0._mouthStopDelayCallbackList, var_17_2)
-	TaskDispatcher.runDelay(var_17_0, nil, arg_17_2)
-	TaskDispatcher.runDelay(var_17_2, nil, arg_17_3)
+	table.insert(self._mouthDelayCallbackList, startCallback)
+	table.insert(self._mouthStopDelayCallbackList, stopCallback)
+	TaskDispatcher.runDelay(startCallback, nil, mouthStart)
+	TaskDispatcher.runDelay(stopCallback, nil, mouthEnd)
 end
 
-function var_0_0._mouthRepeat(arg_20_0)
-	local var_20_0 = Time.time
-	local var_20_1 = AudioMgr.instance:getSwitch(arg_20_0._audioGroup)
+function SpineVoiceMouth:_mouthRepeat()
+	local time = Time.time
+	local id = AudioMgr.instance:getSwitch(self._audioGroup)
 
-	if arg_20_0._lastMouthId ~= var_20_1 then
-		arg_20_0._lastMouthId = var_20_1
+	if self._lastMouthId ~= id then
+		self._lastMouthId = id
 
-		if arg_20_0._mouthActionList[var_20_1] then
-			arg_20_0._curMouth = "t_" .. arg_20_0._mouthActionList[var_20_1]
-			arg_20_0._curMouthEnd = nil
+		if self._mouthActionList[id] then
+			self._curMouth = "t_" .. self._mouthActionList[id]
+			self._curMouthEnd = nil
 
-			arg_20_0._spine:setMouthAnimation(arg_20_0._curMouth, false, 0)
+			self._spine:setMouthAnimation(self._curMouth, false, 0)
 		else
-			arg_20_0:stopMouth()
+			self:stopMouth()
 		end
 	end
 
-	local var_20_2 = var_20_0 - arg_20_0._voiceStartTime
+	local deltaTime = time - self._voiceStartTime
 
-	if var_20_1 == 0 and var_20_2 >= 1 then
-		TaskDispatcher.cancelTask(arg_20_0._mouthRepeat, arg_20_0)
-		arg_20_0:_onMouthEnd()
+	if id == 0 and deltaTime >= 1 then
+		TaskDispatcher.cancelTask(self._mouthRepeat, self)
+		self:_onMouthEnd()
 
 		return
 	end
 end
 
-function var_0_0.stopMouthCallback(arg_21_0, arg_21_1)
-	arg_21_0:stopMouth(arg_21_1)
+function SpineVoiceMouth:stopMouthCallback(force)
+	self:stopMouth(force)
 end
 
-function var_0_0.stopMouth(arg_22_0, arg_22_1)
-	if arg_22_1 then
-		arg_22_0._curMouthEnd = nil
+function SpineVoiceMouth:stopMouth(force)
+	if force then
+		self._curMouthEnd = nil
 
-		if arg_22_0._specialConfig and arg_22_0._specialConfig.skipStopMouth == 1 then
+		if self._specialConfig and self._specialConfig.skipStopMouth == 1 then
 			return
 		end
 
-		if arg_22_0._spine then
-			arg_22_0._spine:stopMouthAnimation()
+		if self._spine then
+			self._spine:stopMouthAnimation()
 		end
-	elseif arg_22_0._curMouth then
-		arg_22_0:_setBiZui()
+	elseif self._curMouth then
+		self:_setBiZui()
 
-		arg_22_0._curMouthEnd = arg_22_0._curMouth
-		arg_22_0._curMouth = nil
+		self._curMouthEnd = self._curMouth
+		self._curMouth = nil
 	end
 end
 
-function var_0_0._setBiZui(arg_23_0)
-	if arg_23_0._spine:hasAnimation(StoryAnimName.T_BiZui) then
-		arg_23_0._curMouth = StoryAnimName.T_BiZui
+function SpineVoiceMouth:_setBiZui()
+	if self._spine:hasAnimation(StoryAnimName.T_BiZui) then
+		self._curMouth = StoryAnimName.T_BiZui
 
-		arg_23_0._spine:setMouthAnimation(arg_23_0._curMouth, false, 0)
+		self._spine:setMouthAnimation(self._curMouth, false, 0)
 	end
 end
 
-function var_0_0.checkMouthEnd(arg_24_0, arg_24_1)
-	if arg_24_1 == arg_24_0._curMouthEnd then
-		arg_24_0:stopMouth(true)
-		arg_24_0:_onMouthEnd()
+function SpineVoiceMouth:checkMouthEnd(actName)
+	if actName == self._curMouthEnd then
+		self:stopMouth(true)
+		self:_onMouthEnd()
 
 		return true
 	end
 end
 
-function var_0_0._clearAutoMouthCallback(arg_25_0)
-	if arg_25_0._mouthDelayCallbackList then
-		for iter_25_0, iter_25_1 in ipairs(arg_25_0._mouthDelayCallbackList) do
-			TaskDispatcher.cancelTask(iter_25_1, nil)
+function SpineVoiceMouth:_clearAutoMouthCallback()
+	if self._mouthDelayCallbackList then
+		for i, v in ipairs(self._mouthDelayCallbackList) do
+			TaskDispatcher.cancelTask(v, nil)
 		end
 	end
 
-	if arg_25_0._mouthStopDelayCallbackList then
-		for iter_25_2, iter_25_3 in ipairs(arg_25_0._mouthStopDelayCallbackList) do
-			TaskDispatcher.cancelTask(iter_25_3, nil)
+	if self._mouthStopDelayCallbackList then
+		for i, v in ipairs(self._mouthStopDelayCallbackList) do
+			TaskDispatcher.cancelTask(v, nil)
 		end
 	end
 
-	arg_25_0._mouthDelayCallbackList = nil
-	arg_25_0._mouthStopDelayCallbackList = nil
+	self._mouthDelayCallbackList = nil
+	self._mouthStopDelayCallbackList = nil
 end
 
-function var_0_0.onVoiceStop(arg_26_0)
-	arg_26_0:stopMouth(true)
-	arg_26_0:removeTaskActions()
+function SpineVoiceMouth:onVoiceStop()
+	self:stopMouth(true)
+	self:removeTaskActions()
 end
 
-function var_0_0.removeTaskActions(arg_27_0)
-	arg_27_0:_stopMouthRepeat()
-	arg_27_0:_clearAutoMouthCallback()
+function SpineVoiceMouth:removeTaskActions()
+	self:_stopMouthRepeat()
+	self:_clearAutoMouthCallback()
 end
 
-return var_0_0
+return SpineVoiceMouth

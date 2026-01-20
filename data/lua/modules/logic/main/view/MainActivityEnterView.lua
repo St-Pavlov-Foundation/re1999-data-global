@@ -1,248 +1,269 @@
-﻿module("modules.logic.main.view.MainActivityEnterView", package.seeall)
+﻿-- chunkname: @modules/logic/main/view/MainActivityEnterView.lua
 
-local var_0_0 = class("MainActivityEnterView", BaseView)
+module("modules.logic.main.view.MainActivityEnterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goGuideFight = gohelper.findChild(arg_1_0.viewGO, "right/go_fight/#go_guidefight")
-	arg_1_0._goActivityFight = gohelper.findChild(arg_1_0.viewGO, "right/go_fight/#go_activityfight")
-	arg_1_0._goNormalFight = gohelper.findChild(arg_1_0.viewGO, "right/go_fight/#go_normalfight")
-	arg_1_0.btnGuideFight = gohelper.findButtonWithAudio(arg_1_0._goGuideFight)
-	arg_1_0.btnNormalFight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/go_fight/#go_normalfight/#btn_fight")
-	arg_1_0.btnJumpFight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/go_fight/#go_normalfight/#btn_jumpfight")
-	arg_1_0.txtChapter = gohelper.findChildText(arg_1_0.viewGO, "right/go_fight/#go_normalfight/#btn_jumpfight/1/#txt_chapter")
-	arg_1_0.txtChapter2 = gohelper.findChildText(arg_1_0.viewGO, "right/go_fight/#go_normalfight/#btn_jumpfight/2/#txt_chapter")
-	arg_1_0.txtChapterName = gohelper.findChildText(arg_1_0.viewGO, "right/go_fight/#go_normalfight/#btn_jumpfight/1/#txt_chaptername")
-	arg_1_0.txtChapterName2 = gohelper.findChildText(arg_1_0.viewGO, "right/go_fight/#go_normalfight/#btn_jumpfight/2/#txt_chaptername")
-	arg_1_0.btnActivityFight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/go_fight/#go_activityfight/#btn_fight")
-	arg_1_0.btnEnterActivity = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/go_fight/#go_activityfight/#btn_activefight")
-	arg_1_0.simageActivityIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "right/go_fight/#go_activityfight/#btn_activefight/icon")
-	arg_1_0.imageActivityIcon = arg_1_0.simageActivityIcon:GetComponent(gohelper.Type_Image)
-	arg_1_0.goActivityRedDot = gohelper.findChild(arg_1_0.viewGO, "right/go_fight/#go_activityfight/#btn_activefight/#go_activityreddot")
-	arg_1_0.pckeyNormalFight = gohelper.findChild(arg_1_0.btnNormalFight.gameObject, "#go_pcbtn")
-	arg_1_0.pckeyActivityFight = gohelper.findChild(arg_1_0.btnEnterActivity.gameObject, "#go_pcbtn")
-	arg_1_0.pckeyEnterFight = gohelper.findChild(arg_1_0.btnActivityFight.gameObject, "#go_pcbtn")
+local MainActivityEnterView = class("MainActivityEnterView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function MainActivityEnterView:onInitView()
+	self._goGuideFight = gohelper.findChild(self.viewGO, "right/go_fight/#go_guidefight")
+	self._goActivityFight = gohelper.findChild(self.viewGO, "right/go_fight/#go_activityfight")
+	self._goNormalFight = gohelper.findChild(self.viewGO, "right/go_fight/#go_normalfight")
+	self.btnGuideFight = gohelper.findButtonWithAudio(self._goGuideFight)
+	self.btnNormalFight = gohelper.findChildButtonWithAudio(self.viewGO, "right/go_fight/#go_normalfight/#btn_fight")
+	self.btnJumpFight = gohelper.findChildButtonWithAudio(self.viewGO, "right/go_fight/#go_normalfight/#btn_jumpfight")
+	self.btnActivityFight = gohelper.findChildButtonWithAudio(self.viewGO, "right/go_fight/#go_activityfight/#btn_fight")
+	self.btnEnterActivity = gohelper.findChildButtonWithAudio(self.viewGO, "right/go_fight/#go_activityfight/#btn_activefight")
+	self.simageActivityIcon = gohelper.findChildSingleImage(self.viewGO, "right/go_fight/#go_activityfight/#btn_activefight/icon")
+	self.imageActivityIcon = self.simageActivityIcon:GetComponent(gohelper.Type_Image)
+	self.goActivityRedDot = gohelper.findChild(self.viewGO, "right/go_fight/#go_activityfight/#btn_activefight/#go_activityreddot")
+	self.pckeyNormalFight = gohelper.findChild(self.btnNormalFight.gameObject, "#go_pcbtn")
+	self.pckeyActivityFight = gohelper.findChild(self.btnEnterActivity.gameObject, "#go_pcbtn")
+	self.pckeyEnterFight = gohelper.findChild(self.btnActivityFight.gameObject, "#go_pcbtn")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0.btnGuideFight:AddClickListener(arg_2_0.btnGuideFightOnClick, arg_2_0)
-	arg_2_0.btnNormalFight:AddClickListener(arg_2_0.btnNormalFightOnClick, arg_2_0)
-	arg_2_0.btnJumpFight:AddClickListener(arg_2_0.btnJumpFightOnClick, arg_2_0)
-	arg_2_0.btnActivityFight:AddClickListener(arg_2_0.btnActivityFightOnClick, arg_2_0)
-	arg_2_0.btnEnterActivity:AddClickListener(arg_2_0.btnEnterActivityOnClick, arg_2_0)
-	arg_2_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyEnterActivityCenter, arg_2_0.OnNotifyEnterActivity, arg_2_0)
+function MainActivityEnterView:addEvents()
+	self.btnGuideFight:AddClickListener(self.btnGuideFightOnClick, self)
+	self.btnNormalFight:AddClickListener(self.btnNormalFightOnClick, self)
+	self.btnJumpFight:AddClickListener(self.btnJumpFightOnClick, self)
+	self.btnActivityFight:AddClickListener(self.btnActivityFightOnClick, self)
+	self.btnEnterActivity:AddClickListener(self.btnEnterActivityOnClick, self)
+	self:addEventCb(PCInputController.instance, PCInputEvent.NotifyEnterActivityCenter, self.OnNotifyEnterActivity, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0.btnGuideFight:RemoveClickListener()
-	arg_3_0.btnNormalFight:RemoveClickListener()
-	arg_3_0.btnJumpFight:RemoveClickListener()
-	arg_3_0.btnActivityFight:RemoveClickListener()
-	arg_3_0.btnEnterActivity:RemoveClickListener()
-	arg_3_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyEnterActivityCenter, arg_3_0.OnNotifyEnterActivity, arg_3_0)
+function MainActivityEnterView:removeEvents()
+	self.btnGuideFight:RemoveClickListener()
+	self.btnNormalFight:RemoveClickListener()
+	self.btnJumpFight:RemoveClickListener()
+	self.btnActivityFight:RemoveClickListener()
+	self.btnEnterActivity:RemoveClickListener()
+	self:removeEventCb(PCInputController.instance, PCInputEvent.NotifyEnterActivityCenter, self.OnNotifyEnterActivity, self)
 end
 
-var_0_0.ShowFightGroupEnum = {
+MainActivityEnterView.ShowFightGroupEnum = {
 	Normal = 2,
 	Activity = 3,
 	Guide = 1
 }
-var_0_0.notOpenColor = Color.New(0.32, 0.32, 0.32, 0.91)
+MainActivityEnterView.notOpenColor = Color.New(0.32, 0.32, 0.32, 0.91)
 
-function var_0_0.btnGuideFightOnClick(arg_4_0)
-	arg_4_0:enterDungeonView()
+function MainActivityEnterView:btnGuideFightOnClick()
+	self:enterDungeonView()
 end
 
-function var_0_0.btnNormalFightOnClick(arg_5_0)
-	arg_5_0:enterDungeonView()
+function MainActivityEnterView:btnNormalFightOnClick()
+	self:enterDungeonView()
 end
 
-function var_0_0.btnActivityFightOnClick(arg_6_0)
-	arg_6_0:enterDungeonView()
+function MainActivityEnterView:btnActivityFightOnClick()
+	self:enterDungeonView()
 end
 
-function var_0_0.btnJumpFightOnClick(arg_7_0)
-	if arg_7_0._jumpParam then
+function MainActivityEnterView:btnJumpFightOnClick()
+	if self._jumpParam then
 		TeachNoteModel.instance:setJumpEnter(false)
-		DungeonController.instance:jumpDungeon(arg_7_0._jumpParam)
+		DungeonController.instance:jumpDungeon(self._jumpParam)
 	end
 end
 
-function var_0_0.enterDungeonView(arg_8_0)
+function MainActivityEnterView:enterDungeonView()
 	TeachNoteModel.instance:setJumpEnter(false)
 
-	local var_8_0 = true
+	local formMainView = true
 
-	DungeonController.instance:enterDungeonView(true, var_8_0)
+	DungeonController.instance:enterDungeonView(true, formMainView)
 end
 
-function var_0_0.btnEnterActivityOnClick(arg_9_0)
-	local var_9_0, var_9_1, var_9_2 = ActivityHelper.getActivityStatusAndToast(arg_9_0.showActivityId)
+function MainActivityEnterView:btnEnterActivityOnClick()
+	local status, toastId, toastParamList = ActivityHelper.getActivityStatusAndToast(self.showActivityId)
 
-	if var_9_0 ~= ActivityEnum.ActivityStatus.Normal then
-		GameFacade.showToastWithTableParam(var_9_1, var_9_2)
+	if status ~= ActivityEnum.ActivityStatus.Normal then
+		GameFacade.showToastWithTableParam(toastId, toastParamList)
 
 		return
 	end
 
-	local var_9_3 = arg_9_0:getActivityHandleFunc(arg_9_0.showActivityId)
+	local handleFunc = self:getActivityHandleFunc(self.showActivityId)
 
-	if var_9_3 then
-		var_9_3(arg_9_0)
+	if handleFunc then
+		handleFunc(self)
 	end
 end
 
-function var_0_0.OnNotifyEnterActivity(arg_10_0)
-	if arg_10_0.showActivityId ~= nil then
-		arg_10_0:btnEnterActivityOnClick()
+function MainActivityEnterView:OnNotifyEnterActivity()
+	if self.showActivityId ~= nil then
+		self:btnEnterActivityOnClick()
 	end
 end
 
-function var_0_0._editableInitView(arg_11_0)
-	gohelper.addUIClickAudio(arg_11_0.btnGuideFight.gameObject, AudioEnum.UI.play_ui_admission_open)
-	gohelper.addUIClickAudio(arg_11_0.btnNormalFight.gameObject, AudioEnum.UI.play_ui_admission_open)
-	gohelper.addUIClickAudio(arg_11_0.btnActivityFight.gameObject, AudioEnum.UI.play_ui_admission_open)
-	gohelper.addUIClickAudio(arg_11_0.btnJumpFight.gameObject, AudioEnum.UI.play_ui_admission_open)
-	gohelper.addUIClickAudio(arg_11_0.btnEnterActivity.gameObject, AudioEnum.UI.play_ui_admission_open)
-	arg_11_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_11_0.onRefreshActivityState, arg_11_0)
-	arg_11_0:addEventCb(DungeonController.instance, DungeonEvent.OnUpdateDungeonInfo, arg_11_0.refreshFastEnterDungeonUI, arg_11_0)
+function MainActivityEnterView:_editableInitView()
+	gohelper.addUIClickAudio(self.btnGuideFight.gameObject, AudioEnum.UI.play_ui_admission_open)
+	gohelper.addUIClickAudio(self.btnNormalFight.gameObject, AudioEnum.UI.play_ui_admission_open)
+	gohelper.addUIClickAudio(self.btnActivityFight.gameObject, AudioEnum.UI.play_ui_admission_open)
+	gohelper.addUIClickAudio(self.btnJumpFight.gameObject, AudioEnum.UI.play_ui_admission_open)
+	gohelper.addUIClickAudio(self.btnEnterActivity.gameObject, AudioEnum.UI.play_ui_admission_open)
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self.onRefreshActivityState, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.OnUpdateDungeonInfo, self.refreshFastEnterDungeonUI, self)
+
+	self.txtChapters = self:getUserDataTb_()
+
+	for _, skinId in pairs(MainUISwitchEnum.Skin) do
+		local name1 = string.format("right/go_fight/#go_normalfight/#btn_jumpfight/%s/#txt_chapter", skinId)
+		local name2 = string.format("right/go_fight/#go_normalfight/#btn_jumpfight/%s/#txt_chaptername", skinId)
+		local item = self:getUserDataTb_()
+
+		item.txtChapter = gohelper.findChildText(self.viewGO, name1)
+		item.txtChapterName = gohelper.findChildText(self.viewGO, name2)
+
+		table.insert(self.txtChapters, item)
+	end
 end
 
-function var_0_0.onOpen(arg_12_0)
-	arg_12_0:refreshUI()
+function MainActivityEnterView:onOpen()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_13_0)
-	arg_13_0:refreshShowFightGroupEnum()
-	arg_13_0:refreshFightBtnGroup()
-	arg_13_0:refreshRedDot()
-	arg_13_0:refreshFastEnterDungeonUI()
-	arg_13_0:refreshActivityIcon()
-	arg_13_0:showKeyTips()
+function MainActivityEnterView:refreshUI()
+	self:refreshShowFightGroupEnum()
+	self:refreshFightBtnGroup()
+	self:refreshRedDot()
+	self:refreshFastEnterDungeonUI()
+	self:refreshActivityIcon()
+	self:showKeyTips()
 end
 
-function var_0_0.refreshShowFightGroupEnum(arg_14_0)
-	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FastDungeon) then
-		arg_14_0.showFightGroupEnum = var_0_0.ShowFightGroupEnum.Guide
+function MainActivityEnterView:refreshShowFightGroupEnum()
+	local isOpenFastDungeonBtn = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FastDungeon)
+
+	if not isOpenFastDungeonBtn then
+		self.showFightGroupEnum = MainActivityEnterView.ShowFightGroupEnum.Guide
 
 		return
 	end
 
 	if not DungeonModel.instance:hasPassLevelAndStory(ActivityEnum.ShowVersionActivityEpisode) then
-		arg_14_0.showFightGroupEnum = var_0_0.ShowFightGroupEnum.Normal
+		self.showFightGroupEnum = MainActivityEnterView.ShowFightGroupEnum.Normal
 
 		return
 	end
 
-	for iter_14_0 = #ActivityEnum.VersionActivityIdList, 1, -1 do
-		local var_14_0 = ActivityEnum.VersionActivityIdList[iter_14_0]
-		local var_14_1 = ActivityHelper.getActivityStatus(var_14_0)
+	for i = #ActivityEnum.VersionActivityIdList, 1, -1 do
+		local activityId = ActivityEnum.VersionActivityIdList[i]
+		local status = ActivityHelper.getActivityStatus(activityId)
 
-		if var_14_1 == ActivityEnum.ActivityStatus.Normal or var_14_1 == ActivityEnum.ActivityStatus.NotUnlock then
-			arg_14_0.showActivityId = var_14_0
-			arg_14_0.showFightGroupEnum = var_0_0.ShowFightGroupEnum.Activity
+		if status == ActivityEnum.ActivityStatus.Normal or status == ActivityEnum.ActivityStatus.NotUnlock then
+			self.showActivityId = activityId
+			self.showFightGroupEnum = MainActivityEnterView.ShowFightGroupEnum.Activity
 
 			return
 		end
 	end
 
-	arg_14_0.showFightGroupEnum = var_0_0.ShowFightGroupEnum.Normal
+	self.showFightGroupEnum = MainActivityEnterView.ShowFightGroupEnum.Normal
 end
 
-function var_0_0.refreshFightBtnGroup(arg_15_0)
-	gohelper.setActive(arg_15_0._goGuideFight, arg_15_0.showFightGroupEnum == var_0_0.ShowFightGroupEnum.Guide)
-	gohelper.setActive(arg_15_0._goNormalFight, arg_15_0.showFightGroupEnum == var_0_0.ShowFightGroupEnum.Normal)
-	gohelper.setActive(arg_15_0._goActivityFight, arg_15_0.showFightGroupEnum == var_0_0.ShowFightGroupEnum.Activity)
+function MainActivityEnterView:refreshFightBtnGroup()
+	gohelper.setActive(self._goGuideFight, self.showFightGroupEnum == MainActivityEnterView.ShowFightGroupEnum.Guide)
+	gohelper.setActive(self._goNormalFight, self.showFightGroupEnum == MainActivityEnterView.ShowFightGroupEnum.Normal)
+	gohelper.setActive(self._goActivityFight, self.showFightGroupEnum == MainActivityEnterView.ShowFightGroupEnum.Activity)
 end
 
-function var_0_0.refreshRedDot(arg_16_0)
-	if arg_16_0.showFightGroupEnum ~= var_0_0.ShowFightGroupEnum.Activity then
+function MainActivityEnterView:refreshRedDot()
+	if self.showFightGroupEnum ~= MainActivityEnterView.ShowFightGroupEnum.Activity then
 		return
 	end
 
-	if arg_16_0.addRedDotActivityId and arg_16_0.addRedDotActivityId == arg_16_0.showActivityId then
+	if self.addRedDotActivityId and self.addRedDotActivityId == self.showActivityId then
 		return
 	end
 
-	RedDotController.instance:addRedDot(arg_16_0.goActivityRedDot, RedDotEnum.DotNode.VersionActivityEnterRedDot, nil, arg_16_0.activityRedDotRefreshFunc, arg_16_0)
+	RedDotController.instance:addRedDot(self.goActivityRedDot, RedDotEnum.DotNode.VersionActivityEnterRedDot, nil, self.activityRedDotRefreshFunc, self)
 
-	arg_16_0.addRedDotActivityId = arg_16_0.showActivityId
+	self.addRedDotActivityId = self.showActivityId
 end
 
-function var_0_0.refreshFastEnterDungeonUI(arg_17_0)
-	if arg_17_0.showFightGroupEnum ~= var_0_0.ShowFightGroupEnum.Normal then
-		arg_17_0._jumpParam = nil
+function MainActivityEnterView:refreshFastEnterDungeonUI()
+	if self.showFightGroupEnum ~= MainActivityEnterView.ShowFightGroupEnum.Normal then
+		self._jumpParam = nil
 
 		return
 	end
 
-	local var_17_0, var_17_1 = DungeonModel.instance:getLastEpisodeShowData()
+	local config, _ = DungeonModel.instance:getLastEpisodeShowData()
 
-	if var_17_0 then
-		local var_17_2 = var_17_0.id
+	if config then
+		local episodeId = config.id
 
-		if var_17_2 == arg_17_0._showEpisodeId then
+		if episodeId == self._showEpisodeId then
 			return
 		end
 
-		local var_17_3 = var_17_0.chapterId
-		local var_17_4 = lua_chapter.configDict[var_17_3]
+		local chapterId = config.chapterId
+		local chapterConfig = lua_chapter.configDict[chapterId]
+		local episodeName = DungeonController.getEpisodeName(config)
+		local chapterName = config.name
 
-		arg_17_0.txtChapter.text = DungeonController.getEpisodeName(var_17_0)
-		arg_17_0.txtChapter2.text = DungeonController.getEpisodeName(var_17_0)
-		arg_17_0.txtChapterName.text = var_17_0.name
-		arg_17_0.txtChapterName2.text = var_17_0.name
-		arg_17_0._jumpParam = arg_17_0._jumpParam or {}
-		arg_17_0._jumpParam.chapterType = var_17_4.type
-		arg_17_0._jumpParam.chapterId = var_17_3
-		arg_17_0._jumpParam.episodeId = var_17_2
-		arg_17_0._showEpisodeId = var_17_2
+		for _, item in ipairs(self.txtChapters) do
+			if item.txtChapter then
+				item.txtChapter.text = episodeName
+			end
+
+			if item.txtChapterName then
+				item.txtChapterName.text = chapterName
+			end
+		end
+
+		self._jumpParam = self._jumpParam or {}
+		self._jumpParam.chapterType = chapterConfig.type
+		self._jumpParam.chapterId = chapterId
+		self._jumpParam.episodeId = episodeId
+		self._showEpisodeId = episodeId
 	end
 end
 
-function var_0_0.activityRedDotRefreshFunc(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_0:getEnterViewActIdList()
+function MainActivityEnterView:activityRedDotRefreshFunc(redDotIcon)
+	local enterViewActIdList = self:getEnterViewActIdList()
 
-	if var_18_0 then
-		local var_18_1 = arg_18_0:_isShowHardModeNewTag(var_18_0)
+	if enterViewActIdList then
+		local isHardModeNew = self:_isShowHardModeNewTag(enterViewActIdList)
 
-		if ActivityStageHelper.checkActivityStageHasChange(var_18_0) or var_18_1 then
-			arg_18_1.show = true
+		if ActivityStageHelper.checkActivityStageHasChange(enterViewActIdList) or isHardModeNew then
+			redDotIcon.show = true
 
-			arg_18_1:showRedDot(RedDotEnum.Style.ObliqueNewTag)
-			arg_18_1:SetRedDotTrsWithType(RedDotEnum.Style.ObliqueNewTag, 40, -4.74)
-			arg_18_1:setRedDotTranLocalRotation(RedDotEnum.Style.ObliqueNewTag, 0, 0, -9)
+			redDotIcon:showRedDot(RedDotEnum.Style.ObliqueNewTag)
+			redDotIcon:SetRedDotTrsWithType(RedDotEnum.Style.ObliqueNewTag, 40, -4.74)
+			redDotIcon:setRedDotTranLocalRotation(RedDotEnum.Style.ObliqueNewTag, 0, 0, -9)
 
 			return
 		end
 	else
-		logWarn(string.format("not found enter actI : %s map actId list", arg_18_0.showActivityId))
+		logWarn(string.format("not found enter actI : %s map actId list", self.showActivityId))
 	end
 
-	arg_18_1:setRedDotTranScale(RedDotEnum.Style.Normal, 1.5, 1.5)
-	arg_18_1:defaultRefreshDot()
+	redDotIcon:setRedDotTranScale(RedDotEnum.Style.Normal, 1.5, 1.5)
+	redDotIcon:defaultRefreshDot()
 end
 
-function var_0_0._isShowHardModeNewTag(arg_19_0, arg_19_1)
-	if arg_19_1 then
-		for iter_19_0, iter_19_1 in ipairs(arg_19_1) do
-			if VersionActivityFixedDungeonModel.instance:isTipHardModeUnlockOpen(iter_19_1) then
+function MainActivityEnterView:_isShowHardModeNewTag(enterViewActIdList)
+	if enterViewActIdList then
+		for _, id in ipairs(enterViewActIdList) do
+			if VersionActivityFixedDungeonModel.instance:isTipHardModeUnlockOpen(id) then
 				return true
 			end
 		end
 	end
 end
 
-function var_0_0._showNewTag(arg_20_0, arg_20_1)
+function MainActivityEnterView:_showNewTag(redDotIcon)
 	return
 end
 
-function var_0_0.getEnterViewActIdList(arg_21_0)
-	if not arg_21_0.enterActId2ActIdListDict then
-		arg_21_0.enterActId2ActIdListDict = {
+function MainActivityEnterView:getEnterViewActIdList()
+	if not self.enterActId2ActIdListDict then
+		self.enterActId2ActIdListDict = {
 			[ActivityEnum.VersionActivityIdDict.Activity1_1] = VersionActivityEnum.EnterViewActIdList,
 			[ActivityEnum.VersionActivityIdDict.Activity1_2] = VersionActivity1_2Enum.EnterViewActIdList,
 			[ActivityEnum.VersionActivityIdDict.Activity1_3] = VersionActivity1_3Enum.EnterViewActIdList,
@@ -263,48 +284,50 @@ function var_0_0.getEnterViewActIdList(arg_21_0)
 		}
 	end
 
-	return arg_21_0.enterActId2ActIdListDict[arg_21_0.showActivityId]
+	return self.enterActId2ActIdListDict[self.showActivityId]
 end
 
-function var_0_0.refreshActivityIcon(arg_22_0)
-	if arg_22_0.showFightGroupEnum ~= var_0_0.ShowFightGroupEnum.Activity then
+function MainActivityEnterView:refreshActivityIcon()
+	if self.showFightGroupEnum ~= MainActivityEnterView.ShowFightGroupEnum.Activity then
 		return
 	end
 
-	arg_22_0.simageActivityIcon:LoadImage(ResUrl.getMainActivityIcon(ActivityEnum.MainIcon[arg_22_0.showActivityId]))
+	self.simageActivityIcon:LoadImage(ResUrl.getMainActivityIcon(ActivityEnum.MainIcon[self.showActivityId]))
 
-	if ActivityHelper.getActivityStatus(arg_22_0.showActivityId) ~= ActivityEnum.ActivityStatus.Normal then
-		arg_22_0.imageActivityIcon.color = var_0_0.notOpenColor
+	local status = ActivityHelper.getActivityStatus(self.showActivityId)
 
-		gohelper.setAsFirstSibling(arg_22_0.btnEnterActivity.gameObject)
+	if status ~= ActivityEnum.ActivityStatus.Normal then
+		self.imageActivityIcon.color = MainActivityEnterView.notOpenColor
+
+		gohelper.setAsFirstSibling(self.btnEnterActivity.gameObject)
 	else
-		arg_22_0.imageActivityIcon.color = Color.white
+		self.imageActivityIcon.color = Color.white
 
-		gohelper.setAsFirstSibling(arg_22_0.btnEnterActivity.gameObject)
+		gohelper.setAsFirstSibling(self.btnEnterActivity.gameObject)
 	end
 end
 
-function var_0_0.getActivityHandleFunc(arg_23_0, arg_23_1)
-	if not arg_23_0.activityHandleFuncDict then
-		arg_23_0.activityHandleFuncDict = {
-			[ActivityEnum.VersionActivityIdDict.Activity1_1] = arg_23_0.enterVersionActivity1_1,
-			[ActivityEnum.VersionActivityIdDict.Activity1_2] = arg_23_0.enterVersionActivity1_2,
-			[ActivityEnum.VersionActivityIdDict.Activity1_3] = arg_23_0.enterVersionActivity1_3,
-			[ActivityEnum.VersionActivityIdDict.Activity1_41] = arg_23_0.enterVersionActivity1_4,
-			[ActivityEnum.VersionActivityIdDict.Activity1_42] = arg_23_0.enterVersionActivity1_4,
-			[ActivityEnum.VersionActivityIdDict.Activity1_51] = arg_23_0.enterVersionActivity1_5,
-			[ActivityEnum.VersionActivityIdDict.Activity1_52] = arg_23_0.enterVersionActivity1_5,
-			[ActivityEnum.VersionActivityIdDict.Activity1_6] = arg_23_0.enterVersionActivity1_6,
-			[ActivityEnum.VersionActivityIdDict.Activity1_7] = arg_23_0.enterVersionActivity1_7
+function MainActivityEnterView:getActivityHandleFunc(activityId)
+	if not self.activityHandleFuncDict then
+		self.activityHandleFuncDict = {
+			[ActivityEnum.VersionActivityIdDict.Activity1_1] = self.enterVersionActivity1_1,
+			[ActivityEnum.VersionActivityIdDict.Activity1_2] = self.enterVersionActivity1_2,
+			[ActivityEnum.VersionActivityIdDict.Activity1_3] = self.enterVersionActivity1_3,
+			[ActivityEnum.VersionActivityIdDict.Activity1_41] = self.enterVersionActivity1_4,
+			[ActivityEnum.VersionActivityIdDict.Activity1_42] = self.enterVersionActivity1_4,
+			[ActivityEnum.VersionActivityIdDict.Activity1_51] = self.enterVersionActivity1_5,
+			[ActivityEnum.VersionActivityIdDict.Activity1_52] = self.enterVersionActivity1_5,
+			[ActivityEnum.VersionActivityIdDict.Activity1_6] = self.enterVersionActivity1_6,
+			[ActivityEnum.VersionActivityIdDict.Activity1_7] = self.enterVersionActivity1_7
 		}
 	end
 
-	return arg_23_0.activityHandleFuncDict[arg_23_1] or arg_23_0.commonEnterVersionActivity
+	return self.activityHandleFuncDict[activityId] or self.commonEnterVersionActivity
 end
 
-function var_0_0.getActivityEnterHandleFunc(arg_24_0, arg_24_1)
-	if not arg_24_0._activityEnterHandleFuncDict then
-		arg_24_0._activityEnterHandleFuncDict = {
+function MainActivityEnterView:getActivityEnterHandleFunc(activityId)
+	if not self._activityEnterHandleFuncDict then
+		self._activityEnterHandleFuncDict = {
 			[ActivityEnum.VersionActivityIdDict.Activity1_8] = VersionActivity1_8EnterController.instance,
 			[ActivityEnum.VersionActivityIdDict.Activity1_9] = VersionActivity1_9EnterController.instance,
 			[ActivityEnum.VersionActivityIdDict.Activity2_0] = VersionActivity2_0EnterController.instance,
@@ -317,69 +340,74 @@ function var_0_0.getActivityEnterHandleFunc(arg_24_0, arg_24_1)
 			[ActivityEnum.VersionActivityIdDict.Activity_Assassin_1] = VersionActivity2_9EnterController.instance,
 			[ActivityEnum.VersionActivityIdDict.Activity_Assassin_2] = VersionActivity2_9EnterController.instance,
 			[ActivityEnum.VersionActivityIdDict.Activity2_8] = VersionActivity2_8EnterController.instance,
-			[ActivityEnum.VersionActivityIdDict.Activity3_0] = VersionActivity3_0EnterController.instance
+			[ActivityEnum.VersionActivityIdDict.Activity3_0] = VersionActivity3_0EnterController.instance,
+			[ActivityEnum.VersionActivityIdDict.Activity3_2] = VersionActivity3_2EnterController.instance
 		}
 	end
 
-	return arg_24_0._activityEnterHandleFuncDict[arg_24_1]
+	return self._activityEnterHandleFuncDict[activityId]
 end
 
-function var_0_0.getCurEnterController(arg_25_0)
-	return arg_25_0:getActivityEnterHandleFunc(arg_25_0.showActivityId) or VersionActivityFixedHelper.getVersionActivityEnterController().instance
+function MainActivityEnterView:getCurEnterController()
+	local controller = self:getActivityEnterHandleFunc(self.showActivityId)
+
+	controller = controller or VersionActivityFixedHelper.getVersionActivityEnterController().instance
+
+	return controller
 end
 
-function var_0_0.enterVersionActivity1_1(arg_26_0)
+function MainActivityEnterView:enterVersionActivity1_1()
 	VersionActivityController.instance:openVersionActivityEnterView()
 end
 
-function var_0_0.enterVersionActivity1_2(arg_27_0)
+function MainActivityEnterView:enterVersionActivity1_2()
 	VersionActivity1_2EnterController.instance:openVersionActivity1_2EnterView()
 end
 
-function var_0_0.enterVersionActivity1_3(arg_28_0)
+function MainActivityEnterView:enterVersionActivity1_3()
 	VersionActivity1_3EnterController.instance:openVersionActivityEnterView()
 end
 
-function var_0_0.enterVersionActivity1_4(arg_29_0)
+function MainActivityEnterView:enterVersionActivity1_4()
 	VersionActivity1_4EnterController.instance:openVersionActivityEnterView()
 end
 
-function var_0_0.enterVersionActivity1_5(arg_30_0)
+function MainActivityEnterView:enterVersionActivity1_5()
 	VersionActivity1_5EnterController.instance:openVersionActivityEnterView()
 end
 
-function var_0_0.enterVersionActivity1_6(arg_31_0)
+function MainActivityEnterView:enterVersionActivity1_6()
 	VersionActivity1_6EnterController.instance:openVersionActivityEnterView(nil, nil, nil, true)
 end
 
-function var_0_0.enterVersionActivity1_7(arg_32_0)
+function MainActivityEnterView:enterVersionActivity1_7()
 	VersionActivity1_7EnterController.instance:openVersionActivityEnterView()
 end
 
-function var_0_0.commonEnterVersionActivity(arg_33_0)
-	arg_33_0:getCurEnterController():openVersionActivityEnterView()
+function MainActivityEnterView:commonEnterVersionActivity()
+	self:getCurEnterController():openVersionActivityEnterView()
 end
 
-function var_0_0.onRefreshActivityState(arg_34_0)
-	arg_34_0:refreshUI()
+function MainActivityEnterView:onRefreshActivityState()
+	self:refreshUI()
 end
 
-function var_0_0.onUpdateDungeonInfo(arg_35_0)
-	arg_35_0:refreshUI()
+function MainActivityEnterView:onUpdateDungeonInfo()
+	self:refreshUI()
 end
 
-function var_0_0.onClose(arg_36_0)
+function MainActivityEnterView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_37_0)
-	arg_37_0.simageActivityIcon:UnLoadImage()
+function MainActivityEnterView:onDestroyView()
+	self.simageActivityIcon:UnLoadImage()
 end
 
-function var_0_0.showKeyTips(arg_38_0)
-	PCInputController.instance:showkeyTips(arg_38_0.pckeyActivityFight, PCInputModel.Activity.MainActivity, PCInputModel.MainActivityFun.activityCenter)
-	PCInputController.instance:showkeyTips(arg_38_0.pckeyEnterFight, PCInputModel.Activity.MainActivity, PCInputModel.MainActivityFun.Enter)
-	PCInputController.instance:showkeyTips(arg_38_0.pckeyNormalFight, PCInputModel.Activity.MainActivity, PCInputModel.MainActivityFun.Enter)
+function MainActivityEnterView:showKeyTips()
+	PCInputController.instance:showkeyTips(self.pckeyActivityFight, PCInputModel.Activity.MainActivity, PCInputModel.MainActivityFun.activityCenter)
+	PCInputController.instance:showkeyTips(self.pckeyEnterFight, PCInputModel.Activity.MainActivity, PCInputModel.MainActivityFun.Enter)
+	PCInputController.instance:showkeyTips(self.pckeyNormalFight, PCInputModel.Activity.MainActivity, PCInputModel.MainActivityFun.Enter)
 end
 
-return var_0_0
+return MainActivityEnterView

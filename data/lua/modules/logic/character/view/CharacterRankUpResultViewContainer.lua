@@ -1,15 +1,17 @@
-﻿module("modules.logic.character.view.CharacterRankUpResultViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterRankUpResultViewContainer.lua
 
-local var_0_0 = class("CharacterRankUpResultViewContainer", BaseViewContainer)
+module("modules.logic.character.view.CharacterRankUpResultViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local CharacterRankUpResultViewContainer = class("CharacterRankUpResultViewContainer", BaseViewContainer)
+
+function CharacterRankUpResultViewContainer:buildViews()
 	return {
 		CharacterRankUpResultView.New(),
 		TabViewGroup.New(1, "#go_btns")
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function CharacterRankUpResultViewContainer:buildTabViews(tabContainerId)
 	return {
 		NavigateButtonsView.New({
 			true,
@@ -19,4 +21,4 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	}
 end
 
-return var_0_0
+return CharacterRankUpResultViewContainer

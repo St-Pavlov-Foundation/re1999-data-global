@@ -1,73 +1,76 @@
-﻿module("modules.logic.versionactivity2_7.act191.view.item.Act191FetterItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/act191/view/item/Act191FetterItem.lua
 
-local var_0_0 = class("Act191FetterItem", LuaCompBase)
+module("modules.logic.versionactivity2_7.act191.view.item.Act191FetterItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0.imageRare = gohelper.findChildImage(arg_1_1, "bg")
-	arg_1_0.goEffect2 = gohelper.findChild(arg_1_1, "effect2")
-	arg_1_0.goEffect3 = gohelper.findChild(arg_1_1, "effect3")
-	arg_1_0.goEffect4 = gohelper.findChild(arg_1_1, "effect4")
-	arg_1_0.goEffect5 = gohelper.findChild(arg_1_1, "effect5")
-	arg_1_0.imageIcon = gohelper.findChildImage(arg_1_1, "icon")
-	arg_1_0.txtCnt = gohelper.findChildText(arg_1_1, "count")
-	arg_1_0.btnClick = gohelper.findChildButtonWithAudio(arg_1_1, "clickArea")
+local Act191FetterItem = class("Act191FetterItem", LuaCompBase)
+
+function Act191FetterItem:init(go)
+	self.go = go
+	self.imageRare = gohelper.findChildImage(go, "bg")
+	self.goEffect2 = gohelper.findChild(go, "effect2")
+	self.goEffect3 = gohelper.findChild(go, "effect3")
+	self.goEffect4 = gohelper.findChild(go, "effect4")
+	self.goEffect5 = gohelper.findChild(go, "effect5")
+	self.imageIcon = gohelper.findChildImage(go, "icon")
+	self.txtCnt = gohelper.findChildText(go, "count")
+	self.btnClick = gohelper.findChildButtonWithAudio(go, "clickArea")
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnClick, arg_2_0.onClick, arg_2_0)
+function Act191FetterItem:addEventListeners()
+	self:addClickCb(self.btnClick, self.onClick, self)
 end
 
-function var_0_0.setData(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0.config = arg_3_1
+function Act191FetterItem:setData(config, count)
+	self.config = config
 
-	local var_3_0 = Activity191Config.instance:getRelationMaxCo(arg_3_0.config.tag)
+	local maxCo = Activity191Config.instance:getRelationMaxCo(self.config.tag)
 
-	if arg_3_1.level ~= 0 then
-		arg_3_0.txtCnt.text = string.format("%d/%d", arg_3_2, var_3_0.activeNum)
+	if config.level ~= 0 then
+		self.txtCnt.text = string.format("%d/%d", count, maxCo.activeNum)
 	else
-		arg_3_0.txtCnt.text = string.format("<color=#ed7f7f>%d</color><color=#838383>/%d</color>", arg_3_2, var_3_0.activeNum)
+		self.txtCnt.text = string.format("<color=#ed7f7f>%d</color><color=#838383>/%d</color>", count, maxCo.activeNum)
 	end
 
-	UISpriteSetMgr.instance:setAct174Sprite(arg_3_0.imageRare, "act174_shop_tag_" .. arg_3_0.config.tagBg)
+	UISpriteSetMgr.instance:setAct174Sprite(self.imageRare, "act174_shop_tag_" .. self.config.tagBg)
 
-	for iter_3_0 = 2, 5 do
-		gohelper.setActive(arg_3_0["goEffect" .. iter_3_0], iter_3_0 == arg_3_0.config.tagBg)
+	for i = 2, 5 do
+		gohelper.setActive(self["goEffect" .. i], i == self.config.tagBg)
 	end
 
-	ZProj.UGUIHelper.SetGrayscale(arg_3_0.imageIcon.gameObject, arg_3_1.level == 0)
+	ZProj.UGUIHelper.SetGrayscale(self.imageIcon.gameObject, config.level == 0)
 
-	local var_3_1
+	local alpha = config.level == 0 and 0.5 or 1
+	local color = self.imageIcon.color
 
-	var_3_1.a, var_3_1 = arg_3_1.level == 0 and 0.5 or 1, arg_3_0.imageIcon.color
-	arg_3_0.imageIcon.color = var_3_1
+	color.a = alpha
+	self.imageIcon.color = color
 
-	Activity191Helper.setFetterIcon(arg_3_0.imageIcon, arg_3_0.config.icon)
+	Activity191Helper.setFetterIcon(self.imageIcon, self.config.icon)
 end
 
-function var_0_0.onClick(arg_4_0)
-	if arg_4_0.param then
-		Act191StatController.instance:statButtonClick(arg_4_0.param.fromView, string.format("clickArea_%s_%s", arg_4_0.param.index, arg_4_0.config.name))
+function Act191FetterItem:onClick()
+	if self.param then
+		Act191StatController.instance:statButtonClick(self.param.fromView, string.format("clickArea_%s_%s", self.param.index, self.config.name))
 	end
 
-	local var_4_0 = {
-		tag = arg_4_0.config.tag,
-		isEnemy = arg_4_0.isEnemy
+	local param = {
+		tag = self.config.tag,
+		isEnemy = self.isEnemy
 	}
 
-	Activity191Controller.instance:openFetterTipView(var_4_0)
+	Activity191Controller.instance:openFetterTipView(param)
 end
 
-function var_0_0.setEnemyView(arg_5_0)
-	arg_5_0.isEnemy = true
+function Act191FetterItem:setEnemyView()
+	self.isEnemy = true
 end
 
-function var_0_0.setClickEnable(arg_6_0, arg_6_1)
-	gohelper.setActive(arg_6_0.btnClick, arg_6_1)
+function Act191FetterItem:setClickEnable(bool)
+	gohelper.setActive(self.btnClick, bool)
 end
 
-function var_0_0.setExtraParam(arg_7_0, arg_7_1)
-	arg_7_0.param = arg_7_1
+function Act191FetterItem:setExtraParam(param)
+	self.param = param
 end
 
-return var_0_0
+return Act191FetterItem

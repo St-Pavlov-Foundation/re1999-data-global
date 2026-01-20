@@ -1,15 +1,17 @@
-﻿module("modules.logic.chessgame.game.step.ChessStepRefreshTarget", package.seeall)
+﻿-- chunkname: @modules/logic/chessgame/game/step/ChessStepRefreshTarget.lua
 
-local var_0_0 = class("ChessStepRefreshTarget", BaseWork)
+module("modules.logic.chessgame.game.step.ChessStepRefreshTarget", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.originData = arg_1_1
+local ChessStepRefreshTarget = class("ChessStepRefreshTarget", BaseWork)
+
+function ChessStepRefreshTarget:init(stepData)
+	self.originData = stepData
 end
 
-function var_0_0.onStart(arg_2_0)
-	ChessGameModel.instance:setCompletedCount(arg_2_0.originData.completedCount)
+function ChessStepRefreshTarget:onStart()
+	ChessGameModel.instance:setCompletedCount(self.originData.completedCount)
 	ChessGameController.instance:dispatchEvent(ChessGameEvent.CurrentConditionUpdate)
-	arg_2_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return ChessStepRefreshTarget

@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity2_7.enter.define.VersionActivity2_7Enum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/enter/define/VersionActivity2_7Enum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity2_7.enter.define.VersionActivity2_7Enum", package.seeall)
 
-var_0_0.ActivityId = {
+local VersionActivity2_7Enum = _M
+
+VersionActivity2_7Enum.ActivityId = {
 	Act191 = 12701,
 	ReactivityStore = 12713,
 	RoleStory1 = 12714,
@@ -16,42 +18,42 @@ var_0_0.ActivityId = {
 	Reactivity = VersionActivity2_0Enum.ActivityId.Dungeon,
 	DungeonGraffiti = VersionActivity2_0Enum.ActivityId.DungeonGraffiti
 }
-var_0_0.EnterViewActSetting = {
+VersionActivity2_7Enum.EnterViewActSetting = {
 	{
-		actId = var_0_0.ActivityId.Dungeon,
+		actId = VersionActivity2_7Enum.ActivityId.Dungeon,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.First,
 		actType = VersionActivityEnterViewEnum.ActType.Single,
-		storeId = var_0_0.ActivityId.DungeonStore
+		storeId = VersionActivity2_7Enum.ActivityId.DungeonStore
 	},
 	{
-		actId = var_0_0.ActivityId.Act191,
+		actId = VersionActivity2_7Enum.ActivityId.Act191,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Single
 	},
 	{
-		actId = var_0_0.ActivityId.CooperGarland,
+		actId = VersionActivity2_7Enum.ActivityId.CooperGarland,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Single
 	},
 	{
-		actId = var_0_0.ActivityId.LengZhou6,
+		actId = VersionActivity2_7Enum.ActivityId.LengZhou6,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Single
 	},
 	{
-		actId = var_0_0.ActivityId.Reactivity,
+		actId = VersionActivity2_7Enum.ActivityId.Reactivity,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Single,
-		storeId = var_0_0.ActivityId.ReactivityStore
+		storeId = VersionActivity2_7Enum.ActivityId.ReactivityStore
 	},
 	{
-		actId = var_0_0.ActivityId.Challenge,
+		actId = VersionActivity2_7Enum.ActivityId.Challenge,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Single
 	},
 	{
 		actId = {
-			var_0_0.ActivityId.RoleStory1
+			VersionActivity2_7Enum.ActivityId.RoleStory1
 		},
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Multi
@@ -74,17 +76,17 @@ var_0_0.EnterViewActSetting = {
 		redDotUid = ActivityEnum.Activity.WeekWalkHeartShow
 	}
 }
-var_0_0.EnterViewActIdListWithRedDot = {
-	var_0_0.ActivityId.Dungeon
+VersionActivity2_7Enum.EnterViewActIdListWithRedDot = {
+	VersionActivity2_7Enum.ActivityId.Dungeon
 }
-var_0_0.TabSetting = {
+VersionActivity2_7Enum.TabSetting = {
 	select = {
 		fontSize = 42,
 		cnColor = "#FFFFFF",
 		enFontSize = 14,
 		enColor = "#337C61",
 		act2TabImg = {
-			[var_0_0.ActivityId.Dungeon] = "singlebg_lang/txt_v2a7_mainactivity_singlebg/v2a7_enterview_itemtitleselected.png"
+			[VersionActivity2_7Enum.ActivityId.Dungeon] = "singlebg_lang/txt_v2a7_mainactivity_singlebg/v2a7_enterview_itemtitleselected.png"
 		}
 	},
 	unselect = {
@@ -93,15 +95,15 @@ var_0_0.TabSetting = {
 		enFontSize = 14,
 		enColor = "#485143",
 		act2TabImg = {
-			[var_0_0.ActivityId.Dungeon] = "singlebg_lang/txt_v2a7_mainactivity_singlebg/v2a7_enterview_itemtitleunselected.png"
+			[VersionActivity2_7Enum.ActivityId.Dungeon] = "singlebg_lang/txt_v2a7_mainactivity_singlebg/v2a7_enterview_itemtitleunselected.png"
 		}
 	}
 }
-var_0_0.MaxShowTimeOffset = 3 * TimeUtil.OneDaySecond
-var_0_0.RedDotOffsetY = 56
-var_0_0.Audio = {
+VersionActivity2_7Enum.MaxShowTimeOffset = 3 * TimeUtil.OneDaySecond
+VersionActivity2_7Enum.RedDotOffsetY = 56
+VersionActivity2_7Enum.Audio = {
 	FirstOpenDungeonTab = AudioEnum2_7.VersionActivity2_7Enter.play_ui_yuzhou_open,
 	ReturnDungeonTab = AudioEnum2_7.VersionActivity2_7Enter.play_ui_qiutu_revelation_open
 }
 
-return var_0_0
+return VersionActivity2_7Enum

@@ -1,43 +1,45 @@
-﻿module("modules.logic.versionactivity3_1.gaosiniao.work.view.GaoSiNiaoViewFlowBase", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/gaosiniao/work/view/GaoSiNiaoViewFlowBase.lua
 
-local var_0_0 = class("GaoSiNiaoViewFlowBase", GaoSiNiaoFlowSequence_Base)
+module("modules.logic.versionactivity3_1.gaosiniao.work.view.GaoSiNiaoViewFlowBase", package.seeall)
 
-function var_0_0.ctor(arg_1_0, ...)
-	var_0_0.super.ctor(arg_1_0, ...)
+local GaoSiNiaoViewFlowBase = class("GaoSiNiaoViewFlowBase", GaoSiNiaoFlowSequence_Base)
+
+function GaoSiNiaoViewFlowBase:ctor(...)
+	GaoSiNiaoViewFlowBase.super.ctor(self, ...)
 end
 
-function var_0_0.start(arg_2_0, arg_2_1)
-	arg_2_0:reset()
-	arg_2_0:setViewObj(arg_2_1)
-	var_0_0.super.start(arg_2_0)
+function GaoSiNiaoViewFlowBase:start(viewObj)
+	self:reset()
+	self:setViewObj(viewObj)
+	GaoSiNiaoViewFlowBase.super.start(self)
 end
 
-function var_0_0.setViewObj(arg_3_0, arg_3_1)
-	arg_3_0._viewObj = assert(arg_3_1)
+function GaoSiNiaoViewFlowBase:setViewObj(viewObj)
+	self._viewObj = assert(viewObj)
 end
 
-function var_0_0.viewObj(arg_4_0)
-	return arg_4_0._viewObj
+function GaoSiNiaoViewFlowBase:viewObj()
+	return self._viewObj
 end
 
-function var_0_0.baseViewContainer(arg_5_0)
-	if type(arg_5_0._viewObj.baseViewContainer) == "function" then
-		return arg_5_0._viewObj:baseViewContainer()
+function GaoSiNiaoViewFlowBase:baseViewContainer()
+	if type(self._viewObj.baseViewContainer) == "function" then
+		return self._viewObj:baseViewContainer()
 	end
 
-	return arg_5_0._viewObj.viewContainer
+	return self._viewObj.viewContainer
 end
 
-function var_0_0.gameObject(arg_6_0)
-	return arg_6_0._viewObj.viewGO
+function GaoSiNiaoViewFlowBase:gameObject()
+	return self._viewObj.viewGO
 end
 
-function var_0_0.transform(arg_7_0)
-	return arg_7_0:gameObject().transform
+function GaoSiNiaoViewFlowBase:transform()
+	return self:gameObject().transform
 end
 
-function var_0_0.setActive(arg_8_0, arg_8_1)
-	gohelper.setActive(arg_8_0:gameObject(), arg_8_1)
+function GaoSiNiaoViewFlowBase:setActive(isActive)
+	gohelper.setActive(self:gameObject(), isActive)
 end
 
-return var_0_0
+return GaoSiNiaoViewFlowBase

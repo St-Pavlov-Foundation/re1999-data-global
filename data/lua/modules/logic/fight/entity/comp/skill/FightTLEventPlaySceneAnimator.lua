@@ -1,53 +1,55 @@
-﻿module("modules.logic.fight.entity.comp.skill.FightTLEventPlaySceneAnimator", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skill/FightTLEventPlaySceneAnimator.lua
 
-local var_0_0 = class("FightTLEventPlaySceneAnimator", FightTimelineTrackItem)
+module("modules.logic.fight.entity.comp.skill.FightTLEventPlaySceneAnimator", package.seeall)
 
-function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0
-	local var_1_1 = GameSceneMgr.instance:getCurScene()
+local FightTLEventPlaySceneAnimator = class("FightTLEventPlaySceneAnimator", FightTimelineTrackItem)
 
-	if var_1_1 then
-		local var_1_2 = var_1_1.level:getSceneGo()
+function FightTLEventPlaySceneAnimator:onTrackStart(fightStepData, duration, paramsArr)
+	local playObj
+	local fightScene = GameSceneMgr.instance:getCurScene()
 
-		var_1_0 = var_1_2 and gohelper.findChild(var_1_2, arg_1_3[1])
+	if fightScene then
+		local sceneObj = fightScene.level:getSceneGo()
+
+		playObj = sceneObj and gohelper.findChild(sceneObj, paramsArr[1])
 	end
 
-	if not var_1_0 then
+	if not playObj then
 		return
 	end
 
-	arg_1_0.playObj = var_1_0
-	arg_1_0.paramsArr = arg_1_3
+	self.playObj = playObj
+	self.paramsArr = paramsArr
 
-	local var_1_3 = arg_1_3[4]
+	local loadPath = paramsArr[4]
 
-	if not string.nilorempty(var_1_3) then
-		local var_1_4 = arg_1_0:com_registWork(FightWorkLoadAnimator, var_1_3, var_1_0)
+	if not string.nilorempty(loadPath) then
+		local loadWork = self:com_registWork(FightWorkLoadAnimator, loadPath, playObj)
 
-		var_1_4:registFinishCallback(arg_1_0.playAnimator, arg_1_0)
-		var_1_4:start()
+		loadWork:registFinishCallback(self.playAnimator, self)
+		loadWork:start()
 	else
-		arg_1_0:playAnimator()
+		self:playAnimator()
 	end
 end
 
-function var_0_0.playAnimator(arg_2_0)
-	local var_2_0 = arg_2_0.paramsArr[2]
-	local var_2_1 = gohelper.onceAddComponent(arg_2_0.playObj, typeof(UnityEngine.Animator))
+function FightTLEventPlaySceneAnimator:playAnimator()
+	local aniName = self.paramsArr[2]
+	local animator = gohelper.onceAddComponent(self.playObj, typeof(UnityEngine.Animator))
 
-	if var_2_1 then
-		var_2_1.speed = FightModel.instance:getSpeed()
+	if animator then
+		animator.speed = FightModel.instance:getSpeed()
 
-		if arg_2_0.paramsArr[3] == "1" then
-			SLFramework.AnimatorPlayer.Get(var_2_1.gameObject):Play(var_2_0, nil, nil)
+		if self.paramsArr[3] == "1" then
+			SLFramework.AnimatorPlayer.Get(animator.gameObject):Play(aniName, nil, nil)
 		else
-			var_2_1:Play(var_2_0, 0, 0)
+			animator:Play(aniName, 0, 0)
 		end
 	end
 end
 
-function var_0_0.onTrackEnd(arg_3_0)
+function FightTLEventPlaySceneAnimator:onTrackEnd()
 	return
 end
 
-return var_0_0
+return FightTLEventPlaySceneAnimator

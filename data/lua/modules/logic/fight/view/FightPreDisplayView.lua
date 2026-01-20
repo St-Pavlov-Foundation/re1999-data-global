@@ -1,37 +1,39 @@
-﻿module("modules.logic.fight.view.FightPreDisplayView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightPreDisplayView.lua
 
-local var_0_0 = class("FightPreDisplayView", BaseView)
+module("modules.logic.fight.view.FightPreDisplayView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._obj = gohelper.findChild(arg_1_0.viewGO, "root/predisplay")
-	arg_1_0._text = gohelper.findChildText(arg_1_0._obj, "#txt_CardNum")
-	arg_1_0._btn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/predisplay")
-	arg_1_0._ani = SLFramework.AnimatorPlayer.Get(arg_1_0._btn.gameObject)
+local FightPreDisplayView = class("FightPreDisplayView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function FightPreDisplayView:onInitView()
+	self._obj = gohelper.findChild(self.viewGO, "root/predisplay")
+	self._text = gohelper.findChildText(self._obj, "#txt_CardNum")
+	self._btn = gohelper.findChildButtonWithAudio(self.viewGO, "root/predisplay")
+	self._ani = SLFramework.AnimatorPlayer.Get(self._btn.gameObject)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnCameraFocusChanged, arg_2_0._onCameraFocusChanged, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.AddPlayOperationData, arg_2_0._onAddPlayOperationData, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnResetCard, arg_2_0._onResetCard, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.StageChanged, arg_2_0.onStageChange, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnClothSkillExpand, arg_2_0._onClothSkillExpand, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnClothSkillShrink, arg_2_0._onClothSkillShrink, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._btn, arg_2_0._onBtnClick, arg_2_0)
+function FightPreDisplayView:addEvents()
+	self:addEventCb(FightController.instance, FightEvent.OnCameraFocusChanged, self._onCameraFocusChanged, self)
+	self:addEventCb(FightController.instance, FightEvent.AddPlayOperationData, self._onAddPlayOperationData, self)
+	self:addEventCb(FightController.instance, FightEvent.OnResetCard, self._onResetCard, self)
+	self:addEventCb(FightController.instance, FightEvent.StageChanged, self.onStageChange, self)
+	self:addEventCb(FightController.instance, FightEvent.OnClothSkillExpand, self._onClothSkillExpand, self)
+	self:addEventCb(FightController.instance, FightEvent.OnClothSkillShrink, self._onClothSkillShrink, self)
+	self:addClickCb(self._btn, self._onBtnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function FightPreDisplayView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function FightPreDisplayView:_editableInitView()
 	return
 end
 
-function var_0_0._onBtnClick(arg_5_0)
+function FightPreDisplayView:_onBtnClick()
 	if not FightDataHelper.stageMgr:isFree() then
 		return
 	end
@@ -41,111 +43,111 @@ function var_0_0._onBtnClick(arg_5_0)
 	})
 end
 
-function var_0_0.onRefreshViewParam(arg_6_0)
+function FightPreDisplayView:onRefreshViewParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	gohelper.setActive(arg_7_0._obj, false)
-	arg_7_0:_refreshUI()
+function FightPreDisplayView:onOpen()
+	gohelper.setActive(self._obj, false)
+	self:_refreshUI()
 end
 
-function var_0_0._onResetCard(arg_8_0)
-	gohelper.setActive(arg_8_0._obj, false)
-	arg_8_0:_refreshUI()
+function FightPreDisplayView:_onResetCard()
+	gohelper.setActive(self._obj, false)
+	self:_refreshUI()
 
-	arg_8_0._lastCount = arg_8_0._curCardCount
-	arg_8_0._isVisible = false
+	self._lastCount = self._curCardCount
+	self._isVisible = false
 end
 
-function var_0_0._refreshUI(arg_9_0)
-	arg_9_0._cardList = FightHelper.getNextRoundGetCardList()
-	arg_9_0._curCardCount = #arg_9_0._cardList
-	arg_9_0._text.text = luaLang("multiple") .. arg_9_0._curCardCount
+function FightPreDisplayView:_refreshUI()
+	self._cardList = FightHelper.getNextRoundGetCardList()
+	self._curCardCount = #self._cardList
+	self._text.text = luaLang("multiple") .. self._curCardCount
 end
 
-function var_0_0._onAddPlayOperationData(arg_10_0)
+function FightPreDisplayView:_onAddPlayOperationData()
 	if FightDataHelper.fieldMgr:isDouQuQu() then
 		return
 	end
 
-	arg_10_0:_refreshUI()
+	self:_refreshUI()
 
-	if arg_10_0._curCardCount > 0 then
-		arg_10_0._isVisible = true
+	if self._curCardCount > 0 then
+		self._isVisible = true
 	end
 
-	if arg_10_0._lastCount then
-		if #arg_10_0._cardList > arg_10_0._lastCount then
-			arg_10_0:_playAni("fiy")
+	if self._lastCount then
+		if #self._cardList > self._lastCount then
+			self:_playAni("fiy")
 		end
-	elseif #arg_10_0._cardList > 0 then
-		arg_10_0:_playAni("open")
+	elseif #self._cardList > 0 then
+		self:_playAni("open")
 	end
 
-	arg_10_0._lastCount = #arg_10_0._cardList
+	self._lastCount = #self._cardList
 end
 
-function var_0_0._playAni(arg_11_0, arg_11_1)
-	arg_11_0._state = arg_11_1
+function FightPreDisplayView:_playAni(state)
+	self._state = state
 
-	gohelper.setActive(arg_11_0._obj, true)
-	arg_11_0._ani:Play(arg_11_1, arg_11_0._aniDone, arg_11_0)
+	gohelper.setActive(self._obj, true)
+	self._ani:Play(state, self._aniDone, self)
 end
 
-function var_0_0._aniDone(arg_12_0)
-	if arg_12_0._state == "close" then
-		gohelper.setActive(arg_12_0._obj, false)
+function FightPreDisplayView:_aniDone()
+	if self._state == "close" then
+		gohelper.setActive(self._obj, false)
 	end
 end
 
-function var_0_0._setActive(arg_13_0, arg_13_1)
-	if arg_13_1 then
-		if arg_13_0._isVisible then
-			arg_13_0:_playAni("open")
+function FightPreDisplayView:_setActive(state)
+	if state then
+		if self._isVisible then
+			self:_playAni("open")
 		end
-	elseif arg_13_0._isVisible then
-		arg_13_0:_playAni("close")
+	elseif self._isVisible then
+		self:_playAni("close")
 	end
 end
 
-function var_0_0._hide(arg_14_0)
-	if arg_14_0._isVisible then
-		arg_14_0:_playAni("close")
+function FightPreDisplayView:_hide()
+	if self._isVisible then
+		self:_playAni("close")
 	end
 end
 
-function var_0_0._onCameraFocusChanged(arg_15_0, arg_15_1)
-	if arg_15_1 then
-		arg_15_0:_setActive(false)
+function FightPreDisplayView:_onCameraFocusChanged(isFocus)
+	if isFocus then
+		self:_setActive(false)
 	else
-		arg_15_0:_setActive(true)
+		self:_setActive(true)
 	end
 end
 
-function var_0_0.onStageChange(arg_16_0, arg_16_1)
-	if arg_16_1 == FightStageMgr.StageType.Play then
-		gohelper.setActive(arg_16_0._obj, false)
+function FightPreDisplayView:onStageChange(stageType)
+	if stageType == FightStageMgr.StageType.Play then
+		gohelper.setActive(self._obj, false)
 
-		arg_16_0._isVisible = false
-		arg_16_0._lastCount = nil
+		self._isVisible = false
+		self._lastCount = nil
 	end
 end
 
-function var_0_0._onClothSkillExpand(arg_17_0)
-	arg_17_0:_setActive(false)
+function FightPreDisplayView:_onClothSkillExpand()
+	self:_setActive(false)
 end
 
-function var_0_0._onClothSkillShrink(arg_18_0)
-	arg_18_0:_setActive(true)
+function FightPreDisplayView:_onClothSkillShrink()
+	self:_setActive(true)
 end
 
-function var_0_0.onClose(arg_19_0)
+function FightPreDisplayView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_20_0)
+function FightPreDisplayView:onDestroyView()
 	return
 end
 
-return var_0_0
+return FightPreDisplayView

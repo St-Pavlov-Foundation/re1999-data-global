@@ -1,186 +1,188 @@
-﻿module("modules.logic.room.view.common.RoomBlockPackageGetView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/common/RoomBlockPackageGetView.lua
 
-local var_0_0 = class("RoomBlockPackageGetView", BaseView)
+module("modules.logic.room.view.common.RoomBlockPackageGetView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._simagemask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_mask")
-	arg_1_0._simagebgicon1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bgicon1")
-	arg_1_0._simagebgicon2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bgicon2")
-	arg_1_0._simageblockpackageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_blockpackageicon")
-	arg_1_0._simagetipshui = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/simage_tipsmask/#simage_tips_hui")
-	arg_1_0._simagetipsbai = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/simage_tipsmask/#simage_tips_bai")
-	arg_1_0._gocobrand = gohelper.findChild(arg_1_0.viewGO, "bg/#go_cobrand")
+local RoomBlockPackageGetView = class("RoomBlockPackageGetView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomBlockPackageGetView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._simagemask = gohelper.findChildSingleImage(self.viewGO, "#simage_mask")
+	self._simagebgicon1 = gohelper.findChildSingleImage(self.viewGO, "#simage_bgicon1")
+	self._simagebgicon2 = gohelper.findChildSingleImage(self.viewGO, "#simage_bgicon2")
+	self._simageblockpackageicon = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_blockpackageicon")
+	self._simagetipshui = gohelper.findChildSingleImage(self.viewGO, "bg/simage_tipsmask/#simage_tips_hui")
+	self._simagetipsbai = gohelper.findChildSingleImage(self.viewGO, "bg/simage_tipsmask/#simage_tips_bai")
+	self._gocobrand = gohelper.findChild(self.viewGO, "bg/#go_cobrand")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function RoomBlockPackageGetView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function RoomBlockPackageGetView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	if not arg_4_0._canClick then
+function RoomBlockPackageGetView:_btncloseOnClick()
+	if not self._canClick then
 		return
 	end
 
-	arg_4_0:_next()
+	self:_next()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._simagebgicon1:LoadImage(ResUrl.getRoomGetIcon("xw_texiao1"))
-	arg_5_0._simagebgicon2:LoadImage(ResUrl.getRoomGetIcon("xw_texiao2"))
+function RoomBlockPackageGetView:_editableInitView()
+	self._simagebgicon1:LoadImage(ResUrl.getRoomGetIcon("xw_texiao1"))
+	self._simagebgicon2:LoadImage(ResUrl.getRoomGetIcon("xw_texiao2"))
 
-	arg_5_0._txtname1 = gohelper.findChildText(arg_5_0.viewGO, "bg/simage_tipsmask/#simage_tips_hui/#txt_name")
-	arg_5_0._txtname2 = gohelper.findChildText(arg_5_0.viewGO, "bg/simage_tipsmask/#simage_tips_bai/#txt_name")
+	self._txtname1 = gohelper.findChildText(self.viewGO, "bg/simage_tipsmask/#simage_tips_hui/#txt_name")
+	self._txtname2 = gohelper.findChildText(self.viewGO, "bg/simage_tipsmask/#simage_tips_bai/#txt_name")
 
-	gohelper.removeUIClickAudio(arg_5_0._btnclose.gameObject)
+	gohelper.removeUIClickAudio(self._btnclose.gameObject)
 
-	arg_5_0._animatorPlayer = SLFramework.AnimatorPlayer.Get(arg_5_0.viewGO)
-	arg_5_0.cobrandLogoItem = MonoHelper.addNoUpdateLuaComOnceToGo(arg_5_0._gocobrand, RoomSourcesCobrandLogoItem, arg_5_0)
-	arg_5_0.cobrandLogoItem.__view = arg_5_0
+	self._animatorPlayer = SLFramework.AnimatorPlayer.Get(self.viewGO)
+	self.cobrandLogoItem = MonoHelper.addNoUpdateLuaComOnceToGo(self._gocobrand, RoomSourcesCobrandLogoItem, self)
+	self.cobrandLogoItem.__view = self
 end
 
-function var_0_0._refreshUI(arg_6_0)
-	local var_6_0 = arg_6_0._item.itemType
-	local var_6_1 = arg_6_0._item.itemId
-	local var_6_2 = var_6_0 == MaterialEnum.MaterialType.BlockPackage
-	local var_6_3 = var_6_0 == MaterialEnum.MaterialType.Building
-	local var_6_4 = var_6_0 == MaterialEnum.MaterialType.RoomTheme
+function RoomBlockPackageGetView:_refreshUI()
+	local itemType = self._item.itemType
+	local itemId = self._item.itemId
+	local isBlockPackage = itemType == MaterialEnum.MaterialType.BlockPackage
+	local isBuilding = itemType == MaterialEnum.MaterialType.Building
+	local isTheme = itemType == MaterialEnum.MaterialType.RoomTheme
 
-	gohelper.setActive(arg_6_0._txtname1.gameObject, var_6_2 or var_6_3 or var_6_4)
-	gohelper.setActive(arg_6_0._txtname2.gameObject, var_6_2 or var_6_3 or var_6_4)
-	gohelper.setActive(arg_6_0._simageblockpackageicon.gameObject, var_6_2 or var_6_3 or var_6_4)
+	gohelper.setActive(self._txtname1.gameObject, isBlockPackage or isBuilding or isTheme)
+	gohelper.setActive(self._txtname2.gameObject, isBlockPackage or isBuilding or isTheme)
+	gohelper.setActive(self._simageblockpackageicon.gameObject, isBlockPackage or isBuilding or isTheme)
 
-	local var_6_5
+	local config
 
-	if var_6_2 then
-		var_6_5 = RoomConfig.instance:getBlockPackageConfig(var_6_1)
-		arg_6_0._txtname1.text = var_6_5.name
-		arg_6_0._txtname2.text = var_6_5.name
+	if isBlockPackage then
+		config = RoomConfig.instance:getBlockPackageConfig(itemId)
+		self._txtname1.text = config.name
+		self._txtname2.text = config.name
 
-		arg_6_0._simageblockpackageicon:LoadImage(ResUrl.getRoomBlockPackageRewardIcon(var_6_5.rewardIcon))
-		arg_6_0._simagetipshui:LoadImage(ResUrl.getRoomIconLangPath("xw_huode_1"))
-		arg_6_0._simagetipsbai:LoadImage(ResUrl.getRoomIconLangPath("xw_huode_1"))
-	elseif var_6_3 then
-		local var_6_6
-		local var_6_7 = arg_6_0._item.roomBuildingLevel
+		self._simageblockpackageicon:LoadImage(ResUrl.getRoomBlockPackageRewardIcon(config.rewardIcon))
+		self._simagetipshui:LoadImage(ResUrl.getRoomIconLangPath("xw_huode_1"))
+		self._simagetipsbai:LoadImage(ResUrl.getRoomIconLangPath("xw_huode_1"))
+	elseif isBuilding then
+		local rewardIcon
+		local roomBuildingLevel = self._item.roomBuildingLevel
 
-		if var_6_7 and var_6_7 > 0 then
-			local var_6_8 = RoomConfig.instance:getLevelGroupConfig(var_6_1, var_6_7)
+		if roomBuildingLevel and roomBuildingLevel > 0 then
+			local levelConfig = RoomConfig.instance:getLevelGroupConfig(itemId, roomBuildingLevel)
 
-			var_6_6 = var_6_8 and var_6_8.rewardIcon
+			rewardIcon = levelConfig and levelConfig.rewardIcon
 		end
 
-		var_6_5 = RoomConfig.instance:getBuildingConfig(var_6_1)
+		config = RoomConfig.instance:getBuildingConfig(itemId)
 
-		if string.nilorempty(var_6_6) then
-			var_6_6 = var_6_5.rewardIcon
+		if string.nilorempty(rewardIcon) then
+			rewardIcon = config.rewardIcon
 		end
 
-		arg_6_0._txtname1.text = var_6_5.name
-		arg_6_0._txtname2.text = var_6_5.name
+		self._txtname1.text = config.name
+		self._txtname2.text = config.name
 
-		arg_6_0._simageblockpackageicon:LoadImage(ResUrl.getRoomBuildingRewardIcon(var_6_6))
-		arg_6_0._simagetipshui:LoadImage(ResUrl.getRoomIconLangPath("xw_huode"))
-		arg_6_0._simagetipsbai:LoadImage(ResUrl.getRoomIconLangPath("xw_huode"))
-	elseif var_6_4 then
-		var_6_5 = RoomConfig.instance:getThemeConfig(var_6_1)
-		arg_6_0._txtname1.text = var_6_5.name
-		arg_6_0._txtname2.text = var_6_5.name
+		self._simageblockpackageicon:LoadImage(ResUrl.getRoomBuildingRewardIcon(rewardIcon))
+		self._simagetipshui:LoadImage(ResUrl.getRoomIconLangPath("xw_huode"))
+		self._simagetipsbai:LoadImage(ResUrl.getRoomIconLangPath("xw_huode"))
+	elseif isTheme then
+		config = RoomConfig.instance:getThemeConfig(itemId)
+		self._txtname1.text = config.name
+		self._txtname2.text = config.name
 
-		arg_6_0._simageblockpackageicon:LoadImage(ResUrl.getRoomThemeRewardIcon(var_6_5.rewardIcon))
-		arg_6_0._simagetipshui:LoadImage(ResUrl.getRoomIconLangPath("xw_huode_2"))
-		arg_6_0._simagetipsbai:LoadImage(ResUrl.getRoomIconLangPath("xw_huode_2"))
+		self._simageblockpackageicon:LoadImage(ResUrl.getRoomThemeRewardIcon(config.rewardIcon))
+		self._simagetipshui:LoadImage(ResUrl.getRoomIconLangPath("xw_huode_2"))
+		self._simagetipsbai:LoadImage(ResUrl.getRoomIconLangPath("xw_huode_2"))
 	else
-		logError("不支持的物品类型, itemType: " .. tostring(var_6_0))
+		logError("不支持的物品类型, itemType: " .. tostring(itemType))
 	end
 
-	arg_6_0.cobrandLogoItem:setSourcesTypeStr(var_6_5 and var_6_5.sourcesType)
+	self.cobrandLogoItem:setSourcesTypeStr(config and config.sourcesType)
 end
 
-function var_0_0._onEscape(arg_7_0)
-	arg_7_0:_btncloseOnClick()
+function RoomBlockPackageGetView:_onEscape()
+	self:_btncloseOnClick()
 end
 
-function var_0_0._next(arg_8_0, arg_8_1)
-	TaskDispatcher.cancelTask(arg_8_0._refreshUI, arg_8_0)
+function RoomBlockPackageGetView:_next(isUpdateParam)
+	TaskDispatcher.cancelTask(self._refreshUI, self)
 
-	arg_8_0._itemIndex = arg_8_0._itemIndex + 1
-	arg_8_0._item = arg_8_0.viewParam and arg_8_0.viewParam.itemList and arg_8_0.viewParam.itemList[arg_8_0._itemIndex]
+	self._itemIndex = self._itemIndex + 1
+	self._item = self.viewParam and self.viewParam.itemList and self.viewParam.itemList[self._itemIndex]
 
-	if not arg_8_0._item then
-		arg_8_0:closeThis()
+	if not self._item then
+		self:closeThis()
 
 		return
 	end
 
-	if arg_8_0._itemIndex > 1 then
-		TaskDispatcher.runDelay(arg_8_0._animDone, arg_8_0, 5)
+	if self._itemIndex > 1 then
+		TaskDispatcher.runDelay(self._animDone, self, 5)
 
-		arg_8_0._canClick = false
+		self._canClick = false
 
-		arg_8_0._animatorPlayer:Play("all", arg_8_0._animDone, arg_8_0)
-		TaskDispatcher.runDelay(arg_8_0._refreshUI, arg_8_0, 0.5)
-	elseif arg_8_1 then
-		TaskDispatcher.runDelay(arg_8_0._animDone, arg_8_0, 5)
+		self._animatorPlayer:Play("all", self._animDone, self)
+		TaskDispatcher.runDelay(self._refreshUI, self, 0.5)
+	elseif isUpdateParam then
+		TaskDispatcher.runDelay(self._animDone, self, 5)
 
-		arg_8_0._canClick = false
+		self._canClick = false
 
-		arg_8_0._animatorPlayer:Play(UIAnimationName.Open, arg_8_0._animDone, arg_8_0)
-		arg_8_0:_refreshUI()
+		self._animatorPlayer:Play(UIAnimationName.Open, self._animDone, self)
+		self:_refreshUI()
 	else
-		arg_8_0:_refreshUI()
+		self:_refreshUI()
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_firmup_open)
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0._itemIndex = 0
-	arg_9_0._canClick = true
+function RoomBlockPackageGetView:onOpen()
+	self._itemIndex = 0
+	self._canClick = true
 
-	arg_9_0:_next()
-	NavigateMgr.instance:addEscape(ViewName.RoomBlockPackageGetView, arg_9_0._onEscape, arg_9_0)
+	self:_next()
+	NavigateMgr.instance:addEscape(ViewName.RoomBlockPackageGetView, self._onEscape, self)
 end
 
-function var_0_0._animDone(arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._animDone, arg_10_0)
+function RoomBlockPackageGetView:_animDone()
+	TaskDispatcher.cancelTask(self._animDone, self)
 
-	arg_10_0._canClick = true
+	self._canClick = true
 end
 
-function var_0_0.onUpdateParam(arg_11_0)
-	arg_11_0._itemIndex = 0
-	arg_11_0._canClick = true
+function RoomBlockPackageGetView:onUpdateParam()
+	self._itemIndex = 0
+	self._canClick = true
 
-	arg_11_0:_next(true)
+	self:_next(true)
 end
 
-function var_0_0.onClose(arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0._animDone, arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0._refreshUI, arg_12_0)
+function RoomBlockPackageGetView:onClose()
+	TaskDispatcher.cancelTask(self._animDone, self)
+	TaskDispatcher.cancelTask(self._refreshUI, self)
 
-	if arg_12_0.viewContainer:isManualClose() then
+	if self.viewContainer:isManualClose() then
 		AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_firmup_close)
 	end
 end
 
-function var_0_0.onDestroyView(arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0._animDone, arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0._refreshUI, arg_13_0)
-	arg_13_0._simagebgicon1:UnLoadImage()
-	arg_13_0._simagebgicon2:UnLoadImage()
-	arg_13_0._simageblockpackageicon:UnLoadImage()
-	arg_13_0._simagetipshui:UnLoadImage()
-	arg_13_0._simagetipsbai:UnLoadImage()
-	arg_13_0.cobrandLogoItem:onDestroy()
+function RoomBlockPackageGetView:onDestroyView()
+	TaskDispatcher.cancelTask(self._animDone, self)
+	TaskDispatcher.cancelTask(self._refreshUI, self)
+	self._simagebgicon1:UnLoadImage()
+	self._simagebgicon2:UnLoadImage()
+	self._simageblockpackageicon:UnLoadImage()
+	self._simagetipshui:UnLoadImage()
+	self._simagetipsbai:UnLoadImage()
+	self.cobrandLogoItem:onDestroy()
 end
 
-return var_0_0
+return RoomBlockPackageGetView

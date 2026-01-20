@@ -1,25 +1,29 @@
-﻿module("modules.logic.fight.system.work.FightWorkAfterRedealCard", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkAfterRedealCard.lua
 
-local var_0_0 = class("FightWorkAfterRedealCard", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkAfterRedealCard", package.seeall)
 
-function var_0_0.beforePlayEffectData(arg_1_0)
-	arg_1_0.oldCardList = FightDataUtil.copyData(FightDataHelper.handCardMgr.handCard)
+local FightWorkAfterRedealCard = class("FightWorkAfterRedealCard", FightEffectBase)
+
+function FightWorkAfterRedealCard:beforePlayEffectData()
+	self.oldCardList = FightDataUtil.copyData(FightDataHelper.handCardMgr.handCard)
 end
 
-function var_0_0.onStart(arg_2_0)
-	if FightModel.instance:getVersion() < 5 then
-		arg_2_0:onDone(true)
+function FightWorkAfterRedealCard:onStart()
+	local version = FightModel.instance:getVersion()
+
+	if version < 5 then
+		self:onDone(true)
 
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_ui_shuffle_allcard)
-	arg_2_0:com_registTimer(arg_2_0._delayAfterPerformance, 1.5 / FightModel.instance:getUISpeed())
+	self:com_registTimer(self._delayAfterPerformance, 1.5 / FightModel.instance:getUISpeed())
 
-	local var_2_0 = arg_2_0.oldCardList
-	local var_2_1 = FightDataHelper.handCardMgr.handCard
+	local oldCards = self.oldCardList
+	local newCards = FightDataHelper.handCardMgr.handCard
 
-	FightController.instance:dispatchEvent(FightEvent.PlayRedealCardEffect, var_2_0, var_2_1)
+	FightController.instance:dispatchEvent(FightEvent.PlayRedealCardEffect, oldCards, newCards)
 end
 
-return var_0_0
+return FightWorkAfterRedealCard

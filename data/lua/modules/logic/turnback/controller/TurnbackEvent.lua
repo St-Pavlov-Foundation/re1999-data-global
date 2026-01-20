@@ -1,18 +1,29 @@
-﻿module("modules.logic.turnback.controller.TurnbackEvent", package.seeall)
+﻿-- chunkname: @modules/logic/turnback/controller/TurnbackEvent.lua
 
-local var_0_0 = {}
+module("modules.logic.turnback.controller.TurnbackEvent", package.seeall)
 
-var_0_0.RefreshBeginner = 1
-var_0_0.RefreshTaskRewardItem = 2
-var_0_0.OnTaskRewardGetFinish = 3
-var_0_0.AdditionCountChange = 4
-var_0_0.RefreshOnceBonusGetState = 5
-var_0_0.RefreshTaskRedDot = 6
-var_0_0.RefreshSignInScroll = 7
-var_0_0.RefreshRemainTime = 8
-var_0_0.RefreshView = 9
-var_0_0.RefreshSignInItem = 10
-var_0_0.RefreshProgressItem = 11
-var_0_0.AfterBuyDoubleReward = 12
+local TurnbackEvent = {}
 
-return var_0_0
+TurnbackEvent.RefreshBeginner = 1
+TurnbackEvent.RefreshTaskRewardItem = 2
+TurnbackEvent.OnTaskRewardGetFinish = 3
+TurnbackEvent.AdditionCountChange = 4
+TurnbackEvent.RefreshOnceBonusGetState = 5
+TurnbackEvent.RefreshTaskRedDot = 6
+TurnbackEvent.RefreshSignInScroll = 7
+TurnbackEvent.RefreshRemainTime = 8
+TurnbackEvent.RefreshView = 9
+TurnbackEvent.RefreshSignInItem = 10
+TurnbackEvent.RefreshProgressItem = 11
+TurnbackEvent.AfterBuyDoubleReward = 12
+TurnbackEvent.OnSignInReply = 13
+TurnbackEvent.onCustomPickComplete = 14
+TurnbackEvent.onCustomPickListChanged = 15
+TurnbackEvent.TapViewOpenAnimBegin = 16
+TurnbackEvent.TapViewCloseAnimBegin = 17
+TurnbackEvent.OnTaskFinishAnim = 18
+TurnbackEvent.AfterReceiveDayFree = 19
+TurnbackEvent.FinishTaskItem = 20
+TurnbackEvent.OnViewOpenFinish = 21
+
+return TurnbackEvent

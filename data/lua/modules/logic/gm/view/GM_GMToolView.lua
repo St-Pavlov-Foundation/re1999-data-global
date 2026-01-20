@@ -1,39 +1,43 @@
-﻿module("modules.logic.gm.view.GM_GMToolView", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GM_GMToolView.lua
 
-local var_0_0 = class("GM_GMToolView", BaseView)
+module("modules.logic.gm.view.GM_GMToolView", package.seeall)
 
-function var_0_0.register()
-	var_0_0.GMToolView_register(GMToolView)
+local GM_GMToolView = class("GM_GMToolView", BaseView)
+
+function GM_GMToolView.register()
+	GM_GMToolView.GMToolView_register(GMToolView)
 end
 
-local function var_0_1()
+local function _skipPopUpFlow()
 	if not MainController.instance then
 		return
 	end
 
-	local var_2_0 = MainController.instance._popupFlow
+	local flow = MainController.instance._popupFlow
 
-	if not var_2_0 then
+	if not flow then
 		return
 	end
 
-	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Main then
+	local curSceneType = GameSceneMgr.instance:getCurSceneType()
+
+	if curSceneType ~= SceneType.Main then
 		return
 	end
 
-	local var_2_1 = var_2_0:getWorkList()
-	local var_2_2 = MainThumbnailWork
-	local var_2_3 = false
+	local workList = flow:getWorkList()
+	local targetCls = MainThumbnailWork
+	local ok = false
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_1) do
-		if iter_2_1.class == var_2_2 then
-			var_2_3 = true
+	for _, workObj in ipairs(workList) do
+		if workObj.class == targetCls then
+			ok = true
 
 			break
 		end
 	end
 
-	if not var_2_3 then
+	if not ok then
 		return
 	end
 
@@ -47,128 +51,131 @@ local function var_0_1()
 	MainController.instance:_onPopupFlowDone(true)
 end
 
-function var_0_0.GMToolView_register(arg_3_0)
-	GMMinusModel.instance:saveOriginalFunc(arg_3_0, "onInitView")
-	GMMinusModel.instance:saveOriginalFunc(arg_3_0, "removeEvents")
-	GMMinusModel.instance:saveOriginalFunc(arg_3_0, "onOpen")
-	GMMinusModel.instance:saveOriginalFunc(arg_3_0, "_sendGM")
+function GM_GMToolView.GMToolView_register(T)
+	GMMinusModel.instance:saveOriginalFunc(T, "onInitView")
+	GMMinusModel.instance:saveOriginalFunc(T, "removeEvents")
+	GMMinusModel.instance:saveOriginalFunc(T, "onOpen")
+	GMMinusModel.instance:saveOriginalFunc(T, "_sendGM")
 
-	function arg_3_0.onInitView(arg_4_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_4_0, "onInitView", ...)
-
-		if not SettingsModel.instance:isOverseas() then
-			return
-		end
-
-		local var_4_0 = gohelper.findChild(arg_4_0.viewGO, "viewport/content")
-		local var_4_1 = gohelper.findChild(var_4_0, "item25")
-		local var_4_2 = gohelper.findChild(var_4_0, "item40")
-		local var_4_3 = gohelper.cloneInPlace(var_4_1, "[GM_GMToolView]dropLangChangeGo")
-
-		arg_4_0._dropLangChange = gohelper.findChildDropdown(var_4_3, "Dropdown")
-		gohelper.findChildText(var_4_3, "text").text = luaLang("language")
-
-		gohelper.setSiblingAfter(var_4_3, var_4_2)
-
-		local var_4_4 = gohelper.create2d(var_4_0, "[GM_GMToolView]empty")
-
-		gohelper.setSiblingAfter(var_4_4, var_4_3)
-	end
-
-	function arg_3_0.removeEvents(arg_5_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_5_0, "removeEvents", ...)
+	function T.onInitView(SelfObj, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(SelfObj, "onInitView", ...)
 
 		if not SettingsModel.instance:isOverseas() then
 			return
 		end
 
-		arg_5_0._dropLangChange:RemoveOnValueChanged()
+		local contentGo = gohelper.findChild(SelfObj.viewGO, "viewport/content")
+		local srcGo = gohelper.findChild(contentGo, "item25")
+		local afterThisGo = gohelper.findChild(contentGo, "item40")
+		local dropLangChangeGo = gohelper.cloneInPlace(srcGo, "[GM_GMToolView]dropLangChangeGo")
+
+		SelfObj._dropLangChange = gohelper.findChildDropdown(dropLangChangeGo, "Dropdown")
+
+		local dropLangChangeText = gohelper.findChildText(dropLangChangeGo, "text")
+
+		dropLangChangeText.text = luaLang("language")
+
+		gohelper.setSiblingAfter(dropLangChangeGo, afterThisGo)
+
+		local emptyGo = gohelper.create2d(contentGo, "[GM_GMToolView]empty")
+
+		gohelper.setSiblingAfter(emptyGo, dropLangChangeGo)
 	end
 
-	function arg_3_0.onOpen(arg_6_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_6_0, "onOpen", ...)
+	function T.removeEvents(SelfObj, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(SelfObj, "removeEvents", ...)
 
 		if not SettingsModel.instance:isOverseas() then
 			return
 		end
 
-		arg_6_0:_initLangChange()
-		arg_6_0._dropLangChange:AddOnValueChanged(arg_6_0._onLangChange, arg_6_0)
+		SelfObj._dropLangChange:RemoveOnValueChanged()
 	end
 
-	function arg_3_0._sendGM(arg_7_0, arg_7_1)
-		GameFacade.showToast(ToastEnum.IconId, arg_7_1)
-		GMCommandHistoryModel.instance:addCommandHistory(arg_7_1)
+	function T.onOpen(SelfObj, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(SelfObj, "onOpen", ...)
 
-		if arg_7_1:find("bossrush") then
-			BossRushController_Test.instance:_test(arg_7_1)
-
-			return
-		end
-
-		if string.find(arg_7_1, "#") == 1 then
-			local var_7_0 = string.split(arg_7_1, " ")
-
-			arg_7_0:_clientGM(var_7_0)
-
-			return
-		end
-
-		if GMToolCommands.sendGM(arg_7_1) then
-			return
-		end
-
-		GMRpc.instance:sendGMRequest(arg_7_1)
-		arg_7_0:_onServerGM(arg_7_1)
-	end
-
-	function arg_3_0._initLangChange(arg_8_0)
 		if not SettingsModel.instance:isOverseas() then
 			return
 		end
 
-		local var_8_0 = GameConfig:GetSupportedLangs()
-		local var_8_1 = var_8_0.Length
+		SelfObj:_initLangChange()
+		SelfObj._dropLangChange:AddOnValueChanged(SelfObj._onLangChange, SelfObj)
+	end
 
-		arg_8_0.supportLangs = {}
+	function T._sendGM(SelfObj, input)
+		GameFacade.showToast(ToastEnum.IconId, input)
+		GMCommandHistoryModel.instance:addCommandHistory(input)
 
-		for iter_8_0 = 0, var_8_1 - 1 do
-			table.insert(arg_8_0.supportLangs, LangSettings.shortcutTab[var_8_0[iter_8_0]])
+		if input:find("bossrush") then
+			BossRushController_Test.instance:_test(input)
+
+			return
 		end
 
-		arg_8_0._dropLangChange:ClearOptions()
-		arg_8_0._dropLangChange:AddOptions(arg_8_0.supportLangs)
+		if string.find(input, "#") == 1 then
+			local param = string.split(input, " ")
 
-		local var_8_2 = LangSettings.instance:getCurLangShortcut()
+			SelfObj:_clientGM(param)
 
-		for iter_8_1 = 1, #arg_8_0.supportLangs do
-			if arg_8_0.supportLangs[iter_8_1] == var_8_2 then
-				arg_8_0._dropLangChange:SetValue(iter_8_1 - 1)
+			return
+		end
+
+		if GMToolCommands.sendGM(input) then
+			return
+		end
+
+		GMRpc.instance:sendGMRequest(input)
+		SelfObj:_onServerGM(input)
+	end
+
+	function T._initLangChange(SelfObj)
+		if not SettingsModel.instance:isOverseas() then
+			return
+		end
+
+		local cSharpArr = GameConfig:GetSupportedLangs()
+		local length = cSharpArr.Length
+
+		SelfObj.supportLangs = {}
+
+		for i = 0, length - 1 do
+			table.insert(SelfObj.supportLangs, LangSettings.shortcutTab[cSharpArr[i]])
+		end
+
+		SelfObj._dropLangChange:ClearOptions()
+		SelfObj._dropLangChange:AddOptions(SelfObj.supportLangs)
+
+		local curLang = LangSettings.instance:getCurLangShortcut()
+
+		for i = 1, #SelfObj.supportLangs do
+			if SelfObj.supportLangs[i] == curLang then
+				SelfObj._dropLangChange:SetValue(i - 1)
 
 				break
 			end
 		end
 	end
 
-	function arg_3_0._onLangChange(arg_9_0, arg_9_1)
+	function T._onLangChange(SelfObj, index)
 		if not SettingsModel.instance:isOverseas() then
 			return
 		end
 
-		local var_9_0 = arg_9_0.supportLangs[arg_9_1 + 1]
+		local selectLang = SelfObj.supportLangs[index + 1]
 
-		LangSettings.instance:SetCurLangType(var_9_0)
+		LangSettings.instance:SetCurLangType(selectLang)
 
-		local var_9_1 = GameLanguageMgr.instance:getStoryIndexByShortCut(var_9_0)
+		local lanIndex = GameLanguageMgr.instance:getStoryIndexByShortCut(selectLang)
 
-		GameLanguageMgr.instance:setLanguageTypeByStoryIndex(var_9_1)
-		PlayerPrefsHelper.setNumber("StoryTxtLanType", var_9_1 - 1)
+		GameLanguageMgr.instance:setLanguageTypeByStoryIndex(lanIndex)
+		PlayerPrefsHelper.setNumber("StoryTxtLanType", lanIndex - 1)
 		SettingsController.instance:changeLangTxt()
 	end
 
 	if SettingsModel.instance:isOverseas() then
-		var_0_1()
+		_skipPopUpFlow()
 	end
 end
 
-return var_0_0
+return GM_GMToolView

@@ -1,27 +1,29 @@
-﻿module("modules.logic.fight.entity.comp.specialeffect.FightEntityCustomSpecialEffect", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/specialeffect/FightEntityCustomSpecialEffect.lua
 
-local var_0_0 = class("FightEntityCustomSpecialEffect", FightEntitySpecialEffectBase)
+module("modules.logic.fight.entity.comp.specialeffect.FightEntityCustomSpecialEffect", package.seeall)
 
-function var_0_0.initClass(arg_1_0)
-	arg_1_0:newClass(FightEntitySpecialEffectBuffLayerEnemySkin)
+local FightEntityCustomSpecialEffect = class("FightEntityCustomSpecialEffect", FightEntitySpecialEffectBase)
 
-	local var_1_0 = FightDataHelper.entityMgr:getAllEntityMO()
+function FightEntityCustomSpecialEffect:initClass()
+	self:newClass(FightEntitySpecialEffectBuffLayerEnemySkin)
 
-	for iter_1_0, iter_1_1 in pairs(var_1_0) do
-		if iter_1_1.modelId == 3079 then
-			arg_1_0:newClass(FightEntitySpecialEffect3079_Buff)
+	local entityDic = FightDataHelper.entityMgr:getAllEntityMO()
+
+	for k, v in pairs(entityDic) do
+		if v.modelId == 3079 then
+			self:newClass(FightEntitySpecialEffect3079_Buff)
 
 			break
 		end
 	end
 
-	arg_1_0:newClass(FightEntitySpecialEffect3070_Ball)
-	arg_1_0:newClass(FightEntitySpecialEffectBuffLayer)
-	arg_1_0:newClass(FightEntitySpecialEffectBuffLayerEnemySkin)
-	arg_1_0:newClass(FightEntitySpecialEffect3081_Ball)
-	arg_1_0:newClass(FightEntitySpecialEffectSeasonChangeHero)
-	arg_1_0:newClass(FightEntitySpecialEffectBuffLayerNaNa)
-	arg_1_0:newClass(FightEntitySpecialEffectBuffLayerLZL)
+	self:newClass(FightEntitySpecialEffect3070_Ball)
+	self:newClass(FightEntitySpecialEffectBuffLayer)
+	self:newClass(FightEntitySpecialEffectBuffLayerEnemySkin)
+	self:newClass(FightEntitySpecialEffect3081_Ball)
+	self:newClass(FightEntitySpecialEffectSeasonChangeHero)
+	self:newClass(FightEntitySpecialEffectBuffLayerNaNa)
+	self:newClass(FightEntitySpecialEffectBuffLayerLZL)
 end
 
-return var_0_0
+return FightEntityCustomSpecialEffect

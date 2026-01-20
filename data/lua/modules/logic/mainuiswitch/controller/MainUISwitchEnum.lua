@@ -1,15 +1,17 @@
-﻿module("modules.logic.mainuiswitch.controller.MainUISwitchEnum", package.seeall)
+﻿-- chunkname: @modules/logic/mainuiswitch/controller/MainUISwitchEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.mainuiswitch.controller.MainUISwitchEnum", package.seeall)
 
-var_0_0.ItemTypeSelected = 1
-var_0_0.ItemTypeUnSelected = 2
-var_0_0.ItemHeight = 190
-var_0_0.ItemUnSelectedScale = 0.78
-var_0_0.ItemUnSelectedHeight = var_0_0.ItemHeight * var_0_0.ItemUnSelectedScale
-var_0_0.MainUIPart = {
+local MainUISwitchEnum = _M
+
+MainUISwitchEnum.ItemTypeSelected = 1
+MainUISwitchEnum.ItemTypeUnSelected = 2
+MainUISwitchEnum.ItemHeight = 190
+MainUISwitchEnum.ItemUnSelectedScale = 0.78
+MainUISwitchEnum.ItemUnSelectedHeight = MainUISwitchEnum.ItemHeight * MainUISwitchEnum.ItemUnSelectedScale
+MainUISwitchEnum.MainUIPart = {
 	NormalJumpFight = 12,
-	ActivityFight = 10,
+	BankEffect = 13,
 	Room = 5,
 	NormalFight = 11,
 	Storage = 3,
@@ -18,11 +20,12 @@ var_0_0.MainUIPart = {
 	Power = 8,
 	Fight = 9,
 	Mail = 1,
+	ActivityFight = 10,
 	Role = 6,
 	Summon = 7
 }
-var_0_0.MainUIFontMaterialPath = "font/meshpro/outline_material/mainui/mainui_font_material_%s.mat"
-var_0_0.SwitchMainUIOffsetType = {
+MainUISwitchEnum.MainUIFontMaterialPath = "font/meshpro/outline_material/mainui/mainui_font_material_%s.mat"
+MainUISwitchEnum.SwitchMainUIOffsetType = {
 	{
 		offsetX = 138
 	},
@@ -30,17 +33,18 @@ var_0_0.SwitchMainUIOffsetType = {
 		offsetX = -187
 	}
 }
-var_0_0.MainUIScale = 0.8
-var_0_0.Skin = {
+MainUISwitchEnum.MainUIScale = 0.8
+MainUISwitchEnum.Skin = {
+	V3a2 = 3,
 	Sp01 = 2,
 	Normal = 1
 }
-var_0_0.EagleLocationType = {
+MainUISwitchEnum.EagleLocationType = {
 	C = 3,
 	A = 1,
 	B = 2
 }
-var_0_0.EagleAnim = {
+MainUISwitchEnum.EagleAnim = {
 	Idle3 = "idle3",
 	Fly = "fly",
 	Idle2 = "idle2",
@@ -49,13 +53,13 @@ var_0_0.EagleAnim = {
 	Scare = "scare",
 	Hover = "hover"
 }
-var_0_0.HeadCutTime = 15
-var_0_0.HeadCutLoadime = 0.2
-var_0_0.AnimName = {
+MainUISwitchEnum.HeadCutTime = 15
+MainUISwitchEnum.HeadCutLoadime = 0.2
+MainUISwitchEnum.AnimName = {
 	Out = "out",
 	Switch = "switch",
 	Idle = "idle",
 	In = "in"
 }
 
-return var_0_0
+return MainUISwitchEnum

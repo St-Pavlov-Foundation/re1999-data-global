@@ -1,29 +1,31 @@
-﻿module("modules.logic.survival.controller.work.SurvivalDecreeVoteBuildCameraWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/SurvivalDecreeVoteBuildCameraWork.lua
 
-local var_0_0 = class("SurvivalDecreeVoteBuildCameraWork", BaseWork)
+module("modules.logic.survival.controller.work.SurvivalDecreeVoteBuildCameraWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0:initParam(arg_1_1)
+local SurvivalDecreeVoteBuildCameraWork = class("SurvivalDecreeVoteBuildCameraWork", BaseWork)
+
+function SurvivalDecreeVoteBuildCameraWork:ctor(param)
+	self:initParam(param)
 end
 
-function var_0_0.initParam(arg_2_0, arg_2_1)
-	arg_2_0.playerPos = arg_2_1.playerPos
+function SurvivalDecreeVoteBuildCameraWork:initParam(param)
+	self.playerPos = param.playerPos
 end
 
-function var_0_0.onStart(arg_3_0)
-	local var_3_0, var_3_1, var_3_2 = SurvivalHelper.instance:hexPointToWorldPoint(arg_3_0.playerPos.q, arg_3_0.playerPos.r)
+function SurvivalDecreeVoteBuildCameraWork:onStart()
+	local x, y, z = SurvivalHelper.instance:hexPointToWorldPoint(self.playerPos.q, self.playerPos.r)
 
-	SurvivalController.instance:dispatchEvent(SurvivalEvent.TweenCameraFocus, Vector3(var_3_0, var_3_1, var_3_2))
+	SurvivalController.instance:dispatchEvent(SurvivalEvent.TweenCameraFocus, Vector3(x, y, z))
 	SurvivalController.instance:dispatchEvent(SurvivalEvent.ChangeCameraScale, 0.44)
-	arg_3_0:onBuildFinish()
+	self:onBuildFinish()
 end
 
-function var_0_0.onBuildFinish(arg_4_0)
-	arg_4_0:onDone(true)
+function SurvivalDecreeVoteBuildCameraWork:onBuildFinish()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_5_0)
+function SurvivalDecreeVoteBuildCameraWork:clearWork()
 	return
 end
 
-return var_0_0
+return SurvivalDecreeVoteBuildCameraWork

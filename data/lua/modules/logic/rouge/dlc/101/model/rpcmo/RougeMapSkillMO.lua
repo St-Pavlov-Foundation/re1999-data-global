@@ -1,19 +1,21 @@
-﻿module("modules.logic.rouge.dlc.101.model.rpcmo.RougeMapSkillMO", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/dlc/101/model/rpcmo/RougeMapSkillMO.lua
 
-local var_0_0 = pureTable("RougeMapSkillMO")
+module("modules.logic.rouge.dlc.101.model.rpcmo.RougeMapSkillMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1.id
-	arg_1_0.useCount = arg_1_1.useCount
-	arg_1_0.stepRecord = arg_1_1.stepRecord
+local RougeMapSkillMO = pureTable("RougeMapSkillMO")
+
+function RougeMapSkillMO:init(info)
+	self.id = info.id
+	self.useCount = info.useCount
+	self.stepRecord = info.stepRecord
 end
 
-function var_0_0.getUseCount(arg_2_0)
-	return arg_2_0.useCount
+function RougeMapSkillMO:getUseCount()
+	return self.useCount
 end
 
-function var_0_0.getStepRecord(arg_3_0)
-	return arg_3_0.stepRecord
+function RougeMapSkillMO:getStepRecord()
+	return self.stepRecord
 end
 
-return var_0_0
+return RougeMapSkillMO

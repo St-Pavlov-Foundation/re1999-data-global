@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity2_6.dicehero.model.DiceHeroRewardMo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/dicehero/model/DiceHeroRewardMo.lua
 
-local var_0_0 = class("DiceHeroRewardMo")
+module("modules.logic.versionactivity2_6.dicehero.model.DiceHeroRewardMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.type = arg_1_1.type
-	arg_1_0.id = arg_1_1.id
-	arg_1_0.index = nil
+local DiceHeroRewardMo = class("DiceHeroRewardMo")
+
+function DiceHeroRewardMo:init(data)
+	self.type = data.type
+	self.id = data.id
+	self.index = nil
 end
 
-return var_0_0
+return DiceHeroRewardMo

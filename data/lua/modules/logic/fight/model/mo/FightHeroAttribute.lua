@@ -1,13 +1,15 @@
-﻿module("modules.logic.fight.model.mo.FightHeroAttribute", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/mo/FightHeroAttribute.lua
 
-local var_0_0 = pureTable("FightHeroAttribute")
+module("modules.logic.fight.model.mo.FightHeroAttribute", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.hp = arg_1_1.hp
-	arg_1_0.attack = arg_1_1.attack
-	arg_1_0.defense = arg_1_1.defense
-	arg_1_0.crit = arg_1_1.crit
-	arg_1_0.crit_damage = arg_1_1.crit_damage
+local FightHeroAttribute = pureTable("FightHeroAttribute")
+
+function FightHeroAttribute:init(info)
+	self.hp = info.hp
+	self.attack = info.attack
+	self.defense = info.defense
+	self.crit = info.crit
+	self.crit_damage = info.crit_damage
 end
 
-return var_0_0
+return FightHeroAttribute

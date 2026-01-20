@@ -1,120 +1,122 @@
-﻿module("modules.logic.commandstation.model.CommandStationHeroListModel", package.seeall)
+﻿-- chunkname: @modules/logic/commandstation/model/CommandStationHeroListModel.lua
 
-local var_0_0 = class("CommandStationHeroListModel", ListScrollModel)
+module("modules.logic.commandstation.model.CommandStationHeroListModel", package.seeall)
 
-function var_0_0.initHeroList(arg_1_0)
-	if arg_1_0:getCount() > 0 then
+local CommandStationHeroListModel = class("CommandStationHeroListModel", ListScrollModel)
+
+function CommandStationHeroListModel:initHeroList()
+	if self:getCount() > 0 then
 		return
 	end
 
-	local var_1_0 = HeroModel.instance:getList()
-	local var_1_1 = {}
-	local var_1_2 = {}
-	local var_1_3 = {}
+	local list = HeroModel.instance:getList()
+	local normalList = {}
+	local topList = {}
+	local bottomList = {}
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
-		if arg_1_0:heroIsUsed(iter_1_1.heroId) then
-			table.insert(var_1_3, iter_1_1)
-		elseif arg_1_0:heroIsSpecial(iter_1_1.heroId) then
-			table.insert(var_1_2, iter_1_1)
+	for i, v in ipairs(list) do
+		if self:heroIsUsed(v.heroId) then
+			table.insert(bottomList, v)
+		elseif self:heroIsSpecial(v.heroId) then
+			table.insert(topList, v)
 		else
-			table.insert(var_1_1, iter_1_1)
+			table.insert(normalList, v)
 		end
 	end
 
-	tabletool.addValues(var_1_1, var_1_3)
-	tabletool.addValues(var_1_2, var_1_1)
-	arg_1_0:setList(var_1_2)
+	tabletool.addValues(normalList, bottomList)
+	tabletool.addValues(topList, normalList)
+	self:setList(topList)
 end
 
-function var_0_0.clearHeroList(arg_2_0)
-	arg_2_0:clear()
+function CommandStationHeroListModel:clearHeroList()
+	self:clear()
 end
 
-function var_0_0.clearSelectedHeroList(arg_3_0)
-	arg_3_0._selectedHero = {}
+function CommandStationHeroListModel:clearSelectedHeroList()
+	self._selectedHero = {}
 end
 
-function var_0_0.setSelectedHeroNum(arg_4_0, arg_4_1)
-	arg_4_0._maxSelectedHeroNum = arg_4_1
-	arg_4_0._selectedHero = {}
+function CommandStationHeroListModel:setSelectedHeroNum(num)
+	self._maxSelectedHeroNum = num
+	self._selectedHero = {}
 end
 
-function var_0_0.getEmptyIndex(arg_5_0)
-	for iter_5_0 = 1, arg_5_0._maxSelectedHeroNum do
-		if not arg_5_0._selectedHero[iter_5_0] then
-			return iter_5_0
+function CommandStationHeroListModel:getEmptyIndex()
+	for i = 1, self._maxSelectedHeroNum do
+		if not self._selectedHero[i] then
+			return i
 		end
 	end
 end
 
-function var_0_0.setSelectedHero(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_0._selectedHero[arg_6_1] = arg_6_2
-	arg_6_0._selectedHero[arg_6_2] = arg_6_1
+function CommandStationHeroListModel:setSelectedHero(index, mo)
+	self._selectedHero[index] = mo
+	self._selectedHero[mo] = index
 
 	CommandStationController.instance:dispatchEvent(CommandStationEvent.DispatchHeroListChange)
 end
 
-function var_0_0.cancelSelectedHero(arg_7_0, arg_7_1)
-	if not arg_7_1 then
+function CommandStationHeroListModel:cancelSelectedHero(mo)
+	if not mo then
 		return
 	end
 
-	local var_7_0 = arg_7_0._selectedHero[arg_7_1]
+	local index = self._selectedHero[mo]
 
-	arg_7_0._selectedHero[arg_7_1] = nil
+	self._selectedHero[mo] = nil
 
-	if var_7_0 then
-		arg_7_0._selectedHero[var_7_0] = nil
+	if index then
+		self._selectedHero[index] = nil
 	end
 
 	CommandStationController.instance:dispatchEvent(CommandStationEvent.DispatchHeroListChange)
 end
 
-function var_0_0.getHeroSelectedIndex(arg_8_0, arg_8_1)
-	return arg_8_1 and arg_8_0._selectedHero[arg_8_1]
+function CommandStationHeroListModel:getHeroSelectedIndex(mo)
+	return mo and self._selectedHero[mo]
 end
 
-function var_0_0.getHeroByIndex(arg_9_0, arg_9_1)
-	return arg_9_0._selectedHero and arg_9_0._selectedHero[arg_9_1]
+function CommandStationHeroListModel:getHeroByIndex(index)
+	return self._selectedHero and self._selectedHero[index]
 end
 
-function var_0_0.getSelectedHeroNum(arg_10_0)
-	for iter_10_0 = 1, arg_10_0._maxSelectedHeroNum do
-		if not arg_10_0._selectedHero[iter_10_0] then
-			return iter_10_0 - 1
+function CommandStationHeroListModel:getSelectedHeroNum()
+	for i = 1, self._maxSelectedHeroNum do
+		if not self._selectedHero[i] then
+			return i - 1
 		end
 	end
 
-	return arg_10_0._maxSelectedHeroNum
+	return self._maxSelectedHeroNum
 end
 
-function var_0_0.getSelectedHeroIdList(arg_11_0)
-	local var_11_0 = {}
+function CommandStationHeroListModel:getSelectedHeroIdList()
+	local heroIdList = {}
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0._selectedHero) do
-		table.insert(var_11_0, iter_11_1.heroId)
+	for _, heroMo in ipairs(self._selectedHero) do
+		table.insert(heroIdList, heroMo.heroId)
 	end
 
-	return var_11_0
+	return heroIdList
 end
 
-function var_0_0.setSpecialHeroList(arg_12_0, arg_12_1)
-	arg_12_0._specialHeroList = arg_12_1
+function CommandStationHeroListModel:setSpecialHeroList(list)
+	self._specialHeroList = list
 end
 
-function var_0_0.heroIsSpecial(arg_13_0, arg_13_1)
-	return arg_13_0._specialHeroList and tabletool.indexOf(arg_13_0._specialHeroList, arg_13_1)
+function CommandStationHeroListModel:heroIsSpecial(heroId)
+	return self._specialHeroList and tabletool.indexOf(self._specialHeroList, heroId)
 end
 
-function var_0_0.initAllEventSelectedHeroList(arg_14_0)
-	arg_14_0._allEventSelectedHeroList = CommandStationModel.instance:getAllEventHeroList()
+function CommandStationHeroListModel:initAllEventSelectedHeroList()
+	self._allEventSelectedHeroList = CommandStationModel.instance:getAllEventHeroList()
 end
 
-function var_0_0.heroIsUsed(arg_15_0, arg_15_1)
-	return arg_15_0._allEventSelectedHeroList and arg_15_0._allEventSelectedHeroList[arg_15_1] ~= nil
+function CommandStationHeroListModel:heroIsUsed(heroId)
+	return self._allEventSelectedHeroList and self._allEventSelectedHeroList[heroId] ~= nil
 end
 
-var_0_0.instance = var_0_0.New()
+CommandStationHeroListModel.instance = CommandStationHeroListModel.New()
 
-return var_0_0
+return CommandStationHeroListModel

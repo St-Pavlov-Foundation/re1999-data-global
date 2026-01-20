@@ -1,106 +1,108 @@
-﻿module("modules.logic.survival.model.SurvivalTaskModel", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/SurvivalTaskModel.lua
 
-local var_0_0 = class("SurvivalTaskModel", BaseModel)
+module("modules.logic.survival.model.SurvivalTaskModel", package.seeall)
 
-function var_0_0.initViewParam(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.selectTaskType = arg_1_1 or SurvivalEnum.TaskModule.MainTask
-	arg_1_0.selectTaskId = arg_1_2 or 0
+local SurvivalTaskModel = class("SurvivalTaskModel", BaseModel)
+
+function SurvivalTaskModel:initViewParam(moduleId, taskId)
+	self.selectTaskType = moduleId or SurvivalEnum.TaskModule.MainTask
+	self.selectTaskId = taskId or 0
 end
 
-function var_0_0.setSelectType(arg_2_0, arg_2_1)
-	if arg_2_1 == arg_2_0.selectTaskType then
+function SurvivalTaskModel:setSelectType(type)
+	if type == self.selectTaskType then
 		return
 	end
 
-	arg_2_0.selectTaskType = arg_2_1
+	self.selectTaskType = type
 
 	return true
 end
 
-function var_0_0.getSelectType(arg_3_0)
-	return arg_3_0.selectTaskType
+function SurvivalTaskModel:getSelectType()
+	return self.selectTaskType
 end
 
-function var_0_0.getTaskFinishedNum(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0:getTaskList(arg_4_1)
-	local var_4_1 = 0
-	local var_4_2 = 0
+function SurvivalTaskModel:getTaskFinishedNum(type)
+	local list = self:getTaskList(type)
+	local num = 0
+	local finishNum = 0
 
-	for iter_4_0, iter_4_1 in pairs(var_4_0) do
-		if arg_4_1 == SurvivalEnum.TaskModule.SubTask or arg_4_1 == SurvivalEnum.TaskModule.MapMainTarget then
-			if iter_4_1:isFinish() then
-				var_4_2 = var_4_2 + 1
+	for _, v in pairs(list) do
+		if type == SurvivalEnum.TaskModule.SubTask or type == SurvivalEnum.TaskModule.MapMainTarget then
+			if v:isFinish() then
+				finishNum = finishNum + 1
 			end
-		elseif not iter_4_1:isUnFinish() then
-			var_4_2 = var_4_2 + 1
+		elseif not v:isUnFinish() then
+			finishNum = finishNum + 1
 		end
 
-		var_4_1 = var_4_1 + 1
+		num = num + 1
 	end
 
-	return var_4_2, var_4_1
+	return finishNum, num
 end
 
-function var_0_0.getTaskList(arg_5_0, arg_5_1)
-	local var_5_0 = {}
-	local var_5_1 = SurvivalShelterModel.instance:getWeekInfo()
+function SurvivalTaskModel:getTaskList(type)
+	local list = {}
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
 
-	if var_5_1 then
-		local var_5_2 = var_5_1.taskPanel:getTaskBoxMo(arg_5_1)
+	if weekInfo then
+		local taskBox = weekInfo.taskPanel:getTaskBoxMo(type)
 
-		for iter_5_0, iter_5_1 in pairs(var_5_2.tasks) do
-			if not iter_5_1:isFail() then
-				table.insert(var_5_0, iter_5_1)
+		for _, v in pairs(taskBox.tasks) do
+			if not v:isFail() then
+				table.insert(list, v)
 			end
 		end
 
-		if arg_5_1 == SurvivalEnum.TaskModule.MainTask then
-			local var_5_3 = {}
-			local var_5_4 = {}
+		if type == SurvivalEnum.TaskModule.MainTask then
+			local dict = {}
+			local taskIdDict = {}
 
-			for iter_5_2, iter_5_3 in pairs(var_5_0) do
-				var_5_4[iter_5_3.id] = true
+			for _, v in pairs(list) do
+				taskIdDict[v.id] = true
 
-				if iter_5_3.co then
-					var_5_3[iter_5_3.co.group] = true
+				if v.co then
+					dict[v.co.group] = true
 				end
 			end
 
-			for iter_5_4, iter_5_5 in ipairs(lua_survival_maintask.configList) do
-				if var_5_3[iter_5_5.group] and not var_5_4[iter_5_5.id] then
-					local var_5_5 = SurvivalTaskMo.Create(arg_5_1, iter_5_5.id)
+			for i, v in ipairs(lua_survival_maintask.configList) do
+				if dict[v.group] and not taskIdDict[v.id] then
+					local taskMo = SurvivalTaskMo.Create(type, v.id)
 
-					table.insert(var_5_0, var_5_5)
+					table.insert(list, taskMo)
 				end
 			end
 		end
 
-		if #var_5_0 > 1 then
-			if arg_5_1 == SurvivalEnum.TaskModule.SubTask then
-				table.sort(var_5_0, SortUtil.tableKeyLower({
+		if #list > 1 then
+			if type == SurvivalEnum.TaskModule.SubTask then
+				table.sort(list, SortUtil.tableKeyLower({
 					"id",
 					"type"
 				}))
-			elseif arg_5_1 == SurvivalEnum.TaskModule.MainTask then
-				table.sort(var_5_0, SortUtil.tableKeyLower({
+			elseif type == SurvivalEnum.TaskModule.MainTask then
+				table.sort(list, SortUtil.tableKeyLower({
 					"group",
 					"step",
 					"id"
 				}))
-			elseif arg_5_1 == SurvivalEnum.TaskModule.NormalTask then
-				table.sort(var_5_0, SortUtil.tableKeyLower({
+			elseif type == SurvivalEnum.TaskModule.NormalTask then
+				table.sort(list, SortUtil.tableKeyLower({
 					"status",
 					"id"
 				}))
 			else
-				table.sort(var_5_0, SortUtil.keyUpper("id"))
+				table.sort(list, SortUtil.keyUpper("id"))
 			end
 		end
 	end
 
-	return var_5_0
+	return list
 end
 
-var_0_0.instance = var_0_0.New()
+SurvivalTaskModel.instance = SurvivalTaskModel.New()
 
-return var_0_0
+return SurvivalTaskModel

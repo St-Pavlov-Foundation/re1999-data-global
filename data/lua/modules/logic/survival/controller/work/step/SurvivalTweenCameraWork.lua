@@ -1,33 +1,35 @@
-﻿module("modules.logic.survival.controller.work.step.SurvivalTweenCameraWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/step/SurvivalTweenCameraWork.lua
 
-local var_0_0 = class("SurvivalTweenCameraWork", SurvivalStepBaseWork)
+module("modules.logic.survival.controller.work.step.SurvivalTweenCameraWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	arg_1_0:moveNext()
+local SurvivalTweenCameraWork = class("SurvivalTweenCameraWork", SurvivalStepBaseWork)
+
+function SurvivalTweenCameraWork:onStart(context)
+	self:moveNext()
 end
 
-function var_0_0.moveNext(arg_2_0)
-	local var_2_0 = table.remove(arg_2_0._stepMo.hex)
+function SurvivalTweenCameraWork:moveNext()
+	local nextPos = table.remove(self._stepMo.hex)
 
-	if not var_2_0 then
-		local var_2_1 = SurvivalMapModel.instance:getSceneMo()
+	if not nextPos then
+		local sceneMo = SurvivalMapModel.instance:getSceneMo()
 
-		SurvivalMapHelper.instance:tryShowServerPanel(var_2_1.panel)
-		arg_2_0:onDone(true)
+		SurvivalMapHelper.instance:tryShowServerPanel(sceneMo.panel)
+		self:onDone(true)
 
 		return
 	end
 
 	ViewMgr.instance:closeAllPopupViews()
 
-	local var_2_2, var_2_3, var_2_4 = SurvivalHelper.instance:hexPointToWorldPoint(var_2_0.q, var_2_0.r)
+	local x, y, z = SurvivalHelper.instance:hexPointToWorldPoint(nextPos.q, nextPos.r)
 
-	SurvivalController.instance:dispatchEvent(SurvivalEvent.TweenCameraFocus, Vector3(var_2_2, var_2_3, var_2_4), 0.3)
-	TaskDispatcher.runDelay(arg_2_0.moveNext, arg_2_0, 0.4)
+	SurvivalController.instance:dispatchEvent(SurvivalEvent.TweenCameraFocus, Vector3(x, y, z), 0.3)
+	TaskDispatcher.runDelay(self.moveNext, self, 0.4)
 end
 
-function var_0_0.clearWork(arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0.moveNext, arg_3_0)
+function SurvivalTweenCameraWork:clearWork()
+	TaskDispatcher.cancelTask(self.moveNext, self)
 end
 
-return var_0_0
+return SurvivalTweenCameraWork

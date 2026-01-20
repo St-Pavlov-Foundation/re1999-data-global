@@ -1,18 +1,22 @@
-﻿module("modules.logic.versionactivity2_3.act174.view.info.Act174ItemTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/act174/view/info/Act174ItemTipViewContainer.lua
 
-local var_0_0 = class("Act174ItemTipViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_3.act174.view.info.Act174ItemTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	arg_1_0.view = Act174ItemTipView.New()
+local Act174ItemTipViewContainer = class("Act174ItemTipViewContainer", BaseViewContainer)
 
-	return {
-		arg_1_0.view
+function Act174ItemTipViewContainer:buildViews()
+	self.view = Act174ItemTipView.New()
+
+	local views = {
+		self.view
 	}
+
+	return views
 end
 
-function var_0_0.playCloseTransition(arg_2_0)
-	arg_2_0.view:playCloseAnim()
-	TaskDispatcher.runDelay(arg_2_0.onPlayCloseTransitionFinish, arg_2_0, 0.2)
+function Act174ItemTipViewContainer:playCloseTransition()
+	self.view:playCloseAnim()
+	TaskDispatcher.runDelay(self.onPlayCloseTransitionFinish, self, 0.2)
 end
 
-return var_0_0
+return Act174ItemTipViewContainer

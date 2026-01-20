@@ -1,33 +1,35 @@
-﻿module("modules.logic.versionactivity2_7.lengzhou6.controller.step.LengZhou6EnemyReleaseSkillStep", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/lengzhou6/controller/step/LengZhou6EnemyReleaseSkillStep.lua
 
-local var_0_0 = class("LengZhou6EnemyReleaseSkillStep", EliminateChessStepBase)
+module("modules.logic.versionactivity2_7.lengzhou6.controller.step.LengZhou6EnemyReleaseSkillStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0._data
-	local var_1_1 = LengZhou6GameModel.instance:getEnemy()
+local LengZhou6EnemyReleaseSkillStep = class("LengZhou6EnemyReleaseSkillStep", EliminateChessStepBase)
 
-	if var_1_1 == nil or var_1_0 == nil then
-		arg_1_0:onDone(true)
+function LengZhou6EnemyReleaseSkillStep:onStart()
+	local skill = self._data
+	local enemy = LengZhou6GameModel.instance:getEnemy()
+
+	if enemy == nil or skill == nil then
+		self:onDone(true)
 
 		return
 	end
 
-	local var_1_2 = var_1_0._id
-	local var_1_3 = var_1_0:getEffect()[1]
-	local var_1_4 = var_1_0:getConfigId()
+	local skillId = skill._id
+	local skillEffect = skill:getEffect()[1]
+	local skillConfigId = skill:getConfigId()
 
-	LengZhou6EliminateController.instance:dispatchEvent(LengZhou6Event.UseEnemySkill, var_1_2)
-	var_1_1:useSkill(var_1_2)
-	LengZhou6Controller.instance:dispatchEvent(LengZhou6Event.EnemyUseSkill, var_1_4)
+	LengZhou6EliminateController.instance:dispatchEvent(LengZhou6Event.UseEnemySkill, skillId)
+	enemy:useSkill(skillId)
+	LengZhou6Controller.instance:dispatchEvent(LengZhou6Event.EnemyUseSkill, skillConfigId)
 
-	if var_1_3 == LengZhou6Enum.SkillEffect.DealsDamage or var_1_3 == LengZhou6Enum.SkillEffect.Heal then
-		LengZhou6EliminateController.instance:dispatchEvent(LengZhou6Event.ShowEnemyEffect, var_1_3)
-		TaskDispatcher.runDelay(arg_1_0._onDone, arg_1_0, LengZhou6Enum.EnemySkillTime)
+	if skillEffect == LengZhou6Enum.SkillEffect.DealsDamage or skillEffect == LengZhou6Enum.SkillEffect.Heal then
+		LengZhou6EliminateController.instance:dispatchEvent(LengZhou6Event.ShowEnemyEffect, skillEffect)
+		TaskDispatcher.runDelay(self._onDone, self, LengZhou6Enum.EnemySkillTime)
 
 		return
 	else
-		TaskDispatcher.runDelay(arg_1_0._onDone, arg_1_0, LengZhou6Enum.EnemySkillTime_2)
+		TaskDispatcher.runDelay(self._onDone, self, LengZhou6Enum.EnemySkillTime_2)
 	end
 end
 
-return var_0_0
+return LengZhou6EnemyReleaseSkillStep

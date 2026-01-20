@@ -1,21 +1,25 @@
-﻿module("modules.logic.room.view.critter.RoomCritterTrainReportViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/critter/RoomCritterTrainReportViewContainer.lua
 
-local var_0_0 = class("RoomCritterTrainReportViewContainer", BaseViewContainer)
+module("modules.logic.room.view.critter.RoomCritterTrainReportViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoomCritterTrainReportViewContainer = class("RoomCritterTrainReportViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RoomCritterTrainReportView.New())
+function RoomCritterTrainReportViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RoomCritterTrainReportView.New())
+
+	return views
 end
 
-function var_0_0.playCloseTransition(arg_2_0)
-	ZProj.ProjAnimatorPlayer.Get(arg_2_0.viewGO):Play(UIAnimationName.Close, arg_2_0.onCloseAnimDone, arg_2_0)
+function RoomCritterTrainReportViewContainer:playCloseTransition()
+	local animatorPlayer = ZProj.ProjAnimatorPlayer.Get(self.viewGO)
+
+	animatorPlayer:Play(UIAnimationName.Close, self.onCloseAnimDone, self)
 end
 
-function var_0_0.onCloseAnimDone(arg_3_0)
-	arg_3_0:onPlayCloseTransitionFinish()
+function RoomCritterTrainReportViewContainer:onCloseAnimDone()
+	self:onPlayCloseTransitionFinish()
 end
 
-return var_0_0
+return RoomCritterTrainReportViewContainer

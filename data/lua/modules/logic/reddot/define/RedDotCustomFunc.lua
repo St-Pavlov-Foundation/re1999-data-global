@@ -1,23 +1,25 @@
-﻿module("modules.logic.reddot.define.RedDotCustomFunc", package.seeall)
+﻿-- chunkname: @modules/logic/reddot/define/RedDotCustomFunc.lua
 
-local var_0_0 = class("RedDotCustomFunc")
+module("modules.logic.reddot.define.RedDotCustomFunc", package.seeall)
 
-function var_0_0.isCustomShow(arg_1_0, arg_1_1)
-	local var_1_0 = var_0_0.CustomRedHandleFunc[arg_1_0]
+local RedDotCustomFunc = class("RedDotCustomFunc")
 
-	if var_1_0 then
-		return true, var_1_0(arg_1_0, arg_1_1)
+function RedDotCustomFunc.isCustomShow(id, uid)
+	local func = RedDotCustomFunc.CustomRedHandleFunc[id]
+
+	if func then
+		return true, func(id, uid)
 	end
 end
 
-function var_0_0.isShowNecrologistStory(arg_2_0, arg_2_1)
-	local var_2_0 = RoleStoryModel.instance:getCurActStoryId()
+function RedDotCustomFunc.isShowNecrologistStory(id, uid)
+	local storyId = RoleStoryModel.instance:getCurActStoryId()
 
-	return NecrologistStoryController.instance:getNecrologistStoryActivityRed(var_2_0)
+	return NecrologistStoryController.instance:getNecrologistStoryActivityRed(storyId)
 end
 
-var_0_0.CustomRedHandleFunc = {
-	[RedDotEnum.DotNode.NecrologistStory] = var_0_0.isShowNecrologistStory
+RedDotCustomFunc.CustomRedHandleFunc = {
+	[RedDotEnum.DotNode.NecrologistStory] = RedDotCustomFunc.isShowNecrologistStory
 }
 
-return var_0_0
+return RedDotCustomFunc

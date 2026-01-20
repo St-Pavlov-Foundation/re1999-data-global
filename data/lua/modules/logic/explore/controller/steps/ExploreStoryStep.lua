@@ -1,9 +1,11 @@
-﻿module("modules.logic.explore.controller.steps.ExploreStoryStep", package.seeall)
+﻿-- chunkname: @modules/logic/explore/controller/steps/ExploreStoryStep.lua
 
-local var_0_0 = class("ExploreStoryStep", ExploreStepBase)
+module("modules.logic.explore.controller.steps.ExploreStoryStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	StoryController.instance:playStory(arg_1_0._data.storyId, nil, arg_1_0.onDone, arg_1_0)
+local ExploreStoryStep = class("ExploreStoryStep", ExploreStepBase)
+
+function ExploreStoryStep:onStart()
+	StoryController.instance:playStory(self._data.storyId, nil, self.onDone, self)
 end
 
-return var_0_0
+return ExploreStoryStep

@@ -1,197 +1,199 @@
-﻿module("modules.common.unit.UnitMoverCurve", package.seeall)
+﻿-- chunkname: @modules/common/unit/UnitMoverCurve.lua
 
-local var_0_0 = class("UnitMoverCurve", LuaCompBase)
+module("modules.common.unit.UnitMoverCurve", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._timeScale = 1
-	arg_1_0._currTime = 0
-	arg_1_0._duration = 0
-	arg_1_0._wayPointBegin = nil
-	arg_1_0._wayPointEnd = nil
-	arg_1_0._wayPointValue = nil
-	arg_1_0._animationCurve = nil
-	arg_1_0._tCurve = nil
-	arg_1_0._getTimeFunction = nil
-	arg_1_0._getTimeObject = nil
-	arg_1_0._x_move_curve = nil
-	arg_1_0._y_move_curve = nil
-	arg_1_0._z_move_curve = nil
+local UnitMoverCurve = class("UnitMoverCurve", LuaCompBase)
 
-	LuaEventSystem.addEventMechanism(arg_1_0)
+function UnitMoverCurve:ctor()
+	self._timeScale = 1
+	self._currTime = 0
+	self._duration = 0
+	self._wayPointBegin = nil
+	self._wayPointEnd = nil
+	self._wayPointValue = nil
+	self._animationCurve = nil
+	self._tCurve = nil
+	self._getTimeFunction = nil
+	self._getTimeObject = nil
+	self._x_move_curve = nil
+	self._y_move_curve = nil
+	self._z_move_curve = nil
+
+	LuaEventSystem.addEventMechanism(self)
 end
 
-function var_0_0.setCurveParam(arg_2_0, arg_2_1)
-	arg_2_0._animationCurve = ZProj.AnimationCurveHelper.GetAnimationCurve(arg_2_1)
+function UnitMoverCurve:setCurveParam(curveParam)
+	self._animationCurve = ZProj.AnimationCurveHelper.GetAnimationCurve(curveParam)
 
-	if not arg_2_0._animationCurve then
+	if not self._animationCurve then
 		logError("动画曲线参数错误")
 	end
 end
 
-function var_0_0.setTCurveParam(arg_3_0, arg_3_1)
-	arg_3_0._tCurve = nil
+function UnitMoverCurve:setTCurveParam(curveParam)
+	self._tCurve = nil
 
-	if not string.nilorempty(arg_3_1) then
-		arg_3_0._tCurve = ZProj.AnimationCurveHelper.GetAnimationCurve(arg_3_1)
+	if not string.nilorempty(curveParam) then
+		self._tCurve = ZProj.AnimationCurveHelper.GetAnimationCurve(curveParam)
 	end
 end
 
-function var_0_0.setEaseType(arg_4_0, arg_4_1)
-	arg_4_0._easeType = arg_4_1 or EaseType.Linear
+function UnitMoverCurve:setEaseType(easeType)
+	self._easeType = easeType or EaseType.Linear
 end
 
-function var_0_0.setTimeScale(arg_5_0, arg_5_1)
-	arg_5_0._timeScale = arg_5_1
+function UnitMoverCurve:setTimeScale(timeScale)
+	self._timeScale = timeScale
 end
 
-function var_0_0.simpleMove(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5, arg_6_6, arg_6_7)
-	arg_6_0:setPosDirectly(arg_6_1, arg_6_2, arg_6_3)
+function UnitMoverCurve:simpleMove(startX, startY, startZ, endX, endY, endZ, duration)
+	self:setPosDirectly(startX, startY, startZ)
 
-	arg_6_0._currTime = 0
-	arg_6_0._duration = arg_6_7
-	arg_6_0._wayPointBegin = {
-		x = arg_6_1,
-		y = arg_6_2,
-		z = arg_6_3
+	self._currTime = 0
+	self._duration = duration
+	self._wayPointBegin = {
+		x = startX,
+		y = startY,
+		z = startZ
 	}
-	arg_6_0._wayPointEnd = {
-		x = arg_6_4,
-		y = arg_6_5,
-		z = arg_6_6
+	self._wayPointEnd = {
+		x = endX,
+		y = endY,
+		z = endZ
 	}
-	arg_6_0._wayPointValue = {
-		x = arg_6_4 - arg_6_1,
-		y = arg_6_5 - arg_6_2,
-		z = arg_6_6 - arg_6_3
+	self._wayPointValue = {
+		x = endX - startX,
+		y = endY - startY,
+		z = endZ - startZ
 	}
 end
 
-function var_0_0.setPosDirectly(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	arg_7_0._wayPointBegin = nil
-	arg_7_0._wayPointValue = nil
-	arg_7_0._yOffset = nil
-	arg_7_0._posX = arg_7_1
-	arg_7_0._posY = arg_7_2
-	arg_7_0._posZ = arg_7_3
+function UnitMoverCurve:setPosDirectly(x, y, z)
+	self._wayPointBegin = nil
+	self._wayPointValue = nil
+	self._yOffset = nil
+	self._posX = x
+	self._posY = y
+	self._posZ = z
 
-	arg_7_0:dispatchEvent(UnitMoveEvent.PosChanged, arg_7_0)
+	self:dispatchEvent(UnitMoveEvent.PosChanged, self)
 end
 
-function var_0_0.setGetTimeFunction(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0._getTimeFunction = arg_8_1
-	arg_8_0._getTimeObject = arg_8_2
+function UnitMoverCurve:setGetTimeFunction(getTimeFunction, getTimeObject)
+	self._getTimeFunction = getTimeFunction
+	self._getTimeObject = getTimeObject
 end
 
-function var_0_0.getCurWayPoint(arg_9_0)
-	return arg_9_0._curWayPoint
+function UnitMoverCurve:getCurWayPoint()
+	return self._curWayPoint
 end
 
-function var_0_0.getPos(arg_10_0)
-	return arg_10_0._posX, arg_10_0._posY + (arg_10_0._yOffset or 0), arg_10_0._posZ
+function UnitMoverCurve:getPos()
+	return self._posX, self._posY + (self._yOffset or 0), self._posZ
 end
 
-function var_0_0.onUpdate(arg_11_0)
-	if not arg_11_0._wayPointBegin then
+function UnitMoverCurve:onUpdate()
+	if not self._wayPointBegin then
 		return
 	end
 
-	if arg_11_0._getTimeFunction then
-		arg_11_0._currTime = arg_11_0._getTimeFunction(arg_11_0._getTimeObject)
+	if self._getTimeFunction then
+		self._currTime = self._getTimeFunction(self._getTimeObject)
 	else
-		arg_11_0._currTime = arg_11_0._currTime + Time.deltaTime * arg_11_0._timeScale
+		self._currTime = self._currTime + Time.deltaTime * self._timeScale
 	end
 
-	if arg_11_0._currTime >= arg_11_0._duration then
-		arg_11_0._posX = arg_11_0._wayPointEnd.x
-		arg_11_0._posY = arg_11_0._wayPointEnd.y
-		arg_11_0._posZ = arg_11_0._wayPointEnd.z
-		arg_11_0._wayPointBegin = nil
-		arg_11_0._wayPointEnd = nil
-		arg_11_0._wayPointValue = nil
+	if self._currTime >= self._duration then
+		self._posX = self._wayPointEnd.x
+		self._posY = self._wayPointEnd.y
+		self._posZ = self._wayPointEnd.z
+		self._wayPointBegin = nil
+		self._wayPointEnd = nil
+		self._wayPointValue = nil
 
-		arg_11_0:dispatchEvent(UnitMoveEvent.PosChanged, arg_11_0)
-		arg_11_0:dispatchEvent(UnitMoveEvent.Arrive, arg_11_0)
+		self:dispatchEvent(UnitMoveEvent.PosChanged, self)
+		self:dispatchEvent(UnitMoveEvent.Arrive, self)
 	else
-		local var_11_0 = arg_11_0._currTime / arg_11_0._duration
-		local var_11_1 = LuaTween.tween(var_11_0, 0, 1, 1, arg_11_0._easeType)
+		local percent = self._currTime / self._duration
+		local t = LuaTween.tween(percent, 0, 1, 1, self._easeType)
 
-		if arg_11_0._animationCurve then
-			arg_11_0._yOffset = arg_11_0._animationCurve:Evaluate(var_11_1)
+		if self._animationCurve then
+			self._yOffset = self._animationCurve:Evaluate(t)
 		end
 
-		if arg_11_0._tCurve then
-			local var_11_2 = arg_11_0._tCurve:Evaluate(var_11_1) / 10
+		if self._tCurve then
+			local exPercent = self._tCurve:Evaluate(t) / 10
 
-			arg_11_0._posX = arg_11_0._wayPointBegin.x * (1 - var_11_2) + arg_11_0._wayPointEnd.x * var_11_2
-			arg_11_0._posY = arg_11_0._wayPointBegin.y * (1 - var_11_2) + arg_11_0._wayPointEnd.y * var_11_2
-			arg_11_0._posZ = arg_11_0._wayPointBegin.z * (1 - var_11_2) + arg_11_0._wayPointEnd.z * var_11_2
+			self._posX = self._wayPointBegin.x * (1 - exPercent) + self._wayPointEnd.x * exPercent
+			self._posY = self._wayPointBegin.y * (1 - exPercent) + self._wayPointEnd.y * exPercent
+			self._posZ = self._wayPointBegin.z * (1 - exPercent) + self._wayPointEnd.z * exPercent
 		else
-			if arg_11_0._x_move_curve then
-				arg_11_0._posX = arg_11_0._wayPointBegin.x + (arg_11_0._wayPointEnd.x - arg_11_0._wayPointBegin.x) * arg_11_0._x_move_curve:Evaluate(var_11_1) / 10
+			if self._x_move_curve then
+				self._posX = self._wayPointBegin.x + (self._wayPointEnd.x - self._wayPointBegin.x) * self._x_move_curve:Evaluate(t) / 10
 			else
-				arg_11_0._posX = LuaTween.tween(arg_11_0._currTime, arg_11_0._wayPointBegin.x, arg_11_0._wayPointValue.x, arg_11_0._duration, arg_11_0._easeType)
+				self._posX = LuaTween.tween(self._currTime, self._wayPointBegin.x, self._wayPointValue.x, self._duration, self._easeType)
 			end
 
-			if arg_11_0._y_move_curve then
-				arg_11_0._posY = arg_11_0._wayPointBegin.y + (arg_11_0._wayPointEnd.y - arg_11_0._wayPointBegin.y) * arg_11_0._y_move_curve:Evaluate(var_11_1) / 10
+			if self._y_move_curve then
+				self._posY = self._wayPointBegin.y + (self._wayPointEnd.y - self._wayPointBegin.y) * self._y_move_curve:Evaluate(t) / 10
 			else
-				arg_11_0._posY = LuaTween.tween(arg_11_0._currTime, arg_11_0._wayPointBegin.y, arg_11_0._wayPointValue.y, arg_11_0._duration, arg_11_0._easeType)
+				self._posY = LuaTween.tween(self._currTime, self._wayPointBegin.y, self._wayPointValue.y, self._duration, self._easeType)
 			end
 
-			if arg_11_0._z_move_curve then
-				arg_11_0._posZ = arg_11_0._wayPointBegin.z + (arg_11_0._wayPointEnd.z - arg_11_0._wayPointBegin.z) * arg_11_0._z_move_curve:Evaluate(var_11_1) / 10
+			if self._z_move_curve then
+				self._posZ = self._wayPointBegin.z + (self._wayPointEnd.z - self._wayPointBegin.z) * self._z_move_curve:Evaluate(t) / 10
 			else
-				arg_11_0._posZ = LuaTween.tween(arg_11_0._currTime, arg_11_0._wayPointBegin.z, arg_11_0._wayPointValue.z, arg_11_0._duration, arg_11_0._easeType)
+				self._posZ = LuaTween.tween(self._currTime, self._wayPointBegin.z, self._wayPointValue.z, self._duration, self._easeType)
 			end
 		end
 
-		arg_11_0:dispatchEvent(UnitMoveEvent.PosChanged, arg_11_0)
+		self:dispatchEvent(UnitMoveEvent.PosChanged, self)
 	end
 end
 
-function var_0_0.setXMoveCruve(arg_12_0, arg_12_1)
-	if string.nilorempty(arg_12_1) then
+function UnitMoverCurve:setXMoveCruve(curveParam)
+	if string.nilorempty(curveParam) then
 		return
 	end
 
-	arg_12_0._x_move_curve = ZProj.AnimationCurveHelper.GetAnimationCurve(arg_12_1)
+	self._x_move_curve = ZProj.AnimationCurveHelper.GetAnimationCurve(curveParam)
 
-	if not arg_12_0._x_move_curve then
+	if not self._x_move_curve then
 		logError("X轴位移曲线参数错误")
 	end
 end
 
-function var_0_0.setYMoveCruve(arg_13_0, arg_13_1)
-	if string.nilorempty(arg_13_1) then
+function UnitMoverCurve:setYMoveCruve(curveParam)
+	if string.nilorempty(curveParam) then
 		return
 	end
 
-	arg_13_0._y_move_curve = ZProj.AnimationCurveHelper.GetAnimationCurve(arg_13_1)
+	self._y_move_curve = ZProj.AnimationCurveHelper.GetAnimationCurve(curveParam)
 
-	if not arg_13_0._y_move_curve then
+	if not self._y_move_curve then
 		logError("Y轴位移曲线参数错误")
 	end
 end
 
-function var_0_0.setZMoveCruve(arg_14_0, arg_14_1)
-	if string.nilorempty(arg_14_1) then
+function UnitMoverCurve:setZMoveCruve(curveParam)
+	if string.nilorempty(curveParam) then
 		return
 	end
 
-	arg_14_0._z_move_curve = ZProj.AnimationCurveHelper.GetAnimationCurve(arg_14_1)
+	self._z_move_curve = ZProj.AnimationCurveHelper.GetAnimationCurve(curveParam)
 
-	if not arg_14_0._z_move_curve then
+	if not self._z_move_curve then
 		logError("Z轴位移曲线参数错误")
 	end
 end
 
-function var_0_0.onDestroy(arg_15_0)
-	arg_15_0._animationCurve = nil
-	arg_15_0._tCurve = nil
-	arg_15_0._x_move_curve = nil
-	arg_15_0._y_move_curve = nil
-	arg_15_0._z_move_curve = nil
-	arg_15_0._yOffset = nil
+function UnitMoverCurve:onDestroy()
+	self._animationCurve = nil
+	self._tCurve = nil
+	self._x_move_curve = nil
+	self._y_move_curve = nil
+	self._z_move_curve = nil
+	self._yOffset = nil
 end
 
-return var_0_0
+return UnitMoverCurve

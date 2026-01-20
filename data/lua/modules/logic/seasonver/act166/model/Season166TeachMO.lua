@@ -1,15 +1,17 @@
-﻿module("modules.logic.seasonver.act166.model.Season166TeachMO", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act166/model/Season166TeachMO.lua
 
-local var_0_0 = pureTable("Season166TeachMO")
+module("modules.logic.seasonver.act166.model.Season166TeachMO", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.id = 0
-	arg_1_0.passCount = 0
+local Season166TeachMO = pureTable("Season166TeachMO")
+
+function Season166TeachMO:ctor()
+	self.id = 0
+	self.passCount = 0
 end
 
-function var_0_0.setData(arg_2_0, arg_2_1)
-	arg_2_0.id = arg_2_1.id
-	arg_2_0.passCount = arg_2_1.passCount
+function Season166TeachMO:setData(info)
+	self.id = info.id
+	self.passCount = info.passCount
 end
 
-return var_0_0
+return Season166TeachMO

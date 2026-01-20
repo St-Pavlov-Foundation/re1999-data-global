@@ -1,13 +1,15 @@
-﻿module("modules.logic.survival.view.shelter.SurvivalDecreeSelectViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/SurvivalDecreeSelectViewContainer.lua
 
-local var_0_0 = class("SurvivalDecreeSelectViewContainer", BaseViewContainer)
+module("modules.logic.survival.view.shelter.SurvivalDecreeSelectViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local SurvivalDecreeSelectViewContainer = class("SurvivalDecreeSelectViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, SurvivalDecreeSelectView.New())
+function SurvivalDecreeSelectViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, SurvivalDecreeSelectView.New())
+
+	return views
 end
 
-return var_0_0
+return SurvivalDecreeSelectViewContainer

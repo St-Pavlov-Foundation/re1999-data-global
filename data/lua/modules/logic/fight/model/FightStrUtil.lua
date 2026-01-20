@@ -1,176 +1,177 @@
-﻿local var_0_0 = class("FightStrUtil")
-local var_0_1 = "true"
-local var_0_2 = "false"
+﻿-- chunkname: @modules/logic/fight/model/FightStrUtil.lua
 
-function var_0_0.ctor(arg_1_0)
+local FightStrUtil = class("FightStrUtil")
+local NumberTrue = "true"
+local NumberFalse = "false"
+
+function FightStrUtil:ctor()
 	return
 end
 
-function var_0_0.split(arg_2_0, arg_2_1)
-	arg_2_0 = tostring(arg_2_0)
-	arg_2_1 = tostring(arg_2_1)
+function FightStrUtil.split(input, delimiter)
+	input = tostring(input)
+	delimiter = tostring(delimiter)
 
-	if arg_2_1 == "" then
+	if delimiter == "" then
 		return false
 	end
 
-	local var_2_0 = 0
-	local var_2_1 = {}
+	local pos, arr = 0, {}
 
-	for iter_2_0, iter_2_1 in function()
-		return string.find(arg_2_0, arg_2_1, var_2_0, true)
+	for st, sp in function()
+		return string.find(input, delimiter, pos, true)
 	end do
-		table.insert(var_2_1, string.sub(arg_2_0, var_2_0, iter_2_0 - 1))
+		table.insert(arr, string.sub(input, pos, st - 1))
 
-		var_2_0 = iter_2_1 + 1
+		pos = sp + 1
 	end
 
-	table.insert(var_2_1, string.sub(arg_2_0, var_2_0))
+	table.insert(arr, string.sub(input, pos))
 
-	return var_2_1
+	return arr
 end
 
-function var_0_0.splitToNumber(arg_4_0, arg_4_1)
-	local var_4_0 = {}
+function FightStrUtil.splitToNumber(input, delimiter)
+	local arr = {}
 
-	for iter_4_0, iter_4_1 in ipairs(var_0_0.split(arg_4_0, arg_4_1)) do
-		var_4_0[iter_4_0] = tonumber(iter_4_1)
+	for i, v in ipairs(FightStrUtil.split(input, delimiter)) do
+		arr[i] = tonumber(v)
 	end
 
-	return var_4_0
+	return arr
 end
 
-function var_0_0.splitString2(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	if string.nilorempty(arg_5_0) then
+function FightStrUtil.splitString2(str, isNumber, separation1, separation2)
+	if string.nilorempty(str) then
 		return
 	end
 
-	arg_5_2 = arg_5_2 or "|"
-	arg_5_3 = arg_5_3 or "#"
+	separation1 = separation1 or "|"
+	separation2 = separation2 or "#"
 
-	local var_5_0 = var_0_0.split(arg_5_0, arg_5_2)
+	local ans = FightStrUtil.split(str, separation1)
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_0) do
-		if arg_5_1 then
-			var_5_0[iter_5_0] = var_0_0.splitToNumber(iter_5_1, arg_5_3)
+	for i, each in ipairs(ans) do
+		if isNumber then
+			ans[i] = FightStrUtil.splitToNumber(each, separation2)
 		else
-			var_5_0[iter_5_0] = var_0_0.split(iter_5_1, arg_5_3)
+			ans[i] = FightStrUtil.split(each, separation2)
 		end
 	end
 
-	return var_5_0
+	return ans
 end
 
-function var_0_0.init(arg_6_0)
-	arg_6_0.inited = true
+function FightStrUtil:init()
+	self.inited = true
 end
 
-function var_0_0.getSplitCache(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_0:logNoInFight()
+function FightStrUtil:getSplitCache(content, delimiter)
+	self:logNoInFight()
 
-	local var_7_0 = tostring(arg_7_2)
+	local cacheKey = tostring(delimiter)
 
-	if not arg_7_0._splitCache then
-		arg_7_0._splitCache = {}
+	if not self._splitCache then
+		self._splitCache = {}
 	end
 
-	if not arg_7_0._splitCache[var_7_0] then
-		arg_7_0._splitCache[var_7_0] = {}
+	if not self._splitCache[cacheKey] then
+		self._splitCache[cacheKey] = {}
 	end
 
-	local var_7_1 = arg_7_0._splitCache[var_7_0]
-	local var_7_2 = tostring(arg_7_1)
+	local cacheTable = self._splitCache[cacheKey]
+	local key = tostring(content)
 
-	if not var_7_1[var_7_2] then
-		var_7_1[var_7_2] = arg_7_0.split(arg_7_1, arg_7_2)
+	if not cacheTable[key] then
+		cacheTable[key] = self.split(content, delimiter)
 	end
 
-	return var_7_1[var_7_2]
+	return cacheTable[key]
 end
 
-function var_0_0.getSplitToNumberCache(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0:logNoInFight()
+function FightStrUtil:getSplitToNumberCache(content, delimiter)
+	self:logNoInFight()
 
-	local var_8_0 = tostring(arg_8_2)
+	local cacheKey = tostring(delimiter)
 
-	if not arg_8_0._splitToNumberCache then
-		arg_8_0._splitToNumberCache = {}
+	if not self._splitToNumberCache then
+		self._splitToNumberCache = {}
 	end
 
-	if not arg_8_0._splitToNumberCache[var_8_0] then
-		arg_8_0._splitToNumberCache[var_8_0] = {}
+	if not self._splitToNumberCache[cacheKey] then
+		self._splitToNumberCache[cacheKey] = {}
 	end
 
-	local var_8_1 = arg_8_0._splitToNumberCache[var_8_0]
-	local var_8_2 = tostring(arg_8_1)
+	local cacheTable = self._splitToNumberCache[cacheKey]
+	local key = tostring(content)
 
-	if not var_8_1[var_8_2] then
-		var_8_1[var_8_2] = arg_8_0.splitToNumber(arg_8_1, arg_8_2)
+	if not cacheTable[key] then
+		cacheTable[key] = self.splitToNumber(content, delimiter)
 	end
 
-	return var_8_1[var_8_2]
+	return cacheTable[key]
 end
 
-function var_0_0.getSplitString2Cache(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
-	arg_9_0:logNoInFight()
+function FightStrUtil:getSplitString2Cache(content, isNumber, separation1, separation2)
+	self:logNoInFight()
 
-	if string.nilorempty(arg_9_1) then
+	if string.nilorempty(content) then
 		return
 	end
 
-	arg_9_3 = arg_9_3 or "|"
-	arg_9_4 = arg_9_4 or "#"
+	separation1 = separation1 or "|"
+	separation2 = separation2 or "#"
 
-	local var_9_0 = arg_9_2 and var_0_1 or var_0_2
+	local numberStr = isNumber and NumberTrue or NumberFalse
 
-	if not arg_9_0._splitString2Cache then
-		arg_9_0._splitString2Cache = {}
+	if not self._splitString2Cache then
+		self._splitString2Cache = {}
 	end
 
-	if not arg_9_0._splitString2Cache[var_9_0] then
-		arg_9_0._splitString2Cache[var_9_0] = {}
+	if not self._splitString2Cache[numberStr] then
+		self._splitString2Cache[numberStr] = {}
 	end
 
-	if not arg_9_0._splitString2Cache[var_9_0][arg_9_3] then
-		arg_9_0._splitString2Cache[var_9_0][arg_9_3] = {}
+	if not self._splitString2Cache[numberStr][separation1] then
+		self._splitString2Cache[numberStr][separation1] = {}
 	end
 
-	if not arg_9_0._splitString2Cache[var_9_0][arg_9_3][arg_9_4] then
-		arg_9_0._splitString2Cache[var_9_0][arg_9_3][arg_9_4] = {}
+	if not self._splitString2Cache[numberStr][separation1][separation2] then
+		self._splitString2Cache[numberStr][separation1][separation2] = {}
 	end
 
-	local var_9_1 = arg_9_0._splitString2Cache[var_9_0][arg_9_3][arg_9_4]
-	local var_9_2 = tostring(arg_9_1)
+	local cacheTable = self._splitString2Cache[numberStr][separation1][separation2]
+	local key = tostring(content)
 
-	if not var_9_1[var_9_2] then
-		var_9_1[var_9_2] = arg_9_0.splitString2(arg_9_1, arg_9_2, arg_9_3, arg_9_4)
+	if not cacheTable[key] then
+		cacheTable[key] = self.splitString2(content, isNumber, separation1, separation2)
 	end
 
-	return var_9_1[var_9_2]
+	return cacheTable[key]
 end
 
-function var_0_0.logNoInFight(arg_10_0)
-	if not arg_10_0.inited and GameUtil.needLogInOtherSceneUseFightStrUtilFunc() then
+function FightStrUtil:logNoInFight()
+	if not self.inited and GameUtil.needLogInOtherSceneUseFightStrUtilFunc() then
 		logError("不在战斗内，不要调用`FightStrUtil`相关接口")
 	end
 end
 
-function var_0_0.dispose(arg_11_0)
-	arg_11_0.inited = nil
+function FightStrUtil:dispose()
+	self.inited = nil
 
-	if arg_11_0._splitCache then
-		arg_11_0._splitCache = nil
+	if self._splitCache then
+		self._splitCache = nil
 	end
 
-	if arg_11_0._splitToNumberCache then
-		arg_11_0._splitToNumberCache = nil
+	if self._splitToNumberCache then
+		self._splitToNumberCache = nil
 	end
 
-	if arg_11_0._splitString2Cache then
-		arg_11_0._splitString2Cache = nil
+	if self._splitString2Cache then
+		self._splitString2Cache = nil
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+FightStrUtil.instance = FightStrUtil.New()
 
-return var_0_0
+return FightStrUtil

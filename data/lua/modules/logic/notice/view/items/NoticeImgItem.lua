@@ -1,32 +1,34 @@
-﻿module("modules.logic.notice.view.items.NoticeImgItem", package.seeall)
+﻿-- chunkname: @modules/logic/notice/view/items/NoticeImgItem.lua
 
-local var_0_0 = class("NoticeImgItem", NoticeContentBaseItem)
+module("modules.logic.notice.view.items.NoticeImgItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	var_0_0.super.init(arg_1_0, arg_1_1, arg_1_2)
+local NoticeImgItem = class("NoticeImgItem", NoticeContentBaseItem)
 
-	arg_1_0.btnImg = gohelper.findChildButtonWithAudio(arg_1_1, "#img_inner")
-	arg_1_0.goImg = arg_1_0.btnImg.gameObject
-	arg_1_0.trImg = arg_1_0.goImg:GetComponent(gohelper.Type_RectTransform)
+function NoticeImgItem:init(go, types)
+	NoticeImgItem.super.init(self, go, types)
+
+	self.btnImg = gohelper.findChildButtonWithAudio(go, "#img_inner")
+	self.goImg = self.btnImg.gameObject
+	self.trImg = self.goImg:GetComponent(gohelper.Type_RectTransform)
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0.btnImg:AddClickListener(arg_2_0.onClickImg, arg_2_0)
+function NoticeImgItem:addEventListeners()
+	self.btnImg:AddClickListener(self.onClickImg, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0.btnImg:RemoveClickListener()
+function NoticeImgItem:removeEventListeners()
+	self.btnImg:RemoveClickListener()
 end
 
-function var_0_0.onClickImg(arg_4_0)
-	if not string.nilorempty(arg_4_0.mo.link) then
-		local var_4_0 = ViewMgr.instance:getContainer(ViewName.NoticeView)
+function NoticeImgItem:onClickImg()
+	if not string.nilorempty(self.mo.link) then
+		local c = ViewMgr.instance:getContainer(ViewName.NoticeView)
 
-		if var_4_0 then
-			var_4_0:trackNoticeJump(arg_4_0.mo)
+		if c then
+			c:trackNoticeJump(self.mo)
 		end
 
-		arg_4_0:jump(arg_4_0.mo.linkType, arg_4_0.mo.link, arg_4_0.mo.link1, arg_4_0.mo.useWebView == 1, arg_4_0.mo.recordUser == 1)
+		self:jump(self.mo.linkType, self.mo.link, self.mo.link1, self.mo.useWebView == 1, self.mo.recordUser == 1)
 		StatController.instance:track(StatEnum.EventName.ClickNoticeImage, {
 			[StatEnum.EventProperties.NoticeType] = NoticeContentListModel.instance:getCurSelectNoticeTypeStr(),
 			[StatEnum.EventProperties.NoticeTitle] = NoticeContentListModel.instance:getCurSelectNoticeTitle()
@@ -34,47 +36,49 @@ function var_0_0.onClickImg(arg_4_0)
 	end
 end
 
-function var_0_0.show(arg_5_0)
-	gohelper.setActive(arg_5_0.goImg, true)
+function NoticeImgItem:show()
+	gohelper.setActive(self.goImg, true)
 
-	local var_5_0 = arg_5_0.mo
-	local var_5_1 = var_5_0.content
+	local mo = self.mo
+	local content = mo.content
+	local noticeImage = MonoHelper.addNoUpdateLuaComOnceToGo(self.goImg, NoticeImage)
+	local isSuccessLoaded = noticeImage:load(content)
 
-	if MonoHelper.addNoUpdateLuaComOnceToGo(arg_5_0.goImg, NoticeImage):load(var_5_1) then
-		if not var_5_0.width then
-			var_5_0.width, var_5_0.height = NoticeModel.instance:getSpriteCacheDefaultSize(SLFramework.FileHelper.GetFileName(string.gsub(var_5_1, "?.*", ""), true))
+	if isSuccessLoaded then
+		if not mo.width then
+			mo.width, mo.height = NoticeModel.instance:getSpriteCacheDefaultSize(SLFramework.FileHelper.GetFileName(string.gsub(content, "?.*", ""), true))
 		end
 
-		recthelper.setSize(arg_5_0.trImg, var_5_0.width, var_5_0.height)
+		recthelper.setSize(self.trImg, mo.width, mo.height)
 	else
-		recthelper.setSize(arg_5_0.trImg, NoticeEnum.IMGDefaultWidth, NoticeEnum.IMGDefaultHeight)
+		recthelper.setSize(self.trImg, NoticeEnum.IMGDefaultWidth, NoticeEnum.IMGDefaultHeight)
 	end
 
-	if var_5_0.align == NoticeContentType.Align.Left then
-		arg_5_0.trImg.anchorMin = NoticeContentType.Anchor.LeftAnchor
-		arg_5_0.trImg.anchorMax = NoticeContentType.Anchor.LeftAnchor
+	if mo.align == NoticeContentType.Align.Left then
+		self.trImg.anchorMin = NoticeContentType.Anchor.LeftAnchor
+		self.trImg.anchorMax = NoticeContentType.Anchor.LeftAnchor
 
-		recthelper.setAnchor(arg_5_0.trImg, var_5_0.width / 2, 0)
-	elseif var_5_0.align == NoticeContentType.Align.Center then
-		arg_5_0.trImg.anchorMin = NoticeContentType.Anchor.CenterAnchor
-		arg_5_0.trImg.anchorMax = NoticeContentType.Anchor.CenterAnchor
+		recthelper.setAnchor(self.trImg, mo.width / 2, 0)
+	elseif mo.align == NoticeContentType.Align.Center then
+		self.trImg.anchorMin = NoticeContentType.Anchor.CenterAnchor
+		self.trImg.anchorMax = NoticeContentType.Anchor.CenterAnchor
 
-		recthelper.setAnchor(arg_5_0.trImg, 0, 0)
-	elseif var_5_0.align == NoticeContentType.Align.Right then
-		arg_5_0.trImg.anchorMin = NoticeContentType.Anchor.RightAnchor
-		arg_5_0.trImg.anchorMax = NoticeContentType.Anchor.RightAnchor
+		recthelper.setAnchor(self.trImg, 0, 0)
+	elseif mo.align == NoticeContentType.Align.Right then
+		self.trImg.anchorMin = NoticeContentType.Anchor.RightAnchor
+		self.trImg.anchorMax = NoticeContentType.Anchor.RightAnchor
 
-		recthelper.setAnchor(arg_5_0.trImg, -var_5_0.width / 2, 0)
+		recthelper.setAnchor(self.trImg, -mo.width / 2, 0)
 	else
-		arg_5_0.trImg.anchorMin = NoticeContentType.Anchor.LeftAnchor
-		arg_5_0.trImg.anchorMax = NoticeContentType.Anchor.LeftAnchor
+		self.trImg.anchorMin = NoticeContentType.Anchor.LeftAnchor
+		self.trImg.anchorMax = NoticeContentType.Anchor.LeftAnchor
 
-		recthelper.setAnchor(arg_5_0.trImg, var_5_0.width / 2, 0)
+		recthelper.setAnchor(self.trImg, mo.width / 2, 0)
 	end
 end
 
-function var_0_0.hide(arg_6_0)
-	gohelper.setActive(arg_6_0.goImg, false)
+function NoticeImgItem:hide()
+	gohelper.setActive(self.goImg, false)
 end
 
-return var_0_0
+return NoticeImgItem

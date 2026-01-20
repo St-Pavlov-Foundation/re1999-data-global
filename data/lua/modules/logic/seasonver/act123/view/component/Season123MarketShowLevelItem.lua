@@ -1,34 +1,36 @@
-﻿module("modules.logic.seasonver.act123.view.component.Season123MarketShowLevelItem", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view/component/Season123MarketShowLevelItem.lua
 
-local var_0_0 = class("Season123MarketShowLevelItem", UserDataDispose)
+module("modules.logic.seasonver.act123.view.component.Season123MarketShowLevelItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	arg_1_0:__onInit()
+local Season123MarketShowLevelItem = class("Season123MarketShowLevelItem", UserDataDispose)
 
-	arg_1_0.go = arg_1_1
-	arg_1_0.index = arg_1_2
-	arg_1_0.targetIndex = arg_1_3
-	arg_1_0.maxIndex = arg_1_4
-	arg_1_0._goselected = gohelper.findChild(arg_1_1, "#go_selected")
-	arg_1_0._txtselectindex = gohelper.findChildText(arg_1_1, "#go_selected/#txt_selectindex")
-	arg_1_0._gounselect = gohelper.findChild(arg_1_1, "#go_unselected")
-	arg_1_0._txtunselectindex = gohelper.findChildText(arg_1_1, "#go_unselected/#txt_selectindex")
+function Season123MarketShowLevelItem:init(go, index, targetIndex, maxIndex)
+	self:__onInit()
 
-	gohelper.setActive(arg_1_0.go, true)
-	gohelper.setActive(arg_1_0._goselected, false)
-	gohelper.setActive(arg_1_0._gounselect, false)
+	self.go = go
+	self.index = index
+	self.targetIndex = targetIndex
+	self.maxIndex = maxIndex
+	self._goselected = gohelper.findChild(go, "#go_selected")
+	self._txtselectindex = gohelper.findChildText(go, "#go_selected/#txt_selectindex")
+	self._gounselect = gohelper.findChild(go, "#go_unselected")
+	self._txtunselectindex = gohelper.findChildText(go, "#go_unselected/#txt_selectindex")
+
+	gohelper.setActive(self.go, true)
+	gohelper.setActive(self._goselected, false)
+	gohelper.setActive(self._gounselect, false)
 end
 
-function var_0_0.show(arg_2_0)
-	gohelper.setActive(arg_2_0._goselected, arg_2_0.targetIndex == arg_2_0.index)
-	gohelper.setActive(arg_2_0._gounselect, arg_2_0.targetIndex ~= arg_2_0.index)
+function Season123MarketShowLevelItem:show()
+	gohelper.setActive(self._goselected, self.targetIndex == self.index)
+	gohelper.setActive(self._gounselect, self.targetIndex ~= self.index)
 
-	arg_2_0._txtselectindex.text = string.format("%02d", arg_2_0.index)
-	arg_2_0._txtunselectindex.text = string.format("%02d", arg_2_0.index)
+	self._txtselectindex.text = string.format("%02d", self.index)
+	self._txtunselectindex.text = string.format("%02d", self.index)
 end
 
-function var_0_0.destroy(arg_3_0)
-	arg_3_0:__onDispose()
+function Season123MarketShowLevelItem:destroy()
+	self:__onDispose()
 end
 
-return var_0_0
+return Season123MarketShowLevelItem

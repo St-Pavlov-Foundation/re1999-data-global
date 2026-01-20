@@ -1,155 +1,157 @@
-﻿module("modules.logic.fight.system.work.FightBuffTriggerEffect", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightBuffTriggerEffect.lua
 
-local var_0_0 = class("FightBuffTriggerEffect", FightEffectBase)
-local var_0_1 = 2
-local var_0_2 = 2
+module("modules.logic.fight.system.work.FightBuffTriggerEffect", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = FightHelper.getEntity(arg_1_0.actEffectData.targetId)
+local FightBuffTriggerEffect = class("FightBuffTriggerEffect", FightEffectBase)
+local OnceEffectTime = 2
+local AnimTime = 2
 
-	if not var_1_0 then
-		arg_1_0:onDone(true)
+function FightBuffTriggerEffect:onStart()
+	local targetEntity = FightHelper.getEntity(self.actEffectData.targetId)
+
+	if not targetEntity then
+		self:onDone(true)
 
 		return
 	end
 
-	local var_1_1 = lua_skill_buff.configDict[arg_1_0.actEffectData.effectNum]
+	local buffCO = lua_skill_buff.configDict[self.actEffectData.effectNum]
 
-	if var_1_1 and FightHelper.shouUIPoisoningEffect(var_1_1.id) and var_1_0.nameUI and var_1_0.nameUI.showPoisoningEffect then
-		var_1_0.nameUI:showPoisoningEffect(var_1_1)
+	if buffCO and FightHelper.shouUIPoisoningEffect(buffCO.id) and targetEntity.nameUI and targetEntity.nameUI.showPoisoningEffect then
+		targetEntity.nameUI:showPoisoningEffect(buffCO)
 	end
 
-	local var_1_2, var_1_3, var_1_4 = arg_1_0:_getBuffTriggerParam(var_1_1, var_1_0)
+	local triggerEffect, triggerEffectHangPoint, triggerAudio = self:_getBuffTriggerParam(buffCO, targetEntity)
 
-	if var_1_2 ~= "0" and not string.nilorempty(var_1_2) then
-		local var_1_5 = var_1_0:getSide()
-		local var_1_6 = "buff/" .. var_1_2
+	if triggerEffect ~= "0" and not string.nilorempty(triggerEffect) then
+		local side = targetEntity:getSide()
+		local effectPath = "buff/" .. triggerEffect
 
-		arg_1_0._effectWrap = nil
+		self._effectWrap = nil
 
-		if not string.nilorempty(var_1_3) then
-			arg_1_0._effectWrap = var_1_0.effect:addHangEffect(var_1_6, var_1_3, var_1_5)
+		if not string.nilorempty(triggerEffectHangPoint) then
+			self._effectWrap = targetEntity.effect:addHangEffect(effectPath, triggerEffectHangPoint, side)
 
-			arg_1_0._effectWrap:setLocalPos(0, 0, 0)
+			self._effectWrap:setLocalPos(0, 0, 0)
 		else
-			arg_1_0._effectWrap = var_1_0.effect:addGlobalEffect(var_1_6, var_1_5)
+			self._effectWrap = targetEntity.effect:addGlobalEffect(effectPath, side)
 
-			local var_1_7, var_1_8, var_1_9 = transformhelper.getPos(var_1_0.go.transform)
+			local posX, posY, posZ = transformhelper.getPos(targetEntity.go.transform)
 
-			arg_1_0._effectWrap:setWorldPos(var_1_7, var_1_8, var_1_9)
+			self._effectWrap:setWorldPos(posX, posY, posZ)
 		end
 
-		FightRenderOrderMgr.instance:onAddEffectWrap(var_1_0.id, arg_1_0._effectWrap)
-		TaskDispatcher.runDelay(arg_1_0._onTickCheckRemoveEffect, arg_1_0, var_0_1 / FightModel.instance:getSpeed())
+		FightRenderOrderMgr.instance:onAddEffectWrap(targetEntity.id, self._effectWrap)
+		TaskDispatcher.runDelay(self._onTickCheckRemoveEffect, self, OnceEffectTime / FightModel.instance:getSpeed())
 	end
 
-	if var_1_4 and var_1_4 > 0 then
-		FightAudioMgr.instance:playAudio(var_1_4)
+	if triggerAudio and triggerAudio > 0 then
+		FightAudioMgr.instance:playAudio(triggerAudio)
 	end
 
-	arg_1_0._animationName = var_1_1 and var_1_1.triggerAnimationName
-	arg_1_0._animationName = FightHelper.processEntityActionName(var_1_0, arg_1_0._animationName)
+	self._animationName = buffCO and buffCO.triggerAnimationName
+	self._animationName = FightHelper.processEntityActionName(targetEntity, self._animationName)
 
-	if not string.nilorempty(arg_1_0._animationName) and var_1_0.spine:hasAnimation(arg_1_0._animationName) then
-		arg_1_0._hasPlayAnim = true
+	if not string.nilorempty(self._animationName) and targetEntity.spine and targetEntity.spine:hasAnimation(self._animationName) then
+		self._hasPlayAnim = true
 
-		var_1_0.spine:addAnimEventCallback(arg_1_0._onAnimEvent, arg_1_0)
-		var_1_0.spine:play(arg_1_0._animationName, false, true, true)
-		TaskDispatcher.runDelay(arg_1_0._onTickCheckRemoveAnim, arg_1_0, var_0_2 / FightModel.instance:getSpeed())
+		targetEntity.spine:addAnimEventCallback(self._onAnimEvent, self)
+		targetEntity.spine:play(self._animationName, false, true, true)
+		TaskDispatcher.runDelay(self._onTickCheckRemoveAnim, self, AnimTime / FightModel.instance:getSpeed())
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0._getBuffTriggerParam(arg_2_0, arg_2_1, arg_2_2)
-	local var_2_0 = arg_2_1 and arg_2_1.triggerEffect
-	local var_2_1 = arg_2_1 and arg_2_1.triggerEffectHangPoint
-	local var_2_2 = arg_2_1 and arg_2_1.triggerAudio
+function FightBuffTriggerEffect:_getBuffTriggerParam(buffCO, targetEntity)
+	local triggerEffect = buffCO and buffCO.triggerEffect
+	local triggerEffectHangPoint = buffCO and buffCO.triggerEffectHangPoint
+	local triggerAudio = buffCO and buffCO.triggerAudio
 
-	if string.nilorempty(var_2_0) or var_2_0 == "0" then
-		local var_2_3 = lua_buff_act.configDict[arg_2_0.actEffectData.buffActId]
+	if string.nilorempty(triggerEffect) or triggerEffect == "0" then
+		local buffActCO = lua_buff_act.configDict[self.actEffectData.buffActId]
 
-		if var_2_3 and not string.nilorempty(var_2_3.effect) then
-			local var_2_4 = var_2_3.effect
-			local var_2_5 = var_2_3.effectHangPoint
-			local var_2_6 = var_2_3.audioId
-			local var_2_7 = arg_2_2 and FightDataHelper.entityMgr:getById(arg_2_2.id)
-			local var_2_8 = var_2_7 and lua_fight_replace_buff_act_effect.configDict[var_2_7.skin]
+		if buffActCO and not string.nilorempty(buffActCO.effect) then
+			local effect = buffActCO.effect
+			local effectHangPoint = buffActCO.effectHangPoint
+			local audio = buffActCO.audioId
+			local entityMO = targetEntity and FightDataHelper.entityMgr:getById(targetEntity.id)
+			local replaceConfig = entityMO and lua_fight_replace_buff_act_effect.configDict[entityMO.skin]
 
-			var_2_8 = var_2_8 and var_2_8[var_2_3.id]
+			replaceConfig = replaceConfig and replaceConfig[buffActCO.id]
 
-			if var_2_8 then
-				var_2_4 = string.nilorempty(var_2_8.effect) and var_2_4 or var_2_8.effect
-				var_2_5 = string.nilorempty(var_2_8.effectHangPoint) and var_2_5 or var_2_8.effectHangPoint
-				var_2_6 = var_2_8.audioId == 0 and var_2_6 or var_2_8.audioId
+			if replaceConfig then
+				effect = string.nilorempty(replaceConfig.effect) and effect or replaceConfig.effect
+				effectHangPoint = string.nilorempty(replaceConfig.effectHangPoint) and effectHangPoint or replaceConfig.effectHangPoint
+				audio = replaceConfig.audioId == 0 and audio or replaceConfig.audioId
 			end
 
-			if var_2_4 ~= "0" and not string.nilorempty(var_2_4) then
-				return var_2_4, var_2_5, var_2_6
-			end
-		end
-	end
-
-	if arg_2_1 then
-		var_2_0 = FightHelper.processBuffEffectPath(var_2_0, arg_2_2, arg_2_1.id, "triggerEffect")
-	end
-
-	return var_2_0, var_2_1, var_2_2
-end
-
-function var_0_0._onAnimEvent(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	if arg_3_1 == arg_3_0._animationName and arg_3_2 == SpineAnimEvent.ActionComplete then
-		local var_3_0 = FightHelper.getEntity(arg_3_0.actEffectData.targetId)
-
-		if var_3_0 then
-			var_3_0.spine:removeAnimEventCallback(arg_3_0._onAnimEvent, arg_3_0)
-
-			if not FightSkillMgr.instance:isEntityPlayingTimeline(var_3_0.id) then
-				var_3_0:resetAnimState()
+			if effect ~= "0" and not string.nilorempty(effect) then
+				return effect, effectHangPoint, audio
 			end
 		end
 	end
+
+	if buffCO then
+		triggerEffect = FightHelper.processBuffEffectPath(triggerEffect, targetEntity, buffCO.id, "triggerEffect")
+	end
+
+	return triggerEffect, triggerEffectHangPoint, triggerAudio
 end
 
-function var_0_0._onTickCheckRemoveEffect(arg_4_0)
+function FightBuffTriggerEffect:_onAnimEvent(actionName, eventName, eventArgs)
+	if actionName == self._animationName and eventName == SpineAnimEvent.ActionComplete then
+		local targetEntity = FightHelper.getEntity(self.actEffectData.targetId)
+
+		if targetEntity then
+			targetEntity.spine:removeAnimEventCallback(self._onAnimEvent, self)
+
+			if not FightSkillMgr.instance:isEntityPlayingTimeline(targetEntity.id) then
+				targetEntity:resetAnimState()
+			end
+		end
+	end
+end
+
+function FightBuffTriggerEffect:_onTickCheckRemoveEffect()
 	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Fight then
 		return
 	end
 
-	local var_4_0 = FightHelper.getEntity(arg_4_0.actEffectData.targetId)
+	local targetEntity = FightHelper.getEntity(self.actEffectData.targetId)
 
-	if arg_4_0._effectWrap and var_4_0 then
-		var_4_0.effect:removeEffect(arg_4_0._effectWrap)
+	if self._effectWrap and targetEntity then
+		targetEntity.effect:removeEffect(self._effectWrap)
 
-		arg_4_0._effectWrap = nil
+		self._effectWrap = nil
 	end
 end
 
-function var_0_0._onTickCheckRemoveAnim(arg_5_0)
+function FightBuffTriggerEffect:_onTickCheckRemoveAnim()
 	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Fight then
 		return
 	end
 
-	local var_5_0 = FightHelper.getEntity(arg_5_0.actEffectData.targetId)
+	local targetEntity = FightHelper.getEntity(self.actEffectData.targetId)
 
-	if var_5_0 then
-		var_5_0.spine:removeAnimEventCallback(arg_5_0._onAnimEvent, arg_5_0)
+	if targetEntity then
+		targetEntity.spine:removeAnimEventCallback(self._onAnimEvent, self)
 	end
 end
 
-function var_0_0.onDestroy(arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0._onTickCheckRemoveEffect, arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0._onTickCheckRemoveAnim, arg_6_0)
+function FightBuffTriggerEffect:onDestroy()
+	TaskDispatcher.cancelTask(self._onTickCheckRemoveEffect, self)
+	TaskDispatcher.cancelTask(self._onTickCheckRemoveAnim, self)
 
-	if arg_6_0._hasPlayAnim then
-		local var_6_0 = FightHelper.getEntity(arg_6_0.actEffectData.targetId)
+	if self._hasPlayAnim then
+		local targetEntity = FightHelper.getEntity(self.actEffectData.targetId)
 
-		if var_6_0 then
-			var_6_0.spine:removeAnimEventCallback(arg_6_0._onAnimEvent, arg_6_0)
+		if targetEntity then
+			targetEntity.spine:removeAnimEventCallback(self._onAnimEvent, self)
 		end
 	end
 
-	var_0_0.super.onDestroy(arg_6_0)
+	FightBuffTriggerEffect.super.onDestroy(self)
 end
 
-return var_0_0
+return FightBuffTriggerEffect

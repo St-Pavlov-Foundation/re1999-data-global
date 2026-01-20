@@ -1,7 +1,9 @@
-﻿module("modules.logic.versionactivity2_6.dungeon.define.VersionActivity2_6DungeonEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/dungeon/define/VersionActivity2_6DungeonEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity2_6.dungeon.define.VersionActivity2_6DungeonEvent", package.seeall)
 
-var_0_0.OnClickAllTaskFinish = 101
+local VersionActivity2_6DungeonEvent = _M
 
-return var_0_0
+VersionActivity2_6DungeonEvent.OnClickAllTaskFinish = 101
+
+return VersionActivity2_6DungeonEvent

@@ -1,264 +1,398 @@
-﻿module("modules.logic.versionactivity2_7.towergift.view.CharacterDestinyStoneUpView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/towergift/view/CharacterDestinyStoneUpView.lua
 
-local var_0_0 = class("CharacterDestinyStoneUpView", BaseView)
+module("modules.logic.versionactivity2_7.towergift.view.CharacterDestinyStoneUpView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._godrag = gohelper.findChild(arg_1_0.viewGO, "#go_drag")
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "root/#image_icon")
-	arg_1_0._txtstonename = gohelper.findChildText(arg_1_0.viewGO, "root/#txt_stonename")
-	arg_1_0._gostone = gohelper.findChild(arg_1_0.viewGO, "root/#go_stone")
-	arg_1_0._gooncefull = gohelper.findChild(arg_1_0.viewGO, "root/btn/#go_oncefull")
-	arg_1_0._btnoncefull = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/btn/#go_oncefull/#btn_oncefull")
-	arg_1_0._gohasoncefull = gohelper.findChild(arg_1_0.viewGO, "root/btn/#go_hasoncefull")
-	arg_1_0._gopoint = gohelper.findChild(arg_1_0.viewGO, "root/point/#go_point")
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
-	arg_1_0._animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+local CharacterDestinyStoneUpView = class("CharacterDestinyStoneUpView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CharacterDestinyStoneUpView:onInitView()
+	self._godrag = gohelper.findChild(self.viewGO, "#go_drag")
+	self._imageicon = gohelper.findChildImage(self.viewGO, "root/#image_icon")
+	self._txtstonename = gohelper.findChildText(self.viewGO, "root/#txt_stonename")
+	self._gostone = gohelper.findChild(self.viewGO, "root/#go_stone")
+	self._gooncefull = gohelper.findChild(self.viewGO, "root/btn/#go_oncefull")
+	self._btnoncefull = gohelper.findChildButtonWithAudio(self.viewGO, "root/btn/#go_oncefull/#btn_oncefull")
+	self._gohasoncefull = gohelper.findChild(self.viewGO, "root/btn/#go_hasoncefull")
+	self._gopoint = gohelper.findChild(self.viewGO, "root/point/#go_point")
+	self._gotopleft = gohelper.findChild(self.viewGO, "#go_topleft")
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._goreshape = gohelper.findChild(self.viewGO, "root/#go_reshape")
+	self._btnreshape = gohelper.findChildButtonWithAudio(self.viewGO, "root/#go_reshape/#btn_reshape")
+	self._goreshapeeffect = gohelper.findChild(self.viewGO, "root/#go_reshapeeffect")
+	self._goreshapeItem = gohelper.findChild(self.viewGO, "root/#go_reshapeeffect/#scroll_reshape")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnoncefull:AddClickListener(arg_2_0._btnoncefullOnClick, arg_2_0)
-	arg_2_0:addEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.OnUnlockStoneReply, arg_2_0._onUnlockStoneReply, arg_2_0)
-	arg_2_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_2_0._onItemChanged, arg_2_0)
+function CharacterDestinyStoneUpView:addEvents()
+	self._btnoncefull:AddClickListener(self._btnoncefullOnClick, self)
+	self._btnreshape:AddClickListener(self._btnreshapeOnClick, self)
+	self:addEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.OnUnlockStoneReply, self._onUnlockStoneReply, self)
+	self:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._onItemChanged, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnoncefull:RemoveClickListener()
-	arg_3_0:removeEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.OnUnlockStoneReply, arg_3_0._onUnlockStoneReply, arg_3_0)
-	arg_3_0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_3_0._onItemChanged, arg_3_0)
+function CharacterDestinyStoneUpView:removeEvents()
+	self._btnoncefull:RemoveClickListener()
+	self._btnreshape:RemoveClickListener()
+	self:removeEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.OnUnlockStoneReply, self._onUnlockStoneReply, self)
+	self:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._onItemChanged, self)
 end
 
-function var_0_0._btnoncefullOnClick(arg_4_0)
-	GameFacade.showMessageBox(MessageBoxIdDefine.CharacterDestinyStoneUpView, MsgBoxEnum.BoxType.Yes_No, arg_4_0._useStoneUpTicket, nil, nil, arg_4_0, nil, nil)
+function CharacterDestinyStoneUpView:_btnreshapeOnClick()
+	self:_showReshape(not self._isShowReshape, true)
 end
 
-function var_0_0._useCallback(arg_5_0)
+function CharacterDestinyStoneUpView:_btnoncefullOnClick()
+	GameFacade.showMessageBox(MessageBoxIdDefine.CharacterDestinyStoneUpView, MsgBoxEnum.BoxType.Yes_No, self._useStoneUpTicket, nil, nil, self, nil, nil)
+end
+
+function CharacterDestinyStoneUpView:_useCallback()
 	return
 end
 
-function var_0_0._useStoneUpTicket(arg_6_0)
-	local var_6_0 = {}
-	local var_6_1 = {
-		materialId = arg_6_0._materialId
-	}
+function CharacterDestinyStoneUpView:_useStoneUpTicket()
+	local data = {}
+	local o = {}
 
-	var_6_1.quantity = 1
+	o.materialId = self._materialId
+	o.quantity = 1
 
-	table.insert(var_6_0, var_6_1)
-	ItemRpc.instance:sendUseItemRequest(var_6_0, arg_6_0._curStoneMo.stoneId)
+	table.insert(data, o)
+	ItemRpc.instance:sendUseItemRequest(data, self._curStoneMo.stoneId)
 end
 
-function var_0_0._onItemChanged(arg_7_0)
-	gohelper.setActive(arg_7_0._gooncefull, false)
-	gohelper.setActive(arg_7_0._gohasoncefull, true)
-	arg_7_0:_playAnim()
+function CharacterDestinyStoneUpView:_onItemChanged()
+	gohelper.setActive(self._gooncefull, false)
+	gohelper.setActive(self._gohasoncefull, true)
+	self:_playAnim()
 	DestinyStoneGiftPickChoiceController.instance:dispatchEvent(DestinyStoneGiftPickChoiceEvent.hadStoneUp)
 end
 
-function var_0_0._playAnim(arg_8_0)
-	if arg_8_0._isSlotMaxLevel then
-		arg_8_0._animator:Play("allup", 0, 0)
-		arg_8_0:_refreshStoneItem()
-	elseif not arg_8_0._curStoneMo.isUnlock then
-		arg_8_0._animator:Play("allup", 0, 0)
+function CharacterDestinyStoneUpView:_playAnim()
+	if self._isSlotMaxLevel then
+		self._animator:Play("allup", 0, 0)
+		self:_refreshStoneItem()
+	elseif not self._curStoneMo.isUnlock then
+		self._animator:Play("allup", 0, 0)
 		AudioMgr.instance:trigger(AudioEnum.CharacterDestinyStone.play_ui_fate_slots_unlock)
 
-		function arg_8_0._cb()
-			TaskDispatcher.cancelTask(arg_8_0._cb, arg_8_0)
+		function self._cb()
+			TaskDispatcher.cancelTask(self._cb, self)
 			AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2BPSP.play_ui_checkpoint_doom_disappear)
 		end
 
-		TaskDispatcher.runDelay(arg_8_0._cb, arg_8_0, 2.6)
-		arg_8_0:_refreshStoneItem()
+		TaskDispatcher.runDelay(self._cb, self, 2.6)
+		self:_refreshStoneItem()
 	else
-		arg_8_0._animator:Play("allup", 0, 0)
-		TaskDispatcher.runDelay(arg_8_0._onPlayAnimBack, arg_8_0, 2.6)
+		self._animator:Play("allup", 0, 0)
+		TaskDispatcher.runDelay(self._onPlayAnimBack, self, 2.6)
 	end
 end
 
-function var_0_0._onPlayAnimBack(arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._onPlayAnimBack, arg_10_0)
+function CharacterDestinyStoneUpView:_onPlayAnimBack()
+	TaskDispatcher.cancelTask(self._onPlayAnimBack, self)
 
-	if arg_10_0._effectItems then
-		for iter_10_0, iter_10_1 in ipairs(arg_10_0._effectItems) do
-			local var_10_0 = arg_10_0._heroMO.destinyStoneMo:isCanPlayAttrUnlockAnim(arg_10_0._curStoneMo.stoneId, iter_10_0)
+	if self._effectItems then
+		for rank, item in ipairs(self._effectItems) do
+			local isCanPlay = self._heroMO.destinyStoneMo:isCanPlayAttrUnlockAnim(self._curStoneMo.stoneId, rank)
 
-			gohelper.setActive(iter_10_1.gounlock, var_10_0)
+			gohelper.setActive(item.gounlock, isCanPlay)
 		end
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2BPSP.play_ui_checkpoint_doom_disappear)
-	arg_10_0:_refreshStoneItem()
+	self:_refreshStoneItem()
 end
 
-function var_0_0._onUnlockStoneReply(arg_11_0, arg_11_1, arg_11_2)
-	if arg_11_0._curStoneMo then
-		arg_11_0._curStoneMo:refresUnlock(true)
+function CharacterDestinyStoneUpView:_onUnlockStoneReply(heroId, stoneId)
+	if self._curStoneMo then
+		self._curStoneMo:refresUnlock(true)
 	end
 
-	arg_11_0:_refreshStoneItem()
-	gohelper.setActive(arg_11_0._root, true)
-	gohelper.setActive(arg_11_0._gounlockstone, false)
+	self:_refreshStoneItem()
+	gohelper.setActive(self._root, true)
+	gohelper.setActive(self._gounlockstone, false)
 end
 
-function var_0_0._editableInitView(arg_12_0)
-	arg_12_0._simagestone = gohelper.findChildSingleImage(arg_12_0.viewGO, "root/#go_stone/#simage_stone")
-	arg_12_0._simagepre = gohelper.findChildSingleImage(arg_12_0.viewGO, "root/#go_prestone/#btn_prestone")
-	arg_12_0._simagenext = gohelper.findChildSingleImage(arg_12_0.viewGO, "root/#go_nextstone/#btn_nextstone")
-	arg_12_0._gounlockstone = gohelper.findChild(arg_12_0.viewGO, "unlockstone")
-	arg_12_0._root = gohelper.findChild(arg_12_0.viewGO, "root")
-	arg_12_0._goeffect = gohelper.findChild(arg_12_0.viewGO, "root/effectItem")
-	arg_12_0._imgstone = gohelper.findChildImage(arg_12_0.viewGO, "root/#go_stone/#simage_stone")
-	arg_12_0._goEquip = gohelper.findChild(arg_12_0.viewGO, "root/#go_stone/#equip")
-	arg_12_0._animRoot = arg_12_0._root:GetComponent(typeof(UnityEngine.Animator))
-	arg_12_0._animPlayerRoot = ZProj.ProjAnimatorPlayer.Get(arg_12_0._root)
-	arg_12_0._animPlayerUnlockStone = ZProj.ProjAnimatorPlayer.Get(arg_12_0._gounlockstone)
-	arg_12_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_12_0._godrag.gameObject)
+function CharacterDestinyStoneUpView:_editableInitView()
+	self._simagestone = gohelper.findChildSingleImage(self.viewGO, "root/#go_stone/#simage_stone")
+	self._simagepre = gohelper.findChildSingleImage(self.viewGO, "root/#go_prestone/#btn_prestone")
+	self._simagenext = gohelper.findChildSingleImage(self.viewGO, "root/#go_nextstone/#btn_nextstone")
+	self._gounlockstone = gohelper.findChild(self.viewGO, "unlockstone")
+	self._root = gohelper.findChild(self.viewGO, "root")
+	self._goeffect = gohelper.findChild(self.viewGO, "root/effectItem")
+	self._imgstone = gohelper.findChildImage(self.viewGO, "root/#go_stone/#simage_stone")
+	self._goEquip = gohelper.findChild(self.viewGO, "root/#go_stone/#equip")
+	self._animRoot = self._root:GetComponent(typeof(UnityEngine.Animator))
+	self._animPlayerRoot = ZProj.ProjAnimatorPlayer.Get(self._root)
+	self._animPlayerUnlockStone = ZProj.ProjAnimatorPlayer.Get(self._gounlockstone)
+	self._drag = SLFramework.UGUI.UIDragListener.Get(self._godrag.gameObject)
+	self._goreshapeVX = gohelper.findChild(self.viewGO, "root/#go_stone/#reshape")
+	self._simagereshape = gohelper.findChildSingleImage(self.viewGO, "root/#go_stone/#reshape/#simage_stone")
+	self._simagestoneName = gohelper.findChildSingleImage(self.viewGO, "root/#simage_reshapeTitle")
+	self._imagestoneName = gohelper.findChildImage(self.viewGO, "root/#simage_reshapeTitle")
+	self._goreshapeselect = gohelper.findChild(self._btnreshape.gameObject, "selected")
+	self._goreshapeunselect = gohelper.findChild(self._btnreshape.gameObject, "unselect")
+	self._reshapeAnim = self._goreshape:GetComponent(typeof(UnityEngine.Animator))
+
+	self:_initReshapeItem()
 end
 
-function var_0_0.onUpdateParam(arg_13_0)
+function CharacterDestinyStoneUpView:onUpdateParam()
 	return
 end
 
-function var_0_0._addEvents(arg_14_0)
+function CharacterDestinyStoneUpView:_addEvents()
 	return
 end
 
-function var_0_0._removeEvents(arg_15_0)
+function CharacterDestinyStoneUpView:_removeEvents()
 	return
 end
 
-function var_0_0.onOpen(arg_16_0)
-	arg_16_0:_addEvents()
+function CharacterDestinyStoneUpView:onOpen()
+	self:_addEvents()
 
-	arg_16_0._effectItems = arg_16_0:getUserDataTb_()
+	self._isShowReshape = false
+	self._effectItems = self:getUserDataTb_()
+	self._effectitemPrefab = gohelper.findChild(self._goeffect, "#scroll_effect")
 
-	for iter_16_0 = 1, CharacterDestinyEnum.EffectItemCount do
-		local var_16_0 = gohelper.findChild(arg_16_0._goeffect, "scroll_desc" .. iter_16_0 .. "/viewport/content")
-		local var_16_1 = arg_16_0:getUserDataTb_()
+	for i = 1, CharacterDestinyEnum.EffectItemCount do
+		local item = self:_getEffectItem(i)
 
-		var_16_1.go = var_16_0
-		var_16_1.lockicon = gohelper.findChildImage(var_16_0, "#txt_dec/#go_lockicon")
-		var_16_1.unlockicon = gohelper.findChildImage(var_16_0, "#txt_dec/#go_unlockicon")
-		var_16_1.txt = gohelper.findChildText(var_16_0, "#txt_dec")
-		var_16_1.gounlock = gohelper.findChild(var_16_0, "#unlock")
-		var_16_1.canvasgroup = var_16_0:GetComponent(typeof(UnityEngine.CanvasGroup))
-		arg_16_0._effectItems[iter_16_0] = var_16_1
+		gohelper.setActive(item.root, true)
 	end
 
-	arg_16_0._materialId = arg_16_0.viewParam.materialId
-	arg_16_0._heroMO = arg_16_0.viewParam.heroMo
-	arg_16_0._curStoneMo = arg_16_0.viewParam.stoneMo
-	arg_16_0._destinyStoneMo = arg_16_0._heroMO.destinyStoneMo
-	arg_16_0._isSlotMaxLevel = arg_16_0._destinyStoneMo:isSlotMaxLevel()
+	self._materialId = self.viewParam.materialId
+	self._heroMO = self.viewParam.heroMo
+	self._curStoneMo = self.viewParam.stoneMo
+	self._destinyStoneMo = self._heroMO.destinyStoneMo
+	self._isSlotMaxLevel = self._destinyStoneMo:isSlotMaxLevel()
 
-	if arg_16_0._curStoneMo then
-		if not arg_16_0._unlockStoneView then
-			arg_16_0._unlockStoneView = MonoHelper.addNoUpdateLuaComOnceToGo(arg_16_0._gounlockstone, CharacterDestinyUnlockStoneComp)
+	if self._curStoneMo then
+		if not self._unlockStoneView then
+			self._unlockStoneView = MonoHelper.addNoUpdateLuaComOnceToGo(self._gounlockstone, CharacterDestinyUnlockStoneComp)
 
-			arg_16_0._unlockStoneView:setStoneView(arg_16_0)
+			self._unlockStoneView:setStoneView(self)
 		end
 
-		arg_16_0._unlockStoneView:onUpdateMo(arg_16_0._heroMO.heroId, arg_16_0._curStoneMo.stoneId)
-		arg_16_0:_refreshStoneItem()
+		self._unlockStoneView:onUpdateMo(self._heroMO.heroId, self._curStoneMo.stoneId)
+		self:_refreshStoneItem()
 	end
 
-	gohelper.setActive(arg_16_0._root, true)
+	gohelper.setActive(self._root, true)
 end
 
-function var_0_0._refreshStoneItem(arg_17_0)
-	if arg_17_0._curStoneMo then
-		arg_17_0._levelCos = arg_17_0._curStoneMo:getFacetCo()
+function CharacterDestinyStoneUpView:_getEffectItem(index)
+	local item = self._effectItems[index]
 
-		local var_17_0 = arg_17_0._curStoneMo.conusmeCo
+	if not item then
+		item = self:getUserDataTb_()
 
-		if arg_17_0._levelCos then
-			for iter_17_0, iter_17_1 in ipairs(arg_17_0._effectItems) do
-				local var_17_1 = arg_17_0._levelCos[iter_17_0]
+		local go = gohelper.findChild(self._goeffect, index)
 
-				iter_17_1.skillDesc = MonoHelper.addNoUpdateLuaComOnceToGo(iter_17_1.txt.gameObject, SkillDescComp)
+		item.go = go
+		item.root = gohelper.clone(self._effectitemPrefab, go)
+		item.lockicon = gohelper.findChildImage(item.root, "Viewport/Content/#go_decItem/#txt_dec/#go_lockicon")
+		item.unlockicon = gohelper.findChildImage(item.root, "Viewport/Content/#go_decItem/#txt_dec/#go_unlockicon")
+		item.txt = gohelper.findChildText(item.root, "Viewport/Content/#go_decItem/#txt_dec")
+		item.gounlock = gohelper.findChild(item.root, "Viewport/Content/#go_decItem/#unlock")
+		item.canvasgroup = item.root:GetComponent(typeof(UnityEngine.CanvasGroup))
+		self._effectItems[index] = item
+	end
 
-				iter_17_1.skillDesc:updateInfo(iter_17_1.txt, var_17_1.desc, arg_17_0._heroMO.heroId)
-				iter_17_1.skillDesc:setTipParam(0, Vector2(300, 100))
+	return item
+end
 
-				local var_17_2 = arg_17_0._curStoneMo.isUnlock and iter_17_0 <= arg_17_0._heroMO.destinyStoneMo.rank
-				local var_17_3 = iter_17_1.txt.color
+function CharacterDestinyStoneUpView:_refreshStoneItem()
+	if self._curStoneMo then
+		self._levelCos = self._curStoneMo:getFacetCo()
 
-				var_17_3.a = var_17_2 and 1 or 0.43
-				iter_17_1.txt.color = var_17_3
+		local conusmeCo = self._curStoneMo.conusmeCo
 
-				if var_17_2 then
-					local var_17_4 = iter_17_1.unlockicon.color
+		if self._levelCos then
+			for i, item in ipairs(self._effectItems) do
+				local co = self._levelCos[i]
 
-					var_17_4.a = var_17_2 and 1 or 0.43
-					iter_17_1.unlockicon.color = var_17_4
+				item.skillDesc = MonoHelper.addNoUpdateLuaComOnceToGo(item.txt.gameObject, SkillDescComp)
+
+				item.skillDesc:updateInfo(item.txt, co.desc, self._heroMO.heroId)
+				item.skillDesc:setTipParam(0, Vector2(300, 100))
+
+				local isUnlock = self._curStoneMo.isUnlock and i <= self._heroMO.destinyStoneMo.rank
+				local color = item.txt.color
+
+				color.a = isUnlock and 1 or 0.43
+				item.txt.color = color
+
+				if isUnlock then
+					local color = item.unlockicon.color
+
+					color.a = isUnlock and 1 or 0.43
+					item.unlockicon.color = color
 				else
-					local var_17_5 = iter_17_1.lockicon.color
+					local color = item.lockicon.color
 
-					var_17_5.a = var_17_2 and 1 or 0.43
-					iter_17_1.lockicon.color = var_17_5
+					color.a = isUnlock and 1 or 0.43
+					item.lockicon.color = color
 				end
 
-				gohelper.setActive(iter_17_1.lockicon.gameObject, not var_17_2)
-				gohelper.setActive(iter_17_1.unlockicon.gameObject, var_17_2)
+				gohelper.setActive(item.lockicon.gameObject, not isUnlock)
+				gohelper.setActive(item.unlockicon.gameObject, isUnlock)
 			end
 		end
 
-		gohelper.setActive(arg_17_0._goEquip, arg_17_0._curStoneMo.isUse)
+		gohelper.setActive(self._goEquip, self._curStoneMo.isUse)
 
-		if var_17_0 then
-			local var_17_6, var_17_7 = arg_17_0._curStoneMo:getNameAndIcon()
+		if conusmeCo then
+			local name, icon = self._curStoneMo:getNameAndIcon()
 
-			arg_17_0._txtstonename.text = var_17_6
+			self._txtstonename.text = name
 
-			arg_17_0._simagestone:LoadImage(var_17_7)
+			self._simagestone:LoadImage(icon)
+			self._simagereshape:LoadImage(icon)
 
-			local var_17_8 = CharacterDestinyEnum.SlotTend[var_17_0.tend]
-			local var_17_9 = var_17_8.TitleIconName
+			local tenp = CharacterDestinyEnum.SlotTend[conusmeCo.tend]
+			local tendIcon = tenp.TitleIconName
 
-			UISpriteSetMgr.instance:setUiCharacterSprite(arg_17_0._imageicon, var_17_9)
+			UISpriteSetMgr.instance:setUiCharacterSprite(self._imageicon, tendIcon)
 
-			arg_17_0._txtstonename.color = GameUtil.parseColor(var_17_8.TitleColor)
+			self._txtstonename.color = GameUtil.parseColor(tenp.TitleColor)
 		end
 
-		local var_17_10 = arg_17_0._curStoneMo.isUnlock and Color.white or Color(0.5, 0.5, 0.5, 1)
+		local isUnlock = self._curStoneMo.isUnlock
+		local color = isUnlock and Color.white or Color(0.5, 0.5, 0.5, 1)
 
-		arg_17_0._imgstone.color = var_17_10
+		self._imgstone.color = color
 	end
 
-	if not arg_17_0._pointItems then
-		arg_17_0._pointItems = arg_17_0:getUserDataTb_()
+	if not self._pointItems then
+		self._pointItems = self:getUserDataTb_()
+	end
+
+	local isReshapeStone = self._curStoneMo:isReshape()
+
+	gohelper.setActive(self._goreshape, isReshapeStone)
+	gohelper.setActive(self._goreshapeVX, isReshapeStone)
+	gohelper.setActive(self._txtstonename.gameObject, not isReshapeStone)
+	gohelper.setActive(self._simagestoneName.gameObject, isReshapeStone)
+
+	if isReshapeStone then
+		local resName = self._curStoneMo.stoneId
+
+		self._simagestoneName:LoadImage(ResUrl.getTxtDestinyIcon(resName), function()
+			self._imagestoneName:SetNativeSize()
+		end)
+	end
+
+	self:_showReshape(self._isShowReshape, false)
+	self:_refreshReshape()
+end
+
+function CharacterDestinyStoneUpView:_getPointItem(index)
+	local item = self._pointItems[index]
+
+	if not item then
+		item = self:getUserDataTb_()
+
+		local go = gohelper.cloneInPlace(self._gopoint, index)
+
+		item.go = go
+		item.normal = gohelper.findChild(go, "normal")
+		item.select = gohelper.findChild(go, "select")
+		self._pointItems[index] = item
+	end
+
+	return item
+end
+
+function CharacterDestinyStoneUpView:_showReshape(show, isPlayAnim)
+	gohelper.setActive(self._goreshapeselect, show)
+	gohelper.setActive(self._goreshapeunselect, not show)
+
+	self._isShowReshape = show
+
+	TaskDispatcher.cancelTask(self._showReshapeEffect, self)
+
+	if isPlayAnim then
+		self._reshapeAnim:Play(CharacterDestinyEnum.SlotViewAnim.Switch, 0, 0)
+
+		local animName = show and CharacterDestinyEnum.StoneViewAnim.Switch_reshape or CharacterDestinyEnum.StoneViewAnim.Switch_normal
+
+		self._animRoot:Play(animName, 0, 0)
+		TaskDispatcher.runDelay(self._showReshapeEffect, self, 0.16)
+	else
+		self:_showReshapeEffect()
 	end
 end
 
-function var_0_0._getPointItem(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_0._pointItems[arg_18_1]
+function CharacterDestinyStoneUpView:_showReshapeEffect()
+	gohelper.setActive(self._goeffect, not self._isShowReshape)
+	gohelper.setActive(self._goreshapeeffect, self._isShowReshape)
+end
 
-	if not var_18_0 then
-		var_18_0 = arg_18_0:getUserDataTb_()
+function CharacterDestinyStoneUpView:_refreshReshape()
+	local descList = self._curStoneMo:getReshapeDesc()
+	local count = 0
+	local isEquipReshapeAttr = self._destinyStoneMo:getEquipReshapeStoneCo(self._curStoneMo) ~= nil
 
-		local var_18_1 = gohelper.cloneInPlace(arg_18_0._gopoint, arg_18_1)
+	if descList then
+		count = #descList
 
-		var_18_0.go = var_18_1
-		var_18_0.normal = gohelper.findChild(var_18_1, "normal")
-		var_18_0.select = gohelper.findChild(var_18_1, "select")
-		arg_18_0._pointItems[arg_18_1] = var_18_0
+		for i = 1, count do
+			local item = self._reshapeItems[i]
+			local lang = luaLang("character_destinystone_reshape_lv")
+
+			item.titleTxt.text = GameUtil.getSubPlaceholderLuaLangOneParam(lang, i)
+			item.skillDesc = MonoHelper.addNoUpdateLuaComOnceToGo(item.descTxt.gameObject, SkillDescComp)
+
+			item.skillDesc:updateInfo(item.descTxt, descList[i], self._heroMO.heroId)
+			item.skillDesc:setTipParam(0, Vector2(300, 100))
+
+			item.cg.alpha = isEquipReshapeAttr and 1 or 0.43
+		end
 	end
 
-	return var_18_0
+	for i = 1, #self._reshapeItems do
+		gohelper.setActive(self._reshapeItems[i].go, i <= count)
+	end
 end
 
-function var_0_0.onClose(arg_19_0)
-	TaskDispatcher.cancelTask(arg_19_0._cb, arg_19_0)
-	TaskDispatcher.cancelTask(arg_19_0._onPlayAnimBack, arg_19_0)
+function CharacterDestinyStoneUpView:_initReshapeItem()
+	gohelper.setActive(self._goreshapeItem, false)
+
+	self._reshapeItems = self:getUserDataTb_()
+
+	for index = 1, 5 do
+		local item = self._reshapeItems[index]
+
+		if not item then
+			item = self:getUserDataTb_()
+
+			local root = gohelper.findChild(self._goreshapeeffect, index)
+			local go = gohelper.clone(self._goreshapeItem, root, "item" .. index)
+
+			item.go = root
+			item.descTxt = gohelper.findChildText(go, "Viewport/Content/#go_reshapeItem")
+			item.titleTxt = gohelper.findChildText(go, "Viewport/Content/#go_reshapeItem/title")
+			item.cg = root:GetComponent(typeof(UnityEngine.CanvasGroup))
+			self._reshapeItems[index] = item
+
+			gohelper.setActive(go, true)
+		end
+	end
 end
 
-function var_0_0.onDestroyView(arg_20_0)
-	arg_20_0:_removeEvents()
-	arg_20_0._simagestone:UnLoadImage()
+function CharacterDestinyStoneUpView:onClose()
+	TaskDispatcher.cancelTask(self._cb, self)
+	TaskDispatcher.cancelTask(self._onPlayAnimBack, self)
 end
 
-return var_0_0
+function CharacterDestinyStoneUpView:onDestroyView()
+	self:_removeEvents()
+	self._simagestone:UnLoadImage()
+	self._simagereshape:UnLoadImage()
+end
+
+return CharacterDestinyStoneUpView

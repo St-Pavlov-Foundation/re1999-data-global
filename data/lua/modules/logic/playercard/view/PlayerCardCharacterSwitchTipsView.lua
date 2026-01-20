@@ -1,85 +1,91 @@
-﻿module("modules.logic.playercard.view.PlayerCardCharacterSwitchTipsView", package.seeall)
+﻿-- chunkname: @modules/logic/playercard/view/PlayerCardCharacterSwitchTipsView.lua
 
-local var_0_0 = class("PlayerCardCharacterSwitchTipsView", BaseView)
+module("modules.logic.playercard.view.PlayerCardCharacterSwitchTipsView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btntouchClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_touchClose")
-	arg_1_0._simagetipbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_tipbg")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._btnbuy = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_buy")
-	arg_1_0._toggletip = gohelper.findChildToggle(arg_1_0.viewGO, "centerTip/#toggle_tip")
+local PlayerCardCharacterSwitchTipsView = class("PlayerCardCharacterSwitchTipsView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function PlayerCardCharacterSwitchTipsView:onInitView()
+	self._btntouchClose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_touchClose")
+	self._simagetipbg = gohelper.findChildSingleImage(self.viewGO, "#simage_tipbg")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._btnbuy = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_buy")
+	self._toggletip = gohelper.findChildToggle(self.viewGO, "centerTip/#toggle_tip")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btntouchClose:AddClickListener(arg_2_0._btntouchCloseOnClick, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnbuy:AddClickListener(arg_2_0._btnbuyOnClick, arg_2_0)
-	arg_2_0._toggletip:AddOnValueChanged(arg_2_0._toggleTipOnClick, arg_2_0)
+function PlayerCardCharacterSwitchTipsView:addEvents()
+	self._btntouchClose:AddClickListener(self._btntouchCloseOnClick, self)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnbuy:AddClickListener(self._btnbuyOnClick, self)
+	self._toggletip:AddOnValueChanged(self._toggleTipOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btntouchClose:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnbuy:RemoveClickListener()
-	arg_3_0._toggletip:RemoveOnValueChanged()
+function PlayerCardCharacterSwitchTipsView:removeEvents()
+	self._btntouchClose:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
+	self._btnbuy:RemoveClickListener()
+	self._toggletip:RemoveOnValueChanged()
 end
 
-function var_0_0._btntouchCloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function PlayerCardCharacterSwitchTipsView:_btntouchCloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btncloseOnClick(arg_5_0)
-	if arg_5_0._toggletip.isOn then
+function PlayerCardCharacterSwitchTipsView:_btncloseOnClick()
+	local isTipOn = self._toggletip.isOn
+
+	if isTipOn then
 		PlayerCardModel.instance:setCharacterSwitchFlag(false)
 	end
 
-	PlayerCardCharacterSwitchListModel.instance:changeMainHeroByParam(arg_5_0.characterParam, false)
-	arg_5_0:closeThis()
+	PlayerCardCharacterSwitchListModel.instance:changeMainHeroByParam(self.characterParam, false)
+	self:closeThis()
 	ViewMgr.instance:closeView(ViewName.PlayerCardCharacterSwitchView, nil, true)
 end
 
-function var_0_0._btnbuyOnClick(arg_6_0)
-	if arg_6_0._toggletip.isOn then
+function PlayerCardCharacterSwitchTipsView:_btnbuyOnClick()
+	local isTipOn = self._toggletip.isOn
+
+	if isTipOn then
 		PlayerCardModel.instance:setCharacterSwitchFlag(true)
 	end
 
-	PlayerCardCharacterSwitchListModel.instance:changeMainHeroByParam(arg_6_0.characterParam, true)
-	arg_6_0:closeThis()
+	PlayerCardCharacterSwitchListModel.instance:changeMainHeroByParam(self.characterParam, true)
+	self:closeThis()
 	ViewMgr.instance:closeView(ViewName.PlayerCardCharacterSwitchView, nil, true)
 end
 
-function var_0_0._toggleTipOnClick(arg_7_0)
+function PlayerCardCharacterSwitchTipsView:_toggleTipOnClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0._toggletip.isOn = false
+function PlayerCardCharacterSwitchTipsView:_editableInitView()
+	self._toggletip.isOn = false
 
-	arg_8_0._simagetipbg:LoadImage(ResUrl.getMessageIcon("bg_tanchuang"))
+	self._simagetipbg:LoadImage(ResUrl.getMessageIcon("bg_tanchuang"))
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
+function PlayerCardCharacterSwitchTipsView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_10_0)
+function PlayerCardCharacterSwitchTipsView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 
-	arg_10_0.characterParam = arg_10_0.viewParam.heroParam
+	self.characterParam = self.viewParam.heroParam
 
-	NavigateMgr.instance:addEscape(arg_10_0.viewName, arg_10_0._btncloseOnClick, arg_10_0)
+	NavigateMgr.instance:addEscape(self.viewName, self._btncloseOnClick, self)
 end
 
-function var_0_0.onClose(arg_11_0)
+function PlayerCardCharacterSwitchTipsView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_12_0)
-	arg_12_0._simagetipbg:UnLoadImage()
+function PlayerCardCharacterSwitchTipsView:onDestroyView()
+	self._simagetipbg:UnLoadImage()
 end
 
-return var_0_0
+return PlayerCardCharacterSwitchTipsView

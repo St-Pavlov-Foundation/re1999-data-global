@@ -1,65 +1,67 @@
-﻿module("modules.logic.room.view.backpack.RoomBackpackCritterItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/backpack/RoomBackpackCritterItem.lua
 
-local var_0_0 = class("RoomBackpackCritterItem", ListScrollCellExtend)
+module("modules.logic.room.view.backpack.RoomBackpackCritterItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goCritterIcon = gohelper.findChild(arg_1_0.viewGO, "#go_critterIcon")
+local RoomBackpackCritterItem = class("RoomBackpackCritterItem", ListScrollCellExtend)
+
+function RoomBackpackCritterItem:onInitView()
+	self._goCritterIcon = gohelper.findChild(self.viewGO, "#go_critterIcon")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(CritterController.instance, CritterEvent.CritterInfoPushUpdate, arg_2_0._onCritterInfoUpdate, arg_2_0)
-	arg_2_0:addEventCb(CritterController.instance, CritterEvent.CritterChangeLockStatus, arg_2_0._onCritterLockStatusChange, arg_2_0)
+function RoomBackpackCritterItem:addEvents()
+	self:addEventCb(CritterController.instance, CritterEvent.CritterInfoPushUpdate, self._onCritterInfoUpdate, self)
+	self:addEventCb(CritterController.instance, CritterEvent.CritterChangeLockStatus, self._onCritterLockStatusChange, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(CritterController.instance, CritterEvent.CritterInfoPushUpdate, arg_3_0._onCritterInfoUpdate, arg_3_0)
-	arg_3_0:removeEventCb(CritterController.instance, CritterEvent.CritterChangeLockStatus, arg_3_0._onCritterLockStatusChange, arg_3_0)
+function RoomBackpackCritterItem:removeEvents()
+	self:removeEventCb(CritterController.instance, CritterEvent.CritterInfoPushUpdate, self._onCritterInfoUpdate, self)
+	self:removeEventCb(CritterController.instance, CritterEvent.CritterChangeLockStatus, self._onCritterLockStatusChange, self)
 end
 
-function var_0_0._onCritterInfoUpdate(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0._mo and arg_4_0._mo:getId()
+function RoomBackpackCritterItem:_onCritterInfoUpdate(critterUidDict)
+	local critterUid = self._mo and self._mo:getId()
 
-	if not arg_4_0._critterIcon or not var_4_0 or arg_4_1 and not arg_4_1[var_4_0] then
+	if not self._critterIcon or not critterUid or critterUidDict and not critterUidDict[critterUid] then
 		return
 	end
 
-	arg_4_0._critterIcon:refreshLockIcon()
-	arg_4_0._critterIcon:refreshMaturityIcon()
+	self._critterIcon:refreshLockIcon()
+	self._critterIcon:refreshMaturityIcon()
 end
 
-function var_0_0._onCritterLockStatusChange(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0._mo and arg_5_0._mo:getId()
+function RoomBackpackCritterItem:_onCritterLockStatusChange(changeCritterUid)
+	local critterUid = self._mo and self._mo:getId()
 
-	if not arg_5_0._critterIcon or not var_5_0 or var_5_0 ~= arg_5_1 then
+	if not self._critterIcon or not critterUid or critterUid ~= changeCritterUid then
 		return
 	end
 
-	arg_5_0._critterIcon:refreshLockIcon()
+	self._critterIcon:refreshLockIcon()
 end
 
-function var_0_0.onUpdateMO(arg_6_0, arg_6_1)
-	arg_6_0._mo = arg_6_1
+function RoomBackpackCritterItem:onUpdateMO(mo)
+	self._mo = mo
 
-	if not arg_6_0._critterIcon then
-		arg_6_0._critterIcon = IconMgr.instance:getCommonCritterIcon(arg_6_0._goCritterIcon)
+	if not self._critterIcon then
+		self._critterIcon = IconMgr.instance:getCommonCritterIcon(self._goCritterIcon)
 
-		arg_6_0._critterIcon:setLockIconShow(true)
-		arg_6_0._critterIcon:setMaturityIconShow(true)
+		self._critterIcon:setLockIconShow(true)
+		self._critterIcon:setMaturityIconShow(true)
 	end
 
-	arg_6_0._critterIcon:onUpdateMO(arg_6_0._mo)
-	arg_6_0._critterIcon:setCustomClick(arg_6_0.onClickCB, arg_6_0)
-	arg_6_0._critterIcon:setIsShowBuildingIcon(true)
+	self._critterIcon:onUpdateMO(self._mo)
+	self._critterIcon:setCustomClick(self.onClickCB, self)
+	self._critterIcon:setIsShowBuildingIcon(true)
 end
 
-function var_0_0.onClickCB(arg_7_0)
-	local var_7_0 = arg_7_0._mo:isMaturity()
+function RoomBackpackCritterItem:onClickCB()
+	local isMaturity = self._mo:isMaturity()
 
-	CritterController.instance:openRoomCritterDetailView(not var_7_0, arg_7_0._mo)
+	CritterController.instance:openRoomCritterDetailView(not isMaturity, self._mo)
 end
 
-function var_0_0.onDestroyView(arg_8_0)
+function RoomBackpackCritterItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return RoomBackpackCritterItem

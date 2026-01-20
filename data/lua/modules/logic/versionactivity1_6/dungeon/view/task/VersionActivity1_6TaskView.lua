@@ -1,78 +1,80 @@
-﻿module("modules.logic.versionactivity1_6.dungeon.view.task.VersionActivity1_6TaskView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/dungeon/view/task/VersionActivity1_6TaskView.lua
 
-local var_0_0 = class("VersionActivity1_6TaskView", BaseView)
+module("modules.logic.versionactivity1_6.dungeon.view.task.VersionActivity1_6TaskView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_LimitTime")
+local VersionActivity1_6TaskView = class("VersionActivity1_6TaskView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity1_6TaskView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_LimitTime")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function VersionActivity1_6TaskView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function VersionActivity1_6TaskView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._simageFullBG:LoadImage("singlebg/v1a6_taskview_singlebg/v1a6_taskview_fullbg.png")
+function VersionActivity1_6TaskView:_editableInitView()
+	self._simageFullBG:LoadImage("singlebg/v1a6_taskview_singlebg/v1a6_taskview_fullbg.png")
 
-	arg_4_0._txtremaintime = gohelper.findChildText(arg_4_0.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_LimitTime")
+	self._txtremaintime = gohelper.findChildText(self.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_LimitTime")
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function VersionActivity1_6TaskView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
+function VersionActivity1_6TaskView:onOpen()
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.ActivityDungeon
-	}, arg_6_0._onOpen, arg_6_0)
+	}, self._onOpen, self)
 end
 
-function var_0_0._onOpen(arg_7_0)
-	arg_7_0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_7_0.refreshRight, arg_7_0)
-	arg_7_0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_7_0.refreshRight, arg_7_0)
-	arg_7_0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_7_0.refreshRight, arg_7_0)
-	arg_7_0:addEventCb(JumpController.instance, JumpEvent.BeforeJump, arg_7_0.closeThis, arg_7_0)
-	TaskDispatcher.runRepeat(arg_7_0.refreshRemainTime, arg_7_0, TimeUtil.OneMinuteSecond)
+function VersionActivity1_6TaskView:_onOpen()
+	self:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, self.refreshRight, self)
+	self:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, self.refreshRight, self)
+	self:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, self.refreshRight, self)
+	self:addEventCb(JumpController.instance, JumpEvent.BeforeJump, self.closeThis, self)
+	TaskDispatcher.runRepeat(self.refreshRemainTime, self, TimeUtil.OneMinuteSecond)
 	AudioMgr.instance:trigger(AudioEnum.UI.Act1_6DungeonEnterTaskView)
 	VersionActivity1_6TaskListModel.instance:initTask()
-	arg_7_0:refreshLeft()
-	arg_7_0:refreshRight()
+	self:refreshLeft()
+	self:refreshRight()
 end
 
-function var_0_0.refreshLeft(arg_8_0)
-	arg_8_0:refreshRemainTime()
+function VersionActivity1_6TaskView:refreshLeft()
+	self:refreshRemainTime()
 end
 
-function var_0_0.refreshRemainTime(arg_9_0)
-	local var_9_0 = ActivityModel.instance:getActivityInfo()[VersionActivity1_6Enum.ActivityId.Dungeon]
-	local var_9_1 = var_9_0:getRealEndTimeStamp() - ServerTime.now()
-	local var_9_2 = Mathf.Floor(var_9_1 / TimeUtil.OneDaySecond)
-	local var_9_3 = var_9_1 % TimeUtil.OneDaySecond
-	local var_9_4 = Mathf.Floor(var_9_3 / TimeUtil.OneHourSecond)
-	local var_9_5 = var_9_0:getRemainTimeStr3(false, true)
+function VersionActivity1_6TaskView:refreshRemainTime()
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[VersionActivity1_6Enum.ActivityId.Dungeon]
+	local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
+	local day = Mathf.Floor(offsetSecond / TimeUtil.OneDaySecond)
+	local hourSecond = offsetSecond % TimeUtil.OneDaySecond
+	local hour = Mathf.Floor(hourSecond / TimeUtil.OneHourSecond)
+	local remainTimeStr = actInfoMo:getRemainTimeStr3(false, true)
 
-	arg_9_0._txtremaintime.text = var_9_5
+	self._txtremaintime.text = remainTimeStr
 end
 
-function var_0_0.refreshRight(arg_10_0)
+function VersionActivity1_6TaskView:refreshRight()
 	VersionActivity1_6TaskListModel.instance:sortTaskMoList()
 	VersionActivity1_6TaskListModel.instance:refreshList()
 end
 
-function var_0_0.onClose(arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0.refreshRemainTime, arg_11_0)
+function VersionActivity1_6TaskView:onClose()
+	TaskDispatcher.cancelTask(self.refreshRemainTime, self)
 end
 
-function var_0_0.onDestroyView(arg_12_0)
-	arg_12_0._simageFullBG:UnLoadImage()
+function VersionActivity1_6TaskView:onDestroyView()
+	self._simageFullBG:UnLoadImage()
 end
 
-return var_0_0
+return VersionActivity1_6TaskView

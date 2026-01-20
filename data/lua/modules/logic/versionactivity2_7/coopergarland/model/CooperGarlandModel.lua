@@ -1,166 +1,171 @@
-﻿module("modules.logic.versionactivity2_7.coopergarland.model.CooperGarlandModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/coopergarland/model/CooperGarlandModel.lua
 
-local var_0_0 = class("CooperGarlandModel", BaseModel)
+module("modules.logic.versionactivity2_7.coopergarland.model.CooperGarlandModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:clearData()
+local CooperGarlandModel = class("CooperGarlandModel", BaseModel)
+
+function CooperGarlandModel:onInit()
+	self:clearData()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clearData()
+function CooperGarlandModel:reInit()
+	self:clearData()
 end
 
-function var_0_0.clearData(arg_3_0)
-	arg_3_0._actInfoDic = {}
-	arg_3_0._actNewestEpisodeDict = {}
+function CooperGarlandModel:clearData()
+	self._actInfoDic = {}
+	self._actNewestEpisodeDict = {}
 end
 
-function var_0_0.updateAct192Info(arg_4_0, arg_4_1)
-	if not arg_4_1 then
+function CooperGarlandModel:updateAct192Info(info)
+	if not info then
 		return
 	end
 
-	local var_4_0 = arg_4_1.activityId
-	local var_4_1 = arg_4_1.episodes
+	local actId = info.activityId
+	local episodeList = info.episodes
 
-	if var_4_1 then
-		for iter_4_0, iter_4_1 in ipairs(var_4_1) do
-			arg_4_0:updateAct192Episode(var_4_0, iter_4_1.episodeId, iter_4_1.isFinished, iter_4_1.progress)
+	if episodeList then
+		for _, episodeInfo in ipairs(episodeList) do
+			self:updateAct192Episode(actId, episodeInfo.episodeId, episodeInfo.isFinished, episodeInfo.progress)
 		end
 	end
 
-	arg_4_0:updateNewestEpisode(var_4_0)
+	self:updateNewestEpisode(actId)
 end
 
-function var_0_0.updateAct192Episode(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
-	if not arg_5_1 or not arg_5_2 then
+function CooperGarlandModel:updateAct192Episode(actId, episodeId, isFinished, progress)
+	if not actId or not episodeId then
 		return
 	end
 
-	local var_5_0 = arg_5_0._actInfoDic[arg_5_1]
+	local episodeDic = self._actInfoDic[actId]
 
-	if not var_5_0 then
-		var_5_0 = {}
-		arg_5_0._actInfoDic[arg_5_1] = var_5_0
+	if not episodeDic then
+		episodeDic = {}
+		self._actInfoDic[actId] = episodeDic
 	end
 
-	local var_5_1 = var_5_0[arg_5_2]
+	local episodeInfo = episodeDic[episodeId]
 
-	if not var_5_1 then
-		var_5_1 = {}
-		var_5_0[arg_5_2] = var_5_1
+	if not episodeInfo then
+		episodeInfo = {}
+		episodeDic[episodeId] = episodeInfo
 	end
 
-	var_5_1.isFinished = arg_5_3
-	var_5_1.progress = arg_5_4
+	episodeInfo.isFinished = isFinished
+	episodeInfo.progress = progress
 end
 
-function var_0_0.updateNewestEpisode(arg_6_0, arg_6_1)
-	local var_6_0
-	local var_6_1 = CooperGarlandConfig.instance:getEpisodeIdList(arg_6_1, true)
+function CooperGarlandModel:updateNewestEpisode(actId)
+	local newestEpisodeId
+	local episodeIdList = CooperGarlandConfig.instance:getEpisodeIdList(actId, true)
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_1) do
-		local var_6_2 = arg_6_0:isUnlockEpisode(arg_6_1, iter_6_1)
-		local var_6_3 = arg_6_0:isFinishedEpisode(arg_6_1, iter_6_1)
+	for _, tmpEpisodeId in ipairs(episodeIdList) do
+		local isUnlock = self:isUnlockEpisode(actId, tmpEpisodeId)
+		local isFinished = self:isFinishedEpisode(actId, tmpEpisodeId)
 
-		if var_6_2 and not var_6_3 then
-			var_6_0 = iter_6_1
+		if isUnlock and not isFinished then
+			newestEpisodeId = tmpEpisodeId
 		end
 	end
 
-	arg_6_0._actNewestEpisodeDict[arg_6_1] = var_6_0
+	self._actNewestEpisodeDict[actId] = newestEpisodeId
 end
 
-function var_0_0.getAct192Id(arg_7_0)
+function CooperGarlandModel:getAct192Id()
 	return VersionActivity2_7Enum.ActivityId.CooperGarland
 end
 
-function var_0_0.isAct192Open(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0:getAct192Id()
-	local var_8_1
-	local var_8_2
-	local var_8_3
+function CooperGarlandModel:isAct192Open(isToast)
+	local actId = self:getAct192Id()
+	local status, toastId, toastParam
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[actId]
 
-	if ActivityModel.instance:getActivityInfo()[var_8_0] then
-		var_8_1, var_8_2, var_8_3 = ActivityHelper.getActivityStatusAndToast(var_8_0)
+	if actInfoMo then
+		status, toastId, toastParam = ActivityHelper.getActivityStatusAndToast(actId)
 	else
-		var_8_2 = ToastEnum.ActivityEnd
+		toastId = ToastEnum.ActivityEnd
 	end
 
-	if arg_8_1 and var_8_2 then
-		GameFacade.showToast(var_8_2, var_8_3)
+	if isToast and toastId then
+		GameFacade.showToast(toastId, toastParam)
 	end
 
-	return var_8_1 == ActivityEnum.ActivityStatus.Normal
+	local result = status == ActivityEnum.ActivityStatus.Normal
+
+	return result
 end
 
-function var_0_0.getAct192RemainTimeStr(arg_9_0, arg_9_1)
-	local var_9_0 = ""
-	local var_9_1 = true
-	local var_9_2 = arg_9_1 or arg_9_0:getAct192Id()
-	local var_9_3 = ActivityModel.instance:getActivityInfo()[var_9_2]
+function CooperGarlandModel:getAct192RemainTimeStr(argsActId)
+	local result = ""
+	local isEnd = true
+	local actId = argsActId or self:getAct192Id()
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[actId]
 
-	if var_9_3 then
-		local var_9_4 = var_9_3:getRealEndTimeStamp() - ServerTime.now()
+	if actInfoMo then
+		local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
 
-		if var_9_4 > 0 then
-			var_9_0 = TimeUtil.SecondToActivityTimeFormat(var_9_4)
-			var_9_1 = false
+		if offsetSecond > 0 then
+			result = TimeUtil.SecondToActivityTimeFormat(offsetSecond)
+			isEnd = false
 		end
 	end
 
-	return var_9_0, var_9_1
+	return result, isEnd
 end
 
-function var_0_0.getEpisodeInfo(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0
+function CooperGarlandModel:getEpisodeInfo(actId, episodeId)
+	local result
 
-	if arg_10_1 and arg_10_2 and arg_10_0._actInfoDic then
-		local var_10_1 = arg_10_0._actInfoDic[arg_10_1]
+	if actId and episodeId and self._actInfoDic then
+		local episodeDic = self._actInfoDic[actId]
 
-		if var_10_1 then
-			var_10_0 = var_10_1[arg_10_2]
+		if episodeDic then
+			result = episodeDic[episodeId]
 		end
 	end
 
-	return var_10_0
+	return result
 end
 
-function var_0_0.isUnlockEpisode(arg_11_0, arg_11_1, arg_11_2)
-	return arg_11_0:getEpisodeInfo(arg_11_1, arg_11_2) ~= nil
+function CooperGarlandModel:isUnlockEpisode(actId, episodeId)
+	return self:getEpisodeInfo(actId, episodeId) ~= nil
 end
 
-function var_0_0.isFinishedEpisode(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = arg_12_0:getEpisodeInfo(arg_12_1, arg_12_2)
+function CooperGarlandModel:isFinishedEpisode(actId, episodeId)
+	local episodeInfo = self:getEpisodeInfo(actId, episodeId)
 
-	return var_12_0 and var_12_0.isFinished
+	return episodeInfo and episodeInfo.isFinished
 end
 
-function var_0_0.getEpisodeProgress(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0 = arg_13_0:getEpisodeInfo(arg_13_1, arg_13_2)
-	local var_13_1 = var_13_0 and var_13_0.progress
+function CooperGarlandModel:getEpisodeProgress(actId, episodeId)
+	local episodeInfo = self:getEpisodeInfo(actId, episodeId)
+	local saveProgress = episodeInfo and episodeInfo.progress
 
-	if string.nilorempty(var_13_1) then
-		var_13_1 = CooperGarlandEnum.Const.DefaultGameProgress
+	if string.nilorempty(saveProgress) then
+		saveProgress = CooperGarlandEnum.Const.DefaultGameProgress
 	end
 
-	return tonumber(var_13_1)
+	return tonumber(saveProgress)
 end
 
-function var_0_0.getNewestEpisodeId(arg_14_0, arg_14_1)
-	return arg_14_0._actNewestEpisodeDict and arg_14_0._actNewestEpisodeDict[arg_14_1]
+function CooperGarlandModel:getNewestEpisodeId(actId)
+	return self._actNewestEpisodeDict and self._actNewestEpisodeDict[actId]
 end
 
-function var_0_0.isNewestEpisode(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0 = false
+function CooperGarlandModel:isNewestEpisode(actId, episodeId)
+	local result = false
 
-	if arg_15_1 and arg_15_2 then
-		var_15_0 = arg_15_2 == arg_15_0:getNewestEpisodeId(arg_15_1)
+	if actId and episodeId then
+		local newestEpisodeId = self:getNewestEpisodeId(actId)
+
+		result = episodeId == newestEpisodeId
 	end
 
-	return var_15_0
+	return result
 end
 
-var_0_0.instance = var_0_0.New()
+CooperGarlandModel.instance = CooperGarlandModel.New()
 
-return var_0_0
+return CooperGarlandModel

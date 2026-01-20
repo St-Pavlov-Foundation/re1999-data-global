@@ -1,120 +1,120 @@
-﻿module("modules.logic.room.view.debug.RoomDebugPlaceItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/debug/RoomDebugPlaceItem.lua
 
-local var_0_0 = class("RoomDebugPlaceItem", ListScrollCellExtend)
+module("modules.logic.room.view.debug.RoomDebugPlaceItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._icon = gohelper.onceAddComponent(gohelper.findChild(arg_1_0.viewGO, "icon"), gohelper.Type_RawImage)
-	arg_1_0._txtdefineid = gohelper.findChildText(arg_1_0.viewGO, "#txt_defineid")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#txt_name")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_click")
-	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "#go_select")
-	arg_1_0._txtuseCount = gohelper.findChildText(arg_1_0.viewGO, "#txt_useCount")
+local RoomDebugPlaceItem = class("RoomDebugPlaceItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomDebugPlaceItem:onInitView()
+	self._icon = gohelper.onceAddComponent(gohelper.findChild(self.viewGO, "icon"), gohelper.Type_RawImage)
+	self._txtdefineid = gohelper.findChildText(self.viewGO, "#txt_defineid")
+	self._txtname = gohelper.findChildText(self.viewGO, "#txt_name")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_click")
+	self._goselect = gohelper.findChild(self.viewGO, "#go_select")
+	self._txtuseCount = gohelper.findChildText(self.viewGO, "#txt_useCount")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
-	RoomDebugController.instance:registerCallback(RoomEvent.DebugReplaceBlock, arg_2_0._delayUpdateTask, arg_2_0)
-	RoomDebugController.instance:registerCallback(RoomEvent.DebugRootOutBlock, arg_2_0._delayUpdateTask, arg_2_0)
+function RoomDebugPlaceItem:addEvents()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
+	RoomDebugController.instance:registerCallback(RoomEvent.DebugReplaceBlock, self._delayUpdateTask, self)
+	RoomDebugController.instance:registerCallback(RoomEvent.DebugRootOutBlock, self._delayUpdateTask, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
-	RoomDebugController.instance:unregisterCallback(RoomEvent.DebugReplaceBlock, arg_3_0._delayUpdateTask, arg_3_0)
-	RoomDebugController.instance:unregisterCallback(RoomEvent.DebugRootOutBlock, arg_3_0._delayUpdateTask, arg_3_0)
+function RoomDebugPlaceItem:removeEvents()
+	self._btnclick:RemoveClickListener()
+	RoomDebugController.instance:unregisterCallback(RoomEvent.DebugReplaceBlock, self._delayUpdateTask, self)
+	RoomDebugController.instance:unregisterCallback(RoomEvent.DebugRootOutBlock, self._delayUpdateTask, self)
 end
 
-function var_0_0._btnclickOnClick(arg_4_0)
-	RoomDebugPlaceListModel.instance:setSelect(arg_4_0._mo.id)
+function RoomDebugPlaceItem:_btnclickOnClick()
+	RoomDebugPlaceListModel.instance:setSelect(self._mo.id)
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._isSelect = false
+function RoomDebugPlaceItem:_editableInitView()
+	self._isSelect = false
 
-	gohelper.addUIClickAudio(arg_5_0._btnclick.gameObject, AudioEnum.UI.UI_Common_Click)
+	gohelper.addUIClickAudio(self._btnclick.gameObject, AudioEnum.UI.UI_Common_Click)
 end
 
-function var_0_0._refreshUI(arg_6_0)
-	arg_6_0._txtdefineid.text = "资源id：" .. arg_6_0._mo.id
-	arg_6_0._txtname.text = RoomHelper.getBlockPrefabName(arg_6_0._mo.config.prefabPath)
-	arg_6_0._txtuseCount.text = string.format("使用总次数：%s\n本地图次数：%s", RoomDebugController.instance:getUseCountByDefineId(arg_6_0._mo.id), arg_6_0:_getMapUseCountByDefineId(arg_6_0._mo.id))
+function RoomDebugPlaceItem:_refreshUI()
+	self._txtdefineid.text = "资源id：" .. self._mo.id
+	self._txtname.text = RoomHelper.getBlockPrefabName(self._mo.config.prefabPath)
+	self._txtuseCount.text = string.format("使用总次数：%s\n本地图次数：%s", RoomDebugController.instance:getUseCountByDefineId(self._mo.id), self:_getMapUseCountByDefineId(self._mo.id))
 end
 
-function var_0_0._getMapUseCountByDefineId(arg_7_0, arg_7_1)
-	local var_7_0 = RoomMapBlockModel.instance:getFullBlockMOList()
-	local var_7_1 = 0
+function RoomDebugPlaceItem:_getMapUseCountByDefineId(defineId)
+	local blockMOList = RoomMapBlockModel.instance:getFullBlockMOList()
+	local count = 0
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-		if iter_7_1.blockState == RoomBlockEnum.BlockState.Map and iter_7_1.blockId > 0 and iter_7_1.defineId == arg_7_1 then
-			var_7_1 = var_7_1 + 1
+	for i, blockMO in ipairs(blockMOList) do
+		if blockMO.blockState == RoomBlockEnum.BlockState.Map and blockMO.blockId > 0 and blockMO.defineId == defineId then
+			count = count + 1
 		end
 	end
 
-	return var_7_1
+	return count
 end
 
-function var_0_0._delayUpdateTask(arg_8_0)
-	if not arg_8_0._hasDelayUpdateTask then
-		arg_8_0._hasDelayUpdateTask = true
+function RoomDebugPlaceItem:_delayUpdateTask()
+	if not self._hasDelayUpdateTask then
+		self._hasDelayUpdateTask = true
 
-		TaskDispatcher.runDelay(arg_8_0._onRunDelayUpdateTask, arg_8_0, 0.1)
+		TaskDispatcher.runDelay(self._onRunDelayUpdateTask, self, 0.1)
 	end
 end
 
-function var_0_0._onRunDelayUpdateTask(arg_9_0)
-	if arg_9_0._hasDelayUpdateTask then
-		arg_9_0._hasDelayUpdateTask = false
+function RoomDebugPlaceItem:_onRunDelayUpdateTask()
+	if self._hasDelayUpdateTask then
+		self._hasDelayUpdateTask = false
 
-		arg_9_0:_refreshUI()
+		self:_refreshUI()
 	end
 end
 
-function var_0_0.onUpdateMO(arg_10_0, arg_10_1)
-	gohelper.setActive(arg_10_0._goselect, arg_10_0._isSelect)
+function RoomDebugPlaceItem:onUpdateMO(mo)
+	gohelper.setActive(self._goselect, self._isSelect)
 
-	if arg_10_0._mo then
-		local var_10_0 = arg_10_0._mo.blockId
-	end
+	local oldBlockId = self._mo and self._mo.blockId
 
-	arg_10_0._mo = arg_10_1
+	self._mo = mo
 
-	arg_10_0:_refreshBlock(arg_10_1 and arg_10_1.blockId)
-	arg_10_0:_refreshUI()
+	self:_refreshBlock(mo and mo.blockId)
+	self:_refreshUI()
 end
 
-function var_0_0._refreshBlock(arg_11_0, arg_11_1)
-	local var_11_0 = GameSceneMgr.instance:getCurScene()
-	local var_11_1 = arg_11_0._lastOldBlockId
+function RoomDebugPlaceItem:_refreshBlock(blockId)
+	local scene = GameSceneMgr.instance:getCurScene()
+	local oldBlockId = self._lastOldBlockId
 
-	arg_11_0._lastOldBlockId = arg_11_1
+	self._lastOldBlockId = blockId
 
-	if var_11_1 then
-		var_11_0.inventorymgr:removeBlockEntity(var_11_1)
+	if oldBlockId then
+		scene.inventorymgr:removeBlockEntity(oldBlockId)
 	end
 
-	gohelper.setActive(arg_11_0._icon, arg_11_1 and true or false)
+	gohelper.setActive(self._icon, blockId and true or false)
 
-	if arg_11_1 then
-		var_11_0.inventorymgr:addBlockEntity(arg_11_1)
+	if blockId then
+		scene.inventorymgr:addBlockEntity(blockId)
 
-		local var_11_2 = var_11_0.inventorymgr:getIndexById(arg_11_1)
+		local index = scene.inventorymgr:getIndexById(blockId)
 
-		OrthCameraRTMgr.instance:setRawImageUvRect(arg_11_0._icon, var_11_2)
+		OrthCameraRTMgr.instance:setRawImageUvRect(self._icon, index)
 	end
 end
 
-function var_0_0.onSelect(arg_12_0, arg_12_1)
-	gohelper.setActive(arg_12_0._goselect, arg_12_1)
+function RoomDebugPlaceItem:onSelect(isSelect)
+	gohelper.setActive(self._goselect, isSelect)
 
-	arg_12_0._isSelect = arg_12_1
+	self._isSelect = isSelect
 end
 
-function var_0_0.onDestroyView(arg_13_0)
-	arg_13_0:_refreshBlock(nil)
-	TaskDispatcher.cancelTask(arg_13_0._onRunDelayUpdateTask, arg_13_0)
+function RoomDebugPlaceItem:onDestroyView()
+	self:_refreshBlock(nil)
+	TaskDispatcher.cancelTask(self._onRunDelayUpdateTask, self)
 end
 
-return var_0_0
+return RoomDebugPlaceItem

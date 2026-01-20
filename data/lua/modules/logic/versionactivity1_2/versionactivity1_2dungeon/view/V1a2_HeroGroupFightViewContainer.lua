@@ -1,16 +1,18 @@
-﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.V1a2_HeroGroupFightViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/versionactivity1_2dungeon/view/V1a2_HeroGroupFightViewContainer.lua
 
-local var_0_0 = class("V1a2_HeroGroupFightViewContainer", HeroGroupFightViewContainer)
+module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.V1a2_HeroGroupFightViewContainer", package.seeall)
 
-function var_0_0.defineFightView(arg_1_0)
-	var_0_0.super.defineFightView(arg_1_0)
+local V1a2_HeroGroupFightViewContainer = class("V1a2_HeroGroupFightViewContainer", HeroGroupFightViewContainer)
 
-	arg_1_0._heroGroupFightView = VersionActivity_1_2_HeroGroupView.New()
+function V1a2_HeroGroupFightViewContainer:defineFightView()
+	V1a2_HeroGroupFightViewContainer.super.defineFightView(self)
+
+	self._heroGroupFightView = VersionActivity_1_2_HeroGroupView.New()
 end
 
-function var_0_0.addLastViews(arg_2_0, arg_2_1)
-	var_0_0.super.addLastViews(arg_2_0)
-	table.insert(arg_2_1, VersionActivity_1_2_HeroGroupBuildView.New())
+function V1a2_HeroGroupFightViewContainer:addLastViews(views)
+	V1a2_HeroGroupFightViewContainer.super.addLastViews(self)
+	table.insert(views, VersionActivity_1_2_HeroGroupBuildView.New())
 end
 
-return var_0_0
+return V1a2_HeroGroupFightViewContainer

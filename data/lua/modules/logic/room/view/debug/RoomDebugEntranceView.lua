@@ -1,57 +1,59 @@
-﻿module("modules.logic.room.view.debug.RoomDebugEntranceView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/debug/RoomDebugEntranceView.lua
 
-local var_0_0 = class("RoomDebugEntranceView", BaseView)
+module("modules.logic.room.view.debug.RoomDebugEntranceView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btndebug = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_debug")
-	arg_1_0._btninit = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_init")
-	arg_1_0._btnpackage = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_package")
+local RoomDebugEntranceView = class("RoomDebugEntranceView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomDebugEntranceView:onInitView()
+	self._btndebug = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_debug")
+	self._btninit = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_init")
+	self._btnpackage = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_package")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btndebug:AddClickListener(arg_2_0._btndebugOnClick, arg_2_0)
-	arg_2_0._btninit:AddClickListener(arg_2_0._btninitOnClick, arg_2_0)
-	arg_2_0._btnpackage:AddClickListener(arg_2_0._btnpackageOnClick, arg_2_0)
+function RoomDebugEntranceView:addEvents()
+	self._btndebug:AddClickListener(self._btndebugOnClick, self)
+	self._btninit:AddClickListener(self._btninitOnClick, self)
+	self._btnpackage:AddClickListener(self._btnpackageOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btndebug:RemoveClickListener()
-	arg_3_0._btninit:RemoveClickListener()
-	arg_3_0._btnpackage:RemoveClickListener()
+function RoomDebugEntranceView:removeEvents()
+	self._btndebug:RemoveClickListener()
+	self._btninit:RemoveClickListener()
+	self._btnpackage:RemoveClickListener()
 end
 
-function var_0_0._btndebugOnClick(arg_4_0)
+function RoomDebugEntranceView:_btndebugOnClick()
 	RoomController.instance:enterRoom(RoomEnum.GameMode.DebugNormal)
 	ViewMgr.instance:closeAllPopupViews()
 end
 
-function var_0_0._btninitOnClick(arg_5_0)
+function RoomDebugEntranceView:_btninitOnClick()
 	RoomController.instance:enterRoom(RoomEnum.GameMode.DebugInit)
 	ViewMgr.instance:closeAllPopupViews()
 end
 
-function var_0_0._btnpackageOnClick(arg_6_0)
+function RoomDebugEntranceView:_btnpackageOnClick()
 	ViewMgr.instance:openView(ViewName.RoomDebugSelectPackageView)
 end
 
-function var_0_0._editableInitView(arg_7_0)
+function RoomDebugEntranceView:_editableInitView()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
+function RoomDebugEntranceView:onOpen()
 	return
 end
 
-function var_0_0.onClose(arg_9_0)
+function RoomDebugEntranceView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_10_0)
+function RoomDebugEntranceView:onDestroyView()
 	return
 end
 
-return var_0_0
+return RoomDebugEntranceView

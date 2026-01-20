@@ -1,12 +1,14 @@
-﻿module("modules.logic.weekwalk_2.model.rpcmo.WeekwalkVer2ElementInfoMO", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk_2/model/rpcmo/WeekwalkVer2ElementInfoMO.lua
 
-local var_0_0 = pureTable("WeekwalkVer2ElementInfoMO")
+module("modules.logic.weekwalk_2.model.rpcmo.WeekwalkVer2ElementInfoMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.elementId = arg_1_1.elementId
-	arg_1_0.finish = arg_1_1.finish
-	arg_1_0.index = arg_1_1.index
-	arg_1_0.visible = arg_1_1.visible
+local WeekwalkVer2ElementInfoMO = pureTable("WeekwalkVer2ElementInfoMO")
+
+function WeekwalkVer2ElementInfoMO:init(info)
+	self.elementId = info.elementId
+	self.finish = info.finish
+	self.index = info.index
+	self.visible = info.visible
 end
 
-return var_0_0
+return WeekwalkVer2ElementInfoMO

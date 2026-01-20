@@ -1,98 +1,100 @@
-﻿module("modules.logic.versionactivity1_9.heroinvitation.view.HeroInvitationDungeonMapView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/heroinvitation/view/HeroInvitationDungeonMapView.lua
 
-local var_0_0 = class("HeroInvitationDungeonMapView", BaseView)
+module("modules.logic.versionactivity1_9.heroinvitation.view.HeroInvitationDungeonMapView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.btnInvitation = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_topright/#btn_invitation")
-	arg_1_0.goNormal = gohelper.findChild(arg_1_0.viewGO, "#go_topright/#btn_invitation/reward/normal")
-	arg_1_0._animTipsReward = arg_1_0.goNormal:GetComponent(typeof(UnityEngine.Animation))
-	arg_1_0._goEffect = gohelper.findChild(arg_1_0.goNormal, "huan")
-	arg_1_0.txtNormalTotal = gohelper.findChildTextMesh(arg_1_0.goNormal, "layout/#txt_Total")
-	arg_1_0.txtNormalNum = gohelper.findChildTextMesh(arg_1_0.goNormal, "layout/#txt_Num")
-	arg_1_0.goFinish = gohelper.findChild(arg_1_0.viewGO, "#go_topright/#btn_invitation/reward/finished")
-	arg_1_0.goRed = gohelper.findChild(arg_1_0.viewGO, "#go_topright/#btn_invitation/#go_reddot")
-	arg_1_0.txtFinishTotal = gohelper.findChildTextMesh(arg_1_0.goFinish, "layout/#txt_Total")
-	arg_1_0.txtFinishNum = gohelper.findChildTextMesh(arg_1_0.goFinish, "layout/#txt_Num")
+local HeroInvitationDungeonMapView = class("HeroInvitationDungeonMapView", BaseView)
 
-	RedDotController.instance:addRedDot(arg_1_0.goRed, RedDotEnum.DotNode.HeroInvitationReward, 0, arg_1_0.refreshRed, arg_1_0)
+function HeroInvitationDungeonMapView:onInitView()
+	self.btnInvitation = gohelper.findChildButtonWithAudio(self.viewGO, "#go_topright/#btn_invitation")
+	self.goNormal = gohelper.findChild(self.viewGO, "#go_topright/#btn_invitation/reward/normal")
+	self._animTipsReward = self.goNormal:GetComponent(typeof(UnityEngine.Animation))
+	self._goEffect = gohelper.findChild(self.goNormal, "huan")
+	self.txtNormalTotal = gohelper.findChildTextMesh(self.goNormal, "layout/#txt_Total")
+	self.txtNormalNum = gohelper.findChildTextMesh(self.goNormal, "layout/#txt_Num")
+	self.goFinish = gohelper.findChild(self.viewGO, "#go_topright/#btn_invitation/reward/finished")
+	self.goRed = gohelper.findChild(self.viewGO, "#go_topright/#btn_invitation/#go_reddot")
+	self.txtFinishTotal = gohelper.findChildTextMesh(self.goFinish, "layout/#txt_Total")
+	self.txtFinishNum = gohelper.findChildTextMesh(self.goFinish, "layout/#txt_Num")
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	RedDotController.instance:addRedDot(self.goRed, RedDotEnum.DotNode.HeroInvitationReward, 0, self.refreshRed, self)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnInvitation, arg_2_0.onClickBtnInvitation, arg_2_0)
-	arg_2_0:addEventCb(DungeonController.instance, DungeonEvent.OnRemoveElement, arg_2_0.refreshInvitation, arg_2_0)
-	arg_2_0:addEventCb(HeroInvitationController.instance, HeroInvitationEvent.UpdateInfo, arg_2_0.refreshInvitation, arg_2_0)
+function HeroInvitationDungeonMapView:addEvents()
+	self:addClickCb(self.btnInvitation, self.onClickBtnInvitation, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.OnRemoveElement, self.refreshInvitation, self)
+	self:addEventCb(HeroInvitationController.instance, HeroInvitationEvent.UpdateInfo, self.refreshInvitation, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function HeroInvitationDungeonMapView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function HeroInvitationDungeonMapView:_editableInitView()
 	return
 end
 
-function var_0_0.onClickBtnInvitation(arg_5_0)
+function HeroInvitationDungeonMapView:onClickBtnInvitation()
 	ViewMgr.instance:openView(ViewName.HeroInvitationView)
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
-	arg_6_0:refreshView()
+function HeroInvitationDungeonMapView:onUpdateParam()
+	self:refreshView()
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0:refreshView()
-	TaskDispatcher.runDelay(arg_7_0._loadMap, arg_7_0, 0.1)
+function HeroInvitationDungeonMapView:onOpen()
+	self:refreshView()
+	TaskDispatcher.runDelay(self._loadMap, self, 0.1)
 end
 
-function var_0_0._loadMap(arg_8_0)
-	local var_8_0 = DungeonConfig.instance:getChapterMapCfg(DungeonModel.instance.curLookChapterId, 0)
+function HeroInvitationDungeonMapView:_loadMap()
+	local map = DungeonConfig.instance:getChapterMapCfg(DungeonModel.instance.curLookChapterId, 0)
 
 	DungeonController.instance:dispatchEvent(DungeonEvent.OnChangeMap, {
-		var_8_0
+		map
 	})
 end
 
-function var_0_0.onClose(arg_9_0)
+function HeroInvitationDungeonMapView:onClose()
 	return
 end
 
-function var_0_0.refreshView(arg_10_0)
-	arg_10_0:refreshInvitation()
+function HeroInvitationDungeonMapView:refreshView()
+	self:refreshInvitation()
 end
 
-function var_0_0.refreshInvitation(arg_11_0)
-	local var_11_0 = HeroInvitationModel.instance.finalReward
+function HeroInvitationDungeonMapView:refreshInvitation()
+	local finish = HeroInvitationModel.instance.finalReward
 
-	gohelper.setActive(arg_11_0.goNormal, not var_11_0)
-	gohelper.setActive(arg_11_0.goFinish, var_11_0)
+	gohelper.setActive(self.goNormal, not finish)
+	gohelper.setActive(self.goFinish, finish)
 
-	local var_11_1, var_11_2 = HeroInvitationModel.instance:getInvitationFinishCount()
+	local count, finishCount = HeroInvitationModel.instance:getInvitationFinishCount()
 
-	arg_11_0.txtNormalTotal.text = var_11_2
-	arg_11_0.txtNormalNum.text = var_11_1
-	arg_11_0.txtFinishTotal.text = var_11_2
-	arg_11_0.txtFinishNum.text = var_11_1
+	self.txtNormalTotal.text = finishCount
+	self.txtNormalNum.text = count
+	self.txtFinishTotal.text = finishCount
+	self.txtFinishNum.text = count
 end
 
-function var_0_0.refreshRed(arg_12_0, arg_12_1)
-	if arg_12_1 then
-		arg_12_1:defaultRefreshDot()
-		gohelper.setActive(arg_12_0._goEffect, arg_12_1.show)
+function HeroInvitationDungeonMapView:refreshRed(redIcon)
+	if redIcon then
+		redIcon:defaultRefreshDot()
+		gohelper.setActive(self._goEffect, redIcon.show)
 
-		if arg_12_1.show then
-			arg_12_0._animTipsReward:Play("btn_tipreward_loop")
+		if redIcon.show then
+			self._animTipsReward:Play("btn_tipreward_loop")
 		else
-			arg_12_0._animTipsReward:Play("btn_tipreward")
+			self._animTipsReward:Play("btn_tipreward")
 		end
 	end
 end
 
-function var_0_0.onDestroyView(arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0._loadMap, arg_13_0)
+function HeroInvitationDungeonMapView:onDestroyView()
+	TaskDispatcher.cancelTask(self._loadMap, self)
 end
 
-return var_0_0
+return HeroInvitationDungeonMapView

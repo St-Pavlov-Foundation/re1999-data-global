@@ -1,75 +1,77 @@
-﻿module("modules.logic.gm.model.GMGuideStatusModel", package.seeall)
+﻿-- chunkname: @modules/logic/gm/model/GMGuideStatusModel.lua
 
-local var_0_0 = class("GMGuideStatusModel", ListScrollModel)
+module("modules.logic.gm.model.GMGuideStatusModel", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	var_0_0.super.ctor(arg_1_0)
+local GMGuideStatusModel = class("GMGuideStatusModel", ListScrollModel)
 
-	arg_1_0.showOpBtn = true
-	arg_1_0.idReverse = false
-	arg_1_0.search = ""
+function GMGuideStatusModel:ctor()
+	GMGuideStatusModel.super.ctor(self)
+
+	self.showOpBtn = true
+	self.idReverse = false
+	self.search = ""
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._hasInit = nil
+function GMGuideStatusModel:reInit()
+	self._hasInit = nil
 end
 
-function var_0_0.onClickShowOpBtn(arg_3_0)
-	arg_3_0.showOpBtn = not arg_3_0.showOpBtn
+function GMGuideStatusModel:onClickShowOpBtn()
+	self.showOpBtn = not self.showOpBtn
 
-	arg_3_0:updateModel()
+	self:updateModel()
 end
 
-function var_0_0.onClickReverse(arg_4_0)
-	arg_4_0.idReverse = not arg_4_0.idReverse
+function GMGuideStatusModel:onClickReverse()
+	self.idReverse = not self.idReverse
 
-	arg_4_0:reInit()
-	arg_4_0:updateModel()
+	self:reInit()
+	self:updateModel()
 end
 
-function var_0_0.setSearch(arg_5_0, arg_5_1)
-	arg_5_0.search = arg_5_1
+function GMGuideStatusModel:setSearch(text)
+	self.search = text
 
-	arg_5_0:reInit()
-	arg_5_0:updateModel()
+	self:reInit()
+	self:updateModel()
 end
 
-function var_0_0.getSearch(arg_6_0)
-	return arg_6_0.search
+function GMGuideStatusModel:getSearch()
+	return self.search
 end
 
-function var_0_0.updateModel(arg_7_0)
-	if not arg_7_0._hasInit then
-		arg_7_0._hasInit = true
+function GMGuideStatusModel:updateModel()
+	if not self._hasInit then
+		self._hasInit = true
 
-		local var_7_0 = {}
+		local list = {}
 
-		for iter_7_0, iter_7_1 in ipairs(lua_guide.configList) do
-			local var_7_1 = true
+		for i, guideCO in ipairs(lua_guide.configList) do
+			local match = true
 
-			if arg_7_0.search then
-				var_7_1 = string.find(tostring(iter_7_1.id), arg_7_0.search) or string.find(iter_7_1.desc, arg_7_0.search)
+			if self.search then
+				match = string.find(tostring(guideCO.id), self.search) or string.find(guideCO.desc, self.search)
 			end
 
-			if iter_7_1.isOnline == 1 and var_7_1 then
-				table.insert(var_7_0, iter_7_1)
+			if guideCO.isOnline == 1 and match then
+				table.insert(list, guideCO)
 			end
 		end
 
-		table.sort(var_7_0, function(arg_8_0, arg_8_1)
-			return arg_8_0.id < arg_8_1.id
+		table.sort(list, function(guideCfg1, guideCfg2)
+			return guideCfg1.id < guideCfg2.id
 		end)
 
-		if arg_7_0.idReverse then
-			tabletool.revert(var_7_0)
+		if self.idReverse then
+			tabletool.revert(list)
 		end
 
-		arg_7_0:setList(var_7_0)
+		self:setList(list)
 	else
-		arg_7_0:onModelUpdate()
+		self:onModelUpdate()
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+GMGuideStatusModel.instance = GMGuideStatusModel.New()
 
-return var_0_0
+return GMGuideStatusModel

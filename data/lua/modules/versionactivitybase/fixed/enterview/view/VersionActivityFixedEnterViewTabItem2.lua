@@ -1,43 +1,45 @@
-﻿module("modules.versionactivitybase.fixed.enterview.view.VersionActivityFixedEnterViewTabItem2", package.seeall)
+﻿-- chunkname: @modules/versionactivitybase/fixed/enterview/view/VersionActivityFixedEnterViewTabItem2.lua
 
-local var_0_0 = class("VersionActivityFixedEnterViewTabItem2", VersionActivityFixedEnterViewTabItemBase)
+module("modules.versionactivitybase.fixed.enterview.view.VersionActivityFixedEnterViewTabItem2", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	var_0_0.super._editableInitView(arg_1_0)
+local VersionActivityFixedEnterViewTabItem2 = class("VersionActivityFixedEnterViewTabItem2", VersionActivityFixedEnterViewTabItemBase)
 
-	arg_1_0.txtName = gohelper.findChildText(arg_1_0.go, "#txt_name")
-	arg_1_0.txtNameEn = gohelper.findChildText(arg_1_0.go, "#txt_name/#txt_nameen")
+function VersionActivityFixedEnterViewTabItem2:_editableInitView()
+	VersionActivityFixedEnterViewTabItem2.super._editableInitView(self)
+
+	self.txtName = gohelper.findChildText(self.go, "#txt_name")
+	self.txtNameEn = gohelper.findChildText(self.go, "#txt_name/#txt_nameen")
 end
 
-function var_0_0.afterSetData(arg_2_0)
-	var_0_0.super.afterSetData(arg_2_0)
+function VersionActivityFixedEnterViewTabItem2:afterSetData()
+	VersionActivityFixedEnterViewTabItem2.super.afterSetData(self)
 
-	local var_2_0 = SLFramework.UGUI.GuiHelper.GetPreferredHeight(arg_2_0.txtName, " ")
+	local singleLineHeight = SLFramework.UGUI.GuiHelper.GetPreferredHeight(self.txtName, " ")
 
-	arg_2_0.txtName.text = arg_2_0.activityCo and arg_2_0.activityCo.name or ""
-	arg_2_0.txtNameEn.text = arg_2_0.activityCo and arg_2_0.activityCo.nameEn or ""
+	self.txtName.text = self.activityCo and self.activityCo.name or ""
+	self.txtNameEn.text = self.activityCo and self.activityCo.nameEn or ""
 
-	ZProj.UGUIHelper.RebuildLayout(arg_2_0.txtName.transform)
+	ZProj.UGUIHelper.RebuildLayout(self.txtName.transform)
 
-	local var_2_1 = arg_2_0.txtName.preferredHeight
-	local var_2_2 = arg_2_0.go:GetComponent(typeof(UnityEngine.UI.LayoutElement))
+	local nameheight = self.txtName.preferredHeight
+	local layoutElement = self.go:GetComponent(typeof(UnityEngine.UI.LayoutElement))
 
-	var_2_2.minHeight = var_2_2.minHeight + var_2_1 - var_2_0
+	layoutElement.minHeight = layoutElement.minHeight + nameheight - singleLineHeight
 end
 
-function var_0_0.childRefreshSelect(arg_3_0, arg_3_1)
-	var_0_0.super.childRefreshSelect(arg_3_0, arg_3_1)
+function VersionActivityFixedEnterViewTabItem2:childRefreshSelect(actId)
+	VersionActivityFixedEnterViewTabItem2.super.childRefreshSelect(self, actId)
 
-	local var_3_0 = VersionActivityFixedHelper.getVersionActivityEnum().TabSetting.unselect
+	local tabSetting = VersionActivityFixedHelper.getVersionActivityEnum().TabSetting.unselect
 
-	if arg_3_0.isSelect then
-		var_3_0 = VersionActivityFixedHelper.getVersionActivityEnum().TabSetting.select
+	if self.isSelect then
+		tabSetting = VersionActivityFixedHelper.getVersionActivityEnum().TabSetting.select
 	end
 
-	arg_3_0.txtName.color = GameUtil.parseColor(var_3_0.cnColor)
-	arg_3_0.txtNameEn.color = GameUtil.parseColor(var_3_0.enColor)
-	arg_3_0.txtName.fontSize = var_3_0.fontSize
-	arg_3_0.txtNameEn.fontSize = var_3_0.enFontSize
+	self.txtName.color = GameUtil.parseColor(tabSetting.cnColor)
+	self.txtNameEn.color = GameUtil.parseColor(tabSetting.enColor)
+	self.txtName.fontSize = tabSetting.fontSize
+	self.txtNameEn.fontSize = tabSetting.enFontSize
 end
 
-return var_0_0
+return VersionActivityFixedEnterViewTabItem2

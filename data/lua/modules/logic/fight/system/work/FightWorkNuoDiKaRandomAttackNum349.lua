@@ -1,23 +1,25 @@
-﻿module("modules.logic.fight.system.work.FightWorkNuoDiKaRandomAttackNum349", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkNuoDiKaRandomAttackNum349.lua
 
-local var_0_0 = class("FightWorkNuoDiKaRandomAttackNum349", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkNuoDiKaRandomAttackNum349", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0.actEffectData
+local FightWorkNuoDiKaRandomAttackNum349 = class("FightWorkNuoDiKaRandomAttackNum349", FightEffectBase)
 
-	arg_1_0:com_sendFightEvent(FightEvent.Blood2BengFa, var_1_0)
+function FightWorkNuoDiKaRandomAttackNum349:onStart()
+	local actEffectData = self.actEffectData
 
-	local var_1_1 = true
+	self:com_sendFightEvent(FightEvent.Blood2BengFa, actEffectData)
 
-	if var_1_0.effectNum1 == 0 then
-		var_1_1 = false
+	local waitPerformance = true
+
+	if actEffectData.effectNum1 == 0 then
+		waitPerformance = false
 	end
 
-	if var_1_1 then
-		arg_1_0:com_registTimer(arg_1_0.finishWork, 0.5)
+	if waitPerformance then
+		self:com_registTimer(self.finishWork, 0.5)
 	else
-		arg_1_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-return var_0_0
+return FightWorkNuoDiKaRandomAttackNum349

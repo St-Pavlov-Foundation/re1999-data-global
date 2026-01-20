@@ -1,103 +1,105 @@
-﻿module("modules.logic.versionactivity2_2.tianshinana.controller.TianShiNaNaController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/tianshinana/controller/TianShiNaNaController.lua
 
-local var_0_0 = class("TianShiNaNaController", BaseController)
+module("modules.logic.versionactivity2_2.tianshinana.controller.TianShiNaNaController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._stepFlow = nil
+local TianShiNaNaController = class("TianShiNaNaController", BaseController)
+
+function TianShiNaNaController:onInit()
+	self._stepFlow = nil
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clearFlow()
+function TianShiNaNaController:reInit()
+	self:clearFlow()
 end
 
-function var_0_0.addConstEvents(arg_3_0)
-	arg_3_0:registerCallback(TianShiNaNaEvent.ExitLevel, arg_3_0.clearFlow, arg_3_0)
+function TianShiNaNaController:addConstEvents()
+	self:registerCallback(TianShiNaNaEvent.ExitLevel, self.clearFlow, self)
 end
 
-function var_0_0.openMainView(arg_4_0)
-	Activity167Rpc.instance:sendGetAct167InfoRequest(VersionActivity2_2Enum.ActivityId.TianShiNaNa, arg_4_0._onRecvMsg, arg_4_0)
+function TianShiNaNaController:openMainView()
+	Activity167Rpc.instance:sendGetAct167InfoRequest(VersionActivity2_2Enum.ActivityId.TianShiNaNa, self._onRecvMsg, self)
 end
 
-function var_0_0._onRecvMsg(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	if arg_5_2 == 0 then
+function TianShiNaNaController:_onRecvMsg(cmd, resultCode, msg)
+	if resultCode == 0 then
 		ViewMgr.instance:openView(ViewName.TianShiNaNaMainView)
 	end
 end
 
-function var_0_0.buildFlow(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0._stepFlow
+function TianShiNaNaController:buildFlow(steps)
+	local haveFlow = self._stepFlow
 
-	arg_6_0._stepFlow = arg_6_0._stepFlow or FlowSequence.New()
+	self._stepFlow = self._stepFlow or FlowSequence.New()
 
-	local var_6_1 = TianShiNaNaPlayEffectWork.New()
+	local effectWork = TianShiNaNaPlayEffectWork.New()
 
-	arg_6_0._stepFlow:addWork(var_6_1)
+	self._stepFlow:addWork(effectWork)
 
-	local var_6_2 = {}
+	local playerWalkPaths = {}
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_1) do
-		local var_6_3 = cjson.decode(iter_6_1.param)
+	for _, step in ipairs(steps) do
+		local stepData = cjson.decode(step.param)
 
-		if var_6_3.stepType == TianShiNaNaEnum.StepType.Move and var_6_3.id == TianShiNaNaModel.instance:getHeroMo().co.id then
-			table.insert(var_6_2, var_6_3)
+		if stepData.stepType == TianShiNaNaEnum.StepType.Move and stepData.id == TianShiNaNaModel.instance:getHeroMo().co.id then
+			table.insert(playerWalkPaths, stepData)
 		end
 
-		local var_6_4 = _G[string.format("TianShiNaNa%sStep", TianShiNaNaEnum.StepTypeToName[var_6_3.stepType] or "")]
+		local cls = _G[string.format("TianShiNaNa%sStep", TianShiNaNaEnum.StepTypeToName[stepData.stepType] or "")]
 
-		if var_6_4 then
-			local var_6_5 = var_6_4.New()
+		if cls then
+			local work = cls.New()
 
-			var_6_5:initData(var_6_3)
-			arg_6_0._stepFlow:addWork(var_6_5)
+			work:initData(stepData)
+			self._stepFlow:addWork(work)
 		else
-			logError("未处理步骤类型" .. var_6_3.stepType)
+			logError("未处理步骤类型" .. stepData.stepType)
 		end
 	end
 
-	var_6_1:setWalkPath(var_6_2)
+	effectWork:setWalkPath(playerWalkPaths)
 
-	if not var_6_0 then
-		arg_6_0._stepFlow:addWork(TianShiNaNaMapCollapseStep.New())
-		arg_6_0._stepFlow:registerDoneListener(arg_6_0.flowDone, arg_6_0)
+	if not haveFlow then
+		self._stepFlow:addWork(TianShiNaNaMapCollapseStep.New())
+		self._stepFlow:registerDoneListener(self.flowDone, self)
 
 		if TianShiNaNaModel.instance.sceneLevelLoadFinish then
 			if TianShiNaNaModel.instance:getState() ~= TianShiNaNaEnum.CurState.DoStep then
 				TianShiNaNaModel.instance:setState(TianShiNaNaEnum.CurState.DoStep)
 			end
 
-			arg_6_0._stepFlow:start()
+			self._stepFlow:start()
 		else
 			TianShiNaNaModel.instance.waitStartFlow = true
 		end
 	end
 end
 
-function var_0_0.checkBeginFlow(arg_7_0)
-	local var_7_0 = TianShiNaNaModel.instance.waitStartFlow
+function TianShiNaNaController:checkBeginFlow()
+	local waitFlow = TianShiNaNaModel.instance.waitStartFlow
 
 	TianShiNaNaModel.instance.waitStartFlow = false
 
-	if var_7_0 and arg_7_0._stepFlow then
-		arg_7_0._stepFlow:start()
+	if waitFlow and self._stepFlow then
+		self._stepFlow:start()
 	end
 end
 
-function var_0_0.flowDone(arg_8_0, arg_8_1)
-	arg_8_0:dispatchEvent(TianShiNaNaEvent.OnFlowEnd, arg_8_1)
+function TianShiNaNaController:flowDone(isSuccess)
+	self:dispatchEvent(TianShiNaNaEvent.OnFlowEnd, isSuccess)
 
-	arg_8_0._stepFlow = nil
+	self._stepFlow = nil
 end
 
-function var_0_0.clearFlow(arg_9_0)
+function TianShiNaNaController:clearFlow()
 	TianShiNaNaModel.instance.waitStartFlow = false
 
-	if arg_9_0._stepFlow then
-		arg_9_0._stepFlow:onDestroyInternal()
+	if self._stepFlow then
+		self._stepFlow:onDestroyInternal()
 
-		arg_9_0._stepFlow = nil
+		self._stepFlow = nil
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+TianShiNaNaController.instance = TianShiNaNaController.New()
 
-return var_0_0
+return TianShiNaNaController

@@ -1,150 +1,152 @@
-﻿module("modules.logic.dungeon.view.chapter.DungeonChapterUnlockItem", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/chapter/DungeonChapterUnlockItem.lua
 
-local var_0_0 = class("DungeonChapterUnlockItem", ListScrollCellExtend)
+module("modules.logic.dungeon.view.chapter.DungeonChapterUnlockItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gocontainer = gohelper.findChild(arg_1_0.viewGO, "#go_container")
-	arg_1_0._gotemplate = gohelper.findChild(arg_1_0.viewGO, "#go_item")
+local DungeonChapterUnlockItem = class("DungeonChapterUnlockItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function DungeonChapterUnlockItem:onInitView()
+	self._gocontainer = gohelper.findChild(self.viewGO, "#go_container")
+	self._gotemplate = gohelper.findChild(self.viewGO, "#go_item")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function DungeonChapterUnlockItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function DungeonChapterUnlockItem:removeEvents()
 	return
 end
 
-function var_0_0.ctor(arg_4_0, arg_4_1)
-	arg_4_0._config = arg_4_1
+function DungeonChapterUnlockItem:ctor(config)
+	self._config = config
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0:_showUnlockContent()
-	arg_5_0:_showBeUnlockEpisode()
-	gohelper.setActive(arg_5_0.viewGO, false)
-	TaskDispatcher.runDelay(arg_5_0._delayShow, arg_5_0, 0.7)
+function DungeonChapterUnlockItem:_editableInitView()
+	self:_showUnlockContent()
+	self:_showBeUnlockEpisode()
+	gohelper.setActive(self.viewGO, false)
+	TaskDispatcher.runDelay(self._delayShow, self, 0.7)
 end
 
-function var_0_0._delayShow(arg_6_0)
-	gohelper.setActive(arg_6_0.viewGO, true)
+function DungeonChapterUnlockItem:_delayShow()
+	gohelper.setActive(self.viewGO, true)
 end
 
-function var_0_0._showUnlockContent(arg_7_0)
-	local var_7_0 = var_0_0.getUnlockContentList(arg_7_0._config.id)
+function DungeonChapterUnlockItem:_showUnlockContent()
+	local list = DungeonChapterUnlockItem.getUnlockContentList(self._config.id)
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-		local var_7_1 = gohelper.clone(arg_7_0._gotemplate, arg_7_0._gocontainer)
+	for i, v in ipairs(list) do
+		local go = gohelper.clone(self._gotemplate, self._gocontainer)
 
-		gohelper.setActive(var_7_1, true)
+		gohelper.setActive(go, true)
 
-		local var_7_2 = gohelper.findChildTextMesh(var_7_1, "#txt_condition")
-		local var_7_3 = gohelper.findChildImage(var_7_1, "#image_icon")
+		local txt = gohelper.findChildTextMesh(go, "#txt_condition")
+		local image = gohelper.findChildImage(go, "#image_icon")
 
-		UISpriteSetMgr.instance:setUiFBSprite(var_7_3, "jiesuo", true)
+		UISpriteSetMgr.instance:setUiFBSprite(image, "jiesuo", true)
 
-		var_7_2.text = iter_7_1
+		txt.text = v
 	end
 end
 
-function var_0_0.getUnlockContentList(arg_8_0, arg_8_1)
-	local var_8_0 = {}
+function DungeonChapterUnlockItem.getUnlockContentList(id, isToast)
+	local list = {}
 
-	if DungeonModel.instance:isReactivityEpisode(arg_8_0) then
-		return var_8_0
+	if DungeonModel.instance:isReactivityEpisode(id) then
+		return list
 	end
 
-	local var_8_1 = OpenConfig.instance:getOpenShowInEpisode(arg_8_0)
+	local openList = OpenConfig.instance:getOpenShowInEpisode(id)
 
-	if var_8_1 then
-		for iter_8_0, iter_8_1 in ipairs(var_8_1) do
-			local var_8_2 = lua_open.configDict[iter_8_1]
-			local var_8_3
+	if openList then
+		for i, v in ipairs(openList) do
+			local openCfg = lua_open.configDict[v]
+			local content
 
-			if arg_8_1 and var_8_2 and var_8_2.bindActivityId ~= 0 then
-				local var_8_4 = var_8_2.bindActivityId
+			if isToast and openCfg and openCfg.bindActivityId ~= 0 then
+				local activityId = openCfg.bindActivityId
 
-				if ActivityHelper.getActivityStatus(var_8_4) == ActivityEnum.ActivityStatus.Normal then
-					var_8_3 = DungeonModel.instance:getUnlockContent(DungeonEnum.UnlockContentType.ActivityOpen, iter_8_1)
+				if ActivityHelper.getActivityStatus(activityId) == ActivityEnum.ActivityStatus.Normal then
+					content = DungeonModel.instance:getUnlockContent(DungeonEnum.UnlockContentType.ActivityOpen, v)
 				end
 			else
-				var_8_3 = DungeonModel.instance:getUnlockContent(DungeonEnum.UnlockContentType.Open, iter_8_1)
+				content = DungeonModel.instance:getUnlockContent(DungeonEnum.UnlockContentType.Open, v)
 			end
 
-			if var_8_3 then
-				table.insert(var_8_0, var_8_3)
-			end
-		end
-	end
-
-	local var_8_5 = DungeonConfig.instance:getUnlockEpisodeList(arg_8_0)
-
-	if var_8_5 then
-		for iter_8_2, iter_8_3 in ipairs(var_8_5) do
-			local var_8_6 = DungeonModel.instance:getUnlockContent(DungeonEnum.UnlockContentType.Episode, iter_8_3)
-
-			if var_8_6 then
-				table.insert(var_8_0, var_8_6)
+			if content then
+				table.insert(list, content)
 			end
 		end
 	end
 
-	local var_8_7 = OpenConfig.instance:getOpenGroupShowInEpisode(arg_8_0)
+	local unlockEpisodeList = DungeonConfig.instance:getUnlockEpisodeList(id)
 
-	if var_8_7 then
-		for iter_8_4, iter_8_5 in ipairs(var_8_7) do
-			local var_8_8 = DungeonModel.instance:getUnlockContent(DungeonEnum.UnlockContentType.OpenGroup, iter_8_5)
+	if unlockEpisodeList then
+		for i, v in ipairs(unlockEpisodeList) do
+			local content = DungeonModel.instance:getUnlockContent(DungeonEnum.UnlockContentType.Episode, v)
 
-			if var_8_8 then
-				table.insert(var_8_0, var_8_8)
+			if content then
+				table.insert(list, content)
 			end
 		end
 	end
 
-	return var_8_0
+	local openGroupList = OpenConfig.instance:getOpenGroupShowInEpisode(id)
+
+	if openGroupList then
+		for i, v in ipairs(openGroupList) do
+			local content = DungeonModel.instance:getUnlockContent(DungeonEnum.UnlockContentType.OpenGroup, v)
+
+			if content then
+				table.insert(list, content)
+			end
+		end
+	end
+
+	return list
 end
 
-function var_0_0._showBeUnlockEpisode(arg_9_0)
-	if arg_9_0._config.unlockEpisode <= 0 or DungeonModel.instance:hasPassLevelAndStory(arg_9_0._config.id) then
+function DungeonChapterUnlockItem:_showBeUnlockEpisode()
+	if self._config.unlockEpisode <= 0 or DungeonModel.instance:hasPassLevelAndStory(self._config.id) then
 		return
 	end
 
-	local var_9_0 = gohelper.clone(arg_9_0._gotemplate, arg_9_0._gocontainer)
+	local go = gohelper.clone(self._gotemplate, self._gocontainer)
 
-	gohelper.setActive(var_9_0, true)
+	gohelper.setActive(go, true)
 
-	local var_9_1 = gohelper.findChildTextMesh(var_9_0, "#txt_condition")
-	local var_9_2 = gohelper.findChildImage(var_9_0, "#image_icon")
+	local txt = gohelper.findChildTextMesh(go, "#txt_condition")
+	local image = gohelper.findChildImage(go, "#image_icon")
 
-	UISpriteSetMgr.instance:setUiFBSprite(var_9_2, "suo1", true)
+	UISpriteSetMgr.instance:setUiFBSprite(image, "suo1", true)
 
-	local var_9_3 = DungeonConfig.instance:getEpisodeCO(arg_9_0._config.unlockEpisode)
+	local episodeCfg = DungeonConfig.instance:getEpisodeCO(self._config.unlockEpisode)
 
-	var_9_1.text = formatLuaLang("dungeon_unlock_episode", string.format("%s %s", DungeonController.getEpisodeName(var_9_3), var_9_3.name))
+	txt.text = formatLuaLang("dungeon_unlock_episode", string.format("%s %s", DungeonController.getEpisodeName(episodeCfg), episodeCfg.name))
 end
 
-function var_0_0._editableAddEvents(arg_10_0)
+function DungeonChapterUnlockItem:_editableAddEvents()
 	return
 end
 
-function var_0_0._editableRemoveEvents(arg_11_0)
+function DungeonChapterUnlockItem:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_12_0, arg_12_1)
+function DungeonChapterUnlockItem:onUpdateMO(mo)
 	return
 end
 
-function var_0_0.onSelect(arg_13_0, arg_13_1)
+function DungeonChapterUnlockItem:onSelect(isSelect)
 	return
 end
 
-function var_0_0.onDestroyView(arg_14_0)
-	TaskDispatcher.cancelTask(arg_14_0._delayShow, arg_14_0)
+function DungeonChapterUnlockItem:onDestroyView()
+	TaskDispatcher.cancelTask(self._delayShow, self)
 end
 
-return var_0_0
+return DungeonChapterUnlockItem

@@ -1,74 +1,76 @@
-﻿module("modules.common.others.LuaMixScrollViewExtended", package.seeall)
+﻿-- chunkname: @modules/common/others/LuaMixScrollViewExtended.lua
 
-local var_0_0 = LuaMixScrollView
+module("modules.common.others.LuaMixScrollViewExtended", package.seeall)
 
-var_0_0.__onUpdateCell = var_0_0._onUpdateCell
+local LuaMixScrollView = LuaMixScrollView
 
-function var_0_0.setDynamicGetItem(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._dynamicGetCallback = arg_1_1
-	arg_1_0._dynamicGetCallbackObj = arg_1_2
-	arg_1_0._useDynamicGetItem = true
+LuaMixScrollView.__onUpdateCell = LuaMixScrollView._onUpdateCell
+
+function LuaMixScrollView:setDynamicGetItem(callback, callbackObj)
+	self._dynamicGetCallback = callback
+	self._dynamicGetCallbackObj = callbackObj
+	self._useDynamicGetItem = true
 end
 
-function var_0_0._onUpdateCell(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
-	if not arg_2_0._useDynamicGetItem then
-		var_0_0.__onUpdateCell(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
+function LuaMixScrollView:_onUpdateCell(cellGO, index, type, param)
+	if not self._useDynamicGetItem then
+		LuaMixScrollView.__onUpdateCell(self, cellGO, index, type, param)
 
 		return
 	end
 
-	local var_2_0 = arg_2_0._model:getByIndex(arg_2_2 + 1)
-	local var_2_1, var_2_2, var_2_3 = arg_2_0._dynamicGetCallback(arg_2_0._dynamicGetCallbackObj, var_2_0)
+	local mo = self._model:getByIndex(index + 1)
+	local prefabInstName, cellClass, prefabUrl = self._dynamicGetCallback(self._dynamicGetCallbackObj, mo)
 
-	var_2_1 = var_2_1 or LuaListScrollView.PrefabInstName
-	var_2_2 = var_2_2 or arg_2_0._param.cellClass
-	var_2_3 = var_2_3 or arg_2_0._param.prefabUrl
+	prefabInstName = prefabInstName or LuaListScrollView.PrefabInstName
+	cellClass = cellClass or self._param.cellClass
+	prefabUrl = prefabUrl or self._param.prefabUrl
 
-	local var_2_4 = arg_2_1.transform
-	local var_2_5 = var_2_4.childCount
+	local transform = cellGO.transform
+	local childCount = transform.childCount
 
-	for iter_2_0 = 1, var_2_5 do
-		local var_2_6 = var_2_4:GetChild(iter_2_0 - 1)
+	for i = 1, childCount do
+		local child = transform:GetChild(i - 1)
 
-		gohelper.setActive(var_2_6, var_2_6.name == var_2_1)
+		gohelper.setActive(child, child.name == prefabInstName)
 	end
 
-	local var_2_7 = arg_2_0:_getLuaCellComp(arg_2_1, var_2_1, var_2_2, var_2_3)
+	local luaCellComp = self:_getLuaCellComp(cellGO, prefabInstName, cellClass, prefabUrl)
 
-	var_2_7._index = arg_2_2 + 1
+	luaCellComp._index = index + 1
 
-	var_2_7:onUpdateMO(var_2_0, arg_2_3, arg_2_4)
+	luaCellComp:onUpdateMO(mo, type, param)
 end
 
-function var_0_0._getLuaCellComp(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	local var_3_0 = gohelper.findChild(arg_3_1, arg_3_2)
-	local var_3_1
+function LuaMixScrollView:_getLuaCellComp(cellGO, prefabInstName, cellClass, prefabUrl)
+	local prefabInstGO = gohelper.findChild(cellGO, prefabInstName)
+	local luaCellComp
 
-	if var_3_0 then
-		var_3_1 = MonoHelper.getLuaComFromGo(var_3_0, arg_3_3)
+	if prefabInstGO then
+		luaCellComp = MonoHelper.getLuaComFromGo(prefabInstGO, cellClass)
 	else
-		if arg_3_0._param.prefabType == ScrollEnum.ScrollPrefabFromRes then
-			var_3_0 = arg_3_0:getResInst(arg_3_4, arg_3_1, arg_3_2)
-		elseif arg_3_0._param.prefabType == ScrollEnum.ScrollPrefabFromView then
-			var_3_0 = gohelper.clone(arg_3_0._cellSourceGO, arg_3_1, arg_3_2)
+		if self._param.prefabType == ScrollEnum.ScrollPrefabFromRes then
+			prefabInstGO = self:getResInst(prefabUrl, cellGO, prefabInstName)
+		elseif self._param.prefabType == ScrollEnum.ScrollPrefabFromView then
+			prefabInstGO = gohelper.clone(self._cellSourceGO, cellGO, prefabInstName)
 
-			gohelper.setActive(var_3_0, true)
+			gohelper.setActive(prefabInstGO, true)
 		else
-			logError("LuaMixScrollView prefabType not support: " .. arg_3_0._param.prefabType)
+			logError("LuaMixScrollView prefabType not support: " .. self._param.prefabType)
 		end
 
-		var_3_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_3_0, arg_3_3)
+		luaCellComp = MonoHelper.addNoUpdateLuaComOnceToGo(prefabInstGO, cellClass)
 
-		var_3_1:initInternal(var_3_0, arg_3_0)
+		luaCellComp:initInternal(prefabInstGO, self)
 
-		arg_3_0._cellCompDict[var_3_1] = true
+		self._cellCompDict[luaCellComp] = true
 	end
 
-	return var_3_1
+	return luaCellComp
 end
 
-function var_0_0.activateExtend()
+function LuaMixScrollView.activateExtend()
 	return
 end
 
-return var_0_0
+return LuaMixScrollView

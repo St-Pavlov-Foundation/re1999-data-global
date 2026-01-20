@@ -1,170 +1,173 @@
-﻿module("modules.logic.sp01.odyssey.view.OdysseyTrialCharacterTalentNodeTipView", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/view/OdysseyTrialCharacterTalentNodeTipView.lua
 
-local var_0_0 = class("OdysseyTrialCharacterTalentNodeTipView", CharacterSkillTalentNodeTipView)
+module("modules.logic.sp01.odyssey.view.OdysseyTrialCharacterTalentNodeTipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	var_0_0.super.onInitView(arg_1_0)
+local OdysseyTrialCharacterTalentNodeTipView = class("OdysseyTrialCharacterTalentNodeTipView", CharacterSkillTalentNodeTipView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function OdysseyTrialCharacterTalentNodeTipView:onInitView()
+	OdysseyTrialCharacterTalentNodeTipView.super.onInitView(self)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnyes:AddClickListener(arg_2_0._btnyesOnClick, arg_2_0)
-	arg_2_0._btnno:AddClickListener(arg_2_0._btnnoOnClick, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.onClickTalentTreeNode, arg_2_0._onClickTalentTreeNode, arg_2_0)
-	arg_2_0:addEventCb(OdysseyController.instance, OdysseyEvent.TrialTalentTreeChange, arg_2_0._closeTip, arg_2_0)
-	arg_2_0:addEventCb(OdysseyController.instance, OdysseyEvent.TrialTalentTreeReset, arg_2_0._closeTip, arg_2_0)
+function OdysseyTrialCharacterTalentNodeTipView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnyes:AddClickListener(self._btnyesOnClick, self)
+	self._btnno:AddClickListener(self._btnnoOnClick, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.onClickTalentTreeNode, self._onClickTalentTreeNode, self)
+	self:addEventCb(OdysseyController.instance, OdysseyEvent.TrialTalentTreeChange, self._closeTip, self)
+	self:addEventCb(OdysseyController.instance, OdysseyEvent.TrialTalentTreeReset, self._closeTip, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnyes:RemoveClickListener()
-	arg_3_0._btnno:RemoveClickListener()
-	arg_3_0:removeEventCb(CharacterController.instance, CharacterEvent.onClickTalentTreeNode, arg_3_0._onClickTalentTreeNode, arg_3_0)
-	arg_3_0:removeEventCb(OdysseyController.instance, OdysseyEvent.TrialTalentTreeChange, arg_3_0._closeTip, arg_3_0)
-	arg_3_0:removeEventCb(OdysseyController.instance, OdysseyEvent.TrialTalentTreeReset, arg_3_0._closeTip, arg_3_0)
+function OdysseyTrialCharacterTalentNodeTipView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btnyes:RemoveClickListener()
+	self._btnno:RemoveClickListener()
+	self:removeEventCb(CharacterController.instance, CharacterEvent.onClickTalentTreeNode, self._onClickTalentTreeNode, self)
+	self:removeEventCb(OdysseyController.instance, OdysseyEvent.TrialTalentTreeChange, self._closeTip, self)
+	self:removeEventCb(OdysseyController.instance, OdysseyEvent.TrialTalentTreeReset, self._closeTip, self)
 end
 
-function var_0_0._btnyesOnClick(arg_4_0)
-	if not arg_4_0.skillTalentMo then
+function OdysseyTrialCharacterTalentNodeTipView:_btnyesOnClick()
+	if not self.skillTalentMo then
 		return
 	end
 
-	if arg_4_0.skillTalentMo:isNullTalentPonit(arg_4_0.heroMo) then
+	if self.skillTalentMo:isNullTalentPonit(self.heroMo) then
 		return
 	end
 
-	if arg_4_0._nodeMo:isLight() then
+	if self._nodeMo:isLight() then
 		return
 	end
 
-	if arg_4_0.isActTrialHero then
-		OdysseyRpc.instance:sendOdysseyTalentCassandraTreeChoiceRequest(arg_4_0._sub, arg_4_0._level)
+	if self.isActTrialHero then
+		OdysseyRpc.instance:sendOdysseyTalentCassandraTreeChoiceRequest(self._sub, self._level)
 	end
 end
 
-function var_0_0._btnnoOnClick(arg_5_0)
-	if not arg_5_0.skillTalentMo then
+function OdysseyTrialCharacterTalentNodeTipView:_btnnoOnClick()
+	if not self.skillTalentMo then
 		return
 	end
 
-	if not arg_5_0._nodeMo:isLight() then
+	if not self._nodeMo:isLight() then
 		return
 	end
 
-	if arg_5_0.isActTrialHero then
-		OdysseyRpc.instance:sendOdysseyTalentCassandraTreeCancelRequest(arg_5_0._sub, arg_5_0._level)
+	if self.isActTrialHero then
+		OdysseyRpc.instance:sendOdysseyTalentCassandraTreeCancelRequest(self._sub, self._level)
 	end
 end
 
-function var_0_0._onClickTalentTreeNode(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_0:_openNodeTip(arg_6_1, arg_6_2)
+function OdysseyTrialCharacterTalentNodeTipView:_onClickTalentTreeNode(sub, level)
+	self:_openNodeTip(sub, level)
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0.heroMo = arg_7_0.viewParam
+function OdysseyTrialCharacterTalentNodeTipView:onOpen()
+	self.heroMo = self.viewParam
 
-	local var_7_0 = arg_7_0.heroMo.extraMo
-	local var_7_1 = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.TrialHeroId)
-	local var_7_2 = tonumber(var_7_1.value)
+	local extraMo = self.heroMo.extraMo
+	local trialHeroConstCo = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.TrialHeroId)
+	local trialHeroId = tonumber(trialHeroConstCo.value)
 
-	arg_7_0.isActTrialHero = arg_7_0.heroMo.trialCo and arg_7_0.heroMo.trialCo.id == var_7_2
-	arg_7_0.skillTalentMo = var_7_0 and arg_7_0.heroMo.trialCo and arg_7_0.isActTrialHero and OdysseyTalentModel.instance:getTrialCassandraTreeInfo() or var_7_0:getSkillTalentMo()
-	arg_7_0._isShowTip = false
+	self.isActTrialHero = self.heroMo.trialCo and self.heroMo.trialCo.id == trialHeroId
+	self.skillTalentMo = extraMo and self.heroMo.trialCo and self.isActTrialHero and OdysseyTalentModel.instance:getTrialCassandraTreeInfo() or extraMo:getSkillTalentMo()
+	self._isShowTip = false
 
-	gohelper.setActive(arg_7_0._gotip, false)
-	gohelper.setActive(arg_7_0._btnclose.gameObject, false)
+	gohelper.setActive(self._gotip, false)
+	gohelper.setActive(self._btnclose.gameObject, false)
 end
 
-function var_0_0._openNodeTip(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = arg_8_0.heroMo.exSkillLevel
+function OdysseyTrialCharacterTalentNodeTipView:_openNodeTip(sub, level)
+	local exSkillLevel = self.heroMo.exSkillLevel
 
-	recthelper.setAnchorX(arg_8_0._gotip.transform, arg_8_1 == 2 and 500 or 0)
+	recthelper.setAnchorX(self._gotip.transform, sub == 2 and 500 or 0)
 
-	local var_8_1 = arg_8_0.skillTalentMo:getTreeNodeMoBySubLevel(arg_8_1, arg_8_2)
+	local mo = self.skillTalentMo:getTreeNodeMoBySubLevel(sub, level)
 
-	arg_8_0._sub = arg_8_1
-	arg_8_0._level = arg_8_2
-	arg_8_0._txtname.text = var_8_1.co.name
+	self._sub = sub
+	self._level = level
+	self._txtname.text = mo.co.name
 
-	local var_8_2 = var_8_1:getDesc(var_8_0)
-	local var_8_3 = var_8_1:getFieldActivateDesc(var_8_0)
+	local desc = mo:getDesc(exSkillLevel)
+	local fieldActivateDesc = mo:getFieldActivateDesc(exSkillLevel)
 
-	arg_8_0._skillDesc = MonoHelper.addNoUpdateLuaComOnceToGo(arg_8_0._txtdesc.gameObject, SkillDescComp)
+	self._skillDesc = MonoHelper.addNoUpdateLuaComOnceToGo(self._txtdesc.gameObject, SkillDescComp)
 
-	arg_8_0._skillDesc:updateInfo(arg_8_0._txtdesc, var_8_2, arg_8_0.heroMo.heroId)
-	UISpriteSetMgr.instance:setUiCharacterSprite(arg_8_0._imageTag, arg_8_0.skillTalentMo:getSmallSubIconPath(arg_8_1))
+	self._skillDesc:updateInfo(self._txtdesc, desc, self.heroMo.heroId)
+	UISpriteSetMgr.instance:setUiCharacterSprite(self._imageTag, self.skillTalentMo:getSmallSubIconPath(sub))
 
-	arg_8_0._treeMo = arg_8_0.skillTalentMo:getTreeMosBySub(arg_8_1)
-	arg_8_0._nodeMo = arg_8_0.skillTalentMo:getTreeNodeMoBySubLevel(arg_8_1, arg_8_2)
+	self._treeMo = self.skillTalentMo:getTreeMosBySub(sub)
+	self._nodeMo = self.skillTalentMo:getTreeNodeMoBySubLevel(sub, level)
 
-	local var_8_4 = #arg_8_0.skillTalentMo:getLightOrCancelNodes(arg_8_1, arg_8_2)
+	local nodeList = self.skillTalentMo:getLightOrCancelNodes(sub, level)
+	local nodeCount = #nodeList
 
-	if arg_8_0._nodeMo:isLight() then
-		arg_8_0._txtnonum.text = "+" .. var_8_4
-		arg_8_0._txtlocknum.text = "+" .. var_8_4
-	elseif arg_8_0._nodeMo:isLock() then
-		arg_8_0._txtlocknum.text = "+" .. var_8_4
+	if self._nodeMo:isLight() then
+		self._txtnonum.text = "+" .. nodeCount
+		self._txtlocknum.text = "+" .. nodeCount
+	elseif self._nodeMo:isLock() then
+		self._txtlocknum.text = "+" .. nodeCount
 	else
-		arg_8_0._txtyesnum.text = "-" .. var_8_4
+		self._txtyesnum.text = "-" .. nodeCount
 	end
 
-	arg_8_0._fieldDesc = MonoHelper.addNoUpdateLuaComOnceToGo(arg_8_0._txtfield.gameObject, SkillDescComp)
+	self._fieldDesc = MonoHelper.addNoUpdateLuaComOnceToGo(self._txtfield.gameObject, SkillDescComp)
 
-	arg_8_0._fieldDesc:updateInfo(arg_8_0._txtfield, var_8_3, arg_8_0.heroMo.heroId)
+	self._fieldDesc:updateInfo(self._txtfield, fieldActivateDesc, self.heroMo.heroId)
 
-	local var_8_5 = arg_8_0._treeMo:isAllLight()
-	local var_8_6 = arg_8_0._nodeMo:isLock()
-	local var_8_7 = arg_8_0._nodeMo:isLight()
-	local var_8_8 = arg_8_0._nodeMo:isNormal()
-	local var_8_9 = arg_8_0.skillTalentMo:getExtraCount()
-	local var_8_10 = ""
-	local var_8_11 = ""
-	local var_8_12 = var_8_4 > arg_8_0.skillTalentMo:getTalentpoint()
+	local isAllLightTreeNode = self._treeMo:isAllLight()
+	local lock = self._nodeMo:isLock()
+	local light = self._nodeMo:isLight()
+	local normal = self._nodeMo:isNormal()
+	local treeCount = self.skillTalentMo:getExtraCount()
+	local tipStr = ""
+	local warningStr = ""
+	local isNoEnoughPoint = nodeCount > self.skillTalentMo:getTalentpoint()
 
-	if var_8_12 then
-		var_8_10 = luaLang("characterskilltalent_warning_3")
+	if isNoEnoughPoint then
+		tipStr = luaLang("characterskilltalent_warning_3")
 	end
 
-	local var_8_13 = arg_8_0.skillTalentMo:getMainFieldMo()
+	local mo = self.skillTalentMo:getMainFieldMo()
 
-	if var_8_13 then
-		local var_8_14 = var_8_13.co and var_8_13.co.sub
+	if mo then
+		local _sub = mo.co and mo.co.sub
 
-		if var_8_14 and var_8_14 ~= arg_8_1 then
-			if not var_8_12 then
-				var_8_10 = luaLang("characterskilltalent_warning_2")
+		if _sub and _sub ~= sub then
+			if not isNoEnoughPoint then
+				tipStr = luaLang("characterskilltalent_warning_2")
 			end
 
-			local var_8_15 = luaLang("characterskilltalent_warning_1")
-			local var_8_16 = luaLang("characterskilltalent_sub_" .. var_8_14)
-			local var_8_17 = luaLang("characterskilltalent_sub_" .. arg_8_1)
+			local warnFormat = luaLang("characterskilltalent_warning_1")
+			local curLangSubName = luaLang("characterskilltalent_sub_" .. _sub)
+			local subName = luaLang("characterskilltalent_sub_" .. sub)
 
-			var_8_11 = GameUtil.getSubPlaceholderLuaLangTwoParam(var_8_15, var_8_16, var_8_17)
+			warningStr = GameUtil.getSubPlaceholderLuaLangTwoParam(warnFormat, curLangSubName, subName)
 		end
 	end
 
-	local var_8_18 = var_8_5 and var_8_9 == 2
+	local isLock = isAllLightTreeNode and treeCount == 2
 
-	arg_8_0._txtWarning.text = var_8_11
-	arg_8_0._txtTips.text = var_8_10
+	self._txtWarning.text = warningStr
+	self._txtTips.text = tipStr
 
-	local var_8_19 = var_8_6 and not string.nilorempty(var_8_10)
-	local var_8_20 = not string.nilorempty(var_8_11)
-	local var_8_21 = not string.nilorempty(var_8_3)
+	local isShowTip = lock and not string.nilorempty(tipStr)
+	local isShowWarning = not string.nilorempty(warningStr)
+	local isField = not string.nilorempty(fieldActivateDesc)
 
-	gohelper.setActive(arg_8_0._gofieldbg.gameObject, arg_8_0.isActTrialHero and (var_8_20 or var_8_21))
-	gohelper.setActive(arg_8_0._golichang.gameObject, arg_8_0.isActTrialHero and var_8_21)
-	gohelper.setActive(arg_8_0._txtTips.gameObject, arg_8_0.isActTrialHero and var_8_19)
-	gohelper.setActive(arg_8_0._txtWarning.gameObject, arg_8_0.isActTrialHero and var_8_20)
-	gohelper.setActive(arg_8_0._btnyes.gameObject, arg_8_0.isActTrialHero and not var_8_18 and var_8_8)
-	gohelper.setActive(arg_8_0._btnno.gameObject, arg_8_0.isActTrialHero and not var_8_18 and var_8_7)
-	gohelper.setActive(arg_8_0._btnLocked.gameObject, arg_8_0.isActTrialHero and (var_8_18 or var_8_19))
-	gohelper.setActive(arg_8_0._goWarning.gameObject, arg_8_0.isActTrialHero and not var_8_5 and var_8_20)
-	arg_8_0:_activeTip(true)
+	gohelper.setActive(self._gofieldbg.gameObject, self.isActTrialHero and (isShowWarning or isField))
+	gohelper.setActive(self._golichang.gameObject, self.isActTrialHero and isField)
+	gohelper.setActive(self._txtTips.gameObject, self.isActTrialHero and isShowTip)
+	gohelper.setActive(self._txtWarning.gameObject, self.isActTrialHero and isShowWarning)
+	gohelper.setActive(self._btnyes.gameObject, self.isActTrialHero and not isLock and normal)
+	gohelper.setActive(self._btnno.gameObject, self.isActTrialHero and not isLock and light)
+	gohelper.setActive(self._btnLocked.gameObject, self.isActTrialHero and (isLock or isShowTip))
+	gohelper.setActive(self._goWarning.gameObject, self.isActTrialHero and not isAllLightTreeNode and isShowWarning)
+	self:_activeTip(true)
 end
 
-return var_0_0
+return OdysseyTrialCharacterTalentNodeTipView

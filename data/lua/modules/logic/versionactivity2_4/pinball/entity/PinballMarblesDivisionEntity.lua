@@ -1,68 +1,70 @@
-﻿module("modules.logic.versionactivity2_4.pinball.entity.PinballMarblesDivisionEntity", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/pinball/entity/PinballMarblesDivisionEntity.lua
 
-local var_0_0 = class("PinballMarblesDivisionEntity", PinballMarblesEntity)
-local var_0_1 = {
+module("modules.logic.versionactivity2_4.pinball.entity.PinballMarblesDivisionEntity", package.seeall)
+
+local PinballMarblesDivisionEntity = class("PinballMarblesDivisionEntity", PinballMarblesEntity)
+local status = {
 	Done = 2,
 	Hit = 1,
 	None = 0
 }
 
-function var_0_0.initByCo(arg_1_0)
-	var_0_0.super.initByCo(arg_1_0)
+function PinballMarblesDivisionEntity:initByCo()
+	PinballMarblesDivisionEntity.super.initByCo(self)
 
-	arg_1_0._statu = var_0_1.None
-	arg_1_0._canHitNum = 0
+	self._statu = status.None
+	self._canHitNum = 0
 end
 
-function var_0_0.onHitEnter(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
-	var_0_0.super.onHitEnter(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
+function PinballMarblesDivisionEntity:onHitEnter(hitEntityId, hitX, hitY, hitDir)
+	PinballMarblesDivisionEntity.super.onHitEnter(self, hitEntityId, hitX, hitY, hitDir)
 
-	local var_2_0 = PinballEntityMgr.instance:getEntity(arg_2_1)
+	local hitEntity = PinballEntityMgr.instance:getEntity(hitEntityId)
 
-	if not var_2_0 or not var_2_0:isResType() then
+	if not hitEntity or not hitEntity:isResType() then
 		return
 	end
 
-	if arg_2_0._statu == var_0_1.None then
-		arg_2_0._statu = var_0_1.Hit
+	if self._statu == status.None then
+		self._statu = status.Hit
 	end
 
-	if arg_2_0._canHitNum > 0 then
-		arg_2_0._canHitNum = arg_2_0._canHitNum - 1
+	if self._canHitNum > 0 then
+		self._canHitNum = self._canHitNum - 1
 
-		if arg_2_0._canHitNum == 0 then
-			arg_2_0:markDead()
+		if self._canHitNum == 0 then
+			self:markDead()
 		end
 	end
 end
 
-function var_0_0.onHitExit(arg_3_0, arg_3_1)
-	var_0_0.super.onHitExit(arg_3_0, arg_3_1)
+function PinballMarblesDivisionEntity:onHitExit(hitEntityId)
+	PinballMarblesDivisionEntity.super.onHitExit(self, hitEntityId)
 
-	if arg_3_0._statu == var_0_1.Hit then
-		arg_3_0._statu = var_0_1.Done
+	if self._statu == status.Hit then
+		self._statu = status.Done
 
 		AudioMgr.instance:trigger(AudioEnum.Act178.act178_audio17)
 
-		for iter_3_0 = 1, arg_3_0.effectNum - 1 do
-			local var_3_0 = math.random(0, 360)
-			local var_3_1, var_3_2 = PinballHelper.rotateAngle(arg_3_0.width * 2.1, 0, var_3_0)
-			local var_3_3 = PinballEntityMgr.instance:addEntity(PinballEnum.UnitType.MarblesDivision)
+		for i = 1, self.effectNum - 1 do
+			local randomAngle = math.random(0, 360)
+			local newX, newY = PinballHelper.rotateAngle(self.width * 2.1, 0, randomAngle)
+			local newEntity = PinballEntityMgr.instance:addEntity(PinballEnum.UnitType.MarblesDivision)
 
-			var_3_3._statu = var_0_1.Done
-			var_3_3.x = arg_3_0.x + var_3_1
-			var_3_3.y = arg_3_0.y + var_3_2
+			newEntity._statu = status.Done
+			newEntity.x = self.x + newX
+			newEntity.y = self.y + newY
 
-			local var_3_4, var_3_5 = PinballHelper.rotateAngle(arg_3_0.vx, arg_3_0.vy, var_3_0)
+			local newVX, newVY = PinballHelper.rotateAngle(self.vx, self.vy, randomAngle)
 
-			var_3_3.vx = var_3_4
-			var_3_3.vy = var_3_5
-			var_3_3._canHitNum = arg_3_0.effectNum2
+			newEntity.vx = newVX
+			newEntity.vy = newVY
+			newEntity._canHitNum = self.effectNum2
 
-			var_3_3:tick(0)
-			var_3_3:playAnim("clone")
+			newEntity:tick(0)
+			newEntity:playAnim("clone")
 		end
 	end
 end
 
-return var_0_0
+return PinballMarblesDivisionEntity

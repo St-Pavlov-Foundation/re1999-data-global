@@ -1,57 +1,59 @@
-﻿module("modules.logic.versionactivity1_5.aizila.view.AiZiLaMapViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/aizila/view/AiZiLaMapViewContainer.lua
 
-local var_0_0 = class("AiZiLaMapViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_5.aizila.view.AiZiLaMapViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local AiZiLaMapViewContainer = class("AiZiLaMapViewContainer", BaseViewContainer)
 
-	arg_1_0._mapView = AiZiLaMapView.New()
+function AiZiLaMapViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, arg_1_0._mapView)
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_BackBtns"))
+	self._mapView = AiZiLaMapView.New()
 
-	return var_1_0
+	table.insert(views, self._mapView)
+	table.insert(views, TabViewGroup.New(1, "#go_BackBtns"))
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
+function AiZiLaMapViewContainer:onContainerClickModalMask()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	arg_2_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.buildTabViews(arg_3_0, arg_3_1)
-	if arg_3_1 == 1 then
-		arg_3_0._navigateButtonsView = NavigateButtonsView.New({
+function AiZiLaMapViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonsView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
-		arg_3_0._navigateButtonsView:setOverrideClose(arg_3_0._overrideCloseFunc, arg_3_0)
+		self._navigateButtonsView:setOverrideClose(self._overrideCloseFunc, self)
 
 		return {
-			arg_3_0._navigateButtonsView
+			self._navigateButtonsView
 		}
 	end
 end
 
-var_0_0.UI_COLSE_BLOCK_KEY = "AiZiLaMapViewContainer_COLSE_BLOCK_KEY"
+AiZiLaMapViewContainer.UI_COLSE_BLOCK_KEY = "AiZiLaMapViewContainer_COLSE_BLOCK_KEY"
 
-function var_0_0._overrideCloseFunc(arg_4_0)
-	AiZiLaHelper.startBlock(var_0_0.UI_COLSE_BLOCK_KEY)
-	arg_4_0._mapView:playViewAnimator(UIAnimationName.Close)
-	TaskDispatcher.runDelay(arg_4_0._onDelayCloseView, arg_4_0, AiZiLaEnum.AnimatorTime.MapViewClose)
+function AiZiLaMapViewContainer:_overrideCloseFunc()
+	AiZiLaHelper.startBlock(AiZiLaMapViewContainer.UI_COLSE_BLOCK_KEY)
+	self._mapView:playViewAnimator(UIAnimationName.Close)
+	TaskDispatcher.runDelay(self._onDelayCloseView, self, AiZiLaEnum.AnimatorTime.MapViewClose)
 end
 
-function var_0_0._onDelayCloseView(arg_5_0)
-	AiZiLaHelper.endBlock(var_0_0.UI_COLSE_BLOCK_KEY)
-	arg_5_0:closeThis()
+function AiZiLaMapViewContainer:_onDelayCloseView()
+	AiZiLaHelper.endBlock(AiZiLaMapViewContainer.UI_COLSE_BLOCK_KEY)
+	self:closeThis()
 end
 
-function var_0_0.onContainerInit(arg_6_0)
+function AiZiLaMapViewContainer:onContainerInit()
 	ActivityEnterMgr.instance:enterActivity(VersionActivity1_5Enum.ActivityId.AiZiLa)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
 		VersionActivity1_5Enum.ActivityId.AiZiLa
 	})
 end
 
-return var_0_0
+return AiZiLaMapViewContainer

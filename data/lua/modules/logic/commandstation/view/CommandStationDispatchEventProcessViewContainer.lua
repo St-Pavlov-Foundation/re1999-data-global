@@ -1,44 +1,46 @@
-﻿module("modules.logic.commandstation.view.CommandStationDispatchEventProcessViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/commandstation/view/CommandStationDispatchEventProcessViewContainer.lua
 
-local var_0_0 = class("CommandStationDispatchEventProcessViewContainer", BaseViewContainer)
+module("modules.logic.commandstation.view.CommandStationDispatchEventProcessViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local CommandStationDispatchEventProcessViewContainer = class("CommandStationDispatchEventProcessViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, CommandStationDispatchEventProcessView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_lefttop"))
+function CommandStationDispatchEventProcessViewContainer:buildViews()
+	local views = {}
 
-	local var_1_1 = ListScrollParam.New()
+	table.insert(views, CommandStationDispatchEventProcessView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_lefttop"))
 
-	var_1_1.scrollGOPath = "#go_DispatchEvent/#go_DispatchPanel/Layout/left/#go_herocontainer/Mask/#scroll_hero"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_1.cellClass = CommandStationDispatchEventProcessHeroItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 3
-	var_1_1.cellWidth = 136
-	var_1_1.cellHeight = 136
-	var_1_1.cellSpaceH = 0
-	var_1_1.cellSpaceV = 0
-	var_1_1.startSpace = 0
+	local scrollParam = ListScrollParam.New()
 
-	table.insert(var_1_0, LuaListScrollView.New(CommandStationHeroListModel.instance, var_1_1))
+	scrollParam.scrollGOPath = "#go_DispatchEvent/#go_DispatchPanel/Layout/left/#go_herocontainer/Mask/#scroll_hero"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = CommandStationDispatchEventProcessHeroItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 3
+	scrollParam.cellWidth = 136
+	scrollParam.cellHeight = 136
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 0
+	scrollParam.startSpace = 0
 
-	return var_1_0
+	table.insert(views, LuaListScrollView.New(CommandStationHeroListModel.instance, scrollParam))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function CommandStationDispatchEventProcessViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-return var_0_0
+return CommandStationDispatchEventProcessViewContainer

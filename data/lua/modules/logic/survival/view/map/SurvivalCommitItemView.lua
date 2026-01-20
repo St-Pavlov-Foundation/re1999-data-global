@@ -1,148 +1,154 @@
-﻿module("modules.logic.survival.view.map.SurvivalCommitItemView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/SurvivalCommitItemView.lua
 
-local var_0_0 = class("SurvivalCommitItemView", BaseView)
+module("modules.logic.survival.view.map.SurvivalCommitItemView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "Center/#go_empty")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_close")
-	arg_1_0._btncommit = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#go_list/#btn_commit")
-	arg_1_0._gocommitgray = gohelper.findChild(arg_1_0.viewGO, "Right/#go_list/#go_commit_gray")
-	arg_1_0._btncancledrop = gohelper.findChildClick(arg_1_0.viewGO, "Right/#go_drop/#btn_close")
-	arg_1_0._goheavy = gohelper.findChild(arg_1_0.viewGO, "Left/#go_heavy")
-	arg_1_0._gosort = gohelper.findChild(arg_1_0.viewGO, "Left/#go_sort")
-	arg_1_0._goleftscroll = gohelper.findChild(arg_1_0.viewGO, "Left/#go_list/scroll_collection")
-	arg_1_0._goleftempty = gohelper.findChild(arg_1_0.viewGO, "Left/#go_list/#go_empty")
-	arg_1_0._goleftcontent = gohelper.findChild(arg_1_0.viewGO, "Left/#go_list/scroll_collection/Viewport/Content")
-	arg_1_0._goleftitem = gohelper.findChild(arg_1_0.viewGO, "Left/#go_list/scroll_collection/Viewport/Content/go_bagitem")
-	arg_1_0._gorightitem = gohelper.findChild(arg_1_0.viewGO, "Right/#go_list/scroll_collection/Viewport/Content/go_bagitem")
-	arg_1_0._gorightcontent = gohelper.findChild(arg_1_0.viewGO, "Right/#go_list/scroll_collection/Viewport/Content")
-	arg_1_0._gorightempty = gohelper.findChild(arg_1_0.viewGO, "Right/#go_list/#go_empty")
-	arg_1_0._gorightscroll = gohelper.findChild(arg_1_0.viewGO, "Right/#go_list/scroll_collection")
-	arg_1_0._gorightinfo = gohelper.findChild(arg_1_0.viewGO, "Right/#go_list")
-	arg_1_0._gorighttips = gohelper.findChild(arg_1_0.viewGO, "Right/#go_tips")
-	arg_1_0._godroparea = gohelper.findChild(arg_1_0.viewGO, "Right/#go_droparea")
-	arg_1_0._godroptips = gohelper.findChild(arg_1_0.viewGO, "Right/#go_drop")
-	arg_1_0._animtips = gohelper.findChildAnim(arg_1_0._godroptips, "#go_droptips")
-	arg_1_0._txttotalvalue = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/#go_value/tag1/#txt_tag1")
-	arg_1_0._txtitemvalue = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/#go_tips/#txt_needcount")
-	arg_1_0._txthave = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/#go_drop/#go_droptips/#txt_have")
-	arg_1_0._txtafter = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/#go_drop/#go_droptips/#txt_after")
-	arg_1_0._inputtipnum = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "Right/#go_drop/#go_droptips/#go_num/valuebg/#input_value")
-	arg_1_0._btnaddnum = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#go_drop/#go_droptips/#go_num/#btn_add")
-	arg_1_0._btnsubnum = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#go_drop/#go_droptips/#go_num/#btn_sub")
-	arg_1_0._btnput = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#go_drop/#go_droptips/#btn_put")
-	arg_1_0._gotipitem = gohelper.findChild(arg_1_0.viewGO, "Right/#go_drop/itembg/#go_item")
+local SurvivalCommitItemView = class("SurvivalCommitItemView", BaseView)
+
+function SurvivalCommitItemView:onInitView()
+	self._goempty = gohelper.findChild(self.viewGO, "Center/#go_empty")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_close")
+	self._btncommit = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#go_list/#btn_commit")
+	self._gocommitgray = gohelper.findChild(self.viewGO, "Right/#go_list/#go_commit_gray")
+	self._btncancledrop = gohelper.findChildClick(self.viewGO, "Right/#go_drop/#btn_close")
+	self._goheavy = gohelper.findChild(self.viewGO, "Left/#go_heavy")
+	self._gosort = gohelper.findChild(self.viewGO, "Left/#go_sort")
+	self._goleftscroll = gohelper.findChild(self.viewGO, "Left/#go_list/scroll_collection")
+	self._goleftempty = gohelper.findChild(self.viewGO, "Left/#go_list/#go_empty")
+	self._goleftcontent = gohelper.findChild(self.viewGO, "Left/#go_list/scroll_collection/Viewport/Content")
+	self._goleftitem = gohelper.findChild(self.viewGO, "Left/#go_list/scroll_collection/Viewport/Content/go_bagitem")
+	self._gorightitem = gohelper.findChild(self.viewGO, "Right/#go_list/scroll_collection/Viewport/Content/go_bagitem")
+	self._gorightcontent = gohelper.findChild(self.viewGO, "Right/#go_list/scroll_collection/Viewport/Content")
+	self._gorightempty = gohelper.findChild(self.viewGO, "Right/#go_list/#go_empty")
+	self._gorightscroll = gohelper.findChild(self.viewGO, "Right/#go_list/scroll_collection")
+	self._gorightinfo = gohelper.findChild(self.viewGO, "Right/#go_list")
+	self._gorighttips = gohelper.findChild(self.viewGO, "Right/#go_tips")
+	self._godroparea = gohelper.findChild(self.viewGO, "Right/#go_droparea")
+	self._godroptips = gohelper.findChild(self.viewGO, "Right/#go_drop")
+	self._animtips = gohelper.findChildAnim(self._godroptips, "#go_droptips")
+	self._txttotalvalue = gohelper.findChildTextMesh(self.viewGO, "Right/#go_value/tag1/#txt_tag1")
+	self._txtitemvalue = gohelper.findChildTextMesh(self.viewGO, "Right/#go_tips/#txt_needcount")
+	self._txthave = gohelper.findChildTextMesh(self.viewGO, "Right/#go_drop/#go_droptips/#txt_have")
+	self._txtafter = gohelper.findChildTextMesh(self.viewGO, "Right/#go_drop/#go_droptips/#txt_after")
+	self._inputtipnum = gohelper.findChildTextMeshInputField(self.viewGO, "Right/#go_drop/#go_droptips/#go_num/valuebg/#input_value")
+	self._btnaddnum = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#go_drop/#go_droptips/#go_num/#btn_add")
+	self._btnsubnum = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#go_drop/#go_droptips/#go_num/#btn_sub")
+	self._btnput = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#go_drop/#go_droptips/#btn_put")
+	self._gotipitem = gohelper.findChild(self.viewGO, "Right/#go_drop/itembg/#go_item")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0.closeThis, arg_2_0)
-	arg_2_0._btncommit:AddClickListener(arg_2_0.commitItems, arg_2_0)
-	arg_2_0._btncancledrop:AddClickListener(arg_2_0.cancelDrop, arg_2_0)
-	arg_2_0._inputtipnum:AddOnEndEdit(arg_2_0._ontipnuminputChange, arg_2_0)
-	arg_2_0._btnaddnum:AddClickListener(arg_2_0._addtipnum, arg_2_0, 1)
-	arg_2_0._btnsubnum:AddClickListener(arg_2_0._addtipnum, arg_2_0, -1)
-	arg_2_0._btnput:AddClickListener(arg_2_0._putItemToRight, arg_2_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnClickTipsBtn, arg_2_0._onTipsClick, arg_2_0)
-	CommonDragHelper.instance:registerDragObj(arg_2_0._goleftcontent, arg_2_0._beginLeftDrag, arg_2_0._onLeftDrag, arg_2_0._endLeftDrag, nil, arg_2_0, nil, true)
-	CommonDragHelper.instance:registerDragObj(arg_2_0._gorightcontent, arg_2_0._beginRightDrag, arg_2_0._onRightDrag, arg_2_0._endRightDrag, nil, arg_2_0, nil, true)
+function SurvivalCommitItemView:addEvents()
+	self._btnclose:AddClickListener(self.closeThis, self)
+	self._btncommit:AddClickListener(self.commitItems, self)
+	self._btncancledrop:AddClickListener(self.cancelDrop, self)
+	self._inputtipnum:AddOnEndEdit(self._ontipnuminputChange, self)
+	self._btnaddnum:AddClickListener(self._addtipnum, self, 1)
+	self._btnsubnum:AddClickListener(self._addtipnum, self, -1)
+	self._btnput:AddClickListener(self._putItemToRight, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnClickTipsBtn, self._onTipsClick, self)
+	CommonDragHelper.instance:registerDragObj(self._goleftcontent, self._beginLeftDrag, self._onLeftDrag, self._endLeftDrag, nil, self, nil, true)
+	CommonDragHelper.instance:registerDragObj(self._gorightcontent, self._beginRightDrag, self._onRightDrag, self._endRightDrag, nil, self, nil, true)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	CommonDragHelper.instance:unregisterDragObj(arg_3_0._goleftcontent)
-	CommonDragHelper.instance:unregisterDragObj(arg_3_0._gorightcontent)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnClickTipsBtn, arg_3_0._onTipsClick, arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btncommit:RemoveClickListener()
-	arg_3_0._btncancledrop:RemoveClickListener()
-	arg_3_0._inputtipnum:RemoveOnEndEdit()
-	arg_3_0._btnaddnum:RemoveClickListener()
-	arg_3_0._btnsubnum:RemoveClickListener()
-	arg_3_0._btnput:RemoveClickListener()
+function SurvivalCommitItemView:removeEvents()
+	CommonDragHelper.instance:unregisterDragObj(self._goleftcontent)
+	CommonDragHelper.instance:unregisterDragObj(self._gorightcontent)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnClickTipsBtn, self._onTipsClick, self)
+	self._btnclose:RemoveClickListener()
+	self._btncommit:RemoveClickListener()
+	self._btncancledrop:RemoveClickListener()
+	self._inputtipnum:RemoveOnEndEdit()
+	self._btnaddnum:RemoveClickListener()
+	self._btnsubnum:RemoveClickListener()
+	self._btnput:RemoveClickListener()
 end
 
-function var_0_0.onOpen(arg_4_0)
-	arg_4_0._choiceMo = arg_4_0.viewParam
+function SurvivalCommitItemView:onOpen()
+	self._choiceMo = self.viewParam
 
 	AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_mail_open)
 
-	local var_4_0 = arg_4_0.viewContainer._viewSetting.otherRes.infoView
-	local var_4_1 = gohelper.findChild(arg_4_0.viewGO, "Center/#go_info")
-	local var_4_2 = gohelper.findChild(arg_4_0.viewGO, "Center/#go_info/go_infoview")
-	local var_4_3 = arg_4_0:getResInst(var_4_0, var_4_2)
+	local infoViewRes = self.viewContainer._viewSetting.otherRes.infoView
+	local infoRoot = gohelper.findChild(self.viewGO, "Center/#go_info")
+	local infoRoot2 = gohelper.findChild(self.viewGO, "Center/#go_info/go_infoview")
+	local infoGo = self:getResInst(infoViewRes, infoRoot2)
 
-	arg_4_0._infoPanel = MonoHelper.addNoUpdateLuaComOnceToGo(var_4_3, SurvivalBagInfoPart)
+	self._infoPanel = MonoHelper.addNoUpdateLuaComOnceToGo(infoGo, SurvivalBagInfoPart)
 
-	arg_4_0._infoPanel:setHideParent(var_4_1)
-	arg_4_0._infoPanel:setCloseShow(true, arg_4_0.closeInfoView, arg_4_0)
-	arg_4_0._infoPanel:updateMo()
-	gohelper.setActive(arg_4_0._godroptips, false)
-	gohelper.setActive(arg_4_0._goempty, true)
-	arg_4_0:setShowRightTips(false)
+	self._infoPanel:setHideParent(infoRoot)
+	self._infoPanel:setCloseShow(true, self.closeInfoView, self)
+	self._infoPanel:updateMo()
+	gohelper.setActive(self._godroptips, false)
+	gohelper.setActive(self._goempty, true)
+	self:setShowRightTips(false)
 
-	local var_4_4 = SurvivalMapHelper.instance:getBagMo()
-	local var_4_5 = {}
+	local bag = SurvivalMapHelper.instance:getBagMo()
+	local allItems = {}
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_4.items) do
-		if iter_4_1.co.worth > 0 then
-			local var_4_6 = iter_4_1:clone()
+	for i, itemMo in ipairs(bag.items) do
+		local co = itemMo.co
 
-			var_4_6.source = SurvivalEnum.ItemSource.Commit
+		if co.worth > 0 then
+			local cloneItem = itemMo:clone()
 
-			table.insert(var_4_5, var_4_6)
+			cloneItem.source = SurvivalEnum.ItemSource.Commit
+
+			table.insert(allItems, cloneItem)
 		end
 	end
 
-	for iter_4_2 = 1, 3 do
-		gohelper.findChildTextMesh(arg_4_0.viewGO, "Left/#go_tag/tag" .. iter_4_2 .. "/#txt_tag" .. iter_4_2).text = var_4_4:getCurrencyNum(iter_4_2)
+	for i = 1, 3 do
+		local txt = gohelper.findChildTextMesh(self.viewGO, "Left/#go_tag/tag" .. i .. "/#txt_tag" .. i)
+
+		txt.text = bag:getCurrencyNum(i)
 	end
 
-	local var_4_7 = arg_4_0.viewContainer._viewSetting.otherRes.itemRes
-	local var_4_8 = arg_4_0:getResInst(var_4_7, arg_4_0.viewGO)
-	local var_4_9 = gohelper.findChildAnim(var_4_8, "")
+	local itemRes = self.viewContainer._viewSetting.otherRes.itemRes
+	local dragGo = self:getResInst(itemRes, self.viewGO)
+	local anim = gohelper.findChildAnim(dragGo, "")
 
-	if var_4_9 then
-		var_4_9.enabled = false
+	if anim then
+		anim.enabled = false
 	end
 
-	arg_4_0._dragItem = MonoHelper.addNoUpdateLuaComOnceToGo(var_4_8, SurvivalBagItem)
+	self._dragItem = MonoHelper.addNoUpdateLuaComOnceToGo(dragGo, SurvivalBagItem)
 
-	local var_4_10 = arg_4_0:getResInst(var_4_7, arg_4_0._gotipitem)
+	local tipsGo = self:getResInst(itemRes, self._gotipitem)
 
-	arg_4_0._tipsItem = MonoHelper.addNoUpdateLuaComOnceToGo(var_4_10, SurvivalBagItem)
+	self._tipsItem = MonoHelper.addNoUpdateLuaComOnceToGo(tipsGo, SurvivalBagItem)
 
-	arg_4_0._tipsItem:setShowNum(false)
+	self._tipsItem:setShowNum(false)
 
-	arg_4_0._simpleLeftList = MonoHelper.addNoUpdateLuaComOnceToGo(arg_4_0._goleftscroll, SurvivalSimpleListPart)
+	self._simpleLeftList = MonoHelper.addNoUpdateLuaComOnceToGo(self._goleftscroll, SurvivalSimpleListPart)
 
-	arg_4_0._simpleLeftList:setCellUpdateCallBack(arg_4_0._createLeftItem, arg_4_0, nil, arg_4_0._goleftitem)
+	self._simpleLeftList:setCellUpdateCallBack(self._createLeftItem, self, nil, self._goleftitem)
 
-	arg_4_0._simpleRightList = MonoHelper.addNoUpdateLuaComOnceToGo(arg_4_0._gorightscroll, SurvivalSimpleListPart)
+	self._simpleRightList = MonoHelper.addNoUpdateLuaComOnceToGo(self._gorightscroll, SurvivalSimpleListPart)
 
-	arg_4_0._simpleRightList:setCellUpdateCallBack(arg_4_0._createRightItem, arg_4_0, nil, arg_4_0._gorightitem)
+	self._simpleRightList:setCellUpdateCallBack(self._createRightItem, self, nil, self._gorightitem)
 
-	arg_4_0._curSelectUid = nil
-	arg_4_0._isSelectLeft = false
+	self._curSelectUid = nil
+	self._isSelectLeft = false
 
-	gohelper.setActive(var_4_8, false)
+	gohelper.setActive(dragGo, false)
 
-	arg_4_0.leftItems = var_4_5
-	arg_4_0.rightItems = {}
+	self.leftItems = allItems
+	self.rightItems = {}
 
-	arg_4_0:initWeightAndSort()
-	arg_4_0:updateView()
+	self:initWeightAndSort()
+	self:updateView()
 end
 
-function var_0_0._beginLeftDrag(arg_5_0, arg_5_1, arg_5_2)
-	ZProj.UGUIHelper.PassEvent(arg_5_0._goleftscroll, arg_5_2, 4)
+function SurvivalCommitItemView:_beginLeftDrag(_, pointerEventData)
+	ZProj.UGUIHelper.PassEvent(self._goleftscroll, pointerEventData, 4)
 
-	for iter_5_0 in pairs(arg_5_0._simpleLeftList:getAllGos()) do
-		local var_5_0 = gohelper.findChild(iter_5_0, "inst")
+	for go in pairs(self._simpleLeftList:getAllGos()) do
+		local instGo = gohelper.findChild(go, "inst")
 
-		if gohelper.isMouseOverGo(var_5_0) then
-			local var_5_1 = MonoHelper.getLuaComFromGo(var_5_0, SurvivalBagItem)
+		if gohelper.isMouseOverGo(instGo) then
+			local bagItem = MonoHelper.getLuaComFromGo(instGo, SurvivalBagItem)
 
-			if var_5_1 and not var_5_1._mo:isEmpty() then
-				arg_5_0._curPressItem = var_5_1
+			if bagItem and not bagItem._mo:isEmpty() then
+				self._curPressItem = bagItem
 			end
 
 			break
@@ -150,340 +156,351 @@ function var_0_0._beginLeftDrag(arg_5_0, arg_5_1, arg_5_2)
 	end
 end
 
-function var_0_0._onLeftDrag(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0
+function SurvivalCommitItemView:_onLeftDrag(_, pointerEventData)
+	local isFirst
 
-	if not arg_6_0._isDragOut then
-		ZProj.UGUIHelper.PassEvent(arg_6_0._goleftscroll, arg_6_2, 5)
+	if not self._isDragOut then
+		ZProj.UGUIHelper.PassEvent(self._goleftscroll, pointerEventData, 5)
 
-		if arg_6_0._curPressItem and arg_6_2.position.x - arg_6_2.pressPosition.x > 100 then
-			arg_6_0._isDragOut = true
+		if self._curPressItem and pointerEventData.position.x - pointerEventData.pressPosition.x > 100 then
+			self._isDragOut = true
 
-			arg_6_0._dragItem:updateMo(arg_6_0._curPressItem._mo)
-			gohelper.setActive(arg_6_0._dragItem.go, true)
+			self._dragItem:updateMo(self._curPressItem._mo)
+			gohelper.setActive(self._dragItem.go, true)
 
-			var_6_0 = true
+			isFirst = true
 
-			ZProj.UGUIHelper.PassEvent(arg_6_0._goleftscroll, arg_6_2, 6)
-			arg_6_0._inputtipnum:SetText("1")
-			arg_6_0:updateTipCount()
+			ZProj.UGUIHelper.PassEvent(self._goleftscroll, pointerEventData, 6)
+			self._inputtipnum:SetText("1")
+			self:updateTipCount()
 		end
 	end
 
-	if arg_6_0._isDragOut then
-		local var_6_1 = recthelper.screenPosToAnchorPos(arg_6_2.position, arg_6_0.viewGO.transform)
-		local var_6_2 = arg_6_0._dragItem.go.transform
-		local var_6_3, var_6_4 = recthelper.getAnchor(var_6_2)
+	if self._isDragOut then
+		local anchorPos = recthelper.screenPosToAnchorPos(pointerEventData.position, self.viewGO.transform)
+		local trans = self._dragItem.go.transform
+		local curAnchorX, curAnchorY = recthelper.getAnchor(trans)
 
-		if not var_6_0 and (math.abs(var_6_3 - var_6_1.x) > 10 or math.abs(var_6_4 - var_6_1.y) > 10) then
-			ZProj.TweenHelper.DOAnchorPos(var_6_2, var_6_1.x, var_6_1.y, 0.2)
+		if not isFirst and (math.abs(curAnchorX - anchorPos.x) > 10 or math.abs(curAnchorY - anchorPos.y) > 10) then
+			ZProj.TweenHelper.DOAnchorPos(trans, anchorPos.x, anchorPos.y, 0.2)
 		else
-			recthelper.setAnchor(var_6_2, var_6_1.x, var_6_1.y)
+			recthelper.setAnchor(trans, anchorPos.x, anchorPos.y)
 		end
 
-		local var_6_5 = gohelper.isMouseOverGo(arg_6_0._godroparea)
+		local isInRight = gohelper.isMouseOverGo(self._godroparea)
 
-		arg_6_0:setShowRightTips(var_6_5)
+		self:setShowRightTips(isInRight)
 	end
 end
 
-function var_0_0._endLeftDrag(arg_7_0, arg_7_1, arg_7_2)
-	if arg_7_0._isDragOut then
-		arg_7_0._isDragOut = nil
+function SurvivalCommitItemView:_endLeftDrag(_, pointerEventData)
+	if self._isDragOut then
+		self._isDragOut = nil
 
-		gohelper.setActive(arg_7_0._dragItem.go, false)
+		gohelper.setActive(self._dragItem.go, false)
 
-		if gohelper.isMouseOverGo(arg_7_0._godroparea) then
-			local var_7_0 = arg_7_0._curPressItem._mo
+		local isInRight = gohelper.isMouseOverGo(self._godroparea)
 
-			if var_7_0.count > 1 then
-				arg_7_0._tipsItem:updateMo(arg_7_0._curPressItem._mo)
-				gohelper.setActive(arg_7_0._godroptips, true)
+		if isInRight then
+			local mo = self._curPressItem._mo
+
+			if mo.count > 1 then
+				self._tipsItem:updateMo(self._curPressItem._mo)
+				gohelper.setActive(self._godroptips, true)
 			else
-				arg_7_0:setShowRightTips(false)
-				arg_7_0:moveData(arg_7_0.leftItems, arg_7_0.rightItems, var_7_0, 1, SurvivalEnum.ItemSource.Commited)
+				self:setShowRightTips(false)
+				self:moveData(self.leftItems, self.rightItems, mo, 1, SurvivalEnum.ItemSource.Commited)
 
-				arg_7_0._curPressItem = nil
+				self._curPressItem = nil
 			end
 		end
 	else
-		arg_7_0._curPressItem = nil
+		self._curPressItem = nil
 
-		ZProj.UGUIHelper.PassEvent(arg_7_0._goleftscroll, arg_7_2, 6)
+		ZProj.UGUIHelper.PassEvent(self._goleftscroll, pointerEventData, 6)
 	end
 end
 
-function var_0_0.setShowRightTips(arg_8_0, arg_8_1)
-	if arg_8_0._isShowTips == arg_8_1 then
+function SurvivalCommitItemView:setShowRightTips(isShow)
+	if self._isShowTips == isShow then
 		return
 	end
 
-	arg_8_0._isShowTips = arg_8_1
+	self._isShowTips = isShow
 
-	gohelper.setActive(arg_8_0._gorightinfo, not arg_8_1)
-	gohelper.setActive(arg_8_0._gorighttips, arg_8_1)
+	gohelper.setActive(self._gorightinfo, not isShow)
+	gohelper.setActive(self._gorighttips, isShow)
 end
 
-function var_0_0.cancelDrop(arg_9_0)
-	arg_9_0._animtips:Play("close", 0, 0)
-	TaskDispatcher.runDelay(arg_9_0._delayHideTips, arg_9_0, 0.167)
+function SurvivalCommitItemView:cancelDrop()
+	self._animtips:Play("close", 0, 0)
+	TaskDispatcher.runDelay(self._delayHideTips, self, 0.167)
 	UIBlockHelper.instance:startBlock("SurvivalCommitItemView_closetips", 0.167)
 end
 
-function var_0_0._delayHideTips(arg_10_0)
-	gohelper.setActive(arg_10_0._godroptips, false)
-	arg_10_0:setShowRightTips(false)
+function SurvivalCommitItemView:_delayHideTips()
+	gohelper.setActive(self._godroptips, false)
+	self:setShowRightTips(false)
 
-	arg_10_0._curPressItem = nil
+	self._curPressItem = nil
 end
 
-function var_0_0._ontipnuminputChange(arg_11_0)
-	local var_11_0 = tonumber(arg_11_0._inputtipnum:GetText()) or 0
-	local var_11_1 = Mathf.Clamp(var_11_0, 1, arg_11_0._curPressItem._mo.count)
+function SurvivalCommitItemView:_ontipnuminputChange()
+	local count = tonumber(self._inputtipnum:GetText()) or 0
 
-	if tostring(var_11_1) ~= arg_11_0._inputtipnum:GetText() then
-		arg_11_0._inputtipnum:SetText(tostring(var_11_1))
-		arg_11_0:updateTipCount()
+	count = Mathf.Clamp(count, 1, self._curPressItem._mo.count)
+
+	if tostring(count) ~= self._inputtipnum:GetText() then
+		self._inputtipnum:SetText(tostring(count))
+		self:updateTipCount()
 	end
 end
 
-function var_0_0._addtipnum(arg_12_0, arg_12_1)
-	local var_12_0 = (tonumber(arg_12_0._inputtipnum:GetText()) or 0) + arg_12_1
-	local var_12_1 = Mathf.Clamp(var_12_0, 1, arg_12_0._curPressItem._mo.count)
+function SurvivalCommitItemView:_addtipnum(value)
+	local count = tonumber(self._inputtipnum:GetText()) or 0
 
-	arg_12_0._inputtipnum:SetText(tostring(var_12_1))
-	arg_12_0:updateTipCount()
+	count = count + value
+	count = Mathf.Clamp(count, 1, self._curPressItem._mo.count)
+
+	self._inputtipnum:SetText(tostring(count))
+	self:updateTipCount()
 end
 
-function var_0_0.updateTipCount(arg_13_0)
-	local var_13_0 = tonumber(arg_13_0._inputtipnum:GetText()) or 0
+function SurvivalCommitItemView:updateTipCount()
+	local count = tonumber(self._inputtipnum:GetText()) or 0
 
-	arg_13_0._txthave.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survival_bag_have"), arg_13_0._curPressItem._mo.count)
-	arg_13_0._txtafter.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survival_bag_place"), arg_13_0._curPressItem._mo.count - var_13_0)
+	self._txthave.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survival_bag_have"), self._curPressItem._mo.count)
+	self._txtafter.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survival_bag_place"), self._curPressItem._mo.count - count)
 
-	local var_13_1 = SurvivalShelterModel.instance:getWeekInfo()
+	local weekMo = SurvivalShelterModel.instance:getWeekInfo()
 
-	arg_13_0._txtitemvalue.text = var_13_0 * var_13_1:getAttr(SurvivalEnum.AttrType.NpcRecruitment, arg_13_0._curPressItem._mo.co.worth)
+	self._txtitemvalue.text = count * weekMo:getAttr(SurvivalEnum.AttrType.NpcRecruitment, self._curPressItem._mo.co.worth)
 end
 
-function var_0_0._putItemToRight(arg_14_0)
-	local var_14_0 = tonumber(arg_14_0._inputtipnum:GetText()) or 0
+function SurvivalCommitItemView:_putItemToRight()
+	local count = tonumber(self._inputtipnum:GetText()) or 0
 
-	arg_14_0:moveData(arg_14_0.leftItems, arg_14_0.rightItems, arg_14_0._curPressItem._mo, var_14_0, SurvivalEnum.ItemSource.Commited)
-	arg_14_0:cancelDrop()
+	self:moveData(self.leftItems, self.rightItems, self._curPressItem._mo, count, SurvivalEnum.ItemSource.Commited)
+	self:cancelDrop()
 end
 
-function var_0_0.moveData(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5)
-	local var_15_0 = arg_15_3.uid
+function SurvivalCommitItemView:moveData(fromList, toList, mo, count, source)
+	local uid = mo.uid
 
-	arg_15_3.count = arg_15_3.count - arg_15_4
+	mo.count = mo.count - count
 
-	if arg_15_3.count == 0 then
-		tabletool.removeValue(arg_15_1, arg_15_3)
+	if mo.count == 0 then
+		tabletool.removeValue(fromList, mo)
 	end
 
-	local var_15_1 = false
+	local isFind = false
 
-	for iter_15_0, iter_15_1 in ipairs(arg_15_2) do
-		if iter_15_1.uid == var_15_0 then
-			iter_15_1.count = iter_15_1.count + arg_15_4
-			var_15_1 = true
+	for _, v in ipairs(toList) do
+		if v.uid == uid then
+			v.count = v.count + count
+			isFind = true
 
 			break
 		end
 	end
 
-	if not var_15_1 then
-		local var_15_2 = arg_15_3:clone()
+	if not isFind then
+		local newMo = mo:clone()
 
-		var_15_2.count = arg_15_4
-		var_15_2.source = arg_15_5
+		newMo.count = count
+		newMo.source = source
 
-		table.insert(arg_15_2, var_15_2)
+		table.insert(toList, newMo)
 	end
 
-	arg_15_0:updateView()
+	self:updateView()
 end
 
-function var_0_0.updateView(arg_16_0)
-	arg_16_0:_refreshLeftView()
-	arg_16_0:_refreshRightView()
-	arg_16_0:closeInfoView()
+function SurvivalCommitItemView:updateView()
+	self:_refreshLeftView()
+	self:_refreshRightView()
+	self:closeInfoView()
 end
 
-function var_0_0.initWeightAndSort(arg_17_0)
-	MonoHelper.addNoUpdateLuaComOnceToGo(arg_17_0._goheavy, SurvivalWeightPart)
+function SurvivalCommitItemView:initWeightAndSort()
+	MonoHelper.addNoUpdateLuaComOnceToGo(self._goheavy, SurvivalWeightPart)
 
-	local var_17_0 = MonoHelper.addNoUpdateLuaComOnceToGo(arg_17_0._gosort, SurvivalSortAndFilterPart)
-	local var_17_1 = {
-		{
-			desc = luaLang("survival_sort_time"),
-			type = SurvivalEnum.ItemSortType.Time
-		},
-		{
-			desc = luaLang("survival_sort_mass"),
-			type = SurvivalEnum.ItemSortType.Mass
-		},
-		{
-			desc = luaLang("survival_sort_worth"),
-			type = SurvivalEnum.ItemSortType.Worth
-		},
-		{
-			desc = luaLang("survival_sort_type"),
-			type = SurvivalEnum.ItemSortType.Type
-		}
+	local sortComp = MonoHelper.addNoUpdateLuaComOnceToGo(self._gosort, SurvivalSortAndFilterPart)
+	local sortOptions = {}
+
+	sortOptions[1] = {
+		desc = luaLang("survival_sort_time"),
+		type = SurvivalEnum.ItemSortType.Time
 	}
-	local var_17_2 = {
-		{
-			desc = luaLang("survival_filter_material"),
-			type = SurvivalEnum.ItemFilterType.Material
-		},
-		{
-			desc = luaLang("survival_filter_equip"),
-			type = SurvivalEnum.ItemFilterType.Equip
-		},
-		{
-			desc = luaLang("survival_filter_consume"),
-			type = SurvivalEnum.ItemFilterType.Consume
-		}
+	sortOptions[2] = {
+		desc = luaLang("survival_sort_mass"),
+		type = SurvivalEnum.ItemSortType.Mass
+	}
+	sortOptions[3] = {
+		desc = luaLang("survival_sort_worth"),
+		type = SurvivalEnum.ItemSortType.Worth
+	}
+	sortOptions[4] = {
+		desc = luaLang("survival_sort_type"),
+		type = SurvivalEnum.ItemSortType.Type
 	}
 
-	arg_17_0._curSort = var_17_1[1]
-	arg_17_0._isDec = true
-	arg_17_0._filterList = {}
+	local filterOptions = {}
 
-	var_17_0:setOptions(var_17_1, var_17_2, arg_17_0._curSort, arg_17_0._isDec)
-	var_17_0:setOptionChangeCallback(arg_17_0._onSortChange, arg_17_0)
+	filterOptions[1] = {
+		desc = luaLang("survival_filter_material"),
+		type = SurvivalEnum.ItemFilterType.Material
+	}
+	filterOptions[2] = {
+		desc = luaLang("survival_filter_equip"),
+		type = SurvivalEnum.ItemFilterType.Equip
+	}
+	filterOptions[3] = {
+		desc = luaLang("survival_filter_consume"),
+		type = SurvivalEnum.ItemFilterType.Consume
+	}
+	self._curSort = sortOptions[1]
+	self._isDec = true
+	self._filterList = {}
+
+	sortComp:setOptions(sortOptions, filterOptions, self._curSort, self._isDec)
+	sortComp:setOptionChangeCallback(self._onSortChange, self)
 end
 
-function var_0_0._onSortChange(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	arg_18_0._curSort = arg_18_1
-	arg_18_0._isDec = arg_18_2
-	arg_18_0._filterList = arg_18_3
+function SurvivalCommitItemView:_onSortChange(sortData, isDec, filterList)
+	self._curSort = sortData
+	self._isDec = isDec
+	self._filterList = filterList
 
-	arg_18_0:_refreshLeftView()
+	self:_refreshLeftView()
 end
 
-function var_0_0._refreshLeftView(arg_19_0)
-	local var_19_0 = {}
+function SurvivalCommitItemView:_refreshLeftView()
+	local showItems = {}
 
-	for iter_19_0, iter_19_1 in ipairs(arg_19_0.leftItems) do
-		if SurvivalBagSortHelper.filterItemMo(arg_19_0._filterList, iter_19_1) then
-			table.insert(var_19_0, iter_19_1)
+	for _, itemMo in ipairs(self.leftItems) do
+		if SurvivalBagSortHelper.filterItemMo(self._filterList, itemMo) then
+			table.insert(showItems, itemMo)
 		end
 	end
 
-	SurvivalBagSortHelper.sortItems(var_19_0, arg_19_0._curSort.type, arg_19_0._isDec)
-	SurvivalHelper.instance:makeArrFull(var_19_0, SurvivalBagItemMo.Empty, 3, 5)
-	arg_19_0._simpleLeftList:setList(var_19_0)
-	gohelper.setActive(arg_19_0._goleftscroll, #var_19_0 > 0)
-	gohelper.setActive(arg_19_0._goleftempty, #var_19_0 == 0)
+	SurvivalBagSortHelper.sortItems(showItems, self._curSort.type, self._isDec)
+	SurvivalHelper.instance:makeArrFull(showItems, SurvivalBagItemMo.Empty, 3, 5)
+	self._simpleLeftList:setList(showItems)
+	gohelper.setActive(self._goleftscroll, #showItems > 0)
+	gohelper.setActive(self._goleftempty, #showItems == 0)
 end
 
-function var_0_0._createLeftItem(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
-	local var_20_0 = arg_20_0.viewContainer._viewSetting.otherRes.itemRes
-	local var_20_1 = gohelper.findChild(arg_20_1, "inst") or arg_20_0:getResInst(var_20_0, arg_20_1, "inst")
-	local var_20_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_20_1, SurvivalBagItem)
+function SurvivalCommitItemView:_createLeftItem(obj, data, index)
+	local itemRes = self.viewContainer._viewSetting.otherRes.itemRes
+	local go = gohelper.findChild(obj, "inst")
 
-	var_20_2:updateMo(arg_20_2)
-	var_20_2:setClickCallback(arg_20_0._onLeftItemClick, arg_20_0)
+	go = go or self:getResInst(itemRes, obj, "inst")
 
-	local var_20_3 = arg_20_0._isSelectLeft and arg_20_0._curSelectUid
+	local item = MonoHelper.addNoUpdateLuaComOnceToGo(go, SurvivalBagItem)
 
-	var_20_2:setIsSelect(var_20_3 and var_20_3 == var_20_2._mo.uid)
+	item:updateMo(data)
+	item:setClickCallback(self._onLeftItemClick, self)
+
+	local uid = self._isSelectLeft and self._curSelectUid
+
+	item:setIsSelect(uid and uid == item._mo.uid)
 end
 
-function var_0_0._createRightItem(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
-	local var_21_0 = arg_21_0.viewContainer._viewSetting.otherRes.itemRes
-	local var_21_1 = gohelper.findChild(arg_21_1, "inst") or arg_21_0:getResInst(var_21_0, arg_21_1, "inst")
-	local var_21_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_21_1, SurvivalBagItem)
+function SurvivalCommitItemView:_createRightItem(obj, data, index)
+	local itemRes = self.viewContainer._viewSetting.otherRes.itemRes
+	local go = gohelper.findChild(obj, "inst")
 
-	var_21_2:updateMo(arg_21_2)
-	var_21_2:setClickCallback(arg_21_0._onRightItemClick, arg_21_0)
+	go = go or self:getResInst(itemRes, obj, "inst")
 
-	local var_21_3 = not arg_21_0._isSelectLeft and arg_21_0._curSelectUid
+	local item = MonoHelper.addNoUpdateLuaComOnceToGo(go, SurvivalBagItem)
 
-	var_21_2:setIsSelect(var_21_3 and var_21_3 == var_21_2._mo.uid)
+	item:updateMo(data)
+	item:setClickCallback(self._onRightItemClick, self)
+
+	local uid = not self._isSelectLeft and self._curSelectUid
+
+	item:setIsSelect(uid and uid == item._mo.uid)
 end
 
-function var_0_0._onLeftItemClick(arg_22_0, arg_22_1)
+function SurvivalCommitItemView:_onLeftItemClick(item)
 	AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_checkpoint_resources_Click)
-	arg_22_0._infoPanel:updateMo(arg_22_1._mo)
-	gohelper.setActive(arg_22_0._goempty, false)
+	self._infoPanel:updateMo(item._mo)
+	gohelper.setActive(self._goempty, false)
 
-	arg_22_0._curSelectUid = arg_22_1._mo.uid
-	arg_22_0._isSelectLeft = true
+	self._curSelectUid = item._mo.uid
+	self._isSelectLeft = true
 
-	arg_22_0:updateItemSelect()
+	self:updateItemSelect()
 end
 
-function var_0_0._onRightItemClick(arg_23_0, arg_23_1)
+function SurvivalCommitItemView:_onRightItemClick(item)
 	AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_checkpoint_resources_Click)
-	arg_23_0._infoPanel:updateMo(arg_23_1._mo)
-	gohelper.setActive(arg_23_0._goempty, false)
+	self._infoPanel:updateMo(item._mo)
+	gohelper.setActive(self._goempty, false)
 
-	arg_23_0._curSelectUid = arg_23_1._mo.uid
-	arg_23_0._isSelectLeft = false
+	self._curSelectUid = item._mo.uid
+	self._isSelectLeft = false
 
-	arg_23_0:updateItemSelect()
+	self:updateItemSelect()
 end
 
-function var_0_0._refreshRightView(arg_24_0)
-	arg_24_0._simpleRightList:setList(arg_24_0.rightItems)
-	gohelper.setActive(arg_24_0._gorightscroll, #arg_24_0.rightItems > 0)
-	gohelper.setActive(arg_24_0._gorightempty, #arg_24_0.rightItems == 0)
+function SurvivalCommitItemView:_refreshRightView()
+	self._simpleRightList:setList(self.rightItems)
+	gohelper.setActive(self._gorightscroll, #self.rightItems > 0)
+	gohelper.setActive(self._gorightempty, #self.rightItems == 0)
 
-	local var_24_0 = SurvivalShelterModel.instance:getWeekInfo()
-	local var_24_1 = 0
+	local weekMo = SurvivalShelterModel.instance:getWeekInfo()
+	local totalWorth = 0
 
-	for iter_24_0 = 1, #arg_24_0.rightItems do
-		var_24_1 = var_24_1 + var_24_0:getAttr(SurvivalEnum.AttrType.NpcRecruitment, arg_24_0.rightItems[iter_24_0].co.worth) * arg_24_0.rightItems[iter_24_0].count
+	for i = 1, #self.rightItems do
+		totalWorth = totalWorth + weekMo:getAttr(SurvivalEnum.AttrType.NpcRecruitment, self.rightItems[i].co.worth) * self.rightItems[i].count
 	end
 
-	local var_24_2 = var_24_1 >= arg_24_0.viewParam.npcWorthCheck
+	local isCanCommit = totalWorth >= self.viewParam.npcWorthCheck
 
-	if var_24_2 then
-		arg_24_0._txttotalvalue.text = string.format("%d/%d", var_24_1, arg_24_0.viewParam.npcWorthCheck)
+	if isCanCommit then
+		self._txttotalvalue.text = string.format("%d/%d", totalWorth, self.viewParam.npcWorthCheck)
 	else
-		arg_24_0._txttotalvalue.text = string.format("<#D74242>%d</COLOR>/%d", var_24_1, arg_24_0.viewParam.npcWorthCheck)
+		self._txttotalvalue.text = string.format("<#D74242>%d</COLOR>/%d", totalWorth, self.viewParam.npcWorthCheck)
 	end
 
-	gohelper.setActive(arg_24_0._btncommit, var_24_2)
-	gohelper.setActive(arg_24_0._gocommitgray, not var_24_2)
+	gohelper.setActive(self._btncommit, isCanCommit)
+	gohelper.setActive(self._gocommitgray, not isCanCommit)
 end
 
-function var_0_0.onClickModalMask(arg_25_0)
-	arg_25_0:closeThis()
+function SurvivalCommitItemView:onClickModalMask()
+	self:closeThis()
 end
 
-function var_0_0.commitItems(arg_26_0)
-	local var_26_0 = tostring(arg_26_0._choiceMo.param)
-	local var_26_1 = {}
+function SurvivalCommitItemView:commitItems()
+	local params = tostring(self._choiceMo.param)
+	local allItems = {}
 
-	for iter_26_0, iter_26_1 in ipairs(arg_26_0.rightItems) do
-		table.insert(var_26_1, string.format("%s:%s", iter_26_1.uid, iter_26_1.count))
+	for i, itemMo in ipairs(self.rightItems) do
+		table.insert(allItems, string.format("%s:%s", itemMo.uid, itemMo.count))
 	end
 
-	if var_26_1[1] then
-		var_26_0 = var_26_0 .. "#" .. table.concat(var_26_1, "&")
+	if allItems[1] then
+		params = params .. "#" .. table.concat(allItems, "&")
 	end
 
-	SurvivalStatHelper.instance:statSurvivalMapUnit("SelectOption", arg_26_0._choiceMo.unitId, arg_26_0._choiceMo.param, arg_26_0._choiceMo.treeId)
-	SurvivalInteriorRpc.instance:sendSurvivalSceneOperation(SurvivalEnum.OperType.SelectOption, var_26_0)
-	arg_26_0:closeThis()
+	SurvivalStatHelper.instance:statSurvivalMapUnit("SelectOption", self._choiceMo.unitId, self._choiceMo.param, self._choiceMo.treeId)
+	SurvivalInteriorRpc.instance:sendSurvivalSceneOperation(SurvivalEnum.OperType.SelectOption, params)
+	self:closeThis()
 end
 
-function var_0_0._beginRightDrag(arg_27_0, arg_27_1, arg_27_2)
-	ZProj.UGUIHelper.PassEvent(arg_27_0._gorightscroll, arg_27_2, 4)
+function SurvivalCommitItemView:_beginRightDrag(_, pointerEventData)
+	ZProj.UGUIHelper.PassEvent(self._gorightscroll, pointerEventData, 4)
 
-	for iter_27_0 in pairs(arg_27_0._simpleRightList:getAllGos()) do
-		local var_27_0 = gohelper.findChild(iter_27_0, "inst")
+	for go in pairs(self._simpleRightList:getAllGos()) do
+		local instGo = gohelper.findChild(go, "inst")
 
-		if gohelper.isMouseOverGo(var_27_0) then
-			local var_27_1 = MonoHelper.getLuaComFromGo(var_27_0, SurvivalBagItem)
+		if gohelper.isMouseOverGo(instGo) then
+			local bagItem = MonoHelper.getLuaComFromGo(instGo, SurvivalBagItem)
 
-			if var_27_1 and not var_27_1._mo:isEmpty() then
-				arg_27_0._curPressItem = var_27_1
+			if bagItem and not bagItem._mo:isEmpty() then
+				self._curPressItem = bagItem
 			end
 
 			break
@@ -491,95 +508,97 @@ function var_0_0._beginRightDrag(arg_27_0, arg_27_1, arg_27_2)
 	end
 end
 
-function var_0_0._onRightDrag(arg_28_0, arg_28_1, arg_28_2)
-	local var_28_0
+function SurvivalCommitItemView:_onRightDrag(_, pointerEventData)
+	local isFirst
 
-	if not arg_28_0._isDragOut then
-		ZProj.UGUIHelper.PassEvent(arg_28_0._goleftscroll, arg_28_2, 5)
+	if not self._isDragOut then
+		ZProj.UGUIHelper.PassEvent(self._goleftscroll, pointerEventData, 5)
 
-		if arg_28_0._curPressItem and arg_28_2.position.x - arg_28_2.pressPosition.x < -100 then
-			arg_28_0._isDragOut = true
+		if self._curPressItem and pointerEventData.position.x - pointerEventData.pressPosition.x < -100 then
+			self._isDragOut = true
 
-			arg_28_0._dragItem:updateMo(arg_28_0._curPressItem._mo)
-			gohelper.setActive(arg_28_0._dragItem.go, true)
+			self._dragItem:updateMo(self._curPressItem._mo)
+			gohelper.setActive(self._dragItem.go, true)
 
-			var_28_0 = true
+			isFirst = true
 
-			ZProj.UGUIHelper.PassEvent(arg_28_0._goleftscroll, arg_28_2, 6)
+			ZProj.UGUIHelper.PassEvent(self._goleftscroll, pointerEventData, 6)
 		end
 	end
 
-	if arg_28_0._isDragOut then
-		local var_28_1 = recthelper.screenPosToAnchorPos(arg_28_2.position, arg_28_0.viewGO.transform)
-		local var_28_2 = arg_28_0._dragItem.go.transform
-		local var_28_3, var_28_4 = recthelper.getAnchor(var_28_2)
+	if self._isDragOut then
+		local anchorPos = recthelper.screenPosToAnchorPos(pointerEventData.position, self.viewGO.transform)
+		local trans = self._dragItem.go.transform
+		local curAnchorX, curAnchorY = recthelper.getAnchor(trans)
 
-		if not var_28_0 and (math.abs(var_28_3 - var_28_1.x) > 10 or math.abs(var_28_4 - var_28_1.y) > 10) then
-			ZProj.TweenHelper.DOAnchorPos(var_28_2, var_28_1.x, var_28_1.y, 0.2)
+		if not isFirst and (math.abs(curAnchorX - anchorPos.x) > 10 or math.abs(curAnchorY - anchorPos.y) > 10) then
+			ZProj.TweenHelper.DOAnchorPos(trans, anchorPos.x, anchorPos.y, 0.2)
 		else
-			recthelper.setAnchor(var_28_2, var_28_1.x, var_28_1.y)
+			recthelper.setAnchor(trans, anchorPos.x, anchorPos.y)
 		end
 	end
 end
 
-function var_0_0._endRightDrag(arg_29_0, arg_29_1, arg_29_2)
-	if arg_29_0._isDragOut then
-		arg_29_0._isDragOut = nil
+function SurvivalCommitItemView:_endRightDrag(_, pointerEventData)
+	if self._isDragOut then
+		self._isDragOut = nil
 
-		gohelper.setActive(arg_29_0._dragItem.go, false)
+		gohelper.setActive(self._dragItem.go, false)
 
-		if not gohelper.isMouseOverGo(arg_29_0._godroparea) then
-			arg_29_0:moveData(arg_29_0.rightItems, arg_29_0.leftItems, arg_29_0._curPressItem._mo, arg_29_0._curPressItem._mo.count, SurvivalEnum.ItemSource.Commit)
+		local isInRight = gohelper.isMouseOverGo(self._godroparea)
+
+		if not isInRight then
+			self:moveData(self.rightItems, self.leftItems, self._curPressItem._mo, self._curPressItem._mo.count, SurvivalEnum.ItemSource.Commit)
 		end
 	else
-		ZProj.UGUIHelper.PassEvent(arg_29_0._goleftscroll, arg_29_2, 6)
+		ZProj.UGUIHelper.PassEvent(self._goleftscroll, pointerEventData, 6)
 	end
 
-	arg_29_0._curPressItem = nil
+	self._curPressItem = nil
 end
 
-function var_0_0._onTipsClick(arg_30_0, arg_30_1, arg_30_2, arg_30_3)
-	if arg_30_1 == "Place" then
-		arg_30_0:moveData(arg_30_0.leftItems, arg_30_0.rightItems, arg_30_2, arg_30_3, SurvivalEnum.ItemSource.Commited)
-	elseif arg_30_1 == "UnPlace" then
-		arg_30_0:moveData(arg_30_0.rightItems, arg_30_0.leftItems, arg_30_2, arg_30_3, SurvivalEnum.ItemSource.Commit)
+function SurvivalCommitItemView:_onTipsClick(type, mo, count)
+	if type == "Place" then
+		self:moveData(self.leftItems, self.rightItems, mo, count, SurvivalEnum.ItemSource.Commited)
+	elseif type == "UnPlace" then
+		self:moveData(self.rightItems, self.leftItems, mo, count, SurvivalEnum.ItemSource.Commit)
 	end
 
-	arg_30_0:closeInfoView()
+	self:closeInfoView()
 end
 
-function var_0_0.closeInfoView(arg_31_0)
-	arg_31_0._infoPanel:updateMo()
-	gohelper.setActive(arg_31_0._goempty, true)
+function SurvivalCommitItemView:closeInfoView()
+	self._infoPanel:updateMo()
+	gohelper.setActive(self._goempty, true)
 
-	arg_31_0._curSelectUid = nil
-	arg_31_0._isSelectLeft = false
+	self._curSelectUid = nil
+	self._isSelectLeft = false
 
-	arg_31_0:updateItemSelect()
+	self:updateItemSelect()
 end
 
-function var_0_0.updateItemSelect(arg_32_0)
-	for iter_32_0 in pairs(arg_32_0._simpleLeftList:getAllGos()) do
-		local var_32_0 = gohelper.findChild(iter_32_0, "inst")
-		local var_32_1 = MonoHelper.getLuaComFromGo(var_32_0, SurvivalBagItem)
+function SurvivalCommitItemView:updateItemSelect()
+	for go in pairs(self._simpleLeftList:getAllGos()) do
+		local instGo = gohelper.findChild(go, "inst")
+		local bagItem = MonoHelper.getLuaComFromGo(instGo, SurvivalBagItem)
 
-		if var_32_1 and not var_32_1._mo:isEmpty() then
-			var_32_1:setIsSelect(arg_32_0._isSelectLeft and arg_32_0._curSelectUid == var_32_1._mo.uid)
+		if bagItem and not bagItem._mo:isEmpty() then
+			bagItem:setIsSelect(self._isSelectLeft and self._curSelectUid == bagItem._mo.uid)
 		end
 	end
 
-	for iter_32_1 in pairs(arg_32_0._simpleRightList:getAllGos()) do
-		local var_32_2 = gohelper.findChild(iter_32_1, "inst")
-		local var_32_3 = MonoHelper.getLuaComFromGo(var_32_2, SurvivalBagItem)
+	for go in pairs(self._simpleRightList:getAllGos()) do
+		local instGo = gohelper.findChild(go, "inst")
+		local bagItem = MonoHelper.getLuaComFromGo(instGo, SurvivalBagItem)
 
-		if var_32_3 and not var_32_3._mo:isEmpty() then
-			var_32_3:setIsSelect(not arg_32_0._isSelectLeft and arg_32_0._curSelectUid == var_32_3._mo.uid)
+		if bagItem and not bagItem._mo:isEmpty() then
+			bagItem:setIsSelect(not self._isSelectLeft and self._curSelectUid == bagItem._mo.uid)
 		end
 	end
 end
 
-function var_0_0.onClose(arg_33_0)
-	TaskDispatcher.cancelTask(arg_33_0._delayHideTips, arg_33_0)
+function SurvivalCommitItemView:onClose()
+	TaskDispatcher.cancelTask(self._delayHideTips, self)
 end
 
-return var_0_0
+return SurvivalCommitItemView

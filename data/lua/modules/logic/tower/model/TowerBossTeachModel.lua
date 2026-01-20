@@ -1,22 +1,24 @@
-﻿module("modules.logic.tower.model.TowerBossTeachModel", package.seeall)
+﻿-- chunkname: @modules/logic/tower/model/TowerBossTeachModel.lua
 
-local var_0_0 = class("TowerBossTeachModel", BaseModel)
+module("modules.logic.tower.model.TowerBossTeachModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0.lastFightTeachId = 0
+local TowerBossTeachModel = class("TowerBossTeachModel", BaseModel)
+
+function TowerBossTeachModel:onInit()
+	self.lastFightTeachId = 0
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0.lastFightTeachId = 0
+function TowerBossTeachModel:reInit()
+	self.lastFightTeachId = 0
 end
 
-function var_0_0.isAllEpisodeFinish(arg_3_0, arg_3_1)
-	local var_3_0 = TowerConfig.instance:getAssistBossConfig(arg_3_1)
-	local var_3_1 = TowerConfig.instance:getAllBossTeachConfigList(var_3_0.towerId)
-	local var_3_2 = TowerModel.instance:getTowerInfoById(TowerEnum.TowerType.Boss, var_3_0.towerId)
+function TowerBossTeachModel:isAllEpisodeFinish(bossId)
+	local bossConfig = TowerConfig.instance:getAssistBossConfig(bossId)
+	local allTeachConfig = TowerConfig.instance:getAllBossTeachConfigList(bossConfig.towerId)
+	local towerInfoMO = TowerModel.instance:getTowerInfoById(TowerEnum.TowerType.Boss, bossConfig.towerId)
 
-	for iter_3_0, iter_3_1 in ipairs(var_3_1) do
-		if var_3_2 and not var_3_2:isPassBossTeach(iter_3_1.teachId) then
+	for _, config in ipairs(allTeachConfig) do
+		if towerInfoMO and not towerInfoMO:isPassBossTeach(config.teachId) then
 			return false
 		end
 	end
@@ -24,32 +26,32 @@ function var_0_0.isAllEpisodeFinish(arg_3_0, arg_3_1)
 	return true
 end
 
-function var_0_0.getTeachFinishEffectSaveKey(arg_4_0, arg_4_1)
-	return string.format("%s_%s", TowerEnum.LocalPrefsKey.TowerBossTeachFinishEffect, arg_4_1)
+function TowerBossTeachModel:getTeachFinishEffectSaveKey(bossId)
+	return string.format("%s_%s", TowerEnum.LocalPrefsKey.TowerBossTeachFinishEffect, bossId)
 end
 
-function var_0_0.setLastFightTeachId(arg_5_0, arg_5_1)
-	arg_5_0.lastFightTeachId = arg_5_1
+function TowerBossTeachModel:setLastFightTeachId(teachId)
+	self.lastFightTeachId = teachId
 end
 
-function var_0_0.getLastFightTeachId(arg_6_0)
-	return arg_6_0.lastFightTeachId
+function TowerBossTeachModel:getLastFightTeachId()
+	return self.lastFightTeachId
 end
 
-function var_0_0.getFirstUnFinishTeachId(arg_7_0, arg_7_1)
-	local var_7_0 = TowerConfig.instance:getAssistBossConfig(arg_7_1)
-	local var_7_1 = TowerConfig.instance:getAllBossTeachConfigList(var_7_0.towerId)
-	local var_7_2 = TowerModel.instance:getTowerInfoById(TowerEnum.TowerType.Boss, var_7_0.towerId)
+function TowerBossTeachModel:getFirstUnFinishTeachId(bossId)
+	local bossConfig = TowerConfig.instance:getAssistBossConfig(bossId)
+	local allTeachConfig = TowerConfig.instance:getAllBossTeachConfigList(bossConfig.towerId)
+	local towerInfoMO = TowerModel.instance:getTowerInfoById(TowerEnum.TowerType.Boss, bossConfig.towerId)
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_1) do
-		if var_7_2 and not var_7_2:isPassBossTeach(iter_7_1.teachId) then
-			return iter_7_1.teachId
+	for _, config in ipairs(allTeachConfig) do
+		if towerInfoMO and not towerInfoMO:isPassBossTeach(config.teachId) then
+			return config.teachId
 		end
 	end
 
-	return var_7_1[1].teachId
+	return allTeachConfig[1].teachId
 end
 
-var_0_0.instance = var_0_0.New()
+TowerBossTeachModel.instance = TowerBossTeachModel.New()
 
-return var_0_0
+return TowerBossTeachModel

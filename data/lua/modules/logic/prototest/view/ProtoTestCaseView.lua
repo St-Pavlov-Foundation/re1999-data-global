@@ -1,80 +1,82 @@
-﻿module("modules.logic.prototest.view.ProtoTestCaseView", package.seeall)
+﻿-- chunkname: @modules/logic/prototest/view/ProtoTestCaseView.lua
 
-local var_0_0 = class("ProtoTestCaseView", BaseView)
+module("modules.logic.prototest.view.ProtoTestCaseView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnRecord = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Panel_testcase/Panel_oprator/Btn_record")
-	arg_1_0._btnStop = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Panel_testcase/Panel_oprator/Btn_stop")
-	arg_1_0._btnClear = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Panel_testcase/Panel_oprator/Btn_clear")
-	arg_1_0._btnSendAll = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Panel_testcase/Panel_oprator/Btn_SendAll")
+local ProtoTestCaseView = class("ProtoTestCaseView", BaseView)
+
+function ProtoTestCaseView:onInitView()
+	self._btnRecord = gohelper.findChildButtonWithAudio(self.viewGO, "Panel_testcase/Panel_oprator/Btn_record")
+	self._btnStop = gohelper.findChildButtonWithAudio(self.viewGO, "Panel_testcase/Panel_oprator/Btn_stop")
+	self._btnClear = gohelper.findChildButtonWithAudio(self.viewGO, "Panel_testcase/Panel_oprator/Btn_clear")
+	self._btnSendAll = gohelper.findChildButtonWithAudio(self.viewGO, "Panel_testcase/Panel_oprator/Btn_SendAll")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnRecord:AddClickListener(arg_2_0._onClickBtnRecord, arg_2_0)
-	arg_2_0._btnStop:AddClickListener(arg_2_0._onClickBtnStop, arg_2_0)
-	arg_2_0._btnClear:AddClickListener(arg_2_0._onClickBtnClear, arg_2_0)
-	arg_2_0._btnSendAll:AddClickListener(arg_2_0._onClickBtnSendAll, arg_2_0)
+function ProtoTestCaseView:addEvents()
+	self._btnRecord:AddClickListener(self._onClickBtnRecord, self)
+	self._btnStop:AddClickListener(self._onClickBtnStop, self)
+	self._btnClear:AddClickListener(self._onClickBtnClear, self)
+	self._btnSendAll:AddClickListener(self._onClickBtnSendAll, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnRecord:RemoveClickListener()
-	arg_3_0._btnStop:RemoveClickListener()
-	arg_3_0._btnClear:RemoveClickListener()
-	arg_3_0._btnSendAll:RemoveClickListener()
-	TaskDispatcher.cancelTask(arg_3_0._onFrameSendProto, arg_3_0)
+function ProtoTestCaseView:removeEvents()
+	self._btnRecord:RemoveClickListener()
+	self._btnStop:RemoveClickListener()
+	self._btnClear:RemoveClickListener()
+	self._btnSendAll:RemoveClickListener()
+	TaskDispatcher.cancelTask(self._onFrameSendProto, self)
 end
 
-function var_0_0.onOpen(arg_4_0)
-	arg_4_0:_updateRecordBtn()
+function ProtoTestCaseView:onOpen()
+	self:_updateRecordBtn()
 end
 
-function var_0_0._updateRecordBtn(arg_5_0)
-	local var_5_0 = ProtoTestMgr.instance:isRecording()
+function ProtoTestCaseView:_updateRecordBtn()
+	local isRecording = ProtoTestMgr.instance:isRecording()
 
-	gohelper.setActive(arg_5_0._btnRecord.gameObject, not var_5_0)
-	gohelper.setActive(arg_5_0._btnStop.gameObject, var_5_0)
+	gohelper.setActive(self._btnRecord.gameObject, not isRecording)
+	gohelper.setActive(self._btnStop.gameObject, isRecording)
 end
 
-function var_0_0._onClickBtnRecord(arg_6_0)
+function ProtoTestCaseView:_onClickBtnRecord()
 	ProtoTestMgr.instance:startRecord()
-	arg_6_0:_updateRecordBtn()
+	self:_updateRecordBtn()
 end
 
-function var_0_0._onClickBtnStop(arg_7_0)
+function ProtoTestCaseView:_onClickBtnStop()
 	ProtoTestMgr.instance:endRecord()
-	arg_7_0:_updateRecordBtn()
+	self:_updateRecordBtn()
 end
 
-function var_0_0._onClickBtnClear(arg_8_0)
+function ProtoTestCaseView:_onClickBtnClear()
 	ProtoTestCaseModel.instance:clear()
 end
 
-function var_0_0._onClickBtnSendAll(arg_9_0)
-	local var_9_0 = ProtoTestCaseModel.instance:getList()
+function ProtoTestCaseView:_onClickBtnSendAll()
+	local list = ProtoTestCaseModel.instance:getList()
 
-	arg_9_0._toSendProtoList = {}
+	self._toSendProtoList = {}
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
-		local var_9_1 = iter_9_1:buildProtoMsg()
+	for _, one in ipairs(list) do
+		local protobuf = one:buildProtoMsg()
 
-		table.insert(arg_9_0._toSendProtoList, var_9_1)
+		table.insert(self._toSendProtoList, protobuf)
 	end
 
-	TaskDispatcher.runRepeat(arg_9_0._onFrameSendProto, arg_9_0, 0.033)
+	TaskDispatcher.runRepeat(self._onFrameSendProto, self, 0.033)
 end
 
-function var_0_0._onFrameSendProto(arg_10_0)
-	if arg_10_0._toSendProtoList and #arg_10_0._toSendProtoList > 0 then
-		local var_10_0 = table.remove(arg_10_0._toSendProtoList, 1)
+function ProtoTestCaseView:_onFrameSendProto()
+	if self._toSendProtoList and #self._toSendProtoList > 0 then
+		local protobuf = table.remove(self._toSendProtoList, 1)
 
-		LuaSocketMgr.instance:sendMsg(var_10_0)
+		LuaSocketMgr.instance:sendMsg(protobuf)
 	end
 
-	if not arg_10_0._toSendProtoList or #arg_10_0._toSendProtoList == 0 then
-		arg_10_0._toSendProtoList = nil
+	if not self._toSendProtoList or #self._toSendProtoList == 0 then
+		self._toSendProtoList = nil
 
-		TaskDispatcher.cancelTask(arg_10_0._onFrameSendProto, arg_10_0)
+		TaskDispatcher.cancelTask(self._onFrameSendProto, self)
 	end
 end
 
-return var_0_0
+return ProtoTestCaseView

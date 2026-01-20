@@ -1,51 +1,57 @@
-﻿module("modules.logic.explore.map.light.ExploreMapLightPool", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/light/ExploreMapLightPool.lua
 
-local var_0_0 = class("ExploreMapLightPool")
+module("modules.logic.explore.map.light.ExploreMapLightPool", package.seeall)
 
-function var_0_0.getInst(arg_1_0, arg_1_1, arg_1_2)
-	if not arg_1_0._pool then
-		arg_1_0._pool = ExploreMapLightItem.getPool()
+local ExploreMapLightPool = class("ExploreMapLightPool")
+
+function ExploreMapLightPool:getInst(lightMO, parent)
+	if not self._pool then
+		self._pool = ExploreMapLightItem.getPool()
 	end
 
-	if not arg_1_0._lightGo then
-		arg_1_0._lightGo = arg_1_0:getLightGo()
+	if not self._lightGo then
+		self._lightGo = self:getLightGo()
 	end
 
-	local var_1_0 = arg_1_0._pool:getObject()
+	local lightItem = self._pool:getObject()
 
-	var_1_0:init(arg_1_1, arg_1_2, arg_1_0._lightGo)
+	lightItem:init(lightMO, parent, self._lightGo)
 
-	return var_1_0
+	return lightItem
 end
 
-function var_0_0.getLightGo(arg_2_0)
-	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Explore then
+function ExploreMapLightPool:getLightGo()
+	local sceneType = GameSceneMgr.instance:getCurSceneType()
+
+	if sceneType ~= SceneType.Explore then
 		return
 	end
 
-	return GameSceneMgr.instance:getCurScene().preloader:getResByPath(ResUrl.getExploreEffectPath(ExploreConstValue.MapLightEffect))
+	local scene = GameSceneMgr.instance:getCurScene()
+
+	return scene.preloader:getResByPath(ResUrl.getExploreEffectPath(ExploreConstValue.MapLightEffect))
 end
 
-function var_0_0.inPool(arg_3_0, arg_3_1)
-	if not arg_3_0._pool then
-		arg_3_1:release()
+function ExploreMapLightPool:inPool(lightItem)
+	if not self._pool then
+		lightItem:release()
 
 		return
 	end
 
-	arg_3_0._pool:putObject(arg_3_1)
+	self._pool:putObject(lightItem)
 end
 
-function var_0_0.clear(arg_4_0)
-	if arg_4_0._pool then
-		arg_4_0._pool:dispose()
+function ExploreMapLightPool:clear()
+	if self._pool then
+		self._pool:dispose()
 
-		arg_4_0._pool = nil
+		self._pool = nil
 	end
 
-	arg_4_0._lightGo = nil
+	self._lightGo = nil
 end
 
-var_0_0.instance = var_0_0.New()
+ExploreMapLightPool.instance = ExploreMapLightPool.New()
 
-return var_0_0
+return ExploreMapLightPool

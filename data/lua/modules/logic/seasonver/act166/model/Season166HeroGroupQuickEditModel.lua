@@ -1,138 +1,143 @@
-﻿module("modules.logic.seasonver.act166.model.Season166HeroGroupQuickEditModel", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act166/model/Season166HeroGroupQuickEditModel.lua
 
-local var_0_0 = class("Season166HeroGroupQuickEditModel", ListScrollModel)
+module("modules.logic.seasonver.act166.model.Season166HeroGroupQuickEditModel", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.activityId = arg_1_1
-	arg_1_0.episodeId = arg_1_2
-	arg_1_0.episodeCO = DungeonConfig.instance:getEpisodeCO(arg_1_0.episodeId)
+local Season166HeroGroupQuickEditModel = class("Season166HeroGroupQuickEditModel", ListScrollModel)
+
+function Season166HeroGroupQuickEditModel:init(actId, episodeId)
+	self.activityId = actId
+	self.episodeId = episodeId
+	self.episodeCO = DungeonConfig.instance:getEpisodeCO(self.episodeId)
 end
 
-function var_0_0.copyQuickEditCardList(arg_2_0)
-	local var_2_0
+function Season166HeroGroupQuickEditModel:copyQuickEditCardList()
+	local moList
 
 	if HeroGroupTrialModel.instance:isOnlyUseTrial() then
-		var_2_0 = {}
+		moList = {}
 	else
-		var_2_0 = tabletool.copy(CharacterBackpackCardListModel.instance:getCharacterCardList())
+		moList = tabletool.copy(CharacterBackpackCardListModel.instance:getCharacterCardList())
 	end
 
-	local var_2_1 = {}
-	local var_2_2 = {}
+	local newMOList = {}
+	local repeatHero = {}
 
-	arg_2_0._inTeamHeroUidMap = {}
-	arg_2_0._inTeamHeroUidList = {}
-	arg_2_0._originalHeroUidList = {}
-	arg_2_0._selectUid = nil
+	self._inTeamHeroUidMap = {}
+	self._inTeamHeroUidList = {}
+	self._originalHeroUidList = {}
+	self._selectUid = nil
 
-	local var_2_3 = Season166HeroGroupModel.instance:getCurGroupMO()
+	local heroGroupMO = Season166HeroGroupModel.instance:getCurGroupMO()
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_3.heroList) do
-		local var_2_4 = Season166HeroGroupModel.instance:isPositionOpen(iter_2_0)
+	for pos, heroUid in ipairs(heroGroupMO.heroList) do
+		local posOpen = Season166HeroGroupModel.instance:isPositionOpen(pos)
 
-		if tonumber(iter_2_1) > 0 and not var_2_2[iter_2_1] then
-			local var_2_5 = arg_2_0:getHeroMO(iter_2_1)
+		if tonumber(heroUid) > 0 and not repeatHero[heroUid] then
+			local tmpMO = self:getHeroMO(heroUid)
 
-			table.insert(var_2_1, var_2_5)
+			table.insert(newMOList, tmpMO)
 
-			if var_2_4 then
-				arg_2_0._inTeamHeroUidMap[iter_2_1] = 1
+			if posOpen then
+				self._inTeamHeroUidMap[heroUid] = 1
 			end
 
-			var_2_2[iter_2_1] = true
+			repeatHero[heroUid] = true
 		else
-			local var_2_6 = Season166HeroSingleGroupModel.instance:getByIndex(iter_2_0)
+			local singleGroupMo = Season166HeroSingleGroupModel.instance:getByIndex(pos)
 
-			if var_2_6 and var_2_6.trial then
-				table.insert(var_2_1, HeroGroupTrialModel.instance:getById(iter_2_1))
+			if singleGroupMo and singleGroupMo.trial then
+				table.insert(newMOList, HeroGroupTrialModel.instance:getById(heroUid))
 
-				if var_2_4 then
-					arg_2_0._inTeamHeroUidMap[iter_2_1] = 1
+				if posOpen then
+					self._inTeamHeroUidMap[heroUid] = 1
 				end
 
-				var_2_2[iter_2_1] = true
+				repeatHero[heroUid] = true
 			end
 		end
 
-		if var_2_4 then
-			table.insert(arg_2_0._inTeamHeroUidList, iter_2_1)
-			table.insert(arg_2_0._originalHeroUidList, iter_2_1)
+		if posOpen then
+			table.insert(self._inTeamHeroUidList, heroUid)
+			table.insert(self._originalHeroUidList, heroUid)
 		end
 	end
 
-	local var_2_7 = HeroGroupTrialModel.instance:getFilterList()
+	local trialList = HeroGroupTrialModel.instance:getFilterList()
 
-	for iter_2_2, iter_2_3 in ipairs(var_2_7) do
-		if not var_2_2[iter_2_3.uid] then
-			table.insert(var_2_1, iter_2_3)
+	for i, heroMo in ipairs(trialList) do
+		if not repeatHero[heroMo.uid] then
+			table.insert(newMOList, heroMo)
 		end
 	end
 
-	for iter_2_4, iter_2_5 in ipairs(var_2_0) do
-		if not var_2_2[iter_2_5.uid] then
-			var_2_2[iter_2_5.uid] = true
+	for i, mo in ipairs(moList) do
+		if not repeatHero[mo.uid] then
+			repeatHero[mo.uid] = true
 
-			table.insert(var_2_1, iter_2_5)
+			table.insert(newMOList, mo)
 		end
 	end
 
 	if Season166HeroGroupModel.instance:isSeason166Episode() then
-		arg_2_0.sortIndexMap = {}
+		self.sortIndexMap = {}
 
-		for iter_2_6, iter_2_7 in ipairs(var_2_1) do
-			arg_2_0.sortIndexMap[iter_2_7] = iter_2_6
+		for i, v in ipairs(newMOList) do
+			self.sortIndexMap[v] = i
 		end
 
-		table.sort(var_2_1, var_0_0.indexMapSortFunc)
+		table.sort(newMOList, Season166HeroGroupQuickEditModel.indexMapSortFunc)
 	end
 
-	arg_2_0:setList(var_2_1)
+	self:setList(newMOList)
 end
 
-function var_0_0.indexMapSortFunc(arg_3_0, arg_3_1)
-	return var_0_0.instance.sortIndexMap[arg_3_0] < var_0_0.instance.sortIndexMap[arg_3_1]
+function Season166HeroGroupQuickEditModel.indexMapSortFunc(a, b)
+	local aIndex = Season166HeroGroupQuickEditModel.instance.sortIndexMap[a]
+	local bIndex = Season166HeroGroupQuickEditModel.instance.sortIndexMap[b]
+
+	return aIndex < bIndex
 end
 
-function var_0_0.getHeroMO(arg_4_0, arg_4_1)
-	local var_4_0 = HeroModel.instance:getById(arg_4_1)
-	local var_4_1 = Season166HeroGroupModel.instance:isSeason166TrainEpisode(arg_4_0.episodeId)
+function Season166HeroGroupQuickEditModel:getHeroMO(heroUid)
+	local heroMO = HeroModel.instance:getById(heroUid)
+	local isTrainEpisode = Season166HeroGroupModel.instance:isSeason166TrainEpisode(self.episodeId)
 
-	if not var_4_0 and var_4_1 then
-		local var_4_2 = Season166HeroSingleGroupModel.instance.assistMO
+	if not heroMO and isTrainEpisode then
+		local assistHeroMO = Season166HeroSingleGroupModel.instance.assistMO
 
-		if var_4_2 and var_4_2.heroUid == arg_4_1 then
-			return var_4_2:getHeroMO()
+		if assistHeroMO and assistHeroMO.heroUid == heroUid then
+			return assistHeroMO:getHeroMO()
 		end
 	else
-		return var_4_0
+		return heroMO
 	end
 end
 
-function var_0_0.keepSelect(arg_5_0, arg_5_1)
-	arg_5_0._selectIndex = arg_5_1
+function Season166HeroGroupQuickEditModel:keepSelect(selectIndex)
+	self._selectIndex = selectIndex
 
-	local var_5_0 = arg_5_0:getList()
+	local list = self:getList()
 
-	if #arg_5_0._scrollViews > 0 then
-		for iter_5_0, iter_5_1 in ipairs(arg_5_0._scrollViews) do
-			iter_5_1:selectCell(arg_5_1, true)
+	if #self._scrollViews > 0 then
+		for _, view in ipairs(self._scrollViews) do
+			view:selectCell(selectIndex, true)
 		end
 
-		if var_5_0[arg_5_1] then
-			return var_5_0[arg_5_1]
+		if list[selectIndex] then
+			return list[selectIndex]
 		end
 	end
 end
 
-function var_0_0.isInTeamHero(arg_6_0, arg_6_1)
-	return arg_6_0._inTeamHeroUidMap and arg_6_0._inTeamHeroUidMap[arg_6_1]
+function Season166HeroGroupQuickEditModel:isInTeamHero(uid)
+	return self._inTeamHeroUidMap and self._inTeamHeroUidMap[uid]
 end
 
-function var_0_0.getHeroTeamPos(arg_7_0, arg_7_1)
-	if arg_7_0._inTeamHeroUidList then
-		for iter_7_0, iter_7_1 in ipairs(arg_7_0._inTeamHeroUidList) do
-			if iter_7_1 == arg_7_1 then
-				return iter_7_0
+function Season166HeroGroupQuickEditModel:getHeroTeamPos(uid)
+	if self._inTeamHeroUidList then
+		for index, heroUid in ipairs(self._inTeamHeroUidList) do
+			if heroUid == uid then
+				return index
 			end
 		end
 	end
@@ -140,49 +145,49 @@ function var_0_0.getHeroTeamPos(arg_7_0, arg_7_1)
 	return 0
 end
 
-function var_0_0.selectHero(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0:getHeroTeamPos(arg_8_1)
+function Season166HeroGroupQuickEditModel:selectHero(uid)
+	local index = self:getHeroTeamPos(uid)
 
-	if var_8_0 ~= 0 then
-		arg_8_0._inTeamHeroUidList[var_8_0] = "0"
-		arg_8_0._inTeamHeroUidMap[arg_8_1] = nil
+	if index ~= 0 then
+		self._inTeamHeroUidList[index] = "0"
+		self._inTeamHeroUidMap[uid] = nil
 
-		arg_8_0:onModelUpdate()
+		self:onModelUpdate()
 
-		arg_8_0._selectUid = nil
+		self._selectUid = nil
 
 		return true
 	else
-		local var_8_1 = 0
+		local nextIndex = 0
 
-		for iter_8_0 = 1, #arg_8_0._inTeamHeroUidList do
-			local var_8_2 = arg_8_0._inTeamHeroUidList[iter_8_0]
+		for i = 1, #self._inTeamHeroUidList do
+			local heroUid = self._inTeamHeroUidList[i]
 
-			if var_8_2 == 0 or var_8_2 == "0" then
-				arg_8_0._inTeamHeroUidList[iter_8_0] = arg_8_1
-				arg_8_0._inTeamHeroUidMap[arg_8_1] = 1
+			if heroUid == 0 or heroUid == "0" then
+				self._inTeamHeroUidList[i] = uid
+				self._inTeamHeroUidMap[uid] = 1
 
-				arg_8_0:onModelUpdate()
+				self:onModelUpdate()
 
 				return true
 			end
 		end
 
-		arg_8_0._selectUid = arg_8_1
+		self._selectUid = uid
 	end
 
 	return false
 end
 
-function var_0_0.isRepeatHero(arg_9_0, arg_9_1, arg_9_2)
-	if not arg_9_0._inTeamHeroUidMap then
+function Season166HeroGroupQuickEditModel:isRepeatHero(heroId, uid)
+	if not self._inTeamHeroUidMap then
 		return false
 	end
 
-	for iter_9_0 in pairs(arg_9_0._inTeamHeroUidMap) do
-		local var_9_0 = arg_9_0:getById(iter_9_0)
+	for inTeamUid in pairs(self._inTeamHeroUidMap) do
+		local mo = self:getById(inTeamUid)
 
-		if var_9_0 and var_9_0.heroId == arg_9_1 and arg_9_2 ~= var_9_0.uid then
+		if mo and mo.heroId == heroId and uid ~= mo.uid then
 			return true
 		end
 	end
@@ -190,33 +195,35 @@ function var_0_0.isRepeatHero(arg_9_0, arg_9_1, arg_9_2)
 	return false
 end
 
-function var_0_0.isTrialLimit(arg_10_0)
-	if not arg_10_0._inTeamHeroUidMap then
+function Season166HeroGroupQuickEditModel:isTrialLimit()
+	if not self._inTeamHeroUidMap then
 		return false
 	end
 
-	local var_10_0 = 0
+	local curNum = 0
 
-	for iter_10_0 in pairs(arg_10_0._inTeamHeroUidMap) do
-		if arg_10_0:getById(iter_10_0):isTrial() then
-			var_10_0 = var_10_0 + 1
+	for inTeamUid in pairs(self._inTeamHeroUidMap) do
+		local mo = self:getById(inTeamUid)
+
+		if mo:isTrial() then
+			curNum = curNum + 1
 		end
 	end
 
-	return var_10_0 >= HeroGroupTrialModel.instance:getLimitNum()
+	return curNum >= HeroGroupTrialModel.instance:getLimitNum()
 end
 
-function var_0_0.getHeroUids(arg_11_0)
-	return arg_11_0._inTeamHeroUidList
+function Season166HeroGroupQuickEditModel:getHeroUids()
+	return self._inTeamHeroUidList
 end
 
-function var_0_0.getHeroUidByPos(arg_12_0, arg_12_1)
-	return arg_12_0._inTeamHeroUidList[arg_12_1]
+function Season166HeroGroupQuickEditModel:getHeroUidByPos(pos)
+	return self._inTeamHeroUidList[pos]
 end
 
-function var_0_0.getIsDirty(arg_13_0)
-	for iter_13_0 = 1, #arg_13_0._inTeamHeroUidList do
-		if arg_13_0._inTeamHeroUidList[iter_13_0] ~= arg_13_0._originalHeroUidList[iter_13_0] then
+function Season166HeroGroupQuickEditModel:getIsDirty()
+	for i = 1, #self._inTeamHeroUidList do
+		if self._inTeamHeroUidList[i] ~= self._originalHeroUidList[i] then
 			return true
 		end
 	end
@@ -224,20 +231,20 @@ function var_0_0.getIsDirty(arg_13_0)
 	return false
 end
 
-function var_0_0.cancelAllSelected(arg_14_0)
-	if arg_14_0._scrollViews then
-		for iter_14_0, iter_14_1 in ipairs(arg_14_0._scrollViews) do
-			local var_14_0 = iter_14_1:getFirstSelect()
-			local var_14_1 = arg_14_0:getIndex(var_14_0)
+function Season166HeroGroupQuickEditModel:cancelAllSelected()
+	if self._scrollViews then
+		for _, view in ipairs(self._scrollViews) do
+			local mo = view:getFirstSelect()
+			local index = self:getIndex(mo)
 
-			iter_14_1:selectCell(var_14_1, false)
+			view:selectCell(index, false)
 		end
 	end
 end
 
-function var_0_0.isTeamFull(arg_15_0)
-	for iter_15_0 = 1, #arg_15_0._inTeamHeroUidList do
-		if arg_15_0._inTeamHeroUidList[iter_15_0] == "0" then
+function Season166HeroGroupQuickEditModel:isTeamFull()
+	for i = 1, #self._inTeamHeroUidList do
+		if self._inTeamHeroUidList[i] == "0" then
 			return false
 		end
 	end
@@ -245,16 +252,16 @@ function var_0_0.isTeamFull(arg_15_0)
 	return true
 end
 
-function var_0_0.clear(arg_16_0)
-	arg_16_0._inTeamHeroUidMap = nil
-	arg_16_0._inTeamHeroUidList = nil
-	arg_16_0._originalHeroUidList = nil
-	arg_16_0._selectIndex = nil
-	arg_16_0._selectUid = nil
+function Season166HeroGroupQuickEditModel:clear()
+	self._inTeamHeroUidMap = nil
+	self._inTeamHeroUidList = nil
+	self._originalHeroUidList = nil
+	self._selectIndex = nil
+	self._selectUid = nil
 
-	var_0_0.super.clear(arg_16_0)
+	Season166HeroGroupQuickEditModel.super.clear(self)
 end
 
-var_0_0.instance = var_0_0.New()
+Season166HeroGroupQuickEditModel.instance = Season166HeroGroupQuickEditModel.New()
 
-return var_0_0
+return Season166HeroGroupQuickEditModel

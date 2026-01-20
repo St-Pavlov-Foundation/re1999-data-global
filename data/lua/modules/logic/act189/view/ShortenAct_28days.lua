@@ -1,37 +1,39 @@
-﻿module("modules.logic.act189.view.ShortenAct_28days", package.seeall)
+﻿-- chunkname: @modules/logic/act189/view/ShortenAct_28days.lua
 
-local var_0_0 = class("ShortenAct_28days", ShortenActStyleItem_impl)
+module("modules.logic.act189.view.ShortenAct_28days", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "2/#btn_click")
+local ShortenAct_28days = class("ShortenAct_28days", ShortenActStyleItem_impl)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ShortenAct_28days:onInitView()
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "2/#btn_click")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+function ShortenAct_28days:addEvents()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
+function ShortenAct_28days:removeEvents()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0.ctor(arg_4_0, ...)
-	var_0_0.super.ctor(arg_4_0, ...)
+function ShortenAct_28days:ctor(...)
+	ShortenAct_28days.super.ctor(self, ...)
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	var_0_0.super._editableInitView(arg_5_0)
+function ShortenAct_28days:_editableInitView()
+	ShortenAct_28days.super._editableInitView(self)
 end
 
-function var_0_0.onDestroyView(arg_6_0)
-	var_0_0.super.onDestroyView(arg_6_0)
+function ShortenAct_28days:onDestroyView()
+	ShortenAct_28days.super.onDestroyView(self)
 end
 
-function var_0_0._btnclickOnClick(arg_7_0)
+function ShortenAct_28days:_btnclickOnClick()
 	BpController.instance:openBattlePassView()
 end
 
-return var_0_0
+return ShortenAct_28days

@@ -1,36 +1,38 @@
-﻿module("modules.logic.resonance.model.TalentStyle.TalentStyleListModel", package.seeall)
+﻿-- chunkname: @modules/logic/resonance/model/TalentStyle/TalentStyleListModel.lua
 
-local var_0_0 = class("TalentStyleListModel", ListScrollModel)
+module("modules.logic.resonance.model.TalentStyle.TalentStyleListModel", package.seeall)
 
-function var_0_0._sort(arg_1_0, arg_1_1)
-	if arg_1_0._isUnlock == arg_1_1._isUnlock then
-		if arg_1_0._styleId == 0 then
+local TalentStyleListModel = class("TalentStyleListModel", ListScrollModel)
+
+function TalentStyleListModel._sort(a, b)
+	if a._isUnlock == b._isUnlock then
+		if a._styleId == 0 then
 			return false
 		end
 
-		if arg_1_1._styleId == 0 then
+		if b._styleId == 0 then
 			return true
 		end
 
-		return arg_1_0._styleId < arg_1_1._styleId
+		return a._styleId < b._styleId
 	end
 
-	return arg_1_0._isUnlock
+	return a._isUnlock
 end
 
-function var_0_0.initData(arg_2_0, arg_2_1)
-	local var_2_0 = TalentStyleModel.instance:getStyleMoList(arg_2_1)
+function TalentStyleListModel:initData(heroId)
+	local moList = TalentStyleModel.instance:getStyleMoList(heroId)
 
-	table.sort(var_2_0, arg_2_0._sort)
-	arg_2_0:setList(var_2_0)
+	table.sort(moList, self._sort)
+	self:setList(moList)
 end
 
-function var_0_0.refreshData(arg_3_0, arg_3_1)
-	local var_3_0 = TalentStyleModel.instance:refreshMoList(arg_3_1, arg_3_0:getList())
+function TalentStyleListModel:refreshData(heroId)
+	local moList = TalentStyleModel.instance:refreshMoList(heroId, self:getList())
 
-	arg_3_0:setList(var_3_0)
+	self:setList(moList)
 end
 
-var_0_0.instance = var_0_0.New()
+TalentStyleListModel.instance = TalentStyleListModel.New()
 
-return var_0_0
+return TalentStyleListModel

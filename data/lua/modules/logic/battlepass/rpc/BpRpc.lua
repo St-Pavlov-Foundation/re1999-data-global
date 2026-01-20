@@ -1,23 +1,33 @@
-﻿module("modules.logic.battlepass.rpc.BpRpc", package.seeall)
+﻿-- chunkname: @modules/logic/battlepass/rpc/BpRpc.lua
 
-local var_0_0 = class("BpRpc", BaseRpc)
+module("modules.logic.battlepass.rpc.BpRpc", package.seeall)
 
-function var_0_0.sendGetBpInfoRequest(arg_1_0, arg_1_1)
-	local var_1_0 = BpModule_pb.GetBpInfoRequest()
+local BpRpc = class("BpRpc", BaseRpc)
 
-	var_1_0.getTask = arg_1_1
-
-	return arg_1_0:sendMsg(var_1_0)
+function BpRpc:onInit()
+	self:reInit()
 end
 
-function var_0_0.onReceiveGetBpInfoReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 == 0 then
-		BpModel.instance:onGetInfo(arg_2_2)
+function BpRpc:reInit()
+	self._tmpIsSp_sendGetBpBonusRequest = nil
+end
 
-		if arg_2_2.endTime > 0 then
-			BpBonusModel.instance:onGetInfo(arg_2_2.scoreBonusInfo)
-			BpBonusModel.instance:initGetSelectBonus(arg_2_2.hasGetSelfSelectBonus)
-			BpTaskModel.instance:onGetInfo(arg_2_2.taskInfo)
+function BpRpc:sendGetBpInfoRequest(getTask)
+	local req = BpModule_pb.GetBpInfoRequest()
+
+	req.getTask = getTask
+
+	return self:sendMsg(req)
+end
+
+function BpRpc:onReceiveGetBpInfoReply(resultCode, msg)
+	if resultCode == 0 then
+		BpModel.instance:onGetInfo(msg)
+
+		if msg.endTime > 0 then
+			BpBonusModel.instance:onGetInfo(msg.scoreBonusInfo)
+			BpBonusModel.instance:initGetSelectBonus(msg.hasGetSelfSelectBonus)
+			BpTaskModel.instance:onGetInfo(msg.taskInfo)
 			BpController.instance:onCheckBpEndTime()
 			BpController.instance:dispatchEvent(BpEvent.OnGetInfo)
 			BpController.instance:dispatchEvent(BpEvent.OnRedDotUpdate)
@@ -27,41 +37,49 @@ function var_0_0.onReceiveGetBpInfoReply(arg_2_0, arg_2_1, arg_2_2)
 	end
 end
 
-function var_0_0.onReceiveBpOpenPush(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == 0 then
-		arg_3_0:sendGetBpInfoRequest(true)
+function BpRpc:onReceiveBpOpenPush(resultCode, msg)
+	if resultCode == 0 then
+		self:sendGetBpInfoRequest(true)
 	end
 end
 
-function var_0_0.sendGetBpBonusRequest(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4, arg_4_5)
-	local var_4_0 = BpModule_pb.GetBpBonusRequest()
+function BpRpc:sendGetBpBonusRequest(level, payBonus, isSp, callback, callbackobj)
+	local req = BpModule_pb.GetBpBonusRequest()
 
-	var_4_0.id = BpModel.instance.id
-	var_4_0.level = arg_4_1
+	req.id = BpModel.instance.id
+	req.level = level
 
-	if arg_4_2 then
-		var_4_0.payBonus = arg_4_2
+	if payBonus then
+		req.payBonus = payBonus
 	end
 
-	if arg_4_3 then
-		var_4_0.isSp = true
+	if isSp then
+		req.isSp = true
+	else
+		BpModel.instance.lockAlertBonus = true
 	end
 
-	BpModel.instance.lockAlertBonus = true
+	self._tmpIsSp_sendGetBpBonusRequest = isSp
 
-	arg_4_0:sendMsg(var_4_0, arg_4_4, arg_4_5)
+	self:sendMsg(req, callback, callbackobj)
 end
 
-function var_0_0.onReceiveGetBpBonusReply(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_1 == 0 then
-		local var_5_0 = BpModel.instance:checkShowPayBonusTip(arg_5_2.scoreBonusInfo)
+function BpRpc:onReceiveGetBpBonusReply(resultCode, msg)
+	local isSp = self._tmpIsSp_sendGetBpBonusRequest
 
-		BpBonusModel.instance:updateInfo(arg_5_2.scoreBonusInfo)
+	if resultCode == 0 then
+		local isAlertChargeTips = false
+
+		if not isSp then
+			isAlertChargeTips = BpModel.instance:checkShowPayBonusTip(msg.scoreBonusInfo)
+		end
+
+		BpBonusModel.instance:updateInfo(msg.scoreBonusInfo)
 		BpController.instance:dispatchEvent(BpEvent.OnGetBonus)
 		BpController.instance:dispatchEvent(BpEvent.OnRedDotUpdate)
 
 		if BpModel.instance.cacheBonus then
-			if var_5_0 then
+			if isAlertChargeTips then
 				PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.BpPropView2, BpModel.instance.cacheBonus)
 			else
 				PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.BpPropView, BpModel.instance.cacheBonus)
@@ -72,24 +90,25 @@ function var_0_0.onReceiveGetBpBonusReply(arg_5_0, arg_5_1, arg_5_2)
 	end
 
 	BpModel.instance.lockAlertBonus = false
+	self._tmpIsSp_sendGetBpBonusRequest = nil
 end
 
-function var_0_0.onReceiveBpScoreUpdatePush(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_1 == 0 then
+function BpRpc:onReceiveBpScoreUpdatePush(resultCode, msg)
+	if resultCode == 0 then
 		if BpModel.instance:isEnd() then
 			return
 		end
 
-		local var_6_0 = BpModel.instance.score
-		local var_6_1 = BpModel.instance:checkLevelUp(arg_6_2.score)
+		local preScore = BpModel.instance.score
+		local levelUp = BpModel.instance:checkLevelUp(msg.score)
 
-		BpModel.instance:updateScore(arg_6_2.score, arg_6_2.weeklyScore)
+		BpModel.instance:updateScore(msg.score, msg.weeklyScore)
 		BpController.instance:dispatchEvent(BpEvent.OnUpdateScore)
 		BpController.instance:dispatchEvent(BpEvent.OnRedDotUpdate)
 
-		if var_6_1 and not BpModel.instance.lockLevelUpShow then
+		if levelUp and not BpModel.instance.lockLevelUpShow then
 			BpModel.instance.preStatus = {
-				score = var_6_0,
+				score = preScore,
 				payStatus = BpModel.instance.payStatus
 			}
 
@@ -98,15 +117,15 @@ function var_0_0.onReceiveBpScoreUpdatePush(arg_6_0, arg_6_1, arg_6_2)
 	end
 end
 
-function var_0_0.onReceiveBpPayPush(arg_7_0, arg_7_1, arg_7_2)
-	if arg_7_1 == 0 then
+function BpRpc:onReceiveBpPayPush(resultCode, msg)
+	if resultCode == 0 then
 		if BpModel.instance:isEnd() then
 			return
 		end
 
-		local var_7_0 = BpModel.instance.payStatus
+		local prePayStatus = BpModel.instance.payStatus
 
-		BpModel.instance:updatePayStatus(arg_7_2.payStatus)
+		BpModel.instance:updatePayStatus(msg.payStatus)
 		BpController.instance:dispatchEvent(BpEvent.OnUpdatePayStatus)
 		BpController.instance:dispatchEvent(BpEvent.OnRedDotUpdate)
 
@@ -117,34 +136,34 @@ function var_0_0.onReceiveBpPayPush(arg_7_0, arg_7_1, arg_7_2)
 				}
 			end
 
-			BpModel.instance.preStatus.payStatus = var_7_0
+			BpModel.instance.preStatus.payStatus = prePayStatus
 		end
 
 		BpModel.instance:buildChargeFlow()
 	end
 end
 
-function var_0_0.sendBpBuyLevelRequset(arg_8_0, arg_8_1)
-	local var_8_0 = BpModule_pb.BpBuyLevelRequset()
+function BpRpc:sendBpBuyLevelRequset(num)
+	local req = BpModule_pb.BpBuyLevelRequset()
 
-	var_8_0.id = BpModel.instance.id
-	var_8_0.num = arg_8_1
+	req.id = BpModel.instance.id
+	req.num = num
 
-	arg_8_0:sendMsg(var_8_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveBpBuyLevelReply(arg_9_0, arg_9_1, arg_9_2)
-	if arg_9_1 == 0 then
-		local var_9_0 = BpModel.instance.score
-		local var_9_1 = BpModel.instance:checkLevelUp(arg_9_2.score)
+function BpRpc:onReceiveBpBuyLevelReply(resultCode, msg)
+	if resultCode == 0 then
+		local preScore = BpModel.instance.score
+		local levelUp = BpModel.instance:checkLevelUp(msg.score)
 
-		BpModel.instance:onBuyLevel(arg_9_2.score)
+		BpModel.instance:onBuyLevel(msg.score)
 		BpController.instance:dispatchEvent(BpEvent.OnBuyLevel)
 		BpController.instance:dispatchEvent(BpEvent.OnRedDotUpdate)
 
-		if var_9_1 then
+		if levelUp then
 			BpModel.instance.preStatus = {
-				score = var_9_0,
+				score = preScore,
 				payStatus = BpModel.instance.payStatus
 			}
 
@@ -153,21 +172,21 @@ function var_0_0.onReceiveBpBuyLevelReply(arg_9_0, arg_9_1, arg_9_2)
 	end
 end
 
-function var_0_0.sendBpMarkFirstShowRequest(arg_10_0, arg_10_1)
-	local var_10_0 = BpModule_pb.BpMarkFirstShowRequest()
+function BpRpc:sendBpMarkFirstShowRequest(isSp)
+	local req = BpModule_pb.BpMarkFirstShowRequest()
 
-	var_10_0.id = BpModel.instance.id
+	req.id = BpModel.instance.id
 
-	if arg_10_1 then
-		var_10_0.isSp = true
+	if isSp then
+		req.isSp = true
 	end
 
-	arg_10_0:sendMsg(var_10_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveBpMarkFirstShowReply(arg_11_0, arg_11_1, arg_11_2)
-	if arg_11_1 == 0 then
-		if arg_11_2.isSp then
+function BpRpc:onReceiveBpMarkFirstShowReply(resultCode, msg)
+	if resultCode == 0 then
+		if msg.isSp then
 			BpModel.instance.firstShowSp = false
 		else
 			BpModel.instance.firstShow = false
@@ -175,23 +194,23 @@ function var_0_0.onReceiveBpMarkFirstShowReply(arg_11_0, arg_11_1, arg_11_2)
 	end
 end
 
-function var_0_0.sendGetSelfSelectBonusRequest(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = BpModule_pb.GetSelfSelectBonusRequest()
+function BpRpc:sendGetSelfSelectBonusRequest(level, index)
+	local req = BpModule_pb.GetSelfSelectBonusRequest()
 
-	var_12_0.id = BpModel.instance.id
-	var_12_0.level = arg_12_1
-	var_12_0.index = arg_12_2
+	req.id = BpModel.instance.id
+	req.level = level
+	req.index = index
 
-	arg_12_0:sendMsg(var_12_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveGetSelfSelectBonusReply(arg_13_0, arg_13_1, arg_13_2)
-	if arg_13_1 == 0 then
-		BpBonusModel.instance:markSelectBonus(arg_13_2.level, arg_13_2.index)
-		BpController.instance:dispatchEvent(BpEvent.onSelectBonusGet, arg_13_2.level)
+function BpRpc:onReceiveGetSelfSelectBonusReply(resultCode, msg)
+	if resultCode == 0 then
+		BpBonusModel.instance:markSelectBonus(msg.level, msg.index)
+		BpController.instance:dispatchEvent(BpEvent.onSelectBonusGet, msg.level)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+BpRpc.instance = BpRpc.New()
 
-return var_0_0
+return BpRpc

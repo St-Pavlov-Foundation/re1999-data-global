@@ -1,65 +1,69 @@
-﻿module("modules.logic.weather.controller.WeatherSceneController", package.seeall)
+﻿-- chunkname: @modules/logic/weather/controller/WeatherSceneController.lua
 
-local var_0_0 = class("WeatherSceneController", BaseController)
+module("modules.logic.weather.controller.WeatherSceneController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:clearInfo()
+local WeatherSceneController = class("WeatherSceneController", BaseController)
+
+function WeatherSceneController:onInit()
+	self:clearInfo()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clearInfo()
+function WeatherSceneController:reInit()
+	self:clearInfo()
 end
 
-function var_0_0.clearInfo(arg_3_0)
-	arg_3_0._hideMainViewTime = 0
-	arg_3_0._hideStartTime = nil
+function WeatherSceneController:clearInfo()
+	self._hideMainViewTime = 0
+	self._hideStartTime = nil
 end
 
-function var_0_0.onInitFinish(arg_4_0)
+function WeatherSceneController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_5_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_5_0._onOpenView, arg_5_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_5_0._onCloseView, arg_5_0, LuaEventSystem.Low)
-	MainController.instance:registerCallback(MainEvent.OnDailyPopupFlowFinish, arg_5_0._onDailyPopupFlowFinish, arg_5_0)
+function WeatherSceneController:addConstEvents()
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, self._onOpenView, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, self._onCloseView, self, LuaEventSystem.Low)
+	MainController.instance:registerCallback(MainEvent.OnDailyPopupFlowFinish, self._onDailyPopupFlowFinish, self)
 end
 
-function var_0_0._onOpenView(arg_6_0, arg_6_1)
+function WeatherSceneController:_onOpenView(viewName)
 	if MainSceneSwitchModel.instance:getCurSceneId() ~= MainSceneSwitchEnum.SpSceneId then
-		arg_6_0:clearInfo()
+		self:clearInfo()
 
 		return
 	end
 
 	if not ViewHelper.instance:checkViewOnTheTop(ViewName.MainView) then
-		arg_6_0._hideStartTime = arg_6_0._hideStartTime or Time.time
+		self._hideStartTime = self._hideStartTime or Time.time
 	end
 end
 
-function var_0_0._onCloseView(arg_7_0, arg_7_1)
+function WeatherSceneController:_onCloseView(viewName)
 	if MainSceneSwitchModel.instance:getCurSceneId() ~= MainSceneSwitchEnum.SpSceneId then
-		arg_7_0:clearInfo()
+		self:clearInfo()
 
 		return
 	end
 
-	if ViewHelper.instance:checkViewOnTheTop(ViewName.MainView) and arg_7_0._hideStartTime then
-		arg_7_0._hideMainViewTime = arg_7_0._hideMainViewTime + Time.time - arg_7_0._hideStartTime
-		arg_7_0._hideStartTime = nil
+	if ViewHelper.instance:checkViewOnTheTop(ViewName.MainView) and self._hideStartTime then
+		self._hideMainViewTime = self._hideMainViewTime + Time.time - self._hideStartTime
+		self._hideStartTime = nil
 
-		if MainController.instance:isInPopupFlow() then
+		local inPopupFlow = MainController.instance:isInPopupFlow()
+
+		if inPopupFlow then
 			return
 		end
 
-		WeatherController.instance:dispatchEvent(WeatherEvent.MainViewHideTimeUpdate, arg_7_0._hideMainViewTime)
+		WeatherController.instance:dispatchEvent(WeatherEvent.MainViewHideTimeUpdate, self._hideMainViewTime)
 	end
 end
 
-function var_0_0._onDailyPopupFlowFinish(arg_8_0)
-	WeatherController.instance:dispatchEvent(WeatherEvent.MainViewHideTimeUpdate, arg_8_0._hideMainViewTime)
+function WeatherSceneController:_onDailyPopupFlowFinish()
+	WeatherController.instance:dispatchEvent(WeatherEvent.MainViewHideTimeUpdate, self._hideMainViewTime)
 end
 
-var_0_0.instance = var_0_0.New()
+WeatherSceneController.instance = WeatherSceneController.New()
 
-return var_0_0
+return WeatherSceneController

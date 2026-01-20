@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_actvity186_like", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_actvity186_like.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_actvity186_like", package.seeall)
+
+local lua_actvity186_like = {}
+local fields = {
 	nameen = 4,
 	name = 3,
 	basevalueornot = 6,
@@ -9,15 +11,15 @@ local var_0_1 = {
 	icon = 5,
 	activityId = 2
 }
-local var_0_2 = {
+local primaryKey = {
 	"type"
 }
-local var_0_3 = {
+local mlStringKey = {
 	name = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_actvity186_like.onLoad(json)
+	lua_actvity186_like.configList, lua_actvity186_like.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_actvity186_like

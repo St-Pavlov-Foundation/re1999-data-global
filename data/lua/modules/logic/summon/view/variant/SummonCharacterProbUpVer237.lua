@@ -1,36 +1,38 @@
-﻿module("modules.logic.summon.view.variant.SummonCharacterProbUpVer237", package.seeall)
+﻿-- chunkname: @modules/logic/summon/view/variant/SummonCharacterProbUpVer237.lua
 
-local var_0_0 = class("SummonCharacterProbUpVer237", SummonMainCharacterProbUp)
+module("modules.logic.summon.view.variant.SummonCharacterProbUpVer237", package.seeall)
 
-var_0_0.preloadList = {
+local SummonCharacterProbUpVer237 = class("SummonCharacterProbUpVer237", SummonMainCharacterProbUp)
+
+SummonCharacterProbUpVer237.preloadList = {
 	"singlebg/summon/heroversion_1_1/full/bg_xt.png",
 	"singlebg/summon/heroversion_1_1/xingti/role_xingti.png"
 }
 
-function var_0_0._editableInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/#simage_bg")
-	arg_1_0._simagead1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/node1/#simage_ad1")
-	arg_1_0._simagerole2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/node2/#simage_role2")
-	arg_1_0._simagerole1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/node2/#simage_role1")
-	arg_1_0._simagebottom = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/#simage_bottom")
-	arg_1_0._charaterItemCount = 1
+function SummonCharacterProbUpVer237:_editableInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#go_ui/current/#simage_bg")
+	self._simagead1 = gohelper.findChildSingleImage(self.viewGO, "#go_ui/current/node1/#simage_ad1")
+	self._simagerole2 = gohelper.findChildSingleImage(self.viewGO, "#go_ui/current/node2/#simage_role2")
+	self._simagerole1 = gohelper.findChildSingleImage(self.viewGO, "#go_ui/current/node2/#simage_role1")
+	self._simagebottom = gohelper.findChildSingleImage(self.viewGO, "#go_ui/current/#simage_bottom")
+	self._charaterItemCount = 1
 
-	var_0_0.super._editableInitView(arg_1_0)
+	SummonCharacterProbUpVer237.super._editableInitView(self)
 end
 
-function var_0_0.refreshSingleImage(arg_2_0)
-	arg_2_0._simageline:LoadImage(ResUrl.getSummonHeroIcon("title_img_deco"))
+function SummonCharacterProbUpVer237:refreshSingleImage()
+	self._simageline:LoadImage(ResUrl.getSummonHeroIcon("title_img_deco"))
 end
 
-function var_0_0.unloadSingleImage(arg_3_0)
-	arg_3_0._simagebg:UnLoadImage()
-	arg_3_0._simagead1:UnLoadImage()
-	arg_3_0._simagerole2:UnLoadImage()
-	arg_3_0._simagerole1:UnLoadImage()
-	arg_3_0._simagebottom:UnLoadImage()
-	arg_3_0._simageline:UnLoadImage()
-	arg_3_0._simagecurrency1:UnLoadImage()
-	arg_3_0._simagecurrency10:UnLoadImage()
+function SummonCharacterProbUpVer237:unloadSingleImage()
+	self._simagebg:UnLoadImage()
+	self._simagead1:UnLoadImage()
+	self._simagerole2:UnLoadImage()
+	self._simagerole1:UnLoadImage()
+	self._simagebottom:UnLoadImage()
+	self._simageline:UnLoadImage()
+	self._simagecurrency1:UnLoadImage()
+	self._simagecurrency10:UnLoadImage()
 end
 
-return var_0_0
+return SummonCharacterProbUpVer237

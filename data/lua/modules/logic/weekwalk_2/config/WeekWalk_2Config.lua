@@ -1,8 +1,10 @@
-﻿module("modules.logic.weekwalk_2.config.WeekWalk_2Config", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk_2/config/WeekWalk_2Config.lua
 
-local var_0_0 = class("WeekWalk_2Config", BaseConfig)
+module("modules.logic.weekwalk_2.config.WeekWalk_2Config", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local WeekWalk_2Config = class("WeekWalk_2Config", BaseConfig)
+
+function WeekWalk_2Config:reqConfigNames()
 	return {
 		"weekwalk_ver2",
 		"weekwalk_ver2_const",
@@ -17,95 +19,95 @@ function var_0_0.reqConfigNames(arg_1_0)
 	}
 end
 
-function var_0_0.onInit(arg_2_0)
+function WeekWalk_2Config:onInit()
 	return
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "task_weekwalk_ver2" then
-		arg_3_0:_initWeekWalkTask()
+function WeekWalk_2Config:onConfigLoaded(configName, configTable)
+	if configName == "task_weekwalk_ver2" then
+		self:_initWeekWalkTask()
 
 		return
 	end
 
-	if arg_3_1 == "weekwalk_ver2_cup" then
-		arg_3_0:_initWeekWalkCup()
+	if configName == "weekwalk_ver2_cup" then
+		self:_initWeekWalkCup()
 
 		return
 	end
 end
 
-function var_0_0._initWeekWalkCup(arg_4_0)
-	arg_4_0._cupInfoMap = {}
+function WeekWalk_2Config:_initWeekWalkCup()
+	self._cupInfoMap = {}
 
-	for iter_4_0, iter_4_1 in ipairs(lua_weekwalk_ver2_cup.configList) do
-		arg_4_0._cupInfoMap[iter_4_1.layerId] = arg_4_0._cupInfoMap[iter_4_1.layerId] or {}
+	for i, v in ipairs(lua_weekwalk_ver2_cup.configList) do
+		self._cupInfoMap[v.layerId] = self._cupInfoMap[v.layerId] or {}
 
-		local var_4_0 = arg_4_0._cupInfoMap[iter_4_1.layerId]
+		local layerInfoMap = self._cupInfoMap[v.layerId]
 
-		var_4_0[iter_4_1.fightType] = var_4_0[iter_4_1.fightType] or {}
+		layerInfoMap[v.fightType] = layerInfoMap[v.fightType] or {}
 
-		table.insert(var_4_0[iter_4_1.fightType], iter_4_1)
+		table.insert(layerInfoMap[v.fightType], v)
 	end
 end
 
-function var_0_0.getCupTask(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = arg_5_0._cupInfoMap[arg_5_1]
+function WeekWalk_2Config:getCupTask(layerId, fightType)
+	local layerInfoMap = self._cupInfoMap[layerId]
 
-	return var_5_0 and var_5_0[arg_5_2]
+	return layerInfoMap and layerInfoMap[fightType]
 end
 
-function var_0_0.getWeekWalkTaskList(arg_6_0, arg_6_1)
-	return arg_6_0._taskTypeList[arg_6_1]
+function WeekWalk_2Config:getWeekWalkTaskList(type)
+	return self._taskTypeList[type]
 end
 
-function var_0_0._initWeekWalkTask(arg_7_0)
-	arg_7_0._taskRewardList = {}
-	arg_7_0._taskTypeList = {}
+function WeekWalk_2Config:_initWeekWalkTask()
+	self._taskRewardList = {}
+	self._taskTypeList = {}
 
-	for iter_7_0, iter_7_1 in ipairs(lua_task_weekwalk_ver2.configList) do
-		local var_7_0 = arg_7_0._taskTypeList[iter_7_1.minTypeId] or {}
+	for i, v in ipairs(lua_task_weekwalk_ver2.configList) do
+		local t = self._taskTypeList[v.minTypeId] or {}
 
-		table.insert(var_7_0, iter_7_1)
+		table.insert(t, v)
 
-		arg_7_0._taskTypeList[iter_7_1.minTypeId] = var_7_0
+		self._taskTypeList[v.minTypeId] = t
 
-		arg_7_0:_initTaskReward(iter_7_1)
+		self:_initTaskReward(v)
 	end
 end
 
-function var_0_0._initTaskReward(arg_8_0, arg_8_1)
-	local var_8_0
+function WeekWalk_2Config:_initTaskReward(config)
+	local listenerParam
 
-	if arg_8_1.listenerType == "WeekwalkVer2SeasonCup" then
-		var_8_0 = tonumber(arg_8_1.listenerParam)
+	if config.listenerType == "WeekwalkVer2SeasonCup" then
+		listenerParam = tonumber(config.listenerParam)
 	else
-		var_8_0 = tonumber(arg_8_1.layerId)
+		listenerParam = tonumber(config.layerId)
 	end
 
-	if not var_8_0 then
+	if not listenerParam then
 		return
 	end
 
-	local var_8_1 = arg_8_1.bonus
+	local bonus = config.bonus
 
-	arg_8_0._taskRewardList[var_8_0] = arg_8_0._taskRewardList[var_8_0] or {}
+	self._taskRewardList[listenerParam] = self._taskRewardList[listenerParam] or {}
 
-	local var_8_2 = string.split(var_8_1, "|")
+	local rewards = string.split(bonus, "|")
 
-	for iter_8_0 = 1, #var_8_2 do
-		local var_8_3 = string.splitToNumber(var_8_2[iter_8_0], "#")
+	for i = 1, #rewards do
+		local itemCo = string.splitToNumber(rewards[i], "#")
 
-		if var_8_3[1] == MaterialEnum.MaterialType.Currency and var_8_3[2] == CurrencyEnum.CurrencyType.FreeDiamondCoupon then
-			arg_8_0._taskRewardList[var_8_0][arg_8_1.id] = var_8_3[3]
+		if itemCo[1] == MaterialEnum.MaterialType.Currency and itemCo[2] == CurrencyEnum.CurrencyType.FreeDiamondCoupon then
+			self._taskRewardList[listenerParam][config.id] = itemCo[3]
 		end
 	end
 end
 
-function var_0_0.getWeekWalkRewardList(arg_9_0, arg_9_1)
-	return arg_9_0._taskRewardList[arg_9_1]
+function WeekWalk_2Config:getWeekWalkRewardList(layerId)
+	return self._taskRewardList[layerId]
 end
 
-var_0_0.instance = var_0_0.New()
+WeekWalk_2Config.instance = WeekWalk_2Config.New()
 
-return var_0_0
+return WeekWalk_2Config

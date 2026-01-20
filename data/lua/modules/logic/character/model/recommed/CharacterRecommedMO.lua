@@ -1,327 +1,338 @@
-﻿module("modules.logic.character.model.recommed.CharacterRecommedMO", package.seeall)
+﻿-- chunkname: @modules/logic/character/model/recommed/CharacterRecommedMO.lua
 
-local var_0_0 = pureTable("CharacterRecommedMO")
+module("modules.logic.character.model.recommed.CharacterRecommedMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1.id
-	arg_1_0.heroId = arg_1_1.id
-	arg_1_0.co = arg_1_1
-	arg_1_0.teamRec = GameUtil.splitString2(arg_1_1.teamRec, true, "|", "#")
-	arg_1_0.equipRec = string.splitToNumber(arg_1_1.equipRec, "|")
-	arg_1_0.lvRec = GameUtil.splitString2(arg_1_1.lvRec, true, "|", "#")
-	arg_1_0.resonanceRec = string.splitToNumber(arg_1_1.resonanceRec, "|")
+local CharacterRecommedMO = pureTable("CharacterRecommedMO")
+
+function CharacterRecommedMO:init(co)
+	self.id = co.id
+	self.heroId = co.id
+	self.co = co
+	self.teamRec = GameUtil.splitString2(co.teamRec, true, "|", "#")
+	self.equipRec = string.splitToNumber(co.equipRec, "|")
+	self.lvRec = GameUtil.splitString2(co.lvRec, true, "|", "#")
+	self.resonanceRec = string.splitToNumber(co.resonanceRec, "|")
 end
 
-function var_0_0.getHeroMo(arg_2_0)
-	return (HeroModel.instance:getByHeroId(arg_2_0.heroId))
+function CharacterRecommedMO:getHeroMo()
+	local heroMo = HeroModel.instance:getByHeroId(self.heroId)
+
+	return heroMo
 end
 
-function var_0_0.getHeroConfig(arg_3_0)
-	return HeroConfig.instance:getHeroCO(arg_3_0.heroId)
+function CharacterRecommedMO:getHeroConfig()
+	return HeroConfig.instance:getHeroCO(self.heroId)
 end
 
-function var_0_0.getHeroSkinConfig(arg_4_0)
-	local var_4_0 = arg_4_0:getHeroMo()
-	local var_4_1 = arg_4_0:getHeroConfig()
-	local var_4_2 = var_4_0 and var_4_0.skin or var_4_1.skinId
+function CharacterRecommedMO:getHeroSkinConfig()
+	local heroMo = self:getHeroMo()
+	local config = self:getHeroConfig()
+	local skin = heroMo and heroMo.skin or config.skinId
 
-	return SkinConfig.instance:getSkinCo(var_4_2)
+	return SkinConfig.instance:getSkinCo(skin)
 end
 
-function var_0_0.isOwnHero(arg_5_0)
-	local var_5_0 = arg_5_0:getHeroMo()
+function CharacterRecommedMO:isOwnHero()
+	local heroMo = self:getHeroMo()
 
-	if not var_5_0 then
+	if not heroMo then
 		return
 	end
 
-	return var_5_0:isOwnHero()
+	return heroMo:isOwnHero()
 end
 
-function var_0_0.getHeroLevel(arg_6_0)
-	local var_6_0 = arg_6_0:getHeroMo()
+function CharacterRecommedMO:getHeroLevel()
+	local heroMo = self:getHeroMo()
 
-	if var_6_0 then
-		return var_6_0.level
+	if heroMo then
+		return heroMo.level
 	end
 
-	return (CharacterModel.instance:getMaxLevel(arg_6_0.heroId))
+	local maxLevel = CharacterModel.instance:getMaxLevel(self.heroId)
+
+	return maxLevel
 end
 
-function var_0_0.getHeroRank(arg_7_0)
-	local var_7_0 = arg_7_0:getHeroMo()
+function CharacterRecommedMO:getHeroRank()
+	local heroMo = self:getHeroMo()
 
-	if var_7_0 then
-		return var_7_0.rank
+	if heroMo then
+		return heroMo.rank
 	end
 
-	return (CharacterModel.instance:getMaxRank(arg_7_0.heroId))
+	local maxLevel = CharacterModel.instance:getMaxRank(self.heroId)
+
+	return maxLevel
 end
 
-function var_0_0.isFavor(arg_8_0)
-	local var_8_0 = arg_8_0:getHeroMo()
+function CharacterRecommedMO:isFavor()
+	local heroMo = self:getHeroMo()
 
-	if var_8_0 then
-		return var_8_0.isFavor
+	if heroMo then
+		return heroMo.isFavor
 	end
 end
 
-function var_0_0.getExSkillLevel(arg_9_0)
-	local var_9_0 = arg_9_0:getHeroMo()
+function CharacterRecommedMO:getExSkillLevel()
+	local heroMo = self:getHeroMo()
 
-	if var_9_0 then
-		return var_9_0.exSkillLevel
+	if heroMo then
+		return heroMo.exSkillLevel
 	end
 
-	return (CharacterModel.instance:getMaxexskill(arg_9_0.heroId))
+	local exSkillLevel = CharacterModel.instance:getMaxexskill(self.heroId)
+
+	return exSkillLevel
 end
 
-function var_0_0.getTalentLevel(arg_10_0)
-	local var_10_0 = arg_10_0:getHeroMo()
+function CharacterRecommedMO:getTalentLevel()
+	local heroMo = self:getHeroMo()
 
-	if var_10_0 then
-		return var_10_0.talent
+	if heroMo then
+		return heroMo.talent
 	end
 
-	return #SkillConfig.instance:getherotalentsCo(arg_10_0.heroId)
+	local talentCo = SkillConfig.instance:getherotalentsCo(self.heroId)
+
+	return #talentCo
 end
 
-function var_0_0.isShowTeam(arg_11_0)
-	return arg_11_0.co.teamDisplay == 1 and not string.nilorempty(arg_11_0.co.teamRec)
+function CharacterRecommedMO:isShowTeam()
+	return self.co.teamDisplay == 1 and not string.nilorempty(self.co.teamRec)
 end
 
-function var_0_0.isShowEquip(arg_12_0)
-	return arg_12_0.co.equipDisplay == 1 and not string.nilorempty(arg_12_0.co.equipRec)
+function CharacterRecommedMO:isShowEquip()
+	return self.co.equipDisplay == 1 and not string.nilorempty(self.co.equipRec)
 end
 
-function var_0_0.getNextDevelopMaterial(arg_13_0)
-	local var_13_0 = arg_13_0:getHeroMo()
-	local var_13_1 = arg_13_0:getHeroConfig()
+function CharacterRecommedMO:getNextDevelopMaterial()
+	local heroMo = self:getHeroMo()
+	local heroConfig = self:getHeroConfig()
 
-	if not arg_13_0._developGoalsMOList then
-		arg_13_0._developGoalsMOList = {}
+	if not self._developGoalsMOList then
+		self._developGoalsMOList = {}
 	end
 
-	local var_13_2 = var_13_0 and var_13_0.rank or 1
-	local var_13_3 = var_13_0 and var_13_0.level or 1
-	local var_13_4, var_13_5 = HeroConfig.instance:getShowLevel(var_13_3)
-	local var_13_6 = arg_13_0:_getRecommedLvRec(var_13_4, var_13_5)
+	local curRank = heroMo and heroMo.rank or 1
+	local curLv = heroMo and heroMo.level or 1
+	local showLevel, showRank = HeroConfig.instance:getShowLevel(curLv)
+	local lvRec = self:_getRecommedLvRec(showLevel, showRank)
 
-	if var_13_6 then
-		local var_13_7 = var_13_6[1]
-		local var_13_8 = {}
+	if lvRec then
+		local rank = lvRec[1]
+		local materialList = {}
 
-		for iter_13_0 = var_13_2 + 1, var_13_7 do
-			local var_13_9 = SkillConfig.instance:getherorankCO(arg_13_0.heroId, iter_13_0)
+		for i = curRank + 1, rank do
+			local rankCo = SkillConfig.instance:getherorankCO(self.heroId, i)
 
-			if var_13_9 and not string.nilorempty(var_13_9.consume) then
-				arg_13_0:_addMaterials(var_13_9.consume, var_13_8)
+			if rankCo and not string.nilorempty(rankCo.consume) then
+				self:_addMaterials(rankCo.consume, materialList)
 			end
 		end
 
-		local var_13_10 = arg_13_0:_getRealLevel(var_13_7, var_13_6[2])
-		local var_13_11 = arg_13_0:_getIgnoreLevel(var_13_0.heroId)
+		local realLevel = self:_getRealLevel(rank, lvRec[2])
+		local ignoreLevels = self:_getIgnoreLevel(self.heroId)
 
-		for iter_13_1 = var_13_3 + 1, var_13_10 do
-			if not LuaUtil.tableContains(var_13_11, iter_13_1) then
-				local var_13_12 = SkillConfig.instance:getcosumeCO(iter_13_1, var_13_1.rare)
+		for level = curLv + 1, realLevel do
+			if not LuaUtil.tableContains(ignoreLevels, level) then
+				local cosumeConfig = SkillConfig.instance:getcosumeCO(level, heroConfig.rare)
 
-				arg_13_0:_addMaterials(var_13_12.cosume, var_13_8)
+				self:_addMaterials(cosumeConfig.cosume, materialList)
 			end
 		end
 
-		local var_13_13 = arg_13_0:_convertMaterial(var_13_8)
-		local var_13_14 = CharacterRecommedEnum.DevelopGoalsType.RankLevel
-		local var_13_15 = arg_13_0._developGoalsMOList[var_13_14]
+		local _items = self:_convertMaterial(materialList)
+		local type = CharacterRecommedEnum.DevelopGoalsType.RankLevel
+		local mo = self._developGoalsMOList[type]
 
-		if not var_13_15 then
-			var_13_15 = CharacterDevelopGoalsMO.New()
+		if not mo then
+			mo = CharacterDevelopGoalsMO.New()
 
-			var_13_15:init(var_13_14, arg_13_0.heroId)
+			mo:init(type, self.heroId)
 
-			arg_13_0._developGoalsMOList[var_13_14] = var_13_15
+			self._developGoalsMOList[type] = mo
 		end
 
-		var_13_15:setItemList(var_13_13)
+		mo:setItemList(_items)
 
-		local var_13_16
-		local var_13_17
+		local levelTxt, levelIcon
 
-		if var_13_7 > 1 then
-			local var_13_18 = luaLang("character_develop_goals_title_1")
+		if rank > 1 then
+			local txtFormat = luaLang("character_develop_goals_title_1")
 
-			var_13_17 = "character_recommend_targeticon" .. 3 + var_13_7
-
-			local var_13_19 = GameUtil.getRomanNums(var_13_7 - 1)
-
-			var_13_16 = GameUtil.getSubPlaceholderLuaLangTwoParam(var_13_18, var_13_19, var_13_6[2])
+			levelIcon = "character_recommend_targeticon" .. 3 + rank
+			rank = GameUtil.getRomanNums(rank - 1)
+			levelTxt = GameUtil.getSubPlaceholderLuaLangTwoParam(txtFormat, rank, lvRec[2])
 		else
-			local var_13_20 = luaLang("character_develop_goals_title_2")
+			local txtFormat = luaLang("character_develop_goals_title_2")
 
-			var_13_16 = GameUtil.getSubPlaceholderLuaLangOneParam(var_13_20, var_13_6[2])
+			levelTxt = GameUtil.getSubPlaceholderLuaLangOneParam(txtFormat, lvRec[2])
 		end
 
-		var_13_15:setTitleTxtAndIcon(var_13_16, var_13_17)
+		mo:setTitleTxtAndIcon(levelTxt, levelIcon)
 	else
-		arg_13_0._developGoalsMOList[CharacterRecommedEnum.DevelopGoalsType.RankLevel] = nil
+		self._developGoalsMOList[CharacterRecommedEnum.DevelopGoalsType.RankLevel] = nil
 	end
 
-	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Talent) and var_13_2 >= CharacterEnum.TalentRank then
-		local var_13_21 = arg_13_0:getTalentLevel()
-		local var_13_22 = arg_13_0:_getRecommedTalentLvRec(var_13_21)
+	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Talent) and curRank >= CharacterEnum.TalentRank then
+		local talent = self:getTalentLevel()
+		local talentLvRec = self:_getRecommedTalentLvRec(talent)
 
-		if var_13_22 then
-			local var_13_23 = {}
+		if talentLvRec then
+			local materialList = {}
 
-			for iter_13_2 = var_13_21 + 1, var_13_22 do
-				local var_13_24 = SkillConfig.instance:gettalentCO(arg_13_0.heroId, iter_13_2)
+			for i = talent + 1, talentLvRec do
+				local co = SkillConfig.instance:gettalentCO(self.heroId, i)
 
-				if var_13_24 then
-					arg_13_0:_addMaterials(var_13_24.consume, var_13_23)
+				if co then
+					self:_addMaterials(co.consume, materialList)
 				end
 			end
 
-			local var_13_25 = arg_13_0:_convertMaterial(var_13_23)
-			local var_13_26 = CharacterRecommedEnum.DevelopGoalsType.TalentLevel
-			local var_13_27 = arg_13_0._developGoalsMOList[var_13_26]
+			local _items = self:_convertMaterial(materialList)
+			local type = CharacterRecommedEnum.DevelopGoalsType.TalentLevel
+			local mo = self._developGoalsMOList[type]
 
-			if not var_13_27 then
-				var_13_27 = CharacterDevelopGoalsMO.New()
+			if not mo then
+				mo = CharacterDevelopGoalsMO.New()
 
-				var_13_27:init(var_13_26, arg_13_0.heroId)
+				mo:init(type, self.heroId)
 
-				arg_13_0._developGoalsMOList[var_13_26] = var_13_27
+				self._developGoalsMOList[type] = mo
 			end
 
-			var_13_27:setItemList(var_13_25)
+			mo:setItemList(_items)
 
-			local var_13_28 = luaLang("character_develop_goals_title_3")
-			local var_13_29 = GameUtil.getSubPlaceholderLuaLangOneParam(var_13_28, var_13_22)
-			local var_13_30 = "character_recommend_targeticon3"
+			local txtFormat = luaLang("character_develop_goals_title_3")
+			local levelTxt = GameUtil.getSubPlaceholderLuaLangOneParam(txtFormat, talentLvRec)
+			local levelIcon = "character_recommend_targeticon3"
 
-			var_13_27:setTitleTxtAndIcon(var_13_29, var_13_30)
+			mo:setTitleTxtAndIcon(levelTxt, levelIcon)
 		else
-			arg_13_0._developGoalsMOList[CharacterRecommedEnum.DevelopGoalsType.TalentLevel] = nil
+			self._developGoalsMOList[CharacterRecommedEnum.DevelopGoalsType.TalentLevel] = nil
 		end
 	end
 
-	return arg_13_0._developGoalsMOList
+	return self._developGoalsMOList
 end
 
-function var_0_0.getDevelopGoalsMO(arg_14_0, arg_14_1)
-	return arg_14_0:getNextDevelopMaterial()[arg_14_1]
+function CharacterRecommedMO:getDevelopGoalsMO(type)
+	local list = self:getNextDevelopMaterial()
+
+	return list[type]
 end
 
-function var_0_0._convertMaterial(arg_15_0, arg_15_1)
-	local var_15_0 = {}
+function CharacterRecommedMO:_convertMaterial(materialList)
+	local list = {}
 
-	if not arg_15_1 then
+	if not materialList then
 		return
 	end
 
-	for iter_15_0, iter_15_1 in pairs(arg_15_1) do
-		for iter_15_2, iter_15_3 in pairs(iter_15_1) do
-			table.insert(var_15_0, {
-				materilType = iter_15_0,
-				materilId = iter_15_2,
-				quantity = iter_15_3
+	for materilType, v in pairs(materialList) do
+		for materilId, quantity in pairs(v) do
+			table.insert(list, {
+				materilType = materilType,
+				materilId = materilId,
+				quantity = quantity
 			})
 		end
 	end
 
-	return var_15_0
+	return list
 end
 
-function var_0_0._getRealLevel(arg_16_0, arg_16_1, arg_16_2)
-	local var_16_0 = SkillConfig.instance:getherorankCO(arg_16_0.heroId, arg_16_1)
+function CharacterRecommedMO:_getRealLevel(rank, level)
+	local rankCo = SkillConfig.instance:getherorankCO(self.heroId, rank)
 
-	if not var_16_0 then
-		return CharacterModel.instance:getMaxLevel(arg_16_0.heroId)
+	if not rankCo then
+		return CharacterModel.instance:getMaxLevel(self.heroId)
 	end
 
-	local var_16_1 = string.split(var_16_0.requirement, "|")
+	local demands = string.split(rankCo.requirement, "|")
 
-	for iter_16_0, iter_16_1 in pairs(var_16_1) do
-		local var_16_2 = string.splitToNumber(iter_16_1, "#")
+	for _, v in pairs(demands) do
+		local demand = string.splitToNumber(v, "#")
 
-		if var_16_2[1] == 1 then
-			return var_16_2[2] + arg_16_2, var_16_2[2]
+		if demand[1] == 1 then
+			return demand[2] + level, demand[2]
 		end
 	end
 
-	return arg_16_2
+	return level
 end
 
-function var_0_0._getIgnoreLevel(arg_17_0, arg_17_1)
-	if not arg_17_0._ignoreLevels then
-		arg_17_0._ignoreLevels = {}
+function CharacterRecommedMO:_getIgnoreLevel(heroId)
+	if not self._ignoreLevels then
+		self._ignoreLevels = {}
 	end
 
-	local var_17_0 = arg_17_0._ignoreLevels[arg_17_1]
+	local ignoreLevel = self._ignoreLevels[heroId]
 
-	if not var_17_0 then
-		var_17_0 = {}
+	if not ignoreLevel then
+		ignoreLevel = {}
 
-		local var_17_1 = SkillConfig.instance:getheroranksCO(arg_17_0.heroId)
+		local rankCos = SkillConfig.instance:getheroranksCO(self.heroId)
 
-		for iter_17_0, iter_17_1 in pairs(var_17_1) do
-			local var_17_2 = string.split(iter_17_1.requirement, "|")
+		for _, co in pairs(rankCos) do
+			local demands = string.split(co.requirement, "|")
 
-			for iter_17_2, iter_17_3 in pairs(var_17_2) do
-				local var_17_3 = string.splitToNumber(iter_17_3, "#")
+			for _, v in pairs(demands) do
+				local demand = string.splitToNumber(v, "#")
 
-				if var_17_3[1] == 1 then
-					table.insert(var_17_0, var_17_3[2] + 1)
+				if demand[1] == 1 then
+					table.insert(ignoreLevel, demand[2] + 1)
 				end
 			end
 		end
 
-		arg_17_0._ignoreLevels[arg_17_1] = var_17_0
+		self._ignoreLevels[heroId] = ignoreLevel
 	end
 
-	return var_17_0
+	return ignoreLevel
 end
 
-function var_0_0._addMaterials(arg_18_0, arg_18_1, arg_18_2)
-	if string.nilorempty(arg_18_1) then
+function CharacterRecommedMO:_addMaterials(consume, materialList)
+	if string.nilorempty(consume) then
 		return
 	end
 
-	local var_18_0 = GameUtil.splitString2(arg_18_1, true, "|", "#")
+	local consumeList = GameUtil.splitString2(consume, true, "|", "#")
 
-	for iter_18_0, iter_18_1 in ipairs(var_18_0) do
-		local var_18_1 = arg_18_2[iter_18_1[1]]
+	for _, v in ipairs(consumeList) do
+		local list = materialList[v[1]]
 
-		if not arg_18_2[iter_18_1[1]] then
-			var_18_1 = {}
+		if not materialList[v[1]] then
+			list = {}
 		end
 
-		local var_18_2 = var_18_1[iter_18_1[2]]
+		local count = list[v[2]]
 
-		if var_18_2 then
-			var_18_1[iter_18_1[2]] = var_18_2 + iter_18_1[3]
+		if count then
+			list[v[2]] = count + v[3]
 		else
-			var_18_1[iter_18_1[2]] = iter_18_1[3]
+			list[v[2]] = v[3]
 		end
 
-		arg_18_2[iter_18_1[1]] = var_18_1
+		materialList[v[1]] = list
 	end
 end
 
-function var_0_0._getRecommedLvRec(arg_19_0, arg_19_1, arg_19_2)
-	for iter_19_0, iter_19_1 in ipairs(arg_19_0.lvRec) do
-		if iter_19_1[1] == arg_19_2 and arg_19_1 < iter_19_1[2] or arg_19_2 < iter_19_1[1] then
-			return iter_19_1
-		end
-	end
-end
-
-function var_0_0._getRecommedTalentLvRec(arg_20_0, arg_20_1)
-	for iter_20_0, iter_20_1 in ipairs(arg_20_0.resonanceRec) do
-		if arg_20_1 < iter_20_1 then
-			return iter_20_1
+function CharacterRecommedMO:_getRecommedLvRec(level, rank)
+	for _, v in ipairs(self.lvRec) do
+		if v[1] == rank and level < v[2] or rank < v[1] then
+			return v
 		end
 	end
 end
 
-return var_0_0
+function CharacterRecommedMO:_getRecommedTalentLvRec(talent)
+	for _, v in ipairs(self.resonanceRec) do
+		if talent < v then
+			return v
+		end
+	end
+end
+
+return CharacterRecommedMO

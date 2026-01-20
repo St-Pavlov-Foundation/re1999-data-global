@@ -1,11 +1,13 @@
-﻿module("modules.logic.herogroup.controller.HeroGroupEnum", package.seeall)
+﻿-- chunkname: @modules/logic/herogroup/controller/HeroGroupEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.herogroup.controller.HeroGroupEnum", package.seeall)
 
-var_0_0.GroupType = {
+local HeroGroupEnum = _M
+
+HeroGroupEnum.GroupType = {
 	WeekWalk_2 = 1
 }
-var_0_0.saveOldVersion = 1
-var_0_0.saveTrialVersion = 2
+HeroGroupEnum.saveOldVersion = 1
+HeroGroupEnum.saveTrialVersion = 2
 
-return var_0_0
+return HeroGroupEnum

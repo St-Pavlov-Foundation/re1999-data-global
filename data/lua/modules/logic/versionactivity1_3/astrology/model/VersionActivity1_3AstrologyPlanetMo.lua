@@ -1,70 +1,75 @@
-﻿module("modules.logic.versionactivity1_3.astrology.model.VersionActivity1_3AstrologyPlanetMo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/astrology/model/VersionActivity1_3AstrologyPlanetMo.lua
 
-local var_0_0 = pureTable("VersionActivity1_3AstrologyPlanetMo")
+module("modules.logic.versionactivity1_3.astrology.model.VersionActivity1_3AstrologyPlanetMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1.id
-	arg_1_0.angle = arg_1_1.angle
-	arg_1_0.previewAngle = arg_1_1.angle
-	arg_1_0.num = arg_1_1.num
+local VersionActivity1_3AstrologyPlanetMo = pureTable("VersionActivity1_3AstrologyPlanetMo")
 
-	local var_1_0 = VersionActivity1_3AstrologyEnum.PlanetItem[arg_1_0.id]
+function VersionActivity1_3AstrologyPlanetMo:init(info)
+	self.id = info.id
+	self.angle = info.angle
+	self.previewAngle = info.angle
+	self.num = info.num
 
-	arg_1_0.config = ItemModel.instance:getItemConfig(MaterialEnum.MaterialType.Item, var_1_0)
+	local itemId = VersionActivity1_3AstrologyEnum.PlanetItem[self.id]
+
+	self.config = ItemModel.instance:getItemConfig(MaterialEnum.MaterialType.Item, itemId)
 end
 
-function var_0_0.updatePreviewAngle(arg_2_0, arg_2_1)
-	arg_2_0.deltaAngle = arg_2_1
-	arg_2_0.previewAngle = arg_2_0.previewAngle + arg_2_1
+function VersionActivity1_3AstrologyPlanetMo:updatePreviewAngle(angle)
+	self.deltaAngle = angle
+	self.previewAngle = self.previewAngle + angle
 
-	local var_2_0 = 360
+	local limitDegree = 360
 
-	if var_2_0 <= arg_2_0.previewAngle then
-		arg_2_0.previewAngle = arg_2_0.previewAngle - var_2_0
-	elseif arg_2_0.previewAngle <= -var_2_0 then
-		arg_2_0.previewAngle = arg_2_0.previewAngle + var_2_0
+	if limitDegree <= self.previewAngle then
+		self.previewAngle = self.previewAngle - limitDegree
+	elseif self.previewAngle <= -limitDegree then
+		self.previewAngle = self.previewAngle + limitDegree
 	end
 end
 
-function var_0_0.getQuadrant(arg_3_0)
-	local var_3_0 = arg_3_0.previewAngle % 360
-	local var_3_1 = 45
-	local var_3_2 = math.ceil(var_3_0 / var_3_1)
+function VersionActivity1_3AstrologyPlanetMo:getQuadrant()
+	local angle = self.previewAngle % 360
+	local quadrantAngle = 45
+	local q = math.ceil(angle / quadrantAngle)
 
-	if var_3_2 == 0 then
-		var_3_2 = 1
+	if q == 0 then
+		q = 1
 	end
 
-	return 9 - var_3_2
+	return 9 - q
 end
 
-function var_0_0.getItemName(arg_4_0)
-	return arg_4_0.config.name
+function VersionActivity1_3AstrologyPlanetMo:getItemName()
+	return self.config.name
 end
 
-function var_0_0.isFront(arg_5_0, arg_5_1)
-	local var_5_0 = (arg_5_1 or arg_5_0.previewAngle) % 360
+function VersionActivity1_3AstrologyPlanetMo:isFront(value)
+	local angle = (value or self.previewAngle) % 360
 
-	return var_5_0 >= 0 and var_5_0 <= 180
+	return angle >= 0 and angle <= 180
 end
 
-function var_0_0.getRemainNum(arg_6_0)
-	return arg_6_0.num - arg_6_0:getCostNum()
+function VersionActivity1_3AstrologyPlanetMo:getRemainNum()
+	return self.num - self:getCostNum()
 end
 
-function var_0_0.getCostNum(arg_7_0)
-	return arg_7_0:minDeltaAngle() / VersionActivity1_3AstrologyEnum.Angle
+function VersionActivity1_3AstrologyPlanetMo:getCostNum()
+	local angle = self:minDeltaAngle()
+
+	return angle / VersionActivity1_3AstrologyEnum.Angle
 end
 
-function var_0_0.minDeltaAngle(arg_8_0)
-	local var_8_0 = math.abs(arg_8_0.previewAngle % 360 - arg_8_0.angle % 360)
-	local var_8_1 = 360 - var_8_0
+function VersionActivity1_3AstrologyPlanetMo:minDeltaAngle()
+	local angle1 = math.abs(self.previewAngle % 360 - self.angle % 360)
+	local angle2 = 360 - angle1
+	local angle = math.min(angle1, angle2)
 
-	return (math.min(var_8_0, var_8_1))
+	return angle
 end
 
-function var_0_0.hasAdjust(arg_9_0)
-	return arg_9_0.angle % 360 ~= arg_9_0.previewAngle % 360
+function VersionActivity1_3AstrologyPlanetMo:hasAdjust()
+	return self.angle % 360 ~= self.previewAngle % 360
 end
 
-return var_0_0
+return VersionActivity1_3AstrologyPlanetMo

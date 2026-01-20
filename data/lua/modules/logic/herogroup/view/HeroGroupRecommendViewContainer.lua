@@ -1,53 +1,56 @@
-﻿module("modules.logic.herogroup.view.HeroGroupRecommendViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/herogroup/view/HeroGroupRecommendViewContainer.lua
 
-local var_0_0 = class("HeroGroupRecommendViewContainer", BaseViewContainer)
+module("modules.logic.herogroup.view.HeroGroupRecommendViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = ListScrollParam.New()
+local HeroGroupRecommendViewContainer = class("HeroGroupRecommendViewContainer", BaseViewContainer)
 
-	var_1_0.scrollGOPath = "#scroll_character"
-	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_0.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_0.cellClass = HeroGroupRecommendCharacterItem
-	var_1_0.scrollDir = ScrollEnum.ScrollDirV
-	var_1_0.lineCount = 1
-	var_1_0.cellWidth = 482
-	var_1_0.cellHeight = 172
-	var_1_0.cellSpaceH = 0
-	var_1_0.cellSpaceV = 7.19
-	var_1_0.startSpace = 0
+function HeroGroupRecommendViewContainer:buildViews()
+	local characterScrollParam = ListScrollParam.New()
 
-	local var_1_1 = ListScrollParam.New()
+	characterScrollParam.scrollGOPath = "#scroll_character"
+	characterScrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	characterScrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	characterScrollParam.cellClass = HeroGroupRecommendCharacterItem
+	characterScrollParam.scrollDir = ScrollEnum.ScrollDirV
+	characterScrollParam.lineCount = 1
+	characterScrollParam.cellWidth = 482
+	characterScrollParam.cellHeight = 172
+	characterScrollParam.cellSpaceH = 0
+	characterScrollParam.cellSpaceV = 7.19
+	characterScrollParam.startSpace = 0
 
-	var_1_1.scrollGOPath = "#scroll_group"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[2]
-	var_1_1.cellClass = HeroGroupRecommendGroupItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 1
-	var_1_1.cellWidth = 1362
-	var_1_1.cellHeight = 172
-	var_1_1.cellSpaceH = 0
-	var_1_1.cellSpaceV = 7.19
-	var_1_1.startSpace = 0
+	local groupScrollParam = ListScrollParam.New()
 
-	local var_1_2 = {}
-	local var_1_3
+	groupScrollParam.scrollGOPath = "#scroll_group"
+	groupScrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	groupScrollParam.prefabUrl = self._viewSetting.otherRes[2]
+	groupScrollParam.cellClass = HeroGroupRecommendGroupItem
+	groupScrollParam.scrollDir = ScrollEnum.ScrollDirV
+	groupScrollParam.lineCount = 1
+	groupScrollParam.cellWidth = 1362
+	groupScrollParam.cellHeight = 172
+	groupScrollParam.cellSpaceH = 0
+	groupScrollParam.cellSpaceV = 7.19
+	groupScrollParam.startSpace = 0
 
-	for iter_1_0 = 1, 5 do
-		var_1_2[iter_1_0] = (iter_1_0 - 1) * 0.06
+	local AnimationDelayTimes = {}
+	local delayTime
+
+	for i = 1, 5 do
+		delayTime = (i - 1) * 0.06
+		AnimationDelayTimes[i] = delayTime
 	end
 
 	return {
 		HeroGroupRecommendView.New(),
-		LuaListScrollViewWithAnimator.New(HeroGroupRecommendCharacterListModel.instance, var_1_0, var_1_2),
-		LuaListScrollViewWithAnimator.New(HeroGroupRecommendGroupListModel.instance, var_1_1, var_1_2),
+		LuaListScrollViewWithAnimator.New(HeroGroupRecommendCharacterListModel.instance, characterScrollParam, AnimationDelayTimes),
+		LuaListScrollViewWithAnimator.New(HeroGroupRecommendGroupListModel.instance, groupScrollParam, AnimationDelayTimes),
 		TabViewGroup.New(1, "#go_btns")
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
+function HeroGroupRecommendViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -58,4 +61,4 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	end
 end
 
-return var_0_0
+return HeroGroupRecommendViewContainer

@@ -1,238 +1,247 @@
-﻿module("modules.logic.fight.view.FightAiJiAoQteSelectView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightAiJiAoQteSelectView.lua
 
-local var_0_0 = class("FightAiJiAoQteSelectView", FightBaseView)
+module("modules.logic.fight.view.FightAiJiAoQteSelectView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.root = gohelper.findChild(arg_1_0.viewGO, "root")
-	arg_1_0.itemRoot = gohelper.findChild(arg_1_0.viewGO, "root/selectTarget/#scroll_enemy/viewport/content")
-	arg_1_0.objItem = gohelper.findChild(arg_1_0.viewGO, "root/selectTarget/#scroll_enemy/viewport/content/go_enemyItem")
-	arg_1_0.roleImg = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/BG/simage_role/loop/simage_role")
-	arg_1_0.confirmClick = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "root/#btn_confirm/clickarea")
-	arg_1_0.exSkillIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/selectTarget/lv4/imgIcon")
-	arg_1_0.txtWave = gohelper.findChildText(arg_1_0.viewGO, "root/topLeftContent/imgRound/txtWave")
-	arg_1_0.txtRound = gohelper.findChildText(arg_1_0.viewGO, "root/topLeftContent/imgRound/txtRound")
-	arg_1_0.btnInfo = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "root/topLeftContent/enemyinfo/#btn_enemyinfo/clickarea")
-	arg_1_0.go_skillTips = gohelper.findChild(arg_1_0.viewGO, "root/selectTarget/#go_skilltip")
-	arg_1_0.skillNameText = gohelper.findChildText(arg_1_0.viewGO, "root/selectTarget/#go_skilltip/skillbg/container/#txt_skillname")
-	arg_1_0.skillDescText = gohelper.findChildText(arg_1_0.viewGO, "root/selectTarget/#go_skilltip/skillbg/#txt_skilldesc")
-	arg_1_0.btnSkillTips = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "root/selectTarget/btn_skillClick")
-	arg_1_0.skillTipsMaskClick = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "tipsMask")
+local FightAiJiAoQteSelectView = class("FightAiJiAoQteSelectView", FightBaseView)
+
+function FightAiJiAoQteSelectView:onInitView()
+	self.root = gohelper.findChild(self.viewGO, "root")
+	self.itemRoot = gohelper.findChild(self.viewGO, "root/selectTarget/#scroll_enemy/viewport/content")
+	self.objItem = gohelper.findChild(self.viewGO, "root/selectTarget/#scroll_enemy/viewport/content/go_enemyItem")
+	self.roleImg = gohelper.findChildSingleImage(self.viewGO, "root/BG/simage_role/loop/simage_role")
+	self.confirmClick = gohelper.findChildClickWithDefaultAudio(self.viewGO, "root/#btn_confirm/clickarea")
+	self.exSkillIcon = gohelper.findChildSingleImage(self.viewGO, "root/selectTarget/lv4/imgIcon")
+	self.txtWave = gohelper.findChildText(self.viewGO, "root/topLeftContent/imgRound/txtWave")
+	self.txtRound = gohelper.findChildText(self.viewGO, "root/topLeftContent/imgRound/txtRound")
+	self.btnInfo = gohelper.findChildClickWithDefaultAudio(self.viewGO, "root/topLeftContent/enemyinfo/#btn_enemyinfo/clickarea")
+	self.go_skillTips = gohelper.findChild(self.viewGO, "root/selectTarget/#go_skilltip")
+	self.skillNameText = gohelper.findChildText(self.viewGO, "root/selectTarget/#go_skilltip/skillbg/container/#txt_skillname")
+	self.skillDescText = gohelper.findChildText(self.viewGO, "root/selectTarget/#go_skilltip/skillbg/#txt_skilldesc")
+	self.btnSkillTips = gohelper.findChildClickWithDefaultAudio(self.viewGO, "root/selectTarget/btn_skillClick")
+	self.skillTipsMaskClick = gohelper.findChildClickWithDefaultAudio(self.viewGO, "tipsMask")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:com_registClick(arg_2_0.confirmClick, arg_2_0.onConfirmClick)
-	arg_2_0:com_registClick(arg_2_0.btnInfo, arg_2_0.onBtnInfoClick)
-	arg_2_0:com_registEvent(ViewMgr.instance, ViewEvent.OnOpenView, arg_2_0.onOpenView)
-	arg_2_0:com_registEvent(ViewMgr.instance, ViewEvent.DestroyViewFinish, arg_2_0.onDestroyViewFinish)
-	arg_2_0:com_registClick(arg_2_0.btnSkillTips, arg_2_0.onBtnSkillTipsClick)
-	arg_2_0:com_registClick(arg_2_0.skillTipsMaskClick, arg_2_0.onSkillTipsMaskClick)
+function FightAiJiAoQteSelectView:addEvents()
+	self:com_registClick(self.confirmClick, self.onConfirmClick)
+	self:com_registClick(self.btnInfo, self.onBtnInfoClick)
+	self:com_registEvent(ViewMgr.instance, ViewEvent.OnOpenView, self.onOpenView)
+	self:com_registEvent(ViewMgr.instance, ViewEvent.DestroyViewFinish, self.onDestroyViewFinish)
+	self:com_registClick(self.btnSkillTips, self.onBtnSkillTipsClick)
+	self:com_registClick(self.skillTipsMaskClick, self.onSkillTipsMaskClick)
 end
 
-function var_0_0.onBtnSkillTipsClick(arg_3_0)
-	gohelper.setActive(arg_3_0.go_skillTips, true)
-	gohelper.setActive(arg_3_0.skillTipsMaskClick.gameObject, true)
+function FightAiJiAoQteSelectView:onBtnSkillTipsClick()
+	gohelper.setActive(self.go_skillTips, true)
+	gohelper.setActive(self.skillTipsMaskClick.gameObject, true)
 end
 
-function var_0_0.onSkillTipsMaskClick(arg_4_0)
-	gohelper.setActive(arg_4_0.go_skillTips, false)
-	gohelper.setActive(arg_4_0.skillTipsMaskClick.gameObject, false)
+function FightAiJiAoQteSelectView:onSkillTipsMaskClick()
+	gohelper.setActive(self.go_skillTips, false)
+	gohelper.setActive(self.skillTipsMaskClick.gameObject, false)
 end
 
-function var_0_0.onOpenView(arg_5_0, arg_5_1)
-	if arg_5_1 == ViewName.FightFocusView then
-		gohelper.setActive(arg_5_0.viewGO, false)
+function FightAiJiAoQteSelectView:onOpenView(viewName)
+	if viewName == ViewName.FightFocusView then
+		gohelper.setActive(self.viewGO, false)
 	end
 end
 
-function var_0_0.onDestroyViewFinish(arg_6_0, arg_6_1)
-	if arg_6_1 == ViewName.FightFocusView then
-		gohelper.setActive(arg_6_0.viewGO, true)
+function FightAiJiAoQteSelectView:onDestroyViewFinish(viewName)
+	if viewName == ViewName.FightFocusView then
+		gohelper.setActive(self.viewGO, true)
 	end
 end
 
-function var_0_0.onBtnInfoClick(arg_7_0)
+function FightAiJiAoQteSelectView:onBtnInfoClick()
 	FightViewContainer.openFightFocusView()
 end
 
-function var_0_0.onConfirmClick(arg_8_0)
-	if not arg_8_0.selectId then
+function FightAiJiAoQteSelectView:onConfirmClick()
+	if not self.selectId then
 		return
 	end
 
-	if arg_8_0.clicked then
+	if self.clicked then
 		return
 	end
 
-	arg_8_0.clicked = true
+	self.clicked = true
 
 	AudioMgr.instance:trigger(20305034)
 
-	local var_8_0 = arg_8_0:com_registFlowSequence()
+	local flow = self:com_registFlowSequence()
 
-	var_8_0:registWork(FightWorkPlayAnimator, arg_8_0.viewGO, "close")
-	var_8_0:registWork(FightWorkFunction, arg_8_0.afterCloseAni, arg_8_0)
-	var_8_0:start()
+	flow:registWork(FightWorkPlayAnimator, self.viewGO, "close")
+	flow:registWork(FightWorkFunction, self.afterCloseAni, self)
+	flow:start()
 end
 
-function var_0_0.afterCloseAni(arg_9_0)
+function FightAiJiAoQteSelectView:afterCloseAni()
 	FightDataHelper.tempMgr.aiJiAoSelectTargetView = nil
 
-	arg_9_0.callback(arg_9_0.handle, arg_9_0.selectId)
-	arg_9_0:closeThis()
+	self.callback(self.handle, self.selectId)
+	self:closeThis()
 end
 
-function var_0_0.onConstructor(arg_10_0)
+function FightAiJiAoQteSelectView:onConstructor()
 	return
 end
 
-function var_0_0._onBtnEsc(arg_11_0)
+function FightAiJiAoQteSelectView:_onBtnEsc()
 	return
 end
 
-function var_0_0.onOpen(arg_12_0)
+function FightAiJiAoQteSelectView:onOpen()
 	FightDataHelper.tempMgr.aiJiAoSelectTargetView = true
 	FightDataHelper.tempMgr.hideNameUIByTimeline = true
 
-	local var_12_0 = FightHelper.getAllEntitys()
+	local entityList = FightHelper.getAllEntitys()
 
-	for iter_12_0, iter_12_1 in ipairs(var_12_0) do
-		if iter_12_1.nameUI then
-			iter_12_1.nameUI:setActive(false)
+	for _, entity in ipairs(entityList) do
+		if entity.nameUI then
+			entity.nameUI:setActive(false)
 		end
 	end
 
 	FightController.instance:dispatchEvent(FightEvent.SetIsShowUI, false)
-	NavigateMgr.instance:addEscape(arg_12_0.viewContainer.viewName, arg_12_0._onBtnEsc, arg_12_0)
+	NavigateMgr.instance:addEscape(self.viewContainer.viewName, self._onBtnEsc, self)
 
-	arg_12_0.callback = arg_12_0.viewParam.callback
-	arg_12_0.handle = arg_12_0.viewParam.handle
+	self.callback = self.viewParam.callback
+	self.handle = self.viewParam.handle
 
-	local var_12_1 = arg_12_0.viewParam.fromId
-	local var_12_2 = FightDataHelper.entityMgr:getById(var_12_1)
-	local var_12_3 = arg_12_0.viewParam.skillId
-	local var_12_4 = arg_12_0.viewParam.targetLimit
+	local fromId = self.viewParam.fromId
+	local entityData = FightDataHelper.entityMgr:getById(fromId)
+	local skillId = self.viewParam.skillId
+	local targetLimit = self.viewParam.targetLimit
 
-	arg_12_0.itemList = {}
+	self.itemList = {}
 
-	for iter_12_2, iter_12_3 in ipairs(var_12_4) do
-		local var_12_5 = gohelper.cloneInPlace(arg_12_0.objItem)
+	for i, toId in ipairs(targetLimit) do
+		local obj = gohelper.cloneInPlace(self.objItem)
 
-		table.insert(arg_12_0.itemList, arg_12_0:com_openSubView(FightAiJiAoQteSelectItemView, var_12_5, nil, var_12_1, iter_12_3))
+		table.insert(self.itemList, self:com_openSubView(FightAiJiAoQteSelectItemView, obj, nil, fromId, toId))
 	end
 
-	arg_12_0.selectId = var_12_4[1]
+	self.selectId = targetLimit[1]
 
-	gohelper.setActive(arg_12_0.objItem, false)
+	gohelper.setActive(self.objItem, false)
 
-	local var_12_6 = lua_skill.configDict[var_12_2.exSkill]
+	local skillConfig = lua_skill.configDict[entityData.exSkill]
 
-	if var_12_6 then
-		local var_12_7 = ResUrl.getSkillIcon(var_12_6.icon)
+	if skillConfig then
+		local targetIconUrl = ResUrl.getSkillIcon(skillConfig.icon)
 
-		arg_12_0.exSkillIcon:LoadImage(var_12_7)
+		self.exSkillIcon:LoadImage(targetIconUrl)
 	end
 
-	local var_12_8 = FightModel.instance.maxWave
-	local var_12_9 = FightModel.instance:getCurWaveId()
-	local var_12_10 = math.min(var_12_9, var_12_8)
+	local maxWave = FightModel.instance.maxWave
+	local curWaveId = FightModel.instance:getCurWaveId()
 
-	arg_12_0.txtWave.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("fight_wave_lang"), var_12_10, var_12_8)
+	curWaveId = math.min(curWaveId, maxWave)
+	self.txtWave.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("fight_wave_lang"), curWaveId, maxWave)
 
-	local var_12_11 = FightModel.instance:getMaxRound()
-	local var_12_12 = FightModel.instance:getCurRoundId()
-	local var_12_13 = math.min(var_12_12, var_12_11)
+	local maxRound = FightModel.instance:getMaxRound()
+	local curRound = FightModel.instance:getCurRoundId()
 
-	arg_12_0.txtRound.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("fight_round_lang"), var_12_13, var_12_11)
+	curRound = math.min(curRound, maxRound)
+	self.txtRound.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("fight_round_lang"), curRound, maxRound)
 
-	local var_12_14 = var_12_2.skin == 312301 and "singlebg/fight/azio/fight_azio_role_1.png" or "singlebg/fight/azio/fight_azio_role_2.png"
+	local roleUrl = entityData.skin == 312301 and "singlebg/fight/azio/fight_azio_role_1.png" or "singlebg/fight/azio/fight_azio_role_2.png"
 
-	arg_12_0.roleImg:LoadImage(var_12_14)
+	self.roleImg:LoadImage(roleUrl)
 
-	local var_12_15 = arg_12_0:com_registFlowSequence()
+	local openFlow = self:com_registFlowSequence()
 
-	var_12_15:registWork(FightWorkPlayAnimator, arg_12_0.viewGO, "open")
-	var_12_15:registWork(FightWorkFunction, arg_12_0.onOpenAnimatorFinish, arg_12_0, var_12_4)
-	var_12_15:start()
+	openFlow:registWork(FightWorkPlayAnimator, self.viewGO, "open")
+	openFlow:registWork(FightWorkFunction, self.onOpenAnimatorFinish, self, targetLimit)
+	openFlow:start()
 
-	arg_12_0.skillNameText.text = var_12_6.name
-	arg_12_0.skillDescText.text = HeroSkillModel.instance:skillDesToSpot(FightConfig.instance:getSkillEffectDesc(nil, var_12_6))
+	self.skillNameText.text = skillConfig.name
+	self.skillDescText.text = HeroSkillModel.instance:skillDesToSpot(FightConfig.instance:getSkillEffectDesc(nil, skillConfig))
 end
 
-function var_0_0.onOpenAnimatorFinish(arg_13_0, arg_13_1)
-	if arg_13_0.selected then
+function FightAiJiAoQteSelectView:onOpenAnimatorFinish(targetLimit)
+	if self.selected then
 		return
 	end
 
-	local var_13_0 = FightDataHelper.operationDataMgr.curSelectEntityId
+	local curSelectEntityId = FightDataHelper.operationDataMgr.curSelectEntityId
 
-	var_13_0 = (not var_13_0 or var_13_0 ~= 0) and var_13_0
+	curSelectEntityId = (not curSelectEntityId or curSelectEntityId ~= 0) and curSelectEntityId
 
-	for iter_13_0, iter_13_1 in ipairs(arg_13_1) do
-		if iter_13_1 == var_13_0 then
-			arg_13_0.itemList[iter_13_0]:onClick()
+	for i, v in ipairs(targetLimit) do
+		if v == curSelectEntityId then
+			self.itemList[i]:onClick()
 
 			break
 		end
 	end
 
-	if not var_13_0 then
-		local var_13_1 = arg_13_1[1]
+	if not curSelectEntityId then
+		curSelectEntityId = targetLimit[1]
 
-		arg_13_0.itemList[1]:onClick()
+		self.itemList[1]:onClick()
 	end
 end
 
-function var_0_0.getTargetLimit(arg_14_0, arg_14_1)
-	local var_14_0 = {}
-	local var_14_1 = FightHelper.getTargetLimits(FightEnum.EntitySide.MySide, arg_14_0, arg_14_1)
+function FightAiJiAoQteSelectView.getTargetLimit(skillId, fromId)
+	local targetLimit = {}
+	local temp = FightHelper.getTargetLimits(FightEnum.EntitySide.MySide, skillId, fromId)
 
-	for iter_14_0, iter_14_1 in ipairs(var_14_1) do
-		local var_14_2 = FightDataHelper.entityMgr:getById(iter_14_1)
+	for i, entityId in ipairs(temp) do
+		local entityMO = FightDataHelper.entityMgr:getById(entityId)
 
-		if var_14_2.entityType == 3 then
+		if entityMO.entityType == 3 then
 			-- block empty
-		elseif var_14_2:hasBuffFeature(FightEnum.BuffType_CantSelect) or var_14_2:hasBuffFeature(FightEnum.BuffType_CantSelectEx) then
+		elseif entityMO:hasBuffFeature(FightEnum.BuffType_CantSelect) or entityMO:hasBuffFeature(FightEnum.BuffType_CantSelectEx) then
 			-- block empty
-		elseif DungeonModel.instance.curSendChapterId ~= DungeonEnum.ChapterId.RoleDuDuGu or var_14_2.originSkin ~= CharacterEnum.DefaultSkinId.DuDuGu then
-			table.insert(var_14_0, iter_14_1)
+		else
+			local curChapterId = DungeonModel.instance.curSendChapterId
+
+			if curChapterId ~= DungeonEnum.ChapterId.RoleDuDuGu or entityMO.originSkin ~= CharacterEnum.DefaultSkinId.DuDuGu then
+				table.insert(targetLimit, entityId)
+			end
 		end
 	end
 
-	table.sort(var_14_0, var_0_0.sortByPosX)
+	table.sort(targetLimit, FightAiJiAoQteSelectView.sortByPosX)
 
-	return var_14_0
+	return targetLimit
 end
 
-function var_0_0.onSelectItem(arg_15_0, arg_15_1)
+function FightAiJiAoQteSelectView:onSelectItem(toId)
 	AudioMgr.instance:trigger(20305033)
 
-	arg_15_0.selected = true
-	arg_15_0.selectId = arg_15_1
+	self.selected = true
+	self.selectId = toId
 
-	for iter_15_0, iter_15_1 in ipairs(arg_15_0.itemList) do
-		iter_15_1:showSelect(arg_15_1)
+	for i, item in ipairs(self.itemList) do
+		item:showSelect(toId)
 	end
 end
 
-function var_0_0.sortByPosX(arg_16_0, arg_16_1)
-	local var_16_0 = FightHelper.getEntity(arg_16_0)
-	local var_16_1 = var_16_0 and var_16_0.go
-	local var_16_2 = FightHelper.getEntity(arg_16_1)
-	local var_16_3 = var_16_2 and var_16_2.go
+function FightAiJiAoQteSelectView.sortByPosX(item1, item2)
+	local entity1 = FightHelper.getEntity(item1)
+	local go1 = entity1 and entity1.go
+	local entity2 = FightHelper.getEntity(item2)
+	local go2 = entity2 and entity2.go
 
-	if var_16_1 and var_16_3 then
-		return transformhelper.getLocalPos(var_16_1.transform) < transformhelper.getLocalPos(var_16_3.transform)
+	if go1 and go2 then
+		local posX1 = transformhelper.getLocalPos(go1.transform)
+		local posX2 = transformhelper.getLocalPos(go2.transform)
+
+		return posX1 < posX2
 	else
 		return false
 	end
 end
 
-function var_0_0.onClose(arg_17_0)
+function FightAiJiAoQteSelectView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_18_0)
+function FightAiJiAoQteSelectView:onDestroyView()
 	return
 end
 
-return var_0_0
+return FightAiJiAoQteSelectView

@@ -1,52 +1,54 @@
-﻿module("modules.logic.character.view.CharacterSwitchViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterSwitchViewContainer.lua
 
-local var_0_0 = class("CharacterSwitchViewContainer", BaseViewContainer)
+module("modules.logic.character.view.CharacterSwitchViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local CharacterSwitchViewContainer = class("CharacterSwitchViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, CharacterSwitchView.New())
+function CharacterSwitchViewContainer:buildViews()
+	local views = {}
 
-	local var_1_1 = ListScrollParam.New()
+	table.insert(views, CharacterSwitchView.New())
 
-	var_1_1.scrollGOPath = "right/mask/#scroll_card"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_1.cellClass = CharacterSwitchItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 3
-	var_1_1.cellWidth = 170
-	var_1_1.cellHeight = 208
-	var_1_1.cellSpaceH = 5
-	var_1_1.cellSpaceV = 0
-	var_1_1.startSpace = 5
-	var_1_1.endSpace = 0
-	arg_1_0._characterScrollView = LuaListScrollView.New(CharacterSwitchListModel.instance, var_1_1)
+	local scrollParam = ListScrollParam.New()
 
-	table.insert(var_1_0, arg_1_0._characterScrollView)
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
+	scrollParam.scrollGOPath = "right/mask/#scroll_card"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = CharacterSwitchItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 3
+	scrollParam.cellWidth = 170
+	scrollParam.cellHeight = 208
+	scrollParam.cellSpaceH = 5
+	scrollParam.cellSpaceV = 0
+	scrollParam.startSpace = 5
+	scrollParam.endSpace = 0
+	self._characterScrollView = LuaListScrollView.New(CharacterSwitchListModel.instance, scrollParam)
 
-	return var_1_0
+	table.insert(views, self._characterScrollView)
+	table.insert(views, TabViewGroup.New(1, "#go_btns"))
+
+	return views
 end
 
-function var_0_0.getCharacterScrollView(arg_2_0)
-	return arg_2_0._characterScrollView
+function CharacterSwitchViewContainer:getCharacterScrollView()
+	return self._characterScrollView
 end
 
-function var_0_0.buildTabViews(arg_3_0, arg_3_1)
-	arg_3_0.navigationView = NavigateButtonsView.New({
+function CharacterSwitchViewContainer:buildTabViews(tabContainerId)
+	self.navigationView = NavigateButtonsView.New({
 		true,
 		false,
 		false
 	}, 101)
 
 	return {
-		arg_3_0.navigationView
+		self.navigationView
 	}
 end
 
-function var_0_0.on(arg_4_0)
-	arg_4_0.navigationView:resetOnCloseViewAudio(AudioEnum.UI.Play_UI_OperaHouse)
+function CharacterSwitchViewContainer:on()
+	self.navigationView:resetOnCloseViewAudio(AudioEnum.UI.Play_UI_OperaHouse)
 end
 
-return var_0_0
+return CharacterSwitchViewContainer

@@ -1,17 +1,19 @@
-﻿module("projbooter.config.UrlConfig", package.seeall)
+﻿-- chunkname: @projbooter/config/UrlConfig.lua
 
-local var_0_0 = class("UrlConfig")
+module("projbooter.config.UrlConfig", package.seeall)
 
-function var_0_0.getConfig()
-	if not var_0_0._config then
-		local var_1_0 = GameConfig.UrlCfg
+local UrlConfig = class("UrlConfig")
 
-		logNormal("UrlConfig.getConfig() =\n " .. var_1_0)
+function UrlConfig.getConfig()
+	if not UrlConfig._config then
+		local cfg = GameConfig.UrlCfg
 
-		var_0_0._config = cjson.decode(var_1_0)
+		logNormal("UrlConfig.getConfig() =\n " .. cfg)
+
+		UrlConfig._config = cjson.decode(cfg)
 	end
 
-	return var_0_0._config
+	return UrlConfig._config
 end
 
-return var_0_0
+return UrlConfig

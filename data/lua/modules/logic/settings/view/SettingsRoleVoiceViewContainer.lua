@@ -1,79 +1,83 @@
-﻿module("modules.logic.settings.view.SettingsRoleVoiceViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/settings/view/SettingsRoleVoiceViewContainer.lua
 
-local var_0_0 = class("SettingsRoleVoiceViewContainer", BaseViewContainer)
+module("modules.logic.settings.view.SettingsRoleVoiceViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	arg_1_0._scrollParam = ListScrollParam.New()
-	arg_1_0._scrollParam.scrollGOPath = "#go_rolecontainer/#scroll_card"
-	arg_1_0._scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
-	arg_1_0._scrollParam.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	arg_1_0._scrollParam.cellClass = SettingsRoleVoiceListItem
-	arg_1_0._scrollParam.scrollDir = ScrollEnum.ScrollDirV
-	arg_1_0._scrollParam.lineCount = 6
-	arg_1_0._scrollParam.cellWidth = 250
-	arg_1_0._scrollParam.cellHeight = 555
-	arg_1_0._scrollParam.cellSpaceH = 18
-	arg_1_0._scrollParam.cellSpaceV = 10
-	arg_1_0._scrollParam.startSpace = 10
-	arg_1_0._scrollParam.frameUpdateMs = 100
-	arg_1_0._scrollParam.minUpdateCountInFrame = 100
-	arg_1_0._scrollParam.multiSelect = false
+local SettingsRoleVoiceViewContainer = class("SettingsRoleVoiceViewContainer", BaseViewContainer)
 
-	local var_1_0 = {}
+function SettingsRoleVoiceViewContainer:buildViews()
+	self._scrollParam = ListScrollParam.New()
+	self._scrollParam.scrollGOPath = "#go_rolecontainer/#scroll_card"
+	self._scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	self._scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	self._scrollParam.cellClass = SettingsRoleVoiceListItem
+	self._scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	self._scrollParam.lineCount = 6
+	self._scrollParam.cellWidth = 250
+	self._scrollParam.cellHeight = 555
+	self._scrollParam.cellSpaceH = 18
+	self._scrollParam.cellSpaceV = 10
+	self._scrollParam.startSpace = 10
+	self._scrollParam.frameUpdateMs = 100
+	self._scrollParam.minUpdateCountInFrame = 100
+	self._scrollParam.multiSelect = false
 
-	for iter_1_0 = 1, 12 do
-		var_1_0[iter_1_0] = math.ceil((iter_1_0 - 1) % 6) * 0.06
+	local cardAnimationDelayTimes = {}
+
+	for i = 1, 12 do
+		local delayTime = math.ceil((i - 1) % 6) * 0.06
+
+		cardAnimationDelayTimes[i] = delayTime
 	end
 
-	arg_1_0._cardScrollView = LuaListScrollViewWithAnimator.New(CharacterBackpackCardListModel.instance, arg_1_0._scrollParam, var_1_0)
+	self._cardScrollView = LuaListScrollViewWithAnimator.New(CharacterBackpackCardListModel.instance, self._scrollParam, cardAnimationDelayTimes)
 
-	local var_1_1 = {}
+	local views = {}
 
-	arg_1_0._mainSettingView = SettingsRoleVoiceView.New()
-	arg_1_0._filterView = SettingsRoleVoiceSearchFilterView.New()
+	self._mainSettingView = SettingsRoleVoiceView.New()
+	self._filterView = SettingsRoleVoiceSearchFilterView.New()
 
-	table.insert(var_1_1, arg_1_0._mainSettingView)
-	table.insert(var_1_1, arg_1_0._filterView)
-	table.insert(var_1_1, TabViewGroup.New(1, "#go_btns"))
-	table.insert(var_1_1, arg_1_0._cardScrollView)
+	table.insert(views, self._mainSettingView)
+	table.insert(views, self._filterView)
+	table.insert(views, TabViewGroup.New(1, "#go_btns"))
+	table.insert(views, self._cardScrollView)
 
-	return var_1_1
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._navigateButtonsView = NavigateButtonsView.New({
+function SettingsRoleVoiceViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonsView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			arg_2_0._navigateButtonsView
+			self._navigateButtonsView
 		}
 	end
 end
 
-function var_0_0.isBatchEditMode(arg_3_0)
-	return arg_3_0._mainSettingView:isBatchEditMode()
+function SettingsRoleVoiceViewContainer:isBatchEditMode()
+	return self._mainSettingView:isBatchEditMode()
 end
 
-function var_0_0.setBatchEditMode(arg_4_0, arg_4_1)
-	arg_4_0._scrollParam.multiSelect = arg_4_1
+function SettingsRoleVoiceViewContainer:setBatchEditMode(mulitEdit)
+	self._scrollParam.multiSelect = mulitEdit
 end
 
-function var_0_0.getCardScorllView(arg_5_0)
-	return arg_5_0._cardScrollView
+function SettingsRoleVoiceViewContainer:getCardScorllView()
+	return self._cardScrollView
 end
 
-function var_0_0.clearSelectedItems(arg_6_0)
-	arg_6_0._cardScrollView:setSelectList()
+function SettingsRoleVoiceViewContainer:clearSelectedItems()
+	self._cardScrollView:setSelectList()
 end
 
-function var_0_0.selectedAllItems(arg_7_0)
-	local var_7_0 = CharacterBackpackCardListModel.instance:getCharacterCardList()
+function SettingsRoleVoiceViewContainer:selectedAllItems()
+	local allItemMos = CharacterBackpackCardListModel.instance:getCharacterCardList()
 
-	arg_7_0._cardScrollView:setSelectList(var_7_0)
+	self._cardScrollView:setSelectList(allItemMos)
 end
 
-return var_0_0
+return SettingsRoleVoiceViewContainer

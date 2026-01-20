@@ -1,27 +1,31 @@
-﻿module("modules.logic.sp01.odyssey.view.work.OdysseyCheckCloseRewardWork", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/view/work/OdysseyCheckCloseRewardWork.lua
 
-local var_0_0 = class("OdysseyCheckCloseRewardWork", BaseWork)
+module("modules.logic.sp01.odyssey.view.work.OdysseyCheckCloseRewardWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.nextElementId = arg_1_1
-	arg_1_0.isForceFocus = arg_1_2
+local OdysseyCheckCloseRewardWork = class("OdysseyCheckCloseRewardWork", BaseWork)
 
-	OdysseyDungeonController.instance:registerCallback(OdysseyEvent.OnCloseDungeonRewardView, arg_1_0.onSetDone, arg_1_0)
+function OdysseyCheckCloseRewardWork:ctor(nextElementId, isForceFocus)
+	self.nextElementId = nextElementId
+	self.isForceFocus = isForceFocus
+
+	OdysseyDungeonController.instance:registerCallback(OdysseyEvent.OnCloseDungeonRewardView, self.onSetDone, self)
 end
 
-function var_0_0.onStart(arg_2_0)
-	if not OdysseyDungeonController.instance:checkNeedPopupRewardView() then
-		arg_2_0:onSetDone()
+function OdysseyCheckCloseRewardWork:onStart()
+	local needShowRewawrdView = OdysseyDungeonController.instance:checkNeedPopupRewardView()
+
+	if not needShowRewawrdView then
+		self:onSetDone()
 	end
 end
 
-function var_0_0.onSetDone(arg_3_0)
-	OdysseyDungeonController.instance:dispatchEvent(OdysseyEvent.OnFocusElement, arg_3_0.nextElementId, arg_3_0.isForceFocus)
-	arg_3_0:onDone(true)
+function OdysseyCheckCloseRewardWork:onSetDone()
+	OdysseyDungeonController.instance:dispatchEvent(OdysseyEvent.OnFocusElement, self.nextElementId, self.isForceFocus)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	OdysseyDungeonController.instance:unregisterCallback(OdysseyEvent.OnCloseDungeonRewardView, arg_4_0.onSetDone, arg_4_0)
+function OdysseyCheckCloseRewardWork:clearWork()
+	OdysseyDungeonController.instance:unregisterCallback(OdysseyEvent.OnCloseDungeonRewardView, self.onSetDone, self)
 end
 
-return var_0_0
+return OdysseyCheckCloseRewardWork

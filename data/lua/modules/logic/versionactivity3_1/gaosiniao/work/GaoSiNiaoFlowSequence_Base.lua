@@ -1,62 +1,64 @@
-﻿module("modules.logic.versionactivity3_1.gaosiniao.work.GaoSiNiaoFlowSequence_Base", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/gaosiniao/work/GaoSiNiaoFlowSequence_Base.lua
 
-local var_0_0 = _G.FlowSequence
-local var_0_1 = class("GaoSiNiaoFlowSequence_Base", var_0_0)
+module("modules.logic.versionactivity3_1.gaosiniao.work.GaoSiNiaoFlowSequence_Base", package.seeall)
 
-function var_0_1.ctor(arg_1_0, ...)
-	var_0_0.ctor(arg_1_0, ...)
+local Base = _G.FlowSequence
+local GaoSiNiaoFlowSequence_Base = class("GaoSiNiaoFlowSequence_Base", Base)
+
+function GaoSiNiaoFlowSequence_Base:ctor(...)
+	Base.ctor(self, ...)
 end
 
-function var_0_1.onDestroyView(arg_2_0)
-	arg_2_0:destroy()
+function GaoSiNiaoFlowSequence_Base:onDestroyView()
+	self:destroy()
 end
 
-function var_0_1.addWork(arg_3_0, arg_3_1)
-	if not arg_3_1 then
+function GaoSiNiaoFlowSequence_Base:addWork(work)
+	if not work then
 		return nil
 	end
 
-	var_0_0.addWork(arg_3_0, arg_3_1)
-	arg_3_1:setRootInternal(arg_3_0)
+	Base.addWork(self, work)
+	work:setRootInternal(self)
 
-	return arg_3_1
+	return work
 end
 
-function var_0_1.insertWork(arg_4_0, arg_4_1)
-	if not arg_4_1 then
+function GaoSiNiaoFlowSequence_Base:insertWork(work)
+	if not work then
 		return nil
 	end
 
-	BaseFlow.addWork(arg_4_0, arg_4_1)
-	arg_4_1:setRootInternal(arg_4_0)
-	table.insert(arg_4_0._workList, arg_4_0:nextIndex(), arg_4_1)
+	BaseFlow.addWork(self, work)
+	work:setRootInternal(self)
+	table.insert(self._workList, self:nextIndex(), work)
 
-	return arg_4_1
+	return work
 end
 
-function var_0_1.appendFlow(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_1:getWorkList()
+function GaoSiNiaoFlowSequence_Base:appendFlow(movableFlow)
+	local workList = movableFlow:getWorkList()
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_0) do
-		arg_5_0:addWork(iter_5_1)
+	for _, work in ipairs(workList) do
+		self:addWork(work)
 	end
 
-	arg_5_1._workList = {}
-	arg_5_1._curIndex = 0
+	movableFlow._workList = {}
+	movableFlow._curIndex = 0
 
-	return arg_5_0
+	return self
 end
 
-function var_0_1.curWork(arg_6_0)
-	return arg_6_0._workList[arg_6_0._curIndex]
+function GaoSiNiaoFlowSequence_Base:curWork()
+	return self._workList[self._curIndex]
 end
 
-function var_0_1.nextIndex(arg_7_0)
-	return arg_7_0._curIndex + 1
+function GaoSiNiaoFlowSequence_Base:nextIndex()
+	return self._curIndex + 1
 end
 
-function var_0_1.onStart(arg_8_0)
+function GaoSiNiaoFlowSequence_Base:onStart()
 	return
 end
 
-return var_0_1
+return GaoSiNiaoFlowSequence_Base

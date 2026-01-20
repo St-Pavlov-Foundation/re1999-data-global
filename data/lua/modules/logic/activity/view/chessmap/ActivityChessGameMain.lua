@@ -1,253 +1,255 @@
-﻿module("modules.logic.activity.view.chessmap.ActivityChessGameMain", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/chessmap/ActivityChessGameMain.lua
 
-local var_0_0 = class("ActivityChessGameMain", BaseView)
+module("modules.logic.activity.view.chessmap.ActivityChessGameMain", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._simagechessboard = gohelper.findChildSingleImage(arg_1_0.viewGO, "scroll/viewport/#go_content/#simage_chessboard")
-	arg_1_0._txtcurround = gohelper.findChildText(arg_1_0.viewGO, "roundbg/anim/curround/#txt_curround")
-	arg_1_0._btnrestart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_restart")
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "scroll/viewport/#go_content")
-	arg_1_0._gotaskitem = gohelper.findChild(arg_1_0.viewGO, "#go_tasklist/#go_taskitem")
-	arg_1_0._gooptip = gohelper.findChild(arg_1_0.viewGO, "#go_optip")
+local ActivityChessGameMain = class("ActivityChessGameMain", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ActivityChessGameMain:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._simagechessboard = gohelper.findChildSingleImage(self.viewGO, "scroll/viewport/#go_content/#simage_chessboard")
+	self._txtcurround = gohelper.findChildText(self.viewGO, "roundbg/anim/curround/#txt_curround")
+	self._btnrestart = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_restart")
+	self._gocontent = gohelper.findChild(self.viewGO, "scroll/viewport/#go_content")
+	self._gotaskitem = gohelper.findChild(self.viewGO, "#go_tasklist/#go_taskitem")
+	self._gooptip = gohelper.findChild(self.viewGO, "#go_optip")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnrestart:AddClickListener(arg_2_0._btnrestartOnClick, arg_2_0)
+function ActivityChessGameMain:addEvents()
+	self._btnrestart:AddClickListener(self._btnrestartOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnrestart:RemoveClickListener()
+function ActivityChessGameMain:removeEvents()
+	self._btnrestart:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	local var_4_0 = ActivityChessGameModel.instance:getMapId()
-	local var_4_1 = ActivityChessGameModel.instance:getActId()
-	local var_4_2 = Activity109Config.instance:getMapCo(var_4_1, var_4_0)
+function ActivityChessGameMain:_editableInitView()
+	local mapId = ActivityChessGameModel.instance:getMapId()
+	local actId = ActivityChessGameModel.instance:getActId()
+	local mapCo = Activity109Config.instance:getMapCo(actId, mapId)
 
-	arg_4_0._animRoot = arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_4_0._conditionItems = {}
+	self._animRoot = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._conditionItems = {}
 end
 
-function var_0_0.onDestroyView(arg_5_0)
+function ActivityChessGameMain:onDestroyView()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:addEventCb(ActivityChessGameController.instance, ActivityChessEvent.SetViewVictory, arg_6_0.onSetViewVictory, arg_6_0)
-	arg_6_0:addEventCb(ActivityChessGameController.instance, ActivityChessEvent.SetViewFail, arg_6_0.onSetViewFail, arg_6_0)
-	arg_6_0:addEventCb(ActivityChessGameController.instance, ActivityChessEvent.CurrentRoundUpdate, arg_6_0.refreshRound, arg_6_0)
-	arg_6_0:addEventCb(ActivityChessGameController.instance, ActivityChessEvent.GameResultQuit, arg_6_0.onResultQuit, arg_6_0)
-	arg_6_0:addEventCb(ActivityChessGameController.instance, ActivityChessEvent.CurrentConditionUpdate, arg_6_0.refreshConditions, arg_6_0)
-	arg_6_0:addEventCb(ActivityChessGameController.instance, ActivityChessEvent.GameMapDataUpdate, arg_6_0.refreshUI, arg_6_0)
-	arg_6_0:addEventCb(ActivityChessGameController.instance, ActivityChessEvent.SetCenterHintText, arg_6_0.setUICenterHintText, arg_6_0)
-	arg_6_0:addEventCb(ActivityChessGameController.instance, ActivityChessEvent.ResetGameByResultView, arg_6_0.handleResetByResult, arg_6_0)
-	arg_6_0:refreshUI()
+function ActivityChessGameMain:onOpen()
+	self:addEventCb(ActivityChessGameController.instance, ActivityChessEvent.SetViewVictory, self.onSetViewVictory, self)
+	self:addEventCb(ActivityChessGameController.instance, ActivityChessEvent.SetViewFail, self.onSetViewFail, self)
+	self:addEventCb(ActivityChessGameController.instance, ActivityChessEvent.CurrentRoundUpdate, self.refreshRound, self)
+	self:addEventCb(ActivityChessGameController.instance, ActivityChessEvent.GameResultQuit, self.onResultQuit, self)
+	self:addEventCb(ActivityChessGameController.instance, ActivityChessEvent.CurrentConditionUpdate, self.refreshConditions, self)
+	self:addEventCb(ActivityChessGameController.instance, ActivityChessEvent.GameMapDataUpdate, self.refreshUI, self)
+	self:addEventCb(ActivityChessGameController.instance, ActivityChessEvent.SetCenterHintText, self.setUICenterHintText, self)
+	self:addEventCb(ActivityChessGameController.instance, ActivityChessEvent.ResetGameByResultView, self.handleResetByResult, self)
+	self:refreshUI()
 end
 
-function var_0_0.onClose(arg_7_0)
-	UIBlockMgr.instance:endBlock(var_0_0.UI_RESTART_BLOCK_KEY)
-	TaskDispatcher.cancelTask(arg_7_0.delayRestartGame, arg_7_0)
+function ActivityChessGameMain:onClose()
+	UIBlockMgr.instance:endBlock(ActivityChessGameMain.UI_RESTART_BLOCK_KEY)
+	TaskDispatcher.cancelTask(self.delayRestartGame, self)
 
-	if arg_7_0.viewContainer:isManualClose() then
+	if self.viewContainer:isManualClose() then
 		Activity109ChessController.instance:statEnd(StatEnum.Result.Abort)
 	end
 
 	Activity109ChessController.instance:dispatchEvent(ActivityEvent.Play109EntryViewOpenAni)
 end
 
-function var_0_0.onSetViewVictory(arg_8_0)
+function ActivityChessGameMain:onSetViewVictory()
 	Activity109ChessController.instance:statEnd(StatEnum.Result.Success)
 
-	local var_8_0 = Activity109ChessModel.instance:getActId()
-	local var_8_1 = Activity109ChessModel.instance:getEpisodeId()
+	local actId = Activity109ChessModel.instance:getActId()
+	local episodeId = Activity109ChessModel.instance:getEpisodeId()
 
-	if var_8_0 ~= nil and var_8_1 ~= nil then
-		local var_8_2 = Activity109Config.instance:getEpisodeCo(var_8_0, var_8_1)
+	if actId ~= nil and episodeId ~= nil then
+		local episodeCfg = Activity109Config.instance:getEpisodeCo(actId, episodeId)
 
-		if var_8_2 and var_8_2.storyClear == 0 then
-			var_0_0.openWinResult()
+		if episodeCfg and episodeCfg.storyClear == 0 then
+			ActivityChessGameMain.openWinResult()
 
 			return
 		end
 
-		local var_8_3 = var_8_2.storyClear
+		local story = episodeCfg.storyClear
 
-		if not StoryModel.instance:isStoryHasPlayed(var_8_3) then
+		if not StoryModel.instance:isStoryHasPlayed(story) then
 			StoryController.instance:playStories({
-				var_8_3
-			}, nil, var_0_0.openWinResult)
+				story
+			}, nil, ActivityChessGameMain.openWinResult)
 		else
-			var_0_0.openWinResult()
+			ActivityChessGameMain.openWinResult()
 		end
 	end
 end
 
-function var_0_0.openWinResult()
-	local var_9_0 = Activity109ChessModel.instance:getEpisodeId()
-	local var_9_1 = "OnChessWinPause" .. var_9_0
-	local var_9_2 = GuideEvent[var_9_1]
-	local var_9_3 = GuideEvent.OnChessWinContinue
-	local var_9_4 = var_0_0._openSuccessView
-	local var_9_5
+function ActivityChessGameMain.openWinResult()
+	local episodeId = Activity109ChessModel.instance:getEpisodeId()
+	local v1 = "OnChessWinPause" .. episodeId
+	local v2 = GuideEvent[v1]
+	local v3 = GuideEvent.OnChessWinContinue
+	local v4 = ActivityChessGameMain._openSuccessView
+	local v5
 
-	GuideController.instance:GuideFlowPauseAndContinue(var_9_1, var_9_2, var_9_3, var_9_4, var_9_5)
+	GuideController.instance:GuideFlowPauseAndContinue(v1, v2, v3, v4, v5)
 end
 
-function var_0_0._openSuccessView()
+function ActivityChessGameMain._openSuccessView()
 	AudioMgr.instance:trigger(AudioEnum.ChessGame.PlayerArrive)
 	ViewMgr.instance:openView(ViewName.ActivityChessGameResultView, {
 		result = true
 	})
 end
 
-function var_0_0.onSetViewFail(arg_11_0)
+function ActivityChessGameMain:onSetViewFail()
 	Activity109ChessController.instance:statEnd(StatEnum.Result.Fail)
 	ViewMgr.instance:openView(ViewName.ActivityChessGameResultView, {
 		result = false
 	})
 end
 
-function var_0_0.refreshUI(arg_12_0)
-	arg_12_0:refreshRound()
-	arg_12_0:refreshConditions()
+function ActivityChessGameMain:refreshUI()
+	self:refreshRound()
+	self:refreshConditions()
 end
 
-function var_0_0.refreshRound(arg_13_0)
-	local var_13_0 = Activity109ChessModel.instance:getActId()
-	local var_13_1 = Activity109ChessModel.instance:getEpisodeId()
+function ActivityChessGameMain:refreshRound()
+	local actId = Activity109ChessModel.instance:getActId()
+	local episodeId = Activity109ChessModel.instance:getEpisodeId()
 
-	if not var_13_0 or not var_13_1 then
+	if not actId or not episodeId then
 		return
 	end
 
-	local var_13_2 = Activity109Config.instance:getEpisodeCo(var_13_0, var_13_1)
+	local episodeCfg = Activity109Config.instance:getEpisodeCo(actId, episodeId)
 
-	arg_13_0._txtcurround.text = string.format("%s/<size=36>%s</size>", tostring(ActivityChessGameModel.instance:getRound()), var_13_2.maxRound)
+	self._txtcurround.text = string.format("%s/<size=36>%s</size>", tostring(ActivityChessGameModel.instance:getRound()), episodeCfg.maxRound)
 end
 
-function var_0_0.refreshConditions(arg_14_0)
-	arg_14_0:hideAllConditions()
+function ActivityChessGameMain:refreshConditions()
+	self:hideAllConditions()
 
-	local var_14_0 = Activity109ChessModel.instance:getActId()
-	local var_14_1 = Activity109ChessModel.instance:getEpisodeId()
+	local actId = Activity109ChessModel.instance:getActId()
+	local episodeId = Activity109ChessModel.instance:getEpisodeId()
 
-	if not var_14_0 or not var_14_1 then
+	if not actId or not episodeId then
 		return
 	end
 
-	local var_14_2 = Activity109Config.instance:getEpisodeCo(var_14_0, var_14_1)
-	local var_14_3 = var_14_2.extStarCondition
-	local var_14_4 = string.split(var_14_3, "|")
-	local var_14_5 = string.split(var_14_2.conditionStr, "|")
-	local var_14_6 = #var_14_4 + 1
+	local episodeCfg = Activity109Config.instance:getEpisodeCo(actId, episodeId)
+	local conditionsStr = episodeCfg.extStarCondition
+	local conditions = string.split(conditionsStr, "|")
+	local conditionDesc = string.split(episodeCfg.conditionStr, "|")
+	local taskLen = #conditions + 1
 
-	logNormal("taskLen : " .. tostring(var_14_6))
+	logNormal("taskLen : " .. tostring(taskLen))
 
-	for iter_14_0 = 1, var_14_6 do
-		local var_14_7 = arg_14_0:getOrCreateConditionItem(iter_14_0)
+	for i = 1, taskLen do
+		local taskItem = self:getOrCreateConditionItem(i)
 
-		if iter_14_0 == 1 then
-			arg_14_0:refreshConditionItem(var_14_7, nil, var_14_5[iter_14_0])
+		if i == 1 then
+			self:refreshConditionItem(taskItem, nil, conditionDesc[i])
 		else
-			arg_14_0:refreshConditionItem(var_14_7, var_14_4[iter_14_0 - 1], var_14_5[iter_14_0])
+			self:refreshConditionItem(taskItem, conditions[i - 1], conditionDesc[i])
 		end
 	end
 end
 
-function var_0_0.refreshConditionItem(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	gohelper.setActive(arg_15_1.go, true)
+function ActivityChessGameMain:refreshConditionItem(taskItem, condition, descTxt)
+	gohelper.setActive(taskItem.go, true)
 
-	local var_15_0 = Activity109ChessModel.instance:getActId()
-	local var_15_1 = Activity109ChessModel.instance:getEpisodeId()
-	local var_15_2
-	local var_15_3 = false
+	local actId = Activity109ChessModel.instance:getActId()
+	local episodeId = Activity109ChessModel.instance:getEpisodeId()
+	local desc
+	local isFinish = false
 
-	if not string.nilorempty(arg_15_2) then
-		local var_15_4 = string.splitToNumber(arg_15_2, "#")
+	if not string.nilorempty(condition) then
+		local params = string.splitToNumber(condition, "#")
 
-		var_15_2 = arg_15_3 or ActivityChessMapUtils.getClearConditionDesc(var_15_4, var_15_0)
-		var_15_3 = ActivityChessMapUtils.isClearConditionFinish(var_15_4, var_15_0)
+		desc = descTxt or ActivityChessMapUtils.getClearConditionDesc(params, actId)
+		isFinish = ActivityChessMapUtils.isClearConditionFinish(params, actId)
 	else
-		var_15_2 = arg_15_3 or luaLang("chessgame_clear_normal")
-		var_15_3 = ActivityChessGameModel.instance:getResult() == true
+		desc = descTxt or luaLang("chessgame_clear_normal")
+		isFinish = ActivityChessGameModel.instance:getResult() == true
 	end
 
-	arg_15_1.txtTaskDesc.text = var_15_2
+	taskItem.txtTaskDesc.text = desc
 
-	if not arg_15_1.goFinish.activeSelf and var_15_3 then
+	if not taskItem.goFinish.activeSelf and isFinish then
 		AudioMgr.instance:trigger(AudioEnum.ChessGame.StarLight)
 	end
 
-	gohelper.setActive(arg_15_1.goFinish, var_15_3)
-	gohelper.setActive(arg_15_1.goUnFinish, not var_15_3)
+	gohelper.setActive(taskItem.goFinish, isFinish)
+	gohelper.setActive(taskItem.goUnFinish, not isFinish)
 end
 
-function var_0_0.setUICenterHintText(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_1.visible
-	local var_16_1 = arg_16_1.text
+function ActivityChessGameMain:setUICenterHintText(param)
+	local visible = param.visible
+	local text = param.text
 
-	gohelper.setActive(arg_16_0._gooptip, var_16_0)
+	gohelper.setActive(self._gooptip, visible)
 end
 
-function var_0_0.getOrCreateConditionItem(arg_17_0, arg_17_1)
-	local var_17_0 = arg_17_0._conditionItems[arg_17_1]
+function ActivityChessGameMain:getOrCreateConditionItem(index)
+	local item = self._conditionItems[index]
 
-	if not var_17_0 then
-		var_17_0 = arg_17_0:getUserDataTb_()
-		var_17_0.go = gohelper.cloneInPlace(arg_17_0._gotaskitem, "taskitem_" .. tostring(arg_17_1))
-		var_17_0.txtTaskDesc = gohelper.findChildText(var_17_0.go, "txt_desc")
-		var_17_0.goFinish = gohelper.findChild(var_17_0.go, "star/go_finish")
-		var_17_0.goUnFinish = gohelper.findChild(var_17_0.go, "star/go_unfinish")
-		arg_17_0._conditionItems[arg_17_1] = var_17_0
+	if not item then
+		item = self:getUserDataTb_()
+		item.go = gohelper.cloneInPlace(self._gotaskitem, "taskitem_" .. tostring(index))
+		item.txtTaskDesc = gohelper.findChildText(item.go, "txt_desc")
+		item.goFinish = gohelper.findChild(item.go, "star/go_finish")
+		item.goUnFinish = gohelper.findChild(item.go, "star/go_unfinish")
+		self._conditionItems[index] = item
 	end
 
-	return var_17_0
+	return item
 end
 
-function var_0_0.hideAllConditions(arg_18_0)
-	for iter_18_0, iter_18_1 in pairs(arg_18_0._conditionItems) do
-		gohelper.setActive(iter_18_1.go, false)
+function ActivityChessGameMain:hideAllConditions()
+	for _, itemObj in pairs(self._conditionItems) do
+		gohelper.setActive(itemObj.go, false)
 	end
 end
 
-function var_0_0.onResultQuit(arg_19_0)
-	arg_19_0:closeThis()
+function ActivityChessGameMain:onResultQuit()
+	self:closeThis()
 end
 
-function var_0_0.handleResetByResult(arg_20_0)
-	arg_20_0._animRoot:Play("open", 0, 0)
+function ActivityChessGameMain:handleResetByResult()
+	self._animRoot:Play("open", 0, 0)
 end
 
-var_0_0.UI_RESTART_BLOCK_KEY = "ActivityChessGameMainDelayRestart"
+ActivityChessGameMain.UI_RESTART_BLOCK_KEY = "ActivityChessGameMainDelayRestart"
 
-function var_0_0._btnrestartOnClick(arg_21_0)
-	local function var_21_0()
+function ActivityChessGameMain:_btnrestartOnClick()
+	local function yesFunc()
 		Activity109ChessController.instance:statEnd(StatEnum.Result.Reset)
-		UIBlockMgr.instance:startBlock(var_0_0.UI_RESTART_BLOCK_KEY)
-		arg_21_0._animRoot:Play("excessive", 0, 0)
-		TaskDispatcher.runDelay(arg_21_0.delayRestartGame, arg_21_0, 0.56)
+		UIBlockMgr.instance:startBlock(ActivityChessGameMain.UI_RESTART_BLOCK_KEY)
+		self._animRoot:Play("excessive", 0, 0)
+		TaskDispatcher.runDelay(self.delayRestartGame, self, 0.56)
 		AudioMgr.instance:trigger(AudioEnum.ChessGame.GameReset)
 	end
 
-	GameFacade.showMessageBox(MessageBoxIdDefine.PushBoxReset, MsgBoxEnum.BoxType.Yes_No, var_21_0)
+	GameFacade.showMessageBox(MessageBoxIdDefine.PushBoxReset, MsgBoxEnum.BoxType.Yes_No, yesFunc)
 end
 
-function var_0_0.delayRestartGame(arg_23_0)
-	UIBlockMgr.instance:endBlock(var_0_0.UI_RESTART_BLOCK_KEY)
-	TaskDispatcher.cancelTask(arg_23_0.delayRestartGame, arg_23_0)
+function ActivityChessGameMain:delayRestartGame()
+	UIBlockMgr.instance:endBlock(ActivityChessGameMain.UI_RESTART_BLOCK_KEY)
+	TaskDispatcher.cancelTask(self.delayRestartGame, self)
 
-	local var_23_0 = Activity109ChessModel.instance:getEpisodeId()
+	local episodeId = Activity109ChessModel.instance:getEpisodeId()
 
-	if var_23_0 then
-		Activity109ChessController.instance:startNewEpisode(var_23_0)
+	if episodeId then
+		Activity109ChessController.instance:startNewEpisode(episodeId)
 	end
 
 	ActivityChessGameController.instance:dispatchEvent(ActivityChessEvent.GameReset)
 end
 
-return var_0_0
+return ActivityChessGameMain

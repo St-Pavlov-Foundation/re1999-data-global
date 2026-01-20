@@ -1,16 +1,18 @@
-﻿module("modules.logic.mainuiswitch.view.MainUISwitchInfoDisplayView", package.seeall)
+﻿-- chunkname: @modules/logic/mainuiswitch/view/MainUISwitchInfoDisplayView.lua
 
-local var_0_0 = class("MainUISwitchInfoDisplayView", MainSceneSwitchInfoDisplayView)
+module("modules.logic.mainuiswitch.view.MainUISwitchInfoDisplayView", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	var_0_0.super._editableInitView(arg_1_0)
-	gohelper.setActive(arg_1_0._gobg1, false)
-	gohelper.setActive(arg_1_0._gobg2, false)
-	gohelper.setActive(arg_1_0._rawImage.gameObject, false)
+local MainUISwitchInfoDisplayView = class("MainUISwitchInfoDisplayView", MainSceneSwitchInfoDisplayView)
+
+function MainUISwitchInfoDisplayView:_editableInitView()
+	MainUISwitchInfoDisplayView.super._editableInitView(self)
+	gohelper.setActive(self._gobg1, false)
+	gohelper.setActive(self._gobg2, false)
+	gohelper.setActive(self._rawImage.gameObject, false)
 end
 
-function var_0_0._onShowSceneInfo(arg_2_0, arg_2_1)
-	arg_2_0._sceneId = arg_2_1
+function MainUISwitchInfoDisplayView:_onShowSceneInfo(id)
+	self._sceneId = id
 end
 
-return var_0_0
+return MainUISwitchInfoDisplayView

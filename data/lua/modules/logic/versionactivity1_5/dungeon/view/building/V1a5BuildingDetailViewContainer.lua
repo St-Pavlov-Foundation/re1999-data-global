@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity1_5.dungeon.view.building.V1a5BuildingDetailViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/dungeon/view/building/V1a5BuildingDetailViewContainer.lua
 
-local var_0_0 = class("V1a5BuildingDetailViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_5.dungeon.view.building.V1a5BuildingDetailViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local V1a5BuildingDetailViewContainer = class("V1a5BuildingDetailViewContainer", BaseViewContainer)
+
+function V1a5BuildingDetailViewContainer:buildViews()
 	return {
 		V1a5BuildingDetailView.New(),
 		TabViewGroup.New(1, "#go_topleft"),
@@ -10,8 +12,8 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
+function V1a5BuildingDetailViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -19,7 +21,7 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 				false
 			})
 		}
-	elseif arg_2_1 == 2 then
+	elseif tabContainerId == 2 then
 		return {
 			CurrencyView.New({
 				CurrencyEnum.CurrencyType.V1a5DungeonBuild
@@ -28,4 +30,4 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	end
 end
 
-return var_0_0
+return V1a5BuildingDetailViewContainer

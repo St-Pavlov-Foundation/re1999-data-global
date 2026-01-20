@@ -1,85 +1,87 @@
-﻿module("modules.logic.handbook.view.HandBookCharacterNavigateHandleView", package.seeall)
+﻿-- chunkname: @modules/logic/handbook/view/HandBookCharacterNavigateHandleView.lua
 
-local var_0_0 = class("HandBookCharacterNavigateHandleView", BaseView)
+module("modules.logic.handbook.view.HandBookCharacterNavigateHandleView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goParentView = gohelper.findChild(arg_1_0.viewGO, "#go_characterswitch")
-	arg_1_0._goSubView = gohelper.findChild(arg_1_0.viewGO, "#go_center")
+local HandBookCharacterNavigateHandleView = class("HandBookCharacterNavigateHandleView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function HandBookCharacterNavigateHandleView:onInitView()
+	self._goParentView = gohelper.findChild(self.viewGO, "#go_characterswitch")
+	self._goSubView = gohelper.findChild(self.viewGO, "#go_center")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function HandBookCharacterNavigateHandleView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function HandBookCharacterNavigateHandleView:removeEvents()
 	return
 end
 
-var_0_0.Status = {
+HandBookCharacterNavigateHandleView.Status = {
 	InParentView = 1,
 	InSubView = 2
 }
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0.status = var_0_0.Status.InParentView
+function HandBookCharacterNavigateHandleView:_editableInitView()
+	self.status = HandBookCharacterNavigateHandleView.Status.InParentView
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function HandBookCharacterNavigateHandleView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:refreshUI()
-	arg_6_0:addEventCb(HandbookController.instance, HandbookController.EventName.OnShowSubCharacterView, arg_6_0.openSubView, arg_6_0)
+function HandBookCharacterNavigateHandleView:onOpen()
+	self:refreshUI()
+	self:addEventCb(HandbookController.instance, HandbookController.EventName.OnShowSubCharacterView, self.openSubView, self)
 end
 
-function var_0_0.onCloseBtnClick(arg_7_0)
-	if arg_7_0.status == var_0_0.Status.InParentView then
-		arg_7_0:closeParentView()
+function HandBookCharacterNavigateHandleView:onCloseBtnClick()
+	if self.status == HandBookCharacterNavigateHandleView.Status.InParentView then
+		self:closeParentView()
 
 		return
 	end
 
 	HandbookController.instance:dispatchEvent(HandbookController.EventName.PlayCharacterSwitchCloseAnim)
-	arg_7_0:closeSubView()
+	self:closeSubView()
 end
 
-function var_0_0.openSubView(arg_8_0)
-	arg_8_0.status = var_0_0.Status.InSubView
+function HandBookCharacterNavigateHandleView:openSubView()
+	self.status = HandBookCharacterNavigateHandleView.Status.InSubView
 
-	arg_8_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.closeSubView(arg_9_0)
-	arg_9_0.status = var_0_0.Status.InParentView
+function HandBookCharacterNavigateHandleView:closeSubView()
+	self.status = HandBookCharacterNavigateHandleView.Status.InParentView
 
-	TaskDispatcher.runDelay(arg_9_0.playCharacterSwitchOpenAnim, arg_9_0, 0.267)
+	TaskDispatcher.runDelay(self.playCharacterSwitchOpenAnim, self, 0.267)
 end
 
-function var_0_0.playCharacterSwitchOpenAnim(arg_10_0)
-	arg_10_0:refreshUI()
+function HandBookCharacterNavigateHandleView:playCharacterSwitchOpenAnim()
+	self:refreshUI()
 	HandbookController.instance:dispatchEvent(HandbookController.EventName.PlayCharacterSwitchOpenAnim)
 end
 
-function var_0_0.closeParentView(arg_11_0)
-	arg_11_0:closeThis()
+function HandBookCharacterNavigateHandleView:closeParentView()
+	self:closeThis()
 end
 
-function var_0_0.refreshUI(arg_12_0)
-	gohelper.setActive(arg_12_0._goParentView, arg_12_0.status == var_0_0.Status.InParentView)
-	gohelper.setActive(arg_12_0._goSubView, arg_12_0.status == var_0_0.Status.InSubView)
+function HandBookCharacterNavigateHandleView:refreshUI()
+	gohelper.setActive(self._goParentView, self.status == HandBookCharacterNavigateHandleView.Status.InParentView)
+	gohelper.setActive(self._goSubView, self.status == HandBookCharacterNavigateHandleView.Status.InSubView)
 end
 
-function var_0_0.onClose(arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0.playCharacterSwitchOpenAnim, arg_13_0)
+function HandBookCharacterNavigateHandleView:onClose()
+	TaskDispatcher.cancelTask(self.playCharacterSwitchOpenAnim, self)
 end
 
-function var_0_0.onDestroyView(arg_14_0)
-	arg_14_0:removeEventCb(HandbookController.instance, HandbookController.EventName.OnShowSubCharacterView, arg_14_0.openSubView, arg_14_0)
+function HandBookCharacterNavigateHandleView:onDestroyView()
+	self:removeEventCb(HandbookController.instance, HandbookController.EventName.OnShowSubCharacterView, self.openSubView, self)
 end
 
-return var_0_0
+return HandBookCharacterNavigateHandleView

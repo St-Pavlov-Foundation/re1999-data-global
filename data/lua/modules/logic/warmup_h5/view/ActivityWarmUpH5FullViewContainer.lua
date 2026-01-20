@@ -1,21 +1,23 @@
-﻿module("modules.logic.warmup_h5.view.ActivityWarmUpH5FullViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/warmup_h5/view/ActivityWarmUpH5FullViewContainer.lua
 
-local var_0_0 = class("ActivityWarmUpH5FullViewContainer", BaseViewContainer)
+module("modules.logic.warmup_h5.view.ActivityWarmUpH5FullViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local ActivityWarmUpH5FullViewContainer = class("ActivityWarmUpH5FullViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, ActivityWarmUpH5FullView.New())
+function ActivityWarmUpH5FullViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, ActivityWarmUpH5FullView.New())
+
+	return views
 end
 
-function var_0_0.actId(arg_2_0)
-	return arg_2_0.viewParam and arg_2_0.viewParam.actId or ActivityType100Config.instance:getWarmUpH5ActivityId()
+function ActivityWarmUpH5FullViewContainer:actId()
+	return self.viewParam and self.viewParam.actId or ActivityType100Config.instance:getWarmUpH5ActivityId()
 end
 
-function var_0_0.getH5BaseUrl(arg_3_0)
-	return ActivityType100Config.instance:getWarmUpH5Link(arg_3_0:actId())
+function ActivityWarmUpH5FullViewContainer:getH5BaseUrl()
+	return ActivityType100Config.instance:getWarmUpH5Link(self:actId())
 end
 
-return var_0_0
+return ActivityWarmUpH5FullViewContainer

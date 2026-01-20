@@ -1,119 +1,125 @@
-﻿module("modules.logic.versionactivity2_7.lengzhou6.model.entity.EnemyActionData", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/lengzhou6/model/entity/EnemyActionData.lua
 
-local var_0_0 = class("EnemyActionData")
+module("modules.logic.versionactivity2_7.lengzhou6.model.entity.EnemyActionData", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._round = 0
-	arg_1_0._curBehaviorId = 1
-	arg_1_0._loopIndex = 1
-	arg_1_0._behaviorData = {}
+local EnemyActionData = class("EnemyActionData")
+
+function EnemyActionData:ctor()
+	self._round = 0
+	self._curBehaviorId = 1
+	self._loopIndex = 1
+	self._behaviorData = {}
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0._config = LengZhou6Config.instance:getEliminateBattleEnemyBehavior(arg_2_1)
-	arg_2_0._curBehaviorId = 1
+function EnemyActionData:init(enemyId)
+	self._config = LengZhou6Config.instance:getEliminateBattleEnemyBehavior(enemyId)
+	self._curBehaviorId = 1
 
-	if arg_2_0._behaviorData == nil then
-		arg_2_0._behaviorData = {}
+	if self._behaviorData == nil then
+		self._behaviorData = {}
 	end
 
-	for iter_2_0 = 1, #arg_2_0._config do
-		local var_2_0 = arg_2_0._config[iter_2_0]
-		local var_2_1 = EnemyBehaviorData.New()
+	for i = 1, #self._config do
+		local behavior = self._config[i]
+		local actionData = EnemyBehaviorData.New()
 
-		var_2_1:init(var_2_0)
-		table.insert(arg_2_0._behaviorData, var_2_1)
+		actionData:init(behavior)
+		table.insert(self._behaviorData, actionData)
 	end
 end
 
-function var_0_0.initLoopIndex(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0._startIndex = arg_3_1
-	arg_3_0._endIndex = arg_3_2
+function EnemyActionData:initLoopIndex(startIndex, endIndex)
+	self._startIndex = startIndex
+	self._endIndex = endIndex
 end
 
-function var_0_0._haveNeedActionSkill(arg_4_0)
-	arg_4_0._round = arg_4_0._round + 1
+function EnemyActionData:_haveNeedActionSkill()
+	self._round = self._round + 1
 
-	local var_4_0 = arg_4_0:calCurResidueCd()
+	local residueCd = self:calCurResidueCd()
 
-	if var_4_0 and var_4_0 == 0 then
+	if residueCd and residueCd == 0 then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.calCurResidueCd(arg_5_0)
-	local var_5_0 = arg_5_0:getCurBehaviorCd()
+function EnemyActionData:calCurResidueCd()
+	local curBehaviorCd = self:getCurBehaviorCd()
 
-	return math.max(var_5_0 - arg_5_0._round, 0)
+	return math.max(curBehaviorCd - self._round, 0)
 end
 
-function var_0_0.getCurBehaviorCd(arg_6_0)
-	local var_6_0 = arg_6_0._behaviorData[arg_6_0._curBehaviorId]
+function EnemyActionData:getCurBehaviorCd()
+	local curBehavior = self._behaviorData[self._curBehaviorId]
 
-	if var_6_0 then
-		return var_6_0:cd()
+	if curBehavior then
+		return curBehavior:cd()
 	end
 
 	return 0
 end
 
-function var_0_0.updateCurBehaviorId(arg_7_0)
-	local var_7_0 = #arg_7_0._behaviorData
+function EnemyActionData:updateCurBehaviorId()
+	local endIndex = #self._behaviorData
 
-	if arg_7_0._endIndex ~= nil and arg_7_0._loopIndex > 1 then
-		var_7_0 = arg_7_0._endIndex
+	if self._endIndex ~= nil and self._loopIndex > 1 then
+		endIndex = self._endIndex
 	end
 
-	if arg_7_0._curBehaviorId == var_7_0 then
-		arg_7_0._loopIndex = arg_7_0._loopIndex + 1
-		arg_7_0._curBehaviorId = arg_7_0._startIndex == nil and 1 or arg_7_0._startIndex
+	if self._curBehaviorId == endIndex then
+		self._loopIndex = self._loopIndex + 1
+		self._curBehaviorId = self._startIndex == nil and 1 or self._startIndex
 	else
-		arg_7_0._curBehaviorId = arg_7_0._curBehaviorId + 1
+		self._curBehaviorId = self._curBehaviorId + 1
 	end
 end
 
-function var_0_0.setCurBehaviorId(arg_8_0, arg_8_1)
-	arg_8_0._curBehaviorId = arg_8_1
+function EnemyActionData:setCurBehaviorId(index)
+	self._curBehaviorId = index
 end
 
-function var_0_0.getCurBehaviorId(arg_9_0)
-	return arg_9_0._curBehaviorId
+function EnemyActionData:getCurBehaviorId()
+	return self._curBehaviorId
 end
 
-function var_0_0.getCurRound(arg_10_0)
-	return arg_10_0._round
+function EnemyActionData:getCurRound()
+	return self._round
 end
 
-function var_0_0.setCurRound(arg_11_0, arg_11_1)
-	arg_11_0._round = arg_11_1
+function EnemyActionData:setCurRound(round)
+	self._round = round
 end
 
-function var_0_0.getCurBehavior(arg_12_0)
-	return arg_12_0._behaviorData[arg_12_0._curBehaviorId] or nil
+function EnemyActionData:getCurBehavior()
+	local curBehavior = self._behaviorData[self._curBehaviorId]
+
+	return curBehavior or nil
 end
 
-function var_0_0.getSkillList(arg_13_0)
-	if arg_13_0:_haveNeedActionSkill() then
-		local var_13_0 = arg_13_0:getCurBehavior()
+function EnemyActionData:getSkillList()
+	local canUse = self:_haveNeedActionSkill()
 
-		if var_13_0 == nil then
-			logError("curBehavior is nil: index " .. arg_13_0._curBehaviorId)
+	if canUse then
+		local curBehavior = self:getCurBehavior()
+
+		if curBehavior == nil then
+			logError("curBehavior is nil: index " .. self._curBehaviorId)
 
 			return nil
 		end
 
-		local var_13_1 = var_13_0:getSkillList(true)
+		local skillList = curBehavior:getSkillList(true)
 
-		arg_13_0._round = arg_13_0._round - var_13_0:cd()
+		self._round = self._round - curBehavior:cd()
 
-		arg_13_0:updateCurBehaviorId()
+		self:updateCurBehaviorId()
 
-		return var_13_1
+		return skillList
 	end
 
 	return nil
 end
 
-return var_0_0
+return EnemyActionData

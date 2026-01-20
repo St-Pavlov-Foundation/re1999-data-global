@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity2_1.aergusi.view.AergusiDialogStartViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_1/aergusi/view/AergusiDialogStartViewContainer.lua
 
-local var_0_0 = class("AergusiDialogStartViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_1.aergusi.view.AergusiDialogStartViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local AergusiDialogStartViewContainer = class("AergusiDialogStartViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, AergusiDialogStartView.New())
+function AergusiDialogStartViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, AergusiDialogStartView.New())
+
+	return views
 end
 
-return var_0_0
+return AergusiDialogStartViewContainer

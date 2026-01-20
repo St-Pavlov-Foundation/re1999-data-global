@@ -1,60 +1,61 @@
-﻿module("modules.logic.rouge.view.RougeCollectionIconItem", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeCollectionIconItem.lua
 
-local var_0_0 = class("RougeCollectionIconItem", UserDataDispose)
+module("modules.logic.rouge.view.RougeCollectionIconItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+local RougeCollectionIconItem = class("RougeCollectionIconItem", UserDataDispose)
 
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_icon")
-	arg_1_0._gogridcontainer = gohelper.findChild(arg_1_0.viewGO, "#go_gridcontainer")
-	arg_1_0._gogrid = gohelper.findChild(arg_1_0.viewGO, "#go_gridcontainer/#go_grid")
-	arg_1_0._goholetool = gohelper.findChild(arg_1_0.viewGO, "#go_holetool")
-	arg_1_0._goholeitem = gohelper.findChild(arg_1_0.viewGO, "#go_holetool/#go_holeitem")
-	arg_1_0._gridList = arg_1_0:getUserDataTb_()
+function RougeCollectionIconItem:ctor(viewGO)
+	self:__onInit()
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	self.viewGO = viewGO
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "#simage_icon")
+	self._gogridcontainer = gohelper.findChild(self.viewGO, "#go_gridcontainer")
+	self._gogrid = gohelper.findChild(self.viewGO, "#go_gridcontainer/#go_grid")
+	self._goholetool = gohelper.findChild(self.viewGO, "#go_holetool")
+	self._goholeitem = gohelper.findChild(self.viewGO, "#go_holetool/#go_holeitem")
+	self._gridList = self:getUserDataTb_()
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RougeCollectionIconItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RougeCollectionIconItem:removeEvents()
 	return
 end
 
-local var_0_1 = 46
-local var_0_2 = 46
+local defaultPerCellWidth, defaultPerCellHeight = 46, 46
 
-function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
-	arg_4_0._collectionCfg = RougeCollectionConfig.instance:getCollectionCfg(arg_4_1)
+function RougeCollectionIconItem:onUpdateMO(collectionCfgId)
+	self._collectionCfg = RougeCollectionConfig.instance:getCollectionCfg(collectionCfgId)
 
-	arg_4_0._simageicon:LoadImage(RougeCollectionHelper.getCollectionIconUrl(arg_4_1))
-	RougeCollectionHelper.loadShapeGrid(arg_4_1, arg_4_0._gogridcontainer, arg_4_0._gogrid, arg_4_0._gridList)
-	gohelper.setActive(arg_4_0.viewGO, true)
+	self._simageicon:LoadImage(RougeCollectionHelper.getCollectionIconUrl(collectionCfgId))
+	RougeCollectionHelper.loadShapeGrid(collectionCfgId, self._gogridcontainer, self._gogrid, self._gridList)
+	gohelper.setActive(self.viewGO, true)
 end
 
-function var_0_0.setPerCellSize(arg_5_0, arg_5_1, arg_5_2)
-	RougeCollectionHelper.computeAndSetCollectionIconScale(arg_5_0._collectionCfg.id, arg_5_0._simageicon.transform, arg_5_1, arg_5_2)
+function RougeCollectionIconItem:setPerCellSize(perCellWidth, perCellHeight)
+	RougeCollectionHelper.computeAndSetCollectionIconScale(self._collectionCfg.id, self._simageicon.transform, perCellWidth, perCellHeight)
 
-	arg_5_0._perCellWidth = arg_5_1 or var_0_1
-	arg_5_0._perCellHeight = arg_5_2 or var_0_2
+	self._perCellWidth = perCellWidth or defaultPerCellWidth
+	self._perCellHeight = perCellHeight or defaultPerCellHeight
 end
 
-function var_0_0.setCollectionIconSize(arg_6_0, arg_6_1, arg_6_2)
-	recthelper.setSize(arg_6_0._simageicon.transform, arg_6_1, arg_6_2)
+function RougeCollectionIconItem:setCollectionIconSize(width, height)
+	recthelper.setSize(self._simageicon.transform, width, height)
 end
 
-function var_0_0.setHolesVisible(arg_7_0, arg_7_1)
-	gohelper.setActive(arg_7_0._goholetool, arg_7_1)
+function RougeCollectionIconItem:setHolesVisible(isVisible)
+	gohelper.setActive(self._goholetool, isVisible)
 end
 
-function var_0_0.destroy(arg_8_0)
-	arg_8_0._simageicon:UnLoadImage()
-	arg_8_0:__onDispose(arg_8_0)
+function RougeCollectionIconItem:destroy()
+	self._simageicon:UnLoadImage()
+	self:__onDispose(self)
 end
 
-return var_0_0
+return RougeCollectionIconItem

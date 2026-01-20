@@ -1,101 +1,103 @@
-﻿module("modules.logic.room.view.RoomViewUIPartItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomViewUIPartItem.lua
 
-local var_0_0 = class("RoomViewUIPartItem", RoomViewUIBaseItem)
+module("modules.logic.room.view.RoomViewUIPartItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0)
+local RoomViewUIPartItem = class("RoomViewUIPartItem", RoomViewUIBaseItem)
 
-	arg_1_0._partId = arg_1_1
+function RoomViewUIPartItem:ctor(partId)
+	RoomViewUIPartItem.super.ctor(self)
+
+	self._partId = partId
 end
 
-function var_0_0._customOnInit(arg_2_0)
-	arg_2_0._txtbuildingname = gohelper.findChildText(arg_2_0._gocontainer, "bottom/txt_buildingName")
-	arg_2_0._goskinreddot = gohelper.findChild(arg_2_0._gocontainer, "bottom/#go_reddot")
-	arg_2_0._gobubbleContent = gohelper.findChild(arg_2_0._gocontainer, "#go_bubbleContent")
-	arg_2_0._goawarn = gohelper.findChild(arg_2_0._gocontainer, "state/#go_warn")
-	arg_2_0._gostop = gohelper.findChild(arg_2_0._gocontainer, "state/#go_stop")
-	arg_2_0._goadd = gohelper.findChild(arg_2_0._gocontainer, "state/#go_add")
-	arg_2_0._txtcount = gohelper.findChildText(arg_2_0._gocontainer, "count/txt_count")
-	arg_2_0._gotxtcount = gohelper.findChild(arg_2_0._gocontainer, "count")
-	arg_2_0._txtper = gohelper.findChildText(arg_2_0._gocontainer, "count/txt_count/txt")
-	arg_2_0._simagegathericon = gohelper.findChildSingleImage(arg_2_0._gocontainer, "simage_gathericon")
-	arg_2_0._simagebuildingicon = gohelper.findChildSingleImage(arg_2_0._gocontainer, "simage_buildingicon")
-	arg_2_0._goroomgifticon = gohelper.findChild(arg_2_0._gocontainer, "simage_actroomicon")
-	arg_2_0._goreddot = gohelper.findChild(arg_2_0._gocontainer, "count/txt_count/go_reddot")
-	arg_2_0._goupgrade = gohelper.findChild(arg_2_0._gocontainer, "#go_upgrade")
-	arg_2_0._gobg = gohelper.findChild(arg_2_0._gocontainer, "count/bg")
-	arg_2_0._gobg1 = gohelper.findChild(arg_2_0._gocontainer, "count/bg1")
-	arg_2_0._gobubbleitem = gohelper.findChild(arg_2_0._gocontainer, "bubbleContent/#go_bubbleitem")
+function RoomViewUIPartItem:_customOnInit()
+	self._txtbuildingname = gohelper.findChildText(self._gocontainer, "bottom/txt_buildingName")
+	self._goskinreddot = gohelper.findChild(self._gocontainer, "bottom/#go_reddot")
+	self._gobubbleContent = gohelper.findChild(self._gocontainer, "#go_bubbleContent")
+	self._goawarn = gohelper.findChild(self._gocontainer, "state/#go_warn")
+	self._gostop = gohelper.findChild(self._gocontainer, "state/#go_stop")
+	self._goadd = gohelper.findChild(self._gocontainer, "state/#go_add")
+	self._txtcount = gohelper.findChildText(self._gocontainer, "count/txt_count")
+	self._gotxtcount = gohelper.findChild(self._gocontainer, "count")
+	self._txtper = gohelper.findChildText(self._gocontainer, "count/txt_count/txt")
+	self._simagegathericon = gohelper.findChildSingleImage(self._gocontainer, "simage_gathericon")
+	self._simagebuildingicon = gohelper.findChildSingleImage(self._gocontainer, "simage_buildingicon")
+	self._goroomgifticon = gohelper.findChild(self._gocontainer, "simage_actroomicon")
+	self._goreddot = gohelper.findChild(self._gocontainer, "count/txt_count/go_reddot")
+	self._goupgrade = gohelper.findChild(self._gocontainer, "#go_upgrade")
+	self._gobg = gohelper.findChild(self._gocontainer, "count/bg")
+	self._gobg1 = gohelper.findChild(self._gocontainer, "count/bg1")
+	self._gobubbleitem = gohelper.findChild(self._gocontainer, "bubbleContent/#go_bubbleitem")
 
-	gohelper.setActive(arg_2_0._gobubbleitem, false)
+	gohelper.setActive(self._gobubbleitem, false)
 
-	arg_2_0._bubbleGOList = arg_2_0:getUserDataTb_()
-	arg_2_0._isPlayAnimation = false
-	arg_2_0._animator = arg_2_0._gocontainer:GetComponent(typeof(UnityEngine.Animator))
+	self._bubbleGOList = self:getUserDataTb_()
+	self._isPlayAnimation = false
+	self._animator = self._gocontainer:GetComponent(typeof(UnityEngine.Animator))
 
-	local var_2_0 = RoomInitBuildingEnum.InitBuildingSkinReddot[arg_2_0._partId]
+	local newSkinReddot = RoomInitBuildingEnum.InitBuildingSkinReddot[self._partId]
 
-	if var_2_0 then
-		RedDotController.instance:addRedDot(arg_2_0._goskinreddot, var_2_0)
+	if newSkinReddot then
+		RedDotController.instance:addRedDot(self._goskinreddot, newSkinReddot)
 	end
 end
 
-function var_0_0._customAddEventListeners(arg_3_0)
-	RoomMapController.instance:registerCallback(RoomEvent.UpdateRoomLevel, arg_3_0.refreshUI, arg_3_0)
-	RoomController.instance:registerCallback(RoomEvent.ProduceLineLevelUp, arg_3_0._refreshUpgradeUI, arg_3_0)
-	RoomController.instance:registerCallback(RoomEvent.UpdateProduceLineData, arg_3_0._updateProduceLineData, arg_3_0)
-	RoomController.instance:registerCallback(RoomEvent.GainProductionLineReply, arg_3_0._gainProductionLineCallback, arg_3_0)
-	RoomMapController.instance:registerCallback(RoomEvent.GuideTouchUIPart, arg_3_0._onGuideTouchUIPart, arg_3_0)
-	RedDotController.instance:registerCallback(RedDotEvent.UpdateRelateDotInfo, arg_3_0.refreshRelateDot, arg_3_0)
-	arg_3_0:refreshUI(true)
+function RoomViewUIPartItem:_customAddEventListeners()
+	self:refreshUI(true)
+	RoomMapController.instance:registerCallback(RoomEvent.UpdateRoomLevel, self.refreshUI, self)
+	RoomController.instance:registerCallback(RoomEvent.ProduceLineLevelUp, self._refreshUpgradeUI, self)
+	RoomController.instance:registerCallback(RoomEvent.UpdateProduceLineData, self._updateProduceLineData, self)
+	RoomController.instance:registerCallback(RoomEvent.GainProductionLineReply, self._gainProductionLineCallback, self)
+	RoomMapController.instance:registerCallback(RoomEvent.GuideTouchUIPart, self._onGuideTouchUIPart, self)
+	RedDotController.instance:registerCallback(RedDotEvent.UpdateRelateDotInfo, self.refreshRelateDot, self)
 end
 
-function var_0_0._customRemoveEventListeners(arg_4_0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.UpdateRoomLevel, arg_4_0.refreshUI, arg_4_0)
-	RoomController.instance:unregisterCallback(RoomEvent.ProduceLineLevelUp, arg_4_0._refreshUpgradeUI, arg_4_0)
-	RoomController.instance:unregisterCallback(RoomEvent.UpdateProduceLineData, arg_4_0._updateProduceLineData, arg_4_0)
-	RoomController.instance:unregisterCallback(RoomEvent.GainProductionLineReply, arg_4_0._gainProductionLineCallback, arg_4_0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.GuideTouchUIPart, arg_4_0._onGuideTouchUIPart, arg_4_0)
-	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateRelateDotInfo, arg_4_0.refreshRelateDot, arg_4_0)
+function RoomViewUIPartItem:_customRemoveEventListeners()
+	RoomMapController.instance:unregisterCallback(RoomEvent.UpdateRoomLevel, self.refreshUI, self)
+	RoomController.instance:unregisterCallback(RoomEvent.ProduceLineLevelUp, self._refreshUpgradeUI, self)
+	RoomController.instance:unregisterCallback(RoomEvent.UpdateProduceLineData, self._updateProduceLineData, self)
+	RoomController.instance:unregisterCallback(RoomEvent.GainProductionLineReply, self._gainProductionLineCallback, self)
+	RoomMapController.instance:unregisterCallback(RoomEvent.GuideTouchUIPart, self._onGuideTouchUIPart, self)
+	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateRelateDotInfo, self.refreshRelateDot, self)
 end
 
-function var_0_0.refreshRelateDot(arg_5_0, arg_5_1)
-	for iter_5_0, iter_5_1 in pairs(arg_5_1) do
-		if iter_5_0 == RedDotEnum.DotNode.RoomProductionFull or iter_5_0 == RedDotEnum.DotNode.RoomProductionLevel then
-			arg_5_0:_refreshReddot()
+function RoomViewUIPartItem:refreshRelateDot(dict)
+	for id, _ in pairs(dict) do
+		if id == RedDotEnum.DotNode.RoomProductionFull or id == RedDotEnum.DotNode.RoomProductionLevel then
+			self:_refreshReddot()
 
 			break
 		end
 	end
 
-	for iter_5_2, iter_5_3 in pairs(arg_5_1) do
-		if iter_5_2 == RedDotEnum.DotNode.RoomProductionLevel then
-			arg_5_0:_refreshUpgradeUI()
+	for id, _ in pairs(dict) do
+		if id == RedDotEnum.DotNode.RoomProductionLevel then
+			self:_refreshUpgradeUI()
 
 			break
 		end
 	end
 end
 
-function var_0_0.refreshUI(arg_6_0, arg_6_1)
-	arg_6_0:_refreshBubble()
-	arg_6_0:_refreshShow(arg_6_1)
-	arg_6_0:_refreshPosition()
-	arg_6_0:_refreshUpgradeUI()
+function RoomViewUIPartItem:refreshUI(isInit)
+	self:_refreshBubble()
+	self:_refreshShow(isInit)
+	self:_refreshPosition()
+	self:_refreshUpgradeUI()
 end
 
-function var_0_0._refreshUpgradeUI(arg_7_0)
-	local var_7_0 = arg_7_0:_canLeveUP()
+function RoomViewUIPartItem:_refreshUpgradeUI()
+	local canLevelUp = self:_canLeveUP()
 
-	gohelper.setActive(arg_7_0._goupgrade, var_7_0)
+	gohelper.setActive(self._goupgrade, canLevelUp)
 end
 
-function var_0_0._canLeveUP(arg_8_0)
-	local var_8_0 = RoomConfig.instance:getProductionPartConfig(arg_8_0._partId)
+function RoomViewUIPartItem:_canLeveUP()
+	local partConfig = RoomConfig.instance:getProductionPartConfig(self._partId)
 
-	if var_8_0 then
-		for iter_8_0, iter_8_1 in ipairs(var_8_0.productionLines) do
-			if arg_8_0:_checkProductionLineLeveUP(iter_8_1) then
+	if partConfig then
+		for i, proLineId in ipairs(partConfig.productionLines) do
+			if self:_checkProductionLineLeveUP(proLineId) then
 				return true
 			end
 		end
@@ -104,27 +106,29 @@ function var_0_0._canLeveUP(arg_8_0)
 	return false
 end
 
-function var_0_0._checkProductionLineLeveUP(arg_9_0, arg_9_1)
-	local var_9_0 = RoomProductionModel.instance:getLineMO(arg_9_1)
+function RoomViewUIPartItem:_checkProductionLineLeveUP(proLineId)
+	local mo = RoomProductionModel.instance:getLineMO(proLineId)
 
-	if not var_9_0 or var_9_0:isLock() or var_9_0.level >= var_9_0.maxLevel or var_9_0.level >= var_9_0.maxConfigLevel then
+	if not mo or mo:isLock() or mo.level >= mo.maxLevel or mo.level >= mo.maxConfigLevel then
 		return false
 	end
 
-	local var_9_1 = RoomConfig.instance:getProductionLineLevelConfig(var_9_0.config.levelGroup, var_9_0.level + 1)
+	local levelGroupConfig = RoomConfig.instance:getProductionLineLevelConfig(mo.config.levelGroup, mo.level + 1)
 
-	if var_9_1 == nil then
+	if levelGroupConfig == nil then
 		return false
 	end
 
-	if not string.nilorempty(var_9_1.cost) then
-		local var_9_2 = GameUtil.splitString2(var_9_1.cost, true)
+	if not string.nilorempty(levelGroupConfig.cost) then
+		local costParam = GameUtil.splitString2(levelGroupConfig.cost, true)
 
-		for iter_9_0, iter_9_1 in ipairs(var_9_2) do
-			local var_9_3 = iter_9_1[1]
-			local var_9_4 = iter_9_1[2]
+		for i, param in ipairs(costParam) do
+			local costType = param[1]
+			local costId = param[2]
+			local costNum = param[3]
+			local hasQuantity = ItemModel.instance:getItemQuantity(costType, costId)
 
-			if iter_9_1[3] > ItemModel.instance:getItemQuantity(var_9_3, var_9_4) then
+			if hasQuantity < costNum then
 				return false
 			end
 		end
@@ -133,227 +137,232 @@ function var_0_0._checkProductionLineLeveUP(arg_9_0, arg_9_1)
 	return true
 end
 
-function var_0_0._updateProduceLineData(arg_10_0)
-	if arg_10_0._isPlayAnimation then
+function RoomViewUIPartItem:_updateProduceLineData()
+	if self._isPlayAnimation then
 		return
 	end
 
-	arg_10_0:_refreshBubble()
+	self:_refreshBubble()
 end
 
-function var_0_0._refreshPartInfo(arg_11_0)
-	local var_11_0 = RoomConfig.instance:getProductionPartConfig(arg_11_0._partId)
+function RoomViewUIPartItem:_refreshPartInfo()
+	local partConfig = RoomConfig.instance:getProductionPartConfig(self._partId)
 
-	arg_11_0._lineMOList = {}
+	self._lineMOList = {}
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_0.productionLines) do
-		local var_11_1 = RoomProductionModel.instance:getLineMO(iter_11_1)
+	for i, v in ipairs(partConfig.productionLines) do
+		local lineMO = RoomProductionModel.instance:getLineMO(v)
 
-		if var_11_1:isLock() == false then
-			table.insert(arg_11_0._lineMOList, var_11_1)
+		if lineMO:isLock() == false then
+			table.insert(self._lineMOList, lineMO)
 		end
 	end
 
-	arg_11_0._txtbuildingname.text = var_11_0.name
+	self._txtbuildingname.text = partConfig.name
 end
 
-function var_0_0._refreshBubble(arg_12_0, arg_12_1)
-	gohelper.setActive(arg_12_0._goroomgifticon, false)
-	arg_12_0:_refreshPartInfo()
+function RoomViewUIPartItem:_refreshBubble(aim)
+	gohelper.setActive(self._goroomgifticon, false)
+	self:_refreshPartInfo()
 
-	if not arg_12_0._isPlayAnimation then
-		TaskDispatcher.cancelTask(arg_12_0._newBubble, arg_12_0)
-		TaskDispatcher.cancelTask(arg_12_0._refreshNewData, arg_12_0)
-		TaskDispatcher.cancelTask(arg_12_0._animationDone, arg_12_0)
-		arg_12_0._animator:Play("idel", 0, 0)
+	if not self._isPlayAnimation then
+		TaskDispatcher.cancelTask(self._newBubble, self)
+		TaskDispatcher.cancelTask(self._refreshNewData, self)
+		TaskDispatcher.cancelTask(self._animationDone, self)
+		self._animator:Play("idel", 0, 0)
 	end
 
-	table.sort(arg_12_0._lineMOList, function(arg_13_0, arg_13_1)
-		local var_13_0 = arg_13_0:getReservePer()
-		local var_13_1 = arg_13_1:getReservePer()
+	table.sort(self._lineMOList, function(a, b)
+		local perA = a:getReservePer()
+		local perB = b:getReservePer()
 
-		if var_13_0 ~= var_13_1 then
-			return var_13_0 < var_13_1
+		if perA ~= perB then
+			return perA < perB
 		end
 
-		return arg_13_0.id > arg_13_1.id
+		return a.id > b.id
 	end)
 
-	local var_12_0 = arg_12_0._lineMOList[#arg_12_0._lineMOList]
+	local lineMO = self._lineMOList[#self._lineMOList]
 
-	if var_12_0 then
-		local var_12_1, var_12_2 = var_12_0:getReservePer()
+	if lineMO then
+		local per, per100 = lineMO:getReservePer()
 
-		arg_12_0._txtcount.text = var_12_2
+		self._txtcount.text = per100
 
-		local var_12_3 = var_12_0:isFull()
-		local var_12_4 = var_12_0.config.logic == RoomProductLineEnum.ProductType.Product
-		local var_12_5 = var_12_0.config.logic == RoomProductLineEnum.ProductType.Change
+		local isFull = lineMO:isFull()
+		local isProduct = lineMO.config.logic == RoomProductLineEnum.ProductType.Product
+		local isChange = lineMO.config.logic == RoomProductLineEnum.ProductType.Change
 
-		gohelper.setActive(arg_12_0._goawarn, false)
-		gohelper.setActive(arg_12_0._gostop, false)
-		gohelper.setActive(arg_12_0._simagebuildingicon.gameObject, var_12_5)
-		gohelper.setActive(arg_12_0._simagegathericon.gameObject, var_12_4)
+		gohelper.setActive(self._goawarn, false)
+		gohelper.setActive(self._gostop, false)
+		gohelper.setActive(self._simagebuildingicon.gameObject, isChange)
+		gohelper.setActive(self._simagegathericon.gameObject, isProduct)
 
-		if var_12_5 then
-			gohelper.setActive(arg_12_0._gobg, false)
-			gohelper.setActive(arg_12_0._gobg1, false)
+		if isChange then
+			gohelper.setActive(self._gobg, false)
+			gohelper.setActive(self._gobg1, false)
 
-			arg_12_0._txtcount.text = ""
-			arg_12_0._txtper.text = ""
+			self._txtcount.text = ""
+			self._txtper.text = ""
 
-			arg_12_0._simagebuildingicon:LoadImage(ResUrl.getRoomImage("productline/icon_2"))
+			self._simagebuildingicon:LoadImage(ResUrl.getRoomImage("productline/icon_2"))
 		else
-			arg_12_0._txtper.text = "%"
+			self._txtper.text = "%"
 
-			local var_12_6 = var_12_0.formulaId
-			local var_12_7 = RoomConfig.instance:getFormulaConfig(var_12_6)
-			local var_12_8 = var_12_7 and RoomProductionHelper.getFormulaItemParamList(var_12_7.produce)
-			local var_12_9 = var_12_8 and var_12_8[1]
-			local var_12_10
+			local formulaId = lineMO.formulaId
+			local formulaConfig = RoomConfig.instance:getFormulaConfig(formulaId)
+			local produceItemParams = formulaConfig and RoomProductionHelper.getFormulaItemParamList(formulaConfig.produce)
+			local produceItemParam = produceItemParams and produceItemParams[1]
+			local icon
 
-			if var_12_9 then
-				local var_12_11
-				local var_12_12
+			if produceItemParam then
+				local config
 
-				var_12_12, var_12_10 = ItemModel.instance:getItemConfigAndIcon(var_12_9.type, var_12_9.id)
+				config, icon = ItemModel.instance:getItemConfigAndIcon(produceItemParam.type, produceItemParam.id)
 			end
 
-			if var_12_10 then
-				arg_12_0._simagegathericon:LoadImage(var_12_10)
+			if icon then
+				self._simagegathericon:LoadImage(icon)
 			end
 		end
 	end
 
-	arg_12_0:_refreshReddot()
+	self:_refreshReddot()
 
-	if not arg_12_0._isPlayAnimation then
-		for iter_12_0 = 1, #arg_12_0._lineMOList - 1 do
-			local var_12_13 = arg_12_0._bubbleGOList[iter_12_0]
+	if not self._isPlayAnimation then
+		for i = 1, #self._lineMOList - 1 do
+			local bubbleGO = self._bubbleGOList[i]
 
-			if not var_12_13 then
-				var_12_13 = gohelper.cloneInPlace(arg_12_0._gobubbleitem, "item" .. iter_12_0)
+			if not bubbleGO then
+				bubbleGO = gohelper.cloneInPlace(self._gobubbleitem, "item" .. i)
 
-				table.insert(arg_12_0._bubbleGOList, var_12_13)
+				table.insert(self._bubbleGOList, bubbleGO)
 			end
 
-			gohelper.setActive(var_12_13, true)
-			var_12_13:GetComponent(typeof(UnityEngine.Animator)):Play(UIAnimationName.Idle, 0, 0)
+			gohelper.setActive(bubbleGO, true)
+
+			local animator = bubbleGO:GetComponent(typeof(UnityEngine.Animator))
+
+			animator:Play(UIAnimationName.Idle, 0, 0)
 		end
 
-		for iter_12_1 = #arg_12_0._lineMOList, #arg_12_0._bubbleGOList do
-			local var_12_14 = arg_12_0._bubbleGOList[iter_12_1]
+		for i = #self._lineMOList, #self._bubbleGOList do
+			local bubbleGO = self._bubbleGOList[i]
 
-			if var_12_14 then
-				gohelper.setActive(var_12_14, false)
+			if bubbleGO then
+				gohelper.setActive(bubbleGO, false)
 			end
 		end
 	end
 end
 
-function var_0_0._refreshReddot(arg_14_0)
-	local var_14_0 = RoomConfig.instance:getProductionPartConfig(arg_14_0._partId).productionLines
-	local var_14_1 = RedDotModel.instance:getRedDotInfo(RedDotEnum.DotNode.RoomProductionFull)
-	local var_14_2 = false
+function RoomViewUIPartItem:_refreshReddot()
+	local partConfig = RoomConfig.instance:getProductionPartConfig(self._partId)
+	local lineIdList = partConfig.productionLines
+	local fullRedDotInfo = RedDotModel.instance:getRedDotInfo(RedDotEnum.DotNode.RoomProductionFull)
+	local show = false
 
-	for iter_14_0, iter_14_1 in ipairs(var_14_0) do
-		if var_14_1 and var_14_1.infos and var_14_1.infos[iter_14_1] and var_14_1.infos[iter_14_1].value > 0 then
-			var_14_2 = true
+	for i, lineId in ipairs(lineIdList) do
+		if fullRedDotInfo and fullRedDotInfo.infos and fullRedDotInfo.infos[lineId] and fullRedDotInfo.infos[lineId].value > 0 then
+			show = true
 
 			break
 		end
 	end
 
-	gohelper.setActive(arg_14_0._goreddot, var_14_2)
+	gohelper.setActive(self._goreddot, show)
 end
 
-function var_0_0._refreshShow(arg_15_0, arg_15_1)
-	if not RoomProductionHelper.hasUnlockLine(arg_15_0._partId) then
-		arg_15_0:_setShow(false, true)
+function RoomViewUIPartItem:_refreshShow(isInit)
+	if not RoomProductionHelper.hasUnlockLine(self._partId) then
+		self:_setShow(false, true)
 
 		return
 	end
 
 	if RoomBuildingController.instance:isBuildingListShow() or RoomCharacterController.instance:isCharacterListShow() then
-		arg_15_0:_setShow(false, arg_15_1)
+		self:_setShow(false, isInit)
 
 		return
 	end
 
-	local var_15_0 = arg_15_0._scene.camera:getCameraState()
+	local cameraState = self._scene.camera:getCameraState()
 
-	if var_15_0 ~= RoomEnum.CameraState.Overlook and var_15_0 ~= RoomEnum.CameraState.OverlookAll then
-		arg_15_0:_setShow(false, arg_15_1)
+	if cameraState ~= RoomEnum.CameraState.Overlook and cameraState ~= RoomEnum.CameraState.OverlookAll then
+		self:_setShow(false, isInit)
 
 		return
 	end
 
 	if RoomMapController.instance:isInRoomInitBuildingViewCamera() then
-		arg_15_0:_setShow(false, arg_15_1)
+		self:_setShow(false, isInit)
 
 		return
 	end
 
-	arg_15_0:_setShow(true, arg_15_1)
+	self:_setShow(true, isInit)
 end
 
-function var_0_0.getUI3DPos(arg_16_0)
-	local var_16_0 = arg_16_0._scene.buildingmgr:getPartContainerGO(arg_16_0._partId)
-	local var_16_1 = RoomBuildingHelper.getCenterPosition(var_16_0)
-	local var_16_2 = Vector3(var_16_1.x, 0.5, var_16_1.z)
+function RoomViewUIPartItem:getUI3DPos()
+	local partContainerGO = self._scene.buildingmgr:getPartContainerGO(self._partId)
+	local position = RoomBuildingHelper.getCenterPosition(partContainerGO)
+	local worldPos = Vector3(position.x, 0.5, position.z)
+	local bendingPos = RoomBendingHelper.worldToBendingSimple(worldPos)
 
-	return (RoomBendingHelper.worldToBendingSimple(var_16_2))
+	return bendingPos
 end
 
-function var_0_0._onGuideTouchUIPart(arg_17_0, arg_17_1)
-	if tonumber(arg_17_1) == arg_17_0._partId then
-		arg_17_0:_onClick()
+function RoomViewUIPartItem:_onGuideTouchUIPart(partId)
+	if tonumber(partId) == self._partId then
+		self:_onClick()
 	end
 end
 
-function var_0_0._onClick(arg_18_0, arg_18_1, arg_18_2)
-	if arg_18_0._isPlayAnimation then
+function RoomViewUIPartItem:_onClick(go, param)
+	if self._isPlayAnimation then
 		return
 	end
 
-	if arg_18_0:_getReward() then
+	local getReward = self:_getReward()
+
+	if getReward then
 		RoomSceneTaskController.instance:showHideRoomTopTaskUI(true)
 
 		return
 	end
 
 	RoomMapController.instance:openRoomInitBuildingView(0.2, {
-		partId = arg_18_0._partId
+		partId = self._partId
 	})
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_admission_open)
 end
 
-function var_0_0._getReward(arg_19_0)
-	if arg_19_0._iscustomDestory then
+function RoomViewUIPartItem:_getReward()
+	if self._iscustomDestory then
 		return false
 	end
 
-	local var_19_0
-	local var_19_1
+	local lineIdList, formulaId
 
-	for iter_19_0 = #arg_19_0._lineMOList, 1, -1 do
-		local var_19_2 = arg_19_0._lineMOList[iter_19_0]
+	for i = #self._lineMOList, 1, -1 do
+		local lineMO = self._lineMOList[i]
 
-		if var_19_2:isCanGain() then
-			var_19_0 = var_19_0 or {}
+		if lineMO:isCanGain() then
+			lineIdList = lineIdList or {}
 
-			table.insert(var_19_0, var_19_2.id)
+			table.insert(lineIdList, lineMO.id)
 
-			var_19_1 = var_19_2.formulaId
-			arg_19_0._isPlayAnimation = true
-			arg_19_0._curGainLineMOId = var_19_2.id
+			formulaId = lineMO.formulaId
+			self._isPlayAnimation = true
+			self._curGainLineMOId = lineMO.id
 		end
 	end
 
-	if var_19_0 then
-		arg_19_0._flyEffectRewardInfo = RoomProductionHelper.getFormulaRewardInfo(var_19_1)
+	if lineIdList then
+		self._flyEffectRewardInfo = RoomProductionHelper.getFormulaRewardInfo(formulaId)
 
-		RoomRpc.instance:sendGainProductionLineRequest(var_19_0, true)
+		RoomRpc.instance:sendGainProductionLineRequest(lineIdList, true)
 
 		return true
 	end
@@ -361,122 +370,127 @@ function var_0_0._getReward(arg_19_0)
 	return false
 end
 
-function var_0_0._gainProductionLineCallback(arg_20_0, arg_20_1, arg_20_2)
-	if arg_20_0._iscustomDestory or not arg_20_0._flyEffectRewardInfo or not arg_20_0._curGainLineMOId then
+function RoomViewUIPartItem:_gainProductionLineCallback(resultCode, lineIds)
+	if self._iscustomDestory or not self._flyEffectRewardInfo or not self._curGainLineMOId then
 		return
 	end
 
-	if not arg_20_2 or not tabletool.indexOf(arg_20_2, arg_20_0._curGainLineMOId) then
+	if not lineIds or not tabletool.indexOf(lineIds, self._curGainLineMOId) then
 		return
 	end
 
-	arg_20_0._curGainLineMOId = nil
+	self._curGainLineMOId = nil
 
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_collect_bubble)
-	TaskDispatcher.cancelTask(arg_20_0._newBubble, arg_20_0)
-	TaskDispatcher.cancelTask(arg_20_0._refreshNewData, arg_20_0)
-	TaskDispatcher.cancelTask(arg_20_0._animationDone, arg_20_0)
+	TaskDispatcher.cancelTask(self._newBubble, self)
+	TaskDispatcher.cancelTask(self._refreshNewData, self)
+	TaskDispatcher.cancelTask(self._animationDone, self)
 	TaskDispatcher.cancelTask(RoomSceneTaskController.instance.showHideRoomTopTaskUI, RoomSceneTaskController.instance)
 	TaskDispatcher.runDelay(RoomSceneTaskController.instance.showHideRoomTopTaskUI, RoomSceneTaskController.instance, 3.5)
 
-	if arg_20_1 ~= 0 then
-		arg_20_0:_animationDone(true)
+	if resultCode ~= 0 then
+		self:_animationDone(true)
 
 		return
 	end
 
-	arg_20_0._animator:Play(UIAnimationName.Switch, 0, 0)
+	self._animator:Play(UIAnimationName.Switch, 0, 0)
 
-	local var_20_0 = arg_20_0._bubbleGOList[1]
+	local firstBubbleGO = self._bubbleGOList[1]
 
-	if var_20_0 and var_20_0.activeSelf then
-		var_20_0:GetComponent(typeof(UnityEngine.Animator)):Play(UIAnimationName.Switch, 0, 0)
-		TaskDispatcher.runDelay(arg_20_0._newBubble, arg_20_0, 1.2)
+	if firstBubbleGO and firstBubbleGO.activeSelf then
+		local animator = firstBubbleGO:GetComponent(typeof(UnityEngine.Animator))
+
+		animator:Play(UIAnimationName.Switch, 0, 0)
+		TaskDispatcher.runDelay(self._newBubble, self, 1.2)
 	end
 
-	arg_20_0:_flyEffect()
+	self:_flyEffect()
 	RoomSceneTaskController.instance:showHideRoomTopTaskUI(true)
-	TaskDispatcher.runDelay(arg_20_0._refreshNewData, arg_20_0, 0.95)
-	TaskDispatcher.runDelay(arg_20_0._animationDone, arg_20_0, 1.5)
+	TaskDispatcher.runDelay(self._refreshNewData, self, 0.95)
+	TaskDispatcher.runDelay(self._animationDone, self, 1.5)
 end
 
-function var_0_0._flyEffect(arg_21_0)
-	if not arg_21_0._flyEffectRewardInfo then
+function RoomViewUIPartItem:_flyEffect()
+	if not self._flyEffectRewardInfo then
 		return
 	end
 
 	RoomMapController.instance:dispatchEvent(RoomEvent.UIFlyEffect, {
-		startPos = arg_21_0._simagegathericon.gameObject.transform.position,
-		itemType = arg_21_0._flyEffectRewardInfo.type,
-		itemId = arg_21_0._flyEffectRewardInfo.id,
-		startQuantity = arg_21_0._flyEffectRewardInfo.quantity
+		startPos = self._simagegathericon.gameObject.transform.position,
+		itemType = self._flyEffectRewardInfo.type,
+		itemId = self._flyEffectRewardInfo.id,
+		startQuantity = self._flyEffectRewardInfo.quantity
 	})
 
-	arg_21_0._flyEffectRewardInfo = nil
+	self._flyEffectRewardInfo = nil
 end
 
-function var_0_0._newBubble(arg_22_0)
-	local var_22_0 = #arg_22_0._lineMOList - 1
-	local var_22_1 = arg_22_0._bubbleGOList[var_22_0 + 1]
+function RoomViewUIPartItem:_newBubble()
+	local count = #self._lineMOList - 1
+	local newBubbleGO = self._bubbleGOList[count + 1]
 
-	if not var_22_1 then
-		var_22_1 = gohelper.cloneInPlace(arg_22_0._gobubbleitem, "item" .. var_22_0 + 1)
+	if not newBubbleGO then
+		newBubbleGO = gohelper.cloneInPlace(self._gobubbleitem, "item" .. count + 1)
 
-		table.insert(arg_22_0._bubbleGOList, var_22_1)
+		table.insert(self._bubbleGOList, newBubbleGO)
 	end
 
-	gohelper.setActive(var_22_1, true)
-	var_22_1:GetComponent(typeof(UnityEngine.Animator)):Play(UIAnimationName.Open, 0, 0)
+	gohelper.setActive(newBubbleGO, true)
+
+	local animator = newBubbleGO:GetComponent(typeof(UnityEngine.Animator))
+
+	animator:Play(UIAnimationName.Open, 0, 0)
 end
 
-function var_0_0._refreshNewData(arg_23_0)
-	arg_23_0:_refreshBubble()
+function RoomViewUIPartItem:_refreshNewData()
+	self:_refreshBubble()
 end
 
-function var_0_0._animationDone(arg_24_0, arg_24_1)
-	TaskDispatcher.cancelTask(arg_24_0._newBubble, arg_24_0)
-	TaskDispatcher.cancelTask(arg_24_0._refreshNewData, arg_24_0)
-	TaskDispatcher.cancelTask(arg_24_0._animationDone, arg_24_0)
+function RoomViewUIPartItem:_animationDone(onlyOnce)
+	TaskDispatcher.cancelTask(self._newBubble, self)
+	TaskDispatcher.cancelTask(self._refreshNewData, self)
+	TaskDispatcher.cancelTask(self._animationDone, self)
 
-	arg_24_0._isPlayAnimation = false
+	self._isPlayAnimation = false
 
-	arg_24_0:_refreshBubble()
+	self:_refreshBubble()
 
-	if not arg_24_1 then
-		arg_24_0:_getReward()
+	if not onlyOnce then
+		self:_getReward()
 	end
 end
 
-function var_0_0._showTopTaskUI(arg_25_0)
+function RoomViewUIPartItem:_showTopTaskUI()
 	RoomSceneTaskController.instance:showHideRoomTopTaskUI(false)
 end
 
-function var_0_0._customOnDestory(arg_26_0)
-	arg_26_0._iscustomDestory = true
+function RoomViewUIPartItem:_customOnDestory()
+	self._iscustomDestory = true
 
-	TaskDispatcher.cancelTask(arg_26_0._newBubble, arg_26_0)
-	TaskDispatcher.cancelTask(arg_26_0._refreshNewData, arg_26_0)
-	TaskDispatcher.cancelTask(arg_26_0._animationDone, arg_26_0)
+	TaskDispatcher.cancelTask(self._newBubble, self)
+	TaskDispatcher.cancelTask(self._refreshNewData, self)
+	TaskDispatcher.cancelTask(self._animationDone, self)
 
-	if arg_26_0._simagegathericon then
-		arg_26_0._simagegathericon:UnLoadImage()
+	if self._simagegathericon then
+		self._simagegathericon:UnLoadImage()
 
-		arg_26_0._simagegathericon = nil
+		self._simagegathericon = nil
 	end
 
-	if arg_26_0._simagebuildingicon then
-		arg_26_0._simagebuildingicon:UnLoadImage()
+	if self._simagebuildingicon then
+		self._simagebuildingicon:UnLoadImage()
 
-		arg_26_0._simagebuildingicon = nil
+		self._simagebuildingicon = nil
 	end
 
-	if arg_26_0._bubbleGOList then
-		for iter_26_0, iter_26_1 in ipairs(arg_26_0._bubbleGOList) do
-			gohelper.destroy(iter_26_1)
+	if self._bubbleGOList then
+		for i, bubbleGO in ipairs(self._bubbleGOList) do
+			gohelper.destroy(bubbleGO)
 		end
 
-		arg_26_0._bubbleGOList = nil
+		self._bubbleGOList = nil
 	end
 end
 
-return var_0_0
+return RoomViewUIPartItem

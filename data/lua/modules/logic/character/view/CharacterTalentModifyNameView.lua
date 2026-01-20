@@ -1,123 +1,125 @@
-﻿module("modules.logic.character.view.CharacterTalentModifyNameView", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterTalentModifyNameView.lua
 
-local var_0_0 = class("CharacterTalentModifyNameView", BaseView)
+module("modules.logic.character.view.CharacterTalentModifyNameView", package.seeall)
 
-function var_0_0.trimInput_overseas(arg_1_0)
-	if not arg_1_0 then
+local CharacterTalentModifyNameView = class("CharacterTalentModifyNameView", BaseView)
+
+function CharacterTalentModifyNameView.trimInput_overseas(str)
+	if not str then
 		return ""
 	end
 
-	return arg_1_0:match("^%s*(.-)%s*$")
+	return str:match("^%s*(.-)%s*$")
 end
 
-function var_0_0.onInitView(arg_2_0)
-	arg_2_0._btnClose = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "bottom/#btn_close")
-	arg_2_0._btnSure = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "bottom/#btn_sure")
-	arg_2_0._input = gohelper.findChildTextMeshInputField(arg_2_0.viewGO, "message/#input_signature")
-	arg_2_0._btncleanname = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "message/#btn_cleanname")
-	arg_2_0._simagerightbg = gohelper.findChildSingleImage(arg_2_0.viewGO, "window/#simage_rightbg")
-	arg_2_0._simageleftbg = gohelper.findChildSingleImage(arg_2_0.viewGO, "window/#simage_leftbg")
+function CharacterTalentModifyNameView:onInitView()
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "bottom/#btn_close")
+	self._btnSure = gohelper.findChildButtonWithAudio(self.viewGO, "bottom/#btn_sure")
+	self._input = gohelper.findChildTextMeshInputField(self.viewGO, "message/#input_signature")
+	self._btncleanname = gohelper.findChildButtonWithAudio(self.viewGO, "message/#btn_cleanname")
+	self._simagerightbg = gohelper.findChildSingleImage(self.viewGO, "window/#simage_rightbg")
+	self._simageleftbg = gohelper.findChildSingleImage(self.viewGO, "window/#simage_leftbg")
 
-	if arg_2_0._editableInitView then
-		arg_2_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_3_0)
-	arg_3_0._btnClose:AddClickListener(arg_3_0._onBtnClose, arg_3_0)
-	arg_3_0._btnSure:AddClickListener(arg_3_0._onBtnSure, arg_3_0)
-	arg_3_0._btncleanname:AddClickListener(arg_3_0._onBtnClean, arg_3_0)
-	arg_3_0:addEventCb(CharacterController.instance, CharacterEvent.RenameTalentTemplateReply, arg_3_0._onRenameTalentTemplateReply, arg_3_0)
-	arg_3_0._input:AddOnValueChanged(arg_3_0._onValueChanged, arg_3_0)
+function CharacterTalentModifyNameView:addEvents()
+	self._btnClose:AddClickListener(self._onBtnClose, self)
+	self._btnSure:AddClickListener(self._onBtnSure, self)
+	self._btncleanname:AddClickListener(self._onBtnClean, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.RenameTalentTemplateReply, self._onRenameTalentTemplateReply, self)
+	self._input:AddOnValueChanged(self._onValueChanged, self)
 end
 
-function var_0_0.removeEvents(arg_4_0)
-	arg_4_0._btnClose:RemoveClickListener()
-	arg_4_0._btnSure:RemoveClickListener()
-	arg_4_0._btncleanname:RemoveClickListener()
-	arg_4_0._input:RemoveOnValueChanged()
+function CharacterTalentModifyNameView:removeEvents()
+	self._btnClose:RemoveClickListener()
+	self._btnSure:RemoveClickListener()
+	self._btncleanname:RemoveClickListener()
+	self._input:RemoveOnValueChanged()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._simageleftbg:LoadImage(ResUrl.getCommonIcon("bg_1"))
-	arg_5_0._simagerightbg:LoadImage(ResUrl.getCommonIcon("bg_2"))
+function CharacterTalentModifyNameView:_editableInitView()
+	self._simageleftbg:LoadImage(ResUrl.getCommonIcon("bg_1"))
+	self._simagerightbg:LoadImage(ResUrl.getCommonIcon("bg_2"))
 end
 
-function var_0_0.onRefreshViewParam(arg_6_0)
+function CharacterTalentModifyNameView:onRefreshViewParam()
 	return
 end
 
-function var_0_0._onRenameTalentTemplateReply(arg_7_0)
-	arg_7_0:_onBtnClose()
+function CharacterTalentModifyNameView:_onRenameTalentTemplateReply()
+	self:_onBtnClose()
 	GameFacade.showToast(ToastEnum.PlayerModifyChangeName)
 end
 
-function var_0_0._onBtnClose(arg_8_0)
-	arg_8_0:closeThis()
+function CharacterTalentModifyNameView:_onBtnClose()
+	self:closeThis()
 end
 
-function var_0_0._onBtnClean(arg_9_0)
-	arg_9_0._input:SetText("")
+function CharacterTalentModifyNameView:_onBtnClean()
+	self._input:SetText("")
 end
 
-function var_0_0._onBtnSure(arg_10_0)
-	local var_10_0 = arg_10_0._input:GetText()
+function CharacterTalentModifyNameView:_onBtnSure()
+	local str = self._input:GetText()
 
-	if string.nilorempty(var_10_0) then
+	if string.nilorempty(str) then
 		return
 	end
 
-	if GameUtil.utf8len(var_10_0) > 10 then
+	if GameUtil.utf8len(str) > 10 then
 		GameFacade.showToast(ToastEnum.InformPlayerCharLen)
 
 		return
 	end
 
-	local var_10_1 = var_0_0.trimInput_overseas(var_10_0)
+	str = CharacterTalentModifyNameView.trimInput_overseas(str)
 
-	if string.nilorempty(var_10_1) then
+	if string.nilorempty(str) then
 		return
 	end
 
-	HeroRpc.instance:RenameTalentTemplateRequest(arg_10_0._heroId, arg_10_0._templateId, var_10_1)
+	HeroRpc.instance:RenameTalentTemplateRequest(self._heroId, self._templateId, str)
 end
 
-function var_0_0._onValueChanged(arg_11_0)
-	local var_11_0 = arg_11_0._input:GetText()
+function CharacterTalentModifyNameView:_onValueChanged()
+	local inputValue = self._input:GetText()
 
-	gohelper.setActive(arg_11_0._btncleanname, not string.nilorempty(var_11_0))
+	gohelper.setActive(self._btncleanname, not string.nilorempty(inputValue))
 end
 
-function var_0_0.onOpen(arg_12_0)
+function CharacterTalentModifyNameView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_petrus_exchange_element_get)
 
-	arg_12_0._heroId = arg_12_0.viewParam[1]
-	arg_12_0._templateId = arg_12_0.viewParam[2]
-	arg_12_0._blurTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.35, arg_12_0._onFrame, arg_12_0._onFinish, arg_12_0, nil, EaseType.Linear)
+	self._heroId = self.viewParam[1]
+	self._templateId = self.viewParam[2]
+	self._blurTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.35, self._onFrame, self._onFinish, self, nil, EaseType.Linear)
 
-	gohelper.setActive(arg_12_0._btncleanname, false)
+	gohelper.setActive(self._btncleanname, false)
 end
 
-function var_0_0._onFrame(arg_13_0, arg_13_1)
-	PostProcessingMgr.instance:setBlurWeight(arg_13_1)
+function CharacterTalentModifyNameView:_onFrame(value)
+	PostProcessingMgr.instance:setBlurWeight(value)
 end
 
-function var_0_0._onFinish(arg_14_0)
+function CharacterTalentModifyNameView:_onFinish()
 	PostProcessingMgr.instance:setBlurWeight(1)
 end
 
-function var_0_0.onClose(arg_15_0)
-	if arg_15_0._blurTweenId then
+function CharacterTalentModifyNameView:onClose()
+	if self._blurTweenId then
 		PostProcessingMgr.instance:setBlurWeight(1)
-		ZProj.TweenHelper.KillById(arg_15_0._blurTweenId)
+		ZProj.TweenHelper.KillById(self._blurTweenId)
 
-		arg_15_0._blurTweenId = nil
+		self._blurTweenId = nil
 	end
 end
 
-function var_0_0.onDestroyView(arg_16_0)
-	arg_16_0._simagerightbg:UnLoadImage()
-	arg_16_0._simageleftbg:UnLoadImage()
+function CharacterTalentModifyNameView:onDestroyView()
+	self._simagerightbg:UnLoadImage()
+	self._simageleftbg:UnLoadImage()
 end
 
-return var_0_0
+return CharacterTalentModifyNameView

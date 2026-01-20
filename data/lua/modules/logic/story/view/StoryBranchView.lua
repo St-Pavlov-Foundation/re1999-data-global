@@ -1,152 +1,154 @@
-﻿module("modules.logic.story.view.StoryBranchView", package.seeall)
+﻿-- chunkname: @modules/logic/story/view/StoryBranchView.lua
 
-local var_0_0 = class("StoryBranchView", BaseView)
+module("modules.logic.story.view.StoryBranchView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._scrollselect = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_select")
-	arg_1_0._golist = gohelper.findChild(arg_1_0.viewGO, "#scroll_select/Viewport/#go_list")
+local StoryBranchView = class("StoryBranchView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function StoryBranchView:onInitView()
+	self._scrollselect = gohelper.findChildScrollRect(self.viewGO, "#scroll_select")
+	self._golist = gohelper.findChild(self.viewGO, "#scroll_select/Viewport/#go_list")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(StoryController.instance, StoryEvent.OnSelectOptionView, arg_2_0._onSelectOption, arg_2_0)
-	arg_2_0:addEventCb(StoryController.instance, StoryEvent.FinishSelectOptionView, arg_2_0._onFinishSelectOptionView, arg_2_0)
-	arg_2_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyStoryDialogSelect, arg_2_0.OnStoryDialogSelect, arg_2_0)
+function StoryBranchView:addEvents()
+	self:addEventCb(StoryController.instance, StoryEvent.OnSelectOptionView, self._onSelectOption, self)
+	self:addEventCb(StoryController.instance, StoryEvent.FinishSelectOptionView, self._onFinishSelectOptionView, self)
+	self:addEventCb(PCInputController.instance, PCInputEvent.NotifyStoryDialogSelect, self.OnStoryDialogSelect, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(StoryController.instance, StoryEvent.OnSelectOptionView, arg_3_0._onSelectOption, arg_3_0)
-	arg_3_0:removeEventCb(StoryController.instance, StoryEvent.FinishSelectOptionView, arg_3_0._onFinishSelectOptionView, arg_3_0)
-	arg_3_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyStoryDialogSelect, arg_3_0.OnStoryDialogSelect, arg_3_0)
+function StoryBranchView:removeEvents()
+	self:removeEventCb(StoryController.instance, StoryEvent.OnSelectOptionView, self._onSelectOption, self)
+	self:removeEventCb(StoryController.instance, StoryEvent.FinishSelectOptionView, self._onFinishSelectOptionView, self)
+	self:removeEventCb(PCInputController.instance, PCInputEvent.NotifyStoryDialogSelect, self.OnStoryDialogSelect, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function StoryBranchView:_editableInitView()
 	StoryModel.instance:enableClick(false)
 
-	arg_4_0._goselectItem = gohelper.findChild(arg_4_0._golist, "selectitem")
-	arg_4_0._items = arg_4_0:getUserDataTb_()
-	arg_4_0._itemCount = 0
-	arg_4_0._finishedSelectViewCount = 0
+	self._goselectItem = gohelper.findChild(self._golist, "selectitem")
+	self._items = self:getUserDataTb_()
+	self._itemCount = 0
+	self._finishedSelectViewCount = 0
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function StoryBranchView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:_refreshView()
+function StoryBranchView:onOpen()
+	self:_refreshView()
 end
 
-function var_0_0.onClose(arg_7_0)
+function StoryBranchView:onClose()
 	return
 end
 
-function var_0_0.OnStoryDialogSelect(arg_8_0, arg_8_1)
-	if arg_8_0._keyTrigger and arg_8_0._keyTrigger[arg_8_1] then
-		arg_8_0:onKeySelect(arg_8_0._keyTrigger[arg_8_1])
+function StoryBranchView:OnStoryDialogSelect(index)
+	if self._keyTrigger and self._keyTrigger[index] then
+		self:onKeySelect(self._keyTrigger[index])
 	end
 end
 
-function var_0_0._refreshView(arg_9_0)
-	if #arg_9_0._items > 0 then
-		for iter_9_0, iter_9_1 in pairs(arg_9_0._items) do
-			iter_9_1:destroy()
+function StoryBranchView:_refreshView()
+	if #self._items > 0 then
+		for _, v in pairs(self._items) do
+			v:destroy()
 		end
 
-		arg_9_0._items = {}
+		self._items = {}
 	end
 
-	arg_9_0:_setSelectList()
-	arg_9_0:showKeyTips()
+	self:_setSelectList()
+	self:showKeyTips()
 end
 
-function var_0_0._setSelectList(arg_10_0)
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0.viewParam) do
-		local var_10_0 = StorySelectListItem.New()
+function StoryBranchView:_setSelectList()
+	for i, v in ipairs(self.viewParam) do
+		local item = StorySelectListItem.New()
 
-		var_10_0:init(arg_10_0._goselectItem, iter_10_1)
-		table.insert(arg_10_0._items, var_10_0)
+		item:init(self._goselectItem, v)
+		table.insert(self._items, item)
 	end
 
-	arg_10_0._itemCount = #arg_10_0._items
+	self._itemCount = #self._items
 end
 
-function var_0_0.showKeyTips(arg_11_0)
-	arg_11_0._keyTrigger = {}
+function StoryBranchView:showKeyTips()
+	self._keyTrigger = {}
 
-	if arg_11_0._items then
-		local var_11_0 = 1
+	if self._items then
+		local index = 1
 
-		for iter_11_0, iter_11_1 in ipairs(arg_11_0._items) do
-			if iter_11_1 and iter_11_1.viewGO.activeSelf then
-				local var_11_1 = gohelper.findChild(iter_11_1.viewGO, "bgdark/#go_pcbtn")
+		for i, v in ipairs(self._items) do
+			if v and v.viewGO.activeSelf then
+				local keytips = gohelper.findChild(v.viewGO, "bgdark/#go_pcbtn")
 
-				if var_11_1 then
-					PCInputController.instance:showkeyTips(var_11_1, 0, 0, "Alpha" .. var_11_0)
+				if keytips then
+					PCInputController.instance:showkeyTips(keytips, 0, 0, "Alpha" .. index)
 				end
 
-				arg_11_0._keyTrigger[var_11_0] = iter_11_0
-				var_11_0 = var_11_0 + 1
+				self._keyTrigger[index] = i
+				index = index + 1
 			end
 		end
 	end
 end
 
-function var_0_0.onKeySelect(arg_12_0, arg_12_1)
-	if arg_12_0._items then
-		for iter_12_0, iter_12_1 in ipairs(arg_12_0._items) do
-			if iter_12_0 == arg_12_1 then
-				iter_12_1:_btnselectOnClick()
+function StoryBranchView:onKeySelect(index)
+	if self._items then
+		for i, v in ipairs(self._items) do
+			if i == index then
+				v:_btnselectOnClick()
 			end
 		end
 	end
 end
 
-function var_0_0._onSelectOption(arg_13_0, arg_13_1)
-	if arg_13_0._items then
-		for iter_13_0, iter_13_1 in ipairs(arg_13_0._items) do
-			if iter_13_0 == arg_13_1 then
-				iter_13_1:onSelectOptionView()
+function StoryBranchView:_onSelectOption(index)
+	if self._items then
+		for i, v in ipairs(self._items) do
+			if i == index then
+				v:onSelectOptionView()
 			else
-				iter_13_1:onSelectOtherOptionView()
+				v:onSelectOtherOptionView()
 			end
 		end
 	end
 end
 
-function var_0_0._onFinishSelectOptionView(arg_14_0, arg_14_1)
-	if arg_14_0._items then
-		for iter_14_0, iter_14_1 in pairs(arg_14_0._items) do
-			if iter_14_1:getOptionIndex() == arg_14_1 then
-				iter_14_1:destroy()
+function StoryBranchView:_onFinishSelectOptionView(index)
+	if self._items then
+		for i, v in pairs(self._items) do
+			if v:getOptionIndex() == index then
+				v:destroy()
 
-				arg_14_0._finishedSelectViewCount = arg_14_0._finishedSelectViewCount + 1
+				self._finishedSelectViewCount = self._finishedSelectViewCount + 1
 
 				break
 			end
 		end
 
-		if arg_14_0._finishedSelectViewCount == arg_14_0._itemCount then
-			arg_14_0._items = nil
+		if self._finishedSelectViewCount == self._itemCount then
+			self._items = nil
 
-			arg_14_0:closeThis()
+			self:closeThis()
 		end
 	end
 end
 
-function var_0_0.onDestroyView(arg_15_0)
+function StoryBranchView:onDestroyView()
 	StoryModel.instance:enableClick(true)
 
-	if arg_15_0._items then
-		for iter_15_0, iter_15_1 in pairs(arg_15_0._items) do
-			iter_15_1:destroy()
+	if self._items then
+		for _, v in pairs(self._items) do
+			v:destroy()
 		end
 
-		arg_15_0._items = nil
+		self._items = nil
 	end
 end
 
-return var_0_0
+return StoryBranchView

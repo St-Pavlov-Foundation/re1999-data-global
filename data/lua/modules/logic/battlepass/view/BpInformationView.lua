@@ -1,80 +1,82 @@
-﻿module("modules.logic.battlepass.view.BpInformationView", package.seeall)
+﻿-- chunkname: @modules/logic/battlepass/view/BpInformationView.lua
 
-local var_0_0 = class("BpInformationView", BaseView)
+module("modules.logic.battlepass.view.BpInformationView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gofirst = gohelper.findChild(arg_1_0.viewGO, "content/scrollview/viewport/content/#go_first")
-	arg_1_0._txtfirst = gohelper.findChildText(arg_1_0.viewGO, "content/scrollview/viewport/content/#go_first/bg/#txt_first")
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "content/scrollview/viewport/content/#go_content")
-	arg_1_0._goconversation = gohelper.findChild(arg_1_0.viewGO, "content/scrollview/viewport/content/#go_conversation")
-	arg_1_0._txtindenthelper = gohelper.findChildText(arg_1_0.viewGO, "content/scrollview/viewport/content/#txt_indenthelper")
-	arg_1_0._gomask = gohelper.findChild(arg_1_0.viewGO, "content/#go_mask")
-	arg_1_0._simagepic = gohelper.findChildSingleImage(arg_1_0.viewGO, "content/#simage_pic")
-	arg_1_0._txttitle1 = gohelper.findChildText(arg_1_0.viewGO, "content/#txt_title1")
-	arg_1_0._txttitle2 = gohelper.findChildText(arg_1_0.viewGO, "content/#txt_title2")
-	arg_1_0._txttitleen1 = gohelper.findChildText(arg_1_0.viewGO, "content/#txt_titleen1")
-	arg_1_0._txttitleen3 = gohelper.findChildText(arg_1_0.viewGO, "content/#txt_titleen3")
-	arg_1_0._btnnext = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "content/pageicon/#btn_next")
-	arg_1_0._btnprevious = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "content/pageicon/#btn_previous")
-	arg_1_0._scrollview = gohelper.findChildScrollRect(arg_1_0.viewGO, "content/scrollview")
+local BpInformationView = class("BpInformationView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function BpInformationView:onInitView()
+	self._gofirst = gohelper.findChild(self.viewGO, "content/scrollview/viewport/content/#go_first")
+	self._txtfirst = gohelper.findChildText(self.viewGO, "content/scrollview/viewport/content/#go_first/bg/#txt_first")
+	self._gocontent = gohelper.findChild(self.viewGO, "content/scrollview/viewport/content/#go_content")
+	self._goconversation = gohelper.findChild(self.viewGO, "content/scrollview/viewport/content/#go_conversation")
+	self._txtindenthelper = gohelper.findChildText(self.viewGO, "content/scrollview/viewport/content/#txt_indenthelper")
+	self._gomask = gohelper.findChild(self.viewGO, "content/#go_mask")
+	self._simagepic = gohelper.findChildSingleImage(self.viewGO, "content/#simage_pic")
+	self._txttitle1 = gohelper.findChildText(self.viewGO, "content/#txt_title1")
+	self._txttitle2 = gohelper.findChildText(self.viewGO, "content/#txt_title2")
+	self._txttitleen1 = gohelper.findChildText(self.viewGO, "content/#txt_titleen1")
+	self._txttitleen3 = gohelper.findChildText(self.viewGO, "content/#txt_titleen3")
+	self._btnnext = gohelper.findChildButtonWithAudio(self.viewGO, "content/pageicon/#btn_next")
+	self._btnprevious = gohelper.findChildButtonWithAudio(self.viewGO, "content/pageicon/#btn_previous")
+	self._scrollview = gohelper.findChildScrollRect(self.viewGO, "content/scrollview")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnnext:AddClickListener(arg_2_0._btnnextOnClick, arg_2_0)
-	arg_2_0._btnprevious:AddClickListener(arg_2_0._btnpreviousOnClick, arg_2_0)
-	arg_2_0._scrollview:AddOnValueChanged(arg_2_0._onContentScrollValueChanged, arg_2_0)
+function BpInformationView:addEvents()
+	self._btnnext:AddClickListener(self._btnnextOnClick, self)
+	self._btnprevious:AddClickListener(self._btnpreviousOnClick, self)
+	self._scrollview:AddOnValueChanged(self._onContentScrollValueChanged, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnnext:RemoveClickListener()
-	arg_3_0._btnprevious:RemoveClickListener()
-	arg_3_0._scrollview:RemoveOnValueChanged()
+function BpInformationView:removeEvents()
+	self._btnnext:RemoveClickListener()
+	self._btnprevious:RemoveClickListener()
+	self._scrollview:RemoveOnValueChanged()
 end
 
-function var_0_0._onContentScrollValueChanged(arg_4_0, arg_4_1)
-	gohelper.setActive(arg_4_0._gomask, arg_4_0._couldScroll and not (gohelper.getRemindFourNumberFloat(arg_4_0._scrollview.verticalNormalizedPosition) <= 0))
+function BpInformationView:_onContentScrollValueChanged(value)
+	gohelper.setActive(self._gomask, self._couldScroll and not (gohelper.getRemindFourNumberFloat(self._scrollview.verticalNormalizedPosition) <= 0))
 end
 
-function var_0_0._btnnextOnClick(arg_5_0)
+function BpInformationView:_btnnextOnClick()
 	return
 end
 
-function var_0_0._btnpreviousOnClick(arg_6_0)
+function BpInformationView:_btnpreviousOnClick()
 	return
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0._scrollcontent = gohelper.findChild(arg_7_0._scrollview.gameObject, "viewport/content")
+function BpInformationView:_editableInitView()
+	self._scrollcontent = gohelper.findChild(self._scrollview.gameObject, "viewport/content")
 
-	ZProj.UGUIHelper.RebuildLayout(arg_7_0._scrollcontent.transform)
+	ZProj.UGUIHelper.RebuildLayout(self._scrollcontent.transform)
 
-	local var_7_0 = recthelper.getHeight(arg_7_0._scrollcontent.transform)
+	local contentHeight = recthelper.getHeight(self._scrollcontent.transform)
 
-	arg_7_0._scrollHeight = recthelper.getHeight(arg_7_0._scrollview.transform)
-	arg_7_0._couldScroll = var_7_0 > arg_7_0._scrollHeight and true or false
+	self._scrollHeight = recthelper.getHeight(self._scrollview.transform)
+	self._couldScroll = contentHeight > self._scrollHeight and true or false
 
-	gohelper.setActive(arg_7_0._gomask, arg_7_0._couldScroll)
-	arg_7_0._simagepic:LoadImage(ResUrl.getBpBg("img_ziliao_juke"))
+	gohelper.setActive(self._gomask, self._couldScroll)
+	self._simagepic:LoadImage(ResUrl.getBpBg("img_ziliao_juke"))
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
+function BpInformationView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_9_0)
+function BpInformationView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_role_culture_open)
 end
 
-function var_0_0.onClose(arg_10_0)
+function BpInformationView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	arg_11_0._simagepic:UnLoadImage()
+function BpInformationView:onDestroyView()
+	self._simagepic:UnLoadImage()
 end
 
-return var_0_0
+return BpInformationView

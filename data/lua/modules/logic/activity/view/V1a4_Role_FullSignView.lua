@@ -1,79 +1,84 @@
-﻿module("modules.logic.activity.view.V1a4_Role_FullSignView", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/V1a4_Role_FullSignView.lua
 
-local var_0_0 = class("V1a4_Role_FullSignView", Activity101SignViewBase)
+module("modules.logic.activity.view.V1a4_Role_FullSignView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._simageTitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_Title")
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Root/LimitTime/image_LimitTimeBG/#txt_LimitTime")
-	arg_1_0._scrollItemList = gohelper.findChildScrollRect(arg_1_0.viewGO, "Root/#scroll_ItemList")
+local V1a4_Role_FullSignView = class("V1a4_Role_FullSignView", Activity101SignViewBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V1a4_Role_FullSignView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._simageTitle = gohelper.findChildSingleImage(self.viewGO, "Root/#simage_Title")
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "Root/LimitTime/image_LimitTimeBG/#txt_LimitTime")
+	self._scrollItemList = gohelper.findChildScrollRect(self.viewGO, "Root/#scroll_ItemList")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	Activity101SignViewBase.addEvents(arg_2_0)
+function V1a4_Role_FullSignView:addEvents()
+	Activity101SignViewBase.addEvents(self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	Activity101SignViewBase.removeEvents(arg_3_0)
+function V1a4_Role_FullSignView:removeEvents()
+	Activity101SignViewBase.removeEvents(self)
 end
 
-function var_0_0.onOpen(arg_4_0)
-	arg_4_0._txtLimitTime.text = ""
+function V1a4_Role_FullSignView:onOpen()
+	self._txtLimitTime.text = ""
 
-	arg_4_0:internal_set_openMode(Activity101SignViewBase.eOpenMode.MainActivityCenterView)
-	arg_4_0:internal_onOpen()
-	TaskDispatcher.runRepeat(arg_4_0._refreshTimeTick, arg_4_0, 1)
+	self:internal_set_openMode(Activity101SignViewBase.eOpenMode.MainActivityCenterView)
+	self:internal_onOpen()
+	TaskDispatcher.runRepeat(self._refreshTimeTick, self, 1)
 end
 
-function var_0_0._updateScrollViewPos(arg_5_0)
-	if arg_5_0._isFirstUpdateScrollPos then
+function V1a4_Role_FullSignView:_updateScrollViewPos()
+	if self._isFirstUpdateScrollPos then
 		return
 	end
 
-	arg_5_0._isFirstUpdateScrollPos = true
+	self._isFirstUpdateScrollPos = true
 
-	arg_5_0:updateRewardCouldGetHorizontalScrollPixel(function(arg_6_0)
-		if arg_6_0 <= 4 then
-			return arg_6_0 - 4
+	self:updateRewardCouldGetHorizontalScrollPixel(function(index)
+		if index <= 4 then
+			return index - 4
 		else
-			local var_6_0 = arg_5_0:getTempDataList()
+			local list = self:getTempDataList()
 
-			return var_6_0 and #var_6_0 or arg_6_0
+			return list and #list or index
 		end
 	end)
 end
 
-function var_0_0.onClose(arg_7_0)
-	arg_7_0._isFirstUpdateScrollPos = nil
+function V1a4_Role_FullSignView:onClose()
+	self._isFirstUpdateScrollPos = nil
 
-	TaskDispatcher.cancelTask(arg_7_0._refreshTimeTick, arg_7_0)
+	TaskDispatcher.cancelTask(self._refreshTimeTick, self)
 end
 
-function var_0_0.onDestroyView(arg_8_0)
-	arg_8_0._simageTitle:UnLoadImage()
-	arg_8_0._simageFullBG:UnLoadImage()
-	TaskDispatcher.cancelTask(arg_8_0._refreshTimeTick, arg_8_0)
+function V1a4_Role_FullSignView:onDestroyView()
+	self._simageTitle:UnLoadImage()
+	self._simageFullBG:UnLoadImage()
+	TaskDispatcher.cancelTask(self._refreshTimeTick, self)
 end
 
-function var_0_0.onRefresh(arg_9_0)
-	arg_9_0:_refreshList()
-	arg_9_0:_updateScrollViewPos()
-	arg_9_0:_refreshTimeTick()
+function V1a4_Role_FullSignView:onRefresh()
+	self:_refreshList()
+	self:_updateScrollViewPos()
+	self:_refreshTimeTick()
 end
 
-function var_0_0._refreshTimeTick(arg_10_0)
-	arg_10_0._txtLimitTime.text = arg_10_0:getRemainTimeStr()
+function V1a4_Role_FullSignView:_refreshTimeTick()
+	self._txtLimitTime.text = self:getRemainTimeStr()
 end
 
-function var_0_0._setPinStartIndex(arg_11_0, arg_11_1)
-	local var_11_0, var_11_1 = arg_11_0:getRewardCouldGetIndex()
-	local var_11_2 = var_11_1 <= 4 and 1 or 3
+function V1a4_Role_FullSignView:_setPinStartIndex(dataList)
+	local _, index = self:getRewardCouldGetIndex()
 
-	arg_11_0.viewContainer:getScrollModel():setStartPinIndex(var_11_2)
+	index = index <= 4 and 1 or 3
+
+	local scrollModel = self.viewContainer:getScrollModel()
+
+	scrollModel:setStartPinIndex(index)
 end
 
-return var_0_0
+return V1a4_Role_FullSignView

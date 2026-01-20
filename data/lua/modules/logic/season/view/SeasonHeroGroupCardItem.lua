@@ -1,146 +1,148 @@
-﻿module("modules.logic.season.view.SeasonHeroGroupCardItem", package.seeall)
+﻿-- chunkname: @modules/logic/season/view/SeasonHeroGroupCardItem.lua
 
-local var_0_0 = class("SeasonHeroGroupCardItem", UserDataDispose)
+module("modules.logic.season.view.SeasonHeroGroupCardItem", package.seeall)
 
-var_0_0.TweenDuration = 0.16
-var_0_0.DragOffset = Vector2(0, 40)
-var_0_0.ZeroPos = Vector2(-2.7, -5)
-var_0_0.ZeroScale = 0.39
+local SeasonHeroGroupCardItem = class("SeasonHeroGroupCardItem", UserDataDispose)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0:__onInit()
+SeasonHeroGroupCardItem.TweenDuration = 0.16
+SeasonHeroGroupCardItem.DragOffset = Vector2(0, 40)
+SeasonHeroGroupCardItem.ZeroPos = Vector2(-2.7, -5)
+SeasonHeroGroupCardItem.ZeroScale = 0.39
 
-	arg_1_0.go = arg_1_1
-	arg_1_0.parent = arg_1_2
-	arg_1_0.transform = arg_1_1.transform
-	arg_1_0.param = arg_1_3
-	arg_1_0.slot = arg_1_3.slot
+function SeasonHeroGroupCardItem:ctor(go, parent, param)
+	self:__onInit()
 
-	arg_1_0:init()
+	self.go = go
+	self.parent = parent
+	self.transform = go.transform
+	self.param = param
+	self.slot = param.slot
+
+	self:init()
 end
 
-function var_0_0.init(arg_2_0)
-	arg_2_0._gocardempty = gohelper.findChild(arg_2_0.go, "go_empty")
-	arg_2_0._gocardicon = gohelper.findChild(arg_2_0.go, "go_card")
-	arg_2_0._trscard = arg_2_0._gocardicon.transform
-	arg_2_0._gocardlock = gohelper.findChild(arg_2_0.go, "go_lock")
-	arg_2_0._btncardclick = gohelper.findChildButtonWithAudio(arg_2_0.go, "btn_click")
-	arg_2_0.trsRect = arg_2_0._btncardclick.transform
+function SeasonHeroGroupCardItem:init()
+	self._gocardempty = gohelper.findChild(self.go, "go_empty")
+	self._gocardicon = gohelper.findChild(self.go, "go_card")
+	self._trscard = self._gocardicon.transform
+	self._gocardlock = gohelper.findChild(self.go, "go_lock")
+	self._btncardclick = gohelper.findChildButtonWithAudio(self.go, "btn_click")
+	self.trsRect = self._btncardclick.transform
 
-	arg_2_0:addClickCb(arg_2_0._btncardclick, arg_2_0._btnCardClick, arg_2_0)
-	arg_2_0:AddDrag(arg_2_0._btncardclick.gameObject)
+	self:addClickCb(self._btncardclick, self._btnCardClick, self)
+	self:AddDrag(self._btncardclick.gameObject)
 
-	local var_2_0, var_2_1, var_2_2 = transformhelper.getLocalRotation(arg_2_0._trscard)
+	local x, y, z = transformhelper.getLocalRotation(self._trscard)
 
-	arg_2_0.orignRoteZ = var_2_2
+	self.orignRoteZ = z
 end
 
-function var_0_0.AddDrag(arg_3_0, arg_3_1)
-	if arg_3_0._drag then
+function SeasonHeroGroupCardItem:AddDrag(go)
+	if self._drag then
 		return
 	end
 
-	arg_3_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_3_1)
+	self._drag = SLFramework.UGUI.UIDragListener.Get(go)
 
-	arg_3_0._drag:AddDragBeginListener(arg_3_0._onBeginDrag, arg_3_0, arg_3_1.transform)
-	arg_3_0._drag:AddDragListener(arg_3_0._onDrag, arg_3_0)
-	arg_3_0._drag:AddDragEndListener(arg_3_0._onEndDrag, arg_3_0, arg_3_1.transform)
+	self._drag:AddDragBeginListener(self._onBeginDrag, self, go.transform)
+	self._drag:AddDragListener(self._onDrag, self)
+	self._drag:AddDragEndListener(self._onEndDrag, self, go.transform)
 end
 
-function var_0_0.setData(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
-	arg_4_0._equipId = arg_4_3
-	arg_4_0._equipUid = arg_4_4
-	arg_4_0._layer = arg_4_2 or Activity104Model.instance:getAct104CurLayer()
-	arg_4_0.id = arg_4_1.id
-	arg_4_0._hasUseSeasonEquipCard = false
+function SeasonHeroGroupCardItem:setData(data, layer, equipId, equipUid)
+	self._equipId = equipId
+	self._equipUid = equipUid
+	self._layer = layer or Activity104Model.instance:getAct104CurLayer()
+	self.id = data.id
+	self._hasUseSeasonEquipCard = false
 
-	arg_4_0:updateView()
+	self:updateView()
 end
 
-function var_0_0.updateView(arg_5_0)
-	local var_5_0 = Activity104Model.instance:getCurSeasonId()
-	local var_5_1 = Activity104Model.instance:getSeasonCurSnapshotSubId(var_5_0)
+function SeasonHeroGroupCardItem:updateView()
+	local actId = Activity104Model.instance:getCurSeasonId()
+	local groupId = Activity104Model.instance:getSeasonCurSnapshotSubId(actId)
 
-	arg_5_0.posUnlock = Activity104Model.instance:isSeasonLayerPosUnlock(var_5_0, var_5_1, arg_5_0._layer, arg_5_0.slot, arg_5_0.id - 1)
-	arg_5_0.slotUnlock = Activity104Model.instance:isSeasonLayerSlotUnlock(var_5_0, var_5_1, arg_5_0._layer, arg_5_0.slot)
+	self.posUnlock = Activity104Model.instance:isSeasonLayerPosUnlock(actId, groupId, self._layer, self.slot, self.id - 1)
+	self.slotUnlock = Activity104Model.instance:isSeasonLayerSlotUnlock(actId, groupId, self._layer, self.slot)
 
-	gohelper.setActive(arg_5_0._gocardlock, not arg_5_0.posUnlock)
-	gohelper.setActive(arg_5_0._gocardempty, arg_5_0.posUnlock)
-	gohelper.setActive(arg_5_0.go, arg_5_0.slotUnlock)
+	gohelper.setActive(self._gocardlock, not self.posUnlock)
+	gohelper.setActive(self._gocardempty, self.posUnlock)
+	gohelper.setActive(self.go, self.slotUnlock)
 
-	if arg_5_0.posUnlock then
-		local var_5_2 = arg_5_0:getEquipId(var_5_0, var_5_1)
+	if self.posUnlock then
+		local equipId = self:getEquipId(actId, groupId)
 
-		if var_5_2 ~= 0 then
-			if not arg_5_0._seasonCardItem then
-				arg_5_0._seasonCardItem = SeasonCelebrityCardItem.New()
+		if equipId ~= 0 then
+			if not self._seasonCardItem then
+				self._seasonCardItem = SeasonCelebrityCardItem.New()
 
-				arg_5_0._seasonCardItem:init(arg_5_0._gocardicon, var_5_2, {
+				self._seasonCardItem:init(self._gocardicon, equipId, {
 					noClick = true
 				})
 			else
-				gohelper.setActive(arg_5_0._seasonCardItem.go, true)
-				arg_5_0._seasonCardItem:reset(var_5_2)
+				gohelper.setActive(self._seasonCardItem.go, true)
+				self._seasonCardItem:reset(equipId)
 			end
 
-			arg_5_0._hasUseSeasonEquipCard = true
+			self._hasUseSeasonEquipCard = true
 		else
-			if arg_5_0._seasonCardItem then
-				gohelper.setActive(arg_5_0._seasonCardItem.go, false)
+			if self._seasonCardItem then
+				gohelper.setActive(self._seasonCardItem.go, false)
 			end
 
-			arg_5_0:playEmptyUnlockAnim()
+			self:playEmptyUnlockAnim()
 		end
-	elseif arg_5_0._seasonCardItem then
-		gohelper.setActive(arg_5_0._seasonCardItem.go, false)
+	elseif self._seasonCardItem then
+		gohelper.setActive(self._seasonCardItem.go, false)
 	end
 end
 
-function var_0_0.playEmptyUnlockAnim(arg_6_0)
-	local var_6_0 = Activity104Model.instance:getCurSeasonId()
-	local var_6_1 = arg_6_0.id - 1
-	local var_6_2 = arg_6_0.slot
-	local var_6_3 = var_6_1 == 4 and 9 or var_6_1 + 1 + 4 * (var_6_2 - 1)
+function SeasonHeroGroupCardItem:playEmptyUnlockAnim()
+	local actId = Activity104Model.instance:getCurSeasonId()
+	local pos = self.id - 1
+	local slot = self.slot
+	local index = pos == 4 and 9 or pos + 1 + 4 * (slot - 1)
 
-	if Activity104Model.instance:isContainGroupCardUnlockTweenPos(var_6_0, arg_6_0._layer - 1, var_6_3) then
+	if Activity104Model.instance:isContainGroupCardUnlockTweenPos(actId, self._layer - 1, index) then
 		return
 	end
 
-	if not arg_6_0._animcardempty then
-		arg_6_0._animcardempty = arg_6_0._gocardempty:GetComponent(typeof(UnityEngine.Animator))
+	if not self._animcardempty then
+		self._animcardempty = self._gocardempty:GetComponent(typeof(UnityEngine.Animator))
 	end
 
-	arg_6_0._animcardempty:Play("lock")
-	Activity104Model.instance:setGroupCardUnlockTweenPos(var_6_0, var_6_3)
+	self._animcardempty:Play("lock")
+	Activity104Model.instance:setGroupCardUnlockTweenPos(actId, index)
 end
 
-function var_0_0.getEquipId(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = HeroGroupModel.instance:getCurGroupMO()
+function SeasonHeroGroupCardItem:getEquipId(actId, groupId)
+	local groupMo = HeroGroupModel.instance:getCurGroupMO()
 
-	if var_7_0 and var_7_0.isReplay then
-		return arg_7_0._equipId, arg_7_0._equipUid
+	if groupMo and groupMo.isReplay then
+		return self._equipId, self._equipUid
 	end
 
-	if arg_7_0._equipId ~= 0 then
-		return arg_7_0._equipId, arg_7_0._equipUid
+	if self._equipId ~= 0 then
+		return self._equipId, self._equipUid
 	end
 
-	if not arg_7_0.slot or not arg_7_0.id then
+	if not self.slot or not self.id then
 		return 0
 	end
 
-	arg_7_1 = arg_7_1 or Activity104Model.instance:getCurSeasonId()
-	arg_7_2 = arg_7_2 or Activity104Model.instance:getSeasonCurSnapshotSubId(arg_7_1)
+	actId = actId or Activity104Model.instance:getCurSeasonId()
+	groupId = groupId or Activity104Model.instance:getSeasonCurSnapshotSubId(actId)
 
-	return Activity104Model.instance:getSeasonHeroGroupEquipId(arg_7_1, arg_7_2, arg_7_0.slot, arg_7_0.id - 1)
+	return Activity104Model.instance:getSeasonHeroGroupEquipId(actId, groupId, self.slot, self.id - 1)
 end
 
-function var_0_0.hasUseSeasonEquipCard(arg_8_0)
-	return arg_8_0._hasUseSeasonEquipCard
+function SeasonHeroGroupCardItem:hasUseSeasonEquipCard()
+	return self._hasUseSeasonEquipCard
 end
 
-function var_0_0._btnCardClick(arg_9_0)
-	if arg_9_0.inDrag then
+function SeasonHeroGroupCardItem:_btnCardClick()
+	if self.inDrag then
 		return
 	end
 
@@ -148,161 +150,162 @@ function var_0_0._btnCardClick(arg_9_0)
 		return
 	end
 
-	if not arg_9_0.id then
+	if not self.id then
 		return
 	end
 
-	local var_9_0 = Activity104Model.instance:getCurSeasonId()
-	local var_9_1 = Activity104Model.instance:getSeasonCurSnapshotSubId(var_9_0)
+	local actId = Activity104Model.instance:getCurSeasonId()
+	local groupId = Activity104Model.instance:getSeasonCurSnapshotSubId(actId)
+	local unlock = Activity104Model.instance:isSeasonPosUnlock(actId, groupId, self.slot, self.id - 1)
 
-	if not Activity104Model.instance:isSeasonPosUnlock(var_9_0, var_9_1, arg_9_0.slot, arg_9_0.id - 1) then
+	if not unlock then
 		GameFacade.showToast(ToastEnum.SeasonEquipSlotNotUnlock)
 
 		return
 	end
 
-	local var_9_2 = {
-		group = var_9_1,
-		actId = var_9_0,
-		pos = arg_9_0.id - 1,
-		slot = arg_9_0.slot or 1
-	}
+	local param = {}
 
-	Activity104Controller.instance:openSeasonEquipView(var_9_2)
+	param.group = groupId
+	param.actId = actId
+	param.pos = self.id - 1
+	param.slot = self.slot or 1
+
+	Activity104Controller.instance:openSeasonEquipView(param)
 end
 
-function var_0_0.canDrag(arg_10_0)
+function SeasonHeroGroupCardItem:canDrag()
 	if HeroGroupModel.instance:getCurGroupMO().isReplay then
 		return false
 	end
 
-	if not arg_10_0.posUnlock then
+	if not self.posUnlock then
 		return false
 	end
 
-	local var_10_0 = arg_10_0:getEquipId()
+	local equipId = self:getEquipId()
 
-	if not var_10_0 or var_10_0 == 0 then
+	if not equipId or equipId == 0 then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0._onBeginDrag(arg_11_0, arg_11_1, arg_11_2)
-	if not arg_11_0:canDrag() then
-		arg_11_0.inDrag = false
+function SeasonHeroGroupCardItem:_onBeginDrag(dragTransform, pointerEventData)
+	if not self:canDrag() then
+		self.inDrag = false
 
 		return
 	end
 
-	arg_11_0:killTweenId()
+	self:killTweenId()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_hero_card_property)
-	gohelper.setAsLastSibling(arg_11_0.parent.go)
-	gohelper.setAsLastSibling(arg_11_0.go)
+	gohelper.setAsLastSibling(self.parent.go)
+	gohelper.setAsLastSibling(self.go)
 
-	local var_11_0 = recthelper.screenPosToAnchorPos(arg_11_2.position, arg_11_0.transform)
+	local anchorPos = recthelper.screenPosToAnchorPos(pointerEventData.position, self.transform)
 
-	arg_11_0:_tweenToPos(arg_11_0._trscard, var_11_0 + var_0_0.DragOffset, true)
+	self:_tweenToPos(self._trscard, anchorPos + SeasonHeroGroupCardItem.DragOffset, true)
 
-	local var_11_1 = var_0_0.ZeroScale * 1.7
+	local scale = SeasonHeroGroupCardItem.ZeroScale * 1.7
 
-	arg_11_0.tweenId = ZProj.TweenHelper.DOScale(arg_11_0._trscard, var_11_1, var_11_1, var_11_1, var_0_0.TweenDuration)
-	arg_11_0.rotaTweenId = ZProj.TweenHelper.DOLocalRotate(arg_11_0._trscard, 0, 0, 0, var_0_0.TweenDuration)
-	arg_11_0.inDrag = true
+	self.tweenId = ZProj.TweenHelper.DOScale(self._trscard, scale, scale, scale, SeasonHeroGroupCardItem.TweenDuration)
+	self.rotaTweenId = ZProj.TweenHelper.DOLocalRotate(self._trscard, 0, 0, 0, SeasonHeroGroupCardItem.TweenDuration)
+	self.inDrag = true
 end
 
-function var_0_0._onDrag(arg_12_0, arg_12_1, arg_12_2)
-	if not arg_12_0:canDrag() then
-		arg_12_0.inDrag = false
+function SeasonHeroGroupCardItem:_onDrag(dragTransform, pointerEventData)
+	if not self:canDrag() then
+		self.inDrag = false
 
 		return
 	end
 
-	local var_12_0 = recthelper.screenPosToAnchorPos(arg_12_2.position, arg_12_0.transform)
+	local anchorPos = recthelper.screenPosToAnchorPos(pointerEventData.position, self.transform)
 
-	arg_12_0:_tweenToPos(arg_12_0._trscard, var_12_0 + var_0_0.DragOffset)
+	self:_tweenToPos(self._trscard, anchorPos + SeasonHeroGroupCardItem.DragOffset)
 
-	arg_12_0.inDrag = true
+	self.inDrag = true
 end
 
-function var_0_0._onEndDrag(arg_13_0, arg_13_1, arg_13_2)
-	arg_13_0.inDrag = false
+function SeasonHeroGroupCardItem:_onEndDrag(dragTransform, pointerEventData)
+	self.inDrag = false
 
-	if not arg_13_0:canDrag() then
+	if not self:canDrag() then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_inking_success)
-	arg_13_0:killTweenId()
+	self:killTweenId()
 
-	local var_13_0 = var_0_0.ZeroScale * 1
+	local scale = SeasonHeroGroupCardItem.ZeroScale * 1
 
-	arg_13_0.tweenId = ZProj.TweenHelper.DOScale(arg_13_0._trscard, var_13_0, var_13_0, var_13_0, var_0_0.TweenDuration)
+	self.tweenId = ZProj.TweenHelper.DOScale(self._trscard, scale, scale, scale, SeasonHeroGroupCardItem.TweenDuration)
 
-	local var_13_1 = arg_13_0:_moveToTarget(arg_13_2.position)
+	local targetItem = self:_moveToTarget(pointerEventData.position)
 
-	arg_13_0:_setDragEnabled(false)
+	self:_setDragEnabled(false)
 
-	if not var_13_1 or not var_13_1:canExchange(arg_13_0) then
-		arg_13_0:_setToPos(arg_13_0._trscard, var_0_0.ZeroPos, true, arg_13_0._onDragFailTweenEnd, arg_13_0)
+	if not targetItem or not targetItem:canExchange(self) then
+		self:_setToPos(self._trscard, SeasonHeroGroupCardItem.ZeroPos, true, self._onDragFailTweenEnd, self)
 
-		arg_13_0.rotaTweenId = ZProj.TweenHelper.DOLocalRotate(arg_13_0._trscard, 0, 0, arg_13_0.orignRoteZ, var_0_0.TweenDuration)
+		self.rotaTweenId = ZProj.TweenHelper.DOLocalRotate(self._trscard, 0, 0, self.orignRoteZ, SeasonHeroGroupCardItem.TweenDuration)
 
 		return
 	end
 
-	local var_13_2 = recthelper.rectToRelativeAnchorPos(var_13_1.transform.position, arg_13_0.transform)
+	local anchorPos = recthelper.rectToRelativeAnchorPos(targetItem.transform.position, self.transform)
 
-	arg_13_0:_setToPos(arg_13_0._trscard, var_13_2, true, arg_13_0._onDragSuccessTweenEnd, arg_13_0, var_13_1)
+	self:_setToPos(self._trscard, anchorPos, true, self._onDragSuccessTweenEnd, self, targetItem)
 
-	arg_13_0.rotaTweenId = ZProj.TweenHelper.DOLocalRotate(arg_13_0._trscard, 0, 0, var_13_1.orignRoteZ, var_0_0.TweenDuration)
+	self.rotaTweenId = ZProj.TweenHelper.DOLocalRotate(self._trscard, 0, 0, targetItem.orignRoteZ, SeasonHeroGroupCardItem.TweenDuration)
 end
 
-function var_0_0._tweenToPos(arg_14_0, arg_14_1, arg_14_2)
-	if arg_14_0.posTweenId then
-		ZProj.TweenHelper.KillById(arg_14_0.posTweenId)
+function SeasonHeroGroupCardItem:_tweenToPos(transform, anchorPos)
+	if self.posTweenId then
+		ZProj.TweenHelper.KillById(self.posTweenId)
 
-		arg_14_0.posTweenId = nil
+		self.posTweenId = nil
 	end
 
-	local var_14_0, var_14_1 = recthelper.getAnchor(arg_14_1)
+	local curAnchorX, curAnchorY = recthelper.getAnchor(transform)
 
-	if math.abs(var_14_0 - arg_14_2.x) > 10 or math.abs(var_14_1 - arg_14_2.y) > 10 then
-		arg_14_0.posTweenId = ZProj.TweenHelper.DOAnchorPos(arg_14_1, arg_14_2.x, arg_14_2.y, var_0_0.TweenDuration)
+	if math.abs(curAnchorX - anchorPos.x) > 10 or math.abs(curAnchorY - anchorPos.y) > 10 then
+		self.posTweenId = ZProj.TweenHelper.DOAnchorPos(transform, anchorPos.x, anchorPos.y, SeasonHeroGroupCardItem.TweenDuration)
 	else
-		recthelper.setAnchor(arg_14_1, arg_14_2.x, arg_14_2.y)
+		recthelper.setAnchor(transform, anchorPos.x, anchorPos.y)
 	end
 end
 
-function var_0_0._setToPos(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5, arg_15_6)
-	local var_15_0, var_15_1 = recthelper.getAnchor(arg_15_1)
+function SeasonHeroGroupCardItem:_setToPos(transform, anchorPos, tween, callback, callbackObj, param)
+	local curAnchorX, curAnchorY = recthelper.getAnchor(transform)
 
-	if arg_15_3 then
-		arg_15_0.moveTweenId = ZProj.TweenHelper.DOAnchorPos(arg_15_1, arg_15_2.x, arg_15_2.y, var_0_0.TweenDuration, arg_15_4, arg_15_5, arg_15_6)
+	if tween then
+		self.moveTweenId = ZProj.TweenHelper.DOAnchorPos(transform, anchorPos.x, anchorPos.y, SeasonHeroGroupCardItem.TweenDuration, callback, callbackObj, param)
 	else
-		recthelper.setAnchor(arg_15_1, arg_15_2.x, arg_15_2.y)
+		recthelper.setAnchor(transform, anchorPos.x, anchorPos.y)
 
-		if arg_15_4 then
-			arg_15_4(arg_15_5, arg_15_6)
+		if callback then
+			callback(callbackObj, param)
 		end
 	end
 end
 
-function var_0_0._moveToTarget(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_0.parent:getHeroItemList()
+function SeasonHeroGroupCardItem:_moveToTarget(position)
+	local heroList = self.parent:getHeroItemList()
 
-	if var_16_0 then
-		for iter_16_0, iter_16_1 in pairs(var_16_0) do
-			for iter_16_2 = 1, 2 do
-				local var_16_1 = iter_16_1[string.format("_cardItem%s", iter_16_2)]
+	if heroList then
+		for _, heroItem in pairs(heroList) do
+			for i = 1, 2 do
+				local cardItem = heroItem[string.format("_cardItem%s", i)]
 
-				if var_16_1 ~= arg_16_0 then
-					local var_16_2 = var_16_1.trsRect
-					local var_16_3 = recthelper.screenPosToAnchorPos(arg_16_1, var_16_2)
+				if cardItem ~= self then
+					local posTr = cardItem.trsRect
+					local anchorPos = recthelper.screenPosToAnchorPos(position, posTr)
 
-					if math.abs(var_16_3.x) * 2 < recthelper.getWidth(var_16_2) and math.abs(var_16_3.y) * 2 < recthelper.getHeight(var_16_2) then
-						return var_16_1
+					if math.abs(anchorPos.x) * 2 < recthelper.getWidth(posTr) and math.abs(anchorPos.y) * 2 < recthelper.getHeight(posTr) then
+						return cardItem
 					end
 				end
 			end
@@ -312,64 +315,64 @@ function var_0_0._moveToTarget(arg_16_0, arg_16_1)
 	return nil
 end
 
-function var_0_0._setDragEnabled(arg_17_0, arg_17_1)
-	local var_17_0 = arg_17_0.parent:getHeroItemList()
+function SeasonHeroGroupCardItem:_setDragEnabled(isEnabled)
+	local heroList = self.parent:getHeroItemList()
 
-	for iter_17_0, iter_17_1 in ipairs(var_17_0) do
-		for iter_17_2 = 1, 2 do
-			local var_17_1 = iter_17_1[string.format("_cardItem%s", iter_17_2)]
+	for _, heroItem in ipairs(heroList) do
+		for i = 1, 2 do
+			local cardItem = heroItem[string.format("_cardItem%s", i)]
 
-			if var_17_1 then
-				var_17_1:setDragEnabled(arg_17_1)
+			if cardItem then
+				cardItem:setDragEnabled(isEnabled)
 			end
 		end
 	end
 end
 
-function var_0_0.setDragEnabled(arg_18_0, arg_18_1)
-	if arg_18_0._drag then
-		arg_18_0._drag.enabled = arg_18_1
+function SeasonHeroGroupCardItem:setDragEnabled(isEnabled)
+	if self._drag then
+		self._drag.enabled = isEnabled
 	end
 end
 
-function var_0_0.canExchange(arg_19_0, arg_19_1)
-	if arg_19_1 == arg_19_0 then
+function SeasonHeroGroupCardItem:canExchange(targetItem)
+	if targetItem == self then
 		return false
 	end
 
-	if not arg_19_1.posUnlock or not arg_19_0.posUnlock then
+	if not targetItem.posUnlock or not self.posUnlock then
 		return false
 	end
 
-	local var_19_0 = arg_19_1:getEquipId()
-	local var_19_1 = arg_19_1.id - 1
-	local var_19_2 = arg_19_1.slot
-	local var_19_3 = SeasonConfig.instance:getSeasonEquipCo(var_19_0)
-	local var_19_4 = arg_19_0:getEquipId()
-	local var_19_5 = arg_19_0.id - 1
-	local var_19_6 = arg_19_0.slot
-	local var_19_7 = SeasonConfig.instance:getSeasonEquipCo(var_19_4)
-	local var_19_8 = Activity104EquipItemListModel.instance:getEquipMaxCount(var_19_5)
-	local var_19_9 = Activity104Model.instance:getCurSeasonId()
-	local var_19_10 = Activity104Model.instance:getSeasonCurSnapshotSubId(var_19_9)
+	local tarEquipId = targetItem:getEquipId()
+	local tarPos = targetItem.id - 1
+	local tarSlot = targetItem.slot
+	local tarCO = SeasonConfig.instance:getSeasonEquipCo(tarEquipId)
+	local srcEquipId = self:getEquipId()
+	local srcPos = self.id - 1
+	local srcSlot = self.slot
+	local srcCO = SeasonConfig.instance:getSeasonEquipCo(srcEquipId)
+	local maxCount = Activity104EquipItemListModel.instance:getEquipMaxCount(srcPos)
+	local actId = Activity104Model.instance:getCurSeasonId()
+	local groupId = Activity104Model.instance:getSeasonCurSnapshotSubId(actId)
 
-	for iter_19_0 = 1, var_19_8 do
-		if iter_19_0 ~= var_19_6 then
-			local var_19_11 = Activity104Model.instance:getSeasonHeroGroupEquipId(var_19_9, var_19_10, iter_19_0, var_19_5)
-			local var_19_12 = SeasonConfig.instance:getSeasonEquipCo(var_19_11)
+	for i = 1, maxCount do
+		if i ~= srcSlot then
+			local id = Activity104Model.instance:getSeasonHeroGroupEquipId(actId, groupId, i, srcPos)
+			local co = SeasonConfig.instance:getSeasonEquipCo(id)
 
-			if var_19_3 and var_19_12 and var_19_12.group == var_19_3.group and var_19_1 ~= var_19_5 then
+			if tarCO and co and co.group == tarCO.group and tarPos ~= srcPos then
 				GameFacade.showToast(SeasonEquipItem.Toast_Same_Card)
 
 				return false
 			end
 		end
 
-		if iter_19_0 ~= var_19_2 then
-			local var_19_13 = Activity104Model.instance:getSeasonHeroGroupEquipId(var_19_9, var_19_10, iter_19_0, var_19_1)
-			local var_19_14 = SeasonConfig.instance:getSeasonEquipCo(var_19_13)
+		if i ~= tarSlot then
+			local id = Activity104Model.instance:getSeasonHeroGroupEquipId(actId, groupId, i, tarPos)
+			local co = SeasonConfig.instance:getSeasonEquipCo(id)
 
-			if var_19_7 and var_19_14 and var_19_14.group == var_19_7.group and var_19_1 ~= var_19_5 then
+			if srcCO and co and co.group == srcCO.group and tarPos ~= srcPos then
 				GameFacade.showToast(SeasonEquipItem.Toast_Same_Card)
 
 				return false
@@ -380,66 +383,66 @@ function var_0_0.canExchange(arg_19_0, arg_19_1)
 	return true
 end
 
-function var_0_0._onDragFailTweenEnd(arg_20_0)
-	arg_20_0:_setDragEnabled(true)
-	gohelper.setAsLastSibling(arg_20_0.parent._cardItem1.go)
+function SeasonHeroGroupCardItem:_onDragFailTweenEnd()
+	self:_setDragEnabled(true)
+	gohelper.setAsLastSibling(self.parent._cardItem1.go)
 end
 
-function var_0_0._onDragSuccessTweenEnd(arg_21_0, arg_21_1)
-	arg_21_0:killTweenId()
-	arg_21_0:_setToPos(arg_21_0._trscard, var_0_0.ZeroPos)
-	arg_21_0:_setToPos(arg_21_1._trscard, var_0_0.ZeroPos)
-	transformhelper.setLocalRotation(arg_21_0._trscard, 0, 0, arg_21_0.orignRoteZ)
-	arg_21_0:_setDragEnabled(true)
-	gohelper.setAsLastSibling(arg_21_0.parent._cardItem1.go)
+function SeasonHeroGroupCardItem:_onDragSuccessTweenEnd(targetItem)
+	self:killTweenId()
+	self:_setToPos(self._trscard, SeasonHeroGroupCardItem.ZeroPos)
+	self:_setToPos(targetItem._trscard, SeasonHeroGroupCardItem.ZeroPos)
+	transformhelper.setLocalRotation(self._trscard, 0, 0, self.orignRoteZ)
+	self:_setDragEnabled(true)
+	gohelper.setAsLastSibling(self.parent._cardItem1.go)
 
-	local var_21_0, var_21_1 = arg_21_1:getEquipId()
-	local var_21_2 = arg_21_1.id - 1
-	local var_21_3 = arg_21_1.slot
-	local var_21_4, var_21_5 = arg_21_0:getEquipId()
-	local var_21_6 = arg_21_0.id - 1
-	local var_21_7 = arg_21_0.slot
-	local var_21_8 = Activity104Model.instance:getCurSeasonId()
-	local var_21_9 = Activity104Model.instance:getSeasonCurSnapshotSubId(var_21_8)
+	local targetEquipId, targetEquipUid = targetItem:getEquipId()
+	local targetPos = targetItem.id - 1
+	local targetSlot = targetItem.slot
+	local srcEquipId, srcEquipUid = self:getEquipId()
+	local srcPos = self.id - 1
+	local srcSlot = self.slot
+	local actId = Activity104Model.instance:getCurSeasonId()
+	local groupId = Activity104Model.instance:getSeasonCurSnapshotSubId(actId)
 
-	Activity104EquipController.instance:exchangeEquip(var_21_6, var_21_7, var_21_5, var_21_2, var_21_3, var_21_1, var_21_8, var_21_9)
+	Activity104EquipController.instance:exchangeEquip(srcPos, srcSlot, srcEquipUid, targetPos, targetSlot, targetEquipUid, actId, groupId)
 end
 
-function var_0_0.killTweenId(arg_22_0)
-	if arg_22_0.tweenId then
-		ZProj.TweenHelper.KillById(arg_22_0.tweenId)
+function SeasonHeroGroupCardItem:killTweenId()
+	if self.tweenId then
+		ZProj.TweenHelper.KillById(self.tweenId)
 
-		arg_22_0.tweenId = nil
+		self.tweenId = nil
 	end
 
-	if arg_22_0.rotaTweenId then
-		ZProj.TweenHelper.KillById(arg_22_0.rotaTweenId)
+	if self.rotaTweenId then
+		ZProj.TweenHelper.KillById(self.rotaTweenId)
 
-		arg_22_0.rotaTweenId = nil
+		self.rotaTweenId = nil
 	end
 
-	if arg_22_0.moveTweenId then
-		ZProj.TweenHelper.KillById(arg_22_0.moveTweenId)
+	if self.moveTweenId then
+		ZProj.TweenHelper.KillById(self.moveTweenId)
 
-		arg_22_0.moveTweenId = nil
+		self.moveTweenId = nil
 	end
 
-	if arg_22_0.posTweenId then
-		ZProj.TweenHelper.KillById(arg_22_0.posTweenId)
+	if self.posTweenId then
+		ZProj.TweenHelper.KillById(self.posTweenId)
 
-		arg_22_0.posTweenId = nil
+		self.posTweenId = nil
 	end
 end
 
-function var_0_0.destory(arg_23_0)
-	if arg_23_0._drag then
-		arg_23_0._drag:RemoveDragBeginListener()
-		arg_23_0._drag:RemoveDragListener()
-		arg_23_0._drag:RemoveDragEndListener()
+function SeasonHeroGroupCardItem:destory()
+	if self._drag then
+		self._drag:RemoveDragBeginListener()
+		self._drag:RemoveDragListener()
+		self._drag:RemoveDragEndListener()
 	end
 
-	arg_23_0:killTweenId()
-	arg_23_0:__onDispose()
+	self:killTweenId()
+	self:__onDispose()
 end
 
-return var_0_0
+return SeasonHeroGroupCardItem

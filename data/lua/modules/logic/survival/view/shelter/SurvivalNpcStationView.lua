@@ -1,190 +1,199 @@
-﻿module("modules.logic.survival.view.shelter.SurvivalNpcStationView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/SurvivalNpcStationView.lua
 
-local var_0_0 = class("SurvivalNpcStationView", BaseView)
+module("modules.logic.survival.view.shelter.SurvivalNpcStationView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageMask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_Mask")
-	arg_1_0._simagePanelBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "Panel/#simage_PanelBG")
-	arg_1_0._simagePanelBG2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "Panel/Left/#simage_PanelBG2")
-	arg_1_0._txttitledec = gohelper.findChildText(arg_1_0.viewGO, "Panel/Left/#txt_titledec")
-	arg_1_0._gobuffitem = gohelper.findChild(arg_1_0.viewGO, "Panel/Left/Buff/Viewport/Content/#go_buffitem")
-	arg_1_0._txtdec = gohelper.findChildText(arg_1_0.viewGO, "Panel/Left/Buff/Viewport/Content/#go_buffitem/#txt_dec")
-	arg_1_0._scrolltag = gohelper.findChildScrollRect(arg_1_0.viewGO, "Panel/Left/Buff/Viewport/Content/#go_buffitem/#scroll_tag")
-	arg_1_0._gotagitem = gohelper.findChild(arg_1_0.viewGO, "Panel/Left/Buff/Viewport/Content/#go_buffitem/#scroll_tag/viewport/content/#go_tagitem")
-	arg_1_0._imageType = gohelper.findChildImage(arg_1_0.viewGO, "Panel/Left/Buff/Viewport/Content/#go_buffitem/#scroll_tag/viewport/content/#go_tagitem/#image_Type")
-	arg_1_0._txtType = gohelper.findChildText(arg_1_0.viewGO, "Panel/Left/Buff/Viewport/Content/#go_buffitem/#scroll_tag/viewport/content/#go_tagitem/#txt_Type")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Panel/Left/Buff/Viewport/Content/#go_buffitem/#scroll_tag/viewport/content/#go_tagitem/#btn_click")
-	arg_1_0._goNpcitem = gohelper.findChild(arg_1_0.viewGO, "Panel/Left/Npc/layout/#go_Npcitem")
-	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "Panel/Left/Npc/layout/#go_Npcitem/#go_empty")
-	arg_1_0._gohas = gohelper.findChild(arg_1_0.viewGO, "Panel/Left/Npc/layout/#go_Npcitem/#go_has")
-	arg_1_0._simagehero = gohelper.findChildSingleImage(arg_1_0.viewGO, "Panel/Left/Npc/layout/#go_Npcitem/#go_has/#simage_hero")
-	arg_1_0._scrollList = gohelper.findChildScrollRect(arg_1_0.viewGO, "Panel/Right/#scroll_List")
-	arg_1_0._goItem = gohelper.findChild(arg_1_0.viewGO, "Panel/Right/#scroll_List/Viewport/Content/#go_Item")
-	arg_1_0._goSmallItem = gohelper.findChild(arg_1_0.viewGO, "Panel/Right/#scroll_List/Viewport/Content/#go_Item/#go_SmallItem")
-	arg_1_0._imageChess = gohelper.findChildImage(arg_1_0.viewGO, "Panel/Right/#scroll_List/Viewport/Content/#go_Item/#go_SmallItem/#image_Chess")
-	arg_1_0._txtPartnerName = gohelper.findChildText(arg_1_0.viewGO, "Panel/Right/#scroll_List/Viewport/Content/#go_Item/#go_SmallItem/#txt_PartnerName")
-	arg_1_0._goSelected = gohelper.findChild(arg_1_0.viewGO, "Panel/Right/#scroll_List/Viewport/Content/#go_Item/#go_SmallItem/#go_Selected")
-	arg_1_0._gorecommend = gohelper.findChild(arg_1_0.viewGO, "Panel/Right/#scroll_List/Viewport/Content/#go_Item/#go_SmallItem/#go_recommend")
-	arg_1_0._btnNext = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Panel/Right/Btns/#btn_Next")
-	arg_1_0._goNextLock = gohelper.findChild(arg_1_0.viewGO, "Panel/Right/Btns/#go_NextLock")
-	arg_1_0._btnCancel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Panel/Right/Btns/#btn_Cancel")
+local SurvivalNpcStationView = class("SurvivalNpcStationView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SurvivalNpcStationView:onInitView()
+	self._simageMask = gohelper.findChildSingleImage(self.viewGO, "#simage_Mask")
+	self._simagePanelBG = gohelper.findChildSingleImage(self.viewGO, "Panel/#simage_PanelBG")
+	self._simagePanelBG2 = gohelper.findChildSingleImage(self.viewGO, "Panel/Left/#simage_PanelBG2")
+	self._txttitledec = gohelper.findChildText(self.viewGO, "Panel/Left/#txt_titledec")
+	self._gobuffitem = gohelper.findChild(self.viewGO, "Panel/Left/Buff/Viewport/Content/#go_buffitem")
+	self._txtdec = gohelper.findChildText(self.viewGO, "Panel/Left/Buff/Viewport/Content/#go_buffitem/#txt_dec")
+	self._scrolltag = gohelper.findChildScrollRect(self.viewGO, "Panel/Left/Buff/Viewport/Content/#go_buffitem/#scroll_tag")
+	self._gotagitem = gohelper.findChild(self.viewGO, "Panel/Left/Buff/Viewport/Content/#go_buffitem/#scroll_tag/viewport/content/#go_tagitem")
+	self._imageType = gohelper.findChildImage(self.viewGO, "Panel/Left/Buff/Viewport/Content/#go_buffitem/#scroll_tag/viewport/content/#go_tagitem/#image_Type")
+	self._txtType = gohelper.findChildText(self.viewGO, "Panel/Left/Buff/Viewport/Content/#go_buffitem/#scroll_tag/viewport/content/#go_tagitem/#txt_Type")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "Panel/Left/Buff/Viewport/Content/#go_buffitem/#scroll_tag/viewport/content/#go_tagitem/#btn_click")
+	self._goNpcitem = gohelper.findChild(self.viewGO, "Panel/Left/Npc/layout/#go_Npcitem")
+	self._goempty = gohelper.findChild(self.viewGO, "Panel/Left/Npc/layout/#go_Npcitem/#go_empty")
+	self._gohas = gohelper.findChild(self.viewGO, "Panel/Left/Npc/layout/#go_Npcitem/#go_has")
+	self._simagehero = gohelper.findChildSingleImage(self.viewGO, "Panel/Left/Npc/layout/#go_Npcitem/#go_has/#simage_hero")
+	self._scrollList = gohelper.findChildScrollRect(self.viewGO, "Panel/Right/#scroll_List")
+	self._goItem = gohelper.findChild(self.viewGO, "Panel/Right/#scroll_List/Viewport/Content/#go_Item")
+	self._goSmallItem = gohelper.findChild(self.viewGO, "Panel/Right/#scroll_List/Viewport/Content/#go_Item/#go_SmallItem")
+	self._imageChess = gohelper.findChildImage(self.viewGO, "Panel/Right/#scroll_List/Viewport/Content/#go_Item/#go_SmallItem/#image_Chess")
+	self._txtPartnerName = gohelper.findChildText(self.viewGO, "Panel/Right/#scroll_List/Viewport/Content/#go_Item/#go_SmallItem/#txt_PartnerName")
+	self._goSelected = gohelper.findChild(self.viewGO, "Panel/Right/#scroll_List/Viewport/Content/#go_Item/#go_SmallItem/#go_Selected")
+	self._gorecommend = gohelper.findChild(self.viewGO, "Panel/Right/#scroll_List/Viewport/Content/#go_Item/#go_SmallItem/#go_recommend")
+	self._btnNext = gohelper.findChildButtonWithAudio(self.viewGO, "Panel/Right/Btns/#btn_Next")
+	self._goNextLock = gohelper.findChild(self.viewGO, "Panel/Right/Btns/#go_NextLock")
+	self._btnCancel = gohelper.findChildButtonWithAudio(self.viewGO, "Panel/Right/Btns/#btn_Cancel")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
-	arg_2_0._btnNext:AddClickListener(arg_2_0._btnNextOnClick, arg_2_0)
-	arg_2_0._btnCancel:AddClickListener(arg_2_0._btnCancelOnClick, arg_2_0)
+function SurvivalNpcStationView:addEvents()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
+	self._btnNext:AddClickListener(self._btnNextOnClick, self)
+	self._btnCancel:AddClickListener(self._btnCancelOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
-	arg_3_0._btnNext:RemoveClickListener()
-	arg_3_0._btnCancel:RemoveClickListener()
+function SurvivalNpcStationView:removeEvents()
+	self._btnclick:RemoveClickListener()
+	self._btnNext:RemoveClickListener()
+	self._btnCancel:RemoveClickListener()
 end
 
-local var_0_1 = ZProj.UIEffectsCollection
+local ZProj_UIEffectsCollection = ZProj.UIEffectsCollection
 
-function var_0_0._btnclickOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function SurvivalNpcStationView:_btnclickOnClick()
+	self:closeThis()
 end
 
-function var_0_0.onClickModalMask(arg_5_0)
-	arg_5_0:closeThis()
+function SurvivalNpcStationView:onClickModalMask()
+	self:closeThis()
 end
 
-function var_0_0._btnNextOnClick(arg_6_0)
-	if not arg_6_0._fight:canSelectNpc() then
+function SurvivalNpcStationView:_btnNextOnClick()
+	if not self._fight:canSelectNpc() then
 		GameFacade.showToast(ToastEnum.SurvivalBossDotSelectNpc)
 
 		return
 	end
 
-	local var_6_0 = #SurvivalShelterNpcMonsterListModel.instance:getSelectList()
-	local var_6_1 = false
-	local var_6_2 = arg_6_0._fight.schemes
+	local selectNpcIds = SurvivalShelterNpcMonsterListModel.instance:getSelectList()
+	local selectNpcNum = #selectNpcIds
+	local isRepress = false
+	local schemes = self._fight.schemes
 
-	for iter_6_0, iter_6_1 in pairs(var_6_2) do
-		if SurvivalShelterMonsterModel.instance:calBuffIsRepress(iter_6_0) then
-			var_6_1 = true
+	for id, _ in pairs(schemes) do
+		local state = SurvivalShelterMonsterModel.instance:calBuffIsRepress(id)
+
+		if state then
+			isRepress = true
 		end
 	end
 
-	if var_6_0 > 0 and not var_6_1 then
-		GameFacade.showMessageBox(MessageBoxIdDefine.SurvivalSelectNpcNotRecommend, MsgBoxEnum.BoxType.Yes_No, arg_6_0._sendSelectNpc, nil, nil, arg_6_0, nil, nil)
+	if selectNpcNum > 0 and not isRepress then
+		GameFacade.showMessageBox(MessageBoxIdDefine.SurvivalSelectNpcNotRecommend, MsgBoxEnum.BoxType.Yes_No, self._sendSelectNpc, nil, nil, self, nil, nil)
 
 		return
 	else
-		arg_6_0:_sendSelectNpc()
+		self:_sendSelectNpc()
 	end
 end
 
-function var_0_0._sendSelectNpc(arg_7_0)
-	arg_7_0:closeThis()
+function SurvivalNpcStationView:_sendSelectNpc()
+	self:closeThis()
 end
 
-function var_0_0._btnCancelOnClick(arg_8_0)
-	SurvivalShelterNpcMonsterListModel.instance:setSelectNpcByList(arg_8_0._enterSelect)
-	arg_8_0:closeThis()
+function SurvivalNpcStationView:_btnCancelOnClick()
+	SurvivalShelterNpcMonsterListModel.instance:setSelectNpcByList(self._enterSelect)
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_9_0)
-	gohelper.setActive(arg_9_0._gobuffitem, false)
-	gohelper.setActive(arg_9_0._goNpcitem, false)
+function SurvivalNpcStationView:_editableInitView()
+	gohelper.setActive(self._gobuffitem, false)
+	gohelper.setActive(self._goNpcitem, false)
 
-	arg_9_0._nextUIEffect = var_0_1.Get(arg_9_0._btnNext.gameObject)
+	self._nextUIEffect = ZProj_UIEffectsCollection.Get(self._btnNext.gameObject)
 end
 
-function var_0_0.onUpdateParam(arg_10_0)
+function SurvivalNpcStationView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_11_0)
-	arg_11_0._enterSelect = SurvivalShelterNpcMonsterListModel.instance:getSelectList()
-	arg_11_0._fight = SurvivalShelterModel.instance:getWeekInfo():getMonsterFight()
+function SurvivalNpcStationView:onOpen()
+	self._enterSelect = SurvivalShelterNpcMonsterListModel.instance:getSelectList()
 
-	arg_11_0:refreshView()
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local fight = weekInfo:getMonsterFight()
+
+	self._fight = fight
+
+	self:refreshView()
 end
 
-function var_0_0.refreshView(arg_12_0)
+function SurvivalNpcStationView:refreshView()
 	SurvivalShelterNpcMonsterListModel.instance:refreshList()
-	arg_12_0:_refreshSchemes()
-	arg_12_0:_updateNpcInfo()
+	self:_refreshSchemes()
+	self:_updateNpcInfo()
 
-	local var_12_0 = arg_12_0._fight:canSelectNpc()
+	local canSelectNpc = self._fight:canSelectNpc()
 
-	if arg_12_0._nextUIEffect then
-		arg_12_0._nextUIEffect:SetGray(not var_12_0)
+	if self._nextUIEffect then
+		self._nextUIEffect:SetGray(not canSelectNpc)
 	end
 end
 
-function var_0_0._refreshSchemes(arg_13_0)
-	local var_13_0 = arg_13_0._fight.schemes
+function SurvivalNpcStationView:_refreshSchemes()
+	local schemes = self._fight.schemes
 
-	if arg_13_0._schemesItems == nil then
-		arg_13_0._schemesItems = arg_13_0:getUserDataTb_()
+	if self._schemesItems == nil then
+		self._schemesItems = self:getUserDataTb_()
 	end
 
-	for iter_13_0, iter_13_1 in pairs(var_13_0) do
-		local var_13_1 = arg_13_0._schemesItems[iter_13_0]
+	for id, repress in pairs(schemes) do
+		local item = self._schemesItems[id]
 
-		if var_13_1 == nil then
-			local var_13_2 = gohelper.cloneInPlace(arg_13_0._gobuffitem)
+		if item == nil then
+			local go = gohelper.cloneInPlace(self._gobuffitem)
 
-			var_13_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_13_2, SurvivalMonsterEventSelectBuffItem)
+			item = MonoHelper.addNoUpdateLuaComOnceToGo(go, SurvivalMonsterEventSelectBuffItem)
 
-			var_13_1:initItem(iter_13_0)
+			item:initItem(id)
 
-			arg_13_0._schemesItems[iter_13_0] = var_13_1
+			self._schemesItems[id] = item
 
-			gohelper.setActive(var_13_2, true)
+			gohelper.setActive(go, true)
 		end
 
-		var_13_1:updateItem()
+		item:updateItem()
 	end
 end
 
-function var_0_0._updateNpcInfo(arg_14_0)
-	local var_14_0 = SurvivalShelterNpcMonsterListModel.instance:getSelectList()
+function SurvivalNpcStationView:_updateNpcInfo()
+	local selectNpcIds = SurvivalShelterNpcMonsterListModel.instance:getSelectList()
 
-	if var_14_0 == nil then
+	if selectNpcIds == nil then
 		return
 	end
 
-	if arg_14_0._smallNpcItems == nil then
-		arg_14_0._smallNpcItems = arg_14_0:getUserDataTb_()
+	if self._smallNpcItems == nil then
+		self._smallNpcItems = self:getUserDataTb_()
 	end
 
-	local var_14_1 = SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.ShelterMonsterSelectNpcMax)
-	local var_14_2 = var_14_1 and tonumber(var_14_1) or 0
+	local configValue = SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.ShelterMonsterSelectNpcMax)
+	local count = configValue and tonumber(configValue) or 0
 
-	for iter_14_0 = 1, var_14_2 do
-		local var_14_3 = arg_14_0._smallNpcItems[iter_14_0]
-		local var_14_4 = var_14_0[iter_14_0]
+	for i = 1, count do
+		local item = self._smallNpcItems[i]
+		local npcId = selectNpcIds[i]
 
-		if var_14_3 == nil then
-			local var_14_5 = gohelper.cloneInPlace(arg_14_0._goNpcitem)
+		if item == nil then
+			local go = gohelper.cloneInPlace(self._goNpcitem)
 
-			var_14_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_14_5, SurvivalMonsterEventSmallNpcItem)
+			item = MonoHelper.addNoUpdateLuaComOnceToGo(go, SurvivalMonsterEventSmallNpcItem)
 
-			gohelper.setActive(var_14_5, true)
-			table.insert(arg_14_0._smallNpcItems, var_14_3)
+			gohelper.setActive(go, true)
+			table.insert(self._smallNpcItems, item)
 		end
 
-		var_14_3:setNeedShowEmpty(true)
-		var_14_3:updateItem(var_14_4)
+		item:setNeedShowEmpty(true)
+		item:updateItem(npcId)
 	end
 end
 
-function var_0_0.onClose(arg_15_0)
+function SurvivalNpcStationView:onClose()
 	SurvivalController.instance:dispatchEvent(SurvivalEvent.UpdateView)
 end
 
-function var_0_0.onDestroyView(arg_16_0)
+function SurvivalNpcStationView:onDestroyView()
 	return
 end
 
-return var_0_0
+return SurvivalNpcStationView

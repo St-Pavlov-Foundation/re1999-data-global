@@ -1,8 +1,10 @@
-﻿module("modules.logic.gm.model.GMHelpViewBrowseModel", package.seeall)
+﻿-- chunkname: @modules/logic/gm/model/GMHelpViewBrowseModel.lua
 
-local var_0_0 = class("GMHelpViewBrowseModel", ListScrollModel)
+module("modules.logic.gm.model.GMHelpViewBrowseModel", package.seeall)
 
-var_0_0.tabModeEnum = {
+local GMHelpViewBrowseModel = class("GMHelpViewBrowseModel", ListScrollModel)
+
+GMHelpViewBrowseModel.tabModeEnum = {
 	fightTechniqueGuide = 5,
 	fightTechniqueView = 3,
 	weekWalkRuleView = 6,
@@ -11,202 +13,203 @@ var_0_0.tabModeEnum = {
 	fightGuideView = 2
 }
 
-function var_0_0.ctor(arg_1_0)
-	var_0_0.super.ctor(arg_1_0)
+function GMHelpViewBrowseModel:ctor()
+	GMHelpViewBrowseModel.super.ctor(self)
 end
 
-function var_0_0.reInit(arg_2_0)
+function GMHelpViewBrowseModel:reInit()
 	return
 end
 
-function var_0_0.getCurrentTabMode(arg_3_0)
-	return arg_3_0._currentTabMode
+function GMHelpViewBrowseModel:getCurrentTabMode()
+	return self._currentTabMode
 end
 
-function var_0_0._getTabModeList(arg_4_0, arg_4_1)
-	local var_4_0 = {}
+function GMHelpViewBrowseModel:_getTabModeList(tabMode)
+	local list = {}
 
-	if arg_4_1 == var_0_0.tabModeEnum.helpView then
-		var_4_0 = arg_4_0:_getHelpViewList()
-	elseif arg_4_1 == var_0_0.tabModeEnum.fightGuideView then
-		var_4_0 = arg_4_0:_getFightGuideList()
-	elseif arg_4_1 == var_0_0.tabModeEnum.fightTechniqueView then
-		var_4_0 = arg_4_0:_getFightTechniqueList()
-	elseif arg_4_1 == var_0_0.tabModeEnum.fightTechniqueTipView then
-		var_4_0 = arg_4_0:_getFightTechniqueTipList()
-	elseif arg_4_1 == var_0_0.tabModeEnum.fightTechniqueGuide then
-		var_4_0 = arg_4_0:_getFightTechniqueGuideList()
-	elseif arg_4_1 == var_0_0.tabModeEnum.weekWalkRuleView then
-		var_4_0 = arg_4_0:_getWeekWalkRuleList()
+	if tabMode == GMHelpViewBrowseModel.tabModeEnum.helpView then
+		list = self:_getHelpViewList()
+	elseif tabMode == GMHelpViewBrowseModel.tabModeEnum.fightGuideView then
+		list = self:_getFightGuideList()
+	elseif tabMode == GMHelpViewBrowseModel.tabModeEnum.fightTechniqueView then
+		list = self:_getFightTechniqueList()
+	elseif tabMode == GMHelpViewBrowseModel.tabModeEnum.fightTechniqueTipView then
+		list = self:_getFightTechniqueTipList()
+	elseif tabMode == GMHelpViewBrowseModel.tabModeEnum.fightTechniqueGuide then
+		list = self:_getFightTechniqueGuideList()
+	elseif tabMode == GMHelpViewBrowseModel.tabModeEnum.weekWalkRuleView then
+		list = self:_getWeekWalkRuleList()
 	else
-		logError("GMHelpViewBrowseModel错误，tabMode获取列表未定义：" .. arg_4_1)
+		logError("GMHelpViewBrowseModel错误，tabMode获取列表未定义：" .. tabMode)
 	end
 
-	return var_4_0
+	return list
 end
 
-function var_0_0.setListByTabMode(arg_5_0, arg_5_1)
-	if arg_5_0._currentTabMode and arg_5_0._currentTabMode == arg_5_1 then
+function GMHelpViewBrowseModel:setListByTabMode(tabMode)
+	if self._currentTabMode and self._currentTabMode == tabMode then
 		return
 	end
 
-	local var_5_0 = arg_5_0:_getTabModeList(arg_5_1)
+	local list = self:_getTabModeList(tabMode)
 
-	arg_5_0._currentTabMode = arg_5_1
+	self._currentTabMode = tabMode
 
-	arg_5_0:setList(var_5_0)
-	arg_5_0:onModelUpdate()
+	self:setList(list)
+	self:onModelUpdate()
 end
 
-function var_0_0.setSearch(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0:_getTabModeList(arg_6_0._currentTabMode)
-	local var_6_1 = {}
+function GMHelpViewBrowseModel:setSearch(searchTxt)
+	local tmpList = self:_getTabModeList(self._currentTabMode)
+	local list = {}
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
-		local var_6_2 = true
+	for _, item in ipairs(tmpList) do
+		local match = true
 
-		if not string.nilorempty(arg_6_1) then
-			var_6_2 = string.find(tostring(iter_6_1.id), arg_6_1) or string.find(iter_6_1.icon, arg_6_1)
+		if not string.nilorempty(searchTxt) then
+			match = string.find(tostring(item.id), searchTxt) or string.find(item.icon, searchTxt)
 		end
 
-		if var_6_2 then
-			table.insert(var_6_1, iter_6_1)
+		if match then
+			table.insert(list, item)
 		end
 	end
 
-	arg_6_0:setList(var_6_1)
-	arg_6_0:onModelUpdate()
+	self:setList(list)
+	self:onModelUpdate()
 end
 
-function var_0_0._getHelpViewList(arg_7_0)
-	local var_7_0 = {}
+function GMHelpViewBrowseModel:_getHelpViewList()
+	local list = {}
 
-	for iter_7_0, iter_7_1 in ipairs(lua_helppage.configList) do
-		if not string.nilorempty(iter_7_1.icon) then
-			local var_7_1
+	for _, helpPageCO in ipairs(lua_helppage.configList) do
+		if not string.nilorempty(helpPageCO.icon) then
+			local iconPath
 
-			if iter_7_1.type == HelpEnum.HelpType.Normal then
-				var_7_1 = ResUrl.getHelpItem(iter_7_1.icon, iter_7_1.isCn == 1)
-			elseif iter_7_1.type == HelpEnum.HelpType.VersionActivity then
-				var_7_1 = ResUrl.getVersionActivityHelpItem(iter_7_1.icon, iter_7_1.isCn == 1)
+			if helpPageCO.type == HelpEnum.HelpType.Normal then
+				iconPath = ResUrl.getHelpItem(helpPageCO.icon, helpPageCO.isCn == 1)
+			elseif helpPageCO.type == HelpEnum.HelpType.VersionActivity then
+				iconPath = ResUrl.getVersionActivityHelpItem(helpPageCO.icon, helpPageCO.isCn == 1)
 			end
 
-			if var_7_1 then
-				local var_7_2 = System.IO.Path.Combine(SLFramework.FrameworkSettings.AssetRootDir, var_7_1)
+			if iconPath then
+				local iconPathEditor = System.IO.Path.Combine(SLFramework.FrameworkSettings.AssetRootDir, iconPath)
 
-				if GameResMgr.IsFromEditorDir == false or SLFramework.FileHelper.IsFileExists(var_7_2) then
-					table.insert(var_7_0, iter_7_1)
+				if GameResMgr.IsFromEditorDir == false or SLFramework.FileHelper.IsFileExists(iconPathEditor) then
+					table.insert(list, helpPageCO)
 				end
 			end
 		end
 	end
 
-	return var_7_0
+	return list
 end
 
-function var_0_0._getFightGuideList(arg_8_0)
-	local var_8_0 = {}
-	local var_8_1 = ResUrl.getFightGuideLangDir()
+function GMHelpViewBrowseModel:_getFightGuideList()
+	local list = {}
+	local fightGuideLangDir = ResUrl.getFightGuideLangDir()
 
-	arg_8_0:_fillFightGuideListByDirPath(var_8_0, var_8_1)
+	self:_fillFightGuideListByDirPath(list, fightGuideLangDir)
 
-	local var_8_2 = ResUrl.getFightGuideDir()
+	local fightGuideDir = ResUrl.getFightGuideDir()
 
-	arg_8_0:_fillFightGuideListByDirPath(var_8_0, var_8_2)
+	self:_fillFightGuideListByDirPath(list, fightGuideDir)
 
-	return var_8_0
+	return list
 end
 
-function var_0_0._fillFightGuideListByDirPath(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = SLFramework.FileHelper.GetDirFilePaths(arg_9_2)
+function GMHelpViewBrowseModel:_fillFightGuideListByDirPath(list, dirPath)
+	local allLangIconPath = SLFramework.FileHelper.GetDirFilePaths(dirPath)
 
-	if not var_9_0 then
+	if not allLangIconPath then
 		return
 	end
 
-	for iter_9_0 = 0, var_9_0.Length - 1 do
-		local var_9_1 = var_9_0[iter_9_0]:match(".+/([^/]+)%.png$")
+	for i = 0, allLangIconPath.Length - 1 do
+		local path = allLangIconPath[i]
+		local iconNameWithoutSuffix = path:match(".+/([^/]+)%.png$")
 
-		if var_9_1 then
-			local var_9_2 = var_9_1:match("%d+$")
+		if iconNameWithoutSuffix then
+			local id = iconNameWithoutSuffix:match("%d+$")
 
-			if var_9_2 then
-				local var_9_3 = {
-					id = tonumber(var_9_2),
-					icon = var_9_1
-				}
+			if id then
+				local pageConfig = {}
 
-				table.insert(arg_9_1, var_9_3)
+				pageConfig.id = tonumber(id)
+				pageConfig.icon = iconNameWithoutSuffix
+
+				table.insert(list, pageConfig)
 			end
 		end
 	end
 end
 
-function var_0_0._getFightTechniqueList(arg_10_0)
-	local var_10_0 = {}
+function GMHelpViewBrowseModel:_getFightTechniqueList()
+	local list = {}
 
-	for iter_10_0, iter_10_1 in ipairs(lua_fight_technique.configList) do
-		local var_10_1 = {
-			id = iter_10_1.id,
-			icon = iter_10_1.picture1
-		}
+	for _, fightTechniqueConfig in ipairs(lua_fight_technique.configList) do
+		local pageConfig = {}
 
-		table.insert(var_10_0, var_10_1)
+		pageConfig.id = fightTechniqueConfig.id
+		pageConfig.icon = fightTechniqueConfig.picture1
+
+		table.insert(list, pageConfig)
 	end
 
-	return var_10_0
+	return list
 end
 
-function var_0_0._getFightTechniqueTipList(arg_11_0)
-	local var_11_0 = {}
+function GMHelpViewBrowseModel:_getFightTechniqueTipList()
+	local list = {}
 
-	for iter_11_0, iter_11_1 in ipairs(lua_fight_technique.configList) do
-		if not string.nilorempty(iter_11_1.picture2) then
-			local var_11_1 = {
-				id = iter_11_1.id,
-				icon = iter_11_1.picture2
-			}
+	for _, fightTechniqueConfig in ipairs(lua_fight_technique.configList) do
+		if not string.nilorempty(fightTechniqueConfig.picture2) then
+			local pageConfig = {}
 
-			table.insert(var_11_0, var_11_1)
+			pageConfig.id = fightTechniqueConfig.id
+			pageConfig.icon = fightTechniqueConfig.picture2
+
+			table.insert(list, pageConfig)
 		end
 	end
 
-	return var_11_0
+	return list
 end
 
-function var_0_0._getFightTechniqueGuideList(arg_12_0)
-	local var_12_0 = {}
+function GMHelpViewBrowseModel:_getFightTechniqueGuideList()
+	local list = {}
 
-	for iter_12_0, iter_12_1 in ipairs(lua_monster_guide_focus.configList) do
-		if not string.nilorempty(iter_12_1.icon) then
-			local var_12_1 = {
-				id = iter_12_1.id,
-				icon = iter_12_1.icon,
-				cfg = iter_12_1
-			}
+	for _, cfg in ipairs(lua_monster_guide_focus.configList) do
+		if not string.nilorempty(cfg.icon) then
+			local pageConfig = {}
 
-			table.insert(var_12_0, var_12_1)
+			pageConfig.id = cfg.id
+			pageConfig.icon = cfg.icon
+			pageConfig.cfg = cfg
+
+			table.insert(list, pageConfig)
 		end
 	end
 
-	return var_12_0
+	return list
 end
 
-function var_0_0._getWeekWalkRuleList(arg_13_0)
-	local var_13_0 = {}
+function GMHelpViewBrowseModel:_getWeekWalkRuleList()
+	local list = {}
 
-	for iter_13_0, iter_13_1 in ipairs(lua_weekwalk_rule.configList) do
-		local var_13_1 = {
-			id = iter_13_1.id,
-			icon = iter_13_1.icon
-		}
+	for _, ruleConfig in ipairs(lua_weekwalk_rule.configList) do
+		local pageConfig = {}
 
-		table.insert(var_13_0, var_13_1)
+		pageConfig.id = ruleConfig.id
+		pageConfig.icon = ruleConfig.icon
+
+		table.insert(list, pageConfig)
 	end
 
-	return var_13_0
+	return list
 end
 
-var_0_0.instance = var_0_0.New()
+GMHelpViewBrowseModel.instance = GMHelpViewBrowseModel.New()
 
-return var_0_0
+return GMHelpViewBrowseModel

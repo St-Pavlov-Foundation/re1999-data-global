@@ -1,9 +1,11 @@
-﻿module("modules.logic.explore.controller.ExploreMapTriggerController", package.seeall)
+﻿-- chunkname: @modules/logic/explore/controller/ExploreMapTriggerController.lua
 
-local var_0_0 = class("ExploreMapTriggerController", BaseController)
+module("modules.logic.explore.controller.ExploreMapTriggerController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0.triggerHandleDic = {
+local ExploreMapTriggerController = class("ExploreMapTriggerController", BaseController)
+
+function ExploreMapTriggerController:onInit()
+	self.triggerHandleDic = {
 		[ExploreEnum.TriggerEvent.Award] = ExploreTriggerAward,
 		[ExploreEnum.TriggerEvent.Story] = ExploreTriggerStory,
 		[ExploreEnum.TriggerEvent.ChangeCamera] = ExploreTriggerCameraCO,
@@ -19,328 +21,331 @@ function var_0_0.onInit(arg_1_0)
 		[ExploreEnum.TriggerEvent.BubbleDialogue] = ExploreTriggerBubbleDialogue,
 		[ExploreEnum.TriggerEvent.HeroPlayAnim] = ExploreTriggerHeroPlayAnim
 	}
-	arg_1_0._triggerflowPool = LuaObjPool.New(5, function()
+	self._triggerflowPool = LuaObjPool.New(5, function()
 		return BaseExploreSequence.New()
-	end, function(arg_3_0)
-		arg_3_0:dispose()
+	end, function(flow)
+		flow:dispose()
 	end, function()
 		return
 	end)
-	arg_1_0._usingTriggerflowDic = {}
-	arg_1_0._triggerHandlePoolDic = {}
+	self._usingTriggerflowDic = {}
+	self._triggerHandlePoolDic = {}
 end
 
-function var_0_0.onInitFinish(arg_5_0)
+function ExploreMapTriggerController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_6_0)
-	ExploreController.instance:registerCallback(ExploreEvent.TryTriggerUnit, arg_6_0._tryTriggerUnit, arg_6_0)
-	ExploreController.instance:registerCallback(ExploreEvent.TryCancelTriggerUnit, arg_6_0._tryCancelTriggerUnit, arg_6_0)
+function ExploreMapTriggerController:addConstEvents()
+	ExploreController.instance:registerCallback(ExploreEvent.TryTriggerUnit, self._tryTriggerUnit, self)
+	ExploreController.instance:registerCallback(ExploreEvent.TryCancelTriggerUnit, self._tryCancelTriggerUnit, self)
 end
 
-function var_0_0.reInit(arg_7_0)
-	arg_7_0._triggerflowPool:dispose()
+function ExploreMapTriggerController:reInit()
+	self._triggerflowPool:dispose()
 end
 
-function var_0_0.getFlow(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0._usingTriggerflowDic[arg_8_1]
+function ExploreMapTriggerController:getFlow(unitId)
+	local flow = self._usingTriggerflowDic[unitId]
 
-	if var_8_0 == nil then
-		var_8_0 = arg_8_0._triggerflowPool:getObject()
+	if flow == nil then
+		flow = self._triggerflowPool:getObject()
 	end
 
-	arg_8_0._usingTriggerflowDic[arg_8_1] = var_8_0
+	self._usingTriggerflowDic[unitId] = flow
 
-	return var_8_0
+	return flow
 end
 
-function var_0_0.releaseFlow(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0._usingTriggerflowDic[arg_9_1]
+function ExploreMapTriggerController:releaseFlow(unitId)
+	local flow = self._usingTriggerflowDic[unitId]
 
-	arg_9_0._triggerflowPool:putObject(var_9_0)
+	self._triggerflowPool:putObject(flow)
 
-	arg_9_0._usingTriggerflowDic[arg_9_1] = nil
+	self._usingTriggerflowDic[unitId] = nil
 end
 
-function var_0_0.getTriggerHandle(arg_10_0, arg_10_1)
-	if arg_10_0.triggerHandleDic[arg_10_1] then
-		local var_10_0 = arg_10_0._triggerHandlePoolDic[arg_10_1]
+function ExploreMapTriggerController:getTriggerHandle(triggerType)
+	if self.triggerHandleDic[triggerType] then
+		local pool = self._triggerHandlePoolDic[triggerType]
 
-		if var_10_0 == nil then
-			var_10_0 = LuaObjPool.New(5, function()
-				return arg_10_0.triggerHandleDic[arg_10_1].New()
-			end, function(arg_12_0)
-				arg_12_0:clearWork()
+		if pool == nil then
+			pool = LuaObjPool.New(5, function()
+				return self.triggerHandleDic[triggerType].New()
+			end, function(work)
+				work:clearWork()
 			end, function()
 				return
 			end)
-			arg_10_0._triggerHandlePoolDic[arg_10_1] = var_10_0
+			self._triggerHandlePoolDic[triggerType] = pool
 		end
 
-		return var_10_0:getObject()
+		return pool:getObject()
 	end
 end
 
-function var_0_0.registerMap(arg_14_0, arg_14_1)
-	arg_14_0._map = arg_14_1
+function ExploreMapTriggerController:registerMap(map)
+	self._map = map
 end
 
-function var_0_0.unRegisterMap(arg_15_0, arg_15_1)
-	if arg_15_0._map == arg_15_1 then
-		arg_15_0._map = nil
+function ExploreMapTriggerController:unRegisterMap(map)
+	if self._map == map then
+		self._map = nil
 	end
 end
 
-function var_0_0.getMap(arg_16_0)
-	return arg_16_0._map
+function ExploreMapTriggerController:getMap()
+	return self._map
 end
 
-function var_0_0._tryCancelTriggerUnit(arg_17_0, arg_17_1)
-	if not arg_17_0._map:isInitDone() then
+function ExploreMapTriggerController:_tryCancelTriggerUnit(unitId)
+	if not self._map:isInitDone() then
 		return
 	end
 
-	local var_17_0 = arg_17_0._map:getUnit(arg_17_1)
+	local unit = self._map:getUnit(unitId)
 
-	if var_17_0 then
-		var_17_0:cancelTrigger()
+	if unit then
+		unit:cancelTrigger()
 	end
 end
 
-function var_0_0._tryTriggerUnit(arg_18_0, arg_18_1, arg_18_2)
-	if not arg_18_0._map:isInitDone() then
+function ExploreMapTriggerController:_tryTriggerUnit(unitId, isClient)
+	if not self._map:isInitDone() then
 		return
 	end
 
-	local var_18_0 = arg_18_0._map:getUnit(arg_18_1)
+	local unit = self._map:getUnit(unitId)
 
-	if var_18_0 then
-		local var_18_1 = ExploreModel.instance:getCarryUnit()
+	if unit then
+		local carryUnit = ExploreModel.instance:getCarryUnit()
 
-		if not arg_18_2 and var_18_1 and (not isTypeOf(var_18_0, ExplorePipeEntranceUnit) or var_18_0.mo:getColor() ~= ExploreEnum.PipeColor.None) then
+		if not isClient and carryUnit and (not isTypeOf(unit, ExplorePipeEntranceUnit) or unit.mo:getColor() ~= ExploreEnum.PipeColor.None) then
 			ToastController.instance:showToast(ExploreConstValue.Toast.ExploreCantTrigger)
 
 			return
 		end
 
-		local var_18_2 = {}
+		local interactOptions = {}
 
-		if var_18_0.mo.isCanMove and not var_18_0.mo:isInteractFinishState() then
-			table.insert(var_18_2, ExploreInteractOptionMO.New(luaLang("explore_op_move"), arg_18_0._beginMoveUnit, arg_18_0, var_18_0))
+		if unit.mo.isCanMove and not unit.mo:isInteractFinishState() then
+			table.insert(interactOptions, ExploreInteractOptionMO.New(luaLang("explore_op_move"), self._beginMoveUnit, self, unit))
 		end
 
-		if not var_18_0.mo:isInteractEnabled() and var_18_0:getFixItemId() then
-			table.insert(var_18_2, ExploreInteractOptionMO.New(luaLang("explore_op_fix"), arg_18_0._beginFixUnit, arg_18_0, var_18_0))
+		if not unit.mo:isInteractEnabled() and unit:getFixItemId() then
+			table.insert(interactOptions, ExploreInteractOptionMO.New(luaLang("explore_op_fix"), self._beginFixUnit, self, unit))
 		end
 
-		if var_18_0:canTrigger() then
-			table.insert(var_18_2, ExploreInteractOptionMO.New(luaLang("explore_op_interact"), arg_18_0._beginTriggerUnit, arg_18_0, var_18_0, arg_18_2))
+		if unit:canTrigger() then
+			table.insert(interactOptions, ExploreInteractOptionMO.New(luaLang("explore_op_interact"), self._beginTriggerUnit, self, unit, isClient))
 		end
 
-		local var_18_3 = #var_18_2
+		local len = #interactOptions
 
-		if var_18_3 == 1 then
-			var_18_2[1].optionCallBack(var_18_2[1].optionCallObj, var_18_2[1].unit, var_18_2[1].isClient)
-		elseif var_18_3 > 1 then
-			ViewMgr.instance:openView(ViewName.ExploreInteractOptionView, var_18_2)
+		if len == 1 then
+			interactOptions[1].optionCallBack(interactOptions[1].optionCallObj, interactOptions[1].unit, interactOptions[1].isClient)
+		elseif len > 1 then
+			ViewMgr.instance:openView(ViewName.ExploreInteractOptionView, interactOptions)
 		end
 	end
 end
 
-function var_0_0._beginMoveUnit(arg_19_0, arg_19_1)
-	ExploreController.instance:dispatchEvent(ExploreEvent.SetMoveUnit, arg_19_1)
+function ExploreMapTriggerController:_beginMoveUnit(unit)
+	ExploreController.instance:dispatchEvent(ExploreEvent.SetMoveUnit, unit)
 end
 
-function var_0_0._beginFixUnit(arg_20_0, arg_20_1)
-	local var_20_0 = ExploreBackpackModel.instance:getItem(arg_20_1:getFixItemId())
+function ExploreMapTriggerController:_beginFixUnit(unit)
+	local itemMO = ExploreBackpackModel.instance:getItem(unit:getFixItemId())
 
-	if not var_20_0 then
+	if not itemMO then
 		ToastController.instance:showToast(ExploreConstValue.Toast.NoItem)
 
 		return
 	end
 
-	local var_20_1 = ExploreController.instance:getMap():getHero()
+	local hero = ExploreController.instance:getMap():getHero()
 
-	var_20_1:onCheckDir(var_20_1.nodePos, arg_20_1.nodePos)
-	var_20_1:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.Fix, true, true)
-	var_20_1.uiComp:addUI(ExploreRoleFixView):setFixUnit(arg_20_1)
-	ExploreRpc.instance:sendExploreUseItemRequest(var_20_0.id, 0, 0, arg_20_1.id)
+	hero:onCheckDir(hero.nodePos, unit.nodePos)
+	hero:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.Fix, true, true)
 
-	local var_20_2, var_20_3, var_20_4, var_20_5 = ExploreConfig.instance:getUnitEffectConfig(arg_20_1:getResPath(), "fix")
+	local fixView = hero.uiComp:addUI(ExploreRoleFixView)
 
-	ExploreHelper.triggerAudio(var_20_4, var_20_5, arg_20_1.go)
+	fixView:setFixUnit(unit)
+	ExploreRpc.instance:sendExploreUseItemRequest(itemMO.id, 0, 0, unit.id)
+
+	local effName, isOnce, audioId, isBindGo = ExploreConfig.instance:getUnitEffectConfig(unit:getResPath(), "fix")
+
+	ExploreHelper.triggerAudio(audioId, isBindGo, unit.go)
 end
 
-function var_0_0._beginTriggerUnit(arg_21_0, arg_21_1, arg_21_2)
-	local var_21_0 = arg_21_1:getUnitType()
-	local var_21_1 = arg_21_1:tryTrigger()
+function ExploreMapTriggerController:_beginTriggerUnit(unit, isClient)
+	local unitType = unit:getUnitType()
+	local isTrigger = unit:tryTrigger()
 
-	if var_21_0 ~= ExploreEnum.ItemType.Bonus then
-		local var_21_2 = ExploreController.instance:getMap():getHero()
+	if unitType ~= ExploreEnum.ItemType.Bonus then
+		local hero = ExploreController.instance:getMap():getHero()
 
-		if not arg_21_2 and ExploreHelper.getDistance(var_21_2.nodePos, arg_21_1.nodePos) == 1 then
-			var_21_2:onCheckDir(var_21_2.nodePos, arg_21_1.nodePos)
+		if not isClient and ExploreHelper.getDistance(hero.nodePos, unit.nodePos) == 1 then
+			hero:onCheckDir(hero.nodePos, unit.nodePos)
 		end
 
-		if var_21_1 then
-			local var_21_3 = ExploreAnimEnum.RoleAnimStatus.Interact
+		if isTrigger then
+			local status = ExploreAnimEnum.RoleAnimStatus.Interact
 
-			if var_21_0 == ExploreEnum.ItemType.StoneTable or isTypeOf(arg_21_1, ExploreItemUnit) then
-				var_21_3 = ExploreAnimEnum.RoleAnimStatus.CreateUnit
+			if unitType == ExploreEnum.ItemType.StoneTable or isTypeOf(unit, ExploreItemUnit) then
+				status = ExploreAnimEnum.RoleAnimStatus.CreateUnit
 			end
 
-			var_21_2:setHeroStatus(var_21_3, true, true)
+			hero:setHeroStatus(status, true, true)
 		end
 	end
 end
 
-function var_0_0.triggerUnit(arg_22_0, arg_22_1, arg_22_2)
-	if arg_22_0._map:isInitDone() == false then
+function ExploreMapTriggerController:triggerUnit(unit, clientOnly)
+	if self._map:isInitDone() == false then
 		return
 	end
 
-	local var_22_0 = arg_22_1.id
-	local var_22_1 = arg_22_0:getFlow(var_22_0)
+	local unitId = unit.id
+	local flow = self:getFlow(unitId)
 
-	var_22_1:buildFlow()
+	flow:buildFlow()
 
-	local var_22_2 = true
-	local var_22_3 = arg_22_1:getUnitType()
+	local isFirstDialog = true
+	local unitType = unit:getUnitType()
 
-	if var_22_3 == ExploreEnum.ItemType.BonusScene then
-		local var_22_4 = ExploreTriggerBonusScene.New()
+	if unitType == ExploreEnum.ItemType.BonusScene then
+		local t = ExploreTriggerBonusScene.New()
 
-		var_22_4:setParam(nil, arg_22_1, 0, arg_22_2)
-		var_22_1:addWork(var_22_4)
+		t:setParam(nil, unit, 0, clientOnly)
+		flow:addWork(t)
 	end
 
-	for iter_22_0, iter_22_1 in ipairs(arg_22_1:getExploreUnitMO().triggerEffects) do
-		local var_22_5 = iter_22_1[1]
-		local var_22_6 = arg_22_0:getTriggerHandle(var_22_5)
+	for i, v in ipairs(unit:getExploreUnitMO().triggerEffects) do
+		local triggerType = v[1]
+		local handler = self:getTriggerHandle(triggerType)
 
-		if var_22_6 then
-			var_22_6:setParam(iter_22_1[2], arg_22_1, iter_22_0, arg_22_2)
+		if handler then
+			handler:setParam(v[2], unit, i, clientOnly)
 
-			if var_22_5 == ExploreEnum.TriggerEvent.Dialogue then
-				if var_22_2 then
-					var_22_2 = false
+			if triggerType == ExploreEnum.TriggerEvent.Dialogue then
+				if isFirstDialog then
+					isFirstDialog = false
 				else
-					var_22_6.isNoFirstDialog = true
+					handler.isNoFirstDialog = true
 				end
 			end
 
-			var_22_1:addWork(var_22_6)
+			flow:addWork(handler)
 		end
 	end
 
-	if not ExploreEnum.ServerTriggerType[var_22_3] and arg_22_1.mo.triggerByClick or arg_22_1:getUnitType() == ExploreEnum.ItemType.Reset then
-		local var_22_7 = ExploreTriggerNormal.New()
+	if not ExploreEnum.ServerTriggerType[unitType] and unit.mo.triggerByClick or unit:getUnitType() == ExploreEnum.ItemType.Reset then
+		local t = ExploreTriggerNormal.New()
 
-		var_22_7:setParam(nil, arg_22_1, 0, arg_22_2)
-		var_22_1:addWork(var_22_7)
+		t:setParam(nil, unit, 0, clientOnly)
+		flow:addWork(t)
 	end
 
-	var_22_1:start(function(arg_23_0)
-		if arg_23_0 then
-			arg_22_0:triggerDone(var_22_0)
+	flow:start(function(isSuccess)
+		if isSuccess then
+			self:triggerDone(unitId)
 		end
 	end)
 end
 
-function var_0_0.triggerDone(arg_24_0, arg_24_1)
-	arg_24_0:releaseFlow(arg_24_1)
-	arg_24_0:doDoneTrigger(arg_24_1)
+function ExploreMapTriggerController:triggerDone(unitId)
+	self:releaseFlow(unitId)
+	self:doDoneTrigger(unitId)
 end
 
-function var_0_0.setDonePerformance(arg_25_0, arg_25_1)
-	for iter_25_0, iter_25_1 in ipairs(arg_25_1:getExploreUnitMO().doneEffects) do
-		local var_25_0 = arg_25_0:getTriggerHandle(iter_25_1[1])
+function ExploreMapTriggerController:setDonePerformance(unit)
+	for i, v in ipairs(unit:getExploreUnitMO().doneEffects) do
+		local handler = self:getTriggerHandle(v[1])
 
-		if var_25_0 then
-			var_25_0:setParam(iter_25_1[2], arg_25_1)
-			var_25_0:onStart()
+		if handler then
+			handler:setParam(v[2], unit)
+			handler:onStart()
 		else
-			logError("Explore triggerHandle not find:", arg_25_1.id, iter_25_1[1])
+			logError("Explore triggerHandle not find:", unit.id, v[1])
 		end
 	end
 end
 
-function var_0_0.doDoneTrigger(arg_26_0, arg_26_1)
-	if not arg_26_0._map then
+function ExploreMapTriggerController:doDoneTrigger(unitId)
+	if not self._map then
 		return
 	end
 
-	local var_26_0 = arg_26_0._map:getUnit(arg_26_1, true)
+	local unit = self._map:getUnit(unitId, true)
 
-	if not var_26_0 then
+	if not unit then
 		return
 	end
 
-	var_26_0:getExploreUnitMO().hasInteract = true
+	unit:getExploreUnitMO().hasInteract = true
 
-	local var_26_1 = arg_26_0:getFlow(arg_26_1)
+	local flow = self:getFlow(unitId)
 
-	var_26_1:buildFlow()
+	flow:buildFlow()
 
-	for iter_26_0, iter_26_1 in ipairs(var_26_0:getExploreUnitMO().doneEffects) do
-		local var_26_2 = arg_26_0:getTriggerHandle(iter_26_1[1])
+	for i, v in ipairs(unit:getExploreUnitMO().doneEffects) do
+		local handler = self:getTriggerHandle(v[1])
 
-		if var_26_2 then
-			var_26_2:setParam(iter_26_1[2], var_26_0)
-			var_26_1:addWork(var_26_2)
+		if handler then
+			handler:setParam(v[2], unit)
+			flow:addWork(handler)
 		end
 	end
 
-	var_26_1:start(function()
-		var_26_0:onTriggerDone()
-		arg_26_0:releaseFlow(arg_26_1)
+	flow:start(function()
+		unit:onTriggerDone()
+		self:releaseFlow(unitId)
 	end)
 end
 
-function var_0_0.triggerEvent(arg_28_0, arg_28_1, arg_28_2)
-	local var_28_0 = arg_28_0:getTriggerHandle(arg_28_1)
+function ExploreMapTriggerController:triggerEvent(eventType, parm)
+	local handler = self:getTriggerHandle(eventType)
 
-	if var_28_0 then
-		var_28_0:handle(arg_28_2)
+	if handler then
+		handler:handle(parm)
 	end
 end
 
-function var_0_0.cancelTriggerEvent(arg_29_0, arg_29_1, arg_29_2, arg_29_3)
-	local var_29_0 = arg_29_0:getTriggerHandle(arg_29_1)
+function ExploreMapTriggerController:cancelTriggerEvent(eventType, parm, unit)
+	local handler = self:getTriggerHandle(eventType)
 
-	if var_29_0 then
-		var_29_0:setParam(arg_29_2, arg_29_3)
-		var_29_0:cancel(arg_29_2)
+	if handler then
+		handler:setParam(parm, unit)
+		handler:cancel(parm)
 	end
 end
 
-function var_0_0.cancelTrigger(arg_30_0, arg_30_1, arg_30_2)
-	if arg_30_0._map:isInitDone() == false then
+function ExploreMapTriggerController:cancelTrigger(unit, clientOnly)
+	if self._map:isInitDone() == false then
 		return
 	end
 
-	local var_30_0 = arg_30_1.id
-	local var_30_1 = arg_30_0:getFlow(var_30_0)
+	local unitId = unit.id
+	local flow = self:getFlow(unitId)
 
-	var_30_1:buildFlow()
+	flow:buildFlow()
 
-	for iter_30_0, iter_30_1 in ipairs(arg_30_1:getExploreUnitMO().triggerEffects) do
-		local var_30_2 = arg_30_0:getTriggerHandle(iter_30_1[1])
+	for i, v in ipairs(unit:getExploreUnitMO().triggerEffects) do
+		local handler = self:getTriggerHandle(v[1])
 
-		if var_30_2 then
-			var_30_2:setParam(iter_30_1[2], arg_30_1, iter_30_0, arg_30_2, true)
-			var_30_1:addWork(var_30_2)
+		if handler then
+			handler:setParam(v[2], unit, i, clientOnly, true)
+			flow:addWork(handler)
 		end
 	end
 
-	var_30_1:start(function(arg_31_0)
-		arg_30_0:releaseFlow(var_30_0)
-		arg_30_1:onTriggerDone()
+	flow:start(function(isSuccess)
+		self:releaseFlow(unitId)
+		unit:onTriggerDone()
 	end)
 end
 
-var_0_0.instance = var_0_0.New()
+ExploreMapTriggerController.instance = ExploreMapTriggerController.New()
 
-return var_0_0
+return ExploreMapTriggerController

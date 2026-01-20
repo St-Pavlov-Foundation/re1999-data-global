@@ -1,48 +1,50 @@
-﻿module("modules.logic.versionactivity1_4.act131.view.Activity131LevelViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act131/view/Activity131LevelViewContainer.lua
 
-local var_0_0 = class("Activity131LevelViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_4.act131.view.Activity131LevelViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Activity131LevelViewContainer = class("Activity131LevelViewContainer", BaseViewContainer)
 
-	arg_1_0._mapViewScene = Activity131LevelScene.New()
-	arg_1_0._levelView = Activity131LevelView.New()
+function Activity131LevelViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, arg_1_0._mapViewScene)
-	table.insert(var_1_0, arg_1_0._levelView)
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
+	self._mapViewScene = Activity131LevelScene.New()
+	self._levelView = Activity131LevelView.New()
 
-	return var_1_0
+	table.insert(views, self._mapViewScene)
+	table.insert(views, self._levelView)
+	table.insert(views, TabViewGroup.New(1, "#go_btns"))
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
+function Activity131LevelViewContainer:onContainerClickModalMask()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	arg_2_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.buildTabViews(arg_3_0, arg_3_1)
-	if arg_3_1 == 1 then
-		arg_3_0._navigateButtonsView = NavigateButtonsView.New({
+function Activity131LevelViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonsView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
-		arg_3_0._navigateButtonsView:setOverrideClose(arg_3_0._overrideCloseFunc, arg_3_0)
+		self._navigateButtonsView:setOverrideClose(self._overrideCloseFunc, self)
 
 		return {
-			arg_3_0._navigateButtonsView
+			self._navigateButtonsView
 		}
 	end
 end
 
-function var_0_0._overrideCloseFunc(arg_4_0)
-	arg_4_0._levelView._viewAnimator:Play(UIAnimationName.Close, 0, 0)
-	TaskDispatcher.runDelay(arg_4_0._doClose, arg_4_0, 0.333)
+function Activity131LevelViewContainer:_overrideCloseFunc()
+	self._levelView._viewAnimator:Play(UIAnimationName.Close, 0, 0)
+	TaskDispatcher.runDelay(self._doClose, self, 0.333)
 end
 
-function var_0_0._doClose(arg_5_0)
-	arg_5_0:closeThis()
+function Activity131LevelViewContainer:_doClose()
+	self:closeThis()
 end
 
-return var_0_0
+return Activity131LevelViewContainer

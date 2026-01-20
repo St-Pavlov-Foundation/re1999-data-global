@@ -1,62 +1,64 @@
-﻿module("modules.logic.fight.system.work.FightWorkShieldValueChange", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkShieldValueChange.lua
 
-local var_0_0 = class("FightWorkShieldValueChange", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkShieldValueChange", package.seeall)
 
-function var_0_0.beforePlayEffectData(arg_1_0)
-	arg_1_0._entityId = arg_1_0.actEffectData.targetId
-	arg_1_0._entityMO = FightDataHelper.entityMgr:getById(arg_1_0._entityId)
-	arg_1_0._oldValue = arg_1_0._entityMO and arg_1_0._entityMO.shieldValue
+local FightWorkShieldValueChange = class("FightWorkShieldValueChange", FightEffectBase)
+
+function FightWorkShieldValueChange:beforePlayEffectData()
+	self._entityId = self.actEffectData.targetId
+	self._entityMO = FightDataHelper.entityMgr:getById(self._entityId)
+	self._oldValue = self._entityMO and self._entityMO.shieldValue
 end
 
-function var_0_0.onStart(arg_2_0)
-	if not arg_2_0._entityMO then
-		arg_2_0:onDone(true)
+function FightWorkShieldValueChange:onStart()
+	if not self._entityMO then
+		self:onDone(true)
 
 		return
 	end
 
-	local var_2_0 = FightHelper.getEntity(arg_2_0._entityId)
+	local entity = FightHelper.getEntity(self._entityId)
 
-	if var_2_0 and var_2_0.nameUI then
-		var_2_0.nameUI:setShield(arg_2_0.actEffectData.effectNum)
+	if entity and entity.nameUI then
+		entity.nameUI:setShield(self.actEffectData.effectNum)
 
-		local var_2_1 = arg_2_0.actEffectData.effectNum - arg_2_0._oldValue
+		local changeValue = self.actEffectData.effectNum - self._oldValue
 
-		if var_2_1 < 0 then
-			local var_2_2 = var_2_0:isMySide() and var_2_1 or -var_2_1
-			local var_2_3 = arg_2_0:_getOriginFloatType() or FightEnum.FloatType.damage
+		if changeValue < 0 then
+			local floatNum = entity:isMySide() and changeValue or -changeValue
+			local floatType = self:_getOriginFloatType() or FightEnum.FloatType.damage
 
-			FightFloatMgr.instance:float(var_2_0.id, var_2_3, var_2_2, nil, arg_2_0.actEffectData.buffActId == 1)
+			FightFloatMgr.instance:float(entity.id, floatType, floatNum, nil, self.actEffectData.buffActId == 1)
 		end
 
-		FightController.instance:dispatchEvent(FightEvent.OnShieldChange, var_2_0, var_2_1)
+		FightController.instance:dispatchEvent(FightEvent.OnShieldChange, entity, changeValue)
 	end
 
-	arg_2_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0._getOriginFloatType(arg_3_0)
-	local var_3_0 = tabletool.indexOf(arg_3_0.fightStepData.actEffect, arg_3_0.actEffectData)
+function FightWorkShieldValueChange:_getOriginFloatType()
+	local index = tabletool.indexOf(self.fightStepData.actEffect, self.actEffectData)
 
-	if var_3_0 then
-		local var_3_1 = arg_3_0.fightStepData.actEffect[var_3_0 + 1]
+	if index then
+		local nextMO = self.fightStepData.actEffect[index + 1]
 
-		if var_3_1 and var_3_1.effectType == FightEnum.EffectType.SHIELDBROCKEN then
-			var_3_1 = arg_3_0.fightStepData.actEffect[var_3_0 + 2]
+		if nextMO and nextMO.effectType == FightEnum.EffectType.SHIELDBROCKEN then
+			nextMO = self.fightStepData.actEffect[index + 2]
 		end
 
-		if var_3_1 and var_3_1.targetId == arg_3_0._entityId then
-			if var_3_1.effectType == FightEnum.EffectType.ORIGINDAMAGE then
+		if nextMO and nextMO.targetId == self._entityId then
+			if nextMO.effectType == FightEnum.EffectType.ORIGINDAMAGE then
 				return FightEnum.FloatType.damage_origin
-			elseif var_3_1.effectType == FightEnum.EffectType.ORIGINCRIT then
+			elseif nextMO.effectType == FightEnum.EffectType.ORIGINCRIT then
 				return FightEnum.FloatType.crit_damage_origin
-			elseif var_3_1.effectType == FightEnum.EffectType.ADDITIONALDAMAGE then
+			elseif nextMO.effectType == FightEnum.EffectType.ADDITIONALDAMAGE then
 				return FightEnum.FloatType.additional_damage
-			elseif var_3_1.effectType == FightEnum.EffectType.ADDITIONALDAMAGECRIT then
+			elseif nextMO.effectType == FightEnum.EffectType.ADDITIONALDAMAGECRIT then
 				return FightEnum.FloatType.crit_additional_damage
 			end
 		end
 	end
 end
 
-return var_0_0
+return FightWorkShieldValueChange

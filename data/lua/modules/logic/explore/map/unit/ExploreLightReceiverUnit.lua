@@ -1,51 +1,53 @@
-﻿module("modules.logic.explore.map.unit.ExploreLightReceiverUnit", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/unit/ExploreLightReceiverUnit.lua
 
-local var_0_0 = class("ExploreLightReceiverUnit", ExploreBaseLightUnit)
+module("modules.logic.explore.map.unit.ExploreLightReceiverUnit", package.seeall)
 
-function var_0_0.getLightRecvDirs(arg_1_0)
-	local var_1_0 = {
-		[ExploreHelper.getDir(arg_1_0.mo.unitDir)] = true
+local ExploreLightReceiverUnit = class("ExploreLightReceiverUnit", ExploreBaseLightUnit)
+
+function ExploreLightReceiverUnit:getLightRecvDirs()
+	local dirs = {
+		[ExploreHelper.getDir(self.mo.unitDir)] = true
 	}
 
-	if arg_1_0.mo.isPhoticDir then
-		var_1_0[ExploreHelper.getDir(arg_1_0.mo.unitDir + 180)] = true
+	if self.mo.isPhoticDir then
+		dirs[ExploreHelper.getDir(self.mo.unitDir + 180)] = true
 	end
 
-	return var_1_0
+	return dirs
 end
 
-function var_0_0.onLightEnter(arg_2_0, arg_2_1)
-	local var_2_0 = ExploreController.instance:getMapLight()
+function ExploreLightReceiverUnit:onLightEnter(lightMO)
+	local mapLight = ExploreController.instance:getMapLight()
 
-	var_2_0:beginCheckStatusChange(arg_2_0.id, false)
-	var_2_0:endCheckStatus()
+	mapLight:beginCheckStatusChange(self.id, false)
+	mapLight:endCheckStatus()
 end
 
-function var_0_0.haveLight(arg_3_0)
-	return ExploreController.instance:getMapLight():haveLight(arg_3_0)
+function ExploreLightReceiverUnit:haveLight()
+	return ExploreController.instance:getMapLight():haveLight(self)
 end
 
-function var_0_0.onLightChange(arg_4_0, arg_4_1, arg_4_2)
-	if not arg_4_0.mo.isPhoticDir then
+function ExploreLightReceiverUnit:onLightChange(lightMO, isEnter)
+	if not self.mo.isPhoticDir then
 		return
 	end
 
-	if arg_4_2 then
-		arg_4_0.lightComp:addLight(arg_4_1.dir)
+	if isEnter then
+		self.lightComp:addLight(lightMO.dir)
 	else
-		arg_4_0.lightComp:removeLightByDir(arg_4_1.dir)
+		self.lightComp:removeLightByDir(lightMO.dir)
 	end
 end
 
-function var_0_0.onLightExit(arg_5_0, arg_5_1)
-	if arg_5_1 and not arg_5_0:getLightRecvDirs()[ExploreHelper.getDir(arg_5_1.dir - 180)] then
+function ExploreLightReceiverUnit:onLightExit(lightMO)
+	if lightMO and not self:getLightRecvDirs()[ExploreHelper.getDir(lightMO.dir - 180)] then
 		return
 	end
 
-	local var_5_0 = ExploreController.instance:getMapLight()
+	local mapLight = ExploreController.instance:getMapLight()
 
-	var_5_0:beginCheckStatusChange(arg_5_0.id, true)
-	var_5_0:endCheckStatus()
+	mapLight:beginCheckStatusChange(self.id, true)
+	mapLight:endCheckStatus()
 end
 
-return var_0_0
+return ExploreLightReceiverUnit

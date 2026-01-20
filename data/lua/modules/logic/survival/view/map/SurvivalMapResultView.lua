@@ -1,325 +1,332 @@
-﻿module("modules.logic.survival.view.map.SurvivalMapResultView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/SurvivalMapResultView.lua
 
-local var_0_0 = class("SurvivalMapResultView", BaseView)
-local var_0_1 = {
+module("modules.logic.survival.view.map.SurvivalMapResultView", package.seeall)
+
+local SurvivalMapResultView = class("SurvivalMapResultView", BaseView)
+local currencys = {
 	SurvivalEnum.CurrencyType.Gold,
 	SurvivalEnum.CurrencyType.Decoding
 }
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._gosuccess = gohelper.findChild(arg_1_0.viewGO, "Left/#go_success")
-	arg_1_0._gofail = gohelper.findChild(arg_1_0.viewGO, "Left/#go_fail")
-	arg_1_0._gonpcitem = gohelper.findChild(arg_1_0.viewGO, "Left/team/#go_npcitem")
-	arg_1_0._gonpcline1 = gohelper.findChild(arg_1_0.viewGO, "Left/team/#go_npc/#go_line1")
-	arg_1_0._gonpcline2 = gohelper.findChild(arg_1_0.viewGO, "Left/team/#go_npc/#go_line2")
-	arg_1_0._goheroitem = gohelper.findChild(arg_1_0.viewGO, "Left/team/#go_heroitem")
-	arg_1_0._goheroline1 = gohelper.findChild(arg_1_0.viewGO, "Left/team/#go_hero/#go_line1")
-	arg_1_0._goheroline2 = gohelper.findChild(arg_1_0.viewGO, "Left/team/#go_hero/#go_line2")
-	arg_1_0._gofail2 = gohelper.findChild(arg_1_0.viewGO, "Right/#go_fail")
-	arg_1_0._txtTageLoss = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/#go_fail/#txt_benifit")
-	arg_1_0._gorightitem = gohelper.findChild(arg_1_0.viewGO, "Right/scroll_collection/Viewport/Content/go_bagitem")
-	arg_1_0._gorightnpcitem = gohelper.findChild(arg_1_0.viewGO, "Right/#go_npc/scroll_npc/Viewport/Content/go_npcitem")
-	arg_1_0._currencyroot = gohelper.findChild(arg_1_0.viewGO, "Right/topright")
-	arg_1_0._gonpcpart = gohelper.findChild(arg_1_0.viewGO, "Right/#go_npc")
-	arg_1_0._goitemscroll = gohelper.findChild(arg_1_0.viewGO, "Right/scroll_collection")
-	arg_1_0._txttag1 = gohelper.findChildTextMesh(arg_1_0._currencyroot, "tag1/#txt_tag1")
-	arg_1_0._txttag2 = gohelper.findChildTextMesh(arg_1_0._currencyroot, "tag2/#txt_tag2")
-	arg_1_0._btntag1 = gohelper.findChildButtonWithAudio(arg_1_0._currencyroot, "tag1")
-	arg_1_0._btntag2 = gohelper.findChildButtonWithAudio(arg_1_0._currencyroot, "tag2")
-	arg_1_0._anim = gohelper.findChildAnim(arg_1_0.viewGO, "")
+function SurvivalMapResultView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._gosuccess = gohelper.findChild(self.viewGO, "Left/#go_success")
+	self._gofail = gohelper.findChild(self.viewGO, "Left/#go_fail")
+	self._gonpcitem = gohelper.findChild(self.viewGO, "Left/team/#go_npcitem")
+	self._gonpcline1 = gohelper.findChild(self.viewGO, "Left/team/#go_npc/#go_line1")
+	self._gonpcline2 = gohelper.findChild(self.viewGO, "Left/team/#go_npc/#go_line2")
+	self._goheroitem = gohelper.findChild(self.viewGO, "Left/team/#go_heroitem")
+	self._goheroline1 = gohelper.findChild(self.viewGO, "Left/team/#go_hero/#go_line1")
+	self._goheroline2 = gohelper.findChild(self.viewGO, "Left/team/#go_hero/#go_line2")
+	self._gofail2 = gohelper.findChild(self.viewGO, "Right/#go_fail")
+	self._txtTageLoss = gohelper.findChildTextMesh(self.viewGO, "Right/#go_fail/#txt_benifit")
+	self._gorightitem = gohelper.findChild(self.viewGO, "Right/scroll_collection/Viewport/Content/go_bagitem")
+	self._gorightnpcitem = gohelper.findChild(self.viewGO, "Right/#go_npc/scroll_npc/Viewport/Content/go_npcitem")
+	self._currencyroot = gohelper.findChild(self.viewGO, "Right/topright")
+	self._gonpcpart = gohelper.findChild(self.viewGO, "Right/#go_npc")
+	self._goitemscroll = gohelper.findChild(self.viewGO, "Right/scroll_collection")
+	self._txttag1 = gohelper.findChildTextMesh(self._currencyroot, "tag1/#txt_tag1")
+	self._txttag2 = gohelper.findChildTextMesh(self._currencyroot, "tag2/#txt_tag2")
+	self._btntag1 = gohelper.findChildButtonWithAudio(self._currencyroot, "tag1")
+	self._btntag2 = gohelper.findChildButtonWithAudio(self._currencyroot, "tag2")
+	self._anim = gohelper.findChildAnim(self.viewGO, "")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0.onClickModalMask, arg_2_0)
-	arg_2_0._btntag1:AddClickListener(arg_2_0._openCurrencyTips, arg_2_0, {
-		id = var_0_1[1],
-		btn = arg_2_0._btntag1
+function SurvivalMapResultView:addEvents()
+	self._btnclose:AddClickListener(self.onClickModalMask, self)
+	self._btntag1:AddClickListener(self._openCurrencyTips, self, {
+		id = currencys[1],
+		btn = self._btntag1
 	})
-	arg_2_0._btntag2:AddClickListener(arg_2_0._openCurrencyTips, arg_2_0, {
-		id = var_0_1[2],
-		btn = arg_2_0._btntag2
+	self._btntag2:AddClickListener(self._openCurrencyTips, self, {
+		id = currencys[2],
+		btn = self._btntag2
 	})
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btntag1:RemoveClickListener()
-	arg_3_0._btntag2:RemoveClickListener()
+function SurvivalMapResultView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btntag1:RemoveClickListener()
+	self._btntag2:RemoveClickListener()
 end
 
-function var_0_0.onOpen(arg_4_0)
-	local var_4_0 = arg_4_0.viewContainer._viewSetting.otherRes.infoView
-	local var_4_1 = gohelper.create2d(arg_4_0.viewGO, "#go_info")
-	local var_4_2 = arg_4_0:getResInst(var_4_0, var_4_1)
+function SurvivalMapResultView:onOpen()
+	local infoViewRes = self.viewContainer._viewSetting.otherRes.infoView
+	local infoRoot = gohelper.create2d(self.viewGO, "#go_info")
+	local infoGo = self:getResInst(infoViewRes, infoRoot)
 
-	arg_4_0._infoPanel = MonoHelper.addNoUpdateLuaComOnceToGo(var_4_2, SurvivalBagInfoPart)
+	self._infoPanel = MonoHelper.addNoUpdateLuaComOnceToGo(infoGo, SurvivalBagInfoPart)
 
-	arg_4_0._infoPanel:setCloseShow(true)
-	arg_4_0._infoPanel:updateMo()
+	self._infoPanel:setCloseShow(true)
+	self._infoPanel:updateMo()
 
-	arg_4_0._resultMo = SurvivalMapModel.instance.resultData
+	self._resultMo = SurvivalMapModel.instance.resultData
 
-	local var_4_3 = arg_4_0.viewParam.isWin
+	local isWin = self.viewParam.isWin
 
-	gohelper.setActive(arg_4_0._gosuccess, var_4_3)
-	gohelper.setActive(arg_4_0._gofail, not var_4_3)
-	gohelper.setActive(arg_4_0._gofail2, not var_4_3)
-	arg_4_0:refreshPlaceAndTime(var_4_3 and arg_4_0._gosuccess or arg_4_0._gofail)
-	arg_4_0:refreshHeroAndNpc()
-	arg_4_0:refreshLoss()
-	arg_4_0:refreshItemsAndNpcs()
+	gohelper.setActive(self._gosuccess, isWin)
+	gohelper.setActive(self._gofail, not isWin)
+	gohelper.setActive(self._gofail2, not isWin)
+	self:refreshPlaceAndTime(isWin and self._gosuccess or self._gofail)
+	self:refreshHeroAndNpc()
+	self:refreshLoss()
+	self:refreshItemsAndNpcs()
 
-	if var_4_3 then
+	if isWin then
 		AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_fuleyuan_tansuo_success_2)
 	else
 		AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_fuleyuan_binansuo_fail_2)
 	end
 end
 
-function var_0_0.refreshPlaceAndTime(arg_5_0, arg_5_1)
-	local var_5_0 = gohelper.findChildTextMesh(arg_5_1, "place/#txt_place")
-	local var_5_1 = gohelper.findChildTextMesh(arg_5_1, "time/#txt_time")
+function SurvivalMapResultView:refreshPlaceAndTime(go)
+	local txtPlace = gohelper.findChildTextMesh(go, "place/#txt_place")
+	local txtTime = gohelper.findChildTextMesh(go, "time/#txt_time")
+	local copyCo = lua_survival_map_group.configDict[self._resultMo.copyId]
 
-	var_5_0.text = lua_survival_map_group.configDict[arg_5_0._resultMo.copyId].name
+	txtPlace.text = copyCo.name
 
-	local var_5_2 = arg_5_0._resultMo.totalGameTime
-	local var_5_3 = math.floor(var_5_2 / 60)
-	local var_5_4 = math.fmod(var_5_2, 60)
+	local time = self._resultMo.totalGameTime
+	local hour = math.floor(time / 60)
+	local min = math.fmod(time, 60)
 
-	var_5_1.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("survival_resultview_time"), var_5_3, var_5_4)
+	txtTime.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("survival_resultview_time"), hour, min)
 end
 
-function var_0_0.refreshHeroAndNpc(arg_6_0)
-	local var_6_0 = arg_6_0._resultMo.teamInfo
-	local var_6_1 = {}
-	local var_6_2 = {}
-	local var_6_3 = {}
+function SurvivalMapResultView:refreshHeroAndNpc()
+	local teamInfoMo = self._resultMo.teamInfo
+	local heroLine1Data = {}
+	local heroLine2Data = {}
+	local npcLine1Data = {}
 
-	for iter_6_0 = 1, 10 do
-		local var_6_4 = var_6_0:getHeroMo(var_6_0.heros[iter_6_0]) or true
+	for i = 1, 10 do
+		local heroMo = teamInfoMo:getHeroMo(teamInfoMo.heros[i]) or true
 
-		table.insert(iter_6_0 <= 5 and var_6_1 or var_6_2, var_6_4)
+		table.insert(i <= 5 and heroLine1Data or heroLine2Data, heroMo)
 	end
 
-	for iter_6_1 = 1, 4 do
-		local var_6_5 = var_6_0.npcId[iter_6_1] or 0
+	for i = 1, 4 do
+		local npcId = teamInfoMo.npcId[i] or 0
 
-		table.insert(var_6_3, var_6_5)
+		table.insert(npcLine1Data, npcId)
 	end
 
-	gohelper.CreateObjList(arg_6_0, arg_6_0._createHeroItem, var_6_1, arg_6_0._goheroline1, arg_6_0._goheroitem)
-	gohelper.CreateObjList(arg_6_0, arg_6_0._createHeroItem, var_6_2, arg_6_0._goheroline2, arg_6_0._goheroitem)
-	gohelper.CreateObjList(arg_6_0, arg_6_0._createNpcItem, var_6_3, arg_6_0._gonpcline1, arg_6_0._gonpcitem)
+	gohelper.CreateObjList(self, self._createHeroItem, heroLine1Data, self._goheroline1, self._goheroitem)
+	gohelper.CreateObjList(self, self._createHeroItem, heroLine2Data, self._goheroline2, self._goheroitem)
+	gohelper.CreateObjList(self, self._createNpcItem, npcLine1Data, self._gonpcline1, self._gonpcitem)
 end
 
-function var_0_0._createHeroItem(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	local var_7_0 = gohelper.findChildSingleImage(arg_7_1, "#image_rolehead")
-	local var_7_1 = gohelper.findChild(arg_7_1, "empty")
+function SurvivalMapResultView:_createHeroItem(obj, data, index)
+	local image = gohelper.findChildSingleImage(obj, "#image_rolehead")
+	local empty = gohelper.findChild(obj, "empty")
 
-	gohelper.setActive(var_7_0, arg_7_2 ~= true)
-	gohelper.setActive(var_7_1, arg_7_2 == true)
+	gohelper.setActive(image, data ~= true)
+	gohelper.setActive(empty, data == true)
 
-	if arg_7_2 ~= true then
-		local var_7_2 = FightConfig.instance:getSkinCO(arg_7_2.skin)
+	if data ~= true then
+		local skinCO = FightConfig.instance:getSkinCO(data.skin)
 
-		var_7_0:LoadImage(ResUrl.getHeadIconSmall(var_7_2.headIcon))
+		image:LoadImage(ResUrl.getHeadIconSmall(skinCO.headIcon))
 	end
 end
 
-function var_0_0._createNpcItem(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	local var_8_0 = gohelper.findChildSingleImage(arg_8_1, "#image_rolehead")
-	local var_8_1 = gohelper.findChild(arg_8_1, "empty")
+function SurvivalMapResultView:_createNpcItem(obj, data, index)
+	local image = gohelper.findChildSingleImage(obj, "#image_rolehead")
+	local empty = gohelper.findChild(obj, "empty")
 
-	gohelper.setActive(var_8_0, arg_8_2 ~= 0)
-	gohelper.setActive(var_8_1, arg_8_2 == 0)
+	gohelper.setActive(image, data ~= 0)
+	gohelper.setActive(empty, data == 0)
 
-	if arg_8_2 ~= 0 then
-		local var_8_2 = SurvivalConfig.instance.npcIdToItemCo[arg_8_2]
+	if data ~= 0 then
+		local itemCo = SurvivalConfig.instance.npcIdToItemCo[data]
 
-		if var_8_2 then
-			var_8_0:LoadImage(ResUrl.getSurvivalNpcIcon(var_8_2.icon))
+		if itemCo then
+			image:LoadImage(ResUrl.getSurvivalNpcIcon(itemCo.icon))
 		end
 	end
 end
 
-function var_0_0.refreshLoss(arg_9_0)
-	arg_9_0._txtTageLoss.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survival_resultview_loss"), arg_9_0._resultMo.percentageLoss)
+function SurvivalMapResultView:refreshLoss()
+	self._txtTageLoss.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survival_resultview_loss"), self._resultMo.percentageLoss)
 end
 
-function var_0_0.refreshItemsAndNpcs(arg_10_0)
-	local var_10_0 = #arg_10_0._resultMo.firstNpcs > 0
+function SurvivalMapResultView:refreshItemsAndNpcs()
+	local haveNpc = #self._resultMo.firstNpcs > 0
 
-	gohelper.setActive(arg_10_0._gonpcpart, var_10_0)
-	recthelper.setHeight(arg_10_0._goitemscroll.transform, var_10_0 and 513.14 or 800)
+	gohelper.setActive(self._gonpcpart, haveNpc)
+	recthelper.setHeight(self._goitemscroll.transform, haveNpc and 513.14 or 800)
 
-	arg_10_0._simpleList = MonoHelper.addNoUpdateLuaComOnceToGo(arg_10_0._goitemscroll, SurvivalSimpleListPart)
+	self._simpleList = MonoHelper.addNoUpdateLuaComOnceToGo(self._goitemscroll, SurvivalSimpleListPart)
 
-	arg_10_0._simpleList:setCellUpdateCallBack(arg_10_0._createItem, arg_10_0, nil, arg_10_0._gorightitem)
-	arg_10_0._simpleList:setRecycleCallBack(arg_10_0._recycleItem, arg_10_0)
+	self._simpleList:setCellUpdateCallBack(self._createItem, self, nil, self._gorightitem)
+	self._simpleList:setRecycleCallBack(self._recycleItem, self)
 
-	arg_10_0._allItemComps = {}
+	self._allItemComps = {}
 
-	arg_10_0:refreshCurrency(false)
-	arg_10_0._simpleList:setList(arg_10_0._resultMo.firstItems)
-	gohelper.CreateObjList(arg_10_0, arg_10_0._createRightNpcItem, arg_10_0._resultMo.firstNpcs, nil, arg_10_0._gorightnpcitem)
-	TaskDispatcher.runDelay(arg_10_0._delayCheckChange, arg_10_0, 1)
+	self:refreshCurrency(false)
+	self._simpleList:setList(self._resultMo.firstItems)
+	gohelper.CreateObjList(self, self._createRightNpcItem, self._resultMo.firstNpcs, nil, self._gorightnpcitem)
+	TaskDispatcher.runDelay(self._delayCheckChange, self, 1)
 end
 
-function var_0_0._delayCheckChange(arg_11_0)
-	if arg_11_0._resultMo.haveChange1 then
+function SurvivalMapResultView:_delayCheckChange()
+	if self._resultMo.haveChange1 then
 		UIBlockHelper.instance:startBlock("SurvivalMapResultView_ItemEffect", 1)
-		TaskDispatcher.runDelay(arg_11_0._delayShowChangeItem, arg_11_0, 1)
+		TaskDispatcher.runDelay(self._delayShowChangeItem, self, 1)
 
-		for iter_11_0, iter_11_1 in pairs(arg_11_0._allItemComps) do
-			local var_11_0 = iter_11_1._mo
+		for k, v in pairs(self._allItemComps) do
+			local itemMo = v._mo
 
-			if not var_11_0:isEmpty() then
-				local var_11_1 = arg_11_0._resultMo.beforeChanges[var_11_0.uid]
+			if not itemMo:isEmpty() then
+				local changToItemMo = self._resultMo.beforeChanges[itemMo.uid]
 
-				if var_11_1 and var_11_1:isEmpty() then
-					iter_11_1:playComposeAnim()
+				if changToItemMo and changToItemMo:isEmpty() then
+					v:playComposeAnim()
 				end
 			end
 		end
 	else
-		arg_11_0:showAfterItems()
+		self:showAfterItems()
 	end
 end
 
-function var_0_0._delayShowChangeItem(arg_12_0)
-	tabletool.clear(arg_12_0._allItemComps)
-	arg_12_0._simpleList:setList(arg_12_0._resultMo.beforeItems)
-	gohelper.CreateObjList(arg_12_0, arg_12_0._createRightNpcItem, arg_12_0._resultMo.beforeNpcs, nil, arg_12_0._gorightnpcitem)
-	arg_12_0:showAfterItems()
+function SurvivalMapResultView:_delayShowChangeItem()
+	tabletool.clear(self._allItemComps)
+	self._simpleList:setList(self._resultMo.beforeItems)
+	gohelper.CreateObjList(self, self._createRightNpcItem, self._resultMo.beforeNpcs, nil, self._gorightnpcitem)
+	self:showAfterItems()
 end
 
-function var_0_0.showAfterItems(arg_13_0)
-	if arg_13_0._resultMo.haveChange2 then
+function SurvivalMapResultView:showAfterItems()
+	if self._resultMo.haveChange2 then
 		AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_fuleyuan_tansuo_sougua_3)
 		UIBlockHelper.instance:startBlock("SurvivalMapResultView_ItemEffect", 1)
-		TaskDispatcher.runDelay(arg_13_0._delayShowAfterItem, arg_13_0, 1)
-		arg_13_0._anim:Play("searching", 0, 0)
+		TaskDispatcher.runDelay(self._delayShowAfterItem, self, 1)
+		self._anim:Play("searching", 0, 0)
 
-		for iter_13_0, iter_13_1 in pairs(arg_13_0._allItemComps) do
-			local var_13_0 = iter_13_1._mo
+		for k, v in pairs(self._allItemComps) do
+			local itemMo = v._mo
 
-			if not var_13_0:isEmpty() then
-				local var_13_1 = arg_13_0._resultMo.afterChanges[var_13_0.uid]
+			if not itemMo:isEmpty() then
+				local changToItemMo = self._resultMo.afterChanges[itemMo.uid]
 
-				if var_13_1 then
-					if var_13_1:isEmpty() then
-						iter_13_1:playSearch()
-						iter_13_1:playCompose()
+				if changToItemMo then
+					if changToItemMo:isEmpty() then
+						v:playSearch()
+						v:playCompose()
 					else
-						iter_13_1:playSearch()
+						v:playSearch()
 					end
 				end
 			end
 		end
 	else
-		arg_13_0:_onFinishShow()
+		self:_onFinishShow()
 	end
 end
 
-function var_0_0._delayShowAfterItem(arg_14_0)
-	arg_14_0:refreshCurrency(true)
-	tabletool.clear(arg_14_0._allItemComps)
-	arg_14_0._simpleList:setList(arg_14_0._resultMo.afterItems)
-	gohelper.CreateObjList(arg_14_0, arg_14_0._createRightNpcItem, arg_14_0._resultMo.afterNpcs, nil, arg_14_0._gorightnpcitem)
-	arg_14_0:_onFinishShow()
+function SurvivalMapResultView:_delayShowAfterItem()
+	self:refreshCurrency(true)
+	tabletool.clear(self._allItemComps)
+	self._simpleList:setList(self._resultMo.afterItems)
+	gohelper.CreateObjList(self, self._createRightNpcItem, self._resultMo.afterNpcs, nil, self._gorightnpcitem)
+	self:_onFinishShow()
 end
 
-function var_0_0._onFinishShow(arg_15_0)
+function SurvivalMapResultView:_onFinishShow()
 	return
 end
 
-function var_0_0._createItem(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
-	if not arg_16_0.viewContainer._abLoader then
+function SurvivalMapResultView:_createItem(obj, data, index)
+	if not self.viewContainer._abLoader then
 		return
 	end
 
-	local var_16_0 = arg_16_0.viewContainer._viewSetting.otherRes.itemRes
-	local var_16_1 = gohelper.findChild(arg_16_1, "inst") or arg_16_0:getResInst(var_16_0, arg_16_1, "inst")
-	local var_16_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_16_1, SurvivalBagItem)
+	local itemRes = self.viewContainer._viewSetting.otherRes.itemRes
+	local go = gohelper.findChild(obj, "inst")
 
-	var_16_2:updateMo(arg_16_2)
-	var_16_2:setClickCallback(arg_16_0._onClickItem, arg_16_0)
+	go = go or self:getResInst(itemRes, obj, "inst")
 
-	arg_16_0._allItemComps[arg_16_3] = var_16_2
+	local item = MonoHelper.addNoUpdateLuaComOnceToGo(go, SurvivalBagItem)
+
+	item:updateMo(data)
+	item:setClickCallback(self._onClickItem, self)
+
+	self._allItemComps[index] = item
 end
 
-function var_0_0._recycleItem(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	arg_17_0._allItemComps[arg_17_2] = nil
+function SurvivalMapResultView:_recycleItem(go, oldIndex, newIndex)
+	self._allItemComps[oldIndex] = nil
 end
 
-function var_0_0._onClickItem(arg_18_0, arg_18_1)
-	arg_18_0._infoPanel:updateMo(arg_18_1._mo)
+function SurvivalMapResultView:_onClickItem(item)
+	self._infoPanel:updateMo(item._mo)
 end
 
-function var_0_0._createRightNpcItem(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
-	local var_19_0 = gohelper.findChildSingleImage(arg_19_1, "#simage_chess")
-	local var_19_1 = gohelper.findChildButtonWithAudio(arg_19_1, "")
+function SurvivalMapResultView:_createRightNpcItem(obj, data, index)
+	local image = gohelper.findChildSingleImage(obj, "#simage_chess")
+	local btn = gohelper.findChildButtonWithAudio(obj, "")
 
-	SurvivalUnitIconHelper.instance:setNpcIcon(var_19_0, arg_19_2.npcCo.headIcon)
-	arg_19_0:removeClickCb(var_19_1)
-	arg_19_0:addClickCb(var_19_1, arg_19_0._onClickNpc, arg_19_0, arg_19_2)
+	SurvivalUnitIconHelper.instance:setNpcIcon(image, data.npcCo.headIcon)
+	self:removeClickCb(btn)
+	self:addClickCb(btn, self._onClickNpc, self, data)
 end
 
-function var_0_0._onClickNpc(arg_20_0, arg_20_1)
-	arg_20_0._infoPanel:updateMo(arg_20_1)
+function SurvivalMapResultView:_onClickNpc(data)
+	self._infoPanel:updateMo(data)
 end
 
-function var_0_0.refreshCurrency(arg_21_0, arg_21_1)
-	if arg_21_1 then
-		arg_21_0._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.3, arg_21_0.setCurrItem, nil, arg_21_0)
+function SurvivalMapResultView:refreshCurrency(isAfter)
+	if isAfter then
+		self._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.3, self.setCurrItem, nil, self)
 	else
-		arg_21_0:setCurrItem(0)
+		self:setCurrItem(0)
 	end
 end
 
-function var_0_0.setCurrItem(arg_22_0, arg_22_1)
-	local var_22_0 = arg_22_0._resultMo.beforeCurrencyItems
-	local var_22_1 = arg_22_0._resultMo.afterCurrencyItems
+function SurvivalMapResultView:setCurrItem(value)
+	local preVal = self._resultMo.beforeCurrencyItems
+	local afterVal = self._resultMo.afterCurrencyItems
 
-	for iter_22_0 = 1, #var_0_1 do
-		local var_22_2 = var_22_0[var_0_1[iter_22_0]] or 0
-		local var_22_3 = var_22_1[var_0_1[iter_22_0]] or 0
-		local var_22_4 = math.floor(var_22_2 + (var_22_3 - var_22_2) * arg_22_1)
+	for i = 1, #currencys do
+		local preCount = preVal[currencys[i]] or 0
+		local afterCount = afterVal[currencys[i]] or 0
+		local count = math.floor(preCount + (afterCount - preCount) * value)
+		local txt = self["_txttag" .. i]
 
-		arg_22_0["_txttag" .. iter_22_0].text = var_22_4
+		txt.text = count
 	end
 end
 
-function var_0_0.onClickModalMask(arg_23_0)
-	arg_23_0:closeThis()
+function SurvivalMapResultView:onClickModalMask()
+	self:closeThis()
 end
 
-function var_0_0.onClose(arg_24_0)
-	if arg_24_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_24_0._tweenId)
+function SurvivalMapResultView:onClose()
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 	end
 
-	TaskDispatcher.cancelTask(arg_24_0._delayShowChangeItem, arg_24_0)
-	TaskDispatcher.cancelTask(arg_24_0._delayShowAfterItem, arg_24_0)
-	TaskDispatcher.cancelTask(arg_24_0._delayCheckChange, arg_24_0)
+	TaskDispatcher.cancelTask(self._delayShowChangeItem, self)
+	TaskDispatcher.cancelTask(self._delayShowAfterItem, self)
+	TaskDispatcher.cancelTask(self._delayCheckChange, self)
 end
 
-function var_0_0._openCurrencyTips(arg_25_0, arg_25_1)
-	local var_25_0 = arg_25_1.btn.transform
-	local var_25_1 = var_25_0.lossyScale
-	local var_25_2 = var_25_0.position
-	local var_25_3 = recthelper.getWidth(var_25_0)
-	local var_25_4 = recthelper.getHeight(var_25_0)
+function SurvivalMapResultView:_openCurrencyTips(param)
+	local trans = param.btn.transform
+	local scale = trans.lossyScale
+	local pos = trans.position
+	local width = recthelper.getWidth(trans)
+	local height = recthelper.getHeight(trans)
 
-	var_25_2.x = var_25_2.x + var_25_3 / 2 * var_25_1.x
-	var_25_2.y = var_25_2.y - var_25_4 / 2 * var_25_1.y
+	pos.x = pos.x + width / 2 * scale.x
+	pos.y = pos.y - height / 2 * scale.y
 
 	ViewMgr.instance:openView(ViewName.SurvivalCurrencyTipView, {
 		arrow = "BL",
-		id = arg_25_1.id,
-		pos = var_25_2
+		id = param.id,
+		pos = pos
 	})
 end
 
-return var_0_0
+return SurvivalMapResultView

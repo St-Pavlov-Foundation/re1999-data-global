@@ -1,362 +1,366 @@
-﻿module("modules.spine.UnitSpine", package.seeall)
+﻿-- chunkname: @modules/spine/UnitSpine.lua
 
-local var_0_0 = class("UnitSpine", LuaCompBase)
+module("modules.spine.UnitSpine", package.seeall)
 
-var_0_0.TypeSkeletonAnimtion = typeof(Spine.Unity.SkeletonAnimation)
-var_0_0.TypeSpineAnimationEvent = typeof(ZProj.SpineAnimationEvent)
-var_0_0.Evt_OnLoaded = 100001
+local UnitSpine = class("UnitSpine", LuaCompBase)
 
-function var_0_0.Create(arg_1_0)
-	return MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0, var_0_0)
+UnitSpine.TypeSkeletonAnimtion = typeof(Spine.Unity.SkeletonAnimation)
+UnitSpine.TypeSpineAnimationEvent = typeof(ZProj.SpineAnimationEvent)
+UnitSpine.Evt_OnLoaded = 100001
+
+function UnitSpine.Create(gameObj)
+	return MonoHelper.addNoUpdateLuaComOnceToGo(gameObj, UnitSpine)
 end
 
-function var_0_0.ctor(arg_2_0, arg_2_1)
-	arg_2_0.unitSpawn = arg_2_1
+function UnitSpine:ctor(unitSpawn)
+	self.unitSpawn = unitSpawn
 
-	LuaEventSystem.addEventMechanism(arg_2_0)
+	LuaEventSystem.addEventMechanism(self)
 end
 
-function var_0_0.init(arg_3_0, arg_3_1)
-	arg_3_0._gameObj = arg_3_1
-	arg_3_0._gameTr = arg_3_1.transform
-	arg_3_0._resLoader = nil
-	arg_3_0._resPath = nil
-	arg_3_0._skeletonAnim = nil
-	arg_3_0._spineRenderer = nil
-	arg_3_0._ppEffectMask = nil
-	arg_3_0._spineGo = nil
-	arg_3_0._spineTr = nil
-	arg_3_0._curAnimState = nil
-	arg_3_0._defaultAnimState = SpineAnimState.idle1
-	arg_3_0._isLoop = false
-	arg_3_0._lookDir = SpineLookDir.Left
-	arg_3_0._timeScale = 1
-	arg_3_0._bFreeze = false
-	arg_3_0._layer = UnityLayer.Unit
-	arg_3_0._actionCbList = {}
-	arg_3_0._resLoadedCb = nil
-	arg_3_0._resLoadedCbObj = nil
+function UnitSpine:init(go)
+	self._gameObj = go
+	self._gameTr = go.transform
+	self._resLoader = nil
+	self._resPath = nil
+	self._skeletonAnim = nil
+	self._spineRenderer = nil
+	self._ppEffectMask = nil
+	self._spineGo = nil
+	self._spineTr = nil
+	self._curAnimState = nil
+	self._defaultAnimState = SpineAnimState.idle1
+	self._isLoop = false
+	self._lookDir = SpineLookDir.Left
+	self._timeScale = 1
+	self._bFreeze = false
+	self._layer = UnityLayer.Unit
+	self._actionCbList = {}
+	self._resLoadedCb = nil
+	self._resLoadedCbObj = nil
 end
 
-function var_0_0.setResPath(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	if not arg_4_1 then
+function UnitSpine:setResPath(resPath, loadedCb, loadedCbObj)
+	if not resPath then
 		return
 	end
 
-	if arg_4_0.resPath == arg_4_1 then
+	if self.resPath == resPath then
 		return
 	end
 
-	arg_4_0:_clear()
+	self:_clear()
 
-	arg_4_0._resPath = arg_4_1
-	arg_4_0._resLoadedCb = arg_4_2
-	arg_4_0._resLoadedCbObj = arg_4_3
+	self._resPath = resPath
+	self._resLoadedCb = loadedCb
+	self._resLoadedCbObj = loadedCbObj
 
-	local var_4_0 = FightSpinePool.getSpine(arg_4_0._resPath)
+	local spineFromPool = FightSpinePool.getSpine(self._resPath)
 
-	if var_4_0 then
-		if gohelper.isNil(arg_4_0._gameObj) then
-			logError("try move spine, but parent is nil, spine name : " .. tostring(var_4_0.name))
+	if spineFromPool then
+		if gohelper.isNil(self._gameObj) then
+			logError("try move spine, but parent is nil, spine name : " .. tostring(spineFromPool.name))
 		end
 
-		gohelper.addChild(arg_4_0._gameObj, var_4_0)
-		transformhelper.setLocalPos(var_4_0.transform, 0, 0, 0)
-		arg_4_0:_initSpine(var_4_0)
+		gohelper.addChild(self._gameObj, spineFromPool)
+		transformhelper.setLocalPos(spineFromPool.transform, 0, 0, 0)
+		self:_initSpine(spineFromPool)
 	else
-		arg_4_0._resLoader = MultiAbLoader.New()
+		self._resLoader = MultiAbLoader.New()
 
-		arg_4_0._resLoader:addPath(arg_4_0._resPath)
-		arg_4_0._resLoader:startLoad(arg_4_0._onResLoaded, arg_4_0)
+		self._resLoader:addPath(self._resPath)
+		self._resLoader:startLoad(self._onResLoaded, self)
 	end
 end
 
-function var_0_0.setFreeze(arg_5_0, arg_5_1)
-	arg_5_0._bFreeze = arg_5_1
+function UnitSpine:setFreeze(isFreeze)
+	self._bFreeze = isFreeze
 
-	if arg_5_0._skeletonAnim then
-		arg_5_0._skeletonAnim.freeze = arg_5_0._bFreeze
+	if self._skeletonAnim then
+		self._skeletonAnim.freeze = self._bFreeze
 	end
 end
 
-function var_0_0.setTimeScale(arg_6_0, arg_6_1)
-	arg_6_0._timeScale = arg_6_1
+function UnitSpine:setTimeScale(timeScale)
+	self._timeScale = timeScale
 
-	if arg_6_0._skeletonAnim then
-		arg_6_0._skeletonAnim.timeScale = arg_6_0._timeScale
+	if self._skeletonAnim then
+		self._skeletonAnim.timeScale = self._timeScale
 	end
 end
 
-function var_0_0._clear(arg_7_0)
-	if arg_7_0._resLoader then
-		arg_7_0._resLoader:dispose()
+function UnitSpine:_clear()
+	if self._resLoader then
+		self._resLoader:dispose()
 
-		arg_7_0._resLoader = nil
+		self._resLoader = nil
 	end
 
-	if arg_7_0._csSpineEvt then
-		arg_7_0._csSpineEvt:RemoveAnimEventCallback()
+	if self._csSpineEvt then
+		self._csSpineEvt:RemoveAnimEventCallback()
 	end
 
-	arg_7_0._skeletonAnim = nil
-	arg_7_0._resPath = nil
-	arg_7_0._spineGo = nil
-	arg_7_0._spineTr = nil
-	arg_7_0._bFreeze = false
-	arg_7_0._isActive = true
-	arg_7_0._renderOrder = nil
+	self._skeletonAnim = nil
+	self._resPath = nil
+	self._spineGo = nil
+	self._spineTr = nil
+	self._bFreeze = false
+	self._isActive = true
+	self._renderOrder = nil
 end
 
-function var_0_0._onResLoaded(arg_8_0, arg_8_1)
-	if gohelper.isNil(arg_8_0._gameObj) then
+function UnitSpine:_onResLoaded(loader)
+	if gohelper.isNil(self._gameObj) then
 		return
 	end
 
-	local var_8_0 = arg_8_1:getFirstAssetItem()
+	local assetItem = loader:getFirstAssetItem()
 
-	if var_8_0 then
-		local var_8_1 = var_8_0:GetResource()
-		local var_8_2 = gohelper.clone(var_8_1, arg_8_0._gameObj)
+	if assetItem then
+		local prefab = assetItem:GetResource()
+		local spineGO = gohelper.clone(prefab, self._gameObj)
 
-		arg_8_0:_initSpine(var_8_2)
+		self:_initSpine(spineGO)
 	end
 end
 
-function var_0_0._initSpine(arg_9_0, arg_9_1)
-	arg_9_0._spineGo = arg_9_1
-	arg_9_0._spineTr = arg_9_0._spineGo.transform
+function UnitSpine:_initSpine(spineGO)
+	self._spineGo = spineGO
+	self._spineTr = self._spineGo.transform
 
-	arg_9_0:setLayer(arg_9_0._layer, true)
+	self:setLayer(self._layer, true)
 
-	arg_9_0._skeletonAnim = arg_9_0._spineGo:GetComponent(var_0_0.TypeSkeletonAnimtion)
+	self._skeletonAnim = self._spineGo:GetComponent(UnitSpine.TypeSkeletonAnimtion)
 
-	if arg_9_0._lookDir == SpineLookDir.Right then
-		arg_9_0._skeletonAnim.initialFlipX = true
+	if self._lookDir == SpineLookDir.Right then
+		self._skeletonAnim.initialFlipX = true
 
-		arg_9_0._skeletonAnim:Initialize(true)
+		self._skeletonAnim:Initialize(true)
 	else
-		arg_9_0._skeletonAnim:Initialize(false)
+		self._skeletonAnim:Initialize(false)
 	end
 
-	arg_9_0._skeletonAnim.freeze = arg_9_0._bFreeze
-	arg_9_0._skeletonAnim.timeScale = arg_9_0._timeScale
-	arg_9_0._spineRenderer = arg_9_0._spineGo:GetComponent(typeof(UnityEngine.MeshRenderer))
-	arg_9_0._ppEffectMask = arg_9_0._spineGo:GetComponent(typeof(UrpCustom.PPEffectMask))
-	arg_9_0._csSpineEvt = gohelper.onceAddComponent(arg_9_0._spineGo, var_0_0.TypeSpineAnimationEvent)
+	self._skeletonAnim.freeze = self._bFreeze
+	self._skeletonAnim.timeScale = self._timeScale
+	self._spineRenderer = self._spineGo:GetComponent(typeof(UnityEngine.MeshRenderer))
+	self._ppEffectMask = self._spineGo:GetComponent(typeof(UrpCustom.PPEffectMask))
+	self._csSpineEvt = gohelper.onceAddComponent(self._spineGo, UnitSpine.TypeSpineAnimationEvent)
 
-	arg_9_0._csSpineEvt:SetAnimEventCallback(arg_9_0._onAnimCallback, arg_9_0)
-	arg_9_0:setActive(arg_9_0._isActive)
+	self._csSpineEvt:SetAnimEventCallback(self._onAnimCallback, self)
+	self:setActive(self._isActive)
 
-	if arg_9_0._curAnimState then
-		local var_9_0 = arg_9_0._curAnimState
+	if self._curAnimState then
+		local animState = self._curAnimState
 
-		arg_9_0._curAnimState = nil
+		self._curAnimState = nil
 
-		arg_9_0:play(var_9_0, arg_9_0._isLoop)
-	elseif arg_9_0._defaultAnimState and arg_9_0._skeletonAnim:HasAnimation(arg_9_0._defaultAnimState) then
-		arg_9_0._isLoop = true
+		self:play(animState, self._isLoop)
+	elseif self._defaultAnimState and self._skeletonAnim:HasAnimation(self._defaultAnimState) then
+		self._isLoop = true
 
-		arg_9_0:play(arg_9_0._defaultAnimState, arg_9_0._isLoop, true)
+		self:play(self._defaultAnimState, self._isLoop, true)
 	end
 
-	arg_9_0:setRenderOrder(arg_9_0._renderOrder, true)
+	self:setRenderOrder(self._renderOrder, true)
 
-	if arg_9_0._resLoadedCb and arg_9_0._resLoadedCbObj then
-		arg_9_0._resLoadedCb(arg_9_0._resLoadedCbObj, arg_9_0)
+	if self._resLoadedCb and self._resLoadedCbObj then
+		self._resLoadedCb(self._resLoadedCbObj, self)
 	end
 
-	arg_9_0._resLoadedCb = nil
-	arg_9_0._resLoadedCbObj = nil
+	self._resLoadedCb = nil
+	self._resLoadedCbObj = nil
 
-	arg_9_0:dispatchEvent(var_0_0.Evt_OnLoaded)
+	self:dispatchEvent(UnitSpine.Evt_OnLoaded)
 end
 
-function var_0_0.setLayer(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_0._layer = arg_10_1
+function UnitSpine:setLayer(layer, recursive)
+	self._layer = layer
 
-	if not gohelper.isNil(arg_10_0._spineGo) then
-		gohelper.setLayer(arg_10_0._spineGo, arg_10_0._layer, arg_10_2)
+	if not gohelper.isNil(self._spineGo) then
+		gohelper.setLayer(self._spineGo, self._layer, recursive)
 	end
 end
 
-function var_0_0.getSpineGO(arg_11_0)
-	return arg_11_0._spineGo
+function UnitSpine:getSpineGO()
+	return self._spineGo
 end
 
-function var_0_0.getSpineTr(arg_12_0)
-	return arg_12_0._spineTr
+function UnitSpine:getSpineTr()
+	return self._spineTr
 end
 
-function var_0_0.getSkeletonAnim(arg_13_0)
-	return arg_13_0._skeletonAnim
+function UnitSpine:getSkeletonAnim()
+	return self._skeletonAnim
 end
 
-function var_0_0.getAnimState(arg_14_0)
-	return arg_14_0._curAnimState or arg_14_0._defaultAnimState
+function UnitSpine:getAnimState()
+	return self._curAnimState or self._defaultAnimState
 end
 
-function var_0_0.getPPEffectMask(arg_15_0)
-	return arg_15_0._ppEffectMask
+function UnitSpine:getPPEffectMask()
+	return self._ppEffectMask
 end
 
-function var_0_0.setRenderOrder(arg_16_0, arg_16_1, arg_16_2)
-	if not arg_16_1 then
+function UnitSpine:setRenderOrder(order, force)
+	if not order then
 		return
 	end
 
-	local var_16_0 = arg_16_0._renderOrder
+	local oldOrder = self._renderOrder
 
-	arg_16_0._renderOrder = arg_16_1
+	self._renderOrder = order
 
-	if not arg_16_2 and arg_16_1 == var_16_0 then
+	if not force and order == oldOrder then
 		return
 	end
 
-	if not gohelper.isNil(arg_16_0._spineRenderer) then
-		arg_16_0._spineRenderer.sortingOrder = arg_16_1
+	if not gohelper.isNil(self._spineRenderer) then
+		self._spineRenderer.sortingOrder = order
 	end
 end
 
-function var_0_0.changeLookDir(arg_17_0, arg_17_1)
-	if arg_17_1 == arg_17_0._lookDir then
+function UnitSpine:changeLookDir(dir)
+	if dir == self._lookDir then
 		return
 	end
 
-	arg_17_0._lookDir = arg_17_1
+	self._lookDir = dir
 
-	arg_17_0:_changeLookDir()
+	self:_changeLookDir()
 end
 
-function var_0_0._changeLookDir(arg_18_0)
-	if arg_18_0._skeletonAnim then
-		arg_18_0._skeletonAnim:SetScaleX(arg_18_0._lookDir)
+function UnitSpine:_changeLookDir()
+	if self._skeletonAnim then
+		self._skeletonAnim:SetScaleX(self._lookDir)
 	end
 end
 
-function var_0_0.getLookDir(arg_19_0)
-	return arg_19_0._lookDir
+function UnitSpine:getLookDir()
+	return self._lookDir
 end
 
-function var_0_0.setActive(arg_20_0, arg_20_1)
-	if arg_20_0._spineGo then
-		gohelper.setActive(arg_20_0._spineGo, arg_20_1)
+function UnitSpine:setActive(isActive)
+	if self._spineGo then
+		gohelper.setActive(self._spineGo, isActive)
 	else
-		arg_20_0._isActive = arg_20_1
+		self._isActive = isActive
 	end
 end
 
-function var_0_0.play(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
-	if not arg_21_1 then
+function UnitSpine:play(animState, loop, reStart)
+	if not animState then
 		return
 	end
 
-	local var_21_0 = arg_21_3 or arg_21_1 ~= arg_21_0._curAnimState or arg_21_2 ~= arg_21_0._isLoop
+	local needPlay = reStart or animState ~= self._curAnimState or loop ~= self._isLoop
 
-	arg_21_0._curAnimState = arg_21_1
-	arg_21_0._isLoop = arg_21_2 or false
-	arg_21_3 = arg_21_3 or false
+	self._curAnimState = animState
+	self._isLoop = loop or false
+	reStart = reStart or false
 
-	if arg_21_0._skeletonAnim and var_21_0 then
-		if arg_21_0._skeletonAnim:HasAnimation(arg_21_1) then
-			arg_21_0:playAnim(arg_21_1, arg_21_0._isLoop, arg_21_3)
+	if self._skeletonAnim and needPlay then
+		if self._skeletonAnim:HasAnimation(animState) then
+			self:playAnim(animState, self._isLoop, reStart)
 		else
 			if isDebugBuild then
-				local var_21_1 = not gohelper.isNil(arg_21_0._spineGo) and arg_21_0._spineGo.name or "spine_nil"
-				local var_21_2 = string.find(var_21_1, "(Clone)", 1)
-				local var_21_3 = var_21_2 and string.sub(var_21_1, 1, var_21_2 - 2) or var_21_1
+				local cloneName = not gohelper.isNil(self._spineGo) and self._spineGo.name or "spine_nil"
+				local begin = string.find(cloneName, "(Clone)", 1)
+				local spineName = begin and string.sub(cloneName, 1, begin - 2) or cloneName
 
-				logError(string.format("%s 缺少动作: %s", var_21_3, arg_21_1))
+				if animState ~= "posture" then
+					logError(string.format("%s 缺少动作: %s", spineName, animState))
+				end
 			end
 
-			arg_21_0:playAnim(SpineAnimState.idle1, true, true)
+			self:playAnim(SpineAnimState.idle1, true, true)
 		end
 	end
 end
 
-function var_0_0.hasAnimation(arg_22_0, arg_22_1)
-	if arg_22_0._skeletonAnim then
-		return arg_22_0._skeletonAnim:HasAnimation(arg_22_1)
+function UnitSpine:hasAnimation(animState)
+	if self._skeletonAnim then
+		return self._skeletonAnim:HasAnimation(animState)
 	end
 
 	return false
 end
 
-function var_0_0.playAnim(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
-	arg_23_0._skeletonAnim:PlayAnim(arg_23_1, arg_23_2, arg_23_3)
+function UnitSpine:playAnim(animState, loop, reStart)
+	self._skeletonAnim:PlayAnim(animState, loop, reStart)
 end
 
-function var_0_0.setAnimation(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
-	if arg_24_0._skeletonAnim then
-		arg_24_0._curAnimState = arg_24_1
-		arg_24_0._isLoop = arg_24_2 or false
+function UnitSpine:setAnimation(animState, loop, mixTime)
+	if self._skeletonAnim then
+		self._curAnimState = animState
+		self._isLoop = loop or false
 
-		arg_24_0._skeletonAnim:SetAnimation(0, arg_24_1, arg_24_2, arg_24_3 or 0)
+		self._skeletonAnim:SetAnimation(0, animState, loop, mixTime or 0)
 	end
 end
 
-function var_0_0.addAnimEventCallback(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
-	if not arg_25_1 then
+function UnitSpine:addAnimEventCallback(animEvtCb, animEvtCbObj, param)
+	if not animEvtCb then
 		return
 	end
 
-	for iter_25_0, iter_25_1 in ipairs(arg_25_0._actionCbList) do
-		local var_25_0 = iter_25_1[1]
-		local var_25_1 = iter_25_1[2]
+	for i, cbTable in ipairs(self._actionCbList) do
+		local callback = cbTable[1]
+		local callbackObj = cbTable[2]
 
-		if var_25_0 == arg_25_1 and var_25_1 == arg_25_2 then
-			iter_25_1[3] = arg_25_3
+		if callback == animEvtCb and callbackObj == animEvtCbObj then
+			cbTable[3] = param
 
 			return
 		end
 	end
 
-	table.insert(arg_25_0._actionCbList, {
-		arg_25_1,
-		arg_25_2,
-		arg_25_3
+	table.insert(self._actionCbList, {
+		animEvtCb,
+		animEvtCbObj,
+		param
 	})
 end
 
-function var_0_0.removeAnimEventCallback(arg_26_0, arg_26_1, arg_26_2)
-	for iter_26_0, iter_26_1 in ipairs(arg_26_0._actionCbList) do
-		local var_26_0 = iter_26_1[1]
-		local var_26_1 = iter_26_1[2]
+function UnitSpine:removeAnimEventCallback(animEvtCb, animEvtCbObj)
+	for i, cbTable in ipairs(self._actionCbList) do
+		local callback = cbTable[1]
+		local callbackObj = cbTable[2]
 
-		if var_26_0 == arg_26_1 and var_26_1 == arg_26_2 then
-			table.remove(arg_26_0._actionCbList, iter_26_0)
+		if callback == animEvtCb and callbackObj == animEvtCbObj then
+			table.remove(self._actionCbList, i)
 
 			break
 		end
 	end
 end
 
-function var_0_0.removeAllAnimEventCallback(arg_27_0)
-	arg_27_0._actionCbList = {}
+function UnitSpine:removeAllAnimEventCallback()
+	self._actionCbList = {}
 end
 
-function var_0_0._onAnimCallback(arg_28_0, arg_28_1, arg_28_2, arg_28_3)
-	for iter_28_0, iter_28_1 in ipairs(arg_28_0._actionCbList) do
-		local var_28_0 = iter_28_1[1]
-		local var_28_1 = iter_28_1[2]
-		local var_28_2 = iter_28_1[3]
+function UnitSpine:_onAnimCallback(actionName, eventName, eventArgs)
+	for i, cbTable in ipairs(self._actionCbList) do
+		local callback = cbTable[1]
+		local callbackObj = cbTable[2]
+		local param = cbTable[3]
 
-		if var_28_1 then
-			var_28_0(var_28_1, arg_28_1, arg_28_2, arg_28_3, var_28_2)
+		if callbackObj then
+			callback(callbackObj, actionName, eventName, eventArgs, param)
 		else
-			var_28_0(arg_28_1, arg_28_2, arg_28_3, var_28_2)
+			callback(actionName, eventName, eventArgs, param)
 		end
 	end
 end
 
-function var_0_0.logNilGameObj(arg_29_0)
+function UnitSpine:logNilGameObj()
 	return
 end
 
-function var_0_0.onDestroy(arg_30_0)
-	arg_30_0:_clear()
+function UnitSpine:onDestroy()
+	self:_clear()
 
-	arg_30_0._resLoader = nil
-	arg_30_0._csSpineEvt = nil
+	self._resLoader = nil
+	self._csSpineEvt = nil
 end
 
-return var_0_0
+return UnitSpine

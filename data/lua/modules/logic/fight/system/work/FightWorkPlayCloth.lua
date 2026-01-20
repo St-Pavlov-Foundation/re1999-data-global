@@ -1,39 +1,41 @@
-﻿module("modules.logic.fight.system.work.FightWorkPlayCloth", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkPlayCloth.lua
 
-local var_0_0 = class("FightWorkPlayCloth", FightWorkItem)
+module("modules.logic.fight.system.work.FightWorkPlayCloth", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0.roundData = FightDataHelper.roundMgr:getRoundData()
+local FightWorkPlayCloth = class("FightWorkPlayCloth", FightWorkItem)
 
-	local var_1_0 = arg_1_0:com_registFlowSequence()
+function FightWorkPlayCloth:onStart()
+	self.roundData = FightDataHelper.roundMgr:getRoundData()
 
-	var_1_0:addWork(FunctionWork.New(function()
+	local flow = self:com_registFlowSequence()
+
+	flow:addWork(FunctionWork.New(function()
 		FightController.instance:dispatchEvent(FightEvent.StartPlayClothSkill)
 	end))
 
-	local var_1_1 = FightStepBuilder.buildStepWorkList(arg_1_0.roundData and arg_1_0.roundData.fightStep)
+	local stepWorkList = FightStepBuilder.buildStepWorkList(self.roundData and self.roundData.fightStep)
 
-	if var_1_1 then
-		for iter_1_0, iter_1_1 in ipairs(var_1_1) do
-			var_1_0:addWork(iter_1_1)
+	if stepWorkList then
+		for _, work in ipairs(stepWorkList) do
+			flow:addWork(work)
 		end
 	end
 
-	var_1_0:addWork(FunctionWork.New(function()
-		local var_3_0 = FightDataHelper.roundMgr:getRoundData()
+	flow:addWork(FunctionWork.New(function()
+		local roundData = FightDataHelper.roundMgr:getRoundData()
 
-		FightDataMgr.instance:afterPlayRoundData(var_3_0)
+		FightDataMgr.instance:afterPlayRoundData(roundData)
 	end))
-	var_1_0:addWork(FunctionWork.New(function()
+	flow:addWork(FunctionWork.New(function()
 		FightController.instance:dispatchEvent(FightEvent.AfterPlayClothSkill)
 	end))
-	var_1_0:registFinishCallback(arg_1_0.onClothFinish, arg_1_0)
-	arg_1_0:playWorkAndDone(var_1_0, {})
+	flow:registFinishCallback(self.onClothFinish, self)
+	self:playWorkAndDone(flow, {})
 end
 
-function var_0_0.onClothFinish(arg_5_0)
+function FightWorkPlayCloth:onClothFinish()
 	FightDataHelper.stageMgr:exitFightState(FightStageMgr.FightStateType.ClothSkill)
 	FightController.instance:dispatchEvent(FightEvent.OnClothSkillRoundSequenceFinish)
 end
 
-return var_0_0
+return FightWorkPlayCloth

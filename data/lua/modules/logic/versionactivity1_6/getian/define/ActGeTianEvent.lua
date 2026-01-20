@@ -1,10 +1,12 @@
-﻿module("modules.logic.versionactivity1_6.getian.define.ActGeTianEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/getian/define/ActGeTianEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_6.getian.define.ActGeTianEvent", package.seeall)
 
-var_0_0.OneClickClaimReward = 1
-var_0_0.StoryItemClick = 2
-var_0_0.FightItemClick = 3
-var_0_0.TabSwitch = 4
+local ActGeTianEvent = _M
 
-return var_0_0
+ActGeTianEvent.OneClickClaimReward = 1
+ActGeTianEvent.StoryItemClick = 2
+ActGeTianEvent.FightItemClick = 3
+ActGeTianEvent.TabSwitch = 4
+
+return ActGeTianEvent

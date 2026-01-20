@@ -1,121 +1,129 @@
-﻿module("modules.logic.versionactivity2_4.act181.view.Activity181RewardView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/act181/view/Activity181RewardView.lua
 
-local var_0_0 = class("Activity181RewardView", BaseView)
+module("modules.logic.versionactivity2_4.act181.view.Activity181RewardView", package.seeall)
 
-var_0_0.DISPLAY_TYPE = {
+local Activity181RewardView = class("Activity181RewardView", BaseView)
+
+Activity181RewardView.DISPLAY_TYPE = {
 	Reward = 2,
 	Effect = 1
 }
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._scrollreward = gohelper.findChildScrollRect(arg_1_0.viewGO, "reward/#scroll_reward")
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "reward/#scroll_reward/Viewport/#go_content")
-	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.viewGO, "reward/#scroll_reward/Viewport/#go_content/#go_rewarditem")
-	arg_1_0._btnclose = gohelper.findChildButton(arg_1_0.viewGO, "#btn_close")
+function Activity181RewardView:onInitView()
+	self._scrollreward = gohelper.findChildScrollRect(self.viewGO, "reward/#scroll_reward")
+	self._gocontent = gohelper.findChild(self.viewGO, "reward/#scroll_reward/Viewport/#go_content")
+	self._gorewarditem = gohelper.findChild(self.viewGO, "reward/#scroll_reward/Viewport/#go_content/#go_rewarditem")
+	self._btnclose = gohelper.findChildButton(self.viewGO, "#btn_close")
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function Activity181RewardView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function Activity181RewardView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
+function Activity181RewardView:_btncloseOnClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_common_click_20190324)
-	arg_4_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._rewardItemList = {}
+function Activity181RewardView:_editableInitView()
+	self._rewardItemList = {}
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function Activity181RewardView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0._actId = arg_7_0.viewParam.actId
+function Activity181RewardView:onOpen()
+	local actId = self.viewParam.actId
 
-	arg_7_0:refreshUI()
+	self._actId = actId
+
+	self:refreshUI()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_souvenir_open)
 end
 
-function var_0_0.refreshUI(arg_8_0)
-	arg_8_0:_refreshReward()
+function Activity181RewardView:refreshUI()
+	self:_refreshReward()
 end
 
-function var_0_0._refreshReward(arg_9_0)
-	local var_9_0 = arg_9_0._actId
-	local var_9_1 = Activity181Config.instance:getBoxListByActivityId(var_9_0)
+function Activity181RewardView:_refreshReward()
+	local actId = self._actId
+	local tempSortList = Activity181Config.instance:getBoxListByActivityId(actId)
 
-	if not var_9_1 then
+	if not tempSortList then
 		return
 	end
 
-	local var_9_2 = {}
-	local var_9_3 = {}
-	local var_9_4 = Activity181Model.instance:getActivityInfo(var_9_0)
+	local rewardBoxIdList = {}
+	local rewardBoxGetDic = {}
+	local activityMo = Activity181Model.instance:getActivityInfo(actId)
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_1) do
-		table.insert(var_9_2, iter_9_1)
+	for _, id in ipairs(tempSortList) do
+		table.insert(rewardBoxIdList, id)
 
-		var_9_3[iter_9_1] = var_9_4:getBonusStateById(iter_9_1) == Activity181Enum.BonusState.HaveGet
+		local haveGet = activityMo:getBonusStateById(id) == Activity181Enum.BonusState.HaveGet
+
+		rewardBoxGetDic[id] = haveGet
 	end
 
-	table.sort(var_9_2, function(arg_10_0, arg_10_1)
-		if var_9_3[arg_10_0] == var_9_3[arg_10_1] then
-			return arg_10_0 < arg_10_1
+	table.sort(rewardBoxIdList, function(a, b)
+		if rewardBoxGetDic[a] == rewardBoxGetDic[b] then
+			return a < b
 		end
 
-		return var_9_3[arg_10_1]
+		return rewardBoxGetDic[b]
 	end)
 
-	local var_9_5 = #var_9_2
-	local var_9_6 = #arg_9_0._rewardItemList
+	local rewardCount = #rewardBoxIdList
+	local itemCount = #self._rewardItemList
 
-	for iter_9_2 = 1, var_9_5 do
-		local var_9_7
+	for i = 1, rewardCount do
+		local rewardItem
 
-		if iter_9_2 <= var_9_6 then
-			var_9_7 = arg_9_0._rewardItemList[iter_9_2]
+		if i <= itemCount then
+			rewardItem = self._rewardItemList[i]
 		else
-			local var_9_8 = gohelper.clone(arg_9_0._gorewarditem, arg_9_0._gocontent)
+			local itemObj = gohelper.clone(self._gorewarditem, self._gocontent)
 
-			var_9_7 = MonoHelper.addNoUpdateLuaComOnceToGo(var_9_8, Activity181RewardItem)
+			rewardItem = MonoHelper.addNoUpdateLuaComOnceToGo(itemObj, Activity181RewardItem)
 
-			table.insert(arg_9_0._rewardItemList, var_9_7)
+			table.insert(self._rewardItemList, rewardItem)
 		end
 
-		local var_9_9 = var_9_2[iter_9_2]
-		local var_9_10 = Activity181Config.instance:getBoxListConfig(var_9_0, var_9_9)
-		local var_9_11 = string.splitToNumber(var_9_10.bonus, "#")
+		local boxId = rewardBoxIdList[i]
+		local boxConfig = Activity181Config.instance:getBoxListConfig(actId, boxId)
+		local reward = string.splitToNumber(boxConfig.bonus, "#")
 
-		var_9_7:setEnable(true)
+		rewardItem:setEnable(true)
 
-		local var_9_12 = var_9_3[var_9_9]
+		local haveGet = rewardBoxGetDic[boxId]
 
-		var_9_7:onUpdateMO(var_9_11[1], var_9_11[2], var_9_11[3], var_9_12)
+		rewardItem:onUpdateMO(reward[1], reward[2], reward[3], haveGet)
 	end
 
-	if var_9_5 < var_9_6 then
-		for iter_9_3 = var_9_5 + 1, var_9_6 do
-			arg_9_0._rewardItemList[iter_9_3]:setEnable(true)
+	if rewardCount < itemCount then
+		for i = rewardCount + 1, itemCount do
+			local item = self._rewardItemList[i]
+
+			item:setEnable(true)
 		end
 	end
 end
 
-function var_0_0.onClose(arg_11_0)
+function Activity181RewardView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_12_0)
+function Activity181RewardView:onDestroyView()
 	return
 end
 
-return var_0_0
+return Activity181RewardView

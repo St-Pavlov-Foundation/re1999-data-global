@@ -1,122 +1,125 @@
-﻿module("modules.logic.versionactivity1_6.dungeon.view.store.VersionActivity1_6StoreView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/dungeon/view/store/VersionActivity1_6StoreView.lua
 
-local var_0_0 = class("VersionActivity1_6StoreView", BaseView)
+module("modules.logic.versionactivity1_6.dungeon.view.store.VersionActivity1_6StoreView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "title/#txt_time")
-	arg_1_0._scrollstore = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_store")
-	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "#scroll_store/Viewport/#go_Content")
-	arg_1_0._gostoreItem = gohelper.findChild(arg_1_0.viewGO, "#scroll_store/Viewport/#go_Content/#go_storeItem")
-	arg_1_0._gostoregoodsitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_store/Viewport/#go_Content/#go_storeItem/#go_storegoodsitem")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._gorighttop = gohelper.findChild(arg_1_0.viewGO, "#go_righttop")
+local VersionActivity1_6StoreView = class("VersionActivity1_6StoreView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity1_6StoreView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._txttime = gohelper.findChildText(self.viewGO, "title/#txt_time")
+	self._scrollstore = gohelper.findChildScrollRect(self.viewGO, "#scroll_store")
+	self._goContent = gohelper.findChild(self.viewGO, "#scroll_store/Viewport/#go_Content")
+	self._gostoreItem = gohelper.findChild(self.viewGO, "#scroll_store/Viewport/#go_Content/#go_storeItem")
+	self._gostoregoodsitem = gohelper.findChild(self.viewGO, "#scroll_store/Viewport/#go_Content/#go_storeItem/#go_storegoodsitem")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._gorighttop = gohelper.findChild(self.viewGO, "#go_righttop")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._scrollstore:AddOnValueChanged(arg_2_0._onScrollValueChanged, arg_2_0)
+function VersionActivity1_6StoreView:addEvents()
+	self._scrollstore:AddOnValueChanged(self._onScrollValueChanged, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._scrollstore:RemoveOnValueChanged()
+function VersionActivity1_6StoreView:removeEvents()
+	self._scrollstore:RemoveOnValueChanged()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._simagebg:LoadImage("singlebg/v1a6_enterview_singlebg/v1a6_store_fullbg.png")
-	gohelper.setActive(arg_4_0._gostoreItem, false)
+function VersionActivity1_6StoreView:_editableInitView()
+	self._simagebg:LoadImage("singlebg/v1a6_enterview_singlebg/v1a6_store_fullbg.png")
+	gohelper.setActive(self._gostoreItem, false)
 
-	arg_4_0.actId = VersionActivity1_6Enum.ActivityId.DungeonStore
-	arg_4_0.storeItemList = arg_4_0:getUserDataTb_()
-	arg_4_0.rectTrContent = arg_4_0._goContent:GetComponent(gohelper.Type_RectTransform)
+	self.actId = VersionActivity1_6Enum.ActivityId.DungeonStore
+	self.storeItemList = self:getUserDataTb_()
+	self.rectTrContent = self._goContent:GetComponent(gohelper.Type_RectTransform)
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function VersionActivity1_6StoreView:onUpdateParam()
 	return
 end
 
-function var_0_0._onScrollValueChanged(arg_6_0)
-	if #arg_6_0.storeItemList > 0 then
-		for iter_6_0, iter_6_1 in ipairs(arg_6_0.storeItemList) do
-			if iter_6_0 == 1 then
-				iter_6_1:refreshTagClip(arg_6_0._scrollstore)
+function VersionActivity1_6StoreView:_onScrollValueChanged()
+	if #self.storeItemList > 0 then
+		for k, v in ipairs(self.storeItemList) do
+			if k == 1 then
+				v:refreshTagClip(self._scrollstore)
 			end
 		end
 	end
 end
 
-function var_0_0.onOpen(arg_7_0)
+function VersionActivity1_6StoreView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_souvenir_open)
-	TaskDispatcher.runRepeat(arg_7_0.refreshTime, arg_7_0, TimeUtil.OneMinuteSecond)
-	arg_7_0:addEventCb(JumpController.instance, JumpEvent.BeforeJump, arg_7_0.closeThis, arg_7_0)
-	arg_7_0:refreshTime()
-	arg_7_0:refreshStoreContent()
-	arg_7_0:_onScrollValueChanged()
-	arg_7_0:scrollToFirstNoSellOutStore()
+	TaskDispatcher.runRepeat(self.refreshTime, self, TimeUtil.OneMinuteSecond)
+	self:addEventCb(JumpController.instance, JumpEvent.BeforeJump, self.closeThis, self)
+	self:refreshTime()
+	self:refreshStoreContent()
+	self:_onScrollValueChanged()
+	self:scrollToFirstNoSellOutStore()
 end
 
-function var_0_0.refreshStoreContent(arg_8_0)
-	local var_8_0 = ActivityStoreConfig.instance:getActivityStoreGroupDict(VersionActivity1_6Enum.ActivityId.DungeonStore)
+function VersionActivity1_6StoreView:refreshStoreContent()
+	local storeGroupDict = ActivityStoreConfig.instance:getActivityStoreGroupDict(VersionActivity1_6Enum.ActivityId.DungeonStore)
 
-	if not var_8_0 then
+	if not storeGroupDict then
 		return
 	end
 
-	local var_8_1
+	local storeItem
 
-	for iter_8_0 = 1, #var_8_0 do
-		local var_8_2 = arg_8_0.storeItemList[iter_8_0]
+	for i = 1, #storeGroupDict do
+		storeItem = self.storeItemList[i]
 
-		if not var_8_2 then
-			var_8_2 = VersionActivity1_6StoreItem.New()
+		if not storeItem then
+			storeItem = VersionActivity1_6StoreItem.New()
 
-			var_8_2:onInitView(gohelper.cloneInPlace(arg_8_0._gostoreItem))
-			table.insert(arg_8_0.storeItemList, var_8_2)
+			storeItem:onInitView(gohelper.cloneInPlace(self._gostoreItem))
+			table.insert(self.storeItemList, storeItem)
 		end
 
-		var_8_2:updateInfo(iter_8_0, var_8_0[iter_8_0])
+		storeItem:updateInfo(i, storeGroupDict[i])
 	end
 end
 
-function var_0_0.scrollToFirstNoSellOutStore(arg_9_0)
-	local var_9_0 = arg_9_0:getFirstNoSellOutGroup()
+function VersionActivity1_6StoreView:scrollToFirstNoSellOutStore()
+	local index = self:getFirstNoSellOutGroup()
 
-	if var_9_0 <= 1 then
+	if index <= 1 then
 		return
 	end
 
-	ZProj.UGUIHelper.RebuildLayout(arg_9_0.rectTrContent)
+	ZProj.UGUIHelper.RebuildLayout(self.rectTrContent)
 
-	local var_9_1 = gohelper.findChildComponent(arg_9_0.viewGO, "#scroll_store/Viewport", gohelper.Type_RectTransform)
-	local var_9_2 = recthelper.getHeight(var_9_1)
-	local var_9_3 = recthelper.getHeight(arg_9_0.rectTrContent) - var_9_2
-	local var_9_4 = 0
+	local viewPortTr = gohelper.findChildComponent(self.viewGO, "#scroll_store/Viewport", gohelper.Type_RectTransform)
+	local viewPortHeight = recthelper.getHeight(viewPortTr)
+	local contentHeight = recthelper.getHeight(self.rectTrContent)
+	local maxAnchorY = contentHeight - viewPortHeight
+	local height = 0
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0.storeItemList) do
-		if var_9_0 <= iter_9_0 then
+	for _index, storeItem in ipairs(self.storeItemList) do
+		if index <= _index then
 			break
 		end
 
-		var_9_4 = var_9_4 + iter_9_1:getHeight()
+		height = height + storeItem:getHeight()
 	end
 
-	recthelper.setAnchorY(arg_9_0.rectTrContent, math.min(var_9_4, var_9_3))
+	recthelper.setAnchorY(self.rectTrContent, math.min(height, maxAnchorY))
 end
 
-function var_0_0.getFirstNoSellOutGroup(arg_10_0)
-	local var_10_0 = ActivityStoreConfig.instance:getActivityStoreGroupDict(arg_10_0.actId)
+function VersionActivity1_6StoreView:getFirstNoSellOutGroup()
+	local storeGroupDict = ActivityStoreConfig.instance:getActivityStoreGroupDict(self.actId)
 
-	for iter_10_0, iter_10_1 in ipairs(var_10_0) do
-		for iter_10_2, iter_10_3 in ipairs(iter_10_1) do
-			if iter_10_3.maxBuyCount == 0 then
-				return iter_10_0
+	for index, groupGoodsCoList in ipairs(storeGroupDict) do
+		for _, goodsCo in ipairs(groupGoodsCoList) do
+			if goodsCo.maxBuyCount == 0 then
+				return index
 			end
 
-			if iter_10_3.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(arg_10_0.actId, iter_10_3.id) > 0 then
-				return iter_10_0
+			if goodsCo.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(self.actId, goodsCo.id) > 0 then
+				return index
 			end
 		end
 	end
@@ -124,22 +127,23 @@ function var_0_0.getFirstNoSellOutGroup(arg_10_0)
 	return 1
 end
 
-function var_0_0.refreshTime(arg_11_0)
-	local var_11_0 = ActivityModel.instance:getActivityInfo()[VersionActivity1_6Enum.ActivityId.DungeonStore]:getRemainTimeStr3(false, true)
+function VersionActivity1_6StoreView:refreshTime()
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[VersionActivity1_6Enum.ActivityId.DungeonStore]
+	local remainTimeStr = actInfoMo:getRemainTimeStr3(false, true)
 
-	arg_11_0._txttime.text = var_11_0
+	self._txttime.text = remainTimeStr
 end
 
-function var_0_0.onClose(arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0.refreshTime, arg_12_0)
+function VersionActivity1_6StoreView:onClose()
+	TaskDispatcher.cancelTask(self.refreshTime, self)
 end
 
-function var_0_0.onDestroyView(arg_13_0)
-	arg_13_0._simagebg:UnLoadImage()
+function VersionActivity1_6StoreView:onDestroyView()
+	self._simagebg:UnLoadImage()
 
-	for iter_13_0, iter_13_1 in ipairs(arg_13_0.storeItemList) do
-		iter_13_1:onDestroy()
+	for _, storeItem in ipairs(self.storeItemList) do
+		storeItem:onDestroy()
 	end
 end
 
-return var_0_0
+return VersionActivity1_6StoreView

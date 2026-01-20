@@ -1,10 +1,14 @@
-﻿module("modules.logic.explore.controller.trigger.ExploreTriggerBubbleDialogue", package.seeall)
+﻿-- chunkname: @modules/logic/explore/controller/trigger/ExploreTriggerBubbleDialogue.lua
 
-local var_0_0 = class("ExploreTriggerBubbleDialogue", ExploreTriggerBase)
+module("modules.logic.explore.controller.trigger.ExploreTriggerBubbleDialogue", package.seeall)
 
-function var_0_0.handle(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_2.uiComp:addUI(ExploreUnitDialogueView):setDialogueId(arg_1_1)
-	arg_1_0:onStepDone(true)
+local ExploreTriggerBubbleDialogue = class("ExploreTriggerBubbleDialogue", ExploreTriggerBase)
+
+function ExploreTriggerBubbleDialogue:handle(id, unit)
+	local view = unit.uiComp:addUI(ExploreUnitDialogueView)
+
+	view:setDialogueId(id)
+	self:onStepDone(true)
 end
 
-return var_0_0
+return ExploreTriggerBubbleDialogue

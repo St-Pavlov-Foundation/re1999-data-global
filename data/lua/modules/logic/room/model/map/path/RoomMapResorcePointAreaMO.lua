@@ -1,170 +1,176 @@
-﻿module("modules.logic.room.model.map.path.RoomMapResorcePointAreaMO", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/map/path/RoomMapResorcePointAreaMO.lua
 
-local var_0_0 = pureTable("RoomMapResorcePointAreaMO")
+module("modules.logic.room.model.map.path.RoomMapResorcePointAreaMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.id = arg_1_1
-	arg_1_0.resourceId = arg_1_2
-	arg_1_0._resPointMap = {}
-	arg_1_0._resPointList = {}
-	arg_1_0._directionConnectsDic = arg_1_0._directionConnectsDic or {}
-	arg_1_0._areaIdMap = {}
-	arg_1_0._areaPointList = {}
-	arg_1_0._isNeedUpdateAreaIdMap = false
+local RoomMapResorcePointAreaMO = pureTable("RoomMapResorcePointAreaMO")
+
+function RoomMapResorcePointAreaMO:init(id, resourceId)
+	self.id = id
+	self.resourceId = resourceId
+	self._resPointMap = {}
+	self._resPointList = {}
+	self._directionConnectsDic = self._directionConnectsDic or {}
+	self._areaIdMap = {}
+	self._areaPointList = {}
+	self._isNeedUpdateAreaIdMap = false
 end
 
-function var_0_0.addResPoint(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_1.x
-	local var_2_1 = arg_2_1.y
-	local var_2_2 = arg_2_1.direction
-	local var_2_3 = arg_2_0:_getResPointValue(arg_2_0._resPointMap, var_2_0, var_2_1, var_2_2)
+function RoomMapResorcePointAreaMO:addResPoint(resourcePoint)
+	local x = resourcePoint.x
+	local y = resourcePoint.y
+	local direction = resourcePoint.direction
+	local old = self:_getResPointValue(self._resPointMap, x, y, direction)
 
-	if var_2_3 then
-		tabletool.removeValue(arg_2_0._resPointList, var_2_3)
+	if old then
+		tabletool.removeValue(self._resPointList, old)
 	else
-		arg_2_0._isNeedUpdateAreaIdMap = true
+		self._isNeedUpdateAreaIdMap = true
 	end
 
-	arg_2_0:_addResPointValue(arg_2_0._resPointMap, var_2_0, var_2_1, var_2_2, arg_2_1)
-	table.insert(arg_2_0._resPointList, arg_2_1)
+	self:_addResPointValue(self._resPointMap, x, y, direction, resourcePoint)
+	table.insert(self._resPointList, resourcePoint)
 end
 
-function var_0_0.removeByXYD(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	local var_3_0 = arg_3_0:_getResPointValue(arg_3_0._resPointMap, arg_3_1, arg_3_2, arg_3_3)
+function RoomMapResorcePointAreaMO:removeByXYD(x, y, direction)
+	local old = self:_getResPointValue(self._resPointMap, x, y, direction)
 
-	if var_3_0 then
-		tabletool.removeValue(arg_3_0._resPointList, var_3_0)
+	if old then
+		tabletool.removeValue(self._resPointList, old)
 
-		arg_3_0._isNeedUpdateAreaIdMap = true
+		self._isNeedUpdateAreaIdMap = true
 	end
 end
 
-function var_0_0.removeByXY(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_0._resPointMap[arg_4_1] and arg_4_0._resPointMap[arg_4_1][arg_4_2] then
-		arg_4_0._resPointMap[arg_4_1][arg_4_2] = nil
+function RoomMapResorcePointAreaMO:removeByXY(x, y)
+	if self._resPointMap[x] and self._resPointMap[x][y] then
+		self._resPointMap[x][y] = nil
 
-		local var_4_0 = arg_4_0._resPointList
-		local var_4_1
-		local var_4_2 = #var_4_0
+		local resPointList = self._resPointList
+		local resPoint
+		local count = #resPointList
 
-		for iter_4_0 = var_4_2, 1, -1 do
-			local var_4_3 = var_4_0[iter_4_0]
+		for i = count, 1, -1 do
+			resPoint = resPointList[i]
 
-			if var_4_3.x == arg_4_1 and var_4_3.y == arg_4_2 then
-				var_4_0[iter_4_0] = var_4_0[var_4_2]
+			if resPoint.x == x and resPoint.y == y then
+				resPointList[i] = resPointList[count]
 
-				table.remove(var_4_0, var_4_2)
+				table.remove(resPointList, count)
 
-				var_4_2 = var_4_2 - 1
+				count = count - 1
 			end
 		end
 
-		arg_4_0._isNeedUpdateAreaIdMap = true
+		self._isNeedUpdateAreaIdMap = true
 	end
 end
 
-function var_0_0.getAreaIdByXYD(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	local var_5_0 = arg_5_0:getAreaIdMap()
+function RoomMapResorcePointAreaMO:getAreaIdByXYD(x, y, direction)
+	local areaIdMap = self:getAreaIdMap()
+	local curAreaId = self:_getResPointValue(areaIdMap, x, y, direction)
 
-	return (arg_5_0:_getResPointValue(var_5_0, arg_5_1, arg_5_2, arg_5_3))
+	return curAreaId
 end
 
-function var_0_0.getResorcePiontListByXYD(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	local var_6_0 = arg_6_0:getAreaIdByXYD(arg_6_1, arg_6_2, arg_6_3)
+function RoomMapResorcePointAreaMO:getResorcePiontListByXYD(x, y, direction)
+	local curAreaId = self:getAreaIdByXYD(x, y, direction)
 
-	if var_6_0 then
-		return arg_6_0._areaPointList[var_6_0]
+	if curAreaId then
+		return self._areaPointList[curAreaId]
 	end
 
 	return nil
 end
 
-function var_0_0._checkUpdateArea(arg_7_0)
-	if arg_7_0._isNeedUpdateAreaMap then
+function RoomMapResorcePointAreaMO:_checkUpdateArea()
+	if self._isNeedUpdateAreaMap then
 		return
 	end
 
-	local var_7_0 = {}
-	local var_7_1 = {}
-	local var_7_2 = arg_7_0._resPointList
-	local var_7_3 = arg_7_0._resPointMap
+	local areaIdMap = {}
+	local areaPointList = {}
+	local resPointList = self._resPointList
+	local resPointMap = self._resPointMap
 
-	for iter_7_0 = 1, #var_7_2 do
-		local var_7_4 = var_7_2[iter_7_0]
+	for i = 1, #resPointList do
+		local resPoint = resPointList[i]
 
-		arg_7_0:_addResPointValue(var_7_0, var_7_4.x, var_7_4.y, var_7_4.direction, -1)
+		self:_addResPointValue(areaIdMap, resPoint.x, resPoint.y, resPoint.direction, -1)
 	end
 
-	local var_7_5 = 0
+	local areaId = 0
 
-	for iter_7_1 = 1, #var_7_2 do
-		local var_7_6 = var_7_2[iter_7_1]
+	for i = 1, #resPointList do
+		local resPoint = resPointList[i]
+		local curAreaId = self:_getResPointValue(areaIdMap, resPoint.x, resPoint.y, resPoint.direction)
 
-		if arg_7_0:_getResPointValue(var_7_0, var_7_6.x, var_7_6.y, var_7_6.direction) == -1 then
-			var_7_5 = var_7_5 + 1
+		if curAreaId == -1 then
+			areaId = areaId + 1
 
-			local var_7_7 = {}
+			local addList = {}
 
-			table.insert(var_7_1, var_7_7)
-			arg_7_0:_searchArea(var_7_5, var_7_6, var_7_0, var_7_3, var_7_7)
+			table.insert(areaPointList, addList)
+			self:_searchArea(areaId, resPoint, areaIdMap, resPointMap, addList)
 		end
 	end
 
-	arg_7_0._isNeedUpdateAreaMap = false
-	arg_7_0._areaIdMap = var_7_0
-	arg_7_0._areaPointList = var_7_1
+	self._isNeedUpdateAreaMap = false
+	self._areaIdMap = areaIdMap
+	self._areaPointList = areaPointList
 end
 
-function var_0_0.getAreaIdMap(arg_8_0)
-	arg_8_0:_checkUpdateArea()
+function RoomMapResorcePointAreaMO:getAreaIdMap()
+	self:_checkUpdateArea()
 
-	return arg_8_0._areaIdMap
+	return self._areaIdMap
 end
 
-function var_0_0.findeArea(arg_9_0)
-	arg_9_0:_checkUpdateArea()
+function RoomMapResorcePointAreaMO:findeArea()
+	self:_checkUpdateArea()
 
-	return arg_9_0._areaPointList
+	return self._areaPointList
 end
 
-function var_0_0._searchArea(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4, arg_10_5)
-	if arg_10_0:_getResPointValue(arg_10_3, arg_10_2.x, arg_10_2.y, arg_10_2.direction) == -1 then
-		arg_10_0:_addResPointValue(arg_10_3, arg_10_2.x, arg_10_2.y, arg_10_2.direction, arg_10_1)
+function RoomMapResorcePointAreaMO:_searchArea(areaId, resPoint, areaMap, resPointMap, addList)
+	local curAreaId = self:_getResPointValue(areaMap, resPoint.x, resPoint.y, resPoint.direction)
 
-		if arg_10_5 then
-			table.insert(arg_10_5, arg_10_2)
+	if curAreaId == -1 then
+		self:_addResPointValue(areaMap, resPoint.x, resPoint.y, resPoint.direction, areaId)
+
+		if addList then
+			table.insert(addList, resPoint)
 		end
 
-		local var_10_0 = arg_10_0:getConnectsAll(arg_10_2.direction)
+		local connectResourcePoints = self:getConnectsAll(resPoint.direction)
 
-		for iter_10_0, iter_10_1 in ipairs(var_10_0) do
-			local var_10_1 = arg_10_0:_getResPointValue(arg_10_4, arg_10_2.x + iter_10_1.x, arg_10_2.y + iter_10_1.y, iter_10_1.direction)
+		for _, connectPoint in ipairs(connectResourcePoints) do
+			local tempResPoint = self:_getResPointValue(resPointMap, resPoint.x + connectPoint.x, resPoint.y + connectPoint.y, connectPoint.direction)
 
-			if var_10_1 then
-				arg_10_0:_searchArea(arg_10_1, var_10_1, arg_10_3, arg_10_4, arg_10_5)
+			if tempResPoint then
+				self:_searchArea(areaId, tempResPoint, areaMap, resPointMap, addList)
 			end
 		end
 	end
 end
 
-function var_0_0.getConnectsAll(arg_11_0, arg_11_1)
-	if not arg_11_0._directionConnectsDic[arg_11_1] then
-		local var_11_0 = ResourcePoint(HexPoint(0, 0), arg_11_1)
+function RoomMapResorcePointAreaMO:getConnectsAll(direction)
+	if not self._directionConnectsDic[direction] then
+		local resPoint = ResourcePoint(HexPoint(0, 0), direction)
 
-		arg_11_0._directionConnectsDic[arg_11_1] = var_11_0:GetConnectsAll()
+		self._directionConnectsDic[direction] = resPoint:GetConnectsAll()
 	end
 
-	return arg_11_0._directionConnectsDic[arg_11_1]
+	return self._directionConnectsDic[direction]
 end
 
-function var_0_0._addResPointValue(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4, arg_12_5)
-	arg_12_1[arg_12_2] = arg_12_1[arg_12_2] or {}
-	arg_12_1[arg_12_2][arg_12_3] = arg_12_1[arg_12_2][arg_12_3] or {}
-	arg_12_1[arg_12_2][arg_12_3][arg_12_4] = arg_12_5
+function RoomMapResorcePointAreaMO:_addResPointValue(dict, x, y, direction, value)
+	dict[x] = dict[x] or {}
+	dict[x][y] = dict[x][y] or {}
+	dict[x][y][direction] = value
 end
 
-function var_0_0._getResPointValue(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4)
-	return arg_13_1[arg_13_2] and arg_13_1[arg_13_2][arg_13_3] and arg_13_1[arg_13_2][arg_13_3][arg_13_4]
+function RoomMapResorcePointAreaMO:_getResPointValue(dict, x, y, direction)
+	return dict[x] and dict[x][y] and dict[x][y][direction]
 end
 
-return var_0_0
+return RoomMapResorcePointAreaMO

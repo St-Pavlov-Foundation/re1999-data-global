@@ -1,3 +1,7 @@
-﻿module("modules.logic.endofdream.controller.EndOfDreamEvent", package.seeall)
+﻿-- chunkname: @modules/logic/endofdream/controller/EndOfDreamEvent.lua
 
-return _M
+module("modules.logic.endofdream.controller.EndOfDreamEvent", package.seeall)
+
+local EndOfDreamEvent = _M
+
+return EndOfDreamEvent

@@ -1,10 +1,12 @@
-﻿module("modules.logic.fight.system.work.FightWorkAddRecordCard", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkAddRecordCard.lua
 
-local var_0_0 = class("FightWorkAddRecordCard", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkAddRecordCard", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	FightController.instance:dispatchEvent(FightEvent.ALF_AddRecordCardData, arg_1_0.actEffectData.buff)
-	arg_1_0:onDone(true)
+local FightWorkAddRecordCard = class("FightWorkAddRecordCard", FightEffectBase)
+
+function FightWorkAddRecordCard:onStart()
+	FightController.instance:dispatchEvent(FightEvent.ALF_AddRecordCardData, self.actEffectData.buff)
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkAddRecordCard

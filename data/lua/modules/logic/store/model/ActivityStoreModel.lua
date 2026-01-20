@@ -1,57 +1,59 @@
-﻿module("modules.logic.store.model.ActivityStoreModel", package.seeall)
+﻿-- chunkname: @modules/logic/store/model/ActivityStoreModel.lua
 
-local var_0_0 = class("ActivityStoreModel", BaseModel)
+module("modules.logic.store.model.ActivityStoreModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0.activityGoodsInfosDict = nil
+local ActivityStoreModel = class("ActivityStoreModel", BaseModel)
+
+function ActivityStoreModel:onInit()
+	self.activityGoodsInfosDict = nil
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:onInit()
+function ActivityStoreModel:reInit()
+	self:onInit()
 end
 
-function var_0_0.initActivityGoodsInfos(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0.activityGoodsInfosDict = arg_3_0.activityGoodsInfosDict or {}
+function ActivityStoreModel:initActivityGoodsInfos(activityId, goodsInfos)
+	self.activityGoodsInfosDict = self.activityGoodsInfosDict or {}
 
-	local var_3_0 = {}
-	local var_3_1
+	local activityGoodsInfos = {}
+	local activityStoreMo
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_2) do
-		local var_3_2 = ActivityStoreMo.New()
+	for _, goodsInfo in ipairs(goodsInfos) do
+		activityStoreMo = ActivityStoreMo.New()
 
-		var_3_2:init(arg_3_1, iter_3_1)
+		activityStoreMo:init(activityId, goodsInfo)
 
-		var_3_0[var_3_2.id] = var_3_2
+		activityGoodsInfos[activityStoreMo.id] = activityStoreMo
 	end
 
-	arg_3_0.activityGoodsInfosDict[arg_3_1] = var_3_0
+	self.activityGoodsInfosDict[activityId] = activityGoodsInfos
 end
 
-function var_0_0.updateActivityGoodsInfos(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = arg_4_0.activityGoodsInfosDict[arg_4_1]
-	local var_4_1 = var_4_0[arg_4_2.id]
+function ActivityStoreModel:updateActivityGoodsInfos(activityId, goodsInfo)
+	local activityGoodsInfos = self.activityGoodsInfosDict[activityId]
+	local activityStoreMo = activityGoodsInfos[goodsInfo.id]
 
-	if not var_4_1 then
-		var_4_1 = ActivityStoreMo.New()
+	if not activityStoreMo then
+		activityStoreMo = ActivityStoreMo.New()
 
-		var_4_1:init(arg_4_1, arg_4_2)
+		activityStoreMo:init(activityId, goodsInfo)
 
-		var_4_0[var_4_1.id] = var_4_1
+		activityGoodsInfos[activityStoreMo.id] = activityStoreMo
 	else
-		var_4_1:updateData(arg_4_2)
+		activityStoreMo:updateData(goodsInfo)
 	end
 end
 
-function var_0_0.getActivityGoodsBuyCount(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = arg_5_0.activityGoodsInfosDict
+function ActivityStoreModel:getActivityGoodsBuyCount(activityId, goodsId)
+	local dict = self.activityGoodsInfosDict
 
-	if not var_5_0 or not var_5_0[arg_5_1] or not var_5_0[arg_5_1][arg_5_2] then
+	if not dict or not dict[activityId] or not dict[activityId][goodsId] then
 		return 0
 	end
 
-	return var_5_0[arg_5_1][arg_5_2].buyCount or 0
+	return dict[activityId][goodsId].buyCount or 0
 end
 
-var_0_0.instance = var_0_0.New()
+ActivityStoreModel.instance = ActivityStoreModel.New()
 
-return var_0_0
+return ActivityStoreModel

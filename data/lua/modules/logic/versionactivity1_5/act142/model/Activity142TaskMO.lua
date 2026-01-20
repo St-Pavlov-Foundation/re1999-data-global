@@ -1,47 +1,49 @@
-﻿module("modules.logic.versionactivity1_5.act142.model.Activity142TaskMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/act142/model/Activity142TaskMO.lua
 
-local var_0_0 = pureTable("Activity142TaskMO")
+module("modules.logic.versionactivity1_5.act142.model.Activity142TaskMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.id = arg_1_1.id
-	arg_1_0.config = arg_1_1
-	arg_1_0.taskMO = arg_1_2
+local Activity142TaskMO = pureTable("Activity142TaskMO")
+
+function Activity142TaskMO:init(taskCfg, taskMO)
+	self.id = taskCfg.id
+	self.config = taskCfg
+	self.taskMO = taskMO
 end
 
-function var_0_0.updateMO(arg_2_0, arg_2_1)
-	arg_2_0.taskMO = arg_2_1
+function Activity142TaskMO:updateMO(taskMO)
+	self.taskMO = taskMO
 end
 
-function var_0_0.isLock(arg_3_0)
-	return arg_3_0.taskMO == nil
+function Activity142TaskMO:isLock()
+	return self.taskMO == nil
 end
 
-function var_0_0.isFinished(arg_4_0)
-	if arg_4_0.taskMO then
-		return arg_4_0.taskMO.hasFinished
+function Activity142TaskMO:isFinished()
+	if self.taskMO then
+		return self.taskMO.hasFinished
 	end
 
 	return false
 end
 
-function var_0_0.getProgress(arg_5_0)
-	return arg_5_0.taskMO and arg_5_0.taskMO.progress or 0
+function Activity142TaskMO:getProgress()
+	return self.taskMO and self.taskMO.progress or 0
 end
 
-function var_0_0.getMaxProgress(arg_6_0)
-	return arg_6_0.config and arg_6_0.config.maxProgress or 0
+function Activity142TaskMO:getMaxProgress()
+	return self.config and self.config.maxProgress or 0
 end
 
-function var_0_0.getFinishProgress(arg_7_0)
-	return arg_7_0.taskMO and arg_7_0.taskMO.finishCount or 0
+function Activity142TaskMO:getFinishProgress()
+	return self.taskMO and self.taskMO.finishCount or 0
 end
 
-function var_0_0.alreadyGotReward(arg_8_0)
-	return arg_8_0:getFinishProgress() > 0
+function Activity142TaskMO:alreadyGotReward()
+	return self:getFinishProgress() > 0
 end
 
-function var_0_0.haveRewardToGet(arg_9_0)
-	return arg_9_0:getFinishProgress() == 0 and arg_9_0:isFinished()
+function Activity142TaskMO:haveRewardToGet()
+	return self:getFinishProgress() == 0 and self:isFinished()
 end
 
-return var_0_0
+return Activity142TaskMO

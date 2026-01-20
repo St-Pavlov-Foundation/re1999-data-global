@@ -1,70 +1,72 @@
-﻿module("modules.logic.activity.view.ActivityNorSignViewBase_1_2", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/ActivityNorSignViewBase_1_2.lua
 
-local var_0_0 = class("ActivityNorSignViewBase_1_2", BaseView)
+module("modules.logic.activity.view.ActivityNorSignViewBase_1_2", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebanner = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_banner")
-	arg_1_0._godaylist = gohelper.findChild(arg_1_0.viewGO, "#go_daylist")
-	arg_1_0._scrollitem = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_daylist/#scroll_item")
-	arg_1_0._titleicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "title/#titleicon")
-	arg_1_0._txtremaintime = gohelper.findChildText(arg_1_0.viewGO, "title/#txt_remaintime")
+local ActivityNorSignViewBase_1_2 = class("ActivityNorSignViewBase_1_2", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ActivityNorSignViewBase_1_2:onInitView()
+	self._simagebanner = gohelper.findChildSingleImage(self.viewGO, "#simage_banner")
+	self._godaylist = gohelper.findChild(self.viewGO, "#go_daylist")
+	self._scrollitem = gohelper.findChildScrollRect(self.viewGO, "#go_daylist/#scroll_item")
+	self._titleicon = gohelper.findChildSingleImage(self.viewGO, "title/#titleicon")
+	self._txtremaintime = gohelper.findChildText(self.viewGO, "title/#txt_remaintime")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshNorSignActivity, arg_2_0._refresh, arg_2_0)
+function ActivityNorSignViewBase_1_2:addEvents()
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshNorSignActivity, self._refresh, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(ActivityController.instance, ActivityEvent.RefreshNorSignActivity, arg_3_0._refresh, arg_3_0)
+function ActivityNorSignViewBase_1_2:removeEvents()
+	self:removeEventCb(ActivityController.instance, ActivityEvent.RefreshNorSignActivity, self._refresh, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function ActivityNorSignViewBase_1_2:_editableInitView()
 	assert(false, "please override this function")
 end
 
-function var_0_0._btnhelpOnClick(arg_5_0)
-	local var_5_0 = {}
-	local var_5_1 = ActivityConfig.instance:getActivityCo(arg_5_0._actId)
+function ActivityNorSignViewBase_1_2:_btnhelpOnClick()
+	local data = {}
+	local co = ActivityConfig.instance:getActivityCo(self._actId)
 
-	var_5_0.title = luaLang("rule")
-	var_5_0.desc = var_5_1.actTip
-	var_5_0.rootGo = arg_5_0._btnhelp.gameObject
+	data.title = luaLang("rule")
+	data.desc = co.actTip
+	data.rootGo = self._btnhelp.gameObject
 
-	ViewMgr.instance:openView(ViewName.ActivityTipView, var_5_0)
+	ViewMgr.instance:openView(ViewName.ActivityTipView, data)
 end
 
-function var_0_0.onOpen(arg_6_0)
-	local var_6_0 = arg_6_0.viewParam.parent
+function ActivityNorSignViewBase_1_2:onOpen()
+	local parentGO = self.viewParam.parent
 
-	gohelper.addChild(var_6_0, arg_6_0.viewGO)
+	gohelper.addChild(parentGO, self.viewGO)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Task_page)
 end
 
-function var_0_0.onDestroyView(arg_7_0)
-	arg_7_0._simagebanner:UnLoadImage()
-	arg_7_0._titleicon:UnLoadImage()
+function ActivityNorSignViewBase_1_2:onDestroyView()
+	self._simagebanner:UnLoadImage()
+	self._titleicon:UnLoadImage()
 end
 
-function var_0_0._refresh(arg_8_0)
-	local var_8_0 = {}
+function ActivityNorSignViewBase_1_2:_refresh()
+	local data = {}
 
-	for iter_8_0 = 1, 7 do
-		local var_8_1 = {
-			data = ActivityConfig.instance:getNorSignActivityCo(arg_8_0._actId, iter_8_0)
-		}
+	for i = 1, 7 do
+		local o = {}
 
-		table.insert(var_8_0, var_8_1)
+		o.data = ActivityConfig.instance:getNorSignActivityCo(self._actId, i)
+
+		table.insert(data, o)
 	end
 
-	ActivityNorSignItemListModel_1_2.instance:setList(var_8_0)
+	ActivityNorSignItemListModel_1_2.instance:setList(data)
 
-	local var_8_2, var_8_3 = ActivityModel.instance:getRemainTime(arg_8_0._actId)
+	local day, hour = ActivityModel.instance:getRemainTime(self._actId)
 
-	arg_8_0._txtremaintime.text = string.format(luaLang("activitynorsignview_remaintime"), var_8_2, var_8_3)
+	self._txtremaintime.text = string.format(luaLang("activitynorsignview_remaintime"), day, hour)
 end
 
-return var_0_0
+return ActivityNorSignViewBase_1_2

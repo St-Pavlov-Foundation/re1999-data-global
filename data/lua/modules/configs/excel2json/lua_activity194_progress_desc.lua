@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_activity194_progress_desc", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_activity194_progress_desc.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_activity194_progress_desc", package.seeall)
+
+local lua_activity194_progress_desc = {}
+local fields = {
 	roundRange = 5,
 	energyRange = 3,
 	energyDesc = 4,
@@ -9,16 +11,16 @@ local var_0_1 = {
 	roundDesc = 6,
 	condition = 1
 }
-local var_0_2 = {
+local primaryKey = {
 	"condition"
 }
-local var_0_3 = {
+local mlStringKey = {
 	energyDesc = 1,
 	roundDesc = 2
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_activity194_progress_desc.onLoad(json)
+	lua_activity194_progress_desc.configList, lua_activity194_progress_desc.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_activity194_progress_desc

@@ -1,27 +1,29 @@
-﻿module("modules.logic.store.config.DecorateStoreConfig", package.seeall)
+﻿-- chunkname: @modules/logic/store/config/DecorateStoreConfig.lua
 
-local var_0_0 = class("DecorateStoreConfig", BaseConfig)
+module("modules.logic.store.config.DecorateStoreConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._storeDecorateConfig = nil
+local DecorateStoreConfig = class("DecorateStoreConfig", BaseConfig)
+
+function DecorateStoreConfig:ctor()
+	self._storeDecorateConfig = nil
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function DecorateStoreConfig:reqConfigNames()
 	return {
 		"store_decorate"
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "store_decorate" then
-		arg_3_0._storeDecorateConfig = arg_3_2
+function DecorateStoreConfig:onConfigLoaded(configName, configTable)
+	if configName == "store_decorate" then
+		self._storeDecorateConfig = configTable
 	end
 end
 
-function var_0_0.getDecorateConfig(arg_4_0, arg_4_1)
-	return arg_4_0._storeDecorateConfig.configDict[arg_4_1]
+function DecorateStoreConfig:getDecorateConfig(goodId)
+	return self._storeDecorateConfig.configDict[goodId]
 end
 
-var_0_0.instance = var_0_0.New()
+DecorateStoreConfig.instance = DecorateStoreConfig.New()
 
-return var_0_0
+return DecorateStoreConfig

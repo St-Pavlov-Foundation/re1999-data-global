@@ -1,10 +1,12 @@
-﻿module("modules.logic.prototest.model.ProtoEnum", package.seeall)
+﻿-- chunkname: @modules/logic/prototest/model/ProtoEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.prototest.model.ProtoEnum", package.seeall)
 
-var_0_0.OnClickModifyItem = 1
-var_0_0.OnClickReqListItem = 2
-var_0_0.LabelType = {
+local ProtoEnum = _M
+
+ProtoEnum.OnClickModifyItem = 1
+ProtoEnum.OnClickReqListItem = 2
+ProtoEnum.LabelType = {
 	"optional",
 	"required",
 	"repeated",
@@ -12,7 +14,7 @@ var_0_0.LabelType = {
 	optional = 1,
 	required = 2
 }
-var_0_0.ParamType = {
+ProtoEnum.ParamType = {
 	nil,
 	nil,
 	"int64",
@@ -34,7 +36,7 @@ var_0_0.ParamType = {
 	int64 = 3,
 	uint64 = 4
 }
-var_0_0.DefaultValue = {
+ProtoEnum.DefaultValue = {
 	bool = {
 		"true",
 		"false"
@@ -73,10 +75,10 @@ var_0_0.DefaultValue = {
 		""
 	}
 }
-var_0_0.IgnoreCmdList = {
+ProtoEnum.IgnoreCmdList = {
 	[19233] = true,
 	[24032] = true,
 	[-16648] = true
 }
 
-return var_0_0
+return ProtoEnum

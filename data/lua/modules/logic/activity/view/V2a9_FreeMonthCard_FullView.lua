@@ -1,125 +1,129 @@
-﻿module("modules.logic.activity.view.V2a9_FreeMonthCard_FullView", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/V2a9_FreeMonthCard_FullView.lua
 
-local var_0_0 = class("V2a9_FreeMonthCard_FullView", BaseView)
+module("modules.logic.activity.view.V2a9_FreeMonthCard_FullView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "root/#go_time/#txt_time")
-	arg_1_0._btncheck = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_check")
-	arg_1_0._scrollReward = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/#scroll_Reward")
-	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.viewGO, "root/#scroll_Reward/Viewport/Content/#go_rewarditem")
-	arg_1_0._btncanget = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_canget")
-	arg_1_0._gohasget = gohelper.findChild(arg_1_0.viewGO, "root/#btn_hasget")
-	arg_1_0._godoneget = gohelper.findChild(arg_1_0.viewGO, "root/#btn_doneget")
-	arg_1_0._txtcanget = gohelper.findChildText(arg_1_0.viewGO, "root/Limit/canget/#txt_canget")
-	arg_1_0._txthasget = gohelper.findChildText(arg_1_0.viewGO, "root/Limit/hasget/#txt_hasget")
+local V2a9_FreeMonthCard_FullView = class("V2a9_FreeMonthCard_FullView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V2a9_FreeMonthCard_FullView:onInitView()
+	self._txttime = gohelper.findChildText(self.viewGO, "root/#go_time/#txt_time")
+	self._btncheck = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_check")
+	self._scrollReward = gohelper.findChildScrollRect(self.viewGO, "root/#scroll_Reward")
+	self._gorewarditem = gohelper.findChild(self.viewGO, "root/#scroll_Reward/Viewport/Content/#go_rewarditem")
+	self._btncanget = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_canget")
+	self._gohasget = gohelper.findChild(self.viewGO, "root/#btn_hasget")
+	self._godoneget = gohelper.findChild(self.viewGO, "root/#btn_doneget")
+	self._txtcanget = gohelper.findChildText(self.viewGO, "root/Limit/canget/#txt_canget")
+	self._txthasget = gohelper.findChildText(self.viewGO, "root/Limit/hasget/#txt_hasget")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btncheck:AddClickListener(arg_2_0._btncheckOnClick, arg_2_0)
-	arg_2_0._btncanget:AddClickListener(arg_2_0._btncangetOnClick, arg_2_0)
+function V2a9_FreeMonthCard_FullView:addEvents()
+	self._btncheck:AddClickListener(self._btncheckOnClick, self)
+	self._btncanget:AddClickListener(self._btncangetOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btncheck:RemoveClickListener()
-	arg_3_0._btncanget:RemoveClickListener()
+function V2a9_FreeMonthCard_FullView:removeEvents()
+	self._btncheck:RemoveClickListener()
+	self._btncanget:RemoveClickListener()
 end
 
-function var_0_0._btncheckOnClick(arg_4_0)
-	local var_4_0 = CommonConfig.instance:getConstStr(ConstEnum.FreeMonthCardTitle)
-	local var_4_1 = CommonConfig.instance:getConstStr(ConstEnum.FreeMonthCardDesc)
+function V2a9_FreeMonthCard_FullView:_btncheckOnClick()
+	local title = CommonConfig.instance:getConstStr(ConstEnum.FreeMonthCardTitle)
+	local desc = CommonConfig.instance:getConstStr(ConstEnum.FreeMonthCardDesc)
 
-	HelpController.instance:openStoreTipView(var_4_1, var_4_0)
+	HelpController.instance:openStoreTipView(desc, title)
 end
 
-function var_0_0._btncangetOnClick(arg_5_0)
-	arg_5_0:_setRewardGet()
+function V2a9_FreeMonthCard_FullView:_btncangetOnClick()
+	self:_setRewardGet()
 end
 
-function var_0_0._onCloseViewFinish(arg_6_0, arg_6_1)
-	if arg_6_1 == ViewName.CommonPropView then
-		arg_6_0:_refreshUI()
+function V2a9_FreeMonthCard_FullView:_onCloseViewFinish(viewName)
+	if viewName == ViewName.CommonPropView then
+		self:_refreshUI()
 	end
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0._rewardItems = {}
+function V2a9_FreeMonthCard_FullView:_editableInitView()
+	self._rewardItems = {}
 end
 
-function var_0_0.onOpen(arg_8_0)
+function V2a9_FreeMonthCard_FullView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum2_9.VersionActivity2_9FreeMonthCard.play_ui_cikeshang_yueka_unfold)
-	arg_8_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_8_0._onCloseViewFinish, arg_8_0)
-	gohelper.addChild(arg_8_0.viewParam.parent, arg_8_0.viewGO)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseViewFinish, self)
+	gohelper.addChild(self.viewParam.parent, self.viewGO)
 
-	arg_8_0._actId = ActivityEnum.Activity.V2a9_FreeMonthCard
+	self._actId = ActivityEnum.Activity.V2a9_FreeMonthCard
 
-	gohelper.setActive(arg_8_0._gorewarditem, false)
-	arg_8_0:_refreshTimeTick()
-	arg_8_0:_refreshUI()
-	TaskDispatcher.runRepeat(arg_8_0._refreshTimeTick, arg_8_0, 1)
+	gohelper.setActive(self._gorewarditem, false)
+	self:_refreshTimeTick()
+	self:_refreshUI()
+	TaskDispatcher.runRepeat(self._refreshTimeTick, self, 1)
 end
 
-function var_0_0._setRewardGet(arg_9_0)
-	if V2a9FreeMonthCardModel.instance:isCurDayCouldGet() then
-		for iter_9_0, iter_9_1 in pairs(arg_9_0._rewardItems) do
-			gohelper.setActive(iter_9_1.gocanget, false)
-			gohelper.setActive(iter_9_1.goreceive, true)
-			iter_9_1.getAnim:Play("go_hasget_in", 0, 0)
+function V2a9_FreeMonthCard_FullView:_setRewardGet()
+	local couldGet = V2a9FreeMonthCardModel.instance:isCurDayCouldGet()
+
+	if couldGet then
+		for _, item in pairs(self._rewardItems) do
+			gohelper.setActive(item.gocanget, false)
+			gohelper.setActive(item.goreceive, true)
+			item.getAnim:Play("go_hasget_in", 0, 0)
 		end
 
 		UIBlockMgr.instance:startBlock("waitShowMonthCardReward")
-		TaskDispatcher.runDelay(arg_9_0._startGetBonus, arg_9_0, 1)
+		TaskDispatcher.runDelay(self._startGetBonus, self, 1)
 	end
 end
 
-function var_0_0._startGetBonus(arg_10_0)
+function V2a9_FreeMonthCard_FullView:_startGetBonus()
 	UIBlockMgr.instance:endBlock("waitShowMonthCardReward")
 
-	local var_10_0 = V2a9FreeMonthCardModel.instance:getCurDay()
+	local curDay = V2a9FreeMonthCardModel.instance:getCurDay()
 
-	if var_10_0 > 0 then
-		Activity101Rpc.instance:sendGet101BonusRequest(arg_10_0._actId, var_10_0)
+	if curDay > 0 then
+		Activity101Rpc.instance:sendGet101BonusRequest(self._actId, curDay)
 	end
 
-	local var_10_1 = ActivityType101Model.instance:getType101LoginCount(arg_10_0._actId)
+	local loginDay = ActivityType101Model.instance:getType101LoginCount(self._actId)
 
-	if var_10_1 > V2a9FreeMonthCardModel.LoginMaxDay then
-		Activity101Rpc.instance:sendGet101BonusRequest(arg_10_0._actId, var_10_1)
+	if loginDay > V2a9FreeMonthCardModel.LoginMaxDay then
+		Activity101Rpc.instance:sendGet101BonusRequest(self._actId, loginDay)
 	end
 end
 
-function var_0_0._refreshTimeTick(arg_11_0)
-	arg_11_0._txttime.text = arg_11_0:getRemainTimeStr()
+function V2a9_FreeMonthCard_FullView:_refreshTimeTick()
+	self._txttime.text = self:getRemainTimeStr()
 end
 
-function var_0_0.getRemainTimeStr(arg_12_0)
-	local var_12_0 = ActivityModel.instance:getRemainTimeSec(arg_12_0._actId) or 0
+function V2a9_FreeMonthCard_FullView:getRemainTimeStr()
+	local remainTimeSec = ActivityModel.instance:getRemainTimeSec(self._actId) or 0
 
-	if var_12_0 <= 0 then
+	if remainTimeSec <= 0 then
 		return luaLang("turnback_end")
 	end
 
-	local var_12_1, var_12_2, var_12_3, var_12_4 = TimeUtil.secondsToDDHHMMSS(var_12_0)
+	local day, hour, min, sec = TimeUtil.secondsToDDHHMMSS(remainTimeSec)
 
-	if var_12_1 > 0 then
+	if day > 0 then
 		return GameUtil.getSubPlaceholderLuaLang(luaLang("time_day_hour2"), {
-			var_12_1,
-			var_12_2
+			day,
+			hour
 		})
-	elseif var_12_2 > 0 then
+	elseif hour > 0 then
 		return GameUtil.getSubPlaceholderLuaLang(luaLang("summonmain_deadline_time"), {
-			var_12_2,
-			var_12_3
+			hour,
+			min
 		})
-	elseif var_12_3 > 0 then
+	elseif min > 0 then
 		return GameUtil.getSubPlaceholderLuaLang(luaLang("summonmain_deadline_time"), {
 			0,
-			var_12_3
+			min
 		})
-	elseif var_12_4 > 0 then
+	elseif sec > 0 then
 		return GameUtil.getSubPlaceholderLuaLang(luaLang("summonmain_deadline_time"), {
 			0,
 			1
@@ -129,79 +133,79 @@ function var_0_0.getRemainTimeStr(arg_12_0)
 	return luaLang("turnback_end")
 end
 
-function var_0_0._refreshUI(arg_13_0)
-	local var_13_0 = V2a9FreeMonthCardModel.instance:getRewardTotalDay()
-	local var_13_1 = ActivityType101Model.instance:getType101LoginCount(arg_13_0._actId)
-	local var_13_2 = ActivityType101Model.instance:isType101RewardGet(arg_13_0._actId, var_13_1)
-	local var_13_3 = V2a9FreeMonthCardModel.instance:getCurDay()
-	local var_13_4 = ActivityType101Model.instance:isType101RewardCouldGet(arg_13_0._actId, var_13_3)
+function V2a9_FreeMonthCard_FullView:_refreshUI()
+	local rewardGetDayCount = V2a9FreeMonthCardModel.instance:getRewardTotalDay()
+	local loginDay = ActivityType101Model.instance:getType101LoginCount(self._actId)
+	local rewardGet = ActivityType101Model.instance:isType101RewardGet(self._actId, loginDay)
+	local curDay = V2a9FreeMonthCardModel.instance:getCurDay()
+	local couldGet = ActivityType101Model.instance:isType101RewardCouldGet(self._actId, curDay)
 
-	arg_13_0._txthasget.text = GameUtil.getSubPlaceholderLuaLang(luaLang("freemonthcard_hasget_day"), {
-		var_13_0
+	self._txthasget.text = GameUtil.getSubPlaceholderLuaLang(luaLang("freemonthcard_hasget_day"), {
+		rewardGetDayCount
 	})
-	arg_13_0._txtcanget.text = GameUtil.getSubPlaceholderLuaLang(luaLang("freemonthcard_canget_day"), {
-		V2a9FreeMonthCardModel.LoginMaxDay - var_13_0
+	self._txtcanget.text = GameUtil.getSubPlaceholderLuaLang(luaLang("freemonthcard_canget_day"), {
+		V2a9FreeMonthCardModel.LoginMaxDay - rewardGetDayCount
 	})
 
-	gohelper.setActive(arg_13_0._btncanget.gameObject, not var_13_2 and var_13_0 < V2a9FreeMonthCardModel.LoginMaxDay)
-	gohelper.setActive(arg_13_0._gohasget, var_13_2 and var_13_0 < V2a9FreeMonthCardModel.LoginMaxDay)
-	gohelper.setActive(arg_13_0._godoneget, var_13_0 >= V2a9FreeMonthCardModel.LoginMaxDay)
+	gohelper.setActive(self._btncanget.gameObject, not rewardGet and rewardGetDayCount < V2a9FreeMonthCardModel.LoginMaxDay)
+	gohelper.setActive(self._gohasget, rewardGet and rewardGetDayCount < V2a9FreeMonthCardModel.LoginMaxDay)
+	gohelper.setActive(self._godoneget, rewardGetDayCount >= V2a9FreeMonthCardModel.LoginMaxDay)
 
-	local var_13_5 = var_13_3 > 0 and var_13_3 or 1
-	local var_13_6 = ActivityConfig.instance:getNorSignActivityCo(arg_13_0._actId, var_13_5)
-	local var_13_7 = string.split(var_13_6.bonus, "|")
+	local rewardDay = curDay > 0 and curDay or 1
+	local actRewardConfig = ActivityConfig.instance:getNorSignActivityCo(self._actId, rewardDay)
+	local rewards = string.split(actRewardConfig.bonus, "|")
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_7) do
-		if not arg_13_0._rewardItems[iter_13_0] then
-			local var_13_8 = {}
-			local var_13_9 = gohelper.cloneInPlace(arg_13_0._gorewarditem)
+	for i, reward in ipairs(rewards) do
+		if not self._rewardItems[i] then
+			local item = {}
+			local go = gohelper.cloneInPlace(self._gorewarditem)
 
-			var_13_8.goRoot = var_13_9
-			var_13_8.goIcon = gohelper.findChild(var_13_9, "go_icon")
-			var_13_8.gocanget = gohelper.findChild(var_13_9, "go_canget")
-			var_13_8.goreceive = gohelper.findChild(var_13_9, "go_receive")
-			var_13_8.gohasget = gohelper.findChild(var_13_9, "go_receive/go_hasget")
-			var_13_8.getAnim = var_13_8.gohasget:GetComponent(typeof(UnityEngine.Animator))
-			var_13_8.btn = gohelper.getClickWithAudio(var_13_8.gocanget)
+			item.goRoot = go
+			item.goIcon = gohelper.findChild(go, "go_icon")
+			item.gocanget = gohelper.findChild(go, "go_canget")
+			item.goreceive = gohelper.findChild(go, "go_receive")
+			item.gohasget = gohelper.findChild(go, "go_receive/go_hasget")
+			item.getAnim = item.gohasget:GetComponent(typeof(UnityEngine.Animator))
+			item.btn = gohelper.getClickWithAudio(item.gocanget)
 
-			var_13_8.btn:AddClickListener(arg_13_0._btncangetOnClick, arg_13_0)
-			table.insert(arg_13_0._rewardItems, var_13_8)
+			item.btn:AddClickListener(self._btncangetOnClick, self)
+			table.insert(self._rewardItems, item)
 		end
 
-		gohelper.setActive(arg_13_0._rewardItems[iter_13_0].goRoot, true)
-		gohelper.destroyAllChildren(arg_13_0._rewardItems[iter_13_0].goIcon)
+		gohelper.setActive(self._rewardItems[i].goRoot, true)
+		gohelper.destroyAllChildren(self._rewardItems[i].goIcon)
 
-		arg_13_0._rewardItems[iter_13_0].item = nil
+		self._rewardItems[i].item = nil
 
-		if not arg_13_0._rewardItems[iter_13_0].item then
-			arg_13_0._rewardItems[iter_13_0].item = IconMgr.instance:getCommonItemIcon(arg_13_0._rewardItems[iter_13_0].goIcon)
+		if not self._rewardItems[i].item then
+			self._rewardItems[i].item = IconMgr.instance:getCommonItemIcon(self._rewardItems[i].goIcon)
 		end
 
-		local var_13_10 = string.splitToNumber(iter_13_1, "#")
+		local props = string.splitToNumber(reward, "#")
 
-		arg_13_0._rewardItems[iter_13_0].item:setMOValue(var_13_10[1], var_13_10[2], var_13_10[3], nil, true)
-		arg_13_0._rewardItems[iter_13_0].item:isShowName(false)
-		gohelper.setActive(arg_13_0._rewardItems[iter_13_0].gocanget, var_13_4)
-		gohelper.setActive(arg_13_0._rewardItems[iter_13_0].goreceive, not var_13_4)
+		self._rewardItems[i].item:setMOValue(props[1], props[2], props[3], nil, true)
+		self._rewardItems[i].item:isShowName(false)
+		gohelper.setActive(self._rewardItems[i].gocanget, couldGet)
+		gohelper.setActive(self._rewardItems[i].goreceive, not couldGet)
 	end
 end
 
-function var_0_0.onClose(arg_14_0)
+function V2a9_FreeMonthCard_FullView:onClose()
 	UIBlockMgr.instance:endBlock("waitShowMonthCardReward")
-	TaskDispatcher.cancelTask(arg_14_0._refreshTimeTick, arg_14_0)
-	TaskDispatcher.cancelTask(arg_14_0._startGetBonus, arg_14_0)
-	TaskDispatcher.cancelTask(arg_14_0._setRewardGet, arg_14_0)
-	arg_14_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_14_0._onCloseViewFinish, arg_14_0)
+	TaskDispatcher.cancelTask(self._refreshTimeTick, self)
+	TaskDispatcher.cancelTask(self._startGetBonus, self)
+	TaskDispatcher.cancelTask(self._setRewardGet, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseViewFinish, self)
 end
 
-function var_0_0.onDestroyView(arg_15_0)
-	if arg_15_0._rewardItems then
-		for iter_15_0, iter_15_1 in pairs(arg_15_0._rewardItems) do
-			iter_15_1.btn:RemoveClickListener()
+function V2a9_FreeMonthCard_FullView:onDestroyView()
+	if self._rewardItems then
+		for _, v in pairs(self._rewardItems) do
+			v.btn:RemoveClickListener()
 		end
 
-		arg_15_0._rewardItems = nil
+		self._rewardItems = nil
 	end
 end
 
-return var_0_0
+return V2a9_FreeMonthCard_FullView

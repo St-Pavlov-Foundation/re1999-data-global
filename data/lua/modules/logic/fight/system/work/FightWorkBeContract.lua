@@ -1,10 +1,12 @@
-﻿module("modules.logic.fight.system.work.FightWorkBeContract", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkBeContract.lua
 
-local var_0_0 = class("FightWorkBeContract", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkBeContract", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	FightModel.instance:setBeContractEntityUid(arg_1_0.actEffectData.targetId)
-	arg_1_0:onDone(true)
+local FightWorkBeContract = class("FightWorkBeContract", FightEffectBase)
+
+function FightWorkBeContract:onStart()
+	FightModel.instance:setBeContractEntityUid(self.actEffectData.targetId)
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkBeContract

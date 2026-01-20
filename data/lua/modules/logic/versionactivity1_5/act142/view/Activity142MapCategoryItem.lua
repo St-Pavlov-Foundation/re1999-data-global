@@ -1,181 +1,186 @@
-﻿module("modules.logic.versionactivity1_5.act142.view.Activity142MapCategoryItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/act142/view/Activity142MapCategoryItem.lua
 
-local var_0_0 = class("Activity142MapCategoryItem", LuaCompBase)
-local var_0_1 = 1
+module("modules.logic.versionactivity1_5.act142.view.Activity142MapCategoryItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._index = arg_1_1.index
-	arg_1_0._clickCb = arg_1_1.clickCb
-	arg_1_0._clickCbObj = arg_1_1.clickCbObj
+local Activity142MapCategoryItem = class("Activity142MapCategoryItem", LuaCompBase)
+local UNLOCK_ANIM_PLAY_AUDIO_DELAY_TIME = 1
+
+function Activity142MapCategoryItem:ctor(param)
+	self._index = param.index
+	self._clickCb = param.clickCb
+	self._clickCbObj = param.clickCbObj
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0._go = arg_2_1
-	arg_2_0._animatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_2_0._go)
-	arg_2_0._golock = gohelper.findChild(arg_2_0._go, "#go_lock")
-	arg_2_0._simagelock = gohelper.findChildImage(arg_2_0._go, "#go_lock")
-	arg_2_0._txtlock = gohelper.findChildText(arg_2_0._go, "#go_lock/#txt_lock")
-	arg_2_0._gounlock = gohelper.findChild(arg_2_0._go, "#go_unlock")
-	arg_2_0._gonormal = gohelper.findChild(arg_2_0._go, "#go_unlock/#go_normal")
-	arg_2_0._simagenormal = gohelper.findChildImage(arg_2_0._go, "#go_unlock/#go_normal")
-	arg_2_0._txtnormal = gohelper.findChildText(arg_2_0._go, "#go_unlock/#go_normal/#txt_normal")
-	arg_2_0._goselect = gohelper.findChild(arg_2_0._go, "#go_unlock/#go_select")
-	arg_2_0._simageselect = gohelper.findChildImage(arg_2_0._go, "#go_unlock/#go_select")
-	arg_2_0._txtselect = gohelper.findChildText(arg_2_0._go, "#go_unlock/#go_select/#txt_select")
-	arg_2_0._btncategory = gohelper.findChildButtonWithAudio(arg_2_0._go, "#btn_click")
+function Activity142MapCategoryItem:init(go)
+	self._go = go
+	self._animatorPlayer = ZProj.ProjAnimatorPlayer.Get(self._go)
+	self._golock = gohelper.findChild(self._go, "#go_lock")
+	self._simagelock = gohelper.findChildImage(self._go, "#go_lock")
+	self._txtlock = gohelper.findChildText(self._go, "#go_lock/#txt_lock")
+	self._gounlock = gohelper.findChild(self._go, "#go_unlock")
+	self._gonormal = gohelper.findChild(self._go, "#go_unlock/#go_normal")
+	self._simagenormal = gohelper.findChildImage(self._go, "#go_unlock/#go_normal")
+	self._txtnormal = gohelper.findChildText(self._go, "#go_unlock/#go_normal/#txt_normal")
+	self._goselect = gohelper.findChild(self._go, "#go_unlock/#go_select")
+	self._simageselect = gohelper.findChildImage(self._go, "#go_unlock/#go_select")
+	self._txtselect = gohelper.findChildText(self._go, "#go_unlock/#go_select/#txt_select")
+	self._btncategory = gohelper.findChildButtonWithAudio(self._go, "#btn_click")
 
-	arg_2_0:setChapterId()
-	arg_2_0:setIsSelected(false)
+	self:setChapterId()
+	self:setIsSelected(false)
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	arg_3_0._btncategory:AddClickListener(arg_3_0.onClick, arg_3_0)
+function Activity142MapCategoryItem:addEventListeners()
+	self._btncategory:AddClickListener(self.onClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	arg_4_0._btncategory:RemoveClickListener()
+function Activity142MapCategoryItem:removeEventListeners()
+	self._btncategory:RemoveClickListener()
 end
 
-function var_0_0.onClick(arg_5_0, arg_5_1)
-	if arg_5_0._isSelected or not arg_5_0._chapterId or not arg_5_0._index then
+function Activity142MapCategoryItem:onClick(notPlaySwitchAnim)
+	if self._isSelected or not self._chapterId or not self._index then
 		return
 	end
 
-	if not arg_5_0:isChapterOpen() then
+	if not self:isChapterOpen() then
 		GameFacade.showToast(ToastEnum.Activity142PreEpisodeNotClear)
 
 		return
 	end
 
-	if arg_5_0._clickCb then
-		arg_5_0._clickCb(arg_5_0._clickCbObj, arg_5_0._index, arg_5_1)
+	if self._clickCb then
+		self._clickCb(self._clickCbObj, self._index, notPlaySwitchAnim)
 	end
 end
 
-function var_0_0.setChapterId(arg_6_0, arg_6_1)
-	arg_6_0:cancelAllTaskDispatcher()
+function Activity142MapCategoryItem:setChapterId(chapterId)
+	self:cancelAllTaskDispatcher()
 
-	arg_6_0._chapterId = arg_6_1
+	self._chapterId = chapterId
 
-	if arg_6_0._chapterId then
-		local var_6_0 = Activity142Model.instance:getActivityId()
-		local var_6_1 = Activity142Config.instance:getChapterName(var_6_0, arg_6_0._chapterId)
+	if self._chapterId then
+		local actId = Activity142Model.instance:getActivityId()
+		local name = Activity142Config.instance:getChapterName(actId, self._chapterId)
 
-		arg_6_0._txtnormal.text = var_6_1
-		arg_6_0._txtselect.text = var_6_1
+		self._txtnormal.text = name
+		self._txtselect.text = name
 
-		local var_6_2 = Activity142Config.instance:getChapterCategoryTxtColor(var_6_0, arg_6_0._chapterId)
+		local colorStr = Activity142Config.instance:getChapterCategoryTxtColor(actId, self._chapterId)
 
-		if var_6_2 then
-			local var_6_3 = GameUtil.parseColor(var_6_2)
+		if colorStr then
+			local txtColor = GameUtil.parseColor(colorStr)
 
-			arg_6_0._txtnormal.color = var_6_3
-			arg_6_0._txtselect.color = var_6_3
+			self._txtnormal.color = txtColor
+			self._txtselect.color = txtColor
 		end
 
-		local var_6_4 = Activity142Config.instance:getChapterCategoryNormalSP(var_6_0, arg_6_0._chapterId)
+		local normalSpriteName = Activity142Config.instance:getChapterCategoryNormalSP(actId, self._chapterId)
 
-		if var_6_4 then
-			UISpriteSetMgr.instance:setV1a5ChessSprite(arg_6_0._simagenormal, var_6_4)
+		if normalSpriteName then
+			UISpriteSetMgr.instance:setV1a5ChessSprite(self._simagenormal, normalSpriteName)
 		end
 
-		local var_6_5 = Activity142Config.instance:getChapterCategorySelectSP(var_6_0, arg_6_0._chapterId)
+		local selectSpriteName = Activity142Config.instance:getChapterCategorySelectSP(actId, self._chapterId)
 
-		if var_6_5 then
-			UISpriteSetMgr.instance:setV1a5ChessSprite(arg_6_0._simageselect, var_6_5)
+		if selectSpriteName then
+			UISpriteSetMgr.instance:setV1a5ChessSprite(self._simageselect, selectSpriteName)
 		end
 
-		local var_6_6 = Activity142Config.instance:getChapterCategoryLockSP(var_6_0, arg_6_0._chapterId)
+		local lockSpriteName = Activity142Config.instance:getChapterCategoryLockSP(actId, self._chapterId)
 
-		if var_6_6 then
-			UISpriteSetMgr.instance:setV1a5ChessSprite(arg_6_0._simagelock, var_6_6)
+		if lockSpriteName then
+			UISpriteSetMgr.instance:setV1a5ChessSprite(self._simagelock, lockSpriteName)
 		end
 
-		arg_6_0:refresh()
-		arg_6_0:setIsSelected(false)
+		self:refresh()
+		self:setIsSelected(false)
 	end
 
-	gohelper.setActive(arg_6_0._go, arg_6_0._chapterId)
+	gohelper.setActive(self._go, self._chapterId)
 end
 
-function var_0_0.getChapterId(arg_7_0)
-	return arg_7_0._chapterId
+function Activity142MapCategoryItem:getChapterId()
+	return self._chapterId
 end
 
-function var_0_0.refresh(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0._animatorPlayer and arg_8_0._animatorPlayer.isActiveAndEnabled
+function Activity142MapCategoryItem:refresh(unlockAnimDelayTime)
+	local isAnimatorReady = self._animatorPlayer and self._animatorPlayer.isActiveAndEnabled
 
-	if var_8_0 then
-		arg_8_0._animatorPlayer:Play(Activity142Enum.CATEGORY_IDLE_ANIM)
+	if isAnimatorReady then
+		self._animatorPlayer:Play(Activity142Enum.CATEGORY_IDLE_ANIM)
 	end
 
-	local var_8_1 = arg_8_0:isChapterOpen()
-	local var_8_2 = string.format("%s_%s", Activity142Enum.CATEGORY_CACHE_KEY, arg_8_0._chapterId)
+	local isChapterOpen = self:isChapterOpen()
+	local cacheKey = string.format("%s_%s", Activity142Enum.CATEGORY_CACHE_KEY, self._chapterId)
+	local isPlayUnlockAnim = self._chapterId ~= Activity142Enum.NOT_PLAY_UNLOCK_ANIM_CHAPTER and not Activity142Controller.instance:havePlayedUnlockAni(cacheKey)
 
-	if arg_8_0._chapterId ~= Activity142Enum.NOT_PLAY_UNLOCK_ANIM_CHAPTER and not Activity142Controller.instance:havePlayedUnlockAni(var_8_2) and var_8_0 and var_8_1 then
-		arg_8_0:playUnlockAnim(arg_8_1)
+	if isPlayUnlockAnim and isAnimatorReady and isChapterOpen then
+		self:playUnlockAnim(unlockAnimDelayTime)
 	else
-		gohelper.setActive(arg_8_0._gounlock, var_8_1)
-		gohelper.setActive(arg_8_0._golock, not var_8_1)
+		gohelper.setActive(self._gounlock, isChapterOpen)
+		gohelper.setActive(self._golock, not isChapterOpen)
 	end
 end
 
-function var_0_0.setIsSelected(arg_9_0, arg_9_1)
-	arg_9_0._isSelected = arg_9_1
+function Activity142MapCategoryItem:setIsSelected(_isSelected)
+	self._isSelected = _isSelected
 
-	gohelper.setActive(arg_9_0._goselect, arg_9_0._isSelected)
-	gohelper.setActive(arg_9_0._gonormal, not arg_9_0._isSelected)
+	gohelper.setActive(self._goselect, self._isSelected)
+	gohelper.setActive(self._gonormal, not self._isSelected)
 end
 
-function var_0_0.isChapterOpen(arg_10_0)
-	return (Activity142Model.instance:isChapterOpen(arg_10_0._chapterId))
+function Activity142MapCategoryItem:isChapterOpen()
+	local result = Activity142Model.instance:isChapterOpen(self._chapterId)
+
+	return result
 end
 
-function var_0_0.playUnlockAnim(arg_11_0, arg_11_1)
+function Activity142MapCategoryItem:playUnlockAnim(delayTime)
 	Activity142Helper.setAct142UIBlock(true, Activity142Enum.MAP_CATEGORY_UNLOCK)
-	gohelper.setActive(arg_11_0._golock, true)
-	gohelper.setActive(arg_11_0._gounlock, false)
+	gohelper.setActive(self._golock, true)
+	gohelper.setActive(self._gounlock, false)
 
-	if arg_11_1 and arg_11_1 > 0 then
-		TaskDispatcher.runDelay(arg_11_0._delayPlayUnlockAnim, arg_11_0, arg_11_1)
+	if delayTime and delayTime > 0 then
+		TaskDispatcher.runDelay(self._delayPlayUnlockAnim, self, delayTime)
 	else
-		arg_11_0:_delayPlayUnlockAnim()
+		self:_delayPlayUnlockAnim()
 	end
 end
 
-function var_0_0._delayPlayUnlockAnim(arg_12_0)
+function Activity142MapCategoryItem:_delayPlayUnlockAnim()
 	UIBlockMgrExtend.setNeedCircleMv(false)
-	gohelper.setActive(arg_12_0._gounlock, true)
-	TaskDispatcher.runDelay(arg_12_0.playUnlockAudio, arg_12_0, var_0_1)
-	arg_12_0._animatorPlayer:Play(Activity142Enum.MAP_ITEM_UNLOCK_ANIM, arg_12_0._finishUnlockAnim, arg_12_0)
+	gohelper.setActive(self._gounlock, true)
+	TaskDispatcher.runDelay(self.playUnlockAudio, self, UNLOCK_ANIM_PLAY_AUDIO_DELAY_TIME)
+	self._animatorPlayer:Play(Activity142Enum.MAP_ITEM_UNLOCK_ANIM, self._finishUnlockAnim, self)
 end
 
-function var_0_0.playUnlockAudio(arg_13_0)
+function Activity142MapCategoryItem:playUnlockAudio()
 	AudioMgr.instance:trigger(AudioEnum.ui_activity142.UnlockChapter)
 end
 
-function var_0_0._finishUnlockAnim(arg_14_0)
-	local var_14_0 = string.format("%s_%s", Activity142Enum.CATEGORY_CACHE_KEY, arg_14_0._chapterId)
+function Activity142MapCategoryItem:_finishUnlockAnim()
+	local cacheKey = string.format("%s_%s", Activity142Enum.CATEGORY_CACHE_KEY, self._chapterId)
 
-	Activity142Controller.instance:setPlayedUnlockAni(var_14_0)
+	Activity142Controller.instance:setPlayedUnlockAni(cacheKey)
 	Activity142Helper.setAct142UIBlock(false, Activity142Enum.MAP_CATEGORY_UNLOCK)
 end
 
-function var_0_0.onDestroy(arg_15_0)
-	arg_15_0._index = nil
-	arg_15_0._chapterId = nil
-	arg_15_0._clickCb = nil
-	arg_15_0._clickCbObj = nil
-	arg_15_0._isSelected = false
+function Activity142MapCategoryItem:onDestroy()
+	self._index = nil
+	self._chapterId = nil
+	self._clickCb = nil
+	self._clickCbObj = nil
+	self._isSelected = false
 
-	arg_15_0:cancelAllTaskDispatcher()
+	self:cancelAllTaskDispatcher()
 	Activity142Helper.setAct142UIBlock(false, Activity142Enum.MAP_CATEGORY_UNLOCK)
 	UIBlockMgrExtend.setNeedCircleMv(true)
 end
 
-function var_0_0.cancelAllTaskDispatcher(arg_16_0)
-	TaskDispatcher.cancelTask(arg_16_0._delayPlayUnlockAnim, arg_16_0)
-	TaskDispatcher.cancelTask(arg_16_0.playUnlockAudio, arg_16_0)
+function Activity142MapCategoryItem:cancelAllTaskDispatcher()
+	TaskDispatcher.cancelTask(self._delayPlayUnlockAnim, self)
+	TaskDispatcher.cancelTask(self.playUnlockAudio, self)
 end
 
-return var_0_0
+return Activity142MapCategoryItem

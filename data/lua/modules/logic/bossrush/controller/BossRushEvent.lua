@@ -1,25 +1,31 @@
-﻿module("modules.logic.bossrush.controller.BossRushEvent", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/controller/BossRushEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.bossrush.controller.BossRushEvent", package.seeall)
 
-var_0_0.OnScoreChange = 1
-var_0_0.OnHpChange = 2
-var_0_0.OnBloodCountChange = 3
-var_0_0.OnBossDeadSumChange = 4
-var_0_0.OnReceiveGet128InfosReply = 100
-var_0_0.OnReceiveAct128GetTotalRewardsReply = 101
-var_0_0.OnReceiveAct128DoublePointRequestReply = 102
-var_0_0.OnReceiveAct128InfoUpdatePush = 103
-var_0_0.OnUnlimitedHp = 104
-var_0_0.OnReceiveGet128EvaluateReply = 1001
-var_0_0.OnReceiveGet128SingleRewardReply = 1002
-var_0_0.OnClickGetAllScheduleBouns = 1003
-var_0_0.OnClickGetAllAchievementBouns = 1004
-var_0_0.OnHandleInStoreView = 1005
-var_0_0.OnEnterStoreView = 1006
-var_0_0.OnClickGetAllSpecialScheduleBouns = 1007
-var_0_0.OnSelectEnhanceRole = 1100
-var_0_0.OnSelectV2a9SpItem = 1200
-var_0_0.onReceiveAct128SpFirstHalfSelectItemReply = 1201
+local BossRushEvent = _M
 
-return var_0_0
+BossRushEvent.OnScoreChange = 1
+BossRushEvent.OnHpChange = 2
+BossRushEvent.OnBloodCountChange = 3
+BossRushEvent.OnBossDeadSumChange = 4
+BossRushEvent.OnReceiveGet128InfosReply = 100
+BossRushEvent.OnReceiveAct128GetTotalRewardsReply = 101
+BossRushEvent.OnReceiveAct128DoublePointRequestReply = 102
+BossRushEvent.OnReceiveAct128InfoUpdatePush = 103
+BossRushEvent.OnUnlimitedHp = 104
+BossRushEvent.OnReceiveGet128EvaluateReply = 1001
+BossRushEvent.OnReceiveGet128SingleRewardReply = 1002
+BossRushEvent.OnClickGetAllScheduleBouns = 1003
+BossRushEvent.OnClickGetAllAchievementBouns = 1004
+BossRushEvent.OnHandleInStoreView = 1005
+BossRushEvent.OnEnterStoreView = 1006
+BossRushEvent.OnClickGetAllSpecialScheduleBouns = 1007
+BossRushEvent.OnSelectEnhanceRole = 1100
+BossRushEvent.OnSelectV2a9SpItem = 1200
+BossRushEvent.onReceiveAct128SpFirstHalfSelectItemReply = 1201
+BossRushEvent.V3a2_BossRush_ResultAssess_AnimFinish = 3201
+BossRushEvent.V3a2_BossRush_HandBook_SelectMonster = 3202
+BossRushEvent.V3a2_BossRush_HandBook_SelectMonsterCB = 3203
+BossRushEvent.onReceiveAct128GetExpReply = 3204
+
+return BossRushEvent

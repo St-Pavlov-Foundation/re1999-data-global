@@ -1,160 +1,163 @@
-﻿module("modules.logic.room.view.manufacture.RoomManufactureCritterInfo", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/manufacture/RoomManufactureCritterInfo.lua
 
-local var_0_0 = class("RoomManufactureCritterInfo", LuaCompBase)
-local var_0_1 = "critterInfo"
+module("modules.logic.room.view.manufacture.RoomManufactureCritterInfo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._gohas = gohelper.findChild(arg_1_0.go, "#go_has")
-	arg_1_0._gocrittericon = gohelper.findChild(arg_1_0.go, "#go_has/#go_critterIcon")
-	arg_1_0._gonone = gohelper.findChild(arg_1_0.go, "#go_none")
-	arg_1_0._goselected = gohelper.findChild(arg_1_0.go, "#go_selected")
-	arg_1_0._btnclick = gohelper.findChildClickWithDefaultAudio(arg_1_0.go, "#btn_click")
-	arg_1_0._goplaceEff = gohelper.findChild(arg_1_0.go, "#add")
+local RoomManufactureCritterInfo = class("RoomManufactureCritterInfo", LuaCompBase)
+local NONE_NAME = "critterInfo"
 
-	arg_1_0:reset()
+function RoomManufactureCritterInfo:init(go)
+	self.go = go
+	self._gohas = gohelper.findChild(self.go, "#go_has")
+	self._gocrittericon = gohelper.findChild(self.go, "#go_has/#go_critterIcon")
+	self._gonone = gohelper.findChild(self.go, "#go_none")
+	self._goselected = gohelper.findChild(self.go, "#go_selected")
+	self._btnclick = gohelper.findChildClickWithDefaultAudio(self.go, "#btn_click")
+	self._goplaceEff = gohelper.findChild(self.go, "#add")
+
+	self:reset()
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._onClick, arg_2_0)
-	arg_2_0:addEventCb(ManufactureController.instance, ManufactureEvent.ChangeSelectedCritterSlotItem, arg_2_0._onChangeSelectedCritterSlotItem, arg_2_0)
-	arg_2_0:addEventCb(ManufactureController.instance, ManufactureEvent.CritterWorkInfoChange, arg_2_0._onCritterWorkInfoChange, arg_2_0)
-	arg_2_0:addEventCb(CritterController.instance, CritterEvent.PlayAddCritterEff, arg_2_0._onAddCritter, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0._onCloseView, arg_2_0)
+function RoomManufactureCritterInfo:addEventListeners()
+	self._btnclick:AddClickListener(self._onClick, self)
+	self:addEventCb(ManufactureController.instance, ManufactureEvent.ChangeSelectedCritterSlotItem, self._onChangeSelectedCritterSlotItem, self)
+	self:addEventCb(ManufactureController.instance, ManufactureEvent.CritterWorkInfoChange, self._onCritterWorkInfoChange, self)
+	self:addEventCb(CritterController.instance, CritterEvent.PlayAddCritterEff, self._onAddCritter, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
-	arg_3_0:removeEventCb(ManufactureController.instance, ManufactureEvent.ChangeSelectedCritterSlotItem, arg_3_0._onChangeSelectedCritterSlotItem, arg_3_0)
-	arg_3_0:removeEventCb(ManufactureController.instance, ManufactureEvent.CritterWorkInfoChange, arg_3_0._onCritterWorkInfoChange, arg_3_0)
-	arg_3_0:removeEventCb(CritterController.instance, CritterEvent.PlayAddCritterEff, arg_3_0._onAddCritter, arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0._onCloseView, arg_3_0)
+function RoomManufactureCritterInfo:removeEventListeners()
+	self._btnclick:RemoveClickListener()
+	self:removeEventCb(ManufactureController.instance, ManufactureEvent.ChangeSelectedCritterSlotItem, self._onChangeSelectedCritterSlotItem, self)
+	self:removeEventCb(ManufactureController.instance, ManufactureEvent.CritterWorkInfoChange, self._onCritterWorkInfoChange, self)
+	self:removeEventCb(CritterController.instance, CritterEvent.PlayAddCritterEff, self._onAddCritter, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
 end
 
-function var_0_0._onClick(arg_4_0)
-	local var_4_0 = arg_4_0:getViewBuilding()
+function RoomManufactureCritterInfo:_onClick()
+	local curBuildingUid = self:getViewBuilding()
 
-	if arg_4_0.parent and arg_4_0.parent.setViewBuildingUid then
-		arg_4_0.parent:setViewBuildingUid()
+	if self.parent and self.parent.setViewBuildingUid then
+		self.parent:setViewBuildingUid()
 	end
 
-	ManufactureController.instance:clickCritterSlotItem(var_4_0, arg_4_0.critterSlotId)
+	ManufactureController.instance:clickCritterSlotItem(curBuildingUid, self.critterSlotId)
 end
 
-function var_0_0._onChangeSelectedCritterSlotItem(arg_5_0)
-	arg_5_0:refreshSelected()
+function RoomManufactureCritterInfo:_onChangeSelectedCritterSlotItem()
+	self:refreshSelected()
 end
 
-function var_0_0._onCritterWorkInfoChange(arg_6_0)
-	arg_6_0:setCritter()
-	arg_6_0:refresh()
+function RoomManufactureCritterInfo:_onCritterWorkInfoChange()
+	self:setCritter()
+	self:refresh()
 end
 
-function var_0_0._onAddCritter(arg_7_0, arg_7_1, arg_7_2)
-	if not arg_7_1 or arg_7_2 then
+function RoomManufactureCritterInfo:_onAddCritter(playEffDict, isTransport)
+	if not playEffDict or isTransport then
 		return
 	end
 
-	local var_7_0 = arg_7_0:getViewBuilding()
+	local curBuildingUid = self:getViewBuilding()
 
-	if arg_7_1[var_7_0] and arg_7_1[var_7_0][arg_7_0.critterSlotId] then
-		arg_7_0:playPlaceCritterEff()
+	if playEffDict[curBuildingUid] and playEffDict[curBuildingUid][self.critterSlotId] then
+		self:playPlaceCritterEff()
 	end
 end
 
-function var_0_0._onCloseView(arg_8_0, arg_8_1)
-	if arg_8_1 == ViewName.RoomCritterOneKeyView and arg_8_0._playEffWaitCloseView then
-		arg_8_0:playPlaceCritterEff()
+function RoomManufactureCritterInfo:_onCloseView(viewName)
+	if viewName == ViewName.RoomCritterOneKeyView and self._playEffWaitCloseView then
+		self:playPlaceCritterEff()
 	end
 end
 
-function var_0_0.getViewBuilding(arg_9_0)
-	local var_9_0
-	local var_9_1
+function RoomManufactureCritterInfo:getViewBuilding()
+	local viewBuildingUid, viewBuildingMO
 
-	if arg_9_0.parent then
-		var_9_0, var_9_1 = arg_9_0.parent:getViewBuilding()
+	if self.parent then
+		viewBuildingUid, viewBuildingMO = self.parent:getViewBuilding()
 	end
 
-	return var_9_0, var_9_1
+	return viewBuildingUid, viewBuildingMO
 end
 
-function var_0_0.setData(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	arg_10_0.critterSlotId = arg_10_1
-	arg_10_0.index = arg_10_2
-	arg_10_0.parent = arg_10_3
-	arg_10_0._playEffWaitCloseView = false
+function RoomManufactureCritterInfo:setData(critterSlotId, index, parent)
+	self.critterSlotId = critterSlotId
+	self.index = index
+	self.parent = parent
+	self._playEffWaitCloseView = false
 
-	local var_10_0 = string.format("id-%s_i-%s", arg_10_0.critterSlotId, arg_10_0.index)
+	local name = string.format("id-%s_i-%s", self.critterSlotId, self.index)
 
-	arg_10_0.go.name = var_10_0
+	self.go.name = name
 
-	arg_10_0:setCritter()
-	arg_10_0:refresh()
-	gohelper.setActive(arg_10_0._goplaceEff, false)
-	gohelper.setActive(arg_10_0.go, true)
+	self:setCritter()
+	self:refresh()
+	gohelper.setActive(self._goplaceEff, false)
+	gohelper.setActive(self.go, true)
 end
 
-function var_0_0.setCritter(arg_11_0)
-	local var_11_0, var_11_1 = arg_11_0:getViewBuilding()
-	local var_11_2 = var_11_1 and var_11_1:getWorkingCritter(arg_11_0.critterSlotId)
+function RoomManufactureCritterInfo:setCritter()
+	local _, curBuildingMO = self:getViewBuilding()
+	local critterUid = curBuildingMO and curBuildingMO:getWorkingCritter(self.critterSlotId)
 
-	if var_11_2 then
-		if not arg_11_0.critterIcon then
-			arg_11_0.critterIcon = IconMgr.instance:getCommonCritterIcon(arg_11_0._gocrittericon)
+	if critterUid then
+		if not self.critterIcon then
+			self.critterIcon = IconMgr.instance:getCommonCritterIcon(self._gocrittericon)
 		end
 
-		arg_11_0.critterIcon:setMOValue(var_11_2)
-		arg_11_0.critterIcon:showMood()
+		self.critterIcon:setMOValue(critterUid)
+		self.critterIcon:showMood()
 	end
 
-	gohelper.setActive(arg_11_0._gohas, var_11_2)
-	gohelper.setActive(arg_11_0._gonone, not var_11_2)
+	gohelper.setActive(self._gohas, critterUid)
+	gohelper.setActive(self._gonone, not critterUid)
 end
 
-function var_0_0.refresh(arg_12_0)
-	arg_12_0:refreshSelected()
+function RoomManufactureCritterInfo:refresh()
+	self:refreshSelected()
 end
 
-function var_0_0.refreshSelected(arg_13_0)
-	local var_13_0 = false
+function RoomManufactureCritterInfo:refreshSelected()
+	local isSelected = false
 
-	if arg_13_0.critterSlotId then
-		local var_13_1 = arg_13_0:getViewBuilding()
-		local var_13_2, var_13_3 = ManufactureModel.instance:getSelectedCritterSlot()
+	if self.critterSlotId then
+		local curBuildingUid = self:getViewBuilding()
+		local buildingUid, critterSlotId = ManufactureModel.instance:getSelectedCritterSlot()
 
-		if var_13_1 and var_13_1 == var_13_2 then
-			var_13_0 = true
+		if curBuildingUid and curBuildingUid == buildingUid then
+			isSelected = true
 		end
 	end
 
-	gohelper.setActive(arg_13_0._goselected, var_13_0)
+	gohelper.setActive(self._goselected, isSelected)
 end
 
-function var_0_0.playPlaceCritterEff(arg_14_0)
-	if ViewMgr.instance:isOpen(ViewName.RoomCritterOneKeyView) then
-		arg_14_0._playEffWaitCloseView = true
+function RoomManufactureCritterInfo:playPlaceCritterEff()
+	local isOpenOneKeyView = ViewMgr.instance:isOpen(ViewName.RoomCritterOneKeyView)
+
+	if isOpenOneKeyView then
+		self._playEffWaitCloseView = true
 	else
-		gohelper.setActive(arg_14_0._goplaceEff, false)
-		gohelper.setActive(arg_14_0._goplaceEff, true)
+		gohelper.setActive(self._goplaceEff, false)
+		gohelper.setActive(self._goplaceEff, true)
 
-		arg_14_0._playEffWaitCloseView = false
+		self._playEffWaitCloseView = false
 	end
 end
 
-function var_0_0.reset(arg_15_0)
-	arg_15_0.critterSlotId = nil
-	arg_15_0.index = nil
-	arg_15_0.parent = nil
-	arg_15_0.go.name = var_0_1
-	arg_15_0._playEffWaitCloseView = false
+function RoomManufactureCritterInfo:reset()
+	self.critterSlotId = nil
+	self.index = nil
+	self.parent = nil
+	self.go.name = NONE_NAME
+	self._playEffWaitCloseView = false
 
-	gohelper.setActive(arg_15_0._goplaceEff, false)
-	gohelper.setActive(arg_15_0.go, false)
+	gohelper.setActive(self._goplaceEff, false)
+	gohelper.setActive(self.go, false)
 end
 
-function var_0_0.onDestroy(arg_16_0)
+function RoomManufactureCritterInfo:onDestroy()
 	return
 end
 
-return var_0_0
+return RoomManufactureCritterInfo

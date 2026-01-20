@@ -1,144 +1,147 @@
-﻿module("modules.logic.versionactivity3_0.enter.view.subview.VersionActivity3_0MaLiAnNaEnterView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/enter/view/subview/VersionActivity3_0MaLiAnNaEnterView.lua
 
-local var_0_0 = class("VersionActivity3_0MaLiAnNaEnterView", VersionActivityEnterBaseSubView)
+module("modules.logic.versionactivity3_0.enter.view.subview.VersionActivity3_0MaLiAnNaEnterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtDescr = gohelper.findChildText(arg_1_0.viewGO, "Left/#txt_Descr")
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Left/image_LimitTimeBG/#txt_LimitTime")
-	arg_1_0._btnEnter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Enter")
-	arg_1_0._goEnterRedDot = gohelper.findChild(arg_1_0.viewGO, "Right/#btn_Enter/#go_reddot")
-	arg_1_0._btnLocked = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Locked")
-	arg_1_0._goTry = gohelper.findChild(arg_1_0.viewGO, "Right/#go_Try")
-	arg_1_0._btnTrial = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#go_Try/#btn_Trial")
-	arg_1_0._goTips = gohelper.findChild(arg_1_0.viewGO, "Right/#go_Try/#go_Tips")
-	arg_1_0._simageReward = gohelper.findChildSingleImage(arg_1_0.viewGO, "Right/#go_Try/#go_Tips/#simage_Reward")
-	arg_1_0._txtNum = gohelper.findChildText(arg_1_0.viewGO, "Right/#go_Try/#go_Tips/#txt_Num")
-	arg_1_0._btnitem = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#go_Try/#go_Tips/#btn_item")
+local VersionActivity3_0MaLiAnNaEnterView = class("VersionActivity3_0MaLiAnNaEnterView", VersionActivityEnterBaseSubView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity3_0MaLiAnNaEnterView:onInitView()
+	self._txtDescr = gohelper.findChildText(self.viewGO, "Left/#txt_Descr")
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "Left/image_LimitTimeBG/#txt_LimitTime")
+	self._btnEnter = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_Enter")
+	self._goEnterRedDot = gohelper.findChild(self.viewGO, "Right/#btn_Enter/#go_reddot")
+	self._btnLocked = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_Locked")
+	self._goTry = gohelper.findChild(self.viewGO, "Right/#go_Try")
+	self._btnTrial = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#go_Try/#btn_Trial")
+	self._goTips = gohelper.findChild(self.viewGO, "Right/#go_Try/#go_Tips")
+	self._simageReward = gohelper.findChildSingleImage(self.viewGO, "Right/#go_Try/#go_Tips/#simage_Reward")
+	self._txtNum = gohelper.findChildText(self.viewGO, "Right/#go_Try/#go_Tips/#txt_Num")
+	self._btnitem = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#go_Try/#go_Tips/#btn_item")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnEnter:AddClickListener(arg_2_0._enterGame, arg_2_0)
-	arg_2_0._btnLocked:AddClickListener(arg_2_0._clickLock, arg_2_0)
-	arg_2_0._btnTrial:AddClickListener(arg_2_0._btnTrialOnClick, arg_2_0)
-	arg_2_0._btnitem:AddClickListener(arg_2_0._btnitemOnClick, arg_2_0)
+function VersionActivity3_0MaLiAnNaEnterView:addEvents()
+	self._btnEnter:AddClickListener(self._enterGame, self)
+	self._btnLocked:AddClickListener(self._clickLock, self)
+	self._btnTrial:AddClickListener(self._btnTrialOnClick, self)
+	self._btnitem:AddClickListener(self._btnitemOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnEnter:RemoveClickListener()
-	arg_3_0._btnLocked:RemoveClickListener()
-	arg_3_0._btnTrial:RemoveClickListener()
-	arg_3_0._btnitem:RemoveClickListener()
+function VersionActivity3_0MaLiAnNaEnterView:removeEvents()
+	self._btnEnter:RemoveClickListener()
+	self._btnLocked:RemoveClickListener()
+	self._btnTrial:RemoveClickListener()
+	self._btnitem:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0.actId = VersionActivity3_0Enum.ActivityId.MaLiAnNa
-	arg_4_0.actCo = ActivityConfig.instance:getActivityCo(arg_4_0.actId)
-	arg_4_0._txtDescr.text = arg_4_0.actCo.actDesc
-	arg_4_0._animator = arg_4_0.viewGO:GetComponent(gohelper.Type_Animator)
+function VersionActivity3_0MaLiAnNaEnterView:_editableInitView()
+	self.actId = VersionActivity3_0Enum.ActivityId.MaLiAnNa
+	self.actCo = ActivityConfig.instance:getActivityCo(self.actId)
+	self._txtDescr.text = self.actCo.actDesc
+	self._animator = self.viewGO:GetComponent(gohelper.Type_Animator)
 end
 
-function var_0_0.onOpen(arg_5_0)
-	RedDotController.instance:addRedDot(arg_5_0._goEnterRedDot, RedDotEnum.DotNode.V3a0MaLiAnNa, arg_5_0.actId)
-	arg_5_0:_refreshTime()
-	TaskDispatcher.runRepeat(arg_5_0._refreshTime, arg_5_0, TimeUtil.OneMinuteSecond)
-	arg_5_0._animator:Play("open", 0, 0)
+function VersionActivity3_0MaLiAnNaEnterView:onOpen()
+	RedDotController.instance:addRedDot(self._goEnterRedDot, RedDotEnum.DotNode.V3a0MaLiAnNa, self.actId)
+	self:_refreshTime()
+	TaskDispatcher.runRepeat(self._refreshTime, self, TimeUtil.OneMinuteSecond)
+	self._animator:Play("open", 0, 0)
 	Activity201MaLiAnNaController.instance:startBurnAudio()
 end
 
-function var_0_0._enterGame(arg_6_0)
-	local var_6_0 = ActivityConfig.instance:getActivityCo(arg_6_0.actId).confirmCondition
+function VersionActivity3_0MaLiAnNaEnterView:_enterGame()
+	local config = ActivityConfig.instance:getActivityCo(self.actId)
+	local condition = config.confirmCondition
 
-	if string.nilorempty(var_6_0) then
+	if string.nilorempty(condition) then
 		Activity201MaLiAnNaController.instance:enterLevelView()
 	else
-		local var_6_1 = string.split(var_6_0, "=")
-		local var_6_2 = tonumber(var_6_1[2])
-		local var_6_3 = PlayerModel.instance:getPlayinfo().userId
-		local var_6_4 = PlayerPrefsKey.EnterRoleActivity .. arg_6_0.actId .. var_6_3
-		local var_6_5 = PlayerPrefsHelper.getNumber(var_6_4, 0) == 1
+		local strs = string.split(condition, "=")
+		local openId = tonumber(strs[2])
+		local userid = PlayerModel.instance:getPlayinfo().userId
+		local key = PlayerPrefsKey.EnterRoleActivity .. self.actId .. userid
+		local hasTiped = PlayerPrefsHelper.getNumber(key, 0) == 1
 
-		if OpenModel.instance:isFunctionUnlock(var_6_2) or var_6_5 then
+		if OpenModel.instance:isFunctionUnlock(openId) or hasTiped then
 			Activity201MaLiAnNaController.instance:enterLevelView()
 		else
-			local var_6_6 = OpenConfig.instance:getOpenCo(var_6_2)
-			local var_6_7 = DungeonConfig.instance:getEpisodeDisplay(var_6_6.episodeId)
-			local var_6_8 = DungeonConfig.instance:getEpisodeCO(var_6_6.episodeId).name
-			local var_6_9 = var_6_7 .. var_6_8
+			local openCO = OpenConfig.instance:getOpenCo(openId)
+			local dungeonDisplay = DungeonConfig.instance:getEpisodeDisplay(openCO.episodeId)
+			local dungeonName = DungeonConfig.instance:getEpisodeCO(openCO.episodeId).name
+			local name = dungeonDisplay .. dungeonName
 
 			GameFacade.showMessageBox(MessageBoxIdDefine.RoleActivityOpenTip, MsgBoxEnum.BoxType.Yes_No, function()
-				PlayerPrefsHelper.setNumber(var_6_4, 1)
+				PlayerPrefsHelper.setNumber(key, 1)
 				Activity201MaLiAnNaController.instance:enterLevelView()
-			end, nil, nil, nil, nil, nil, var_6_9)
+			end, nil, nil, nil, nil, nil, name)
 		end
 	end
 end
 
-function var_0_0._clickLock(arg_8_0)
-	local var_8_0, var_8_1 = OpenHelper.getToastIdAndParam(arg_8_0.actCo.openId)
+function VersionActivity3_0MaLiAnNaEnterView:_clickLock()
+	local toastId, toastParamList = OpenHelper.getToastIdAndParam(self.actCo.openId)
 
-	if var_8_0 and var_8_0 ~= 0 then
-		GameFacade.showToast(var_8_0)
+	if toastId and toastId ~= 0 then
+		GameFacade.showToast(toastId)
 	end
 end
 
-function var_0_0._btnitemOnClick(arg_9_0)
+function VersionActivity3_0MaLiAnNaEnterView:_btnitemOnClick()
 	return
 end
 
-function var_0_0._btnTrialOnClick(arg_10_0)
-	if ActivityHelper.getActivityStatus(arg_10_0.actId) == ActivityEnum.ActivityStatus.Normal then
-		local var_10_0 = arg_10_0.actCo.tryoutEpisode
+function VersionActivity3_0MaLiAnNaEnterView:_btnTrialOnClick()
+	if ActivityHelper.getActivityStatus(self.actId) == ActivityEnum.ActivityStatus.Normal then
+		local episodeId = self.actCo.tryoutEpisode
 
-		if var_10_0 <= 0 then
+		if episodeId <= 0 then
 			logError("没有配置对应的试用关卡")
 
 			return
 		end
 
-		local var_10_1 = DungeonConfig.instance:getEpisodeCO(var_10_0)
+		local config = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-		DungeonFightController.instance:enterFight(var_10_1.chapterId, var_10_0)
+		DungeonFightController.instance:enterFight(config.chapterId, episodeId)
 	else
-		arg_10_0:_clickLock()
+		self:_clickLock()
 	end
 end
 
-function var_0_0.everySecondCall(arg_11_0)
-	arg_11_0:_refreshTime()
+function VersionActivity3_0MaLiAnNaEnterView:everySecondCall()
+	self:_refreshTime()
 end
 
-function var_0_0._refreshTime(arg_12_0)
-	local var_12_0 = ActivityModel.instance:getActivityInfo()[arg_12_0.actId]
+function VersionActivity3_0MaLiAnNaEnterView:_refreshTime()
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[self.actId]
 
-	if var_12_0 then
-		local var_12_1 = var_12_0:getRealEndTimeStamp() - ServerTime.now()
+	if actInfoMo then
+		local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
 
-		gohelper.setActive(arg_12_0._txtLimitTime.gameObject, var_12_1 > 0)
+		gohelper.setActive(self._txtLimitTime.gameObject, offsetSecond > 0)
 
-		if var_12_1 > 0 then
-			local var_12_2 = TimeUtil.SecondToActivityTimeFormat(var_12_1)
+		if offsetSecond > 0 then
+			local dateStr = TimeUtil.SecondToActivityTimeFormat(offsetSecond)
 
-			arg_12_0._txtLimitTime.text = var_12_2
+			self._txtLimitTime.text = dateStr
 		end
 
-		local var_12_3 = ActivityHelper.getActivityStatus(arg_12_0.actId) ~= ActivityEnum.ActivityStatus.Normal
+		local isLock = ActivityHelper.getActivityStatus(self.actId) ~= ActivityEnum.ActivityStatus.Normal
 
-		gohelper.setActive(arg_12_0._btnEnter, not var_12_3)
-		gohelper.setActive(arg_12_0._btnLocked, var_12_3)
+		gohelper.setActive(self._btnEnter, not isLock)
+		gohelper.setActive(self._btnLocked, isLock)
 	end
 end
 
-function var_0_0.onClose(arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0._refreshTime, arg_13_0)
+function VersionActivity3_0MaLiAnNaEnterView:onClose()
+	TaskDispatcher.cancelTask(self._refreshTime, self)
 	Activity201MaLiAnNaController.instance:stopBurnAudio()
 end
 
-function var_0_0.onDestroyView(arg_14_0)
+function VersionActivity3_0MaLiAnNaEnterView:onDestroyView()
 	return
 end
 
-return var_0_0
+return VersionActivity3_0MaLiAnNaEnterView

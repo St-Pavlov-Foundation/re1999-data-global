@@ -1,43 +1,47 @@
-﻿module("modules.logic.rouge.view.RougeCollectionChessView", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeCollectionChessView.lua
 
-local var_0_0 = class("RougeCollectionChessView", RougeBaseDLCViewComp)
+module("modules.logic.rouge.view.RougeCollectionChessView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._gomeshContainer = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_meshContainer")
-	arg_1_0._goeffectContainer = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_effectContainer")
-	arg_1_0._gotriggerContainer = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_triggerContainer")
-	arg_1_0._gocellModel = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_dragAnchor/#go_cellModel")
-	arg_1_0._golineContainer = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_dragAnchor/#go_lineContainer")
-	arg_1_0._godragContainer = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_dragAnchor/#go_dragContainer")
-	arg_1_0._btnlayout = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_layout")
-	arg_1_0._btnclear = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_left/#btn_clear")
-	arg_1_0._btnauto = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_left/#btn_auto")
-	arg_1_0._btnoverview = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_left/#btn_overview")
-	arg_1_0._btnhandbook = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_left/#btn_handbook")
+local RougeCollectionChessView = class("RougeCollectionChessView", RougeBaseDLCViewComp)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeCollectionChessView:onInitView()
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._gomeshContainer = gohelper.findChild(self.viewGO, "chessboard/#go_meshContainer")
+	self._goeffectContainer = gohelper.findChild(self.viewGO, "chessboard/#go_effectContainer")
+	self._gotriggerContainer = gohelper.findChild(self.viewGO, "chessboard/#go_triggerContainer")
+	self._gocellModel = gohelper.findChild(self.viewGO, "chessboard/#go_dragAnchor/#go_cellModel")
+	self._golineContainer = gohelper.findChild(self.viewGO, "chessboard/#go_dragAnchor/#go_lineContainer")
+	self._godragContainer = gohelper.findChild(self.viewGO, "chessboard/#go_dragAnchor/#go_dragContainer")
+	self._btnlayout = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_layout")
+	self._btnclear = gohelper.findChildButtonWithAudio(self.viewGO, "#go_left/#btn_clear")
+	self._btnauto = gohelper.findChildButtonWithAudio(self.viewGO, "#go_left/#btn_auto")
+	self._btnoverview = gohelper.findChildButtonWithAudio(self.viewGO, "#go_left/#btn_overview")
+	self._btnhandbook = gohelper.findChildButtonWithAudio(self.viewGO, "#go_left/#btn_handbook")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclear:AddClickListener(arg_2_0._btnclearOnClick, arg_2_0)
-	arg_2_0._btnauto:AddClickListener(arg_2_0._btnautoOnClick, arg_2_0)
-	arg_2_0._btnoverview:AddClickListener(arg_2_0._btnoverviewOnClick, arg_2_0)
-	arg_2_0._btnhandbook:AddClickListener(arg_2_0._btnhandbookOnClick, arg_2_0)
+function RougeCollectionChessView:addEvents()
+	self._btnclear:AddClickListener(self._btnclearOnClick, self)
+	self._btnauto:AddClickListener(self._btnautoOnClick, self)
+	self._btnoverview:AddClickListener(self._btnoverviewOnClick, self)
+	self._btnhandbook:AddClickListener(self._btnhandbookOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnlayout:RemoveClickListener()
-	arg_3_0._btnclear:RemoveClickListener()
-	arg_3_0._btnauto:RemoveClickListener()
-	arg_3_0._btnoverview:RemoveClickListener()
-	arg_3_0._btnhandbook:RemoveClickListener()
+function RougeCollectionChessView:removeEvents()
+	self._btnlayout:RemoveClickListener()
+	self._btnclear:RemoveClickListener()
+	self._btnauto:RemoveClickListener()
+	self._btnoverview:RemoveClickListener()
+	self._btnhandbook:RemoveClickListener()
 end
 
-function var_0_0._btnclearOnClick(arg_4_0)
-	if not RougeCollectionHelper.isCanDragCollection() then
+function RougeCollectionChessView:_btnclearOnClick()
+	local isCanDragCollection = RougeCollectionHelper.isCanDragCollection()
+
+	if not isCanDragCollection then
 		return
 	end
 
@@ -46,8 +50,10 @@ function var_0_0._btnclearOnClick(arg_4_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.OneKeyClearSlotArea)
 end
 
-function var_0_0._btnautoOnClick(arg_5_0)
-	if not RougeCollectionHelper.isCanDragCollection() then
+function RougeCollectionChessView:_btnautoOnClick()
+	local isCanDragCollection = RougeCollectionHelper.isCanDragCollection()
+
+	if not isCanDragCollection then
 		return
 	end
 
@@ -56,71 +62,71 @@ function var_0_0._btnautoOnClick(arg_5_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.OneKeyPlaceSlotArea)
 end
 
-function var_0_0._btnoverviewOnClick(arg_6_0)
+function RougeCollectionChessView:_btnoverviewOnClick()
 	RougeController.instance:openRougeCollectionOverView()
 end
 
-function var_0_0._btnhandbookOnClick(arg_7_0)
+function RougeCollectionChessView:_btnhandbookOnClick()
 	RougeController.instance:openRougeCollectionHandBookView()
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0:initAllContainerPosition()
-	arg_8_0:checkAndSetHandBookIconVisible()
+function RougeCollectionChessView:_editableInitView()
+	self:initAllContainerPosition()
+	self:checkAndSetHandBookIconVisible()
 end
 
-function var_0_0.onOpen(arg_9_0)
-	var_0_0.super.onOpen(arg_9_0)
-	arg_9_0:startCheckCollectionCfgs()
+function RougeCollectionChessView:onOpen()
+	RougeCollectionChessView.super.onOpen(self)
+	self:startCheckCollectionCfgs()
 	RougeCollectionChessController.instance:onOpen()
 	RougeStatController.instance:startAdjustBackPack()
 end
 
-function var_0_0.onClose(arg_10_0)
+function RougeCollectionChessView:onClose()
 	RougeStatController.instance:endAdjustBackPack()
 end
 
-function var_0_0.startCheckCollectionCfgs(arg_11_0)
+function RougeCollectionChessView:startCheckCollectionCfgs()
 	RougeCollectionDebugHelper.checkCollectionStaticItmeCfgs()
 	RougeCollectionDebugHelper.checkCollectionDescCfgs()
 end
 
-function var_0_0.initAllContainerPosition(arg_12_0)
-	local var_12_0 = RougeCollectionHelper.CollectionSlotCellSize
-	local var_12_1 = {
-		arg_12_0._gomeshContainer,
-		arg_12_0._goeffectContainer,
-		arg_12_0._gotriggerContainer,
-		arg_12_0._gocellModel,
-		arg_12_0._golineContainer,
-		arg_12_0._godragContainer
+function RougeCollectionChessView:initAllContainerPosition()
+	local cellSize = RougeCollectionHelper.CollectionSlotCellSize
+	local containerTab = {
+		self._gomeshContainer,
+		self._goeffectContainer,
+		self._gotriggerContainer,
+		self._gocellModel,
+		self._golineContainer,
+		self._godragContainer
 	}
-	local var_12_2 = Vector2(0, 1)
-	local var_12_3 = Vector2(0, 1)
-	local var_12_4 = var_12_0.x / 2
-	local var_12_5 = -var_12_0.y / 2
+	local anchorMin = Vector2(0, 1)
+	local anchorMax = Vector2(0, 1)
+	local posX = cellSize.x / 2
+	local posY = -cellSize.y / 2
 
-	for iter_12_0, iter_12_1 in pairs(var_12_1) do
-		recthelper.setSize(iter_12_1.transform, var_12_0.x, var_12_0.y)
-		recthelper.setAnchor(iter_12_1.transform, var_12_4, var_12_5)
+	for _, containerGO in pairs(containerTab) do
+		recthelper.setSize(containerGO.transform, cellSize.x, cellSize.y)
+		recthelper.setAnchor(containerGO.transform, posX, posY)
 
-		iter_12_1.transform.anchorMin = var_12_2
-		iter_12_1.transform.anchorMax = var_12_3
+		containerGO.transform.anchorMin = anchorMin
+		containerGO.transform.anchorMax = anchorMax
 	end
 end
 
-function var_0_0.checkAndSetHandBookIconVisible(arg_13_0)
-	local var_13_0 = RougeOutsideModel.instance:getRougeGameRecord()
-	local var_13_1 = false
+function RougeCollectionChessView:checkAndSetHandBookIconVisible()
+	local rougeRecord = RougeOutsideModel.instance:getRougeGameRecord()
+	local isLayerPass = false
 
-	if var_13_0 then
-		local var_13_2 = lua_rouge_const.configDict[RougeEnum.Const.CompositeEntryVisible]
-		local var_13_3 = var_13_2 and tonumber(var_13_2.value) or 0
+	if rougeRecord then
+		local constCfg = lua_rouge_const.configDict[RougeEnum.Const.CompositeEntryVisible]
+		local layerId = constCfg and tonumber(constCfg.value) or 0
 
-		var_13_1 = var_13_0:passLayerId(var_13_3)
+		isLayerPass = rougeRecord:passLayerId(layerId)
 	end
 
-	gohelper.setActive(arg_13_0._btnhandbook.gameObject, var_13_1)
+	gohelper.setActive(self._btnhandbook.gameObject, isLayerPass)
 end
 
-return var_0_0
+return RougeCollectionChessView

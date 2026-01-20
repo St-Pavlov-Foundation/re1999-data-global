@@ -1,45 +1,47 @@
-﻿module("modules.logic.rouge.view.RougeIllustrationListViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeIllustrationListViewContainer.lua
 
-local var_0_0 = class("RougeIllustrationListViewContainer", BaseViewContainer)
+module("modules.logic.rouge.view.RougeIllustrationListViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RougeIllustrationListViewContainer = class("RougeIllustrationListViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RougeIllustrationListView.New())
-	table.insert(var_1_0, RougeScrollAudioView.New("#scroll_view"))
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_LeftTop"))
+function RougeIllustrationListViewContainer:buildViews()
+	local views = {}
 
-	local var_1_1 = MixScrollParam.New()
+	table.insert(views, RougeIllustrationListView.New())
+	table.insert(views, RougeScrollAudioView.New("#scroll_view"))
+	table.insert(views, TabViewGroup.New(1, "#go_LeftTop"))
 
-	var_1_1.scrollGOPath = "#scroll_view"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_1.cellClass = RougeIllustrationListPage
-	var_1_1.scrollDir = ScrollEnum.ScrollDirH
-	var_1_1.lineCount = 1
-	var_1_1.cellSpaceH = 0
-	var_1_1.cellSpaceV = 0
-	var_1_1.startSpace = 0
-	var_1_1.endSpace = 120
-	arg_1_0._scrollView = LuaMixScrollView.New(RougeIllustrationListModel.instance, var_1_1)
+	local scrollParam = MixScrollParam.New()
 
-	table.insert(var_1_0, arg_1_0._scrollView)
+	scrollParam.scrollGOPath = "#scroll_view"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = RougeIllustrationListPage
+	scrollParam.scrollDir = ScrollEnum.ScrollDirH
+	scrollParam.lineCount = 1
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 0
+	scrollParam.startSpace = 0
+	scrollParam.endSpace = 120
+	self._scrollView = LuaMixScrollView.New(RougeIllustrationListModel.instance, scrollParam)
 
-	return var_1_0
+	table.insert(views, self._scrollView)
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function RougeIllustrationListViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-return var_0_0
+return RougeIllustrationListViewContainer

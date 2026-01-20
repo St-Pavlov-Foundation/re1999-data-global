@@ -1,15 +1,17 @@
-﻿module("modules.logic.explore.controller.trigger.ExploreTriggerItem", package.seeall)
+﻿-- chunkname: @modules/logic/explore/controller/trigger/ExploreTriggerItem.lua
 
-local var_0_0 = class("ExploreTriggerItem", ExploreTriggerBase)
+module("modules.logic.explore.controller.trigger.ExploreTriggerItem", package.seeall)
 
-function var_0_0.handle(arg_1_0, arg_1_1, arg_1_2)
-	ExploreRpc.instance:sendExploreItemInteractRequest(arg_1_2.id, arg_1_1, arg_1_0.onRequestCallBack, arg_1_0)
+local ExploreTriggerItem = class("ExploreTriggerItem", ExploreTriggerBase)
+
+function ExploreTriggerItem:handle(param, unit)
+	ExploreRpc.instance:sendExploreItemInteractRequest(unit.id, param, self.onRequestCallBack, self)
 end
 
-function var_0_0.onReply(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	if arg_2_2 == 0 then
-		arg_2_0:onDone(true)
+function ExploreTriggerItem:onReply(cmd, resultCode, msg)
+	if resultCode == 0 then
+		self:onDone(true)
 	end
 end
 
-return var_0_0
+return ExploreTriggerItem

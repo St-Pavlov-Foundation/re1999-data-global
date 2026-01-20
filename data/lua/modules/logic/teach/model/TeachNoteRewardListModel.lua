@@ -1,22 +1,24 @@
-﻿module("modules.logic.teach.model.TeachNoteRewardListModel", package.seeall)
+﻿-- chunkname: @modules/logic/teach/model/TeachNoteRewardListModel.lua
 
-local var_0_0 = class("TeachNoteRewardListModel", ListScrollModel)
+module("modules.logic.teach.model.TeachNoteRewardListModel", package.seeall)
 
-function var_0_0.setRewardList(arg_1_0, arg_1_1)
-	arg_1_0._moList = {}
+local TeachNoteRewardListModel = class("TeachNoteRewardListModel", ListScrollModel)
 
-	if arg_1_1 then
-		for iter_1_0, iter_1_1 in pairs(arg_1_1) do
-			table.insert(arg_1_0._moList, iter_1_1)
+function TeachNoteRewardListModel:setRewardList(infos)
+	self._moList = {}
+
+	if infos then
+		for _, v in pairs(infos) do
+			table.insert(self._moList, v)
 		end
 	end
 
-	table.sort(arg_1_0._moList, function(arg_2_0, arg_2_1)
-		return arg_2_0.id < arg_2_1.id
+	table.sort(self._moList, function(a, b)
+		return a.id < b.id
 	end)
-	arg_1_0:setList(arg_1_0._moList)
+	self:setList(self._moList)
 end
 
-var_0_0.instance = var_0_0.New()
+TeachNoteRewardListModel.instance = TeachNoteRewardListModel.New()
 
-return var_0_0
+return TeachNoteRewardListModel

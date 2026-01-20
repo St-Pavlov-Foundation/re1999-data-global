@@ -1,8 +1,10 @@
-﻿module("modules.logic.room.define.RoomDistributionEnum", package.seeall)
+﻿-- chunkname: @modules/logic/room/define/RoomDistributionEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.room.define.RoomDistributionEnum", package.seeall)
 
-var_0_0.DistributionType = {
+local RoomDistributionEnum = _M
+
+RoomDistributionEnum.DistributionType = {
 	C3TA = "c3ta",
 	C2TC = "c2tc",
 	C4TC = "c4tc",
@@ -17,8 +19,8 @@ var_0_0.DistributionType = {
 	C1TA = "c1ta",
 	C2TA = "c2ta"
 }
-var_0_0.DistributionTypeValue = {
-	[var_0_0.DistributionType.C1TA] = {
+RoomDistributionEnum.DistributionTypeValue = {
+	[RoomDistributionEnum.DistributionType.C1TA] = {
 		true,
 		false,
 		false,
@@ -26,7 +28,7 @@ var_0_0.DistributionTypeValue = {
 		false,
 		false
 	},
-	[var_0_0.DistributionType.C2TA] = {
+	[RoomDistributionEnum.DistributionType.C2TA] = {
 		true,
 		true,
 		false,
@@ -34,7 +36,7 @@ var_0_0.DistributionTypeValue = {
 		false,
 		false
 	},
-	[var_0_0.DistributionType.C2TB] = {
+	[RoomDistributionEnum.DistributionType.C2TB] = {
 		true,
 		false,
 		true,
@@ -42,7 +44,7 @@ var_0_0.DistributionTypeValue = {
 		false,
 		false
 	},
-	[var_0_0.DistributionType.C2TC] = {
+	[RoomDistributionEnum.DistributionType.C2TC] = {
 		true,
 		false,
 		false,
@@ -50,7 +52,7 @@ var_0_0.DistributionTypeValue = {
 		false,
 		false
 	},
-	[var_0_0.DistributionType.C3TA] = {
+	[RoomDistributionEnum.DistributionType.C3TA] = {
 		true,
 		true,
 		true,
@@ -58,7 +60,7 @@ var_0_0.DistributionTypeValue = {
 		false,
 		false
 	},
-	[var_0_0.DistributionType.C3TB] = {
+	[RoomDistributionEnum.DistributionType.C3TB] = {
 		true,
 		true,
 		false,
@@ -66,7 +68,7 @@ var_0_0.DistributionTypeValue = {
 		false,
 		false
 	},
-	[var_0_0.DistributionType.C3TC] = {
+	[RoomDistributionEnum.DistributionType.C3TC] = {
 		true,
 		false,
 		true,
@@ -74,7 +76,7 @@ var_0_0.DistributionTypeValue = {
 		true,
 		false
 	},
-	[var_0_0.DistributionType.C3TD] = {
+	[RoomDistributionEnum.DistributionType.C3TD] = {
 		true,
 		true,
 		false,
@@ -82,7 +84,7 @@ var_0_0.DistributionTypeValue = {
 		true,
 		false
 	},
-	[var_0_0.DistributionType.C4TA] = {
+	[RoomDistributionEnum.DistributionType.C4TA] = {
 		true,
 		true,
 		true,
@@ -90,7 +92,7 @@ var_0_0.DistributionTypeValue = {
 		false,
 		false
 	},
-	[var_0_0.DistributionType.C4TB] = {
+	[RoomDistributionEnum.DistributionType.C4TB] = {
 		true,
 		true,
 		true,
@@ -98,7 +100,7 @@ var_0_0.DistributionTypeValue = {
 		true,
 		false
 	},
-	[var_0_0.DistributionType.C4TC] = {
+	[RoomDistributionEnum.DistributionType.C4TC] = {
 		true,
 		true,
 		false,
@@ -106,7 +108,7 @@ var_0_0.DistributionTypeValue = {
 		true,
 		false
 	},
-	[var_0_0.DistributionType.C5TA] = {
+	[RoomDistributionEnum.DistributionType.C5TA] = {
 		true,
 		true,
 		true,
@@ -114,7 +116,7 @@ var_0_0.DistributionTypeValue = {
 		true,
 		false
 	},
-	[var_0_0.DistributionType.C6TA] = {
+	[RoomDistributionEnum.DistributionType.C6TA] = {
 		true,
 		true,
 		true,
@@ -123,32 +125,32 @@ var_0_0.DistributionTypeValue = {
 		true
 	}
 }
-var_0_0.CountToTypeList = {
+RoomDistributionEnum.CountToTypeList = {
 	{
-		var_0_0.DistributionType.C1TA
+		RoomDistributionEnum.DistributionType.C1TA
 	},
 	{
-		var_0_0.DistributionType.C2TA,
-		var_0_0.DistributionType.C2TB,
-		var_0_0.DistributionType.C2TC
+		RoomDistributionEnum.DistributionType.C2TA,
+		RoomDistributionEnum.DistributionType.C2TB,
+		RoomDistributionEnum.DistributionType.C2TC
 	},
 	{
-		var_0_0.DistributionType.C3TA,
-		var_0_0.DistributionType.C3TB,
-		var_0_0.DistributionType.C3TC,
-		var_0_0.DistributionType.C3TD
+		RoomDistributionEnum.DistributionType.C3TA,
+		RoomDistributionEnum.DistributionType.C3TB,
+		RoomDistributionEnum.DistributionType.C3TC,
+		RoomDistributionEnum.DistributionType.C3TD
 	},
 	{
-		var_0_0.DistributionType.C4TA,
-		var_0_0.DistributionType.C4TB,
-		var_0_0.DistributionType.C4TC
+		RoomDistributionEnum.DistributionType.C4TA,
+		RoomDistributionEnum.DistributionType.C4TB,
+		RoomDistributionEnum.DistributionType.C4TC
 	},
 	{
-		var_0_0.DistributionType.C5TA
+		RoomDistributionEnum.DistributionType.C5TA
 	},
 	{
-		var_0_0.DistributionType.C6TA
+		RoomDistributionEnum.DistributionType.C6TA
 	}
 }
 
-return var_0_0
+return RoomDistributionEnum

@@ -1,48 +1,50 @@
-﻿module("modules.logic.sp01.assassin2.story.dungeon.VersionActivity2_9DungeonMapEditView", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/story/dungeon/VersionActivity2_9DungeonMapEditView.lua
 
-local var_0_0 = class("VersionActivity2_9DungeonMapEditView", BaseView)
+module("modules.logic.sp01.assassin2.story.dungeon.VersionActivity2_9DungeonMapEditView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._mapScene = arg_1_0.viewContainer.mapScene
-	arg_1_0._isEditMode = false
+local VersionActivity2_9DungeonMapEditView = class("VersionActivity2_9DungeonMapEditView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity2_9DungeonMapEditView:onInitView()
+	self._mapScene = self.viewContainer.mapScene
+	self._isEditMode = false
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0.frameHandle = UpdateBeat:CreateListener(arg_2_0.onFrame, arg_2_0)
+function VersionActivity2_9DungeonMapEditView:addEvents()
+	self.frameHandle = UpdateBeat:CreateListener(self.onFrame, self)
 
-	UpdateBeat:AddListener(arg_2_0.frameHandle)
+	UpdateBeat:AddListener(self.frameHandle)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	if arg_3_0.frameHandle then
-		UpdateBeat:RemoveListener(arg_3_0.frameHandle)
+function VersionActivity2_9DungeonMapEditView:removeEvents()
+	if self.frameHandle then
+		UpdateBeat:RemoveListener(self.frameHandle)
 	end
 end
 
-function var_0_0.onFrame(arg_4_0)
+function VersionActivity2_9DungeonMapEditView:onFrame()
 	if UnityEngine.Input.GetKeyUp(UnityEngine.KeyCode.Q) then
-		arg_4_0._isEditMode = not arg_4_0._isEditMode
+		self._isEditMode = not self._isEditMode
 
-		if arg_4_0._isEditMode then
+		if self._isEditMode then
 			GameFacade.showToastString("EnterEditMode")
 		else
 			GameFacade.showToastString("ExitEditMode")
 		end
 	end
 
-	if not arg_4_0._isEditMode then
+	if not self._isEditMode then
 		return
 	end
 
-	if not arg_4_0._mapScene then
+	if not self._mapScene then
 		return
 	end
 
-	arg_4_0._mapScene:_brocastAllNodePos()
+	self._mapScene:_brocastAllNodePos()
 end
 
-return var_0_0
+return VersionActivity2_9DungeonMapEditView

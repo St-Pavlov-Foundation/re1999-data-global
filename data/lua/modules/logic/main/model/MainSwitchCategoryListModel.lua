@@ -1,21 +1,23 @@
-﻿module("modules.logic.main.model.MainSwitchCategoryListModel", package.seeall)
+﻿-- chunkname: @modules/logic/main/model/MainSwitchCategoryListModel.lua
 
-local var_0_0 = class("MainSwitchCategoryListModel", ListScrollModel)
+module("modules.logic.main.model.MainSwitchCategoryListModel", package.seeall)
 
-function var_0_0.setCategoryId(arg_1_0, arg_1_1)
-	arg_1_0.categoryId = arg_1_1
+local MainSwitchCategoryListModel = class("MainSwitchCategoryListModel", ListScrollModel)
 
-	arg_1_0:onModelUpdate()
+function MainSwitchCategoryListModel:setCategoryId(id)
+	self.categoryId = id
+
+	self:onModelUpdate()
 end
 
-function var_0_0.getCategoryId(arg_2_0)
-	return arg_2_0.categoryId
+function MainSwitchCategoryListModel:getCategoryId()
+	return self.categoryId
 end
 
-function var_0_0.initCategoryList(arg_3_0)
-	arg_3_0.categoryId = MainEnum.SwitchType.Character
+function MainSwitchCategoryListModel:initCategoryList()
+	self.categoryId = MainEnum.SwitchType.Character
 
-	local var_3_0 = {
+	local list = {
 		{
 			id = MainEnum.SwitchType.Character
 		},
@@ -25,14 +27,14 @@ function var_0_0.initCategoryList(arg_3_0)
 	}
 
 	if FightUISwitchModel.instance:isOpenFightUISwitchSystem() then
-		table.insert(var_3_0, {
+		table.insert(list, {
 			id = MainEnum.SwitchType.FightUI
 		})
 	end
 
-	arg_3_0:setList(var_3_0)
+	self:setList(list)
 end
 
-var_0_0.instance = var_0_0.New()
+MainSwitchCategoryListModel.instance = MainSwitchCategoryListModel.New()
 
-return var_0_0
+return MainSwitchCategoryListModel

@@ -1,46 +1,48 @@
-﻿module("modules.logic.versionactivity2_3.zhixinquaner.maze.view.PuzzleMazeObjAlert", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/zhixinquaner/maze/view/PuzzleMazeObjAlert.lua
 
-local var_0_0 = class("PuzzleMazeObjAlert", PuzzleMazeBaseAlert)
+module("modules.logic.versionactivity2_3.zhixinquaner.maze.view.PuzzleMazeObjAlert", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0, arg_1_1)
+local PuzzleMazeObjAlert = class("PuzzleMazeObjAlert", PuzzleMazeBaseAlert)
 
-	arg_1_0.image = gohelper.findChildImage(arg_1_0.go, "#image_content")
-	arg_1_0.imageTf = arg_1_0.image.transform
-	arg_1_0.tf = arg_1_0.go.transform
+function PuzzleMazeObjAlert:ctor(go)
+	PuzzleMazeObjAlert.super.ctor(self, go)
 
-	UISpriteSetMgr.instance:setPuzzleSprite(arg_1_0.image, PuzzleEnum.MazeAlertResPath, true)
+	self.image = gohelper.findChildImage(self.go, "#image_content")
+	self.imageTf = self.image.transform
+	self.tf = self.go.transform
+
+	UISpriteSetMgr.instance:setPuzzleSprite(self.image, PuzzleEnum.MazeAlertResPath, true)
 end
 
-function var_0_0.onEnable(arg_2_0, arg_2_1, arg_2_2)
-	gohelper.setActive(arg_2_0.go, true)
-	gohelper.setAsLastSibling(arg_2_0.go)
+function PuzzleMazeObjAlert:onEnable(alertType, alertObj)
+	gohelper.setActive(self.go, true)
+	gohelper.setAsLastSibling(self.go)
 
-	local var_2_0 = string.splitToNumber(arg_2_2, "_")
+	local linePos = string.splitToNumber(alertObj, "_")
 
-	if arg_2_1 == PuzzleEnum.MazeAlertType.VisitBlock or arg_2_1 == PuzzleEnum.MazeAlertType.DisconnectLine then
-		local var_2_1, var_2_2 = PuzzleMazeDrawModel.instance:getLineAnchor(var_2_0[1], var_2_0[2], var_2_0[3], var_2_0[4])
+	if alertType == PuzzleEnum.MazeAlertType.VisitBlock or alertType == PuzzleEnum.MazeAlertType.DisconnectLine then
+		local anchorX, anchorY = PuzzleMazeDrawModel.instance:getLineAnchor(linePos[1], linePos[2], linePos[3], linePos[4])
 
-		recthelper.setAnchor(arg_2_0.tf, var_2_1 + PuzzleEnum.MazeAlertBlockOffsetX, var_2_2 + PuzzleEnum.MazeAlertBlockOffsetY)
-	elseif arg_2_1 == PuzzleEnum.MazeAlertType.VisitRepeat then
-		local var_2_3, var_2_4 = PuzzleMazeDrawModel.instance:getObjectAnchor(var_2_0[1], var_2_0[2])
+		recthelper.setAnchor(self.tf, anchorX + PuzzleEnum.MazeAlertBlockOffsetX, anchorY + PuzzleEnum.MazeAlertBlockOffsetY)
+	elseif alertType == PuzzleEnum.MazeAlertType.VisitRepeat then
+		local anchorX, anchorY = PuzzleMazeDrawModel.instance:getObjectAnchor(linePos[1], linePos[2])
 
-		recthelper.setAnchor(arg_2_0.tf, var_2_3 + PuzzleEnum.MazeAlertCrossOffsetX, var_2_4 + PuzzleEnum.MazeAlertCrossOffsetY)
+		recthelper.setAnchor(self.tf, anchorX + PuzzleEnum.MazeAlertCrossOffsetX, anchorY + PuzzleEnum.MazeAlertCrossOffsetY)
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.Act176_ForbiddenGo)
 end
 
-function var_0_0.onDisable(arg_3_0)
-	gohelper.setActive(arg_3_0.go, false)
+function PuzzleMazeObjAlert:onDisable()
+	gohelper.setActive(self.go, false)
 end
 
-function var_0_0.onRecycle(arg_4_0)
+function PuzzleMazeObjAlert:onRecycle()
 	return
 end
 
-function var_0_0.getKey(arg_5_0)
+function PuzzleMazeObjAlert:getKey()
 	return
 end
 
-return var_0_0
+return PuzzleMazeObjAlert

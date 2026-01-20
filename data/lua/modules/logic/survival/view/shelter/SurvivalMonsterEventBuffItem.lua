@@ -1,77 +1,79 @@
-﻿module("modules.logic.survival.view.shelter.SurvivalMonsterEventBuffItem", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/SurvivalMonsterEventBuffItem.lua
 
-local var_0_0 = class("SurvivalMonsterEventBuffItem", ListScrollCellExtend)
+module("modules.logic.survival.view.shelter.SurvivalMonsterEventBuffItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gounfinish = gohelper.findChild(arg_1_0.viewGO, "#go_unfinish")
-	arg_1_0._txtdec = gohelper.findChildText(arg_1_0.viewGO, "scroll_buffDec/Viewport/Content/#txt_dec")
-	arg_1_0._txtdecfinished = gohelper.findChildText(arg_1_0.viewGO, "scroll_buffDec/Viewport/Content/#txt_dec_finished")
-	arg_1_0._gofinished = gohelper.findChild(arg_1_0.viewGO, "#go_finished")
+local SurvivalMonsterEventBuffItem = class("SurvivalMonsterEventBuffItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SurvivalMonsterEventBuffItem:onInitView()
+	self._gounfinish = gohelper.findChild(self.viewGO, "#go_unfinish")
+	self._txtdec = gohelper.findChildText(self.viewGO, "scroll_buffDec/Viewport/Content/#txt_dec")
+	self._txtdecfinished = gohelper.findChildText(self.viewGO, "scroll_buffDec/Viewport/Content/#txt_dec_finished")
+	self._gofinished = gohelper.findChild(self.viewGO, "#go_finished")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 
-	arg_1_0.icon = gohelper.findChildImage(arg_1_0.viewGO, "#go_unfinish/icon")
+	self.icon = gohelper.findChildImage(self.viewGO, "#go_unfinish/icon")
 end
 
-function var_0_0.addEvents(arg_2_0)
+function SurvivalMonsterEventBuffItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function SurvivalMonsterEventBuffItem:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._ani = arg_4_0.viewGO:GetComponent(gohelper.Type_Animator)
+function SurvivalMonsterEventBuffItem:_editableInitView()
+	self._ani = self.viewGO:GetComponent(gohelper.Type_Animator)
 end
 
-function var_0_0._editableAddEvents(arg_5_0)
+function SurvivalMonsterEventBuffItem:_editableAddEvents()
 	return
 end
 
-function var_0_0._editableRemoveEvents(arg_6_0)
+function SurvivalMonsterEventBuffItem:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.initItem(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_0.survivalIntrudeSchemeMo = arg_7_2
-	arg_7_0._co = SurvivalConfig.instance:getShelterIntrudeSchemeConfig(arg_7_1)
+function SurvivalMonsterEventBuffItem:initItem(id, survivalIntrudeSchemeMo)
+	self.survivalIntrudeSchemeMo = survivalIntrudeSchemeMo
+	self._co = SurvivalConfig.instance:getShelterIntrudeSchemeConfig(id)
 
-	if arg_7_0._co == nil then
-		logError("SurvivalMonsterEventBuffItem:initItem id is nil" .. arg_7_1)
+	if self._co == nil then
+		logError("SurvivalMonsterEventBuffItem:initItem id is nil" .. id)
 	end
 
-	arg_7_0._txtdec.text = arg_7_0._co and arg_7_0._co.desc or ""
-	arg_7_0._txtdecfinished.text = arg_7_0._co and arg_7_0._co.desc or ""
+	self._txtdec.text = self._co and self._co.desc or ""
+	self._txtdecfinished.text = self._co and self._co.desc or ""
 
-	local var_7_0 = arg_7_0.survivalIntrudeSchemeMo:getDisplayIcon()
+	local path = self.survivalIntrudeSchemeMo:getDisplayIcon()
 
-	UISpriteSetMgr.instance:setSurvivalSprite(arg_7_0.icon, var_7_0)
+	UISpriteSetMgr.instance:setSurvivalSprite(self.icon, path)
 end
 
-function var_0_0.updateItem(arg_8_0, arg_8_1)
-	gohelper.setActive(arg_8_0._gofinished, arg_8_1)
-	gohelper.setActive(arg_8_0._txtdecfinished.gameObject, arg_8_1)
-	gohelper.setActive(arg_8_0._gounfinish, not arg_8_1)
-	gohelper.setActive(arg_8_0._txtdec.gameObject, not arg_8_1)
+function SurvivalMonsterEventBuffItem:updateItem(repress)
+	gohelper.setActive(self._gofinished, repress)
+	gohelper.setActive(self._txtdecfinished.gameObject, repress)
+	gohelper.setActive(self._gounfinish, not repress)
+	gohelper.setActive(self._txtdec.gameObject, not repress)
 
-	if arg_8_0._lastState == nil or arg_8_0._lastState ~= arg_8_1 then
-		arg_8_0:playAni(arg_8_1 and "finished" or "open")
+	if self._lastState == nil or self._lastState ~= repress then
+		self:playAni(repress and "finished" or "open")
 	end
 
-	arg_8_0._lastState = arg_8_1
+	self._lastState = repress
 end
 
-function var_0_0.playAni(arg_9_0, arg_9_1)
-	if arg_9_1 then
-		arg_9_0._ani:Play(arg_9_1, 0, 0)
+function SurvivalMonsterEventBuffItem:playAni(name)
+	if name then
+		self._ani:Play(name, 0, 0)
 	end
 end
 
-function var_0_0.onDestroyView(arg_10_0)
+function SurvivalMonsterEventBuffItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return SurvivalMonsterEventBuffItem

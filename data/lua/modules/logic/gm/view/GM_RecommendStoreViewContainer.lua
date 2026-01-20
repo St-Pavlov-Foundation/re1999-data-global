@@ -1,27 +1,29 @@
-﻿module("modules.logic.gm.view.GM_RecommendStoreViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GM_RecommendStoreViewContainer.lua
 
-local var_0_0 = class("GM_RecommendStoreViewContainer", BaseViewContainer)
+module("modules.logic.gm.view.GM_RecommendStoreViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local GM_RecommendStoreViewContainer = class("GM_RecommendStoreViewContainer", BaseViewContainer)
+
+function GM_RecommendStoreViewContainer:buildViews()
 	return {
 		GM_RecommendStoreView.New()
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	ViewMgr.instance:closeView(arg_2_0.viewName)
+function GM_RecommendStoreViewContainer:onContainerClickModalMask()
+	ViewMgr.instance:closeView(self.viewName)
 end
 
-function var_0_0.addEvents(arg_3_0)
-	GMController.instance:registerCallback(GMEvent.RecommendStore_ShowAllBannerUpdate, arg_3_0._gm_showAllBannerUpdate, arg_3_0)
-	GMController.instance:registerCallback(GMEvent.RecommendStore_ShowAllTabIdUpdate, arg_3_0._gm_showAllTabIdUpdate, arg_3_0)
-	GMController.instance:registerCallback(GMEvent.RecommendStore_StopBannerLoopAnimUpdate, arg_3_0._gm_stopBannerLoopAnimUpdate, arg_3_0)
+function GM_RecommendStoreViewContainer.addEvents(viewObj)
+	GMController.instance:registerCallback(GMEvent.RecommendStore_ShowAllBannerUpdate, viewObj._gm_showAllBannerUpdate, viewObj)
+	GMController.instance:registerCallback(GMEvent.RecommendStore_ShowAllTabIdUpdate, viewObj._gm_showAllTabIdUpdate, viewObj)
+	GMController.instance:registerCallback(GMEvent.RecommendStore_StopBannerLoopAnimUpdate, viewObj._gm_stopBannerLoopAnimUpdate, viewObj)
 end
 
-function var_0_0.removeEvents(arg_4_0)
-	GMController.instance:unregisterCallback(GMEvent.RecommendStore_ShowAllBannerUpdate, arg_4_0._gm_showAllBannerUpdate, arg_4_0)
-	GMController.instance:unregisterCallback(GMEvent.RecommendStore_ShowAllTabIdUpdate, arg_4_0._gm_showAllTabIdUpdate, arg_4_0)
-	GMController.instance:unregisterCallback(GMEvent.RecommendStore_StopBannerLoopAnimUpdate, arg_4_0._gm_stopBannerLoopAnimUpdate, arg_4_0)
+function GM_RecommendStoreViewContainer.removeEvents(viewObj)
+	GMController.instance:unregisterCallback(GMEvent.RecommendStore_ShowAllBannerUpdate, viewObj._gm_showAllBannerUpdate, viewObj)
+	GMController.instance:unregisterCallback(GMEvent.RecommendStore_ShowAllTabIdUpdate, viewObj._gm_showAllTabIdUpdate, viewObj)
+	GMController.instance:unregisterCallback(GMEvent.RecommendStore_StopBannerLoopAnimUpdate, viewObj._gm_stopBannerLoopAnimUpdate, viewObj)
 end
 
-return var_0_0
+return GM_RecommendStoreViewContainer

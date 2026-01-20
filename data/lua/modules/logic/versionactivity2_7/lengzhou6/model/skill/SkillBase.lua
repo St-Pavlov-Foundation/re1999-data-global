@@ -1,88 +1,90 @@
-﻿module("modules.logic.versionactivity2_7.lengzhou6.model.skill.SkillBase", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/lengzhou6/model/skill/SkillBase.lua
 
-local var_0_0 = class("SkillBase")
+module("modules.logic.versionactivity2_7.lengzhou6.model.skill.SkillBase", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._id = 0
-	arg_1_0._configId = 0
-	arg_1_0._cd = 0
-	arg_1_0._entity = nil
-	arg_1_0._skillType = LengZhou6Enum.SkillType.passive
+local SkillBase = class("SkillBase")
+
+function SkillBase:ctor()
+	self._id = 0
+	self._configId = 0
+	self._cd = 0
+	self._entity = nil
+	self._skillType = LengZhou6Enum.SkillType.passive
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._id = arg_2_1
-	arg_2_0._configId = arg_2_2
-	arg_2_0._config = LengZhou6Config.instance:getEliminateBattleSkill(arg_2_2)
-	arg_2_0._cd = arg_2_0._config.cd
+function SkillBase:init(id, configId)
+	self._id = id
+	self._configId = configId
+	self._config = LengZhou6Config.instance:getEliminateBattleSkill(configId)
+	self._cd = self._config.cd
 
-	arg_2_0:_initEffect()
+	self:_initEffect()
 end
 
-function var_0_0.getConfig(arg_3_0)
-	return arg_3_0._config
+function SkillBase:getConfig()
+	return self._config
 end
 
-function var_0_0.getConfigId(arg_4_0)
-	return arg_4_0._configId
+function SkillBase:getConfigId()
+	return self._configId
 end
 
-function var_0_0._initEffect(arg_5_0)
-	local var_5_0 = arg_5_0._config.effect
+function SkillBase:_initEffect()
+	local effect = self._config.effect
 
-	arg_5_0._triggerPoint = arg_5_0._config.triggerPoint
+	self._triggerPoint = self._config.triggerPoint
 
-	if not string.nilorempty(var_5_0) then
-		arg_5_0._effect = string.split(var_5_0, "#")
+	if not string.nilorempty(effect) then
+		self._effect = string.split(effect, "#")
 	end
 end
 
-function var_0_0.getEffect(arg_6_0)
-	return arg_6_0._effect
+function SkillBase:getEffect()
+	return self._effect
 end
 
-function var_0_0.initEntity(arg_7_0, arg_7_1)
-	arg_7_0._entity = arg_7_1
+function SkillBase:initEntity(entity)
+	self._entity = entity
 end
 
-function var_0_0.getEntityCamp(arg_8_0)
-	if arg_8_0._entity then
-		return arg_8_0._entity:getCamp()
+function SkillBase:getEntityCamp()
+	if self._entity then
+		return self._entity:getCamp()
 	end
 
 	return -1
 end
 
-function var_0_0.getSkillType(arg_9_0)
-	return arg_9_0._skillType
+function SkillBase:getSkillType()
+	return self._skillType
 end
 
-function var_0_0.getCd(arg_10_0)
-	return arg_10_0._cd
+function SkillBase:getCd()
+	return self._cd
 end
 
-function var_0_0.setCd(arg_11_0, arg_11_1)
-	arg_11_0._cd = arg_11_1
+function SkillBase:setCd(cd)
+	self._cd = cd
 
-	if arg_11_0._cd < 0 then
-		arg_11_0._cd = 0
+	if self._cd < 0 then
+		self._cd = 0
 	end
 end
 
-function var_0_0.updateCD(arg_12_0)
-	arg_12_0._cd = arg_12_0._cd - 1
+function SkillBase:updateCD()
+	self._cd = self._cd - 1
 
-	if arg_12_0._cd < 0 then
-		arg_12_0._cd = 0
+	if self._cd < 0 then
+		self._cd = 0
 	end
 end
 
-function var_0_0.execute(arg_13_0)
-	if arg_13_0._cd == 0 then
-		arg_13_0._cd = arg_13_0._config.cd
+function SkillBase:execute()
+	if self._cd == 0 then
+		self._cd = self._config.cd
 
 		return true
 	end
 end
 
-return var_0_0
+return SkillBase

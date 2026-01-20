@@ -1,222 +1,230 @@
-﻿module("modules.logic.versionactivity2_2.act169.view.SummonNewCustomPickFullView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/act169/view/SummonNewCustomPickFullView.lua
 
-local var_0_0 = class("SummonNewCustomPickFullView", BaseView)
+module("modules.logic.versionactivity2_2.act169.view.SummonNewCustomPickFullView", package.seeall)
 
-var_0_0.DEFAULT_REFRESH_DELAY = 0.4
-var_0_0.TIME_REFRESH_DURATION = 10
+local SummonNewCustomPickFullView = class("SummonNewCustomPickFullView", BaseView)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._simagerole1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "role/#simage_role1")
-	arg_1_0._simagerole2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "role/#simage_role2")
-	arg_1_0._simagerole3 = gohelper.findChildSingleImage(arg_1_0.viewGO, "role/#simage_role3")
-	arg_1_0._simagerole4 = gohelper.findChildSingleImage(arg_1_0.viewGO, "role/#simage_role4")
-	arg_1_0._simagedecbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "role/#simage_decbg")
-	arg_1_0._simagetitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "logo/#simage_title")
-	arg_1_0._simagetitle2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "logo/#simage_title2")
-	arg_1_0._simagefrontbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_frontbg")
-	arg_1_0._txtremainTime = gohelper.findChildText(arg_1_0.viewGO, "timebg/#txt_remainTime")
-	arg_1_0._goinviteContent = gohelper.findChild(arg_1_0.viewGO, "#go_inviteContent")
-	arg_1_0._gouninvite = gohelper.findChild(arg_1_0.viewGO, "#go_inviteContent/#go_uninvite")
-	arg_1_0._btninvite = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_inviteContent/#go_uninvite/#btn_invite")
-	arg_1_0._btnuninviteTips = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_inviteContent/#go_uninvite/#btn_uninviteTips")
-	arg_1_0._goinvited = gohelper.findChild(arg_1_0.viewGO, "#go_inviteContent/#go_invited")
-	arg_1_0._btninviteTips = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_inviteContent/#go_invited/#btn_inviteTips")
-	arg_1_0._simagerolehead = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_inviteContent/#go_invited/#btn_inviteTips/#simage_rolehead")
-	arg_1_0._txtrolename = gohelper.findChildText(arg_1_0.viewGO, "#go_inviteContent/#go_invited/#txt_rolename")
+SummonNewCustomPickFullView.DEFAULT_REFRESH_DELAY = 0.4
+SummonNewCustomPickFullView.TIME_REFRESH_DURATION = 10
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SummonNewCustomPickFullView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._simagerole1 = gohelper.findChildSingleImage(self.viewGO, "role/#simage_role1")
+	self._simagerole2 = gohelper.findChildSingleImage(self.viewGO, "role/#simage_role2")
+	self._simagerole3 = gohelper.findChildSingleImage(self.viewGO, "role/#simage_role3")
+	self._simagerole4 = gohelper.findChildSingleImage(self.viewGO, "role/#simage_role4")
+	self._simagedecbg = gohelper.findChildSingleImage(self.viewGO, "role/#simage_decbg")
+	self._simagetitle = gohelper.findChildSingleImage(self.viewGO, "logo/#simage_title")
+	self._simagetitle2 = gohelper.findChildSingleImage(self.viewGO, "logo/#simage_title2")
+	self._simagefrontbg = gohelper.findChildSingleImage(self.viewGO, "#simage_frontbg")
+	self._txtremainTime = gohelper.findChildText(self.viewGO, "timebg/#txt_remainTime")
+	self._goinviteContent = gohelper.findChild(self.viewGO, "#go_inviteContent")
+	self._gouninvite = gohelper.findChild(self.viewGO, "#go_inviteContent/#go_uninvite")
+	self._btninvite = gohelper.findChildButtonWithAudio(self.viewGO, "#go_inviteContent/#go_uninvite/#btn_invite")
+	self._btnuninviteTips = gohelper.findChildButtonWithAudio(self.viewGO, "#go_inviteContent/#go_uninvite/#btn_uninviteTips")
+	self._goinvited = gohelper.findChild(self.viewGO, "#go_inviteContent/#go_invited")
+	self._btninviteTips = gohelper.findChildButtonWithAudio(self.viewGO, "#go_inviteContent/#go_invited/#btn_inviteTips")
+	self._simagerolehead = gohelper.findChildSingleImage(self.viewGO, "#go_inviteContent/#go_invited/#btn_inviteTips/#simage_rolehead")
+	self._txtrolename = gohelper.findChildText(self.viewGO, "#go_inviteContent/#go_invited/#txt_rolename")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btninvite:AddClickListener(arg_2_0._btninviteOnClick, arg_2_0)
-	arg_2_0._btnuninviteTips:AddClickListener(arg_2_0._btnuninviteTipsOnClick, arg_2_0)
-	arg_2_0._btninviteTips:AddClickListener(arg_2_0._btninviteTipsOnClick, arg_2_0)
-	arg_2_0:addEventCb(SummonNewCustomPickViewController.instance, SummonNewCustomPickEvent.OnGetReward, arg_2_0._onGetReward, arg_2_0)
-	arg_2_0:addEventCb(SummonNewCustomPickViewController.instance, SummonNewCustomPickEvent.OnGetServerInfoReply, arg_2_0._refreshUI, arg_2_0)
+function SummonNewCustomPickFullView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btninvite:AddClickListener(self._btninviteOnClick, self)
+	self._btnuninviteTips:AddClickListener(self._btnuninviteTipsOnClick, self)
+	self._btninviteTips:AddClickListener(self._btninviteTipsOnClick, self)
+	self:addEventCb(SummonNewCustomPickViewController.instance, SummonNewCustomPickEvent.OnGetReward, self._onGetReward, self)
+	self:addEventCb(SummonNewCustomPickViewController.instance, SummonNewCustomPickEvent.OnGetServerInfoReply, self._refreshUI, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btninvite:RemoveClickListener()
-	arg_3_0._btnuninviteTips:RemoveClickListener()
-	arg_3_0._btninviteTips:RemoveClickListener()
-	arg_3_0:removeEventCb(SummonNewCustomPickViewController.instance, SummonNewCustomPickEvent.OnGetReward, arg_3_0._onGetReward, arg_3_0)
-	arg_3_0:removeEventCb(SummonNewCustomPickViewController.instance, SummonNewCustomPickEvent.OnGetServerInfoReply, arg_3_0._refreshUI, arg_3_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_3_0._delayRefreshUI, arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0._refreshTime, arg_3_0)
+function SummonNewCustomPickFullView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btninvite:RemoveClickListener()
+	self._btnuninviteTips:RemoveClickListener()
+	self._btninviteTips:RemoveClickListener()
+	self:removeEventCb(SummonNewCustomPickViewController.instance, SummonNewCustomPickEvent.OnGetReward, self._onGetReward, self)
+	self:removeEventCb(SummonNewCustomPickViewController.instance, SummonNewCustomPickEvent.OnGetServerInfoReply, self._refreshUI, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._delayRefreshUI, self)
+	TaskDispatcher.cancelTask(self._refreshTime, self)
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function SummonNewCustomPickFullView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnuninviteTipsOnClick(arg_5_0)
+function SummonNewCustomPickFullView:_btnuninviteTipsOnClick()
 	ViewMgr.instance:openView(ViewName.SummonNewCustomPickTipsView)
 end
 
-function var_0_0._btninviteTipsOnClick(arg_6_0)
-	local var_6_0 = SummonNewCustomPickViewModel.instance:getActivityInfo(arg_6_0._actId)
+function SummonNewCustomPickFullView:_btninviteTipsOnClick()
+	local activityMo = SummonNewCustomPickViewModel.instance:getActivityInfo(self._actId)
 
-	if not var_6_0 or not var_6_0.heroId then
+	if not activityMo or not activityMo.heroId then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_action_explore)
 	ViewMgr.instance:openView(ViewName.SummonHeroDetailView, {
-		heroId = var_6_0.heroId
+		heroId = activityMo.heroId
 	})
 end
 
-function var_0_0._btninviteOnClick(arg_7_0)
-	local var_7_0 = arg_7_0._actId
+function SummonNewCustomPickFullView:_btninviteOnClick()
+	local curAct = self._actId
 
-	if not var_7_0 then
+	if not curAct then
 		return
 	end
 
-	if SummonNewCustomPickViewModel.instance:isGetReward(var_7_0) then
+	if SummonNewCustomPickViewModel.instance:isGetReward(curAct) then
 		return
 	end
 
-	if SummonNewCustomPickChoiceListModel.instance:haveAllRole() then
+	local haveAllRole = SummonNewCustomPickChoiceListModel.instance:haveAllRole()
+
+	if haveAllRole then
 		ViewMgr.instance:openView(ViewName.SummonNewCustomPickChoiceView, {
-			actId = var_7_0
+			actId = curAct
 		})
 	else
 		SummonNewCustomPickChoiceController.instance:trySendSummon()
 	end
 end
 
-function var_0_0._onGetReward(arg_8_0, arg_8_1, arg_8_2)
-	if arg_8_1 ~= arg_8_0._actId then
+function SummonNewCustomPickFullView:_onGetReward(activityId, heroId)
+	if activityId ~= self._actId then
 		return
 	end
 
 	if not SummonNewCustomPickChoiceListModel.instance:haveAllRole() then
 		SummonNewCustomPickChoiceController.instance:onGetReward(1, {
-			arg_8_2
+			heroId
 		})
 	end
 
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_8_0._delayRefreshUI, arg_8_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._delayRefreshUI, self)
 end
 
-function var_0_0._editableInitView(arg_9_0)
-	arg_9_0._getRewardAnim = arg_9_0._goinvited:GetComponent(typeof(UnityEngine.Animator))
+function SummonNewCustomPickFullView:_editableInitView()
+	self._getRewardAnim = self._goinvited:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function var_0_0.onUpdateParam(arg_10_0)
+function SummonNewCustomPickFullView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_11_0)
+function SummonNewCustomPickFullView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.SummonNewCustomSkin.play_ui_youyu_liuxing_give)
-	arg_11_0:_checkParam()
-	arg_11_0:_refreshUI()
-	arg_11_0:_addTimeRefreshTask()
+	self:_checkParam()
+	self:_refreshUI()
+	self:_addTimeRefreshTask()
 end
 
-function var_0_0._addTimeRefreshTask(arg_12_0)
-	if not arg_12_0._actId then
+function SummonNewCustomPickFullView:_addTimeRefreshTask()
+	if not self._actId then
 		return
 	end
 
-	TaskDispatcher.runRepeat(arg_12_0._refreshTime, arg_12_0, arg_12_0.TIME_REFRESH_DURATION)
+	TaskDispatcher.runRepeat(self._refreshTime, self, self.TIME_REFRESH_DURATION)
 end
 
-function var_0_0._checkParam(arg_13_0)
-	local var_13_0 = arg_13_0.viewParam.actId
+function SummonNewCustomPickFullView:_checkParam()
+	local actId = self.viewParam.actId
 
-	arg_13_0._actId = var_13_0
+	self._actId = actId
 
-	SummonNewCustomPickViewModel.instance:setCurActId(var_13_0)
+	SummonNewCustomPickViewModel.instance:setCurActId(actId)
 
-	if arg_13_0.viewParam.refreshData == nil or arg_13_0.viewParam.refreshData == true then
-		SummonNewCustomPickViewController.instance:getSummonInfo(var_13_0)
+	if self.viewParam.refreshData == nil or self.viewParam.refreshData == true then
+		SummonNewCustomPickViewController.instance:getSummonInfo(actId)
 	end
 end
 
-function var_0_0._delayRefreshUI(arg_14_0, arg_14_1)
-	if arg_14_1 == SummonNewCustomPickChoiceController.instance:getCurrentListenViewName() then
-		arg_14_0:_refreshUI()
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_14_0._delayRefreshUI, arg_14_0)
+function SummonNewCustomPickFullView:_delayRefreshUI(viewName)
+	local currentViewName = SummonNewCustomPickChoiceController.instance:getCurrentListenViewName()
+
+	if viewName == currentViewName then
+		self:_refreshUI()
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._delayRefreshUI, self)
 	end
 end
 
-function var_0_0._refreshUI(arg_15_0)
-	local var_15_0 = SummonNewCustomPickViewModel.instance:isGetReward(arg_15_0._actId)
+function SummonNewCustomPickFullView:_refreshUI()
+	local havePick = SummonNewCustomPickViewModel.instance:isGetReward(self._actId)
 
-	gohelper.setActive(arg_15_0._goinvited, var_15_0)
-	gohelper.setActive(arg_15_0._gouninvite, not var_15_0)
+	gohelper.setActive(self._goinvited, havePick)
+	gohelper.setActive(self._gouninvite, not havePick)
 
-	if var_15_0 then
-		arg_15_0:_refreshSelectRole()
+	if havePick then
+		self:_refreshSelectRole()
 	end
 
-	arg_15_0:_refreshTime()
-	arg_15_0:_checkShowFx()
+	self:_refreshTime()
+	self:_checkShowFx()
 end
 
-function var_0_0._checkShowFx(arg_16_0)
-	local var_16_0 = arg_16_0._actId
+function SummonNewCustomPickFullView:_checkShowFx()
+	local actId = self._actId
 
-	if SummonNewCustomPickViewModel.instance:getGetRewardFxState(var_16_0) then
-		arg_16_0._getRewardAnim:Play(UIAnimationName.Open, 0, 0)
-		SummonNewCustomPickViewModel.instance:setGetRewardFxState(var_16_0, false)
+	if SummonNewCustomPickViewModel.instance:getGetRewardFxState(actId) then
+		self._getRewardAnim:Play(UIAnimationName.Open, 0, 0)
+		SummonNewCustomPickViewModel.instance:setGetRewardFxState(actId, false)
 	else
-		arg_16_0._getRewardAnim:Play(UIAnimationName.Idle, 0, 0)
+		self._getRewardAnim:Play(UIAnimationName.Idle, 0, 0)
 	end
 end
 
-function var_0_0._refreshTime(arg_17_0)
-	local var_17_0 = ActivityModel.instance:getActMO(arg_17_0._actId):getRealEndTimeStamp()
-	local var_17_1 = ServerTime.now()
+function SummonNewCustomPickFullView:_refreshTime()
+	local actInfo = ActivityModel.instance:getActMO(self._actId)
+	local endTime = actInfo:getRealEndTimeStamp()
+	local nowTime = ServerTime.now()
 
-	if var_17_0 <= var_17_1 then
-		arg_17_0._txtremainTime.text = luaLang("ended")
+	if endTime <= nowTime then
+		self._txtremainTime.text = luaLang("ended")
 
 		return
 	end
 
-	local var_17_2 = TimeUtil.SecondToActivityTimeFormat(var_17_0 - var_17_1)
+	local dataStr = TimeUtil.SecondToActivityTimeFormat(endTime - nowTime)
 
-	arg_17_0._txtremainTime.text = var_17_2
+	self._txtremainTime.text = dataStr
 end
 
-function var_0_0._refreshSelectRole(arg_18_0)
-	local var_18_0 = SummonNewCustomPickViewModel.instance:getActivityInfo(arg_18_0._actId).heroId
-	local var_18_1 = HeroConfig.instance:getHeroCO(var_18_0)
+function SummonNewCustomPickFullView:_refreshSelectRole()
+	local info = SummonNewCustomPickViewModel.instance:getActivityInfo(self._actId)
+	local heroId = info.heroId
+	local heroConfig = HeroConfig.instance:getHeroCO(heroId)
 
-	if not var_18_1 then
-		logError("SummonNewCustomPick.refreshUI error, heroConfig is nil, id:" .. tostring(var_18_0))
+	if not heroConfig then
+		logError("SummonNewCustomPick.refreshUI error, heroConfig is nil, id:" .. tostring(heroId))
 
 		return
 	end
 
-	local var_18_2 = SkinConfig.instance:getSkinCo(var_18_1.skinId)
+	local skinConfig = SkinConfig.instance:getSkinCo(heroConfig.skinId)
 
-	if not var_18_2 then
-		logError("SummonNewCustomPick.refreshUI error,  skinCfg is nil, id:" .. tostring(var_18_1.skinId))
+	if not skinConfig then
+		logError("SummonNewCustomPick.refreshUI error,  skinCfg is nil, id:" .. tostring(heroConfig.skinId))
 
 		return
 	end
 
-	arg_18_0._simagerolehead:LoadImage(ResUrl.getRoomHeadIcon(var_18_2.headIcon))
+	self._simagerolehead:LoadImage(ResUrl.getRoomHeadIcon(skinConfig.headIcon))
 
-	arg_18_0._txtrolename.text = var_18_1.name
+	self._txtrolename.text = heroConfig.name
 end
 
-function var_0_0.onClose(arg_19_0)
+function SummonNewCustomPickFullView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_20_0)
-	arg_20_0._simagerolehead:UnLoadImage()
+function SummonNewCustomPickFullView:onDestroyView()
+	self._simagerolehead:UnLoadImage()
 end
 
-return var_0_0
+return SummonNewCustomPickFullView

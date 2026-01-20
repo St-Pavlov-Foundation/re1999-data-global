@@ -1,212 +1,214 @@
-﻿module("modules.logic.ressplit.work.ResSplitChapterWork", package.seeall)
+﻿-- chunkname: @modules/logic/ressplit/work/ResSplitChapterWork.lua
 
-local var_0_0 = class("ResSplitChapterWork", BaseWork)
+module("modules.logic.ressplit.work.ResSplitChapterWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = DungeonConfig.instance._episodeConfig.configDict
+local ResSplitChapterWork = class("ResSplitChapterWork", BaseWork)
 
-	arg_1_0:_buildMapData()
+function ResSplitChapterWork:onStart(context)
+	local allEpisode = DungeonConfig.instance._episodeConfig.configDict
 
-	for iter_1_0, iter_1_1 in pairs(var_1_0) do
-		if iter_1_1.type == DungeonEnum.EpisodeType.WeekWalk then
+	self:_buildMapData()
+
+	for i, v in pairs(allEpisode) do
+		if v.type == DungeonEnum.EpisodeType.WeekWalk then
 			-- block empty
 		else
-			local var_1_1 = DungeonConfig.instance:getBattleCo(iter_1_1.id)
-			local var_1_2 = {}
+			local battleCo = DungeonConfig.instance:getBattleCo(v.id)
+			local levelIds = {}
 
-			if var_1_1 then
-				ResSplitHelper.checkConfigEmpty(string.format("Character:%d", var_1_1.id), "sceneIds", var_1_1.sceneIds)
+			if battleCo then
+				ResSplitHelper.checkConfigEmpty(string.format("Character:%d", battleCo.id), "sceneIds", battleCo.sceneIds)
 
-				local var_1_3 = string.splitToNumber(var_1_1.sceneIds, "#")
+				local sceneIds = string.splitToNumber(battleCo.sceneIds, "#")
 
-				for iter_1_2, iter_1_3 in ipairs(var_1_3) do
-					local var_1_4 = SceneConfig.instance:getSceneLevelCOs(iter_1_3)
+				for _, sceneId in ipairs(sceneIds) do
+					local levelCOs = SceneConfig.instance:getSceneLevelCOs(sceneId)
 
-					if var_1_4 then
-						local var_1_5 = var_1_4[1].id
+					if levelCOs then
+						local levelId = levelCOs[1].id
 
-						table.insert(var_1_2, var_1_5)
+						table.insert(levelIds, levelId)
 					end
 				end
 			end
 
-			local var_1_6 = ResSplitModel.instance:isExcludeChapter(iter_1_1.chapterId)
+			local isExcludeChapter = ResSplitModel.instance:isExcludeChapter(v.chapterId)
 
-			if var_1_6 then
+			if isExcludeChapter then
 				-- block empty
 			else
-				ResSplitModel.instance:addIncludeStory(iter_1_1.beforeStory)
+				ResSplitModel.instance:addIncludeStory(v.beforeStory)
 
-				local var_1_7 = string.split(iter_1_1.story, "#")
+				local sp = string.split(v.story, "#")
 
-				if #var_1_7 == 3 then
-					ResSplitModel.instance:addIncludeStory(tonumber(var_1_7[3]))
+				if #sp == 3 then
+					ResSplitModel.instance:addIncludeStory(tonumber(sp[3]))
 				end
 
-				ResSplitModel.instance:addIncludeStory(iter_1_1.afterStory)
+				ResSplitModel.instance:addIncludeStory(v.afterStory)
 
-				if var_1_1 then
-					arg_1_0:_getBattleMonsterSkins(var_1_1)
+				if battleCo then
+					self:_getBattleMonsterSkins(battleCo)
 				end
 			end
 
-			arg_1_0:_addMapRes(iter_1_1, var_1_6)
+			self:_addMapRes(v, isExcludeChapter)
 
-			if not ResSplitEnum.SplitAllScene and var_1_1 then
-				for iter_1_4, iter_1_5 in pairs(var_1_2) do
-					arg_1_0:_addSceneRes(iter_1_5, var_1_6)
+			if not ResSplitEnum.SplitAllScene and battleCo then
+				for n, levelId in pairs(levelIds) do
+					self:_addSceneRes(levelId, isExcludeChapter)
 				end
 			end
 		end
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0._addSceneRes(arg_2_0, arg_2_1, arg_2_2)
-	local var_2_0 = lua_scene_level.configDict[arg_2_1]
+function ResSplitChapterWork:_addSceneRes(levelId, exclude)
+	local levelCO = lua_scene_level.configDict[levelId]
 
-	ResSplitHelper.checkConfigEmpty(string.format("levelId:%d", arg_2_1), "resName", var_2_0.resName)
+	ResSplitHelper.checkConfigEmpty(string.format("levelId:%d", levelId), "resName", levelCO.resName)
 
-	local var_2_1 = ResUrl.getSceneRes(var_2_0.resName)
+	local path = ResUrl.getSceneRes(levelCO.resName)
 
-	if arg_2_2 then
-		ResSplitModel.instance:setExclude(ResSplitEnum.OutSceneAB, var_2_1, true)
+	if exclude then
+		ResSplitModel.instance:setExclude(ResSplitEnum.OutSceneAB, path, true)
 	else
-		ResSplitModel.instance:setExclude(ResSplitEnum.InnerSceneAB, var_2_1, true)
-		ResSplitModel.instance:setExclude(ResSplitEnum.OutSceneAB, var_2_1, false)
+		ResSplitModel.instance:setExclude(ResSplitEnum.InnerSceneAB, path, true)
+		ResSplitModel.instance:setExclude(ResSplitEnum.OutSceneAB, path, false)
 	end
 
-	local var_2_2 = var_2_0.bgm
-	local var_2_3 = ResSplitModel.instance.audioDic[var_2_2]
+	local bgm = levelCO.bgm
+	local audioInfo = ResSplitModel.instance.audioDic[bgm]
 
-	if var_2_3 then
-		ResSplitModel.instance:setExclude(ResSplitEnum.CommonAudioBank, var_2_3.bankName, arg_2_2)
+	if audioInfo then
+		ResSplitModel.instance:setExclude(ResSplitEnum.CommonAudioBank, audioInfo.bankName, exclude)
 	end
 end
 
-function var_0_0._getBattleMonsterSkins(arg_3_0, arg_3_1)
-	if arg_3_1 then
-		local var_3_0 = string.splitToNumber(arg_3_1.monsterGroupIds, "#")
+function ResSplitChapterWork:_getBattleMonsterSkins(battleCO)
+	if battleCO then
+		local monsterGroupIds = string.splitToNumber(battleCO.monsterGroupIds, "#")
 
-		for iter_3_0, iter_3_1 in ipairs(var_3_0) do
-			local var_3_1 = lua_monster_group.configDict[iter_3_1]
+		for _, monsterGroupId in ipairs(monsterGroupIds) do
+			local monsterGroupCO = lua_monster_group.configDict[monsterGroupId]
 
-			if var_3_1 then
-				local var_3_2 = string.splitToNumber(var_3_1.monster, "#")
+			if monsterGroupCO then
+				local monsterIds = string.splitToNumber(monsterGroupCO.monster, "#")
 
-				for iter_3_2, iter_3_3 in ipairs(var_3_2) do
-					local var_3_3 = iter_3_3 and lua_monster.configDict[iter_3_3]
+				for _, monsterId in ipairs(monsterIds) do
+					local monsterConfig = monsterId and lua_monster.configDict[monsterId]
 
-					if var_3_3 then
-						ResSplitModel.instance:addIncludeSkin(var_3_3.skinId)
+					if monsterConfig then
+						ResSplitModel.instance:addIncludeSkin(monsterConfig.skinId)
 
-						local var_3_4 = FightHelper.buildSkills(iter_3_3)
+						local skillArr = FightHelper.buildSkills(monsterId)
 
-						for iter_3_4, iter_3_5 in ipairs(var_3_4) do
-							ResSplitModel.instance:addIncludeSkill(iter_3_5)
+						for i, v in ipairs(skillArr) do
+							ResSplitModel.instance:addIncludeSkill(v)
 						end
 					else
-						logError(string.format("怪物不存在 battle_%d monsterGroup_%d monster_%d", arg_3_1.id, iter_3_1, iter_3_3))
+						logError(string.format("怪物不存在 battle_%d monsterGroup_%d monster_%d", battleCO.id, monsterGroupId, monsterId))
 					end
 				end
 			end
 		end
 
-		local var_3_5 = {}
+		local aidList = {}
 
-		if not string.nilorempty(arg_3_1.aid) then
-			var_3_5 = string.splitToNumber(arg_3_1.aid, "#")
+		if not string.nilorempty(battleCO.aid) then
+			aidList = string.splitToNumber(battleCO.aid, "#")
 		end
 
-		for iter_3_6, iter_3_7 in ipairs(var_3_5) do
-			local var_3_6 = iter_3_7 and lua_monster.configDict[iter_3_7]
+		for _, monsterId in ipairs(aidList) do
+			local monsterConfig = monsterId and lua_monster.configDict[monsterId]
 
-			ResSplitModel.instance:addIncludeSkin(var_3_6.skinId)
+			ResSplitModel.instance:addIncludeSkin(monsterConfig.skinId)
 
-			local var_3_7 = FightHelper.buildSkills(iter_3_7)
+			local skillArr = FightHelper.buildSkills(monsterId)
 
-			for iter_3_8, iter_3_9 in ipairs(var_3_7) do
-				ResSplitModel.instance:addIncludeSkill(iter_3_9)
+			for i, v in ipairs(skillArr) do
+				ResSplitModel.instance:addIncludeSkill(v)
 			end
 		end
 	end
 end
 
-function var_0_0._buildMapData(arg_4_0)
-	local var_4_0 = lua_chapter_map_element.configDict
+function ResSplitChapterWork:_buildMapData()
+	local allMapElement = lua_chapter_map_element.configDict
 
-	arg_4_0._mapElementResDic = {}
-	arg_4_0._mapElementFragmentDic = {}
+	self._mapElementResDic = {}
+	self._mapElementFragmentDic = {}
 
-	for iter_4_0, iter_4_1 in pairs(var_4_0) do
-		if arg_4_0._mapElementResDic[iter_4_1.mapId] == nil then
-			arg_4_0._mapElementResDic[iter_4_1.mapId] = {}
+	for id, config in pairs(allMapElement) do
+		if self._mapElementResDic[config.mapId] == nil then
+			self._mapElementResDic[config.mapId] = {}
 		end
 
-		if string.nilorempty(iter_4_1.res) == false then
-			table.insert(arg_4_0._mapElementResDic[iter_4_1.mapId], iter_4_1.res)
+		if string.nilorempty(config.res) == false then
+			table.insert(self._mapElementResDic[config.mapId], config.res)
 		end
 
-		if string.nilorempty(iter_4_1.effect) == false then
-			table.insert(arg_4_0._mapElementResDic[iter_4_1.mapId], iter_4_1.effect)
+		if string.nilorempty(config.effect) == false then
+			table.insert(self._mapElementResDic[config.mapId], config.effect)
 		end
 
-		if iter_4_1.fragment > 0 then
-			if arg_4_0._mapElementFragmentDic[iter_4_1.mapId] == nil then
-				arg_4_0._mapElementFragmentDic[iter_4_1.mapId] = {}
+		if config.fragment > 0 then
+			if self._mapElementFragmentDic[config.mapId] == nil then
+				self._mapElementFragmentDic[config.mapId] = {}
 			end
 
-			arg_4_0._mapElementFragmentDic[iter_4_1.mapId][iter_4_1.fragment] = true
+			self._mapElementFragmentDic[config.mapId][config.fragment] = true
 		end
 	end
 
-	local var_4_1 = lua_chapter_map_fragment.configDict
+	local allFragment = lua_chapter_map_fragment.configDict
 
-	for iter_4_2, iter_4_3 in pairs(var_4_1) do
-		if not string.nilorempty(iter_4_3.res) then
-			local var_4_2 = ResUrl.getDungeonFragmentIcon(iter_4_3.res)
+	for id, config in pairs(allFragment) do
+		if not string.nilorempty(config.res) then
+			local fragmentPath = ResUrl.getDungeonFragmentIcon(config.res)
 
-			ResSplitModel.instance:setExclude(ResSplitEnum.Path, var_4_2, true)
+			ResSplitModel.instance:setExclude(ResSplitEnum.Path, fragmentPath, true)
 		end
 	end
 end
 
-function var_0_0._addMapRes(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = DungeonMapEpisodeItem.getMap(arg_5_1)
+function ResSplitChapterWork:_addMapRes(episodeConfig, exclude)
+	local mapConfig = DungeonMapEpisodeItem.getMap(episodeConfig)
 
-	if var_5_0 then
-		local var_5_1 = ResUrl.getDungeonMapRes(var_5_0.res)
+	if mapConfig then
+		local path = ResUrl.getDungeonMapRes(mapConfig.res)
 
-		ResSplitModel.instance:setExclude(ResSplitEnum.Path, var_5_1, arg_5_2)
-		arg_5_0:_addDependRes(var_5_1, arg_5_2, var_5_0.id)
+		ResSplitModel.instance:setExclude(ResSplitEnum.Path, path, exclude)
+		self:_addDependRes(path, exclude, mapConfig.id)
 
-		local var_5_2 = arg_5_0._mapElementResDic[var_5_0.id]
+		local elementResList = self._mapElementResDic[mapConfig.id]
 
-		if var_5_2 then
-			for iter_5_0, iter_5_1 in ipairs(var_5_2) do
-				ResSplitModel.instance:setExclude(ResSplitEnum.Path, iter_5_1, arg_5_2)
-				arg_5_0:_addDependRes(iter_5_1, arg_5_2, var_5_0.id)
+		if elementResList then
+			for i, v in ipairs(elementResList) do
+				ResSplitModel.instance:setExclude(ResSplitEnum.Path, v, exclude)
+				self:_addDependRes(v, exclude, mapConfig.id)
 			end
 		end
 
-		local var_5_3 = arg_5_0._mapElementFragmentDic[var_5_0.id]
+		local fragmentIdDic = self._mapElementFragmentDic[mapConfig.id]
 
-		if var_5_3 then
-			for iter_5_2, iter_5_3 in pairs(var_5_3) do
-				local var_5_4 = lua_chapter_map_fragment.configDict[iter_5_2]
+		if fragmentIdDic then
+			for fragmentId, v in pairs(fragmentIdDic) do
+				local fragmentConfig = lua_chapter_map_fragment.configDict[fragmentId]
 
-				if not string.nilorempty(var_5_4.res) then
-					local var_5_5 = ResUrl.getDungeonFragmentIcon(var_5_4.res)
+				if not string.nilorempty(fragmentConfig.res) then
+					local fragmentPath = ResUrl.getDungeonFragmentIcon(fragmentConfig.res)
 
-					ResSplitModel.instance:setExclude(ResSplitEnum.Path, var_5_5, arg_5_2)
+					ResSplitModel.instance:setExclude(ResSplitEnum.Path, fragmentPath, exclude)
 				end
 			end
 		end
 	end
 end
 
-local var_0_1 = {
+local _DependResExtDic = {
 	tga = true,
 	prefab = true,
 	controller = true,
@@ -215,21 +217,21 @@ local var_0_1 = {
 	mat = true
 }
 
-function var_0_0._addDependRes(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	arg_6_1 = SLFramework.FrameworkSettings.GetEditorResPath(arg_6_1)
+function ResSplitChapterWork:_addDependRes(path, exclude, mapId)
+	path = SLFramework.FrameworkSettings.GetEditorResPath(path)
 
-	local var_6_0 = ZProj.AssetDatabaseHelper.GetDependencies(arg_6_1, true)
+	local dependencies = ZProj.AssetDatabaseHelper.GetDependencies(path, true)
 
-	for iter_6_0 = 0, var_6_0.Length - 1 do
-		local var_6_1 = var_6_0[iter_6_0]
-		local var_6_2 = string.match(var_6_1, ".+%.(%w+)$")
+	for i = 0, dependencies.Length - 1 do
+		local dependPath = dependencies[i]
+		local extension = string.match(dependPath, ".+%.(%w+)$")
 
-		if string.find(var_6_1, "_hddt") and var_0_1[var_6_2] then
-			local var_6_3 = string.gsub(var_6_1, SLFramework.FrameworkSettings.AssetRootDir .. "/", "")
+		if string.find(dependPath, "_hddt") and _DependResExtDic[extension] then
+			dependPath = string.gsub(dependPath, SLFramework.FrameworkSettings.AssetRootDir .. "/", "")
 
-			ResSplitModel.instance:setExclude(ResSplitEnum.Path, var_6_3, arg_6_2)
+			ResSplitModel.instance:setExclude(ResSplitEnum.Path, dependPath, exclude)
 		end
 	end
 end
 
-return var_0_0
+return ResSplitChapterWork

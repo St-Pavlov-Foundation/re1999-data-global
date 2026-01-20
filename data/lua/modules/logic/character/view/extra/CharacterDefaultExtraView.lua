@@ -1,244 +1,249 @@
-﻿module("modules.logic.character.view.extra.CharacterDefaultExtraView", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/extra/CharacterDefaultExtraView.lua
 
-local var_0_0 = class("CharacterDefaultExtraView", BaseView)
-local var_0_1 = 0
-local var_0_2 = 1
+module("modules.logic.character.view.extra.CharacterDefaultExtraView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goskillLayout = gohelper.findChild(arg_1_0.viewGO, "anim/layout/#go_skillLayout")
-	arg_1_0._goweapon = gohelper.findChild(arg_1_0._goskillLayout, "#go_weapon")
-	arg_1_0._goweaponmain = gohelper.findChild(arg_1_0._goweapon, "main")
-	arg_1_0._imageweaponmainicon = gohelper.findChildImage(arg_1_0._goweapon, "main/#image_icon")
-	arg_1_0._goweaponmainadd = gohelper.findChild(arg_1_0._goweapon, "main/#go_add")
-	arg_1_0._goweaponmainreddot = gohelper.findChild(arg_1_0._goweapon, "main/#go_reddot")
-	arg_1_0._goweaponsecond = gohelper.findChild(arg_1_0._goweapon, "second")
-	arg_1_0._imageweaponsecondicon = gohelper.findChildImage(arg_1_0._goweapon, "second/#image_icon")
-	arg_1_0._goweaponsecondadd = gohelper.findChild(arg_1_0._goweapon, "second/#go_add")
-	arg_1_0._goweaponsecondreddot = gohelper.findChild(arg_1_0._goweapon, "second/#go_reddot")
-	arg_1_0._btnweapon = gohelper.findChildButtonWithAudio(arg_1_0._goweapon, "#btn_weapon")
-	arg_1_0._goskilltalent = gohelper.findChild(arg_1_0._goskillLayout, "#go_skilltalent")
-	arg_1_0._goskilltalentlock = gohelper.findChild(arg_1_0._goskillLayout, "#go_skilltalent/lock")
-	arg_1_0._goskilltalentunlight = gohelper.findChild(arg_1_0._goskillLayout, "#go_skilltalent/unlight")
-	arg_1_0._goskilltalentunlightreddot = gohelper.findChild(arg_1_0._goskilltalent, "unlight/#go_reddot")
-	arg_1_0._goskilltalentlightedreddot = gohelper.findChild(arg_1_0._goskilltalent, "lighted/#go_reddot")
-	arg_1_0._goskilltalentlighted = gohelper.findChild(arg_1_0._goskillLayout, "#go_skilltalent/lighted")
-	arg_1_0._btnskilltalent = gohelper.findChildButtonWithAudio(arg_1_0._goskilltalent, "#btn_skilltalent")
-	arg_1_0._goskill = gohelper.findChild(arg_1_0._goskilltalent, "#go_skillLayout/#go_skill")
+local CharacterDefaultExtraView = class("CharacterDefaultExtraView", BaseView)
+local defalutPrefValue = 0
+local savePrefValue = 1
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CharacterDefaultExtraView:onInitView()
+	self._goskillLayout = gohelper.findChild(self.viewGO, "anim/layout/#go_skillLayout")
+	self._goweapon = gohelper.findChild(self._goskillLayout, "#go_weapon")
+	self._goweaponmain = gohelper.findChild(self._goweapon, "main")
+	self._imageweaponmainicon = gohelper.findChildImage(self._goweapon, "main/#image_icon")
+	self._goweaponmainadd = gohelper.findChild(self._goweapon, "main/#go_add")
+	self._goweaponmainreddot = gohelper.findChild(self._goweapon, "main/#go_reddot")
+	self._goweaponsecond = gohelper.findChild(self._goweapon, "second")
+	self._imageweaponsecondicon = gohelper.findChildImage(self._goweapon, "second/#image_icon")
+	self._goweaponsecondadd = gohelper.findChild(self._goweapon, "second/#go_add")
+	self._goweaponsecondreddot = gohelper.findChild(self._goweapon, "second/#go_reddot")
+	self._btnweapon = gohelper.findChildButtonWithAudio(self._goweapon, "#btn_weapon")
+	self._goskilltalent = gohelper.findChild(self._goskillLayout, "#go_skilltalent")
+	self._goskilltalentlock = gohelper.findChild(self._goskillLayout, "#go_skilltalent/lock")
+	self._goskilltalentunlight = gohelper.findChild(self._goskillLayout, "#go_skilltalent/unlight")
+	self._goskilltalentunlightreddot = gohelper.findChild(self._goskilltalent, "unlight/#go_reddot")
+	self._goskilltalentlightedreddot = gohelper.findChild(self._goskilltalent, "lighted/#go_reddot")
+	self._goskilltalentlighted = gohelper.findChild(self._goskillLayout, "#go_skilltalent/lighted")
+	self._btnskilltalent = gohelper.findChildButtonWithAudio(self._goskilltalent, "#btn_skilltalent")
+	self._goskill = gohelper.findChild(self._goskilltalent, "#go_skillLayout/#go_skill")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnweapon:AddClickListener(arg_2_0._btnweaponOnClick, arg_2_0)
-	arg_2_0._btnskilltalent:AddClickListener(arg_2_0._btnskilltalentOnClick, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, arg_2_0._onSuccessHeroRankUp, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.onChoiceHero3123WeaponReply, arg_2_0._refreshWeapon, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.onChoiceHero3124TalentTreeReply, arg_2_0._refresSkilltalent, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.onResetHero3124TalentTreeReply, arg_2_0._refresSkilltalent, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.onCancelHero3124TalentTreeReply, arg_2_0._refresSkilltalent, arg_2_0)
-	arg_2_0:addEventCb(OdysseyController.instance, OdysseyEvent.TrialTalentTreeChange, arg_2_0._refresSkilltalent, arg_2_0)
-	arg_2_0:addEventCb(OdysseyController.instance, OdysseyEvent.TrialTalentTreeReset, arg_2_0._refresSkilltalent, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.OnSwitchSpine, arg_2_0._onSwitchSpine, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, arg_2_0._onCloseFullView, arg_2_0)
+function CharacterDefaultExtraView:addEvents()
+	self._btnweapon:AddClickListener(self._btnweaponOnClick, self)
+	self._btnskilltalent:AddClickListener(self._btnskilltalentOnClick, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, self._onSuccessHeroRankUp, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.onChoiceHero3123WeaponReply, self._refreshWeapon, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.onChoiceHero3124TalentTreeReply, self._refresSkilltalent, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.onResetHero3124TalentTreeReply, self._refresSkilltalent, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.onCancelHero3124TalentTreeReply, self._refresSkilltalent, self)
+	self:addEventCb(OdysseyController.instance, OdysseyEvent.TrialTalentTreeChange, self._refresSkilltalent, self)
+	self:addEventCb(OdysseyController.instance, OdysseyEvent.TrialTalentTreeReset, self._refresSkilltalent, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.OnSwitchSpine, self._onSwitchSpine, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, self._onCloseFullView, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnweapon:RemoveClickListener()
-	arg_3_0._btnskilltalent:RemoveClickListener()
-	arg_3_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, arg_3_0._onSuccessHeroRankUp, arg_3_0)
-	arg_3_0:removeEventCb(CharacterController.instance, CharacterEvent.onChoiceHero3123WeaponReply, arg_3_0._refreshWeapon, arg_3_0)
-	arg_3_0:removeEventCb(CharacterController.instance, CharacterEvent.onChoiceHero3124TalentTreeReply, arg_3_0._refresSkilltalent, arg_3_0)
-	arg_3_0:removeEventCb(CharacterController.instance, CharacterEvent.onResetHero3124TalentTreeReply, arg_3_0._refresSkilltalent, arg_3_0)
-	arg_3_0:removeEventCb(CharacterController.instance, CharacterEvent.onCancelHero3124TalentTreeReply, arg_3_0._refresSkilltalent, arg_3_0)
-	arg_3_0:removeEventCb(OdysseyController.instance, OdysseyEvent.TrialTalentTreeChange, arg_3_0._refresSkilltalent, arg_3_0)
-	arg_3_0:removeEventCb(OdysseyController.instance, OdysseyEvent.TrialTalentTreeReset, arg_3_0._refresSkilltalent, arg_3_0)
-	arg_3_0:removeEventCb(CharacterController.instance, CharacterEvent.OnSwitchSpine, arg_3_0._onSwitchSpine, arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, arg_3_0._onCloseFullView, arg_3_0)
+function CharacterDefaultExtraView:removeEvents()
+	self._btnweapon:RemoveClickListener()
+	self._btnskilltalent:RemoveClickListener()
+	self:removeEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, self._onSuccessHeroRankUp, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.onChoiceHero3123WeaponReply, self._refreshWeapon, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.onChoiceHero3124TalentTreeReply, self._refresSkilltalent, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.onResetHero3124TalentTreeReply, self._refresSkilltalent, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.onCancelHero3124TalentTreeReply, self._refresSkilltalent, self)
+	self:removeEventCb(OdysseyController.instance, OdysseyEvent.TrialTalentTreeChange, self._refresSkilltalent, self)
+	self:removeEventCb(OdysseyController.instance, OdysseyEvent.TrialTalentTreeReset, self._refresSkilltalent, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.OnSwitchSpine, self._onSwitchSpine, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, self._onCloseFullView, self)
 end
 
-function var_0_0._btnweaponOnClick(arg_4_0)
-	if not arg_4_0.weaponMo then
+function CharacterDefaultExtraView:_btnweaponOnClick()
+	if not self.weaponMo then
 		return
 	end
 
-	if not arg_4_0.weaponMo:isUnlockSystem() then
-		local var_4_0 = arg_4_0.weaponMo:getUnlockSystemRank()
+	if not self.weaponMo:isUnlockSystem() then
+		local rank = self.weaponMo:getUnlockSystemRank()
 
-		GameFacade.showToast(ToastEnum.CharacterRankUnlock, GameUtil.getNum2Chinese(var_4_0 - 1))
-
-		return
-	end
-
-	CharacterController.instance:openCharacterWeaponView(arg_4_0.heroMo)
-	arg_4_0.weaponMo:checkReddot()
-	arg_4_0:_refreshWeaponReddot()
-end
-
-function var_0_0._btnskilltalentOnClick(arg_5_0)
-	if not arg_5_0.skillTalentMo then
-		return
-	end
-
-	if not arg_5_0.skillTalentMo:isUnlockSystem() then
-		local var_5_0 = arg_5_0.skillTalentMo:getUnlockSystemRank()
-
-		GameFacade.showToast(ToastEnum.CharacterRankUnlock, GameUtil.getNum2Chinese(var_5_0 - 1))
+		GameFacade.showToast(ToastEnum.CharacterRankUnlock, GameUtil.getNum2Chinese(rank - 1))
 
 		return
 	end
 
-	CharacterController.instance:openCharacterSkillTalentView(arg_5_0.heroMo)
+	CharacterController.instance:openCharacterWeaponView(self.heroMo)
+	self.weaponMo:checkReddot()
+	self:_refreshWeaponReddot()
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	local var_6_0 = arg_6_0._goweaponmain:GetComponent(typeof(UnityEngine.Animator))
-	local var_6_1 = arg_6_0._goweaponsecond:GetComponent(typeof(UnityEngine.Animator))
+function CharacterDefaultExtraView:_btnskilltalentOnClick()
+	if not self.skillTalentMo then
+		return
+	end
 
-	arg_6_0._weaponComps = {
+	if not self.skillTalentMo:isUnlockSystem() then
+		local rank = self.skillTalentMo:getUnlockSystemRank()
+
+		GameFacade.showToast(ToastEnum.CharacterRankUnlock, GameUtil.getNum2Chinese(rank - 1))
+
+		return
+	end
+
+	CharacterController.instance:openCharacterSkillTalentView(self.heroMo)
+end
+
+function CharacterDefaultExtraView:_editableInitView()
+	local mainWeaponAnim = self._goweaponmain:GetComponent(typeof(UnityEngine.Animator))
+	local secondWeaponAnim = self._goweaponsecond:GetComponent(typeof(UnityEngine.Animator))
+
+	self._weaponComps = {
 		[CharacterExtraEnum.WeaponType.First] = {
-			Root = arg_6_0._goweaponmain,
-			Icon = arg_6_0._imageweaponmainicon,
-			Add = arg_6_0._goweaponmainadd,
-			Reddot = arg_6_0._goweaponmainreddot,
-			Anim = var_6_0
+			Root = self._goweaponmain,
+			Icon = self._imageweaponmainicon,
+			Add = self._goweaponmainadd,
+			Reddot = self._goweaponmainreddot,
+			Anim = mainWeaponAnim
 		},
 		[CharacterExtraEnum.WeaponType.Second] = {
-			Root = arg_6_0._goweaponsecond,
-			Icon = arg_6_0._imageweaponsecondicon,
-			Add = arg_6_0._goweaponsecondadd,
-			Reddot = arg_6_0._goweaponsecondreddot,
-			Anim = var_6_1
+			Root = self._goweaponsecond,
+			Icon = self._imageweaponsecondicon,
+			Add = self._goweaponsecondadd,
+			Reddot = self._goweaponsecondreddot,
+			Anim = secondWeaponAnim
 		}
 	}
-	arg_6_0._skilltalentitems = arg_6_0:getUserDataTb_()
+	self._skilltalentitems = self:getUserDataTb_()
 
-	for iter_6_0 = 1, 3 do
-		local var_6_2 = gohelper.findChild(arg_6_0._goskilltalent, "lighted/" .. iter_6_0)
+	for i = 1, 3 do
+		local go = gohelper.findChild(self._goskilltalent, "lighted/" .. i)
 
-		if var_6_2 then
-			local var_6_3 = arg_6_0:getUserDataTb_()
+		if go then
+			local item = self:getUserDataTb_()
 
-			var_6_3.go = var_6_2
-			var_6_3.iconList = arg_6_0:getUserDataTb_()
-			var_6_3.numList = arg_6_0:getUserDataTb_()
+			item.go = go
+			item.iconList = self:getUserDataTb_()
+			item.numList = self:getUserDataTb_()
 
-			if iter_6_0 > 1 then
-				for iter_6_1 = 1, iter_6_0 do
-					var_6_3.iconList[iter_6_1] = gohelper.findChildImage(var_6_2, "#image_icon" .. iter_6_1)
-					var_6_3.numList[iter_6_1] = gohelper.findChildText(var_6_2, "#txt_num" .. iter_6_1)
+			if i > 1 then
+				for j = 1, i do
+					item.iconList[j] = gohelper.findChildImage(go, "#image_icon" .. j)
+					item.numList[j] = gohelper.findChildText(go, "#txt_num" .. j)
 				end
 			else
-				var_6_3.iconList[1] = gohelper.findChildImage(var_6_2, "#image_icon")
-				var_6_3.numList[1] = gohelper.findChildText(var_6_2, "#txt_num")
+				item.iconList[1] = gohelper.findChildImage(go, "#image_icon")
+				item.numList[1] = gohelper.findChildText(go, "#txt_num")
 			end
 
-			arg_6_0._skilltalentitems[iter_6_0] = var_6_3
+			self._skilltalentitems[i] = item
 		end
 	end
 end
 
-function var_0_0._onSuccessHeroRankUp(arg_7_0)
-	arg_7_0:_refreshView()
+function CharacterDefaultExtraView:_onSuccessHeroRankUp()
+	self:_refreshView()
 end
 
-function var_0_0._onSwitchSpine(arg_8_0, arg_8_1)
-	arg_8_0:_refreshMo(arg_8_1)
+function CharacterDefaultExtraView:_onSwitchSpine(heroMo)
+	self:_refreshMo(heroMo)
 end
 
-function var_0_0._onCloseFullView(arg_9_0, arg_9_1)
-	if arg_9_1 == ViewName.CharacterRankUpResultView then
-		arg_9_0:_checkPlayUnlockWeaponAnim()
-	elseif arg_9_1 == ViewName.CharacterWeaponView then
-		arg_9_0:_checkPlaySwitchWeaponAnim(true)
+function CharacterDefaultExtraView:_onCloseFullView(viewName)
+	if viewName == ViewName.CharacterRankUpResultView then
+		self:_checkPlayUnlockWeaponAnim()
+	elseif viewName == ViewName.CharacterWeaponView then
+		self:_checkPlaySwitchWeaponAnim(true)
 	end
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0:_refreshMo(arg_10_0.viewParam)
+function CharacterDefaultExtraView:onOpen()
+	self:_refreshMo(self.viewParam)
 end
 
-function var_0_0._refreshMo(arg_11_0, arg_11_1)
-	arg_11_0.heroMo = arg_11_1
-	arg_11_0.heroExtraMo = arg_11_0.heroMo.extraMo
-	arg_11_0.weaponMo = arg_11_0.heroExtraMo and arg_11_0.heroExtraMo:getWeaponMo()
-	arg_11_0.skillTalentMo = arg_11_0.heroExtraMo and (arg_11_0.heroMo.trialCo and OdysseyTalentModel.instance:getTrialCassandraTreeInfo() or arg_11_0.heroExtraMo:getSkillTalentMo())
+function CharacterDefaultExtraView:_refreshMo(heroMo)
+	self.heroMo = heroMo
+	self.heroExtraMo = self.heroMo.extraMo
+	self.weaponMo = self.heroExtraMo and self.heroExtraMo:getWeaponMo()
+	self.skillTalentMo = self.heroExtraMo and (self.heroMo.trialCo and OdysseyTalentModel.instance:getTrialCassandraTreeInfo() or self.heroExtraMo:getSkillTalentMo())
 
-	arg_11_0:_refreshEntrance()
-	arg_11_0:_refreshView()
-	arg_11_0:_checkPlayUnlockWeaponAnim()
-	arg_11_0:_checkPlaySwitchWeaponAnim(false)
+	self:_refreshEntrance()
+	self:_refreshView()
+	self:_checkPlayUnlockWeaponAnim()
+	self:_checkPlaySwitchWeaponAnim(false)
 end
 
-function var_0_0._refreshView(arg_12_0)
-	if arg_12_0.weaponMo then
-		arg_12_0:_refreshWeapon()
+function CharacterDefaultExtraView:_refreshView()
+	if self.weaponMo then
+		self:_refreshWeapon()
 	end
 
-	if arg_12_0.skillTalentMo then
-		arg_12_0:_refresSkilltalent()
+	if self.skillTalentMo then
+		self:_refresSkilltalent()
 	else
-		gohelper.setActive(arg_12_0._goskilltalentlightedreddot, false)
-		gohelper.setActive(arg_12_0._goskilltalentunlightreddot, false)
+		gohelper.setActive(self._goskilltalentlightedreddot, false)
+		gohelper.setActive(self._goskilltalentunlightreddot, false)
 	end
 
-	arg_12_0:_refreshWeaponReddot()
+	self:_refreshWeaponReddot()
 end
 
-function var_0_0._refreshWeaponReddot(arg_13_0)
-	for iter_13_0, iter_13_1 in ipairs(arg_13_0._weaponComps) do
-		local var_13_0 = iter_13_1.Reddot
-		local var_13_1 = arg_13_0.weaponMo and arg_13_0.weaponMo:isShowWeaponReddot(iter_13_0)
+function CharacterDefaultExtraView:_refreshWeaponReddot()
+	for type, comp in ipairs(self._weaponComps) do
+		local reddot = comp.Reddot
+		local isShow = self.weaponMo and self.weaponMo:isShowWeaponReddot(type)
 
-		gohelper.setActive(var_13_0, var_13_1)
+		gohelper.setActive(reddot, isShow)
 	end
 end
 
-function var_0_0._refreshEntrance(arg_14_0)
-	local var_14_0 = arg_14_0.heroExtraMo and arg_14_0.heroExtraMo:hasTalentSkill()
-	local var_14_1 = arg_14_0.heroExtraMo and arg_14_0.heroExtraMo:hasWeapon()
+function CharacterDefaultExtraView:_refreshEntrance()
+	local hasTalentSkill = self.heroExtraMo and self.heroExtraMo:hasTalentSkill()
+	local hasWeapon = self.heroExtraMo and self.heroExtraMo:hasWeapon()
 
-	gohelper.setActive(arg_14_0._goweapon, var_14_1)
-	gohelper.setActive(arg_14_0._goskilltalent, var_14_0)
+	gohelper.setActive(self._goweapon, hasWeapon)
+	gohelper.setActive(self._goskilltalent, hasTalentSkill)
 end
 
-function var_0_0._refreshWeapon(arg_15_0)
-	if arg_15_0.weaponMo then
-		for iter_15_0, iter_15_1 in ipairs(arg_15_0._weaponComps) do
-			local var_15_0 = arg_15_0.weaponMo:isUnlockWeapon(iter_15_0)
+function CharacterDefaultExtraView:_refreshWeapon()
+	if self.weaponMo then
+		for weaponType, comp in ipairs(self._weaponComps) do
+			local isUnlock = self.weaponMo:isUnlockWeapon(weaponType)
 
-			if var_15_0 then
-				local var_15_1 = arg_15_0.weaponMo:getCurEquipWeapon(iter_15_0)
-				local var_15_2 = var_15_1 and var_15_1 ~= 0
+			if isUnlock then
+				local euipId = self.weaponMo:getCurEquipWeapon(weaponType)
+				local isEquip = euipId and euipId ~= 0
 
-				if var_15_2 then
-					local var_15_3 = arg_15_0.weaponMo:getWeaponMoByTypeId(iter_15_0, var_15_1)
-					local var_15_4 = iter_15_0 == CharacterExtraEnum.WeaponType.First and var_15_3.co.firsticon or var_15_3.co.secondicon
+				if isEquip then
+					local mo = self.weaponMo:getWeaponMoByTypeId(weaponType, euipId)
+					local iconPath = weaponType == CharacterExtraEnum.WeaponType.First and mo.co.firsticon or mo.co.secondicon
 
-					if not string.nilorempty(var_15_4) then
-						UISpriteSetMgr.instance:setUiCharacterSprite(iter_15_1.Icon, var_15_4)
+					if not string.nilorempty(iconPath) then
+						UISpriteSetMgr.instance:setUiCharacterSprite(comp.Icon, iconPath)
 					end
 				end
 
-				gohelper.setActive(iter_15_1.Icon.gameObject, var_15_2)
-				gohelper.setActive(iter_15_1.Add, not var_15_2)
+				gohelper.setActive(comp.Icon.gameObject, isEquip)
+				gohelper.setActive(comp.Add, not isEquip)
 			end
 
-			gohelper.setActive(iter_15_1.Root, var_15_0)
+			gohelper.setActive(comp.Root, isUnlock)
 		end
 	end
 end
 
-function var_0_0._checkPlayUnlockWeaponAnim(arg_16_0)
-	if arg_16_0.weaponMo then
-		for iter_16_0, iter_16_1 in ipairs(arg_16_0._weaponComps) do
-			if arg_16_0.weaponMo:isUnlockWeapon(iter_16_0) then
-				local var_16_0 = arg_16_0:_getPlayUnlockWeaponAnimKey(iter_16_0)
+function CharacterDefaultExtraView:_checkPlayUnlockWeaponAnim()
+	if self.weaponMo then
+		for weaponType, comp in ipairs(self._weaponComps) do
+			local isUnlock = self.weaponMo:isUnlockWeapon(weaponType)
 
-				if GameUtil.playerPrefsGetNumberByUserId(var_16_0, var_0_1) == var_0_1 then
-					iter_16_1.Anim:Play(CharacterExtraEnum.WeaponAnimName.Unlock, 0, 0)
-					GameUtil.playerPrefsSetNumberByUserId(arg_16_0:_getPlayUnlockWeaponAnimKey(iter_16_0), var_0_2)
+			if isUnlock then
+				local key = self:_getPlayUnlockWeaponAnimKey(weaponType)
+				local prefs = GameUtil.playerPrefsGetNumberByUserId(key, defalutPrefValue)
+
+				if prefs == defalutPrefValue then
+					comp.Anim:Play(CharacterExtraEnum.WeaponAnimName.Unlock, 0, 0)
+					GameUtil.playerPrefsSetNumberByUserId(self:_getPlayUnlockWeaponAnimKey(weaponType), savePrefValue)
 					AudioMgr.instance:trigger(AudioEnum2_9.Character.ui_role_aijiao_jiesuo2)
 				end
 			end
@@ -246,21 +251,24 @@ function var_0_0._checkPlayUnlockWeaponAnim(arg_16_0)
 	end
 end
 
-function var_0_0._checkPlaySwitchWeaponAnim(arg_17_0, arg_17_1)
-	if arg_17_0.weaponMo then
-		if not arg_17_0._showWeaponId then
-			arg_17_0._showWeaponId = {}
+function CharacterDefaultExtraView:_checkPlaySwitchWeaponAnim(isPalyAnim)
+	if self.weaponMo then
+		if not self._showWeaponId then
+			self._showWeaponId = {}
 		end
 
-		for iter_17_0, iter_17_1 in ipairs(arg_17_0._weaponComps) do
-			if arg_17_0.weaponMo:isUnlockWeapon(iter_17_0) then
-				local var_17_0 = arg_17_0.weaponMo:getCurEquipWeapon(iter_17_0)
+		for weaponType, comp in ipairs(self._weaponComps) do
+			local isUnlock = self.weaponMo:isUnlockWeapon(weaponType)
 
-				if (arg_17_0._showWeaponId[iter_17_0] or 0) ~= var_17_0 then
-					arg_17_0._showWeaponId[iter_17_0] = var_17_0
+			if isUnlock then
+				local equipId = self.weaponMo:getCurEquipWeapon(weaponType)
+				local showId = self._showWeaponId[weaponType] or 0
 
-					if arg_17_1 then
-						iter_17_1.Anim:Play(CharacterExtraEnum.WeaponAnimName.Switch, 0, 0)
+				if showId ~= equipId then
+					self._showWeaponId[weaponType] = equipId
+
+					if isPalyAnim then
+						comp.Anim:Play(CharacterExtraEnum.WeaponAnimName.Switch, 0, 0)
 					end
 				end
 			end
@@ -268,65 +276,69 @@ function var_0_0._checkPlaySwitchWeaponAnim(arg_17_0, arg_17_1)
 	end
 end
 
-function var_0_0._getPlayUnlockWeaponAnimKey(arg_18_0, arg_18_1)
-	return (string.format("CharacterDefaultExtraView_PlayWeaponAnimKey_%s_%s", arg_18_0.heroMo.heroId, arg_18_1))
+function CharacterDefaultExtraView:_getPlayUnlockWeaponAnimKey(weaponType)
+	local key = string.format("CharacterDefaultExtraView_PlayWeaponAnimKey_%s_%s", self.heroMo.heroId, weaponType)
+
+	return key
 end
 
-function var_0_0._refresSkilltalent(arg_19_0)
-	local var_19_0 = arg_19_0.skillTalentMo:isUnlockSystem()
+function CharacterDefaultExtraView:_refresSkilltalent()
+	local isUnlock = self.skillTalentMo:isUnlockSystem()
 
-	gohelper.setActive(arg_19_0._goskilltalentlightedreddot, arg_19_0.skillTalentMo:showReddot())
-	gohelper.setActive(arg_19_0._goskilltalentunlightreddot, arg_19_0.skillTalentMo:showReddot())
+	gohelper.setActive(self._goskilltalentlightedreddot, self.skillTalentMo:showReddot())
+	gohelper.setActive(self._goskilltalentunlightreddot, self.skillTalentMo:showReddot())
 
-	if var_19_0 then
-		local var_19_1 = arg_19_0.skillTalentMo:isNotLight()
+	if isUnlock then
+		local isNotLight = self.skillTalentMo:isNotLight()
 
-		if not var_19_1 then
-			local var_19_2 = arg_19_0.skillTalentMo:getSubExtra()
-			local var_19_3 = {}
-			local var_19_4 = 0
+		if not isNotLight then
+			local extra = self.skillTalentMo:getSubExtra()
+			local info = {}
+			local treecount = 0
 
-			for iter_19_0, iter_19_1 in pairs(var_19_2) do
-				local var_19_5 = {
-					sub = iter_19_0,
-					count = tabletool.len(iter_19_1)
+			for i, list in pairs(extra) do
+				local v = {
+					sub = i,
+					count = tabletool.len(list)
 				}
 
-				table.insert(var_19_3, var_19_5)
+				table.insert(info, v)
 
-				var_19_4 = var_19_4 + 1
+				treecount = treecount + 1
 			end
 
-			table.sort(var_19_3, function(arg_20_0, arg_20_1)
-				return arg_20_0.count > arg_20_1.count
+			table.sort(info, function(a, b)
+				return a.count > b.count
 			end)
 
-			local var_19_6 = arg_19_0._skilltalentitems[var_19_4]
+			local stItem = self._skilltalentitems[treecount]
 
-			if var_19_6 then
-				for iter_19_2 = 1, var_19_4 do
-					var_19_6.numList[iter_19_2].text = var_19_3[iter_19_2].count
+			if stItem then
+				for j = 1, treecount do
+					local txtNum = stItem.numList[j]
 
-					local var_19_7 = var_19_6.iconList[iter_19_2]
-					local var_19_8 = arg_19_0.skillTalentMo:getWhiteSubIconPath(var_19_3[iter_19_2].sub)
+					txtNum.text = info[j].count
 
-					UISpriteSetMgr.instance:setUiCharacterSprite(var_19_7, var_19_8)
+					local imageicon = stItem.iconList[j]
+					local icon = self.skillTalentMo:getWhiteSubIconPath(info[j].sub)
+
+					UISpriteSetMgr.instance:setUiCharacterSprite(imageicon, icon)
 				end
 			end
 
-			for iter_19_3, iter_19_4 in ipairs(arg_19_0._skilltalentitems) do
-				gohelper.setActive(iter_19_4.go, var_19_4 == iter_19_3)
+			for i, item in ipairs(self._skilltalentitems) do
+				gohelper.setActive(item.go, treecount == i)
 			end
 		end
 
-		gohelper.setActive(arg_19_0._goskilltalentlock, false)
-		gohelper.setActive(arg_19_0._goskilltalentunlight, var_19_1)
-		gohelper.setActive(arg_19_0._goskilltalentlighted, not var_19_1)
+		gohelper.setActive(self._goskilltalentlock, false)
+		gohelper.setActive(self._goskilltalentunlight, isNotLight)
+		gohelper.setActive(self._goskilltalentlighted, not isNotLight)
 	else
-		gohelper.setActive(arg_19_0._goskilltalentlock, true)
-		gohelper.setActive(arg_19_0._goskilltalentunlight, false)
-		gohelper.setActive(arg_19_0._goskilltalentlighted, false)
+		gohelper.setActive(self._goskilltalentlock, true)
+		gohelper.setActive(self._goskilltalentunlight, false)
+		gohelper.setActive(self._goskilltalentlighted, false)
 	end
 end
 
-return var_0_0
+return CharacterDefaultExtraView

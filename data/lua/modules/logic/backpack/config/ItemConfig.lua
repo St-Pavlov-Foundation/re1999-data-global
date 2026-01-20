@@ -1,221 +1,244 @@
-﻿module("modules.logic.backpack.config.ItemConfig", package.seeall)
+﻿-- chunkname: @modules/logic/backpack/config/ItemConfig.lua
 
-local var_0_0 = class("ItemConfig", BaseConfig)
+module("modules.logic.backpack.config.ItemConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._itemConfig = nil
-	arg_1_0._itemUseConfig = nil
-	arg_1_0._itemSpecialConfig = nil
-	arg_1_0._itemPowerConfig = nil
-	arg_1_0._itemInsightConfig = nil
+local ItemConfig = class("ItemConfig", BaseConfig)
+
+function ItemConfig:ctor()
+	self._itemConfig = nil
+	self._itemUseConfig = nil
+	self._itemSpecialConfig = nil
+	self._itemPowerConfig = nil
+	self._itemInsightConfig = nil
+	self._itemUseTipConfig = nil
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function ItemConfig:reqConfigNames()
 	return {
 		"item",
 		"item_use",
 		"item_specialitem",
 		"power_item",
 		"item_category_show",
-		"insight_item"
+		"insight_item",
+		"specialexpired_item",
+		"item_use_tip"
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "item" then
-		arg_3_0._itemConfig = arg_3_2
-	elseif arg_3_1 == "item_use" then
-		arg_3_0._itemUseConfig = arg_3_2
-	elseif arg_3_1 == "item_specialitem" then
-		arg_3_0._itemSpecialConfig = arg_3_2
-	elseif arg_3_1 == "power_item" then
-		arg_3_0._itemPowerConfig = arg_3_2
-	elseif arg_3_1 == "item_category_show" then
-		arg_3_0._itemCategoryShow = arg_3_2
-	elseif arg_3_1 == "insight_item" then
-		arg_3_0._itemInsightConfig = arg_3_2
+function ItemConfig:onConfigLoaded(configName, configTable)
+	if configName == "item" then
+		self._itemConfig = configTable
+	elseif configName == "item_use" then
+		self._itemUseConfig = configTable
+	elseif configName == "item_specialitem" then
+		self._itemSpecialConfig = configTable
+	elseif configName == "power_item" then
+		self._itemPowerConfig = configTable
+	elseif configName == "item_category_show" then
+		self._itemCategoryShow = configTable
+	elseif configName == "insight_item" then
+		self._itemInsightConfig = configTable
+	elseif configName == "specialexpired_item" then
+		self._specialExpiredItemConfig = configTable
+	elseif configName == "item_use_tip" then
+		self._itemUseTipConfig = configTable
 	end
 end
 
-function var_0_0.getItemsCo(arg_4_0)
-	return arg_4_0._itemConfig.configDict
+function ItemConfig:getItemsCo()
+	return self._itemConfig.configDict
 end
 
-function var_0_0.getItemCo(arg_5_0, arg_5_1)
-	return arg_5_0._itemConfig.configDict[arg_5_1]
+function ItemConfig:getItemCo(propId)
+	return self._itemConfig.configDict[propId]
 end
 
-function var_0_0.getItemsUseCo(arg_6_0)
-	return arg_6_0._itemUseConfig.configDict
+function ItemConfig:getItemsUseCo()
+	return self._itemUseConfig.configDict
 end
 
-function var_0_0.getItemUseCo(arg_7_0, arg_7_1)
-	return arg_7_0._itemUseConfig.configDict[arg_7_1]
+function ItemConfig:getItemUseCo(itemId)
+	return self._itemUseConfig.configDict[itemId]
 end
 
-function var_0_0.getItemsSpecialCo(arg_8_0)
-	return arg_8_0._itemSpecialConfig.configDict
+function ItemConfig:getItemsSpecialCo()
+	return self._itemSpecialConfig.configDict
 end
 
-function var_0_0.getItemSpecialCo(arg_9_0, arg_9_1)
-	return arg_9_0._itemSpecialConfig.configDict[arg_9_1]
+function ItemConfig:getItemSpecialCo(itemId)
+	return self._itemSpecialConfig.configDict[itemId]
 end
 
-function var_0_0.getItemsPowerCo(arg_10_0)
-	return arg_10_0._itemPowerConfig.configDict
+function ItemConfig:getItemsPowerCo()
+	return self._itemPowerConfig.configDict
 end
 
-function var_0_0.getPowerItemCo(arg_11_0, arg_11_1)
-	return arg_11_0._itemPowerConfig.configDict[arg_11_1]
+function ItemConfig:getPowerItemCo(itemId)
+	return self._itemPowerConfig.configDict[itemId]
 end
 
-function var_0_0.getItemsInsightCo(arg_12_0)
-	return arg_12_0._itemInsightConfig.configDict
+function ItemConfig:getItemsInsightCo()
+	return self._itemInsightConfig.configDict
 end
 
-function var_0_0.getInsightItemCo(arg_13_0, arg_13_1)
-	return arg_13_0._itemInsightConfig.configDict[arg_13_1]
+function ItemConfig:getInsightItemCo(itemId)
+	return self._itemInsightConfig.configDict[itemId]
 end
 
-function var_0_0.getItemNameById(arg_14_0, arg_14_1)
-	return arg_14_0._itemConfig.configDict[arg_14_1] and arg_14_0._itemConfig.configDict[arg_14_1].name
+function ItemConfig:getItemsSpecialExpiredItemCo()
+	return self._specialExpiredItemConfig.configDict
 end
 
-function var_0_0.getItemIconById(arg_15_0, arg_15_1)
-	return arg_15_0._itemConfig.configDict[arg_15_1] and arg_15_0._itemConfig.configDict[arg_15_1].icon
+function ItemConfig:getItemSpecialExpiredItemCo(itemId)
+	return self._specialExpiredItemConfig.configDict[itemId]
 end
 
-function var_0_0.getItemListBySubType(arg_16_0, arg_16_1)
-	if not arg_16_0._subTypeDict then
-		arg_16_0._subTypeDict = {}
+function ItemConfig:getItemNameById(propId)
+	return self._itemConfig.configDict[propId] and self._itemConfig.configDict[propId].name
+end
 
-		for iter_16_0, iter_16_1 in ipairs(arg_16_0._itemConfig.configList) do
-			local var_16_0 = arg_16_0._subTypeDict[iter_16_1.subType]
+function ItemConfig:getItemIconById(propId)
+	return self._itemConfig.configDict[propId] and self._itemConfig.configDict[propId].icon
+end
 
-			if not var_16_0 then
-				var_16_0 = {}
-				arg_16_0._subTypeDict[iter_16_1.subType] = var_16_0
+function ItemConfig:getItemUseTipConfigById(propId)
+	return self._itemUseTipConfig.configDict[propId]
+end
+
+function ItemConfig:getItemListBySubType(subType)
+	if not self._subTypeDict then
+		self._subTypeDict = {}
+
+		for _, config in ipairs(self._itemConfig.configList) do
+			local propList = self._subTypeDict[config.subType]
+
+			if not propList then
+				propList = {}
+				self._subTypeDict[config.subType] = propList
 			end
 
-			table.insert(var_16_0, iter_16_1)
+			table.insert(propList, config)
 		end
 	end
 
-	return arg_16_0._subTypeDict[arg_16_1]
+	return self._subTypeDict[subType]
 end
 
-function var_0_0.getStackItemList(arg_17_0, arg_17_1)
-	local var_17_0 = {}
+function ItemConfig:getStackItemList(list)
+	local newList = {}
 
-	for iter_17_0, iter_17_1 in ipairs(arg_17_1) do
-		local var_17_1 = tonumber(iter_17_1[1])
-		local var_17_2 = tonumber(iter_17_1[2])
-		local var_17_3 = tonumber(iter_17_1[3])
+	for i, item in ipairs(list) do
+		local materialType = tonumber(item[1])
+		local materialId = tonumber(item[2])
+		local quantity = tonumber(item[3])
+		local config = ItemModel.instance:getItemConfig(tonumber(item[1]), tonumber(item[2]))
 
-		if ItemModel.instance:getItemConfig(tonumber(iter_17_1[1]), tonumber(iter_17_1[2])) then
-			if arg_17_0:isItemStackable(var_17_1, var_17_2) then
-				local var_17_4 = {
-					var_17_1,
-					var_17_2,
-					var_17_3
-				}
+		if config then
+			local stackable = self:isItemStackable(materialType, materialId)
 
-				table.insert(var_17_0, var_17_4)
+			if stackable then
+				local sItem = {}
+
+				sItem[1] = materialType
+				sItem[2] = materialId
+				sItem[3] = quantity
+
+				table.insert(newList, sItem)
 			else
-				for iter_17_2 = 1, var_17_3 do
-					local var_17_5 = {
-						var_17_1,
-						var_17_2
-					}
+				for j = 1, quantity do
+					local sItem = {}
 
-					var_17_5[3] = 1
+					sItem[1] = materialType
+					sItem[2] = materialId
+					sItem[3] = 1
 
-					table.insert(var_17_0, var_17_5)
+					table.insert(newList, sItem)
 				end
 			end
 		else
-			logError(string.format("getStackItemList no config, type: %s, id: %s", var_17_1, var_17_2))
+			logError(string.format("getStackItemList no config, type: %s, id: %s", materialType, materialId))
 		end
 	end
 
-	return var_17_0
+	return newList
 end
 
-function var_0_0.isItemStackable(arg_18_0, arg_18_1, arg_18_2)
-	local var_18_0 = true
-	local var_18_1 = arg_18_0:getItemConfig(tonumber(arg_18_1), tonumber(arg_18_2))
+function ItemConfig:isItemStackable(materialType, materialId)
+	local stackable = true
+	local config = self:getItemConfig(tonumber(materialType), tonumber(materialId))
 
-	if arg_18_1 == MaterialEnum.MaterialType.Item then
-		var_18_0 = not var_18_1.isStackable or var_18_1.isStackable == 1
-	elseif arg_18_1 == MaterialEnum.MaterialType.Hero or arg_18_1 == MaterialEnum.MaterialType.HeroSkin or arg_18_1 == MaterialEnum.MaterialType.EquipCard or arg_18_1 == MaterialEnum.MaterialType.PlayerCloth or arg_18_1 == MaterialEnum.MaterialType.Season123EquipCard then
-		var_18_0 = false
-	elseif arg_18_1 == MaterialEnum.MaterialType.Equip then
-		var_18_0 = var_18_1.isExpEquip and var_18_1.isExpEquip == 1
+	if materialType == MaterialEnum.MaterialType.Item then
+		stackable = not config.isStackable or config.isStackable == 1
+	elseif materialType == MaterialEnum.MaterialType.Hero or materialType == MaterialEnum.MaterialType.HeroSkin or materialType == MaterialEnum.MaterialType.EquipCard or materialType == MaterialEnum.MaterialType.PlayerCloth or materialType == MaterialEnum.MaterialType.Season123EquipCard then
+		stackable = false
+	elseif materialType == MaterialEnum.MaterialType.Equip then
+		stackable = config.isExpEquip and config.isExpEquip == 1
 	end
 
-	return var_18_0
+	return stackable
 end
 
-function var_0_0.getItemCategroyShow(arg_19_0, arg_19_1)
-	return arg_19_0._itemCategoryShow.configDict[arg_19_1]
+function ItemConfig:getItemCategroyShow(category)
+	return self._itemCategoryShow.configDict[category]
 end
 
-function var_0_0.getItemConfig(arg_20_0, arg_20_1, arg_20_2)
-	arg_20_1 = tonumber(arg_20_1)
-	arg_20_2 = tonumber(arg_20_2)
+function ItemConfig:getItemConfig(type, id)
+	type = tonumber(type)
+	id = tonumber(id)
 
-	local var_20_0
-	local var_20_1 = ItemConfigGetDefine.instance:getItemConfigFunc(arg_20_1)
+	local config
+	local getFunc = ItemConfigGetDefine.instance:getItemConfigFunc(type)
 
-	if var_20_1 then
-		var_20_0 = var_20_1(arg_20_2)
+	if getFunc then
+		config = getFunc(id)
 	else
-		var_20_0 = arg_20_0:getItemSpecialCo(arg_20_1)
+		config = self:getItemSpecialCo(type)
 	end
 
-	return var_20_0
+	return config
 end
 
-function var_0_0.isUniqueByCo(arg_21_0, arg_21_1, arg_21_2)
-	if arg_21_1 ~= MaterialEnum.MaterialType.Equip then
+function ItemConfig:isUniqueByCo(type, itemConfig)
+	if type ~= MaterialEnum.MaterialType.Equip then
 		return false
 	end
 
-	return arg_21_2.upperLimit and arg_21_2.upperLimit == 1
+	return itemConfig.upperLimit and itemConfig.upperLimit == 1
 end
 
-function var_0_0.isUniqueById(arg_22_0, arg_22_1, arg_22_2)
-	return arg_22_0:isUniqueByCo(arg_22_1, arg_22_0:getItemConfig(arg_22_1, arg_22_2))
+function ItemConfig:isUniqueById(type, id)
+	return self:isUniqueByCo(type, self:getItemConfig(type, id))
 end
 
-function var_0_0.getRewardGroupRateInfoList(arg_23_0, arg_23_1)
-	arg_23_1 = tonumber(arg_23_1)
+function ItemConfig:getRewardGroupRateInfoList(itemEffect)
+	itemEffect = tonumber(itemEffect)
 
-	local var_23_0 = lua_reward.configDict[arg_23_1]
-	local var_23_1 = {}
-	local var_23_2 = 0
+	local rewardCO = lua_reward.configDict[itemEffect]
+	local list = {}
+	local i = 0
 
 	repeat
-		var_23_2 = var_23_2 + 1
+		i = i + 1
 
-		local var_23_3 = var_23_0["rewardGroup" .. var_23_2]
+		local rewardGroup = rewardCO["rewardGroup" .. i]
 
-		if string.nilorempty(var_23_3) then
-			return var_23_1
+		if string.nilorempty(rewardGroup) then
+			return list
 		end
 
-		local var_23_4 = string.split(var_23_3, ":")
+		local strList = string.split(rewardGroup, ":")
 
-		if var_23_4 then
-			local var_23_5 = var_23_4[1]
+		if strList then
+			local group = strList[1]
 
-			DungeonConfig.instance:_calcRewardGroupRateInfoList(var_23_1, var_23_5)
+			DungeonConfig.instance:_calcRewardGroupRateInfoList(list, group)
 		end
-	until not var_23_4 or #var_23_4 == 0
+	until not strList or #strList == 0
 
-	return var_23_1
+	return list
 end
 
-var_0_0.instance = var_0_0.New()
+ItemConfig.instance = ItemConfig.New()
 
-return var_0_0
+return ItemConfig

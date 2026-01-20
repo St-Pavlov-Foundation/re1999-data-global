@@ -1,97 +1,100 @@
-﻿module("modules.logic.activity.model.warmup.ActivityWarmUpTaskListModel", package.seeall)
+﻿-- chunkname: @modules/logic/activity/model/warmup/ActivityWarmUpTaskListModel.lua
 
-local var_0_0 = class("ActivityWarmUpTaskListModel", ListScrollModel)
+module("modules.logic.activity.model.warmup.ActivityWarmUpTaskListModel", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._totalDict = arg_1_0._totalDict or {}
+local ActivityWarmUpTaskListModel = class("ActivityWarmUpTaskListModel", ListScrollModel)
 
-	local var_1_0 = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Activity106)
-	local var_1_1 = Activity106Config.instance:getTaskByActId(arg_1_1)
-	local var_1_2 = {}
+function ActivityWarmUpTaskListModel:init(actId)
+	self._totalDict = self._totalDict or {}
 
-	if var_1_0 ~= nil then
-		for iter_1_0, iter_1_1 in ipairs(var_1_1) do
-			local var_1_3 = iter_1_1.id
-			local var_1_4 = var_1_0[var_1_3]
+	local taskDict = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Activity106)
+	local taskCfgs = Activity106Config.instance:getTaskByActId(actId)
+	local data = {}
 
-			if var_1_4 ~= nil then
-				local var_1_5 = arg_1_0._totalDict[var_1_3]
+	if taskDict ~= nil then
+		for _, taskCO in ipairs(taskCfgs) do
+			local taskId = taskCO.id
+			local taskMO = taskDict[taskId]
 
-				if not var_1_5 then
-					var_1_5 = ActivityWarmUpTaskMO.New()
-					arg_1_0._totalDict[var_1_3] = var_1_5
+			if taskMO ~= nil then
+				local mo = self._totalDict[taskId]
+
+				if not mo then
+					mo = ActivityWarmUpTaskMO.New()
+					self._totalDict[taskId] = mo
 				end
 
-				var_1_5:init(var_1_4, iter_1_1)
-				table.insert(var_1_2, var_1_5)
+				mo:init(taskMO, taskCO)
+				table.insert(data, mo)
 			end
 		end
 
-		table.sort(var_1_2, var_0_0.sortMO)
+		table.sort(data, ActivityWarmUpTaskListModel.sortMO)
 	end
 
-	arg_1_0._totalDatas = var_1_2
+	self._totalDatas = data
 
-	arg_1_0:groupByDay()
+	self:groupByDay()
 end
 
-function var_0_0.sortMO(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_0:alreadyGotReward()
-	local var_2_1 = arg_2_1:alreadyGotReward()
+function ActivityWarmUpTaskListModel.sortMO(objA, objB)
+	local alreadyGotA = objA:alreadyGotReward()
+	local alreadyGotB = objB:alreadyGotReward()
 
-	if var_2_0 ~= var_2_1 then
-		return var_2_1
+	if alreadyGotA ~= alreadyGotB then
+		return alreadyGotB
 	else
-		local var_2_2 = arg_2_0:isFinished()
+		local finishA = objA:isFinished()
+		local finishB = objB:isFinished()
 
-		if var_2_2 ~= arg_2_1:isFinished() then
-			return var_2_2
+		if finishA ~= finishB then
+			return finishA
 		end
 	end
 
-	return arg_2_0.id < arg_2_1.id
+	return objA.id < objB.id
 end
 
-function var_0_0.setSelectedDay(arg_3_0, arg_3_1)
-	arg_3_0._selectDay = arg_3_1
+function ActivityWarmUpTaskListModel:setSelectedDay(day)
+	self._selectDay = day
 end
 
-function var_0_0.updateDayList(arg_4_0)
-	local var_4_0 = arg_4_0._taskGroup[arg_4_0:getSelectedDay()]
+function ActivityWarmUpTaskListModel:updateDayList()
+	local datas = self._taskGroup[self:getSelectedDay()]
 
-	if var_4_0 then
-		arg_4_0:setList(var_4_0)
+	if datas then
+		self:setList(datas)
 	end
 end
 
-function var_0_0.getSelectedDay(arg_5_0)
-	return arg_5_0._selectDay
+function ActivityWarmUpTaskListModel:getSelectedDay()
+	return self._selectDay
 end
 
-function var_0_0.groupByDay(arg_6_0)
-	arg_6_0._taskGroup = {}
+function ActivityWarmUpTaskListModel:groupByDay()
+	self._taskGroup = {}
 
-	local var_6_0 = arg_6_0._totalDatas
+	local taskList = self._totalDatas
 
-	if not var_6_0 then
+	if not taskList then
 		return
 	end
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
-		local var_6_1 = iter_6_1.config.openDay
+	for _, taskMO in ipairs(taskList) do
+		local day = taskMO.config.openDay
 
-		arg_6_0._taskGroup[var_6_1] = arg_6_0._taskGroup[var_6_1] or {}
+		self._taskGroup[day] = self._taskGroup[day] or {}
 
-		table.insert(arg_6_0._taskGroup[var_6_1], iter_6_1)
+		table.insert(self._taskGroup[day], taskMO)
 	end
 end
 
-function var_0_0.dayHasReward(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0._taskGroup[arg_7_1]
+function ActivityWarmUpTaskListModel:dayHasReward(day)
+	local list = self._taskGroup[day]
 
-	if var_7_0 then
-		for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-			if not iter_7_1:alreadyGotReward() and iter_7_1:isFinished() then
+	if list then
+		for _, mo in ipairs(list) do
+			if not mo:alreadyGotReward() and mo:isFinished() then
 				return true
 			end
 		end
@@ -100,12 +103,12 @@ function var_0_0.dayHasReward(arg_7_0, arg_7_1)
 	return false
 end
 
-function var_0_0.release(arg_8_0)
-	arg_8_0._totalDict = nil
-	arg_8_0._totalDatas = nil
-	arg_8_0._taskGroup = nil
+function ActivityWarmUpTaskListModel:release()
+	self._totalDict = nil
+	self._totalDatas = nil
+	self._taskGroup = nil
 end
 
-var_0_0.instance = var_0_0.New()
+ActivityWarmUpTaskListModel.instance = ActivityWarmUpTaskListModel.New()
 
-return var_0_0
+return ActivityWarmUpTaskListModel

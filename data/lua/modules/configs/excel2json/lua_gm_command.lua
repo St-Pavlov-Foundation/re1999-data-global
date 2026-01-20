@@ -1,19 +1,21 @@
-﻿module("modules.configs.excel2json.lua_gm_command", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_gm_command.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_gm_command", package.seeall)
+
+local lua_gm_command = {}
+local fields = {
 	id = 1,
 	name = 3,
 	command = 2,
 	desc = 4
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_gm_command.onLoad(json)
+	lua_gm_command.configList, lua_gm_command.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_gm_command

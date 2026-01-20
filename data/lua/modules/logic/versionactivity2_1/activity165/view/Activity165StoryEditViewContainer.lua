@@ -1,19 +1,21 @@
-﻿module("modules.logic.versionactivity2_1.activity165.view.Activity165StoryEditViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_1/activity165/view/Activity165StoryEditViewContainer.lua
 
-local var_0_0 = class("Activity165StoryEditViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_1.activity165.view.Activity165StoryEditViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	arg_1_0.editView = Activity165StoryEditView.New()
+local Activity165StoryEditViewContainer = class("Activity165StoryEditViewContainer", BaseViewContainer)
 
-	local var_1_0 = {}
+function Activity165StoryEditViewContainer:buildViews()
+	self.editView = Activity165StoryEditView.New()
 
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
-	table.insert(var_1_0, arg_1_0.editView)
+	local views = {}
 
-	return var_1_0
+	table.insert(views, TabViewGroup.New(1, "#go_topleft"))
+	table.insert(views, self.editView)
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function Activity165StoryEditViewContainer:buildTabViews(tabContainerId)
 	return {
 		NavigateButtonsView.New({
 			true,
@@ -23,9 +25,9 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	}
 end
 
-function var_0_0.playCloseTransition(arg_3_0)
-	arg_3_0:startViewCloseBlock()
-	arg_3_0.editView:playCloseAnim(arg_3_0.onPlayCloseTransitionFinish, arg_3_0)
+function Activity165StoryEditViewContainer:playCloseTransition()
+	self:startViewCloseBlock()
+	self.editView:playCloseAnim(self.onPlayCloseTransitionFinish, self)
 end
 
-return var_0_0
+return Activity165StoryEditViewContainer

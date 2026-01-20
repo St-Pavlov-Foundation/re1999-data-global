@@ -1,13 +1,15 @@
-﻿module("modules.logic.sp01.odyssey.view.OdysseySuccessViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/view/OdysseySuccessViewContainer.lua
 
-local var_0_0 = class("OdysseySuccessViewContainer", BaseViewContainer)
+module("modules.logic.sp01.odyssey.view.OdysseySuccessViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local OdysseySuccessViewContainer = class("OdysseySuccessViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, OdysseySuccessView.New())
+function OdysseySuccessViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, OdysseySuccessView.New())
+
+	return views
 end
 
-return var_0_0
+return OdysseySuccessViewContainer

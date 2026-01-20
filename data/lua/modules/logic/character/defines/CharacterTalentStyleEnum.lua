@@ -1,8 +1,10 @@
-﻿module("modules.logic.character.defines.CharacterTalentStyleEnum", package.seeall)
+﻿-- chunkname: @modules/logic/character/defines/CharacterTalentStyleEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.character.defines.CharacterTalentStyleEnum", package.seeall)
 
-var_0_0.AttrChange = {
+local CharacterTalentStyleEnum = _M
+
+CharacterTalentStyleEnum.AttrChange = {
 	[0] = {
 		NumColor = "#CAC8C5"
 	},
@@ -26,7 +28,7 @@ var_0_0.AttrChange = {
 		NumColor = "#CAC8C5"
 	}
 }
-var_0_0.StatType = {
+CharacterTalentStyleEnum.StatType = {
 	{
 		TxtColor = "#EA8438",
 		ProgressColor = "#EA8438"
@@ -37,4 +39,4 @@ var_0_0.StatType = {
 	}
 }
 
-return var_0_0
+return CharacterTalentStyleEnum

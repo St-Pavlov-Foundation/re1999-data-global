@@ -1,199 +1,207 @@
-﻿module("modules.logic.sp01.odyssey.controller.OdysseyDungeonController", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/controller/OdysseyDungeonController.lua
 
-local var_0_0 = class("OdysseyDungeonController", BaseController)
+module("modules.logic.sp01.odyssey.controller.OdysseyDungeonController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local OdysseyDungeonController = class("OdysseyDungeonController", BaseController)
+
+function OdysseyDungeonController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function OdysseyDungeonController:reInit()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function OdysseyDungeonController:addConstEvents()
 	return
 end
 
-function var_0_0.openDungeonView(arg_4_0, arg_4_1)
-	arg_4_0.dungeonViewParam = arg_4_1
+function OdysseyDungeonController:openDungeonView(viewParam)
+	self.dungeonViewParam = viewParam
 
-	OdysseyRpc.instance:sendOdysseyGetInfoRequest(arg_4_0._openDungeonView, arg_4_0)
+	OdysseyRpc.instance:sendOdysseyGetInfoRequest(self._openDungeonView, self)
 end
 
-function var_0_0._openDungeonView(arg_5_0)
+function OdysseyDungeonController:_openDungeonView()
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.Odyssey
 	}, function()
-		ViewMgr.instance:openView(ViewName.OdysseyDungeonView, arg_5_0.dungeonViewParam)
+		ViewMgr.instance:openView(ViewName.OdysseyDungeonView, self.dungeonViewParam)
 	end)
 end
 
-function var_0_0.openDungeonInteractView(arg_7_0, arg_7_1)
-	arg_7_0:dispatchEvent(OdysseyEvent.ShowInteractCloseBtn, true)
-	OdysseyDungeonModel.instance:setCurInElementId(arg_7_1.config.id)
-	ViewMgr.instance:openView(ViewName.OdysseyDungeonInteractView, arg_7_1)
+function OdysseyDungeonController:openDungeonInteractView(elementComp)
+	self:dispatchEvent(OdysseyEvent.ShowInteractCloseBtn, true)
+	OdysseyDungeonModel.instance:setCurInElementId(elementComp.config.id)
+	ViewMgr.instance:openView(ViewName.OdysseyDungeonInteractView, elementComp)
 end
 
-function var_0_0.openDungeonMapSelectInfoView(arg_8_0, arg_8_1)
-	local var_8_0 = {
-		mapId = arg_8_1
-	}
+function OdysseyDungeonController:openDungeonMapSelectInfoView(mapId)
+	local viewParam = {}
 
-	ViewMgr.instance:openView(ViewName.OdysseyDungeonMapSelectInfoView, var_8_0)
+	viewParam.mapId = mapId
+
+	ViewMgr.instance:openView(ViewName.OdysseyDungeonMapSelectInfoView, viewParam)
 end
 
-function var_0_0.openMembersView(arg_9_0, arg_9_1)
+function OdysseyDungeonController:openMembersView(viewParam)
 	OdysseyMembersModel.instance:initLocalClueUnlockState()
-	ViewMgr.instance:openView(ViewName.OdysseyMembersView, arg_9_1)
+	ViewMgr.instance:openView(ViewName.OdysseyMembersView, viewParam)
 end
 
-function var_0_0.openMembersTipView(arg_10_0, arg_10_1)
-	ViewMgr.instance:openView(ViewName.OdysseyMembersTipView, arg_10_1)
+function OdysseyDungeonController:openMembersTipView(viewParam)
+	ViewMgr.instance:openView(ViewName.OdysseyMembersTipView, viewParam)
 end
 
-function var_0_0.openLevelRewardView(arg_11_0)
+function OdysseyDungeonController:openLevelRewardView()
 	OdysseyTaskModel.instance:setCurSelectTaskTypeAndGroupId(OdysseyEnum.TaskType.LevelReward)
 	OdysseyTaskModel.instance:refreshList()
 	ViewMgr.instance:openView(ViewName.OdysseyLevelRewardView)
 end
 
-function var_0_0.popupRewardView(arg_12_0)
-	local var_12_0, var_12_1 = arg_12_0:checkNeedPopupRewardView()
+function OdysseyDungeonController:popupRewardView()
+	local needPopup, rewardParam = self:checkNeedPopupRewardView()
 
-	if var_12_0 then
-		local var_12_2 = {
-			showAddItemList = var_12_1.showAddItemList,
-			showAddOuterItemList = var_12_1.showAddOuterItemList,
-			heroCurLevel = var_12_1.heroCurLevel,
-			heroOldLevel = var_12_1.heroOldLevel,
-			heroCurExp = var_12_1.heroCurExp,
-			levelAddTalentPoint = var_12_1.levelAddTalentPoint,
-			rewardAddTalentPoint = var_12_1.rewardAddTalentPoint,
-			addExp = var_12_1.addExp
-		}
+	if needPopup then
+		local viewParam = {}
 
-		PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.OdysseyDungeonRewardView, var_12_2)
+		viewParam.showAddItemList = rewardParam.showAddItemList
+		viewParam.showAddOuterItemList = rewardParam.showAddOuterItemList
+		viewParam.heroCurLevel = rewardParam.heroCurLevel
+		viewParam.heroOldLevel = rewardParam.heroOldLevel
+		viewParam.heroCurExp = rewardParam.heroCurExp
+		viewParam.levelAddTalentPoint = rewardParam.levelAddTalentPoint
+		viewParam.rewardAddTalentPoint = rewardParam.rewardAddTalentPoint
+		viewParam.addExp = rewardParam.addExp
+
+		PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.OdysseyDungeonRewardView, viewParam)
 	end
 end
 
-function var_0_0.checkNeedPopupRewardView(arg_13_0)
-	local var_13_0 = OdysseyItemModel.instance:getItemMoUidMap()
-	local var_13_1 = {}
+function OdysseyDungeonController:checkNeedPopupRewardView()
+	local itemMoUidMap = OdysseyItemModel.instance:getItemMoUidMap()
+	local showAddItemList = {}
 
-	for iter_13_0, iter_13_1 in pairs(var_13_0) do
-		if iter_13_1.addCount > 0 then
-			table.insert(var_13_1, iter_13_1)
+	for itemUid, itemMo in pairs(itemMoUidMap) do
+		if itemMo.addCount > 0 then
+			table.insert(showAddItemList, itemMo)
 		end
 	end
 
-	local var_13_2 = OdysseyItemModel.instance:getAddOuterItemList()
-	local var_13_3, var_13_4 = OdysseyModel.instance:getHeroCurLevelAndExp()
-	local var_13_5, var_13_6 = OdysseyModel.instance:getHeroOldLevelAndExp()
-	local var_13_7 = OdysseyTalentModel.instance:getLevelAddTalentPoint()
-	local var_13_8 = OdysseyTalentModel.instance:getRewardAddTalentPoint()
-	local var_13_9 = OdysseyModel.instance:getHeroAddExp()
-	local var_13_10 = #var_13_1 > 0 or #var_13_2 > 0 or var_13_7 > 0 or var_13_8 > 0 or var_13_3 ~= var_13_5 or var_13_9 > 0
-	local var_13_11 = {
-		showAddItemList = var_13_1,
-		showAddOuterItemList = var_13_2,
-		heroCurLevel = var_13_3,
-		heroOldLevel = var_13_5,
-		heroCurExp = var_13_4,
-		levelAddTalentPoint = var_13_7,
-		rewardAddTalentPoint = var_13_8,
-		addExp = var_13_9
+	local showAddOuterItemList = OdysseyItemModel.instance:getAddOuterItemList()
+	local heroCurLevel, heroCurExp = OdysseyModel.instance:getHeroCurLevelAndExp()
+	local heroOldLevel, heroOldExp = OdysseyModel.instance:getHeroOldLevelAndExp()
+	local levelAddTalentPoint = OdysseyTalentModel.instance:getLevelAddTalentPoint()
+	local rewardAddTalentPoint = OdysseyTalentModel.instance:getRewardAddTalentPoint()
+	local addExp = OdysseyModel.instance:getHeroAddExp()
+	local needPopup = #showAddItemList > 0 or #showAddOuterItemList > 0 or levelAddTalentPoint > 0 or rewardAddTalentPoint > 0 or heroCurLevel ~= heroOldLevel or addExp > 0
+	local rewardParam = {
+		showAddItemList = showAddItemList,
+		showAddOuterItemList = showAddOuterItemList,
+		heroCurLevel = heroCurLevel,
+		heroOldLevel = heroOldLevel,
+		heroCurExp = heroCurExp,
+		levelAddTalentPoint = levelAddTalentPoint,
+		rewardAddTalentPoint = rewardAddTalentPoint,
+		addExp = addExp
 	}
 
-	return var_13_10, var_13_11
+	return needPopup, rewardParam
 end
 
-function var_0_0.openMythView(arg_14_0)
+function OdysseyDungeonController:openMythView()
 	ViewMgr.instance:openView(ViewName.OdysseyMythView)
 end
 
-function var_0_0.jumpToMapElement(arg_15_0, arg_15_1)
-	if not OdysseyDungeonModel.instance:getElementMo(arg_15_1) then
-		logError(arg_15_1 .. "事件数据不存在,请检查")
+function OdysseyDungeonController:jumpToMapElement(elementId)
+	local elementMo = OdysseyDungeonModel.instance:getElementMo(elementId)
+
+	if not elementMo then
+		logError(elementId .. "事件数据不存在,请检查")
 
 		return
 	end
 
-	OdysseyDungeonModel.instance:setJumpNeedOpenElement(arg_15_1)
-	OdysseyRpc.instance:sendOdysseyMapSetCurrElementRequest(arg_15_1)
-	OdysseyDungeonModel.instance:setCurInElementId(arg_15_1)
-	arg_15_0:dispatchEvent(OdysseyEvent.JumpNeedOpenElement, arg_15_1)
+	OdysseyDungeonModel.instance:setJumpNeedOpenElement(elementId)
+	OdysseyRpc.instance:sendOdysseyMapSetCurrElementRequest(elementId)
+	OdysseyDungeonModel.instance:setCurInElementId(elementId)
+	self:dispatchEvent(OdysseyEvent.JumpNeedOpenElement, elementId)
 end
 
-function var_0_0.jumpToHeroPos(arg_16_0)
-	arg_16_0:dispatchEvent(OdysseyEvent.JumpToHeroPos)
+function OdysseyDungeonController:jumpToHeroPos()
+	self:dispatchEvent(OdysseyEvent.JumpToHeroPos)
 end
 
-function var_0_0.setPlayerPrefs(arg_17_0, arg_17_1, arg_17_2)
-	if string.nilorempty(arg_17_1) or not arg_17_2 then
+function OdysseyDungeonController:setPlayerPrefs(key, value)
+	if string.nilorempty(key) or not value then
 		return
 	end
 
-	if type(arg_17_2) == "number" then
-		GameUtil.playerPrefsSetNumberByUserId(arg_17_1, arg_17_2)
+	local isNumber = type(value) == "number"
+
+	if isNumber then
+		GameUtil.playerPrefsSetNumberByUserId(key, value)
 	else
-		GameUtil.playerPrefsSetStringByUserId(arg_17_1, arg_17_2)
+		GameUtil.playerPrefsSetStringByUserId(key, value)
 	end
 end
 
-function var_0_0.getPlayerPrefs(arg_18_0, arg_18_1, arg_18_2)
-	local var_18_0 = arg_18_2 or ""
+function OdysseyDungeonController:getPlayerPrefs(key, defaultValue)
+	local value = defaultValue or ""
 
-	if string.nilorempty(arg_18_1) then
-		return var_18_0
+	if string.nilorempty(key) then
+		return value
 	end
 
-	if type(var_18_0) == "number" then
-		var_18_0 = GameUtil.playerPrefsGetNumberByUserId(arg_18_1, var_18_0)
+	local isNumber = type(value) == "number"
+
+	if isNumber then
+		value = GameUtil.playerPrefsGetNumberByUserId(key, value)
 	else
-		var_18_0 = GameUtil.playerPrefsGetStringByUserId(arg_18_1, var_18_0)
+		value = GameUtil.playerPrefsGetStringByUserId(key, value)
 	end
 
-	return var_18_0
+	return value
 end
 
-function var_0_0.setFightHeroGroup(arg_19_0)
-	local var_19_0 = FightModel.instance:getFightParam()
+function OdysseyDungeonController:setFightHeroGroup()
+	local fightParam = FightModel.instance:getFightParam()
 
-	if not var_19_0 then
+	if not fightParam then
 		return false
 	end
 
-	local var_19_1 = HeroGroupModel.instance:getCurGroupMO()
+	local curGroupMO = HeroGroupModel.instance:getCurGroupMO()
 
-	if not var_19_1 then
+	if not curGroupMO then
 		GameFacade.showToast(ToastEnum.FightNoCurGroupMO)
 
 		return false
 	end
 
-	local var_19_2, var_19_3 = var_19_1:getMainList()
-	local var_19_4, var_19_5 = var_19_1:getSubList()
-	local var_19_6 = 0
+	local main, mainCount = curGroupMO:getMainList()
+	local sub, subCount = curGroupMO:getSubList()
+	local trialCount = 0
 
-	if var_19_1.trialDict ~= nil then
-		for iter_19_0, iter_19_1 in pairs(var_19_1.trialDict) do
-			var_19_6 = var_19_6 + 1
+	if curGroupMO.trialDict ~= nil then
+		for _, _ in pairs(curGroupMO.trialDict) do
+			trialCount = trialCount + 1
 		end
 	end
 
-	if (not var_19_1.aidDict or #var_19_1.aidDict <= 0) and var_19_3 + var_19_5 + var_19_6 == 0 then
+	if (not curGroupMO.aidDict or #curGroupMO.aidDict <= 0) and mainCount + subCount + trialCount == 0 then
 		GameFacade.showToast(ToastEnum.FightNoCurGroupMO)
 
 		return false
 	end
 
-	local var_19_7 = var_19_1.clothId
+	local clothId = curGroupMO.clothId
 
-	var_19_0:setMySide(var_19_7, var_19_2, var_19_1:getSubList(), var_19_1:getAllHeroEquips(), nil, nil, nil, nil)
+	fightParam:setMySide(clothId, main, curGroupMO:getSubList(), curGroupMO:getAllHeroEquips(), nil, nil, nil, nil)
 
 	return true
 end
 
-var_0_0.instance = var_0_0.New()
+OdysseyDungeonController.instance = OdysseyDungeonController.New()
 
-return var_0_0
+return OdysseyDungeonController

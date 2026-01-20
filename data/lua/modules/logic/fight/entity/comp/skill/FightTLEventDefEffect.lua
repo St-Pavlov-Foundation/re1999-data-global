@@ -1,50 +1,53 @@
-﻿module("modules.logic.fight.entity.comp.skill.FightTLEventDefEffect", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skill/FightTLEventDefEffect.lua
 
-local var_0_0 = class("FightTLEventDefEffect", FightTimelineTrackItem)
-local var_0_1 = 8
-local var_0_2 = 28
-local var_0_3 = {
-	[var_0_1] = {
+module("modules.logic.fight.entity.comp.skill.FightTLEventDefEffect", package.seeall)
+
+local FightTLEventDefEffect = class("FightTLEventDefEffect", FightTimelineTrackItem)
+local TypeDefEffect = 8
+local TypeHealEffect = 28
+local EffectTypes = {
+	[TypeDefEffect] = {
 		[FightEnum.EffectType.MISS] = true,
 		[FightEnum.EffectType.DAMAGE] = true,
 		[FightEnum.EffectType.CRIT] = true,
 		[FightEnum.EffectType.SHIELD] = true
 	},
-	[var_0_2] = {
+	[TypeHealEffect] = {
 		[FightEnum.EffectType.HEAL] = true,
 		[FightEnum.EffectType.HEALCRIT] = true
 	}
 }
 
-function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	if arg_1_0.type == var_0_1 and not FightHelper.detectTimelinePlayEffectCondition(arg_1_1, arg_1_3[8]) then
+function FightTLEventDefEffect:onTrackStart(fightStepData, duration, paramsArr)
+	if self.type == TypeDefEffect and not FightHelper.detectTimelinePlayEffectCondition(fightStepData, paramsArr[8]) then
 		return
 	end
 
-	arg_1_0.fightStepData = arg_1_1
+	self.fightStepData = fightStepData
 
-	local var_1_0 = arg_1_3[1]
+	local effectName = paramsArr[1]
 
-	if string.nilorempty(var_1_0) then
-		local var_1_1 = FightConfig.instance:getSkinSkillTimeline(nil, arg_1_1.actId)
+	if string.nilorempty(effectName) then
+		local timeline = FightConfig.instance:getSkinSkillTimeline(nil, fightStepData.actId)
 
-		logError("受击特效名字为空，检查一下技能的timeline：" .. (var_1_1 or "nil"))
+		logError("受击特效名字为空，检查一下技能的timeline：" .. (timeline or "nil"))
 
 		return
 	end
 
-	if not string.nilorempty(arg_1_3[10]) then
-		local var_1_2 = FightHelper.getEntity(arg_1_0.fightStepData.fromId):getMO()
-		local var_1_3 = var_1_2 and var_1_2.skin
+	if not string.nilorempty(paramsArr[10]) then
+		local attacker = FightHelper.getEntity(self.fightStepData.fromId)
+		local entityMO = attacker:getMO()
+		local skinId = entityMO and entityMO.skin
 
-		if var_1_3 then
-			local var_1_4 = string.split(arg_1_3[10], "|")
+		if skinId then
+			local skinArr = string.split(paramsArr[10], "|")
 
-			for iter_1_0, iter_1_1 in ipairs(var_1_4) do
-				local var_1_5 = string.split(iter_1_1, "#")
+			for i, v in ipairs(skinArr) do
+				local arr = string.split(v, "#")
 
-				if tonumber(var_1_5[1]) == var_1_3 then
-					var_1_0 = var_1_5[2]
+				if tonumber(arr[1]) == skinId then
+					effectName = arr[2]
 
 					break
 				end
@@ -52,49 +55,47 @@ function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 		end
 	end
 
-	local var_1_6 = arg_1_3[2]
-	local var_1_7 = arg_1_3[3]
-	local var_1_8 = 0
-	local var_1_9 = 0
-	local var_1_10 = 0
+	local hangPoint = paramsArr[2]
+	local notHangCenter = paramsArr[3]
+	local offsetX, offsetY, offsetZ = 0, 0, 0
 
-	if arg_1_3[4] then
-		local var_1_11 = string.split(arg_1_3[4], ",")
+	if paramsArr[4] then
+		local arr = string.split(paramsArr[4], ",")
 
-		var_1_8 = var_1_11[1] and tonumber(var_1_11[1]) or var_1_8
-		var_1_9 = var_1_11[2] and tonumber(var_1_11[2]) or var_1_9
-		var_1_10 = var_1_11[3] and tonumber(var_1_11[3]) or var_1_10
+		offsetX = arr[1] and tonumber(arr[1]) or offsetX
+		offsetY = arr[2] and tonumber(arr[2]) or offsetY
+		offsetZ = arr[3] and tonumber(arr[3]) or offsetZ
 	end
 
-	local var_1_12 = tonumber(arg_1_3[5]) or -1
+	local renderOrder = tonumber(paramsArr[5]) or -1
 
-	arg_1_0._act_on_index_entity = arg_1_3[6] and tonumber(arg_1_3[6])
+	self._act_on_index_entity = paramsArr[6] and tonumber(paramsArr[6])
 
-	local var_1_13 = arg_1_3[7]
-	local var_1_14 = arg_1_0.fightStepData.actEffect
+	local dontSkillEffectIdStr = paramsArr[7]
+	local invoke_list = self.fightStepData.actEffect
 
-	if arg_1_0._act_on_index_entity then
-		var_1_14 = FightHelper.dealDirectActEffectData(arg_1_0.fightStepData.actEffect, arg_1_0._act_on_index_entity, var_0_3[arg_1_0.type])
+	if self._act_on_index_entity then
+		invoke_list = FightHelper.dealDirectActEffectData(self.fightStepData.actEffect, self._act_on_index_entity, EffectTypes[self.type])
 	end
 
-	local var_1_15 = var_0_3[arg_1_0.type]
-	local var_1_16
+	local needProcessTypes = EffectTypes[self.type]
+	local _monster_scale_effect
 
-	arg_1_0._monster_scale_dic = nil
+	self._monster_scale_dic = nil
 
-	local var_1_17 = lua_skin_monster_scale.configDict[arg_1_1.actId]
+	local config = lua_skin_monster_scale.configDict[fightStepData.actId]
 
-	if var_1_17 then
-		local var_1_18 = string.split(var_1_17.effectName, "#")
+	if config then
+		local effect_names = string.split(config.effectName, "#")
 
-		for iter_1_2, iter_1_3 in ipairs(var_1_18) do
-			if iter_1_3 == var_1_0 then
-				var_1_16 = {}
+		for index, name in ipairs(effect_names) do
+			if name == effectName then
+				_monster_scale_effect = {}
 
-				local var_1_19 = string.splitToNumber(var_1_17.monsterId, "#")
+				local arr = string.splitToNumber(config.monsterId, "#")
 
-				for iter_1_4, iter_1_5 in ipairs(var_1_19) do
-					var_1_16[iter_1_5] = var_1_17.scale
+				for i, v in ipairs(arr) do
+					_monster_scale_effect[v] = config.scale
 				end
 
 				break
@@ -102,160 +103,158 @@ function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 		end
 	end
 
-	for iter_1_6, iter_1_7 in ipairs(var_1_14) do
-		if var_1_15[iter_1_7.effectType] and (arg_1_0.type == var_0_2 or var_1_13 ~= tostring(iter_1_7.configEffect)) then
-			local var_1_20 = FightHelper.getEntity(iter_1_7.targetId)
+	for _, actEffectData in ipairs(invoke_list) do
+		if needProcessTypes[actEffectData.effectType] and (self.type == TypeHealEffect or dontSkillEffectIdStr ~= tostring(actEffectData.configEffect)) then
+			local oneDefender = FightHelper.getEntity(actEffectData.targetId)
 
-			if var_1_20 then
-				local var_1_21 = true
+			if oneDefender then
+				local can_play_effect = true
 
-				if arg_1_0.type == var_0_1 and not FightHelper.detectTimelinePlayEffectCondition(arg_1_1, arg_1_3[8], var_1_20) then
-					var_1_21 = false
+				if self.type == TypeDefEffect and not FightHelper.detectTimelinePlayEffectCondition(fightStepData, paramsArr[8], oneDefender) then
+					can_play_effect = false
 				end
 
-				if iter_1_7.effectType == FightEnum.EffectType.SHIELD and not FightHelper.checkShieldHit(iter_1_7) then
-					var_1_21 = false
+				if actEffectData.effectType == FightEnum.EffectType.SHIELD and not FightHelper.checkShieldHit(actEffectData) then
+					can_play_effect = false
 				end
 
-				if var_1_21 and (not arg_1_0._defenderEffectWrapDict or not arg_1_0._defenderEffectWrapDict[var_1_20]) then
-					if var_1_16 and var_1_16[var_1_20:getMO().skin] then
-						arg_1_0._monster_scale_dic = {}
-						arg_1_0._monster_scale_dic[var_1_20.id] = var_1_16[var_1_20:getMO().skin]
+				if can_play_effect and (not self._defenderEffectWrapDict or not self._defenderEffectWrapDict[oneDefender]) then
+					if _monster_scale_effect and _monster_scale_effect[oneDefender:getMO().skin] then
+						self._monster_scale_dic = {}
+						self._monster_scale_dic[oneDefender.id] = _monster_scale_effect[oneDefender:getMO().skin]
 					else
-						local var_1_22 = arg_1_0:_createHitEffect(var_1_20, var_1_0, var_1_6, var_1_7, var_1_8, var_1_9, var_1_10)
+						local effectWrap = self:_createHitEffect(oneDefender, effectName, hangPoint, notHangCenter, offsetX, offsetY, offsetZ)
 
-						arg_1_0:_setRenderOrder(var_1_20.id, var_1_22, var_1_12)
+						self:_setRenderOrder(oneDefender.id, effectWrap, renderOrder)
 
-						arg_1_0._defenderEffectWrapDict = arg_1_0._defenderEffectWrapDict or {}
-						arg_1_0._defenderEffectWrapDict[var_1_20] = var_1_22
+						self._defenderEffectWrapDict = self._defenderEffectWrapDict or {}
+						self._defenderEffectWrapDict[oneDefender] = effectWrap
 					end
 				end
 			else
-				logNormal("play defender effect fail, entity not exist: " .. iter_1_7.targetId)
+				logNormal("play defender effect fail, entity not exist: " .. actEffectData.targetId)
 			end
 		end
 	end
 
-	if arg_1_0._monster_scale_dic then
-		local var_1_23 = false
-		local var_1_24 = 1
+	if self._monster_scale_dic then
+		local combinative = false
+		local tar_scale = 1
 
-		for iter_1_8, iter_1_9 in pairs(arg_1_0._monster_scale_dic) do
-			local var_1_25 = FightHelper.getEntity(iter_1_8)
+		for entity_id, scale in pairs(self._monster_scale_dic) do
+			local tar_entity = FightHelper.getEntity(entity_id)
 
-			var_1_25:setScale(iter_1_9)
+			tar_entity:setScale(scale)
 
-			local var_1_26 = var_1_25:getMO()
+			local entity_mo = tar_entity:getMO()
 
-			if var_1_26 then
-				local var_1_27 = FightConfig.instance:getSkinCO(var_1_26.skin)
+			if entity_mo then
+				local skin_config = FightConfig.instance:getSkinCO(entity_mo.skin)
 
-				if var_1_27 and var_1_27.canHide == 1 then
-					var_1_23 = var_1_25
-					var_1_24 = iter_1_9
+				if skin_config and skin_config.canHide == 1 then
+					combinative = tar_entity
+					tar_scale = scale
 
 					break
 				end
 			end
 		end
 
-		if var_1_23 then
-			FightHelper.refreshCombinativeMonsterScaleAndPos(var_1_23, var_1_24)
+		if combinative then
+			FightHelper.refreshCombinativeMonsterScaleAndPos(combinative, tar_scale)
 
-			arg_1_0._revert_combinative_position = var_1_23
+			self._revert_combinative_position = combinative
 		end
 	end
 
-	if not string.nilorempty(arg_1_3[9]) then
-		AudioMgr.instance:trigger(tonumber(arg_1_3[9]))
+	if not string.nilorempty(paramsArr[9]) then
+		AudioMgr.instance:trigger(tonumber(paramsArr[9]))
 	end
 end
 
-function var_0_0.onTrackEnd(arg_2_0)
-	arg_2_0:_removeEffect()
+function FightTLEventDefEffect:onTrackEnd()
+	self:_removeEffect()
 end
 
-function var_0_0._createHitEffect(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5, arg_3_6, arg_3_7)
-	local var_3_0 = FightHelper.getEntity(arg_3_0.fightStepData.fromId)
-	local var_3_1
+function FightTLEventDefEffect:_createHitEffect(defender, effectName, hangPoint, notHangCenter, offsetX, offsetY, offsetZ)
+	local attacker = FightHelper.getEntity(self.fightStepData.fromId)
+	local effectWrap
 
-	if not string.nilorempty(arg_3_3) then
-		var_3_1 = arg_3_1.effect:addHangEffect(arg_3_2, arg_3_3, var_3_0:getSide())
+	if not string.nilorempty(hangPoint) then
+		effectWrap = defender.effect:addHangEffect(effectName, hangPoint, attacker:getSide())
 
-		var_3_1:setLocalPos(arg_3_5, arg_3_6, arg_3_7)
+		effectWrap:setLocalPos(offsetX, offsetY, offsetZ)
 	else
-		var_3_1 = arg_3_1.effect:addGlobalEffect(arg_3_2, var_3_0:getSide())
+		effectWrap = defender.effect:addGlobalEffect(effectName, attacker:getSide())
 
-		local var_3_2
-		local var_3_3
-		local var_3_4
+		local posX, posY, posZ
 
-		if arg_3_4 == "0" then
-			var_3_2, var_3_3, var_3_4 = FightHelper.getEntityWorldBottomPos(arg_3_1)
-		elseif arg_3_4 == "1" then
-			var_3_2, var_3_3, var_3_4 = FightHelper.getEntityWorldCenterPos(arg_3_1)
-		elseif arg_3_4 == "2" then
-			var_3_2, var_3_3, var_3_4 = FightHelper.getEntityWorldTopPos(arg_3_1)
-		elseif arg_3_4 == "3" then
-			var_3_2, var_3_3, var_3_4 = FightHelper.getProcessEntitySpinePos(arg_3_1)
+		if notHangCenter == "0" then
+			posX, posY, posZ = FightHelper.getEntityWorldBottomPos(defender)
+		elseif notHangCenter == "1" then
+			posX, posY, posZ = FightHelper.getEntityWorldCenterPos(defender)
+		elseif notHangCenter == "2" then
+			posX, posY, posZ = FightHelper.getEntityWorldTopPos(defender)
+		elseif notHangCenter == "3" then
+			posX, posY, posZ = FightHelper.getProcessEntitySpinePos(defender)
 		else
-			local var_3_5 = not string.nilorempty(arg_3_4) and arg_3_1:getHangPoint(arg_3_4)
+			local hangPointGO = not string.nilorempty(notHangCenter) and defender:getHangPoint(notHangCenter)
 
-			if var_3_5 then
-				local var_3_6 = var_3_5.transform.position
+			if hangPointGO then
+				local hangPointPosition = hangPointGO.transform.position
 
-				var_3_2, var_3_3, var_3_4 = var_3_6.x, var_3_6.y, var_3_6.z
+				posX, posY, posZ = hangPointPosition.x, hangPointPosition.y, hangPointPosition.z
 			else
-				var_3_2, var_3_3, var_3_4 = FightHelper.getEntityWorldCenterPos(arg_3_1)
+				posX, posY, posZ = FightHelper.getEntityWorldCenterPos(defender)
 			end
 		end
 
-		local var_3_7 = arg_3_1:isMySide() and -arg_3_5 or arg_3_5
+		local offsetX2 = defender:isMySide() and -offsetX or offsetX
 
-		var_3_1:setWorldPos(var_3_2 + var_3_7, var_3_3 + arg_3_6, var_3_4 + arg_3_7)
+		effectWrap:setWorldPos(posX + offsetX2, posY + offsetY, posZ + offsetZ)
 	end
 
-	return var_3_1
+	return effectWrap
 end
 
-function var_0_0._setRenderOrder(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	if arg_4_3 == -1 then
-		FightRenderOrderMgr.instance:onAddEffectWrap(arg_4_1, arg_4_2)
+function FightTLEventDefEffect:_setRenderOrder(entityId, effectWrap, renderOrder)
+	if renderOrder == -1 then
+		FightRenderOrderMgr.instance:onAddEffectWrap(entityId, effectWrap)
 	else
-		FightRenderOrderMgr.instance:setEffectOrder(arg_4_2, arg_4_3)
+		FightRenderOrderMgr.instance:setEffectOrder(effectWrap, renderOrder)
 	end
 end
 
-function var_0_0.onDestructor(arg_5_0)
-	arg_5_0:_removeEffect()
+function FightTLEventDefEffect:onDestructor()
+	self:_removeEffect()
 end
 
-function var_0_0._removeEffect(arg_6_0)
-	if arg_6_0._defenderEffectWrapDict then
-		for iter_6_0, iter_6_1 in pairs(arg_6_0._defenderEffectWrapDict) do
-			FightRenderOrderMgr.instance:onRemoveEffectWrap(iter_6_0.id, iter_6_1)
-			iter_6_0.effect:removeEffect(iter_6_1)
+function FightTLEventDefEffect:_removeEffect()
+	if self._defenderEffectWrapDict then
+		for defender, effectWrap in pairs(self._defenderEffectWrapDict) do
+			FightRenderOrderMgr.instance:onRemoveEffectWrap(defender.id, effectWrap)
+			defender.effect:removeEffect(effectWrap)
 		end
 
-		arg_6_0._defenderEffectWrapDict = nil
+		self._defenderEffectWrapDict = nil
 	end
 
-	if arg_6_0._monster_scale_dic then
-		for iter_6_2, iter_6_3 in pairs(arg_6_0._monster_scale_dic) do
-			local var_6_0 = FightHelper.getEntity(iter_6_2)
+	if self._monster_scale_dic then
+		for entity_id, v in pairs(self._monster_scale_dic) do
+			local tar_entity = FightHelper.getEntity(entity_id)
 
-			if var_6_0 then
-				var_6_0:setScale(1)
+			if tar_entity then
+				tar_entity:setScale(1)
 			end
 		end
 
-		if arg_6_0._revert_combinative_position then
-			FightHelper.refreshCombinativeMonsterScaleAndPos(arg_6_0._revert_combinative_position, 1)
+		if self._revert_combinative_position then
+			FightHelper.refreshCombinativeMonsterScaleAndPos(self._revert_combinative_position, 1)
 		end
 	end
 
-	arg_6_0._revert_combinative_position = nil
-	arg_6_0._monster_scale_dic = nil
+	self._revert_combinative_position = nil
+	self._monster_scale_dic = nil
 end
 
-return var_0_0
+return FightTLEventDefEffect

@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.view.Activity114ScoreReportViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/view/Activity114ScoreReportViewContainer.lua
 
-local var_0_0 = class("Activity114ScoreReportViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_2.jiexika.view.Activity114ScoreReportViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local Activity114ScoreReportViewContainer = class("Activity114ScoreReportViewContainer", BaseViewContainer)
+
+function Activity114ScoreReportViewContainer:buildViews()
 	return {
 		Activity114ScoreReportView.New()
 	}
 end
 
-return var_0_0
+return Activity114ScoreReportViewContainer

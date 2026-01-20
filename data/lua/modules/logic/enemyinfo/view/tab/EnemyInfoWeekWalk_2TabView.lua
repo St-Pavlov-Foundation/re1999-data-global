@@ -1,136 +1,144 @@
-﻿module("modules.logic.enemyinfo.view.tab.EnemyInfoWeekWalk_2TabView", package.seeall)
+﻿-- chunkname: @modules/logic/enemyinfo/view/tab/EnemyInfoWeekWalk_2TabView.lua
 
-local var_0_0 = class("EnemyInfoWeekWalk_2TabView", UserDataDispose)
+module("modules.logic.enemyinfo.view.tab.EnemyInfoWeekWalk_2TabView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.goweekwalktab = gohelper.findChild(arg_1_0.viewGO, "#go_tab_container/#go_weekwalkhearttab")
-	arg_1_0.simagebattlelistbg = gohelper.findChildSingleImage(arg_1_0.goweekwalktab, "#simage_battlelistbg")
-	arg_1_0.gobattleitem = gohelper.findChild(arg_1_0.goweekwalktab, "scroll_battle/Viewport/battlelist/#go_battlebtntemplate")
+local EnemyInfoWeekWalk_2TabView = class("EnemyInfoWeekWalk_2TabView", UserDataDispose)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function EnemyInfoWeekWalk_2TabView:onInitView()
+	self.goweekwalktab = gohelper.findChild(self.viewGO, "#go_tab_container/#go_weekwalkhearttab")
+	self.simagebattlelistbg = gohelper.findChildSingleImage(self.goweekwalktab, "#simage_battlelistbg")
+	self.gobattleitem = gohelper.findChild(self.goweekwalktab, "scroll_battle/Viewport/battlelist/#go_battlebtntemplate")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function EnemyInfoWeekWalk_2TabView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function EnemyInfoWeekWalk_2TabView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	gohelper.setActive(arg_4_0.gobattleitem, false)
+function EnemyInfoWeekWalk_2TabView:_editableInitView()
+	gohelper.setActive(self.gobattleitem, false)
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0._mapId = arg_5_0.viewParam.mapId
+function EnemyInfoWeekWalk_2TabView:onOpen()
+	self._mapId = self.viewParam.mapId
 
-	local var_5_0 = WeekWalk_2Model.instance:getInfo():getLayerInfo(arg_5_0._mapId)
-	local var_5_1 = var_5_0.battleIds
-	local var_5_2 = arg_5_0.viewParam.selectBattleId or var_5_1[1]
+	local info = WeekWalk_2Model.instance:getInfo()
+	local mapInfo = info:getLayerInfo(self._mapId)
+	local battleIds = mapInfo.battleIds
+	local selectBattleId = self.viewParam.selectBattleId or battleIds[1]
 
-	arg_5_0._battleIds = var_5_1
-	arg_5_0._btnList = {}
-	arg_5_0._statusList = {}
+	self._battleIds = battleIds
+	self._btnList = {}
+	self._statusList = {}
 
-	local var_5_3 = 5
-	local var_5_4 = math.min(var_5_3, #var_5_0.battleInfos)
-	local var_5_5 = WeekWalk_2Enum.MaxStar
+	local maxIndex = 5
+	local showIndex = maxIndex
 
-	for iter_5_0 = 1, var_5_4 do
-		local var_5_6 = gohelper.cloneInPlace(arg_5_0.gobattleitem).gameObject
-		local var_5_7 = gohelper.findChildButton(var_5_6, "btn")
-		local var_5_8 = gohelper.findChildText(var_5_6, "txt")
-		local var_5_9 = gohelper.findChild(var_5_6, "selectIcon")
+	showIndex = math.min(showIndex, #mapInfo.battleInfos)
 
-		var_5_8.text = "0" .. iter_5_0
+	local mapMaxStarNum = WeekWalk_2Enum.MaxStar
 
-		local var_5_10 = var_5_1[iter_5_0]
-		local var_5_11 = var_5_0:getBattleInfoByBattleId(var_5_10)
-		local var_5_12 = gohelper.findChild(var_5_6, "star2")
-		local var_5_13 = gohelper.findChild(var_5_6, "star3")
-		local var_5_14 = var_5_5 <= 2 and var_5_12 or var_5_13
+	for i = 1, showIndex do
+		local container = gohelper.cloneInPlace(self.gobattleitem)
+		local go = container.gameObject
+		local btn = gohelper.findChildButton(go, "btn")
+		local txt = gohelper.findChildText(go, "txt")
+		local selectIcon = gohelper.findChild(go, "selectIcon")
 
-		gohelper.setActive(var_5_12, false)
-		gohelper.setActive(var_5_13, false)
-		gohelper.setActive(var_5_14, true)
+		txt.text = "0" .. i
 
-		local var_5_15 = var_5_14.transform
-		local var_5_16 = var_5_15.childCount
-		local var_5_17 = {
-			var_5_9,
-			var_5_8
+		local battleId = battleIds[i]
+		local battleInfo = mapInfo:getBattleInfoByBattleId(battleId)
+		local starGo2 = gohelper.findChild(go, "star2")
+		local starGo3 = gohelper.findChild(go, "star3")
+		local starGo = mapMaxStarNum <= 2 and starGo2 or starGo3
+
+		gohelper.setActive(starGo2, false)
+		gohelper.setActive(starGo3, false)
+		gohelper.setActive(starGo, true)
+
+		local transform = starGo.transform
+		local itemCount = transform.childCount
+		local statusTable = {
+			selectIcon,
+			txt
 		}
 
-		for iter_5_1 = 1, var_5_16 do
-			local var_5_18 = var_5_15:GetChild(iter_5_1 - 1):GetComponentInChildren(gohelper.Type_Image)
+		for index = 1, itemCount do
+			local child = transform:GetChild(index - 1)
+			local image = child:GetComponentInChildren(gohelper.Type_Image)
 
-			var_5_18.enabled = false
+			image.enabled = false
 
-			local var_5_19 = arg_5_0.tabParentView:getResInst(arg_5_0.viewContainer._viewSetting.otherRes.weekwalkheart_star, var_5_18.gameObject)
+			local icon1Effect = self.tabParentView:getResInst(self.viewContainer._viewSetting.otherRes.weekwalkheart_star, image.gameObject)
 
-			WeekWalk_2Helper.setCupEffect(var_5_19, var_5_11:getCupInfo(iter_5_1))
-			table.insert(var_5_17, var_5_18)
+			WeekWalk_2Helper.setCupEffect(icon1Effect, battleInfo:getCupInfo(index))
+			table.insert(statusTable, image)
 		end
 
-		var_5_7:AddClickListener(arg_5_0.selectBattleId, arg_5_0, var_5_10)
-		gohelper.setActive(var_5_6, true)
-		table.insert(arg_5_0._statusList, var_5_17)
-		table.insert(arg_5_0._btnList, var_5_7)
+		btn:AddClickListener(self.selectBattleId, self, battleId)
+		gohelper.setActive(go, true)
+		table.insert(self._statusList, statusTable)
+		table.insert(self._btnList, btn)
 	end
 
-	gohelper.setActive(arg_5_0.goweekwalktab, true)
-	arg_5_0.enemyInfoMo:setShowLeftTab(true)
-	arg_5_0:selectBattleId(var_5_2)
+	gohelper.setActive(self.goweekwalktab, true)
+	self.enemyInfoMo:setShowLeftTab(true)
+	self:selectBattleId(selectBattleId)
 end
 
-function var_0_0.selectBattleId(arg_6_0, arg_6_1)
-	arg_6_0.enemyInfoMo:updateBattleId(arg_6_1)
+function EnemyInfoWeekWalk_2TabView:selectBattleId(battleId)
+	self.enemyInfoMo:updateBattleId(battleId)
 
-	if not arg_6_0._statusList then
+	if not self._statusList then
 		return
 	end
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0._battleIds) do
-		local var_6_0 = iter_6_1 == arg_6_1
-		local var_6_1 = arg_6_0._statusList[iter_6_0]
+	for i, v in ipairs(self._battleIds) do
+		local isSelected = v == battleId
+		local t = self._statusList[i]
 
-		if not var_6_1 then
+		if not t then
 			break
 		end
 
-		gohelper.setActive(var_6_1[1], var_6_0)
+		gohelper.setActive(t[1], isSelected)
 
-		if var_6_0 then
-			SLFramework.UGUI.GuiHelper.SetColor(var_6_1[2], "#FFFFFF")
-			SLFramework.UGUI.GuiHelper.SetColor(var_6_1[3], "#FFFFFF")
-			SLFramework.UGUI.GuiHelper.SetColor(var_6_1[4], "#FFFFFF")
+		if isSelected then
+			SLFramework.UGUI.GuiHelper.SetColor(t[2], "#FFFFFF")
+			SLFramework.UGUI.GuiHelper.SetColor(t[3], "#FFFFFF")
+			SLFramework.UGUI.GuiHelper.SetColor(t[4], "#FFFFFF")
 		else
-			SLFramework.UGUI.GuiHelper.SetColor(var_6_1[2], "#6c6f64")
-			SLFramework.UGUI.GuiHelper.SetColor(var_6_1[3], "#C1C5B6")
-			SLFramework.UGUI.GuiHelper.SetColor(var_6_1[4], "#C1C5B6")
+			SLFramework.UGUI.GuiHelper.SetColor(t[2], "#6c6f64")
+			SLFramework.UGUI.GuiHelper.SetColor(t[3], "#C1C5B6")
+			SLFramework.UGUI.GuiHelper.SetColor(t[4], "#C1C5B6")
 		end
 
-		if var_6_1[5] then
-			SLFramework.UGUI.GuiHelper.SetColor(var_6_1[5], var_6_0 and "#FFFFFF" or "#C1C5B6")
+		if t[5] then
+			SLFramework.UGUI.GuiHelper.SetColor(t[5], isSelected and "#FFFFFF" or "#C1C5B6")
 		end
 	end
 end
 
-function var_0_0.onClose(arg_7_0)
+function EnemyInfoWeekWalk_2TabView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_8_0)
-	arg_8_0.simagebattlelistbg:UnLoadImage()
+function EnemyInfoWeekWalk_2TabView:onDestroyView()
+	self.simagebattlelistbg:UnLoadImage()
 
-	if arg_8_0._btnList then
-		for iter_8_0, iter_8_1 in ipairs(arg_8_0._btnList) do
-			iter_8_1:RemoveClickListener()
+	if self._btnList then
+		for _, v in ipairs(self._btnList) do
+			v:RemoveClickListener()
 		end
 	end
 end
 
-return var_0_0
+return EnemyInfoWeekWalk_2TabView

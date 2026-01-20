@@ -1,20 +1,22 @@
-﻿module("modules.logic.sp01.assassin2.story.dungeon.VersionActivity2_9FightSuccViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/story/dungeon/VersionActivity2_9FightSuccViewContainer.lua
 
-local var_0_0 = class("VersionActivity2_9FightSuccViewContainer", FightSuccViewContainer)
+module("modules.logic.sp01.assassin2.story.dungeon.VersionActivity2_9FightSuccViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	arg_1_0.fightSuccActView = FightSuccActView.New()
+local VersionActivity2_9FightSuccViewContainer = class("VersionActivity2_9FightSuccViewContainer", FightSuccViewContainer)
 
-	local var_1_0 = {
+function VersionActivity2_9FightSuccViewContainer:buildViews()
+	self.fightSuccActView = FightSuccActView.New()
+
+	local views = {
 		VersionActivity2_9FightSuccView.New(),
-		arg_1_0.fightSuccActView
+		self.fightSuccActView
 	}
 
 	if isDebugBuild and GMBattleModel.instance.enableGMFightRecord then
-		table.insert(var_1_0, FightGMRecordView.New())
+		table.insert(views, FightGMRecordView.New())
 	end
 
-	return var_1_0
+	return views
 end
 
-return var_0_0
+return VersionActivity2_9FightSuccViewContainer

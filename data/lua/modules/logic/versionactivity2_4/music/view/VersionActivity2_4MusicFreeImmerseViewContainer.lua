@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicFreeImmerseViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/music/view/VersionActivity2_4MusicFreeImmerseViewContainer.lua
 
-local var_0_0 = class("VersionActivity2_4MusicFreeImmerseViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicFreeImmerseViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local VersionActivity2_4MusicFreeImmerseViewContainer = class("VersionActivity2_4MusicFreeImmerseViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, VersionActivity2_4MusicFreeImmerseView.New())
+function VersionActivity2_4MusicFreeImmerseViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, VersionActivity2_4MusicFreeImmerseView.New())
+
+	return views
 end
 
-return var_0_0
+return VersionActivity2_4MusicFreeImmerseViewContainer

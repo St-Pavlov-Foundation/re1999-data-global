@@ -1,29 +1,31 @@
-﻿module("modules.logic.jump.model.JumpModel", package.seeall)
+﻿-- chunkname: @modules/logic/jump/model/JumpModel.lua
 
-local var_0_0 = class("JumpModel", BaseModel)
+module("modules.logic.jump.model.JumpModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local JumpModel = class("JumpModel", BaseModel)
+
+function JumpModel:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._recordFarmItem = nil
-	arg_2_0.jumpFromFightScene = nil
-	arg_2_0.jumpFromFightSceneParam = nil
+function JumpModel:reInit()
+	self._recordFarmItem = nil
+	self.jumpFromFightScene = nil
+	self.jumpFromFightSceneParam = nil
 end
 
-function var_0_0.setRecordFarmItem(arg_3_0, arg_3_1)
-	arg_3_0._recordFarmItem = arg_3_1
+function JumpModel:setRecordFarmItem(recordFarmItem)
+	self._recordFarmItem = recordFarmItem
 end
 
-function var_0_0.getRecordFarmItem(arg_4_0)
-	return arg_4_0._recordFarmItem
+function JumpModel:getRecordFarmItem()
+	return self._recordFarmItem
 end
 
-function var_0_0.clearRecordFarmItem(arg_5_0)
-	arg_5_0._recordFarmItem = nil
+function JumpModel:clearRecordFarmItem()
+	self._recordFarmItem = nil
 end
 
-var_0_0.instance = var_0_0.New()
+JumpModel.instance = JumpModel.New()
 
-return var_0_0
+return JumpModel

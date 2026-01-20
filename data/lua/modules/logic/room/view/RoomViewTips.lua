@@ -1,223 +1,225 @@
-﻿module("modules.logic.room.view.RoomViewTips", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomViewTips.lua
 
-local var_0_0 = class("RoomViewTips", BaseView)
+module("modules.logic.room.view.RoomViewTips", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnfishingResources = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_normalroot/btn_fishingResource")
-	arg_1_0._gotips = gohelper.findChild(arg_1_0.viewGO, "go_normalroot/#go_tips")
-	arg_1_0._btntipsmask = gohelper.findChildClickWithAudio(arg_1_0.viewGO, "go_normalroot/#go_tips/#btn_tipsMask")
-	arg_1_0._goresrourcestips = gohelper.findChild(arg_1_0.viewGO, "go_normalroot/#go_tips/#go_resourcesTip")
-	arg_1_0._goresourcesitem = gohelper.findChild(arg_1_0.viewGO, "go_normalroot/#go_tips/#go_resourcesTip/#go_Item")
-	arg_1_0._gofishingtips = gohelper.findChild(arg_1_0.viewGO, "go_normalroot/#go_tips/#go_fishingTip")
-	arg_1_0._gofishingContent = gohelper.findChild(arg_1_0.viewGO, "go_normalroot/#go_tips/#go_fishingTip/List")
-	arg_1_0._gofishingItem = gohelper.findChild(arg_1_0.viewGO, "go_normalroot/#go_tips/#go_fishingTip/List/#go_Item")
-	arg_1_0.resTipAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_1_0._goresrourcestips)
-	arg_1_0.fishingTipAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_1_0._gofishingtips)
+local RoomViewTips = class("RoomViewTips", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomViewTips:onInitView()
+	self._btnfishingResources = gohelper.findChildButtonWithAudio(self.viewGO, "go_normalroot/btn_fishingResource")
+	self._gotips = gohelper.findChild(self.viewGO, "go_normalroot/#go_tips")
+	self._btntipsmask = gohelper.findChildClickWithAudio(self.viewGO, "go_normalroot/#go_tips/#btn_tipsMask")
+	self._goresrourcestips = gohelper.findChild(self.viewGO, "go_normalroot/#go_tips/#go_resourcesTip")
+	self._goresourcesitem = gohelper.findChild(self.viewGO, "go_normalroot/#go_tips/#go_resourcesTip/#go_Item")
+	self._gofishingtips = gohelper.findChild(self.viewGO, "go_normalroot/#go_tips/#go_fishingTip")
+	self._gofishingContent = gohelper.findChild(self.viewGO, "go_normalroot/#go_tips/#go_fishingTip/List")
+	self._gofishingItem = gohelper.findChild(self.viewGO, "go_normalroot/#go_tips/#go_fishingTip/List/#go_Item")
+	self.resTipAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(self._goresrourcestips)
+	self.fishingTipAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(self._gofishingtips)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnfishingResources:AddClickListener(arg_2_0._btnFishingResourcesOnClick, arg_2_0)
-	arg_2_0._btntipsmask:AddClickListener(arg_2_0._btnTipsMaskOnClick, arg_2_0)
-	arg_2_0:addEventCb(FishingController.instance, FishingEvent.OnFishingInfoUpdate, arg_2_0._onFishingInfoUpdate, arg_2_0)
-	arg_2_0:addEventCb(FishingController.instance, FishingEvent.ShowFishingTip, arg_2_0._onShowFishingTip, arg_2_0)
-	arg_2_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_2_0._onCurrencyChange, arg_2_0)
+function RoomViewTips:addEvents()
+	self._btnfishingResources:AddClickListener(self._btnFishingResourcesOnClick, self)
+	self._btntipsmask:AddClickListener(self._btnTipsMaskOnClick, self)
+	self:addEventCb(FishingController.instance, FishingEvent.OnFishingInfoUpdate, self._onFishingInfoUpdate, self)
+	self:addEventCb(FishingController.instance, FishingEvent.ShowFishingTip, self._onShowFishingTip, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._onCurrencyChange, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnfishingResources:RemoveClickListener()
-	arg_3_0._btntipsmask:RemoveClickListener()
-	arg_3_0:removeEventCb(FishingController.instance, FishingEvent.OnFishingInfoUpdate, arg_3_0._onFishingInfoUpdate, arg_3_0)
-	arg_3_0:removeEventCb(FishingController.instance, FishingEvent.ShowFishingTip, arg_3_0._onShowFishingTip, arg_3_0)
-	arg_3_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_3_0._onCurrencyChange, arg_3_0)
+function RoomViewTips:removeEvents()
+	self._btnfishingResources:RemoveClickListener()
+	self._btntipsmask:RemoveClickListener()
+	self:removeEventCb(FishingController.instance, FishingEvent.OnFishingInfoUpdate, self._onFishingInfoUpdate, self)
+	self:removeEventCb(FishingController.instance, FishingEvent.ShowFishingTip, self._onShowFishingTip, self)
+	self:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._onCurrencyChange, self)
 end
 
-function var_0_0._btnFishingResourcesOnClick(arg_4_0)
-	local var_4_0 = FishingModel.instance:getBackpackItemList()
+function RoomViewTips:_btnFishingResourcesOnClick()
+	local resourceList = FishingModel.instance:getBackpackItemList()
 
-	if #var_4_0 <= 0 then
+	if #resourceList <= 0 then
 		GameFacade.showToast(ToastEnum.NoRoomFishingResources)
 
 		return
 	end
 
-	arg_4_0._showFishingResourcesTip = not arg_4_0._showFishingResourcesTip
+	self._showFishingResourcesTip = not self._showFishingResourcesTip
 
-	if arg_4_0._showFishingResourcesTip then
-		gohelper.CreateObjList(arg_4_0, arg_4_0._onFishingResourceItemShow, var_4_0, arg_4_0._goresrourcestips, arg_4_0._goresourcesitem, RoomFishingResourceItem)
-		arg_4_0:_checkResourcesTipShow()
-		arg_4_0.resTipAnimatorPlayer:Play(UIAnimationName.Open)
+	if self._showFishingResourcesTip then
+		gohelper.CreateObjList(self, self._onFishingResourceItemShow, resourceList, self._goresrourcestips, self._goresourcesitem, RoomFishingResourceItem)
+		self:_checkResourcesTipShow()
+		self.resTipAnimatorPlayer:Play(UIAnimationName.Open)
 	else
-		arg_4_0.resTipAnimatorPlayer:Play(UIAnimationName.Close, arg_4_0._checkResourcesTipShow, arg_4_0)
+		self.resTipAnimatorPlayer:Play(UIAnimationName.Close, self._checkResourcesTipShow, self)
 	end
 
-	arg_4_0:refreshTipMask()
+	self:refreshTipMask()
 end
 
-function var_0_0._onFishingResourceItemShow(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	arg_5_1:onUpdateMO(arg_5_2)
-	arg_5_1:setCanClick(true)
+function RoomViewTips:_onFishingResourceItemShow(obj, data, index)
+	obj:onUpdateMO(data)
+	obj:setCanClick(true)
 end
 
-function var_0_0._checkResourcesTipShow(arg_6_0)
-	gohelper.setActive(arg_6_0._goresrourcestips, arg_6_0._showFishingResourcesTip)
+function RoomViewTips:_checkResourcesTipShow()
+	gohelper.setActive(self._goresrourcestips, self._showFishingResourcesTip)
 end
 
-function var_0_0._btnFishOnClick(arg_7_0, arg_7_1)
-	FishingController.instance:beginFishing(arg_7_1)
+function RoomViewTips:_btnFishOnClick(times)
+	FishingController.instance:beginFishing(times)
 end
 
-function var_0_0._btnTipsMaskOnClick(arg_8_0)
-	if arg_8_0._showFishingResourcesTip then
-		arg_8_0:_btnFishingResourcesOnClick()
+function RoomViewTips:_btnTipsMaskOnClick()
+	if self._showFishingResourcesTip then
+		self:_btnFishingResourcesOnClick()
 	end
 
-	if arg_8_0._showFishingTip then
-		arg_8_0:_onShowFishingTip()
+	if self._showFishingTip then
+		self:_onShowFishingTip()
 	end
 
-	arg_8_0:refreshTipMask()
+	self:refreshTipMask()
 end
 
-function var_0_0._onFishingInfoUpdate(arg_9_0)
-	if not arg_9_0._showFishingTip then
+function RoomViewTips:_onFishingInfoUpdate()
+	if not self._showFishingTip then
 		return
 	end
 
-	arg_9_0:clearFishingItem()
+	self:clearFishingItem()
 
-	local var_9_0 = FishingConfig.instance:getFishingConst(FishingEnum.ConstId.FishOption, true, "#")
+	local optionList = FishingConfig.instance:getFishingConst(FishingEnum.ConstId.FishOption, true, "#")
 
-	gohelper.CreateObjList(arg_9_0, arg_9_0._onFishingItemShow, var_9_0, arg_9_0._gofishingContent, arg_9_0._gofishingItem)
+	gohelper.CreateObjList(self, self._onFishingItemShow, optionList, self._gofishingContent, self._gofishingItem)
 end
 
-function var_0_0._onShowFishingTip(arg_10_0, arg_10_1)
-	arg_10_0._showFishingTip = arg_10_1 and true or false
+function RoomViewTips:_onShowFishingTip(showPos)
+	self._showFishingTip = showPos and true or false
 
-	if arg_10_0._showFishingTip then
-		local var_10_0 = arg_10_0._transtip:InverseTransformPoint(arg_10_1)
+	if self._showFishingTip then
+		local pos = self._transtip:InverseTransformPoint(showPos)
 
-		transformhelper.setLocalPosXY(arg_10_0._transfishingtips, var_10_0.x, var_10_0.y)
-		arg_10_0:clearFishingItem()
+		transformhelper.setLocalPosXY(self._transfishingtips, pos.x, pos.y)
+		self:clearFishingItem()
 
-		local var_10_1 = FishingConfig.instance:getFishingConst(FishingEnum.ConstId.FishOption, true, "#")
+		local optionList = FishingConfig.instance:getFishingConst(FishingEnum.ConstId.FishOption, true, "#")
 
-		gohelper.CreateObjList(arg_10_0, arg_10_0._onFishingItemShow, var_10_1, arg_10_0._gofishingContent, arg_10_0._gofishingItem)
-		arg_10_0:_checkFishingTipsShow()
-		arg_10_0.fishingTipAnimatorPlayer:Play(UIAnimationName.Open)
+		gohelper.CreateObjList(self, self._onFishingItemShow, optionList, self._gofishingContent, self._gofishingItem)
+		self:_checkFishingTipsShow()
+		self.fishingTipAnimatorPlayer:Play(UIAnimationName.Open)
 		AudioMgr.instance:trigger(AudioEnum3_1.RoomFishing.ui_home_mingdi_tan)
 	else
-		arg_10_0.fishingTipAnimatorPlayer:Play(UIAnimationName.Close, arg_10_0._checkFishingTipsShow, arg_10_0)
+		self.fishingTipAnimatorPlayer:Play(UIAnimationName.Close, self._checkFishingTipsShow, self)
 		AudioMgr.instance:trigger(AudioEnum3_1.RoomFishing.play_ui_home_mingdi_shou)
 	end
 
-	arg_10_0:refreshFishingItem()
-	arg_10_0:refreshTipMask()
+	self:refreshFishingItem()
+	self:refreshTipMask()
 end
 
-function var_0_0._onFishingItemShow(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	local var_11_0 = arg_11_0:getUserDataTb_()
+function RoomViewTips:_onFishingItemShow(obj, data, index)
+	local item = self:getUserDataTb_()
 
-	var_11_0.go = arg_11_1
-	var_11_0.fishingTimes = arg_11_2
-	var_11_0.txtTime = gohelper.findChildText(var_11_0.go, "#txt_Time")
-	var_11_0.simageProp = gohelper.findChildSingleImage(var_11_0.go, "Prop/#simage_Prop")
-	var_11_0.txtNum = gohelper.findChildText(var_11_0.go, "Prop/#txt_Num")
-	var_11_0.txtFishing = gohelper.findChildText(var_11_0.go, "#btn_Fishing/txt_Fishing")
-	var_11_0.txtCost = gohelper.findChildText(var_11_0.go, "#btn_Fishing/#txt_Num")
-	var_11_0.btn = gohelper.findChildButtonWithAudio(var_11_0.go, "#btn_Fishing")
-	var_11_0.goBtn = var_11_0.btn.gameObject
+	item.go = obj
+	item.fishingTimes = data
+	item.txtTime = gohelper.findChildText(item.go, "#txt_Time")
+	item.simageProp = gohelper.findChildSingleImage(item.go, "Prop/#simage_Prop")
+	item.txtNum = gohelper.findChildText(item.go, "Prop/#txt_Num")
+	item.txtFishing = gohelper.findChildText(item.go, "#btn_Fishing/txt_Fishing")
+	item.txtCost = gohelper.findChildText(item.go, "#btn_Fishing/#txt_Num")
+	item.btn = gohelper.findChildButtonWithAudio(item.go, "#btn_Fishing")
+	item.goBtn = item.btn.gameObject
 
-	local var_11_1 = ""
-	local var_11_2 = FishingModel.instance:getCurFishingPoolId()
-	local var_11_3 = FishingConfig.instance:getFishingTime(var_11_2)
+	local timeStr = ""
+	local poolId = FishingModel.instance:getCurFishingPoolId()
+	local needTime = FishingConfig.instance:getFishingTime(poolId)
 
-	if var_11_3 then
-		var_11_1 = string.format("%s%s", TimeUtil.secondToRoughTime(var_11_3 * var_11_0.fishingTimes, true))
+	if needTime then
+		timeStr = string.format("%s%s", TimeUtil.secondToRoughTime(needTime * item.fishingTimes, true))
 	end
 
-	var_11_0.txtTime.text = var_11_1
+	item.txtTime.text = timeStr
 
-	local var_11_4 = FishingModel.instance:getCurFishingPoolItem()
-	local var_11_5, var_11_6 = ItemModel.instance:getItemConfigAndIcon(var_11_4[1], var_11_4[2])
+	local itemData = FishingModel.instance:getCurFishingPoolItem()
+	local _, icon = ItemModel.instance:getItemConfigAndIcon(itemData[1], itemData[2])
 
-	var_11_0.simageProp:LoadImage(var_11_6)
+	item.simageProp:LoadImage(icon)
 
-	var_11_0.txtNum.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("multi_num"), var_11_4[3] * var_11_0.fishingTimes)
-	var_11_0.txtFishing.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("RoomFishing_times"), var_11_0.fishingTimes)
+	item.txtNum.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("multi_num"), itemData[3] * item.fishingTimes)
+	item.txtFishing.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("RoomFishing_times"), item.fishingTimes)
 
-	local var_11_7 = FishingConfig.instance:getFishingConst(FishingEnum.ConstId.OneFishCost, true, "#")
-	local var_11_8 = var_11_0.fishingTimes * var_11_7[2]
+	local costData = FishingConfig.instance:getFishingConst(FishingEnum.ConstId.OneFishCost, true, "#")
+	local needCost = item.fishingTimes * costData[2]
 
-	var_11_0.txtCost.text = string.format("-%d", var_11_8)
+	item.txtCost.text = string.format("-%d", needCost)
 
-	var_11_0.btn:AddClickListener(arg_11_0._btnFishOnClick, arg_11_0, var_11_0.fishingTimes)
+	item.btn:AddClickListener(self._btnFishOnClick, self, item.fishingTimes)
 
-	arg_11_0._fishingItemList[arg_11_3] = var_11_0
+	self._fishingItemList[index] = item
 end
 
-function var_0_0._checkFishingTipsShow(arg_12_0)
-	gohelper.setActive(arg_12_0._gofishingtips, arg_12_0._showFishingTip)
+function RoomViewTips:_checkFishingTipsShow()
+	gohelper.setActive(self._gofishingtips, self._showFishingTip)
 end
 
-function var_0_0._onCurrencyChange(arg_13_0)
-	arg_13_0:refreshFishingItem()
+function RoomViewTips:_onCurrencyChange()
+	self:refreshFishingItem()
 end
 
-function var_0_0._editableInitView(arg_14_0)
-	arg_14_0._transfishingtips = arg_14_0._gofishingtips.transform
-	arg_14_0._transtip = arg_14_0._gotips.transform
-	arg_14_0._showFishingResourcesTip = false
-	arg_14_0._showFishingTip = false
+function RoomViewTips:_editableInitView()
+	self._transfishingtips = self._gofishingtips.transform
+	self._transtip = self._gotips.transform
+	self._showFishingResourcesTip = false
+	self._showFishingTip = false
 end
 
-function var_0_0.onOpen(arg_15_0)
-	arg_15_0:_checkResourcesTipShow()
-	arg_15_0:_checkFishingTipsShow()
-	arg_15_0:refreshTipMask()
+function RoomViewTips:onOpen()
+	self:_checkResourcesTipShow()
+	self:_checkFishingTipsShow()
+	self:refreshTipMask()
 end
 
-function var_0_0.refreshTipMask(arg_16_0)
-	gohelper.setActive(arg_16_0._btntipsmask, arg_16_0._showFishingTip or arg_16_0._showFishingResourcesTip)
+function RoomViewTips:refreshTipMask()
+	gohelper.setActive(self._btntipsmask, self._showFishingTip or self._showFishingResourcesTip)
 end
 
-function var_0_0.refreshFishingItem(arg_17_0)
-	if not arg_17_0._showFishingTip then
+function RoomViewTips:refreshFishingItem()
+	if not self._showFishingTip then
 		return
 	end
 
-	if arg_17_0._fishingItemList then
-		for iter_17_0, iter_17_1 in ipairs(arg_17_0._fishingItemList) do
-			local var_17_0 = FishingModel.instance:isEnoughToFish(iter_17_1.fishingTimes)
-			local var_17_1 = var_17_0 and "#101010" or "#972D1B"
+	if self._fishingItemList then
+		for _, fishingItem in ipairs(self._fishingItemList) do
+			local isEnough = FishingModel.instance:isEnoughToFish(fishingItem.fishingTimes)
+			local hexColor = isEnough and "#101010" or "#972D1B"
 
-			SLFramework.UGUI.GuiHelper.SetColor(iter_17_1.txtFishing, var_17_1)
-			SLFramework.UGUI.GuiHelper.SetColor(iter_17_1.txtCost, var_17_1)
-			ZProj.UGUIHelper.SetGrayscale(iter_17_1.goBtn, not var_17_0)
+			SLFramework.UGUI.GuiHelper.SetColor(fishingItem.txtFishing, hexColor)
+			SLFramework.UGUI.GuiHelper.SetColor(fishingItem.txtCost, hexColor)
+			ZProj.UGUIHelper.SetGrayscale(fishingItem.goBtn, not isEnough)
 		end
 	end
 end
 
-function var_0_0.clearFishingItem(arg_18_0)
-	if arg_18_0._fishingItemList then
-		for iter_18_0, iter_18_1 in ipairs(arg_18_0._fishingItemList) do
-			iter_18_1.simageProp:UnLoadImage()
-			iter_18_1.btn:RemoveClickListener()
+function RoomViewTips:clearFishingItem()
+	if self._fishingItemList then
+		for _, fishingItem in ipairs(self._fishingItemList) do
+			fishingItem.simageProp:UnLoadImage()
+			fishingItem.btn:RemoveClickListener()
 		end
 	end
 
-	arg_18_0._fishingItemList = {}
+	self._fishingItemList = {}
 end
 
-function var_0_0.onClose(arg_19_0)
-	arg_19_0:clearFishingItem()
+function RoomViewTips:onClose()
+	self:clearFishingItem()
 end
 
-function var_0_0.onDestroyView(arg_20_0)
+function RoomViewTips:onDestroyView()
 	return
 end
 
-return var_0_0
+return RoomViewTips

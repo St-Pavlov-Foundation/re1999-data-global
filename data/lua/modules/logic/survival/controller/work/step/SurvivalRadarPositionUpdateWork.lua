@@ -1,12 +1,16 @@
-﻿module("modules.logic.survival.controller.work.step.SurvivalRadarPositionUpdateWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/step/SurvivalRadarPositionUpdateWork.lua
 
-local var_0_0 = class("SurvivalRadarPositionUpdateWork", SurvivalStepBaseWork)
+module("modules.logic.survival.controller.work.step.SurvivalRadarPositionUpdateWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	SurvivalMapModel.instance:getSceneMo().sceneProp.radarPosition = arg_1_0._stepMo.position
+local SurvivalRadarPositionUpdateWork = class("SurvivalRadarPositionUpdateWork", SurvivalStepBaseWork)
+
+function SurvivalRadarPositionUpdateWork:onStart(context)
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
+
+	sceneMo.sceneProp.radarPosition = self._stepMo.position
 
 	SurvivalController.instance:dispatchEvent(SurvivalEvent.OnMapRadarPosChange)
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return SurvivalRadarPositionUpdateWork

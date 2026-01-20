@@ -1,40 +1,44 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.dungeon.episode.Act183MainBossEpisodeItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/dungeon/episode/Act183MainBossEpisodeItem.lua
 
-local var_0_0 = class("Act183MainBossEpisodeItem", Act183BaseEpisodeItem)
+module("modules.logic.versionactivity2_5.challenge.view.dungeon.episode.Act183MainBossEpisodeItem", package.seeall)
 
-function var_0_0.getItemParentPath(arg_1_0)
+local Act183MainBossEpisodeItem = class("Act183MainBossEpisodeItem", Act183BaseEpisodeItem)
+
+function Act183MainBossEpisodeItem.getItemParentPath(order)
 	return "root/middle/#go_episodecontainer/go_pointboss"
 end
 
-function var_0_0.getItemTemplatePath()
+function Act183MainBossEpisodeItem.getItemTemplatePath()
 	return "root/middle/#go_episodecontainer/#go_bossepisode"
 end
 
-function var_0_0.init(arg_3_0, arg_3_1)
-	var_0_0.super.init(arg_3_0, arg_3_1)
+function Act183MainBossEpisodeItem:init(go)
+	Act183MainBossEpisodeItem.super.init(self, go)
 
-	arg_3_0._animunlock = gohelper.onceAddComponent(arg_3_0._gounlock, gohelper.Type_Animator)
+	self._animunlock = gohelper.onceAddComponent(self._gounlock, gohelper.Type_Animator)
 
-	arg_3_0:addEventCb(Act183Controller.instance, Act183Event.OnInitDungeonDone, arg_3_0._onInitDungeonDone, arg_3_0)
+	self:addEventCb(Act183Controller.instance, Act183Event.OnInitDungeonDone, self._onInitDungeonDone, self)
 end
 
-function var_0_0._onInitDungeonDone(arg_4_0)
-	arg_4_0:_checkPlayNewUnlockAnim()
+function Act183MainBossEpisodeItem:_onInitDungeonDone()
+	self:_checkPlayNewUnlockAnim()
 end
 
-function var_0_0._checkPlayNewUnlockAnim(arg_5_0)
-	if arg_5_0._status ~= Act183Enum.EpisodeStatus.Unlocked then
+function Act183MainBossEpisodeItem:_checkPlayNewUnlockAnim()
+	if self._status ~= Act183Enum.EpisodeStatus.Unlocked then
 		return
 	end
 
-	if Act183Model.instance:isEpisodeNewUnlock(arg_5_0._episodeId) then
-		arg_5_0._animunlock:Play("unlock", 0, 0)
+	local isNewUnlock = Act183Model.instance:isEpisodeNewUnlock(self._episodeId)
+
+	if isNewUnlock then
+		self._animunlock:Play("unlock", 0, 0)
 	end
 end
 
-function var_0_0.playFinishAnim(arg_6_0)
-	var_0_0.super.playFinishAnim(arg_6_0)
+function Act183MainBossEpisodeItem:playFinishAnim()
+	Act183MainBossEpisodeItem.super.playFinishAnim(self)
 	AudioMgr.instance:trigger(AudioEnum.UI.Act183_EpisodeFinished_Star)
 end
 
-return var_0_0
+return Act183MainBossEpisodeItem

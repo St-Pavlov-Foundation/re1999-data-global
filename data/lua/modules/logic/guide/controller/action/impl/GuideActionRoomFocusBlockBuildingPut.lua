@@ -1,93 +1,103 @@
-﻿module("modules.logic.guide.controller.action.impl.GuideActionRoomFocusBlockBuildingPut", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/GuideActionRoomFocusBlockBuildingPut.lua
 
-local var_0_0 = class("GuideActionRoomFocusBlockBuildingPut", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.GuideActionRoomFocusBlockBuildingPut", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+local GuideActionRoomFocusBlockBuildingPut = class("GuideActionRoomFocusBlockBuildingPut", BaseGuideAction)
 
-	local var_1_0 = arg_1_0.actionParam and string.splitToNumber(arg_1_0.actionParam, "#")
-	local var_1_1 = var_1_0[1]
-	local var_1_2 = var_1_0[2] or 0
-	local var_1_3 = var_1_0[3] or 0
+function GuideActionRoomFocusBlockBuildingPut:onStart(context)
+	GuideActionRoomFocusBlockBuildingPut.super.onStart(self, context)
+
+	local arr = self.actionParam and string.splitToNumber(self.actionParam, "#")
+	local buildingId = arr[1]
+	local posOffsetX = arr[2] or 0
+	local posOffsetY = arr[3] or 0
 
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Room then
-		if var_1_1 < 100 then
-			arg_1_0:focusByBuildingType(var_1_1, var_1_2, var_1_3)
+		if buildingId < 100 then
+			self:focusByBuildingType(buildingId, posOffsetX, posOffsetY)
 		else
-			arg_1_0:focusByBuildingId(var_1_1, var_1_2, var_1_3)
+			self:focusByBuildingId(buildingId, posOffsetX, posOffsetY)
 		end
 	else
-		logError("不在小屋场景，指引失败 " .. arg_1_0.guideId .. "_" .. arg_1_0.stepId)
-		arg_1_0:onDone(true)
+		logError("不在小屋场景，指引失败 " .. self.guideId .. "_" .. self.stepId)
+		self:onDone(true)
 	end
 end
 
-function var_0_0.focusByBuildingType(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	local var_2_0 = RoomMapBuildingModel.instance:getBuildingListByType(arg_2_1)
-	local var_2_1
+function GuideActionRoomFocusBlockBuildingPut:focusByBuildingType(buildingType, posOffsetX, posOffsetY)
+	local list = RoomMapBuildingModel.instance:getBuildingListByType(buildingType)
+	local hexPoint
 
-	if var_2_0 then
-		for iter_2_0, iter_2_1 in ipairs(var_2_0) do
-			if iter_2_1:isInMap() then
-				var_2_1 = iter_2_1.hexPoint
+	if list then
+		for i, v in ipairs(list) do
+			if v:isInMap() then
+				hexPoint = v.hexPoint
 
-				local var_2_2 = GameSceneMgr.instance:getCurScene()
-				local var_2_3 = var_2_2.buildingmgr and var_2_2.buildingmgr:getBuildingEntity(iter_2_1.id, SceneTag.RoomBuilding)
-				local var_2_4 = var_2_3 and SLFramework.GameObjectHelper.GetPath(var_2_3.go)
+				local scene = GameSceneMgr.instance:getCurScene()
+				local entity = scene.buildingmgr and scene.buildingmgr:getBuildingEntity(v.id, SceneTag.RoomBuilding)
+				local goPath = entity and SLFramework.GameObjectHelper.GetPath(entity.go)
 
-				GuideModel.instance:setNextStepGOPath(arg_2_0.guideId, arg_2_0.stepId, var_2_4)
+				GuideModel.instance:setNextStepGOPath(self.guideId, self.stepId, goPath)
 
 				break
 			end
 		end
 	end
 
-	arg_2_0:_focusByPoint(var_2_1, arg_2_2, arg_2_3)
+	self:_focusByPoint(hexPoint, posOffsetX, posOffsetY)
 end
 
-function var_0_0.focusByBuildingId(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	local var_3_0 = RoomMapBuildingModel.instance:getBuildingMoByBuildingId(arg_3_1)
-	local var_3_1
+function GuideActionRoomFocusBlockBuildingPut:focusByBuildingId(buildingId, posOffsetX, posOffsetY)
+	local mo = RoomMapBuildingModel.instance:getBuildingMoByBuildingId(buildingId)
+	local hexPoint
 
-	if var_3_0 and var_3_0:isInMap() then
-		var_3_1 = var_3_0.hexPoint
+	if mo and mo:isInMap() then
+		hexPoint = mo.hexPoint
 	else
-		local var_3_2 = arg_3_0:getNearRotate(arg_3_1)
-		local var_3_3 = RoomBuildingHelper.getRecommendHexPoint(arg_3_1, nil, nil, nil, var_3_2)
+		local nearRotate = self:getNearRotate(buildingId)
+		local bestPositionParam = RoomBuildingHelper.getRecommendHexPoint(buildingId, nil, nil, nil, nearRotate)
 
-		var_3_1 = var_3_3 and var_3_3.hexPoint
+		hexPoint = bestPositionParam and bestPositionParam.hexPoint
 	end
 
-	arg_3_0:_focusByPoint(var_3_1, arg_3_2, arg_3_3)
+	self:_focusByPoint(hexPoint, posOffsetX, posOffsetY)
 end
 
-function var_0_0._focusByPoint(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	if arg_4_1 then
-		local var_4_0 = HexMath.hexToPosition(arg_4_1, RoomBlockEnum.BlockSize)
-		local var_4_1 = {
-			focusX = var_4_0.x + arg_4_2,
-			focusY = var_4_0.y + arg_4_3
+function GuideActionRoomFocusBlockBuildingPut:_focusByPoint(hexPoint, posOffsetX, posOffsetY)
+	if hexPoint then
+		local pos = HexMath.hexToPosition(hexPoint, RoomBlockEnum.BlockSize)
+		local cameraParam = {
+			focusX = pos.x + posOffsetX,
+			focusY = pos.y + posOffsetY
 		}
 
-		GameSceneMgr.instance:getCurScene().camera:tweenCamera(var_4_1)
-		TaskDispatcher.runDelay(arg_4_0._onDone, arg_4_0, 0.7)
+		GameSceneMgr.instance:getCurScene().camera:tweenCamera(cameraParam)
+		TaskDispatcher.runDelay(self._onDone, self, 0.7)
 	else
-		arg_4_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._onDone(arg_5_0, arg_5_1)
-	arg_5_0:onDone(true)
+function GuideActionRoomFocusBlockBuildingPut:_onDone(percent)
+	self:onDone(true)
 end
 
-function var_0_0.getNearRotate(arg_6_0, arg_6_1)
-	local var_6_0 = RoomCameraController.instance:getRoomScene().camera:getCameraRotate() * Mathf.Rad2Deg
+function GuideActionRoomFocusBlockBuildingPut:getNearRotate(buildingId)
+	local roomScene = RoomCameraController.instance:getRoomScene()
+	local nearRotate = roomScene.camera:getCameraRotate()
+	local rotation = nearRotate * Mathf.Rad2Deg
 
-	return RoomRotateHelper.getCameraNearRotate(var_6_0) + RoomConfig.instance:getBuildingConfig(arg_6_1).rotate
+	nearRotate = RoomRotateHelper.getCameraNearRotate(rotation)
+
+	local buildingConfig = RoomConfig.instance:getBuildingConfig(buildingId)
+
+	nearRotate = nearRotate + buildingConfig.rotate
+
+	return nearRotate
 end
 
-function var_0_0.clearWork(arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0._onDone, arg_7_0)
+function GuideActionRoomFocusBlockBuildingPut:clearWork()
+	TaskDispatcher.cancelTask(self._onDone, self)
 end
 
-return var_0_0
+return GuideActionRoomFocusBlockBuildingPut

@@ -1,12 +1,14 @@
-﻿module("modules.logic.necrologiststory.view.control.NecrologistStoryControlWeather", package.seeall)
+﻿-- chunkname: @modules/logic/necrologiststory/view/control/NecrologistStoryControlWeather.lua
 
-local var_0_0 = class("NecrologistStoryControlWeather", NecrologistStoryControlMgrItem)
+module("modules.logic.necrologiststory.view.control.NecrologistStoryControlWeather", package.seeall)
 
-function var_0_0.onPlayControl(arg_1_0)
-	local var_1_0 = tonumber(arg_1_0.controlParam)
+local NecrologistStoryControlWeather = class("NecrologistStoryControlWeather", NecrologistStoryControlMgrItem)
 
-	NecrologistStoryController.instance:dispatchEvent(NecrologistStoryEvent.OnChangeWeather, var_1_0)
-	arg_1_0:onPlayControlFinish()
+function NecrologistStoryControlWeather:onPlayControl()
+	local weather = tonumber(self.controlParam)
+
+	NecrologistStoryController.instance:dispatchEvent(NecrologistStoryEvent.OnChangeWeather, weather)
+	self:onPlayControlFinish()
 end
 
-return var_0_0
+return NecrologistStoryControlWeather

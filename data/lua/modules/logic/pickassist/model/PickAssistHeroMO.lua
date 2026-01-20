@@ -1,156 +1,163 @@
-﻿module("modules.logic.pickassist.model.PickAssistHeroMO", package.seeall)
+﻿-- chunkname: @modules/logic/pickassist/model/PickAssistHeroMO.lua
 
-local var_0_0 = pureTable("PickAssistHeroMO")
+module("modules.logic.pickassist.model.PickAssistHeroMO", package.seeall)
 
-local function var_0_1(arg_1_0, arg_1_1)
-	local var_1_0 = HeroConfig.instance:getHeroCO(arg_1_0.heroId)
-	local var_1_1 = HeroDef_pb.HeroInfo()
+local PickAssistHeroMO = pureTable("PickAssistHeroMO")
 
-	var_1_1.uid = arg_1_0.heroUid
+local function createHeroMOByAssistMO(assistMO, checkIsBalance)
+	local heroCo = HeroConfig.instance:getHeroCO(assistMO.heroId)
+	local heroInfo = HeroDef_pb.HeroInfo()
 
-	local var_1_2 = arg_1_0.level
-	local var_1_3 = arg_1_0.rank
-	local var_1_4 = arg_1_0.balanceLevel
-	local var_1_5 = false
+	heroInfo.uid = assistMO.heroUid
 
-	if arg_1_1 and var_1_4 ~= var_1_2 then
-		var_1_2 = var_1_4
+	local level = assistMO.level
+	local rank = assistMO.rank
+	local balanceLevel = assistMO.balanceLevel
+	local isBalance = false
 
-		local var_1_6, var_1_7 = HeroConfig.instance:getShowLevel(var_1_4)
+	if checkIsBalance and balanceLevel ~= level then
+		level = balanceLevel
 
-		var_1_3 = var_1_7
-		var_1_5 = true
+		local _, balanceRank = HeroConfig.instance:getShowLevel(balanceLevel)
+
+		rank = balanceRank
+		isBalance = true
 	end
 
-	var_1_1.level = var_1_2
-	var_1_1.heroId = arg_1_0.heroId
-	var_1_1.skin = arg_1_0.skin
-	var_1_1.defaultEquipUid = "0"
-	var_1_1.rank = var_1_3
-	var_1_1.talent = arg_1_0.talent
-	var_1_1.exSkillLevel = arg_1_0.exSkillLevel
+	heroInfo.level = level
+	heroInfo.heroId = assistMO.heroId
+	heroInfo.skin = assistMO.skin
+	heroInfo.defaultEquipUid = "0"
+	heroInfo.rank = rank
+	heroInfo.talent = assistMO.talent
+	heroInfo.exSkillLevel = assistMO.exSkillLevel
 
-	if arg_1_0.passiveSkillLevel then
-		for iter_1_0 = 1, #arg_1_0.passiveSkillLevel do
-			table.insert(var_1_1.passiveSkillLevel, arg_1_0.passiveSkillLevel[iter_1_0])
+	if assistMO.passiveSkillLevel then
+		for i = 1, #assistMO.passiveSkillLevel do
+			table.insert(heroInfo.passiveSkillLevel, assistMO.passiveSkillLevel[i])
 		end
 	else
-		local var_1_8 = SkillConfig.instance:getHeroExSkillLevelByLevel(arg_1_0.heroId, var_1_2)
+		local passiveLevel = SkillConfig.instance:getHeroExSkillLevelByLevel(assistMO.heroId, level)
 
-		for iter_1_1 = 1, var_1_8 do
-			table.insert(var_1_1.passiveSkillLevel, iter_1_1)
+		for i = 1, passiveLevel do
+			table.insert(heroInfo.passiveSkillLevel, i)
 		end
 	end
 
-	local var_1_9 = SkillConfig.instance:getBaseAttr(arg_1_0.heroId, var_1_2)
+	local baseAttr = SkillConfig.instance:getBaseAttr(assistMO.heroId, level)
 
-	var_1_1.baseAttr.attack = var_1_9.atk
-	var_1_1.baseAttr.defense = var_1_9.def
-	var_1_1.baseAttr.hp = var_1_9.hp
-	var_1_1.baseAttr.mdefense = var_1_9.mdef
-	var_1_1.baseAttr.technic = var_1_9.technic
-	var_1_1.exAttr.addDmg = var_1_9.add_dmg
-	var_1_1.exAttr.cri = var_1_9.cri
-	var_1_1.exAttr.criDef = var_1_9.cri_def
-	var_1_1.exAttr.dropDmg = var_1_9.drop_dmg
-	var_1_1.exAttr.recri = var_1_9.recri
-	var_1_1.exAttr.criDmg = var_1_9.cri_dmg
+	heroInfo.baseAttr.attack = baseAttr.atk
+	heroInfo.baseAttr.defense = baseAttr.def
+	heroInfo.baseAttr.hp = baseAttr.hp
+	heroInfo.baseAttr.mdefense = baseAttr.mdef
+	heroInfo.baseAttr.technic = baseAttr.technic
+	heroInfo.exAttr.addDmg = baseAttr.add_dmg
+	heroInfo.exAttr.cri = baseAttr.cri
+	heroInfo.exAttr.criDef = baseAttr.cri_def
+	heroInfo.exAttr.dropDmg = baseAttr.drop_dmg
+	heroInfo.exAttr.recri = baseAttr.recri
+	heroInfo.exAttr.criDmg = baseAttr.cri_dmg
 
-	local var_1_10 = HeroMo.New()
+	local heroMO = HeroMo.New()
 
-	var_1_10:init(var_1_1, var_1_0)
+	heroMO:init(heroInfo, heroCo)
 
-	var_1_10.talentCubeInfos = arg_1_0.talentCubeInfos
+	heroMO.talentCubeInfos = assistMO.talentCubeInfos
 
-	var_1_10:setIsBelongOtherPlayer(true)
-	var_1_10:setIsBalance(var_1_5)
-	var_1_10:setOtherPlayerIsOpenTalent(arg_1_0.isOpenTalent)
-	var_1_10:setOtherPlayerTalentStyle(arg_1_0.style)
+	heroMO:setIsBelongOtherPlayer(true)
+	heroMO:setIsBalance(isBalance)
+	heroMO:setOtherPlayerIsOpenTalent(assistMO.isOpenTalent)
+	heroMO:setOtherPlayerTalentStyle(assistMO.style)
 
-	var_1_10.destinyRank = arg_1_0.destinyRank
-	var_1_10.destinyLevel = arg_1_0.destinyLevel
-	var_1_10.destinyStone = arg_1_0.destinyStone
-	var_1_10.destinyStoneMo = var_1_10.destinyStoneMo or HeroDestinyStoneMO.New(var_1_1.heroId)
+	heroMO.destinyRank = assistMO.destinyRank
+	heroMO.destinyLevel = assistMO.destinyLevel
+	heroMO.destinyStone = assistMO.destinyStone
+	heroMO.destinyStoneMo = heroMO.destinyStoneMo or HeroDestinyStoneMO.New(heroInfo.heroId)
 
-	var_1_10.destinyStoneMo:refreshMo(arg_1_0.destinyRank, arg_1_0.destinyLevel, arg_1_0.destinyStone, arg_1_0.destinyStoneUnlock)
+	heroMO.destinyStoneMo:refreshMo(assistMO.destinyRank, assistMO.destinyLevel, assistMO.destinyStone, assistMO.destinyStoneUnlock)
 
-	var_1_10.extraMo = var_1_10.extraMo or CharacterExtraMO.New(var_1_10)
+	heroMO.extraMo = heroMO.extraMo or CharacterExtraMO.New(heroMO)
 
-	var_1_10.extraMo:refreshMo(arg_1_0.extraStr)
+	heroMO.extraMo:refreshMo(assistMO.extraStr)
 
-	return var_1_10
+	return heroMO
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.id = arg_2_1.heroUid
+function PickAssistHeroMO:init(info)
+	self.id = info.heroUid
 
-	arg_2_0:setHeroInfo(arg_2_1)
+	self:setHeroInfo(info)
 
-	arg_2_0.heroMO = var_0_1(arg_2_0, true)
+	self.heroMO = createHeroMOByAssistMO(self, true)
 end
 
-function var_0_0.setHeroInfo(arg_3_0, arg_3_1)
-	arg_3_0.heroId = arg_3_1.heroId
-	arg_3_0.heroUid = tostring(arg_3_1.heroUid)
-	arg_3_0.userId = tostring(arg_3_1.userId)
-	arg_3_0.name = arg_3_1.name
-	arg_3_0.userLevel = arg_3_1.userLevel
-	arg_3_0.portrait = arg_3_1.portrait
-	arg_3_0.bg = arg_3_1.bg
-	arg_3_0.isFriend = arg_3_1.isFriend
-	arg_3_0.heroId = tonumber(arg_3_1.heroId)
-	arg_3_0.level = tonumber(arg_3_1.level)
-	arg_3_0.rank = arg_3_1.rank
-	arg_3_0.skin = arg_3_1.skin
-	arg_3_0.passiveSkillLevel = arg_3_1.passiveSkillLevel
-	arg_3_0.exSkillLevel = arg_3_1.exSkillLevel
-	arg_3_0.balanceLevel = arg_3_1.balanceLevel
-	arg_3_0.isOpenTalent = arg_3_1.isOpenTalent
-	arg_3_0.talent = arg_3_1.talent
-	arg_3_0.talentCubeInfos = HeroTalentCubeInfosMO.New()
+function PickAssistHeroMO:setHeroInfo(info)
+	self.heroId = info.heroId
+	self.heroUid = tostring(info.heroUid)
+	self.userId = tostring(info.userId)
+	self.name = info.name
+	self.userLevel = info.userLevel
+	self.portrait = info.portrait
+	self.bg = info.bg
+	self.isFriend = info.isFriend
+	self.heroId = tonumber(info.heroId)
+	self.level = tonumber(info.level)
+	self.rank = info.rank
+	self.skin = info.skin
+	self.passiveSkillLevel = info.passiveSkillLevel
+	self.exSkillLevel = info.exSkillLevel
+	self.balanceLevel = info.balanceLevel
+	self.isOpenTalent = info.isOpenTalent
+	self.talent = info.talent
+	self.talentCubeInfos = HeroTalentCubeInfosMO.New()
 
-	arg_3_0.talentCubeInfos:init(arg_3_1.talentCubeInfos)
-	arg_3_0.talentCubeInfos:setOwnData(arg_3_0.heroId, arg_3_0.talent)
+	self.talentCubeInfos:init(info.talentCubeInfos)
+	self.talentCubeInfos:setOwnData(self.heroId, self.talent)
 
-	arg_3_0.destinyRank = arg_3_1.destinyRank
-	arg_3_0.destinyLevel = arg_3_1.destinyLevel
-	arg_3_0.destinyStone = arg_3_1.destinyStone
-	arg_3_0.extraStr = arg_3_1.extraStr
-	arg_3_0.style = arg_3_1.style
+	self.destinyRank = info.destinyRank
+	self.destinyLevel = info.destinyLevel
+	self.destinyStone = info.destinyStone
+	self.extraStr = info.extraStr
+	self.style = info.style
 end
 
-function var_0_0.getId(arg_4_0)
-	return arg_4_0.id
+function PickAssistHeroMO:getId()
+	return self.id
 end
 
-function var_0_0.isSameHero(arg_5_0, arg_5_1)
-	local var_5_0 = false
+function PickAssistHeroMO:isSameHero(targetPickAssistMO)
+	local result = false
 
-	if arg_5_1 then
-		var_5_0 = arg_5_0:getId() == arg_5_1:getId()
+	if targetPickAssistMO then
+		local curHeroUid = self:getId()
+		local targetHeroUid = targetPickAssistMO:getId()
+
+		result = curHeroUid == targetHeroUid
 	end
 
-	return var_5_0
+	return result
 end
 
-function var_0_0.getPlayerInfo(arg_6_0)
-	return {
-		userId = arg_6_0.userId,
-		name = arg_6_0.name,
-		level = arg_6_0.userLevel,
-		portrait = arg_6_0.portrait,
-		bg = arg_6_0.bg
+function PickAssistHeroMO:getPlayerInfo()
+	local info = {
+		userId = self.userId,
+		name = self.name,
+		level = self.userLevel,
+		portrait = self.portrait,
+		bg = self.bg
 	}
+
+	return info
 end
 
-function var_0_0.getCareer(arg_7_0)
-	local var_7_0
+function PickAssistHeroMO:getCareer()
+	local result
 
-	if arg_7_0.heroMO and arg_7_0.heroMO.config then
-		var_7_0 = arg_7_0.heroMO.config.career
+	if self.heroMO and self.heroMO.config then
+		result = self.heroMO.config.career
 	end
 
-	return var_7_0
+	return result
 end
 
-return var_0_0
+return PickAssistHeroMO

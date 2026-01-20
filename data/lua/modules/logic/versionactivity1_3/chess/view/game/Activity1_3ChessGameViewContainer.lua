@@ -1,84 +1,86 @@
-﻿module("modules.logic.versionactivity1_3.chess.view.game.Activity1_3ChessGameViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/chess/view/game/Activity1_3ChessGameViewContainer.lua
 
-local var_0_0 = class("Activity1_3ChessGameViewContainer", BaseViewContainer)
-local var_0_1 = "ChessGameViewColseBlockKey"
-local var_0_2 = 0.5
+module("modules.logic.versionactivity1_3.chess.view.game.Activity1_3ChessGameViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Activity1_3ChessGameViewContainer = class("Activity1_3ChessGameViewContainer", BaseViewContainer)
+local COLSE_BLOCK_KEY = "ChessGameViewColseBlockKey"
+local CloseViewTime = 0.5
 
-	arg_1_0._gameView = Activity1_3ChessGameView.New()
+function Activity1_3ChessGameViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, arg_1_0._gameView)
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_BackBtns"))
-	table.insert(var_1_0, TabViewGroup.New(2, "gamescene"))
+	self._gameView = Activity1_3ChessGameView.New()
 
-	return var_1_0
+	table.insert(views, self._gameView)
+	table.insert(views, TabViewGroup.New(1, "#go_BackBtns"))
+	table.insert(views, TabViewGroup.New(2, "gamescene"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		local var_2_0 = NavigateButtonsView.New({
+function Activity1_3ChessGameViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		local navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			true
 		}, HelpEnum.HelpId.VersionActivity_1_3Chess)
 
-		var_2_0:setOverrideClose(arg_2_0.overrideOnCloseClick, arg_2_0)
+		navigateView:setOverrideClose(self.overrideOnCloseClick, self)
 
 		return {
-			var_2_0
+			navigateView
 		}
-	elseif arg_2_1 == 2 then
+	elseif tabContainerId == 2 then
 		return {
 			Activity1_3ChessGameScene.New()
 		}
 	end
 end
 
-function var_0_0.onContainerOpen(arg_3_0)
+function Activity1_3ChessGameViewContainer:onContainerOpen()
 	return
 end
 
-function var_0_0.onContainerClose(arg_4_0)
+function Activity1_3ChessGameViewContainer:onContainerClose()
 	return
 end
 
-function var_0_0.onContainerOpenFinish(arg_5_0)
-	arg_5_0._gameView:initCamera()
+function Activity1_3ChessGameViewContainer:onContainerOpenFinish()
+	self._gameView:initCamera()
 end
 
-function var_0_0.onContainerClickModalMask(arg_6_0)
+function Activity1_3ChessGameViewContainer:onContainerClickModalMask()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	arg_6_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.onContainerUpdateParam(arg_7_0)
-	TaskDispatcher.runDelay(arg_7_0._setUnitCameraNextFrame, arg_7_0, 0.1)
+function Activity1_3ChessGameViewContainer:onContainerUpdateParam()
+	TaskDispatcher.runDelay(self._setUnitCameraNextFrame, self, 0.1)
 end
 
-function var_0_0._setUnitCameraNextFrame(arg_8_0)
+function Activity1_3ChessGameViewContainer:_setUnitCameraNextFrame()
 	Activity1_3ChessGameController.instance:setSceneCamera(true)
 end
 
-function var_0_0.overrideOnCloseClick(arg_9_0)
+function Activity1_3ChessGameViewContainer:overrideOnCloseClick()
 	if Va3ChessGameController.instance:isNeedBlock() then
 		return
 	end
 
-	GameFacade.showMessageBox(MessageBoxIdDefine.QuitPushBoxEpisode, MsgBoxEnum.BoxType.Yes_No, arg_9_0.closeFunc, nil, nil, arg_9_0)
+	GameFacade.showMessageBox(MessageBoxIdDefine.QuitPushBoxEpisode, MsgBoxEnum.BoxType.Yes_No, self.closeFunc, nil, nil, self)
 end
 
-function var_0_0.closeFunc(arg_10_0)
+function Activity1_3ChessGameViewContainer:closeFunc()
 	Stat1_3Controller.instance:bristleStatAbort()
-	UIBlockMgr.instance:startBlock(var_0_1)
-	arg_10_0._gameView:playCloseAniamtion()
-	TaskDispatcher.runDelay(arg_10_0._delayCloseFunc, arg_10_0, var_0_2)
+	UIBlockMgr.instance:startBlock(COLSE_BLOCK_KEY)
+	self._gameView:playCloseAniamtion()
+	TaskDispatcher.runDelay(self._delayCloseFunc, self, CloseViewTime)
 end
 
-function var_0_0._delayCloseFunc(arg_11_0)
-	UIBlockMgr.instance:endBlock(var_0_1)
-	arg_11_0:closeThis()
+function Activity1_3ChessGameViewContainer:_delayCloseFunc()
+	UIBlockMgr.instance:endBlock(COLSE_BLOCK_KEY)
+	self:closeThis()
 end
 
-return var_0_0
+return Activity1_3ChessGameViewContainer

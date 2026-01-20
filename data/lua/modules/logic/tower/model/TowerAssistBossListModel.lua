@@ -1,90 +1,94 @@
-﻿module("modules.logic.tower.model.TowerAssistBossListModel", package.seeall)
+﻿-- chunkname: @modules/logic/tower/model/TowerAssistBossListModel.lua
 
-local var_0_0 = class("TowerAssistBossListModel", ListScrollModel)
+module("modules.logic.tower.model.TowerAssistBossListModel", package.seeall)
 
-function var_0_0.initList(arg_1_0)
-	arg_1_0.isFirstRefresh = true
+local TowerAssistBossListModel = class("TowerAssistBossListModel", ListScrollModel)
+
+function TowerAssistBossListModel:initList()
+	self.isFirstRefresh = true
 end
 
-function var_0_0.refreshList(arg_2_0, arg_2_1)
-	arg_2_0.isFromHeroGroup = arg_2_1 and arg_2_1.isFromHeroGroup
-	arg_2_0.bossId = arg_2_1 and arg_2_1.bossId
-	arg_2_0.towerType = arg_2_1 and arg_2_1.towerType
-	arg_2_0.towerId = arg_2_1 and arg_2_1.towerId
+function TowerAssistBossListModel:refreshList(param)
+	self.isFromHeroGroup = param and param.isFromHeroGroup
+	self.bossId = param and param.bossId
+	self.towerType = param and param.towerType
+	self.towerId = param and param.towerId
 
-	local var_2_0 = arg_2_1.otherParam and arg_2_1.otherParam.heroGroupMO
+	local heroGroupMo = param.otherParam and param.otherParam.heroGroupMO
 
-	if arg_2_0.isFromHeroGroup then
-		arg_2_0.bossId = (var_2_0 or HeroGroupModel.instance:getCurGroupMO()):getAssistBossId()
+	if self.isFromHeroGroup then
+		local mo = heroGroupMo or HeroGroupModel.instance:getCurGroupMO()
 
-		if TowerModel.instance:isBossBan(arg_2_0.bossId) or TowerModel.instance:isLimitTowerBossBan(arg_2_0.towerType, arg_2_0.towerId, arg_2_0.bossId) then
-			arg_2_0.bossId = 0
+		self.bossId = mo:getAssistBossId()
+
+		if TowerModel.instance:isBossBan(self.bossId) or TowerModel.instance:isLimitTowerBossBan(self.towerType, self.towerId, self.bossId) then
+			self.bossId = 0
 		end
 	end
 
-	if arg_2_0.isFirstRefresh then
-		local var_2_1 = TowerConfig.instance:getAssistBossList()
-		local var_2_2 = {}
+	if self.isFirstRefresh then
+		local list = TowerConfig.instance:getAssistBossList()
+		local dataList = {}
 
-		if var_2_1 then
-			for iter_2_0, iter_2_1 in ipairs(var_2_1) do
-				if arg_2_0:checkBossCanShow(iter_2_1.bossId) then
-					table.insert(var_2_2, arg_2_0:buildBossData(iter_2_1))
+		if list then
+			for i, v in ipairs(list) do
+				if self:checkBossCanShow(v.bossId) then
+					table.insert(dataList, self:buildBossData(v))
 				end
 			end
 		end
 
-		if #var_2_2 > 1 then
-			if arg_2_0.isFromHeroGroup then
-				table.sort(var_2_2, SortUtil.tableKeyLower({
+		if #dataList > 1 then
+			if self.isFromHeroGroup then
+				table.sort(dataList, SortUtil.tableKeyLower({
 					"isBanOrder",
 					"isSelectOrder",
 					"isLock",
 					"bossId"
 				}))
 			else
-				table.sort(var_2_2, SortUtil.tableKeyLower({
+				table.sort(dataList, SortUtil.tableKeyLower({
 					"isLock",
 					"bossId"
 				}))
 			end
 		end
 
-		arg_2_0:setList(var_2_2)
+		self:setList(dataList)
 	else
-		local var_2_3 = arg_2_0:getList()
+		local list = self:getList()
 
-		for iter_2_2, iter_2_3 in ipairs(var_2_3) do
-			arg_2_0:buildBossData(iter_2_3.config, iter_2_3)
+		for i, v in ipairs(list) do
+			self:buildBossData(v.config, v)
 		end
 
-		local var_2_4 = {}
+		local dataList = {}
 
-		for iter_2_4, iter_2_5 in ipairs(var_2_3) do
-			if arg_2_0:checkBossCanShow(iter_2_5.bossId) then
-				table.insert(var_2_4, iter_2_5)
+		for i, v in ipairs(list) do
+			if self:checkBossCanShow(v.bossId) then
+				table.insert(dataList, v)
 			end
 		end
 
-		arg_2_0:setList(var_2_4)
+		self:setList(dataList)
 	end
 
-	arg_2_0.isFirstRefresh = false
+	self.isFirstRefresh = false
 end
 
-function var_0_0.checkBossCanShow(arg_3_0, arg_3_1)
-	if not TowerModel.instance:isBossOpen(arg_3_1) then
+function TowerAssistBossListModel:checkBossCanShow(bossId)
+	if not TowerModel.instance:isBossOpen(bossId) then
 		return false
 	end
 
-	if arg_3_0.towerType and arg_3_0.towerType == TowerEnum.TowerType.Limited then
-		local var_3_0 = TowerConfig.instance:getTowerLimitedTimeCo(arg_3_0.towerId)
+	if self.towerType and self.towerType == TowerEnum.TowerType.Limited then
+		local limitedTimeCo = TowerConfig.instance:getTowerLimitedTimeCo(self.towerId)
 
-		if var_3_0 then
-			local var_3_1 = string.splitToNumber(var_3_0.bossPool, "#")
+		if limitedTimeCo then
+			local bossIdList = string.splitToNumber(limitedTimeCo.bossPool, "#")
 
-			for iter_3_0, iter_3_1 in ipairs(var_3_1) do
-				if iter_3_1 == arg_3_1 then
+			for i, v in ipairs(bossIdList) do
+				if v == bossId then
 					return true
 				end
 			end
@@ -96,30 +100,32 @@ function var_0_0.checkBossCanShow(arg_3_0, arg_3_1)
 	return true
 end
 
-function var_0_0.buildBossData(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_2 = arg_4_2 or {}
-	arg_4_2.id = arg_4_1.bossId
-	arg_4_2.config = arg_4_1
-	arg_4_2.bossId = arg_4_1.bossId
-	arg_4_2.bossInfo = TowerAssistBossModel.instance:getById(arg_4_1.bossId)
-	arg_4_2.isLock = (arg_4_2.bossInfo == nil or arg_4_2.bossInfo:getTempState()) and 1 or 0
-	arg_4_2.isFromHeroGroup = arg_4_0.isFromHeroGroup
+function TowerAssistBossListModel:buildBossData(config, data)
+	data = data or {}
+	data.id = config.bossId
+	data.config = config
+	data.bossId = config.bossId
+	data.bossInfo = TowerAssistBossModel.instance:getById(config.bossId)
+	data.isLock = (data.bossInfo == nil or data.bossInfo:getTempState()) and 1 or 0
+	data.isFromHeroGroup = self.isFromHeroGroup
 
-	if arg_4_0.isFromHeroGroup then
-		arg_4_2.isSelect = arg_4_0.bossId == arg_4_1.bossId
+	if self.isFromHeroGroup then
+		data.isSelect = self.bossId == config.bossId
 
-		if arg_4_0.isFirstRefresh then
-			arg_4_2.isSelectOrder = arg_4_2.isSelect and 0 or 1
+		if self.isFirstRefresh then
+			data.isSelectOrder = data.isSelect and 0 or 1
 		end
 
-		arg_4_2.isBanOrder = TowerModel.instance:isBossBan(arg_4_1.bossId) and 1 or 0
+		data.isBanOrder = TowerModel.instance:isBossBan(config.bossId) and 1 or 0
 	end
 
-	arg_4_2.isTowerOpen = TowerModel.instance:getTowerOpenInfo(TowerEnum.TowerType.Boss, arg_4_1.towerId, TowerEnum.TowerStatus.Open) ~= nil
+	local openInfo = TowerModel.instance:getTowerOpenInfo(TowerEnum.TowerType.Boss, config.towerId, TowerEnum.TowerStatus.Open)
 
-	return arg_4_2
+	data.isTowerOpen = openInfo ~= nil
+
+	return data
 end
 
-var_0_0.instance = var_0_0.New()
+TowerAssistBossListModel.instance = TowerAssistBossListModel.New()
 
-return var_0_0
+return TowerAssistBossListModel

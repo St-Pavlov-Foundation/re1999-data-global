@@ -1,234 +1,250 @@
-﻿module("modules.logic.rouge.map.map.RougeLayerMap", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/map/RougeLayerMap.lua
 
-local var_0_0 = class("RougeLayerMap", RougeBaseMap)
+module("modules.logic.rouge.map.map.RougeLayerMap", package.seeall)
 
-function var_0_0.initMap(arg_1_0)
-	var_0_0.super.initMap(arg_1_0)
-	arg_1_0:addEventCb(RougeMapController.instance, RougeMapEvent.onMapPosChange, arg_1_0.setMapPos, arg_1_0)
-	arg_1_0:addEventCb(RougeMapController.instance, RougeMapEvent.onNodeEventStatusChange, arg_1_0.onNodeEventStatusChange, arg_1_0)
-	arg_1_0:addEventCb(RougeMapController.instance, RougeMapEvent.onFocusNormalLayerActor, arg_1_0.focusActor, arg_1_0)
+local RougeLayerMap = class("RougeLayerMap", RougeBaseMap)
 
-	local var_1_0 = arg_1_0:getCameraSize()
+function RougeLayerMap:initMap()
+	RougeLayerMap.super.initMap(self)
+	self:addEventCb(RougeMapController.instance, RougeMapEvent.onMapPosChange, self.setMapPos, self)
+	self:addEventCb(RougeMapController.instance, RougeMapEvent.onNodeEventStatusChange, self.onNodeEventStatusChange, self)
+	self:addEventCb(RougeMapController.instance, RougeMapEvent.onFocusNormalLayerActor, self.focusActor, self)
 
-	RougeMapModel.instance:setCameraSize(var_1_0)
-	arg_1_0:updateMapXRange()
+	local cameraSize = self:getCameraSize()
+
+	RougeMapModel.instance:setCameraSize(cameraSize)
+	self:updateMapXRange()
 	RougeMapModel.instance:setMapPosX(RougeMapModel.instance.maxX)
-	arg_1_0:setMapPos(RougeMapModel.instance:getMapPosX())
+	self:setMapPos(RougeMapModel.instance:getMapPosX())
 end
 
-function var_0_0.updateMapXRange(arg_2_0)
-	local var_2_0 = RougeMapModel.instance:getCameraSize()
-	local var_2_1 = RougeMapHelper.getUIRoot().transform:GetWorldCorners()
-	local var_2_2 = var_2_0 / CameraMgr.instance:getUICamera().orthographicSize
-	local var_2_3 = var_2_1[1]
-	local var_2_4 = (var_2_1[3].x - var_2_3.x) * var_2_2
-	local var_2_5 = RougeMapModel.instance:getMapSize().x
-	local var_2_6 = -var_2_4 / 2 - RougeMapModel.instance:getMapStartOffsetX() + RougeMapEnum.MapStartOffsetX
-	local var_2_7
+function RougeLayerMap:updateMapXRange()
+	local cameraSize = RougeMapModel.instance:getCameraSize()
+	local popTop = RougeMapHelper.getUIRoot()
+	local worldcorners = popTop.transform:GetWorldCorners()
+	local uiCamera = CameraMgr.instance:getUICamera()
+	local uiCameraSize = uiCamera.orthographicSize
+	local cameraSizeRate = cameraSize / uiCameraSize
+	local posTL = worldcorners[1]
+	local posBR = worldcorners[3]
+	local viewWidth = (posBR.x - posTL.x) * cameraSizeRate
+	local mapSize = RougeMapModel.instance:getMapSize()
+	local mapWidth = mapSize.x
+	local mapMaxX = -viewWidth / 2 - RougeMapModel.instance:getMapStartOffsetX() + RougeMapEnum.MapStartOffsetX
+	local mapMinX
 
-	if var_2_5 <= var_2_4 then
-		var_2_7 = var_2_6
+	if mapWidth <= viewWidth then
+		mapMinX = mapMaxX
 	else
-		var_2_7 = var_2_6 - (var_2_5 - var_2_4)
+		mapMinX = mapMaxX - (mapWidth - viewWidth)
 	end
 
-	RougeMapModel.instance:setMapXRange(var_2_7, var_2_6)
+	RougeMapModel.instance:setMapXRange(mapMinX, mapMaxX)
 end
 
-function var_0_0.getCameraSize(arg_3_0)
+function RougeLayerMap:getCameraSize()
 	return RougeMapHelper.getNormalLayerCameraSize()
 end
 
-function var_0_0.onScreenSizeChanged(arg_4_0)
-	var_0_0.super.onScreenSizeChanged(arg_4_0)
+function RougeLayerMap:onScreenSizeChanged()
+	RougeLayerMap.super.onScreenSizeChanged(self)
 
-	local var_4_0 = RougeMapModel.instance:getMapPosX()
+	local curMapPosX = RougeMapModel.instance:getMapPosX()
 
-	arg_4_0:updateMapXRange()
-	RougeMapModel.instance:setMapPosX(var_4_0)
+	self:updateMapXRange()
+	RougeMapModel.instance:setMapPosX(curMapPosX)
 end
 
-function var_0_0.createMapNodeContainer(arg_5_0)
-	arg_5_0.goLayerNodeContainer = gohelper.create3d(arg_5_0.mapGo, "layerNodeContainer")
-	arg_5_0.goLayerLinePathContainer = gohelper.create3d(arg_5_0.mapGo, "layerLinePathContainer")
+function RougeLayerMap:createMapNodeContainer()
+	self.goLayerNodeContainer = gohelper.create3d(self.mapGo, "layerNodeContainer")
+	self.goLayerLinePathContainer = gohelper.create3d(self.mapGo, "layerLinePathContainer")
 
-	transformhelper.setLocalPos(arg_5_0.goLayerNodeContainer.transform, 0, 0, RougeMapEnum.OffsetZ.NodeContainer)
-	transformhelper.setLocalPos(arg_5_0.goLayerLinePathContainer.transform, 0, 0, RougeMapEnum.OffsetZ.PathContainer)
+	transformhelper.setLocalPos(self.goLayerNodeContainer.transform, 0, 0, RougeMapEnum.OffsetZ.NodeContainer)
+	transformhelper.setLocalPos(self.goLayerLinePathContainer.transform, 0, 0, RougeMapEnum.OffsetZ.PathContainer)
 
-	arg_5_0.goLayerPiecesContainer = gohelper.findChild(arg_5_0.mapGo, "layerPiecesContainer")
-	arg_5_0.trLayerPiecesContainer = arg_5_0.goLayerPiecesContainer.transform
+	self.goLayerPiecesContainer = gohelper.findChild(self.mapGo, "layerPiecesContainer")
+	self.trLayerPiecesContainer = self.goLayerPiecesContainer.transform
 
-	transformhelper.setLocalPos(arg_5_0.goLayerPiecesContainer.transform, 0, 0, RougeMapEnum.OffsetZ.PiecesContainer)
+	transformhelper.setLocalPos(self.goLayerPiecesContainer.transform, 0, 0, RougeMapEnum.OffsetZ.PiecesContainer)
 end
 
-function var_0_0.handleOtherRes(arg_6_0, arg_6_1)
-	arg_6_0.linePrefab = arg_6_1:getAssetItem(RougeMapEnum.LinePrefabRes):GetResource()
-	arg_6_0.lineIconDict = arg_6_0:getUserDataTb_()
+function RougeLayerMap:handleOtherRes(loader)
+	local linePrefab = loader:getAssetItem(RougeMapEnum.LinePrefabRes):GetResource()
 
-	for iter_6_0, iter_6_1 in pairs(RougeMapEnum.LineIconRes) do
-		arg_6_0.lineIconDict[iter_6_0] = arg_6_1:getAssetItem(iter_6_1):GetResource()
+	self.linePrefab = linePrefab
+	self.lineIconDict = self:getUserDataTb_()
+
+	for lineIcon, res in pairs(RougeMapEnum.LineIconRes) do
+		self.lineIconDict[lineIcon] = loader:getAssetItem(res):GetResource()
 	end
 
-	arg_6_0.iconPrefabDict = arg_6_0:getUserDataTb_()
+	self.iconPrefabDict = self:getUserDataTb_()
 
-	for iter_6_2, iter_6_3 in pairs(RougeMapEnum.EventType) do
-		local var_6_0 = RougeMapEnum.IconPath[iter_6_3]
+	for _, type in pairs(RougeMapEnum.EventType) do
+		local name = RougeMapEnum.IconPath[type]
 
-		if not string.nilorempty(var_6_0) then
-			local var_6_1 = RougeMapHelper.getScenePath(var_6_0)
+		if not string.nilorempty(name) then
+			local path = RougeMapHelper.getScenePath(name)
 
-			arg_6_0.iconPrefabDict[iter_6_3] = arg_6_1:getAssetItem(var_6_1):GetResource()
+			self.iconPrefabDict[type] = loader:getAssetItem(path):GetResource()
 		end
 	end
 
-	arg_6_0.nodeBgPrefabDict = {}
+	self.nodeBgPrefabDict = {}
 
-	for iter_6_4, iter_6_5 in pairs(RougeMapEnum.NodeBgPath) do
-		local var_6_2 = arg_6_0:getUserDataTb_()
+	for status, resDict in pairs(RougeMapEnum.NodeBgPath) do
+		local dict = self:getUserDataTb_()
 
-		arg_6_0.nodeBgPrefabDict[iter_6_4] = var_6_2
+		self.nodeBgPrefabDict[status] = dict
 
-		for iter_6_6, iter_6_7 in pairs(iter_6_5) do
-			local var_6_3 = RougeMapHelper.getScenePath(iter_6_7)
+		for arrive, name in pairs(resDict) do
+			local path = RougeMapHelper.getScenePath(name)
 
-			var_6_2[iter_6_6] = arg_6_1:getAssetItem(var_6_3):GetResource()
+			dict[arrive] = loader:getAssetItem(path):GetResource()
 		end
 	end
 
-	arg_6_0.startBgPrefab = arg_6_1:getAssetItem(RougeMapHelper.getScenePath(RougeMapEnum.StartNodeBgPath)):GetResource()
+	self.startBgPrefab = loader:getAssetItem(RougeMapHelper.getScenePath(RougeMapEnum.StartNodeBgPath)):GetResource()
 end
 
-function var_0_0.handleDLCRes(arg_7_0, arg_7_1, arg_7_2)
-	if not arg_7_2 then
+function RougeLayerMap:handleDLCRes(loader, versions)
+	if not versions then
 		return
 	end
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_2) do
-		RougeMapDLCResHelper.handleLoadMapDLCRes(iter_7_1, arg_7_1, arg_7_0)
+	for _, version in ipairs(versions) do
+		RougeMapDLCResHelper.handleLoadMapDLCRes(version, loader, self)
 	end
 end
 
-function var_0_0.createMap(arg_8_0)
-	local var_8_0 = RougeMapModel.instance:getEpisodeList()
+function RougeLayerMap:createMap()
+	local episodeMoList = RougeMapModel.instance:getEpisodeList()
 
-	arg_8_0.episodeItemList = {}
-	arg_8_0.lineItemList = {}
+	self.episodeItemList = {}
+	self.lineItemList = {}
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_0) do
-		local var_8_1 = RougeMapEpisodeItem.New()
+	for index, episodeMo in ipairs(episodeMoList) do
+		local episodeItem = RougeMapEpisodeItem.New()
 
-		var_8_1:init(iter_8_1, arg_8_0)
-		table.insert(arg_8_0.episodeItemList, var_8_1)
-		arg_8_0:addMapItemList(var_8_1:getNodeItemList())
-		arg_8_0:createLinePath(iter_8_0)
+		episodeItem:init(episodeMo, self)
+		table.insert(self.episodeItemList, episodeItem)
+		self:addMapItemList(episodeItem:getNodeItemList())
+		self:createLinePath(index)
 	end
 
-	arg_8_0.goActor = gohelper.findChild(arg_8_0.mapGo, "layerPiecesContainer/actor")
-	arg_8_0.actorComp = RougeMapNormalLayerActorComp.New()
+	self.goActor = gohelper.findChild(self.mapGo, "layerPiecesContainer/actor")
+	self.actorComp = RougeMapNormalLayerActorComp.New()
 
-	arg_8_0.actorComp:init(arg_8_0.goActor, arg_8_0)
-	arg_8_0:createDLCMap()
-	var_0_0.super.createMap(arg_8_0)
+	self.actorComp:init(self.goActor, self)
+	self:createDLCMap()
+	RougeLayerMap.super.createMap(self)
 end
 
-function var_0_0.createDLCMap(arg_9_0)
-	local var_9_0 = RougeModel.instance:getVersion()
+function RougeLayerMap:createDLCMap()
+	local versions = RougeModel.instance:getVersion()
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
-		RougeMapDLCResHelper.handleCreateMapDLC(iter_9_1, arg_9_0)
+	for _, version in ipairs(versions) do
+		RougeMapDLCResHelper.handleCreateMapDLC(version, self)
 	end
 end
 
-function var_0_0.getNodeBgPrefab(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = arg_10_1 and arg_10_1.specialUI == 1
-	local var_10_1
+function RougeLayerMap:getNodeBgPrefab(eventCo, arriveStatus)
+	local isSpecial = eventCo and eventCo.specialUI == 1
+	local prefabDict
 
-	if var_10_0 then
-		var_10_1 = arg_10_0.nodeBgPrefabDict.Special
+	if isSpecial then
+		prefabDict = self.nodeBgPrefabDict.Special
 	else
-		var_10_1 = arg_10_0.nodeBgPrefabDict.Normal
+		prefabDict = self.nodeBgPrefabDict.Normal
 	end
 
-	return var_10_1[arg_10_2]
+	return prefabDict[arriveStatus]
 end
 
-function var_0_0.getNodeIconPrefab(arg_11_0, arg_11_1)
-	if not arg_11_0.iconPrefabDict[arg_11_1.type] then
-		logError(string.format("not icon prefab, eventCo.id : %s, type : %s", arg_11_1.id, arg_11_1.type))
+function RougeLayerMap:getNodeIconPrefab(eventCo)
+	local prefab = self.iconPrefabDict[eventCo.type]
 
-		return arg_11_0.iconPrefabDict[RougeMapEnum.EventType.NormalFight]
+	if not prefab then
+		logError(string.format("not icon prefab, eventCo.id : %s, type : %s", eventCo.id, eventCo.type))
+
+		return self.iconPrefabDict[RougeMapEnum.EventType.NormalFight]
 	end
 
-	return arg_11_0.iconPrefabDict[arg_11_1.type]
+	return self.iconPrefabDict[eventCo.type]
 end
 
-function var_0_0.createLinePath(arg_12_0, arg_12_1)
-	if arg_12_1 == 1 then
+function RougeLayerMap:createLinePath(episodeIndex)
+	if episodeIndex == 1 then
 		return
 	end
 
-	local var_12_0 = arg_12_0.episodeItemList[arg_12_1].episodeMo
+	local episodeItem = self.episodeItemList[episodeIndex]
+	local episodeMo = episodeItem.episodeMo
 
-	for iter_12_0, iter_12_1 in ipairs(var_12_0:getNodeMoList()) do
-		local var_12_1 = iter_12_1.nodeId
+	for _, curNodeMo in ipairs(episodeMo:getNodeMoList()) do
+		local nodeId = curNodeMo.nodeId
 
-		for iter_12_2, iter_12_3 in ipairs(iter_12_1.preNodeList) do
-			local var_12_2 = RougeMapModel.instance:getNode(iter_12_3)
+		for _, preNodeId in ipairs(curNodeMo.preNodeList) do
+			local nodeMo = RougeMapModel.instance:getNode(preNodeId)
+			local nodeItem = self:getMapItem(nodeId)
 
-			arg_12_0:getMapItem(var_12_1).lineItem = arg_12_0:createLineItem(iter_12_1, var_12_2)
+			nodeItem.lineItem = self:createLineItem(curNodeMo, nodeMo)
 		end
 	end
 end
 
-function var_0_0.createLineItem(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0 = RougeMapLineItem.New()
-	local var_13_1 = gohelper.clone(arg_13_0.linePrefab, arg_13_0.goLayerLinePathContainer)
+function RougeLayerMap:createLineItem(curNodeMo, preNodeMo)
+	local lineItem = RougeMapLineItem.New()
+	local go = gohelper.clone(self.linePrefab, self.goLayerLinePathContainer)
 
-	var_13_0:init(var_13_1, arg_13_0)
-	var_13_0:drawLine(arg_13_1, arg_13_2)
-	table.insert(arg_13_0.lineItemList, var_13_0)
+	lineItem:init(go, self)
+	lineItem:drawLine(curNodeMo, preNodeMo)
+	table.insert(self.lineItemList, lineItem)
 
-	return var_13_0
+	return lineItem
 end
 
-function var_0_0.setMapPos(arg_14_0, arg_14_1)
-	local var_14_0 = RougeMapModel.instance:getMapSize()
+function RougeLayerMap:setMapPos(posX)
+	local mapSize = RougeMapModel.instance:getMapSize()
 
-	transformhelper.setLocalPos(arg_14_0.mapTransform, arg_14_1, var_14_0.y / 2, RougeMapEnum.OffsetZ.Map)
+	transformhelper.setLocalPos(self.mapTransform, posX, mapSize.y / 2, RougeMapEnum.OffsetZ.Map)
 end
 
-function var_0_0.onNodeEventStatusChange(arg_15_0, arg_15_1, arg_15_2)
-	if arg_15_2 == RougeMapEnum.EventState.Finish then
-		arg_15_0:focusActor()
+function RougeLayerMap:onNodeEventStatusChange(eventId, state)
+	if state == RougeMapEnum.EventState.Finish then
+		self:focusActor()
 	end
 end
 
-function var_0_0.focusActor(arg_16_0)
-	local var_16_0 = RougeMapModel.instance:getFocusScreenPosX()
-	local var_16_1 = arg_16_0.actorComp:getActorWordPos()
-	local var_16_2 = recthelper.screenPosToWorldPos3(Vector2(var_16_0, 0), nil, var_16_1)
-	local var_16_3 = var_16_1.x - var_16_2
-	local var_16_4 = RougeMapModel.instance:getMapPosX() - var_16_3
+function RougeLayerMap:focusActor()
+	local screenPosX = RougeMapModel.instance:getFocusScreenPosX()
+	local actorWorldPos = self.actorComp:getActorWordPos()
+	local worldPoxX = recthelper.screenPosToWorldPos3(Vector2(screenPosX, 0), nil, actorWorldPos)
+	local offsetX = actorWorldPos.x - worldPoxX
+	local curMapPosX = RougeMapModel.instance:getMapPosX()
 
-	RougeMapModel.instance:setMapPosX(var_16_4)
+	curMapPosX = curMapPosX - offsetX
+
+	RougeMapModel.instance:setMapPosX(curMapPosX)
 end
 
-function var_0_0.getActorPos(arg_17_0)
-	local var_17_0 = RougeMapModel.instance:getCurNode()
+function RougeLayerMap:getActorPos()
+	local curNodeMo = RougeMapModel.instance:getCurNode()
+	local mapItem = self:getMapItem(curNodeMo.nodeId)
 
-	return arg_17_0:getMapItem(var_17_0.nodeId):getActorPos()
+	return mapItem:getActorPos()
 end
 
-function var_0_0.destroy(arg_18_0)
-	for iter_18_0, iter_18_1 in ipairs(arg_18_0.lineItemList) do
-		iter_18_1:destroy()
+function RougeLayerMap:destroy()
+	for _, lineItem in ipairs(self.lineItemList) do
+		lineItem:destroy()
 	end
 
-	for iter_18_2, iter_18_3 in ipairs(arg_18_0.episodeItemList) do
-		iter_18_3:destroy()
+	for _, episodeItem in ipairs(self.episodeItemList) do
+		episodeItem:destroy()
 	end
 
-	var_0_0.super.destroy(arg_18_0)
+	RougeLayerMap.super.destroy(self)
 end
 
-return var_0_0
+return RougeLayerMap

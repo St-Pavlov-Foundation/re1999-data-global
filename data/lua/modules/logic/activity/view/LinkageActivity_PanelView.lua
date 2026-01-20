@@ -1,71 +1,73 @@
-﻿module("modules.logic.activity.view.LinkageActivity_PanelView", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/LinkageActivity_PanelView.lua
 
-local var_0_0 = class("LinkageActivity_PanelView", LinkageActivity_PanelViewBase)
+module("modules.logic.activity.view.LinkageActivity_PanelView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._simageLogo = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_Logo")
-	arg_1_0._simageTitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_Title")
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "LimitTime/image_LimitTimeBG/#txt_LimitTime")
-	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Close")
+local LinkageActivity_PanelView = class("LinkageActivity_PanelView", LinkageActivity_PanelViewBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function LinkageActivity_PanelView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._simageLogo = gohelper.findChildSingleImage(self.viewGO, "#simage_Logo")
+	self._simageTitle = gohelper.findChildSingleImage(self.viewGO, "#simage_Title")
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "LimitTime/image_LimitTimeBG/#txt_LimitTime")
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Close")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	var_0_0.super.addEvents(arg_2_0)
-	arg_2_0._btnClose:AddClickListener(arg_2_0._btnCloseOnClick, arg_2_0)
+function LinkageActivity_PanelView:addEvents()
+	LinkageActivity_PanelView.super.addEvents(self)
+	self._btnClose:AddClickListener(self._btnCloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnClose:RemoveClickListener()
-	var_0_0.super.removeEvents(arg_3_0)
+function LinkageActivity_PanelView:removeEvents()
+	self._btnClose:RemoveClickListener()
+	LinkageActivity_PanelView.super.removeEvents(self)
 end
 
-function var_0_0.ctor(arg_4_0, ...)
-	var_0_0.super.ctor(arg_4_0, ...)
+function LinkageActivity_PanelView:ctor(...)
+	LinkageActivity_PanelView.super.ctor(self, ...)
 end
 
-function var_0_0.onDestroyView(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0._refreshTimeTick, arg_5_0)
-	var_0_0.super.onDestroyView(arg_5_0)
+function LinkageActivity_PanelView:onDestroyView()
+	TaskDispatcher.cancelTask(self._refreshTimeTick, self)
+	LinkageActivity_PanelView.super.onDestroyView(self)
 end
 
-function var_0_0.onClickModalMask(arg_6_0)
-	arg_6_0:closeThis()
+function LinkageActivity_PanelView:onClickModalMask()
+	self:closeThis()
 end
 
-function var_0_0._btnCloseOnClick(arg_7_0)
-	arg_7_0:closeThis()
+function LinkageActivity_PanelView:_btnCloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0._txtLimitTime.text = ""
-	arg_8_0._pageGo1 = gohelper.findChild(arg_8_0.viewGO, "Page1")
-	arg_8_0._pageGo2 = gohelper.findChild(arg_8_0.viewGO, "Page2")
+function LinkageActivity_PanelView:_editableInitView()
+	self._txtLimitTime.text = ""
+	self._pageGo1 = gohelper.findChild(self.viewGO, "Page1")
+	self._pageGo2 = gohelper.findChild(self.viewGO, "Page2")
 end
 
-function var_0_0.onStart(arg_9_0)
-	arg_9_0:addPage(1, arg_9_0._pageGo1, LinkageActivity_PanelView_Page1)
-	arg_9_0:addPage(2, arg_9_0._pageGo2, LinkageActivity_PanelView_Page2)
-	arg_9_0:selectedPage(2)
+function LinkageActivity_PanelView:onStart()
+	self:addPage(1, self._pageGo1, LinkageActivity_PanelView_Page1)
+	self:addPage(2, self._pageGo2, LinkageActivity_PanelView_Page2)
+	self:selectedPage(2)
 end
 
-function var_0_0.onRefresh(arg_10_0)
-	var_0_0.super.onRefresh(arg_10_0)
-	arg_10_0:_refreshTimeTick()
-	TaskDispatcher.cancelTask(arg_10_0._refreshTimeTick, arg_10_0)
-	TaskDispatcher.runRepeat(arg_10_0._refreshTimeTick, arg_10_0, 1)
+function LinkageActivity_PanelView:onRefresh()
+	LinkageActivity_PanelView.super.onRefresh(self)
+	self:_refreshTimeTick()
+	TaskDispatcher.cancelTask(self._refreshTimeTick, self)
+	TaskDispatcher.runRepeat(self._refreshTimeTick, self, 1)
 end
 
-function var_0_0.onClose(arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0._refreshTimeTick, arg_11_0)
+function LinkageActivity_PanelView:onClose()
+	TaskDispatcher.cancelTask(self._refreshTimeTick, self)
 end
 
-function var_0_0._refreshTimeTick(arg_12_0)
-	arg_12_0._txtLimitTime.text = arg_12_0:getRemainTimeStr()
+function LinkageActivity_PanelView:_refreshTimeTick()
+	self._txtLimitTime.text = self:getRemainTimeStr()
 end
 
-return var_0_0
+return LinkageActivity_PanelView

@@ -1,20 +1,22 @@
-﻿module("modules.logic.login.model.ServerListModel", package.seeall)
+﻿-- chunkname: @modules/logic/login/model/ServerListModel.lua
 
-local var_0_0 = class("ServerListModel", ListScrollModel)
+module("modules.logic.login.model.ServerListModel", package.seeall)
 
-function var_0_0.setServerList(arg_1_0, arg_1_1)
-	local var_1_0 = {}
+local ServerListModel = class("ServerListModel", ListScrollModel)
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1) do
-		local var_1_1 = ServerMO.New()
+function ServerListModel:setServerList(zoneInfos)
+	local moList = {}
 
-		var_1_1:init(iter_1_1)
-		table.insert(var_1_0, var_1_1)
+	for _, zone in ipairs(zoneInfos) do
+		local serverMO = ServerMO.New()
+
+		serverMO:init(zone)
+		table.insert(moList, serverMO)
 	end
 
-	arg_1_0:setList(var_1_0)
+	self:setList(moList)
 end
 
-var_0_0.instance = var_0_0.New()
+ServerListModel.instance = ServerListModel.New()
 
-return var_0_0
+return ServerListModel

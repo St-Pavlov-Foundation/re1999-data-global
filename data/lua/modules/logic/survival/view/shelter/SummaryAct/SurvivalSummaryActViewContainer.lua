@@ -1,19 +1,23 @@
-﻿module("modules.logic.survival.view.shelter.SummaryAct.SurvivalSummaryActViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/SummaryAct/SurvivalSummaryActViewContainer.lua
 
-local var_0_0 = class("SurvivalSummaryActViewContainer", BaseViewContainer)
+module("modules.logic.survival.view.shelter.SummaryAct.SurvivalSummaryActViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	return {
+local SurvivalSummaryActViewContainer = class("SurvivalSummaryActViewContainer", BaseViewContainer)
+
+function SurvivalSummaryActViewContainer:buildViews()
+	local views = {
 		SurvivalSummaryActView.New()
 	}
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function SurvivalSummaryActViewContainer:buildTabViews(tabContainerId)
 	return
 end
 
-function var_0_0.onContainerOpenFinish(arg_3_0)
+function SurvivalSummaryActViewContainer:onContainerOpenFinish()
 	return
 end
 
-return var_0_0
+return SurvivalSummaryActViewContainer

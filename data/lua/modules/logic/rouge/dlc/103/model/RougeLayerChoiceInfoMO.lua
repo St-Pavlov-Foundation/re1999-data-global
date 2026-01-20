@@ -1,34 +1,36 @@
-﻿module("modules.logic.rouge.dlc.103.model.RougeLayerChoiceInfoMO", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/dlc/103/model/RougeLayerChoiceInfoMO.lua
 
-local var_0_0 = pureTable("RougeLayerChoiceInfoMO")
+module("modules.logic.rouge.dlc.103.model.RougeLayerChoiceInfoMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.layerId = arg_1_1.layerId
-	arg_1_0.mapRuleId = arg_1_1.mapRuleId
-	arg_1_0.mapRuleCo = RougeDLCConfig103.instance:getMapRuleConfig(arg_1_0.mapRuleId)
-	arg_1_0.curLayerCollection = {}
+local RougeLayerChoiceInfoMO = pureTable("RougeLayerChoiceInfoMO")
 
-	tabletool.addValues(arg_1_0.curLayerCollection, arg_1_1.curLayerCollection)
+function RougeLayerChoiceInfoMO:init(info)
+	self.layerId = info.layerId
+	self.mapRuleId = info.mapRuleId
+	self.mapRuleCo = RougeDLCConfig103.instance:getMapRuleConfig(self.mapRuleId)
+	self.curLayerCollection = {}
 
-	arg_1_0.mapRuleCanFreshNum = arg_1_1.mapRuleCanFreshNum
+	tabletool.addValues(self.curLayerCollection, info.curLayerCollection)
+
+	self.mapRuleCanFreshNum = info.mapRuleCanFreshNum
 end
 
-function var_0_0.getMapRuleCo(arg_2_0)
-	return arg_2_0.mapRuleCo
+function RougeLayerChoiceInfoMO:getMapRuleCo()
+	return self.mapRuleCo
 end
 
-function var_0_0.getMapRuleType(arg_3_0)
-	local var_3_0 = arg_3_0:getMapRuleCo()
+function RougeLayerChoiceInfoMO:getMapRuleType()
+	local ruleCo = self:getMapRuleCo()
 
-	return var_3_0 and var_3_0.type
+	return ruleCo and ruleCo.type
 end
 
-function var_0_0.getCurLayerCollection(arg_4_0)
-	return arg_4_0.curLayerCollection
+function RougeLayerChoiceInfoMO:getCurLayerCollection()
+	return self.curLayerCollection
 end
 
-function var_0_0.getMapRuleCanFreshNum(arg_5_0)
-	return arg_5_0.mapRuleCanFreshNum
+function RougeLayerChoiceInfoMO:getMapRuleCanFreshNum()
+	return self.mapRuleCanFreshNum
 end
 
-return var_0_0
+return RougeLayerChoiceInfoMO

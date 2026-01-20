@@ -1,442 +1,447 @@
-﻿module("modules.logic.room.entity.comp.RoomVehicleMoveComp", package.seeall)
+﻿-- chunkname: @modules/logic/room/entity/comp/RoomVehicleMoveComp.lua
 
-local var_0_0 = class("RoomVehicleMoveComp", LuaCompBase)
+module("modules.logic.room.entity.comp.RoomVehicleMoveComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.entity = arg_1_1
-	arg_1_0.moveSpeed = 0.2
-	arg_1_0.rotationSpeed = 90
-	arg_1_0.maxRotationAngle = 150
-	arg_1_0.endPathWaitTime = 0
-	arg_1_0.radius = 0.1
-	arg_1_0.crossloadMaxWaitTime = 15
-	arg_1_0._crossloadEndTime = 0
-	arg_1_0._endNodeResourcePointOffest = 0.42
-	arg_1_0._isStop = false
-	arg_1_0._isWalking = false
-	arg_1_0._moveParams = {}
-	arg_1_0._rotationParams = {}
+local RoomVehicleMoveComp = class("RoomVehicleMoveComp", LuaCompBase)
+
+function RoomVehicleMoveComp:ctor(entity)
+	self.entity = entity
+	self.moveSpeed = 0.2
+	self.rotationSpeed = 90
+	self.maxRotationAngle = 150
+	self.endPathWaitTime = 0
+	self.radius = 0.1
+	self.crossloadMaxWaitTime = 15
+	self._crossloadEndTime = 0
+	self._endNodeResourcePointOffest = 0.42
+	self._isStop = false
+	self._isWalking = false
+	self._moveParams = {}
+	self._rotationParams = {}
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
-	arg_2_0.targetTrs = arg_2_0.go.transform
-	arg_2_0._scene = GameSceneMgr.instance:getCurScene()
-	arg_2_0._seeker = ZProj.AStarSeekWrap.Get(arg_2_0.go)
+function RoomVehicleMoveComp:init(go)
+	self.go = go
+	self.targetTrs = self.go.transform
+	self._scene = GameSceneMgr.instance:getCurScene()
+	self._seeker = ZProj.AStarSeekWrap.Get(self.go)
 
-	arg_2_0:initVehicleParam()
+	self:initVehicleParam()
 
-	for iter_2_0 = 0, 31 do
-		arg_2_0._seeker:SetTagTraversable(iter_2_0, RoomAStarHelper.walkableTag(arg_2_0._resId, iter_2_0))
+	for layerTag = 0, 31 do
+		self._seeker:SetTagTraversable(layerTag, RoomAStarHelper.walkableTag(self._resId, layerTag))
 	end
 
-	arg_2_0:_delayFindPath()
+	self:_delayFindPath()
 end
 
-function var_0_0.initVehicleParam(arg_3_0)
-	arg_3_0._mo = arg_3_0:getVehicleMO()
-	arg_3_0._resId = arg_3_0._mo and arg_3_0._mo.resourceId
+function RoomVehicleMoveComp:initVehicleParam()
+	self._mo = self:getVehicleMO()
+	self._resId = self._mo and self._mo.resourceId
 
-	local var_3_0 = arg_3_0._mo and arg_3_0._mo:getReplaceDefideCfg()
+	local cfg = self._mo and self._mo:getReplaceDefideCfg()
 
-	if var_3_0 then
-		arg_3_0.moveSpeed = var_3_0.moveSpeed * 0.01
-		arg_3_0.rotationSpeed = var_3_0.rotationSpeed
-		arg_3_0.endPathWaitTime = var_3_0.endPathWaitTime and var_3_0.endPathWaitTime * 0.001 or arg_3_0.endPathWaitTime or 0
-		arg_3_0._useType = var_3_0.useType
+	if cfg then
+		self.moveSpeed = cfg.moveSpeed * 0.01
+		self.rotationSpeed = cfg.rotationSpeed
+		self.endPathWaitTime = cfg.endPathWaitTime and cfg.endPathWaitTime * 0.001 or self.endPathWaitTime or 0
+		self._useType = cfg.useType
 
-		if var_3_0.radius and var_3_0.radius > 0 then
-			local var_3_1 = RoomBlockEnum.BlockSize * math.sqrt(3) * 0.5
-			local var_3_2 = (1 - math.min(var_3_0.radius * 0.01, var_3_1) / var_3_1) * 0.5
+		if cfg.radius and cfg.radius > 0 then
+			local direSize = RoomBlockEnum.BlockSize * math.sqrt(3) * 0.5
+			local radius = math.min(cfg.radius * 0.01, direSize)
+			local offset = (1 - radius / direSize) * 0.5
 
-			arg_3_0._endNodeResourcePointOffest = math.max(0.1, var_3_2)
+			self._endNodeResourcePointOffest = math.max(0.1, offset)
 		end
 	end
 end
 
-function var_0_0.addEventListeners(arg_4_0)
+function RoomVehicleMoveComp:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_5_0)
-	if not gohelper.isNil(arg_5_0._seeker) then
-		arg_5_0._seeker:RemoveOnPathCall()
+function RoomVehicleMoveComp:removeEventListeners()
+	if not gohelper.isNil(self._seeker) then
+		self._seeker:RemoveOnPathCall()
 	end
 
-	arg_5_0._seeker = nil
+	self._seeker = nil
 end
 
-function var_0_0._reset(arg_6_0)
-	arg_6_0._isInitPosition = false
-	arg_6_0._mo = arg_6_0:getVehicleMO()
-	arg_6_0._resId = arg_6_0._mo and arg_6_0._mo.resourceId or arg_6_0._resId
+function RoomVehicleMoveComp:_reset()
+	self._isInitPosition = false
+	self._mo = self:getVehicleMO()
+	self._resId = self._mo and self._mo.resourceId or self._resId
 
-	if arg_6_0.pathList and #arg_6_0.pathList > 0 then
-		for iter_6_0 = #arg_6_0.pathList, 1, -1 do
-			RoomVectorPool.instance:recycle(arg_6_0.pathList[iter_6_0])
-			table.remove(arg_6_0.pathList, iter_6_0)
+	if self.pathList and #self.pathList > 0 then
+		for i = #self.pathList, 1, -1 do
+			RoomVectorPool.instance:recycle(self.pathList[i])
+			table.remove(self.pathList, i)
 		end
 	end
 end
 
-function var_0_0._delayFindPath(arg_7_0, arg_7_1)
-	arg_7_0:_returnFindPath()
+function RoomVehicleMoveComp:_delayFindPath(delay)
+	self:_returnFindPath()
 
-	arg_7_0._delayFindPathing = true
+	self._delayFindPathing = true
 
-	local var_7_0 = arg_7_1 or 0.5
+	local delayTime = delay or 0.5
 
-	TaskDispatcher.runDelay(arg_7_0._onDelayFindPath, arg_7_0, var_7_0)
+	TaskDispatcher.runDelay(self._onDelayFindPath, self, delayTime)
 
-	if var_7_0 > 0 and (not arg_7_0.pathList or #arg_7_0.pathList <= 0) then
-		arg_7_0:_setIsWalking(false, arg_7_1)
+	if delayTime > 0 and (not self.pathList or #self.pathList <= 0) then
+		self:_setIsWalking(false, delay)
 	end
 end
 
-function var_0_0._setIsWalking(arg_8_0, arg_8_1, arg_8_2)
-	if arg_8_0._isWalking == arg_8_1 then
+function RoomVehicleMoveComp:_setIsWalking(isWalking, delay)
+	if self._isWalking == isWalking then
 		return
 	end
 
-	arg_8_0._isWalking = arg_8_1
+	self._isWalking = isWalking
 
-	local var_8_0 = arg_8_0:getVehicleMO() or arg_8_0._mo
-	local var_8_1 = var_8_0 and var_8_0:getReplaceDefideCfg()
+	local mo = self:getVehicleMO() or self._mo
+	local vehicleCfg = mo and mo:getReplaceDefideCfg()
 
-	if var_8_1 then
-		local var_8_2 = var_8_1.audioStop
+	if vehicleCfg then
+		local audioId = vehicleCfg.audioStop
 
-		if arg_8_0._isWalking then
-			var_8_2 = var_8_1.audioWalk
+		if self._isWalking then
+			audioId = vehicleCfg.audioWalk
 		end
 
-		if var_8_2 and var_8_2 ~= 0 then
-			RoomHelper.audioExtendTrigger(var_8_2, arg_8_0.go)
+		if audioId and audioId ~= 0 then
+			RoomHelper.audioExtendTrigger(audioId, self.go)
 		end
 	end
 
-	if arg_8_0.entity then
-		local var_8_3 = arg_8_0._isWalking and RoomEvent.VehicleStartMove or RoomEvent.VehicleStopMove
+	if self.entity then
+		local eventId = self._isWalking and RoomEvent.VehicleStartMove or RoomEvent.VehicleStopMove
 
-		arg_8_0.entity:dispatchEvent(var_8_3, arg_8_2)
+		self.entity:dispatchEvent(eventId, delay)
 	end
 end
 
-function var_0_0._onDelayFindPath(arg_9_0)
-	arg_9_0._delayFindPathing = false
+function RoomVehicleMoveComp:_onDelayFindPath()
+	self._delayFindPathing = false
 
-	arg_9_0:findPath()
+	self:findPath()
 end
 
-function var_0_0._returnFindPath(arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._onDelayFindPath, arg_10_0)
+function RoomVehicleMoveComp:_returnFindPath()
+	TaskDispatcher.cancelTask(self._onDelayFindPath, self)
 end
 
-function var_0_0.findPath(arg_11_0)
-	if not arg_11_0._seeker then
+function RoomVehicleMoveComp:findPath()
+	local seeker = self._seeker
+
+	if not seeker then
 		return
 	end
 
-	local var_11_0 = arg_11_0:getVehicleMO() or arg_11_0._mo
+	local mo = self:getVehicleMO() or self._mo
 
-	if not var_11_0 then
-		arg_11_0:_delayFindPath()
+	if not mo then
+		self:_delayFindPath()
 		logError("RoomVehicleMoveComp: 没有MO数据")
 
 		return
 	end
 
-	local var_11_1 = var_11_0:getCurNode()
-	local var_11_2 = var_11_0.enterDirection
-	local var_11_3, var_11_4, var_11_5 = var_11_0:findNextWeightNode()
+	local curNode = mo:getCurNode()
+	local curDire = mo.enterDirection
+	local nextNode, nextEnterDire, curExitDire = mo:findNextWeightNode()
+	local hexPoint = nextNode and nextNode.hexPoint
 
-	if not (var_11_3 and var_11_3.hexPoint) then
-		arg_11_0:_delayFindPath()
+	if not hexPoint then
+		self:_delayFindPath()
 		logError("RoomVehicleMoveComp: 没有位置信息")
 
 		return
 	end
 
-	local var_11_6 = var_11_0:getAreaNode()
+	local areaNodeList = mo:getAreaNode()
 
-	if var_11_6 and #var_11_6 > 1 and tabletool.indexOf(var_11_6, var_11_3) then
-		arg_11_0:_followTrunAround()
-		arg_11_0:_delayFindPath()
+	if areaNodeList and #areaNodeList > 1 and tabletool.indexOf(areaNodeList, nextNode) then
+		self:_followTrunAround()
+		self:_delayFindPath()
 
 		return
 	end
 
-	local var_11_7 = var_11_4
+	local findNextDir = nextEnterDire
 
-	if var_11_3:isEndNode() then
-		var_11_7 = var_11_0:findEndDir(var_11_3, var_11_4)
+	if nextNode:isEndNode() then
+		findNextDir = mo:findEndDir(nextNode, nextEnterDire)
 
-		if var_11_3 == var_11_1 then
-			if var_11_7 == var_11_4 then
-				var_11_7 = 0
+		if nextNode == curNode then
+			if findNextDir == nextEnterDire then
+				findNextDir = 0
 			end
 
-			var_11_4 = var_11_7
+			nextEnterDire = findNextDir
 		end
 	end
 
-	local var_11_8, var_11_9 = arg_11_0:_isCrossload(var_11_1, var_11_2, var_11_5)
+	local isCrossLoad, buildingUid = self:_isCrossload(curNode, curDire, curExitDire)
 
-	if not var_11_8 then
-		var_11_8, var_11_9 = arg_11_0:_isCrossload(var_11_3, var_11_4, var_11_7)
+	if not isCrossLoad then
+		isCrossLoad, buildingUid = self:_isCrossload(nextNode, nextEnterDire, findNextDir)
 	end
 
-	if var_11_8 then
-		local var_11_10, var_11_11 = RoomCrossLoadController.instance:crossload(var_11_9, arg_11_0._resId)
-		local var_11_12
+	if isCrossLoad then
+		local crossLoadResId, canMove = RoomCrossLoadController.instance:crossload(buildingUid, self._resId)
+		local isSameRes = crossLoadResId == self._resId
 
-		var_11_12 = var_11_10 == arg_11_0._resId
-
-		if arg_11_0._crossloadEndTime <= 0 then
-			arg_11_0._crossloadEndTime = Time.time + 15
+		if self._crossloadEndTime <= 0 then
+			self._crossloadEndTime = Time.time + 15
 		end
 
-		if var_11_10 ~= arg_11_0._resId and arg_11_0._crossloadEndTime < Time.time then
-			arg_11_0._crossloadEndTime = 0
+		if crossLoadResId ~= self._resId and self._crossloadEndTime < Time.time then
+			self._crossloadEndTime = 0
 
-			var_11_0:moveToNode(var_11_3, var_11_4, true)
+			mo:moveToNode(nextNode, nextEnterDire, true)
 		end
 
-		if var_11_10 ~= arg_11_0._resId or not var_11_11 then
-			arg_11_0:_delayFindPath()
+		if crossLoadResId ~= self._resId or not canMove then
+			self:_delayFindPath()
 
 			return
 		end
 	else
-		arg_11_0._crossloadEndTime = 0
+		self._crossloadEndTime = 0
 	end
 
-	local var_11_13 = {
-		var_11_7
+	local findDireList = {
+		findNextDir
 	}
 
-	if var_11_3:isEndNode() and var_11_7 ~= var_11_4 then
-		table.insert(var_11_13, var_11_4)
+	if nextNode:isEndNode() and findNextDir ~= nextEnterDire then
+		table.insert(findDireList, nextEnterDire)
 	end
 
-	local var_11_14 = {
-		nextNode = var_11_3,
-		nextEnterDire = var_11_4,
-		direList = var_11_13,
-		isCrossLoad = var_11_8,
-		buildingUid = var_11_9
+	local param = {
+		nextNode = nextNode,
+		nextEnterDire = nextEnterDire,
+		direList = findDireList,
+		isCrossLoad = isCrossLoad,
+		buildingUid = buildingUid
 	}
 
-	if arg_11_0._useType == RoomVehicleEnum.UseType.Aircraft then
-		local var_11_15 = var_11_3.hexPoint
-		local var_11_16, var_11_17 = HexMath.hexXYToPosXY(var_11_15.x, var_11_15.y, RoomBlockEnum.BlockSize)
-		local var_11_18 = {
-			Vector3(var_11_16, RoomBuildingEnum.VehicleInitOffestY, var_11_17)
+	if self._useType == RoomVehicleEnum.UseType.Aircraft then
+		local nextHexPoint = nextNode.hexPoint
+		local nextPosX, nextPosZ = HexMath.hexXYToPosXY(nextHexPoint.x, nextHexPoint.y, RoomBlockEnum.BlockSize)
+		local pathV3List = {
+			Vector3(nextPosX, RoomBuildingEnum.VehicleInitOffestY, nextPosZ)
 		}
 
-		arg_11_0:_setPathV3ListParam(var_11_14, var_11_18)
+		self:_setPathV3ListParam(param, pathV3List)
 	else
-		arg_11_0:_startFindPath(var_11_14, var_11_3:isEndNode() and arg_11_0._endNodeResourcePointOffest)
+		self:_startFindPath(param, nextNode:isEndNode() and self._endNodeResourcePointOffest)
 	end
 end
 
-function var_0_0._startFindPath(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = arg_12_0._seeker
+function RoomVehicleMoveComp:_startFindPath(findParam, offset)
+	local seeker = self._seeker
 
-	if var_12_0 and arg_12_1 and #arg_12_1.direList > 0 then
-		local var_12_1 = arg_12_1.direList[1]
+	if seeker and findParam and #findParam.direList > 0 then
+		local findNextDir = findParam.direList[1]
 
-		table.remove(arg_12_1.direList, 1)
+		table.remove(findParam.direList, 1)
 
-		local var_12_2 = HexMath.resourcePointToPosition(ResourcePoint.New(arg_12_1.nextNode.hexPoint, var_12_1), RoomBlockEnum.BlockSize, arg_12_2 or 0.4)
+		local position = HexMath.resourcePointToPosition(ResourcePoint.New(findParam.nextNode.hexPoint, findNextDir), RoomBlockEnum.BlockSize, offset or 0.4)
 
-		var_12_0:RemoveOnPathCall()
-		var_12_0:AddOnPathCall(arg_12_0._onPathCall, arg_12_0, arg_12_1)
-		var_12_0:StartPath(arg_12_0.targetTrs.localPosition, Vector3(var_12_2.x, 0, var_12_2.y))
+		seeker:RemoveOnPathCall()
+		seeker:AddOnPathCall(self._onPathCall, self, findParam)
+		seeker:StartPath(self.targetTrs.localPosition, Vector3(position.x, 0, position.y))
 	end
 end
 
-function var_0_0._onPathCall(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4)
-	local var_13_0
+function RoomVehicleMoveComp:_onPathCall(findParam, pathList, isError, errorMsg)
+	local pathV3List
 
-	if not arg_13_3 then
-		var_13_0 = RoomVectorPool.instance:packPosList(arg_13_2)
+	if not isError then
+		pathV3List = RoomVectorPool.instance:packPosList(pathList)
 	end
 
-	arg_13_0:_setPathV3ListParam(arg_13_1, var_13_0, arg_13_3)
+	self:_setPathV3ListParam(findParam, pathV3List, isError)
 
-	if arg_13_3 then
-		if #arg_13_1.direList > 0 then
-			arg_13_0:_startFindPath(arg_13_1)
+	if isError then
+		if #findParam.direList > 0 then
+			self:_startFindPath(findParam)
 		else
-			arg_13_0:_delayFindPath()
+			self:_delayFindPath()
 		end
 	end
 end
 
-function var_0_0._setPathV3ListParam(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	if arg_14_1 and arg_14_1.nextNode and (#arg_14_1.direList < 1 or not arg_14_3) then
-		local var_14_0 = arg_14_0:getVehicleMO() or arg_14_0._mo
-		local var_14_1 = var_14_0.enterDirection
+function RoomVehicleMoveComp:_setPathV3ListParam(findParam, pathV3List, isError)
+	if findParam and findParam.nextNode and (#findParam.direList < 1 or not isError) then
+		local mo = self:getVehicleMO() or self._mo
+		local curDire = mo.enterDirection
 
-		var_14_0:moveToNode(arg_14_1.nextNode, arg_14_1.nextEnterDire, arg_14_3 and true or false)
+		mo:moveToNode(findParam.nextNode, findParam.nextEnterDire, isError and true or false)
 
-		local var_14_2 = var_14_0:getReplaceDefideCfg()
+		local vehicleCfg = mo:getReplaceDefideCfg()
 
-		if arg_14_1.isCrossLoad and RoomConfig.instance:getAudioExtendConfig(var_14_2.audioCrossload) then
-			RoomHelper.audioExtendTrigger(var_14_2.audioCrossload, arg_14_0.go)
-		elseif arg_14_1.nextEnterDire ~= var_14_1 and RoomConfig.instance:getAudioExtendConfig(var_14_2.audioTurn) then
-			RoomHelper.audioExtendTrigger(var_14_2.audioTurn, arg_14_0.go)
+		if findParam.isCrossLoad and RoomConfig.instance:getAudioExtendConfig(vehicleCfg.audioCrossload) then
+			RoomHelper.audioExtendTrigger(vehicleCfg.audioCrossload, self.go)
+		elseif findParam.nextEnterDire ~= curDire and RoomConfig.instance:getAudioExtendConfig(vehicleCfg.audioTurn) then
+			RoomHelper.audioExtendTrigger(vehicleCfg.audioTurn, self.go)
 		end
 	end
 
-	if not arg_14_3 then
-		arg_14_0.pathList = arg_14_2
+	if not isError then
+		self.pathList = pathV3List
 
-		arg_14_0:_moveNext()
+		self:_moveNext()
 	end
 end
 
-function var_0_0._isCrossload(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	if arg_15_1 then
-		return RoomCrossLoadController.instance:isEnterBuilingCrossLoad(arg_15_1.hexPoint.x, arg_15_1.hexPoint.y, arg_15_2, arg_15_3)
+function RoomVehicleMoveComp:_isCrossload(node, enterDire, curExitDire)
+	if node then
+		return RoomCrossLoadController.instance:isEnterBuilingCrossLoad(node.hexPoint.x, node.hexPoint.y, enterDire, curExitDire)
 	end
 end
 
-function var_0_0._moveNext(arg_16_0)
-	if not arg_16_0._isInitPosition and #arg_16_0.pathList > 1 then
-		arg_16_0._isInitPosition = true
+function RoomVehicleMoveComp:_moveNext()
+	if not self._isInitPosition and #self.pathList > 1 then
+		self._isInitPosition = true
 
-		local var_16_0 = arg_16_0.pathList[1]
-		local var_16_1, var_16_2, var_16_3 = transformhelper.getLocalPos(arg_16_0.targetTrs)
+		local initPosition = self.pathList[1]
+		local px, py, pz = transformhelper.getLocalPos(self.targetTrs)
 
-		transformhelper.setLocalPos(arg_16_0.targetTrs, var_16_1, var_16_0.y, var_16_3)
+		transformhelper.setLocalPos(self.targetTrs, px, initPosition.y, pz)
 
-		if Vector3.Distance(Vector3(var_16_1, var_16_0.y, var_16_3), var_16_0) <= 0.001 then
-			table.remove(arg_16_0.pathList, 1)
-			RoomVectorPool.instance:recycle(var_16_0)
+		if Vector3.Distance(Vector3(px, initPosition.y, pz), initPosition) <= 0.001 then
+			table.remove(self.pathList, 1)
+			RoomVectorPool.instance:recycle(initPosition)
 		end
 	end
 
-	if #arg_16_0.pathList > 0 then
-		local var_16_4 = arg_16_0.pathList[1]
+	if #self.pathList > 0 then
+		local pos = self.pathList[1]
 
-		table.remove(arg_16_0.pathList, 1)
-		arg_16_0:_moveTo(var_16_4.x, var_16_4.y, var_16_4.z)
-		RoomVectorPool.instance:recycle(var_16_4)
+		table.remove(self.pathList, 1)
+		self:_moveTo(pos.x, pos.y, pos.z)
+		RoomVectorPool.instance:recycle(pos)
 	end
 end
 
-function var_0_0._moveTo(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	arg_17_0:_killMoveToTween()
+function RoomVehicleMoveComp:_moveTo(x, y, z)
+	self:_killMoveToTween()
 
-	local var_17_0 = arg_17_0.targetTrs.position
-	local var_17_1 = Vector3(arg_17_1, arg_17_2, arg_17_3)
-	local var_17_2 = Vector3.Distance(var_17_0, var_17_1) / arg_17_0.moveSpeed
-	local var_17_3 = arg_17_0._moveParams
+	local fromPos = self.targetTrs.position
+	local toPos = Vector3(x, y, z)
+	local distance = Vector3.Distance(fromPos, toPos)
+	local duration = distance / self.moveSpeed
+	local mps = self._moveParams
 
-	var_17_3.originalX = var_17_0.x
-	var_17_3.originalY = var_17_0.y
-	var_17_3.originalZ = var_17_0.z
-	var_17_3.x = arg_17_1
-	var_17_3.y = arg_17_2
-	var_17_3.z = arg_17_3
-	arg_17_0._tweenId = arg_17_0._scene.tween:tweenFloat(0, 1, var_17_2, arg_17_0._frameCallback, arg_17_0._finishCallback, arg_17_0, var_17_3)
+	mps.originalX = fromPos.x
+	mps.originalY = fromPos.y
+	mps.originalZ = fromPos.z
+	mps.x = x
+	mps.y = y
+	mps.z = z
+	self._tweenId = self._scene.tween:tweenFloat(0, 1, duration, self._frameCallback, self._finishCallback, self, mps)
 
-	if math.abs(arg_17_1 - var_17_3.originalX) > 1e-06 or math.abs(arg_17_3 - var_17_3.originalZ) > 1e-06 then
-		local var_17_4 = Vector3(arg_17_1 - var_17_3.originalX, arg_17_2 - var_17_3.originalY, arg_17_3 - var_17_3.originalZ)
-		local var_17_5 = Quaternion.LookRotation(var_17_4, Vector3.up)
-		local var_17_6 = arg_17_0.targetTrs.rotation
-		local var_17_7 = Quaternion.Angle(var_17_6, var_17_5)
+	if math.abs(x - mps.originalX) > 1e-06 or math.abs(z - mps.originalZ) > 1e-06 then
+		local targetDir = Vector3(x - mps.originalX, y - mps.originalY, z - mps.originalZ)
+		local toRotation = Quaternion.LookRotation(targetDir, Vector3.up)
+		local fromRotation = self.targetTrs.rotation
+		local angle = Quaternion.Angle(fromRotation, toRotation)
 
-		if var_17_7 < arg_17_0.maxRotationAngle then
-			local var_17_8 = var_17_7 / arg_17_0.rotationSpeed
-			local var_17_9 = arg_17_0._rotationParams
+		if angle < self.maxRotationAngle then
+			local duration = angle / self.rotationSpeed
+			local rps = self._rotationParams
 
-			var_17_9.fromRotation = var_17_6
-			var_17_9.toRotation = var_17_5
-			var_17_9.angle = var_17_7
-			arg_17_0._tweenRotionId = arg_17_0._scene.tween:tweenFloat(0, 1, var_17_8, arg_17_0._frameRotationCallback, nil, arg_17_0, var_17_9)
+			rps.fromRotation = fromRotation
+			rps.toRotation = toRotation
+			rps.angle = angle
+			self._tweenRotionId = self._scene.tween:tweenFloat(0, 1, duration, self._frameRotationCallback, nil, self, rps)
 		else
-			arg_17_0.targetTrs:LookAt(var_17_1)
-			arg_17_0.entity.vehiclefollow:updateFollower()
+			self.targetTrs:LookAt(toPos)
+			self.entity.vehiclefollow:updateFollower()
 
-			local var_17_10 = arg_17_0._mo and arg_17_0._mo:getReplaceDefideCfg()
+			local vehicleCfg = self._mo and self._mo:getReplaceDefideCfg()
 
-			if var_17_10 then
-				RoomHelper.audioExtendTrigger(var_17_10.audioTurnAround, arg_17_0.go)
+			if vehicleCfg then
+				RoomHelper.audioExtendTrigger(vehicleCfg.audioTurnAround, self.go)
 			end
 		end
 	else
-		arg_17_0.targetTrs:LookAt(var_17_1)
+		self.targetTrs:LookAt(toPos)
 	end
 
-	arg_17_0:_setIsWalking(true)
+	self:_setIsWalking(true)
 end
 
-function var_0_0._killMoveToTween(arg_18_0)
-	if arg_18_0._tweenId then
-		arg_18_0._scene.tween:killById(arg_18_0._tweenId)
+function RoomVehicleMoveComp:_killMoveToTween()
+	if self._tweenId then
+		self._scene.tween:killById(self._tweenId)
 
-		arg_18_0._tweenId = nil
+		self._tweenId = nil
 	end
 
-	if arg_18_0._tweenRotionId then
-		arg_18_0._scene.tween:killById(arg_18_0._tweenRotionId)
+	if self._tweenRotionId then
+		self._scene.tween:killById(self._tweenRotionId)
 
-		arg_18_0._tweenRotionId = nil
+		self._tweenRotionId = nil
 	end
 end
 
-function var_0_0._frameCallback(arg_19_0, arg_19_1, arg_19_2)
-	local var_19_0 = arg_19_2.originalX + (arg_19_2.x - arg_19_2.originalX) * arg_19_1
-	local var_19_1 = arg_19_2.originalY + (arg_19_2.y - arg_19_2.originalY) * arg_19_1
-	local var_19_2 = arg_19_2.originalZ + (arg_19_2.z - arg_19_2.originalZ) * arg_19_1
+function RoomVehicleMoveComp:_frameCallback(value, param)
+	local x = param.originalX + (param.x - param.originalX) * value
+	local y = param.originalY + (param.y - param.originalY) * value
+	local z = param.originalZ + (param.z - param.originalZ) * value
 
-	transformhelper.setPos(arg_19_0.targetTrs, var_19_0, var_19_1, var_19_2)
-	arg_19_0.entity.vehiclefollow:updateFollower()
+	transformhelper.setPos(self.targetTrs, x, y, z)
+	self.entity.vehiclefollow:updateFollower()
 end
 
-function var_0_0._frameRotationCallback(arg_20_0, arg_20_1, arg_20_2)
-	local var_20_0 = Quaternion.RotateTowards(arg_20_2.fromRotation, arg_20_2.toRotation, arg_20_1 * arg_20_2.angle)
+function RoomVehicleMoveComp:_frameRotationCallback(value, param)
+	local ro = Quaternion.RotateTowards(param.fromRotation, param.toRotation, value * param.angle)
 
-	arg_20_0.targetTrs.rotation = var_20_0
+	self.targetTrs.rotation = ro
 end
 
-function var_0_0._finishCallback(arg_21_0, arg_21_1)
-	transformhelper.setPos(arg_21_0.targetTrs, arg_21_1.x, arg_21_1.y, arg_21_1.z)
-	arg_21_0.entity.vehiclefollow:addFollerPathPos(arg_21_1.x, arg_21_1.y, arg_21_1.z)
+function RoomVehicleMoveComp:_finishCallback(param)
+	transformhelper.setPos(self.targetTrs, param.x, param.y, param.z)
+	self.entity.vehiclefollow:addFollerPathPos(param.x, param.y, param.z)
 
-	if #arg_21_0.pathList <= 0 then
-		local var_21_0 = arg_21_0:_isCurNodeIsEndNode()
+	if #self.pathList <= 0 then
+		local isEndNode = self:_isCurNodeIsEndNode()
 
-		if var_21_0 then
-			arg_21_0:_followTrunAround()
+		if isEndNode then
+			self:_followTrunAround()
 		end
 
-		if arg_21_0.endPathWaitTime > 0 and var_21_0 then
-			arg_21_0:_delayFindPath(arg_21_0.endPathWaitTime)
+		if self.endPathWaitTime > 0 and isEndNode then
+			self:_delayFindPath(self.endPathWaitTime)
 		else
-			arg_21_0:findPath()
+			self:findPath()
 		end
 	else
-		arg_21_0:_moveNext()
+		self:_moveNext()
 	end
 end
 
-function var_0_0._followTrunAround(arg_22_0)
-	if arg_22_0.entity.vehiclefollow:turnAround() then
-		arg_22_0._isInitPosition = false
+function RoomVehicleMoveComp:_followTrunAround()
+	if self.entity.vehiclefollow:turnAround() then
+		self._isInitPosition = false
 	end
 end
 
-function var_0_0._isCurNodeIsEndNode(arg_23_0)
-	local var_23_0 = arg_23_0:getVehicleMO() or arg_23_0._mo
+function RoomVehicleMoveComp:_isCurNodeIsEndNode()
+	local mo = self:getVehicleMO() or self._mo
 
-	if var_23_0 then
-		local var_23_1 = var_23_0:getCurNode()
+	if mo then
+		local node = mo:getCurNode()
 
-		if var_23_1 and var_23_1:isEndNode() then
+		if node and node:isEndNode() then
 			return true
 		end
 	end
@@ -444,49 +449,49 @@ function var_0_0._isCurNodeIsEndNode(arg_23_0)
 	return false
 end
 
-function var_0_0.getIsStop(arg_24_0)
-	return arg_24_0._isStop
+function RoomVehicleMoveComp:getIsStop()
+	return self._isStop
 end
 
-function var_0_0.stop(arg_25_0)
-	if arg_25_0._isStop then
+function RoomVehicleMoveComp:stop()
+	if self._isStop then
 		return
 	end
 
-	arg_25_0._isStop = true
+	self._isStop = true
 
-	if not gohelper.isNil(arg_25_0._seeker) then
-		arg_25_0._seeker:RemoveOnPathCall()
+	if not gohelper.isNil(self._seeker) then
+		self._seeker:RemoveOnPathCall()
 	end
 
-	arg_25_0:_killMoveToTween()
-	arg_25_0:_returnFindPath()
-	arg_25_0:_setIsWalking(false)
+	self:_killMoveToTween()
+	self:_returnFindPath()
+	self:_setIsWalking(false)
 end
 
-function var_0_0.restart(arg_26_0)
-	if not arg_26_0._isStop then
+function RoomVehicleMoveComp:restart()
+	if not self._isStop then
 		return
 	end
 
-	arg_26_0._isStop = false
+	self._isStop = false
 
-	arg_26_0:_reset()
-	arg_26_0:_delayFindPath()
+	self:_reset()
+	self:_delayFindPath()
 end
 
-function var_0_0.getVehicleMO(arg_27_0)
-	return arg_27_0.entity:getVehicleMO()
+function RoomVehicleMoveComp:getVehicleMO()
+	return self.entity:getVehicleMO()
 end
 
-function var_0_0.getSeeker(arg_28_0)
-	return arg_28_0._seeker
+function RoomVehicleMoveComp:getSeeker()
+	return self._seeker
 end
 
-function var_0_0.beforeDestroy(arg_29_0)
-	arg_29_0:removeEventListeners()
-	arg_29_0:_returnFindPath()
-	arg_29_0:_killMoveToTween()
+function RoomVehicleMoveComp:beforeDestroy()
+	self:removeEventListeners()
+	self:_returnFindPath()
+	self:_killMoveToTween()
 end
 
-return var_0_0
+return RoomVehicleMoveComp

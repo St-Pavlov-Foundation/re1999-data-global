@@ -1,8 +1,10 @@
-﻿module("modules.logic.gm.model.GMPostProcessModel", package.seeall)
+﻿-- chunkname: @modules/logic/gm/model/GMPostProcessModel.lua
 
-local var_0_0 = class("GMPostProcessModel", MixScrollModel)
+module("modules.logic.gm.model.GMPostProcessModel", package.seeall)
 
-var_0_0.Interfaces = {
+local GMPostProcessModel = class("GMPostProcessModel", MixScrollModel)
+
+GMPostProcessModel.Interfaces = {
 	{
 		{
 			val = "LocalBloomActive",
@@ -183,25 +185,26 @@ var_0_0.Interfaces = {
 	}
 }
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:addList(var_0_0.Interfaces)
+function GMPostProcessModel:onInit()
+	self:addList(GMPostProcessModel.Interfaces)
 
-	arg_1_0.ppType = 2
+	self.ppType = 2
 end
 
-function var_0_0.getInfoList(arg_2_0, arg_2_1)
-	local var_2_0 = {}
+function GMPostProcessModel:getInfoList(scrollGO)
+	local mixCellInfos = {}
 
-	for iter_2_0, iter_2_1 in ipairs(var_0_0.Interfaces) do
-		local var_2_1 = 65 * #iter_2_1 + 50
-		local var_2_2 = SLFramework.UGUI.MixCellInfo.New(iter_2_0, var_2_1, var_2_1)
+	for i, one in ipairs(GMPostProcessModel.Interfaces) do
+		local oneCount = #one
+		local lineHeight = 65 * oneCount + 50
+		local mixCellInfo = SLFramework.UGUI.MixCellInfo.New(i, lineHeight, lineHeight)
 
-		table.insert(var_2_0, var_2_2)
+		table.insert(mixCellInfos, mixCellInfo)
 	end
 
-	return var_2_0
+	return mixCellInfos
 end
 
-var_0_0.instance = var_0_0.New()
+GMPostProcessModel.instance = GMPostProcessModel.New()
 
-return var_0_0
+return GMPostProcessModel

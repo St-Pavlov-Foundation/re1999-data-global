@@ -1,11 +1,13 @@
-﻿module("modules.logic.lifecircle.view.LifeCirclePickChoiceContainer", package.seeall)
+﻿-- chunkname: @modules/logic/lifecircle/view/LifeCirclePickChoiceContainer.lua
 
-local var_0_0 = class("LifeCirclePickChoiceContainer", BaseViewContainer)
+module("modules.logic.lifecircle.view.LifeCirclePickChoiceContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local LifeCirclePickChoiceContainer = class("LifeCirclePickChoiceContainer", BaseViewContainer)
+
+function LifeCirclePickChoiceContainer:buildViews()
 	return {
 		LifeCirclePickChoice.New()
 	}
 end
 
-return var_0_0
+return LifeCirclePickChoiceContainer

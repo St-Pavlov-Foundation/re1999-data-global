@@ -1,63 +1,65 @@
-﻿module("modules.logic.versionactivity1_7.common.VersionActivity1_7JumpHandleFunc", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_7/common/VersionActivity1_7JumpHandleFunc.lua
 
-local var_0_0 = class("VersionActivity1_7JumpHandleFunc")
+module("modules.logic.versionactivity1_7.common.VersionActivity1_7JumpHandleFunc", package.seeall)
 
-function var_0_0.jumpTo11720(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_1[2]
+local VersionActivity1_7JumpHandleFunc = class("VersionActivity1_7JumpHandleFunc")
 
-	if not ActivityModel.instance:isActOnLine(var_1_0) then
+function VersionActivity1_7JumpHandleFunc:jumpTo11720(paramsList)
+	local actId = paramsList[2]
+
+	if not ActivityModel.instance:isActOnLine(actId) then
 		return JumpEnum.JumpResult.Fail
 	end
 
-	table.insert(arg_1_0.waitOpenViewNames, ViewName.ActivityBeginnerView)
-	ActivityModel.instance:setTargetActivityCategoryId(var_1_0)
+	table.insert(self.waitOpenViewNames, ViewName.ActivityBeginnerView)
+	ActivityModel.instance:setTargetActivityCategoryId(actId)
 	ActivityController.instance:openActivityBeginnerView()
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpTo11701(arg_2_0, arg_2_1)
+function VersionActivity1_7JumpHandleFunc:jumpTo11701(paramsList)
 	VersionActivity1_7EnterController.instance:openVersionActivityEnterView()
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpTo11702(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_1[2]
+function VersionActivity1_7JumpHandleFunc:jumpTo11702(paramsList)
+	local actId = paramsList[2]
 
-	VersionActivity1_7EnterController.instance:openVersionActivityEnterView(nil, nil, var_3_0)
+	VersionActivity1_7EnterController.instance:openVersionActivityEnterView(nil, nil, actId)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpTo11703(arg_4_0, arg_4_1)
+function VersionActivity1_7JumpHandleFunc:jumpTo11703(paramsList)
 	VersionActivity1_7EnterController.instance:openVersionActivityEnterView(VersionActivity1_7DungeonController.openStoreView, VersionActivity1_7DungeonController.instance, VersionActivity1_7Enum.ActivityId.Dungeon)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpTo11700(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_1[2]
+function VersionActivity1_7JumpHandleFunc:jumpTo11700(paramsList)
+	local actId = paramsList[2]
 
-	VersionActivity1_7EnterController.instance:openVersionActivityEnterView(nil, nil, var_5_0)
-
-	return JumpEnum.JumpResult.Success
-end
-
-function var_0_0.jumpTo11706(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_1[2]
-
-	VersionActivity1_7EnterController.instance:openVersionActivityEnterView(ActIsoldeController.enterActivity, ActIsoldeController.instance, var_6_0)
+	VersionActivity1_7EnterController.instance:openVersionActivityEnterView(nil, nil, actId)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpTo11707(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_1[2]
+function VersionActivity1_7JumpHandleFunc:jumpTo11706(paramsList)
+	local actId = paramsList[2]
 
-	VersionActivity1_7EnterController.instance:openVersionActivityEnterView(ActMarcusController.enterActivity, ActMarcusController.instance, var_7_0)
+	VersionActivity1_7EnterController.instance:openVersionActivityEnterView(ActIsoldeController.enterActivity, ActIsoldeController.instance, actId)
 
 	return JumpEnum.JumpResult.Success
 end
 
-return var_0_0
+function VersionActivity1_7JumpHandleFunc:jumpTo11707(paramsList)
+	local actId = paramsList[2]
+
+	VersionActivity1_7EnterController.instance:openVersionActivityEnterView(ActMarcusController.enterActivity, ActMarcusController.instance, actId)
+
+	return JumpEnum.JumpResult.Success
+end
+
+return VersionActivity1_7JumpHandleFunc

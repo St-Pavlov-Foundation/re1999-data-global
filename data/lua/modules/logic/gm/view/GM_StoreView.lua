@@ -1,511 +1,515 @@
-﻿module("modules.logic.gm.view.GM_StoreView", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GM_StoreView.lua
 
-local var_0_0 = class("GM_StoreView", BaseView)
-local var_0_1 = "#FFFF00"
-local var_0_2 = "#00FF00"
+module("modules.logic.gm.view.GM_StoreView", package.seeall)
 
-function var_0_0.register()
-	var_0_0.StoreView_register(StoreView)
-	var_0_0.RecommendStoreView_register(RecommendStoreView)
-	var_0_0.PackageStoreView_register(PackageStoreView)
-	var_0_0.PackageStoreGoodsItem_register(PackageStoreGoodsItem)
-	var_0_0.ClothesStoreView_register(ClothesStoreView)
-	var_0_0.StoreSkinGoodsItem_register(StoreSkinGoodsItem)
-	var_0_0.NormalStoreView_register(NormalStoreView)
-	var_0_0.NormalStoreGoodsItem_register(NormalStoreGoodsItem)
+local GM_StoreView = class("GM_StoreView", BaseView)
+local kYellow = "#FFFF00"
+local kGreen = "#00FF00"
+
+function GM_StoreView.register()
+	GM_StoreView.StoreView_register(StoreView)
+	GM_StoreView.RecommendStoreView_register(RecommendStoreView)
+	GM_StoreView.PackageStoreView_register(PackageStoreView)
+	GM_StoreView.PackageStoreGoodsItem_register(PackageStoreGoodsItem)
+	GM_StoreView.ClothesStoreView_register(ClothesStoreView)
+	GM_StoreView.StoreSkinGoodsItem_register(StoreSkinGoodsItem)
+	GM_StoreView.NormalStoreView_register(NormalStoreView)
+	GM_StoreView.NormalStoreGoodsItem_register(NormalStoreGoodsItem)
 end
 
-function var_0_0.StoreView_register(arg_2_0)
-	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "_editableInitView")
-	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "addEvents")
-	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "removeEvents")
-	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "_refreshTabs")
+function GM_StoreView.StoreView_register(T)
+	GMMinusModel.instance:saveOriginalFunc(T, "_editableInitView")
+	GMMinusModel.instance:saveOriginalFunc(T, "addEvents")
+	GMMinusModel.instance:saveOriginalFunc(T, "removeEvents")
+	GMMinusModel.instance:saveOriginalFunc(T, "_refreshTabs")
 
-	function arg_2_0._editableInitView(arg_3_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_3_0, "_editableInitView", ...)
+	function T:_editableInitView(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "_editableInitView", ...)
 
-		local var_3_0 = GMMinusModel.instance:addBtnGM(arg_3_0)
+		local btnGM = GMMinusModel.instance:addBtnGM(self)
 
-		recthelper.setAnchorX(var_3_0.transform, 50)
-		recthelper.setAnchorY(var_3_0.transform, -999)
+		recthelper.setAnchorX(btnGM.transform, 50)
+		recthelper.setAnchorY(btnGM.transform, -999)
 	end
 
-	function arg_2_0.addEvents(arg_4_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_4_0, "addEvents", ...)
-		GMMinusModel.instance:btnGM_AddClickListener(arg_4_0)
-		GM_StoreViewContainer.addEvents(arg_4_0)
+	function T:addEvents(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "addEvents", ...)
+		GMMinusModel.instance:btnGM_AddClickListener(self)
+		GM_StoreViewContainer.addEvents(self)
 	end
 
-	function arg_2_0.removeEvents(arg_5_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_5_0, "removeEvents", ...)
-		GMMinusModel.instance:btnGM_RemoveClickListener(arg_5_0)
-		GM_StoreViewContainer.removeEvents(arg_5_0)
+	function T:removeEvents(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "removeEvents", ...)
+		GMMinusModel.instance:btnGM_RemoveClickListener(self)
+		GM_StoreViewContainer.removeEvents(self)
 	end
 
-	function arg_2_0._refreshTabs(arg_6_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_6_0, "_refreshTabs", ...)
+	function T._refreshTabs(selfObj, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(selfObj, "_refreshTabs", ...)
 
-		if var_0_0.s_ShowAllTabId then
-			for iter_6_0, iter_6_1 in ipairs(arg_6_0._tabsContainer) do
-				if iter_6_1 then
-					local var_6_0 = iter_6_1.tabId
+		if GM_StoreView.s_ShowAllTabId then
+			for _, tabTable in ipairs(selfObj._tabsContainer) do
+				if tabTable then
+					local tabId = tabTable.tabId
 
-					if iter_6_1 then
-						iter_6_1.txtnamecn1.text = tostring(var_6_0)
-						iter_6_1.txtnamecn2.text = tostring(var_6_0)
+					if tabTable then
+						tabTable.txtnamecn1.text = tostring(tabId)
+						tabTable.txtnamecn2.text = tostring(tabId)
 					end
 				end
 			end
 		else
-			local var_6_1 = StoreModel.instance:getFirstTabs(true, true)
+			local tabConfigs = StoreModel.instance:getFirstTabs(true, true)
 
-			for iter_6_2, iter_6_3 in ipairs(arg_6_0._tabsContainer) do
-				if iter_6_3 then
-					local var_6_2 = var_6_1[iter_6_2]
+			for i, tabTable in ipairs(selfObj._tabsContainer) do
+				if tabTable then
+					local tabConfig = tabConfigs[i]
 
-					if iter_6_3 then
-						iter_6_3.txtnamecn1.text = var_6_2.name
-						iter_6_3.txtnamecn2.text = var_6_2.name
+					if tabTable then
+						tabTable.txtnamecn1.text = tabConfig.name
+						tabTable.txtnamecn2.text = tabConfig.name
 					end
 				end
 			end
 		end
 	end
 
-	function arg_2_0._gm_showAllTabIdUpdate(arg_7_0)
-		local var_7_0 = StoreController.instance._lastViewStoreId
+	function T._gm_showAllTabIdUpdate(selfObj)
+		local id = StoreController.instance._lastViewStoreId
 
-		if not var_7_0 or var_7_0 == 0 then
-			var_7_0 = StoreEnum.DefaultTabId
+		if not id or id == 0 then
+			id = StoreEnum.DefaultTabId
 		end
 
-		arg_7_0:_refreshTabs(var_7_0)
+		selfObj:_refreshTabs(id)
 	end
 end
 
-function var_0_0.RecommendStoreView_register(arg_8_0)
-	GMMinusModel.instance:saveOriginalFunc(arg_8_0, "_editableInitView")
-	GMMinusModel.instance:saveOriginalFunc(arg_8_0, "addEvents")
-	GMMinusModel.instance:saveOriginalFunc(arg_8_0, "removeEvents")
-	GMMinusModel.instance:saveOriginalFunc(arg_8_0, "onOpen")
-	GMMinusModel.instance:saveOriginalFunc(arg_8_0, "_refreshSecondTabs")
-	GMMinusModel.instance:saveOriginalFunc(arg_8_0, "_refreshTabsItem")
-	GMMinusModel.instance:saveOriginalFunc(arg_8_0, "_refreshTabs")
-	GMMinusModel.instance:saveOriginalFunc(arg_8_0, "_onSetVisibleInternal")
-	GMMinusModel.instance:saveOriginalFunc(arg_8_0, "_onSetAutoToNextPage")
-	GMMinusModel.instance:saveOriginalFunc(arg_8_0, "onDestroyView")
+function GM_StoreView.RecommendStoreView_register(T)
+	GMMinusModel.instance:saveOriginalFunc(T, "_editableInitView")
+	GMMinusModel.instance:saveOriginalFunc(T, "addEvents")
+	GMMinusModel.instance:saveOriginalFunc(T, "removeEvents")
+	GMMinusModel.instance:saveOriginalFunc(T, "onOpen")
+	GMMinusModel.instance:saveOriginalFunc(T, "_refreshSecondTabs")
+	GMMinusModel.instance:saveOriginalFunc(T, "_refreshTabsItem")
+	GMMinusModel.instance:saveOriginalFunc(T, "_refreshTabs")
+	GMMinusModel.instance:saveOriginalFunc(T, "_onSetVisibleInternal")
+	GMMinusModel.instance:saveOriginalFunc(T, "_onSetAutoToNextPage")
+	GMMinusModel.instance:saveOriginalFunc(T, "onDestroyView")
 	GMMinusModel.instance:saveOriginalFunc(StoreHelper, "getRecommendStoreSecondTabConfig")
 
-	function arg_8_0._editableInitView(arg_9_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_9_0, "_editableInitView", ...)
-		GMMinusModel.instance:addBtnGM(arg_9_0)
+	function T:_editableInitView(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "_editableInitView", ...)
+		GMMinusModel.instance:addBtnGM(self)
 	end
 
-	function arg_8_0.addEvents(arg_10_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_10_0, "addEvents", ...)
-		GMMinusModel.instance:btnGM_AddClickListener(arg_10_0)
-		GM_RecommendStoreViewContainer.addEvents(arg_10_0)
+	function T:addEvents(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "addEvents", ...)
+		GMMinusModel.instance:btnGM_AddClickListener(self)
+		GM_RecommendStoreViewContainer.addEvents(self)
 	end
 
-	function arg_8_0.removeEvents(arg_11_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_11_0, "removeEvents", ...)
-		GMMinusModel.instance:btnGM_RemoveClickListener(arg_11_0)
-		GM_RecommendStoreViewContainer.removeEvents(arg_11_0)
+	function T:removeEvents(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "removeEvents", ...)
+		GMMinusModel.instance:btnGM_RemoveClickListener(self)
+		GM_RecommendStoreViewContainer.removeEvents(self)
 	end
 
-	function arg_8_0.onOpen(arg_12_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_12_0, "onOpen", ...)
-		arg_12_0:_gm_stopBannerLoopAnimUpdate()
+	function T.onOpen(selfObj, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(selfObj, "onOpen", ...)
+		selfObj:_gm_stopBannerLoopAnimUpdate()
 	end
 
-	function arg_8_0._refreshSecondTabs(arg_13_0, arg_13_1, arg_13_2, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_13_0, "_refreshSecondTabs", arg_13_1, arg_13_2, ...)
+	function T._refreshSecondTabs(selfObj, index, secondTabConfig, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(selfObj, "_refreshSecondTabs", index, secondTabConfig, ...)
 
-		local var_13_0 = arg_13_0._categoryItemContainer[arg_13_1]
-		local var_13_1 = arg_13_2.id
-		local var_13_2 = arg_13_2.name
+		local categoryItemTable = selfObj._categoryItemContainer[index]
+		local tabId = secondTabConfig.id
+		local desc = secondTabConfig.name
 
 		if GM_RecommendStoreView.s_ShowAllTabId then
-			local var_13_3 = GMMinusModel.instance:getFirstLogin("GM_RecommendStoreViewContainer_lastOpenedTabIdSet", {})
+			local lastOpenedTabIdSet = GMMinusModel.instance:getFirstLogin("GM_RecommendStoreViewContainer_lastOpenedTabIdSet", {})
 
-			if GM_RecommendStoreView.s_ShowAllBanner and not var_13_3[var_13_1] then
-				var_13_2 = string.format("%s\n<color=#00FF00>%s (New)</color>", var_13_2, var_13_1)
+			if GM_RecommendStoreView.s_ShowAllBanner and not lastOpenedTabIdSet[tabId] then
+				desc = string.format("%s\n<color=#00FF00>%s (New)</color>", desc, tabId)
 			else
-				var_13_2 = string.format("%s\n%s", var_13_2, var_13_1)
+				desc = string.format("%s\n%s", desc, tabId)
 			end
 		end
 
-		var_13_0.txt_itemcn1.text = var_13_2
-		var_13_0.txt_itemcn2.text = var_13_2
+		categoryItemTable.txt_itemcn1.text = desc
+		categoryItemTable.txt_itemcn2.text = desc
 	end
 
-	function arg_8_0._onSetVisibleInternal(arg_14_0, ...)
+	function T:_onSetVisibleInternal(...)
 		if GM_RecommendStoreView.s_StopBannerLoopAnim then
 			-- block empty
 		else
-			GMMinusModel.instance:callOriginalSelfFunc(arg_14_0, "_onSetVisibleInternal", ...)
+			GMMinusModel.instance:callOriginalSelfFunc(self, "_onSetVisibleInternal", ...)
 		end
 	end
 
-	function arg_8_0._onSetAutoToNextPage(arg_15_0, ...)
+	function T:_onSetAutoToNextPage(...)
 		if GM_RecommendStoreView.s_StopBannerLoopAnim then
 			-- block empty
 		else
-			GMMinusModel.instance:callOriginalSelfFunc(arg_15_0, "_onSetAutoToNextPage", ...)
+			GMMinusModel.instance:callOriginalSelfFunc(self, "_onSetAutoToNextPage", ...)
 		end
 	end
 
-	function arg_8_0._refreshTabsItem(arg_16_0, ...)
+	function T._refreshTabsItem(selfObj, ...)
 		if GM_RecommendStoreView.s_ShowAllBanner then
-			local var_16_0, var_16_1 = arg_16_0:_gm_getRecommendStoreSecondTabConfig()
+			local _, oriStoreIds = selfObj:_gm_getRecommendStoreSecondTabConfig()
 
 			function StoreHelper.getRecommendStoreSecondTabConfig()
-				local var_17_0 = arg_16_0:_gm_showAllBanner_GetTabIdList()
-				local var_17_1 = StoreModel.instance:getRecommendSecondTabs(StoreEnum.RecommendStore, true)
-				local var_17_2 = {}
+				local tabIdList = selfObj:_gm_showAllBanner_GetTabIdList()
+				local allSecondTabConfigs = StoreModel.instance:getRecommendSecondTabs(StoreEnum.RecommendStore, true)
+				local justShowTabIdDict = {}
 
-				for iter_17_0, iter_17_1 in ipairs(var_17_0) do
-					var_17_2[iter_17_1] = true
+				for _, tabId in ipairs(tabIdList) do
+					justShowTabIdDict[tabId] = true
 				end
 
-				local var_17_3 = {}
+				local newShowSecondTabConfigs = {}
 
-				for iter_17_2, iter_17_3 in ipairs(var_17_1) do
-					if var_17_2[iter_17_3.id] then
-						table.insert(var_17_3, iter_17_3)
+				for _, v in ipairs(allSecondTabConfigs) do
+					if justShowTabIdDict[v.id] then
+						table.insert(newShowSecondTabConfigs, v)
 					end
 				end
 
-				return var_17_3, var_16_1
+				return newShowSecondTabConfigs, oriStoreIds
 			end
 		end
 
-		local var_16_2 = GMMinusModel.instance:callOriginalSelfFunc(arg_16_0, "_refreshTabsItem", ...)
+		local storeIds = GMMinusModel.instance:callOriginalSelfFunc(selfObj, "_refreshTabsItem", ...)
 
 		StoreHelper.getRecommendStoreSecondTabConfig = GMMinusModel.instance:loadOriginalFunc(StoreHelper, "getRecommendStoreSecondTabConfig")
 
-		return var_16_2
+		return storeIds
 	end
 
-	function arg_8_0._refreshTabs(arg_18_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_18_0, "_refreshTabs", ...)
-		arg_18_0:_gm_stopBannerLoopAnimUpdate()
+	function T._refreshTabs(selfObj, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(selfObj, "_refreshTabs", ...)
+		selfObj:_gm_stopBannerLoopAnimUpdate()
 	end
 
-	function arg_8_0.onDestroyView(arg_19_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_19_0, "onDestroyView", ...)
+	function T.onDestroyView(selfObj, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(selfObj, "onDestroyView", ...)
 
 		StoreHelper.getRecommendStoreSecondTabConfig = GMMinusModel.instance:loadOriginalFunc(StoreHelper, "getRecommendStoreSecondTabConfig")
 	end
 
-	function arg_8_0._gm_stopBannerLoopAnimUpdate(arg_20_0)
+	function T._gm_stopBannerLoopAnimUpdate(selfObj)
 		if GM_RecommendStoreView.s_StopBannerLoopAnim then
-			TaskDispatcher.cancelTask(arg_20_0._toNextTab, arg_20_0)
-			TaskDispatcher.cancelTask(arg_20_0._onSwitchCloseAnimDone, arg_20_0)
+			TaskDispatcher.cancelTask(selfObj._toNextTab, selfObj)
+			TaskDispatcher.cancelTask(selfObj._onSwitchCloseAnimDone, selfObj)
 		end
 	end
 
-	function arg_8_0._gm_showAllTabIdUpdate(arg_21_0)
-		arg_21_0:_refreshTabsItem()
+	function T._gm_showAllTabIdUpdate(selfObj)
+		selfObj:_refreshTabsItem()
 	end
 
-	function arg_8_0._gm_showAllBannerUpdate(arg_22_0)
+	function T._gm_showAllBannerUpdate(selfObj)
 		if not GM_RecommendStoreView.s_ShowAllBanner then
 			return
 		end
 
-		arg_22_0:_refreshTabsItem()
+		selfObj:_refreshTabsItem()
 	end
 
-	function arg_8_0._gm_getRecommendStoreSecondTabConfig(arg_23_0)
+	function T._gm_getRecommendStoreSecondTabConfig(selfObj)
 		return GMMinusModel.instance:callOriginalStaticFunc(StoreHelper, "getRecommendStoreSecondTabConfig")
 	end
 
-	function arg_8_0._gm_showAllBanner_GetTabIdList(arg_24_0)
-		local var_24_0 = {}
-		local var_24_1, var_24_2 = arg_24_0:_gm_getRecommendStoreSecondTabConfig()
+	function T._gm_showAllBanner_GetTabIdList(selfObj)
+		local tabIdList = {}
+		local showSecondTabConfigs, storeIds = selfObj:_gm_getRecommendStoreSecondTabConfig()
 
-		table.sort(var_24_1, function(arg_25_0, arg_25_1)
-			return arg_24_0:_tabSortFunction(arg_25_0, arg_25_1)
+		table.sort(showSecondTabConfigs, function(a, b)
+			return selfObj:_tabSortFunction(a, b)
 		end)
 
-		local var_24_3 = {}
+		local lastOpenedTabIdSet = {}
 
-		for iter_24_0 = 1, #var_24_1 do
-			local var_24_4 = var_24_1[iter_24_0].id
+		for i = 1, #showSecondTabConfigs do
+			local showSecondTabConfig = showSecondTabConfigs[i]
+			local tabId = showSecondTabConfig.id
 
-			var_24_0[#var_24_0 + 1] = var_24_4
-			var_24_3[var_24_4] = true
+			tabIdList[#tabIdList + 1] = tabId
+			lastOpenedTabIdSet[tabId] = true
 		end
 
-		GMMinusModel.instance:setFirstLogin("GM_RecommendStoreViewContainer_lastOpenedTabIdSet", var_24_3)
+		GMMinusModel.instance:setFirstLogin("GM_RecommendStoreViewContainer_lastOpenedTabIdSet", lastOpenedTabIdSet)
 
-		local var_24_5 = ServerTime.now()
+		local now = ServerTime.now()
 
-		for iter_24_1, iter_24_2 in ipairs(lua_store_recommend.configList) do
-			local var_24_6 = iter_24_2.onlineTime
-			local var_24_7 = iter_24_2.offlineTime
-			local var_24_8
-			local var_24_9
+		for _, v in ipairs(lua_store_recommend.configList) do
+			local onlineTime = v.onlineTime
+			local offlineTime = v.offlineTime
+			local onlineTimeServerTs, offlineTimeServerTs
 
-			if string.nilorempty(var_24_6) then
-				var_24_8 = var_24_5
+			if string.nilorempty(onlineTime) then
+				onlineTimeServerTs = now
 			else
-				var_24_8 = TimeUtil.stringToTimestamp(var_24_6)
+				onlineTimeServerTs = TimeUtil.stringToTimestamp(onlineTime)
 			end
 
-			if string.nilorempty(var_24_7) then
-				var_24_9 = var_24_5
+			if string.nilorempty(offlineTime) then
+				offlineTimeServerTs = now
 			else
-				var_24_9 = TimeUtil.stringToTimestamp(var_24_7)
+				offlineTimeServerTs = TimeUtil.stringToTimestamp(offlineTime)
 			end
 
-			if var_24_5 <= var_24_8 and var_24_5 <= var_24_9 then
-				var_24_0[#var_24_0 + 1] = iter_24_2.id
+			if now <= onlineTimeServerTs and now <= offlineTimeServerTs then
+				tabIdList[#tabIdList + 1] = v.id
 			end
 		end
 
-		return var_24_0
+		return tabIdList
 	end
 end
 
-function var_0_0.PackageStoreView_register(arg_26_0)
-	GMMinusModel.instance:saveOriginalFunc(arg_26_0, "_editableInitView")
-	GMMinusModel.instance:saveOriginalFunc(arg_26_0, "addEvents")
-	GMMinusModel.instance:saveOriginalFunc(arg_26_0, "removeEvents")
-	GMMinusModel.instance:saveOriginalFunc(arg_26_0, "_refreshSecondTabs")
+function GM_StoreView.PackageStoreView_register(T)
+	GMMinusModel.instance:saveOriginalFunc(T, "_editableInitView")
+	GMMinusModel.instance:saveOriginalFunc(T, "addEvents")
+	GMMinusModel.instance:saveOriginalFunc(T, "removeEvents")
+	GMMinusModel.instance:saveOriginalFunc(T, "_refreshSecondTabs")
 
-	function arg_26_0._editableInitView(arg_27_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_27_0, "_editableInitView", ...)
-		GMMinusModel.instance:addBtnGM(arg_27_0)
+	function T:_editableInitView(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "_editableInitView", ...)
+		GMMinusModel.instance:addBtnGM(self)
 	end
 
-	function arg_26_0.addEvents(arg_28_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_28_0, "addEvents", ...)
-		GMMinusModel.instance:btnGM_AddClickListener(arg_28_0)
-		GM_PackageStoreViewContainer.addEvents(arg_28_0)
+	function T:addEvents(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "addEvents", ...)
+		GMMinusModel.instance:btnGM_AddClickListener(self)
+		GM_PackageStoreViewContainer.addEvents(self)
 	end
 
-	function arg_26_0.removeEvents(arg_29_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_29_0, "removeEvents", ...)
-		GMMinusModel.instance:btnGM_RemoveClickListener(arg_29_0)
-		GM_PackageStoreViewContainer.removeEvents(arg_29_0)
+	function T:removeEvents(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "removeEvents", ...)
+		GMMinusModel.instance:btnGM_RemoveClickListener(self)
+		GM_PackageStoreViewContainer.removeEvents(self)
 	end
 
-	function arg_26_0._refreshSecondTabs(arg_30_0, arg_30_1, arg_30_2, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_30_0, "_refreshSecondTabs", arg_30_1, arg_30_2, ...)
+	function T._refreshSecondTabs(selfObj, index, secondTabConfig, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(selfObj, "_refreshSecondTabs", index, secondTabConfig, ...)
 
 		if not GM_PackageStoreView.s_ShowAllTabId then
 			return
 		end
 
-		local var_30_0 = arg_30_0._categoryItemContainer[arg_30_1]
+		local categoryItemTable = selfObj._categoryItemContainer[index]
 
-		if not var_30_0 then
+		if not categoryItemTable then
 			return
 		end
 
-		local var_30_1 = arg_30_2.id .. arg_30_2.name
+		local desc = secondTabConfig.id .. secondTabConfig.name
 
-		var_30_0.txt_itemcn1.text = var_30_1
-		var_30_0.txt_itemcn2.text = var_30_1
+		categoryItemTable.txt_itemcn1.text = desc
+		categoryItemTable.txt_itemcn2.text = desc
 	end
 
-	function arg_26_0._gm_showAllTabIdUpdate()
+	function T._gm_showAllTabIdUpdate()
 		StoreController.instance:dispatchEvent(StoreEvent.UpdatePackageStore)
 	end
 
-	function arg_26_0._gm_showAllItemIdUpdate()
+	function T._gm_showAllItemIdUpdate()
 		StoreController.instance:dispatchEvent(StoreEvent.GoodsModelChanged)
 	end
 end
 
-function var_0_0.PackageStoreGoodsItem_register(arg_33_0)
-	GMMinusModel.instance:saveOriginalFunc(arg_33_0, "onUpdateMO")
+function GM_StoreView.PackageStoreGoodsItem_register(T)
+	GMMinusModel.instance:saveOriginalFunc(T, "onUpdateMO")
 
-	function arg_33_0.onUpdateMO(arg_34_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_34_0, "onUpdateMO", ...)
+	function T.onUpdateMO(selfObj, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(selfObj, "onUpdateMO", ...)
 
 		if not GM_PackageStoreView.s_ShowAllItemId then
 			return
 		end
 
-		local var_34_0 = arg_34_0._mo.config
+		local config = selfObj._mo.config
 
-		arg_34_0._txtmaterialNum.text = tostring(var_34_0.id)
+		selfObj._txtmaterialNum.text = tostring(config.id)
 	end
 end
 
-function var_0_0.ClothesStoreView_register(arg_35_0)
-	GMMinusModel.instance:saveOriginalFunc(arg_35_0, "_editableInitView")
-	GMMinusModel.instance:saveOriginalFunc(arg_35_0, "addEvents")
-	GMMinusModel.instance:saveOriginalFunc(arg_35_0, "removeEvents")
+function GM_StoreView.ClothesStoreView_register(T)
+	GMMinusModel.instance:saveOriginalFunc(T, "_editableInitView")
+	GMMinusModel.instance:saveOriginalFunc(T, "addEvents")
+	GMMinusModel.instance:saveOriginalFunc(T, "removeEvents")
 
-	function arg_35_0._editableInitView(arg_36_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_36_0, "_editableInitView", ...)
-		GMMinusModel.instance:addBtnGM(arg_36_0)
+	function T:_editableInitView(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "_editableInitView", ...)
+		GMMinusModel.instance:addBtnGM(self)
 	end
 
-	function arg_35_0.addEvents(arg_37_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_37_0, "addEvents", ...)
-		GMMinusModel.instance:btnGM_AddClickListener(arg_37_0)
-		GM_ClothesStoreViewContainer.addEvents(arg_37_0)
+	function T:addEvents(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "addEvents", ...)
+		GMMinusModel.instance:btnGM_AddClickListener(self)
+		GM_ClothesStoreViewContainer.addEvents(self)
 	end
 
-	function arg_35_0.removeEvents(arg_38_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_38_0, "removeEvents", ...)
-		GMMinusModel.instance:btnGM_RemoveClickListener(arg_38_0)
-		GM_ClothesStoreViewContainer.removeEvents(arg_38_0)
+	function T:removeEvents(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "removeEvents", ...)
+		GMMinusModel.instance:btnGM_RemoveClickListener(self)
+		GM_ClothesStoreViewContainer.removeEvents(self)
 	end
 
-	function arg_35_0._gm_showAllTabIdUpdate()
+	function T._gm_showAllTabIdUpdate()
 		StoreClothesGoodsItemListModel.instance:onModelUpdate()
 	end
 end
 
-function var_0_0.StoreSkinGoodsItem_register(arg_40_0)
-	GMMinusModel.instance:saveOriginalFunc(arg_40_0, "onUpdateMO")
+function GM_StoreView.StoreSkinGoodsItem_register(T)
+	GMMinusModel.instance:saveOriginalFunc(T, "onUpdateMO")
 
-	local var_40_0 = "#FF0000"
+	local kRed = "#FF0000"
 
-	function arg_40_0.onUpdateMO(arg_41_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_41_0, "onUpdateMO", ...)
+	function T.onUpdateMO(selfObj, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(selfObj, "onUpdateMO", ...)
 
 		if not GM_ClothesStoreView.s_ShowAllTabId then
 			return
 		end
 
-		local var_41_0 = arg_41_0._mo.config
-		local var_41_1 = arg_41_0.skinCo
-		local var_41_2 = var_41_1.characterId
-		local var_41_3 = HeroConfig.instance:getHeroCO(var_41_2)
-		local var_41_4 = gohelper.getRichColorText(tostring(var_41_0.id), var_40_0)
-		local var_41_5 = gohelper.getRichColorText(tostring(var_41_1.id), var_40_0)
+		local config = selfObj._mo.config
+		local skinCO = selfObj.skinCo
+		local heroId = skinCO.characterId
+		local heroCO = HeroConfig.instance:getHeroCO(heroId)
+		local idStr = gohelper.getRichColorText(tostring(config.id), kRed)
+		local skinIdStr = gohelper.getRichColorText(tostring(skinCO.id), kRed)
 
-		arg_41_0._txtskinname.text = "id: " .. var_41_4 .. "\n" .. "SkinId: " .. var_41_5
-		arg_41_0._txtname.text = var_41_3.name .. " (id: " .. tostring(var_41_2) .. ")"
+		selfObj._txtskinname.text = "id: " .. idStr .. "\n" .. "SkinId: " .. skinIdStr
+		selfObj._txtname.text = heroCO.name .. " (id: " .. tostring(heroId) .. ")"
 	end
 end
 
-function var_0_0.NormalStoreView_register(arg_42_0)
-	GMMinusModel.instance:saveOriginalFunc(arg_42_0, "_editableInitView")
-	GMMinusModel.instance:saveOriginalFunc(arg_42_0, "addEvents")
-	GMMinusModel.instance:saveOriginalFunc(arg_42_0, "removeEvents")
-	GMMinusModel.instance:saveOriginalFunc(arg_42_0, "_refreshSecondTabs")
+function GM_StoreView.NormalStoreView_register(T)
+	GMMinusModel.instance:saveOriginalFunc(T, "_editableInitView")
+	GMMinusModel.instance:saveOriginalFunc(T, "addEvents")
+	GMMinusModel.instance:saveOriginalFunc(T, "removeEvents")
+	GMMinusModel.instance:saveOriginalFunc(T, "_refreshSecondTabs")
 
-	function arg_42_0._editableInitView(arg_43_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_43_0, "_editableInitView", ...)
-		GMMinusModel.instance:addBtnGM(arg_43_0)
+	function T:_editableInitView(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "_editableInitView", ...)
+		GMMinusModel.instance:addBtnGM(self)
 	end
 
-	function arg_42_0.addEvents(arg_44_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_44_0, "addEvents", ...)
-		GMMinusModel.instance:btnGM_AddClickListener(arg_44_0)
-		GM_NormalStoreViewContainer.addEvents(arg_44_0)
+	function T:addEvents(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "addEvents", ...)
+		GMMinusModel.instance:btnGM_AddClickListener(self)
+		GM_NormalStoreViewContainer.addEvents(self)
 	end
 
-	function arg_42_0.removeEvents(arg_45_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_45_0, "removeEvents", ...)
-		GMMinusModel.instance:btnGM_RemoveClickListener(arg_45_0)
-		GM_NormalStoreViewContainer.removeEvents(arg_45_0)
+	function T:removeEvents(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "removeEvents", ...)
+		GMMinusModel.instance:btnGM_RemoveClickListener(self)
+		GM_NormalStoreViewContainer.removeEvents(self)
 	end
 
-	function arg_42_0._refreshSecondTabs(arg_46_0, arg_46_1, arg_46_2, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_46_0, "_refreshSecondTabs", arg_46_1, arg_46_2, ...)
+	function T._refreshSecondTabs(selfObj, index, secondTabConfig, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(selfObj, "_refreshSecondTabs", index, secondTabConfig, ...)
 
 		if not GM_NormalStoreView.s_ShowAllTabId then
 			return
 		end
 
-		local var_46_0 = arg_46_0._categoryItemContainer[arg_46_1]
-		local var_46_1 = arg_46_2.id
+		local categoryItemTable = selfObj._categoryItemContainer[index]
+		local tabId = secondTabConfig.id
 
-		var_46_0.tabId = var_46_1
-		var_46_0.txt_itemcn1.text = tostring(var_46_1) .. arg_46_2.name
-		var_46_0.txt_itemcn2.text = tostring(var_46_1) .. arg_46_2.name
+		categoryItemTable.tabId = tabId
+		categoryItemTable.txt_itemcn1.text = tostring(tabId) .. secondTabConfig.name
+		categoryItemTable.txt_itemcn2.text = tostring(tabId) .. secondTabConfig.name
 	end
 
-	function arg_42_0._gm_showAllTabIdUpdate(arg_47_0)
-		local var_47_0 = StoreController.instance._lastViewStoreId
+	function T._gm_showAllTabIdUpdate(selfObj)
+		local id = StoreController.instance._lastViewStoreId
 
-		if not var_47_0 or var_47_0 == 0 then
-			var_47_0 = arg_47_0.viewContainer:getJumpTabId()
+		if not id or id == 0 then
+			id = selfObj.viewContainer:getJumpTabId()
 		end
 
-		arg_47_0:_refreshTabs(var_47_0, true)
+		selfObj:_refreshTabs(id, true)
 	end
 
-	function arg_42_0._gm_showAllGoodsIdUpdate(arg_48_0)
+	function T:_gm_showAllGoodsIdUpdate()
 		StoreController.instance:dispatchEvent(StoreEvent.GoodsModelChanged)
 	end
 end
 
-function var_0_0.NormalStoreGoodsItem_register(arg_49_0)
-	GMMinusModel.instance:saveOriginalFunc(arg_49_0, "refreshActGoods")
-	GMMinusModel.instance:saveOriginalFunc(arg_49_0, "refreshNormalGoods")
+function GM_StoreView.NormalStoreGoodsItem_register(T)
+	GMMinusModel.instance:saveOriginalFunc(T, "refreshActGoods")
+	GMMinusModel.instance:saveOriginalFunc(T, "refreshNormalGoods")
 
-	function arg_49_0.refreshActGoods(arg_50_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_50_0, "refreshActGoods", ...)
-
-		if not GM_NormalStoreView.s_ShowAllGoodsId then
-			return
-		end
-
-		local var_50_0 = arg_50_0._mo:getActGoodsId()
-
-		arg_50_0._txtgoodsName.text = gohelper.getRichColorText(var_50_0, var_0_1) .. gohelper.getRichColorText("(Act)", var_0_2)
-	end
-
-	function arg_49_0.refreshNormalGoods(arg_51_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_51_0, "refreshNormalGoods", ...)
+	function T.refreshActGoods(selfObj, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(selfObj, "refreshActGoods", ...)
 
 		if not GM_NormalStoreView.s_ShowAllGoodsId then
 			return
 		end
 
-		local var_51_0 = arg_51_0._mo.goodsId
+		local mo = selfObj._mo
+		local goodsId = mo:getActGoodsId()
 
-		arg_51_0._txtgoodsName.text = gohelper.getRichColorText(var_51_0, var_0_1)
+		selfObj._txtgoodsName.text = gohelper.getRichColorText(goodsId, kYellow) .. gohelper.getRichColorText("(Act)", kGreen)
+	end
+
+	function T.refreshNormalGoods(selfObj, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(selfObj, "refreshNormalGoods", ...)
+
+		if not GM_NormalStoreView.s_ShowAllGoodsId then
+			return
+		end
+
+		local mo = selfObj._mo
+		local goodsId = mo.goodsId
+
+		selfObj._txtgoodsName.text = gohelper.getRichColorText(goodsId, kYellow)
 	end
 end
 
-function var_0_0.onInitView(arg_52_0)
-	arg_52_0._btnClose = gohelper.findChildButtonWithAudio(arg_52_0.viewGO, "btnClose")
-	arg_52_0._item1Toggle = gohelper.findChildToggle(arg_52_0.viewGO, "viewport/content/item1/Toggle")
+function GM_StoreView:onInitView()
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "btnClose")
+	self._item1Toggle = gohelper.findChildToggle(self.viewGO, "viewport/content/item1/Toggle")
 end
 
-function var_0_0.addEvents(arg_53_0)
-	arg_53_0._btnClose:AddClickListener(arg_53_0.closeThis, arg_53_0)
-	arg_53_0._item1Toggle:AddOnValueChanged(arg_53_0._onItem1ToggleValueChanged, arg_53_0)
+function GM_StoreView:addEvents()
+	self._btnClose:AddClickListener(self.closeThis, self)
+	self._item1Toggle:AddOnValueChanged(self._onItem1ToggleValueChanged, self)
 end
 
-function var_0_0.removeEvents(arg_54_0)
-	arg_54_0._btnClose:RemoveClickListener()
-	arg_54_0._item1Toggle:RemoveOnValueChanged()
+function GM_StoreView:removeEvents()
+	self._btnClose:RemoveClickListener()
+	self._item1Toggle:RemoveOnValueChanged()
 end
 
-function var_0_0.onOpen(arg_55_0)
-	arg_55_0:_refreshItem1()
+function GM_StoreView:onOpen()
+	self:_refreshItem1()
 end
 
-function var_0_0.onDestroyView(arg_56_0)
+function GM_StoreView:onDestroyView()
 	return
 end
 
-var_0_0.s_ShowAllTabId = false
+GM_StoreView.s_ShowAllTabId = false
 
-function var_0_0._refreshItem1(arg_57_0)
-	local var_57_0 = var_0_0.s_ShowAllTabId
+function GM_StoreView:_refreshItem1()
+	local isOn = GM_StoreView.s_ShowAllTabId
 
-	arg_57_0._item1Toggle.isOn = var_57_0
+	self._item1Toggle.isOn = isOn
 end
 
-function var_0_0._onItem1ToggleValueChanged(arg_58_0)
-	local var_58_0 = arg_58_0._item1Toggle.isOn
+function GM_StoreView:_onItem1ToggleValueChanged()
+	local isOn = self._item1Toggle.isOn
 
-	var_0_0.s_ShowAllTabId = var_58_0
+	GM_StoreView.s_ShowAllTabId = isOn
 
-	GMController.instance:dispatchEvent(GMEvent.StoreView_ShowAllTabIdUpdate, var_58_0)
+	GMController.instance:dispatchEvent(GMEvent.StoreView_ShowAllTabIdUpdate, isOn)
 end
 
-return var_0_0
+return GM_StoreView

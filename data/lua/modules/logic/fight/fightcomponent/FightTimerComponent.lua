@@ -1,82 +1,83 @@
-﻿module("modules.logic.fight.fightcomponent.FightTimerComponent", package.seeall)
+﻿-- chunkname: @modules/logic/fight/fightcomponent/FightTimerComponent.lua
 
-local var_0_0 = class("FightTimerComponent", FightBaseClass)
+module("modules.logic.fight.fightcomponent.FightTimerComponent", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0.timerList = {}
+local FightTimerComponent = class("FightTimerComponent", FightBaseClass)
+
+function FightTimerComponent:onConstructor()
+	self.timerList = {}
 end
 
-function var_0_0.cancelTimer(arg_2_0, arg_2_1)
-	if not arg_2_1 then
+function FightTimerComponent:cancelTimer(timer)
+	if not timer then
 		return
 	end
 
-	arg_2_1.isDone = true
+	timer.isDone = true
 end
 
-function var_0_0.registRepeatTimer(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5)
-	local var_3_0 = FightTimer.registRepeatTimer(arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5)
+function FightTimerComponent:registRepeatTimer(callback, handle, time, repeatCount, param)
+	local item = FightTimer.registRepeatTimer(callback, handle, time, repeatCount, param)
 
-	table.insert(arg_3_0.timerList, var_3_0)
+	table.insert(self.timerList, item)
 
-	return var_3_0
+	return item
 end
 
-function var_0_0.restartRepeatTimer(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
-	return FightTimer.restartRepeatTimer(arg_4_1, arg_4_2, arg_4_3, arg_4_4)
+function FightTimerComponent:restartRepeatTimer(timerItem, time, repeatCount, param)
+	return FightTimer.restartRepeatTimer(timerItem, time, repeatCount, param)
 end
 
-function var_0_0.registSingleTimer(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4, arg_5_5)
-	if not arg_5_0.singleTimer then
-		arg_5_0.singleTimer = {}
+function FightTimerComponent:registSingleTimer(callback, handle, time, repeatCount, param)
+	if not self.singleTimer then
+		self.singleTimer = {}
 	end
 
-	local var_5_0 = arg_5_0.singleTimer[arg_5_1]
+	local timerItem = self.singleTimer[callback]
 
-	if var_5_0 then
-		if var_5_0.isDone then
-			var_5_0 = arg_5_0:registRepeatTimer(arg_5_1, arg_5_2, arg_5_3, arg_5_4, arg_5_5)
-			arg_5_0.singleTimer[arg_5_1] = var_5_0
+	if timerItem then
+		if timerItem.isDone then
+			timerItem = self:registRepeatTimer(callback, handle, time, repeatCount, param)
+			self.singleTimer[callback] = timerItem
 
-			return var_5_0
+			return timerItem
 		else
-			var_5_0:restart(arg_5_3, arg_5_4, arg_5_5)
+			timerItem:restart(time, repeatCount, param)
 
-			return var_5_0
+			return timerItem
 		end
 	else
-		local var_5_1 = arg_5_0:registRepeatTimer(arg_5_1, arg_5_2, arg_5_3, arg_5_4, arg_5_5)
+		timerItem = self:registRepeatTimer(callback, handle, time, repeatCount, param)
+		self.singleTimer[callback] = timerItem
 
-		arg_5_0.singleTimer[arg_5_1] = var_5_1
-
-		return var_5_1
+		return timerItem
 	end
 end
 
-function var_0_0.releaseSingleTimer(arg_6_0, arg_6_1)
-	if not arg_6_0.singleTimer then
+function FightTimerComponent:releaseSingleTimer(callback)
+	if not self.singleTimer then
 		return
 	end
 
-	local var_6_0 = arg_6_0.singleTimer[arg_6_1]
+	local timerItem = self.singleTimer[callback]
 
-	if var_6_0 then
-		var_6_0.isDone = true
-		arg_6_0.singleTimer[arg_6_1] = nil
+	if timerItem then
+		timerItem.isDone = true
+		self.singleTimer[callback] = nil
 	end
 end
 
-function var_0_0.releaseAllTimer(arg_7_0)
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0.timerList) do
-		iter_7_1.isDone = true
+function FightTimerComponent:releaseAllTimer()
+	for i, item in ipairs(self.timerList) do
+		item.isDone = true
 	end
 end
 
-function var_0_0.onDestructor(arg_8_0)
-	arg_8_0:releaseAllTimer()
+function FightTimerComponent:onDestructor()
+	self:releaseAllTimer()
 
-	arg_8_0.timerList = nil
-	arg_8_0.singleTimer = nil
+	self.timerList = nil
+	self.singleTimer = nil
 end
 
-return var_0_0
+return FightTimerComponent

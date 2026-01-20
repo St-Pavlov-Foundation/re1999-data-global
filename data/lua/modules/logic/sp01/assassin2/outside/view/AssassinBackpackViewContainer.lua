@@ -1,41 +1,43 @@
-﻿module("modules.logic.sp01.assassin2.outside.view.AssassinBackpackViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/outside/view/AssassinBackpackViewContainer.lua
 
-local var_0_0 = class("AssassinBackpackViewContainer", BaseViewContainer)
+module("modules.logic.sp01.assassin2.outside.view.AssassinBackpackViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+local AssassinBackpackViewContainer = class("AssassinBackpackViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "root/#scroll_item"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_1.prefabUrl = "root/#scroll_item/viewport/content/#go_item"
-	var_1_1.cellClass = AssassinBackpackItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 3
-	var_1_1.cellWidth = 230
-	var_1_1.cellHeight = 230
-	var_1_1.cellSpaceV = 40
-	var_1_1.cellSpaceH = 40
+function AssassinBackpackViewContainer:buildViews()
+	local views = {}
+	local scrollParam = ListScrollParam.New()
 
-	table.insert(var_1_0, LuaListScrollView.New(AssassinBackpackListModel.instance, var_1_1))
-	table.insert(var_1_0, AssassinBackpackView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "root/#go_topleft"))
+	scrollParam.scrollGOPath = "root/#scroll_item"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "root/#scroll_item/viewport/content/#go_item"
+	scrollParam.cellClass = AssassinBackpackItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 3
+	scrollParam.cellWidth = 230
+	scrollParam.cellHeight = 230
+	scrollParam.cellSpaceV = 40
+	scrollParam.cellSpaceH = 40
 
-	return var_1_0
+	table.insert(views, LuaListScrollView.New(AssassinBackpackListModel.instance, scrollParam))
+	table.insert(views, AssassinBackpackView.New())
+	table.insert(views, TabViewGroup.New(1, "root/#go_topleft"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function AssassinBackpackViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-return var_0_0
+return AssassinBackpackViewContainer

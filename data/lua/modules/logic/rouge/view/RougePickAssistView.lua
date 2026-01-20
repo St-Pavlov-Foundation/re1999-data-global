@@ -1,29 +1,31 @@
-﻿module("modules.logic.rouge.view.RougePickAssistView", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougePickAssistView.lua
 
-local var_0_0 = class("RougePickAssistView", PickAssistView)
+module("modules.logic.rouge.view.RougePickAssistView", package.seeall)
 
-function var_0_0.onOpen(arg_1_0)
-	arg_1_0._capacityParams = RougeController.instance.pickAssistViewParams
+local RougePickAssistView = class("RougePickAssistView", PickAssistView)
 
-	arg_1_0:_initCapacity()
-	var_0_0.super.onOpen(arg_1_0)
+function RougePickAssistView:onOpen()
+	self._capacityParams = RougeController.instance.pickAssistViewParams
+
+	self:_initCapacity()
+	RougePickAssistView.super.onOpen(self)
 end
 
-function var_0_0._initCapacity(arg_2_0)
-	local var_2_0 = gohelper.findChild(arg_2_0.viewGO, "bg/volume")
+function RougePickAssistView:_initCapacity()
+	local volumeGo = gohelper.findChild(self.viewGO, "bg/volume")
 
-	arg_2_0._capacityComp = RougeCapacityComp.Add(var_2_0, arg_2_0._capacityParams.curCapacity, arg_2_0._capacityParams.totalCapacity, true)
+	self._capacityComp = RougeCapacityComp.Add(volumeGo, self._capacityParams.curCapacity, self._capacityParams.totalCapacity, true)
 
-	arg_2_0._capacityComp:showChangeEffect(true)
+	self._capacityComp:showChangeEffect(true)
 end
 
-function var_0_0.refreshBtnDetail(arg_3_0)
-	var_0_0.super.refreshBtnDetail(arg_3_0)
+function RougePickAssistView:refreshBtnDetail()
+	RougePickAssistView.super.refreshBtnDetail(self)
 
-	local var_3_0 = PickAssistListModel.instance:getSelectedMO()
-	local var_3_1 = var_3_0 and RougeConfig1.instance:getRoleCapacity(var_3_0.heroMO.config.rare) or 0
+	local selectedMO = PickAssistListModel.instance:getSelectedMO()
+	local capacity = selectedMO and RougeConfig1.instance:getRoleCapacity(selectedMO.heroMO.config.rare) or 0
 
-	arg_3_0._capacityComp:updateCurNum(var_3_1 + arg_3_0._capacityParams.curCapacity)
+	self._capacityComp:updateCurNum(capacity + self._capacityParams.curCapacity)
 end
 
-return var_0_0
+return RougePickAssistView

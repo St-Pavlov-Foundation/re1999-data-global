@@ -1,36 +1,38 @@
-﻿module("modules.logic.versionactivity2_6.dicehero.defines.DiceHeroEnum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/dicehero/defines/DiceHeroEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity2_6.dicehero.defines.DiceHeroEnum", package.seeall)
 
-var_0_0.LevelType = {
+local DiceHeroEnum = _M
+
+DiceHeroEnum.LevelType = {
 	Fight = 2,
 	Story = 1
 }
-var_0_0.GetRewardType = {
+DiceHeroEnum.GetRewardType = {
 	All = 1,
 	One = 2,
 	None = 0
 }
-var_0_0.RewardType = {
+DiceHeroEnum.RewardType = {
 	SkillCard = 2,
 	Hero = 1,
 	Relic = 3
 }
-var_0_0.DialogContentType = {
+DiceHeroEnum.DialogContentType = {
 	Narration = 3,
 	Talk = 2,
 	Title = 1
 }
-var_0_0.SkillType = {
+DiceHeroEnum.SkillType = {
 	Hero = 2,
 	Normal = 1
 }
-var_0_0.GameStatu = {
+DiceHeroEnum.GameStatu = {
 	Win = 1,
 	Lose = 2,
 	None = 0
 }
-var_0_0.SkillEffectType = {
+DiceHeroEnum.SkillEffectType = {
 	FixDamageByDicePoint = 108,
 	AddBuff = 40,
 	FixAddShield = 107,
@@ -55,43 +57,43 @@ var_0_0.SkillEffectType = {
 	Damage2 = 11,
 	AddDice = 101
 }
-var_0_0.GameProgress = {
+DiceHeroEnum.GameProgress = {
 	PlaySkill = 1,
 	RollDice = 2,
 	UseSkill = 3,
 	None = 0
 }
-var_0_0.DiceStatu = {
+DiceHeroEnum.DiceStatu = {
 	HardLock = 2,
 	SoftLock = 1,
 	Normal = 0
 }
-var_0_0.DiceType = {
+DiceHeroEnum.DiceType = {
 	Power = 4,
 	Def = 2,
 	Atk = 1
 }
-var_0_0.BaseDiceSuitDict = {
-	[var_0_0.DiceType.Atk] = true,
-	[var_0_0.DiceType.Def] = true,
-	[var_0_0.DiceType.Power] = true
+DiceHeroEnum.BaseDiceSuitDict = {
+	[DiceHeroEnum.DiceType.Atk] = true,
+	[DiceHeroEnum.DiceType.Def] = true,
+	[DiceHeroEnum.DiceType.Power] = true
 }
-var_0_0.CardType = {
+DiceHeroEnum.CardType = {
 	Power = 3,
 	Def = 2,
 	Hero = 4,
 	Atk = 1
 }
-var_0_0.HeroCardType = {
+DiceHeroEnum.HeroCardType = {
 	PassiveSkill = 2,
 	ActiveSkill = 1,
 	None = 0
 }
-var_0_0.FightActionType = {
+DiceHeroEnum.FightActionType = {
 	UseSkill = 1,
 	Effect = 2
 }
-var_0_0.FightEffectType = {
+DiceHeroEnum.FightEffectType = {
 	ChangePower = 5,
 	RemoveBuff = 2,
 	Damage = 8,
@@ -105,22 +107,22 @@ var_0_0.FightEffectType = {
 	UpdateBuff = 3,
 	ChangeShield = 4
 }
-var_0_0.SkillCardTargetType = {
+DiceHeroEnum.SkillCardTargetType = {
 	RandomEnemy = 4,
 	Self = 2,
 	AllEnemy = 3,
 	SingleEnemy = 1,
 	None = 0
 }
-var_0_0.CantUseReason = {
+DiceHeroEnum.CantUseReason = {
 	NoUseCount = 2,
 	NoDice = 1,
 	BanSkill = 3
 }
-var_0_0.FightEffectTypeToName = {}
+DiceHeroEnum.FightEffectTypeToName = {}
 
-for iter_0_0, iter_0_1 in pairs(var_0_0.FightEffectType) do
-	var_0_0.FightEffectTypeToName[iter_0_1] = iter_0_0
+for k, v in pairs(DiceHeroEnum.FightEffectType) do
+	DiceHeroEnum.FightEffectTypeToName[v] = k
 end
 
-return var_0_0
+return DiceHeroEnum

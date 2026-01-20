@@ -1,6 +1,7 @@
 [
   {
     "id": 31000131,
+    "skinId": 0,
     "layer": 0,
     "effect": "v2a2_tsnn/tsnn_shuzi_0",
     "effectRoot": "mounttop",
@@ -9,6 +10,7 @@
   },
   {
     "id": 31000131,
+    "skinId": 0,
     "layer": 1,
     "effect": "v2a2_tsnn/tsnn_shuzi_1",
     "effectRoot": "mounttop",
@@ -17,6 +19,7 @@
   },
   {
     "id": 31000131,
+    "skinId": 0,
     "layer": 2,
     "effect": "v2a2_tsnn/tsnn_shuzi_2",
     "effectRoot": "mounttop",
@@ -25,6 +28,7 @@
   },
   {
     "id": 31000131,
+    "skinId": 0,
     "layer": 3,
     "effect": "v2a2_tsnn/tsnn_shuzi_3",
     "effectRoot": "mounttop",
@@ -33,6 +37,7 @@
   },
   {
     "id": 31000131,
+    "skinId": 0,
     "layer": 4,
     "effect": "v2a2_tsnn/tsnn_shuzi_4",
     "effectRoot": "mounttop",
@@ -41,6 +46,7 @@
   },
   {
     "id": 31000131,
+    "skinId": 0,
     "layer": 5,
     "effect": "v2a2_tsnn/tsnn_shuzi_5",
     "effectRoot": "mounttop",
@@ -49,6 +55,7 @@
   },
   {
     "id": 31000131,
+    "skinId": 0,
     "layer": 6,
     "effect": "v2a2_tsnn/tsnn_shuzi_6",
     "effectRoot": "mounttop",
@@ -57,10 +64,83 @@
   },
   {
     "id": 31000131,
+    "skinId": 0,
     "layer": 7,
     "effect": "v2a2_tsnn/tsnn_shuzi_7",
     "effectRoot": "mounttop",
     "effectAudio": 431000152,
+    "duration": 1
+  },
+  {
+    "id": 31000131,
+    "skinId": 310003,
+    "layer": 0,
+    "effect": "v3a2_tsnn/tsnn_shuzi_0",
+    "effectRoot": "mounthead",
+    "effectAudio": 431000354,
+    "duration": 1
+  },
+  {
+    "id": 31000131,
+    "skinId": 310003,
+    "layer": 1,
+    "effect": "v3a2_tsnn/tsnn_shuzi_1",
+    "effectRoot": "mounthead",
+    "effectAudio": 431000352,
+    "duration": 1
+  },
+  {
+    "id": 31000131,
+    "skinId": 310003,
+    "layer": 2,
+    "effect": "v3a2_tsnn/tsnn_shuzi_2",
+    "effectRoot": "mounthead",
+    "effectAudio": 431000352,
+    "duration": 1
+  },
+  {
+    "id": 31000131,
+    "skinId": 310003,
+    "layer": 3,
+    "effect": "v3a2_tsnn/tsnn_shuzi_3",
+    "effectRoot": "mounthead",
+    "effectAudio": 431000352,
+    "duration": 1
+  },
+  {
+    "id": 31000131,
+    "skinId": 310003,
+    "layer": 4,
+    "effect": "v3a2_tsnn/tsnn_shuzi_4",
+    "effectRoot": "mounthead",
+    "effectAudio": 431000352,
+    "duration": 1
+  },
+  {
+    "id": 31000131,
+    "skinId": 310003,
+    "layer": 5,
+    "effect": "v3a2_tsnn/tsnn_shuzi_5",
+    "effectRoot": "mounthead",
+    "effectAudio": 431000352,
+    "duration": 1
+  },
+  {
+    "id": 31000131,
+    "skinId": 310003,
+    "layer": 6,
+    "effect": "v3a2_tsnn/tsnn_shuzi_6",
+    "effectRoot": "mounthead",
+    "effectAudio": 431000352,
+    "duration": 1
+  },
+  {
+    "id": 31000131,
+    "skinId": 310003,
+    "layer": 7,
+    "effect": "v3a2_tsnn/tsnn_shuzi_7",
+    "effectRoot": "mounthead",
+    "effectAudio": 431000352,
     "duration": 1
   }
 ]

@@ -1,85 +1,88 @@
-﻿module("modules.logic.mainuiswitch.view.MainUISwitchInfoBlurMaskView", package.seeall)
+﻿-- chunkname: @modules/logic/mainuiswitch/view/MainUISwitchInfoBlurMaskView.lua
 
-local var_0_0 = class("MainUISwitchInfoBlurMaskView", BaseView)
+module("modules.logic.mainuiswitch.view.MainUISwitchInfoBlurMaskView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._root = gohelper.findChild(arg_1_0.viewGO, "root")
-	arg_1_0._gorawImage = gohelper.findChild(arg_1_0._root, "RawImage")
-	arg_1_0._rawImage = gohelper.onceAddComponent(arg_1_0._gorawImage, gohelper.Type_RawImage)
+local MainUISwitchInfoBlurMaskView = class("MainUISwitchInfoBlurMaskView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function MainUISwitchInfoBlurMaskView:onInitView()
+	self._root = gohelper.findChild(self.viewGO, "root")
+	self._gorawImage = gohelper.findChild(self._root, "RawImage")
+	self._rawImage = gohelper.onceAddComponent(self._gorawImage, gohelper.Type_RawImage)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0._onCloseView, arg_2_0)
-	arg_2_0:addEventCb(MainUISwitchController.instance, MainUISwitchEvent.PreviewSwitchUIVisible, arg_2_0._onSwitchUIVisible, arg_2_0)
+function MainUISwitchInfoBlurMaskView:addEvents()
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
+	self:addEventCb(MainUISwitchController.instance, MainUISwitchEvent.PreviewSwitchUIVisible, self._onSwitchUIVisible, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0._onCloseView, arg_3_0)
-	arg_3_0:removeEventCb(MainUISwitchController.instance, MainUISwitchEvent.PreviewSwitchUIVisible, arg_3_0._onSwitchUIVisible, arg_3_0)
+function MainUISwitchInfoBlurMaskView:removeEvents()
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
+	self:removeEventCb(MainUISwitchController.instance, MainUISwitchEvent.PreviewSwitchUIVisible, self._onSwitchUIVisible, self)
 end
 
-local var_0_1 = ViewName.MainUISwitchInfoView
+local MainUISwitchInfoViewName = ViewName.MainUISwitchInfoView
 
-function var_0_0._editableInitView(arg_4_0)
+function MainUISwitchInfoBlurMaskView:_editableInitView()
 	return
 end
 
-function var_0_0._onSwitchUIVisible(arg_5_0, arg_5_1)
-	if arg_5_1 then
-		gohelper.addChildPosStay(arg_5_0.viewGO, arg_5_0._root)
-	elseif ViewMgr.instance:isOpen(var_0_1) then
-		local var_5_0 = ViewMgr.instance:getContainer(var_0_1)
+function MainUISwitchInfoBlurMaskView:_onSwitchUIVisible(visible)
+	if visible then
+		gohelper.addChildPosStay(self.viewGO, self._root)
+	elseif ViewMgr.instance:isOpen(MainUISwitchInfoViewName) then
+		local contains = ViewMgr.instance:getContainer(MainUISwitchInfoViewName)
 
-		if var_5_0 and var_5_0.viewGO then
-			gohelper.addChildPosStay(var_5_0.viewGO, arg_5_0._root)
-			arg_5_0._root.transform:SetAsFirstSibling()
+		if contains and contains.viewGO then
+			gohelper.addChildPosStay(contains.viewGO, self._root)
+			self._root.transform:SetAsFirstSibling()
 		end
 	end
 end
 
-function var_0_0._onCloseView(arg_6_0, arg_6_1)
-	if arg_6_1 == var_0_1 then
-		arg_6_0:closeThis()
+function MainUISwitchInfoBlurMaskView:_onCloseView(viewName)
+	if viewName == MainUISwitchInfoViewName then
+		self:closeThis()
 	end
 end
 
-function var_0_0.onOpen(arg_7_0)
-	local var_7_0 = arg_7_0.viewParam and arg_7_0.viewParam.sceneId or MainSceneSwitchModel.instance:getCurSceneId()
+function MainUISwitchInfoBlurMaskView:onOpen()
+	local sceneId = self.viewParam and self.viewParam.sceneId or MainSceneSwitchModel.instance:getCurSceneId()
 
-	gohelper.setActive(arg_7_0._gorawImage, false)
-	arg_7_0:_onShowSceneInfo(var_7_0)
+	gohelper.setActive(self._gorawImage, false)
+	self:_onShowSceneInfo(sceneId)
 end
 
-function var_0_0._onShowSceneInfo(arg_8_0, arg_8_1)
-	arg_8_0._sceneId = arg_8_1
+function MainUISwitchInfoBlurMaskView:_onShowSceneInfo(id)
+	self._sceneId = id
 
-	MainSceneSwitchCameraController.instance:showScene(arg_8_1, arg_8_0._showSceneFinished, arg_8_0)
+	MainSceneSwitchCameraController.instance:showScene(id, self._showSceneFinished, self)
 end
 
-function var_0_0._showSceneFinished(arg_9_0, arg_9_1)
-	gohelper.setActive(arg_9_0._gorawImage, true)
-	MainSceneSwitchInfoDisplayView.adjustRt(arg_9_0._rawImage, arg_9_1)
-	ViewMgr.instance:openView(var_0_1, arg_9_0.viewParam)
+function MainUISwitchInfoBlurMaskView:_showSceneFinished(rt)
+	gohelper.setActive(self._gorawImage, true)
+	MainSceneSwitchInfoDisplayView.adjustRt(self._rawImage, rt)
+	ViewMgr.instance:openView(MainUISwitchInfoViewName, self.viewParam)
 end
 
-function var_0_0.adjustRt(arg_10_0, arg_10_1)
-	arg_10_0.texture = arg_10_1
+function MainUISwitchInfoBlurMaskView.adjustRt(rawImage, rt)
+	rawImage.texture = rt
 
-	arg_10_0:SetNativeSize()
+	rawImage:SetNativeSize()
 
-	local var_10_0 = arg_10_1.width
-	local var_10_1 = ViewMgr.instance:getUIRoot().transform
-	local var_10_2 = recthelper.getWidth(var_10_1) / var_10_0
+	local width = rt.width
+	local root = ViewMgr.instance:getUIRoot().transform
+	local containerWidth = recthelper.getWidth(root)
+	local scale = containerWidth / width
 
-	transformhelper.setLocalScale(arg_10_0.transform, var_10_2, var_10_2, 1)
+	transformhelper.setLocalScale(rawImage.transform, scale, scale, 1)
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function MainUISwitchInfoBlurMaskView:onDestroyView()
 	MainSceneSwitchCameraController.instance:clear()
 end
 
-return var_0_0
+return MainUISwitchInfoBlurMaskView

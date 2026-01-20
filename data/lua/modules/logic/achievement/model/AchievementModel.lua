@@ -1,177 +1,181 @@
-﻿module("modules.logic.achievement.model.AchievementModel", package.seeall)
+﻿-- chunkname: @modules/logic/achievement/model/AchievementModel.lua
 
-local var_0_0 = class("AchievementModel", BaseModel)
+module("modules.logic.achievement.model.AchievementModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._levelMap = {}
+local AchievementModel = class("AchievementModel", BaseModel)
+
+function AchievementModel:onInit()
+	self._levelMap = {}
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:release()
+function AchievementModel:reInit()
+	self:release()
 
-	arg_2_0._levelMap = {}
+	self._levelMap = {}
 end
 
-function var_0_0.release(arg_3_0)
-	arg_3_0._record = nil
-	arg_3_0._achievementMap = nil
-	arg_3_0._levelMap = nil
-	arg_3_0._isInited = false
+function AchievementModel:release()
+	self._record = nil
+	self._achievementMap = nil
+	self._levelMap = nil
+	self._isInited = false
 end
 
-function var_0_0.initDatas(arg_4_0, arg_4_1)
-	arg_4_0:checkBuildAchievementMap()
+function AchievementModel:initDatas(taskInfos)
+	self:checkBuildAchievementMap()
 
-	arg_4_0._isInited = true
+	self._isInited = true
 
-	local var_4_0 = {}
+	local list = {}
 
-	if arg_4_1 then
-		for iter_4_0 = 1, #arg_4_1 do
-			local var_4_1 = arg_4_1[iter_4_0]
-			local var_4_2 = AchievementConfig.instance:getTask(var_4_1.id)
+	if taskInfos then
+		for i = 1, #taskInfos do
+			local taskInfo = taskInfos[i]
+			local co = AchievementConfig.instance:getTask(taskInfo.id)
 
-			if var_4_2 then
-				local var_4_3 = AchiementTaskMO.New()
+			if co then
+				local mo = AchiementTaskMO.New()
 
-				var_4_3:init(var_4_2)
-				var_4_3:updateByServerData(var_4_1)
-				table.insert(var_4_0, var_4_3)
+				mo:init(co)
+				mo:updateByServerData(taskInfo)
+				table.insert(list, mo)
 			end
 		end
 	end
 
-	arg_4_0:setList(var_4_0)
-	arg_4_0:updateLevelMap()
+	self:setList(list)
+	self:updateLevelMap()
 end
 
-function var_0_0.updateDatas(arg_5_0, arg_5_1)
-	arg_5_0:checkBuildAchievementMap()
+function AchievementModel:updateDatas(taskInfos)
+	self:checkBuildAchievementMap()
 
-	if not arg_5_1 then
+	if not taskInfos then
 		return
 	end
 
-	local var_5_0 = {}
+	local newFinishList = {}
 
-	for iter_5_0 = 1, #arg_5_1 do
-		local var_5_1 = arg_5_1[iter_5_0]
-		local var_5_2 = arg_5_0:getById(var_5_1.id)
+	for i = 1, #taskInfos do
+		local taskInfo = taskInfos[i]
+		local mo = self:getById(taskInfo.id)
 
-		if var_5_2 == nil then
-			local var_5_3 = AchievementConfig.instance:getTask(var_5_1.id)
+		if mo == nil then
+			local co = AchievementConfig.instance:getTask(taskInfo.id)
 
-			if var_5_3 then
-				var_5_2 = AchiementTaskMO.New()
+			if co then
+				mo = AchiementTaskMO.New()
 
-				var_5_2:init(var_5_3)
-				var_5_2:updateByServerData(var_5_1)
-				arg_5_0:addAtLast(var_5_2)
+				mo:init(co)
+				mo:updateByServerData(taskInfo)
+				self:addAtLast(mo)
 			end
 		else
-			local var_5_4 = var_5_2.hasFinished
+			local oldFinishStatus = mo.hasFinished
 
-			var_5_2:updateByServerData(var_5_1)
+			mo:updateByServerData(taskInfo)
 
-			if var_5_2.hasFinished and not var_5_4 then
-				table.insert(var_5_0, var_5_2)
+			if mo.hasFinished and not oldFinishStatus then
+				table.insert(newFinishList, mo)
 			end
 		end
 	end
 
-	arg_5_0:updateLevelMap()
+	self:updateLevelMap()
 
-	return var_5_0
+	return newFinishList
 end
 
-function var_0_0.updateLevelMap(arg_6_0)
-	for iter_6_0, iter_6_1 in pairs(arg_6_0._achievementMap) do
-		local var_6_0 = 0
+function AchievementModel:updateLevelMap()
+	for achievementId, taskCOList in pairs(self._achievementMap) do
+		local level = 0
 
-		for iter_6_2, iter_6_3 in ipairs(iter_6_1) do
-			local var_6_1 = arg_6_0:getById(iter_6_3.id)
+		for i, taskCO in ipairs(taskCOList) do
+			local mo = self:getById(taskCO.id)
 
-			if var_6_1 and var_6_1.hasFinished then
-				var_6_0 = iter_6_3.level
+			if mo and mo.hasFinished then
+				level = taskCO.level
 			end
 		end
 
-		arg_6_0._levelMap[iter_6_0] = var_6_0
+		self._levelMap[achievementId] = level
 	end
 end
 
-function var_0_0.checkBuildAchievementMap(arg_7_0)
-	arg_7_0._achievementMap = {}
+function AchievementModel:checkBuildAchievementMap()
+	self._achievementMap = {}
 
-	local var_7_0 = AchievementConfig.instance:getAllTasks()
+	local allTasks = AchievementConfig.instance:getAllTasks()
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-		arg_7_0._achievementMap[iter_7_1.achievementId] = arg_7_0._achievementMap[iter_7_1.achievementId] or {}
+	for i, taskCo in ipairs(allTasks) do
+		self._achievementMap[taskCo.achievementId] = self._achievementMap[taskCo.achievementId] or {}
 
-		table.insert(arg_7_0._achievementMap[iter_7_1.achievementId], iter_7_1)
+		table.insert(self._achievementMap[taskCo.achievementId], taskCo)
 	end
 
-	for iter_7_2, iter_7_3 in pairs(arg_7_0._achievementMap) do
-		if not AchievementConfig.instance:getAchievement(iter_7_2) then
-			logError("achievementId in achievement_task not in config : [" .. tostring(iter_7_2) .. "]")
+	for achievementId, list in pairs(self._achievementMap) do
+		if not AchievementConfig.instance:getAchievement(achievementId) then
+			logError("achievementId in achievement_task not in config : [" .. tostring(achievementId) .. "]")
 		end
 
-		table.sort(iter_7_3, var_0_0.sortMapTask)
+		table.sort(list, AchievementModel.sortMapTask)
 	end
 end
 
-function var_0_0.sortMapTask(arg_8_0, arg_8_1)
-	return arg_8_0.level < arg_8_1.level
+function AchievementModel.sortMapTask(a, b)
+	return a.level < b.level
 end
 
-function var_0_0.getAchievementLevel(arg_9_0, arg_9_1)
-	if arg_9_0._levelMap then
-		return arg_9_0._levelMap[arg_9_1] or 0
+function AchievementModel:getAchievementLevel(achievementId)
+	if self._levelMap then
+		return self._levelMap[achievementId] or 0
 	end
 
 	return 0
 end
 
-function var_0_0.getGroupLevel(arg_10_0, arg_10_1)
-	local var_10_0 = 0
-	local var_10_1 = AchievementConfig.instance:getAchievementsByGroupId(arg_10_1)
+function AchievementModel:getGroupLevel(groupId)
+	local groupLevel = 0
+	local achievementCfgList = AchievementConfig.instance:getAchievementsByGroupId(groupId)
 
-	if var_10_1 then
-		for iter_10_0, iter_10_1 in pairs(var_10_1) do
-			local var_10_2 = arg_10_0:getAchievementLevel(iter_10_1.id)
+	if achievementCfgList then
+		for _, achievementCfg in pairs(achievementCfgList) do
+			local achievementLevel = self:getAchievementLevel(achievementCfg.id)
 
-			if var_10_0 < var_10_2 then
-				var_10_0 = var_10_2
+			if groupLevel < achievementLevel then
+				groupLevel = achievementLevel
 			end
 		end
 	end
 
-	return var_10_0
+	return groupLevel
 end
 
-function var_0_0.cleanAchievementNew(arg_11_0, arg_11_1)
-	local var_11_0 = false
+function AchievementModel:cleanAchievementNew(idList)
+	local isDirty = false
 
-	if not arg_11_1 then
-		return var_11_0
+	if not idList then
+		return isDirty
 	end
 
-	for iter_11_0 = 1, #arg_11_1 do
-		arg_11_0:getById(arg_11_1[iter_11_0]).isNew = false
-		var_11_0 = true
+	for i = 1, #idList do
+		local taskMo = self:getById(idList[i])
+
+		taskMo.isNew = false
+		isDirty = true
 	end
 
-	return var_11_0
+	return isDirty
 end
 
-function var_0_0.achievementHasNew(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0:getAchievementTaskCoList(arg_12_1)
+function AchievementModel:achievementHasNew(achievementId)
+	local taskCoList = self:getAchievementTaskCoList(achievementId)
 
-	if var_12_0 then
-		for iter_12_0, iter_12_1 in ipairs(var_12_0) do
-			local var_12_1 = arg_12_0:getById(iter_12_1.id)
+	if taskCoList then
+		for _, taskCo in ipairs(taskCoList) do
+			local taskMo = self:getById(taskCo.id)
 
-			if var_12_1 and var_12_1.isNew then
+			if taskMo and taskMo.isNew then
 				return true
 			end
 		end
@@ -180,15 +184,15 @@ function var_0_0.achievementHasNew(arg_12_0, arg_12_1)
 	return false
 end
 
-function var_0_0.achievementHasNewWithTaskId(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0 = arg_13_0:getAchievementTaskCoList(arg_13_1)
+function AchievementModel:achievementHasNewWithTaskId(achievementId, taskId)
+	local taskCoList = self:getAchievementTaskCoList(achievementId)
 
-	if var_13_0 then
-		for iter_13_0, iter_13_1 in ipairs(var_13_0) do
-			if iter_13_1.id == arg_13_2 then
-				local var_13_1 = arg_13_0:getById(iter_13_1.id)
+	if taskCoList then
+		for _, taskCo in ipairs(taskCoList) do
+			if taskCo.id == taskId then
+				local taskMo = self:getById(taskCo.id)
 
-				if var_13_1 and var_13_1.isNew then
+				if taskMo and taskMo.isNew then
 					return true
 				end
 			end
@@ -198,60 +202,60 @@ function var_0_0.achievementHasNewWithTaskId(arg_13_0, arg_13_1, arg_13_2)
 	return false
 end
 
-function var_0_0.getAchievementTaskCoList(arg_14_0, arg_14_1)
-	if arg_14_0._achievementMap then
-		return arg_14_0._achievementMap[arg_14_1]
+function AchievementModel:getAchievementTaskCoList(achievementId)
+	if self._achievementMap then
+		return self._achievementMap[achievementId]
 	end
 end
 
-function var_0_0.getGroupUnlockTime(arg_15_0, arg_15_1)
-	local var_15_0
-	local var_15_1 = AchievementConfig.instance:getAchievementsByGroupId(arg_15_1)
+function AchievementModel:getGroupUnlockTime(groupId)
+	local firstUnlockTime
+	local achievementCfgs = AchievementConfig.instance:getAchievementsByGroupId(groupId)
 
-	if var_15_1 then
-		for iter_15_0, iter_15_1 in ipairs(var_15_1) do
-			local var_15_2 = arg_15_0:getAchievementTaskCoList(iter_15_1.id)
+	if achievementCfgs then
+		for _, cfg in ipairs(achievementCfgs) do
+			local taskCoList = self:getAchievementTaskCoList(cfg.id)
 
-			if var_15_2 then
-				for iter_15_2, iter_15_3 in ipairs(var_15_2) do
-					local var_15_3 = arg_15_0:getById(iter_15_3.id)
+			if taskCoList then
+				for _, taskCo in ipairs(taskCoList) do
+					local taskMo = self:getById(taskCo.id)
 
-					if var_15_3 and var_15_3.hasFinished and (not var_15_0 or var_15_0 > var_15_3.finishTime) then
-						var_15_0 = var_15_3.finishTime
+					if taskMo and taskMo.hasFinished and (not firstUnlockTime or firstUnlockTime > taskMo.finishTime) then
+						firstUnlockTime = taskMo.finishTime
 					end
 				end
 			end
 		end
 	end
 
-	return var_15_0
+	return firstUnlockTime
 end
 
-function var_0_0.getAchievementUnlockTime(arg_16_0, arg_16_1)
-	local var_16_0
-	local var_16_1 = arg_16_0:getAchievementTaskCoList(arg_16_1)
+function AchievementModel:getAchievementUnlockTime(achievementId)
+	local firstUnlockTime
+	local taskCfgList = self:getAchievementTaskCoList(achievementId)
 
-	if var_16_1 then
-		for iter_16_0, iter_16_1 in ipairs(var_16_1) do
-			local var_16_2 = arg_16_0:getById(iter_16_1.id)
+	if taskCfgList then
+		for _, taskCfg in ipairs(taskCfgList) do
+			local taskMo = self:getById(taskCfg.id)
 
-			if var_16_2 and var_16_2.hasFinished and (not var_16_0 or var_16_0 > var_16_2.finishTime) then
-				var_16_0 = var_16_2.finishTime
+			if taskMo and taskMo.hasFinished and (not firstUnlockTime or firstUnlockTime > taskMo.finishTime) then
+				firstUnlockTime = taskMo.finishTime
 			end
 		end
 	end
 
-	return var_16_0
+	return firstUnlockTime
 end
 
-function var_0_0.achievementHasLocked(arg_17_0, arg_17_1)
-	local var_17_0 = arg_17_0:getAchievementTaskCoList(arg_17_1)
+function AchievementModel:achievementHasLocked(achievementId)
+	local taskCoList = self:getAchievementTaskCoList(achievementId)
 
-	if var_17_0 then
-		for iter_17_0, iter_17_1 in ipairs(var_17_0) do
-			local var_17_1 = arg_17_0:getById(iter_17_1.id)
+	if taskCoList then
+		for _, taskCo in ipairs(taskCoList) do
+			local taskMo = self:getById(taskCo.id)
 
-			if var_17_1 and var_17_1.hasFinished then
+			if taskMo and taskMo.hasFinished then
 				return false
 			end
 		end
@@ -260,12 +264,12 @@ function var_0_0.achievementHasLocked(arg_17_0, arg_17_1)
 	return true
 end
 
-function var_0_0.achievementGroupHasLocked(arg_18_0, arg_18_1)
-	local var_18_0 = AchievementConfig.instance:getAchievementsByGroupId(arg_18_1)
+function AchievementModel:achievementGroupHasLocked(groupId)
+	local achievementCfgs = AchievementConfig.instance:getAchievementsByGroupId(groupId)
 
-	if var_18_0 then
-		for iter_18_0, iter_18_1 in pairs(var_18_0) do
-			if not arg_18_0:achievementHasLocked(iter_18_1.id) then
+	if achievementCfgs then
+		for _, cfg in pairs(achievementCfgs) do
+			if not self:achievementHasLocked(cfg.id) then
 				return false
 			end
 		end
@@ -274,47 +278,47 @@ function var_0_0.achievementGroupHasLocked(arg_18_0, arg_18_1)
 	return true
 end
 
-function var_0_0.isGroupFinished(arg_19_0, arg_19_1)
-	local var_19_0 = AchievementConfig.instance:getAchievementsByGroupId(arg_19_1)
-	local var_19_1 = false
+function AchievementModel:isGroupFinished(groupId)
+	local achievementCfgs = AchievementConfig.instance:getAchievementsByGroupId(groupId)
+	local isAllAchievementsFinish = false
 
-	if var_19_0 then
-		for iter_19_0, iter_19_1 in pairs(var_19_0) do
-			local var_19_2 = arg_19_0:getAchievementTaskCoList(iter_19_1.id)
+	if achievementCfgs then
+		for _, cfg in pairs(achievementCfgs) do
+			local taskCoList = self:getAchievementTaskCoList(cfg.id)
 
-			if var_19_2 then
-				local var_19_3 = false
+			if taskCoList then
+				local isAchievementFinish = false
 
-				for iter_19_2, iter_19_3 in pairs(var_19_2) do
-					local var_19_4 = arg_19_0:getById(iter_19_3.id)
+				for _, taskCo in pairs(taskCoList) do
+					local taskMo = self:getById(taskCo.id)
 
-					var_19_3 = var_19_4 and var_19_4.hasFinished
+					isAchievementFinish = taskMo and taskMo.hasFinished
 
-					if not var_19_3 then
+					if not isAchievementFinish then
 						break
 					end
 				end
 
-				var_19_1 = var_19_3
+				isAllAchievementsFinish = isAchievementFinish
 
-				if not var_19_3 then
+				if not isAchievementFinish then
 					break
 				end
 			end
 		end
 	end
 
-	return var_19_1
+	return isAllAchievementsFinish
 end
 
-function var_0_0.isAchievementFinished(arg_20_0, arg_20_1)
-	local var_20_0 = arg_20_0:getAchievementTaskCoList(arg_20_1)
+function AchievementModel:isAchievementFinished(achievementId)
+	local taskCoList = self:getAchievementTaskCoList(achievementId)
 
-	if var_20_0 then
-		for iter_20_0, iter_20_1 in ipairs(var_20_0) do
-			local var_20_1 = arg_20_0:getById(iter_20_1.id)
+	if taskCoList then
+		for _, taskCo in ipairs(taskCoList) do
+			local taskMo = self:getById(taskCo.id)
 
-			if not var_20_1 or not var_20_1.hasFinished then
+			if not taskMo or not taskMo.hasFinished then
 				return false
 			end
 		end
@@ -323,36 +327,36 @@ function var_0_0.isAchievementFinished(arg_20_0, arg_20_1)
 	end
 end
 
-function var_0_0.getGroupFinishTaskList(arg_21_0, arg_21_1)
-	local var_21_0 = AchievementConfig.instance:getAchievementsByGroupId(arg_21_1)
+function AchievementModel:getGroupFinishTaskList(groupId)
+	local achievementCfgs = AchievementConfig.instance:getAchievementsByGroupId(groupId)
 
-	if var_21_0 then
-		local var_21_1 = {}
+	if achievementCfgs then
+		local finishTaskList = {}
 
-		for iter_21_0, iter_21_1 in ipairs(var_21_0) do
-			local var_21_2 = AchievementConfig.instance:getTasksByAchievementId(iter_21_1.id)
+		for _, achievementCfg in ipairs(achievementCfgs) do
+			local taskCfgs = AchievementConfig.instance:getTasksByAchievementId(achievementCfg.id)
 
-			if var_21_2 then
-				for iter_21_2, iter_21_3 in ipairs(var_21_2) do
-					local var_21_3 = arg_21_0:getById(iter_21_3.id)
+			if taskCfgs then
+				for _, taskCfg in ipairs(taskCfgs) do
+					local taskMo = self:getById(taskCfg.id)
 
-					if var_21_3 and var_21_3.hasFinished then
-						table.insert(var_21_1, iter_21_3)
+					if taskMo and taskMo.hasFinished then
+						table.insert(finishTaskList, taskCfg)
 					end
 				end
 			end
 		end
 
-		return var_21_1
+		return finishTaskList
 	end
 end
 
-function var_0_0.isAchievementTaskFinished(arg_22_0, arg_22_1)
-	local var_22_0 = arg_22_0:getById(arg_22_1)
+function AchievementModel:isAchievementTaskFinished(taskId)
+	local taskMo = self:getById(taskId)
 
-	return var_22_0 and var_22_0.hasFinished
+	return taskMo and taskMo.hasFinished
 end
 
-var_0_0.instance = var_0_0.New()
+AchievementModel.instance = AchievementModel.New()
 
-return var_0_0
+return AchievementModel

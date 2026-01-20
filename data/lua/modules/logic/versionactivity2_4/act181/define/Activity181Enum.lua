@@ -1,20 +1,22 @@
-﻿module("modules.logic.versionactivity2_4.act181.define.Activity181Enum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/act181/define/Activity181Enum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity2_4.act181.define.Activity181Enum", package.seeall)
 
-var_0_0.BonusState = {
+local Activity181Enum = _M
+
+Activity181Enum.BonusState = {
 	Unlock = 0,
 	HaveGet = 1
 }
-var_0_0.SPBonusState = {
+Activity181Enum.SPBonusState = {
 	Locked = 0,
 	Unlock = 1,
 	HaveGet = 2
 }
-var_0_0.SPBonusUnlockType = {
+Activity181Enum.SPBonusUnlockType = {
 	Time = 1,
 	Count = 2,
 	HaveGet = 3
 }
 
-return var_0_0
+return Activity181Enum

@@ -1,366 +1,382 @@
-﻿module("modules.logic.versionactivity2_8.dungeonboss.view.VersionActivity2_8BossStorySceneView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/dungeonboss/view/VersionActivity2_8BossStorySceneView.lua
 
-local var_0_0 = class("VersionActivity2_8BossStorySceneView", BaseView)
+module("modules.logic.versionactivity2_8.dungeonboss.view.VersionActivity2_8BossStorySceneView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local VersionActivity2_8BossStorySceneView = class("VersionActivity2_8BossStorySceneView", BaseView)
+
+function VersionActivity2_8BossStorySceneView:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function VersionActivity2_8BossStorySceneView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function VersionActivity2_8BossStorySceneView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._gofullscreen = gohelper.findChild(arg_4_0.viewGO, "#go_fullscreen")
-	arg_4_0._tempVector = Vector3()
-	arg_4_0._dragDeltaPos = Vector3()
+function VersionActivity2_8BossStorySceneView:_editableInitView()
+	self._gofullscreen = gohelper.findChild(self.viewGO, "#go_fullscreen")
+	self._tempVector = Vector3()
+	self._dragDeltaPos = Vector3()
 
-	arg_4_0:_initMap()
-	arg_4_0:_initDrag()
+	self:_initMap()
+	self:_initDrag()
 end
 
-function var_0_0._initMap(arg_5_0)
-	local var_5_0 = CameraMgr.instance:getMainCameraTrs().parent
-	local var_5_1 = CameraMgr.instance:getSceneRoot()
+function VersionActivity2_8BossStorySceneView:_initMap()
+	local mainTrans = CameraMgr.instance:getMainCameraTrs().parent
+	local sceneRoot = CameraMgr.instance:getSceneRoot()
 
-	arg_5_0._sceneRoot = UnityEngine.GameObject.New("BossStoryScene")
+	self._sceneRoot = UnityEngine.GameObject.New("BossStoryScene")
 
-	local var_5_2, var_5_3, var_5_4 = transformhelper.getLocalPos(var_5_0)
+	local x, y, z = transformhelper.getLocalPos(mainTrans)
 
-	transformhelper.setLocalPos(arg_5_0._sceneRoot.transform, 0, var_5_3, 0)
-	gohelper.addChild(var_5_1, arg_5_0._sceneRoot)
+	transformhelper.setLocalPos(self._sceneRoot.transform, 0, y, 0)
+	gohelper.addChild(sceneRoot, self._sceneRoot)
 end
 
-function var_0_0._initDrag(arg_6_0)
-	arg_6_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_6_0._gofullscreen)
+function VersionActivity2_8BossStorySceneView:_initDrag()
+	self._drag = SLFramework.UGUI.UIDragListener.Get(self._gofullscreen)
 
-	arg_6_0._drag:AddDragBeginListener(arg_6_0._onDragBegin, arg_6_0)
-	arg_6_0._drag:AddDragEndListener(arg_6_0._onDragEnd, arg_6_0)
-	arg_6_0._drag:AddDragListener(arg_6_0._onDrag, arg_6_0)
+	self._drag:AddDragBeginListener(self._onDragBegin, self)
+	self._drag:AddDragEndListener(self._onDragEnd, self)
+	self._drag:AddDragListener(self._onDrag, self)
 end
 
-function var_0_0.getDragWorldPos(arg_7_0, arg_7_1)
-	local var_7_0 = CameraMgr.instance:getMainCamera()
-	local var_7_1 = arg_7_0._gofullscreen.transform.position
+function VersionActivity2_8BossStorySceneView:getDragWorldPos(pointerEventData)
+	local mainCamera = CameraMgr.instance:getMainCamera()
+	local refPos = self._gofullscreen.transform.position
+	local worldPos = SLFramework.UGUI.RectTrHelper.ScreenPosToWorldPos(pointerEventData.position, mainCamera, refPos)
 
-	return (SLFramework.UGUI.RectTrHelper.ScreenPosToWorldPos(arg_7_1.position, var_7_0, var_7_1))
+	return worldPos
 end
 
-function var_0_0._onDragBegin(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0._dragBeginPos = arg_8_0:getDragWorldPos(arg_8_2)
+function VersionActivity2_8BossStorySceneView:_onDragBegin(param, pointerEventData)
+	self._dragBeginPos = self:getDragWorldPos(pointerEventData)
 
-	if arg_8_0._sceneTrans then
-		arg_8_0._beginDragPos = arg_8_0._sceneTrans.localPosition
+	if self._sceneTrans then
+		self._beginDragPos = self._sceneTrans.localPosition
 	end
 end
 
-function var_0_0._onDragEnd(arg_9_0, arg_9_1, arg_9_2)
-	arg_9_0._dragBeginPos = nil
-	arg_9_0._beginDragPos = nil
+function VersionActivity2_8BossStorySceneView:_onDragEnd(param, pointerEventData)
+	self._dragBeginPos = nil
+	self._beginDragPos = nil
 end
 
-function var_0_0._onDrag(arg_10_0, arg_10_1, arg_10_2)
-	if not arg_10_0._dragBeginPos then
+function VersionActivity2_8BossStorySceneView:_onDrag(param, pointerEventData)
+	if not self._dragBeginPos then
 		return
 	end
 
-	local var_10_0 = arg_10_0:getDragWorldPos(arg_10_2) - arg_10_0._dragBeginPos
+	local deltaPos = self:getDragWorldPos(pointerEventData) - self._dragBeginPos
 
-	arg_10_0:drag(var_10_0)
+	self:drag(deltaPos)
 end
 
-function var_0_0.drag(arg_11_0, arg_11_1)
-	if not arg_11_0._sceneTrans or not arg_11_0._beginDragPos then
+function VersionActivity2_8BossStorySceneView:drag(deltaPos)
+	if not self._sceneTrans or not self._beginDragPos then
 		return
 	end
 
-	arg_11_0._dragDeltaPos.x = arg_11_1.x
-	arg_11_0._dragDeltaPos.y = arg_11_1.y
+	self._dragDeltaPos.x = deltaPos.x
+	self._dragDeltaPos.y = deltaPos.y
 
-	local var_11_0 = arg_11_0:vectorAdd(arg_11_0._beginDragPos, arg_11_0._dragDeltaPos)
+	local targetPos = self:vectorAdd(self._beginDragPos, self._dragDeltaPos)
 
-	arg_11_0:setScenePosSafety(var_11_0)
+	self:setScenePosSafety(targetPos)
 end
 
-function var_0_0.vectorAdd(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = arg_12_0._tempVector
+function VersionActivity2_8BossStorySceneView:vectorAdd(v1, v2)
+	local tempVector = self._tempVector
 
-	var_12_0.x = arg_12_1.x + arg_12_2.x
-	var_12_0.y = arg_12_1.y + arg_12_2.y
+	tempVector.x = v1.x + v2.x
+	tempVector.y = v1.y + v2.y
 
-	return var_12_0
+	return tempVector
 end
 
-function var_0_0._changeMap(arg_13_0, arg_13_1)
-	if not arg_13_1 then
+function VersionActivity2_8BossStorySceneView:_changeMap(mapCfg)
+	if not mapCfg then
 		logError("VersionActivity2_8BossStorySceneView mapCfg is nil")
 
 		return
 	end
 
-	if not arg_13_0._oldMapLoader and arg_13_0._sceneGo then
-		arg_13_0._oldMapLoader = arg_13_0._mapLoader
-		arg_13_0._oldSceneGo = arg_13_0._sceneGo
-		arg_13_0._mapLoader = nil
+	if not self._oldMapLoader and self._sceneGo then
+		self._oldMapLoader = self._mapLoader
+		self._oldSceneGo = self._sceneGo
+		self._mapLoader = nil
 	end
 
-	if arg_13_0._mapLoader then
-		arg_13_0._mapLoader:dispose()
+	if self._mapLoader then
+		self._mapLoader:dispose()
 
-		arg_13_0._mapLoader = nil
+		self._mapLoader = nil
 	end
 
-	arg_13_0._mapCfg = arg_13_1
-	arg_13_0._mapLoader = MultiAbLoader.New()
-	arg_13_0._sceneUrl = string.format("scenes/%s.prefab", arg_13_1.res)
+	self._mapCfg = mapCfg
+	self._mapLoader = MultiAbLoader.New()
+	self._sceneUrl = string.format("scenes/%s.prefab", mapCfg.res)
 
-	arg_13_0._mapLoader:addPath(arg_13_0._sceneUrl)
-	arg_13_0._mapLoader:startLoad(arg_13_0._loadSceneFinish, arg_13_0)
+	self._mapLoader:addPath(self._sceneUrl)
+	self._mapLoader:startLoad(self._loadSceneFinish, self)
 end
 
-function var_0_0._loadSceneFinish(arg_14_0)
-	arg_14_0:_disposeOldMap()
+function VersionActivity2_8BossStorySceneView:_loadSceneFinish()
+	self:_disposeOldMap()
 
-	local var_14_0 = arg_14_0._sceneUrl
-	local var_14_1 = arg_14_0._mapLoader:getAssetItem(var_14_0):GetResource(var_14_0)
+	local assetUrl = self._sceneUrl
+	local assetItem = self._mapLoader:getAssetItem(assetUrl)
+	local mainPrefab = assetItem:GetResource(assetUrl)
 
-	arg_14_0._sceneGo = gohelper.clone(var_14_1, arg_14_0._sceneRoot)
-	arg_14_0._sceneTrans = arg_14_0._sceneGo.transform
-	arg_14_0._animator = arg_14_0._sceneGo:GetComponent("Animator")
-	arg_14_0._animator.enabled = false
+	self._sceneGo = gohelper.clone(mainPrefab, self._sceneRoot)
+	self._sceneTrans = self._sceneGo.transform
+	self._animator = self._sceneGo:GetComponent("Animator")
+	self._animator.enabled = false
 
-	transformhelper.setLocalScale(arg_14_0._sceneTrans, VersionActivity2_8BossEnum.SceneNearScale, VersionActivity2_8BossEnum.SceneNearScale, VersionActivity2_8BossEnum.SceneNearScale)
-	MainCameraMgr.instance:addView(arg_14_0.viewName, arg_14_0._initCamera, nil, arg_14_0)
-	arg_14_0:_initScene()
+	transformhelper.setLocalScale(self._sceneTrans, VersionActivity2_8BossEnum.SceneNearScale, VersionActivity2_8BossEnum.SceneNearScale, VersionActivity2_8BossEnum.SceneNearScale)
+	MainCameraMgr.instance:addView(self.viewName, self._initCamera, nil, self)
+	self:_initScene()
 end
 
-function var_0_0._initCamera(arg_15_0)
-	local var_15_0 = CameraMgr.instance:getMainCamera()
+function VersionActivity2_8BossStorySceneView:_initCamera()
+	local camera = CameraMgr.instance:getMainCamera()
 
-	var_15_0.orthographic = true
-	var_15_0.orthographicSize = 5 * GameUtil.getAdapterScale()
+	camera.orthographic = true
+
+	local scale = GameUtil.getAdapterScale()
+
+	camera.orthographicSize = 5 * scale
 end
 
-function var_0_0._initScene(arg_16_0)
-	arg_16_0._mapSize = gohelper.findChild(arg_16_0._sceneGo, "root/size"):GetComponentInChildren(typeof(UnityEngine.BoxCollider)).size
+function VersionActivity2_8BossStorySceneView:_initScene()
+	local sizeGo = gohelper.findChild(self._sceneGo, "root/size")
+	local box = sizeGo:GetComponentInChildren(typeof(UnityEngine.BoxCollider))
 
-	local var_16_0 = arg_16_0._mapSize.x * VersionActivity2_8BossEnum.SceneNearScale
-	local var_16_1 = arg_16_0._mapSize.y * VersionActivity2_8BossEnum.SceneNearScale
-	local var_16_2
-	local var_16_3 = GameUtil.getAdapterScale()
+	self._mapSize = box.size
 
-	if var_16_3 ~= 1 then
-		var_16_2 = ViewMgr.instance:getUILayer(UILayerName.Hud)
+	local sizeX = self._mapSize.x * VersionActivity2_8BossEnum.SceneNearScale
+	local sizeY = self._mapSize.y * VersionActivity2_8BossEnum.SceneNearScale
+	local canvasGo
+	local scale = GameUtil.getAdapterScale()
+
+	if scale ~= 1 then
+		canvasGo = ViewMgr.instance:getUILayer(UILayerName.Hud)
 	else
-		var_16_2 = ViewMgr.instance:getUIRoot()
+		canvasGo = ViewMgr.instance:getUIRoot()
 	end
 
-	local var_16_4 = var_16_2.transform:GetWorldCorners()
-	local var_16_5 = var_16_4[1] * var_16_3
-	local var_16_6 = var_16_4[3] * var_16_3
+	local worldcorners = canvasGo.transform:GetWorldCorners()
+	local posTL = worldcorners[1] * scale
+	local posBR = worldcorners[3] * scale
 
-	arg_16_0._viewWidth = math.abs(var_16_6.x - var_16_5.x)
-	arg_16_0._viewHeight = math.abs(var_16_6.y - var_16_5.y)
-	arg_16_0._mapMinX = var_16_5.x - (var_16_0 - arg_16_0._viewWidth)
-	arg_16_0._mapMaxX = var_16_5.x
-	arg_16_0._mapMinY = var_16_5.y
-	arg_16_0._mapMaxY = var_16_5.y + (var_16_1 - arg_16_0._viewHeight)
+	self._viewWidth = math.abs(posBR.x - posTL.x)
+	self._viewHeight = math.abs(posBR.y - posTL.y)
+	self._mapMinX = posTL.x - (sizeX - self._viewWidth)
+	self._mapMaxX = posTL.x
+	self._mapMinY = posTL.y
+	self._mapMaxY = posTL.y + (sizeY - self._viewHeight)
 
-	arg_16_0:_setInitPos()
+	self:_setInitPos()
 end
 
-function var_0_0._getInitPos(arg_17_0)
-	if ViewMgr.instance:isOpen(ViewName.VersionActivity2_8BossStoryLoadingView) and arg_17_0._episodeId == VersionActivity2_8BossEnum.StoryBossSecondEpisode and not GuideController.instance:isForbidGuides() and not GuideModel.instance:isGuideFinish(VersionActivity2_8BossEnum.StoryBossSecondEpisodeGuideId) then
+function VersionActivity2_8BossStorySceneView:_getInitPos()
+	if ViewMgr.instance:isOpen(ViewName.VersionActivity2_8BossStoryLoadingView) and self._episodeId == VersionActivity2_8BossEnum.StoryBossSecondEpisode and not GuideController.instance:isForbidGuides() and not GuideModel.instance:isGuideFinish(VersionActivity2_8BossEnum.StoryBossSecondEpisodeGuideId) then
 		return "-31.5#14.4"
 	end
 
-	if arg_17_0._moveToTargetMap then
-		local var_17_0 = arg_17_0._moveToTargetMap
+	if self._moveToTargetMap then
+		local map = self._moveToTargetMap
 
-		arg_17_0._moveToTargetMap = nil
+		self._moveToTargetMap = nil
 
-		return var_17_0.initPos
+		return map.initPos
 	end
 
-	return arg_17_0._mapCfg.initPos
+	return self._mapCfg.initPos
 end
 
-function var_0_0._setInitPos(arg_18_0, arg_18_1)
-	if not arg_18_0._sceneTrans then
+function VersionActivity2_8BossStorySceneView:_setInitPos(tween)
+	if not self._sceneTrans then
 		return
 	end
 
-	local var_18_0 = arg_18_0:_getInitPos()
-	local var_18_1 = string.splitToNumber(var_18_0, "#")
+	local pos = self:_getInitPos()
+	local posParam = string.splitToNumber(pos, "#")
 
-	arg_18_0:setScenePosSafety(Vector3(var_18_1[1], var_18_1[2], 0), arg_18_1)
-	arg_18_0:_moveMapPos()
+	self:setScenePosSafety(Vector3(posParam[1], posParam[2], 0), tween)
+	self:_moveMapPos()
 end
 
-function var_0_0.setScenePosSafety(arg_19_0, arg_19_1, arg_19_2)
-	if not arg_19_0._sceneTrans then
+function VersionActivity2_8BossStorySceneView:setScenePosSafety(targetPos, tween)
+	if not self._sceneTrans then
 		return
 	end
 
-	if arg_19_1.x < arg_19_0._mapMinX then
-		arg_19_1.x = arg_19_0._mapMinX
-	elseif arg_19_1.x > arg_19_0._mapMaxX then
-		arg_19_1.x = arg_19_0._mapMaxX
+	if targetPos.x < self._mapMinX then
+		targetPos.x = self._mapMinX
+	elseif targetPos.x > self._mapMaxX then
+		targetPos.x = self._mapMaxX
 	end
 
-	if arg_19_1.y < arg_19_0._mapMinY then
-		arg_19_1.y = arg_19_0._mapMinY
-	elseif arg_19_1.y > arg_19_0._mapMaxY then
-		arg_19_1.y = arg_19_0._mapMaxY
+	if targetPos.y < self._mapMinY then
+		targetPos.y = self._mapMinY
+	elseif targetPos.y > self._mapMaxY then
+		targetPos.y = self._mapMaxY
 	end
 
-	arg_19_0._targetPos = arg_19_1
+	self._targetPos = targetPos
 
-	if arg_19_2 then
-		local var_19_0 = arg_19_0._tweenTime or 0.3
+	if tween then
+		local t = self._tweenTime or 0.3
 
-		arg_19_0._tweenTime = nil
+		self._tweenTime = nil
 
-		UIBlockHelper.instance:startBlock("VersionActivity2_8BossStorySceneView", var_19_0, arg_19_0.viewName)
-		ZProj.TweenHelper.DOLocalMove(arg_19_0._sceneTrans, arg_19_1.x, arg_19_1.y, 0, var_19_0, arg_19_0._localMoveDone, arg_19_0, nil, EaseType.InOutQuart)
+		UIBlockHelper.instance:startBlock("VersionActivity2_8BossStorySceneView", t, self.viewName)
+		ZProj.TweenHelper.DOLocalMove(self._sceneTrans, targetPos.x, targetPos.y, 0, t, self._localMoveDone, self, nil, EaseType.InOutQuart)
 	else
-		arg_19_0._sceneTrans.localPosition = arg_19_1
+		self._sceneTrans.localPosition = targetPos
 	end
 end
 
-function var_0_0._localMoveDone(arg_20_0)
+function VersionActivity2_8BossStorySceneView:_localMoveDone()
 	return
 end
 
-function var_0_0.setSceneVisible(arg_21_0, arg_21_1)
-	gohelper.setActive(arg_21_0._sceneRoot, arg_21_1 and true or false)
+function VersionActivity2_8BossStorySceneView:setSceneVisible(isVisible)
+	gohelper.setActive(self._sceneRoot, isVisible and true or false)
 end
 
-function var_0_0.onOpen(arg_22_0)
-	arg_22_0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_22_0._onScreenResize, arg_22_0)
-	arg_22_0:addEventCb(DungeonController.instance, DungeonEvent.BossStoryReset, arg_22_0._onBossStoryReset, arg_22_0)
-	arg_22_0:addEventCb(DungeonController.instance, DungeonEvent.BossStoryMoveMap, arg_22_0._onBossStoryMoveMap, arg_22_0)
-	arg_22_0:addEventCb(DungeonController.instance, DungeonEvent.BossStoryMoveMapAnim, arg_22_0._onBossStoryMoveMapAnim, arg_22_0)
-	arg_22_0:addEventCb(DungeonController.instance, DungeonEvent.BossStoryPreMoveMapPos, arg_22_0._onBossStoryPreMoveMapPos, arg_22_0)
-	arg_22_0:_startChangeMap()
+function VersionActivity2_8BossStorySceneView:onOpen()
+	self:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, self._onScreenResize, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.BossStoryReset, self._onBossStoryReset, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.BossStoryMoveMap, self._onBossStoryMoveMap, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.BossStoryMoveMapAnim, self._onBossStoryMoveMapAnim, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.BossStoryPreMoveMapPos, self._onBossStoryPreMoveMapPos, self)
+	self:_startChangeMap()
 end
 
-function var_0_0.getMap()
-	local var_23_0 = VersionActivity2_8BossModel.instance:getStoryBossCurEpisodeId()
-	local var_23_1 = VersionActivity2_8BossConfig.instance:getEpisodeMapId(var_23_0)
+function VersionActivity2_8BossStorySceneView.getMap()
+	local episodeId = VersionActivity2_8BossModel.instance:getStoryBossCurEpisodeId()
+	local mapId = VersionActivity2_8BossConfig.instance:getEpisodeMapId(episodeId)
+	local map = lua_chapter_map.configDict[mapId]
 
-	return lua_chapter_map.configDict[var_23_1], var_23_0
+	return map, episodeId
 end
 
-function var_0_0._startChangeMap(arg_24_0)
-	arg_24_0._map, arg_24_0._episodeId = var_0_0.getMap()
+function VersionActivity2_8BossStorySceneView:_startChangeMap()
+	self._map, self._episodeId = VersionActivity2_8BossStorySceneView.getMap()
 
-	if arg_24_0._map then
-		arg_24_0:_changeMap(arg_24_0._map)
+	if self._map then
+		self:_changeMap(self._map)
 	else
-		logError(string.format("map is not exist,episodeId:%s", arg_24_0._episodeId))
+		logError(string.format("map is not exist,episodeId:%s", self._episodeId))
 	end
 end
 
-function var_0_0._onScreenResize(arg_25_0)
-	if arg_25_0._sceneGo then
-		arg_25_0:_initScene()
+function VersionActivity2_8BossStorySceneView:_onScreenResize()
+	if self._sceneGo then
+		self:_initScene()
 	end
 end
 
-function var_0_0._onBossStoryMoveMap(arg_26_0, arg_26_1)
-	arg_26_0._tweenMapPosParam = string.splitToNumber(arg_26_1, "_")
+function VersionActivity2_8BossStorySceneView:_onBossStoryMoveMap(param)
+	local list = string.splitToNumber(param, "_")
 
-	arg_26_0:_moveMapPos()
+	self._tweenMapPosParam = list
+
+	self:_moveMapPos()
 end
 
-function var_0_0._onBossStoryMoveMapAnim(arg_27_0, arg_27_1)
-	arg_27_0._animator.enabled = true
+function VersionActivity2_8BossStorySceneView:_onBossStoryMoveMapAnim(param)
+	self._animator.enabled = true
 
-	arg_27_0._animator:Play(arg_27_1, 0, 0)
+	self._animator:Play(param, 0, 0)
 end
 
-function var_0_0._onBossStoryPreMoveMapPos(arg_28_0, arg_28_1)
+function VersionActivity2_8BossStorySceneView:_onBossStoryPreMoveMapPos(param)
 	if not ViewMgr.instance:isOpen(ViewName.VersionActivity2_8BossStoryLoadingView) then
 		return
 	end
 
-	local var_28_0 = tonumber(arg_28_1)
-	local var_28_1 = VersionActivity2_8BossConfig.instance:getEpisodeMapId(var_28_0)
+	local episodeId = tonumber(param)
+	local mapId = VersionActivity2_8BossConfig.instance:getEpisodeMapId(episodeId)
+	local map = lua_chapter_map.configDict[mapId]
 
-	arg_28_0._moveToTargetMap = lua_chapter_map.configDict[var_28_1]
+	self._moveToTargetMap = map
 
-	arg_28_0:_setInitPos()
+	self:_setInitPos()
 end
 
-function var_0_0._moveMapPos(arg_29_0)
-	if not arg_29_0._sceneTrans then
+function VersionActivity2_8BossStorySceneView:_moveMapPos()
+	if not self._sceneTrans then
 		return
 	end
 
-	if not arg_29_0._tweenMapPosParam then
+	if not self._tweenMapPosParam then
 		return
 	end
 
-	local var_29_0 = arg_29_0._tweenMapPosParam[1]
-	local var_29_1 = arg_29_0._tweenMapPosParam[2]
+	local fromEpisodeId = self._tweenMapPosParam[1]
+	local toEpisodeId = self._tweenMapPosParam[2]
+	local time = self._tweenMapPosParam[3]
 
-	arg_29_0._tweenTime, arg_29_0._tweenMapPosParam = arg_29_0._tweenMapPosParam[3]
+	self._tweenMapPosParam = nil
+	self._tweenTime = time
 
-	local var_29_2 = VersionActivity2_8BossConfig.instance:getEpisodeMapId(var_29_0)
-	local var_29_3 = lua_chapter_map.configDict[var_29_2]
-	local var_29_4 = VersionActivity2_8BossConfig.instance:getEpisodeMapId(var_29_1)
-	local var_29_5 = lua_chapter_map.configDict[var_29_4]
-	local var_29_6 = var_29_3.initPos
-	local var_29_7 = string.splitToNumber(var_29_6, "#")
+	local mapId = VersionActivity2_8BossConfig.instance:getEpisodeMapId(fromEpisodeId)
+	local map = lua_chapter_map.configDict[mapId]
+	local mapId2 = VersionActivity2_8BossConfig.instance:getEpisodeMapId(toEpisodeId)
+	local map2 = lua_chapter_map.configDict[mapId2]
+	local pos = map.initPos
+	local posParam = string.splitToNumber(pos, "#")
 
-	arg_29_0:setScenePosSafety(Vector3(var_29_7[1], var_29_7[2], 0))
+	self:setScenePosSafety(Vector3(posParam[1], posParam[2], 0))
 
-	local var_29_8 = var_29_5.initPos
-	local var_29_9 = string.splitToNumber(var_29_8, "#")
+	local pos2 = map2.initPos
+	local posParam2 = string.splitToNumber(pos2, "#")
 
-	arg_29_0:setScenePosSafety(Vector3(var_29_9[1], var_29_9[2], 0), true)
+	self:setScenePosSafety(Vector3(posParam2[1], posParam2[2], 0), true)
 end
 
-function var_0_0._onBossStoryReset(arg_30_0)
-	arg_30_0:_startChangeMap()
+function VersionActivity2_8BossStorySceneView:_onBossStoryReset()
+	self:_startChangeMap()
 end
 
-function var_0_0._disposeOldMap(arg_31_0)
-	if arg_31_0._oldSceneGo then
-		gohelper.destroy(arg_31_0._oldSceneGo)
+function VersionActivity2_8BossStorySceneView:_disposeOldMap()
+	if self._oldSceneGo then
+		gohelper.destroy(self._oldSceneGo)
 
-		arg_31_0._oldSceneGo = nil
+		self._oldSceneGo = nil
 	end
 
-	if arg_31_0._oldMapLoader then
-		arg_31_0._oldMapLoader:dispose()
+	if self._oldMapLoader then
+		self._oldMapLoader:dispose()
 
-		arg_31_0._oldMapLoader = nil
+		self._oldMapLoader = nil
 	end
 end
 
-function var_0_0.onClose(arg_32_0)
-	gohelper.destroy(arg_32_0._sceneRoot)
+function VersionActivity2_8BossStorySceneView:onClose()
+	gohelper.destroy(self._sceneRoot)
 
-	if arg_32_0._mapLoader then
-		arg_32_0._mapLoader:dispose()
+	if self._mapLoader then
+		self._mapLoader:dispose()
 	end
 
-	arg_32_0:_disposeOldMap()
-	arg_32_0._drag:RemoveDragBeginListener()
-	arg_32_0._drag:RemoveDragListener()
-	arg_32_0._drag:RemoveDragEndListener()
+	self:_disposeOldMap()
+	self._drag:RemoveDragBeginListener()
+	self._drag:RemoveDragListener()
+	self._drag:RemoveDragEndListener()
 end
 
-function var_0_0.onDestroyView(arg_33_0)
+function VersionActivity2_8BossStorySceneView:onDestroyView()
 	return
 end
 
-return var_0_0
+return VersionActivity2_8BossStorySceneView

@@ -1,252 +1,254 @@
-﻿module("modules.logic.versionactivity2_6.dicehero.view.DiceHeroDiceBoxItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/dicehero/view/DiceHeroDiceBoxItem.lua
 
-local var_0_0 = class("DiceHeroDiceBoxItem", LuaCompBase)
+module("modules.logic.versionactivity2_6.dicehero.view.DiceHeroDiceBoxItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._parentView = arg_1_1
+local DiceHeroDiceBoxItem = class("DiceHeroDiceBoxItem", LuaCompBase)
+
+function DiceHeroDiceBoxItem:ctor(parentView)
+	self._parentView = parentView
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0._goreroll = gohelper.findChild(arg_2_1, "#go_reroll")
-	arg_2_0._goend = gohelper.findChild(arg_2_1, "#go_end")
-	arg_2_0._godices = gohelper.findChild(arg_2_1, "dices")
-	arg_2_0._btnreroll = gohelper.findChildButtonWithAudio(arg_2_1, "#go_reroll/#btn_reroll")
-	arg_2_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_2_1, "#go_reroll/#btn_confirm")
-	arg_2_0._goconfirmeffect = gohelper.findChild(arg_2_1, "#go_reroll/#btn_confirm/#hint")
-	arg_2_0._btnskip = gohelper.findChildButtonWithAudio(arg_2_1, "#go_reroll/#btn_skip")
-	arg_2_0._btnend = gohelper.findChildButtonWithAudio(arg_2_1, "#go_end/#btn_endround")
-	arg_2_0._goendeffect = gohelper.findChild(arg_2_1, "#go_end/#btn_endround/#hint")
-	arg_2_0._btnusecard = gohelper.findChildButtonWithAudio(arg_2_1, "#go_end/#btn_usecard")
-	arg_2_0._txtrollnum = gohelper.findChildTextMesh(arg_2_1, "#go_reroll/#btn_reroll/#txt_rollnum")
-	arg_2_0._selectDict = {}
-	arg_2_0._dices = {}
+function DiceHeroDiceBoxItem:init(go)
+	self._goreroll = gohelper.findChild(go, "#go_reroll")
+	self._goend = gohelper.findChild(go, "#go_end")
+	self._godices = gohelper.findChild(go, "dices")
+	self._btnreroll = gohelper.findChildButtonWithAudio(go, "#go_reroll/#btn_reroll")
+	self._btnconfirm = gohelper.findChildButtonWithAudio(go, "#go_reroll/#btn_confirm")
+	self._goconfirmeffect = gohelper.findChild(go, "#go_reroll/#btn_confirm/#hint")
+	self._btnskip = gohelper.findChildButtonWithAudio(go, "#go_reroll/#btn_skip")
+	self._btnend = gohelper.findChildButtonWithAudio(go, "#go_end/#btn_endround")
+	self._goendeffect = gohelper.findChild(go, "#go_end/#btn_endround/#hint")
+	self._btnusecard = gohelper.findChildButtonWithAudio(go, "#go_end/#btn_usecard")
+	self._txtrollnum = gohelper.findChildTextMesh(go, "#go_reroll/#btn_reroll/#txt_rollnum")
+	self._selectDict = {}
+	self._dices = {}
 
-	local var_2_0 = arg_2_0._parentView.viewContainer._viewSetting.otherRes.diceitem
+	local diceitemPath = self._parentView.viewContainer._viewSetting.otherRes.diceitem
 
-	for iter_2_0 = 1, 12 do
-		local var_2_1 = gohelper.findChild(arg_2_0._godices, tostring(iter_2_0))
-		local var_2_2 = gohelper.findChildButton(var_2_1, "")
-		local var_2_3 = arg_2_0._parentView:getResInst(var_2_0, var_2_1)
+	for i = 1, 12 do
+		local diceGo = gohelper.findChild(self._godices, tostring(i))
+		local btn = gohelper.findChildButton(diceGo, "")
+		local instGo = self._parentView:getResInst(diceitemPath, diceGo)
 
-		arg_2_0._dices[iter_2_0] = MonoHelper.addNoUpdateLuaComOnceToGo(var_2_3, DiceHeroDiceItem, {
-			index = iter_2_0
+		self._dices[i] = MonoHelper.addNoUpdateLuaComOnceToGo(instGo, DiceHeroDiceItem, {
+			index = i
 		})
 
-		arg_2_0:addClickCb(var_2_2, arg_2_0._onDiceClick, arg_2_0, iter_2_0)
+		self:addClickCb(btn, self._onDiceClick, self, i)
 	end
 
-	local var_2_4 = DiceHeroModel.instance.lastEnterLevelId
-	local var_2_5 = lua_dice_level.configDict[var_2_4]
+	local lastEnterLevelId = DiceHeroModel.instance.lastEnterLevelId
+	local co = lua_dice_level.configDict[lastEnterLevelId]
 
-	if var_2_5 then
-		local var_2_6 = DiceHeroModel.instance:getGameInfo(var_2_5.chapter)
+	if co then
+		local gameInfo = DiceHeroModel.instance:getGameInfo(co.chapter)
 
-		if var_2_6.currLevel ~= var_2_4 or var_2_6.allPass then
-			gohelper.setActive(arg_2_0._btnskip, true)
+		if gameInfo.currLevel ~= lastEnterLevelId or gameInfo.allPass then
+			gohelper.setActive(self._btnskip, true)
 		else
-			gohelper.setActive(arg_2_0._btnskip, false)
+			gohelper.setActive(self._btnskip, false)
 		end
 	else
-		gohelper.setActive(arg_2_0._btnskip, false)
+		gohelper.setActive(self._btnskip, false)
 	end
 
-	arg_2_0:onProgressUpdate()
-	arg_2_0:updateRollNum()
+	self:onProgressUpdate()
+	self:updateRollNum()
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	arg_3_0._btnreroll:AddClickListener(arg_3_0._onClickReroll, arg_3_0)
-	arg_3_0._btnconfirm:AddClickListener(arg_3_0._onClickConfirm, arg_3_0)
-	arg_3_0._btnend:AddClickListener(arg_3_0._onClickEnd, arg_3_0)
-	arg_3_0._btnskip:AddClickListener(arg_3_0._onClickSkip, arg_3_0)
-	arg_3_0._btnusecard:AddClickListener(arg_3_0._onClickUseCard, arg_3_0)
-	DiceHeroController.instance:registerCallback(DiceHeroEvent.ConfirmDice, arg_3_0.onProgressUpdate, arg_3_0)
-	DiceHeroController.instance:registerCallback(DiceHeroEvent.StepEnd, arg_3_0.onStepEnd, arg_3_0)
-	DiceHeroController.instance:registerCallback(DiceHeroEvent.SkillCardSelectChange, arg_3_0.onSkillCardSelectChange, arg_3_0)
-	DiceHeroController.instance:registerCallback(DiceHeroEvent.SkillCardDiceChange, arg_3_0.updateUseCardStatu, arg_3_0)
+function DiceHeroDiceBoxItem:addEventListeners()
+	self._btnreroll:AddClickListener(self._onClickReroll, self)
+	self._btnconfirm:AddClickListener(self._onClickConfirm, self)
+	self._btnend:AddClickListener(self._onClickEnd, self)
+	self._btnskip:AddClickListener(self._onClickSkip, self)
+	self._btnusecard:AddClickListener(self._onClickUseCard, self)
+	DiceHeroController.instance:registerCallback(DiceHeroEvent.ConfirmDice, self.onProgressUpdate, self)
+	DiceHeroController.instance:registerCallback(DiceHeroEvent.StepEnd, self.onStepEnd, self)
+	DiceHeroController.instance:registerCallback(DiceHeroEvent.SkillCardSelectChange, self.onSkillCardSelectChange, self)
+	DiceHeroController.instance:registerCallback(DiceHeroEvent.SkillCardDiceChange, self.updateUseCardStatu, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	arg_4_0._btnreroll:RemoveClickListener()
-	arg_4_0._btnconfirm:RemoveClickListener()
-	arg_4_0._btnend:RemoveClickListener()
-	arg_4_0._btnskip:RemoveClickListener()
-	arg_4_0._btnusecard:RemoveClickListener()
-	DiceHeroController.instance:unregisterCallback(DiceHeroEvent.ConfirmDice, arg_4_0.onProgressUpdate, arg_4_0)
-	DiceHeroController.instance:unregisterCallback(DiceHeroEvent.StepEnd, arg_4_0.onStepEnd, arg_4_0)
-	DiceHeroController.instance:unregisterCallback(DiceHeroEvent.SkillCardSelectChange, arg_4_0.onSkillCardSelectChange, arg_4_0)
-	DiceHeroController.instance:unregisterCallback(DiceHeroEvent.SkillCardDiceChange, arg_4_0.updateUseCardStatu, arg_4_0)
+function DiceHeroDiceBoxItem:removeEventListeners()
+	self._btnreroll:RemoveClickListener()
+	self._btnconfirm:RemoveClickListener()
+	self._btnend:RemoveClickListener()
+	self._btnskip:RemoveClickListener()
+	self._btnusecard:RemoveClickListener()
+	DiceHeroController.instance:unregisterCallback(DiceHeroEvent.ConfirmDice, self.onProgressUpdate, self)
+	DiceHeroController.instance:unregisterCallback(DiceHeroEvent.StepEnd, self.onStepEnd, self)
+	DiceHeroController.instance:unregisterCallback(DiceHeroEvent.SkillCardSelectChange, self.onSkillCardSelectChange, self)
+	DiceHeroController.instance:unregisterCallback(DiceHeroEvent.SkillCardDiceChange, self.updateUseCardStatu, self)
 end
 
-function var_0_0.onStepEnd(arg_5_0, arg_5_1)
-	for iter_5_0 = 1, 12 do
-		arg_5_0._dices[iter_5_0]:onStepEnd(arg_5_1)
+function DiceHeroDiceBoxItem:onStepEnd(isFirst)
+	for i = 1, 12 do
+		self._dices[i]:onStepEnd(isFirst)
 	end
 
-	arg_5_0:onProgressUpdate()
-	arg_5_0:updateRollNum()
-	arg_5_0:checkEndEffect()
+	self:onProgressUpdate()
+	self:updateRollNum()
+	self:checkEndEffect()
 
-	local var_5_0 = DiceHeroFightModel.instance:getGameData()
+	local gameData = DiceHeroFightModel.instance:getGameData()
 
-	if var_5_0.diceBox.resetTimes <= 0 and not var_5_0.confirmed and DiceHeroFightModel.instance.finishResult == DiceHeroEnum.GameStatu.None then
-		arg_5_0:_onClickConfirm()
-	end
-end
-
-function var_0_0.startRoll(arg_6_0)
-	arg_6_0._selectDict = {}
-
-	for iter_6_0 = 1, 12 do
-		arg_6_0._dices[iter_6_0]:startRoll()
+	if gameData.diceBox.resetTimes <= 0 and not gameData.confirmed and DiceHeroFightModel.instance.finishResult == DiceHeroEnum.GameStatu.None then
+		self:_onClickConfirm()
 	end
 end
 
-function var_0_0.updateRollNum(arg_7_0)
-	local var_7_0 = DiceHeroFightModel.instance:getGameData().diceBox
+function DiceHeroDiceBoxItem:startRoll()
+	self._selectDict = {}
 
-	if var_7_0.resetTimes > 0 then
-		arg_7_0._txtrollnum.text = var_7_0.resetTimes .. "/" .. var_7_0.maxResetTimes
+	for i = 1, 12 do
+		self._dices[i]:startRoll()
+	end
+end
+
+function DiceHeroDiceBoxItem:updateRollNum()
+	local diceBox = DiceHeroFightModel.instance:getGameData().diceBox
+
+	if diceBox.resetTimes > 0 then
+		self._txtrollnum.text = diceBox.resetTimes .. "/" .. diceBox.maxResetTimes
 	else
-		arg_7_0._txtrollnum.text = "<color=#cd5353>" .. var_7_0.resetTimes .. "</color>/" .. var_7_0.maxResetTimes
+		self._txtrollnum.text = "<color=#cd5353>" .. diceBox.resetTimes .. "</color>/" .. diceBox.maxResetTimes
 	end
 
-	gohelper.setActive(arg_7_0._goconfirmeffect, var_7_0.resetTimes <= 0)
+	gohelper.setActive(self._goconfirmeffect, diceBox.resetTimes <= 0)
 end
 
-function var_0_0.onProgressUpdate(arg_8_0)
-	local var_8_0 = DiceHeroFightModel.instance:getGameData()
+function DiceHeroDiceBoxItem:onProgressUpdate()
+	local gameData = DiceHeroFightModel.instance:getGameData()
 
-	gohelper.setActive(arg_8_0._goreroll, not var_8_0.confirmed)
-	gohelper.setActive(arg_8_0._goend, var_8_0.confirmed)
+	gohelper.setActive(self._goreroll, not gameData.confirmed)
+	gohelper.setActive(self._goend, gameData.confirmed)
 
-	if var_8_0.confirmed then
-		arg_8_0:checkEndEffect()
+	if gameData.confirmed then
+		self:checkEndEffect()
 	end
 end
 
-function var_0_0.checkEndEffect(arg_9_0)
-	local var_9_0 = true
-	local var_9_1 = DiceHeroFightModel.instance:getGameData()
+function DiceHeroDiceBoxItem:checkEndEffect()
+	local isAllCardCantUse = true
+	local gameData = DiceHeroFightModel.instance:getGameData()
 
-	for iter_9_0, iter_9_1 in pairs(var_9_1.skillCards) do
-		if iter_9_1:canSelect() then
-			var_9_0 = false
+	for k, cardMo in pairs(gameData.skillCards) do
+		if cardMo:canSelect() then
+			isAllCardCantUse = false
 
 			break
 		end
 	end
 
-	gohelper.setActive(arg_9_0._goendeffect, var_9_0)
+	gohelper.setActive(self._goendeffect, isAllCardCantUse)
 end
 
-function var_0_0._onDiceClick(arg_10_0, arg_10_1)
+function DiceHeroDiceBoxItem:_onDiceClick(index)
 	if DiceHeroHelper.instance:isInFlow() then
 		return
 	end
 
-	local var_10_0 = arg_10_0._dices[arg_10_1].diceMo
+	local diceMo = self._dices[index].diceMo
 
-	if not var_10_0 or var_10_0.deleted then
+	if not diceMo or diceMo.deleted then
 		return
 	end
 
-	local var_10_1 = DiceHeroFightModel.instance:getGameData()
-	local var_10_2 = var_10_1.curSelectCardMo
+	local gameInfo = DiceHeroFightModel.instance:getGameData()
+	local curCardMo = gameInfo.curSelectCardMo
 
-	if not var_10_1.confirmed then
-		if var_10_0.status ~= DiceHeroEnum.DiceStatu.Normal then
+	if not gameInfo.confirmed then
+		if diceMo.status ~= DiceHeroEnum.DiceStatu.Normal then
 			return
 		end
 
-		if arg_10_0._selectDict[arg_10_1] then
-			arg_10_0._selectDict[arg_10_1] = nil
+		if self._selectDict[index] then
+			self._selectDict[index] = nil
 
-			arg_10_0._dices[arg_10_1]:setSelect(false)
+			self._dices[index]:setSelect(false)
 			AudioMgr.instance:trigger(AudioEnum2_6.DiceHero.play_ui_wenming_cardunready)
 		else
-			arg_10_0._selectDict[arg_10_1] = true
+			self._selectDict[index] = true
 
-			arg_10_0._dices[arg_10_1]:setSelect(true)
+			self._dices[index]:setSelect(true)
 			AudioMgr.instance:trigger(AudioEnum2_6.DiceHero.play_ui_wenming_cardready)
 		end
 	else
-		if not var_10_2 then
+		if not curCardMo then
 			return
 		end
 
-		if var_10_0.status == DiceHeroEnum.DiceStatu.HardLock then
+		if diceMo.status == DiceHeroEnum.DiceStatu.HardLock then
 			return
 		end
 
-		if arg_10_0._selectDict[arg_10_1] then
-			var_10_2:removeDice(var_10_0.uid)
-		elseif not var_10_2:addDice(var_10_0.uid) then
+		if self._selectDict[index] then
+			curCardMo:removeDice(diceMo.uid)
+		elseif not curCardMo:addDice(diceMo.uid) then
 			return
 		end
 
-		if arg_10_0._selectDict[arg_10_1] then
-			arg_10_0._selectDict[arg_10_1] = nil
+		if self._selectDict[index] then
+			self._selectDict[index] = nil
 
 			AudioMgr.instance:trigger(AudioEnum2_6.DiceHero.play_ui_wenming_cardunready)
 		else
-			arg_10_0._selectDict[arg_10_1] = true
+			self._selectDict[index] = true
 
 			AudioMgr.instance:trigger(AudioEnum2_6.DiceHero.play_ui_wenming_cardready)
 		end
 
-		local var_10_3 = var_10_2:getCanUseDiceUidDict()
+		local canUseDict = curCardMo:getCanUseDiceUidDict()
 
-		for iter_10_0 = 1, 12 do
-			if arg_10_0._dices[iter_10_0].diceMo and not arg_10_0._dices[iter_10_0].diceMo.deleted then
-				if arg_10_0._selectDict[iter_10_0] then
-					arg_10_0._dices[iter_10_0]:setSelect(true)
+		for i = 1, 12 do
+			if self._dices[i].diceMo and not self._dices[i].diceMo.deleted then
+				if self._selectDict[i] then
+					self._dices[i]:setSelect(true)
 				else
-					arg_10_0._dices[iter_10_0]:setSelect(false, var_10_3[arg_10_0._dices[iter_10_0].diceMo.uid] and true or false)
+					self._dices[i]:setSelect(false, canUseDict[self._dices[i].diceMo.uid] and true or false)
 				end
 			end
 		end
 	end
 end
 
-function var_0_0._onClickUseCard(arg_11_0)
-	local var_11_0 = DiceHeroFightModel.instance:getGameData()
-	local var_11_1 = var_11_0.curSelectCardMo
+function DiceHeroDiceBoxItem:_onClickUseCard()
+	local gameInfo = DiceHeroFightModel.instance:getGameData()
+	local curSelectSkillCard = gameInfo.curSelectCardMo
 
-	if not var_11_1 then
+	if not curSelectSkillCard then
 		return
 	end
 
-	local var_11_2, var_11_3 = var_11_1:canUse()
+	local pattern, diceUids = curSelectSkillCard:canUse()
 
-	if not var_11_2 then
+	if not pattern then
 		return
 	end
 
-	local var_11_4 = var_11_0.curSelectEnemyMo and var_11_0.curSelectEnemyMo.uid or ""
+	local toId = gameInfo.curSelectEnemyMo and gameInfo.curSelectEnemyMo.uid or ""
 
-	DiceHeroRpc.instance:sendDiceHeroUseSkill(DiceHeroEnum.SkillType.Normal, var_11_1.skillId, var_11_4, var_11_3, var_11_2 > 0 and var_11_2 - 1 or var_11_2)
+	DiceHeroRpc.instance:sendDiceHeroUseSkill(DiceHeroEnum.SkillType.Normal, curSelectSkillCard.skillId, toId, diceUids, pattern > 0 and pattern - 1 or pattern)
 end
 
-function var_0_0.onSkillCardSelectChange(arg_12_0)
-	local var_12_0 = DiceHeroFightModel.instance:getGameData()
+function DiceHeroDiceBoxItem:onSkillCardSelectChange()
+	local gameInfo = DiceHeroFightModel.instance:getGameData()
 
-	if not var_12_0.confirmed then
+	if not gameInfo.confirmed then
 		return
 	end
 
-	arg_12_0._selectDict = {}
+	self._selectDict = {}
 
-	local var_12_1 = var_12_0.curSelectCardMo
+	local curCardMo = gameInfo.curSelectCardMo
 
-	if var_12_1 then
-		local var_12_2, var_12_3 = var_12_1:isMatchMin(true)
+	if curCardMo then
+		local isMatch, minMatchList = curCardMo:isMatchMin(true)
 
-		if var_12_2 then
-			for iter_12_0, iter_12_1 in ipairs(var_12_3) do
-				for iter_12_2 = 1, 12 do
-					if arg_12_0._dices[iter_12_2].diceMo and arg_12_0._dices[iter_12_2].diceMo.uid == iter_12_1 and var_12_1:addDice(iter_12_1) then
-						arg_12_0._selectDict[iter_12_2] = true
+		if isMatch then
+			for _, uid in ipairs(minMatchList) do
+				for i = 1, 12 do
+					if self._dices[i].diceMo and self._dices[i].diceMo.uid == uid and curCardMo:addDice(uid) then
+						self._selectDict[i] = true
 
 						break
 					end
@@ -255,135 +257,137 @@ function var_0_0.onSkillCardSelectChange(arg_12_0)
 		end
 	end
 
-	local var_12_4 = var_12_1 and var_12_1:getCanUseDiceUidDict()
+	local canUseDict = curCardMo and curCardMo:getCanUseDiceUidDict()
 
-	for iter_12_3 = 1, 12 do
-		if arg_12_0._dices[iter_12_3].diceMo and not arg_12_0._dices[iter_12_3].diceMo.deleted then
-			local var_12_5
+	for i = 1, 12 do
+		if self._dices[i].diceMo and not self._dices[i].diceMo.deleted then
+			local isCanUse
 
-			if var_12_4 then
-				var_12_5 = var_12_4[arg_12_0._dices[iter_12_3].diceMo.uid] and true or false
+			if canUseDict then
+				isCanUse = canUseDict[self._dices[i].diceMo.uid] and true or false
 			end
 
-			if arg_12_0._selectDict[iter_12_3] then
-				arg_12_0._dices[iter_12_3]:setSelect(true)
+			if self._selectDict[i] then
+				self._dices[i]:setSelect(true)
 			else
-				arg_12_0._dices[iter_12_3]:setSelect(false, var_12_5)
+				self._dices[i]:setSelect(false, isCanUse)
 			end
 		end
 	end
 
-	arg_12_0:updateUseCardStatu()
+	self:updateUseCardStatu()
 end
 
-function var_0_0.updateUseCardStatu(arg_13_0)
-	gohelper.setActive(arg_13_0._btnusecard, false)
+function DiceHeroDiceBoxItem:updateUseCardStatu()
+	gohelper.setActive(self._btnusecard, false)
 
 	do return end
 
-	local var_13_0 = DiceHeroFightModel.instance:getGameData().curSelectCardMo
+	local curSelectSkillCard = DiceHeroFightModel.instance:getGameData().curSelectCardMo
 
-	if not var_13_0 then
-		gohelper.setActive(arg_13_0._btnusecard, false)
+	if not curSelectSkillCard then
+		gohelper.setActive(self._btnusecard, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_13_0._btnusecard, true)
+	gohelper.setActive(self._btnusecard, true)
 
-	local var_13_1 = var_13_0:canUse() and true or false
+	local canUse = curSelectSkillCard:canUse() and true or false
 
-	ZProj.UGUIHelper.SetGrayscale(arg_13_0._btnusecard.gameObject, not var_13_1)
+	ZProj.UGUIHelper.SetGrayscale(self._btnusecard.gameObject, not canUse)
 end
 
-function var_0_0._onClickReroll(arg_14_0)
+function DiceHeroDiceBoxItem:_onClickReroll()
 	if DiceHeroHelper.instance:isInFlow() then
 		return
 	end
 
-	if DiceHeroFightModel.instance:getGameData().diceBox.resetTimes <= 0 then
+	local diceBox = DiceHeroFightModel.instance:getGameData().diceBox
+
+	if diceBox.resetTimes <= 0 then
 		GameFacade.showToast(ToastEnum.DiceHeroDiceNoResetCount)
 
 		return
 	end
 
-	local var_14_0 = {}
+	local uids = {}
 
-	for iter_14_0 in pairs(arg_14_0._selectDict) do
-		local var_14_1 = DiceHeroFightModel.instance:getGameData().diceBox.dices[iter_14_0]
+	for index in pairs(self._selectDict) do
+		local diceMo = DiceHeroFightModel.instance:getGameData().diceBox.dices[index]
 
-		table.insert(var_14_0, var_14_1.uid)
+		table.insert(uids, diceMo.uid)
 	end
 
-	if not var_14_0[1] then
+	if not uids[1] then
 		GameFacade.showToast(ToastEnum.DiceHeroNoSelectDice)
 
 		return
 	end
 
-	DiceHeroRpc.instance:sendDiceHeroResetDice(var_14_0, arg_14_0._onReroll, arg_14_0)
+	DiceHeroRpc.instance:sendDiceHeroResetDice(uids, self._onReroll, self)
 end
 
-function var_0_0._onClickConfirm(arg_15_0)
+function DiceHeroDiceBoxItem:_onClickConfirm()
 	if DiceHeroHelper.instance:isInFlow() then
 		return
 	end
 
-	DiceHeroRpc.instance:sendDiceHeroConfirmDice(arg_15_0._onConfirmEnd, arg_15_0)
+	DiceHeroRpc.instance:sendDiceHeroConfirmDice(self._onConfirmEnd, self)
 end
 
-function var_0_0._onConfirmEnd(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
-	if arg_16_2 ~= 0 then
+function DiceHeroDiceBoxItem:_onConfirmEnd(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	arg_16_0:onSkillCardSelectChange()
+	self:onSkillCardSelectChange()
 end
 
-function var_0_0._onClickEnd(arg_17_0)
+function DiceHeroDiceBoxItem:_onClickEnd()
 	if DiceHeroHelper.instance:isInFlow() then
 		return
 	end
 
 	DiceHeroRpc.instance:sendDiceHeroEndRound()
-	gohelper.setActive(arg_17_0._goend, false)
+	gohelper.setActive(self._goend, false)
 end
 
-function var_0_0._onClickSkip(arg_18_0)
-	MessageBoxController.instance:showMsgBox(MessageBoxIdDefine.DiceHeroSkipFight, MsgBoxEnum.BoxType.Yes_No, arg_18_0._closeGameView, nil, nil, arg_18_0)
+function DiceHeroDiceBoxItem:_onClickSkip()
+	MessageBoxController.instance:showMsgBox(MessageBoxIdDefine.DiceHeroSkipFight, MsgBoxEnum.BoxType.Yes_No, self._closeGameView, nil, nil, self)
 end
 
-function var_0_0._closeGameView(arg_19_0)
+function DiceHeroDiceBoxItem:_closeGameView()
 	ViewMgr.instance:closeView(ViewName.DiceHeroGameView)
 end
 
-function var_0_0._onReroll(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
-	if arg_20_2 ~= 0 then
+function DiceHeroDiceBoxItem:_onReroll(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	DiceHeroFightModel.instance:getGameData().diceBox:init(arg_20_3.diceBox)
+	DiceHeroFightModel.instance:getGameData().diceBox:init(msg.diceBox)
 	DiceHeroFightModel.instance:getGameData():onStepEnd()
-	arg_20_0:updateRollNum()
+	self:updateRollNum()
 	UIBlockHelper.instance:startBlock("DiceHeroDiceBoxItem_reroll", 0.6)
 
-	for iter_20_0 = 1, 12 do
-		arg_20_0._dices[iter_20_0]:setSelect(false)
+	for i = 1, 12 do
+		self._dices[i]:setSelect(false)
 
-		if arg_20_0._selectDict[iter_20_0] then
-			local var_20_0 = DiceHeroFightModel.instance:getGameData().diceBox.dices[iter_20_0]
+		if self._selectDict[i] then
+			local diceMo = DiceHeroFightModel.instance:getGameData().diceBox.dices[i]
 
-			arg_20_0._dices[iter_20_0]:playRefresh(var_20_0)
+			self._dices[i]:playRefresh(diceMo)
 		end
 	end
 
-	arg_20_0._selectDict = {}
+	self._selectDict = {}
 
 	DiceHeroController.instance:dispatchEvent(DiceHeroEvent.RerollDice)
 end
 
-function var_0_0.onDestroy(arg_21_0)
+function DiceHeroDiceBoxItem:onDestroy()
 	return
 end
 
-return var_0_0
+return DiceHeroDiceBoxItem

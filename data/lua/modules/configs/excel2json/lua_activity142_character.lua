@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_activity142_character", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_activity142_character.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_activity142_character", package.seeall)
+
+local lua_activity142_character = {}
+local fields = {
 	activityId = 1,
 	canTriggerPedal = 3,
 	canUseFireball = 5,
@@ -9,14 +11,14 @@ local var_0_1 = {
 	characterType = 2,
 	canLightBrazier = 4
 }
-local var_0_2 = {
+local primaryKey = {
 	"activityId",
 	"characterType"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_activity142_character.onLoad(json)
+	lua_activity142_character.configList, lua_activity142_character.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_activity142_character

@@ -1,104 +1,111 @@
-﻿module("modules.logic.store.model.StoreCritterGoodsItemListModel", package.seeall)
+﻿-- chunkname: @modules/logic/store/model/StoreCritterGoodsItemListModel.lua
 
-local var_0_0 = class("StoreCritterGoodsItemListModel", ListScrollModel)
+module("modules.logic.store.model.StoreCritterGoodsItemListModel", package.seeall)
 
-function var_0_0.setMOList(arg_1_0, arg_1_1)
-	local var_1_0 = StoreModel.instance:getStoreMO(arg_1_1)
+local StoreCritterGoodsItemListModel = class("StoreCritterGoodsItemListModel", ListScrollModel)
 
-	if var_1_0 then
-		arg_1_0._moList = var_1_0:getGoodsList()
+function StoreCritterGoodsItemListModel:setMOList(storeId)
+	local storeMo = StoreModel.instance:getStoreMO(storeId)
 
-		if #arg_1_0._moList > 1 then
-			table.sort(arg_1_0._moList, arg_1_0._sortFunction)
+	if storeMo then
+		self._moList = storeMo:getGoodsList()
+
+		if #self._moList > 1 then
+			table.sort(self._moList, self._sortFunction)
 		end
 
-		arg_1_0:setList(arg_1_0._moList)
+		self:setList(self._moList)
 	end
 end
 
-function var_0_0._sortFunction(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_0:getIsActGoods()
+function StoreCritterGoodsItemListModel._sortFunction(x, y)
+	local xIsActGoods = x:getIsActGoods()
+	local yIsActGoods = y:getIsActGoods()
 
-	if var_2_0 ~= arg_2_1:getIsActGoods() then
-		return var_2_0
+	if xIsActGoods ~= yIsActGoods then
+		return xIsActGoods
 	end
 
-	if var_2_0 then
-		return arg_2_0:getActGoodsId() < arg_2_1:getActGoodsId()
+	if xIsActGoods then
+		local xActGoodsId = x:getActGoodsId()
+		local yActGoodsId = y:getActGoodsId()
+
+		return xActGoodsId < yActGoodsId
 	end
 
-	local var_2_1 = StoreConfig.instance:getGoodsConfig(arg_2_0.goodsId)
-	local var_2_2 = StoreConfig.instance:getGoodsConfig(arg_2_1.goodsId)
-	local var_2_3 = var_0_0._isStoreItemCountLimit(arg_2_0)
-	local var_2_4 = var_0_0._isStoreItemCountLimit(arg_2_1)
+	local xConfig = StoreConfig.instance:getGoodsConfig(x.goodsId)
+	local yConfig = StoreConfig.instance:getGoodsConfig(y.goodsId)
+	local xCountLimit = StoreCritterGoodsItemListModel._isStoreItemCountLimit(x)
+	local yCountLimit = StoreCritterGoodsItemListModel._isStoreItemCountLimit(y)
 
-	if var_2_3 and not var_2_4 then
+	if xCountLimit and not yCountLimit then
 		return false
-	elseif not var_2_3 and var_2_4 then
+	elseif not xCountLimit and yCountLimit then
 		return true
 	end
 
-	local var_2_5 = var_0_0._isStoreItemSoldOut(arg_2_0.goodsId)
-	local var_2_6 = var_0_0._isStoreItemSoldOut(arg_2_1.goodsId)
-	local var_2_7 = var_0_0._isStoreItemUnlock(arg_2_0.goodsId)
-	local var_2_8 = var_0_0._isStoreItemUnlock(arg_2_1.goodsId)
+	local xSoldOut = StoreCritterGoodsItemListModel._isStoreItemSoldOut(x.goodsId)
+	local ySoldOut = StoreCritterGoodsItemListModel._isStoreItemSoldOut(y.goodsId)
+	local xUnlock = StoreCritterGoodsItemListModel._isStoreItemUnlock(x.goodsId)
+	local yUnlock = StoreCritterGoodsItemListModel._isStoreItemUnlock(y.goodsId)
 
-	if not var_2_5 and var_2_6 then
+	if not xSoldOut and ySoldOut then
 		return true
-	elseif var_2_5 and not var_2_6 then
+	elseif xSoldOut and not ySoldOut then
 		return false
 	end
 
-	local var_2_9 = arg_2_0:alreadyHas()
-	local var_2_10 = arg_2_1:alreadyHas()
+	local xHas = x:alreadyHas()
+	local yHas = y:alreadyHas()
 
-	if var_2_9 ~= var_2_10 then
-		return var_2_10
+	if xHas ~= yHas then
+		return yHas
 	end
 
-	if var_2_7 and not var_2_8 then
+	if xUnlock and not yUnlock then
 		return true
-	elseif not var_2_7 and var_2_8 then
+	elseif not xUnlock and yUnlock then
 		return false
 	end
 
-	local var_2_11 = var_0_0.needWeekWalkLayerUnlock(arg_2_0.goodsId)
+	local xWeekWalkLock = StoreCritterGoodsItemListModel.needWeekWalkLayerUnlock(x.goodsId)
+	local yWeekWalkLock = StoreCritterGoodsItemListModel.needWeekWalkLayerUnlock(y.goodsId)
 
-	if var_2_11 ~= var_0_0.needWeekWalkLayerUnlock(arg_2_1.goodsId) then
-		if var_2_11 then
+	if xWeekWalkLock ~= yWeekWalkLock then
+		if xWeekWalkLock then
 			return false
 		end
 
 		return true
 	end
 
-	if var_2_1.order < var_2_2.order then
+	if xConfig.order < yConfig.order then
 		return true
-	elseif var_2_1.order > var_2_2.order then
+	elseif xConfig.order > yConfig.order then
 		return false
 	end
 
-	if var_2_1.id < var_2_2.id then
+	if xConfig.id < yConfig.id then
 		return true
-	elseif var_2_1.id > var_2_2.id then
+	elseif xConfig.id > yConfig.id then
 		return false
 	end
 end
 
-function var_0_0._isStoreItemUnlock(arg_3_0)
-	local var_3_0 = StoreConfig.instance:getGoodsConfig(arg_3_0).needEpisodeId
+function StoreCritterGoodsItemListModel._isStoreItemUnlock(goodsId)
+	local episodeId = StoreConfig.instance:getGoodsConfig(goodsId).needEpisodeId
 
-	if not var_3_0 or var_3_0 == 0 then
+	if not episodeId or episodeId == 0 then
 		return true
 	end
 
-	return DungeonModel.instance:hasPassLevelAndStory(var_3_0)
+	return DungeonModel.instance:hasPassLevelAndStory(episodeId)
 end
 
-function var_0_0.needWeekWalkLayerUnlock(arg_4_0)
-	local var_4_0 = StoreConfig.instance:getGoodsConfig(arg_4_0).needWeekwalkLayer
+function StoreCritterGoodsItemListModel.needWeekWalkLayerUnlock(goodsId)
+	local needWeekwalkLayer = StoreConfig.instance:getGoodsConfig(goodsId).needWeekwalkLayer
 
-	if var_4_0 <= 0 then
+	if needWeekwalkLayer <= 0 then
 		return false
 	end
 
@@ -106,30 +113,36 @@ function var_0_0.needWeekWalkLayerUnlock(arg_4_0)
 		return true
 	end
 
-	return var_4_0 > WeekWalkModel.instance:getMaxLayerId()
+	local maxLayer = WeekWalkModel.instance:getMaxLayerId()
+
+	return maxLayer < needWeekwalkLayer
 end
 
-function var_0_0._isStoreItemSoldOut(arg_5_0)
-	return StoreModel.instance:getGoodsMO(arg_5_0):isSoldOut()
+function StoreCritterGoodsItemListModel._isStoreItemSoldOut(goodsId)
+	local mo = StoreModel.instance:getGoodsMO(goodsId)
+
+	return mo:isSoldOut()
 end
 
-function var_0_0._isStoreItemCountLimit(arg_6_0)
-	local var_6_0 = arg_6_0:getLimitSoldNum()
+function StoreCritterGoodsItemListModel._isStoreItemCountLimit(goodItemMo)
+	local limitNum = goodItemMo:getLimitSoldNum()
 
-	if not var_6_0 or var_6_0 == 0 then
+	if not limitNum or limitNum == 0 then
 		return false
 	end
 
-	local var_6_1 = arg_6_0.config.product
-	local var_6_2 = GameUtil.splitString2(var_6_1, true)
-	local var_6_3 = var_6_2[1][1]
-	local var_6_4 = var_6_2[1][2]
+	local product = goodItemMo.config.product
+	local productArr = GameUtil.splitString2(product, true)
+	local itemType = productArr[1][1]
+	local itemId = productArr[1][2]
 
-	if var_6_3 == MaterialEnum.MaterialType.Equip then
-		return var_6_0 <= EquipModel.instance:getEquipQuantity(var_6_4)
+	if itemType == MaterialEnum.MaterialType.Equip then
+		local hasEquipNum = EquipModel.instance:getEquipQuantity(itemId)
+
+		return limitNum <= hasEquipNum
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+StoreCritterGoodsItemListModel.instance = StoreCritterGoodsItemListModel.New()
 
-return var_0_0
+return StoreCritterGoodsItemListModel

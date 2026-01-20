@@ -1,588 +1,602 @@
-﻿module("modules.logic.room.view.RoomBuildingItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomBuildingItem.lua
 
-local var_0_0 = class("RoomBuildingItem", ListScrollCellExtend)
+module("modules.logic.room.view.RoomBuildingItem", package.seeall)
 
-var_0_0.DRAG_RADIUS = 15
+local RoomBuildingItem = class("RoomBuildingItem", ListScrollCellExtend)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#go_content")
-	arg_1_0._imagerare = gohelper.findChildImage(arg_1_0.viewGO, "#go_content/#image_rare")
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_content/#simage_icon")
-	arg_1_0._txtcount = gohelper.findChildText(arg_1_0.viewGO, "#go_content/#txt_count")
-	arg_1_0._txtbuildingname = gohelper.findChildText(arg_1_0.viewGO, "#go_content/#txt_buildingname")
-	arg_1_0._imagearea = gohelper.findChildImage(arg_1_0.viewGO, "#go_content/#image_area")
-	arg_1_0._gogroupres = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_groupres")
-	arg_1_0._imageres = gohelper.findChildImage(arg_1_0.viewGO, "#go_content/#go_groupres/#image_res")
-	arg_1_0._txtaddvalue = gohelper.findChildText(arg_1_0.viewGO, "#go_content/#txt_addvalue")
-	arg_1_0._txtcostres = gohelper.findChildText(arg_1_0.viewGO, "#go_content/#txt_costres")
-	arg_1_0._imagecostresicon = gohelper.findChildImage(arg_1_0.viewGO, "#go_content/#txt_costres/#image_costresicon")
-	arg_1_0._buildingusedesc = gohelper.findChildText(arg_1_0.viewGO, "#go_content/#txt_buildingusedesc")
-	arg_1_0._imagebuildingtype = gohelper.findChildImage(arg_1_0.viewGO, "#go_content/#image_buildingtype")
-	arg_1_0._txtcritternum = gohelper.findChildText(arg_1_0.viewGO, "#go_content/#txt_critternum")
-	arg_1_0._simagebuilddegree = gohelper.findChildImage(arg_1_0.viewGO, "#go_content/#txt_addvalue/#simage_builddegree")
-	arg_1_0._gobeplaced = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_beplaced")
-	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_select")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_content/#btn_click")
-	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_reddot")
-	arg_1_0._govehicle = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_vehicle")
-	arg_1_0._goneed2buy = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_need2buy")
-	arg_1_0._gocostitem = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_need2buy/go_costcontent/#go_costitem")
+RoomBuildingItem.DRAG_RADIUS = 15
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomBuildingItem:onInitView()
+	self._gocontent = gohelper.findChild(self.viewGO, "#go_content")
+	self._imagerare = gohelper.findChildImage(self.viewGO, "#go_content/#image_rare")
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "#go_content/#simage_icon")
+	self._txtcount = gohelper.findChildText(self.viewGO, "#go_content/#txt_count")
+	self._txtbuildingname = gohelper.findChildText(self.viewGO, "#go_content/#txt_buildingname")
+	self._imagearea = gohelper.findChildImage(self.viewGO, "#go_content/#image_area")
+	self._gogroupres = gohelper.findChild(self.viewGO, "#go_content/#go_groupres")
+	self._imageres = gohelper.findChildImage(self.viewGO, "#go_content/#go_groupres/#image_res")
+	self._txtaddvalue = gohelper.findChildText(self.viewGO, "#go_content/#txt_addvalue")
+	self._txtcostres = gohelper.findChildText(self.viewGO, "#go_content/#txt_costres")
+	self._imagecostresicon = gohelper.findChildImage(self.viewGO, "#go_content/#txt_costres/#image_costresicon")
+	self._buildingusedesc = gohelper.findChildText(self.viewGO, "#go_content/#txt_buildingusedesc")
+	self._imagebuildingtype = gohelper.findChildImage(self.viewGO, "#go_content/#image_buildingtype")
+	self._txtcritternum = gohelper.findChildText(self.viewGO, "#go_content/#txt_critternum")
+	self._simagebuilddegree = gohelper.findChildImage(self.viewGO, "#go_content/#txt_addvalue/#simage_builddegree")
+	self._gobeplaced = gohelper.findChild(self.viewGO, "#go_content/#go_beplaced")
+	self._goselect = gohelper.findChild(self.viewGO, "#go_content/#go_select")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "#go_content/#btn_click")
+	self._goreddot = gohelper.findChild(self.viewGO, "#go_content/#go_reddot")
+	self._govehicle = gohelper.findChild(self.viewGO, "#go_content/#go_vehicle")
+	self._goneed2buy = gohelper.findChild(self.viewGO, "#go_content/#go_need2buy")
+	self._gocostitem = gohelper.findChild(self.viewGO, "#go_content/#go_need2buy/go_costcontent/#go_costitem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RoomBuildingItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RoomBuildingItem:removeEvents()
 	return
 end
 
-function var_0_0.addEventListeners(arg_4_0)
-	arg_4_0._btnUIlongPrees:SetLongPressTime(arg_4_0._longPressArr)
-	arg_4_0._btnUIlongPrees:AddLongPressListener(arg_4_0._onbtnlongPrees, arg_4_0)
-	arg_4_0._btnUIclick:AddClickListener(arg_4_0._btnclickOnClick, arg_4_0)
+function RoomBuildingItem:addEventListeners()
+	self._btnUIlongPrees:SetLongPressTime(self._longPressArr)
+	self._btnUIlongPrees:AddLongPressListener(self._onbtnlongPrees, self)
+	self._btnUIclick:AddClickListener(self._btnclickOnClick, self)
 
-	if arg_4_0._btnUIdrag then
-		arg_4_0._btnUIdrag:AddDragBeginListener(arg_4_0._onDragBegin, arg_4_0)
-		arg_4_0._btnUIdrag:AddDragListener(arg_4_0._onDragIng, arg_4_0)
-		arg_4_0._btnUIdrag:AddDragEndListener(arg_4_0._onDragEnd, arg_4_0)
+	if self._btnUIdrag then
+		self._btnUIdrag:AddDragBeginListener(self._onDragBegin, self)
+		self._btnUIdrag:AddDragListener(self._onDragIng, self)
+		self._btnUIdrag:AddDragEndListener(self._onDragEnd, self)
 	end
 end
 
-function var_0_0.removeEventListeners(arg_5_0)
-	arg_5_0._btnUIlongPrees:RemoveLongPressListener()
-	arg_5_0._btnUIclick:RemoveClickListener()
+function RoomBuildingItem:removeEventListeners()
+	self._btnUIlongPrees:RemoveLongPressListener()
+	self._btnUIclick:RemoveClickListener()
 
-	if arg_5_0._btnUIdrag then
-		arg_5_0._btnUIdrag:RemoveDragBeginListener()
-		arg_5_0._btnUIdrag:RemoveDragListener()
-		arg_5_0._btnUIdrag:RemoveDragEndListener()
+	if self._btnUIdrag then
+		self._btnUIdrag:RemoveDragBeginListener()
+		self._btnUIdrag:RemoveDragListener()
+		self._btnUIdrag:RemoveDragEndListener()
 	end
 end
 
-function var_0_0._btnclickOnClick(arg_6_0)
-	if arg_6_0._scene.camera:isTweening() or arg_6_0:_cancelTouch() then
+function RoomBuildingItem:_btnclickOnClick()
+	if self._scene.camera:isTweening() or self:_cancelTouch() then
 		return
 	end
 
-	arg_6_0:_hideReddot()
+	self:_hideReddot()
 
-	local var_6_0 = arg_6_0._mo.uids[1]
+	local uid = self._mo.uids[1]
 
 	if RoomHelper.isFSMState(RoomEnum.FSMObState.Idle) or RoomHelper.isFSMState(RoomEnum.FSMObState.PlaceBuildingConfirm) or RoomHelper.isFSMState(RoomEnum.FSMEditState.Idle) or RoomHelper.isFSMState(RoomEnum.FSMEditState.PlaceBuildingConfirm) then
-		local var_6_1 = RoomMapBuildingModel.instance:getTempBuildingMO()
+		local tempBuildingMO = RoomMapBuildingModel.instance:getTempBuildingMO()
 
-		if var_6_1 and var_6_1.id == var_6_0 then
-			arg_6_0._scene.fsm:triggerEvent(RoomSceneEvent.TryPlaceBuilding, {
+		if tempBuildingMO and tempBuildingMO.id == uid then
+			self._scene.fsm:triggerEvent(RoomSceneEvent.TryPlaceBuilding, {
 				focus = true,
-				buildingUid = var_6_0
+				buildingUid = uid
 			})
 
 			return
 		end
 
-		if arg_6_0._mo.use then
-			local var_6_2 = var_6_0 and RoomMapBuildingModel.instance:getBuildingMOById(var_6_0)
+		if self._mo.use then
+			local buildingMO = uid and RoomMapBuildingModel.instance:getBuildingMOById(uid)
 
-			arg_6_0._scene.fsm:triggerEvent(RoomSceneEvent.TryPlaceBuilding, {
-				buildingUid = var_6_0,
-				hexPoint = var_6_2.hexPoint,
-				rotate = var_6_2.rotate
+			self._scene.fsm:triggerEvent(RoomSceneEvent.TryPlaceBuilding, {
+				buildingUid = uid,
+				hexPoint = buildingMO.hexPoint,
+				rotate = buildingMO.rotate
 			})
-			arg_6_0:_playPlaceAudio(var_6_2)
+			self:_playPlaceAudio(buildingMO)
 		else
-			local var_6_3 = arg_6_0._scene.camera:getCameraRotate() * Mathf.Rad2Deg
-			local var_6_4 = RoomRotateHelper.getCameraNearRotate(var_6_3)
-			local var_6_5 = var_6_0 and RoomInventoryBuildingModel.instance:getBuildingMOById(var_6_0)
-			local var_6_6 = var_6_4 + RoomConfig.instance:getBuildingConfig(var_6_5.buildingId).rotate
-			local var_6_7 = arg_6_0:_getRecommendHexPoint(var_6_5, var_6_6)
-			local var_6_8 = var_6_7 and var_6_7.hexPoint or arg_6_0:_findNearHexPoint()
-			local var_6_9 = var_6_7 and var_6_7.rotate or var_6_6
+			local nearRotate = self._scene.camera:getCameraRotate()
+			local rotation = nearRotate * Mathf.Rad2Deg
 
-			if not var_6_7 then
-				local var_6_10, var_6_11 = RoomBuildingAreaHelper.checkBuildingArea(var_6_5.buildingId, var_6_8, var_6_9)
+			nearRotate = RoomRotateHelper.getCameraNearRotate(rotation)
 
-				if var_6_11 == RoomBuildingEnum.ConfirmPlaceBuildingErrorCode.NoAreaMainBuilding then
+			local buildingMO = uid and RoomInventoryBuildingModel.instance:getBuildingMOById(uid)
+			local buildingConfig = RoomConfig.instance:getBuildingConfig(buildingMO.buildingId)
+
+			nearRotate = nearRotate + buildingConfig.rotate
+
+			local bestPositionParam = self:_getRecommendHexPoint(buildingMO, nearRotate)
+			local hexPoint = bestPositionParam and bestPositionParam.hexPoint or self:_findNearHexPoint()
+			local rotate = bestPositionParam and bestPositionParam.rotate or nearRotate
+
+			if not bestPositionParam then
+				local success, errorCode = RoomBuildingAreaHelper.checkBuildingArea(buildingMO.buildingId, hexPoint, rotate)
+
+				if errorCode == RoomBuildingEnum.ConfirmPlaceBuildingErrorCode.NoAreaMainBuilding then
 					GameFacade.showToast(ToastEnum.NoAreaMainBuilding)
-				elseif var_6_11 == RoomBuildingEnum.ConfirmPlaceBuildingErrorCode.OutSizeAreaBuilding then
+				elseif errorCode == RoomBuildingEnum.ConfirmPlaceBuildingErrorCode.OutSizeAreaBuilding then
 					GameFacade.showToast(ToastEnum.OutSizeAreaBuilding)
 				else
 					GameFacade.showToast(ToastEnum.RoomBuilding)
 				end
 			end
 
-			local var_6_12 = {
-				buildingUid = var_6_0,
-				hexPoint = var_6_8,
-				rotate = var_6_9
+			local param = {
+				buildingUid = uid,
+				hexPoint = hexPoint,
+				rotate = rotate
 			}
 
 			TaskDispatcher.runDelay(function()
-				GameSceneMgr.instance:getCurScene().fsm:triggerEvent(RoomSceneEvent.TryPlaceBuilding, var_6_12)
-			end, arg_6_0, 0.05)
-			arg_6_0:_playPlaceAudio(var_6_5)
+				local scene = GameSceneMgr.instance:getCurScene()
+
+				scene.fsm:triggerEvent(RoomSceneEvent.TryPlaceBuilding, param)
+			end, self, 0.05)
+			self:_playPlaceAudio(buildingMO)
 		end
 	end
 
-	RoomShowBuildingListModel.instance:setSelect(arg_6_0._mo.id)
+	RoomShowBuildingListModel.instance:setSelect(self._mo.id)
 end
 
-function var_0_0._playPlaceAudio(arg_8_0, arg_8_1)
-	if arg_8_1 then
-		local var_8_0 = arg_8_1:getPlaceAudioId(true)
+function RoomBuildingItem:_playPlaceAudio(buildingMO)
+	if buildingMO then
+		local placeAudio = buildingMO:getPlaceAudioId(true)
 
-		if var_8_0 ~= 0 then
-			AudioMgr.instance:trigger(var_8_0)
+		if placeAudio ~= 0 then
+			AudioMgr.instance:trigger(placeAudio)
 		end
 	end
 end
 
-function var_0_0._findNearHexPoint(arg_9_0)
-	local var_9_0 = arg_9_0._scene.camera:getCameraFocus()
-	local var_9_1 = HexMath.positionToRoundHex(var_9_0, RoomBlockEnum.BlockSize)
+function RoomBuildingItem:_findNearHexPoint()
+	local vector2 = self._scene.camera:getCameraFocus()
+	local hexPoint = HexMath.positionToRoundHex(vector2, RoomBlockEnum.BlockSize)
 
-	return RoomBuildingHelper.findNearBlockHexPoint(var_9_1, arg_9_0._mo.id) or var_9_1
+	return RoomBuildingHelper.findNearBlockHexPoint(hexPoint, self._mo.id) or hexPoint
 end
 
-function var_0_0._getRecommendHexPoint(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = arg_10_1.config
-	local var_10_1
+function RoomBuildingItem:_getRecommendHexPoint(buildingMO, nearRotate)
+	local config = buildingMO.config
+	local bestPositionParam
 
-	if var_10_0.vehicleType ~= 0 then
-		var_10_1 = arg_10_0:_getVehicleHexPoint(arg_10_1, arg_10_2)
+	if config.vehicleType ~= 0 then
+		bestPositionParam = self:_getVehicleHexPoint(buildingMO, nearRotate)
 	end
 
-	return var_10_1 or RoomBuildingHelper.getRecommendHexPoint(arg_10_1.buildingId, nil, nil, arg_10_1.levels, arg_10_2)
+	return bestPositionParam or RoomBuildingHelper.getRecommendHexPoint(buildingMO.buildingId, nil, nil, buildingMO.levels, nearRotate)
 end
 
-function var_0_0._getVehicleHexPoint(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = arg_11_1.config
-	local var_11_1 = RoomConfig.instance:getVehicleConfig(var_11_0.vehicleId)
+function RoomBuildingItem:_getVehicleHexPoint(buildingMO, nearRotate)
+	local config = buildingMO.config
+	local vehicleCfg = RoomConfig.instance:getVehicleConfig(config.vehicleId)
 
-	if not var_11_1 then
+	if not vehicleCfg then
 		return nil
 	end
 
-	local var_11_2 = RoomConfig.instance:getResourceConfig(var_11_1.resId)
-	local var_11_3 = var_11_2 and var_11_2.numLimit or 2
-	local var_11_4 = RoomResourceHelper.getResourcePointAreaMODict(nil, {
-		var_11_1.resId
-	})[var_11_1.resId]
-
-	if not var_11_4 then
-		return nil
-	end
-
-	local var_11_5 = var_11_4:findeArea()
-	local var_11_6 = {}
-
-	for iter_11_0, iter_11_1 in ipairs(var_11_5) do
-		if var_11_3 <= arg_11_0:_getNumByResourcePointList(iter_11_1) then
-			tabletool.addValues(var_11_6, iter_11_1)
-		end
-	end
-
-	if #var_11_6 > 0 then
-		return arg_11_0:_getHexPointByResourcePoint(arg_11_1, arg_11_2, var_11_6)
-	end
-end
-
-function var_0_0._getNumByResourcePointList(arg_12_0, arg_12_1)
-	local var_12_0 = {}
-	local var_12_1 = 0
-	local var_12_2 = RoomResourceModel.instance
-
-	for iter_12_0, iter_12_1 in ipairs(arg_12_1) do
-		local var_12_3 = var_12_2:getIndexByXY(iter_12_1.x, iter_12_1.y)
-
-		if not var_12_0[var_12_3] then
-			var_12_1 = var_12_1 + 1
-			var_12_0[var_12_3] = true
-		end
-	end
-
-	return var_12_1
-end
-
-function var_0_0._getHexPointByResourcePoint(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	local var_13_0 = {}
-	local var_13_1 = RoomMapBlockModel.instance:getBlockMODict()
-
-	for iter_13_0, iter_13_1 in ipairs(arg_13_3) do
-		local var_13_2 = iter_13_1.x
-		local var_13_3 = iter_13_1.y
-
-		if not var_13_0[var_13_2] then
-			var_13_0[var_13_2] = {}
-		end
-
-		var_13_0[var_13_2][var_13_3] = var_13_1[var_13_2][var_13_3]
-	end
-
-	return RoomBuildingHelper.getRecommendHexPoint(arg_13_1.buildingId, var_13_0, nil, arg_13_1.levels, arg_13_2)
-end
-
-function var_0_0._starDragBuilding(arg_14_0)
-	arg_14_0._isStarDrag = true
-
-	arg_14_0._scene.touch:setUIDragScreenScroll(true)
-
-	local var_14_0 = arg_14_0._mo.uids[1]
-	local var_14_1 = RoomMapBuildingModel.instance:getBuildingMOById(var_14_0) or RoomInventoryBuildingModel.instance:getBuildingMOById(var_14_0)
-
-	arg_14_0._scene.fsm:triggerEvent(RoomSceneEvent.TryPlaceBuilding, {
-		press = true,
-		buildingUid = var_14_0,
-		hexPoint = RoomBendingHelper.screenPosToHex(GamepadController.instance:getMousePosition()),
-		rotate = var_14_1 and var_14_1.rotate or 0
+	local resCfg = RoomConfig.instance:getResourceConfig(vehicleCfg.resId)
+	local numLimit = resCfg and resCfg.numLimit or 2
+	local dic = RoomResourceHelper.getResourcePointAreaMODict(nil, {
+		vehicleCfg.resId
 	})
-	RoomMapController.instance:dispatchEvent(RoomEvent.TouchPressBuilding, GamepadController.instance:getMousePosition(), var_14_0)
-	arg_14_0:_hideReddot()
-end
+	local mo = dic[vehicleCfg.resId]
 
-function var_0_0._onbtnlongPrees(arg_15_0)
-	if arg_15_0._scene.camera:isTweening() or not arg_15_0._mo or arg_15_0._mo.use then
-		return
+	if not mo then
+		return nil
 	end
 
-	if arg_15_0:_cancelTouch() then
-		return
-	end
-end
+	local areaList = mo:findeArea()
+	local allResPointList = {}
 
-function var_0_0._onDragBegin(arg_16_0, arg_16_1, arg_16_2)
-	arg_16_0._isDragBeginOp = true
-	arg_16_0._dragBginePosition = arg_16_2.position
+	for i, resourcePointList in ipairs(areaList) do
+		local num = self:_getNumByResourcePointList(resourcePointList)
 
-	RoomBuildingController.instance:dispatchEvent(RoomEvent.BuildingListOnDragBeginListener, arg_16_2)
-end
-
-function var_0_0._onDragIng(arg_17_0, arg_17_1, arg_17_2)
-	if not arg_17_0._isDragBeginOp then
-		return
-	end
-
-	if not arg_17_0._isStarDrag then
-		local var_17_0 = arg_17_2.position.y
-
-		if var_17_0 - arg_17_0._dragBginePosition.y > 50 and var_17_0 > arg_17_0._buildingDragStarY then
-			arg_17_0:_starDragBuilding()
+		if numLimit <= num then
+			tabletool.addValues(allResPointList, resourcePointList)
 		end
 	end
 
-	if arg_17_0._isStarDrag then
-		RoomMapController.instance:dispatchEvent(RoomEvent.TouchPressBuilding, arg_17_2.position)
+	if #allResPointList > 0 then
+		return self:_getHexPointByResourcePoint(buildingMO, nearRotate, allResPointList)
+	end
+end
+
+function RoomBuildingItem:_getNumByResourcePointList(resourcePointList)
+	local tempDic = {}
+	local count = 0
+	local tRoomResourceModel = RoomResourceModel.instance
+
+	for _, resourcePoint in ipairs(resourcePointList) do
+		local index = tRoomResourceModel:getIndexByXY(resourcePoint.x, resourcePoint.y)
+
+		if not tempDic[index] then
+			count = count + 1
+			tempDic[index] = true
+		end
+	end
+
+	return count
+end
+
+function RoomBuildingItem:_getHexPointByResourcePoint(buildingMO, nearRotate, resourcePointList)
+	local tempDic = {}
+	local mapBlockMODict = RoomMapBlockModel.instance:getBlockMODict()
+
+	for _, resourcePoint in ipairs(resourcePointList) do
+		local x = resourcePoint.x
+		local y = resourcePoint.y
+
+		if not tempDic[x] then
+			tempDic[x] = {}
+		end
+
+		tempDic[x][y] = mapBlockMODict[x][y]
+	end
+
+	return RoomBuildingHelper.getRecommendHexPoint(buildingMO.buildingId, tempDic, nil, buildingMO.levels, nearRotate)
+end
+
+function RoomBuildingItem:_starDragBuilding()
+	self._isStarDrag = true
+
+	self._scene.touch:setUIDragScreenScroll(true)
+
+	local uid = self._mo.uids[1]
+	local buildingMO = RoomMapBuildingModel.instance:getBuildingMOById(uid) or RoomInventoryBuildingModel.instance:getBuildingMOById(uid)
+
+	self._scene.fsm:triggerEvent(RoomSceneEvent.TryPlaceBuilding, {
+		press = true,
+		buildingUid = uid,
+		hexPoint = RoomBendingHelper.screenPosToHex(GamepadController.instance:getMousePosition()),
+		rotate = buildingMO and buildingMO.rotate or 0
+	})
+	RoomMapController.instance:dispatchEvent(RoomEvent.TouchPressBuilding, GamepadController.instance:getMousePosition(), uid)
+	self:_hideReddot()
+end
+
+function RoomBuildingItem:_onbtnlongPrees()
+	if self._scene.camera:isTweening() or not self._mo or self._mo.use then
+		return
+	end
+
+	if self:_cancelTouch() then
+		return
+	end
+end
+
+function RoomBuildingItem:_onDragBegin(param, pointerEventData)
+	self._isDragBeginOp = true
+	self._dragBginePosition = pointerEventData.position
+
+	RoomBuildingController.instance:dispatchEvent(RoomEvent.BuildingListOnDragBeginListener, pointerEventData)
+end
+
+function RoomBuildingItem:_onDragIng(param, pointerEventData)
+	if not self._isDragBeginOp then
+		return
+	end
+
+	if not self._isStarDrag then
+		local mosuePositionY = pointerEventData.position.y
+		local disValue = mosuePositionY - self._dragBginePosition.y
+
+		if disValue > 50 and mosuePositionY > self._buildingDragStarY then
+			self:_starDragBuilding()
+		end
+	end
+
+	if self._isStarDrag then
+		RoomMapController.instance:dispatchEvent(RoomEvent.TouchPressBuilding, pointerEventData.position)
 	else
-		RoomBuildingController.instance:dispatchEvent(RoomEvent.BuildingListOnDragListener, arg_17_2)
+		RoomBuildingController.instance:dispatchEvent(RoomEvent.BuildingListOnDragListener, pointerEventData)
 	end
 end
 
-function var_0_0._onDragEnd(arg_18_0, arg_18_1, arg_18_2)
-	arg_18_0._isDragBeginOp = false
-	arg_18_0._dragBginePosition = nil
+function RoomBuildingItem:_onDragEnd(param, pointerEventData)
+	self._isDragBeginOp = false
+	self._dragBginePosition = nil
 
-	if arg_18_0._isStarDrag then
-		arg_18_0._isStarDrag = false
+	if self._isStarDrag then
+		self._isStarDrag = false
 
-		arg_18_0._scene.touch:setUIDragScreenScroll(false)
-		RoomMapController.instance:dispatchEvent(RoomEvent.TouchDropBuilding, arg_18_2.position)
+		self._scene.touch:setUIDragScreenScroll(false)
+		RoomMapController.instance:dispatchEvent(RoomEvent.TouchDropBuilding, pointerEventData.position)
 	end
 
-	RoomBuildingController.instance:dispatchEvent(RoomEvent.BuildingListOnDragEndListener, arg_18_2)
+	RoomBuildingController.instance:dispatchEvent(RoomEvent.BuildingListOnDragEndListener, pointerEventData)
 end
 
-function var_0_0._cancelTouch(arg_19_0)
-	if arg_19_0._dragBginePosition then
+function RoomBuildingItem:_cancelTouch()
+	if self._dragBginePosition then
 		if GamepadController.instance:isOpen() then
-			return Vector2.Distance(arg_19_0._dragBginePosition, GamepadController.instance:getScreenPos()) > var_0_0.DRAG_RADIUS
+			return Vector2.Distance(self._dragBginePosition, GamepadController.instance:getScreenPos()) > RoomBuildingItem.DRAG_RADIUS
 		else
-			return Vector2.Distance(arg_19_0._dragBginePosition, GamepadController.instance:getMousePosition()) > var_0_0.DRAG_RADIUS
+			return Vector2.Distance(self._dragBginePosition, GamepadController.instance:getMousePosition()) > RoomBuildingItem.DRAG_RADIUS
 		end
 	end
 
 	return false
 end
 
-function var_0_0._editableInitView(arg_20_0)
-	arg_20_0._longPressArr = {
+function RoomBuildingItem:_editableInitView()
+	self._longPressArr = {
 		0.2,
 		99999
 	}
-	arg_20_0._buildingDragStarY = 350 * UnityEngine.Screen.height / 1080
-	arg_20_0._scene = GameSceneMgr.instance:getCurScene()
+	self._buildingDragStarY = 350 * UnityEngine.Screen.height / 1080
+	self._scene = GameSceneMgr.instance:getCurScene()
 
-	UISpriteSetMgr.instance:setRoomSprite(arg_20_0._simagebuilddegree, "jianshezhi")
+	UISpriteSetMgr.instance:setRoomSprite(self._simagebuilddegree, "jianshezhi")
 
-	arg_20_0._isSelect = false
-	arg_20_0._animator = arg_20_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._isSelect = false
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	local var_20_0 = arg_20_0._btnclick.gameObject
+	local btnclickGO = self._btnclick.gameObject
 
-	gohelper.addUIClickAudio(var_20_0, AudioEnum.UI.UI_Common_Click)
+	gohelper.addUIClickAudio(btnclickGO, AudioEnum.UI.UI_Common_Click)
 
-	arg_20_0._btnUIlongPrees = SLFramework.UGUI.UILongPressListener.Get(var_20_0)
-	arg_20_0._btnUIclick = SLFramework.UGUI.UIClickListener.Get(var_20_0)
-	arg_20_0._btnUIdrag = SLFramework.UGUI.UIDragListener.Get(var_20_0)
+	self._btnUIlongPrees = SLFramework.UGUI.UILongPressListener.Get(btnclickGO)
+	self._btnUIclick = SLFramework.UGUI.UIClickListener.Get(btnclickGO)
+	self._btnUIdrag = SLFramework.UGUI.UIDragListener.Get(btnclickGO)
 
-	gohelper.setActive(arg_20_0._gocostitem, false)
+	gohelper.setActive(self._gocostitem, false)
 
-	arg_20_0._buildingTypeDefindeColor = "#FFFFFF"
-	arg_20_0._buildingTypeIconColor = {
+	self._buildingTypeDefindeColor = "#FFFFFF"
+	self._buildingTypeIconColor = {
 		[RoomBuildingEnum.BuildingType.Collect] = "#6E9FB1",
 		[RoomBuildingEnum.BuildingType.Process] = "#C6BA7B",
 		[RoomBuildingEnum.BuildingType.Manufacture] = "#7BB19A"
 	}
 end
 
-function var_0_0._refreshUI(arg_21_0)
-	arg_21_0._simageicon:LoadImage(ResUrl.getRoomImage("building/" .. arg_21_0._mo:getIcon()))
-	gohelper.setActive(arg_21_0._gobeplaced, arg_21_0._mo.use)
+function RoomBuildingItem:_refreshUI()
+	self._simageicon:LoadImage(ResUrl.getRoomImage("building/" .. self._mo:getIcon()))
+	gohelper.setActive(self._gobeplaced, self._mo.use)
 
-	arg_21_0._txtcount.text = string.format("<size=24>%s  </size>%d", luaLang("multiple"), #arg_21_0._mo.uids)
-	arg_21_0._txtaddvalue.text = arg_21_0._mo.config.buildDegree
-	arg_21_0._txtbuildingname.text = arg_21_0._mo.config.name
+	self._txtcount.text = string.format("<size=24>%s  </size>%d", luaLang("multiple"), #self._mo.uids)
+	self._txtaddvalue.text = self._mo.config.buildDegree
+	self._txtbuildingname.text = self._mo.config.name
 
-	gohelper.setActive(arg_21_0._txtcostres.gameObject, false)
+	gohelper.setActive(self._txtcostres.gameObject, false)
 
-	local var_21_0 = RoomConfig.instance:getBuildingAreaConfig(arg_21_0._mo.config.areaId)
+	local areaConfig = RoomConfig.instance:getBuildingAreaConfig(self._mo.config.areaId)
 
-	UISpriteSetMgr.instance:setRoomSprite(arg_21_0._imagearea, "xiaowuliubianxing_" .. var_21_0.icon)
+	UISpriteSetMgr.instance:setRoomSprite(self._imagearea, "xiaowuliubianxing_" .. areaConfig.icon)
 
-	local var_21_1 = RoomBuildingEnum.RareIcon[arg_21_0._mo.config.rare] or RoomBuildingEnum.RareIcon[1]
+	local splitName = RoomBuildingEnum.RareIcon[self._mo.config.rare] or RoomBuildingEnum.RareIcon[1]
 
-	UISpriteSetMgr.instance:setRoomSprite(arg_21_0._imagerare, var_21_1)
-	gohelper.setActive(arg_21_0._goreddot, not arg_21_0._mo.use)
+	UISpriteSetMgr.instance:setRoomSprite(self._imagerare, splitName)
+	gohelper.setActive(self._goreddot, not self._mo.use)
 
-	if not arg_21_0._mo.use then
-		RedDotController.instance:addRedDot(arg_21_0._goreddot, RedDotEnum.DotNode.RoomBuildingPlace, arg_21_0._mo.buildingId)
+	if not self._mo.use then
+		RedDotController.instance:addRedDot(self._goreddot, RedDotEnum.DotNode.RoomBuildingPlace, self._mo.buildingId)
 	end
 
-	if arg_21_0._refresCostBuilding ~= arg_21_0._mo.buildingId then
-		arg_21_0._refresCostBuilding = arg_21_0._mo.buildingId
+	if self._refresCostBuilding ~= self._mo.buildingId then
+		self._refresCostBuilding = self._mo.buildingId
 
-		arg_21_0:_refreshCostResList(arg_21_0._mo.buildingId)
+		self:_refreshCostResList(self._mo.buildingId)
 	end
 
-	gohelper.setActive(arg_21_0._govehicle, arg_21_0._mo.config.vehicleType ~= 0)
-	gohelper.setActive(arg_21_0._goneed2buy, arg_21_0._mo.isNeedToBuy == true and arg_21_0._mo.isBuyNoCost ~= true)
+	gohelper.setActive(self._govehicle, self._mo.config.vehicleType ~= 0)
+	gohelper.setActive(self._goneed2buy, self._mo.isNeedToBuy == true and self._mo.isBuyNoCost ~= true)
 
-	if arg_21_0._mo.isNeedToBuy == true and arg_21_0._mo.isBuyNoCost ~= true then
-		arg_21_0:_refreshPlaceCost(arg_21_0._mo.buildingId)
+	if self._mo.isNeedToBuy == true and self._mo.isBuyNoCost ~= true then
+		self:_refreshPlaceCost(self._mo.buildingId)
 	end
 
-	local var_21_2 = true
+	local isDet = true
 
-	if arg_21_0._mo.config.buildingType ~= RoomBuildingEnum.BuildingType.Decoration then
-		var_21_2 = false
+	if self._mo.config.buildingType ~= RoomBuildingEnum.BuildingType.Decoration then
+		isDet = false
 	end
 
-	gohelper.setActive(arg_21_0._txtcount, var_21_2)
-	gohelper.setActive(arg_21_0._txtaddvalue, var_21_2)
-	gohelper.setActive(arg_21_0._buildingusedesc, not var_21_2)
-	gohelper.setActive(arg_21_0._imagebuildingtype, not var_21_2)
+	gohelper.setActive(self._txtcount, isDet)
+	gohelper.setActive(self._txtaddvalue, isDet)
+	gohelper.setActive(self._buildingusedesc, not isDet)
+	gohelper.setActive(self._imagebuildingtype, not isDet)
 
-	if var_21_2 then
-		gohelper.setActive(arg_21_0._txtcritternum, false)
+	if isDet then
+		gohelper.setActive(self._txtcritternum, false)
 	else
-		arg_21_0:_refreshBuildingTypeIcon(arg_21_0._mo.config)
+		self:_refreshBuildingTypeIcon(self._mo.config)
 	end
 end
 
-function var_0_0._refreshCostResList(arg_22_0, arg_22_1)
-	arg_22_0._imageResList = arg_22_0._imageResList or {
-		arg_22_0._imageres
+function RoomBuildingItem:_refreshCostResList(buildingId)
+	self._imageResList = self._imageResList or {
+		self._imageres
 	}
 
-	local var_22_0 = RoomBuildingHelper.getCostResource(arg_22_1)
-	local var_22_1 = var_22_0 and #var_22_0 or 0
+	local costResIds = RoomBuildingHelper.getCostResource(buildingId)
+	local costResNum = costResIds and #costResIds or 0
 
-	for iter_22_0 = 1, var_22_1 do
-		local var_22_2 = arg_22_0._imageResList[iter_22_0]
+	for i = 1, costResNum do
+		local imageRes = self._imageResList[i]
 
-		if not var_22_2 then
-			local var_22_3 = gohelper.clone(arg_22_0._imageres.gameObject, arg_22_0._gogroupres, "imageres" .. iter_22_0)
+		if not imageRes then
+			local cloneGo = gohelper.clone(self._imageres.gameObject, self._gogroupres, "imageres" .. i)
 
-			var_22_2 = gohelper.onceAddComponent(var_22_3, gohelper.Type_Image)
+			imageRes = gohelper.onceAddComponent(cloneGo, gohelper.Type_Image)
 
-			table.insert(arg_22_0._imageResList, var_22_2)
+			table.insert(self._imageResList, imageRes)
 		end
 
-		gohelper.setActive(var_22_2.gameObject, true)
-		UISpriteSetMgr.instance:setRoomSprite(var_22_2, string.format("fanzhi_icon_%s", var_22_0[iter_22_0]))
+		gohelper.setActive(imageRes.gameObject, true)
+		UISpriteSetMgr.instance:setRoomSprite(imageRes, string.format("fanzhi_icon_%s", costResIds[i]))
 	end
 
-	for iter_22_1 = var_22_1 + 1, #arg_22_0._imageResList do
-		local var_22_4 = arg_22_0._imageResList[iter_22_1]
+	for i = costResNum + 1, #self._imageResList do
+		local imageRes = self._imageResList[i]
 
-		gohelper.setActive(var_22_4.gameObject, false)
+		gohelper.setActive(imageRes.gameObject, false)
 	end
 end
 
-function var_0_0._refreshPlaceCost(arg_23_0, arg_23_1)
-	if arg_23_0._lastCostPlaceId == arg_23_1 then
+function RoomBuildingItem:_refreshPlaceCost(buildingId)
+	if self._lastCostPlaceId == buildingId then
 		return
 	end
 
-	arg_23_0._lastCostPlaceId = arg_23_1
+	self._lastCostPlaceId = buildingId
 
-	local var_23_0 = ManufactureConfig.instance:getManufactureBuildingCfg(arg_23_1)
+	local placeCfg = ManufactureConfig.instance:getManufactureBuildingCfg(buildingId)
 
-	if var_23_0 then
-		arg_23_0._costDataList = ItemModel.instance:getItemDataListByConfigStr(var_23_0.placeCost)
+	if placeCfg then
+		self._costDataList = ItemModel.instance:getItemDataListByConfigStr(placeCfg.placeCost)
 	end
 
-	arg_23_0._costDataList = arg_23_0._costDataList or {}
-	arg_23_0._costItemList = arg_23_0._costItemList or {}
+	self._costDataList = self._costDataList or {}
+	self._costItemList = self._costItemList or {}
 
-	for iter_23_0, iter_23_1 in ipairs(arg_23_0._costDataList) do
-		local var_23_1 = arg_23_0._costItemList[iter_23_0]
+	for index, costData in ipairs(self._costDataList) do
+		local itemTb = self._costItemList[index]
 
-		if not var_23_1 then
-			var_23_1 = {}
+		if not itemTb then
+			itemTb = {}
 
-			table.insert(arg_23_0._costItemList, var_23_1)
+			table.insert(self._costItemList, itemTb)
 
-			local var_23_2 = gohelper.cloneInPlace(arg_23_0._gocostitem, "gocostitem_" .. iter_23_0)
+			local go = gohelper.cloneInPlace(self._gocostitem, "gocostitem_" .. index)
 
-			gohelper.setActive(var_23_2, true)
+			gohelper.setActive(go, true)
 
-			var_23_1.go = var_23_2
-			var_23_1.txtnum = gohelper.findChildText(var_23_2, "txt_num")
-			var_23_1.imageicon = gohelper.findChildImage(var_23_2, "image_icon")
+			itemTb.go = go
+			itemTb.txtnum = gohelper.findChildText(go, "txt_num")
+			itemTb.imageicon = gohelper.findChildImage(go, "image_icon")
 		else
-			gohelper.setActive(var_23_1.go, true)
+			gohelper.setActive(itemTb.go, true)
 		end
 
-		var_23_1.txtnum.text = iter_23_1.quantity
+		itemTb.txtnum.text = costData.quantity
 
-		local var_23_3 = iter_23_1.materilId
+		local materilId = costData.materilId
 
-		if iter_23_1.materilType == MaterialEnum.MaterialType.Currency then
-			local var_23_4 = CurrencyConfig.instance:getCurrencyCo(var_23_3)
+		if costData.materilType == MaterialEnum.MaterialType.Currency then
+			local currencyCfg = CurrencyConfig.instance:getCurrencyCo(materilId)
 
-			if var_23_4 then
-				var_23_3 = var_23_4.icon
+			if currencyCfg then
+				materilId = currencyCfg.icon
 			end
 		end
 
-		UISpriteSetMgr.instance:setCurrencyItemSprite(var_23_1.imageicon, var_23_3 .. "_1")
+		UISpriteSetMgr.instance:setCurrencyItemSprite(itemTb.imageicon, materilId .. "_1")
 	end
 
-	for iter_23_2 = #arg_23_0._costDataList + 1, #arg_23_0._costItemList do
-		gohelper.setActive(arg_23_0._costItemList[iter_23_2].go, true)
-	end
-end
-
-function var_0_0.onUpdateMO(arg_24_0, arg_24_1)
-	gohelper.setActive(arg_24_0._goselect, arg_24_0._isSelect)
-
-	arg_24_0._mo = arg_24_1
-
-	local var_24_0 = arg_24_1 and arg_24_1.config
-
-	gohelper.setActive(arg_24_0._gocontent, var_24_0)
-
-	if var_24_0 then
-		arg_24_0:_refreshUI()
-		arg_24_0:_updateAnchorX()
+	for i = #self._costDataList + 1, #self._costItemList do
+		gohelper.setActive(self._costItemList[i].go, true)
 	end
 end
 
-function var_0_0._updateAnchorX(arg_25_0)
-	local var_25_0 = RoomShowBuildingListModel.instance:getItemAnchorX()
+function RoomBuildingItem:onUpdateMO(mo)
+	gohelper.setActive(self._goselect, self._isSelect)
 
-	recthelper.setAnchorX(arg_25_0._gocontent.transform, var_25_0 or 0)
+	self._mo = mo
+
+	local flag = mo and mo.config
+
+	gohelper.setActive(self._gocontent, flag)
+
+	if flag then
+		self:_refreshUI()
+		self:_updateAnchorX()
+	end
 end
 
-function var_0_0.getAnimator(arg_26_0)
-	return arg_26_0._animator
+function RoomBuildingItem:_updateAnchorX()
+	local anchorX = RoomShowBuildingListModel.instance:getItemAnchorX()
+
+	recthelper.setAnchorX(self._gocontent.transform, anchorX or 0)
 end
 
-function var_0_0.onSelect(arg_27_0, arg_27_1)
-	gohelper.setActive(arg_27_0._goselect, arg_27_1)
-
-	arg_27_0._isSelect = arg_27_1
-
-	arg_27_0:_updateAnchorX()
+function RoomBuildingItem:getAnimator()
+	return self._animator
 end
 
-function var_0_0.onDestroy(arg_28_0)
-	arg_28_0._simageicon:UnLoadImage()
+function RoomBuildingItem:onSelect(isSelect)
+	gohelper.setActive(self._goselect, isSelect)
 
-	if arg_28_0._costItemList and #arg_28_0._costItemList > 0 then
-		local var_28_0 = arg_28_0._costItemList
+	self._isSelect = isSelect
 
-		arg_28_0._costItemList = nil
+	self:_updateAnchorX()
+end
 
-		for iter_28_0 = 1, #var_28_0 do
-			local var_28_1 = var_28_0[iter_28_0]
+function RoomBuildingItem:onDestroy()
+	self._simageicon:UnLoadImage()
 
-			for iter_28_1 in pairs(var_28_1) do
-				rawset(var_28_1, iter_28_1, nil)
+	if self._costItemList and #self._costItemList > 0 then
+		local itemList = self._costItemList
+
+		self._costItemList = nil
+
+		for i = 1, #itemList do
+			local item = itemList[i]
+
+			for itemkey in pairs(item) do
+				rawset(item, itemkey, nil)
 			end
 		end
 	end
 end
 
-function var_0_0._refreshBuildingTypeIcon(arg_29_0, arg_29_1)
-	local var_29_0 = arg_29_1.buildingType
-	local var_29_1 = arg_29_1.id
-	local var_29_2 = arg_29_0._buildingTypeIconColor[var_29_0] or arg_29_0._buildingTypeDefindeColor
+function RoomBuildingItem:_refreshBuildingTypeIcon(buildingCfg)
+	local buildingType = buildingCfg.buildingType
+	local buildingId = buildingCfg.id
+	local colorStr = self._buildingTypeIconColor[buildingType] or self._buildingTypeDefindeColor
 
-	SLFramework.UGUI.GuiHelper.SetColor(arg_29_0._buildingusedesc, var_29_2)
-	SLFramework.UGUI.GuiHelper.SetColor(arg_29_0._imagebuildingtype, var_29_2)
+	SLFramework.UGUI.GuiHelper.SetColor(self._buildingusedesc, colorStr)
+	SLFramework.UGUI.GuiHelper.SetColor(self._imagebuildingtype, colorStr)
 
-	local var_29_3
+	local iconName
 
-	if RoomBuildingEnum.BuildingArea[var_29_0] then
-		var_29_3 = ManufactureConfig.instance:getManufactureBuildingIcon(var_29_1)
+	if RoomBuildingEnum.BuildingArea[buildingType] then
+		iconName = ManufactureConfig.instance:getManufactureBuildingIcon(buildingId)
 	else
-		var_29_3 = RoomConfig.instance:getBuildingTypeIcon(var_29_0)
+		iconName = RoomConfig.instance:getBuildingTypeIcon(buildingType)
 	end
 
-	arg_29_0._buildingusedesc.text = arg_29_1.useDesc
+	self._buildingusedesc.text = buildingCfg.useDesc
 
-	UISpriteSetMgr.instance:setRoomSprite(arg_29_0._imagebuildingtype, var_29_3)
+	UISpriteSetMgr.instance:setRoomSprite(self._imagebuildingtype, iconName)
 
-	local var_29_4 = 0
+	local num = 0
 
-	if RoomBuildingEnum.BuildingArea[var_29_0] or var_29_0 == RoomBuildingEnum.BuildingType.Rest then
-		local var_29_5 = ManufactureModel.instance:getTradeLevel()
+	if RoomBuildingEnum.BuildingArea[buildingType] or buildingType == RoomBuildingEnum.BuildingType.Rest then
+		local tradeLevel = ManufactureModel.instance:getTradeLevel()
 
-		var_29_4 = ManufactureConfig.instance:getBuildingCanPlaceCritterCount(var_29_1, var_29_5)
+		num = ManufactureConfig.instance:getBuildingCanPlaceCritterCount(buildingId, tradeLevel)
 	end
 
-	gohelper.setActive(arg_29_0._txtcritternum, var_29_4 > 0)
+	gohelper.setActive(self._txtcritternum, num > 0)
 
-	if var_29_4 > 0 then
-		arg_29_0._txtcritternum.text = var_29_4
-	end
-end
-
-function var_0_0._hideReddot(arg_30_0)
-	if arg_30_0._mo.use then
-		return
-	end
-
-	local var_30_0 = RedDotModel.instance:getRedDotInfo(RedDotEnum.DotNode.RoomBuildingPlace)
-
-	if not var_30_0 or not var_30_0.infos then
-		return
-	end
-
-	local var_30_1 = var_30_0.infos[arg_30_0._mo.buildingId]
-
-	if not var_30_1 then
-		return
-	end
-
-	if var_30_1.value > 0 then
-		RoomRpc.instance:sendHideBuildingReddotRequset(arg_30_0._mo.buildingId)
+	if num > 0 then
+		self._txtcritternum.text = num
 	end
 end
 
-return var_0_0
+function RoomBuildingItem:_hideReddot()
+	if self._mo.use then
+		return
+	end
+
+	local reddotInfo = RedDotModel.instance:getRedDotInfo(RedDotEnum.DotNode.RoomBuildingPlace)
+
+	if not reddotInfo or not reddotInfo.infos then
+		return
+	end
+
+	local info = reddotInfo.infos[self._mo.buildingId]
+
+	if not info then
+		return
+	end
+
+	if info.value > 0 then
+		RoomRpc.instance:sendHideBuildingReddotRequset(self._mo.buildingId)
+	end
+end
+
+return RoomBuildingItem

@@ -1,17 +1,19 @@
-﻿module("modules.configs.excel2json.lua_key_name_replace", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_key_name_replace.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_key_name_replace", package.seeall)
+
+local lua_key_name_replace = {}
+local fields = {
 	replacedName = 2,
 	name = 1
 }
-local var_0_2 = {
+local primaryKey = {
 	"name"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_key_name_replace.onLoad(json)
+	lua_key_name_replace.configList, lua_key_name_replace.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_key_name_replace

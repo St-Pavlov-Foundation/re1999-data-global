@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_tower_assist_boss_change", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_tower_assist_boss_change.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_tower_assist_boss_change", package.seeall)
+
+local lua_tower_assist_boss_change = {}
+local fields = {
 	bossId = 1,
 	activeSkills = 5,
 	passiveSkills = 6,
@@ -11,14 +13,14 @@ local var_0_1 = {
 	replacePassiveSkills = 7,
 	resMaxVal = 8
 }
-local var_0_2 = {
+local primaryKey = {
 	"bossId",
 	"form"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_tower_assist_boss_change.onLoad(json)
+	lua_tower_assist_boss_change.configList, lua_tower_assist_boss_change.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_tower_assist_boss_change

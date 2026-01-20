@@ -1,216 +1,218 @@
-﻿module("modules.logic.versionactivity3_0.maLiAnNaAct201.controller.MaliAnNaSoliderAiMgr", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/maLiAnNaAct201/controller/MaliAnNaSoliderAiMgr.lua
 
-local var_0_0 = class("MaliAnNaSoliderAiMgr")
+module("modules.logic.versionactivity3_0.maLiAnNaAct201.controller.MaliAnNaSoliderAiMgr", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._defineList = {
-		[Activity201MaLiAnNaEnum.SlotAIFuncType.attAckSlot] = arg_1_0._attAckSlot,
-		[Activity201MaLiAnNaEnum.SlotAIFuncType.attackRoad] = arg_1_0._attackRoad,
-		[Activity201MaLiAnNaEnum.SlotAIFuncType.retreat] = arg_1_0._retreat,
-		[Activity201MaLiAnNaEnum.SlotAIFuncType.helpSlot] = arg_1_0._helpSlot
+local MaliAnNaSoliderAiMgr = class("MaliAnNaSoliderAiMgr")
+
+function MaliAnNaSoliderAiMgr:ctor()
+	self._defineList = {
+		[Activity201MaLiAnNaEnum.SlotAIFuncType.attAckSlot] = self._attAckSlot,
+		[Activity201MaLiAnNaEnum.SlotAIFuncType.attackRoad] = self._attackRoad,
+		[Activity201MaLiAnNaEnum.SlotAIFuncType.retreat] = self._retreat,
+		[Activity201MaLiAnNaEnum.SlotAIFuncType.helpSlot] = self._helpSlot
 	}
-	arg_1_0._weights = {}
+	self._weights = {}
 
-	for iter_1_0 = 1, #Activity201MaLiAnNaEnum.AllSlotAIFuncType do
-		table.insert(arg_1_0._weights, 1)
+	for i = 1, #Activity201MaLiAnNaEnum.AllSlotAIFuncType do
+		table.insert(self._weights, 1)
 	end
 
-	arg_1_0.attackTriggerRate = 0
-	arg_1_0.positiveMoveTriggerRate = 0
-	arg_1_0.negativeMoveTriggerRate = 0
-	arg_1_0._heroMoveRate = 0
-	arg_1_0._heroOrSoldier = 0
-	arg_1_0._heroGoFrontOrNot = 0
-	arg_1_0._needTick = false
+	self.attackTriggerRate = 0
+	self.positiveMoveTriggerRate = 0
+	self.negativeMoveTriggerRate = 0
+	self._heroMoveRate = 0
+	self._heroOrSoldier = 0
+	self._heroGoFrontOrNot = 0
+	self._needTick = false
 end
 
-function var_0_0.initAiParamsById(arg_2_0, arg_2_1)
-	arg_2_0._needTick = false
-	arg_2_0._tickTime = 0
-	arg_2_0._tickInterval = 10000
+function MaliAnNaSoliderAiMgr:initAiParamsById(gameId)
+	self._needTick = false
+	self._tickTime = 0
+	self._tickInterval = 10000
 
-	arg_2_0:_changeAiParamsByIdByIndex(arg_2_1, 1)
+	self:_changeAiParamsByIdByIndex(gameId, 1)
 end
 
-function var_0_0._changeAiParamsByIdByIndex(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = lua_activity203_ai.configDict[arg_3_1]
+function MaliAnNaSoliderAiMgr:_changeAiParamsByIdByIndex(gameId, index)
+	local allGameAIConfig = lua_activity203_ai.configDict[gameId]
 
-	if var_3_0 and var_3_0[arg_3_2] then
-		local var_3_1 = var_3_0[arg_3_2]
+	if allGameAIConfig and allGameAIConfig[index] then
+		local config = allGameAIConfig[index]
 
-		arg_3_0._tickInterval = var_3_1.gaptime or 10000
-		arg_3_0._weights[1] = var_3_1.attack_weight or 1
-		arg_3_0._weights[2] = var_3_1.positive_move_weight or 1
-		arg_3_0._weights[3] = var_3_1.negative_move_weight or 1
-		arg_3_0._weights[4] = var_3_1.assist_weight or 1
-		arg_3_0.attackTriggerRate = var_3_1.attack_trigger_rate
-		arg_3_0.positiveMoveTriggerRate = var_3_1.positive_move_trigger_rate
-		arg_3_0.negativeMoveTriggerRate = var_3_1.negative_move_trigger_rate
-		arg_3_0._heroMoveRate = var_3_1.hero_move_rate or 0
-		arg_3_0._heroOrSoldier = var_3_1.hero_or_soldier or false
-		arg_3_0._heroGoFrontOrNot = var_3_1.hero_go_front_ornot or false
-		arg_3_0._needTick = true
+		self._tickInterval = config.gaptime or 10000
+		self._weights[1] = config.attack_weight or 1
+		self._weights[2] = config.positive_move_weight or 1
+		self._weights[3] = config.negative_move_weight or 1
+		self._weights[4] = config.assist_weight or 1
+		self.attackTriggerRate = config.attack_trigger_rate
+		self.positiveMoveTriggerRate = config.positive_move_trigger_rate
+		self.negativeMoveTriggerRate = config.negative_move_trigger_rate
+		self._heroMoveRate = config.hero_move_rate or 0
+		self._heroOrSoldier = config.hero_or_soldier or false
+		self._heroGoFrontOrNot = config.hero_go_front_ornot or false
+		self._needTick = true
 
 		math.randomseed(os.time())
 	end
 end
 
-function var_0_0.clear(arg_4_0)
-	arg_4_0._tickTime = 0
+function MaliAnNaSoliderAiMgr:clear()
+	self._tickTime = 0
 end
 
-function var_0_0.getHandleFunc(arg_5_0, arg_5_1)
-	return arg_5_0._defineList[arg_5_1]
+function MaliAnNaSoliderAiMgr:getHandleFunc(type)
+	return self._defineList[type]
 end
 
-function var_0_0.update(arg_6_0, arg_6_1)
-	if not arg_6_0._needTick then
+function MaliAnNaSoliderAiMgr:update(deltaTime)
+	if not self._needTick then
 		return
 	end
 
-	arg_6_0._tickTime = arg_6_0._tickTime + arg_6_1 * 1000
+	self._tickTime = self._tickTime + deltaTime * 1000
 
-	if arg_6_0._tickTime < arg_6_0._tickInterval then
+	if self._tickTime < self._tickInterval then
 		return
 	end
 
-	arg_6_0._tickTime = 0
+	self._tickTime = 0
 
-	local var_6_0 = EliminateModelUtils.getRandomNumberByWeight(arg_6_0._weights)
-	local var_6_1 = Activity201MaLiAnNaEnum.AllSlotAIFuncType[var_6_0]
+	local index = EliminateModelUtils.getRandomNumberByWeight(self._weights)
+	local typeKey = Activity201MaLiAnNaEnum.AllSlotAIFuncType[index]
 
-	arg_6_0._typeKey = var_6_1
+	self._typeKey = typeKey
 
-	local var_6_2 = arg_6_0:getHandleFunc(var_6_1)
+	local func = self:getHandleFunc(typeKey)
 
 	if isDebugBuild then
-		local var_6_3 = var_0_0.instance.getName(var_6_1)
+		local name = MaliAnNaSoliderAiMgr.instance.getName(typeKey)
 
-		logNormal("AI本次tick: " .. var_6_3)
+		logNormal("AI本次tick: " .. name)
 	end
 
-	if var_6_2 then
-		var_6_2(arg_6_0)
+	if func then
+		func(self)
 	end
 end
 
-function var_0_0._attAckSlot(arg_7_0)
-	local var_7_0 = Activity201MaLiAnNaGameModel.instance:getAllSlot()
-	local var_7_1 = {}
+function MaliAnNaSoliderAiMgr:_attAckSlot()
+	local allSlot = Activity201MaLiAnNaGameModel.instance:getAllSlot()
+	local attackPaths = {}
 
-	if var_7_0 then
-		for iter_7_0, iter_7_1 in pairs(var_7_0) do
-			if iter_7_1 and iter_7_1:canAI() and iter_7_1:getSoliderPercent() >= arg_7_0.attackTriggerRate then
-				local var_7_2 = arg_7_0._shortestPaths(iter_7_1:getId())
+	if allSlot then
+		for _, slot in pairs(allSlot) do
+			if slot and slot:canAI() and slot:getSoliderPercent() >= self.attackTriggerRate then
+				local paths = self._shortestPaths(slot:getId())
 
-				for iter_7_2 = 1, #var_7_2 do
-					local var_7_3 = var_7_2[iter_7_2]
+				for i = 1, #paths do
+					local path = paths[i]
 
-					if var_7_3 ~= nil and #var_7_3 >= 2 then
-						table.insert(var_7_1, var_7_3)
+					if path ~= nil and #path >= 2 then
+						table.insert(attackPaths, path)
 					end
 				end
 			end
 		end
 	end
 
-	table.sort(var_7_1, function(arg_8_0, arg_8_1)
-		local var_8_0 = Activity201MaLiAnNaGameModel.instance:getSlotById(arg_8_0[1])
-		local var_8_1 = Activity201MaLiAnNaGameModel.instance:getSlotById(arg_8_1[1])
+	table.sort(attackPaths, function(a, b)
+		local startSlotA = Activity201MaLiAnNaGameModel.instance:getSlotById(a[1])
+		local startSlotB = Activity201MaLiAnNaGameModel.instance:getSlotById(b[1])
 
-		if var_8_0:getSoliderPercent() == var_8_1:getSoliderPercent() then
-			local var_8_2 = arg_7_0.getPathAllLength(arg_8_0)
-			local var_8_3 = arg_7_0.getPathAllLength(arg_8_1)
+		if startSlotA:getSoliderPercent() == startSlotB:getSoliderPercent() then
+			local lengthA = self.getPathAllLength(a)
+			local lengthB = self.getPathAllLength(b)
 
-			if var_8_2 == var_8_3 then
-				local var_8_4 = Activity201MaLiAnNaGameModel.instance:getSlotById(arg_8_0[#arg_8_0])
-				local var_8_5 = Activity201MaLiAnNaGameModel.instance:getSlotById(arg_8_1[#arg_8_1])
+			if lengthA == lengthB then
+				local endSlotA = Activity201MaLiAnNaGameModel.instance:getSlotById(a[#a])
+				local endSlotB = Activity201MaLiAnNaGameModel.instance:getSlotById(b[#b])
 
-				return var_8_4:getSoliderCount() < var_8_5:getSoliderCount()
+				return endSlotA:getSoliderCount() < endSlotB:getSoliderCount()
 			end
 
-			return var_8_2 < var_8_3
+			return lengthA < lengthB
 		end
 
-		return var_8_0:getSoliderPercent() > var_8_1:getSoliderPercent()
+		return startSlotA:getSoliderPercent() > startSlotB:getSoliderPercent()
 	end)
 
-	local var_7_4, var_7_5 = arg_7_0:getDisPatchPath(var_7_1, Activity201MaLiAnNaEnum.SlotAIFuncType.attAckSlot)
+	local attackPath, isHeroFirst = self:getDisPatchPath(attackPaths, Activity201MaLiAnNaEnum.SlotAIFuncType.attAckSlot)
 
-	return arg_7_0._disPatch(var_7_4, var_7_5)
+	return self._disPatch(attackPath, isHeroFirst)
 end
 
-function var_0_0._attackRoad(arg_9_0)
-	local var_9_0 = Activity201MaLiAnNaGameModel.instance:getAllSlot()
-	local var_9_1 = {}
+function MaliAnNaSoliderAiMgr:_attackRoad()
+	local allSlot = Activity201MaLiAnNaGameModel.instance:getAllSlot()
+	local attackPaths = {}
 
-	if var_9_0 then
-		for iter_9_0, iter_9_1 in pairs(var_9_0) do
-			if iter_9_1 and iter_9_1:canAI() and iter_9_1:getSoliderPercent() >= arg_9_0.positiveMoveTriggerRate then
-				local var_9_2 = arg_9_0._shortestPaths(iter_9_1:getId())
+	if allSlot then
+		for _, slot in pairs(allSlot) do
+			if slot and slot:canAI() and slot:getSoliderPercent() >= self.positiveMoveTriggerRate then
+				local paths = self._shortestPaths(slot:getId())
 
-				for iter_9_2 = 1, #var_9_2 do
-					local var_9_3 = var_9_2[iter_9_2]
+				for i = 1, #paths do
+					local path = paths[i]
 
-					table.remove(var_9_3, #var_9_3)
+					table.remove(path, #path)
 
-					if var_9_3 ~= nil and #var_9_3 >= 2 then
-						table.insert(var_9_1, var_9_3)
+					if path ~= nil and #path >= 2 then
+						table.insert(attackPaths, path)
 					end
 				end
 			end
 		end
 	end
 
-	table.sort(var_9_1, function(arg_10_0, arg_10_1)
-		local var_10_0 = Activity201MaLiAnNaGameModel.instance:getSlotById(arg_10_0[1])
-		local var_10_1 = Activity201MaLiAnNaGameModel.instance:getSlotById(arg_10_1[1])
+	table.sort(attackPaths, function(a, b)
+		local startSlotA = Activity201MaLiAnNaGameModel.instance:getSlotById(a[1])
+		local startSlotB = Activity201MaLiAnNaGameModel.instance:getSlotById(b[1])
 
-		if var_10_0:getSoliderPercent() == var_10_1:getSoliderPercent() then
-			local var_10_2 = arg_9_0.getPathAllLength(arg_10_0)
-			local var_10_3 = arg_9_0.getPathAllLength(arg_10_1)
+		if startSlotA:getSoliderPercent() == startSlotB:getSoliderPercent() then
+			local lengthA = self.getPathAllLength(a)
+			local lengthB = self.getPathAllLength(b)
 
-			if var_10_2 == var_10_3 then
-				local var_10_4 = Activity201MaLiAnNaGameModel.instance:getSlotById(arg_10_0[#arg_10_0])
-				local var_10_5 = Activity201MaLiAnNaGameModel.instance:getSlotById(arg_10_1[#arg_10_1])
+			if lengthA == lengthB then
+				local endSlotA = Activity201MaLiAnNaGameModel.instance:getSlotById(a[#a])
+				local endSlotB = Activity201MaLiAnNaGameModel.instance:getSlotById(b[#b])
 
-				return var_10_4:getSoliderCount() < var_10_5:getSoliderCount()
+				return endSlotA:getSoliderCount() < endSlotB:getSoliderCount()
 			end
 
-			return var_10_2 < var_10_3
+			return lengthA < lengthB
 		end
 
-		return var_10_0:getSoliderPercent() > var_10_1:getSoliderPercent()
+		return startSlotA:getSoliderPercent() > startSlotB:getSoliderPercent()
 	end)
 
-	local var_9_4, var_9_5 = arg_9_0:getDisPatchPath(var_9_1, Activity201MaLiAnNaEnum.SlotAIFuncType.attackRoad)
+	local attackPath, isHeroFirst = self:getDisPatchPath(attackPaths, Activity201MaLiAnNaEnum.SlotAIFuncType.attackRoad)
 
-	return arg_9_0._disPatch(var_9_4, var_9_5)
+	return self._disPatch(attackPath, isHeroFirst)
 end
 
-function var_0_0._retreat(arg_11_0)
-	local var_11_0 = Activity201MaLiAnNaGameModel.instance:getAllSlot()
-	local var_11_1 = {}
+function MaliAnNaSoliderAiMgr:_retreat()
+	local allSlot = Activity201MaLiAnNaGameModel.instance:getAllSlot()
+	local retreatPaths = {}
 
-	if var_11_0 then
-		for iter_11_0, iter_11_1 in pairs(var_11_0) do
-			if iter_11_1 and iter_11_1:canAI() then
-				local var_11_2 = arg_11_0._shortestPathsToEnemyMain(iter_11_1:getId())
+	if allSlot then
+		for _, slot in pairs(allSlot) do
+			if slot and slot:canAI() then
+				local paths = self._shortestPathsToEnemyMain(slot:getId())
 
-				for iter_11_2 = 1, #var_11_2 do
-					local var_11_3 = var_11_2[iter_11_2]
+				for i = 1, #paths do
+					local path = paths[i]
 
-					if var_11_3 ~= nil and #var_11_3 >= 2 then
-						local var_11_4 = #var_11_3 - 2
+					if path ~= nil and #path >= 2 then
+						local index = #path - 2
 
-						for iter_11_3 = 1, var_11_4 do
-							local var_11_5 = tabletool.copy(var_11_3)
+						for j = 1, index do
+							local copyPath = tabletool.copy(path)
 
-							for iter_11_4 = 1, iter_11_3 do
-								table.remove(var_11_5, #var_11_5)
+							for k = 1, j do
+								table.remove(copyPath, #copyPath)
 							end
 
-							table.insert(var_11_1, var_11_3)
+							table.insert(retreatPaths, path)
 						end
 					end
 				end
@@ -218,114 +220,119 @@ function var_0_0._retreat(arg_11_0)
 		end
 	end
 
-	table.sort(var_11_1, function(arg_12_0, arg_12_1)
-		local var_12_0 = Activity201MaLiAnNaGameModel.instance:getSlotById(arg_12_0[1])
-		local var_12_1 = Activity201MaLiAnNaGameModel.instance:getSlotById(arg_12_1[1])
+	table.sort(retreatPaths, function(a, b)
+		local startSlotA = Activity201MaLiAnNaGameModel.instance:getSlotById(a[1])
+		local startSlotB = Activity201MaLiAnNaGameModel.instance:getSlotById(b[1])
 
-		if var_12_0:getSoliderPercent() == var_12_1:getSoliderPercent() then
-			if var_12_0:getSoliderCount() == var_12_0:getSoliderCount() then
-				local var_12_2 = Activity201MaLiAnNaGameModel.instance:getSlotById(arg_12_0[#arg_12_0])
-				local var_12_3 = Activity201MaLiAnNaGameModel.instance:getSlotById(arg_12_1[#arg_12_1])
+		if startSlotA:getSoliderPercent() == startSlotB:getSoliderPercent() then
+			if startSlotA:getSoliderCount() == startSlotA:getSoliderCount() then
+				local endSlotA = Activity201MaLiAnNaGameModel.instance:getSlotById(a[#a])
+				local endSlotB = Activity201MaLiAnNaGameModel.instance:getSlotById(b[#b])
 
-				return var_12_2:getSoliderCount() > var_12_3:getSoliderCount()
+				return endSlotA:getSoliderCount() > endSlotB:getSoliderCount()
 			end
 
-			return var_12_0:getSoliderCount() < var_12_0:getSoliderCount()
+			return startSlotA:getSoliderCount() < startSlotA:getSoliderCount()
 		end
 
-		return var_12_0:getSoliderPercent() < var_12_1:getSoliderPercent()
+		return startSlotA:getSoliderPercent() < startSlotB:getSoliderPercent()
 	end)
 
-	local var_11_6, var_11_7 = arg_11_0:getDisPatchPath(var_11_1, Activity201MaLiAnNaEnum.SlotAIFuncType.retreat)
+	local retreatPath, isHeroFirst = self:getDisPatchPath(retreatPaths, Activity201MaLiAnNaEnum.SlotAIFuncType.retreat)
 
-	return arg_11_0._disPatch(var_11_6, var_11_7)
+	return self._disPatch(retreatPath, isHeroFirst)
 end
 
-function var_0_0._helpSlot(arg_13_0)
-	local var_13_0 = Activity201MaLiAnNaGameModel.instance:getAllSlot()
-	local var_13_1 = {}
+function MaliAnNaSoliderAiMgr:_helpSlot()
+	local allSlot = Activity201MaLiAnNaGameModel.instance:getAllSlot()
+	local helpPaths = {}
 
-	if var_13_0 then
-		for iter_13_0, iter_13_1 in pairs(var_13_0) do
-			if iter_13_1 and iter_13_1:canAI() and Activity201MaLiAnNaGameModel.instance:isInAttackState(iter_13_1) then
-				local var_13_2 = arg_13_0._findTargetCampPaths(iter_13_1:getId(), Activity201MaLiAnNaEnum.CampType.Enemy)
+	if allSlot then
+		for _, slot in pairs(allSlot) do
+			if slot and slot:canAI() and Activity201MaLiAnNaGameModel.instance:isInAttackState(slot) then
+				local paths = self._findTargetCampPaths(slot:getId(), Activity201MaLiAnNaEnum.CampType.Enemy)
 
-				for iter_13_2 = 1, #var_13_2 do
-					local var_13_3 = var_13_2[iter_13_2]
+				for i = 1, #paths do
+					local path = paths[i]
 
-					if var_13_3 ~= nil and #var_13_3 >= 2 then
-						tabletool.revert(var_13_3)
-						table.insert(var_13_1, var_13_3)
+					if path ~= nil and #path >= 2 then
+						tabletool.revert(path)
+						table.insert(helpPaths, path)
 					end
 				end
 			end
 		end
 	end
 
-	table.sort(var_13_1, function(arg_14_0, arg_14_1)
-		local var_14_0 = Activity201MaLiAnNaGameModel.instance:getSlotById(arg_14_0[#arg_14_0])
-		local var_14_1 = Activity201MaLiAnNaGameModel.instance:getSlotById(arg_14_1[#arg_14_1])
+	table.sort(helpPaths, function(a, b)
+		local endSlotA = Activity201MaLiAnNaGameModel.instance:getSlotById(a[#a])
+		local endSlotB = Activity201MaLiAnNaGameModel.instance:getSlotById(b[#b])
 
-		if var_14_0:getSoliderPercent() == var_14_1:getSoliderPercent() then
-			if var_14_0:getSoliderCount() == var_14_1:getSoliderCount() then
-				return arg_13_0.getPathAllLength(arg_14_0) < arg_13_0.getPathAllLength(arg_14_1)
+		if endSlotA:getSoliderPercent() == endSlotB:getSoliderPercent() then
+			if endSlotA:getSoliderCount() == endSlotB:getSoliderCount() then
+				local lengthA = self.getPathAllLength(a)
+				local lengthB = self.getPathAllLength(b)
+
+				return lengthA < lengthB
 			end
 
-			return var_14_0:getSoliderCount() > var_14_1:getSoliderCount()
+			return endSlotA:getSoliderCount() > endSlotB:getSoliderCount()
 		end
 
-		return var_14_0:getSoliderPercent() > var_14_1:getSoliderPercent()
+		return endSlotA:getSoliderPercent() > endSlotB:getSoliderPercent()
 	end)
 
-	local var_13_4, var_13_5 = arg_13_0:getDisPatchPath(var_13_1, Activity201MaLiAnNaEnum.SlotAIFuncType.helpSlot)
+	local helpPath, isHeroFirst = self:getDisPatchPath(helpPaths, Activity201MaLiAnNaEnum.SlotAIFuncType.helpSlot)
 
-	return arg_13_0._disPatch(var_13_4, var_13_5)
+	return self._disPatch(helpPath, isHeroFirst)
 end
 
-function var_0_0.getDisPatchPath(arg_15_0, arg_15_1, arg_15_2)
-	if arg_15_1 == nil then
+function MaliAnNaSoliderAiMgr:getDisPatchPath(paths, disPatchType)
+	if paths == nil then
 		return nil, false
 	end
 
-	if arg_15_2 == Activity201MaLiAnNaEnum.SlotAIFuncType.attAckSlot and not arg_15_0._heroGoFrontOrNot then
-		return table.remove(arg_15_1, 1), false
+	if disPatchType == Activity201MaLiAnNaEnum.SlotAIFuncType.attAckSlot and not self._heroGoFrontOrNot then
+		return table.remove(paths, 1), false
 	end
 
-	if var_0_0.simpleProbabilityTrigger(arg_15_0._heroMoveRate) then
-		local var_15_0 = #arg_15_1
+	local isHeroFirst = MaliAnNaSoliderAiMgr.simpleProbabilityTrigger(self._heroMoveRate)
 
-		for iter_15_0 = 1, var_15_0 do
-			local var_15_1 = arg_15_1[iter_15_0]
-			local var_15_2 = var_15_1[1]
-			local var_15_3 = Activity201MaLiAnNaGameModel.instance:getSlotById(var_15_2)
+	if isHeroFirst then
+		local pathCount = #paths
 
-			if var_15_3 and var_15_3:getHeroSoliderList() ~= 0 then
-				return var_15_1, true
+		for i = 1, pathCount do
+			local path = paths[i]
+			local slotId = path[1]
+			local slot = Activity201MaLiAnNaGameModel.instance:getSlotById(slotId)
+
+			if slot and slot:getHeroSoliderList() ~= 0 then
+				return path, true
 			end
 		end
 	else
-		return table.remove(arg_15_1, 1), false
+		return table.remove(paths, 1), false
 	end
 end
 
-function var_0_0._disPatch(arg_16_0, arg_16_1)
-	if arg_16_0 == nil or #arg_16_0 < 2 then
+function MaliAnNaSoliderAiMgr._disPatch(path, isHeroFirst)
+	if path == nil or #path < 2 then
 		return false
 	end
 
-	local var_16_0 = Activity201MaLiAnNaGameModel.instance:getSlotById(arg_16_0[1])
+	local slot = Activity201MaLiAnNaGameModel.instance:getSlotById(path[1])
 
-	if var_16_0:canDispatch() then
-		local var_16_1 = Activity201MaLiAnNaGameModel.instance:getNextDisPatchId()
+	if slot:canDispatch() then
+		local disPatchId = Activity201MaLiAnNaGameModel.instance:getNextDisPatchId()
 
-		Activity201MaLiAnNaGameController.instance:dispatchEvent(Activity201MaLiAnNaEvent.ShowDisPatchPath, var_16_1, Activity201MaLiAnNaEnum.CampType.Enemy, arg_16_0)
-		var_16_0:setDispatchSoldierInfo(var_16_1, arg_16_0, arg_16_1)
+		Activity201MaLiAnNaGameController.instance:dispatchEvent(Activity201MaLiAnNaEvent.ShowDisPatchPath, disPatchId, Activity201MaLiAnNaEnum.CampType.Enemy, path)
+		slot:setDispatchSoldierInfo(disPatchId, path, isHeroFirst)
 
 		if isDebugBuild then
-			local var_16_2 = var_0_0.instance._typeKey
-			local var_16_3 = var_0_0.instance.getName(var_16_2)
+			local key = MaliAnNaSoliderAiMgr.instance._typeKey
+			local name = MaliAnNaSoliderAiMgr.instance.getName(key)
 
-			logNormal("AI本次tick: [执行]" .. var_16_3 .. " slotId: " .. var_16_0:getConfig().baseId .. " 剩余派遣数量：" .. var_16_0._dispatchValue .. "当前时间：" .. os.time())
+			logNormal("AI本次tick: [执行]" .. name .. " slotId: " .. slot:getConfig().baseId .. " 剩余派遣数量：" .. slot._dispatchValue .. "当前时间：" .. os.time())
 		end
 
 		return true
@@ -334,57 +341,61 @@ function var_0_0._disPatch(arg_16_0, arg_16_1)
 	return false
 end
 
-function var_0_0._shortestPathToEnemyMainBFS(arg_17_0)
-	return var_0_0._shortestPathBFSFuncCheck(arg_17_0, function(arg_18_0)
-		local var_18_0 = Activity201MaLiAnNaGameModel.instance:getSlotById(arg_18_0)
-		local var_18_1 = var_18_0:getSlotCamp()
-		local var_18_2 = var_18_0:getConfig()
+function MaliAnNaSoliderAiMgr._shortestPathToEnemyMainBFS(startSlotId)
+	return MaliAnNaSoliderAiMgr._shortestPathBFSFuncCheck(startSlotId, function(node)
+		local slotA = Activity201MaLiAnNaGameModel.instance:getSlotById(node)
+		local camp = slotA:getSlotCamp()
+		local config = slotA:getConfig()
 
-		return var_18_1 == Activity201MaLiAnNaEnum.CampType.Enemy and var_18_2.isHQ
+		return camp == Activity201MaLiAnNaEnum.CampType.Enemy and config.isHQ
 	end)
 end
 
-function var_0_0._shortestPathBFS(arg_19_0)
-	return var_0_0._shortestPathBFSFuncCheck(arg_19_0, function(arg_20_0)
-		local var_20_0 = Activity201MaLiAnNaGameModel.instance:getSlotById(arg_20_0):getSlotCamp()
+function MaliAnNaSoliderAiMgr._shortestPathBFS(startSlotId)
+	return MaliAnNaSoliderAiMgr._shortestPathBFSFuncCheck(startSlotId, function(node)
+		local slotA = Activity201MaLiAnNaGameModel.instance:getSlotById(node)
+		local camp = slotA:getSlotCamp()
 
-		return var_20_0 == Activity201MaLiAnNaEnum.CampType.Player or var_20_0 == Activity201MaLiAnNaEnum.CampType.Middle
+		return camp == Activity201MaLiAnNaEnum.CampType.Player or camp == Activity201MaLiAnNaEnum.CampType.Middle
 	end)
 end
 
-function var_0_0._findTargetCampPathBFS(arg_21_0, arg_21_1)
-	return var_0_0._shortestPathBFSFuncCheck(arg_21_0, function(arg_22_0)
-		return Activity201MaLiAnNaGameModel.instance:getSlotById(arg_22_0):getSlotCamp() == arg_21_1
+function MaliAnNaSoliderAiMgr._findTargetCampPathBFS(startSlotId, targetCamp)
+	return MaliAnNaSoliderAiMgr._shortestPathBFSFuncCheck(startSlotId, function(node)
+		local slotA = Activity201MaLiAnNaGameModel.instance:getSlotById(node)
+		local camp = slotA:getSlotCamp()
+
+		return camp == targetCamp
 	end)
 end
 
-function var_0_0._shortestPathBFSFuncCheck(arg_23_0, arg_23_1)
-	local var_23_0 = Activity201MaLiAnNaGameModel.instance:getRoadGraph()
-	local var_23_1 = {
+function MaliAnNaSoliderAiMgr._shortestPathBFSFuncCheck(startSlotId, funcCheck)
+	local graph = Activity201MaLiAnNaGameModel.instance:getRoadGraph()
+	local queue = {
 		{
-			arg_23_0
+			startSlotId
 		}
 	}
-	local var_23_2 = {
-		[arg_23_0] = true
+	local visited = {
+		[startSlotId] = true
 	}
 
-	while #var_23_1 > 0 do
-		local var_23_3 = table.remove(var_23_1, 1)
-		local var_23_4 = var_23_3[#var_23_3]
+	while #queue > 0 do
+		local path = table.remove(queue, 1)
+		local node = path[#path]
 
-		if arg_23_1 and arg_23_1(var_23_4) then
-			return var_23_3
+		if funcCheck and funcCheck(node) then
+			return path
 		end
 
-		for iter_23_0, iter_23_1 in ipairs(var_23_0[var_23_4] or {}) do
-			if not var_23_2[iter_23_1] then
-				var_23_2[iter_23_1] = true
+		for _, neighbor in ipairs(graph[node] or {}) do
+			if not visited[neighbor] then
+				visited[neighbor] = true
 
-				local var_23_5 = tabletool.copy(var_23_3)
+				local newPath = tabletool.copy(path)
 
-				table.insert(var_23_5, iter_23_1)
-				table.insert(var_23_1, var_23_5)
+				table.insert(newPath, neighbor)
+				table.insert(queue, newPath)
 			end
 		end
 	end
@@ -392,150 +403,158 @@ function var_0_0._shortestPathBFSFuncCheck(arg_23_0, arg_23_1)
 	return nil
 end
 
-function var_0_0.getPathAllLength(arg_24_0)
-	if not arg_24_0 or #arg_24_0 < 2 then
+function MaliAnNaSoliderAiMgr.getPathAllLength(path)
+	if not path or #path < 2 then
 		return 0
 	end
 
-	local var_24_0 = 0
+	local totalLength = 0
 
-	for iter_24_0 = 1, #arg_24_0 - 1 do
-		local var_24_1 = Activity201MaLiAnNaGameModel.instance:getSlotById(arg_24_0[iter_24_0])
-		local var_24_2 = Activity201MaLiAnNaGameModel.instance:getSlotById(arg_24_0[iter_24_0 + 1])
+	for i = 1, #path - 1 do
+		local slotA = Activity201MaLiAnNaGameModel.instance:getSlotById(path[i])
+		local slotB = Activity201MaLiAnNaGameModel.instance:getSlotById(path[i + 1])
 
-		if var_24_1 and var_24_2 then
-			var_24_0 = var_24_0 + var_24_1:getDistanceTo(var_24_2)
+		if slotA and slotB then
+			totalLength = totalLength + slotA:getDistanceTo(slotB)
 		end
 	end
 
-	return var_24_0
+	return totalLength
 end
 
-function var_0_0._shortestPathsToEnemyMain(arg_25_0)
-	return var_0_0.findAllPaths(arg_25_0, function(arg_26_0)
-		if arg_26_0 == nil then
+function MaliAnNaSoliderAiMgr._shortestPathsToEnemyMain(startSlotId)
+	return MaliAnNaSoliderAiMgr.findAllPaths(startSlotId, function(node)
+		if node == nil then
 			return false
 		end
 
-		local var_26_0 = Activity201MaLiAnNaGameModel.instance:getSlotById(arg_26_0)
-		local var_26_1 = var_26_0:getSlotCamp()
-		local var_26_2 = var_26_0:getConfig()
+		local slotA = Activity201MaLiAnNaGameModel.instance:getSlotById(node)
+		local camp = slotA:getSlotCamp()
+		local config = slotA:getConfig()
 
-		return var_26_1 == Activity201MaLiAnNaEnum.CampType.Enemy and var_26_2.isHQ
+		return camp == Activity201MaLiAnNaEnum.CampType.Enemy and config.isHQ
 	end)
 end
 
-function var_0_0._shortestPaths(arg_27_0)
-	return var_0_0.findAllPaths(arg_27_0, function(arg_28_0)
-		if arg_28_0 == nil then
+function MaliAnNaSoliderAiMgr._shortestPaths(startSlotId)
+	return MaliAnNaSoliderAiMgr.findAllPaths(startSlotId, function(node)
+		if node == nil then
 			return false
 		end
 
-		local var_28_0 = Activity201MaLiAnNaGameModel.instance:getSlotById(arg_28_0):getSlotCamp()
+		local slotA = Activity201MaLiAnNaGameModel.instance:getSlotById(node)
+		local camp = slotA:getSlotCamp()
 
-		return var_28_0 == Activity201MaLiAnNaEnum.CampType.Player or var_28_0 == Activity201MaLiAnNaEnum.CampType.Middle
+		return camp == Activity201MaLiAnNaEnum.CampType.Player or camp == Activity201MaLiAnNaEnum.CampType.Middle
 	end)
 end
 
-function var_0_0._findTargetCampPaths(arg_29_0, arg_29_1)
-	return var_0_0.findAllPaths(arg_29_0, function(arg_30_0)
-		return Activity201MaLiAnNaGameModel.instance:getSlotById(arg_30_0):getSlotCamp() == arg_29_1
+function MaliAnNaSoliderAiMgr._findTargetCampPaths(startSlotId, targetCamp)
+	return MaliAnNaSoliderAiMgr.findAllPaths(startSlotId, function(node)
+		local slotA = Activity201MaLiAnNaGameModel.instance:getSlotById(node)
+		local camp = slotA:getSlotCamp()
+
+		return camp == targetCamp
 	end)
 end
 
-function var_0_0.findAllPaths(arg_31_0, arg_31_1)
-	local var_31_0 = Activity201MaLiAnNaGameModel.instance:getRoadGraph()
-	local var_31_1 = {}
-	local var_31_2 = {}
+function MaliAnNaSoliderAiMgr.findAllPaths(start, checkFunc)
+	local graph = Activity201MaLiAnNaGameModel.instance:getRoadGraph()
+	local visited = {}
+	local allPaths = {}
 
-	local function var_31_3(arg_32_0, arg_32_1)
-		var_31_1[arg_32_0] = true
+	local function dfs(current, path)
+		visited[current] = true
 
-		table.insert(arg_32_1, arg_32_0)
+		table.insert(path, current)
 
-		if arg_31_1 and arg_31_1(arg_32_0) and arg_32_0 ~= arg_31_0 then
-			table.insert(var_31_2, tabletool.copy(arg_32_1))
+		if checkFunc and checkFunc(current) and current ~= start then
+			table.insert(allPaths, tabletool.copy(path))
 		else
-			for iter_32_0, iter_32_1 in pairs(var_31_0[arg_32_0] or {}) do
-				local var_32_0 = Activity201MaLiAnNaGameModel.instance:getSlotById(arg_31_0)
-				local var_32_1 = Activity201MaLiAnNaGameModel.instance:getSlotById(arg_32_0)
+			for _, neighbor in pairs(graph[current] or {}) do
+				local startSlot = Activity201MaLiAnNaGameModel.instance:getSlotById(start)
+				local currentSlot = Activity201MaLiAnNaGameModel.instance:getSlotById(current)
 
-				if not var_31_1[iter_32_1] and var_32_1:getSlotCamp() == var_32_0:getSlotCamp() then
-					var_31_3(iter_32_1, arg_32_1)
+				if not visited[neighbor] and currentSlot:getSlotCamp() == startSlot:getSlotCamp() then
+					dfs(neighbor, path)
 				end
 			end
 		end
 
-		var_31_1[arg_32_0] = false
+		visited[current] = false
 
-		table.remove(arg_32_1)
+		table.remove(path)
 	end
 
-	var_31_3(arg_31_0, {})
+	dfs(start, {})
 
-	local var_31_4 = 0
+	local minPathCount = 0
 
-	for iter_31_0 = 1, #var_31_2 do
-		local var_31_5 = var_31_2[iter_31_0]
+	for i = 1, #allPaths do
+		local path = allPaths[i]
 
-		if var_31_4 > #var_31_5 or var_31_4 == 0 then
-			var_31_4 = #var_31_5
+		if minPathCount > #path or minPathCount == 0 then
+			minPathCount = #path
 		end
 	end
 
-	if var_31_4 ~= 0 then
-		for iter_31_1 = #var_31_2, 1, -1 do
-			if #var_31_2[iter_31_1] ~= var_31_4 then
-				table.remove(var_31_2, iter_31_1)
+	if minPathCount ~= 0 then
+		local count = #allPaths
+
+		for i = count, 1, -1 do
+			local path = allPaths[i]
+
+			if #path ~= minPathCount then
+				table.remove(allPaths, i)
 			end
 		end
 	end
 
-	return var_31_2
+	return allPaths
 end
 
-function var_0_0.simpleProbabilityTrigger(arg_33_0)
-	return arg_33_0 > math.random()
+function MaliAnNaSoliderAiMgr.simpleProbabilityTrigger(probability)
+	return probability > math.random()
 end
 
-function var_0_0.guaranteedTrigger(arg_34_0, arg_34_1)
-	local var_34_0 = 0
+function MaliAnNaSoliderAiMgr.guaranteedTrigger(probability, maxAttempts)
+	local failedAttempts = 0
 
 	return function()
-		var_34_0 = var_34_0 + 1
+		failedAttempts = failedAttempts + 1
 
-		if var_34_0 >= arg_34_1 then
-			var_34_0 = 0
+		if failedAttempts >= maxAttempts then
+			failedAttempts = 0
 
 			return true
 		end
 
-		return math.random() < arg_34_0
+		return math.random() < probability
 	end
 end
 
-function var_0_0.getName(arg_36_0)
-	local var_36_0 = ""
+function MaliAnNaSoliderAiMgr.getName(key)
+	local name = ""
 
-	if Activity201MaLiAnNaEnum.SlotAIFuncType.attAckSlot == arg_36_0 then
-		var_36_0 = "攻击"
+	if Activity201MaLiAnNaEnum.SlotAIFuncType.attAckSlot == key then
+		name = "攻击"
 	end
 
-	if Activity201MaLiAnNaEnum.SlotAIFuncType.attackRoad == arg_36_0 then
-		var_36_0 = "有效调兵"
+	if Activity201MaLiAnNaEnum.SlotAIFuncType.attackRoad == key then
+		name = "有效调兵"
 	end
 
-	if Activity201MaLiAnNaEnum.SlotAIFuncType.retreat == arg_36_0 then
-		var_36_0 = "无效调兵"
+	if Activity201MaLiAnNaEnum.SlotAIFuncType.retreat == key then
+		name = "无效调兵"
 	end
 
-	if Activity201MaLiAnNaEnum.SlotAIFuncType.helpSlot == arg_36_0 then
-		var_36_0 = "支援"
+	if Activity201MaLiAnNaEnum.SlotAIFuncType.helpSlot == key then
+		name = "支援"
 	end
 
-	return var_36_0
+	return name
 end
 
-var_0_0.instance = var_0_0.New()
+MaliAnNaSoliderAiMgr.instance = MaliAnNaSoliderAiMgr.New()
 
-return var_0_0
+return MaliAnNaSoliderAiMgr

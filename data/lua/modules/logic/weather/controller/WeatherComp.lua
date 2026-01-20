@@ -1,1236 +1,1246 @@
-﻿module("modules.logic.weather.controller.WeatherComp", package.seeall)
+﻿-- chunkname: @modules/logic/weather/controller/WeatherComp.lua
 
-local var_0_0 = class("WeatherComp")
+module("modules.logic.weather.controller.WeatherComp", package.seeall)
 
-var_0_0.TypeOfLightSwitch = typeof(ZProj.SwitchLight)
-var_0_0.TypeOfParticleSystem = typeof(UnityEngine.ParticleSystem)
+local WeatherComp = class("WeatherComp")
 
-local var_0_1 = AudioMgr.instance
+WeatherComp.TypeOfLightSwitch = typeof(ZProj.SwitchLight)
+WeatherComp.TypeOfParticleSystem = typeof(UnityEngine.ParticleSystem)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._weatherController = arg_1_1
-	arg_1_0._isMain = arg_1_2
+local audioMgr = AudioMgr.instance
 
-	if arg_1_0._isMain then
-		arg_1_0._randomMainHero = true
+function WeatherComp:ctor(weatherController, isMain)
+	self._weatherController = weatherController
+	self._isMain = isMain
+
+	if self._isMain then
+		self._randomMainHero = true
 	end
 end
 
-function var_0_0.onInit(arg_2_0)
-	arg_2_0._str2Id = {}
-	arg_2_0._lightMapPath = "scenes/dynamic/%s/lightmaps/%s_%s.tga"
-	arg_2_0._effectPath = "scenes/%s/effect/s01_effect_0%s.prefab"
+function WeatherComp:onInit()
+	self._str2Id = {}
+	self._lightMapPath = "scenes/dynamic/%s/lightmaps/%s_%s.tga"
+	self._effectPath = "scenes/%s/effect/s01_effect_0%s.prefab"
 
-	local var_2_0 = UnityEngine.Shader
+	local _shader = UnityEngine.Shader
 
-	arg_2_0._MainColorId = var_2_0.PropertyToID("_MainColor")
-	arg_2_0._EmissionColorId = var_2_0.PropertyToID("_EmissionColor")
-	arg_2_0._UseSecondMapId = var_2_0.PropertyToID("_UseSecondMap")
-	arg_2_0._UseFirstMapId = var_2_0.PropertyToID("_UseFirstMap")
-	arg_2_0._PercentId = var_2_0.PropertyToID("_Percent")
-	arg_2_0._LightmaplerpId = var_2_0.PropertyToID("_Lightmaplerp")
-	arg_2_0._BloomFactorId = var_2_0.PropertyToID("_BloomFactor")
-	arg_2_0._BloomFactor2Id = var_2_0.PropertyToID("_BloomFactor2")
-	arg_2_0._LuminanceId = var_2_0.PropertyToID("Luminance")
-	arg_2_0._RainId = var_2_0.PropertyToID("_Rain")
-	arg_2_0._RainDistortionFactorId = var_2_0.PropertyToID("_DistortionFactor")
-	arg_2_0._RainEmissionId = var_2_0.PropertyToID("_Emission")
-	arg_2_0._UseFirstMapKey = "_USEFIRSTMAP_ON"
-	arg_2_0._UseSecondMapKey = "_USESECONDMAP_ON"
+	self._MainColorId = _shader.PropertyToID("_MainColor")
+	self._EmissionColorId = _shader.PropertyToID("_EmissionColor")
+	self._UseSecondMapId = _shader.PropertyToID("_UseSecondMap")
+	self._UseFirstMapId = _shader.PropertyToID("_UseFirstMap")
+	self._PercentId = _shader.PropertyToID("_Percent")
+	self._LightmaplerpId = _shader.PropertyToID("_Lightmaplerp")
+	self._BloomFactorId = _shader.PropertyToID("_BloomFactor")
+	self._BloomFactor2Id = _shader.PropertyToID("_BloomFactor2")
+	self._LuminanceId = _shader.PropertyToID("Luminance")
+	self._RainId = _shader.PropertyToID("_Rain")
+	self._RainDistortionFactorId = _shader.PropertyToID("_DistortionFactor")
+	self._RainEmissionId = _shader.PropertyToID("_Emission")
+	self._UseFirstMapKey = "_USEFIRSTMAP_ON"
+	self._UseSecondMapKey = "_USESECONDMAP_ON"
 
-	if arg_2_0._isMain then
-		arg_2_0:onInitFinish()
+	if self._isMain then
+		self:onInitFinish()
 	end
 end
 
-function var_0_0._onApplicationQuit(arg_3_0)
-	arg_3_0:_clearMats()
+function WeatherComp:_onApplicationQuit()
+	self:_clearMats()
 end
 
-function var_0_0.onInitFinish(arg_4_0)
-	GameStateMgr.instance:registerCallback(GameStateEvent.OnApplicationQuit, arg_4_0._onApplicationQuit, arg_4_0)
-	MainSceneSwitchController.instance:registerCallback(MainSceneSwitchEvent.SwitchSceneFinish, arg_4_0._onSwitchSceneFinish, arg_4_0, LuaEventSystem.High)
-	MainSceneSwitchController.instance:registerCallback(MainSceneSwitchEvent.StartSwitchScene, arg_4_0._onStartSwitchScene, arg_4_0)
-	MainSceneSwitchController.instance:registerCallback(MainSceneSwitchEvent.CloseSwitchSceneLoading, arg_4_0._onCloseSwitchSceneLoading, arg_4_0)
-	GameSceneMgr.instance:registerCallback(SceneEventName.SceneGoChangeVisible, arg_4_0._onSceneGoChangeVisible, arg_4_0)
+function WeatherComp:onInitFinish()
+	GameStateMgr.instance:registerCallback(GameStateEvent.OnApplicationQuit, self._onApplicationQuit, self)
+	MainSceneSwitchController.instance:registerCallback(MainSceneSwitchEvent.SwitchSceneFinish, self._onSwitchSceneFinish, self, LuaEventSystem.High)
+	MainSceneSwitchController.instance:registerCallback(MainSceneSwitchEvent.StartSwitchScene, self._onStartSwitchScene, self)
+	MainSceneSwitchController.instance:registerCallback(MainSceneSwitchEvent.CloseSwitchSceneLoading, self._onCloseSwitchSceneLoading, self)
+	GameSceneMgr.instance:registerCallback(SceneEventName.SceneGoChangeVisible, self._onSceneGoChangeVisible, self)
 end
 
-function var_0_0._onSceneGoChangeVisible(arg_5_0, arg_5_1)
-	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Main then
+function WeatherComp:_onSceneGoChangeVisible(value)
+	local curSceneType = GameSceneMgr.instance:getCurSceneType()
+
+	if curSceneType ~= SceneType.Main then
 		return
 	end
 
-	if arg_5_1 then
-		arg_5_0:_playWeatherEffectAudio()
+	if value then
+		self:_playWeatherEffectAudio()
 	else
-		arg_5_0:_stopWeatherEffectAudio()
+		self:_stopWeatherEffectAudio()
 	end
 end
 
-function var_0_0.doCallback(arg_6_0)
-	if not arg_6_0._callbackTarget then
+function WeatherComp:doCallback()
+	if not self._callbackTarget then
 		return
 	end
 
-	arg_6_0._callback(arg_6_0._callbackTarget)
+	self._callback(self._callbackTarget)
 
-	arg_6_0._callback = nil
-	arg_6_0._callbackTarget = nil
+	self._callback = nil
+	self._callbackTarget = nil
 end
 
-function var_0_0.resetWeatherChangeVoiceFlag(arg_7_0)
-	arg_7_0._weatherChangeVoice = false
+function WeatherComp:resetWeatherChangeVoiceFlag()
+	self._weatherChangeVoice = false
 end
 
-function var_0_0.setLightModel(arg_8_0, arg_8_1)
-	arg_8_0._lightModel = arg_8_1
+function WeatherComp:setLightModel(lightModel)
+	self._lightModel = lightModel
 end
 
-function var_0_0.initRoleGo(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4, arg_9_5)
-	arg_9_0._weatherChangeVoice = false
-	arg_9_0._dispatchParam = arg_9_0._dispatchParam or {}
+function WeatherComp:initRoleGo(roleGo, heroId, sharedMaterial, playVoice, skinId)
+	self._weatherChangeVoice = false
+	self._dispatchParam = self._dispatchParam or {}
 
-	arg_9_0:_changeRoleGo(arg_9_1, arg_9_2, arg_9_3, true, arg_9_5)
+	self:_changeRoleGo(roleGo, heroId, sharedMaterial, true, skinId)
 
-	if arg_9_4 then
-		arg_9_0:playWeatherVoice(true)
+	if playVoice then
+		self:playWeatherVoice(true)
 	end
 end
 
-function var_0_0.changeRoleGo(arg_10_0, arg_10_1)
-	arg_10_0:_changeRoleGo(arg_10_1.roleGo, arg_10_1.heroId, arg_10_1.sharedMaterial, arg_10_1.heroPlayWeatherVoice, arg_10_1.skinId)
+function WeatherComp:changeRoleGo(param)
+	self:_changeRoleGo(param.roleGo, param.heroId, param.sharedMaterial, param.heroPlayWeatherVoice, param.skinId)
 end
 
-function var_0_0.clearMat(arg_11_0)
-	arg_11_0._roleSharedMaterial = nil
+function WeatherComp:clearMat()
+	self._roleSharedMaterial = nil
 end
 
-function var_0_0._changeRoleGo(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4, arg_12_5)
-	arg_12_0._tempRoleParam = nil
-	arg_12_0._changeRoleParam = {
-		roleGo = arg_12_1,
-		heroId = arg_12_2,
-		sharedMaterial = arg_12_3,
-		heroPlayWeatherVoice = arg_12_4,
-		skinId = arg_12_5
+function WeatherComp:_changeRoleGo(roleGo, heroId, sharedMaterial, heroPlayWeatherVoice, skinId)
+	self._tempRoleParam = nil
+	self._changeRoleParam = {
+		roleGo = roleGo,
+		heroId = heroId,
+		sharedMaterial = sharedMaterial,
+		heroPlayWeatherVoice = heroPlayWeatherVoice,
+		skinId = skinId
 	}
-	arg_12_0._roleGo = arg_12_1
-	arg_12_0._heroId = arg_12_2
-	arg_12_0._skinId = arg_12_5
-	arg_12_0._heroPlayWeatherVoice = arg_12_4
-	arg_12_0._roleSharedMaterial = arg_12_3
+	self._roleGo = roleGo
+	self._heroId = heroId
+	self._skinId = skinId
+	self._heroPlayWeatherVoice = heroPlayWeatherVoice
+	self._roleSharedMaterial = sharedMaterial
 
-	local var_12_0 = arg_12_1:GetComponent(PostProcessingMgr.PPEffectMaskType)
+	local mask = roleGo:GetComponent(PostProcessingMgr.PPEffectMaskType)
 
-	if var_12_0 then
-		arg_12_0._postProcessMask = var_12_0
+	if mask then
+		self._postProcessMask = mask
 	else
-		arg_12_0._postProcessMask = nil
+		self._postProcessMask = nil
 	end
 
-	arg_12_0:initRoleParam(arg_12_0._curReport)
-	arg_12_0:blendRoleLightMode(arg_12_0._targetValue, true)
+	self:initRoleParam(self._curReport)
+	self:blendRoleLightMode(self._targetValue, true)
 end
 
-function var_0_0.setRoleMaskEnabled(arg_13_0, arg_13_1)
-	if not gohelper.isNil(arg_13_0._postProcessMask) then
-		arg_13_0._postProcessMask.enabled = arg_13_1
+function WeatherComp:setRoleMaskEnabled(value)
+	if not gohelper.isNil(self._postProcessMask) then
+		self._postProcessMask.enabled = value
 	end
 end
 
-function var_0_0.playWeatherVoice(arg_14_0, arg_14_1)
-	if not arg_14_0._weatherController then
+function WeatherComp:playWeatherVoice(force)
+	if not self._weatherController then
 		return
 	end
 
-	if arg_14_0._weatherChangeVoice or not arg_14_0._heroPlayWeatherVoice then
+	if self._weatherChangeVoice or not self._heroPlayWeatherVoice then
 		return
 	end
 
-	local var_14_0 = false
-	local var_14_1 = false
-	local var_14_2 = arg_14_0._heroId
-	local var_14_3 = HeroModel.instance:getVoiceConfig(var_14_2, CharacterEnum.VoiceType.WeatherChange, function(arg_15_0)
-		local var_15_0 = string.split(arg_15_0.param, "#")
+	local prevWeatherVoice = false
+	local curWeatherVoice = false
+	local heroId = self._heroId
+	local weatherChangeVoices = HeroModel.instance:getVoiceConfig(heroId, CharacterEnum.VoiceType.WeatherChange, function(config)
+		local param = string.split(config.param, "#")
 
-		for iter_15_0, iter_15_1 in ipairs(var_15_0) do
-			local var_15_1 = tonumber(iter_15_1)
+		for i, v in ipairs(param) do
+			local reportId = tonumber(v)
 
-			if arg_14_0._prevReport and var_15_1 == arg_14_0._prevReport.id then
-				var_14_0 = true
+			if self._prevReport and reportId == self._prevReport.id then
+				prevWeatherVoice = true
 			end
 
-			if var_15_1 == arg_14_0._curReport.id then
-				var_14_1 = true
+			if reportId == self._curReport.id then
+				curWeatherVoice = true
 			end
 		end
 
-		return var_14_1
-	end, arg_14_0._skinId)
+		return curWeatherVoice
+	end, self._skinId)
 
-	if var_14_3 and #var_14_3 > 0 and (arg_14_1 or var_14_0 == false and var_14_1 or math.random() <= 0.3) then
-		local var_14_4 = var_14_3[1]
-		local var_14_5 = MainHeroView.getRandomMultiVoice(var_14_4, arg_14_0._heroId, arg_14_0._skinId)
+	if weatherChangeVoices and #weatherChangeVoices > 0 and (force or prevWeatherVoice == false and curWeatherVoice or math.random() <= 0.3) then
+		local weatherConfig = weatherChangeVoices[1]
+		local config = MainHeroView.getRandomMultiVoice(weatherConfig, self._heroId, self._skinId)
 
-		arg_14_0._dispatchParam[1] = var_14_5
-		arg_14_0._dispatchParam[2] = false
+		self._dispatchParam[1] = config
+		self._dispatchParam[2] = false
 
-		arg_14_0._weatherController:dispatchEvent(WeatherEvent.PlayVoice, arg_14_0._dispatchParam)
+		self._weatherController:dispatchEvent(WeatherEvent.PlayVoice, self._dispatchParam)
 
-		if arg_14_0._dispatchParam[2] then
-			arg_14_0._weatherChangeVoice = true
+		if self._dispatchParam[2] then
+			self._weatherChangeVoice = true
 		end
 	end
 end
 
-function var_0_0.getSceneNode(arg_16_0, arg_16_1)
-	return gohelper.findChild(arg_16_0._sceneGo, arg_16_1)
+function WeatherComp:getSceneNode(nodePath)
+	return gohelper.findChild(self._sceneGo, nodePath)
 end
 
-function var_0_0.playAnim(arg_17_0, arg_17_1)
-	if not arg_17_0._animator then
-		local var_17_0 = arg_17_0:getSceneNode("s01_obj_a/Anim")
+function WeatherComp:playAnim(name)
+	if not self._animator then
+		local anim = self:getSceneNode("s01_obj_a/Anim")
 
-		if var_17_0 then
-			arg_17_0._animator = var_17_0:GetComponent(typeof(UnityEngine.Animator))
+		if anim then
+			self._animator = anim:GetComponent(typeof(UnityEngine.Animator))
 		end
 	end
 
-	if arg_17_0._animator and arg_17_0._sceneGo.activeInHierarchy then
-		arg_17_0._animator:Play(arg_17_1)
+	if self._animator and self._sceneGo.activeInHierarchy then
+		self._animator:Play(name)
 	end
 end
 
-function var_0_0._onCloseSwitchSceneLoading(arg_18_0)
-	arg_18_0:playAnim("s01_character_switch_bg")
+function WeatherComp:_onCloseSwitchSceneLoading()
+	self:playAnim("s01_character_switch_bg")
 end
 
-function var_0_0._onStartSwitchScene(arg_19_0)
-	arg_19_0._tempRoleParam = arg_19_0._changeRoleParam
+function WeatherComp:_onStartSwitchScene()
+	self._tempRoleParam = self._changeRoleParam
 
-	arg_19_0:onSceneClose()
+	self:onSceneClose()
 
-	if arg_19_0._isMain then
-		arg_19_0._randomMainHero = false
+	if self._isMain then
+		self._randomMainHero = false
 	end
 end
 
-function var_0_0._onSwitchSceneInitFinish(arg_20_0)
-	if not arg_20_0._weatherController then
+function WeatherComp:_onSwitchSceneInitFinish()
+	if not self._weatherController then
 		return
 	end
 
-	if arg_20_0._isSceneHide then
-		arg_20_0:onSceneHide()
+	if self._isSceneHide then
+		self:onSceneHide()
 	end
 
-	if arg_20_0._startInitSceneTime then
-		local var_20_0 = Time.realtimeSinceStartup - arg_20_0._startInitSceneTime
+	if self._startInitSceneTime then
+		local deltaTime = Time.realtimeSinceStartup - self._startInitSceneTime
 	end
 
 	MainSceneSwitchController.instance:dispatchEvent(MainSceneSwitchEvent.SwitchSceneInitFinish)
 end
 
-function var_0_0._onSwitchSceneFinish(arg_21_0)
-	local var_21_0 = GameSceneMgr.instance:getCurScene().level:getSceneGo()
+function WeatherComp:_onSwitchSceneFinish()
+	local scene = GameSceneMgr.instance:getCurScene()
+	local sceneGO = scene.level:getSceneGo()
 
-	arg_21_0._startInitSceneTime = Time.realtimeSinceStartup
+	self._startInitSceneTime = Time.realtimeSinceStartup
 
-	arg_21_0:setSceneId(MainSceneSwitchModel.instance:getCurSceneId())
-	arg_21_0:initSceneGo(var_21_0, arg_21_0._onSwitchSceneInitFinish, arg_21_0)
+	self:setSceneId(MainSceneSwitchModel.instance:getCurSceneId())
+	self:initSceneGo(sceneGO, self._onSwitchSceneInitFinish, self)
 
-	if arg_21_0._tempRoleParam then
-		local var_21_1 = arg_21_0._tempRoleParam
+	if self._tempRoleParam then
+		local param = self._tempRoleParam
 
-		arg_21_0._tempRoleParam = nil
+		self._tempRoleParam = nil
 
-		arg_21_0:_changeRoleGo(var_21_1.roleGo, var_21_1.heroId, var_21_1.sharedMaterial, var_21_1.heroPlayWeatherVoice, var_21_1.skinId)
+		self:_changeRoleGo(param.roleGo, param.heroId, param.sharedMaterial, param.heroPlayWeatherVoice, param.skinId)
 	end
 end
 
-function var_0_0.changeReportId(arg_22_0, arg_22_1, arg_22_2)
-	arg_22_0._reportId = arg_22_1
-	arg_22_0._reportDeltaTime = arg_22_2
+function WeatherComp:changeReportId(reportId, deltaTime)
+	self._reportId = reportId
+	self._reportDeltaTime = deltaTime
 
-	if arg_22_0._sceneGo then
-		arg_22_0:updateReport(false)
+	if self._sceneGo then
+		self:updateReport(false)
 	end
 end
 
-function var_0_0.setSceneId(arg_23_0, arg_23_1)
-	arg_23_0._sceneId = arg_23_1
+function WeatherComp:setSceneId(sceneId)
+	self._sceneId = sceneId
 end
 
-function var_0_0._checkMatTexture(arg_24_0, arg_24_1)
-	if arg_24_1:GetTexture(ShaderPropertyId.MainTex) then
-		logError(string.format("_checkMatTexture mat:{%s} MainTex is not nil", arg_24_1.name))
+function WeatherComp:_checkMatTexture(mat)
+	if mat:GetTexture(ShaderPropertyId.MainTex) then
+		logError(string.format("_checkMatTexture mat:{%s} MainTex is not nil", mat.name))
 	end
 
-	if arg_24_1:GetTexture(ShaderPropertyId.MainTexSecond) then
-		logError(string.format("_checkMatTexture mat:{%s} MainTexSecond is not nil", arg_24_1.name))
+	if mat:GetTexture(ShaderPropertyId.MainTexSecond) then
+		logError(string.format("_checkMatTexture mat:{%s} MainTexSecond is not nil", mat.name))
 	end
 end
 
-function var_0_0.getSceneGo(arg_25_0)
-	return arg_25_0._sceneGo
+function WeatherComp:getSceneGo()
+	return self._sceneGo
 end
 
-function var_0_0.initSceneGo(arg_26_0, arg_26_1, arg_26_2, arg_26_3)
-	arg_26_0._revert = true
+function WeatherComp:initSceneGo(sceneGo, callback, callbackTarget)
+	self._revert = true
 
-	if arg_26_0._isMain then
-		WeatherModel.instance:initDay(arg_26_0._sceneId)
+	if self._isMain then
+		WeatherModel.instance:initDay(self._sceneId)
 	end
 
-	arg_26_0._sceneGo = arg_26_1
+	self._sceneGo = sceneGo
 
-	local var_26_0 = arg_26_0:getSceneNode("s01_obj_a/Anim/Effect")
+	local effectRootGo = self:getSceneNode("s01_obj_a/Anim/Effect")
 
-	arg_26_0._effectRoot = var_26_0.transform
-	arg_26_0._effectLightPs = gohelper.findChildComponent(var_26_0, "m_s01_effect_light", var_0_0.TypeOfParticleSystem)
-	arg_26_0._effectAirPs = gohelper.findChildComponent(var_26_0, "m_s01_effect_air", var_0_0.TypeOfParticleSystem)
-	arg_26_0._lightSwitch = arg_26_1:GetComponent(var_0_0.TypeOfLightSwitch)
-	arg_26_0._callback = arg_26_2
-	arg_26_0._callbackTarget = arg_26_3
+	self._effectRoot = effectRootGo.transform
+	self._effectLightPs = gohelper.findChildComponent(effectRootGo, "m_s01_effect_light", WeatherComp.TypeOfParticleSystem)
+	self._effectAirPs = gohelper.findChildComponent(effectRootGo, "m_s01_effect_air", WeatherComp.TypeOfParticleSystem)
+	self._lightSwitch = sceneGo:GetComponent(WeatherComp.TypeOfLightSwitch)
+	self._callback = callback
+	self._callbackTarget = callbackTarget
 
-	local var_26_1 = SLFramework.FrameworkSettings.IsEditor
-	local var_26_2 = arg_26_0._lightSwitch.lightMats
+	local isEditor = SLFramework.FrameworkSettings.IsEditor
+	local lightMats = self._lightSwitch.lightMats
 
-	arg_26_0._lightMats = {}
-	arg_26_0._matsMap = {}
-	arg_26_0._rawLightMats = {}
-	arg_26_0._rainEffectMat = nil
+	self._lightMats = {}
+	self._matsMap = {}
+	self._rawLightMats = {}
+	self._rainEffectMat = nil
 
-	for iter_26_0 = 0, var_26_2.Length - 1 do
-		local var_26_3 = var_26_2[iter_26_0]
-		local var_26_4 = UnityEngine.Material.Instantiate(var_26_3)
+	for i = 0, lightMats.Length - 1 do
+		local rawMat = lightMats[i]
+		local mat = UnityEngine.Material.Instantiate(rawMat)
 
-		var_26_4.name = var_26_3.name
-		var_26_2[iter_26_0] = var_26_4
+		mat.name = rawMat.name
+		lightMats[i] = mat
 
-		local var_26_5 = string.split(var_26_4.name, "#")
-		local var_26_6 = var_26_5[1]
-		local var_26_7 = var_26_5[2]
+		local nameParam = string.split(mat.name, "#")
+		local prefix = nameParam[1]
+		local nameId = nameParam[2]
 
-		if not WeatherHelper.skipLightMap(arg_26_0._sceneId, var_26_6) then
-			arg_26_0._lightMats[var_26_6] = arg_26_0._lightMats[var_26_6] or {}
+		if not WeatherHelper.skipLightMap(self._sceneId, prefix) then
+			self._lightMats[prefix] = self._lightMats[prefix] or {}
 
-			table.insert(arg_26_0._lightMats[var_26_6], var_26_4)
-			table.insert(arg_26_0._rawLightMats, var_26_4)
+			table.insert(self._lightMats[prefix], mat)
+			table.insert(self._rawLightMats, mat)
 		end
 
-		arg_26_0._matsMap[var_26_4.name] = var_26_4
+		self._matsMap[mat.name] = mat
 
-		if var_26_1 then
-			arg_26_0:_checkMatTexture(var_26_4)
+		if isEditor then
+			self:_checkMatTexture(mat)
 		end
 
-		if string.find(var_26_6, "m_s01_obj_e$") then
-			arg_26_0._rainEffectMat = var_26_4
+		if string.find(prefix, "m_s01_obj_e$") then
+			self._rainEffectMat = mat
 		end
 	end
 
-	arg_26_0._behaviourContainer = WeatherBehaviourContainer.Create(arg_26_0._sceneGo)
+	self._behaviourContainer = WeatherBehaviourContainer.Create(self._sceneGo)
 
-	arg_26_0._behaviourContainer:setSceneId(arg_26_0._sceneId)
-	arg_26_0._behaviourContainer:setLightMats(var_26_2)
+	self._behaviourContainer:setSceneId(self._sceneId)
+	self._behaviourContainer:setLightMats(lightMats)
 
-	if not arg_26_0._rainEffectMat then
+	if not self._rainEffectMat then
 		logError("WeatherComp initSceneGo no rainEffectMat")
 	end
 
-	arg_26_0:_initMatReportSettings()
+	self:_initMatReportSettings()
 
-	if arg_26_0._isMain then
-		ViewMgr.instance:registerCallback(ViewEvent.OnCloseFullView, arg_26_0._onCloseFullView, arg_26_0)
-		MainController.instance:registerCallback(MainEvent.OnShowSceneNewbieOpen, arg_26_0._OnShowSceneNewbieOpen, arg_26_0)
-		arg_26_0._weatherController:updateOtherComps(arg_26_1)
+	if self._isMain then
+		ViewMgr.instance:registerCallback(ViewEvent.OnCloseFullView, self._onCloseFullView, self)
+		MainController.instance:registerCallback(MainEvent.OnShowSceneNewbieOpen, self._OnShowSceneNewbieOpen, self)
+		self._weatherController:updateOtherComps(sceneGo)
 	end
 
-	arg_26_0:updateReport(false)
+	self:updateReport(false)
 end
 
-function var_0_0._initMatReportSettings(arg_27_0)
-	arg_27_0._matReportSettings = WeatherConfig.instance:getMatReportSettings(arg_27_0._sceneId)
+function WeatherComp:_initMatReportSettings()
+	self._matReportSettings = WeatherConfig.instance:getMatReportSettings(self._sceneId)
 
-	if SLFramework.FrameworkSettings.IsEditor and arg_27_0._matReportSettings then
-		for iter_27_0, iter_27_1 in pairs(arg_27_0._matReportSettings) do
-			local var_27_0 = arg_27_0._matsMap[iter_27_0]
+	if SLFramework.FrameworkSettings.IsEditor and self._matReportSettings then
+		for matName, v in pairs(self._matReportSettings) do
+			local mat = self._matsMap[matName]
 
-			if not var_27_0 then
-				logError(string.format("WeatherComp _initMatReportSettings mat:{%s} is nil", iter_27_0))
-			elseif var_27_0:GetTexture(ShaderPropertyId.LightMap) then
-				logError(string.format("WeatherComp _initMatReportSettings mat:{%s} LightMap is not nil", iter_27_0))
+			if not mat then
+				logError(string.format("WeatherComp _initMatReportSettings mat:{%s} is nil", matName))
+			elseif mat:GetTexture(ShaderPropertyId.LightMap) then
+				logError(string.format("WeatherComp _initMatReportSettings mat:{%s} LightMap is not nil", matName))
 			end
 		end
 	end
 end
 
-function var_0_0._OnShowSceneNewbieOpen(arg_28_0)
-	callWithCatch(arg_28_0._playNewbieShowAnim, arg_28_0)
+function WeatherComp:_OnShowSceneNewbieOpen()
+	callWithCatch(self._playNewbieShowAnim, self)
 end
 
-function var_0_0._playNewbieShowAnim(arg_29_0)
-	arg_29_0:playAnim("s01_character_switch_xingshou")
+function WeatherComp:_playNewbieShowAnim()
+	self:playAnim("s01_character_switch_xingshou")
 end
 
-function var_0_0._onCloseFullView(arg_30_0, arg_30_1)
+function WeatherComp:_onCloseFullView(viewName)
 	if not ViewMgr.instance:hasOpenFullView() then
-		arg_30_0:_checkReport()
+		self:_checkReport()
 	end
 end
 
-function var_0_0.setReportId(arg_31_0, arg_31_1)
-	local var_31_0 = lua_weather_report.configDict[arg_31_1]
-	local var_31_1 = 60
+function WeatherComp:setReportId(id)
+	local curReport, deltaTime = lua_weather_report.configDict[id], 60
 
-	if var_31_0 and var_31_1 then
-		print(WeatherModel.instance:debug(var_31_0.id, arg_31_0._sceneId))
-		arg_31_0:setReport(var_31_0)
+	if curReport and deltaTime then
+		print(WeatherModel.instance:debug(curReport.id, self._sceneId))
+		self:setReport(curReport)
 
-		if not arg_31_0._reportEndTime then
-			TaskDispatcher.runRepeat(arg_31_0._checkReport, arg_31_0, 60)
+		if not self._reportEndTime then
+			TaskDispatcher.runRepeat(self._checkReport, self, 60)
 		end
 
-		arg_31_0._reportEndTime = os.time() + var_31_1
+		self._reportEndTime = os.time() + deltaTime
 
-		if arg_31_0._weatherController then
-			arg_31_0._weatherController:dispatchEvent(WeatherEvent.WeatherChanged, var_31_0.id, var_31_1)
+		if self._weatherController then
+			self._weatherController:dispatchEvent(WeatherEvent.WeatherChanged, curReport.id, deltaTime)
 		end
 	end
 end
 
-function var_0_0.updateReport(arg_32_0, arg_32_1)
-	local var_32_0, var_32_1 = WeatherModel.instance:getReport()
-	local var_32_2, var_32_3 = xpcall(arg_32_0._getWelcomeReport, __G__TRACKBACK__, arg_32_0)
+function WeatherComp:updateReport(dispatchChange)
+	local curReport, deltaTime = WeatherModel.instance:getReport()
+	local status, welcomeReport = xpcall(self._getWelcomeReport, __G__TRACKBACK__, self)
 
-	if var_32_2 and var_32_3 then
-		var_32_0 = var_32_3
-		var_32_1 = 3600
+	if status and welcomeReport then
+		curReport = welcomeReport
+		deltaTime = 3600
 	end
 
 	if GuideModel.instance:isDoingFirstGuide() then
-		var_32_0, var_32_1 = lua_weather_report.configDict[2], 86400
+		curReport, deltaTime = lua_weather_report.configDict[2], 86400
 	end
 
-	if arg_32_0._reportId and arg_32_0._reportDeltaTime then
-		var_32_0 = lua_weather_report.configDict[arg_32_0._reportId]
-		var_32_1 = arg_32_0._reportDeltaTime
+	if self._reportId and self._reportDeltaTime then
+		curReport = lua_weather_report.configDict[self._reportId]
+		deltaTime = self._reportDeltaTime
 	end
 
-	if var_32_0 and var_32_1 then
-		print(WeatherModel.instance:debug(var_32_0.id, arg_32_0._sceneId))
-		arg_32_0:setReport(var_32_0)
+	if curReport and deltaTime then
+		print(WeatherModel.instance:debug(curReport.id, self._sceneId))
+		self:setReport(curReport)
 
-		if not arg_32_0._reportEndTime then
-			TaskDispatcher.runRepeat(arg_32_0._checkReport, arg_32_0, 60)
+		if not self._reportEndTime then
+			TaskDispatcher.runRepeat(self._checkReport, self, 60)
 		end
 
-		arg_32_0._reportEndTime = os.time() + var_32_1
+		self._reportEndTime = os.time() + deltaTime
 
-		if arg_32_1 and arg_32_0._weatherController then
-			arg_32_0._weatherController:dispatchEvent(WeatherEvent.WeatherChanged, var_32_0.id, var_32_1)
+		if dispatchChange and self._weatherController then
+			self._weatherController:dispatchEvent(WeatherEvent.WeatherChanged, curReport.id, deltaTime)
 		end
 	else
-		logError(string.format("WeatherComp:updateReport error,curReport:%s,deltaTime:%s", var_32_0, var_32_1))
+		logError(string.format("WeatherComp:updateReport error,curReport:%s,deltaTime:%s", curReport, deltaTime))
 	end
 end
 
-function var_0_0._getWelcomeReport(arg_33_0)
+function WeatherComp:_getWelcomeReport()
 	if not MainThumbnailWork._checkShow() then
 		return
 	end
 
-	local var_33_0, var_33_1 = CharacterSwitchListModel.instance:getMainHero()
-	local var_33_2 = MainHeroView.getWelcomeLikeVoice(CharacterEnum.VoiceType.MainViewWelcome, var_33_0, var_33_1)
+	local curHeroId, curSkinId = CharacterSwitchListModel.instance:getMainHero()
+	local config = MainHeroView.getWelcomeLikeVoice(CharacterEnum.VoiceType.MainViewWelcome, curHeroId, curSkinId)
 
-	if not var_33_2 then
+	if not config then
 		return
 	end
 
-	local var_33_3 = string.split(var_33_2.time, "#")
-	local var_33_4 = string.split(var_33_3[1], ":")
-	local var_33_5 = tonumber(var_33_4[1]) < 12
+	local param = string.split(config.time, "#")
+	local timeList = string.split(param[1], ":")
+	local h = tonumber(timeList[1])
+	local inTheMorning = h < 12
+	local report = WeatherConfig.instance:getRandomReport(inTheMorning and WeatherEnum.LightModeDuring or WeatherEnum.LightModeDusk, self._sceneId)
 
-	return (WeatherConfig.instance:getRandomReport(var_33_5 and WeatherEnum.LightModeDuring or WeatherEnum.LightModeDusk, arg_33_0._sceneId))
+	return report
 end
 
-function var_0_0._checkReport(arg_34_0)
+function WeatherComp:_checkReport()
 	if ViewMgr.instance:hasOpenFullView() then
 		return
 	end
 
-	if not arg_34_0._isSceneHide and arg_34_0._reportEndTime and arg_34_0._reportEndTime <= os.time() then
-		arg_34_0:updateReport(true)
+	if not self._isSceneHide and self._reportEndTime and self._reportEndTime <= os.time() then
+		self:updateReport(true)
 	end
 end
 
-function var_0_0.getPrevLightMode(arg_35_0)
-	return arg_35_0._prevReport and arg_35_0._prevReport.lightMode
+function WeatherComp:getPrevLightMode()
+	return self._prevReport and self._prevReport.lightMode
 end
 
-function var_0_0.getCurLightMode(arg_36_0)
-	return arg_36_0._curReport and arg_36_0._curReport.lightMode
+function WeatherComp:getCurLightMode()
+	return self._curReport and self._curReport.lightMode
 end
 
-function var_0_0._finishAllUpdate(arg_37_0)
-	if arg_37_0._effectStartTime then
-		arg_37_0:_onEffectUpdateHandler(arg_37_0._effectStartTime + 5)
+function WeatherComp:_finishAllUpdate()
+	if self._effectStartTime then
+		self:_onEffectUpdateHandler(self._effectStartTime + 5)
 	end
 
-	if arg_37_0._startTime then
-		arg_37_0:_onUpdateHandler(arg_37_0._startTime + 5)
+	if self._startTime then
+		self:_onUpdateHandler(self._startTime + 5)
 	end
 end
 
-function var_0_0.setReport(arg_38_0, arg_38_1)
-	if arg_38_0._curReport and arg_38_1.id == arg_38_0._curReport.id then
+function WeatherComp:setReport(report)
+	if self._curReport and report.id == self._curReport.id then
 		return
 	end
 
-	if not WeatherConfig.instance:sceneContainReport(arg_38_0._sceneId, arg_38_1.id) then
-		logError(string.format("WeatherComp setReport sceneId:%s,reportId:%s,not in scene", arg_38_0._sceneId, arg_38_1.id))
+	if not WeatherConfig.instance:sceneContainReport(self._sceneId, report.id) then
+		logError(string.format("WeatherComp setReport sceneId:%s,reportId:%s,not in scene", self._sceneId, report.id))
 
-		arg_38_1 = lua_weather_report.configDict[1]
+		report = lua_weather_report.configDict[1]
 	end
 
-	arg_38_0:_finishAllUpdate()
+	self:_finishAllUpdate()
 
-	arg_38_0._prevReport = arg_38_0._curReport
-	arg_38_0._curReport = arg_38_1
-	arg_38_0.reportLightMode = arg_38_0._curReport.lightMode
+	self._prevReport = self._curReport
+	self._curReport = report
+	self.reportLightMode = self._curReport.lightMode
 
-	if arg_38_0._changeReportCallback then
-		arg_38_0._changeReportCallback(arg_38_0._changeReportCallbackTarget, arg_38_0._curReport)
+	if self._changeReportCallback then
+		self._changeReportCallback(self._changeReportCallbackTarget, self._curReport)
 	end
 
-	if arg_38_0._prevReport and arg_38_0._prevReport.effect ~= arg_38_0._curReport.effect then
-		arg_38_0:removeAllEffect()
+	if self._prevReport and self._prevReport.effect ~= self._curReport.effect then
+		self:removeAllEffect()
 	end
 
-	if arg_38_0._behaviourContainer then
-		arg_38_0._behaviourContainer:setReport(arg_38_0._prevReport, arg_38_0._curReport)
+	if self._behaviourContainer then
+		self._behaviourContainer:setReport(self._prevReport, self._curReport)
 	end
 
-	arg_38_0:_playVoice()
+	self:_playVoice()
 
-	if arg_38_0._prevReport and arg_38_0._prevReport.lightMode == arg_38_0._curReport.lightMode then
-		arg_38_0:addAllEffect()
-		arg_38_0:startEffectBlend()
-		arg_38_0:playWeatherVoice()
+	if self._prevReport and self._prevReport.lightMode == self._curReport.lightMode then
+		self:addAllEffect()
+		self:startEffectBlend()
+		self:playWeatherVoice()
 
 		return
 	end
 
-	arg_38_0:changeLightEffectColor()
-	arg_38_0:initRoleParam(arg_38_0._curReport)
-	arg_38_0:startSwitchReport(arg_38_0._prevReport, arg_38_0._curReport)
+	self:changeLightEffectColor()
+	self:initRoleParam(self._curReport)
+	self:startSwitchReport(self._prevReport, self._curReport)
 end
 
-function var_0_0.getCurrReport(arg_39_0)
-	return arg_39_0._curReport
+function WeatherComp:getCurrReport()
+	return self._curReport
 end
 
-function var_0_0.startSwitchReport(arg_40_0, arg_40_1, arg_40_2)
-	arg_40_0._speed = 0.5
-	arg_40_0._revert = not arg_40_0._revert
+function WeatherComp:startSwitchReport(src, target)
+	self._speed = 0.5
+	self._revert = not self._revert
 
-	if arg_40_0._revert then
-		arg_40_0._startValue = 1
-		arg_40_0._targetValue = 0
-		arg_40_0._srcReport = arg_40_2
-		arg_40_0._targetReport = arg_40_1
+	if self._revert then
+		self._startValue = 1
+		self._targetValue = 0
+		self._srcReport = target
+		self._targetReport = src
 	else
-		arg_40_0._startValue = 0
-		arg_40_0._targetValue = 1
-		arg_40_0._srcReport = arg_40_1
-		arg_40_0._targetReport = arg_40_2
+		self._startValue = 0
+		self._targetValue = 1
+		self._srcReport = src
+		self._targetReport = target
 	end
 
-	arg_40_0._deltaValue = arg_40_0._targetValue - arg_40_0._startValue
+	self._deltaValue = self._targetValue - self._startValue
 
-	arg_40_0:switchLight(arg_40_0._srcReport and arg_40_0._srcReport.lightMode - 1 or nil, arg_40_0._targetReport.lightMode - 1)
+	self:switchLight(self._srcReport and self._srcReport.lightMode - 1 or nil, self._targetReport.lightMode - 1)
 end
 
-function var_0_0.switchLight(arg_41_0, arg_41_1, arg_41_2)
-	arg_41_0:_startLoad(arg_41_1, arg_41_2)
+function WeatherComp:switchLight(src, target)
+	self:_startLoad(src, target)
 end
 
-function var_0_0._getSceneResName(arg_42_0)
-	return arg_42_0._sceneResName or MainSceneSwitchModel.instance:getCurSceneResName()
+function WeatherComp:_getSceneResName()
+	return self._sceneResName or MainSceneSwitchModel.instance:getCurSceneResName()
 end
 
-function var_0_0.setSceneResName(arg_43_0, arg_43_1)
-	arg_43_0._sceneResName = arg_43_1
+function WeatherComp:setSceneResName(name)
+	self._sceneResName = name
 end
 
-function var_0_0._startLoad(arg_44_0, arg_44_1, arg_44_2)
-	TaskDispatcher.cancelTask(arg_44_0._resGC, arg_44_0)
-	TaskDispatcher.cancelTask(arg_44_0._repeatPlayEffectAndAudio, arg_44_0)
+function WeatherComp:_startLoad(src, target)
+	TaskDispatcher.cancelTask(self._resGC, self)
+	TaskDispatcher.cancelTask(self._repeatPlayEffectAndAudio, self)
 
-	arg_44_0._reportSrc = arg_44_1
-	arg_44_0._reportTarget = arg_44_2
+	self._reportSrc = src
+	self._reportTarget = target
 
-	if arg_44_0._srcLoader then
-		arg_44_0._srcLoader:dispose()
+	if self._srcLoader then
+		self._srcLoader:dispose()
 
-		arg_44_0._srcLoader = nil
+		self._srcLoader = nil
 	end
 
-	if arg_44_0._targetLoader then
-		arg_44_0._targetLoader:dispose()
+	if self._targetLoader then
+		self._targetLoader:dispose()
 
-		arg_44_0._targetLoader = nil
+		self._targetLoader = nil
 	end
 
-	local var_44_0 = arg_44_0:_getSceneResName()
-	local var_44_1 = {}
-	local var_44_2 = {}
-	local var_44_3 = {}
+	local resName = self:_getSceneResName()
+	local lightMapPathList = {}
+	local srcList = {}
+	local targetList = {}
 
-	for iter_44_0, iter_44_1 in pairs(arg_44_0._lightMats) do
-		local var_44_4 = var_44_1[iter_44_0] or {}
+	for prefix, v in pairs(self._lightMats) do
+		local t = lightMapPathList[prefix] or {}
 
-		if arg_44_1 then
-			local var_44_5 = string.format(arg_44_0._lightMapPath, var_44_0, WeatherHelper.getResourcePrefix(iter_44_0), arg_44_1)
+		if src then
+			local srcPath = string.format(self._lightMapPath, resName, WeatherHelper.getResourcePrefix(prefix), src)
 
-			if not tabletool.indexOf(var_44_2, var_44_5) then
-				table.insert(var_44_2, var_44_5)
+			if not tabletool.indexOf(srcList, srcPath) then
+				table.insert(srcList, srcPath)
 			end
 
-			var_44_4[arg_44_1] = var_44_5
+			t[src] = srcPath
 		end
 
-		local var_44_6 = string.format(arg_44_0._lightMapPath, var_44_0, WeatherHelper.getResourcePrefix(iter_44_0), arg_44_2)
+		local targetPath = string.format(self._lightMapPath, resName, WeatherHelper.getResourcePrefix(prefix), target)
 
-		if not tabletool.indexOf(var_44_3, var_44_6) then
-			table.insert(var_44_3, var_44_6)
+		if not tabletool.indexOf(targetList, targetPath) then
+			table.insert(targetList, targetPath)
 		end
 
-		var_44_4[arg_44_2] = var_44_6
-		var_44_1[iter_44_0] = var_44_4
+		t[target] = targetPath
+		lightMapPathList[prefix] = t
 	end
 
-	arg_44_0._lightMapPathPrefix = var_44_1
-	arg_44_0._loadFinishNum = 0
+	self._lightMapPathPrefix = lightMapPathList
+	self._loadFinishNum = 0
 
-	if #var_44_2 > 0 then
-		arg_44_0._loadMaxNum = 2
-		arg_44_0._srcLoader = MultiAbLoader.New()
+	if #srcList > 0 then
+		self._loadMaxNum = 2
+		self._srcLoader = MultiAbLoader.New()
 
-		arg_44_0._srcLoader:setPathList(var_44_2)
-		arg_44_0._srcLoader:startLoad(arg_44_0._onLoadOneDone, arg_44_0)
+		self._srcLoader:setPathList(srcList)
+		self._srcLoader:startLoad(self._onLoadOneDone, self)
 	else
-		arg_44_0._loadMaxNum = 1
+		self._loadMaxNum = 1
 	end
 
-	if arg_44_0._matReportSettings and #var_44_3 > 0 then
-		for iter_44_2, iter_44_3 in pairs(arg_44_0._matReportSettings) do
-			local var_44_7 = iter_44_3[arg_44_0._curReport.lightMode]
+	if self._matReportSettings and #targetList > 0 then
+		for k, v in pairs(self._matReportSettings) do
+			local path = v[self._curReport.lightMode]
 
-			if var_44_7 then
-				table.insert(var_44_3, var_44_7)
+			if path then
+				table.insert(targetList, path)
 			end
 		end
 	end
 
-	if #var_44_3 > 0 then
-		arg_44_0._targetLoader = MultiAbLoader.New()
+	if #targetList > 0 then
+		self._targetLoader = MultiAbLoader.New()
 
-		arg_44_0._targetLoader:setPathList(var_44_3)
-		arg_44_0._targetLoader:startLoad(arg_44_0._onLoadOneDone, arg_44_0)
+		self._targetLoader:setPathList(targetList)
+		self._targetLoader:startLoad(self._onLoadOneDone, self)
 	end
 end
 
-function var_0_0._onLoadOneDone(arg_45_0)
-	arg_45_0._loadFinishNum = arg_45_0._loadFinishNum + 1
+function WeatherComp:_onLoadOneDone()
+	self._loadFinishNum = self._loadFinishNum + 1
 
-	if arg_45_0._loadFinishNum < arg_45_0._loadMaxNum then
+	if self._loadFinishNum < self._loadMaxNum then
 		return
 	end
 
-	arg_45_0:_loadTexturesFinish(arg_45_0._srcLoader, arg_45_0._targetLoader, arg_45_0._lightMapPathPrefix, arg_45_0._reportSrc, arg_45_0._reportTarget)
+	self:_loadTexturesFinish(self._srcLoader, self._targetLoader, self._lightMapPathPrefix, self._reportSrc, self._reportTarget)
 end
 
-function var_0_0._loadTexturesFinish(arg_46_0, arg_46_1, arg_46_2, arg_46_3, arg_46_4, arg_46_5)
-	arg_46_0:doCallback()
+function WeatherComp:_loadTexturesFinish(srcLoader, targetLoader, lightMapPathList, src, target)
+	self:doCallback()
 
-	local var_46_0
+	local srcTexture
 
-	for iter_46_0, iter_46_1 in pairs(arg_46_3) do
-		if arg_46_4 then
-			local var_46_1 = iter_46_1[arg_46_4]
+	for prefix, v in pairs(lightMapPathList) do
+		if src then
+			local srcPath = v[src]
+			local srcItem = srcLoader:getAssetItem(srcPath)
 
-			var_46_0 = arg_46_1:getAssetItem(var_46_1):GetResource(var_46_1)
+			srcTexture = srcItem:GetResource(srcPath)
 		end
 
-		local var_46_2 = iter_46_1[arg_46_5]
-		local var_46_3 = arg_46_2:getAssetItem(var_46_2):GetResource(var_46_2)
+		local targetPath = v[target]
+		local targetItem = targetLoader:getAssetItem(targetPath)
+		local targetTexture = targetItem:GetResource(targetPath)
 
-		for iter_46_2, iter_46_3 in pairs(arg_46_0._lightMats[iter_46_0]) do
-			if arg_46_4 then
-				iter_46_3:SetTexture(ShaderPropertyId.MainTex, var_46_0)
+		for _, mat in pairs(self._lightMats[prefix]) do
+			if src then
+				mat:SetTexture(ShaderPropertyId.MainTex, srcTexture)
 			end
 
-			iter_46_3:SetTexture(ShaderPropertyId.MainTexSecond, var_46_3)
+			mat:SetTexture(ShaderPropertyId.MainTexSecond, targetTexture)
 		end
 	end
 
-	arg_46_0:_setMatReportLightMap(arg_46_2)
-	arg_46_0:_setSceneMatMapCfg(1, 1)
-	TaskDispatcher.runDelay(arg_46_0._resGC, arg_46_0, 3)
+	self:_setMatReportLightMap(targetLoader)
+	self:_setSceneMatMapCfg(1, 1)
+	TaskDispatcher.runDelay(self._resGC, self, 3)
 
-	if arg_46_4 then
-		arg_46_0:startLightBlend()
-		arg_46_0:startEffectBlend()
+	if src then
+		self:startLightBlend()
+		self:startEffectBlend()
 	else
-		arg_46_0:_changeBlendValue(arg_46_0._targetValue, true)
-		arg_46_0:_changeEffectBlendValue(1, true)
-		arg_46_0:_updateSceneMatMapCfg()
+		self:_changeBlendValue(self._targetValue, true)
+		self:_changeEffectBlendValue(1, true)
+		self:_updateSceneMatMapCfg()
 	end
 
-	arg_46_0:_resetMats()
+	self:_resetMats()
 end
 
-function var_0_0._setMatReportLightMap(arg_47_0, arg_47_1)
-	if not arg_47_0._matReportSettings then
+function WeatherComp:_setMatReportLightMap(targetLoader)
+	if not self._matReportSettings then
 		return
 	end
 
-	for iter_47_0, iter_47_1 in pairs(arg_47_0._matReportSettings) do
-		local var_47_0 = arg_47_0._matsMap[iter_47_0]
-		local var_47_1 = iter_47_1[arg_47_0._curReport.lightMode]
+	for matName, v in pairs(self._matReportSettings) do
+		local mat = self._matsMap[matName]
+		local path = v[self._curReport.lightMode]
 
-		if var_47_1 then
-			if var_47_0 then
-				local var_47_2 = arg_47_1:getAssetItem(var_47_1)
-				local var_47_3 = var_47_2 and var_47_2:GetResource(var_47_1)
+		if path then
+			if mat then
+				local targetItem = targetLoader:getAssetItem(path)
+				local targetTexture = targetItem and targetItem:GetResource(path)
 
-				if var_47_3 then
-					var_47_0:SetTexture(ShaderPropertyId.LightMap, var_47_3)
+				if targetTexture then
+					mat:SetTexture(ShaderPropertyId.LightMap, targetTexture)
 				else
-					logError(string.format("WeatherComp:_setMatReportLightMap targetTexture is nil, path: %s", var_47_1))
+					logError(string.format("WeatherComp:_setMatReportLightMap targetTexture is nil, path: %s", path))
 				end
 			end
-		elseif var_47_0 then
-			var_47_0:SetTexture(ShaderPropertyId.LightMap, nil)
+		elseif mat then
+			mat:SetTexture(ShaderPropertyId.LightMap, nil)
 		end
 	end
 end
 
-function var_0_0._resetMats(arg_48_0)
-	arg_48_0:_resetGoMats(arg_48_0:getSceneNode("s01_obj_a/Anim/Sky"))
-	arg_48_0:_resetGoMats(arg_48_0:getSceneNode("s01_obj_a/Anim/Ground"))
-	arg_48_0:_resetGoMats(arg_48_0:getSceneNode("s01_obj_a/Anim/Obj"))
+function WeatherComp:_resetMats()
+	self:_resetGoMats(self:getSceneNode("s01_obj_a/Anim/Sky"))
+	self:_resetGoMats(self:getSceneNode("s01_obj_a/Anim/Ground"))
+	self:_resetGoMats(self:getSceneNode("s01_obj_a/Anim/Obj"))
 end
 
-function var_0_0._resetGoMats(arg_49_0, arg_49_1)
-	local var_49_0 = arg_49_1:GetComponentsInChildren(typeof(UnityEngine.MeshRenderer), true)
+function WeatherComp:_resetGoMats(go)
+	local meshRenderer = go:GetComponentsInChildren(typeof(UnityEngine.MeshRenderer), true)
 
-	if var_49_0 then
-		for iter_49_0 = 0, var_49_0.Length - 1 do
-			local var_49_1 = var_49_0[iter_49_0]
-			local var_49_2 = var_49_1.sharedMaterial
-			local var_49_3 = var_49_2 and string.split(var_49_2.name, " ")[1]
+	if meshRenderer then
+		for index = 0, meshRenderer.Length - 1 do
+			local render = meshRenderer[index]
+			local mat = render.sharedMaterial
+			local matName = mat and string.split(mat.name, " ")[1]
 
-			if var_49_3 and arg_49_0._matsMap[var_49_3] then
-				var_49_1.sharedMaterial = arg_49_0._matsMap[var_49_3]
+			if matName and self._matsMap[matName] then
+				render.sharedMaterial = self._matsMap[matName]
 			end
 		end
 	end
 end
 
-function var_0_0.startEffectBlend(arg_50_0)
-	arg_50_0._effectStartTime = Time.time
+function WeatherComp:startEffectBlend()
+	self._effectStartTime = Time.time
 
-	TaskDispatcher.runRepeat(arg_50_0._onEffectUpdate, arg_50_0, 0.033)
+	TaskDispatcher.runRepeat(self._onEffectUpdate, self, 0.033)
 end
 
-function var_0_0._onEffectUpdate(arg_51_0)
-	arg_51_0:_onEffectUpdateHandler(Time.time)
+function WeatherComp:_onEffectUpdate()
+	self:_onEffectUpdateHandler(Time.time)
 end
 
-function var_0_0._onEffectUpdateHandler(arg_52_0, arg_52_1)
-	local var_52_0 = (arg_52_1 - arg_52_0._effectStartTime) * arg_52_0._speed
-	local var_52_1 = var_52_0 >= 1 or var_52_0 <= 0
-	local var_52_2 = var_52_0
+function WeatherComp:_onEffectUpdateHandler(curTime)
+	local value = (curTime - self._effectStartTime) * self._speed
+	local isEnd = value >= 1 or value <= 0
+	local target = value
 
-	if var_52_1 then
-		if var_52_0 > 1 then
-			var_52_2 = 1
-		elseif var_52_0 < 0 then
-			var_52_2 = 0
+	if isEnd then
+		if value > 1 then
+			target = 1
+		elseif value < 0 then
+			target = 0
 		end
 	end
 
-	if var_52_1 then
-		arg_52_0._effectStartTime = nil
+	if isEnd then
+		self._effectStartTime = nil
 
-		TaskDispatcher.cancelTask(arg_52_0._onEffectUpdate, arg_52_0)
+		TaskDispatcher.cancelTask(self._onEffectUpdate, self)
 	end
 
-	arg_52_0:_changeEffectBlendValue(var_52_2, var_52_1)
+	self:_changeEffectBlendValue(target, isEnd)
 end
 
-function var_0_0._changeEffectBlendValue(arg_53_0, arg_53_1, arg_53_2)
-	if not arg_53_0._rainEffectMat then
+function WeatherComp:_changeEffectBlendValue(value, isEnd)
+	if not self._rainEffectMat then
 		return
 	end
 
-	local var_53_0 = arg_53_0._prevReport or arg_53_0._curReport
-	local var_53_1 = arg_53_0._curReport
+	local prevReport = self._prevReport or self._curReport
+	local curReport = self._curReport
 
-	if not var_53_0 or not var_53_1 then
+	if not prevReport or not curReport then
 		logError("WeatherComp _changeEffectBlendValue prevReport or curReport is nil")
 
 		return
 	end
 
-	local var_53_2 = arg_53_0:_getRainEffectValue(WeatherEnum.RainOn, var_53_1.effect)
-	local var_53_3 = arg_53_0:_getRainEffectValue(WeatherEnum.RainValue, var_53_1.effect)
+	local rainOn = self:_getRainEffectValue(WeatherEnum.RainOn, curReport.effect)
+	local rainValue = self:_getRainEffectValue(WeatherEnum.RainValue, curReport.effect)
 
-	if var_53_2 == 1 then
-		arg_53_0._rainEffectMat:EnableKeyword("_RAIN_ON")
-		arg_53_0._rainEffectMat:SetInt(arg_53_0._RainId, var_53_3)
-	elseif arg_53_2 then
-		arg_53_0._rainEffectMat:DisableKeyword("_RAIN_ON")
-		arg_53_0._rainEffectMat:SetInt(arg_53_0._RainId, var_53_3)
+	if rainOn == 1 then
+		self._rainEffectMat:EnableKeyword("_RAIN_ON")
+		self._rainEffectMat:SetInt(self._RainId, rainValue)
+	elseif isEnd then
+		self._rainEffectMat:DisableKeyword("_RAIN_ON")
+		self._rainEffectMat:SetInt(self._RainId, rainValue)
 	end
 
-	local var_53_4 = arg_53_0:_getRainEffectValue(WeatherEnum.RainDistortionFactor, var_53_0.effect)
-	local var_53_5 = arg_53_0:_getRainEffectValue(WeatherEnum.RainDistortionFactor, var_53_1.effect)
-	local var_53_6 = arg_53_0:lerpVector4(var_53_4, var_53_5, arg_53_1)
+	local prevDistortion = self:_getRainEffectValue(WeatherEnum.RainDistortionFactor, prevReport.effect)
+	local curDistortion = self:_getRainEffectValue(WeatherEnum.RainDistortionFactor, curReport.effect)
+	local lerpDistortion = self:lerpVector4(prevDistortion, curDistortion, value)
 
-	arg_53_0._rainEffectMat:SetVector(arg_53_0._RainDistortionFactorId, var_53_6)
+	self._rainEffectMat:SetVector(self._RainDistortionFactorId, lerpDistortion)
 
-	local var_53_7 = arg_53_0:_getRainEffectValue(WeatherEnum.RainEmission, var_53_0.effect)
-	local var_53_8 = arg_53_0:_getRainEffectValue(WeatherEnum.RainEmission, var_53_1.effect)
-	local var_53_9 = arg_53_0:lerpVector4(var_53_7, var_53_8, arg_53_1)
+	local prevEmission = self:_getRainEffectValue(WeatherEnum.RainEmission, prevReport.effect)
+	local curEmission = self:_getRainEffectValue(WeatherEnum.RainEmission, curReport.effect)
+	local lerpEmission = self:lerpVector4(prevEmission, curEmission, value)
 
-	arg_53_0._rainEffectMat:SetVector(arg_53_0._RainEmissionId, var_53_9)
+	self._rainEffectMat:SetVector(self._RainEmissionId, lerpEmission)
 end
 
-function var_0_0._getRainEffectValue(arg_54_0, arg_54_1, arg_54_2)
-	return arg_54_1[arg_54_2] or arg_54_1[WeatherEnum.Default]
+function WeatherComp:_getRainEffectValue(prop, effect)
+	return prop[effect] or prop[WeatherEnum.Default]
 end
 
-function var_0_0.startLightBlend(arg_55_0)
-	arg_55_0._startTime = Time.time
+function WeatherComp:startLightBlend()
+	self._startTime = Time.time
 
-	TaskDispatcher.runRepeat(arg_55_0._onUpdate, arg_55_0, 0.033)
+	TaskDispatcher.runRepeat(self._onUpdate, self, 0.033)
 end
 
-function var_0_0._onUpdate(arg_56_0)
-	arg_56_0:_onUpdateHandler(Time.time)
+function WeatherComp:_onUpdate()
+	self:_onUpdateHandler(Time.time)
 end
 
-function var_0_0._onUpdateHandler(arg_57_0, arg_57_1)
-	local var_57_0 = arg_57_0._startValue + arg_57_0._deltaValue * (arg_57_1 - arg_57_0._startTime) * arg_57_0._speed
-	local var_57_1 = var_57_0 >= 1 or var_57_0 <= 0
-	local var_57_2 = var_57_0
+function WeatherComp:_onUpdateHandler(curTime)
+	local value = self._startValue + self._deltaValue * (curTime - self._startTime) * self._speed
+	local isEnd = value >= 1 or value <= 0
+	local target = value
 
-	if var_57_1 then
-		if var_57_0 > 1 then
-			var_57_2 = 1
-		elseif var_57_0 < 0 then
-			var_57_2 = 0
+	if isEnd then
+		if value > 1 then
+			target = 1
+		elseif value < 0 then
+			target = 0
 		end
 	end
 
-	if var_57_1 then
-		TaskDispatcher.cancelTask(arg_57_0._onUpdate, arg_57_0)
+	if isEnd then
+		TaskDispatcher.cancelTask(self._onUpdate, self)
 
-		arg_57_0._startTime = nil
+		self._startTime = nil
 
-		arg_57_0:_updateSceneMatMapCfg()
+		self:_updateSceneMatMapCfg()
 	end
 
-	arg_57_0:_changeBlendValue(var_57_2, var_57_1)
+	self:_changeBlendValue(target, isEnd)
 end
 
-function var_0_0._updateSceneMatMapCfg(arg_58_0)
-	if arg_58_0._targetValue >= 1 then
-		arg_58_0:_setSceneMatMapCfg(0, 1)
+function WeatherComp:_updateSceneMatMapCfg()
+	local value = self._targetValue
+
+	if value >= 1 then
+		self:_setSceneMatMapCfg(0, 1)
 	else
-		arg_58_0:_setSceneMatMapCfg(1, 0)
+		self:_setSceneMatMapCfg(1, 0)
 	end
 end
 
-function var_0_0._setSceneMatMapCfg(arg_59_0, arg_59_1, arg_59_2)
-	if arg_59_1 == 0 and arg_59_2 == 0 then
+function WeatherComp:_setSceneMatMapCfg(useFirst, useSecond)
+	if useFirst == 0 and useSecond == 0 then
 		logError("useFirst useSecond 不能同时为0！ ")
 
 		return
 	end
 
-	for iter_59_0, iter_59_1 in pairs(arg_59_0._rawLightMats) do
-		local var_59_0 = arg_59_0._UseFirstMapKey
+	for _, mat in pairs(self._rawLightMats) do
+		local firstKey = self._UseFirstMapKey
 
-		if arg_59_1 == 1 then
-			iter_59_1:EnableKeyword(var_59_0)
+		if useFirst == 1 then
+			mat:EnableKeyword(firstKey)
 		else
-			iter_59_1:DisableKeyword(var_59_0)
+			mat:DisableKeyword(firstKey)
 		end
 
-		local var_59_1 = arg_59_0._UseSecondMapKey
+		local secondKey = self._UseSecondMapKey
 
-		if arg_59_2 == 1 then
-			iter_59_1:EnableKeyword(var_59_1)
+		if useSecond == 1 then
+			mat:EnableKeyword(secondKey)
 		else
-			iter_59_1:DisableKeyword(var_59_1)
+			mat:DisableKeyword(secondKey)
 		end
 	end
 end
 
-function var_0_0._changeBlendValue(arg_60_0, arg_60_1, arg_60_2)
-	for iter_60_0, iter_60_1 in ipairs(arg_60_0._rawLightMats) do
-		iter_60_1:SetFloat(ShaderPropertyId.ChangeTexture, arg_60_1)
+function WeatherComp:_changeBlendValue(value, isEnd)
+	for i, v in ipairs(self._rawLightMats) do
+		v:SetFloat(ShaderPropertyId.ChangeTexture, value)
 	end
 
-	if arg_60_2 then
-		arg_60_0:addAllEffect()
-		arg_60_0:playWeatherVoice()
+	if isEnd then
+		self:addAllEffect()
+		self:playWeatherVoice()
 	end
 
-	arg_60_0:blendRoleLightMode(arg_60_1, arg_60_2)
+	self:blendRoleLightMode(value, isEnd)
 
-	if arg_60_0._behaviourContainer then
-		arg_60_0._behaviourContainer:changeBlendValue(arg_60_1, arg_60_2, arg_60_0._revert)
+	if self._behaviourContainer then
+		self._behaviourContainer:changeBlendValue(value, isEnd, self._revert)
 	end
 end
 
-function var_0_0.blendRoleLightMode(arg_61_0, arg_61_1, arg_61_2)
-	if arg_61_1 ~= arg_61_0._targetValue then
-		if not gohelper.isNil(arg_61_0._roleSharedMaterial) then
-			arg_61_0._roleSharedMaterial:SetInt(arg_61_0._UseSecondMapId, 1)
+function WeatherComp:blendRoleLightMode(value, isEnd)
+	if value ~= self._targetValue then
+		if not gohelper.isNil(self._roleSharedMaterial) then
+			self._roleSharedMaterial:SetInt(self._UseSecondMapId, 1)
 		end
-	elseif not gohelper.isNil(arg_61_0._roleSharedMaterial) then
-		arg_61_0._roleSharedMaterial:SetInt(arg_61_0._UseSecondMapId, 0)
+	elseif not gohelper.isNil(self._roleSharedMaterial) then
+		self._roleSharedMaterial:SetInt(self._UseSecondMapId, 0)
 	end
 
-	if arg_61_0._revert then
-		arg_61_1 = 1 - arg_61_1
+	if self._revert then
+		value = 1 - value
 	end
 
-	if arg_61_0._roleBlendCallback then
-		arg_61_0._roleBlendCallback(arg_61_0._roleBlendCallbackTarget, arg_61_0, arg_61_1, arg_61_2)
+	if self._roleBlendCallback then
+		self._roleBlendCallback(self._roleBlendCallbackTarget, self, value, isEnd)
 	end
 
-	if not arg_61_0._roleGo or not arg_61_0._dispatchParam then
+	if not self._roleGo or not self._dispatchParam then
 		return
 	end
 
-	local var_61_0 = arg_61_0:lerpColorIntensity(arg_61_0._srcBloomColor or arg_61_0._targetBloomColor, arg_61_0._targetBloomColor, arg_61_1, true)
+	local _BloomColor = self:lerpColorIntensity(self._srcBloomColor or self._targetBloomColor, self._targetBloomColor, value, true)
 
-	PostProcessingMgr.instance:setLocalBloomColor(var_61_0)
+	PostProcessingMgr.instance:setLocalBloomColor(_BloomColor)
 
-	local var_61_1 = arg_61_0:lerpColorIntensity(arg_61_0._srcMainColor or arg_61_0._targetMainColor, arg_61_0._targetMainColor, arg_61_1)
+	local _MainColor = self:lerpColorIntensity(self._srcMainColor or self._targetMainColor, self._targetMainColor, value)
 
-	if not gohelper.isNil(arg_61_0._roleSharedMaterial) then
-		arg_61_0._roleSharedMaterial:SetColor(arg_61_0._MainColorId, var_61_1)
+	if not gohelper.isNil(self._roleSharedMaterial) then
+		self._roleSharedMaterial:SetColor(self._MainColorId, _MainColor)
 	end
 
-	arg_61_0:_setMainColor(var_61_1)
+	self:_setMainColor(_MainColor)
 
-	local var_61_2 = arg_61_0:lerpColorIntensity(arg_61_0._srcEmissionColor or arg_61_0._targetEmissionColor, arg_61_0._targetEmissionColor, arg_61_1, true)
+	local _EmissionColor = self:lerpColorIntensity(self._srcEmissionColor or self._targetEmissionColor, self._targetEmissionColor, value, true)
 
-	if not gohelper.isNil(arg_61_0._roleSharedMaterial) then
-		arg_61_0._roleSharedMaterial:SetColor(arg_61_0._EmissionColorId, var_61_2)
+	if not gohelper.isNil(self._roleSharedMaterial) then
+		self._roleSharedMaterial:SetColor(self._EmissionColorId, _EmissionColor)
 	end
 
-	if arg_61_0._lightModel then
-		arg_61_0._lightModel:setEmissionColor(var_61_2)
+	if self._lightModel then
+		self._lightModel:setEmissionColor(_EmissionColor)
 	end
 
-	if arg_61_0._weatherController then
-		arg_61_0._dispatchParam[1] = arg_61_1
-		arg_61_0._dispatchParam[2] = arg_61_2
+	if self._weatherController then
+		self._dispatchParam[1] = value
+		self._dispatchParam[2] = isEnd
 
-		arg_61_0._weatherController:dispatchEvent(WeatherEvent.OnRoleBlend, arg_61_0._dispatchParam)
-	end
-end
-
-function var_0_0.addRoleBlendCallback(arg_62_0, arg_62_1, arg_62_2)
-	arg_62_0._roleBlendCallback = arg_62_1
-	arg_62_0._roleBlendCallbackTarget = arg_62_2
-end
-
-function var_0_0.addChangeReportCallback(arg_63_0, arg_63_1, arg_63_2, arg_63_3)
-	arg_63_0._changeReportCallback = arg_63_1
-	arg_63_0._changeReportCallbackTarget = arg_63_2
-
-	if arg_63_3 then
-		arg_63_0._changeReportCallback(arg_63_0._changeReportCallbackTarget, arg_63_0._curReport)
+		self._weatherController:dispatchEvent(WeatherEvent.OnRoleBlend, self._dispatchParam)
 	end
 end
 
-function var_0_0._setMainColor(arg_64_0, arg_64_1)
-	arg_64_0._mainColor = Color.New(arg_64_1.r, arg_64_1.g, arg_64_1.b, arg_64_1.a)
+function WeatherComp:addRoleBlendCallback(callback, callbackTarget)
+	self._roleBlendCallback = callback
+	self._roleBlendCallbackTarget = callbackTarget
+end
 
-	if arg_64_0._lightModel then
-		arg_64_0._lightModel:setMainColor(arg_64_1)
+function WeatherComp:addChangeReportCallback(callback, callbackTarget, executeCallback)
+	self._changeReportCallback = callback
+	self._changeReportCallbackTarget = callbackTarget
+
+	if executeCallback then
+		self._changeReportCallback(self._changeReportCallbackTarget, self._curReport)
 	end
 end
 
-function var_0_0.getMainColor(arg_65_0)
-	return arg_65_0._mainColor
+function WeatherComp:_setMainColor(color)
+	self._mainColor = Color.New(color.r, color.g, color.b, color.a)
+
+	if self._lightModel then
+		self._lightModel:setMainColor(color)
+	end
 end
 
-function var_0_0.lerpColorIntensity(arg_66_0, arg_66_1, arg_66_2, arg_66_3, arg_66_4)
-	local var_66_0 = arg_66_1[1]
-	local var_66_1 = arg_66_1[2]
-	local var_66_2 = arg_66_2[1]
-	local var_66_3 = arg_66_2[2]
-	local var_66_4
-	local var_66_5 = 0
+function WeatherComp:getMainColor()
+	return self._mainColor
+end
 
-	if arg_66_3 <= 0.5 then
-		var_66_5 = Mathf.Lerp(var_66_1, 0, arg_66_3 / 0.5)
+function WeatherComp:lerpColorIntensity(srcColorIntensity, targetColorIntensity, value, lerpWithBlack)
+	local srcColor = srcColorIntensity[1]
+	local srcIntensity = srcColorIntensity[2]
+	local targetColor = targetColorIntensity[1]
+	local targetIntensity = targetColorIntensity[2]
+	local color
+	local intensity = 0
+
+	if value <= 0.5 then
+		intensity = Mathf.Lerp(srcIntensity, 0, value / 0.5)
 	else
-		var_66_5 = Mathf.Lerp(0, var_66_3, (arg_66_3 - 0.5) / 0.5)
+		intensity = Mathf.Lerp(0, targetIntensity, (value - 0.5) / 0.5)
 	end
 
-	if arg_66_4 then
-		if arg_66_3 <= 0.5 then
-			var_66_4 = arg_66_0:lerpColor(var_66_0, arg_66_0._blackColor, arg_66_3 / 0.5, Mathf.Pow(2, var_66_5))
+	if lerpWithBlack then
+		if value <= 0.5 then
+			color = self:lerpColor(srcColor, self._blackColor, value / 0.5, Mathf.Pow(2, intensity))
 		else
-			var_66_4 = arg_66_0:lerpColor(arg_66_0._blackColor, var_66_2, (arg_66_3 - 0.5) / 0.5, Mathf.Pow(2, var_66_5))
+			color = self:lerpColor(self._blackColor, targetColor, (value - 0.5) / 0.5, Mathf.Pow(2, intensity))
 		end
 	else
-		var_66_4 = arg_66_0:lerpColor(var_66_0, var_66_2, arg_66_3, Mathf.Pow(2, var_66_5))
+		color = self:lerpColor(srcColor, targetColor, value, Mathf.Pow(2, intensity))
 	end
 
-	return var_66_4
+	return color
 end
 
-function var_0_0.lerpColor(arg_67_0, arg_67_1, arg_67_2, arg_67_3, arg_67_4)
-	arg_67_0._tempColor = arg_67_0._tempColor or Color.New()
-	arg_67_0._tempColor.r, arg_67_0._tempColor.g, arg_67_0._tempColor.b = (arg_67_1.r + arg_67_3 * (arg_67_2.r - arg_67_1.r)) * arg_67_4, (arg_67_1.g + arg_67_3 * (arg_67_2.g - arg_67_1.g)) * arg_67_4, (arg_67_1.b + arg_67_3 * (arg_67_2.b - arg_67_1.b)) * arg_67_4
-	arg_67_0._tempColor.a = arg_67_4
+function WeatherComp:lerpColor(a, b, t, intensity)
+	self._tempColor = self._tempColor or Color.New()
+	self._tempColor.r, self._tempColor.g, self._tempColor.b = (a.r + t * (b.r - a.r)) * intensity, (a.g + t * (b.g - a.g)) * intensity, (a.b + t * (b.b - a.b)) * intensity
+	self._tempColor.a = intensity
 
-	return arg_67_0._tempColor
+	return self._tempColor
 end
 
-function var_0_0.lerpColorRGBA(arg_68_0, arg_68_1, arg_68_2, arg_68_3)
-	arg_68_0._tempColor = arg_68_0._tempColor or Color.New()
-	arg_68_0._tempColor.r, arg_68_0._tempColor.g, arg_68_0._tempColor.b, arg_68_0._tempColor.a = arg_68_1.r + arg_68_3 * (arg_68_2.r - arg_68_1.r), arg_68_1.g + arg_68_3 * (arg_68_2.g - arg_68_1.g), arg_68_1.b + arg_68_3 * (arg_68_2.b - arg_68_1.b), arg_68_1.a + arg_68_3 * (arg_68_2.a - arg_68_1.a)
+function WeatherComp:lerpColorRGBA(a, b, t)
+	self._tempColor = self._tempColor or Color.New()
+	self._tempColor.r, self._tempColor.g, self._tempColor.b, self._tempColor.a = a.r + t * (b.r - a.r), a.g + t * (b.g - a.g), a.b + t * (b.b - a.b), a.a + t * (b.a - a.a)
 
-	return arg_68_0._tempColor
+	return self._tempColor
 end
 
-function var_0_0.lerpVector4(arg_69_0, arg_69_1, arg_69_2, arg_69_3)
-	arg_69_0._tempVector4 = arg_69_0._tempVector4 or Vector4.New()
-	arg_69_0._tempVector4.x, arg_69_0._tempVector4.y, arg_69_0._tempVector4.z, arg_69_0._tempVector4.w = arg_69_1.x + arg_69_3 * (arg_69_2.x - arg_69_1.x), arg_69_1.y + arg_69_3 * (arg_69_2.y - arg_69_1.y), arg_69_1.z + arg_69_3 * (arg_69_2.z - arg_69_1.z), arg_69_1.w + arg_69_3 * (arg_69_2.w - arg_69_1.w)
+function WeatherComp:lerpVector4(a, b, t)
+	self._tempVector4 = self._tempVector4 or Vector4.New()
+	self._tempVector4.x, self._tempVector4.y, self._tempVector4.z, self._tempVector4.w = a.x + t * (b.x - a.x), a.y + t * (b.y - a.y), a.z + t * (b.z - a.z), a.w + t * (b.w - a.w)
 
-	return arg_69_0._tempVector4
+	return self._tempVector4
 end
 
-function var_0_0.changeLightEffectColor(arg_70_0)
-	if not arg_70_0._effectLightPs or not arg_70_0._effectAirPs then
+function WeatherComp:changeLightEffectColor()
+	if not self._effectLightPs or not self._effectAirPs then
 		return
 	end
 
-	local var_70_0 = MainSceneSwitchController.getLightColor(arg_70_0._curReport.lightMode, arg_70_0._sceneId)
-	local var_70_1 = WeatherEnum.EffectAirColor[arg_70_0._curReport.lightMode]
-	local var_70_2 = ZProj.ParticleSystemHelper
+	local lightColor = MainSceneSwitchController.getLightColor(self._curReport.lightMode, self._sceneId)
+	local airColor = WeatherEnum.EffectAirColor[self._curReport.lightMode]
+	local psHelper = ZProj.ParticleSystemHelper
 
-	var_70_2.SetStartColor(arg_70_0._effectLightPs, var_70_0[1] / 255, var_70_0[2] / 255, var_70_0[3] / 255, var_70_0[4] / 255)
-	var_70_2.SetStartColor(arg_70_0._effectAirPs, var_70_1[1] / 255, var_70_1[2] / 255, var_70_1[3] / 255, var_70_1[4] / 255)
-	gohelper.setActive(arg_70_0._effectLightPs, false)
-	var_70_2.SetStartRotation(arg_70_0._effectLightPs, MainSceneSwitchController.getPrefabLightStartRotation(arg_70_0._curReport.lightMode, arg_70_0._sceneId))
-	gohelper.setActive(arg_70_0._effectLightPs, true)
+	psHelper.SetStartColor(self._effectLightPs, lightColor[1] / 255, lightColor[2] / 255, lightColor[3] / 255, lightColor[4] / 255)
+	psHelper.SetStartColor(self._effectAirPs, airColor[1] / 255, airColor[2] / 255, airColor[3] / 255, airColor[4] / 255)
+	gohelper.setActive(self._effectLightPs, false)
+	psHelper.SetStartRotation(self._effectLightPs, MainSceneSwitchController.getPrefabLightStartRotation(self._curReport.lightMode, self._sceneId))
+	gohelper.setActive(self._effectLightPs, true)
 end
 
-function var_0_0.removeAllEffect(arg_71_0)
-	arg_71_0:_removeWeatherEffect()
+function WeatherComp:removeAllEffect()
+	self:_removeWeatherEffect()
 end
 
-function var_0_0._removeWeatherEffect(arg_72_0)
-	if arg_72_0._effectLoader then
-		arg_72_0._effectLoader:dispose()
+function WeatherComp:_removeWeatherEffect()
+	if self._effectLoader then
+		self._effectLoader:dispose()
 
-		arg_72_0._effectLoader = nil
+		self._effectLoader = nil
 	end
 
-	arg_72_0._weatherEffectGo = nil
+	self._weatherEffectGo = nil
 
-	arg_72_0:_stopWeatherEffectAudio()
+	self:_stopWeatherEffectAudio()
 end
 
-function var_0_0.addAllEffect(arg_73_0)
-	arg_73_0:_addWeatherEffect()
+function WeatherComp:addAllEffect()
+	self:_addWeatherEffect()
 
-	if arg_73_0._weatherController then
-		arg_73_0._weatherController:dispatchEvent(WeatherEvent.LoadPhotoFrameBg)
+	if self._weatherController then
+		self._weatherController:dispatchEvent(WeatherEvent.LoadPhotoFrameBg)
 	end
 end
 
-function var_0_0._addWeatherEffect(arg_74_0)
-	if arg_74_0._prevReport and arg_74_0._prevReport.effect == arg_74_0._curReport.effect then
-		arg_74_0:_setDynamicEffectLightStartRotation()
+function WeatherComp:_addWeatherEffect()
+	if self._prevReport and self._prevReport.effect == self._curReport.effect then
+		self:_setDynamicEffectLightStartRotation()
 
 		return
 	end
 
-	if arg_74_0._curReport.effect <= 1 then
+	if self._curReport.effect <= 1 then
 		return
 	end
 
-	if not arg_74_0._effectLoader then
-		arg_74_0._effectLoader = PrefabInstantiate.Create(arg_74_0._sceneGo)
+	if not self._effectLoader then
+		self._effectLoader = PrefabInstantiate.Create(self._sceneGo)
 
-		local var_74_0 = arg_74_0:_getSceneResName()
-		local var_74_1 = string.format(arg_74_0._effectPath, var_74_0, arg_74_0._curReport.effect - 1)
+		local resName = self:_getSceneResName()
+		local path = string.format(self._effectPath, resName, self._curReport.effect - 1)
 
-		arg_74_0._effectLoader:startLoad(var_74_1, arg_74_0._effectLoaded, arg_74_0)
+		self._effectLoader:startLoad(path, self._effectLoaded, self)
 	end
 end
 
-function var_0_0._effectLoaded(arg_75_0)
-	local var_75_0 = arg_75_0._effectLoader:getInstGO()
+function WeatherComp:_effectLoaded()
+	local effect = self._effectLoader:getInstGO()
 
-	var_75_0.transform.parent = arg_75_0._effectRoot
-	arg_75_0._weatherEffectGo = var_75_0
-	arg_75_0._dynamicEffectLightPs = gohelper.findChildComponent(var_75_0, "m_s01_effect_light", var_0_0.TypeOfParticleSystem)
+	effect.transform.parent = self._effectRoot
+	self._weatherEffectGo = effect
+	self._dynamicEffectLightPs = gohelper.findChildComponent(effect, "m_s01_effect_light", WeatherComp.TypeOfParticleSystem)
 
-	arg_75_0:_setDynamicEffectLightStartRotation()
-	arg_75_0:_playWeatherEffectAudio()
+	self:_setDynamicEffectLightStartRotation()
+	self:_playWeatherEffectAudio()
 end
 
-function var_0_0._setDynamicEffectLightStartRotation(arg_76_0)
-	if not gohelper.isNil(arg_76_0._dynamicEffectLightPs) then
-		gohelper.setActive(arg_76_0._dynamicEffectLightPs, false)
-		ZProj.ParticleSystemHelper.SetStartRotation(arg_76_0._dynamicEffectLightPs, MainSceneSwitchController.getEffectLightStartRotation(arg_76_0._curReport.lightMode, arg_76_0._sceneId))
-		gohelper.setActive(arg_76_0._dynamicEffectLightPs, true)
+function WeatherComp:_setDynamicEffectLightStartRotation()
+	if not gohelper.isNil(self._dynamicEffectLightPs) then
+		gohelper.setActive(self._dynamicEffectLightPs, false)
+		ZProj.ParticleSystemHelper.SetStartRotation(self._dynamicEffectLightPs, MainSceneSwitchController.getEffectLightStartRotation(self._curReport.lightMode, self._sceneId))
+		gohelper.setActive(self._dynamicEffectLightPs, true)
 	end
 end
 
-function var_0_0._playVoice(arg_77_0)
+function WeatherComp:_playVoice()
 	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Main then
 		return
 	end
 
-	local var_77_0 = WeatherEnum.LightMode[arg_77_0._curReport.lightMode]
-	local var_77_1 = WeatherEnum.EffectMode[arg_77_0._curReport.effect]
-	local var_77_2 = arg_77_0._prevEffect ~= arg_77_0._curReport.effect
+	local lightMode = WeatherEnum.LightMode[self._curReport.lightMode]
+	local effect = WeatherEnum.EffectMode[self._curReport.effect]
+	local effectChange = self._prevEffect ~= self._curReport.effect
 
-	arg_77_0._prevEffect = arg_77_0._curReport.effect
+	self._prevEffect = self._curReport.effect
 
-	if var_77_2 and var_77_1 then
-		if not arg_77_0._isSceneHide then
-			var_0_1:setSwitch(arg_77_0:getId("WeatherState"), arg_77_0:getId(var_77_1))
+	if effectChange and effect then
+		if not self._isSceneHide then
+			audioMgr:setSwitch(self:getId("WeatherState"), self:getId(effect))
 		end
 
-		arg_77_0._curWeatherEffect = var_77_1
-		arg_77_0._curWeatherState = arg_77_0._curReport.effect
+		self._curWeatherEffect = effect
+		self._curWeatherState = self._curReport.effect
 	end
 
-	local var_77_3 = arg_77_0._prevLightMode ~= arg_77_0._curReport.lightMode
+	local lightModeChange = self._prevLightMode ~= self._curReport.lightMode
 
-	arg_77_0._prevLightMode = arg_77_0._curReport.lightMode
+	self._prevLightMode = self._curReport.lightMode
 
-	if var_77_3 and var_77_0 then
-		if not arg_77_0._isSceneHide then
-			var_0_1:setSwitch(arg_77_0:getId("Daytimestate"), arg_77_0:getId(var_77_0))
+	if lightModeChange and lightMode then
+		if not self._isSceneHide then
+			audioMgr:setSwitch(self:getId("Daytimestate"), self:getId(lightMode))
 		end
 
-		arg_77_0._curLightMode = var_77_0
+		self._curLightMode = lightMode
 	end
 
-	print("===playVoice:", var_77_0, var_77_3, var_77_1, var_77_2)
+	print("===playVoice:", lightMode, lightModeChange, effect, effectChange)
 end
 
-function var_0_0.playWeatherAudio(arg_78_0)
-	arg_78_0:_playVoice()
-	arg_78_0:_playWeatherEffectAudio()
+function WeatherComp:playWeatherAudio()
+	self:_playVoice()
+	self:_playWeatherEffectAudio()
 end
 
-function var_0_0.stopWeatherAudio(arg_79_0)
-	arg_79_0._prevLightMode = nil
-	arg_79_0._prevEffect = nil
-	arg_79_0._curWeatherEffect = nil
-	arg_79_0._curWeatherState = nil
-	arg_79_0._curLightMode = nil
+function WeatherComp:stopWeatherAudio()
+	self._prevLightMode = nil
+	self._prevEffect = nil
+	self._curWeatherEffect = nil
+	self._curWeatherState = nil
+	self._curLightMode = nil
 
-	arg_79_0:_stopWeatherEffectAudio()
+	self:_stopWeatherEffectAudio()
 end
 
-function var_0_0.setStateByString(arg_80_0, arg_80_1, arg_80_2)
-	var_0_1:setState(arg_80_0:getId(arg_80_1), arg_80_0:getId(arg_80_2))
+function WeatherComp:setStateByString(stateGroup, stateState)
+	audioMgr:setState(self:getId(stateGroup), self:getId(stateState))
 end
 
-function var_0_0.getId(arg_81_0, arg_81_1)
-	local var_81_0 = arg_81_0._str2Id[arg_81_1]
+function WeatherComp:getId(str)
+	local id = self._str2Id[str]
 
-	if not var_81_0 then
-		var_81_0 = var_0_1:getIdFromString(arg_81_1)
-		arg_81_0._str2Id[arg_81_1] = var_81_0
+	if not id then
+		id = audioMgr:getIdFromString(str)
+		self._str2Id[str] = id
 	end
 
-	return var_81_0
+	return id
 end
 
-function var_0_0.initRoleParam(arg_82_0, arg_82_1)
-	local var_82_0, var_82_1 = CharacterSwitchListModel.instance:getMainHero(arg_82_0._randomMainHero)
+function WeatherComp:initRoleParam(targetReport)
+	local heroId, skinId = CharacterSwitchListModel.instance:getMainHero(self._randomMainHero)
 
-	arg_82_0._randomMainHero = false
+	self._randomMainHero = false
 
-	if not var_82_0 then
+	if not heroId then
 		return
 	end
 
-	local var_82_2 = HeroModel.instance:getByHeroId(var_82_0)
+	local hero = HeroModel.instance:getByHeroId(heroId)
 
-	if not var_82_2 then
+	if not hero then
 		return
 	end
 
-	if not arg_82_0._blackColor then
-		arg_82_0._blackColor = Color()
+	if not self._blackColor then
+		self._blackColor = Color()
 	end
 
-	arg_82_0._srcBloomColor = arg_82_0._targetBloomColor
-	arg_82_0._srcMainColor = arg_82_0._targetMainColor
-	arg_82_0._srcEmissionColor = arg_82_0._targetEmissionColor
-	arg_82_0._srcBloomFactor = arg_82_0._targetBloomFactor
-	arg_82_0._srcPercent = arg_82_0._targetPercent
-	arg_82_0._srcBloomFactor2 = arg_82_0._targetBloomFactor2
-	arg_82_0._srcLuminance = arg_82_0._targetLuminance
+	self._srcBloomColor = self._targetBloomColor
+	self._srcMainColor = self._targetMainColor
+	self._srcEmissionColor = self._targetEmissionColor
+	self._srcBloomFactor = self._targetBloomFactor
+	self._srcPercent = self._targetPercent
+	self._srcBloomFactor2 = self._targetBloomFactor2
+	self._srcLuminance = self._targetLuminance
 
-	local var_82_3 = SkinConfig.instance:getSkinCo(var_82_1 or var_82_2.skin)
+	local skinCo = SkinConfig.instance:getSkinCo(skinId or hero.skin)
 
-	if var_82_3 then
-		local var_82_4 = WeatherConfig.instance:getSkinWeatherParam(var_82_3.weatherParam)
+	if skinCo then
+		local skinWeatherParam = WeatherConfig.instance:getSkinWeatherParam(skinCo.weatherParam)
 
-		if var_82_4 then
-			local var_82_5 = arg_82_1.lightMode
+		if skinWeatherParam then
+			local targetLightMode = targetReport.lightMode
 
-			arg_82_0._targetBloomColor = arg_82_0:createColorIntensity(var_82_4["bloomColor" .. var_82_5])
-			arg_82_0._targetMainColor = arg_82_0:createColorIntensity(var_82_4["mainColor" .. var_82_5])
-			arg_82_0._targetEmissionColor = arg_82_0:createColorIntensity(var_82_4["emissionColor" .. var_82_5])
-			arg_82_0._targetBloomFactor = WeatherEnum.BloomFactor
-			arg_82_0._targetPercent = WeatherEnum.Percent
-			arg_82_0._targetBloomFactor2 = WeatherEnum.BloomFactor2[var_82_5]
-			arg_82_0._targetLuminance = WeatherEnum.Luminance[var_82_5]
+			self._targetBloomColor = self:createColorIntensity(skinWeatherParam["bloomColor" .. targetLightMode])
+			self._targetMainColor = self:createColorIntensity(skinWeatherParam["mainColor" .. targetLightMode])
+			self._targetEmissionColor = self:createColorIntensity(skinWeatherParam["emissionColor" .. targetLightMode])
+			self._targetBloomFactor = WeatherEnum.BloomFactor
+			self._targetPercent = WeatherEnum.Percent
+			self._targetBloomFactor2 = WeatherEnum.BloomFactor2[targetLightMode]
+			self._targetLuminance = WeatherEnum.Luminance[targetLightMode]
 		elseif isDebugBuild then
-			local var_82_6 = var_82_3 and tostring(var_82_3.id) or "nil"
-			local var_82_7 = var_82_3 and tostring(var_82_3.weatherParam) or "nil"
+			local skinStr = skinCo and tostring(skinCo.id) or "nil"
+			local weatherStr = skinCo and tostring(skinCo.weatherParam) or "nil"
 
-			logError(string.format("skin_%s 天气参数_%s P皮肤表.xlsx-export_皮肤天气颜色参数 未配置", var_82_6, var_82_7))
+			logError(string.format("skin_%s 天气参数_%s P皮肤表.xlsx-export_皮肤天气颜色参数 未配置", skinStr, weatherStr))
 		end
 	elseif isDebugBuild then
-		local var_82_8 = tostring(var_82_2.heroId)
-		local var_82_9 = tostring(var_82_1 or var_82_2.skin)
+		local heroStr = tostring(hero.heroId)
+		local skinStr = tostring(skinId or hero.skin)
 
-		logError(string.format("hero_%s skin_%s 皮肤id 不存在", var_82_8, var_82_9))
+		logError(string.format("hero_%s skin_%s 皮肤id 不存在", heroStr, skinStr))
 	end
 end
 
-function var_0_0.createColorIntensity(arg_83_0, arg_83_1)
-	local var_83_0 = string.split(arg_83_1, "#")
+function WeatherComp:createColorIntensity(rgbintensityStr)
+	local rgbintensity = string.split(rgbintensityStr, "#")
 
-	if not var_83_0 or #var_83_0 < 4 then
-		logError("createColorIntensity rgbintensity error,report id:" .. arg_83_0._curReport.id .. " rgbintensityStr:" .. arg_83_1)
+	if not rgbintensity or #rgbintensity < 4 then
+		logError("createColorIntensity rgbintensity error,report id:" .. self._curReport.id .. " rgbintensityStr:" .. rgbintensityStr)
 
 		return {
 			Color.New(),
@@ -1238,193 +1248,193 @@ function var_0_0.createColorIntensity(arg_83_0, arg_83_1)
 		}
 	end
 
-	local var_83_1 = tonumber(var_83_0[1]) / 255
-	local var_83_2 = tonumber(var_83_0[2]) / 255
-	local var_83_3 = tonumber(var_83_0[3]) / 255
-	local var_83_4 = tonumber(var_83_0[4])
-	local var_83_5 = Color.New(var_83_1, var_83_2, var_83_3)
+	local r = tonumber(rgbintensity[1]) / 255
+	local g = tonumber(rgbintensity[2]) / 255
+	local b = tonumber(rgbintensity[3]) / 255
+	local intensity = tonumber(rgbintensity[4])
+	local c = Color.New(r, g, b)
 
 	return {
-		var_83_5,
-		var_83_4
+		c,
+		intensity
 	}
 end
 
-function var_0_0._resGC(arg_84_0)
-	if arg_84_0._sceneGo then
-		for iter_84_0, iter_84_1 in pairs(arg_84_0._lightMapPathPrefix) do
-			for iter_84_2, iter_84_3 in pairs(arg_84_0._lightMats[iter_84_0]) do
-				if not arg_84_0._revert then
-					iter_84_3:SetTexture(ShaderPropertyId.MainTex, nil)
+function WeatherComp:_resGC()
+	if self._sceneGo then
+		for prefix, v in pairs(self._lightMapPathPrefix) do
+			for _, mat in pairs(self._lightMats[prefix]) do
+				if not self._revert then
+					mat:SetTexture(ShaderPropertyId.MainTex, nil)
 				else
-					iter_84_3:SetTexture(ShaderPropertyId.MainTexSecond, nil)
+					mat:SetTexture(ShaderPropertyId.MainTexSecond, nil)
 				end
 			end
 		end
 
-		if not arg_84_0._revert then
-			if arg_84_0._srcLoader then
-				arg_84_0._srcLoader:dispose()
+		if not self._revert then
+			if self._srcLoader then
+				self._srcLoader:dispose()
 
-				arg_84_0._srcLoader = nil
+				self._srcLoader = nil
 			end
-		elseif arg_84_0._targetLoader then
-			arg_84_0._targetLoader:dispose()
+		elseif self._targetLoader then
+			self._targetLoader:dispose()
 
-			arg_84_0._targetLoader = nil
+			self._targetLoader = nil
 		end
 
 		SLFramework.UnityHelper.ResGC()
 	end
 end
 
-function var_0_0._clearMats(arg_85_0)
-	if not arg_85_0._rawLightMats then
+function WeatherComp:_clearMats()
+	if not self._rawLightMats then
 		return
 	end
 
-	for iter_85_0, iter_85_1 in pairs(arg_85_0._rawLightMats) do
-		iter_85_1:SetTexture(ShaderPropertyId.MainTex, nil)
-		iter_85_1:SetTexture(ShaderPropertyId.MainTexSecond, nil)
+	for _, mat in pairs(self._rawLightMats) do
+		mat:SetTexture(ShaderPropertyId.MainTex, nil)
+		mat:SetTexture(ShaderPropertyId.MainTexSecond, nil)
 	end
 end
 
-function var_0_0.onSceneShow(arg_86_0)
-	if arg_86_0._isSceneHide == false then
+function WeatherComp:onSceneShow()
+	if self._isSceneHide == false then
 		return
 	end
 
-	gohelper.setActive(arg_86_0._sceneGo, true)
+	gohelper.setActive(self._sceneGo, true)
 
-	arg_86_0._isSceneHide = false
+	self._isSceneHide = false
 
-	if arg_86_0._curWeatherEffect then
-		var_0_1:setSwitch(arg_86_0:getId("WeatherState"), arg_86_0:getId(arg_86_0._curWeatherEffect))
+	if self._curWeatherEffect then
+		audioMgr:setSwitch(self:getId("WeatherState"), self:getId(self._curWeatherEffect))
 	end
 
-	if arg_86_0._curLightMode then
-		var_0_1:setSwitch(arg_86_0:getId("Daytimestate"), arg_86_0:getId(arg_86_0._curLightMode))
+	if self._curLightMode then
+		audioMgr:setSwitch(self:getId("Daytimestate"), self:getId(self._curLightMode))
 	end
 
-	arg_86_0:_playWeatherEffectAudio()
+	self:_playWeatherEffectAudio()
 end
 
-function var_0_0._playWeatherEffectAudio(arg_87_0, arg_87_1)
-	arg_87_0:_stopWeatherEffectAudio()
+function WeatherComp:_playWeatherEffectAudio(isRepeat)
+	self:_stopWeatherEffectAudio()
 
-	if arg_87_0._curWeatherState and not gohelper.isNil(arg_87_0._weatherEffectGo) then
-		local var_87_0 = WeatherEnum.EffectPlayAudio[arg_87_0._curWeatherState]
+	if self._curWeatherState and not gohelper.isNil(self._weatherEffectGo) then
+		local playAudioId = WeatherEnum.EffectPlayAudio[self._curWeatherState]
 
-		if var_87_0 and not arg_87_0._isSceneHide then
-			arg_87_0._stopWeatherEffectAudioId = WeatherEnum.EffectStopAudio[arg_87_0._curWeatherState]
+		if playAudioId and not self._isSceneHide then
+			self._stopWeatherEffectAudioId = WeatherEnum.EffectStopAudio[self._curWeatherState]
 
-			var_0_1:trigger(var_87_0)
+			audioMgr:trigger(playAudioId)
 
-			if not arg_87_1 then
-				gohelper.setActive(arg_87_0._weatherEffectGo, false)
-				gohelper.setActive(arg_87_0._weatherEffectGo, true)
+			if not isRepeat then
+				gohelper.setActive(self._weatherEffectGo, false)
+				gohelper.setActive(self._weatherEffectGo, true)
 			end
 
-			TaskDispatcher.cancelTask(arg_87_0._repeatPlayEffectAndAudio, arg_87_0)
-			TaskDispatcher.runDelay(arg_87_0._repeatPlayEffectAndAudio, arg_87_0, WeatherEnum.EffectAudioTime[arg_87_0._curWeatherState])
+			TaskDispatcher.cancelTask(self._repeatPlayEffectAndAudio, self)
+			TaskDispatcher.runDelay(self._repeatPlayEffectAndAudio, self, WeatherEnum.EffectAudioTime[self._curWeatherState])
 		end
 	end
 end
 
-function var_0_0.onSceneHide(arg_88_0)
-	gohelper.setActive(arg_88_0._sceneGo, false)
+function WeatherComp:onSceneHide()
+	gohelper.setActive(self._sceneGo, false)
 
-	arg_88_0._isSceneHide = true
+	self._isSceneHide = true
 
-	arg_88_0:_stopWeatherEffectAudio()
+	self:_stopWeatherEffectAudio()
 end
 
-function var_0_0._stopWeatherEffectAudio(arg_89_0)
-	if arg_89_0._stopWeatherEffectAudioId then
-		var_0_1:trigger(arg_89_0._stopWeatherEffectAudioId)
+function WeatherComp:_stopWeatherEffectAudio()
+	if self._stopWeatherEffectAudioId then
+		audioMgr:trigger(self._stopWeatherEffectAudioId)
 
-		arg_89_0._stopWeatherEffectAudioId = nil
+		self._stopWeatherEffectAudioId = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_89_0._repeatPlayEffectAndAudio, arg_89_0)
+	TaskDispatcher.cancelTask(self._repeatPlayEffectAndAudio, self)
 end
 
-function var_0_0._repeatPlayEffectAndAudio(arg_90_0)
-	arg_90_0:_playWeatherEffectAudio(true)
+function WeatherComp:_repeatPlayEffectAndAudio()
+	self:_playWeatherEffectAudio(true)
 end
 
-function var_0_0.onSceneClose(arg_91_0)
-	if arg_91_0._isMain then
-		arg_91_0:_clearMats()
+function WeatherComp:onSceneClose()
+	if self._isMain then
+		self:_clearMats()
 
-		arg_91_0._randomMainHero = true
+		self._randomMainHero = true
 	end
 
-	if arg_91_0._srcLoader then
-		arg_91_0._srcLoader:dispose()
+	if self._srcLoader then
+		self._srcLoader:dispose()
 
-		arg_91_0._srcLoader = nil
+		self._srcLoader = nil
 	end
 
-	if arg_91_0._targetLoader then
-		arg_91_0._targetLoader:dispose()
+	if self._targetLoader then
+		self._targetLoader:dispose()
 
-		arg_91_0._targetLoader = nil
+		self._targetLoader = nil
 	end
 
-	if arg_91_0._effectLoader then
-		arg_91_0._effectLoader:dispose()
+	if self._effectLoader then
+		self._effectLoader:dispose()
 
-		arg_91_0._effectLoader = nil
+		self._effectLoader = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_91_0._onUpdate, arg_91_0)
-	TaskDispatcher.cancelTask(arg_91_0._onEffectUpdate, arg_91_0)
-	TaskDispatcher.cancelTask(arg_91_0._checkReport, arg_91_0)
-	TaskDispatcher.cancelTask(arg_91_0._resGC, arg_91_0)
-	TaskDispatcher.cancelTask(arg_91_0._repeatPlayEffectAndAudio, arg_91_0)
+	TaskDispatcher.cancelTask(self._onUpdate, self)
+	TaskDispatcher.cancelTask(self._onEffectUpdate, self)
+	TaskDispatcher.cancelTask(self._checkReport, self)
+	TaskDispatcher.cancelTask(self._resGC, self)
+	TaskDispatcher.cancelTask(self._repeatPlayEffectAndAudio, self)
 
-	arg_91_0._sceneGo = nil
-	arg_91_0._effectRoot = nil
-	arg_91_0._lightMats = nil
-	arg_91_0._matsMap = nil
-	arg_91_0._lightSwitch = nil
-	arg_91_0._rawLightMats = nil
-	arg_91_0._rainEffectMat = nil
-	arg_91_0._roleGo = nil
-	arg_91_0._roleSharedMaterial = nil
-	arg_91_0._postProcessMask = null
-	arg_91_0._curReport = nil
-	arg_91_0._prevReport = nil
-	arg_91_0._srcReport = nil
-	arg_91_0._targetReport = nil
-	arg_91_0._animator = nil
-	arg_91_0._prevEffect = nil
-	arg_91_0._prevLightMode = nil
-	arg_91_0._curWeatherEffect = nil
-	arg_91_0._curLightMode = nil
-	arg_91_0._curWeatherState = nil
-	arg_91_0._isSceneHide = nil
+	self._sceneGo = nil
+	self._effectRoot = nil
+	self._lightMats = nil
+	self._matsMap = nil
+	self._lightSwitch = nil
+	self._rawLightMats = nil
+	self._rainEffectMat = nil
+	self._roleGo = nil
+	self._roleSharedMaterial = nil
+	self._postProcessMask = null
+	self._curReport = nil
+	self._prevReport = nil
+	self._srcReport = nil
+	self._targetReport = nil
+	self._animator = nil
+	self._prevEffect = nil
+	self._prevLightMode = nil
+	self._curWeatherEffect = nil
+	self._curLightMode = nil
+	self._curWeatherState = nil
+	self._isSceneHide = nil
 
-	arg_91_0:_stopWeatherEffectAudio()
+	self:_stopWeatherEffectAudio()
 
-	arg_91_0._effectLightPs = nil
-	arg_91_0._effectAirPs = nil
-	arg_91_0._dynamicEffectLightPs = nil
-	arg_91_0._heroPlayWeatherVoice = nil
-	arg_91_0._lightModel = nil
-	arg_91_0._changeRoleParam = nil
-	arg_91_0._roleBlendCallback = nil
-	arg_91_0._roleBlendCallbackTarget = nil
-	arg_91_0._changeReportCallback = nil
-	arg_91_0._changeReportCallbackTarget = nil
-	arg_91_0._weatherEffectGo = nil
-	arg_91_0._startTime = nil
-	arg_91_0._effectStartTime = nil
-	arg_91_0._reportEndTime = nil
+	self._effectLightPs = nil
+	self._effectAirPs = nil
+	self._dynamicEffectLightPs = nil
+	self._heroPlayWeatherVoice = nil
+	self._lightModel = nil
+	self._changeRoleParam = nil
+	self._roleBlendCallback = nil
+	self._roleBlendCallbackTarget = nil
+	self._changeReportCallback = nil
+	self._changeReportCallbackTarget = nil
+	self._weatherEffectGo = nil
+	self._startTime = nil
+	self._effectStartTime = nil
+	self._reportEndTime = nil
 
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseFullView, arg_91_0._onCloseFullView, arg_91_0)
-	MainController.instance:unregisterCallback(MainEvent.OnShowSceneNewbieOpen, arg_91_0._OnShowSceneNewbieOpen, arg_91_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseFullView, self._onCloseFullView, self)
+	MainController.instance:unregisterCallback(MainEvent.OnShowSceneNewbieOpen, self._OnShowSceneNewbieOpen, self)
 end
 
-return var_0_0
+return WeatherComp

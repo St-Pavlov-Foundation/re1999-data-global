@@ -1,59 +1,66 @@
-﻿module("modules.logic.versionactivity1_4.act136.config.Activity136Config", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act136/config/Activity136Config.lua
 
-local var_0_0 = class("Activity136Config", BaseConfig)
+module("modules.logic.versionactivity1_4.act136.config.Activity136Config", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.Id2HeroIdDict = {}
+local Activity136Config = class("Activity136Config", BaseConfig)
+
+function Activity136Config:ctor()
+	self.Id2HeroIdDict = {}
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function Activity136Config:reqConfigNames()
 	return {
 		"activity136"
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = arg_3_0[string.format("%sConfigLoaded", arg_3_1)]
+function Activity136Config:onConfigLoaded(configName, configTable)
+	local funcName = string.format("%sConfigLoaded", configName)
+	local configLoadedFunc = self[funcName]
 
-	if var_3_0 then
-		var_3_0(arg_3_0, arg_3_2)
+	if configLoadedFunc then
+		configLoadedFunc(self, configTable)
 	end
 end
 
-function var_0_0.activity136ConfigLoaded(arg_4_0, arg_4_1)
-	for iter_4_0, iter_4_1 in ipairs(arg_4_1.configList) do
-		local var_4_0 = string.splitToNumber(iter_4_1.heroIds, "#")
+function Activity136Config:activity136ConfigLoaded(configTable)
+	for _, cfg in ipairs(configTable.configList) do
+		local heroIdList = string.splitToNumber(cfg.heroIds, "#")
 
-		arg_4_0.Id2HeroIdDict[iter_4_1.activityId] = var_4_0
+		self.Id2HeroIdDict[cfg.activityId] = heroIdList
 	end
 end
 
-function var_0_0.getCfg(arg_5_0, arg_5_1)
-	return lua_activity136.configDict[arg_5_1]
+function Activity136Config:getCfg(activityId)
+	return lua_activity136.configDict[activityId]
 end
 
-function var_0_0.getCfgWithNilError(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0:getCfg(arg_6_1)
+function Activity136Config:getCfgWithNilError(activityId)
+	local cfg = self:getCfg(activityId)
 
-	if not var_6_0 then
-		logError("Activity136Config:getCfgWithNilError:cfg nil, id:" .. (arg_6_1 or "nil"))
+	if not cfg then
+		logError("Activity136Config:getCfgWithNilError:cfg nil, id:" .. (activityId or "nil"))
 	end
 
-	return var_6_0
+	return cfg
 end
 
-function var_0_0.getSelfSelectCharacterIdList(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0.Id2HeroIdDict[arg_7_1]
+function Activity136Config:getSelfSelectCharacterIdList(activityId)
+	local result = self.Id2HeroIdDict[activityId]
 
-	if not var_7_0 then
-		var_7_0 = {}
+	if not result then
+		result = {}
 
-		logError("Activity136Config:getSelfSelectCharacterIdList error, no heroIds data, id:" .. (arg_7_1 or "nil"))
+		logError("Activity136Config:getSelfSelectCharacterIdList error, no heroIds data, id:" .. (activityId or "nil"))
 	end
 
-	return var_7_0
+	return result
 end
 
-var_0_0.instance = var_0_0.New()
+function Activity136Config:getActivityId(fallback)
+	return ActivityConfig.instance:getConstAsNum(4, fallback or ActivityEnum.Activity.SelfSelectCharacter)
+end
 
-return var_0_0
+Activity136Config.instance = Activity136Config.New()
+
+return Activity136Config

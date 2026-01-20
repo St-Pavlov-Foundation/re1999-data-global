@@ -1,166 +1,168 @@
-﻿module("modules.logic.scene.room.comp.RoomSceneAmbientComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/comp/RoomSceneAmbientComp.lua
 
-local var_0_0 = class("RoomSceneAmbientComp", BaseSceneComp)
-local var_0_1 = UnityEngine.Shader
-local var_0_2 = {
-	LIGHTRANGE = var_0_1.PropertyToID("_LightRange"),
-	LIGHTOFFSET = var_0_1.PropertyToID("_LightOffset"),
-	LIGHTPOSITION = var_0_1.PropertyToID("_LightPosition"),
-	LIGHTMAX = var_0_1.PropertyToID("_LightMax"),
-	LIGHTMIN = var_0_1.PropertyToID("_LightMin"),
-	LIGHTCOLA = var_0_1.PropertyToID("_LightColA"),
-	_LightParamOptimize = var_0_1.PropertyToID("_LightParamOptimize"),
-	LIGHTPARAMS = var_0_1.PropertyToID("_LightParams"),
-	BENDING_AMOUNT = var_0_1.PropertyToID("_Curvature"),
-	BENDING_AMOUNT_SCALED = var_0_1.PropertyToID("_CurvatureScaled"),
-	AMBIENTSIZE = var_0_1.PropertyToID("_AmbientSize"),
-	HFLAMBERT = var_0_1.PropertyToID("_Hflambert"),
-	AMBIENTCOL = var_0_1.PropertyToID("_AmbientCol"),
-	_ShadowColor = var_0_1.PropertyToID("_ShadowColor"),
-	SHADOW_PARAMS = var_0_1.PropertyToID("_ShadowParams"),
-	SHADOW_PARAMS_OPT = var_0_1.PropertyToID("_ShadowParamsOpt"),
-	FOGCOLOR = var_0_1.PropertyToID("_FogColor"),
-	FOGCOLOR2 = var_0_1.PropertyToID("_FogColor2"),
-	FOGPARAMS = var_0_1.PropertyToID("_FogParams"),
-	FOGHEIGHT = var_0_1.PropertyToID("_FogHeight"),
-	HEIGHTFOGEDGE = var_0_1.PropertyToID("_HeightFogEdge"),
-	DISFOGSTART = var_0_1.PropertyToID("_DisFogStart"),
-	_DisFogDataAndFogParmasOpt = var_0_1.PropertyToID("_DisFogDataAndFogParmasOpt"),
-	DISFOGEDGE = var_0_1.PropertyToID("_DisFogEdge"),
-	FOGDENSITYMIN = var_0_1.PropertyToID("_FogDensityMin"),
-	FOGDENSITYMAX = var_0_1.PropertyToID("_FogDensityMax"),
-	FOGMAINCOL = var_0_1.PropertyToID("_MainCol"),
-	FOGOUTSIDECOL = var_0_1.PropertyToID("_OutSideCol"),
-	FOGPLANEOUTSIDECOLOR = var_0_1.PropertyToID("_OutSideColor"),
-	FOGPLANEMAINCOLOR = var_0_1.PropertyToID("_MainColor"),
-	FogDensityData = var_0_1.PropertyToID("_FogDensityData"),
-	ADD_RANGE = var_0_1.PropertyToID("_AddRange")
+module("modules.logic.scene.room.comp.RoomSceneAmbientComp", package.seeall)
+
+local RoomSceneAmbientComp = class("RoomSceneAmbientComp", BaseSceneComp)
+local Shader = UnityEngine.Shader
+local ShaderIDMap = {
+	LIGHTRANGE = Shader.PropertyToID("_LightRange"),
+	LIGHTOFFSET = Shader.PropertyToID("_LightOffset"),
+	LIGHTPOSITION = Shader.PropertyToID("_LightPosition"),
+	LIGHTMAX = Shader.PropertyToID("_LightMax"),
+	LIGHTMIN = Shader.PropertyToID("_LightMin"),
+	LIGHTCOLA = Shader.PropertyToID("_LightColA"),
+	_LightParamOptimize = Shader.PropertyToID("_LightParamOptimize"),
+	LIGHTPARAMS = Shader.PropertyToID("_LightParams"),
+	BENDING_AMOUNT = Shader.PropertyToID("_Curvature"),
+	BENDING_AMOUNT_SCALED = Shader.PropertyToID("_CurvatureScaled"),
+	AMBIENTSIZE = Shader.PropertyToID("_AmbientSize"),
+	HFLAMBERT = Shader.PropertyToID("_Hflambert"),
+	AMBIENTCOL = Shader.PropertyToID("_AmbientCol"),
+	_ShadowColor = Shader.PropertyToID("_ShadowColor"),
+	SHADOW_PARAMS = Shader.PropertyToID("_ShadowParams"),
+	SHADOW_PARAMS_OPT = Shader.PropertyToID("_ShadowParamsOpt"),
+	FOGCOLOR = Shader.PropertyToID("_FogColor"),
+	FOGCOLOR2 = Shader.PropertyToID("_FogColor2"),
+	FOGPARAMS = Shader.PropertyToID("_FogParams"),
+	FOGHEIGHT = Shader.PropertyToID("_FogHeight"),
+	HEIGHTFOGEDGE = Shader.PropertyToID("_HeightFogEdge"),
+	DISFOGSTART = Shader.PropertyToID("_DisFogStart"),
+	_DisFogDataAndFogParmasOpt = Shader.PropertyToID("_DisFogDataAndFogParmasOpt"),
+	DISFOGEDGE = Shader.PropertyToID("_DisFogEdge"),
+	FOGDENSITYMIN = Shader.PropertyToID("_FogDensityMin"),
+	FOGDENSITYMAX = Shader.PropertyToID("_FogDensityMax"),
+	FOGMAINCOL = Shader.PropertyToID("_MainCol"),
+	FOGOUTSIDECOL = Shader.PropertyToID("_OutSideCol"),
+	FOGPLANEOUTSIDECOLOR = Shader.PropertyToID("_OutSideColor"),
+	FOGPLANEMAINCOLOR = Shader.PropertyToID("_MainColor"),
+	FogDensityData = Shader.PropertyToID("_FogDensityData"),
+	ADD_RANGE = Shader.PropertyToID("_AddRange")
 }
 
-var_0_0.ShaderIDMap = var_0_2
+RoomSceneAmbientComp.ShaderIDMap = ShaderIDMap
 
-local var_0_3 = {
+local KEY_TYPT = {
 	vector3 = 3,
 	vector4 = 4,
 	color = 5,
 	vector2 = 2,
 	number = 1
 }
-local var_0_4 = {
-	ambientsize = var_0_3.number,
-	hflambert = var_0_3.number,
-	ambientcol = var_0_3.color,
-	outsideShadow = var_0_3.number,
-	insideShadow = var_0_3.number,
-	shadowColor = var_0_3.color,
-	fogColor = var_0_3.color,
-	fogColor2 = var_0_3.color,
-	fogParams = var_0_3.vector2,
-	fogHeight = var_0_3.number,
-	heightfogedge = var_0_3.number,
-	disfogstart = var_0_3.number,
-	disfogedge = var_0_3.number,
-	fogdensitymin = var_0_3.number,
-	fogdensitymax = var_0_3.number,
-	addRange = var_0_3.number,
-	dirLightColor = var_0_3.color,
-	dirLightIntensity = var_0_3.number,
-	lightDir = var_0_3.vector3,
-	fogPlaneMainCol = var_0_3.color,
-	fogPlaneOutSideCol = var_0_3.color,
-	fogMainCol = var_0_3.color,
-	fogOutSideCol = var_0_3.color,
-	rimcol = var_0_3.color,
-	lightRangeNear = var_0_3.number,
-	lightRangeFar = var_0_3.number,
-	lightOffsetNear = var_0_3.number,
-	lightOffsetFar = var_0_3.number,
-	cameraDistanceValue = var_0_3.number,
-	lightmin = var_0_3.number,
-	lightmax = var_0_3.number,
-	lightParams = var_0_3.vector2
+local Data_KeyTyp_Map = {
+	ambientsize = KEY_TYPT.number,
+	hflambert = KEY_TYPT.number,
+	ambientcol = KEY_TYPT.color,
+	outsideShadow = KEY_TYPT.number,
+	insideShadow = KEY_TYPT.number,
+	shadowColor = KEY_TYPT.color,
+	fogColor = KEY_TYPT.color,
+	fogColor2 = KEY_TYPT.color,
+	fogParams = KEY_TYPT.vector2,
+	fogHeight = KEY_TYPT.number,
+	heightfogedge = KEY_TYPT.number,
+	disfogstart = KEY_TYPT.number,
+	disfogedge = KEY_TYPT.number,
+	fogdensitymin = KEY_TYPT.number,
+	fogdensitymax = KEY_TYPT.number,
+	addRange = KEY_TYPT.number,
+	dirLightColor = KEY_TYPT.color,
+	dirLightIntensity = KEY_TYPT.number,
+	lightDir = KEY_TYPT.vector3,
+	fogPlaneMainCol = KEY_TYPT.color,
+	fogPlaneOutSideCol = KEY_TYPT.color,
+	fogMainCol = KEY_TYPT.color,
+	fogOutSideCol = KEY_TYPT.color,
+	rimcol = KEY_TYPT.color,
+	lightRangeNear = KEY_TYPT.number,
+	lightRangeFar = KEY_TYPT.number,
+	lightOffsetNear = KEY_TYPT.number,
+	lightOffsetFar = KEY_TYPT.number,
+	cameraDistanceValue = KEY_TYPT.number,
+	lightmin = KEY_TYPT.number,
+	lightmax = KEY_TYPT.number,
+	lightParams = KEY_TYPT.vector2
 }
-local var_0_5 = "night_1"
-local var_0_6 = {
+local Scene_Ambient_NightId = "night_1"
+local Scene_Ambient_Ids = {
 	"day_1",
 	"day_2",
 	"afternoon",
 	"night_1"
 }
 
-var_0_0.Update_Rate_Time = 10
-var_0_0.Switch_Tween_Time = 5
+RoomSceneAmbientComp.Update_Rate_Time = 10
+RoomSceneAmbientComp.Switch_Tween_Time = 5
 
-function var_0_0.onInit(arg_1_0)
+function RoomSceneAmbientComp:onInit()
 	return
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._scene = arg_2_0:getCurScene()
-	arg_2_0._matFogPlane = arg_2_0._scene.go.sceneAmbient.matFogPlane
-	arg_2_0._matFogParticle = arg_2_0._scene.go.sceneAmbient.matFogParticle
-	arg_2_0._updateRateTime = var_0_0.Update_Rate_Time
-	arg_2_0._swithchTweenTime = var_0_0.Switch_Tween_Time
+function RoomSceneAmbientComp:init(sceneId, levelId)
+	self._scene = self:getCurScene()
+	self._matFogPlane = self._scene.go.sceneAmbient.matFogPlane
+	self._matFogParticle = self._scene.go.sceneAmbient.matFogParticle
+	self._updateRateTime = RoomSceneAmbientComp.Update_Rate_Time
+	self._swithchTweenTime = RoomSceneAmbientComp.Switch_Tween_Time
 
-	local var_2_0 = CommonConfig.instance:getConstStr(ConstEnum.RoomWeatherUpdateTime)
+	local str = CommonConfig.instance:getConstStr(ConstEnum.RoomWeatherUpdateTime)
 
-	if not string.nilorempty(var_2_0) then
-		local var_2_1 = string.splitToNumber(var_2_0, "#")
+	if not string.nilorempty(str) then
+		local nums = string.splitToNumber(str, "#")
 
-		arg_2_0._updateRateTime = var_2_1[1] or var_0_0.Update_Rate_Time
-		arg_2_0._swithchTweenTime = var_2_1[2] or 0
+		self._updateRateTime = nums[1] or RoomSceneAmbientComp.Update_Rate_Time
+		self._swithchTweenTime = nums[2] or 0
 	end
 
-	local var_2_2 = arg_2_0:_isCanUpdate()
+	local isAuto = self:_isCanUpdate()
 
-	if arg_2_0._lastAutoUpdateReport ~= var_2_2 then
-		arg_2_0._lastAutoUpdateReport = var_2_2
+	if self._lastAutoUpdateReport ~= isAuto then
+		self._lastAutoUpdateReport = isAuto
 
-		arg_2_0:reset()
+		self:reset()
 	end
 end
 
-function var_0_0.reset(arg_3_0)
-	arg_3_0._ambientId = nil
-	arg_3_0._curDataParams = nil
-	arg_3_0._data = nil
+function RoomSceneAmbientComp:reset()
+	self._ambientId = nil
+	self._curDataParams = nil
+	self._data = nil
 
-	local var_3_0 = arg_3_0._curRoomMode
+	local lastMode = self._curRoomMode
 
-	arg_3_0._curRoomMode = RoomModel.instance:getGameMode()
-	arg_3_0._ambientIds = {}
+	self._curRoomMode = RoomModel.instance:getGameMode()
+	self._ambientIds = {}
 
-	for iter_3_0, iter_3_1 in ipairs(var_0_6) do
-		if RoomConfig.instance:getSceneAmbientConfig(iter_3_1) then
-			table.insert(arg_3_0._ambientIds, iter_3_1)
+	for i, ambientId in ipairs(Scene_Ambient_Ids) do
+		if RoomConfig.instance:getSceneAmbientConfig(ambientId) then
+			table.insert(self._ambientIds, ambientId)
 		end
 	end
 
-	TaskDispatcher.cancelTask(arg_3_0.updateReport, arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0._initReport, arg_3_0)
+	TaskDispatcher.cancelTask(self.updateReport, self)
+	TaskDispatcher.cancelTask(self._initReport, self)
 
-	if arg_3_0:_isCanUpdate() then
-		TaskDispatcher.runRepeat(arg_3_0.updateReport, arg_3_0, arg_3_0._updateRateTime)
+	if self:_isCanUpdate() then
+		TaskDispatcher.runRepeat(self.updateReport, self, self._updateRateTime)
 	end
 
-	TaskDispatcher.runDelay(arg_3_0._initReport, arg_3_0, 0.1)
+	TaskDispatcher.runDelay(self._initReport, self, 0.1)
 end
 
-function var_0_0._initReport(arg_4_0)
-	local var_4_0 = 1
+function RoomSceneAmbientComp:_initReport()
+	local index = 1
 
-	if arg_4_0:_isCanUpdate() then
-		local var_4_1, var_4_2 = WeatherModel.instance:getReport()
+	if self:_isCanUpdate() then
+		local reportConfig, deltaTime = WeatherModel.instance:getReport()
 
-		if var_4_1 then
-			var_4_0 = var_4_1.roomMode
+		if reportConfig then
+			index = reportConfig.roomMode
 		end
 	end
 
-	arg_4_0:tweenToAmbientId(arg_4_0._ambientIds[var_4_0] or arg_4_0._ambientIds[1])
+	self:tweenToAmbientId(self._ambientIds[index] or self._ambientIds[1])
 end
 
-function var_0_0._isCanUpdate(arg_5_0)
+function RoomSceneAmbientComp:_isCanUpdate()
 	if RoomController.instance:isObMode() or RoomController.instance:isVisitMode() then
 		return true
 	end
@@ -168,287 +170,289 @@ function var_0_0._isCanUpdate(arg_5_0)
 	return false
 end
 
-function var_0_0.updateReport(arg_6_0)
-	if not arg_6_0._ambientIds then
+function RoomSceneAmbientComp:updateReport()
+	if not self._ambientIds then
 		return
 	end
 
-	arg_6_0._ambientIds = arg_6_0._ambientIds
+	self._ambientIds = self._ambientIds
 
-	local var_6_0 = (tabletool.indexOf(arg_6_0._ambientIds, arg_6_0._ambientId) or 0) + 1
+	local index = tabletool.indexOf(self._ambientIds, self._ambientId) or 0
 
-	if var_6_0 > #arg_6_0._ambientIds then
-		var_6_0 = 1
+	index = index + 1
+
+	if index > #self._ambientIds then
+		index = 1
 	end
 
-	arg_6_0:tweenToAmbientId(arg_6_0._ambientIds[var_6_0])
+	self:tweenToAmbientId(self._ambientIds[index])
 end
 
-function var_0_0._getKeyTypeFuncMap(arg_7_0)
-	if not arg_7_0._keyTypeFuncMap then
-		arg_7_0._keyTypeFuncMap = {
-			[var_0_3.number] = arg_7_0._paramToNumber,
-			[var_0_3.vector2] = arg_7_0._paramToVector2,
-			[var_0_3.vector3] = arg_7_0._paramToVector3,
-			[var_0_3.vector4] = arg_7_0._paramToVector4,
-			[var_0_3.color] = arg_7_0._paramToColor
+function RoomSceneAmbientComp:_getKeyTypeFuncMap()
+	if not self._keyTypeFuncMap then
+		self._keyTypeFuncMap = {
+			[KEY_TYPT.number] = self._paramToNumber,
+			[KEY_TYPT.vector2] = self._paramToVector2,
+			[KEY_TYPT.vector3] = self._paramToVector3,
+			[KEY_TYPT.vector4] = self._paramToVector4,
+			[KEY_TYPT.color] = self._paramToColor
 		}
 	end
 
-	return arg_7_0._keyTypeFuncMap
+	return self._keyTypeFuncMap
 end
 
-function var_0_0.tweenToAmbientId(arg_8_0, arg_8_1)
-	local var_8_0 = RoomConfig.instance:getSceneAmbientConfig(arg_8_1)
+function RoomSceneAmbientComp:tweenToAmbientId(ambientId)
+	local curAmbientCfg = RoomConfig.instance:getSceneAmbientConfig(ambientId)
 
-	if not var_8_0 then
-		logError(string.format("room_scene_ambient --> can not find ambientId:[%s]", arg_8_1))
-
-		return
-	end
-
-	arg_8_0:_killTween()
-
-	arg_8_0._ambientId = arg_8_1
-
-	if not arg_8_0._curDataParams then
-		arg_8_0:_updateData(1, var_8_0, var_8_0)
-		arg_8_0:_nightLight()
+	if not curAmbientCfg then
+		logError(string.format("room_scene_ambient --> can not find ambientId:[%s]", ambientId))
 
 		return
 	end
 
-	local var_8_1 = {
-		fromAmbientCfg = arg_8_0:_copyAmbientParam(arg_8_0._curDataParams or var_8_0),
-		toAmbientCfg = var_8_0
+	self:_killTween()
+
+	self._ambientId = ambientId
+
+	if not self._curDataParams then
+		self:_updateData(1, curAmbientCfg, curAmbientCfg)
+		self:_nightLight()
+
+		return
+	end
+
+	local mps = {
+		fromAmbientCfg = self:_copyAmbientParam(self._curDataParams or curAmbientCfg),
+		toAmbientCfg = curAmbientCfg
 	}
-	local var_8_2 = arg_8_0._swithchTweenTime or var_0_0.Switch_Tween_Time
+	local duration = self._swithchTweenTime or RoomSceneAmbientComp.Switch_Tween_Time
 
-	arg_8_0._tweenId = arg_8_0._scene.tween:tweenFloat(0, 1, var_8_2, arg_8_0._frameCallback, arg_8_0._finishCallback, arg_8_0, var_8_1)
+	self._tweenId = self._scene.tween:tweenFloat(0, 1, duration, self._frameCallback, self._finishCallback, self, mps)
 
-	arg_8_0:_nightLight()
+	self:_nightLight()
 end
 
-function var_0_0._killTween(arg_9_0)
-	if arg_9_0._tweenId then
-		arg_9_0._scene.tween:killById(arg_9_0._tweenId)
+function RoomSceneAmbientComp:_killTween()
+	if self._tweenId then
+		self._scene.tween:killById(self._tweenId)
 
-		arg_9_0._tweenId = nil
+		self._tweenId = nil
 	end
 end
 
-function var_0_0._frameCallback(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_0:_updateData(arg_10_1, arg_10_2.fromAmbientCfg, arg_10_2.toAmbientCfg)
+function RoomSceneAmbientComp:_frameCallback(zoom, param)
+	self:_updateData(zoom, param.fromAmbientCfg, param.toAmbientCfg)
 end
 
-function var_0_0._finishCallback(arg_11_0, arg_11_1, arg_11_2)
-	arg_11_0._tweenId = nil
+function RoomSceneAmbientComp:_finishCallback(value, param)
+	self._tweenId = nil
 end
 
-function var_0_0._copyAmbientParam(arg_12_0, arg_12_1)
-	local var_12_0 = {}
+function RoomSceneAmbientComp:_copyAmbientParam(ambientParam)
+	local target = {}
 
-	arg_12_0:_getZoomAmbientParam(1, var_12_0, arg_12_1, arg_12_1)
+	self:_getZoomAmbientParam(1, target, ambientParam, ambientParam)
 
-	return var_12_0
+	return target
 end
 
-function var_0_0._getZoomAmbientParam(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4)
-	local var_13_0 = var_0_4
+function RoomSceneAmbientComp:_getZoomAmbientParam(zoom, target, formCfg, toCfg)
+	local keyTypeMap = Data_KeyTyp_Map
 
-	for iter_13_0, iter_13_1 in pairs(var_13_0) do
-		if arg_13_3[iter_13_0] ~= nil and arg_13_4[iter_13_0] ~= nil then
-			if iter_13_1 == var_0_3.number then
-				arg_13_0:_zoomToKeyNumber(arg_13_2, iter_13_0, arg_13_1, arg_13_3[iter_13_0], arg_13_4[iter_13_0])
+	for key, key_type in pairs(keyTypeMap) do
+		if formCfg[key] ~= nil and toCfg[key] ~= nil then
+			if key_type == KEY_TYPT.number then
+				self:_zoomToKeyNumber(target, key, zoom, formCfg[key], toCfg[key])
 			else
-				arg_13_0:_zoomToKeyTable(arg_13_2, iter_13_0, arg_13_1, arg_13_3[iter_13_0], arg_13_4[iter_13_0])
+				self:_zoomToKeyTable(target, key, zoom, formCfg[key], toCfg[key])
 			end
 		end
 	end
 end
 
-function var_0_0._updateData(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	if arg_14_2 == nil and arg_14_3 == nil then
+function RoomSceneAmbientComp:_updateData(zoom, fromAmbientCfg, toAmbientCfg)
+	if fromAmbientCfg == nil and toAmbientCfg == nil then
 		return
 	end
 
-	local var_14_0 = arg_14_2 or arg_14_3
-	local var_14_1 = arg_14_3 or arg_14_2
+	local formCfg = fromAmbientCfg or toAmbientCfg
+	local toCfg = toAmbientCfg or fromAmbientCfg
 
-	arg_14_0._data = arg_14_0._data or {}
-	arg_14_0._curDataParams = arg_14_0._curDataParams or {}
+	self._data = self._data or {}
+	self._curDataParams = self._curDataParams or {}
 
-	arg_14_0:_getZoomAmbientParam(arg_14_1, arg_14_0._curDataParams, var_14_0, var_14_1)
+	self:_getZoomAmbientParam(zoom, self._curDataParams, formCfg, toCfg)
 
-	local var_14_2 = var_0_4
-	local var_14_3 = arg_14_0:_getKeyTypeFuncMap()
+	local keyTypeMap = Data_KeyTyp_Map
+	local keyTypeFuncMap = self:_getKeyTypeFuncMap()
 
-	for iter_14_0, iter_14_1 in pairs(var_14_2) do
-		if arg_14_0._curDataParams[iter_14_0] ~= nil then
-			local var_14_4 = var_14_3[iter_14_1]
+	for key, key_type in pairs(keyTypeMap) do
+		if self._curDataParams[key] ~= nil then
+			local zoomToFunc = keyTypeFuncMap[key_type]
 
-			if var_14_4 then
-				arg_14_0._data[iter_14_0] = var_14_4(arg_14_0, arg_14_0._curDataParams[iter_14_0])
+			if zoomToFunc then
+				self._data[key] = zoomToFunc(self, self._curDataParams[key])
 			else
-				logError(string.format("can not find keyTypeFuncMap[%s]", iter_14_1))
+				logError(string.format("can not find keyTypeFuncMap[%s]", key_type))
 			end
 		else
-			logError(string.format("can not find key[%s]", iter_14_0))
+			logError(string.format("can not find key[%s]", key))
 		end
 	end
 
-	arg_14_0:applyInspectorParam()
+	self:applyInspectorParam()
 end
 
-function var_0_0._zoomToKeyNumber(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5)
-	arg_15_1[arg_15_2] = arg_15_0:_zoomToNumber(arg_15_3, arg_15_4, arg_15_5)
+function RoomSceneAmbientComp:_zoomToKeyNumber(data, key, zoom, from, to)
+	data[key] = self:_zoomToNumber(zoom, from, to)
 end
 
-function var_0_0._zoomToKeyTable(arg_16_0, arg_16_1, arg_16_2, arg_16_3, arg_16_4, arg_16_5)
-	if not arg_16_1[arg_16_2] then
-		arg_16_1[arg_16_2] = {}
+function RoomSceneAmbientComp:_zoomToKeyTable(data, key, zoom, from, to)
+	if not data[key] then
+		data[key] = {}
 	end
 
-	local var_16_0 = arg_16_1[arg_16_2]
+	local t = data[key]
 
-	for iter_16_0 = 1, #arg_16_4 do
-		var_16_0[iter_16_0] = arg_16_0:_zoomToNumber(arg_16_3, arg_16_4[iter_16_0], arg_16_5[iter_16_0])
+	for i = 1, #from do
+		t[i] = self:_zoomToNumber(zoom, from[i], to[i])
 	end
 end
 
-function var_0_0._zoomToNumber(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	if arg_17_1 >= 1 then
-		return arg_17_3
-	elseif arg_17_1 <= 0 then
-		return arg_17_2
+function RoomSceneAmbientComp:_zoomToNumber(zoom, from, to)
+	if zoom >= 1 then
+		return to
+	elseif zoom <= 0 then
+		return from
 	end
 
-	return arg_17_2 + (arg_17_3 - arg_17_2) * arg_17_1
+	return from + (to - from) * zoom
 end
 
-function var_0_0._paramToNumber(arg_18_0, arg_18_1)
-	return arg_18_1
+function RoomSceneAmbientComp:_paramToNumber(p)
+	return p
 end
 
-function var_0_0._paramToVector2(arg_19_0, arg_19_1)
-	return Vector4(arg_19_1[1], arg_19_1[2], 0, 0)
+function RoomSceneAmbientComp:_paramToVector2(p)
+	return Vector4(p[1], p[2], 0, 0)
 end
 
-function var_0_0._paramToVector3(arg_20_0, arg_20_1)
-	return Vector4(arg_20_1[1], arg_20_1[2], arg_20_1[3], 0)
+function RoomSceneAmbientComp:_paramToVector3(p)
+	return Vector4(p[1], p[2], p[3], 0)
 end
 
-function var_0_0._paramTooVector4(arg_21_0, arg_21_1)
-	return Vector4(arg_21_1[1], arg_21_1[2], arg_21_1[3], arg_21_1[4])
+function RoomSceneAmbientComp:_paramTooVector4(p)
+	return Vector4(p[1], p[2], p[3], p[4])
 end
 
-function var_0_0._paramToColor(arg_22_0, arg_22_1)
-	return Color(arg_22_1[1], arg_22_1[2], arg_22_1[3], arg_22_1[4])
+function RoomSceneAmbientComp:_paramToColor(p)
+	return Color(p[1], p[2], p[3], p[4])
 end
 
-function var_0_0.applyInspectorParam(arg_23_0)
-	arg_23_0:_applyShaher()
-	arg_23_0:_applyAmbientData()
-	arg_23_0:_applyLightComp()
-	arg_23_0:_applyFog()
+function RoomSceneAmbientComp:applyInspectorParam()
+	self:_applyShaher()
+	self:_applyAmbientData()
+	self:_applyLightComp()
+	self:_applyFog()
 end
 
-function var_0_0._applyShaher(arg_24_0)
-	if not arg_24_0._data then
+function RoomSceneAmbientComp:_applyShaher()
+	if not self._data then
 		return
 	end
 
-	local var_24_0 = arg_24_0._data
+	local data = self._data
 
-	var_0_1.SetGlobalFloat(var_0_2.AMBIENTSIZE, var_24_0.ambientsize)
-	var_0_1.SetGlobalFloat(var_0_2.HFLAMBERT, var_24_0.hflambert)
-	var_0_1.SetGlobalColor(var_0_2.AMBIENTCOL, var_24_0.ambientcol)
-	var_0_1.SetGlobalVector(var_0_2.SHADOW_PARAMS, Vector4(var_24_0.outsideShadow, var_24_0.insideShadow))
-	var_0_1.SetGlobalVector(var_0_2.SHADOW_PARAMS_OPT, Vector4(var_24_0.insideShadow - var_24_0.outsideShadow, var_24_0.outsideShadow))
-	var_0_1.SetGlobalColor(var_0_2._ShadowColor, var_24_0.shadowColor)
-	var_0_1.SetGlobalColor(var_0_2.FOGCOLOR, var_24_0.fogColor)
-	var_0_1.SetGlobalColor(var_0_2.FOGCOLOR2, var_24_0.fogColor2)
-	var_0_1.SetGlobalVector(var_0_2.FOGPARAMS, var_24_0.fogParams)
-	var_0_1.SetGlobalFloat(var_0_2.FOGHEIGHT, var_24_0.fogHeight)
-	var_0_1.SetGlobalFloat(var_0_2.HEIGHTFOGEDGE, var_24_0.heightfogedge)
-	var_0_1.SetGlobalFloat(var_0_2.DISFOGSTART, var_24_0.disfogstart)
-	var_0_1.SetGlobalFloat(var_0_2.DISFOGEDGE, var_24_0.disfogedge)
-	var_0_1.SetGlobalFloat(var_0_2.ADD_RANGE, var_24_0.addRange)
+	Shader.SetGlobalFloat(ShaderIDMap.AMBIENTSIZE, data.ambientsize)
+	Shader.SetGlobalFloat(ShaderIDMap.HFLAMBERT, data.hflambert)
+	Shader.SetGlobalColor(ShaderIDMap.AMBIENTCOL, data.ambientcol)
+	Shader.SetGlobalVector(ShaderIDMap.SHADOW_PARAMS, Vector4(data.outsideShadow, data.insideShadow))
+	Shader.SetGlobalVector(ShaderIDMap.SHADOW_PARAMS_OPT, Vector4(data.insideShadow - data.outsideShadow, data.outsideShadow))
+	Shader.SetGlobalColor(ShaderIDMap._ShadowColor, data.shadowColor)
+	Shader.SetGlobalColor(ShaderIDMap.FOGCOLOR, data.fogColor)
+	Shader.SetGlobalColor(ShaderIDMap.FOGCOLOR2, data.fogColor2)
+	Shader.SetGlobalVector(ShaderIDMap.FOGPARAMS, data.fogParams)
+	Shader.SetGlobalFloat(ShaderIDMap.FOGHEIGHT, data.fogHeight)
+	Shader.SetGlobalFloat(ShaderIDMap.HEIGHTFOGEDGE, data.heightfogedge)
+	Shader.SetGlobalFloat(ShaderIDMap.DISFOGSTART, data.disfogstart)
+	Shader.SetGlobalFloat(ShaderIDMap.DISFOGEDGE, data.disfogedge)
+	Shader.SetGlobalFloat(ShaderIDMap.ADD_RANGE, data.addRange)
 
-	local var_24_1 = 1 / var_24_0.disfogedge
-	local var_24_2 = -var_24_0.disfogstart / var_24_0.disfogedge
-	local var_24_3 = var_24_0.fogParams.x
-	local var_24_4 = var_24_0.fogParams.y - var_24_3
-	local var_24_5 = var_24_4 ~= 0 and 1 / var_24_4 or var_24_3
-	local var_24_6 = -var_24_3 * var_24_5
+	local disFogDataX = 1 / data.disfogedge
+	local disFogDataY = -data.disfogstart / data.disfogedge
+	local fogParamsX = data.fogParams.x
+	local fogDis = data.fogParams.y - fogParamsX
+	local fogParamsOptX = fogDis ~= 0 and 1 / fogDis or fogParamsX
+	local fogParamsOptY = -fogParamsX * fogParamsOptX
 
-	var_0_1.SetGlobalVector(var_0_2._DisFogDataAndFogParmasOpt, Vector4(var_24_1, var_24_2, var_24_5, var_24_6))
+	Shader.SetGlobalVector(ShaderIDMap._DisFogDataAndFogParmasOpt, Vector4(disFogDataX, disFogDataY, fogParamsOptX, fogParamsOptY))
 end
 
-function var_0_0._applyAmbientData(arg_25_0)
-	local var_25_0 = arg_25_0._scene.go.sceneAmbientData
-	local var_25_1 = arg_25_0._scene.go.sceneAmbient
-	local var_25_2 = arg_25_0._data
+function RoomSceneAmbientComp:_applyAmbientData()
+	local ambientData = self._scene.go.sceneAmbientData
+	local sceneAmbient = self._scene.go.sceneAmbient
+	local data = self._data
 
-	if var_25_2 and var_25_1 and var_25_0 then
-		var_25_0.rimcol = var_25_2.rimcol
-		var_25_0.lightRangeNear = var_25_2.lightRangeNear
-		var_25_0.lightRangeFar = var_25_2.lightRangeFar
-		var_25_0.lightOffsetNear = var_25_2.lightOffsetNear
-		var_25_0.lightOffsetFar = var_25_2.lightOffsetFar
-		var_25_0.cameraDistanceValue = var_25_2.cameraDistanceValue
-		var_25_0.lightmin = var_25_2.lightmin
-		var_25_0.lightmax = var_25_2.lightmax
-		var_25_0.lightParams = var_25_2.lightParams
-		var_25_1.data = var_25_0
+	if data and sceneAmbient and ambientData then
+		ambientData.rimcol = data.rimcol
+		ambientData.lightRangeNear = data.lightRangeNear
+		ambientData.lightRangeFar = data.lightRangeFar
+		ambientData.lightOffsetNear = data.lightOffsetNear
+		ambientData.lightOffsetFar = data.lightOffsetFar
+		ambientData.cameraDistanceValue = data.cameraDistanceValue
+		ambientData.lightmin = data.lightmin
+		ambientData.lightmax = data.lightmax
+		ambientData.lightParams = data.lightParams
+		sceneAmbient.data = ambientData
 	end
 end
 
-function var_0_0._applyLightComp(arg_26_0, arg_26_1)
-	local var_26_0 = arg_26_0._scene.light
-	local var_26_1 = arg_26_0._data
+function RoomSceneAmbientComp:_applyLightComp(data)
+	local lightComp = self._scene.light
+	local data = self._data
 
-	if var_26_0 and var_26_1 then
-		var_26_0:setLightColor(var_26_1.dirLightColor)
-		var_26_0:setLightIntensity(var_26_1.dirLightIntensity)
-		var_26_0:setLocalRotation(var_26_1.lightDir.x, var_26_1.lightDir.y, var_26_1.lightDir.z)
+	if lightComp and data then
+		lightComp:setLightColor(data.dirLightColor)
+		lightComp:setLightIntensity(data.dirLightIntensity)
+		lightComp:setLocalRotation(data.lightDir.x, data.lightDir.y, data.lightDir.z)
 	end
 end
 
-function var_0_0._applyFog(arg_27_0)
-	local var_27_0 = arg_27_0._data
+function RoomSceneAmbientComp:_applyFog()
+	local data = self._data
 
-	if var_27_0 then
-		if arg_27_0._matFogParticle then
-			arg_27_0._matFogParticle:SetColor(var_0_2.FOGMAINCOL, var_27_0.fogMainCol)
-			arg_27_0._matFogParticle:SetColor(var_0_2.FOGOUTSIDECOL, var_27_0.fogOutSideCol)
+	if data then
+		if self._matFogParticle then
+			self._matFogParticle:SetColor(ShaderIDMap.FOGMAINCOL, data.fogMainCol)
+			self._matFogParticle:SetColor(ShaderIDMap.FOGOUTSIDECOL, data.fogOutSideCol)
 		end
 
-		if arg_27_0._matFogPlane then
-			arg_27_0._matFogPlane:SetColor(var_0_2.FOGPLANEMAINCOLOR, var_27_0.fogPlaneMainCol)
-			arg_27_0._matFogPlane:SetColor(var_0_2.FOGPLANEOUTSIDECOLOR, var_27_0.fogPlaneOutSideCol)
+		if self._matFogPlane then
+			self._matFogPlane:SetColor(ShaderIDMap.FOGPLANEMAINCOLOR, data.fogPlaneMainCol)
+			self._matFogPlane:SetColor(ShaderIDMap.FOGPLANEOUTSIDECOLOR, data.fogPlaneOutSideCol)
 		end
 	end
 end
 
-function var_0_0._nightLight(arg_28_0)
-	local var_28_0 = arg_28_0._ambientId == var_0_5
+function RoomSceneAmbientComp:_nightLight()
+	local curIsNight = self._ambientId == Scene_Ambient_NightId
 
-	if RoomWeatherModel.instance:getIsNight() ~= var_28_0 then
-		RoomWeatherModel.instance:setIsNight(var_28_0)
-		RoomMapController.instance:dispatchEvent(RoomEvent.MapEntityNightLight, var_28_0)
+	if RoomWeatherModel.instance:getIsNight() ~= curIsNight then
+		RoomWeatherModel.instance:setIsNight(curIsNight)
+		RoomMapController.instance:dispatchEvent(RoomEvent.MapEntityNightLight, curIsNight)
 	end
 end
 
-function var_0_0.onSceneClose(arg_29_0)
-	arg_29_0._matFogParticle = nil
-	arg_29_0._matFogPlane = nil
-	arg_29_0._curRoomMode = nil
-	arg_29_0._lastAutoUpdateReport = nil
+function RoomSceneAmbientComp:onSceneClose()
+	self._matFogParticle = nil
+	self._matFogPlane = nil
+	self._curRoomMode = nil
+	self._lastAutoUpdateReport = nil
 
-	TaskDispatcher.cancelTask(arg_29_0.updateReport, arg_29_0)
-	TaskDispatcher.cancelTask(arg_29_0._initReport, arg_29_0)
-	arg_29_0:_killTween()
+	TaskDispatcher.cancelTask(self.updateReport, self)
+	TaskDispatcher.cancelTask(self._initReport, self)
+	self:_killTween()
 end
 
-return var_0_0
+return RoomSceneAmbientComp

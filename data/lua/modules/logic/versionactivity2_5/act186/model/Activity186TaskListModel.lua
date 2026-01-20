@@ -1,63 +1,65 @@
-﻿module("modules.logic.versionactivity2_5.act186.model.Activity186TaskListModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/act186/model/Activity186TaskListModel.lua
 
-local var_0_0 = class("Activity186TaskListModel", MixScrollModel)
+module("modules.logic.versionactivity2_5.act186.model.Activity186TaskListModel", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._activityId = arg_1_1
+local Activity186TaskListModel = class("Activity186TaskListModel", MixScrollModel)
+
+function Activity186TaskListModel:init(activityId)
+	self._activityId = activityId
 end
 
-function var_0_0.refresh(arg_2_0)
-	local var_2_0 = Activity186Model.instance:getById(arg_2_0._activityId)
+function Activity186TaskListModel:refresh()
+	local actMo = Activity186Model.instance:getById(self._activityId)
 
-	if not var_2_0 then
+	if not actMo then
 		return
 	end
 
-	local var_2_1 = var_2_0:getTaskList()
-	local var_2_2 = {}
+	local taskMoList = actMo:getTaskList()
+	local list = {}
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_1) do
-		local var_2_3 = iter_2_1.config
+	for i, v in ipairs(taskMoList) do
+		local config = v.config
 
-		if var_2_3 then
-			if not string.nilorempty(var_2_3.prepose) then
-				local var_2_4 = true
-				local var_2_5 = string.splitToNumber(var_2_3.prepose, "#")
+		if config then
+			if not string.nilorempty(config.prepose) then
+				local preposeFinish = true
+				local preposes = string.splitToNumber(config.prepose, "#")
 
-				for iter_2_2, iter_2_3 in ipairs(var_2_5) do
-					local var_2_6 = var_2_0:getTaskInfo(iter_2_3)
+				for _, preposeId in ipairs(preposes) do
+					local taskInfo = actMo:getTaskInfo(preposeId)
 
-					if not var_2_6 or not var_2_6.hasGetBonus then
-						var_2_4 = false
+					if not taskInfo or not taskInfo.hasGetBonus then
+						preposeFinish = false
 
 						break
 					end
 				end
 
-				if var_2_4 then
-					table.insert(var_2_2, iter_2_1)
+				if preposeFinish then
+					table.insert(list, v)
 				end
 			else
-				table.insert(var_2_2, iter_2_1)
+				table.insert(list, v)
 			end
 		end
 	end
 
-	if #var_2_2 > 1 then
-		table.sort(var_2_2, SortUtil.tableKeyLower({
+	if #list > 1 then
+		table.sort(list, SortUtil.tableKeyLower({
 			"status",
 			"missionorder",
 			"id"
 		}))
 	end
 
-	for iter_2_4, iter_2_5 in ipairs(var_2_2) do
-		iter_2_5.index = iter_2_4
+	for i, v in ipairs(list) do
+		v.index = i
 	end
 
-	arg_2_0:setList(var_2_2)
+	self:setList(list)
 end
 
-var_0_0.instance = var_0_0.New()
+Activity186TaskListModel.instance = Activity186TaskListModel.New()
 
-return var_0_0
+return Activity186TaskListModel

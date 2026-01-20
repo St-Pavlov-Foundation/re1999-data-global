@@ -1,39 +1,41 @@
-﻿module("modules.logic.sdk.rpc.Activity1000Rpc", package.seeall)
+﻿-- chunkname: @modules/logic/sdk/rpc/Activity1000Rpc.lua
 
-local var_0_0 = class("Activity1000Rpc", BaseRpc)
+module("modules.logic.sdk.rpc.Activity1000Rpc", package.seeall)
 
-function var_0_0.sendAct1000GetInfoRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	local var_1_0 = Activity1000Module_pb.Act1000GetInfoRequest()
+local Activity1000Rpc = class("Activity1000Rpc", BaseRpc)
 
-	var_1_0.activityId = arg_1_1
+function Activity1000Rpc:sendAct1000GetInfoRequest(activityId, callback, callbackObj, socketId)
+	local req = Activity1000Module_pb.Act1000GetInfoRequest()
 
-	arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3, arg_1_4)
+	req.activityId = activityId
+
+	self:sendMsg(req, callback, callbackObj, socketId)
 end
 
-function var_0_0.onReceiveAct1000GetInfoReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 ~= 0 then
+function Activity1000Rpc:onReceiveAct1000GetInfoReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	SDKModel.instance:setAccountBindBonus(arg_2_2.accountBindBonus)
+	SDKModel.instance:setAccountBindBonus(msg.accountBindBonus)
 end
 
-function var_0_0.sendAct1000AccountBindBonusRequest(arg_3_0, arg_3_1)
-	local var_3_0 = Activity1000Module_pb.Act1000AccountBindBonusRequest()
+function Activity1000Rpc:sendAct1000AccountBindBonusRequest(activityId)
+	local req = Activity1000Module_pb.Act1000AccountBindBonusRequest()
 
-	var_3_0.activityId = arg_3_1
+	req.activityId = activityId
 
-	arg_3_0:sendMsg(var_3_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveAct1000AccountBindBonusReply(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 ~= 0 then
+function Activity1000Rpc:onReceiveAct1000AccountBindBonusReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
 	SDKModel.instance:setAccountBindBonus(SDKEnum.RewardType.Got)
 end
 
-var_0_0.instance = var_0_0.New()
+Activity1000Rpc.instance = Activity1000Rpc.New()
 
-return var_0_0
+return Activity1000Rpc

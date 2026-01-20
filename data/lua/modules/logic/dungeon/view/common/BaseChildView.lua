@@ -1,40 +1,42 @@
-﻿module("modules.logic.dungeon.view.common.BaseChildView", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/common/BaseChildView.lua
 
-local var_0_0 = class("BaseChildView", UserDataDispose)
+module("modules.logic.dungeon.view.common.BaseChildView", package.seeall)
 
-function var_0_0.initView(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0:__onInit()
+local BaseChildView = class("BaseChildView", UserDataDispose)
 
-	arg_1_0.viewParam = arg_1_2
-	arg_1_0.viewGO = arg_1_1
+function BaseChildView:initView(go, viewParam)
+	self:__onInit()
 
-	arg_1_0:onInitView()
-	arg_1_0:addEvents()
-	arg_1_0:onOpen()
+	self.viewParam = viewParam
+	self.viewGO = go
+
+	self:onInitView()
+	self:addEvents()
+	self:onOpen()
 end
 
-function var_0_0.updateParam(arg_2_0, arg_2_1)
-	arg_2_0.viewParam = arg_2_1
+function BaseChildView:updateParam(viewParam)
+	self.viewParam = viewParam
 
-	arg_2_0:onUpdateParam()
+	self:onUpdateParam()
 end
 
-function var_0_0.onOpenFinish(arg_3_0)
+function BaseChildView:onOpenFinish()
 	return
 end
 
-function var_0_0.destroyView(arg_4_0)
-	arg_4_0:onClose()
-	arg_4_0:removeEvents()
-	arg_4_0:onDestroyView()
+function BaseChildView:destroyView()
+	self:onClose()
+	self:removeEvents()
+	self:onDestroyView()
 
-	if arg_4_0.viewGO then
-		gohelper.destroy(arg_4_0.viewGO)
+	if self.viewGO then
+		gohelper.destroy(self.viewGO)
 
-		arg_4_0.viewGO = nil
+		self.viewGO = nil
 	end
 
-	arg_4_0:__onDispose()
+	self:__onDispose()
 end
 
-return var_0_0
+return BaseChildView

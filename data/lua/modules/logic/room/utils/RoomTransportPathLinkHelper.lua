@@ -1,103 +1,105 @@
-﻿module("modules.logic.room.utils.RoomTransportPathLinkHelper", package.seeall)
+﻿-- chunkname: @modules/logic/room/utils/RoomTransportPathLinkHelper.lua
 
-local var_0_0 = {
-	_neighborMODict = {},
-	_neighborLinkResIdDict = {}
-}
+module("modules.logic.room.utils.RoomTransportPathLinkHelper", package.seeall)
 
-function var_0_0.getPtahLineType(arg_1_0, arg_1_1, arg_1_2)
-	if not arg_1_0 then
+local RoomTransportPathLinkHelper = {}
+
+RoomTransportPathLinkHelper._neighborMODict = {}
+RoomTransportPathLinkHelper._neighborLinkResIdDict = {}
+
+function RoomTransportPathLinkHelper.getPtahLineType(hexPoint, prevHexPoint, nextHexPoint)
+	if not hexPoint then
 		return nil
 	end
 
-	if arg_1_1 == nil and arg_1_2 == nil then
+	if prevHexPoint == nil and nextHexPoint == nil then
 		return RoomTransportPathEnum.PathLineType.Line00, 0
 	end
 
-	if not arg_1_1 or HexPoint.Distance(arg_1_0, arg_1_1) ~= 1 then
-		return var_0_0._getLine10(arg_1_0, arg_1_2)
+	if not prevHexPoint or HexPoint.Distance(hexPoint, prevHexPoint) ~= 1 then
+		return RoomTransportPathLinkHelper._getLine10(hexPoint, nextHexPoint)
 	end
 
-	if not arg_1_2 or HexPoint.Distance(arg_1_0, arg_1_2) ~= 1 then
-		return var_0_0._getLine10(arg_1_0, arg_1_1)
+	if not nextHexPoint or HexPoint.Distance(hexPoint, nextHexPoint) ~= 1 then
+		return RoomTransportPathLinkHelper._getLine10(hexPoint, prevHexPoint)
 	end
 
-	local var_1_0 = var_0_0.findLinkDirection(arg_1_0, arg_1_1)
-	local var_1_1 = var_0_0.findLinkDirection(arg_1_0, arg_1_2)
-	local var_1_2 = math.abs(var_1_0 - var_1_1)
+	local dir = RoomTransportPathLinkHelper.findLinkDirection(hexPoint, prevHexPoint)
+	local dir2 = RoomTransportPathLinkHelper.findLinkDirection(hexPoint, nextHexPoint)
+	local abs = math.abs(dir - dir2)
 
-	if var_1_2 == 1 then
-		return var_0_0._getLineAbs1(var_1_0, var_1_1)
-	elseif var_1_2 == 2 then
-		return var_0_0._getLineAbs2(var_1_0, var_1_1)
-	elseif var_1_2 == 3 then
-		return var_0_0._getLineAbs3(var_1_0, var_1_1)
-	elseif var_1_2 == 4 then
-		return var_0_0._getLineAbs4(var_1_0, var_1_1)
-	elseif var_1_2 == 5 then
-		return var_0_0._getLineAbs5(var_1_0, var_1_1)
+	if abs == 1 then
+		return RoomTransportPathLinkHelper._getLineAbs1(dir, dir2)
+	elseif abs == 2 then
+		return RoomTransportPathLinkHelper._getLineAbs2(dir, dir2)
+	elseif abs == 3 then
+		return RoomTransportPathLinkHelper._getLineAbs3(dir, dir2)
+	elseif abs == 4 then
+		return RoomTransportPathLinkHelper._getLineAbs4(dir, dir2)
+	elseif abs == 5 then
+		return RoomTransportPathLinkHelper._getLineAbs5(dir, dir2)
 	end
 end
 
-function var_0_0._getLine10(arg_2_0, arg_2_1)
-	if not arg_2_1 or HexPoint.Distance(arg_2_0, arg_2_1) ~= 1 then
+function RoomTransportPathLinkHelper._getLine10(hexPoint, nextHexPoint)
+	if not nextHexPoint or HexPoint.Distance(hexPoint, nextHexPoint) ~= 1 then
 		return nil
 	end
 
-	local var_2_0 = var_0_0.findLinkDirection(arg_2_0, arg_2_1)
+	local dir = RoomTransportPathLinkHelper.findLinkDirection(hexPoint, nextHexPoint)
 
-	if var_2_0 then
-		local var_2_1 = var_2_0 - 1
+	if dir then
+		local rotate = dir - 1
 
-		return RoomTransportPathEnum.PathLineType.Line10, var_2_1
+		return RoomTransportPathEnum.PathLineType.Line10, rotate
 	end
 end
 
-function var_0_0._getLineAbs1(arg_3_0, arg_3_1)
-	local var_3_0 = math.max(arg_3_0, arg_3_1) - 2
+function RoomTransportPathLinkHelper._getLineAbs1(dir, dir2)
+	local rotate = math.max(dir, dir2) - 2
 
-	return RoomTransportPathEnum.PathLineType.Line12, var_3_0
+	return RoomTransportPathEnum.PathLineType.Line12, rotate
 end
 
-function var_0_0._getLineAbs5(arg_4_0, arg_4_1)
+function RoomTransportPathLinkHelper._getLineAbs5(dir, dir2)
 	return RoomTransportPathEnum.PathLineType.Line12, 5
 end
 
-function var_0_0._getLineAbs2(arg_5_0, arg_5_1)
-	local var_5_0 = math.max(arg_5_0, arg_5_1) - 3
+function RoomTransportPathLinkHelper._getLineAbs2(dir, dir2)
+	local rotate = math.max(dir, dir2) - 3
 
-	return RoomTransportPathEnum.PathLineType.Line13, var_5_0
+	return RoomTransportPathEnum.PathLineType.Line13, rotate
 end
 
-function var_0_0._getLineAbs4(arg_6_0, arg_6_1)
-	local var_6_0 = math.max(arg_6_0, arg_6_1) - 1
+function RoomTransportPathLinkHelper._getLineAbs4(dir, dir2)
+	local rotate = math.max(dir, dir2) - 1
 
-	return RoomTransportPathEnum.PathLineType.Line13, var_6_0
+	return RoomTransportPathEnum.PathLineType.Line13, rotate
 end
 
-function var_0_0._getLineAbs3(arg_7_0, arg_7_1)
-	local var_7_0 = math.max(arg_7_0, arg_7_1) - 4
+function RoomTransportPathLinkHelper._getLineAbs3(dir, dir2)
+	local rotate = math.max(dir, dir2) - 4
 
-	return RoomTransportPathEnum.PathLineType.Line14, var_7_0
+	return RoomTransportPathEnum.PathLineType.Line14, rotate
 end
 
-function var_0_0.findLinkDirection(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_1.x - arg_8_0.x
-	local var_8_1 = arg_8_1.y - arg_8_0.y
+function RoomTransportPathLinkHelper.findLinkDirection(hexPoint, nextHexPoint)
+	local x = nextHexPoint.x - hexPoint.x
+	local y = nextHexPoint.y - hexPoint.y
 
-	if var_8_0 == 0 and var_8_1 == 0 then
+	if x == 0 and y == 0 then
 		return 0
 	end
 
-	for iter_8_0 = 1, 6 do
-		local var_8_2 = HexPoint.directions[iter_8_0]
+	for dir = 1, 6 do
+		local dirPoint = HexPoint.directions[dir]
 
-		if var_8_0 == var_8_2.x and var_8_1 == var_8_2.y then
-			return iter_8_0
+		if x == dirPoint.x and y == dirPoint.y then
+			return dir
 		end
 	end
 
 	return nil
 end
 
-return var_0_0
+return RoomTransportPathLinkHelper

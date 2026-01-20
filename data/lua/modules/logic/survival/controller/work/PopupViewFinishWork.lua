@@ -1,21 +1,23 @@
-﻿module("modules.logic.survival.controller.work.PopupViewFinishWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/PopupViewFinishWork.lua
 
-local var_0_0 = pureTable("PopupViewFinishWork", BaseWork)
+module("modules.logic.survival.controller.work.PopupViewFinishWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local PopupViewFinishWork = pureTable("PopupViewFinishWork", BaseWork)
+
+function PopupViewFinishWork:ctor()
 	return
 end
 
-function var_0_0.onStart(arg_2_0)
-	PopupController.instance:registerCallback(PopupEvent.OnPopupFinish, arg_2_0.onPopupFinish, arg_2_0)
+function PopupViewFinishWork:onStart()
+	PopupController.instance:registerCallback(PopupEvent.OnPopupFinish, self.onPopupFinish, self)
 end
 
-function var_0_0.onPopupFinish(arg_3_0)
-	arg_3_0:onDone(true)
+function PopupViewFinishWork:onPopupFinish()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	PopupController.instance:unregisterCallback(PopupEvent.OnPopupFinish, arg_4_0.onPopupFinish, arg_4_0)
+function PopupViewFinishWork:clearWork()
+	PopupController.instance:unregisterCallback(PopupEvent.OnPopupFinish, self.onPopupFinish, self)
 end
 
-return var_0_0
+return PopupViewFinishWork

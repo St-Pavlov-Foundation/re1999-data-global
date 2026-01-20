@@ -1,8 +1,10 @@
-﻿module("modules.logic.scene.survival.comp.SurvivalPointEffectComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/survival/comp/SurvivalPointEffectComp.lua
 
-local var_0_0 = class("SurvivalPointEffectComp", BaseSceneComp)
+module("modules.logic.scene.survival.comp.SurvivalPointEffectComp", package.seeall)
 
-var_0_0.ResPaths = {
+local SurvivalPointEffectComp = class("SurvivalPointEffectComp", BaseSceneComp)
+
+SurvivalPointEffectComp.ResPaths = {
 	changeModel = "survival/effects/prefab/v3a1_scene_zaiju.prefab",
 	teleportGate = "survival/effects/prefab/v3a1_scene_biaoji.prefab",
 	explode = "survival/effects/prefab/v3a1_scene_baozha.prefab",
@@ -12,230 +14,230 @@ var_0_0.ResPaths = {
 	fastfight = "survival/effects/prefab/v2a8_scene_tiaoguo.prefab"
 }
 
-function var_0_0.onScenePrepared(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._sceneGo = arg_1_0:getCurScene().level:getSceneGo()
-	arg_1_0._effectRoot = gohelper.create3d(arg_1_0._sceneGo, "PointEffectRoot")
-	arg_1_0._warmingPool = {}
-	arg_1_0._useitemPool = {}
-	arg_1_0._allInsts = {}
-	arg_1_0._allKeys = {}
-	arg_1_0._autoDisposeEffect = {}
+function SurvivalPointEffectComp:onScenePrepared(sceneId, levelId)
+	self._sceneGo = self:getCurScene().level:getSceneGo()
+	self._effectRoot = gohelper.create3d(self._sceneGo, "PointEffectRoot")
+	self._warmingPool = {}
+	self._useitemPool = {}
+	self._allInsts = {}
+	self._allKeys = {}
+	self._autoDisposeEffect = {}
 
-	arg_1_0:setTeleportGateEffect()
+	self:setTeleportGateEffect()
 end
 
-function var_0_0.setPointEffectType(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
-	if not arg_2_0._effectRoot then
+function SurvivalPointEffectComp:setPointEffectType(key, q, r, type)
+	if not self._effectRoot then
 		return
 	end
 
-	if not arg_2_0._allInsts[arg_2_2] then
-		arg_2_0._allInsts[arg_2_2] = {}
+	if not self._allInsts[q] then
+		self._allInsts[q] = {}
 	end
 
-	if not arg_2_0._allInsts[arg_2_2][arg_2_3] then
-		arg_2_0._allInsts[arg_2_2][arg_2_3] = {
+	if not self._allInsts[q][r] then
+		self._allInsts[q][r] = {
 			allKey = {}
 		}
 	end
 
-	local var_2_0 = arg_2_0._allInsts[arg_2_2][arg_2_3]
-	local var_2_1 = var_2_0.allKey
+	local info = self._allInsts[q][r]
+	local dict = info.allKey
 
-	if var_2_1[arg_2_1] == arg_2_4 then
+	if dict[key] == type then
 		return
 	end
 
-	var_2_1[arg_2_1] = arg_2_4
-	arg_2_0._allKeys[arg_2_1] = true
+	dict[key] = type
+	self._allKeys[key] = true
 
-	arg_2_0:pointChangeCheck(var_2_0, arg_2_2, arg_2_3)
+	self:pointChangeCheck(info, q, r)
 end
 
-function var_0_0.setTeleportGateEffect(arg_3_0)
-	if not arg_3_0._effectRoot then
+function SurvivalPointEffectComp:setTeleportGateEffect()
+	if not self._effectRoot then
 		return
 	end
 
-	local var_3_0 = SurvivalMapModel.instance:getSceneMo()
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
 
-	if var_3_0.sceneProp.teleportGate == 1 then
-		if not arg_3_0._teleportEffect then
-			local var_3_1 = SurvivalMapHelper.instance:getBlockRes(var_0_0.ResPaths.teleportGate)
+	if sceneMo.sceneProp.teleportGate == 1 then
+		if not self._teleportEffect then
+			local res = SurvivalMapHelper.instance:getBlockRes(SurvivalPointEffectComp.ResPaths.teleportGate)
 
-			arg_3_0._teleportEffect = gohelper.clone(var_3_1, arg_3_0._effectRoot)
+			self._teleportEffect = gohelper.clone(res, self._effectRoot)
 		else
-			gohelper.setActive(arg_3_0._teleportEffect, true)
+			gohelper.setActive(self._teleportEffect, true)
 		end
 
-		local var_3_2 = var_3_0.sceneProp.teleportGateHex
-		local var_3_3, var_3_4, var_3_5 = SurvivalHelper.instance:hexPointToWorldPoint(var_3_2.q, var_3_2.r)
+		local pos = sceneMo.sceneProp.teleportGateHex
+		local x, y, z = SurvivalHelper.instance:hexPointToWorldPoint(pos.q, pos.r)
 
-		transformhelper.setLocalPos(arg_3_0._teleportEffect.transform, var_3_3, var_3_4, var_3_5)
+		transformhelper.setLocalPos(self._teleportEffect.transform, x, y, z)
 	else
-		gohelper.setActive(arg_3_0._teleportEffect, false)
+		gohelper.setActive(self._teleportEffect, false)
 	end
 end
 
-function var_0_0.addAutoDisposeEffect(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	if not arg_4_0._effectRoot then
+function SurvivalPointEffectComp:addAutoDisposeEffect(path, pos, time)
+	if not self._effectRoot then
 		return
 	end
 
-	arg_4_3 = arg_4_3 or 2
+	time = time or 2
 
-	local var_4_0 = SurvivalMapHelper.instance:getBlockRes(arg_4_1)
-	local var_4_1 = gohelper.clone(var_4_0, arg_4_0._effectRoot)
+	local res = SurvivalMapHelper.instance:getBlockRes(path)
+	local effectGo = gohelper.clone(res, self._effectRoot)
 
-	transformhelper.setLocalPos(var_4_1.transform, arg_4_2.x, arg_4_2.y, arg_4_2.z)
+	transformhelper.setLocalPos(effectGo.transform, pos.x, pos.y, pos.z)
 
-	arg_4_0._autoDisposeEffect[var_4_1] = arg_4_3 + UnityEngine.Time.realtimeSinceStartup
+	self._autoDisposeEffect[effectGo] = time + UnityEngine.Time.realtimeSinceStartup
 
-	TaskDispatcher.runRepeat(arg_4_0._checkEffectDispose, arg_4_0, 2, -1)
+	TaskDispatcher.runRepeat(self._checkEffectDispose, self, 2, -1)
 end
 
-function var_0_0._checkEffectDispose(arg_5_0)
-	local var_5_0 = UnityEngine.Time.realtimeSinceStartup
+function SurvivalPointEffectComp:_checkEffectDispose()
+	local time = UnityEngine.Time.realtimeSinceStartup
 
-	for iter_5_0, iter_5_1 in pairs(arg_5_0._autoDisposeEffect) do
-		if iter_5_1 < var_5_0 then
-			gohelper.destroy(iter_5_0)
+	for go, dt in pairs(self._autoDisposeEffect) do
+		if dt < time then
+			gohelper.destroy(go)
 
-			arg_5_0._autoDisposeEffect[iter_5_0] = nil
+			self._autoDisposeEffect[go] = nil
 		end
 	end
 
-	if not next(arg_5_0._autoDisposeEffect) then
-		TaskDispatcher.cancelTask(arg_5_0._checkEffectDispose, arg_5_0)
+	if not next(self._autoDisposeEffect) then
+		TaskDispatcher.cancelTask(self._checkEffectDispose, self)
 	end
 end
 
-function var_0_0.clearPointsByKey(arg_6_0, arg_6_1)
-	if not arg_6_0._allKeys[arg_6_1] then
+function SurvivalPointEffectComp:clearPointsByKey(key)
+	if not self._allKeys[key] then
 		return
 	end
 
-	for iter_6_0, iter_6_1 in pairs(arg_6_0._allInsts) do
-		for iter_6_2, iter_6_3 in pairs(iter_6_1) do
-			if iter_6_3.allKey[arg_6_1] then
-				iter_6_3.allKey[arg_6_1] = nil
+	for q, v in pairs(self._allInsts) do
+		for r, info in pairs(v) do
+			if info.allKey[key] then
+				info.allKey[key] = nil
 
-				arg_6_0:pointChangeCheck(iter_6_3, iter_6_0, iter_6_2)
+				self:pointChangeCheck(info, q, r)
 			end
 		end
 	end
 
-	arg_6_0._allKeys[arg_6_1] = nil
+	self._allKeys[key] = nil
 end
 
-function var_0_0.pointChangeCheck(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	local var_7_0 = arg_7_1.allKey
-	local var_7_1 = 0
+function SurvivalPointEffectComp:pointChangeCheck(info, q, r)
+	local dict = info.allKey
+	local needShowType = 0
 
-	for iter_7_0, iter_7_1 in pairs(var_7_0) do
-		if var_7_1 < iter_7_1 then
-			var_7_1 = iter_7_1
+	for _, saveType in pairs(dict) do
+		if needShowType < saveType then
+			needShowType = saveType
 		end
 	end
 
-	if var_7_1 == 0 then
-		var_7_1 = nil
+	if needShowType == 0 then
+		needShowType = nil
 	end
 
-	if var_7_1 ~= arg_7_1.curType then
-		arg_7_0:inPoolRes(arg_7_1.curType, arg_7_1.obj)
+	if needShowType ~= info.curType then
+		self:inPoolRes(info.curType, info.obj)
 
-		arg_7_1.curType = var_7_1
-		arg_7_1.obj = arg_7_0:setResByType(var_7_1, arg_7_2, arg_7_3)
+		info.curType = needShowType
+		info.obj = self:setResByType(needShowType, q, r)
 	end
 end
 
-function var_0_0.setResByType(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	if not arg_8_1 then
+function SurvivalPointEffectComp:setResByType(type, q, r)
+	if not type then
 		return
 	end
 
-	local var_8_0
+	local obj
 
-	if arg_8_1 == 1 then
-		var_8_0 = table.remove(arg_8_0._warmingPool)
+	if type == 1 then
+		obj = table.remove(self._warmingPool)
 
-		if not var_8_0 then
-			local var_8_1 = var_0_0.ResPaths.warming1
-			local var_8_2 = SurvivalMapModel.instance:getCurMapId()
-			local var_8_3 = lua_survival_map_group_mapping.configDict[var_8_2].id
-			local var_8_4 = lua_survival_map_group.configDict[var_8_3]
+		if not obj then
+			local path = SurvivalPointEffectComp.ResPaths.warming1
+			local mapId = SurvivalMapModel.instance:getCurMapId()
+			local groupId = lua_survival_map_group_mapping.configDict[mapId].id
+			local co = lua_survival_map_group.configDict[groupId]
 
-			if not var_8_4 then
-				logError("没有找到配置" .. tostring(var_8_2) .. " >> " .. tostring(var_8_3))
+			if not co then
+				logError("没有找到配置" .. tostring(mapId) .. " >> " .. tostring(groupId))
 			end
 
-			if var_8_4.id == 5 then
-				var_8_1 = var_0_0.ResPaths.warming2
+			if co.id == 5 then
+				path = SurvivalPointEffectComp.ResPaths.warming2
 			end
 
-			local var_8_5 = SurvivalMapHelper.instance:getBlockRes(var_8_1)
+			local res = SurvivalMapHelper.instance:getBlockRes(path)
 
-			var_8_0 = gohelper.clone(var_8_5, arg_8_0._effectRoot)
+			obj = gohelper.clone(res, self._effectRoot)
 
-			transformhelper.setLocalRotation(var_8_0.transform, 0, 30, 0)
+			transformhelper.setLocalRotation(obj.transform, 0, 30, 0)
 		end
-	elseif arg_8_1 == 2 then
-		var_8_0 = table.remove(arg_8_0._useitemPool)
+	elseif type == 2 then
+		obj = table.remove(self._useitemPool)
 
-		if not var_8_0 then
-			local var_8_6 = SurvivalMapHelper.instance:getBlockRes(var_0_0.ResPaths.useitem)
+		if not obj then
+			local res = SurvivalMapHelper.instance:getBlockRes(SurvivalPointEffectComp.ResPaths.useitem)
 
-			var_8_0 = gohelper.clone(var_8_6, arg_8_0._effectRoot)
+			obj = gohelper.clone(res, self._effectRoot)
 
-			transformhelper.setLocalRotation(var_8_0.transform, 0, 30, 0)
+			transformhelper.setLocalRotation(obj.transform, 0, 30, 0)
 		end
 	end
 
-	gohelper.setActive(var_8_0, true)
+	gohelper.setActive(obj, true)
 
-	local var_8_7, var_8_8, var_8_9 = SurvivalHelper.instance:hexPointToWorldPoint(arg_8_2, arg_8_3)
+	local x, y, z = SurvivalHelper.instance:hexPointToWorldPoint(q, r)
 
-	transformhelper.setLocalPos(var_8_0.transform, var_8_7, var_8_8, var_8_9)
+	transformhelper.setLocalPos(obj.transform, x, y, z)
 
-	var_8_0.name = string.format("[%s,%s,%s]", arg_8_2, arg_8_3, -arg_8_2 - arg_8_3)
+	obj.name = string.format("[%s,%s,%s]", q, r, -q - r)
 
-	return var_8_0
+	return obj
 end
 
-function var_0_0.inPoolRes(arg_9_0, arg_9_1, arg_9_2)
-	if not arg_9_1 then
+function SurvivalPointEffectComp:inPoolRes(type, obj)
+	if not type then
 		return
 	end
 
-	gohelper.setActive(arg_9_2, false)
+	gohelper.setActive(obj, false)
 
-	if arg_9_1 == 1 then
-		table.insert(arg_9_0._warmingPool, arg_9_2)
-	elseif arg_9_1 == 2 then
-		table.insert(arg_9_0._useitemPool, arg_9_2)
+	if type == 1 then
+		table.insert(self._warmingPool, obj)
+	elseif type == 2 then
+		table.insert(self._useitemPool, obj)
 	end
 end
 
-function var_0_0.onSceneClose(arg_10_0)
-	if arg_10_0._teleportEffect then
-		gohelper.destroy(arg_10_0._teleportEffect)
+function SurvivalPointEffectComp:onSceneClose()
+	if self._teleportEffect then
+		gohelper.destroy(self._teleportEffect)
 
-		arg_10_0._teleportEffect = nil
+		self._teleportEffect = nil
 	end
 
-	if arg_10_0._effectRoot then
-		gohelper.destroy(arg_10_0._effectRoot)
+	if self._effectRoot then
+		gohelper.destroy(self._effectRoot)
 
-		arg_10_0._effectRoot = nil
+		self._effectRoot = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_10_0._checkEffectDispose, arg_10_0)
+	TaskDispatcher.cancelTask(self._checkEffectDispose, self)
 
-	arg_10_0._autoDisposeEffect = {}
-	arg_10_0._warmingPool = {}
-	arg_10_0._useitemPool = {}
-	arg_10_0._allInsts = {}
+	self._autoDisposeEffect = {}
+	self._warmingPool = {}
+	self._useitemPool = {}
+	self._allInsts = {}
 end
 
-return var_0_0
+return SurvivalPointEffectComp

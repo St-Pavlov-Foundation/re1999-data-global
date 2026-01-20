@@ -1,97 +1,99 @@
-﻿module("modules.logic.summon.model.SummonFlagSubModel", package.seeall)
+﻿-- chunkname: @modules/logic/summon/model/SummonFlagSubModel.lua
 
-local var_0_0 = class("SummonFlagSubModel", BaseModel)
+module("modules.logic.summon.model.SummonFlagSubModel", package.seeall)
 
-function var_0_0.init(arg_1_0)
-	arg_1_0._isNew = false
-	arg_1_0._newFlagDict = {}
+local SummonFlagSubModel = class("SummonFlagSubModel", BaseModel)
 
-	arg_1_0:initLocalSave()
+function SummonFlagSubModel:init()
+	self._isNew = false
+	self._newFlagDict = {}
+
+	self:initLocalSave()
 end
 
-function var_0_0.initLocalSave(arg_2_0)
-	arg_2_0._lastDict = {}
+function SummonFlagSubModel:initLocalSave()
+	self._lastDict = {}
 
-	local var_2_0 = PlayerPrefsHelper.getString(arg_2_0:getLocalKey(), "")
+	local rs = PlayerPrefsHelper.getString(self:getLocalKey(), "")
 
-	if not string.nilorempty(var_2_0) then
-		local var_2_1 = cjson.decode(var_2_0)
+	if not string.nilorempty(rs) then
+		local list = cjson.decode(rs)
 
-		for iter_2_0, iter_2_1 in ipairs(var_2_1) do
-			arg_2_0._lastDict[iter_2_1] = 1
+		for _, id in ipairs(list) do
+			self._lastDict[id] = 1
 		end
 	end
 end
 
-function var_0_0.compareRecord(arg_3_0, arg_3_1)
-	arg_3_0._newFlagDict = {}
+function SummonFlagSubModel:compareRecord(newPoolList)
+	self._newFlagDict = {}
 
-	local var_3_0 = {}
+	local curSet = {}
 
-	for iter_3_0 = 1, #arg_3_1 do
-		local var_3_1 = arg_3_1[iter_3_0]
+	for i = 1, #newPoolList do
+		local info = newPoolList[i]
 
-		if not arg_3_0._lastDict[var_3_1.id] then
-			arg_3_0._newFlagDict[var_3_1.id] = 1
+		if not self._lastDict[info.id] then
+			self._newFlagDict[info.id] = 1
 		end
 
-		var_3_0[var_3_1.id] = 1
+		curSet[info.id] = 1
 	end
 
-	local var_3_2 = false
+	local isDirty = false
 
-	for iter_3_1, iter_3_2 in pairs(arg_3_0._lastDict) do
-		if not var_3_0[iter_3_1] then
-			arg_3_0._lastDict[iter_3_1] = nil
-			var_3_2 = true
+	for poolId, _ in pairs(self._lastDict) do
+		if not curSet[poolId] then
+			self._lastDict[poolId] = nil
+			isDirty = true
 		end
 	end
 
-	if var_3_2 then
-		arg_3_0:flush()
+	if isDirty then
+		self:flush()
 	end
 
 	SummonController.instance:dispatchEvent(SummonEvent.onNewPoolChanged)
 end
 
-function var_0_0.cleanFlag(arg_4_0, arg_4_1)
-	if arg_4_0._newFlagDict[arg_4_1] then
-		arg_4_0._newFlagDict[arg_4_1] = nil
-		arg_4_0._lastDict[arg_4_1] = 1
+function SummonFlagSubModel:cleanFlag(poolId)
+	if self._newFlagDict[poolId] then
+		self._newFlagDict[poolId] = nil
+		self._lastDict[poolId] = 1
 
-		arg_4_0:flush()
+		self:flush()
 		SummonController.instance:dispatchEvent(SummonEvent.onNewPoolChanged)
 	end
 end
 
-function var_0_0.hasNew(arg_5_0)
-	if arg_5_0._newFlagDict and next(arg_5_0._newFlagDict) then
+function SummonFlagSubModel:hasNew()
+	if self._newFlagDict and next(self._newFlagDict) then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.isNew(arg_6_0, arg_6_1)
-	if arg_6_0._newFlagDict and arg_6_0._newFlagDict[arg_6_1] then
+function SummonFlagSubModel:isNew(poolId)
+	if self._newFlagDict and self._newFlagDict[poolId] then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.flush(arg_7_0)
-	local var_7_0 = {}
+function SummonFlagSubModel:flush()
+	local list = {}
 
-	for iter_7_0, iter_7_1 in pairs(arg_7_0._lastDict) do
-		table.insert(var_7_0, iter_7_0)
+	for poolId, _ in pairs(self._lastDict) do
+		table.insert(list, poolId)
 	end
 
-	PlayerPrefsHelper.setString(arg_7_0:getLocalKey(), cjson.encode(var_7_0))
+	PlayerPrefsHelper.setString(self:getLocalKey(), cjson.encode(list))
 end
 
-function var_0_0.getLocalKey(arg_8_0)
+function SummonFlagSubModel:getLocalKey()
 	return "SummonFlagSubModel#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
 end
 
-return var_0_0
+return SummonFlagSubModel

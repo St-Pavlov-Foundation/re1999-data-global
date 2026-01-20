@@ -1,69 +1,71 @@
-﻿module("modules.logic.survival.model.SurvivalModel", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/SurvivalModel.lua
 
-local var_0_0 = class("SurvivalModel", BaseModel)
+module("modules.logic.survival.model.SurvivalModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._outsideInfo = SurvivalOutSideInfoMo.New()
-	arg_1_0._report = nil
-	arg_1_0._survivalSettleInfo = nil
-	arg_1_0._lastIndex = nil
-	arg_1_0._isUseSimpleDesc = PlayerPrefsHelper.getNumber(PlayerPrefsKey.SurvivalDescSimply, 1)
-	arg_1_0.summaryActPosOffset = 0
+local SurvivalModel = class("SurvivalModel", BaseModel)
+
+function SurvivalModel:onInit()
+	self._outsideInfo = SurvivalOutSideInfoMo.New()
+	self._report = nil
+	self._survivalSettleInfo = nil
+	self._lastIndex = nil
+	self._isUseSimpleDesc = PlayerPrefsHelper.getNumber(PlayerPrefsKey.SurvivalDescSimply, 1)
+	self.summaryActPosOffset = 0
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:onInit()
+function SurvivalModel:reInit()
+	self:onInit()
 	SurvivalMapHelper.instance:clear()
 end
 
-function var_0_0.onGetInfo(arg_3_0, arg_3_1)
-	arg_3_0._outsideInfo:init(arg_3_1)
+function SurvivalModel:onGetInfo(info)
+	self._outsideInfo:init(info)
 	SurvivalController.instance:dispatchEvent(SurvivalEvent.OnOutInfoChange)
 end
 
-function var_0_0.getOutSideInfo(arg_4_0)
-	return arg_4_0._outsideInfo
+function SurvivalModel:getOutSideInfo()
+	return self._outsideInfo
 end
 
-function var_0_0.getRewardState(arg_5_0, arg_5_1, arg_5_2)
-	return arg_5_0._outsideInfo:getRewardState(arg_5_1, arg_5_2)
+function SurvivalModel:getRewardState(rewardId, rewardScore)
+	return self._outsideInfo:getRewardState(rewardId, rewardScore)
 end
 
-function var_0_0.setDailyReport(arg_6_0, arg_6_1)
-	arg_6_0._report = arg_6_1
+function SurvivalModel:setDailyReport(report)
+	self._report = report
 end
 
-function var_0_0.getDailyReport(arg_7_0)
-	return arg_7_0._report
+function SurvivalModel:getDailyReport()
+	return self._report
 end
 
-function var_0_0.setSurvivalSettleInfo(arg_8_0, arg_8_1)
-	arg_8_0._survivalSettleInfo = arg_8_1
+function SurvivalModel:setSurvivalSettleInfo(info)
+	self._survivalSettleInfo = info
 end
 
-function var_0_0.getSurvivalSettleInfo(arg_9_0)
-	return arg_9_0._survivalSettleInfo
+function SurvivalModel:getSurvivalSettleInfo()
+	return self._survivalSettleInfo
 end
 
-function var_0_0.changeDescSimple(arg_10_0)
-	arg_10_0._isUseSimpleDesc = 1 - arg_10_0._isUseSimpleDesc
+function SurvivalModel:changeDescSimple()
+	self._isUseSimpleDesc = 1 - self._isUseSimpleDesc
 
-	PlayerPrefsHelper.setNumber(PlayerPrefsKey.SurvivalDescSimply, arg_10_0._isUseSimpleDesc)
+	PlayerPrefsHelper.setNumber(PlayerPrefsKey.SurvivalDescSimply, self._isUseSimpleDesc)
 	SurvivalController.instance:dispatchEvent(SurvivalEvent.OnEquipDescSimpleChange)
 end
 
-function var_0_0.setBossFightLastIndex(arg_11_0, arg_11_1)
-	arg_11_0._lastIndex = arg_11_1
+function SurvivalModel:setBossFightLastIndex(index)
+	self._lastIndex = index
 end
 
-function var_0_0.getBossFightLastIndex(arg_12_0)
-	local var_12_0 = arg_12_0._lastIndex
+function SurvivalModel:getBossFightLastIndex()
+	local index = self._lastIndex
 
-	arg_12_0._lastIndex = nil
+	self._lastIndex = nil
 
-	return var_12_0
+	return index
 end
 
-var_0_0.instance = var_0_0.New()
+SurvivalModel.instance = SurvivalModel.New()
 
-return var_0_0
+return SurvivalModel

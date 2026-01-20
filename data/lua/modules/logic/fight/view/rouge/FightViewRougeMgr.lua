@@ -1,137 +1,139 @@
-﻿module("modules.logic.fight.view.rouge.FightViewRougeMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/rouge/FightViewRougeMgr.lua
 
-local var_0_0 = class("FightViewRougeMgr", BaseViewExtended)
+module("modules.logic.fight.view.rouge.FightViewRougeMgr", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local FightViewRougeMgr = class("FightViewRougeMgr", BaseViewExtended)
+
+function FightViewRougeMgr:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.ResonanceLevel, arg_2_0._onResonanceLevel, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.PolarizationLevel, arg_2_0._onPolarizationLevel, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.RougeCoinChange, arg_2_0._onRougeCoinChange, arg_2_0)
+function FightViewRougeMgr:addEvents()
+	self:addEventCb(FightController.instance, FightEvent.ResonanceLevel, self._onResonanceLevel, self)
+	self:addEventCb(FightController.instance, FightEvent.PolarizationLevel, self._onPolarizationLevel, self)
+	self:addEventCb(FightController.instance, FightEvent.RougeCoinChange, self._onRougeCoinChange, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function FightViewRougeMgr:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	local var_4_0 = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
+function FightViewRougeMgr:_editableInitView()
+	local episode_config = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
 
-	arg_4_0._isRouge = var_4_0 and var_4_0.type == DungeonEnum.EpisodeType.Rouge
+	self._isRouge = episode_config and episode_config.type == DungeonEnum.EpisodeType.Rouge
 
-	if arg_4_0._isRouge then
-		arg_4_0:_addCollectionBtn()
+	if self._isRouge then
+		self:_addCollectionBtn()
 	end
 end
 
-function var_0_0._addCollectionBtn(arg_5_0)
-	local var_5_0 = gohelper.findChild(arg_5_0.viewGO, "root/btns")
-	local var_5_1 = "ui/viewres/rouge/fight/rougebtnview.prefab"
+function FightViewRougeMgr:_addCollectionBtn()
+	local topRightBtnRoot = gohelper.findChild(self.viewGO, "root/btns")
+	local url = "ui/viewres/rouge/fight/rougebtnview.prefab"
 
-	arg_5_0._loader = PrefabInstantiate.Create(var_5_0)
+	self._loader = PrefabInstantiate.Create(topRightBtnRoot)
 
-	arg_5_0._loader:startLoad(var_5_1, arg_5_0._onLoaded, arg_5_0)
+	self._loader:startLoad(url, self._onLoaded, self)
 end
 
-function var_0_0._onLoaded(arg_6_0)
-	local var_6_0 = arg_6_0._loader:getInstGO()
+function FightViewRougeMgr:_onLoaded()
+	local btnGo = self._loader:getInstGO()
 
-	gohelper.setAsFirstSibling(var_6_0)
+	gohelper.setAsFirstSibling(btnGo)
 
-	arg_6_0._btnCollection = gohelper.findChildButtonWithAudio(var_6_0, "")
+	self._btnCollection = gohelper.findChildButtonWithAudio(btnGo, "")
 
-	arg_6_0._btnCollection:AddClickListener(arg_6_0._onClickCollection, arg_6_0)
+	self._btnCollection:AddClickListener(self._onClickCollection, self)
 end
 
-function var_0_0._onClickCollection(arg_7_0)
+function FightViewRougeMgr:_onClickCollection()
 	RougeController.instance:openRougeCollectionOverView()
 end
 
-function var_0_0.onRefreshViewParam(arg_8_0)
+function FightViewRougeMgr:onRefreshViewParam()
 	return
 end
 
-function var_0_0.openRougeCoinView(arg_9_0)
-	if arg_9_0.rougeCoinView then
+function FightViewRougeMgr:openRougeCoinView()
+	if self.rougeCoinView then
 		return
 	end
 
-	local var_9_0 = arg_9_0.viewContainer.rightElementLayoutView:getElementContainer(FightRightElementEnum.Elements.RougeCoin)
+	local goContainer = self.viewContainer.rightElementLayoutView:getElementContainer(FightRightElementEnum.Elements.RougeCoin)
 
-	arg_9_0.rougeCoinView = arg_9_0:openSubView(FightViewRougeCoin, "ui/viewres/rouge/fight/rougecoin.prefab", var_9_0)
+	self.rougeCoinView = self:openSubView(FightViewRougeCoin, "ui/viewres/rouge/fight/rougecoin.prefab", goContainer)
 end
 
-function var_0_0.openRougeGongMingView(arg_10_0)
-	if arg_10_0.rougeGongMingView then
+function FightViewRougeMgr:openRougeGongMingView()
+	if self.rougeGongMingView then
 		return
 	end
 
-	local var_10_0 = arg_10_0.viewContainer.rightElementLayoutView:getElementContainer(FightRightElementEnum.Elements.RougeGongMing)
+	local goContainer = self.viewContainer.rightElementLayoutView:getElementContainer(FightRightElementEnum.Elements.RougeGongMing)
 
-	arg_10_0.rougeGongMingView = arg_10_0:openSubView(FightViewRougeGongMing, "ui/viewres/rouge/fight/rougegongming.prefab", var_10_0)
+	self.rougeGongMingView = self:openSubView(FightViewRougeGongMing, "ui/viewres/rouge/fight/rougegongming.prefab", goContainer)
 end
 
-function var_0_0.openRougeTongPinView(arg_11_0)
-	if arg_11_0.rougeTongPinView then
+function FightViewRougeMgr:openRougeTongPinView()
+	if self.rougeTongPinView then
 		return
 	end
 
-	local var_11_0 = arg_11_0.viewContainer.rightElementLayoutView:getElementContainer(FightRightElementEnum.Elements.RougeTongPin)
+	local goContainer = self.viewContainer.rightElementLayoutView:getElementContainer(FightRightElementEnum.Elements.RougeTongPin)
 
-	arg_11_0.rougeTongPinView = arg_11_0:openSubView(FightViewRougeTongPin, "ui/viewres/rouge/fight/rougetongpin.prefab", var_11_0)
+	self.rougeTongPinView = self:openSubView(FightViewRougeTongPin, "ui/viewres/rouge/fight/rougetongpin.prefab", goContainer)
 end
 
-function var_0_0.openRougeTipDescView(arg_12_0)
-	if arg_12_0.rougeTipDescView then
+function FightViewRougeMgr:openRougeTipDescView()
+	if self.rougeTipDescView then
 		return
 	end
 
-	arg_12_0.rougeTipDescView = arg_12_0:openSubView(FightViewRougeDescTip, "ui/viewres/rouge/fight/rougedesctip.prefab", arg_12_0.viewGO)
+	self.rougeTipDescView = self:openSubView(FightViewRougeDescTip, "ui/viewres/rouge/fight/rougedesctip.prefab", self.viewGO)
 end
 
-function var_0_0._onResonanceLevel(arg_13_0, arg_13_1)
-	arg_13_0:_openSubViewRight()
+function FightViewRougeMgr:_onResonanceLevel(resonancelLevel)
+	self:_openSubViewRight()
 end
 
-function var_0_0._onPolarizationLevel(arg_14_0, arg_14_1)
-	arg_14_0:_openSubViewRight()
+function FightViewRougeMgr:_onPolarizationLevel(polarizationLevel)
+	self:_openSubViewRight()
 end
 
-function var_0_0._onRougeCoinChange(arg_15_0)
-	arg_15_0:_openSubViewRight()
+function FightViewRougeMgr:_onRougeCoinChange()
+	self:_openSubViewRight()
 end
 
-function var_0_0._openSubViewRight(arg_16_0)
-	arg_16_0:openRougeCoinView()
-	arg_16_0:openRougeTongPinView()
-	arg_16_0:openRougeGongMingView()
-	arg_16_0:openRougeTipDescView()
+function FightViewRougeMgr:_openSubViewRight()
+	self:openRougeCoinView()
+	self:openRougeTongPinView()
+	self:openRougeGongMingView()
+	self:openRougeTipDescView()
 end
 
-function var_0_0.onOpen(arg_17_0)
-	if arg_17_0._isRouge then
-		arg_17_0:_openSubViewRight()
+function FightViewRougeMgr:onOpen()
+	if self._isRouge then
+		self:_openSubViewRight()
 	end
 end
 
-function var_0_0.onClose(arg_18_0)
+function FightViewRougeMgr:onClose()
 	ViewMgr.instance:closeView(ViewName.RougeCollectionOverView)
 end
 
-function var_0_0.onDestroyView(arg_19_0)
-	if arg_19_0._btnCollection then
-		arg_19_0._btnCollection:RemoveClickListener()
+function FightViewRougeMgr:onDestroyView()
+	if self._btnCollection then
+		self._btnCollection:RemoveClickListener()
 	end
 
-	if arg_19_0._loader then
-		arg_19_0._loader:dispose()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_19_0._loader = nil
+		self._loader = nil
 	end
 end
 
-return var_0_0
+return FightViewRougeMgr

@@ -1,9 +1,11 @@
-﻿module("modules.common.gameobject.GameObjectLiveMgr", package.seeall)
+﻿-- chunkname: @modules/common/gameobject/GameObjectLiveMgr.lua
 
-local var_0_0 = class("GameObjectLiveMgr")
+module("modules.common.gameobject.GameObjectLiveMgr", package.seeall)
 
-var_0_0.instance = var_0_0.New()
+local GameObjectLiveMgr = class("GameObjectLiveMgr")
 
-LuaEventSystem.addEventMechanism(var_0_0.instance)
+GameObjectLiveMgr.instance = GameObjectLiveMgr.New()
 
-return var_0_0
+LuaEventSystem.addEventMechanism(GameObjectLiveMgr.instance)
+
+return GameObjectLiveMgr

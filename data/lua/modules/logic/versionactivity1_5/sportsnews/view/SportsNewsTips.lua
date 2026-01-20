@@ -1,14 +1,16 @@
-﻿module("modules.logic.versionactivity1_5.sportsnews.view.SportsNewsTips", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/sportsnews/view/SportsNewsTips.lua
 
-local var_0_0 = class("SportsNewsTips", ActivityWarmUpTips)
+module("modules.logic.versionactivity1_5.sportsnews.view.SportsNewsTips", package.seeall)
 
-function var_0_0.onOpen(arg_1_0)
-	var_0_0.super.onOpen(arg_1_0)
+local SportsNewsTips = class("SportsNewsTips", ActivityWarmUpTips)
 
-	local var_1_0 = arg_1_0.viewParam.orderId
-	local var_1_1 = arg_1_0.viewParam.actId
+function SportsNewsTips:onOpen()
+	SportsNewsTips.super.onOpen(self)
 
-	SportsNewsModel.instance:onReadEnd(var_1_1, var_1_0)
+	local orderId = self.viewParam.orderId
+	local actId = self.viewParam.actId
+
+	SportsNewsModel.instance:onReadEnd(actId, orderId)
 end
 
-return var_0_0
+return SportsNewsTips

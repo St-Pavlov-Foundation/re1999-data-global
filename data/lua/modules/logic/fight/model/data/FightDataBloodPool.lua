@@ -1,18 +1,20 @@
-﻿module("modules.logic.fight.model.data.FightDataBloodPool", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightDataBloodPool.lua
 
-local var_0_0 = FightDataClass("FightDataBloodPool")
+module("modules.logic.fight.model.data.FightDataBloodPool", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1)
-	arg_1_0.value = arg_1_1 and arg_1_1.value or 0
-	arg_1_0.max = arg_1_1 and arg_1_1.max or 0
+local FightDataBloodPool = FightDataClass("FightDataBloodPool")
+
+function FightDataBloodPool:onConstructor(bloodPool)
+	self.value = bloodPool and bloodPool.value or 0
+	self.max = bloodPool and bloodPool.max or 0
 end
 
-function var_0_0.changeMaxValue(arg_2_0, arg_2_1)
-	arg_2_0.max = arg_2_0.max + arg_2_1
+function FightDataBloodPool:changeMaxValue(value)
+	self.max = self.max + value
 end
 
-function var_0_0.changeValue(arg_3_0, arg_3_1)
-	arg_3_0.value = arg_3_0.value + arg_3_1
+function FightDataBloodPool:changeValue(value)
+	self.value = self.value + value
 end
 
-return var_0_0
+return FightDataBloodPool

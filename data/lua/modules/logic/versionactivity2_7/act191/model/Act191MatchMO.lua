@@ -1,262 +1,266 @@
-﻿module("modules.logic.versionactivity2_7.act191.model.Act191MatchMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/act191/model/Act191MatchMO.lua
 
-local var_0_0 = pureTable("Act191MatchMO")
+module("modules.logic.versionactivity2_7.act191.model.Act191MatchMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.uid = arg_1_1.uid
-	arg_1_0.rank = arg_1_1.rank
-	arg_1_0.robot = arg_1_1.robot
-	arg_1_0.playerUid = arg_1_1.playerUid
-	arg_1_0.heroMap = arg_1_1.heroMap
-	arg_1_0.subHeroMap = arg_1_1.subHeroMap
+local Act191MatchMO = pureTable("Act191MatchMO")
 
-	arg_1_0:updateEnhance(arg_1_1.enhanceSet)
+function Act191MatchMO:init(info)
+	self.uid = info.uid
+	self.rank = info.rank
+	self.robot = info.robot
+	self.playerUid = info.playerUid
+	self.heroMap = info.heroMap
+	self.subHeroMap = info.subHeroMap
 
-	arg_1_0.wareHouseInfo = arg_1_1.warehouseInfo
+	self:updateEnhance(info.enhanceSet)
+
+	self.wareHouseInfo = info.warehouseInfo
 end
 
-function var_0_0.updateEnhance(arg_2_0, arg_2_1)
-	arg_2_0.enhanceSet = arg_2_1
+function Act191MatchMO:updateEnhance(enhanceIdList)
+	self.enhanceSet = enhanceIdList
 
-	local var_2_0 = Activity191Model.instance:getCurActId()
+	local actId = Activity191Model.instance:getCurActId()
 
-	arg_2_0.heroId2ExtraFetterMap = {}
+	self.heroId2ExtraFetterMap = {}
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0.enhanceSet) do
-		local var_2_1 = Activity191Config.instance:getEnhanceCo(var_2_0, iter_2_1)
-		local var_2_2 = string.splitToNumber(var_2_1.effects, "|")
+	for _, enhanceId in ipairs(self.enhanceSet) do
+		local enhanceCo = Activity191Config.instance:getEnhanceCo(actId, enhanceId)
+		local effectIds = string.splitToNumber(enhanceCo.effects, "|")
 
-		for iter_2_2, iter_2_3 in ipairs(var_2_2) do
-			local var_2_3 = lua_activity191_effect.configDict[iter_2_3]
-			local var_2_4 = string.split(var_2_3.typeParam, "#")
+		for _, effectId in ipairs(effectIds) do
+			local effectCo = lua_activity191_effect.configDict[effectId]
+			local params = string.split(effectCo.typeParam, "#")
 
-			if var_2_3.type == Activity191Enum.EffectType.ExtraFetter then
-				local var_2_5 = tonumber(var_2_4[1])
-				local var_2_6 = arg_2_0.heroId2ExtraFetterMap[var_2_5]
+			if effectCo.type == Activity191Enum.EffectType.ExtraFetter then
+				local heroId = tonumber(params[1])
+				local fetterTbl = self.heroId2ExtraFetterMap[heroId]
 
-				if not var_2_6 then
-					var_2_6 = {}
-					arg_2_0.heroId2ExtraFetterMap[var_2_5] = var_2_6
+				if not fetterTbl then
+					fetterTbl = {}
+					self.heroId2ExtraFetterMap[heroId] = fetterTbl
 				end
 
-				table.insert(var_2_6, var_2_4[2])
+				table.insert(fetterTbl, params[2])
 			end
 		end
 	end
 end
 
-function var_0_0.getRoleCo(arg_3_0, arg_3_1)
-	if arg_3_0.robot then
-		return Activity191Config.instance:getRoleCo(arg_3_1)
+function Act191MatchMO:getRoleCo(heroId)
+	if self.robot then
+		return Activity191Config.instance:getRoleCo(heroId)
 	else
-		local var_3_0 = arg_3_0:getHeroInfo(arg_3_1, true)
+		local heroInfo = self:getHeroInfo(heroId, true)
 
-		if var_3_0 then
-			return Activity191Config.instance:getRoleCoByNativeId(arg_3_1, var_3_0.star)
+		if heroInfo then
+			return Activity191Config.instance:getRoleCoByNativeId(heroId, heroInfo.star)
 		end
 	end
 end
 
-function var_0_0.getHeroInfo(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_1 = tostring(arg_4_1)
+function Act191MatchMO:getHeroInfo(heroId, error)
+	heroId = tostring(heroId)
 
-	local var_4_0 = arg_4_0.wareHouseInfo.heroInfoMap[arg_4_1]
+	local info = self.wareHouseInfo.heroInfoMap[heroId]
 
-	if arg_4_2 and not var_4_0 then
-		logError("enemyHeroInfo not found" .. arg_4_1)
+	if error and not info then
+		logError("enemyHeroInfo not found" .. heroId)
 	end
 
-	return var_4_0
+	return info
 end
 
-function var_0_0.getItemCo(arg_5_0, arg_5_1)
-	local var_5_0
+function Act191MatchMO:getItemCo(itemUid)
+	local itemId
 
-	if arg_5_0.robot then
-		var_5_0 = arg_5_1
+	if self.robot then
+		itemId = itemUid
 	else
-		var_5_0 = arg_5_0:getItemInfo(arg_5_1).itemId
+		local itemInfo = self:getItemInfo(itemUid)
+
+		itemId = itemInfo.itemId
 	end
 
-	return Activity191Config.instance:getCollectionCo(var_5_0)
+	return Activity191Config.instance:getCollectionCo(itemId)
 end
 
-function var_0_0.getItemInfo(arg_6_0, arg_6_1)
-	arg_6_1 = tostring(arg_6_1)
+function Act191MatchMO:getItemInfo(itemUid)
+	itemUid = tostring(itemUid)
 
-	local var_6_0 = arg_6_0.wareHouseInfo.itemInfoMap[arg_6_1]
+	local info = self.wareHouseInfo.itemInfoMap[itemUid]
 
-	if var_6_0 then
-		return var_6_0
+	if info then
+		return info
 	else
-		logError("enemyItemInfo not found" .. arg_6_1)
+		logError("enemyItemInfo not found" .. itemUid)
 	end
 end
 
-function var_0_0.getTeamFetterCntDic(arg_7_0)
-	local var_7_0 = {}
+function Act191MatchMO:getTeamFetterCntDic()
+	local cntDic = {}
 
-	for iter_7_0, iter_7_1 in pairs(arg_7_0.heroMap) do
-		if iter_7_1.heroId ~= 0 then
-			local var_7_1 = arg_7_0:getRoleCo(iter_7_1.heroId)
-			local var_7_2 = string.split(var_7_1.tag, "#")
+	for _, info in pairs(self.heroMap) do
+		if info.heroId ~= 0 then
+			local roleCo = self:getRoleCo(info.heroId)
+			local fetterArr = string.split(roleCo.tag, "#")
 
-			for iter_7_2, iter_7_3 in ipairs(var_7_2) do
-				if var_7_0[iter_7_3] then
-					var_7_0[iter_7_3] = var_7_0[iter_7_3] + 1
+			for _, tag in ipairs(fetterArr) do
+				if cntDic[tag] then
+					cntDic[tag] = cntDic[tag] + 1
 				else
-					var_7_0[iter_7_3] = 1
+					cntDic[tag] = 1
 				end
 			end
 
-			if iter_7_1.itemUid1 ~= 0 then
-				local var_7_3 = arg_7_0:getItemCo(iter_7_1.itemUid1)
-				local var_7_4 = not string.nilorempty(var_7_3.tag) and var_7_3.tag or var_7_3.tag2
+			if info.itemUid1 ~= 0 then
+				local itemCo = self:getItemCo(info.itemUid1)
+				local tagStr = not string.nilorempty(itemCo.tag) and itemCo.tag or itemCo.tag2
 
-				if not string.nilorempty(var_7_4) then
-					local var_7_5 = string.split(var_7_3.tag, "#")
+				if not string.nilorempty(tagStr) then
+					fetterArr = string.split(itemCo.tag, "#")
 
-					for iter_7_4, iter_7_5 in ipairs(var_7_5) do
-						if var_7_0[iter_7_5] then
-							var_7_0[iter_7_5] = var_7_0[iter_7_5] + 1
+					for _, tag in ipairs(fetterArr) do
+						if cntDic[tag] then
+							cntDic[tag] = cntDic[tag] + 1
 						else
-							var_7_0[iter_7_5] = 1
+							cntDic[tag] = 1
 						end
 					end
 				end
 			end
 
-			local var_7_6 = arg_7_0.heroId2ExtraFetterMap[iter_7_1.heroId]
+			local fetterTbl = self.heroId2ExtraFetterMap[info.heroId]
 
-			if var_7_6 then
-				for iter_7_6, iter_7_7 in ipairs(var_7_6) do
-					if not var_7_0[iter_7_7] then
-						var_7_0[iter_7_7] = 1
+			if fetterTbl then
+				for _, tag in ipairs(fetterTbl) do
+					if not cntDic[tag] then
+						cntDic[tag] = 1
 					else
-						var_7_0[iter_7_7] = var_7_0[iter_7_7] + 1
+						cntDic[tag] = cntDic[tag] + 1
 					end
 				end
 			end
 		end
 	end
 
-	for iter_7_8, iter_7_9 in pairs(arg_7_0.subHeroMap) do
-		local var_7_7 = arg_7_0:getRoleCo(iter_7_9)
-		local var_7_8 = string.split(var_7_7.tag, "#")
+	for _, heroId in pairs(self.subHeroMap) do
+		local roleCo = self:getRoleCo(heroId)
+		local fetterArr = string.split(roleCo.tag, "#")
 
-		for iter_7_10, iter_7_11 in ipairs(var_7_8) do
-			if var_7_0[iter_7_11] then
-				var_7_0[iter_7_11] = var_7_0[iter_7_11] + 1
+		for _, tag in ipairs(fetterArr) do
+			if cntDic[tag] then
+				cntDic[tag] = cntDic[tag] + 1
 			else
-				var_7_0[iter_7_11] = 1
+				cntDic[tag] = 1
 			end
 		end
 
-		local var_7_9 = arg_7_0.heroId2ExtraFetterMap[iter_7_9]
+		local fetterTbl = self.heroId2ExtraFetterMap[heroId]
 
-		if var_7_9 then
-			for iter_7_12, iter_7_13 in ipairs(var_7_9) do
-				if not var_7_0[iter_7_13] then
-					var_7_0[iter_7_13] = 1
+		if fetterTbl then
+			for _, tag in ipairs(fetterTbl) do
+				if not cntDic[tag] then
+					cntDic[tag] = 1
 				else
-					var_7_0[iter_7_13] = var_7_0[iter_7_13] + 1
+					cntDic[tag] = cntDic[tag] + 1
 				end
 			end
 		end
 	end
 
-	return var_7_0
+	return cntDic
 end
 
-function var_0_0.getFetterHeroList(arg_8_0, arg_8_1)
-	local var_8_0 = Activity191Model.instance:getCurActId()
-	local var_8_1 = {}
-	local var_8_2 = lua_activity191_role.configList
+function Act191MatchMO:getFetterHeroList(tag)
+	local actId = Activity191Model.instance:getCurActId()
+	local fetterHeroList = {}
+	local roleCoList = lua_activity191_role.configList
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_2) do
-		local var_8_3 = arg_8_0.robot and iter_8_1.id or iter_8_1.roleId
+	for _, roleCo in ipairs(roleCoList) do
+		local heroId = self.robot and roleCo.id or roleCo.roleId
 
-		if iter_8_1.activityId == var_8_0 and iter_8_1.star == 1 then
-			local var_8_4 = 0
-			local var_8_5 = 0
+		if roleCo.activityId == actId and roleCo.star == 1 then
+			local transfer = 0
+			local inBag = 0
 
-			if arg_8_0:isHeroInTeam(var_8_3) then
-				var_8_5 = 2
-			elseif not arg_8_0.robot and arg_8_0:getHeroInfo(var_8_3) then
-				var_8_5 = 1
+			if self:isHeroInTeam(heroId) then
+				inBag = 2
+			elseif not self.robot and self:getHeroInfo(heroId) then
+				inBag = 1
 			end
 
-			local var_8_6 = string.split(iter_8_1.tag, "#")
+			local fetterArr = string.split(roleCo.tag, "#")
 
-			if tabletool.indexOf(var_8_6, arg_8_1) then
-				local var_8_7 = {
-					config = iter_8_1,
-					inBag = var_8_5,
-					transfer = var_8_4
+			if tabletool.indexOf(fetterArr, tag) then
+				local data = {
+					config = roleCo,
+					inBag = inBag,
+					transfer = transfer
 				}
 
-				var_8_1[#var_8_1 + 1] = var_8_7
+				fetterHeroList[#fetterHeroList + 1] = data
 			else
-				local var_8_8 = arg_8_0:getBattleHeroInfoInTeam(iter_8_1.roleId)
+				local info = self:getBattleHeroInfoInTeam(roleCo.roleId)
 
-				if var_8_8 and var_8_8.itemUid1 ~= 0 then
-					local var_8_9 = arg_8_0:getItemCo(var_8_8.itemUid1)
+				if info and info.itemUid1 ~= 0 then
+					local itemCo = self:getItemCo(info.itemUid1)
 
-					if not string.nilorempty(var_8_9.tag) then
-						local var_8_10 = string.split(var_8_9.tag, "#")
+					if not string.nilorempty(itemCo.tag) then
+						fetterArr = string.split(itemCo.tag, "#")
 
-						if tabletool.indexOf(var_8_10, arg_8_1) then
-							local var_8_11 = {
+						if tabletool.indexOf(fetterArr, tag) then
+							local data = {
 								inBag = 2,
 								transfer = 1,
-								config = iter_8_1
+								config = roleCo
 							}
 
-							var_8_1[#var_8_1 + 1] = var_8_11
+							fetterHeroList[#fetterHeroList + 1] = data
 						end
 					end
 				end
 			end
 
-			local var_8_12 = arg_8_0.heroId2ExtraFetterMap[var_8_3]
+			local fetterTbl = self.heroId2ExtraFetterMap[heroId]
 
-			if var_8_12 and tabletool.indexOf(var_8_12, arg_8_1) then
-				local var_8_13 = {
+			if fetterTbl and tabletool.indexOf(fetterTbl, tag) then
+				local data = {
 					transfer = 2,
-					config = iter_8_1,
-					inBag = var_8_5
+					config = roleCo,
+					inBag = inBag
 				}
 
-				var_8_1[#var_8_1 + 1] = var_8_13
+				fetterHeroList[#fetterHeroList + 1] = data
 			end
 		end
 	end
 
-	table.sort(var_8_1, Activity191Helper.sortFetterHeroList)
+	table.sort(fetterHeroList, Activity191Helper.sortFetterHeroList)
 
-	return var_8_1
+	return fetterHeroList
 end
 
-function var_0_0.isHeroInTeam(arg_9_0, arg_9_1)
-	for iter_9_0, iter_9_1 in pairs(arg_9_0.heroMap) do
-		if iter_9_1.heroId == arg_9_1 then
+function Act191MatchMO:isHeroInTeam(heroId)
+	for _, info in pairs(self.heroMap) do
+		if info.heroId == heroId then
 			return true
 		end
 	end
 
-	for iter_9_2, iter_9_3 in pairs(arg_9_0.subHeroMap) do
-		if iter_9_3 == arg_9_1 then
+	for _, _heroId in pairs(self.subHeroMap) do
+		if _heroId == heroId then
 			return true
 		end
 	end
 end
 
-function var_0_0.getBattleHeroInfoInTeam(arg_10_0, arg_10_1)
-	for iter_10_0, iter_10_1 in pairs(arg_10_0.heroMap) do
-		if iter_10_1.heroId == arg_10_1 then
-			return iter_10_1
+function Act191MatchMO:getBattleHeroInfoInTeam(heroId)
+	for _, info in pairs(self.heroMap) do
+		if info.heroId == heroId then
+			return info
 		end
 	end
 end
 
-return var_0_0
+return Act191MatchMO

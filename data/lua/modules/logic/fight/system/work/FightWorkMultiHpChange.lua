@@ -1,58 +1,62 @@
-﻿module("modules.logic.fight.system.work.FightWorkMultiHpChange", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkMultiHpChange.lua
 
-local var_0_0 = class("FightWorkMultiHpChange", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkMultiHpChange", package.seeall)
 
-function var_0_0.beforePlayEffectData(arg_1_0)
-	arg_1_0._entityId = arg_1_0.actEffectData.targetId
-	arg_1_0._oldEntityMO = FightDataHelper.entityMgr:getOldEntityMO(arg_1_0._entityId)
+local FightWorkMultiHpChange = class("FightWorkMultiHpChange", FightEffectBase)
+
+function FightWorkMultiHpChange:beforePlayEffectData()
+	self._entityId = self.actEffectData.targetId
+	self._oldEntityMO = FightDataHelper.entityMgr:getOldEntityMO(self._entityId)
 end
 
-function var_0_0.onStart(arg_2_0)
-	arg_2_0._newEntityMO = FightDataHelper.entityMgr:getById(arg_2_0._entityId)
+function FightWorkMultiHpChange:onStart()
+	self._newEntityMO = FightDataHelper.entityMgr:getById(self._entityId)
 
-	local var_2_0 = FightHelper.getEntity(arg_2_0._entityId)
+	local entity = FightHelper.getEntity(self._entityId)
 
-	if not var_2_0 or not arg_2_0._oldEntityMO then
-		arg_2_0:onDone(true)
+	if not entity or not self._oldEntityMO then
+		self:onDone(true)
 
 		return
 	end
 
-	local var_2_1 = arg_2_0:com_registWorkDoneFlowSequence()
+	local flow = self:com_registWorkDoneFlowSequence()
 
-	if arg_2_0._newEntityMO then
-		var_2_0.beforeMonsterChangeSkin = arg_2_0._oldEntityMO.skin
+	if self._newEntityMO then
+		entity.beforeMonsterChangeSkin = self._oldEntityMO.skin
 
-		local var_2_2 = FightWorkFlowSequence.New()
+		local afterChangeFlow = FightWorkFlowSequence.New()
 
-		var_2_2:registWork(FightWorkFunction, arg_2_0._buildNewEntity, arg_2_0)
-		var_2_2:registWork(FightWorkSendEvent, FightEvent.MultiHpChange, arg_2_0._newEntityMO.id)
-		FightHelper.buildMonsterA2B(var_2_0, arg_2_0._oldEntityMO, var_2_1, var_2_2)
+		afterChangeFlow:registWork(FightWorkFunction, self._buildNewEntity, self)
+		afterChangeFlow:registWork(FightWorkSendEvent, FightEvent.MultiHpChange, self._newEntityMO.id)
+		FightHelper.buildMonsterA2B(entity, self._oldEntityMO, flow, afterChangeFlow)
 	end
 
-	var_2_1:start()
+	flow:start()
 end
 
-function var_0_0._buildNewEntity(arg_3_0)
-	if lua_fight_boss_evolution_client.configDict[arg_3_0._oldEntityMO.skin] then
-		local var_3_0 = GameSceneMgr.instance:getCurScene().entityMgr
-		local var_3_1 = FightHelper.getEntity(arg_3_0._newEntityMO.id)
+function FightWorkMultiHpChange:_buildNewEntity()
+	local evolutionConfig = lua_fight_boss_evolution_client.configDict[self._oldEntityMO.skin]
 
-		if var_3_1 then
-			var_3_0:removeUnit(var_3_1:getTag(), var_3_1.id)
+	if evolutionConfig then
+		local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+		local oldEntity = FightHelper.getEntity(self._newEntityMO.id)
+
+		if oldEntity then
+			entityMgr:removeUnit(oldEntity:getTag(), oldEntity.id)
 		end
 
-		local var_3_2 = var_3_0:buildSpine(arg_3_0._newEntityMO)
-		local var_3_3 = var_3_2 and var_3_2.buff
+		local newEntity = entityMgr:buildSpine(self._newEntityMO)
+		local buffComp = newEntity and newEntity.buff
 
-		if var_3_3 then
-			xpcall(var_3_3.dealStartBuff, __G__TRACKBACK__, var_3_3)
+		if buffComp then
+			xpcall(buffComp.dealStartBuff, __G__TRACKBACK__, buffComp)
 		end
 	end
 end
 
-function var_0_0.clearWork(arg_4_0)
+function FightWorkMultiHpChange:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkMultiHpChange

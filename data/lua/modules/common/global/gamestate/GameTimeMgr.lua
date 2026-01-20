@@ -1,8 +1,10 @@
-﻿module("modules.common.global.gamestate.GameTimeMgr", package.seeall)
+﻿-- chunkname: @modules/common/global/gamestate/GameTimeMgr.lua
 
-local var_0_0 = class("GameTimeMgr")
+module("modules.common.global.gamestate.GameTimeMgr", package.seeall)
 
-var_0_0.TimeScaleType = {
+local GameTimeMgr = class("GameTimeMgr")
+
+GameTimeMgr.TimeScaleType = {
 	FightKillEnemy = "FightKillEnemy",
 	GM = "GM",
 	AutoChess = "AutoChess",
@@ -10,40 +12,40 @@ var_0_0.TimeScaleType = {
 	FightTLEventSpeed = "FightTLEventSpeed"
 }
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._timeScaleDict = {}
+function GameTimeMgr:ctor()
+	self._timeScaleDict = {}
 end
 
-function var_0_0.init(arg_2_0)
-	arg_2_0._timeScaleDict = {}
+function GameTimeMgr:init()
+	self._timeScaleDict = {}
 end
 
-function var_0_0.setTimeScale(arg_3_0, arg_3_1, arg_3_2)
-	if var_0_0.TimeScaleType[arg_3_1] then
-		arg_3_0._timeScaleDict[arg_3_1] = arg_3_2 or 1
+function GameTimeMgr:setTimeScale(timeScaleType, timeScale)
+	if GameTimeMgr.TimeScaleType[timeScaleType] then
+		self._timeScaleDict[timeScaleType] = timeScale or 1
 	else
-		logError("没有定义时间缩放类型, timeScaleType: " .. tostring(arg_3_1))
+		logError("没有定义时间缩放类型, timeScaleType: " .. tostring(timeScaleType))
 	end
 
-	local var_3_0 = 1
+	local multiTimeScale = 1
 
-	for iter_3_0, iter_3_1 in pairs(arg_3_0._timeScaleDict) do
-		var_3_0 = var_3_0 * iter_3_1
+	for type, scale in pairs(self._timeScaleDict) do
+		multiTimeScale = multiTimeScale * scale
 	end
 
-	if math.abs(Time.timeScale - var_3_0) > 0.01 then
-		logNormal("游戏速度变更: " .. tostring(var_3_0))
+	if math.abs(Time.timeScale - multiTimeScale) > 0.01 then
+		logNormal("游戏速度变更: " .. tostring(multiTimeScale))
 	end
 
-	Time.timeScale = var_3_0
+	Time.timeScale = multiTimeScale
 
-	return var_3_0
+	return multiTimeScale
 end
 
-function var_0_0.getTimeScale(arg_4_0, arg_4_1)
-	return arg_4_0._timeScaleDict[arg_4_1] or 1
+function GameTimeMgr:getTimeScale(timeScaleType)
+	return self._timeScaleDict[timeScaleType] or 1
 end
 
-var_0_0.instance = var_0_0.New()
+GameTimeMgr.instance = GameTimeMgr.New()
 
-return var_0_0
+return GameTimeMgr

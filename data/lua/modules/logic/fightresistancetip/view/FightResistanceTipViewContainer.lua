@@ -1,13 +1,15 @@
-﻿module("modules.logic.fightresistancetip.view.FightResistanceTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/fightresistancetip/view/FightResistanceTipViewContainer.lua
 
-local var_0_0 = class("FightResistanceTipViewContainer", BaseViewContainer)
+module("modules.logic.fightresistancetip.view.FightResistanceTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local FightResistanceTipViewContainer = class("FightResistanceTipViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, FightResistanceTipView.New())
+function FightResistanceTipViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, FightResistanceTipView.New())
+
+	return views
 end
 
-return var_0_0
+return FightResistanceTipViewContainer

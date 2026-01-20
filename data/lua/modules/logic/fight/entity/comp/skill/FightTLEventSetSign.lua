@@ -1,82 +1,84 @@
-﻿module("modules.logic.fight.entity.comp.skill.FightTLEventSetSign", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skill/FightTLEventSetSign.lua
 
-local var_0_0 = class("FightTLEventSetSign", FightTimelineTrackItem)
+module("modules.logic.fight.entity.comp.skill.FightTLEventSetSign", package.seeall)
 
-function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.fightStepData = arg_1_1
-	arg_1_0.duration = arg_1_2
-	arg_1_0.paramsArr = arg_1_3
+local FightTLEventSetSign = class("FightTLEventSetSign", FightTimelineTrackItem)
 
-	if arg_1_3[1] == "1" then
-		arg_1_0.workTimelineItem.skipAfterTimelineFunc = true
+function FightTLEventSetSign:onTrackStart(fightStepData, duration, paramsArr)
+	self.fightStepData = fightStepData
+	self.duration = duration
+	self.paramsArr = paramsArr
+
+	if paramsArr[1] == "1" then
+		self.workTimelineItem.skipAfterTimelineFunc = true
 	end
 
-	local var_1_0 = arg_1_3[2]
+	local param2 = paramsArr[2]
 
-	if not string.nilorempty(var_1_0) then
-		local var_1_1 = string.split(var_1_0, "#")
-		local var_1_2 = table.remove(var_1_1, 1)
+	if not string.nilorempty(param2) then
+		local arr = string.split(param2, "#")
+		local visible = table.remove(arr, 1)
 
-		arg_1_0:com_sendFightEvent(FightEvent.SetBtnListVisibleWhenHidingFightView, var_1_2 == "show", var_1_1)
+		self:com_sendFightEvent(FightEvent.SetBtnListVisibleWhenHidingFightView, visible == "show", arr)
 	end
 
-	local var_1_3 = arg_1_3[3]
+	local param3 = paramsArr[3]
 
-	if not string.nilorempty(var_1_3) then
-		local var_1_4 = string.split(var_1_3, "#")
-		local var_1_5 = var_1_4[1]
-		local var_1_6 = var_1_4[2]
+	if not string.nilorempty(param3) then
+		local arr = string.split(param3, "#")
+		local targetType = arr[1]
+		local visible = arr[2]
 
-		if var_1_5 == "1" then
-			local var_1_7 = arg_1_1.toId
-			local var_1_8 = FightDataHelper.entityMgr:getById(var_1_7)
-			local var_1_9 = FightHelper.checkIsBossByMonsterId(var_1_8.modelId)
+		if targetType == "1" then
+			local toId = fightStepData.toId
+			local entityData = FightDataHelper.entityMgr:getById(toId)
+			local isBoss = FightHelper.checkIsBossByMonsterId(entityData.modelId)
 
-			if lua_fight_assembled_monster.configDict[var_1_8.skin] then
-				var_1_9 = true
+			if lua_fight_assembled_monster.configDict[entityData.skin] then
+				isBoss = true
 			end
 
-			if var_1_9 then
-				arg_1_0:com_sendFightEvent(FightEvent.SetBossHpVisibleWhenHidingFightView, var_1_6 == "show")
+			if isBoss then
+				self:com_sendFightEvent(FightEvent.SetBossHpVisibleWhenHidingFightView, visible == "show")
 			end
 		end
 	end
 
-	local var_1_10 = arg_1_3[4]
+	local param4 = paramsArr[4]
 
-	if not string.nilorempty(var_1_10) then
-		FightDataHelper.tempMgr.hideNameUIByTimeline = var_1_10 == "hide"
+	if not string.nilorempty(param4) then
+		FightDataHelper.tempMgr.hideNameUIByTimeline = param4 == "hide"
 	end
 
-	if arg_1_3[5] == "1" then
-		arg_1_1.forceShowDamageTotalFloat = true
+	if paramsArr[5] == "1" then
+		fightStepData.forceShowDamageTotalFloat = true
 	end
 
-	local var_1_11 = arg_1_3[6]
+	local param6 = paramsArr[6]
 
-	if var_1_11 == "aiJiAoQteStart" then
+	if param6 == "aiJiAoQteStart" then
 		FightDataHelper.stageMgr:enterFightState(FightStageMgr.FightStateType.AiJiAoQteIng)
-	elseif var_1_11 == "aiJiAoQteEnd" then
+	elseif param6 == "aiJiAoQteEnd" then
 		FightDataHelper.stageMgr:exitFightState(FightStageMgr.FightStateType.AiJiAoQteIng)
 	end
 end
 
-function var_0_0.onTrackEnd(arg_2_0)
-	if arg_2_0.workTimelineItem.skipAfterTimelineFunc then
-		local var_2_0 = FightSkillMgr.instance
+function FightTLEventSetSign:onTrackEnd()
+	if self.workTimelineItem.skipAfterTimelineFunc then
+		local skillMgr = FightSkillMgr.instance
 
-		var_2_0._playingSkillCount = var_2_0._playingSkillCount - 1
+		skillMgr._playingSkillCount = skillMgr._playingSkillCount - 1
 
-		if var_2_0._playingSkillCount < 0 then
-			var_2_0._playingSkillCount = 0
+		if skillMgr._playingSkillCount < 0 then
+			skillMgr._playingSkillCount = 0
 		end
 
-		var_2_0._playingEntityId2StepData[arg_2_0.fightStepData.fromId] = nil
+		skillMgr._playingEntityId2StepData[self.fightStepData.fromId] = nil
 	end
 end
 
-function var_0_0.onDestructor(arg_3_0)
+function FightTLEventSetSign:onDestructor()
 	return
 end
 
-return var_0_0
+return FightTLEventSetSign

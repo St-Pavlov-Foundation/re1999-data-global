@@ -1,30 +1,32 @@
-﻿module("modules.logic.dungeon.view.map.DungeonMapChapterLineItem", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/map/DungeonMapChapterLineItem.lua
 
-local var_0_0 = class("DungeonMapChapterLineItem", BaseChildView)
+module("modules.logic.dungeon.view.map.DungeonMapChapterLineItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gochoiceicon = gohelper.findChild(arg_1_0.viewGO, "#go_choiceicon")
-	arg_1_0._simageicon1 = gohelper.findChildImage(arg_1_0.viewGO, "#go_choiceicon/#simage_icon1")
-	arg_1_0._gonormalicon = gohelper.findChild(arg_1_0.viewGO, "#go_normalicon")
-	arg_1_0._simageicon2 = gohelper.findChildImage(arg_1_0.viewGO, "#go_normalicon/#simage_icon2")
-	arg_1_0._golockicon = gohelper.findChild(arg_1_0.viewGO, "#go_lockicon")
-	arg_1_0._simageicon3 = gohelper.findChildImage(arg_1_0.viewGO, "#go_lockicon/#simage_icon3")
+local DungeonMapChapterLineItem = class("DungeonMapChapterLineItem", BaseChildView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function DungeonMapChapterLineItem:onInitView()
+	self._gochoiceicon = gohelper.findChild(self.viewGO, "#go_choiceicon")
+	self._simageicon1 = gohelper.findChildImage(self.viewGO, "#go_choiceicon/#simage_icon1")
+	self._gonormalicon = gohelper.findChild(self.viewGO, "#go_normalicon")
+	self._simageicon2 = gohelper.findChildImage(self.viewGO, "#go_normalicon/#simage_icon2")
+	self._golockicon = gohelper.findChild(self.viewGO, "#go_lockicon")
+	self._simageicon3 = gohelper.findChildImage(self.viewGO, "#go_lockicon/#simage_icon3")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function DungeonMapChapterLineItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function DungeonMapChapterLineItem:removeEvents()
 	return
 end
 
-function var_0_0._onClick(arg_4_0)
-	if arg_4_0._isSelect then
+function DungeonMapChapterLineItem:_onClick()
+	if self._isSelect then
 		return
 	end
 
@@ -32,71 +34,71 @@ function var_0_0._onClick(arg_4_0)
 		return
 	end
 
-	if arg_4_0._isLock then
-		if arg_4_0._lockCode == -1 then
+	if self._isLock then
+		if self._lockCode == -1 then
 			GameFacade.showToast(ToastEnum.DungeonChapterLine1)
-		elseif arg_4_0._lockCode == -2 then
+		elseif self._lockCode == -2 then
 			-- block empty
-		elseif arg_4_0._lockCode == -3 then
+		elseif self._lockCode == -3 then
 			GameFacade.showToast(ToastEnum.DungeonChapterLine3)
-		elseif arg_4_0._lockCode == -4 and arg_4_0._lockToast then
-			GameFacade.showToast(arg_4_0._lockToast, arg_4_0._lockToastParam)
+		elseif self._lockCode == -4 and self._lockToast then
+			GameFacade.showToast(self._lockToast, self._lockToastParam)
 		end
 
 		return
 	end
 
-	if not arg_4_0._openTimeValid then
-		GameFacade.showToast(ToastEnum.DungeonResChapter, arg_4_0._config.name)
+	if not self._openTimeValid then
+		GameFacade.showToast(ToastEnum.DungeonResChapter, self._config.name)
 
 		return
 	end
 
-	DungeonModel.instance:changeCategory(arg_4_0._config.type, false)
-	DungeonController.instance:dispatchEvent(DungeonEvent.OnChangeChapter, arg_4_0._config.id)
+	DungeonModel.instance:changeCategory(self._config.type, false)
+	DungeonController.instance:dispatchEvent(DungeonEvent.OnChangeChapter, self._config.id)
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._click = gohelper.getClickWithAudio(arg_5_0.viewGO, AudioEnum.UI.UI_checkpoint_detailed_tabs_click)
+function DungeonMapChapterLineItem:_editableInitView()
+	self._click = gohelper.getClickWithAudio(self.viewGO, AudioEnum.UI.UI_checkpoint_detailed_tabs_click)
 
-	arg_5_0._click:AddClickListener(arg_5_0._onClick, arg_5_0)
+	self._click:AddClickListener(self._onClick, self)
 end
 
-function var_0_0.updateStatus(arg_6_0)
-	arg_6_0:onSelect(arg_6_0._config.id == DungeonModel.instance.curLookChapterId)
+function DungeonMapChapterLineItem:updateStatus()
+	self:onSelect(self._config.id == DungeonModel.instance.curLookChapterId)
 end
 
-function var_0_0.onSelect(arg_7_0, arg_7_1)
-	gohelper.setActive(arg_7_0._gochoiceicon, arg_7_0._openTimeValid and arg_7_1)
-	gohelper.setActive(arg_7_0._gonormalicon, arg_7_0._openTimeValid and not arg_7_1)
-	gohelper.setActive(arg_7_0._golockicon, not arg_7_0._openTimeValid)
+function DungeonMapChapterLineItem:onSelect(isSelect)
+	gohelper.setActive(self._gochoiceicon, self._openTimeValid and isSelect)
+	gohelper.setActive(self._gonormalicon, self._openTimeValid and not isSelect)
+	gohelper.setActive(self._golockicon, not self._openTimeValid)
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
-	arg_8_0._config = arg_8_0.viewParam.config
-	arg_8_0._isLock, arg_8_0._lockCode, arg_8_0._lockToast, arg_8_0._lockToastParam = DungeonModel.instance:chapterIsLock(arg_8_0._config.id)
-	arg_8_0._openTimeValid = DungeonModel.instance:getChapterOpenTimeValid(arg_8_0._config)
+function DungeonMapChapterLineItem:onUpdateParam()
+	self._config = self.viewParam.config
+	self._isLock, self._lockCode, self._lockToast, self._lockToastParam = DungeonModel.instance:chapterIsLock(self._config.id)
+	self._openTimeValid = DungeonModel.instance:getChapterOpenTimeValid(self._config)
 
-	local var_8_0 = "bg_fuben_wenzi_" .. arg_8_0.viewParam.index
+	local navigationIcon = "bg_fuben_wenzi_" .. self.viewParam.index
 
-	if arg_8_0._openTimeValid then
-		UISpriteSetMgr.instance:setDungeonNavigationSprite(arg_8_0._simageicon1, var_8_0)
-		UISpriteSetMgr.instance:setDungeonNavigationSprite(arg_8_0._simageicon2, var_8_0)
+	if self._openTimeValid then
+		UISpriteSetMgr.instance:setDungeonNavigationSprite(self._simageicon1, navigationIcon)
+		UISpriteSetMgr.instance:setDungeonNavigationSprite(self._simageicon2, navigationIcon)
 	else
-		UISpriteSetMgr.instance:setDungeonNavigationSprite(arg_8_0._simageicon3, var_8_0 .. "_dis")
+		UISpriteSetMgr.instance:setDungeonNavigationSprite(self._simageicon3, navigationIcon .. "_dis")
 	end
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0:onUpdateParam()
+function DungeonMapChapterLineItem:onOpen()
+	self:onUpdateParam()
 end
 
-function var_0_0.onClose(arg_10_0)
+function DungeonMapChapterLineItem:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	arg_11_0._click:RemoveClickListener()
+function DungeonMapChapterLineItem:onDestroyView()
+	self._click:RemoveClickListener()
 end
 
-return var_0_0
+return DungeonMapChapterLineItem

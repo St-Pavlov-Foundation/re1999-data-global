@@ -1,14 +1,16 @@
-﻿module("modules.logic.versionactivity3_1.nationalgift.model.NationalGiftBonusMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/nationalgift/model/NationalGiftBonusMO.lua
 
-local var_0_0 = pureTable("NationalGiftBonusMO")
+module("modules.logic.versionactivity3_1.nationalgift.model.NationalGiftBonusMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1.id
-	arg_1_0.status = arg_1_1.status
+local NationalGiftBonusMO = pureTable("NationalGiftBonusMO")
+
+function NationalGiftBonusMO:init(info)
+	self.id = info.id
+	self.status = info.status
 end
 
-function var_0_0.updateStatus(arg_2_0, arg_2_1)
-	arg_2_0.status = arg_2_1
+function NationalGiftBonusMO:updateStatus(status)
+	self.status = status
 end
 
-return var_0_0
+return NationalGiftBonusMO

@@ -1,52 +1,54 @@
-﻿module("modules.logic.versionactivity1_3.va3chess.game.Va3ChessEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/va3chess/game/Va3ChessEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_3.va3chess.game.Va3ChessEvent", package.seeall)
 
-var_0_0.GuideOnEnterEpisode = 9
-var_0_0.GuideOnEnterMap = 10
-var_0_0.GuideClickTile = 11
-var_0_0.GuideRoundStartCheckPlayerPos = 12
-var_0_0.SceneInteractObjCreated = 10001
-var_0_0.StoryReviewSceneActvie = 10002
-var_0_0.AddInteractObj = 1000
-var_0_0.AllObjectCreated = 1001
-var_0_0.DeleteInteractAvatar = 1002
-var_0_0.ResetMapView = 1003
-var_0_0.SetViewVictory = 1004
-var_0_0.SetViewFail = 1005
-var_0_0.DeleteInteractObj = 1006
-var_0_0.GameViewOpened = 1007
-var_0_0.GameResultQuit = 1008
-var_0_0.GameMapDataUpdate = 1009
-var_0_0.GameReset = 1010
-var_0_0.EnterMap = 1011
-var_0_0.EnterNextMap = 1012
-var_0_0.TilePosuiTrigger = 1013
-var_0_0.GameLoadingMapStateUpdate = 1014
-var_0_0.BeforeEnterNextMap = 1015
-var_0_0.EndEnterNextMap = 1016
-var_0_0.SetNeedChooseDirectionVisible = 2002
-var_0_0.CurrentRoundUpdate = 2003
-var_0_0.CurrentConditionUpdate = 2004
-var_0_0.RewardIsClose = 2005
-var_0_0.RefreshAlarmArea = 2006
-var_0_0.SetCenterHintText = 2007
-var_0_0.ResetGameByResultView = 2008
-var_0_0.CurrentHpUpdate = 2009
-var_0_0.TargetUpdate = 2010
-var_0_0.GameToastUpdate = 2011
-var_0_0.RefreshAlarmAreaOnXY = 2012
-var_0_0.PlayStoryFinish = 2013
-var_0_0.TileTriggerUpdate = 2014
-var_0_0.ObjMoveStep = 4001
-var_0_0.ObjMoveEnd = 4002
-var_0_0.TaskJump = 3001
-var_0_0.EventFinishPlay = 12001
-var_0_0.EventStart = 12002
-var_0_0.EventBattleReturn = 12003
-var_0_0.LoadingMapState = {
+local Va3ChessEvent = _M
+
+Va3ChessEvent.GuideOnEnterEpisode = 9
+Va3ChessEvent.GuideOnEnterMap = 10
+Va3ChessEvent.GuideClickTile = 11
+Va3ChessEvent.GuideRoundStartCheckPlayerPos = 12
+Va3ChessEvent.SceneInteractObjCreated = 10001
+Va3ChessEvent.StoryReviewSceneActvie = 10002
+Va3ChessEvent.AddInteractObj = 1000
+Va3ChessEvent.AllObjectCreated = 1001
+Va3ChessEvent.DeleteInteractAvatar = 1002
+Va3ChessEvent.ResetMapView = 1003
+Va3ChessEvent.SetViewVictory = 1004
+Va3ChessEvent.SetViewFail = 1005
+Va3ChessEvent.DeleteInteractObj = 1006
+Va3ChessEvent.GameViewOpened = 1007
+Va3ChessEvent.GameResultQuit = 1008
+Va3ChessEvent.GameMapDataUpdate = 1009
+Va3ChessEvent.GameReset = 1010
+Va3ChessEvent.EnterMap = 1011
+Va3ChessEvent.EnterNextMap = 1012
+Va3ChessEvent.TilePosuiTrigger = 1013
+Va3ChessEvent.GameLoadingMapStateUpdate = 1014
+Va3ChessEvent.BeforeEnterNextMap = 1015
+Va3ChessEvent.EndEnterNextMap = 1016
+Va3ChessEvent.SetNeedChooseDirectionVisible = 2002
+Va3ChessEvent.CurrentRoundUpdate = 2003
+Va3ChessEvent.CurrentConditionUpdate = 2004
+Va3ChessEvent.RewardIsClose = 2005
+Va3ChessEvent.RefreshAlarmArea = 2006
+Va3ChessEvent.SetCenterHintText = 2007
+Va3ChessEvent.ResetGameByResultView = 2008
+Va3ChessEvent.CurrentHpUpdate = 2009
+Va3ChessEvent.TargetUpdate = 2010
+Va3ChessEvent.GameToastUpdate = 2011
+Va3ChessEvent.RefreshAlarmAreaOnXY = 2012
+Va3ChessEvent.PlayStoryFinish = 2013
+Va3ChessEvent.TileTriggerUpdate = 2014
+Va3ChessEvent.ObjMoveStep = 4001
+Va3ChessEvent.ObjMoveEnd = 4002
+Va3ChessEvent.TaskJump = 3001
+Va3ChessEvent.EventFinishPlay = 12001
+Va3ChessEvent.EventStart = 12002
+Va3ChessEvent.EventBattleReturn = 12003
+Va3ChessEvent.LoadingMapState = {
 	Start = 1,
 	Finish = 2
 }
 
-return var_0_0
+return Va3ChessEvent

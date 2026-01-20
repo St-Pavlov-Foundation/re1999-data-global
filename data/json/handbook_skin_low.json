@@ -172,11 +172,11 @@
     "name": "language_10065878",
     "nameEn": "OLD STORIES, NEW PERSPECTIVES",
     "highId": 10008,
-    "show": 0,
-    "des": "language_10086216",
-    "skinContain": "308303|300904|309803|307703|301202",
+    "show": 1,
+    "des": "language_10103715",
+    "skinContain": "301202|300904|308303|309803|307703",
     "backImg": "",
-    "spineParams": "",
+    "spineParams": "308303|roles_bust/v3a2_308303_qn_skinsuit/308303_qn_skinsuit.prefab|0,0|1.4",
     "tarotCardPath": ""
   },
   {
@@ -222,10 +222,10 @@
     "highId": 11001,
     "show": 1,
     "des": "language_10089256",
-    "skinContain": "306204|300306|305104|305604|304804|308804|300731|310703",
+    "skinContain": "305104|305604|310003|308004|304804|308804|300731|310703|306204|300306",
     "backImg": "",
     "spineParams": "",
-    "tarotCardPath": "card01|card02|card03|card06|card17|card18|card20|card21"
+    "tarotCardPath": "card03|card06|card15|card16|card17|card18|card20|card21|card01|card02"
   },
   {
     "id": 22001,
@@ -283,6 +283,18 @@
     "show": 1,
     "des": "language_10096594",
     "skinContain": "307704|311303|303103",
+    "backImg": "",
+    "spineParams": "",
+    "tarotCardPath": ""
+  },
+  {
+    "id": 20021,
+    "name": "language_10103694",
+    "nameEn": "WAVES AGAINST TIME",
+    "highId": 10001,
+    "show": 1,
+    "des": "language_10103716",
+    "skinContain": "307004|308104|309602",
     "backImg": "",
     "spineParams": "",
     "tarotCardPath": ""

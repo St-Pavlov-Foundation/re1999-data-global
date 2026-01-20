@@ -1,24 +1,26 @@
-﻿module("modules.logic.scene.survival.comp.SurvivalSceneAmbientComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/survival/comp/SurvivalSceneAmbientComp.lua
 
-local var_0_0 = class("SurvivalSceneAmbientComp", BaseSceneComp)
+module("modules.logic.scene.survival.comp.SurvivalSceneAmbientComp", package.seeall)
 
-function var_0_0.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
-	SurvivalController.instance:registerCallback(SurvivalEvent.SceneLightLoaded, arg_1_0._onLightLoaded, arg_1_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapGameTimeUpdate, arg_1_0.updateSceneAmbient, arg_1_0)
+local SurvivalSceneAmbientComp = class("SurvivalSceneAmbientComp", BaseSceneComp)
+
+function SurvivalSceneAmbientComp:onSceneStart(sceneId, levelId)
+	SurvivalController.instance:registerCallback(SurvivalEvent.SceneLightLoaded, self._onLightLoaded, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapGameTimeUpdate, self.updateSceneAmbient, self)
 end
 
-function var_0_0._onLightLoaded(arg_2_0, arg_2_1)
-	SurvivalSceneAmbientUtil.instance:_onLightLoaded(arg_2_1)
+function SurvivalSceneAmbientComp:_onLightLoaded(lightGo)
+	SurvivalSceneAmbientUtil.instance:_onLightLoaded(lightGo)
 end
 
-function var_0_0.updateSceneAmbient(arg_3_0)
+function SurvivalSceneAmbientComp:updateSceneAmbient()
 	SurvivalSceneAmbientUtil.instance:updateSceneAmbient()
 end
 
-function var_0_0.onSceneClose(arg_4_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.SceneLightLoaded, arg_4_0._onLightLoaded, arg_4_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapGameTimeUpdate, arg_4_0.updateSceneAmbient, arg_4_0)
+function SurvivalSceneAmbientComp:onSceneClose()
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.SceneLightLoaded, self._onLightLoaded, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapGameTimeUpdate, self.updateSceneAmbient, self)
 	SurvivalSceneAmbientUtil.instance:disable()
 end
 
-return var_0_0
+return SurvivalSceneAmbientComp

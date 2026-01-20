@@ -1,469 +1,475 @@
-﻿module("modules.logic.fight.entity.comp.FightUnitSpine_500M", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/FightUnitSpine_500M.lua
 
-local var_0_0 = class("FightUnitSpine_500M", LuaCompBase)
+module("modules.logic.fight.entity.comp.FightUnitSpine_500M", package.seeall)
 
-function var_0_0._onResLoaded(arg_1_0, arg_1_1)
+local FightUnitSpine_500M = class("FightUnitSpine_500M", LuaCompBase)
+
+function FightUnitSpine_500M:_onResLoaded(loader)
 	return
 end
 
-function var_0_0.ctor(arg_2_0, arg_2_1)
-	arg_2_0.entityId = arg_2_1.id
-	arg_2_0.unitSpawn = arg_2_1
+function FightUnitSpine_500M:ctor(unitSpawn)
+	self.entityId = unitSpawn.id
+	self.unitSpawn = unitSpawn
 
-	LuaEventSystem.addEventMechanism(arg_2_0)
+	LuaEventSystem.addEventMechanism(self)
 end
 
-function var_0_0.init(arg_3_0, arg_3_1)
-	arg_3_0.go = arg_3_1
-	arg_3_0.behindGo = gohelper.create3d(arg_3_1, "behind")
-	arg_3_0.centerGo = gohelper.create3d(arg_3_1, "center")
-	arg_3_0.frontGo = gohelper.create3d(arg_3_1, "front")
+function FightUnitSpine_500M:init(go)
+	self.go = go
+	self.behindGo = gohelper.create3d(go, "behind")
+	self.centerGo = gohelper.create3d(go, "center")
+	self.frontGo = gohelper.create3d(go, "front")
 
-	arg_3_0:setCenterSpinePos()
-	FightController.instance:registerCallback(FightEvent.RefreshSpineHeadIcon, arg_3_0.refreshSpineHeadIcon, arg_3_0)
+	self:setCenterSpinePos()
+	FightController.instance:registerCallback(FightEvent.RefreshSpineHeadIcon, self.refreshSpineHeadIcon, self)
 end
 
-function var_0_0.setCenterSpinePos(arg_4_0)
-	arg_4_0:initOffset()
+function FightUnitSpine_500M:setCenterSpinePos()
+	self:initOffset()
 
-	local var_4_0 = arg_4_0.centerGo.transform
+	local tr = self.centerGo.transform
 
-	transformhelper.setLocalPos(var_4_0, arg_4_0.offsetX, arg_4_0.offsetY, arg_4_0.offsetZ)
+	transformhelper.setLocalPos(tr, self.offsetX, self.offsetY, self.offsetZ)
 end
 
-function var_0_0.initOffset(arg_5_0)
-	if arg_5_0.offsetX then
+function FightUnitSpine_500M:initOffset()
+	if self.offsetX then
 		return
 	end
 
-	local var_5_0 = lua_fight_const.configDict[56]
+	local co = lua_fight_const.configDict[56]
 
-	if not var_5_0 then
-		arg_5_0.offsetX = 0
-		arg_5_0.offsetY = 0
-		arg_5_0.offsetZ = 0
-
-		return
-	end
-
-	local var_5_1 = FightStrUtil.instance:getSplitToNumberCache(var_5_0.value, "#")
-
-	if not var_5_1 then
-		arg_5_0.offsetX = 0
-		arg_5_0.offsetY = 0
-		arg_5_0.offsetZ = 0
+	if not co then
+		self.offsetX = 0
+		self.offsetY = 0
+		self.offsetZ = 0
 
 		return
 	end
 
-	arg_5_0.offsetX = var_5_1[1]
-	arg_5_0.offsetY = var_5_1[2]
-	arg_5_0.offsetZ = var_5_1[3]
-end
+	local pos = FightStrUtil.instance:getSplitToNumberCache(co.value, "#")
 
-function var_0_0.getCenterSpineOffset(arg_6_0)
-	arg_6_0:initOffset()
-
-	return arg_6_0.offsetX, arg_6_0.offsetY, arg_6_0.offsetZ
-end
-
-function var_0_0.refreshSpineHeadIcon(arg_7_0, arg_7_1)
-	if not arg_7_1 then
-		return
-	end
-
-	local var_7_0 = lua_fight_sp_500m_model.configDict[arg_7_1]
-
-	if not var_7_0 then
-		logError("爬塔500M模型配置不存在 : " .. tostring(arg_7_1))
+	if not pos then
+		self.offsetX = 0
+		self.offsetY = 0
+		self.offsetZ = 0
 
 		return
 	end
 
-	local var_7_1 = var_7_0.headIcon
+	self.offsetX = pos[1]
+	self.offsetY = pos[2]
+	self.offsetZ = pos[3]
+end
 
-	if var_7_1 == arg_7_0.headIcon then
+function FightUnitSpine_500M:getCenterSpineOffset()
+	self:initOffset()
+
+	return self.offsetX, self.offsetY, self.offsetZ
+end
+
+function FightUnitSpine_500M:refreshSpineHeadIcon(modelId)
+	if not modelId then
+		return
+	end
+
+	local modelCo = lua_fight_sp_500m_model.configDict[modelId]
+
+	if not modelCo then
+		logError("爬塔500M模型配置不存在 : " .. tostring(modelId))
+
+		return
+	end
+
+	local headIcon = modelCo.headIcon
+
+	if headIcon == self.headIcon then
 		logError("refresh head icon, but icon is equal src")
 
 		return
 	end
 
-	arg_7_0.headIcon = var_7_1
+	self.headIcon = headIcon
 
-	arg_7_0:loadCenterSpineTexture()
+	self:loadCenterSpineTexture()
 end
 
-function var_0_0.reInitDefaultAnimState(arg_8_0)
-	arg_8_0:callFunc("reInitDefaultAnimState")
+function FightUnitSpine_500M:reInitDefaultAnimState()
+	self:callFunc("reInitDefaultAnimState")
 end
 
-function var_0_0.play(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4, arg_9_5)
-	arg_9_0:callFunc("play", arg_9_1, arg_9_2, arg_9_3, arg_9_4, arg_9_5)
+function FightUnitSpine_500M:play(animState, loop, reStart, donotProcess, fightStepData)
+	self:callFunc("play", animState, loop, reStart, donotProcess, fightStepData)
 end
 
-function var_0_0.replaceAnimState(arg_10_0, arg_10_1)
-	arg_10_0:callFunc("replaceAnimState", arg_10_1)
+function FightUnitSpine_500M:replaceAnimState(animState)
+	self:callFunc("replaceAnimState", animState)
 end
 
-function var_0_0._onTransitionAnimEvent(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+function FightUnitSpine_500M:_onTransitionAnimEvent(actionName, eventName, eventArgs)
 	return
 end
 
-function var_0_0.tryPlay(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	return arg_12_0:callFunc("tryPlay", arg_12_1, arg_12_2, arg_12_3)
+function FightUnitSpine_500M:tryPlay(animState, loop, reStart)
+	return self:callFunc("tryPlay", animState, loop, reStart)
 end
 
-function var_0_0._cannotPlay(arg_13_0, arg_13_1)
-	return arg_13_0:callFunc("_cannotPlay", arg_13_1)
+function FightUnitSpine_500M:_cannotPlay(animState)
+	return self:callFunc("_cannotPlay", animState)
 end
 
-function var_0_0.playAnim(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	arg_14_0:callFunc("playAnim", arg_14_1, arg_14_2, arg_14_3)
+function FightUnitSpine_500M:playAnim(animState, loop, reStart)
+	self:callFunc("playAnim", animState, loop, reStart)
 end
 
-function var_0_0.setFreeze(arg_15_0, arg_15_1)
-	arg_15_0:callFunc("setFreeze", arg_15_1)
+function FightUnitSpine_500M:setFreeze(isFreeze)
+	self:callFunc("setFreeze", isFreeze)
 end
 
-function var_0_0.setTimeScale(arg_16_0, arg_16_1)
-	arg_16_0:callFunc("setTimeScale", arg_16_1)
+function FightUnitSpine_500M:setTimeScale(timeScale)
+	self:callFunc("setTimeScale", timeScale)
 end
 
-function var_0_0.setLayer(arg_17_0, arg_17_1, arg_17_2)
-	arg_17_0:callFunc("setLayer", arg_17_1, arg_17_2)
+function FightUnitSpine_500M:setLayer(layer, recursive)
+	self:callFunc("setLayer", layer, recursive)
 end
 
-local var_0_1 = 10
+local orderInterval = 10
 
-function var_0_0.setRenderOrder(arg_18_0, arg_18_1, arg_18_2)
-	if arg_18_0.frontSpine then
-		arg_18_0.frontSpine:setRenderOrder(arg_18_1 + var_0_1, arg_18_2)
+function FightUnitSpine_500M:setRenderOrder(order, force)
+	if self.frontSpine then
+		self.frontSpine:setRenderOrder(order + orderInterval, force)
 	end
 
-	if arg_18_0.centerSpine then
-		arg_18_0.centerSpine:setRenderOrder(arg_18_1, arg_18_2)
+	if self.centerSpine then
+		self.centerSpine:setRenderOrder(order, force)
 	end
 
-	if arg_18_0.behindSpine then
-		arg_18_0.behindSpine:setRenderOrder(arg_18_1 - var_0_1, arg_18_2)
+	if self.behindSpine then
+		self.behindSpine:setRenderOrder(order - orderInterval, force)
 	end
 end
 
-function var_0_0.changeLookDir(arg_19_0, arg_19_1)
-	arg_19_0:callFunc("changeLookDir", arg_19_1)
+function FightUnitSpine_500M:changeLookDir(dir)
+	self:callFunc("changeLookDir", dir)
 end
 
-function var_0_0._changeLookDir(arg_20_0)
-	arg_20_0:callFunc("_changeLookDir")
+function FightUnitSpine_500M:_changeLookDir()
+	self:callFunc("_changeLookDir")
 end
 
-function var_0_0.setActive(arg_21_0, arg_21_1)
-	arg_21_0:callFunc("setActive", arg_21_1)
+function FightUnitSpine_500M:setActive(isActive)
+	self:callFunc("setActive", isActive)
 end
 
-function var_0_0.setAnimation(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
-	arg_22_0:callFunc("setAnimation", arg_22_1, arg_22_2, arg_22_3)
+function FightUnitSpine_500M:setAnimation(animState, loop, mixTime)
+	self:callFunc("setAnimation", animState, loop, mixTime)
 end
 
-function var_0_0._initSpine(arg_23_0, arg_23_1)
+function FightUnitSpine_500M:_initSpine(spineGO)
 	return
 end
 
-function var_0_0._initSpecialSpine(arg_24_0)
+function FightUnitSpine_500M:_initSpecialSpine()
 	return
 end
 
-function var_0_0.detectDisplayInScreen(arg_25_0)
-	return arg_25_0:callFunc("detectDisplayInScreen")
+function FightUnitSpine_500M:detectDisplayInScreen()
+	return self:callFunc("detectDisplayInScreen")
 end
 
-function var_0_0.detectRefreshAct(arg_26_0, arg_26_1)
-	return arg_26_0:callFunc("detectRefreshAct", arg_26_1)
+function FightUnitSpine_500M:detectRefreshAct(buffId)
+	return self:callFunc("detectRefreshAct", buffId)
 end
 
-function var_0_0._onBuffUpdate(arg_27_0, arg_27_1, arg_27_2, arg_27_3)
+function FightUnitSpine_500M:_onBuffUpdate(entityId, effectType, buffId)
 	return
 end
 
-function var_0_0.releaseSpecialSpine(arg_28_0)
-	arg_28_0:callFunc("releaseSpecialSpine")
+function FightUnitSpine_500M:releaseSpecialSpine()
+	self:callFunc("releaseSpecialSpine")
 end
 
-function var_0_0._clear(arg_29_0)
-	arg_29_0:callFunc("_clear")
+function FightUnitSpine_500M:_clear()
+	self:callFunc("_clear")
 end
 
-function var_0_0.beforeDestroy(arg_30_0)
-	arg_30_0:clearLoader()
-	arg_30_0:removeAnimEventCallback(arg_30_0.onAnimEvent, arg_30_0)
-	FightController.instance:unregisterCallback(FightEvent.RefreshSpineHeadIcon, arg_30_0.refreshSpineHeadIcon, arg_30_0)
-	arg_30_0:callFunc("beforeDestroy")
+function FightUnitSpine_500M:beforeDestroy()
+	self:clearLoader()
+	self:removeAnimEventCallback(self.onAnimEvent, self)
+	FightController.instance:unregisterCallback(FightEvent.RefreshSpineHeadIcon, self.refreshSpineHeadIcon, self)
+	self:callFunc("beforeDestroy")
 end
 
-function var_0_0.onDestroy(arg_31_0)
+function FightUnitSpine_500M:onDestroy()
 	return
 end
 
-function var_0_0.getSpineGO(arg_32_0)
-	if arg_32_0.centerSpine then
-		return arg_32_0.centerSpine:getSpineGO()
+function FightUnitSpine_500M:getSpineGO()
+	if self.centerSpine then
+		return self.centerSpine:getSpineGO()
 	end
 end
 
-function var_0_0.getSpineTr(arg_33_0)
-	if arg_33_0.centerSpine then
-		return arg_33_0.centerSpine:getSpineTr()
+function FightUnitSpine_500M:getSpineTr()
+	if self.centerSpine then
+		return self.centerSpine:getSpineTr()
 	end
 end
 
-function var_0_0.getSkeletonAnim(arg_34_0)
-	if arg_34_0.centerSpine then
-		return arg_34_0.centerSpine:getSkeletonAnim()
+function FightUnitSpine_500M:getSkeletonAnim()
+	if self.centerSpine then
+		return self.centerSpine:getSkeletonAnim()
 	end
 end
 
-function var_0_0.getAnimState(arg_35_0)
-	if arg_35_0.centerSpine then
-		return arg_35_0.centerSpine:getSkeletonAnim()
+function FightUnitSpine_500M:getAnimState()
+	if self.centerSpine then
+		return self.centerSpine:getSkeletonAnim()
 	end
 end
 
-function var_0_0.getPPEffectMask(arg_36_0)
-	if arg_36_0.centerSpine then
-		return arg_36_0.centerSpine:getPPEffectMask()
+function FightUnitSpine_500M:getPPEffectMask()
+	if self.centerSpine then
+		return self.centerSpine:getPPEffectMask()
 	end
 end
 
-function var_0_0.getLookDir(arg_37_0)
-	if arg_37_0.centerSpine then
-		return arg_37_0.centerSpine:getLookDir()
+function FightUnitSpine_500M:getLookDir()
+	if self.centerSpine then
+		return self.centerSpine:getLookDir()
 	end
 end
 
-function var_0_0.hasAnimation(arg_38_0, arg_38_1)
-	if arg_38_0.centerSpine then
-		return arg_38_0.centerSpine:hasAnimation(arg_38_1)
+function FightUnitSpine_500M:hasAnimation(animState)
+	if self.centerSpine then
+		return self.centerSpine:hasAnimation(animState)
 	end
 end
 
-function var_0_0.addAnimEventCallback(arg_39_0, arg_39_1, arg_39_2, arg_39_3)
-	if arg_39_0.centerSpine then
-		return arg_39_0.centerSpine:addAnimEventCallback(arg_39_1, arg_39_2, arg_39_3)
+function FightUnitSpine_500M:addAnimEventCallback(animEvtCb, animEvtCbObj, param)
+	if self.centerSpine then
+		return self.centerSpine:addAnimEventCallback(animEvtCb, animEvtCbObj, param)
 	end
 end
 
-function var_0_0.removeAnimEventCallback(arg_40_0, arg_40_1, arg_40_2)
-	if arg_40_0.centerSpine then
-		return arg_40_0.centerSpine:removeAnimEventCallback(arg_40_1, arg_40_2)
+function FightUnitSpine_500M:removeAnimEventCallback(animEvtCb, animEvtCbObj)
+	if self.centerSpine then
+		return self.centerSpine:removeAnimEventCallback(animEvtCb, animEvtCbObj)
 	end
 end
 
-function var_0_0.removeAllAnimEventCallback(arg_41_0)
-	if arg_41_0.centerSpine then
-		return arg_41_0.centerSpine:removeAllAnimEventCallback()
+function FightUnitSpine_500M:removeAllAnimEventCallback()
+	if self.centerSpine then
+		return self.centerSpine:removeAllAnimEventCallback()
 	end
 end
 
-function var_0_0._onAnimCallback(arg_42_0, arg_42_1, arg_42_2, arg_42_3)
+function FightUnitSpine_500M:_onAnimCallback(actionName, eventName, eventArgs)
 	return
 end
 
-function var_0_0.setResPath(arg_43_0, arg_43_1, arg_43_2, arg_43_3)
-	local var_43_0 = arg_43_0.unitSpawn:getMO().modelId
+function FightUnitSpine_500M:setResPath(resPath, loadedCb, loadedCbObj)
+	local entityMo = self.unitSpawn:getMO()
+	local modeId = entityMo.modelId
 
-	if not var_43_0 then
+	if not modeId then
 		return
 	end
 
-	local var_43_1 = lua_fight_sp_500m_model.configDict[var_43_0]
+	local modelCo = lua_fight_sp_500m_model.configDict[modeId]
 
-	if not var_43_1 then
-		logError("爬塔500M模型配置不存在 : " .. tostring(var_43_0))
+	if not modelCo then
+		logError("爬塔500M模型配置不存在 : " .. tostring(modeId))
 
 		return
 	end
 
-	arg_43_0.loadedCb = arg_43_2
-	arg_43_0.loadedCbObj = arg_43_3
-	arg_43_0.headIcon = var_43_1.headIcon
-	arg_43_0.frontSpineLoaded = false
-	arg_43_0.centerSpineLoaded = false
-	arg_43_0.behindSpineLoaded = false
+	self.loadedCb = loadedCb
+	self.loadedCbObj = loadedCbObj
+	self.headIcon = modelCo.headIcon
+	self.frontSpineLoaded = false
+	self.centerSpineLoaded = false
+	self.behindSpineLoaded = false
 
-	if not arg_43_0.frontSpine then
-		arg_43_0.frontSpine = MonoHelper.addLuaComOnceToGo(arg_43_0.frontGo, FightUnitSpine, arg_43_0.unitSpawn)
+	if not self.frontSpine then
+		self.frontSpine = MonoHelper.addLuaComOnceToGo(self.frontGo, FightUnitSpine, self.unitSpawn)
 	end
 
-	if not arg_43_0.centerSpine then
-		arg_43_0.centerSpine = MonoHelper.addLuaComOnceToGo(arg_43_0.centerGo, FightUnitSpine, arg_43_0.unitSpawn)
+	if not self.centerSpine then
+		self.centerSpine = MonoHelper.addLuaComOnceToGo(self.centerGo, FightUnitSpine, self.unitSpawn)
 	end
 
-	if not arg_43_0.behindSpine then
-		arg_43_0.behindSpine = MonoHelper.addLuaComOnceToGo(arg_43_0.behindGo, FightUnitSpine, arg_43_0.unitSpawn)
+	if not self.behindSpine then
+		self.behindSpine = MonoHelper.addLuaComOnceToGo(self.behindGo, FightUnitSpine, self.unitSpawn)
 	end
 
-	arg_43_0:loadCenterSpineTexture()
-	arg_43_0.frontSpine:setResPath(arg_43_0:getSpineRes(var_43_1.front), arg_43_0.onFrontResLoaded, arg_43_0)
-	arg_43_0.centerSpine:setResPath(arg_43_0:getSpineRes(var_43_1.center), arg_43_0.onCenterResLoaded, arg_43_0)
-	arg_43_0.behindSpine:setResPath(arg_43_0:getSpineRes(var_43_1.behind), arg_43_0.onBehindResLoaded, arg_43_0)
+	self:loadCenterSpineTexture()
+	self.frontSpine:setResPath(self:getSpineRes(modelCo.front), self.onFrontResLoaded, self)
+	self.centerSpine:setResPath(self:getSpineRes(modelCo.center), self.onCenterResLoaded, self)
+	self.behindSpine:setResPath(self:getSpineRes(modelCo.behind), self.onBehindResLoaded, self)
 end
 
-function var_0_0.getSpineRes(arg_44_0, arg_44_1)
-	return string.format("roles/%s.prefab", arg_44_1)
+function FightUnitSpine_500M:getSpineRes(res)
+	return string.format("roles/%s.prefab", res)
 end
 
-function var_0_0.callFunc(arg_45_0, arg_45_1, ...)
-	if arg_45_0.frontSpine then
-		local var_45_0 = arg_45_0.frontSpine[arg_45_1]
+function FightUnitSpine_500M:callFunc(funcName, ...)
+	if self.frontSpine then
+		local func = self.frontSpine[funcName]
 
-		if var_45_0 then
-			var_45_0(arg_45_0.frontSpine, ...)
+		if func then
+			func(self.frontSpine, ...)
 		else
-			logError("not found func int frontSpine : " .. tostring(arg_45_1))
+			logError("not found func int frontSpine : " .. tostring(funcName))
 		end
 	end
 
-	if arg_45_0.behindSpine then
-		local var_45_1 = arg_45_0.behindSpine[arg_45_1]
+	if self.behindSpine then
+		local func = self.behindSpine[funcName]
 
-		if var_45_1 then
-			var_45_1(arg_45_0.behindSpine, ...)
+		if func then
+			func(self.behindSpine, ...)
 		else
-			logError("not found func int behindSpine : " .. tostring(arg_45_1))
+			logError("not found func int behindSpine : " .. tostring(funcName))
 		end
 	end
 
-	if arg_45_0.centerSpine then
-		local var_45_2 = arg_45_0.centerSpine[arg_45_1]
+	if self.centerSpine then
+		local func = self.centerSpine[funcName]
 
-		if var_45_2 then
-			return var_45_2(arg_45_0.centerSpine, ...)
+		if func then
+			return func(self.centerSpine, ...)
 		else
-			logError("not found func int centerSpine : " .. tostring(arg_45_1))
+			logError("not found func int centerSpine : " .. tostring(funcName))
 		end
 	end
 end
 
-function var_0_0.onFrontResLoaded(arg_46_0)
-	gohelper.addChild(arg_46_0.frontGo, arg_46_0.frontSpine:getSpineGO())
+function FightUnitSpine_500M:onFrontResLoaded()
+	gohelper.addChild(self.frontGo, self.frontSpine:getSpineGO())
 
-	arg_46_0.frontSpineLoaded = true
+	self.frontSpineLoaded = true
 
-	arg_46_0.frontSpine:setActive(false)
-	arg_46_0:checkLoadResDone()
+	self.frontSpine:setActive(false)
+	self:checkLoadResDone()
 end
 
-function var_0_0.onCenterResLoaded(arg_47_0)
-	gohelper.addChild(arg_47_0.centerGo, arg_47_0.centerSpine:getSpineGO())
+function FightUnitSpine_500M:onCenterResLoaded()
+	gohelper.addChild(self.centerGo, self.centerSpine:getSpineGO())
 
-	arg_47_0.centerSpineLoaded = true
+	self.centerSpineLoaded = true
 
-	arg_47_0.centerSpine:setActive(false)
-	arg_47_0:checkLoadResDone()
+	self.centerSpine:setActive(false)
+	self:checkLoadResDone()
 end
 
-function var_0_0.onBehindResLoaded(arg_48_0)
-	gohelper.addChild(arg_48_0.behindGo, arg_48_0.behindSpine:getSpineGO())
+function FightUnitSpine_500M:onBehindResLoaded()
+	gohelper.addChild(self.behindGo, self.behindSpine:getSpineGO())
 
-	arg_48_0.behindSpineLoaded = true
+	self.behindSpineLoaded = true
 
-	arg_48_0.behindSpine:setActive(false)
-	arg_48_0:checkLoadResDone()
+	self.behindSpine:setActive(false)
+	self:checkLoadResDone()
 end
 
-function var_0_0.checkLoadResDone(arg_49_0)
-	if not arg_49_0.frontSpineLoaded then
+function FightUnitSpine_500M:checkLoadResDone()
+	if not self.frontSpineLoaded then
 		return
 	end
 
-	if not arg_49_0.centerSpineLoaded then
+	if not self.centerSpineLoaded then
 		return
 	end
 
-	if not arg_49_0.behindSpineLoaded then
+	if not self.behindSpineLoaded then
 		return
 	end
 
-	arg_49_0:setActive(true)
+	self:setActive(true)
 
-	if arg_49_0:checkCanPlayBornAnim() then
-		arg_49_0:addAnimEventCallback(arg_49_0.onAnimEvent, arg_49_0)
-		arg_49_0:playAnim("born", false, true)
+	if self:checkCanPlayBornAnim() then
+		self:addAnimEventCallback(self.onAnimEvent, self)
+		self:playAnim("born", false, true)
 	end
 
-	if arg_49_0.loadedCb then
-		if arg_49_0.loadedCbObj then
-			arg_49_0.loadedCb(arg_49_0.loadedCbObj, arg_49_0)
+	if self.loadedCb then
+		if self.loadedCbObj then
+			self.loadedCb(self.loadedCbObj, self)
 		else
-			arg_49_0.loadedCb(arg_49_0)
+			self.loadedCb(self)
 		end
 	end
 
-	arg_49_0.loadedCb = nil
-	arg_49_0.loadedCbObj = nil
+	self.loadedCb = nil
+	self.loadedCbObj = nil
 
-	arg_49_0:setHeadTexture()
-	arg_49_0:dispatchEvent(UnitSpine.Evt_OnLoaded)
+	self:setHeadTexture()
+	self:dispatchEvent(UnitSpine.Evt_OnLoaded)
 end
 
-function var_0_0.checkCanPlayBornAnim(arg_50_0)
+function FightUnitSpine_500M:checkCanPlayBornAnim()
 	if FightModel.instance.needFightReconnect then
 		return false
 	end
 
-	return arg_50_0.unitSpawn:getCreateStage() == FightEnum.EntityCreateStage.Init
+	local stage = self.unitSpawn:getCreateStage()
+
+	return stage == FightEnum.EntityCreateStage.Init
 end
 
-function var_0_0.onAnimEvent(arg_51_0, arg_51_1, arg_51_2, arg_51_3)
-	if arg_51_2 == SpineAnimEvent.ActionComplete then
-		arg_51_0:removeAnimEventCallback(arg_51_0.onAnimEvent, arg_51_0)
-		arg_51_0.unitSpawn:resetAnimState()
+function FightUnitSpine_500M:onAnimEvent(actionName, eventName, eventArgs)
+	if eventName == SpineAnimEvent.ActionComplete then
+		self:removeAnimEventCallback(self.onAnimEvent, self)
+		self.unitSpawn:resetAnimState()
 	end
 end
 
-function var_0_0.loadCenterSpineTexture(arg_52_0)
-	if string.nilorempty(arg_52_0.headIcon) then
-		arg_52_0:onLoadTextureFinish()
+function FightUnitSpine_500M:loadCenterSpineTexture()
+	if string.nilorempty(self.headIcon) then
+		self:onLoadTextureFinish()
 
 		return
 	end
 
-	arg_52_0:clearLoader()
+	self:clearLoader()
 
-	arg_52_0.loader = MultiAbLoader.New()
+	self.loader = MultiAbLoader.New()
 
-	arg_52_0.loader:addPath(ResUrl.getRoleDynamicTexture(arg_52_0.headIcon))
-	arg_52_0.loader:startLoad(arg_52_0.onLoadTextureFinish, arg_52_0)
+	self.loader:addPath(ResUrl.getRoleDynamicTexture(self.headIcon))
+	self.loader:startLoad(self.onLoadTextureFinish, self)
 end
 
-function var_0_0.onLoadTextureFinish(arg_53_0, arg_53_1)
-	local var_53_0 = arg_53_1 and arg_53_1:getFirstAssetItem()
+function FightUnitSpine_500M:onLoadTextureFinish(loader)
+	local assetItem = loader and loader:getFirstAssetItem()
+	local texture = assetItem and assetItem:GetResource()
 
-	arg_53_0.headTexture = var_53_0 and var_53_0:GetResource()
-	arg_53_0.loadHeadTextureDone = true
+	self.headTexture = texture
+	self.loadHeadTextureDone = true
 
-	arg_53_0:setHeadTexture()
+	self:setHeadTexture()
 end
 
-local var_0_2 = UnityEngine.Shader.PropertyToID("_MainTex")
+local propertyId = UnityEngine.Shader.PropertyToID("_MainTex")
 
-function var_0_0.setHeadTexture(arg_54_0)
-	local var_54_0 = arg_54_0.unitSpawn.spineRenderer:getReplaceMat()
+function FightUnitSpine_500M:setHeadTexture()
+	local mat = self.unitSpawn.spineRenderer:getReplaceMat()
 
-	if var_54_0 and arg_54_0.headTexture then
-		var_54_0:SetTexture(var_0_2, arg_54_0.headTexture)
+	if mat and self.headTexture then
+		mat:SetTexture(propertyId, self.headTexture)
 	end
 end
 
-function var_0_0.clearLoader(arg_55_0)
-	if arg_55_0.loader then
-		arg_55_0.loader:dispose()
+function FightUnitSpine_500M:clearLoader()
+	if self.loader then
+		self.loader:dispose()
 
-		arg_55_0.loader = nil
+		self.loader = nil
 	end
 
-	arg_55_0.headTexture = nil
-	arg_55_0.loadHeadTextureDone = false
+	self.headTexture = nil
+	self.loadHeadTextureDone = false
 end
 
-return var_0_0
+return FightUnitSpine_500M

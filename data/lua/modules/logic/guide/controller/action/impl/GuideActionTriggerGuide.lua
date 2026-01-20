@@ -1,38 +1,40 @@
-﻿module("modules.logic.guide.controller.action.impl.GuideActionTriggerGuide", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/GuideActionTriggerGuide.lua
 
-local var_0_0 = class("GuideActionTriggerGuide", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.GuideActionTriggerGuide", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	var_0_0.super.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+local GuideActionTriggerGuide = class("GuideActionTriggerGuide", BaseGuideAction)
 
-	arg_1_0._triggerGuideId = not string.nilorempty(arg_1_3) and tonumber(arg_1_3)
+function GuideActionTriggerGuide:ctor(guideId, stepId, actionParam)
+	GuideActionTriggerGuide.super.ctor(self, guideId, stepId, actionParam)
+
+	self._triggerGuideId = not string.nilorempty(actionParam) and tonumber(actionParam)
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	var_0_0.super.onStart(arg_2_0, arg_2_1)
-	arg_2_0:onDone(true)
+function GuideActionTriggerGuide:onStart(context)
+	GuideActionTriggerGuide.super.onStart(self, context)
+	self:onDone(true)
 end
 
-function var_0_0.onDestroy(arg_3_0)
-	var_0_0.super.onDestroy(arg_3_0)
+function GuideActionTriggerGuide:onDestroy()
+	GuideActionTriggerGuide.super.onDestroy(self)
 
-	if arg_3_0._triggerGuideId then
-		local var_3_0 = GuideModel.instance:getById(arg_3_0._triggerGuideId)
+	if self._triggerGuideId then
+		local guideMO = GuideModel.instance:getById(self._triggerGuideId)
 
-		if var_3_0 and not var_3_0.isFinish then
-			GuideController.instance:execNextStep(arg_3_0._triggerGuideId)
+		if guideMO and not guideMO.isFinish then
+			GuideController.instance:execNextStep(self._triggerGuideId)
 		else
-			GuideController.instance:dispatchEvent(GuideEvent.TriggerGuide, arg_3_0._triggerGuideId)
+			GuideController.instance:dispatchEvent(GuideEvent.TriggerGuide, self._triggerGuideId)
 		end
 	else
-		local var_3_1 = GuideModel.instance:getDoingGuideId()
+		local doingGuideId = GuideModel.instance:getDoingGuideId()
 
-		if var_3_1 then
-			GuideController.instance:execNextStep(var_3_1)
+		if doingGuideId then
+			GuideController.instance:execNextStep(doingGuideId)
 		else
 			GuideController.instance:dispatchEvent(GuideEvent.TriggerGuide)
 		end
 	end
 end
 
-return var_0_0
+return GuideActionTriggerGuide

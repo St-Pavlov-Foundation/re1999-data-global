@@ -1,6 +1,8 @@
-﻿module("modules.logic.scene.SceneMacro", package.seeall)
+﻿-- chunkname: @modules/logic/scene/SceneMacro.lua
 
-local var_0_0 = class()
+module("modules.logic.scene.SceneMacro", package.seeall)
+
+local SceneMacro = class()
 
 SceneType.Summon = 4
 SceneType.SelectFb = 5
@@ -14,10 +16,12 @@ SceneType.Rouge = 14
 SceneType.Survival = 15
 SceneType.SurvivalShelter = 16
 SceneType.SurvivalSummaryAct = 17
+SceneType.Rouge2 = 18
+SceneType.Udimo = 19
 SceneType.NameDict = {}
 
-for iter_0_0, iter_0_1 in pairs(SceneType) do
-	SceneType.NameDict[iter_0_1] = iter_0_0
+for k, v in pairs(SceneType) do
+	SceneType.NameDict[v] = k
 end
 
 SceneTag.UnitCamera = "UnitCamera"
@@ -46,4 +50,4 @@ SceneLayer.Monster = "Monster"
 SceneLayer.Ignore = "Ignore"
 SceneLayer.UI3DAfterPostProcess = "UI3DAfterPostProcess"
 
-return var_0_0
+return SceneMacro

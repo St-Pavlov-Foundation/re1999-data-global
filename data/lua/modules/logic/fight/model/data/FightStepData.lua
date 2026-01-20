@@ -1,48 +1,52 @@
-﻿module("modules.logic.fight.model.data.FightStepData", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightStepData.lua
 
-local var_0_0 = FightDataClass("FightStepData")
-local var_0_1 = 1
+module("modules.logic.fight.model.data.FightStepData", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1)
-	arg_1_0:initClientParam()
+local FightStepData = FightDataClass("FightStepData")
+local uidCounter = 1
 
-	if not arg_1_1 then
+function FightStepData:onConstructor(proto)
+	self:initClientParam()
+
+	if not proto then
 		return
 	end
 
-	arg_1_0.actType = arg_1_1.actType
-	arg_1_0.fromId = arg_1_1.fromId
-	arg_1_0.toId = arg_1_1.toId
-	arg_1_0.actId = arg_1_1.actId
-	arg_1_0.actEffect = arg_1_0:buildActEffect(arg_1_1.actEffect)
-	arg_1_0.cardIndex = arg_1_1.cardIndex or 0
-	arg_1_0.supportHeroId = arg_1_1.supportHeroId or 0
-	arg_1_0.fakeTimeline = arg_1_1.fakeTimeline
+	self.actType = proto.actType
+	self.fromId = proto.fromId
+	self.toId = proto.toId
+	self.actId = proto.actId
+	self.actEffect = self:buildActEffect(proto.actEffect)
+	self.cardIndex = proto.cardIndex or 0
+	self.supportHeroId = proto.supportHeroId or 0
+	self.fakeTimeline = proto.fakeTimeline
+	self.realSkillType = proto.realSkillType
+	self.realSkinId = proto.realSkinId
 end
 
-function var_0_0.initClientParam(arg_2_0)
-	arg_2_0.stepUid = var_0_1
-	var_0_1 = var_0_1 + 1
-	arg_2_0.atkAudioId = nil
-	arg_2_0.editorPlaySkill = nil
-	arg_2_0.isParallelStep = false
-	arg_2_0.cusParam_lockTimelineTypes = nil
-	arg_2_0.cus_Param_invokeSpineActTimelineEnd = nil
-	arg_2_0.hasPlay = nil
-	arg_2_0.custom_stepIndex = nil
-	arg_2_0.custom_ingoreParallelSkill = nil
+function FightStepData:initClientParam()
+	self.stepUid = uidCounter
+	uidCounter = uidCounter + 1
+	self.atkAudioId = nil
+	self.editorPlaySkill = nil
+	self.isParallelStep = false
+	self.cusParam_lockTimelineTypes = nil
+	self.cus_Param_invokeSpineActTimelineEnd = nil
+	self.hasPlay = nil
+	self.custom_stepIndex = nil
+	self.custom_ingoreParallelSkill = nil
 end
 
-function var_0_0.buildActEffect(arg_3_0, arg_3_1)
-	local var_3_0 = {}
+function FightStepData:buildActEffect(actEffectProtoList)
+	local actEffectList = {}
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
-		local var_3_1 = FightActEffectData.New(iter_3_1)
+	for i, oneActEffect in ipairs(actEffectProtoList) do
+		local actEffectData = FightActEffectData.New(oneActEffect)
 
-		table.insert(var_3_0, var_3_1)
+		table.insert(actEffectList, actEffectData)
 	end
 
-	return var_3_0
+	return actEffectList
 end
 
-return var_0_0
+return FightStepData

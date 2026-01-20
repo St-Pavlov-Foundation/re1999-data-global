@@ -1,55 +1,57 @@
-﻿module("modules.logic.fight.view.FightViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightViewContainer.lua
 
-local var_0_0 = class("FightViewContainer", BaseViewContainer)
+module("modules.logic.fight.view.FightViewContainer", package.seeall)
 
-var_0_0.hanCardClass = FightViewHandCard
-var_0_0.operationClass = FightViewPlayCard
-var_0_0.playCardClass = FightViewWaitingAreaVersion1
+local FightViewContainer = class("FightViewContainer", BaseViewContainer)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = ListScrollParam.New()
+FightViewContainer.hanCardClass = FightViewHandCard
+FightViewContainer.operationClass = FightViewPlayCard
+FightViewContainer.playCardClass = FightViewWaitingAreaVersion1
 
-	var_1_0.scrollGOPath = "root/#scroll_effecttips"
-	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_0.prefabUrl = "root/#scroll_effecttips/Viewport/#go_item"
-	var_1_0.cellClass = FightViewTechniqueCell
-	var_1_0.scrollDir = ScrollEnum.ScrollDirV
-	var_1_0.lineCount = 1
-	var_1_0.cellWidth = 150
-	var_1_0.cellHeight = 145
-	var_1_0.cellSpaceH = 0
-	var_1_0.cellSpaceV = 25.1
-	var_1_0.startSpace = 0
-	arg_1_0.fightView = FightView.New()
-	arg_1_0.fightViewHandCard = var_0_0.hanCardClass.New()
-	arg_1_0.fightViewPlayCard = var_0_0.operationClass.New()
-	arg_1_0.waitingArea = nil
+function FightViewContainer:buildViews()
+	local fightTechniqueListParam = ListScrollParam.New()
 
-	local var_1_1 = FightModel.instance:getVersion()
+	fightTechniqueListParam.scrollGOPath = "root/#scroll_effecttips"
+	fightTechniqueListParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	fightTechniqueListParam.prefabUrl = "root/#scroll_effecttips/Viewport/#go_item"
+	fightTechniqueListParam.cellClass = FightViewTechniqueCell
+	fightTechniqueListParam.scrollDir = ScrollEnum.ScrollDirV
+	fightTechniqueListParam.lineCount = 1
+	fightTechniqueListParam.cellWidth = 150
+	fightTechniqueListParam.cellHeight = 145
+	fightTechniqueListParam.cellSpaceH = 0
+	fightTechniqueListParam.cellSpaceV = 25.1
+	fightTechniqueListParam.startSpace = 0
+	self.fightView = FightView.New()
+	self.fightViewHandCard = FightViewContainer.hanCardClass.New()
+	self.fightViewPlayCard = FightViewContainer.operationClass.New()
+	self.waitingArea = nil
 
-	if var_1_1 and var_1_1 >= 1 then
-		arg_1_0.waitingArea = var_0_0.playCardClass.New()
+	local version = FightModel.instance:getVersion()
+
+	if version and version >= 1 then
+		self.waitingArea = FightViewContainer.playCardClass.New()
 	else
-		arg_1_0.waitingArea = FightViewWaitingArea.New()
+		self.waitingArea = FightViewWaitingArea.New()
 	end
 
-	arg_1_0.rightElementLayoutView = FightViewRightElementsLayout.New()
-	arg_1_0.rightBottomElementLayoutView = FightViewRightBottomElementsLayout.New()
+	self.rightElementLayoutView = FightViewRightElementsLayout.New()
+	self.rightBottomElementLayoutView = FightViewRightBottomElementsLayout.New()
 
-	local var_1_2 = {
-		arg_1_0.rightElementLayoutView,
-		arg_1_0.rightBottomElementLayoutView,
-		arg_1_0.fightView,
+	local views = {
+		self.rightElementLayoutView,
+		self.rightBottomElementLayoutView,
+		self.fightView,
 		FightViewPartVisible.New(),
-		arg_1_0.fightViewHandCard,
-		arg_1_0.fightViewPlayCard,
+		self.fightViewHandCard,
+		self.fightViewPlayCard,
 		FightViewExPoint.New(),
-		arg_1_0.waitingArea,
+		self.waitingArea,
 		FightViewClothSkillMgrView.New(),
 		FightViewTips.New(),
 		FightViewSkillFrame.New(),
 		FightViewTechnique.New(),
-		LuaListScrollView.New(FightViewTechniqueListModel.instance, var_1_0),
+		LuaListScrollView.New(FightViewTechniqueListModel.instance, fightTechniqueListParam),
 		FightViewDialog.New(),
 		FightViewEnemyCard.New(),
 		FightHideUIView.New(),
@@ -68,31 +70,31 @@ function var_0_0.buildViews(arg_1_0)
 		FightViewRedAndBlueArea.New()
 	}
 
-	table.insert(var_1_2, FightViewBossHpMgr.New())
-	table.insert(var_1_2, FightViewMgr.New())
-	table.insert(var_1_2, FightViewBuffId2Behaviour.New())
+	table.insert(views, FightViewBossHpMgr.New())
+	table.insert(views, FightViewMgr.New())
+	table.insert(views, FightViewBuffId2Behaviour.New())
 
-	return var_1_2
+	return views
 end
 
-function var_0_0.openFightFocusView(arg_2_0)
-	local var_2_0 = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
+function FightViewContainer:openFightFocusView()
+	local episodeCo = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
 
-	if var_2_0 and var_2_0.type == DungeonEnum.EpisodeType.Cachot then
-		local var_2_1 = V1a6_CachotHeroGroupController.instance
+	if episodeCo and episodeCo.type == DungeonEnum.EpisodeType.Cachot then
+		local controller = V1a6_CachotHeroGroupController.instance
 
 		ViewMgr.instance:openView(ViewName.FightFocusView, {
 			group = V1a6_CachotHeroGroupModel.instance:getCurGroupMO(),
 			setEquipInfo = {
-				var_2_1.getFightFocusEquipInfo,
-				var_2_1
+				controller.getFightFocusEquipInfo,
+				controller
 			}
 		})
 
 		return
 	end
 
-	if var_2_0 and var_2_0.type == DungeonEnum.EpisodeType.Rouge then
+	if episodeCo and episodeCo.type == DungeonEnum.EpisodeType.Rouge then
 		ViewMgr.instance:openView(ViewName.FightFocusView, {
 			group = RougeHeroGroupModel.instance:getCurGroupMO(),
 			balanceHelper = RougeHeroGroupBalanceHelper
@@ -104,4 +106,4 @@ function var_0_0.openFightFocusView(arg_2_0)
 	ViewMgr.instance:openView(ViewName.FightFocusView)
 end
 
-return var_0_0
+return FightViewContainer

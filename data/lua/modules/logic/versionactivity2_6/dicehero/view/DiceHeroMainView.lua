@@ -1,161 +1,167 @@
-﻿module("modules.logic.versionactivity2_6.dicehero.view.DiceHeroMainView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/dicehero/view/DiceHeroMainView.lua
 
-local var_0_0 = class("DiceHeroMainView", BaseView)
+module("modules.logic.versionactivity2_6.dicehero.view.DiceHeroMainView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnTask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Task")
-	arg_1_0._gotaskred = gohelper.findChild(arg_1_0.viewGO, "#btn_Task/#go_reddot")
-	arg_1_0._taskAnimator = gohelper.findChildAnim(arg_1_0.viewGO, "#btn_Task/ani")
+local DiceHeroMainView = class("DiceHeroMainView", BaseView)
 
-	for iter_1_0 = 1, 5 do
-		arg_1_0["_btnstage" .. iter_1_0] = gohelper.findChildButton(arg_1_0.viewGO, "#btn_stage" .. iter_1_0)
-		arg_1_0["_lockAnim" .. iter_1_0] = gohelper.findChildAnim(arg_1_0.viewGO, "#btn_stage" .. iter_1_0 .. "/lock")
+function DiceHeroMainView:onInitView()
+	self._btnTask = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Task")
+	self._gotaskred = gohelper.findChild(self.viewGO, "#btn_Task/#go_reddot")
+	self._taskAnimator = gohelper.findChildAnim(self.viewGO, "#btn_Task/ani")
+
+	for i = 1, 5 do
+		self["_btnstage" .. i] = gohelper.findChildButton(self.viewGO, "#btn_stage" .. i)
+		self["_lockAnim" .. i] = gohelper.findChildAnim(self.viewGO, "#btn_stage" .. i .. "/lock")
 	end
 
-	arg_1_0._lockAnim5 = gohelper.findChildAnim(arg_1_0.viewGO, "#btn_stage5")
+	self._lockAnim5 = gohelper.findChildAnim(self.viewGO, "#btn_stage5")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnTask:AddClickListener(arg_2_0._onClickTask, arg_2_0)
+function DiceHeroMainView:addEvents()
+	self._btnTask:AddClickListener(self._onClickTask, self)
 
-	for iter_2_0 = 1, 5 do
-		arg_2_0["_btnstage" .. iter_2_0]:AddClickListener(arg_2_0._onClickStage, arg_2_0, iter_2_0)
+	for i = 1, 5 do
+		self["_btnstage" .. i]:AddClickListener(self._onClickStage, self, i)
 	end
 
-	DiceHeroController.instance:registerCallback(DiceHeroEvent.InfoUpdate, arg_2_0._onInfoUpdate, arg_2_0)
-	RedDotController.instance:registerCallback(RedDotEvent.UpdateRelateDotInfo, arg_2_0._refreshTask, arg_2_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_2_0._onCloseViewFinish, arg_2_0)
+	DiceHeroController.instance:registerCallback(DiceHeroEvent.InfoUpdate, self._onInfoUpdate, self)
+	RedDotController.instance:registerCallback(RedDotEvent.UpdateRelateDotInfo, self._refreshTask, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnTask:RemoveClickListener()
+function DiceHeroMainView:removeEvents()
+	self._btnTask:RemoveClickListener()
 
-	for iter_3_0 = 1, 5 do
-		arg_3_0["_btnstage" .. iter_3_0]:RemoveClickListener()
+	for i = 1, 5 do
+		self["_btnstage" .. i]:RemoveClickListener()
 	end
 
-	DiceHeroController.instance:unregisterCallback(DiceHeroEvent.InfoUpdate, arg_3_0._onInfoUpdate, arg_3_0)
-	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateRelateDotInfo, arg_3_0._refreshTask, arg_3_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_3_0._onCloseViewFinish, arg_3_0)
+	DiceHeroController.instance:unregisterCallback(DiceHeroEvent.InfoUpdate, self._onInfoUpdate, self)
+	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateRelateDotInfo, self._refreshTask, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 end
 
-function var_0_0.onOpen(arg_4_0)
-	arg_4_0:_refreshTask()
+function DiceHeroMainView:onOpen()
+	self:_refreshTask()
 
 	DiceHeroModel.instance.isUnlockNewChapter = false
 
-	RedDotController.instance:addRedDot(arg_4_0._gotaskred, RedDotEnum.DotNode.V2a6DiceHero)
-	arg_4_0:_onInfoUpdate()
+	RedDotController.instance:addRedDot(self._gotaskred, RedDotEnum.DotNode.V2a6DiceHero)
+	self:_onInfoUpdate()
 end
 
-function var_0_0._refreshTask(arg_5_0)
-	if RedDotModel.instance:isDotShow(RedDotEnum.DotNode.V2a6DiceHero, 0) then
-		arg_5_0._taskAnimator:Play("loop", 0, 0)
+function DiceHeroMainView:_refreshTask()
+	local hasRewards = RedDotModel.instance:isDotShow(RedDotEnum.DotNode.V2a6DiceHero, 0)
+
+	if hasRewards then
+		self._taskAnimator:Play("loop", 0, 0)
 	else
-		arg_5_0._taskAnimator:Play("idle", 0, 0)
+		self._taskAnimator:Play("idle", 0, 0)
 	end
 end
 
-function var_0_0._onClickTask(arg_6_0)
+function DiceHeroMainView:_onClickTask()
 	ViewMgr.instance:openView(ViewName.DiceHeroTaskView)
 end
 
-function var_0_0._onCloseViewFinish(arg_7_0, arg_7_1)
-	if arg_7_1 == ViewName.DiceHeroLevelView and DiceHeroModel.instance.isUnlockNewChapter then
+function DiceHeroMainView:_onCloseViewFinish(viewName)
+	if viewName == ViewName.DiceHeroLevelView and DiceHeroModel.instance.isUnlockNewChapter then
 		AudioMgr.instance:trigger(AudioEnum2_6.DiceHero.play_ui_wenming_unclockchapter)
 
 		DiceHeroModel.instance.isUnlockNewChapter = false
 
-		arg_7_0:_onInfoUpdate()
+		self:_onInfoUpdate()
 		UIBlockHelper.instance:startBlock("DiceHeroMainView_PlayUnlock", 1.5)
 
-		local var_7_0 = #DiceHeroModel.instance.unlockChapterIds
+		local lastUnlockChapter = #DiceHeroModel.instance.unlockChapterIds
 
-		if var_7_0 == 5 then
-			arg_7_0._lockAnim5:Play("open", 0, 0)
+		if lastUnlockChapter == 5 then
+			self._lockAnim5:Play("open", 0, 0)
 		else
-			gohelper.setActive(arg_7_0["_lockAnim" .. var_7_0], true)
-			arg_7_0["_lockAnim" .. var_7_0]:Play("unlock", 0, 0)
+			gohelper.setActive(self["_lockAnim" .. lastUnlockChapter], true)
+			self["_lockAnim" .. lastUnlockChapter]:Play("unlock", 0, 0)
 		end
 
-		TaskDispatcher.runDelay(arg_7_0._delayRefreshAnim, arg_7_0, 1.5)
+		TaskDispatcher.runDelay(self._delayRefreshAnim, self, 1.5)
 	end
 end
 
-function var_0_0._delayRefreshAnim(arg_8_0)
-	local var_8_0 = #DiceHeroModel.instance.unlockChapterIds
+function DiceHeroMainView:_delayRefreshAnim()
+	local lastUnlockChapter = #DiceHeroModel.instance.unlockChapterIds
 
-	if var_8_0 == 5 then
-		arg_8_0._lockAnim5:Play("loop", 0, 0)
+	if lastUnlockChapter == 5 then
+		self._lockAnim5:Play("loop", 0, 0)
 	else
-		gohelper.setActive(arg_8_0["_lockAnim" .. var_8_0], false)
+		gohelper.setActive(self["_lockAnim" .. lastUnlockChapter], false)
 	end
 end
 
-function var_0_0._onInfoUpdate(arg_9_0)
+function DiceHeroMainView:_onInfoUpdate()
 	if DiceHeroModel.instance.isUnlockNewChapter then
 		return
 	end
 
-	local var_9_0 = DiceHeroModel.instance.unlockChapterIds
+	local unlockChapterIds = DiceHeroModel.instance.unlockChapterIds
 
-	for iter_9_0 = 1, 5 do
-		local var_9_1 = DiceHeroModel.instance:getGameInfo(iter_9_0)
-		local var_9_2 = arg_9_0["_btnstage" .. iter_9_0].gameObject
-		local var_9_3 = gohelper.findChild(var_9_2, "normal")
-		local var_9_4 = gohelper.findChild(var_9_2, "lock")
-		local var_9_5 = gohelper.findChild(var_9_2, "challenge")
-		local var_9_6 = gohelper.findChildTextMesh(var_9_2, "Name/#txt_name") or gohelper.findChildTextMesh(var_9_2, "#txt_name")
-		local var_9_7 = gohelper.findChild(var_9_2, "Name")
+	for i = 1, 5 do
+		local gameInfo = DiceHeroModel.instance:getGameInfo(i)
+		local go = self["_btnstage" .. i].gameObject
+		local normal = gohelper.findChild(go, "normal")
+		local lock = gohelper.findChild(go, "lock")
+		local challenge = gohelper.findChild(go, "challenge")
+		local name = gohelper.findChildTextMesh(go, "Name/#txt_name") or gohelper.findChildTextMesh(go, "#txt_name")
+		local nameRoot = gohelper.findChild(go, "Name")
 
-		gohelper.setActive(var_9_3, var_9_0[iter_9_0] and var_9_1.allPass)
-		gohelper.setActive(var_9_4, not var_9_0[iter_9_0])
-		gohelper.setActive(var_9_7, var_9_0[iter_9_0])
-		gohelper.setActive(var_9_5, var_9_0[iter_9_0] and not var_9_1.allPass)
+		gohelper.setActive(normal, unlockChapterIds[i] and gameInfo.allPass)
+		gohelper.setActive(lock, not unlockChapterIds[i])
+		gohelper.setActive(nameRoot, unlockChapterIds[i])
+		gohelper.setActive(challenge, unlockChapterIds[i] and not gameInfo.allPass)
 
-		if iter_9_0 == 5 then
-			gohelper.setActive(var_9_2, var_9_0[iter_9_0])
+		if i == 5 then
+			gohelper.setActive(go, unlockChapterIds[i])
 		end
 
-		local var_9_8 = DiceHeroConfig.instance:getLevelCo(iter_9_0, 1)
+		local co = DiceHeroConfig.instance:getLevelCo(i, 1)
 
-		if var_9_8 and var_9_6 then
-			var_9_6.text = GameUtil.setFirstStrSize(var_9_8.chapterName, 70)
+		if co and name then
+			name.text = GameUtil.setFirstStrSize(co.chapterName, 70)
 		end
 	end
 end
 
-function var_0_0._onClickStage(arg_10_0, arg_10_1)
-	if not DiceHeroModel.instance.unlockChapterIds[arg_10_1] then
+function DiceHeroMainView:_onClickStage(index)
+	local unlockChapterIds = DiceHeroModel.instance.unlockChapterIds
+
+	if not unlockChapterIds[index] then
 		GameFacade.showToast(ToastEnum.DiceHeroLockChapter)
 
 		return
 	end
 
-	arg_10_0._enterChapterId = arg_10_1
+	self._enterChapterId = index
 
-	arg_10_0:_enterChapter()
+	self:_enterChapter()
 end
 
-function var_0_0._enterChapter(arg_11_0)
-	if not arg_11_0._enterChapterId then
+function DiceHeroMainView:_enterChapter()
+	if not self._enterChapterId then
 		return
 	end
 
-	local var_11_0 = DiceHeroConfig.instance:getLevelCo(arg_11_0._enterChapterId, 1)
+	local co = DiceHeroConfig.instance:getLevelCo(self._enterChapterId, 1)
 
-	if not var_11_0 then
+	if not co then
 		return
 	end
 
 	ViewMgr.instance:openView(ViewName.DiceHeroLevelView, {
-		chapterId = arg_11_0._enterChapterId,
-		isInfinite = var_11_0.mode == 2
+		chapterId = self._enterChapterId,
+		isInfinite = co.mode == 2
 	})
 end
 
-function var_0_0.onDestroyView(arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0._delayRefreshAnim, arg_12_0)
+function DiceHeroMainView:onDestroyView()
+	TaskDispatcher.cancelTask(self._delayRefreshAnim, self)
 end
 
-return var_0_0
+return DiceHeroMainView

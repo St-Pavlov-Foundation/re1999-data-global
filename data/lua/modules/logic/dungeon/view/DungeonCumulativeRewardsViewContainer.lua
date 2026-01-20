@@ -1,13 +1,15 @@
-﻿module("modules.logic.dungeon.view.DungeonCumulativeRewardsViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/DungeonCumulativeRewardsViewContainer.lua
 
-local var_0_0 = class("DungeonCumulativeRewardsViewContainer", BaseViewContainer)
+module("modules.logic.dungeon.view.DungeonCumulativeRewardsViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local DungeonCumulativeRewardsViewContainer = class("DungeonCumulativeRewardsViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, DungeonCumulativeRewardsView.New())
+function DungeonCumulativeRewardsViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, DungeonCumulativeRewardsView.New())
+
+	return views
 end
 
-return var_0_0
+return DungeonCumulativeRewardsViewContainer

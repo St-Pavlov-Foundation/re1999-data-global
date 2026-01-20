@@ -1,74 +1,81 @@
-﻿module("modules.logic.versionactivity2_2.act136.view.Activity136FullView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/act136/view/Activity136FullView.lua
 
-local var_0_0 = class("Activity136FullView", BaseView)
+module("modules.logic.versionactivity2_2.act136.view.Activity136FullView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtremainTime = gohelper.findChildText(arg_1_0.viewGO, "timebg/#txt_remainTime")
-	arg_1_0._gouninvite = gohelper.findChild(arg_1_0.viewGO, "#go_inviteContent/#go_uninvite")
-	arg_1_0._btninvite = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_inviteContent/#go_uninvite/#btn_invite")
-	arg_1_0._goinvited = gohelper.findChild(arg_1_0.viewGO, "#go_inviteContent/#go_invited")
+local Activity136FullView = class("Activity136FullView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Activity136FullView:onInitView()
+	self._txtremainTime = gohelper.findChildText(self.viewGO, "timebg/#txt_remainTime")
+	self._gouninvite = gohelper.findChild(self.viewGO, "#go_inviteContent/#go_uninvite")
+	self._btninvite = gohelper.findChildButtonWithAudio(self.viewGO, "#go_inviteContent/#go_uninvite/#btn_invite")
+	self._goinvited = gohelper.findChild(self.viewGO, "#go_inviteContent/#go_invited")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btninvite:AddClickListener(arg_2_0._btninviteOnClick, arg_2_0)
-	Activity136Controller.instance:registerCallback(Activity136Event.ActivityDataUpdate, arg_2_0.refresh, arg_2_0)
+function Activity136FullView:addEvents()
+	self._btninvite:AddClickListener(self._btninviteOnClick, self)
+	Activity136Controller.instance:registerCallback(Activity136Event.ActivityDataUpdate, self.refresh, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btninvite:RemoveClickListener()
-	Activity136Controller.instance:unregisterCallback(Activity136Event.ActivityDataUpdate, arg_3_0.refresh, arg_3_0)
+function Activity136FullView:removeEvents()
+	self._btninvite:RemoveClickListener()
+	Activity136Controller.instance:unregisterCallback(Activity136Event.ActivityDataUpdate, self.refresh, self)
 end
 
-function var_0_0._btninviteOnClick(arg_4_0)
+function Activity136FullView:_btninviteOnClick()
 	Activity136Controller.instance:openActivity136ChoiceView()
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function Activity136FullView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function Activity136FullView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	local var_7_0 = arg_7_0.viewParam.parent
+function Activity136FullView:onOpen()
+	local parentGO = self.viewParam.parent
 
-	gohelper.addChild(var_7_0, arg_7_0.viewGO)
-	arg_7_0:refresh()
-	TaskDispatcher.cancelTask(arg_7_0.refreshRemainTime, arg_7_0)
-	TaskDispatcher.runRepeat(arg_7_0.refreshRemainTime, arg_7_0, TimeUtil.OneMinuteSecond)
+	gohelper.addChild(parentGO, self.viewGO)
+	self:refresh()
+	TaskDispatcher.cancelTask(self.refreshRemainTime, self)
+	TaskDispatcher.runRepeat(self.refreshRemainTime, self, TimeUtil.OneMinuteSecond)
 end
 
-function var_0_0.refresh(arg_8_0)
-	arg_8_0:refreshStatus()
-	arg_8_0:refreshRemainTime()
+function Activity136FullView:refresh()
+	self:refreshStatus()
+	self:refreshRemainTime()
 end
 
-function var_0_0.refreshStatus(arg_9_0)
-	local var_9_0 = Activity136Model.instance:hasReceivedCharacter()
+function Activity136FullView:refreshStatus()
+	local hasReceive = Activity136Model.instance:hasReceivedCharacter()
 
-	gohelper.setActive(arg_9_0._goinvited, var_9_0)
-	gohelper.setActive(arg_9_0._gouninvite, not var_9_0)
+	gohelper.setActive(self._goinvited, hasReceive)
+	gohelper.setActive(self._gouninvite, not hasReceive)
 end
 
-function var_0_0.refreshRemainTime(arg_10_0)
-	local var_10_0 = Activity136Model.instance:getCurActivity136Id()
-	local var_10_1 = ActivityModel.instance:getActMO(var_10_0):getRemainTimeStr3()
+function Activity136FullView:refreshRemainTime()
+	local actId = Activity136Controller.instance:actId()
+	local actInfoMo = ActivityModel.instance:getActMO(actId)
+	local timeStr, isEnd = actInfoMo:getRemainTimeStr3()
 
-	arg_10_0._txtremainTime.text = string.format(luaLang("remain"), var_10_1)
+	self._txtremainTime.text = string.format(luaLang("remain"), timeStr)
+
+	if isEnd then
+		TaskDispatcher.cancelTask(self.refreshRemainTime, self)
+	end
 end
 
-function var_0_0.onClose(arg_11_0)
-	return
+function Activity136FullView:onClose()
+	TaskDispatcher.cancelTask(self.refreshRemainTime, self)
 end
 
-function var_0_0.onDestroyView(arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0.refreshRemainTime, arg_12_0)
+function Activity136FullView:onDestroyView()
+	TaskDispatcher.cancelTask(self.refreshRemainTime, self)
 end
 
-return var_0_0
+return Activity136FullView

@@ -1,269 +1,280 @@
-﻿module("modules.logic.fight.view.preview.SkillEditorSkillSelectTargetView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/preview/SkillEditorSkillSelectTargetView.lua
 
-local var_0_0 = class("SkillEditorSkillSelectTargetView", BaseView)
+module("modules.logic.fight.view.preview.SkillEditorSkillSelectTargetView", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._side = arg_1_1
+local SkillEditorSkillSelectTargetView = class("SkillEditorSkillSelectTargetView", BaseView)
+
+function SkillEditorSkillSelectTargetView:ctor(side)
+	self._side = side
 end
 
-function var_0_0.onInitView(arg_2_0)
-	local var_2_0 = arg_2_0._side == FightEnum.EntitySide.MySide and "right" or "left"
-	local var_2_1 = gohelper.findChild(arg_2_0.viewGO, var_2_0)
+function SkillEditorSkillSelectTargetView:onInitView()
+	local goPath = self._side == FightEnum.EntitySide.MySide and "right" or "left"
+	local go = gohelper.findChild(self.viewGO, goPath)
 
-	arg_2_0._containerGO = gohelper.findChild(var_2_1, "skillSelect")
-	arg_2_0._containerTr = arg_2_0._containerGO.transform
-	arg_2_0._imgSelectGO = gohelper.findChild(var_2_1, "skillSelect/imgSkillSelect")
-	arg_2_0._imgSelectTr = arg_2_0._imgSelectGO.transform
-	arg_2_0._clickGOArr = {
-		gohelper.findChild(var_2_1, "skillSelect/click")
+	self._containerGO = gohelper.findChild(go, "skillSelect")
+	self._containerTr = self._containerGO.transform
+	self._imgSelectGO = gohelper.findChild(go, "skillSelect/imgSkillSelect")
+	self._imgSelectTr = self._imgSelectGO.transform
+	self._clickGOArr = {
+		gohelper.findChild(go, "skillSelect/click")
 	}
 
-	gohelper.setActive(arg_2_0._imgSelectGO, false)
-	arg_2_0:_updateClickPos()
-	arg_2_0:_updateSelectUI()
+	gohelper.setActive(self._imgSelectGO, false)
+	self:_updateClickPos()
+	self:_updateSelectUI()
 
-	local var_2_2 = ViewMgr.instance:getUILayer(UILayerName.Hud)
+	local hudLayer = ViewMgr.instance:getUILayer(UILayerName.Hud)
 
-	gohelper.addChild(var_2_2, arg_2_0._containerGO)
-	gohelper.setAsFirstSibling(arg_2_0._containerGO)
+	gohelper.addChild(hudLayer, self._containerGO)
+	gohelper.setAsFirstSibling(self._containerGO)
 
-	arg_2_0._containerGO.name = "skillSelect" .. var_2_0
+	self._containerGO.name = "skillSelect" .. goPath
 end
 
-function var_0_0.onDestroyView(arg_3_0)
-	gohelper.destroy(arg_3_0._containerGO)
+function SkillEditorSkillSelectTargetView:onDestroyView()
+	gohelper.destroy(self._containerGO)
 end
 
-function var_0_0.addEvents(arg_4_0)
-	FightController.instance:registerCallback(FightEvent.OnSpineLoaded, arg_4_0._onSpineLoaded, arg_4_0)
-	FightController.instance:registerCallback(FightEvent.OnSkillPlayStart, arg_4_0._onSkillPlayStart, arg_4_0)
-	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, arg_4_0._onSkillPlayFinish, arg_4_0)
-	TaskDispatcher.runRepeat(arg_4_0._onSecond, arg_4_0, 3)
+function SkillEditorSkillSelectTargetView:addEvents()
+	FightController.instance:registerCallback(FightEvent.OnSpineLoaded, self._onSpineLoaded, self)
+	FightController.instance:registerCallback(FightEvent.OnSkillPlayStart, self._onSkillPlayStart, self)
+	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
+	TaskDispatcher.runRepeat(self._onSecond, self, 3)
 end
 
-function var_0_0.removeEvents(arg_5_0)
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0._clickGOArr) do
-		SLFramework.UGUI.UIClickListener.Get(iter_5_1):RemoveClickListener()
-		SLFramework.UGUI.UILongPressListener.Get(iter_5_1):RemoveLongPressListener()
+function SkillEditorSkillSelectTargetView:removeEvents()
+	for _, clickGO in ipairs(self._clickGOArr) do
+		SLFramework.UGUI.UIClickListener.Get(clickGO):RemoveClickListener()
+
+		local listener = SLFramework.UGUI.UILongPressListener.Get(clickGO)
+
+		listener:RemoveLongPressListener()
 	end
 
-	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, arg_5_0._onSpineLoaded, arg_5_0)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayStart, arg_5_0._onSkillPlayStart, arg_5_0)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, arg_5_0._onSkillPlayFinish, arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0._onSecond, arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0._hideSelectGO, arg_5_0)
+	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, self._onSpineLoaded, self)
+	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayStart, self._onSkillPlayStart, self)
+	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
+	TaskDispatcher.cancelTask(self._onSecond, self)
+	TaskDispatcher.cancelTask(self._hideSelectGO, self)
 end
 
-function var_0_0._onSkillPlayStart(arg_6_0)
-	gohelper.setActive(arg_6_0._containerGO, false)
+function SkillEditorSkillSelectTargetView:_onSkillPlayStart()
+	gohelper.setActive(self._containerGO, false)
 end
 
-function var_0_0._onSkillPlayFinish(arg_7_0)
-	gohelper.setActive(arg_7_0._containerGO, true)
+function SkillEditorSkillSelectTargetView:_onSkillPlayFinish()
+	gohelper.setActive(self._containerGO, true)
 end
 
-function var_0_0._onSecond(arg_8_0)
-	arg_8_0:_updateClickPos()
+function SkillEditorSkillSelectTargetView:_onSecond()
+	self:_updateClickPos()
 end
 
-function var_0_0._onSpineLoaded(arg_9_0)
-	arg_9_0:_updateClickPos()
+function SkillEditorSkillSelectTargetView:_onSpineLoaded()
+	self:_updateClickPos()
 end
 
-function var_0_0._updateSelectUI(arg_10_0)
-	local var_10_0 = SkillEditorView.selectPosId[arg_10_0._side]
-	local var_10_1 = FightDataHelper.entityMgr:getByPosId(arg_10_0._side, var_10_0)
-	local var_10_2 = FightHelper.getEntity(var_10_1 and var_10_1.id or 0)
+function SkillEditorSkillSelectTargetView:_updateSelectUI()
+	local posId = SkillEditorView.selectPosId[self._side]
+	local entityMO = FightDataHelper.entityMgr:getByPosId(self._side, posId)
+	local entity = FightHelper.getEntity(entityMO and entityMO.id or 0)
 
-	gohelper.setActive(arg_10_0._imgSelectGO, var_10_2 ~= nil)
+	gohelper.setActive(self._imgSelectGO, entity ~= nil)
 
-	if var_10_2 then
-		local var_10_3, var_10_4 = arg_10_0:_getEntityMiddlePos(var_10_2)
+	if entity then
+		local middlePosX, middlePosY = self:_getEntityMiddlePos(entity)
 
-		recthelper.setAnchor(arg_10_0._imgSelectTr, var_10_3, var_10_4)
+		recthelper.setAnchor(self._imgSelectTr, middlePosX, middlePosY)
 	else
-		SkillEditorView.selectPosId[arg_10_0._side] = 1
+		SkillEditorView.selectPosId[self._side] = 1
+		entityMO = FightDataHelper.entityMgr:getByPosId(self._side, 1)
+		entity = FightHelper.getEntity(entityMO and entityMO.id or 0)
 
-		local var_10_5 = FightDataHelper.entityMgr:getByPosId(arg_10_0._side, 1)
-		local var_10_6 = FightHelper.getEntity(var_10_5 and var_10_5.id or 0)
+		gohelper.setActive(self._imgSelectGO, entity ~= nil)
 
-		gohelper.setActive(arg_10_0._imgSelectGO, var_10_6 ~= nil)
+		if entity then
+			local middlePosX, middlePosY = self:_getEntityMiddlePos(entity)
 
-		if var_10_6 then
-			local var_10_7, var_10_8 = arg_10_0:_getEntityMiddlePos(var_10_6)
-
-			recthelper.setAnchor(arg_10_0._imgSelectTr, var_10_7, var_10_8)
+			recthelper.setAnchor(self._imgSelectTr, middlePosX, middlePosY)
 		end
 	end
 
-	TaskDispatcher.cancelTask(arg_10_0._hideSelectGO, arg_10_0)
-	TaskDispatcher.runDelay(arg_10_0._hideSelectGO, arg_10_0, 0.5)
+	TaskDispatcher.cancelTask(self._hideSelectGO, self)
+	TaskDispatcher.runDelay(self._hideSelectGO, self, 0.5)
 end
 
-function var_0_0._getEntityMiddlePos(arg_11_0, arg_11_1)
-	if FightHelper.isAssembledMonster(arg_11_1) then
-		local var_11_0 = arg_11_1:getMO()
-		local var_11_1 = lua_fight_assembled_monster.configDict[var_11_0.skin]
-		local var_11_2 = arg_11_1.go.transform.position
-		local var_11_3 = Vector3.New(var_11_2.x + var_11_1.selectPos[1], var_11_2.y + var_11_1.selectPos[2], var_11_2.z)
-		local var_11_4 = recthelper.worldPosToAnchorPos(var_11_3, arg_11_0._containerTr)
+function SkillEditorSkillSelectTargetView:_getEntityMiddlePos(entity)
+	if FightHelper.isAssembledMonster(entity) then
+		local entityMO = entity:getMO()
+		local config = lua_fight_assembled_monster.configDict[entityMO.skin]
+		local worldPos = entity.go.transform.position
 
-		return var_11_4.x, var_11_4.y
+		worldPos = Vector3.New(worldPos.x + config.selectPos[1], worldPos.y + config.selectPos[2], worldPos.z)
+
+		local rectPos = recthelper.worldPosToAnchorPos(worldPos, self._containerTr)
+
+		return rectPos.x, rectPos.y
 	end
 
-	local var_11_5 = arg_11_0:_getHangPointObj(arg_11_1, ModuleEnum.SpineHangPoint.mountmiddle)
+	local mountMiddleGO = self:_getHangPointObj(entity, ModuleEnum.SpineHangPoint.mountmiddle)
 
-	if var_11_5 and var_11_5.name == ModuleEnum.SpineHangPoint.mountmiddle then
-		local var_11_6 = Vector3.New(transformhelper.getPos(var_11_5.transform))
-		local var_11_7 = recthelper.worldPosToAnchorPos(var_11_6, arg_11_0._containerTr)
+	if mountMiddleGO and mountMiddleGO.name == ModuleEnum.SpineHangPoint.mountmiddle then
+		local worldPos = Vector3.New(transformhelper.getPos(mountMiddleGO.transform))
+		local rectPos = recthelper.worldPosToAnchorPos(worldPos, self._containerTr)
 
-		return var_11_7.x, var_11_7.y
+		return rectPos.x, rectPos.y
 	else
-		local var_11_8, var_11_9 = arg_11_0:_calcRect(arg_11_1)
+		local rectPos1, rectPos2 = self:_calcRect(entity)
 
-		return (var_11_8.x + var_11_9.x) / 2, (var_11_8.y + var_11_9.y) / 2
+		return (rectPos1.x + rectPos2.x) / 2, (rectPos1.y + rectPos2.y) / 2
 	end
 end
 
-function var_0_0._hideSelectGO(arg_12_0)
-	gohelper.setActive(arg_12_0._imgSelectGO, false)
+function SkillEditorSkillSelectTargetView:_hideSelectGO()
+	gohelper.setActive(self._imgSelectGO, false)
 end
 
-function var_0_0._updateClickPos(arg_13_0)
-	local var_13_0 = {}
+function SkillEditorSkillSelectTargetView:_updateClickPos()
+	local list = {}
 
-	FightDataHelper.entityMgr:getNormalList(arg_13_0._side, var_13_0)
-	FightDataHelper.entityMgr:getSubList(arg_13_0._side, var_13_0)
+	FightDataHelper.entityMgr:getNormalList(self._side, list)
+	FightDataHelper.entityMgr:getSubList(self._side, list)
 
-	local var_13_1 = {}
+	local assembledMonster = {}
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
-		local var_13_2 = arg_13_0._clickGOArr[iter_13_0]
+	for i, entityMO in ipairs(list) do
+		local clickGO = self._clickGOArr[i]
 
-		if not var_13_2 then
-			var_13_2 = gohelper.clone(arg_13_0._clickGOArr[1], arg_13_0._containerGO, "click" .. iter_13_0)
+		if not clickGO then
+			clickGO = gohelper.clone(self._clickGOArr[1], self._containerGO, "click" .. i)
 
-			table.insert(arg_13_0._clickGOArr, var_13_2)
+			table.insert(self._clickGOArr, clickGO)
 		end
 
-		gohelper.setActive(var_13_2, true)
+		gohelper.setActive(clickGO, true)
 
-		local var_13_3 = FightHelper.getEntity(iter_13_1.id)
+		local entity = FightHelper.getEntity(entityMO.id)
 
-		if var_13_3 then
-			local var_13_4, var_13_5 = arg_13_0:_calcRect(var_13_3)
-			local var_13_6 = var_13_2.transform
+		if entity then
+			local rectPos1, rectPos2 = self:_calcRect(entity)
+			local clickTr = clickGO.transform
 
-			recthelper.setAnchor(var_13_6, (var_13_4.x + var_13_5.x) / 2, (var_13_4.y + var_13_5.y) / 2)
-			recthelper.setSize(var_13_6, math.abs(var_13_4.x - var_13_5.x), math.abs(var_13_4.y - var_13_5.y))
-			SLFramework.UGUI.UIClickListener.Get(var_13_2):AddClickListener(arg_13_0._onClick, arg_13_0, iter_13_1.id)
+			recthelper.setAnchor(clickTr, (rectPos1.x + rectPos2.x) / 2, (rectPos1.y + rectPos2.y) / 2)
+			recthelper.setSize(clickTr, math.abs(rectPos1.x - rectPos2.x), math.abs(rectPos1.y - rectPos2.y))
+			SLFramework.UGUI.UIClickListener.Get(clickGO):AddClickListener(self._onClick, self, entityMO.id)
 
-			local var_13_7 = FightHelper.getEntity(iter_13_1.id)
+			local tarEntity = FightHelper.getEntity(entityMO.id)
 
-			if isTypeOf(var_13_7, FightEntityAssembledMonsterMain) or isTypeOf(var_13_7, FightEntityAssembledMonsterSub) then
-				table.insert(var_13_1, {
-					entity = var_13_7,
-					clickTr = var_13_6,
-					clickGO = var_13_2
+			if isTypeOf(tarEntity, FightEntityAssembledMonsterMain) or isTypeOf(tarEntity, FightEntityAssembledMonsterSub) then
+				table.insert(assembledMonster, {
+					entity = tarEntity,
+					clickTr = clickTr,
+					clickGO = clickGO
 				})
 			end
 
-			local var_13_8 = SLFramework.UGUI.UILongPressListener.Get(var_13_2)
+			local listener = SLFramework.UGUI.UILongPressListener.Get(clickGO)
 
-			var_13_8:AddLongPressListener(arg_13_0._onLongPress, arg_13_0, iter_13_1.id)
-			var_13_8:SetLongPressTime({
+			listener:AddLongPressListener(self._onLongPress, self, entityMO.id)
+			listener:SetLongPressTime({
 				0.5,
 				99999
 			})
 		end
 	end
 
-	for iter_13_2 = #var_13_0 + 1, #arg_13_0._clickGOArr do
-		gohelper.setActive(arg_13_0._clickGOArr[iter_13_2], false)
+	for i = #list + 1, #self._clickGOArr do
+		gohelper.setActive(self._clickGOArr[i], false)
 	end
 
-	if #var_13_1 > 0 then
-		arg_13_0:_dealAssembledMonsterClick(var_13_1)
-	end
-end
-
-function var_0_0.sortAssembledMonster(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_0.entity:getMO()
-	local var_14_1 = arg_14_1.entity:getMO()
-	local var_14_2 = lua_fight_assembled_monster.configDict[var_14_0.skin]
-	local var_14_3 = lua_fight_assembled_monster.configDict[var_14_1.skin]
-
-	return var_14_2.clickIndex < var_14_3.clickIndex
-end
-
-function var_0_0._dealAssembledMonsterClick(arg_15_0, arg_15_1)
-	table.sort(arg_15_1, var_0_0.sortAssembledMonster)
-
-	for iter_15_0, iter_15_1 in ipairs(arg_15_1) do
-		gohelper.setAsLastSibling(iter_15_1.clickGO)
-
-		local var_15_0 = iter_15_1.entity:getMO()
-		local var_15_1 = lua_fight_assembled_monster.configDict[var_15_0.skin]
-		local var_15_2 = iter_15_1.entity.go.transform.position
-		local var_15_3 = Vector3.New(var_15_2.x + var_15_1.virtualSpinePos[1], var_15_2.y + var_15_1.virtualSpinePos[2], var_15_2.z + var_15_1.virtualSpinePos[3])
-		local var_15_4 = recthelper.worldPosToAnchorPos(var_15_3, arg_15_0._containerTr)
-
-		recthelper.setAnchor(iter_15_1.clickTr, var_15_4.x, var_15_4.y)
-
-		local var_15_5 = var_15_1.virtualSpineSize[1] * 0.5
-		local var_15_6 = var_15_1.virtualSpineSize[2] * 0.5
-		local var_15_7 = Vector3.New(var_15_3.x - var_15_5, var_15_3.y - var_15_6, var_15_3.z)
-		local var_15_8 = Vector3.New(var_15_3.x + var_15_5, var_15_3.y + var_15_6, var_15_3.z)
-		local var_15_9 = recthelper.worldPosToAnchorPos(var_15_7, arg_15_0._containerTr)
-		local var_15_10 = recthelper.worldPosToAnchorPos(var_15_8, arg_15_0._containerTr)
-
-		recthelper.setSize(iter_15_1.clickTr, var_15_10.x - var_15_9.x, var_15_10.y - var_15_9.y)
+	if #assembledMonster > 0 then
+		self:_dealAssembledMonsterClick(assembledMonster)
 	end
 end
 
-function var_0_0._calcRect(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_0:_getHangPointObj(arg_16_1, ModuleEnum.SpineHangPoint.BodyStatic).transform.position
-	local var_16_1, var_16_2 = FightHelper.getEntityBoxSizeOffsetV2(arg_16_1)
-	local var_16_3 = arg_16_1:isMySide() and 1 or -1
-	local var_16_4 = Vector3.New(var_16_0.x - var_16_1.x * 0.5, var_16_0.y - var_16_1.y * 0.5 * var_16_3, var_16_0.z)
-	local var_16_5 = Vector3.New(var_16_0.x + var_16_1.x * 0.5, var_16_0.y + var_16_1.y * 0.5 * var_16_3, var_16_0.z)
-	local var_16_6 = recthelper.worldPosToAnchorPos(var_16_4, arg_16_0._containerTr)
-	local var_16_7 = recthelper.worldPosToAnchorPos(var_16_5, arg_16_0._containerTr)
+function SkillEditorSkillSelectTargetView.sortAssembledMonster(item1, item2)
+	local entityMO1 = item1.entity:getMO()
+	local entityMO2 = item2.entity:getMO()
+	local config1 = lua_fight_assembled_monster.configDict[entityMO1.skin]
+	local config2 = lua_fight_assembled_monster.configDict[entityMO2.skin]
 
-	return var_16_6, var_16_7
+	return config1.clickIndex < config2.clickIndex
 end
 
-function var_0_0._getHangPointObj(arg_17_0, arg_17_1, arg_17_2)
-	return FightDataHelper.entityMgr:isSub(arg_17_1:getMO().uid) and arg_17_1.go or arg_17_1:getHangPoint(arg_17_2)
+function SkillEditorSkillSelectTargetView:_dealAssembledMonsterClick(assembledMonster)
+	table.sort(assembledMonster, SkillEditorSkillSelectTargetView.sortAssembledMonster)
+
+	for i, v in ipairs(assembledMonster) do
+		gohelper.setAsLastSibling(v.clickGO)
+
+		local entityMO = v.entity:getMO()
+		local config = lua_fight_assembled_monster.configDict[entityMO.skin]
+		local entityPos = v.entity.go.transform.position
+
+		entityPos = Vector3.New(entityPos.x + config.virtualSpinePos[1], entityPos.y + config.virtualSpinePos[2], entityPos.z + config.virtualSpinePos[3])
+
+		local rectPos = recthelper.worldPosToAnchorPos(entityPos, self._containerTr)
+
+		recthelper.setAnchor(v.clickTr, rectPos.x, rectPos.y)
+
+		local halfX = config.virtualSpineSize[1] * 0.5
+		local halfY = config.virtualSpineSize[2] * 0.5
+		local worldPos1 = Vector3.New(entityPos.x - halfX, entityPos.y - halfY, entityPos.z)
+		local worldPos2 = Vector3.New(entityPos.x + halfX, entityPos.y + halfY, entityPos.z)
+		local rectPos1 = recthelper.worldPosToAnchorPos(worldPos1, self._containerTr)
+		local rectPos2 = recthelper.worldPosToAnchorPos(worldPos2, self._containerTr)
+
+		recthelper.setSize(v.clickTr, rectPos2.x - rectPos1.x, rectPos2.y - rectPos1.y)
+	end
 end
 
-function var_0_0._onClick(arg_18_0, arg_18_1)
-	local var_18_0 = SkillEditorView.selectPosId[arg_18_0._side]
-	local var_18_1 = FightDataHelper.entityMgr:getById(arg_18_1)
+function SkillEditorSkillSelectTargetView:_calcRect(entity)
+	local bodyStaticGO = self:_getHangPointObj(entity, ModuleEnum.SpineHangPoint.BodyStatic)
+	local bodyPos = bodyStaticGO.transform.position
+	local size, _ = FightHelper.getEntityBoxSizeOffsetV2(entity)
+	local sideOp = entity:isMySide() and 1 or -1
+	local worldPos1 = Vector3.New(bodyPos.x - size.x * 0.5, bodyPos.y - size.y * 0.5 * sideOp, bodyPos.z)
+	local worldPos2 = Vector3.New(bodyPos.x + size.x * 0.5, bodyPos.y + size.y * 0.5 * sideOp, bodyPos.z)
+	local rectPos1 = recthelper.worldPosToAnchorPos(worldPos1, self._containerTr)
+	local rectPos2 = recthelper.worldPosToAnchorPos(worldPos2, self._containerTr)
 
-	SkillEditorView.setSelectPosId(arg_18_0._side, var_18_1.position)
+	return rectPos1, rectPos2
+end
 
-	SkillEditorMgr.instance.cur_select_entity_id = arg_18_1
+function SkillEditorSkillSelectTargetView:_getHangPointObj(entity, hang_type)
+	local is_sub = FightDataHelper.entityMgr:isSub(entity:getMO().uid)
+
+	return is_sub and entity.go or entity:getHangPoint(hang_type)
+end
+
+function SkillEditorSkillSelectTargetView:_onClick(entityId)
+	local oldPosId = SkillEditorView.selectPosId[self._side]
+	local entityMO = FightDataHelper.entityMgr:getById(entityId)
+
+	SkillEditorView.setSelectPosId(self._side, entityMO.position)
+
+	SkillEditorMgr.instance.cur_select_entity_id = entityId
 	SkillEditorMgr.instance.cur_select_side = GameSceneMgr.instance:getCurScene().entityMgr:getEntity(SkillEditorMgr.instance.cur_select_entity_id):getSide()
 
-	SkillEditorMgr.instance:dispatchEvent(SkillEditorMgr.OnSelectEntity, SkillEditorMgr.instance.cur_select_side, arg_18_1)
-	arg_18_0:_updateSelectUI()
+	SkillEditorMgr.instance:dispatchEvent(SkillEditorMgr.OnSelectEntity, SkillEditorMgr.instance.cur_select_side, entityId)
+	self:_updateSelectUI()
 
-	if var_18_1.position == var_18_0 and arg_18_0._lastClickTime and Time.time - arg_18_0._lastClickTime < 0.5 then
-		SkillEditorMgr.instance:dispatchEvent(SkillEditorMgr.ShowHeroSelectView, arg_18_0._side, var_18_1.position)
+	if entityMO.position == oldPosId and self._lastClickTime and Time.time - self._lastClickTime < 0.5 then
+		SkillEditorMgr.instance:dispatchEvent(SkillEditorMgr.ShowHeroSelectView, self._side, entityMO.position)
 	end
 
-	arg_18_0._lastClickTime = Time.time
+	self._lastClickTime = Time.time
 end
 
-function var_0_0._onLongPress(arg_19_0, arg_19_1)
-	local var_19_0 = FightDataHelper.entityMgr:getById(arg_19_1)
+function SkillEditorSkillSelectTargetView:_onLongPress(entityId)
+	local entityMO = FightDataHelper.entityMgr:getById(entityId)
 
-	if var_19_0 then
+	if entityMO then
 		ViewMgr.instance:openView(ViewName.FightFocusView, {
-			entityId = var_19_0.id
+			entityId = entityMO.id
 		})
 	end
 end
 
-return var_0_0
+return SkillEditorSkillSelectTargetView

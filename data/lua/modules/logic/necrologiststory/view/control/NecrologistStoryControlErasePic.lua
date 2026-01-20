@@ -1,9 +1,11 @@
-﻿module("modules.logic.necrologiststory.view.control.NecrologistStoryControlErasePic", package.seeall)
+﻿-- chunkname: @modules/logic/necrologiststory/view/control/NecrologistStoryControlErasePic.lua
 
-local var_0_0 = class("NecrologistStoryControlErasePic", NecrologistStoryControlMgrItem)
+module("modules.logic.necrologiststory.view.control.NecrologistStoryControlErasePic", package.seeall)
 
-function var_0_0.onPlayControl(arg_1_0)
-	arg_1_0:getControlItem(NecrologistStoryErasePictureItem)
+local NecrologistStoryControlErasePic = class("NecrologistStoryControlErasePic", NecrologistStoryControlMgrItem)
+
+function NecrologistStoryControlErasePic:onPlayControl()
+	self:getControlItem(NecrologistStoryErasePictureItem)
 end
 
-return var_0_0
+return NecrologistStoryControlErasePic

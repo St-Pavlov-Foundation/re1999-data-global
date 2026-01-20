@@ -1,37 +1,42 @@
-﻿module("modules.logic.survival.view.shelter.SummaryAct.SurvivalSummaryActReputationItem", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/SummaryAct/SurvivalSummaryActReputationItem.lua
 
-local var_0_0 = class("SurvivalSummaryActReputationItem", SurvivalSimpleListItem)
+module("modules.logic.survival.view.shelter.SummaryAct.SurvivalSummaryActReputationItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "root/#image_icon")
-	arg_1_0._txtdec1 = gohelper.findChildText(arg_1_0.viewGO, "root/#txt_dec1")
-	arg_1_0._txtdec2 = gohelper.findChildText(arg_1_0.viewGO, "root/#txt_dec2")
+local SurvivalSummaryActReputationItem = class("SurvivalSummaryActReputationItem", SurvivalSimpleListItem)
+
+function SurvivalSummaryActReputationItem:init(viewGO)
+	self.viewGO = viewGO
+	self._imageicon = gohelper.findChildImage(self.viewGO, "root/#image_icon")
+	self._txtdec1 = gohelper.findChildText(self.viewGO, "root/#txt_dec1")
+	self._txtdec2 = gohelper.findChildText(self.viewGO, "root/#txt_dec2")
 end
 
-function var_0_0.onItemShow(arg_2_0, arg_2_1)
-	arg_2_0.reputationId = arg_2_1.reputationId
-	arg_2_0.value = arg_2_1.value
-	arg_2_0.npcs = arg_2_1.npcs
-	arg_2_0.weekInfo = SurvivalShelterModel.instance:getWeekInfo()
-	arg_2_0.reputationLevel = arg_2_0.weekInfo:getBuildingMoByReputationId(arg_2_0.reputationId).survivalReputationPropMo.prop.reputationLevel
-	arg_2_0.reputationCfg = SurvivalConfig.instance:getReputationCfgById(arg_2_0.reputationId, arg_2_0.reputationLevel)
+function SurvivalSummaryActReputationItem:onItemShow(info)
+	self.reputationId = info.reputationId
+	self.value = info.value
+	self.npcs = info.npcs
+	self.weekInfo = SurvivalShelterModel.instance:getWeekInfo()
 
-	local var_2_0 = arg_2_0.reputationCfg.type
-	local var_2_1 = SurvivalUnitIconHelper.instance:getRelationIcon(var_2_0)
+	local survivalShelterBuildingMo = self.weekInfo:getBuildingMoByReputationId(self.reputationId)
 
-	UISpriteSetMgr.instance:setSurvivalSprite(arg_2_0._imageicon, var_2_1)
+	self.reputationLevel = survivalShelterBuildingMo.survivalReputationPropMo.prop.reputationLevel
+	self.reputationCfg = SurvivalConfig.instance:getReputationCfgById(self.reputationId, self.reputationLevel)
 
-	local var_2_2 = arg_2_0.reputationCfg.name
+	local reputationType = self.reputationCfg.type
+	local icon = SurvivalUnitIconHelper.instance:getRelationIcon(reputationType)
 
-	arg_2_0._txtdec1.text = GameUtil.getSubPlaceholderLuaLang(luaLang("SurvivalSummaryActReputationItem_1"), {
-		var_2_2,
-		#arg_2_0.npcs
+	UISpriteSetMgr.instance:setSurvivalSprite(self._imageicon, icon)
+
+	local reputationName = self.reputationCfg.name
+
+	self._txtdec1.text = GameUtil.getSubPlaceholderLuaLang(luaLang("SurvivalSummaryActReputationItem_1"), {
+		reputationName,
+		#self.npcs
 	})
-	arg_2_0._txtdec2.text = GameUtil.getSubPlaceholderLuaLang(luaLang("SurvivalSummaryActReputationItem_2"), {
-		var_2_2,
-		arg_2_0.value
+	self._txtdec2.text = GameUtil.getSubPlaceholderLuaLang(luaLang("SurvivalSummaryActReputationItem_2"), {
+		reputationName,
+		self.value
 	})
 end
 
-return var_0_0
+return SurvivalSummaryActReputationItem

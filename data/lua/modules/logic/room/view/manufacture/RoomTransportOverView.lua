@@ -1,135 +1,141 @@
-﻿module("modules.logic.room.view.manufacture.RoomTransportOverView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/manufacture/RoomTransportOverView.lua
 
-local var_0_0 = class("RoomTransportOverView", BaseView)
+module("modules.logic.room.view.manufacture.RoomTransportOverView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gotransportContent = gohelper.findChild(arg_1_0.viewGO, "centerArea/#go_building/#scroll_building/viewport/content")
-	arg_1_0._gotransportItem = gohelper.findChild(arg_1_0.viewGO, "centerArea/#go_building/#scroll_building/viewport/content/#go_buildingItem")
-	arg_1_0._btnpopBlock = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "#go_popBlock")
-	arg_1_0._btnoneKeyCritter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bottomBtns/#btn_oneKeyCritter")
+local RoomTransportOverView = class("RoomTransportOverView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomTransportOverView:onInitView()
+	self._gotransportContent = gohelper.findChild(self.viewGO, "centerArea/#go_building/#scroll_building/viewport/content")
+	self._gotransportItem = gohelper.findChild(self.viewGO, "centerArea/#go_building/#scroll_building/viewport/content/#go_buildingItem")
+	self._btnpopBlock = gohelper.findChildClickWithDefaultAudio(self.viewGO, "#go_popBlock")
+	self._btnoneKeyCritter = gohelper.findChildButtonWithAudio(self.viewGO, "bottomBtns/#btn_oneKeyCritter")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnoneKeyCritter:AddClickListener(arg_2_0._btnoneKeyCritterOnClick, arg_2_0)
-	arg_2_0._btnpopBlock:AddClickListener(arg_2_0._btnpopBlockOnClick, arg_2_0)
-	arg_2_0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, arg_2_0._onManufactureInfoUpdate, arg_2_0)
-	arg_2_0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, arg_2_0._onManufactureInfoUpdate, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_2_0._onViewChange, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0._onViewChange, arg_2_0)
+function RoomTransportOverView:addEvents()
+	self._btnoneKeyCritter:AddClickListener(self._btnoneKeyCritterOnClick, self)
+	self._btnpopBlock:AddClickListener(self._btnpopBlockOnClick, self)
+	self:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, self._onManufactureInfoUpdate, self)
+	self:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, self._onManufactureInfoUpdate, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onViewChange, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onViewChange, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnoneKeyCritter:RemoveClickListener()
-	arg_3_0._btnpopBlock:RemoveClickListener()
-	arg_3_0:removeEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, arg_3_0._onManufactureInfoUpdate, arg_3_0)
-	arg_3_0:removeEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, arg_3_0._onManufactureInfoUpdate, arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_3_0._onViewChange, arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0._onViewChange, arg_3_0)
+function RoomTransportOverView:removeEvents()
+	self._btnoneKeyCritter:RemoveClickListener()
+	self._btnpopBlock:RemoveClickListener()
+	self:removeEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, self._onManufactureInfoUpdate, self)
+	self:removeEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, self._onManufactureInfoUpdate, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onViewChange, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onViewChange, self)
 end
 
-function var_0_0._btnoneKeyCritterOnClick(arg_4_0)
+function RoomTransportOverView:_btnoneKeyCritterOnClick()
 	ManufactureController.instance:oneKeyCritter(true)
 end
 
-function var_0_0._btnpopBlockOnClick(arg_5_0)
-	arg_5_0:_closeCritterListView()
+function RoomTransportOverView:_btnpopBlockOnClick()
+	self:_closeCritterListView()
 end
 
-function var_0_0._onManufactureInfoUpdate(arg_6_0)
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0._transportItemList) do
-		iter_6_1:onManufactureInfoUpdate()
+function RoomTransportOverView:_onManufactureInfoUpdate()
+	for _, transportItem in ipairs(self._transportItemList) do
+		transportItem:onManufactureInfoUpdate()
 	end
 end
 
-function var_0_0._onViewChange(arg_7_0, arg_7_1)
-	if arg_7_1 ~= ViewName.RoomCritterListView then
+function RoomTransportOverView:_onViewChange(viewName)
+	if viewName ~= ViewName.RoomCritterListView then
 		return
 	end
 
-	arg_7_0:refreshPopBlock()
+	self:refreshPopBlock()
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0:_setTransportList()
+function RoomTransportOverView:_editableInitView()
+	self:_setTransportList()
 end
 
-function var_0_0._setTransportList(arg_9_0)
-	arg_9_0._transportItemList = {}
+function RoomTransportOverView:_setTransportList()
+	self._transportItemList = {}
 
-	local var_9_0 = true
-	local var_9_1 = RoomMapTransportPathModel.instance:getMaxCount()
-	local var_9_2 = RoomMapTransportPathModel.instance:getTransportPathMOList()
+	local dataValid = true
+	local maxCount = RoomMapTransportPathModel.instance:getMaxCount()
+	local transportPathMOList = RoomMapTransportPathModel.instance:getTransportPathMOList()
 
-	if var_9_1 < #var_9_2 then
-		var_9_0 = false
+	if maxCount < #transportPathMOList then
+		dataValid = false
 
-		logError(string.format("RoomTransportOverView:_setTransportList error path count more than maxCount, pathCount:%s, maxCount:%s", #var_9_2, var_9_1))
+		logError(string.format("RoomTransportOverView:_setTransportList error path count more than maxCount, pathCount:%s, maxCount:%s", #transportPathMOList, maxCount))
 	end
 
-	local var_9_3 = {}
-	local var_9_4 = RoomTransportHelper.getSiteBuildingTypeList()
+	local list = {}
+	local buildingTypeList = RoomTransportHelper.getSiteBuildingTypeList()
 
-	for iter_9_0 = 1, #var_9_4 do
-		local var_9_5 = {}
-		local var_9_6 = var_9_2[iter_9_0]
+	for i = 1, #buildingTypeList do
+		local data = {}
+		local pathMO = transportPathMOList[i]
 
-		if var_9_0 and var_9_6 and var_9_6:isLinkFinish() then
-			var_9_5.mo = var_9_6
+		if dataValid then
+			local isLinkFinish = pathMO and pathMO:isLinkFinish()
+
+			if isLinkFinish then
+				data.mo = pathMO
+			end
 		end
 
-		var_9_3[iter_9_0] = var_9_5
+		list[i] = data
 	end
 
-	gohelper.CreateObjList(arg_9_0, arg_9_0._onSetTransportItem, var_9_3, arg_9_0._gotransportContent, arg_9_0._gotransportItem, RoomTransportOverItem)
+	gohelper.CreateObjList(self, self._onSetTransportItem, list, self._gotransportContent, self._gotransportItem, RoomTransportOverItem)
 end
 
-function var_0_0._onSetTransportItem(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	local var_10_0 = arg_10_2.mo
+function RoomTransportOverView:_onSetTransportItem(obj, data, index)
+	local transportPathMO = data.mo
 
-	arg_10_1:setData(var_10_0)
+	obj:setData(transportPathMO)
 
-	arg_10_0._transportItemList[arg_10_3] = arg_10_1
+	self._transportItemList[index] = obj
 end
 
-function var_0_0._closeCritterListView(arg_11_0)
+function RoomTransportOverView:_closeCritterListView()
 	ManufactureController.instance:clearSelectTransportPath()
 end
 
-function var_0_0.onUpdateParam(arg_12_0)
+function RoomTransportOverView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_13_0)
-	arg_13_0:refreshPopBlock()
-	arg_13_0:everySecondCall()
-	TaskDispatcher.runRepeat(arg_13_0.everySecondCall, arg_13_0, TimeUtil.OneSecond)
+function RoomTransportOverView:onOpen()
+	self:refreshPopBlock()
+	self:everySecondCall()
+	TaskDispatcher.runRepeat(self.everySecondCall, self, TimeUtil.OneSecond)
 end
 
-function var_0_0.refreshPopBlock(arg_14_0)
-	local var_14_0 = ViewMgr.instance:isOpen(ViewName.RoomCritterListView)
+function RoomTransportOverView:refreshPopBlock()
+	local isShowCritterListView = ViewMgr.instance:isOpen(ViewName.RoomCritterListView)
 
-	gohelper.setActive(arg_14_0._btnpopBlock, var_14_0)
+	gohelper.setActive(self._btnpopBlock, isShowCritterListView)
 end
 
-function var_0_0.everySecondCall(arg_15_0)
-	if arg_15_0._transportItemList then
-		for iter_15_0, iter_15_1 in ipairs(arg_15_0._transportItemList) do
-			iter_15_1:everySecondCall()
+function RoomTransportOverView:everySecondCall()
+	if self._transportItemList then
+		for _, transportItem in ipairs(self._transportItemList) do
+			transportItem:everySecondCall()
 		end
 	end
 end
 
-function var_0_0.onClose(arg_16_0)
-	TaskDispatcher.cancelTask(arg_16_0.everySecondCall, arg_16_0)
-	arg_16_0:_closeCritterListView()
+function RoomTransportOverView:onClose()
+	TaskDispatcher.cancelTask(self.everySecondCall, self)
+	self:_closeCritterListView()
 end
 
-function var_0_0.onDestroyView(arg_17_0)
+function RoomTransportOverView:onDestroyView()
 	return
 end
 
-return var_0_0
+return RoomTransportOverView

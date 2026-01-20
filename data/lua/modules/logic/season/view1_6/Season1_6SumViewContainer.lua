@@ -1,13 +1,15 @@
-﻿module("modules.logic.season.view1_6.Season1_6SumViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/season/view1_6/Season1_6SumViewContainer.lua
 
-local var_0_0 = class("Season1_6SumViewContainer", BaseViewContainer)
+module("modules.logic.season.view1_6.Season1_6SumViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Season1_6SumViewContainer = class("Season1_6SumViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Season1_6SumView.New())
+function Season1_6SumViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Season1_6SumView.New())
+
+	return views
 end
 
-return var_0_0
+return Season1_6SumViewContainer

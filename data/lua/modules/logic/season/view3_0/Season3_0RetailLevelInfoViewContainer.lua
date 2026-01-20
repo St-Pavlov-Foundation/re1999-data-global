@@ -1,40 +1,42 @@
-﻿module("modules.logic.season.view3_0.Season3_0RetailLevelInfoViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/season/view3_0/Season3_0RetailLevelInfoViewContainer.lua
 
-local var_0_0 = class("Season3_0RetailLevelInfoViewContainer", BaseViewContainer)
+module("modules.logic.season.view3_0.Season3_0RetailLevelInfoViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Season3_0RetailLevelInfoViewContainer = class("Season3_0RetailLevelInfoViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Season3_0RetailLevelInfoView.New())
+function Season3_0RetailLevelInfoViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Season3_0RetailLevelInfoView.New())
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	arg_2_0._navigateButtonView = NavigateButtonsView.New({
+function Season3_0RetailLevelInfoViewContainer:buildTabViews(tabContainerId)
+	self._navigateButtonView = NavigateButtonsView.New({
 		true,
 		true,
 		true
-	}, 100, arg_2_0._closeCallback, arg_2_0._homeCallback, nil, arg_2_0)
+	}, 100, self._closeCallback, self._homeCallback, nil, self)
 
 	return {
-		arg_2_0._navigateButtonView
+		self._navigateButtonView
 	}
 end
 
-function var_0_0._closeCallback(arg_3_0)
-	arg_3_0:closeThis()
+function Season3_0RetailLevelInfoViewContainer:_closeCallback()
+	self:closeThis()
 end
 
-function var_0_0._homeCallback(arg_4_0)
-	arg_4_0:closeThis()
+function Season3_0RetailLevelInfoViewContainer:_homeCallback()
+	self:closeThis()
 end
 
-function var_0_0.playOpenTransition(arg_5_0, arg_5_1)
-	arg_5_1 = arg_5_1 or {}
-	arg_5_1.duration = 0
+function Season3_0RetailLevelInfoViewContainer:playOpenTransition(paramTable)
+	paramTable = paramTable or {}
+	paramTable.duration = 0
 
-	var_0_0.super.playOpenTransition(arg_5_0, arg_5_1)
+	Season3_0RetailLevelInfoViewContainer.super.playOpenTransition(self, paramTable)
 end
 
-return var_0_0
+return Season3_0RetailLevelInfoViewContainer

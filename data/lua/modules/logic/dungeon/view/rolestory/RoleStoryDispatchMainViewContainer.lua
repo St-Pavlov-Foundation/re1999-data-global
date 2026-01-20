@@ -1,32 +1,34 @@
-﻿module("modules.logic.dungeon.view.rolestory.RoleStoryDispatchMainViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/rolestory/RoleStoryDispatchMainViewContainer.lua
 
-local var_0_0 = class("RoleStoryDispatchMainViewContainer", BaseViewContainer)
+module("modules.logic.dungeon.view.rolestory.RoleStoryDispatchMainViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoleStoryDispatchMainViewContainer = class("RoleStoryDispatchMainViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RoleStoryItemRewardView.New())
-	table.insert(var_1_0, RoleStoryDispatchMainView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
-	table.insert(var_1_0, TabViewGroup.New(2, "#go_topright"))
+function RoleStoryDispatchMainViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RoleStoryItemRewardView.New())
+	table.insert(views, RoleStoryDispatchMainView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_topleft"))
+	table.insert(views, TabViewGroup.New(2, "#go_topright"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._navigateButtonsView = NavigateButtonsView.New({
+function RoleStoryDispatchMainViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonsView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			arg_2_0._navigateButtonsView
+			self._navigateButtonsView
 		}
 	end
 
-	local var_2_0 = {
+	local currencyParam = {
 		{
 			isIcon = true,
 			type = MaterialEnum.MaterialType.Item,
@@ -35,22 +37,22 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 		CurrencyEnum.CurrencyType.RoleStory
 	}
 
-	arg_2_0.currencyView = CurrencyView.New(var_2_0)
-	arg_2_0.currencyView.foreHideBtn = true
+	self.currencyView = CurrencyView.New(currencyParam)
+	self.currencyView.foreHideBtn = true
 
 	return {
-		arg_2_0.currencyView
+		self.currencyView
 	}
 end
 
-function var_0_0.refreshCurrency(arg_3_0, arg_3_1)
-	arg_3_0.currencyView:setCurrencyType(arg_3_1)
+function RoleStoryDispatchMainViewContainer:refreshCurrency(currencyTypeParam)
+	self.currencyView:setCurrencyType(currencyTypeParam)
 end
 
-function var_0_0.onContainerClose(arg_4_0)
-	if arg_4_0:isManualClose() and not ViewMgr.instance:isOpen(ViewName.MainView) then
+function RoleStoryDispatchMainViewContainer:onContainerClose()
+	if self:isManualClose() and not ViewMgr.instance:isOpen(ViewName.MainView) then
 		MainController.instance:dispatchEvent(MainEvent.ManuallyOpenMainView)
 	end
 end
 
-return var_0_0
+return RoleStoryDispatchMainViewContainer

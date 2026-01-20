@@ -1,91 +1,95 @@
-﻿module("modules.logic.scene.explore.comp.ExploreScenePPVolume", package.seeall)
+﻿-- chunkname: @modules/logic/scene/explore/comp/ExploreScenePPVolume.lua
 
-local var_0_0 = class("ExploreScenePPVolume", BaseSceneComp)
+module("modules.logic.scene.explore.comp.ExploreScenePPVolume", package.seeall)
 
-var_0_0.ExploreHighProfilePath = "ppassets/profiles/msts_profile_high.asset"
-var_0_0.ExploreMiddleProfilePath = "ppassets/profiles/msts_profile_middle.asset"
-var_0_0.ExploreLowProfilePath = "ppassets/profiles/msts_profile_low.asset"
+local ExploreScenePPVolume = class("ExploreScenePPVolume", BaseSceneComp)
 
-function var_0_0.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0:initPPVolume()
-	arg_1_0:_setCamera()
-	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnQualityChange, arg_1_0.updatePPLevel, arg_1_0)
+ExploreScenePPVolume.ExploreHighProfilePath = "ppassets/profiles/msts_profile_high.asset"
+ExploreScenePPVolume.ExploreMiddleProfilePath = "ppassets/profiles/msts_profile_middle.asset"
+ExploreScenePPVolume.ExploreLowProfilePath = "ppassets/profiles/msts_profile_low.asset"
+
+function ExploreScenePPVolume:onSceneStart(sceneId, levelId)
+	self:initPPVolume()
+	self:_setCamera()
+	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnQualityChange, self.updatePPLevel, self)
 end
 
-function var_0_0.initPPVolume(arg_2_0)
-	if arg_2_0._ppVolumeGo then
+function ExploreScenePPVolume:initPPVolume()
+	if self._ppVolumeGo then
 		return
 	end
 
-	arg_2_0._highProfile = ConstAbCache.instance:getRes(var_0_0.ExploreHighProfilePath)
-	arg_2_0._middleProfile = ConstAbCache.instance:getRes(var_0_0.ExploreMiddleProfilePath)
-	arg_2_0._lowProfile = ConstAbCache.instance:getRes(var_0_0.ExploreLowProfilePath)
+	self._highProfile = ConstAbCache.instance:getRes(ExploreScenePPVolume.ExploreHighProfilePath)
+	self._middleProfile = ConstAbCache.instance:getRes(ExploreScenePPVolume.ExploreMiddleProfilePath)
+	self._lowProfile = ConstAbCache.instance:getRes(ExploreScenePPVolume.ExploreLowProfilePath)
 
 	gohelper.setActive(CameraMgr.instance:getUnitCameraGO(), false)
 
-	arg_2_0._ppVolumeGo = gohelper.create3d(CameraMgr.instance:getMainCameraGO(), "PPVolume")
-	arg_2_0._ppVolumeWrap = gohelper.onceAddComponent(arg_2_0._ppVolumeGo, PostProcessingMgr.PPVolumeWrapType)
+	self._ppVolumeGo = gohelper.create3d(CameraMgr.instance:getMainCameraGO(), "PPVolume")
+	self._ppVolumeWrap = gohelper.onceAddComponent(self._ppVolumeGo, PostProcessingMgr.PPVolumeWrapType)
 
-	arg_2_0:updatePPLevel()
+	self:updatePPLevel()
 end
 
-function var_0_0._setCamera(arg_3_0)
-	local var_3_0 = CameraMgr.instance:getMainCameraGO():GetComponent(PostProcessingMgr.PPCustomCamDataType)
+function ExploreScenePPVolume:_setCamera()
+	local mainCameraGO = CameraMgr.instance:getMainCameraGO()
+	local mainCustomCameraData = mainCameraGO:GetComponent(PostProcessingMgr.PPCustomCamDataType)
 
-	arg_3_0._originalusePostProcess = var_3_0.usePostProcess
-	arg_3_0._originalMainCameraVolumeTrigger = var_3_0.volumeTrigger
-	var_3_0.usePostProcess = true
-	var_3_0.volumeTrigger = arg_3_0._ppVolumeGo.transform
+	self._originalusePostProcess = mainCustomCameraData.usePostProcess
+	self._originalMainCameraVolumeTrigger = mainCustomCameraData.volumeTrigger
+	mainCustomCameraData.usePostProcess = true
+	mainCustomCameraData.volumeTrigger = self._ppVolumeGo.transform
 end
 
-function var_0_0._resetCamera(arg_4_0)
-	local var_4_0 = CameraMgr.instance:getMainCameraGO():GetComponent(PostProcessingMgr.PPCustomCamDataType)
+function ExploreScenePPVolume:_resetCamera()
+	local mainCameraGO = CameraMgr.instance:getMainCameraGO()
+	local mainCustomCameraData = mainCameraGO:GetComponent(PostProcessingMgr.PPCustomCamDataType)
 
-	var_4_0.usePostProcess = arg_4_0._originalusePostProcess
-	var_4_0.volumeTrigger = arg_4_0._originalMainCameraVolumeTrigger
-	arg_4_0._originalusePostProcess = nil
-	arg_4_0._originalMainCameraVolumeTrigger = nil
+	mainCustomCameraData.usePostProcess = self._originalusePostProcess
+	mainCustomCameraData.volumeTrigger = self._originalMainCameraVolumeTrigger
+	self._originalusePostProcess = nil
+	self._originalMainCameraVolumeTrigger = nil
 end
 
-function var_0_0.updatePPLevel(arg_5_0)
-	if not arg_5_0._ppVolumeWrap then
+function ExploreScenePPVolume:updatePPLevel()
+	if not self._ppVolumeWrap then
 		return
 	end
 
-	local var_5_0 = GameGlobalMgr.instance:getScreenState():getLocalQuality()
-	local var_5_1 = arg_5_0._highProfile
-	local var_5_2 = CameraMgr.instance:getMainCameraGO()
+	local grade = GameGlobalMgr.instance:getScreenState():getLocalQuality()
+	local targetProfile = self._highProfile
+	local mainCameraGO = CameraMgr.instance:getMainCameraGO()
 
-	if var_5_0 == ModuleEnum.Performance.High then
-		var_5_1 = arg_5_0._highProfile
-	elseif var_5_0 == ModuleEnum.Performance.Middle then
-		var_5_1 = arg_5_0._middleProfile
-	elseif var_5_0 == ModuleEnum.Performance.Low then
-		var_5_1 = arg_5_0._lowProfile
+	if grade == ModuleEnum.Performance.High then
+		targetProfile = self._highProfile
+	elseif grade == ModuleEnum.Performance.Middle then
+		targetProfile = self._middleProfile
+	elseif grade == ModuleEnum.Performance.Low then
+		targetProfile = self._lowProfile
 	end
 
-	arg_5_0._ppVolumeWrap:SetProfile(var_5_1)
+	self._ppVolumeWrap:SetProfile(targetProfile)
 end
 
-function var_0_0.destoryPPVolume(arg_6_0)
-	if not arg_6_0._ppVolumeGo then
+function ExploreScenePPVolume:destoryPPVolume()
+	if not self._ppVolumeGo then
 		return
 	end
 
 	gohelper.setActive(CameraMgr.instance:getUnitCameraGO(), true)
-	gohelper.destroy(arg_6_0._ppVolumeGo)
+	gohelper.destroy(self._ppVolumeGo)
 
-	arg_6_0._ppVolumeGo = nil
-	arg_6_0._ppVolumeWrap = nil
-	arg_6_0._highProfile = nil
-	arg_6_0._middleProfile = nil
-	arg_6_0._lowProfile = nil
+	self._ppVolumeGo = nil
+	self._ppVolumeWrap = nil
+	self._highProfile = nil
+	self._middleProfile = nil
+	self._lowProfile = nil
 end
 
-function var_0_0.onSceneClose(arg_7_0)
-	arg_7_0:_resetCamera()
-	arg_7_0:destoryPPVolume()
-	GameGlobalMgr.instance:unregisterCallback(GameStateEvent.OnQualityChange, arg_7_0.updatePPLevel, arg_7_0)
+function ExploreScenePPVolume:onSceneClose()
+	self:_resetCamera()
+	self:destoryPPVolume()
+	GameGlobalMgr.instance:unregisterCallback(GameStateEvent.OnQualityChange, self.updatePPLevel, self)
 end
 
-return var_0_0
+return ExploreScenePPVolume

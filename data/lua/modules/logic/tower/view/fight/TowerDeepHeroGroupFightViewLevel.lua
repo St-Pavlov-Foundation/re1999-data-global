@@ -1,63 +1,65 @@
-﻿module("modules.logic.tower.view.fight.TowerDeepHeroGroupFightViewLevel", package.seeall)
+﻿-- chunkname: @modules/logic/tower/view/fight/TowerDeepHeroGroupFightViewLevel.lua
 
-local var_0_0 = class("TowerDeepHeroGroupFightViewLevel", HeroGroupFightViewLevel)
+module("modules.logic.tower.view.fight.TowerDeepHeroGroupFightViewLevel", package.seeall)
 
-function var_0_0.addEvents(arg_1_0)
-	var_0_0.super.addEvents(arg_1_0)
-	arg_1_0:addEventCb(TowerController.instance, TowerEvent.OnLoadTeamSuccess, arg_1_0._showEnemyList, arg_1_0)
+local TowerDeepHeroGroupFightViewLevel = class("TowerDeepHeroGroupFightViewLevel", HeroGroupFightViewLevel)
+
+function TowerDeepHeroGroupFightViewLevel:addEvents()
+	TowerDeepHeroGroupFightViewLevel.super.addEvents(self)
+	self:addEventCb(TowerController.instance, TowerEvent.OnLoadTeamSuccess, self._showEnemyList, self)
 end
 
-function var_0_0.removeEvents(arg_2_0)
-	var_0_0.super.removeEvents(arg_2_0)
-	arg_2_0:removeEventCb(TowerController.instance, TowerEvent.OnLoadTeamSuccess, arg_2_0._showEnemyList, arg_2_0)
+function TowerDeepHeroGroupFightViewLevel:removeEvents()
+	TowerDeepHeroGroupFightViewLevel.super.removeEvents(self)
+	self:removeEventCb(TowerController.instance, TowerEvent.OnLoadTeamSuccess, self._showEnemyList, self)
 end
 
-function var_0_0._btnenemyOnClick(arg_3_0)
-	if arg_3_0._battleId then
-		EnemyInfoController.instance:openTowerDeepEnemyInfoView(arg_3_0._battleId)
+function TowerDeepHeroGroupFightViewLevel:_btnenemyOnClick()
+	if self._battleId then
+		EnemyInfoController.instance:openTowerDeepEnemyInfoView(self._battleId)
 	end
 end
 
-function var_0_0._showEnemyList(arg_4_0)
-	local var_4_0 = FightModel.instance:getFightParam()
-	local var_4_1 = {}
-	local var_4_2 = {}
-	local var_4_3 = {}
-	local var_4_4 = {}
-	local var_4_5 = TowerPermanentDeepModel.instance:getCurDeepMonsterId()
-	local var_4_6 = lua_monster.configDict[var_4_5].career
+function TowerDeepHeroGroupFightViewLevel:_showEnemyList()
+	local fight_param = FightModel.instance:getFightParam()
+	local boss_career_dic = {}
+	local enemy_career_dic = {}
+	local enemy_list = {}
+	local enemy_boss_list = {}
+	local bossId = TowerPermanentDeepModel.instance:getCurDeepMonsterId()
+	local enemy_career = lua_monster.configDict[bossId].career
 
-	var_4_1[var_4_6] = (var_4_1[var_4_6] or 0) + 1
+	boss_career_dic[enemy_career] = (boss_career_dic[enemy_career] or 0) + 1
 
-	table.insert(var_4_4, var_4_5)
+	table.insert(enemy_boss_list, bossId)
 
-	local var_4_7 = {}
+	local enemy_career_list = {}
 
-	for iter_4_0, iter_4_1 in pairs(var_4_1) do
-		table.insert(var_4_7, {
-			career = iter_4_0,
-			count = iter_4_1
+	for k, v in pairs(boss_career_dic) do
+		table.insert(enemy_career_list, {
+			career = k,
+			count = v
 		})
 	end
 
-	arg_4_0._enemy_boss_end_index = #var_4_7
+	self._enemy_boss_end_index = #enemy_career_list
 
-	for iter_4_2, iter_4_3 in pairs(var_4_2) do
-		table.insert(var_4_7, {
-			career = iter_4_2,
-			count = iter_4_3
+	for k, v in pairs(enemy_career_dic) do
+		table.insert(enemy_career_list, {
+			career = k,
+			count = v
 		})
 	end
 
-	gohelper.CreateObjList(arg_4_0, arg_4_0._onEnemyItemShow, var_4_7, gohelper.findChild(arg_4_0._goenemyteam, "enemyList"), gohelper.findChild(arg_4_0._goenemyteam, "enemyList/go_enemyitem"))
+	gohelper.CreateObjList(self, self._onEnemyItemShow, enemy_career_list, gohelper.findChild(self._goenemyteam, "enemyList"), gohelper.findChild(self._goenemyteam, "enemyList/go_enemyitem"))
 
-	local var_4_8 = FightHelper.getBattleRecommendLevel(var_4_0.battleId, arg_4_0._isSimple)
+	local recommendLevel = FightHelper.getBattleRecommendLevel(fight_param.battleId, self._isSimple)
 
-	if var_4_8 >= 0 then
-		arg_4_0._txtrecommendlevel.text = HeroConfig.instance:getLevelDisplayVariant(var_4_8)
+	if recommendLevel >= 0 then
+		self._txtrecommendlevel.text = HeroConfig.instance:getLevelDisplayVariant(recommendLevel)
 	else
-		arg_4_0._txtrecommendlevel.text = ""
+		self._txtrecommendlevel.text = ""
 	end
 end
 
-return var_0_0
+return TowerDeepHeroGroupFightViewLevel

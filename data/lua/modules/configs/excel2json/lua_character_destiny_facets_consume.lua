@@ -1,25 +1,31 @@
-﻿module("modules.configs.excel2json.lua_character_destiny_facets_consume", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_character_destiny_facets_consume.lua
 
-local var_0_0 = {}
-local var_0_1 = {
-	tend = 4,
-	name = 2,
-	consume = 3,
-	facetsId = 1,
+module("modules.configs.excel2json.lua_character_destiny_facets_consume", package.seeall)
+
+local lua_character_destiny_facets_consume = {}
+local fields = {
 	facetsSort = 6,
-	icon = 5,
-	keyword = 7
+	name = 2,
+	facetsId = 1,
+	type = 8,
+	titleName = 9,
+	tend = 4,
+	keyword = 7,
+	consume = 3,
+	tag = 10,
+	icon = 5
 }
-local var_0_2 = {
+local primaryKey = {
 	"facetsId"
 }
-local var_0_3 = {
+local mlStringKey = {
 	keyword = 2,
-	name = 1
+	name = 1,
+	titleName = 3
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_character_destiny_facets_consume.onLoad(json)
+	lua_character_destiny_facets_consume.configList, lua_character_destiny_facets_consume.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_character_destiny_facets_consume

@@ -1,162 +1,167 @@
-﻿module("modules.logic.season.model.Activity104EquipItemBookModel", package.seeall)
+﻿-- chunkname: @modules/logic/season/model/Activity104EquipItemBookModel.lua
 
-local var_0_0 = class("Activity104EquipItemBookModel", ListScrollModel)
+module("modules.logic.season.model.Activity104EquipItemBookModel", package.seeall)
 
-function var_0_0.clear(arg_1_0)
-	var_0_0.super.clear(arg_1_0)
+local Activity104EquipItemBookModel = class("Activity104EquipItemBookModel", ListScrollModel)
 
-	arg_1_0.activityId = nil
-	arg_1_0.curSelectItemId = nil
-	arg_1_0._itemMap = nil
-	arg_1_0.recordNew = nil
-	arg_1_0._itemStartAnimTime = nil
-	arg_1_0.tagModel = nil
+function Activity104EquipItemBookModel:clear()
+	Activity104EquipItemBookModel.super.clear(self)
+
+	self.activityId = nil
+	self.curSelectItemId = nil
+	self._itemMap = nil
+	self.recordNew = nil
+	self._itemStartAnimTime = nil
+	self.tagModel = nil
 end
 
-function var_0_0.initDatas(arg_2_0, arg_2_1)
-	arg_2_0.activityId = arg_2_1
-	arg_2_0.curSelectItemId = nil
+function Activity104EquipItemBookModel:initDatas(activityId)
+	self.activityId = activityId
+	self.curSelectItemId = nil
 
-	arg_2_0:initSubModel()
-	arg_2_0:initPlayerPrefs()
-	arg_2_0:initList()
+	self:initSubModel()
+	self:initPlayerPrefs()
+	self:initList()
 end
 
-function var_0_0.initList(arg_3_0)
-	arg_3_0:initConfig()
-	arg_3_0:initBackpack()
+function Activity104EquipItemBookModel:initList()
+	self:initConfig()
+	self:initBackpack()
 
-	if arg_3_0:getCount() > 0 then
-		arg_3_0:setSelectItemId(arg_3_0:getByIndex(1).id)
+	if self:getCount() > 0 then
+		self:setSelectItemId(self:getByIndex(1).id)
 	end
 end
 
-function var_0_0.initSubModel(arg_4_0)
-	arg_4_0.tagModel = Activity104EquipTagModel.New()
+function Activity104EquipItemBookModel:initSubModel()
+	self.tagModel = Activity104EquipTagModel.New()
 
-	arg_4_0.tagModel:init(arg_4_0.activityId)
+	self.tagModel:init(self.activityId)
 end
 
-function var_0_0.initConfig(arg_5_0)
-	local var_5_0 = {}
-	local var_5_1 = SeasonConfig.instance:getSeasonEquipCos()
+function Activity104EquipItemBookModel:initConfig()
+	local list = {}
+	local cfgDict = SeasonConfig.instance:getSeasonEquipCos()
 
-	for iter_5_0, iter_5_1 in pairs(var_5_1) do
-		if not SeasonConfig.instance:getEquipIsOptional(iter_5_0) and not SeasonEquipMetaUtils.isBanActivity(iter_5_1, arg_5_0.activityId) and arg_5_0:isCardCanShowByTag(iter_5_1.tag) then
-			local var_5_2 = Activity104EquipBookMo.New()
+	for itemId, cfg in pairs(cfgDict) do
+		if not SeasonConfig.instance:getEquipIsOptional(itemId) and not SeasonEquipMetaUtils.isBanActivity(cfg, self.activityId) and self:isCardCanShowByTag(cfg.tag) then
+			local listMO = Activity104EquipBookMo.New()
 
-			var_5_2:init(iter_5_0)
-			table.insert(var_5_0, var_5_2)
+			listMO:init(itemId)
+			table.insert(list, listMO)
 		end
 	end
 
-	arg_5_0:setList(var_5_0)
+	self:setList(list)
 end
 
-function var_0_0.initPlayerPrefs(arg_6_0)
-	arg_6_0.recordNew = SeasonEquipLocalRecord.New()
+function Activity104EquipItemBookModel:initPlayerPrefs()
+	self.recordNew = SeasonEquipLocalRecord.New()
 
-	arg_6_0.recordNew:init(arg_6_0.activityId, Activity104Enum.PlayerPrefsKeyItemUid)
+	self.recordNew:init(self.activityId, Activity104Enum.PlayerPrefsKeyItemUid)
 end
 
-function var_0_0.initBackpack(arg_7_0)
-	arg_7_0._itemMap = Activity104Model.instance:getAllItemMo(arg_7_0.activityId) or {}
+function Activity104EquipItemBookModel:initBackpack()
+	self._itemMap = Activity104Model.instance:getAllItemMo(self.activityId) or {}
 
-	for iter_7_0, iter_7_1 in pairs(arg_7_0._itemMap) do
-		if SeasonConfig.instance:getSeasonEquipCo(iter_7_1.itemId) then
-			local var_7_0 = arg_7_0:getById(iter_7_1.itemId)
+	for itemUid, itemMO in pairs(self._itemMap) do
+		local itemCO = SeasonConfig.instance:getSeasonEquipCo(itemMO.itemId)
 
-			if var_7_0 then
-				var_7_0.count = var_7_0.count + 1
+		if itemCO then
+			local listMO = self:getById(itemMO.itemId)
 
-				if not arg_7_0.recordNew:contain(iter_7_0) then
-					var_7_0:setIsNew(true)
+			if listMO then
+				listMO.count = listMO.count + 1
+
+				if not self.recordNew:contain(itemUid) then
+					listMO:setIsNew(true)
 				end
 			end
 		end
 	end
 
-	arg_7_0:sort(var_0_0.sortItemMOList)
+	self:sort(Activity104EquipItemBookModel.sortItemMOList)
 end
 
-function var_0_0.isCardCanShowByTag(arg_8_0, arg_8_1)
-	if arg_8_0.tagModel then
-		return arg_8_0.tagModel:isCardNeedShow(arg_8_1)
+function Activity104EquipItemBookModel:isCardCanShowByTag(itemTags)
+	if self.tagModel then
+		return self.tagModel:isCardNeedShow(itemTags)
 	end
 
 	return true
 end
 
-function var_0_0.getDelayPlayTime(arg_9_0, arg_9_1)
-	if arg_9_1 == nil then
+function Activity104EquipItemBookModel:getDelayPlayTime(mo)
+	if mo == nil then
 		return -1
 	end
 
-	local var_9_0 = Time.time
+	local curTime = Time.time
 
-	if arg_9_0._itemStartAnimTime == nil then
-		arg_9_0._itemStartAnimTime = var_9_0 + SeasonEquipBookItem.OpenAnimStartTime
+	if self._itemStartAnimTime == nil then
+		self._itemStartAnimTime = curTime + SeasonEquipBookItem.OpenAnimStartTime
 	end
 
-	local var_9_1 = arg_9_0:getIndex(arg_9_1)
+	local index = self:getIndex(mo)
 
-	if not var_9_1 or var_9_1 > SeasonEquipBookItem.AnimRowCount * SeasonEquipBookItem.ColumnCount then
+	if not index or index > SeasonEquipBookItem.AnimRowCount * SeasonEquipBookItem.ColumnCount then
 		return -1
 	end
 
-	local var_9_2 = math.floor((var_9_1 - 1) / SeasonEquipBookItem.ColumnCount) * SeasonEquipBookItem.OpenAnimTime + SeasonEquipBookItem.OpenAnimStartTime
-	local var_9_3 = var_9_0 - arg_9_0._itemStartAnimTime
+	local delayTime = math.floor((index - 1) / SeasonEquipBookItem.ColumnCount) * SeasonEquipBookItem.OpenAnimTime + SeasonEquipBookItem.OpenAnimStartTime
+	local passTime = curTime - self._itemStartAnimTime
 
-	if var_9_2 < var_9_3 then
+	if delayTime < passTime then
 		return -1
 	else
-		return var_9_2 - var_9_3
+		return delayTime - passTime
 	end
 end
 
-function var_0_0.sortItemMOList(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0.count > 0
+function Activity104EquipItemBookModel.sortItemMOList(a, b)
+	local hasGainA = a.count > 0
+	local hasGainB = b.count > 0
 
-	if var_10_0 ~= (arg_10_1.count > 0) then
-		return var_10_0
+	if hasGainA ~= hasGainB then
+		return hasGainA
 	end
 
-	local var_10_1 = SeasonConfig.instance:getSeasonEquipCo(arg_10_0.id)
-	local var_10_2 = SeasonConfig.instance:getSeasonEquipCo(arg_10_1.id)
+	local cfgA = SeasonConfig.instance:getSeasonEquipCo(a.id)
+	local cfgB = SeasonConfig.instance:getSeasonEquipCo(b.id)
 
-	if var_10_1 ~= nil and var_10_2 ~= nil then
-		if var_10_1.rare ~= var_10_2.rare then
-			return var_10_1.rare > var_10_2.rare
+	if cfgA ~= nil and cfgB ~= nil then
+		if cfgA.rare ~= cfgB.rare then
+			return cfgA.rare > cfgB.rare
 		else
-			return var_10_1.equipId > var_10_2.equipId
+			return cfgA.equipId > cfgB.equipId
 		end
 	else
-		return arg_10_0.id < arg_10_1.id
+		return a.id < b.id
 	end
 end
 
-function var_0_0.setSelectItemId(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0:getById(arg_11_1)
+function Activity104EquipItemBookModel:setSelectItemId(itemId)
+	local selectItemMO = self:getById(itemId)
 
-	if var_11_0 then
-		arg_11_0.curSelectItemId = arg_11_1
+	if selectItemMO then
+		self.curSelectItemId = itemId
 
-		var_11_0:setIsNew(false)
+		selectItemMO:setIsNew(false)
 	end
 end
 
-function var_0_0.checkResetCurSelected(arg_12_0)
-	if arg_12_0.curSelectItemId and not arg_12_0:getById(arg_12_0.curSelectItemId) then
-		arg_12_0.curSelectItemId = nil
+function Activity104EquipItemBookModel:checkResetCurSelected()
+	if self.curSelectItemId and not self:getById(self.curSelectItemId) then
+		self.curSelectItemId = nil
 	end
 end
 
-function var_0_0.flushRecord(arg_13_0)
-	if arg_13_0.recordNew then
-		arg_13_0.recordNew:recordAllItem()
+function Activity104EquipItemBookModel:flushRecord()
+	if self.recordNew then
+		self.recordNew:recordAllItem()
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+Activity104EquipItemBookModel.instance = Activity104EquipItemBookModel.New()
 
-return var_0_0
+return Activity104EquipItemBookModel

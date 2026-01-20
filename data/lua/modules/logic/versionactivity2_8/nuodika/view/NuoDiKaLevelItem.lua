@@ -1,296 +1,310 @@
-﻿module("modules.logic.versionactivity2_8.nuodika.view.NuoDiKaLevelItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/nuodika/view/NuoDiKaLevelItem.lua
 
-local var_0_0 = class("NuoDiKaLevelItem", LuaCompBase)
+module("modules.logic.versionactivity2_8.nuodika.view.NuoDiKaLevelItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._itemAnim = arg_1_0.go:GetComponent(gohelper.Type_Animator)
-	arg_1_0._gostagenormal1 = gohelper.findChild(arg_1_0.go, "unlock/#go_stagenormal1")
-	arg_1_0._txtnum1 = gohelper.findChildText(arg_1_0.go, "unlock/#go_stagenormal1/info/#txt_stageNum")
-	arg_1_0._txtname1 = gohelper.findChildText(arg_1_0.go, "unlock/#go_stagenormal1/info/#txt_stagename")
-	arg_1_0._gostar1 = gohelper.findChild(arg_1_0.go, "unlock/#go_stagenormal1/info/star1")
-	arg_1_0._gostagenormal2 = gohelper.findChild(arg_1_0.go, "unlock/#go_stagenormal2")
-	arg_1_0._txtnum2 = gohelper.findChildText(arg_1_0.go, "unlock/#go_stagenormal2/info/#txt_stageNum")
-	arg_1_0._txtname2 = gohelper.findChildText(arg_1_0.go, "unlock/#go_stagenormal2/info/#txt_stagename")
-	arg_1_0._gostar2 = gohelper.findChild(arg_1_0.go, "unlock/#go_stagenormal2/info/star1")
-	arg_1_0._gostageunlock = gohelper.findChild(arg_1_0.go, "unlock/#go_stageunlock")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.go, "unlock/#btn_click")
-	arg_1_0._itemAnim = arg_1_0.go:GetComponent(typeof(UnityEngine.Animator))
+local NuoDiKaLevelItem = class("NuoDiKaLevelItem", LuaCompBase)
+
+function NuoDiKaLevelItem:init(go)
+	self.go = go
+	self._itemAnim = self.go:GetComponent(gohelper.Type_Animator)
+	self._gostagenormal1 = gohelper.findChild(self.go, "unlock/#go_stagenormal1")
+	self._txtnum1 = gohelper.findChildText(self.go, "unlock/#go_stagenormal1/info/#txt_stageNum")
+	self._txtname1 = gohelper.findChildText(self.go, "unlock/#go_stagenormal1/info/#txt_stagename")
+	self._gostar1 = gohelper.findChild(self.go, "unlock/#go_stagenormal1/info/star1")
+	self._gostagenormal2 = gohelper.findChild(self.go, "unlock/#go_stagenormal2")
+	self._txtnum2 = gohelper.findChildText(self.go, "unlock/#go_stagenormal2/info/#txt_stageNum")
+	self._txtname2 = gohelper.findChildText(self.go, "unlock/#go_stagenormal2/info/#txt_stagename")
+	self._gostar2 = gohelper.findChild(self.go, "unlock/#go_stagenormal2/info/star1")
+	self._gostageunlock = gohelper.findChild(self.go, "unlock/#go_stageunlock")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.go, "unlock/#btn_click")
+	self._itemAnim = self.go:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnOnClick, arg_2_0)
-	NuoDiKaController.instance:registerCallback(NuoDiKaEvent.JumpToEpisode, arg_2_0._onJumpToEpisode, arg_2_0)
+function NuoDiKaLevelItem:addEventListeners()
+	self._btnclick:AddClickListener(self._btnOnClick, self)
+	NuoDiKaController.instance:registerCallback(NuoDiKaEvent.JumpToEpisode, self._onJumpToEpisode, self)
 end
 
-function var_0_0._btnOnClick(arg_3_0)
-	if not arg_3_0._islvunlock then
+function NuoDiKaLevelItem:_btnOnClick()
+	if not self._islvunlock then
 		return
 	end
 
-	Activity180Rpc.instance:sendAct180EnterEpisodeRequest(arg_3_0._actId, arg_3_0.id, arg_3_0._startEpisodeFinished, arg_3_0)
+	Activity180Rpc.instance:sendAct180EnterEpisodeRequest(self._actId, self.id, self._startEpisodeFinished, self)
 end
 
-function var_0_0._onJumpToEpisode(arg_4_0, arg_4_1)
-	if arg_4_0.id ~= arg_4_1 then
+function NuoDiKaLevelItem:_onJumpToEpisode(episodeId)
+	if self.id ~= episodeId then
 		return
 	end
 
-	Activity180Rpc.instance:sendAct180EnterEpisodeRequest(arg_4_0._actId, arg_4_0.id, arg_4_0._startEpisodeFinished, arg_4_0)
+	Activity180Rpc.instance:sendAct180EnterEpisodeRequest(self._actId, self.id, self._startEpisodeFinished, self)
 end
 
-function var_0_0._startEpisodeFinished(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	if arg_5_2 ~= 0 then
+function NuoDiKaLevelItem:_startEpisodeFinished(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	if arg_5_3.activityId ~= arg_5_0._actId then
+	if msg.activityId ~= self._actId then
 		return
 	end
 
-	NuoDiKaModel.instance:updateEpisodeInfo(arg_5_3.episode)
-	NuoDiKaModel.instance:setCurEpisode(arg_5_0._index, arg_5_0.id)
-	arg_5_0:_playBeforeStory()
+	NuoDiKaModel.instance:updateEpisodeInfo(msg.episode)
+	NuoDiKaModel.instance:setCurEpisode(self._index, self.id)
+	self:_playBeforeStory()
 end
 
-function var_0_0._playBeforeStory(arg_6_0)
-	arg_6_0._startTime = ServerTime.now()
+function NuoDiKaLevelItem:_playBeforeStory()
+	self._startTime = ServerTime.now()
 
-	if NuoDiKaModel.instance:isEpisodePass(arg_6_0.id) then
-		if arg_6_0._config.beforeStory > 0 then
-			local var_6_0 = {}
+	local isPass = NuoDiKaModel.instance:isEpisodePass(self.id)
 
-			var_6_0.mark = true
+	if isPass then
+		if self._config.beforeStory > 0 then
+			local param = {}
 
-			StoryController.instance:playStory(arg_6_0._config.beforeStory, var_6_0, arg_6_0._enterGame, arg_6_0)
+			param.mark = true
+
+			StoryController.instance:playStory(self._config.beforeStory, param, self._enterGame, self)
 		else
-			arg_6_0:_enterGame()
+			self:_enterGame()
 		end
 
 		return
 	end
 
-	if NuoDiKaModel.instance:getEpisodeStatus(arg_6_0.id) == NuoDiKaEnum.EpisodeStatus.BeforeStory then
-		if arg_6_0._config.beforeStory > 0 then
-			local var_6_1 = {}
+	local status = NuoDiKaModel.instance:getEpisodeStatus(self.id)
 
-			var_6_1.mark = true
+	if status == NuoDiKaEnum.EpisodeStatus.BeforeStory then
+		if self._config.beforeStory > 0 then
+			local param = {}
 
-			StoryController.instance:playStory(arg_6_0._config.beforeStory, var_6_1, arg_6_0._onBeforeStoryFinished, arg_6_0)
+			param.mark = true
+
+			StoryController.instance:playStory(self._config.beforeStory, param, self._onBeforeStoryFinished, self)
 		else
-			arg_6_0:_enterGame()
-		end
-	else
-		arg_6_0:_enterGame()
-	end
-end
-
-function var_0_0._onBeforeStoryFinished(arg_7_0)
-	Activity180Rpc.instance:sendAct180StoryRequest(arg_7_0._actId, arg_7_0.id, arg_7_0._onStartUnlockBeforeStory, arg_7_0)
-end
-
-function var_0_0._onStartUnlockBeforeStory(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	if arg_8_2 ~= 0 then
-		return
-	end
-
-	if arg_8_3.activityId ~= arg_8_0._actId then
-		return
-	end
-
-	NuoDiKaModel.instance:updateEpisodeInfo(arg_8_3.episode)
-
-	if arg_8_0._isStoryEpisode and arg_8_0._config.afterStory == 0 then
-		NuoDiKaModel.instance:setNewFinishEpisode(arg_8_0.id)
-	end
-
-	arg_8_0:_enterGame()
-end
-
-function var_0_0._enterGame(arg_9_0)
-	if NuoDiKaModel.instance:isEpisodePass(arg_9_0.id) then
-		if not arg_9_0._isStoryEpisode then
-			local var_9_0 = {
-				episodeId = arg_9_0.id,
-				callback = arg_9_0._enterAfterStory,
-				callbackObj = arg_9_0
-			}
-
-			NuoDiKaController.instance:enterGameView(var_9_0)
-		else
-			arg_9_0:_enterAfterStory()
-		end
-
-		return
-	end
-
-	if NuoDiKaModel.instance:getEpisodeStatus(arg_9_0.id) == NuoDiKaEnum.EpisodeStatus.MapGame then
-		local var_9_1 = {
-			episodeId = arg_9_0.id,
-			callback = arg_9_0._onGameFinished,
-			callbackObj = arg_9_0
-		}
-
-		NuoDiKaController.instance:enterGameView(var_9_1)
-	else
-		arg_9_0:_enterAfterStory()
-	end
-end
-
-function var_0_0._onGameFinished(arg_10_0)
-	Activity180Rpc.instance:sendAct180GameFinishRequest(arg_10_0._actId, arg_10_0.id, arg_10_0._onStartUnlockGame, arg_10_0)
-end
-
-function var_0_0._onStartUnlockGame(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	if arg_11_2 ~= 0 then
-		return
-	end
-
-	if arg_11_3.activityId ~= arg_11_0._actId then
-		return
-	end
-
-	NuoDiKaModel.instance:updateEpisodeInfo(arg_11_3.episode)
-
-	if arg_11_0._config.afterStory == 0 then
-		NuoDiKaModel.instance:setNewFinishEpisode(arg_11_0.id)
-	end
-
-	arg_11_0:_enterAfterStory()
-end
-
-function var_0_0._enterAfterStory(arg_12_0)
-	if NuoDiKaModel.instance:isEpisodePass(arg_12_0.id) then
-		if arg_12_0._config.afterStory > 0 then
-			StoryController.instance:playStory(arg_12_0._config.afterStory, nil, arg_12_0._levelFinished, arg_12_0)
-		else
-			arg_12_0:_levelFinished()
-		end
-
-		return
-	end
-
-	if NuoDiKaModel.instance:getEpisodeStatus(arg_12_0.id) == NuoDiKaEnum.EpisodeStatus.AfterStory then
-		if arg_12_0._config.afterStory > 0 then
-			local var_12_0 = {}
-
-			var_12_0.mark = true
-
-			StoryController.instance:playStory(arg_12_0._config.afterStory, var_12_0, arg_12_0._onAfterStoryFinished, arg_12_0)
-		else
-			arg_12_0:_levelFinished()
+			self:_enterGame()
 		end
 	else
-		arg_12_0:_levelFinished()
+		self:_enterGame()
 	end
 end
 
-function var_0_0._onAfterStoryFinished(arg_13_0)
-	Activity180Rpc.instance:sendAct180StoryRequest(arg_13_0._actId, arg_13_0.id, arg_13_0._onStartUnlockAfterStory, arg_13_0)
+function NuoDiKaLevelItem:_onBeforeStoryFinished()
+	Activity180Rpc.instance:sendAct180StoryRequest(self._actId, self.id, self._onStartUnlockBeforeStory, self)
 end
 
-function var_0_0._onStartUnlockAfterStory(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	if arg_14_2 ~= 0 then
+function NuoDiKaLevelItem:_onStartUnlockBeforeStory(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	if arg_14_3.activityId ~= arg_14_0._actId then
+	if msg.activityId ~= self._actId then
 		return
 	end
 
-	NuoDiKaModel.instance:updateEpisodeInfo(arg_14_3.episode)
-	NuoDiKaModel.instance:setNewFinishEpisode(arg_14_0.id)
-	arg_14_0:_levelFinished()
+	NuoDiKaModel.instance:updateEpisodeInfo(msg.episode)
+
+	if self._isStoryEpisode and self._config.afterStory == 0 then
+		NuoDiKaModel.instance:setNewFinishEpisode(self.id)
+	end
+
+	self:_enterGame()
 end
 
-function var_0_0._levelFinished(arg_15_0)
-	TaskDispatcher.runDelay(arg_15_0._backToLevel, arg_15_0, 0.5)
+function NuoDiKaLevelItem:_enterGame()
+	local isPass = NuoDiKaModel.instance:isEpisodePass(self.id)
+
+	if isPass then
+		if not self._isStoryEpisode then
+			local data = {}
+
+			data.episodeId = self.id
+			data.callback = self._enterAfterStory
+			data.callbackObj = self
+
+			NuoDiKaController.instance:enterGameView(data)
+		else
+			self:_enterAfterStory()
+		end
+
+		return
+	end
+
+	local status = NuoDiKaModel.instance:getEpisodeStatus(self.id)
+
+	if status == NuoDiKaEnum.EpisodeStatus.MapGame then
+		local data = {}
+
+		data.episodeId = self.id
+		data.callback = self._onGameFinished
+		data.callbackObj = self
+
+		NuoDiKaController.instance:enterGameView(data)
+	else
+		self:_enterAfterStory()
+	end
 end
 
-function var_0_0._backToLevel(arg_16_0)
+function NuoDiKaLevelItem:_onGameFinished()
+	Activity180Rpc.instance:sendAct180GameFinishRequest(self._actId, self.id, self._onStartUnlockGame, self)
+end
+
+function NuoDiKaLevelItem:_onStartUnlockGame(cmd, resultCode, msg)
+	if resultCode ~= 0 then
+		return
+	end
+
+	if msg.activityId ~= self._actId then
+		return
+	end
+
+	NuoDiKaModel.instance:updateEpisodeInfo(msg.episode)
+
+	if self._config.afterStory == 0 then
+		NuoDiKaModel.instance:setNewFinishEpisode(self.id)
+	end
+
+	self:_enterAfterStory()
+end
+
+function NuoDiKaLevelItem:_enterAfterStory()
+	local isPass = NuoDiKaModel.instance:isEpisodePass(self.id)
+
+	if isPass then
+		if self._config.afterStory > 0 then
+			StoryController.instance:playStory(self._config.afterStory, nil, self._levelFinished, self)
+		else
+			self:_levelFinished()
+		end
+
+		return
+	end
+
+	local status = NuoDiKaModel.instance:getEpisodeStatus(self.id)
+
+	if status == NuoDiKaEnum.EpisodeStatus.AfterStory then
+		if self._config.afterStory > 0 then
+			local param = {}
+
+			param.mark = true
+
+			StoryController.instance:playStory(self._config.afterStory, param, self._onAfterStoryFinished, self)
+		else
+			self:_levelFinished()
+		end
+	else
+		self:_levelFinished()
+	end
+end
+
+function NuoDiKaLevelItem:_onAfterStoryFinished()
+	Activity180Rpc.instance:sendAct180StoryRequest(self._actId, self.id, self._onStartUnlockAfterStory, self)
+end
+
+function NuoDiKaLevelItem:_onStartUnlockAfterStory(cmd, resultCode, msg)
+	if resultCode ~= 0 then
+		return
+	end
+
+	if msg.activityId ~= self._actId then
+		return
+	end
+
+	NuoDiKaModel.instance:updateEpisodeInfo(msg.episode)
+	NuoDiKaModel.instance:setNewFinishEpisode(self.id)
+	self:_levelFinished()
+end
+
+function NuoDiKaLevelItem:_levelFinished()
+	TaskDispatcher.runDelay(self._backToLevel, self, 0.5)
+end
+
+function NuoDiKaLevelItem:_backToLevel()
 	NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.OnBackToLevel)
 	NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.EpisodeFinished)
 end
 
-function var_0_0.setParam(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	arg_17_0._config = arg_17_1
-	arg_17_0.id = arg_17_1.episodeId
-	arg_17_0._actId = arg_17_3
-	arg_17_0._index = arg_17_2
-	arg_17_0._isStoryEpisode = arg_17_0._config.mapId == 0
+function NuoDiKaLevelItem:setParam(co, index, actId)
+	self._config = co
+	self.id = co.episodeId
+	self._actId = actId
+	self._index = index
+	self._isStoryEpisode = self._config.mapId == 0
 
-	arg_17_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_18_0)
-	arg_18_0._islvunlock = NuoDiKaModel.instance:isEpisodeUnlock(arg_18_0.id)
-	arg_18_0._islvpass = NuoDiKaModel.instance:isEpisodePass(arg_18_0.id)
+function NuoDiKaLevelItem:refreshUI()
+	self._islvunlock = NuoDiKaModel.instance:isEpisodeUnlock(self.id)
+	self._islvpass = NuoDiKaModel.instance:isEpisodePass(self.id)
 
-	gohelper.setActive(arg_18_0._gostar2, arg_18_0._islvpass)
-	gohelper.setActive(arg_18_0._gostar1, arg_18_0._islvpass)
+	gohelper.setActive(self._gostar2, self._islvpass)
+	gohelper.setActive(self._gostar1, self._islvpass)
 
-	arg_18_0._txtname1.text = arg_18_0._config.name
-	arg_18_0._txtname2.text = arg_18_0._config.name
-	arg_18_0._txtnum1.text = "STAGE 0" .. arg_18_0._index
-	arg_18_0._txtnum2.text = "STAGE 0" .. arg_18_0._index
+	self._txtname1.text = self._config.name
+	self._txtname2.text = self._config.name
+	self._txtnum1.text = "STAGE 0" .. self._index
+	self._txtnum2.text = "STAGE 0" .. self._index
 
-	if not arg_18_0._islvunlock then
-		arg_18_0._itemAnim.enabled = true
+	if not self._islvunlock then
+		self._itemAnim.enabled = true
 
-		arg_18_0._itemAnim:Play("lockidle", 0, 0)
-	elseif not arg_18_0._islvpass then
-		arg_18_0._itemAnim.enabled = true
+		self._itemAnim:Play("lockidle", 0, 0)
+	elseif not self._islvpass then
+		self._itemAnim.enabled = true
 
-		arg_18_0._itemAnim:Play("normalidle", 0, 0)
+		self._itemAnim:Play("normalidle", 0, 0)
 	else
-		arg_18_0._itemAnim:Play("finishidle", 0, 0)
+		self._itemAnim:Play("finishidle", 0, 0)
 	end
 
-	local var_18_0 = arg_18_0.id == NuoDiKaModel.instance:getMaxUnlockEpisodeId()
+	local isMaxEpisode = self.id == NuoDiKaModel.instance:getMaxUnlockEpisodeId()
 
-	gohelper.setActive(arg_18_0._gostagenormal1, arg_18_0._islvunlock and not var_18_0)
-	gohelper.setActive(arg_18_0._gostagenormal2, arg_18_0._islvunlock and var_18_0)
+	gohelper.setActive(self._gostagenormal1, self._islvunlock and not isMaxEpisode)
+	gohelper.setActive(self._gostagenormal2, self._islvunlock and isMaxEpisode)
 end
 
-function var_0_0.isUnlock(arg_19_0)
-	return arg_19_0._islvunlock
+function NuoDiKaLevelItem:isUnlock()
+	return self._islvunlock
 end
 
-function var_0_0.playFinish(arg_20_0)
-	arg_20_0._itemAnim.enabled = true
+function NuoDiKaLevelItem:playFinish()
+	self._itemAnim.enabled = true
 
 	AudioMgr.instance:trigger(AudioEnum2_8.NuoDiKa.play_ui_level_finished)
-	arg_20_0._itemAnim:Play("finish", 0, 0)
-	gohelper.setActive(arg_20_0._gostagenormal1, true)
+	self._itemAnim:Play("finish", 0, 0)
+	gohelper.setActive(self._gostagenormal1, true)
 
-	arg_20_0._islvpass = NuoDiKaModel.instance:isEpisodePass(arg_20_0.id)
+	self._islvpass = NuoDiKaModel.instance:isEpisodePass(self.id)
 
-	gohelper.setActive(arg_20_0._gostar2, arg_20_0._islvpass)
-	gohelper.setActive(arg_20_0._gostar1, arg_20_0._islvpass)
-	gohelper.setActive(arg_20_0._gostagenormal2, false)
+	gohelper.setActive(self._gostar2, self._islvpass)
+	gohelper.setActive(self._gostar1, self._islvpass)
+	gohelper.setActive(self._gostagenormal2, false)
 end
 
-function var_0_0.playUnlock(arg_21_0)
-	gohelper.setActive(arg_21_0._gostagenormal1, false)
-	gohelper.setActive(arg_21_0._gostagenormal2, true)
+function NuoDiKaLevelItem:playUnlock()
+	gohelper.setActive(self._gostagenormal1, false)
+	gohelper.setActive(self._gostagenormal2, true)
 
-	arg_21_0._itemAnim.enabled = true
+	self._itemAnim.enabled = true
 
 	AudioMgr.instance:trigger(AudioEnum2_8.NuoDiKa.play_ui_level_unlock)
-	arg_21_0._itemAnim:Play("unlock", 0, 0)
+	self._itemAnim:Play("unlock", 0, 0)
 end
 
-function var_0_0.playStarAnim(arg_22_0)
+function NuoDiKaLevelItem:playStarAnim()
 	AudioMgr.instance:trigger(AudioEnum.RoleActivity.star_show)
 end
 
-function var_0_0.removeEventListeners(arg_23_0)
-	NuoDiKaController.instance:unregisterCallback(NuoDiKaEvent.JumpToEpisode, arg_23_0._onJumpToEpisode, arg_23_0)
-	arg_23_0._btnclick:RemoveClickListener()
+function NuoDiKaLevelItem:removeEventListeners()
+	NuoDiKaController.instance:unregisterCallback(NuoDiKaEvent.JumpToEpisode, self._onJumpToEpisode, self)
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0.onDestroy(arg_24_0)
+function NuoDiKaLevelItem:onDestroy()
 	return
 end
 
-return var_0_0
+return NuoDiKaLevelItem

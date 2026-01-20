@@ -1,38 +1,40 @@
-﻿module("modules.logic.fight.view.FightSkillTargetItem", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightSkillTargetItem.lua
 
-local var_0_0 = class("FightSkillTargetItem", LuaCompBase)
+module("modules.logic.fight.view.FightSkillTargetItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._cardIcon = gohelper.findChildSingleImage(arg_1_1, "icon")
+local FightSkillTargetItem = class("FightSkillTargetItem", LuaCompBase)
+
+function FightSkillTargetItem:init(go)
+	self.go = go
+	self._cardIcon = gohelper.findChildSingleImage(go, "icon")
 end
 
-function var_0_0.onUpdateMO(arg_2_0, arg_2_1)
-	local var_2_0 = FightDataHelper.entityMgr:getById(arg_2_1)
-	local var_2_1 = FightConfig.instance:getSkinCO(var_2_0.skin)
-	local var_2_2 = ""
+function FightSkillTargetItem:onUpdateMO(entityId)
+	local entityMO = FightDataHelper.entityMgr:getById(entityId)
+	local skinConfig = FightConfig.instance:getSkinCO(entityMO.skin)
+	local url = ""
 
-	if var_2_0:isEnemySide() then
-		var_2_2 = ResUrl.monsterHeadIcon(var_2_1.headIcon)
+	if entityMO:isEnemySide() then
+		url = ResUrl.monsterHeadIcon(skinConfig.headIcon)
 	else
-		var_2_2 = ResUrl.getHeadIconSmall(var_2_1.retangleIcon)
+		url = ResUrl.getHeadIconSmall(skinConfig.retangleIcon)
 	end
 
-	arg_2_0._cardIcon:LoadImage(var_2_2)
+	self._cardIcon:LoadImage(url)
 
-	if var_2_0:isMonster() then
-		local var_2_3 = lua_monster.configDict[var_2_0.modelId]
+	if entityMO:isMonster() then
+		local monsterCo = lua_monster.configDict[entityMO.modelId]
 
-		if var_2_3 and var_2_3.heartVariantId ~= 0 then
-			arg_2_0._cardImage = gohelper.findChildImage(arg_2_0.go, "icon")
+		if monsterCo and monsterCo.heartVariantId ~= 0 then
+			self._cardImage = gohelper.findChildImage(self.go, "icon")
 
-			IconMaterialMgr.instance:loadMaterialAddSet(IconMaterialMgr.instance:getMaterialPath(var_2_3.heartVariantId), arg_2_0._cardImage)
+			IconMaterialMgr.instance:loadMaterialAddSet(IconMaterialMgr.instance:getMaterialPath(monsterCo.heartVariantId), self._cardImage)
 		end
 	end
 end
 
-function var_0_0.onDestroy(arg_3_0)
-	arg_3_0._cardIcon:UnLoadImage()
+function FightSkillTargetItem:onDestroy()
+	self._cardIcon:UnLoadImage()
 end
 
-return var_0_0
+return FightSkillTargetItem

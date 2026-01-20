@@ -1,29 +1,31 @@
-﻿module("modules.logic.rouge.map.work.WaitRougeInteractDoneWork", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/work/WaitRougeInteractDoneWork.lua
 
-local var_0_0 = class("WaitRougeInteractDoneWork", BaseWork)
+module("modules.logic.rouge.map.work.WaitRougeInteractDoneWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local WaitRougeInteractDoneWork = class("WaitRougeInteractDoneWork", BaseWork)
+
+function WaitRougeInteractDoneWork:ctor()
 	return
 end
 
-function var_0_0.onStart(arg_2_0)
-	local var_2_0 = RougeMapModel.instance:getCurInteractive()
+function WaitRougeInteractDoneWork:onStart()
+	local cutInteract = RougeMapModel.instance:getCurInteractive()
 
-	if string.nilorempty(var_2_0) then
-		return arg_2_0:onDone(true)
+	if string.nilorempty(cutInteract) then
+		return self:onDone(true)
 	end
 
-	RougeMapController.instance:registerCallback(RougeMapEvent.onClearInteract, arg_2_0.onClearInteract, arg_2_0)
+	RougeMapController.instance:registerCallback(RougeMapEvent.onClearInteract, self.onClearInteract, self)
 	RougeMapInteractHelper.triggerInteractive()
 end
 
-function var_0_0.onClearInteract(arg_3_0)
-	RougeMapController.instance:unregisterCallback(RougeMapEvent.onClearInteract, arg_3_0.onClearInteract, arg_3_0)
-	arg_3_0:onDone(true)
+function WaitRougeInteractDoneWork:onClearInteract()
+	RougeMapController.instance:unregisterCallback(RougeMapEvent.onClearInteract, self.onClearInteract, self)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	RougeMapController.instance:unregisterCallback(RougeMapEvent.onClearInteract, arg_4_0.onClearInteract, arg_4_0)
+function WaitRougeInteractDoneWork:clearWork()
+	RougeMapController.instance:unregisterCallback(RougeMapEvent.onClearInteract, self.onClearInteract, self)
 end
 
-return var_0_0
+return WaitRougeInteractDoneWork

@@ -1,4 +1,6 @@
-﻿return {
+﻿-- chunkname: @modules/configs/tianshinana/lua_tianshinana_map_22002.lua
+
+return {
 	"scenes/v2a2_m_s12_tsnn_jshd/scenes_prefab/v2a2_m_s12_tsnn_jshd_b_p.prefab",
 	{
 		{

@@ -1,236 +1,243 @@
-﻿module("modules.logic.versionactivity1_5.peaceulu.view.PeaceUluGameView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/peaceulu/view/PeaceUluGameView.lua
 
-local var_0_0 = class("PeaceUluGameView", BaseView)
+module("modules.logic.versionactivity1_5.peaceulu.view.PeaceUluGameView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._golive2d = gohelper.findChild(arg_1_0.viewGO, "#go_live2d")
-	arg_1_0._gotalk = gohelper.findChild(arg_1_0.viewGO, "#go_live2d/#go_talk")
-	arg_1_0._gotalkbg = gohelper.findChild(arg_1_0.viewGO, "#go_live2d/#go_talkbg")
-	arg_1_0._txttalk = gohelper.findChildText(arg_1_0.viewGO, "#go_live2d/#go_talk/bg/#txt_talk")
-	arg_1_0._goleftbg = gohelper.findChild(arg_1_0.viewGO, "game/left/#go_bg")
-	arg_1_0._gostartmask = gohelper.findChild(arg_1_0.viewGO, "game/#go_BlackMask1")
-	arg_1_0._goresultmask = gohelper.findChild(arg_1_0.viewGO, "game/#go_BlackMask2")
-	arg_1_0._goleftselected = gohelper.findChild(arg_1_0.viewGO, "game/left/#go_selected")
-	arg_1_0._imgleftselected = gohelper.findChildImage(arg_1_0.viewGO, "game/left/#go_selected")
-	arg_1_0._txtleft = gohelper.findChildText(arg_1_0.viewGO, "game/left/#go_selected/#txt_left")
-	arg_1_0._goxian = gohelper.findChild(arg_1_0.viewGO, "game/#go_xian")
-	arg_1_0._gorightbg = gohelper.findChild(arg_1_0.viewGO, "game/right/#go_bg")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "game/#go_btns")
-	arg_1_0._btnpaper = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "game/#go_btns/#btn_paper")
-	arg_1_0._btnrock = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "game/#go_btns/#btn_rock")
-	arg_1_0._btnscissors = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "game/#go_btns/#btn_scissors")
-	arg_1_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "game/#go_btns/#btn_confirm")
-	arg_1_0._gotips = gohelper.findChild(arg_1_0.viewGO, "game/#go_tips")
-	arg_1_0._txttips = gohelper.findChildText(arg_1_0.viewGO, "game/right/#go_tips/bg/#txt_tips")
-	arg_1_0._gorightselected = gohelper.findChild(arg_1_0.viewGO, "game/right/#go_selected")
-	arg_1_0._imgrightselected = gohelper.findChildImage(arg_1_0.viewGO, "game/right/#go_selected")
-	arg_1_0._txtright = gohelper.findChildText(arg_1_0.viewGO, "game/right/#go_selected/#txt_right")
-	arg_1_0._gostate = gohelper.findChild(arg_1_0.viewGO, "game/#go_state")
-	arg_1_0._gostart = gohelper.findChild(arg_1_0.viewGO, "game/#go_state/#go_start")
-	arg_1_0._btndraw = gohelper.findChildButton(arg_1_0.viewGO, "game/#go_state/0/#btn_draw")
-	arg_1_0._gocontentbg = gohelper.findChild(arg_1_0.viewGO, "bottom/#go_contentbg")
-	arg_1_0._txtanacn = gohelper.findChildText(arg_1_0.viewGO, "bottom/#txt_ana_cn")
-	arg_1_0._txtanaen = gohelper.findChildText(arg_1_0.viewGO, "bottom/#txt_ana_en")
-	arg_1_0._animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._stateList = {}
-	arg_1_0._btnItemList = {}
-	arg_1_0._isSelect = false
-	arg_1_0.tweenDuration = 0.5
-	arg_1_0._isTips = false
+local PeaceUluGameView = class("PeaceUluGameView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function PeaceUluGameView:onInitView()
+	self._golive2d = gohelper.findChild(self.viewGO, "#go_live2d")
+	self._gotalk = gohelper.findChild(self.viewGO, "#go_live2d/#go_talk")
+	self._gotalkbg = gohelper.findChild(self.viewGO, "#go_live2d/#go_talkbg")
+	self._txttalk = gohelper.findChildText(self.viewGO, "#go_live2d/#go_talk/bg/#txt_talk")
+	self._goleftbg = gohelper.findChild(self.viewGO, "game/left/#go_bg")
+	self._gostartmask = gohelper.findChild(self.viewGO, "game/#go_BlackMask1")
+	self._goresultmask = gohelper.findChild(self.viewGO, "game/#go_BlackMask2")
+	self._goleftselected = gohelper.findChild(self.viewGO, "game/left/#go_selected")
+	self._imgleftselected = gohelper.findChildImage(self.viewGO, "game/left/#go_selected")
+	self._txtleft = gohelper.findChildText(self.viewGO, "game/left/#go_selected/#txt_left")
+	self._goxian = gohelper.findChild(self.viewGO, "game/#go_xian")
+	self._gorightbg = gohelper.findChild(self.viewGO, "game/right/#go_bg")
+	self._gobtns = gohelper.findChild(self.viewGO, "game/#go_btns")
+	self._btnpaper = gohelper.findChildButtonWithAudio(self.viewGO, "game/#go_btns/#btn_paper")
+	self._btnrock = gohelper.findChildButtonWithAudio(self.viewGO, "game/#go_btns/#btn_rock")
+	self._btnscissors = gohelper.findChildButtonWithAudio(self.viewGO, "game/#go_btns/#btn_scissors")
+	self._btnconfirm = gohelper.findChildButtonWithAudio(self.viewGO, "game/#go_btns/#btn_confirm")
+	self._gotips = gohelper.findChild(self.viewGO, "game/#go_tips")
+	self._txttips = gohelper.findChildText(self.viewGO, "game/right/#go_tips/bg/#txt_tips")
+	self._gorightselected = gohelper.findChild(self.viewGO, "game/right/#go_selected")
+	self._imgrightselected = gohelper.findChildImage(self.viewGO, "game/right/#go_selected")
+	self._txtright = gohelper.findChildText(self.viewGO, "game/right/#go_selected/#txt_right")
+	self._gostate = gohelper.findChild(self.viewGO, "game/#go_state")
+	self._gostart = gohelper.findChild(self.viewGO, "game/#go_state/#go_start")
+	self._btndraw = gohelper.findChildButton(self.viewGO, "game/#go_state/0/#btn_draw")
+	self._gocontentbg = gohelper.findChild(self.viewGO, "bottom/#go_contentbg")
+	self._txtanacn = gohelper.findChildText(self.viewGO, "bottom/#txt_ana_cn")
+	self._txtanaen = gohelper.findChildText(self.viewGO, "bottom/#txt_ana_en")
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._stateList = {}
+	self._btnItemList = {}
+	self._isSelect = false
+	self.tweenDuration = 0.5
+	self._isTips = false
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnconfirm:AddClickListener(arg_2_0._btnconfirmOnClick, arg_2_0)
-	arg_2_0._btndraw:AddClickListener(arg_2_0._onClickDraw, arg_2_0)
-	arg_2_0:addEventCb(PeaceUluController.instance, PeaceUluEvent.onGetGameResult, arg_2_0._getResult, arg_2_0)
+function PeaceUluGameView:addEvents()
+	self._btnconfirm:AddClickListener(self._btnconfirmOnClick, self)
+	self._btndraw:AddClickListener(self._onClickDraw, self)
+	self:addEventCb(PeaceUluController.instance, PeaceUluEvent.onGetGameResult, self._getResult, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnconfirm:RemoveClickListener()
-	arg_3_0._btndraw:RemoveClickListener()
-	arg_3_0:removeEventCb(PeaceUluController.instance, PeaceUluEvent.onGetGameResult, arg_3_0._getResult, arg_3_0)
+function PeaceUluGameView:removeEvents()
+	self._btnconfirm:RemoveClickListener()
+	self._btndraw:RemoveClickListener()
+	self:removeEventCb(PeaceUluController.instance, PeaceUluEvent.onGetGameResult, self._getResult, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	for iter_4_0 = 0, 2 do
-		local var_4_0 = gohelper.findChild(arg_4_0.viewGO, "game/#go_state/" .. iter_4_0)
+function PeaceUluGameView:_editableInitView()
+	for i = 0, 2 do
+		local go = gohelper.findChild(self.viewGO, "game/#go_state/" .. i)
 
-		table.insert(arg_4_0._stateList, var_4_0)
+		table.insert(self._stateList, go)
 	end
 
-	for iter_4_1 = 1, 3 do
-		local var_4_1 = arg_4_0:getUserDataTb_()
+	for i = 1, 3 do
+		local btnItem = self:getUserDataTb_()
 
-		var_4_1.trs = gohelper.findChild(arg_4_0.viewGO, "game/#go_btns/" .. iter_4_1).transform
-		var_4_1.go = gohelper.findChild(arg_4_0.viewGO, "game/#go_btns/" .. iter_4_1 .. "/img")
-		var_4_1.btn = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "game/#go_btns/" .. iter_4_1)
-		var_4_1.id = iter_4_1
+		btnItem.trs = gohelper.findChild(self.viewGO, "game/#go_btns/" .. i).transform
+		btnItem.go = gohelper.findChild(self.viewGO, "game/#go_btns/" .. i .. "/img")
+		btnItem.btn = gohelper.findChildButtonWithAudio(self.viewGO, "game/#go_btns/" .. i)
+		btnItem.id = i
 
-		gohelper.setActive(var_4_1.go, false)
-		var_4_1.btn:AddClickListener(arg_4_0._onClickGameBtn, arg_4_0, var_4_1)
-		table.insert(arg_4_0._btnItemList, var_4_1)
+		gohelper.setActive(btnItem.go, false)
+		btnItem.btn:AddClickListener(self._onClickGameBtn, self, btnItem)
+		table.insert(self._btnItemList, btnItem)
 	end
 end
 
-function var_0_0._onClickGameBtn(arg_5_0, arg_5_1)
-	arg_5_0.selectId = arg_5_1.id
+function PeaceUluGameView:_onClickGameBtn(btnItem)
+	self.selectId = btnItem.id
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0._btnItemList) do
-		if iter_5_1.id ~= arg_5_0.selectId then
-			gohelper.setActive(iter_5_1.go, false)
+	for index, item in ipairs(self._btnItemList) do
+		if item.id ~= self.selectId then
+			gohelper.setActive(item.go, false)
 		else
-			gohelper.setActive(iter_5_1.go, true)
+			gohelper.setActive(item.go, true)
 		end
 	end
 
-	gohelper.setActive(arg_5_0._btnconfirm.gameObject, true)
+	gohelper.setActive(self._btnconfirm.gameObject, true)
 end
 
-function var_0_0._btnconfirmOnClick(arg_6_0)
-	PeaceUluRpc.instance:sendAct145GameRequest(VersionActivity1_5Enum.ActivityId.PeaceUlu, arg_6_0.selectId)
-	gohelper.setActive(arg_6_0._btnconfirm.gameObject, false)
-	TaskDispatcher.runDelay(arg_6_0._onGameTipsFinish, arg_6_0, 2)
+function PeaceUluGameView:_btnconfirmOnClick()
+	PeaceUluRpc.instance:sendAct145GameRequest(VersionActivity1_5Enum.ActivityId.PeaceUlu, self.selectId)
+	gohelper.setActive(self._btnconfirm.gameObject, false)
+	TaskDispatcher.runDelay(self._onGameTipsFinish, self, 2)
 end
 
-function var_0_0._getResult(arg_7_0)
-	local var_7_0 = PeaceUluModel.instance:getOtherChoice()
+function PeaceUluGameView:_getResult()
+	local otherChoice = PeaceUluModel.instance:getOtherChoice()
 
-	gohelper.setActive(arg_7_0._gobtns, false)
-	gohelper.setActive(arg_7_0._gotips, false)
-	gohelper.setActive(arg_7_0._goresultmask, true)
-	gohelper.setActive(arg_7_0._goxian, true)
-	gohelper.setActive(arg_7_0._goleftselected, true)
-	gohelper.setActive(arg_7_0._gorightselected, true)
-	UISpriteSetMgr.instance:setPeaceUluSprite(arg_7_0._imgleftselected, var_7_0)
-	UISpriteSetMgr.instance:setPeaceUluSprite(arg_7_0._imgrightselected, arg_7_0.selectId)
-	arg_7_0._animator:Play("play", 0, 0)
-	arg_7_0._animator:Update(0)
-	arg_7_0.viewContainer:getNavigateButtonView():setParam({
+	gohelper.setActive(self._gobtns, false)
+	gohelper.setActive(self._gotips, false)
+	gohelper.setActive(self._goresultmask, true)
+	gohelper.setActive(self._goxian, true)
+	gohelper.setActive(self._goleftselected, true)
+	gohelper.setActive(self._gorightselected, true)
+	UISpriteSetMgr.instance:setPeaceUluSprite(self._imgleftselected, otherChoice)
+	UISpriteSetMgr.instance:setPeaceUluSprite(self._imgrightselected, self.selectId)
+	self._animator:Play("play", 0, 0)
+	self._animator:Update(0)
+
+	local navigatetionview = self.viewContainer:getNavigateButtonView()
+
+	navigatetionview:setParam({
 		false,
 		false,
 		false
 	})
 	AudioMgr.instance:trigger(AudioEnum.ui_activity_1_5_wulu.play_ui_wulu_caiquan_decide)
-	TaskDispatcher.runDelay(arg_7_0._showResult, arg_7_0, 1.6)
+	TaskDispatcher.runDelay(self._showResult, self, 1.6)
 end
 
-function var_0_0._showResult(arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0._showResult, arg_8_0)
+function PeaceUluGameView:_showResult()
+	TaskDispatcher.cancelTask(self._showResult, self)
 
-	local var_8_0 = PeaceUluModel.instance:getGameRes()
+	local result = PeaceUluModel.instance:getGameRes()
 
-	if var_8_0 == PeaceUluEnum.GameResult.Win then
-		arg_8_0._animator:Play("success", 0, 0)
-		arg_8_0._animator:Update(0)
+	if result == PeaceUluEnum.GameResult.Win then
+		self._animator:Play("success", 0, 0)
+		self._animator:Update(0)
 		AudioMgr.instance:trigger(AudioEnum.ui_activity.play_ui_pkls_endpoint_arrival)
-		TaskDispatcher.runDelay(arg_8_0._showResultFinish, arg_8_0, 2.2)
-	elseif var_8_0 == PeaceUluEnum.GameResult.Fail then
-		arg_8_0._animator:Play("fail", 0, 0)
-		arg_8_0._animator:Update(0)
+		TaskDispatcher.runDelay(self._showResultFinish, self, 2.2)
+	elseif result == PeaceUluEnum.GameResult.Fail then
+		self._animator:Play("fail", 0, 0)
+		self._animator:Update(0)
 		AudioMgr.instance:trigger(AudioEnum.ui_activity.play_ui_pkls_challenge_fail)
-		TaskDispatcher.runDelay(arg_8_0._showResultFinish, arg_8_0, 2.2)
+		TaskDispatcher.runDelay(self._showResultFinish, self, 2.2)
 	else
-		arg_8_0._animator:Play("draw", 0, 0)
-		arg_8_0._animator:Update(0)
+		self._animator:Play("draw", 0, 0)
+		self._animator:Update(0)
 		AudioMgr.instance:trigger(AudioEnum.ui_activity.play_ui_pkls_endpoint_arrival)
 	end
 
-	gohelper.setActive(arg_8_0._stateList[var_8_0 + 1], true)
+	gohelper.setActive(self._stateList[result + 1], true)
 end
 
-function var_0_0._onClickDraw(arg_9_0)
-	arg_9_0._animator:Play("drawend", 0, 0)
-	arg_9_0._animator:Update(0)
+function PeaceUluGameView:_onClickDraw()
+	self._animator:Play("drawend", 0, 0)
+	self._animator:Update(0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
-	TaskDispatcher.runDelay(arg_9_0._showResultFinish, arg_9_0, 0.5)
+	TaskDispatcher.runDelay(self._showResultFinish, self, 0.5)
 end
 
-function var_0_0._showResultFinish(arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._showResultFinish, arg_10_0)
+function PeaceUluGameView:_showResultFinish()
+	TaskDispatcher.cancelTask(self._showResultFinish, self)
 
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0._stateList) do
-		gohelper.setActive(iter_10_1, false)
+	for index, go in ipairs(self._stateList) do
+		gohelper.setActive(go, false)
 	end
 
-	if PeaceUluModel.instance:getGameRes() == PeaceUluEnum.GameResult.Draw then
-		gohelper.setActive(arg_10_0._gostate, false)
-		arg_10_0:_onGameStart()
+	local result = PeaceUluModel.instance:getGameRes()
+
+	if result == PeaceUluEnum.GameResult.Draw then
+		gohelper.setActive(self._gostate, false)
+		self:_onGameStart()
 	else
 		PeaceUluController.instance:dispatchEvent(PeaceUluEvent.reInitResultView)
-		arg_10_0.viewContainer:dispatchEvent(ViewEvent.ToSwitchTab, 2, PeaceUluEnum.TabIndex.Result)
-		gohelper.setActive(arg_10_0._goresultmask, false)
+		self.viewContainer:dispatchEvent(ViewEvent.ToSwitchTab, 2, PeaceUluEnum.TabIndex.Result)
+		gohelper.setActive(self._goresultmask, false)
 	end
 end
 
-function var_0_0._reInitUI(arg_11_0)
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0._btnItemList) do
-		gohelper.setActive(iter_11_1.go, false)
+function PeaceUluGameView:_reInitUI()
+	for index, item in ipairs(self._btnItemList) do
+		gohelper.setActive(item.go, false)
 	end
 
-	gohelper.setActive(arg_11_0._btnconfirm.gameObject, false)
+	gohelper.setActive(self._btnconfirm.gameObject, false)
 end
 
-function var_0_0._onGameStart(arg_12_0)
-	arg_12_0._animator:Play("start", 0, 0)
-	arg_12_0._animator:Update(0)
-	gohelper.setActive(arg_12_0._gobtns, true)
-	gohelper.setActive(arg_12_0._gostate, true)
-	gohelper.setActive(arg_12_0._gostart, true)
-	gohelper.setActive(arg_12_0._goresultmask, true)
-	gohelper.setActive(arg_12_0._goxian, false)
-	gohelper.setActive(arg_12_0._gotips, false)
-	gohelper.setActive(arg_12_0._goleftbg, false)
-	gohelper.setActive(arg_12_0._goleftselected, false)
-	gohelper.setActive(arg_12_0._gorightselected, false)
-	gohelper.setActive(arg_12_0._gorightbg, false)
-	arg_12_0:_reInitUI()
-	TaskDispatcher.runDelay(arg_12_0._onGameStartFinish, arg_12_0, 2)
+function PeaceUluGameView:_onGameStart()
+	self._animator:Play("start", 0, 0)
+	self._animator:Update(0)
+	gohelper.setActive(self._gobtns, true)
+	gohelper.setActive(self._gostate, true)
+	gohelper.setActive(self._gostart, true)
+	gohelper.setActive(self._goresultmask, true)
+	gohelper.setActive(self._goxian, false)
+	gohelper.setActive(self._gotips, false)
+	gohelper.setActive(self._goleftbg, false)
+	gohelper.setActive(self._goleftselected, false)
+	gohelper.setActive(self._gorightselected, false)
+	gohelper.setActive(self._gorightbg, false)
+	self:_reInitUI()
+	TaskDispatcher.runDelay(self._onGameStartFinish, self, 2)
 end
 
-function var_0_0._onGameStartFinish(arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0._onGameStartFinish, arg_13_0)
-	gohelper.setActive(arg_13_0._goresultmask, false)
-	gohelper.setActive(arg_13_0._gostartmask, true)
-	gohelper.setActive(arg_13_0._gostart, false)
-	gohelper.setActive(arg_13_0._gotips, true)
+function PeaceUluGameView:_onGameStartFinish()
+	TaskDispatcher.cancelTask(self._onGameStartFinish, self)
+	gohelper.setActive(self._goresultmask, false)
+	gohelper.setActive(self._gostartmask, true)
+	gohelper.setActive(self._gostart, false)
+	gohelper.setActive(self._gotips, true)
 end
 
-function var_0_0._onGameTipsFinish(arg_14_0)
-	TaskDispatcher.cancelTask(arg_14_0._onGameTipsFinish, arg_14_0)
-	gohelper.setActive(arg_14_0._gotips, false)
-	gohelper.setActive(arg_14_0._gostartmask, false)
+function PeaceUluGameView:_onGameTipsFinish()
+	TaskDispatcher.cancelTask(self._onGameTipsFinish, self)
+	gohelper.setActive(self._gotips, false)
+	gohelper.setActive(self._gostartmask, false)
 end
 
-function var_0_0.onUpdateParam(arg_15_0)
-	arg_15_0:_refreshUI()
+function PeaceUluGameView:onUpdateParam()
+	self:_refreshUI()
 end
 
-function var_0_0.onOpen(arg_16_0)
-	arg_16_0._animator:Play("start", 0, 0)
-	arg_16_0._animator:Update(0)
-	arg_16_0:_onGameStart()
+function PeaceUluGameView:onOpen()
+	self._animator:Play("start", 0, 0)
+	self._animator:Update(0)
+	self:_onGameStart()
 	AudioMgr.instance:trigger(AudioEnum.ui_activity_1_5_wulu.play_ui_wulu_caiquan_open)
 end
 
-function var_0_0._refreshUI(arg_17_0)
+function PeaceUluGameView:_refreshUI()
 	return
 end
 
-function var_0_0.onClose(arg_18_0)
-	TaskDispatcher.cancelTask(arg_18_0._showResult, arg_18_0)
-	TaskDispatcher.cancelTask(arg_18_0._onGameStartFinish, arg_18_0)
-	TaskDispatcher.cancelTask(arg_18_0._onGameTipsFinish, arg_18_0)
-	TaskDispatcher.cancelTask(arg_18_0._showResultFinish, arg_18_0)
+function PeaceUluGameView:onClose()
+	TaskDispatcher.cancelTask(self._showResult, self)
+	TaskDispatcher.cancelTask(self._onGameStartFinish, self)
+	TaskDispatcher.cancelTask(self._onGameTipsFinish, self)
+	TaskDispatcher.cancelTask(self._showResultFinish, self)
 end
 
-function var_0_0.onDestroyView(arg_19_0)
-	for iter_19_0, iter_19_1 in ipairs(arg_19_0._btnItemList) do
-		iter_19_1.btn:RemoveClickListener()
+function PeaceUluGameView:onDestroyView()
+	for index, item in ipairs(self._btnItemList) do
+		item.btn:RemoveClickListener()
 	end
 end
 
-return var_0_0
+return PeaceUluGameView

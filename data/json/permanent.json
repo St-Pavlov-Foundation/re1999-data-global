@@ -53,5 +53,10 @@
     "id": 12101,
     "kvIcon": "reappear_img_kv11",
     "enterview": "Permanent2_1EnterView"
+  },
+  {
+    "id": 12401,
+    "kvIcon": "reappear_img_kv14",
+    "enterview": "Permanent2_4EnterView"
   }
 ]

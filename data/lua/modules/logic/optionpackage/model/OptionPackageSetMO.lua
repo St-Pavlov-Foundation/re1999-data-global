@@ -1,40 +1,42 @@
-﻿module("modules.logic.optionpackage.model.OptionPackageSetMO", package.seeall)
+﻿-- chunkname: @modules/logic/optionpackage/model/OptionPackageSetMO.lua
 
-local var_0_0 = pureTable("OptionPackageSetMO")
+module("modules.logic.optionpackage.model.OptionPackageSetMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.id = arg_1_1 or ""
-	arg_1_0.packName = arg_1_1 or ""
-	arg_1_0._packMOModel = arg_1_3
-	arg_1_0._lang2IdDict = {}
-	arg_1_0._needDownloadLangs = {}
-	arg_1_0._neddDownLoadDict = {}
-	arg_1_0._allPackLangs = {}
+local OptionPackageSetMO = pureTable("OptionPackageSetMO")
 
-	tabletool.addValues(arg_1_0._needDownloadLangs, OptionPackageEnum.NeedPackLangList)
-	tabletool.addValues(arg_1_0._allPackLangs, OptionPackageEnum.NeedPackLangList)
-	tabletool.addValues(arg_1_0._allPackLangs, arg_1_2)
+function OptionPackageSetMO:init(packageName, langs, packMOModel)
+	self.id = packageName or ""
+	self.packName = packageName or ""
+	self._packMOModel = packMOModel
+	self._lang2IdDict = {}
+	self._needDownloadLangs = {}
+	self._neddDownLoadDict = {}
+	self._allPackLangs = {}
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_0._allPackLangs) do
-		arg_1_0._lang2IdDict[iter_1_1] = OptionPackageHelper.formatLangPackName(iter_1_1, arg_1_0.packName)
+	tabletool.addValues(self._needDownloadLangs, OptionPackageEnum.NeedPackLangList)
+	tabletool.addValues(self._allPackLangs, OptionPackageEnum.NeedPackLangList)
+	tabletool.addValues(self._allPackLangs, langs)
+
+	for _, lang in ipairs(self._allPackLangs) do
+		self._lang2IdDict[lang] = OptionPackageHelper.formatLangPackName(lang, self.packName)
 	end
 
-	for iter_1_2, iter_1_3 in ipairs(arg_1_0._needDownloadLangs) do
-		arg_1_0._neddDownLoadDict[iter_1_3] = true
-	end
-end
-
-function var_0_0.getPackageMO(arg_2_0, arg_2_1)
-	if arg_2_0._packMOModel and arg_2_0._lang2IdDict[arg_2_1] then
-		return arg_2_0._packMOModel:getById(arg_2_0._lang2IdDict[arg_2_1])
+	for _, lang in ipairs(self._needDownloadLangs) do
+		self._neddDownLoadDict[lang] = true
 	end
 end
 
-function var_0_0.hasLocalVersion(arg_3_0)
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0._allPackLangs) do
-		local var_3_0 = arg_3_0:getPackageMO(iter_3_1)
+function OptionPackageSetMO:getPackageMO(lang)
+	if self._packMOModel and self._lang2IdDict[lang] then
+		return self._packMOModel:getById(self._lang2IdDict[lang])
+	end
+end
 
-		if var_3_0 and var_3_0:hasLocalVersion() then
+function OptionPackageSetMO:hasLocalVersion()
+	for _, lang in ipairs(self._allPackLangs) do
+		local voiceMO = self:getPackageMO(lang)
+
+		if voiceMO and voiceMO:hasLocalVersion() then
 			return true
 		end
 	end
@@ -42,43 +44,43 @@ function var_0_0.hasLocalVersion(arg_3_0)
 	return false
 end
 
-function var_0_0.getDownloadSize(arg_4_0, arg_4_1)
-	local var_4_0 = 0
-	local var_4_1 = 0
+function OptionPackageSetMO:getDownloadSize(langs)
+	local size = 0
+	local localSize = 0
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
-		if not arg_4_0._neddDownLoadDict[iter_4_1] then
-			local var_4_2 = arg_4_0:getPackageMO(iter_4_1)
+	for _, lang in ipairs(langs) do
+		if not self._neddDownLoadDict[lang] then
+			local packMO = self:getPackageMO(lang)
 
-			if var_4_2 then
-				var_4_0 = var_4_0 + var_4_2.size
-				var_4_1 = var_4_1 + var_4_2.localSize
+			if packMO then
+				size = size + packMO.size
+				localSize = localSize + packMO.localSize
 			end
 		end
 	end
 
-	for iter_4_2, iter_4_3 in ipairs(arg_4_0._needDownloadLangs) do
-		local var_4_3 = arg_4_0:getPackageMO(iter_4_3)
+	for _, needLang in ipairs(self._needDownloadLangs) do
+		local packMO = self:getPackageMO(needLang)
 
-		if var_4_3 then
-			var_4_0 = var_4_0 + var_4_3.size
-			var_4_1 = var_4_1 + var_4_3.localSize
+		if packMO then
+			size = size + packMO.size
+			localSize = localSize + packMO.localSize
 		end
 	end
 
-	return var_4_0, var_4_1
+	return size, localSize
 end
 
-function var_0_0.isNeedDownload(arg_5_0, arg_5_1)
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0._needDownloadLangs) do
-		if arg_5_0:_checkDownloadLang(iter_5_1) then
+function OptionPackageSetMO:isNeedDownload(langs)
+	for _, needLang in ipairs(self._needDownloadLangs) do
+		if self:_checkDownloadLang(needLang) then
 			return true
 		end
 	end
 
-	if arg_5_1 and #arg_5_1 > 0 then
-		for iter_5_2, iter_5_3 in ipairs(arg_5_1) do
-			if arg_5_0:_checkDownloadLang(iter_5_3) then
+	if langs and #langs > 0 then
+		for _, lang in ipairs(langs) do
+			if self:_checkDownloadLang(lang) then
 				return true
 			end
 		end
@@ -87,48 +89,48 @@ function var_0_0.isNeedDownload(arg_5_0, arg_5_1)
 	return false
 end
 
-function var_0_0.getDownloadInfoListTb(arg_6_0, arg_6_1)
-	local var_6_0 = {}
+function OptionPackageSetMO:getDownloadInfoListTb(langs)
+	local infoListTb = {}
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0._needDownloadLangs) do
-		arg_6_0:_getDownloadInfoTb(iter_6_1, var_6_0)
+	for _, lang in ipairs(self._needDownloadLangs) do
+		self:_getDownloadInfoTb(lang, infoListTb)
 	end
 
-	if arg_6_1 and #arg_6_1 > 0 then
-		for iter_6_2, iter_6_3 in ipairs(arg_6_1) do
-			if not arg_6_0._neddDownLoadDict[iter_6_3] then
-				arg_6_0:_getDownloadInfoTb(iter_6_3, var_6_0)
+	if langs and #langs > 0 then
+		for _, lang in ipairs(langs) do
+			if not self._neddDownLoadDict[lang] then
+				self:_getDownloadInfoTb(lang, infoListTb)
 			end
 		end
 	end
 
-	return var_6_0
+	return infoListTb
 end
 
-function var_0_0._checkDownloadLang(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0:getPackageMO(arg_7_1)
+function OptionPackageSetMO:_checkDownloadLang(lang)
+	local packageMO = self:getPackageMO(lang)
 
-	if var_7_0 and var_7_0:isNeedDownload() then
+	if packageMO and packageMO:isNeedDownload() then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0._getDownloadInfoTb(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_2 = arg_8_2 or {}
+function OptionPackageSetMO:_getDownloadInfoTb(lang, getInfoListTb)
+	getInfoListTb = getInfoListTb or {}
 
-	local var_8_0 = arg_8_0:getPackageMO(arg_8_1)
+	local packageMO = self:getPackageMO(lang)
 
-	if var_8_0 and var_8_0:isNeedDownload() then
-		local var_8_1 = var_8_0:getPackInfo()
+	if packageMO and packageMO:isNeedDownload() then
+		local packInfo = packageMO:getPackInfo()
 
-		if var_8_1 then
-			arg_8_2[var_8_0.langPack] = var_8_1
+		if packInfo then
+			getInfoListTb[packageMO.langPack] = packInfo
 		end
 	end
 
-	return arg_8_2
+	return getInfoListTb
 end
 
-return var_0_0
+return OptionPackageSetMO

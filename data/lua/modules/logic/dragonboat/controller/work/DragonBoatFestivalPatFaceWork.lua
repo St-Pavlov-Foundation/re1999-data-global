@@ -1,31 +1,35 @@
-﻿module("modules.logic.dragonboat.controller.work.DragonBoatFestivalPatFaceWork", package.seeall)
+﻿-- chunkname: @modules/logic/dragonboat/controller/work/DragonBoatFestivalPatFaceWork.lua
 
-local var_0_0 = class("DragonBoatFestivalPatFaceWork", PatFaceWorkBase)
+module("modules.logic.dragonboat.controller.work.DragonBoatFestivalPatFaceWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
+local DragonBoatFestivalPatFaceWork = class("DragonBoatFestivalPatFaceWork", PatFaceWorkBase)
+
+function DragonBoatFestivalPatFaceWork:onStart(context)
 	if not ActivityModel.instance:isActOnLine(ActivityEnum.Activity.DragonBoatFestival) then
-		arg_1_0:onDone(true)
+		self:onDone(true)
 
 		return
 	end
 
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_1_0._onShowFinish, arg_1_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onShowFinish, self)
 
-	if DragonBoatFestivalModel.instance:hasRewardNotGet() then
+	local hasCouldGetReward = DragonBoatFestivalModel.instance:hasRewardNotGet()
+
+	if hasCouldGetReward then
 		DragonBoatFestivalController.instance:openDragonBoatFestivalView()
 	else
-		arg_1_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._onShowFinish(arg_2_0, arg_2_1)
-	if arg_2_1 == ViewName.DragonBoatFestivalView then
-		arg_2_0:onDone(true)
+function DragonBoatFestivalPatFaceWork:_onShowFinish(viewName)
+	if viewName == ViewName.DragonBoatFestivalView then
+		self:onDone(true)
 	end
 end
 
-function var_0_0.clearWork(arg_3_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_3_0._onShowFinish, arg_3_0)
+function DragonBoatFestivalPatFaceWork:clearWork()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onShowFinish, self)
 end
 
-return var_0_0
+return DragonBoatFestivalPatFaceWork

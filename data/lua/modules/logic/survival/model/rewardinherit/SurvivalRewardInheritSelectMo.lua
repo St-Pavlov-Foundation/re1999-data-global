@@ -1,97 +1,101 @@
-﻿module("modules.logic.survival.model.rewardinherit.SurvivalRewardInheritSelectMo", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/rewardinherit/SurvivalRewardInheritSelectMo.lua
 
-local var_0_0 = pureTable("SurvivalRewardInheritSelectMo")
+module("modules.logic.survival.model.rewardinherit.SurvivalRewardInheritSelectMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.maxAmount = nil
-	arg_1_0.selectIdDic = {}
+local SurvivalRewardInheritSelectMo = pureTable("SurvivalRewardInheritSelectMo")
+
+function SurvivalRewardInheritSelectMo:ctor()
+	self.maxAmount = nil
+	self.selectIdDic = {}
 end
 
-function var_0_0.clear(arg_2_0)
-	tabletool.clear(arg_2_0.selectIdDic)
+function SurvivalRewardInheritSelectMo:clear()
+	tabletool.clear(self.selectIdDic)
 end
 
-function var_0_0.replaceSelectIdDic(arg_3_0, arg_3_1)
-	tabletool.clear(arg_3_0.selectIdDic)
-	LuaUtil.insertDict(arg_3_0.selectIdDic, arg_3_1)
+function SurvivalRewardInheritSelectMo:replaceSelectIdDic(dic)
+	tabletool.clear(self.selectIdDic)
+	LuaUtil.insertDict(self.selectIdDic, dic)
 end
 
-function var_0_0.copySelectIdDic(arg_4_0)
-	return tabletool.copy(arg_4_0.selectIdDic)
+function SurvivalRewardInheritSelectMo:copySelectIdDic()
+	return tabletool.copy(self.selectIdDic)
 end
 
-function var_0_0.setMaxAmount(arg_5_0, arg_5_1)
-	arg_5_0.maxAmount = arg_5_1
+function SurvivalRewardInheritSelectMo:setMaxAmount(maxAmount)
+	self.maxAmount = maxAmount
 end
 
-function var_0_0.isSelect(arg_6_0, arg_6_1)
-	return LuaUtil.tableContains(arg_6_0.selectIdDic, arg_6_1)
+function SurvivalRewardInheritSelectMo:isSelect(id)
+	return LuaUtil.tableContains(self.selectIdDic, id)
 end
 
-function var_0_0.replaceOne(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_0.selectIdDic[arg_7_1] = arg_7_2
+function SurvivalRewardInheritSelectMo:replaceOne(posIndex, id)
+	self.selectIdDic[posIndex] = id
 end
 
-function var_0_0.removeOne(arg_8_0, arg_8_1)
-	local var_8_0 = LuaUtil.indexOfElement(arg_8_0.selectIdDic, arg_8_1)
+function SurvivalRewardInheritSelectMo:removeOne(id)
+	local index = LuaUtil.indexOfElement(self.selectIdDic, id)
 
-	if var_8_0 > 0 then
-		arg_8_0.selectIdDic[var_8_0] = nil
+	if index > 0 then
+		self.selectIdDic[index] = nil
 	end
 end
 
-function var_0_0.removeOneByPos(arg_9_0, arg_9_1)
-	arg_9_0.selectIdDic[arg_9_1] = nil
+function SurvivalRewardInheritSelectMo:removeOneByPos(pos)
+	self.selectIdDic[pos] = nil
 end
 
-function var_0_0.haveSelect(arg_10_0)
-	return #arg_10_0.selectIdDic > 0
+function SurvivalRewardInheritSelectMo:haveSelect()
+	return #self.selectIdDic > 0
 end
 
-function var_0_0.getSelect(arg_11_0, arg_11_1)
-	return arg_11_0.selectIdDic[arg_11_1]
+function SurvivalRewardInheritSelectMo:getSelect(index)
+	return self.selectIdDic[index]
 end
 
-function var_0_0.getSelectCellCfgId(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0:getSelect(arg_12_1)
+function SurvivalRewardInheritSelectMo:getSelectCellCfgId(index)
+	local selectId = self:getSelect(index)
 
-	if var_12_0 then
-		return SurvivalHandbookModel.instance:getMoById(var_12_0):getCellCfgId()
+	if selectId then
+		local mo = SurvivalHandbookModel.instance:getMoById(selectId)
+
+		return mo:getCellCfgId()
 	end
 end
 
-function var_0_0.haveEmpty(arg_13_0)
-	for iter_13_0 = 1, arg_13_0.maxAmount do
-		if arg_13_0.selectIdDic[iter_13_0] == nil then
-			return true, iter_13_0
+function SurvivalRewardInheritSelectMo:haveEmpty()
+	for i = 1, self.maxAmount do
+		if self.selectIdDic[i] == nil then
+			return true, i
 		end
 	end
 end
 
-function var_0_0.getLastPos(arg_14_0)
-	local var_14_0 = arg_14_0.maxAmount
+function SurvivalRewardInheritSelectMo:getLastPos()
+	local pos = self.maxAmount
 
-	for iter_14_0 = 1, arg_14_0.maxAmount do
-		if arg_14_0.selectIdDic[iter_14_0] == nil then
-			var_14_0 = iter_14_0
+	for i = 1, self.maxAmount do
+		if self.selectIdDic[i] == nil then
+			pos = i
 
 			break
 		end
 	end
 
-	return var_14_0
+	return pos
 end
 
-function var_0_0.getSelectList(arg_15_0)
-	local var_15_0 = {}
+function SurvivalRewardInheritSelectMo:getSelectList()
+	local list = {}
 
-	for iter_15_0, iter_15_1 in pairs(arg_15_0.selectIdDic) do
-		local var_15_1 = SurvivalHandbookModel.instance:getMoById(iter_15_1)
+	for i, handbookId in pairs(self.selectIdDic) do
+		local mo = SurvivalHandbookModel.instance:getMoById(handbookId)
 
-		table.insert(var_15_0, var_15_1:getCellCfgId())
+		table.insert(list, mo:getCellCfgId())
 	end
 
-	return var_15_0
+	return list
 end
 
-return var_0_0
+return SurvivalRewardInheritSelectMo

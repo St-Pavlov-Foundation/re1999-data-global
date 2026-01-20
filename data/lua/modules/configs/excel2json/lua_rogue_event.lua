@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_rogue_event", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_rogue_event.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_rogue_event", package.seeall)
+
+local lua_rogue_event = {}
+local fields = {
 	weight19 = 105,
 	collection2Weights = 57,
 	event2Weights = 43,
@@ -119,15 +121,15 @@ local var_0_1 = {
 	version = 4,
 	token2Weights = 31
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	title = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_rogue_event.onLoad(json)
+	lua_rogue_event.configList, lua_rogue_event.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_rogue_event

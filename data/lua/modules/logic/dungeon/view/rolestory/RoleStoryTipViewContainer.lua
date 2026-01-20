@@ -1,13 +1,15 @@
-﻿module("modules.logic.dungeon.view.rolestory.RoleStoryTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/rolestory/RoleStoryTipViewContainer.lua
 
-local var_0_0 = class("RoleStoryTipViewContainer", BaseViewContainer)
+module("modules.logic.dungeon.view.rolestory.RoleStoryTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoleStoryTipViewContainer = class("RoleStoryTipViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RoleStoryTipView.New())
+function RoleStoryTipViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RoleStoryTipView.New())
+
+	return views
 end
 
-return var_0_0
+return RoleStoryTipViewContainer

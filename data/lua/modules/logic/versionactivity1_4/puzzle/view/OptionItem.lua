@@ -1,7 +1,9 @@
-﻿module("modules.logic.versionactivity1_4.puzzle.view.OptionItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/puzzle/view/OptionItem.lua
 
-local var_0_0 = class("OptionItem", LuaCompBase)
-local var_0_1 = {
+module("modules.logic.versionactivity1_4.puzzle.view.OptionItem", package.seeall)
+
+local OptionItem = class("OptionItem", LuaCompBase)
+local posY = {
 	-45,
 	-37,
 	-27,
@@ -11,160 +13,162 @@ local var_0_1 = {
 	21
 }
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0.transform = arg_1_1.transform
-	arg_1_0.transParent = arg_1_1.transform.parent
-	arg_1_0.imageIcon = gohelper.findChildImage(arg_1_1, "img_ItemIcon")
-	arg_1_0._uiclick = SLFramework.UGUI.UIClickListener.Get(arg_1_0.go)
+function OptionItem:init(go)
+	self.go = go
+	self.transform = go.transform
+	self.transParent = go.transform.parent
+	self.imageIcon = gohelper.findChildImage(go, "img_ItemIcon")
+	self._uiclick = SLFramework.UGUI.UIClickListener.Get(self.go)
 
-	arg_1_0._uiclick:AddClickListener(arg_1_0._btnclickOnClick, arg_1_0)
+	self._uiclick:AddClickListener(self._btnclickOnClick, self)
 
-	arg_1_0._uidrag = SLFramework.UGUI.UIDragListener.Get(arg_1_0.go)
+	self._uidrag = SLFramework.UGUI.UIDragListener.Get(self.go)
 
-	arg_1_0._uidrag:AddDragBeginListener(arg_1_0._onDragBegin, arg_1_0)
-	arg_1_0._uidrag:AddDragListener(arg_1_0._onDrag, arg_1_0)
-	arg_1_0._uidrag:AddDragEndListener(arg_1_0._onDragEnd, arg_1_0)
+	self._uidrag:AddDragBeginListener(self._onDragBegin, self)
+	self._uidrag:AddDragListener(self._onDrag, self)
+	self._uidrag:AddDragEndListener(self._onDragEnd, self)
 
-	arg_1_0.anim = arg_1_1:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0.imageyy = gohelper.findChildImage(arg_1_0.go, "img_ItemIcon_yy")
-	arg_1_0.goWrong = gohelper.findChild(arg_1_1, "go_Wrong")
-	arg_1_0.txtNum = gohelper.findChildText(arg_1_1, "txt_Num")
-	arg_1_0.isDrag = false
-	arg_1_0.operList = Role37PuzzleModel.instance:getOperList()
-	arg_1_0.maxOper = Role37PuzzleModel.instance:getMaxOper()
+	self.anim = go:GetComponent(typeof(UnityEngine.Animator))
+	self.imageyy = gohelper.findChildImage(self.go, "img_ItemIcon_yy")
+	self.goWrong = gohelper.findChild(go, "go_Wrong")
+	self.txtNum = gohelper.findChildText(go, "txt_Num")
+	self.isDrag = false
+	self.operList = Role37PuzzleModel.instance:getOperList()
+	self.maxOper = Role37PuzzleModel.instance:getMaxOper()
 end
 
-function var_0_0.onDestroy(arg_2_0)
-	arg_2_0._uiclick:RemoveClickListener()
-	arg_2_0._uidrag:RemoveDragBeginListener()
-	arg_2_0._uidrag:RemoveDragListener()
-	arg_2_0._uidrag:RemoveDragEndListener()
+function OptionItem:onDestroy()
+	self._uiclick:RemoveClickListener()
+	self._uidrag:RemoveDragBeginListener()
+	self._uidrag:RemoveDragListener()
+	self._uidrag:RemoveDragEndListener()
 end
 
-function var_0_0.initParam(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	arg_3_0.isFinal = arg_3_4
-	arg_3_0.viewRootGO = arg_3_3
-	arg_3_0.viewRootTrans = arg_3_3.transform
-	arg_3_0.frameItemList = arg_3_2
+function OptionItem:initParam(index, frameItemList, viewGO, isFinal)
+	self.isFinal = isFinal
+	self.viewRootGO = viewGO
+	self.viewRootTrans = viewGO.transform
+	self.frameItemList = frameItemList
 
-	arg_3_0:updateIndex(arg_3_1)
-	arg_3_0:refreshSprite()
-	arg_3_0:calculateDefalutPos()
-	arg_3_0:_setDefalutPos(false)
+	self:updateIndex(index)
+	self:refreshSprite()
+	self:calculateDefalutPos()
+	self:_setDefalutPos(false)
 
-	arg_3_0.frameWidth = recthelper.getWidth(arg_3_2[1].go.transform)
-	arg_3_0.frameHeight = recthelper.getHeight(arg_3_2[1].go.transform)
+	self.frameWidth = recthelper.getWidth(frameItemList[1].go.transform)
+	self.frameHeight = recthelper.getHeight(frameItemList[1].go.transform)
 
-	gohelper.setActive(arg_3_0.txtNum, true)
+	gohelper.setActive(self.txtNum, true)
 end
 
-function var_0_0.refreshSprite(arg_4_0)
-	local var_4_0 = arg_4_0.operList[arg_4_0._index]
+function OptionItem:refreshSprite()
+	local operType = self.operList[self._index]
 
-	UISpriteSetMgr.instance:setV1a4Role37Sprite(arg_4_0.imageIcon, Role37PuzzleModel.instance:getShapeImage(var_4_0))
-	UISpriteSetMgr.instance:setV1a4Role37Sprite(arg_4_0.imageyy, Role37PuzzleModel.instance:getShapeImage(var_4_0) .. "_yy")
+	UISpriteSetMgr.instance:setV1a4Role37Sprite(self.imageIcon, Role37PuzzleModel.instance:getShapeImage(operType))
+	UISpriteSetMgr.instance:setV1a4Role37Sprite(self.imageyy, Role37PuzzleModel.instance:getShapeImage(operType) .. "_yy")
 
-	if arg_4_0.isFinal then
-		local var_4_1 = var_0_1[var_4_0]
+	if self.isFinal then
+		local y = posY[operType]
 
-		recthelper.setAnchorY(arg_4_0.imageIcon.transform, var_4_1)
-		recthelper.setAnchorY(arg_4_0.imageyy.transform, var_4_1)
+		recthelper.setAnchorY(self.imageIcon.transform, y)
+		recthelper.setAnchorY(self.imageyy.transform, y)
 	end
 end
 
-function var_0_0.updateIndex(arg_5_0, arg_5_1)
-	arg_5_0._index = arg_5_1
+function OptionItem:updateIndex(index)
+	self._index = index
 end
 
-function var_0_0.calculateDefalutPos(arg_6_0)
-	local var_6_0 = arg_6_0.frameItemList[arg_6_0._index].go
+function OptionItem:calculateDefalutPos()
+	local frameGo = self.frameItemList[self._index].go
 
-	arg_6_0.defalutPos = recthelper.rectToRelativeAnchorPos(var_6_0.transform.position, arg_6_0.transParent)
+	self.defalutPos = recthelper.rectToRelativeAnchorPos(frameGo.transform.position, self.transParent)
 end
 
-function var_0_0._btnclickOnClick(arg_7_0)
-	if arg_7_0._isDrag then
+function OptionItem:_btnclickOnClick()
+	if self._isDrag then
 		return
 	end
 
-	Role37PuzzleModel.instance:removeOption(arg_7_0._index)
+	Role37PuzzleModel.instance:removeOption(self._index)
 end
 
-function var_0_0._onDragBegin(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0._isDrag = true
+function OptionItem:_onDragBegin(param, pointerEventData)
+	self._isDrag = true
 
-	arg_8_0.anim:Play("in", 0, 0)
+	self.anim:Play("in", 0, 0)
 	AudioEffectMgr.instance:playAudio(AudioEnum.UI.play_ui_activity_hero37_checkpoint_graph_drag)
-	gohelper.addChildPosStay(arg_8_0.viewRootGO, arg_8_0.go)
+	gohelper.addChildPosStay(self.viewRootGO, self.go)
 end
 
-function var_0_0._onDrag(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = recthelper.screenPosToAnchorPos(arg_9_2.position, arg_9_0.viewRootTrans)
+function OptionItem:_onDrag(param, pointerEventData)
+	local pos = recthelper.screenPosToAnchorPos(pointerEventData.position, self.viewRootTrans)
 
-	recthelper.setAnchor(arg_9_0.transform, var_9_0.x, var_9_0.y)
+	recthelper.setAnchor(self.transform, pos.x, pos.y)
 end
 
-function var_0_0._onDragEnd(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_0._isDrag = false
+function OptionItem:_onDragEnd(param, pointerEventData)
+	self._isDrag = false
 
-	arg_10_0.anim:Play("put", 0, 0)
-	ZProj.TweenHelper.KillByObj(arg_10_0.go)
+	self.anim:Play("put", 0, 0)
+	ZProj.TweenHelper.KillByObj(self.go)
 
-	local var_10_0 = recthelper.screenPosToAnchorPos(arg_10_2.position, arg_10_0.viewRootTrans)
+	local anchorPos = recthelper.screenPosToAnchorPos(pointerEventData.position, self.viewRootTrans)
 
-	for iter_10_0 = 1, arg_10_0.maxOper do
-		local var_10_1 = arg_10_0.frameItemList[iter_10_0].go
-		local var_10_2 = recthelper.rectToRelativeAnchorPos(var_10_1.transform.position, arg_10_0.viewRootTrans)
-		local var_10_3 = math.abs(var_10_2.x - var_10_0.x)
-		local var_10_4 = math.abs(var_10_2.y - var_10_0.y)
+	for i = 1, self.maxOper do
+		local frameGo = self.frameItemList[i].go
+		local uiPos = recthelper.rectToRelativeAnchorPos(frameGo.transform.position, self.viewRootTrans)
+		local deltaX = math.abs(uiPos.x - anchorPos.x)
+		local deltaY = math.abs(uiPos.y - anchorPos.y)
 
-		if var_10_3 < arg_10_0.frameWidth / 2 and var_10_4 < arg_10_0.frameHeight / 2 then
-			gohelper.addChildPosStay(arg_10_0.transParent.gameObject, arg_10_0.go)
+		if deltaX < self.frameWidth / 2 and deltaY < self.frameHeight / 2 then
+			gohelper.addChildPosStay(self.transParent.gameObject, self.go)
 
-			if iter_10_0 == arg_10_0._index then
-				arg_10_0:_setDefalutPos(true)
+			if i == self._index then
+				self:_setDefalutPos(true)
 			else
-				Role37PuzzleModel.instance:exchangeOption(arg_10_0._index, iter_10_0)
+				Role37PuzzleModel.instance:exchangeOption(self._index, i)
 			end
 
-			arg_10_0:_playEndAduio()
+			self:_playEndAduio()
 
 			return
 		end
 	end
 
-	Role37PuzzleModel.instance:removeOption(arg_10_0._index)
+	Role37PuzzleModel.instance:removeOption(self._index)
 end
 
-function var_0_0._setDefalutPos(arg_11_0, arg_11_1)
-	if arg_11_1 then
-		ZProj.TweenHelper.DOAnchorPos(arg_11_0.transform, arg_11_0.defalutPos.x, arg_11_0.defalutPos.y, 0.2)
+function OptionItem:_setDefalutPos(isTween)
+	if isTween then
+		ZProj.TweenHelper.DOAnchorPos(self.transform, self.defalutPos.x, self.defalutPos.y, 0.2)
 	else
-		recthelper.setAnchor(arg_11_0.transform, arg_11_0.defalutPos.x, arg_11_0.defalutPos.y)
+		recthelper.setAnchor(self.transform, self.defalutPos.x, self.defalutPos.y)
 	end
 end
 
-function var_0_0.setError(arg_12_0, arg_12_1)
-	if arg_12_0.goWrong then
-		gohelper.setActive(arg_12_0.goWrong, arg_12_1)
+function OptionItem:setError(isShow)
+	if self.goWrong then
+		gohelper.setActive(self.goWrong, isShow)
 	end
 end
 
-function var_0_0.setNum(arg_13_0, arg_13_1)
-	if arg_13_0.txtNum then
-		arg_13_0.txtNum.text = arg_13_1 < 10 and "0" .. arg_13_1 or arg_13_1
+function OptionItem:setNum(num)
+	if self.txtNum then
+		self.txtNum.text = num < 10 and "0" .. num or num
 	end
 end
 
-function var_0_0._playEndAduio(arg_14_0)
-	if Activity130Model.instance:getCurEpisodeId() == 7 then
-		local var_14_0 = Role37PuzzleModel.instance:getOperAudioId(arg_14_0.operList[arg_14_0._index])
+function OptionItem:_playEndAduio()
+	local curLevelId = Activity130Model.instance:getCurEpisodeId()
 
-		AudioEffectMgr.instance:playAudio(var_14_0)
+	if curLevelId == 7 then
+		local audioId = Role37PuzzleModel.instance:getOperAudioId(self.operList[self._index])
+
+		AudioEffectMgr.instance:playAudio(audioId)
 	else
 		AudioEffectMgr.instance:playAudio(AudioEnum.UI.play_ui_activity_hero37_checkpoint_graph_put)
 	end
 end
 
-return var_0_0
+return OptionItem

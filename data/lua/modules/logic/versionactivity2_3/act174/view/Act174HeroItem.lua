@@ -1,182 +1,185 @@
-﻿module("modules.logic.versionactivity2_3.act174.view.Act174HeroItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/act174/view/Act174HeroItem.lua
 
-local var_0_0 = class("Act174HeroItem", LuaCompBase)
+module("modules.logic.versionactivity2_3.act174.view.Act174HeroItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._teamView = arg_1_1
+local Act174HeroItem = class("Act174HeroItem", LuaCompBase)
+
+function Act174HeroItem:ctor(act174TeamView)
+	self._teamView = act174TeamView
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0._go = arg_2_1
-	arg_2_0._goHero = gohelper.findChild(arg_2_1, "go_Hero")
-	arg_2_0._heroIcon = gohelper.findChildSingleImage(arg_2_1, "go_Hero/image_Hero")
-	arg_2_0._heroQuality = gohelper.findChildImage(arg_2_1, "go_Hero/image_quality")
-	arg_2_0._heroCareer = gohelper.findChildImage(arg_2_1, "go_Hero/image_Career")
-	arg_2_0._goEquip = gohelper.findChild(arg_2_1, "go_Equip")
-	arg_2_0._skillIcon = gohelper.findChildSingleImage(arg_2_1, "go_Equip/skill/image_Skill")
-	arg_2_0._collectionIcon = gohelper.findChildSingleImage(arg_2_1, "go_Equip/collection/image_Collection")
-	arg_2_0._goEmptyCollection = gohelper.findChild(arg_2_1, "go_Equip/collection/empty")
-	arg_2_0._goEmpty = gohelper.findChild(arg_2_1, "go_Empty")
-	arg_2_0._txtNum = gohelper.findChildText(arg_2_1, "Index/txt_Num")
-	arg_2_0._goLock = gohelper.findChild(arg_2_1, "go_Lock")
-	arg_2_0.btnClick = gohelper.findButtonWithAudio(arg_2_1)
+function Act174HeroItem:init(go)
+	self._go = go
+	self._goHero = gohelper.findChild(go, "go_Hero")
+	self._heroIcon = gohelper.findChildSingleImage(go, "go_Hero/image_Hero")
+	self._heroQuality = gohelper.findChildImage(go, "go_Hero/image_quality")
+	self._heroCareer = gohelper.findChildImage(go, "go_Hero/image_Career")
+	self._goEquip = gohelper.findChild(go, "go_Equip")
+	self._skillIcon = gohelper.findChildSingleImage(go, "go_Equip/skill/image_Skill")
+	self._collectionIcon = gohelper.findChildSingleImage(go, "go_Equip/collection/image_Collection")
+	self._goEmptyCollection = gohelper.findChild(go, "go_Equip/collection/empty")
+	self._goEmpty = gohelper.findChild(go, "go_Empty")
+	self._txtNum = gohelper.findChildText(go, "Index/txt_Num")
+	self._goLock = gohelper.findChild(go, "go_Lock")
+	self.btnClick = gohelper.findButtonWithAudio(go)
 
-	CommonDragHelper.instance:registerDragObj(arg_2_1, arg_2_0.beginDrag, nil, arg_2_0.endDrag, arg_2_0.checkDrag, arg_2_0)
-	gohelper.setActive(arg_2_0._goEmpty, true)
-	gohelper.setActive(arg_2_0._goHero, false)
+	CommonDragHelper.instance:registerDragObj(go, self.beginDrag, nil, self.endDrag, self.checkDrag, self)
+	gohelper.setActive(self._goEmpty, true)
+	gohelper.setActive(self._goHero, false)
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	arg_3_0.btnClick:AddClickListener(arg_3_0.onClick, arg_3_0)
+function Act174HeroItem:addEventListeners()
+	self.btnClick:AddClickListener(self.onClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	arg_4_0.btnClick:RemoveClickListener()
+function Act174HeroItem:removeEventListeners()
+	self.btnClick:RemoveClickListener()
 end
 
-function var_0_0.onDestroy(arg_5_0)
-	arg_5_0._heroIcon:UnLoadImage()
-	arg_5_0._skillIcon:UnLoadImage()
-	arg_5_0._collectionIcon:UnLoadImage()
-	CommonDragHelper.instance:unregisterDragObj(arg_5_0._go)
+function Act174HeroItem:onDestroy()
+	self._heroIcon:UnLoadImage()
+	self._skillIcon:UnLoadImage()
+	self._collectionIcon:UnLoadImage()
+	CommonDragHelper.instance:unregisterDragObj(self._go)
 end
 
-function var_0_0.onClick(arg_6_0)
-	if arg_6_0.tweenId or arg_6_0.isDraging then
+function Act174HeroItem:onClick()
+	if self.tweenId or self.isDraging then
 		return
 	end
 
-	arg_6_0._teamView:clickHero(arg_6_0._index)
+	self._teamView:clickHero(self._index)
 end
 
-function var_0_0.setIndex(arg_7_0, arg_7_1)
-	arg_7_0._index = arg_7_1
+function Act174HeroItem:setIndex(index)
+	self._index = index
 
-	local var_7_0, var_7_1 = Activity174Helper.CalculateRowColumn(arg_7_1)
+	local row, column = Activity174Helper.CalculateRowColumn(index)
 
-	arg_7_0._txtNum.text = var_7_1
+	self._txtNum.text = column
 
-	local var_7_2 = arg_7_0._teamView.unLockTeamCnt
+	local teamCnt = self._teamView.unLockTeamCnt
 
-	gohelper.setActive(arg_7_0._goLock, var_7_2 < var_7_0)
-	gohelper.setActive(arg_7_0._goEquip, var_7_0 <= var_7_2)
+	gohelper.setActive(self._goLock, teamCnt < row)
+	gohelper.setActive(self._goEquip, row <= teamCnt)
 end
 
-function var_0_0.setData(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	arg_8_0._heroId = arg_8_1
-	arg_8_0._itemId = arg_8_2
-	arg_8_0._skillIndex = arg_8_3
+function Act174HeroItem:setData(heroId, itemId, skillIndex)
+	self._heroId = heroId
+	self._itemId = itemId
+	self._skillIndex = skillIndex
 
-	if arg_8_1 then
-		local var_8_0 = Activity174Config.instance:getRoleCo(arg_8_1)
-		local var_8_1 = ResUrl.getHeadIconMiddle(var_8_0.skinId)
+	if heroId then
+		local roleCo = Activity174Config.instance:getRoleCo(heroId)
+		local path = ResUrl.getHeadIconMiddle(roleCo.skinId)
 
-		arg_8_0._heroIcon:LoadImage(var_8_1)
-		UISpriteSetMgr.instance:setAct174Sprite(arg_8_0._heroQuality, "act174_ready_rolebg_" .. var_8_0.rare)
-		UISpriteSetMgr.instance:setCommonSprite(arg_8_0._heroCareer, "lssx_" .. var_8_0.career)
+		self._heroIcon:LoadImage(path)
+		UISpriteSetMgr.instance:setAct174Sprite(self._heroQuality, "act174_ready_rolebg_" .. roleCo.rare)
+		UISpriteSetMgr.instance:setCommonSprite(self._heroCareer, "lssx_" .. roleCo.career)
 	end
 
-	if arg_8_2 then
-		local var_8_2 = lua_activity174_collection.configDict[arg_8_2]
+	if itemId then
+		local config = lua_activity174_collection.configDict[itemId]
 
-		arg_8_0._collectionIcon:LoadImage(ResUrl.getRougeSingleBgCollection(var_8_2.icon))
+		self._collectionIcon:LoadImage(ResUrl.getRougeSingleBgCollection(config.icon))
 	end
 
-	if arg_8_3 then
-		local var_8_3 = Activity174Config.instance:getHeroSkillIdDic(arg_8_0._heroId, true)[arg_8_3]
-		local var_8_4 = lua_skill.configDict[var_8_3]
+	if skillIndex then
+		local skillIdList = Activity174Config.instance:getHeroSkillIdDic(self._heroId, true)
+		local skillId = skillIdList[skillIndex]
+		local config = lua_skill.configDict[skillId]
 
-		arg_8_0._skillIcon:LoadImage(ResUrl.getSkillIcon(var_8_4.icon))
+		self._skillIcon:LoadImage(ResUrl.getSkillIcon(config.icon))
 	end
 
-	gohelper.setActive(arg_8_0._goHero, arg_8_1)
-	gohelper.setActive(arg_8_0._collectionIcon, arg_8_2)
-	gohelper.setActive(arg_8_0._goEmptyCollection, not arg_8_2)
-	gohelper.setActive(arg_8_0._skillIcon, arg_8_3)
-	gohelper.setActive(arg_8_0._goEmpty, not arg_8_1 and not arg_8_2)
+	gohelper.setActive(self._goHero, heroId)
+	gohelper.setActive(self._collectionIcon, itemId)
+	gohelper.setActive(self._goEmptyCollection, not itemId)
+	gohelper.setActive(self._skillIcon, skillIndex)
+	gohelper.setActive(self._goEmpty, not heroId and not itemId)
 end
 
-function var_0_0.activeEquip(arg_9_0, arg_9_1)
-	gohelper.setActive(arg_9_0._goEquip, arg_9_1)
+function Act174HeroItem:activeEquip(isActive)
+	gohelper.setActive(self._goEquip, isActive)
 end
 
-function var_0_0.beginDrag(arg_10_0)
-	gohelper.setAsLastSibling(arg_10_0._go)
+function Act174HeroItem:beginDrag()
+	gohelper.setAsLastSibling(self._go)
 
-	arg_10_0.isDraging = true
+	self.isDraging = true
 end
 
-function var_0_0.endDrag(arg_11_0, arg_11_1, arg_11_2)
-	arg_11_0.isDraging = false
+function Act174HeroItem:endDrag(_, pointerEventData)
+	self.isDraging = false
 
-	local var_11_0 = arg_11_2.position
-	local var_11_1 = arg_11_0:findTarget(var_11_0)
+	local pos = pointerEventData.position
+	local targetItem = self:findTarget(pos)
 
-	if not var_11_1 then
-		local var_11_2 = arg_11_0._teamView.frameTrList[arg_11_0._index]
-		local var_11_3, var_11_4 = recthelper.getAnchor(var_11_2)
+	if not targetItem then
+		local targetTr = self._teamView.frameTrList[self._index]
+		local x, y = recthelper.getAnchor(targetTr)
 
-		arg_11_0:setToPos(arg_11_0._go.transform, Vector2(var_11_3, var_11_4), true, arg_11_0.tweenCallback, arg_11_0)
-		arg_11_0._teamView:UnInstallHero(arg_11_0._index)
+		self:setToPos(self._go.transform, Vector2(x, y), true, self.tweenCallback, self)
+		self._teamView:UnInstallHero(self._index)
 	else
-		local var_11_5 = arg_11_0._teamView.frameTrList[var_11_1._index]
-		local var_11_6, var_11_7 = recthelper.getAnchor(var_11_5)
+		local targetTr = self._teamView.frameTrList[targetItem._index]
+		local x, y = recthelper.getAnchor(targetTr)
 
-		arg_11_0:setToPos(arg_11_0._go.transform, Vector2(var_11_6, var_11_7), true, arg_11_0.tweenCallback, arg_11_0)
+		self:setToPos(self._go.transform, Vector2(x, y), true, self.tweenCallback, self)
 
-		if var_11_1 ~= arg_11_0 then
-			local var_11_8 = arg_11_0._teamView.frameTrList[arg_11_0._index]
-			local var_11_9, var_11_10 = recthelper.getAnchor(var_11_8)
+		if targetItem ~= self then
+			local tr = self._teamView.frameTrList[self._index]
+			local i, j = recthelper.getAnchor(tr)
 
-			arg_11_0:setToPos(var_11_1._go.transform, Vector2(var_11_9, var_11_10), true, function()
-				arg_11_0._teamView:exchangeHeroItem(arg_11_0._index, var_11_1._index)
-			end, arg_11_0)
+			self:setToPos(targetItem._go.transform, Vector2(i, j), true, function()
+				self._teamView:exchangeHeroItem(self._index, targetItem._index)
+			end, self)
 		end
 	end
 end
 
-function var_0_0.checkDrag(arg_13_0)
-	if arg_13_0._heroId and arg_13_0._heroId ~= 0 then
+function Act174HeroItem:checkDrag()
+	if self._heroId and self._heroId ~= 0 then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0.findTarget(arg_14_0, arg_14_1)
-	for iter_14_0 = 1, arg_14_0._teamView.unLockTeamCnt * 4 do
-		local var_14_0 = arg_14_0._teamView.frameTrList[iter_14_0]
-		local var_14_1 = arg_14_0._teamView.heroItemList[iter_14_0]
-		local var_14_2, var_14_3 = recthelper.getAnchor(var_14_0)
-		local var_14_4 = var_14_0.parent
-		local var_14_5 = recthelper.screenPosToAnchorPos(arg_14_1, var_14_4)
+function Act174HeroItem:findTarget(position)
+	for i = 1, self._teamView.unLockTeamCnt * 4 do
+		local framTr = self._teamView.frameTrList[i]
+		local heroItem = self._teamView.heroItemList[i]
+		local x, y = recthelper.getAnchor(framTr)
+		local posTr = framTr.parent
+		local anchorPos = recthelper.screenPosToAnchorPos(position, posTr)
 
-		if math.abs(var_14_5.x - var_14_2) * 2 < recthelper.getWidth(var_14_0) and math.abs(var_14_5.y - var_14_3) * 2 < recthelper.getHeight(var_14_0) then
-			return var_14_1 or nil
+		if math.abs(anchorPos.x - x) * 2 < recthelper.getWidth(framTr) and math.abs(anchorPos.y - y) * 2 < recthelper.getHeight(framTr) then
+			return heroItem or nil
 		end
 	end
 
 	return nil
 end
 
-function var_0_0.setToPos(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5)
-	if arg_15_3 then
+function Act174HeroItem:setToPos(transform, anchorPos, tween, callback, callbackObj)
+	if tween then
 		CommonDragHelper.instance:setGlobalEnabled(false)
 
-		arg_15_0.tweenId = ZProj.TweenHelper.DOAnchorPos(arg_15_1, arg_15_2.x, arg_15_2.y, 0.2, arg_15_4, arg_15_5)
+		self.tweenId = ZProj.TweenHelper.DOAnchorPos(transform, anchorPos.x, anchorPos.y, 0.2, callback, callbackObj)
 	else
-		recthelper.setAnchor(arg_15_1, arg_15_2.x, arg_15_2.y)
+		recthelper.setAnchor(transform, anchorPos.x, anchorPos.y)
 
-		if arg_15_4 then
-			arg_15_4(arg_15_5)
+		if callback then
+			callback(callbackObj)
 		end
 	end
 end
 
-function var_0_0.tweenCallback(arg_16_0)
-	arg_16_0.tweenId = nil
+function Act174HeroItem:tweenCallback()
+	self.tweenId = nil
 
 	CommonDragHelper.instance:setGlobalEnabled(true)
 end
 
-return var_0_0
+return Act174HeroItem

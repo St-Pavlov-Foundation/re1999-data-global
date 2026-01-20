@@ -1,11 +1,13 @@
-﻿module("modules.logic.video.view.FullScreenVideoViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/video/view/FullScreenVideoViewContainer.lua
 
-local var_0_0 = class("FullScreenVideoViewContainer", BaseViewContainer)
+module("modules.logic.video.view.FullScreenVideoViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local FullScreenVideoViewContainer = class("FullScreenVideoViewContainer", BaseViewContainer)
+
+function FullScreenVideoViewContainer:buildViews()
 	return {
 		FullScreenVideoView.New()
 	}
 end
 
-return var_0_0
+return FullScreenVideoViewContainer

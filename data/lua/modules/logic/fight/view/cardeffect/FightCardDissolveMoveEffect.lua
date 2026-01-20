@@ -1,73 +1,75 @@
-﻿module("modules.logic.fight.view.cardeffect.FightCardDissolveMoveEffect", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/cardeffect/FightCardDissolveMoveEffect.lua
 
-local var_0_0 = class("FightCardDissolveMoveEffect", BaseWork)
-local var_0_1 = 1
-local var_0_2 = var_0_1 * 0.033
+module("modules.logic.fight.view.cardeffect.FightCardDissolveMoveEffect", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+local FightCardDissolveMoveEffect = class("FightCardDissolveMoveEffect", BaseWork)
+local TimeFactor = 1
+local dt = TimeFactor * 0.033
 
-	arg_1_0._dt = var_0_2 / FightModel.instance:getUISpeed()
+function FightCardDissolveMoveEffect:onStart(context)
+	FightCardDissolveMoveEffect.super.onStart(self, context)
 
-	local var_1_0 = {}
+	self._dt = dt / FightModel.instance:getUISpeed()
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1.handCardItemList) do
-		if not tabletool.indexOf(arg_1_1.dissolveCardIndexs, iter_1_0) then
-			table.insert(var_1_0, iter_1_0)
+	local leftCardIndexs = {}
+
+	for i, _ in ipairs(context.handCardItemList) do
+		if not tabletool.indexOf(context.dissolveCardIndexs, i) then
+			table.insert(leftCardIndexs, i)
 		end
 	end
 
-	arg_1_0._dissolveCardIndexs = nil
-	arg_1_0._moveCardFlow = FlowParallel.New()
+	self._dissolveCardIndexs = nil
+	self._moveCardFlow = FlowParallel.New()
 
-	local var_1_1 = 1
+	local count = 1
 
-	for iter_1_2, iter_1_3 in ipairs(var_1_0) do
-		local var_1_2 = arg_1_1.handCardItemList[iter_1_3].go
-		local var_1_3 = arg_1_1.handCardItemList[iter_1_2].go
+	for i, cardIndex in ipairs(leftCardIndexs) do
+		local cardItemGO = context.handCardItemList[cardIndex].go
+		local destItemGO = context.handCardItemList[i].go
 
-		if not gohelper.isNil(var_1_2) and not gohelper.isNil(var_1_3) and var_1_2 ~= var_1_3 then
-			local var_1_4 = var_1_2.transform
-			local var_1_5 = FlowSequence.New()
+		if not gohelper.isNil(cardItemGO) and not gohelper.isNil(destItemGO) and cardItemGO ~= destItemGO then
+			local cardItemTr = cardItemGO.transform
+			local oneCardFlow = FlowSequence.New()
 
-			var_1_5:addWork(WorkWaitSeconds.New(3 * var_1_1 * arg_1_0._dt))
+			oneCardFlow:addWork(WorkWaitSeconds.New(3 * count * self._dt))
 
-			local var_1_6, var_1_7 = recthelper.getAnchor(var_1_3.transform)
-			local var_1_8 = var_1_6 + 10
+			local cardTargetPosX, _ = recthelper.getAnchor(destItemGO.transform)
+			local cardTargetPosXOver = cardTargetPosX + 10
 
-			var_1_5:addWork(TweenWork.New({
+			oneCardFlow:addWork(TweenWork.New({
 				type = "DOAnchorPosX",
-				tr = var_1_4,
-				to = var_1_8,
-				t = arg_1_0._dt * 5
+				tr = cardItemTr,
+				to = cardTargetPosXOver,
+				t = self._dt * 5
 			}))
-			var_1_5:addWork(TweenWork.New({
+			oneCardFlow:addWork(TweenWork.New({
 				type = "DOAnchorPosX",
-				tr = var_1_4,
-				to = var_1_6,
-				t = arg_1_0._dt * 2
+				tr = cardItemTr,
+				to = cardTargetPosX,
+				t = self._dt * 2
 			}))
-			arg_1_0._moveCardFlow:addWork(var_1_5)
+			self._moveCardFlow:addWork(oneCardFlow)
 
-			var_1_1 = var_1_1 + 1
+			count = count + 1
 		end
 	end
 
-	arg_1_0._moveCardFlow:registerDoneListener(arg_1_0._onWorkDone, arg_1_0)
-	arg_1_0._moveCardFlow:start()
+	self._moveCardFlow:registerDoneListener(self._onWorkDone, self)
+	self._moveCardFlow:start()
 end
 
-function var_0_0.onStop(arg_2_0)
-	var_0_0.super.onStop(arg_2_0)
-	arg_2_0._moveCardFlow:unregisterDoneListener(arg_2_0._onWorkDone, arg_2_0)
+function FightCardDissolveMoveEffect:onStop()
+	FightCardDissolveMoveEffect.super.onStop(self)
+	self._moveCardFlow:unregisterDoneListener(self._onWorkDone, self)
 
-	if arg_2_0._moveCardFlow.status == WorkStatus.Running then
-		arg_2_0._moveCardFlow:stop()
+	if self._moveCardFlow.status == WorkStatus.Running then
+		self._moveCardFlow:stop()
 	end
 end
 
-function var_0_0._onWorkDone(arg_3_0)
-	arg_3_0:onDone(true)
+function FightCardDissolveMoveEffect:_onWorkDone()
+	self:onDone(true)
 end
 
-return var_0_0
+return FightCardDissolveMoveEffect

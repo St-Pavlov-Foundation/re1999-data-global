@@ -1,44 +1,46 @@
-﻿module("modules.logic.ressplit.work.ResSplitSeasonWork", package.seeall)
+﻿-- chunkname: @modules/logic/ressplit/work/ResSplitSeasonWork.lua
 
-local var_0_0 = class("ResSplitSeasonWork", BaseWork)
+module("modules.logic.ressplit.work.ResSplitSeasonWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	for iter_1_0, iter_1_1 in pairs(ResSplitModel.instance.includeSeasonDic) do
-		local var_1_0 = SeasonConfig.instance:getSeasonEpisodeCos(iter_1_0)
-		local var_1_1 = SeasonConfig.instance:getSeasonRetailCos(iter_1_0)
-		local var_1_2 = SeasonConfig.instance:getSeasonSpecialCos(iter_1_0)
-		local var_1_3 = {}
+local ResSplitSeasonWork = class("ResSplitSeasonWork", BaseWork)
 
-		for iter_1_2, iter_1_3 in pairs(var_1_0) do
-			var_1_3[iter_1_3.episodeId] = true
+function ResSplitSeasonWork:onStart(context)
+	for seasonId, _ in pairs(ResSplitModel.instance.includeSeasonDic) do
+		local episodeConfig = SeasonConfig.instance:getSeasonEpisodeCos(seasonId)
+		local retailConfig = SeasonConfig.instance:getSeasonRetailCos(seasonId)
+		local specialConfig = SeasonConfig.instance:getSeasonSpecialCos(seasonId)
+		local episodeIdDic = {}
 
-			ResSplitModel.instance:addIncludeStory(iter_1_3.afterStoryId)
+		for layer, config in pairs(episodeConfig) do
+			episodeIdDic[config.episodeId] = true
+
+			ResSplitModel.instance:addIncludeStory(config.afterStoryId)
 		end
 
-		for iter_1_4, iter_1_5 in pairs(var_1_1) do
-			local var_1_4 = string.splitToNumber(iter_1_5.retailEpisodeIdPool, "#")
+		for stage, config in pairs(retailConfig) do
+			local arr = string.splitToNumber(config.retailEpisodeIdPool, "#")
 
-			for iter_1_6, iter_1_7 in pairs(var_1_4) do
-				var_1_3[iter_1_7] = true
+			for _, episodeId in pairs(arr) do
+				episodeIdDic[episodeId] = true
 			end
 		end
 
-		for iter_1_8, iter_1_9 in pairs(var_1_2) do
-			var_1_3[iter_1_9.episodeId] = true
+		for layer, config in pairs(specialConfig) do
+			episodeIdDic[config.episodeId] = true
 		end
 
-		for iter_1_10, iter_1_11 in pairs(var_1_3) do
-			ResSplitHelper.addEpisodeRes(iter_1_10)
+		for id, v in pairs(episodeIdDic) do
+			ResSplitHelper.addEpisodeRes(id)
 		end
 
-		local var_1_5 = SeasonConfig.instance:getStoryIds(iter_1_0)
+		local seasonOpenStorysArr = SeasonConfig.instance:getStoryIds(seasonId)
 
-		for iter_1_12, iter_1_13 in ipairs(var_1_5) do
-			ResSplitModel.instance:addIncludeStory(iter_1_13)
+		for i, v in ipairs(seasonOpenStorysArr) do
+			ResSplitModel.instance:addIncludeStory(v)
 		end
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return ResSplitSeasonWork

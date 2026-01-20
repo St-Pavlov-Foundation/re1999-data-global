@@ -1,20 +1,22 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.controller.chess.step.EliminateChessPlayAudioStep", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/controller/chess/step/EliminateChessPlayAudioStep.lua
 
-local var_0_0 = class("EliminateChessPlayAudioStep", EliminateChessStepBase)
+module("modules.logic.versionactivity2_2.eliminate.controller.chess.step.EliminateChessPlayAudioStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = EliminateChessModel.instance:getCurPlayAudioCount()
+local EliminateChessPlayAudioStep = class("EliminateChessPlayAudioStep", EliminateChessStepBase)
 
-	if var_1_0 > 5 then
-		var_1_0 = 5
+function EliminateChessPlayAudioStep:onStart()
+	local count = EliminateChessModel.instance:getCurPlayAudioCount()
+
+	if count > 5 then
+		count = 5
 	end
 
-	local var_1_1 = "ui_youyu_sources_dispel_" .. var_1_0
-	local var_1_2 = AudioEnum.VersionActivity2_2EliminateChess[var_1_1]
+	local audioName = "ui_youyu_sources_dispel_" .. count
+	local audioId = AudioEnum.VersionActivity2_2EliminateChess[audioName]
 
-	AudioMgr.instance:trigger(var_1_2)
+	AudioMgr.instance:trigger(audioId)
 	EliminateChessModel.instance:addCurPlayAudioCount()
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return EliminateChessPlayAudioStep

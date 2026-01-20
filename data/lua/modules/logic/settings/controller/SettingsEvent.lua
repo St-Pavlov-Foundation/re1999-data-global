@@ -1,31 +1,33 @@
-﻿module("modules.logic.settings.controller.SettingsEvent", package.seeall)
+﻿-- chunkname: @modules/logic/settings/controller/SettingsEvent.lua
 
-local var_0_0 = {}
+module("modules.logic.settings.controller.SettingsEvent", package.seeall)
 
-var_0_0.SelectCategory = 1
-var_0_0.PlayCloseCategoryAnim = 2
-var_0_0.OnChangeLangTxt = 3
-var_0_0.OnChangeScrollValue = 4
-var_0_0.OnChangeHDType = 5
-var_0_0.OnDownloadPrepareStart = 100
-var_0_0.OnNotEnoughDiskSpace = 101
-var_0_0.OnDownloadStart = 102
-var_0_0.OnDownloadProgressRefresh = 103
-var_0_0.OnDownloadPackFail = 104
-var_0_0.OnDownloadPackSuccess = 105
-var_0_0.OnPackUnZipFail = 106
-var_0_0.OnPackItemStateChange = 107
-var_0_0.OnUnzipProgressRefresh = 108
-var_0_0.OnUseCdkReplay = 200
-var_0_0.OnMarkNeedDownloadChange = 301
-var_0_0.OnChangeEnergyMode = 302
-var_0_0.OnChangeSelecetDownloadVoicePack = 303
-var_0_0.OnChangeVoiceType = 304
-var_0_0.OnChangePushType = 401
-var_0_0.OnSetVoiceRoleSelected = 501
-var_0_0.OnCharVoiceTypeChanged = 502
-var_0_0.OnSetVoiceRoleFiltered = 503
-var_0_0.OnKeyMapChange = 601
-var_0_0.OnKeyTipsChange = 602
+local SettingsEvent = {}
 
-return var_0_0
+SettingsEvent.SelectCategory = 1
+SettingsEvent.PlayCloseCategoryAnim = 2
+SettingsEvent.OnChangeLangTxt = 3
+SettingsEvent.OnChangeScrollValue = 4
+SettingsEvent.OnChangeHDType = 5
+SettingsEvent.OnDownloadPrepareStart = 100
+SettingsEvent.OnNotEnoughDiskSpace = 101
+SettingsEvent.OnDownloadStart = 102
+SettingsEvent.OnDownloadProgressRefresh = 103
+SettingsEvent.OnDownloadPackFail = 104
+SettingsEvent.OnDownloadPackSuccess = 105
+SettingsEvent.OnPackUnZipFail = 106
+SettingsEvent.OnPackItemStateChange = 107
+SettingsEvent.OnUnzipProgressRefresh = 108
+SettingsEvent.OnUseCdkReplay = 200
+SettingsEvent.OnMarkNeedDownloadChange = 301
+SettingsEvent.OnChangeEnergyMode = 302
+SettingsEvent.OnChangeSelecetDownloadVoicePack = 303
+SettingsEvent.OnChangeVoiceType = 304
+SettingsEvent.OnChangePushType = 401
+SettingsEvent.OnSetVoiceRoleSelected = 501
+SettingsEvent.OnCharVoiceTypeChanged = 502
+SettingsEvent.OnSetVoiceRoleFiltered = 503
+SettingsEvent.OnKeyMapChange = 601
+SettingsEvent.OnKeyTipsChange = 602
+
+return SettingsEvent

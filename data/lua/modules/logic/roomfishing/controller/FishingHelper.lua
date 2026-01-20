@@ -1,28 +1,32 @@
-﻿module("modules.logic.roomfishing.controller.FishingHelper", package.seeall)
+﻿-- chunkname: @modules/logic/roomfishing/controller/FishingHelper.lua
 
-local var_0_0 = _M
+module("modules.logic.roomfishing.controller.FishingHelper", package.seeall)
 
-function var_0_0.getFishingProgress(arg_1_0, arg_1_1)
-	local var_1_0 = 0
+local FishingHelper = _M
 
-	if arg_1_0 and arg_1_1 and arg_1_0 > 0 and arg_1_1 > 0 and arg_1_0 < arg_1_1 then
-		local var_1_1 = ServerTime.now()
-		local var_1_2 = Mathf.Clamp((var_1_1 - arg_1_0) / (arg_1_1 - arg_1_0), 0, 1)
+function FishingHelper.getFishingProgress(startTime, endTime)
+	local result = 0
 
-		var_1_0 = tonumber(string.format("%.2f", var_1_2)) * 100
+	if startTime and endTime and startTime > 0 and endTime > 0 and startTime < endTime then
+		local nowTime = ServerTime.now()
+		local progress = Mathf.Clamp((nowTime - startTime) / (endTime - startTime), 0, 1)
+
+		result = tonumber(string.format("%.2f", progress)) * 100
 	end
 
-	return var_1_0
+	return result
 end
 
-function var_0_0.isFishingFinished(arg_2_0, arg_2_1)
-	local var_2_0 = false
+function FishingHelper.isFishingFinished(startTime, endTime)
+	local result = false
 
-	if arg_2_0 and arg_2_1 and arg_2_0 > 0 and arg_2_1 > 0 then
-		var_2_0 = arg_2_1 < ServerTime.now()
+	if startTime and endTime and startTime > 0 and endTime > 0 then
+		local nowTime = ServerTime.now()
+
+		result = endTime < nowTime
 	end
 
-	return var_2_0
+	return result
 end
 
-return var_0_0
+return FishingHelper

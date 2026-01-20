@@ -1,43 +1,45 @@
-﻿module("modules.logic.activity.view.LinkageActivity_PanelViewBase", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/LinkageActivity_PanelViewBase.lua
 
-local var_0_0 = class("LinkageActivity_PanelViewBase", LinkageActivity_BaseView)
+module("modules.logic.activity.view.LinkageActivity_PanelViewBase", package.seeall)
 
-function var_0_0.ctor(arg_1_0, ...)
-	var_0_0.super.ctor(arg_1_0, ...)
+local LinkageActivity_PanelViewBase = class("LinkageActivity_PanelViewBase", LinkageActivity_BaseView)
 
-	arg_1_0._inited = false
+function LinkageActivity_PanelViewBase:ctor(...)
+	LinkageActivity_PanelViewBase.super.ctor(self, ...)
 
-	arg_1_0:internal_set_openMode(Activity101SignViewBase.eOpenMode.PaiLian)
+	self._inited = false
+
+	self:internal_set_openMode(Activity101SignViewBase.eOpenMode.PaiLian)
 end
 
-function var_0_0.onDestroyView(arg_2_0)
-	var_0_0.super.onDestroyView(arg_2_0)
+function LinkageActivity_PanelViewBase:onDestroyView()
+	LinkageActivity_PanelViewBase.super.onDestroyView(self)
 
-	arg_2_0._inited = false
+	self._inited = false
 end
 
-function var_0_0.onUpdateParam(arg_3_0)
-	arg_3_0:_refresh()
+function LinkageActivity_PanelViewBase:onUpdateParam()
+	self:_refresh()
 end
 
-function var_0_0.onOpen(arg_4_0)
-	arg_4_0:internal_set_actId(arg_4_0.viewParam.actId)
+function LinkageActivity_PanelViewBase:onOpen()
+	self:internal_set_actId(self.viewParam.actId)
 
-	if not arg_4_0._inited then
-		arg_4_0:internal_onOpen()
+	if not self._inited then
+		self:internal_onOpen()
 
-		arg_4_0._inited = true
+		self._inited = true
 	else
-		arg_4_0:_refresh()
+		self:_refresh()
 	end
 end
 
-function var_0_0.addEvents(arg_5_0)
-	var_0_0.super.addEvents(arg_5_0)
+function LinkageActivity_PanelViewBase:addEvents()
+	LinkageActivity_PanelViewBase.super.addEvents(self)
 end
 
-function var_0_0.removeEvents(arg_6_0)
-	var_0_0.super.removeEvents(arg_6_0)
+function LinkageActivity_PanelViewBase:removeEvents()
+	LinkageActivity_PanelViewBase.super.removeEvents(self)
 end
 
-return var_0_0
+return LinkageActivity_PanelViewBase

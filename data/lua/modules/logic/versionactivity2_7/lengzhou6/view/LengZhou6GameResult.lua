@@ -1,99 +1,101 @@
-﻿module("modules.logic.versionactivity2_7.lengzhou6.view.LengZhou6GameResult", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/lengzhou6/view/LengZhou6GameResult.lua
 
-local var_0_0 = class("LengZhou6GameResult", BaseView)
+module("modules.logic.versionactivity2_7.lengzhou6.view.LengZhou6GameResult", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gotop = gohelper.findChild(arg_1_0.viewGO, "#go_top")
-	arg_1_0._txtstage = gohelper.findChildText(arg_1_0.viewGO, "#go_top/#txt_stage")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#go_top/#txt_name")
-	arg_1_0._gosuccess = gohelper.findChild(arg_1_0.viewGO, "#go_success")
-	arg_1_0._gofail = gohelper.findChild(arg_1_0.viewGO, "#go_fail")
-	arg_1_0._gotargetitem = gohelper.findChild(arg_1_0.viewGO, "targets/#go_targetitem")
-	arg_1_0._txttaskdesc = gohelper.findChildText(arg_1_0.viewGO, "targets/#go_targetitem/#txt_taskdesc")
-	arg_1_0._gofinish = gohelper.findChild(arg_1_0.viewGO, "targets/#go_targetitem/result/#go_finish")
-	arg_1_0._gounfinish = gohelper.findChild(arg_1_0.viewGO, "targets/#go_targetitem/result/#go_unfinish")
-	arg_1_0._gobtn = gohelper.findChild(arg_1_0.viewGO, "#go_btn")
-	arg_1_0._btnquitgame = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_btn/#btn_quitgame")
-	arg_1_0._btnrestart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_btn/#btn_restart")
-	arg_1_0._btnsuccessClick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_successClick")
+local LengZhou6GameResult = class("LengZhou6GameResult", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function LengZhou6GameResult:onInitView()
+	self._gotop = gohelper.findChild(self.viewGO, "#go_top")
+	self._txtstage = gohelper.findChildText(self.viewGO, "#go_top/#txt_stage")
+	self._txtname = gohelper.findChildText(self.viewGO, "#go_top/#txt_name")
+	self._gosuccess = gohelper.findChild(self.viewGO, "#go_success")
+	self._gofail = gohelper.findChild(self.viewGO, "#go_fail")
+	self._gotargetitem = gohelper.findChild(self.viewGO, "targets/#go_targetitem")
+	self._txttaskdesc = gohelper.findChildText(self.viewGO, "targets/#go_targetitem/#txt_taskdesc")
+	self._gofinish = gohelper.findChild(self.viewGO, "targets/#go_targetitem/result/#go_finish")
+	self._gounfinish = gohelper.findChild(self.viewGO, "targets/#go_targetitem/result/#go_unfinish")
+	self._gobtn = gohelper.findChild(self.viewGO, "#go_btn")
+	self._btnquitgame = gohelper.findChildButtonWithAudio(self.viewGO, "#go_btn/#btn_quitgame")
+	self._btnrestart = gohelper.findChildButtonWithAudio(self.viewGO, "#go_btn/#btn_restart")
+	self._btnsuccessClick = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_successClick")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnquitgame:AddClickListener(arg_2_0._btnquitgameOnClick, arg_2_0)
-	arg_2_0._btnrestart:AddClickListener(arg_2_0._btnrestartOnClick, arg_2_0)
-	arg_2_0._btnsuccessClick:AddClickListener(arg_2_0._btnsuccessClickOnClick, arg_2_0)
+function LengZhou6GameResult:addEvents()
+	self._btnquitgame:AddClickListener(self._btnquitgameOnClick, self)
+	self._btnrestart:AddClickListener(self._btnrestartOnClick, self)
+	self._btnsuccessClick:AddClickListener(self._btnsuccessClickOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnquitgame:RemoveClickListener()
-	arg_3_0._btnrestart:RemoveClickListener()
-	arg_3_0._btnsuccessClick:RemoveClickListener()
+function LengZhou6GameResult:removeEvents()
+	self._btnquitgame:RemoveClickListener()
+	self._btnrestart:RemoveClickListener()
+	self._btnsuccessClick:RemoveClickListener()
 end
 
-function var_0_0._btnquitgameOnClick(arg_4_0)
-	arg_4_0:close()
+function LengZhou6GameResult:_btnquitgameOnClick()
+	self:close()
 end
 
-function var_0_0._btnrestartOnClick(arg_5_0)
-	arg_5_0._isCloseGameView = false
+function LengZhou6GameResult:_btnrestartOnClick()
+	self._isCloseGameView = false
 
-	arg_5_0:close()
+	self:close()
 	LengZhou6Controller.instance:restartGame()
 end
 
-function var_0_0._btnsuccessClickOnClick(arg_6_0)
-	arg_6_0:close()
+function LengZhou6GameResult:_btnsuccessClickOnClick()
+	self:close()
 end
 
-function var_0_0.close(arg_7_0)
-	arg_7_0:closeThis()
+function LengZhou6GameResult:close()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_8_0)
+function LengZhou6GameResult:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
+function LengZhou6GameResult:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0._isCloseGameView = true
+function LengZhou6GameResult:onOpen()
+	self._isCloseGameView = true
 
-	arg_10_0:initInfo()
-	arg_10_0:initResult()
+	self:initInfo()
+	self:initResult()
 	LengZhou6StatHelper.instance:sendGameExit()
 end
 
-function var_0_0.initInfo(arg_11_0)
-	local var_11_0 = LengZhou6GameModel.instance:getEpisodeConfig()
+function LengZhou6GameResult:initInfo()
+	local config = LengZhou6GameModel.instance:getEpisodeConfig()
 
-	arg_11_0._txtname.text = var_11_0.name
-	arg_11_0._txtstage.text = string.format("STAGE %s", var_11_0.episodeId - 1270200)
+	self._txtname.text = config.name
+	self._txtstage.text = string.format("STAGE %s", config.episodeId - 1270200)
 end
 
-function var_0_0.initResult(arg_12_0)
-	local var_12_0 = LengZhou6GameModel.instance:playerIsWin()
+function LengZhou6GameResult:initResult()
+	local isWin = LengZhou6GameModel.instance:playerIsWin()
 
-	gohelper.setActive(arg_12_0._gofail, not var_12_0)
-	gohelper.setActive(arg_12_0._gosuccess, var_12_0)
-	gohelper.setActive(arg_12_0._gobtn, not var_12_0)
+	gohelper.setActive(self._gofail, not isWin)
+	gohelper.setActive(self._gosuccess, isWin)
+	gohelper.setActive(self._gobtn, not isWin)
 
-	local var_12_1 = var_12_0 and AudioEnum2_7.LengZhou6.play_ui_yuzhou_lzl_success or AudioEnum2_7.LengZhou6.play_ui_yuzhou_lzl_fail
+	local audioId = isWin and AudioEnum2_7.LengZhou6.play_ui_yuzhou_lzl_success or AudioEnum2_7.LengZhou6.play_ui_yuzhou_lzl_fail
 
-	AudioMgr.instance:trigger(var_12_1)
+	AudioMgr.instance:trigger(audioId)
 
-	local var_12_2 = var_12_0 and LengZhou6Enum.GameResult.win or LengZhou6Enum.GameResult.lose
+	local result = isWin and LengZhou6Enum.GameResult.win or LengZhou6Enum.GameResult.lose
 
-	LengZhou6StatHelper.instance:setGameResult(var_12_2)
+	LengZhou6StatHelper.instance:setGameResult(result)
 end
 
-function var_0_0.onClose(arg_13_0)
-	LengZhou6GameController.instance:levelGame(arg_13_0._isCloseGameView)
+function LengZhou6GameResult:onClose()
+	LengZhou6GameController.instance:levelGame(self._isCloseGameView)
 end
 
-return var_0_0
+return LengZhou6GameResult

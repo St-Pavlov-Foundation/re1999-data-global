@@ -1,49 +1,51 @@
-﻿module("modules.logic.room.controller.RoomBackpackController", package.seeall)
+﻿-- chunkname: @modules/logic/room/controller/RoomBackpackController.lua
 
-local var_0_0 = class("RoomBackpackController", BaseController)
+module("modules.logic.room.controller.RoomBackpackController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local RoomBackpackController = class("RoomBackpackController", BaseController)
+
+function RoomBackpackController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function RoomBackpackController:reInit()
 	return
 end
 
-function var_0_0.clear(arg_3_0)
+function RoomBackpackController:clear()
 	return
 end
 
-function var_0_0.clickCritterRareSort(arg_4_0, arg_4_1)
-	local var_4_0 = RoomBackpackCritterListModel.instance:getIsSortByRareAscend()
+function RoomBackpackController:clickCritterRareSort(filterMO)
+	local isRareAscend = RoomBackpackCritterListModel.instance:getIsSortByRareAscend()
 
-	RoomBackpackCritterListModel.instance:setIsSortByRareAscend(not var_4_0)
-	arg_4_0:refreshCritterBackpackList(arg_4_1)
+	RoomBackpackCritterListModel.instance:setIsSortByRareAscend(not isRareAscend)
+	self:refreshCritterBackpackList(filterMO)
 end
 
-function var_0_0.selectMatureFilterType(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = RoomBackpackCritterListModel.instance:getMatureFilterType()
+function RoomBackpackController:selectMatureFilterType(newFilterType, filterMO)
+	local matureFilterType = RoomBackpackCritterListModel.instance:getMatureFilterType()
 
-	if var_5_0 and var_5_0 == arg_5_1 then
+	if matureFilterType and matureFilterType == newFilterType then
 		return
 	end
 
-	RoomBackpackCritterListModel.instance:setMatureFilterType(arg_5_1)
-	arg_5_0:refreshCritterBackpackList(arg_5_2)
+	RoomBackpackCritterListModel.instance:setMatureFilterType(newFilterType)
+	self:refreshCritterBackpackList(filterMO)
 end
 
-function var_0_0.refreshCritterBackpackList(arg_6_0, arg_6_1)
-	RoomBackpackCritterListModel.instance:setBackpackCritterList(arg_6_1)
+function RoomBackpackController:refreshCritterBackpackList(filterMO)
+	RoomBackpackCritterListModel.instance:setBackpackCritterList(filterMO)
 end
 
-function var_0_0.openCritterDecomposeView(arg_7_0)
+function RoomBackpackController:openCritterDecomposeView()
 	ViewMgr.instance:openView(ViewName.RoomCritterDecomposeView)
 end
 
-function var_0_0.refreshPropBackpackList(arg_8_0)
+function RoomBackpackController:refreshPropBackpackList()
 	RoomBackpackPropListModel.instance:setBackpackPropList()
 end
 
-var_0_0.instance = var_0_0.New()
+RoomBackpackController.instance = RoomBackpackController.New()
 
-return var_0_0
+return RoomBackpackController

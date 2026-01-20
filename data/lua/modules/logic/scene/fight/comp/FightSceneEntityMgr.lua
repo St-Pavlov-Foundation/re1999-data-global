@@ -1,560 +1,597 @@
-﻿module("modules.logic.scene.fight.comp.FightSceneEntityMgr", package.seeall)
+﻿-- chunkname: @modules/logic/scene/fight/comp/FightSceneEntityMgr.lua
 
-local var_0_0 = class("FightSceneEntityMgr", BaseSceneUnitMgr)
+module("modules.logic.scene.fight.comp.FightSceneEntityMgr", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._remainCount = 0
+local FightSceneEntityMgr = class("FightSceneEntityMgr", BaseSceneUnitMgr)
 
-	var_0_0.super.ctor(arg_1_0, arg_1_1)
+function FightSceneEntityMgr:ctor(scene)
+	self._remainCount = 0
 
-	arg_1_0.enableSpineRotate = true
-	arg_1_0._forward = Vector3.New(0, 0, 0)
-	arg_1_0._containerGO = gohelper.findChild(arg_1_0:getCurScene():getSceneContainerGO(), "Entitys")
+	FightSceneEntityMgr.super.ctor(self, scene)
+
+	self.enableSpineRotate = true
+	self._forward = Vector3.New(0, 0, 0)
+	self._containerGO = gohelper.findChild(self:getCurScene():getSceneContainerGO(), "Entitys")
 end
 
-function var_0_0.getEntityContainer(arg_2_0)
-	return arg_2_0._containerGO
+function FightSceneEntityMgr:getEntityContainer()
+	return self._containerGO
 end
 
-function var_0_0.onScenePrepared(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0:removeAllUnits()
+function FightSceneEntityMgr:onScenePrepared(sceneId, levelId)
+	self:removeAllUnits()
 
-	local var_3_0 = FightModel.instance:getSpeed()
-	local var_3_1 = gohelper.create3d(arg_3_0._containerGO, "SceneEntityMy")
-	local var_3_2 = gohelper.create3d(arg_3_0._containerGO, "SceneEntityEnemy")
+	local speed = FightModel.instance:getSpeed()
+	local sceneEntityGO1 = gohelper.create3d(self._containerGO, "SceneEntityMy")
+	local sceneEntityGO2 = gohelper.create3d(self._containerGO, "SceneEntityEnemy")
 
-	arg_3_0._sceneEntityMySide = MonoHelper.addLuaComOnceToGo(var_3_1, FightEntityScene, FightEntityScene.MySideId)
-	arg_3_0._sceneEntityEnemySide = MonoHelper.addLuaComOnceToGo(var_3_2, FightEntityScene, FightEntityScene.EnemySideId)
+	self._sceneEntityMySide = MonoHelper.addLuaComOnceToGo(sceneEntityGO1, FightEntityScene, FightEntityScene.MySideId)
+	self._sceneEntityEnemySide = MonoHelper.addLuaComOnceToGo(sceneEntityGO2, FightEntityScene, FightEntityScene.EnemySideId)
 
-	arg_3_0._sceneEntityMySide:setSpeed(var_3_0)
-	arg_3_0._sceneEntityEnemySide:setSpeed(var_3_0)
-	arg_3_0:addUnit(arg_3_0._sceneEntityMySide)
-	arg_3_0:addUnit(arg_3_0._sceneEntityEnemySide)
-	arg_3_0:addASFDUnit()
-	arg_3_0:addVorpalithUnit()
+	self._sceneEntityMySide:setSpeed(speed)
+	self._sceneEntityEnemySide:setSpeed(speed)
+	self:addUnit(self._sceneEntityMySide)
+	self:addUnit(self._sceneEntityEnemySide)
+	self:addASFDUnit()
+	self:addVorpalithUnit()
 
-	local var_3_3 = FightDataHelper.entityMgr:getMyNormalList()
-	local var_3_4 = FightDataHelper.entityMgr:getEnemyNormalList()
-	local var_3_5 = FightDataHelper.entityMgr:getMySubList()
+	local mySide = FightDataHelper.entityMgr:getMyNormalList()
+	local enemySide = FightDataHelper.entityMgr:getEnemyNormalList()
+	local mySideSub = FightDataHelper.entityMgr:getMySubList()
 
-	table.sort(var_3_5, FightEntityDataHelper.sortSubEntityList)
+	table.sort(mySideSub, FightEntityDataHelper.sortSubEntityList)
 
-	local var_3_6 = FightDataHelper.entityMgr:getSpList(FightEnum.EntitySide.MySide)
-	local var_3_7 = FightDataHelper.entityMgr:getSpList(FightEnum.EntitySide.EnemySide)
-	local var_3_8 = #var_3_5 > 1 and 1 or #var_3_5
+	local mySideSp = FightDataHelper.entityMgr:getSpList(FightEnum.EntitySide.MySide)
+	local enemySideSp = FightDataHelper.entityMgr:getSpList(FightEnum.EntitySide.EnemySide)
+	local mySideSubCount = #mySideSub > 1 and 1 or #mySideSub
 
-	arg_3_0._remainCount = #var_3_3 + #var_3_4 + var_3_8 + #var_3_6 + #var_3_7
+	self._remainCount = #mySide + #enemySide + mySideSubCount + #mySideSp + #enemySideSp
 
-	if arg_3_0._remainCount == 0 then
-		arg_3_0:dispatchEvent(FightSceneEvent.OnAllEntityLoaded)
+	if self._remainCount == 0 then
+		self:dispatchEvent(FightSceneEvent.OnAllEntityLoaded)
 	else
-		for iter_3_0, iter_3_1 in ipairs(var_3_3) do
-			arg_3_0:buildSpine(iter_3_1, FightEnum.EntityCreateStage.Init)
+		for _, mySideMO in ipairs(mySide) do
+			self:buildSpine(mySideMO, FightEnum.EntityCreateStage.Init)
 		end
 
-		for iter_3_2, iter_3_3 in ipairs(var_3_4) do
-			arg_3_0:buildSpine(iter_3_3, FightEnum.EntityCreateStage.Init)
+		for _, enemySideMO in ipairs(enemySide) do
+			self:buildSpine(enemySideMO, FightEnum.EntityCreateStage.Init)
 		end
 
 		if FightEntitySub.Online then
-			for iter_3_4, iter_3_5 in ipairs(var_3_5) do
-				arg_3_0:buildSubSpine(iter_3_5, FightEnum.EntityCreateStage.Init)
+			for _, mySubMO in ipairs(mySideSub) do
+				self:buildSubSpine(mySubMO, FightEnum.EntityCreateStage.Init)
 
 				break
 			end
 		else
-			arg_3_0._remainCount = arg_3_0._remainCount - var_3_8
+			self._remainCount = self._remainCount - mySideSubCount
 		end
 
-		for iter_3_6, iter_3_7 in ipairs(var_3_6) do
-			arg_3_0:buildSpine(iter_3_7, FightEnum.EntityCreateStage.Init)
+		for _, mySideSpMO in ipairs(mySideSp) do
+			self:buildSpine(mySideSpMO, FightEnum.EntityCreateStage.Init)
 		end
 
-		for iter_3_8, iter_3_9 in ipairs(var_3_7) do
-			arg_3_0:buildSpine(iter_3_9, FightEnum.EntityCreateStage.Init)
+		for _, enemySideSpMO in ipairs(enemySideSp) do
+			self:buildSpine(enemySideSpMO, FightEnum.EntityCreateStage.Init)
 		end
 
-		local var_3_9 = FightDataHelper.entityMgr:getAssistBoss()
+		local assistBoss = FightDataHelper.entityMgr:getAssistBoss()
 
-		if var_3_9 then
-			arg_3_0:buildSpine(var_3_9, FightEnum.EntityCreateStage.Init)
+		if assistBoss then
+			self:buildSpine(assistBoss, FightEnum.EntityCreateStage.Init)
 		end
 
-		local var_3_10 = FightDataHelper.entityMgr:getSpFightEntities(FightEnum.EntitySide.MySide)
+		local spFightEntities = FightDataHelper.entityMgr:getSpFightEntities(FightEnum.EntitySide.MySide)
 
-		for iter_3_10, iter_3_11 in ipairs(var_3_10) do
-			arg_3_0:buildSpine(iter_3_11, FightEnum.EntityCreateStage.Init)
+		for i, entityData in ipairs(spFightEntities) do
+			self:buildSpine(entityData, FightEnum.EntityCreateStage.Init)
 		end
 
-		local var_3_11 = FightDataHelper.entityMgr:getSpFightEntities(FightEnum.EntitySide.EnemySide)
+		spFightEntities = FightDataHelper.entityMgr:getSpFightEntities(FightEnum.EntitySide.EnemySide)
 
-		for iter_3_12, iter_3_13 in ipairs(var_3_11) do
-			arg_3_0:buildSpine(iter_3_13, FightEnum.EntityCreateStage.Init)
+		for i, entityData in ipairs(spFightEntities) do
+			self:buildSpine(entityData, FightEnum.EntityCreateStage.Init)
 		end
 	end
 
-	arg_3_0._up = nil
-	arg_3_0._up = CameraMgr.instance:getUnitCameraTrs().up
+	self._up = nil
+	self._up = CameraMgr.instance:getUnitCameraTrs().up
 
-	FightController.instance:registerCallback(FightEvent.OnUpdateSpeed, arg_3_0._onUpdateSpeed, arg_3_0)
+	FightController.instance:registerCallback(FightEvent.OnUpdateSpeed, self._onUpdateSpeed, self)
 
-	local var_3_12 = ZProj.TransformListener.Get(CameraMgr.instance:getUnitCameraGO())
+	local transformListener = ZProj.TransformListener.Get(CameraMgr.instance:getUnitCameraGO())
 
-	var_3_12:AddPositionCallback(arg_3_0._adjustSpinesLookRotation, arg_3_0)
-	var_3_12:AddRotationCallback(arg_3_0._adjustSpinesLookRotation, arg_3_0)
+	transformListener:AddPositionCallback(self._adjustSpinesLookRotation, self)
+	transformListener:AddRotationCallback(self._adjustSpinesLookRotation, self)
 end
 
-function var_0_0.addVorpalithUnit(arg_4_0)
-	local var_4_0 = FightDataHelper.entityMgr:getVorpalith()
+function FightSceneEntityMgr:addVorpalithUnit()
+	local vorpalithMo = FightDataHelper.entityMgr:getVorpalith()
 
-	if not var_4_0 then
+	if not vorpalithMo then
 		return
 	end
 
-	local var_4_1 = FightModel.instance:getSpeed()
-	local var_4_2 = gohelper.create3d(arg_4_0._containerGO, "Vorpalith")
-	local var_4_3 = MonoHelper.addLuaComOnceToGo(var_4_2, FightEntityVorpalith, var_4_0.id)
+	local speed = FightModel.instance:getSpeed()
+	local entityGo = gohelper.create3d(self._containerGO, "Vorpalith")
+	local vorpalithEntity = MonoHelper.addLuaComOnceToGo(entityGo, FightEntityVorpalith, vorpalithMo.id)
 
-	var_4_3:setSpeed(var_4_1)
-	arg_4_0:addUnit(var_4_3)
+	vorpalithEntity:setSpeed(speed)
+	self:addUnit(vorpalithEntity)
 end
 
-function var_0_0.addASFDUnit(arg_5_0)
-	local var_5_0 = FightModel.instance:getSpeed()
-	local var_5_1 = FightDataHelper.entityMgr:getASFDEntityMo(FightEnum.EntitySide.MySide)
-
-	if var_5_1 and not FightHelper.getEntity(var_5_1.id) then
-		local var_5_2 = gohelper.create3d(arg_5_0._containerGO, "MyASFDEntityGo")
-		local var_5_3 = MonoHelper.addLuaComOnceToGo(var_5_2, FightEntityASFD, var_5_1.id)
-
-		var_5_3:setSpeed(var_5_0)
-		arg_5_0:addUnit(var_5_3)
-	end
-
-	local var_5_4 = FightDataHelper.entityMgr:getASFDEntityMo(FightEnum.EntitySide.EnemySide)
-
-	if var_5_4 and not FightHelper.getEntity(var_5_4.id) then
-		local var_5_5 = gohelper.create3d(arg_5_0._containerGO, "EnemyASFDEntityGo")
-		local var_5_6 = MonoHelper.addLuaComOnceToGo(var_5_5, FightEntityASFD, var_5_4.id)
-
-		var_5_6:setSpeed(var_5_0)
-		arg_5_0:addUnit(var_5_6)
-	end
-end
-
-function var_0_0.onSceneClose(arg_6_0)
-	var_0_0.super.onSceneClose(arg_6_0)
-	FightController.instance:unregisterCallback(FightEvent.OnUpdateSpeed, arg_6_0._onUpdateSpeed, arg_6_0)
-
-	local var_6_0 = ZProj.TransformListener.Get(CameraMgr.instance:getUnitCameraGO())
-
-	var_6_0:RemovePositionCallback()
-	var_6_0:RemoveRotationCallback()
-
-	if arg_6_0._showSubWork then
-		arg_6_0._showSubWork:disposeSelf()
-
-		arg_6_0._showSubWork = nil
-	end
-end
-
-function var_0_0._adjustSpinesLookRotation(arg_7_0)
-	if not arg_7_0.enableSpineRotate then
+function FightSceneEntityMgr:createRouge2MusicEntity(entityMo)
+	if not entityMo then
 		return
 	end
 
-	local var_7_0, var_7_1, var_7_2 = arg_7_0:_getCameraPos()
-	local var_7_3 = arg_7_0:getTagUnitDict(SceneTag.UnitPlayer)
-	local var_7_4 = arg_7_0:getTagUnitDict(SceneTag.UnitMonster)
+	local speed = FightModel.instance:getSpeed()
+	local entityGo = gohelper.create3d(self._containerGO, "rouge2Music")
+	local rouge2MusicEntity = MonoHelper.addLuaComOnceToGo(entityGo, FightEntityRouge2Music, entityMo.id)
 
-	if var_7_3 then
-		for iter_7_0, iter_7_1 in pairs(var_7_3) do
-			arg_7_0:adjustSpineLookRotation(iter_7_1)
+	rouge2MusicEntity:setSpeed(speed)
+	self:addUnit(rouge2MusicEntity)
+end
+
+function FightSceneEntityMgr:addASFDUnit()
+	local speed = FightModel.instance:getSpeed()
+	local mySideASFDEntityMo = FightDataHelper.entityMgr:getASFDEntityMo(FightEnum.EntitySide.MySide)
+
+	if mySideASFDEntityMo then
+		local entity = FightHelper.getEntity(mySideASFDEntityMo.id)
+
+		if not entity then
+			local myASFDEntityGo = gohelper.create3d(self._containerGO, "MyASFDEntityGo")
+
+			entity = MonoHelper.addLuaComOnceToGo(myASFDEntityGo, FightEntityASFD, mySideASFDEntityMo.id)
+
+			entity:setSpeed(speed)
+			self:addUnit(entity)
 		end
 	end
 
-	if var_7_4 then
-		for iter_7_2, iter_7_3 in pairs(var_7_4) do
-			arg_7_0:adjustSpineLookRotation(iter_7_3)
+	local enemySideASFDEntityMo = FightDataHelper.entityMgr:getASFDEntityMo(FightEnum.EntitySide.EnemySide)
+
+	if enemySideASFDEntityMo then
+		local entity = FightHelper.getEntity(enemySideASFDEntityMo.id)
+
+		if not entity then
+			local enemyASFDEntityGo = gohelper.create3d(self._containerGO, "EnemyASFDEntityGo")
+
+			entity = MonoHelper.addLuaComOnceToGo(enemyASFDEntityGo, FightEntityASFD, enemySideASFDEntityMo.id)
+
+			entity:setSpeed(speed)
+			self:addUnit(entity)
 		end
 	end
 end
 
-function var_0_0.adjustSpineLookRotation(arg_8_0, arg_8_1)
-	if not arg_8_0.enableSpineRotate then
-		return
-	end
+function FightSceneEntityMgr:onSceneClose()
+	FightSceneEntityMgr.super.onSceneClose(self)
+	FightController.instance:unregisterCallback(FightEvent.OnUpdateSpeed, self._onUpdateSpeed, self)
 
-	if arg_8_1 and not gohelper.isNil(arg_8_1.go) then
-		local var_8_0 = arg_8_1.go.transform
-		local var_8_1 = CameraMgr.instance:getMainCameraTrs()
+	local transformListener = ZProj.TransformListener.Get(CameraMgr.instance:getUnitCameraGO())
 
-		transformhelper.setLocalRotation(var_8_0, transformhelper.getLocalRotation(var_8_1))
+	transformListener:RemovePositionCallback()
+	transformListener:RemoveRotationCallback()
+
+	if self._showSubWork then
+		self._showSubWork:disposeSelf()
+
+		self._showSubWork = nil
 	end
 end
 
-function var_0_0._getCameraPos(arg_9_0)
-	if CameraMgr.instance:getSubCameraGO().activeInHierarchy then
+function FightSceneEntityMgr:_adjustSpinesLookRotation()
+	if not self.enableSpineRotate then
+		return
+	end
+
+	local cameraPosX, cameraPosY, cameraPosZ = self:_getCameraPos()
+	local mySide = self:getTagUnitDict(SceneTag.UnitPlayer)
+	local enemySide = self:getTagUnitDict(SceneTag.UnitMonster)
+
+	if mySide then
+		for _, entity in pairs(mySide) do
+			self:adjustSpineLookRotation(entity)
+		end
+	end
+
+	if enemySide then
+		for _, entity in pairs(enemySide) do
+			self:adjustSpineLookRotation(entity)
+		end
+	end
+end
+
+function FightSceneEntityMgr:adjustSpineLookRotation(entity)
+	if not self.enableSpineRotate then
+		return
+	end
+
+	if entity and not gohelper.isNil(entity.go) then
+		local entityTr = entity.go.transform
+		local mainCameraTrs = CameraMgr.instance:getMainCameraTrs()
+
+		transformhelper.setLocalRotation(entityTr, transformhelper.getLocalRotation(mainCameraTrs))
+	end
+end
+
+function FightSceneEntityMgr:_getCameraPos()
+	local subCameraGO = CameraMgr.instance:getSubCameraGO()
+
+	if subCameraGO.activeInHierarchy then
 		return transformhelper.getPos(CameraMgr.instance:getSubCameraTrs())
 	end
 
 	return transformhelper.getPos(CameraMgr.instance:getUnitCameraTrs())
 end
 
-function var_0_0._onUpdateSpeed(arg_10_0)
-	local var_10_0 = FightModel.instance:getSpeed()
+function FightSceneEntityMgr:_onUpdateSpeed()
+	local speed = FightModel.instance:getSpeed()
 
-	for iter_10_0, iter_10_1 in pairs(arg_10_0:getTagUnitDict(SceneTag.UnitPlayer)) do
-		iter_10_1:setSpeed(var_10_0)
+	for _, entity in pairs(self:getTagUnitDict(SceneTag.UnitPlayer)) do
+		entity:setSpeed(speed)
 	end
 
-	for iter_10_2, iter_10_3 in pairs(arg_10_0:getTagUnitDict(SceneTag.UnitMonster)) do
-		iter_10_3:setSpeed(var_10_0)
+	for _, entity in pairs(self:getTagUnitDict(SceneTag.UnitMonster)) do
+		entity:setSpeed(speed)
 	end
 
-	for iter_10_4, iter_10_5 in pairs(arg_10_0:getTagUnitDict(SceneTag.UnitNpc)) do
-		iter_10_5:setSpeed(var_10_0)
+	for _, entity in pairs(self:getTagUnitDict(SceneTag.UnitNpc)) do
+		entity:setSpeed(speed)
 	end
 
-	arg_10_0._sceneEntityMySide:setSpeed(var_10_0)
-	arg_10_0._sceneEntityEnemySide:setSpeed(var_10_0)
+	self._sceneEntityMySide:setSpeed(speed)
+	self._sceneEntityEnemySide:setSpeed(speed)
 end
 
-function var_0_0.compareUpdate(arg_11_0, arg_11_1, arg_11_2)
-	arg_11_0._existBuffUidDict = {}
+function FightSceneEntityMgr:compareUpdate(fight, changeWave)
+	self._existBuffUidDict = {}
 
-	local var_11_0 = FightDataHelper.entityMgr:getMyNormalList()
+	local mySideMOList = FightDataHelper.entityMgr:getMyNormalList()
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
-		arg_11_0._existBuffUidDict[iter_11_1.id] = {}
+	for _, entityMO in ipairs(mySideMOList) do
+		self._existBuffUidDict[entityMO.id] = {}
 
-		for iter_11_2, iter_11_3 in pairs(iter_11_1:getBuffDic()) do
-			arg_11_0._existBuffUidDict[iter_11_1.id][iter_11_3.id] = iter_11_3
+		for _, buffMO in pairs(entityMO:getBuffDic()) do
+			self._existBuffUidDict[entityMO.id][buffMO.id] = buffMO
 		end
 	end
 
-	arg_11_0._myStancePos2EntityId = {}
-	arg_11_0._enemyStancePos2EntityId = {}
+	self._myStancePos2EntityId = {}
+	self._enemyStancePos2EntityId = {}
 
-	for iter_11_4, iter_11_5 in pairs(arg_11_0:getTagUnitDict(SceneTag.UnitPlayer)) do
-		arg_11_0._myStancePos2EntityId[iter_11_5:getMO().position] = iter_11_5.id
+	for _, entity in pairs(self:getTagUnitDict(SceneTag.UnitPlayer)) do
+		self._myStancePos2EntityId[entity:getMO().position] = entity.id
 	end
 
-	for iter_11_6, iter_11_7 in pairs(arg_11_0:getTagUnitDict(SceneTag.UnitMonster)) do
-		arg_11_0._enemyStancePos2EntityId[iter_11_7:getMO().position] = iter_11_7.id
+	for _, entity in pairs(self:getTagUnitDict(SceneTag.UnitMonster)) do
+		self._enemyStancePos2EntityId[entity:getMO().position] = entity.id
 	end
 
-	FightModel.instance:updateFight(arg_11_1, arg_11_2)
-	arg_11_0:_rebuildEntity(SceneTag.UnitPlayer, arg_11_0._myStancePos2EntityId)
-	arg_11_0:_rebuildEntity(SceneTag.UnitMonster, arg_11_0._enemyStancePos2EntityId)
+	FightModel.instance:updateFight(fight, changeWave)
+	self:_rebuildEntity(SceneTag.UnitPlayer, self._myStancePos2EntityId)
+	self:_rebuildEntity(SceneTag.UnitMonster, self._enemyStancePos2EntityId)
 
-	local var_11_1 = FightDataHelper.entityMgr:getMyNormalList()
+	mySideMOList = FightDataHelper.entityMgr:getMyNormalList()
 
-	for iter_11_8, iter_11_9 in ipairs(var_11_1) do
-		local var_11_2 = arg_11_0._existBuffUidDict[iter_11_9.id]
-		local var_11_3 = FightHelper.getEntity(iter_11_9.id)
+	for _, afterEntityMO in ipairs(mySideMOList) do
+		local existBuffUidDict = self._existBuffUidDict[afterEntityMO.id]
+		local entity = FightHelper.getEntity(afterEntityMO.id)
 
-		if var_11_3 and var_11_2 then
-			for iter_11_10, iter_11_11 in pairs(var_11_2) do
-				if not iter_11_9:getBuffMO(iter_11_10) then
-					var_11_3.buff:delBuff(iter_11_11.uid)
+		if entity and existBuffUidDict then
+			for buffUid, buffMO in pairs(existBuffUidDict) do
+				if not afterEntityMO:getBuffMO(buffUid) then
+					entity.buff:delBuff(buffMO.uid)
 				end
 			end
 
-			for iter_11_12, iter_11_13 in ipairs(iter_11_9:getBuffList()) do
-				if not var_11_2[iter_11_13.id] then
-					var_11_3.buff:addBuff(iter_11_13, true)
+			for _, buffMO in ipairs(afterEntityMO:getBuffList()) do
+				if not existBuffUidDict[buffMO.id] then
+					entity.buff:addBuff(buffMO, true)
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.changeWave(arg_12_0, arg_12_1)
-	arg_12_0:compareUpdate(arg_12_1, true)
+function FightSceneEntityMgr:changeWave(fight)
+	self:compareUpdate(fight, true)
 end
 
-function var_0_0._rebuildEntity(arg_13_0, arg_13_1, arg_13_2)
-	for iter_13_0, iter_13_1 in pairs(arg_13_2) do
-		local var_13_0 = FightDataHelper.entityMgr:getById(iter_13_1)
+function FightSceneEntityMgr:_rebuildEntity(tag, oldStancePos2EntityId)
+	for standPos, entityId in pairs(oldStancePos2EntityId) do
+		local entityMO = FightDataHelper.entityMgr:getById(entityId)
 
-		if not var_13_0 or var_13_0.position ~= iter_13_0 then
-			arg_13_0:removeUnit(arg_13_1, iter_13_1)
+		if not entityMO or entityMO.position ~= standPos then
+			self:removeUnit(tag, entityId)
 		end
 
-		if var_13_0 and not arg_13_0:getUnit(arg_13_1, var_13_0.id) then
-			if FightDataHelper.entityMgr:isSub(iter_13_1) then
-				if FightEntitySub.Online and var_13_0.side == FightEnum.EntitySide.MySide then
-					arg_13_0:buildSubSpine(var_13_0)
+		if entityMO and not self:getUnit(tag, entityMO.id) then
+			if FightDataHelper.entityMgr:isSub(entityId) then
+				if FightEntitySub.Online and entityMO.side == FightEnum.EntitySide.MySide then
+					self:buildSubSpine(entityMO)
 				end
 			else
-				arg_13_0:buildSpine(var_13_0)
+				self:buildSpine(entityMO)
 			end
 		end
 	end
 
-	local var_13_1 = arg_13_1 == SceneTag.UnitPlayer and FightEnum.EntitySide.MySide or FightEnum.EntitySide.EnemySide
-	local var_13_2 = {}
+	local side = tag == SceneTag.UnitPlayer and FightEnum.EntitySide.MySide or FightEnum.EntitySide.EnemySide
+	local moList = {}
 
-	if var_13_1 == FightEnum.EntitySide.EnemySide then
-		tabletool.addValues(var_13_2, FightDataHelper.entityMgr:getEnemyNormalList())
-		tabletool.addValues(var_13_2, FightDataHelper.entityMgr:getEnemySpList())
+	if side == FightEnum.EntitySide.EnemySide then
+		tabletool.addValues(moList, FightDataHelper.entityMgr:getEnemyNormalList())
+		tabletool.addValues(moList, FightDataHelper.entityMgr:getEnemySpList())
 	else
-		var_13_2 = FightDataHelper.entityMgr:getNormalList(var_13_1)
+		moList = FightDataHelper.entityMgr:getNormalList(side)
 	end
 
-	for iter_13_2, iter_13_3 in ipairs(var_13_2) do
-		if not arg_13_0:getUnit(arg_13_1, iter_13_3.id) then
-			arg_13_0:buildSpine(iter_13_3)
+	for _, entityMO in ipairs(moList) do
+		if not self:getUnit(tag, entityMO.id) then
+			self:buildSpine(entityMO)
 		end
 	end
 
-	if FightEntitySub.Online and var_13_1 == FightEnum.EntitySide.MySide then
-		local var_13_3 = FightDataHelper.entityMgr:getMySubList()
-		local var_13_4 = false
+	if FightEntitySub.Online and side == FightEnum.EntitySide.MySide then
+		local subMOList = FightDataHelper.entityMgr:getMySubList()
+		local hasExist = false
 
-		for iter_13_4, iter_13_5 in ipairs(var_13_3) do
-			if arg_13_0:getUnit(arg_13_1, iter_13_5.id) and arg_13_0:getEntityByPosId(arg_13_1, iter_13_5.position) then
-				var_13_4 = true
+		for _, entityMO in ipairs(subMOList) do
+			if self:getUnit(tag, entityMO.id) and self:getEntityByPosId(tag, entityMO.position) then
+				hasExist = true
 			end
 		end
 
-		if not var_13_4 and var_13_3 and #var_13_3 > 0 then
-			arg_13_0:buildSubSpine(var_13_3[1])
+		if not hasExist and subMOList and #subMOList > 0 then
+			self:buildSubSpine(subMOList[1])
 		end
 	end
 end
 
-function var_0_0.getEntity(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_0:getTagUnitDict(SceneTag.UnitPlayer)
-	local var_14_1 = var_14_0 and var_14_0[arg_14_1]
+function FightSceneEntityMgr:getEntity(id)
+	local tagEntitys = self:getTagUnitDict(SceneTag.UnitPlayer)
+	local player = tagEntitys and tagEntitys[id]
 
-	if var_14_1 then
-		return var_14_1
+	if player then
+		return player
 	end
 
-	local var_14_2 = arg_14_0:getTagUnitDict(SceneTag.UnitMonster)
-	local var_14_3 = var_14_2 and var_14_2[arg_14_1]
+	tagEntitys = self:getTagUnitDict(SceneTag.UnitMonster)
 
-	if var_14_3 then
-		return var_14_3
+	local monster = tagEntitys and tagEntitys[id]
+
+	if monster then
+		return monster
 	end
 
-	local var_14_4 = arg_14_0:getTagUnitDict(SceneTag.UnitNpc)
+	tagEntitys = self:getTagUnitDict(SceneTag.UnitNpc)
 
-	return var_14_4 and var_14_4[arg_14_1]
+	return tagEntitys and tagEntitys[id]
 end
 
-function var_0_0.getEntityByPosId(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0 = arg_15_0:getTagUnitDict(arg_15_1)
+function FightSceneEntityMgr:getEntityByPosId(tag, posId)
+	local tagEntitys = self:getTagUnitDict(tag)
 
-	if var_15_0 then
-		for iter_15_0, iter_15_1 in pairs(var_15_0) do
-			if iter_15_1:getMO().position == arg_15_2 then
-				return iter_15_1
+	if tagEntitys then
+		for _, entity in pairs(tagEntitys) do
+			if entity:getMO().position == posId then
+				return entity
 			end
 		end
 	end
 end
 
-function var_0_0.getSpineClass(arg_16_0, arg_16_1)
-	local var_16_0 = lua_fight_assembled_monster.configDict[arg_16_1.skin]
+function FightSceneEntityMgr:getSpineClass(entityMo)
+	local assembledMonsterConfig = lua_fight_assembled_monster.configDict[entityMo.skin]
 
-	if var_16_0 then
-		if var_16_0.part == 1 then
+	if assembledMonsterConfig then
+		if assembledMonsterConfig.part == 1 then
 			return FightEntityAssembledMonsterMain
 		else
 			return FightEntityAssembledMonsterSub
 		end
 	end
 
-	if lua_fight_sp_500m_model.configDict[arg_16_1.modelId] then
+	local modelCo = lua_fight_sp_500m_model.configDict[entityMo.modelId]
+
+	if modelCo then
 		return FightEntityMonster_500M
 	end
 
-	return arg_16_1.side == FightEnum.EntitySide.MySide and FightEntityPlayer or FightEntityMonster
+	local isMySide = entityMo.side == FightEnum.EntitySide.MySide
+	local cls = isMySide and FightEntityPlayer or FightEntityMonster
+
+	return cls
 end
 
-function var_0_0.buildSpine(arg_17_0, arg_17_1, arg_17_2)
-	local var_17_0 = arg_17_0:getSpineClass(arg_17_1)
-	local var_17_1 = FightHelper.getEntitySpineLookDir(arg_17_1)
-	local var_17_2 = arg_17_1:getIdName()
-	local var_17_3 = gohelper.create3d(arg_17_0._containerGO, var_17_2)
-	local var_17_4 = MonoHelper.addLuaComOnceToGo(var_17_3, var_17_0, arg_17_1.id)
-
-	arg_17_0:addUnit(var_17_4)
-	var_17_4:resetEntity()
-	var_17_4:loadSpine(arg_17_0._onSpineLoaded, arg_17_0)
-	var_17_4.spine:changeLookDir(var_17_1)
-	var_17_4:setCreateStage(arg_17_2)
-
-	if var_17_4.nameUI then
-		var_17_4.nameUI:load(ResUrl.getSceneUIPrefab("fight", "fightname"))
+function FightSceneEntityMgr:buildSpine(entityMO, createStage)
+	if entityMO:isRouge2Music() then
+		return self:createRouge2MusicEntity(entityMO, createStage)
 	end
 
-	var_17_4:setSpeed(FightModel.instance:getSpeed())
+	local cls = self:getSpineClass(entityMO)
+	local lookDir = FightHelper.getEntitySpineLookDir(entityMO)
+	local EntityGOName = entityMO:getIdName()
+	local entityGO = gohelper.create3d(self._containerGO, EntityGOName)
+	local fightEntity = MonoHelper.addLuaComOnceToGo(entityGO, cls, entityMO.id)
 
-	return var_17_4
+	self:addUnit(fightEntity)
+	fightEntity:resetEntity()
+	fightEntity:loadSpine(self._onSpineLoaded, self)
+	fightEntity.spine:changeLookDir(lookDir)
+	fightEntity:setCreateStage(createStage)
+
+	if fightEntity.nameUI then
+		fightEntity.nameUI:load(ResUrl.getSceneUIPrefab("fight", "fightname"))
+	end
+
+	fightEntity:setSpeed(FightModel.instance:getSpeed())
+
+	return fightEntity
 end
 
-function var_0_0.buildSubSpine(arg_18_0, arg_18_1, arg_18_2)
+function FightSceneEntityMgr:buildSubSpine(entityMO, createStage)
 	if not FightEntitySub.Online then
 		logError("替补不上线，该方法不应该被调用")
 	end
 
-	if arg_18_1.side == FightEnum.EntitySide.MySide then
-		local var_18_0 = FightConfig.instance:getSkinCO(arg_18_1.skin)
+	if entityMO.side == FightEnum.EntitySide.MySide then
+		local skinCO = FightConfig.instance:getSkinCO(entityMO.skin)
 
-		if var_18_0 and not string.nilorempty(var_18_0.alternateSpine) then
-			local var_18_1 = FightHelper.getEntitySpineLookDir(arg_18_1)
-			local var_18_2 = arg_18_1:getIdName()
-			local var_18_3 = gohelper.create3d(arg_18_0._containerGO, var_18_2)
-			local var_18_4 = MonoHelper.addLuaComOnceToGo(var_18_3, FightEntitySub, arg_18_1.id)
+		if skinCO and not string.nilorempty(skinCO.alternateSpine) then
+			local lookDir = FightHelper.getEntitySpineLookDir(entityMO)
+			local EntityGOName = entityMO:getIdName()
+			local entityGO = gohelper.create3d(self._containerGO, EntityGOName)
+			local fightEntity = MonoHelper.addLuaComOnceToGo(entityGO, FightEntitySub, entityMO.id)
 
-			arg_18_0:addUnit(var_18_4)
-			var_18_4:resetEntity()
-			var_18_4:loadSpine(arg_18_0._onSpineLoaded, arg_18_0)
-			var_18_4.spine:changeLookDir(var_18_1)
-			var_18_4:setSpeed(FightModel.instance:getSpeed())
-			var_18_4:setCreateStage(arg_18_2)
+			self:addUnit(fightEntity)
+			fightEntity:resetEntity()
+			fightEntity:loadSpine(self._onSpineLoaded, self)
+			fightEntity.spine:changeLookDir(lookDir)
+			fightEntity:setSpeed(FightModel.instance:getSpeed())
+			fightEntity:setCreateStage(createStage)
 
-			return var_18_4
+			return fightEntity
 		else
-			logError("can't build sub spine, skin alternateSpine not exist: " .. (arg_18_1.skin or arg_18_1.modelId))
-			arg_18_0:_onSpineLoaded()
+			logError("can't build sub spine, skin alternateSpine not exist: " .. (entityMO.skin or entityMO.modelId))
+			self:_onSpineLoaded()
 		end
 	else
 		logError("can't build enemy sub spine")
 	end
 end
 
-function var_0_0._onSpineLoaded(arg_19_0, arg_19_1, arg_19_2)
-	if arg_19_2:getTag() ~= SceneTag.UnitNpc then
-		arg_19_0._remainCount = arg_19_0._remainCount - 1
+function FightSceneEntityMgr:_onSpineLoaded(unitSpine, entity)
+	if entity:getTag() ~= SceneTag.UnitNpc then
+		self._remainCount = self._remainCount - 1
 
-		if arg_19_0._remainCount == 0 then
-			arg_19_0:dispatchEvent(FightSceneEvent.OnAllEntityLoaded)
+		if self._remainCount == 0 then
+			self:dispatchEvent(FightSceneEvent.OnAllEntityLoaded)
 		end
 	end
 
-	if arg_19_1 then
-		local var_19_0 = arg_19_1.unitSpawn.spineRenderer:getReplaceMat()
+	if unitSpine then
+		local mat = unitSpine.unitSpawn.spineRenderer:getReplaceMat()
 
-		arg_19_0:adjustSpineLookRotation(arg_19_1.unitSpawn)
-		GameSceneMgr.instance:getCurScene().bloom:addEntity(arg_19_2)
-		FightMsgMgr.sendMsg(FightMsgId.SpineLoadFinish, arg_19_1)
-		FightController.instance:dispatchEvent(FightEvent.OnSpineLoaded, arg_19_1)
-		FightController.instance:dispatchEvent(FightEvent.OnSpineMaterialChange, arg_19_2.id, var_19_0)
+		self:adjustSpineLookRotation(unitSpine.unitSpawn)
+		FightGameMgr.bloomMgr:addEntity(entity)
+		FightMsgMgr.sendMsg(FightMsgId.SpineLoadFinish, unitSpine)
+		FightController.instance:dispatchEvent(FightEvent.OnSpineLoaded, unitSpine)
+		FightController.instance:dispatchEvent(FightEvent.OnSpineMaterialChange, entity.id, mat)
 	end
 end
 
-function var_0_0.showSubEntity(arg_20_0)
-	if arg_20_0._showSubWork then
-		arg_20_0._showSubWork:disposeSelf()
+function FightSceneEntityMgr:showSubEntity()
+	if self._showSubWork then
+		self._showSubWork:disposeSelf()
 	end
 
-	arg_20_0._showSubWork = FightWorkBuildSubEntityAfterChangeHero.New()
+	self._showSubWork = FightWorkBuildSubEntityAfterChangeHero.New()
 
-	arg_20_0._showSubWork:start()
+	self._showSubWork:start()
 end
 
-function var_0_0.buildTempSpineByName(arg_21_0, arg_21_1, arg_21_2, arg_21_3, arg_21_4, arg_21_5, arg_21_6)
-	local var_21_0 = tostring(arg_21_2)
+function FightSceneEntityMgr:buildTempSpineByName(spineName, specificId, specificSide, mirror, skin, param)
+	local id = tostring(specificId)
 
-	var_21_0 = string.nilorempty(var_21_0) and arg_21_1 or var_21_0
+	id = string.nilorempty(id) and spineName or id
 
-	if arg_21_0:getEntity(var_21_0) then
-		var_21_0 = var_21_0 .. "_1"
+	if self:getEntity(id) then
+		id = id .. "_1"
 	end
 
-	local var_21_1 = gohelper.create3d(arg_21_0._containerGO, var_21_0)
-	local var_21_2 = MonoHelper.addLuaComOnceToGo(var_21_1, FightEntityTemp, var_21_0)
+	local entityGO = gohelper.create3d(self._containerGO, id)
+	local entity = MonoHelper.addLuaComOnceToGo(entityGO, FightEntityTemp, id)
 
-	if arg_21_6 and arg_21_6.ingoreRainEffect then
-		var_21_2.ingoreRainEffect = true
+	if param and param.ingoreRainEffect then
+		entity.ingoreRainEffect = true
 	end
 
-	local var_21_3 = arg_21_4 and arg_21_3 and FightHelper.getSpineLookDir(arg_21_3) or SpineLookDir.Left
+	local lookDir = mirror and specificSide and FightHelper.getSpineLookDir(specificSide) or SpineLookDir.Left
 
-	var_21_2.spine:changeLookDir(var_21_3)
-	var_21_2:setSide(arg_21_3)
+	entity.spine:changeLookDir(lookDir)
+	entity:setSide(specificSide)
 
-	var_21_2.needLookCamera = false
+	entity.needLookCamera = false
 
-	arg_21_0:addUnit(var_21_2)
+	self:addUnit(entity)
 
-	if arg_21_5 then
-		var_21_2:loadSpineBySkin(arg_21_5, arg_21_0._onTempSpineLoaded, arg_21_0)
+	if skin then
+		entity:loadSpineBySkin(skin, self._onTempSpineLoaded, self)
 	else
-		var_21_2:loadSpine(arg_21_1, arg_21_0._onTempSpineLoaded, arg_21_0)
+		entity:loadSpine(spineName, self._onTempSpineLoaded, self)
 	end
 
-	var_21_2:setSpeed(FightModel.instance:getSpeed())
+	entity:setSpeed(FightModel.instance:getSpeed())
 
-	return var_21_2
+	return entity
 end
 
-function var_0_0.buildTempSpine(arg_22_0, arg_22_1, arg_22_2, arg_22_3, arg_22_4, arg_22_5, arg_22_6)
-	local var_22_0 = arg_22_6
+function FightSceneEntityMgr:buildTempSpine(spinePath, entityId, side, layer, cls, containerName)
+	local goName = containerName
 
-	if not var_22_0 then
-		local var_22_1 = FightStrUtil.split(arg_22_1, "/")
+	if not goName then
+		local array = FightStrUtil.split(spinePath, "/")
 
-		var_22_0 = var_22_1[#var_22_1]
+		goName = array[#array]
 	end
 
-	local var_22_2 = gohelper.create3d(arg_22_0._containerGO, var_22_0)
-	local var_22_3 = MonoHelper.addLuaComOnceToGo(var_22_2, arg_22_5 or FightEntityTemp, arg_22_2)
+	local entityGO = gohelper.create3d(self._containerGO, goName)
+	local entity = MonoHelper.addLuaComOnceToGo(entityGO, cls or FightEntityTemp, entityId)
 
-	var_22_3.needLookCamera = false
+	entity.needLookCamera = false
 
-	if arg_22_4 then
-		var_22_3.spine:setLayer(arg_22_4, true)
+	if layer then
+		entity.spine:setLayer(layer, true)
 	end
 
-	local var_22_4 = arg_22_3 == FightEnum.EntitySide.MySide and SpineLookDir.Left or SpineLookDir.Right
+	local lookDir = side == FightEnum.EntitySide.MySide and SpineLookDir.Left or SpineLookDir.Right
 
-	var_22_3.spine:changeLookDir(var_22_4)
-	var_22_3:setSide(arg_22_3)
-	arg_22_0:addUnit(var_22_3)
-	var_22_3:loadSpineBySpinePath(arg_22_1, arg_22_0._onTempSpineLoaded, arg_22_0)
-	var_22_3:setSpeed(FightModel.instance:getSpeed())
+	entity.spine:changeLookDir(lookDir)
+	entity:setSide(side)
+	self:addUnit(entity)
+	entity:loadSpineBySpinePath(spinePath, self._onTempSpineLoaded, self)
+	entity:setSpeed(FightModel.instance:getSpeed())
 
-	return var_22_3
+	return entity
 end
 
-function var_0_0._onTempSpineLoaded(arg_23_0, arg_23_1, arg_23_2)
-	if arg_23_1 then
-		GameSceneMgr.instance:getCurScene().bloom:addEntity(arg_23_2)
-		FightMsgMgr.sendMsg(FightMsgId.SpineLoadFinish, arg_23_1)
-		FightController.instance:dispatchEvent(FightEvent.OnSpineLoaded, arg_23_1)
+function FightSceneEntityMgr:_onTempSpineLoaded(unitSpine, entity)
+	if unitSpine then
+		FightGameMgr.bloomMgr:addEntity(entity)
+		FightMsgMgr.sendMsg(FightMsgId.SpineLoadFinish, unitSpine)
+		FightController.instance:dispatchEvent(FightEvent.OnSpineLoaded, unitSpine)
 	end
 end
 
-function var_0_0.buildTempSceneEntity(arg_24_0, arg_24_1)
-	local var_24_0 = "Temp_" .. arg_24_1
-	local var_24_1 = gohelper.create3d(arg_24_0._containerGO, var_24_0)
-	local var_24_2 = MonoHelper.addLuaComOnceToGo(var_24_1, FightEntityScene, var_24_0)
+function FightSceneEntityMgr:buildTempSceneEntity(name)
+	local id = "Temp_" .. name
+	local sceneEntityGO = gohelper.create3d(self._containerGO, id)
+	local entity = MonoHelper.addLuaComOnceToGo(sceneEntityGO, FightEntityScene, id)
 
-	var_24_2:setSpeed(FightModel.instance:getSpeed())
-	arg_24_0:addUnit(var_24_2)
+	entity:setSpeed(FightModel.instance:getSpeed())
+	self:addUnit(entity)
 
-	return var_24_2
+	return entity
 end
 
-function var_0_0.destroyUnit(arg_25_0, arg_25_1)
-	if arg_25_1.IS_REMOVED then
+function FightSceneEntityMgr:destroyUnit(unit)
+	if unit.IS_REMOVED then
 		return
 	end
 
-	arg_25_1.IS_REMOVED = true
+	unit.IS_REMOVED = true
 
-	if FightSkillMgr.instance:isEntityPlayingTimeline(arg_25_1.id) then
-		FightSkillMgr.instance:afterTimeline(arg_25_1)
+	if FightSkillMgr.instance:isEntityPlayingTimeline(unit.id) then
+		FightSkillMgr.instance:afterTimeline(unit)
 	end
 
-	FightController.instance:dispatchEvent(FightEvent.BeforeDestroyEntity, arg_25_1)
-	var_0_0.super.destroyUnit(arg_25_0, arg_25_1)
+	FightController.instance:dispatchEvent(FightEvent.BeforeDestroyEntity, unit)
+	FightSceneEntityMgr.super.destroyUnit(self, unit)
 end
 
-return var_0_0
+return FightSceneEntityMgr

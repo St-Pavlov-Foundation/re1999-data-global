@@ -1,16 +1,18 @@
-﻿module("modules.logic.versionactivity1_5.dungeon.view.building.V1a5BuildingSkillViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/dungeon/view/building/V1a5BuildingSkillViewContainer.lua
 
-local var_0_0 = class("V1a5BuildingSkillViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_5.dungeon.view.building.V1a5BuildingSkillViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local V1a5BuildingSkillViewContainer = class("V1a5BuildingSkillViewContainer", BaseViewContainer)
+
+function V1a5BuildingSkillViewContainer:buildViews()
 	return {
 		V1a5BuildingSkillView.New(),
 		TabViewGroup.New(1, "#go_topleft")
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
+function V1a5BuildingSkillViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -21,4 +23,4 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	end
 end
 
-return var_0_0
+return V1a5BuildingSkillViewContainer

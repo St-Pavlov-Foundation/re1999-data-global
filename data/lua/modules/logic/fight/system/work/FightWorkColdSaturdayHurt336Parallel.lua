@@ -1,9 +1,11 @@
-﻿module("modules.logic.fight.system.work.FightWorkColdSaturdayHurt336Parallel", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkColdSaturdayHurt336Parallel.lua
 
-local var_0_0 = class("FightWorkColdSaturdayHurt336Parallel", FightStepEffectFlow)
+module("modules.logic.fight.system.work.FightWorkColdSaturdayHurt336Parallel", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0:onDone(true)
+local FightWorkColdSaturdayHurt336Parallel = class("FightWorkColdSaturdayHurt336Parallel", FightStepEffectFlow)
+
+function FightWorkColdSaturdayHurt336Parallel:onStart()
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkColdSaturdayHurt336Parallel

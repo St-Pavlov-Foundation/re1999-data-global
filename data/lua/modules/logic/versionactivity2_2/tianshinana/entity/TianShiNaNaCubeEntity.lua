@@ -1,176 +1,184 @@
-﻿module("modules.logic.versionactivity2_2.tianshinana.entity.TianShiNaNaCubeEntity", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/tianshinana/entity/TianShiNaNaCubeEntity.lua
 
-local var_0_0 = class("TianShiNaNaCubeEntity", LuaCompBase)
-local var_0_1 = TianShiNaNaEnum.Dir
-local var_0_2 = TianShiNaNaEnum.OperDir
-local var_0_3 = TianShiNaNaEnum.OperEffect
-local var_0_4 = TianShiNaNaEnum.DirToQuaternion
-local var_0_5 = {
-	[var_0_1.Forward] = true,
-	[var_0_1.Left] = true,
-	[var_0_1.Down] = true
+module("modules.logic.versionactivity2_2.tianshinana.entity.TianShiNaNaCubeEntity", package.seeall)
+
+local TianShiNaNaCubeEntity = class("TianShiNaNaCubeEntity", LuaCompBase)
+local Dir = TianShiNaNaEnum.Dir
+local OperDir = TianShiNaNaEnum.OperDir
+local OperEffect = TianShiNaNaEnum.OperEffect
+local DirToQuaternion = TianShiNaNaEnum.DirToQuaternion
+local backDir = {
+	[Dir.Forward] = true,
+	[Dir.Left] = true,
+	[Dir.Down] = true
 }
 
-function var_0_0.Create(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = UnityEngine.GameObject.New("Cube")
+function TianShiNaNaCubeEntity.Create(x, y, parent)
+	local go = UnityEngine.GameObject.New("Cube")
 
-	if arg_1_2 then
-		var_1_0.transform:SetParent(arg_1_2.transform, false)
+	if parent then
+		go.transform:SetParent(parent.transform, false)
 	end
 
-	return (MonoHelper.addNoUpdateLuaComOnceToGo(var_1_0, var_0_0, {
-		x = arg_1_0,
-		y = arg_1_1
-	}))
+	local cubeComp = MonoHelper.addNoUpdateLuaComOnceToGo(go, TianShiNaNaCubeEntity, {
+		x = x,
+		y = y
+	})
+
+	return cubeComp
 end
 
-function var_0_0.ctor(arg_2_0, arg_2_1)
-	arg_2_0.planDirs = {
-		var_0_1.Up,
-		var_0_1.Back,
-		var_0_1.Right,
-		var_0_1.Left,
-		var_0_1.Forward,
-		var_0_1.Down
+function TianShiNaNaCubeEntity:ctor(param)
+	self.planDirs = {
+		Dir.Up,
+		Dir.Back,
+		Dir.Right,
+		Dir.Left,
+		Dir.Forward,
+		Dir.Down
 	}
-	arg_2_0.l = 1
-	arg_2_0.w = 1
-	arg_2_0.h = 2
-	arg_2_0.x = arg_2_1.x + arg_2_0.l / 2 - 0.5
-	arg_2_0.y = arg_2_0.h / 2 - 1
-	arg_2_0.z = arg_2_1.y + arg_2_0.w / 2 - 0.5
-	arg_2_0.finalV3 = Vector3(arg_2_0.x, arg_2_0.y, arg_2_0.z)
-	arg_2_0.curOper = nil
-	arg_2_0.nowTweenValue = 0
+	self.l = 1
+	self.w = 1
+	self.h = 2
+	self.x = param.x + self.l / 2 - 0.5
+	self.y = self.h / 2 - 1
+	self.z = param.y + self.w / 2 - 0.5
+	self.finalV3 = Vector3(self.x, self.y, self.z)
+	self.curOper = nil
+	self.nowTweenValue = 0
 end
 
-function var_0_0.init(arg_3_0, arg_3_1)
-	arg_3_0.go = arg_3_1
-	arg_3_0.loader = PrefabInstantiate.Create(arg_3_0.go)
+function TianShiNaNaCubeEntity:init(go)
+	self.go = go
+	self.loader = PrefabInstantiate.Create(self.go)
 
-	arg_3_0.loader:startLoad("scenes/v2a2_m_s12_tsnn_jshd/prefab/v2a2_m_s12_tsnn_box_p.prefab", arg_3_0.onLoadResEnd, arg_3_0)
+	self.loader:startLoad("scenes/v2a2_m_s12_tsnn_jshd/prefab/v2a2_m_s12_tsnn_box_p.prefab", self.onLoadResEnd, self)
 
-	arg_3_0.trans = arg_3_0.instGo.transform:GetChild(0)
+	self.trans = self.instGo.transform:GetChild(0)
 
-	transformhelper.setLocalPos(arg_3_0.trans, arg_3_0.x, arg_3_0.y, arg_3_0.z)
+	transformhelper.setLocalPos(self.trans, self.x, self.y, self.z)
 
 	TianShiNaNaModel.instance.curPointList = {}
 end
 
-function var_0_0.onLoadResEnd(arg_4_0)
-	arg_4_0.plans = arg_4_0:getUserDataTb_()
-	arg_4_0.renderers = arg_4_0:getUserDataTb_()
-	arg_4_0.hideRenderers = arg_4_0:getUserDataTb_()
-	arg_4_0.instGo = arg_4_0.loader:getInstGO()
-	arg_4_0.rootGo = arg_4_0.instGo.transform:GetChild(0):GetChild(0).gameObject
-	arg_4_0.anim = arg_4_0.instGo:GetComponent(typeof(UnityEngine.Animator))
+function TianShiNaNaCubeEntity:onLoadResEnd()
+	self.plans = self:getUserDataTb_()
+	self.renderers = self:getUserDataTb_()
+	self.hideRenderers = self:getUserDataTb_()
+	self.instGo = self.loader:getInstGO()
+	self.rootGo = self.instGo.transform:GetChild(0):GetChild(0).gameObject
+	self.anim = self.instGo:GetComponent(typeof(UnityEngine.Animator))
 
-	arg_4_0.anim:Play("open1", 0, 1)
+	self.anim:Play("open1", 0, 1)
 
-	for iter_4_0 = 1, 6 do
-		arg_4_0.plans[iter_4_0] = gohelper.findChild(arg_4_0.rootGo, iter_4_0)
-		arg_4_0.renderers[iter_4_0] = arg_4_0.plans[iter_4_0]:GetComponent(typeof(UnityEngine.Renderer))
+	for i = 1, 6 do
+		self.plans[i] = gohelper.findChild(self.rootGo, i)
+		self.renderers[i] = self.plans[i]:GetComponent(typeof(UnityEngine.Renderer))
 	end
 
-	arg_4_0:updateSortOrder()
+	self:updateSortOrder()
 end
 
-function var_0_0.playOpenAnim(arg_5_0, arg_5_1)
-	if arg_5_1 == TianShiNaNaEnum.CubeType.Type1 then
-		arg_5_0.anim:Play("open1", 0, 0)
+function TianShiNaNaCubeEntity:playOpenAnim(cubeType)
+	if cubeType == TianShiNaNaEnum.CubeType.Type1 then
+		self.anim:Play("open1", 0, 0)
 	else
-		arg_5_0.anim:Play("open2", 0, 0)
+		self.anim:Play("open2", 0, 0)
 	end
 end
 
-function var_0_0.updateSortOrder(arg_6_0)
-	if not arg_6_0.renderers then
+function TianShiNaNaCubeEntity:updateSortOrder()
+	if not self.renderers then
 		return
 	end
 
-	for iter_6_0, iter_6_1 in pairs(arg_6_0.renderers) do
-		local var_6_0 = arg_6_0.planDirs[iter_6_0]
+	for index, renderer in pairs(self.renderers) do
+		local dir = self.planDirs[index]
 
-		if var_0_5[var_6_0] then
-			iter_6_1.sortingOrder = TianShiNaNaHelper.getSortIndex(arg_6_0.x, arg_6_0.z) - 1
+		if backDir[dir] then
+			renderer.sortingOrder = TianShiNaNaHelper.getSortIndex(self.x, self.z) - 1
 		else
-			iter_6_1.sortingOrder = TianShiNaNaHelper.getSortIndex(arg_6_0.x, arg_6_0.z) + 1
+			renderer.sortingOrder = TianShiNaNaHelper.getSortIndex(self.x, self.z) + 1
 		end
 	end
 end
 
-function var_0_0.doCubeTween(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = (arg_7_1 == var_0_2.Left or arg_7_1 == var_0_2.Right) and arg_7_0.l or arg_7_0.w
-	local var_7_1 = (var_7_0 / 2)^2 + (arg_7_0.h / 2)^2
-	local var_7_2 = var_7_0 * Mathf.Clamp(arg_7_2, 0, 0.5)
-	local var_7_3 = arg_7_0.h * Mathf.Clamp(arg_7_2 - 0.5, 0, 0.5)
-	local var_7_4 = var_7_2 + var_7_3
+function TianShiNaNaCubeEntity:doCubeTween(operDir, value)
+	local b = (operDir == OperDir.Left or operDir == OperDir.Right) and self.l or self.w
+	local dis = (b / 2)^2 + (self.h / 2)^2
+	local beforeOffset = b * Mathf.Clamp(value, 0, 0.5)
+	local afterOffset = self.h * Mathf.Clamp(value - 0.5, 0, 0.5)
+	local totalOffset = beforeOffset + afterOffset
 
-	arg_7_0.finalV3.y = math.sqrt(var_7_1 - (var_7_4 - var_7_0 / 2)^2)
+	self.finalV3.y = math.sqrt(dis - (totalOffset - b / 2)^2)
 
-	if arg_7_1 == var_0_2.Left then
-		arg_7_0.finalV3.x = arg_7_0.x - var_7_4
-	elseif arg_7_1 == var_0_2.Right then
-		arg_7_0.finalV3.x = arg_7_0.x + var_7_4
-	elseif arg_7_1 == var_0_2.Forward then
-		arg_7_0.finalV3.z = arg_7_0.z + var_7_4
-	elseif arg_7_1 == var_0_2.Back then
-		arg_7_0.finalV3.z = arg_7_0.z - var_7_4
+	if operDir == OperDir.Left then
+		self.finalV3.x = self.x - totalOffset
+	elseif operDir == OperDir.Right then
+		self.finalV3.x = self.x + totalOffset
+	elseif operDir == OperDir.Forward then
+		self.finalV3.z = self.z + totalOffset
+	elseif operDir == OperDir.Back then
+		self.finalV3.z = self.z - totalOffset
 	end
 
-	local var_7_5 = var_0_4[arg_7_0.planDirs[1]][arg_7_0.planDirs[2]]
-	local var_7_6 = var_0_4[arg_7_0:getNextDir(arg_7_1, arg_7_0.planDirs[1])][arg_7_0:getNextDir(arg_7_1, arg_7_0.planDirs[2])]
-	local var_7_7 = math.atan2(arg_7_0.h, var_7_0)
-	local var_7_8 = math.atan2(arg_7_0.finalV3.y, arg_7_2 > 0.5 and -var_7_3 or var_7_0 / 2 - var_7_2)
-	local var_7_9 = TianShiNaNaHelper.lerpQ(var_7_5, var_7_6, (var_7_8 - var_7_7) / math.pi * 2)
+	local q1 = DirToQuaternion[self.planDirs[1]][self.planDirs[2]]
+	local q2 = DirToQuaternion[self:getNextDir(operDir, self.planDirs[1])][self:getNextDir(operDir, self.planDirs[2])]
+	local beginAngle = math.atan2(self.h, b)
+	local nowAngle = math.atan2(self.finalV3.y, value > 0.5 and -afterOffset or b / 2 - beforeOffset)
+	local q = TianShiNaNaHelper.lerpQ(q1, q2, (nowAngle - beginAngle) / math.pi * 2)
 
-	transformhelper.setLocalRotation2(arg_7_0.trans, var_7_9.x, var_7_9.y, var_7_9.z, var_7_9.w)
-	transformhelper.setLocalPos(arg_7_0.trans, arg_7_0.finalV3.x, arg_7_0.finalV3.y - 1, arg_7_0.finalV3.z)
+	transformhelper.setLocalRotation2(self.trans, q.x, q.y, q.z, q.w)
+	transformhelper.setLocalPos(self.trans, self.finalV3.x, self.finalV3.y - 1, self.finalV3.z)
 
-	if arg_7_2 > 0.5 then
-		arg_7_0:doRotate(arg_7_1, true)
-		arg_7_0:updateSortOrder()
-		arg_7_0:doRotate(-arg_7_1, true)
+	if value > 0.5 then
+		self:doRotate(operDir, true)
+		self:updateSortOrder()
+		self:doRotate(-operDir, true)
 	else
-		arg_7_0:updateSortOrder()
+		self:updateSortOrder()
 	end
 end
 
-function var_0_0.getPlaneByIndex(arg_8_0, arg_8_1)
-	return arg_8_0.plans[arg_8_1]
+function TianShiNaNaCubeEntity:getPlaneByIndex(index)
+	return self.plans[index]
 end
 
-function var_0_0.setPlaneParent(arg_9_0, arg_9_1, arg_9_2)
-	arg_9_0.renderers[arg_9_1].sortingOrder = 1
-	arg_9_0.hideRenderers[arg_9_1] = arg_9_0.renderers[arg_9_1]
-	arg_9_0.renderers[arg_9_1] = nil
+function TianShiNaNaCubeEntity:setPlaneParent(index, parent)
+	self.renderers[index].sortingOrder = 1
+	self.hideRenderers[index] = self.renderers[index]
+	self.renderers[index] = nil
 
-	arg_9_0:getPlaneByIndex(arg_9_1).transform:SetParent(arg_9_2, true)
-	tabletool.addValues(TianShiNaNaModel.instance.curPointList, arg_9_0:getCurGrids())
+	local plane = self:getPlaneByIndex(index)
+
+	plane.transform:SetParent(parent, true)
+	tabletool.addValues(TianShiNaNaModel.instance.curPointList, self:getCurGrids())
 	TianShiNaNaController.instance:dispatchEvent(TianShiNaNaEvent.CubePointUpdate)
 end
 
-function var_0_0.revertPlane(arg_10_0, arg_10_1)
-	local var_10_0, var_10_1 = next(arg_10_0.renderers)
+function TianShiNaNaCubeEntity:revertPlane(index)
+	local _, renderer = next(self.renderers)
 
-	if not var_10_1 or not arg_10_0.hideRenderers[arg_10_1] then
+	if not renderer or not self.hideRenderers[index] then
 		return
 	end
 
-	arg_10_0.renderers[arg_10_1] = arg_10_0.hideRenderers[arg_10_1]
-	arg_10_0.renderers[arg_10_1].sortingOrder = var_10_1.sortingOrder
-	arg_10_0.hideRenderers[arg_10_1] = nil
+	self.renderers[index] = self.hideRenderers[index]
+	self.renderers[index].sortingOrder = renderer.sortingOrder
+	self.hideRenderers[index] = nil
 
-	arg_10_0:getPlaneByIndex(arg_10_1).transform:SetParent(arg_10_0.rootGo.transform, true)
+	local plane = self:getPlaneByIndex(index)
 
-	local var_10_2 = arg_10_0:getCurGrids()
+	plane.transform:SetParent(self.rootGo.transform, true)
 
-	for iter_10_0 = #TianShiNaNaModel.instance.curPointList, 1, -1 do
-		local var_10_3 = TianShiNaNaModel.instance.curPointList[iter_10_0]
+	local points = self:getCurGrids()
 
-		for iter_10_1, iter_10_2 in pairs(var_10_2) do
-			if TianShiNaNaHelper.isPosSame(iter_10_2, var_10_3) then
-				table.remove(TianShiNaNaModel.instance.curPointList, iter_10_0)
+	for i = #TianShiNaNaModel.instance.curPointList, 1, -1 do
+		local point = TianShiNaNaModel.instance.curPointList[i]
+
+		for _, curPoint in pairs(points) do
+			if TianShiNaNaHelper.isPosSame(curPoint, point) then
+				table.remove(TianShiNaNaModel.instance.curPointList, i)
 
 				break
 			end
@@ -180,133 +188,135 @@ function var_0_0.revertPlane(arg_10_0, arg_10_1)
 	TianShiNaNaController.instance:dispatchEvent(TianShiNaNaEvent.CubePointUpdate)
 end
 
-function var_0_0.hideOtherPlane(arg_11_0)
-	for iter_11_0 in pairs(arg_11_0.renderers) do
-		gohelper.setActive(arg_11_0:getPlaneByIndex(iter_11_0), false)
+function TianShiNaNaCubeEntity:hideOtherPlane()
+	for index in pairs(self.renderers) do
+		gohelper.setActive(self:getPlaneByIndex(index), false)
 	end
 end
 
-function var_0_0.doRotate(arg_12_0, arg_12_1, arg_12_2)
-	if arg_12_1 == var_0_2.Left then
-		arg_12_0.x = arg_12_0.x - arg_12_0.l / 2 - arg_12_0.h / 2
-		arg_12_0.l, arg_12_0.h = arg_12_0.h, arg_12_0.l
-	elseif arg_12_1 == var_0_2.Right then
-		arg_12_0.x = arg_12_0.x + arg_12_0.l / 2 + arg_12_0.h / 2
-		arg_12_0.l, arg_12_0.h = arg_12_0.h, arg_12_0.l
-	elseif arg_12_1 == var_0_2.Forward then
-		arg_12_0.z = arg_12_0.z + arg_12_0.w / 2 + arg_12_0.h / 2
-		arg_12_0.w, arg_12_0.h = arg_12_0.h, arg_12_0.w
-	elseif arg_12_1 == var_0_2.Back then
-		arg_12_0.z = arg_12_0.z - arg_12_0.w / 2 - arg_12_0.h / 2
-		arg_12_0.w, arg_12_0.h = arg_12_0.h, arg_12_0.w
+function TianShiNaNaCubeEntity:doRotate(operDir, onlyCalc)
+	if operDir == OperDir.Left then
+		self.x = self.x - self.l / 2 - self.h / 2
+		self.l, self.h = self.h, self.l
+	elseif operDir == OperDir.Right then
+		self.x = self.x + self.l / 2 + self.h / 2
+		self.l, self.h = self.h, self.l
+	elseif operDir == OperDir.Forward then
+		self.z = self.z + self.w / 2 + self.h / 2
+		self.w, self.h = self.h, self.w
+	elseif operDir == OperDir.Back then
+		self.z = self.z - self.w / 2 - self.h / 2
+		self.w, self.h = self.h, self.w
 	end
 
-	arg_12_0.y = arg_12_0.h / 2 - 1
-	arg_12_0.allPoint = nil
+	self.y = self.h / 2 - 1
+	self.allPoint = nil
 
-	if not arg_12_2 then
-		for iter_12_0, iter_12_1 in pairs(arg_12_0.planDirs) do
-			arg_12_0.planDirs[iter_12_0] = arg_12_0:getNextDir(arg_12_1, iter_12_1)
+	if not onlyCalc then
+		for index, dir in pairs(self.planDirs) do
+			self.planDirs[index] = self:getNextDir(operDir, dir)
 		end
 
-		arg_12_0.finalV3:Set(arg_12_0.x, arg_12_0.y, arg_12_0.z)
-		transformhelper.setLocalPos(arg_12_0.trans, arg_12_0.finalV3.x, arg_12_0.finalV3.y, arg_12_0.finalV3.z)
+		self.finalV3:Set(self.x, self.y, self.z)
+		transformhelper.setLocalPos(self.trans, self.finalV3.x, self.finalV3.y, self.finalV3.z)
 
-		local var_12_0 = var_0_4[arg_12_0.planDirs[1]][arg_12_0.planDirs[2]]
+		local q = DirToQuaternion[self.planDirs[1]][self.planDirs[2]]
 
-		transformhelper.setLocalRotation2(arg_12_0.trans, var_12_0.x, var_12_0.y, var_12_0.z, var_12_0.w)
-		arg_12_0:updateSortOrder()
+		transformhelper.setLocalRotation2(self.trans, q.x, q.y, q.z, q.w)
+		self:updateSortOrder()
 	end
 end
 
-function var_0_0.resetPos(arg_13_0)
-	arg_13_0.finalV3:Set(arg_13_0.x, arg_13_0.y, arg_13_0.z)
-	transformhelper.setLocalPos(arg_13_0.trans, arg_13_0.finalV3.x, arg_13_0.finalV3.y, arg_13_0.finalV3.z)
+function TianShiNaNaCubeEntity:resetPos()
+	self.finalV3:Set(self.x, self.y, self.z)
+	transformhelper.setLocalPos(self.trans, self.finalV3.x, self.finalV3.y, self.finalV3.z)
 
-	local var_13_0 = var_0_4[arg_13_0.planDirs[1]][arg_13_0.planDirs[2]]
+	local q = DirToQuaternion[self.planDirs[1]][self.planDirs[2]]
 
-	transformhelper.setLocalRotation2(arg_13_0.trans, var_13_0.x, var_13_0.y, var_13_0.z, var_13_0.w)
+	transformhelper.setLocalRotation2(self.trans, q.x, q.y, q.z, q.w)
 end
 
-function var_0_0.getCurDownIndex(arg_14_0)
-	for iter_14_0, iter_14_1 in pairs(arg_14_0.planDirs) do
-		if iter_14_1 == var_0_1.Down then
-			return iter_14_0
+function TianShiNaNaCubeEntity:getCurDownIndex()
+	for index, dir in pairs(self.planDirs) do
+		if dir == Dir.Down then
+			return index
 		end
 	end
 
 	return 1
 end
 
-function var_0_0.getDirByIndex(arg_15_0, arg_15_1)
-	return arg_15_0.planDirs[arg_15_1] or var_0_1.Up
+function TianShiNaNaCubeEntity:getDirByIndex(index)
+	return self.planDirs[index] or Dir.Up
 end
 
-function var_0_0.getCurGrids(arg_16_0)
-	if arg_16_0.allPoint then
-		return arg_16_0.allPoint
+function TianShiNaNaCubeEntity:getCurGrids()
+	if self.allPoint then
+		return self.allPoint
 	end
 
-	local var_16_0 = Mathf.Round(arg_16_0.x - arg_16_0.l / 2)
-	local var_16_1 = Mathf.Round(arg_16_0.x + arg_16_0.l / 2)
-	local var_16_2 = Mathf.Round(arg_16_0.z - arg_16_0.w / 2)
-	local var_16_3 = Mathf.Round(arg_16_0.z + arg_16_0.w / 2)
-	local var_16_4 = {}
+	local minX = Mathf.Round(self.x - self.l / 2)
+	local maxX = Mathf.Round(self.x + self.l / 2)
+	local minY = Mathf.Round(self.z - self.w / 2)
+	local maxY = Mathf.Round(self.z + self.w / 2)
+	local allPoint = {}
 
-	for iter_16_0 = var_16_0, var_16_1 - 1 do
-		for iter_16_1 = var_16_2, var_16_3 - 1 do
-			table.insert(var_16_4, {
-				x = iter_16_0,
-				y = iter_16_1
+	for x = minX, maxX - 1 do
+		for y = minY, maxY - 1 do
+			table.insert(allPoint, {
+				x = x,
+				y = y
 			})
 		end
 	end
 
-	arg_16_0.allPoint = var_16_4
+	self.allPoint = allPoint
 
-	return var_16_4
+	return allPoint
 end
 
-function var_0_0.getOperGrids(arg_17_0, arg_17_1)
-	arg_17_0:doRotate(arg_17_1, true)
+function TianShiNaNaCubeEntity:getOperGrids(operDir)
+	self:doRotate(operDir, true)
 
-	local var_17_0 = arg_17_0:getCurGrids()
+	local allPoints = self:getCurGrids()
 
-	arg_17_0:doRotate(-arg_17_1, true)
+	self:doRotate(-operDir, true)
 
-	return var_17_0
+	return allPoints
 end
 
-function var_0_0.getOperDownIndex(arg_18_0, arg_18_1)
-	for iter_18_0, iter_18_1 in pairs(arg_18_0.planDirs) do
-		if arg_18_0:getNextDir(arg_18_1, iter_18_1) == var_0_1.Down then
-			return iter_18_0
+function TianShiNaNaCubeEntity:getOperDownIndex(operDir)
+	for index, dir in pairs(self.planDirs) do
+		local nextDir = self:getNextDir(operDir, dir)
+
+		if nextDir == Dir.Down then
+			return index
 		end
 	end
 
 	return 1
 end
 
-function var_0_0.getNextDir(arg_19_0, arg_19_1, arg_19_2)
-	local var_19_0 = var_0_3[arg_19_1]
+function TianShiNaNaCubeEntity:getNextDir(oper, dir)
+	local nextDirs = OperEffect[oper]
 
-	if not arg_19_1 then
-		return arg_19_2
+	if not oper then
+		return dir
 	end
 
-	return var_19_0[arg_19_2] or arg_19_2
+	return nextDirs[dir] or dir
 end
 
-function var_0_0.onDestroy(arg_20_0)
-	for iter_20_0 = 1, 6 do
-		gohelper.destroy(arg_20_0.plans[iter_20_0])
+function TianShiNaNaCubeEntity:onDestroy()
+	for i = 1, 6 do
+		gohelper.destroy(self.plans[i])
 	end
 
-	if arg_20_0.loader then
-		arg_20_0.loader:dispose()
+	if self.loader then
+		self.loader:dispose()
 
-		arg_20_0.loader = nil
+		self.loader = nil
 	end
 end
 
-return var_0_0
+return TianShiNaNaCubeEntity

@@ -1,23 +1,25 @@
-﻿module("modules.logic.survival.controller.handbook.SurvivalHandbookController", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/handbook/SurvivalHandbookController.lua
 
-local var_0_0 = class("SurvivalHandbookController", BaseController)
+module("modules.logic.survival.controller.handbook.SurvivalHandbookController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local SurvivalHandbookController = class("SurvivalHandbookController", BaseController)
+
+function SurvivalHandbookController:onInit()
 	return
 end
 
-function var_0_0.sendOpenSurvivalHandbookView(arg_2_0)
+function SurvivalHandbookController:sendOpenSurvivalHandbookView()
 	ViewMgr.instance:openView(ViewName.SurvivalHandbookView)
 end
 
-function var_0_0.markNewHandbook(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = SurvivalHandbookModel.instance:getNewHandbook(arg_3_1, arg_3_2)
+function SurvivalHandbookController:markNewHandbook(type, subType)
+	local ids = SurvivalHandbookModel.instance:getNewHandbook(type, subType)
 
-	if #var_3_0 > 0 then
-		SurvivalOutSideRpc.instance:sendSurvivalMarkNewHandbook(var_3_0)
+	if #ids > 0 then
+		SurvivalOutSideRpc.instance:sendSurvivalMarkNewHandbook(ids)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+SurvivalHandbookController.instance = SurvivalHandbookController.New()
 
-return var_0_0
+return SurvivalHandbookController

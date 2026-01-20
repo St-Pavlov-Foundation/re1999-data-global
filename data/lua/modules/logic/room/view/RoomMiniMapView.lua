@@ -1,311 +1,313 @@
-﻿module("modules.logic.room.view.RoomMiniMapView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomMiniMapView.lua
 
-local var_0_0 = class("RoomMiniMapView", BaseView)
+module("modules.logic.room.view.RoomMiniMapView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._simagelefticon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_lefticon")
-	arg_1_0._simagerighticon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_righticon")
-	arg_1_0._simagerighticon2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_righticon2")
-	arg_1_0._simagemask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_mask")
-	arg_1_0._simageline = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_line")
-	arg_1_0._simageline2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_line2")
-	arg_1_0._simagecontour = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_mapbg/#simage_contour")
-	arg_1_0._gocontainer = gohelper.findChild(arg_1_0.viewGO, "#go_container")
-	arg_1_0._goblockcontainer = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_blockcontainer")
-	arg_1_0._gounititem = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_blockcontainer/unitcontainer/#go_unititem")
-	arg_1_0._gobuildingitem = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_blockcontainer/buildingcontainer/#go_buildingitem")
-	arg_1_0._goredpointitem = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_blockcontainer/redpointcontainer/#go_redpointitem")
+local RoomMiniMapView = class("RoomMiniMapView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomMiniMapView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._simagelefticon = gohelper.findChildSingleImage(self.viewGO, "#simage_lefticon")
+	self._simagerighticon = gohelper.findChildSingleImage(self.viewGO, "#simage_righticon")
+	self._simagerighticon2 = gohelper.findChildSingleImage(self.viewGO, "#simage_righticon2")
+	self._simagemask = gohelper.findChildSingleImage(self.viewGO, "#simage_mask")
+	self._simageline = gohelper.findChildSingleImage(self.viewGO, "#simage_line")
+	self._simageline2 = gohelper.findChildSingleImage(self.viewGO, "#simage_line2")
+	self._simagecontour = gohelper.findChildSingleImage(self.viewGO, "#simage_mapbg/#simage_contour")
+	self._gocontainer = gohelper.findChild(self.viewGO, "#go_container")
+	self._goblockcontainer = gohelper.findChild(self.viewGO, "#go_container/#go_blockcontainer")
+	self._gounititem = gohelper.findChild(self.viewGO, "#go_container/#go_blockcontainer/unitcontainer/#go_unititem")
+	self._gobuildingitem = gohelper.findChild(self.viewGO, "#go_container/#go_blockcontainer/buildingcontainer/#go_buildingitem")
+	self._goredpointitem = gohelper.findChild(self.viewGO, "#go_container/#go_blockcontainer/redpointcontainer/#go_redpointitem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RoomMiniMapView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RoomMiniMapView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._scene = GameSceneMgr.instance:getCurScene()
+function RoomMiniMapView:_editableInitView()
+	self._scene = GameSceneMgr.instance:getCurScene()
 
-	arg_4_0._simagebg:LoadImage(ResUrl.getCommonIcon("full/bg_fmand2"))
-	arg_4_0._simagelefticon:LoadImage(ResUrl.getCommonIcon("bg_leftdown"))
-	arg_4_0._simagerighticon:LoadImage(ResUrl.getCommonIcon("bg_rightdown"))
-	arg_4_0._simagerighticon2:LoadImage(ResUrl.getCommonIcon("bg_rightup"))
-	arg_4_0._simagemask:LoadImage(ResUrl.getCommonIcon("full/bg_noise2"))
-	arg_4_0._simageline:LoadImage(ResUrl.getRoomImage("quanlanditu_line_002"))
-	arg_4_0._simageline2:LoadImage(ResUrl.getRoomTexture("bgline.jpg"))
-	arg_4_0._simagecontour:LoadImage(ResUrl.getRoomImage("quanlanditukuai_012"))
+	self._simagebg:LoadImage(ResUrl.getCommonIcon("full/bg_fmand2"))
+	self._simagelefticon:LoadImage(ResUrl.getCommonIcon("bg_leftdown"))
+	self._simagerighticon:LoadImage(ResUrl.getCommonIcon("bg_rightdown"))
+	self._simagerighticon2:LoadImage(ResUrl.getCommonIcon("bg_rightup"))
+	self._simagemask:LoadImage(ResUrl.getCommonIcon("full/bg_noise2"))
+	self._simageline:LoadImage(ResUrl.getRoomImage("quanlanditu_line_002"))
+	self._simageline2:LoadImage(ResUrl.getRoomTexture("bgline.jpg"))
+	self._simagecontour:LoadImage(ResUrl.getRoomImage("quanlanditukuai_012"))
 
-	arg_4_0._unitItemList = {}
-	arg_4_0._buildingItemList = {}
-	arg_4_0._redpointItemDict = {}
-	arg_4_0._countItemList = {}
+	self._unitItemList = {}
+	self._buildingItemList = {}
+	self._redpointItemDict = {}
+	self._countItemList = {}
 
-	gohelper.setActive(arg_4_0._gounititem, false)
-	gohelper.setActive(arg_4_0._gobuildingitem, false)
-	gohelper.setActive(arg_4_0._goredpointitem, false)
+	gohelper.setActive(self._gounititem, false)
+	gohelper.setActive(self._gobuildingitem, false)
+	gohelper.setActive(self._goredpointitem, false)
 
-	arg_4_0._left = 0
-	arg_4_0._right = 0
-	arg_4_0._bottom = 0
-	arg_4_0._top = 0
-	arg_4_0._width = recthelper.getWidth(arg_4_0._gocontainer.transform)
-	arg_4_0._height = recthelper.getHeight(arg_4_0._gocontainer.transform)
-	arg_4_0._touchMgr = TouchEventMgrHepler.getTouchEventMgr(arg_4_0._gocontainer)
+	self._left = 0
+	self._right = 0
+	self._bottom = 0
+	self._top = 0
+	self._width = recthelper.getWidth(self._gocontainer.transform)
+	self._height = recthelper.getHeight(self._gocontainer.transform)
+	self._touchMgr = TouchEventMgrHepler.getTouchEventMgr(self._gocontainer)
 
-	arg_4_0._touchMgr:SetIgnoreUI(true)
-	arg_4_0._touchMgr:SetOnlyTouch(true)
-	arg_4_0._touchMgr:SetOnDragBeginCb(arg_4_0._onDragBegin, arg_4_0)
-	arg_4_0._touchMgr:SetOnDragCb(arg_4_0._onDrag, arg_4_0)
-	arg_4_0._touchMgr:SetOnDragEndCb(arg_4_0._onDragEnd, arg_4_0)
+	self._touchMgr:SetIgnoreUI(true)
+	self._touchMgr:SetOnlyTouch(true)
+	self._touchMgr:SetOnDragBeginCb(self._onDragBegin, self)
+	self._touchMgr:SetOnDragCb(self._onDrag, self)
+	self._touchMgr:SetOnDragEndCb(self._onDragEnd, self)
 
-	arg_4_0._lastPos = nil
+	self._lastPos = nil
 
-	arg_4_0:_setScale(0.5)
+	self:_setScale(0.5)
 end
 
-function var_0_0._onDragBegin(arg_5_0, arg_5_1)
-	arg_5_0._isDraging = true
-	arg_5_0._lastPos = recthelper.screenPosToAnchorPos(arg_5_1, arg_5_0._gocontainer.transform)
+function RoomMiniMapView:_onDragBegin(screenPos)
+	self._isDraging = true
+	self._lastPos = recthelper.screenPosToAnchorPos(screenPos, self._gocontainer.transform)
 
-	if math.abs(arg_5_0._lastPos.x) > arg_5_0._width / 2 or math.abs(arg_5_0._lastPos.y) > arg_5_0._height / 2 then
-		arg_5_0._lastPos = nil
+	if math.abs(self._lastPos.x) > self._width / 2 or math.abs(self._lastPos.y) > self._height / 2 then
+		self._lastPos = nil
 	end
 end
 
-function var_0_0._onDrag(arg_6_0, arg_6_1)
-	arg_6_0._isDraging = true
+function RoomMiniMapView:_onDrag(screenPos)
+	self._isDraging = true
 
-	if not arg_6_0._lastPos then
+	if not self._lastPos then
 		return
 	end
 
-	local var_6_0 = recthelper.screenPosToAnchorPos(arg_6_1, arg_6_0._gocontainer.transform)
+	local anchorPos = recthelper.screenPosToAnchorPos(screenPos, self._gocontainer.transform)
 
-	arg_6_0:_moveMap(var_6_0 - arg_6_0._lastPos)
+	self:_moveMap(anchorPos - self._lastPos)
 
-	arg_6_0._lastPos = var_6_0
+	self._lastPos = anchorPos
 end
 
-function var_0_0._onDragEnd(arg_7_0, arg_7_1)
-	arg_7_0._isDraging = false
-	arg_7_0._lastPos = nil
+function RoomMiniMapView:_onDragEnd(screenPos)
+	self._isDraging = false
+	self._lastPos = nil
 end
 
-function var_0_0._moveMap(arg_8_0, arg_8_1)
-	local var_8_0, var_8_1 = transformhelper.getLocalPos(arg_8_0._goblockcontainer.transform)
-	local var_8_2 = var_8_0 + arg_8_1.x
-	local var_8_3 = var_8_1 + arg_8_1.y
+function RoomMiniMapView:_moveMap(deltaPos)
+	local currentPosX, currentPosY = transformhelper.getLocalPos(self._goblockcontainer.transform)
+	local targetPosX, targetPosY = currentPosX + deltaPos.x, currentPosY + deltaPos.y
 
-	arg_8_0:_setMapPos(Vector2(var_8_2, var_8_3))
+	self:_setMapPos(Vector2(targetPosX, targetPosY))
 end
 
-function var_0_0._setMapPos(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_1.x
-	local var_9_1 = arg_9_1.y
-	local var_9_2 = Mathf.Clamp(var_9_0, -arg_9_0._right * arg_9_0._scale, -arg_9_0._left * arg_9_0._scale)
-	local var_9_3 = Mathf.Clamp(var_9_1, -arg_9_0._top * arg_9_0._scale, -arg_9_0._bottom * arg_9_0._scale)
+function RoomMiniMapView:_setMapPos(mapPos)
+	local targetPosX, targetPosY = mapPos.x, mapPos.y
 
-	transformhelper.setLocalPos(arg_9_0._goblockcontainer.transform, var_9_2, var_9_3, 0)
+	targetPosX = Mathf.Clamp(targetPosX, -self._right * self._scale, -self._left * self._scale)
+	targetPosY = Mathf.Clamp(targetPosY, -self._top * self._scale, -self._bottom * self._scale)
+
+	transformhelper.setLocalPos(self._goblockcontainer.transform, targetPosX, targetPosY, 0)
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0:_refreshFixed()
-	arg_10_0:_refreshDynamic()
-	arg_10_0:_resetScale()
+function RoomMiniMapView:onOpen()
+	self:_refreshFixed()
+	self:_refreshDynamic()
+	self:_resetScale()
 
-	local var_10_0 = arg_10_0._scene.camera:getCameraFocus()
-	local var_10_1 = HexMath.positionToHex(var_10_0, RoomBlockEnum.BlockSize)
+	local cameraFocus = self._scene.camera:getCameraFocus()
+	local focusHexPoint = HexMath.positionToHex(cameraFocus, RoomBlockEnum.BlockSize)
 
-	arg_10_0._focusMapPos = -arg_10_0:_getMapPos(var_10_1)
+	self._focusMapPos = -self:_getMapPos(focusHexPoint)
 
-	arg_10_0:_setMapPos(arg_10_0._focusMapPos)
+	self:_setMapPos(self._focusMapPos)
 end
 
-function var_0_0._resetScale(arg_11_0)
-	arg_11_0:_setScale(0.5)
+function RoomMiniMapView:_resetScale()
+	self:_setScale(0.5)
 end
 
-function var_0_0._setScale(arg_12_0, arg_12_1)
-	arg_12_0._scale = arg_12_1
+function RoomMiniMapView:_setScale(scale)
+	self._scale = scale
 
-	transformhelper.setLocalScale(arg_12_0._goblockcontainer.transform, arg_12_1, arg_12_1, 1)
+	transformhelper.setLocalScale(self._goblockcontainer.transform, scale, scale, 1)
 end
 
-function var_0_0.onClose(arg_13_0)
+function RoomMiniMapView:onClose()
 	return
 end
 
-function var_0_0._refreshFixed(arg_14_0)
-	arg_14_0:_refreshUnitItems()
-	arg_14_0:_refreshBuildingItems()
-	arg_14_0:_refreshInitBuildingItems()
+function RoomMiniMapView:_refreshFixed()
+	self:_refreshUnitItems()
+	self:_refreshBuildingItems()
+	self:_refreshInitBuildingItems()
 end
 
-function var_0_0._refreshDynamic(arg_15_0)
+function RoomMiniMapView:_refreshDynamic()
 	if RoomController.instance:isObMode() then
-		arg_15_0:_refreshRedpointItems()
+		self:_refreshRedpointItems()
 	end
 end
 
-function var_0_0._refreshUnitItems(arg_16_0)
-	local var_16_0 = RoomMapBlockModel.instance:getBlockMOList()
+function RoomMiniMapView:_refreshUnitItems()
+	local mapBlockMOList = RoomMapBlockModel.instance:getBlockMOList()
 
-	for iter_16_0, iter_16_1 in ipairs(var_16_0) do
-		if iter_16_1.blockState == RoomBlockEnum.BlockState.Map then
-			local var_16_1 = iter_16_1.hexPoint
-			local var_16_2 = arg_16_0:getUserDataTb_()
+	for _, blockMO in ipairs(mapBlockMOList) do
+		if blockMO.blockState == RoomBlockEnum.BlockState.Map then
+			local hexPoint = blockMO.hexPoint
+			local unitItem = self:getUserDataTb_()
 
-			var_16_2.go = gohelper.cloneInPlace(arg_16_0._gounititem, string.format("%s_%s", var_16_1.x, var_16_1.y))
-			var_16_2.imageunit = gohelper.findChildImage(var_16_2.go, "image_unit")
+			unitItem.go = gohelper.cloneInPlace(self._gounititem, string.format("%s_%s", hexPoint.x, hexPoint.y))
+			unitItem.imageunit = gohelper.findChildImage(unitItem.go, "image_unit")
 
-			table.insert(arg_16_0._unitItemList, var_16_2)
+			table.insert(self._unitItemList, unitItem)
 
-			local var_16_3 = RoomBlockHelper.getMapResourceId(iter_16_1)
+			local mapResourceId = RoomBlockHelper.getMapResourceId(blockMO)
 
-			UISpriteSetMgr.instance:setRoomSprite(var_16_2.imageunit, "mapunit" .. var_16_3)
-			arg_16_0:_setCommonPosition(var_16_2.go.transform, var_16_1)
-			gohelper.setActive(var_16_2.go, true)
+			UISpriteSetMgr.instance:setRoomSprite(unitItem.imageunit, "mapunit" .. mapResourceId)
+			self:_setCommonPosition(unitItem.go.transform, hexPoint)
+			gohelper.setActive(unitItem.go, true)
 		end
 	end
 end
 
-function var_0_0._refreshBuildingItems(arg_17_0)
-	local var_17_0 = RoomMapBlockModel.instance:getBlockMOList()
+function RoomMiniMapView:_refreshBuildingItems()
+	local mapBlockMOList = RoomMapBlockModel.instance:getBlockMOList()
 
-	for iter_17_0, iter_17_1 in ipairs(var_17_0) do
-		if iter_17_1.blockState == RoomBlockEnum.BlockState.Map then
-			local var_17_1 = iter_17_1.hexPoint
-			local var_17_2 = RoomBuildingHelper.getOccupyBuildingParam(var_17_1)
-			local var_17_3 = var_17_2 and var_17_2.buildingUid
-			local var_17_4 = var_17_3 and RoomMapBuildingModel.instance:getBuildingMOById(var_17_3)
-			local var_17_5 = var_17_4 and var_17_4.config.buildingType
-			local var_17_6 = var_17_4 and var_17_4.config.buildingShowType
+	for _, blockMO in ipairs(mapBlockMOList) do
+		if blockMO.blockState == RoomBlockEnum.BlockState.Map then
+			local hexPoint = blockMO.hexPoint
+			local buildingParam = RoomBuildingHelper.getOccupyBuildingParam(hexPoint)
+			local buildingUid = buildingParam and buildingParam.buildingUid
+			local buildingMO = buildingUid and RoomMapBuildingModel.instance:getBuildingMOById(buildingUid)
+			local buildingType = buildingMO and buildingMO.config.buildingType
+			local buildingShowType = buildingMO and buildingMO.config.buildingShowType
 
-			if var_17_5 and var_17_5 ~= RoomBuildingEnum.BuildingType.Decoration then
-				local var_17_7 = arg_17_0:getUserDataTb_()
+			if buildingType and buildingType ~= RoomBuildingEnum.BuildingType.Decoration then
+				local buildingItem = self:getUserDataTb_()
 
-				var_17_7.id = var_17_4.id
-				var_17_7.go = gohelper.cloneInPlace(arg_17_0._gobuildingitem, string.format("%s_%s", var_17_1.x, var_17_1.y))
-				var_17_7.imagebuilding = gohelper.findChildImage(var_17_7.go, "image_building")
+				buildingItem.id = buildingMO.id
+				buildingItem.go = gohelper.cloneInPlace(self._gobuildingitem, string.format("%s_%s", hexPoint.x, hexPoint.y))
+				buildingItem.imagebuilding = gohelper.findChildImage(buildingItem.go, "image_building")
 
-				table.insert(arg_17_0._buildingItemList, var_17_7)
-				UISpriteSetMgr.instance:setRoomSprite(var_17_7.imagebuilding, "buildingtype" .. var_17_6)
-				arg_17_0:_setCommonPosition(var_17_7.go.transform, var_17_1)
-				gohelper.setActive(var_17_7.go, true)
+				table.insert(self._buildingItemList, buildingItem)
+				UISpriteSetMgr.instance:setRoomSprite(buildingItem.imagebuilding, "buildingtype" .. buildingShowType)
+				self:_setCommonPosition(buildingItem.go.transform, hexPoint)
+				gohelper.setActive(buildingItem.go, true)
 			end
 		end
 	end
 end
 
-function var_0_0._refreshInitBuildingItems(arg_18_0)
-	local var_18_0 = RoomConfig.instance:getInitBuildingOccupyDict()
+function RoomMiniMapView:_refreshInitBuildingItems()
+	local occupyDict = RoomConfig.instance:getInitBuildingOccupyDict()
 
-	for iter_18_0, iter_18_1 in pairs(var_18_0) do
-		for iter_18_2, iter_18_3 in pairs(iter_18_1) do
-			local var_18_1 = HexPoint(iter_18_0, iter_18_2)
-			local var_18_2 = arg_18_0:getUserDataTb_()
+	for x, dict in pairs(occupyDict) do
+		for y, _ in pairs(dict) do
+			local hexPoint = HexPoint(x, y)
+			local buildingItem = self:getUserDataTb_()
 
-			var_18_2.id = 0
-			var_18_2.go = gohelper.cloneInPlace(arg_18_0._gobuildingitem, string.format("%s_%s", var_18_1.x, var_18_1.y))
-			var_18_2.imagebuilding = gohelper.findChildImage(var_18_2.go, "image_building")
-			var_18_2.btnbuilding = gohelper.findChildButtonWithAudio(var_18_2.go, "btn_building")
+			buildingItem.id = 0
+			buildingItem.go = gohelper.cloneInPlace(self._gobuildingitem, string.format("%s_%s", hexPoint.x, hexPoint.y))
+			buildingItem.imagebuilding = gohelper.findChildImage(buildingItem.go, "image_building")
+			buildingItem.btnbuilding = gohelper.findChildButtonWithAudio(buildingItem.go, "btn_building")
 
-			table.insert(arg_18_0._buildingItemList, var_18_2)
-			gohelper.setActive(var_18_2.btnbuilding.gameObject, false)
-			SLFramework.UGUI.GuiHelper.SetColor(var_18_2.imagebuilding, "#A29E88")
-			UISpriteSetMgr.instance:setRoomSprite(var_18_2.imagebuilding, "buildingtype0")
-			recthelper.setWidth(var_18_2.imagebuilding.gameObject.transform, 38)
-			recthelper.setHeight(var_18_2.imagebuilding.gameObject.transform, 31)
-			arg_18_0:_setCommonPosition(var_18_2.go.transform, var_18_1)
-			gohelper.setActive(var_18_2.go, true)
+			table.insert(self._buildingItemList, buildingItem)
+			gohelper.setActive(buildingItem.btnbuilding.gameObject, false)
+			SLFramework.UGUI.GuiHelper.SetColor(buildingItem.imagebuilding, "#A29E88")
+			UISpriteSetMgr.instance:setRoomSprite(buildingItem.imagebuilding, "buildingtype0")
+			recthelper.setWidth(buildingItem.imagebuilding.gameObject.transform, 38)
+			recthelper.setHeight(buildingItem.imagebuilding.gameObject.transform, 31)
+			self:_setCommonPosition(buildingItem.go.transform, hexPoint)
+			gohelper.setActive(buildingItem.go, true)
 		end
 	end
 end
 
-function var_0_0._refreshRedpointItems(arg_19_0)
-	local var_19_0 = RoomMapBuildingModel.instance:getBuildingMOList()
+function RoomMiniMapView:_refreshRedpointItems()
+	local mapBuildingMOList = RoomMapBuildingModel.instance:getBuildingMOList()
 
-	for iter_19_0, iter_19_1 in pairs(arg_19_0._redpointItemDict) do
-		gohelper.setActive(iter_19_1.go, false)
+	for buildingUid, redpointItem in pairs(self._redpointItemDict) do
+		gohelper.setActive(redpointItem.go, false)
 	end
 
-	for iter_19_2, iter_19_3 in ipairs(var_19_0) do
-		local var_19_1 = RoomBuildingHelper.getTopRightHexPoint(iter_19_3.buildingId, iter_19_3.hexPoint, iter_19_3.rotate)
+	for i, buildingMO in ipairs(mapBuildingMOList) do
+		local topRightHexPoint = RoomBuildingHelper.getTopRightHexPoint(buildingMO.buildingId, buildingMO.hexPoint, buildingMO.rotate)
+		local buildingType = buildingMO.config.buildingType
 
-		if iter_19_3.config.buildingType ~= RoomBuildingEnum.BuildingType.Decoration and var_19_1 and iter_19_3.buildingState == RoomBuildingEnum.BuildingState.Map then
-			local var_19_2 = arg_19_0._redpointItemDict[iter_19_3.id]
+		if buildingType ~= RoomBuildingEnum.BuildingType.Decoration and topRightHexPoint and buildingMO.buildingState == RoomBuildingEnum.BuildingState.Map then
+			local redpointItem = self._redpointItemDict[buildingMO.id]
 
-			if not var_19_2 then
-				var_19_2 = arg_19_0:getUserDataTb_()
-				var_19_2.go = gohelper.cloneInPlace(arg_19_0._goredpointitem, string.format("%s_%s", var_19_1.x, var_19_1.y))
-				var_19_2.goreddot = gohelper.findChild(var_19_2.go, "go_buildingreddot")
+			if not redpointItem then
+				redpointItem = self:getUserDataTb_()
+				redpointItem.go = gohelper.cloneInPlace(self._goredpointitem, string.format("%s_%s", topRightHexPoint.x, topRightHexPoint.y))
+				redpointItem.goreddot = gohelper.findChild(redpointItem.go, "go_buildingreddot")
 
 				if RoomController.instance:isObMode() then
-					RedDotController.instance:addMultiRedDot(var_19_2.goreddot, {
+					RedDotController.instance:addMultiRedDot(redpointItem.goreddot, {
 						{
 							id = RedDotEnum.DotNode.RoomBuildingFull,
-							uid = tonumber(iter_19_3.id)
+							uid = tonumber(buildingMO.id)
 						},
 						{
 							id = RedDotEnum.DotNode.RoomBuildingGet,
-							uid = tonumber(iter_19_3.id)
+							uid = tonumber(buildingMO.id)
 						}
 					})
 				end
 
-				arg_19_0._redpointItemDict[iter_19_3.id] = var_19_2
+				self._redpointItemDict[buildingMO.id] = redpointItem
 
-				arg_19_0:_setCommonPosition(var_19_2.go.transform, var_19_1)
+				self:_setCommonPosition(redpointItem.go.transform, topRightHexPoint)
 			end
 
-			gohelper.setActive(var_19_2.go, true)
+			gohelper.setActive(redpointItem.go, true)
 		end
 	end
 end
 
-function var_0_0._setCommonPosition(arg_20_0, arg_20_1, arg_20_2)
-	local var_20_0 = HexMath.hexToPosition(arg_20_2, 43.78481 / math.sqrt(3) * 2)
-	local var_20_1 = 30 * Mathf.Deg2Rad
-	local var_20_2 = Vector2(var_20_0.x * Mathf.Cos(var_20_1) - var_20_0.y * Mathf.Sin(var_20_1), var_20_0.x * Mathf.Sin(var_20_1) + var_20_0.y * Mathf.Cos(var_20_1))
+function RoomMiniMapView:_setCommonPosition(transform, hexPoint)
+	local position = HexMath.hexToPosition(hexPoint, 43.78481 / math.sqrt(3) * 2)
+	local theta = 30 * Mathf.Deg2Rad
+	local rotatedPosition = Vector2(position.x * Mathf.Cos(theta) - position.y * Mathf.Sin(theta), position.x * Mathf.Sin(theta) + position.y * Mathf.Cos(theta))
 
-	arg_20_0._left = math.min(var_20_2.x, arg_20_0._left)
-	arg_20_0._right = math.max(var_20_2.x, arg_20_0._right)
-	arg_20_0._bottom = math.min(var_20_2.y, arg_20_0._bottom)
-	arg_20_0._top = math.max(var_20_2.y, arg_20_0._top)
+	self._left = math.min(rotatedPosition.x, self._left)
+	self._right = math.max(rotatedPosition.x, self._right)
+	self._bottom = math.min(rotatedPosition.y, self._bottom)
+	self._top = math.max(rotatedPosition.y, self._top)
 
-	recthelper.setAnchor(arg_20_1, var_20_0.x, var_20_0.y)
+	recthelper.setAnchor(transform, position.x, position.y)
 end
 
-function var_0_0._getMapPos(arg_21_0, arg_21_1)
-	local var_21_0 = HexMath.hexToPosition(arg_21_1, 43.78481 / math.sqrt(3) * 2)
-	local var_21_1 = 30 * Mathf.Deg2Rad
-	local var_21_2 = Vector2(var_21_0.x * Mathf.Cos(var_21_1) - var_21_0.y * Mathf.Sin(var_21_1), var_21_0.x * Mathf.Sin(var_21_1) + var_21_0.y * Mathf.Cos(var_21_1))
+function RoomMiniMapView:_getMapPos(hexPoint)
+	local position = HexMath.hexToPosition(hexPoint, 43.78481 / math.sqrt(3) * 2)
+	local theta = 30 * Mathf.Deg2Rad
+	local rotatedPosition = Vector2(position.x * Mathf.Cos(theta) - position.y * Mathf.Sin(theta), position.x * Mathf.Sin(theta) + position.y * Mathf.Cos(theta))
 
-	return Vector2(var_21_2.x * arg_21_0._scale, var_21_2.y * arg_21_0._scale)
+	return Vector2(rotatedPosition.x * self._scale, rotatedPosition.y * self._scale)
 end
 
-function var_0_0.onDestroyView(arg_22_0)
-	if arg_22_0._touchMgr then
-		TouchEventMgrHepler.remove(arg_22_0._touchMgr)
+function RoomMiniMapView:onDestroyView()
+	if self._touchMgr then
+		TouchEventMgrHepler.remove(self._touchMgr)
 
-		arg_22_0._touchMgr = nil
+		self._touchMgr = nil
 	end
 
-	arg_22_0._simagebg:UnLoadImage()
-	arg_22_0._simagelefticon:UnLoadImage()
-	arg_22_0._simagerighticon:UnLoadImage()
-	arg_22_0._simagerighticon2:UnLoadImage()
-	arg_22_0._simagemask:UnLoadImage()
-	arg_22_0._simageline:UnLoadImage()
-	arg_22_0._simageline2:UnLoadImage()
-	arg_22_0._simagecontour:UnLoadImage()
+	self._simagebg:UnLoadImage()
+	self._simagelefticon:UnLoadImage()
+	self._simagerighticon:UnLoadImage()
+	self._simagerighticon2:UnLoadImage()
+	self._simagemask:UnLoadImage()
+	self._simageline:UnLoadImage()
+	self._simageline2:UnLoadImage()
+	self._simagecontour:UnLoadImage()
 end
 
-return var_0_0
+return RoomMiniMapView

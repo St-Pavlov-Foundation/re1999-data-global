@@ -1,7 +1,9 @@
-﻿module("modules.logic.versionactivity1_2.dreamtail.controller.Activity119Event", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/dreamtail/controller/Activity119Event.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_2.dreamtail.controller.Activity119Event", package.seeall)
 
-var_0_0.TabChange = 1
+local Activity119Event = _M
 
-return var_0_0
+Activity119Event.TabChange = 1
+
+return Activity119Event

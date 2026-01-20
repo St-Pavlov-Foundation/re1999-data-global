@@ -1,66 +1,68 @@
-﻿module("modules.logic.story.model.StoryMo", package.seeall)
+﻿-- chunkname: @modules/logic/story/model/StoryMo.lua
 
-local var_0_0 = pureTable("StoryMo")
+module("modules.logic.story.model.StoryMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.finishList = nil
-	arg_1_0.processList = nil
+local StoryMo = pureTable("StoryMo")
+
+function StoryMo:ctor()
+	self.finishList = nil
+	self.processList = nil
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.finishList = {}
+function StoryMo:init(co)
+	self.finishList = {}
 
-	if arg_2_1.finishList then
-		for iter_2_0, iter_2_1 in ipairs(arg_2_1.finishList) do
-			arg_2_0.finishList[iter_2_1] = true
+	if co.finishList then
+		for i, v in ipairs(co.finishList) do
+			self.finishList[v] = true
 		end
 	end
 
-	arg_2_0.processList = arg_2_1.processingList and arg_2_0:_getListInfo(arg_2_1.processingList, StoryProcessInfoMo) or {}
+	self.processList = co.processingList and self:_getListInfo(co.processingList, StoryProcessInfoMo) or {}
 end
 
-function var_0_0.update(arg_3_0, arg_3_1)
-	local var_3_0 = false
+function StoryMo:update(info)
+	local isProcessing = false
 
-	for iter_3_0, iter_3_1 in pairs(arg_3_0.processList) do
-		if iter_3_1.storyId == arg_3_1.storyId then
-			iter_3_1.stepId = arg_3_1.stepId
-			iter_3_1.favor = arg_3_1.favor
-			var_3_0 = true
+	for _, v in pairs(self.processList) do
+		if v.storyId == info.storyId then
+			v.stepId = info.stepId
+			v.favor = info.favor
+			isProcessing = true
 		end
 	end
 
-	if not var_3_0 then
-		local var_3_1 = StoryProcessInfoMo.New()
+	if not isProcessing then
+		local mo = StoryProcessInfoMo.New()
 
-		var_3_1.storyId = arg_3_1.storyId
-		var_3_1.stepId = arg_3_1.stepId
-		var_3_1.favor = arg_3_1.favor
+		mo.storyId = info.storyId
+		mo.stepId = info.stepId
+		mo.favor = info.favor
 
-		table.insert(arg_3_0.processList, var_3_1)
+		table.insert(self.processList, mo)
 	end
 end
 
-function var_0_0._getListInfo(arg_4_0, arg_4_1, arg_4_2)
-	if not arg_4_1 then
+function StoryMo:_getListInfo(originList, cls)
+	if not originList then
 		return {}
 	end
 
-	local var_4_0 = {}
+	local list = {}
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
-		local var_4_1 = iter_4_1
+	for _, v in ipairs(originList) do
+		local mo = v
 
-		if arg_4_2 then
-			var_4_1 = arg_4_2.New()
+		if cls then
+			mo = cls.New()
 
-			var_4_1:init(iter_4_1)
+			mo:init(v)
 		end
 
-		table.insert(var_4_0, var_4_1)
+		table.insert(list, mo)
 	end
 
-	return var_4_0
+	return list
 end
 
-return var_0_0
+return StoryMo

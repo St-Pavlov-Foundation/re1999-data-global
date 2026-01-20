@@ -1,118 +1,125 @@
-﻿module("modules.logic.weather.controller.WeatherFrameComp", package.seeall)
+﻿-- chunkname: @modules/logic/weather/controller/WeatherFrameComp.lua
 
-local var_0_0 = class("WeatherFrameComp")
+module("modules.logic.weather.controller.WeatherFrameComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._TintColorId = UnityEngine.Shader.PropertyToID("_TintColor")
+local WeatherFrameComp = class("WeatherFrameComp")
+
+function WeatherFrameComp:ctor()
+	local _shader = UnityEngine.Shader
+
+	self._TintColorId = _shader.PropertyToID("_TintColor")
 end
 
-function var_0_0.onInit(arg_2_0, arg_2_1)
-	arg_2_0._sceneId = arg_2_1
+function WeatherFrameComp:onInit(sceneId)
+	self._sceneId = sceneId
 end
 
-function var_0_0.getSceneNode(arg_3_0, arg_3_1)
-	return gohelper.findChild(arg_3_0._sceneGo, arg_3_1)
+function WeatherFrameComp:getSceneNode(nodePath)
+	return gohelper.findChild(self._sceneGo, nodePath)
 end
 
-function var_0_0.initSceneGo(arg_4_0, arg_4_1)
-	arg_4_0._sceneGo = arg_4_1
+function WeatherFrameComp:initSceneGo(sceneGo)
+	self._sceneGo = sceneGo
 
-	arg_4_0:_initFrame()
-	arg_4_0:loadPhotoFrameBg()
+	self:_initFrame()
+	self:loadPhotoFrameBg()
 end
 
-function var_0_0._initFrame(arg_5_0)
-	arg_5_0._frameBg = nil
-	arg_5_0._frameSpineNode = nil
-	arg_5_0._frameBg = arg_5_0:getSceneNode("s01_obj_a/Anim/Drawing/s01_xiangkuang_d_back")
+function WeatherFrameComp:_initFrame()
+	self._frameBg = nil
+	self._frameSpineNode = nil
+	self._frameBg = self:getSceneNode("s01_obj_a/Anim/Drawing/s01_xiangkuang_d_back")
 
-	if not arg_5_0._frameBg then
+	if not self._frameBg then
 		logError("_initFrame no frameBg")
 	end
 
-	gohelper.setActive(arg_5_0._frameBg, false)
+	gohelper.setActive(self._frameBg, false)
 
-	local var_5_0 = arg_5_0._frameBg:GetComponent(typeof(UnityEngine.Renderer))
+	local bgRenderer = self._frameBg:GetComponent(typeof(UnityEngine.Renderer))
 
-	arg_5_0._frameBgMaterial = UnityEngine.Material.Instantiate(var_5_0.sharedMaterial)
-	var_5_0.material = arg_5_0._frameBgMaterial
+	self._frameBgMaterial = UnityEngine.Material.Instantiate(bgRenderer.sharedMaterial)
+	bgRenderer.material = self._frameBgMaterial
 end
 
-function var_0_0.getFramePath(arg_6_0)
-	local var_6_0 = 0
-	local var_6_1 = lua_scene_switch.configDict[arg_6_0].resName
+function WeatherFrameComp.getFramePath(sceneId)
+	local frameBg = 0
+	local sceneConfig = lua_scene_switch.configDict[sceneId]
+	local resName = sceneConfig.resName
+	local path = string.format("scenes/dynamic/%s/lightmaps/%s_back_a_%s.tga", resName, string.gsub(resName, "_zjm_a", ""), frameBg)
 
-	return (string.format("scenes/dynamic/%s/lightmaps/%s_back_a_%s.tga", var_6_1, string.gsub(var_6_1, "_zjm_a", ""), var_6_0))
+	return path
 end
 
-function var_0_0.loadPhotoFrameBg(arg_7_0)
-	local var_7_0 = MultiAbLoader.New()
+function WeatherFrameComp:loadPhotoFrameBg()
+	local loader = MultiAbLoader.New()
 
-	arg_7_0._photoFrameBgLoader = var_7_0
+	self._photoFrameBgLoader = loader
 
-	local var_7_1 = var_0_0.getFramePath(arg_7_0._sceneId)
+	local path = WeatherFrameComp.getFramePath(self._sceneId)
 
-	var_7_0:addPath(var_7_1)
-	var_7_0:startLoad(function()
-		local var_8_0 = var_7_0:getAssetItem(var_7_1):GetResource(var_7_1)
+	loader:addPath(path)
+	loader:startLoad(function()
+		local assetItem = loader:getAssetItem(path)
+		local texture = assetItem:GetResource(path)
 
-		arg_7_0._frameBgMaterial:SetTexture("_MainTex", var_8_0)
-		gohelper.setActive(arg_7_0._frameBg, true)
+		self._frameBgMaterial:SetTexture("_MainTex", texture)
+		gohelper.setActive(self._frameBg, true)
 	end)
 end
 
-function var_0_0.getFrameColor(arg_9_0, arg_9_1)
-	local var_9_0
-	local var_9_1 = MainSceneSwitchConfig.instance:getSceneEffect(arg_9_0, WeatherEnum.EffectTag.Frame)
+function WeatherFrameComp.getFrameColor(sceneId, lightMode)
+	local targetTintColor
+	local config = MainSceneSwitchConfig.instance:getSceneEffect(sceneId, WeatherEnum.EffectTag.Frame)
 
-	if var_9_1 then
-		local var_9_2 = var_9_1["lightColor" .. arg_9_1]
+	if config then
+		local color = config["lightColor" .. lightMode]
 
-		var_9_0 = {
-			var_9_2[1] / 255,
-			var_9_2[2] / 255,
-			var_9_2[3] / 255,
-			var_9_2[4] / 255
+		targetTintColor = {
+			color[1] / 255,
+			color[2] / 255,
+			color[3] / 255,
+			color[4] / 255
 		}
 	end
 
-	var_9_0 = var_9_0 or WeatherEnum.FrameTintColor[arg_9_1]
+	targetTintColor = targetTintColor or WeatherEnum.FrameTintColor[lightMode]
 
-	return Color.New(var_9_0[1], var_9_0[2], var_9_0[3], var_9_0[4])
+	return Color.New(targetTintColor[1], targetTintColor[2], targetTintColor[3], targetTintColor[4])
 end
 
-function var_0_0.onRoleBlend(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	if not arg_10_0._targetFrameTintColor then
-		local var_10_0 = arg_10_1:getCurLightMode()
-		local var_10_1 = arg_10_1:getPrevLightMode() or var_10_0
+function WeatherFrameComp:onRoleBlend(weatherComp, value, isEnd)
+	if not self._targetFrameTintColor then
+		local curLightMode = weatherComp:getCurLightMode()
+		local prevLightMode = weatherComp:getPrevLightMode() or curLightMode
 
-		if not var_10_0 then
+		if not curLightMode then
 			return
 		end
 
-		arg_10_0._targetFrameTintColor = var_0_0.getFrameColor(arg_10_0._sceneId, var_10_0)
-		arg_10_0._srcFrameTintColor = var_0_0.getFrameColor(arg_10_0._sceneId, var_10_1)
+		self._targetFrameTintColor = WeatherFrameComp.getFrameColor(self._sceneId, curLightMode)
+		self._srcFrameTintColor = WeatherFrameComp.getFrameColor(self._sceneId, prevLightMode)
 
-		arg_10_0._frameBgMaterial:EnableKeyword("_COLORGRADING_ON")
+		self._frameBgMaterial:EnableKeyword("_COLORGRADING_ON")
 	end
 
-	arg_10_0._frameBgMaterial:SetColor(arg_10_0._TintColorId, arg_10_1:lerpColorRGBA(arg_10_0._srcFrameTintColor, arg_10_0._targetFrameTintColor, arg_10_2))
+	self._frameBgMaterial:SetColor(self._TintColorId, weatherComp:lerpColorRGBA(self._srcFrameTintColor, self._targetFrameTintColor, value))
 
-	if arg_10_3 then
-		arg_10_0._targetFrameTintColor = nil
+	if isEnd then
+		self._targetFrameTintColor = nil
 
-		if arg_10_1:getCurLightMode() == 1 then
-			arg_10_0._frameBgMaterial:DisableKeyword("_COLORGRADING_ON")
+		if weatherComp:getCurLightMode() == 1 then
+			self._frameBgMaterial:DisableKeyword("_COLORGRADING_ON")
 		end
 	end
 end
 
-function var_0_0.onSceneClose(arg_11_0)
-	if arg_11_0._photoFrameBgLoader then
-		arg_11_0._photoFrameBgLoader:dispose()
+function WeatherFrameComp:onSceneClose()
+	if self._photoFrameBgLoader then
+		self._photoFrameBgLoader:dispose()
 
-		arg_11_0._photoFrameBgLoader = nil
+		self._photoFrameBgLoader = nil
 	end
 end
 
-return var_0_0
+return WeatherFrameComp

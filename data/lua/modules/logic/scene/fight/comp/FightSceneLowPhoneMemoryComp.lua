@@ -1,18 +1,20 @@
-﻿module("modules.logic.scene.fight.comp.FightSceneLowPhoneMemoryComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/fight/comp/FightSceneLowPhoneMemoryComp.lua
 
-local var_0_0 = class("FightSceneLowPhoneMemoryComp", BaseSceneComp)
+module("modules.logic.scene.fight.comp.FightSceneLowPhoneMemoryComp", package.seeall)
 
-function var_0_0.onScenePrepared(arg_1_0, arg_1_1, arg_1_2)
-	FightController.instance:registerCallback(FightEvent.OnRoundSequenceFinish, arg_1_0._onRoundEnd, arg_1_0)
+local FightSceneLowPhoneMemoryComp = class("FightSceneLowPhoneMemoryComp", BaseSceneComp)
+
+function FightSceneLowPhoneMemoryComp:onScenePrepared(sceneId, levelId)
+	FightController.instance:registerCallback(FightEvent.OnRoundSequenceFinish, self._onRoundEnd, self)
 end
 
-function var_0_0._onRoundEnd(arg_2_0)
+function FightSceneLowPhoneMemoryComp:_onRoundEnd()
 	logNormal("clear no use effect")
 	FightHelper.clearNoUseEffect()
 end
 
-function var_0_0.onSceneClose(arg_3_0, arg_3_1, arg_3_2)
-	FightController.instance:unregisterCallback(FightEvent.OnRoundSequenceFinish, arg_3_0._onRoundEnd, arg_3_0)
+function FightSceneLowPhoneMemoryComp:onSceneClose(sceneId, levelId)
+	FightController.instance:unregisterCallback(FightEvent.OnRoundSequenceFinish, self._onRoundEnd, self)
 end
 
-return var_0_0
+return FightSceneLowPhoneMemoryComp

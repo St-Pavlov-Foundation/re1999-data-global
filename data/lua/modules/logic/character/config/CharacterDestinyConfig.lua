@@ -1,123 +1,133 @@
-﻿module("modules.logic.character.config.CharacterDestinyConfig", package.seeall)
+﻿-- chunkname: @modules/logic/character/config/CharacterDestinyConfig.lua
 
-local var_0_0 = class("CharacterDestinyConfig", BaseConfig)
+module("modules.logic.character.config.CharacterDestinyConfig", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local CharacterDestinyConfig = class("CharacterDestinyConfig", BaseConfig)
+
+function CharacterDestinyConfig:reqConfigNames()
 	return {
 		"character_destiny_facets_consume",
 		"character_destiny_facets",
 		"character_destiny_slots",
-		"character_destiny"
+		"character_destiny",
+		"destiny_facets_ex_level"
 	}
 end
 
-function var_0_0.onInit(arg_2_0)
-	arg_2_0._consumeTable = nil
-	arg_2_0._destinyFacetsTable = nil
-	arg_2_0._slotTable = nil
-	arg_2_0._destinyTable = nil
+function CharacterDestinyConfig:onInit()
+	self._consumeTable = nil
+	self._destinyFacetsTable = nil
+	self._slotTable = nil
+	self._destinyTable = nil
+	self._skillExlevelTable = nil
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "character_destiny_facets_consume" then
-		arg_3_0._consumeDict = arg_3_2
-	elseif arg_3_1 == "character_destiny_facets" then
-		arg_3_0._destinyFacetsTable = arg_3_2
-	elseif arg_3_1 == "character_destiny_slots" then
-		arg_3_0._slotTable = arg_3_2
-	elseif arg_3_1 == "character_destiny" then
-		arg_3_0._destinyTable = arg_3_2
+function CharacterDestinyConfig:onConfigLoaded(configName, configTable)
+	if configName == "character_destiny_facets_consume" then
+		self._consumeDict = configTable
+	elseif configName == "character_destiny_facets" then
+		self._destinyFacetsTable = configTable
+	elseif configName == "character_destiny_slots" then
+		self._slotTable = configTable
+	elseif configName == "character_destiny" then
+		self._destinyTable = configTable
 
-		arg_3_0:initDestinyTable()
+		self:initDestinyTable()
+	elseif configName == "destiny_facets_ex_level" then
+		self._skillExlevelTable = configTable
 	end
 end
 
-function var_0_0.hasDestinyHero(arg_4_0, arg_4_1)
-	if arg_4_0._destinyTable then
-		return arg_4_0._destinyTable.configDict[arg_4_1]
+function CharacterDestinyConfig:hasDestinyHero(heroId)
+	if self._destinyTable then
+		return self._destinyTable.configDict[heroId]
 	end
 end
 
-function var_0_0.getHeroDestiny(arg_5_0, arg_5_1)
-	if arg_5_0._destinyTable then
-		return arg_5_0._destinyTable.configDict[arg_5_1]
+function CharacterDestinyConfig:getHeroDestiny(heroId)
+	if self._destinyTable then
+		return self._destinyTable.configDict[heroId]
 	end
 end
 
-function var_0_0.getSlotIdByHeroId(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0._destinyTable.configDict[arg_6_1]
+function CharacterDestinyConfig:getSlotIdByHeroId(heroId)
+	local co = self._destinyTable.configDict[heroId]
 
-	return var_6_0 and var_6_0.slotsId
+	return co and co.slotsId
 end
 
-function var_0_0.getFacetIdsByHeroId(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0._destinyTable.configDict[arg_7_1]
-	local var_7_1 = var_7_0 and var_7_0.facetsId
+function CharacterDestinyConfig:getFacetIdsByHeroId(heroId)
+	local co = self._destinyTable.configDict[heroId]
+	local facetsId = co and co.facetsId
 
-	if not string.nilorempty(var_7_1) then
-		return (string.splitToNumber(var_7_1, "#"))
+	if not string.nilorempty(facetsId) then
+		local facetIds = string.splitToNumber(facetsId, "#")
+
+		return facetIds
 	end
 end
 
-function var_0_0.getDestinySlotCosByHeroId(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0:getSlotIdByHeroId(arg_8_1)
+function CharacterDestinyConfig:getDestinySlotCosByHeroId(heroId)
+	local slotsId = self:getSlotIdByHeroId(heroId)
 
-	return arg_8_0._slotTable.configDict[var_8_0]
+	return self._slotTable.configDict[slotsId]
 end
 
-function var_0_0.getDestinySlotCo(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	local var_9_0 = arg_9_0:getDestinySlotCosByHeroId(arg_9_1)
+function CharacterDestinyConfig:getDestinySlotCo(heroId, rank, level)
+	local cos = self:getDestinySlotCosByHeroId(heroId)
 
-	if var_9_0 and var_9_0[arg_9_2] then
-		return var_9_0[arg_9_2][arg_9_3]
+	if cos and cos[rank] then
+		return cos[rank][level]
 	end
 end
 
-function var_0_0.getNextDestinySlotCo(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	if arg_10_2 == 0 then
-		return arg_10_0:getDestinySlotCo(arg_10_1, 1, 1)
+function CharacterDestinyConfig:getNextDestinySlotCo(heroId, rank, level)
+	if rank == 0 then
+		return self:getDestinySlotCo(heroId, 1, 1)
 	end
 
-	local var_10_0 = arg_10_0:getDestinySlotCo(arg_10_1, arg_10_2, arg_10_3 + 1)
+	local co = self:getDestinySlotCo(heroId, rank, level + 1)
 
-	if not var_10_0 then
-		return arg_10_0:getDestinySlotCo(arg_10_1, arg_10_2 + 1, 1)
+	if not co then
+		return self:getDestinySlotCo(heroId, rank + 1, 1)
 	end
 
-	return var_10_0
+	return co
 end
 
-function var_0_0.getCurDestinySlotAddAttr(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	local var_11_0 = {}
-	local var_11_1 = arg_11_0:getDestinySlotCosByHeroId(arg_11_1)
+function CharacterDestinyConfig:getCurDestinySlotAddAttr(heroId, rank, level)
+	local attrInfos = {}
+	local cos = self:getDestinySlotCosByHeroId(heroId)
 
-	if var_11_1 then
-		for iter_11_0, iter_11_1 in ipairs(var_11_1) do
-			if iter_11_0 < arg_11_2 then
-				for iter_11_2, iter_11_3 in ipairs(iter_11_1) do
-					local var_11_2 = GameUtil.splitString2(iter_11_3.effect, true)
+	if cos then
+		for _rank, cos1 in ipairs(cos) do
+			if _rank < rank then
+				for _, co in ipairs(cos1) do
+					local effect = GameUtil.splitString2(co.effect, true)
 
-					for iter_11_4, iter_11_5 in ipairs(var_11_2) do
-						local var_11_3 = iter_11_5[1]
-						local var_11_4 = iter_11_5[2]
+					for _, v in ipairs(effect) do
+						local id = v[1]
+						local num = v[2]
+						local attrCo = HeroConfig.instance:getHeroAttributeCO(id)
 
-						var_11_4 = HeroConfig.instance:getHeroAttributeCO(var_11_3).showType == 1 and var_11_4 * 0.1 or var_11_4
-						var_11_0[var_11_3] = var_11_0[var_11_3] and var_11_0[var_11_3] + var_11_4 or var_11_4
+						num = attrCo.showType == 1 and num * 0.1 or num
+						attrInfos[id] = attrInfos[id] and attrInfos[id] + num or num
 					end
 				end
-			elseif iter_11_0 == arg_11_2 then
-				for iter_11_6 = 1, arg_11_3 do
-					local var_11_5 = iter_11_1[iter_11_6]
+			elseif _rank == rank then
+				for i = 1, level do
+					local co = cos1[i]
 
-					if var_11_5 then
-						local var_11_6 = GameUtil.splitString2(var_11_5.effect, true)
+					if co then
+						local effect = GameUtil.splitString2(co.effect, true)
 
-						for iter_11_7, iter_11_8 in ipairs(var_11_6) do
-							local var_11_7 = iter_11_8[1]
-							local var_11_8 = iter_11_8[2]
+						for _, v in ipairs(effect) do
+							local id = v[1]
+							local num = v[2]
+							local attrCo = HeroConfig.instance:getHeroAttributeCO(id)
 
-							var_11_8 = HeroConfig.instance:getHeroAttributeCO(var_11_7).showType == 1 and var_11_8 * 0.1 or var_11_8
-							var_11_0[var_11_7] = var_11_0[var_11_7] and var_11_0[var_11_7] + var_11_8 or var_11_8
+							num = attrCo.showType == 1 and num * 0.1 or num
+							attrInfos[id] = attrInfos[id] and attrInfos[id] + num or num
 						end
 					end
 				end
@@ -125,95 +135,114 @@ function var_0_0.getCurDestinySlotAddAttr(arg_11_0, arg_11_1, arg_11_2, arg_11_3
 		end
 	end
 
-	return var_11_0
+	return attrInfos
 end
 
-function var_0_0.getLockAttr(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = {}
-	local var_12_1 = arg_12_0:getDestinySlotCosByHeroId(arg_12_1)
+function CharacterDestinyConfig:getLockAttr(heroId, rank)
+	local attrInfos = {}
+	local cos = self:getDestinySlotCosByHeroId(heroId)
 
-	if var_12_1 and arg_12_2 < #var_12_1 then
-		for iter_12_0 = arg_12_2 + 1, #var_12_1 do
-			for iter_12_1, iter_12_2 in ipairs(var_12_1[iter_12_0]) do
-				local var_12_2 = GameUtil.splitString2(iter_12_2.effect, true)
+	if cos and rank < #cos then
+		for i = rank + 1, #cos do
+			for _, co in ipairs(cos[i]) do
+				local effect = GameUtil.splitString2(co.effect, true)
 
-				for iter_12_3, iter_12_4 in ipairs(var_12_2) do
-					local var_12_3 = iter_12_4[1]
-					local var_12_4 = iter_12_4[2]
+				for _, v in ipairs(effect) do
+					local id = v[1]
+					local num = v[2]
+					local attrCo = HeroConfig.instance:getHeroAttributeCO(id)
 
-					var_12_4 = HeroConfig.instance:getHeroAttributeCO(var_12_3).showType == 1 and var_12_4 * 0.1 or var_12_4
+					num = attrCo.showType == 1 and num * 0.1 or num
 
-					if not var_12_0[iter_12_0] then
-						var_12_0[iter_12_0] = {}
+					if not attrInfos[i] then
+						attrInfos[i] = {}
 					end
 
-					if var_12_0[iter_12_0][var_12_3] then
-						var_12_0[iter_12_0][var_12_3] = var_12_0[iter_12_0][var_12_3] + var_12_4
+					if attrInfos[i][id] then
+						attrInfos[i][id] = attrInfos[i][id] + num
 					else
-						var_12_0[iter_12_0][var_12_3] = var_12_4
+						attrInfos[i][id] = num
 					end
 				end
 			end
 		end
 	end
 
-	return var_12_0
+	return attrInfos
 end
 
-function var_0_0.getDestinyFacets(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0 = arg_13_0._destinyFacetsTable.configDict[arg_13_1]
+function CharacterDestinyConfig:getDestinyFacets(facetsId, level)
+	local cos = self._destinyFacetsTable.configDict[facetsId]
 
-	return var_13_0 and var_13_0[arg_13_2]
+	return cos and cos[level]
 end
 
-function var_0_0.getDestinyFacetCo(arg_14_0, arg_14_1)
-	return arg_14_0._destinyFacetsTable.configDict[arg_14_1]
+function CharacterDestinyConfig:getDestinyFacetCo(facetId)
+	local cos = self._destinyFacetsTable.configDict[facetId]
+
+	return cos
 end
 
-function var_0_0.getDestinyFacetConsumeCo(arg_15_0, arg_15_1)
-	return arg_15_0._consumeDict.configDict[arg_15_1]
+function CharacterDestinyConfig:getDestinyFacetConsumeCo(facetId)
+	return self._consumeDict.configDict[facetId]
 end
 
-function var_0_0.getAllDestinyConfigList(arg_16_0)
-	if not arg_16_0._destinyTable then
+function CharacterDestinyConfig:getAllDestinyConfigList()
+	if not self._destinyTable then
 		return
 	end
 
-	return arg_16_0._destinyTable.configList
+	return self._destinyTable.configList
 end
 
-function var_0_0.initDestinyTable(arg_17_0)
-	local var_17_0 = arg_17_0:getAllDestinyConfigList()
+function CharacterDestinyConfig:initDestinyTable()
+	local configList = self:getAllDestinyConfigList()
 
-	arg_17_0._destinyFacetHeroIdDic = {}
+	self._destinyFacetHeroIdDic = {}
 
-	if var_17_0 == nil then
+	if configList == nil then
 		return
 	end
 
-	for iter_17_0, iter_17_1 in ipairs(var_17_0) do
-		if not string.nilorempty(iter_17_1.facetsId) then
-			local var_17_1 = string.splitToNumber(iter_17_1.facetsId, "#")
+	for _, config in ipairs(configList) do
+		if not string.nilorempty(config.facetsId) then
+			local faceIdList = string.splitToNumber(config.facetsId, "#")
 
-			for iter_17_2, iter_17_3 in ipairs(var_17_1) do
-				if not arg_17_0._destinyFacetHeroIdDic[iter_17_3] then
-					arg_17_0._destinyFacetHeroIdDic[iter_17_3] = iter_17_1.heroId
+			for _, faceId in ipairs(faceIdList) do
+				if not self._destinyFacetHeroIdDic[faceId] then
+					self._destinyFacetHeroIdDic[faceId] = config.heroId
 				else
-					logError("角色命石表 存在重复命石id:" + tostring(iter_17_3))
+					logError("角色命石表 存在重复命石id:" + tostring(faceId))
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.getDestinyFacetHeroId(arg_18_0, arg_18_1)
-	if not arg_18_0._destinyFacetHeroIdDic then
+function CharacterDestinyConfig:getDestinyFacetHeroId(facetId)
+	if not self._destinyFacetHeroIdDic then
 		return nil
 	end
 
-	return arg_18_0._destinyFacetHeroIdDic[arg_18_1]
+	return self._destinyFacetHeroIdDic[facetId]
 end
 
-var_0_0.instance = var_0_0.New()
+function CharacterDestinyConfig:getSkillExlevelTable(facetsId, exp)
+	if self._skillExlevelTable then
+		local cos = self._skillExlevelTable.configDict[facetsId]
 
-return var_0_0
+		return cos and cos[exp]
+	end
+end
+
+function CharacterDestinyConfig:getSkillExlevelCos(facetsId)
+	if self._skillExlevelTable then
+		local cos = self._skillExlevelTable.configDict[facetsId]
+
+		return cos
+	end
+end
+
+CharacterDestinyConfig.instance = CharacterDestinyConfig.New()
+
+return CharacterDestinyConfig

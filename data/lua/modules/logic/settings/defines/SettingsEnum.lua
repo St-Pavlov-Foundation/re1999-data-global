@@ -1,21 +1,24 @@
-﻿module("modules.logic.settings.defines.SettingsEnum", package.seeall)
+﻿-- chunkname: @modules/logic/settings/defines/SettingsEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.settings.defines.SettingsEnum", package.seeall)
 
-var_0_0.ShowType = {
-	LimitedRoleEffect = 2,
+local SettingsEnum = _M
+
+SettingsEnum.ShowType = {
 	Push = 4,
-	KeyMap = 3,
-	RecordVideo = 1
+	LimitedRoleEffect = 2,
+	Udimo = 5,
+	RecordVideo = 1,
+	KeyMap = 3
 }
-var_0_0.CategoryList = {
+SettingsEnum.CategoryList = {
 	{
 		name = "key_binding",
 		subname = "KEYMAP",
 		id = 1,
 		openIds = {},
 		showIds = {
-			var_0_0.ShowType.KeyMap
+			SettingsEnum.ShowType.KeyMap
 		}
 	},
 	{
@@ -43,7 +46,7 @@ var_0_0.CategoryList = {
 		id = 5,
 		openIds = {},
 		showIds = {
-			var_0_0.ShowType.Push
+			SettingsEnum.ShowType.Push
 		}
 	},
 	{
@@ -62,16 +65,21 @@ var_0_0.CategoryList = {
 		id = 7,
 		openIds = {},
 		showIds = {
-			var_0_0.ShowType.RecordVideo,
-			var_0_0.ShowType.LimitedRoleEffect
+			SettingsEnum.ShowType.RecordVideo,
+			SettingsEnum.ShowType.LimitedRoleEffect,
+			SettingsEnum.ShowType.Udimo
 		}
 	}
 }
-var_0_0.PushType = {
+SettingsEnum.PushType = {
 	Room_Produce_Upper_Limit = 2,
 	Reactivation = 1,
 	Allow_Recommend = 3
 }
-var_0_0.CharVoiceLangPrefsKey = "CharVoiceLang_"
+SettingsEnum.LoginPageType = {
+	Random = -1,
+	LastId = 0
+}
+SettingsEnum.CharVoiceLangPrefsKey = "CharVoiceLang_"
 
-return var_0_0
+return SettingsEnum

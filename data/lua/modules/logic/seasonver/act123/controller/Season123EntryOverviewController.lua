@@ -1,15 +1,17 @@
-﻿module("modules.logic.seasonver.act123.controller.Season123EntryOverviewController", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/controller/Season123EntryOverviewController.lua
 
-local var_0_0 = class("Season123EntryOverviewController", BaseController)
+module("modules.logic.seasonver.act123.controller.Season123EntryOverviewController", package.seeall)
 
-function var_0_0.onOpenView(arg_1_0, arg_1_1)
-	Season123EntryOverviewModel.instance:init(arg_1_1)
+local Season123EntryOverviewController = class("Season123EntryOverviewController", BaseController)
+
+function Season123EntryOverviewController:onOpenView(actId)
+	Season123EntryOverviewModel.instance:init(actId)
 end
 
-function var_0_0.onCloseView(arg_2_0)
+function Season123EntryOverviewController:onCloseView()
 	return
 end
 
-var_0_0.instance = var_0_0.New()
+Season123EntryOverviewController.instance = Season123EntryOverviewController.New()
 
-return var_0_0
+return Season123EntryOverviewController

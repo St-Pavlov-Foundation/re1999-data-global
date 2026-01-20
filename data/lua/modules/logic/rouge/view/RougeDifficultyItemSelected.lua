@@ -1,128 +1,138 @@
-﻿module("modules.logic.rouge.view.RougeDifficultyItemSelected", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeDifficultyItemSelected.lua
 
-local var_0_0 = class("RougeDifficultyItemSelected", RougeDifficultyItem_Base)
+module("modules.logic.rouge.view.RougeDifficultyItemSelected", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goFrame1 = gohelper.findChild(arg_1_0.viewGO, "frame/#go_Frame1")
-	arg_1_0._goFrame2 = gohelper.findChild(arg_1_0.viewGO, "frame/#go_Frame2")
-	arg_1_0._goFrame3 = gohelper.findChild(arg_1_0.viewGO, "frame/#go_Frame3")
-	arg_1_0._goBg1 = gohelper.findChild(arg_1_0.viewGO, "bg/#go_Bg1")
-	arg_1_0._goBg2 = gohelper.findChild(arg_1_0.viewGO, "bg/#go_Bg2")
-	arg_1_0._goBg3 = gohelper.findChild(arg_1_0.viewGO, "bg/#go_Bg3")
-	arg_1_0._txtnum1 = gohelper.findChildText(arg_1_0.viewGO, "num/#txt_num1")
-	arg_1_0._txtnum2 = gohelper.findChildText(arg_1_0.viewGO, "num/#txt_num2")
-	arg_1_0._txtnum3 = gohelper.findChildText(arg_1_0.viewGO, "num/#txt_num3")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#txt_name")
-	arg_1_0._txten = gohelper.findChildText(arg_1_0.viewGO, "#txt_name/#txt_en")
-	arg_1_0._txtenemy = gohelper.findChildText(arg_1_0.viewGO, "enemy/#txt_enemy")
-	arg_1_0._enemyGo1 = gohelper.findChild(arg_1_0.viewGO, "enemy/#go_1")
-	arg_1_0._enemyGo2 = gohelper.findChild(arg_1_0.viewGO, "enemy/#go_2")
-	arg_1_0._enemyGo3 = gohelper.findChild(arg_1_0.viewGO, "enemy/#go_3")
-	arg_1_0._scoreGo1 = gohelper.findChild(arg_1_0.viewGO, "score/#go_1")
-	arg_1_0._scoreGo2 = gohelper.findChild(arg_1_0.viewGO, "score/#go_2")
-	arg_1_0._scoreGo3 = gohelper.findChild(arg_1_0.viewGO, "score/#go_3")
-	arg_1_0._txtscore = gohelper.findChildText(arg_1_0.viewGO, "score/#txt_score")
-	arg_1_0._btnTipsIcon = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "layout/#btn_TipsIcon")
-	arg_1_0._btnBalance = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_balance")
-	arg_1_0._scrolldesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_desc")
-	arg_1_0._txtScrollDesc = gohelper.findChildText(arg_1_0.viewGO, "#scroll_desc/viewport/content/#txt_ScrollDesc")
-	arg_1_0._goarrow = gohelper.findChild(arg_1_0.viewGO, "#go_arrow")
+local RougeDifficultyItemSelected = class("RougeDifficultyItemSelected", RougeDifficultyItem_Base)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeDifficultyItemSelected:onInitView()
+	self._goFrame1 = gohelper.findChild(self.viewGO, "frame/#go_Frame1")
+	self._goFrame2 = gohelper.findChild(self.viewGO, "frame/#go_Frame2")
+	self._goFrame3 = gohelper.findChild(self.viewGO, "frame/#go_Frame3")
+	self._goBg1 = gohelper.findChild(self.viewGO, "bg/#go_Bg1")
+	self._goBg2 = gohelper.findChild(self.viewGO, "bg/#go_Bg2")
+	self._goBg3 = gohelper.findChild(self.viewGO, "bg/#go_Bg3")
+	self._txtnum1 = gohelper.findChildText(self.viewGO, "num/#txt_num1")
+	self._txtnum2 = gohelper.findChildText(self.viewGO, "num/#txt_num2")
+	self._txtnum3 = gohelper.findChildText(self.viewGO, "num/#txt_num3")
+	self._txtname = gohelper.findChildText(self.viewGO, "#txt_name")
+	self._txten = gohelper.findChildText(self.viewGO, "#txt_name/#txt_en")
+	self._txtenemy = gohelper.findChildText(self.viewGO, "enemy/#txt_enemy")
+	self._enemyGo1 = gohelper.findChild(self.viewGO, "enemy/#go_1")
+	self._enemyGo2 = gohelper.findChild(self.viewGO, "enemy/#go_2")
+	self._enemyGo3 = gohelper.findChild(self.viewGO, "enemy/#go_3")
+	self._scoreGo1 = gohelper.findChild(self.viewGO, "score/#go_1")
+	self._scoreGo2 = gohelper.findChild(self.viewGO, "score/#go_2")
+	self._scoreGo3 = gohelper.findChild(self.viewGO, "score/#go_3")
+	self._txtscore = gohelper.findChildText(self.viewGO, "score/#txt_score")
+	self._btnTipsIcon = gohelper.findChildButtonWithAudio(self.viewGO, "layout/#btn_TipsIcon")
+	self._btnBalance = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_balance")
+	self._scrolldesc = gohelper.findChildScrollRect(self.viewGO, "#scroll_desc")
+	self._txtScrollDesc = gohelper.findChildText(self.viewGO, "#scroll_desc/viewport/content/#txt_ScrollDesc")
+	self._goarrow = gohelper.findChild(self.viewGO, "#go_arrow")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnTipsIcon:AddClickListener(arg_2_0._btnTipsIconOnClick, arg_2_0)
-	arg_2_0._btnBalance:AddClickListener(arg_2_0._btnBalanceOnClick, arg_2_0)
+function RougeDifficultyItemSelected:addEvents()
+	self._btnTipsIcon:AddClickListener(self._btnTipsIconOnClick, self)
+	self._btnBalance:AddClickListener(self._btnBalanceOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnTipsIcon:RemoveClickListener()
-	arg_3_0._btnBalance:RemoveClickListener()
+function RougeDifficultyItemSelected:removeEvents()
+	self._btnTipsIcon:RemoveClickListener()
+	self._btnBalance:RemoveClickListener()
 end
 
-function var_0_0._btnTipsIconOnClick(arg_4_0)
-	local var_4_0 = arg_4_0._mo.difficultyCO.difficulty
+function RougeDifficultyItemSelected:_btnTipsIconOnClick()
+	local mo = self._mo
+	local difficultyCO = mo.difficultyCO
+	local difficulty = difficultyCO.difficulty
 
-	arg_4_0:dispatchEvent(RougeEvent.RougeDifficultyView_btnTipsIconOnClick, var_4_0)
+	self:dispatchEvent(RougeEvent.RougeDifficultyView_btnTipsIconOnClick, difficulty)
 end
 
-function var_0_0._btnBalanceOnClick(arg_5_0)
-	local var_5_0 = arg_5_0._mo.difficultyCO.difficulty
+function RougeDifficultyItemSelected:_btnBalanceOnClick()
+	local mo = self._mo
+	local difficultyCO = mo.difficultyCO
+	local difficulty = difficultyCO.difficulty
 
-	arg_5_0:dispatchEvent(RougeEvent.RougeDifficultyView_btnBalanceOnClick, var_5_0)
+	self:dispatchEvent(RougeEvent.RougeDifficultyView_btnBalanceOnClick, difficulty)
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	RougeDifficultyItem_Base._editableInitView(arg_6_0)
+function RougeDifficultyItemSelected:_editableInitView()
+	RougeDifficultyItem_Base._editableInitView(self)
 
-	arg_6_0._btnBalanceGo = arg_6_0._btnBalance.gameObject
-	arg_6_0._btnTipsIconGo = arg_6_0._btnTipsIcon.gameObject
-	arg_6_0._goFrameList = arg_6_0:getUserDataTb_()
+	self._btnBalanceGo = self._btnBalance.gameObject
+	self._btnTipsIconGo = self._btnTipsIcon.gameObject
+	self._goFrameList = self:getUserDataTb_()
 
-	arg_6_0:_fillUserDataTb("_goFrame", arg_6_0._goFrameList)
+	self:_fillUserDataTb("_goFrame", self._goFrameList)
 
-	arg_6_0._goEnemyTxtBgList = arg_6_0:getUserDataTb_()
+	self._goEnemyTxtBgList = self:getUserDataTb_()
 
-	arg_6_0:_fillUserDataTb("_enemyGo", arg_6_0._goEnemyTxtBgList)
+	self:_fillUserDataTb("_enemyGo", self._goEnemyTxtBgList)
 
-	arg_6_0._goScoreTxtBgList = arg_6_0:getUserDataTb_()
+	self._goScoreTxtBgList = self:getUserDataTb_()
 
-	arg_6_0:_fillUserDataTb("_scoreGo", arg_6_0._goScoreTxtBgList)
+	self:_fillUserDataTb("_scoreGo", self._goScoreTxtBgList)
 
-	arg_6_0._scrolldescLimitScrollRectCmp = arg_6_0._scrolldesc.gameObject:GetComponent(gohelper.Type_LimitedScrollRect)
+	self._scrolldescLimitScrollRectCmp = self._scrolldesc.gameObject:GetComponent(gohelper.Type_LimitedScrollRect)
 
-	arg_6_0:_onSetScrollParentGameObject(arg_6_0._scrolldescLimitScrollRectCmp)
-	arg_6_0:_setActiveBalance(false)
-	arg_6_0:_setActiveOverview(false)
+	self:_onSetScrollParentGameObject(self._scrolldescLimitScrollRectCmp)
+	self:_setActiveBalance(false)
+	self:_setActiveOverview(false)
 end
 
-function var_0_0.onDestroyView(arg_7_0)
-	RougeDifficultyItem_Base.onDestroyView(arg_7_0)
+function RougeDifficultyItemSelected:onDestroyView()
+	RougeDifficultyItem_Base.onDestroyView(self)
 end
 
-function var_0_0.setData(arg_8_0, arg_8_1)
-	RougeDifficultyItem_Base.setData(arg_8_0, arg_8_1)
+function RougeDifficultyItemSelected:setData(mo)
+	RougeDifficultyItem_Base.setData(self, mo)
 
-	local var_8_0 = arg_8_0:staticData().geniusBranchStartViewInfo
-	local var_8_1 = arg_8_1.difficultyCO
-	local var_8_2 = var_8_1.difficulty
-	local var_8_3 = var_8_1.balanceLevel
-	local var_8_4 = RougeConfig1.instance:getRougeDifficultyViewStyleIndex(var_8_2)
-	local var_8_5 = RougeOutsideModel.instance:config():getDifficultyCOStartViewDeltaValue(var_8_2, RougeEnum.StartViewEnum.point) + (var_8_0[RougeEnum.StartViewEnum.point] or 0)
+	local staticData = self:staticData()
+	local geniusBranchStartViewInfo = staticData.geniusBranchStartViewInfo
+	local difficultyCO = mo.difficultyCO
+	local difficulty = difficultyCO.difficulty
+	local balanceLevel = difficultyCO.balanceLevel
+	local styleIndex = RougeConfig1.instance:getRougeDifficultyViewStyleIndex(difficulty)
+	local cfg = RougeOutsideModel.instance:config()
+	local dtScoreReward1 = cfg:getDifficultyCOStartViewDeltaValue(difficulty, RougeEnum.StartViewEnum.point)
+	local dtScoreReward2 = geniusBranchStartViewInfo[RougeEnum.StartViewEnum.point] or 0
+	local dtScoreReward = dtScoreReward1 + dtScoreReward2
 
-	arg_8_0._txtenemy.text = var_8_2
-	arg_8_0._txtscore.text = tostring(var_8_1.scoreReward + var_8_5) .. "%"
-	arg_8_0._txtScrollDesc.text = var_8_1.desc
+	self._txtenemy.text = difficulty
+	self._txtscore.text = tostring(difficultyCO.scoreReward + dtScoreReward) .. "%"
+	self._txtScrollDesc.text = difficultyCO.desc
 
-	arg_8_0:_activeStyle(arg_8_0._goFrameList, var_8_4)
-	arg_8_0:_activeStyle(arg_8_0._goEnemyTxtBgList, var_8_4)
-	arg_8_0:_activeStyle(arg_8_0._goScoreTxtBgList, var_8_4)
-	arg_8_0:_setActiveBalance(not string.nilorempty(var_8_3))
+	self:_activeStyle(self._goFrameList, styleIndex)
+	self:_activeStyle(self._goEnemyTxtBgList, styleIndex)
+	self:_activeStyle(self._goScoreTxtBgList, styleIndex)
+	self:_setActiveBalance(not string.nilorempty(balanceLevel))
 
-	local var_8_6 = arg_8_0:baseViewContainer()
+	local c = self:baseViewContainer()
 
-	if var_8_6 then
-		arg_8_0:_setActiveOverview(#var_8_6:getSumDescIndexList(var_8_2) > 0)
+	if c then
+		self:_setActiveOverview(#c:getSumDescIndexList(difficulty) > 0)
 	end
 end
 
-function var_0_0._activeStyle(arg_9_0, arg_9_1, arg_9_2)
-	for iter_9_0, iter_9_1 in ipairs(arg_9_1) do
-		gohelper.setActive(iter_9_1, false)
+function RougeDifficultyItemSelected:_activeStyle(styleGoList, activeStyleIndex)
+	for _, go in ipairs(styleGoList) do
+		gohelper.setActive(go, false)
 	end
 
-	gohelper.setActive(arg_9_1[arg_9_2], true)
+	gohelper.setActive(styleGoList[activeStyleIndex], true)
 end
 
-function var_0_0._setActiveBalance(arg_10_0, arg_10_1)
-	gohelper.setActive(arg_10_0._btnBalanceGo, arg_10_1)
+function RougeDifficultyItemSelected:_setActiveBalance(isActive)
+	gohelper.setActive(self._btnBalanceGo, isActive)
 end
 
-function var_0_0._setActiveOverview(arg_11_0, arg_11_1)
-	gohelper.setActive(arg_11_0._btnTipsIconGo, arg_11_1)
+function RougeDifficultyItemSelected:_setActiveOverview(isActive)
+	gohelper.setActive(self._btnTipsIconGo, isActive)
 end
 
-return var_0_0
+return RougeDifficultyItemSelected

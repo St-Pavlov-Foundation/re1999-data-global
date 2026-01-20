@@ -1,36 +1,38 @@
-﻿module("modules.logic.versionactivity2_4.act181.view.Activity181RewardItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/act181/view/Activity181RewardItem.lua
 
-local var_0_0 = class("Activity181RewardItem", ListScrollCellExtend)
+module("modules.logic.versionactivity2_4.act181.view.Activity181RewardItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._goHaveGet = gohelper.findChild(arg_1_1, "#go_haveGet")
+local Activity181RewardItem = class("Activity181RewardItem", ListScrollCellExtend)
 
-	gohelper.setActive(arg_1_1, false)
+function Activity181RewardItem:init(go)
+	self.go = go
+	self._goHaveGet = gohelper.findChild(go, "#go_haveGet")
 
-	arg_1_0._itemIcon = IconMgr.instance:getCommonItemIcon(arg_1_1)
+	gohelper.setActive(go, false)
 
-	gohelper.setAsLastSibling(arg_1_0._goHaveGet)
+	self._itemIcon = IconMgr.instance:getCommonItemIcon(go)
+
+	gohelper.setAsLastSibling(self._goHaveGet)
 end
 
-function var_0_0.setEnable(arg_2_0, arg_2_1)
-	gohelper.setActive(arg_2_0.go, arg_2_1)
+function Activity181RewardItem:setEnable(active)
+	gohelper.setActive(self.go, active)
 end
 
-function var_0_0.onUpdateMO(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	arg_3_0._itemIcon:setInPack(false)
-	arg_3_0._itemIcon:setMOValue(arg_3_1, arg_3_2, arg_3_3)
-	arg_3_0._itemIcon:isShowName(false)
-	arg_3_0._itemIcon:isShowCount(true)
-	arg_3_0._itemIcon:isShowEffect(true)
-	arg_3_0._itemIcon:setGetMask(arg_3_4)
-	arg_3_0._itemIcon:setRecordFarmItem({
-		type = arg_3_1,
-		id = arg_3_2,
+function Activity181RewardItem:onUpdateMO(type, id, quantity, haveGet)
+	self._itemIcon:setInPack(false)
+	self._itemIcon:setMOValue(type, id, quantity)
+	self._itemIcon:isShowName(false)
+	self._itemIcon:isShowCount(true)
+	self._itemIcon:isShowEffect(true)
+	self._itemIcon:setGetMask(haveGet)
+	self._itemIcon:setRecordFarmItem({
+		type = type,
+		id = id,
 		sceneType = GameSceneMgr.instance:getCurSceneType(),
 		openedViewNameList = JumpController.instance:getCurrentOpenedView()
 	})
-	gohelper.setActive(arg_3_0._goHaveGet, arg_3_4)
+	gohelper.setActive(self._goHaveGet, haveGet)
 end
 
-return var_0_0
+return Activity181RewardItem

@@ -1,21 +1,23 @@
-﻿module("modules.logic.dragonboat.model.DragonBoatFestivalModel", package.seeall)
+﻿-- chunkname: @modules/logic/dragonboat/model/DragonBoatFestivalModel.lua
 
-local var_0_0 = class("DragonBoatFestivalModel", BaseModel)
+module("modules.logic.dragonboat.model.DragonBoatFestivalModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local DragonBoatFestivalModel = class("DragonBoatFestivalModel", BaseModel)
+
+function DragonBoatFestivalModel:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._curDay = nil
+function DragonBoatFestivalModel:reInit()
+	self._curDay = nil
 end
 
-function var_0_0.hasRewardNotGet(arg_3_0)
-	local var_3_0 = ActivityEnum.Activity.DragonBoatFestival
-	local var_3_1 = ActivityConfig.instance:getNorSignActivityCos(var_3_0)
+function DragonBoatFestivalModel:hasRewardNotGet()
+	local actId = ActivityEnum.Activity.DragonBoatFestival
+	local actCos = ActivityConfig.instance:getNorSignActivityCos(actId)
 
-	for iter_3_0, iter_3_1 in pairs(var_3_1) do
-		if arg_3_0:isGiftUnlock(iter_3_1.id) and not arg_3_0:isGiftGet(iter_3_1.id) then
+	for _, v in pairs(actCos) do
+		if self:isGiftUnlock(v.id) and not self:isGiftGet(v.id) then
 			return true
 		end
 	end
@@ -23,69 +25,70 @@ function var_0_0.hasRewardNotGet(arg_3_0)
 	return false
 end
 
-function var_0_0.setCurDay(arg_4_0, arg_4_1)
-	arg_4_0._curDay = arg_4_1
+function DragonBoatFestivalModel:setCurDay(day)
+	self._curDay = day
 end
 
-function var_0_0.getCurDay(arg_5_0)
-	local var_5_0 = arg_5_0._curDay or arg_5_0:getFinalGiftGetDay()
+function DragonBoatFestivalModel:getCurDay()
+	local day = self._curDay or self:getFinalGiftGetDay()
 
-	return var_5_0 > arg_5_0:getMaxDay() and arg_5_0:getMaxDay() or var_5_0
+	return day > self:getMaxDay() and self:getMaxDay() or day
 end
 
-function var_0_0.getFinalGiftGetDay(arg_6_0)
-	local var_6_0 = ActivityEnum.Activity.DragonBoatFestival
-	local var_6_1 = ActivityConfig.instance:getNorSignActivityCos(var_6_0)
-	local var_6_2 = {}
+function DragonBoatFestivalModel:getFinalGiftGetDay()
+	local actId = ActivityEnum.Activity.DragonBoatFestival
+	local actCos = ActivityConfig.instance:getNorSignActivityCos(actId)
+	local giftGetList = {}
 
-	for iter_6_0, iter_6_1 in pairs(var_6_1) do
-		if arg_6_0:isGiftUnlock(iter_6_1.id) and arg_6_0:isGiftGet(iter_6_1.id) then
-			table.insert(var_6_2, iter_6_1.id)
+	for _, v in pairs(actCos) do
+		if self:isGiftUnlock(v.id) and self:isGiftGet(v.id) then
+			table.insert(giftGetList, v.id)
 		end
 	end
 
-	if GameUtil.getTabLen(var_6_2) > 0 then
-		return var_6_2[#var_6_2]
+	if GameUtil.getTabLen(giftGetList) > 0 then
+		return giftGetList[#giftGetList]
 	else
-		return arg_6_0:getLoginCount()
+		return self:getLoginCount()
 	end
 end
 
-function var_0_0.isGiftGet(arg_7_0, arg_7_1)
-	local var_7_0 = ActivityEnum.Activity.DragonBoatFestival
+function DragonBoatFestivalModel:isGiftGet(id)
+	local actId = ActivityEnum.Activity.DragonBoatFestival
 
-	if arg_7_1 > arg_7_0:getMaxDay() then
+	if id > self:getMaxDay() then
 		return false
 	end
 
-	return ActivityType101Model.instance:isType101RewardGet(var_7_0, arg_7_1)
+	return ActivityType101Model.instance:isType101RewardGet(actId, id)
 end
 
-function var_0_0.isGiftUnlock(arg_8_0, arg_8_1)
-	return arg_8_1 <= arg_8_0:getLoginCount()
+function DragonBoatFestivalModel:isGiftUnlock(id)
+	return id <= self:getLoginCount()
 end
 
-function var_0_0.getMaxDay(arg_9_0)
-	local var_9_0 = DragonBoatFestivalConfig.instance:getDragonBoatCos()
-	local var_9_1 = 0
+function DragonBoatFestivalModel:getMaxDay()
+	local cos = DragonBoatFestivalConfig.instance:getDragonBoatCos()
+	local maxDay = 0
 
-	for iter_9_0, iter_9_1 in pairs(var_9_0) do
-		var_9_1 = var_9_1 > iter_9_1.day and var_9_1 or iter_9_1.day
+	for _, v in pairs(cos) do
+		maxDay = maxDay > v.day and maxDay or v.day
 	end
 
-	return var_9_1
+	return maxDay
 end
 
-function var_0_0.getLoginCount(arg_10_0)
-	local var_10_0 = ActivityEnum.Activity.DragonBoatFestival
+function DragonBoatFestivalModel:getLoginCount()
+	local actId = ActivityEnum.Activity.DragonBoatFestival
+	local count = ActivityType101Model.instance:getType101LoginCount(actId)
 
-	return (ActivityType101Model.instance:getType101LoginCount(var_10_0))
+	return count
 end
 
-function var_0_0.getMaxUnlockDay(arg_11_0)
-	return arg_11_0:getLoginCount() <= arg_11_0:getMaxDay() and arg_11_0:getLoginCount() or arg_11_0:getMaxDay()
+function DragonBoatFestivalModel:getMaxUnlockDay()
+	return self:getLoginCount() <= self:getMaxDay() and self:getLoginCount() or self:getMaxDay()
 end
 
-var_0_0.instance = var_0_0.New()
+DragonBoatFestivalModel.instance = DragonBoatFestivalModel.New()
 
-return var_0_0
+return DragonBoatFestivalModel

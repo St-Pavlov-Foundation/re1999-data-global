@@ -1,15 +1,17 @@
-﻿module("modules.logic.versionactivity1_6.act149.model.Activity149Mo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/act149/model/Activity149Mo.lua
 
-local var_0_0 = class("Activity149Mo")
+module("modules.logic.versionactivity1_6.act149.model.Activity149Mo", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.id = arg_1_1
-	arg_1_0._activityId = arg_1_2
-	arg_1_0.cfg = arg_1_0:getAct149EpisodeCfg(arg_1_1)
+local Activity149Mo = class("Activity149Mo")
+
+function Activity149Mo:ctor(id, activityId)
+	self.id = id
+	self._activityId = activityId
+	self.cfg = self:getAct149EpisodeCfg(id)
 end
 
-function var_0_0.getAct149EpisodeCfg(arg_2_0, arg_2_1)
-	return Activity149Config.instance:getAct149EpisodeCfg(arg_2_1)
+function Activity149Mo:getAct149EpisodeCfg(id)
+	return Activity149Config.instance:getAct149EpisodeCfg(id)
 end
 
-return var_0_0
+return Activity149Mo

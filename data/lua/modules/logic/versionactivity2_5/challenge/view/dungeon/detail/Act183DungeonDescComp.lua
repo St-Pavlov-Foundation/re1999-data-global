@@ -1,59 +1,61 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.dungeon.detail.Act183DungeonDescComp", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/dungeon/detail/Act183DungeonDescComp.lua
 
-local var_0_0 = class("Act183DungeonDescComp", Act183DungeonBaseComp)
+module("modules.logic.versionactivity2_5.challenge.view.dungeon.detail.Act183DungeonDescComp", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	var_0_0.super.init(arg_1_0, arg_1_1)
+local Act183DungeonDescComp = class("Act183DungeonDescComp", Act183DungeonBaseComp)
 
-	arg_1_0._gonormal = gohelper.findChild(arg_1_0.go, "#go_normal")
-	arg_1_0._gohard = gohelper.findChild(arg_1_0.go, "#go_hard")
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.go, "title/#txt_title")
-	arg_1_0._godone = gohelper.findChild(arg_1_0.go, "title/#go_done")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.go, "#scroll_detail/Viewport/Content/top/#txt_desc")
-	arg_1_0._btninfo = gohelper.findChildButtonWithAudio(arg_1_0.go, "title/#btn_Info")
-	arg_1_0._gotop = gohelper.findChild(arg_1_0.go, "#scroll_detail/Viewport/Content/top")
-	arg_1_0._topTran = arg_1_0._gotop.transform
+function Act183DungeonDescComp:init(go)
+	Act183DungeonDescComp.super.init(self, go)
+
+	self._gonormal = gohelper.findChild(self.go, "#go_normal")
+	self._gohard = gohelper.findChild(self.go, "#go_hard")
+	self._txttitle = gohelper.findChildText(self.go, "title/#txt_title")
+	self._godone = gohelper.findChild(self.go, "title/#go_done")
+	self._txtdesc = gohelper.findChildText(self.go, "#scroll_detail/Viewport/Content/top/#txt_desc")
+	self._btninfo = gohelper.findChildButtonWithAudio(self.go, "title/#btn_Info")
+	self._gotop = gohelper.findChild(self.go, "#scroll_detail/Viewport/Content/top")
+	self._topTran = self._gotop.transform
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._btninfo:AddClickListener(arg_2_0._btninfoOnClick, arg_2_0)
+function Act183DungeonDescComp:addEventListeners()
+	self._btninfo:AddClickListener(self._btninfoOnClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btninfo:RemoveClickListener()
+function Act183DungeonDescComp:removeEventListeners()
+	self._btninfo:RemoveClickListener()
 end
 
-function var_0_0.checkIsVisible(arg_4_0)
+function Act183DungeonDescComp:checkIsVisible()
 	return true
 end
 
-function var_0_0.show(arg_5_0)
-	var_0_0.super.show(arg_5_0)
+function Act183DungeonDescComp:show()
+	Act183DungeonDescComp.super.show(self)
 
-	arg_5_0._txttitle.text = arg_5_0._episodeCo.title
-	arg_5_0._txtdesc.text = arg_5_0._episodeCo.desc
+	self._txttitle.text = self._episodeCo.title
+	self._txtdesc.text = self._episodeCo.desc
 
-	gohelper.setActive(arg_5_0._gonormal, arg_5_0._groupType ~= Act183Enum.GroupType.HardMain)
-	gohelper.setActive(arg_5_0._gohard, arg_5_0._groupType == Act183Enum.GroupType.HardMain)
-	gohelper.setActive(arg_5_0._godone, arg_5_0._status == Act183Enum.EpisodeStatus.Finished)
+	gohelper.setActive(self._gonormal, self._groupType ~= Act183Enum.GroupType.HardMain)
+	gohelper.setActive(self._gohard, self._groupType == Act183Enum.GroupType.HardMain)
+	gohelper.setActive(self._godone, self._status == Act183Enum.EpisodeStatus.Finished)
 end
 
-function var_0_0._btninfoOnClick(arg_6_0)
-	local var_6_0 = DungeonConfig.instance:getEpisodeCO(arg_6_0._episodeId)
+function Act183DungeonDescComp:_btninfoOnClick()
+	local episodeCo = DungeonConfig.instance:getEpisodeCO(self._episodeId)
 
-	if var_6_0 then
-		EnemyInfoController.instance:openEnemyInfoViewByBattleId(var_6_0.battleId)
+	if episodeCo then
+		EnemyInfoController.instance:openEnemyInfoViewByBattleId(episodeCo.battleId)
 	end
 end
 
-function var_0_0.getHeight(arg_7_0)
-	ZProj.UGUIHelper.RebuildLayout(arg_7_0._topTran)
+function Act183DungeonDescComp:getHeight()
+	ZProj.UGUIHelper.RebuildLayout(self._topTran)
 
-	return recthelper.getHeight(arg_7_0._topTran)
+	return recthelper.getHeight(self._topTran)
 end
 
-function var_0_0.onDestroy(arg_8_0)
-	var_0_0.super.onDestroy(arg_8_0)
+function Act183DungeonDescComp:onDestroy()
+	Act183DungeonDescComp.super.onDestroy(self)
 end
 
-return var_0_0
+return Act183DungeonDescComp

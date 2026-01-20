@@ -1,128 +1,133 @@
-﻿module("modules.logic.story.view.StoryExitBtn", package.seeall)
+﻿-- chunkname: @modules/logic/story/view/StoryExitBtn.lua
 
-local var_0_0 = class("StoryExitBtn", UserDataDispose)
+module("modules.logic.story.view.StoryExitBtn", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0:__onInit()
+local StoryExitBtn = class("StoryExitBtn", UserDataDispose)
 
-	arg_1_0.frontView = arg_1_3
-	arg_1_0.go = arg_1_1
-	arg_1_0.callback = arg_1_2
-	arg_1_0.btn = gohelper.findButtonWithAudio(arg_1_1)
+function StoryExitBtn:ctor(go, callback, frontView)
+	self:__onInit()
 
-	arg_1_0:addClickCb(arg_1_0.btn, arg_1_0.onClickExitBtn, arg_1_0)
-	gohelper.setActive(arg_1_0.go, false)
+	self.frontView = frontView
+	self.go = go
+	self.callback = callback
+	self.btn = gohelper.findButtonWithAudio(go)
 
-	arg_1_0.isActive = false
-	arg_1_0.isInVideo = false
+	self:addClickCb(self.btn, self.onClickExitBtn, self)
+	gohelper.setActive(self.go, false)
 
-	arg_1_0:addEventCb(StoryController.instance, StoryEvent.VideoChange, arg_1_0._onVideoChange, arg_1_0)
+	self.isActive = false
+	self.isInVideo = false
+
+	self:addEventCb(StoryController.instance, StoryEvent.VideoChange, self._onVideoChange, self)
 end
 
-function var_0_0.onClickExitBtn(arg_2_0)
+function StoryExitBtn:onClickExitBtn()
 	StoryModel.instance:setStoryAuto(false)
-	GameFacade.showMessageBox(MessageBoxIdDefine.ExitStoryReplay, MsgBoxEnum.BoxType.Yes_No, arg_2_0.onMessageYes, nil, nil, arg_2_0)
+	GameFacade.showMessageBox(MessageBoxIdDefine.ExitStoryReplay, MsgBoxEnum.BoxType.Yes_No, self.onMessageYes, nil, nil, self)
 end
 
-function var_0_0.onMessageYes(arg_3_0)
+function StoryExitBtn:onMessageYes()
 	StoryController.instance:dispatchEvent(StoryEvent.Skip, true)
 end
 
-function var_0_0.onClickNext(arg_4_0)
+function StoryExitBtn:onClickNext()
 	if StoryModel.instance:isPlayFinished() then
 		return
 	end
 
-	if not arg_4_0:checkBtnCanShow() then
+	if not self:checkBtnCanShow() then
 		return
 	end
 
-	arg_4_0:setActive(true)
+	self:setActive(true)
 
-	if not arg_4_0.isInVideo then
+	if not self.isInVideo then
 		return
 	end
 
-	arg_4_0:_startHideTime()
+	self:_startHideTime()
 end
 
-function var_0_0.refresh(arg_5_0, arg_5_1)
+function StoryExitBtn:refresh(btnVisible)
 	if StoryModel.instance:isPlayFinished() then
 		return
 	end
 
-	local var_5_0 = arg_5_0.frontView and arg_5_0.frontView.btnVisible
+	local btnVisible = self.frontView and self.frontView.btnVisible
+	local isCanShow = self:checkBtnCanShow()
 
-	if arg_5_0:checkBtnCanShow() then
-		local var_5_1 = StoryModel.instance:isPlayingVideo()
+	if isCanShow then
+		local isPlayVideo = StoryModel.instance:isPlayingVideo()
 
-		if not var_5_0 and var_5_1 then
-			if not arg_5_0.isInVideo then
-				arg_5_0:setActive(false)
+		if not btnVisible and isPlayVideo then
+			if not self.isInVideo then
+				self:setActive(false)
 			end
 
-			arg_5_0.isInVideo = true
+			self.isInVideo = true
 		else
-			TaskDispatcher.cancelTask(arg_5_0._hideCallback, arg_5_0)
+			TaskDispatcher.cancelTask(self._hideCallback, self)
 
-			arg_5_0.isInVideo = false
+			self.isInVideo = false
 
-			arg_5_0:setActive(true)
+			self:setActive(true)
 		end
 	else
-		TaskDispatcher.cancelTask(arg_5_0._hideCallback, arg_5_0)
+		TaskDispatcher.cancelTask(self._hideCallback, self)
 
-		arg_5_0.isInVideo = false
+		self.isInVideo = false
 
-		arg_5_0:setActive(false)
+		self:setActive(false)
 	end
 end
 
-function var_0_0._onVideoChange(arg_6_0)
-	arg_6_0:refresh()
+function StoryExitBtn:_onVideoChange()
+	self:refresh()
 end
 
-function var_0_0._startHideTime(arg_7_0)
-	local var_7_0 = 5
+function StoryExitBtn:_startHideTime()
+	local hideTime = 5
 
-	TaskDispatcher.cancelTask(arg_7_0._hideCallback, arg_7_0)
-	TaskDispatcher.runDelay(arg_7_0._hideCallback, arg_7_0, var_7_0)
+	TaskDispatcher.cancelTask(self._hideCallback, self)
+	TaskDispatcher.runDelay(self._hideCallback, self, hideTime)
 end
 
-function var_0_0._hideCallback(arg_8_0)
-	arg_8_0:setActive(false)
+function StoryExitBtn:_hideCallback()
+	self:setActive(false)
 end
 
-function var_0_0.setActive(arg_9_0, arg_9_1)
-	if StoryModel.instance:getHideBtns() then
-		gohelper.setActive(arg_9_0.go, false)
+function StoryExitBtn:setActive(isActive)
+	local hideTopBtns = StoryModel.instance:getHideBtns()
+
+	if hideTopBtns then
+		gohelper.setActive(self.go, false)
 
 		return
 	end
 
-	if arg_9_1 == arg_9_0.isActive then
+	if isActive == self.isActive then
 		return
 	end
 
-	arg_9_0.isActive = arg_9_1
+	self.isActive = isActive
 
-	gohelper.setActive(arg_9_0.go, arg_9_1)
+	gohelper.setActive(self.go, isActive)
 
-	if arg_9_0.callback then
-		arg_9_0.callback(arg_9_0.frontView)
+	if self.callback then
+		self.callback(self.frontView)
 	end
 end
 
-function var_0_0.checkBtnCanShow(arg_10_0)
-	local var_10_0 = StoryModel.instance:isReplay()
-	local var_10_1 = StoryModel.instance:isVersionActivityPV()
+function StoryExitBtn:checkBtnCanShow()
+	local isReplay = StoryModel.instance:isReplay()
+	local isPv = StoryModel.instance:isVersionActivityPV()
 
-	return var_10_0 and not var_10_1
+	return isReplay and not isPv
 end
 
-function var_0_0.destroy(arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0._hideCallback, arg_11_0)
-	arg_11_0:__onDispose()
+function StoryExitBtn:destroy()
+	TaskDispatcher.cancelTask(self._hideCallback, self)
+	self:__onDispose()
 end
 
-return var_0_0
+return StoryExitBtn

@@ -1,141 +1,143 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_warmup.model.Activity156Model", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_warmup/model/Activity156Model.lua
 
-local var_0_0 = class("Activity156Model", BaseModel)
+module("modules.logic.versionactivity1_6.v1a6_warmup.model.Activity156Model", package.seeall)
 
-var_0_0.EpisodeUnFinishState = 0
-var_0_0.EpisodeFinishedState = 1
+local Activity156Model = class("Activity156Model", BaseModel)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._actInfo = nil
+Activity156Model.EpisodeUnFinishState = 0
+Activity156Model.EpisodeFinishedState = 1
+
+function Activity156Model:onInit()
+	self._actInfo = nil
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._actInfo = nil
+function Activity156Model:reInit()
+	self._actInfo = nil
 end
 
-function var_0_0.setActivityInfo(arg_3_0, arg_3_1)
-	arg_3_0._actInfo = {}
+function Activity156Model:setActivityInfo(info)
+	self._actInfo = {}
 
-	for iter_3_0, iter_3_1 in pairs(arg_3_1) do
-		if iter_3_1.id and iter_3_1.state then
-			arg_3_0._actInfo[iter_3_1.id] = iter_3_1.state
+	for _, v in pairs(info) do
+		if v.id and v.state then
+			self._actInfo[v.id] = v.state
 		end
 	end
 end
 
-function var_0_0.setLocalIsPlay(arg_4_0, arg_4_1)
-	PlayerPrefsHelper.setString(PlayerModel.instance:getPlayinfo().userId .. PlayerPrefsKey.VersionActivity1_6WarmUpView .. arg_4_1, arg_4_1)
+function Activity156Model:setLocalIsPlay(id)
+	PlayerPrefsHelper.setString(PlayerModel.instance:getPlayinfo().userId .. PlayerPrefsKey.VersionActivity1_6WarmUpView .. id, id)
 end
 
-function var_0_0.checkLocalIsPlay(arg_5_0, arg_5_1)
-	local var_5_0 = PlayerPrefsHelper.getString(PlayerModel.instance:getPlayinfo().userId .. PlayerPrefsKey.VersionActivity1_6WarmUpView .. arg_5_1, "")
+function Activity156Model:checkLocalIsPlay(id)
+	local value = PlayerPrefsHelper.getString(PlayerModel.instance:getPlayinfo().userId .. PlayerPrefsKey.VersionActivity1_6WarmUpView .. id, "")
 
-	if string.nilorempty(var_5_0) then
+	if string.nilorempty(value) then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0.isEpisodeFinishedButUnReceive(arg_6_0, arg_6_1)
-	return arg_6_0._actInfo and arg_6_0._actInfo[arg_6_1] == var_0_0.EpisodeFinishedState
+function Activity156Model:isEpisodeFinishedButUnReceive(episodeId)
+	return self._actInfo and self._actInfo[episodeId] == Activity156Model.EpisodeFinishedState
 end
 
-function var_0_0.isEpisodeFinished(arg_7_0, arg_7_1)
-	return arg_7_0:isEpisodeFinishedButUnReceive(arg_7_1) or arg_7_0:isEpisodeHasReceivedReward(arg_7_1)
+function Activity156Model:isEpisodeFinished(episodeId)
+	return self:isEpisodeFinishedButUnReceive(episodeId) or self:isEpisodeHasReceivedReward(episodeId)
 end
 
-function var_0_0.isEpisodeHasReceivedReward(arg_8_0, arg_8_1)
-	return arg_8_0._actInfo and arg_8_0._actInfo[arg_8_1] == var_0_0.EpisodeFinishedState
+function Activity156Model:isEpisodeHasReceivedReward(episodeId)
+	return self._actInfo and self._actInfo[episodeId] == Activity156Model.EpisodeFinishedState
 end
 
-function var_0_0.setCurSelectedEpisode(arg_9_0, arg_9_1)
-	arg_9_0._curSelectedEpisodeId = arg_9_1
+function Activity156Model:setCurSelectedEpisode(episodeId)
+	self._curSelectedEpisodeId = episodeId
 end
 
-function var_0_0.getCurSelectedEpisode(arg_10_0)
-	return arg_10_0._curSelectedEpisodeId
+function Activity156Model:getCurSelectedEpisode()
+	return self._curSelectedEpisodeId
 end
 
-function var_0_0.cleanCurSelectedEpisode(arg_11_0)
-	arg_11_0._curSelectedEpisodeId = nil
+function Activity156Model:cleanCurSelectedEpisode()
+	self._curSelectedEpisodeId = nil
 end
 
-function var_0_0.setIsPlayingMusicId(arg_12_0, arg_12_1)
-	arg_12_0._isPlayingMusicId = arg_12_1
+function Activity156Model:setIsPlayingMusicId(id)
+	self._isPlayingMusicId = id
 end
 
-function var_0_0.checkIsPlayingMusicId(arg_13_0, arg_13_1)
-	if arg_13_0._isPlayingMusicId == arg_13_1 then
+function Activity156Model:checkIsPlayingMusicId(id)
+	if self._isPlayingMusicId == id then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.cleanIsPlayingMusicId(arg_14_0)
-	arg_14_0._isPlayingMusicId = nil
+function Activity156Model:cleanIsPlayingMusicId()
+	self._isPlayingMusicId = nil
 end
 
-function var_0_0.isEpisodeUnLock(arg_15_0, arg_15_1)
-	local var_15_0 = Activity156Config.instance:getPreEpisodeConfig(arg_15_1)
-	local var_15_1 = true
+function Activity156Model:isEpisodeUnLock(episodeId)
+	local preEpisodeCfg = Activity156Config.instance:getPreEpisodeConfig(episodeId)
+	local isPreEpisodeFinished = true
 
-	if var_15_0 then
-		var_15_1 = arg_15_0:isEpisodeFinished(var_15_0.id)
+	if preEpisodeCfg then
+		isPreEpisodeFinished = self:isEpisodeFinished(preEpisodeCfg.id)
 	end
 
-	return var_15_1 and arg_15_0._actInfo and arg_15_0._actInfo[arg_15_1] ~= nil
+	return isPreEpisodeFinished and self._actInfo and self._actInfo[episodeId] ~= nil
 end
 
-function var_0_0.isOpen(arg_16_0, arg_16_1, arg_16_2)
-	local var_16_0 = false
-	local var_16_1 = ActivityModel.instance:getActMO(arg_16_1)
-	local var_16_2 = Activity156Config.instance:getEpisodeOpenDay(arg_16_2)
+function Activity156Model:isOpen(actId, episodeId)
+	local result = false
+	local actMO = ActivityModel.instance:getActMO(actId)
+	local openDay = Activity156Config.instance:getEpisodeOpenDay(episodeId)
 
-	if var_16_1 and var_16_2 then
-		local var_16_3 = var_16_1:getRealStartTimeStamp() + (var_16_2 - 1) * TimeUtil.OneDaySecond
-		local var_16_4 = ServerTime.now()
+	if actMO and openDay then
+		local openTime = actMO:getRealStartTimeStamp() + (openDay - 1) * TimeUtil.OneDaySecond
+		local time = ServerTime.now()
 
-		if var_16_3 < ServerTime.now() then
-			var_16_0 = true
+		if openTime < ServerTime.now() then
+			result = true
 		end
 	end
 
-	return var_16_0
+	return result
 end
 
-function var_0_0.reallyOpen(arg_17_0, arg_17_1, arg_17_2)
-	local var_17_0 = arg_17_0:isEpisodeUnLock(arg_17_2)
-	local var_17_1 = arg_17_0:isOpen(arg_17_1, arg_17_2)
+function Activity156Model:reallyOpen(actId, episodeId)
+	local isEpisodeUnLock = self:isEpisodeUnLock(episodeId)
+	local isOpenDay = self:isOpen(actId, episodeId)
 
-	return var_17_0 and var_17_1
+	return isEpisodeUnLock and isOpenDay
 end
 
-function var_0_0.getLastEpisode(arg_18_0)
-	if arg_18_0._actInfo then
-		for iter_18_0, iter_18_1 in ipairs(arg_18_0._actInfo) do
-			if arg_18_0:reallyOpen(ActivityEnum.Activity.Activity1_6WarmUp, iter_18_0) then
-				if iter_18_1 == var_0_0.EpisodeUnFinishState then
-					return iter_18_0
+function Activity156Model:getLastEpisode()
+	if self._actInfo then
+		for index, value in ipairs(self._actInfo) do
+			if self:reallyOpen(ActivityEnum.Activity.Activity1_6WarmUp, index) then
+				if value == Activity156Model.EpisodeUnFinishState then
+					return index
 				end
 			else
-				return iter_18_0 - 1
+				return index - 1
 			end
 		end
 
-		return #arg_18_0._actInfo
+		return #self._actInfo
 	end
 end
 
-function var_0_0.getActivityInfo(arg_19_0)
-	return arg_19_0._actInfo
+function Activity156Model:getActivityInfo()
+	return self._actInfo
 end
 
-function var_0_0.isAllEpisodeFinish(arg_20_0)
-	if arg_20_0._actInfo then
-		for iter_20_0, iter_20_1 in pairs(arg_20_0._actInfo) do
-			if tonumber(iter_20_1) == 0 then
+function Activity156Model:isAllEpisodeFinish()
+	if self._actInfo then
+		for _, v in pairs(self._actInfo) do
+			if tonumber(v) == 0 then
 				return false
 			end
 		end
@@ -146,6 +148,6 @@ function var_0_0.isAllEpisodeFinish(arg_20_0)
 	return false
 end
 
-var_0_0.instance = var_0_0.New()
+Activity156Model.instance = Activity156Model.New()
 
-return var_0_0
+return Activity156Model

@@ -1,18 +1,20 @@
-﻿module("modules.logic.login.controller.work.LogoutSocketWork", package.seeall)
+﻿-- chunkname: @modules/logic/login/controller/work/LogoutSocketWork.lua
 
-local var_0_0 = class("LogoutSocketWork", BaseWork)
+module("modules.logic.login.controller.work.LogoutSocketWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local LogoutSocketWork = class("LogoutSocketWork", BaseWork)
+
+function LogoutSocketWork:ctor()
 	return
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	if arg_2_1.isConnected then
+function LogoutSocketWork:onStart(context)
+	if context.isConnected then
 		-- block empty
 	end
 
 	ConnectAliveMgr.instance:logout()
-	arg_2_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return LogoutSocketWork

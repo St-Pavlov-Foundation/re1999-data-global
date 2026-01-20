@@ -1,44 +1,48 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.model.characterSkillMo.CharacterSkillMOBase", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/model/characterSkillMo/CharacterSkillMOBase.lua
 
-local var_0_0 = class("CharacterSkillMOBase")
+module("modules.logic.versionactivity2_2.eliminate.model.characterSkillMo.CharacterSkillMOBase", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._skillId = arg_1_1
-	arg_1_0._releaseParam = ""
+local CharacterSkillMOBase = class("CharacterSkillMOBase")
+
+function CharacterSkillMOBase:init(skillId)
+	self._skillId = skillId
+	self._releaseParam = ""
 end
 
-function var_0_0.getSkillConfig(arg_2_0)
-	return lua_character_skill.configDict[arg_2_0._skillId]
+function CharacterSkillMOBase:getSkillConfig()
+	return lua_character_skill.configDict[self._skillId]
 end
 
-function var_0_0.getCost(arg_3_0)
-	return arg_3_0:getSkillConfig().cost
+function CharacterSkillMOBase:getCost()
+	local skillConfig = self:getSkillConfig()
+
+	return skillConfig.cost
 end
 
-function var_0_0.getReleaseParam(arg_4_0)
-	return arg_4_0._releaseParam
+function CharacterSkillMOBase:getReleaseParam()
+	return self._releaseParam
 end
 
-function var_0_0.setSkillParam(arg_5_0, ...)
+function CharacterSkillMOBase:setSkillParam(...)
 	return
 end
 
-function var_0_0.playAction(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_1 then
-		arg_6_1(arg_6_2)
+function CharacterSkillMOBase:playAction(cb, cbTarget)
+	if cb then
+		cb(cbTarget)
 	end
 end
 
-function var_0_0.cancelRelease(arg_7_0)
+function CharacterSkillMOBase:cancelRelease()
 	return
 end
 
-function var_0_0.getEffectRound(arg_8_0)
+function CharacterSkillMOBase:getEffectRound()
 	return EliminateEnum.RoundType.Match3Chess
 end
 
-function var_0_0.canRelease(arg_9_0)
+function CharacterSkillMOBase:canRelease()
 	return true
 end
 
-return var_0_0
+return CharacterSkillMOBase

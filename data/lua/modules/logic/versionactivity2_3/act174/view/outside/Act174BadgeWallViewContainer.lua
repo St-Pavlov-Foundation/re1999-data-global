@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity2_3.act174.view.outside.Act174BadgeWallViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/act174/view/outside/Act174BadgeWallViewContainer.lua
 
-local var_0_0 = class("Act174BadgeWallViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_3.act174.view.outside.Act174BadgeWallViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Act174BadgeWallViewContainer = class("Act174BadgeWallViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Act174BadgeWallView.New())
+function Act174BadgeWallViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Act174BadgeWallView.New())
+
+	return views
 end
 
-return var_0_0
+return Act174BadgeWallViewContainer

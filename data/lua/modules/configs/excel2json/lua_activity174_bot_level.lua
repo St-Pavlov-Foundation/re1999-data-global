@@ -1,19 +1,21 @@
-﻿module("modules.configs.excel2json.lua_activity174_bot_level", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_activity174_bot_level.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_activity174_bot_level", package.seeall)
+
+local lua_activity174_bot_level = {}
+local fields = {
 	upWin = 3,
 	downLost = 4,
 	rank = 2,
 	level = 1
 }
-local var_0_2 = {
+local primaryKey = {
 	"level"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_activity174_bot_level.onLoad(json)
+	lua_activity174_bot_level.configList, lua_activity174_bot_level.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_activity174_bot_level

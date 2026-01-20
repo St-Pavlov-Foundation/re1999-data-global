@@ -1,21 +1,23 @@
-﻿module("modules.logic.activity.controller.chessmap.step.ActivityChessStepCreateObject", package.seeall)
+﻿-- chunkname: @modules/logic/activity/controller/chessmap/step/ActivityChessStepCreateObject.lua
 
-local var_0_0 = class("ActivityChessStepCreateObject", ActivityChessStepBase)
+module("modules.logic.activity.controller.chessmap.step.ActivityChessStepCreateObject", package.seeall)
 
-function var_0_0.start(arg_1_0)
-	local var_1_0 = arg_1_0.originData.id
-	local var_1_1 = arg_1_0.originData.x
-	local var_1_2 = arg_1_0.originData.y
-	local var_1_3 = ActivityChessGameModel.instance:getActId()
+local ActivityChessStepCreateObject = class("ActivityChessStepCreateObject", ActivityChessStepBase)
 
-	ActivityChessGameModel.instance:removeObjectById(var_1_0)
-	ActivityChessGameController.instance:deleteInteractObj(var_1_0)
+function ActivityChessStepCreateObject:start()
+	local objId = self.originData.id
+	local tarX = self.originData.x
+	local tarY = self.originData.y
+	local actId = ActivityChessGameModel.instance:getActId()
 
-	local var_1_4 = ActivityChessGameModel.instance:addObject(var_1_3, arg_1_0.originData)
+	ActivityChessGameModel.instance:removeObjectById(objId)
+	ActivityChessGameController.instance:deleteInteractObj(objId)
 
-	ActivityChessGameController.instance:addInteractObj(var_1_4)
-	logNormal("create object finish !" .. tostring(var_1_4.id))
-	arg_1_0:finish()
+	local mo = ActivityChessGameModel.instance:addObject(actId, self.originData)
+
+	ActivityChessGameController.instance:addInteractObj(mo)
+	logNormal("create object finish !" .. tostring(mo.id))
+	self:finish()
 end
 
-return var_0_0
+return ActivityChessStepCreateObject

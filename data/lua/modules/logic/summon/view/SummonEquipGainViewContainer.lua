@@ -1,12 +1,14 @@
-﻿module("modules.logic.summon.view.SummonEquipGainViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/summon/view/SummonEquipGainViewContainer.lua
 
-local var_0_0 = class("SummonEquipGainViewContainer", BaseViewContainer)
+module("modules.logic.summon.view.SummonEquipGainViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local SummonEquipGainViewContainer = class("SummonEquipGainViewContainer", BaseViewContainer)
+
+function SummonEquipGainViewContainer:buildViews()
 	return {
 		EquipGetView.New(),
 		SummonEquipGainView.New()
 	}
 end
 
-return var_0_0
+return SummonEquipGainViewContainer

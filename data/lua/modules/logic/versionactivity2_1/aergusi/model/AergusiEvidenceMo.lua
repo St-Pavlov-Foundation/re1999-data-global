@@ -1,36 +1,38 @@
-﻿module("modules.logic.versionactivity2_1.aergusi.model.AergusiEvidenceMo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_1/aergusi/model/AergusiEvidenceMo.lua
 
-local var_0_0 = class("AergusiEvidenceMo")
+module("modules.logic.versionactivity2_1.aergusi.model.AergusiEvidenceMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.clueInfos = {}
-	arg_1_0.hp = 0
-	arg_1_0.tipCount = 0
-	arg_1_0.success = false
+local AergusiEvidenceMo = class("AergusiEvidenceMo")
+
+function AergusiEvidenceMo:ctor()
+	self.clueInfos = {}
+	self.hp = 0
+	self.tipCount = 0
+	self.success = false
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.clueInfos = arg_2_0:_buildClues(arg_2_1.cluesInfo)
-	arg_2_0.hp = arg_2_1.hp
-	arg_2_0.tipCount = arg_2_1.tipCount
-	arg_2_0.success = arg_2_1.success
+function AergusiEvidenceMo:init(info)
+	self.clueInfos = self:_buildClues(info.cluesInfo)
+	self.hp = info.hp
+	self.tipCount = info.tipCount
+	self.success = info.success
 end
 
-function var_0_0.update(arg_3_0, arg_3_1)
-	arg_3_0:init(arg_3_1)
+function AergusiEvidenceMo:update(info)
+	self:init(info)
 end
 
-function var_0_0._buildClues(arg_4_0, arg_4_1)
-	local var_4_0 = {}
+function AergusiEvidenceMo:_buildClues(clueInfos)
+	local infos = {}
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
-		local var_4_1 = AergusiClueMo.New()
+	for _, v in ipairs(clueInfos) do
+		local info = AergusiClueMo.New()
 
-		var_4_1:init(iter_4_1)
-		table.insert(var_4_0, var_4_1)
+		info:init(v)
+		table.insert(infos, info)
 	end
 
-	return var_4_0
+	return infos
 end
 
-return var_0_0
+return AergusiEvidenceMo

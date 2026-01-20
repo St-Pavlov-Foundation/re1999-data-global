@@ -1,92 +1,96 @@
-﻿module("modules.logic.social.model.SocialListModel", package.seeall)
+﻿-- chunkname: @modules/logic/social/model/SocialListModel.lua
 
-local var_0_0 = class("SocialListModel")
+module("modules.logic.social.model.SocialListModel", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._models = {}
+local SocialListModel = class("SocialListModel")
+
+function SocialListModel:ctor()
+	self._models = {}
 end
 
-function var_0_0.reInit(arg_2_0)
-	for iter_2_0, iter_2_1 in pairs(arg_2_0._models) do
-		iter_2_1:clear()
+function SocialListModel:reInit()
+	for _, model in pairs(self._models) do
+		model:clear()
 	end
 end
 
-function var_0_0.getModel(arg_3_0, arg_3_1)
-	if not arg_3_0._models[arg_3_1] then
-		arg_3_0._models[arg_3_1] = ListScrollModel.New()
+function SocialListModel:getModel(type)
+	if not self._models[type] then
+		self._models[type] = ListScrollModel.New()
 	end
 
-	return arg_3_0._models[arg_3_1]
+	return self._models[type]
 end
 
-function var_0_0.setModelList(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = arg_4_0:getModel(arg_4_1)
-	local var_4_1 = {}
+function SocialListModel:setModelList(type, dict)
+	local model = self:getModel(type)
+	local list = {}
 
-	if arg_4_2 then
-		for iter_4_0, iter_4_1 in pairs(arg_4_2) do
-			table.insert(var_4_1, iter_4_1)
+	if dict then
+		for _, v in pairs(dict) do
+			table.insert(list, v)
 		end
 	end
 
-	if arg_4_1 == SocialEnum.Type.Friend then
-		table.sort(var_4_1, var_0_0.sortFriend)
+	if type == SocialEnum.Type.Friend then
+		table.sort(list, SocialListModel.sortFriend)
 	else
-		table.sort(var_4_1, var_0_0.sort)
+		table.sort(list, SocialListModel.sort)
 	end
 
-	var_4_0:setList(var_4_1)
+	model:setList(list)
 end
 
-function var_0_0.sortFriendList(arg_5_0)
-	arg_5_0:getModel(SocialEnum.Type.Friend):sort(var_0_0.sortFriend)
+function SocialListModel:sortFriendList()
+	local model = self:getModel(SocialEnum.Type.Friend)
+
+	model:sort(SocialListModel.sortFriend)
 end
 
-function var_0_0.sortFriend(arg_6_0, arg_6_1)
-	local var_6_0 = SocialMessageModel.instance:getUnReadLastMsgTime(arg_6_0.userId)
-	local var_6_1 = SocialMessageModel.instance:getUnReadLastMsgTime(arg_6_1.userId)
+function SocialListModel.sortFriend(a, b)
+	local timeA = SocialMessageModel.instance:getUnReadLastMsgTime(a.userId)
+	local timeB = SocialMessageModel.instance:getUnReadLastMsgTime(b.userId)
 
-	if var_6_0 ~= 0 and var_6_1 ~= 0 then
-		return var_6_1 < var_6_0
-	elseif var_6_0 ~= 0 or var_6_1 ~= 0 then
-		return var_6_0 ~= 0
+	if timeA ~= 0 and timeB ~= 0 then
+		return timeB < timeA
+	elseif timeA ~= 0 or timeB ~= 0 then
+		return timeA ~= 0
 	else
-		return var_0_0.sort(arg_6_0, arg_6_1)
+		return SocialListModel.sort(a, b)
 	end
 end
 
-function var_0_0.sort(arg_7_0, arg_7_1)
-	local var_7_0 = tonumber(arg_7_0.time)
-	local var_7_1 = tonumber(arg_7_1.time)
+function SocialListModel.sort(x, y)
+	local xTime = tonumber(x.time)
+	local yTime = tonumber(y.time)
 
-	if var_7_0 == 0 and var_7_1 ~= 0 then
+	if xTime == 0 and yTime ~= 0 then
 		return true
-	elseif var_7_1 == 0 and var_7_0 ~= 0 then
+	elseif yTime == 0 and xTime ~= 0 then
 		return false
 	end
 
-	if var_7_1 < var_7_0 then
+	if yTime < xTime then
 		return true
-	elseif var_7_0 < var_7_1 then
+	elseif xTime < yTime then
 		return false
 	end
 
-	if arg_7_0.level > arg_7_1.level then
+	if x.level > y.level then
 		return true
-	elseif arg_7_0.level < arg_7_1.level then
+	elseif x.level < y.level then
 		return false
 	end
 
-	if tonumber(arg_7_0.userId) < tonumber(arg_7_1.userId) then
+	if tonumber(x.userId) < tonumber(y.userId) then
 		return true
-	elseif tonumber(arg_7_0.userId) > tonumber(arg_7_1.userId) then
+	elseif tonumber(x.userId) > tonumber(y.userId) then
 		return false
 	end
 
 	return false
 end
 
-var_0_0.instance = var_0_0.New()
+SocialListModel.instance = SocialListModel.New()
 
-return var_0_0
+return SocialListModel

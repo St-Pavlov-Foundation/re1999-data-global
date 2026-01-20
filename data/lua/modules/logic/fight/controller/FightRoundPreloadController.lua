@@ -1,96 +1,98 @@
-﻿module("modules.logic.fight.controller.FightRoundPreloadController", package.seeall)
+﻿-- chunkname: @modules/logic/fight/controller/FightRoundPreloadController.lua
 
-local var_0_0 = class("FightRoundPreloadController", BaseController)
+module("modules.logic.fight.controller.FightRoundPreloadController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._assetItemDict = arg_1_0:getUserDataTb_()
-	arg_1_0._roundPreloadSequence = FlowSequence.New()
+local FightRoundPreloadController = class("FightRoundPreloadController", BaseController)
 
-	arg_1_0._roundPreloadSequence:addWork(FightRoundPreloadTimelineWork.New())
-	arg_1_0._roundPreloadSequence:addWork(FightPreloadTimelineRefWork.New())
-	arg_1_0._roundPreloadSequence:addWork(FightRoundPreloadEffectWork.New())
+function FightRoundPreloadController:onInit()
+	self._assetItemDict = self:getUserDataTb_()
+	self._roundPreloadSequence = FlowSequence.New()
 
-	arg_1_0._monsterPreloadSequence = FlowSequence.New()
+	self._roundPreloadSequence:addWork(FightRoundPreloadTimelineWork.New())
+	self._roundPreloadSequence:addWork(FightPreloadTimelineRefWork.New())
+	self._roundPreloadSequence:addWork(FightRoundPreloadEffectWork.New())
 
-	arg_1_0._monsterPreloadSequence:addWork(FightRoundPreloadMonsterWork.New())
+	self._monsterPreloadSequence = FlowSequence.New()
 
-	arg_1_0._context = {
-		callback = arg_1_0._onPreloadOneFinish,
-		callbackObj = arg_1_0
+	self._monsterPreloadSequence:addWork(FightRoundPreloadMonsterWork.New())
+
+	self._context = {
+		callback = self._onPreloadOneFinish,
+		callbackObj = self
 	}
 end
 
-function var_0_0.registStageEvent(arg_2_0)
-	FightController.instance:registerCallback(FightEvent.StageChanged, arg_2_0.onStageChange, arg_2_0)
+function FightRoundPreloadController:registStageEvent()
+	FightController.instance:registerCallback(FightEvent.StageChanged, self.onStageChange, self)
 end
 
-function var_0_0.reInit(arg_3_0)
-	arg_3_0:dispose()
+function FightRoundPreloadController:reInit()
+	self:dispose()
 end
 
-function var_0_0.onStageChange(arg_4_0, arg_4_1)
-	if arg_4_1 == FightStageMgr.StageType.Operate then
-		arg_4_0:preload()
-	elseif arg_4_1 == FightStageMgr.StageType.Play then
-		if arg_4_0._monsterPreloadSequence and arg_4_0._monsterPreloadSequence.status == WorkStatus.Running then
-			arg_4_0._monsterPreloadSequence:stop()
+function FightRoundPreloadController:onStageChange(stage)
+	if stage == FightStageMgr.StageType.Operate then
+		self:preload()
+	elseif stage == FightStageMgr.StageType.Play then
+		if self._monsterPreloadSequence and self._monsterPreloadSequence.status == WorkStatus.Running then
+			self._monsterPreloadSequence:stop()
 		end
 
-		arg_4_0._monsterPreloadSequence:start(arg_4_0._context)
+		self._monsterPreloadSequence:start(self._context)
 	end
 end
 
-function var_0_0.preload(arg_5_0)
-	arg_5_0._assetItemDict = arg_5_0._assetItemDict or arg_5_0:getUserDataTb_()
+function FightRoundPreloadController:preload()
+	self._assetItemDict = self._assetItemDict or self:getUserDataTb_()
 
-	if arg_5_0._roundPreloadSequence and arg_5_0._roundPreloadSequence.status == WorkStatus.Running then
-		arg_5_0._roundPreloadSequence:stop()
+	if self._roundPreloadSequence and self._roundPreloadSequence.status == WorkStatus.Running then
+		self._roundPreloadSequence:stop()
 	end
 
-	arg_5_0._roundPreloadSequence:registerDoneListener(arg_5_0._onPreloadDone, arg_5_0)
-	arg_5_0._roundPreloadSequence:start(arg_5_0._context)
+	self._roundPreloadSequence:registerDoneListener(self._onPreloadDone, self)
+	self._roundPreloadSequence:start(self._context)
 end
 
-function var_0_0.dispose(arg_6_0)
-	FightController.instance:unregisterCallback(FightEvent.StageChanged, arg_6_0.onStageChange, arg_6_0)
+function FightRoundPreloadController:dispose()
+	FightController.instance:unregisterCallback(FightEvent.StageChanged, self.onStageChange, self)
 
-	arg_6_0._battleId = nil
+	self._battleId = nil
 
-	arg_6_0._roundPreloadSequence:stop()
-	arg_6_0._monsterPreloadSequence:stop()
+	self._roundPreloadSequence:stop()
+	self._monsterPreloadSequence:stop()
 
-	if arg_6_0._assetItemDict then
-		for iter_6_0, iter_6_1 in pairs(arg_6_0._assetItemDict) do
-			iter_6_1:Release()
+	if self._assetItemDict then
+		for url, assetItem in pairs(self._assetItemDict) do
+			assetItem:Release()
 
-			arg_6_0._assetItemDict[iter_6_0] = nil
+			self._assetItemDict[url] = nil
 		end
 
-		arg_6_0._assetItemDict = nil
+		self._assetItemDict = nil
 	end
 
-	arg_6_0._context.timelineDict = nil
-	arg_6_0._context.timelineUrlDict = nil
-	arg_6_0._context.timelineSkinDict = nil
+	self._context.timelineDict = nil
+	self._context.timelineUrlDict = nil
+	self._context.timelineSkinDict = nil
 
-	arg_6_0._roundPreloadSequence:unregisterDoneListener(arg_6_0._onPreloadDone, arg_6_0)
-	arg_6_0:__onDispose()
+	self._roundPreloadSequence:unregisterDoneListener(self._onPreloadDone, self)
+	self:__onDispose()
 end
 
-function var_0_0._onPreloadDone(arg_7_0)
+function FightRoundPreloadController:_onPreloadDone()
 	return
 end
 
-function var_0_0._onPreloadOneFinish(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_1.ResPath
+function FightRoundPreloadController:_onPreloadOneFinish(assetItem)
+	local url = assetItem.ResPath
 
-	if not arg_8_0._assetItemDict[var_8_0] then
-		arg_8_0._assetItemDict[var_8_0] = arg_8_1
+	if not self._assetItemDict[url] then
+		self._assetItemDict[url] = assetItem
 
-		arg_8_1:Retain()
+		assetItem:Retain()
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+FightRoundPreloadController.instance = FightRoundPreloadController.New()
 
-return var_0_0
+return FightRoundPreloadController

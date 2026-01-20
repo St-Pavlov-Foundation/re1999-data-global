@@ -1,137 +1,146 @@
-﻿module("modules.logic.versionactivity1_9.heroinvitation.model.HeroInvitationModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/heroinvitation/model/HeroInvitationModel.lua
 
-local var_0_0 = class("HeroInvitationModel", BaseModel)
+module("modules.logic.versionactivity1_9.heroinvitation.model.HeroInvitationModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local HeroInvitationModel = class("HeroInvitationModel", BaseModel)
+
+function HeroInvitationModel:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0.finalReward = false
+function HeroInvitationModel:reInit()
+	self.finalReward = false
 
-	TaskDispatcher.cancelTask(arg_2_0.checkInvitationTime, arg_2_0)
+	TaskDispatcher.cancelTask(self.checkInvitationTime, self)
 end
 
-function var_0_0.onGetHeroInvitationInfoReply(arg_3_0, arg_3_1)
-	arg_3_0:clear()
-	arg_3_0:updateInvitationInfo(arg_3_1.info)
-	TaskDispatcher.cancelTask(arg_3_0.checkInvitationTime, arg_3_0)
-	TaskDispatcher.runRepeat(arg_3_0.checkInvitationTime, arg_3_0, 1)
+function HeroInvitationModel:onGetHeroInvitationInfoReply(info)
+	self:clear()
+	self:updateInvitationInfo(info.info)
+	TaskDispatcher.cancelTask(self.checkInvitationTime, self)
+	TaskDispatcher.runRepeat(self.checkInvitationTime, self, 1)
 end
 
-function var_0_0.onGainInviteRewardReply(arg_4_0, arg_4_1)
-	arg_4_0:updateInvitationInfo(arg_4_1.info)
+function HeroInvitationModel:onGainInviteRewardReply(info)
+	self:updateInvitationInfo(info.info)
 end
 
-function var_0_0.onGainFinalInviteRewardReply(arg_5_0, arg_5_1)
-	arg_5_0:updateInvitationInfo(arg_5_1.info)
+function HeroInvitationModel:onGainFinalInviteRewardReply(info)
+	self:updateInvitationInfo(info.info)
 end
 
-function var_0_0.updateInvitationInfo(arg_6_0, arg_6_1)
-	if not arg_6_1 then
+function HeroInvitationModel:updateInvitationInfo(info)
+	if not info then
 		return
 	end
 
-	if arg_6_1.gainReward then
-		for iter_6_0 = 1, #arg_6_1.gainReward do
-			arg_6_0:getInvitationMoById(arg_6_1.gainReward[iter_6_0]):setGainReward(true)
+	if info.gainReward then
+		for i = 1, #info.gainReward do
+			local mo = self:getInvitationMoById(info.gainReward[i])
+
+			mo:setGainReward(true)
 		end
 	end
 
-	arg_6_0.finalReward = arg_6_1.finalReward
+	self.finalReward = info.finalReward
 end
 
-function var_0_0.getInvitationMoById(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0:getById(arg_7_1)
+function HeroInvitationModel:getInvitationMoById(id)
+	local mo = self:getById(id)
 
-	if not var_7_0 then
-		var_7_0 = HeroInvitationMo.New()
+	if not mo then
+		mo = HeroInvitationMo.New()
 
-		var_7_0:init(arg_7_1)
-		arg_7_0:addAtLast(var_7_0)
+		mo:init(id)
+		self:addAtLast(mo)
 	end
 
-	return var_7_0
+	return mo
 end
 
-function var_0_0.getInvitationState(arg_8_0, arg_8_1)
-	return arg_8_0:getInvitationMoById(arg_8_1):getInvitationState()
+function HeroInvitationModel:getInvitationState(id)
+	local mo = self:getInvitationMoById(id)
+
+	return mo:getInvitationState()
 end
 
-function var_0_0.isGainReward(arg_9_0, arg_9_1)
-	return arg_9_0:getInvitationMoById(arg_9_1):isGainReward()
+function HeroInvitationModel:isGainReward(id)
+	local mo = self:getInvitationMoById(id)
+
+	return mo:isGainReward()
 end
 
-function var_0_0.getInvitationFinishCount(arg_10_0)
-	local var_10_0 = HeroInvitationConfig.instance:getInvitationList()
-	local var_10_1 = #var_10_0
-	local var_10_2 = 0
+function HeroInvitationModel:getInvitationFinishCount()
+	local invitations = HeroInvitationConfig.instance:getInvitationList()
+	local count = #invitations
+	local finishCount = 0
 
-	for iter_10_0, iter_10_1 in ipairs(var_10_0) do
-		local var_10_3 = arg_10_0:getInvitationState(iter_10_1.id)
+	for i, v in ipairs(invitations) do
+		local state = self:getInvitationState(v.id)
 
-		if var_10_3 == HeroInvitationEnum.InvitationState.Finish or var_10_3 == HeroInvitationEnum.InvitationState.CanGet then
-			var_10_2 = var_10_2 + 1
+		if state == HeroInvitationEnum.InvitationState.Finish or state == HeroInvitationEnum.InvitationState.CanGet then
+			finishCount = finishCount + 1
 		end
 	end
 
-	return var_10_1, var_10_2
+	return count, finishCount
 end
 
-function var_0_0.getInvitationHasRewardCount(arg_11_0)
-	local var_11_0 = HeroInvitationConfig.instance:getInvitationList()
-	local var_11_1 = #var_11_0
-	local var_11_2 = 0
+function HeroInvitationModel:getInvitationHasRewardCount()
+	local invitations = HeroInvitationConfig.instance:getInvitationList()
+	local count = #invitations
+	local finishCount = 0
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
-		if arg_11_0:getInvitationState(iter_11_1.id) == HeroInvitationEnum.InvitationState.Finish then
-			var_11_2 = var_11_2 + 1
+	for i, v in ipairs(invitations) do
+		local state = self:getInvitationState(v.id)
+
+		if state == HeroInvitationEnum.InvitationState.Finish then
+			finishCount = finishCount + 1
 		end
 	end
 
-	return var_11_1, var_11_2
+	return count, finishCount
 end
 
-function var_0_0.checkInvitationTime(arg_12_0)
-	local var_12_0 = HeroInvitationConfig.instance:getInvitationList()
-	local var_12_1 = false
+function HeroInvitationModel:checkInvitationTime()
+	local invitations = HeroInvitationConfig.instance:getInvitationList()
+	local stateChange = false
 
-	if var_12_0 then
-		local var_12_2
-		local var_12_3
+	if invitations then
+		local mo, state
 
-		for iter_12_0, iter_12_1 in ipairs(var_12_0) do
-			local var_12_4 = arg_12_0:getInvitationMoById(iter_12_1.id)
-			local var_12_5 = var_12_4:getInvitationState()
+		for i, v in ipairs(invitations) do
+			mo = self:getInvitationMoById(v.id)
+			state = mo:getInvitationState()
 
-			if var_12_5 ~= var_12_4.state then
-				var_12_4.state = var_12_5
-				var_12_1 = true
+			if state ~= mo.state then
+				mo.state = state
+				stateChange = true
 			end
 		end
 	end
 
-	if var_12_1 then
+	if stateChange then
 		HeroInvitationController.instance:dispatchEvent(HeroInvitationEvent.StateChange)
 	end
 end
 
-function var_0_0.getInvitationStateByElementId(arg_13_0, arg_13_1)
-	local var_13_0 = HeroInvitationConfig.instance:getInvitationConfigByElementId(arg_13_1)
+function HeroInvitationModel:getInvitationStateByElementId(id)
+	local config = HeroInvitationConfig.instance:getInvitationConfigByElementId(id)
 
-	if not var_13_0 then
+	if not config then
 		return
 	end
 
-	return arg_13_0:getInvitationState(var_13_0.id)
+	return self:getInvitationState(config.id)
 end
 
-function var_0_0.isAllFinish(arg_14_0)
-	local var_14_0, var_14_1 = arg_14_0:getInvitationFinishCount()
+function HeroInvitationModel:isAllFinish()
+	local count, finish = self:getInvitationFinishCount()
 
-	return var_14_0 == var_14_1
+	return count == finish
 end
 
-var_0_0.instance = var_0_0.New()
+HeroInvitationModel.instance = HeroInvitationModel.New()
 
-return var_0_0
+return HeroInvitationModel

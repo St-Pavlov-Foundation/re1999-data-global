@@ -1,21 +1,23 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.EliminateTeamChessUpdateActiveMoveStep", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/controller/teamChess/step/EliminateTeamChessUpdateActiveMoveStep.lua
 
-local var_0_0 = class("EliminateTeamChessUpdateActiveMoveStep", EliminateTeamChessStepBase)
+module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.EliminateTeamChessUpdateActiveMoveStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0._data
-	local var_1_1 = var_1_0.uid
-	local var_1_2 = var_1_0.displacementState
+local EliminateTeamChessUpdateActiveMoveStep = class("EliminateTeamChessUpdateActiveMoveStep", EliminateTeamChessStepBase)
 
-	if var_1_1 == nil or var_1_2 == nil then
-		arg_1_0:onDone(true)
+function EliminateTeamChessUpdateActiveMoveStep:onStart()
+	local data = self._data
+	local uid = data.uid
+	local displacementState = data.displacementState
+
+	if uid == nil or displacementState == nil then
+		self:onDone(true)
 
 		return
 	end
 
-	EliminateTeamChessModel.instance:updateDisplacementState(var_1_1, var_1_2)
-	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.TeamChessUpdateActiveMoveState, var_1_1)
-	TaskDispatcher.runDelay(arg_1_0._onDone, arg_1_0, EliminateTeamChessEnum.teamChessUpdateActiveMoveStepTime)
+	EliminateTeamChessModel.instance:updateDisplacementState(uid, displacementState)
+	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.TeamChessUpdateActiveMoveState, uid)
+	TaskDispatcher.runDelay(self._onDone, self, EliminateTeamChessEnum.teamChessUpdateActiveMoveStepTime)
 end
 
-return var_0_0
+return EliminateTeamChessUpdateActiveMoveStep

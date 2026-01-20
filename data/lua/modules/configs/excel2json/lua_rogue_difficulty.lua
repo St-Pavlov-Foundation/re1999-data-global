@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_rogue_difficulty", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_rogue_difficulty.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_rogue_difficulty", package.seeall)
+
+local lua_rogue_difficulty = {}
+local fields = {
 	effect1 = 15,
 	initRoom = 5,
 	effectDesc1 = 14,
@@ -22,18 +24,18 @@ local var_0_1 = {
 	retries = 13,
 	initLevel = 4
 }
-local var_0_2 = {
+local primaryKey = {
 	"difficulty"
 }
-local var_0_3 = {
+local mlStringKey = {
 	effectDesc1 = 2,
 	title = 1,
 	effectDesc3 = 4,
 	effectDesc2 = 3
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_rogue_difficulty.onLoad(json)
+	lua_rogue_difficulty.configList, lua_rogue_difficulty.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_rogue_difficulty

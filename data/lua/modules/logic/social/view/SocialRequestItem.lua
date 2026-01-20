@@ -1,151 +1,154 @@
-﻿module("modules.logic.social.view.SocialRequestItem", package.seeall)
+﻿-- chunkname: @modules/logic/social/view/SocialRequestItem.lua
 
-local var_0_0 = class("SocialRequestItem", ListScrollCellExtend)
+module("modules.logic.social.view.SocialRequestItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goplayericon = gohelper.findChild(arg_1_0.viewGO, "#go_playericon")
-	arg_1_0._goskinbg = gohelper.findChild(arg_1_0.viewGO, "#go_skinbg")
-	arg_1_0._imagebg = gohelper.findChildImage(arg_1_0.viewGO, "image_ItemBG")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#txt_name")
-	arg_1_0._txtstatus = gohelper.findChildText(arg_1_0.viewGO, "status/#txt_status")
-	arg_1_0._txtofflinetime = gohelper.findChildText(arg_1_0.viewGO, "status/#txt_offlinetime")
-	arg_1_0._goofflinebg = gohelper.findChild(arg_1_0.viewGO, "status/bg")
-	arg_1_0._txtuid = gohelper.findChildText(arg_1_0.viewGO, "#txt_uid")
-	arg_1_0._btnagree = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_agree")
-	arg_1_0._btnreject = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_reject")
+local SocialRequestItem = class("SocialRequestItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SocialRequestItem:onInitView()
+	self._goplayericon = gohelper.findChild(self.viewGO, "#go_playericon")
+	self._goskinbg = gohelper.findChild(self.viewGO, "#go_skinbg")
+	self._imagebg = gohelper.findChildImage(self.viewGO, "image_ItemBG")
+	self._txtname = gohelper.findChildText(self.viewGO, "#txt_name")
+	self._txtstatus = gohelper.findChildText(self.viewGO, "status/#txt_status")
+	self._txtofflinetime = gohelper.findChildText(self.viewGO, "status/#txt_offlinetime")
+	self._goofflinebg = gohelper.findChild(self.viewGO, "status/bg")
+	self._txtuid = gohelper.findChildText(self.viewGO, "#txt_uid")
+	self._btnagree = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_agree")
+	self._btnreject = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_reject")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnagree:AddClickListener(arg_2_0._btnagreeOnClick, arg_2_0)
-	arg_2_0._btnreject:AddClickListener(arg_2_0._btnrejectOnClick, arg_2_0)
+function SocialRequestItem:addEvents()
+	self._btnagree:AddClickListener(self._btnagreeOnClick, self)
+	self._btnreject:AddClickListener(self._btnrejectOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnagree:RemoveClickListener()
-	arg_3_0._btnreject:RemoveClickListener()
+function SocialRequestItem:removeEvents()
+	self._btnagree:RemoveClickListener()
+	self._btnreject:RemoveClickListener()
 end
 
-function var_0_0._btnagreeOnClick(arg_4_0)
+function SocialRequestItem:_btnagreeOnClick()
 	if SocialModel.instance:getFriendsCount() >= SocialConfig.instance:getMaxFriendsCount() then
 		GameFacade.showToast(ToastEnum.SocialRequest1)
 
 		return
 	end
 
-	if SocialModel.instance:isMyBlackListByUserId(arg_4_0._mo.userId) then
+	if SocialModel.instance:isMyBlackListByUserId(self._mo.userId) then
 		GameFacade.showToast(ToastEnum.SocialRequest2)
 
 		return
 	end
 
-	FriendRpc.instance:sendHandleApplyRequest(arg_4_0._mo.userId, true)
+	FriendRpc.instance:sendHandleApplyRequest(self._mo.userId, true)
 end
 
-function var_0_0._btnrejectOnClick(arg_5_0)
-	FriendRpc.instance:sendHandleApplyRequest(arg_5_0._mo.userId, false)
+function SocialRequestItem:_btnrejectOnClick()
+	FriendRpc.instance:sendHandleApplyRequest(self._mo.userId, false)
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._heros = {}
-	arg_6_0._heroParents = arg_6_0:getUserDataTb_()
+function SocialRequestItem:_editableInitView()
+	self._heros = {}
+	self._heroParents = self:getUserDataTb_()
 
-	for iter_6_0 = 1, 3 do
-		arg_6_0._heroParents[iter_6_0] = gohelper.findChild(arg_6_0.viewGO, "Role/" .. iter_6_0)
+	for i = 1, 3 do
+		self._heroParents[i] = gohelper.findChild(self.viewGO, "Role/" .. i)
 	end
 
-	arg_6_0._playericon = IconMgr.instance:getCommonPlayerIcon(arg_6_0._goplayericon)
+	self._playericon = IconMgr.instance:getCommonPlayerIcon(self._goplayericon)
 end
 
-function var_0_0._refreshUI(arg_7_0)
-	arg_7_0._playericon:onUpdateMO(arg_7_0._mo)
-	arg_7_0._playericon:setShowLevel(true)
+function SocialRequestItem:_refreshUI()
+	self._playericon:onUpdateMO(self._mo)
+	self._playericon:setShowLevel(true)
 
-	arg_7_0._txtname.text = arg_7_0._mo.name
-	arg_7_0._txtuid.text = tostring(arg_7_0._mo.userId)
-	arg_7_0._txtstatus.text = SocialConfig.instance:getRequestTimeText(arg_7_0._mo.time)
+	self._txtname.text = self._mo.name
+	self._txtuid.text = tostring(self._mo.userId)
+	self._txtstatus.text = SocialConfig.instance:getRequestTimeText(self._mo.time)
 
-	gohelper.setActive(arg_7_0._goofflinebg, false)
-	arg_7_0:_loadBg()
+	gohelper.setActive(self._goofflinebg, false)
+	self:_loadBg()
 end
 
-function var_0_0._loadBg(arg_8_0)
-	if not arg_8_0._mo.bg or arg_8_0._mo.bg == 0 then
-		arg_8_0._hasSkin = false
+function SocialRequestItem:_loadBg()
+	if not self._mo.bg or self._mo.bg == 0 then
+		self._hasSkin = false
 	else
-		arg_8_0._hasSkin = true
+		self._hasSkin = true
 
-		if not arg_8_0.lastskinId or arg_8_0.lastskinId ~= arg_8_0._mo.bg then
-			arg_8_0._skinPath = string.format("ui/viewres/social/socialrequestitem_bg_%s.prefab", arg_8_0._mo.bg)
+		if not self.lastskinId or self.lastskinId ~= self._mo.bg then
+			self._skinPath = string.format("ui/viewres/social/socialrequestitem_bg_%s.prefab", self._mo.bg)
 
-			arg_8_0:_disposeBg()
+			self:_disposeBg()
 
-			arg_8_0._loader = MultiAbLoader.New()
+			self._loader = MultiAbLoader.New()
 
-			arg_8_0._loader:addPath(arg_8_0._skinPath)
-			arg_8_0._loader:startLoad(arg_8_0._onLoadFinish, arg_8_0)
+			self._loader:addPath(self._skinPath)
+			self._loader:startLoad(self._onLoadFinish, self)
 		end
 	end
 
-	gohelper.setActive(arg_8_0._imagebg.gameObject, not arg_8_0._hasSkin)
-	gohelper.setActive(arg_8_0._goskinbg, arg_8_0._hasSkin)
+	gohelper.setActive(self._imagebg.gameObject, not self._hasSkin)
+	gohelper.setActive(self._goskinbg, self._hasSkin)
 end
 
-function var_0_0._disposeBg(arg_9_0)
-	if arg_9_0._loader then
-		arg_9_0._loader:dispose()
+function SocialRequestItem:_disposeBg()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_9_0._loader = nil
+		self._loader = nil
 	end
 
-	if arg_9_0._goskinEffect then
-		gohelper.destroy(arg_9_0._goskinEffect)
+	if self._goskinEffect then
+		gohelper.destroy(self._goskinEffect)
 
-		arg_9_0._goskinEffect = nil
+		self._goskinEffect = nil
 	end
 end
 
-function var_0_0._onLoadFinish(arg_10_0)
-	local var_10_0 = arg_10_0._loader:getAssetItem(arg_10_0._skinPath):GetResource(arg_10_0._skinPath)
+function SocialRequestItem:_onLoadFinish()
+	local assetItem = self._loader:getAssetItem(self._skinPath)
+	local viewPrefab = assetItem:GetResource(self._skinPath)
 
-	arg_10_0._goskinEffect = gohelper.clone(var_10_0, arg_10_0._goskinbg)
-	arg_10_0.lastskinId = arg_10_0._mo.bg
+	self._goskinEffect = gohelper.clone(viewPrefab, self._goskinbg)
+	self.lastskinId = self._mo.bg
 end
 
-function var_0_0.onUpdateMO(arg_11_0, arg_11_1)
-	arg_11_0._mo = arg_11_1
+function SocialRequestItem:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_11_0:_refreshUI()
+	self:_refreshUI()
 
-	local var_11_0 = arg_11_1.infos or {}
-	local var_11_1 = #var_11_0
+	local heroList = mo.infos or {}
+	local count = #heroList
 
-	for iter_11_0 = 1, 3 do
-		local var_11_2 = arg_11_0:getHeroIcon(iter_11_0)
+	for i = 1, 3 do
+		local item = self:getHeroIcon(i)
 
-		if iter_11_0 <= var_11_1 then
-			var_11_2:updateMo(var_11_0[iter_11_0])
+		if i <= count then
+			item:updateMo(heroList[i])
 		else
-			var_11_2:setActive(false)
+			item:setActive(false)
 		end
 	end
 end
 
-function var_0_0.getHeroIcon(arg_12_0, arg_12_1)
-	if not arg_12_0._heros[arg_12_1] then
-		local var_12_0 = arg_12_0._view:getResInst("ui/viewres/social/socialheroitem.prefab", arg_12_0._heroParents[arg_12_1], "HeroItem")
+function SocialRequestItem:getHeroIcon(index)
+	if not self._heros[index] then
+		local go = self._view:getResInst("ui/viewres/social/socialheroitem.prefab", self._heroParents[index], "HeroItem")
 
-		arg_12_0._heros[arg_12_1] = MonoHelper.addNoUpdateLuaComOnceToGo(var_12_0, SocialHeroItem)
+		self._heros[index] = MonoHelper.addNoUpdateLuaComOnceToGo(go, SocialHeroItem)
 	end
 
-	return arg_12_0._heros[arg_12_1]
+	return self._heros[index]
 end
 
-function var_0_0.onDestroy(arg_13_0)
+function SocialRequestItem:onDestroy()
 	return
 end
 
-return var_0_0
+return SocialRequestItem

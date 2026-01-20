@@ -1,20 +1,22 @@
-﻿module("modules.logic.defines.MsgBoxEnum", package.seeall)
+﻿-- chunkname: @modules/logic/defines/MsgBoxEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.defines.MsgBoxEnum", package.seeall)
 
-var_0_0.BoxType = {
+local MsgBoxEnum = _M
+
+MsgBoxEnum.BoxType = {
 	Yes = 2,
 	NO = 3,
 	Yes_No = 1
 }
-var_0_0.CloseType = {
+MsgBoxEnum.CloseType = {
 	Yes = 1,
 	Close = 0,
 	No = -1
 }
-var_0_0.optionType = {
+MsgBoxEnum.optionType = {
 	NotShow = 2,
 	Daily = 1
 }
 
-return var_0_0
+return MsgBoxEnum

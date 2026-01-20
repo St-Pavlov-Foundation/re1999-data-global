@@ -1,23 +1,26 @@
-﻿module("modules.configs.excel2json.lua_character_destiny_facets", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_character_destiny_facets.lua
 
-local var_0_0 = {}
-local var_0_1 = {
-	level = 2,
+module("modules.configs.excel2json.lua_character_destiny_facets", package.seeall)
+
+local lua_character_destiny_facets = {}
+local fields = {
+	ex_level_exchange = 6,
 	desc = 5,
 	powerAdd = 3,
 	facetsId = 1,
+	level = 2,
 	exchangeSkills = 4
 }
-local var_0_2 = {
+local primaryKey = {
 	"facetsId",
 	"level"
 }
-local var_0_3 = {
+local mlStringKey = {
 	desc = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_character_destiny_facets.onLoad(json)
+	lua_character_destiny_facets.configList, lua_character_destiny_facets.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_character_destiny_facets

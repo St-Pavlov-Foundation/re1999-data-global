@@ -1,84 +1,86 @@
-﻿module("modules.logic.skin.model.SkinOffsetSkinListModel", package.seeall)
+﻿-- chunkname: @modules/logic/skin/model/SkinOffsetSkinListModel.lua
 
-local var_0_0 = class("SkinOffsetSkinListModel", ListScrollModel)
+module("modules.logic.skin.model.SkinOffsetSkinListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0.selectSkinIndex = 0
-	arg_1_0.selectSkin = 0
+local SkinOffsetSkinListModel = class("SkinOffsetSkinListModel", ListScrollModel)
+
+function SkinOffsetSkinListModel:onInit()
+	self.selectSkinIndex = 0
+	self.selectSkin = 0
 end
 
-function var_0_0.setScrollView(arg_2_0, arg_2_1)
-	arg_2_0.scrollView = arg_2_1
+function SkinOffsetSkinListModel:setScrollView(scrollView)
+	self.scrollView = scrollView
 end
 
-function var_0_0.initOriginSkinList(arg_3_0)
-	arg_3_0._originSkinCoList = {}
+function SkinOffsetSkinListModel:initOriginSkinList()
+	self._originSkinCoList = {}
 
-	for iter_3_0, iter_3_1 in ipairs(lua_skin.configList) do
-		if iter_3_1.characterId > 0 then
-			table.insert(arg_3_0._originSkinCoList, iter_3_1)
+	for i, v in ipairs(lua_skin.configList) do
+		if v.characterId > 0 then
+			table.insert(self._originSkinCoList, v)
 		end
 	end
 end
 
-function var_0_0.initSkinList(arg_4_0)
-	arg_4_0._skinList = {}
+function SkinOffsetSkinListModel:initSkinList()
+	self._skinList = {}
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_0._originSkinCoList) do
-		if iter_4_1.characterId > 0 then
-			if arg_4_0.filterFunc then
-				if arg_4_0.filterFunc(iter_4_1) then
-					table.insert(arg_4_0._skinList, {
-						skinId = iter_4_1.id,
-						skinName = iter_4_1.name
+	for i, v in ipairs(self._originSkinCoList) do
+		if v.characterId > 0 then
+			if self.filterFunc then
+				if self.filterFunc(v) then
+					table.insert(self._skinList, {
+						skinId = v.id,
+						skinName = v.name
 					})
 				end
 			else
-				table.insert(arg_4_0._skinList, {
-					skinId = iter_4_1.id,
-					skinName = iter_4_1.name
+				table.insert(self._skinList, {
+					skinId = v.id,
+					skinName = v.name
 				})
 			end
 		end
 	end
 
-	arg_4_0:refreshList()
-	arg_4_0.scrollView:setSkinScrollRectVertical(1 - arg_4_0.selectSkinIndex / #arg_4_0._originSkinCoList)
+	self:refreshList()
+	self.scrollView:setSkinScrollRectVertical(1 - self.selectSkinIndex / #self._originSkinCoList)
 end
 
-function var_0_0.slideNext(arg_5_0)
-	arg_5_0.selectSkinIndex = arg_5_0.selectSkinIndex + 1
+function SkinOffsetSkinListModel:slideNext()
+	self.selectSkinIndex = self.selectSkinIndex + 1
 
-	if arg_5_0.selectSkinIndex > #arg_5_0._skinList then
-		arg_5_0.selectSkinIndex = 1
+	if self.selectSkinIndex > #self._skinList then
+		self.selectSkinIndex = 1
 	end
 
-	arg_5_0:refreshSelectByIndex(arg_5_0.selectSkinIndex)
+	self:refreshSelectByIndex(self.selectSkinIndex)
 end
 
-function var_0_0.slidePre(arg_6_0)
-	arg_6_0.selectSkinIndex = arg_6_0.selectSkinIndex - 1
+function SkinOffsetSkinListModel:slidePre()
+	self.selectSkinIndex = self.selectSkinIndex - 1
 
-	if arg_6_0.selectSkinIndex < 1 then
-		arg_6_0.selectSkinIndex = #arg_6_0._skinList
+	if self.selectSkinIndex < 1 then
+		self.selectSkinIndex = #self._skinList
 	end
 
-	arg_6_0:refreshSelectByIndex(arg_6_0.selectSkinIndex)
+	self:refreshSelectByIndex(self.selectSkinIndex)
 end
 
-function var_0_0.refreshSelectByIndex(arg_7_0, arg_7_1)
-	arg_7_0:setSelectSkin(arg_7_0._skinList[arg_7_1].skinId)
+function SkinOffsetSkinListModel:refreshSelectByIndex(index)
+	self:setSelectSkin(self._skinList[index].skinId)
 end
 
-function var_0_0.setSelectSkin(arg_8_0, arg_8_1)
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0._skinList) do
-		if iter_8_1.skinId == arg_8_1 then
-			arg_8_0.selectSkinIndex = iter_8_0
-			arg_8_0.selectSkin = arg_8_1
+function SkinOffsetSkinListModel:setSelectSkin(skinId)
+	for index, skinCo in ipairs(self._skinList) do
+		if skinCo.skinId == skinId then
+			self.selectSkinIndex = index
+			self.selectSkin = skinId
 
-			arg_8_0.scrollView.viewContainer.skinOffsetAdjustView:refreshSkin({
-				skinId = arg_8_1,
-				skinName = iter_8_1.skinName
+			self.scrollView.viewContainer.skinOffsetAdjustView:refreshSkin({
+				skinId = skinId,
+				skinName = skinCo.skinName
 			})
 			SkinOffsetController.instance:dispatchEvent(SkinOffsetController.Event.OnSelectSkinChange)
 
@@ -86,73 +88,73 @@ function var_0_0.setSelectSkin(arg_8_0, arg_8_1)
 		end
 	end
 
-	logError(string.format("not found skinId : %s index", arg_8_1))
+	logError(string.format("not found skinId : %s index", skinId))
 end
 
-function var_0_0.isSelect(arg_9_0, arg_9_1)
-	return arg_9_0.selectSkin == arg_9_1
+function SkinOffsetSkinListModel:isSelect(skinId)
+	return self.selectSkin == skinId
 end
 
-function var_0_0.filterById(arg_10_0, arg_10_1)
-	arg_10_0._skinList = {}
+function SkinOffsetSkinListModel:filterById(idStr)
+	self._skinList = {}
 
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0._originSkinCoList) do
-		if iter_10_1.characterId > 0 and string.match(tostring(iter_10_1.id), arg_10_1) then
-			if arg_10_0.filterFunc then
-				if arg_10_0.filterFunc(iter_10_1) then
-					table.insert(arg_10_0._skinList, {
-						skinId = iter_10_1.id,
-						skinName = iter_10_1.name
+	for i, v in ipairs(self._originSkinCoList) do
+		if v.characterId > 0 and string.match(tostring(v.id), idStr) then
+			if self.filterFunc then
+				if self.filterFunc(v) then
+					table.insert(self._skinList, {
+						skinId = v.id,
+						skinName = v.name
 					})
 				end
 			else
-				table.insert(arg_10_0._skinList, {
-					skinId = iter_10_1.id,
-					skinName = iter_10_1.name
+				table.insert(self._skinList, {
+					skinId = v.id,
+					skinName = v.name
 				})
 			end
 		end
 	end
 
-	arg_10_0:refreshList()
+	self:refreshList()
 end
 
-function var_0_0.filterByName(arg_11_0, arg_11_1)
-	arg_11_0._skinList = {}
+function SkinOffsetSkinListModel:filterByName(name)
+	self._skinList = {}
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0._originSkinCoList) do
-		if iter_11_1.characterId > 0 and string.match(iter_11_1.name, arg_11_1) then
-			if arg_11_0.filterFunc then
-				if arg_11_0.filterFunc(iter_11_1) then
-					table.insert(arg_11_0._skinList, {
-						skinId = iter_11_1.id,
-						skinName = iter_11_1.name
+	for i, v in ipairs(self._originSkinCoList) do
+		if v.characterId > 0 and string.match(v.name, name) then
+			if self.filterFunc then
+				if self.filterFunc(v) then
+					table.insert(self._skinList, {
+						skinId = v.id,
+						skinName = v.name
 					})
 				end
 			else
-				table.insert(arg_11_0._skinList, {
-					skinId = iter_11_1.id,
-					skinName = iter_11_1.name
+				table.insert(self._skinList, {
+					skinId = v.id,
+					skinName = v.name
 				})
 			end
 		end
 	end
 
-	arg_11_0:refreshList()
+	self:refreshList()
 end
 
-function var_0_0.setInitFilterFunc(arg_12_0, arg_12_1)
-	arg_12_0.filterFunc = arg_12_1
+function SkinOffsetSkinListModel:setInitFilterFunc(filterFunc)
+	self.filterFunc = filterFunc
 end
 
-function var_0_0.getFirst(arg_13_0)
-	return arg_13_0._skinList[1]
+function SkinOffsetSkinListModel:getFirst()
+	return self._skinList[1]
 end
 
-function var_0_0.refreshList(arg_14_0)
-	arg_14_0:setList(arg_14_0._skinList)
+function SkinOffsetSkinListModel:refreshList()
+	self:setList(self._skinList)
 end
 
-var_0_0.instance = var_0_0.New()
+SkinOffsetSkinListModel.instance = SkinOffsetSkinListModel.New()
 
-return var_0_0
+return SkinOffsetSkinListModel

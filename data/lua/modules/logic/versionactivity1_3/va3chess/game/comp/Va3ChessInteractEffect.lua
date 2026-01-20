@@ -1,117 +1,119 @@
-﻿module("modules.logic.versionactivity1_3.va3chess.game.comp.Va3ChessInteractEffect", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/va3chess/game/comp/Va3ChessInteractEffect.lua
 
-local var_0_0 = class("Va3ChessInteractEffect")
+module("modules.logic.versionactivity1_3.va3chess.game.comp.Va3ChessInteractEffect", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._target = arg_1_1
-	arg_1_0.effectGoDict = {}
-	arg_1_0.assetItemList = {}
-	arg_1_0.loadedEffectTypeList = {}
+local Va3ChessInteractEffect = class("Va3ChessInteractEffect")
+
+function Va3ChessInteractEffect:ctor(interactObj)
+	self._target = interactObj
+	self.effectGoDict = {}
+	self.assetItemList = {}
+	self.loadedEffectTypeList = {}
 end
 
-function var_0_0.onAvatarLoaded(arg_2_0)
-	local var_2_0 = arg_2_0._target.avatar.loader
+function Va3ChessInteractEffect:onAvatarLoaded()
+	local loader = self._target.avatar.loader
 
-	if not var_2_0 then
+	if not loader then
 		return
 	end
 
-	local var_2_1 = var_2_0:getInstGO()
+	local avatarGO = loader:getInstGO()
 
-	arg_2_0._target.avatar.goLostTarget = gohelper.findChild(var_2_1, "piecea/vx_vertigo")
-	arg_2_0.effectGoContainer = var_2_1
+	self._target.avatar.goLostTarget = gohelper.findChild(avatarGO, "piecea/vx_vertigo")
+	self.effectGoContainer = avatarGO
 
-	arg_2_0:refreshSearchFailed()
+	self:refreshSearchFailed()
 end
 
-function var_0_0.refreshSearchFailed(arg_3_0)
-	if arg_3_0._target.originData and arg_3_0._target.originData.data and arg_3_0._target.avatar and arg_3_0._target.avatar.goLostTarget then
-		gohelper.setActive(arg_3_0._target.avatar.goLostTarget, arg_3_0._target.originData.data.lostTarget)
+function Va3ChessInteractEffect:refreshSearchFailed()
+	if self._target.originData and self._target.originData.data and self._target.avatar and self._target.avatar.goLostTarget then
+		gohelper.setActive(self._target.avatar.goLostTarget, self._target.originData.data.lostTarget)
 	end
 end
 
-function var_0_0.showEffect(arg_4_0, arg_4_1)
-	arg_4_0.showEffectType = arg_4_1
+function Va3ChessInteractEffect:showEffect(effectType)
+	self.showEffectType = effectType
 
-	if not arg_4_0.effectGoDict[arg_4_0.showEffectType] then
-		arg_4_0:loadEffect()
+	if not self.effectGoDict[self.showEffectType] then
+		self:loadEffect()
 
 		return
 	end
 
-	arg_4_0:_realShowEffect()
+	self:_realShowEffect()
 end
 
-function var_0_0._realShowEffect(arg_5_0)
-	local var_5_0 = arg_5_0.effectGoDict[arg_5_0.showEffectType]
+function Va3ChessInteractEffect:_realShowEffect()
+	local go = self.effectGoDict[self.showEffectType]
 
-	gohelper.setActive(var_5_0, false)
-	gohelper.setActive(var_5_0, true)
+	gohelper.setActive(go, false)
+	gohelper.setActive(go, true)
 
-	if arg_5_0.showEffectType == Va3ChessEnum.EffectType.ArrowHit then
-		local var_5_1
-		local var_5_2 = arg_5_0._target.objType
+	if self.showEffectType == Va3ChessEnum.EffectType.ArrowHit then
+		local audioId
+		local interactType = self._target.objType
 
-		if var_5_2 == Va3ChessEnum.InteractType.Player or var_5_2 == Va3ChessEnum.InteractType.AssistPlayer then
-			var_5_1 = AudioEnum.chess_activity142.ArrowHitPlayer
+		if interactType == Va3ChessEnum.InteractType.Player or interactType == Va3ChessEnum.InteractType.AssistPlayer then
+			audioId = AudioEnum.chess_activity142.ArrowHitPlayer
 		else
-			var_5_1 = AudioEnum.chess_activity142.MonsterBeHit
+			audioId = AudioEnum.chess_activity142.MonsterBeHit
 		end
 
-		AudioMgr.instance:trigger(var_5_1)
+		AudioMgr.instance:trigger(audioId)
 	end
 end
 
-function var_0_0.loadEffect(arg_6_0)
-	local var_6_0 = arg_6_0.showEffectType
+function Va3ChessInteractEffect:loadEffect()
+	local effectType = self.showEffectType
 
-	if tabletool.indexOf(arg_6_0.loadedEffectTypeList, var_6_0) then
+	if tabletool.indexOf(self.loadedEffectTypeList, effectType) then
 		return
 	end
 
-	table.insert(arg_6_0.loadedEffectTypeList, var_6_0)
+	table.insert(self.loadedEffectTypeList, effectType)
 
-	local var_6_1 = Va3ChessEnum.EffectPath[var_6_0]
+	local path = Va3ChessEnum.EffectPath[effectType]
 
-	loadAbAsset(var_6_1, true, arg_6_0._onLoadCallback, arg_6_0)
+	loadAbAsset(path, true, self._onLoadCallback, self)
 end
 
-function var_0_0._onLoadCallback(arg_7_0, arg_7_1)
-	if arg_7_1.IsLoadSuccess then
-		table.insert(arg_7_0.assetItemList, arg_7_1)
-		arg_7_1:Retain()
+function Va3ChessInteractEffect:_onLoadCallback(assetItem)
+	if assetItem.IsLoadSuccess then
+		table.insert(self.assetItemList, assetItem)
+		assetItem:Retain()
 
-		local var_7_0 = gohelper.clone(arg_7_1:GetResource(), arg_7_0.effectGoContainer)
+		local effectGO = gohelper.clone(assetItem:GetResource(), self.effectGoContainer)
 
-		arg_7_0.effectGoDict[arg_7_0.showEffectType] = var_7_0
+		self.effectGoDict[self.showEffectType] = effectGO
 
-		gohelper.setActive(var_7_0, false)
-		arg_7_0:showEffect(arg_7_0.showEffectType)
+		gohelper.setActive(effectGO, false)
+		self:showEffect(self.showEffectType)
 	end
 end
 
-function var_0_0.dispose(arg_8_0)
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0.loadedEffectTypeList) do
-		removeAssetLoadCb(Va3ChessEnum.EffectPath[iter_8_1], arg_8_0._onLoadCallback, arg_8_0)
+function Va3ChessInteractEffect:dispose()
+	for _, effectType in ipairs(self.loadedEffectTypeList) do
+		removeAssetLoadCb(Va3ChessEnum.EffectPath[effectType], self._onLoadCallback, self)
 	end
 
-	for iter_8_2, iter_8_3 in ipairs(arg_8_0.assetItemList) do
-		iter_8_3:Release()
+	for k, assetItem in ipairs(self.assetItemList) do
+		assetItem:Release()
 	end
 
-	arg_8_0.assetItemList = {}
+	self.assetItemList = {}
 
-	for iter_8_4, iter_8_5 in pairs(arg_8_0.effectGoDict) do
-		if not gohelper.isNil(iter_8_5) then
-			gohelper.destroy(iter_8_5)
+	for k, effectGO in pairs(self.effectGoDict) do
+		if not gohelper.isNil(effectGO) then
+			gohelper.destroy(effectGO)
 		end
 
-		arg_8_0.effectGoDict[iter_8_4] = nil
+		self.effectGoDict[k] = nil
 	end
 
-	arg_8_0.effectGoDict = {}
-	arg_8_0._target = nil
-	arg_8_0.effectGoContainer = nil
+	self.effectGoDict = {}
+	self._target = nil
+	self.effectGoContainer = nil
 end
 
-return var_0_0
+return Va3ChessInteractEffect

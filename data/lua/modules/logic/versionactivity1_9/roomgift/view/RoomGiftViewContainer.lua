@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity1_9.roomgift.view.RoomGiftViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/roomgift/view/RoomGiftViewContainer.lua
 
-local var_0_0 = class("RoomGiftViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_9.roomgift.view.RoomGiftViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoomGiftViewContainer = class("RoomGiftViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RoomGiftView.New())
+function RoomGiftViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RoomGiftView.New())
+
+	return views
 end
 
-return var_0_0
+return RoomGiftViewContainer

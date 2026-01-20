@@ -1,113 +1,124 @@
-﻿module("modules.logic.versionactivity2_5.challenge.model.Act183GroupEpisodeRecordMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/model/Act183GroupEpisodeRecordMO.lua
 
-local var_0_0 = pureTable("Act183GroupEpisodeRecordMO")
+module("modules.logic.versionactivity2_5.challenge.model.Act183GroupEpisodeRecordMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._playerName = arg_1_1.playerName
-	arg_1_0._portrait = arg_1_1.portrait
-	arg_1_0._groupId = arg_1_1.groupId
-	arg_1_0._allRound = arg_1_1.allRound
+local Act183GroupEpisodeRecordMO = pureTable("Act183GroupEpisodeRecordMO")
 
-	arg_1_0:_onEpisodeListInfoLoaded(arg_1_1.episodeList)
+function Act183GroupEpisodeRecordMO:init(info, actId)
+	self._playerName = info.playerName
+	self._portrait = info.portrait
+	self._groupId = info.groupId
+	self._allRound = info.allRound
 
-	arg_1_0._finishedTime = arg_1_1.finishedTime
-	arg_1_0._actId = arg_1_2
+	self:_onEpisodeListInfoLoaded(info.episodeList)
+
+	self._finishedTime = info.finishedTime
+	self._actId = actId
 end
 
-function var_0_0._onEpisodeListInfoLoaded(arg_2_0, arg_2_1)
-	arg_2_0._episodeList = {}
-	arg_2_0._episodeTypeMap = {}
+function Act183GroupEpisodeRecordMO:_onEpisodeListInfoLoaded(episodeList)
+	self._episodeList = {}
+	self._episodeTypeMap = {}
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_1) do
-		local var_2_0 = Act183EpisodeRecordMO.New()
+	for _, episodeInfo in ipairs(episodeList) do
+		local episodeMo = Act183EpisodeRecordMO.New()
 
-		var_2_0:init(iter_2_1)
-		table.insert(arg_2_0._episodeList, var_2_0)
+		episodeMo:init(episodeInfo)
+		table.insert(self._episodeList, episodeMo)
 
-		local var_2_1 = var_2_0:getEpisodeType()
+		local episodeType = episodeMo:getEpisodeType()
 
-		arg_2_0._episodeTypeMap[var_2_1] = arg_2_0._episodeTypeMap[var_2_1] or {}
+		self._episodeTypeMap[episodeType] = self._episodeTypeMap[episodeType] or {}
 
-		table.insert(arg_2_0._episodeTypeMap[var_2_1], var_2_0)
+		table.insert(self._episodeTypeMap[episodeType], episodeMo)
 	end
 
-	local var_2_2 = arg_2_0._episodeList[1]
+	local episodeMo = self._episodeList[1]
 
-	arg_2_0._groupType = var_2_2 and var_2_2:getGroupType()
+	self._groupType = episodeMo and episodeMo:getGroupType()
 
-	table.sort(arg_2_0._episodeList, arg_2_0._sortEpisodeByPassOrder)
+	table.sort(self._episodeList, self._sortEpisodeByPassOrder)
 
-	for iter_2_2, iter_2_3 in pairs(arg_2_0._episodeTypeMap) do
-		table.sort(iter_2_3, arg_2_0._sortEpisodeByPassOrder)
+	for _, typeEpisodeList in pairs(self._episodeTypeMap) do
+		table.sort(typeEpisodeList, self._sortEpisodeByPassOrder)
 	end
 end
 
-function var_0_0.getUserName(arg_3_0)
-	return arg_3_0._playerName
+function Act183GroupEpisodeRecordMO:getUserName()
+	return self._playerName
 end
 
-function var_0_0.getPortrait(arg_4_0)
-	return arg_4_0._portrait
+function Act183GroupEpisodeRecordMO:getPortrait()
+	return self._portrait
 end
 
-function var_0_0.getFinishedTime(arg_5_0)
-	return arg_5_0._finishedTime
+function Act183GroupEpisodeRecordMO:getFinishedTime()
+	return self._finishedTime
 end
 
-function var_0_0.getAllRound(arg_6_0)
-	return arg_6_0._allRound
+function Act183GroupEpisodeRecordMO:getAllRound()
+	return self._allRound
 end
 
-function var_0_0.getEpisodeListByType(arg_7_0, arg_7_1)
-	return arg_7_0._episodeTypeMap and arg_7_0._episodeTypeMap[arg_7_1]
+function Act183GroupEpisodeRecordMO:getEpisodeListByType(episodeType)
+	local episodes = self._episodeTypeMap and self._episodeTypeMap[episodeType]
+
+	return episodes
 end
 
-function var_0_0.getBossEpisode(arg_8_0)
-	local var_8_0 = arg_8_0:getEpisodeListByType(Act183Enum.EpisodeType.Boss)
+function Act183GroupEpisodeRecordMO:getBossEpisode()
+	local bossEpisodes = self:getEpisodeListByType(Act183Enum.EpisodeType.Boss)
 
-	return var_8_0 and var_8_0[1]
+	return bossEpisodes and bossEpisodes[1]
 end
 
-function var_0_0.getEpusideListByTypeAndPassOrder(arg_9_0, arg_9_1)
-	return (arg_9_0:getEpisodeListByType(arg_9_1))
+function Act183GroupEpisodeRecordMO:getEpusideListByTypeAndPassOrder(episodeType)
+	local episodes = self:getEpisodeListByType(episodeType)
+
+	return episodes
 end
 
-function var_0_0._sortEpisodeByPassOrder(arg_10_0, arg_10_1)
-	return arg_10_0:getPassOrder() < arg_10_1:getPassOrder()
+function Act183GroupEpisodeRecordMO._sortEpisodeByPassOrder(aRecord, bRecord)
+	local aPassOrder = aRecord:getPassOrder()
+	local bPassOrder = bRecord:getPassOrder()
+
+	return aPassOrder < bPassOrder
 end
 
-function var_0_0.getGroupType(arg_11_0)
-	return arg_11_0._groupType
+function Act183GroupEpisodeRecordMO:getGroupType()
+	return self._groupType
 end
 
-function var_0_0.getGroupId(arg_12_0)
-	return arg_12_0._groupId
+function Act183GroupEpisodeRecordMO:getGroupId()
+	return self._groupId
 end
 
-function var_0_0.getActivityId(arg_13_0)
-	return arg_13_0._actId
+function Act183GroupEpisodeRecordMO:getActivityId()
+	return self._actId
 end
 
-function var_0_0.getBossEpisodeConditionStatus(arg_14_0)
-	local var_14_0 = {}
-	local var_14_1 = {}
-	local var_14_2 = {}
-	local var_14_3 = {}
+function Act183GroupEpisodeRecordMO:getBossEpisodeConditionStatus()
+	local allConditionIds = {}
+	local unlockConditionIds = {}
+	local passConditionIds = {}
+	local chooseConditions = {}
 
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0._episodeList) do
-		if iter_14_1:getEpisodeType() ~= Act183Enum.EpisodeType.Boss then
-			local var_14_4 = iter_14_1:getConditionIds()
-			local var_14_5 = iter_14_1:getPassConditions()
+	for _, episodeMo in ipairs(self._episodeList) do
+		local episodeType = episodeMo:getEpisodeType()
 
-			tabletool.addValues(var_14_0, var_14_4)
-			tabletool.addValues(var_14_1, var_14_5)
+		if episodeType ~= Act183Enum.EpisodeType.Boss then
+			local conditionIds = episodeMo:getConditionIds()
+			local passIds = episodeMo:getPassConditions()
+
+			tabletool.addValues(allConditionIds, conditionIds)
+			tabletool.addValues(unlockConditionIds, passIds)
 		else
-			var_14_2 = iter_14_1:getPassConditions()
-			var_14_3 = iter_14_1:getChooseConditions()
+			passConditionIds = episodeMo:getPassConditions()
+			chooseConditions = episodeMo:getChooseConditions()
 		end
 	end
 
-	return var_14_0, var_14_1, var_14_2, var_14_3
+	return allConditionIds, unlockConditionIds, passConditionIds, chooseConditions
 end
 
-return var_0_0
+return Act183GroupEpisodeRecordMO

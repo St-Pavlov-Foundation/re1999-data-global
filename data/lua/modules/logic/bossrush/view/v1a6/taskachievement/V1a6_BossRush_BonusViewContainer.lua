@@ -1,101 +1,104 @@
-﻿module("modules.logic.bossrush.view.v1a6.taskachievement.V1a6_BossRush_BonusViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/view/v1a6/taskachievement/V1a6_BossRush_BonusViewContainer.lua
 
-local var_0_0 = class("V1a6_BossRush_BonusViewContainer", BaseViewContainer)
+module("modules.logic.bossrush.view.v1a6.taskachievement.V1a6_BossRush_BonusViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local V1a6_BossRush_BonusViewContainer = class("V1a6_BossRush_BonusViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, TabViewGroup.New(1, "top_left"))
-	table.insert(var_1_0, V1a6_BossRush_TabViewGroup.New(2, "#go_bonus"))
-	table.insert(var_1_0, V1a6_BossRush_BonusView.New())
+function V1a6_BossRush_BonusViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, TabViewGroup.New(1, "top_left"))
+	table.insert(views, V1a6_BossRush_TabViewGroup.New(2, "#go_bonus"))
+	table.insert(views, V1a6_BossRush_BonusView.New())
+
+	return views
 end
 
-function var_0_0._getTabView(arg_2_0, arg_2_1)
-	local var_2_0 = ListScrollParam.New()
+function V1a6_BossRush_BonusViewContainer:_getTabView(tabViewEnum)
+	local achievementScrollParam = ListScrollParam.New()
 
-	var_2_0.cellClass = arg_2_1.CellClass
-	var_2_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_2_0.prefabUrl = arg_2_0._viewSetting.otherRes[arg_2_1.ResIndex]
-	var_2_0.scrollGOPath = "Right/#scroll_ScoreList"
-	var_2_0.scrollDir = ScrollEnum.ScrollDirV
-	var_2_0.lineCount = 1
-	var_2_0.cellWidth = 964
-	var_2_0.cellHeight = 162
-	var_2_0.cellSpaceH = 0
-	var_2_0.cellSpaceV = 0
-	var_2_0.startSpace = 0
-	var_2_0.sortMode = ScrollEnum.ScrollSortDown
+	achievementScrollParam.cellClass = tabViewEnum.CellClass
+	achievementScrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	achievementScrollParam.prefabUrl = self._viewSetting.otherRes[tabViewEnum.ResIndex]
+	achievementScrollParam.scrollGOPath = "Right/#scroll_ScoreList"
+	achievementScrollParam.scrollDir = ScrollEnum.ScrollDirV
+	achievementScrollParam.lineCount = 1
+	achievementScrollParam.cellWidth = 964
+	achievementScrollParam.cellHeight = 162
+	achievementScrollParam.cellSpaceH = 0
+	achievementScrollParam.cellSpaceV = 0
+	achievementScrollParam.startSpace = 0
+	achievementScrollParam.sortMode = ScrollEnum.ScrollSortDown
 
-	local var_2_1 = LuaListScrollViewWithAnimator.New(arg_2_1.ListModel, var_2_0, arg_2_0.delayTimes)
-	local var_2_2 = arg_2_1.ViewClass.New()
-	local var_2_3 = MultiView.New({
-		var_2_2,
-		var_2_1
+	local scrollView = LuaListScrollViewWithAnimator.New(tabViewEnum.ListModel, achievementScrollParam, self.delayTimes)
+	local viewClass = tabViewEnum.ViewClass.New()
+	local multiView = MultiView.New({
+		viewClass,
+		scrollView
 	})
-
-	return {
-		viewClass = var_2_2,
-		scrollView = var_2_1,
-		multiView = var_2_3
+	local tabView = {
+		viewClass = viewClass,
+		scrollView = scrollView,
+		multiView = multiView
 	}
+
+	return tabView
 end
 
-function var_0_0.buildTabViews(arg_3_0, arg_3_1)
-	if arg_3_1 == 1 then
-		arg_3_0.navigationView = NavigateButtonsView.New({
+function V1a6_BossRush_BonusViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigationView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			arg_3_0.navigationView
+			self.navigationView
 		}
-	elseif arg_3_1 == 2 then
-		arg_3_0.delayTimes = {}
+	elseif tabContainerId == 2 then
+		self.delayTimes = {}
 
-		for iter_3_0 = 1, 10 do
-			local var_3_0 = (iter_3_0 - 1) * 0.07
+		for i = 1, 10 do
+			local delayTime = (i - 1) * 0.07
 
-			arg_3_0.delayTimes[iter_3_0] = var_3_0
+			self.delayTimes[i] = delayTime
 		end
 
-		arg_3_0._tabView = {}
+		self._tabView = {}
 
-		local var_3_1 = BossRushModel.instance:getActivityBonus()
-		local var_3_2 = {}
+		local tabViewEnum = BossRushModel.instance:getActivityBonus()
+		local multiViews = {}
 
-		for iter_3_1, iter_3_2 in ipairs(var_3_1) do
-			local var_3_3 = arg_3_0:_getTabView(iter_3_2)
+		for tab, _tabViewEnum in ipairs(tabViewEnum) do
+			local tabView = self:_getTabView(_tabViewEnum)
 
-			arg_3_0._tabView[iter_3_1] = var_3_3
+			self._tabView[tab] = tabView
 
-			table.insert(var_3_2, var_3_3.multiView)
+			table.insert(multiViews, tabView.multiView)
 		end
 
-		return var_3_2
+		return multiViews
 	end
 end
 
-function var_0_0.getScrollAnimRemoveItem(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0._tabView[arg_4_1]
+function V1a6_BossRush_BonusViewContainer:getScrollAnimRemoveItem(tab)
+	local tabView = self._tabView[tab]
 
-	if var_4_0 and var_4_0.scrollView and not gohelper.isNil(var_4_0.scrollView._csListScroll) then
-		return ListScrollAnimRemoveItem.Get(var_4_0.scrollView)
+	if tabView and tabView.scrollView and not gohelper.isNil(tabView.scrollView._csListScroll) then
+		return ListScrollAnimRemoveItem.Get(tabView.scrollView)
 	end
 end
 
-function var_0_0.getTabView(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0._tabView[arg_5_1]
+function V1a6_BossRush_BonusViewContainer:getTabView(tab)
+	local tabView = self._tabView[tab]
 
-	return var_5_0 and var_5_0.viewClass
+	return tabView and tabView.viewClass
 end
 
-function var_0_0.selectTabView(arg_6_0, arg_6_1)
-	V1a6_BossRush_BonusModel.instance:setTab(arg_6_1)
-	arg_6_0:dispatchEvent(ViewEvent.ToSwitchTab, 2, arg_6_1)
+function V1a6_BossRush_BonusViewContainer:selectTabView(selectId)
+	V1a6_BossRush_BonusModel.instance:setTab(selectId)
+	self:dispatchEvent(ViewEvent.ToSwitchTab, 2, selectId)
 end
 
-return var_0_0
+return V1a6_BossRush_BonusViewContainer

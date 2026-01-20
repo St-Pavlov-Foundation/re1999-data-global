@@ -1,8 +1,10 @@
-﻿module("modules.logic.defines.LoadingEnum", package.seeall)
+﻿-- chunkname: @modules/logic/defines/LoadingEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.defines.LoadingEnum", package.seeall)
 
-var_0_0.LoadingSceneType = {
+local LoadingEnum = _M
+
+LoadingEnum.LoadingSceneType = {
 	Main = 2,
 	Room = 4,
 	Other = 1,
@@ -10,4 +12,4 @@ var_0_0.LoadingSceneType = {
 	Summon = 3
 }
 
-return var_0_0
+return LoadingEnum

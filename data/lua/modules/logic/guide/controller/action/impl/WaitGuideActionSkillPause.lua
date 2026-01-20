@@ -1,28 +1,30 @@
-﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionSkillPause", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/WaitGuideActionSkillPause.lua
 
-local var_0_0 = class("WaitGuideActionSkillPause", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.WaitGuideActionSkillPause", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
-	FightController.instance:registerCallback(FightEvent.OnGuideBeforeSkillPause, arg_1_0._onGuideBeforeSkillPause, arg_1_0)
+local WaitGuideActionSkillPause = class("WaitGuideActionSkillPause", BaseGuideAction)
 
-	local var_1_0 = string.splitToNumber(arg_1_0.actionParam, "#")
+function WaitGuideActionSkillPause:onStart(context)
+	WaitGuideActionSkillPause.super.onStart(self, context)
+	FightController.instance:registerCallback(FightEvent.OnGuideBeforeSkillPause, self._onGuideBeforeSkillPause, self)
 
-	arg_1_0._attackId = var_1_0[1]
-	arg_1_0._skillId = var_1_0[2]
+	local temp = string.splitToNumber(self.actionParam, "#")
+
+	self._attackId = temp[1]
+	self._skillId = temp[2]
 end
 
-function var_0_0._onGuideBeforeSkillPause(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	arg_2_1.OnGuideBeforeSkillPause = arg_2_2 == arg_2_0._attackId and arg_2_3 == arg_2_0._skillId
+function WaitGuideActionSkillPause:_onGuideBeforeSkillPause(guideParam, attackId, skillId)
+	guideParam.OnGuideBeforeSkillPause = attackId == self._attackId and skillId == self._skillId
 
-	if arg_2_1.OnGuideBeforeSkillPause then
-		FightController.instance:unregisterCallback(FightEvent.OnGuideBeforeSkillPause, arg_2_0._onGuideBeforeSkillPause, arg_2_0)
-		arg_2_0:onDone(true)
+	if guideParam.OnGuideBeforeSkillPause then
+		FightController.instance:unregisterCallback(FightEvent.OnGuideBeforeSkillPause, self._onGuideBeforeSkillPause, self)
+		self:onDone(true)
 	end
 end
 
-function var_0_0.clearWork(arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.OnGuideBeforeSkillPause, arg_3_0._onGuideBeforeSkillPause, arg_3_0)
+function WaitGuideActionSkillPause:clearWork()
+	FightController.instance:unregisterCallback(FightEvent.OnGuideBeforeSkillPause, self._onGuideBeforeSkillPause, self)
 end
 
-return var_0_0
+return WaitGuideActionSkillPause

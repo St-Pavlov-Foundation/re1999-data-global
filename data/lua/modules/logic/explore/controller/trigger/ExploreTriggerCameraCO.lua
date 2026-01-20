@@ -1,16 +1,18 @@
-﻿module("modules.logic.explore.controller.trigger.ExploreTriggerCameraCO", package.seeall)
+﻿-- chunkname: @modules/logic/explore/controller/trigger/ExploreTriggerCameraCO.lua
 
-local var_0_0 = class("ExploreTriggerCameraCO", ExploreTriggerBase)
+module("modules.logic.explore.controller.trigger.ExploreTriggerCameraCO", package.seeall)
 
-function var_0_0.handle(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.cameraId = tonumber(arg_1_1)
+local ExploreTriggerCameraCO = class("ExploreTriggerCameraCO", ExploreTriggerBase)
 
-	ExploreController.instance:dispatchEvent(ExploreEvent.OnChangeCameraCO, arg_1_0.cameraId)
-	arg_1_0:onStepDone(true)
+function ExploreTriggerCameraCO:handle(id, unit)
+	self.cameraId = tonumber(id)
+
+	ExploreController.instance:dispatchEvent(ExploreEvent.OnChangeCameraCO, self.cameraId)
+	self:onStepDone(true)
 end
 
-function var_0_0.clearWork(arg_2_0)
+function ExploreTriggerCameraCO:clearWork()
 	return
 end
 
-return var_0_0
+return ExploreTriggerCameraCO

@@ -1,21 +1,23 @@
-﻿module("modules.logic.versionactivity1_2.yaxian.view.YaXianCollectViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/yaxian/view/YaXianCollectViewContainer.lua
 
-local var_0_0 = class("YaXianCollectViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_2.yaxian.view.YaXianCollectViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local YaXianCollectViewContainer = class("YaXianCollectViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, YaXianCollectView.New())
+function YaXianCollectViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, YaXianCollectView.New())
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function YaXianCollectViewContainer:buildTabViews(tabContainerId)
 	return
 end
 
-function var_0_0.onContainerInit(arg_3_0)
+function YaXianCollectViewContainer:onContainerInit()
 	AudioMgr.instance:trigger(AudioEnum.TeachNote.play_ui_feedback_open)
 end
 
-return var_0_0
+return YaXianCollectViewContainer

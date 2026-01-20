@@ -1,35 +1,37 @@
-﻿module("modules.logic.advance.config.TestTaskConfig", package.seeall)
+﻿-- chunkname: @modules/logic/advance/config/TestTaskConfig.lua
 
-local var_0_0 = class("TestTaskConfig", BaseConfig)
+module("modules.logic.advance.config.TestTaskConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._taskConfigs = nil
+local TestTaskConfig = class("TestTaskConfig", BaseConfig)
+
+function TestTaskConfig:ctor()
+	self._taskConfigs = nil
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function TestTaskConfig:reqConfigNames()
 	return {
 		"test_server_task"
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0._taskConfigs = arg_3_2
+function TestTaskConfig:onConfigLoaded(configName, configTable)
+	self._taskConfigs = configTable
 end
 
-function var_0_0.getTaskList(arg_4_0)
-	if arg_4_0._task_list then
-		return arg_4_0._task_list
+function TestTaskConfig:getTaskList()
+	if self._task_list then
+		return self._task_list
 	end
 
-	arg_4_0._task_list = {}
+	self._task_list = {}
 
-	for iter_4_0, iter_4_1 in pairs(arg_4_0._taskConfigs.configDict) do
-		table.insert(arg_4_0._task_list, iter_4_1)
+	for _, v in pairs(self._taskConfigs.configDict) do
+		table.insert(self._task_list, v)
 	end
 
-	return arg_4_0._task_list
+	return self._task_list
 end
 
-var_0_0.instance = var_0_0.New()
+TestTaskConfig.instance = TestTaskConfig.New()
 
-return var_0_0
+return TestTaskConfig

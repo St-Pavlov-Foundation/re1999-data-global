@@ -1,12 +1,14 @@
-﻿module("modules.logic.versionactivity2_6.xugouji.controller.gamestep.XugoujiGameStepNewCards", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/xugouji/controller/gamestep/XugoujiGameStepNewCards.lua
 
-local var_0_0 = class("XugoujiGameStepNewCards", XugoujiGameStepBase)
+module("modules.logic.versionactivity2_6.xugouji.controller.gamestep.XugoujiGameStepNewCards", package.seeall)
 
-function var_0_0.start(arg_1_0)
-	local var_1_0 = arg_1_0._stepData.cards
+local XugoujiGameStepNewCards = class("XugoujiGameStepNewCards", XugoujiGameStepBase)
+
+function XugoujiGameStepNewCards:start()
+	local newCards = self._stepData.cards
 
 	Activity188Model.instance:clearCardsInfo()
-	Activity188Model.instance:updateCardInfo(var_1_0)
+	Activity188Model.instance:updateCardInfo(newCards)
 	Activity188Model.instance:setPairCount(0, true)
 	Activity188Model.instance:setPairCount(0, false)
 	XugoujiController.instance:dispatchEvent(XugoujiEvent.GotNewCardDisplay)
@@ -15,17 +17,17 @@ function var_0_0.start(arg_1_0)
 			stepType = XugoujiEnum.GameStepType.UpdateInitialCard
 		}
 	}, true)
-	TaskDispatcher.runDelay(arg_1_0.doNewCardDisplay, arg_1_0, 0.5)
+	TaskDispatcher.runDelay(self.doNewCardDisplay, self, 0.5)
 end
 
-function var_0_0.doNewCardDisplay(arg_2_0)
+function XugoujiGameStepNewCards:doNewCardDisplay()
 	XugoujiController.instance:dispatchEvent(XugoujiEvent.NewCards)
-	TaskDispatcher.runDelay(arg_2_0.finish, arg_2_0, 0.5)
+	TaskDispatcher.runDelay(self.finish, self, 0.5)
 end
 
-function var_0_0.dispose(arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0.finish, arg_3_0)
-	XugoujiGameStepBase.dispose(arg_3_0)
+function XugoujiGameStepNewCards:dispose()
+	TaskDispatcher.cancelTask(self.finish, self)
+	XugoujiGameStepBase.dispose(self)
 end
 
-return var_0_0
+return XugoujiGameStepNewCards

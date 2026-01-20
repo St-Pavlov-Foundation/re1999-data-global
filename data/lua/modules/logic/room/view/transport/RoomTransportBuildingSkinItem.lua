@@ -1,75 +1,77 @@
-﻿module("modules.logic.room.view.transport.RoomTransportBuildingSkinItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/transport/RoomTransportBuildingSkinItem.lua
 
-local var_0_0 = class("RoomTransportBuildingSkinItem", ListScrollCellExtend)
+module("modules.logic.room.view.transport.RoomTransportBuildingSkinItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#go_content")
-	arg_1_0._imagerare = gohelper.findChildImage(arg_1_0.viewGO, "#go_content/#image_rare")
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_content/#simage_icon")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_content/#btn_click")
-	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_reddot")
-	arg_1_0._goselected = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_selected")
-	arg_1_0._golock = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_lock")
+local RoomTransportBuildingSkinItem = class("RoomTransportBuildingSkinItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomTransportBuildingSkinItem:onInitView()
+	self._gocontent = gohelper.findChild(self.viewGO, "#go_content")
+	self._imagerare = gohelper.findChildImage(self.viewGO, "#go_content/#image_rare")
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "#go_content/#simage_icon")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "#go_content/#btn_click")
+	self._goreddot = gohelper.findChild(self.viewGO, "#go_content/#go_reddot")
+	self._goselected = gohelper.findChild(self.viewGO, "#go_content/#go_selected")
+	self._golock = gohelper.findChild(self.viewGO, "#go_content/#go_lock")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+function RoomTransportBuildingSkinItem:addEvents()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
+function RoomTransportBuildingSkinItem:removeEvents()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0._btnclickOnClick(arg_4_0)
-	if arg_4_0._mo and arg_4_0._view and arg_4_0._view.viewContainer then
-		arg_4_0._view.viewContainer:dispatchEvent(RoomEvent.TransportBuildingSkinSelect, arg_4_0._mo)
+function RoomTransportBuildingSkinItem:_btnclickOnClick()
+	if self._mo and self._view and self._view.viewContainer then
+		self._view.viewContainer:dispatchEvent(RoomEvent.TransportBuildingSkinSelect, self._mo)
 	end
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function RoomTransportBuildingSkinItem:_editableInitView()
 	return
 end
 
-function var_0_0._editableAddEvents(arg_6_0)
+function RoomTransportBuildingSkinItem:_editableAddEvents()
 	return
 end
 
-function var_0_0._editableRemoveEvents(arg_7_0)
+function RoomTransportBuildingSkinItem:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
-	arg_8_0._mo = arg_8_1
+function RoomTransportBuildingSkinItem:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_8_0:_refreshUI()
+	self:_refreshUI()
 end
 
-function var_0_0.onSelect(arg_9_0, arg_9_1)
-	gohelper.setActive(arg_9_0._goselected, arg_9_1)
+function RoomTransportBuildingSkinItem:onSelect(isSelect)
+	gohelper.setActive(self._goselected, isSelect)
 end
 
-function var_0_0._refreshUI(arg_10_0)
-	local var_10_0 = arg_10_0._mo
-	local var_10_1 = var_10_0 and var_10_0.config or var_10_0.buildingCfg
+function RoomTransportBuildingSkinItem:_refreshUI()
+	local mo = self._mo
+	local cfg = mo and mo.config or mo.buildingCfg
 
-	if var_10_0 then
-		arg_10_0._simageicon:LoadImage(ResUrl.getRoomImage("building/" .. var_10_1.icon))
+	if mo then
+		self._simageicon:LoadImage(ResUrl.getRoomImage("building/" .. cfg.icon))
 
-		local var_10_2 = RoomBuildingEnum.RareFrame[var_10_1.rare] or RoomBuildingEnum.RareFrame[1]
+		local splitName = RoomBuildingEnum.RareFrame[cfg.rare] or RoomBuildingEnum.RareFrame[1]
 
-		UISpriteSetMgr.instance:setRoomSprite(arg_10_0._imagerare, var_10_2)
-		gohelper.setActive(arg_10_0._golock, var_10_0.isLock)
+		UISpriteSetMgr.instance:setRoomSprite(self._imagerare, splitName)
+		gohelper.setActive(self._golock, mo.isLock)
 	end
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function RoomTransportBuildingSkinItem:onDestroyView()
 	return
 end
 
-var_0_0.prefabPath = "ui/viewres/room/transport/roomtransportbuildingskinitem.prefab"
+RoomTransportBuildingSkinItem.prefabPath = "ui/viewres/room/transport/roomtransportbuildingskinitem.prefab"
 
-return var_0_0
+return RoomTransportBuildingSkinItem

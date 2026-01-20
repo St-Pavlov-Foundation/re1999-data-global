@@ -1,120 +1,122 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.view.Activity114FullPhotoView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/view/Activity114FullPhotoView.lua
 
-local var_0_0 = class("Activity114FullPhotoView", BaseView)
+module("modules.logic.versionactivity1_2.jiexika.view.Activity114FullPhotoView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagephoto = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_photo")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._btnleft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_leftArrow")
-	arg_1_0._btnright = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_rightArrow")
-	arg_1_0._txtname = gohelper.findChildTextMesh(arg_1_0.viewGO, "#txt_name")
-	arg_1_0._txtnameen = gohelper.findChildTextMesh(arg_1_0.viewGO, "#txt_name/#txt_nameen")
-	arg_1_0._txtpage = gohelper.findChildTextMesh(arg_1_0.viewGO, "#txt_page")
-	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "#simage_photo/#go_empty")
-	arg_1_0._animationEventWrap = arg_1_0.viewGO:GetComponent(typeof(ZProj.AnimationEventWrap))
-	arg_1_0._anim = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._image = gohelper.findChildImage(arg_1_0.viewGO, "#simage_photo")
+local Activity114FullPhotoView = class("Activity114FullPhotoView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Activity114FullPhotoView:onInitView()
+	self._simagephoto = gohelper.findChildSingleImage(self.viewGO, "#simage_photo")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._btnleft = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_leftArrow")
+	self._btnright = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_rightArrow")
+	self._txtname = gohelper.findChildTextMesh(self.viewGO, "#txt_name")
+	self._txtnameen = gohelper.findChildTextMesh(self.viewGO, "#txt_name/#txt_nameen")
+	self._txtpage = gohelper.findChildTextMesh(self.viewGO, "#txt_page")
+	self._goempty = gohelper.findChild(self.viewGO, "#simage_photo/#go_empty")
+	self._animationEventWrap = self.viewGO:GetComponent(typeof(ZProj.AnimationEventWrap))
+	self._anim = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._image = gohelper.findChildImage(self.viewGO, "#simage_photo")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0.closeThis, arg_2_0)
-	arg_2_0._btnleft:AddClickListener(arg_2_0.onLeftPhoto, arg_2_0)
-	arg_2_0._btnright:AddClickListener(arg_2_0.onRightPhoto, arg_2_0)
-	arg_2_0._animationEventWrap:AddEventListener("switch", arg_2_0.updatePhotoShow, arg_2_0)
+function Activity114FullPhotoView:addEvents()
+	self._btnclose:AddClickListener(self.closeThis, self)
+	self._btnleft:AddClickListener(self.onLeftPhoto, self)
+	self._btnright:AddClickListener(self.onRightPhoto, self)
+	self._animationEventWrap:AddEventListener("switch", self.updatePhotoShow, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnleft:RemoveClickListener()
-	arg_3_0._btnright:RemoveClickListener()
-	arg_3_0._animationEventWrap:RemoveAllEventListener()
+function Activity114FullPhotoView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btnleft:RemoveClickListener()
+	self._btnright:RemoveClickListener()
+	self._animationEventWrap:RemoveAllEventListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function Activity114FullPhotoView:_editableInitView()
 	return
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0.nowShowIndex = arg_5_0.viewParam
+function Activity114FullPhotoView:onOpen()
+	self.nowShowIndex = self.viewParam
 
-	arg_5_0:updatePhotoShow()
+	self:updatePhotoShow()
 end
 
-function var_0_0.updatePhotoShow(arg_6_0)
-	arg_6_0._animLock = nil
+function Activity114FullPhotoView:updatePhotoShow()
+	self._animLock = nil
 
-	local var_6_0 = Activity114Config.instance:getPhotoCoList(Activity114Model.instance.id)
-	local var_6_1 = var_6_0[arg_6_0.nowShowIndex]
+	local photoCo = Activity114Config.instance:getPhotoCoList(Activity114Model.instance.id)
+	local co = photoCo[self.nowShowIndex]
 
-	if Activity114Model.instance.unLockPhotoDict[arg_6_0.nowShowIndex] then
-		arg_6_0._txtname.text = var_6_1.name
-		arg_6_0._txtnameen.text = var_6_1.nameEn
+	if Activity114Model.instance.unLockPhotoDict[self.nowShowIndex] then
+		self._txtname.text = co.name
+		self._txtnameen.text = co.nameEn
 
-		gohelper.setActive(arg_6_0._goempty, false)
+		gohelper.setActive(self._goempty, false)
 
-		arg_6_0._image.enabled = true
+		self._image.enabled = true
 
-		arg_6_0._simagephoto:LoadImage(ResUrl.getVersionActivityWhiteHouse_1_2_Bg("photo/" .. var_6_0[arg_6_0.nowShowIndex].bigCg .. ".png"))
+		self._simagephoto:LoadImage(ResUrl.getVersionActivityWhiteHouse_1_2_Bg("photo/" .. photoCo[self.nowShowIndex].bigCg .. ".png"))
 	else
-		arg_6_0._txtname.text = luaLang("hero_display_level0_variant")
-		arg_6_0._txtnameen.text = ""
+		self._txtname.text = luaLang("hero_display_level0_variant")
+		self._txtnameen.text = ""
 
-		gohelper.setActive(arg_6_0._goempty, true)
+		gohelper.setActive(self._goempty, true)
 
-		arg_6_0._image.enabled = false
+		self._image.enabled = false
 	end
 
-	arg_6_0._txtpage.text = var_6_1.desc
+	self._txtpage.text = co.desc
 end
 
-function var_0_0.onLeftPhoto(arg_7_0)
-	if arg_7_0._animLock then
+function Activity114FullPhotoView:onLeftPhoto()
+	if self._animLock then
 		return
 	end
 
-	arg_7_0._animLock = true
+	self._animLock = true
 
-	local var_7_0 = arg_7_0.nowShowIndex - 1
+	local index = self.nowShowIndex - 1
 
-	if var_7_0 <= 0 then
-		var_7_0 = 9
+	if index <= 0 then
+		index = 9
 	end
 
-	arg_7_0.nowShowIndex = var_7_0
+	self.nowShowIndex = index
 
-	arg_7_0._anim:Play(UIAnimationName.Left, 0, 0)
+	self._anim:Play(UIAnimationName.Left, 0, 0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
 end
 
-function var_0_0.onRightPhoto(arg_8_0)
-	if arg_8_0._animLock then
+function Activity114FullPhotoView:onRightPhoto()
+	if self._animLock then
 		return
 	end
 
-	arg_8_0._animLock = true
+	self._animLock = true
 
-	local var_8_0 = arg_8_0.nowShowIndex + 1
+	local index = self.nowShowIndex + 1
 
-	if var_8_0 > 9 then
-		var_8_0 = 1
+	if index > 9 then
+		index = 1
 	end
 
-	arg_8_0.nowShowIndex = var_8_0
+	self.nowShowIndex = index
 
-	arg_8_0._anim:Play(UIAnimationName.Right, 0, 0)
+	self._anim:Play(UIAnimationName.Right, 0, 0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
 end
 
-function var_0_0.onClose(arg_9_0)
+function Activity114FullPhotoView:onClose()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_mail_close)
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	arg_10_0._simagephoto:UnLoadImage()
+function Activity114FullPhotoView:onDestroyView()
+	self._simagephoto:UnLoadImage()
 end
 
-return var_0_0
+return Activity114FullPhotoView

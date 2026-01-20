@@ -1,83 +1,88 @@
-﻿module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicFreeView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/music/view/VersionActivity2_4MusicFreeView.lua
 
-local var_0_0 = class("VersionActivity2_4MusicFreeView", BaseView)
+module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicFreeView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/#simage_FullBG")
-	arg_1_0._gotopleftbtn = gohelper.findChild(arg_1_0.viewGO, "root/#go_topleftbtn")
-	arg_1_0._btnremove1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/left/Title/#btn_remove1")
-	arg_1_0._btnremove2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/left/Title/#btn_remove2")
-	arg_1_0._gotranscribelist = gohelper.findChild(arg_1_0.viewGO, "root/left/scroll_transcribelist/viewport/#go_transcribe_list")
-	arg_1_0._txtstatetext = gohelper.findChildText(arg_1_0.viewGO, "root/left/bottom_btn/#txt_statetext")
-	arg_1_0._btntranscribebtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/left/bottom_btn/#btn_transcribebtn")
-	arg_1_0._btntranscribeagainbtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/left/bottom_btn/#btn_transcribe_againbtn")
-	arg_1_0._btnplaybtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/left/bottom_btn/#btn_playbtn")
-	arg_1_0._gobtngroup1 = gohelper.findChild(arg_1_0.viewGO, "root/left/bottom_btn/#go_btngroup1")
-	arg_1_0._btnpause = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/left/bottom_btn/#go_btngroup1/#btn_pause")
-	arg_1_0._btncontinue = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/left/bottom_btn/#go_btngroup1/#btn_continue")
-	arg_1_0._btndone = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/left/bottom_btn/#go_btngroup1/#btn_done")
-	arg_1_0._gobtngroup2 = gohelper.findChild(arg_1_0.viewGO, "root/left/bottom_btn/#go_btngroup2")
-	arg_1_0._btnpause2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/left/bottom_btn/#go_btngroup2/#btn_pause2")
-	arg_1_0._btncontinue2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/left/bottom_btn/#go_btngroup2/#btn_continue2")
-	arg_1_0._btnstop = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/left/bottom_btn/#go_btngroup2/#btn_stop")
-	arg_1_0._gobtngroup3 = gohelper.findChild(arg_1_0.viewGO, "root/left/bottom_btn/#go_btngroup3")
-	arg_1_0._btncanel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/left/bottom_btn/#go_btngroup3/#btn_canel")
-	arg_1_0._btndel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/left/bottom_btn/#go_btngroup3/#btn_del")
-	arg_1_0._btnaccompany = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/toprightbtn/#btn_accompany")
-	arg_1_0._btncalibration = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/toprightbtn/#btn_calibration")
-	arg_1_0._btnimmerse = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/toprightbtn/#btn_immerse")
-	arg_1_0._gomusic1 = gohelper.findChild(arg_1_0.viewGO, "root/right/#go_music1")
-	arg_1_0._gomusic2 = gohelper.findChild(arg_1_0.viewGO, "root/right/#go_music2")
-	arg_1_0._goinstruments = gohelper.findChild(arg_1_0.viewGO, "root/right/bottom/#go_instruments")
-	arg_1_0._gocountdown = gohelper.findChild(arg_1_0.viewGO, "#go_countdown")
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "#go_countdown/#txt_num")
-	arg_1_0._goleft = gohelper.findChild(arg_1_0.viewGO, "#go_left")
+local VersionActivity2_4MusicFreeView = class("VersionActivity2_4MusicFreeView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity2_4MusicFreeView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "root/#simage_FullBG")
+	self._gotopleftbtn = gohelper.findChild(self.viewGO, "root/#go_topleftbtn")
+	self._btnremove1 = gohelper.findChildButtonWithAudio(self.viewGO, "root/left/Title/#btn_remove1")
+	self._btnremove2 = gohelper.findChildButtonWithAudio(self.viewGO, "root/left/Title/#btn_remove2")
+	self._gotranscribelist = gohelper.findChild(self.viewGO, "root/left/scroll_transcribelist/viewport/#go_transcribe_list")
+	self._txtstatetext = gohelper.findChildText(self.viewGO, "root/left/bottom_btn/#txt_statetext")
+	self._btntranscribebtn = gohelper.findChildButtonWithAudio(self.viewGO, "root/left/bottom_btn/#btn_transcribebtn")
+	self._btntranscribeagainbtn = gohelper.findChildButtonWithAudio(self.viewGO, "root/left/bottom_btn/#btn_transcribe_againbtn")
+	self._btnplaybtn = gohelper.findChildButtonWithAudio(self.viewGO, "root/left/bottom_btn/#btn_playbtn")
+	self._gobtngroup1 = gohelper.findChild(self.viewGO, "root/left/bottom_btn/#go_btngroup1")
+	self._btnpause = gohelper.findChildButtonWithAudio(self.viewGO, "root/left/bottom_btn/#go_btngroup1/#btn_pause")
+	self._btncontinue = gohelper.findChildButtonWithAudio(self.viewGO, "root/left/bottom_btn/#go_btngroup1/#btn_continue")
+	self._btndone = gohelper.findChildButtonWithAudio(self.viewGO, "root/left/bottom_btn/#go_btngroup1/#btn_done")
+	self._gobtngroup2 = gohelper.findChild(self.viewGO, "root/left/bottom_btn/#go_btngroup2")
+	self._btnpause2 = gohelper.findChildButtonWithAudio(self.viewGO, "root/left/bottom_btn/#go_btngroup2/#btn_pause2")
+	self._btncontinue2 = gohelper.findChildButtonWithAudio(self.viewGO, "root/left/bottom_btn/#go_btngroup2/#btn_continue2")
+	self._btnstop = gohelper.findChildButtonWithAudio(self.viewGO, "root/left/bottom_btn/#go_btngroup2/#btn_stop")
+	self._gobtngroup3 = gohelper.findChild(self.viewGO, "root/left/bottom_btn/#go_btngroup3")
+	self._btncanel = gohelper.findChildButtonWithAudio(self.viewGO, "root/left/bottom_btn/#go_btngroup3/#btn_canel")
+	self._btndel = gohelper.findChildButtonWithAudio(self.viewGO, "root/left/bottom_btn/#go_btngroup3/#btn_del")
+	self._btnaccompany = gohelper.findChildButtonWithAudio(self.viewGO, "root/toprightbtn/#btn_accompany")
+	self._btncalibration = gohelper.findChildButtonWithAudio(self.viewGO, "root/toprightbtn/#btn_calibration")
+	self._btnimmerse = gohelper.findChildButtonWithAudio(self.viewGO, "root/toprightbtn/#btn_immerse")
+	self._gomusic1 = gohelper.findChild(self.viewGO, "root/right/#go_music1")
+	self._gomusic2 = gohelper.findChild(self.viewGO, "root/right/#go_music2")
+	self._goinstruments = gohelper.findChild(self.viewGO, "root/right/bottom/#go_instruments")
+	self._gocountdown = gohelper.findChild(self.viewGO, "#go_countdown")
+	self._txtnum = gohelper.findChildText(self.viewGO, "#go_countdown/#txt_num")
+	self._goleft = gohelper.findChild(self.viewGO, "#go_left")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnremove1:AddClickListener(arg_2_0._btnremove1OnClick, arg_2_0)
-	arg_2_0._btnremove2:AddClickListener(arg_2_0._btnremove2OnClick, arg_2_0)
-	arg_2_0._btntranscribebtn:AddClickListener(arg_2_0._btntranscribebtnOnClick, arg_2_0)
-	arg_2_0._btntranscribeagainbtn:AddClickListener(arg_2_0._btntranscribeagainbtnOnClick, arg_2_0)
-	arg_2_0._btnplaybtn:AddClickListener(arg_2_0._btnplaybtnOnClick, arg_2_0)
-	arg_2_0._btnpause:AddClickListener(arg_2_0._btnpauseOnClick, arg_2_0)
-	arg_2_0._btncontinue:AddClickListener(arg_2_0._btncontinueOnClick, arg_2_0)
-	arg_2_0._btndone:AddClickListener(arg_2_0._btndoneOnClick, arg_2_0)
-	arg_2_0._btnpause2:AddClickListener(arg_2_0._btnpause2OnClick, arg_2_0)
-	arg_2_0._btncontinue2:AddClickListener(arg_2_0._btncontinue2OnClick, arg_2_0)
-	arg_2_0._btnstop:AddClickListener(arg_2_0._btnstopOnClick, arg_2_0)
-	arg_2_0._btncanel:AddClickListener(arg_2_0._btncanelOnClick, arg_2_0)
-	arg_2_0._btndel:AddClickListener(arg_2_0._btndelOnClick, arg_2_0)
-	arg_2_0._btnaccompany:AddClickListener(arg_2_0._btnaccompanyOnClick, arg_2_0)
-	arg_2_0._btncalibration:AddClickListener(arg_2_0._btncalibrationOnClick, arg_2_0)
-	arg_2_0._btnimmerse:AddClickListener(arg_2_0._btnimmerseOnClick, arg_2_0)
+function VersionActivity2_4MusicFreeView:addEvents()
+	self._btnremove1:AddClickListener(self._btnremove1OnClick, self)
+	self._btnremove2:AddClickListener(self._btnremove2OnClick, self)
+	self._btntranscribebtn:AddClickListener(self._btntranscribebtnOnClick, self)
+	self._btntranscribeagainbtn:AddClickListener(self._btntranscribeagainbtnOnClick, self)
+	self._btnplaybtn:AddClickListener(self._btnplaybtnOnClick, self)
+	self._btnpause:AddClickListener(self._btnpauseOnClick, self)
+	self._btncontinue:AddClickListener(self._btncontinueOnClick, self)
+	self._btndone:AddClickListener(self._btndoneOnClick, self)
+	self._btnpause2:AddClickListener(self._btnpause2OnClick, self)
+	self._btncontinue2:AddClickListener(self._btncontinue2OnClick, self)
+	self._btnstop:AddClickListener(self._btnstopOnClick, self)
+	self._btncanel:AddClickListener(self._btncanelOnClick, self)
+	self._btndel:AddClickListener(self._btndelOnClick, self)
+	self._btnaccompany:AddClickListener(self._btnaccompanyOnClick, self)
+	self._btncalibration:AddClickListener(self._btncalibrationOnClick, self)
+	self._btnimmerse:AddClickListener(self._btnimmerseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnremove1:RemoveClickListener()
-	arg_3_0._btnremove2:RemoveClickListener()
-	arg_3_0._btntranscribebtn:RemoveClickListener()
-	arg_3_0._btntranscribeagainbtn:RemoveClickListener()
-	arg_3_0._btnplaybtn:RemoveClickListener()
-	arg_3_0._btnpause:RemoveClickListener()
-	arg_3_0._btncontinue:RemoveClickListener()
-	arg_3_0._btndone:RemoveClickListener()
-	arg_3_0._btnpause2:RemoveClickListener()
-	arg_3_0._btncontinue2:RemoveClickListener()
-	arg_3_0._btnstop:RemoveClickListener()
-	arg_3_0._btncanel:RemoveClickListener()
-	arg_3_0._btndel:RemoveClickListener()
-	arg_3_0._btnaccompany:RemoveClickListener()
-	arg_3_0._btncalibration:RemoveClickListener()
-	arg_3_0._btnimmerse:RemoveClickListener()
+function VersionActivity2_4MusicFreeView:removeEvents()
+	self._btnremove1:RemoveClickListener()
+	self._btnremove2:RemoveClickListener()
+	self._btntranscribebtn:RemoveClickListener()
+	self._btntranscribeagainbtn:RemoveClickListener()
+	self._btnplaybtn:RemoveClickListener()
+	self._btnpause:RemoveClickListener()
+	self._btncontinue:RemoveClickListener()
+	self._btndone:RemoveClickListener()
+	self._btnpause2:RemoveClickListener()
+	self._btncontinue2:RemoveClickListener()
+	self._btnstop:RemoveClickListener()
+	self._btncanel:RemoveClickListener()
+	self._btndel:RemoveClickListener()
+	self._btnaccompany:RemoveClickListener()
+	self._btncalibration:RemoveClickListener()
+	self._btnimmerse:RemoveClickListener()
 end
 
-function var_0_0._btnremove1OnClick(arg_4_0)
-	if VersionActivity2_4MusicFreeModel.instance:getActionStatus() == VersionActivity2_4MusicEnum.ActionStatus.Del then
+function VersionActivity2_4MusicFreeView:_btnremove1OnClick()
+	local status = VersionActivity2_4MusicFreeModel.instance:getActionStatus()
+	local isDel = status == VersionActivity2_4MusicEnum.ActionStatus.Del
+
+	if isDel then
 		return
 	end
 
@@ -88,384 +93,387 @@ function var_0_0._btnremove1OnClick(arg_4_0)
 	VersionActivity2_4MusicFreeModel.instance:setActionStatus(VersionActivity2_4MusicEnum.ActionStatus.Del)
 end
 
-function var_0_0._btnremove2OnClick(arg_5_0)
+function VersionActivity2_4MusicFreeView:_btnremove2OnClick()
 	VersionActivity2_4MusicFreeModel.instance:setActionStatus(VersionActivity2_4MusicEnum.ActionStatus.Record)
 end
 
-function var_0_0._btndelOnClick(arg_6_0)
+function VersionActivity2_4MusicFreeView:_btndelOnClick()
 	GameFacade.showMessageBox(MessageBoxIdDefine.MusicDelConfirm, MsgBoxEnum.BoxType.Yes_No, function()
 		VersionActivity2_4MusicFreeModel.instance:delTrackSelected()
 	end)
 end
 
-function var_0_0._btntranscribebtnOnClick(arg_8_0)
-	arg_8_0:_checkStartRecord()
+function VersionActivity2_4MusicFreeView:_btntranscribebtnOnClick()
+	self:_checkStartRecord()
 end
 
-function var_0_0._btntranscribeagainbtnOnClick(arg_9_0)
-	arg_9_0:_checkStartRecord()
+function VersionActivity2_4MusicFreeView:_btntranscribeagainbtnOnClick()
+	self:_checkStartRecord()
 end
 
-function var_0_0._checkStartRecord(arg_10_0)
-	local var_10_0 = VersionActivity2_4MusicFreeModel.instance:getTrackMo()
+function VersionActivity2_4MusicFreeView:_checkStartRecord()
+	local mo = VersionActivity2_4MusicFreeModel.instance:getTrackMo()
 
-	if var_10_0 and var_10_0.recordTotalTime > 0 then
+	if mo and mo.recordTotalTime > 0 then
 		GameFacade.showMessageBox(MessageBoxIdDefine.MusicReplaceConfirm, MsgBoxEnum.BoxType.Yes_No, function()
 			VersionActivity2_4MusicController.instance:stopBgm()
-			arg_10_0:_startCountDown(arg_10_0._startRecord, VersionActivity2_4MusicEnum.RecordStatus.Recording)
+			self:_startCountDown(self._startRecord, VersionActivity2_4MusicEnum.RecordStatus.Recording)
 		end)
 
 		return
 	end
 
 	VersionActivity2_4MusicController.instance:stopBgm()
-	arg_10_0:_startCountDown(arg_10_0._startRecord, VersionActivity2_4MusicEnum.RecordStatus.Recording)
+	self:_startCountDown(self._startRecord, VersionActivity2_4MusicEnum.RecordStatus.Recording)
 end
 
-function var_0_0._startRecord(arg_12_0)
+function VersionActivity2_4MusicFreeView:_startRecord()
 	VersionActivity2_4MusicController.instance:dispatchEvent(VersionActivity2_4MusicEvent.StartRecord)
 end
 
-function var_0_0._btnplaybtnOnClick(arg_13_0)
+function VersionActivity2_4MusicFreeView:_btnplaybtnOnClick()
 	VersionActivity2_4MusicController.instance:stopBgm()
 	VersionActivity2_4MusicController.instance:dispatchEvent(VersionActivity2_4MusicEvent.StartPlay)
 end
 
-function var_0_0._btnpauseOnClick(arg_14_0)
-	arg_14_0:_updateBtnStatus(VersionActivity2_4MusicEnum.RecordStatus.RecordPause)
+function VersionActivity2_4MusicFreeView:_btnpauseOnClick()
+	self:_updateBtnStatus(VersionActivity2_4MusicEnum.RecordStatus.RecordPause)
 end
 
-function var_0_0._btncontinueOnClick(arg_15_0)
-	arg_15_0:_onContinue()
+function VersionActivity2_4MusicFreeView:_btncontinueOnClick()
+	self:_onContinue()
 end
 
-function var_0_0._onContinue(arg_16_0)
-	arg_16_0:_updateBtnStatus(VersionActivity2_4MusicEnum.RecordStatus.Recording)
+function VersionActivity2_4MusicFreeView:_onContinue()
+	self:_updateBtnStatus(VersionActivity2_4MusicEnum.RecordStatus.Recording)
 	VersionActivity2_4MusicController.instance:resumeBgm()
 end
 
-function var_0_0._startCountDown(arg_17_0, arg_17_1, arg_17_2)
-	arg_17_0:_updateBtnStatus(VersionActivity2_4MusicEnum.RecordStatus.RecordReady, arg_17_2)
+function VersionActivity2_4MusicFreeView:_startCountDown(callback, nextStatus)
+	self:_updateBtnStatus(VersionActivity2_4MusicEnum.RecordStatus.RecordReady, nextStatus)
 
-	arg_17_0._countDownCallback = arg_17_1
-	arg_17_0._countDownNum = 3
+	self._countDownCallback = callback
+	self._countDownNum = 3
 
-	TaskDispatcher.cancelTask(arg_17_0._countDownHandler, arg_17_0)
-	TaskDispatcher.runRepeat(arg_17_0._countDownHandler, arg_17_0, 1)
-	arg_17_0:_countDownHandler()
+	TaskDispatcher.cancelTask(self._countDownHandler, self)
+	TaskDispatcher.runRepeat(self._countDownHandler, self, 1)
+	self:_countDownHandler()
 
-	arg_17_0._countDownId = AudioMgr.instance:trigger(AudioEnum.Bakaluoer.play_ui_diqiu_count_down)
+	self._countDownId = AudioMgr.instance:trigger(AudioEnum.Bakaluoer.play_ui_diqiu_count_down)
 end
 
-function var_0_0._countDownHandler(arg_18_0)
-	if arg_18_0._countDownNum == 0 then
-		arg_18_0._countDownId = nil
+function VersionActivity2_4MusicFreeView:_countDownHandler()
+	if self._countDownNum == 0 then
+		self._countDownId = nil
 
-		TaskDispatcher.cancelTask(arg_18_0._countDownHandler, arg_18_0)
-		arg_18_0._countDownCallback(arg_18_0)
+		TaskDispatcher.cancelTask(self._countDownHandler, self)
+		self._countDownCallback(self)
 
 		return
 	end
 
-	arg_18_0._txtnum.text = tostring(arg_18_0._countDownNum)
-	arg_18_0._countDownNum = arg_18_0._countDownNum - 1
+	self._txtnum.text = tostring(self._countDownNum)
+	self._countDownNum = self._countDownNum - 1
 end
 
-function var_0_0._btndoneOnClick(arg_19_0)
+function VersionActivity2_4MusicFreeView:_btndoneOnClick()
 	VersionActivity2_4MusicController.instance:dispatchEvent(VersionActivity2_4MusicEvent.EndRecord)
 end
 
-function var_0_0._btnpause2OnClick(arg_20_0)
-	arg_20_0:_updateBtnStatus(VersionActivity2_4MusicEnum.RecordStatus.PlayPause)
+function VersionActivity2_4MusicFreeView:_btnpause2OnClick()
+	self:_updateBtnStatus(VersionActivity2_4MusicEnum.RecordStatus.PlayPause)
 end
 
-function var_0_0._btncontinue2OnClick(arg_21_0)
-	arg_21_0:_updateBtnStatus(VersionActivity2_4MusicEnum.RecordStatus.Playing)
+function VersionActivity2_4MusicFreeView:_btncontinue2OnClick()
+	self:_updateBtnStatus(VersionActivity2_4MusicEnum.RecordStatus.Playing)
 	VersionActivity2_4MusicController.instance:resumeBgm()
 end
 
-function var_0_0._btncanelOnClick(arg_22_0)
+function VersionActivity2_4MusicFreeView:_btncanelOnClick()
 	VersionActivity2_4MusicFreeModel.instance:setActionStatus(VersionActivity2_4MusicEnum.ActionStatus.Record)
 end
 
-function var_0_0._btnaccompanyOnClick(arg_23_0)
+function VersionActivity2_4MusicFreeView:_btnaccompanyOnClick()
 	VersionActivity2_4MusicController.instance:openVersionActivity2_4MusicFreeAccompanyView()
 end
 
-function var_0_0._btncalibrationOnClick(arg_24_0)
+function VersionActivity2_4MusicFreeView:_btncalibrationOnClick()
 	VersionActivity2_4MusicController.instance:openVersionActivity2_4MusicFreeCalibrationView()
 end
 
-function var_0_0._btnimmerseOnClick(arg_25_0)
+function VersionActivity2_4MusicFreeView:_btnimmerseOnClick()
 	VersionActivity2_4MusicController.instance:openVersionActivity2_4MusicFreeImmerseView()
 end
 
-function var_0_0._btninstrument1OnClick(arg_26_0)
+function VersionActivity2_4MusicFreeView:_btninstrument1OnClick()
 	return
 end
 
-function var_0_0._btnstopOnClick(arg_27_0)
+function VersionActivity2_4MusicFreeView:_btnstopOnClick()
 	VersionActivity2_4MusicController.instance:dispatchEvent(VersionActivity2_4MusicEvent.EndPlay)
 end
 
-function var_0_0._editableInitView(arg_28_0)
-	gohelper.setActive(arg_28_0._btnaccompany, false)
+function VersionActivity2_4MusicFreeView:_editableInitView()
+	gohelper.setActive(self._btnaccompany, false)
 	VersionActivity2_4MusicFreeModel.instance:onStart()
-	arg_28_0:_updateBtnStatus(VersionActivity2_4MusicEnum.RecordStatus.Normal)
-	arg_28_0:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.StartRecord, arg_28_0._onStartRecord, arg_28_0)
-	arg_28_0:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.EndRecord, arg_28_0._onEndRecord, arg_28_0)
-	arg_28_0:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.StartPlay, arg_28_0._onStartPlay, arg_28_0)
-	arg_28_0:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.EndPlay, arg_28_0._onEndPlay, arg_28_0)
-	arg_28_0:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.ActionStatusChange, arg_28_0._onActionStatusChange, arg_28_0)
-	arg_28_0:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.TrackDelSelectedChange, arg_28_0._onTrackDelSelectedChange, arg_28_0)
-	arg_28_0:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.UpdateSelectedTrackIndex, arg_28_0._onUpdateSelectedTrackIndex, arg_28_0)
-	arg_28_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_28_0._onOpenViewCallBack, arg_28_0)
-	arg_28_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_28_0._onCloseViewFinish, arg_28_0)
+	self:_updateBtnStatus(VersionActivity2_4MusicEnum.RecordStatus.Normal)
+	self:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.StartRecord, self._onStartRecord, self)
+	self:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.EndRecord, self._onEndRecord, self)
+	self:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.StartPlay, self._onStartPlay, self)
+	self:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.EndPlay, self._onEndPlay, self)
+	self:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.ActionStatusChange, self._onActionStatusChange, self)
+	self:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.TrackDelSelectedChange, self._onTrackDelSelectedChange, self)
+	self:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.UpdateSelectedTrackIndex, self._onUpdateSelectedTrackIndex, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenViewCallBack, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 
-	arg_28_0._recordStartTime = 0
-	arg_28_0._recordTotalTime = 0
-	arg_28_0._txtstatetext.text = ""
+	self._recordStartTime = 0
+	self._recordTotalTime = 0
+	self._txtstatetext.text = ""
 end
 
-function var_0_0._onOpenViewCallBack(arg_29_0, arg_29_1)
-	if arg_29_1 == ViewName.VersionActivity2_4MusicFreeImmerseView or arg_29_1 == ViewName.VersionActivity2_4MusicFreeCalibrationView then
+function VersionActivity2_4MusicFreeView:_onOpenViewCallBack(viewName)
+	if viewName == ViewName.VersionActivity2_4MusicFreeImmerseView or viewName == ViewName.VersionActivity2_4MusicFreeCalibrationView then
 		return
 	end
 
-	if arg_29_0._isRecord then
-		arg_29_0:_updateBtnStatus(VersionActivity2_4MusicEnum.RecordStatus.RecordPause)
+	if self._isRecord then
+		self:_updateBtnStatus(VersionActivity2_4MusicEnum.RecordStatus.RecordPause)
 	end
 
-	if arg_29_0._isPlay then
-		arg_29_0:_updateBtnStatus(VersionActivity2_4MusicEnum.RecordStatus.PlayPause)
+	if self._isPlay then
+		self:_updateBtnStatus(VersionActivity2_4MusicEnum.RecordStatus.PlayPause)
 	end
 end
 
-function var_0_0._onCloseViewFinish(arg_30_0, arg_30_1)
+function VersionActivity2_4MusicFreeView:_onCloseViewFinish(viewName)
 	return
 end
 
-function var_0_0._onUpdateSelectedTrackIndex(arg_31_0)
-	arg_31_0:_updateRecordBtnStatus()
+function VersionActivity2_4MusicFreeView:_onUpdateSelectedTrackIndex()
+	self:_updateRecordBtnStatus()
 end
 
-function var_0_0._onTrackDelSelectedChange(arg_32_0)
-	local var_32_0 = VersionActivity2_4MusicFreeModel.instance:getTrackSelectedNum() > 0
+function VersionActivity2_4MusicFreeView:_onTrackDelSelectedChange()
+	local hasSelectedTrack = VersionActivity2_4MusicFreeModel.instance:getTrackSelectedNum() > 0
 
-	arg_32_0._btndel.button.interactable = var_32_0
+	self._btndel.button.interactable = hasSelectedTrack
 end
 
-function var_0_0._onActionStatusChange(arg_33_0)
-	local var_33_0 = VersionActivity2_4MusicFreeModel.instance:getActionStatus() == VersionActivity2_4MusicEnum.ActionStatus.Del
+function VersionActivity2_4MusicFreeView:_onActionStatusChange()
+	local status = VersionActivity2_4MusicFreeModel.instance:getActionStatus()
+	local isDel = status == VersionActivity2_4MusicEnum.ActionStatus.Del
 
-	arg_33_0:_updateBtnStatus(var_33_0 and VersionActivity2_4MusicEnum.RecordStatus.Del or VersionActivity2_4MusicEnum.RecordStatus.Normal)
+	self:_updateBtnStatus(isDel and VersionActivity2_4MusicEnum.RecordStatus.Del or VersionActivity2_4MusicEnum.RecordStatus.Normal)
 end
 
-function var_0_0._onStartPlay(arg_34_0)
-	arg_34_0._isPlay = true
-	arg_34_0._recordStartTime = Time.time
-	arg_34_0._recordTotalTime = 0
+function VersionActivity2_4MusicFreeView:_onStartPlay()
+	self._isPlay = true
+	self._recordStartTime = Time.time
+	self._recordTotalTime = 0
 
-	arg_34_0:_updateBtnStatus(VersionActivity2_4MusicEnum.RecordStatus.Playing)
+	self:_updateBtnStatus(VersionActivity2_4MusicEnum.RecordStatus.Playing)
 	VersionActivity2_4MusicFreeModel.instance:startPlay()
 	VersionActivity2_4MusicController.instance:playBgm(VersionActivity2_4MusicEnum.BgmPlay)
 end
 
-function var_0_0._onEndPlay(arg_35_0)
-	arg_35_0._isPlay = false
+function VersionActivity2_4MusicFreeView:_onEndPlay()
+	self._isPlay = false
 
-	arg_35_0:_updateBtnStatus(VersionActivity2_4MusicEnum.RecordStatus.Normal)
+	self:_updateBtnStatus(VersionActivity2_4MusicEnum.RecordStatus.Normal)
 	VersionActivity2_4MusicFreeModel.instance:endPlay()
 	VersionActivity2_4MusicController.instance:stopBgm()
 	VersionActivity2_4MusicFreeModel.instance:onAccompanyStatusChange()
 end
 
-function var_0_0._onStartRecord(arg_36_0)
-	arg_36_0._isRecord = true
-	arg_36_0._recordStartTime = Time.time
-	arg_36_0._recordTotalTime = 0
-	arg_36_0._skipTrackMap = {}
-	arg_36_0._skipTrackMap[VersionActivity2_4MusicFreeModel.instance:getSelectedTrackIndex()] = true
+function VersionActivity2_4MusicFreeView:_onStartRecord()
+	self._isRecord = true
+	self._recordStartTime = Time.time
+	self._recordTotalTime = 0
+	self._skipTrackMap = {}
+	self._skipTrackMap[VersionActivity2_4MusicFreeModel.instance:getSelectedTrackIndex()] = true
 
-	arg_36_0:_updateBtnStatus(VersionActivity2_4MusicEnum.RecordStatus.Recording)
+	self:_updateBtnStatus(VersionActivity2_4MusicEnum.RecordStatus.Recording)
 	VersionActivity2_4MusicFreeModel.instance:startRecord()
 	VersionActivity2_4MusicController.instance:playBgm(VersionActivity2_4MusicEnum.BgmPlay)
 end
 
-function var_0_0._onEndRecord(arg_37_0)
-	arg_37_0._isRecord = false
+function VersionActivity2_4MusicFreeView:_onEndRecord()
+	self._isRecord = false
 
 	VersionActivity2_4MusicFreeModel.instance:endRecord()
-	arg_37_0:_updateBtnStatus(VersionActivity2_4MusicEnum.RecordStatus.NormalAfterRecord)
+	self:_updateBtnStatus(VersionActivity2_4MusicEnum.RecordStatus.NormalAfterRecord)
 	VersionActivity2_4MusicController.instance:stopBgm()
 	VersionActivity2_4MusicFreeModel.instance:onAccompanyStatusChange()
 
-	local var_37_0 = Activity179Config.instance:getFreeEpisodeId()
+	local episodeId = Activity179Config.instance:getFreeEpisodeId()
 
-	Activity179Rpc.instance:sendSet179ScoreRequest(Activity179Model.instance:getActivityId(), var_37_0, 0)
+	Activity179Rpc.instance:sendSet179ScoreRequest(Activity179Model.instance:getActivityId(), episodeId, 0)
 end
 
-function var_0_0._updateRecordBtnStatus(arg_38_0)
-	local var_38_0 = VersionActivity2_4MusicFreeModel.instance:getStatus()
-	local var_38_1 = var_38_0 == VersionActivity2_4MusicEnum.RecordStatus.Normal
-	local var_38_2 = var_38_0 == VersionActivity2_4MusicEnum.RecordStatus.NormalAfterRecord
-	local var_38_3 = var_38_1 or var_38_2
-	local var_38_4 = VersionActivity2_4MusicFreeModel.instance:getTrackMo()
+function VersionActivity2_4MusicFreeView:_updateRecordBtnStatus()
+	local status = VersionActivity2_4MusicFreeModel.instance:getStatus()
+	local isNormal = status == VersionActivity2_4MusicEnum.RecordStatus.Normal
+	local isNormalAfterRecord = status == VersionActivity2_4MusicEnum.RecordStatus.NormalAfterRecord
+	local isNormalStatus = isNormal or isNormalAfterRecord
+	local mo = VersionActivity2_4MusicFreeModel.instance:getTrackMo()
 
-	gohelper.setActive(arg_38_0._btntranscribebtn, var_38_3 and var_38_4 and var_38_4.recordTotalTime <= 0)
-	gohelper.setActive(arg_38_0._btntranscribeagainbtn, var_38_3 and var_38_4 and var_38_4.recordTotalTime > 0)
+	gohelper.setActive(self._btntranscribebtn, isNormalStatus and mo and mo.recordTotalTime <= 0)
+	gohelper.setActive(self._btntranscribeagainbtn, isNormalStatus and mo and mo.recordTotalTime > 0)
 end
 
-function var_0_0._updateBtnStatus(arg_39_0, arg_39_1, arg_39_2)
-	VersionActivity2_4MusicFreeModel.instance:setStatus(arg_39_1)
+function VersionActivity2_4MusicFreeView:_updateBtnStatus(status, nextStatus)
+	VersionActivity2_4MusicFreeModel.instance:setStatus(status)
 
-	local var_39_0 = arg_39_1 == VersionActivity2_4MusicEnum.RecordStatus.Normal
-	local var_39_1 = arg_39_1 == VersionActivity2_4MusicEnum.RecordStatus.NormalAfterRecord
-	local var_39_2 = var_39_0 or var_39_1
-	local var_39_3 = arg_39_1 == VersionActivity2_4MusicEnum.RecordStatus.RecordReady
-	local var_39_4 = arg_39_1 == VersionActivity2_4MusicEnum.RecordStatus.Recording or arg_39_2 == VersionActivity2_4MusicEnum.RecordStatus.Recording
-	local var_39_5 = arg_39_1 == VersionActivity2_4MusicEnum.RecordStatus.RecordPause
-	local var_39_6 = var_39_4 or var_39_5
-	local var_39_7 = arg_39_1 == VersionActivity2_4MusicEnum.RecordStatus.Playing
-	local var_39_8 = arg_39_1 == VersionActivity2_4MusicEnum.RecordStatus.PlayPause
-	local var_39_9 = var_39_7 or var_39_8
-	local var_39_10 = arg_39_1 == VersionActivity2_4MusicEnum.RecordStatus.Del
+	local isNormal = status == VersionActivity2_4MusicEnum.RecordStatus.Normal
+	local isNormalAfterRecord = status == VersionActivity2_4MusicEnum.RecordStatus.NormalAfterRecord
+	local isNormalStatus = isNormal or isNormalAfterRecord
+	local isCountDownState = status == VersionActivity2_4MusicEnum.RecordStatus.RecordReady
+	local isRecording = status == VersionActivity2_4MusicEnum.RecordStatus.Recording or nextStatus == VersionActivity2_4MusicEnum.RecordStatus.Recording
+	local isRecordingPause = status == VersionActivity2_4MusicEnum.RecordStatus.RecordPause
+	local isRecordingStatus = isRecording or isRecordingPause
+	local isPlaying = status == VersionActivity2_4MusicEnum.RecordStatus.Playing
+	local isPlayingPause = status == VersionActivity2_4MusicEnum.RecordStatus.PlayPause
+	local isPlayingStatus = isPlaying or isPlayingPause
+	local isDel = status == VersionActivity2_4MusicEnum.RecordStatus.Del
 
-	arg_39_0:_updateRecordBtnStatus()
-	gohelper.setActive(arg_39_0._btnplaybtn, var_39_2)
-	gohelper.setActive(arg_39_0._gobtngroup1, var_39_6)
-	gohelper.setActive(arg_39_0._gobtngroup2, var_39_9)
-	gohelper.setActive(arg_39_0._gobtngroup3, var_39_10)
-	gohelper.setActive(arg_39_0._gocountdown, var_39_3)
-	gohelper.setActive(arg_39_0._btnremove2, var_39_10)
-	gohelper.setActive(arg_39_0._btnremove1, not var_39_10)
-	gohelper.setActive(arg_39_0._btndel, var_39_10)
+	self:_updateRecordBtnStatus()
+	gohelper.setActive(self._btnplaybtn, isNormalStatus)
+	gohelper.setActive(self._gobtngroup1, isRecordingStatus)
+	gohelper.setActive(self._gobtngroup2, isPlayingStatus)
+	gohelper.setActive(self._gobtngroup3, isDel)
+	gohelper.setActive(self._gocountdown, isCountDownState)
+	gohelper.setActive(self._btnremove2, isDel)
+	gohelper.setActive(self._btnremove1, not isDel)
+	gohelper.setActive(self._btndel, isDel)
 
-	if var_39_2 then
-		arg_39_0._btnplaybtn.button.interactable = VersionActivity2_4MusicFreeModel.instance:anyOneHasRecorded()
+	if isNormalStatus then
+		self._btnplaybtn.button.interactable = VersionActivity2_4MusicFreeModel.instance:anyOneHasRecorded()
 	end
 
-	arg_39_0._txtstatetext.text = ""
+	self._txtstatetext.text = ""
 
-	if var_39_3 then
-		arg_39_0._txtstatetext.text = luaLang("MusicRecordReady")
+	if isCountDownState then
+		self._txtstatetext.text = luaLang("MusicRecordReady")
 	end
 
-	if arg_39_1 == VersionActivity2_4MusicEnum.RecordStatus.Recording then
-		arg_39_0._txtstatetext.text = luaLang("MusicRecording")
+	if status == VersionActivity2_4MusicEnum.RecordStatus.Recording then
+		self._txtstatetext.text = luaLang("MusicRecording")
 	end
 
-	if var_39_5 then
-		arg_39_0._txtstatetext.text = luaLang("MusicRecordPause")
+	if isRecordingPause then
+		self._txtstatetext.text = luaLang("MusicRecordPause")
 	end
 
-	if var_39_7 then
-		arg_39_0._txtstatetext.text = luaLang("MusicPlaying")
+	if isPlaying then
+		self._txtstatetext.text = luaLang("MusicPlaying")
 	end
 
-	if var_39_8 then
-		arg_39_0._txtstatetext.text = luaLang("MusicPlayPause")
+	if isPlayingPause then
+		self._txtstatetext.text = luaLang("MusicPlayPause")
 	end
 
-	if var_39_10 then
-		arg_39_0:_onTrackDelSelectedChange()
+	if isDel then
+		self:_onTrackDelSelectedChange()
 	end
 
-	if var_39_6 then
-		gohelper.setActive(arg_39_0._btnpause, var_39_4)
-		gohelper.setActive(arg_39_0._btncontinue, var_39_5)
+	if isRecordingStatus then
+		gohelper.setActive(self._btnpause, isRecording)
+		gohelper.setActive(self._btncontinue, isRecordingPause)
 	end
 
-	if var_39_9 then
-		gohelper.setActive(arg_39_0._btnpause2, var_39_7)
-		gohelper.setActive(arg_39_0._btncontinue2, var_39_8)
+	if isPlayingStatus then
+		gohelper.setActive(self._btnpause2, isPlaying)
+		gohelper.setActive(self._btncontinue2, isPlayingPause)
 	end
 
-	arg_39_0:_recordOnStatusChange(arg_39_1)
-	arg_39_0:_bgmOnStatusChange(arg_39_1)
+	self:_recordOnStatusChange(status)
+	self:_bgmOnStatusChange(status)
 end
 
-function var_0_0._bgmOnStatusChange(arg_40_0, arg_40_1)
-	if arg_40_1 == VersionActivity2_4MusicEnum.RecordStatus.RecordPause or arg_40_1 == VersionActivity2_4MusicEnum.RecordStatus.PlayPause then
+function VersionActivity2_4MusicFreeView:_bgmOnStatusChange(status)
+	if status == VersionActivity2_4MusicEnum.RecordStatus.RecordPause or status == VersionActivity2_4MusicEnum.RecordStatus.PlayPause then
 		VersionActivity2_4MusicController.instance:pauseBgm()
 	end
 end
 
-function var_0_0._recordOnStatusChange(arg_41_0, arg_41_1)
-	TaskDispatcher.cancelTask(arg_41_0._onRecordingFrame, arg_41_0)
-	TaskDispatcher.cancelTask(arg_41_0._playFrame, arg_41_0)
+function VersionActivity2_4MusicFreeView:_recordOnStatusChange(status)
+	TaskDispatcher.cancelTask(self._onRecordingFrame, self)
+	TaskDispatcher.cancelTask(self._playFrame, self)
 
-	if arg_41_1 == VersionActivity2_4MusicEnum.RecordStatus.Recording then
-		arg_41_0._recordStartTime = Time.time
+	if status == VersionActivity2_4MusicEnum.RecordStatus.Recording then
+		self._recordStartTime = Time.time
 
-		TaskDispatcher.runRepeat(arg_41_0._onRecordingFrame, arg_41_0, 0)
-	elseif arg_41_1 == VersionActivity2_4MusicEnum.RecordStatus.RecordPause then
-		arg_41_0._recordTotalTime = arg_41_0._recordTotalTime + (Time.time - arg_41_0._recordStartTime)
+		TaskDispatcher.runRepeat(self._onRecordingFrame, self, 0)
+	elseif status == VersionActivity2_4MusicEnum.RecordStatus.RecordPause then
+		self._recordTotalTime = self._recordTotalTime + (Time.time - self._recordStartTime)
 	end
 
-	if arg_41_1 == VersionActivity2_4MusicEnum.RecordStatus.Playing then
-		arg_41_0._recordStartTime = Time.time
+	if status == VersionActivity2_4MusicEnum.RecordStatus.Playing then
+		self._recordStartTime = Time.time
 
-		TaskDispatcher.runRepeat(arg_41_0._playFrame, arg_41_0, 0)
-	elseif arg_41_1 == VersionActivity2_4MusicEnum.RecordStatus.PlayPause then
-		arg_41_0._recordTotalTime = arg_41_0._recordTotalTime + (Time.time - arg_41_0._recordStartTime)
+		TaskDispatcher.runRepeat(self._playFrame, self, 0)
+	elseif status == VersionActivity2_4MusicEnum.RecordStatus.PlayPause then
+		self._recordTotalTime = self._recordTotalTime + (Time.time - self._recordStartTime)
 	end
 end
 
-function var_0_0._onRecordingFrame(arg_42_0)
-	local var_42_0 = Time.time - arg_42_0._recordStartTime
-	local var_42_1 = arg_42_0._recordTotalTime + var_42_0
+function VersionActivity2_4MusicFreeView:_onRecordingFrame()
+	local time = Time.time - self._recordStartTime
+	local tempTotalTime = self._recordTotalTime + time
 
-	VersionActivity2_4MusicFreeModel.instance:setRecordProgressTime(var_42_1)
+	VersionActivity2_4MusicFreeModel.instance:setRecordProgressTime(tempTotalTime)
 
-	if VersionActivity2_4MusicFreeModel.instance:timeout(var_42_1) then
+	if VersionActivity2_4MusicFreeModel.instance:timeout(tempTotalTime) then
 		VersionActivity2_4MusicController.instance:dispatchEvent(VersionActivity2_4MusicEvent.EndRecord)
 
 		return
 	end
 
-	VersionActivity2_4MusicFreeModel.instance:playTrackList(arg_42_0._skipTrackMap)
-	VersionActivity2_4MusicController.instance:dispatchEvent(VersionActivity2_4MusicEvent.RecordFrame, var_42_1)
+	VersionActivity2_4MusicFreeModel.instance:playTrackList(self._skipTrackMap)
+	VersionActivity2_4MusicController.instance:dispatchEvent(VersionActivity2_4MusicEvent.RecordFrame, tempTotalTime)
 end
 
-function var_0_0._playFrame(arg_43_0)
-	local var_43_0 = Time.time - arg_43_0._recordStartTime
-	local var_43_1 = arg_43_0._recordTotalTime + var_43_0
+function VersionActivity2_4MusicFreeView:_playFrame()
+	local time = Time.time - self._recordStartTime
+	local tempTotalTime = self._recordTotalTime + time
 
-	VersionActivity2_4MusicFreeModel.instance:setRecordProgressTime(var_43_1)
+	VersionActivity2_4MusicFreeModel.instance:setRecordProgressTime(tempTotalTime)
 
-	if VersionActivity2_4MusicFreeModel.instance:playTrackList() then
+	local isFinished = VersionActivity2_4MusicFreeModel.instance:playTrackList()
+
+	if isFinished then
 		VersionActivity2_4MusicController.instance:dispatchEvent(VersionActivity2_4MusicEvent.EndPlay)
 
 		return
 	end
 
-	VersionActivity2_4MusicController.instance:dispatchEvent(VersionActivity2_4MusicEvent.PlayFrame, var_43_1)
+	VersionActivity2_4MusicController.instance:dispatchEvent(VersionActivity2_4MusicEvent.PlayFrame, tempTotalTime)
 end
 
-function var_0_0.onUpdateParam(arg_44_0)
+function VersionActivity2_4MusicFreeView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_45_0)
+function VersionActivity2_4MusicFreeView:onOpen()
 	return
 end
 
-function var_0_0.onClose(arg_46_0)
-	if arg_46_0._countDownId then
-		AudioMgr.instance:stopPlayingID(arg_46_0._countDownId)
+function VersionActivity2_4MusicFreeView:onClose()
+	if self._countDownId then
+		AudioMgr.instance:stopPlayingID(self._countDownId)
 
-		arg_46_0._countDownId = nil
+		self._countDownId = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_46_0._onRecordingFrame, arg_46_0)
-	TaskDispatcher.cancelTask(arg_46_0._playFrame, arg_46_0)
-	TaskDispatcher.cancelTask(arg_46_0._countDownHandler, arg_46_0)
+	TaskDispatcher.cancelTask(self._onRecordingFrame, self)
+	TaskDispatcher.cancelTask(self._playFrame, self)
+	TaskDispatcher.cancelTask(self._countDownHandler, self)
 	VersionActivity2_4MusicFreeModel.instance:onEnd()
 end
 
-function var_0_0.onDestroyView(arg_47_0)
+function VersionActivity2_4MusicFreeView:onDestroyView()
 	return
 end
 
-return var_0_0
+return VersionActivity2_4MusicFreeView

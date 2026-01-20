@@ -1,18 +1,20 @@
-﻿module("modules.logic.room.model.layout.RoomLayoutBgResMO", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/layout/RoomLayoutBgResMO.lua
 
-local var_0_0 = pureTable("RoomLayoutBgResMO")
+module("modules.logic.room.model.layout.RoomLayoutBgResMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.id = arg_1_1
-	arg_1_0.config = arg_1_2
+local RoomLayoutBgResMO = pureTable("RoomLayoutBgResMO")
+
+function RoomLayoutBgResMO:init(id, config)
+	self.id = id
+	self.config = config
 end
 
-function var_0_0.getName(arg_2_0)
-	return arg_2_0.config and arg_2_0.config.name
+function RoomLayoutBgResMO:getName()
+	return self.config and self.config.name
 end
 
-function var_0_0.getResPath(arg_3_0)
-	return arg_3_0.config and arg_3_0.config.coverResPath
+function RoomLayoutBgResMO:getResPath()
+	return self.config and self.config.coverResPath
 end
 
-return var_0_0
+return RoomLayoutBgResMO

@@ -1,323 +1,328 @@
-﻿module("modules.logic.versionactivity1_2.yaxian.view.game.items.YaXianInteractObject", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/yaxian/view/game/items/YaXianInteractObject.lua
 
-local var_0_0 = class("YaXianInteractObject", UserDataDispose)
-local var_0_1 = {
+module("modules.logic.versionactivity1_2.yaxian.view.game.items.YaXianInteractObject", package.seeall)
+
+local YaXianInteractObject = class("YaXianInteractObject", UserDataDispose)
+local HandlerClsMap = {
 	[YaXianGameEnum.InteractType.Player] = YaXianInteractPlayerHandle,
 	[YaXianGameEnum.InteractType.TriggerFail] = YaXianInteractTriggerFailHandle
 }
-local var_0_2 = {
+local StatusClsMap = {
 	[YaXianGameEnum.InteractType.Player] = YaXianInteractPlayerStatus,
 	[YaXianGameEnum.InteractType.Enemy] = YaXianInteractEnemyStatus
 }
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+function YaXianInteractObject:ctor(interactContainerTr)
+	self:__onInit()
 
-	arg_1_0.delete = false
-	arg_1_0.interactContainerTr = arg_1_1
+	self.delete = false
+	self.interactContainerTr = interactContainerTr
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.id = arg_2_1.id
-	arg_2_0.interactMo = arg_2_1
+function YaXianInteractObject:init(interactMo)
+	self.id = interactMo.id
+	self.interactMo = interactMo
 
-	local var_2_0 = YaXianConfig.instance:getInteractObjectCo(arg_2_0.interactMo.actId, arg_2_0.id)
+	local cfg = YaXianConfig.instance:getInteractObjectCo(self.interactMo.actId, self.id)
 
-	if var_2_0 then
-		arg_2_0.config = var_2_0
-		arg_2_0.handler = (var_0_1[var_2_0.interactType] or YaXianInteractHandleBase).New()
+	if cfg then
+		self.config = cfg
 
-		arg_2_0.handler:init(arg_2_0)
+		local handlerCls = HandlerClsMap[cfg.interactType] or YaXianInteractHandleBase
+
+		self.handler = handlerCls.New()
+
+		self.handler:init(self)
 	else
-		logError("can't find interact_object : " .. tostring(arg_2_1.actId) .. ", " .. tostring(arg_2_1.id))
+		logError("can't find interact_object : " .. tostring(interactMo.actId) .. ", " .. tostring(interactMo.id))
 	end
 
-	arg_2_0:createSceneNode()
+	self:createSceneNode()
 end
 
-function var_0_0.createSceneNode(arg_3_0)
-	arg_3_0.interactItemContainerGo = UnityEngine.GameObject.New("interact_item")
-	arg_3_0.interactItemContainerTr = arg_3_0.interactItemContainerGo.transform
+function YaXianInteractObject:createSceneNode()
+	self.interactItemContainerGo = UnityEngine.GameObject.New("interact_item")
+	self.interactItemContainerTr = self.interactItemContainerGo.transform
 
-	arg_3_0.interactItemContainerTr:SetParent(arg_3_0.interactContainerTr, false)
+	self.interactItemContainerTr:SetParent(self.interactContainerTr, false)
 end
 
-function var_0_0.loadAvatar(arg_4_0)
-	if arg_4_0.loader then
+function YaXianInteractObject:loadAvatar()
+	if self.loader then
 		return
 	end
 
-	local var_4_0 = arg_4_0:getAvatarPath()
+	local resPath = self:getAvatarPath()
 
-	if arg_4_0:isExitInteract() then
-		arg_4_0.loader = MultiAbLoader.New()
+	if self:isExitInteract() then
+		self.loader = MultiAbLoader.New()
 
-		arg_4_0.loader:addPath(YaXianGameEnum.SceneResPath.ExitDefaultPath)
+		self.loader:addPath(YaXianGameEnum.SceneResPath.ExitDefaultPath)
 
-		if not string.nilorempty(var_4_0) then
-			arg_4_0.loader:addPath(var_4_0)
+		if not string.nilorempty(resPath) then
+			self.loader:addPath(resPath)
 		end
 
-		arg_4_0.loader:startLoad(arg_4_0.onSceneObjectMultiLoadFinish, arg_4_0)
+		self.loader:startLoad(self.onSceneObjectMultiLoadFinish, self)
 
 		return
 	end
 
-	arg_4_0.loader = PrefabInstantiate.Create(arg_4_0.interactItemContainerGo)
+	self.loader = PrefabInstantiate.Create(self.interactItemContainerGo)
 
-	if not string.nilorempty(var_4_0) then
-		arg_4_0.loader:startLoad(var_4_0, arg_4_0.onSceneObjectLoadFinish, arg_4_0)
+	if not string.nilorempty(resPath) then
+		self.loader:startLoad(resPath, self.onSceneObjectLoadFinish, self)
 	end
 end
 
-function var_0_0.onSceneObjectLoadFinish(arg_5_0)
-	arg_5_0.interactGo = arg_5_0.loader:getInstGO()
+function YaXianInteractObject:onSceneObjectLoadFinish()
+	self.interactGo = self.loader:getInstGO()
 
-	arg_5_0:initInteractGo()
-	arg_5_0:getHandler():onAvatarLoaded()
-	gohelper.setLayer(arg_5_0.interactItemContainerGo, UnityLayer.Scene, true)
-	YaXianGameController.instance:dispatchEvent(YaXianEvent.OnInteractLoadDone, arg_5_0.id)
+	self:initInteractGo()
+	self:getHandler():onAvatarLoaded()
+	gohelper.setLayer(self.interactItemContainerGo, UnityLayer.Scene, true)
+	YaXianGameController.instance:dispatchEvent(YaXianEvent.OnInteractLoadDone, self.id)
 end
 
-function var_0_0.onSceneObjectMultiLoadFinish(arg_6_0)
-	local var_6_0 = arg_6_0.loader:getAssetItem(YaXianGameEnum.SceneResPath.ExitDefaultPath):GetResource()
+function YaXianInteractObject:onSceneObjectMultiLoadFinish()
+	local defaultExitPrefab = self.loader:getAssetItem(YaXianGameEnum.SceneResPath.ExitDefaultPath):GetResource()
 
-	arg_6_0.defaultExitInteractGo = gohelper.clone(var_6_0, arg_6_0.interactItemContainerGo, "default")
-	arg_6_0.goEnd = gohelper.findChild(arg_6_0.defaultExitInteractGo, "#go_end")
-	arg_6_0.goTxtEnd = gohelper.findChild(arg_6_0.defaultExitInteractGo, "#go_end/#go_txtend")
-	arg_6_0.transformEnd = arg_6_0.goEnd and arg_6_0.goEnd.transform
+	self.defaultExitInteractGo = gohelper.clone(defaultExitPrefab, self.interactItemContainerGo, "default")
+	self.goEnd = gohelper.findChild(self.defaultExitInteractGo, "#go_end")
+	self.goTxtEnd = gohelper.findChild(self.defaultExitInteractGo, "#go_end/#go_txtend")
+	self.transformEnd = self.goEnd and self.goEnd.transform
 
-	local var_6_1 = arg_6_0:getAvatarPath()
+	local resPath = self:getAvatarPath()
 
-	if not string.nilorempty(var_6_1) then
-		local var_6_2 = arg_6_0.loader:getAssetItem(var_6_1):GetResource()
+	if not string.nilorempty(resPath) then
+		local exitPrefab = self.loader:getAssetItem(resPath):GetResource()
 
-		arg_6_0.interactGo = gohelper.clone(var_6_2, arg_6_0.interactItemContainerGo)
+		self.interactGo = gohelper.clone(exitPrefab, self.interactItemContainerGo)
 
-		arg_6_0:initInteractGo()
+		self:initInteractGo()
 	end
 
-	arg_6_0:getHandler():onAvatarLoaded()
-	gohelper.setLayer(arg_6_0.interactItemContainerGo, UnityLayer.Scene, true)
-	YaXianGameController.instance:dispatchEvent(YaXianEvent.OnInteractLoadDone, arg_6_0.id)
+	self:getHandler():onAvatarLoaded()
+	gohelper.setLayer(self.interactItemContainerGo, UnityLayer.Scene, true)
+	YaXianGameController.instance:dispatchEvent(YaXianEvent.OnInteractLoadDone, self.id)
 end
 
-function var_0_0.initInteractGo(arg_7_0)
-	arg_7_0.interactGo.name = arg_7_0.id
-	arg_7_0.interactAnimator = ZProj.ProjAnimatorPlayer.Get(arg_7_0.interactGo)
+function YaXianInteractObject:initInteractGo()
+	self.interactGo.name = self.id
+	self.interactAnimator = ZProj.ProjAnimatorPlayer.Get(self.interactGo)
 
-	arg_7_0:stopAnimation()
-	arg_7_0:initDirectionNode()
+	self:stopAnimation()
+	self:initDirectionNode()
 
-	arg_7_0.iconGoContainer = gohelper.findChild(arg_7_0.interactGo, "icon")
-	arg_7_0.effectGoContainer = gohelper.findChild(arg_7_0.interactGo, "skill")
+	self.iconGoContainer = gohelper.findChild(self.interactGo, "icon")
+	self.effectGoContainer = gohelper.findChild(self.interactGo, "skill")
 
-	local var_7_0 = var_0_2[arg_7_0.config.interactType]
+	local statusCls = StatusClsMap[self.config.interactType]
 
-	if var_7_0 then
-		arg_7_0.status = var_7_0.New()
+	if statusCls then
+		self.status = statusCls.New()
 
-		arg_7_0.status:init(arg_7_0)
+		self.status:init(self)
 	end
 
-	arg_7_0.effectMgr = YaXianInteractEffect.New()
+	self.effectMgr = YaXianInteractEffect.New()
 
-	arg_7_0.effectMgr:init(arg_7_0)
+	self.effectMgr:init(self)
 
-	arg_7_0.goTop = gohelper.findChild(arg_7_0.interactGo, "tou")
-	arg_7_0.transformTop = not gohelper.isNil(arg_7_0.goTop) and arg_7_0.goTop.transform or nil
+	self.goTop = gohelper.findChild(self.interactGo, "tou")
+	self.transformTop = not gohelper.isNil(self.goTop) and self.goTop.transform or nil
 end
 
-function var_0_0.updateInteractPos(arg_8_0)
-	if arg_8_0.delete then
+function YaXianInteractObject:updateInteractPos()
+	if self.delete then
 		return
 	end
 
-	local var_8_0, var_8_1, var_8_2 = YaXianGameHelper.calcTilePosInScene(arg_8_0.interactMo.posX, arg_8_0.interactMo.posY)
+	local sceneX, sceneY, sceneZ = YaXianGameHelper.calcTilePosInScene(self.interactMo.posX, self.interactMo.posY)
 
-	transformhelper.setLocalPos(arg_8_0.interactItemContainerTr, var_8_0, var_8_1, var_8_2)
+	transformhelper.setLocalPos(self.interactItemContainerTr, sceneX, sceneY, sceneZ)
 end
 
-function var_0_0.updateInteractMo(arg_9_0, arg_9_1)
-	arg_9_0.interactMo = arg_9_1
+function YaXianInteractObject:updateInteractMo(interactMo)
+	self.interactMo = interactMo
 
-	arg_9_0:updateInteractDirection()
-	arg_9_0:updateInteractPos()
+	self:updateInteractDirection()
+	self:updateInteractPos()
 end
 
-function var_0_0.getShowPriority(arg_10_0)
-	return YaXianGameEnum.InteractShowPriority[arg_10_0.config.interactType] or YaXianGameEnum.MinShowPriority
+function YaXianInteractObject:getShowPriority()
+	return YaXianGameEnum.InteractShowPriority[self.config.interactType] or YaXianGameEnum.MinShowPriority
 end
 
-function var_0_0.updateActiveByShowPriority(arg_11_0, arg_11_1)
-	gohelper.setActive(arg_11_0.interactGo, arg_11_1 <= arg_11_0:getShowPriority())
+function YaXianInteractObject:updateActiveByShowPriority(maxPriority)
+	gohelper.setActive(self.interactGo, maxPriority <= self:getShowPriority())
 
-	if arg_11_0:isExitInteract() then
-		if arg_11_1 > arg_11_0:getShowPriority() then
-			gohelper.setActive(arg_11_0.goEnd, false)
+	if self:isExitInteract() then
+		if maxPriority > self:getShowPriority() then
+			gohelper.setActive(self.goEnd, false)
 
 			return
 		end
 
-		gohelper.setActive(arg_11_0.goEnd, true)
-		gohelper.setActive(arg_11_0.goTxtEnd, not arg_11_0.interactGo)
+		gohelper.setActive(self.goEnd, true)
+		gohelper.setActive(self.goTxtEnd, not self.interactGo)
 
-		if arg_11_0.interactGo then
-			if not gohelper.isNil(arg_11_0.transformEnd) then
-				transformhelper.setLocalPosXY(arg_11_0.transformEnd, 0, arg_11_0.transformTop and arg_11_0.transformTop.localPosition.y or 0.5)
+		if self.interactGo then
+			if not gohelper.isNil(self.transformEnd) then
+				transformhelper.setLocalPosXY(self.transformEnd, 0, self.transformTop and self.transformTop.localPosition.y or 0.5)
 			else
-				logError("transformEnd is nil, interact name : " .. tostring(arg_11_0.config and arg_11_0.config.name or "nil"))
+				logError("transformEnd is nil, interact name : " .. tostring(self.config and self.config.name or "nil"))
 			end
-		elseif not gohelper.isNil(arg_11_0.transformEnd) then
-			transformhelper.setLocalPosXY(arg_11_0.transformEnd, 0, 0)
+		elseif not gohelper.isNil(self.transformEnd) then
+			transformhelper.setLocalPosXY(self.transformEnd, 0, 0)
 		else
-			logError("transformEnd is nil, interact name : " .. tostring(arg_11_0.config and arg_11_0.config.name or "nil"))
+			logError("transformEnd is nil, interact name : " .. tostring(self.config and self.config.name or "nil"))
 		end
 	end
 end
 
-function var_0_0.updateInteractDirection(arg_12_0)
-	arg_12_0:getHandler():faceTo(arg_12_0.interactMo.direction)
+function YaXianInteractObject:updateInteractDirection()
+	self:getHandler():faceTo(self.interactMo.direction)
 end
 
-function var_0_0.setActive(arg_13_0, arg_13_1)
-	gohelper.setActive(arg_13_0.interactItemContainerGo, arg_13_1)
+function YaXianInteractObject:setActive(active)
+	gohelper.setActive(self.interactItemContainerGo, active)
 end
 
-function var_0_0.deleteSelf(arg_14_0)
-	arg_14_0.delete = true
+function YaXianInteractObject:deleteSelf()
+	self.delete = true
 
-	gohelper.setActive(arg_14_0.interactItemContainerGo, false)
+	gohelper.setActive(self.interactItemContainerGo, false)
 end
 
-function var_0_0.renewSelf(arg_15_0)
-	arg_15_0.delete = false
+function YaXianInteractObject:renewSelf()
+	self.delete = false
 
-	gohelper.setActive(arg_15_0.interactItemContainerGo, true)
-	arg_15_0:_stopAnimation()
+	gohelper.setActive(self.interactItemContainerGo, true)
+	self:_stopAnimation()
 end
 
-function var_0_0.isDelete(arg_16_0)
-	return arg_16_0.delete
+function YaXianInteractObject:isDelete()
+	return self.delete
 end
 
-function var_0_0.getAvatarPath(arg_17_0)
-	if arg_17_0.config and not string.nilorempty(arg_17_0.config.avatar) then
-		return "scenes/" .. arg_17_0.config.avatar
+function YaXianInteractObject:getAvatarPath()
+	if self.config and not string.nilorempty(self.config.avatar) then
+		return "scenes/" .. self.config.avatar
 	end
 
 	return nil
 end
 
-function var_0_0.initDirectionNode(arg_18_0)
-	arg_18_0.directionAvatarDict = arg_18_0:getUserDataTb_()
-	arg_18_0.directionAvatarDict[YaXianGameEnum.MoveDirection.Bottom] = gohelper.findChild(arg_18_0.interactGo, "cha4_" .. YaXianGameEnum.MoveDirection.Bottom)
-	arg_18_0.directionAvatarDict[YaXianGameEnum.MoveDirection.Left] = gohelper.findChild(arg_18_0.interactGo, "cha4_" .. YaXianGameEnum.MoveDirection.Left)
-	arg_18_0.directionAvatarDict[YaXianGameEnum.MoveDirection.Right] = gohelper.findChild(arg_18_0.interactGo, "cha4_" .. YaXianGameEnum.MoveDirection.Right)
-	arg_18_0.directionAvatarDict[YaXianGameEnum.MoveDirection.Top] = gohelper.findChild(arg_18_0.interactGo, "cha4_" .. YaXianGameEnum.MoveDirection.Top)
+function YaXianInteractObject:initDirectionNode()
+	self.directionAvatarDict = self:getUserDataTb_()
+	self.directionAvatarDict[YaXianGameEnum.MoveDirection.Bottom] = gohelper.findChild(self.interactGo, "cha4_" .. YaXianGameEnum.MoveDirection.Bottom)
+	self.directionAvatarDict[YaXianGameEnum.MoveDirection.Left] = gohelper.findChild(self.interactGo, "cha4_" .. YaXianGameEnum.MoveDirection.Left)
+	self.directionAvatarDict[YaXianGameEnum.MoveDirection.Right] = gohelper.findChild(self.interactGo, "cha4_" .. YaXianGameEnum.MoveDirection.Right)
+	self.directionAvatarDict[YaXianGameEnum.MoveDirection.Top] = gohelper.findChild(self.interactGo, "cha4_" .. YaXianGameEnum.MoveDirection.Top)
 end
 
-function var_0_0.getHandler(arg_19_0)
-	return arg_19_0.handler
+function YaXianInteractObject:getHandler()
+	return self.handler
 end
 
-function var_0_0.getSelectPriority(arg_20_0)
-	local var_20_0
+function YaXianInteractObject:getSelectPriority()
+	local p
 
-	if arg_20_0.config then
-		var_20_0 = YaXianGameEnum.InteractSelectPriority[arg_20_0.config.interactType]
+	if self.config then
+		p = YaXianGameEnum.InteractSelectPriority[self.config.interactType]
 	end
 
-	return var_20_0 or arg_20_0.id
+	return p or self.id
 end
 
-function var_0_0.isFighting(arg_21_0)
-	if arg_21_0.config.alertType ~= YaXianGameEnum.AlertType.FourWay then
+function YaXianInteractObject:isFighting()
+	if self.config.alertType ~= YaXianGameEnum.AlertType.FourWay then
 		return false
 	end
 
-	return arg_21_0.interactMo.alertPosList and next(arg_21_0.interactMo.alertPosList)
+	return self.interactMo.alertPosList and next(self.interactMo.alertPosList)
 end
 
-function var_0_0.isEnemy(arg_22_0)
-	return arg_22_0.config.interactType == YaXianGameEnum.InteractType.Enemy or arg_22_0.config.interactType == YaXianGameEnum.InteractType.TriggerFail
+function YaXianInteractObject:isEnemy()
+	return self.config.interactType == YaXianGameEnum.InteractType.Enemy or self.config.interactType == YaXianGameEnum.InteractType.TriggerFail
 end
 
-function var_0_0.getEffectMgr(arg_23_0)
-	return arg_23_0.effectMgr
+function YaXianInteractObject:getEffectMgr()
+	return self.effectMgr
 end
 
-function var_0_0.showEffect(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
-	if arg_24_0.effectMgr then
-		arg_24_0.effectMgr:showEffect(arg_24_1, arg_24_2, arg_24_3)
+function YaXianInteractObject:showEffect(type, doneCallback, doneCallbackObj)
+	if self.effectMgr then
+		self.effectMgr:showEffect(type, doneCallback, doneCallbackObj)
 	end
 end
 
-function var_0_0.cancelEffectTask(arg_25_0)
-	if arg_25_0.effectMgr then
-		arg_25_0.effectMgr:cancelTask()
+function YaXianInteractObject:cancelEffectTask()
+	if self.effectMgr then
+		self.effectMgr:cancelTask()
 	end
 end
 
-function var_0_0.isExitInteract(arg_26_0)
-	return arg_26_0.config.interactType == YaXianGameEnum.InteractType.TriggerVictory
+function YaXianInteractObject:isExitInteract()
+	return self.config.interactType == YaXianGameEnum.InteractType.TriggerVictory
 end
 
-function var_0_0.isPlayer(arg_27_0)
-	return arg_27_0.config.interactType == YaXianGameEnum.InteractType.Player
+function YaXianInteractObject:isPlayer()
+	return self.config.interactType == YaXianGameEnum.InteractType.Player
 end
 
-function var_0_0.playAnimation(arg_28_0, arg_28_1)
-	if arg_28_0.interactAnimator then
-		arg_28_0.currentPlayAnimationName = arg_28_1
+function YaXianInteractObject:playAnimation(aniName)
+	if self.interactAnimator then
+		self.currentPlayAnimationName = aniName
 
-		arg_28_0.interactAnimator:Play(arg_28_1)
+		self.interactAnimator:Play(aniName)
 	end
 end
 
-function var_0_0.stopAnimation(arg_29_0)
-	if string.nilorempty(arg_29_0.currentPlayAnimationName) then
-		local var_29_0 = YaXianGameEnum.CloseAnimationName[arg_29_0.currentPlayAnimationName]
+function YaXianInteractObject:stopAnimation()
+	if string.nilorempty(self.currentPlayAnimationName) then
+		local closeName = YaXianGameEnum.CloseAnimationName[self.currentPlayAnimationName]
 
-		if var_29_0 then
-			arg_29_0.interactAnimator:Play(var_29_0, arg_29_0._stopAnimation, arg_29_0)
+		if closeName then
+			self.interactAnimator:Play(closeName, self._stopAnimation, self)
 
 			return
 		end
 	end
 
-	arg_29_0:_stopAnimation()
+	self:_stopAnimation()
 end
 
-function var_0_0._stopAnimation(arg_30_0)
-	if arg_30_0.interactAnimator then
-		arg_30_0.interactAnimator:Play("idle")
+function YaXianInteractObject:_stopAnimation()
+	if self.interactAnimator then
+		self.interactAnimator:Play("idle")
 	end
 end
 
-function var_0_0.dispose(arg_31_0)
-	gohelper.setActive(arg_31_0.iconGoContainer, true)
-	gohelper.setActive(arg_31_0.interactItemContainerGo, true)
-	gohelper.destroy(arg_31_0.iconGoContainer)
-	gohelper.destroy(arg_31_0.interactItemContainerGo)
+function YaXianInteractObject:dispose()
+	gohelper.setActive(self.iconGoContainer, true)
+	gohelper.setActive(self.interactItemContainerGo, true)
+	gohelper.destroy(self.iconGoContainer)
+	gohelper.destroy(self.interactItemContainerGo)
 
-	if arg_31_0.handler ~= nil then
-		arg_31_0.handler:dispose()
+	if self.handler ~= nil then
+		self.handler:dispose()
 	end
 
-	if arg_31_0.loader then
-		arg_31_0.loader:dispose()
+	if self.loader then
+		self.loader:dispose()
 	end
 
-	if arg_31_0.status then
-		arg_31_0.status:dispose()
+	if self.status then
+		self.status:dispose()
 	end
 
-	if arg_31_0.effectMgr then
-		arg_31_0.effectMgr:dispose()
+	if self.effectMgr then
+		self.effectMgr:dispose()
 	end
 
-	arg_31_0:__onDispose()
+	self:__onDispose()
 end
 
-return var_0_0
+return YaXianInteractObject

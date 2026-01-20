@@ -1,89 +1,97 @@
-﻿module("modules.logic.fight.entity.comp.buff.FightBuffAddCardContinueChannel", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/buff/FightBuffAddCardContinueChannel.lua
 
-local var_0_0 = class("FightBuffAddCardContinueChannel")
+module("modules.logic.fight.entity.comp.buff.FightBuffAddCardContinueChannel", package.seeall)
 
-var_0_0.Count2BuffEffectName = {
+local FightBuffAddCardContinueChannel = class("FightBuffAddCardContinueChannel")
+
+FightBuffAddCardContinueChannel.Count2BuffEffectName = {
 	nil,
 	"effect2",
 	"effect3",
 	"effect4"
 }
 
-function var_0_0.onBuffStart(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.entity = arg_1_1
-	arg_1_0.buffUid = arg_1_2.uid
+function FightBuffAddCardContinueChannel:onBuffStart(entity, buffMo)
+	self.entity = entity
+	self.buffUid = buffMo.uid
 
-	FightController.instance:registerCallback(FightEvent.ALF_AddRecordCardUI, arg_1_0.onUpdateRecordCard, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.ALF_AddRecordCardUI, self.onUpdateRecordCard, self)
 
-	arg_1_0.effectRes, arg_1_0.recordCount = arg_1_0:getEffectRes(arg_1_2)
-	arg_1_0.loader = MultiAbLoader.New()
+	self.effectRes, self.recordCount = self:getEffectRes(buffMo)
+	self.loader = MultiAbLoader.New()
 
-	arg_1_0.loader:addPath(FightHelper.getEffectUrlWithLod(arg_1_0.effectRes))
-	arg_1_0.loader:startLoad(arg_1_0.createEffect, arg_1_0)
+	self.loader:addPath(FightHelper.getEffectUrlWithLod(self.effectRes))
+	self.loader:startLoad(self.createEffect, self)
 end
 
-function var_0_0.getEffectRes(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_1:getCO()
-	local var_2_1 = FightStrUtil.instance:getSplitString2Cache(var_2_0.features, true)
-	local var_2_2 = 0
+function FightBuffAddCardContinueChannel:getEffectRes(buffMo)
+	local buffCo = buffMo:getCO()
+	local featureList = FightStrUtil.instance:getSplitString2Cache(buffCo.features, true)
+	local count = 0
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_1) do
-		if iter_2_1[1] == 923 then
-			var_2_2 = iter_2_1[3]
+	for _, feature in ipairs(featureList) do
+		if feature[1] == 923 then
+			count = feature[3]
 
 			break
 		end
 	end
 
-	local var_2_3 = arg_2_0.entity:getMO().skin
+	local entityMo = self.entity:getMO()
+	local skinId = entityMo.skin
+	local co = lua_fight_sp_effect_alf_record_buff_effect.configDict[skinId]
 
-	return (lua_fight_sp_effect_alf_record_buff_effect.configDict[var_2_3] or lua_fight_sp_effect_alf_record_buff_effect.configList[1])[var_0_0.Count2BuffEffectName[var_2_2]], var_2_2
+	co = co or lua_fight_sp_effect_alf_record_buff_effect.configList[1]
+
+	local effectRes = co[FightBuffAddCardContinueChannel.Count2BuffEffectName[count]]
+
+	return effectRes, count
 end
 
-function var_0_0.createEffect(arg_3_0, arg_3_1)
-	arg_3_0.effectWrap = arg_3_0.entity.effect:addHangEffect(arg_3_0.effectRes, ModuleEnum.SpineHangPointRoot)
+function FightBuffAddCardContinueChannel:createEffect(loader)
+	self.effectWrap = self.entity.effect:addHangEffect(self.effectRes, ModuleEnum.SpineHangPointRoot)
 
-	arg_3_0.effectWrap:setLocalPos(0, 0, 0)
-	FightRenderOrderMgr.instance:onAddEffectWrap(arg_3_0.entity.id, arg_3_0.effectWrap)
-	arg_3_0.entity.buff:addLoopBuff(arg_3_0.effectWrap)
-	arg_3_0:refreshEffect()
+	self.effectWrap:setLocalPos(0, 0, 0)
+	FightRenderOrderMgr.instance:onAddEffectWrap(self.entity.id, self.effectWrap)
+	self.entity.buff:addLoopBuff(self.effectWrap)
+	self:refreshEffect()
 end
 
-function var_0_0.onBuffEnd(arg_4_0)
-	arg_4_0:clear()
+function FightBuffAddCardContinueChannel:onBuffEnd()
+	self:clear()
 end
 
-function var_0_0.clear(arg_5_0)
-	arg_5_0:resetMat()
-	arg_5_0:clearTextureLoader()
+function FightBuffAddCardContinueChannel:clear()
+	self:resetMat()
+	self:clearTextureLoader()
 
-	if arg_5_0.loader then
-		arg_5_0.loader:dispose()
+	if self.loader then
+		self.loader:dispose()
 
-		arg_5_0.loader = nil
+		self.loader = nil
 	end
 
-	if arg_5_0.effectWrap then
-		arg_5_0.entity.buff:removeLoopBuff(arg_5_0.effectWrap)
-		arg_5_0.entity.effect:removeEffect(arg_5_0.effectWrap)
-		FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_5_0.entity.id, arg_5_0.effectWrap)
+	if self.effectWrap then
+		self.entity.buff:removeLoopBuff(self.effectWrap)
+		self.entity.effect:removeEffect(self.effectWrap)
+		FightRenderOrderMgr.instance:onRemoveEffectWrap(self.entity.id, self.effectWrap)
 
-		arg_5_0.effectWrap = nil
+		self.effectWrap = nil
 	end
 
-	FightController.instance:unregisterCallback(FightEvent.ALF_AddRecordCardUI, arg_5_0.onUpdateRecordCard, arg_5_0)
+	FightController.instance:unregisterCallback(FightEvent.ALF_AddRecordCardUI, self.onUpdateRecordCard, self)
 end
 
-function var_0_0.dispose(arg_6_0)
-	arg_6_0:clear()
+function FightBuffAddCardContinueChannel:dispose()
+	self:clear()
 end
 
-function var_0_0.onUpdateRecordCard(arg_7_0)
-	arg_7_0:refreshEffect()
+function FightBuffAddCardContinueChannel:onUpdateRecordCard()
+	self:refreshEffect()
 end
 
-var_0_0.PreFix = "root/l_boli"
-var_0_0.RecordCountNameDict = {
+FightBuffAddCardContinueChannel.PreFix = "root/l_boli"
+FightBuffAddCardContinueChannel.RecordCountNameDict = {
 	[2] = {
 		"l_boli01_di",
 		"l_boli01_di03"
@@ -101,111 +109,111 @@ var_0_0.RecordCountNameDict = {
 	}
 }
 
-function var_0_0.clearTextureLoader(arg_8_0)
-	if arg_8_0.textureLoader then
-		arg_8_0.textureLoader:dispose()
+function FightBuffAddCardContinueChannel:clearTextureLoader()
+	if self.textureLoader then
+		self.textureLoader:dispose()
 
-		arg_8_0.textureLoader = nil
+		self.textureLoader = nil
 	end
 end
 
-function var_0_0.getAlfCacheSkillList(arg_9_0)
-	local var_9_0 = arg_9_0.entity.heroCustomComp and arg_9_0.entity.heroCustomComp:getCustomComp()
+function FightBuffAddCardContinueChannel:getAlfCacheSkillList()
+	local alfCustomComp = self.entity.heroCustomComp and self.entity.heroCustomComp:getCustomComp()
 
-	if var_9_0 then
-		return var_9_0:getCacheSkillList()
+	if alfCustomComp then
+		return alfCustomComp:getCacheSkillList()
 	end
 end
 
-function var_0_0.refreshEffect(arg_10_0)
-	if not arg_10_0.effectWrap then
+function FightBuffAddCardContinueChannel:refreshEffect()
+	if not self.effectWrap then
 		return
 	end
 
-	arg_10_0:clearTextureLoader()
+	self:clearTextureLoader()
 
-	arg_10_0.skillResList = arg_10_0.skillResList or {}
+	self.skillResList = self.skillResList or {}
 
-	tabletool.clear(arg_10_0.skillResList)
+	tabletool.clear(self.skillResList)
 
-	local var_10_0 = arg_10_0:getAlfCacheSkillList()
+	local cacheSkillList = self:getAlfCacheSkillList()
 
-	if not var_10_0 then
-		arg_10_0:resetMat()
-
-		return
-	end
-
-	if #var_10_0 < 2 then
-		arg_10_0:resetMat()
+	if not cacheSkillList then
+		self:resetMat()
 
 		return
 	end
 
-	arg_10_0.textureLoader = MultiAbLoader.New()
+	if #cacheSkillList < 2 then
+		self:resetMat()
 
-	for iter_10_0 = 2, #var_10_0 do
-		local var_10_1 = lua_skill.configDict[var_10_0[iter_10_0]]
-		local var_10_2 = var_10_1 and var_10_1.icon
+		return
+	end
 
-		if not string.nilorempty(var_10_2) then
-			local var_10_3 = ResUrl.getSkillIcon(var_10_2)
+	self.textureLoader = MultiAbLoader.New()
 
-			arg_10_0.textureLoader:addPath(var_10_3)
-			table.insert(arg_10_0.skillResList, var_10_3)
+	for i = 2, #cacheSkillList do
+		local skillCo = lua_skill.configDict[cacheSkillList[i]]
+		local icon = skillCo and skillCo.icon
+
+		if not string.nilorempty(icon) then
+			local fullRes = ResUrl.getSkillIcon(icon)
+
+			self.textureLoader:addPath(fullRes)
+			table.insert(self.skillResList, fullRes)
 		else
-			table.insert(arg_10_0.skillResList, nil)
+			table.insert(self.skillResList, nil)
 		end
 	end
 
-	arg_10_0.textureLoader:startLoad(arg_10_0._refreshEffect, arg_10_0)
+	self.textureLoader:startLoad(self._refreshEffect, self)
 end
 
-function var_0_0._refreshEffect(arg_11_0)
-	local var_11_0 = var_0_0.RecordCountNameDict[arg_11_0.recordCount]
-	local var_11_1 = arg_11_0.effectWrap.effectGO
+function FightBuffAddCardContinueChannel:_refreshEffect()
+	local pathList = FightBuffAddCardContinueChannel.RecordCountNameDict[self.recordCount]
+	local go = self.effectWrap.effectGO
 
-	for iter_11_0 = 1, arg_11_0.recordCount do
-		local var_11_2 = var_11_0[iter_11_0]
-		local var_11_3 = string.format("%s/%s/mask", var_0_0.PreFix, var_11_2)
-		local var_11_4 = gohelper.findChild(var_11_1, var_11_3)
-		local var_11_5 = arg_11_0.skillResList[iter_11_0]
-		local var_11_6 = var_11_5 and arg_11_0.textureLoader:getAssetItem(var_11_5)
-		local var_11_7 = var_11_6 and var_11_6:GetResource()
+	for i = 1, self.recordCount do
+		local path = pathList[i]
+		local fullPath = string.format("%s/%s/mask", FightBuffAddCardContinueChannel.PreFix, path)
+		local matGo = gohelper.findChild(go, fullPath)
+		local skillRes = self.skillResList[i]
+		local assetItem = skillRes and self.textureLoader:getAssetItem(skillRes)
+		local texture = assetItem and assetItem:GetResource()
 
-		if var_11_4 then
-			local var_11_8 = var_11_4:GetComponent(gohelper.Type_Render)
-			local var_11_9 = var_11_8 and var_11_8.material
+		if matGo then
+			local render = matGo:GetComponent(gohelper.Type_Render)
+			local mat = render and render.material
 
-			if var_11_9 then
-				var_11_9:SetTexture("_MainTex", var_11_7)
+			if mat then
+				mat:SetTexture("_MainTex", texture)
 			end
 		end
 	end
 end
 
-function var_0_0.resetMat(arg_12_0)
-	if not arg_12_0.effectWrap then
+function FightBuffAddCardContinueChannel:resetMat()
+	if not self.effectWrap then
 		return
 	end
 
-	local var_12_0 = var_0_0.RecordCountNameDict[arg_12_0.recordCount]
-	local var_12_1 = arg_12_0.effectWrap.effectGO
+	local pathList = FightBuffAddCardContinueChannel.RecordCountNameDict[self.recordCount]
+	local go = self.effectWrap.effectGO
 
-	for iter_12_0 = 1, arg_12_0.recordCount do
-		local var_12_2 = var_12_0[iter_12_0]
-		local var_12_3 = string.format("%s/%s/mask", var_0_0.PreFix, var_12_2)
-		local var_12_4 = gohelper.findChild(var_12_1, var_12_3)
+	for i = 1, self.recordCount do
+		local path = pathList[i]
+		local fullPath = string.format("%s/%s/mask", FightBuffAddCardContinueChannel.PreFix, path)
+		local matGo = gohelper.findChild(go, fullPath)
 
-		if var_12_4 then
-			local var_12_5 = var_12_4:GetComponent(gohelper.Type_Render)
-			local var_12_6 = var_12_5 and var_12_5.material
+		if matGo then
+			local render = matGo:GetComponent(gohelper.Type_Render)
+			local mat = render and render.material
 
-			if var_12_6 then
-				var_12_6:SetTexture("_MainTex", nil)
+			if mat then
+				mat:SetTexture("_MainTex", nil)
 			end
 		end
 	end
 end
 
-return var_0_0
+return FightBuffAddCardContinueChannel

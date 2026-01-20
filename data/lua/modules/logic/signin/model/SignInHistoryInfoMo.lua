@@ -1,38 +1,40 @@
-﻿module("modules.logic.signin.model.SignInHistoryInfoMo", package.seeall)
+﻿-- chunkname: @modules/logic/signin/model/SignInHistoryInfoMo.lua
 
-local var_0_0 = pureTable("SignInHistoryInfoMo")
+module("modules.logic.signin.model.SignInHistoryInfoMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.month = 1
-	arg_1_0.hasSignInDays = {}
-	arg_1_0.hasMonthCardDays = {}
-	arg_1_0.birthdayHeroIds = {}
+local SignInHistoryInfoMo = pureTable("SignInHistoryInfoMo")
+
+function SignInHistoryInfoMo:ctor()
+	self.month = 1
+	self.hasSignInDays = {}
+	self.hasMonthCardDays = {}
+	self.birthdayHeroIds = {}
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.month = arg_2_1.month
-	arg_2_0.hasSignInDays = arg_2_0:_getListInfo(arg_2_1.hasSignInDays)
-	arg_2_0.hasMonthCardDays = arg_2_0:_getListInfo(arg_2_1.hasMonthCardDays)
-	arg_2_0.birthdayHeroIds = arg_2_0:_getListInfo(arg_2_1.birthdayHeroIds)
+function SignInHistoryInfoMo:init(info)
+	self.month = info.month
+	self.hasSignInDays = self:_getListInfo(info.hasSignInDays)
+	self.hasMonthCardDays = self:_getListInfo(info.hasMonthCardDays)
+	self.birthdayHeroIds = self:_getListInfo(info.birthdayHeroIds)
 end
 
-function var_0_0._getListInfo(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = {}
-	local var_3_1 = arg_3_1 and #arg_3_1 or 0
+function SignInHistoryInfoMo:_getListInfo(originList, cls)
+	local list = {}
+	local count = originList and #originList or 0
 
-	for iter_3_0 = 1, var_3_1 do
-		local var_3_2 = arg_3_1[iter_3_0]
+	for i = 1, count do
+		local mo = originList[i]
 
-		if arg_3_2 then
-			var_3_2 = arg_3_2.New()
+		if cls then
+			mo = cls.New()
 
-			var_3_2:init(arg_3_1[iter_3_0])
+			mo:init(originList[i])
 		end
 
-		table.insert(var_3_0, var_3_2)
+		table.insert(list, mo)
 	end
 
-	return var_3_0
+	return list
 end
 
-return var_0_0
+return SignInHistoryInfoMo

@@ -1,14 +1,16 @@
-﻿module("modules.logic.fight.model.mo.FightASFDEmitterInfoMO", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/mo/FightASFDEmitterInfoMO.lua
 
-local var_0_0 = pureTable("FightASFDEmitterInfoMO")
+module("modules.logic.fight.model.mo.FightASFDEmitterInfoMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.energy = arg_1_1.energy
+local FightASFDEmitterInfoMO = pureTable("FightASFDEmitterInfoMO")
+
+function FightASFDEmitterInfoMO:init(info)
+	self.energy = info.energy
 end
 
-function var_0_0.changeEnergy(arg_2_0, arg_2_1)
-	arg_2_0.energy = arg_2_0.energy or 0
-	arg_2_0.energy = arg_2_0.energy + arg_2_1
+function FightASFDEmitterInfoMO:changeEnergy(offset)
+	self.energy = self.energy or 0
+	self.energy = self.energy + offset
 end
 
-return var_0_0
+return FightASFDEmitterInfoMO

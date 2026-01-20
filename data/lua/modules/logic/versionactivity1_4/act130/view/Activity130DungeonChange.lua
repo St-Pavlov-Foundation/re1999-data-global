@@ -1,107 +1,109 @@
-﻿module("modules.logic.versionactivity1_4.act130.view.Activity130DungeonChange", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act130/view/Activity130DungeonChange.lua
 
-local var_0_0 = class("Activity130DungeonChange", BaseView)
+module("modules.logic.versionactivity1_4.act130.view.Activity130DungeonChange", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local Activity130DungeonChange = class("Activity130DungeonChange", BaseView)
+
+function Activity130DungeonChange:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function Activity130DungeonChange:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Activity130DungeonChange:removeEvents()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_4_0)
+function Activity130DungeonChange:onUpdateParam()
 	return
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function Activity130DungeonChange:_editableInitView()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:_addEvents()
+function Activity130DungeonChange:onOpen()
+	self:_addEvents()
 
-	arg_6_0._changeRoot = gohelper.findChild(arg_6_0.viewGO, "#go_dungeonchange")
+	self._changeRoot = gohelper.findChild(self.viewGO, "#go_dungeonchange")
 
-	local var_6_0 = arg_6_0.viewContainer:getSetting().otherRes[2]
+	local path = self.viewContainer:getSetting().otherRes[2]
 
-	arg_6_0._changeGo = arg_6_0:getResInst(var_6_0, arg_6_0._changeRoot)
-	arg_6_0._changeAnimator = arg_6_0._changeGo:GetComponent(typeof(UnityEngine.Animator))
-	arg_6_0._changeAnimatorPlayer = SLFramework.AnimatorPlayer.Get(arg_6_0._changeGo)
+	self._changeGo = self:getResInst(path, self._changeRoot)
+	self._changeAnimator = self._changeGo:GetComponent(typeof(UnityEngine.Animator))
+	self._changeAnimatorPlayer = SLFramework.AnimatorPlayer.Get(self._changeGo)
 
-	gohelper.setActive(arg_6_0._changeRoot, false)
+	gohelper.setActive(self._changeRoot, false)
 end
 
-function var_0_0.onClose(arg_7_0)
+function Activity130DungeonChange:onClose()
 	return
 end
 
-function var_0_0._onNewUnlockChangeLevelScene(arg_8_0)
-	local var_8_0 = Activity130Model.instance:getNewUnlockEpisode()
+function Activity130DungeonChange:_onNewUnlockChangeLevelScene()
+	local newEpisode = Activity130Model.instance:getNewUnlockEpisode()
 
-	if var_8_0 > -1 then
-		arg_8_0:_onChangeLevelScene(var_8_0)
+	if newEpisode > -1 then
+		self:_onChangeLevelScene(newEpisode)
 	end
 end
 
-function var_0_0._onChangeLevelScene(arg_9_0, arg_9_1)
-	local var_9_0 = Activity130Model.instance:getCurEpisodeId()
+function Activity130DungeonChange:_onChangeLevelScene(episodeId)
+	local curEpisodeId = Activity130Model.instance:getCurEpisodeId()
 
-	if var_9_0 > 4 and arg_9_1 > 4 then
+	if curEpisodeId > 4 and episodeId > 4 then
 		return
 	end
 
-	if var_9_0 < 5 and arg_9_1 < 5 then
+	if curEpisodeId < 5 and episodeId < 5 then
 		return
 	end
 
-	local var_9_1 = VersionActivity1_4Enum.ActivityId.Role37
-	local var_9_2 = var_9_0 < 1 and Activity130Enum.lvSceneType.Light or Activity130Config.instance:getActivity130EpisodeCo(var_9_1, var_9_0).lvscene
+	local actId = VersionActivity1_4Enum.ActivityId.Role37
+	local curSceneType = curEpisodeId < 1 and Activity130Enum.lvSceneType.Light or Activity130Config.instance:getActivity130EpisodeCo(actId, curEpisodeId).lvscene
 
-	arg_9_0._toSceneType = arg_9_1 < 1 and Activity130Enum.lvSceneType.Light or Activity130Config.instance:getActivity130EpisodeCo(var_9_1, arg_9_1).lvscene
+	self._toSceneType = episodeId < 1 and Activity130Enum.lvSceneType.Light or Activity130Config.instance:getActivity130EpisodeCo(actId, episodeId).lvscene
 
-	gohelper.setActive(arg_9_0._changeRoot, true)
+	gohelper.setActive(self._changeRoot, true)
 
-	if arg_9_0._toSceneType == Activity130Enum.lvSceneType.Light then
-		arg_9_0._changeAnimator:Play("to_sun", 0, 0)
+	if self._toSceneType == Activity130Enum.lvSceneType.Light then
+		self._changeAnimator:Play("to_sun", 0, 0)
 
-		if arg_9_0._toSceneType ~= var_9_2 then
-			TaskDispatcher.runDelay(arg_9_0._startChangeScene, arg_9_0, 0.17)
+		if self._toSceneType ~= curSceneType then
+			TaskDispatcher.runDelay(self._startChangeScene, self, 0.17)
 		end
-	elseif arg_9_0._toSceneType == Activity130Enum.lvSceneType.Moon then
-		arg_9_0._changeAnimator:Play("to_moon", 0, 0)
+	elseif self._toSceneType == Activity130Enum.lvSceneType.Moon then
+		self._changeAnimator:Play("to_moon", 0, 0)
 
-		if arg_9_0._toSceneType ~= var_9_2 then
-			TaskDispatcher.runDelay(arg_9_0._startChangeScene, arg_9_0, 0.17)
+		if self._toSceneType ~= curSceneType then
+			TaskDispatcher.runDelay(self._startChangeScene, self, 0.17)
 		end
 	end
 end
 
-function var_0_0._startChangeScene(arg_10_0)
-	arg_10_0.viewContainer:changeLvScene(arg_10_0._toSceneType)
-	TaskDispatcher.runDelay(arg_10_0._aniFinished, arg_10_0, 0.83)
+function Activity130DungeonChange:_startChangeScene()
+	self.viewContainer:changeLvScene(self._toSceneType)
+	TaskDispatcher.runDelay(self._aniFinished, self, 0.83)
 end
 
-function var_0_0._aniFinished(arg_11_0)
-	gohelper.setActive(arg_11_0._changeRoot, false)
+function Activity130DungeonChange:_aniFinished()
+	gohelper.setActive(self._changeRoot, false)
 end
 
-function var_0_0._addEvents(arg_12_0)
+function Activity130DungeonChange:_addEvents()
 	return
 end
 
-function var_0_0._removeEvents(arg_13_0)
+function Activity130DungeonChange:_removeEvents()
 	return
 end
 
-function var_0_0.onDestroyView(arg_14_0)
-	arg_14_0:_removeEvents()
+function Activity130DungeonChange:onDestroyView()
+	self:_removeEvents()
 end
 
-return var_0_0
+return Activity130DungeonChange

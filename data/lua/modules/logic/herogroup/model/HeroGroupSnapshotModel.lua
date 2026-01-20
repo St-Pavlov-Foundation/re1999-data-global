@@ -1,196 +1,201 @@
-﻿module("modules.logic.herogroup.model.HeroGroupSnapshotModel", package.seeall)
+﻿-- chunkname: @modules/logic/herogroup/model/HeroGroupSnapshotModel.lua
 
-local var_0_0 = class("HeroGroupSnapshotModel", BaseModel)
+module("modules.logic.herogroup.model.HeroGroupSnapshotModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local HeroGroupSnapshotModel = class("HeroGroupSnapshotModel", BaseModel)
+
+function HeroGroupSnapshotModel:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0.curSnapshotId = nil
-	arg_2_0.curGroupIds = nil
-	arg_2_0.customSelectDict = {}
+function HeroGroupSnapshotModel:reInit()
+	self.curSnapshotId = nil
+	self.curGroupIds = nil
+	self.customSelectDict = {}
 end
 
-function var_0_0.onReceiveGetHeroGroupSnapshotListReply(arg_3_0, arg_3_1)
-	if not arg_3_1 then
+function HeroGroupSnapshotModel:onReceiveGetHeroGroupSnapshotListReply(info)
+	if not info then
 		return
 	end
 
-	for iter_3_0 = 1, #arg_3_1.heroGroupSnapshots do
-		arg_3_0:updateHeroGroupSnapshot(arg_3_1.heroGroupSnapshots[iter_3_0])
+	for i = 1, #info.heroGroupSnapshots do
+		self:updateHeroGroupSnapshot(info.heroGroupSnapshots[i])
 	end
 end
 
-function var_0_0.updateHeroGroupSnapshot(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0:getById(arg_4_1.snapshotId)
+function HeroGroupSnapshotModel:updateHeroGroupSnapshot(info)
+	local mo = self:getById(info.snapshotId)
 
-	if not var_4_0 then
-		var_4_0 = HeroGroupSnapshotMo.New()
+	if not mo then
+		mo = HeroGroupSnapshotMo.New()
 
-		var_4_0:init(arg_4_1.snapshotId)
-		arg_4_0:addAtLast(var_4_0)
+		mo:init(info.snapshotId)
+		self:addAtLast(mo)
 	end
 
-	var_4_0:updateGroupInfoList(arg_4_1.heroGroupSnapshots)
-	var_4_0:updateSortSubIds(arg_4_1.sortSubIds)
+	mo:updateGroupInfoList(info.heroGroupSnapshots)
+	mo:updateSortSubIds(info.sortSubIds)
 end
 
-function var_0_0.updateSortSubIds(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = arg_5_0:getById(arg_5_1)
+function HeroGroupSnapshotModel:updateSortSubIds(snapshotId, sortSubIds)
+	local mo = self:getById(snapshotId)
 
-	return var_5_0 and var_5_0:updateSortSubIds(arg_5_2)
+	return mo and mo:updateSortSubIds(sortSubIds)
 end
 
-function var_0_0.getSortSubIds(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0:getById(arg_6_1)
+function HeroGroupSnapshotModel:getSortSubIds(snapshotId)
+	local mo = self:getById(snapshotId)
 
-	return var_6_0 and var_6_0:getSortSubIds() or {}
+	return mo and mo:getSortSubIds() or {}
 end
 
-function var_0_0.getHeroGroupSnapshotList(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0:getById(arg_7_1)
+function HeroGroupSnapshotModel:getHeroGroupSnapshotList(snapshotId)
+	local mo = self:getById(snapshotId)
 
-	return var_7_0 and var_7_0:getHeroGroupSnapshotList()
+	return mo and mo:getHeroGroupSnapshotList()
 end
 
-function var_0_0.getHeroGroupInfo(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	local var_8_0 = arg_8_0:getById(arg_8_1)
+function HeroGroupSnapshotModel:getHeroGroupInfo(snapshotId, groupId, create)
+	local mo = self:getById(snapshotId)
 
-	return var_8_0 and var_8_0:getHeroGroupInfo(arg_8_2, arg_8_3)
+	return mo and mo:getHeroGroupInfo(groupId, create)
 end
 
-function var_0_0.updateHeroGroupInfo(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	local var_9_0 = arg_9_0:getById(arg_9_1)
+function HeroGroupSnapshotModel:updateHeroGroupInfo(snapshotId, groupId, info)
+	local mo = self:getById(snapshotId)
 
-	return var_9_0 and var_9_0:updateGroupInfoByGroupId(arg_9_3, arg_9_2)
+	return mo and mo:updateGroupInfoByGroupId(info, groupId)
 end
 
-function var_0_0.removeHeroGroup(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = arg_10_0:getById(arg_10_1)
+function HeroGroupSnapshotModel:removeHeroGroup(snapshotId, groupId)
+	local mo = self:getById(snapshotId)
 
-	return var_10_0 and var_10_0:removeHeroGroup(arg_10_2)
+	return mo and mo:removeHeroGroup(groupId)
 end
 
-function var_0_0.addHeroGroup(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	local var_11_0 = arg_11_0:getById(arg_11_1)
+function HeroGroupSnapshotModel:addHeroGroup(snapshotId, groupId, heroMo)
+	local mo = self:getById(snapshotId)
 
-	return var_11_0 and var_11_0:addHeroGroup(arg_11_2, arg_11_3)
+	return mo and mo:addHeroGroup(groupId, heroMo)
 end
 
-function var_0_0.getHeroGroupName(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = arg_12_0:getHeroGroupInfo(arg_12_1, arg_12_2)
+function HeroGroupSnapshotModel:getHeroGroupName(snapshotId, groupId)
+	local info = self:getHeroGroupInfo(snapshotId, groupId)
 
-	return var_12_0 and var_12_0.name
+	return info and info.name
 end
 
-function var_0_0.setHeroGroupName(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	local var_13_0 = arg_13_0:getHeroGroupInfo(arg_13_1, arg_13_2)
+function HeroGroupSnapshotModel:setHeroGroupName(id, groupId, name)
+	local info = self:getHeroGroupInfo(id, groupId)
 
-	if var_13_0 then
-		var_13_0.name = arg_13_3
+	if info then
+		info.name = name
 	end
 end
 
-function var_0_0.setParam(arg_14_0, arg_14_1)
-	local var_14_0, var_14_1 = HeroGroupHandler.getSnapShot(arg_14_1)
+function HeroGroupSnapshotModel:setParam(episodeId)
+	local snapshotId, groupIds = HeroGroupHandler.getSnapShot(episodeId)
 
-	arg_14_0.curSnapshotId = var_14_0
-	arg_14_0.curGroupIds = var_14_1
-	arg_14_0.episodeId = arg_14_1
+	self.curSnapshotId = snapshotId
+	self.curGroupIds = groupIds
+	self.episodeId = episodeId
 end
 
-function var_0_0.getCurSnapshotId(arg_15_0)
-	return arg_15_0.curSnapshotId
+function HeroGroupSnapshotModel:getCurSnapshotId()
+	return self.curSnapshotId
 end
 
-function var_0_0.getCurGroupId(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_0:getSelectIndex(arg_16_1)
+function HeroGroupSnapshotModel:getCurGroupId(snapshotId)
+	local index = self:getSelectIndex(snapshotId)
 
-	arg_16_1 = arg_16_1 or arg_16_0.curSnapshotId
+	snapshotId = snapshotId or self.curSnapshotId
 
-	if HeroGroupPresetController.snapshotUsePreset(arg_16_1) then
-		return var_16_0
+	if HeroGroupPresetController.snapshotUsePreset(snapshotId) then
+		return index
 	end
 
-	return arg_16_0.curGroupIds[var_16_0]
+	return self.curGroupIds[index]
 end
 
-function var_0_0.getCurGroup(arg_17_0)
-	local var_17_0 = arg_17_0:getCurGroupId(arg_17_0.curSnapshotId)
+function HeroGroupSnapshotModel:getCurGroup()
+	local groupId = self:getCurGroupId(self.curSnapshotId)
+	local info = self:getHeroGroupInfo(self.curSnapshotId, groupId, true)
 
-	return (arg_17_0:getHeroGroupInfo(arg_17_0.curSnapshotId, var_17_0, true))
+	return info
 end
 
-function var_0_0.getCurGroupList(arg_18_0)
-	return (arg_18_0:getHeroGroupSnapshotList(arg_18_0.curSnapshotId))
+function HeroGroupSnapshotModel:getCurGroupList()
+	local info = self:getHeroGroupSnapshotList(self.curSnapshotId)
+
+	return info
 end
 
-function var_0_0.setSelectIndex(arg_19_0, arg_19_1, arg_19_2)
-	arg_19_1 = arg_19_1 or arg_19_0.curSnapshotId
+function HeroGroupSnapshotModel:setSelectIndex(snapshotId, index)
+	snapshotId = snapshotId or self.curSnapshotId
 
-	if arg_19_1 == ModuleEnum.HeroGroupSnapshotType.TowerPermanentAndLimit then
-		local var_19_0 = DungeonConfig.instance:getEpisodeCO(arg_19_0.episodeId)
-		local var_19_1 = var_19_0 and var_19_0.type or 0
+	if snapshotId == ModuleEnum.HeroGroupSnapshotType.TowerPermanentAndLimit then
+		local episdoeConfig = DungeonConfig.instance:getEpisodeCO(self.episodeId)
+		local episodeType = episdoeConfig and episdoeConfig.type or 0
 
-		if arg_19_0.customSelectDict[var_19_1] == arg_19_2 then
+		if self.customSelectDict[episodeType] == index then
 			return false
 		end
 
-		arg_19_0.customSelectDict[var_19_1] = arg_19_2
+		self.customSelectDict[episodeType] = index
 
 		return true
 	end
 
-	local var_19_2 = arg_19_0:getById(arg_19_1)
+	local mo = self:getById(snapshotId)
 
-	if var_19_2 then
-		return var_19_2:setSelectIndex(arg_19_2)
+	if mo then
+		return mo:setSelectIndex(index)
 	end
 end
 
-function var_0_0.getSelectIndex(arg_20_0, arg_20_1)
-	arg_20_1 = arg_20_1 or arg_20_0.curSnapshotId
+function HeroGroupSnapshotModel:getSelectIndex(snapshotId)
+	snapshotId = snapshotId or self.curSnapshotId
 
-	if arg_20_1 == ModuleEnum.HeroGroupSnapshotType.TowerPermanentAndLimit then
-		local var_20_0 = DungeonConfig.instance:getEpisodeCO(arg_20_0.episodeId)
-		local var_20_1 = var_20_0 and var_20_0.type or 0
+	if snapshotId == ModuleEnum.HeroGroupSnapshotType.TowerPermanentAndLimit then
+		local episdoeConfig = DungeonConfig.instance:getEpisodeCO(self.episodeId)
+		local episodeType = episdoeConfig and episdoeConfig.type or 0
 
-		if arg_20_0.customSelectDict[var_20_1] == nil then
-			arg_20_0.customSelectDict[var_20_1] = 1
+		if self.customSelectDict[episodeType] == nil then
+			self.customSelectDict[episodeType] = 1
 		end
 
-		local var_20_2 = arg_20_0.customSelectDict[var_20_1]
+		local selectIndex = self.customSelectDict[episodeType]
 
-		if HeroGroupPresetController.snapshotUsePreset(arg_20_1) then
-			var_20_2 = HeroGroupPresetHeroGroupSelectIndexController.instance:getSnapshotTypeSelectedIndex(arg_20_1, var_20_2)
+		if HeroGroupPresetController.snapshotUsePreset(snapshotId) then
+			selectIndex = HeroGroupPresetHeroGroupSelectIndexController.instance:getSnapshotTypeSelectedIndex(snapshotId, selectIndex)
 		end
 
-		return var_20_2
+		return selectIndex
 	end
 
-	local var_20_3 = arg_20_0:getById(arg_20_1)
+	local mo = self:getById(snapshotId)
 
-	if var_20_3 then
-		return var_20_3:getSelectIndex()
-	end
-end
-
-function var_0_0.getGroupName(arg_21_0)
-	local var_21_0 = arg_21_0:getCurGroupId()
-	local var_21_1 = arg_21_0:getHeroGroupInfo(arg_21_0.curSnapshotId, var_21_0)
-
-	return var_21_1 and var_21_1.name
-end
-
-function var_0_0.setGroupName(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
-	local var_22_0 = arg_22_0:getHeroGroupInfo(arg_22_1, arg_22_2)
-
-	if var_22_0 then
-		var_22_0.name = arg_22_3
+	if mo then
+		return mo:getSelectIndex()
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+function HeroGroupSnapshotModel:getGroupName()
+	local groupId = self:getCurGroupId()
+	local info = self:getHeroGroupInfo(self.curSnapshotId, groupId)
 
-return var_0_0
+	return info and info.name
+end
+
+function HeroGroupSnapshotModel:setGroupName(id, groupId, name)
+	local info = self:getHeroGroupInfo(id, groupId)
+
+	if info then
+		info.name = name
+	end
+end
+
+HeroGroupSnapshotModel.instance = HeroGroupSnapshotModel.New()
+
+return HeroGroupSnapshotModel

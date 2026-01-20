@@ -1,84 +1,89 @@
-﻿module("modules.logic.fight.entity.pool.FightSpinePool", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/pool/FightSpinePool.lua
 
-local var_0_0 = class("FightSpinePool")
-local var_0_1 = {}
-local var_0_2 = {}
+module("modules.logic.fight.entity.pool.FightSpinePool", package.seeall)
 
-function var_0_0.getSpine(arg_1_0)
-	local var_1_0 = var_0_1[arg_1_0]
+local FightSpinePool = class("FightSpinePool")
+local _poolDict = {}
+local _assetItemDict = {}
 
-	if not var_1_0 then
-		var_1_0 = LuaObjPool.New(3, function()
-			local var_2_0 = var_0_2[arg_1_0]
+function FightSpinePool.getSpine(url)
+	local pool = _poolDict[url]
 
-			if var_2_0 then
-				local var_2_1 = var_2_0:GetResource()
+	if not pool then
+		pool = LuaObjPool.New(3, function()
+			local assetItem = _assetItemDict[url]
 
-				return (gohelper.clone(var_2_1))
+			if assetItem then
+				local prefab = assetItem:GetResource()
+				local go = gohelper.clone(prefab)
+
+				return go
 			end
-		end, var_0_0._releaseFunc, var_0_0._resetFunc)
-		var_0_1[arg_1_0] = var_1_0
+		end, FightSpinePool._releaseFunc, FightSpinePool._resetFunc)
+		_poolDict[url] = pool
 	end
 
-	return (var_1_0:getObject())
+	local spineGO = pool:getObject()
+
+	return spineGO
 end
 
-function var_0_0.putSpine(arg_3_0, arg_3_1)
-	local var_3_0 = var_0_1[arg_3_0]
+function FightSpinePool.putSpine(url, spineGO)
+	local pool = _poolDict[url]
 
-	if var_3_0 then
-		var_3_0:putObject(arg_3_1)
-	end
-end
-
-function var_0_0.setAssetItem(arg_4_0, arg_4_1)
-	var_0_2[arg_4_0] = arg_4_1
-end
-
-function var_0_0.dispose()
-	for iter_5_0, iter_5_1 in pairs(var_0_1) do
-		var_0_0.releaseUrl(iter_5_0)
-	end
-
-	for iter_5_2, iter_5_3 in pairs(var_0_2) do
-		var_0_2[iter_5_2] = nil
-	end
-
-	var_0_1 = {}
-	var_0_2 = {}
-end
-
-function var_0_0._releaseFunc(arg_6_0)
-	if arg_6_0 then
-		gohelper.destroy(arg_6_0)
+	if pool then
+		pool:putObject(spineGO)
 	end
 end
 
-function var_0_0._resetFunc(arg_7_0)
-	if arg_7_0 then
-		gohelper.setActive(arg_7_0, false)
+function FightSpinePool.setAssetItem(url, assetItem)
+	_assetItemDict[url] = assetItem
+end
 
-		local var_7_0 = GameSceneMgr.instance:getScene(SceneType.Fight).entityMgr:getEntityContainer()
+function FightSpinePool.dispose()
+	for url, pool in pairs(_poolDict) do
+		FightSpinePool.releaseUrl(url)
+	end
 
-		gohelper.addChild(var_7_0, arg_7_0)
-		transformhelper.setLocalPos(arg_7_0.transform, 0, 0, 0)
-		transformhelper.setLocalScale(arg_7_0.transform, 1, 1, 1)
-		transformhelper.setLocalRotation(arg_7_0.transform, 0, 0, 0)
+	for url, assetItem in pairs(_assetItemDict) do
+		_assetItemDict[url] = nil
+	end
+
+	_poolDict = {}
+	_assetItemDict = {}
+end
+
+function FightSpinePool._releaseFunc(spineGO)
+	if spineGO then
+		gohelper.destroy(spineGO)
 	end
 end
 
-function var_0_0.releaseUrl(arg_8_0)
-	local var_8_0 = var_0_1 and var_0_1[arg_8_0]
+function FightSpinePool._resetFunc(spineGO)
+	if spineGO then
+		gohelper.setActive(spineGO, false)
 
-	if var_8_0 then
-		var_8_0:dispose()
+		local container = GameSceneMgr.instance:getScene(SceneType.Fight).entityMgr:getEntityContainer()
 
-		var_0_1[arg_8_0] = nil
-	end
-
-	if var_0_2 and var_0_2[arg_8_0] then
-		var_0_2[arg_8_0] = nil
+		gohelper.addChild(container, spineGO)
+		transformhelper.setLocalPos(spineGO.transform, 0, 0, 0)
+		transformhelper.setLocalScale(spineGO.transform, 1, 1, 1)
+		transformhelper.setLocalRotation(spineGO.transform, 0, 0, 0)
 	end
 end
 
-return var_0_0
+function FightSpinePool.releaseUrl(url)
+	local pool = _poolDict and _poolDict[url]
+
+	if pool then
+		pool:dispose()
+
+		_poolDict[url] = nil
+	end
+
+	if _assetItemDict and _assetItemDict[url] then
+		_assetItemDict[url] = nil
+	end
+end
+
+return FightSpinePool

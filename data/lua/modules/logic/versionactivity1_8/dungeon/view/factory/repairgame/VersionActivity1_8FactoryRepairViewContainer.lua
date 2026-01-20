@@ -1,48 +1,50 @@
-﻿module("modules.logic.versionactivity1_8.dungeon.view.factory.repairgame.VersionActivity1_8FactoryRepairViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_8/dungeon/view/factory/repairgame/VersionActivity1_8FactoryRepairViewContainer.lua
 
-local var_0_0 = class("VersionActivity1_8FactoryRepairViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_8.dungeon.view.factory.repairgame.VersionActivity1_8FactoryRepairViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = VersionActivity1_8FactoryRepairView.New()
+local VersionActivity1_8FactoryRepairViewContainer = class("VersionActivity1_8FactoryRepairViewContainer", BaseViewContainer)
 
-	arg_1_0._gameMap = VersionActivity1_8FactoryRepairGameMap.New()
+function VersionActivity1_8FactoryRepairViewContainer:buildViews()
+	local repairView = VersionActivity1_8FactoryRepairView.New()
 
-	local var_1_1 = VersionActivity1_8FactoryRepairPieceView.New()
+	self._gameMap = VersionActivity1_8FactoryRepairGameMap.New()
+
+	local pieceView = VersionActivity1_8FactoryRepairPieceView.New()
 
 	return {
-		var_1_0,
-		arg_1_0._gameMap,
-		var_1_1,
+		repairView,
+		self._gameMap,
+		pieceView,
 		TabViewGroup.New(1, "#go_BackBtns")
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	local var_2_0 = NavigateButtonsView.New({
+function VersionActivity1_8FactoryRepairViewContainer:buildTabViews(tabContainerId)
+	local navigateView = NavigateButtonsView.New({
 		true,
 		false,
 		false
 	})
 
 	return {
-		var_2_0
+		navigateView
 	}
 end
 
-function var_0_0.getPipes(arg_3_0)
-	return arg_3_0._gameMap
+function VersionActivity1_8FactoryRepairViewContainer:getPipes()
+	return self._gameMap
 end
 
-function var_0_0.getPipesXYByPosition(arg_4_0, arg_4_1)
-	return arg_4_0._gameMap:getXYByPosition(arg_4_1)
+function VersionActivity1_8FactoryRepairViewContainer:getPipesXYByPosition(position)
+	return self._gameMap:getXYByPosition(position)
 end
 
-function var_0_0.onContainerInit(arg_5_0)
+function VersionActivity1_8FactoryRepairViewContainer:onContainerInit()
 	VersionActivity1_8StatController.instance:startStat()
 end
 
-function var_0_0.onContainerClose(arg_6_0)
+function VersionActivity1_8FactoryRepairViewContainer:onContainerClose()
 	VersionActivity1_8StatController.instance:statAbort()
 end
 
-return var_0_0
+return VersionActivity1_8FactoryRepairViewContainer

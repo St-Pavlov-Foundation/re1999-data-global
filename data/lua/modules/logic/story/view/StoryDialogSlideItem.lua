@@ -1,86 +1,88 @@
-﻿module("modules.logic.story.view.StoryDialogSlideItem", package.seeall)
+﻿-- chunkname: @modules/logic/story/view/StoryDialogSlideItem.lua
 
-local var_0_0 = class("StoryDialogSlideItem")
+module("modules.logic.story.view.StoryDialogSlideItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	local var_1_0 = ViewMgr.instance:getContainer(ViewName.StoryView)
-	local var_1_1 = var_1_0:getSetting().otherRes[3]
+local StoryDialogSlideItem = class("StoryDialogSlideItem")
 
-	arg_1_0._dialogGo = var_1_0:getResInst(var_1_1, arg_1_1)
-	arg_1_0._simagedialog = gohelper.findChildSingleImage(arg_1_0._dialogGo, "#simage_dialog")
-	arg_1_0._imagedialog = gohelper.findChildImage(arg_1_0._dialogGo, "#simage_dialog")
+function StoryDialogSlideItem:init(go)
+	local viewContainer = ViewMgr.instance:getContainer(ViewName.StoryView)
+	local itemPath = viewContainer:getSetting().otherRes[3]
+
+	self._dialogGo = viewContainer:getResInst(itemPath, go)
+	self._simagedialog = gohelper.findChildSingleImage(self._dialogGo, "#simage_dialog")
+	self._imagedialog = gohelper.findChildImage(self._dialogGo, "#simage_dialog")
 end
 
-function var_0_0.clearSlideDialog(arg_2_0)
-	arg_2_0._callback = nil
-	arg_2_0._callbackObj = nil
+function StoryDialogSlideItem:clearSlideDialog()
+	self._callback = nil
+	self._callbackObj = nil
 end
 
-function var_0_0.startShowDialog(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	local var_3_0 = ResUrl.getStoryLangPath(arg_3_1.img)
+function StoryDialogSlideItem:startShowDialog(data, callback, callbackObj)
+	local imgPath = ResUrl.getStoryLangPath(data.img)
 
-	arg_3_0._speed = arg_3_1.speed
-	arg_3_0._showTime = arg_3_1.showTime
-	arg_3_0._callback = arg_3_2
-	arg_3_0._callbackObj = arg_3_3
+	self._speed = data.speed
+	self._showTime = data.showTime
+	self._callback = callback
+	self._callbackObj = callbackObj
 
-	gohelper.setActive(arg_3_0._dialogGo, true)
-	arg_3_0._simagedialog:LoadImage(var_3_0, arg_3_0._imgLoaded, arg_3_0)
+	gohelper.setActive(self._dialogGo, true)
+	self._simagedialog:LoadImage(imgPath, self._imgLoaded, self)
 end
 
-function var_0_0.hideDialog(arg_4_0)
-	gohelper.setActive(arg_4_0._dialogGo, false)
-	arg_4_0._simagedialog:UnLoadImage()
+function StoryDialogSlideItem:hideDialog()
+	gohelper.setActive(self._dialogGo, false)
+	self._simagedialog:UnLoadImage()
 end
 
-function var_0_0._imgLoaded(arg_5_0)
-	gohelper.setActive(arg_5_0._imagedialog.gameObject, false)
+function StoryDialogSlideItem:_imgLoaded()
+	gohelper.setActive(self._imagedialog.gameObject, false)
 	TaskDispatcher.runDelay(function()
-		gohelper.setActive(arg_5_0._imagedialog.gameObject, true)
-		arg_5_0._imagedialog:SetNativeSize()
-		arg_5_0:_startMove()
+		gohelper.setActive(self._imagedialog.gameObject, true)
+		self._imagedialog:SetNativeSize()
+		self:_startMove()
 	end, nil, 0.05)
 end
 
-function var_0_0._moveUpdate(arg_7_0, arg_7_1)
-	local var_7_0, var_7_1 = transformhelper.getLocalPos(arg_7_0._simagedialog.transform)
+function StoryDialogSlideItem:_moveUpdate(value)
+	local _, posY = transformhelper.getLocalPos(self._simagedialog.transform)
 
-	transformhelper.setLocalPosXY(arg_7_0._simagedialog.transform, arg_7_1, var_7_1)
+	transformhelper.setLocalPosXY(self._simagedialog.transform, value, posY)
 end
 
-function var_0_0._startMove(arg_8_0)
-	if arg_8_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_8_0._tweenId)
+function StoryDialogSlideItem:_startMove()
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_8_0._tweenId = nil
+		self._tweenId = nil
 	end
 
-	local var_8_0 = recthelper.getWidth(arg_8_0._simagedialog.transform)
-	local var_8_1 = recthelper.getWidth(ViewMgr.instance:getUIRoot().transform)
-	local var_8_2 = 0.5 * (var_8_1 + var_8_0)
-	local var_8_3 = arg_8_0._showTime
-	local var_8_4 = var_8_2 - 0.2 * (var_8_1 + var_8_0) * arg_8_0._speed * var_8_3
+	local width = recthelper.getWidth(self._simagedialog.transform)
+	local screenWidth = recthelper.getWidth(ViewMgr.instance:getUIRoot().transform)
+	local from = 0.5 * (screenWidth + width)
+	local time = self._showTime
+	local to = from - 0.2 * (screenWidth + width) * self._speed * time
 
-	arg_8_0._tweenId = ZProj.TweenHelper.DOTweenFloat(var_8_2, var_8_4, var_8_3, arg_8_0._moveUpdate, arg_8_0._moveDone, arg_8_0, nil, EaseType.Linear)
+	self._tweenId = ZProj.TweenHelper.DOTweenFloat(from, to, time, self._moveUpdate, self._moveDone, self, nil, EaseType.Linear)
 end
 
-function var_0_0._moveDone(arg_9_0)
-	if arg_9_0._callback then
-		arg_9_0._callback(arg_9_0._callbackObj)
+function StoryDialogSlideItem:_moveDone()
+	if self._callback then
+		self._callback(self._callbackObj)
 	end
 
-	TaskDispatcher.runDelay(arg_9_0._startMove, arg_9_0, 3)
+	TaskDispatcher.runDelay(self._startMove, self, 3)
 end
 
-function var_0_0.destroy(arg_10_0)
-	if arg_10_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_10_0._tweenId)
+function StoryDialogSlideItem:destroy()
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_10_0._tweenId = nil
+		self._tweenId = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_10_0._startMove, arg_10_0)
-	arg_10_0._simagedialog:UnLoadImage()
+	TaskDispatcher.cancelTask(self._startMove, self)
+	self._simagedialog:UnLoadImage()
 end
 
-return var_0_0
+return StoryDialogSlideItem

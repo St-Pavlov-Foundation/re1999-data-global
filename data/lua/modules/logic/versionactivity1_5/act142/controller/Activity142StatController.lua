@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity1_5.act142.controller.Activity142StatController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/act142/controller/Activity142StatController.lua
 
-local var_0_0 = class("Activity142StatController", BaseController)
+module("modules.logic.versionactivity1_5.act142.controller.Activity142StatController", package.seeall)
 
-var_0_0.FailReasonEnum = {
+local Activity142StatController = class("Activity142StatController", BaseController)
+
+Activity142StatController.FailReasonEnum = {
 	[0] = "",
 	nil,
 	nil,
@@ -11,110 +13,110 @@ var_0_0.FailReasonEnum = {
 	"被场地机制击倒"
 }
 
-function var_0_0.statStart(arg_1_0)
-	arg_1_0.startTime = Time.realtimeSinceStartup
+function Activity142StatController:statStart()
+	self.startTime = Time.realtimeSinceStartup
 end
 
-function var_0_0.statEnd(arg_2_0, arg_2_1)
-	if not arg_2_0.startTime or arg_2_0.waitingRpc then
+function Activity142StatController:statEnd(result)
+	if not self.startTime or self.waitingRpc then
 		return
 	end
 
-	arg_2_0.useTime = Time.realtimeSinceStartup - arg_2_0.startTime
-	arg_2_0.episodeId = Activity142Model.instance:getCurEpisodeId()
-	arg_2_0.round = Va3ChessGameModel.instance:getRound()
+	self.useTime = Time.realtimeSinceStartup - self.startTime
+	self.episodeId = Activity142Model.instance:getCurEpisodeId()
+	self.round = Va3ChessGameModel.instance:getRound()
 
-	if arg_2_1 == StatEnum.Result.Abort or arg_2_1 == StatEnum.Result.Reset or arg_2_1 == StatEnum.Result.BackTrace then
-		arg_2_0.round = arg_2_0.round - 1
+	if result == StatEnum.Result.Abort or result == StatEnum.Result.Reset or result == StatEnum.Result.BackTrace then
+		self.round = self.round - 1
 	end
 
-	arg_2_0.goalNum = Activity142Model.instance:getStarCount()
-	arg_2_0.result = arg_2_1
+	self.goalNum = Activity142Model.instance:getStarCount()
+	self.result = result
 
-	if arg_2_1 == StatEnum.Result.Fail then
-		local var_2_0 = Va3ChessGameModel.instance:getFailReason()
+	if result == StatEnum.Result.Fail then
+		local numFailReason = Va3ChessGameModel.instance:getFailReason()
 
-		arg_2_0.failReason = var_0_0.FailReasonEnum[var_2_0 or 0] or ""
+		self.failReason = Activity142StatController.FailReasonEnum[numFailReason or 0] or ""
 	else
-		arg_2_0.failReason = ""
+		self.failReason = ""
 	end
 
-	arg_2_0.startTime = nil
-	arg_2_0.waitingRpc = true
+	self.startTime = nil
+	self.waitingRpc = true
 
-	local var_2_1 = Activity142Model.instance:getActivityId()
+	local actId = Activity142Model.instance:getActivityId()
 
-	Va3ChessRpcController.instance:sendGetActInfoRequest(var_2_1, arg_2_0._onReceive142InfoCb, arg_2_0)
+	Va3ChessRpcController.instance:sendGetActInfoRequest(actId, self._onReceive142InfoCb, self)
 end
 
-function var_0_0._onReceive142InfoCb(arg_3_0)
-	local var_3_0 = Activity142Model.instance:getEpisodeData(arg_3_0.episodeId)
-	local var_3_1 = var_3_0 and var_3_0.totalCount or 0
+function Activity142StatController:_onReceive142InfoCb()
+	local episodeMo = Activity142Model.instance:getEpisodeData(self.episodeId)
+	local challengesNum = episodeMo and episodeMo.totalCount or 0
 
-	arg_3_0.waitingRpc = false
+	self.waitingRpc = false
 
 	StatController.instance:track(StatEnum.EventName.ExitSpathodeaActivity, {
-		[StatEnum.EventProperties.UseTime] = arg_3_0.useTime,
-		[StatEnum.EventProperties.EpisodeId] = tostring(arg_3_0.episodeId),
-		[StatEnum.EventProperties.ChallengesNum] = var_3_1,
-		[StatEnum.EventProperties.RoundNum] = arg_3_0.round,
-		[StatEnum.EventProperties.GoalNum] = arg_3_0.goalNum,
-		[StatEnum.EventProperties.Result] = arg_3_0.result,
-		[StatEnum.EventProperties.FailReason] = arg_3_0.failReason
+		[StatEnum.EventProperties.UseTime] = self.useTime,
+		[StatEnum.EventProperties.EpisodeId] = tostring(self.episodeId),
+		[StatEnum.EventProperties.ChallengesNum] = challengesNum,
+		[StatEnum.EventProperties.RoundNum] = self.round,
+		[StatEnum.EventProperties.GoalNum] = self.goalNum,
+		[StatEnum.EventProperties.Result] = self.result,
+		[StatEnum.EventProperties.FailReason] = self.failReason
 	})
 end
 
-function var_0_0.statSuccess(arg_4_0)
-	arg_4_0:statEnd(StatEnum.Result.Success)
+function Activity142StatController:statSuccess()
+	self:statEnd(StatEnum.Result.Success)
 end
 
-function var_0_0.statFail(arg_5_0)
-	arg_5_0:statEnd(StatEnum.Result.Fail)
-	arg_5_0:statStart()
+function Activity142StatController:statFail()
+	self:statEnd(StatEnum.Result.Fail)
+	self:statStart()
 end
 
-function var_0_0.statBack2CheckPoint(arg_6_0)
-	arg_6_0:statEnd(StatEnum.Result.BackTrace)
-	arg_6_0:statStart()
+function Activity142StatController:statBack2CheckPoint()
+	self:statEnd(StatEnum.Result.BackTrace)
+	self:statStart()
 end
 
-function var_0_0.statReset(arg_7_0)
-	arg_7_0:statEnd(StatEnum.Result.Reset)
-	arg_7_0:statStart()
+function Activity142StatController:statReset()
+	self:statEnd(StatEnum.Result.Reset)
+	self:statStart()
 end
 
-function var_0_0.statAbort(arg_8_0)
-	arg_8_0:statEnd(StatEnum.Result.Abort)
+function Activity142StatController:statAbort()
+	self:statEnd(StatEnum.Result.Abort)
 end
 
-function var_0_0.statCollectionViewStart(arg_9_0)
-	arg_9_0.collectionViewStartTime = Time.realtimeSinceStartup
+function Activity142StatController:statCollectionViewStart()
+	self.collectionViewStartTime = Time.realtimeSinceStartup
 end
 
-function var_0_0.statCollectionViewEnd(arg_10_0)
-	if not arg_10_0.collectionViewStartTime then
+function Activity142StatController:statCollectionViewEnd()
+	if not self.collectionViewStartTime then
 		return
 	end
 
-	local var_10_0 = Activity142Model.instance:getActivityId()
-	local var_10_1 = Time.realtimeSinceStartup - arg_10_0.collectionViewStartTime
-	local var_10_2 = {}
-	local var_10_3 = Activity142Model.instance:getHadCollectionIdList()
+	local actId = Activity142Model.instance:getActivityId()
+	local useTime = Time.realtimeSinceStartup - self.collectionViewStartTime
+	local collectedItemNameList = {}
+	local hasCollectionIdList = Activity142Model.instance:getHadCollectionIdList()
 
-	for iter_10_0, iter_10_1 in ipairs(var_10_3) do
-		local var_10_4 = Activity142Config.instance:getCollectionName(var_10_0, iter_10_1)
+	for _, collectionId in ipairs(hasCollectionIdList) do
+		local collectionName = Activity142Config.instance:getCollectionName(actId, collectionId)
 
-		table.insert(var_10_2, var_10_4)
+		table.insert(collectedItemNameList, collectionName)
 	end
 
 	StatController.instance:track(StatEnum.EventName.ExitSpathodeaCollect, {
-		[StatEnum.EventProperties.Time] = var_10_1,
-		[StatEnum.EventProperties.CollectedItems] = var_10_2
+		[StatEnum.EventProperties.Time] = useTime,
+		[StatEnum.EventProperties.CollectedItems] = collectedItemNameList
 	})
 
-	arg_10_0.collectionViewStartTime = nil
+	self.collectionViewStartTime = nil
 end
 
-var_0_0.instance = var_0_0.New()
+Activity142StatController.instance = Activity142StatController.New()
 
-return var_0_0
+return Activity142StatController

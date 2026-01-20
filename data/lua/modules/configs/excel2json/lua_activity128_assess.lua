@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_activity128_assess", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_activity128_assess.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_activity128_assess", package.seeall)
+
+local lua_activity128_assess = {}
+local fields = {
 	spriteName = 3,
 	needPointBoss1 = 4,
 	mainBg = 8,
@@ -12,13 +14,13 @@ local var_0_1 = {
 	needPointBoss3 = 6,
 	level = 1
 }
-local var_0_2 = {
+local primaryKey = {
 	"level"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_activity128_assess.onLoad(json)
+	lua_activity128_assess.configList, lua_activity128_assess.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_activity128_assess

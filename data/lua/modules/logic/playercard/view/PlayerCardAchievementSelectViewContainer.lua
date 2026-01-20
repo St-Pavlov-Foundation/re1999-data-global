@@ -1,68 +1,70 @@
-﻿module("modules.logic.playercard.view.PlayerCardAchievementSelectViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/playercard/view/PlayerCardAchievementSelectViewContainer.lua
 
-local var_0_0 = class("PlayerCardAchievementSelectViewContainer", BaseViewContainer)
+module("modules.logic.playercard.view.PlayerCardAchievementSelectViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	arg_1_0._scrollView = LuaMixScrollView.New(PlayerCardAchievementSelectListModel.instance, arg_1_0:getMixContentParam())
-	arg_1_0._nameplatescrollView = LuaMixScrollView.New(PlayerCardAchievementSelectListModel.instance, arg_1_0:getMixNamePlateContentParam())
+local PlayerCardAchievementSelectViewContainer = class("PlayerCardAchievementSelectViewContainer", BaseViewContainer)
+
+function PlayerCardAchievementSelectViewContainer:buildViews()
+	self._scrollView = LuaMixScrollView.New(PlayerCardAchievementSelectListModel.instance, self:getMixContentParam())
+	self._nameplatescrollView = LuaMixScrollView.New(PlayerCardAchievementSelectListModel.instance, self:getMixNamePlateContentParam())
 
 	return {
 		PlayerCardAchievementSelectView.New(),
 		TabViewGroup.New(1, "#go_btns"),
-		arg_1_0._scrollView,
-		arg_1_0._nameplatescrollView
+		self._scrollView,
+		self._nameplatescrollView
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function PlayerCardAchievementSelectViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
-		arg_2_0.navigateView:setOverrideClose(arg_2_0.overrideCloseFunc, arg_2_0)
+		self.navigateView:setOverrideClose(self.overrideCloseFunc, self)
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-function var_0_0.getMixContentParam(arg_3_0)
-	local var_3_0 = MixScrollParam.New()
+function PlayerCardAchievementSelectViewContainer:getMixContentParam()
+	local scrollParam = MixScrollParam.New()
 
-	var_3_0.scrollGOPath = "#go_container/#scroll_content"
-	var_3_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_3_0.prefabUrl = arg_3_0._viewSetting.otherRes[1]
-	var_3_0.cellClass = PlayerCardAchievementSelectItem
-	var_3_0.scrollDir = ScrollEnum.ScrollDirV
-	var_3_0.endSpace = 50
+	scrollParam.scrollGOPath = "#go_container/#scroll_content"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = PlayerCardAchievementSelectItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.endSpace = 50
 
-	return var_3_0
+	return scrollParam
 end
 
-function var_0_0.getMixNamePlateContentParam(arg_4_0)
-	local var_4_0 = MixScrollParam.New()
+function PlayerCardAchievementSelectViewContainer:getMixNamePlateContentParam()
+	local scrollParam = MixScrollParam.New()
 
-	var_4_0.scrollGOPath = "#go_container/#scroll_content_misihai"
-	var_4_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_4_0.prefabUrl = arg_4_0._viewSetting.otherRes[3]
-	var_4_0.cellClass = PlayerCardAchievementNamePlateSelectItem
-	var_4_0.scrollDir = ScrollEnum.ScrollDirV
-	var_4_0.endSpace = 50
+	scrollParam.scrollGOPath = "#go_container/#scroll_content_misihai"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[3]
+	scrollParam.cellClass = PlayerCardAchievementNamePlateSelectItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.endSpace = 50
 
-	return var_4_0
+	return scrollParam
 end
 
-function var_0_0.overrideCloseFunc(arg_5_0)
-	PlayerCardAchievementSelectController.instance:popUpMessageBoxIfNeedSave(arg_5_0.yesCallBackFunc, nil, arg_5_0.closeThis, arg_5_0, nil, arg_5_0)
+function PlayerCardAchievementSelectViewContainer:overrideCloseFunc()
+	PlayerCardAchievementSelectController.instance:popUpMessageBoxIfNeedSave(self.yesCallBackFunc, nil, self.closeThis, self, nil, self)
 end
 
-function var_0_0.yesCallBackFunc(arg_6_0)
+function PlayerCardAchievementSelectViewContainer:yesCallBackFunc()
 	PlayerCardAchievementSelectController.instance:resumeToOriginSelect()
-	arg_6_0:closeThis()
+	self:closeThis()
 end
 
-return var_0_0
+return PlayerCardAchievementSelectViewContainer

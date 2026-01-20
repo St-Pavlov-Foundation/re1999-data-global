@@ -1,214 +1,215 @@
-﻿module("modules.logic.handbook.view.HandbookStoryItem", package.seeall)
+﻿-- chunkname: @modules/logic/handbook/view/HandbookStoryItem.lua
 
-local var_0_0 = class("HandbookStoryItem", ListScrollCellExtend)
+module("modules.logic.handbook.view.HandbookStoryItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._golinedown = gohelper.findChild(arg_1_0.viewGO, "#go_layout/#go_linedown")
-	arg_1_0._golineup = gohelper.findChild(arg_1_0.viewGO, "#go_layout/#go_lineup")
-	arg_1_0._golayout = gohelper.findChild(arg_1_0.viewGO, "#go_layout")
-	arg_1_0._gofragmentinfolist = gohelper.findChild(arg_1_0.viewGO, "#go_layout/#go_fragmentinfolist")
-	arg_1_0._btnplay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "")
-	arg_1_0._txtstorynamecn = gohelper.findChildText(arg_1_0.viewGO, "#go_layout/basic/#txt_storynamecn")
-	arg_1_0._txtstorynameen = gohelper.findChildText(arg_1_0.viewGO, "#go_layout/basic/#txt_storynameen")
-	arg_1_0._simagestoryicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_layout/basic/mask/#simage_storyicon")
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "#go_layout/basic/#txt_time")
-	arg_1_0._txtdate = gohelper.findChildText(arg_1_0.viewGO, "#go_layout/basic/#txt_date")
-	arg_1_0._gomessycode = gohelper.findChild(arg_1_0.viewGO, "#go_layout/basic/#go_messycode")
-	arg_1_0._txtyear = gohelper.findChildText(arg_1_0.viewGO, "#go_year/#txt_year")
-	arg_1_0._txtyearmessycode = gohelper.findChildText(arg_1_0.viewGO, "#go_year/#txt_yearmessycode")
-	arg_1_0._txtid = gohelper.findChildText(arg_1_0.viewGO, "#go_layout/basic/#txt_id")
-	arg_1_0._gofragmentitem = gohelper.findChild(arg_1_0.viewGO, "#go_layout/#go_fragmentinfolist/#go_fragmentitem")
-	arg_1_0._goyear = gohelper.findChild(arg_1_0.viewGO, "#go_year")
-	arg_1_0._anim = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+local HandbookStoryItem = class("HandbookStoryItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function HandbookStoryItem:onInitView()
+	self._golinedown = gohelper.findChild(self.viewGO, "#go_layout/#go_linedown")
+	self._golineup = gohelper.findChild(self.viewGO, "#go_layout/#go_lineup")
+	self._golayout = gohelper.findChild(self.viewGO, "#go_layout")
+	self._gofragmentinfolist = gohelper.findChild(self.viewGO, "#go_layout/#go_fragmentinfolist")
+	self._btnplay = gohelper.findChildButtonWithAudio(self.viewGO, "")
+	self._txtstorynamecn = gohelper.findChildText(self.viewGO, "#go_layout/basic/#txt_storynamecn")
+	self._txtstorynameen = gohelper.findChildText(self.viewGO, "#go_layout/basic/#txt_storynameen")
+	self._simagestoryicon = gohelper.findChildSingleImage(self.viewGO, "#go_layout/basic/mask/#simage_storyicon")
+	self._txttime = gohelper.findChildText(self.viewGO, "#go_layout/basic/#txt_time")
+	self._txtdate = gohelper.findChildText(self.viewGO, "#go_layout/basic/#txt_date")
+	self._gomessycode = gohelper.findChild(self.viewGO, "#go_layout/basic/#go_messycode")
+	self._txtyear = gohelper.findChildText(self.viewGO, "#go_year/#txt_year")
+	self._txtyearmessycode = gohelper.findChildText(self.viewGO, "#go_year/#txt_yearmessycode")
+	self._txtid = gohelper.findChildText(self.viewGO, "#go_layout/basic/#txt_id")
+	self._gofragmentitem = gohelper.findChild(self.viewGO, "#go_layout/#go_fragmentinfolist/#go_fragmentitem")
+	self._goyear = gohelper.findChild(self.viewGO, "#go_year")
+	self._anim = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnplay:AddClickListener(arg_2_0._btnplayOnClick, arg_2_0)
+function HandbookStoryItem:addEvents()
+	self._btnplay:AddClickListener(self._btnplayOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnplay:RemoveClickListener()
+function HandbookStoryItem:removeEvents()
+	self._btnplay:RemoveClickListener()
 end
 
-function var_0_0._btnplayOnClick(arg_4_0)
-	if not string.nilorempty(arg_4_0._config.storyIdList) then
-		local var_4_0 = string.splitToNumber(arg_4_0._config.storyIdList, "#")
-		local var_4_1 = {}
+function HandbookStoryItem:_btnplayOnClick()
+	if not string.nilorempty(self._config.storyIdList) then
+		local storyList = string.splitToNumber(self._config.storyIdList, "#")
+		local levelIdDict = {}
 
-		if not string.nilorempty(arg_4_0._config.levelIdDict) then
-			local var_4_2 = string.split(arg_4_0._config.levelIdDict, "|")
+		if not string.nilorempty(self._config.levelIdDict) then
+			local levelIdPairs = string.split(self._config.levelIdDict, "|")
 
-			for iter_4_0, iter_4_1 in ipairs(var_4_2) do
-				local var_4_3 = string.splitToNumber(iter_4_1, "#")
+			for _, levelIdPair in ipairs(levelIdPairs) do
+				local levelIdParam = string.splitToNumber(levelIdPair, "#")
 
-				var_4_1[var_4_3[1]] = var_4_3[2]
+				levelIdDict[levelIdParam[1]] = levelIdParam[2]
 			end
 		end
 
-		local var_4_4 = {
-			levelIdDict = var_4_1
-		}
+		local data = {}
 
-		var_4_4.isReplay = true
+		data.levelIdDict = levelIdDict
+		data.isReplay = true
 
-		local var_4_5 = DungeonConfig.instance:getExtendStory(arg_4_0._config.episodeId)
+		local extendStory = DungeonConfig.instance:getExtendStory(self._config.episodeId)
 
-		if var_4_5 then
-			table.insert(var_4_0, var_4_5)
+		if extendStory then
+			table.insert(storyList, extendStory)
 		end
 
-		StoryController.instance:playStories(var_4_0, var_4_4)
+		StoryController.instance:playStories(storyList, data)
 	end
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	gohelper.setActive(arg_5_0._gofragmentitem, false)
+function HandbookStoryItem:_editableInitView()
+	gohelper.setActive(self._gofragmentitem, false)
 
-	arg_5_0._fragmentItemList = arg_5_0._fragmentItemList or {}
+	self._fragmentItemList = self._fragmentItemList or {}
 
-	gohelper.addUIClickAudio(arg_5_0._btnplay.gameObject, AudioEnum.UI.play_ui_screenplay_plot_playback)
+	gohelper.addUIClickAudio(self._btnplay.gameObject, AudioEnum.UI.play_ui_screenplay_plot_playback)
 end
 
-function var_0_0._refreshUI(arg_6_0)
-	arg_6_0:_setUpDown()
+function HandbookStoryItem:_refreshUI()
+	self:_setUpDown()
 
-	arg_6_0._txtstorynamecn.text = arg_6_0._config.name
-	arg_6_0._txtstorynameen.text = arg_6_0._config.nameEn
-	arg_6_0._txttime.text = arg_6_0._config.time
-	arg_6_0._txtdate.text = arg_6_0._config.date
+	self._txtstorynamecn.text = self._config.name
+	self._txtstorynameen.text = self._config.nameEn
+	self._txttime.text = self._config.time
+	self._txtdate.text = self._config.date
 
-	gohelper.setActive(arg_6_0._txttime.gameObject, not string.nilorempty(arg_6_0._config.time))
-	gohelper.setActive(arg_6_0._txtdate.gameObject, not string.nilorempty(arg_6_0._config.date))
-	gohelper.setActive(arg_6_0._gomessycode, string.nilorempty(arg_6_0._config.time))
+	gohelper.setActive(self._txttime.gameObject, not string.nilorempty(self._config.time))
+	gohelper.setActive(self._txtdate.gameObject, not string.nilorempty(self._config.date))
+	gohelper.setActive(self._gomessycode, string.nilorempty(self._config.time))
 
-	local var_6_0 = GameUtil.utf8isnum(arg_6_0._config.year)
+	local yearIsNum = GameUtil.utf8isnum(self._config.year)
 
-	gohelper.setActive(arg_6_0._goyear, not string.nilorempty(arg_6_0._config.year))
-	gohelper.setActive(arg_6_0._txtyear.gameObject, var_6_0)
-	gohelper.setActive(arg_6_0._txtyearmessycode.gameObject, not var_6_0)
+	gohelper.setActive(self._goyear, not string.nilorempty(self._config.year))
+	gohelper.setActive(self._txtyear.gameObject, yearIsNum)
+	gohelper.setActive(self._txtyearmessycode.gameObject, not yearIsNum)
 
-	arg_6_0._txtyear.text = var_6_0 and arg_6_0._config.year or ""
-	arg_6_0._txtyearmessycode.text = var_6_0 and "" or arg_6_0._config.year
+	self._txtyear.text = yearIsNum and self._config.year or ""
+	self._txtyearmessycode.text = yearIsNum and "" or self._config.year
 
-	arg_6_0._simagestoryicon:LoadImage(ResUrl.getStorySmallBg(arg_6_0._config.image))
+	self._simagestoryicon:LoadImage(ResUrl.getStorySmallBg(self._config.image))
 
-	if arg_6_0._mo.index > 9 then
-		arg_6_0._txtid.text = tostring(arg_6_0._mo.index)
+	if self._mo.index > 9 then
+		self._txtid.text = tostring(self._mo.index)
 	else
-		arg_6_0._txtid.text = "0" .. tostring(arg_6_0._mo.index)
+		self._txtid.text = "0" .. tostring(self._mo.index)
 	end
 
-	arg_6_0:_refreshFragment()
+	self:_refreshFragment()
 end
 
-function var_0_0._setUpDown(arg_7_0)
-	local var_7_0 = arg_7_0._mo.index % 2 ~= 0
+function HandbookStoryItem:_setUpDown()
+	local isUp = self._mo.index % 2 ~= 0
 
-	if var_7_0 then
-		recthelper.setAnchorY(arg_7_0._golayout.transform, 0)
+	if isUp then
+		recthelper.setAnchorY(self._golayout.transform, 0)
 
-		arg_7_0._golayout.transform.pivot = Vector2(0.5, 0)
+		self._golayout.transform.pivot = Vector2(0.5, 0)
 
-		gohelper.setAsLastSibling(arg_7_0._gofragmentinfolist)
+		gohelper.setAsLastSibling(self._gofragmentinfolist)
 	else
-		recthelper.setAnchorY(arg_7_0._golayout.transform, -72)
+		recthelper.setAnchorY(self._golayout.transform, -72)
 
-		arg_7_0._golayout.transform.pivot = Vector2(0.5, 1)
+		self._golayout.transform.pivot = Vector2(0.5, 1)
 
-		gohelper.setAsFirstSibling(arg_7_0._gofragmentinfolist)
+		gohelper.setAsFirstSibling(self._gofragmentinfolist)
 	end
 
-	gohelper.setActive(arg_7_0._golineup, var_7_0)
-	gohelper.setActive(arg_7_0._golinedown, not var_7_0)
+	gohelper.setActive(self._golineup, isUp)
+	gohelper.setActive(self._golinedown, not isUp)
 end
 
-function var_0_0._refreshFragment(arg_8_0)
-	local var_8_0 = {}
+function HandbookStoryItem:_refreshFragment()
+	local fragmentIdList = {}
 
-	if not string.nilorempty(arg_8_0._config.fragmentIdList) then
-		var_8_0 = string.splitToNumber(arg_8_0._config.fragmentIdList, "#")
+	if not string.nilorempty(self._config.fragmentIdList) then
+		fragmentIdList = string.splitToNumber(self._config.fragmentIdList, "#")
 	end
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_0) do
-		local var_8_1 = arg_8_0._fragmentItemList[iter_8_0]
+	for i, fragmentId in ipairs(fragmentIdList) do
+		local fragmentItem = self._fragmentItemList[i]
 
-		if not var_8_1 then
-			var_8_1 = {
-				go = gohelper.cloneInPlace(arg_8_0._gofragmentitem, "item" .. iter_8_0)
+		if not fragmentItem then
+			fragmentItem = {
+				go = gohelper.cloneInPlace(self._gofragmentitem, "item" .. i)
 			}
-			var_8_1.txtinfo = gohelper.findChildText(var_8_1.go, "info")
-			var_8_1.btnclick = gohelper.findChildButtonWithAudio(var_8_1.go, "info/btnclick")
+			fragmentItem.txtinfo = gohelper.findChildText(fragmentItem.go, "info")
+			fragmentItem.btnclick = gohelper.findChildButtonWithAudio(fragmentItem.go, "info/btnclick")
 
-			var_8_1.btnclick:AddClickListener(arg_8_0._btnclickOnClick, arg_8_0, var_8_1)
-			table.insert(arg_8_0._fragmentItemList, var_8_1)
+			fragmentItem.btnclick:AddClickListener(self._btnclickOnClick, self, fragmentItem)
+			table.insert(self._fragmentItemList, fragmentItem)
 		end
 
-		local var_8_2 = lua_chapter_map_fragment.configDict[iter_8_1]
+		local fragmentConfig = lua_chapter_map_fragment.configDict[fragmentId]
 
-		var_8_1.fragmentId = iter_8_1
-		var_8_1.dialogIdList = HandbookModel.instance:getFragmentDialogIdList(iter_8_1)
+		fragmentItem.fragmentId = fragmentId
+		fragmentItem.dialogIdList = HandbookModel.instance:getFragmentDialogIdList(fragmentId)
 
-		if var_8_1.dialogIdList then
-			var_8_1.txtinfo.text = var_8_2.title
+		if fragmentItem.dialogIdList then
+			fragmentItem.txtinfo.text = fragmentConfig.title
 		else
-			var_8_1.txtinfo.text = "???"
+			fragmentItem.txtinfo.text = "???"
 		end
 
-		gohelper.setActive(var_8_1.go, true)
+		gohelper.setActive(fragmentItem.go, true)
 	end
 
-	for iter_8_2 = #var_8_0 + 1, #arg_8_0._fragmentItemList do
-		local var_8_3 = arg_8_0._fragmentItemList[iter_8_2]
+	for i = #fragmentIdList + 1, #self._fragmentItemList do
+		local fragmentItem = self._fragmentItemList[i]
 
-		gohelper.setActive(var_8_3.go, false)
+		gohelper.setActive(fragmentItem.go, false)
 	end
 end
 
-function var_0_0._btnclickOnClick(arg_9_0, arg_9_1)
-	if arg_9_1.dialogIdList then
-		local var_9_0 = arg_9_1.fragmentId
+function HandbookStoryItem:_btnclickOnClick(fragmentItem)
+	if fragmentItem.dialogIdList then
+		local fragmentId = fragmentItem.fragmentId
+		local fragmentType = lua_chapter_map_fragment.configDict[fragmentId].type
 
-		if lua_chapter_map_fragment.configDict[var_9_0].type == DungeonEnum.FragmentType.AvgStory then
-			local var_9_1 = DungeonConfig.instance:getMapElementByFragmentId(var_9_0)
-			local var_9_2 = tonumber(var_9_1.param)
+		if fragmentType == DungeonEnum.FragmentType.AvgStory then
+			local elementCo = DungeonConfig.instance:getMapElementByFragmentId(fragmentId)
+			local storyId = tonumber(elementCo.param)
 
-			StoryController.instance:playStory(var_9_2)
+			StoryController.instance:playStory(storyId)
 		else
-			local var_9_3 = {
-				fragmentId = var_9_0,
-				dialogIdList = arg_9_1.dialogIdList
-			}
+			local data = {}
 
-			var_9_3.isFromHandbook = true
+			data.fragmentId = fragmentId
+			data.dialogIdList = fragmentItem.dialogIdList
+			data.isFromHandbook = true
 
-			ViewMgr.instance:openView(ViewName.DungeonFragmentInfoView, var_9_3)
+			ViewMgr.instance:openView(ViewName.DungeonFragmentInfoView, data)
 		end
 	else
 		GameFacade.showToast(ToastEnum.HandBook2)
 	end
 end
 
-function var_0_0.onUpdateMO(arg_10_0, arg_10_1)
-	arg_10_0._mo = arg_10_1
-	arg_10_0._config = HandbookConfig.instance:getStoryGroupConfig(arg_10_0._mo.storyGroupId)
+function HandbookStoryItem:onUpdateMO(mo)
+	self._mo = mo
+	self._config = HandbookConfig.instance:getStoryGroupConfig(self._mo.storyGroupId)
 
-	arg_10_0:_refreshUI()
+	self:_refreshUI()
 end
 
-function var_0_0.getAnimator(arg_11_0)
-	return arg_11_0._anim
+function HandbookStoryItem:getAnimator()
+	return self._anim
 end
 
-function var_0_0.onDestroy(arg_12_0)
-	arg_12_0._simagestoryicon:UnLoadImage()
+function HandbookStoryItem:onDestroy()
+	self._simagestoryicon:UnLoadImage()
 
-	for iter_12_0, iter_12_1 in ipairs(arg_12_0._fragmentItemList) do
-		iter_12_1.btnclick:RemoveClickListener()
+	for i, fragmentItem in ipairs(self._fragmentItemList) do
+		fragmentItem.btnclick:RemoveClickListener()
 	end
 end
 
-return var_0_0
+return HandbookStoryItem

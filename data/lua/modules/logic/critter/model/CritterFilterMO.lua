@@ -1,56 +1,60 @@
-﻿module("modules.logic.critter.model.CritterFilterMO", package.seeall)
+﻿-- chunkname: @modules/logic/critter/model/CritterFilterMO.lua
 
-local var_0_0 = pureTable("CritterFilterMO")
+module("modules.logic.critter.model.CritterFilterMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.viewName = arg_1_1
+local CritterFilterMO = pureTable("CritterFilterMO")
 
-	arg_1_0:reset()
+function CritterFilterMO:init(viewName)
+	self.viewName = viewName
+
+	self:reset()
 end
 
-function var_0_0.updateMo(arg_2_0, arg_2_1)
-	arg_2_0._isFiltering = false
-	arg_2_0.filterCategoryDict = arg_2_1.filterCategoryDict
+function CritterFilterMO:updateMo(filterMo)
+	self._isFiltering = false
+	self.filterCategoryDict = filterMo.filterCategoryDict
 
-	for iter_2_0, iter_2_1 in pairs(arg_2_0.filterCategoryDict) do
-		if #iter_2_1 > 0 then
-			arg_2_0._isFiltering = true
+	for _, selectTagList in pairs(self.filterCategoryDict) do
+		if #selectTagList > 0 then
+			self._isFiltering = true
 		end
 	end
 end
 
-function var_0_0.isPassedFilter(arg_3_0, arg_3_1)
-	local var_3_0 = false
+function CritterFilterMO:isPassedFilter(critterMO)
+	local result = false
 
-	if not arg_3_1 then
-		return var_3_0
+	if not critterMO then
+		return result
 	end
 
-	local var_3_1 = arg_3_1:getDefineId()
-	local var_3_2 = arg_3_0:_checkRace(var_3_1)
-	local var_3_3 = arg_3_1:getSkillInfo()
-	local var_3_4 = arg_3_0:_checkSkill(var_3_3)
+	local critterId = critterMO:getDefineId()
+	local racePass = self:_checkRace(critterId)
+	local skillTags = critterMO:getSkillInfo()
+	local skillPass = self:_checkSkill(skillTags)
 
-	return var_3_2 and var_3_4
+	result = racePass and skillPass
+
+	return result
 end
 
-function var_0_0._checkRace(arg_4_0, arg_4_1)
-	local var_4_0 = CritterConfig.instance:getCritterCatalogue(arg_4_1)
+function CritterFilterMO:_checkRace(critterId)
+	local catalogueId = CritterConfig.instance:getCritterCatalogue(critterId)
 
-	return arg_4_0:checkRaceByCatalogueId(var_4_0)
+	return self:checkRaceByCatalogueId(catalogueId)
 end
 
-function var_0_0.checkRaceByCatalogueId(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0.filterCategoryDict[CritterEnum.FilterType.Race]
+function CritterFilterMO:checkRaceByCatalogueId(catalogueId)
+	local filterTabList = self.filterCategoryDict[CritterEnum.FilterType.Race]
 
-	if not var_5_0 or #var_5_0 <= 0 then
+	if not filterTabList or #filterTabList <= 0 then
 		return true
 	end
 
-	local var_5_1 = CritterConfig.instance
+	local tCritterConfig = CritterConfig.instance
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_0) do
-		if iter_5_1 == arg_5_1 or var_5_1:isHasCatalogueChildId(iter_5_1, arg_5_1) then
+	for _, parentId in ipairs(filterTabList) do
+		if parentId == catalogueId or tCritterConfig:isHasCatalogueChildId(parentId, catalogueId) then
 			return true
 		end
 	end
@@ -58,82 +62,82 @@ function var_0_0.checkRaceByCatalogueId(arg_5_0, arg_5_1)
 	return false
 end
 
-function var_0_0._checkSkill(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0.filterCategoryDict[CritterEnum.FilterType.SkillTag]
+function CritterFilterMO:_checkSkill(skillTags)
+	local filterTabList = self.filterCategoryDict[CritterEnum.FilterType.SkillTag]
 
-	if not var_6_0 or #var_6_0 <= 0 then
+	if not filterTabList or #filterTabList <= 0 then
 		return true
 	end
 
-	if not arg_6_1 then
+	if not skillTags then
 		return false
 	end
 
-	local var_6_1 = false
+	local result = false
 
-	for iter_6_0, iter_6_1 in pairs(arg_6_1) do
-		local var_6_2 = CritterConfig.instance:getCritterTagCfg(iter_6_1)
-		local var_6_3 = string.splitToNumber(var_6_2 and var_6_2.filterTag, "#")
+	for _, skillTag in pairs(skillTags) do
+		local skillTagCfg = CritterConfig.instance:getCritterTagCfg(skillTag)
+		local skillFilterTagList = string.splitToNumber(skillTagCfg and skillTagCfg.filterTag, "#")
 
-		for iter_6_2, iter_6_3 in ipairs(var_6_3) do
-			if tabletool.indexOf(var_6_0, iter_6_3) then
-				var_6_1 = true
+		for _, skillFilterTag in ipairs(skillFilterTagList) do
+			if tabletool.indexOf(filterTabList, skillFilterTag) then
+				result = true
 
 				break
 			end
 		end
 	end
 
-	return var_6_1
+	return result
 end
 
-function var_0_0.isFiltering(arg_7_0)
-	return arg_7_0._isFiltering
+function CritterFilterMO:isFiltering()
+	return self._isFiltering
 end
 
-function var_0_0.isSelectedTag(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = false
-	local var_8_1 = arg_8_0.filterCategoryDict[arg_8_1]
+function CritterFilterMO:isSelectedTag(filterType, tagId)
+	local result = false
+	local selectedTagList = self.filterCategoryDict[filterType]
 
-	if var_8_1 and #var_8_1 > 0 then
-		var_8_0 = tabletool.indexOf(var_8_1, arg_8_2)
+	if selectedTagList and #selectedTagList > 0 then
+		result = tabletool.indexOf(selectedTagList, tagId)
 	end
 
-	return var_8_0
+	return result
 end
 
-function var_0_0.selectedTag(arg_9_0, arg_9_1, arg_9_2)
-	if not arg_9_0.filterCategoryDict[arg_9_1] then
-		arg_9_0.filterCategoryDict[arg_9_1] = {}
+function CritterFilterMO:selectedTag(filterType, tagId)
+	if not self.filterCategoryDict[filterType] then
+		self.filterCategoryDict[filterType] = {}
 	end
 
-	table.insert(arg_9_0.filterCategoryDict[arg_9_1], arg_9_2)
+	table.insert(self.filterCategoryDict[filterType], tagId)
 end
 
-function var_0_0.unselectedTag(arg_10_0, arg_10_1, arg_10_2)
-	if arg_10_0.filterCategoryDict[arg_10_1] then
-		tabletool.removeValue(arg_10_0.filterCategoryDict[arg_10_1], arg_10_2)
+function CritterFilterMO:unselectedTag(filterType, tagId)
+	if self.filterCategoryDict[filterType] then
+		tabletool.removeValue(self.filterCategoryDict[filterType], tagId)
 	end
 end
 
-function var_0_0.getFilterCategoryDict(arg_11_0)
-	return arg_11_0.filterCategoryDict
+function CritterFilterMO:getFilterCategoryDict()
+	return self.filterCategoryDict
 end
 
-function var_0_0.clone(arg_12_0)
-	local var_12_0 = var_0_0.New()
+function CritterFilterMO:clone()
+	local filterMO = CritterFilterMO.New()
 
-	var_12_0:init(arg_12_0.viewName)
+	filterMO:init(self.viewName)
 
-	var_12_0.filterCategoryDict = LuaUtil.deepCopySimple(arg_12_0.filterCategoryDict)
-	var_12_0._isFiltering = arg_12_0._isFiltering
+	filterMO.filterCategoryDict = LuaUtil.deepCopySimple(self.filterCategoryDict)
+	filterMO._isFiltering = self._isFiltering
 
-	return var_12_0
+	return filterMO
 end
 
-function var_0_0.reset(arg_13_0)
-	arg_13_0.filterCategoryDict = {}
-	arg_13_0._isFiltering = false
+function CritterFilterMO:reset()
+	self.filterCategoryDict = {}
+	self._isFiltering = false
 end
 
-return var_0_0
+return CritterFilterMO

@@ -1,117 +1,119 @@
-﻿module("modules.logic.fight.entity.comp.buff.FightBuffLuXiUpgradeEffect2", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/buff/FightBuffLuXiUpgradeEffect2.lua
 
-local var_0_0 = class("FightBuffLuXiUpgradeEffect2", FightBaseClass)
+module("modules.logic.fight.entity.comp.buff.FightBuffLuXiUpgradeEffect2", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.entity = arg_1_1
-	arg_1_0.entityData = arg_1_2
-	arg_1_0.entityId = arg_1_2.id
-	arg_1_0.configDict = arg_1_3
-	arg_1_0.buffDic = {}
-	arg_1_0.count = 0
-	arg_1_0.effectNameList = {}
+local FightBuffLuXiUpgradeEffect2 = class("FightBuffLuXiUpgradeEffect2", FightBaseClass)
 
-	for iter_1_0, iter_1_1 in pairs(arg_1_0.configDict) do
-		local var_1_0 = iter_1_1.effect
+function FightBuffLuXiUpgradeEffect2:onConstructor(entity, entityData, luxiUpgradeEffectConfig)
+	self.entity = entity
+	self.entityData = entityData
+	self.entityId = entityData.id
+	self.configDict = luxiUpgradeEffectConfig
+	self.buffDic = {}
+	self.count = 0
+	self.effectNameList = {}
 
-		arg_1_0.effectNameList = string.split(var_1_0, "#")
+	for k, v in pairs(self.configDict) do
+		local effect = v.effect
+
+		self.effectNameList = string.split(effect, "#")
 
 		break
 	end
 
-	arg_1_0:com_registFightEvent(FightEvent.AddEntityBuff, arg_1_0.onAddEntityBuff)
-	arg_1_0:com_registFightEvent(FightEvent.RemoveEntityBuff, arg_1_0.onRemoveEntityBuff)
-	arg_1_0:com_registFightEvent(FightEvent.SetBuffEffectVisible, arg_1_0.onSetBuffEffectVisible)
-	arg_1_0:com_registFightEvent(FightEvent.OnSkillPlayStart, arg_1_0._onSkillPlayStart)
-	arg_1_0:com_registFightEvent(FightEvent.OnSkillPlayFinish, arg_1_0._onSkillPlayFinish, LuaEventSystem.High)
+	self:com_registFightEvent(FightEvent.AddEntityBuff, self.onAddEntityBuff)
+	self:com_registFightEvent(FightEvent.RemoveEntityBuff, self.onRemoveEntityBuff)
+	self:com_registFightEvent(FightEvent.SetBuffEffectVisible, self.onSetBuffEffectVisible)
+	self:com_registFightEvent(FightEvent.OnSkillPlayStart, self._onSkillPlayStart)
+	self:com_registFightEvent(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, LuaEventSystem.High)
 end
 
-function var_0_0.onAddEntityBuff(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 ~= arg_2_0.entityId then
+function FightBuffLuXiUpgradeEffect2:onAddEntityBuff(entityId, buffData)
+	if entityId ~= self.entityId then
 		return
 	end
 
-	local var_2_0 = arg_2_2.buffId
-	local var_2_1 = arg_2_0.configDict[var_2_0]
+	local buffId = buffData.buffId
+	local config = self.configDict[buffId]
 
-	if not var_2_1 then
+	if not config then
 		return
 	end
 
-	arg_2_0.count = arg_2_0.count + 1 + var_2_1.countOffset
+	self.count = self.count + 1 + config.countOffset
 
-	arg_2_0:releaseAllEffect()
+	self:releaseAllEffect()
 
-	local var_2_2 = arg_2_0.effectNameList[arg_2_0.count]
-	local var_2_3 = var_2_1.effectHangPoint
-	local var_2_4 = arg_2_0.entity.effect:addHangEffect(var_2_2, var_2_3)
+	local effectPath = self.effectNameList[self.count]
+	local effectHangPoint = config.effectHangPoint
+	local effectWrap = self.entity.effect:addHangEffect(effectPath, effectHangPoint)
 
-	var_2_4:setLocalPos(0, 0, 0)
-	FightRenderOrderMgr.instance:onAddEffectWrap(arg_2_0.entity.id, var_2_4)
+	effectWrap:setLocalPos(0, 0, 0)
+	FightRenderOrderMgr.instance:onAddEffectWrap(self.entity.id, effectWrap)
 
-	arg_2_0.buffDic[var_2_0] = var_2_4
+	self.buffDic[buffId] = effectWrap
 
-	local var_2_5 = var_2_1.audio
+	local audioId = config.audio
 
-	if var_2_5 ~= 0 then
-		AudioMgr.instance:trigger(var_2_5)
+	if audioId ~= 0 then
+		AudioMgr.instance:trigger(audioId)
 	end
 end
 
-function var_0_0.onRemoveEntityBuff(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 ~= arg_3_0.entityId then
+function FightBuffLuXiUpgradeEffect2:onRemoveEntityBuff(entityId, buffData)
+	if entityId ~= self.entityId then
 		return
 	end
 
-	local var_3_0 = arg_3_2.buffId
-	local var_3_1 = arg_3_0.configDict[var_3_0]
+	local buffId = buffData.buffId
+	local config = self.configDict[buffId]
 
-	if not var_3_1 then
+	if not config then
 		return
 	end
 
-	arg_3_0.count = arg_3_0.count - 1 - var_3_1.countOffset
+	self.count = self.count - 1 - config.countOffset
 
-	arg_3_0:releaseEffect(var_3_0)
+	self:releaseEffect(buffId)
 end
 
-function var_0_0.onSetBuffEffectVisible(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	if arg_4_1 ~= arg_4_0.entityId then
+function FightBuffLuXiUpgradeEffect2:onSetBuffEffectVisible(entityId, state, sign)
+	if entityId ~= self.entityId then
 		return
 	end
 
-	for iter_4_0, iter_4_1 in pairs(arg_4_0.buffDic) do
-		iter_4_1:setActive(arg_4_2, arg_4_3 or "FightBuffLuXiUpgradeEffect2")
+	for buffId, effectWrap in pairs(self.buffDic) do
+		effectWrap:setActive(state, sign or "FightBuffLuXiUpgradeEffect2")
 	end
 end
 
-function var_0_0._onSkillPlayStart(arg_5_0, arg_5_1)
-	arg_5_0:onSetBuffEffectVisible(arg_5_1.id, false, "FightBuffLuXiUpgradeEffect2_PlaySkill")
+function FightBuffLuXiUpgradeEffect2:_onSkillPlayStart(entity)
+	self:onSetBuffEffectVisible(entity.id, false, "FightBuffLuXiUpgradeEffect2_PlaySkill")
 end
 
-function var_0_0._onSkillPlayFinish(arg_6_0, arg_6_1)
-	arg_6_0:onSetBuffEffectVisible(arg_6_1.id, true, "FightBuffLuXiUpgradeEffect2_PlaySkill")
+function FightBuffLuXiUpgradeEffect2:_onSkillPlayFinish(entity)
+	self:onSetBuffEffectVisible(entity.id, true, "FightBuffLuXiUpgradeEffect2_PlaySkill")
 end
 
-function var_0_0.releaseEffect(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0.buffDic[arg_7_1]
+function FightBuffLuXiUpgradeEffect2:releaseEffect(buffId)
+	local effectWrap = self.buffDic[buffId]
 
-	if var_7_0 then
-		arg_7_0.entity.effect:removeEffect(var_7_0)
-		FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_7_0.entityId, var_7_0)
+	if effectWrap then
+		self.entity.effect:removeEffect(effectWrap)
+		FightRenderOrderMgr.instance:onRemoveEffectWrap(self.entityId, effectWrap)
 	end
 
-	arg_7_0.buffDic[arg_7_1] = nil
+	self.buffDic[buffId] = nil
 end
 
-function var_0_0.releaseAllEffect(arg_8_0)
-	for iter_8_0, iter_8_1 in pairs(arg_8_0.buffDic) do
-		arg_8_0:releaseEffect(iter_8_0)
+function FightBuffLuXiUpgradeEffect2:releaseAllEffect()
+	for buffId, effect in pairs(self.buffDic) do
+		self:releaseEffect(buffId)
 	end
 end
 
-function var_0_0.onDestructor(arg_9_0)
-	arg_9_0:releaseAllEffect()
+function FightBuffLuXiUpgradeEffect2:onDestructor()
+	self:releaseAllEffect()
 end
 
-return var_0_0
+return FightBuffLuXiUpgradeEffect2

@@ -1,215 +1,221 @@
-﻿module("modules.logic.explore.map.unit.comp.ExploreOutLineComp", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/unit/comp/ExploreOutLineComp.lua
 
-local var_0_0 = class("ExploreOutLineComp", LuaCompBase)
-local var_0_1 = Color(0.7529, 0.6831, 0.1721, 1)
-local var_0_2 = Color.white
-local var_0_3 = Color.black
-local var_0_4 = 0.5
-local var_0_5 = 0.3
-local var_0_6 = 3
+module("modules.logic.explore.map.unit.comp.ExploreOutLineComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.unit = arg_1_1
+local ExploreOutLineComp = class("ExploreOutLineComp", LuaCompBase)
+local strongColor = Color(0.7529, 0.6831, 0.1721, 1)
+local normalColor = Color.white
+local blackColor = Color.black
+local tweenInTime = 0.5
+local tweenOutTime = 0.3
+local OutlineLayerIndex = 3
+
+function ExploreOutLineComp:ctor(unit)
+	self.unit = unit
 end
 
-function var_0_0.setup(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
-	arg_2_0._renderers = arg_2_1:GetComponentsInChildren(typeof(UnityEngine.Renderer), true)
-	arg_2_0._iconHangPoint = gohelper.findChild(arg_2_1, "msts_icon")
+function ExploreOutLineComp:setup(go)
+	self.go = go
+	self._renderers = go:GetComponentsInChildren(typeof(UnityEngine.Renderer), true)
+	self._iconHangPoint = gohelper.findChild(go, "msts_icon")
 
-	ExploreController.instance:registerCallback(ExploreEvent.HeroTweenDisTr, arg_2_0.setCameraPos, arg_2_0)
-	ExploreController.instance:registerCallback(ExploreEvent.OnCharacterPosChange, arg_2_0.setCameraPos, arg_2_0)
+	ExploreController.instance:registerCallback(ExploreEvent.HeroTweenDisTr, self.setCameraPos, self)
+	ExploreController.instance:registerCallback(ExploreEvent.OnCharacterPosChange, self.setCameraPos, self)
 
-	local var_2_0 = lua_explore_unit.configDict[arg_2_0.unit:getUnitType()]
+	local co = lua_explore_unit.configDict[self.unit:getUnitType()]
 
-	if not var_2_0 then
+	if not co then
 		return
 	end
 
-	local var_2_1 = arg_2_0.unit.mo.isStrong and var_2_0.icon2 or var_2_0.icon
+	local icon = self.unit.mo.isStrong and co.icon2 or co.icon
 
-	if not string.nilorempty(var_2_1) then
-		arg_2_0._iconPath = "explore/common/sprite/prefabs/" .. var_2_1 .. ".prefab"
+	if not string.nilorempty(icon) then
+		self._iconPath = "explore/common/sprite/prefabs/" .. icon .. ".prefab"
 	end
 end
 
-function var_0_0.setCameraPos(arg_3_0)
-	if not arg_3_0.go or arg_3_0._renderers.Length <= 0 then
+function ExploreOutLineComp:setCameraPos()
+	if not self.go or self._renderers.Length <= 0 then
 		return
 	end
 
-	if arg_3_0._isOutLight then
-		local var_3_0 = arg_3_0._renderers[0].isVisible
+	if self._isOutLight then
+		local isVisible = self._renderers[0].isVisible
 
-		if var_3_0 ~= arg_3_0._isMarkOutLight then
-			if var_3_0 then
-				arg_3_0._isMarkOutLight = true
+		if isVisible ~= self._isMarkOutLight then
+			if isVisible then
+				self._isMarkOutLight = true
 
 				ExploreMapModel.instance:changeOutlineNum(1)
 
-				for iter_3_0 = 0, arg_3_0._renderers.Length - 1 do
-					arg_3_0._renderers[iter_3_0].renderingLayerMask = ExploreHelper.setBit(arg_3_0._renderers[iter_3_0].renderingLayerMask, var_0_6, true)
+				for i = 0, self._renderers.Length - 1 do
+					self._renderers[i].renderingLayerMask = ExploreHelper.setBit(self._renderers[i].renderingLayerMask, OutlineLayerIndex, true)
 				end
 			else
-				arg_3_0._isMarkOutLight = false
+				self._isMarkOutLight = false
 
 				ExploreMapModel.instance:changeOutlineNum(-1)
 
-				for iter_3_1 = 0, arg_3_0._renderers.Length - 1 do
-					arg_3_0._renderers[iter_3_1].renderingLayerMask = ExploreHelper.setBit(arg_3_0._renderers[iter_3_1].renderingLayerMask, var_0_6, false)
+				for i = 0, self._renderers.Length - 1 do
+					self._renderers[i].renderingLayerMask = ExploreHelper.setBit(self._renderers[i].renderingLayerMask, OutlineLayerIndex, false)
 				end
 			end
 		end
-	elseif not arg_3_0._isOutLight and arg_3_0._tweenId and not arg_3_0._renderers[0].isVisible then
-		ZProj.TweenHelper.KillById(arg_3_0._tweenId, true)
+	elseif not self._isOutLight and self._tweenId then
+		local isVisible = self._renderers[0].isVisible
 
-		arg_3_0._tweenId = nil
+		if not isVisible then
+			ZProj.TweenHelper.KillById(self._tweenId, true)
 
-		TaskDispatcher.cancelTask(arg_3_0._delayTweenClear, arg_3_0)
+			self._tweenId = nil
+
+			TaskDispatcher.cancelTask(self._delayTweenClear, self)
+		end
 	end
 end
 
-function var_0_0.setOutLight(arg_4_0, arg_4_1)
-	local var_4_0, var_4_1 = arg_4_0.unit:isCustomShowOutLine()
+function ExploreOutLineComp:setOutLight(isOutLight)
+	local _, customShowIcon = self.unit:isCustomShowOutLine()
 
-	if (var_4_1 or arg_4_1 and arg_4_0._iconPath) and arg_4_0._iconHangPoint then
-		if not arg_4_0._iconLoader then
-			arg_4_0._iconLoader = PrefabInstantiate.Create(arg_4_0._iconHangPoint)
+	if (customShowIcon or isOutLight and self._iconPath) and self._iconHangPoint then
+		if not self._iconLoader then
+			self._iconLoader = PrefabInstantiate.Create(self._iconHangPoint)
 		end
 
-		local var_4_2 = var_4_1 or arg_4_0._iconPath
+		local path = customShowIcon or self._iconPath
 
-		if var_4_2 ~= arg_4_0._iconLoader:getPath() then
-			arg_4_0._iconLoader:dispose()
-			arg_4_0._iconLoader:startLoad(var_4_2)
+		if path ~= self._iconLoader:getPath() then
+			self._iconLoader:dispose()
+			self._iconLoader:startLoad(path)
 		end
-	elseif arg_4_0._iconLoader then
-		arg_4_0._iconLoader:dispose()
+	elseif self._iconLoader then
+		self._iconLoader:dispose()
 
-		arg_4_0._iconLoader = nil
+		self._iconLoader = nil
 	end
 
-	if not arg_4_0._isOutLight == not arg_4_1 then
+	if not self._isOutLight == not isOutLight then
 		return
 	end
 
-	arg_4_0._isOutLight = arg_4_1
+	self._isOutLight = isOutLight
 
-	if arg_4_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_4_0._tweenId, true)
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId, true)
 	end
 
-	local var_4_3 = false
+	local isVisible = false
 
-	if arg_4_0._renderers.Length > 0 then
-		var_4_3 = ExploreHelper.getDistance(arg_4_0.unit.nodePos, ExploreController.instance:getMap():getHeroPos()) <= 3 and true or arg_4_0._renderers[0].isVisible
+	if self._renderers.Length > 0 then
+		isVisible = ExploreHelper.getDistance(self.unit.nodePos, ExploreController.instance:getMap():getHeroPos()) <= 3 and true or self._renderers[0].isVisible
 	end
 
-	if not var_4_3 then
-		if arg_4_0._isMarkOutLight then
-			arg_4_0._isMarkOutLight = false
+	if not isVisible then
+		if self._isMarkOutLight then
+			self._isMarkOutLight = false
 
 			ExploreMapModel.instance:changeOutlineNum(-1)
 
-			for iter_4_0 = 0, arg_4_0._renderers.Length - 1 do
-				arg_4_0._renderers[iter_4_0].renderingLayerMask = ExploreHelper.setBit(arg_4_0._renderers[iter_4_0].renderingLayerMask, var_0_6, false)
+			for i = 0, self._renderers.Length - 1 do
+				self._renderers[i].renderingLayerMask = ExploreHelper.setBit(self._renderers[i].renderingLayerMask, OutlineLayerIndex, false)
 			end
 		end
 
-		arg_4_0._isOutLight = false
+		self._isOutLight = false
 
 		return
 	end
 
-	for iter_4_1 = 0, arg_4_0._renderers.Length - 1 do
-		arg_4_0._renderers[iter_4_1].renderingLayerMask = ExploreHelper.setBit(arg_4_0._renderers[iter_4_1].renderingLayerMask, var_0_6, true)
+	for i = 0, self._renderers.Length - 1 do
+		self._renderers[i].renderingLayerMask = ExploreHelper.setBit(self._renderers[i].renderingLayerMask, OutlineLayerIndex, true)
 	end
 
-	if not arg_4_0._isMarkOutLight then
-		arg_4_0._isMarkOutLight = true
+	if not self._isMarkOutLight then
+		self._isMarkOutLight = true
 
 		ExploreMapModel.instance:changeOutlineNum(1)
 	end
 
-	TaskDispatcher.cancelTask(arg_4_0._delayTweenClear, arg_4_0)
+	TaskDispatcher.cancelTask(self._delayTweenClear, self)
 
-	if arg_4_1 then
-		arg_4_0._tweenId = ZProj.TweenHelper.DOTweenFloat(arg_4_0._nowLerpValue or 0, 1, var_0_4, arg_4_0.tweenColor, nil, arg_4_0)
+	if isOutLight then
+		self._tweenId = ZProj.TweenHelper.DOTweenFloat(self._nowLerpValue or 0, 1, tweenInTime, self.tweenColor, nil, self)
 	else
-		TaskDispatcher.runDelay(arg_4_0._delayTweenClear, arg_4_0, 0.05)
+		TaskDispatcher.runDelay(self._delayTweenClear, self, 0.05)
 	end
 end
 
-function var_0_0._delayTweenClear(arg_5_0)
-	arg_5_0._tweenId = ZProj.TweenHelper.DOTweenFloat(arg_5_0._nowLerpValue or 1, 0, var_0_5, arg_5_0.tweenColor, arg_5_0.outLineEnd, arg_5_0)
+function ExploreOutLineComp:_delayTweenClear()
+	self._tweenId = ZProj.TweenHelper.DOTweenFloat(self._nowLerpValue or 1, 0, tweenOutTime, self.tweenColor, self.outLineEnd, self)
 end
 
-function var_0_0.tweenColor(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0.unit.mo.isStrong and var_0_1 or var_0_2
+function ExploreOutLineComp:tweenColor(v)
+	local color = self.unit.mo.isStrong and strongColor or normalColor
 
-	for iter_6_0 = 0, arg_6_0._renderers.Length - 1 do
-		local var_6_1 = arg_6_0._renderers[iter_6_0]
+	for i = 0, self._renderers.Length - 1 do
+		local renderer = self._renderers[i]
 
-		if not tolua.isnull(var_6_1) then
-			arg_6_0._reuseValue = MaterialUtil.getLerpValue("Color", var_0_3, var_6_0, arg_6_1, arg_6_0._reuseValue)
+		if not tolua.isnull(renderer) then
+			self._reuseValue = MaterialUtil.getLerpValue("Color", blackColor, color, v, self._reuseValue)
 
-			MaterialUtil.setPropValue(var_6_1.material, "_OutlineColor", "Color", arg_6_0._reuseValue)
+			MaterialUtil.setPropValue(renderer.material, "_OutlineColor", "Color", self._reuseValue)
 		end
 	end
 
-	arg_6_0._nowLerpValue = arg_6_1
+	self._nowLerpValue = v
 end
 
-function var_0_0.outLineEnd(arg_7_0)
-	for iter_7_0 = 0, arg_7_0._renderers.Length - 1 do
-		local var_7_0 = arg_7_0._renderers[iter_7_0]
+function ExploreOutLineComp:outLineEnd()
+	for i = 0, self._renderers.Length - 1 do
+		local renderer = self._renderers[i]
 
-		if not tolua.isnull(var_7_0) then
-			var_7_0.renderingLayerMask = ExploreHelper.setBit(var_7_0.renderingLayerMask, var_0_6, false)
+		if not tolua.isnull(renderer) then
+			renderer.renderingLayerMask = ExploreHelper.setBit(renderer.renderingLayerMask, OutlineLayerIndex, false)
 		end
 	end
 
-	if arg_7_0._isMarkOutLight then
-		arg_7_0._isMarkOutLight = false
+	if self._isMarkOutLight then
+		self._isMarkOutLight = false
 
 		ExploreMapModel.instance:changeOutlineNum(-1)
 	end
 end
 
-function var_0_0.clear(arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0._delayTweenClear, arg_8_0)
+function ExploreOutLineComp:clear()
+	TaskDispatcher.cancelTask(self._delayTweenClear, self)
 
-	arg_8_0._nowLerpValue = 0
+	self._nowLerpValue = 0
 
-	if arg_8_0._isMarkOutLight then
+	if self._isMarkOutLight then
 		ExploreMapModel.instance:changeOutlineNum(-1)
 
-		arg_8_0._isMarkOutLight = false
+		self._isMarkOutLight = false
 	end
 
-	if arg_8_0._iconLoader then
-		arg_8_0._iconLoader:dispose()
+	if self._iconLoader then
+		self._iconLoader:dispose()
 
-		arg_8_0._iconLoader = nil
+		self._iconLoader = nil
 	end
 
-	if arg_8_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_8_0._tweenId)
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_8_0._tweenId = nil
+		self._tweenId = nil
 	end
 
-	arg_8_0._renderers = nil
-	arg_8_0._iconHangPoint = nil
-	arg_8_0._iconPath = nil
-	arg_8_0._isOutLight = false
+	self._renderers = nil
+	self._iconHangPoint = nil
+	self._iconPath = nil
+	self._isOutLight = false
 
-	ExploreController.instance:unregisterCallback(ExploreEvent.HeroTweenDisTr, arg_8_0.setCameraPos, arg_8_0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.OnCharacterPosChange, arg_8_0.setCameraPos, arg_8_0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.HeroTweenDisTr, self.setCameraPos, self)
+	ExploreController.instance:unregisterCallback(ExploreEvent.OnCharacterPosChange, self.setCameraPos, self)
 end
 
-function var_0_0.onDestroy(arg_9_0)
-	arg_9_0:clear()
+function ExploreOutLineComp:onDestroy()
+	self:clear()
 end
 
-return var_0_0
+return ExploreOutLineComp

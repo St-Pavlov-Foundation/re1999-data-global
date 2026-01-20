@@ -1,8 +1,10 @@
-﻿module("modules.logic.limited.controller.LimitedRoleEnum", package.seeall)
+﻿-- chunkname: @modules/logic/limited/controller/LimitedRoleEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.limited.controller.LimitedRoleEnum", package.seeall)
 
-var_0_0.Stage = {
+local LimitedRoleEnum = _M
+
+LimitedRoleEnum.Stage = {
 	FirstLogin = 1,
 	SwitchRole = 5,
 	MainVisibleClick = 3,
@@ -10,4 +12,4 @@ var_0_0.Stage = {
 	SummonGet = 4
 }
 
-return var_0_0
+return LimitedRoleEnum

@@ -1,379 +1,391 @@
-﻿module("modules.logic.season.model.Activity104Mo", package.seeall)
+﻿-- chunkname: @modules/logic/season/model/Activity104Mo.lua
 
-local var_0_0 = pureTable("Activity104Mo")
+module("modules.logic.season.model.Activity104Mo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.activityId = 0
-	arg_1_0.activity104Items = {}
-	arg_1_0.episodes = {}
-	arg_1_0.retails = {}
-	arg_1_0.specials = {}
-	arg_1_0.unlockEquipIndexs = {}
-	arg_1_0.optionalEquipCount = 0
-	arg_1_0.heroGroupSnapshot = {}
-	arg_1_0.tempHeroGroupSnapshot = {}
-	arg_1_0.heroGroupSnapshotSubId = 1
-	arg_1_0.retailStage = 1
-	arg_1_0.unlockActivity104EquipIds = {}
-	arg_1_0.activity104ItemCountDict = {}
-	arg_1_0.trialId = 0
-	arg_1_0.isPopSummary = true
-	arg_1_0.lastMaxLayer = 0
+local Activity104Mo = pureTable("Activity104Mo")
+
+function Activity104Mo:ctor()
+	self.activityId = 0
+	self.activity104Items = {}
+	self.episodes = {}
+	self.retails = {}
+	self.specials = {}
+	self.unlockEquipIndexs = {}
+	self.optionalEquipCount = 0
+	self.heroGroupSnapshot = {}
+	self.tempHeroGroupSnapshot = {}
+	self.heroGroupSnapshotSubId = 1
+	self.retailStage = 1
+	self.unlockActivity104EquipIds = {}
+	self.activity104ItemCountDict = {}
+	self.trialId = 0
+	self.isPopSummary = true
+	self.lastMaxLayer = 0
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.activityId = arg_2_1.activityId
-	arg_2_0.activity104Items = arg_2_0:_buildItems(arg_2_1.activity104Items)
-	arg_2_0.episodes = arg_2_0:_buildEpisodes(arg_2_1.episodes)
-	arg_2_0.retails = arg_2_0:_buildRetails(arg_2_1.retails)
-	arg_2_0.specials = arg_2_0:_buildSpecials(arg_2_1.specials)
-	arg_2_0.unlockEquipIndexs = arg_2_0:_buildList(arg_2_1.unlockEquipIndexs)
-	arg_2_0.optionalEquipCount = arg_2_1.optionalEquipCount
-	arg_2_0.heroGroupSnapshot = arg_2_0:_buildSnapshot(arg_2_1.heroGroupSnapshot)
-	arg_2_0.heroGroupSnapshotSubId = arg_2_1.heroGroupSnapshotSubId
-	arg_2_0.retailStage = arg_2_1.retailStage
+function Activity104Mo:init(info)
+	self.activityId = info.activityId
+	self.activity104Items = self:_buildItems(info.activity104Items)
+	self.episodes = self:_buildEpisodes(info.episodes)
+	self.retails = self:_buildRetails(info.retails)
+	self.specials = self:_buildSpecials(info.specials)
+	self.unlockEquipIndexs = self:_buildList(info.unlockEquipIndexs)
+	self.optionalEquipCount = info.optionalEquipCount
+	self.heroGroupSnapshot = self:_buildSnapshot(info.heroGroupSnapshot)
+	self.heroGroupSnapshotSubId = info.heroGroupSnapshotSubId
+	self.retailStage = info.retailStage
 
-	arg_2_0:setUnlockActivity104EquipIds(arg_2_1.unlockActivity104EquipIds)
+	self:setUnlockActivity104EquipIds(info.unlockActivity104EquipIds)
 
-	arg_2_0.readActivity104Story = arg_2_1.readActivity104Story
-	arg_2_0.trialId = arg_2_1.trial.id
-	arg_2_0.isPopSummary = arg_2_1.preSummary.isPopSummary
-	arg_2_0.lastMaxLayer = arg_2_1.preSummary.maxLayer
+	self.readActivity104Story = info.readActivity104Story
+	self.trialId = info.trial.id
+	self.isPopSummary = info.preSummary.isPopSummary
+	self.lastMaxLayer = info.preSummary.maxLayer
 
-	arg_2_0:refreshItemCount()
+	self:refreshItemCount()
 end
 
-function var_0_0.reset(arg_3_0, arg_3_1)
-	arg_3_0.activityId = arg_3_1.activityId
-	arg_3_0.trialId = arg_3_1.trial.id
+function Activity104Mo:reset(info)
+	self.activityId = info.activityId
+	self.trialId = info.trial.id
 
-	arg_3_0:_addUnlockEquipIndexs(arg_3_1.unlockEquipIndexs)
+	self:_addUnlockEquipIndexs(info.unlockEquipIndexs)
 
-	arg_3_0.optionalEquipCount = arg_3_1.optionalEquipCount
+	self.optionalEquipCount = info.optionalEquipCount
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1.updateEpisodes) do
-		if not arg_3_0.episodes[iter_3_1.layer] then
-			arg_3_0.episodes[iter_3_1.layer] = Activity104EpisodeMo.New()
+	for _, v in ipairs(info.updateEpisodes) do
+		if not self.episodes[v.layer] then
+			self.episodes[v.layer] = Activity104EpisodeMo.New()
 
-			arg_3_0.episodes[iter_3_1.layer]:init(iter_3_1)
+			self.episodes[v.layer]:init(v)
 		else
-			arg_3_0.episodes[iter_3_1.layer]:reset(iter_3_1)
+			self.episodes[v.layer]:reset(v)
 		end
 	end
 
-	arg_3_0.retails = arg_3_0:_buildRetails(arg_3_1.retails)
+	self.retails = self:_buildRetails(info.retails)
 
-	for iter_3_2, iter_3_3 in ipairs(arg_3_1.updateSpecials) do
-		if not arg_3_0.specials[iter_3_3.layer] then
-			arg_3_0.specials[iter_3_3.layer] = Activity104SpecialMo.New()
+	for _, v in ipairs(info.updateSpecials) do
+		if not self.specials[v.layer] then
+			self.specials[v.layer] = Activity104SpecialMo.New()
 
-			arg_3_0.specials[iter_3_3.layer]:init(iter_3_3)
+			self.specials[v.layer]:init(v)
 		else
-			arg_3_0.specials[iter_3_3.layer]:reset(iter_3_3)
+			self.specials[v.layer]:reset(v)
 		end
 	end
 end
 
-function var_0_0._addUnlockEquipIndexs(arg_4_0, arg_4_1)
-	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
-		table.insert(arg_4_0.unlockEquipIndexs, iter_4_1)
+function Activity104Mo:_addUnlockEquipIndexs(indexs)
+	for _, index in ipairs(indexs) do
+		table.insert(self.unlockEquipIndexs, index)
 	end
 end
 
-function var_0_0.updateItems(arg_5_0, arg_5_1)
-	for iter_5_0, iter_5_1 in ipairs(arg_5_1.activity104Items) do
-		if arg_5_0.activity104Items[iter_5_1.uid] then
-			arg_5_0.activity104Items[iter_5_1.uid]:reset(iter_5_1)
+function Activity104Mo:updateItems(info)
+	for _, v in ipairs(info.activity104Items) do
+		if self.activity104Items[v.uid] then
+			self.activity104Items[v.uid]:reset(v)
 		else
-			local var_5_0 = Activity104ItemMo.New()
+			local itemMo = Activity104ItemMo.New()
 
-			var_5_0:init(iter_5_1)
+			itemMo:init(v)
 
-			arg_5_0.activity104Items[iter_5_1.uid] = var_5_0
+			self.activity104Items[v.uid] = itemMo
 		end
 	end
 
-	for iter_5_2, iter_5_3 in ipairs(arg_5_1.deleteItems) do
-		if arg_5_0.activity104Items[iter_5_3.uid] then
-			arg_5_0.activity104Items[iter_5_3.uid] = nil
+	for _, v in ipairs(info.deleteItems) do
+		if self.activity104Items[v.uid] then
+			self.activity104Items[v.uid] = nil
 		end
 	end
 
-	arg_5_0:refreshItemCount()
+	self:refreshItemCount()
 end
 
-function var_0_0._buildEpisodes(arg_6_0, arg_6_1)
-	local var_6_0 = {}
+function Activity104Mo:_buildEpisodes(episodes)
+	local dict = {}
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_1) do
-		local var_6_1 = Activity104EpisodeMo.New()
+	for _, v in ipairs(episodes) do
+		local episodeMo = Activity104EpisodeMo.New()
 
-		var_6_1:init(iter_6_1)
+		episodeMo:init(v)
 
-		var_6_0[var_6_1.layer] = var_6_1
+		dict[episodeMo.layer] = episodeMo
 	end
 
-	return var_6_0
+	return dict
 end
 
-function var_0_0._buildRetails(arg_7_0, arg_7_1)
-	arg_7_0.lastRetails = arg_7_0.retails
+function Activity104Mo:_buildRetails(retails)
+	self.lastRetails = self.retails
 
-	local var_7_0 = {}
+	local list = {}
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_1) do
-		local var_7_1 = Activity104RetailMo.New()
+	for _, v in ipairs(retails) do
+		local retailMo = Activity104RetailMo.New()
 
-		var_7_1:init(iter_7_1)
-		table.insert(var_7_0, var_7_1)
+		retailMo:init(v)
+		table.insert(list, retailMo)
 	end
 
-	table.sort(var_7_0, function(arg_8_0, arg_8_1)
-		return arg_8_0.id < arg_8_1.id
+	table.sort(list, function(a, b)
+		return a.id < b.id
 	end)
 
-	return var_7_0
+	return list
 end
 
-function var_0_0._buildSpecials(arg_9_0, arg_9_1)
-	local var_9_0 = {}
+function Activity104Mo:_buildSpecials(specials)
+	local list = {}
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_1) do
-		local var_9_1 = Activity104SpecialMo.New()
+	for _, v in ipairs(specials) do
+		local specialMo = Activity104SpecialMo.New()
 
-		var_9_1:init(iter_9_1)
-		table.insert(var_9_0, var_9_1)
+		specialMo:init(v)
+		table.insert(list, specialMo)
 	end
 
-	table.sort(var_9_0, function(arg_10_0, arg_10_1)
-		return arg_10_0.layer < arg_10_1.layer
+	table.sort(list, function(a, b)
+		return a.layer < b.layer
 	end)
 
-	return var_9_0
+	return list
 end
 
-function var_0_0._buildItems(arg_11_0, arg_11_1)
-	local var_11_0 = {}
+function Activity104Mo:_buildItems(items)
+	local list = {}
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_1) do
-		local var_11_1 = Activity104ItemMo.New()
+	for _, v in ipairs(items) do
+		local itemMo = Activity104ItemMo.New()
 
-		var_11_1:init(iter_11_1)
+		itemMo:init(v)
 
-		var_11_0[iter_11_1.uid] = var_11_1
+		list[v.uid] = itemMo
 	end
 
-	table.sort(var_11_0, function(arg_12_0, arg_12_1)
-		return arg_12_0.itemId < arg_12_1.itemId
+	table.sort(list, function(a, b)
+		return a.itemId < b.itemId
 	end)
 
-	return var_11_0
+	return list
 end
 
-function var_0_0._buildList(arg_13_0, arg_13_1)
-	local var_13_0 = {}
+function Activity104Mo:_buildList(listInfo)
+	local list = {}
 
-	for iter_13_0, iter_13_1 in ipairs(arg_13_1) do
-		table.insert(var_13_0, iter_13_1)
+	for _, v in ipairs(listInfo) do
+		table.insert(list, v)
 	end
 
-	return var_13_0
+	return list
 end
 
-function var_0_0._buildSnapshot(arg_14_0, arg_14_1)
-	local var_14_0 = {}
+function Activity104Mo:_buildSnapshot(snapshots)
+	local list = {}
 
-	for iter_14_0, iter_14_1 in ipairs(arg_14_1) do
-		local var_14_1 = HeroGroupMO.New()
-		local var_14_2 = true
+	for _, v in ipairs(snapshots) do
+		local snapMo = HeroGroupMO.New()
+		local fit = true
 
-		for iter_14_2, iter_14_3 in ipairs(iter_14_1.heroList) do
-			if tonumber(iter_14_3) ~= 0 then
-				var_14_2 = false
+		for _, hero in ipairs(v.heroList) do
+			if tonumber(hero) ~= 0 then
+				fit = false
 			end
 
 			break
 		end
 
-		if var_14_2 then
-			local var_14_3 = HeroGroupModel.instance:getById(1)
+		if fit then
+			local mainHeroGroupMo = HeroGroupModel.instance:getById(1)
 
-			if iter_14_1.groupId == 1 and var_14_3 then
-				var_14_1.id = iter_14_1.groupId
-				var_14_1.groupId = iter_14_1.groupId
-				var_14_1.name = var_14_3.name
-				var_14_1.heroList = LuaUtil.deepCopy(var_14_3.heroList)
-				var_14_1.aidDict = LuaUtil.deepCopy(var_14_3.aidDict)
-				var_14_1.clothId = var_14_3.clothId
-				var_14_1.equips = LuaUtil.deepCopy(var_14_3.equips)
-				var_14_1.activity104Equips = LuaUtil.deepCopy(var_14_3.activity104Equips)
+			if v.groupId == 1 and mainHeroGroupMo then
+				snapMo.id = v.groupId
+				snapMo.groupId = v.groupId
+				snapMo.name = mainHeroGroupMo.name
+				snapMo.heroList = LuaUtil.deepCopy(mainHeroGroupMo.heroList)
+				snapMo.aidDict = LuaUtil.deepCopy(mainHeroGroupMo.aidDict)
+				snapMo.clothId = mainHeroGroupMo.clothId
+				snapMo.equips = LuaUtil.deepCopy(mainHeroGroupMo.equips)
+				snapMo.activity104Equips = LuaUtil.deepCopy(mainHeroGroupMo.activity104Equips)
 			else
-				var_14_1.id = iter_14_1.groupId
-				var_14_1.groupId = iter_14_1.groupId
-				var_14_1.name = ""
-				var_14_1.heroList = {
+				snapMo.id = v.groupId
+				snapMo.groupId = v.groupId
+				snapMo.name = ""
+				snapMo.heroList = {
 					"0",
 					"0",
 					"0",
 					"0"
 				}
-				var_14_1.clothId = var_14_3.clothId
-				var_14_1.equips = {}
+				snapMo.clothId = mainHeroGroupMo.clothId
+				snapMo.equips = {}
 
-				for iter_14_4 = 0, 3 do
-					var_14_1:updatePosEquips({
-						index = iter_14_4,
+				for i = 0, 3 do
+					snapMo:updatePosEquips({
+						index = i,
 						equipUid = {
 							"0"
 						}
 					})
 				end
 
-				var_14_1.activity104Equips = {}
+				snapMo.activity104Equips = {}
 
-				for iter_14_5 = 0, 3 do
-					var_14_1:updatePosEquips({
-						index = iter_14_5,
+				for i = 0, 3 do
+					snapMo:updatePosEquips({
+						index = i,
 						equipUid = {
 							"0"
 						}
 					})
 				end
 
-				local var_14_4 = HeroGroupActivity104EquipMo.New()
+				local mainEquipMo = HeroGroupActivity104EquipMo.New()
 
-				var_14_4:init({
+				mainEquipMo:init({
 					index = 4,
 					equipUid = {
 						"0"
 					}
 				})
 
-				var_14_1.activity104Equips[4] = var_14_4
+				snapMo.activity104Equips[4] = mainEquipMo
 			end
 		else
-			var_14_1:init(iter_14_1)
+			snapMo:init(v)
 		end
 
-		var_14_1:clearAidHero()
+		snapMo:clearAidHero()
 
-		var_14_0[iter_14_1.groupId] = var_14_1
+		list[v.groupId] = snapMo
 	end
 
-	table.sort(var_14_0, function(arg_15_0, arg_15_1)
-		return arg_15_0.groupId < arg_15_1.groupId
+	table.sort(list, function(a, b)
+		return a.groupId < b.groupId
 	end)
 
-	return var_14_0
+	return list
 end
 
-function var_0_0.replaceRetails(arg_16_0, arg_16_1)
-	arg_16_0.retails = arg_16_0:_buildRetails(arg_16_1)
+function Activity104Mo:replaceRetails(info)
+	self.retails = self:_buildRetails(info)
 end
 
-function var_0_0.getLastRetails(arg_17_0)
-	local var_17_0 = arg_17_0.lastRetails
+function Activity104Mo:getLastRetails()
+	local list = self.lastRetails
 
-	arg_17_0.lastRetails = nil
+	self.lastRetails = nil
 
-	return var_17_0
+	return list
 end
 
-function var_0_0.setUnlockActivity104EquipIds(arg_18_0, arg_18_1)
-	arg_18_0.unlockActivity104EquipIds = {}
+function Activity104Mo:setUnlockActivity104EquipIds(proto)
+	self.unlockActivity104EquipIds = {}
 
-	for iter_18_0, iter_18_1 in ipairs(arg_18_1) do
-		arg_18_0.unlockActivity104EquipIds[iter_18_1] = iter_18_1
+	for i, v in ipairs(proto) do
+		self.unlockActivity104EquipIds[v] = v
 	end
 end
 
-function var_0_0.markStory(arg_19_0, arg_19_1)
-	arg_19_0.readActivity104Story = arg_19_1
+function Activity104Mo:markStory(mark)
+	self.readActivity104Story = mark
 end
 
-function var_0_0.markEpisodeAfterStory(arg_20_0, arg_20_1)
-	local var_20_0 = arg_20_0.episodes[arg_20_1]
+function Activity104Mo:markEpisodeAfterStory(layer)
+	local mo = self.episodes[layer]
 
-	if var_20_0 then
-		var_20_0:markStory(true)
+	if mo then
+		mo:markStory(true)
 	end
 end
 
-function var_0_0.setBattleFinishLayer(arg_21_0, arg_21_1)
-	if arg_21_1 > 0 then
-		arg_21_0.battleFinishLayer = arg_21_1
+function Activity104Mo:setBattleFinishLayer(layer)
+	if layer > 0 then
+		self.battleFinishLayer = layer
 	end
 end
 
-function var_0_0.getBattleFinishLayer(arg_22_0)
-	return arg_22_0.battleFinishLayer
+function Activity104Mo:getBattleFinishLayer()
+	return self.battleFinishLayer
 end
 
-function var_0_0.refreshItemCount(arg_23_0)
-	arg_23_0.activity104ItemCountDict = {}
+function Activity104Mo:refreshItemCount()
+	self.activity104ItemCountDict = {}
 
-	if arg_23_0.activity104Items then
-		for iter_23_0, iter_23_1 in pairs(arg_23_0.activity104Items) do
-			if arg_23_0.activity104ItemCountDict[iter_23_1.itemId] then
-				arg_23_0.activity104ItemCountDict[iter_23_1.itemId] = arg_23_0.activity104ItemCountDict[iter_23_1.itemId] + 1
+	if self.activity104Items then
+		for k, v in pairs(self.activity104Items) do
+			if self.activity104ItemCountDict[v.itemId] then
+				self.activity104ItemCountDict[v.itemId] = self.activity104ItemCountDict[v.itemId] + 1
 			else
-				arg_23_0.activity104ItemCountDict[iter_23_1.itemId] = 1
+				self.activity104ItemCountDict[v.itemId] = 1
 			end
 		end
 	end
 end
 
-function var_0_0.getItemCount(arg_24_0, arg_24_1)
-	return arg_24_0.activity104ItemCountDict[arg_24_1] or 0
+function Activity104Mo:getItemCount(itemId)
+	return self.activity104ItemCountDict[itemId] or 0
 end
 
-function var_0_0.getSnapshotHeroGroupBySubId(arg_25_0, arg_25_1)
-	arg_25_1 = arg_25_1 or arg_25_0.heroGroupSnapshotSubId
+function Activity104Mo:getSnapshotHeroGroupBySubId(subId)
+	subId = subId or self.heroGroupSnapshotSubId
 
-	local var_25_0 = arg_25_0.heroGroupSnapshot[arg_25_1]
-	local var_25_1 = HeroGroupModel.instance.battleConfig
+	local groupMo = self.heroGroupSnapshot[subId]
+	local battleCO = HeroGroupModel.instance.battleConfig
 
-	if var_25_1 and (#string.splitToNumber(var_25_1.aid, "#") > 0 or var_25_1.trialLimit > 0) then
-		return arg_25_0.tempHeroGroupSnapshot[arg_25_1]
+	if battleCO then
+		local configAids = string.splitToNumber(battleCO.aid, "#")
+
+		if #configAids > 0 or battleCO.trialLimit > 0 then
+			return self.tempHeroGroupSnapshot[subId]
+		end
 	end
 
-	return var_25_0
+	return groupMo
 end
 
-function var_0_0.getRealHeroGroupBySubId(arg_26_0, arg_26_1)
-	arg_26_1 = arg_26_1 or arg_26_0.heroGroupSnapshotSubId
+function Activity104Mo:getRealHeroGroupBySubId(subId)
+	subId = subId or self.heroGroupSnapshotSubId
 
-	return arg_26_0.heroGroupSnapshot[arg_26_1]
+	local groupMo = self.heroGroupSnapshot[subId]
+
+	return groupMo
 end
 
-function var_0_0.getIsPopSummary(arg_27_0)
-	return arg_27_0.isPopSummary
+function Activity104Mo:getIsPopSummary()
+	return self.isPopSummary
 end
 
-function var_0_0.setIsPopSummary(arg_28_0, arg_28_1)
-	arg_28_0.isPopSummary = arg_28_1
+function Activity104Mo:setIsPopSummary(isPopSummary)
+	self.isPopSummary = isPopSummary
 end
 
-function var_0_0.getLastMaxLayer(arg_29_0)
-	return arg_29_0.lastMaxLayer
+function Activity104Mo:getLastMaxLayer()
+	return self.lastMaxLayer
 end
 
-function var_0_0.getTrialId(arg_30_0)
-	return arg_30_0.trialId
+function Activity104Mo:getTrialId()
+	return self.trialId
 end
 
-function var_0_0.buildHeroGroup(arg_31_0)
-	local var_31_0 = HeroGroupModel.instance.battleConfig
+function Activity104Mo:buildHeroGroup()
+	local battleCO = HeroGroupModel.instance.battleConfig
 
-	if var_31_0 and (#string.splitToNumber(var_31_0.aid, "#") > 0 or var_31_0.trialLimit > 0) then
-		arg_31_0.tempHeroGroupSnapshot = {}
+	if battleCO then
+		local configAids = string.splitToNumber(battleCO.aid, "#")
 
-		for iter_31_0, iter_31_1 in ipairs(arg_31_0.heroGroupSnapshot) do
-			arg_31_0.tempHeroGroupSnapshot[iter_31_0] = HeroGroupModel.instance:generateTempGroup(iter_31_1)
+		if #configAids > 0 or battleCO.trialLimit > 0 then
+			self.tempHeroGroupSnapshot = {}
 
-			arg_31_0.tempHeroGroupSnapshot[iter_31_0]:setTemp(false)
+			for i, v in ipairs(self.heroGroupSnapshot) do
+				self.tempHeroGroupSnapshot[i] = HeroGroupModel.instance:generateTempGroup(v)
+
+				self.tempHeroGroupSnapshot[i]:setTemp(false)
+			end
 		end
 	end
 end
 
-return var_0_0
+return Activity104Mo

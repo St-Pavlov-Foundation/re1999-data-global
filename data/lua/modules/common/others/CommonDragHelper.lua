@@ -1,231 +1,233 @@
-﻿module("modules.common.others.CommonDragHelper", package.seeall)
+﻿-- chunkname: @modules/common/others/CommonDragHelper.lua
 
-local var_0_0 = class("CommonDragHelper")
+module("modules.common.others.CommonDragHelper", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._list = {}
-	arg_1_0._nowDragData = nil
-	arg_1_0.enabled = true
+local CommonDragHelper = class("CommonDragHelper")
+
+function CommonDragHelper:ctor()
+	self._list = {}
+	self._nowDragData = nil
+	self.enabled = true
 end
 
-function var_0_0.registerDragObj(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4, arg_2_5, arg_2_6, arg_2_7, arg_2_8, arg_2_9, arg_2_10, arg_2_11)
-	if not arg_2_1 or gohelper.isNil(arg_2_1) then
+function CommonDragHelper:registerDragObj(go, beginCallBack, dragCallBack, endCallBack, checkCallBack, callObj, params, isNoMove, moveOffset, dragScale, dragDefaultScale)
+	if not go or gohelper.isNil(go) then
 		logError("go can not be nil")
 
 		return
 	end
 
-	if arg_2_0:getDragData(arg_2_1) then
+	if self:getDragData(go) then
 		logWarn("repeat register")
-		arg_2_0:unregisterDragObj(arg_2_1)
+		self:unregisterDragObj(go)
 	end
 
-	local var_2_0 = {}
-	local var_2_1 = SLFramework.UGUI.UIDragListener.Get(arg_2_1)
+	local data = {}
+	local drag = SLFramework.UGUI.UIDragListener.Get(go)
 
-	var_2_1:AddDragBeginListener(arg_2_0._onBeginDrag, arg_2_0, var_2_0)
-	var_2_1:AddDragListener(arg_2_0._onDrag, arg_2_0, var_2_0)
-	var_2_1:AddDragEndListener(arg_2_0._onEndDrag, arg_2_0, var_2_0)
+	drag:AddDragBeginListener(self._onBeginDrag, self, data)
+	drag:AddDragListener(self._onDrag, self, data)
+	drag:AddDragEndListener(self._onEndDrag, self, data)
 
-	var_2_0.go = arg_2_1
-	var_2_0.transform = arg_2_1.transform
-	var_2_0.parent = arg_2_1.transform.parent
-	var_2_0.beginCallBack = arg_2_2
-	var_2_0.dragCallBack = arg_2_3
-	var_2_0.endCallBack = arg_2_4
-	var_2_0.checkCallBack = arg_2_5
-	var_2_0.callObj = arg_2_6
-	var_2_0.drag = var_2_1
-	var_2_0.params = arg_2_7
-	var_2_0.enabled = true
-	var_2_0.isNoMove = arg_2_8
-	var_2_0.moveOffset = arg_2_9
-	var_2_0.dragScale = arg_2_10 or 1
-	var_2_0.dragDefaultScale = arg_2_11 or 1
+	data.go = go
+	data.transform = go.transform
+	data.parent = go.transform.parent
+	data.beginCallBack = beginCallBack
+	data.dragCallBack = dragCallBack
+	data.endCallBack = endCallBack
+	data.checkCallBack = checkCallBack
+	data.callObj = callObj
+	data.drag = drag
+	data.params = params
+	data.enabled = true
+	data.isNoMove = isNoMove
+	data.moveOffset = moveOffset
+	data.dragScale = dragScale or 1
+	data.dragDefaultScale = dragDefaultScale or 1
 
-	table.insert(arg_2_0._list, var_2_0)
+	table.insert(self._list, data)
 end
 
-function var_0_0.setCallBack(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5, arg_3_6, arg_3_7)
-	local var_3_0 = arg_3_0:getDragData(arg_3_1)
+function CommonDragHelper:setCallBack(go, beginCallBack, dragCallBack, endCallBack, checkCallBack, callObj, params)
+	local data = self:getDragData(go)
 
-	if not var_3_0 then
+	if not data then
 		return
 	end
 
-	var_3_0.beginCallBack = arg_3_2
-	var_3_0.dragCallBack = arg_3_3
-	var_3_0.endCallBack = arg_3_4
-	var_3_0.checkCallBack = arg_3_5
-	var_3_0.callObj = arg_3_6
-	var_3_0.params = arg_3_7
+	data.beginCallBack = beginCallBack
+	data.dragCallBack = dragCallBack
+	data.endCallBack = endCallBack
+	data.checkCallBack = checkCallBack
+	data.callObj = callObj
+	data.params = params
 end
 
-function var_0_0.refreshParent(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0:getDragData(arg_4_1)
+function CommonDragHelper:refreshParent(go)
+	local data = self:getDragData(go)
 
-	if not var_4_0 then
+	if not data then
 		return
 	end
 
-	var_4_0.parent = var_4_0.transform.parent
+	data.parent = data.transform.parent
 
-	ZProj.TweenHelper.KillByObj(var_4_0.transform)
+	ZProj.TweenHelper.KillByObj(data.transform)
 end
 
-function var_0_0._onBeginDrag(arg_5_0, arg_5_1, arg_5_2)
-	if not arg_5_1.enabled or not arg_5_0.enabled then
+function CommonDragHelper:_onBeginDrag(data, pointerEventData)
+	if not data.enabled or not self.enabled then
 		return
 	end
 
-	if arg_5_1.checkCallBack and arg_5_1.checkCallBack(arg_5_1.callObj, arg_5_1.params) then
+	if data.checkCallBack and data.checkCallBack(data.callObj, data.params) then
 		return
 	end
 
-	if arg_5_0._nowDragData then
+	if self._nowDragData then
 		return
 	end
 
-	arg_5_0._nowDragData = arg_5_1
+	self._nowDragData = data
 
-	if not arg_5_1.isNoMove then
-		arg_5_0:_tweenToPos(arg_5_1, arg_5_2.position)
-		gohelper.setAsLastSibling(arg_5_1.go)
+	if not data.isNoMove then
+		self:_tweenToPos(data, pointerEventData.position)
+		gohelper.setAsLastSibling(data.go)
 	end
 
-	if arg_5_1.dragScale ~= arg_5_1.dragDefaultScale then
-		ZProj.TweenHelper.KillByObj(arg_5_1.transform)
-		ZProj.TweenHelper.DOScale(arg_5_1.transform, arg_5_1.dragScale, arg_5_1.dragScale, arg_5_1.dragScale, 0.16)
+	if data.dragScale ~= data.dragDefaultScale then
+		ZProj.TweenHelper.KillByObj(data.transform)
+		ZProj.TweenHelper.DOScale(data.transform, data.dragScale, data.dragScale, data.dragScale, 0.16)
 	end
 
-	if arg_5_1.beginCallBack then
-		arg_5_1.beginCallBack(arg_5_1.callObj, arg_5_1.params, arg_5_2)
+	if data.beginCallBack then
+		data.beginCallBack(data.callObj, data.params, pointerEventData)
 	end
 end
 
-function var_0_0._tweenToPos(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_1.moveOffset then
-		arg_6_2 = arg_6_2 + arg_6_1.moveOffset
+function CommonDragHelper:_tweenToPos(data, position)
+	if data.moveOffset then
+		position = position + data.moveOffset
 	end
 
-	local var_6_0 = recthelper.screenPosToAnchorPos(arg_6_2, arg_6_1.parent)
-	local var_6_1 = arg_6_1.transform
-	local var_6_2, var_6_3 = recthelper.getAnchor(var_6_1)
+	local anchorPos = recthelper.screenPosToAnchorPos(position, data.parent)
+	local trans = data.transform
+	local curAnchorX, curAnchorY = recthelper.getAnchor(trans)
 
-	if math.abs(var_6_2 - var_6_0.x) > 10 or math.abs(var_6_3 - var_6_0.y) > 10 then
-		ZProj.TweenHelper.DOAnchorPos(var_6_1, var_6_0.x, var_6_0.y, 0.2)
+	if math.abs(curAnchorX - anchorPos.x) > 10 or math.abs(curAnchorY - anchorPos.y) > 10 then
+		ZProj.TweenHelper.DOAnchorPos(trans, anchorPos.x, anchorPos.y, 0.2)
 	else
-		recthelper.setAnchor(var_6_1, var_6_0.x, var_6_0.y)
+		recthelper.setAnchor(trans, anchorPos.x, anchorPos.y)
 	end
 end
 
-function var_0_0._onDrag(arg_7_0, arg_7_1, arg_7_2)
-	if arg_7_0._nowDragData ~= arg_7_1 then
+function CommonDragHelper:_onDrag(data, pointerEventData)
+	if self._nowDragData ~= data then
 		return
 	end
 
-	if not arg_7_1.isNoMove then
-		arg_7_0:_tweenToPos(arg_7_1, arg_7_2.position)
+	if not data.isNoMove then
+		self:_tweenToPos(data, pointerEventData.position)
 	end
 
-	if arg_7_1.dragCallBack then
-		arg_7_1.dragCallBack(arg_7_1.callObj, arg_7_1.params, arg_7_2)
+	if data.dragCallBack then
+		data.dragCallBack(data.callObj, data.params, pointerEventData)
 	end
 end
 
-function var_0_0._onEndDrag(arg_8_0, arg_8_1, arg_8_2)
-	if arg_8_0._nowDragData ~= arg_8_1 then
+function CommonDragHelper:_onEndDrag(data, pointerEventData)
+	if self._nowDragData ~= data then
 		return
 	end
 
-	if arg_8_1.dragScale ~= arg_8_1.dragDefaultScale then
-		ZProj.TweenHelper.DOScale(arg_8_1.transform, arg_8_1.dragDefaultScale, arg_8_1.dragDefaultScale, arg_8_1.dragDefaultScale, 0.16)
+	if data.dragScale ~= data.dragDefaultScale then
+		ZProj.TweenHelper.DOScale(data.transform, data.dragDefaultScale, data.dragDefaultScale, data.dragDefaultScale, 0.16)
 	end
 
-	if arg_8_1.endCallBack then
-		arg_8_1.endCallBack(arg_8_1.callObj, arg_8_1.params, arg_8_2)
+	if data.endCallBack then
+		data.endCallBack(data.callObj, data.params, pointerEventData)
 	end
 
-	arg_8_0._nowDragData = nil
+	self._nowDragData = nil
 end
 
-function var_0_0.setDragEnabled(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = arg_9_0:getDragData(arg_9_1)
+function CommonDragHelper:setDragEnabled(go, isEnabled)
+	local data = self:getDragData(go)
 
-	if not var_9_0 then
+	if not data then
 		return
 	end
 
-	var_9_0.enabled = arg_9_2
+	data.enabled = isEnabled
 
-	if not arg_9_2 and arg_9_0._nowDragData == var_9_0 then
-		arg_9_0:stopDrag(arg_9_1)
+	if not isEnabled and self._nowDragData == data then
+		self:stopDrag(go)
 	end
 end
 
-function var_0_0.setGlobalEnabled(arg_10_0, arg_10_1)
-	arg_10_0.enabled = arg_10_1
+function CommonDragHelper:setGlobalEnabled(isEnabled)
+	self.enabled = isEnabled
 
-	if not arg_10_1 and arg_10_0._nowDragData then
-		arg_10_0:stopDrag(arg_10_0._nowDragData.go)
+	if not isEnabled and self._nowDragData then
+		self:stopDrag(self._nowDragData.go)
 	end
 end
 
-function var_0_0.getDragData(arg_11_0, arg_11_1)
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0._list) do
-		if iter_11_1.go == arg_11_1 then
-			return iter_11_1, iter_11_0
+function CommonDragHelper:getDragData(go)
+	for index, data in ipairs(self._list) do
+		if data.go == go then
+			return data, index
 		end
 	end
 end
 
-function var_0_0.stopDrag(arg_12_0, arg_12_1, arg_12_2)
-	if arg_12_0._nowDragData and arg_12_0._nowDragData.go == arg_12_1 then
-		if arg_12_2 then
-			arg_12_0._nowDragData.endCallBack(arg_12_0._nowDragData.callObj, arg_12_0._nowDragData.params, GamepadController.instance:getMousePosition())
+function CommonDragHelper:stopDrag(go, isEndCall)
+	if self._nowDragData and self._nowDragData.go == go then
+		if isEndCall then
+			self._nowDragData.endCallBack(self._nowDragData.callObj, self._nowDragData.params, GamepadController.instance:getMousePosition())
 		end
 
-		arg_12_0._nowDragData = nil
+		self._nowDragData = nil
 	end
 end
 
-function var_0_0.unregisterDragObj(arg_13_0, arg_13_1)
-	local var_13_0, var_13_1 = arg_13_0:getDragData(arg_13_1)
+function CommonDragHelper:unregisterDragObj(go)
+	local data, index = self:getDragData(go)
 
-	if not var_13_0 then
+	if not data then
 		return
 	end
 
-	local var_13_2 = var_13_0.drag
+	local drag = data.drag
 
-	if not gohelper.isNil(var_13_2) then
-		var_13_2:RemoveDragListener()
-		var_13_2:RemoveDragBeginListener()
-		var_13_2:RemoveDragEndListener()
+	if not gohelper.isNil(drag) then
+		drag:RemoveDragListener()
+		drag:RemoveDragBeginListener()
+		drag:RemoveDragEndListener()
 	end
 
-	table.remove(arg_13_0._list, var_13_1)
+	table.remove(self._list, index)
 
-	if arg_13_0._nowDragData == var_13_0 then
-		arg_13_0._nowDragData = nil
+	if self._nowDragData == data then
+		self._nowDragData = nil
 	end
 end
 
-function var_0_0.clear(arg_14_0)
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0._list) do
-		local var_14_0 = iter_14_1.drag
+function CommonDragHelper:clear()
+	for _, data in ipairs(self._list) do
+		local drag = data.drag
 
-		if not gohelper.isNil(var_14_0) then
-			var_14_0:RemoveDragListener()
-			var_14_0:RemoveDragBeginListener()
-			var_14_0:RemoveDragEndListener()
+		if not gohelper.isNil(drag) then
+			drag:RemoveDragListener()
+			drag:RemoveDragBeginListener()
+			drag:RemoveDragEndListener()
 		end
 	end
 
-	arg_14_0._list = {}
-	arg_14_0._nowDragData = nil
+	self._list = {}
+	self._nowDragData = nil
 end
 
-var_0_0.instance = var_0_0.New()
+CommonDragHelper.instance = CommonDragHelper.New()
 
-return var_0_0
+return CommonDragHelper

@@ -1,7 +1,9 @@
-﻿module("modules.logic.notice.model.NoticeMO", package.seeall)
+﻿-- chunkname: @modules/logic/notice/model/NoticeMO.lua
 
-local var_0_0 = pureTable("NoticeMO")
-local var_0_1 = {
+module("modules.logic.notice.model.NoticeMO", package.seeall)
+
+local NoticeMO = pureTable("NoticeMO")
+local Lang2Key = {
 	jp = "ja-JP",
 	kr = "ko-KR",
 	zh = "zh-CN",
@@ -10,76 +12,81 @@ local var_0_1 = {
 	en = "en"
 }
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1.id
-	arg_1_0.gameId = arg_1_1.gameId
-	arg_1_0.order = arg_1_1.order
-	arg_1_0.noticeTypes = arg_1_1.noticeTypes
-	arg_1_0.noticePositionTypes = arg_1_1.noticePositionTypes
-	arg_1_0.noticeLabelType = arg_1_1.noticeLabelType
-	arg_1_0.beginTime = arg_1_1.beginTime
-	arg_1_0.endTime = arg_1_1.endTime
-	arg_1_0.noticeLabelTypeName = arg_1_1.noticeLabelTypeName
-	arg_1_0.isTop = arg_1_1.isTop
-	arg_1_0.contentMap = arg_1_1.contentMap
+function NoticeMO:init(info)
+	self.id = info.id
+	self.gameId = info.gameId
+	self.order = info.order
+	self.noticeTypes = info.noticeTypes
+	self.noticePositionTypes = info.noticePositionTypes
+	self.noticeLabelType = info.noticeLabelType
+	self.beginTime = info.beginTime
+	self.endTime = info.endTime
+	self.noticeLabelTypeName = info.noticeLabelTypeName
+	self.isTop = info.isTop
+	self.contentMap = info.contentMap
 
-	for iter_1_0, iter_1_1 in pairs(arg_1_0.contentMap) do
-		for iter_1_2, iter_1_3 in ipairs(iter_1_1.imageUrl) do
-			arg_1_0:addImageUrl(iter_1_3)
+	for _, content in pairs(self.contentMap) do
+		for _, url in ipairs(content.imageUrl) do
+			self:addImageUrl(url)
 		end
 	end
 end
 
-function var_0_0.getTitle(arg_2_0)
-	return arg_2_0:getLangContent().title
+function NoticeMO:getTitle()
+	local contentMO = self:getLangContent()
+
+	return contentMO.title
 end
 
-function var_0_0.getContent(arg_3_0)
-	return arg_3_0:getLangContent().content
+function NoticeMO:getContent()
+	local contentMO = self:getLangContent()
+
+	return contentMO.content
 end
 
-function var_0_0.getLangContent(arg_4_0)
-	local var_4_0 = LangSettings.instance:getCurLangShortcut()
-	local var_4_1 = var_0_1[var_4_0] or var_4_0
-	local var_4_2 = arg_4_0.contentMap[var_4_1]
+function NoticeMO:getLangContent()
+	local curLang = LangSettings.instance:getCurLangShortcut()
+	local key = Lang2Key[curLang] or curLang
+	local content = self.contentMap[key]
 
-	if var_4_2 then
-		return var_4_2
+	if content then
+		return content
 	end
 
-	local var_4_3 = LangSettings.instance:getDefaultLangShortcut()
-	local var_4_4 = var_0_1[var_4_3] or var_4_3
-	local var_4_5 = arg_4_0.contentMap[var_4_4]
+	local defaultLang = LangSettings.instance:getDefaultLangShortcut()
 
-	if var_4_5 then
-		return var_4_5
+	key = Lang2Key[defaultLang] or defaultLang
+	content = self.contentMap[key]
+
+	if content then
+		return content
 	end
 
-	for iter_4_0, iter_4_1 in pairs(arg_4_0.contentMap) do
-		return iter_4_1
+	for l, c in pairs(self.contentMap) do
+		return c
 	end
 end
 
-function var_0_0.setContent(arg_5_0, arg_5_1, arg_5_2)
-	for iter_5_0, iter_5_1 in pairs(arg_5_0.contentMap) do
-		if not arg_5_2 or arg_5_2 == iter_5_0 then
-			iter_5_1.content = arg_5_1
+function NoticeMO:setContent(content, lang)
+	for l, c in pairs(self.contentMap) do
+		if not lang or lang == l then
+			c.content = content
 		end
 	end
 end
 
-function var_0_0.addImageUrl(arg_6_0, arg_6_1)
-	arg_6_0.imgUrlDict = arg_6_0.imgUrlDict or {}
+function NoticeMO:addImageUrl(url)
+	self.imgUrlDict = self.imgUrlDict or {}
 
-	local var_6_0 = SLFramework.FileHelper.GetFileName(arg_6_1, false)
+	local fileName = SLFramework.FileHelper.GetFileName(url, false)
 
-	arg_6_0.imgUrlDict[var_6_0] = arg_6_1
+	self.imgUrlDict[fileName] = url
 end
 
-function var_0_0.isNormalStatus(arg_7_0)
-	local var_7_0 = ServerTime.now()
+function NoticeMO:isNormalStatus()
+	local now = ServerTime.now()
 
-	return var_7_0 > arg_7_0.beginTime / 1000 and var_7_0 < arg_7_0.endTime / 1000
+	return now > self.beginTime / 1000 and now < self.endTime / 1000
 end
 
-return var_0_0
+return NoticeMO

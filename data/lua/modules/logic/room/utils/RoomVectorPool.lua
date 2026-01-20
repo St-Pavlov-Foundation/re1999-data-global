@@ -1,63 +1,65 @@
-﻿module("modules.logic.room.utils.RoomVectorPool", package.seeall)
+﻿-- chunkname: @modules/logic/room/utils/RoomVectorPool.lua
 
-local var_0_0 = class("RoomVectorPool")
+module("modules.logic.room.utils.RoomVectorPool", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._posList = {}
-	arg_1_0._xCache = {}
-	arg_1_0._yCache = {}
-	arg_1_0._zCache = {}
+local RoomVectorPool = class("RoomVectorPool")
+
+function RoomVectorPool:ctor()
+	self._posList = {}
+	self._xCache = {}
+	self._yCache = {}
+	self._zCache = {}
 end
 
-function var_0_0.packPosList(arg_2_0, arg_2_1)
-	local var_2_0 = {}
+function RoomVectorPool:packPosList(posOriginList)
+	local result = {}
 
-	ZProj.AStarPathBridge.PosListToLuaTable(arg_2_1, arg_2_0._xCache, arg_2_0._yCache, arg_2_0._zCache)
+	ZProj.AStarPathBridge.PosListToLuaTable(posOriginList, self._xCache, self._yCache, self._zCache)
 
-	for iter_2_0 = 1, #arg_2_0._xCache do
-		local var_2_1 = arg_2_0:get()
+	for i = 1, #self._xCache do
+		local pos = self:get()
 
-		var_2_1.x, var_2_1.y, var_2_1.z = arg_2_0._xCache[iter_2_0], arg_2_0._yCache[iter_2_0], arg_2_0._zCache[iter_2_0]
+		pos.x, pos.y, pos.z = self._xCache[i], self._yCache[i], self._zCache[i]
 
-		table.insert(var_2_0, var_2_1)
+		table.insert(result, pos)
 	end
 
-	arg_2_0:cleanTable(arg_2_0._xCache)
-	arg_2_0:cleanTable(arg_2_0._yCache)
-	arg_2_0:cleanTable(arg_2_0._zCache)
+	self:cleanTable(self._xCache)
+	self:cleanTable(self._yCache)
+	self:cleanTable(self._zCache)
 
-	return var_2_0
+	return result
 end
 
-function var_0_0.get(arg_3_0)
-	local var_3_0 = #arg_3_0._posList
+function RoomVectorPool:get()
+	local len = #self._posList
 
-	if var_3_0 > 0 then
-		local var_3_1 = arg_3_0._posList[var_3_0]
+	if len > 0 then
+		local pos = self._posList[len]
 
-		arg_3_0._posList[var_3_0] = nil
+		self._posList[len] = nil
 
-		return var_3_1
+		return pos
 	end
 
 	return Vector3.New()
 end
 
-function var_0_0.recycle(arg_4_0, arg_4_1)
-	arg_4_1:Set(0, 0, 0)
-	table.insert(arg_4_0._posList, arg_4_1)
+function RoomVectorPool:recycle(pos)
+	pos:Set(0, 0, 0)
+	table.insert(self._posList, pos)
 end
 
-function var_0_0.clean(arg_5_0)
-	arg_5_0:cleanTable(arg_5_0._posList)
+function RoomVectorPool:clean()
+	self:cleanTable(self._posList)
 end
 
-function var_0_0.cleanTable(arg_6_0, arg_6_1)
-	for iter_6_0, iter_6_1 in pairs(arg_6_1) do
-		arg_6_1[iter_6_0] = nil
+function RoomVectorPool:cleanTable(t)
+	for k, v in pairs(t) do
+		t[k] = nil
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+RoomVectorPool.instance = RoomVectorPool.New()
 
-return var_0_0
+return RoomVectorPool

@@ -1,52 +1,54 @@
-﻿module("modules.logic.currency.controller.CurrencyJumpHandler", package.seeall)
+﻿-- chunkname: @modules/logic/currency/controller/CurrencyJumpHandler.lua
 
-local var_0_0 = class("CurrencyJumpHandler")
+module("modules.logic.currency.controller.CurrencyJumpHandler", package.seeall)
 
-function var_0_0.JumpByCurrency(arg_1_0)
-	if not var_0_0._handlerMap then
-		var_0_0._handlerMap = {
-			[CurrencyEnum.CurrencyType.Power] = var_0_0.handlePower,
-			[CurrencyEnum.CurrencyType.Diamond] = var_0_0.handlePayDiamond,
-			[CurrencyEnum.CurrencyType.FreeDiamondCoupon] = var_0_0.handleFreeDiamond,
-			[CurrencyEnum.CurrencyType.Gold] = var_0_0.handleGold,
-			[CurrencyEnum.CurrencyType.DryForest] = var_0_0.handleDryForest,
-			[CurrencyEnum.CurrencyType.RoomCritterTrain] = var_0_0.handleRoomCritterTrain
+local CurrencyJumpHandler = class("CurrencyJumpHandler")
+
+function CurrencyJumpHandler.JumpByCurrency(currencyId)
+	if not CurrencyJumpHandler._handlerMap then
+		CurrencyJumpHandler._handlerMap = {
+			[CurrencyEnum.CurrencyType.Power] = CurrencyJumpHandler.handlePower,
+			[CurrencyEnum.CurrencyType.Diamond] = CurrencyJumpHandler.handlePayDiamond,
+			[CurrencyEnum.CurrencyType.FreeDiamondCoupon] = CurrencyJumpHandler.handleFreeDiamond,
+			[CurrencyEnum.CurrencyType.Gold] = CurrencyJumpHandler.handleGold,
+			[CurrencyEnum.CurrencyType.DryForest] = CurrencyJumpHandler.handleDryForest,
+			[CurrencyEnum.CurrencyType.RoomCritterTrain] = CurrencyJumpHandler.handleRoomCritterTrain
 		}
 	end
 
-	local var_1_0 = var_0_0._handlerMap[arg_1_0]
+	local func = CurrencyJumpHandler._handlerMap[currencyId]
 
-	if var_1_0 then
-		var_1_0()
+	if func then
+		func()
 	end
 end
 
-function var_0_0.handleGold()
+function CurrencyJumpHandler.handleGold()
 	StoreController.instance:checkAndOpenStoreView(StoreEnum.StoreId.SummonExchange)
 end
 
-function var_0_0.handlePower()
+function CurrencyJumpHandler.handlePower()
 	CurrencyController.instance:openPowerView()
 end
 
-function var_0_0.handleFreeDiamond()
+function CurrencyJumpHandler.handleFreeDiamond()
 	ViewMgr.instance:openView(ViewName.CurrencyDiamondExchangeView)
 end
 
-function var_0_0.handlePayDiamond()
+function CurrencyJumpHandler.handlePayDiamond()
 	StoreController.instance:checkAndOpenStoreView(StoreEnum.ChargeStoreTabId)
 end
 
-function var_0_0.handleDryForest()
+function CurrencyJumpHandler.handleDryForest()
 	MaterialTipController.instance:showMaterialInfo(2, CurrencyEnum.CurrencyType.DryForest)
 end
 
-function var_0_0.handleRoomCritterTrain()
+function CurrencyJumpHandler.handleRoomCritterTrain()
 	GameFacade.jump(JumpEnum.JumpId.RoomStoreTabFluff)
 end
 
-function var_0_0.clearHandlers()
-	var_0_0._handlerMap = nil
+function CurrencyJumpHandler.clearHandlers()
+	CurrencyJumpHandler._handlerMap = nil
 end
 
-return var_0_0
+return CurrencyJumpHandler

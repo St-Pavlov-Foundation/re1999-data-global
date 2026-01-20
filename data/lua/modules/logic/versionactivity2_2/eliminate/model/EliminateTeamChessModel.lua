@@ -1,308 +1,312 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.model.EliminateTeamChessModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/model/EliminateTeamChessModel.lua
 
-local var_0_0 = class("EliminateTeamChessModel", BaseModel)
+module("modules.logic.versionactivity2_2.eliminate.model.EliminateTeamChessModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0.curTeamChessWar = nil
-	arg_1_0.serverTeamChessWar = nil
-	arg_1_0.warFightResult = nil
-	arg_1_0.teamChessStepList = {}
-	arg_1_0._curTeamRoundStepState = EliminateTeamChessEnum.TeamChessRoundType.enemy
+local EliminateTeamChessModel = class("EliminateTeamChessModel", BaseModel)
+
+function EliminateTeamChessModel:onInit()
+	self.curTeamChessWar = nil
+	self.serverTeamChessWar = nil
+	self.warFightResult = nil
+	self.teamChessStepList = {}
+	self._curTeamRoundStepState = EliminateTeamChessEnum.TeamChessRoundType.enemy
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0.curTeamChessWar = nil
-	arg_2_0.serverTeamChessWar = nil
-	arg_2_0.warFightResult = nil
-	arg_2_0._teamChessSkillState = nil
-	arg_2_0.teamChessStepList = {}
+function EliminateTeamChessModel:reInit()
+	self.curTeamChessWar = nil
+	self.serverTeamChessWar = nil
+	self.warFightResult = nil
+	self._teamChessSkillState = nil
+	self.teamChessStepList = {}
 end
 
-function var_0_0.initTeamChess(arg_3_0, arg_3_1)
-	arg_3_0._warChessId = arg_3_1
+function EliminateTeamChessModel:initTeamChess(warChessId)
+	self._warChessId = warChessId
 end
 
-function var_0_0.getCurWarChessEpisodeConfig(arg_4_0)
-	return EliminateConfig.instance:getWarChessEpisodeConfig(arg_4_0._warChessId)
+function EliminateTeamChessModel:getCurWarChessEpisodeConfig()
+	return EliminateConfig.instance:getWarChessEpisodeConfig(self._warChessId)
 end
 
-function var_0_0.handleCurTeamChessWarFightInfo(arg_5_0, arg_5_1)
-	if arg_5_0.curTeamChessWar == nil then
-		arg_5_0.curTeamChessWar = EliminateTeamChessWarMO.New()
+function EliminateTeamChessModel:handleCurTeamChessWarFightInfo(info)
+	if self.curTeamChessWar == nil then
+		self.curTeamChessWar = EliminateTeamChessWarMO.New()
 
-		arg_5_0.curTeamChessWar:init(arg_5_1)
+		self.curTeamChessWar:init(info)
 	end
 
-	arg_5_0.curTeamChessWar:updateInfo(arg_5_1)
+	self.curTeamChessWar:updateInfo(info)
 end
 
-function var_0_0.handleServerTeamChessWarFightInfo(arg_6_0, arg_6_1)
-	if arg_6_0.serverTeamChessWar == nil then
-		arg_6_0.serverTeamChessWar = EliminateTeamChessWarMO.New()
+function EliminateTeamChessModel:handleServerTeamChessWarFightInfo(info)
+	if self.serverTeamChessWar == nil then
+		self.serverTeamChessWar = EliminateTeamChessWarMO.New()
 
-		arg_6_0.serverTeamChessWar:init(arg_6_1)
+		self.serverTeamChessWar:init(info)
 	end
 
-	arg_6_0.serverTeamChessWar:updateInfo(arg_6_1)
+	self.serverTeamChessWar:updateInfo(info)
 end
 
-function var_0_0.handleTeamFightResult(arg_7_0, arg_7_1)
-	if not arg_7_0.warFightResult then
-		arg_7_0.warFightResult = WarChessFightResultMO.New()
+function EliminateTeamChessModel:handleTeamFightResult(result)
+	if not self.warFightResult then
+		self.warFightResult = WarChessFightResultMO.New()
 	end
 
-	arg_7_0.warFightResult:updateInfo(arg_7_1)
+	self.warFightResult:updateInfo(result)
 end
 
-function var_0_0.handleTeamFightTurn(arg_8_0, arg_8_1)
-	if arg_8_1 == nil or arg_8_1.step == nil then
+function EliminateTeamChessModel:handleTeamFightTurn(turn)
+	if turn == nil or turn.step == nil then
 		return
 	end
 
-	for iter_8_0, iter_8_1 in ipairs(arg_8_1.step) do
-		local var_8_0 = WarChessStepMO.New()
+	for _, data in ipairs(turn.step) do
+		local step = WarChessStepMO.New()
 
-		var_8_0:init(iter_8_1)
+		step:init(data)
 
-		arg_8_0.teamChessStepList[#arg_8_0.teamChessStepList + 1] = var_8_0
+		self.teamChessStepList[#self.teamChessStepList + 1] = step
 	end
 end
 
-function var_0_0.getTeamChessStepList(arg_9_0)
-	return arg_9_0.teamChessStepList
+function EliminateTeamChessModel:getTeamChessStepList()
+	return self.teamChessStepList
 end
 
-function var_0_0.getCurTeamChessWar(arg_10_0)
-	return arg_10_0.curTeamChessWar
+function EliminateTeamChessModel:getCurTeamChessWar()
+	return self.curTeamChessWar
 end
 
-function var_0_0.getServerTeamChessWar(arg_11_0)
-	return arg_11_0.serverTeamChessWar
+function EliminateTeamChessModel:getServerTeamChessWar()
+	return self.serverTeamChessWar
 end
 
-function var_0_0.getSlotIds(arg_12_0)
-	return arg_12_0.curTeamChessWar and arg_12_0.curTeamChessWar:getSlotIds() or {}
+function EliminateTeamChessModel:getSlotIds()
+	return self.curTeamChessWar and self.curTeamChessWar:getSlotIds() or {}
 end
 
-function var_0_0.getStrongholds(arg_13_0)
-	return arg_13_0.curTeamChessWar and arg_13_0.curTeamChessWar:getStrongholds() or {}
+function EliminateTeamChessModel:getStrongholds()
+	return self.curTeamChessWar and self.curTeamChessWar:getStrongholds() or {}
 end
 
-function var_0_0.getStronghold(arg_14_0, arg_14_1)
-	return arg_14_0.curTeamChessWar and arg_14_0.curTeamChessWar:getStronghold(arg_14_1) or nil
+function EliminateTeamChessModel:getStronghold(id)
+	return self.curTeamChessWar and self.curTeamChessWar:getStronghold(id) or nil
 end
 
-function var_0_0.getCurTeamMyInfo(arg_15_0)
-	return arg_15_0.curTeamChessWar and arg_15_0.curTeamChessWar.myCharacter or nil
+function EliminateTeamChessModel:getCurTeamMyInfo()
+	return self.curTeamChessWar and self.curTeamChessWar.myCharacter or nil
 end
 
-function var_0_0.getCurTeamEnemyInfo(arg_16_0)
-	return arg_16_0.curTeamChessWar and arg_16_0.curTeamChessWar.enemyCharacter or nil
+function EliminateTeamChessModel:getCurTeamEnemyInfo()
+	return self.curTeamChessWar and self.curTeamChessWar.enemyCharacter or nil
 end
 
-function var_0_0.getEnemyForecastChess(arg_17_0)
-	local var_17_0 = var_0_0.instance:getCurTeamEnemyInfo()
+function EliminateTeamChessModel:getEnemyForecastChess()
+	local enemyInfo = EliminateTeamChessModel.instance:getCurTeamEnemyInfo()
 
-	if var_17_0 then
-		local var_17_1 = var_17_0.forecastBehavior
+	if enemyInfo then
+		local forecastChess = enemyInfo.forecastBehavior
 
-		if #var_17_1 ~= 0 then
-			return var_17_1
+		if #forecastChess ~= 0 then
+			return forecastChess
 		end
 	end
 
 	return nil
 end
 
-function var_0_0.getAllPlayerSoliderCount(arg_18_0)
-	local var_18_0 = arg_18_0:getStrongholds()
-	local var_18_1 = 0
+function EliminateTeamChessModel:getAllPlayerSoliderCount()
+	local strongholds = self:getStrongholds()
+	local playerSoliderCount = 0
 
-	for iter_18_0, iter_18_1 in pairs(var_18_0) do
-		var_18_1 = var_18_1 + iter_18_1:getPlayerSoliderCount()
+	for _, stronghold in pairs(strongholds) do
+		playerSoliderCount = playerSoliderCount + stronghold:getPlayerSoliderCount()
 	end
 
-	return var_18_1
+	return playerSoliderCount
 end
 
-function var_0_0.getCurTeamResource(arg_19_0)
-	local var_19_0 = arg_19_0:getCurTeamMyInfo()
+function EliminateTeamChessModel:getCurTeamResource()
+	local curTeamMyInfo = self:getCurTeamMyInfo()
 
-	return var_19_0 and var_19_0.diamonds or {}
+	return curTeamMyInfo and curTeamMyInfo.diamonds or {}
 end
 
-function var_0_0.getResourceNumber(arg_20_0, arg_20_1)
-	local var_20_0 = arg_20_0:getCurTeamMyInfo()
+function EliminateTeamChessModel:getResourceNumber(resourceId)
+	local curTeamMyInfo = self:getCurTeamMyInfo()
 
-	return var_20_0 and var_20_0.diamonds and var_20_0.diamonds[arg_20_1] or 0
+	return curTeamMyInfo and curTeamMyInfo.diamonds and curTeamMyInfo.diamonds[resourceId] or 0
 end
 
-function var_0_0.getWarFightResult(arg_21_0)
-	return arg_21_0.warFightResult
+function EliminateTeamChessModel:getWarFightResult()
+	return self.warFightResult
 end
 
-function var_0_0.updateChessPower(arg_22_0, arg_22_1, arg_22_2)
-	if arg_22_0.curTeamChessWar then
-		arg_22_0.curTeamChessWar:updateChessPower(arg_22_1, arg_22_2)
-	end
-end
-
-function var_0_0.updateDisplacementState(arg_23_0, arg_23_1, arg_23_2)
-	if arg_23_0.curTeamChessWar then
-		arg_23_0.curTeamChessWar:updateDisplacementState(arg_23_1, arg_23_2)
+function EliminateTeamChessModel:updateChessPower(uid, diffValue)
+	if self.curTeamChessWar then
+		self.curTeamChessWar:updateChessPower(uid, diffValue)
 	end
 end
 
-function var_0_0.updateStrongholdsScore(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
-	if arg_24_0.curTeamChessWar then
-		arg_24_0.curTeamChessWar:updateStrongholdsScore(arg_24_1, arg_24_2, arg_24_3)
+function EliminateTeamChessModel:updateDisplacementState(uid, displacementState)
+	if self.curTeamChessWar then
+		self.curTeamChessWar:updateDisplacementState(uid, displacementState)
 	end
 end
 
-function var_0_0.updateMainCharacterHp(arg_25_0, arg_25_1, arg_25_2)
-	if arg_25_0.curTeamChessWar then
-		arg_25_0.curTeamChessWar:updateMainCharacterHp(arg_25_1, arg_25_2)
+function EliminateTeamChessModel:updateStrongholdsScore(strongholdId, teamType, diffValue)
+	if self.curTeamChessWar then
+		self.curTeamChessWar:updateStrongholdsScore(strongholdId, teamType, diffValue)
 	end
 end
 
-function var_0_0.updateMainCharacterPower(arg_26_0, arg_26_1, arg_26_2)
-	if arg_26_0.curTeamChessWar then
-		arg_26_0.curTeamChessWar:updateMainCharacterPower(arg_26_1, arg_26_2)
+function EliminateTeamChessModel:updateMainCharacterHp(teamType, diffValue)
+	if self.curTeamChessWar then
+		self.curTeamChessWar:updateMainCharacterHp(teamType, diffValue)
 	end
 end
 
-function var_0_0.updateResourceData(arg_27_0, arg_27_1, arg_27_2)
-	if arg_27_0.curTeamChessWar then
-		arg_27_0.curTeamChessWar:updateResourceData(arg_27_1, arg_27_2)
+function EliminateTeamChessModel:updateMainCharacterPower(teamType, diffValue)
+	if self.curTeamChessWar then
+		self.curTeamChessWar:updateMainCharacterPower(teamType, diffValue)
 	end
 end
 
-function var_0_0.removeStrongholdChess(arg_28_0, arg_28_1, arg_28_2)
-	if arg_28_0.curTeamChessWar then
-		arg_28_0.curTeamChessWar:removeStrongholdChess(arg_28_1, arg_28_2)
+function EliminateTeamChessModel:updateResourceData(resourceId, diffValue)
+	if self.curTeamChessWar then
+		self.curTeamChessWar:updateResourceData(resourceId, diffValue)
 	end
 end
 
-function var_0_0.getChess(arg_29_0, arg_29_1)
-	if arg_29_0.curTeamChessWar then
-		return arg_29_0.curTeamChessWar:getChess(arg_29_1)
+function EliminateTeamChessModel:removeStrongholdChess(strongholdId, uid)
+	if self.curTeamChessWar then
+		self.curTeamChessWar:removeStrongholdChess(strongholdId, uid)
+	end
+end
+
+function EliminateTeamChessModel:getChess(uid)
+	if self.curTeamChessWar then
+		return self.curTeamChessWar:getChess(uid)
 	end
 
 	return nil
 end
 
-function var_0_0.strongHoldSettle(arg_30_0, arg_30_1, arg_30_2)
-	if arg_30_0.curTeamChessWar then
-		arg_30_0.curTeamChessWar:strongHoldSettle(arg_30_1, arg_30_2)
+function EliminateTeamChessModel:strongHoldSettle(strongHoldId, state)
+	if self.curTeamChessWar then
+		self.curTeamChessWar:strongHoldSettle(strongHoldId, state)
 	end
 end
 
-function var_0_0.updateSkillGrowUp(arg_31_0, arg_31_1, arg_31_2, arg_31_3)
-	if arg_31_0.curTeamChessWar then
-		arg_31_0.curTeamChessWar:updateSkillGrowUp(arg_31_1, arg_31_2, arg_31_3)
+function EliminateTeamChessModel:updateSkillGrowUp(uid, skillId, upValue)
+	if self.curTeamChessWar then
+		self.curTeamChessWar:updateSkillGrowUp(uid, skillId, upValue)
 	end
 end
 
-function var_0_0.diamondsIsEnough(arg_32_0, arg_32_1, arg_32_2)
-	if not arg_32_0.curTeamChessWar then
+function EliminateTeamChessModel:diamondsIsEnough(diamondId, needCount)
+	if not self.curTeamChessWar then
 		return false
 	end
 
-	return arg_32_0.curTeamChessWar:diamondsIsEnough(arg_32_1, arg_32_2)
+	return self.curTeamChessWar:diamondsIsEnough(diamondId, needCount)
 end
 
-function var_0_0.getViewCanvas(arg_33_0)
-	return arg_33_0._canvas
+function EliminateTeamChessModel:getViewCanvas()
+	return self._canvas
 end
 
-function var_0_0.setViewCanvas(arg_34_0, arg_34_1)
-	arg_34_0._canvas = arg_34_1
+function EliminateTeamChessModel:setViewCanvas(canvas)
+	self._canvas = canvas
 end
 
-function var_0_0.getTipViewParent(arg_35_0)
-	return arg_35_0._tipViewParent
+function EliminateTeamChessModel:getTipViewParent()
+	return self._tipViewParent
 end
 
-function var_0_0.setTipViewParent(arg_36_0, arg_36_1)
-	arg_36_0._tipViewParent = arg_36_1
+function EliminateTeamChessModel:setTipViewParent(parent)
+	self._tipViewParent = parent
 end
 
-function var_0_0.setCurTeamRoundStepState(arg_37_0, arg_37_1)
-	arg_37_0._curTeamRoundStepState = arg_37_1
+function EliminateTeamChessModel:setCurTeamRoundStepState(state)
+	self._curTeamRoundStepState = state
 end
 
-function var_0_0.getCurTeamRoundStepState(arg_38_0)
-	return arg_38_0._curTeamRoundStepState
+function EliminateTeamChessModel:getCurTeamRoundStepState()
+	return self._curTeamRoundStepState
 end
 
-function var_0_0.clear(arg_39_0)
-	arg_39_0._canvas = nil
-	arg_39_0._tipViewParent = nil
-	arg_39_0.curTeamChessWar = nil
-	arg_39_0.serverTeamChessWar = nil
-	arg_39_0.warFightResult = nil
-	arg_39_0.teamChessStepList = {}
+function EliminateTeamChessModel:clear()
+	self._canvas = nil
+	self._tipViewParent = nil
+	self.curTeamChessWar = nil
+	self.serverTeamChessWar = nil
+	self.warFightResult = nil
+	self.teamChessStepList = {}
 
-	if arg_39_0._cacheRuleLimit ~= nil then
-		arg_39_0._cacheRuleLimit = nil
+	if self._cacheRuleLimit ~= nil then
+		self._cacheRuleLimit = nil
 	end
 
-	arg_39_0._curTeamRoundStepState = EliminateTeamChessEnum.TeamChessRoundType.enemy
+	self._curTeamRoundStepState = EliminateTeamChessEnum.TeamChessRoundType.enemy
 end
 
-function var_0_0.getSellResourceData(arg_40_0, arg_40_1)
-	local var_40_0 = {}
-	local var_40_1 = EliminateConfig.instance:getSellSoliderPermillage()
+function EliminateTeamChessModel:getSellResourceData(costList)
+	local costData = {}
+	local sellSoliderPermillage = EliminateConfig.instance:getSellSoliderPermillage()
 
-	for iter_40_0 = 1, #arg_40_1 do
-		local var_40_2 = arg_40_1[iter_40_0]
-		local var_40_3 = math.floor(var_40_2[2] * var_40_1 / 1000)
+	for i = 1, #costList do
+		local cost = costList[i]
+		local num = math.floor(cost[2] * sellSoliderPermillage / 1000)
 
-		table.insert(var_40_0, {
-			var_40_2[1],
-			var_40_3
+		table.insert(costData, {
+			cost[1],
+			num
 		})
 	end
 
-	return var_40_0
+	return costData
 end
 
-function var_0_0.canUseChess(arg_41_0, arg_41_1)
-	local var_41_0 = EliminateConfig.instance:getSoldierChessConfigConst(arg_41_1)
-	local var_41_1 = true
+function EliminateTeamChessModel:canUseChess(soliderId)
+	local costList = EliminateConfig.instance:getSoldierChessConfigConst(soliderId)
+	local canUse = true
 
-	if var_41_0 then
-		for iter_41_0, iter_41_1 in ipairs(var_41_0) do
-			local var_41_2 = iter_41_1[1]
+	if costList then
+		for _, cost in ipairs(costList) do
+			local resourceId = cost[1]
+			local num = tonumber(cost[2])
+			local haveNum = self:getResourceNumber(resourceId)
 
-			if tonumber(iter_41_1[2]) > arg_41_0:getResourceNumber(var_41_2) then
-				var_41_1 = false
+			if haveNum < num then
+				canUse = false
 
 				break
 			end
 		end
 	else
-		var_41_1 = true
+		canUse = true
 	end
 
-	return var_41_1
+	return canUse
 end
 
-function var_0_0.getSoliderIdEffectParam(arg_42_0, arg_42_1)
-	local var_42_0 = EliminateConfig.instance:getSoldierChessConfig(arg_42_1)
-	local var_42_1 = var_42_0 and var_42_0.skillId or ""
+function EliminateTeamChessModel:getSoliderIdEffectParam(soliderId)
+	local config = EliminateConfig.instance:getSoldierChessConfig(soliderId)
+	local skillIds = config and config.skillId or ""
 
-	for iter_42_0, iter_42_1 in ipairs(string.splitToNumber(var_42_1, "#")) do
-		local var_42_2 = EliminateConfig.instance:getSoldierSkillConfig(iter_42_1)
-		local var_42_3 = string.split(var_42_2 and var_42_2.effect or "", "#")
-		local var_42_4 = var_42_3[1]
+	for _, skillId in ipairs(string.splitToNumber(skillIds, "#")) do
+		local skillConfig = EliminateConfig.instance:getSoldierSkillConfig(skillId)
+		local effects = string.split(skillConfig and skillConfig.effect or "", "#")
+		local effectType = effects[1]
 
-		if EliminateTeamChessEnum.placeSkillEffectParamConfigEnum[var_42_4] then
-			local var_42_5 = var_42_3[2]
-			local var_42_6 = EliminateTeamChessEnum.placeSkillEffectParamConfigEnum[var_42_4][var_42_5]
+		if EliminateTeamChessEnum.placeSkillEffectParamConfigEnum[effectType] then
+			local effectParam = effects[2]
+			local effectParamConfig = EliminateTeamChessEnum.placeSkillEffectParamConfigEnum[effectType][effectParam]
 
-			if var_42_6 then
-				return var_42_6.teamType, var_42_6.count, var_42_6.limitStrongHold
+			if effectParamConfig then
+				return effectParamConfig.teamType, effectParamConfig.count, effectParamConfig.limitStrongHold
 			end
 		end
 	end
@@ -310,29 +314,29 @@ function var_0_0.getSoliderIdEffectParam(arg_42_0, arg_42_1)
 	return nil, nil, false
 end
 
-function var_0_0.createPlaceMo(arg_43_0, arg_43_1, arg_43_2, arg_43_3)
-	local var_43_0 = SoliderSkillMOBase.New()
+function EliminateTeamChessModel:createPlaceMo(soliderId, soliderUid, strongholdId)
+	local soliderSkillMoBase = SoliderSkillMOBase.New()
 
-	var_43_0:init(arg_43_1, arg_43_2, arg_43_3)
+	soliderSkillMoBase:init(soliderId, soliderUid, strongholdId)
 
-	return var_43_0
+	return soliderSkillMoBase
 end
 
-function var_0_0.haveSoliderByTeamTypeAndStrongholdId(arg_44_0, arg_44_1, arg_44_2)
-	local var_44_0 = arg_44_0:getStrongholds()
-	local var_44_1 = false
+function EliminateTeamChessModel:haveSoliderByTeamTypeAndStrongholdId(teamType, strongholdId)
+	local strongholds = self:getStrongholds()
+	local isHave = false
 
-	for iter_44_0 = 1, #var_44_0 do
-		local var_44_2 = var_44_0[iter_44_0]
+	for i = 1, #strongholds do
+		local stronghold = strongholds[i]
 
-		if arg_44_2 == nil or arg_44_2 == arg_44_2 then
-			if not var_44_1 then
-				if arg_44_1 == EliminateTeamChessEnum.TeamChessTeamType.player then
-					var_44_1 = #var_44_2.mySidePiece > 0
+		if strongholdId == nil or strongholdId == strongholdId then
+			if not isHave then
+				if teamType == EliminateTeamChessEnum.TeamChessTeamType.player then
+					isHave = #stronghold.mySidePiece > 0
 				end
 
-				if arg_44_1 == EliminateTeamChessEnum.TeamChessTeamType.enemy then
-					var_44_1 = #var_44_2.enemySidePiece > 0
+				if teamType == EliminateTeamChessEnum.TeamChessTeamType.enemy then
+					isHave = #stronghold.enemySidePiece > 0
 				end
 			else
 				break
@@ -340,64 +344,66 @@ function var_0_0.haveSoliderByTeamTypeAndStrongholdId(arg_44_0, arg_44_1, arg_44
 		end
 	end
 
-	return var_44_1
+	return isHave
 end
 
-function var_0_0.sourceStrongHoldInRight(arg_45_0, arg_45_1, arg_45_2)
-	local var_45_0 = arg_45_0:getStrongholds()
-	local var_45_1 = 0
-	local var_45_2 = 0
+function EliminateTeamChessModel:sourceStrongHoldInRight(sourceId, targetId)
+	local allStrongholds = self:getStrongholds()
+	local targetIndex = 0
+	local sourceIndex = 0
 
-	for iter_45_0 = 1, #var_45_0 do
-		local var_45_3 = var_45_0[iter_45_0]
+	for i = 1, #allStrongholds do
+		local stronghold = allStrongholds[i]
 
-		if var_45_3.id == arg_45_2 then
-			var_45_1 = iter_45_0
+		if stronghold.id == targetId then
+			targetIndex = i
 		end
 
-		if var_45_3.id == arg_45_1 then
-			var_45_2 = iter_45_0
+		if stronghold.id == sourceId then
+			sourceIndex = i
 		end
 	end
 
-	return var_45_2 < var_45_1
+	return sourceIndex < targetIndex
 end
 
-function var_0_0.strongHoldIsFull(arg_46_0, arg_46_1)
-	local var_46_0 = arg_46_0:getStrongholds()
+function EliminateTeamChessModel:strongHoldIsFull(strongHoldId)
+	local strongholds = self:getStrongholds()
 
-	for iter_46_0 = 1, #var_46_0 do
-		local var_46_1 = var_46_0[iter_46_0]
+	for i = 1, #strongholds do
+		local stronghold = strongholds[i]
 
-		if arg_46_1 == var_46_1.id then
-			return var_46_1:isFull(EliminateTeamChessEnum.TeamChessTeamType.player)
+		if strongHoldId == stronghold.id then
+			return stronghold:isFull(EliminateTeamChessEnum.TeamChessTeamType.player)
 		end
 	end
 
 	return false
 end
 
-function var_0_0.allStrongHoldIsIsFull(arg_47_0)
-	local var_47_0 = false
-	local var_47_1 = arg_47_0:getStrongholds()
+function EliminateTeamChessModel:allStrongHoldIsIsFull()
+	local isFull = false
+	local strongholds = self:getStrongholds()
 
-	for iter_47_0 = 1, #var_47_1 do
-		if var_47_1[iter_47_0]:isFull(EliminateTeamChessEnum.TeamChessTeamType.player) then
-			var_47_0 = true
+	for i = 1, #strongholds do
+		local stronghold = strongholds[i]
+
+		if stronghold:isFull(EliminateTeamChessEnum.TeamChessTeamType.player) then
+			isFull = true
 		end
 	end
 
-	return var_47_0
+	return isFull
 end
 
-function var_0_0.haveEnoughResource(arg_48_0)
-	local var_48_0 = EliminateLevelModel.instance:getCurLevelPieceIds()
+function EliminateTeamChessModel:haveEnoughResource()
+	local pieceIds = EliminateLevelModel.instance:getCurLevelPieceIds()
 
-	if var_48_0 ~= nil then
-		for iter_48_0 = 1, #var_48_0 do
-			local var_48_1 = var_48_0[iter_48_0]
+	if pieceIds ~= nil then
+		for i = 1, #pieceIds do
+			local pieceId = pieceIds[i]
 
-			if arg_48_0:canUseChess(var_48_1) then
+			if self:canUseChess(pieceId) then
 				return true
 			end
 		end
@@ -406,80 +412,80 @@ function var_0_0.haveEnoughResource(arg_48_0)
 	return false
 end
 
-function var_0_0.canReleaseSkillAddResource(arg_49_0)
+function EliminateTeamChessModel:canReleaseSkillAddResource()
 	if not EliminateLevelModel.instance:mainCharacterSkillIsUnLock() then
 		return false
 	end
 
-	local var_49_0 = var_0_0.instance:getCurTeamMyInfo()
-	local var_49_1 = false
+	local myInfo = EliminateTeamChessModel.instance:getCurTeamMyInfo()
+	local canUse = false
 
-	if var_49_0 then
-		local var_49_2
-		local var_49_3 = EliminateConfig.instance:getTeamChessCharacterConfig(var_49_0.id)
-		local var_49_4 = EliminateConfig.instance:getMainCharacterSkillConfig(var_49_3.activeSkillIds)
-		local var_49_5 = EliminateLevelController.instance:getTempSkillMo(var_49_4.id, var_49_4.effect)
+	if myInfo then
+		local skillMo
+		local characterConfig = EliminateConfig.instance:getTeamChessCharacterConfig(myInfo.id)
+		local skillConfig = EliminateConfig.instance:getMainCharacterSkillConfig(characterConfig.activeSkillIds)
 
-		var_49_1 = EliminateLevelController.instance:canReleaseByRound(var_49_5) and var_49_0.power >= var_49_4.cost
+		skillMo = EliminateLevelController.instance:getTempSkillMo(skillConfig.id, skillConfig.effect)
+		canUse = EliminateLevelController.instance:canReleaseByRound(skillMo) and myInfo.power >= skillConfig.cost
 	end
 
-	return var_49_1
+	return canUse
 end
 
-function var_0_0.strongHoldTotalScoreWin(arg_50_0)
-	local var_50_0 = 0
-	local var_50_1 = 0
-	local var_50_2 = arg_50_0:getStrongholds()
+function EliminateTeamChessModel:strongHoldTotalScoreWin()
+	local totalEnemyScore = 0
+	local totalPlayerScore = 0
+	local strongholds = self:getStrongholds()
 
-	for iter_50_0 = 1, #var_50_2 do
-		local var_50_3 = var_50_2[iter_50_0]
+	for i = 1, #strongholds do
+		local stronghold = strongholds[i]
 
-		var_50_0 = var_50_0 + var_50_3.enemyScore
-		var_50_1 = var_50_1 + var_50_3.myScore
+		totalEnemyScore = totalEnemyScore + stronghold.enemyScore
+		totalPlayerScore = totalPlayerScore + stronghold.myScore
 	end
 
-	return var_50_0 < var_50_1
+	return totalEnemyScore < totalPlayerScore
 end
 
-function var_0_0.calDamageGear(arg_51_0, arg_51_1)
-	local var_51_0 = EliminateConfig.instance:getCharacterDamageGear()
-	local var_51_1 = 1
+function EliminateTeamChessModel:calDamageGear(damage)
+	local gear = EliminateConfig.instance:getCharacterDamageGear()
+	local gearLevel = 1
 
-	if var_51_0 and #var_51_0 == 2 and arg_51_1 then
-		if arg_51_1 < var_51_0[2] then
-			var_51_1 = arg_51_1 >= var_51_0[1] and 2 or 1
+	if gear and #gear == 2 and damage then
+		if damage < gear[2] then
+			gearLevel = damage >= gear[1] and 2 or 1
 		else
-			var_51_1 = 3
+			gearLevel = 3
 		end
 	end
 
-	return var_51_1
+	return gearLevel
 end
 
-function var_0_0.isCanPlaceByStrongHoldRule(arg_52_0, arg_52_1, arg_52_2)
-	local var_52_0 = EliminateConfig.instance:getStrongHoldConfig(arg_52_1)
-	local var_52_1 = EliminateConfig.instance:getStrongHoldRuleRuleConfig(var_52_0.ruleId)
-	local var_52_2 = EliminateLevelModel.instance:getRoundNumber()
-	local var_52_3 = var_52_1 and var_52_1.putLimit or 0
+function EliminateTeamChessModel:isCanPlaceByStrongHoldRule(strongHoldId, soliderId)
+	local strongHoldConfig = EliminateConfig.instance:getStrongHoldConfig(strongHoldId)
+	local ruleConfig = EliminateConfig.instance:getStrongHoldRuleRuleConfig(strongHoldConfig.ruleId)
+	local curRound = EliminateLevelModel.instance:getRoundNumber()
+	local putLimit = ruleConfig and ruleConfig.putLimit or 0
 
-	if arg_52_0._cacheRuleLimit == nil then
-		arg_52_0._cacheRuleLimit = {}
+	if self._cacheRuleLimit == nil then
+		self._cacheRuleLimit = {}
 	end
 
-	local var_52_4 = arg_52_0._cacheRuleLimit[var_52_1.id]
+	local ruleLimit = self._cacheRuleLimit[ruleConfig.id]
 
-	if var_52_4 == nil then
-		arg_52_0._cacheRuleLimit[var_52_1.id] = string.splitToNumber(var_52_3, "#")
-		var_52_4 = arg_52_0._cacheRuleLimit[var_52_1.id]
+	if ruleLimit == nil then
+		self._cacheRuleLimit[ruleConfig.id] = string.splitToNumber(putLimit, "#")
+		ruleLimit = self._cacheRuleLimit[ruleConfig.id]
 	end
 
-	if var_52_2 >= var_52_1.startEffectRound and var_52_2 <= var_52_1.endEffectRound and tabletool.len(var_52_4) > 0 then
-		local var_52_5 = EliminateConfig.instance:getSoldierChessConfig(arg_52_2)
+	if curRound >= ruleConfig.startEffectRound and curRound <= ruleConfig.endEffectRound and tabletool.len(ruleLimit) > 0 then
+		local soliderConfig = EliminateConfig.instance:getSoldierChessConfig(soliderId)
 
-		for iter_52_0 = 1, #var_52_4 do
-			local var_52_6 = var_52_4[iter_52_0]
+		for i = 1, #ruleLimit do
+			local limit = ruleLimit[i]
 
-			if tonumber(var_52_6) == var_52_5.level then
+			if tonumber(limit) == soliderConfig.level then
 				return false
 			end
 		end
@@ -488,24 +494,24 @@ function var_0_0.isCanPlaceByStrongHoldRule(arg_52_0, arg_52_1, arg_52_2)
 	return true
 end
 
-function var_0_0.setTeamChessSkillState(arg_53_0, arg_53_1)
-	arg_53_0._teamChessSkillState = arg_53_1
+function EliminateTeamChessModel:setTeamChessSkillState(state)
+	self._teamChessSkillState = state
 end
 
-function var_0_0.getTeamChessSkillState(arg_54_0)
-	if arg_54_0._teamChessSkillState == nil then
+function EliminateTeamChessModel:getTeamChessSkillState()
+	if self._teamChessSkillState == nil then
 		-- block empty
 	end
 
-	return arg_54_0._teamChessSkillState
+	return self._teamChessSkillState
 end
 
-function var_0_0.chessSkillIsGrowUp(arg_55_0)
-	local var_55_0 = EliminateConfig.instance:getSoliderSkillConfig(arg_55_0)
+function EliminateTeamChessModel.chessSkillIsGrowUp(chessSkillId)
+	local skillConfig = EliminateConfig.instance:getSoliderSkillConfig(chessSkillId)
 
-	return var_55_0 and var_55_0.type == EliminateTeamChessEnum.SoliderSkillType.GrowUp
+	return skillConfig and skillConfig.type == EliminateTeamChessEnum.SoliderSkillType.GrowUp
 end
 
-var_0_0.instance = var_0_0.New()
+EliminateTeamChessModel.instance = EliminateTeamChessModel.New()
 
-return var_0_0
+return EliminateTeamChessModel

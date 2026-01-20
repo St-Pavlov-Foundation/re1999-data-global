@@ -1,134 +1,138 @@
-﻿module("modules.logic.fight.view.work.FightReadyAttackWork", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/work/FightReadyAttackWork.lua
 
-local var_0_0 = class("FightReadyAttackWork", BaseWork)
-local var_0_1 = 0.5
-local var_0_2 = 1
-local var_0_3 = Color.New(2.119, 1.353, 0.821, 1)
-local var_0_4 = Color.white
+module("modules.logic.fight.view.work.FightReadyAttackWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	arg_1_0._count = 3
-	arg_1_0._hasAddEvent = false
-	arg_1_0._entity = arg_1_1
+local FightReadyAttackWork = class("FightReadyAttackWork", BaseWork)
+local Time1 = 0.5
+local Time2 = 1
+local endColor = Color.New(2.119, 1.353, 0.821, 1)
+local lerpColor = Color.white
 
-	if FightDataHelper.entityMgr:getById(arg_1_0._entity.id) and arg_1_0._entity and arg_1_0._entity.spine and not arg_1_0._entity.spine:hasAnimation(SpineAnimState.posture) then
-		arg_1_0:onDone(true)
+function FightReadyAttackWork:onStart(entity)
+	self._count = 3
+	self._hasAddEvent = false
+	self._entity = entity
 
-		return
-	end
+	local entityMO = FightDataHelper.entityMgr:getById(self._entity.id)
 
-	local var_1_0 = arg_1_0._entity.spineRenderer:getReplaceMat()
-
-	arg_1_0._oldColor = MaterialUtil.GetMainColor(var_1_0)
-
-	if not arg_1_0._oldColor then
-		arg_1_0:onDone(true)
+	if entityMO and self._entity and self._entity.spine and not self._entity.spine:hasAnimation(SpineAnimState.posture) then
+		self:onDone(true)
 
 		return
 	end
 
-	arg_1_0._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 2, var_0_1 / FightModel.instance:getSpeed(), arg_1_0._onFrameSetColor, arg_1_0._checkDone, arg_1_0)
+	local spineMat = self._entity.spineRenderer:getReplaceMat()
 
-	local var_1_1 = arg_1_1.buff:getBuffAnim()
+	self._oldColor = MaterialUtil.GetMainColor(spineMat)
 
-	if string.nilorempty(var_1_1) then
-		if arg_1_0._entity.spine:hasAnimation(SpineAnimState.change) then
-			arg_1_0._changeActName = FightHelper.processEntityActionName(arg_1_0._entity, SpineAnimState.change)
+	if not self._oldColor then
+		self:onDone(true)
 
-			arg_1_0._entity.spine:addAnimEventCallback(arg_1_0._onChangeAnimEvent, arg_1_0)
-			arg_1_0._entity.spine:play(arg_1_0._changeActName, false, true, true)
+		return
+	end
 
-			arg_1_0._hasAddEvent = true
+	self._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 2, Time1 / FightModel.instance:getSpeed(), self._onFrameSetColor, self._checkDone, self)
+
+	local buffAnim = entity.buff:getBuffAnim()
+
+	if string.nilorempty(buffAnim) then
+		if self._entity.spine:hasAnimation(SpineAnimState.change) then
+			self._changeActName = FightHelper.processEntityActionName(self._entity, SpineAnimState.change)
+
+			self._entity.spine:addAnimEventCallback(self._onChangeAnimEvent, self)
+			self._entity.spine:play(self._changeActName, false, true, true)
+
+			self._hasAddEvent = true
 		else
-			arg_1_0:_playPostureAnim()
+			self:_playPostureAnim()
 		end
 	else
-		arg_1_0:_checkDone()
+		self:_checkDone()
 	end
 
-	arg_1_0._effectWrap = arg_1_0._entity.effect:addHangEffect(FightPreloadEffectWork.buff_zhunbeigongji, ModuleEnum.SpineHangPoint.mountbottom)
+	self._effectWrap = self._entity.effect:addHangEffect(FightPreloadEffectWork.buff_zhunbeigongji, ModuleEnum.SpineHangPoint.mountbottom)
 
-	arg_1_0._effectWrap:setLocalPos(0, 0, 0)
-	FightRenderOrderMgr.instance:onAddEffectWrap(arg_1_0._entity.id, arg_1_0._effectWrap)
-	TaskDispatcher.runDelay(arg_1_0._checkDone, arg_1_0, var_0_2 / FightModel.instance:getSpeed())
+	self._effectWrap:setLocalPos(0, 0, 0)
+	FightRenderOrderMgr.instance:onAddEffectWrap(self._entity.id, self._effectWrap)
+	TaskDispatcher.runDelay(self._checkDone, self, Time2 / FightModel.instance:getSpeed())
 end
 
-function var_0_0._onFrameSetColor(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_1 < 1 and arg_2_1 or 2 - arg_2_1
+function FightReadyAttackWork:_onFrameSetColor(value)
+	local lerpValue = value < 1 and value or 2 - value
 
-	var_0_4.r = Mathf.Lerp(arg_2_0._oldColor.r, var_0_3.r, var_2_0)
-	var_0_4.g = Mathf.Lerp(arg_2_0._oldColor.g, var_0_3.g, var_2_0)
-	var_0_4.b = Mathf.Lerp(arg_2_0._oldColor.b, var_0_3.b, var_2_0)
+	lerpColor.r = Mathf.Lerp(self._oldColor.r, endColor.r, lerpValue)
+	lerpColor.g = Mathf.Lerp(self._oldColor.g, endColor.g, lerpValue)
+	lerpColor.b = Mathf.Lerp(self._oldColor.b, endColor.b, lerpValue)
 
-	arg_2_0:_setMainColor(var_0_4)
+	self:_setMainColor(lerpColor)
 end
 
-function var_0_0._setMainColor(arg_3_0, arg_3_1)
+function FightReadyAttackWork:_setMainColor(color)
 	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Operate then
-		local var_3_0 = arg_3_0._entity.spineRenderer:getReplaceMat()
+		local spineMat = self._entity.spineRenderer:getReplaceMat()
 
-		if not gohelper.isNil(var_3_0) then
-			MaterialUtil.setMainColor(var_3_0, arg_3_1)
+		if not gohelper.isNil(spineMat) then
+			MaterialUtil.setMainColor(spineMat, color)
 		end
 	end
 end
 
-function var_0_0._onChangeAnimEvent(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	if arg_4_1 == arg_4_0._changeActName and arg_4_2 == SpineAnimEvent.ActionComplete then
-		arg_4_0:_playPostureAnim()
+function FightReadyAttackWork:_onChangeAnimEvent(actionName, eventName, eventArgs)
+	if actionName == self._changeActName and eventName == SpineAnimEvent.ActionComplete then
+		self:_playPostureAnim()
 	end
 end
 
-function var_0_0._playPostureAnim(arg_5_0)
-	if arg_5_0._hasAddEvent then
-		arg_5_0._entity.spine:removeAnimEventCallback(arg_5_0._onChangeAnimEvent, arg_5_0)
+function FightReadyAttackWork:_playPostureAnim()
+	if self._hasAddEvent then
+		self._entity.spine:removeAnimEventCallback(self._onChangeAnimEvent, self)
 
-		arg_5_0._hasAddEvent = false
+		self._hasAddEvent = false
 	end
 
-	arg_5_0._entity.spine:play(SpineAnimState.posture, true, true)
-	arg_5_0:_checkDone()
+	self._entity.spine:play(SpineAnimState.posture, true, true)
+	self:_checkDone()
 end
 
-function var_0_0._checkDone(arg_6_0)
-	arg_6_0._count = arg_6_0._count - 1
+function FightReadyAttackWork:_checkDone()
+	self._count = self._count - 1
 
-	if arg_6_0._count <= 0 then
-		arg_6_0:_setMainColor(arg_6_0._oldColor)
+	if self._count <= 0 then
+		self:_setMainColor(self._oldColor)
 
-		arg_6_0._tweenId = nil
+		self._tweenId = nil
 
-		arg_6_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0.clearWork(arg_7_0)
-	if arg_7_0._effectWrap then
-		FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_7_0._entity.id, arg_7_0._effectWrap)
-		arg_7_0._entity.effect:removeEffect(arg_7_0._effectWrap)
+function FightReadyAttackWork:clearWork()
+	if self._effectWrap then
+		FightRenderOrderMgr.instance:onRemoveEffectWrap(self._entity.id, self._effectWrap)
+		self._entity.effect:removeEffect(self._effectWrap)
 
-		arg_7_0._effectWrap = nil
+		self._effectWrap = nil
 	end
 
-	if arg_7_0._hasAddEvent then
-		arg_7_0._entity.spine:removeAnimEventCallback(arg_7_0._onChangeAnimEvent, arg_7_0)
+	if self._hasAddEvent then
+		self._entity.spine:removeAnimEventCallback(self._onChangeAnimEvent, self)
 
-		arg_7_0._hasAddEvent = false
+		self._hasAddEvent = false
 	end
 
-	if arg_7_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_7_0._tweenId)
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_7_0._tweenId = nil
+		self._tweenId = nil
 
-		if arg_7_0._oldColor then
-			arg_7_0:_setMainColor(arg_7_0._oldColor)
+		if self._oldColor then
+			self:_setMainColor(self._oldColor)
 		end
 	end
 
-	arg_7_0._entity = nil
+	self._entity = nil
 
-	TaskDispatcher.cancelTask(arg_7_0._checkDone, arg_7_0)
+	TaskDispatcher.cancelTask(self._checkDone, self)
 end
 
-return var_0_0
+return FightReadyAttackWork

@@ -1,138 +1,141 @@
-﻿module("modules.logic.character.view.CharacterBackpackView", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterBackpackView.lua
 
-local var_0_0 = class("CharacterBackpackView", BaseView)
+module("modules.logic.character.view.CharacterBackpackView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._gorolecategory = gohelper.findChild(arg_1_0.viewGO, "category/#go_rolecategory")
-	arg_1_0._goequipcategory = gohelper.findChild(arg_1_0.viewGO, "category/#go_equipcategory")
-	arg_1_0._goequipsub = gohelper.findChild(arg_1_0.viewGO, "category/#go_equipsub")
-	arg_1_0._goequipsubcategory1 = gohelper.findChild(arg_1_0.viewGO, "category/#go_equipsub/#go_equipsubcategory1")
-	arg_1_0._goequipsubcategory2 = gohelper.findChild(arg_1_0.viewGO, "category/#go_equipsub/#go_equipsubcategory2")
-	arg_1_0._goequipsubcategory3 = gohelper.findChild(arg_1_0.viewGO, "category/#go_equipsub/#go_equipsubcategory3")
-	arg_1_0._gocontainer = gohelper.findChild(arg_1_0.viewGO, "#go_container")
+local CharacterBackpackView = class("CharacterBackpackView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CharacterBackpackView:onInitView()
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._gorolecategory = gohelper.findChild(self.viewGO, "category/#go_rolecategory")
+	self._goequipcategory = gohelper.findChild(self.viewGO, "category/#go_equipcategory")
+	self._goequipsub = gohelper.findChild(self.viewGO, "category/#go_equipsub")
+	self._goequipsubcategory1 = gohelper.findChild(self.viewGO, "category/#go_equipsub/#go_equipsubcategory1")
+	self._goequipsubcategory2 = gohelper.findChild(self.viewGO, "category/#go_equipsub/#go_equipsubcategory2")
+	self._goequipsubcategory3 = gohelper.findChild(self.viewGO, "category/#go_equipsub/#go_equipsubcategory3")
+	self._gocontainer = gohelper.findChild(self.viewGO, "#go_container")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function CharacterBackpackView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function CharacterBackpackView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._imgBg = gohelper.findChildSingleImage(arg_4_0.viewGO, "bg/#simage_bgimg")
+function CharacterBackpackView:_editableInitView()
+	self._imgBg = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_bgimg")
 
-	arg_4_0._imgBg:LoadImage(ResUrl.getCommonViewBg("full/juesebeibao_005"))
+	self._imgBg:LoadImage(ResUrl.getCommonViewBg("full/juesebeibao_005"))
 
-	arg_4_0._isFirstOpenCharacter = true
-	arg_4_0._isFirstOpenEquip = true
+	self._isFirstOpenCharacter = true
+	self._isFirstOpenEquip = true
 end
 
-function var_0_0.initCategory(arg_5_0)
-	arg_5_0._categoryList = arg_5_0:getUserDataTb_()
+function CharacterBackpackView:initCategory()
+	self._categoryList = self:getUserDataTb_()
 
-	arg_5_0:_refreshCategorys()
+	self:_refreshCategorys()
 end
 
-function var_0_0._refreshCategorys(arg_6_0, arg_6_1)
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0._categoryList) do
-		iter_6_1:destroyView()
+function CharacterBackpackView:_refreshCategorys(force_tab)
+	for _, v in ipairs(self._categoryList) do
+		v:destroyView()
 	end
 
-	arg_6_0._categoryList = arg_6_0:getUserDataTb_()
+	self._categoryList = self:getUserDataTb_()
 
-	local var_6_0 = arg_6_0.viewContainer:getSetting().otherRes[2]
-	local var_6_1 = arg_6_0:getResInst(var_6_0, arg_6_0._gorolecategory)
-	local var_6_2 = CharacterCategoryItem.New()
+	local path = self.viewContainer:getSetting().otherRes[2]
+	local child = self:getResInst(path, self._gorolecategory)
+	local item = CharacterCategoryItem.New()
 
-	var_6_2:initView(var_6_1, {
+	item:initView(child, {
 		index = 1,
 		enName = "CREW",
 		name = luaLang("activitynovicesign_character")
 	})
-	table.insert(arg_6_0._categoryList, var_6_2)
-	arg_6_0:_setCategory(arg_6_1)
+	table.insert(self._categoryList, item)
+	self:_setCategory(force_tab)
 end
 
-function var_0_0._onFuncUnlockRefresh(arg_7_0)
-	arg_7_0:_refreshCategorys(arg_7_0.cur_select_tab)
+function CharacterBackpackView:_onFuncUnlockRefresh()
+	self:_refreshCategorys(self.cur_select_tab)
 end
 
-function var_0_0._changeCategory(arg_8_0, arg_8_1)
-	if arg_8_1 == 2 and not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Equip) then
+function CharacterBackpackView:_changeCategory(index)
+	if index == 2 and not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Equip) then
 		GameFacade.showToast(OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.Equip))
 
 		return
 	end
 
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0._categoryList) do
-		iter_8_1:updateSeletedStatus(arg_8_1)
+	for _, v in ipairs(self._categoryList) do
+		v:updateSeletedStatus(index)
 	end
 
-	local var_8_0 = arg_8_1 == 2
-	local var_8_1 = var_8_0 and "zhuangbei_006" or "juesebeibao_005"
+	local isEquip = index == 2
+	local viewBg = isEquip and "zhuangbei_006" or "juesebeibao_005"
 
-	arg_8_0._imgBg:LoadImage(ResUrl.getCommonViewBg("full/" .. var_8_1))
-	gohelper.setActive(arg_8_0._goequipsub, var_8_0)
+	self._imgBg:LoadImage(ResUrl.getCommonViewBg("full/" .. viewBg))
+	gohelper.setActive(self._goequipsub, isEquip)
 
-	if var_8_0 then
-		if arg_8_0._isFirstOpenEquip then
-			arg_8_0.viewContainer:playEquipOpenAnimation()
+	if isEquip then
+		if self._isFirstOpenEquip then
+			self.viewContainer:playEquipOpenAnimation()
 
-			arg_8_0._isFirstOpenEquip = false
+			self._isFirstOpenEquip = false
 		end
-	elseif arg_8_0._isFirstOpenCharacter then
-		arg_8_0.viewContainer:playCardOpenAnimation()
+	elseif self._isFirstOpenCharacter then
+		self.viewContainer:playCardOpenAnimation()
 
-		arg_8_0._isFirstOpenCharacter = false
+		self._isFirstOpenCharacter = false
 	end
 
-	arg_8_0.viewContainer:switchTab(arg_8_1)
+	self.viewContainer:switchTab(index)
 
-	arg_8_0.cur_select_tab = arg_8_1
+	self.cur_select_tab = index
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0:initCategory()
-	arg_9_0:_addEvent()
+function CharacterBackpackView:onOpen()
+	self:initCategory()
+	self:_addEvent()
 end
 
-function var_0_0.onUpdateParam(arg_10_0)
-	arg_10_0:_setCategory()
+function CharacterBackpackView:onUpdateParam()
+	self:_setCategory()
 end
 
-function var_0_0._setCategory(arg_11_0, arg_11_1)
-	local var_11_0 = (arg_11_1 or arg_11_0.viewParam and arg_11_0.viewParam.jumpTab or JumpEnum.CharacterBackpack.Character) == JumpEnum.CharacterBackpack.Equip and 2 or 1
+function CharacterBackpackView:_setCategory(force_tab)
+	local jumpTab = force_tab or self.viewParam and self.viewParam.jumpTab or JumpEnum.CharacterBackpack.Character
+	local cate = jumpTab == JumpEnum.CharacterBackpack.Equip and 2 or 1
 
-	arg_11_0:_changeCategory(var_11_0)
+	self:_changeCategory(cate)
 end
 
-function var_0_0.onClose(arg_12_0)
-	arg_12_0:_removeEvent()
+function CharacterBackpackView:onClose()
+	self:_removeEvent()
 end
 
-function var_0_0._addEvent(arg_13_0)
-	arg_13_0:addEventCb(CharacterController.instance, CharacterEvent.BackpackChangeCategory, arg_13_0._changeCategory, arg_13_0)
-	arg_13_0:addEventCb(MainController.instance, MainEvent.OnFuncUnlockRefresh, arg_13_0._onFuncUnlockRefresh, arg_13_0)
+function CharacterBackpackView:_addEvent()
+	self:addEventCb(CharacterController.instance, CharacterEvent.BackpackChangeCategory, self._changeCategory, self)
+	self:addEventCb(MainController.instance, MainEvent.OnFuncUnlockRefresh, self._onFuncUnlockRefresh, self)
 end
 
-function var_0_0._removeEvent(arg_14_0)
-	arg_14_0:removeEventCb(CharacterController.instance, CharacterEvent.BackpackChangeCategory, arg_14_0._changeCategory, arg_14_0)
-	arg_14_0:removeEventCb(MainController.instance, MainEvent.OnFuncUnlockRefresh, arg_14_0._onFuncUnlockRefresh, arg_14_0)
+function CharacterBackpackView:_removeEvent()
+	self:removeEventCb(CharacterController.instance, CharacterEvent.BackpackChangeCategory, self._changeCategory, self)
+	self:removeEventCb(MainController.instance, MainEvent.OnFuncUnlockRefresh, self._onFuncUnlockRefresh, self)
 end
 
-function var_0_0.onDestroyView(arg_15_0)
-	arg_15_0._imgBg:UnLoadImage()
+function CharacterBackpackView:onDestroyView()
+	self._imgBg:UnLoadImage()
 
-	for iter_15_0, iter_15_1 in ipairs(arg_15_0._categoryList) do
-		iter_15_1:destroyView()
+	for _, v in ipairs(self._categoryList) do
+		v:destroyView()
 	end
 end
 
-return var_0_0
+return CharacterBackpackView

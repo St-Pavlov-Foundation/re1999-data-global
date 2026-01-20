@@ -1,307 +1,311 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotCollectionEnchantView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/view/V1a6_CachotCollectionEnchantView.lua
 
-local var_0_0 = class("V1a6_CachotCollectionEnchantView", BaseView)
+module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotCollectionEnchantView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagelevelbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_levelbg")
-	arg_1_0._simagetitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_title")
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "#simage_title/#txt_title")
-	arg_1_0._scrollview = gohelper.findChildScrollRect(arg_1_0.viewGO, "left/#scroll_view")
-	arg_1_0._gocollectionbagitem = gohelper.findChild(arg_1_0.viewGO, "left/#scroll_view/Viewport/Content/#go_collectionbagitem")
-	arg_1_0._dropcollectionclassify = gohelper.findChildDropdown(arg_1_0.viewGO, "left/#drop_collectionclassify")
-	arg_1_0._gomiddle = gohelper.findChild(arg_1_0.viewGO, "#go_middle")
-	arg_1_0._simagecollection = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_middle/#simage_collection")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#go_middle/#txt_name")
-	arg_1_0._gogrid1 = gohelper.findChild(arg_1_0.viewGO, "#go_middle/grids/#go_grid1")
-	arg_1_0._gogridselect1 = gohelper.findChild(arg_1_0.viewGO, "#go_middle/grids/#go_grid1/#go_gridselect1")
-	arg_1_0._gogridadd1 = gohelper.findChild(arg_1_0.viewGO, "#go_middle/grids/#go_grid1/#go_gridadd1")
-	arg_1_0._gogridget1 = gohelper.findChild(arg_1_0.viewGO, "#go_middle/grids/#go_grid1/#go_gridget1")
-	arg_1_0._simageicon1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_middle/grids/#go_grid1/#go_gridget1/#simage_icon1")
-	arg_1_0._btngridclick1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_middle/grids/#go_grid1/#btn_gridclick1")
-	arg_1_0._gogrid2 = gohelper.findChild(arg_1_0.viewGO, "#go_middle/grids/#go_grid2")
-	arg_1_0._gogridselect2 = gohelper.findChild(arg_1_0.viewGO, "#go_middle/grids/#go_grid2/#go_gridselect2")
-	arg_1_0._gogridadd2 = gohelper.findChild(arg_1_0.viewGO, "#go_middle/grids/#go_grid2/#go_gridadd2")
-	arg_1_0._gogridget2 = gohelper.findChild(arg_1_0.viewGO, "#go_middle/grids/#go_grid2/#go_gridget2")
-	arg_1_0._simageicon2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_middle/grids/#go_grid2/#go_gridget2/#simage_icon2")
-	arg_1_0._btngridclick2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_middle/grids/#go_grid2/#btn_gridclick2")
-	arg_1_0._gounique = gohelper.findChild(arg_1_0.viewGO, "#go_middle/#go_unique")
-	arg_1_0._txtuniquetips = gohelper.findChildText(arg_1_0.viewGO, "#go_middle/#go_unique/#txt_uniquetips")
-	arg_1_0._gocollectionenchantitem = gohelper.findChild(arg_1_0.viewGO, "right/#scroll_view/Viewport/Content/#go_collectionenchantitem")
-	arg_1_0._simageframe = gohelper.findChildSingleImage(arg_1_0.viewGO, "right/#scroll_view/Viewport/Content/#go_collectionenchantitem/#simage_frame")
-	arg_1_0._goenchant = gohelper.findChild(arg_1_0.viewGO, "right/#scroll_view/Viewport/Content/#go_collectionenchantitem/#go_enchant")
-	arg_1_0._txtdes = gohelper.findChildText(arg_1_0.viewGO, "right/#scroll_view/Viewport/Content/#go_collectionenchantitem/#txt_des")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._goencahntempty = gohelper.findChild(arg_1_0.viewGO, "right/#go_enchantempty")
-	arg_1_0._scrolleffectcontainer = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_middle/#scroll_effectcontainer")
-	arg_1_0._goskills = gohelper.findChild(arg_1_0.viewGO, "#go_middle/#scroll_effectcontainer/Viewport/Content/#go_skills")
-	arg_1_0._goskillitem = gohelper.findChild(arg_1_0.viewGO, "#go_middle/#scroll_effectcontainer/Viewport/Content/#go_skills/#go_skillitem")
-	arg_1_0._gospdescs = gohelper.findChild(arg_1_0.viewGO, "#go_middle/#scroll_effectcontainer/Viewport/Content/#go_spdescs")
-	arg_1_0._gospdescitem = gohelper.findChild(arg_1_0.viewGO, "#go_middle/#scroll_effectcontainer/Viewport/Content/#go_spdescs/#go_spdescitem")
-	arg_1_0._gocollectionempty = gohelper.findChild(arg_1_0.viewGO, "left/#go_collectionempty")
+local V1a6_CachotCollectionEnchantView = class("V1a6_CachotCollectionEnchantView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V1a6_CachotCollectionEnchantView:onInitView()
+	self._simagelevelbg = gohelper.findChildSingleImage(self.viewGO, "#simage_levelbg")
+	self._simagetitle = gohelper.findChildSingleImage(self.viewGO, "#simage_title")
+	self._txttitle = gohelper.findChildText(self.viewGO, "#simage_title/#txt_title")
+	self._scrollview = gohelper.findChildScrollRect(self.viewGO, "left/#scroll_view")
+	self._gocollectionbagitem = gohelper.findChild(self.viewGO, "left/#scroll_view/Viewport/Content/#go_collectionbagitem")
+	self._dropcollectionclassify = gohelper.findChildDropdown(self.viewGO, "left/#drop_collectionclassify")
+	self._gomiddle = gohelper.findChild(self.viewGO, "#go_middle")
+	self._simagecollection = gohelper.findChildSingleImage(self.viewGO, "#go_middle/#simage_collection")
+	self._txtname = gohelper.findChildText(self.viewGO, "#go_middle/#txt_name")
+	self._gogrid1 = gohelper.findChild(self.viewGO, "#go_middle/grids/#go_grid1")
+	self._gogridselect1 = gohelper.findChild(self.viewGO, "#go_middle/grids/#go_grid1/#go_gridselect1")
+	self._gogridadd1 = gohelper.findChild(self.viewGO, "#go_middle/grids/#go_grid1/#go_gridadd1")
+	self._gogridget1 = gohelper.findChild(self.viewGO, "#go_middle/grids/#go_grid1/#go_gridget1")
+	self._simageicon1 = gohelper.findChildSingleImage(self.viewGO, "#go_middle/grids/#go_grid1/#go_gridget1/#simage_icon1")
+	self._btngridclick1 = gohelper.findChildButtonWithAudio(self.viewGO, "#go_middle/grids/#go_grid1/#btn_gridclick1")
+	self._gogrid2 = gohelper.findChild(self.viewGO, "#go_middle/grids/#go_grid2")
+	self._gogridselect2 = gohelper.findChild(self.viewGO, "#go_middle/grids/#go_grid2/#go_gridselect2")
+	self._gogridadd2 = gohelper.findChild(self.viewGO, "#go_middle/grids/#go_grid2/#go_gridadd2")
+	self._gogridget2 = gohelper.findChild(self.viewGO, "#go_middle/grids/#go_grid2/#go_gridget2")
+	self._simageicon2 = gohelper.findChildSingleImage(self.viewGO, "#go_middle/grids/#go_grid2/#go_gridget2/#simage_icon2")
+	self._btngridclick2 = gohelper.findChildButtonWithAudio(self.viewGO, "#go_middle/grids/#go_grid2/#btn_gridclick2")
+	self._gounique = gohelper.findChild(self.viewGO, "#go_middle/#go_unique")
+	self._txtuniquetips = gohelper.findChildText(self.viewGO, "#go_middle/#go_unique/#txt_uniquetips")
+	self._gocollectionenchantitem = gohelper.findChild(self.viewGO, "right/#scroll_view/Viewport/Content/#go_collectionenchantitem")
+	self._simageframe = gohelper.findChildSingleImage(self.viewGO, "right/#scroll_view/Viewport/Content/#go_collectionenchantitem/#simage_frame")
+	self._goenchant = gohelper.findChild(self.viewGO, "right/#scroll_view/Viewport/Content/#go_collectionenchantitem/#go_enchant")
+	self._txtdes = gohelper.findChildText(self.viewGO, "right/#scroll_view/Viewport/Content/#go_collectionenchantitem/#txt_des")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._goencahntempty = gohelper.findChild(self.viewGO, "right/#go_enchantempty")
+	self._scrolleffectcontainer = gohelper.findChildScrollRect(self.viewGO, "#go_middle/#scroll_effectcontainer")
+	self._goskills = gohelper.findChild(self.viewGO, "#go_middle/#scroll_effectcontainer/Viewport/Content/#go_skills")
+	self._goskillitem = gohelper.findChild(self.viewGO, "#go_middle/#scroll_effectcontainer/Viewport/Content/#go_skills/#go_skillitem")
+	self._gospdescs = gohelper.findChild(self.viewGO, "#go_middle/#scroll_effectcontainer/Viewport/Content/#go_spdescs")
+	self._gospdescitem = gohelper.findChild(self.viewGO, "#go_middle/#scroll_effectcontainer/Viewport/Content/#go_spdescs/#go_spdescitem")
+	self._gocollectionempty = gohelper.findChild(self.viewGO, "left/#go_collectionempty")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btngridclick1:AddClickListener(arg_2_0._btngridclick1OnClick, arg_2_0)
-	arg_2_0._btngridclick2:AddClickListener(arg_2_0._btngridclick2OnClick, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._dropcollectionclassify:AddOnValueChanged(arg_2_0._onSwitchCategory, arg_2_0)
-	arg_2_0:addEventCb(V1a6_CachotCollectionEnchantController.instance, V1a6_CachotEvent.OnSelectEnchantCollection, arg_2_0.onSelectBagItem, arg_2_0)
+function V1a6_CachotCollectionEnchantView:addEvents()
+	self._btngridclick1:AddClickListener(self._btngridclick1OnClick, self)
+	self._btngridclick2:AddClickListener(self._btngridclick2OnClick, self)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._dropcollectionclassify:AddOnValueChanged(self._onSwitchCategory, self)
+	self:addEventCb(V1a6_CachotCollectionEnchantController.instance, V1a6_CachotEvent.OnSelectEnchantCollection, self.onSelectBagItem, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btngridclick1:RemoveClickListener()
-	arg_3_0._btngridclick2:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._dropcollectionclassify:RemoveOnValueChanged()
-	arg_3_0:removeEventCb(V1a6_CachotCollectionEnchantController.instance, V1a6_CachotEvent.OnSelectEnchantCollection, arg_3_0.onSelectBagItem, arg_3_0)
+function V1a6_CachotCollectionEnchantView:removeEvents()
+	self._btngridclick1:RemoveClickListener()
+	self._btngridclick2:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
+	self._dropcollectionclassify:RemoveOnValueChanged()
+	self:removeEventCb(V1a6_CachotCollectionEnchantController.instance, V1a6_CachotEvent.OnSelectEnchantCollection, self.onSelectBagItem, self)
 end
 
-function var_0_0._btngridclick1OnClick(arg_4_0)
-	arg_4_0:refreshAllHoleSelectState(V1a6_CachotEnum.CollectionHole.Left)
+function V1a6_CachotCollectionEnchantView:_btngridclick1OnClick()
+	self:refreshAllHoleSelectState(V1a6_CachotEnum.CollectionHole.Left)
 
-	local var_4_0 = arg_4_0:checkIsCouldRemoveEnchant(V1a6_CachotEnum.CollectionHole.Left)
+	local isCouldRemoveEnchant = self:checkIsCouldRemoveEnchant(V1a6_CachotEnum.CollectionHole.Left)
 
-	V1a6_CachotCollectionEnchantController.instance:onSelectHoleGrid(V1a6_CachotEnum.CollectionHole.Left, var_4_0)
+	V1a6_CachotCollectionEnchantController.instance:onSelectHoleGrid(V1a6_CachotEnum.CollectionHole.Left, isCouldRemoveEnchant)
 end
 
-function var_0_0._btngridclick2OnClick(arg_5_0)
-	arg_5_0:refreshAllHoleSelectState(V1a6_CachotEnum.CollectionHole.Right)
+function V1a6_CachotCollectionEnchantView:_btngridclick2OnClick()
+	self:refreshAllHoleSelectState(V1a6_CachotEnum.CollectionHole.Right)
 
-	local var_5_0 = arg_5_0:checkIsCouldRemoveEnchant(V1a6_CachotEnum.CollectionHole.Right)
+	local isCouldRemoveEnchant = self:checkIsCouldRemoveEnchant(V1a6_CachotEnum.CollectionHole.Right)
 
-	V1a6_CachotCollectionEnchantController.instance:onSelectHoleGrid(V1a6_CachotEnum.CollectionHole.Right, var_5_0)
+	V1a6_CachotCollectionEnchantController.instance:onSelectHoleGrid(V1a6_CachotEnum.CollectionHole.Right, isCouldRemoveEnchant)
 end
 
-function var_0_0._btncloseOnClick(arg_6_0)
-	arg_6_0:closeThis()
+function V1a6_CachotCollectionEnchantView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0._categoryList = {
-		var_0_0.AllFilterType,
+function V1a6_CachotCollectionEnchantView:_editableInitView()
+	self._categoryList = {
+		V1a6_CachotCollectionEnchantView.AllFilterType,
 		V1a6_CachotEnum.CollectionType.Weapon,
 		V1a6_CachotEnum.CollectionType.Protect,
 		V1a6_CachotEnum.CollectionType.Decorate
 	}
-	arg_7_0._anim = gohelper.onceAddComponent(arg_7_0.viewGO, typeof(UnityEngine.Animator))
+	self._anim = gohelper.onceAddComponent(self.viewGO, typeof(UnityEngine.Animator))
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
+function V1a6_CachotCollectionEnchantView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_9_0)
-	local var_9_0 = arg_9_0.viewParam and arg_9_0.viewParam.collectionId
+function V1a6_CachotCollectionEnchantView:onOpen()
+	local curSelectCollectionId = self.viewParam and self.viewParam.collectionId
 
-	arg_9_0:refreshUI(var_9_0)
+	self:refreshUI(curSelectCollectionId)
 end
 
-function var_0_0.refreshUI(arg_10_0, arg_10_1)
-	V1a6_CachotCollectionEnchantController.instance:onOpenView(arg_10_1)
-	arg_10_0:initCategory()
-	arg_10_0:initEnchantsListUI()
-	arg_10_0:initCollectionsListUI()
+function V1a6_CachotCollectionEnchantView:refreshUI(curSelectCollectionId)
+	V1a6_CachotCollectionEnchantController.instance:onOpenView(curSelectCollectionId)
+	self:initCategory()
+	self:initEnchantsListUI()
+	self:initCollectionsListUI()
 end
 
-local var_0_1 = 0.2
+local delayTime2SwitchCollectionIcon = 0.2
 
-function var_0_0.onSelectBagItem(arg_11_0, arg_11_1)
-	local var_11_0 = V1a6_CachotEnchantBagListModel.instance:getById(arg_11_1)
+function V1a6_CachotCollectionEnchantView:onSelectBagItem(curSelectCollectionId)
+	local curSelectMO = V1a6_CachotEnchantBagListModel.instance:getById(curSelectCollectionId)
 
-	if var_11_0 then
-		local var_11_1 = V1a6_CachotCollectionConfig.instance:getCollectionConfig(var_11_0.cfgId)
+	if curSelectMO then
+		local collectionConfig = V1a6_CachotCollectionConfig.instance:getCollectionConfig(curSelectMO.cfgId)
 
-		if var_11_1 then
-			arg_11_0._txtname.text = tostring(var_11_1.name)
-			arg_11_0._collectionIconUrl = ResUrl.getV1a6CachotIcon("collection/" .. var_11_1.icon)
+		if collectionConfig then
+			self._txtname.text = tostring(collectionConfig.name)
+			self._collectionIconUrl = ResUrl.getV1a6CachotIcon("collection/" .. collectionConfig.icon)
 
-			gohelper.setActive(arg_11_0._goadd, var_11_1.holeNum > 0)
-			arg_11_0:refreshHoleUI(var_11_0, var_11_1)
-			arg_11_0:refreshCollectionDesc(var_11_0, var_11_1)
-			V1a6_CachotCollectionHelper.refreshCollectionUniqueTip(var_11_1, arg_11_0._txtuniquetips, arg_11_0._gounique)
+			gohelper.setActive(self._goadd, collectionConfig.holeNum > 0)
+			self:refreshHoleUI(curSelectMO, collectionConfig)
+			self:refreshCollectionDesc(curSelectMO, collectionConfig)
+			V1a6_CachotCollectionHelper.refreshCollectionUniqueTip(collectionConfig, self._txtuniquetips, self._gounique)
 
-			local var_11_2 = false
+			local isPlaySwitchAnim = false
 
-			if arg_11_0._curSelectCollectionId and arg_11_0._curSelectCollectionId ~= arg_11_1 then
-				arg_11_0._anim:Play("swicth", 0, 0)
+			if self._curSelectCollectionId and self._curSelectCollectionId ~= curSelectCollectionId then
+				self._anim:Play("swicth", 0, 0)
 
-				var_11_2 = true
+				isPlaySwitchAnim = true
 			end
 
-			TaskDispatcher.cancelTask(arg_11_0._switchCollectionIcon, arg_11_0)
-			TaskDispatcher.runDelay(arg_11_0._switchCollectionIcon, arg_11_0, var_11_2 and var_0_1 or 0)
+			TaskDispatcher.cancelTask(self._switchCollectionIcon, self)
+			TaskDispatcher.runDelay(self._switchCollectionIcon, self, isPlaySwitchAnim and delayTime2SwitchCollectionIcon or 0)
 
-			arg_11_0._curSelectCollectionId = arg_11_1
+			self._curSelectCollectionId = curSelectCollectionId
 		end
 	else
-		arg_11_0._curSelectCollectionId = nil
+		self._curSelectCollectionId = nil
 	end
 
-	gohelper.setActive(arg_11_0._gomiddle, var_11_0 ~= nil)
-	arg_11_0:resetHoleClickCount()
+	gohelper.setActive(self._gomiddle, curSelectMO ~= nil)
+	self:resetHoleClickCount()
 end
 
-function var_0_0._switchCollectionIcon(arg_12_0)
-	arg_12_0._simagecollection:LoadImage(arg_12_0._collectionIconUrl)
+function V1a6_CachotCollectionEnchantView:_switchCollectionIcon()
+	self._simagecollection:LoadImage(self._collectionIconUrl)
 end
 
-function var_0_0.refreshHoleUI(arg_13_0, arg_13_1, arg_13_2)
-	if arg_13_1 and arg_13_2 then
-		local var_13_0 = arg_13_2.holeNum or 0
+function V1a6_CachotCollectionEnchantView:refreshHoleUI(collectionMO, collectionConfig)
+	if collectionMO and collectionConfig then
+		local holeNum = collectionConfig.holeNum or 0
 
-		gohelper.setActive(arg_13_0._gogrid1, var_13_0 >= 1)
-		gohelper.setActive(arg_13_0._gogrid2, var_13_0 >= 2)
+		gohelper.setActive(self._gogrid1, holeNum >= 1)
+		gohelper.setActive(self._gogrid2, holeNum >= 2)
 
-		local var_13_1 = arg_13_1:getEnchantId(V1a6_CachotEnum.CollectionHole.Left)
-		local var_13_2 = arg_13_1:getEnchantId(V1a6_CachotEnum.CollectionHole.Right)
+		local leftEnchantId = collectionMO:getEnchantId(V1a6_CachotEnum.CollectionHole.Left)
+		local rightEnchantId = collectionMO:getEnchantId(V1a6_CachotEnum.CollectionHole.Right)
 
-		arg_13_0:refreshSingleHoleUI(V1a6_CachotEnum.CollectionHole.Left, var_13_1)
-		arg_13_0:refreshSingleHoleUI(V1a6_CachotEnum.CollectionHole.Right, var_13_2)
+		self:refreshSingleHoleUI(V1a6_CachotEnum.CollectionHole.Left, leftEnchantId)
+		self:refreshSingleHoleUI(V1a6_CachotEnum.CollectionHole.Right, rightEnchantId)
 	end
 end
 
-function var_0_0.refreshSingleHoleUI(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = V1a6_CachotEnchantBagListModel.instance:getCurSelectHoleIndex()
-	local var_14_1 = arg_14_2 and arg_14_2 ~= 0
+function V1a6_CachotCollectionEnchantView:refreshSingleHoleUI(index, enchantId)
+	local curSelectHoleIndex = V1a6_CachotEnchantBagListModel.instance:getCurSelectHoleIndex()
+	local hasEnchant = enchantId and enchantId ~= 0
 
-	gohelper.setActive(arg_14_0["_gogridadd" .. arg_14_1], not var_14_1)
-	gohelper.setActive(arg_14_0["_gogridget" .. arg_14_1], var_14_1)
-	gohelper.setActive(arg_14_0["_gogridselect" .. arg_14_1], var_14_0 == arg_14_1)
+	gohelper.setActive(self["_gogridadd" .. index], not hasEnchant)
+	gohelper.setActive(self["_gogridget" .. index], hasEnchant)
+	gohelper.setActive(self["_gogridselect" .. index], curSelectHoleIndex == index)
 
-	if var_14_1 then
-		local var_14_2 = V1a6_CachotModel.instance:getRogueInfo()
-		local var_14_3 = var_14_2 and var_14_2:getCollectionByUid(arg_14_2)
-		local var_14_4 = var_14_3 and var_14_3.cfgId
-		local var_14_5 = V1a6_CachotCollectionConfig.instance:getCollectionConfig(var_14_4)
+	if hasEnchant then
+		local rogueInfo = V1a6_CachotModel.instance:getRogueInfo()
+		local enchantMO = rogueInfo and rogueInfo:getCollectionByUid(enchantId)
+		local enchantCfgId = enchantMO and enchantMO.cfgId
+		local enchantCfg = V1a6_CachotCollectionConfig.instance:getCollectionConfig(enchantCfgId)
 
-		if var_14_5 and arg_14_0["_simageicon" .. arg_14_1] then
-			arg_14_0["_simageicon" .. arg_14_1]:LoadImage(ResUrl.getV1a6CachotIcon("collection/" .. var_14_5.icon))
+		if enchantCfg and self["_simageicon" .. index] then
+			self["_simageicon" .. index]:LoadImage(ResUrl.getV1a6CachotIcon("collection/" .. enchantCfg.icon))
 		end
 	end
 end
 
-function var_0_0.refreshAllHoleSelectState(arg_15_0, arg_15_1)
-	for iter_15_0, iter_15_1 in pairs(V1a6_CachotEnum.CollectionHole) do
-		gohelper.setActive(arg_15_0["_gogridselect" .. iter_15_1], arg_15_1 == iter_15_1)
+function V1a6_CachotCollectionEnchantView:refreshAllHoleSelectState(selectHoleIndex)
+	for _, holeIndex in pairs(V1a6_CachotEnum.CollectionHole) do
+		gohelper.setActive(self["_gogridselect" .. holeIndex], selectHoleIndex == holeIndex)
 	end
 end
 
-function var_0_0.refreshCollectionDesc(arg_16_0, arg_16_1, arg_16_2)
-	if arg_16_2 then
-		V1a6_CachotCollectionHelper.refreshSkillDesc(arg_16_2, arg_16_0._goskills, arg_16_0._goskillitem)
-		V1a6_CachotCollectionHelper.refreshEnchantDesc(arg_16_2, arg_16_0._gospdescs, arg_16_0._gospdescitem)
+function V1a6_CachotCollectionEnchantView:refreshCollectionDesc(collectionMO, collectionConfig)
+	if collectionConfig then
+		V1a6_CachotCollectionHelper.refreshSkillDesc(collectionConfig, self._goskills, self._goskillitem)
+		V1a6_CachotCollectionHelper.refreshEnchantDesc(collectionConfig, self._gospdescs, self._gospdescitem)
 	end
 
-	arg_16_0._scrolleffectcontainer.verticalNormalizedPosition = 1
+	self._scrolleffectcontainer.verticalNormalizedPosition = 1
 end
 
-var_0_0.AllFilterType = 6
+V1a6_CachotCollectionEnchantView.AllFilterType = 6
 
-function var_0_0.initCategory(arg_17_0)
-	local var_17_0 = {}
+function V1a6_CachotCollectionEnchantView:initCategory()
+	local categoryNameList = {}
 
-	for iter_17_0, iter_17_1 in ipairs(arg_17_0._categoryList) do
-		local var_17_1
+	for _, v in ipairs(self._categoryList) do
+		local categoryNameCn
 
-		if iter_17_1 == var_0_0.AllFilterType then
-			var_17_1 = luaLang("cachot_CollectionTypeName_All")
+		if v == V1a6_CachotCollectionEnchantView.AllFilterType then
+			categoryNameCn = luaLang("cachot_CollectionTypeName_All")
 		else
-			var_17_1 = luaLang(V1a6_CachotEnum.CollectionTypeName[iter_17_1])
+			categoryNameCn = luaLang(V1a6_CachotEnum.CollectionTypeName[v])
 		end
 
-		table.insert(var_17_0, var_17_1)
+		table.insert(categoryNameList, categoryNameCn)
 	end
 
-	arg_17_0._dropcollectionclassify:AddOptions(var_17_0)
+	self._dropcollectionclassify:AddOptions(categoryNameList)
 end
 
-function var_0_0.initEnchantsListUI(arg_18_0)
-	local var_18_0 = V1a6_CachotCollectionEnchantListModel.instance:isEnchantEmpty()
+function V1a6_CachotCollectionEnchantView:initEnchantsListUI()
+	local isEnchantEmpty = V1a6_CachotCollectionEnchantListModel.instance:isEnchantEmpty()
 
-	gohelper.setActive(arg_18_0._goencahntempty, var_18_0)
+	gohelper.setActive(self._goencahntempty, isEnchantEmpty)
 end
 
-function var_0_0.initCollectionsListUI(arg_19_0)
-	local var_19_0 = V1a6_CachotEnchantBagListModel.instance:isBagEmpty()
+function V1a6_CachotCollectionEnchantView:initCollectionsListUI()
+	local isCollectionEmpty = V1a6_CachotEnchantBagListModel.instance:isBagEmpty()
 
-	gohelper.setActive(arg_19_0._gocollectionempty, var_19_0)
-	gohelper.setActive(arg_19_0._gomiddle, not var_19_0)
+	gohelper.setActive(self._gocollectionempty, isCollectionEmpty)
+	gohelper.setActive(self._gomiddle, not isCollectionEmpty)
 end
 
-function var_0_0._onSwitchCategory(arg_20_0, arg_20_1)
-	arg_20_1 = arg_20_1 + 1
+function V1a6_CachotCollectionEnchantView:_onSwitchCategory(index)
+	index = index + 1
 
-	local var_20_0 = arg_20_0._categoryList[arg_20_1]
+	local categoryId = self._categoryList[index]
 
-	if var_20_0 then
-		arg_20_0._scrollview.verticalNormalizedPosition = 1
+	if categoryId then
+		self._scrollview.verticalNormalizedPosition = 1
 
-		V1a6_CachotCollectionEnchantController.instance:switchCategory(var_20_0)
-		arg_20_0:initCollectionsListUI()
+		V1a6_CachotCollectionEnchantController.instance:switchCategory(categoryId)
+		self:initCollectionsListUI()
 	end
 end
 
-var_0_0.RemoveEnchantMinClickCount = 2
+V1a6_CachotCollectionEnchantView.RemoveEnchantMinClickCount = 2
 
-function var_0_0.checkIsCouldRemoveEnchant(arg_21_0, arg_21_1)
-	if arg_21_1 ~= arg_21_0._checkHoleIndex then
-		arg_21_0:resetHoleClickCount()
+function V1a6_CachotCollectionEnchantView:checkIsCouldRemoveEnchant(holeIndex)
+	if holeIndex ~= self._checkHoleIndex then
+		self:resetHoleClickCount()
 	end
 
-	arg_21_0._checkHoleIndex = arg_21_1
-	arg_21_0._holeClickCount = arg_21_0._holeClickCount + 1
+	self._checkHoleIndex = holeIndex
+	self._holeClickCount = self._holeClickCount + 1
 
-	if arg_21_0._holeClickCount >= var_0_0.RemoveEnchantMinClickCount then
-		arg_21_0:checkHoleClickToast(arg_21_1)
-		arg_21_0:resetHoleClickCount()
+	if self._holeClickCount >= V1a6_CachotCollectionEnchantView.RemoveEnchantMinClickCount then
+		self:checkHoleClickToast(holeIndex)
+		self:resetHoleClickCount()
 
 		return true
 	end
 end
 
-function var_0_0.resetHoleClickCount(arg_22_0)
-	arg_22_0._holeClickCount = 0
+function V1a6_CachotCollectionEnchantView:resetHoleClickCount()
+	self._holeClickCount = 0
 end
 
-local var_0_2 = 2
+local repeatClickToastCount = 2
 
-function var_0_0.checkHoleClickToast(arg_23_0, arg_23_1)
-	if V1a6_CachotCollectionEnchantListModel.instance:isEnchantEmpty() then
+function V1a6_CachotCollectionEnchantView:checkHoleClickToast(holeIndex)
+	local isEnchantListEmpty = V1a6_CachotCollectionEnchantListModel.instance:isEnchantEmpty()
+
+	if isEnchantListEmpty then
 		ToastController.instance:showToast(ToastEnum.V1a6Cachot_EnchantListEmpty)
 	else
-		local var_23_0 = V1a6_CachotEnchantBagListModel.instance:getById(arg_23_0._curSelectCollectionId)
-		local var_23_1 = var_23_0 and var_23_0:getEnchantId(arg_23_1)
-		local var_23_2 = var_23_1 and var_23_1 ~= V1a6_CachotEnum.EmptyEnchantId
+		local curSelectMO = V1a6_CachotEnchantBagListModel.instance:getById(self._curSelectCollectionId)
+		local enchantId = curSelectMO and curSelectMO:getEnchantId(holeIndex)
+		local hasEnchant = enchantId and enchantId ~= V1a6_CachotEnum.EmptyEnchantId
 
-		if var_23_0 and not var_23_2 and arg_23_0._holeClickCount and arg_23_0._holeClickCount >= var_0_2 then
+		if curSelectMO and not hasEnchant and self._holeClickCount and self._holeClickCount >= repeatClickToastCount then
 			ToastController.instance:showToast(ToastEnum.V1a6Cachot_SelectCollectionEnchant)
 		end
 	end
 end
 
-function var_0_0.releaseSingleImage(arg_24_0)
+function V1a6_CachotCollectionEnchantView:releaseSingleImage()
 	if V1a6_CachotEnum.CollectionHole then
-		for iter_24_0, iter_24_1 in pairs(V1a6_CachotEnum.CollectionHole) do
-			local var_24_0 = arg_24_0["_simageicon" .. iter_24_1]
+		for _, collectionHole in pairs(V1a6_CachotEnum.CollectionHole) do
+			local simage = self["_simageicon" .. collectionHole]
 
-			if var_24_0 then
-				var_24_0:UnLoadImage()
+			if simage then
+				simage:UnLoadImage()
 			end
 		end
 	end
 end
 
-function var_0_0.onClose(arg_25_0)
+function V1a6_CachotCollectionEnchantView:onClose()
 	V1a6_CachotCollectionEnchantController.instance:onCloseView()
 end
 
-function var_0_0.onDestroyView(arg_26_0)
-	TaskDispatcher.cancelTask(arg_26_0._switchCollectionIcon, arg_26_0)
-	arg_26_0:releaseSingleImage()
+function V1a6_CachotCollectionEnchantView:onDestroyView()
+	TaskDispatcher.cancelTask(self._switchCollectionIcon, self)
+	self:releaseSingleImage()
 end
 
-return var_0_0
+return V1a6_CachotCollectionEnchantView

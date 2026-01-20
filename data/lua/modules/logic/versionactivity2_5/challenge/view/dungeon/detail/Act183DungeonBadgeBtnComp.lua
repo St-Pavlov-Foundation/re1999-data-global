@@ -1,99 +1,102 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.dungeon.detail.Act183DungeonBadgeBtnComp", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/dungeon/detail/Act183DungeonBadgeBtnComp.lua
 
-local var_0_0 = class("Act183DungeonBadgeBtnComp", Act183DungeonBaseComp)
-local var_0_1 = {
+module("modules.logic.versionactivity2_5.challenge.view.dungeon.detail.Act183DungeonBadgeBtnComp", package.seeall)
+
+local Act183DungeonBadgeBtnComp = class("Act183DungeonBadgeBtnComp", Act183DungeonBaseComp)
+local BadgeBtnPos_HasRestart_HasRerpress = {
 	660,
 	-416
 }
-local var_0_2 = {
+local BadgeBtnPos_HasRestart_NotRepress = {
 	445,
 	-416
 }
-local var_0_3 = {
+local BadgeBtnPos_HasStart = {
 	445,
 	-416
 }
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	var_0_0.super.init(arg_1_0, arg_1_1)
+function Act183DungeonBadgeBtnComp:init(go)
+	Act183DungeonBadgeBtnComp.super.init(self, go)
 
-	arg_1_0._btnbadge = gohelper.getClickWithDefaultAudio(arg_1_0.go)
-	arg_1_0._imagebadgebtn = gohelper.onceAddComponent(arg_1_0.go, gohelper.Type_Image)
-	arg_1_0._txtusebadgenum = gohelper.findChildText(arg_1_0.go, "#txt_usebadgenum")
-	arg_1_0._readyUseBadgeNum = 0
+	self._btnbadge = gohelper.getClickWithDefaultAudio(self.go)
+	self._imagebadgebtn = gohelper.onceAddComponent(self.go, gohelper.Type_Image)
+	self._txtusebadgenum = gohelper.findChildText(self.go, "#txt_usebadgenum")
+	self._readyUseBadgeNum = 0
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0:addEventCb(Act183Controller.instance, Act183Event.OnUpdateSelectBadgeNum, arg_2_0._onUpdateSelectBadgeNum, arg_2_0)
-	arg_2_0._btnbadge:AddClickListener(arg_2_0._btnbadgeOnClick, arg_2_0)
+function Act183DungeonBadgeBtnComp:addEventListeners()
+	self:addEventCb(Act183Controller.instance, Act183Event.OnUpdateSelectBadgeNum, self._onUpdateSelectBadgeNum, self)
+	self._btnbadge:AddClickListener(self._btnbadgeOnClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btnbadge:RemoveClickListener()
+function Act183DungeonBadgeBtnComp:removeEventListeners()
+	self._btnbadge:RemoveClickListener()
 end
 
-function var_0_0._btnbadgeOnClick(arg_4_0)
-	local var_4_0 = arg_4_0.mgr:getComp(Act183DungeonSelectBadgeComp)
+function Act183DungeonBadgeBtnComp:_btnbadgeOnClick()
+	local selectBadgeComp = self.mgr:getComp(Act183DungeonSelectBadgeComp)
 
-	if var_4_0 then
-		var_4_0:_onUpdateBadgeDetailVisible(true, arg_4_0._readyUseBadgeNum)
+	if selectBadgeComp then
+		selectBadgeComp:_onUpdateBadgeDetailVisible(true, self._readyUseBadgeNum)
 	end
 
-	Act183Controller.instance:dispatchEvent(Act183Event.OnUpdateBadgeDetailVisible, true, arg_4_0._readyUseBadgeNum)
+	Act183Controller.instance:dispatchEvent(Act183Event.OnUpdateBadgeDetailVisible, true, self._readyUseBadgeNum)
 end
 
-function var_0_0.updateInfo(arg_5_0, arg_5_1)
-	var_0_0.super.updateInfo(arg_5_0, arg_5_1)
+function Act183DungeonBadgeBtnComp:updateInfo(episodeMo)
+	Act183DungeonBadgeBtnComp.super.updateInfo(self, episodeMo)
 
-	local var_5_0 = Act183Model.instance:getActInfo()
+	local actInfo = Act183Model.instance:getActInfo()
 
-	arg_5_0._totalBadgeNum = var_5_0 and var_5_0:getBadgeNum() or 0
-	arg_5_0._useBadgeNum = arg_5_0._episodeMo:getUseBadgeNum()
-	arg_5_0._readyUseBadgeNum = arg_5_0._useBadgeNum or 0
+	self._totalBadgeNum = actInfo and actInfo:getBadgeNum() or 0
+	self._useBadgeNum = self._episodeMo:getUseBadgeNum()
+	self._readyUseBadgeNum = self._useBadgeNum or 0
 end
 
-function var_0_0.checkIsVisible(arg_6_0)
-	return arg_6_0._status ~= Act183Enum.EpisodeStatus.Locked and arg_6_0._totalBadgeNum > 0 and arg_6_0._groupType == Act183Enum.GroupType.NormalMain
+function Act183DungeonBadgeBtnComp:checkIsVisible()
+	return self._status ~= Act183Enum.EpisodeStatus.Locked and self._totalBadgeNum > 0 and self._groupType == Act183Enum.GroupType.NormalMain
 end
 
-function var_0_0.show(arg_7_0)
-	var_0_0.super.show(arg_7_0)
+function Act183DungeonBadgeBtnComp:show()
+	Act183DungeonBadgeBtnComp.super.show(self)
 
-	local var_7_0 = var_0_3
-	local var_7_1 = arg_7_0.mgr:isCompVisible(Act183DungeonRepressBtnComp)
+	local badgeBtnPos = BadgeBtnPos_HasStart
+	local isRepressBtnVisible = self.mgr:isCompVisible(Act183DungeonRepressBtnComp)
+	local isRestartBtnVisible = self.mgr:isCompVisible(Act183DungeonRestartBtnComp)
 
-	if arg_7_0.mgr:isCompVisible(Act183DungeonRestartBtnComp) then
-		var_7_0 = var_7_1 and var_0_1 or var_0_2
+	if isRestartBtnVisible then
+		badgeBtnPos = isRepressBtnVisible and BadgeBtnPos_HasRestart_HasRerpress or BadgeBtnPos_HasRestart_NotRepress
 	end
 
-	recthelper.setAnchor(arg_7_0.tran, var_7_0[1], var_7_0[2])
-	arg_7_0:_refreshBadgeNum()
+	recthelper.setAnchor(self.tran, badgeBtnPos[1], badgeBtnPos[2])
+	self:_refreshBadgeNum()
 end
 
-function var_0_0._refreshBadgeNum(arg_8_0)
-	local var_8_0 = arg_8_0._readyUseBadgeNum and arg_8_0._readyUseBadgeNum > 0
+function Act183DungeonBadgeBtnComp:_refreshBadgeNum()
+	local isReadyUseBadge = self._readyUseBadgeNum and self._readyUseBadgeNum > 0
 
-	gohelper.setActive(arg_8_0._txtusebadgenum.gameObject, var_8_0)
+	gohelper.setActive(self._txtusebadgenum.gameObject, isReadyUseBadge)
 
-	arg_8_0._txtusebadgenum.text = arg_8_0._readyUseBadgeNum
+	self._txtusebadgenum.text = self._readyUseBadgeNum
 
-	local var_8_1 = var_8_0 and "v2a5_challenge_dungeon_iconbtn2" or "v2a5_challenge_dungeon_iconbtn1"
+	local btnBgName = isReadyUseBadge and "v2a5_challenge_dungeon_iconbtn2" or "v2a5_challenge_dungeon_iconbtn1"
 
-	UISpriteSetMgr.instance:setChallengeSprite(arg_8_0._imagebadgebtn, var_8_1)
+	UISpriteSetMgr.instance:setChallengeSprite(self._imagebadgebtn, btnBgName)
 end
 
-function var_0_0._onUpdateSelectBadgeNum(arg_9_0, arg_9_1, arg_9_2)
-	if arg_9_0._episodeId ~= arg_9_1 then
+function Act183DungeonBadgeBtnComp:_onUpdateSelectBadgeNum(episodeId, readyUseBadgeNum)
+	if self._episodeId ~= episodeId then
 		return
 	end
 
-	arg_9_0._readyUseBadgeNum = arg_9_2 or 0
+	self._readyUseBadgeNum = readyUseBadgeNum or 0
 
-	arg_9_0:refresh()
+	self:refresh()
 end
 
-function var_0_0.onDestroy(arg_10_0)
-	var_0_0.super.onDestroy(arg_10_0)
+function Act183DungeonBadgeBtnComp:onDestroy()
+	Act183DungeonBadgeBtnComp.super.onDestroy(self)
 end
 
-return var_0_0
+return Act183DungeonBadgeBtnComp

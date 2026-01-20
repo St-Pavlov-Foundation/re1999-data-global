@@ -1,49 +1,53 @@
-﻿module("modules.logic.weekwalk.view.WeekWalkBuffBindingViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk/view/WeekWalkBuffBindingViewContainer.lua
 
-local var_0_0 = class("WeekWalkBuffBindingViewContainer", BaseViewContainer)
+module("modules.logic.weekwalk.view.WeekWalkBuffBindingViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = ListScrollParam.New()
+local WeekWalkBuffBindingViewContainer = class("WeekWalkBuffBindingViewContainer", BaseViewContainer)
 
-	var_1_0.scrollGOPath = "#go_rolecontainer/#scroll_card"
-	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_0.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_0.cellClass = WeekWalkBuffBindingHeroItem
-	var_1_0.scrollDir = ScrollEnum.ScrollDirV
-	var_1_0.lineCount = 5
-	var_1_0.cellWidth = 211
-	var_1_0.cellHeight = 450
-	var_1_0.cellSpaceH = 0
-	var_1_0.cellSpaceV = 0
-	var_1_0.startSpace = 30
+function WeekWalkBuffBindingViewContainer:buildViews()
+	local scrollParam = ListScrollParam.New()
 
-	local var_1_1 = {}
+	scrollParam.scrollGOPath = "#go_rolecontainer/#scroll_card"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = WeekWalkBuffBindingHeroItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 5
+	scrollParam.cellWidth = 211
+	scrollParam.cellHeight = 450
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 0
+	scrollParam.startSpace = 30
 
-	for iter_1_0 = 1, 15 do
-		var_1_1[iter_1_0] = math.ceil((iter_1_0 - 1) % 5) * 0.06
+	local animationDelayTimes = {}
+
+	for i = 1, 15 do
+		local delayTime = math.ceil((i - 1) % 5) * 0.06
+
+		animationDelayTimes[i] = delayTime
 	end
 
 	return {
-		LuaListScrollViewWithAnimator.New(WeekWalkCardListModel.instance, var_1_0, var_1_1),
+		LuaListScrollViewWithAnimator.New(WeekWalkCardListModel.instance, scrollParam, animationDelayTimes),
 		WeekWalkBuffBindingView.New(),
 		TabViewGroup.New(1, "#go_btns")
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	arg_2_0.navigationView = NavigateButtonsView.New({
+function WeekWalkBuffBindingViewContainer:buildTabViews(tabContainerId)
+	self.navigationView = NavigateButtonsView.New({
 		true,
 		false,
 		false
 	})
 
 	return {
-		arg_2_0.navigationView
+		self.navigationView
 	}
 end
 
-function var_0_0.onContainerOpenFinish(arg_3_0)
-	arg_3_0.navigationView:resetOnCloseViewAudio(AudioEnum.UI.play_ui_checkpoint_click)
+function WeekWalkBuffBindingViewContainer:onContainerOpenFinish()
+	self.navigationView:resetOnCloseViewAudio(AudioEnum.UI.play_ui_checkpoint_click)
 end
 
-return var_0_0
+return WeekWalkBuffBindingViewContainer

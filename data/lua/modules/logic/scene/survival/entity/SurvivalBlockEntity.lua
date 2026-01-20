@@ -1,91 +1,94 @@
-﻿module("modules.logic.scene.survival.entity.SurvivalBlockEntity", package.seeall)
+﻿-- chunkname: @modules/logic/scene/survival/entity/SurvivalBlockEntity.lua
 
-local var_0_0 = class("SurvivalBlockEntity", LuaCompBase)
-local var_0_1 = require("bit")
+module("modules.logic.scene.survival.entity.SurvivalBlockEntity", package.seeall)
 
-function var_0_0.Create(arg_1_0, arg_1_1)
-	local var_1_0 = gohelper.create3d(arg_1_1, tostring(arg_1_0.pos))
-	local var_1_1, var_1_2, var_1_3 = SurvivalHelper.instance:hexPointToWorldPoint(arg_1_0.pos.q, arg_1_0.pos.r)
-	local var_1_4 = var_1_0.transform
+local SurvivalBlockEntity = class("SurvivalBlockEntity", LuaCompBase)
+local bit = require("bit")
 
-	transformhelper.setLocalPos(var_1_4, var_1_1, var_1_2, var_1_3)
-	transformhelper.setLocalRotation(var_1_4, 0, arg_1_0.dir * 60 + 30, 0)
+function SurvivalBlockEntity.Create(blockCo, root)
+	local go = gohelper.create3d(root, tostring(blockCo.pos))
+	local x, y, z = SurvivalHelper.instance:hexPointToWorldPoint(blockCo.pos.q, blockCo.pos.r)
+	local rootTrans = go.transform
 
-	local var_1_5 = SurvivalMapHelper.instance:getBlockRes(arg_1_0.assetPath)
+	transformhelper.setLocalPos(rootTrans, x, y, z)
+	transformhelper.setLocalRotation(rootTrans, 0, blockCo.dir * 60 + 30, 0)
 
-	if var_1_5 then
-		local var_1_6 = gohelper.clone(var_1_5, var_1_0).transform
+	local blockRes = SurvivalMapHelper.instance:getBlockRes(blockCo.assetPath)
 
-		transformhelper.setLocalPos(var_1_6, 0, 0, 0)
-		transformhelper.setLocalRotation(var_1_6, 0, 0, 0)
-		transformhelper.setLocalScale(var_1_6, 1, 1, 1)
+	if blockRes then
+		local blockGo = gohelper.clone(blockRes, go)
+		local trans = blockGo.transform
+
+		transformhelper.setLocalPos(trans, 0, 0, 0)
+		transformhelper.setLocalRotation(trans, 0, 0, 0)
+		transformhelper.setLocalScale(trans, 1, 1, 1)
 	end
 
-	return MonoHelper.addNoUpdateLuaComOnceToGo(var_1_0, var_0_0, arg_1_0)
+	return MonoHelper.addNoUpdateLuaComOnceToGo(go, SurvivalBlockEntity, blockCo)
 end
 
-function var_0_0.ctor(arg_2_0, arg_2_1)
-	arg_2_0._data = arg_2_1
+function SurvivalBlockEntity:ctor(data)
+	self._data = data
 end
 
-local var_0_2 = 9
+local TerrainLayerIndex = 9
 
-function var_0_0.init(arg_3_0, arg_3_1)
-	arg_3_0.go = arg_3_1
-	arg_3_0._terrainMRs = arg_3_0:getUserDataTb_()
+function SurvivalBlockEntity:init(go)
+	self.go = go
+	self._terrainMRs = self:getUserDataTb_()
 
-	local var_3_0 = arg_3_1:GetComponentsInChildren(typeof(UnityEngine.Renderer), true)
+	local meshRenderers = go:GetComponentsInChildren(typeof(UnityEngine.Renderer), true)
 
-	for iter_3_0 = 0, var_3_0.Length - 1 do
-		local var_3_1 = var_3_0[iter_3_0]
-		local var_3_2 = var_3_1.renderingLayerMask
+	for i = 0, meshRenderers.Length - 1 do
+		local meshRenderer = meshRenderers[i]
+		local layerMask = meshRenderer.renderingLayerMask
 
-		if var_0_1.band(var_3_2, 2^var_0_2) ~= 0 then
-			table.insert(arg_3_0._terrainMRs, var_3_1)
+		if bit.band(layerMask, 2^TerrainLayerIndex) ~= 0 then
+			table.insert(self._terrainMRs, meshRenderer)
 		end
 	end
 
-	if not arg_3_0._terrainMRs[1] then
+	if not self._terrainMRs[1] then
 		return
 	end
 
-	arg_3_0._isInFog = SurvivalMapModel.instance:isInFog(arg_3_0._data.pos)
+	self._isInFog = SurvivalMapModel.instance:isInFog(self._data.pos)
 
-	for iter_3_1, iter_3_2 in pairs(arg_3_0._terrainMRs) do
-		SurvivalMapHelper.instance:getSceneFogComp():setBlockStatu(iter_3_2, arg_3_0._isInFog, arg_3_0._isInRain)
+	for _, terrainMR in pairs(self._terrainMRs) do
+		SurvivalMapHelper.instance:getSceneFogComp():setBlockStatu(terrainMR, self._isInFog, self._isInRain)
 	end
 end
 
-function var_0_0.addEventListeners(arg_4_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapExploredPointUpdate, arg_4_0._onFogUpdate, arg_4_0)
+function SurvivalBlockEntity:addEventListeners()
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapExploredPointUpdate, self._onFogUpdate, self)
 end
 
-function var_0_0.removeEventListeners(arg_5_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapExploredPointUpdate, arg_5_0._onFogUpdate, arg_5_0)
+function SurvivalBlockEntity:removeEventListeners()
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapExploredPointUpdate, self._onFogUpdate, self)
 end
 
-function var_0_0.onStart(arg_6_0)
-	arg_6_0.go:GetComponent(typeof(SLFramework.LuaMonobehavier)).enabled = false
+function SurvivalBlockEntity:onStart()
+	self.go:GetComponent(typeof(SLFramework.LuaMonobehavier)).enabled = false
 end
 
-function var_0_0._onFogUpdate(arg_7_0)
-	if not arg_7_0._terrainMRs[1] then
+function SurvivalBlockEntity:_onFogUpdate()
+	if not self._terrainMRs[1] then
 		return
 	end
 
-	local var_7_0 = SurvivalMapModel.instance:isInFog(arg_7_0._data.pos)
+	local isInFog = SurvivalMapModel.instance:isInFog(self._data.pos)
 
-	if var_7_0 ~= arg_7_0._isInFog then
-		arg_7_0._isInFog = var_7_0
+	if isInFog ~= self._isInFog then
+		self._isInFog = isInFog
 
-		for iter_7_0, iter_7_1 in pairs(arg_7_0._terrainMRs) do
-			SurvivalMapHelper.instance:getSceneFogComp():setBlockStatu(iter_7_1, var_7_0)
+		for _, terrainMR in pairs(self._terrainMRs) do
+			SurvivalMapHelper.instance:getSceneFogComp():setBlockStatu(terrainMR, isInFog)
 		end
 	end
 end
 
-function var_0_0.onDestroy(arg_8_0)
+function SurvivalBlockEntity:onDestroy()
 	return
 end
 
-return var_0_0
+return SurvivalBlockEntity

@@ -1,15 +1,17 @@
-﻿module("modules.logic.fight.view.FightCardPreDisPlayViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightCardPreDisPlayViewContainer.lua
 
-local var_0_0 = class("FightCardPreDisPlayViewContainer", BaseViewContainer)
+module("modules.logic.fight.view.FightCardPreDisPlayViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local FightCardPreDisPlayViewContainer = class("FightCardPreDisPlayViewContainer", BaseViewContainer)
+
+function FightCardPreDisPlayViewContainer:buildViews()
 	return {
 		FightCardPreDisPlayView.New()
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function FightCardPreDisPlayViewContainer:buildTabViews(tabContainerId)
 	return
 end
 
-return var_0_0
+return FightCardPreDisPlayViewContainer

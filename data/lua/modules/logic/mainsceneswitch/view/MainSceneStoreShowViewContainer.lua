@@ -1,13 +1,15 @@
-﻿module("modules.logic.mainsceneswitch.view.MainSceneStoreShowViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/mainsceneswitch/view/MainSceneStoreShowViewContainer.lua
 
-local var_0_0 = class("MainSceneStoreShowViewContainer", BaseViewContainer)
+module("modules.logic.mainsceneswitch.view.MainSceneStoreShowViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local MainSceneStoreShowViewContainer = class("MainSceneStoreShowViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, MainSceneStoreShowView.New())
+function MainSceneStoreShowViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, MainSceneStoreShowView.New())
+
+	return views
 end
 
-return var_0_0
+return MainSceneStoreShowViewContainer

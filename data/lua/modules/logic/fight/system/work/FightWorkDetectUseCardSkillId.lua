@@ -1,16 +1,18 @@
-﻿module("modules.logic.fight.system.work.FightWorkDetectUseCardSkillId", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkDetectUseCardSkillId.lua
 
-local var_0_0 = class("FightWorkDetectUseCardSkillId", FightWorkItem)
+module("modules.logic.fight.system.work.FightWorkDetectUseCardSkillId", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0:com_registWorkDoneFlowSequence()
+local FightWorkDetectUseCardSkillId = class("FightWorkDetectUseCardSkillId", FightWorkItem)
 
-	var_1_0:addWork(Work2FightWork.New(FightWorkNormalDialog, FightViewDialog.Type.DetectHaveCardAfterEndOperation))
-	var_1_0:start()
+function FightWorkDetectUseCardSkillId:onStart()
+	local flow = self:com_registWorkDoneFlowSequence()
+
+	flow:addWork(Work2FightWork.New(FightWorkNormalDialog, FightViewDialog.Type.DetectHaveCardAfterEndOperation))
+	flow:start()
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkDetectUseCardSkillId:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkDetectUseCardSkillId

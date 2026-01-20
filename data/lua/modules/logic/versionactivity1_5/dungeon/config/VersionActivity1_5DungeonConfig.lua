@@ -1,12 +1,14 @@
-﻿module("modules.logic.versionactivity1_5.dungeon.config.VersionActivity1_5DungeonConfig", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/dungeon/config/VersionActivity1_5DungeonConfig.lua
 
-local var_0_0 = class("VersionActivity1_5DungeonConfig", BaseConfig)
+module("modules.logic.versionactivity1_5.dungeon.config.VersionActivity1_5DungeonConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local VersionActivity1_5DungeonConfig = class("VersionActivity1_5DungeonConfig", BaseConfig)
+
+function VersionActivity1_5DungeonConfig:ctor()
 	return
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function VersionActivity1_5DungeonConfig:reqConfigNames()
 	return {
 		"act139_dispatch_task",
 		"activity140_building",
@@ -19,238 +21,262 @@ function var_0_0.reqConfigNames(arg_2_0)
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity139_const" then
-		arg_3_0.exploreTaskReward = string.splitToNumber(arg_3_2.configDict[1].value, "#")
-		arg_3_0.exploreTaskUnlockEpisodeId = tonumber(arg_3_2.configDict[2].value)
-		arg_3_0.exploreTaskLockToastId = tonumber(arg_3_2.configDict[3].value)
-		arg_3_0.revivalTaskUnlockEpisodeId = tonumber(arg_3_2.configDict[4].value)
-		arg_3_0.revivalTaskLockToastId = tonumber(arg_3_2.configDict[5].value)
-	elseif arg_3_1 == "activity140_const" then
-		arg_3_0.buildReward = string.splitToNumber(arg_3_2.configDict[2].value, "#")
-		arg_3_0.buildUnlockEpisodeId = tonumber(arg_3_2.configDict[3].value)
-		arg_3_0.buildLockToastId = tonumber(arg_3_2.configDict[4].value)
+function VersionActivity1_5DungeonConfig:onConfigLoaded(configName, configTable)
+	if configName == "activity139_const" then
+		self.exploreTaskReward = string.splitToNumber(configTable.configDict[1].value, "#")
+		self.exploreTaskUnlockEpisodeId = tonumber(configTable.configDict[2].value)
+		self.exploreTaskLockToastId = tonumber(configTable.configDict[3].value)
+		self.revivalTaskUnlockEpisodeId = tonumber(configTable.configDict[4].value)
+		self.revivalTaskLockToastId = tonumber(configTable.configDict[5].value)
+	elseif configName == "activity140_const" then
+		self.buildReward = string.splitToNumber(configTable.configDict[2].value, "#")
+		self.buildUnlockEpisodeId = tonumber(configTable.configDict[3].value)
+		self.buildLockToastId = tonumber(configTable.configDict[4].value)
 	end
 end
 
-function var_0_0.initSubHeroTaskCo(arg_4_0)
-	if arg_4_0.initedSubHeroTask then
+function VersionActivity1_5DungeonConfig:initSubHeroTaskCo()
+	if self.initedSubHeroTask then
 		return
 	end
 
-	local var_4_0 = {
-		__index = function(arg_5_0, arg_5_1)
-			return rawget(arg_5_0, arg_5_1) or rawget(arg_5_0, "srcCo")[arg_5_1]
-		end
-	}
+	local metaTable = {}
 
-	arg_4_0.taskId2SubTaskListDict = {}
-	arg_4_0.subHeroTaskElementIdDict = {}
+	function metaTable.__index(t, key)
+		local value = rawget(t, key)
 
-	for iter_4_0, iter_4_1 in ipairs(lua_act139_sub_hero_task.configList) do
-		local var_4_1 = arg_4_0.taskId2SubTaskListDict[iter_4_1.taskId]
+		if not value then
+			local srcCo = rawget(t, "srcCo")
 
-		if not var_4_1 then
-			var_4_1 = {}
-			arg_4_0.taskId2SubTaskListDict[iter_4_1.taskId] = var_4_1
+			value = srcCo[key]
 		end
 
-		local var_4_2 = {}
+		return value
+	end
 
-		setmetatable(var_4_2, var_4_0)
+	self.taskId2SubTaskListDict = {}
+	self.subHeroTaskElementIdDict = {}
 
-		var_4_2.elementList = string.splitToNumber(iter_4_1.elementIds, "#")
-		var_4_2.srcCo = iter_4_1
-		var_4_2.id = iter_4_1.id
+	for _, heroTaskCo in ipairs(lua_act139_sub_hero_task.configList) do
+		local taskList = self.taskId2SubTaskListDict[heroTaskCo.taskId]
 
-		table.insert(var_4_1, var_4_2)
+		if not taskList then
+			taskList = {}
+			self.taskId2SubTaskListDict[heroTaskCo.taskId] = taskList
+		end
 
-		for iter_4_2, iter_4_3 in ipairs(var_4_2.elementList) do
-			arg_4_0.subHeroTaskElementIdDict[iter_4_3] = var_4_2
+		local newTaskCo = {}
+
+		setmetatable(newTaskCo, metaTable)
+
+		newTaskCo.elementList = string.splitToNumber(heroTaskCo.elementIds, "#")
+		newTaskCo.srcCo = heroTaskCo
+		newTaskCo.id = heroTaskCo.id
+
+		table.insert(taskList, newTaskCo)
+
+		for _, elementId in ipairs(newTaskCo.elementList) do
+			self.subHeroTaskElementIdDict[elementId] = newTaskCo
 		end
 	end
 
-	for iter_4_4, iter_4_5 in ipairs(arg_4_0.taskId2SubTaskListDict) do
-		table.sort(iter_4_5, function(arg_6_0, arg_6_1)
-			return arg_6_0.id < arg_6_1.id
+	for _, taskList in ipairs(self.taskId2SubTaskListDict) do
+		table.sort(taskList, function(a, b)
+			return a.id < b.id
 		end)
 	end
 end
 
-function var_0_0.getDispatchCo(arg_7_0, arg_7_1)
-	return lua_act139_dispatch_task.configDict[arg_7_1]
+function VersionActivity1_5DungeonConfig:getDispatchCo(dispatchId)
+	return lua_act139_dispatch_task.configDict[dispatchId]
 end
 
-function var_0_0.initExploreTaskCo(arg_8_0)
-	if arg_8_0.initedExploreTask then
+function VersionActivity1_5DungeonConfig:initExploreTaskCo()
+	if self.initedExploreTask then
 		return
 	end
 
-	arg_8_0.exploreTaskCoDict = {}
-	arg_8_0.exploreTaskCoList = {}
-	arg_8_0.elementId2ExploreCoDict = {}
-	arg_8_0.initedExploreTask = true
+	self.exploreTaskCoDict = {}
+	self.exploreTaskCoList = {}
+	self.elementId2ExploreCoDict = {}
+	self.initedExploreTask = true
 
-	local var_8_0 = {
-		__index = function(arg_9_0, arg_9_1)
-			return rawget(arg_9_0, arg_9_1) or rawget(arg_9_0, "srcCo")[arg_9_1]
+	local metaTable = {}
+
+	function metaTable.__index(t, key)
+		local value = rawget(t, key)
+
+		if not value then
+			local srcCo = rawget(t, "srcCo")
+
+			value = srcCo[key]
 		end
-	}
 
-	for iter_8_0, iter_8_1 in ipairs(lua_act139_explore_task.configList) do
-		local var_8_1 = {}
+		return value
+	end
 
-		setmetatable(var_8_1, var_8_0)
+	for _, taskCo in ipairs(lua_act139_explore_task.configList) do
+		local newCo = {}
 
-		var_8_1.srcCo = iter_8_1
-		var_8_1.elementList = string.splitToNumber(iter_8_1.elementIds, "#")
+		setmetatable(newCo, metaTable)
 
-		local var_8_2 = string.splitToNumber(iter_8_1.areaPos, "#")
+		newCo.srcCo = taskCo
+		newCo.elementList = string.splitToNumber(taskCo.elementIds, "#")
 
-		var_8_1.areaPosX = var_8_2[1]
-		var_8_1.areaPosY = var_8_2[2]
+		local areaPosList = string.splitToNumber(taskCo.areaPos, "#")
 
-		table.insert(arg_8_0.exploreTaskCoList, var_8_1)
+		newCo.areaPosX = areaPosList[1]
+		newCo.areaPosY = areaPosList[2]
 
-		arg_8_0.exploreTaskCoDict[iter_8_1.id] = var_8_1
+		table.insert(self.exploreTaskCoList, newCo)
 
-		for iter_8_2, iter_8_3 in ipairs(var_8_1.elementList) do
-			arg_8_0.elementId2ExploreCoDict[iter_8_3] = var_8_1
+		self.exploreTaskCoDict[taskCo.id] = newCo
+
+		for _, elementId in ipairs(newCo.elementList) do
+			self.elementId2ExploreCoDict[elementId] = newCo
 		end
 	end
 end
 
-function var_0_0.getExploreTaskList(arg_10_0)
-	arg_10_0:initExploreTaskCo()
+function VersionActivity1_5DungeonConfig:getExploreTaskList()
+	self:initExploreTaskCo()
 
-	return arg_10_0.exploreTaskCoList
+	return self.exploreTaskCoList
 end
 
-function var_0_0.getExploreTask(arg_11_0, arg_11_1)
-	arg_11_0:initExploreTaskCo()
+function VersionActivity1_5DungeonConfig:getExploreTask(exploreId)
+	self:initExploreTaskCo()
 
-	return arg_11_0.exploreTaskCoDict[arg_11_1]
+	return self.exploreTaskCoDict[exploreId]
 end
 
-function var_0_0.getExploreTaskByElementId(arg_12_0, arg_12_1)
-	arg_12_0:initExploreTaskCo()
+function VersionActivity1_5DungeonConfig:getExploreTaskByElementId(elementId)
+	self:initExploreTaskCo()
 
-	return arg_12_0.elementId2ExploreCoDict[arg_12_1]
+	return self.elementId2ExploreCoDict[elementId]
 end
 
-function var_0_0.getHeroTaskCo(arg_13_0, arg_13_1)
-	return lua_act139_hero_task.configDict[arg_13_1]
+function VersionActivity1_5DungeonConfig:getHeroTaskCo(taskId)
+	return lua_act139_hero_task.configDict[taskId]
 end
 
-function var_0_0.getSubHeroTaskList(arg_14_0, arg_14_1)
-	arg_14_0:initSubHeroTaskCo()
+function VersionActivity1_5DungeonConfig:getSubHeroTaskList(taskId)
+	self:initSubHeroTaskCo()
 
-	return arg_14_0.taskId2SubTaskListDict[arg_14_1]
+	return self.taskId2SubTaskListDict[taskId]
 end
 
-function var_0_0.getExploreReward(arg_15_0)
-	return arg_15_0.exploreTaskReward[1], arg_15_0.exploreTaskReward[2], arg_15_0.exploreTaskReward[3]
+function VersionActivity1_5DungeonConfig:getExploreReward()
+	return self.exploreTaskReward[1], self.exploreTaskReward[2], self.exploreTaskReward[3]
 end
 
-function var_0_0.getExploreUnlockEpisodeId(arg_16_0)
-	return arg_16_0.exploreTaskUnlockEpisodeId
+function VersionActivity1_5DungeonConfig:getExploreUnlockEpisodeId()
+	return self.exploreTaskUnlockEpisodeId
 end
 
-function var_0_0.getSubHeroTaskCoByElementId(arg_17_0, arg_17_1)
-	arg_17_0:initSubHeroTaskCo()
+function VersionActivity1_5DungeonConfig:getSubHeroTaskCoByElementId(elementId)
+	self:initSubHeroTaskCo()
 
-	return arg_17_0.subHeroTaskElementIdDict[arg_17_1]
+	return self.subHeroTaskElementIdDict[elementId]
 end
 
-function var_0_0.initBuildInfoList(arg_18_0)
-	if arg_18_0.initBuild then
+function VersionActivity1_5DungeonConfig:initBuildInfoList()
+	if self.initBuild then
 		return
 	end
 
-	local var_18_0 = {
-		__index = function(arg_19_0, arg_19_1)
-			return rawget(arg_19_0, arg_19_1) or rawget(arg_19_0, "srcCo")[arg_19_1]
-		end
-	}
+	local metaTable = {}
 
-	arg_18_0.initBuild = true
-	arg_18_0.groupId2CoDict = {}
-	arg_18_0.buildCoList = {}
+	function metaTable.__index(t, key)
+		local value = rawget(t, key)
 
-	for iter_18_0, iter_18_1 in ipairs(lua_activity140_building.configList) do
-		local var_18_1 = arg_18_0.groupId2CoDict[iter_18_1.group]
+		if not value then
+			local srcCo = rawget(t, "srcCo")
 
-		if not var_18_1 then
-			var_18_1 = {}
-			arg_18_0.groupId2CoDict[iter_18_1.group] = var_18_1
+			value = srcCo[key]
 		end
 
-		local var_18_2 = {}
+		return value
+	end
 
-		setmetatable(var_18_2, var_18_0)
+	self.initBuild = true
+	self.groupId2CoDict = {}
+	self.buildCoList = {}
 
-		var_18_2.costList = string.splitToNumber(iter_18_1.cost, "#")
-		var_18_2.id = iter_18_1.id
-		var_18_2.srcCo = iter_18_1
+	for _, buildCo in ipairs(lua_activity140_building.configList) do
+		local coDict = self.groupId2CoDict[buildCo.group]
 
-		local var_18_3 = string.splitToNumber(iter_18_1.focusPos, "#")
+		if not coDict then
+			coDict = {}
+			self.groupId2CoDict[buildCo.group] = coDict
+		end
 
-		var_18_2.focusPosX = var_18_3[1]
-		var_18_2.focusPosY = var_18_3[2]
+		local newCo = {}
 
-		table.insert(arg_18_0.buildCoList, var_18_2)
+		setmetatable(newCo, metaTable)
 
-		var_18_1[iter_18_1.type] = var_18_2
+		newCo.costList = string.splitToNumber(buildCo.cost, "#")
+		newCo.id = buildCo.id
+		newCo.srcCo = buildCo
+
+		local pos = string.splitToNumber(buildCo.focusPos, "#")
+
+		newCo.focusPosX = pos[1]
+		newCo.focusPosY = pos[2]
+
+		table.insert(self.buildCoList, newCo)
+
+		coDict[buildCo.type] = newCo
 	end
 end
 
-function var_0_0.getBuildCo(arg_20_0, arg_20_1)
-	arg_20_0:initBuildInfoList()
+function VersionActivity1_5DungeonConfig:getBuildCo(buildId)
+	self:initBuildInfoList()
 
-	for iter_20_0, iter_20_1 in ipairs(arg_20_0.buildCoList) do
-		if iter_20_1.id == arg_20_1 then
-			return iter_20_1
+	for _, buildCo in ipairs(self.buildCoList) do
+		if buildCo.id == buildId then
+			return buildCo
 		end
 	end
 
-	logError("not found build id : " .. tostring(arg_20_1))
+	logError("not found build id : " .. tostring(buildId))
 end
 
-function var_0_0.getBuildCoByGroupAndType(arg_21_0, arg_21_1, arg_21_2)
-	arg_21_0:initBuildInfoList()
+function VersionActivity1_5DungeonConfig:getBuildCoByGroupAndType(groupId, type)
+	self:initBuildInfoList()
 
-	return arg_21_0.groupId2CoDict[arg_21_1][arg_21_2]
+	return self.groupId2CoDict[groupId][type]
 end
 
-function var_0_0.getBuildCoList(arg_22_0, arg_22_1)
-	arg_22_0:initBuildInfoList()
+function VersionActivity1_5DungeonConfig:getBuildCoList(groupId)
+	self:initBuildInfoList()
 
-	return arg_22_0.groupId2CoDict[arg_22_1]
+	return self.groupId2CoDict[groupId]
 end
 
-function var_0_0.getBuildReward(arg_23_0)
-	return arg_23_0.buildReward[1], arg_23_0.buildReward[2], arg_23_0.buildReward[3]
+function VersionActivity1_5DungeonConfig:getBuildReward()
+	return self.buildReward[1], self.buildReward[2], self.buildReward[3]
 end
 
-function var_0_0.getBuildUnlockEpisodeId(arg_24_0)
-	return arg_24_0.buildUnlockEpisodeId
+function VersionActivity1_5DungeonConfig:getBuildUnlockEpisodeId()
+	return self.buildUnlockEpisodeId
 end
 
-function var_0_0.checkElementBelongMapId(arg_25_0, arg_25_1, arg_25_2)
-	local var_25_0 = lua_activity11502_episode_element.configDict[arg_25_1.id]
-	local var_25_1
+function VersionActivity1_5DungeonConfig:checkElementBelongMapId(elementCo, mapId)
+	local elementExtendConfig = lua_activity11502_episode_element.configDict[elementCo.id]
+	local belongMapIdList
 
-	if not string.nilorempty(var_25_0.mapIds) then
-		var_25_1 = string.splitToNumber(var_25_0.mapIds, "#")
+	if not string.nilorempty(elementExtendConfig.mapIds) then
+		belongMapIdList = string.splitToNumber(elementExtendConfig.mapIds, "#")
 	else
-		var_25_1 = {
-			arg_25_1.mapId
+		belongMapIdList = {
+			elementCo.mapId
 		}
 	end
 
-	return tabletool.indexOf(var_25_1, arg_25_2)
+	return tabletool.indexOf(belongMapIdList, mapId)
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity1_5DungeonConfig.instance = VersionActivity1_5DungeonConfig.New()
 
-return var_0_0
+return VersionActivity1_5DungeonConfig

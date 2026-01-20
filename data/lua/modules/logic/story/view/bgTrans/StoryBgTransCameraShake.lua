@@ -1,113 +1,118 @@
-﻿module("modules.logic.story.view.bgTrans.StoryBgTransCameraShake", package.seeall)
+﻿-- chunkname: @modules/logic/story/view/bgTrans/StoryBgTransCameraShake.lua
 
-local var_0_0 = class("StoryBgTransCameraShake", StoryBgTransBase)
+module("modules.logic.story.view.bgTrans.StoryBgTransCameraShake", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	var_0_0.super.ctor(arg_1_0)
+local StoryBgTransCameraShake = class("StoryBgTransCameraShake", StoryBgTransBase)
+
+function StoryBgTransCameraShake:ctor()
+	StoryBgTransCameraShake.super.ctor(self)
 end
 
-function var_0_0.init(arg_2_0)
-	var_0_0.super.init(arg_2_0)
+function StoryBgTransCameraShake:init()
+	StoryBgTransCameraShake.super.init(self)
 
-	arg_2_0._transInTime = 0.267
-	arg_2_0._transOutTime = 0.267
-	arg_2_0._transType = StoryEnum.BgTransType.ShakeCamera
-	arg_2_0._transMo = StoryBgEffectTransModel.instance:getStoryBgEffectTransByType(arg_2_0._transType)
-	arg_2_0._shakeCameraPrefabPath = ResUrl.getStoryBgEffect(arg_2_0._transMo.prefab)
-	arg_2_0._shakeCameraAnimPath = "ui/animations/dynamic/story_avg_shake.controller"
-	arg_2_0._shakeCameraMatPath = "ui/materials/dynamic/storybg_edge_stretch.mat"
+	self._transInTime = 0.267
+	self._transOutTime = 0.267
+	self._transType = StoryEnum.BgTransType.ShakeCamera
+	self._transMo = StoryBgEffectTransModel.instance:getStoryBgEffectTransByType(self._transType)
+	self._shakeCameraPrefabPath = ResUrl.getStoryBgEffect(self._transMo.prefab)
+	self._shakeCameraAnimPath = "ui/animations/dynamic/story_avg_shake.controller"
+	self._shakeCameraMatPath = "ui/materials/dynamic/storybg_edge_stretch.mat"
 
-	table.insert(arg_2_0._resList, arg_2_0._shakeCameraPrefabPath)
-	table.insert(arg_2_0._resList, arg_2_0._shakeCameraAnimPath)
-	table.insert(arg_2_0._resList, arg_2_0._shakeCameraMatPath)
+	table.insert(self._resList, self._shakeCameraPrefabPath)
+	table.insert(self._resList, self._shakeCameraAnimPath)
+	table.insert(self._resList, self._shakeCameraMatPath)
 end
 
-function var_0_0.start(arg_3_0, arg_3_1, arg_3_2)
-	var_0_0.super.start(arg_3_0)
+function StoryBgTransCameraShake:start(callback, callbackObj)
+	StoryBgTransCameraShake.super.start(self)
 
-	arg_3_0._finishedCallback = arg_3_1
-	arg_3_0._finishedCallbackObj = arg_3_2
+	self._finishedCallback = callback
+	self._finishedCallbackObj = callbackObj
 
-	arg_3_0:loadRes()
+	self:loadRes()
 	GameUtil.setActiveUIBlock("bgTrans", true, false)
 end
 
-function var_0_0.onLoadFinished(arg_4_0)
-	var_0_0.super.onLoadFinished(arg_4_0)
+function StoryBgTransCameraShake:onLoadFinished()
+	StoryBgTransCameraShake.super.onLoadFinished(self)
 	StoryTool.enablePostProcess(true)
 
-	local var_4_0 = StoryViewMgr.instance:getStoryBackgroundView()
+	local bgGo = StoryViewMgr.instance:getStoryBackgroundView()
 
-	arg_4_0._rootGo = gohelper.findChild(var_4_0, "#go_upbg/#simage_bgimg")
-	arg_4_0._shakeCameraBgGo = gohelper.cloneInPlace(arg_4_0._rootGo, "shakeCameraBg")
+	self._rootGo = gohelper.findChild(bgGo, "#go_upbg/#simage_bgimg")
+	self._shakeCameraBgGo = gohelper.cloneInPlace(self._rootGo, "shakeCameraBg")
 
-	gohelper.destroyAllChildren(arg_4_0._shakeCameraBgGo)
-	gohelper.setAsFirstSibling(arg_4_0._shakeCameraBgGo)
+	gohelper.destroyAllChildren(self._shakeCameraBgGo)
+	gohelper.setAsFirstSibling(self._shakeCameraBgGo)
 
-	arg_4_0._shakeCameraBgGo:GetComponent(gohelper.Type_Image).material = arg_4_0._loader:getAssetItem(arg_4_0._shakeCameraMatPath):GetResource()
+	local img = self._shakeCameraBgGo:GetComponent(gohelper.Type_Image)
+	local mat = self._loader:getAssetItem(self._shakeCameraMatPath):GetResource()
 
-	local var_4_1 = arg_4_0._loader:getAssetItem(arg_4_0._shakeCameraPrefabPath)
+	img.material = mat
 
-	arg_4_0._shakeCameraGo = gohelper.clone(var_4_1:GetResource(), arg_4_0._rootGo)
-	arg_4_0._shakeCameraGo.name = "v3a0_dynamicblur_controller"
+	local prefAssetItem = self._loader:getAssetItem(self._shakeCameraPrefabPath)
 
-	gohelper.setActive(arg_4_0._shakeCameraGo, true)
+	self._shakeCameraGo = gohelper.clone(prefAssetItem:GetResource(), self._rootGo)
+	self._shakeCameraGo.name = "v3a0_dynamicblur_controller"
 
-	local var_4_2 = arg_4_0._loader:getAssetItem(arg_4_0._shakeCameraAnimPath):GetResource()
+	gohelper.setActive(self._shakeCameraGo, true)
 
-	arg_4_0._shakeCameraAnim = gohelper.onceAddComponent(arg_4_0._rootGo, typeof(UnityEngine.Animator))
-	arg_4_0._shakeCameraAnim.runtimeAnimatorController = var_4_2
+	local animator = self._loader:getAssetItem(self._shakeCameraAnimPath):GetResource()
 
-	arg_4_0._shakeCameraAnim:Play("shake", 0, 0)
+	self._shakeCameraAnim = gohelper.onceAddComponent(self._rootGo, typeof(UnityEngine.Animator))
+	self._shakeCameraAnim.runtimeAnimatorController = animator
+
+	self._shakeCameraAnim:Play("shake", 0, 0)
 	PostProcessingMgr.instance:setUIPPValue("customPassActive", true)
 	PostProcessingMgr.instance:setUIPPValue("CustomPassActive", true)
 	PostProcessingMgr.instance:setUIPPValue("customPassIndex", 0)
 	PostProcessingMgr.instance:setUIPPValue("CustomPassIndex", 0)
-	TaskDispatcher.runDelay(arg_4_0.onSwitchBg, arg_4_0, arg_4_0._transInTime)
+	TaskDispatcher.runDelay(self.onSwitchBg, self, self._transInTime)
 end
 
-function var_0_0.onSwitchBg(arg_5_0)
-	var_0_0.super.onSwitchBg(arg_5_0)
-	TaskDispatcher.runDelay(arg_5_0.onTransFinished, arg_5_0, arg_5_0._transOutTime)
+function StoryBgTransCameraShake:onSwitchBg()
+	StoryBgTransCameraShake.super.onSwitchBg(self)
+	TaskDispatcher.runDelay(self.onTransFinished, self, self._transOutTime)
 end
 
-function var_0_0.onTransFinished(arg_6_0)
-	var_0_0.super.onTransFinished(arg_6_0)
+function StoryBgTransCameraShake:onTransFinished()
+	StoryBgTransCameraShake.super.onTransFinished(self)
 
-	if arg_6_0._finishedCallback then
-		arg_6_0._finishedCallback(arg_6_0._finishedCallbackObj)
+	if self._finishedCallback then
+		self._finishedCallback(self._finishedCallbackObj)
 	end
 
-	arg_6_0:_clearTrans()
+	self:_clearTrans()
 end
 
-function var_0_0._clearTrans(arg_7_0)
+function StoryBgTransCameraShake:_clearTrans()
 	GameUtil.setActiveUIBlock("bgTrans", false, false)
-	gohelper.removeComponent(arg_7_0._rootGo, typeof(UnityEngine.Animator))
+	gohelper.removeComponent(self._rootGo, typeof(UnityEngine.Animator))
 	PostProcessingMgr.instance:setUIPPValue("customPassActive", false)
 	PostProcessingMgr.instance:setUIPPValue("CustomPassActive", false)
 
-	if arg_7_0._shakeCameraGo then
-		gohelper.destroy(arg_7_0._shakeCameraGo)
+	if self._shakeCameraGo then
+		gohelper.destroy(self._shakeCameraGo)
 
-		arg_7_0._shakeCameraGo = nil
+		self._shakeCameraGo = nil
 	end
 
-	if arg_7_0._shakeCameraBgGo then
-		gohelper.destroy(arg_7_0._shakeCameraBgGo)
+	if self._shakeCameraBgGo then
+		gohelper.destroy(self._shakeCameraBgGo)
 
-		arg_7_0._shakeCameraBgGo = nil
+		self._shakeCameraBgGo = nil
 	end
 
-	arg_7_0._finishedCallback = nil
-	arg_7_0._finishedCallbackObj = nil
+	self._finishedCallback = nil
+	self._finishedCallbackObj = nil
 end
 
-function var_0_0.destroy(arg_8_0)
-	var_0_0.super.destroy(arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0.onSwitchBg, arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0.onTransFinished, arg_8_0)
-	arg_8_0:_clearTrans()
+function StoryBgTransCameraShake:destroy()
+	StoryBgTransCameraShake.super.destroy(self)
+	TaskDispatcher.cancelTask(self.onSwitchBg, self)
+	TaskDispatcher.cancelTask(self.onTransFinished, self)
+	self:_clearTrans()
 end
 
-return var_0_0
+return StoryBgTransCameraShake

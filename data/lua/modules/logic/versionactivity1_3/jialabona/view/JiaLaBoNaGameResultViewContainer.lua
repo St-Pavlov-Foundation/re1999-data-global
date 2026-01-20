@@ -1,20 +1,22 @@
-﻿module("modules.logic.versionactivity1_3.jialabona.view.JiaLaBoNaGameResultViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/jialabona/view/JiaLaBoNaGameResultViewContainer.lua
 
-local var_0_0 = class("JiaLaBoNaGameResultViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_3.jialabona.view.JiaLaBoNaGameResultViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local JiaLaBoNaGameResultViewContainer = class("JiaLaBoNaGameResultViewContainer", BaseViewContainer)
 
-	arg_1_0._resultview = JiaLaBoNaGameResultView.New()
+function JiaLaBoNaGameResultViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, arg_1_0._resultview)
+	self._resultview = JiaLaBoNaGameResultView.New()
 
-	return var_1_0
+	table.insert(views, self._resultview)
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
+function JiaLaBoNaGameResultViewContainer:onContainerClickModalMask()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	arg_2_0:closeThis()
+	self:closeThis()
 end
 
-return var_0_0
+return JiaLaBoNaGameResultViewContainer

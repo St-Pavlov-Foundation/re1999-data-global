@@ -1,45 +1,51 @@
-﻿module("modules.logic.season.controller.Activity104HeroGroupController", package.seeall)
+﻿-- chunkname: @modules/logic/season/controller/Activity104HeroGroupController.lua
 
-local var_0_0 = class("Activity104HeroGroupController", BaseController)
+module("modules.logic.season.controller.Activity104HeroGroupController", package.seeall)
 
-function var_0_0.addConstEvents(arg_1_0)
-	LoginController.instance:registerCallback(LoginEvent.OnGetInfoFinish, arg_1_0._onGetInfoFinish, arg_1_0)
+local Activity104HeroGroupController = class("Activity104HeroGroupController", BaseController)
+
+function Activity104HeroGroupController:addConstEvents()
+	LoginController.instance:registerCallback(LoginEvent.OnGetInfoFinish, self._onGetInfoFinish, self)
 end
 
-function var_0_0.reInit(arg_2_0)
-	FightController.instance:unregisterCallback(FightEvent.RespGetFightRecordGroupReply, arg_2_0._onGetFightRecordGroupReply, arg_2_0)
+function Activity104HeroGroupController:reInit()
+	FightController.instance:unregisterCallback(FightEvent.RespGetFightRecordGroupReply, self._onGetFightRecordGroupReply, self)
 end
 
-function var_0_0._onGetInfoFinish(arg_3_0)
+function Activity104HeroGroupController:_onGetInfoFinish()
 	HeroGroupModel.instance:setParam()
 end
 
-function var_0_0.openGroupFightView(arg_4_0, arg_4_1, arg_4_2)
+function Activity104HeroGroupController:openGroupFightView(battleId, episodeId)
 	HeroGroupModel.instance:setReplayParam(nil)
-	HeroGroupModel.instance:setParam(arg_4_1, arg_4_2)
+	HeroGroupModel.instance:setParam(battleId, episodeId)
 
-	local var_4_0 = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightReplay)
-	local var_4_1 = DungeonModel.instance:getEpisodeInfo(arg_4_2)
-	local var_4_2 = var_4_1 and var_4_1.star == DungeonEnum.StarType.Advanced and var_4_1.hasRecord
-	local var_4_3 = PlayerPrefsHelper.getString(FightModel.getPrefsKeyFightPassModel(), "")
-	local var_4_4 = Activity104Model.instance:isEpisodeAdvance(HeroGroupModel.instance.episodeId)
+	local hasUnlock = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightReplay)
+	local userDungeonMO = DungeonModel.instance:getEpisodeInfo(episodeId)
+	local hasRecord = userDungeonMO and userDungeonMO.star == DungeonEnum.StarType.Advanced and userDungeonMO.hasRecord
+	local pass_model_record = PlayerPrefsHelper.getString(FightModel.getPrefsKeyFightPassModel(), "")
+	local isAdvance = Activity104Model.instance:isEpisodeAdvance(HeroGroupModel.instance.episodeId)
 
-	if var_4_0 and var_4_2 and not string.nilorempty(var_4_3) and not var_4_4 and cjson.decode(var_4_3)[tostring(arg_4_2)] then
-		FightController.instance:registerCallback(FightEvent.RespGetFightRecordGroupReply, arg_4_0._onGetFightRecordGroupReply, arg_4_0)
-		FightRpc.instance:sendGetFightRecordGroupRequest(arg_4_2)
+	if hasUnlock and hasRecord and not string.nilorempty(pass_model_record) and not isAdvance then
+		pass_model_record = cjson.decode(pass_model_record)
 
-		return
+		if pass_model_record[tostring(episodeId)] then
+			FightController.instance:registerCallback(FightEvent.RespGetFightRecordGroupReply, self._onGetFightRecordGroupReply, self)
+			FightRpc.instance:sendGetFightRecordGroupRequest(episodeId)
+
+			return
+		end
 	end
 
 	Activity104Controller.instance:openSeasonHeroGroupFightView()
 end
 
-function var_0_0._onGetFightRecordGroupReply(arg_5_0, arg_5_1)
-	FightController.instance:unregisterCallback(FightEvent.RespGetFightRecordGroupReply, arg_5_0._onGetFightRecordGroupReply, arg_5_0)
-	HeroGroupModel.instance:setReplayParam(arg_5_1)
+function Activity104HeroGroupController:_onGetFightRecordGroupReply(fightGroupMO)
+	FightController.instance:unregisterCallback(FightEvent.RespGetFightRecordGroupReply, self._onGetFightRecordGroupReply, self)
+	HeroGroupModel.instance:setReplayParam(fightGroupMO)
 	Activity104Controller.instance:openSeasonHeroGroupFightView()
 end
 
-var_0_0.instance = var_0_0.New()
+Activity104HeroGroupController.instance = Activity104HeroGroupController.New()
 
-return var_0_0
+return Activity104HeroGroupController

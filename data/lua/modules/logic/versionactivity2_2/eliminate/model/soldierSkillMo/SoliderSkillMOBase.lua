@@ -1,44 +1,49 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.model.soldierSkillMo.SoliderSkillMOBase", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/model/soldierSkillMo/SoliderSkillMOBase.lua
 
-local var_0_0 = class("SoliderSkillMOBase")
+module("modules.logic.versionactivity2_2.eliminate.model.soldierSkillMo.SoliderSkillMOBase", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0._soldierId = arg_1_1
-	arg_1_0._uid = arg_1_2
-	arg_1_0._strongholdId = arg_1_3
-	arg_1_0._selectSoliderIds = {}
+local SoliderSkillMOBase = class("SoliderSkillMOBase")
 
-	arg_1_0:initSkill()
+function SoliderSkillMOBase:init(soliderId, soliderUid, strongholdId)
+	self._soldierId = soliderId
+	self._uid = soliderUid
+	self._strongholdId = strongholdId
+	self._selectSoliderIds = {}
+
+	self:initSkill()
 end
 
-function var_0_0.initSkill(arg_2_0)
-	local var_2_0, var_2_1, var_2_2 = EliminateTeamChessModel.instance:getSoliderIdEffectParam(arg_2_0._soldierId)
+function SoliderSkillMOBase:initSkill()
+	local teamType, count, limitStrongHold = EliminateTeamChessModel.instance:getSoliderIdEffectParam(self._soldierId)
 
-	if var_2_0 ~= nil then
-		arg_2_0._needSelectSoliderCount = var_2_1
-		arg_2_0._needSelectSoliderType = var_2_0
-		arg_2_0._needSelectSoliderCount = EliminateTeamChessModel.instance:haveSoliderByTeamTypeAndStrongholdId(arg_2_0._needSelectSoliderType, var_2_2 and arg_2_0._strongholdId or nil) and arg_2_0._needSelectSoliderCount or 0
+	if teamType ~= nil then
+		self._needSelectSoliderCount = count
+		self._needSelectSoliderType = teamType
+
+		local isHave = EliminateTeamChessModel.instance:haveSoliderByTeamTypeAndStrongholdId(self._needSelectSoliderType, limitStrongHold and self._strongholdId or nil)
+
+		self._needSelectSoliderCount = isHave and self._needSelectSoliderCount or 0
 	else
-		arg_2_0._needSelectSoliderCount = 0
+		self._needSelectSoliderCount = 0
 	end
 end
 
-function var_0_0.setSelectSoliderId(arg_3_0, arg_3_1)
-	if arg_3_0:canRelease() then
+function SoliderSkillMOBase:setSelectSoliderId(uid)
+	if self:canRelease() then
 		return true
 	end
 
-	local var_3_0 = tonumber(arg_3_1)
+	local uidNum = tonumber(uid)
 
-	if var_3_0 == EliminateTeamChessEnum.tempPieceUid then
+	if uidNum == EliminateTeamChessEnum.tempPieceUid then
 		return false
 	end
 
-	local var_3_1 = EliminateTeamChessEnum.TeamChessTeamType.player
-	local var_3_2 = EliminateTeamChessEnum.TeamChessTeamType.enemy
+	local playerType = EliminateTeamChessEnum.TeamChessTeamType.player
+	local enemyType = EliminateTeamChessEnum.TeamChessTeamType.enemy
 
-	if var_3_0 > 0 and arg_3_0._needSelectSoliderType == var_3_1 or var_3_0 < 0 and arg_3_0._needSelectSoliderType == var_3_2 then
-		table.insert(arg_3_0._selectSoliderIds, arg_3_1)
+	if uidNum > 0 and self._needSelectSoliderType == playerType or uidNum < 0 and self._needSelectSoliderType == enemyType then
+		table.insert(self._selectSoliderIds, uid)
 
 		return true
 	end
@@ -46,38 +51,38 @@ function var_0_0.setSelectSoliderId(arg_3_0, arg_3_1)
 	return false
 end
 
-function var_0_0.getNeedSelectSoliderType(arg_4_0)
-	return arg_4_0._needSelectSoliderType
+function SoliderSkillMOBase:getNeedSelectSoliderType()
+	return self._needSelectSoliderType
 end
 
-function var_0_0.canRelease(arg_5_0)
-	if arg_5_0._needSelectSoliderCount then
-		return #arg_5_0._selectSoliderIds >= arg_5_0._needSelectSoliderCount
+function SoliderSkillMOBase:canRelease()
+	if self._needSelectSoliderCount then
+		return #self._selectSoliderIds >= self._needSelectSoliderCount
 	end
 
 	return true
 end
 
-function var_0_0._getReleaseExParam(arg_6_0)
-	if arg_6_0._selectSoliderIds and #arg_6_0._selectSoliderIds > 0 then
-		return arg_6_0._selectSoliderIds[1]
+function SoliderSkillMOBase:_getReleaseExParam()
+	if self._selectSoliderIds and #self._selectSoliderIds > 0 then
+		return self._selectSoliderIds[1]
 	end
 
 	return ""
 end
 
-function var_0_0.needClearTemp(arg_7_0)
-	return arg_7_0._needSelectSoliderCount > 0
+function SoliderSkillMOBase:needClearTemp()
+	return self._needSelectSoliderCount > 0
 end
 
-function var_0_0.releaseSkill(arg_8_0, arg_8_1, arg_8_2)
-	if arg_8_0:canRelease() then
-		local var_8_0 = arg_8_0:_getReleaseExParam()
+function SoliderSkillMOBase:releaseSkill(cb, cbTarget)
+	if self:canRelease() then
+		local exParam = self:_getReleaseExParam()
 
-		EliminateTeamChessController.instance:sendWarChessPiecePlaceRequest(arg_8_0._soldierId, arg_8_0._uid, arg_8_0._strongholdId, var_8_0, arg_8_1, arg_8_2)
+		EliminateTeamChessController.instance:sendWarChessPiecePlaceRequest(self._soldierId, self._uid, self._strongholdId, exParam, cb, cbTarget)
 	end
 
-	return arg_8_0:canRelease()
+	return self:canRelease()
 end
 
-return var_0_0
+return SoliderSkillMOBase

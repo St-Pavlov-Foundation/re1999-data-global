@@ -1,257 +1,260 @@
-﻿module("modules.logic.versionactivity2_4.wuerlixi.view.WuErLiXiGameMapUnitItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/wuerlixi/view/WuErLiXiGameMapUnitItem.lua
 
-local var_0_0 = class("WuErLiXiGameMapUnitItem", LuaCompBase)
+module("modules.logic.versionactivity2_4.wuerlixi.view.WuErLiXiGameMapUnitItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.go = arg_1_1
-	arg_1_0._itemCanvas = gohelper.onceAddComponent(arg_1_0.go, typeof(UnityEngine.CanvasGroup))
-	arg_1_0._anim = arg_1_0.go:GetComponent(gohelper.Type_Animator)
+local WuErLiXiGameMapUnitItem = class("WuErLiXiGameMapUnitItem", LuaCompBase)
 
-	gohelper.setActive(arg_1_0.go, false)
+function WuErLiXiGameMapUnitItem:init(go, dragGO)
+	self.go = go
+	self._itemCanvas = gohelper.onceAddComponent(self.go, typeof(UnityEngine.CanvasGroup))
+	self._anim = self.go:GetComponent(gohelper.Type_Animator)
 
-	arg_1_0._itemWidth = recthelper.getWidth(arg_1_0.go.transform)
-	arg_1_0._goDrag = arg_1_2
-	arg_1_0._nodeItem = {}
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_1, "icon")
-	arg_1_0._goiconwallidle = gohelper.findChild(arg_1_1, "icon_wallidle")
-	arg_1_0._goiconwallact = gohelper.findChild(arg_1_1, "icon_wallact")
-	arg_1_0._goiconendactived = gohelper.findChild(arg_1_1, "icon_endactived")
-	arg_1_0._imageiconlock = gohelper.findChildImage(arg_1_1, "icon_lockframe")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_1, "#txt_Num")
-	arg_1_0._goput = gohelper.findChild(arg_1_1, "#go_Put")
-	arg_1_0._click = gohelper.getClick(arg_1_0._imageicon.gameObject)
+	gohelper.setActive(self.go, false)
 
-	arg_1_0._click:AddClickListener(arg_1_0._onNodeClick, arg_1_0)
+	self._itemWidth = recthelper.getWidth(self.go.transform)
+	self._goDrag = dragGO
+	self._nodeItem = {}
+	self._imageicon = gohelper.findChildImage(go, "icon")
+	self._goiconwallidle = gohelper.findChild(go, "icon_wallidle")
+	self._goiconwallact = gohelper.findChild(go, "icon_wallact")
+	self._goiconendactived = gohelper.findChild(go, "icon_endactived")
+	self._imageiconlock = gohelper.findChildImage(go, "icon_lockframe")
+	self._txtname = gohelper.findChildText(go, "#txt_Num")
+	self._goput = gohelper.findChild(go, "#go_Put")
+	self._click = gohelper.getClick(self._imageicon.gameObject)
 
-	arg_1_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_1_0._imageicon.gameObject)
+	self._click:AddClickListener(self._onNodeClick, self)
 
-	arg_1_0._drag:AddDragBeginListener(arg_1_0._onBeginDrag, arg_1_0, arg_1_1.transform)
-	arg_1_0._drag:AddDragListener(arg_1_0._onDrag, arg_1_0)
-	arg_1_0._drag:AddDragEndListener(arg_1_0._onEndDrag, arg_1_0, arg_1_1.transform)
+	self._drag = SLFramework.UGUI.UIDragListener.Get(self._imageicon.gameObject)
 
-	arg_1_0._bgiconwidthoffset = recthelper.getWidth(arg_1_0._imageiconlock.gameObject.transform) - recthelper.getWidth(arg_1_0._imageicon.gameObject.transform)
+	self._drag:AddDragBeginListener(self._onBeginDrag, self, go.transform)
+	self._drag:AddDragListener(self._onDrag, self)
+	self._drag:AddDragEndListener(self._onEndDrag, self, go.transform)
+
+	self._bgiconwidthoffset = recthelper.getWidth(self._imageiconlock.gameObject.transform) - recthelper.getWidth(self._imageicon.gameObject.transform)
 end
 
-function var_0_0._onNodeClick(arg_2_0)
-	if arg_2_0._unitMo and arg_2_0._nodeMo and arg_2_0._nodeMo.initUnit == 0 then
-		WuErLiXiMapModel.instance:setCurSelectUnit(arg_2_0._nodeMo.x, arg_2_0._nodeMo.y)
+function WuErLiXiGameMapUnitItem:_onNodeClick()
+	if self._unitMo and self._nodeMo and self._nodeMo.initUnit == 0 then
+		WuErLiXiMapModel.instance:setCurSelectUnit(self._nodeMo.x, self._nodeMo.y)
 
-		local var_2_0 = (arg_2_0._unitMo.dir + 1) % 4
+		local dir = (self._unitMo.dir + 1) % 4
+		local couldSetDir = WuErLiXiMapModel.instance:isSetDirEnable(self._unitMo.unitType, dir, self._nodeMo.x, self._nodeMo.y)
 
-		if WuErLiXiMapModel.instance:isSetDirEnable(arg_2_0._unitMo.unitType, var_2_0, arg_2_0._nodeMo.x, arg_2_0._nodeMo.y) then
+		if couldSetDir then
 			AudioMgr.instance:trigger(AudioEnum.WuErLiXi.play_ui_diqiu_revolve)
-			WuErLiXiMapModel.instance:setUnitDir(arg_2_0._nodeMo, var_2_0, arg_2_0._unitMo.dir)
+			WuErLiXiMapModel.instance:setUnitDir(self._nodeMo, dir, self._unitMo.dir)
 		end
 
 		WuErLiXiController.instance:dispatchEvent(WuErLiXiEvent.NodeClicked)
 	end
 end
 
-function var_0_0._onBeginDrag(arg_3_0, arg_3_1, arg_3_2)
-	if not arg_3_0._nodeMo then
+function WuErLiXiGameMapUnitItem:_onBeginDrag(unitTransform, pointerEventData)
+	if not self._nodeMo then
 		return
 	end
 
-	if not arg_3_0._nodeMo.unit then
+	if not self._nodeMo.unit then
 		return
 	end
 
-	if arg_3_0._nodeMo.initUnit > 0 then
+	if self._nodeMo.initUnit > 0 then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.WuErLiXi.play_ui_diqiu_choose)
-	gohelper.setActive(arg_3_0._goDrag, false)
-	arg_3_0:_setDragItem()
-	arg_3_0._goDrag.transform:SetParent(arg_3_0.go.transform.parent.parent)
+	gohelper.setActive(self._goDrag, false)
+	self:_setDragItem()
+	self._goDrag.transform:SetParent(self.go.transform.parent.parent)
 
-	local var_3_0 = arg_3_2.position
+	local pos = pointerEventData.position
 
 	WuErLiXiMapModel.instance:clearSelectUnit()
 
-	local var_3_1 = recthelper.screenPosToAnchorPos(var_3_0, arg_3_0._goDrag.transform.parent)
+	local anchorPos = recthelper.screenPosToAnchorPos(pos, self._goDrag.transform.parent)
 
-	recthelper.setAnchor(arg_3_0._goDrag.transform, var_3_1.x, var_3_1.y)
-	transformhelper.setLocalScale(arg_3_0._goDrag.transform, 1, 1, 1)
+	recthelper.setAnchor(self._goDrag.transform, anchorPos.x, anchorPos.y)
+	transformhelper.setLocalScale(self._goDrag.transform, 1, 1, 1)
 
-	arg_3_0._itemCanvas.alpha = 0
+	self._itemCanvas.alpha = 0
 end
 
-function var_0_0._setDragItem(arg_4_0)
-	arg_4_0._imagedragicon = gohelper.findChildImage(arg_4_0._goDrag, "icon")
-	arg_4_0._imagedragiconbg = gohelper.findChildImage(arg_4_0._goDrag, "image_BG")
-	arg_4_0._txtdragname = gohelper.findChildText(arg_4_0._goDrag, "#txt_Num")
+function WuErLiXiGameMapUnitItem:_setDragItem()
+	self._imagedragicon = gohelper.findChildImage(self._goDrag, "icon")
+	self._imagedragiconbg = gohelper.findChildImage(self._goDrag, "image_BG")
+	self._txtdragname = gohelper.findChildText(self._goDrag, "#txt_Num")
 
-	local var_4_0 = WuErLiXiHelper.getUnitSpriteName(arg_4_0._unitMo.unitType, false)
+	local spriteName = WuErLiXiHelper.getUnitSpriteName(self._unitMo.unitType, false)
 
-	UISpriteSetMgr.instance:setV2a4WuErLiXiSprite(arg_4_0._imagedragicon, var_4_0)
-	UISpriteSetMgr.instance:setV2a4WuErLiXiSprite(arg_4_0._imagedragiconbg, "v2a4_wuerlixi_node_icon2")
+	UISpriteSetMgr.instance:setV2a4WuErLiXiSprite(self._imagedragicon, spriteName)
+	UISpriteSetMgr.instance:setV2a4WuErLiXiSprite(self._imagedragiconbg, "v2a4_wuerlixi_node_icon2")
 
-	arg_4_0._txtdragname.text = WuErLiXiMapModel.instance:getKeyAndSwitchTagById(arg_4_0._unitMo.id)
+	self._txtdragname.text = WuErLiXiMapModel.instance:getKeyAndSwitchTagById(self._unitMo.id)
 
-	TaskDispatcher.runDelay(arg_4_0._setDragPos, arg_4_0, 0.05)
+	TaskDispatcher.runDelay(self._setDragPos, self, 0.05)
 end
 
-function var_0_0._setDragPos(arg_5_0)
-	gohelper.setActive(arg_5_0._goDrag, true)
-	arg_5_0._imagedragicon:SetNativeSize()
-	arg_5_0._imagedragiconbg:SetNativeSize()
+function WuErLiXiGameMapUnitItem:_setDragPos()
+	gohelper.setActive(self._goDrag, true)
+	self._imagedragicon:SetNativeSize()
+	self._imagedragiconbg:SetNativeSize()
 
-	local var_5_0 = recthelper.getWidth(arg_5_0._imagedragicon.gameObject.transform)
+	local actUnitIconWidth = recthelper.getWidth(self._imagedragicon.gameObject.transform)
 
-	if arg_5_0._unitMo.unitType == WuErLiXiEnum.UnitType.SignalMulti then
-		if arg_5_0._unitMo.dir == WuErLiXiEnum.Dir.Up or arg_5_0._unitMo.dir == WuErLiXiEnum.Dir.Down then
-			recthelper.setWidth(arg_5_0._imagedragiconbg.gameObject.transform, var_5_0 + arg_5_0._bgiconwidthoffset)
-			recthelper.setWidth(arg_5_0._goDrag.transform, var_5_0 + arg_5_0._bgiconwidthoffset)
+	if self._unitMo.unitType == WuErLiXiEnum.UnitType.SignalMulti then
+		if self._unitMo.dir == WuErLiXiEnum.Dir.Up or self._unitMo.dir == WuErLiXiEnum.Dir.Down then
+			recthelper.setWidth(self._imagedragiconbg.gameObject.transform, actUnitIconWidth + self._bgiconwidthoffset)
+			recthelper.setWidth(self._goDrag.transform, actUnitIconWidth + self._bgiconwidthoffset)
 		else
-			recthelper.setHeight(arg_5_0._imagedragiconbg.gameObject.transform, var_5_0 + arg_5_0._bgiconwidthoffset)
-			recthelper.setHeight(arg_5_0._goDrag.transform, var_5_0 + arg_5_0._bgiconwidthoffset)
+			recthelper.setHeight(self._imagedragiconbg.gameObject.transform, actUnitIconWidth + self._bgiconwidthoffset)
+			recthelper.setHeight(self._goDrag.transform, actUnitIconWidth + self._bgiconwidthoffset)
 		end
 	else
-		recthelper.setWidth(arg_5_0._goDrag.transform, arg_5_0._itemWidth)
-		recthelper.setHeight(arg_5_0._goDrag.transform, arg_5_0._itemWidth)
+		recthelper.setWidth(self._goDrag.transform, self._itemWidth)
+		recthelper.setHeight(self._goDrag.transform, self._itemWidth)
 	end
 
-	transformhelper.setLocalRotation(arg_5_0._imagedragicon.gameObject.transform, 0, 0, -90 * arg_5_0._unitMo.dir)
+	transformhelper.setLocalRotation(self._imagedragicon.gameObject.transform, 0, 0, -90 * self._unitMo.dir)
 end
 
-function var_0_0._onDrag(arg_6_0, arg_6_1, arg_6_2)
-	if not arg_6_0._nodeMo then
+function WuErLiXiGameMapUnitItem:_onDrag(param, pointerEventData)
+	if not self._nodeMo then
 		return
 	end
 
-	if not arg_6_0._nodeMo.unit then
+	if not self._nodeMo.unit then
 		return
 	end
 
-	if arg_6_0._nodeMo.initUnit > 0 then
+	if self._nodeMo.initUnit > 0 then
 		return
 	end
 
-	local var_6_0 = arg_6_2.position
-	local var_6_1 = recthelper.screenPosToAnchorPos(var_6_0, arg_6_0._goDrag.transform.parent)
+	local pos = pointerEventData.position
+	local anchorPos = recthelper.screenPosToAnchorPos(pos, self._goDrag.transform.parent)
 
-	recthelper.setAnchor(arg_6_0._goDrag.transform, var_6_1.x, var_6_1.y)
-	WuErLiXiController.instance:dispatchEvent(WuErLiXiEvent.UnitDraging, var_6_0, arg_6_0._nodeMo, arg_6_0._unitMo.unitType)
+	recthelper.setAnchor(self._goDrag.transform, anchorPos.x, anchorPos.y)
+	WuErLiXiController.instance:dispatchEvent(WuErLiXiEvent.UnitDraging, pos, self._nodeMo, self._unitMo.unitType)
 end
 
-function var_0_0._onEndDrag(arg_7_0, arg_7_1, arg_7_2)
-	if not arg_7_0._nodeMo then
+function WuErLiXiGameMapUnitItem:_onEndDrag(equipTransform, pointerEventData)
+	if not self._nodeMo then
 		return
 	end
 
-	if not arg_7_0._nodeMo.unit then
+	if not self._nodeMo.unit then
 		return
 	end
 
-	if arg_7_0._nodeMo.initUnit > 0 then
+	if self._nodeMo.initUnit > 0 then
 		return
 	end
 
-	local var_7_0 = arg_7_2.position
-	local var_7_1 = recthelper.screenPosToAnchorPos(var_7_0, arg_7_0._goDrag.transform.parent)
+	local pos = pointerEventData.position
+	local anchorPos = recthelper.screenPosToAnchorPos(pos, self._goDrag.transform.parent)
 
-	recthelper.setAnchor(arg_7_0._goDrag.transform, var_7_1.x, var_7_1.y)
-	gohelper.setActive(arg_7_0._goDrag, false)
+	recthelper.setAnchor(self._goDrag.transform, anchorPos.x, anchorPos.y)
+	gohelper.setActive(self._goDrag, false)
 
-	arg_7_0._itemCanvas.alpha = 1
+	self._itemCanvas.alpha = 1
 
-	TaskDispatcher.cancelTask(arg_7_0._setDragPos, arg_7_0)
-	WuErLiXiController.instance:dispatchEvent(WuErLiXiEvent.NodeUnitDragEnd, var_7_0, arg_7_0._unitMo)
+	TaskDispatcher.cancelTask(self._setDragPos, self)
+	WuErLiXiController.instance:dispatchEvent(WuErLiXiEvent.NodeUnitDragEnd, pos, self._unitMo)
 end
 
-function var_0_0.setItem(arg_8_0, arg_8_1, arg_8_2)
-	if not arg_8_2 then
+function WuErLiXiGameMapUnitItem:setItem(mo, nodeItem)
+	if not nodeItem then
 		logError("请检查配置，并将元件设置在已有的节点上！")
 
 		return
 	end
 
-	arg_8_0._unitMo = arg_8_1
-	arg_8_0._nodeMo = arg_8_2:getNodeMo()
-	arg_8_0._nodeItem = arg_8_2
-	arg_8_0.go.name = arg_8_0._nodeMo.x .. "_" .. arg_8_0._nodeMo.y
+	self._unitMo = mo
+	self._nodeMo = nodeItem:getNodeMo()
+	self._nodeItem = nodeItem
+	self.go.name = self._nodeMo.x .. "_" .. self._nodeMo.y
 
-	local var_8_0 = WuErLiXiHelper.getUnitSpriteName(arg_8_0._unitMo.unitType, arg_8_0._nodeMo:isNodeShowActive())
+	local spriteName = WuErLiXiHelper.getUnitSpriteName(self._unitMo.unitType, self._nodeMo:isNodeShowActive())
 
-	UISpriteSetMgr.instance:setV2a4WuErLiXiSprite(arg_8_0._imageicon, var_8_0)
-	UISpriteSetMgr.instance:setV2a4WuErLiXiSprite(arg_8_0._imageiconlock, "v2a4_wuerlixi_unit_icon7_1")
-	gohelper.setActive(arg_8_0._imageiconlock.gameObject, arg_8_0._unitMo.unitType == WuErLiXiEnum.UnitType.Switch)
-	gohelper.setActive(arg_8_0._goiconwallact, arg_8_0._unitMo.unitType == WuErLiXiEnum.UnitType.Obstacle and arg_8_0._nodeMo.initUnit == 0)
-	gohelper.setActive(arg_8_0._goiconwallidle, arg_8_0._unitMo.unitType == WuErLiXiEnum.UnitType.Obstacle and arg_8_0._nodeMo.initUnit ~= 0)
+	UISpriteSetMgr.instance:setV2a4WuErLiXiSprite(self._imageicon, spriteName)
+	UISpriteSetMgr.instance:setV2a4WuErLiXiSprite(self._imageiconlock, "v2a4_wuerlixi_unit_icon7_1")
+	gohelper.setActive(self._imageiconlock.gameObject, self._unitMo.unitType == WuErLiXiEnum.UnitType.Switch)
+	gohelper.setActive(self._goiconwallact, self._unitMo.unitType == WuErLiXiEnum.UnitType.Obstacle and self._nodeMo.initUnit == 0)
+	gohelper.setActive(self._goiconwallidle, self._unitMo.unitType == WuErLiXiEnum.UnitType.Obstacle and self._nodeMo.initUnit ~= 0)
 
-	local var_8_1 = arg_8_0._unitMo:isUnitActive()
+	local unitActive = self._unitMo:isUnitActive()
 
-	gohelper.setActive(arg_8_0._imageicon.gameObject, arg_8_0._unitMo.unitType ~= WuErLiXiEnum.UnitType.Switch or not var_8_1)
-	gohelper.setActive(arg_8_0._goiconendactived, var_8_1 and arg_8_0._unitMo.unitType == WuErLiXiEnum.UnitType.SignalEnd)
+	gohelper.setActive(self._imageicon.gameObject, self._unitMo.unitType ~= WuErLiXiEnum.UnitType.Switch or not unitActive)
+	gohelper.setActive(self._goiconendactived, unitActive and self._unitMo.unitType == WuErLiXiEnum.UnitType.SignalEnd)
 
-	if var_8_1 and not arg_8_0._lastActive then
-		if arg_8_0._unitMo.unitType == WuErLiXiEnum.UnitType.Switch then
+	if unitActive and not self._lastActive then
+		if self._unitMo.unitType == WuErLiXiEnum.UnitType.Switch then
 			AudioMgr.instance:trigger(AudioEnum.WuErLiXi.play_ui_diqiu_enable)
-			arg_8_0._anim:Play("active", 0, 0)
-		elseif arg_8_0._unitMo.unitType == WuErLiXiEnum.UnitType.SignalEnd then
+			self._anim:Play("active", 0, 0)
+		elseif self._unitMo.unitType == WuErLiXiEnum.UnitType.SignalEnd then
 			AudioMgr.instance:trigger(AudioEnum.WuErLiXi.play_ui_diqiu_enable)
-			arg_8_0._anim:Play("active", 0, 0)
-		elseif arg_8_0._unitMo.unitType == WuErLiXiEnum.UnitType.Key then
+			self._anim:Play("active", 0, 0)
+		elseif self._unitMo.unitType == WuErLiXiEnum.UnitType.Key then
 			AudioMgr.instance:trigger(AudioEnum.WuErLiXi.play_ui_diqiu_enable)
-			arg_8_0._anim:Play("active", 0, 0)
-		elseif arg_8_0._unitMo.unitType == WuErLiXiEnum.UnitType.SignalMulti then
+			self._anim:Play("active", 0, 0)
+		elseif self._unitMo.unitType == WuErLiXiEnum.UnitType.SignalMulti then
 			AudioMgr.instance:trigger(AudioEnum.WuErLiXi.play_ui_diqiu_enable)
-			arg_8_0._anim:Play("active", 0, 0)
+			self._anim:Play("active", 0, 0)
 		else
-			arg_8_0._anim:Play("idle", 0, 0)
+			self._anim:Play("idle", 0, 0)
 		end
 	else
-		arg_8_0._anim:Play("idle", 0, 0)
+		self._anim:Play("idle", 0, 0)
 	end
 
-	arg_8_0._lastActive = var_8_1
-	arg_8_0._txtname.text = WuErLiXiMapModel.instance:getKeyAndSwitchTagById(arg_8_0._unitMo.id)
+	self._lastActive = unitActive
+	self._txtname.text = WuErLiXiMapModel.instance:getKeyAndSwitchTagById(self._unitMo.id)
 
-	TaskDispatcher.runDelay(arg_8_0.setPos, arg_8_0, 0.05)
+	TaskDispatcher.runDelay(self.setPos, self, 0.05)
 end
 
-function var_0_0.setPos(arg_9_0)
-	arg_9_0._nodeItem = arg_9_0._nodeItem
+function WuErLiXiGameMapUnitItem:setPos()
+	self._nodeItem = self._nodeItem
 
-	gohelper.setActive(arg_9_0.go, true)
-	arg_9_0._imageicon:SetNativeSize()
+	gohelper.setActive(self.go, true)
+	self._imageicon:SetNativeSize()
 
-	arg_9_0.go.transform.position = arg_9_0._nodeItem.go.transform.position
+	self.go.transform.position = self._nodeItem.go.transform.position
 
-	transformhelper.setLocalRotation(arg_9_0._imageicon.gameObject.transform, 0, 0, -90 * arg_9_0._unitMo.dir)
+	transformhelper.setLocalRotation(self._imageicon.gameObject.transform, 0, 0, -90 * self._unitMo.dir)
 end
 
-function var_0_0.hide(arg_10_0)
-	gohelper.setActive(arg_10_0.go, false)
+function WuErLiXiGameMapUnitItem:hide()
+	gohelper.setActive(self.go, false)
 end
 
-function var_0_0.showPut(arg_11_0, arg_11_1)
-	if arg_11_0._unitMo.unitType == WuErLiXiEnum.UnitType.SignalMulti then
-		if arg_11_0._unitMo.dir == WuErLiXiEnum.Dir.Up or arg_11_0._unitMo.dir == WuErLiXiEnum.Dir.Down then
-			transformhelper.setLocalScale(arg_11_0._goput.transform, 3, 1, 1)
+function WuErLiXiGameMapUnitItem:showPut(show)
+	if self._unitMo.unitType == WuErLiXiEnum.UnitType.SignalMulti then
+		if self._unitMo.dir == WuErLiXiEnum.Dir.Up or self._unitMo.dir == WuErLiXiEnum.Dir.Down then
+			transformhelper.setLocalScale(self._goput.transform, 3, 1, 1)
 		else
-			transformhelper.setLocalScale(arg_11_0._goput.transform, 1, 3, 1)
+			transformhelper.setLocalScale(self._goput.transform, 1, 3, 1)
 		end
 	else
-		transformhelper.setLocalScale(arg_11_0._goput.transform, 1, 1, 1)
+		transformhelper.setLocalScale(self._goput.transform, 1, 1, 1)
 	end
 
-	gohelper.setActive(arg_11_0._goput, arg_11_1)
+	gohelper.setActive(self._goput, show)
 end
 
-function var_0_0.destroy(arg_12_0)
-	if arg_12_0.go then
-		gohelper.destroy(arg_12_0.go)
+function WuErLiXiGameMapUnitItem:destroy()
+	if self.go then
+		gohelper.destroy(self.go)
 
-		arg_12_0.go = nil
+		self.go = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_12_0.setPos, arg_12_0)
-	arg_12_0._click:RemoveClickListener()
-	arg_12_0._drag:RemoveDragListener()
-	arg_12_0._drag:RemoveDragBeginListener()
-	arg_12_0._drag:RemoveDragEndListener()
+	TaskDispatcher.cancelTask(self.setPos, self)
+	self._click:RemoveClickListener()
+	self._drag:RemoveDragListener()
+	self._drag:RemoveDragBeginListener()
+	self._drag:RemoveDragEndListener()
 end
 
-return var_0_0
+return WuErLiXiGameMapUnitItem

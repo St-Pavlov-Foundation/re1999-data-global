@@ -1,102 +1,108 @@
-﻿module("modules.logic.versionactivity1_4.act134.view.Activity134ReportItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act134/view/Activity134ReportItem.lua
 
-local var_0_0 = class("Activity134ReportItem", LuaCompBase)
+module("modules.logic.versionactivity1_4.act134.view.Activity134ReportItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.template = arg_1_1
-	arg_1_0.viewGO = arg_1_2
+local Activity134ReportItem = class("Activity134ReportItem", LuaCompBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Activity134ReportItem:init(template, viewGO)
+	self.template = template
+	self.viewGO = viewGO
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function Activity134ReportItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Activity134ReportItem:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function Activity134ReportItem:_editableInitView()
 	return
 end
 
-function var_0_0._editableAddEvents(arg_5_0)
+function Activity134ReportItem:_editableAddEvents()
 	return
 end
 
-function var_0_0._editableRemoveEvents(arg_6_0)
+function Activity134ReportItem:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.onDestroy(arg_7_0)
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0.charaterIcon) do
-		iter_7_1:UnLoadImage()
+function Activity134ReportItem:onDestroy()
+	for _, v in ipairs(self.charaterIcon) do
+		v:UnLoadImage()
 	end
 end
 
-function var_0_0.initMo(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0.index = arg_8_1
-	arg_8_0.mo = arg_8_2
-	arg_8_0.typeList = {}
+function Activity134ReportItem:initMo(index, mo)
+	self.index = index
+	self.mo = mo
+	self.typeList = {}
 
-	local var_8_0 = arg_8_2.storyType
+	local type = mo.storyType
 
-	arg_8_0.charaterIcon = {}
+	self.charaterIcon = {}
 
-	for iter_8_0, iter_8_1 in ipairs(arg_8_2.desc) do
-		local var_8_1 = gohelper.clone(arg_8_0.template, arg_8_0.viewGO, iter_8_0)
+	for i, v in ipairs(mo.desc) do
+		local item = gohelper.clone(self.template, self.viewGO, i)
 
-		gohelper.setActive(var_8_1.gameObject, true)
+		gohelper.setActive(item.gameObject, true)
 
-		if var_8_0 == 1 then
-			arg_8_0:setItemOneType(iter_8_1, var_8_1)
-		elseif var_8_0 == 2 then
-			arg_8_0:setItemTwoType(iter_8_1, var_8_1)
-		elseif var_8_0 == 3 then
-			arg_8_0:setItemThreeType(iter_8_1, var_8_1)
+		if type == 1 then
+			self:setItemOneType(v, item)
+		elseif type == 2 then
+			self:setItemTwoType(v, item)
+		elseif type == 3 then
+			self:setItemThreeType(v, item)
 		else
-			arg_8_0:setItemFourType(iter_8_1, var_8_1)
+			self:setItemFourType(v, item)
 		end
 	end
 end
 
-function var_0_0.setItemOneType(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = gohelper.findChildSingleImage(arg_9_2, "bg/#simage_role")
-	local var_9_1 = gohelper.findChildText(arg_9_2, "right/#txt_title")
-	local var_9_2 = gohelper.findChildText(arg_9_2, "right/#txt_dec")
+function Activity134ReportItem:setItemOneType(mo, item)
+	local _simagerole = gohelper.findChildSingleImage(item, "bg/#simage_role")
+	local _txttitle = gohelper.findChildText(item, "right/#txt_title")
+	local _txtdec = gohelper.findChildText(item, "right/#txt_dec")
 
-	if not string.nilorempty(arg_9_1.charaterIcon) then
-		local var_9_3 = string.format("v1a4_dustyrecords_role_" .. arg_9_1.charaterIcon)
+	if not string.nilorempty(mo.charaterIcon) then
+		local icon = string.format("v1a4_dustyrecords_role_" .. mo.charaterIcon)
 
-		var_9_0:LoadImage(ResUrl.getV1a4DustRecordsIcon(var_9_3))
-		table.insert(arg_9_0.charaterIcon, var_9_0)
+		_simagerole:LoadImage(ResUrl.getV1a4DustRecordsIcon(icon))
+		table.insert(self.charaterIcon, _simagerole)
 	end
 
-	local var_9_4 = string.split(arg_9_1.desc, "<split>")
+	local str = string.split(mo.desc, "<split>")
 
-	if #var_9_4 > 1 then
-		var_9_1.text = var_9_4[1]
-		var_9_2.text = var_9_4[2]
+	if #str > 1 then
+		_txttitle.text = str[1]
+		_txtdec.text = str[2]
 	end
 end
 
-function var_0_0.setItemTwoType(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = gohelper.findChildText(arg_10_2, "bg/#txt_dec")
-	local var_10_1 = gohelper.findChildText(arg_10_2, "bg/#txt_name")
+function Activity134ReportItem:setItemTwoType(mo, item)
+	local _txtdec = gohelper.findChildText(item, "bg/#txt_dec")
+	local _txtname = gohelper.findChildText(item, "bg/#txt_name")
 
-	var_10_0.text = arg_10_1.desc
-	var_10_1.text = arg_10_1.formMan and arg_10_1.formMan or ""
+	_txtdec.text = mo.desc
+	_txtname.text = mo.formMan and mo.formMan or ""
 end
 
-function var_0_0.setItemThreeType(arg_11_0, arg_11_1, arg_11_2)
-	gohelper.findChildText(arg_11_2, "#txt_dec").text = arg_11_1.desc
+function Activity134ReportItem:setItemThreeType(mo, item)
+	local _txtdec = gohelper.findChildText(item, "#txt_dec")
+
+	_txtdec.text = mo.desc
 end
 
-function var_0_0.setItemFourType(arg_12_0, arg_12_1, arg_12_2)
-	gohelper.findChildText(arg_12_2, "#txt_dec").text = arg_12_1.desc
+function Activity134ReportItem:setItemFourType(mo, item)
+	local _txtdec = gohelper.findChildText(item, "#txt_dec")
+
+	_txtdec.text = mo.desc
 end
 
-return var_0_0
+return Activity134ReportItem

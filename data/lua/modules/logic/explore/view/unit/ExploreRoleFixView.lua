@@ -1,53 +1,55 @@
-﻿module("modules.logic.explore.view.unit.ExploreRoleFixView", package.seeall)
+﻿-- chunkname: @modules/logic/explore/view/unit/ExploreRoleFixView.lua
 
-local var_0_0 = class("ExploreRoleFixView", ExploreUnitBaseView)
+module("modules.logic.explore.view.unit.ExploreRoleFixView", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0, arg_1_1, "ui/viewres/explore/exploreinteractiveitem.prefab")
+local ExploreRoleFixView = class("ExploreRoleFixView", ExploreUnitBaseView)
+
+function ExploreRoleFixView:ctor(unit)
+	ExploreRoleFixView.super.ctor(self, unit, "ui/viewres/explore/exploreinteractiveitem.prefab")
 end
 
-function var_0_0.onInit(arg_2_0)
-	arg_2_0._goslider = gohelper.findChildImage(arg_2_0.viewGO, "#image_progress")
-	arg_2_0._nowValue = 0
+function ExploreRoleFixView:onInit()
+	self._goslider = gohelper.findChildImage(self.viewGO, "#image_progress")
+	self._nowValue = 0
 
-	TaskDispatcher.runRepeat(arg_2_0._everyFrame, arg_2_0, 0)
+	TaskDispatcher.runRepeat(self._everyFrame, self, 0)
 end
 
-function var_0_0.setFixUnit(arg_3_0, arg_3_1)
-	arg_3_0._fixUnit = arg_3_1
+function ExploreRoleFixView:setFixUnit(unit)
+	self._fixUnit = unit
 end
 
-function var_0_0._everyFrame(arg_4_0)
-	arg_4_0._nowValue = arg_4_0._nowValue + UnityEngine.Time.deltaTime
+function ExploreRoleFixView:_everyFrame()
+	self._nowValue = self._nowValue + UnityEngine.Time.deltaTime
 
-	local var_4_0 = arg_4_0._nowValue / (ExploreAnimEnum.RoleAnimLen[ExploreAnimEnum.RoleAnimStatus.Fix] or 1)
+	local value = self._nowValue / (ExploreAnimEnum.RoleAnimLen[ExploreAnimEnum.RoleAnimStatus.Fix] or 1)
 
-	arg_4_0._goslider.fillAmount = var_4_0
+	self._goslider.fillAmount = value
 
-	if var_4_0 > 1 then
-		if arg_4_0._fixUnit then
-			local var_4_1, var_4_2, var_4_3, var_4_4 = ExploreConfig.instance:getUnitEffectConfig(arg_4_0._fixUnit:getResPath(), "fix_finish")
+	if value > 1 then
+		if self._fixUnit then
+			local effName, isOnce, audioId, isBindGo = ExploreConfig.instance:getUnitEffectConfig(self._fixUnit:getResPath(), "fix_finish")
 
-			ExploreHelper.triggerAudio(var_4_3, var_4_4, arg_4_0._fixUnit.go)
+			ExploreHelper.triggerAudio(audioId, isBindGo, self._fixUnit.go)
 		end
 
-		arg_4_0.unit.uiComp:removeUI(var_0_0)
+		self.unit.uiComp:removeUI(ExploreRoleFixView)
 	end
 end
 
-function var_0_0.addEventListeners(arg_5_0)
+function ExploreRoleFixView:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_6_0)
+function ExploreRoleFixView:removeEventListeners()
 	return
 end
 
-function var_0_0.onDestroy(arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0._everyFrame, arg_7_0)
+function ExploreRoleFixView:onDestroy()
+	TaskDispatcher.cancelTask(self._everyFrame, self)
 
-	arg_7_0._goslider = nil
-	arg_7_0._fixUnit = nil
+	self._goslider = nil
+	self._fixUnit = nil
 end
 
-return var_0_0
+return ExploreRoleFixView

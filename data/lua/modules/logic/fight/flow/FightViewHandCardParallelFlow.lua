@@ -1,25 +1,27 @@
-﻿module("modules.logic.fight.flow.FightViewHandCardParallelFlow", package.seeall)
+﻿-- chunkname: @modules/logic/fight/flow/FightViewHandCardParallelFlow.lua
 
-local var_0_0 = class("FightViewHandCardParallelFlow", FlowParallel)
+module("modules.logic.fight.flow.FightViewHandCardParallelFlow", package.seeall)
 
-function var_0_0.ctor(arg_1_0, ...)
-	var_0_0.super.ctor(arg_1_0, ...)
-	FightController.instance:dispatchEvent(FightEvent.OnHandCardFlowCreate, arg_1_0)
+local FightViewHandCardParallelFlow = class("FightViewHandCardParallelFlow", FlowParallel)
+
+function FightViewHandCardParallelFlow:ctor(...)
+	FightViewHandCardParallelFlow.super.ctor(self, ...)
+	FightController.instance:dispatchEvent(FightEvent.OnHandCardFlowCreate, self)
 end
 
-function var_0_0.start(arg_2_0, arg_2_1)
-	var_0_0.super.start(arg_2_0, arg_2_1)
-	FightController.instance:dispatchEvent(FightEvent.OnHandCardFlowStart, arg_2_0)
+function FightViewHandCardParallelFlow:start(context)
+	FightViewHandCardParallelFlow.super.start(self, context)
+	FightController.instance:dispatchEvent(FightEvent.OnHandCardFlowStart, self)
 end
 
-function var_0_0.onDone(arg_3_0, arg_3_1)
-	var_0_0.super.onDone(arg_3_0, arg_3_1)
-	FightController.instance:dispatchEvent(FightEvent.OnHandCardFlowEnd, arg_3_0)
+function FightViewHandCardParallelFlow:onDone(isSuccess)
+	FightViewHandCardParallelFlow.super.onDone(self, isSuccess)
+	FightController.instance:dispatchEvent(FightEvent.OnHandCardFlowEnd, self)
 end
 
-function var_0_0.stop(arg_4_0)
-	var_0_0.super.stop(arg_4_0)
-	FightController.instance:dispatchEvent(FightEvent.OnHandCardFlowEnd, arg_4_0)
+function FightViewHandCardParallelFlow:stop()
+	FightViewHandCardParallelFlow.super.stop(self)
+	FightController.instance:dispatchEvent(FightEvent.OnHandCardFlowEnd, self)
 end
 
-return var_0_0
+return FightViewHandCardParallelFlow

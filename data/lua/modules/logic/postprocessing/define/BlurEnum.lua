@@ -1,10 +1,12 @@
-﻿module("modules.logic.postprocessing.define.BlurEnum", package.seeall)
+﻿-- chunkname: @modules/logic/postprocessing/define/BlurEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.postprocessing.define.BlurEnum", package.seeall)
 
-var_0_0.Never = 0
-var_0_0.UseRadialBlur = 1
-var_0_0.UseDistortionBlur = 2
-var_0_0.UseGaussianBlur = 3
+local BlurEnum = _M
 
-return var_0_0
+BlurEnum.Never = 0
+BlurEnum.UseRadialBlur = 1
+BlurEnum.UseDistortionBlur = 2
+BlurEnum.UseGaussianBlur = 3
+
+return BlurEnum

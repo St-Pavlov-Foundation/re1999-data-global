@@ -1,19 +1,21 @@
-﻿module("modules.logic.versionactivity2_6.xugouji.controller.gamestep.XugoujiGameStepHpUpdate", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/xugouji/controller/gamestep/XugoujiGameStepHpUpdate.lua
 
-local var_0_0 = class("XugoujiGameStepHpUpdate", XugoujiGameStepBase)
+module("modules.logic.versionactivity2_6.xugouji.controller.gamestep.XugoujiGameStepHpUpdate", package.seeall)
 
-function var_0_0.start(arg_1_0)
-	local var_1_0 = arg_1_0._stepData.isSelf
-	local var_1_1 = arg_1_0._stepData.hpChange
+local XugoujiGameStepHpUpdate = class("XugoujiGameStepHpUpdate", XugoujiGameStepBase)
 
-	Activity188Model.instance:updateHp(var_1_0, var_1_1)
+function XugoujiGameStepHpUpdate:start()
+	local isSelf = self._stepData.isSelf
+	local hpChangeValue = self._stepData.hpChange
+
+	Activity188Model.instance:updateHp(isSelf, hpChangeValue)
 	XugoujiController.instance:dispatchEvent(XugoujiEvent.HpUpdated)
-	arg_1_0:finish()
+	self:finish()
 end
 
-function var_0_0.dispose(arg_2_0)
-	TaskDispatcher.cancelTask(arg_2_0.finish, arg_2_0)
-	XugoujiGameStepBase.dispose(arg_2_0)
+function XugoujiGameStepHpUpdate:dispose()
+	TaskDispatcher.cancelTask(self.finish, self)
+	XugoujiGameStepBase.dispose(self)
 end
 
-return var_0_0
+return XugoujiGameStepHpUpdate

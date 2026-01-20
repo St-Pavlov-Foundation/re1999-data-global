@@ -1,17 +1,19 @@
-﻿module("modules.logic.gm.model.GMAddItemModel", package.seeall)
+﻿-- chunkname: @modules/logic/gm/model/GMAddItemModel.lua
 
-local var_0_0 = class("GMAddItemModel", ListScrollModel)
+module("modules.logic.gm.model.GMAddItemModel", package.seeall)
 
-function var_0_0.setFastAddHeroView(arg_1_0, arg_1_1)
-	arg_1_0.fastAddHeroView = arg_1_1
+local GMAddItemModel = class("GMAddItemModel", ListScrollModel)
+
+function GMAddItemModel:setFastAddHeroView(view)
+	self.fastAddHeroView = view
 end
 
-function var_0_0.onOnClickItem(arg_2_0, arg_2_1)
-	if arg_2_0.fastAddHeroView then
-		arg_2_0.fastAddHeroView:onAddItemOnClick(arg_2_1)
+function GMAddItemModel:onOnClickItem(characterCo)
+	if self.fastAddHeroView then
+		self.fastAddHeroView:onAddItemOnClick(characterCo)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+GMAddItemModel.instance = GMAddItemModel.New()
 
-return var_0_0
+return GMAddItemModel

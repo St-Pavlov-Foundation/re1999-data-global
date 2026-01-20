@@ -1,86 +1,88 @@
-﻿module("modules.logic.survival.view.shelter.SurvivalSceneUIItemBase", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/SurvivalSceneUIItemBase.lua
 
-local var_0_0 = class("SurvivalSceneUIItemBase", LuaCompBase)
+module("modules.logic.survival.view.shelter.SurvivalSceneUIItemBase", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0.goTrs = arg_1_1.transform
-	arg_1_0._gocontainer = gohelper.findChild(arg_1_0.go, "go_container")
-	arg_1_0._gocontainerTrs = arg_1_0._gocontainer.transform
-	arg_1_0._scene = GameSceneMgr.instance:getCurScene()
-	arg_1_0._canvasGroup = arg_1_0.go:GetComponent(typeof(UnityEngine.CanvasGroup))
-	arg_1_0._baseAnimator = arg_1_0.go:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._containerCanvasGroup = arg_1_0._gocontainer:GetComponent(typeof(UnityEngine.CanvasGroup))
-	arg_1_0._click = gohelper.findChildClick(arg_1_0.go, "go_click")
-	arg_1_0._isShow = true
+local SurvivalSceneUIItemBase = class("SurvivalSceneUIItemBase", LuaCompBase)
 
-	if arg_1_0._customOnInit then
-		arg_1_0:_customOnInit()
+function SurvivalSceneUIItemBase:init(go)
+	self.go = go
+	self.goTrs = go.transform
+	self._gocontainer = gohelper.findChild(self.go, "go_container")
+	self._gocontainerTrs = self._gocontainer.transform
+	self._scene = GameSceneMgr.instance:getCurScene()
+	self._canvasGroup = self.go:GetComponent(typeof(UnityEngine.CanvasGroup))
+	self._baseAnimator = self.go:GetComponent(typeof(UnityEngine.Animator))
+	self._containerCanvasGroup = self._gocontainer:GetComponent(typeof(UnityEngine.CanvasGroup))
+	self._click = gohelper.findChildClick(self.go, "go_click")
+	self._isShow = true
+
+	if self._customOnInit then
+		self:_customOnInit()
 	end
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	if not gohelper.isNil(arg_2_0._click) then
-		arg_2_0._click:AddClickListener(arg_2_0._onTouchClick, arg_2_0)
+function SurvivalSceneUIItemBase:addEventListeners()
+	if not gohelper.isNil(self._click) then
+		self._click:AddClickListener(self._onTouchClick, self)
 	end
 
-	if arg_2_0._customAddEventListeners then
-		arg_2_0:_customAddEventListeners()
-	end
-end
-
-function var_0_0.removeEventListeners(arg_3_0)
-	if not gohelper.isNil(arg_3_0._click) then
-		arg_3_0._click:RemoveClickListener()
-	end
-
-	if arg_3_0._customRemoveEventListeners then
-		arg_3_0:_customRemoveEventListeners()
+	if self._customAddEventListeners then
+		self:_customAddEventListeners()
 	end
 end
 
-function var_0_0.refreshFollower(arg_4_0, arg_4_1)
-	local var_4_0 = CameraMgr.instance:getMainCamera()
-	local var_4_1 = CameraMgr.instance:getUICamera()
-	local var_4_2 = ViewMgr.instance:getUIRoot().transform
+function SurvivalSceneUIItemBase:removeEventListeners()
+	if not gohelper.isNil(self._click) then
+		self._click:RemoveClickListener()
+	end
 
-	arg_4_0._uiFollower = gohelper.onceAddComponent(arg_4_0.go, typeof(ZProj.UIFollower))
-
-	arg_4_0._uiFollower:Set(var_4_0, var_4_1, var_4_2, arg_4_1, 0, 0, 0, 0, 0)
+	if self._customRemoveEventListeners then
+		self:_customRemoveEventListeners()
+	end
 end
 
-function var_0_0._setShow(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_1 then
-		if not arg_5_0._isShow then
-			arg_5_0._baseAnimator:Play("room_task_in", 0, arg_5_2 and 1 or 0)
+function SurvivalSceneUIItemBase:refreshFollower(transform)
+	local mainCamera = CameraMgr.instance:getMainCamera()
+	local uiCamera = CameraMgr.instance:getUICamera()
+	local plane = ViewMgr.instance:getUIRoot().transform
+
+	self._uiFollower = gohelper.onceAddComponent(self.go, typeof(ZProj.UIFollower))
+
+	self._uiFollower:Set(mainCamera, uiCamera, plane, transform, 0, 0, 0, 0, 0)
+end
+
+function SurvivalSceneUIItemBase:_setShow(isShow, immediately)
+	if isShow then
+		if not self._isShow then
+			self._baseAnimator:Play("room_task_in", 0, immediately and 1 or 0)
 		end
 
-		arg_5_0._containerCanvasGroup.blocksRaycasts = true
+		self._containerCanvasGroup.blocksRaycasts = true
 	else
-		if arg_5_0._isShow then
-			arg_5_0._baseAnimator:Play("room_task_out", 0, arg_5_2 and 1 or 0)
+		if self._isShow then
+			self._baseAnimator:Play("room_task_out", 0, immediately and 1 or 0)
 		end
 
-		arg_5_0._containerCanvasGroup.blocksRaycasts = false
+		self._containerCanvasGroup.blocksRaycasts = false
 	end
 
-	arg_5_0._isShow = arg_5_1
+	self._isShow = isShow
 
-	arg_5_0._uiFollower:SetEnable(arg_5_1)
+	self._uiFollower:SetEnable(isShow)
 end
 
-function var_0_0._onTouchClick(arg_6_0)
-	arg_6_0:_onClick()
+function SurvivalSceneUIItemBase:_onTouchClick()
+	self:_onClick()
 end
 
-function var_0_0._onClick(arg_7_0)
+function SurvivalSceneUIItemBase:_onClick()
 	return
 end
 
-function var_0_0.onDestroy(arg_8_0)
-	if arg_8_0._customOnDestory then
-		arg_8_0:_customOnDestory()
+function SurvivalSceneUIItemBase:onDestroy()
+	if self._customOnDestory then
+		self:_customOnDestory()
 	end
 end
 
-return var_0_0
+return SurvivalSceneUIItemBase

@@ -1,81 +1,84 @@
-﻿module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepSyncObject", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/va3chess/game/step/Va3ChessStepSyncObject.lua
 
-local var_0_0 = class("Va3ChessStepSyncObject", Va3ChessStepBase)
+module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepSyncObject", package.seeall)
 
-function var_0_0.start(arg_1_0)
-	local var_1_0 = arg_1_0.originData.object
-	local var_1_1 = var_1_0.id
-	local var_1_2 = var_1_0.data
-	local var_1_3 = var_1_0.direction
+local Va3ChessStepSyncObject = class("Va3ChessStepSyncObject", Va3ChessStepBase)
 
-	if Va3ChessGameModel.instance:getObjectDataById(var_1_1) then
-		arg_1_0:_syncObject(var_1_1, var_1_2, var_1_3)
+function Va3ChessStepSyncObject:start()
+	local newServerData = self.originData.object
+	local interactId = newServerData.id
+	local extendData = newServerData.data
+	local dir = newServerData.direction
+	local interactMO = Va3ChessGameModel.instance:getObjectDataById(interactId)
+
+	if interactMO then
+		self:_syncObject(interactId, extendData, dir)
 	end
 
-	arg_1_0:finish()
+	self:finish()
 end
 
-function var_0_0._syncObject(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	local var_2_0 = Va3ChessGameModel.instance:syncObjectData(arg_2_1, arg_2_2)
+function Va3ChessStepSyncObject:_syncObject(interactId, extendData, dir)
+	local deltaDatas = Va3ChessGameModel.instance:syncObjectData(interactId, extendData)
 
-	if var_2_0 == nil then
+	if deltaDatas == nil then
 		return
 	end
 
-	if arg_2_0:dataHasChanged(var_2_0, "alertArea") then
+	if self:dataHasChanged(deltaDatas, "alertArea") then
 		Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.RefreshAlarmArea)
 	end
 
-	if arg_2_0:dataHasChanged(var_2_0, "goToObject") then
-		local var_2_1 = Va3ChessGameController.instance.interacts:get(arg_2_1)
+	if self:dataHasChanged(deltaDatas, "goToObject") then
+		local interactObj = Va3ChessGameController.instance.interacts:get(interactId)
 
-		if var_2_1 then
-			var_2_1.goToObject:updateGoToObject()
+		if interactObj then
+			interactObj.goToObject:updateGoToObject()
 		end
 	end
 
-	if arg_2_0:dataHasChanged(var_2_0, "lostTarget") then
-		local var_2_2 = Va3ChessGameController.instance.interacts:get(arg_2_1)
+	if self:dataHasChanged(deltaDatas, "lostTarget") then
+		local interactObj = Va3ChessGameController.instance.interacts:get(interactId)
 
-		if var_2_2 then
-			var_2_2.effect:refreshSearchFailed()
-			var_2_2.goToObject:refreshTarget()
+		if interactObj then
+			interactObj.effect:refreshSearchFailed()
+			interactObj.goToObject:refreshTarget()
 		end
 	end
 
-	if arg_2_0:dataHasChanged(var_2_0, "pedalStatus") then
-		local var_2_3 = Va3ChessGameController.instance.interacts:get(arg_2_1)
+	if self:dataHasChanged(deltaDatas, "pedalStatus") then
+		local interactObj = Va3ChessGameController.instance.interacts:get(interactId)
 
-		if var_2_3 and var_2_3:getHandler().refreshPedalStatus then
-			var_2_3:getHandler():refreshPedalStatus()
+		if interactObj and interactObj:getHandler().refreshPedalStatus then
+			interactObj:getHandler():refreshPedalStatus()
 		end
 	end
 
-	local var_2_4 = Va3ChessGameController.instance.interacts:get(arg_2_1)
+	local interactObj = Va3ChessGameController.instance.interacts:get(interactId)
 
-	if not var_2_4 or not var_2_4.chessEffectObj then
+	if not interactObj or not interactObj.chessEffectObj then
 		return
 	end
 
-	if arg_2_2.attributes and arg_2_2.attributes.sleep and var_2_4.chessEffectObj.setSleep then
-		var_2_4.chessEffectObj:setSleep(arg_2_2.attributes.sleep)
+	if extendData.attributes and extendData.attributes.sleep and interactObj.chessEffectObj.setSleep then
+		interactObj.chessEffectObj:setSleep(extendData.attributes.sleep)
 	end
 
-	if var_2_4.chessEffectObj.refreshKillEffect then
-		var_2_4.chessEffectObj:refreshKillEffect()
+	if interactObj.chessEffectObj.refreshKillEffect then
+		interactObj.chessEffectObj:refreshKillEffect()
 	end
 
-	if arg_2_3 then
-		var_2_4:getHandler():faceTo(arg_2_3)
+	if dir then
+		interactObj:getHandler():faceTo(dir)
 	end
 end
 
-function var_0_0.dataHasChanged(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1[arg_3_2] ~= nil or arg_3_1.__deleteFields and arg_3_1.__deleteFields[arg_3_2] then
+function Va3ChessStepSyncObject:dataHasChanged(deltaDatas, fieldName)
+	if deltaDatas[fieldName] ~= nil or deltaDatas.__deleteFields and deltaDatas.__deleteFields[fieldName] then
 		return true
 	end
 
 	return false
 end
 
-return var_0_0
+return Va3ChessStepSyncObject

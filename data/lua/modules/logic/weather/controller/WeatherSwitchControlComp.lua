@@ -1,207 +1,213 @@
-﻿module("modules.logic.weather.controller.WeatherSwitchControlComp", package.seeall)
+﻿-- chunkname: @modules/logic/weather/controller/WeatherSwitchControlComp.lua
 
-local var_0_0 = class("WeatherSwitchControlComp", ListScrollCellExtend)
+module("modules.logic.weather.controller.WeatherSwitchControlComp", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnup = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_up")
-	arg_1_0._goexpand = gohelper.findChild(arg_1_0.viewGO, "#go_expand")
-	arg_1_0._gonumitem = gohelper.findChild(arg_1_0.viewGO, "#go_expand/go_numitem")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_expand/#btn_close")
-	arg_1_0._btnmiddle = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_middle")
-	arg_1_0._middleicon = gohelper.findChildImage(arg_1_0.viewGO, "#btn_middle/icon")
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "#btn_middle/icon/#txt_num")
-	arg_1_0._btndown = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_down")
+local WeatherSwitchControlComp = class("WeatherSwitchControlComp", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function WeatherSwitchControlComp:onInitView()
+	self._btnup = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_up")
+	self._goexpand = gohelper.findChild(self.viewGO, "#go_expand")
+	self._gonumitem = gohelper.findChild(self.viewGO, "#go_expand/go_numitem")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#go_expand/#btn_close")
+	self._btnmiddle = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_middle")
+	self._middleicon = gohelper.findChildImage(self.viewGO, "#btn_middle/icon")
+	self._txtnum = gohelper.findChildText(self.viewGO, "#btn_middle/icon/#txt_num")
+	self._btndown = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_down")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnup:AddClickListener(arg_2_0._btnupOnClick, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnmiddle:AddClickListener(arg_2_0._btnmiddleOnClick, arg_2_0)
-	arg_2_0._btndown:AddClickListener(arg_2_0._btndownOnClick, arg_2_0)
+function WeatherSwitchControlComp:addEvents()
+	self._btnup:AddClickListener(self._btnupOnClick, self)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnmiddle:AddClickListener(self._btnmiddleOnClick, self)
+	self._btndown:AddClickListener(self._btndownOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnup:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnmiddle:RemoveClickListener()
-	arg_3_0._btndown:RemoveClickListener()
+function WeatherSwitchControlComp:removeEvents()
+	self._btnup:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
+	self._btnmiddle:RemoveClickListener()
+	self._btndown:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	gohelper.setActive(arg_4_0._goexpand, false)
+function WeatherSwitchControlComp:_btncloseOnClick()
+	gohelper.setActive(self._goexpand, false)
 end
 
-function var_0_0._btnupOnClick(arg_5_0)
-	arg_5_0._switchComp:switchPrevLightMode()
-	arg_5_0:_updateBtnStatus()
-	arg_5_0:_startDelayUpdateStatus()
+function WeatherSwitchControlComp:_btnupOnClick()
+	self._switchComp:switchPrevLightMode()
+	self:_updateBtnStatus()
+	self:_startDelayUpdateStatus()
 end
 
-function var_0_0._btnmiddleOnClick(arg_6_0)
-	arg_6_0._showExpand = true
+function WeatherSwitchControlComp:_btnmiddleOnClick()
+	self._showExpand = true
 
-	gohelper.setActive(arg_6_0._goexpand, true)
+	gohelper.setActive(self._goexpand, true)
 
-	local var_6_0 = arg_6_0._switchComp:getReportList()
+	local reportList = self._switchComp:getReportList()
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
-		if not arg_6_0._itemList[iter_6_0] then
-			local var_6_1 = gohelper.cloneInPlace(arg_6_0._gonumitem, iter_6_0)
+	for i, v in ipairs(reportList) do
+		if not self._itemList[i] then
+			local go = gohelper.cloneInPlace(self._gonumitem, i)
 
-			arg_6_0:_onItemShow(var_6_1, iter_6_1, iter_6_0)
+			self:_onItemShow(go, v, i)
 		else
-			local var_6_2 = arg_6_0._itemList[iter_6_0]
+			local item = self._itemList[i]
 
-			gohelper.setActive(var_6_2 and var_6_2.go, true)
+			gohelper.setActive(item and item.go, true)
 		end
 	end
 
-	for iter_6_2 = #var_6_0 + 1, #arg_6_0._itemList do
-		local var_6_3 = arg_6_0._itemList[iter_6_2]
+	for i = #reportList + 1, #self._itemList do
+		local item = self._itemList[i]
 
-		gohelper.setActive(var_6_3 and var_6_3.go, false)
+		gohelper.setActive(item and item.go, false)
 	end
 
-	arg_6_0:_updateItemSelectStatus()
+	self:_updateItemSelectStatus()
 end
 
-function var_0_0._onItemShow(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	gohelper.findChildText(arg_7_1, "#txt_num").text = arg_7_3
+function WeatherSwitchControlComp:_onItemShow(obj, data, index)
+	local txt = gohelper.findChildText(obj, "#txt_num")
 
-	local var_7_0 = gohelper.findChild(arg_7_1, "select")
-	local var_7_1 = gohelper.findChildButtonWithAudio(arg_7_1, "#btn_click")
+	txt.text = index
 
-	var_7_1:AddClickListener(arg_7_0._btnclickOnClick, arg_7_0, arg_7_3)
+	local selectGo = gohelper.findChild(obj, "select")
+	local btn = gohelper.findChildButtonWithAudio(obj, "#btn_click")
 
-	arg_7_0._itemList[arg_7_3] = {
-		go = arg_7_1,
-		selectGo = var_7_0,
-		btn = var_7_1
+	btn:AddClickListener(self._btnclickOnClick, self, index)
+
+	self._itemList[index] = {
+		go = obj,
+		selectGo = selectGo,
+		btn = btn
 	}
 
-	gohelper.setActive(arg_7_1, true)
-	gohelper.setActive(var_7_0, false)
-	gohelper.setSiblingAfter(arg_7_1, arg_7_0._gonumitem)
+	gohelper.setActive(obj, true)
+	gohelper.setActive(selectGo, false)
+	gohelper.setSiblingAfter(obj, self._gonumitem)
 end
 
-function var_0_0._btnclickOnClick(arg_8_0, arg_8_1)
-	gohelper.setActive(arg_8_0._goexpand, false)
+function WeatherSwitchControlComp:_btnclickOnClick(index)
+	gohelper.setActive(self._goexpand, false)
 
-	if arg_8_0._switchComp:getReportIndex() == arg_8_1 then
+	local reportIndex = self._switchComp:getReportIndex()
+
+	if reportIndex == index then
 		return
 	end
 
-	arg_8_0._switchComp:switchReport(arg_8_1)
+	self._switchComp:switchReport(index)
 end
 
-function var_0_0._btndownOnClick(arg_9_0)
-	arg_9_0._switchComp:switchNextLightMode()
-	arg_9_0:_updateBtnStatus()
-	arg_9_0:_startDelayUpdateStatus()
+function WeatherSwitchControlComp:_btndownOnClick()
+	self._switchComp:switchNextLightMode()
+	self:_updateBtnStatus()
+	self:_startDelayUpdateStatus()
 end
 
-function var_0_0._updateBtnStatus(arg_10_0)
-	if not arg_10_0._switchComp then
+function WeatherSwitchControlComp:_updateBtnStatus()
+	if not self._switchComp then
 		return
 	end
 
-	local var_10_0 = arg_10_0._switchComp:getLightMode()
-	local var_10_1 = arg_10_0._switchComp:getReportIndex()
+	local lightMode = self._switchComp:getLightMode()
+	local reportIndex = self._switchComp:getReportIndex()
 
-	arg_10_0._txtnum.text = var_10_1
-	arg_10_0._btnup.button.interactable = var_10_0 ~= 1
-	arg_10_0._btndown.button.interactable = var_10_0 ~= 4
+	self._txtnum.text = reportIndex
+	self._btnup.button.interactable = lightMode ~= 1
+	self._btndown.button.interactable = lightMode ~= 4
 
-	UISpriteSetMgr.instance:setStoreGoodsSprite(arg_10_0._middleicon, arg_10_0._iconMap[var_10_0])
-	arg_10_0:_updateItemSelectStatus()
+	UISpriteSetMgr.instance:setStoreGoodsSprite(self._middleicon, self._iconMap[lightMode])
+	self:_updateItemSelectStatus()
 end
 
-function var_0_0._updateItemSelectStatus(arg_11_0)
-	local var_11_0 = arg_11_0._switchComp:getReportIndex()
+function WeatherSwitchControlComp:_updateItemSelectStatus()
+	local reportIndex = self._switchComp:getReportIndex()
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0._itemList) do
-		gohelper.setActive(iter_11_1.selectGo, iter_11_0 == var_11_0)
+	for i, v in ipairs(self._itemList) do
+		gohelper.setActive(v.selectGo, i == reportIndex)
 	end
 end
 
-function var_0_0._editableInitView(arg_12_0)
-	gohelper.setActive(arg_12_0._goexpand, false)
-	gohelper.setActive(arg_12_0._gonumitem, false)
-	gohelper.setActive(arg_12_0._btnclose, false)
+function WeatherSwitchControlComp:_editableInitView()
+	gohelper.setActive(self._goexpand, false)
+	gohelper.setActive(self._gonumitem, false)
+	gohelper.setActive(self._btnclose, false)
 
-	arg_12_0._itemList = arg_12_0:getUserDataTb_()
-	arg_12_0._iconMap = {
+	self._itemList = self:getUserDataTb_()
+	self._iconMap = {
 		[WeatherEnum.LightModeDuring] = "store_weathericon_01",
 		[WeatherEnum.LightModeOvercast] = "store_weathericon_03",
 		[WeatherEnum.LightModeDusk] = "store_weathericon_02",
 		[WeatherEnum.LightModeNight] = "store_weathericon_04"
 	}
-	arg_12_0._cdTime = CommonConfig.instance:getConstNum(ConstEnum.MainSceneChangeCD) / 1000
+	self._cdTime = CommonConfig.instance:getConstNum(ConstEnum.MainSceneChangeCD) / 1000
 
-	arg_12_0:addEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreenUp, arg_12_0._onTouch, arg_12_0)
+	self:addEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreenUp, self._onTouch, self)
 end
 
-function var_0_0._startDelayUpdateStatus(arg_13_0)
-	arg_13_0._btnup.button.interactable = false
-	arg_13_0._btndown.button.interactable = false
+function WeatherSwitchControlComp:_startDelayUpdateStatus()
+	self._btnup.button.interactable = false
+	self._btndown.button.interactable = false
 
-	TaskDispatcher.cancelTask(arg_13_0._delayUpdateStatus, arg_13_0)
-	TaskDispatcher.runDelay(arg_13_0._delayUpdateStatus, arg_13_0, arg_13_0._cdTime)
+	TaskDispatcher.cancelTask(self._delayUpdateStatus, self)
+	TaskDispatcher.runDelay(self._delayUpdateStatus, self, self._cdTime)
 end
 
-function var_0_0._delayUpdateStatus(arg_14_0)
-	arg_14_0:_updateBtnStatus()
+function WeatherSwitchControlComp:_delayUpdateStatus()
+	self:_updateBtnStatus()
 end
 
-function var_0_0._onTouch(arg_15_0)
-	if arg_15_0._showExpand then
-		arg_15_0._showExpand = false
+function WeatherSwitchControlComp:_onTouch()
+	if self._showExpand then
+		self._showExpand = false
 
 		return
 	end
 
-	gohelper.setActive(arg_15_0._goexpand, false)
+	gohelper.setActive(self._goexpand, false)
 end
 
-function var_0_0._editableAddEvents(arg_16_0)
+function WeatherSwitchControlComp:_editableAddEvents()
 	return
 end
 
-function var_0_0._editableRemoveEvents(arg_17_0)
+function WeatherSwitchControlComp:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.updateScene(arg_18_0, arg_18_1, arg_18_2)
-	if arg_18_0._switchComp then
-		arg_18_0._switchComp:removeReportChangeCallback()
+function WeatherSwitchControlComp:updateScene(id, controller)
+	if self._switchComp then
+		self._switchComp:removeReportChangeCallback()
 
-		arg_18_0._switchComp = nil
+		self._switchComp = nil
 	end
 
-	arg_18_0._switchComp = arg_18_2:getSwitchComp(arg_18_1)
+	self._switchComp = controller:getSwitchComp(id)
 
-	gohelper.setActive(arg_18_0.viewGO, arg_18_0._switchComp ~= nil)
+	gohelper.setActive(self.viewGO, self._switchComp ~= nil)
 
-	if not arg_18_0._switchComp then
+	if not self._switchComp then
 		return
 	end
 
-	arg_18_0._switchComp:addReportChangeCallback(arg_18_0._updateBtnStatus, arg_18_0)
-	arg_18_0:_updateBtnStatus()
+	self._switchComp:addReportChangeCallback(self._updateBtnStatus, self)
+	self:_updateBtnStatus()
 end
 
-function var_0_0.onDestroyView(arg_19_0)
-	arg_19_0._switchComp = nil
+function WeatherSwitchControlComp:onDestroyView()
+	self._switchComp = nil
 
-	for iter_19_0, iter_19_1 in ipairs(arg_19_0._itemList) do
-		iter_19_1.btn:RemoveClickListener()
+	for i, v in ipairs(self._itemList) do
+		v.btn:RemoveClickListener()
 	end
 
-	TaskDispatcher.cancelTask(arg_19_0._delayUpdateStatus, arg_19_0)
+	TaskDispatcher.cancelTask(self._delayUpdateStatus, self)
 end
 
-return var_0_0
+return WeatherSwitchControlComp

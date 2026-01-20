@@ -1,66 +1,68 @@
-﻿module("modules.logic.versionactivity1_3.versionactivity1_3dungeon.view.VersionActivity1_3DungeonMapEpisodeView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/versionactivity1_3dungeon/view/VersionActivity1_3DungeonMapEpisodeView.lua
 
-local var_0_0 = class("VersionActivity1_3DungeonMapEpisodeView", VersionActivity1_3DungeonBaseEpisodeView)
+module("modules.logic.versionactivity1_3.versionactivity1_3dungeon.view.VersionActivity1_3DungeonMapEpisodeView", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	var_0_0.super._editableInitView(arg_1_0)
+local VersionActivity1_3DungeonMapEpisodeView = class("VersionActivity1_3DungeonMapEpisodeView", VersionActivity1_3DungeonBaseEpisodeView)
 
-	arg_1_0._txtunlocktime = gohelper.findChildText(arg_1_0.viewGO, "#go_tasklist/#go_versionActivity/#go_hardmode/#go_hardModeLock/#txt_unlockTime")
-	arg_1_0.goScrollRect = gohelper.findChild(arg_1_0.viewGO, "#scroll_content")
+function VersionActivity1_3DungeonMapEpisodeView:_editableInitView()
+	VersionActivity1_3DungeonMapEpisodeView.super._editableInitView(self)
 
-	recthelper.setAnchorY(arg_1_0.goScrollRect.transform, -240)
+	self._txtunlocktime = gohelper.findChildText(self.viewGO, "#go_tasklist/#go_versionActivity/#go_hardmode/#go_hardModeLock/#txt_unlockTime")
+	self.goScrollRect = gohelper.findChild(self.viewGO, "#scroll_content")
+
+	recthelper.setAnchorY(self.goScrollRect.transform, -240)
 end
 
-function var_0_0.refreshModeNode(arg_2_0)
-	var_0_0.super.refreshModeNode(arg_2_0)
-	arg_2_0:refreshModeLockText()
+function VersionActivity1_3DungeonMapEpisodeView:refreshModeNode()
+	VersionActivity1_3DungeonMapEpisodeView.super.refreshModeNode(self)
+	self:refreshModeLockText()
 end
 
-function var_0_0.refreshModeLockText(arg_3_0)
-	local var_3_0 = VersionActivityConfig.instance:getAct113DungeonChapterOpenTimeStamp(VersionActivity1_3DungeonEnum.DungeonChapterId.LeiMiTeBeiHard)
-	local var_3_1 = ServerTime.now()
+function VersionActivity1_3DungeonMapEpisodeView:refreshModeLockText()
+	local openTimeStamp = VersionActivityConfig.instance:getAct113DungeonChapterOpenTimeStamp(VersionActivity1_3DungeonEnum.DungeonChapterId.LeiMiTeBeiHard)
+	local serverTime = ServerTime.now()
 
-	if var_3_1 < var_3_0 then
-		local var_3_2 = var_3_0 - var_3_1
-		local var_3_3 = Mathf.Floor(var_3_2 / TimeUtil.OneDaySecond)
-		local var_3_4 = var_3_2 % TimeUtil.OneDaySecond
-		local var_3_5 = Mathf.Floor(var_3_4 / TimeUtil.OneHourSecond)
-		local var_3_6 = ActivityModel.instance:getActivityInfo()[VersionActivity1_3Enum.ActivityId.Dungeon]
+	if serverTime < openTimeStamp then
+		local timeStampOffset = openTimeStamp - serverTime
+		local day = Mathf.Floor(timeStampOffset / TimeUtil.OneDaySecond)
+		local hourSecond = timeStampOffset % TimeUtil.OneDaySecond
+		local hour = Mathf.Floor(hourSecond / TimeUtil.OneHourSecond)
+		local actInfoMo = ActivityModel.instance:getActivityInfo()[VersionActivity1_3Enum.ActivityId.Dungeon]
 
-		if var_3_3 > 0 then
-			local var_3_7 = var_3_6:getRemainTimeStr2(var_3_2)
+		if day > 0 then
+			local tempStr = actInfoMo:getRemainTimeStr2(timeStampOffset)
 
-			if var_3_5 > 0 then
-				var_3_7 = var_3_7 .. var_3_5 .. luaLang("time_hour2")
+			if hour > 0 then
+				tempStr = tempStr .. hour .. luaLang("time_hour2")
 			end
 
-			arg_3_0._txtunlocktime.text = string.format(luaLang("seasonmainview_timeopencondition"), var_3_7)
+			self._txtunlocktime.text = string.format(luaLang("seasonmainview_timeopencondition"), tempStr)
 		else
-			arg_3_0._txtunlocktime.text = string.format(luaLang("seasonmainview_timeopencondition"), var_3_6:getRemainTimeStr2(var_3_2))
+			self._txtunlocktime.text = string.format(luaLang("seasonmainview_timeopencondition"), actInfoMo:getRemainTimeStr2(timeStampOffset))
 		end
 
-		gohelper.setActive(arg_3_0._gohardmodelock, true)
-		gohelper.setActive(arg_3_0._gohardmodeNormal, true)
-		gohelper.setActive(arg_3_0._gohardmodeSelect, false)
+		gohelper.setActive(self._gohardmodelock, true)
+		gohelper.setActive(self._gohardmodeNormal, true)
+		gohelper.setActive(self._gohardmodeSelect, false)
 
 		return
 	end
 
-	local var_3_8, var_3_9 = DungeonModel.instance:chapterIsUnLock(arg_3_0.activityDungeonMo.activityDungeonConfig.hardChapterId)
+	local isOpen, unLockEpisodeId = DungeonModel.instance:chapterIsUnLock(self.activityDungeonMo.activityDungeonConfig.hardChapterId)
 
-	if not var_3_8 then
-		local var_3_10 = DungeonConfig.instance:getEpisodeCO(var_3_9)
+	if not isOpen then
+		local episodeConfig = DungeonConfig.instance:getEpisodeCO(unLockEpisodeId)
 
-		arg_3_0._txtunlocktime.text = string.format(luaLang("versionactivity1_3_hardlocktip"), "JMP-" .. DungeonConfig.instance:getChapterEpisodeIndexWithSP(var_3_10.chapterId, var_3_9))
+		self._txtunlocktime.text = string.format(luaLang("versionactivity1_3_hardlocktip"), "JMP-" .. DungeonConfig.instance:getChapterEpisodeIndexWithSP(episodeConfig.chapterId, unLockEpisodeId))
 
-		gohelper.setActive(arg_3_0._gohardmodelock, true)
-		gohelper.setActive(arg_3_0._gohardmodeNormal, true)
-		gohelper.setActive(arg_3_0._gohardmodeSelect, false)
+		gohelper.setActive(self._gohardmodelock, true)
+		gohelper.setActive(self._gohardmodeNormal, true)
+		gohelper.setActive(self._gohardmodeSelect, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_3_0._gohardmodelock, false)
+	gohelper.setActive(self._gohardmodelock, false)
 end
 
-return var_0_0
+return VersionActivity1_3DungeonMapEpisodeView

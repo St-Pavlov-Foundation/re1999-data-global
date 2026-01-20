@@ -1,8 +1,10 @@
-﻿module("modules.logic.rouge.map.controller.RougeMapSkillCheckHelper", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/controller/RougeMapSkillCheckHelper.lua
 
-local var_0_0 = class("RougeMapSkillCheckHelper")
+module("modules.logic.rouge.map.controller.RougeMapSkillCheckHelper", package.seeall)
 
-var_0_0.CantUseMapSkillReason = {
+local RougeMapSkillCheckHelper = class("RougeMapSkillCheckHelper")
+
+RougeMapSkillCheckHelper.CantUseMapSkillReason = {
 	UseLimit = 1,
 	DoingEvent = 5,
 	CoinCost = 3,
@@ -12,173 +14,182 @@ var_0_0.CantUseMapSkillReason = {
 	PowerCost = 4,
 	None = 0
 }
-var_0_0.CantUseSkillToast = {
-	[var_0_0.CantUseMapSkillReason.UseLimit] = ToastEnum.CantUseMapSkill_StepCd,
-	[var_0_0.CantUseMapSkillReason.StepCd] = ToastEnum.CantUseMapSkill_StepCd,
-	[var_0_0.CantUseMapSkillReason.CoinCost] = ToastEnum.CantUseMapSkill,
-	[var_0_0.CantUseMapSkillReason.PowerCost] = ToastEnum.CantUseMapSkill,
-	[var_0_0.CantUseMapSkillReason.DoingEvent] = ToastEnum.CantUseMapSkill_DoingEvent,
-	[var_0_0.CantUseMapSkillReason.ForbidenMiddle] = ToastEnum.CantUseMapSkill_MiddleLayer,
-	[var_0_0.CantUseMapSkillReason.ForbidenPathSelect] = ToastEnum.CantUseMapSkill_MiddleLayer
+RougeMapSkillCheckHelper.CantUseSkillToast = {
+	[RougeMapSkillCheckHelper.CantUseMapSkillReason.UseLimit] = ToastEnum.CantUseMapSkill_StepCd,
+	[RougeMapSkillCheckHelper.CantUseMapSkillReason.StepCd] = ToastEnum.CantUseMapSkill_StepCd,
+	[RougeMapSkillCheckHelper.CantUseMapSkillReason.CoinCost] = ToastEnum.CantUseMapSkill,
+	[RougeMapSkillCheckHelper.CantUseMapSkillReason.PowerCost] = ToastEnum.CantUseMapSkill,
+	[RougeMapSkillCheckHelper.CantUseMapSkillReason.DoingEvent] = ToastEnum.CantUseMapSkill_DoingEvent,
+	[RougeMapSkillCheckHelper.CantUseMapSkillReason.ForbidenMiddle] = ToastEnum.CantUseMapSkill_MiddleLayer,
+	[RougeMapSkillCheckHelper.CantUseMapSkillReason.ForbidenPathSelect] = ToastEnum.CantUseMapSkill_MiddleLayer
 }
 
-function var_0_0.canUseMapSkill(arg_1_0)
-	local var_1_0 = var_0_0._getCantUseReason(arg_1_0)
+function RougeMapSkillCheckHelper.canUseMapSkill(skillMo)
+	local cantUseReason = RougeMapSkillCheckHelper._getCantUseReason(skillMo)
+	local canUse = not cantUseReason or cantUseReason == RougeMapSkillCheckHelper.CantUseMapSkillReason.None
 
-	return not var_1_0 or var_1_0 == var_0_0.CantUseMapSkillReason.None, var_1_0
+	return canUse, cantUseReason
 end
 
-function var_0_0._getCantUseReason(arg_2_0)
-	var_0_0._initSkillUseChcekFuncList()
+function RougeMapSkillCheckHelper._getCantUseReason(skillMo)
+	RougeMapSkillCheckHelper._initSkillUseChcekFuncList()
 
-	local var_2_0 = lua_rouge_map_skill.configDict[arg_2_0.id]
+	local skillCo = lua_rouge_map_skill.configDict[skillMo.id]
 
-	for iter_2_0, iter_2_1 in ipairs(var_0_0._checkFuncList) do
-		local var_2_1 = iter_2_1(arg_2_0, var_2_0)
+	for _, checkFunc in ipairs(RougeMapSkillCheckHelper._checkFuncList) do
+		local reason = checkFunc(skillMo, skillCo)
 
-		if var_2_1 and var_2_1 ~= var_0_0.CantUseMapSkillReason.None then
-			return var_2_1
+		if reason and reason ~= RougeMapSkillCheckHelper.CantUseMapSkillReason.None then
+			return reason
 		end
 	end
 end
 
-function var_0_0.showCantUseMapSkillToast(arg_3_0)
-	local var_3_0 = var_0_0.CantUseSkillToast[arg_3_0]
+function RougeMapSkillCheckHelper.showCantUseMapSkillToast(reason)
+	local toastId = RougeMapSkillCheckHelper.CantUseSkillToast[reason]
 
-	if var_3_0 then
-		GameFacade.showToast(var_3_0)
+	if toastId then
+		GameFacade.showToast(toastId)
 	end
 end
 
-function var_0_0._initSkillUseChcekFuncList()
-	if not var_0_0._checkFuncList then
-		var_0_0._checkFuncList = {
-			var_0_0.checkDoineEvent,
-			var_0_0.checkMiddleLayer,
-			var_0_0.checkPathSelectLayer,
-			var_0_0.checkUseLimiter,
-			var_0_0.checkStepCd,
-			var_0_0.checkCoinCost,
-			var_0_0.checkPowerCost
+function RougeMapSkillCheckHelper._initSkillUseChcekFuncList()
+	if not RougeMapSkillCheckHelper._checkFuncList then
+		RougeMapSkillCheckHelper._checkFuncList = {
+			RougeMapSkillCheckHelper.checkDoineEvent,
+			RougeMapSkillCheckHelper.checkMiddleLayer,
+			RougeMapSkillCheckHelper.checkPathSelectLayer,
+			RougeMapSkillCheckHelper.checkUseLimiter,
+			RougeMapSkillCheckHelper.checkStepCd,
+			RougeMapSkillCheckHelper.checkCoinCost,
+			RougeMapSkillCheckHelper.checkPowerCost
 		}
 	end
 end
 
-function var_0_0.checkDoineEvent(arg_5_0, arg_5_1)
-	if RougeMapModel.instance:isNormalLayer() then
-		local var_5_0 = RougeMapModel.instance:getCurNode()
+function RougeMapSkillCheckHelper.checkDoineEvent(skillMo, skillCo)
+	local isNormalLayer = RougeMapModel.instance:isNormalLayer()
 
-		if var_5_0 and var_5_0:checkIsNormal() and not var_5_0:isFinishEvent() then
-			return var_0_0.CantUseMapSkillReason.DoingEvent
+	if isNormalLayer then
+		local curNode = RougeMapModel.instance:getCurNode()
+
+		if curNode and curNode:checkIsNormal() and not curNode:isFinishEvent() then
+			return RougeMapSkillCheckHelper.CantUseMapSkillReason.DoingEvent
 		end
 	end
 end
 
-function var_0_0.checkMiddleLayer(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_1.middleLayerLimit == 0
-	local var_6_1 = RougeMapModel.instance:isMiddle()
+function RougeMapSkillCheckHelper.checkMiddleLayer(skillMo, skillCo)
+	local middleLayerLimit = skillCo.middleLayerLimit == 0
+	local isMiddle = RougeMapModel.instance:isMiddle()
 
-	if var_6_0 and var_6_1 then
-		return var_0_0.CantUseMapSkillReason.ForbidenMiddle
+	if middleLayerLimit and isMiddle then
+		return RougeMapSkillCheckHelper.CantUseMapSkillReason.ForbidenMiddle
 	end
 end
 
-function var_0_0.checkPathSelectLayer(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_1.middleLayerLimit == 0
-	local var_7_1 = RougeMapModel.instance:isPathSelect()
+function RougeMapSkillCheckHelper.checkPathSelectLayer(skillMo, skillCo)
+	local middleLayerLimit = skillCo.middleLayerLimit == 0
+	local isPathSelect = RougeMapModel.instance:isPathSelect()
 
-	if var_7_0 and var_7_1 then
-		return var_0_0.CantUseMapSkillReason.ForbidenPathSelect
+	if middleLayerLimit and isPathSelect then
+		return RougeMapSkillCheckHelper.CantUseMapSkillReason.ForbidenPathSelect
 	end
 end
 
-function var_0_0.checkUseLimiter(arg_8_0, arg_8_1)
-	if arg_8_0:getUseCount() >= arg_8_1.useLimit then
-		return var_0_0.CantUseMapSkillReason.UseLimit
+function RougeMapSkillCheckHelper.checkUseLimiter(skillMo, skillCo)
+	if skillMo:getUseCount() >= skillCo.useLimit then
+		return RougeMapSkillCheckHelper.CantUseMapSkillReason.UseLimit
 	end
 end
 
-function var_0_0.checkStepCd(arg_9_0, arg_9_1)
-	if arg_9_0:getStepRecord() >= arg_9_1.stepCd then
-		return var_0_0.CantUseMapSkillReason.StepCd
+function RougeMapSkillCheckHelper.checkStepCd(skillMo, skillCo)
+	if skillMo:getStepRecord() >= skillCo.stepCd then
+		return RougeMapSkillCheckHelper.CantUseMapSkillReason.StepCd
 	end
 end
 
-function var_0_0.checkCoinCost(arg_10_0, arg_10_1)
-	local var_10_0 = RougeModel.instance:getRougeInfo()
+function RougeMapSkillCheckHelper.checkCoinCost(skillMo, skillCo)
+	local rougeInfo = RougeModel.instance:getRougeInfo()
+	local coin = rougeInfo and rougeInfo.coin or 0
 
-	if (var_10_0 and var_10_0.coin or 0) < arg_10_1.coinCost then
-		return var_0_0.CantUseMapSkillReason.CoinCost
+	if coin < skillCo.coinCost then
+		return RougeMapSkillCheckHelper.CantUseMapSkillReason.CoinCost
 	end
 end
 
-function var_0_0.checkPowerCost(arg_11_0, arg_11_1)
-	local var_11_0 = RougeModel.instance:getRougeInfo()
+function RougeMapSkillCheckHelper.checkPowerCost(skillMo, skillCo)
+	local rougeInfo = RougeModel.instance:getRougeInfo()
+	local power = rougeInfo and rougeInfo.power or 0
 
-	if (var_11_0 and var_11_0.power or 0) < arg_11_1.powerCost then
-		return var_0_0.CantUseMapSkillReason.PowerCost
+	if power < skillCo.powerCost then
+		return RougeMapSkillCheckHelper.CantUseMapSkillReason.PowerCost
 	end
 end
 
-function var_0_0._initUseMapSkillCallBackMap()
-	if not var_0_0._mapSkillUseCallBackMap then
-		var_0_0._mapSkillUseCallBackMap = {
-			[13002] = var_0_0.useMapSkill_13002
+function RougeMapSkillCheckHelper._initUseMapSkillCallBackMap()
+	if not RougeMapSkillCheckHelper._mapSkillUseCallBackMap then
+		RougeMapSkillCheckHelper._mapSkillUseCallBackMap = {
+			[13002] = RougeMapSkillCheckHelper.useMapSkill_13002
 		}
 	end
 end
 
-function var_0_0.executeUseMapSkillCallBack(arg_13_0)
-	if not arg_13_0 then
+function RougeMapSkillCheckHelper.executeUseMapSkillCallBack(skillMo)
+	if not skillMo then
 		return
 	end
 
-	var_0_0._initUseMapSkillCallBackMap()
+	RougeMapSkillCheckHelper._initUseMapSkillCallBackMap()
 
-	local var_13_0 = var_0_0._mapSkillUseCallBackMap[arg_13_0.id]
+	local callback = RougeMapSkillCheckHelper._mapSkillUseCallBackMap[skillMo.id]
 
-	if var_13_0 then
-		var_13_0(arg_13_0)
+	if callback then
+		callback(skillMo)
 	end
 end
 
-local function var_0_1(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = RougeMapModel.instance:getNode(arg_14_0)
+local function collectUnTreasurePlaceNode(curNodeId, visitNodeIdMap, unTreasureNodeList)
+	local curNode = RougeMapModel.instance:getNode(curNodeId)
 
-	if var_14_0 and not var_14_0:checkIsEnd() then
-		local var_14_1 = var_14_0.nextNodeList
+	if curNode and not curNode:checkIsEnd() then
+		local nextNodeList = curNode.nextNodeList
 
-		if var_14_1 then
-			for iter_14_0, iter_14_1 in ipairs(var_14_1) do
-				local var_14_2 = RougeMapModel.instance:getNode(iter_14_1)
-				local var_14_3 = var_14_2 and var_14_2:getEventCo()
-				local var_14_4 = var_14_3 and var_14_3.type == RougeMapEnum.EventType.TreasurePlace
+		if nextNodeList then
+			for _, nodeId in ipairs(nextNodeList) do
+				local nodeMo = RougeMapModel.instance:getNode(nodeId)
+				local eventCo = nodeMo and nodeMo:getEventCo()
+				local isTreasurePlace = eventCo and eventCo.type == RougeMapEnum.EventType.TreasurePlace
 
-				if var_14_2 and not var_14_2:checkIsEnd() and not var_14_4 and not arg_14_1[iter_14_1] then
-					arg_14_1[iter_14_1] = true
+				if nodeMo and not nodeMo:checkIsEnd() and not isTreasurePlace and not visitNodeIdMap[nodeId] then
+					visitNodeIdMap[nodeId] = true
 
-					table.insert(arg_14_2, iter_14_1)
+					table.insert(unTreasureNodeList, nodeId)
 				end
 
-				var_0_1(iter_14_1, arg_14_1, arg_14_2)
+				collectUnTreasurePlaceNode(nodeId, visitNodeIdMap, unTreasureNodeList)
 			end
 		end
 	end
 end
 
-function var_0_0.useMapSkill_13002(arg_15_0, arg_15_1)
-	if RougeMapModel.instance:isNormalLayer() then
-		local var_15_0 = RougeMapModel.instance:getCurNode()
-		local var_15_1 = {}
-		local var_15_2 = {}
-		local var_15_3 = var_15_0 and var_15_0.nodeId
+function RougeMapSkillCheckHelper.useMapSkill_13002(skillMo, skillCo)
+	local isNormalLayer = RougeMapModel.instance:isNormalLayer()
 
-		var_0_1(var_15_3, var_15_1, var_15_2)
+	if isNormalLayer then
+		local curNode = RougeMapModel.instance:getCurNode()
+		local visitNodeIdMap = {}
+		local unTreasureNodeList = {}
+		local curNodeId = curNode and curNode.nodeId
 
-		if #var_15_2 < 2 then
+		collectUnTreasurePlaceNode(curNodeId, visitNodeIdMap, unTreasureNodeList)
+
+		local canVisitUnTreasureNodeNum = #unTreasureNodeList
+
+		if canVisitUnTreasureNodeNum < 2 then
 			GameFacade.showToast(ToastEnum.UseMapSkillLimit_13002)
 		end
 	end
 end
 
-return var_0_0
+return RougeMapSkillCheckHelper

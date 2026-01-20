@@ -1,180 +1,187 @@
-﻿module("modules.logic.versionactivity2_0.dungeon.view.map.VersionActivity2_0DungeonMapGraffitiEnterView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_0/dungeon/view/map/VersionActivity2_0DungeonMapGraffitiEnterView.lua
 
-local var_0_0 = class("VersionActivity2_0DungeonMapGraffitiEnterView", BaseView)
+module("modules.logic.versionactivity2_0.dungeon.view.map.VersionActivity2_0DungeonMapGraffitiEnterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gorole1 = gohelper.findChild(arg_1_0.viewGO, "root/role/#go_role1")
-	arg_1_0._gorole2 = gohelper.findChild(arg_1_0.viewGO, "root/role/#go_role2")
-	arg_1_0._gorole3 = gohelper.findChild(arg_1_0.viewGO, "root/role/#go_role3")
-	arg_1_0._gorole4 = gohelper.findChild(arg_1_0.viewGO, "root/role/#go_role4")
-	arg_1_0._btnenterGraffiti = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_enterGraffiti")
-	arg_1_0._btnenterGraffiti2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_enterGraffiti2")
-	arg_1_0._btnback = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_back")
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "root/#go_topleft")
-	arg_1_0._gograffitiReddot = gohelper.findChild(arg_1_0.viewGO, "root/#btn_enterGraffiti/#go_graffitiReddot")
-	arg_1_0._gobackReddot = gohelper.findChild(arg_1_0.viewGO, "root/#btn_back/#go_backReddot")
+local VersionActivity2_0DungeonMapGraffitiEnterView = class("VersionActivity2_0DungeonMapGraffitiEnterView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity2_0DungeonMapGraffitiEnterView:onInitView()
+	self._gorole1 = gohelper.findChild(self.viewGO, "root/role/#go_role1")
+	self._gorole2 = gohelper.findChild(self.viewGO, "root/role/#go_role2")
+	self._gorole3 = gohelper.findChild(self.viewGO, "root/role/#go_role3")
+	self._gorole4 = gohelper.findChild(self.viewGO, "root/role/#go_role4")
+	self._btnenterGraffiti = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_enterGraffiti")
+	self._btnenterGraffiti2 = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_enterGraffiti2")
+	self._btnback = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_back")
+	self._gotopleft = gohelper.findChild(self.viewGO, "root/#go_topleft")
+	self._gograffitiReddot = gohelper.findChild(self.viewGO, "root/#btn_enterGraffiti/#go_graffitiReddot")
+	self._gobackReddot = gohelper.findChild(self.viewGO, "root/#btn_back/#go_backReddot")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnenterGraffiti:AddClickListener(arg_2_0._btnenterGraffitiOnClick, arg_2_0)
-	arg_2_0._btnenterGraffiti2:AddClickListener(arg_2_0._btnenterGraffitiOnClick, arg_2_0)
-	arg_2_0._btnback:AddClickListener(arg_2_0._btnbackOnClick, arg_2_0)
-	arg_2_0:addEventCb(Activity161Controller.instance, Activity161Event.SetGraffitiMapSceneCanvas, arg_2_0.setCanvasView, arg_2_0)
-	arg_2_0:addEventCb(Activity161Controller.instance, Activity161Event.OpenGuideDialogue, arg_2_0.openGuideDialogue, arg_2_0)
-	arg_2_0:addEventCb(Activity161Controller.instance, Activity161Event.EnterGraffitiView, arg_2_0._btnenterGraffitiOnClick, arg_2_0)
-	arg_2_0:addEventCb(Activity161Controller.instance, Activity161Event.CloseRestaurantWithEffect, arg_2_0.closeViewWithEffect, arg_2_0)
+function VersionActivity2_0DungeonMapGraffitiEnterView:addEvents()
+	self._btnenterGraffiti:AddClickListener(self._btnenterGraffitiOnClick, self)
+	self._btnenterGraffiti2:AddClickListener(self._btnenterGraffitiOnClick, self)
+	self._btnback:AddClickListener(self._btnbackOnClick, self)
+	self:addEventCb(Activity161Controller.instance, Activity161Event.SetGraffitiMapSceneCanvas, self.setCanvasView, self)
+	self:addEventCb(Activity161Controller.instance, Activity161Event.OpenGuideDialogue, self.openGuideDialogue, self)
+	self:addEventCb(Activity161Controller.instance, Activity161Event.EnterGraffitiView, self._btnenterGraffitiOnClick, self)
+	self:addEventCb(Activity161Controller.instance, Activity161Event.CloseRestaurantWithEffect, self.closeViewWithEffect, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnenterGraffiti:RemoveClickListener()
-	arg_3_0._btnenterGraffiti2:RemoveClickListener()
-	arg_3_0._btnback:RemoveClickListener()
-	arg_3_0:removeEventCb(Activity161Controller.instance, Activity161Event.SetGraffitiMapSceneCanvas, arg_3_0.setCanvasView, arg_3_0)
-	arg_3_0:removeEventCb(Activity161Controller.instance, Activity161Event.OpenGuideDialogue, arg_3_0.openGuideDialogue, arg_3_0)
-	arg_3_0:removeEventCb(Activity161Controller.instance, Activity161Event.EnterGraffitiView, arg_3_0._btnenterGraffitiOnClick, arg_3_0)
-	arg_3_0:removeEventCb(Activity161Controller.instance, Activity161Event.CloseRestaurantWithEffect, arg_3_0.closeViewWithEffect, arg_3_0)
+function VersionActivity2_0DungeonMapGraffitiEnterView:removeEvents()
+	self._btnenterGraffiti:RemoveClickListener()
+	self._btnenterGraffiti2:RemoveClickListener()
+	self._btnback:RemoveClickListener()
+	self:removeEventCb(Activity161Controller.instance, Activity161Event.SetGraffitiMapSceneCanvas, self.setCanvasView, self)
+	self:removeEventCb(Activity161Controller.instance, Activity161Event.OpenGuideDialogue, self.openGuideDialogue, self)
+	self:removeEventCb(Activity161Controller.instance, Activity161Event.EnterGraffitiView, self._btnenterGraffitiOnClick, self)
+	self:removeEventCb(Activity161Controller.instance, Activity161Event.CloseRestaurantWithEffect, self.closeViewWithEffect, self)
 end
 
-var_0_0.TextShowInterval = 0.06
-var_0_0.TalkStepShowInterval = 1
-var_0_0.TalkFinishTime = 2
-var_0_0.ScrollTalkMargin = {
+VersionActivity2_0DungeonMapGraffitiEnterView.TextShowInterval = 0.06
+VersionActivity2_0DungeonMapGraffitiEnterView.TalkStepShowInterval = 1
+VersionActivity2_0DungeonMapGraffitiEnterView.TalkFinishTime = 2
+VersionActivity2_0DungeonMapGraffitiEnterView.ScrollTalkMargin = {
 	Top = 10,
 	Bottom = 20
 }
-var_0_0.TextMaxHeight = 200
-var_0_0.TipHeight = 10
+VersionActivity2_0DungeonMapGraffitiEnterView.TextMaxHeight = 200
+VersionActivity2_0DungeonMapGraffitiEnterView.TipHeight = 10
 
-function var_0_0._btnenterGraffitiOnClick(arg_4_0)
-	if VersionActivity2_0DungeonModel.instance:isDraggingMapState() then
+function VersionActivity2_0DungeonMapGraffitiEnterView:_btnenterGraffitiOnClick()
+	local isDragginMap = VersionActivity2_0DungeonModel.instance:isDraggingMapState()
+
+	if isDragginMap then
 		return
 	end
 
-	local var_4_0 = {
-		actId = arg_4_0.actId
-	}
+	local param = {}
 
-	Activity161Controller.instance:openGraffitiView(var_4_0)
+	param.actId = self.actId
+
+	Activity161Controller.instance:openGraffitiView(param)
 end
 
-function var_0_0._btnbackOnClick(arg_5_0)
+function VersionActivity2_0DungeonMapGraffitiEnterView:_btnbackOnClick()
 	Activity161Controller.instance:dispatchEvent(Activity161Event.CloseGraffitiEnterView)
 
-	arg_5_0.isClickBack = true
+	self.isClickBack = true
 
-	local var_5_0 = VersionActivity2_0DungeonModel.instance:getCurNeedUnlockGraffitiElement()
+	local elementId = VersionActivity2_0DungeonModel.instance:getCurNeedUnlockGraffitiElement()
 
-	if var_5_0 then
-		VersionActivity2_0DungeonController.instance:dispatchEvent(VersionActivity2_0DungeonEvent.FocusElement, var_5_0)
+	if elementId then
+		VersionActivity2_0DungeonController.instance:dispatchEvent(VersionActivity2_0DungeonEvent.FocusElement, elementId)
 	else
 		VersionActivityDungeonBaseController.instance:dispatchEvent(VersionActivityDungeonEvent.OnActivityDungeonMoChange)
 	end
 
-	arg_5_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.openGuideDialogue(arg_6_0, arg_6_1)
-	VersionActivity2_0DungeonController.instance:openDialogueView(tonumber(arg_6_1))
+function VersionActivity2_0DungeonMapGraffitiEnterView:openGuideDialogue(dialogueId)
+	VersionActivity2_0DungeonController.instance:openDialogueView(tonumber(dialogueId))
 end
 
-function var_0_0.setCanvasView(arg_7_0, arg_7_1)
-	arg_7_0.mapCfg = arg_7_1.mapConfig
-	arg_7_0.canvasGO = arg_7_1.canvasGO
-	arg_7_0.sceneGO = arg_7_1.sceneGo
+function VersionActivity2_0DungeonMapGraffitiEnterView:setCanvasView(param)
+	self.mapCfg = param.mapConfig
+	self.canvasGO = param.canvasGO
+	self.sceneGO = param.sceneGo
 
-	gohelper.addChild(arg_7_0.canvasGO, arg_7_0.viewGO)
+	gohelper.addChild(self.canvasGO, self.viewGO)
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0.actId = Activity161Model.instance:getActId()
-	arg_8_0.roleTab = arg_8_0:getUserDataTb_()
-	arg_8_0.dialogMap = {}
-	arg_8_0.isStartTalk = false
-	arg_8_0.isClickBack = false
+function VersionActivity2_0DungeonMapGraffitiEnterView:_editableInitView()
+	self.actId = Activity161Model.instance:getActId()
+	self.roleTab = self:getUserDataTb_()
+	self.dialogMap = {}
+	self.isStartTalk = false
+	self.isClickBack = false
 
-	RedDotController.instance:addRedDot(arg_8_0._gobackReddot, RedDotEnum.DotNode.V2a0DungeonHasUnDoElement, nil, arg_8_0.checkHasUnDoElement, arg_8_0)
+	RedDotController.instance:addRedDot(self._gobackReddot, RedDotEnum.DotNode.V2a0DungeonHasUnDoElement, nil, self.checkHasUnDoElement, self)
 
-	local var_8_0 = {
+	local multiReddots = {
 		{
 			id = RedDotEnum.DotNode.V2a0GraffitiReward,
-			uid = arg_8_0.actId
+			uid = self.actId
 		},
 		{
 			id = RedDotEnum.DotNode.V2a0GraffitiUnlock,
-			uid = arg_8_0.actId
+			uid = self.actId
 		}
 	}
 
-	RedDotController.instance:addMultiRedDot(arg_8_0._gograffitiReddot, var_8_0)
+	RedDotController.instance:addMultiRedDot(self._gograffitiReddot, multiReddots)
 end
 
-function var_0_0.checkHasUnDoElement(arg_9_0, arg_9_1)
-	arg_9_1:defaultRefreshDot()
+function VersionActivity2_0DungeonMapGraffitiEnterView:checkHasUnDoElement(redDotIcon)
+	redDotIcon:defaultRefreshDot()
 
-	if not arg_9_1.show and VersionActivity2_0DungeonModel.instance:getCurNeedUnlockGraffitiElement() then
-		arg_9_1.show = true
+	if not redDotIcon.show then
+		local needDoElementId = VersionActivity2_0DungeonModel.instance:getCurNeedUnlockGraffitiElement()
 
-		arg_9_1:showRedDot(RedDotEnum.Style.Normal)
+		if needDoElementId then
+			redDotIcon.show = true
+
+			redDotIcon:showRedDot(RedDotEnum.Style.Normal)
+		end
 	end
 end
 
-function var_0_0.onOpen(arg_10_0)
+function VersionActivity2_0DungeonMapGraffitiEnterView:onOpen()
 	VersionActivity2_0DungeonModel.instance:setOpeningGraffitiEntrance(false)
-	arg_10_0:initRoleComp()
-	arg_10_0:initDialog()
-	arg_10_0:startTalk()
+	self:initRoleComp()
+	self:initDialog()
+	self:startTalk()
 end
 
-function var_0_0.initRoleComp(arg_11_0)
-	for iter_11_0 = 1, 4 do
-		local var_11_0 = {
-			go = arg_11_0["_gorole" .. iter_11_0]
-		}
+function VersionActivity2_0DungeonMapGraffitiEnterView:initRoleComp()
+	for i = 1, 4 do
+		local roleItem = {}
 
-		var_11_0.canvasGroup = var_11_0.go:GetComponent(gohelper.Type_CanvasGroup)
-		var_11_0.gotalkDot = gohelper.findChild(var_11_0.go, "vx_pot")
-		var_11_0.gotalk = gohelper.findChild(var_11_0.go, "go_talk")
-		var_11_0.gotalkRect = var_11_0.gotalk:GetComponent(gohelper.Type_RectTransform)
-		var_11_0.scrolltalk = gohelper.findChildScrollRect(var_11_0.go, "go_talk/Scroll View")
-		var_11_0.txttalk = gohelper.findChildText(var_11_0.go, "go_talk/Scroll View/Viewport/Content/txt_talk")
-		var_11_0.imgchess = gohelper.findChildImage(var_11_0.go, "#chess/image_chess")
-		arg_11_0.roleTab[iter_11_0] = var_11_0
+		roleItem.go = self["_gorole" .. i]
+		roleItem.canvasGroup = roleItem.go:GetComponent(gohelper.Type_CanvasGroup)
+		roleItem.gotalkDot = gohelper.findChild(roleItem.go, "vx_pot")
+		roleItem.gotalk = gohelper.findChild(roleItem.go, "go_talk")
+		roleItem.gotalkRect = roleItem.gotalk:GetComponent(gohelper.Type_RectTransform)
+		roleItem.scrolltalk = gohelper.findChildScrollRect(roleItem.go, "go_talk/Scroll View")
+		roleItem.txttalk = gohelper.findChildText(roleItem.go, "go_talk/Scroll View/Viewport/Content/txt_talk")
+		roleItem.imgchess = gohelper.findChildImage(roleItem.go, "#chess/image_chess")
+		self.roleTab[i] = roleItem
 
-		UISpriteSetMgr.instance:setV2a0DungeonSprite(var_11_0.imgchess, "v2a0_dungeon_chess_" .. iter_11_0)
+		UISpriteSetMgr.instance:setV2a0DungeonSprite(roleItem.imgchess, "v2a0_dungeon_chess_" .. i)
 
-		local var_11_1 = Activity161Config.instance:getChessConfig(iter_11_0)
-		local var_11_2 = string.splitToNumber(var_11_1.pos, "#")
+		local config = Activity161Config.instance:getChessConfig(i)
+		local posList = string.splitToNumber(config.pos, "#")
 
-		recthelper.setAnchor(var_11_0.go.transform, var_11_2[1], var_11_2[2])
-		gohelper.setActive(var_11_0.gotalk, false)
-		gohelper.setActive(var_11_0.gotalkDot, false)
+		recthelper.setAnchor(roleItem.go.transform, posList[1], posList[2])
+		gohelper.setActive(roleItem.gotalk, false)
+		gohelper.setActive(roleItem.gotalkDot, false)
 	end
 
-	gohelper.setActive(arg_11_0.roleTab[Activity161Enum.npcRole].go, false)
+	gohelper.setActive(self.roleTab[Activity161Enum.npcRole].go, false)
 end
 
-function var_0_0.initDialog(arg_12_0)
-	arg_12_0.dialogState, arg_12_0.recentFinishDialogMO = Activity161Controller.instance:checkRencentGraffitiHasDialog()
+function VersionActivity2_0DungeonMapGraffitiEnterView:initDialog()
+	self.dialogState, self.recentFinishDialogMO = Activity161Controller.instance:checkRencentGraffitiHasDialog()
 
-	if arg_12_0:canDialog() then
-		local var_12_0 = arg_12_0.recentFinishDialogMO.config.dialogGroupId
+	if self:canDialog() then
+		local dialogGroupId = self.recentFinishDialogMO.config.dialogGroupId
 
-		arg_12_0.dialogMap = Activity161Config.instance:getAllDialogMapCoByGraoupId(var_12_0)
+		self.dialogMap = Activity161Config.instance:getAllDialogMapCoByGraoupId(dialogGroupId)
 
-		for iter_12_0, iter_12_1 in pairs(arg_12_0.dialogMap) do
-			if iter_12_1.chessId >= Activity161Enum.npcRole then
-				local var_12_1 = Activity161Config.instance:getChessConfig(iter_12_1.chessId)
+		for step, dialogCo in pairs(self.dialogMap) do
+			if dialogCo.chessId >= Activity161Enum.npcRole then
+				local chessCofing = Activity161Config.instance:getChessConfig(dialogCo.chessId)
 
-				UISpriteSetMgr.instance:setV2a0DungeonSprite(arg_12_0.roleTab[Activity161Enum.npcRole].imgchess, var_12_1.resource)
+				UISpriteSetMgr.instance:setV2a0DungeonSprite(self.roleTab[Activity161Enum.npcRole].imgchess, chessCofing.resource)
 
-				local var_12_2 = string.splitToNumber(var_12_1.pos, "#")
+				local posList = string.splitToNumber(chessCofing.pos, "#")
 
-				recthelper.setAnchor(arg_12_0.roleTab[Activity161Enum.npcRole].go.transform, var_12_2[1], var_12_2[2])
-				gohelper.setActive(arg_12_0.roleTab[Activity161Enum.npcRole].go, true)
+				recthelper.setAnchor(self.roleTab[Activity161Enum.npcRole].go.transform, posList[1], posList[2])
+				gohelper.setActive(self.roleTab[Activity161Enum.npcRole].go, true)
 
 				break
 			end
@@ -182,186 +189,190 @@ function var_0_0.initDialog(arg_12_0)
 	end
 end
 
-function var_0_0.canDialog(arg_13_0)
-	return not arg_13_0.dialogState and arg_13_0.recentFinishDialogMO
+function VersionActivity2_0DungeonMapGraffitiEnterView:canDialog()
+	return not self.dialogState and self.recentFinishDialogMO
 end
 
-function var_0_0.startTalk(arg_14_0)
-	if arg_14_0:canDialog() then
-		arg_14_0.isStartTalk = true
-		arg_14_0.curStepIndex = 1
-		arg_14_0.curCharIndex = 0
-		arg_14_0.lastShowTime = Time.time - var_0_0.TextShowInterval
-		arg_14_0.dialogConfig = arg_14_0.dialogMap[arg_14_0.curStepIndex]
-		arg_14_0.dialogLength = utf8.len(arg_14_0.dialogConfig.dialog)
+function VersionActivity2_0DungeonMapGraffitiEnterView:startTalk()
+	if self:canDialog() then
+		self.isStartTalk = true
+		self.curStepIndex = 1
+		self.curCharIndex = 0
+		self.lastShowTime = Time.time - VersionActivity2_0DungeonMapGraffitiEnterView.TextShowInterval
+		self.dialogConfig = self.dialogMap[self.curStepIndex]
+		self.dialogLength = utf8.len(self.dialogConfig.dialog)
 
-		arg_14_0:initUpdateBeat()
+		self:initUpdateBeat()
 	else
-		arg_14_0.isStartTalk = false
+		self.isStartTalk = false
 	end
 end
 
-function var_0_0.initUpdateBeat(arg_15_0)
-	arg_15_0.updateHandle = UpdateBeat:CreateListener(arg_15_0._onTalkFrame, arg_15_0)
+function VersionActivity2_0DungeonMapGraffitiEnterView:initUpdateBeat()
+	self.updateHandle = UpdateBeat:CreateListener(self._onTalkFrame, self)
 
-	UpdateBeat:AddListener(arg_15_0.updateHandle)
+	UpdateBeat:AddListener(self.updateHandle)
 
-	arg_15_0.lateUpdateHandle = UpdateBeat:CreateListener(arg_15_0._onTalkFrameLateUpdate, arg_15_0)
+	self.lateUpdateHandle = UpdateBeat:CreateListener(self._onTalkFrameLateUpdate, self)
 
-	UpdateBeat:AddListener(arg_15_0.lateUpdateHandle)
+	UpdateBeat:AddListener(self.lateUpdateHandle)
 end
 
-function var_0_0._onTalkFrame(arg_16_0)
-	if arg_16_0.closedView then
+function VersionActivity2_0DungeonMapGraffitiEnterView:_onTalkFrame()
+	if self.closedView then
 		return
 	end
 
-	if not arg_16_0.isStartTalk then
+	if not self.isStartTalk then
 		return
 	end
 
-	if arg_16_0.waitPlayNextStep or arg_16_0.waitFinishTalk then
+	if self.waitPlayNextStep or self.waitFinishTalk then
 		return
 	end
 
-	if Time.time - arg_16_0.lastShowTime < var_0_0.TextShowInterval then
+	local currentTime = Time.time
+
+	if currentTime - self.lastShowTime < VersionActivity2_0DungeonMapGraffitiEnterView.TextShowInterval then
 		return
 	end
 
-	arg_16_0:showTalkContent()
+	self:showTalkContent()
 end
 
-function var_0_0.showTalkContent(arg_17_0)
-	if arg_17_0.closedView then
+function VersionActivity2_0DungeonMapGraffitiEnterView:showTalkContent()
+	if self.closedView then
 		return
 	end
 
-	arg_17_0.lastShowTime = Time.time
-	arg_17_0.curCharIndex = arg_17_0.curCharIndex + 1
-	arg_17_0.curChessId = Mathf.Min(arg_17_0.dialogConfig.chessId, Activity161Enum.npcRole)
+	self.lastShowTime = Time.time
+	self.curCharIndex = self.curCharIndex + 1
+	self.curChessId = Mathf.Min(self.dialogConfig.chessId, Activity161Enum.npcRole)
 
-	gohelper.setActive(arg_17_0.roleTab[arg_17_0.curChessId].gotalk, true)
-	gohelper.setActive(arg_17_0.roleTab[arg_17_0.curChessId].gotalkDot, true)
+	gohelper.setActive(self.roleTab[self.curChessId].gotalk, true)
+	gohelper.setActive(self.roleTab[self.curChessId].gotalkDot, true)
 
-	arg_17_0.roleTab[arg_17_0.curChessId].txttalk.text = utf8.sub(arg_17_0.dialogConfig.dialog, 1, arg_17_0.curCharIndex)
-	arg_17_0.roleTab[arg_17_0.curChessId].scrolltalk.verticalNormalizedPosition = 0
-	arg_17_0.isDirty = true
+	self.roleTab[self.curChessId].txttalk.text = utf8.sub(self.dialogConfig.dialog, 1, self.curCharIndex)
+	self.roleTab[self.curChessId].scrolltalk.verticalNormalizedPosition = 0
+	self.isDirty = true
 
-	if arg_17_0.curCharIndex == arg_17_0.dialogLength + 1 then
-		if arg_17_0.dialogMap[arg_17_0.curStepIndex + 1] then
-			arg_17_0.waitPlayNextStep = true
+	if self.curCharIndex == self.dialogLength + 1 then
+		local nextStepConfig = self.dialogMap[self.curStepIndex + 1]
 
-			TaskDispatcher.runDelay(arg_17_0.playNextStep, arg_17_0, var_0_0.TalkStepShowInterval)
+		if nextStepConfig then
+			self.waitPlayNextStep = true
+
+			TaskDispatcher.runDelay(self.playNextStep, self, VersionActivity2_0DungeonMapGraffitiEnterView.TalkStepShowInterval)
 		else
-			arg_17_0.waitFinishTalk = true
+			self.waitFinishTalk = true
 
-			TaskDispatcher.runDelay(arg_17_0.onFinishTalk, arg_17_0, var_0_0.TalkFinishTime)
+			TaskDispatcher.runDelay(self.onFinishTalk, self, VersionActivity2_0DungeonMapGraffitiEnterView.TalkFinishTime)
 		end
 	end
 end
 
-function var_0_0.playNextStep(arg_18_0)
-	arg_18_0.waitPlayNextStep = false
-	arg_18_0.curCharIndex = 0
-	arg_18_0.curStepIndex = arg_18_0.curStepIndex + 1
-	arg_18_0.dialogConfig = arg_18_0.dialogMap[arg_18_0.curStepIndex]
-	arg_18_0.dialogLength = utf8.len(arg_18_0.dialogConfig.dialog)
+function VersionActivity2_0DungeonMapGraffitiEnterView:playNextStep()
+	self.waitPlayNextStep = false
+	self.curCharIndex = 0
+	self.curStepIndex = self.curStepIndex + 1
+	self.dialogConfig = self.dialogMap[self.curStepIndex]
+	self.dialogLength = utf8.len(self.dialogConfig.dialog)
 
-	arg_18_0:hideAllTalk()
+	self:hideAllTalk()
 end
 
-function var_0_0.onFinishTalk(arg_19_0)
-	arg_19_0.waitFinishTalk = false
-	arg_19_0.waitPlayNextStep = false
-	arg_19_0.isStartTalk = false
-	arg_19_0.lastShowTime = 0
-	arg_19_0.curCharIndex = 0
-	arg_19_0.curStepIndex = 1
+function VersionActivity2_0DungeonMapGraffitiEnterView:onFinishTalk()
+	self.waitFinishTalk = false
+	self.waitPlayNextStep = false
+	self.isStartTalk = false
+	self.lastShowTime = 0
+	self.curCharIndex = 0
+	self.curStepIndex = 1
 
-	arg_19_0:hideAllTalk()
-	gohelper.setActive(arg_19_0.roleTab[Activity161Enum.npcRole].go, false)
-	arg_19_0:removeUpdateBeat()
+	self:hideAllTalk()
+	gohelper.setActive(self.roleTab[Activity161Enum.npcRole].go, false)
+	self:removeUpdateBeat()
 end
 
-function var_0_0.hideAllTalk(arg_20_0)
-	for iter_20_0 = 1, 4 do
-		gohelper.setActive(arg_20_0.roleTab[iter_20_0].gotalkDot, false)
-		gohelper.setActive(arg_20_0.roleTab[iter_20_0].gotalk, false)
+function VersionActivity2_0DungeonMapGraffitiEnterView:hideAllTalk()
+	for i = 1, 4 do
+		gohelper.setActive(self.roleTab[i].gotalkDot, false)
+		gohelper.setActive(self.roleTab[i].gotalk, false)
 	end
 end
 
-function var_0_0._onTalkFrameLateUpdate(arg_21_0)
-	if arg_21_0.closedView then
+function VersionActivity2_0DungeonMapGraffitiEnterView:_onTalkFrameLateUpdate()
+	if self.closedView then
 		return
 	end
 
-	if not arg_21_0.isStartTalk then
+	if not self.isStartTalk then
 		return
 	end
 
-	if arg_21_0.waitPlayNextStep or arg_21_0.waitFinishTalk then
+	if self.waitPlayNextStep or self.waitFinishTalk then
 		return
 	end
 
-	if not arg_21_0.isDirty then
+	if not self.isDirty then
 		return
 	end
 
-	arg_21_0.isDirty = false
+	self.isDirty = false
 
-	local var_21_0 = 0
-	local var_21_1 = arg_21_0.roleTab[arg_21_0.curChessId].txttalk.preferredHeight
-	local var_21_2 = var_0_0.ScrollTalkMargin.Top + var_0_0.ScrollTalkMargin.Bottom
+	local talkHeight = 0
+	local preferredHeight = self.roleTab[self.curChessId].txttalk.preferredHeight
+	local margin = VersionActivity2_0DungeonMapGraffitiEnterView.ScrollTalkMargin.Top + VersionActivity2_0DungeonMapGraffitiEnterView.ScrollTalkMargin.Bottom
 
-	if var_21_1 > var_0_0.TextMaxHeight then
-		var_21_0 = var_0_0.TextMaxHeight + var_21_2
+	if preferredHeight > VersionActivity2_0DungeonMapGraffitiEnterView.TextMaxHeight then
+		talkHeight = VersionActivity2_0DungeonMapGraffitiEnterView.TextMaxHeight + margin
 	else
-		var_21_0 = var_21_1 + var_21_2
+		talkHeight = preferredHeight + margin
 	end
 
-	if arg_21_0.waitPlayNextStep then
-		var_21_0 = var_21_0 + var_0_0.TipHeight
+	if self.waitPlayNextStep then
+		talkHeight = talkHeight + VersionActivity2_0DungeonMapGraffitiEnterView.TipHeight
 	end
 
-	recthelper.setHeight(arg_21_0.roleTab[arg_21_0.curChessId].gotalkRect, var_21_0)
+	recthelper.setHeight(self.roleTab[self.curChessId].gotalkRect, talkHeight)
 end
 
-function var_0_0.onClose(arg_22_0)
+function VersionActivity2_0DungeonMapGraffitiEnterView:onClose()
 	Activity161Controller.instance:dispatchEvent(Activity161Event.CloseGraffitiEnterView)
 	Activity161Controller.instance:saveRecentGraffitiDialog()
-	arg_22_0:removeUpdateBeat()
-	TaskDispatcher.cancelTask(arg_22_0.playNextStep, arg_22_0)
-	TaskDispatcher.cancelTask(arg_22_0.onFinishTalk, arg_22_0)
+	self:removeUpdateBeat()
+	TaskDispatcher.cancelTask(self.playNextStep, self)
+	TaskDispatcher.cancelTask(self.onFinishTalk, self)
 
-	arg_22_0.closedView = true
+	self.closedView = true
 
 	VersionActivity2_0DungeonModel.instance:setMapNeedTweenState(false)
 
-	if not arg_22_0.isClickBack then
+	if not self.isClickBack then
 		VersionActivityDungeonBaseController.instance:dispatchEvent(VersionActivityDungeonEvent.OnActivityDungeonMoChange)
 	end
 
 	VersionActivity2_0DungeonModel.instance:setOpenGraffitiEntrance(false)
-	TaskDispatcher.cancelTask(arg_22_0.closeThis, arg_22_0)
+	TaskDispatcher.cancelTask(self.closeThis, self)
 end
 
-function var_0_0.closeViewWithEffect(arg_23_0)
+function VersionActivity2_0DungeonMapGraffitiEnterView:closeViewWithEffect()
 	Activity161Controller.instance:dispatchEvent(Activity161Event.PlayExcessiveEffect)
-	TaskDispatcher.runDelay(arg_23_0.closeThis, arg_23_0, 0.5)
+	TaskDispatcher.runDelay(self.closeThis, self, 0.5)
 end
 
-function var_0_0.removeUpdateBeat(arg_24_0)
-	if arg_24_0.updateHandle then
-		UpdateBeat:RemoveListener(arg_24_0.updateHandle)
+function VersionActivity2_0DungeonMapGraffitiEnterView:removeUpdateBeat()
+	if self.updateHandle then
+		UpdateBeat:RemoveListener(self.updateHandle)
 	end
 
-	if arg_24_0.lateUpdateHandle then
-		UpdateBeat:RemoveListener(arg_24_0.lateUpdateHandle)
+	if self.lateUpdateHandle then
+		UpdateBeat:RemoveListener(self.lateUpdateHandle)
 	end
 end
 
-function var_0_0.onDestroyView(arg_25_0)
+function VersionActivity2_0DungeonMapGraffitiEnterView:onDestroyView()
 	return
 end
 
-return var_0_0
+return VersionActivity2_0DungeonMapGraffitiEnterView

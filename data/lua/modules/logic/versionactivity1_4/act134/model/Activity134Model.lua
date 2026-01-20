@@ -1,234 +1,237 @@
-﻿module("modules.logic.versionactivity1_4.act134.model.Activity134Model", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act134/model/Activity134Model.lua
 
-local var_0_0 = class("Activity134Model", BaseModel)
+module("modules.logic.versionactivity1_4.act134.model.Activity134Model", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.super:ctor()
+local Activity134Model = class("Activity134Model", BaseModel)
 
-	arg_1_0.serverTaskModel = BaseModel.New()
+function Activity134Model:ctor()
+	self.super:ctor()
+
+	self.serverTaskModel = BaseModel.New()
 end
 
-function var_0_0.onInitMo(arg_2_0, arg_2_1)
-	arg_2_0.actId = arg_2_1.activityId
+function Activity134Model:onInitMo(info)
+	self.actId = info.activityId
 
-	arg_2_0:initStory(arg_2_1.hasGetBonusIds)
-	arg_2_0:setTasksInfo(arg_2_1.tasks)
+	self:initStory(info.hasGetBonusIds)
+	self:setTasksInfo(info.tasks)
 end
 
-function var_0_0.getCurActivityID(arg_3_0)
-	return arg_3_0.actId
+function Activity134Model:getCurActivityID()
+	return self.actId
 end
 
-function var_0_0.initStory(arg_4_0, arg_4_1)
-	arg_4_0.storyMoList = {}
-	arg_4_0.finishStoryCount = #arg_4_1
-	arg_4_0.maxNeedClueCount = 0
+function Activity134Model:initStory(getBonusId)
+	self.storyMoList = {}
+	self.finishStoryCount = #getBonusId
+	self.maxNeedClueCount = 0
 
-	for iter_4_0, iter_4_1 in ipairs(Activity134Config.instance:getBonusAllConfig()) do
-		local var_4_0 = Activity134StoryMo.New()
+	for i, v in ipairs(Activity134Config.instance:getBonusAllConfig()) do
+		local mo = Activity134StoryMo.New()
 
-		var_4_0:init(iter_4_0, iter_4_1)
+		mo:init(i, v)
 
-		var_4_0.status = arg_4_1[iter_4_1.id] and Activity134Enum.StroyStatus.Finish or Activity134Enum.StroyStatus.Orgin
-		arg_4_0.maxNeedClueCount = Mathf.Max(arg_4_0.maxNeedClueCount, var_4_0.needTokensQuantity)
+		local status = getBonusId[v.id] and Activity134Enum.StroyStatus.Finish or Activity134Enum.StroyStatus.Orgin
 
-		table.insert(arg_4_0.storyMoList, var_4_0)
+		mo.status = status
+		self.maxNeedClueCount = Mathf.Max(self.maxNeedClueCount, mo.needTokensQuantity)
+
+		table.insert(self.storyMoList, mo)
 	end
 
-	table.sort(arg_4_0.storyMoList, function(arg_5_0, arg_5_1)
-		return arg_5_0.needTokensQuantity < arg_5_1.needTokensQuantity
+	table.sort(self.storyMoList, function(a, b)
+		return a.needTokensQuantity < b.needTokensQuantity
 	end)
 end
 
-function var_0_0.getStoryMoByIndex(arg_6_0, arg_6_1)
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0.storyMoList) do
-		if iter_6_1.index == arg_6_1 then
-			return iter_6_1
+function Activity134Model:getStoryMoByIndex(index)
+	for _, v in ipairs(self.storyMoList) do
+		if v.index == index then
+			return v
 		end
 	end
 end
 
-function var_0_0.getStoryMoById(arg_7_0, arg_7_1)
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0.storyMoList) do
-		if arg_7_1 == iter_7_1.config.id then
-			return iter_7_1
+function Activity134Model:getStoryMoById(id)
+	for _, v in ipairs(self.storyMoList) do
+		if id == v.config.id then
+			return v
 		end
 	end
 end
 
-function var_0_0.getAllStoryMo(arg_8_0)
-	return arg_8_0.storyMoList
+function Activity134Model:getAllStoryMo()
+	return self.storyMoList
 end
 
-function var_0_0.getStoryTotalCount(arg_9_0)
-	return #arg_9_0.storyMoList
+function Activity134Model:getStoryTotalCount()
+	return #self.storyMoList
 end
 
-function var_0_0.getFinishStoryCount(arg_10_0)
-	return arg_10_0.finishStoryCount
+function Activity134Model:getFinishStoryCount()
+	return self.finishStoryCount
 end
 
-function var_0_0.getClueCount(arg_11_0)
-	local var_11_0 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.Act134Clue)
+function Activity134Model:getClueCount()
+	local clueCurrencyMo = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.Act134Clue)
 
-	if var_11_0 then
-		return var_11_0.quantity
+	if clueCurrencyMo then
+		return clueCurrencyMo.quantity
 	end
 end
 
-function var_0_0.getMaxClueCount(arg_12_0)
-	return arg_12_0.maxNeedClueCount
+function Activity134Model:getMaxClueCount()
+	return self.maxNeedClueCount
 end
 
-function var_0_0.checkGetStoryBonus(arg_13_0)
-	local var_13_0 = arg_13_0:getClueCount()
-	local var_13_1
+function Activity134Model:checkGetStoryBonus()
+	local clueCount = self:getClueCount()
+	local isHas
 
-	for iter_13_0, iter_13_1 in ipairs(arg_13_0.storyMoList) do
-		if iter_13_1.status == Activity134Enum.StroyStatus.Orgin and var_13_0 >= tonumber(iter_13_1.needTokensQuantity) then
-			Activity134Rpc.instance:sendGet134BonusRequest(arg_13_0.actId, iter_13_1.config.id)
+	for _, v in ipairs(self.storyMoList) do
+		if v.status == Activity134Enum.StroyStatus.Orgin and clueCount >= tonumber(v.needTokensQuantity) then
+			Activity134Rpc.instance:sendGet134BonusRequest(self.actId, v.config.id)
 
-			var_13_1 = true
+			isHas = true
 		end
 	end
 
-	return var_13_1
+	return isHas
 end
 
-function var_0_0.onReceiveBonus(arg_14_0, arg_14_1)
-	if not arg_14_1 then
+function Activity134Model:onReceiveBonus(bonusId)
+	if not bonusId then
 		return
 	end
 
-	local var_14_0 = arg_14_0.storyMoList[arg_14_1]
+	local mo = self.storyMoList[bonusId]
 
-	if not var_14_0 or var_14_0.status == Activity134Enum.StroyStatus.Finish then
+	if not mo or mo.status == Activity134Enum.StroyStatus.Finish then
 		return
 	end
 
-	var_14_0.status = Activity134Enum.StroyStatus.Finish
-	arg_14_0.finishStoryCount = Mathf.Max(arg_14_0.finishStoryCount, var_14_0.index)
+	mo.status = Activity134Enum.StroyStatus.Finish
+	self.finishStoryCount = Mathf.Max(self.finishStoryCount, mo.index)
 end
 
-function var_0_0.getTaskMoById(arg_15_0, arg_15_1)
-	for iter_15_0, iter_15_1 in ipairs(arg_15_0.serverTaskModel) do
-		if arg_15_1 == iter_15_1.config.id then
-			return iter_15_1
+function Activity134Model:getTaskMoById(id)
+	for _, v in ipairs(self.serverTaskModel) do
+		if id == v.config.id then
+			return v
 		end
 	end
 end
 
-function var_0_0.getTasksInfo(arg_16_0)
-	return arg_16_0.serverTaskModel:getList()
+function Activity134Model:getTasksInfo()
+	return self.serverTaskModel:getList()
 end
 
-function var_0_0.setTasksInfo(arg_17_0, arg_17_1)
-	local var_17_0
+function Activity134Model:setTasksInfo(taskInfo)
+	local hasChange
 
-	for iter_17_0, iter_17_1 in ipairs(arg_17_1) do
-		local var_17_1 = arg_17_0.serverTaskModel:getById(iter_17_1.id)
+	for i, info in ipairs(taskInfo) do
+		local mo = self.serverTaskModel:getById(info.id)
 
-		if var_17_1 then
-			var_17_1:update(iter_17_1)
+		if mo then
+			mo:update(info)
 		else
-			local var_17_2 = Activity134Config.instance:getTaskConfig(iter_17_1.id)
+			local co = Activity134Config.instance:getTaskConfig(info.id)
 
-			if var_17_2 then
-				local var_17_3 = TaskMo.New()
+			if co then
+				mo = TaskMo.New()
 
-				var_17_3:init(iter_17_1, var_17_2)
-				arg_17_0.serverTaskModel:addAtLast(var_17_3)
+				mo:init(info, co)
+				self.serverTaskModel:addAtLast(mo)
 			end
 		end
 
-		var_17_0 = true
+		hasChange = true
 	end
 
-	if var_17_0 then
-		arg_17_0:sortList()
+	if hasChange then
+		self:sortList()
 	end
 
-	return var_17_0
+	return hasChange
 end
 
-function var_0_0.deleteInfo(arg_18_0, arg_18_1)
-	local var_18_0 = {}
+function Activity134Model:deleteInfo(taskInfo)
+	local removeDict = {}
 
-	for iter_18_0, iter_18_1 in pairs(arg_18_1) do
-		local var_18_1 = arg_18_0.serverTaskModel:getById(iter_18_1)
+	for _, id in pairs(taskInfo) do
+		local mo = self.serverTaskModel:getById(id)
 
-		if var_18_1 then
-			var_18_0[iter_18_1] = var_18_1
+		if mo then
+			removeDict[id] = mo
 		end
 	end
 
-	for iter_18_2, iter_18_3 in pairs(var_18_0) do
-		arg_18_0.serverTaskModel:remove(iter_18_3)
+	for id, mo in pairs(removeDict) do
+		self.serverTaskModel:remove(mo)
 	end
 
-	local var_18_2 = next(var_18_0)
+	local isChange = next(removeDict)
 
-	if var_18_2 then
-		arg_18_0:sortList()
+	if isChange then
+		self:sortList()
 	end
 
-	return var_18_2
+	return isChange
 end
 
-function var_0_0.sortList(arg_19_0)
-	arg_19_0.serverTaskModel:sort(function(arg_20_0, arg_20_1)
-		local var_20_0 = arg_20_0.finishCount > 0 and 3 or arg_20_0.progress >= arg_20_0.config.maxProgress and 1 or 2
-		local var_20_1 = arg_20_1.finishCount > 0 and 3 or arg_20_1.progress >= arg_20_1.config.maxProgress and 1 or 2
+function Activity134Model:sortList()
+	self.serverTaskModel:sort(function(a, b)
+		local aValue = a.finishCount > 0 and 3 or a.progress >= a.config.maxProgress and 1 or 2
+		local bValue = b.finishCount > 0 and 3 or b.progress >= b.config.maxProgress and 1 or 2
 
-		if var_20_0 ~= var_20_1 then
-			return var_20_0 < var_20_1
+		if aValue ~= bValue then
+			return aValue < bValue
 		else
-			return arg_20_0.config.id < arg_20_1.config.id
+			return a.config.id < b.config.id
 		end
 	end)
 end
 
-function var_0_0.getBonusFillWidth(arg_21_0)
-	local var_21_0 = arg_21_0:getClueCount()
+function Activity134Model:getBonusFillWidth()
+	local clueCount = self:getClueCount()
 
-	if var_21_0 <= 0 then
+	if clueCount <= 0 then
 		return 0
 	end
 
-	local var_21_1 = 0
-	local var_21_2 = 0
-	local var_21_3 = 0
-	local var_21_4 = 0
-	local var_21_5 = arg_21_0:getStoryTotalCount()
+	local index, width, tokens, nexttokens = 0, 0, 0, 0
+	local total = self:getStoryTotalCount()
 
-	for iter_21_0, iter_21_1 in ipairs(arg_21_0.storyMoList) do
-		if var_21_0 > iter_21_1.needTokensQuantity then
-			var_21_1 = iter_21_1.index
+	for _, v in ipairs(self.storyMoList) do
+		if clueCount > v.needTokensQuantity then
+			index = v.index
 
 			break
 		end
 	end
 
-	if var_21_0 > arg_21_0:getMaxClueCount() then
-		var_21_1 = var_21_5
+	if clueCount > self:getMaxClueCount() then
+		index = total
 	end
 
-	if var_21_1 == 0 then
-		var_21_3 = -30
-		var_21_4 = arg_21_0.storyMoList[1].needTokensQuantity
-	elseif var_21_5 <= var_21_1 then
-		var_21_3 = arg_21_0.storyMoList[var_21_5].needTokensQuantity
-		var_21_4 = var_21_3
+	if index == 0 then
+		tokens = -30
+		nexttokens = self.storyMoList[1].needTokensQuantity
+	elseif total <= index then
+		tokens = self.storyMoList[total].needTokensQuantity
+		nexttokens = tokens
 	else
-		var_21_3 = arg_21_0.storyMoList[var_21_1].needTokensQuantity
-		var_21_4 = arg_21_0.storyMoList[var_21_1 + 1].needTokensQuantity
+		tokens = self.storyMoList[index].needTokensQuantity
+		nexttokens = self.storyMoList[index + 1].needTokensQuantity
 	end
 
-	local var_21_6 = var_21_4 == var_21_3 and 0 or (var_21_0 - var_21_3) / (var_21_4 - var_21_3)
+	local progress = nexttokens == tokens and 0 or (clueCount - tokens) / (nexttokens - tokens)
 
-	return 970 + 310 * (var_21_1 - 1 + var_21_6)
+	width = 970 + 310 * (index - 1 + progress)
+
+	return width
 end
 
-var_0_0.instance = var_0_0.New()
+Activity134Model.instance = Activity134Model.New()
 
-return var_0_0
+return Activity134Model

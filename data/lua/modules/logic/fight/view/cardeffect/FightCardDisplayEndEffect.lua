@@ -1,62 +1,64 @@
-﻿module("modules.logic.fight.view.cardeffect.FightCardDisplayEndEffect", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/cardeffect/FightCardDisplayEndEffect.lua
 
-local var_0_0 = class("FightCardDisplayEndEffect", BaseWork)
-local var_0_1 = 1
-local var_0_2 = var_0_1 * 0.033
+module("modules.logic.fight.view.cardeffect.FightCardDisplayEndEffect", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+local FightCardDisplayEndEffect = class("FightCardDisplayEndEffect", BaseWork)
+local TimeFactor = 1
+local dt = TimeFactor * 0.033
 
-	arg_1_0._dt = var_0_2 / FightModel.instance:getUISpeed()
-	arg_1_0._flow = FlowSequence.New()
+function FightCardDisplayEndEffect:onStart(context)
+	FightCardDisplayEndEffect.super.onStart(self, context)
 
-	if arg_1_1.skillItemGO then
-		local var_1_0 = TweenWork.New({
+	self._dt = dt / FightModel.instance:getUISpeed()
+	self._flow = FlowSequence.New()
+
+	if context.skillItemGO then
+		local fadeWork = TweenWork.New({
 			from = 1,
 			type = "DOFadeCanvasGroup",
 			to = 0,
-			go = arg_1_1.skillItemGO,
-			t = arg_1_0._dt * 5
+			go = context.skillItemGO,
+			t = self._dt * 5
 		})
 
-		arg_1_0._flow:addWork(var_1_0)
+		self._flow:addWork(fadeWork)
 	end
 
-	local var_1_1 = arg_1_1.waitingAreaGO.transform
-	local var_1_2 = arg_1_1.skillTipsGO.transform
-	local var_1_3 = recthelper.getWidth(var_1_1) + recthelper.getWidth(var_1_2)
-	local var_1_4 = TweenWork.New({
+	local waitTr = context.waitingAreaGO.transform
+	local tipsTr = context.skillTipsGO.transform
+	local width = recthelper.getWidth(waitTr) + recthelper.getWidth(tipsTr)
+	local tipsWork = TweenWork.New({
 		type = "DOAnchorPosX",
-		tr = var_1_2,
-		to = var_1_3,
-		t = arg_1_0._dt * 3
+		tr = tipsTr,
+		to = width,
+		t = self._dt * 3
 	})
 
-	arg_1_0._flow:addWork(var_1_4)
+	self._flow:addWork(tipsWork)
 
-	local var_1_5 = FunctionWork.New(function()
-		gohelper.setActive(arg_1_1.skillItemGO, false)
-		gohelper.setActive(arg_1_1.skillTipsGO, false)
+	local hideWork = FunctionWork.New(function()
+		gohelper.setActive(context.skillItemGO, false)
+		gohelper.setActive(context.skillTipsGO, false)
 	end)
 
-	arg_1_0._flow:addWork(var_1_5)
-	arg_1_0._flow:registerDoneListener(arg_1_0._onWorkDone, arg_1_0)
-	arg_1_0._flow:start()
+	self._flow:addWork(hideWork)
+	self._flow:registerDoneListener(self._onWorkDone, self)
+	self._flow:start()
 end
 
-function var_0_0.onStop(arg_3_0)
-	var_0_0.super.onStop(arg_3_0)
+function FightCardDisplayEndEffect:onStop()
+	FightCardDisplayEndEffect.super.onStop(self)
 
-	if arg_3_0._flow then
-		arg_3_0._flow:unregisterDoneListener(arg_3_0._onWorkDone, arg_3_0)
-		arg_3_0._flow:stop()
+	if self._flow then
+		self._flow:unregisterDoneListener(self._onWorkDone, self)
+		self._flow:stop()
 
-		arg_3_0._flow = nil
+		self._flow = nil
 	end
 end
 
-function var_0_0._onWorkDone(arg_4_0)
-	arg_4_0:onDone(true)
+function FightCardDisplayEndEffect:_onWorkDone()
+	self:onDone(true)
 end
 
-return var_0_0
+return FightCardDisplayEndEffect

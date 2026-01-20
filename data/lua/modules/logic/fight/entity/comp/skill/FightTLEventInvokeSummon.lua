@@ -1,59 +1,61 @@
-﻿module("modules.logic.fight.entity.comp.skill.FightTLEventInvokeSummon", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skill/FightTLEventInvokeSummon.lua
 
-local var_0_0 = class("FightTLEventInvokeSummon", FightTimelineTrackItem)
+module("modules.logic.fight.entity.comp.skill.FightTLEventInvokeSummon", package.seeall)
 
-function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.summonList = {}
+local FightTLEventInvokeSummon = class("FightTLEventInvokeSummon", FightTimelineTrackItem)
 
-	arg_1_0:getStepDataSummon(arg_1_1)
+function FightTLEventInvokeSummon:onTrackStart(fightStepData, duration, paramsArr)
+	self.summonList = {}
 
-	if #arg_1_0.summonList < 1 then
+	self:getStepDataSummon(fightStepData)
+
+	if #self.summonList < 1 then
 		return
 	end
 
-	local var_1_0 = arg_1_0:com_registFlowParallel()
-	local var_1_1 = FightStepBuilder.ActEffectWorkCls[FightEnum.EffectType.SUMMON]
+	local flow = self:com_registFlowParallel()
+	local workCls = FightStepBuilder.ActEffectWorkCls[FightEnum.EffectType.SUMMON]
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_0.summonList) do
-		local var_1_2 = iter_1_1[1]
-		local var_1_3 = iter_1_1[2]
+	for _, array in ipairs(self.summonList) do
+		local _fightStepData = array[1]
+		local _actEffectData = array[2]
 
-		var_1_0:registWork(var_1_1, var_1_2, var_1_3)
+		flow:registWork(workCls, _fightStepData, _actEffectData)
 	end
 
-	arg_1_0:addWork2TimelineFinishWork(var_1_0)
-	var_1_0:start()
+	self:addWork2TimelineFinishWork(flow)
+	flow:start()
 end
 
-function var_0_0.getStepDataSummon(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_1 and arg_2_1.actEffect
+function FightTLEventInvokeSummon:getStepDataSummon(fightStepData)
+	local effectTypeList = fightStepData and fightStepData.actEffect
 
-	if not var_2_0 then
+	if not effectTypeList then
 		return
 	end
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_0) do
-		if iter_2_1.effectType == FightEnum.EffectType.SUMMON then
-			table.insert(arg_2_0.summonList, {
-				arg_2_1,
-				iter_2_1
+	for _, actEffectData in ipairs(effectTypeList) do
+		if actEffectData.effectType == FightEnum.EffectType.SUMMON then
+			table.insert(self.summonList, {
+				fightStepData,
+				actEffectData
 			})
-		elseif iter_2_1.effectType == FightEnum.EffectType.FIGHTSTEP then
-			arg_2_0:getStepDataSummon(iter_2_1.fightStep)
+		elseif actEffectData.effectType == FightEnum.EffectType.FIGHTSTEP then
+			self:getStepDataSummon(actEffectData.fightStep)
 		end
 	end
 end
 
-function var_0_0.onTrackEnd(arg_3_0)
+function FightTLEventInvokeSummon:onTrackEnd()
 	return
 end
 
-function var_0_0.onDestructor(arg_4_0)
+function FightTLEventInvokeSummon:onDestructor()
 	return
 end
 
-function var_0_0.dispose(arg_5_0)
+function FightTLEventInvokeSummon:dispose()
 	return
 end
 
-return var_0_0
+return FightTLEventInvokeSummon

@@ -1,146 +1,200 @@
-﻿module("modules.logic.settings.view.SettingsVoiceDownloadView", package.seeall)
+﻿-- chunkname: @modules/logic/settings/view/SettingsVoiceDownloadView.lua
 
-local var_0_0 = class("SettingsVoiceDownloadView", BaseView)
+module("modules.logic.settings.view.SettingsVoiceDownloadView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagerightbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/bg/#simage_rightbg")
-	arg_1_0._simageleftbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/bg/#simage_leftbg")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/#btn_close")
-	arg_1_0._txttitle2 = gohelper.findChildText(arg_1_0.viewGO, "view/main/#txt_title2")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "view/main/#txt_desc")
-	arg_1_0._txtloading = gohelper.findChildText(arg_1_0.viewGO, "view/main/#txt_loading")
-	arg_1_0._gobtnloading = gohelper.findChild(arg_1_0.viewGO, "view/#go_btnloading")
-	arg_1_0._btncanceldownload = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/#go_btnloading/#btn_cancel")
-	arg_1_0._goon = gohelper.findChild(arg_1_0.viewGO, "view/#go_btnloading/#btn_cancel/#go_on")
-	arg_1_0._gooff = gohelper.findChild(arg_1_0.viewGO, "view/#go_btnloading/#btn_cancel/#go_off")
-	arg_1_0._btnswitch = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/#go_btnloading/#btn_confirm")
+local SettingsVoiceDownloadView = class("SettingsVoiceDownloadView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SettingsVoiceDownloadView:onInitView()
+	self._simagerightbg = gohelper.findChildSingleImage(self.viewGO, "view/bg/#simage_rightbg")
+	self._simageleftbg = gohelper.findChildSingleImage(self.viewGO, "view/bg/#simage_leftbg")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "view/#btn_close")
+	self._txttitle2 = gohelper.findChildText(self.viewGO, "view/main/#txt_title2")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "view/main/#txt_desc")
+	self._txtloading = gohelper.findChildText(self.viewGO, "view/main/#txt_loading")
+	self._gobtnloading = gohelper.findChild(self.viewGO, "view/#go_btnloading")
+	self._btncanceldownload = gohelper.findChildButtonWithAudio(self.viewGO, "view/#go_btnloading/#btn_cancel")
+	self._goon = gohelper.findChild(self.viewGO, "view/#go_btnloading/#btn_cancel/#go_on")
+	self._gooff = gohelper.findChild(self.viewGO, "view/#go_btnloading/#btn_cancel/#go_off")
+	self._btnswitch = gohelper.findChildButtonWithAudio(self.viewGO, "view/#go_btnloading/#btn_confirm")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 
 	SettingsVoicePackageController.instance:register()
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btncanceldownload:AddClickListener(arg_2_0._btncanceldownloadOnClick, arg_2_0)
-	arg_2_0._btnswitch:AddClickListener(arg_2_0._btnswitchOnClick, arg_2_0)
+function SettingsVoiceDownloadView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btncanceldownload:AddClickListener(self._btncanceldownloadOnClick, self)
+	self._btnswitch:AddClickListener(self._btnswitchOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btncanceldownload:RemoveClickListener()
-	arg_3_0._btnswitch:RemoveClickListener()
+function SettingsVoiceDownloadView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btncanceldownload:RemoveClickListener()
+	self._btnswitch:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
+function SettingsVoiceDownloadView:_btncloseOnClick()
 	return
 end
 
-function var_0_0._btncanceldownloadOnClick(arg_5_0)
-	SettingsVoicePackageController.instance:stopDownload(arg_5_0._mo)
-	arg_5_0:closeThis()
+function SettingsVoiceDownloadView:_btncanceldownloadOnClick()
+	if not self._succ then
+		SettingsVoicePackageController.instance:stopDownload(self._mo)
+	end
+
+	self:closeThis()
 end
 
-function var_0_0._btnswitchOnClick(arg_6_0)
-	if arg_6_0._mo.lang == "res-HD" then
-		arg_6_0:closeThis()
+function SettingsVoiceDownloadView:_btnswitchOnClick()
+	if self._mo.lang == "res-HD" then
+		self:closeThis()
 		SettingsModel.instance:setVideoHDMode(true)
 		SettingsController.instance:dispatchEvent(SettingsEvent.OnChangeHDType)
 
 		return
 	end
 
-	SettingsVoicePackageController.instance:switchVoiceType(arg_6_0._mo.lang, "in_voiceview")
+	SettingsVoicePackageController.instance:switchVoiceType(self._mo.lang, "in_voiceview")
+
+	local allCharMos = HeroModel.instance:getAllHero()
+
+	for _, charMo in pairs(allCharMos) do
+		local heroId = charMo.heroId
+		local langId, langStr, usingDefaultLang = SettingsRoleVoiceModel.instance:getCharVoiceLangPrefValue(heroId)
+
+		if not usingDefaultLang then
+			SettingsRoleVoiceModel.instance:setCharVoiceLangPrefValue(self._mo.lang, charMo.heroId)
+		end
+	end
+
 	ToastController.instance:showToast(182)
-	arg_6_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0._imgloading = gohelper.findChildImage(arg_7_0.viewGO, "view/main/loadingline/#img_loading")
+function SettingsVoiceDownloadView:_editableInitView()
+	self._imgloading = gohelper.findChildImage(self.viewGO, "view/main/loadingline/#img_loading")
 
-	arg_7_0._simageleftbg:LoadImage(ResUrl.getCommonIcon("bg_1"))
-	arg_7_0._simagerightbg:LoadImage(ResUrl.getCommonIcon("bg_2"))
+	self._simageleftbg:LoadImage(ResUrl.getCommonIcon("bg_1"))
+	self._simagerightbg:LoadImage(ResUrl.getCommonIcon("bg_2"))
 
-	arg_7_0._txtcancel = gohelper.findChildText(arg_7_0.viewGO, "view/#go_btnloading/#btn_cancel/#txt_cancel")
-	arg_7_0._txtcancelEn = gohelper.findChildText(arg_7_0.viewGO, "view/#go_btnloading/#btn_cancel/#txt_cancelen")
-	arg_7_0._txtconfirm = gohelper.findChildText(arg_7_0.viewGO, "view/#go_btnloading/#btn_confirm/#txt_confirm")
-	arg_7_0._goCanceldownload = arg_7_0._btncanceldownload.gameObject
+	self._txtcancel = gohelper.findChildText(self.viewGO, "view/#go_btnloading/#btn_cancel/#txt_cancel")
+	self._txtcancelEn = gohelper.findChildText(self.viewGO, "view/#go_btnloading/#btn_cancel/#txt_cancelen")
+	self._txtconfirm = gohelper.findChildText(self.viewGO, "view/#go_btnloading/#btn_confirm/#txt_confirm")
+	self._goCanceldownload = self._btncanceldownload.gameObject
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
+function SettingsVoiceDownloadView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0:addEventCb(SettingsVoicePackageController.instance, SettingsEvent.OnDownloadProgressRefresh, arg_9_0._refreshDownloadProgress, arg_9_0)
-	arg_9_0:addEventCb(SettingsVoicePackageController.instance, SettingsEvent.OnUnzipProgressRefresh, arg_9_0._refreshUnzipProgress, arg_9_0)
-	arg_9_0:addEventCb(SettingsVoicePackageController.instance, SettingsEvent.OnDownloadPackSuccess, arg_9_0._onDownloadPackSuccess, arg_9_0)
+function SettingsVoiceDownloadView:onOpen()
+	self:addEventCb(SettingsVoicePackageController.instance, SettingsEvent.OnDownloadProgressRefresh, self._refreshDownloadProgress, self)
+	self:addEventCb(SettingsVoicePackageController.instance, SettingsEvent.OnUnzipProgressRefresh, self._refreshUnzipProgress, self)
+	self:addEventCb(SettingsVoicePackageController.instance, SettingsEvent.OnDownloadPackSuccess, self._onDownloadPackSuccess, self)
+	self:addEventCb(OptionPackageController.instance, OptionPackageEvent.DownloadProgressRefresh, self._refreshDownloadProgress, self)
+	self:addEventCb(OptionPackageController.instance, OptionPackageEvent.DownloadFinish, self._onDownloadPackSuccess, self)
+	self:addEventCb(OptionPackageController.instance, OptionPackageEvent.DownladErrorMsg, self._onDownladErrorMsg, self)
 
-	arg_9_0._eventMgr = SLFramework.GameUpdate.HotUpdateEvent
-	arg_9_0._eventMgrInst = SLFramework.GameUpdate.HotUpdateEvent.Instance
+	self._eventMgr = SLFramework.GameUpdate.HotUpdateEvent
+	self._eventMgrInst = SLFramework.GameUpdate.HotUpdateEvent.Instance
 
-	arg_9_0._eventMgrInst:AddLuaLisenter(arg_9_0._eventMgr.UnzipProgress, arg_9_0._refreshUnzipProgress, arg_9_0)
+	self._eventMgrInst:AddLuaLisenter(self._eventMgr.UnzipProgress, self._refreshUnzipProgress, self)
 
-	arg_9_0._mo = arg_9_0.viewParam.packItemMO
-	arg_9_0._txttitle2.text = formatLuaLang("voice_package_update_3", luaLang(arg_9_0._mo.nameLangId))
-	arg_9_0._txtcancel.text = luaLang("voice_package_cancel_download")
-	arg_9_0._txtcancelEn.text = "CANCEL"
+	self._mo = self.viewParam.packItemMO
+	self._txttitle2.text = formatLuaLang("voice_package_update_3", luaLang(self._mo.nameLangId))
+	self._txtcancel.text = luaLang("voice_package_cancel_download")
+	self._txtcancelEn.text = "CANCEL"
 
-	gohelper.setActive(arg_9_0._txtdesc.gameObject, false)
-	gohelper.setActive(arg_9_0._btnswitch.gameObject, false)
+	gohelper.setActive(self._txtdesc.gameObject, false)
+	gohelper.setActive(self._btnswitch.gameObject, false)
+	ConnectAliveMgr.instance:registerCallback(ConnectEvent.OnReconnectSucc, self._onReconnectSucc, self)
 end
 
-function var_0_0.onClose(arg_10_0)
-	arg_10_0._eventMgrInst:ClearLuaListener()
-	arg_10_0:removeEventCb(SettingsVoicePackageController.instance, SettingsEvent.OnDownloadProgressRefresh, arg_10_0._refreshDownloadProgress, arg_10_0)
-	arg_10_0:removeEventCb(SettingsVoicePackageController.instance, SettingsEvent.OnUnzipProgressRefresh, arg_10_0._refreshUnzipProgress, arg_10_0)
-	arg_10_0:removeEventCb(SettingsVoicePackageController.instance, SettingsEvent.OnDownloadPackSuccess, arg_10_0._onDownloadPackSuccess, arg_10_0)
+function SettingsVoiceDownloadView:onClose()
+	self._eventMgrInst:ClearLuaListener()
+	self:removeEventCb(SettingsVoicePackageController.instance, SettingsEvent.OnDownloadProgressRefresh, self._refreshDownloadProgress, self)
+	self:removeEventCb(SettingsVoicePackageController.instance, SettingsEvent.OnUnzipProgressRefresh, self._refreshUnzipProgress, self)
+	self:removeEventCb(SettingsVoicePackageController.instance, SettingsEvent.OnDownloadPackSuccess, self._onDownloadPackSuccess, self)
+	self:removeEventCb(OptionPackageController.instance, OptionPackageEvent.DownloadProgressRefresh, self._refreshDownloadProgress, self)
+	self:removeEventCb(OptionPackageController.instance, OptionPackageEvent.DownloadFinish, self._onDownloadPackSuccess, self)
+	self:removeEventCb(OptionPackageController.instance, OptionPackageEvent.DownladErrorMsg, self._onDownladErrorMsg, self)
+	ConnectAliveMgr.instance:unregisterCallback(ConnectEvent.OnReconnectSucc, self._onReconnectSucc, self)
 end
 
-function var_0_0._refreshDownloadProgress(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	arg_11_2 = string.format("%0.2f", arg_11_2 / 1024 / 1024)
-	arg_11_3 = string.format("%0.2f", arg_11_3 / 1024 / 1024)
-	arg_11_0._imgloading.fillAmount = arg_11_2 / arg_11_3
+function SettingsVoiceDownloadView:_refreshDownloadProgress(packName, curSize, allSize)
+	curSize = string.format("%0.2f", curSize / 1024 / 1024)
+	allSize = string.format("%0.2f", allSize / 1024 / 1024)
+	self._imgloading.fillAmount = curSize / allSize
 
-	local var_11_0 = {
-		arg_11_2 .. "MB",
-		arg_11_3 .. "MB"
+	local tag = {
+		curSize .. "MB",
+		allSize .. "MB"
 	}
 
-	arg_11_0._txtloading.text = GameUtil.getSubPlaceholderLuaLang(luaLang("voice_package_update_4"), var_11_0)
+	self._txtloading.text = GameUtil.getSubPlaceholderLuaLang(luaLang("voice_package_update_4"), tag)
 end
 
-function var_0_0._refreshUnzipProgress(arg_12_0, arg_12_1)
-	arg_12_0._imgloading.fillAmount = arg_12_1
-	arg_12_0._txtloading.text = luaLang("voice_package_unzip")
+function SettingsVoiceDownloadView:_refreshUnzipProgress(progress)
+	self._imgloading.fillAmount = progress
+	self._txtloading.text = luaLang("voice_package_unzip")
 
-	gohelper.setActive(arg_12_0._goCanceldownload, false)
+	gohelper.setActive(self._goCanceldownload, false)
 end
 
-function var_0_0._onDownloadPackSuccess(arg_13_0)
-	arg_13_0._txtcancel.text = luaLang("cancel")
-	arg_13_0._txtcancelEn.text = "CANCEL"
-	arg_13_0._txtconfirm.text = luaLang("confirm")
-	arg_13_0._imgloading.fillAmount = 1
-	arg_13_0._txtloading.text = ""
+function SettingsVoiceDownloadView:_onDownloadPackSuccess()
+	self._succ = true
+	self._txtcancel.text = luaLang("cancel")
+	self._txtcancelEn.text = "CANCEL"
+	self._txtconfirm.text = luaLang("confirm")
+	self._imgloading.fillAmount = 1
+	self._txtloading.text = ""
 
-	gohelper.setActive(arg_13_0._btncanceldownload.gameObject, true)
+	gohelper.setActive(self._btncanceldownload.gameObject, true)
 
-	if arg_13_0._mo.lang == "res-HD" then
-		gohelper.setActive(arg_13_0._txtdesc.gameObject, false)
-		gohelper.setActive(arg_13_0._btncanceldownload, false)
+	if self._mo.lang == "res-HD" then
+		gohelper.setActive(self._txtdesc.gameObject, false)
+		gohelper.setActive(self._btncanceldownload, false)
 	else
-		gohelper.setActive(arg_13_0._txtdesc.gameObject, true)
+		gohelper.setActive(self._txtdesc.gameObject, true)
 	end
 
-	gohelper.setActive(arg_13_0._btnswitch.gameObject, true)
+	gohelper.setActive(self._btnswitch.gameObject, true)
 end
 
-function var_0_0.onDestroyView(arg_14_0)
-	arg_14_0._simageleftbg:UnLoadImage()
-	arg_14_0._simagerightbg:UnLoadImage()
+function SettingsVoiceDownloadView:_onReconnectSucc()
+	if self._errorMsgInfo then
+		if self._errorMsgInfo.yesCallback then
+			self._errorMsgInfo.yesCallback(self._errorMsgInfo.yesCallbackObj)
+		end
+
+		self._errorMsgInfo = nil
+	end
 end
 
-return var_0_0
+function SettingsVoiceDownloadView:_onDownladErrorMsg(msgInfo)
+	self._errorMsgInfo = msgInfo
+
+	MessageBoxController.instance:showMsgBoxAndSetBtn(MessageBoxIdDefine.VoiceDownloadCurFailed_1, MsgBoxEnum.BoxType.Yes_No, luaLang("retry"), "RETRY", luaLang("cancel"), "CANCEL", function()
+		self._errorMsgInfo = nil
+
+		if msgInfo.yesCallback then
+			msgInfo.yesCallback(msgInfo.yesCallbackObj)
+		end
+	end, function()
+		if msgInfo.noCallback then
+			msgInfo.noCallback(msgInfo.noCallbackObj)
+		end
+
+		self:closeThis()
+	end, nil, nil, nil, nil, luaLang(self._mo.nameLangId), msgInfo.extra)
+end
+
+function SettingsVoiceDownloadView:onDestroyView()
+	self._simageleftbg:UnLoadImage()
+	self._simagerightbg:UnLoadImage()
+end
+
+return SettingsVoiceDownloadView

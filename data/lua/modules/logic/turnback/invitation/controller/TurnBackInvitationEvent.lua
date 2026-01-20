@@ -1,7 +1,9 @@
-﻿module("modules.logic.turnback.invitation.controller.TurnBackInvitationEvent", package.seeall)
+﻿-- chunkname: @modules/logic/turnback/invitation/controller/TurnBackInvitationEvent.lua
 
-local var_0_0 = {}
+module("modules.logic.turnback.invitation.controller.TurnBackInvitationEvent", package.seeall)
 
-var_0_0.OnGetInfoSuccess = 1
+local TurnBackInvitationEvent = {}
 
-return var_0_0
+TurnBackInvitationEvent.OnGetInfoSuccess = 1
+
+return TurnBackInvitationEvent

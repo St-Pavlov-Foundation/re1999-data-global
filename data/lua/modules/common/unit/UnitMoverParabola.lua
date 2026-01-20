@@ -1,182 +1,189 @@
-﻿module("modules.common.unit.UnitMoverParabola", package.seeall)
+﻿-- chunkname: @modules/common/unit/UnitMoverParabola.lua
 
-local var_0_0 = class("UnitMoverParabola", LuaCompBase)
+module("modules.common.unit.UnitMoverParabola", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._speed = 0
-	arg_1_0._speedX = 0
-	arg_1_0._speedY = 0
-	arg_1_0._speedZ = 0
-	arg_1_0._gravity = 0
-	arg_1_0._posX = 0
-	arg_1_0._posY = 0
-	arg_1_0._posZ = 0
-	arg_1_0._wayPoint = nil
-	arg_1_0._getFrameFunction = nil
-	arg_1_0._getFrameObject = nil
-	arg_1_0._timeScale = 1
+local UnitMoverParabola = class("UnitMoverParabola", LuaCompBase)
 
-	LuaEventSystem.addEventMechanism(arg_1_0)
+function UnitMoverParabola:ctor(unit)
+	self._speed = 0
+	self._speedX = 0
+	self._speedY = 0
+	self._speedZ = 0
+	self._gravity = 0
+	self._posX = 0
+	self._posY = 0
+	self._posZ = 0
+	self._wayPoint = nil
+	self._getFrameFunction = nil
+	self._getFrameObject = nil
+	self._timeScale = 1
+
+	LuaEventSystem.addEventMechanism(self)
 end
 
-function var_0_0.setPosDirectly(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	arg_2_0:clearWayPoints()
+function UnitMoverParabola:setPosDirectly(x, y, z)
+	self:clearWayPoints()
 
-	arg_2_0._posX = arg_2_1
-	arg_2_0._posY = arg_2_2
-	arg_2_0._posZ = arg_2_3
+	self._posX = x
+	self._posY = y
+	self._posZ = z
 
-	arg_2_0:dispatchEvent(UnitMoveEvent.PosChanged, arg_2_0)
+	self:dispatchEvent(UnitMoveEvent.PosChanged, self)
 end
 
-function var_0_0.setGetFrameFunction(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0._getFrameFunction = arg_3_1
-	arg_3_0._getFrameObject = arg_3_2
-	arg_3_0._frame = 0
+function UnitMoverParabola:setGetFrameFunction(getFrameFunction, getFrameObject)
+	self._getFrameFunction = getFrameFunction
+	self._getFrameObject = getFrameObject
+	self._frame = 0
 end
 
-function var_0_0.getCurWayPoint(arg_4_0)
-	return arg_4_0._wayPoint
+function UnitMoverParabola:getCurWayPoint()
+	return self._wayPoint
 end
 
-function var_0_0.getPos(arg_5_0)
-	return arg_5_0._posX, arg_5_0._posY, arg_5_0._posZ
+function UnitMoverParabola:getPos()
+	return self._posX, self._posY, self._posZ
 end
 
-function var_0_0.setWayPoint(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5)
-	arg_6_0._wayPoint = {
-		x = arg_6_1,
-		y = arg_6_2,
-		z = arg_6_3
+function UnitMoverParabola:setWayPoint(x, y, z, horiSpeed, maxHeight)
+	self._wayPoint = {
+		x = x,
+		y = y,
+		z = z
 	}
 
-	arg_6_0:_setHoriSpeed(arg_6_4)
-	arg_6_0:_calcSpeedYAndGravity(arg_6_5)
+	self:_setHoriSpeed(horiSpeed)
+	self:_calcSpeedYAndGravity(maxHeight)
 
-	arg_6_0._startMoveTime = Time.time
+	self._startMoveTime = Time.time
 
-	arg_6_0:dispatchEvent(UnitMoveEvent.StartMove, arg_6_0)
+	self:dispatchEvent(UnitMoveEvent.StartMove, self)
 end
 
-function var_0_0.simpleMove(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4, arg_7_5, arg_7_6, arg_7_7, arg_7_8)
-	arg_7_0._duration = arg_7_7
+function UnitMoverParabola:simpleMove(startX, startY, startZ, endX, endY, endZ, duration, height)
+	self._duration = duration
 
-	local var_7_0 = math.sqrt((arg_7_1 - arg_7_4)^2 + (arg_7_2 - arg_7_5)^2 + (arg_7_3 - arg_7_6)^2)
-	local var_7_1 = var_7_0 > 0 and var_7_0 / arg_7_7 or 100000000
+	local distance = math.sqrt((startX - endX)^2 + (startY - endY)^2 + (startZ - endZ)^2)
+	local speed = distance > 0 and distance / duration or 100000000
 
-	arg_7_0:setPosDirectly(arg_7_1, arg_7_2, arg_7_3)
-	arg_7_0:setWayPoint(arg_7_4, arg_7_5, arg_7_6, var_7_1, arg_7_8)
+	self:setPosDirectly(startX, startY, startZ)
+	self:setWayPoint(endX, endY, endZ, speed, height)
 end
 
-function var_0_0.clearWayPoints(arg_8_0)
-	if arg_8_0._wayPoint then
-		arg_8_0._wayPoint = nil
+function UnitMoverParabola:clearWayPoints()
+	if self._wayPoint then
+		self._wayPoint = nil
 
-		arg_8_0:dispatchEvent(UnitMoveEvent.Interrupt, arg_8_0)
+		self:dispatchEvent(UnitMoveEvent.Interrupt, self)
 	end
 end
 
-function var_0_0.setTimeScale(arg_9_0, arg_9_1)
-	if arg_9_1 > 0 then
-		arg_9_0._timeScale = arg_9_1
+function UnitMoverParabola:setTimeScale(timeScale)
+	if timeScale > 0 then
+		self._timeScale = timeScale
 	else
-		logError("argument illegal, timeScale = " .. arg_9_1)
+		logError("argument illegal, timeScale = " .. timeScale)
 	end
 end
 
-function var_0_0._setHoriSpeed(arg_10_0, arg_10_1)
-	arg_10_0._speed = arg_10_1
+function UnitMoverParabola:_setHoriSpeed(speed)
+	self._speed = speed
 
-	if not arg_10_0._wayPoint then
-		arg_10_0._speedX = 0
-		arg_10_0._speedZ = 0
+	if not self._wayPoint then
+		self._speedX = 0
+		self._speedZ = 0
 	else
-		local var_10_0 = arg_10_0._wayPoint.x - arg_10_0._posX
-		local var_10_1 = arg_10_0._wayPoint.z - arg_10_0._posZ
-		local var_10_2 = math.sqrt(var_10_0 * var_10_0 + var_10_1 * var_10_1)
-		local var_10_3 = var_10_0 / var_10_2
-		local var_10_4 = var_10_1 / var_10_2
+		local vx = self._wayPoint.x - self._posX
+		local vz = self._wayPoint.z - self._posZ
+		local length = math.sqrt(vx * vx + vz * vz)
 
-		arg_10_0._speedX = var_10_3 * arg_10_0._speed
-		arg_10_0._speedZ = var_10_4 * arg_10_0._speed
+		vx = vx / length
+		vz = vz / length
+		self._speedX = vx * self._speed
+		self._speedZ = vz * self._speed
 	end
 end
 
-function var_0_0._calcSpeedYAndGravity(arg_11_0, arg_11_1)
-	arg_11_1 = (arg_11_0._posY >= arg_11_0._wayPoint.y and arg_11_0._posY or arg_11_0._wayPoint.y) + arg_11_1
+function UnitMoverParabola:_calcSpeedYAndGravity(maxHeight)
+	maxHeight = (self._posY >= self._wayPoint.y and self._posY or self._wayPoint.y) + maxHeight
 
-	local var_11_0 = math.sqrt((arg_11_0._posX - arg_11_0._wayPoint.x)^2 + (arg_11_0._posZ - arg_11_0._wayPoint.z)^2) / arg_11_0._speed
-	local var_11_1 = arg_11_1 - arg_11_0._posY
-	local var_11_2 = arg_11_1 - arg_11_0._wayPoint.y
-	local var_11_3 = var_11_0 / (1 + math.sqrt(var_11_2 / var_11_1))
+	local horiDist = math.sqrt((self._posX - self._wayPoint.x)^2 + (self._posZ - self._wayPoint.z)^2)
+	local t = horiDist / self._speed
+	local s1 = maxHeight - self._posY
+	local s2 = maxHeight - self._wayPoint.y
+	local t1 = t / (1 + math.sqrt(s2 / s1))
 
-	arg_11_0._gravity = 2 * var_11_1 / var_11_3^2
-	arg_11_0._speedY = arg_11_0._gravity * var_11_3
+	self._gravity = 2 * s1 / t1^2
+	self._speedY = self._gravity * t1
 end
 
-function var_0_0.getDeltaTime(arg_12_0)
-	local var_12_0, var_12_1, var_12_2 = arg_12_0._getFrameFunction(arg_12_0._getFrameObject)
+function UnitMoverParabola:getDeltaTime()
+	local curFrame, previousFrame, totalFrame = self._getFrameFunction(self._getFrameObject)
 
-	if var_12_0 <= var_12_1 then
+	if curFrame <= previousFrame then
 		return 0
 	end
 
-	if var_12_2 <= 0 then
-		return arg_12_0._duration
+	if totalFrame <= 0 then
+		return self._duration
 	end
 
-	local var_12_3 = var_12_0 - math.max(var_12_1, arg_12_0._frame)
+	local deltaFrame = curFrame - math.max(previousFrame, self._frame)
 
-	arg_12_0._frame = var_12_0
+	self._frame = curFrame
 
-	return var_12_3 / var_12_2 * (arg_12_0._duration or 0)
+	local deltaTime = deltaFrame / totalFrame * (self._duration or 0)
+
+	return deltaTime
 end
 
-function var_0_0.onUpdate(arg_13_0)
-	if arg_13_0._wayPoint then
-		local var_13_0 = 0
+function UnitMoverParabola:onUpdate()
+	if self._wayPoint then
+		local deltaTime = 0
 
-		if arg_13_0._getFrameFunction then
-			var_13_0 = arg_13_0:getDeltaTime()
+		if self._getFrameFunction then
+			deltaTime = self:getDeltaTime()
 		else
-			var_13_0 = Time.deltaTime * arg_13_0._timeScale
+			deltaTime = Time.deltaTime * self._timeScale
 		end
 
-		if var_13_0 <= 0 then
+		if deltaTime <= 0 then
 			return
 		end
 
-		local var_13_1 = arg_13_0._speedY - arg_13_0._gravity * var_13_0
+		local newSpeed = self._speedY - self._gravity * deltaTime
 
-		arg_13_0._posY = arg_13_0._posY + (var_13_1 + arg_13_0._speedY) / 2 * var_13_0
-		arg_13_0._posY = arg_13_0._posY < arg_13_0._wayPoint.y and arg_13_0._wayPoint.y or arg_13_0._posY
-		arg_13_0._speedY = var_13_1
+		self._posY = self._posY + (newSpeed + self._speedY) / 2 * deltaTime
+		self._posY = self._posY < self._wayPoint.y and self._wayPoint.y or self._posY
+		self._speedY = newSpeed
 
-		local var_13_2 = arg_13_0._posX + arg_13_0._speedX * var_13_0
-		local var_13_3 = arg_13_0._posZ + arg_13_0._speedZ * var_13_0
-		local var_13_4 = var_13_2 - arg_13_0._posX
-		local var_13_5 = var_13_3 - arg_13_0._posZ
-		local var_13_6 = arg_13_0._wayPoint.x - arg_13_0._posX
-		local var_13_7 = arg_13_0._wayPoint.z - arg_13_0._posZ
+		local nextPosX = self._posX + self._speedX * deltaTime
+		local nextPosZ = self._posZ + self._speedZ * deltaTime
+		local vecNowNextX = nextPosX - self._posX
+		local vecNowNextZ = nextPosZ - self._posZ
+		local vecNowDestX = self._wayPoint.x - self._posX
+		local vecNowDestZ = self._wayPoint.z - self._posZ
+		local distNext = vecNowNextX * vecNowNextX + vecNowNextZ * vecNowNextZ
+		local distDest = vecNowDestX * vecNowDestX + vecNowDestZ * vecNowDestZ
 
-		if var_13_4 * var_13_4 + var_13_5 * var_13_5 >= var_13_6 * var_13_6 + var_13_7 * var_13_7 then
-			arg_13_0._posX = arg_13_0._wayPoint.x
-			arg_13_0._posZ = arg_13_0._wayPoint.z
-			arg_13_0._wayPoint = nil
+		if distDest <= distNext then
+			self._posX = self._wayPoint.x
+			self._posZ = self._wayPoint.z
+			self._wayPoint = nil
 
-			arg_13_0:dispatchEvent(UnitMoveEvent.PosChanged, arg_13_0)
-			arg_13_0:dispatchEvent(UnitMoveEvent.Arrive, arg_13_0)
+			self:dispatchEvent(UnitMoveEvent.PosChanged, self)
+			self:dispatchEvent(UnitMoveEvent.Arrive, self)
 		else
-			arg_13_0._posX = var_13_2
-			arg_13_0._posZ = var_13_3
+			self._posX = nextPosX
+			self._posZ = nextPosZ
 
-			arg_13_0:dispatchEvent(UnitMoveEvent.PosChanged, arg_13_0)
+			self:dispatchEvent(UnitMoveEvent.PosChanged, self)
 		end
 	end
 end
 
-function var_0_0.onDestroy(arg_14_0)
-	arg_14_0._wayPoint = nil
+function UnitMoverParabola:onDestroy()
+	self._wayPoint = nil
 end
 
-return var_0_0
+return UnitMoverParabola

@@ -1,10 +1,12 @@
-﻿module("modules.logic.versionactivity1_3.act126.define.Activity126Enum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/act126/define/Activity126Enum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_3.act126.define.Activity126Enum", package.seeall)
 
-var_0_0.constId = {
+local Activity126Enum = _M
+
+Activity126Enum.constId = {
 	initAngle = 3
 }
-var_0_0.buffCurrencyId = 1302
+Activity126Enum.buffCurrencyId = 1302
 
-return var_0_0
+return Activity126Enum

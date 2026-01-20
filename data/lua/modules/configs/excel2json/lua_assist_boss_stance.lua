@@ -1,20 +1,22 @@
-﻿module("modules.configs.excel2json.lua_assist_boss_stance", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_assist_boss_stance.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_assist_boss_stance", package.seeall)
+
+local lua_assist_boss_stance = {}
+local fields = {
 	sceneId = 2,
 	position = 3,
 	scale = 4,
 	skinId = 1
 }
-local var_0_2 = {
+local primaryKey = {
 	"skinId",
 	"sceneId"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_assist_boss_stance.onLoad(json)
+	lua_assist_boss_stance.configList, lua_assist_boss_stance.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_assist_boss_stance

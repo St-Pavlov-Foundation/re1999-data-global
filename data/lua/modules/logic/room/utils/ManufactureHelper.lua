@@ -1,94 +1,96 @@
-﻿module("modules.logic.room.utils.ManufactureHelper", package.seeall)
+﻿-- chunkname: @modules/logic/room/utils/ManufactureHelper.lua
 
-local var_0_0 = {
-	__EMPTY__TABLE = {}
-}
+module("modules.logic.room.utils.ManufactureHelper", package.seeall)
 
-function var_0_0.findItemIdListByBUid(arg_1_0)
-	local var_1_0 = ManufactureModel.instance:getManufactureMOById(arg_1_0)
+local ManufactureHelper = {}
 
-	if not var_1_0 then
-		return var_0_0.__EMPTY__TABLE
+ManufactureHelper.__EMPTY__TABLE = {}
+
+function ManufactureHelper.findItemIdListByBUid(buildingUid)
+	local manufactureMO = ManufactureModel.instance:getManufactureMOById(buildingUid)
+
+	if not manufactureMO then
+		return ManufactureHelper.__EMPTY__TABLE
 	end
 
-	local var_1_1 = {}
-	local var_1_2 = var_1_0:getAllUnlockedSlotMOList()
+	local itemIdList = {}
+	local slotMOList = manufactureMO:getAllUnlockedSlotMOList()
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_2) do
-		local var_1_3 = iter_1_1:getSlotState()
+	for _, slotMO in ipairs(slotMOList) do
+		local state = slotMO:getSlotState()
 
-		if var_1_3 == RoomManufactureEnum.SlotState.Running or var_1_3 == RoomManufactureEnum.SlotState.Wait or var_1_3 == RoomManufactureEnum.SlotState.Stop or var_1_3 == RoomManufactureEnum.SlotState.Complete then
-			local var_1_4 = iter_1_1:getSlotManufactureItemId()
-			local var_1_5 = ManufactureConfig.instance:getItemId(var_1_4)
+		if state == RoomManufactureEnum.SlotState.Running or state == RoomManufactureEnum.SlotState.Wait or state == RoomManufactureEnum.SlotState.Stop or state == RoomManufactureEnum.SlotState.Complete then
+			local manufactureItemId = slotMO:getSlotManufactureItemId()
+			local itemId = ManufactureConfig.instance:getItemId(manufactureItemId)
 
-			if not tabletool.indexOf(var_1_1, var_1_5) then
-				table.insert(var_1_1, var_1_5)
+			if not tabletool.indexOf(itemIdList, itemId) then
+				table.insert(itemIdList, itemId)
 			end
 		end
 	end
 
-	return var_1_1
+	return itemIdList
 end
 
-function var_0_0.findLuckyItemIdListByBUid(arg_2_0)
-	local var_2_0, var_2_1 = var_0_0.findLuckyItemParamByBUid(arg_2_0)
+function ManufactureHelper.findLuckyItemIdListByBUid(buildingUid)
+	local isAll, luckyItemDict = ManufactureHelper.findLuckyItemParamByBUid(buildingUid)
 
-	if not var_2_0 and not var_2_1 then
-		return var_0_0.__EMPTY__TABLE
+	if not isAll and not luckyItemDict then
+		return ManufactureHelper.__EMPTY__TABLE
 	end
 
-	local var_2_2 = var_0_0.findItemIdListByBUid(arg_2_0)
+	local itemIdList = ManufactureHelper.findItemIdListByBUid(buildingUid)
 
-	if var_2_0 then
-		return var_2_2
+	if isAll then
+		return itemIdList
 	end
 
-	for iter_2_0 = #var_2_2, 1, -1 do
-		local var_2_3 = var_2_2[iter_2_0]
+	for i = #itemIdList, 1, -1 do
+		local itemId = itemIdList[i]
 
-		if not var_2_1 or not var_2_1[var_2_3] then
-			table.remove(var_2_2, 1)
+		if not luckyItemDict or not luckyItemDict[itemId] then
+			table.remove(itemIdList, 1)
 		end
 	end
 
-	return var_2_2
+	return itemIdList
 end
 
-function var_0_0.findLuckyItemParamByBUid(arg_3_0)
-	local var_3_0 = false
-	local var_3_1
-	local var_3_2 = RoomMapBuildingModel.instance:getBuildingMOById(arg_3_0)
-	local var_3_3 = CritterHelper.getWorkCritterMOListByBuid(arg_3_0)
+function ManufactureHelper.findLuckyItemParamByBUid(buildingUid)
+	local isAll = false
+	local luckyItemDict
+	local buildingMO = RoomMapBuildingModel.instance:getBuildingMOById(buildingUid)
+	local critterMOList = CritterHelper.getWorkCritterMOListByBuid(buildingUid)
 
-	if not var_3_2 or not var_3_3 or #var_3_3 < 1 then
-		return var_3_0, var_3_1
+	if not buildingMO or not critterMOList or #critterMOList < 1 then
+		return isAll, luckyItemDict
 	end
 
-	local var_3_4 = var_3_2.buildingId
-	local var_3_5 = CritterConfig.instance
-	local var_3_6 = ManufactureCritterListModel.instance
+	local buildingId = buildingMO.buildingId
+	local tCritterConfig = CritterConfig.instance
+	local tManufactureCritterListModel = ManufactureCritterListModel.instance
 
-	for iter_3_0 = 1, #var_3_3 do
-		local var_3_7 = var_3_3[iter_3_0]
-		local var_3_8 = var_3_6:getPreviewAttrInfo(var_3_7:getId(), var_3_4, false)
+	for i = 1, #critterMOList do
+		local critterMO = critterMOList[i]
+		local attrInfo = tManufactureCritterListModel:getPreviewAttrInfo(critterMO:getId(), buildingId, false)
 
-		if var_3_8 and var_3_8.skillTags and #var_3_8.skillTags > 0 then
-			local var_3_9 = var_3_8.skillTags
+		if attrInfo and attrInfo.skillTags and #attrInfo.skillTags > 0 then
+			local skillTags = attrInfo.skillTags
 
-			for iter_3_1 = 1, #var_3_9 do
-				local var_3_10 = var_3_5:getCritterTagCfg(var_3_9[iter_3_1])
+			for si = 1, #skillTags do
+				local cfg = tCritterConfig:getCritterTagCfg(skillTags[si])
 
-				if var_3_10 and var_3_10.luckyItemType == RoomManufactureEnum.LuckyItemType.All then
-					var_3_0 = true
+				if cfg and cfg.luckyItemType == RoomManufactureEnum.LuckyItemType.All then
+					isAll = true
 
-					return var_3_0, var_3_1
-				elseif var_3_10 and var_3_10.luckyItemType == RoomManufactureEnum.LuckyItemType.ItemId and not string.nilorempty(var_3_10.luckyItemIds) then
-					local var_3_11 = string.splitToNumber(var_3_10.luckyItemIds)
+					return isAll, luckyItemDict
+				elseif cfg and cfg.luckyItemType == RoomManufactureEnum.LuckyItemType.ItemId and not string.nilorempty(cfg.luckyItemIds) then
+					local itemIdList = string.splitToNumber(cfg.luckyItemIds)
 
-					if var_3_11 then
-						for iter_3_2, iter_3_3 in ipairs(var_3_11) do
-							var_3_1 = var_3_1 or {}
-							var_3_1[iter_3_3] = true
+					if itemIdList then
+						for _, itemId in ipairs(itemIdList) do
+							luckyItemDict = luckyItemDict or {}
+							luckyItemDict[itemId] = true
 						end
 					end
 				end
@@ -96,7 +98,7 @@ function var_0_0.findLuckyItemParamByBUid(arg_3_0)
 		end
 	end
 
-	return var_3_0, var_3_1
+	return isAll, luckyItemDict
 end
 
-return var_0_0
+return ManufactureHelper

@@ -1,101 +1,106 @@
-﻿module("modules.logic.explore.map.whirl.comp.ExploreWhirlFollowComp", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/whirl/comp/ExploreWhirlFollowComp.lua
 
-local var_0_0 = class("ExploreWhirlFollowComp", LuaCompBase)
-local var_0_1 = {
+module("modules.logic.explore.map.whirl.comp.ExploreWhirlFollowComp", package.seeall)
+
+local ExploreWhirlFollowComp = class("ExploreWhirlFollowComp", LuaCompBase)
+local Dir = {
 	Down = -1,
 	Up = 1
 }
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._whirl = arg_1_1
-	arg_1_0._isPause = false
+function ExploreWhirlFollowComp:ctor(whirl)
+	self._whirl = whirl
+	self._isPause = false
 end
 
-function var_0_0.setup(arg_2_0, arg_2_1)
-	arg_2_0._go = arg_2_1
-	arg_2_0._trans = arg_2_1.transform
-	arg_2_0._minHeight = 0.6
-	arg_2_0._maxHeight = 0.8
-	arg_2_0._radius = 0.4
-	arg_2_0._upDownSpeed = 0.003
-	arg_2_0._moveSpeed = 0.05
-	arg_2_0._rotateSpeed = 1
-	arg_2_0._nowHeight = 0.7
-	arg_2_0._nowDir = var_0_1.Up
+function ExploreWhirlFollowComp:setup(go)
+	self._go = go
+	self._trans = go.transform
+	self._minHeight = 0.6
+	self._maxHeight = 0.8
+	self._radius = 0.4
+	self._upDownSpeed = 0.003
+	self._moveSpeed = 0.05
+	self._rotateSpeed = 1
+	self._nowHeight = 0.7
+	self._nowDir = Dir.Up
 end
 
-function var_0_0.start(arg_3_0)
-	arg_3_0._isPause = false
+function ExploreWhirlFollowComp:start()
+	self._isPause = false
 
-	arg_3_0:onUpdatePos()
+	self:onUpdatePos()
 end
 
-function var_0_0.pause(arg_4_0)
-	arg_4_0._isPause = true
+function ExploreWhirlFollowComp:pause()
+	self._isPause = true
 end
 
-function var_0_0.onUpdate(arg_5_0)
-	if not arg_5_0._go or arg_5_0._isPause then
+function ExploreWhirlFollowComp:onUpdate()
+	if not self._go or self._isPause then
 		return
 	end
 
-	arg_5_0:onUpdatePos()
+	self:onUpdatePos()
 end
 
-function var_0_0._getHero(arg_6_0)
+function ExploreWhirlFollowComp:_getHero()
 	return ExploreController.instance:getMap():getHero()
 end
 
-function var_0_0.onUpdatePos(arg_7_0)
-	local var_7_0 = arg_7_0:_getHero()._displayTr
-	local var_7_1 = var_7_0.position
-	local var_7_2 = -var_7_0.forward:Mul(arg_7_0._radius) + var_7_1
+function ExploreWhirlFollowComp:onUpdatePos()
+	local heroTrans = self:_getHero()._displayTr
+	local heroPos = heroTrans.position
+	local finalPos = -heroTrans.forward:Mul(self._radius) + heroPos
 
-	if arg_7_0._nowDir == var_0_1.Up then
-		arg_7_0._nowHeight = arg_7_0._nowHeight + arg_7_0._upDownSpeed
+	if self._nowDir == Dir.Up then
+		self._nowHeight = self._nowHeight + self._upDownSpeed
 
-		if arg_7_0._nowHeight >= arg_7_0._maxHeight then
-			arg_7_0._nowDir = var_0_1.Down
+		if self._nowHeight >= self._maxHeight then
+			self._nowDir = Dir.Down
 		end
 	else
-		arg_7_0._nowHeight = arg_7_0._nowHeight - arg_7_0._upDownSpeed
+		self._nowHeight = self._nowHeight - self._upDownSpeed
 
-		if arg_7_0._nowHeight <= arg_7_0._minHeight then
-			arg_7_0._nowDir = var_0_1.Up
+		if self._nowHeight <= self._minHeight then
+			self._nowDir = Dir.Up
 		end
 	end
 
-	var_7_2.y = arg_7_0._nowHeight
+	finalPos.y = self._nowHeight
 
-	arg_7_0._trans:Rotate(0, arg_7_0._rotateSpeed, 0)
+	self._trans:Rotate(0, self._rotateSpeed, 0)
 
-	local var_7_3 = arg_7_0._trans.position:Sub(var_7_2):SqrMagnitude()
+	local nowPos = self._trans.position
+	local dis = nowPos:Sub(finalPos):SqrMagnitude()
 
-	if var_7_3 > arg_7_0._moveSpeed * arg_7_0._moveSpeed then
-		var_7_2 = Vector3.Lerp(arg_7_0._trans.position, var_7_2, arg_7_0._moveSpeed / math.sqrt(var_7_3))
+	if dis > self._moveSpeed * self._moveSpeed then
+		finalPos = Vector3.Lerp(self._trans.position, finalPos, self._moveSpeed / math.sqrt(dis))
 
-		local var_7_4 = var_7_2 - var_7_1
+		local xzOffset = finalPos - heroPos
 
-		var_7_4.y = 0
+		xzOffset.y = 0
 
-		if var_7_4:SqrMagnitude() > 1 then
-			local var_7_5 = var_7_4:SetNormalize():Add(var_7_1)
+		local heroDis = xzOffset:SqrMagnitude()
 
-			var_7_5.y = var_7_2.y
-			var_7_2 = var_7_5
+		if heroDis > 1 then
+			local pos = xzOffset:SetNormalize():Add(heroPos)
+
+			pos.y = finalPos.y
+			finalPos = pos
 		end
 
-		arg_7_0._trans.position = var_7_2
+		self._trans.position = finalPos
 	else
-		arg_7_0._trans.position = var_7_2
+		self._trans.position = finalPos
 	end
 end
 
-function var_0_0.onDestroy(arg_8_0)
-	arg_8_0._go = nil
-	arg_8_0._trans = nil
-	arg_8_0._whirl = nil
-	arg_8_0._isPause = false
+function ExploreWhirlFollowComp:onDestroy()
+	self._go = nil
+	self._trans = nil
+	self._whirl = nil
+	self._isPause = false
 end
 
-return var_0_0
+return ExploreWhirlFollowComp

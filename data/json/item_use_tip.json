@@ -1,0 +1,29 @@
+[
+  {
+    "id": 540002,
+    "priority": 1,
+    "type": 1,
+    "jumpId": 0,
+    "desc": "language_10097903",
+    "descParam": "1",
+    "checkParam": ""
+  },
+  {
+    "id": 713201,
+    "priority": 1,
+    "type": 1,
+    "jumpId": 0,
+    "desc": "language_10097903",
+    "descParam": "1",
+    "checkParam": ""
+  },
+  {
+    "id": 2929001,
+    "priority": 1,
+    "type": 1,
+    "jumpId": 700,
+    "desc": "language_10097904",
+    "descParam": "1",
+    "checkParam": "1"
+  }
+]

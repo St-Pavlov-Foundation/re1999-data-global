@@ -1,25 +1,27 @@
-﻿module("modules.logic.rouge.model.RougeIllustrationListModel", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/model/RougeIllustrationListModel.lua
 
-local var_0_0 = class("RougeIllustrationListModel", MixScrollModel)
+module("modules.logic.rouge.model.RougeIllustrationListModel", package.seeall)
 
-function var_0_0.initList(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = RougeFavoriteConfig.instance:getIllustrationPages()
+local RougeIllustrationListModel = class("RougeIllustrationListModel", MixScrollModel)
 
-	tabletool.addValues(var_1_0, var_1_1)
+function RougeIllustrationListModel:initList()
+	local pages = {}
+	local pageDatas = RougeFavoriteConfig.instance:getIllustrationPages()
 
-	local var_1_2 = RougeFavoriteConfig.instance:getNormalIllustrationPageCount()
+	tabletool.addValues(pages, pageDatas)
 
-	if var_1_2 > 0 then
-		local var_1_3 = arg_1_0:getSplitSpaceInfoItem()
+	local normalPageCount = RougeFavoriteConfig.instance:getNormalIllustrationPageCount()
 
-		table.insert(var_1_0, var_1_2 + 1, var_1_3)
+	if normalPageCount > 0 then
+		local splitSpaceItem = self:getSplitSpaceInfoItem()
+
+		table.insert(pages, normalPageCount + 1, splitSpaceItem)
 	end
 
-	arg_1_0:setList(var_1_0)
+	self:setList(pages)
 end
 
-local var_0_1 = {
+local cellWidth = {
 	480,
 	660,
 	1140,
@@ -27,53 +29,53 @@ local var_0_1 = {
 	1770,
 	2103
 }
-local var_0_2 = 300
-local var_0_3 = 1000
+local splitSpaceWidth = 300
+local splitSpaceItemType = 1000
 
-function var_0_0.getInfoList(arg_2_0, arg_2_1)
-	local var_2_0 = {}
-	local var_2_1 = arg_2_0:getList()
+function RougeIllustrationListModel:getInfoList(scrollGO)
+	local mixCellInfos = {}
+	local list = self:getList()
 
-	arg_2_0._splitSpaceStartPosX = 0
+	self._splitSpaceStartPosX = 0
 
-	local var_2_2 = false
+	local hasGetSpacePos = false
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_1) do
-		local var_2_3
+	for i, mo in ipairs(list) do
+		local mixCellInfo
 
-		if iter_2_1.isSplitSpace then
-			var_2_3 = SLFramework.UGUI.MixCellInfo.New(var_0_3, var_0_2, iter_2_0)
-			var_2_2 = true
+		if mo.isSplitSpace then
+			mixCellInfo = SLFramework.UGUI.MixCellInfo.New(splitSpaceItemType, splitSpaceWidth, i)
+			hasGetSpacePos = true
 		else
-			local var_2_4 = #iter_2_1
+			local num = #mo
 
-			var_2_3 = SLFramework.UGUI.MixCellInfo.New(var_2_4, var_0_1[var_2_4], iter_2_0)
+			mixCellInfo = SLFramework.UGUI.MixCellInfo.New(num, cellWidth[num], i)
 
-			if not var_2_2 then
-				arg_2_0._splitSpaceStartPosX = arg_2_0._splitSpaceStartPosX + var_0_1[var_2_4]
+			if not hasGetSpacePos then
+				self._splitSpaceStartPosX = self._splitSpaceStartPosX + cellWidth[num]
 			end
 		end
 
-		table.insert(var_2_0, var_2_3)
+		table.insert(mixCellInfos, mixCellInfo)
 	end
 
-	return var_2_0
+	return mixCellInfos
 end
 
-function var_0_0.getSplitSpaceInfoItem(arg_3_0)
-	if not arg_3_0._splitSpaceItem then
-		arg_3_0._splitSpaceItem = {
+function RougeIllustrationListModel:getSplitSpaceInfoItem()
+	if not self._splitSpaceItem then
+		self._splitSpaceItem = {
 			isSplitSpace = true
 		}
 	end
 
-	return arg_3_0._splitSpaceItem
+	return self._splitSpaceItem
 end
 
-function var_0_0.getSplitEmptySpaceStartPosX(arg_4_0)
-	return arg_4_0._splitSpaceStartPosX or 0
+function RougeIllustrationListModel:getSplitEmptySpaceStartPosX()
+	return self._splitSpaceStartPosX or 0
 end
 
-var_0_0.instance = var_0_0.New()
+RougeIllustrationListModel.instance = RougeIllustrationListModel.New()
 
-return var_0_0
+return RougeIllustrationListModel

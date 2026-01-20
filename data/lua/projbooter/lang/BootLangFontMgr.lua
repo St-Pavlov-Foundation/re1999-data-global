@@ -1,23 +1,27 @@
-﻿module("projbooter.lang.BootLangFontMgr", package.seeall)
+﻿-- chunkname: @projbooter/lang/BootLangFontMgr.lua
 
-local var_0_0 = class("BootLangFontMgr")
+module("projbooter.lang.BootLangFontMgr", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._font = arg_1_1
+local BootLangFontMgr = class("BootLangFontMgr")
 
-	ZProj.LangFontAssetMgr.Instance:SetLuaCallback(arg_1_0._setFontAsset, arg_1_0)
+function BootLangFontMgr:init(font)
+	self._font = font
+
+	ZProj.LangFontAssetMgr.Instance:SetLuaCallback(self._setFontAsset, self)
 end
 
-function var_0_0._setFontAsset(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_2 then
-		arg_2_1.text.font = arg_2_0._font
+function BootLangFontMgr:_setFontAsset(langFont, isRegister)
+	if isRegister then
+		local text = langFont.text
+
+		text.font = self._font
 	end
 end
 
-function var_0_0.dispose(arg_3_0)
-	arg_3_0._font = nil
+function BootLangFontMgr:dispose()
+	self._font = nil
 end
 
-var_0_0.instance = var_0_0.New()
+BootLangFontMgr.instance = BootLangFontMgr.New()
 
-return var_0_0
+return BootLangFontMgr

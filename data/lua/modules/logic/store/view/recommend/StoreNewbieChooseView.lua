@@ -1,131 +1,136 @@
-﻿module("modules.logic.store.view.recommend.StoreNewbieChooseView", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/recommend/StoreNewbieChooseView.lua
 
-local var_0_0 = class("StoreNewbieChooseView", StoreRecommendBaseSubView)
+module("modules.logic.store.view.recommend.StoreNewbieChooseView", package.seeall)
 
-local function var_0_1(arg_1_0)
-	local var_1_0 = PayModel.instance:getProductOriginPriceSymbol(arg_1_0)
-	local var_1_1, var_1_2 = PayModel.instance:getProductOriginPriceNum(arg_1_0)
-	local var_1_3 = ""
+local StoreNewbieChooseView = class("StoreNewbieChooseView", StoreRecommendBaseSubView)
 
-	if string.nilorempty(var_1_0) then
-		local var_1_4 = string.reverse(var_1_2)
-		local var_1_5 = string.find(var_1_4, "%d")
-		local var_1_6 = string.len(var_1_4) - var_1_5 + 1
-		local var_1_7 = string.sub(var_1_2, var_1_6 + 1, string.len(var_1_2))
+local function _getPriceStr(jumpGoodsId)
+	local symbol = PayModel.instance:getProductOriginPriceSymbol(jumpGoodsId)
+	local num, numStr = PayModel.instance:getProductOriginPriceNum(jumpGoodsId)
+	local symbol2 = ""
 
-		var_1_2 = string.sub(var_1_2, 1, var_1_6)
+	if string.nilorempty(symbol) then
+		local reverseStr = string.reverse(numStr)
+		local lastIndex = string.find(reverseStr, "%d")
 
-		return string.format("%s<size=60>%s</size>", var_1_2, var_1_7)
+		lastIndex = string.len(reverseStr) - lastIndex + 1
+		symbol2 = string.sub(numStr, lastIndex + 1, string.len(numStr))
+		numStr = string.sub(numStr, 1, lastIndex)
+
+		return string.format("%s<size=60>%s</size>", numStr, symbol2)
 	else
-		return string.format("<size=60>%s</size>%s", var_1_0, var_1_2)
+		return string.format("<size=60>%s</size>%s", symbol, numStr)
 	end
 end
 
-local var_0_2 = 3
-local var_0_3 = 3
-local var_0_4 = {
+local newbieCharNum = 3
+local autoSwitchNextCharTime = 3
+local charIds = {
 	3082,
 	3020,
 	3076
 }
-local var_0_5 = {
+local charShowTags = {
 	[3020] = 105,
 	[3076] = 103,
 	[3082] = 104
 }
-local var_0_6 = 10170
+local jumpToPackTab = 10170
 
-function var_0_0.onInitView(arg_2_0)
-	arg_2_0._goNewbieChar1 = gohelper.findChild(arg_2_0.viewGO, "recommend/anibg/#simage_char1")
-	arg_2_0._goNewbieChar2 = gohelper.findChild(arg_2_0.viewGO, "recommend/anibg/#simage_char2")
-	arg_2_0._goNewbieChar3 = gohelper.findChild(arg_2_0.viewGO, "recommend/anibg/#simage_char3")
-	arg_2_0._charAnim = gohelper.findChild(arg_2_0.viewGO, "recommend/anibg"):GetComponent(typeof(UnityEngine.Animation))
+function StoreNewbieChooseView:onInitView()
+	self._goNewbieChar1 = gohelper.findChild(self.viewGO, "recommend/anibg/#simage_char1")
+	self._goNewbieChar2 = gohelper.findChild(self.viewGO, "recommend/anibg/#simage_char2")
+	self._goNewbieChar3 = gohelper.findChild(self.viewGO, "recommend/anibg/#simage_char3")
 
-	if arg_2_0._editableInitView then
-		arg_2_0:_editableInitView()
+	local goCharRoot = gohelper.findChild(self.viewGO, "recommend/anibg")
+
+	self._charAnim = goCharRoot:GetComponent(typeof(UnityEngine.Animation))
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_3_0)
-	arg_3_0._btn:AddClickListener(arg_3_0._onClick, arg_3_0)
+function StoreNewbieChooseView:addEvents()
+	self._btn:AddClickListener(self._onClick, self)
 end
 
-function var_0_0.removeEvents(arg_4_0)
-	arg_4_0._btn:RemoveClickListener()
+function StoreNewbieChooseView:removeEvents()
+	self._btn:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._txtNum = gohelper.findChildText(arg_5_0.viewGO, "recommend/Buy/txt_Num")
-	arg_5_0._txtNum.text = var_0_1(StoreEnum.NewbiePackId)
-	arg_5_0._animator = arg_5_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function StoreNewbieChooseView:_editableInitView()
+	self._txtNum = gohelper.findChildText(self.viewGO, "recommend/Buy/txt_Num")
+	self._txtNum.text = _getPriceStr(StoreEnum.NewbiePackId)
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	local var_5_0 = gohelper.findChild(arg_5_0.viewGO, "recommend")
+	local gotmp = gohelper.findChild(self.viewGO, "recommend")
 
-	arg_5_0._animatorPlayer = SLFramework.AnimatorPlayer.Get(var_5_0)
-	arg_5_0._btn = gohelper.getClickWithAudio(arg_5_0.viewGO)
-	arg_5_0._newbieCharGoList = arg_5_0:getUserDataTb_()
-	arg_5_0._newbieCharGoList[1] = arg_5_0._goNewbieChar3
-	arg_5_0._newbieCharGoList[2] = arg_5_0._goNewbieChar2
-	arg_5_0._newbieCharGoList[3] = arg_5_0._goNewbieChar1
+	self._animatorPlayer = SLFramework.AnimatorPlayer.Get(gotmp)
+	self._btn = gohelper.getClickWithAudio(self.viewGO)
+	self._newbieCharGoList = self:getUserDataTb_()
+	self._newbieCharGoList[1] = self._goNewbieChar3
+	self._newbieCharGoList[2] = self._goNewbieChar2
+	self._newbieCharGoList[3] = self._goNewbieChar1
 end
 
-function var_0_0.onOpen(arg_6_0)
-	StoreRecommendBaseSubView.onOpen(arg_6_0)
+function StoreNewbieChooseView:onOpen()
+	StoreRecommendBaseSubView.onOpen(self)
 
-	arg_6_0.config = StoreConfig.instance:getStoreRecommendConfig(StoreEnum.RecommendSubStoreId.ChargeView)
+	self.config = StoreConfig.instance:getStoreRecommendConfig(StoreEnum.RecommendSubStoreId.ChargeView)
 
 	StoreController.instance:dispatchEvent(StoreEvent.SetAutoToNextPage, false)
 
-	arg_6_0._curCharIdx = 0
+	self._curCharIdx = 0
 
-	arg_6_0:_toNextChar()
-	arg_6_0._charAnim:Play()
+	self:_toNextChar()
+	self._charAnim:Play()
 end
 
-function var_0_0.onClose(arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0._toNextChar, arg_7_0)
-	StoreRecommendBaseSubView.onClose(arg_7_0)
-	arg_7_0._charAnim:Stop()
+function StoreNewbieChooseView:onClose()
+	TaskDispatcher.cancelTask(self._toNextChar, self)
+	StoreRecommendBaseSubView.onClose(self)
+	self._charAnim:Stop()
 	StoreController.instance:dispatchEvent(StoreEvent.SetAutoToNextPage, true)
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
+function StoreNewbieChooseView:onUpdateParam()
 	return
 end
 
-function var_0_0._toNextChar(arg_9_0)
-	if arg_9_0._curCharIdx >= var_0_2 then
-		arg_9_0._curCharIdx = 0
+function StoreNewbieChooseView:_toNextChar()
+	if self._curCharIdx >= newbieCharNum then
+		self._curCharIdx = 0
 	end
 
-	arg_9_0._curCharIdx = arg_9_0._curCharIdx + 1
+	self._curCharIdx = self._curCharIdx + 1
 
-	if arg_9_0._curCharIdx == var_0_2 then
+	if self._curCharIdx == newbieCharNum then
 		StoreController.instance:dispatchEvent(StoreEvent.SetAutoToNextPage, true)
 	end
 
-	local var_9_0 = arg_9_0._newbieCharGoList[arg_9_0._curCharIdx]
-	local var_9_1 = var_0_4[arg_9_0._curCharIdx]
-	local var_9_2 = gohelper.findChildText(var_9_0, "name/image_NameBG/#txt_Name")
-	local var_9_3 = gohelper.findChildImage(var_9_0, "name/#image_Attr")
-	local var_9_4 = HeroConfig.instance:getHeroCO(var_9_1)
+	local newbieCharGo = self._newbieCharGoList[self._curCharIdx]
+	local curCharId = charIds[self._curCharIdx]
+	local charNameText = gohelper.findChildText(newbieCharGo, "name/image_NameBG/#txt_Name")
+	local attrImage = gohelper.findChildImage(newbieCharGo, "name/#image_Attr")
+	local heroConfig = HeroConfig.instance:getHeroCO(curCharId)
 
-	var_9_2.text = var_9_4.name
+	charNameText.text = heroConfig.name
 
-	UISpriteSetMgr.instance:setCommonSprite(var_9_3, "lssx_" .. var_9_4.career)
-	TaskDispatcher.runDelay(arg_9_0._toNextChar, arg_9_0, var_0_3)
+	UISpriteSetMgr.instance:setCommonSprite(attrImage, "lssx_" .. heroConfig.career)
+	TaskDispatcher.runDelay(self._toNextChar, self, autoSwitchNextCharTime)
 end
 
-function var_0_0._onClick(arg_10_0)
-	local var_10_0 = string.splitToNumber(arg_10_0.config.systemJumpCode, "#")
+function StoreNewbieChooseView:_onClick()
+	local jumpParams = string.splitToNumber(self.config.systemJumpCode, "#")
 
-	if var_10_0[2] then
-		local var_10_1 = var_10_0[2]
-		local var_10_2 = StoreModel.instance:getGoodsMO(var_10_1)
+	if jumpParams[2] then
+		local goodId = jumpParams[2]
+		local packageMo = StoreModel.instance:getGoodsMO(goodId)
 
-		StoreController.instance:openPackageStoreGoodsView(var_10_2)
+		StoreController.instance:openPackageStoreGoodsView(packageMo)
 	else
-		GameFacade.jumpByAdditionParam(var_0_6 .. "#" .. StoreEnum.NewbiePackId)
+		GameFacade.jumpByAdditionParam(jumpToPackTab .. "#" .. StoreEnum.NewbiePackId)
 	end
 
 	AudioMgr.instance:trigger(2000001)
@@ -133,12 +138,12 @@ function var_0_0._onClick(arg_10_0)
 		[StatEnum.EventProperties.RecommendPageType] = StatEnum.RecommendType.Store,
 		[StatEnum.EventProperties.RecommendPageId] = "712",
 		[StatEnum.EventProperties.RecommendPageName] = "新人邀约",
-		[StatEnum.EventProperties.RecommendPageRank] = arg_10_0:getTabIndex()
+		[StatEnum.EventProperties.RecommendPageRank] = self:getTabIndex()
 	})
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0._toNextChar, arg_11_0)
+function StoreNewbieChooseView:onDestroyView()
+	TaskDispatcher.cancelTask(self._toNextChar, self)
 end
 
-return var_0_0
+return StoreNewbieChooseView

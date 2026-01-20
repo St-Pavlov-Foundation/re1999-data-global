@@ -1,27 +1,29 @@
-﻿module("modules.logic.fight.system.work.FightWorkCardDeckDelete", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkCardDeckDelete.lua
 
-local var_0_0 = class("FightWorkCardDeckDelete", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkCardDeckDelete", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0.SAFETIME = 3
+local FightWorkCardDeckDelete = class("FightWorkCardDeckDelete", FightEffectBase)
+
+function FightWorkCardDeckDelete:onConstructor()
+	self.SAFETIME = 3
 end
 
-function var_0_0.beforePlayEffectData(arg_2_0)
-	arg_2_0.beforeNum = FightDataHelper.fieldMgr.deckNum
+function FightWorkCardDeckDelete:beforePlayEffectData()
+	self.beforeNum = FightDataHelper.fieldMgr.deckNum
 end
 
-function var_0_0.onStart(arg_3_0)
-	local var_3_0 = arg_3_0.actEffectData.cardInfoList
+function FightWorkCardDeckDelete:onStart()
+	local cardInfoList = self.actEffectData.cardInfoList
 
-	if var_3_0 and #var_3_0 < 1 then
-		return arg_3_0:onDone(true)
+	if cardInfoList and #cardInfoList < 1 then
+		return self:onDone(true)
 	end
 
-	local var_3_1 = FightDataHelper.fieldMgr.deckNum
+	local curDeckNum = FightDataHelper.fieldMgr.deckNum
 
-	arg_3_0:com_sendFightEvent(FightEvent.CardBoxNumChange, arg_3_0.beforeNum, var_3_1)
-	arg_3_0:com_registFightEvent(FightEvent.CardDeckDeleteDone, arg_3_0._delayDone)
-	arg_3_0:com_sendFightEvent(FightEvent.CardDeckDelete, arg_3_0.actEffectData.cardInfoList)
+	self:com_sendFightEvent(FightEvent.CardBoxNumChange, self.beforeNum, curDeckNum)
+	self:com_registFightEvent(FightEvent.CardDeckDeleteDone, self._delayDone)
+	self:com_sendFightEvent(FightEvent.CardDeckDelete, self.actEffectData.cardInfoList)
 end
 
-return var_0_0
+return FightWorkCardDeckDelete

@@ -1,32 +1,36 @@
-﻿module("modules.logic.fight.system.work.FightWorkCardAConvertCardB", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkCardAConvertCardB.lua
 
-local var_0_0 = class("FightWorkCardAConvertCardB", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkCardAConvertCardB", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	if not FightCardDataHelper.cardChangeIsMySide(arg_1_0.actEffectData) then
-		arg_1_0:onDone(true)
+local FightWorkCardAConvertCardB = class("FightWorkCardAConvertCardB", FightEffectBase)
+
+function FightWorkCardAConvertCardB:onStart()
+	if not FightCardDataHelper.cardChangeIsMySide(self.actEffectData) then
+		self:onDone(true)
 
 		return
 	end
 
-	arg_1_0._revertVisible = true
+	self._revertVisible = true
 
 	FightController.instance:dispatchEvent(FightEvent.SetHandCardVisible, true)
 	AudioMgr.instance:trigger(2000072)
 
-	if FightModel.instance:getVersion() >= 4 then
-		FightController.instance:dispatchEvent(FightEvent.CardAConvertCardB, arg_1_0.actEffectData.effectNum)
-		arg_1_0:com_registTimer(arg_1_0._delayAfterPerformance, FightEnum.PerformanceTime.CardAConvertCardB / FightModel.instance:getUISpeed())
+	local version = FightModel.instance:getVersion()
+
+	if version >= 4 then
+		FightController.instance:dispatchEvent(FightEvent.CardAConvertCardB, self.actEffectData.effectNum)
+		self:com_registTimer(self._delayAfterPerformance, FightEnum.PerformanceTime.CardAConvertCardB / FightModel.instance:getUISpeed())
 	else
 		FightController.instance:dispatchEvent(FightEvent.RefreshHandCard)
-		arg_1_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0.clearWork(arg_2_0)
-	if arg_2_0._revertVisible then
+function FightWorkCardAConvertCardB:clearWork()
+	if self._revertVisible then
 		FightController.instance:dispatchEvent(FightEvent.SetHandCardVisible, true, true)
 	end
 end
 
-return var_0_0
+return FightWorkCardAConvertCardB

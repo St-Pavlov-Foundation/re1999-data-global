@@ -1,61 +1,63 @@
-﻿module("modules.logic.room.model.map.path.RoomMapPathNodeMO", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/map/path/RoomMapPathNodeMO.lua
 
-local var_0_0 = pureTable("RoomMapPathNodeMO")
+module("modules.logic.room.model.map.path.RoomMapPathNodeMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.id = arg_1_1
-	arg_1_0.hexPoint = arg_1_2
-	arg_1_0.resourceId = arg_1_3
-	arg_1_0.resId = arg_1_3
-	arg_1_0.directionDic = {}
-	arg_1_0.connectNode = {}
-	arg_1_0.directionList = {}
-	arg_1_0.neighborNum = 0
-	arg_1_0.connectNodeNum = 0
-	arg_1_0.searchIndex = 0
-	arg_1_0.hasBuilding = false
+local RoomMapPathNodeMO = pureTable("RoomMapPathNodeMO")
+
+function RoomMapPathNodeMO:init(id, hexPoint, resId)
+	self.id = id
+	self.hexPoint = hexPoint
+	self.resourceId = resId
+	self.resId = resId
+	self.directionDic = {}
+	self.connectNode = {}
+	self.directionList = {}
+	self.neighborNum = 0
+	self.connectNodeNum = 0
+	self.searchIndex = 0
+	self.hasBuilding = false
 end
 
-function var_0_0.addDirection(arg_2_0, arg_2_1)
-	arg_2_0.directionDic[arg_2_1] = true
+function RoomMapPathNodeMO:addDirection(direction)
+	self.directionDic[direction] = true
 
-	if arg_2_1 >= 1 and arg_2_1 <= 6 and not tabletool.indexOf(arg_2_0.directionList) then
-		table.insert(arg_2_0.directionList, arg_2_1)
+	if direction >= 1 and direction <= 6 and not tabletool.indexOf(self.directionList) then
+		table.insert(self.directionList, direction)
 	end
 end
 
-function var_0_0.getConnectDirection(arg_3_0, arg_3_1)
-	return (arg_3_1 + 3 - 1) % 6 + 1
+function RoomMapPathNodeMO:getConnectDirection(direction)
+	return (direction + 3 - 1) % 6 + 1
 end
 
-function var_0_0.isHasDirection(arg_4_0, arg_4_1)
-	return arg_4_0.directionDic[arg_4_1] ~= nil
+function RoomMapPathNodeMO:isHasDirection(direction)
+	return self.directionDic[direction] ~= nil
 end
 
-function var_0_0.setConnctNode(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_0.directionDic[arg_5_1] ~= nil then
-		arg_5_0.connectNode[arg_5_1] = arg_5_2
+function RoomMapPathNodeMO:setConnctNode(direction, node)
+	if self.directionDic[direction] ~= nil then
+		self.connectNode[direction] = node
 	end
 end
 
-function var_0_0.getConnctNode(arg_6_0, arg_6_1)
-	return arg_6_0.connectNode[arg_6_1]
+function RoomMapPathNodeMO:getConnctNode(direction)
+	return self.connectNode[direction]
 end
 
-function var_0_0.getDirectionNum(arg_7_0)
-	return #arg_7_0.directionList
+function RoomMapPathNodeMO:getDirectionNum()
+	return #self.directionList
 end
 
-function var_0_0.isEndNode(arg_8_0)
-	return arg_8_0.connectNodeNum <= 1
+function RoomMapPathNodeMO:isEndNode()
+	return self.connectNodeNum <= 1
 end
 
-function var_0_0.isNotConnctDirection(arg_9_0)
-	return #arg_9_0.directionList > arg_9_0.connectNodeNum
+function RoomMapPathNodeMO:isNotConnctDirection()
+	return #self.directionList > self.connectNodeNum
 end
 
-function var_0_0.isSideNode(arg_10_0)
-	return arg_10_0.neighborNum <= 6
+function RoomMapPathNodeMO:isSideNode()
+	return self.neighborNum <= 6
 end
 
-return var_0_0
+return RoomMapPathNodeMO

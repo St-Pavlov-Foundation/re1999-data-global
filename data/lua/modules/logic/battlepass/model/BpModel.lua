@@ -1,212 +1,302 @@
-﻿module("modules.logic.battlepass.model.BpModel", package.seeall)
+﻿-- chunkname: @modules/logic/battlepass/model/BpModel.lua
 
-local var_0_0 = class("BpModel", BaseModel)
+module("modules.logic.battlepass.model.BpModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0.preStatus = nil
-	arg_1_0.animProcess = 0
-	arg_1_0.animData = nil
-	arg_1_0.isViewLoading = nil
-	arg_1_0.lockLevelUpShow = false
-	arg_1_0.cacheBonus = nil
-	arg_1_0.firstShowSp = nil
+local BpModel = class("BpModel", BaseModel)
+
+function BpModel:onInit()
+	self.preStatus = nil
+	self.animProcess = 0
+	self.animData = nil
+	self.isViewLoading = nil
+	self.lockLevelUpShow = false
+	self.cacheBonus = nil
+	self.firstShowSp = nil
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._hasGetInfo = nil
-	arg_2_0.firstShow = nil
-	arg_2_0.firstShowSp = nil
-	arg_2_0.lockAlertBonus = nil
+function BpModel:reInit()
+	self._hasGetInfo = nil
+	self.firstShow = nil
+	self.firstShowSp = nil
+	self.lockAlertBonus = nil
 
-	arg_2_0:onInit()
+	self:onInit()
 end
 
-function var_0_0.onGetInfo(arg_3_0, arg_3_1)
-	arg_3_0._hasGetInfo = true
-	arg_3_0.id = arg_3_1.id
-	arg_3_0.score = arg_3_1.score
-	arg_3_0.payStatus = arg_3_1.payStatus
-	arg_3_0.startTime = arg_3_1.startTime
-	arg_3_0.endTime = arg_3_1.endTime
-	arg_3_0.weeklyScore = arg_3_1.weeklyScore
-	arg_3_0.firstShow = arg_3_1.firstShow
-	arg_3_0.firstShowSp = arg_3_1.spFirstShow
+function BpModel:onGetInfo(msg)
+	self._hasGetInfo = true
+	self.id = msg.id
+	self.score = msg.score
+	self.payStatus = msg.payStatus
+	self.startTime = msg.startTime
+	self.endTime = msg.endTime
+	self.weeklyScore = msg.weeklyScore
+	self.firstShow = msg.firstShow
+	self.firstShowSp = msg.spFirstShow
 end
 
-function var_0_0.hasGetInfo(arg_4_0)
-	return arg_4_0._hasGetInfo
+function BpModel:hasGetInfo()
+	return self._hasGetInfo
 end
 
-function var_0_0.isEnd(arg_5_0)
-	if not arg_5_0._hasGetInfo or arg_5_0.endTime == 0 then
+function BpModel:isEnd()
+	if not self._hasGetInfo or self.endTime == 0 then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.getBpEndTime(arg_6_0)
-	return arg_6_0.endTime or 0
+function BpModel:getBpEndTime()
+	return self.endTime or 0
 end
 
-function var_0_0.updateScore(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_0.score = arg_7_1
-	arg_7_0.weeklyScore = arg_7_2
+function BpModel:updateScore(score, weeklyScore)
+	self.score = score
+	self.weeklyScore = weeklyScore
 end
 
-function var_0_0.updatePayStatus(arg_8_0, arg_8_1)
-	arg_8_0.payStatus = arg_8_1
+function BpModel:updatePayStatus(payStatus)
+	self.payStatus = payStatus
 end
 
-function var_0_0.onBuyLevel(arg_9_0, arg_9_1)
-	arg_9_0.score = arg_9_1
+function BpModel:onBuyLevel(score)
+	self.score = score
 end
 
-function var_0_0.buildChargeFlow(arg_10_0)
-	if not arg_10_0._chargeFlow then
-		arg_10_0._chargeFlow = BpChargeFlow.New()
+function BpModel:buildChargeFlow()
+	if not self._chargeFlow then
+		self._chargeFlow = BpChargeFlow.New()
 	end
 
-	arg_10_0._chargeFlow:registerDoneListener(arg_10_0.clearFlow, arg_10_0)
-	arg_10_0._chargeFlow:buildFlow()
+	self._chargeFlow:registerDoneListener(self.clearFlow, self)
+	self._chargeFlow:buildFlow()
 end
 
-function var_0_0.isInFlow(arg_11_0)
-	return arg_11_0._chargeFlow and true or false
+function BpModel:isInFlow()
+	return self._chargeFlow and true or false
 end
 
-function var_0_0.clearFlow(arg_12_0)
-	if arg_12_0._chargeFlow then
-		arg_12_0._chargeFlow:onDestroyInternal()
+function BpModel:clearFlow()
+	if self._chargeFlow then
+		self._chargeFlow:onDestroyInternal()
 
-		arg_12_0._chargeFlow = nil
+		self._chargeFlow = nil
 	end
 end
 
-function var_0_0.isWeeklyScoreFull(arg_13_0)
-	return (arg_13_0.weeklyScore or 0) >= arg_13_0:getWeeklyMaxScore()
+function BpModel:isWeeklyScoreFull()
+	local weeklyScore = self.weeklyScore or 0
+	local weeklyMaxScore = self:getWeeklyMaxScore()
+
+	return weeklyMaxScore <= weeklyScore
 end
 
-function var_0_0.getBpChargeLeftSec(arg_14_0)
-	local var_14_0 = lua_bp.configDict[var_0_0.instance.id]
+function BpModel:getBpChargeLeftSec()
+	local bpCO = lua_bp.configDict[BpModel.instance.id]
 
-	if not var_14_0 then
+	if not bpCO then
 		return
 	end
 
-	local var_14_1 = StoreConfig.instance:getChargeGoodsConfig(var_14_0.chargeId1)
+	local shopCO = StoreConfig.instance:getChargeGoodsConfig(bpCO.chargeId1)
 
-	if not var_14_1 then
+	if not shopCO then
 		return
 	end
 
-	if type(var_14_1.offlineTime) == "number" then
-		return var_14_1.offlineTime - ServerTime.now()
+	if type(shopCO.offlineTime) == "number" then
+		local leftTime = shopCO.offlineTime - ServerTime.now()
+
+		return leftTime
 	end
 end
 
-function var_0_0.isBpChargeEnd(arg_15_0)
-	local var_15_0 = arg_15_0:getBpChargeLeftSec()
+function BpModel:isBpChargeEnd()
+	local leftTime = self:getBpChargeLeftSec()
 
-	if var_15_0 and var_15_0 < 0 then
+	if leftTime and leftTime < 0 then
 		return true
 	else
 		return false
 	end
 end
 
-function var_0_0.checkLevelUp(arg_16_0, arg_16_1, arg_16_2)
-	local var_16_0 = BpConfig.instance:getLevelScore(arg_16_0.id)
+function BpModel:checkLevelUp(score, preScore)
+	local levelScore = BpConfig.instance:getLevelScore(self.id)
 
-	return math.floor(arg_16_1 / var_16_0) > math.floor((arg_16_2 or arg_16_0.score) / var_16_0)
+	return math.floor(score / levelScore) > math.floor((preScore or self.score) / levelScore)
 end
 
-function var_0_0.getBpLv(arg_17_0, arg_17_1)
-	arg_17_1 = arg_17_1 or arg_17_0.score or 0
+function BpModel:getBpLv(score)
+	score = score or self.score or 0
 
-	local var_17_0 = BpConfig.instance:getLevelScore(arg_17_0.id)
+	local levelScore = BpConfig.instance:getLevelScore(self.id)
 
-	return math.floor(arg_17_1 / var_17_0)
+	return math.floor(score / levelScore)
 end
 
-function var_0_0.isShowExpUp(arg_18_0)
-	local var_18_0 = BpConfig.instance:getBpCO(arg_18_0.id or 0)
+function BpModel:isShowExpUp()
+	local bpCo = BpConfig.instance:getBpCO(self.id or 0)
 
-	if not var_18_0 then
+	if not bpCo then
 		return false
 	end
 
-	return var_18_0 and var_18_0.expUpShow or false
+	return bpCo and bpCo.expUpShow or false
 end
 
-function var_0_0.getWeeklyMaxScore(arg_19_0)
-	local var_19_0 = CommonConfig.instance:getConstNum(ConstEnum.BpWeeklyMaxScore)
-	local var_19_1 = BpConfig.instance:getBpCO(arg_19_0.id or 0)
+function BpModel:getWeeklyMaxScore()
+	local weeklyMaxScore = CommonConfig.instance:getConstNum(ConstEnum.BpWeeklyMaxScore)
+	local bpCo = BpConfig.instance:getBpCO(self.id or 0)
 
-	if not var_19_1 then
-		return var_19_0
+	if not bpCo then
+		return weeklyMaxScore
 	end
 
-	local var_19_2 = 1000 + (var_19_1.weekLimitTimes or 0)
+	local rate1000 = 1000 + (bpCo.weekLimitTimes or 0)
 
-	if var_19_2 > 1000 then
-		var_19_0 = math.floor(var_19_2 * var_19_0 / 1000)
+	if rate1000 > 1000 then
+		weeklyMaxScore = math.floor(rate1000 * weeklyMaxScore / 1000)
 	end
 
-	return var_19_0
+	return weeklyMaxScore
 end
 
-function var_0_0.checkShowPayBonusTip(arg_20_0, arg_20_1)
-	if arg_20_0:isEnd() or arg_20_0.payStatus ~= BpEnum.PayStatus.NotPay then
+function BpModel:checkShowPayBonusTip(bonusInfoList)
+	if self:isEnd() or self.payStatus ~= BpEnum.PayStatus.NotPay then
 		return false
 	end
 
-	local var_20_0 = string.splitToNumber(CommonConfig.instance:getConstStr(ConstEnum.BpShowBonusLvs), "#")
+	local showLvs = string.splitToNumber(CommonConfig.instance:getConstStr(ConstEnum.BpShowBonusLvs), "#")
 
-	if not var_20_0 or not var_20_0[1] then
+	if not showLvs or not showLvs[1] then
 		return false
 	end
 
-	local var_20_1 = arg_20_0:getBpLv()
+	local bpLv = self:getBpLv()
 
-	if var_20_1 < var_20_0[1] then
+	if bpLv < showLvs[1] then
 		return false
 	end
 
-	local var_20_2 = arg_20_0.id or 0
-	local var_20_3 = BpConfig.instance:getBpCO(var_20_2)
-	local var_20_4 = GameUtil.playerPrefsGetStringByUserId(PlayerPrefsKey.BpShowPayBonusTip .. var_20_2, "")
-	local var_20_5 = false
-	local var_20_6 = string.splitToNumber(var_20_4, "#") or {}
-	local var_20_7 = TimeUtil.stringToTimestamp(var_20_3.showBonusDate) + ServerTime.clientToServerOffset()
+	local bpId = self.id or 0
+	local bpCo = BpConfig.instance:getBpCO(bpId)
+	local markLvStrs = GameUtil.playerPrefsGetStringByUserId(PlayerPrefsKey.BpShowPayBonusTip .. bpId, "")
+	local isShowTips = false
+	local allMarks = string.splitToNumber(markLvStrs, "#") or {}
+	local leftSec = TimeUtil.stringToTimestamp(bpCo.showBonusDate) + ServerTime.clientToServerOffset()
 
-	if ServerTime.now() - var_20_7 >= 0 and not tabletool.indexOf(var_20_6, -1) then
-		table.insert(var_20_6, -1)
+	leftSec = ServerTime.now() - leftSec
 
-		var_20_5 = true
+	local canShowByDate = leftSec >= 0
+
+	if canShowByDate and not tabletool.indexOf(allMarks, -1) then
+		table.insert(allMarks, -1)
+
+		isShowTips = true
 	end
 
-	for iter_20_0, iter_20_1 in ipairs(var_20_0) do
-		if iter_20_1 <= var_20_1 and not tabletool.indexOf(var_20_6, iter_20_1) then
-			table.insert(var_20_6, iter_20_1)
+	for _, lv in ipairs(showLvs) do
+		if lv <= bpLv and not tabletool.indexOf(allMarks, lv) then
+			table.insert(allMarks, lv)
 
-			var_20_5 = true
+			isShowTips = true
 		end
 	end
 
-	if var_20_5 then
-		GameUtil.playerPrefsSetStringByUserId(PlayerPrefsKey.BpShowPayBonusTip .. var_20_2, table.concat(var_20_6, "#"))
+	if isShowTips then
+		GameUtil.playerPrefsSetStringByUserId(PlayerPrefsKey.BpShowPayBonusTip .. bpId, table.concat(allMarks, "#"))
 	end
 
-	return var_20_5
+	return isShowTips
 end
 
-function var_0_0.isMaxLevel(arg_21_0)
-	local var_21_0 = BpConfig.instance:getLevelScore(arg_21_0.id)
+function BpModel:isMaxLevel()
+	local levelScore = BpConfig.instance:getLevelScore(self.id)
+	local curLevel = math.floor(self.score / levelScore)
+	local maxLevel = #BpConfig.instance:getBonusCOList(self.id)
+	local isMax = maxLevel <= curLevel
 
-	return math.floor(arg_21_0.score / var_21_0) >= #BpConfig.instance:getBonusCOList(arg_21_0.id)
+	return isMax
 end
 
-var_0_0.instance = var_0_0.New()
+function BpModel:haveSpecialBonus()
+	local bpCo = BpConfig.instance:getBpCO(self.id)
 
-return var_0_0
+	if not string.nilorempty(bpCo.specialBonus) then
+		return true
+	end
+end
+
+function BpModel:getSpecialBonus()
+	local bpCo = BpConfig.instance:getBpCO(self.id)
+
+	if not string.nilorempty(bpCo.specialBonus) then
+		local itemList = GameUtil.splitString2(bpCo.specialBonus, true)
+
+		return itemList
+	end
+end
+
+function BpModel:isSpecialBonus(itemId)
+	local itemList = self:getSpecialBonus()
+
+	if itemList then
+		for i, infos in ipairs(itemList) do
+			local type = infos[1]
+			local id = infos[2]
+			local amount = infos[3]
+
+			if id == itemId then
+				return true
+			end
+		end
+	end
+
+	return false
+end
+
+function BpModel:checkOpenBpUpdatePopup()
+	local cfg = self:getUpdatePopupValidCfg()
+
+	if cfg then
+		local serverTime = ServerTime.now()
+		local key = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.BpUpdatePopup)
+
+		PlayerPrefsHelper.setNumber(key, serverTime)
+
+		return cfg
+	end
+end
+
+function BpModel:getUpdatePopupValidCfg()
+	local cfgs = lua_bp_update_popup.configList
+
+	for i, cfg in ipairs(cfgs) do
+		local startTime = cfg.startTime
+		local endTime = cfg.endTime
+		local startSeverTimeS = TimeUtil.stringToTimestamp(startTime)
+		local endSeverTimeS = TimeUtil.stringToTimestamp(endTime)
+		local serverTime = ServerTime.now()
+
+		if startSeverTimeS <= serverTime and serverTime <= endSeverTimeS then
+			local key = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.BpUpdatePopup)
+			local lastTimeS = PlayerPrefsHelper.getNumber(key, nil)
+
+			if lastTimeS and startSeverTimeS <= lastTimeS and lastTimeS <= endSeverTimeS then
+				return
+			end
+
+			return cfg
+		end
+	end
+end
+
+function BpModel:getCurVersionOperActId()
+	return VersionActivity3_2Enum.ActivityId.BpOperAct
+end
+
+BpModel.instance = BpModel.New()
+
+return BpModel

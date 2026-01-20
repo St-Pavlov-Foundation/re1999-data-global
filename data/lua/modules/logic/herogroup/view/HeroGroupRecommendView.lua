@@ -1,49 +1,51 @@
-﻿module("modules.logic.herogroup.view.HeroGroupRecommendView", package.seeall)
+﻿-- chunkname: @modules/logic/herogroup/view/HeroGroupRecommendView.lua
 
-local var_0_0 = class("HeroGroupRecommendView", BaseView)
+module("modules.logic.herogroup.view.HeroGroupRecommendView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._scrollgroup = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_group")
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#siamge_bg")
+local HeroGroupRecommendView = class("HeroGroupRecommendView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function HeroGroupRecommendView:onInitView()
+	self._scrollgroup = gohelper.findChildScrollRect(self.viewGO, "#scroll_group")
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#siamge_bg")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function HeroGroupRecommendView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function HeroGroupRecommendView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._simagebg:LoadImage(ResUrl.getHeroGroupBg("full/tuijianbeijingdi_036"))
+function HeroGroupRecommendView:_editableInitView()
+	self._simagebg:LoadImage(ResUrl.getHeroGroupBg("full/tuijianbeijingdi_036"))
 end
 
-function var_0_0._refreshUI(arg_5_0)
-	local var_5_0 = arg_5_0.viewParam
+function HeroGroupRecommendView:_refreshUI()
+	local msg = self.viewParam
 
-	HeroGroupRecommendCharacterListModel.instance:setCharacterList(var_5_0.racommends)
+	HeroGroupRecommendCharacterListModel.instance:setCharacterList(msg.racommends)
 end
 
-function var_0_0._onClickRecommendCharacter(arg_6_0)
-	arg_6_0._scrollgroup.verticalNormalizedPosition = 1
+function HeroGroupRecommendView:_onClickRecommendCharacter()
+	self._scrollgroup.verticalNormalizedPosition = 1
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0:_refreshUI()
-	arg_7_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickRecommendCharacter, arg_7_0._onClickRecommendCharacter, arg_7_0)
+function HeroGroupRecommendView:onOpen()
+	self:_refreshUI()
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickRecommendCharacter, self._onClickRecommendCharacter, self)
 end
 
-function var_0_0.onClose(arg_8_0)
+function HeroGroupRecommendView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
-	arg_9_0._simagebg:UnLoadImage()
+function HeroGroupRecommendView:onDestroyView()
+	self._simagebg:UnLoadImage()
 end
 
-return var_0_0
+return HeroGroupRecommendView

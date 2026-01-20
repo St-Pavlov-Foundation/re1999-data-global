@@ -1,22 +1,26 @@
-﻿module("modules.logic.room.view.critter.detail.RoomCriiterDetailSimpleViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/critter/detail/RoomCriiterDetailSimpleViewContainer.lua
 
-local var_0_0 = class("RoomCriiterDetailSimpleViewContainer", BaseViewContainer)
+module("modules.logic.room.view.critter.detail.RoomCriiterDetailSimpleViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoomCriiterDetailSimpleViewContainer = class("RoomCriiterDetailSimpleViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RoomCriiterDetailSimpleView.New())
+function RoomCriiterDetailSimpleViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RoomCriiterDetailSimpleView.New())
+
+	return views
 end
 
-function var_0_0.playCloseTransition(arg_2_0)
-	ZProj.ProjAnimatorPlayer.Get(arg_2_0.viewGO):Play(UIAnimationName.Close, arg_2_0.onCloseAnimDone, arg_2_0)
+function RoomCriiterDetailSimpleViewContainer:playCloseTransition()
+	local animatorPlayer = ZProj.ProjAnimatorPlayer.Get(self.viewGO)
+
+	animatorPlayer:Play(UIAnimationName.Close, self.onCloseAnimDone, self)
 end
 
-function var_0_0.onCloseAnimDone(arg_3_0)
-	arg_3_0:onPlayCloseTransitionFinish()
+function RoomCriiterDetailSimpleViewContainer:onCloseAnimDone()
+	self:onPlayCloseTransitionFinish()
 	CritterSummonController.instance:dispatchEvent(CritterSummonEvent.onCloseRoomCriiterDetailSimpleView)
 end
 
-return var_0_0
+return RoomCriiterDetailSimpleViewContainer

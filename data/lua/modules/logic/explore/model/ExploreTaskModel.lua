@@ -1,19 +1,21 @@
-﻿module("modules.logic.explore.model.ExploreTaskModel", package.seeall)
+﻿-- chunkname: @modules/logic/explore/model/ExploreTaskModel.lua
 
-local var_0_0 = class("ExploreTaskModel", BaseModel)
+module("modules.logic.explore.model.ExploreTaskModel", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._models = {}
+local ExploreTaskModel = class("ExploreTaskModel", BaseModel)
+
+function ExploreTaskModel:ctor()
+	self._models = {}
 end
 
-function var_0_0.getTaskList(arg_2_0, arg_2_1)
-	if not arg_2_0._models[arg_2_1] then
-		arg_2_0._models[arg_2_1] = ListScrollModel.New()
+function ExploreTaskModel:getTaskList(collectType)
+	if not self._models[collectType] then
+		self._models[collectType] = ListScrollModel.New()
 	end
 
-	return arg_2_0._models[arg_2_1]
+	return self._models[collectType]
 end
 
-var_0_0.instance = var_0_0.New()
+ExploreTaskModel.instance = ExploreTaskModel.New()
 
-return var_0_0
+return ExploreTaskModel

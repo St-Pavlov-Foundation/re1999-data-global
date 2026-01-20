@@ -1,46 +1,48 @@
-﻿module("modules.logic.fight.system.work.FightWorkDetectReplayEnterSceneActive", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkDetectReplayEnterSceneActive.lua
 
-local var_0_0 = class("FightWorkDetectReplayEnterSceneActive", BaseWork)
+module("modules.logic.fight.system.work.FightWorkDetectReplayEnterSceneActive", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
+local FightWorkDetectReplayEnterSceneActive = class("FightWorkDetectReplayEnterSceneActive", BaseWork)
+
+function FightWorkDetectReplayEnterSceneActive:onStart()
 	if FightDataHelper.stateMgr.isReplay then
-		local var_1_0 = FightModel.instance:getBattleId()
-		local var_1_1 = lua_fight_replay_enter_scene_root_active.configDict[var_1_0]
+		local battleId = FightModel.instance:getBattleId()
+		local config = lua_fight_replay_enter_scene_root_active.configDict[battleId]
 
-		if var_1_1 then
-			local var_1_2 = var_1_1[FightModel.instance:getCurWaveId()]
+		if config then
+			config = config[FightModel.instance:getCurWaveId()]
 
-			if var_1_2 then
-				local var_1_3 = GameSceneMgr.instance:getCurScene()
+			if config then
+				local fightScene = GameSceneMgr.instance:getCurScene()
 
-				if var_1_3 then
-					local var_1_4 = var_1_3.level:getSceneGo()
+				if fightScene then
+					local sceneObj = fightScene.level:getSceneGo()
 
-					if var_1_4 then
-						local var_1_5 = var_1_4.transform.childCount
+					if sceneObj then
+						local childCount = sceneObj.transform.childCount
 
-						for iter_1_0 = 0, var_1_5 - 1 do
-							local var_1_6 = var_1_4.transform:GetChild(iter_1_0)
+						for i = 0, childCount - 1 do
+							local childItem = sceneObj.transform:GetChild(i)
 
-							gohelper.setActive(var_1_6.gameObject, var_1_6.name == var_1_2.activeRootName)
+							gohelper.setActive(childItem.gameObject, childItem.name == config.activeRootName)
 						end
 					end
 
-					if not string.nilorempty(var_1_2.switch) then
-						var_1_3.bgm._cur_switch = var_1_2.switch
+					if not string.nilorempty(config.switch) then
+						FightGameMgr.bgmMgr._cur_switch = config.switch
 
-						var_1_3.bgm:_switchMonsterGroup()
+						FightGameMgr.bgmMgr:_switchMonsterGroup()
 					end
 				end
 			end
 		end
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkDetectReplayEnterSceneActive:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkDetectReplayEnterSceneActive

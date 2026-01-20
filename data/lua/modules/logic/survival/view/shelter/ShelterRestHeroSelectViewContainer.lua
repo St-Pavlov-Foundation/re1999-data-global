@@ -1,63 +1,69 @@
-﻿module("modules.logic.survival.view.shelter.ShelterRestHeroSelectViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/ShelterRestHeroSelectViewContainer.lua
 
-local var_0_0 = class("ShelterRestHeroSelectViewContainer", SurvivalInitHeroSelectViewContainer)
+module("modules.logic.survival.view.shelter.ShelterRestHeroSelectViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = ListScrollParam.New()
+local ShelterRestHeroSelectViewContainer = class("ShelterRestHeroSelectViewContainer", SurvivalInitHeroSelectViewContainer)
 
-	var_1_0.scrollGOPath = "#go_rolecontainer/#scroll_card"
-	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_0.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_0.cellClass = ShelterRestHeroSelectEditItem
-	var_1_0.scrollDir = ScrollEnum.ScrollDirV
-	var_1_0.lineCount = 5
-	var_1_0.cellWidth = 200
-	var_1_0.cellHeight = 450
-	var_1_0.cellSpaceH = 12
-	var_1_0.cellSpaceV = 10
-	var_1_0.startSpace = 37
+function ShelterRestHeroSelectViewContainer:buildViews()
+	local scrollParam = ListScrollParam.New()
 
-	local var_1_1 = {}
+	scrollParam.scrollGOPath = "#go_rolecontainer/#scroll_card"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = ShelterRestHeroSelectEditItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 5
+	scrollParam.cellWidth = 200
+	scrollParam.cellHeight = 450
+	scrollParam.cellSpaceH = 12
+	scrollParam.cellSpaceV = 10
+	scrollParam.startSpace = 37
 
-	for iter_1_0 = 1, 15 do
-		var_1_1[iter_1_0] = math.ceil((iter_1_0 - 1) % 5) * 0.03
+	local animationDelayTimes = {}
+
+	for i = 1, 15 do
+		local delayTime = math.ceil((i - 1) % 5) * 0.03
+
+		animationDelayTimes[i] = delayTime
 	end
 
 	return {
 		ShelterRestHeroSelectView.New(),
-		LuaListScrollViewWithAnimator.New(arg_1_0:getGroupModel(), var_1_0, var_1_1),
-		arg_1_0:getQuickEditScroll(),
+		LuaListScrollViewWithAnimator.New(self:getGroupModel(), scrollParam, animationDelayTimes),
+		self:getQuickEditScroll(),
 		CommonRainEffectView.New("bg/#go_raincontainer"),
 		TabViewGroup.New(1, "#go_btns")
 	}
 end
 
-function var_0_0.getQuickEditScroll(arg_2_0)
-	local var_2_0 = ListScrollParam.New()
+function ShelterRestHeroSelectViewContainer:getQuickEditScroll()
+	local scrollParam = ListScrollParam.New()
 
-	var_2_0.scrollGOPath = "#go_rolecontainer/#scroll_quickedit"
-	var_2_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_2_0.prefabUrl = arg_2_0._viewSetting.otherRes[2]
-	var_2_0.cellClass = ShelterRestHeroSelectQuickEditItem
-	var_2_0.scrollDir = ScrollEnum.ScrollDirV
-	var_2_0.lineCount = 5
-	var_2_0.cellWidth = 200
-	var_2_0.cellHeight = 440
-	var_2_0.cellSpaceH = 12
-	var_2_0.cellSpaceV = 10
-	var_2_0.startSpace = 37
+	scrollParam.scrollGOPath = "#go_rolecontainer/#scroll_quickedit"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[2]
+	scrollParam.cellClass = ShelterRestHeroSelectQuickEditItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 5
+	scrollParam.cellWidth = 200
+	scrollParam.cellHeight = 440
+	scrollParam.cellSpaceH = 12
+	scrollParam.cellSpaceV = 10
+	scrollParam.startSpace = 37
 
-	local var_2_1 = {}
+	local animationDelayTimes = {}
 
-	for iter_2_0 = 1, 15 do
-		var_2_1[iter_2_0] = math.ceil((iter_2_0 - 1) % 5) * 0.03
+	for i = 1, 15 do
+		local delayTime = math.ceil((i - 1) % 5) * 0.03
+
+		animationDelayTimes[i] = delayTime
 	end
 
-	return LuaListScrollViewWithAnimator.New(arg_2_0:getGroupModel(), var_2_0, var_2_1)
+	return LuaListScrollViewWithAnimator.New(self:getGroupModel(), scrollParam, animationDelayTimes)
 end
 
-function var_0_0.getGroupModel(arg_3_0)
+function ShelterRestHeroSelectViewContainer:getGroupModel()
 	return ShelterRestGroupModel.instance
 end
 
-return var_0_0
+return ShelterRestHeroSelectViewContainer

@@ -1,73 +1,75 @@
-﻿module("modules.logic.survival.view.map.comp.SurvivalFlashTxtComp", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/comp/SurvivalFlashTxtComp.lua
 
-local var_0_0 = class("SurvivalFlashTxtComp", LuaCompBase)
+module("modules.logic.survival.view.map.comp.SurvivalFlashTxtComp", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._txt = gohelper.findChildTextMesh(arg_1_1, "")
+local SurvivalFlashTxtComp = class("SurvivalFlashTxtComp", LuaCompBase)
+
+function SurvivalFlashTxtComp:init(go)
+	self._txt = gohelper.findChildTextMesh(go, "")
 end
 
-function var_0_0.setNormalTxt(arg_2_0, arg_2_1)
-	arg_2_0._normalTxt = arg_2_1
+function SurvivalFlashTxtComp:setNormalTxt(txt)
+	self._normalTxt = txt
 
-	if not arg_2_0._flashTxt then
-		arg_2_0._txt.text = arg_2_1
+	if not self._flashTxt then
+		self._txt.text = txt
 	end
 end
 
-function var_0_0.setFlashTxt(arg_3_0, arg_3_1)
-	arg_3_0._flashTxt = arg_3_1
+function SurvivalFlashTxtComp:setFlashTxt(txt)
+	self._flashTxt = txt
 
-	if arg_3_1 then
-		if arg_3_0.isShowFlashTxt then
-			arg_3_0._txt.text = arg_3_0._flashTxt
+	if txt then
+		if self.isShowFlashTxt then
+			self._txt.text = self._flashTxt
 		end
 
-		TaskDispatcher.runRepeat(arg_3_0._autoFlashTxt, arg_3_0, 2)
+		TaskDispatcher.runRepeat(self._autoFlashTxt, self, 2)
 	else
-		TaskDispatcher.cancelTask(arg_3_0._autoFlashTxt, arg_3_0)
-		TaskDispatcher.cancelTask(arg_3_0._autoFlashTxt2, arg_3_0)
-		ZProj.TweenHelper.KillByObj(arg_3_0._txt)
+		TaskDispatcher.cancelTask(self._autoFlashTxt, self)
+		TaskDispatcher.cancelTask(self._autoFlashTxt2, self)
+		ZProj.TweenHelper.KillByObj(self._txt)
 
-		local var_3_0 = arg_3_0._txt.color
+		local color = self._txt.color
 
-		var_3_0.a = 1
-		arg_3_0._txt.color = var_3_0
-		arg_3_0.isShowFlashTxt = false
-		arg_3_0._txt.text = arg_3_0._normalTxt
+		color.a = 1
+		self._txt.color = color
+		self.isShowFlashTxt = false
+		self._txt.text = self._normalTxt
 	end
 end
 
-function var_0_0._autoFlashTxt(arg_4_0)
-	if not arg_4_0._txt then
-		TaskDispatcher.cancelTask(arg_4_0._autoFlashTxt, arg_4_0)
+function SurvivalFlashTxtComp:_autoFlashTxt()
+	if not self._txt then
+		TaskDispatcher.cancelTask(self._autoFlashTxt, self)
 
 		return
 	end
 
-	ZProj.TweenHelper.DoFade(arg_4_0._txt, 1, 0, 0.4)
-	TaskDispatcher.runDelay(arg_4_0._autoFlashTxt2, arg_4_0, 0.4)
+	ZProj.TweenHelper.DoFade(self._txt, 1, 0, 0.4)
+	TaskDispatcher.runDelay(self._autoFlashTxt2, self, 0.4)
 end
 
-function var_0_0._autoFlashTxt2(arg_5_0)
-	if not arg_5_0._txt then
+function SurvivalFlashTxtComp:_autoFlashTxt2()
+	if not self._txt then
 		return
 	end
 
-	arg_5_0.isShowFlashTxt = not arg_5_0.isShowFlashTxt
+	self.isShowFlashTxt = not self.isShowFlashTxt
 
-	if arg_5_0.isShowFlashTxt then
-		arg_5_0._txt.text = arg_5_0._flashTxt
+	if self.isShowFlashTxt then
+		self._txt.text = self._flashTxt
 	else
-		arg_5_0._txt.text = arg_5_0._normalTxt
+		self._txt.text = self._normalTxt
 	end
 
-	ZProj.TweenHelper.DoFade(arg_5_0._txt, 0, 1, 0.4)
+	ZProj.TweenHelper.DoFade(self._txt, 0, 1, 0.4)
 end
 
-function var_0_0.onDestroy(arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0._autoFlashTxt, arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0._autoFlashTxt2, arg_6_0)
-	ZProj.TweenHelper.KillByObj(arg_6_0._txt)
+function SurvivalFlashTxtComp:onDestroy()
+	TaskDispatcher.cancelTask(self._autoFlashTxt, self)
+	TaskDispatcher.cancelTask(self._autoFlashTxt2, self)
+	ZProj.TweenHelper.KillByObj(self._txt)
 end
 
-return var_0_0
+return SurvivalFlashTxtComp

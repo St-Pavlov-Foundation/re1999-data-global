@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_fight_ui_style", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_fight_ui_style.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_fight_ui_style", package.seeall)
+
+local lua_fight_ui_style = {}
+local fields = {
 	itemId = 4,
 	sort = 5,
 	image = 6,
@@ -12,13 +14,13 @@ local var_0_1 = {
 	id = 1,
 	defaultUnlock = 3
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_fight_ui_style.onLoad(json)
+	lua_fight_ui_style.configList, lua_fight_ui_style.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_fight_ui_style

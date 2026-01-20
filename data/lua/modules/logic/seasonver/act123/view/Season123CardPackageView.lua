@@ -1,255 +1,259 @@
-﻿module("modules.logic.seasonver.act123.view.Season123CardPackageView", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view/Season123CardPackageView.lua
 
-local var_0_0 = class("Season123CardPackageView", BaseView)
+module("modules.logic.seasonver.act123.view.Season123CardPackageView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gocardpackage = gohelper.findChild(arg_1_0.viewGO, "#go_cardpackage")
-	arg_1_0._gocardgetBtns = gohelper.findChild(arg_1_0.viewGO, "#go_cardpackage/cardgetBtns")
-	arg_1_0._gopackageCount = gohelper.findChild(arg_1_0.viewGO, "#go_cardpackage/cardpackage/package/#go_packageCount")
-	arg_1_0._txtpackageCount = gohelper.findChildText(arg_1_0.viewGO, "#go_cardpackage/cardpackage/package/#go_packageCount/#txt_packageCount")
-	arg_1_0._btnopenPackage = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_cardpackage/cardgetBtns/#btn_openPackage")
-	arg_1_0._btnopenOnePackage = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_cardpackage/cardgetBtns/#btn_openOnePackage")
-	arg_1_0._btnopenAllPackage = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_cardpackage/cardgetBtns/#btn_openAllPackage")
-	arg_1_0._gowaitingOpen = gohelper.findChild(arg_1_0.viewGO, "#go_cardpackage/#go_waitingOpen")
-	arg_1_0._gorealOpen = gohelper.findChild(arg_1_0.viewGO, "#go_cardpackage/#go_waitingOpen/#drag_realOpen")
-	arg_1_0._gocardget = gohelper.findChild(arg_1_0.viewGO, "#go_cardget")
-	arg_1_0._scrollcardget = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_cardget/mask/#scroll_cardget")
-	arg_1_0._gocardContent = gohelper.findChild(arg_1_0.viewGO, "#go_cardget/mask/#scroll_cardget/Viewport/#go_cardContent")
-	arg_1_0._gocarditem = gohelper.findChild(arg_1_0.viewGO, "#go_cardget/mask/#scroll_cardget/Viewport/#go_cardContent/#go_carditem")
-	arg_1_0._btnquit = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_cardget/#btn_quit")
-	arg_1_0._btnopenNext = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_cardget/cardgetBtns/#btn_openNext")
-	arg_1_0._btnskip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_skip")
-	arg_1_0._imageskip = gohelper.findChildImage(arg_1_0.viewGO, "#btn_skip/#image_skip")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._goopenEffect = gohelper.findChild(arg_1_0.viewGO, "#go_cardpackage/cardpackage/package/openup")
-	arg_1_0._goopenLineEffect = gohelper.findChild(arg_1_0.viewGO, "#go_cardpackage/cardpackage/package/kabao/go_line")
-	arg_1_0._animator = ZProj.ProjAnimatorPlayer.Get(arg_1_0.viewGO)
-	arg_1_0._dragrealOpen = SLFramework.UGUI.UIDragListener.Get(arg_1_0._gorealOpen)
+local Season123CardPackageView = class("Season123CardPackageView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Season123CardPackageView:onInitView()
+	self._gocardpackage = gohelper.findChild(self.viewGO, "#go_cardpackage")
+	self._gocardgetBtns = gohelper.findChild(self.viewGO, "#go_cardpackage/cardgetBtns")
+	self._gopackageCount = gohelper.findChild(self.viewGO, "#go_cardpackage/cardpackage/package/#go_packageCount")
+	self._txtpackageCount = gohelper.findChildText(self.viewGO, "#go_cardpackage/cardpackage/package/#go_packageCount/#txt_packageCount")
+	self._btnopenPackage = gohelper.findChildButtonWithAudio(self.viewGO, "#go_cardpackage/cardgetBtns/#btn_openPackage")
+	self._btnopenOnePackage = gohelper.findChildButtonWithAudio(self.viewGO, "#go_cardpackage/cardgetBtns/#btn_openOnePackage")
+	self._btnopenAllPackage = gohelper.findChildButtonWithAudio(self.viewGO, "#go_cardpackage/cardgetBtns/#btn_openAllPackage")
+	self._gowaitingOpen = gohelper.findChild(self.viewGO, "#go_cardpackage/#go_waitingOpen")
+	self._gorealOpen = gohelper.findChild(self.viewGO, "#go_cardpackage/#go_waitingOpen/#drag_realOpen")
+	self._gocardget = gohelper.findChild(self.viewGO, "#go_cardget")
+	self._scrollcardget = gohelper.findChildScrollRect(self.viewGO, "#go_cardget/mask/#scroll_cardget")
+	self._gocardContent = gohelper.findChild(self.viewGO, "#go_cardget/mask/#scroll_cardget/Viewport/#go_cardContent")
+	self._gocarditem = gohelper.findChild(self.viewGO, "#go_cardget/mask/#scroll_cardget/Viewport/#go_cardContent/#go_carditem")
+	self._btnquit = gohelper.findChildButtonWithAudio(self.viewGO, "#go_cardget/#btn_quit")
+	self._btnopenNext = gohelper.findChildButtonWithAudio(self.viewGO, "#go_cardget/cardgetBtns/#btn_openNext")
+	self._btnskip = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_skip")
+	self._imageskip = gohelper.findChildImage(self.viewGO, "#btn_skip/#image_skip")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._goopenEffect = gohelper.findChild(self.viewGO, "#go_cardpackage/cardpackage/package/openup")
+	self._goopenLineEffect = gohelper.findChild(self.viewGO, "#go_cardpackage/cardpackage/package/kabao/go_line")
+	self._animator = ZProj.ProjAnimatorPlayer.Get(self.viewGO)
+	self._dragrealOpen = SLFramework.UGUI.UIDragListener.Get(self._gorealOpen)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnopenPackage:AddClickListener(arg_2_0._btnopenPackageOnClick, arg_2_0)
-	arg_2_0._btnopenOnePackage:AddClickListener(arg_2_0._btnopenOnePackageOnClick, arg_2_0)
-	arg_2_0._btnopenAllPackage:AddClickListener(arg_2_0._btnopenAllPackageOnClick, arg_2_0)
-	arg_2_0._dragrealOpen:AddDragBeginListener(arg_2_0._onDragBegin, arg_2_0)
-	arg_2_0._dragrealOpen:AddDragEndListener(arg_2_0._onDragEnd, arg_2_0)
-	arg_2_0._btnquit:AddClickListener(arg_2_0._btnquitOnClick, arg_2_0)
-	arg_2_0._btnopenNext:AddClickListener(arg_2_0._btnopenNextOnClick, arg_2_0)
-	arg_2_0._btnskip:AddClickListener(arg_2_0._btnskipOnClick, arg_2_0)
-	arg_2_0:addEventCb(Season123Controller.instance, Season123Event.OnCardPackageOpen, arg_2_0.showWaitingOpenView, arg_2_0)
+function Season123CardPackageView:addEvents()
+	self._btnopenPackage:AddClickListener(self._btnopenPackageOnClick, self)
+	self._btnopenOnePackage:AddClickListener(self._btnopenOnePackageOnClick, self)
+	self._btnopenAllPackage:AddClickListener(self._btnopenAllPackageOnClick, self)
+	self._dragrealOpen:AddDragBeginListener(self._onDragBegin, self)
+	self._dragrealOpen:AddDragEndListener(self._onDragEnd, self)
+	self._btnquit:AddClickListener(self._btnquitOnClick, self)
+	self._btnopenNext:AddClickListener(self._btnopenNextOnClick, self)
+	self._btnskip:AddClickListener(self._btnskipOnClick, self)
+	self:addEventCb(Season123Controller.instance, Season123Event.OnCardPackageOpen, self.showWaitingOpenView, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnopenPackage:RemoveClickListener()
-	arg_3_0._btnopenOnePackage:RemoveClickListener()
-	arg_3_0._btnopenAllPackage:RemoveClickListener()
-	arg_3_0._dragrealOpen:RemoveDragBeginListener()
-	arg_3_0._dragrealOpen:RemoveDragEndListener()
-	arg_3_0._btnquit:RemoveClickListener()
-	arg_3_0._btnopenNext:RemoveClickListener()
-	arg_3_0._btnskip:RemoveClickListener()
-	arg_3_0:removeEventCb(Season123Controller.instance, Season123Event.OnCardPackageOpen, arg_3_0.showWaitingOpenView, arg_3_0)
+function Season123CardPackageView:removeEvents()
+	self._btnopenPackage:RemoveClickListener()
+	self._btnopenOnePackage:RemoveClickListener()
+	self._btnopenAllPackage:RemoveClickListener()
+	self._dragrealOpen:RemoveDragBeginListener()
+	self._dragrealOpen:RemoveDragEndListener()
+	self._btnquit:RemoveClickListener()
+	self._btnopenNext:RemoveClickListener()
+	self._btnskip:RemoveClickListener()
+	self:removeEventCb(Season123Controller.instance, Season123Event.OnCardPackageOpen, self.showWaitingOpenView, self)
 end
 
-var_0_0.hideCardPackageTime = 0.33
+Season123CardPackageView.hideCardPackageTime = 0.33
 
-function var_0_0._btnopenPackageOnClick(arg_4_0)
-	arg_4_0:openCardPackage()
+function Season123CardPackageView:_btnopenPackageOnClick()
+	self:openCardPackage()
 end
 
-function var_0_0._btnopenOnePackageOnClick(arg_5_0)
-	arg_5_0:openCardPackage()
+function Season123CardPackageView:_btnopenOnePackageOnClick()
+	self:openCardPackage()
 end
 
-function var_0_0._btnopenAllPackageOnClick(arg_6_0)
-	if arg_6_0.hasClickOpen then
+function Season123CardPackageView:_btnopenAllPackageOnClick()
+	if self.hasClickOpen then
 		return
 	end
 
-	Activity123Rpc.instance:sendAct123OpenCardBagRequest(arg_6_0.actId, Activity123Enum.openAllCardPackage)
-	Activity123Rpc.instance:sendGetUnlockAct123EquipIdsRequest(arg_6_0.actId)
+	Activity123Rpc.instance:sendAct123OpenCardBagRequest(self.actId, Activity123Enum.openAllCardPackage)
+	Activity123Rpc.instance:sendGetUnlockAct123EquipIdsRequest(self.actId)
 end
 
-function var_0_0._onDragBegin(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_0._startPos = arg_7_2.position.x
+function Season123CardPackageView:_onDragBegin(param, pointerEventData)
+	self._startPos = pointerEventData.position.x
 end
 
-function var_0_0._onDragEnd(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = arg_8_2.position.x
-	local var_8_1 = recthelper.getWidth(arg_8_0._gorealOpen.transform) / 4
+function Season123CardPackageView:_onDragEnd(param, pointerEventData)
+	local endPos = pointerEventData.position.x
+	local distance = recthelper.getWidth(self._gorealOpen.transform) / 4
 
-	if var_8_0 > arg_8_0._startPos and var_8_1 <= Mathf.Abs(var_8_0 - arg_8_0._startPos) then
-		arg_8_0:playOpenCardAnim()
-		gohelper.setActive(arg_8_0._gowaitingOpen, false)
+	if endPos > self._startPos and distance <= Mathf.Abs(endPos - self._startPos) then
+		self:playOpenCardAnim()
+		gohelper.setActive(self._gowaitingOpen, false)
 	end
 end
 
-function var_0_0._btnskipOnClick(arg_9_0)
-	if arg_9_0.hasClickSkip then
+function Season123CardPackageView:_btnskipOnClick()
+	if self.hasClickSkip then
 		return
 	end
 
-	arg_9_0._animator:Stop()
-	arg_9_0._animator:Play("kabao_skip", arg_9_0.showCardGetView, arg_9_0)
+	self._animator:Stop()
+	self._animator:Play("kabao_skip", self.showCardGetView, self)
 
-	local var_9_0 = Season123CardPackageModel.instance:getCardMaxRare()
+	local maxRare = Season123CardPackageModel.instance:getCardMaxRare()
 
-	for iter_9_0 = 2, 5 do
-		gohelper.setActive(arg_9_0.rareEffectList[iter_9_0], iter_9_0 == var_9_0)
+	for i = 2, 5 do
+		gohelper.setActive(self.rareEffectList[i], i == maxRare)
 	end
 
-	arg_9_0.hasClickSkip = true
+	self.hasClickSkip = true
 end
 
-function var_0_0._btnquitOnClick(arg_10_0)
-	arg_10_0:closeThis()
+function Season123CardPackageView:_btnquitOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnopenNextOnClick(arg_11_0)
-	arg_11_0:openCardPackage()
+function Season123CardPackageView:_btnopenNextOnClick()
+	self:openCardPackage()
 end
 
-function var_0_0._editableInitView(arg_12_0)
-	arg_12_0.rareEffectList = arg_12_0:getUserDataTb_()
-	arg_12_0.rareLineEffectList = arg_12_0:getUserDataTb_()
-	arg_12_0.actId = Season123Model.instance:getCurSeasonId()
-	arg_12_0.contentGrid = arg_12_0._gocardContent:GetComponent(typeof(UnityEngine.UI.GridLayoutGroup))
+function Season123CardPackageView:_editableInitView()
+	self.rareEffectList = self:getUserDataTb_()
+	self.rareLineEffectList = self:getUserDataTb_()
+	self.actId = Season123Model.instance:getCurSeasonId()
+	self.contentGrid = self._gocardContent:GetComponent(typeof(UnityEngine.UI.GridLayoutGroup))
 
-	for iter_12_0 = 2, 5 do
-		local var_12_0 = gohelper.findChild(arg_12_0._goopenEffect, "go_rare" .. iter_12_0)
-		local var_12_1 = gohelper.findChild(arg_12_0._goopenLineEffect, "go_rare" .. iter_12_0)
+	for i = 2, 5 do
+		local goRare = gohelper.findChild(self._goopenEffect, "go_rare" .. i)
+		local goLineRare = gohelper.findChild(self._goopenLineEffect, "go_rare" .. i)
 
-		arg_12_0.rareEffectList[iter_12_0] = var_12_0
-		arg_12_0.rareLineEffectList[iter_12_0] = var_12_1
+		self.rareEffectList[i] = goRare
+		self.rareLineEffectList[i] = goLineRare
 
-		gohelper.setActive(var_12_0, false)
-		gohelper.setActive(var_12_1, false)
+		gohelper.setActive(goRare, false)
+		gohelper.setActive(goLineRare, false)
 	end
 
-	arg_12_0.hasClickSkip = false
-	arg_12_0.hasClickOpen = false
+	self.hasClickSkip = false
+	self.hasClickOpen = false
 end
 
-function var_0_0.onOpen(arg_13_0)
-	arg_13_0:refreshCardPackageUI()
-	gohelper.setActive(arg_13_0._gocardgetBtns, true)
-	gohelper.setActive(arg_13_0._btnskip.gameObject, false)
-	gohelper.setActive(arg_13_0._gowaitingOpen, false)
-	gohelper.setActive(arg_13_0._gobtns, true)
+function Season123CardPackageView:onOpen()
+	self:refreshCardPackageUI()
+	gohelper.setActive(self._gocardgetBtns, true)
+	gohelper.setActive(self._btnskip.gameObject, false)
+	gohelper.setActive(self._gowaitingOpen, false)
+	gohelper.setActive(self._gobtns, true)
 	AudioMgr.instance:trigger(AudioEnum.Season123.play_ui_jinye_cardpacks_unfold)
 end
 
-function var_0_0.refreshCardPackageUI(arg_14_0)
-	gohelper.setActive(arg_14_0._gocardpackage, true)
-	gohelper.setActive(arg_14_0._gocardget, false)
+function Season123CardPackageView:refreshCardPackageUI()
+	gohelper.setActive(self._gocardpackage, true)
+	gohelper.setActive(self._gocardget, false)
 
-	arg_14_0.curPackageCount = Season123CardPackageModel.instance:initPackageCount()
-	arg_14_0._txtpackageCount.text = arg_14_0.curPackageCount
+	self.curPackageCount = Season123CardPackageModel.instance:initPackageCount()
+	self._txtpackageCount.text = self.curPackageCount
 
-	gohelper.setActive(arg_14_0._btnopenPackage.gameObject, arg_14_0.curPackageCount == 1)
-	gohelper.setActive(arg_14_0._btnopenOnePackage.gameObject, arg_14_0.curPackageCount > 1)
-	gohelper.setActive(arg_14_0._btnopenAllPackage.gameObject, arg_14_0.curPackageCount > 1)
+	gohelper.setActive(self._btnopenPackage.gameObject, self.curPackageCount == 1)
+	gohelper.setActive(self._btnopenOnePackage.gameObject, self.curPackageCount > 1)
+	gohelper.setActive(self._btnopenAllPackage.gameObject, self.curPackageCount > 1)
 end
 
-function var_0_0.showWaitingOpenView(arg_15_0)
-	arg_15_0._animator:Play("kabao_wait")
-	arg_15_0:refreshCardPackageUI()
-	gohelper.setActive(arg_15_0._gowaitingOpen, true)
-	gohelper.setActive(arg_15_0._gocardgetBtns, false)
-	gohelper.setActive(arg_15_0._gobtns, false)
+function Season123CardPackageView:showWaitingOpenView()
+	self._animator:Play("kabao_wait")
+	self:refreshCardPackageUI()
+	gohelper.setActive(self._gowaitingOpen, true)
+	gohelper.setActive(self._gocardgetBtns, false)
+	gohelper.setActive(self._gobtns, false)
 end
 
-function var_0_0.playOpenCardAnim(arg_16_0)
-	arg_16_0:refreshCardPackageUI()
-	gohelper.setActive(arg_16_0._btnskip.gameObject, true)
-	gohelper.setActive(arg_16_0._gocardgetBtns, false)
-	arg_16_0._animator:Play("kabao_open", arg_16_0.showCardGetView, arg_16_0)
+function Season123CardPackageView:playOpenCardAnim()
+	self:refreshCardPackageUI()
+	gohelper.setActive(self._btnskip.gameObject, true)
+	gohelper.setActive(self._gocardgetBtns, false)
+	self._animator:Play("kabao_open", self.showCardGetView, self)
 
-	arg_16_0.openCardPackageAudioId = AudioMgr.instance:trigger(AudioEnum.Season123.play_ui_jinye_cardpacks_open)
+	self.openCardPackageAudioId = AudioMgr.instance:trigger(AudioEnum.Season123.play_ui_jinye_cardpacks_open)
 
-	local var_16_0 = Season123CardPackageModel.instance:getCardMaxRare()
+	local maxRare = Season123CardPackageModel.instance:getCardMaxRare()
 
-	for iter_16_0 = 2, 5 do
-		gohelper.setActive(arg_16_0.rareEffectList[iter_16_0], iter_16_0 == var_16_0)
-		gohelper.setActive(arg_16_0.rareLineEffectList[iter_16_0], iter_16_0 == var_16_0)
+	for i = 2, 5 do
+		gohelper.setActive(self.rareEffectList[i], i == maxRare)
+		gohelper.setActive(self.rareLineEffectList[i], i == maxRare)
 	end
 end
 
-function var_0_0.showCardGetView(arg_17_0)
-	arg_17_0:refreshCardGetUI()
-	TaskDispatcher.runDelay(arg_17_0.hideCardPackageView, arg_17_0, var_0_0.hideCardPackageTime)
+function Season123CardPackageView:showCardGetView()
+	self:refreshCardGetUI()
+	TaskDispatcher.runDelay(self.hideCardPackageView, self, Season123CardPackageView.hideCardPackageTime)
 
-	if arg_17_0.hasClickSkip then
-		arg_17_0:stopOpenCardPackageAudio()
+	if self.hasClickSkip then
+		self:stopOpenCardPackageAudio()
 	end
 
 	Season123Controller.instance:dispatchEvent(Season123Event.GotCardView)
 end
 
-function var_0_0.hideCardPackageView(arg_18_0)
-	gohelper.setActive(arg_18_0._gocardpackage, false)
+function Season123CardPackageView:hideCardPackageView()
+	gohelper.setActive(self._gocardpackage, false)
 
-	arg_18_0.hasClickSkip = false
+	self.hasClickSkip = false
 end
 
-function var_0_0.refreshCardGetUI(arg_19_0)
+function Season123CardPackageView:refreshCardGetUI()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_celebrity_get)
-	gohelper.setActive(arg_19_0._gocardget, true)
-	gohelper.setActive(arg_19_0._btnskip.gameObject, false)
-	arg_19_0:refreshScrollPos()
-	gohelper.setActive(arg_19_0._btnopenNext, arg_19_0.curPackageCount > 0)
-	gohelper.setActive(arg_19_0._btnquit, true)
-	gohelper.setActive(arg_19_0._gobtns, false)
+	gohelper.setActive(self._gocardget, true)
+	gohelper.setActive(self._btnskip.gameObject, false)
+	self:refreshScrollPos()
+	gohelper.setActive(self._btnopenNext, self.curPackageCount > 0)
+	gohelper.setActive(self._btnquit, true)
+	gohelper.setActive(self._gobtns, false)
 
-	arg_19_0.hasClickOpen = false
+	self.hasClickOpen = false
 end
 
-function var_0_0.refreshScrollPos(arg_20_0)
-	if Season123CardPackageModel.instance:getCount() <= 6 then
-		arg_20_0.contentGrid.enabled = false
-		arg_20_0.contentGrid.enabled = true
+function Season123CardPackageView:refreshScrollPos()
+	local itemCount = Season123CardPackageModel.instance:getCount()
 
-		transformhelper.setLocalPosXY(arg_20_0._scrollcardget.transform, 0, -680)
+	if itemCount <= 6 then
+		self.contentGrid.enabled = false
+		self.contentGrid.enabled = true
+
+		transformhelper.setLocalPosXY(self._scrollcardget.transform, 0, -680)
 	else
-		arg_20_0.contentGrid.enabled = false
+		self.contentGrid.enabled = false
 
-		transformhelper.setLocalPosXY(arg_20_0._scrollcardget.transform, 0, -570)
+		transformhelper.setLocalPosXY(self._scrollcardget.transform, 0, -570)
 	end
 end
 
-function var_0_0.openCardPackage(arg_21_0)
-	if arg_21_0.hasClickOpen then
+function Season123CardPackageView:openCardPackage()
+	if self.hasClickOpen then
 		return
 	end
 
-	arg_21_0.hasClickOpen = true
+	self.hasClickOpen = true
 
-	local var_21_0 = Season123CardPackageModel.instance:getOpenPackageMO()
+	local packageItemMO = Season123CardPackageModel.instance:getOpenPackageMO()
 
-	Activity123Rpc.instance:sendAct123OpenCardBagRequest(arg_21_0.actId, var_21_0.id)
-	Activity123Rpc.instance:sendGetUnlockAct123EquipIdsRequest(arg_21_0.actId)
-	arg_21_0:stopOpenCardPackageAudio()
+	Activity123Rpc.instance:sendAct123OpenCardBagRequest(self.actId, packageItemMO.id)
+	Activity123Rpc.instance:sendGetUnlockAct123EquipIdsRequest(self.actId)
+	self:stopOpenCardPackageAudio()
 end
 
-function var_0_0.stopOpenCardPackageAudio(arg_22_0)
-	if arg_22_0.openCardPackageAudioId then
-		AudioMgr.instance:stopPlayingID(arg_22_0.openCardPackageAudioId)
+function Season123CardPackageView:stopOpenCardPackageAudio()
+	if self.openCardPackageAudioId then
+		AudioMgr.instance:stopPlayingID(self.openCardPackageAudioId)
 
-		arg_22_0.openCardPackageAudioId = nil
+		self.openCardPackageAudioId = nil
 	end
 end
 
-function var_0_0.onClose(arg_23_0)
-	TaskDispatcher.cancelTask(arg_23_0.hideCardPackageView, arg_23_0)
-	arg_23_0:stopOpenCardPackageAudio()
+function Season123CardPackageView:onClose()
+	TaskDispatcher.cancelTask(self.hideCardPackageView, self)
+	self:stopOpenCardPackageAudio()
 end
 
-function var_0_0.onDestroyView(arg_24_0)
+function Season123CardPackageView:onDestroyView()
 	Season123CardPackageModel.instance:release()
 end
 
-return var_0_0
+return Season123CardPackageView

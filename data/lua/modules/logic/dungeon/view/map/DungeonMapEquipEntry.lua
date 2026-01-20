@@ -1,75 +1,79 @@
-﻿module("modules.logic.dungeon.view.map.DungeonMapEquipEntry", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/map/DungeonMapEquipEntry.lua
 
-local var_0_0 = class("DungeonMapEquipEntry", BaseView)
+module("modules.logic.dungeon.view.map.DungeonMapEquipEntry", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goentryItem = gohelper.findChild(arg_1_0.viewGO, "#go_res/entry/#go_entryItem")
+local DungeonMapEquipEntry = class("DungeonMapEquipEntry", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function DungeonMapEquipEntry:onInitView()
+	self._goentryItem = gohelper.findChild(self.viewGO, "#go_res/entry/#go_entryItem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function DungeonMapEquipEntry:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function DungeonMapEquipEntry:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._goentry = gohelper.findChild(arg_4_0.viewGO, "#go_res/entry")
+function DungeonMapEquipEntry:_editableInitView()
+	self._goentry = gohelper.findChild(self.viewGO, "#go_res/entry")
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function DungeonMapEquipEntry:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0._chapterId = arg_6_0.viewParam.chapterId
+function DungeonMapEquipEntry:onOpen()
+	self._chapterId = self.viewParam.chapterId
 
-	arg_6_0:_showEntryItem()
-	arg_6_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_6_0._onOpenView, arg_6_0)
-	arg_6_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_6_0._onCloseView, arg_6_0)
+	self:_showEntryItem()
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
 end
 
-function var_0_0._onOpenView(arg_7_0, arg_7_1)
-	if arg_7_1 == ViewName.DungeonMapLevelView then
-		gohelper.setActive(arg_7_0._goentry, false)
+function DungeonMapEquipEntry:_onOpenView(viewName)
+	if viewName == ViewName.DungeonMapLevelView then
+		gohelper.setActive(self._goentry, false)
 	end
 end
 
-function var_0_0._onCloseView(arg_8_0, arg_8_1)
-	if arg_8_1 == ViewName.DungeonMapLevelView then
-		gohelper.setActive(arg_8_0._goentry, true)
+function DungeonMapEquipEntry:_onCloseView(viewName)
+	if viewName == ViewName.DungeonMapLevelView then
+		gohelper.setActive(self._goentry, true)
 	end
 end
 
-function var_0_0._showEntryItem(arg_9_0)
-	if DungeonConfig.instance:getChapterCO(arg_9_0._chapterId).type ~= DungeonEnum.ChapterType.Equip then
+function DungeonMapEquipEntry:_showEntryItem()
+	local chapterConfig = DungeonConfig.instance:getChapterCO(self._chapterId)
+
+	if chapterConfig.type ~= DungeonEnum.ChapterType.Equip then
 		return
 	end
 
-	local var_9_0 = DungeonMapModel.instance:getEquipSpChapters()
+	local list = DungeonMapModel.instance:getEquipSpChapters()
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
-		local var_9_1 = gohelper.cloneInPlace(arg_9_0._goentryItem)
-		local var_9_2 = MonoHelper.addLuaComOnceToGo(var_9_1, DungeonMapEquipEntryItem, {
-			iter_9_0,
-			iter_9_1
+	for i, id in ipairs(list) do
+		local go = gohelper.cloneInPlace(self._goentryItem)
+		local item = MonoHelper.addLuaComOnceToGo(go, DungeonMapEquipEntryItem, {
+			i,
+			id
 		})
 
-		gohelper.setActive(var_9_1, true)
+		gohelper.setActive(go, true)
 	end
 end
 
-function var_0_0.onClose(arg_10_0)
+function DungeonMapEquipEntry:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function DungeonMapEquipEntry:onDestroyView()
 	return
 end
 
-return var_0_0
+return DungeonMapEquipEntry

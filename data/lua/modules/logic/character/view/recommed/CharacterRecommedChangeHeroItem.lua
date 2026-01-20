@@ -1,15 +1,17 @@
-﻿module("modules.logic.character.view.recommed.CharacterRecommedChangeHeroItem", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/recommed/CharacterRecommedChangeHeroItem.lua
 
-local var_0_0 = class("CharacterRecommedChangeHeroItem", CharacterRecommedHeroIcon)
+module("modules.logic.character.view.recommed.CharacterRecommedChangeHeroItem", package.seeall)
 
-function var_0_0._btnclickOnClick(arg_1_0)
+local CharacterRecommedChangeHeroItem = class("CharacterRecommedChangeHeroItem", CharacterRecommedHeroIcon)
+
+function CharacterRecommedChangeHeroItem:_btnclickOnClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 
-	local var_1_0 = arg_1_0._mo.heroId
+	local heroId = self._mo.heroId
 
-	arg_1_0._view.viewParam.heroId = var_1_0
+	self._view.viewParam.heroId = heroId
 
-	CharacterRecommedController.instance:dispatchEvent(CharacterRecommedEvent.OnChangeHero, var_1_0)
+	CharacterRecommedController.instance:dispatchEvent(CharacterRecommedEvent.OnChangeHero, heroId)
 end
 
-return var_0_0
+return CharacterRecommedChangeHeroItem

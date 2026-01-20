@@ -1,13 +1,15 @@
-﻿module("modules.logic.rouge.view.RougeResultViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeResultViewContainer.lua
 
-local var_0_0 = class("RougeResultViewContainer", BaseViewContainer)
+module("modules.logic.rouge.view.RougeResultViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RougeResultViewContainer = class("RougeResultViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RougeResultView.New())
+function RougeResultViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RougeResultView.New())
+
+	return views
 end
 
-return var_0_0
+return RougeResultViewContainer

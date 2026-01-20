@@ -1,185 +1,187 @@
-﻿module("modules.logic.fight.view.indicator.FightIndicatorView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/indicator/FightIndicatorView.lua
 
-local var_0_0 = class("FightIndicatorView", FightIndicatorBaseView)
+module("modules.logic.fight.view.indicator.FightIndicatorView", package.seeall)
 
-var_0_0.PrefabPath = "ui/sceneui/fight/seasoncelebritycardi.prefab"
-var_0_0.EffectDuration = 1.667
-var_0_0.EffectDurationForDot = 0.8
-var_0_0.MaxIndicatorCount = 5
+local FightIndicatorView = class("FightIndicatorView", FightIndicatorBaseView)
 
-function var_0_0.initView(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	var_0_0.super.initView(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+FightIndicatorView.PrefabPath = "ui/sceneui/fight/seasoncelebritycardi.prefab"
+FightIndicatorView.EffectDuration = 1.667
+FightIndicatorView.EffectDurationForDot = 0.8
+FightIndicatorView.MaxIndicatorCount = 5
 
-	arg_1_0.totalIndicatorNum = var_0_0.MaxIndicatorCount
-	arg_1_0.goIndicatorContainer = gohelper.findChild(arg_1_0.goIndicatorRoot, "fight_indicator")
+function FightIndicatorView:initView(indicatorMgrView, indicatorId, totalIndicatorNum)
+	FightIndicatorView.super.initView(self, indicatorMgrView, indicatorId, totalIndicatorNum)
+
+	self.totalIndicatorNum = FightIndicatorView.MaxIndicatorCount
+	self.goIndicatorContainer = gohelper.findChild(self.goIndicatorRoot, "fight_indicator")
 end
 
-function var_0_0.startLoadPrefab(arg_2_0)
-	gohelper.setActive(arg_2_0.goIndicatorContainer, true)
+function FightIndicatorView:startLoadPrefab()
+	gohelper.setActive(self.goIndicatorContainer, true)
 
-	arg_2_0.loader = PrefabInstantiate.Create(arg_2_0.goIndicatorContainer)
+	self.loader = PrefabInstantiate.Create(self.goIndicatorContainer)
 
-	arg_2_0.loader:startLoad(var_0_0.PrefabPath, arg_2_0.loadCallback, arg_2_0)
+	self.loader:startLoad(FightIndicatorView.PrefabPath, self.loadCallback, self)
 end
 
-function var_0_0.loadCallback(arg_3_0)
-	arg_3_0.loadDone = true
-	arg_3_0.instanceGo = arg_3_0.loader:getInstGO()
+function FightIndicatorView:loadCallback()
+	self.loadDone = true
+	self.instanceGo = self.loader:getInstGO()
 
-	arg_3_0:initNode()
-	arg_3_0:onIndicatorChange()
+	self:initNode()
+	self:onIndicatorChange()
 end
 
-function var_0_0.initNode(arg_4_0)
-	arg_4_0.init = true
-	arg_4_0.goDownOne = gohelper.findChild(arg_4_0.instanceGo, "down_one")
-	arg_4_0.goDownAll = gohelper.findChild(arg_4_0.instanceGo, "down_all")
-	arg_4_0.goUpOne = gohelper.findChild(arg_4_0.instanceGo, "up_one")
-	arg_4_0.goUpAll = gohelper.findChild(arg_4_0.instanceGo, "up_all")
-	arg_4_0.pointContainer = gohelper.findChild(arg_4_0.instanceGo, "pointContainer")
+function FightIndicatorView:initNode()
+	self.init = true
+	self.goDownOne = gohelper.findChild(self.instanceGo, "down_one")
+	self.goDownAll = gohelper.findChild(self.instanceGo, "down_all")
+	self.goUpOne = gohelper.findChild(self.instanceGo, "up_one")
+	self.goUpAll = gohelper.findChild(self.instanceGo, "up_all")
+	self.pointContainer = gohelper.findChild(self.instanceGo, "pointContainer")
 
-	local var_4_0 = gohelper.findChild(arg_4_0.instanceGo, "pointContainer/dot_item")
+	local goDot = gohelper.findChild(self.instanceGo, "pointContainer/dot_item")
 
-	arg_4_0.goDotItemList = {}
+	self.goDotItemList = {}
 
-	table.insert(arg_4_0.goDotItemList, arg_4_0:createDotItem(var_4_0))
+	table.insert(self.goDotItemList, self:createDotItem(goDot))
 
-	for iter_4_0 = 2, arg_4_0.totalIndicatorNum do
-		var_4_0 = gohelper.cloneInPlace(var_4_0)
+	for i = 2, self.totalIndicatorNum do
+		goDot = gohelper.cloneInPlace(goDot)
 
-		table.insert(arg_4_0.goDotItemList, arg_4_0:createDotItem(var_4_0))
+		table.insert(self.goDotItemList, self:createDotItem(goDot))
 	end
 
-	arg_4_0.simageIcon = gohelper.findChildSingleImage(arg_4_0.instanceGo, "card/#go_rare5/image_icon")
-	arg_4_0.simageSignature = gohelper.findChildSingleImage(arg_4_0.instanceGo, "card/#go_rare5/simage_signature")
+	self.simageIcon = gohelper.findChildSingleImage(self.instanceGo, "card/#go_rare5/image_icon")
+	self.simageSignature = gohelper.findChildSingleImage(self.instanceGo, "card/#go_rare5/simage_signature")
 
-	local var_4_1 = gohelper.findChild(arg_4_0.instanceGo, "card/#go_rare5/image_career")
+	local goCareer = gohelper.findChild(self.instanceGo, "card/#go_rare5/image_career")
 
-	gohelper.setActive(var_4_1, false)
-	arg_4_0:loadImage()
+	gohelper.setActive(goCareer, false)
+	self:loadImage()
 end
 
-function var_0_0.createDotItem(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0:getUserDataTb_()
+function FightIndicatorView:createDotItem(goDot)
+	local dotItem = self:getUserDataTb_()
 
-	var_5_0.goDot = arg_5_1
-	var_5_0.goDarkIcon = gohelper.findChild(arg_5_1, "dark_icon")
-	var_5_0.goBrightIcon = gohelper.findChild(arg_5_1, "bright_icon")
-	var_5_0.goEffect = gohelper.findChild(arg_5_1, "effect")
-	var_5_0.goEffectOne = gohelper.findChild(arg_5_1, "effect/one")
-	var_5_0.goEffectAll = gohelper.findChild(arg_5_1, "effect/all")
+	dotItem.goDot = goDot
+	dotItem.goDarkIcon = gohelper.findChild(goDot, "dark_icon")
+	dotItem.goBrightIcon = gohelper.findChild(goDot, "bright_icon")
+	dotItem.goEffect = gohelper.findChild(goDot, "effect")
+	dotItem.goEffectOne = gohelper.findChild(goDot, "effect/one")
+	dotItem.goEffectAll = gohelper.findChild(goDot, "effect/all")
 
-	return var_5_0
+	return dotItem
 end
 
-function var_0_0.loadImage(arg_6_0)
-	local var_6_0 = arg_6_0:getCardConfig()
+function FightIndicatorView:loadImage()
+	local config = self:getCardConfig()
 
-	arg_6_0.simageIcon:LoadImage(ResUrl.getSeasonCelebrityCard(var_6_0.icon))
+	self.simageIcon:LoadImage(ResUrl.getSeasonCelebrityCard(config.icon))
 
-	if not string.nilorempty(var_6_0.signIcon) then
-		arg_6_0.simageSignature:LoadImage(ResUrl.getSignature(var_6_0.signIcon, "characterget"))
+	if not string.nilorempty(config.signIcon) then
+		self.simageSignature:LoadImage(ResUrl.getSignature(config.signIcon, "characterget"))
 	end
 end
 
-function var_0_0.getCardConfig(arg_7_0)
-	return SeasonConfig.instance:getSeasonEquipCo(arg_7_0:getCardId())
+function FightIndicatorView:getCardConfig()
+	return SeasonConfig.instance:getSeasonEquipCo(self:getCardId())
 end
 
-function var_0_0.getCardId(arg_8_0)
+function FightIndicatorView:getCardId()
 	return 11549
 end
 
-function var_0_0.onIndicatorChange(arg_9_0)
-	if not arg_9_0.loadDone then
+function FightIndicatorView:onIndicatorChange()
+	if not self.loadDone then
 		return
 	end
 
-	local var_9_0 = FightDataHelper.fieldMgr:getIndicatorNum(arg_9_0.indicatorId)
+	local num = FightDataHelper.fieldMgr:getIndicatorNum(self.indicatorId)
 
-	if var_9_0 <= 0 or var_9_0 > arg_9_0.totalIndicatorNum then
+	if num <= 0 or num > self.totalIndicatorNum then
 		return
 	end
 
-	arg_9_0.indicatorNum = var_9_0
+	self.indicatorNum = num
 
-	arg_9_0:playEffect()
+	self:playEffect()
 end
 
-function var_0_0.playEffect(arg_10_0)
-	gohelper.setActive(arg_10_0.goIndicatorContainer, true)
-	arg_10_0:resetEffect()
-	arg_10_0:refreshDotItemNode()
+function FightIndicatorView:playEffect()
+	gohelper.setActive(self.goIndicatorContainer, true)
+	self:resetEffect()
+	self:refreshDotItemNode()
 
-	if arg_10_0.indicatorNum == arg_10_0.totalIndicatorNum then
+	if self.indicatorNum == self.totalIndicatorNum then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_buff_accrued_number_2)
-		gohelper.setActive(arg_10_0.goDownAll, true)
-		gohelper.setActive(arg_10_0.goUpAll, true)
+		gohelper.setActive(self.goDownAll, true)
+		gohelper.setActive(self.goUpAll, true)
 	else
 		AudioMgr.instance:trigger(AudioEnum.UI.play_buff_accrued_number_1)
-		gohelper.setActive(arg_10_0.goDownOne, true)
-		gohelper.setActive(arg_10_0.goUpOne, true)
+		gohelper.setActive(self.goDownOne, true)
+		gohelper.setActive(self.goUpOne, true)
 	end
 
-	TaskDispatcher.runDelay(arg_10_0.playEffectDone, arg_10_0, var_0_0.EffectDuration)
+	TaskDispatcher.runDelay(self.playEffectDone, self, FightIndicatorView.EffectDuration)
 
-	local var_10_0 = arg_10_0.goDotItemList[arg_10_0.indicatorNum]
+	local dotItem = self.goDotItemList[self.indicatorNum]
 
-	if var_10_0 then
-		gohelper.setActive(var_10_0.goEffect, true)
+	if dotItem then
+		gohelper.setActive(dotItem.goEffect, true)
 
-		local var_10_1 = arg_10_0.indicatorNum == arg_10_0.totalIndicatorNum
+		local isLastDot = self.indicatorNum == self.totalIndicatorNum
 
-		gohelper.setActive(var_10_0.goEffectOne, not var_10_1)
-		gohelper.setActive(var_10_0.goEffectAll, var_10_1)
-	end
-end
-
-function var_0_0.refreshDotItemNode(arg_11_0)
-	local var_11_0
-
-	for iter_11_0 = 1, arg_11_0.totalIndicatorNum do
-		local var_11_1 = arg_11_0.goDotItemList[iter_11_0]
-
-		gohelper.setActive(var_11_1.goEffectOne, false)
-		gohelper.setActive(var_11_1.goEffectAll, false)
-		gohelper.setActive(var_11_1.goBrightIcon, iter_11_0 <= arg_11_0.indicatorNum)
-		gohelper.setActive(var_11_1.goDarkIcon, iter_11_0 > arg_11_0.indicatorNum)
+		gohelper.setActive(dotItem.goEffectOne, not isLastDot)
+		gohelper.setActive(dotItem.goEffectAll, isLastDot)
 	end
 end
 
-function var_0_0.playEffectDone(arg_12_0)
-	gohelper.setActive(arg_12_0.goIndicatorContainer, false)
-	arg_12_0:resetEffect()
+function FightIndicatorView:refreshDotItemNode()
+	local dotItem
+
+	for i = 1, self.totalIndicatorNum do
+		dotItem = self.goDotItemList[i]
+
+		gohelper.setActive(dotItem.goEffectOne, false)
+		gohelper.setActive(dotItem.goEffectAll, false)
+		gohelper.setActive(dotItem.goBrightIcon, i <= self.indicatorNum)
+		gohelper.setActive(dotItem.goDarkIcon, i > self.indicatorNum)
+	end
 end
 
-function var_0_0.resetEffect(arg_13_0)
-	gohelper.setActive(arg_13_0.goDownOne, false)
-	gohelper.setActive(arg_13_0.goDownAll, false)
-	gohelper.setActive(arg_13_0.goUpOne, false)
-	gohelper.setActive(arg_13_0.goUpAll, false)
+function FightIndicatorView:playEffectDone()
+	gohelper.setActive(self.goIndicatorContainer, false)
+	self:resetEffect()
 end
 
-function var_0_0.onDestroy(arg_14_0)
-	TaskDispatcher.cancelTask(arg_14_0.playEffectDone, arg_14_0)
-
-	arg_14_0.goDotItemList = nil
-
-	if arg_14_0.loader then
-		arg_14_0.loader:onDestroy()
-
-		arg_14_0.loader = nil
-	end
-
-	if gohelper.isNil(arg_14_0.simageIcon) then
-		arg_14_0.simageIcon:UnLoadImage()
-	end
-
-	if gohelper.isNil(arg_14_0.simageSignature) then
-		arg_14_0.simageSignature:UnLoadImage()
-	end
-
-	var_0_0.super.onDestroy(arg_14_0)
+function FightIndicatorView:resetEffect()
+	gohelper.setActive(self.goDownOne, false)
+	gohelper.setActive(self.goDownAll, false)
+	gohelper.setActive(self.goUpOne, false)
+	gohelper.setActive(self.goUpAll, false)
 end
 
-return var_0_0
+function FightIndicatorView:onDestroy()
+	TaskDispatcher.cancelTask(self.playEffectDone, self)
+
+	self.goDotItemList = nil
+
+	if self.loader then
+		self.loader:onDestroy()
+
+		self.loader = nil
+	end
+
+	if gohelper.isNil(self.simageIcon) then
+		self.simageIcon:UnLoadImage()
+	end
+
+	if gohelper.isNil(self.simageSignature) then
+		self.simageSignature:UnLoadImage()
+	end
+
+	FightIndicatorView.super.onDestroy(self)
+end
+
+return FightIndicatorView

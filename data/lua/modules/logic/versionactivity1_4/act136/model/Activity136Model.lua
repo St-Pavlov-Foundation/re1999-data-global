@@ -1,70 +1,77 @@
-﻿module("modules.logic.versionactivity1_4.act136.model.Activity136Model", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act136/model/Activity136Model.lua
 
-local var_0_0 = class("Activity136Model", BaseModel)
+module("modules.logic.versionactivity1_4.act136.model.Activity136Model", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:clear()
+local Activity136Model = class("Activity136Model", BaseModel)
+
+function Activity136Model:onInit()
+	self:clear()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clear()
+function Activity136Model:reInit()
+	self:clear()
 end
 
-function var_0_0.setActivityInfo(arg_3_0, arg_3_1)
-	arg_3_0.curActivity136Id = arg_3_1.activityId
-	arg_3_0.alreadyReceivedCharacterId = arg_3_1.selectHeroId
+function Activity136Model:setActivityInfo(severInfo)
+	self.curActivity136Id = severInfo.activityId
+	self.alreadyReceivedCharacterId = severInfo.selectHeroId
 
 	Activity136Controller.instance:dispatchEvent(Activity136Event.ActivityDataUpdate)
 end
 
-function var_0_0.isActivity136InOpen(arg_4_0, arg_4_1)
-	local var_4_0 = false
-	local var_4_1 = arg_4_0:getCurActivity136Id()
+function Activity136Model:isActivity136InOpen(isTipNotOpen)
+	local result = false
+	local curActId = self:getCurActivity136Id()
 
-	if var_4_1 then
-		local var_4_2, var_4_3, var_4_4 = ActivityHelper.getActivityStatusAndToast(var_4_1)
+	if curActId then
+		local status, toastId, paramList = ActivityHelper.getActivityStatusAndToast(curActId)
 
-		if var_4_2 == ActivityEnum.ActivityStatus.Normal then
-			var_4_0 = true
-		elseif var_4_3 and arg_4_1 then
-			GameFacade.showToastWithTableParam(var_4_3, var_4_4)
+		if status == ActivityEnum.ActivityStatus.Normal then
+			result = true
+		elseif toastId and isTipNotOpen then
+			GameFacade.showToastWithTableParam(toastId, paramList)
 		end
 	end
 
-	return var_4_0
+	return result
 end
 
-function var_0_0.hasReceivedCharacter(arg_5_0)
-	local var_5_0 = arg_5_0:getAlreadyReceivedCharacterId()
+function Activity136Model:hasReceivedCharacter()
+	local alreadyReceivedCharacterId = self:getAlreadyReceivedCharacterId()
 
-	return var_5_0 and var_5_0 ~= 0
+	return alreadyReceivedCharacterId and alreadyReceivedCharacterId ~= 0
 end
 
-function var_0_0.isShowRedDot(arg_6_0)
-	local var_6_0 = false
+function Activity136Model:isShowRedDot()
+	local result = false
+	local isInOpen = self:isActivity136InOpen()
 
-	if arg_6_0:isActivity136InOpen() then
-		var_6_0 = not arg_6_0:hasReceivedCharacter()
+	if isInOpen then
+		result = not self:hasReceivedCharacter()
 	end
 
-	return var_6_0
+	return result
 end
 
-function var_0_0.getAlreadyReceivedCharacterId(arg_7_0)
-	return arg_7_0.alreadyReceivedCharacterId
+function Activity136Model:getAlreadyReceivedCharacterId()
+	return self.alreadyReceivedCharacterId
 end
 
-function var_0_0.getCurActivity136Id(arg_8_0)
-	return arg_8_0.curActivity136Id
+function Activity136Model:getCurActivity136Id()
+	if not self.curActivity136Id then
+		return Activity136Config.instance:getActivityId()
+	end
+
+	return self.curActivity136Id
 end
 
-function var_0_0.clear(arg_9_0)
-	arg_9_0.curActivity136Id = nil
-	arg_9_0.alreadyReceivedCharacterId = 0
+function Activity136Model:clear()
+	self.curActivity136Id = nil
+	self.alreadyReceivedCharacterId = 0
 
-	var_0_0.super.clear(arg_9_0)
+	Activity136Model.super.clear(self)
 end
 
-var_0_0.instance = var_0_0.New()
+Activity136Model.instance = Activity136Model.New()
 
-return var_0_0
+return Activity136Model

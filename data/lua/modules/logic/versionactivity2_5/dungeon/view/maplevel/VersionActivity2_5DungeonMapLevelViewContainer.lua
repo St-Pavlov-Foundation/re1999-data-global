@@ -1,26 +1,28 @@
-﻿module("modules.logic.versionactivity2_5.dungeon.view.maplevel.VersionActivity2_5DungeonMapLevelViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/dungeon/view/maplevel/VersionActivity2_5DungeonMapLevelViewContainer.lua
 
-local var_0_0 = class("VersionActivity2_5DungeonMapLevelViewContainer", BaseViewContainer)
-local var_0_1 = 2
+module("modules.logic.versionactivity2_5.dungeon.view.maplevel.VersionActivity2_5DungeonMapLevelViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	arg_1_0.mapLevelView = VersionActivity2_5DungeonMapLevelView.New()
+local VersionActivity2_5DungeonMapLevelViewContainer = class("VersionActivity2_5DungeonMapLevelViewContainer", BaseViewContainer)
+local TIME_OUT = 2
+
+function VersionActivity2_5DungeonMapLevelViewContainer:buildViews()
+	self.mapLevelView = VersionActivity2_5DungeonMapLevelView.New()
 
 	return {
-		arg_1_0.mapLevelView,
+		self.mapLevelView,
 		TabViewGroup.New(1, "anim/#go_righttop"),
 		TabViewGroup.New(2, "anim/#go_lefttop")
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
+function VersionActivity2_5DungeonMapLevelViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
 		return {
 			CurrencyView.New({
 				CurrencyEnum.CurrencyType.Power
 			})
 		}
-	elseif arg_2_1 == 2 then
+	elseif tabContainerId == 2 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -31,33 +33,33 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	end
 end
 
-function var_0_0.setOpenedEpisodeId(arg_3_0, arg_3_1)
-	arg_3_0.openedEpisodeId = arg_3_1
+function VersionActivity2_5DungeonMapLevelViewContainer:setOpenedEpisodeId(episodeId)
+	self.openedEpisodeId = episodeId
 end
 
-function var_0_0.getOpenedEpisodeId(arg_4_0)
-	return arg_4_0.openedEpisodeId
+function VersionActivity2_5DungeonMapLevelViewContainer:getOpenedEpisodeId()
+	return self.openedEpisodeId
 end
 
-function var_0_0.playCloseTransition(arg_5_0)
-	arg_5_0:startViewOpenBlock()
+function VersionActivity2_5DungeonMapLevelViewContainer:playCloseTransition()
+	self:startViewOpenBlock()
 
-	local var_5_0 = arg_5_0.mapLevelView.animatorPlayer
+	local player = self.mapLevelView.animatorPlayer
 
-	if var_5_0 then
-		var_5_0:Play(UIAnimationName.Close, arg_5_0.onPlayCloseTransitionFinish, arg_5_0)
+	if player then
+		player:Play(UIAnimationName.Close, self.onPlayCloseTransitionFinish, self)
 	end
 
-	TaskDispatcher.runDelay(arg_5_0.onPlayCloseTransitionFinish, arg_5_0, var_0_1)
+	TaskDispatcher.runDelay(self.onPlayCloseTransitionFinish, self, TIME_OUT)
 end
 
-function var_0_0.onPlayCloseTransitionFinish(arg_6_0)
-	SLFramework.AnimatorPlayer.Get(arg_6_0.mapLevelView.goVersionActivity):Stop()
-	var_0_0.super.onPlayCloseTransitionFinish(arg_6_0)
+function VersionActivity2_5DungeonMapLevelViewContainer:onPlayCloseTransitionFinish()
+	SLFramework.AnimatorPlayer.Get(self.mapLevelView.goVersionActivity):Stop()
+	VersionActivity2_5DungeonMapLevelViewContainer.super.onPlayCloseTransitionFinish(self)
 end
 
-function var_0_0.stopCloseViewTask(arg_7_0)
+function VersionActivity2_5DungeonMapLevelViewContainer:stopCloseViewTask()
 	return
 end
 
-return var_0_0
+return VersionActivity2_5DungeonMapLevelViewContainer

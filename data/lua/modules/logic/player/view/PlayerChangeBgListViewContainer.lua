@@ -1,11 +1,13 @@
-﻿module("modules.logic.player.view.PlayerChangeBgListViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/player/view/PlayerChangeBgListViewContainer.lua
 
-local var_0_0 = class("PlayerChangeBgListViewContainer", BaseViewContainer)
+module("modules.logic.player.view.PlayerChangeBgListViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local PlayerChangeBgListViewContainer = class("PlayerChangeBgListViewContainer", BaseViewContainer)
+
+function PlayerChangeBgListViewContainer:buildViews()
 	return {
 		PlayerChangeBgListView.New()
 	}
 end
 
-return var_0_0
+return PlayerChangeBgListViewContainer

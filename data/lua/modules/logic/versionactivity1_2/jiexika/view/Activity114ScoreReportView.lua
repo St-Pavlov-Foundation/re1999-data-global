@@ -1,154 +1,155 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.view.Activity114ScoreReportView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/view/Activity114ScoreReportView.lua
 
-local var_0_0 = class("Activity114ScoreReportView", BaseView)
-local var_0_1 = {
+module("modules.logic.versionactivity1_2.jiexika.view.Activity114ScoreReportView", package.seeall)
+
+local Activity114ScoreReportView = class("Activity114ScoreReportView", BaseView)
+local scoreConst = {
 	Activity114Enum.ConstId.ScoreA,
 	Activity114Enum.ConstId.ScoreB,
 	Activity114Enum.ConstId.ScoreC,
 	Activity114Enum.ConstId.ScoreE
 }
-local var_0_2 = {
+local progressBase = {
 	1,
 	0.6,
 	0.32,
 	0.15
 }
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._simagebg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg2")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._txtactionscore = gohelper.findChildTextMesh(arg_1_0.viewGO, "content/scoreInfo/action/#txt_actionscore")
-	arg_1_0._txtmidtermscore = gohelper.findChildTextMesh(arg_1_0.viewGO, "content/scoreInfo/midterm/#txt_midtermscore")
-	arg_1_0._txtfinalscore = gohelper.findChildTextMesh(arg_1_0.viewGO, "content/scoreInfo/final/#txt_finalscore")
-	arg_1_0._txttotalscore = gohelper.findChildTextMesh(arg_1_0.viewGO, "content/scoreInfo/total/#txt_totalscore")
-	arg_1_0._imageprogress = gohelper.findChildImage(arg_1_0.viewGO, "content/multigradeInfo/progressbar/#image_progress")
-	arg_1_0._txtremarkdesc = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_remarktip/#scroll_remark/Viewport/Content/#txt_remarkdesc")
+function Activity114ScoreReportView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._simagebg2 = gohelper.findChildSingleImage(self.viewGO, "#simage_bg2")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._txtactionscore = gohelper.findChildTextMesh(self.viewGO, "content/scoreInfo/action/#txt_actionscore")
+	self._txtmidtermscore = gohelper.findChildTextMesh(self.viewGO, "content/scoreInfo/midterm/#txt_midtermscore")
+	self._txtfinalscore = gohelper.findChildTextMesh(self.viewGO, "content/scoreInfo/final/#txt_finalscore")
+	self._txttotalscore = gohelper.findChildTextMesh(self.viewGO, "content/scoreInfo/total/#txt_totalscore")
+	self._imageprogress = gohelper.findChildImage(self.viewGO, "content/multigradeInfo/progressbar/#image_progress")
+	self._txtremarkdesc = gohelper.findChildTextMesh(self.viewGO, "#go_remarktip/#scroll_remark/Viewport/Content/#txt_remarkdesc")
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0.closeThis, arg_2_0)
+function Activity114ScoreReportView:addEvents()
+	self._btnclose:AddClickListener(self.closeThis, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function Activity114ScoreReportView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._simagebg:LoadImage(ResUrl.getVersionActivityWhiteHouse_1_2_Bg("score/img_bg.png"))
-	arg_4_0._simagebg2:LoadImage(ResUrl.getAct114Icon("bg1"))
+function Activity114ScoreReportView:_editableInitView()
+	self._simagebg:LoadImage(ResUrl.getVersionActivityWhiteHouse_1_2_Bg("score/img_bg.png"))
+	self._simagebg2:LoadImage(ResUrl.getAct114Icon("bg1"))
 
-	arg_4_0._scoreIcons = arg_4_0:getUserDataTb_()
+	self._scoreIcons = self:getUserDataTb_()
 
-	for iter_4_0 = 1, 4 do
-		arg_4_0._scoreIcons[iter_4_0] = gohelper.findChild(arg_4_0.viewGO, "content/#go_scoreIcon/go_score" .. iter_4_0)
+	for i = 1, 4 do
+		self._scoreIcons[i] = gohelper.findChild(self.viewGO, "content/#go_scoreIcon/go_score" .. i)
 	end
 
-	arg_4_0._grades = {}
+	self._grades = {}
 
-	for iter_4_1 = 1, 4 do
-		arg_4_0._grades[iter_4_1] = arg_4_0:getUserDataTb_()
-		arg_4_0._grades[iter_4_1].circle = gohelper.findChild(arg_4_0.viewGO, "content/multigradeInfo/grade/grade" .. iter_4_1 .. "/go_circle")
-		arg_4_0._grades[iter_4_1].txt = gohelper.findChildTextMesh(arg_4_0.viewGO, "content/multigradeInfo/grade/grade" .. iter_4_1 .. "/txt")
+	for i = 1, 4 do
+		self._grades[i] = self:getUserDataTb_()
+		self._grades[i].circle = gohelper.findChild(self.viewGO, "content/multigradeInfo/grade/grade" .. i .. "/go_circle")
+		self._grades[i].txt = gohelper.findChildTextMesh(self.viewGO, "content/multigradeInfo/grade/grade" .. i .. "/txt")
 	end
 end
 
-function var_0_0.onOpen(arg_5_0)
+function Activity114ScoreReportView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.Meilanni.play_ui_mln_details_open)
 
-	local var_5_0, var_5_1, var_5_2, var_5_3 = Activity114Helper.getWeekEndScore()
-	local var_5_4
-	local var_5_5
+	local allAttr, score1, score2, totalScore = Activity114Helper.getWeekEndScore()
+	local level, des
 
-	for iter_5_0 = 1, #var_0_1 do
-		local var_5_6, var_5_7 = Activity114Config.instance:getConstValue(Activity114Model.instance.id, var_0_1[iter_5_0])
+	for i = 1, #scoreConst do
+		local score, desc = Activity114Config.instance:getConstValue(Activity114Model.instance.id, scoreConst[i])
 
-		if var_5_6 <= var_5_3 and not var_5_4 then
-			var_5_4 = iter_5_0
-			var_5_5 = var_5_7
+		if score <= totalScore and not level then
+			level = i
+			des = desc
 		end
 
-		gohelper.setActive(arg_5_0._grades[iter_5_0].circle, false)
+		gohelper.setActive(self._grades[i].circle, false)
 
-		arg_5_0._grades[iter_5_0].txt.text = var_5_6
+		self._grades[i].txt.text = score
 	end
 
-	arg_5_0._txtremarkdesc.text = var_5_5
+	self._txtremarkdesc.text = des
 
-	for iter_5_1 = 1, 4 do
-		gohelper.setActive(arg_5_0._scoreIcons[iter_5_1], false)
+	for i = 1, 4 do
+		gohelper.setActive(self._scoreIcons[i], false)
 	end
 
-	arg_5_0._txtactionscore.text = var_5_0
-	arg_5_0._txtmidtermscore.text = var_5_1
-	arg_5_0._txtfinalscore.text = var_5_2
-	arg_5_0._txttotalscore.text = var_5_3
+	self._txtactionscore.text = allAttr
+	self._txtmidtermscore.text = score1
+	self._txtfinalscore.text = score2
+	self._txttotalscore.text = totalScore
 
-	local var_5_8 = 0
+	local amount = 0
 
-	if var_5_4 == 1 then
-		var_5_8 = var_0_2[1]
+	if level == 1 then
+		amount = progressBase[1]
 	else
-		local var_5_9 = var_0_2[var_5_4]
-		local var_5_10 = var_0_2[var_5_4 - 1]
-		local var_5_11 = 0
-		local var_5_12 = Activity114Config.instance:getConstValue(Activity114Model.instance.id, var_0_1[var_5_4])
-		local var_5_13 = Activity114Config.instance:getConstValue(Activity114Model.instance.id, var_0_1[var_5_4 - 1])
-		local var_5_14 = (var_5_3 - var_5_13) / (var_5_12 - var_5_13)
+		local amount1 = progressBase[level]
+		local amount2 = progressBase[level - 1]
+		local percent = 0
+		local constScore1 = Activity114Config.instance:getConstValue(Activity114Model.instance.id, scoreConst[level])
+		local constScore2 = Activity114Config.instance:getConstValue(Activity114Model.instance.id, scoreConst[level - 1])
 
-		var_5_8 = Mathf.Lerp(var_5_10, var_5_9, var_5_14)
+		percent = (totalScore - constScore2) / (constScore1 - constScore2)
+		amount = Mathf.Lerp(amount2, amount1, percent)
 	end
 
-	arg_5_0._imageprogress.fillAmount = 0
-	arg_5_0._finalAmount = var_5_8
-	arg_5_0._finalLevel = var_5_4
+	self._imageprogress.fillAmount = 0
+	self._finalAmount = amount
+	self._finalLevel = level
 
-	TaskDispatcher.runDelay(arg_5_0.delayTweenSlider, arg_5_0, 0.4)
-	TaskDispatcher.runDelay(arg_5_0.playAudio1, arg_5_0, 0.95)
-	TaskDispatcher.runDelay(arg_5_0.playAudio2, arg_5_0, 1.3)
+	TaskDispatcher.runDelay(self.delayTweenSlider, self, 0.4)
+	TaskDispatcher.runDelay(self.playAudio1, self, 0.95)
+	TaskDispatcher.runDelay(self.playAudio2, self, 1.3)
 end
 
-function var_0_0.delayTweenSlider(arg_6_0)
-	arg_6_0._tweenId = ZProj.TweenHelper.DOFillAmount(arg_6_0._imageprogress, arg_6_0._finalAmount, 0.6, arg_6_0.onTweenEnd, arg_6_0)
+function Activity114ScoreReportView:delayTweenSlider()
+	self._tweenId = ZProj.TweenHelper.DOFillAmount(self._imageprogress, self._finalAmount, 0.6, self.onTweenEnd, self)
 end
 
-function var_0_0.onTweenEnd(arg_7_0)
-	arg_7_0._tweenId = nil
+function Activity114ScoreReportView:onTweenEnd()
+	self._tweenId = nil
 
-	for iter_7_0 = 1, 4 do
-		gohelper.setActive(arg_7_0._grades[iter_7_0].circle, iter_7_0 == arg_7_0._finalLevel)
-		gohelper.setActive(arg_7_0._scoreIcons[iter_7_0], iter_7_0 == arg_7_0._finalLevel)
+	for i = 1, 4 do
+		gohelper.setActive(self._grades[i].circle, i == self._finalLevel)
+		gohelper.setActive(self._scoreIcons[i], i == self._finalLevel)
 	end
 end
 
-function var_0_0.playAudio1(arg_8_0)
+function Activity114ScoreReportView:playAudio1()
 	AudioMgr.instance:trigger(AudioEnum.Meilanni.play_ui_mln_stamp)
 end
 
-function var_0_0.playAudio2(arg_9_0)
+function Activity114ScoreReportView:playAudio2()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_screenplay_photo_close)
 end
 
-function var_0_0.onClose(arg_10_0)
+function Activity114ScoreReportView:onClose()
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_firmup_close)
 
-	if arg_10_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_10_0._tweenId)
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_10_0._tweenId = nil
+		self._tweenId = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_10_0.delayTweenSlider, arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0.playAudio1, arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0.playAudio2, arg_10_0)
+	TaskDispatcher.cancelTask(self.delayTweenSlider, self)
+	TaskDispatcher.cancelTask(self.playAudio1, self)
+	TaskDispatcher.cancelTask(self.playAudio2, self)
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	arg_11_0._simagebg:UnLoadImage()
+function Activity114ScoreReportView:onDestroyView()
+	self._simagebg:UnLoadImage()
 end
 
-return var_0_0
+return Activity114ScoreReportView

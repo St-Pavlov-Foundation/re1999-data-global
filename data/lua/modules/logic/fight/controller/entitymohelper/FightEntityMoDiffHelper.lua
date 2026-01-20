@@ -1,233 +1,248 @@
-﻿module("modules.logic.fight.controller.entitymohelper.FightEntityMoDiffHelper", package.seeall)
+﻿-- chunkname: @modules/logic/fight/controller/entitymohelper/FightEntityMoDiffHelper.lua
 
-local var_0_0 = _M
+module("modules.logic.fight.controller.entitymohelper.FightEntityMoDiffHelper", package.seeall)
 
-var_0_0.DeepMaxStack = 100
+local FightEntityMoDiffHelper = _M
 
-local var_0_1 = {}
-local var_0_2 = "entityMo1"
-local var_0_3 = "[表现层数据] entityMo2"
-local var_0_4 = 0
+FightEntityMoDiffHelper.DeepMaxStack = 100
 
-function var_0_0.getDiffMsg(arg_1_0, arg_1_1)
-	var_0_0.initGetDiffHandleDict()
-	tabletool.clear(var_0_1)
+local diffMsgTab = {}
+local entityMo1Name = "entityMo1"
+local entityMo2Name = "[表现层数据] entityMo2"
+local errorNumber = 0
 
-	var_0_4 = 0
+function FightEntityMoDiffHelper.getDiffMsg(entityMo1, entityMo2)
+	FightEntityMoDiffHelper.initGetDiffHandleDict()
+	tabletool.clear(diffMsgTab)
 
-	for iter_1_0, iter_1_1 in pairs(arg_1_0) do
-		if not FightEntityMoCompareHelper.CompareFilterAttrDict[iter_1_0] then
-			(var_0_0.diffHandleDict[iter_1_0] or var_0_0.defaultDiff)(iter_1_1, arg_1_1[iter_1_0], iter_1_0)
+	errorNumber = 0
+
+	for key, value in pairs(entityMo1) do
+		if not FightEntityMoCompareHelper.CompareFilterAttrDict[key] then
+			local diffHandle = FightEntityMoDiffHelper.diffHandleDict[key]
+
+			diffHandle = diffHandle or FightEntityMoDiffHelper.defaultDiff
+
+			diffHandle(value, entityMo2[key], key)
 		end
 	end
 
-	return table.concat(var_0_1, "\n")
+	return table.concat(diffMsgTab, "\n")
 end
 
-function var_0_0.getTypeDiffMsg(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
-	var_0_4 = var_0_4 + 1
+function FightEntityMoDiffHelper.getTypeDiffMsg(key, entity1Name, type1, entity2Name, type2)
+	errorNumber = errorNumber + 1
 
-	table.insert(var_0_1, string.format("\n[error %s] key : %s, \n%s.%s type is %s, \n%s.%s type is %s", var_0_4, arg_2_0, arg_2_1, arg_2_0, arg_2_2, arg_2_3, arg_2_0, arg_2_4))
+	table.insert(diffMsgTab, string.format("\n[error %s] key : %s, \n%s.%s type is %s, \n%s.%s type is %s", errorNumber, key, entity1Name, key, type1, entity2Name, key, type2))
 end
 
-function var_0_0.getValueDiffMsg(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	var_0_4 = var_0_4 + 1
+function FightEntityMoDiffHelper.getValueDiffMsg(key, entity1Name, value1, entity2Name, value2)
+	errorNumber = errorNumber + 1
 
-	table.insert(var_0_1, string.format("\n[error %s] key : %s, \n%s.%s = %s, \n%s.%s = %s", var_0_4, arg_3_0, arg_3_1, arg_3_0, arg_3_2, arg_3_3, arg_3_0, arg_3_4))
+	table.insert(diffMsgTab, string.format("\n[error %s] key : %s, \n%s.%s = %s, \n%s.%s = %s", errorNumber, key, entity1Name, key, value1, entity2Name, key, value2))
 end
 
-function var_0_0.addDiffMsg(arg_4_0)
-	table.insert(var_0_1, "\n" .. tostring(arg_4_0))
+function FightEntityMoDiffHelper.addDiffMsg(msg)
+	table.insert(diffMsgTab, "\n" .. tostring(msg))
 end
 
-function var_0_0.initGetDiffHandleDict()
-	if not var_0_0.diffHandleDict then
-		var_0_0.diffHandleDict = {
-			buffModel = var_0_0.buffModelDiff,
-			_powerInfos = var_0_0.defaultTableDeepDiff,
-			summonedInfo = var_0_0.summonedInfoDiff
+function FightEntityMoDiffHelper.initGetDiffHandleDict()
+	if not FightEntityMoDiffHelper.diffHandleDict then
+		FightEntityMoDiffHelper.diffHandleDict = {
+			buffModel = FightEntityMoDiffHelper.buffModelDiff,
+			_powerInfos = FightEntityMoDiffHelper.defaultTableDeepDiff,
+			summonedInfo = FightEntityMoDiffHelper.summonedInfoDiff
 		}
 	end
 end
 
-function var_0_0.defaultDiff(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_0 == arg_6_1 then
+function FightEntityMoDiffHelper.defaultDiff(valueA, valueB, key)
+	if valueA == valueB then
 		return
 	end
 
-	if not arg_6_0 or not arg_6_1 then
-		var_0_0.getValueDiffMsg(arg_6_2, var_0_2, arg_6_0, var_0_3, arg_6_1)
-
-		return
-	end
-
-	local var_6_0 = type(arg_6_0)
-	local var_6_1 = type(arg_6_1)
-
-	if var_6_0 ~= var_6_1 then
-		var_0_0.getTypeDiffMsg(arg_6_2, var_0_2, var_6_0, var_0_3, var_6_1)
+	if not valueA or not valueB then
+		FightEntityMoDiffHelper.getValueDiffMsg(key, entityMo1Name, valueA, entityMo2Name, valueB)
 
 		return
 	end
 
-	if var_6_0 == "table" then
-		return var_0_0.defaultTableDiff(arg_6_0, arg_6_1, arg_6_2)
+	local typeA, typeB = type(valueA), type(valueB)
+
+	if typeA ~= typeB then
+		FightEntityMoDiffHelper.getTypeDiffMsg(key, entityMo1Name, typeA, entityMo2Name, typeB)
+
+		return
 	end
 
-	if arg_6_0 ~= arg_6_1 then
-		var_0_0.getValueDiffMsg(arg_6_2, var_0_2, arg_6_0, var_0_3, arg_6_1)
+	if typeA == "table" then
+		return FightEntityMoDiffHelper.defaultTableDiff(valueA, valueB, key)
+	end
+
+	if valueA ~= valueB then
+		FightEntityMoDiffHelper.getValueDiffMsg(key, entityMo1Name, valueA, entityMo2Name, valueB)
 	end
 end
 
-var_0_0.CompareStatus = {
+FightEntityMoDiffHelper.CompareStatus = {
 	CompareFinish = 2,
 	WaitCompare = 1
 }
 
-function var_0_0._innerTableDiff(arg_7_0, arg_7_1, arg_7_2)
-	if arg_7_0 == arg_7_1 then
-		return var_0_0.CompareStatus.CompareFinish
+function FightEntityMoDiffHelper._innerTableDiff(tableA, tableB, key)
+	if tableA == tableB then
+		return FightEntityMoDiffHelper.CompareStatus.CompareFinish
 	end
 
-	if not arg_7_0 or not arg_7_1 then
-		var_0_0.getValueDiffMsg(arg_7_2, var_0_2, arg_7_0, var_0_3, arg_7_1)
+	if not tableA or not tableB then
+		FightEntityMoDiffHelper.getValueDiffMsg(key, entityMo1Name, tableA, entityMo2Name, tableB)
 
-		return var_0_0.CompareStatus.CompareFinish
+		return FightEntityMoDiffHelper.CompareStatus.CompareFinish
 	end
 
-	local var_7_0 = type(arg_7_0)
-	local var_7_1 = type(arg_7_1)
+	local typeA, typeB = type(tableA), type(tableB)
 
-	if var_7_0 ~= var_7_1 then
-		var_0_0.getTypeDiffMsg(arg_7_2, var_0_2, var_7_0, var_0_3, var_7_1)
+	if typeA ~= typeB then
+		FightEntityMoDiffHelper.getTypeDiffMsg(key, entityMo1Name, typeA, entityMo2Name, typeB)
 
-		return var_0_0.CompareStatus.CompareFinish
+		return FightEntityMoDiffHelper.CompareStatus.CompareFinish
 	end
 
-	return var_0_0.CompareStatus.WaitCompare
+	return FightEntityMoDiffHelper.CompareStatus.WaitCompare
 end
 
-function var_0_0.defaultTableDiff(arg_8_0, arg_8_1, arg_8_2)
-	if var_0_0._innerTableDiff(arg_8_0, arg_8_1, arg_8_2) == var_0_0.CompareStatus.CompareFinish then
+function FightEntityMoDiffHelper.defaultTableDiff(tableA, tableB, key)
+	local status = FightEntityMoDiffHelper._innerTableDiff(tableA, tableB, key)
+
+	if status == FightEntityMoDiffHelper.CompareStatus.CompareFinish then
 		return
 	end
 
-	local var_8_0 = true
+	local same = true
 
-	for iter_8_0, iter_8_1 in pairs(arg_8_1) do
-		if iter_8_1 ~= arg_8_0[iter_8_0] then
-			var_8_0 = false
+	for innerKey, value in pairs(tableB) do
+		if value ~= tableA[innerKey] then
+			same = false
 
-			var_0_0.getValueDiffMsg(arg_8_2 .. iter_8_0, var_0_2, iter_8_1, var_0_3, arg_8_0[arg_8_2])
+			FightEntityMoDiffHelper.getValueDiffMsg(key .. innerKey, entityMo1Name, value, entityMo2Name, tableA[key])
 		end
 	end
 
-	if not var_8_0 then
-		var_0_0.addDiffMsg(GameUtil.logTab(arg_8_0))
-		var_0_0.addDiffMsg(GameUtil.logTab(arg_8_1))
+	if not same then
+		FightEntityMoDiffHelper.addDiffMsg(GameUtil.logTab(tableA))
+		FightEntityMoDiffHelper.addDiffMsg(GameUtil.logTab(tableB))
 	end
 end
 
-function var_0_0.defaultTableDeepDiff(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	arg_9_3 = arg_9_3 or 0
+function FightEntityMoDiffHelper.defaultTableDeepDiff(tableA, tableB, key, level)
+	level = level or 0
 
-	if arg_9_3 > var_0_0.DeepMaxStack then
+	if level > FightEntityMoDiffHelper.DeepMaxStack then
 		logError("stackoverflow")
 
 		return
 	end
 
-	if var_0_0._innerTableDiff(arg_9_0, arg_9_1, arg_9_2) == var_0_0.CompareStatus.CompareFinish then
+	local status = FightEntityMoDiffHelper._innerTableDiff(tableA, tableB, key)
+
+	if status == FightEntityMoDiffHelper.CompareStatus.CompareFinish then
 		return
 	end
 
-	local var_9_0 = true
+	local same = true
 
-	for iter_9_0, iter_9_1 in pairs(arg_9_0) do
-		local var_9_1 = arg_9_2 .. "." .. iter_9_0
-		local var_9_2 = arg_9_1[iter_9_0]
-		local var_9_3 = type(iter_9_1)
-		local var_9_4 = type(var_9_2)
+	for innerKey, aValue in pairs(tableA) do
+		local curLogKey = key .. "." .. innerKey
+		local bValue = tableB[innerKey]
+		local typeA, typeB = type(aValue), type(bValue)
 
-		if var_9_3 ~= var_9_4 then
-			var_9_0 = false
+		if typeA ~= typeB then
+			same = false
 
-			var_0_0.getTypeDiffMsg(var_9_1, var_0_2, var_9_3, var_0_3, var_9_4)
-		elseif var_9_3 == "table" then
-			var_0_0.defaultTableDeepDiff(iter_9_1, var_9_2, var_9_1, arg_9_3 + 1)
-		elseif iter_9_1 ~= var_9_2 then
-			var_9_0 = false
+			FightEntityMoDiffHelper.getTypeDiffMsg(curLogKey, entityMo1Name, typeA, entityMo2Name, typeB)
+		elseif typeA == "table" then
+			FightEntityMoDiffHelper.defaultTableDeepDiff(aValue, bValue, curLogKey, level + 1)
+		elseif aValue ~= bValue then
+			same = false
 
-			var_0_0.getValueDiffMsg(var_9_1, var_0_2, iter_9_1, var_0_3, var_9_2)
+			FightEntityMoDiffHelper.getValueDiffMsg(curLogKey, entityMo1Name, aValue, entityMo2Name, bValue)
 		end
 	end
 
-	if not var_9_0 then
-		var_0_0.addDiffMsg(GameUtil.logTab(arg_9_0))
-		var_0_0.addDiffMsg(GameUtil.logTab(arg_9_1))
+	if not same then
+		FightEntityMoDiffHelper.addDiffMsg(GameUtil.logTab(tableA))
+		FightEntityMoDiffHelper.addDiffMsg(GameUtil.logTab(tableB))
 	end
 end
 
-function var_0_0.buffModelDiff(arg_10_0, arg_10_1, arg_10_2)
-	if var_0_0._innerTableDiff(arg_10_0, arg_10_1, arg_10_2) == var_0_0.CompareStatus.CompareFinish then
+function FightEntityMoDiffHelper.buffModelDiff(modelA, modelB, key)
+	local status = FightEntityMoDiffHelper._innerTableDiff(modelA, modelB, key)
+
+	if status == FightEntityMoDiffHelper.CompareStatus.CompareFinish then
 		return
 	end
 
-	local var_10_0 = arg_10_0.getDict and arg_10_0:getDict()
-	local var_10_1 = arg_10_1.getDict and arg_10_1:getDict()
+	local aBuffDict = modelA.getDict and modelA:getDict()
+	local bBuffDict = modelB.getDict and modelB:getDict()
 
-	if var_0_0._innerTableDiff(var_10_0, var_10_1, arg_10_2 .. "._dict") == var_0_0.CompareStatus.CompareFinish then
+	status = FightEntityMoDiffHelper._innerTableDiff(aBuffDict, bBuffDict, key .. "._dict")
+
+	if status == FightEntityMoDiffHelper.CompareStatus.CompareFinish then
 		return
 	end
 
-	local var_10_2 = true
+	local same = true
 
-	for iter_10_0, iter_10_1 in pairs(var_10_0) do
-		local var_10_3 = arg_10_2 .. "._dict." .. iter_10_0
-		local var_10_4 = var_10_1[iter_10_0]
-		local var_10_5, var_10_6 = FightEntityMoCompareHelper.defaultTableDeepCompare(iter_10_1, var_10_4)
+	for buffUid, buffMoA in pairs(aBuffDict) do
+		local curKey = key .. "._dict." .. buffUid
+		local buffMoB = bBuffDict[buffUid]
+		local tempSame, diffKey = FightEntityMoCompareHelper.defaultTableDeepCompare(buffMoA, buffMoB)
 
-		if not var_10_5 then
-			var_10_2 = false
-			var_10_3 = var_10_6 and var_10_3 .. var_10_6 or var_10_3
+		if not tempSame then
+			same = false
+			curKey = diffKey and curKey .. diffKey or curKey
 
-			var_0_0.getValueDiffMsg(var_10_3, var_0_2, GameUtil.logTab(iter_10_1), var_0_3, GameUtil.logTab(var_10_4))
+			FightEntityMoDiffHelper.getValueDiffMsg(curKey, entityMo1Name, GameUtil.logTab(buffMoA), entityMo2Name, GameUtil.logTab(buffMoB))
 		end
 	end
 
-	if not var_10_2 then
-		var_0_0.addDiffMsg(FightLogHelper.getFightBuffDictString(var_10_0))
-		var_0_0.addDiffMsg(FightLogHelper.getFightBuffDictString(var_10_1))
+	if not same then
+		FightEntityMoDiffHelper.addDiffMsg(FightLogHelper.getFightBuffDictString(aBuffDict))
+		FightEntityMoDiffHelper.addDiffMsg(FightLogHelper.getFightBuffDictString(bBuffDict))
 	end
 end
 
-function var_0_0.summonedInfoDiff(arg_11_0, arg_11_1, arg_11_2)
-	if var_0_0._innerTableDiff(arg_11_0, arg_11_1, arg_11_2) == var_0_0.CompareStatus.CompareFinish then
+function FightEntityMoDiffHelper.summonedInfoDiff(summonedInfoA, summonedInfoB, key)
+	local status = FightEntityMoDiffHelper._innerTableDiff(summonedInfoA, summonedInfoB, key)
+
+	if status == FightEntityMoDiffHelper.CompareStatus.CompareFinish then
 		return
 	end
 
-	local var_11_0 = arg_11_0.getDataDic and arg_11_0:getDataDic()
-	local var_11_1 = arg_11_0.getDataDic and arg_11_1:getDataDic()
+	local aData = summonedInfoA.getDataDic and summonedInfoA:getDataDic()
+	local bData = summonedInfoA.getDataDic and summonedInfoB:getDataDic()
 
-	if var_0_0._innerTableDiff(var_11_0, var_11_1, arg_11_2 .. ".dataDic") == var_0_0.CompareStatus.CompareFinish then
+	status = FightEntityMoDiffHelper._innerTableDiff(aData, bData, key .. ".dataDic")
+
+	if status == FightEntityMoDiffHelper.CompareStatus.CompareFinish then
 		return
 	end
 
-	local var_11_2 = true
+	local same = true
 
-	for iter_11_0, iter_11_1 in pairs(var_11_0) do
-		local var_11_3 = arg_11_2 .. ".dataDic." .. iter_11_0
-		local var_11_4 = var_11_1[iter_11_0]
+	for uid, dataA in pairs(aData) do
+		local curKey = key .. ".dataDic." .. uid
+		local dataB = bData[uid]
 
-		if not FightEntityMoCompareHelper.defaultTableDeepCompare(iter_11_1, var_11_4) then
-			var_0_0.getValueDiffMsg(var_11_3, var_0_2, GameUtil.logTab(iter_11_1), var_0_3, GameUtil.logTab(var_11_4))
+		if not FightEntityMoCompareHelper.defaultTableDeepCompare(dataA, dataB) then
+			FightEntityMoDiffHelper.getValueDiffMsg(curKey, entityMo1Name, GameUtil.logTab(dataA), entityMo2Name, GameUtil.logTab(dataB))
 		end
 	end
 
-	if not var_11_2 then
-		var_0_0.addDiffMsg(GameUtil.logTab(var_11_0))
-		var_0_0.addDiffMsg(GameUtil.logTab(var_11_1))
+	if not same then
+		FightEntityMoDiffHelper.addDiffMsg(GameUtil.logTab(aData))
+		FightEntityMoDiffHelper.addDiffMsg(GameUtil.logTab(bData))
 	end
 end
 
-return var_0_0
+return FightEntityMoDiffHelper

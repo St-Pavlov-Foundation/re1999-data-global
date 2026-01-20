@@ -1,241 +1,246 @@
-﻿module("modules.logic.fight.entity.comp.specialspine.FightEntitySpecialSpine3072_Mask", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/specialspine/FightEntitySpecialSpine3072_Mask.lua
 
-local var_0_0 = class("FightEntitySpecialSpine3072_Mask", UserDataDispose)
-local var_0_1 = 30720101
+module("modules.logic.fight.entity.comp.specialspine.FightEntitySpecialSpine3072_Mask", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+local FightEntitySpecialSpine3072_Mask = class("FightEntitySpecialSpine3072_Mask", UserDataDispose)
+local maskBuffId = 30720101
 
-	arg_1_0._entity = arg_1_1
+function FightEntitySpecialSpine3072_Mask:ctor(entity)
+	self:__onInit()
 
-	arg_1_0:_initSpine()
-	arg_1_0:addEventCb(FightController.instance, FightEvent.SetEntityAlpha, arg_1_0._onSetEntityAlpha, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, arg_1_0._onBuffUpdate, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.OnSkillPlayStart, arg_1_0._onSkillPlayStart, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, arg_1_0._onSkillPlayFinish, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.OnFightReconnectLastWork, arg_1_0._onFightReconnectLastWork, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.TimelinePlayEntityAni, arg_1_0._onTimelinePlayEntityAni, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.SetSpinePosByTimeline, arg_1_0.onSetSpinePosByTimeline, arg_1_0)
+	self._entity = entity
+
+	self:_initSpine()
+	self:addEventCb(FightController.instance, FightEvent.SetEntityAlpha, self._onSetEntityAlpha, self)
+	self:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, self._onBuffUpdate, self)
+	self:addEventCb(FightController.instance, FightEvent.OnSkillPlayStart, self._onSkillPlayStart, self)
+	self:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
+	self:addEventCb(FightController.instance, FightEvent.OnFightReconnectLastWork, self._onFightReconnectLastWork, self)
+	self:addEventCb(FightController.instance, FightEvent.TimelinePlayEntityAni, self._onTimelinePlayEntityAni, self)
+	self:addEventCb(FightController.instance, FightEvent.SetSpinePosByTimeline, self.onSetSpinePosByTimeline, self)
 end
 
-function var_0_0._onBuffUpdate(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	if arg_2_1 ~= arg_2_0._entity.id then
+function FightEntitySpecialSpine3072_Mask:_onBuffUpdate(targetId, effectType, buffId)
+	if targetId ~= self._entity.id then
 		return
 	end
 
-	if arg_2_3 ~= var_0_1 then
+	if buffId ~= maskBuffId then
 		return
 	end
 
-	arg_2_0:_detectMaskBuff()
+	self:_detectMaskBuff()
 end
 
-function var_0_0._detectMaskBuff(arg_3_0)
-	local var_3_0 = false
-	local var_3_1 = arg_3_0._entity:getMO()
+function FightEntitySpecialSpine3072_Mask:_detectMaskBuff()
+	local showMask = false
+	local entityMO = self._entity:getMO()
 
-	if var_3_1 then
-		local var_3_2 = var_3_1:getBuffDic()
+	if entityMO then
+		local buffDic = entityMO:getBuffDic()
 
-		for iter_3_0, iter_3_1 in pairs(var_3_2) do
-			if iter_3_1.buffId == var_0_1 then
-				var_3_0 = true
+		for i, v in pairs(buffDic) do
+			if v.buffId == maskBuffId then
+				showMask = true
 
 				break
 			end
 		end
 	end
 
-	arg_3_0._showMask = var_3_0
+	self._showMask = showMask
 
-	arg_3_0:_refreshMaskVisible()
+	self:_refreshMaskVisible()
 end
 
-function var_0_0._refreshMaskVisible(arg_4_0)
-	if not gohelper.isNil(arg_4_0._spineRoot) then
-		local var_4_0 = true
+function FightEntitySpecialSpine3072_Mask:_refreshMaskVisible()
+	if not gohelper.isNil(self._spineRoot) then
+		local state = true
 
-		if not arg_4_0._showMask then
-			var_4_0 = false
+		if not self._showMask then
+			state = false
 		end
 
-		if arg_4_0._entity.marked_alpha == 0 then
-			var_4_0 = false
+		if self._entity.marked_alpha == 0 then
+			state = false
 		end
 
-		if arg_4_0._playingSkill then
-			var_4_0 = false
+		if self._playingSkill then
+			state = false
 		end
 
-		if arg_4_0._playingAni then
-			var_4_0 = false
+		if self._playingAni then
+			state = false
 		end
 
-		transformhelper.setLocalPos(arg_4_0._spineRootTransform, var_4_0 and 0 or 20000, 0, 0)
+		transformhelper.setLocalPos(self._spineRootTransform, state and 0 or 20000, 0, 0)
 
-		if var_4_0 then
-			arg_4_0:_correctAniTime()
-		end
-	end
-end
-
-function var_0_0._onSetEntityAlpha(arg_5_0, arg_5_1)
-	arg_5_0:_refreshMaskVisible()
-end
-
-function var_0_0._initSpine(arg_6_0)
-	arg_6_0._spineRoot = gohelper.create3d(arg_6_0._entity.go, "specialSpine")
-	arg_6_0._spineRootTransform = arg_6_0._spineRoot.transform
-	arg_6_0._spine = MonoHelper.addLuaComOnceToGo(arg_6_0._spineRoot, UnitSpine, arg_6_0._entity)
-
-	local var_6_0 = arg_6_0._entity:getMO()
-	local var_6_1
-	local var_6_2 = var_6_0.skin == 307203 and "roles/v2a2_307203_zmsl_m/307203_zmsl_m_fight.prefab" or string.format("roles/v1a3_%d_zongmaoshali_m/%d_zongmaoshali_m_fight.prefab", var_6_0.skin, var_6_0.skin)
-
-	arg_6_0._spine:setResPath(var_6_2, arg_6_0._onSpineLoaded, arg_6_0)
-end
-
-function var_0_0.onSetSpinePosByTimeline(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4)
-	if arg_7_1 == arg_7_0._entity.id then
-		local var_7_0 = arg_7_0._spine:getSpineTr()
-
-		if var_7_0 then
-			transformhelper.setLocalPos(var_7_0, arg_7_2, arg_7_3, arg_7_4)
+		if state then
+			self:_correctAniTime()
 		end
 	end
 end
 
-function var_0_0._onSpineLoaded(arg_8_0, arg_8_1)
-	if arg_8_0._layer then
-		arg_8_0:setLayer(arg_8_0._layer, arg_8_0._recursive)
-	end
-
-	if arg_8_0._order then
-		arg_8_0:setRenderOrder(arg_8_0._order, true)
-	end
-
-	if arg_8_0._isActive ~= nil then
-		arg_8_0:setActive(arg_8_0._isActive)
-	end
-
-	arg_8_0._spine._skeletonAnim.freeze = arg_8_0._entity.spine._bFreeze
-	arg_8_0._spine._skeletonAnim.timeScale = arg_8_0._entity.spine._timeScale
-
-	local var_8_0 = arg_8_0._entity.spine
-
-	if var_8_0._skeletonAnim.state:GetCurrent(0) and arg_8_0._spine._skeletonAnim then
-		arg_8_0:playAnim(var_8_0:getAnimState(), var_8_0._isLoop, true)
-	end
-
-	arg_8_0:_detectMaskBuff()
-	arg_8_0:_refreshMaskVisible()
+function FightEntitySpecialSpine3072_Mask:_onSetEntityAlpha(alpha)
+	self:_refreshMaskVisible()
 end
 
-function var_0_0._correctAniTime(arg_9_0)
-	local var_9_0 = arg_9_0._entity.spine._skeletonAnim.state:GetCurrent(0)
+function FightEntitySpecialSpine3072_Mask:_initSpine()
+	self._spineRoot = gohelper.create3d(self._entity.go, "specialSpine")
+	self._spineRootTransform = self._spineRoot.transform
+	self._spine = MonoHelper.addLuaComOnceToGo(self._spineRoot, UnitSpine, self._entity)
 
-	if var_9_0 and arg_9_0._spine._skeletonAnim then
-		arg_9_0._spine._skeletonAnim:Jump2Time(var_9_0.TrackTime)
+	local entityMO = self._entity:getMO()
+	local path
+
+	path = entityMO.skin == 307203 and "roles/v2a2_307203_zmsl_m/307203_zmsl_m_fight.prefab" or string.format("roles/v1a3_%d_zongmaoshali_m/%d_zongmaoshali_m_fight.prefab", entityMO.skin, entityMO.skin)
+
+	self._spine:setResPath(path, self._onSpineLoaded, self)
+end
+
+function FightEntitySpecialSpine3072_Mask:onSetSpinePosByTimeline(entityId, posX, posY, posZ)
+	if entityId == self._entity.id then
+		local transform = self._spine:getSpineTr()
+
+		if transform then
+			transformhelper.setLocalPos(transform, posX, posY, posZ)
+		end
 	end
 end
 
-function var_0_0.playAnim(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	if arg_10_0._spine and arg_10_0._spine._skeletonAnim and arg_10_0._spine:hasAnimation(arg_10_1) then
-		arg_10_0._spine:playAnim(arg_10_1, arg_10_2, arg_10_3)
+function FightEntitySpecialSpine3072_Mask:_onSpineLoaded(spine)
+	if self._layer then
+		self:setLayer(self._layer, self._recursive)
+	end
+
+	if self._order then
+		self:setRenderOrder(self._order, true)
+	end
+
+	if self._isActive ~= nil then
+		self:setActive(self._isActive)
+	end
+
+	self._spine._skeletonAnim.freeze = self._entity.spine._bFreeze
+	self._spine._skeletonAnim.timeScale = self._entity.spine._timeScale
+
+	local mainSpine = self._entity.spine
+	local curTrack = mainSpine._skeletonAnim.state:GetCurrent(0)
+
+	if curTrack and self._spine._skeletonAnim then
+		self:playAnim(mainSpine:getAnimState(), mainSpine._isLoop, true)
+	end
+
+	self:_detectMaskBuff()
+	self:_refreshMaskVisible()
+end
+
+function FightEntitySpecialSpine3072_Mask:_correctAniTime()
+	local mainSpine = self._entity.spine
+	local curTrack = mainSpine._skeletonAnim.state:GetCurrent(0)
+
+	if curTrack and self._spine._skeletonAnim then
+		self._spine._skeletonAnim:Jump2Time(curTrack.TrackTime)
 	end
 end
 
-function var_0_0.setFreeze(arg_11_0, arg_11_1)
-	if arg_11_0._spine then
-		arg_11_0._spine:setFreeze(arg_11_1)
+function FightEntitySpecialSpine3072_Mask:playAnim(animState, loop, reStart)
+	if self._spine and self._spine._skeletonAnim and self._spine:hasAnimation(animState) then
+		self._spine:playAnim(animState, loop, reStart)
 	end
 end
 
-function var_0_0.setTimeScale(arg_12_0, arg_12_1)
-	if arg_12_0._spine then
-		arg_12_0._spine:setTimeScale(arg_12_1)
+function FightEntitySpecialSpine3072_Mask:setFreeze(isFreeze)
+	if self._spine then
+		self._spine:setFreeze(isFreeze)
 	end
 end
 
-function var_0_0.setLayer(arg_13_0, arg_13_1, arg_13_2)
-	arg_13_0._layer = arg_13_1
-	arg_13_0._recursive = arg_13_2
-
-	if arg_13_0._spine and arg_13_1 then
-		arg_13_0._spine:setLayer(arg_13_1, arg_13_2)
+function FightEntitySpecialSpine3072_Mask:setTimeScale(timeScale)
+	if self._spine then
+		self._spine:setTimeScale(timeScale)
 	end
 end
 
-function var_0_0.setRenderOrder(arg_14_0, arg_14_1, arg_14_2)
-	arg_14_0._order = arg_14_1
+function FightEntitySpecialSpine3072_Mask:setLayer(layer, recursive)
+	self._layer = layer
+	self._recursive = recursive
 
-	if arg_14_0._spine and arg_14_1 then
-		arg_14_0._spine:setRenderOrder(arg_14_1 + 1, arg_14_2)
+	if self._spine and layer then
+		self._spine:setLayer(layer, recursive)
 	end
 end
 
-function var_0_0.changeLookDir(arg_15_0, arg_15_1)
-	if arg_15_0._spine then
-		arg_15_0._spine:changeLookDir(arg_15_1)
+function FightEntitySpecialSpine3072_Mask:setRenderOrder(order, force)
+	self._order = order
+
+	if self._spine and order then
+		self._spine:setRenderOrder(order + 1, force)
 	end
 end
 
-function var_0_0._changeLookDir(arg_16_0)
-	if arg_16_0._spine then
-		arg_16_0._spine:_changeLookDir()
+function FightEntitySpecialSpine3072_Mask:changeLookDir(dir)
+	if self._spine then
+		self._spine:changeLookDir(dir)
 	end
 end
 
-function var_0_0.setActive(arg_17_0, arg_17_1)
-	arg_17_0._isActive = arg_17_1
-
-	if arg_17_0._spine then
-		arg_17_0._spine:setActive(arg_17_1)
+function FightEntitySpecialSpine3072_Mask:_changeLookDir()
+	if self._spine then
+		self._spine:_changeLookDir()
 	end
 end
 
-function var_0_0.setAnimation(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	if arg_18_0._spine then
-		arg_18_0._spine:setAnimation(arg_18_1, arg_18_2, arg_18_3)
+function FightEntitySpecialSpine3072_Mask:setActive(isActive)
+	self._isActive = isActive
+
+	if self._spine then
+		self._spine:setActive(isActive)
 	end
 end
 
-function var_0_0._onSkillPlayStart(arg_19_0, arg_19_1, arg_19_2)
-	if arg_19_1.id == arg_19_0._entity.id then
-		arg_19_0._playingSkill = true
-
-		arg_19_0:_refreshMaskVisible()
+function FightEntitySpecialSpine3072_Mask:setAnimation(animState, loop, mixTime)
+	if self._spine then
+		self._spine:setAnimation(animState, loop, mixTime)
 	end
 end
 
-function var_0_0._onSkillPlayFinish(arg_20_0, arg_20_1, arg_20_2)
-	if arg_20_1.id == arg_20_0._entity.id then
-		arg_20_0._playingSkill = false
+function FightEntitySpecialSpine3072_Mask:_onSkillPlayStart(entity, curSkillId)
+	if entity.id == self._entity.id then
+		self._playingSkill = true
 
-		arg_20_0:_refreshMaskVisible()
+		self:_refreshMaskVisible()
 	end
 end
 
-function var_0_0._onTimelinePlayEntityAni(arg_21_0, arg_21_1, arg_21_2)
-	if arg_21_1 == arg_21_0._entity.id then
-		arg_21_0._playingAni = arg_21_2
+function FightEntitySpecialSpine3072_Mask:_onSkillPlayFinish(entity, curSkillId)
+	if entity.id == self._entity.id then
+		self._playingSkill = false
 
-		arg_21_0:_refreshMaskVisible()
+		self:_refreshMaskVisible()
 	end
 end
 
-function var_0_0._onFightReconnectLastWork(arg_22_0)
-	arg_22_0:_onBuffUpdate(arg_22_0._entity.id, nil, var_0_1)
+function FightEntitySpecialSpine3072_Mask:_onTimelinePlayEntityAni(entityId, state)
+	if entityId == self._entity.id then
+		self._playingAni = state
+
+		self:_refreshMaskVisible()
+	end
 end
 
-function var_0_0.releaseSelf(arg_23_0)
-	if arg_23_0._spineRoot then
-		gohelper.destroy(arg_23_0._spineRoot)
+function FightEntitySpecialSpine3072_Mask:_onFightReconnectLastWork()
+	self:_onBuffUpdate(self._entity.id, nil, maskBuffId)
+end
+
+function FightEntitySpecialSpine3072_Mask:releaseSelf()
+	if self._spineRoot then
+		gohelper.destroy(self._spineRoot)
 	end
 
-	arg_23_0._entity = nil
+	self._entity = nil
 
-	arg_23_0:__onDispose()
+	self:__onDispose()
 end
 
-return var_0_0
+return FightEntitySpecialSpine3072_Mask

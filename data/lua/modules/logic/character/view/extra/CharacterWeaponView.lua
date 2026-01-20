@@ -1,350 +1,363 @@
-﻿module("modules.logic.character.view.extra.CharacterWeaponView", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/extra/CharacterWeaponView.lua
 
-local var_0_0 = class("CharacterWeaponView", BaseView)
-local var_0_1 = 0
-local var_0_2 = 1
+module("modules.logic.character.view.extra.CharacterWeaponView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._scrollmain = gohelper.findChildScrollRect(arg_1_0.viewGO, "main/#scroll_main")
-	arg_1_0._gomain = gohelper.findChild(arg_1_0.viewGO, "main/#go_main")
-	arg_1_0._imagemainweapon = gohelper.findChildImage(arg_1_0.viewGO, "main/#go_main/equiped/#image_weapon")
-	arg_1_0._txtmainname = gohelper.findChildText(arg_1_0.viewGO, "main/#go_main/equiped/#txt_name")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "main/#go_main/#btn_click")
-	arg_1_0._scrollsecond = gohelper.findChildScrollRect(arg_1_0.viewGO, "second/#scroll_second")
-	arg_1_0._gosecond = gohelper.findChild(arg_1_0.viewGO, "second/#go_second")
-	arg_1_0._imagesecondweapon = gohelper.findChildImage(arg_1_0.viewGO, "second/#go_second/equiped/#image_weapon")
-	arg_1_0._txtsecondname = gohelper.findChildText(arg_1_0.viewGO, "second/#go_second/equiped/#txt_name")
-	arg_1_0._btnsecondclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "second/#go_second/#btn_click")
-	arg_1_0._goeffect = gohelper.findChild(arg_1_0.viewGO, "#go_effect")
-	arg_1_0._goeffectTitle = gohelper.findChild(arg_1_0.viewGO, "#go_effect/#go_effectTitle")
-	arg_1_0._btneffect = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_effect/#btn_effect")
-	arg_1_0._scrolleffect = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_effect/#scroll_effect")
-	arg_1_0._txtfirsteffect = gohelper.findChildText(arg_1_0.viewGO, "#go_effect/#scroll_effect/Viewport/Content/#txt_firsteffect")
-	arg_1_0._txtsecondeffect = gohelper.findChildText(arg_1_0.viewGO, "#go_effect/#scroll_effect/Viewport/Content/#txt_secondeffect")
-	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "#go_effect/#scroll_effect/Viewport/Content/#go_empty")
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
+local CharacterWeaponView = class("CharacterWeaponView", BaseView)
+local defalutPrefValue = 0
+local savePrefValue = 1
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CharacterWeaponView:onInitView()
+	self._scrollmain = gohelper.findChildScrollRect(self.viewGO, "main/#scroll_main")
+	self._gomain = gohelper.findChild(self.viewGO, "main/#go_main")
+	self._imagemainweapon = gohelper.findChildImage(self.viewGO, "main/#go_main/equiped/#image_weapon")
+	self._txtmainname = gohelper.findChildText(self.viewGO, "main/#go_main/equiped/#txt_name")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "main/#go_main/#btn_click")
+	self._scrollsecond = gohelper.findChildScrollRect(self.viewGO, "second/#scroll_second")
+	self._gosecond = gohelper.findChild(self.viewGO, "second/#go_second")
+	self._imagesecondweapon = gohelper.findChildImage(self.viewGO, "second/#go_second/equiped/#image_weapon")
+	self._txtsecondname = gohelper.findChildText(self.viewGO, "second/#go_second/equiped/#txt_name")
+	self._btnsecondclick = gohelper.findChildButtonWithAudio(self.viewGO, "second/#go_second/#btn_click")
+	self._goeffect = gohelper.findChild(self.viewGO, "#go_effect")
+	self._goeffectTitle = gohelper.findChild(self.viewGO, "#go_effect/#go_effectTitle")
+	self._btneffect = gohelper.findChildButtonWithAudio(self.viewGO, "#go_effect/#btn_effect")
+	self._scrolleffect = gohelper.findChildScrollRect(self.viewGO, "#go_effect/#scroll_effect")
+	self._txtfirsteffect = gohelper.findChildText(self.viewGO, "#go_effect/#scroll_effect/Viewport/Content/#txt_firsteffect")
+	self._txtsecondeffect = gohelper.findChildText(self.viewGO, "#go_effect/#scroll_effect/Viewport/Content/#txt_secondeffect")
+	self._goempty = gohelper.findChild(self.viewGO, "#go_effect/#scroll_effect/Viewport/Content/#go_empty")
+	self._gotopleft = gohelper.findChild(self.viewGO, "#go_topleft")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btneffect:AddClickListener(arg_2_0._btneffectOnClick, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, arg_2_0._onSuccessHeroRankUp, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.onChoiceHero3123WeaponReply, arg_2_0._onChoiceHero3123WeaponReply, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.onClickWeapon, arg_2_0._onClickWeapon, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0._onCloseView, arg_2_0)
+function CharacterWeaponView:addEvents()
+	self._btneffect:AddClickListener(self._btneffectOnClick, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, self._onSuccessHeroRankUp, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.onChoiceHero3123WeaponReply, self._onChoiceHero3123WeaponReply, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.onClickWeapon, self._onClickWeapon, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btneffect:RemoveClickListener()
-	arg_3_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, arg_3_0._onSuccessHeroRankUp, arg_3_0)
-	arg_3_0:removeEventCb(CharacterController.instance, CharacterEvent.onChoiceHero3123WeaponReply, arg_3_0._onChoiceHero3123WeaponReply, arg_3_0)
-	arg_3_0:removeEventCb(CharacterController.instance, CharacterEvent.onClickWeapon, arg_3_0._onClickWeapon, arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0._onCloseView, arg_3_0)
+function CharacterWeaponView:removeEvents()
+	self._btneffect:RemoveClickListener()
+	self:removeEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, self._onSuccessHeroRankUp, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.onChoiceHero3123WeaponReply, self._onChoiceHero3123WeaponReply, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.onClickWeapon, self._onClickWeapon, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
 end
 
-function var_0_0._btneffectOnClick(arg_4_0)
-	CharacterController.instance:openCharacterWeaponEffectView(arg_4_0.heroMo)
+function CharacterWeaponView:_btneffectOnClick()
+	CharacterController.instance:openCharacterWeaponEffectView(self.heroMo)
 end
 
-function var_0_0._onSuccessHeroRankUp(arg_5_0)
-	arg_5_0:_refreshWeaponStatus()
-	arg_5_0:_refreshWeaponUnlock()
+function CharacterWeaponView:_onSuccessHeroRankUp()
+	self:_refreshWeaponStatus()
+	self:_refreshWeaponUnlock()
 end
 
-function var_0_0._onChoiceHero3123WeaponReply(arg_6_0)
-	arg_6_0:_refreshWeaponStatus()
+function CharacterWeaponView:_onChoiceHero3123WeaponReply()
+	self:_refreshWeaponStatus()
 
 	if not ViewMgr.instance:isOpen(ViewName.CharacterWeaponEffectView) then
-		arg_6_0:_playSwitchAnim()
+		self:_playSwitchAnim()
 	end
 end
 
-function var_0_0._onCloseView(arg_7_0, arg_7_1)
-	if arg_7_1 == ViewName.CharacterWeaponEffectView then
-		arg_7_0:_playSwitchAnim()
+function CharacterWeaponView:_onCloseView(viewName)
+	if viewName == ViewName.CharacterWeaponEffectView then
+		self:_playSwitchAnim()
 	end
 end
 
-function var_0_0._onClickWeapon(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = arg_8_0.weaponMo:getWeaponMoByTypeId(arg_8_1, arg_8_2)
+function CharacterWeaponView:_onClickWeapon(type, id)
+	local mo = self.weaponMo:getWeaponMoByTypeId(type, id)
 
-	if var_8_0 then
-		if var_8_0:isLock() then
-			if arg_8_1 == CharacterExtraEnum.WeaponType.Second and not arg_8_0.weaponMo:isUnlockWeapon(arg_8_1) then
-				local var_8_1 = arg_8_0.weaponMo:getUnlockWeaponRank(arg_8_1)
+	if mo then
+		if mo:isLock() then
+			if type == CharacterExtraEnum.WeaponType.Second and not self.weaponMo:isUnlockWeapon(type) then
+				local rank = self.weaponMo:getUnlockWeaponRank(type)
 
-				GameFacade.showToast(ToastEnum.CharacterSecondWeaponRankUnlock, GameUtil.getNum2Chinese(var_8_1 - 1))
+				GameFacade.showToast(ToastEnum.CharacterSecondWeaponRankUnlock, GameUtil.getNum2Chinese(rank - 1))
 			end
 
 			return
-		elseif var_8_0:isNormal() then
-			arg_8_0.weaponMo:setChoiceHero3123WeaponRequest(arg_8_1, arg_8_2)
+		elseif mo:isNormal() then
+			self.weaponMo:setChoiceHero3123WeaponRequest(type, id)
 		end
 	end
 
-	arg_8_0:_refreshWeaponStatus()
+	self:_refreshWeaponStatus()
 end
 
-function var_0_0._editableInitView(arg_9_0)
-	local var_9_0 = gohelper.findChild(arg_9_0.viewGO, "main/#scroll_main/Viewport/Content")
-	local var_9_1 = gohelper.findChild(arg_9_0.viewGO, "second/#scroll_second/Viewport/Content")
-	local var_9_2 = gohelper.findChild(arg_9_0.viewGO, "main/#scroll_main/Viewport/Content/go_item")
-	local var_9_3 = gohelper.findChild(arg_9_0.viewGO, "second/#scroll_second/Viewport/Content/go_item")
-	local var_9_4 = gohelper.findChild(arg_9_0.viewGO, "main/#go_main/equiped")
-	local var_9_5 = gohelper.findChild(arg_9_0.viewGO, "second/#go_second/equiped")
-	local var_9_6 = gohelper.findChild(arg_9_0.viewGO, "main/#go_main/unequip")
-	local var_9_7 = gohelper.findChild(arg_9_0.viewGO, "second/#go_second/unequip")
+function CharacterWeaponView:_editableInitView()
+	local contentmain = gohelper.findChild(self.viewGO, "main/#scroll_main/Viewport/Content")
+	local contentsecond = gohelper.findChild(self.viewGO, "second/#scroll_second/Viewport/Content")
+	local itemmain = gohelper.findChild(self.viewGO, "main/#scroll_main/Viewport/Content/go_item")
+	local itemsecond = gohelper.findChild(self.viewGO, "second/#scroll_second/Viewport/Content/go_item")
+	local equipRootmain = gohelper.findChild(self.viewGO, "main/#go_main/equiped")
+	local equipRootsecond = gohelper.findChild(self.viewGO, "second/#go_second/equiped")
+	local unequipRootmain = gohelper.findChild(self.viewGO, "main/#go_main/unequip")
+	local unequipRootsecond = gohelper.findChild(self.viewGO, "second/#go_second/unequip")
 
-	arg_9_0._curShowWeapon = {}
+	self._curShowWeapon = {}
 
-	local var_9_8 = arg_9_0._gomain:GetComponent(typeof(UnityEngine.Animator))
-	local var_9_9 = arg_9_0._gosecond:GetComponent(typeof(UnityEngine.Animator))
-	local var_9_10 = gohelper.findChild(arg_9_0._txtfirsteffect.gameObject, "#switch")
-	local var_9_11 = gohelper.findChild(arg_9_0._txtsecondeffect.gameObject, "#switch")
-	local var_9_12 = gohelper.findChild(arg_9_0.viewGO, "second/#go_second/locked")
+	local mainWeaponAnim = self._gomain:GetComponent(typeof(UnityEngine.Animator))
+	local secondWeaponAnim = self._gosecond:GetComponent(typeof(UnityEngine.Animator))
+	local mainEffect = gohelper.findChild(self._txtfirsteffect.gameObject, "#switch")
+	local secondEffect = gohelper.findChild(self._txtsecondeffect.gameObject, "#switch")
+	local locksecond = gohelper.findChild(self.viewGO, "second/#go_second/locked")
 
-	arg_9_0._weaponItems = arg_9_0:getUserDataTb_()
-	arg_9_0._weaponTypeComp = {
+	self._weaponItems = self:getUserDataTb_()
+	self._weaponTypeComp = {
 		[CharacterExtraEnum.WeaponType.First] = {
-			content = var_9_0,
-			prefabItem = var_9_2,
-			equipRoot = var_9_4,
-			unequipRoot = var_9_6,
-			anim = var_9_8,
-			effect = var_9_10,
-			nameTxt = arg_9_0._txtmainname,
-			iconImage = arg_9_0._imagemainweapon
+			content = contentmain,
+			prefabItem = itemmain,
+			equipRoot = equipRootmain,
+			unequipRoot = unequipRootmain,
+			anim = mainWeaponAnim,
+			effect = mainEffect,
+			nameTxt = self._txtmainname,
+			iconImage = self._imagemainweapon
 		},
 		[CharacterExtraEnum.WeaponType.Second] = {
-			content = var_9_1,
-			prefabItem = var_9_3,
-			equipRoot = var_9_5,
-			unequipRoot = var_9_7,
-			lock = var_9_12,
-			anim = var_9_9,
-			effect = var_9_11,
-			nameTxt = arg_9_0._txtsecondname,
-			iconImage = arg_9_0._imagesecondweapon
+			content = contentsecond,
+			prefabItem = itemsecond,
+			equipRoot = equipRootsecond,
+			unequipRoot = unequipRootsecond,
+			lock = locksecond,
+			anim = secondWeaponAnim,
+			effect = secondEffect,
+			nameTxt = self._txtsecondname,
+			iconImage = self._imagesecondweapon
 		}
 	}
 
-	gohelper.setActive(var_9_2, false)
-	gohelper.setActive(var_9_3, false)
+	gohelper.setActive(itemmain, false)
+	gohelper.setActive(itemsecond, false)
 
-	arg_9_0._txtsecondweaponLock = gohelper.findChildText(arg_9_0.viewGO, "second/#go_second/locked/txt_locked")
-	arg_9_0._effectAnim = arg_9_0._goeffect:GetComponent(typeof(UnityEngine.Animator))
+	self._txtsecondweaponLock = gohelper.findChildText(self.viewGO, "second/#go_second/locked/txt_locked")
+	self._effectAnim = self._goeffect:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function var_0_0.onUpdateParam(arg_10_0)
-	arg_10_0:_refreshWeaponStatus()
+function CharacterWeaponView:onUpdateParam()
+	self:_refreshWeaponStatus()
 end
 
-function var_0_0.onOpen(arg_11_0)
-	arg_11_0.heroMo = arg_11_0.viewParam
-	arg_11_0.weaponMo = arg_11_0.heroMo.extraMo:getWeaponMo()
+function CharacterWeaponView:onOpen()
+	self.heroMo = self.viewParam
 
-	arg_11_0:_refreshWeapon()
-	arg_11_0:_refreshEquip()
-	arg_11_0:_refreshWeaponUnlock()
+	local extraMo = self.heroMo.extraMo
 
-	local var_11_0 = arg_11_0.weaponMo:getUnlockWeaponRank(CharacterExtraEnum.WeaponType.Second)
-	local var_11_1 = luaLang("characterweaponview_unlock_rank")
-	local var_11_2 = GameUtil.getNum2Chinese(var_11_0 - 1)
+	self.weaponMo = extraMo:getWeaponMo()
 
-	arg_11_0._txtsecondweaponLock.text = GameUtil.getSubPlaceholderLuaLangOneParam(var_11_1, var_11_2)
+	self:_refreshWeapon()
+	self:_refreshEquip()
+	self:_refreshWeaponUnlock()
+
+	local unlockSecondWeaponRank = self.weaponMo:getUnlockWeaponRank(CharacterExtraEnum.WeaponType.Second)
+	local lang = luaLang("characterweaponview_unlock_rank")
+	local rankStr = GameUtil.getNum2Chinese(unlockSecondWeaponRank - 1)
+
+	self._txtsecondweaponLock.text = GameUtil.getSubPlaceholderLuaLangOneParam(lang, rankStr)
 end
 
-function var_0_0._refreshWeaponUnlock(arg_12_0)
-	for iter_12_0, iter_12_1 in ipairs(arg_12_0._weaponTypeComp) do
-		local var_12_0 = arg_12_0.weaponMo:isUnlockWeapon(iter_12_0)
+function CharacterWeaponView:_refreshWeaponUnlock()
+	for weaponType, comp in ipairs(self._weaponTypeComp) do
+		local isUnlock = self.weaponMo:isUnlockWeapon(weaponType)
 
-		if var_12_0 then
-			local var_12_1 = arg_12_0:_getPlayUnlockWeaponAnimKey(iter_12_0)
+		if isUnlock then
+			local key = self:_getPlayUnlockWeaponAnimKey(weaponType)
 
-			if GameUtil.playerPrefsGetNumberByUserId(var_12_1, var_0_1) == var_0_1 then
-				iter_12_1.anim:Play(CharacterExtraEnum.WeaponAnimName.Unlock, 0, 0)
-				GameUtil.playerPrefsSetNumberByUserId(var_12_1, var_0_2)
+			if GameUtil.playerPrefsGetNumberByUserId(key, defalutPrefValue) == defalutPrefValue then
+				comp.anim:Play(CharacterExtraEnum.WeaponAnimName.Unlock, 0, 0)
+				GameUtil.playerPrefsSetNumberByUserId(key, savePrefValue)
 				AudioMgr.instance:trigger(AudioEnum2_9.Character.ui_role_aijiao_jiesuo)
 			end
 		else
-			gohelper.setActive(iter_12_1.equipRoot.gameObject, false)
-			gohelper.setActive(iter_12_1.unequipRoot.gameObject, false)
+			gohelper.setActive(comp.equipRoot.gameObject, false)
+			gohelper.setActive(comp.unequipRoot.gameObject, false)
 		end
 
-		if iter_12_1.lock then
-			gohelper.setActive(iter_12_1.lock.gameObject, not var_12_0)
-		end
-	end
-end
-
-function var_0_0._getPlayUnlockWeaponAnimKey(arg_13_0, arg_13_1)
-	return (string.format("CharacterWeaponView_PlayWeaponAnimKey_%s_%s", arg_13_0.heroMo.heroId, arg_13_1))
-end
-
-function var_0_0._refreshWeaponStatus(arg_14_0)
-	for iter_14_0, iter_14_1 in pairs(arg_14_0._weaponItems) do
-		for iter_14_2, iter_14_3 in pairs(iter_14_1) do
-			iter_14_3:refreshStatus()
+		if comp.lock then
+			gohelper.setActive(comp.lock.gameObject, not isUnlock)
 		end
 	end
 end
 
-function var_0_0._refreshEquip(arg_15_0)
-	local var_15_0 = arg_15_0.heroMo.exSkillLevel
+function CharacterWeaponView:_getPlayUnlockWeaponAnimKey(weaponType)
+	local key = string.format("CharacterWeaponView_PlayWeaponAnimKey_%s_%s", self.heroMo.heroId, weaponType)
 
-	for iter_15_0, iter_15_1 in pairs(CharacterExtraEnum.WeaponType) do
-		local var_15_1 = arg_15_0.weaponMo:getCurEquipWeapon(iter_15_1)
-		local var_15_2 = arg_15_0._weaponTypeComp[iter_15_1]
+	return key
+end
 
-		if var_15_1 and var_15_1 ~= 0 then
-			local var_15_3 = arg_15_0.weaponMo:getWeaponMoByTypeId(iter_15_1, var_15_1)
+function CharacterWeaponView:_refreshWeaponStatus()
+	for _, items in pairs(self._weaponItems) do
+		for _, item in pairs(items) do
+			item:refreshStatus()
+		end
+	end
+end
 
-			if var_15_3 then
-				var_15_2.nameTxt.text = var_15_3.co.name
+function CharacterWeaponView:_refreshEquip()
+	local exSkillLevel = self.heroMo.exSkillLevel
 
-				local var_15_4 = var_15_3.co.secondicon
+	for _, type in pairs(CharacterExtraEnum.WeaponType) do
+		local equipId = self.weaponMo:getCurEquipWeapon(type)
+		local typeComp = self._weaponTypeComp[type]
+		local isEquip = equipId and equipId ~= 0
 
-				if not string.nilorempty(var_15_4) then
-					UISpriteSetMgr.instance:setUiCharacterSprite(var_15_2.iconImage, var_15_4)
+		if isEquip then
+			local mo = self.weaponMo:getWeaponMoByTypeId(type, equipId)
+
+			if mo then
+				typeComp.nameTxt.text = mo.co.name
+
+				local iconPath = mo.co.secondicon
+
+				if not string.nilorempty(iconPath) then
+					UISpriteSetMgr.instance:setUiCharacterSprite(typeComp.iconImage, iconPath)
 				end
 			end
 
-			gohelper.setActive(var_15_2.equipRoot, true)
-			gohelper.setActive(var_15_2.unequipRoot, false)
+			gohelper.setActive(typeComp.equipRoot, true)
+			gohelper.setActive(typeComp.unequipRoot, false)
 		else
-			gohelper.setActive(var_15_2.equipRoot, false)
+			gohelper.setActive(typeComp.equipRoot, false)
 
-			local var_15_5 = arg_15_0.weaponMo:isUnlockWeapon(iter_15_1)
+			local isUnlock = self.weaponMo:isUnlockWeapon(type)
 
-			gohelper.setActive(var_15_2.unequipRoot, var_15_5)
+			gohelper.setActive(typeComp.unequipRoot, isUnlock)
 		end
 
-		local var_15_6 = arg_15_0._curShowWeapon[iter_15_1] or {}
+		local curShowWeapon = self._curShowWeapon[type]
 
-		var_15_6.id = var_15_1
-		arg_15_0._curShowWeapon[iter_15_1] = var_15_6
+		curShowWeapon = curShowWeapon or {}
+		curShowWeapon.id = equipId
+		self._curShowWeapon[type] = curShowWeapon
 	end
 
-	local var_15_7 = arg_15_0._curShowWeapon[CharacterExtraEnum.WeaponType.First]
-	local var_15_8 = var_15_7 and var_15_7.id or 0
+	local curShowFirstWeapon = self._curShowWeapon[CharacterExtraEnum.WeaponType.First]
+	local mainId = curShowFirstWeapon and curShowFirstWeapon.id or 0
 
-	if var_15_8 == 0 then
-		gohelper.setActive(arg_15_0._txtfirsteffect.gameObject, false)
-		gohelper.setActive(arg_15_0._txtsecondeffect.gameObject, false)
-		gohelper.setActive(arg_15_0._goempty.gameObject, true)
+	if mainId == 0 then
+		gohelper.setActive(self._txtfirsteffect.gameObject, false)
+		gohelper.setActive(self._txtsecondeffect.gameObject, false)
+		gohelper.setActive(self._goempty.gameObject, true)
 
 		return
 	end
 
-	local var_15_9 = arg_15_0._curShowWeapon[CharacterExtraEnum.WeaponType.Second]
-	local var_15_10 = var_15_9 and var_15_9.id or 0
-	local var_15_11 = CharacterExtraConfig.instance:getEzioWeaponGroupCos(var_15_8, var_15_10, var_15_0)
+	local curShowSecondWeapon = self._curShowWeapon[CharacterExtraEnum.WeaponType.Second]
+	local secondId = curShowSecondWeapon and curShowSecondWeapon.id or 0
+	local co = CharacterExtraConfig.instance:getEzioWeaponGroupCos(mainId, secondId, exSkillLevel)
 
-	var_15_7.desc = var_15_11.firstDesc
-	arg_15_0._firstSkillDesc = arg_15_0._firstSkillDesc or MonoHelper.addNoUpdateLuaComOnceToGo(arg_15_0._txtfirsteffect.gameObject, SkillDescComp)
+	curShowFirstWeapon.desc = co.firstDesc
+	self._firstSkillDesc = self._firstSkillDesc or MonoHelper.addNoUpdateLuaComOnceToGo(self._txtfirsteffect.gameObject, SkillDescComp)
 
-	arg_15_0._firstSkillDesc:updateInfo(arg_15_0._txtfirsteffect, var_15_11.firstDesc, arg_15_0.heroMo.heroId)
-	arg_15_0._firstSkillDesc:setTipParam(nil, Vector2(250, -100))
-	arg_15_0._firstSkillDesc:setBuffTipPivot(CommonBuffTipEnum.Pivot.Down)
-	gohelper.setActive(arg_15_0._txtfirsteffect.gameObject, true)
-	gohelper.setActive(arg_15_0._goempty.gameObject, false)
+	self._firstSkillDesc:updateInfo(self._txtfirsteffect, co.firstDesc, self.heroMo.heroId)
+	self._firstSkillDesc:setTipParam(nil, Vector2(250, -100))
+	self._firstSkillDesc:setBuffTipPivot(CommonBuffTipEnum.Pivot.Down)
+	gohelper.setActive(self._txtfirsteffect.gameObject, true)
+	gohelper.setActive(self._goempty.gameObject, false)
 
-	if var_15_10 == 0 then
-		gohelper.setActive(arg_15_0._txtsecondeffect.gameObject, false)
+	if secondId == 0 then
+		gohelper.setActive(self._txtsecondeffect.gameObject, false)
 
 		return
 	end
 
-	var_15_9.desc = var_15_11.secondDesc
-	arg_15_0._secondSkillDesc = arg_15_0._secondSkillDesc or MonoHelper.addNoUpdateLuaComOnceToGo(arg_15_0._txtsecondeffect.gameObject, SkillDescComp)
+	curShowSecondWeapon.desc = co.secondDesc
+	self._secondSkillDesc = self._secondSkillDesc or MonoHelper.addNoUpdateLuaComOnceToGo(self._txtsecondeffect.gameObject, SkillDescComp)
 
-	arg_15_0._secondSkillDesc:updateInfo(arg_15_0._txtsecondeffect, var_15_11.secondDesc, arg_15_0.heroMo.heroId)
-	arg_15_0._secondSkillDesc:setTipParam(nil, Vector2(250, -100))
-	arg_15_0._secondSkillDesc:setBuffTipPivot(CommonBuffTipEnum.Pivot.Down)
-	gohelper.setActive(arg_15_0._txtsecondeffect.gameObject, true)
+	self._secondSkillDesc:updateInfo(self._txtsecondeffect, co.secondDesc, self.heroMo.heroId)
+	self._secondSkillDesc:setTipParam(nil, Vector2(250, -100))
+	self._secondSkillDesc:setBuffTipPivot(CommonBuffTipEnum.Pivot.Down)
+	gohelper.setActive(self._txtsecondeffect.gameObject, true)
 end
 
-function var_0_0._checkDescHeight(arg_16_0, arg_16_1)
-	local var_16_0 = SLFramework.UGUI.GuiHelper.GetPreferredHeight(arg_16_0._txtfirsteffect, arg_16_1.firstDesc) + SLFramework.UGUI.GuiHelper.GetPreferredHeight(arg_16_0._txtsecondeffect, arg_16_1.secondDesc) + 20
-	local var_16_1 = 246
-	local var_16_2 = 168
-	local var_16_3 = GameUtil.clamp(var_16_0, var_16_2, var_16_1)
+function CharacterWeaponView:_checkDescHeight(co)
+	local firstHeight = SLFramework.UGUI.GuiHelper.GetPreferredHeight(self._txtfirsteffect, co.firstDesc)
+	local secondHeight = SLFramework.UGUI.GuiHelper.GetPreferredHeight(self._txtsecondeffect, co.secondDesc)
+	local totalHeight = firstHeight + secondHeight + 20
+	local scrollMaxHeight = 246
+	local scrollMinHeight = 168
+	local height = GameUtil.clamp(totalHeight, scrollMinHeight, scrollMaxHeight)
 
-	recthelper.setHeight(arg_16_0._scrolleffect.transform, var_16_3)
+	recthelper.setHeight(self._scrolleffect.transform, height)
 end
 
-function var_0_0._refreshWeapon(arg_17_0)
-	for iter_17_0, iter_17_1 in pairs(CharacterExtraEnum.WeaponType) do
-		local var_17_0 = arg_17_0.weaponMo:getWeaponMosByType(iter_17_1)
+function CharacterWeaponView:_refreshWeapon()
+	for _, type in pairs(CharacterExtraEnum.WeaponType) do
+		local moList = self.weaponMo:getWeaponMosByType(type)
 
-		for iter_17_2, iter_17_3 in ipairs(var_17_0) do
-			arg_17_0:_getWeaponItem(iter_17_1, iter_17_2):onUpdateMO(iter_17_3, arg_17_0.heroMo)
+		for i, mo in ipairs(moList) do
+			local item = self:_getWeaponItem(type, i)
+
+			item:onUpdateMO(mo, self.heroMo)
 		end
 	end
 end
 
-function var_0_0._getWeaponItem(arg_18_0, arg_18_1, arg_18_2)
-	if not arg_18_0._weaponItems[arg_18_1] then
-		arg_18_0._weaponItems[arg_18_1] = arg_18_0:getUserDataTb_()
+function CharacterWeaponView:_getWeaponItem(type, index)
+	if not self._weaponItems[type] then
+		self._weaponItems[type] = self:getUserDataTb_()
 	end
 
-	local var_18_0 = arg_18_0._weaponItems[arg_18_1][arg_18_2]
+	local item = self._weaponItems[type][index]
 
-	if not var_18_0 then
-		local var_18_1 = arg_18_0._weaponTypeComp[arg_18_1]
-		local var_18_2 = var_18_1.content
-		local var_18_3 = var_18_1.prefabItem
-		local var_18_4 = gohelper.clone(var_18_3, var_18_2)
+	if not item then
+		local weaponTypeComp = self._weaponTypeComp[type]
+		local parent = weaponTypeComp.content
+		local prefabItem = weaponTypeComp.prefabItem
+		local go = gohelper.clone(prefabItem, parent)
 
-		var_18_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_18_4, CharacterWeaponShowItem)
-		arg_18_0._weaponItems[arg_18_1][arg_18_2] = var_18_0
+		item = MonoHelper.addNoUpdateLuaComOnceToGo(go, CharacterWeaponShowItem)
+		self._weaponItems[type][index] = item
 	end
 
-	return var_18_0
+	return item
 end
 
-function var_0_0._playSwitchAnim(arg_19_0)
-	TaskDispatcher.cancelTask(arg_19_0._refreshEquip, arg_19_0)
+function CharacterWeaponView:_playSwitchAnim()
+	TaskDispatcher.cancelTask(self._refreshEquip, self)
 
-	local var_19_0 = false
-	local var_19_1 = arg_19_0.weaponMo:getWeaponGroupCo()
+	local isPlaySwitchAnim = false
+	local groupCo = self.weaponMo:getWeaponGroupCo()
 
-	for iter_19_0, iter_19_1 in ipairs(arg_19_0._weaponTypeComp) do
-		local var_19_2 = arg_19_0.weaponMo:getCurEquipWeapon(iter_19_0)
-		local var_19_3 = arg_19_0._curShowWeapon[iter_19_0]
+	for weaponType, comp in ipairs(self._weaponTypeComp) do
+		local weaponId = self.weaponMo:getCurEquipWeapon(weaponType)
+		local curShowWeapon = self._curShowWeapon[weaponType]
 
-		if var_19_3.id ~= var_19_2 then
-			iter_19_1.anim:Play(CharacterExtraEnum.WeaponAnimName.Switch, 0, 0)
+		if curShowWeapon.id ~= weaponId then
+			comp.anim:Play(CharacterExtraEnum.WeaponAnimName.Switch, 0, 0)
 			AudioMgr.instance:trigger(AudioEnum2_9.Character.ui_role_aijiao_wuqi)
 		end
 
-		local var_19_4 = iter_19_0 == CharacterExtraEnum.WeaponType.First and var_19_1.firstDesc or var_19_1.secondDesc
+		local desc = weaponType == CharacterExtraEnum.WeaponType.First and groupCo.firstDesc or groupCo.secondDesc
 
-		if var_19_3.desc ~= var_19_4 then
-			gohelper.setActive(iter_19_1.effect, true)
+		if curShowWeapon.desc ~= desc then
+			gohelper.setActive(comp.effect, true)
 
-			var_19_0 = true
+			isPlaySwitchAnim = true
 		else
-			gohelper.setActive(iter_19_1.effect, false)
+			gohelper.setActive(comp.effect, false)
 		end
 	end
 
-	if var_19_0 then
-		arg_19_0._effectAnim:Play(CharacterExtraEnum.WeaponAnimName.Switch, 0, 0)
+	if isPlaySwitchAnim then
+		self._effectAnim:Play(CharacterExtraEnum.WeaponAnimName.Switch, 0, 0)
 	end
 
-	TaskDispatcher.runDelay(arg_19_0._refreshEquip, arg_19_0, 0.16)
+	TaskDispatcher.runDelay(self._refreshEquip, self, 0.16)
 end
 
-function var_0_0.onClose(arg_20_0)
-	TaskDispatcher.cancelTask(arg_20_0._refreshEquip, arg_20_0)
+function CharacterWeaponView:onClose()
+	TaskDispatcher.cancelTask(self._refreshEquip, self)
 end
 
-function var_0_0.onDestroyView(arg_21_0)
+function CharacterWeaponView:onDestroyView()
 	return
 end
 
-return var_0_0
+return CharacterWeaponView

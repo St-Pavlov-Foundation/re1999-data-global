@@ -1,152 +1,157 @@
-﻿module("modules.logic.rouge.map.view.map.RougeMapEliteFightView", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/view/map/RougeMapEliteFightView.lua
 
-local var_0_0 = class("RougeMapEliteFightView", BaseView)
+module("modules.logic.rouge.map.view.map.RougeMapEliteFightView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goboss = gohelper.findChild(arg_1_0.viewGO, "#go_boss")
-	arg_1_0._txtbossdesc = gohelper.findChildText(arg_1_0.viewGO, "#go_boss/scroll_bossdesc/viewport/#txt_bossdec")
-	arg_1_0._imageBossHead = gohelper.findChildImage(arg_1_0.viewGO, "#go_boss/#image_bosshead")
-	arg_1_0._imagecareer = gohelper.findChildImage(arg_1_0.viewGO, "#go_boss/career")
+local RougeMapEliteFightView = class("RougeMapEliteFightView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeMapEliteFightView:onInitView()
+	self._goboss = gohelper.findChild(self.viewGO, "#go_boss")
+	self._txtbossdesc = gohelper.findChildText(self.viewGO, "#go_boss/scroll_bossdesc/viewport/#txt_bossdec")
+	self._imageBossHead = gohelper.findChildImage(self.viewGO, "#go_boss/#image_bosshead")
+	self._imagecareer = gohelper.findChildImage(self.viewGO, "#go_boss/career")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RougeMapEliteFightView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RougeMapEliteFightView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0:addEventCb(RougeMapController.instance, RougeMapEvent.onChangeMapInfo, arg_4_0.refreshBoss, arg_4_0)
-	arg_4_0:addEventCb(RougeMapController.instance, RougeMapEvent.onUpdateMapInfo, arg_4_0.refreshBoss, arg_4_0)
+function RougeMapEliteFightView:_editableInitView()
+	self:addEventCb(RougeMapController.instance, RougeMapEvent.onChangeMapInfo, self.refreshBoss, self)
+	self:addEventCb(RougeMapController.instance, RougeMapEvent.onUpdateMapInfo, self.refreshBoss, self)
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0:refreshBoss()
+function RougeMapEliteFightView:onOpen()
+	self:refreshBoss()
 end
 
-function var_0_0.refreshBoss(arg_6_0)
+function RougeMapEliteFightView:refreshBoss()
 	if not RougeMapModel.instance:isNormalLayer() then
-		gohelper.setActive(arg_6_0._goboss, false)
+		gohelper.setActive(self._goboss, false)
 
-		arg_6_0.eventId = nil
+		self.eventId = nil
 
 		return
 	end
 
 	if not RougeMapEffectHelper.checkHadEffect(RougeMapEnum.EffectType.UnlockShowPassFightMask, RougeMapEnum.EventType.EliteFight) then
-		gohelper.setActive(arg_6_0._goboss, false)
+		gohelper.setActive(self._goboss, false)
 
-		arg_6_0.eventId = nil
-
-		return
-	end
-
-	local var_6_0 = arg_6_0:getShowBossEventId()
-
-	if not var_6_0 then
-		gohelper.setActive(arg_6_0._goboss, false)
-
-		arg_6_0.eventId = nil
+		self.eventId = nil
 
 		return
 	end
 
-	if not RougeOutsideModel.instance:passedEventId(var_6_0) then
-		gohelper.setActive(arg_6_0._goboss, false)
+	local eventId = self:getShowBossEventId()
 
-		arg_6_0.eventId = nil
+	if not eventId then
+		gohelper.setActive(self._goboss, false)
+
+		self.eventId = nil
 
 		return
 	end
 
-	if var_6_0 == arg_6_0.eventId then
+	if not RougeOutsideModel.instance:passedEventId(eventId) then
+		gohelper.setActive(self._goboss, false)
+
+		self.eventId = nil
+
 		return
 	end
 
-	gohelper.setActive(arg_6_0._goboss, true)
+	if eventId == self.eventId then
+		return
+	end
 
-	arg_6_0.eventId = var_6_0
+	gohelper.setActive(self._goboss, true)
 
-	arg_6_0:refreshUI()
+	self.eventId = eventId
+
+	self:refreshUI()
 end
 
-function var_0_0.checkUnlockTalent(arg_7_0)
-	local var_7_0 = RougeMapConfig.instance:getShowFightMonsterMaskTalentId(RougeMapEnum.EventType.EliteFight)
+function RougeMapEliteFightView:checkUnlockTalent()
+	local talentId = RougeMapConfig.instance:getShowFightMonsterMaskTalentId(RougeMapEnum.EventType.EliteFight)
 
-	return var_7_0 and RougeTalentModel.instance:checkNodeLight(var_7_0)
+	return talentId and RougeTalentModel.instance:checkNodeLight(talentId)
 end
 
-function var_0_0.getShowBossEventId(arg_8_0)
-	local var_8_0 = RougeMapModel.instance:getNodeDict()
+function RougeMapEliteFightView:getShowBossEventId()
+	local nodeMoDict = RougeMapModel.instance:getNodeDict()
 
-	for iter_8_0, iter_8_1 in pairs(var_8_0) do
-		local var_8_1 = iter_8_1:getEventCo()
+	for _, nodeMo in pairs(nodeMoDict) do
+		local eventCo = nodeMo:getEventCo()
 
-		if var_8_1 and var_8_1.type == RougeMapEnum.EventType.EliteFight then
-			return var_8_1.id
+		if eventCo and eventCo.type == RougeMapEnum.EventType.EliteFight then
+			return eventCo.id
 		end
 	end
 end
 
-function var_0_0.refreshUI(arg_9_0)
-	local var_9_0 = RougeMapConfig.instance:getFightEvent(arg_9_0.eventId)
+function RougeMapEliteFightView:refreshUI()
+	local fightEventCo = RougeMapConfig.instance:getFightEvent(self.eventId)
 
-	if not var_9_0 then
+	if not fightEventCo then
 		return
 	end
 
-	local var_9_1 = arg_9_0:getBossCareer(var_9_0)
+	local career = self:getBossCareer(fightEventCo)
 
-	UISpriteSetMgr.instance:setRougeSprite(arg_9_0._imagecareer, "rouge_map_career_" .. var_9_1)
+	UISpriteSetMgr.instance:setRougeSprite(self._imagecareer, "rouge_map_career_" .. career)
 
-	arg_9_0._txtbossdesc.text = var_9_0.bossDesc
+	self._txtbossdesc.text = fightEventCo.bossDesc
 
-	local var_9_2 = var_9_0.bossMask
+	local bossMask = fightEventCo.bossMask
 
-	if string.nilorempty(var_9_2) then
-		logError(string.format("战斗事件表id ： %s， 没有配置Boss剪影", arg_9_0.eventId))
+	if string.nilorempty(bossMask) then
+		logError(string.format("战斗事件表id ： %s， 没有配置Boss剪影", self.eventId))
 
 		return
 	end
 
-	UISpriteSetMgr.instance:setRouge3Sprite(arg_9_0._imageBossHead, var_9_2)
+	UISpriteSetMgr.instance:setRouge3Sprite(self._imageBossHead, bossMask)
 end
 
-function var_0_0.getBossCareer(arg_10_0, arg_10_1)
-	local var_10_0 = DungeonConfig.instance:getEpisodeCO(arg_10_1.episodeId)
-	local var_10_1 = lua_battle.configDict[var_10_0.battleId]
+function RougeMapEliteFightView:getBossCareer(fightEventCo)
+	local episodeCo = DungeonConfig.instance:getEpisodeCO(fightEventCo.episodeId)
+	local battleCo = lua_battle.configDict[episodeCo.battleId]
 
-	if not var_10_1 then
-		logError("not found battle co, battle id : " .. tostring(var_10_0.battleId))
+	if not battleCo then
+		logError("not found battle co, battle id : " .. tostring(episodeCo.battleId))
 
 		return 1
 	end
 
-	local var_10_2 = string.splitToNumber(var_10_1.monsterGroupIds, "#")
+	local monsterGroupIdList = string.splitToNumber(battleCo.monsterGroupIds, "#")
 
-	for iter_10_0, iter_10_1 in ipairs(var_10_2) do
-		local var_10_3 = lua_monster_group.configDict[iter_10_1].bossId
+	for _, groupId in ipairs(monsterGroupIdList) do
+		local groupCo = lua_monster_group.configDict[groupId]
+		local bossId = groupCo.bossId
 
-		if not string.nilorempty(var_10_3) then
-			local var_10_4 = string.splitToNumber(var_10_3, "#")[1]
+		if not string.nilorempty(bossId) then
+			bossId = string.splitToNumber(bossId, "#")[1]
 
-			return lua_monster.configDict[var_10_4].career
+			local monsterCo = lua_monster.configDict[bossId]
+
+			return monsterCo.career
 		end
 	end
 
-	logError("not found boss career, battle id .. " .. var_10_1.id)
+	logError("not found boss career, battle id .. " .. battleCo.id)
 
 	return 1
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function RougeMapEliteFightView:onDestroyView()
 	return
 end
 
-return var_0_0
+return RougeMapEliteFightView

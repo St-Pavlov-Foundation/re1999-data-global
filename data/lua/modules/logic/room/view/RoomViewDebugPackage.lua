@@ -1,301 +1,302 @@
-﻿module("modules.logic.room.view.RoomViewDebugPackage", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomViewDebugPackage.lua
 
-local var_0_0 = class("RoomViewDebugPackage", BaseView)
+module("modules.logic.room.view.RoomViewDebugPackage", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local RoomViewDebugPackage = class("RoomViewDebugPackage", BaseView)
+
+function RoomViewDebugPackage:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RoomViewDebugPackage:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RoomViewDebugPackage:removeEvents()
 	return
 end
 
-function var_0_0._btnpackageidOnClick(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0._packageIdItemList[arg_4_1]
+function RoomViewDebugPackage:_btnpackageidOnClick(index)
+	local packageIdItem = self._packageIdItemList[index]
 
-	RoomDebugPackageListModel.instance:setFilterPackageId(var_4_0.packageId)
+	RoomDebugPackageListModel.instance:setFilterPackageId(packageIdItem.packageId)
 	RoomDebugPackageListModel.instance:setDebugPackageList()
 	RoomDebugPackageListModel.instance:clearSelect()
-	arg_4_0:_refreshPackageId()
+	self:_refreshPackageId()
 	RoomDebugController.instance:dispatchEvent(RoomEvent.DebugPackageFilterChanged)
 
-	arg_4_0._scrolldebugpackage.horizontalNormalizedPosition = 0
+	self._scrolldebugpackage.horizontalNormalizedPosition = 0
 end
 
-function var_0_0._btnmainresOnClick(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0._mainResItemList[arg_5_1]
+function RoomViewDebugPackage:_btnmainresOnClick(index)
+	local mainResItem = self._mainResItemList[index]
 
-	RoomDebugPackageListModel.instance:setFilterMainRes(var_5_0.resourceId >= 0 and var_5_0.resourceId or nil)
+	RoomDebugPackageListModel.instance:setFilterMainRes(mainResItem.resourceId >= 0 and mainResItem.resourceId or nil)
 	RoomDebugPackageListModel.instance:setDebugPackageList()
 	RoomDebugPackageListModel.instance:clearSelect()
-	arg_5_0:_refreshMainRes()
+	self:_refreshMainRes()
 	RoomDebugController.instance:dispatchEvent(RoomEvent.DebugPackageFilterChanged)
 
-	arg_5_0._scrolldebugpackage.horizontalNormalizedPosition = 0
+	self._scrolldebugpackage.horizontalNormalizedPosition = 0
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._godebugpackage = gohelper.findChild(arg_6_0.viewGO, "go_normalroot/go_debugpackage")
-	arg_6_0._btnclose = gohelper.findChildButtonWithAudio(arg_6_0.viewGO, "go_normalroot/go_debugpackage/btn_close")
-	arg_6_0._gopackageiditem = gohelper.findChild(arg_6_0.viewGO, "go_normalroot/go_debugpackage/filterpackageid/viewport/content/go_packageiditem")
-	arg_6_0._gomainresitem = gohelper.findChild(arg_6_0.viewGO, "go_normalroot/go_debugpackage/filtermainres/go_mainresitem")
-	arg_6_0._scrolldebugpackage = gohelper.findChildScrollRect(arg_6_0.viewGO, "go_normalroot/go_debugpackage/scroll_debugpackage")
-	arg_6_0._btnpackageidmode = gohelper.findChildButtonWithAudio(arg_6_0.viewGO, "go_normalroot/go_debugpackage/btn_packageidmode")
-	arg_6_0._goselectpackageidmode = gohelper.findChild(arg_6_0.viewGO, "go_normalroot/go_debugpackage/btn_packageidmode/go_selectpackageidmode")
-	arg_6_0._btnpackageordermode = gohelper.findChildButtonWithAudio(arg_6_0.viewGO, "go_normalroot/go_debugpackage/btn_packageordermode")
-	arg_6_0._goselectpackageordermode = gohelper.findChild(arg_6_0.viewGO, "go_normalroot/go_debugpackage/btn_packageordermode/go_selectpackageordermode")
-	arg_6_0._btnthemfilter = gohelper.findChildButtonWithAudio(arg_6_0.viewGO, "go_normalroot/go_debugpackage/btn_themfilter")
-	arg_6_0._goselectthemfilter = gohelper.findChild(arg_6_0.viewGO, "go_normalroot/go_debugpackage/btn_themfilter/go_selectthemfilter")
+function RoomViewDebugPackage:_editableInitView()
+	self._godebugpackage = gohelper.findChild(self.viewGO, "go_normalroot/go_debugpackage")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "go_normalroot/go_debugpackage/btn_close")
+	self._gopackageiditem = gohelper.findChild(self.viewGO, "go_normalroot/go_debugpackage/filterpackageid/viewport/content/go_packageiditem")
+	self._gomainresitem = gohelper.findChild(self.viewGO, "go_normalroot/go_debugpackage/filtermainres/go_mainresitem")
+	self._scrolldebugpackage = gohelper.findChildScrollRect(self.viewGO, "go_normalroot/go_debugpackage/scroll_debugpackage")
+	self._btnpackageidmode = gohelper.findChildButtonWithAudio(self.viewGO, "go_normalroot/go_debugpackage/btn_packageidmode")
+	self._goselectpackageidmode = gohelper.findChild(self.viewGO, "go_normalroot/go_debugpackage/btn_packageidmode/go_selectpackageidmode")
+	self._btnpackageordermode = gohelper.findChildButtonWithAudio(self.viewGO, "go_normalroot/go_debugpackage/btn_packageordermode")
+	self._goselectpackageordermode = gohelper.findChild(self.viewGO, "go_normalroot/go_debugpackage/btn_packageordermode/go_selectpackageordermode")
+	self._btnthemfilter = gohelper.findChildButtonWithAudio(self.viewGO, "go_normalroot/go_debugpackage/btn_themfilter")
+	self._goselectthemfilter = gohelper.findChild(self.viewGO, "go_normalroot/go_debugpackage/btn_themfilter/go_selectthemfilter")
 
-	arg_6_0._btnclose:AddClickListener(arg_6_0._btncloseOnClick, arg_6_0)
-	arg_6_0._btnpackageidmode:AddClickListener(arg_6_0._btnpackageidmodeOnClick, arg_6_0)
-	arg_6_0._btnpackageordermode:AddClickListener(arg_6_0._btnpackageordermodeOnClick, arg_6_0)
-	arg_6_0._btnthemfilter:AddClickListener(arg_6_0._btnthemfilterOnClick, arg_6_0)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnpackageidmode:AddClickListener(self._btnpackageidmodeOnClick, self)
+	self._btnpackageordermode:AddClickListener(self._btnpackageordermodeOnClick, self)
+	self._btnthemfilter:AddClickListener(self._btnthemfilterOnClick, self)
 
-	arg_6_0._isShowDebugPackage = false
+	self._isShowDebugPackage = false
 
-	gohelper.setActive(arg_6_0._godebugpackage, false)
+	gohelper.setActive(self._godebugpackage, false)
 
-	arg_6_0._packageIdItemList = {}
-	arg_6_0._mainResItemList = {}
+	self._packageIdItemList = {}
+	self._mainResItemList = {}
 
-	gohelper.setActive(arg_6_0._gopackageiditem, false)
-	gohelper.setActive(arg_6_0._gomainresitem, false)
-	gohelper.setActive(arg_6_0._goselectthemfilter, false)
-	arg_6_0:_initPackageId()
-	arg_6_0:_initMainRes()
+	gohelper.setActive(self._gopackageiditem, false)
+	gohelper.setActive(self._gomainresitem, false)
+	gohelper.setActive(self._goselectthemfilter, false)
+	self:_initPackageId()
+	self:_initMainRes()
 
-	arg_6_0._scene = GameSceneMgr.instance:getCurScene()
+	self._scene = GameSceneMgr.instance:getCurScene()
 end
 
-function var_0_0._btncloseOnClick(arg_7_0)
+function RoomViewDebugPackage:_btncloseOnClick()
 	RoomDebugController.instance:setDebugPackageListShow(false)
 end
 
-function var_0_0._btnpackageidmodeOnClick(arg_8_0)
+function RoomViewDebugPackage:_btnpackageidmodeOnClick()
 	RoomDebugController.instance:setEditPackageOrder(false)
-	arg_8_0:_refreshPackageMode()
+	self:_refreshPackageMode()
 end
 
-function var_0_0._btnpackageordermodeOnClick(arg_9_0)
+function RoomViewDebugPackage:_btnpackageordermodeOnClick()
 	RoomDebugController.instance:setEditPackageOrder(true)
-	arg_9_0:_refreshPackageMode()
+	self:_refreshPackageMode()
 end
 
-function var_0_0._btnthemfilterOnClick(arg_10_0)
+function RoomViewDebugPackage:_btnthemfilterOnClick()
 	ViewMgr.instance:openView(ViewName.RoomDebugThemeFilterView)
 end
 
-function var_0_0._refreshPackageMode(arg_11_0)
-	local var_11_0 = RoomDebugController.instance:isEditPackageOrder()
+function RoomViewDebugPackage:_refreshPackageMode()
+	local isEditPackageOrder = RoomDebugController.instance:isEditPackageOrder()
 
-	gohelper.setActive(arg_11_0._goselectpackageidmode, not var_11_0)
-	gohelper.setActive(arg_11_0._goselectpackageordermode, var_11_0)
+	gohelper.setActive(self._goselectpackageidmode, not isEditPackageOrder)
+	gohelper.setActive(self._goselectpackageordermode, isEditPackageOrder)
 end
 
-function var_0_0._refreshUI(arg_12_0)
-	arg_12_0:_refreshPackageId()
-	arg_12_0:_refreshMainRes()
-	arg_12_0:_refreshPackageMode()
+function RoomViewDebugPackage:_refreshUI()
+	self:_refreshPackageId()
+	self:_refreshMainRes()
+	self:_refreshPackageMode()
 end
 
-function var_0_0._initPackageId(arg_13_0)
-	local var_13_0 = lua_block_package.configList
+function RoomViewDebugPackage:_initPackageId()
+	local list = lua_block_package.configList
 
-	table.sort(var_13_0, function(arg_14_0, arg_14_1)
-		return arg_14_0.id < arg_14_1.id
+	table.sort(list, function(x, y)
+		return x.id < y.id
 	end)
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
-		local var_13_1 = arg_13_0._packageIdItemList[iter_13_0]
+	for i, packageConfig in ipairs(list) do
+		local packageIdItem = self._packageIdItemList[i]
 
-		if not var_13_1 then
-			var_13_1 = arg_13_0:getUserDataTb_()
-			var_13_1.index = iter_13_0
-			var_13_1.go = gohelper.cloneInPlace(arg_13_0._gopackageiditem, "item" .. iter_13_0)
-			var_13_1.gobeselect = gohelper.findChild(var_13_1.go, "go_beselect")
-			var_13_1.gounselect = gohelper.findChild(var_13_1.go, "go_unselect")
-			var_13_1.txtbeselectname = gohelper.findChildText(var_13_1.go, "go_beselect/txt_name")
-			var_13_1.txtunselectname = gohelper.findChildText(var_13_1.go, "go_unselect/txt_name")
-			var_13_1.btnclick = gohelper.findChildButtonWithAudio(var_13_1.go, "btn_click")
+		if not packageIdItem then
+			packageIdItem = self:getUserDataTb_()
+			packageIdItem.index = i
+			packageIdItem.go = gohelper.cloneInPlace(self._gopackageiditem, "item" .. i)
+			packageIdItem.gobeselect = gohelper.findChild(packageIdItem.go, "go_beselect")
+			packageIdItem.gounselect = gohelper.findChild(packageIdItem.go, "go_unselect")
+			packageIdItem.txtbeselectname = gohelper.findChildText(packageIdItem.go, "go_beselect/txt_name")
+			packageIdItem.txtunselectname = gohelper.findChildText(packageIdItem.go, "go_unselect/txt_name")
+			packageIdItem.btnclick = gohelper.findChildButtonWithAudio(packageIdItem.go, "btn_click")
 
-			var_13_1.btnclick:AddClickListener(arg_13_0._btnpackageidOnClick, arg_13_0, var_13_1.index)
-			table.insert(arg_13_0._packageIdItemList, var_13_1)
+			packageIdItem.btnclick:AddClickListener(self._btnpackageidOnClick, self, packageIdItem.index)
+			table.insert(self._packageIdItemList, packageIdItem)
 		end
 
-		var_13_1.packageId = iter_13_1.id
-		var_13_1.txtbeselectname.text = iter_13_1.name
-		var_13_1.txtunselectname.text = iter_13_1.name
+		packageIdItem.packageId = packageConfig.id
+		packageIdItem.txtbeselectname.text = packageConfig.name
+		packageIdItem.txtunselectname.text = packageConfig.name
 
-		gohelper.setActive(var_13_1.go, true)
+		gohelper.setActive(packageIdItem.go, true)
 	end
 
-	for iter_13_2 = #var_13_0 + 1, #arg_13_0._packageIdItemList do
-		local var_13_2 = arg_13_0._packageIdItemList[iter_13_2]
+	for i = #list + 1, #self._packageIdItemList do
+		local packageIdItem = self._packageIdItemList[i]
 
-		gohelper.setActive(var_13_2.go, false)
+		gohelper.setActive(packageIdItem.go, false)
 	end
 
-	arg_13_0:_refreshPackageId()
+	self:_refreshPackageId()
 end
 
-function var_0_0._refreshPackageId(arg_15_0)
-	for iter_15_0, iter_15_1 in ipairs(arg_15_0._packageIdItemList) do
-		gohelper.setActive(iter_15_1.gobeselect, RoomDebugPackageListModel.instance:isFilterPackageId(iter_15_1.packageId))
-		gohelper.setActive(iter_15_1.gounselect, not RoomDebugPackageListModel.instance:isFilterPackageId(iter_15_1.packageId))
+function RoomViewDebugPackage:_refreshPackageId()
+	for i, packageIdItem in ipairs(self._packageIdItemList) do
+		gohelper.setActive(packageIdItem.gobeselect, RoomDebugPackageListModel.instance:isFilterPackageId(packageIdItem.packageId))
+		gohelper.setActive(packageIdItem.gounselect, not RoomDebugPackageListModel.instance:isFilterPackageId(packageIdItem.packageId))
 	end
 end
 
-function var_0_0._initMainRes(arg_16_0)
-	local var_16_0 = {}
+function RoomViewDebugPackage:_initMainRes()
+	local list = {}
 
-	table.insert(var_16_0, -1)
+	table.insert(list, -1)
 
-	for iter_16_0, iter_16_1 in pairs(RoomResourceEnum.ResourceId) do
-		if iter_16_1 >= 0 then
-			table.insert(var_16_0, iter_16_1)
+	for _, resourceId in pairs(RoomResourceEnum.ResourceId) do
+		if resourceId >= 0 then
+			table.insert(list, resourceId)
 		end
 	end
 
-	table.sort(var_16_0, function(arg_17_0, arg_17_1)
-		return arg_17_0 < arg_17_1
+	table.sort(list, function(x, y)
+		return x < y
 	end)
 
-	for iter_16_2, iter_16_3 in ipairs(var_16_0) do
-		local var_16_1 = arg_16_0._mainResItemList[iter_16_2]
+	for i, resourceId in ipairs(list) do
+		local mainResItem = self._mainResItemList[i]
 
-		if not var_16_1 then
-			var_16_1 = arg_16_0:getUserDataTb_()
-			var_16_1.index = iter_16_2
-			var_16_1.go = gohelper.cloneInPlace(arg_16_0._gomainresitem, "item" .. iter_16_2)
-			var_16_1.gobeselect = gohelper.findChild(var_16_1.go, "go_beselect")
-			var_16_1.gounselect = gohelper.findChild(var_16_1.go, "go_unselect")
-			var_16_1.txtbeselectname = gohelper.findChildText(var_16_1.go, "go_beselect/txt_name")
-			var_16_1.txtunselectname = gohelper.findChildText(var_16_1.go, "go_unselect/txt_name")
-			var_16_1.txtcount = gohelper.findChildText(var_16_1.go, "txt_count")
-			var_16_1.btnclick = gohelper.findChildButtonWithAudio(var_16_1.go, "btn_click")
+		if not mainResItem then
+			mainResItem = self:getUserDataTb_()
+			mainResItem.index = i
+			mainResItem.go = gohelper.cloneInPlace(self._gomainresitem, "item" .. i)
+			mainResItem.gobeselect = gohelper.findChild(mainResItem.go, "go_beselect")
+			mainResItem.gounselect = gohelper.findChild(mainResItem.go, "go_unselect")
+			mainResItem.txtbeselectname = gohelper.findChildText(mainResItem.go, "go_beselect/txt_name")
+			mainResItem.txtunselectname = gohelper.findChildText(mainResItem.go, "go_unselect/txt_name")
+			mainResItem.txtcount = gohelper.findChildText(mainResItem.go, "txt_count")
+			mainResItem.btnclick = gohelper.findChildButtonWithAudio(mainResItem.go, "btn_click")
 
-			var_16_1.btnclick:AddClickListener(arg_16_0._btnmainresOnClick, arg_16_0, var_16_1.index)
-			table.insert(arg_16_0._mainResItemList, var_16_1)
+			mainResItem.btnclick:AddClickListener(self._btnmainresOnClick, self, mainResItem.index)
+			table.insert(self._mainResItemList, mainResItem)
 		end
 
-		var_16_1.resourceId = iter_16_3
+		mainResItem.resourceId = resourceId
 
-		local var_16_2 = "空"
+		local name = "空"
 
-		if iter_16_3 > 0 then
-			local var_16_3 = RoomConfig.instance:getResourceConfig(iter_16_3)
+		if resourceId > 0 then
+			local resourceConfig = RoomConfig.instance:getResourceConfig(resourceId)
 
-			if var_16_3 then
-				var_16_2 = var_16_3.name
+			if resourceConfig then
+				name = resourceConfig.name
 			else
-				logError(string.format("[X小屋地块包表.xlsx] [export_地块资源] 找不到资源id:[%s]", iter_16_3))
+				logError(string.format("[X小屋地块包表.xlsx] [export_地块资源] 找不到资源id:[%s]", resourceId))
 
-				var_16_2 = "未知:" .. iter_16_3
+				name = "未知:" .. resourceId
 			end
-		elseif iter_16_3 < 0 then
-			var_16_2 = "未分类"
+		elseif resourceId < 0 then
+			name = "未分类"
 		end
 
-		var_16_1.txtbeselectname.text = var_16_2
-		var_16_1.txtunselectname.text = var_16_2
+		mainResItem.txtbeselectname.text = name
+		mainResItem.txtunselectname.text = name
 
-		gohelper.setActive(var_16_1.go, true)
+		gohelper.setActive(mainResItem.go, true)
 	end
 
-	for iter_16_4 = #var_16_0 + 1, #arg_16_0._mainResItemList do
-		local var_16_4 = arg_16_0._mainResItemList[iter_16_4]
+	for i = #list + 1, #self._mainResItemList do
+		local mainResItem = self._mainResItemList[i]
 
-		gohelper.setActive(var_16_4.go, false)
+		gohelper.setActive(mainResItem.go, false)
 	end
 
-	arg_16_0:_refreshMainRes()
+	self:_refreshMainRes()
 end
 
-function var_0_0._refreshMainRes(arg_18_0)
-	local var_18_0 = RoomDebugPackageListModel.instance:getFilterMainRes()
+function RoomViewDebugPackage:_refreshMainRes()
+	local filterMainRes = RoomDebugPackageListModel.instance:getFilterMainRes()
 
-	for iter_18_0, iter_18_1 in ipairs(arg_18_0._mainResItemList) do
-		local var_18_1 = var_18_0 == iter_18_1.resourceId or iter_18_1.resourceId < 0 and not var_18_0
+	for i, mainResItem in ipairs(self._mainResItemList) do
+		local select = filterMainRes == mainResItem.resourceId or mainResItem.resourceId < 0 and not filterMainRes
 
-		gohelper.setActive(iter_18_1.gobeselect, var_18_1)
-		gohelper.setActive(iter_18_1.gounselect, not var_18_1)
+		gohelper.setActive(mainResItem.gobeselect, select)
+		gohelper.setActive(mainResItem.gounselect, not select)
 
-		local var_18_2 = RoomDebugPackageListModel.instance:getCountByMainRes(iter_18_1.resourceId)
+		local count = RoomDebugPackageListModel.instance:getCountByMainRes(mainResItem.resourceId)
 
-		iter_18_1.txtcount.text = var_18_2
+		mainResItem.txtcount.text = count
 	end
 end
 
-function var_0_0._themeFilterChanged(arg_19_0)
-	local var_19_0 = RoomDebugThemeFilterListModel.instance
-	local var_19_1 = MaterialEnum.MaterialType.BlockPackage
+function RoomViewDebugPackage:_themeFilterChanged()
+	local tRoomDebugThemeFilterListModel = RoomDebugThemeFilterListModel.instance
+	local materialType = MaterialEnum.MaterialType.BlockPackage
 
-	for iter_19_0 = 1, #arg_19_0._packageIdItemList do
-		local var_19_2 = arg_19_0._packageIdItemList[iter_19_0]
+	for i = 1, #self._packageIdItemList do
+		local packageIdItem = self._packageIdItemList[i]
 
-		gohelper.setActive(var_19_2.go, var_19_0:checkSelectByItem(var_19_2.packageId, var_19_1))
+		gohelper.setActive(packageIdItem.go, tRoomDebugThemeFilterListModel:checkSelectByItem(packageIdItem.packageId, materialType))
 	end
 
-	gohelper.setActive(arg_19_0._goselectthemfilter, var_19_0:getIsAll() or var_19_0:getSelectCount() > 0)
+	gohelper.setActive(self._goselectthemfilter, tRoomDebugThemeFilterListModel:getIsAll() or tRoomDebugThemeFilterListModel:getSelectCount() > 0)
 end
 
-function var_0_0._debugPackageListViewShowChanged(arg_20_0, arg_20_1)
-	local var_20_0
+function RoomViewDebugPackage:_debugPackageListViewShowChanged(isShowDebugPackage)
+	local changed = self._isShowDebugPackage ~= isShowDebugPackage
 
-	var_20_0 = arg_20_0._isShowDebugPackage ~= arg_20_1
-	arg_20_0._isShowDebugPackage = arg_20_1
+	self._isShowDebugPackage = isShowDebugPackage
 
 	RoomDebugPackageListModel.instance:clearSelect()
-	gohelper.setActive(arg_20_0._godebugpackage, arg_20_1)
+	gohelper.setActive(self._godebugpackage, isShowDebugPackage)
 
-	if arg_20_1 then
+	if isShowDebugPackage then
 		RoomDebugPackageListModel.instance:setDebugPackageList()
 
-		arg_20_0._scrolldebugpackage.horizontalNormalizedPosition = 0
+		self._scrolldebugpackage.horizontalNormalizedPosition = 0
 	end
 end
 
-function var_0_0._addBtnAudio(arg_21_0)
-	gohelper.addUIClickAudio(arg_21_0._btnclose.gameObject, AudioEnum.UI.UI_vertical_first_tabs_click)
+function RoomViewDebugPackage:_addBtnAudio()
+	gohelper.addUIClickAudio(self._btnclose.gameObject, AudioEnum.UI.UI_vertical_first_tabs_click)
 end
 
-function var_0_0.onOpen(arg_22_0)
-	arg_22_0:_refreshUI()
-	arg_22_0:_addBtnAudio()
-	arg_22_0:addEventCb(RoomDebugController.instance, RoomEvent.DebugPackageListShowChanged, arg_22_0._debugPackageListViewShowChanged, arg_22_0)
-	arg_22_0:addEventCb(RoomDebugController.instance, RoomEvent.DebugSetPackage, arg_22_0._refreshMainRes, arg_22_0)
-	arg_22_0:addEventCb(RoomDebugController.instance, RoomEvent.DebugPlaceListShowChanged, arg_22_0._refreshMainRes, arg_22_0)
-	arg_22_0:addEventCb(RoomDebugController.instance, RoomEvent.DebugPackageOrderChanged, arg_22_0._refreshMainRes, arg_22_0)
-	arg_22_0:addEventCb(RoomDebugController.instance, RoomEvent.DebugPackageFilterChanged, arg_22_0._refreshMainRes, arg_22_0)
-	arg_22_0:addEventCb(RoomDebugController.instance, RoomEvent.UIRoomThemeFilterChanged, arg_22_0._themeFilterChanged, arg_22_0)
+function RoomViewDebugPackage:onOpen()
+	self:_refreshUI()
+	self:_addBtnAudio()
+	self:addEventCb(RoomDebugController.instance, RoomEvent.DebugPackageListShowChanged, self._debugPackageListViewShowChanged, self)
+	self:addEventCb(RoomDebugController.instance, RoomEvent.DebugSetPackage, self._refreshMainRes, self)
+	self:addEventCb(RoomDebugController.instance, RoomEvent.DebugPlaceListShowChanged, self._refreshMainRes, self)
+	self:addEventCb(RoomDebugController.instance, RoomEvent.DebugPackageOrderChanged, self._refreshMainRes, self)
+	self:addEventCb(RoomDebugController.instance, RoomEvent.DebugPackageFilterChanged, self._refreshMainRes, self)
+	self:addEventCb(RoomDebugController.instance, RoomEvent.UIRoomThemeFilterChanged, self._themeFilterChanged, self)
 	RoomDebugThemeFilterListModel.instance:init()
 end
 
-function var_0_0.onClose(arg_23_0)
+function RoomViewDebugPackage:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_24_0)
-	for iter_24_0, iter_24_1 in ipairs(arg_24_0._packageIdItemList) do
-		iter_24_1.btnclick:RemoveClickListener()
+function RoomViewDebugPackage:onDestroyView()
+	for i, packageIdItem in ipairs(self._packageIdItemList) do
+		packageIdItem.btnclick:RemoveClickListener()
 	end
 
-	for iter_24_2, iter_24_3 in ipairs(arg_24_0._mainResItemList) do
-		iter_24_3.btnclick:RemoveClickListener()
+	for i, mainResItem in ipairs(self._mainResItemList) do
+		mainResItem.btnclick:RemoveClickListener()
 	end
 
-	arg_24_0._btnclose:RemoveClickListener()
-	arg_24_0._scrolldebugpackage:RemoveOnValueChanged()
-	arg_24_0._btnpackageidmode:RemoveClickListener()
-	arg_24_0._btnpackageordermode:RemoveClickListener()
-	arg_24_0._btnthemfilter:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
+	self._scrolldebugpackage:RemoveOnValueChanged()
+	self._btnpackageidmode:RemoveClickListener()
+	self._btnpackageordermode:RemoveClickListener()
+	self._btnthemfilter:RemoveClickListener()
 end
 
-return var_0_0
+return RoomViewDebugPackage

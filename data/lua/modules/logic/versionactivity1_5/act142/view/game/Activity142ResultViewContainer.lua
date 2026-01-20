@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity1_5.act142.view.game.Activity142ResultViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/act142/view/game/Activity142ResultViewContainer.lua
 
-local var_0_0 = class("Activity142ResultViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_5.act142.view.game.Activity142ResultViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local Activity142ResultViewContainer = class("Activity142ResultViewContainer", BaseViewContainer)
+
+function Activity142ResultViewContainer:buildViews()
 	return {
 		Activity142ResultView.New()
 	}
 end
 
-return var_0_0
+return Activity142ResultViewContainer

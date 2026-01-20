@@ -1,61 +1,63 @@
-﻿module("modules.logic.versionactivity1_9.heroinvitation.view.HeroInvitationDungeonMapHoleView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/heroinvitation/view/HeroInvitationDungeonMapHoleView.lua
 
-local var_0_0 = class("HeroInvitationDungeonMapHoleView", DungeonMapHoleView)
+module("modules.logic.versionactivity1_9.heroinvitation.view.HeroInvitationDungeonMapHoleView", package.seeall)
 
-function var_0_0.refreshHoles(arg_1_0)
-	if not arg_1_0.loadSceneDone or gohelper.isNil(arg_1_0.mat) then
+local HeroInvitationDungeonMapHoleView = class("HeroInvitationDungeonMapHoleView", DungeonMapHoleView)
+
+function HeroInvitationDungeonMapHoleView:refreshHoles()
+	if not self.loadSceneDone or gohelper.isNil(self.mat) then
 		return
 	end
 
-	local var_1_0 = {}
+	local list = {}
 
-	for iter_1_0, iter_1_1 in pairs(arg_1_0.holdCoList) do
-		local var_1_1 = iter_1_1[4]
-		local var_1_2 = iter_1_1[1] + arg_1_0.sceneWorldPosX - arg_1_0.defaultSceneWorldPosX
-		local var_1_3 = iter_1_1[2] + arg_1_0.sceneWorldPosY - arg_1_0.defaultSceneWorldPosY
-		local var_1_4 = math.abs(iter_1_1[3])
-		local var_1_5 = math.sqrt((arg_1_0.mainCameraPosX - var_1_2)^2)
-		local var_1_6 = math.sqrt((arg_1_0.mainCameraPosY - var_1_3)^2)
+	for _, co in pairs(self.holdCoList) do
+		local id = co[4]
+		local x = co[1] + self.sceneWorldPosX - self.defaultSceneWorldPosX
+		local y = co[2] + self.sceneWorldPosY - self.defaultSceneWorldPosY
+		local size = math.abs(co[3])
+		local xDistance = math.sqrt((self.mainCameraPosX - x)^2)
+		local yDistance = math.sqrt((self.mainCameraPosY - y)^2)
 
-		if var_1_5 <= arg_1_0._mapHalfWidth + var_1_4 and var_1_6 <= arg_1_0._mapHalfHeight + var_1_4 then
-			local var_1_7 = {
+		if xDistance <= self._mapHalfWidth + size and yDistance <= self._mapHalfHeight + size then
+			local data = {
 				finish = 0,
-				distance = -(var_1_5 * var_1_5 + var_1_6 * var_1_6),
+				distance = -(xDistance * xDistance + yDistance * yDistance),
 				pos = {
-					var_1_2,
-					var_1_3,
-					iter_1_1[3]
+					x,
+					y,
+					co[3]
 				},
-				id = var_1_1 or 0
+				id = id or 0
 			}
 
-			if var_1_1 and var_1_1 > 0 then
-				var_1_7.finish = DungeonMapModel.instance:elementIsFinished(var_1_1) and 0 or 1
+			if id and id > 0 then
+				data.finish = DungeonMapModel.instance:elementIsFinished(id) and 0 or 1
 			end
 
-			table.insert(var_1_0, var_1_7)
+			table.insert(list, data)
 		end
 	end
 
-	if #var_1_0 > 1 then
-		table.sort(var_1_0, SortUtil.tableKeyUpper({
+	if #list > 1 then
+		table.sort(list, SortUtil.tableKeyUpper({
 			"finish",
 			"distance",
 			"id"
 		}))
 	end
 
-	for iter_1_2 = 1, 5 do
-		local var_1_8 = var_1_0[iter_1_2]
+	for i = 1, 5 do
+		local data = list[i]
 
-		if var_1_8 then
-			arg_1_0.tempVector4:Set(var_1_8.pos[1], var_1_8.pos[2], var_1_8.pos[3])
-			arg_1_0.mat:SetVector(arg_1_0.shaderParamList[iter_1_2], arg_1_0.tempVector4)
+		if data then
+			self.tempVector4:Set(data.pos[1], data.pos[2], data.pos[3])
+			self.mat:SetVector(self.shaderParamList[i], self.tempVector4)
 		else
-			arg_1_0.tempVector4:Set(0, 0, 0)
-			arg_1_0.mat:SetVector(arg_1_0.shaderParamList[iter_1_2], arg_1_0.tempVector4)
+			self.tempVector4:Set(0, 0, 0)
+			self.mat:SetVector(self.shaderParamList[i], self.tempVector4)
 		end
 	end
 end
 
-return var_0_0
+return HeroInvitationDungeonMapHoleView

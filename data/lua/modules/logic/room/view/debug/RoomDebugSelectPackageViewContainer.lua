@@ -1,17 +1,19 @@
-﻿module("modules.logic.room.view.debug.RoomDebugSelectPackageViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/debug/RoomDebugSelectPackageViewContainer.lua
 
-local var_0_0 = class("RoomDebugSelectPackageViewContainer", BaseViewContainer)
+module("modules.logic.room.view.debug.RoomDebugSelectPackageViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoomDebugSelectPackageViewContainer = class("RoomDebugSelectPackageViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RoomDebugSelectPackageView.New())
+function RoomDebugSelectPackageViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RoomDebugSelectPackageView.New())
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	arg_2_0:closeThis()
+function RoomDebugSelectPackageViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return RoomDebugSelectPackageViewContainer

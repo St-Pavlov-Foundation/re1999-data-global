@@ -1,68 +1,70 @@
-﻿module("modules.logic.character.view.extra.CharacterWeaponEffectView", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/extra/CharacterWeaponEffectView.lua
 
-local var_0_0 = class("CharacterWeaponEffectView", BaseView)
+module("modules.logic.character.view.extra.CharacterWeaponEffectView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_close")
-	arg_1_0._goscroll = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/#scroll")
-	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "root/#go_item")
+local CharacterWeaponEffectView = class("CharacterWeaponEffectView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CharacterWeaponEffectView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_close")
+	self._goscroll = gohelper.findChildScrollRect(self.viewGO, "root/#scroll")
+	self._goitem = gohelper.findChild(self.viewGO, "root/#go_item")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0.closeThis, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.onChoiceHero3123WeaponReply, arg_2_0._onChoiceHero3123WeaponReply, arg_2_0)
+function CharacterWeaponEffectView:addEvents()
+	self._btnclose:AddClickListener(self.closeThis, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.onChoiceHero3123WeaponReply, self._onChoiceHero3123WeaponReply, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0:removeEventCb(CharacterController.instance, CharacterEvent.onChoiceHero3123WeaponReply, arg_3_0._onChoiceHero3123WeaponReply, arg_3_0)
+function CharacterWeaponEffectView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self:removeEventCb(CharacterController.instance, CharacterEvent.onChoiceHero3123WeaponReply, self._onChoiceHero3123WeaponReply, self)
 end
 
-function var_0_0._onChoiceHero3123WeaponReply(arg_4_0, arg_4_1, arg_4_2)
-	for iter_4_0, iter_4_1 in ipairs(arg_4_0._items) do
-		iter_4_1:refreshSelect()
+function CharacterWeaponEffectView:_onChoiceHero3123WeaponReply(mainId, secondId)
+	for _, item in ipairs(self._items) do
+		item:refreshSelect()
 	end
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function CharacterWeaponEffectView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function CharacterWeaponEffectView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0.heroMo = arg_7_0.viewParam
-	arg_7_0._items = arg_7_0:getUserDataTb_()
+function CharacterWeaponEffectView:onOpen()
+	self.heroMo = self.viewParam
+	self._items = self:getUserDataTb_()
 
-	gohelper.setActive(arg_7_0._goitem, false)
+	gohelper.setActive(self._goitem, false)
 
-	local var_7_0 = CharacterWeaponListModel.instance:getMoList(arg_7_0.heroMo)
+	local moList = CharacterWeaponListModel.instance:getMoList(self.heroMo)
 
-	gohelper.CreateObjList(arg_7_0, arg_7_0._createItem, var_7_0, arg_7_0._goscroll.content.gameObject, arg_7_0._goitem, CharacterWeaponEffectItem)
+	gohelper.CreateObjList(self, self._createItem, moList, self._goscroll.content.gameObject, self._goitem, CharacterWeaponEffectItem)
 end
 
-function var_0_0._createItem(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	arg_8_1:onUpdateMO(arg_8_2, arg_8_0.heroMo, arg_8_3)
+function CharacterWeaponEffectView:_createItem(obj, data, index)
+	obj:onUpdateMO(data, self.heroMo, index)
 
-	arg_8_0._items[arg_8_3] = arg_8_1
+	self._items[index] = obj
 end
 
-function var_0_0.onClickModalMask(arg_9_0)
-	arg_9_0:closeThis()
+function CharacterWeaponEffectView:onClickModalMask()
+	self:closeThis()
 end
 
-function var_0_0.onClose(arg_10_0)
+function CharacterWeaponEffectView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function CharacterWeaponEffectView:onDestroyView()
 	return
 end
 
-return var_0_0
+return CharacterWeaponEffectView

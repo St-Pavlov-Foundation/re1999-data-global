@@ -1,70 +1,74 @@
-﻿module("modules.logic.fight.view.FightCommonalitySlider", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightCommonalitySlider.lua
 
-local var_0_0 = class("FightCommonalitySlider", FightBaseView)
+module("modules.logic.fight.view.FightCommonalitySlider", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._slider = gohelper.findChildImage(arg_1_0.viewGO, "slider/sliderbg/sliderfg")
-	arg_1_0._skillName = gohelper.findChildText(arg_1_0.viewGO, "slider/txt_commonality")
-	arg_1_0._sliderText = gohelper.findChildText(arg_1_0.viewGO, "slider/sliderbg/#txt_slidernum")
-	arg_1_0._tips = gohelper.findChild(arg_1_0.viewGO, "tips")
-	arg_1_0._tipsTitle = gohelper.findChildText(arg_1_0.viewGO, "tips/#txt_title")
-	arg_1_0._desText = gohelper.findChildText(arg_1_0.viewGO, "tips/desccont/#txt_descitem")
-	arg_1_0._max = gohelper.findChild(arg_1_0.viewGO, "slider/max")
-	arg_1_0._click = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "btn")
+local FightCommonalitySlider = class("FightCommonalitySlider", FightBaseView)
+
+function FightCommonalitySlider:onInitView()
+	self._slider = gohelper.findChildImage(self.viewGO, "slider/sliderbg/sliderfg")
+	self._skillName = gohelper.findChildText(self.viewGO, "slider/txt_commonality")
+	self._sliderText = gohelper.findChildText(self.viewGO, "slider/sliderbg/#txt_slidernum")
+	self._tips = gohelper.findChild(self.viewGO, "tips")
+	self._tipsTitle = gohelper.findChildText(self.viewGO, "tips/#txt_title")
+	self._desText = gohelper.findChildText(self.viewGO, "tips/desccont/#txt_descitem")
+	self._max = gohelper.findChild(self.viewGO, "slider/max")
+	self._click = gohelper.findChildClickWithDefaultAudio(self.viewGO, "btn")
 end
 
-function var_0_0.onOpen(arg_2_0)
-	arg_2_0:_refreshData()
-	arg_2_0:com_registMsg(FightMsgId.FightProgressValueChange, arg_2_0._refreshData)
-	arg_2_0:com_registMsg(FightMsgId.FightMaxProgressValueChange, arg_2_0._refreshData)
-	arg_2_0:com_registClick(arg_2_0._click, arg_2_0._onBtnClick)
-	arg_2_0:com_registFightEvent(FightEvent.TouchFightViewScreen, arg_2_0._onTouchFightViewScreen)
+function FightCommonalitySlider:onOpen()
+	self:_refreshData()
+	self:com_registMsg(FightMsgId.FightProgressValueChange, self._refreshData)
+	self:com_registMsg(FightMsgId.FightMaxProgressValueChange, self._refreshData)
+	self:com_registClick(self._click, self._onBtnClick)
+	self:com_registFightEvent(FightEvent.TouchFightViewScreen, self._onTouchFightViewScreen)
 end
 
-function var_0_0._onTouchFightViewScreen(arg_3_0)
-	gohelper.setActive(arg_3_0._tips, false)
+function FightCommonalitySlider:_onTouchFightViewScreen()
+	gohelper.setActive(self._tips, false)
 end
 
-function var_0_0._onBtnClick(arg_4_0)
-	gohelper.setActive(arg_4_0._tips, true)
+function FightCommonalitySlider:_onBtnClick()
+	gohelper.setActive(self._tips, true)
 end
 
-function var_0_0._refreshData(arg_5_0)
-	local var_5_0 = FightDataHelper.fieldMgr.param[FightParamData.ParamKey.ProgressSkill]
-	local var_5_1 = lua_skill.configDict[var_5_0]
+function FightCommonalitySlider:_refreshData()
+	local skillId = FightDataHelper.fieldMgr.param[FightParamData.ParamKey.ProgressSkill]
+	local skillConfig = lua_skill.configDict[skillId]
 
-	if var_5_1 then
-		arg_5_0._skillName.text = var_5_1.name
-		arg_5_0._tipsTitle.text = var_5_1.name
-		arg_5_0._desText.text = FightConfig.instance:getSkillEffectDesc(nil, var_5_1)
+	if skillConfig then
+		self._skillName.text = skillConfig.name
+		self._tipsTitle.text = skillConfig.name
+		self._desText.text = FightConfig.instance:getSkillEffectDesc(nil, skillConfig)
 	end
 
-	local var_5_2 = FightDataHelper.fieldMgr.progress
-	local var_5_3 = FightDataHelper.fieldMgr.progressMax
-	local var_5_4 = var_5_3 <= var_5_2
+	local progress = FightDataHelper.fieldMgr.progress
+	local max = FightDataHelper.fieldMgr.progressMax
+	local isMax = max <= progress
 
-	if arg_5_0._lastMax ~= var_5_4 then
-		gohelper.setActive(arg_5_0._max, var_5_4)
+	if self._lastMax ~= isMax then
+		gohelper.setActive(self._max, isMax)
 	end
 
-	local var_5_5 = var_5_2 / var_5_3
+	local percent = progress / max
 
-	arg_5_0._sliderText.text = Mathf.Clamp(var_5_5 * 100, 0, 100) .. "%"
+	self._sliderText.text = Mathf.Clamp(percent * 100, 0, 100) .. "%"
 
-	ZProj.TweenHelper.KillByObj(arg_5_0._slider)
-	ZProj.TweenHelper.DOFillAmount(arg_5_0._slider, var_5_5, 0.2 / FightModel.instance:getUISpeed())
+	ZProj.TweenHelper.KillByObj(self._slider)
+	ZProj.TweenHelper.DOFillAmount(self._slider, percent, 0.2 / FightModel.instance:getUISpeed())
 
-	arg_5_0._lastMax = var_5_4
+	self._lastMax = isMax
 
-	if FightDataHelper.fieldMgr.param[FightParamData.ParamKey.ProgressId] == 2 then
-		local var_5_6 = FightDataHelper.entityMgr:getEnemyVertin()
+	local progressId = FightDataHelper.fieldMgr.param[FightParamData.ParamKey.ProgressId]
 
-		if var_5_6 then
-			local var_5_7 = var_5_6.buffDic
+	if progressId == 2 then
+		local enemyVertin = FightDataHelper.entityMgr:getEnemyVertin()
 
-			for iter_5_0, iter_5_1 in pairs(var_5_7) do
-				if iter_5_1.buffId == 9260101 then
-					arg_5_0._sliderText.text = iter_5_1.duration
+		if enemyVertin then
+			local buffDic = enemyVertin.buffDic
+
+			for k, buffMO in pairs(buffDic) do
+				if buffMO.buffId == 9260101 then
+					self._sliderText.text = buffMO.duration
 
 					break
 				end
@@ -73,8 +77,8 @@ function var_0_0._refreshData(arg_5_0)
 	end
 end
 
-function var_0_0.onClose(arg_6_0)
-	ZProj.TweenHelper.KillByObj(arg_6_0._slider)
+function FightCommonalitySlider:onClose()
+	ZProj.TweenHelper.KillByObj(self._slider)
 end
 
-return var_0_0
+return FightCommonalitySlider

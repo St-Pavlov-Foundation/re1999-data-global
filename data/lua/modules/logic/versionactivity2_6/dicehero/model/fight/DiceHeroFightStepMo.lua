@@ -1,30 +1,32 @@
-﻿module("modules.logic.versionactivity2_6.dicehero.model.fight.DiceHeroFightStepMo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/dicehero/model/fight/DiceHeroFightStepMo.lua
 
-local var_0_0 = pureTable("DiceHeroFightStepMo")
+module("modules.logic.versionactivity2_6.dicehero.model.fight.DiceHeroFightStepMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.actionType = arg_1_1.actionType
-	arg_1_0.reasonId = arg_1_1.reasonId
-	arg_1_0.fromId = arg_1_1.fromId
-	arg_1_0.toId = arg_1_1.toId
-	arg_1_0.effect = {}
+local DiceHeroFightStepMo = pureTable("DiceHeroFightStepMo")
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1.effect) do
-		arg_1_0.effect[iter_1_0] = DiceHeroFightEffectMo.New()
+function DiceHeroFightStepMo:init(data)
+	self.actionType = data.actionType
+	self.reasonId = data.reasonId
+	self.fromId = data.fromId
+	self.toId = data.toId
+	self.effect = {}
 
-		arg_1_0.effect[iter_1_0]:init(iter_1_1, arg_1_0)
+	for k, v in ipairs(data.effect) do
+		self.effect[k] = DiceHeroFightEffectMo.New()
+
+		self.effect[k]:init(v, self)
 	end
 
-	arg_1_0.isByCard = false
-	arg_1_0.isByHero = false
+	self.isByCard = false
+	self.isByHero = false
 
-	if arg_1_0.actionType == 1 then
-		local var_1_0 = DiceHeroFightModel.instance:getGameData()
-		local var_1_1 = var_1_0.skillCardsBySkillId[tonumber(arg_1_0.reasonId)]
+	if self.actionType == 1 then
+		local gameData = DiceHeroFightModel.instance:getGameData()
+		local skillMo = gameData.skillCardsBySkillId[tonumber(self.reasonId)]
 
-		arg_1_0.isByCard = var_1_1 and var_1_1.co.type ~= DiceHeroEnum.CardType.Hero
-		arg_1_0.isByHero = var_1_0.allyHero.uid == arg_1_0.fromId
+		self.isByCard = skillMo and skillMo.co.type ~= DiceHeroEnum.CardType.Hero
+		self.isByHero = gameData.allyHero.uid == self.fromId
 	end
 end
 
-return var_0_0
+return DiceHeroFightStepMo

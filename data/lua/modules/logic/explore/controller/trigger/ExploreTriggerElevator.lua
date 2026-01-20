@@ -1,20 +1,24 @@
-﻿module("modules.logic.explore.controller.trigger.ExploreTriggerElevator", package.seeall)
+﻿-- chunkname: @modules/logic/explore/controller/trigger/ExploreTriggerElevator.lua
 
-local var_0_0 = class("ExploreTriggerElevator", ExploreTriggerBase)
+module("modules.logic.explore.controller.trigger.ExploreTriggerElevator", package.seeall)
 
-function var_0_0.handle(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = string.splitToNumber(arg_1_1, "#")
-	local var_1_1 = var_1_0[1]
+local ExploreTriggerElevator = class("ExploreTriggerElevator", ExploreTriggerBase)
 
-	if var_1_1 ~= 0 then
-		ExploreMapTriggerController.instance:getMap():getUnit(var_1_1):movingElevator(var_1_0[2], var_1_0[3])
+function ExploreTriggerElevator:handle(param, unit)
+	local arr = string.splitToNumber(param, "#")
+	local id = arr[1]
+
+	if id ~= 0 then
+		local tmpUnit = ExploreMapTriggerController.instance:getMap():getUnit(id)
+
+		tmpUnit:movingElevator(arr[2], arr[3])
 	end
 
-	arg_1_0:onStepDone(true)
+	self:onStepDone(true)
 end
 
-function var_0_0.clearWork(arg_2_0)
+function ExploreTriggerElevator:clearWork()
 	return
 end
 
-return var_0_0
+return ExploreTriggerElevator

@@ -1,155 +1,160 @@
-﻿module("modules.logic.toughbattle.controller.ToughBattleController", package.seeall)
+﻿-- chunkname: @modules/logic/toughbattle/controller/ToughBattleController.lua
 
-local var_0_0 = class("ToughBattleController", BaseController)
+module("modules.logic.toughbattle.controller.ToughBattleController", package.seeall)
 
-function var_0_0.reInit(arg_1_0)
-	arg_1_0._delayOpenViewAndParam = nil
+local ToughBattleController = class("ToughBattleController", BaseController)
 
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, arg_1_0.onOpenDungeonMapView, arg_1_0)
+function ToughBattleController:reInit()
+	self._delayOpenViewAndParam = nil
+
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, self.onOpenDungeonMapView, self)
 end
 
-function var_0_0.addConstEvents(arg_2_0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, arg_2_0._getAct158Info, arg_2_0)
+function ToughBattleController:addConstEvents()
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, self._getAct158Info, self)
 end
 
-function var_0_0._getAct158Info(arg_3_0, arg_3_1)
-	if not arg_3_1 or arg_3_1 == VersionActivity1_9Enum.ActivityId.ToughBattle then
+function ToughBattleController:_getAct158Info(activityId)
+	if not activityId or activityId == VersionActivity1_9Enum.ActivityId.ToughBattle then
 		if ActivityHelper.getActivityStatus(VersionActivity1_9Enum.ActivityId.ToughBattle) == ActivityEnum.ActivityStatus.Normal then
-			Activity158Rpc.instance:sendGet158InfosRequest(VersionActivity1_9Enum.ActivityId.ToughBattle, arg_3_0._onGetActInfo, arg_3_0)
+			Activity158Rpc.instance:sendGet158InfosRequest(VersionActivity1_9Enum.ActivityId.ToughBattle, self._onGetActInfo, self)
 		else
 			ToughBattleModel.instance:setActOffLine()
-			arg_3_0:dispatchEvent(ToughBattleEvent.ToughBattleActChange)
+			self:dispatchEvent(ToughBattleEvent.ToughBattleActChange)
 		end
 	end
 end
 
-function var_0_0._onGetActInfo(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	if arg_4_2 == 0 then
+function ToughBattleController:_onGetActInfo(cmd, resultCode, msg)
+	if resultCode == 0 then
 		-- block empty
 	end
 end
 
-function var_0_0.checkIsToughBattle(arg_5_0)
-	local var_5_0 = DungeonModel.instance.curSendChapterId
-	local var_5_1 = DungeonConfig.instance:getChapterCO(var_5_0)
+function ToughBattleController:checkIsToughBattle()
+	local chapterId = DungeonModel.instance.curSendChapterId
+	local chapterCo = DungeonConfig.instance:getChapterCO(chapterId)
 
-	if not var_5_1 or var_5_1.type ~= DungeonEnum.ChapterType.ToughBattle then
+	if not chapterCo or chapterCo.type ~= DungeonEnum.ChapterType.ToughBattle then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0.onRecvToughInfo(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	if arg_6_2 == 0 then
-		arg_6_0:_enterToughBattle()
+function ToughBattleController:onRecvToughInfo(cmd, resultCode, msg)
+	if resultCode == 0 then
+		self:_enterToughBattle()
 	else
-		MainController.instance:enterMainScene(arg_6_0._isFromGroupView, false)
+		MainController.instance:enterMainScene(self._isFromGroupView, false)
 	end
 end
 
-function var_0_0.enterToughBattle(arg_7_0, arg_7_1)
-	local var_7_0 = DungeonModel.instance.curSendEpisodeId
+function ToughBattleController:enterToughBattle(isFromGroupView)
+	local episodeId = DungeonModel.instance.curSendEpisodeId
+	local co = ToughBattleConfig.instance:getCoByEpisodeId(episodeId)
 
-	if not ToughBattleConfig.instance:getCoByEpisodeId(var_7_0) then
-		logError("攻坚战配置不存在" .. tostring(var_7_0))
-		MainController.instance:enterMainScene(arg_7_1, false)
+	if not co then
+		logError("攻坚战配置不存在" .. tostring(episodeId))
+		MainController.instance:enterMainScene(isFromGroupView, false)
 
 		return
 	end
 
-	arg_7_0._isFromGroupView = arg_7_1
-	arg_7_0._preEpisodeId = var_7_0
-	arg_7_0._isFightSuccess = nil
+	self._isFromGroupView = isFromGroupView
+	self._preEpisodeId = episodeId
+	self._isFightSuccess = nil
 
-	if not arg_7_1 then
-		local var_7_1 = FightModel.instance:getRecordMO()
+	if not isFromGroupView then
+		local recordMo = FightModel.instance:getRecordMO()
 
-		if var_7_1 and var_7_1.fightResult == FightEnum.FightResult.Succ then
-			arg_7_0._isFightSuccess = true
+		if recordMo and recordMo.fightResult == FightEnum.FightResult.Succ then
+			self._isFightSuccess = true
 		end
 	end
 
 	DungeonModel.instance:resetSendChapterEpisodeId()
 
-	if ToughBattleConfig.instance:isActEpisodeId(var_7_0) then
-		Activity158Rpc.instance:sendGet158InfosRequest(VersionActivity1_9Enum.ActivityId.ToughBattle, arg_7_0.onRecvToughInfo, arg_7_0)
+	local isAct = ToughBattleConfig.instance:isActEpisodeId(episodeId)
+
+	if isAct then
+		Activity158Rpc.instance:sendGet158InfosRequest(VersionActivity1_9Enum.ActivityId.ToughBattle, self.onRecvToughInfo, self)
 	else
-		SiegeBattleRpc.instance:sendGetSiegeBattleInfoRequest(arg_7_0.onRecvToughInfo, arg_7_0)
+		SiegeBattleRpc.instance:sendGetSiegeBattleInfoRequest(self.onRecvToughInfo, self)
 	end
 end
 
-function var_0_0._enterToughBattle(arg_8_0)
-	local var_8_0 = arg_8_0._preEpisodeId
-	local var_8_1 = arg_8_0._isFightSuccess
-	local var_8_2 = ToughBattleConfig.instance:getCoByEpisodeId(var_8_0)
-	local var_8_3 = ToughBattleConfig.instance:isActEpisodeId(var_8_0)
-	local var_8_4
+function ToughBattleController:_enterToughBattle()
+	local episodeId = self._preEpisodeId
+	local isBattleSuccess = self._isFightSuccess
+	local co = ToughBattleConfig.instance:getCoByEpisodeId(episodeId)
+	local isAct = ToughBattleConfig.instance:isActEpisodeId(episodeId)
+	local info
 
-	if var_8_3 then
-		var_8_4 = ToughBattleModel.instance:getActInfo()
+	if isAct then
+		info = ToughBattleModel.instance:getActInfo()
 	else
-		var_8_4 = ToughBattleModel.instance:getStoryInfo()
+		info = ToughBattleModel.instance:getStoryInfo()
 	end
 
-	MainController.instance:enterMainScene(arg_8_0._isFromGroupView, false)
+	MainController.instance:enterMainScene(self._isFromGroupView, false)
 	SceneHelper.instance:waitSceneDone(SceneType.Main, function()
-		local var_9_0 = {
-			mode = var_8_3 and ToughBattleEnum.Mode.Act or ToughBattleEnum.Mode.Story,
-			lastFightSuccIndex = var_8_1 and var_8_2.sort
+		local param = {
+			mode = isAct and ToughBattleEnum.Mode.Act or ToughBattleEnum.Mode.Story,
+			lastFightSuccIndex = isBattleSuccess and co.sort
 		}
-		local var_9_1 = var_8_3 and ViewName.ToughBattleActEnterView or ViewName.ToughBattleEnterView
-		local var_9_2 = var_8_3 and ViewName.ToughBattleActMapView or ViewName.ToughBattleMapView
+		local enterView = isAct and ViewName.ToughBattleActEnterView or ViewName.ToughBattleEnterView
+		local mapView = isAct and ViewName.ToughBattleActMapView or ViewName.ToughBattleMapView
 
-		if var_8_3 then
+		if isAct then
 			JumpController.instance:jumpByParam("4#10728#1")
 		else
 			JumpController.instance:jumpByParam("3#107")
 		end
 
-		arg_8_0._delayOpenViewAndParam = nil
+		self._delayOpenViewAndParam = nil
 
-		if #var_8_4.passChallengeIds == 4 and var_8_1 or not var_8_4.openChallenge then
-			if var_8_3 then
-				GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, var_9_1)
+		if #info.passChallengeIds == 4 and isBattleSuccess or not info.openChallenge then
+			if isAct then
+				GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, enterView)
 
 				if ViewMgr.instance:isOpen(ViewName.DungeonMapView) then
-					ViewMgr.instance:openView(var_9_1, var_9_0)
+					ViewMgr.instance:openView(enterView, param)
 				else
-					arg_8_0._delayOpenViewAndParam = {
-						var_9_1,
-						var_9_0
+					self._delayOpenViewAndParam = {
+						enterView,
+						param
 					}
 				end
 			end
 		else
-			GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, var_9_2)
+			GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, mapView)
 
 			if ViewMgr.instance:isOpen(ViewName.DungeonMapView) then
-				ViewMgr.instance:openView(var_9_2, var_9_0)
+				ViewMgr.instance:openView(mapView, param)
 			else
-				arg_8_0._delayOpenViewAndParam = {
-					var_9_2,
-					var_9_0
+				self._delayOpenViewAndParam = {
+					mapView,
+					param
 				}
 			end
 		end
 
-		if arg_8_0._delayOpenViewAndParam then
-			ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_8_0.onOpenDungeonMapView, arg_8_0)
+		if self._delayOpenViewAndParam then
+			ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, self.onOpenDungeonMapView, self)
 		end
 	end)
 end
 
-function var_0_0.jumpToActView(arg_10_0)
-	local var_10_0 = ToughBattleModel.instance:getActInfo()
+function ToughBattleController:jumpToActView()
+	local info = ToughBattleModel.instance:getActInfo()
 
-	if not var_10_0 then
+	if not info then
 		return
 	end
 
 	if ViewMgr.instance:isOpen(ViewName.DungeonMapView) then
-		if not var_10_0.openChallenge then
+		if not info.openChallenge then
 			ViewMgr.instance:openView(ViewName.ToughBattleActEnterView, {
 				mode = ToughBattleEnum.Mode.Act
 			})
@@ -159,17 +164,17 @@ function var_0_0.jumpToActView(arg_10_0)
 			})
 		end
 	else
-		ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_10_0.onOpenDungeonMapView, arg_10_0)
+		ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, self.onOpenDungeonMapView, self)
 
-		if not var_10_0.openChallenge then
-			arg_10_0._delayOpenViewAndParam = {
+		if not info.openChallenge then
+			self._delayOpenViewAndParam = {
 				ViewName.ToughBattleActEnterView,
 				{
 					mode = ToughBattleEnum.Mode.Act
 				}
 			}
 		else
-			arg_10_0._delayOpenViewAndParam = {
+			self._delayOpenViewAndParam = {
 				ViewName.ToughBattleActMapView,
 				{
 					mode = ToughBattleEnum.Mode.Act
@@ -179,18 +184,18 @@ function var_0_0.jumpToActView(arg_10_0)
 	end
 end
 
-function var_0_0.onOpenDungeonMapView(arg_11_0, arg_11_1)
-	if arg_11_1 == ViewName.DungeonMapView then
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, arg_11_0.onOpenDungeonMapView, arg_11_0)
+function ToughBattleController:onOpenDungeonMapView(viewName)
+	if viewName == ViewName.DungeonMapView then
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, self.onOpenDungeonMapView, self)
 
-		if arg_11_0._delayOpenViewAndParam then
-			ViewMgr.instance:openView(unpack(arg_11_0._delayOpenViewAndParam))
+		if self._delayOpenViewAndParam then
+			ViewMgr.instance:openView(unpack(self._delayOpenViewAndParam))
 
-			arg_11_0._delayOpenViewAndParam = nil
+			self._delayOpenViewAndParam = nil
 		end
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+ToughBattleController.instance = ToughBattleController.New()
 
-return var_0_0
+return ToughBattleController

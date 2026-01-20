@@ -1,15 +1,17 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.defines.EliminateEnum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/defines/EliminateEnum.lua
 
-local var_0_0 = class("EliminateEnum")
+module("modules.logic.versionactivity2_2.eliminate.defines.EliminateEnum", package.seeall)
 
-var_0_0.ChessState = {
+local EliminateEnum = class("EliminateEnum")
+
+EliminateEnum.ChessState = {
 	Frost = 1000,
 	SpecialSkill = 10000,
 	Selected = 10,
 	Die = 100,
 	Normal = 1
 }
-var_0_0.StepWorkType = {
+EliminateEnum.StepWorkType = {
 	StartShowView = 5,
 	LengZhou6PlayAudio = 23,
 	RefreshEliminate = 10,
@@ -35,35 +37,35 @@ var_0_0.StepWorkType = {
 	EliminateChessDebug2_7 = 15,
 	Move = 0
 }
-var_0_0.EffectType = {
+EliminateEnum.EffectType = {
 	exchange_2 = 3,
 	crossEliminate = 0,
 	exchange_1 = 2,
 	blockEliminate = 1
 }
-var_0_0.ChessBoardType = {
+EliminateEnum.ChessBoardType = {
 	Normal = 0,
 	Empty = -1
 }
-var_0_0.RoundType = {
+EliminateEnum.RoundType = {
 	Match3Chess = 0,
 	TeamChess = 1
 }
-var_0_0.GetInfoType = {
+EliminateEnum.GetInfoType = {
 	All = 0,
 	OnlyMovePint = 1
 }
-var_0_0.AnimType = {
+EliminateEnum.AnimType = {
 	drop = 1,
 	init = 0,
 	move = 2
 }
-var_0_0.AudioFightStep = {
+EliminateEnum.AudioFightStep = {
 	FightNormal = 1,
 	ComeShow = 0,
 	Victory = 2
 }
-var_0_0.ConditionType = {
+EliminateEnum.ConditionType = {
 	SettleAndToHaveDamage = "SettleAndToHaveDamage",
 	TeamChessRoundBegin = "TeamChessRoundBegin",
 	ClickMainCharacter = "ClickMainCharacter",
@@ -71,35 +73,35 @@ var_0_0.ConditionType = {
 	TeamChessEnemyPlaceBefore = "TeamChessEnemyPlaceBefore",
 	MatchRoundBegin = "MatchRoundBegin"
 }
-var_0_0.ChessMaxRowValue = 7
-var_0_0.ChessMaxLineValue = 6
-var_0_0.ChessWidth = 124
-var_0_0.ChessHeight = 124
-var_0_0.AniTime = {
+EliminateEnum.ChessMaxRowValue = 7
+EliminateEnum.ChessMaxLineValue = 6
+EliminateEnum.ChessWidth = 124
+EliminateEnum.ChessHeight = 124
+EliminateEnum.AniTime = {
 	Die = EliminateConfig.instance:getConstValue(24) / 1000,
 	Move = EliminateConfig.instance:getConstValue(21) / 1000,
 	MoveRevert = EliminateConfig.instance:getConstValue(22) / 1000,
 	Drop = EliminateConfig.instance:getConstValue(23) / 1000,
 	InitDrop = EliminateConfig.instance:getConstValue(28) / 1000
 }
-var_0_0.DotMoveTipInterval = EliminateConfig.instance:getConstValue(27) / 1000
-var_0_0.ShowStartTime = EliminateConfig.instance:getConstValue(25) / 1000
-var_0_0.ShowEndTime = EliminateConfig.instance:getConstValue(26) / 1000
-var_0_0.ResourceFlyTime = EliminateConfig.instance:getConstValue(31) / 1000
-var_0_0.DieToFlyOffsetTime = EliminateConfig.instance:getConstValue(32) / 1000
-var_0_0.DieStepTime = EliminateConfig.instance:getConstValue(33) / 1000
-var_0_0.ChessDropAngleThreshold = EliminateConfig.instance:getConstValue(29)
-var_0_0.ShowEvaluateTime = EliminateConfig.instance:getConstValue(37) / 1000
-var_0_0.chessFrameBgMaxWidth = 1140
-var_0_0.chessFrameBgMaxHeight = 900
-var_0_0.teamChessDescTipOffsetX = -140
-var_0_0.teamChessDescTipOffsetY = -220
-var_0_0.teamChessDescMinAnchorX = -737
-var_0_0.levelTargetTipShowTime = EliminateConfig.instance:getConstValue(30) / 1000
-var_0_0.levelTargetTipShowTimeInTeamChess = 0.5
-var_0_0.dieEffectCacheCount = 30
-var_0_0.damageCacheCount = 10
-var_0_0.hpDamageCacheCount = 10
-var_0_0.InvalidId = -1
+EliminateEnum.DotMoveTipInterval = EliminateConfig.instance:getConstValue(27) / 1000
+EliminateEnum.ShowStartTime = EliminateConfig.instance:getConstValue(25) / 1000
+EliminateEnum.ShowEndTime = EliminateConfig.instance:getConstValue(26) / 1000
+EliminateEnum.ResourceFlyTime = EliminateConfig.instance:getConstValue(31) / 1000
+EliminateEnum.DieToFlyOffsetTime = EliminateConfig.instance:getConstValue(32) / 1000
+EliminateEnum.DieStepTime = EliminateConfig.instance:getConstValue(33) / 1000
+EliminateEnum.ChessDropAngleThreshold = EliminateConfig.instance:getConstValue(29)
+EliminateEnum.ShowEvaluateTime = EliminateConfig.instance:getConstValue(37) / 1000
+EliminateEnum.chessFrameBgMaxWidth = 1140
+EliminateEnum.chessFrameBgMaxHeight = 900
+EliminateEnum.teamChessDescTipOffsetX = -140
+EliminateEnum.teamChessDescTipOffsetY = -220
+EliminateEnum.teamChessDescMinAnchorX = -737
+EliminateEnum.levelTargetTipShowTime = EliminateConfig.instance:getConstValue(30) / 1000
+EliminateEnum.levelTargetTipShowTimeInTeamChess = 0.5
+EliminateEnum.dieEffectCacheCount = 30
+EliminateEnum.damageCacheCount = 10
+EliminateEnum.hpDamageCacheCount = 10
+EliminateEnum.InvalidId = -1
 
-return var_0_0
+return EliminateEnum

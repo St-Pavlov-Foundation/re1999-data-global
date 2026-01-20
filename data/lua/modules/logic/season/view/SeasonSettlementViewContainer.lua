@@ -1,17 +1,19 @@
-﻿module("modules.logic.season.view.SeasonSettlementViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/season/view/SeasonSettlementViewContainer.lua
 
-local var_0_0 = class("SeasonSettlementViewContainer", BaseViewContainer)
+module("modules.logic.season.view.SeasonSettlementViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local SeasonSettlementViewContainer = class("SeasonSettlementViewContainer", BaseViewContainer)
+
+function SeasonSettlementViewContainer:buildViews()
 	return {
 		SeasonSettlementView.New()
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
+function SeasonSettlementViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
 		-- block empty
 	end
 end
 
-return var_0_0
+return SeasonSettlementViewContainer

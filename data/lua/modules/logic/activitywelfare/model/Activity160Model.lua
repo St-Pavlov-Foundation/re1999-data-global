@@ -1,71 +1,75 @@
-﻿module("modules.logic.activitywelfare.model.Activity160Model", package.seeall)
+﻿-- chunkname: @modules/logic/activitywelfare/model/Activity160Model.lua
 
-local var_0_0 = class("Activity160Model", BaseModel)
+module("modules.logic.activitywelfare.model.Activity160Model", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local Activity160Model = class("Activity160Model", BaseModel)
+
+function Activity160Model:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0.infoDic = {}
+function Activity160Model:reInit()
+	self.infoDic = {}
 end
 
-function var_0_0.setInfo(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_1.activityId
-	local var_3_1 = arg_3_0:getActInfo(var_3_0)
+function Activity160Model:setInfo(msg)
+	local actId = msg.activityId
+	local actInfo = self:getActInfo(actId)
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1.act160Infos) do
-		var_3_1[iter_3_1.id] = iter_3_1
+	for _, info in ipairs(msg.act160Infos) do
+		actInfo[info.id] = info
 	end
 
-	Activity160Controller.instance:dispatchEvent(Activity160Event.InfoUpdate, var_3_0)
+	Activity160Controller.instance:dispatchEvent(Activity160Event.InfoUpdate, actId)
 end
 
-function var_0_0.updateInfo(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_1.activityId
+function Activity160Model:updateInfo(msg)
+	local actId = msg.activityId
+	local actInfo = self:getActInfo(actId)
 
-	arg_4_0:getActInfo(var_4_0)[arg_4_1.act160Info.id] = arg_4_1.act160Info
+	actInfo[msg.act160Info.id] = msg.act160Info
 
-	Activity160Controller.instance:dispatchEvent(Activity160Event.InfoUpdate, var_4_0)
+	Activity160Controller.instance:dispatchEvent(Activity160Event.InfoUpdate, actId)
 end
 
-function var_0_0.finishMissionReply(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_1.activityId
+function Activity160Model:finishMissionReply(msg)
+	local actId = msg.activityId
+	local actInfo = self:getActInfo(actId)
 
-	arg_5_0:getActInfo(var_5_0)[arg_5_1.act160Info.id] = arg_5_1.act160Info
+	actInfo[msg.act160Info.id] = msg.act160Info
 
-	Activity160Controller.instance:dispatchEvent(Activity160Event.InfoUpdate, var_5_0)
+	Activity160Controller.instance:dispatchEvent(Activity160Event.InfoUpdate, actId)
 
-	if arg_5_1.isReadMail then
-		Activity160Controller.instance:dispatchEvent(Activity160Event.HasReadMail, var_5_0, arg_5_1.act160Info.id)
+	if msg.isReadMail then
+		Activity160Controller.instance:dispatchEvent(Activity160Event.HasReadMail, actId, msg.act160Info.id)
 	end
 end
 
-function var_0_0.getActInfo(arg_6_0, arg_6_1)
-	if not arg_6_0.infoDic[arg_6_1] then
-		arg_6_0.infoDic[arg_6_1] = {}
+function Activity160Model:getActInfo(actId)
+	if not self.infoDic[actId] then
+		self.infoDic[actId] = {}
 	end
 
-	return arg_6_0.infoDic[arg_6_1]
+	return self.infoDic[actId]
 end
 
-function var_0_0.getCurMission(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0:getActInfo(arg_7_1)
+function Activity160Model:getCurMission(actId)
+	local actInfo = self:getActInfo(actId)
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-		if iter_7_1.state ~= 2 then
-			return iter_7_0
+	for id, info in ipairs(actInfo) do
+		if info.state ~= 2 then
+			return id
 		end
 	end
 
-	return var_7_0[#var_7_0].id
+	return actInfo[#actInfo].id
 end
 
-function var_0_0.hasRewardClaim(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0:getActInfo(arg_8_1)
+function Activity160Model:hasRewardClaim(actId)
+	local actInfo = self:getActInfo(actId)
 
-	for iter_8_0, iter_8_1 in pairs(var_8_0) do
-		if iter_8_1.state == 1 then
+	for _, info in pairs(actInfo) do
+		if info.state == 1 then
 			return true
 		end
 	end
@@ -73,11 +77,11 @@ function var_0_0.hasRewardClaim(arg_8_0, arg_8_1)
 	return false
 end
 
-function var_0_0.hasRewardCanGet(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0:getActInfo(arg_9_1)
+function Activity160Model:hasRewardCanGet(actId)
+	local actInfo = self:getActInfo(actId)
 
-	for iter_9_0, iter_9_1 in pairs(var_9_0) do
-		if iter_9_1.state ~= 2 then
+	for _, info in pairs(actInfo) do
+		if info.state ~= 2 then
 			return true
 		end
 	end
@@ -85,11 +89,11 @@ function var_0_0.hasRewardCanGet(arg_9_0, arg_9_1)
 	return false
 end
 
-function var_0_0.allRewardReceive(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0:getActInfo(arg_10_1)
+function Activity160Model:allRewardReceive(actId)
+	local actInfo = self:getActInfo(actId)
 
-	for iter_10_0, iter_10_1 in pairs(var_10_0) do
-		if iter_10_1.state ~= 2 then
+	for _, info in pairs(actInfo) do
+		if info.state ~= 2 then
 			return false
 		end
 	end
@@ -97,18 +101,18 @@ function var_0_0.allRewardReceive(arg_10_0, arg_10_1)
 	return true
 end
 
-function var_0_0.isMissionCanGet(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = arg_11_0:getActInfo(arg_11_1)
+function Activity160Model:isMissionCanGet(actId, missionId)
+	local actInfo = self:getActInfo(actId)
 
-	return var_11_0[arg_11_2] and var_11_0[arg_11_2].state == 1
+	return actInfo[missionId] and actInfo[missionId].state == 1
 end
 
-function var_0_0.isMissionFinish(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = arg_12_0:getActInfo(arg_12_1)
+function Activity160Model:isMissionFinish(actId, missionId)
+	local actInfo = self:getActInfo(actId)
 
-	return var_12_0[arg_12_2] and var_12_0[arg_12_2].state == 2
+	return actInfo[missionId] and actInfo[missionId].state == 2
 end
 
-var_0_0.instance = var_0_0.New()
+Activity160Model.instance = Activity160Model.New()
 
-return var_0_0
+return Activity160Model

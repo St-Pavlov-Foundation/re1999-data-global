@@ -1,39 +1,41 @@
-﻿module("modules.logic.versionactivity1_5.aizila.view.AiZiLaEpsiodeDetailViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/aizila/view/AiZiLaEpsiodeDetailViewContainer.lua
 
-local var_0_0 = class("AiZiLaEpsiodeDetailViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_5.aizila.view.AiZiLaEpsiodeDetailViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local AiZiLaEpsiodeDetailViewContainer = class("AiZiLaEpsiodeDetailViewContainer", BaseViewContainer)
 
-	arg_1_0._detailView = AiZiLaEpsiodeDetailView.New()
+function AiZiLaEpsiodeDetailViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, arg_1_0._detailView)
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_BackBtns"))
+	self._detailView = AiZiLaEpsiodeDetailView.New()
 
-	return var_1_0
+	table.insert(views, self._detailView)
+	table.insert(views, TabViewGroup.New(1, "#go_BackBtns"))
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
+function AiZiLaEpsiodeDetailViewContainer:onContainerClickModalMask()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	arg_2_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.buildTabViews(arg_3_0, arg_3_1)
-	if arg_3_1 == 1 then
-		arg_3_0._navigateButtonsView = NavigateButtonsView.New({
+function AiZiLaEpsiodeDetailViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonsView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_3_0._navigateButtonsView
+			self._navigateButtonsView
 		}
 	end
 end
 
-function var_0_0.playViewAnimator(arg_4_0, arg_4_1)
-	arg_4_0._detailView:playViewAnimator(arg_4_1)
+function AiZiLaEpsiodeDetailViewContainer:playViewAnimator(animName)
+	self._detailView:playViewAnimator(animName)
 end
 
-return var_0_0
+return AiZiLaEpsiodeDetailViewContainer

@@ -1,209 +1,211 @@
-﻿module("modules.logic.versionactivity2_3.act174.model.Act174WareHouseMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/act174/model/Act174WareHouseMO.lua
 
-local var_0_0 = pureTable("Act174WareHouseMO")
+module("modules.logic.versionactivity2_3.act174.model.Act174WareHouseMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.newHeroDic = {}
-	arg_1_0.newItemDic = {}
-	arg_1_0.heroId = arg_1_1.heroId
-	arg_1_0.enhanceId = arg_1_1.enhanceId
+local Act174WareHouseMO = pureTable("Act174WareHouseMO")
 
-	arg_1_0:caculateEnhanceRole(arg_1_0.enhanceId)
+function Act174WareHouseMO:init(info)
+	self.newHeroDic = {}
+	self.newItemDic = {}
+	self.heroId = info.heroId
+	self.enhanceId = info.enhanceId
 
-	arg_1_0.endEnhanceId = arg_1_1.endEnhanceId
-	arg_1_0.itemId = arg_1_1.itemId
+	self:caculateEnhanceRole(self.enhanceId)
+
+	self.endEnhanceId = info.endEnhanceId
+	self.itemId = info.itemId
 end
 
-function var_0_0.update(arg_2_0, arg_2_1)
-	for iter_2_0, iter_2_1 in ipairs(arg_2_1.heroId) do
-		if not tabletool.indexOf(arg_2_0.heroId, iter_2_1) then
-			arg_2_0.newHeroDic[iter_2_1] = 1
+function Act174WareHouseMO:update(info)
+	for _, heroId in ipairs(info.heroId) do
+		if not tabletool.indexOf(self.heroId, heroId) then
+			self.newHeroDic[heroId] = 1
 		end
 	end
 
-	local var_2_0 = var_0_0.getItemCntDic(arg_2_1.itemId)
+	local itemCntDic = Act174WareHouseMO.getItemCntDic(info.itemId)
 
-	for iter_2_2, iter_2_3 in ipairs(arg_2_0.itemId) do
-		if var_2_0[iter_2_3] then
-			var_2_0[iter_2_3] = var_2_0[iter_2_3] - 1
+	for _, itemId in ipairs(self.itemId) do
+		if itemCntDic[itemId] then
+			itemCntDic[itemId] = itemCntDic[itemId] - 1
 
-			if var_2_0[iter_2_3] == 0 then
-				var_2_0[iter_2_3] = nil
+			if itemCntDic[itemId] == 0 then
+				itemCntDic[itemId] = nil
 			end
 		end
 	end
 
-	for iter_2_4, iter_2_5 in pairs(var_2_0) do
-		local var_2_1 = arg_2_0.newItemDic[iter_2_4]
+	for id, cnt in pairs(itemCntDic) do
+		local base = self.newItemDic[id]
 
-		if var_2_1 then
-			arg_2_0.newItemDic[iter_2_4] = var_2_1 + iter_2_5
+		if base then
+			self.newItemDic[id] = base + cnt
 		else
-			arg_2_0.newItemDic[iter_2_4] = iter_2_5
+			self.newItemDic[id] = cnt
 		end
 	end
 
-	arg_2_0.heroId = arg_2_1.heroId
-	arg_2_0.itemId = arg_2_1.itemId
-	arg_2_0.enhanceId = arg_2_1.enhanceId
+	self.heroId = info.heroId
+	self.itemId = info.itemId
+	self.enhanceId = info.enhanceId
 
-	arg_2_0:caculateEnhanceRole(arg_2_0.enhanceId)
+	self:caculateEnhanceRole(self.enhanceId)
 
-	arg_2_0.endEnhanceId = arg_2_1.endEnhanceId
+	self.endEnhanceId = info.endEnhanceId
 end
 
-function var_0_0.getHeroData(arg_3_0)
-	local var_3_0 = Activity174Model.instance:getActInfo():getGameInfo()
-	local var_3_1 = {}
+function Act174WareHouseMO:getHeroData()
+	local gameInfo = Activity174Model.instance:getActInfo():getGameInfo()
+	local list = {}
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0.heroId) do
-		local var_3_2 = var_3_0:isHeroInTeam(iter_3_1)
+	for k, id in ipairs(self.heroId) do
+		local isEquip = gameInfo:isHeroInTeam(id)
 
-		var_3_1[iter_3_0] = {
-			id = iter_3_1,
-			isEquip = var_3_2
+		list[k] = {
+			id = id,
+			isEquip = isEquip
 		}
 	end
 
-	table.sort(var_3_1, var_0_0.SortRoleFunc)
+	table.sort(list, Act174WareHouseMO.SortRoleFunc)
 
-	return var_3_1
+	return list
 end
 
-function var_0_0.getItemData(arg_4_0)
-	local var_4_0 = Activity174Model.instance:getActInfo():getGameInfo()
-	local var_4_1 = {}
-	local var_4_2 = {}
+function Act174WareHouseMO:getItemData()
+	local gameInfo = Activity174Model.instance:getActInfo():getGameInfo()
+	local list = {}
+	local idCount = {}
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_0.itemId) do
-		if not var_4_2[iter_4_1] then
-			var_4_2[iter_4_1] = var_4_0:getCollectionEquipCnt(iter_4_1)
+	for k, id in ipairs(self.itemId) do
+		if not idCount[id] then
+			idCount[id] = gameInfo:getCollectionEquipCnt(id)
 		end
 
-		local var_4_3 = var_4_2[iter_4_1]
-		local var_4_4 = 0
+		local equipCnt = idCount[id]
+		local isEquip = 0
 
-		if var_4_3 > 0 then
-			var_4_4 = 1
-			var_4_2[iter_4_1] = var_4_3 - 1
+		if equipCnt > 0 then
+			isEquip = 1
+			idCount[id] = equipCnt - 1
 		end
 
-		var_4_1[iter_4_0] = {
-			id = iter_4_1,
-			isEquip = var_4_4
+		list[k] = {
+			id = id,
+			isEquip = isEquip
 		}
 	end
 
-	table.sort(var_4_1, var_0_0.SortItemFunc)
+	table.sort(list, Act174WareHouseMO.SortItemFunc)
 
-	return var_4_1
+	return list
 end
 
-function var_0_0.SortRoleFunc(arg_5_0, arg_5_1)
-	if arg_5_0.isEquip == arg_5_1.isEquip then
-		local var_5_0 = Activity174Config.instance:getRoleCo(arg_5_0.id)
-		local var_5_1 = Activity174Config.instance:getRoleCo(arg_5_1.id)
+function Act174WareHouseMO.SortRoleFunc(a, b)
+	if a.isEquip == b.isEquip then
+		local coA = Activity174Config.instance:getRoleCo(a.id)
+		local coB = Activity174Config.instance:getRoleCo(b.id)
 
-		if var_5_0.rare == var_5_1.rare then
-			return arg_5_0.id > arg_5_1.id
+		if coA.rare == coB.rare then
+			return a.id > b.id
 		else
-			return var_5_0.rare > var_5_1.rare
+			return coA.rare > coB.rare
 		end
 	else
-		return arg_5_0.isEquip > arg_5_1.isEquip
+		return a.isEquip > b.isEquip
 	end
 end
 
-function var_0_0.SortItemFunc(arg_6_0, arg_6_1)
-	if arg_6_0.isEquip == arg_6_1.isEquip then
-		local var_6_0 = Activity174Config.instance:getCollectionCo(arg_6_0.id)
-		local var_6_1 = Activity174Config.instance:getCollectionCo(arg_6_1.id)
+function Act174WareHouseMO.SortItemFunc(a, b)
+	if a.isEquip == b.isEquip then
+		local coA = Activity174Config.instance:getCollectionCo(a.id)
+		local coB = Activity174Config.instance:getCollectionCo(b.id)
 
-		if var_6_0.rare == var_6_1.rare then
-			return arg_6_0.id > arg_6_1.id
+		if coA.rare == coB.rare then
+			return a.id > b.id
 		else
-			return var_6_0.rare > var_6_1.rare
+			return coA.rare > coB.rare
 		end
 	else
-		return arg_6_0.isEquip > arg_6_1.isEquip
+		return a.isEquip > b.isEquip
 	end
 end
 
-function var_0_0.getItemCntDic(arg_7_0)
-	local var_7_0 = {}
+function Act174WareHouseMO.getItemCntDic(itemIds)
+	local itemCntList = {}
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0) do
-		if not var_7_0[iter_7_1] then
-			var_7_0[iter_7_1] = 1
+	for _, id in ipairs(itemIds) do
+		if not itemCntList[id] then
+			itemCntList[id] = 1
 		else
-			var_7_0[iter_7_1] = var_7_0[iter_7_1] + 1
+			itemCntList[id] = itemCntList[id] + 1
 		end
 	end
 
-	return var_7_0
+	return itemCntList
 end
 
-function var_0_0.getNewIdDic(arg_8_0, arg_8_1)
-	if arg_8_1 == Activity174Enum.WareType.Hero then
-		return tabletool.copy(arg_8_0.newHeroDic)
+function Act174WareHouseMO:getNewIdDic(wareType)
+	if wareType == Activity174Enum.WareType.Hero then
+		return tabletool.copy(self.newHeroDic)
 	else
-		return tabletool.copy(arg_8_0.newItemDic)
+		return tabletool.copy(self.newItemDic)
 	end
 end
 
-function var_0_0.deleteNewSign(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0
+function Act174WareHouseMO:deleteNewSign(wareType, wareId)
+	local newDic
 
-	if arg_9_1 == Activity174Enum.WareType.Hero then
-		var_9_0 = arg_9_0.newHeroDic
+	if wareType == Activity174Enum.WareType.Hero then
+		newDic = self.newHeroDic
 	else
-		var_9_0 = arg_9_0.newItemDic
+		newDic = self.newItemDic
 	end
 
-	if var_9_0[arg_9_2] then
-		var_9_0[arg_9_2] = var_9_0[arg_9_2] - 1
+	if newDic[wareId] then
+		newDic[wareId] = newDic[wareId] - 1
 
-		if var_9_0[arg_9_2] == 0 then
-			var_9_0[arg_9_2] = nil
+		if newDic[wareId] == 0 then
+			newDic[wareId] = nil
 		end
 	end
 end
 
-function var_0_0.clearNewSign(arg_10_0)
-	tabletool.clear(arg_10_0.newHeroDic)
-	tabletool.clear(arg_10_0.newItemDic)
+function Act174WareHouseMO:clearNewSign()
+	tabletool.clear(self.newHeroDic)
+	tabletool.clear(self.newItemDic)
 end
 
-function var_0_0.caculateEnhanceRole(arg_11_0, arg_11_1)
-	arg_11_0.enhanceRoleList = {}
+function Act174WareHouseMO:caculateEnhanceRole(enhanceList)
+	self.enhanceRoleList = {}
 
-	local var_11_0 = {}
+	local effectList = {}
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_1) do
-		local var_11_1 = lua_activity174_enhance.configDict[iter_11_1]
+	for _, enhanceId in ipairs(enhanceList) do
+		local enhanceCo = lua_activity174_enhance.configDict[enhanceId]
 
-		if var_11_1 then
-			if not string.nilorempty(var_11_1.effects) then
-				local var_11_2 = string.splitToNumber(var_11_1.effects, "|")
+		if enhanceCo then
+			if not string.nilorempty(enhanceCo.effects) then
+				local effects = string.splitToNumber(enhanceCo.effects, "|")
 
-				tabletool.addValues(var_11_0, var_11_2)
+				tabletool.addValues(effectList, effects)
 			end
 		else
-			logError("dont exist enhanceCo" .. iter_11_1)
+			logError("dont exist enhanceCo" .. enhanceId)
 		end
 	end
 
-	for iter_11_2, iter_11_3 in ipairs(var_11_0) do
-		local var_11_3 = lua_activity174_effect.configDict[iter_11_3]
+	for _, effectId in ipairs(effectList) do
+		local effectCo = lua_activity174_effect.configDict[effectId]
 
-		if var_11_3 then
-			if var_11_3.type == Activity174Enum.EffectType.EnhanceRole then
-				arg_11_0.enhanceRoleList[#arg_11_0.enhanceRoleList + 1] = tonumber(var_11_3.typeParam)
+		if effectCo then
+			if effectCo.type == Activity174Enum.EffectType.EnhanceRole then
+				self.enhanceRoleList[#self.enhanceRoleList + 1] = tonumber(effectCo.typeParam)
 			end
 		else
-			logError("dont exist enhanceCo" .. iter_11_3)
+			logError("dont exist enhanceCo" .. effectId)
 		end
 	end
 end
 
-return var_0_0
+return Act174WareHouseMO

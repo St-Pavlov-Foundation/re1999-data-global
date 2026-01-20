@@ -1,109 +1,111 @@
-﻿module("modules.logic.activity.view.ActivityNoviceSignView", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/ActivityNoviceSignView.lua
 
-local var_0_0 = class("ActivityNoviceSignView", BaseView)
+module("modules.logic.activity.view.ActivityNoviceSignView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._simageframebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "character/image_frame")
-	arg_1_0._simagecharacter = gohelper.findChildSingleImage(arg_1_0.viewGO, "character/image_character")
-	arg_1_0._godaylist = gohelper.findChild(arg_1_0.viewGO, "#go_daylist")
-	arg_1_0._scrollitem = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_daylist/#scroll_item")
+local ActivityNoviceSignView = class("ActivityNoviceSignView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ActivityNoviceSignView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._simageframebg = gohelper.findChildSingleImage(self.viewGO, "character/image_frame")
+	self._simagecharacter = gohelper.findChildSingleImage(self.viewGO, "character/image_character")
+	self._godaylist = gohelper.findChild(self.viewGO, "#go_daylist")
+	self._scrollitem = gohelper.findChildScrollRect(self.viewGO, "#go_daylist/#scroll_item")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshNorSignActivity, arg_2_0._refresh, arg_2_0)
+function ActivityNoviceSignView:addEvents()
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshNorSignActivity, self._refresh, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(ActivityController.instance, ActivityEvent.RefreshNorSignActivity, arg_3_0._refresh, arg_3_0)
+function ActivityNoviceSignView:removeEvents()
+	self:removeEventCb(ActivityController.instance, ActivityEvent.RefreshNorSignActivity, self._refresh, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._txtdesc = gohelper.findChildText(arg_4_0.viewGO, "activitydesc/tips/#txt_desc")
-	arg_4_0._txtreward = gohelper.findChildText(arg_4_0.viewGO, "activitydesc/tips/#txt_reward")
-	arg_4_0._gostarlist = gohelper.findChild(arg_4_0.viewGO, "activitydesc/tips/#go_starlist")
-	arg_4_0._gostaricon = gohelper.findChild(arg_4_0.viewGO, "activitydesc/tips/#go_starlist/#go_staricon")
-	arg_4_0._actId = ActivityEnum.Activity.NoviceSign
+function ActivityNoviceSignView:_editableInitView()
+	self._txtdesc = gohelper.findChildText(self.viewGO, "activitydesc/tips/#txt_desc")
+	self._txtreward = gohelper.findChildText(self.viewGO, "activitydesc/tips/#txt_reward")
+	self._gostarlist = gohelper.findChild(self.viewGO, "activitydesc/tips/#go_starlist")
+	self._gostaricon = gohelper.findChild(self.viewGO, "activitydesc/tips/#go_starlist/#go_staricon")
+	self._actId = ActivityEnum.Activity.NoviceSign
 
-	Activity101Rpc.instance:sendGet101InfosRequest(arg_4_0._actId)
-	arg_4_0._simagebg:LoadImage(ResUrl.getActivityBg("full/img_bg"))
-	arg_4_0._simageframebg:LoadImage(ResUrl.getActivityBg("eightday/img_lihui_deco_fire"))
-	arg_4_0._simagecharacter:LoadImage(ResUrl.getActivityBg("eightday/char_008"))
+	Activity101Rpc.instance:sendGet101InfosRequest(self._actId)
+	self._simagebg:LoadImage(ResUrl.getActivityBg("full/img_bg"))
+	self._simageframebg:LoadImage(ResUrl.getActivityBg("eightday/img_lihui_deco_fire"))
+	self._simagecharacter:LoadImage(ResUrl.getActivityBg("eightday/char_008"))
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function ActivityNoviceSignView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	local var_6_0 = arg_6_0.viewParam.parent
+function ActivityNoviceSignView:onOpen()
+	local parentGO = self.viewParam.parent
 
-	gohelper.addChild(var_6_0, arg_6_0.viewGO)
+	gohelper.addChild(parentGO, self.viewGO)
 end
 
-function var_0_0._refresh(arg_7_0)
-	local var_7_0 = {}
+function ActivityNoviceSignView:_refresh()
+	local data = {}
 
-	for iter_7_0 = 1, 8 do
-		local var_7_1 = {
-			data = ActivityConfig.instance:getNorSignActivityCo(arg_7_0._actId, iter_7_0)
-		}
+	for i = 1, 8 do
+		local o = {}
 
-		table.insert(var_7_0, var_7_1)
+		o.data = ActivityConfig.instance:getNorSignActivityCo(self._actId, i)
+
+		table.insert(data, o)
 	end
 
-	ActivityNoviceSignItemListModel.instance:setDayList(var_7_0)
+	ActivityNoviceSignItemListModel.instance:setDayList(data)
 
-	local var_7_2 = ActivityConfig.instance:getActivityCo(arg_7_0._actId)
-	local var_7_3 = string.splitToNumber(var_7_0[8].data.bonus, "#")
-	local var_7_4, var_7_5 = ItemModel.instance:getItemConfigAndIcon(var_7_3[1], var_7_3[2])
+	local co = ActivityConfig.instance:getActivityCo(self._actId)
+	local boCo = string.splitToNumber(data[8].data.bonus, "#")
+	local itemCo, icon = ItemModel.instance:getItemConfigAndIcon(boCo[1], boCo[2])
 
-	if var_7_3[1] == MaterialEnum.MaterialType.Hero then
+	if boCo[1] == MaterialEnum.MaterialType.Hero then
 		if GameConfig:GetCurLangType() == LangSettings.jp then
-			gohelper.setActive(arg_7_0._gostarlist, false)
+			gohelper.setActive(self._gostarlist, false)
 
-			local var_7_6 = var_7_2.actDesc
-			local var_7_7 = string.rep("<sprite=0>", 5)
-			local var_7_8 = string.format("%s<color=#c66030>%s</color>", luaLang("activitynovicesign_character"), var_7_4.name)
+			local _str = co.actDesc
+			local star = string.rep("<sprite=0>", 5)
+			local _str2 = string.format("%s<color=#c66030>%s</color>", luaLang("activitynovicesign_character"), itemCo.name)
 
-			arg_7_0._txtdesc.text = string.format(var_7_6, var_7_7 .. var_7_8)
-			arg_7_0._txtreward.text = ""
+			self._txtdesc.text = string.format(_str, star .. _str2)
+			self._txtreward.text = ""
 		else
-			local var_7_9 = GameConfig:GetCurLangType() == LangSettings.zh and "%s<color=#c66030>%s</color>。" or "%s<color=#c66030> %s</color>."
+			local rewardInfo = GameConfig:GetCurLangType() == LangSettings.zh and "%s<color=#c66030>%s</color>。" or "%s<color=#c66030> %s</color>."
 
-			gohelper.setActive(arg_7_0._gostarlist, true)
+			gohelper.setActive(self._gostarlist, true)
 
-			arg_7_0._txtdesc.text = string.format("%s", var_7_2.actDesc)
-			arg_7_0._txtreward.text = string.format(var_7_9, luaLang("activitynovicesign_character"), var_7_4.name)
+			self._txtdesc.text = string.format("%s", co.actDesc)
+			self._txtreward.text = string.format(rewardInfo, luaLang("activitynovicesign_character"), itemCo.name)
 
-			if not arg_7_0._hasCreateStar then
-				for iter_7_1 = 1, 4 do
-					gohelper.cloneInPlace(arg_7_0._gostaricon, "star" .. iter_7_1)
+			if not self._hasCreateStar then
+				for i = 1, 4 do
+					gohelper.cloneInPlace(self._gostaricon, "star" .. i)
 				end
 
-				arg_7_0._hasCreateStar = true
+				self._hasCreateStar = true
 			end
 		end
 	else
-		gohelper.setActive(arg_7_0._gostarlist, false)
+		gohelper.setActive(self._gostarlist, false)
 
-		arg_7_0._txtdesc.text = string.format("%s", var_7_2.actDesc)
-		arg_7_0._txtreward.text = string.format("<color=#c66030>%s</color>", var_7_4.name)
+		self._txtdesc.text = string.format("%s", co.actDesc)
+		self._txtreward.text = string.format("<color=#c66030>%s</color>", itemCo.name)
 	end
 end
 
-function var_0_0.onClose(arg_8_0)
+function ActivityNoviceSignView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
-	arg_9_0._simagebg:UnLoadImage()
-	arg_9_0._simageframebg:UnLoadImage()
-	arg_9_0._simagecharacter:UnLoadImage()
+function ActivityNoviceSignView:onDestroyView()
+	self._simagebg:UnLoadImage()
+	self._simageframebg:UnLoadImage()
+	self._simagecharacter:UnLoadImage()
 end
 
-return var_0_0
+return ActivityNoviceSignView

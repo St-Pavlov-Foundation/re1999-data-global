@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity2_5.dungeon.view.store.VersionActivity2_5StoreViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/dungeon/view/store/VersionActivity2_5StoreViewContainer.lua
 
-local var_0_0 = class("VersionActivity2_5StoreViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_5.dungeon.view.store.VersionActivity2_5StoreViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local VersionActivity2_5StoreViewContainer = class("VersionActivity2_5StoreViewContainer", BaseViewContainer)
+
+function VersionActivity2_5StoreViewContainer:buildViews()
 	return {
 		VersionActivity2_5StoreView.New(),
 		TabViewGroup.New(1, "#go_btns"),
@@ -10,8 +12,8 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
+function VersionActivity2_5StoreViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -21,37 +23,43 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 		}
 	end
 
-	if arg_2_1 == 2 then
-		arg_2_0._currencyView = CurrencyView.New({
+	if tabContainerId == 2 then
+		self._currencyView = CurrencyView.New({
 			CurrencyEnum.CurrencyType.V2a5Dungeon
 		})
 
-		arg_2_0._currencyView:setOpenCallback(arg_2_0._onCurrencyOpen, arg_2_0)
+		self._currencyView:setOpenCallback(self._onCurrencyOpen, self)
 
 		return {
-			arg_2_0._currencyView
+			self._currencyView
 		}
 	end
 end
 
-function var_0_0._onCurrencyOpen(arg_3_0)
-	local var_3_0 = arg_3_0._currencyView:getCurrencyItem(1)
+function VersionActivity2_5StoreViewContainer:_onCurrencyOpen()
+	local item = self._currencyView:getCurrencyItem(1)
 
-	gohelper.setActive(var_3_0.btn, false)
-	gohelper.setActive(var_3_0.click, true)
-	recthelper.setAnchorX(var_3_0.txt.transform, 313)
+	gohelper.setActive(item.btn, false)
+	gohelper.setActive(item.click, true)
+	recthelper.setAnchorX(item.txt.transform, 313)
 end
 
-function var_0_0.playOpenTransition(arg_4_0)
-	arg_4_0:startViewOpenBlock()
-	arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animation)):Play("activitystore_open")
-	TaskDispatcher.runDelay(arg_4_0.onPlayOpenTransitionFinish, arg_4_0, 0.5)
+function VersionActivity2_5StoreViewContainer:playOpenTransition()
+	self:startViewOpenBlock()
+
+	local animation = self.viewGO:GetComponent(typeof(UnityEngine.Animation))
+
+	animation:Play("activitystore_open")
+	TaskDispatcher.runDelay(self.onPlayOpenTransitionFinish, self, 0.5)
 end
 
-function var_0_0.playCloseTransition(arg_5_0)
-	arg_5_0:startViewCloseBlock()
-	arg_5_0.viewGO:GetComponent(typeof(UnityEngine.Animation)):Play("activitystore_close")
-	TaskDispatcher.runDelay(arg_5_0.onPlayCloseTransitionFinish, arg_5_0, 0.167)
+function VersionActivity2_5StoreViewContainer:playCloseTransition()
+	self:startViewCloseBlock()
+
+	local animation = self.viewGO:GetComponent(typeof(UnityEngine.Animation))
+
+	animation:Play("activitystore_close")
+	TaskDispatcher.runDelay(self.onPlayCloseTransitionFinish, self, 0.167)
 end
 
-return var_0_0
+return VersionActivity2_5StoreViewContainer

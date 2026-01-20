@@ -1,17 +1,19 @@
-﻿module("modules.configs.excel2json.lua_hero3124_buff_talent", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_hero3124_buff_talent.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_hero3124_buff_talent", package.seeall)
+
+local lua_hero3124_buff_talent = {}
+local fields = {
 	buffId = 1,
 	rank = 2
 }
-local var_0_2 = {
+local primaryKey = {
 	"buffId"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_hero3124_buff_talent.onLoad(json)
+	lua_hero3124_buff_talent.configList, lua_hero3124_buff_talent.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_hero3124_buff_talent

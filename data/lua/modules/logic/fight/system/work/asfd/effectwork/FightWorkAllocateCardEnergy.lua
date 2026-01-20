@@ -1,36 +1,40 @@
-﻿module("modules.logic.fight.system.work.asfd.effectwork.FightWorkAllocateCardEnergy", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/asfd/effectwork/FightWorkAllocateCardEnergy.lua
 
-local var_0_0 = class("FightWorkAllocateCardEnergy", FightEffectBase)
+module("modules.logic.fight.system.work.asfd.effectwork.FightWorkAllocateCardEnergy", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0.SAFETIME = 3
+local FightWorkAllocateCardEnergy = class("FightWorkAllocateCardEnergy", FightEffectBase)
+
+function FightWorkAllocateCardEnergy:onConstructor()
+	self.SAFETIME = 3
 end
 
-var_0_0.AllocateEnum = {
+FightWorkAllocateCardEnergy.AllocateEnum = {
 	Clear = 0,
 	Allocate = 1
 }
 
-function var_0_0.onStart(arg_2_0)
-	if arg_2_0.actEffectData.effectNum1 ~= var_0_0.AllocateEnum.Allocate then
-		arg_2_0:onDone(true)
+function FightWorkAllocateCardEnergy:onStart()
+	local effectNum1 = self.actEffectData.effectNum1
+
+	if effectNum1 ~= FightWorkAllocateCardEnergy.AllocateEnum.Allocate then
+		self:onDone(true)
 
 		return
 	end
 
-	FightController.instance:registerCallback(FightEvent.ASFD_AllocateCardEnergyDone, arg_2_0.allocateCardEnergyDone, arg_2_0)
+	FightController.instance:registerCallback(FightEvent.ASFD_AllocateCardEnergyDone, self.allocateCardEnergyDone, self)
 	FightController.instance:dispatchEvent(FightEvent.ASFD_StartAllocateCardEnergy)
 end
 
-var_0_0.ASFDOpenTime = 0.5
+FightWorkAllocateCardEnergy.ASFDOpenTime = 0.5
 
-function var_0_0.allocateCardEnergyDone(arg_3_0)
-	TaskDispatcher.runDelay(arg_3_0._delayDone, arg_3_0, var_0_0.ASFDOpenTime / FightModel.instance:getUISpeed())
+function FightWorkAllocateCardEnergy:allocateCardEnergyDone()
+	TaskDispatcher.runDelay(self._delayDone, self, FightWorkAllocateCardEnergy.ASFDOpenTime / FightModel.instance:getUISpeed())
 end
 
-function var_0_0.clearWork(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._delayDone, arg_4_0)
-	FightController.instance:unregisterCallback(FightEvent.ASFD_AllocateCardEnergyDone, arg_4_0.allocateCardEnergyDone, arg_4_0)
+function FightWorkAllocateCardEnergy:clearWork()
+	TaskDispatcher.cancelTask(self._delayDone, self)
+	FightController.instance:unregisterCallback(FightEvent.ASFD_AllocateCardEnergyDone, self.allocateCardEnergyDone, self)
 end
 
-return var_0_0
+return FightWorkAllocateCardEnergy

@@ -1,269 +1,270 @@
-﻿module("modules.logic.limited.controller.LimitedRoleController", package.seeall)
+﻿-- chunkname: @modules/logic/limited/controller/LimitedRoleController.lua
 
-local var_0_0 = class("LimitedRoleController", BaseController)
+module("modules.logic.limited.controller.LimitedRoleController", package.seeall)
 
-var_0_0.PlayAction = GameUtil.getEventId()
-var_0_0.ManualSkip = GameUtil.getEventId()
-var_0_0.VideoState = GameUtil.getEventId()
+local LimitedRoleController = class("LimitedRoleController", BaseController)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._isPlayingVideo = false
-	arg_1_0._isPlayingAction = false
+LimitedRoleController.PlayAction = GameUtil.getEventId()
+LimitedRoleController.ManualSkip = GameUtil.getEventId()
+LimitedRoleController.VideoState = GameUtil.getEventId()
+
+function LimitedRoleController:onInit()
+	self._isPlayingVideo = false
+	self._isPlayingAction = false
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._isPlayingVideo = false
-	arg_2_0._isPlayingAction = false
+function LimitedRoleController:reInit()
+	self._isPlayingVideo = false
+	self._isPlayingAction = false
 
-	arg_2_0:unregisterCallback(var_0_0.PlayAction, arg_2_0._playAction, arg_2_0)
-	arg_2_0:unregisterCallback(var_0_0.ManualSkip, arg_2_0._manualSkip, arg_2_0)
-	arg_2_0:unregisterCallback(var_0_0.VideoState, arg_2_0._onVideoState, arg_2_0)
-	TaskDispatcher.cancelTask(arg_2_0._stopMainBgm, arg_2_0)
-	TaskDispatcher.cancelTask(arg_2_0._HideMainView, arg_2_0)
-	arg_2_0:_clearEffect()
-	arg_2_0:_stopVideoAudio()
+	self:unregisterCallback(LimitedRoleController.PlayAction, self._playAction, self)
+	self:unregisterCallback(LimitedRoleController.ManualSkip, self._manualSkip, self)
+	self:unregisterCallback(LimitedRoleController.VideoState, self._onVideoState, self)
+	TaskDispatcher.cancelTask(self._stopMainBgm, self)
+	TaskDispatcher.cancelTask(self._HideMainView, self)
+	self:_clearEffect()
+	self:_stopVideoAudio()
 end
 
-function var_0_0.play(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	if arg_3_0._isPlayingVideo and isDebugBuild then
-		logError("正在播放限定角色入场效果 " .. arg_3_1)
+function LimitedRoleController:play(stage, limitedCO, callback, callbackObj)
+	if self._isPlayingVideo and isDebugBuild then
+		logError("正在播放限定角色入场效果 " .. stage)
 
 		return
 	end
 
-	arg_3_0:_stopVideoAudio()
-	arg_3_0:_stopVoice()
-	TaskDispatcher.cancelTask(arg_3_0._clearActionState, arg_3_0)
+	self:_stopVideoAudio()
+	self:_stopVoice()
+	TaskDispatcher.cancelTask(self._clearActionState, self)
 
-	arg_3_0._isPlayingVideo = true
-	arg_3_0._stage = arg_3_1
-	arg_3_0._limitedCO = arg_3_2
-	arg_3_0._callback = arg_3_3
-	arg_3_0._callbackObj = arg_3_4
+	self._isPlayingVideo = true
+	self._stage = stage
+	self._limitedCO = limitedCO
+	self._callback = callback
+	self._callbackObj = callbackObj
 
-	arg_3_0:registerCallback(var_0_0.PlayAction, arg_3_0._playAction, arg_3_0)
-	arg_3_0:registerCallback(var_0_0.ManualSkip, arg_3_0._manualSkip, arg_3_0)
+	self:registerCallback(LimitedRoleController.PlayAction, self._playAction, self)
+	self:registerCallback(LimitedRoleController.ManualSkip, self._manualSkip, self)
 	ViewMgr.instance:openView(ViewName.LimitedRoleView, {
-		limitedCO = arg_3_2
+		limitedCO = limitedCO
 	})
-	arg_3_0:_stopMainBgm()
-	arg_3_0:_HideMainView()
-	AudioBgmManager.instance:registerCallback(AudioBgmEvent.onPlayBgm, arg_3_0._stopMainBgm, arg_3_0, LuaEventSystem.Low)
-	TaskDispatcher.runDelay(arg_3_0._HideMainView, arg_3_0, 2)
-	arg_3_0:registerCallback(var_0_0.VideoState, arg_3_0._onVideoState, arg_3_0)
+	self:_stopMainBgm()
+	self:_HideMainView()
+	AudioBgmManager.instance:registerCallback(AudioBgmEvent.onPlayBgm, self._stopMainBgm, self, LuaEventSystem.Low)
+	TaskDispatcher.runDelay(self._HideMainView, self, 2)
+	self:registerCallback(LimitedRoleController.VideoState, self._onVideoState, self)
 end
 
-function var_0_0._onVideoState(arg_4_0, arg_4_1)
-	if arg_4_1 == AvProEnum.PlayerStatus.Started then
-		arg_4_0:unregisterCallback(var_0_0.VideoState, arg_4_0._onVideoState, arg_4_0)
+function LimitedRoleController:_onVideoState(state)
+	if state == AvProEnum.PlayerStatus.Started then
+		self:unregisterCallback(LimitedRoleController.VideoState, self._onVideoState, self)
 
-		if arg_4_0._limitedCO and arg_4_0._limitedCO.audio > 0 then
-			AudioMgr.instance:trigger(arg_4_0._limitedCO.audio, nil)
+		if self._limitedCO and self._limitedCO.audio > 0 then
+			AudioMgr.instance:trigger(self._limitedCO.audio, nil)
 		end
 	end
 end
 
-function var_0_0.isPlayingVideo(arg_5_0)
-	return arg_5_0._isPlayingVideo
+function LimitedRoleController:isPlayingVideo()
+	return self._isPlayingVideo
 end
 
-function var_0_0.isPlayingAction(arg_6_0)
-	return arg_6_0._isPlayingAction
+function LimitedRoleController:isPlayingAction()
+	return self._isPlayingAction
 end
 
-function var_0_0.isPlaying(arg_7_0)
-	return arg_7_0._isPlayingVideo or arg_7_0._isPlayingAction
+function LimitedRoleController:isPlaying()
+	return self._isPlayingVideo or self._isPlayingAction
 end
 
-function var_0_0.stop(arg_8_0)
-	arg_8_0._isPlayingVideo = false
-	arg_8_0._callback = nil
-	arg_8_0._callbackObj = nil
+function LimitedRoleController:stop()
+	self._isPlayingVideo = false
+	self._callback = nil
+	self._callbackObj = nil
 
-	arg_8_0:unregisterCallback(var_0_0.PlayAction, arg_8_0._playAction, arg_8_0)
-	arg_8_0:unregisterCallback(var_0_0.ManualSkip, arg_8_0._manualSkip, arg_8_0)
-	arg_8_0:unregisterCallback(var_0_0.VideoState, arg_8_0._onVideoState, arg_8_0)
-	AudioBgmManager.instance:unregisterCallback(AudioBgmEvent.onPlayBgm, arg_8_0._stopMainBgm, arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0._HideMainView, arg_8_0)
+	self:unregisterCallback(LimitedRoleController.PlayAction, self._playAction, self)
+	self:unregisterCallback(LimitedRoleController.ManualSkip, self._manualSkip, self)
+	self:unregisterCallback(LimitedRoleController.VideoState, self._onVideoState, self)
+	AudioBgmManager.instance:unregisterCallback(AudioBgmEvent.onPlayBgm, self._stopMainBgm, self)
+	TaskDispatcher.cancelTask(self._HideMainView, self)
 	ViewMgr.instance:closeView(ViewName.LimitedRoleView)
 
-	if arg_8_0._stage and arg_8_0._stage == LimitedRoleEnum.Stage.FirstLogin then
+	if self._stage and self._stage == LimitedRoleEnum.Stage.FirstLogin then
 		MainController.instance:dispatchEvent(MainEvent.SetMainViewVisible, true)
 	end
 end
 
-function var_0_0._stopMainBgm(arg_9_0)
+function LimitedRoleController:_stopMainBgm()
 	AudioBgmManager.instance:stopBgm(AudioBgmEnum.Layer.Main)
 end
 
-function var_0_0._HideMainView(arg_10_0)
-	if arg_10_0._stage == LimitedRoleEnum.Stage.FirstLogin and ViewMgr.instance:isOpen(ViewName.MainView) then
+function LimitedRoleController:_HideMainView()
+	if self._stage == LimitedRoleEnum.Stage.FirstLogin and ViewMgr.instance:isOpen(ViewName.MainView) then
 		MainController.instance:dispatchEvent(MainEvent.SetMainViewVisible, false)
 	end
 end
 
-function var_0_0._manualSkip(arg_11_0)
-	arg_11_0:unregisterCallback(var_0_0.PlayAction, arg_11_0._playAction, arg_11_0)
-	arg_11_0:unregisterCallback(var_0_0.ManualSkip, arg_11_0._manualSkip, arg_11_0)
-	arg_11_0:unregisterCallback(var_0_0.VideoState, arg_11_0._onVideoState, arg_11_0)
+function LimitedRoleController:_manualSkip()
+	self:unregisterCallback(LimitedRoleController.PlayAction, self._playAction, self)
+	self:unregisterCallback(LimitedRoleController.ManualSkip, self._manualSkip, self)
+	self:unregisterCallback(LimitedRoleController.VideoState, self._onVideoState, self)
 
-	arg_11_0._isPlayingVideo = false
-	arg_11_0._isPlayingAction = false
+	self._isPlayingVideo = false
+	self._isPlayingAction = false
 
-	arg_11_0:_clearEffect()
-	arg_11_0:_clearActionState()
+	self:_clearEffect()
+	self:_clearActionState()
 end
 
-function var_0_0._playAction(arg_12_0)
-	arg_12_0:unregisterCallback(var_0_0.PlayAction, arg_12_0._playAction, arg_12_0)
-	arg_12_0:unregisterCallback(var_0_0.ManualSkip, arg_12_0._manualSkip, arg_12_0)
-	arg_12_0:unregisterCallback(var_0_0.VideoState, arg_12_0._onVideoState, arg_12_0)
-	AudioBgmManager.instance:unregisterCallback(AudioBgmEvent.onPlayBgm, arg_12_0._stopMainBgm, arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0._HideMainView, arg_12_0)
+function LimitedRoleController:_playAction()
+	self:unregisterCallback(LimitedRoleController.PlayAction, self._playAction, self)
+	self:unregisterCallback(LimitedRoleController.ManualSkip, self._manualSkip, self)
+	self:unregisterCallback(LimitedRoleController.VideoState, self._onVideoState, self)
+	AudioBgmManager.instance:unregisterCallback(AudioBgmEvent.onPlayBgm, self._stopMainBgm, self)
+	TaskDispatcher.cancelTask(self._HideMainView, self)
 	AudioBgmManager.instance:playBgm(AudioBgmEnum.Layer.Main)
 
-	local var_12_0 = arg_12_0._limitedCO and arg_12_0._limitedCO.voice
-	local var_12_1 = arg_12_0._limitedCO and arg_12_0._limitedCO.actionTime
-	local var_12_2 = arg_12_0._limitedCO and arg_12_0._limitedCO.entranceEffect
-	local var_12_3 = arg_12_0._limitedCO and arg_12_0._limitedCO.effectDuration
-	local var_12_4 = ViewMgr.instance:getContainer(ViewName.MainView)
+	local voice = self._limitedCO and self._limitedCO.voice
+	local actionTime = self._limitedCO and self._limitedCO.actionTime
+	local effect = self._limitedCO and self._limitedCO.entranceEffect
+	local effectDuration = self._limitedCO and self._limitedCO.effectDuration
+	local mainViewContainer = ViewMgr.instance:getContainer(ViewName.MainView)
 
-	if var_12_4 then
-		if not string.nilorempty(var_12_2) then
-			arg_12_0:_playEntranceEffect(var_12_2, var_12_3)
+	if mainViewContainer then
+		if not string.nilorempty(effect) then
+			self:_playEntranceEffect(effect, effectDuration)
 		end
 
-		local var_12_5 = var_12_4:getMainHeroView()
-		local var_12_6, var_12_7 = CharacterSwitchListModel.instance:getMainHero()
-		local var_12_8 = PlayerModel.instance:getPropKeyValue(PlayerEnum.SimpleProperty.SkinState, var_12_6, 1)
-		local var_12_9
+		local mainHeroView = mainViewContainer:getMainHeroView()
+		local curHeroId, curSkinId = CharacterSwitchListModel.instance:getMainHero()
+		local skinState = PlayerModel.instance:getPropKeyValue(PlayerEnum.SimpleProperty.SkinState, curHeroId, 1)
 
-		var_12_9 = tonumber(var_12_8) or 1
+		skinState = tonumber(skinState) or 1
 
-		local var_12_10 = var_12_0[var_12_9] or 0
-		local var_12_11 = var_12_1[var_12_9] or 0
+		local voiceId = voice[skinState] or 0
+		local actionTime2 = actionTime[skinState] or 0
 
-		if var_12_5 and var_12_10 > 0 then
-			var_12_5:checkSwitchShowInScene()
+		if mainHeroView and voiceId > 0 then
+			mainHeroView:checkSwitchShowInScene()
 
-			local var_12_12 = lua_skin.configDict[arg_12_0._limitedCO.id]
-			local var_12_13 = var_12_12 and var_12_12.characterId
-			local var_12_14 = CharacterDataConfig.instance:getCharacterVoiceCO(var_12_13, var_12_10)
+			local skinCO = lua_skin.configDict[self._limitedCO.id]
+			local characterId = skinCO and skinCO.characterId
+			local voiceCO = CharacterDataConfig.instance:getCharacterVoiceCO(characterId, voiceId)
 
-			if var_12_14 then
-				if var_12_11 > 0 then
-					if arg_12_0._stage == LimitedRoleEnum.Stage.FirstLogin then
-						arg_12_0:_blockMainViewClick(var_12_11)
+			if voiceCO then
+				if actionTime2 > 0 then
+					if self._stage == LimitedRoleEnum.Stage.FirstLogin then
+						self:_blockMainViewClick(actionTime2)
 					end
 
-					arg_12_0._isPlayingAction = true
+					self._isPlayingAction = true
 
-					TaskDispatcher.runDelay(arg_12_0._clearActionState, arg_12_0, var_12_11)
+					TaskDispatcher.runDelay(self._clearActionState, self, actionTime2)
 				end
 
-				var_12_5:playVoice(var_12_14)
+				mainHeroView:playVoice(voiceCO)
 			else
-				logError("限定角色语音配置不存在 " .. var_12_10)
+				logError("限定角色语音配置不存在 " .. voiceId)
 			end
 		end
 	end
 
-	arg_12_0._isPlayingVideo = false
+	self._isPlayingVideo = false
 end
 
-function var_0_0._playEntranceEffect(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0 = GameSceneMgr.instance:getScene(SceneType.Main):getSceneContainerGO()
+function LimitedRoleController:_playEntranceEffect(effect, duration)
+	local mainSceneRoot = GameSceneMgr.instance:getScene(SceneType.Main):getSceneContainerGO()
 
-	arg_13_0._effectRoot = gohelper.create3d(var_13_0, "EntranceEffect")
-	arg_13_0._effectPrefabInstantiate = PrefabInstantiate.Create(arg_13_0._effectRoot)
+	self._effectRoot = gohelper.create3d(mainSceneRoot, "EntranceEffect")
+	self._effectPrefabInstantiate = PrefabInstantiate.Create(self._effectRoot)
 
-	arg_13_0._effectPrefabInstantiate:startLoad(ResUrl.getEffect(arg_13_1))
-	TaskDispatcher.runDelay(arg_13_0._clearEffect, arg_13_0, arg_13_2 or 5)
+	self._effectPrefabInstantiate:startLoad(ResUrl.getEffect(effect))
+	TaskDispatcher.runDelay(self._clearEffect, self, duration or 5)
 end
 
-function var_0_0._clearEffect(arg_14_0)
-	TaskDispatcher.cancelTask(arg_14_0._clearEffect, arg_14_0)
+function LimitedRoleController:_clearEffect()
+	TaskDispatcher.cancelTask(self._clearEffect, self)
 
-	if arg_14_0._effectPrefabInstantiate then
-		arg_14_0._effectPrefabInstantiate:dispose()
+	if self._effectPrefabInstantiate then
+		self._effectPrefabInstantiate:dispose()
 
-		arg_14_0._effectPrefabInstantiate = nil
+		self._effectPrefabInstantiate = nil
 	end
 
-	if not gohelper.isNil(arg_14_0._effectRoot) then
-		gohelper.destroy(arg_14_0._effectRoot)
+	if not gohelper.isNil(self._effectRoot) then
+		gohelper.destroy(self._effectRoot)
 
-		arg_14_0._effectRoot = nil
-	end
-end
-
-function var_0_0._stopVideoAudio(arg_15_0)
-	if arg_15_0._limitedCO and arg_15_0._limitedCO.stopAudio > 0 then
-		AudioMgr.instance:trigger(arg_15_0._limitedCO.stopAudio)
+		self._effectRoot = nil
 	end
 end
 
-function var_0_0._stopVoice(arg_16_0)
-	arg_16_0._isPlayingAction = false
+function LimitedRoleController:_stopVideoAudio()
+	if self._limitedCO and self._limitedCO.stopAudio > 0 then
+		AudioMgr.instance:trigger(self._limitedCO.stopAudio)
+	end
+end
+
+function LimitedRoleController:_stopVoice()
+	self._isPlayingAction = false
 
 	MainController.instance:dispatchEvent(MainEvent.ForceStopVoice)
 end
 
-function var_0_0._clearActionState(arg_17_0)
-	arg_17_0:_stopVideoAudio()
+function LimitedRoleController:_clearActionState()
+	self:_stopVideoAudio()
 	AudioBgmManager.instance:playBgm(AudioBgmEnum.Layer.Main)
 
-	if arg_17_0._stage == LimitedRoleEnum.Stage.FirstLogin then
+	if self._stage == LimitedRoleEnum.Stage.FirstLogin then
 		MainController.instance:dispatchEvent(MainEvent.SetMainViewVisible, true)
 	end
 
-	arg_17_0:_cancelBlockMainViewClick()
-	AudioBgmManager.instance:unregisterCallback(AudioBgmEvent.onPlayBgm, arg_17_0._stopMainBgm, arg_17_0)
-	TaskDispatcher.cancelTask(arg_17_0._HideMainView, arg_17_0)
+	self:_cancelBlockMainViewClick()
+	AudioBgmManager.instance:unregisterCallback(AudioBgmEvent.onPlayBgm, self._stopMainBgm, self)
+	TaskDispatcher.cancelTask(self._HideMainView, self)
 
-	arg_17_0._stage = nil
-	arg_17_0._isPlayingAction = false
-	arg_17_0._limitedCO = nil
+	self._stage = nil
+	self._isPlayingAction = false
+	self._limitedCO = nil
 
-	local var_17_0 = arg_17_0._callback
-	local var_17_1 = arg_17_0._callbackObj
+	local callback = self._callback
+	local callbackObj = self._callbackObj
 
-	arg_17_0._callback = nil
-	arg_17_0._callbackObj = nil
+	self._callback = nil
+	self._callbackObj = nil
 
-	if var_17_0 then
-		var_17_0(var_17_1)
+	if callback then
+		callback(callbackObj)
 	end
 end
 
-function var_0_0.getNeedPlayLimitedCO(arg_18_0)
+function LimitedRoleController:getNeedPlayLimitedCO()
 	if VersionValidator.instance:isInReviewing() then
 		return nil
 	end
 
-	local var_18_0, var_18_1 = CharacterSwitchListModel.instance:getMainHero(false)
-	local var_18_2 = lua_character_limited.configDict[var_18_1]
+	local curHeroId, curSkinId = CharacterSwitchListModel.instance:getMainHero(false)
+	local limitedCO = lua_character_limited.configDict[curSkinId]
 
-	if var_18_2 and not string.nilorempty(var_18_2.entranceMv) then
-		return var_18_2
+	if limitedCO and not string.nilorempty(limitedCO.entranceMv) then
+		return limitedCO
 	end
 
 	return nil
 end
 
-function var_0_0._blockMainViewClick(arg_19_0, arg_19_1)
+function LimitedRoleController:_blockMainViewClick(cancelDelay)
 	UIBlockMgr.instance:startBlock(UIBlockKey.LimitedRoleMainView)
 	UIBlockMgrExtend.setNeedCircleMv(false)
-	TaskDispatcher.cancelTask(arg_19_0._cancelBlockMainViewClick, arg_19_0)
-	TaskDispatcher.runDelay(arg_19_0._cancelBlockMainViewClick, arg_19_0, arg_19_1 or 10)
+	TaskDispatcher.cancelTask(self._cancelBlockMainViewClick, self)
+	TaskDispatcher.runDelay(self._cancelBlockMainViewClick, self, cancelDelay or 10)
 end
 
-function var_0_0._cancelBlockMainViewClick(arg_20_0)
+function LimitedRoleController:_cancelBlockMainViewClick()
 	UIBlockMgr.instance:endBlock(UIBlockKey.LimitedRoleMainView)
 	UIBlockMgrExtend.setNeedCircleMv(true)
-	TaskDispatcher.cancelTask(arg_20_0._cancelBlockMainViewClick, arg_20_0)
+	TaskDispatcher.cancelTask(self._cancelBlockMainViewClick, self)
 end
 
-var_0_0.instance = var_0_0.New()
+LimitedRoleController.instance = LimitedRoleController.New()
 
-return var_0_0
+return LimitedRoleController

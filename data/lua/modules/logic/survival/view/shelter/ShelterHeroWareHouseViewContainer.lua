@@ -1,75 +1,79 @@
-﻿module("modules.logic.survival.view.shelter.ShelterHeroWareHouseViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/ShelterHeroWareHouseViewContainer.lua
 
-local var_0_0 = class("ShelterHeroWareHouseViewContainer", BaseViewContainer)
+module("modules.logic.survival.view.shelter.ShelterHeroWareHouseViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+local ShelterHeroWareHouseViewContainer = class("ShelterHeroWareHouseViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "#scroll_card"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes.itemRes
-	var_1_1.cellClass = ShelterHeroWareHouseItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 6
-	var_1_1.cellWidth = 260
-	var_1_1.cellHeight = 600
-	var_1_1.cellSpaceH = 20
-	var_1_1.cellSpaceV = 0
-	var_1_1.startSpace = 20
-	var_1_1.frameUpdateMs = 100
+function ShelterHeroWareHouseViewContainer:buildViews()
+	local views = {}
+	local scrollParam = ListScrollParam.New()
 
-	local var_1_2 = {}
+	scrollParam.scrollGOPath = "#scroll_card"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes.itemRes
+	scrollParam.cellClass = ShelterHeroWareHouseItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 6
+	scrollParam.cellWidth = 260
+	scrollParam.cellHeight = 600
+	scrollParam.cellSpaceH = 20
+	scrollParam.cellSpaceV = 0
+	scrollParam.startSpace = 20
+	scrollParam.frameUpdateMs = 100
 
-	for iter_1_0 = 1, 12 do
-		var_1_2[iter_1_0] = math.ceil((iter_1_0 - 1) % 6) * 0.06
+	local cardAnimationDelayTimes = {}
+
+	for i = 1, 12 do
+		local delayTime = math.ceil((i - 1) % 6) * 0.06
+
+		cardAnimationDelayTimes[i] = delayTime
 	end
 
-	arg_1_0._cardScrollView = LuaListScrollViewWithAnimator.New(CharacterBackpackCardListModel.instance, var_1_1, var_1_2)
+	self._cardScrollView = LuaListScrollViewWithAnimator.New(CharacterBackpackCardListModel.instance, scrollParam, cardAnimationDelayTimes)
 
-	table.insert(var_1_0, arg_1_0._cardScrollView)
-	table.insert(var_1_0, ShelterHeroWareHouseView.New())
-	table.insert(var_1_0, CommonRainEffectView.New("bg/#go_glowcontainer"))
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
+	table.insert(views, self._cardScrollView)
+	table.insert(views, ShelterHeroWareHouseView.New())
+	table.insert(views, CommonRainEffectView.New("bg/#go_glowcontainer"))
+	table.insert(views, TabViewGroup.New(1, "#go_topleft"))
 
-	return var_1_0
+	return views
 end
 
-function var_0_0.playCardOpenAnimation(arg_2_0)
-	if arg_2_0._cardScrollView then
-		arg_2_0._cardScrollView:playOpenAnimation()
+function ShelterHeroWareHouseViewContainer:playCardOpenAnimation()
+	if self._cardScrollView then
+		self._cardScrollView:playOpenAnimation()
 	end
 end
 
-function var_0_0.buildTabViews(arg_3_0, arg_3_1)
-	if arg_3_1 == 1 then
-		arg_3_0._navigateButtonView = NavigateButtonsView.New({
+function ShelterHeroWareHouseViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_3_0._navigateButtonView
+			self._navigateButtonView
 		}
 	end
 end
 
-function var_0_0.onContainerOpenFinish(arg_4_0)
-	arg_4_0._navigateButtonView:resetCloseBtnAudioId(AudioEnum.UI.UI_Rolesclose)
-	arg_4_0._navigateButtonView:resetHomeBtnAudioId(AudioEnum.UI.UI_Rolesclose)
+function ShelterHeroWareHouseViewContainer:onContainerOpenFinish()
+	self._navigateButtonView:resetCloseBtnAudioId(AudioEnum.UI.UI_Rolesclose)
+	self._navigateButtonView:resetHomeBtnAudioId(AudioEnum.UI.UI_Rolesclose)
 end
 
-function var_0_0.onContainerOpen(arg_5_0)
-	arg_5_0.notPlayAnimation = true
+function ShelterHeroWareHouseViewContainer:onContainerOpen()
+	self.notPlayAnimation = true
 end
 
-function var_0_0.onContainerClose(arg_6_0)
-	arg_6_0.notPlayAnimation = false
+function ShelterHeroWareHouseViewContainer:onContainerClose()
+	self.notPlayAnimation = false
 end
 
-function var_0_0.playCloseTransition(arg_7_0)
-	arg_7_0:onPlayCloseTransitionFinish()
+function ShelterHeroWareHouseViewContainer:playCloseTransition()
+	self:onPlayCloseTransitionFinish()
 end
 
-return var_0_0
+return ShelterHeroWareHouseViewContainer

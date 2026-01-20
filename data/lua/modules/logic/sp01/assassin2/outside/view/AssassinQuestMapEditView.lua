@@ -1,247 +1,252 @@
-﻿module("modules.logic.sp01.assassin2.outside.view.AssassinQuestMapEditView", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/outside/view/AssassinQuestMapEditView.lua
 
-local var_0_0 = class("AssassinQuestMapEditView", BaseView)
-local var_0_1 = 300
-local var_0_2 = 50
-local var_0_3 = -352
-local var_0_4 = 0
+module("modules.logic.sp01.assassin2.outside.view.AssassinQuestMapEditView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goroot = gohelper.findChild(arg_1_0.viewGO, "root")
-	arg_1_0._gocontainer = gohelper.findChild(arg_1_0.viewGO, "root/#go_drag/simage_fullbg/#go_container")
+local AssassinQuestMapEditView = class("AssassinQuestMapEditView", BaseView)
+local SingleQuestLabelItemWidth = 300
+local SingleQuestLabelItemHeight = 50
+local QuestLabelListPosX = -352
+local QuestLabelListPosY = 0
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function AssassinQuestMapEditView:onInitView()
+	self._goroot = gohelper.findChild(self.viewGO, "root")
+	self._gocontainer = gohelper.findChild(self.viewGO, "root/#go_drag/simage_fullbg/#go_container")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0.frameHandle = UpdateBeat:CreateListener(arg_2_0.onFrame, arg_2_0)
+function AssassinQuestMapEditView:addEvents()
+	self.frameHandle = UpdateBeat:CreateListener(self.onFrame, self)
 
-	UpdateBeat:AddListener(arg_2_0.frameHandle)
+	UpdateBeat:AddListener(self.frameHandle)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	if arg_3_0._questEditItemTab then
-		for iter_3_0, iter_3_1 in pairs(arg_3_0._questEditItemTab) do
-			iter_3_1.btnQuestItem:RemoveClickListener()
+function AssassinQuestMapEditView:removeEvents()
+	if self._questEditItemTab then
+		for _, questEditItem in pairs(self._questEditItemTab) do
+			questEditItem.btnQuestItem:RemoveClickListener()
 		end
 	end
 
-	if arg_3_0._btnexport then
-		arg_3_0._btnexport:RemoveClickListener()
+	if self._btnexport then
+		self._btnexport:RemoveClickListener()
 	end
 
-	if arg_3_0._drag then
-		arg_3_0._drag:RemoveDragBeginListener()
-		arg_3_0._drag:RemoveDragListener()
-		arg_3_0._drag:RemoveDragEndListener()
+	if self._drag then
+		self._drag:RemoveDragBeginListener()
+		self._drag:RemoveDragListener()
+		self._drag:RemoveDragEndListener()
 	end
 end
 
-function var_0_0.onFrame(arg_4_0)
+function AssassinQuestMapEditView:onFrame()
 	if UnityEngine.Input.GetKeyUp(UnityEngine.KeyCode.Q) then
-		if arg_4_0._isEditMode then
-			arg_4_0._isEditMode = false
+		if self._isEditMode then
+			self._isEditMode = false
 
-			gohelper.setActive(arg_4_0.goDrag, false)
+			gohelper.setActive(self.goDrag, false)
 		else
-			if gohelper.isNil(arg_4_0.goEditBtnList) then
-				arg_4_0:initEditorTools()
-				arg_4_0:initQuestCoList()
+			if gohelper.isNil(self.goEditBtnList) then
+				self:initEditorTools()
+				self:initQuestCoList()
 			end
 
-			arg_4_0._isEditMode = true
+			self._isEditMode = true
 
-			GameFacade.showToastString(string.format("进入编辑模式，MapId : %s", arg_4_0._mapId))
+			GameFacade.showToastString(string.format("进入编辑模式，MapId : %s", self._mapId))
 		end
 
-		gohelper.setActive(arg_4_0.goEditBtnList, arg_4_0._isEditMode)
+		gohelper.setActive(self.goEditBtnList, self._isEditMode)
 	end
 end
 
-function var_0_0._btnquestItemOnClick(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0._questEditItemTab[arg_5_1]
-	local var_5_1 = var_5_0 and var_5_0.questId
-	local var_5_2 = AssassinConfig.instance:getQuestCfg(var_5_1)
+function AssassinQuestMapEditView:_btnquestItemOnClick(index)
+	local item = self._questEditItemTab[index]
+	local questId = item and item.questId
+	local questCo = AssassinConfig.instance:getQuestCfg(questId)
 
-	if not var_5_2 then
+	if not questCo then
 		return
 	end
 
-	local var_5_3 = arg_5_0._curEditItemIndex and arg_5_0._questEditItemTab[arg_5_0._curEditItemIndex]
+	local lastEditItem = self._curEditItemIndex and self._questEditItemTab[self._curEditItemIndex]
 
-	if var_5_3 then
-		SLFramework.UGUI.GuiHelper.SetColor(var_5_3.txtQuestName, "#FFFFFF")
+	if lastEditItem then
+		SLFramework.UGUI.GuiHelper.SetColor(lastEditItem.txtQuestName, "#FFFFFF")
 	end
 
-	if arg_5_0._curEditItemIndex == arg_5_1 then
-		arg_5_0._editItemIcon = nil
-		arg_5_0._curEditItemIndex = false
+	if self._curEditItemIndex == index then
+		self._editItemIcon = nil
+		self._curEditItemIndex = false
 	else
-		arg_5_0._editItemIcon = arg_5_0:_getQuestIconItem(var_5_2.id)
-		arg_5_0._curEditItemIndex = arg_5_1
+		self._editItemIcon = self:_getQuestIconItem(questCo.id)
+		self._curEditItemIndex = index
 	end
 
-	gohelper.setActive(arg_5_0.goDrag, arg_5_0._curEditItemIndex)
+	gohelper.setActive(self.goDrag, self._curEditItemIndex)
 
-	local var_5_4 = arg_5_0._curEditItemIndex and arg_5_0._questEditItemTab[arg_5_0._curEditItemIndex]
+	local newEditItem = self._curEditItemIndex and self._questEditItemTab[self._curEditItemIndex]
 
-	if var_5_4 then
-		SLFramework.UGUI.GuiHelper.SetColor(var_5_4.txtQuestName, "#FF0000")
-	end
-end
-
-function var_0_0._getQuestIconItem(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0.viewContainer.assassinMapView
-
-	if var_6_0 and var_6_0._showQuestItemDict then
-		return var_6_0._showQuestItemDict[arg_6_1]
+	if newEditItem then
+		SLFramework.UGUI.GuiHelper.SetColor(newEditItem.txtQuestName, "#FF0000")
 	end
 end
 
-function var_0_0._onDrag(arg_7_0, arg_7_1, arg_7_2)
-	if not arg_7_0._editItemIcon then
+function AssassinQuestMapEditView:_getQuestIconItem(questId)
+	local questMapView = self.viewContainer.assassinMapView
+
+	if questMapView and questMapView._showQuestItemDict then
+		return questMapView._showQuestItemDict[questId]
+	end
+end
+
+function AssassinQuestMapEditView:_onDrag(_, pointerEventData)
+	if not self._editItemIcon then
 		return
 	end
 
-	local var_7_0 = recthelper.screenPosToAnchorPos(GamepadController.instance:getMousePosition(), arg_7_0._transcontainer)
+	local temp_pos = recthelper.screenPosToAnchorPos(GamepadController.instance:getMousePosition(), self._transcontainer)
 
-	arg_7_0._editItemIcon:setPosition(var_7_0.x, var_7_0.y)
+	self._editItemIcon:setPosition(temp_pos.x, temp_pos.y)
 end
 
-function var_0_0._btnexportOnClick(arg_8_0)
-	if not arg_8_0._editItemIcon then
+function AssassinQuestMapEditView:_btnexportOnClick()
+	if not self._editItemIcon then
 		GameFacade.showToastString("Export Failed\nNo selected edit item")
 
 		return
 	end
 
-	local var_8_0 = arg_8_0._editItemIcon:getQuestId()
-	local var_8_1, var_8_2 = arg_8_0._editItemIcon:getPosition()
-	local var_8_3 = string.format("%.2f", var_8_1)
-	local var_8_4 = string.format("%.2f", var_8_2)
-	local var_8_5 = string.format("%s#%s", var_8_3, var_8_4)
+	local questId = self._editItemIcon:getQuestId()
+	local posX, posY = self._editItemIcon:getPosition()
 
-	ZProj.UGUIHelper.CopyText(var_8_5)
-	GameFacade.showToastString(string.format("Export Quest:%s\nPos:(%s, %s)", var_8_0, var_8_3, var_8_4))
+	posX = string.format("%.2f", posX)
+	posY = string.format("%.2f", posY)
+
+	local exportPosStr = string.format("%s#%s", posX, posY)
+
+	ZProj.UGUIHelper.CopyText(exportPosStr)
+	GameFacade.showToastString(string.format("Export Quest:%s\nPos:(%s, %s)", questId, posX, posY))
 end
 
-function var_0_0._editableInitView(arg_9_0)
-	arg_9_0._isEditMode = false
-	arg_9_0._transcontainer = arg_9_0._gocontainer.transform
+function AssassinQuestMapEditView:_editableInitView()
+	self._isEditMode = false
+	self._transcontainer = self._gocontainer.transform
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0._mapId = arg_10_0.viewParam and arg_10_0.viewParam.mapId
+function AssassinQuestMapEditView:onOpen()
+	self._mapId = self.viewParam and self.viewParam.mapId
 end
 
-function var_0_0._createBtnNotGraphic(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = gohelper.create2d(arg_11_1, arg_11_2)
+function AssassinQuestMapEditView:_createBtnNotGraphic(rootGo, goName)
+	local go = gohelper.create2d(rootGo, goName)
 
-	ZProj.UGUIHelper.SetColorAlpha(gohelper.onceAddComponent(var_11_0, gohelper.Type_Image), 0)
-	gohelper.onceAddComponent(var_11_0, typeof(UnityEngine.UI.Button))
+	ZProj.UGUIHelper.SetColorAlpha(gohelper.onceAddComponent(go, gohelper.Type_Image), 0)
+	gohelper.onceAddComponent(go, typeof(UnityEngine.UI.Button))
 
-	return var_11_0, gohelper.findChildButtonWithAudio(arg_11_1, arg_11_2, AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
+	return go, gohelper.findChildButtonWithAudio(rootGo, goName, AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
 end
 
-function var_0_0.initEditorTools(arg_12_0)
-	local var_12_0 = arg_12_0.viewGO:GetComponentInChildren(gohelper.Type_TextMesh)
+function AssassinQuestMapEditView:initEditorTools()
+	local tempTxtComp = self.viewGO:GetComponentInChildren(gohelper.Type_TextMesh)
 
-	arg_12_0._txtCompFont = var_12_0 and var_12_0.font
-	arg_12_0.goDrag = arg_12_0:_createBtnNotGraphic(arg_12_0._goroot, "edit_DragArea")
+	self._txtCompFont = tempTxtComp and tempTxtComp.font
+	self.goDrag = self:_createBtnNotGraphic(self._goroot, "edit_DragArea")
 
-	local var_12_1 = recthelper.getWidth(arg_12_0._transcontainer)
-	local var_12_2 = recthelper.getHeight(arg_12_0._transcontainer)
-	local var_12_3, var_12_4 = recthelper.getAnchor(arg_12_0._transcontainer)
+	local gocontainerWidth = recthelper.getWidth(self._transcontainer)
+	local gocontainerHeight = recthelper.getHeight(self._transcontainer)
+	local gocontainerPosX, gocontainerPosY = recthelper.getAnchor(self._transcontainer)
 
-	recthelper.setSize(arg_12_0.goDrag.transform, var_12_1, var_12_2)
-	recthelper.setAnchor(arg_12_0.goDrag.transform, var_12_3, var_12_4)
+	recthelper.setSize(self.goDrag.transform, gocontainerWidth, gocontainerHeight)
+	recthelper.setAnchor(self.goDrag.transform, gocontainerPosX, gocontainerPosY)
 
-	arg_12_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_12_0.goDrag)
+	self._drag = SLFramework.UGUI.UIDragListener.Get(self.goDrag)
 
-	arg_12_0._drag:AddDragBeginListener(arg_12_0._onDrag, arg_12_0)
-	arg_12_0._drag:AddDragListener(arg_12_0._onDrag, arg_12_0)
-	arg_12_0._drag:AddDragEndListener(arg_12_0._onDrag, arg_12_0)
+	self._drag:AddDragBeginListener(self._onDrag, self)
+	self._drag:AddDragListener(self._onDrag, self)
+	self._drag:AddDragEndListener(self._onDrag, self)
 
-	arg_12_0._questEditItemTab = arg_12_0:getUserDataTb_()
+	self._questEditItemTab = self:getUserDataTb_()
 end
 
-function var_0_0.initQuestCoList(arg_13_0)
-	local var_13_0 = AssassinOutsideModel.instance:getMapUnlockQuestIdList(arg_13_0._mapId)
+function AssassinQuestMapEditView:initQuestCoList()
+	local unlockQuestIdList = AssassinOutsideModel.instance:getMapUnlockQuestIdList(self._mapId)
 
-	arg_13_0.goEditBtnList = gohelper.create2d(arg_13_0.viewGO, "edit_BtnList")
+	self.goEditBtnList = gohelper.create2d(self.viewGO, "edit_BtnList")
 
-	local var_13_1 = var_0_1
-	local var_13_2 = var_0_2 * #var_13_0
+	local questListWidth = SingleQuestLabelItemWidth
+	local questListHeight = SingleQuestLabelItemHeight * #unlockQuestIdList
 
-	recthelper.setSize(arg_13_0.goEditBtnList.transform, var_13_1, var_13_2)
-	recthelper.setAnchor(arg_13_0.goEditBtnList.transform, var_0_3, var_0_4)
+	recthelper.setSize(self.goEditBtnList.transform, questListWidth, questListHeight)
+	recthelper.setAnchor(self.goEditBtnList.transform, QuestLabelListPosX, QuestLabelListPosY)
 
-	local var_13_3 = gohelper.onceAddComponent(arg_13_0.goEditBtnList, gohelper.Type_VerticalLayoutGroup)
+	local lg = gohelper.onceAddComponent(self.goEditBtnList, gohelper.Type_VerticalLayoutGroup)
 
-	var_13_3.childControlWidth = false
-	var_13_3.childControlHeight = false
-	var_13_3.childForceExpandWidth = false
-	var_13_3.childForceExpandHeight = false
+	lg.childControlWidth = false
+	lg.childControlHeight = false
+	lg.childForceExpandWidth = false
+	lg.childForceExpandHeight = false
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
-		local var_13_4 = AssassinConfig.instance:getQuestCfg(iter_13_1)
+	for index, questId in ipairs(unlockQuestIdList) do
+		local questCo = AssassinConfig.instance:getQuestCfg(questId)
+		local questEditItem = self:_createSingleQuestEditItem(self.goEditBtnList, index, questId)
 
-		arg_13_0:_createSingleQuestEditItem(arg_13_0.goEditBtnList, iter_13_0, iter_13_1).txtQuestName.text = var_13_4.title
+		questEditItem.txtQuestName.text = questCo.title
 	end
 
-	arg_13_0._goexportbtn, arg_13_0._btnexport = arg_13_0:_createBtnNotGraphic(arg_13_0.goEditBtnList, "edit_export")
+	self._goexportbtn, self._btnexport = self:_createBtnNotGraphic(self.goEditBtnList, "edit_export")
 
-	recthelper.setSize(arg_13_0._goexportbtn.transform, var_0_1, var_0_2)
+	recthelper.setSize(self._goexportbtn.transform, SingleQuestLabelItemWidth, SingleQuestLabelItemHeight)
 
-	local var_13_5 = gohelper.create2d(arg_13_0._goexportbtn, "txt_name")
+	local goText = gohelper.create2d(self._goexportbtn, "txt_name")
 
-	recthelper.setSize(var_13_5.transform, var_0_1, var_0_2)
+	recthelper.setSize(goText.transform, SingleQuestLabelItemWidth, SingleQuestLabelItemHeight)
 
-	local var_13_6 = gohelper.onceAddComponent(var_13_5, gohelper.Type_TextMesh)
+	local exprotTxtComp = gohelper.onceAddComponent(goText, gohelper.Type_TextMesh)
 
-	var_13_6.text = "Export"
-	var_13_6.font = arg_13_0._txtCompFont
+	exprotTxtComp.text = "Export"
+	exprotTxtComp.font = self._txtCompFont
 
-	arg_13_0._btnexport:AddClickListener(arg_13_0._btnexportOnClick, arg_13_0)
+	self._btnexport:AddClickListener(self._btnexportOnClick, self)
 end
 
-function var_0_0._createSingleQuestEditItem(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	local var_14_0 = arg_14_0._questEditItemTab[arg_14_2]
+function AssassinQuestMapEditView:_createSingleQuestEditItem(rootGo, index, questId)
+	local questEditItem = self._questEditItemTab[index]
 
-	if not var_14_0 then
-		var_14_0 = arg_14_0:getUserDataTb_()
-		var_14_0.go, var_14_0.btnQuestItem = arg_14_0:_createBtnNotGraphic(arg_14_1, "edit_questitem_" .. arg_14_2)
+	if not questEditItem then
+		questEditItem = self:getUserDataTb_()
+		questEditItem.go, questEditItem.btnQuestItem = self:_createBtnNotGraphic(rootGo, "edit_questitem_" .. index)
 
-		var_14_0.btnQuestItem:AddClickListener(arg_14_0._btnquestItemOnClick, arg_14_0, arg_14_2)
+		questEditItem.btnQuestItem:AddClickListener(self._btnquestItemOnClick, self, index)
 
-		local var_14_1 = gohelper.create2d(var_14_0.go, "txt_name")
+		local goText = gohelper.create2d(questEditItem.go, "txt_name")
 
-		var_14_0.txtQuestName = gohelper.onceAddComponent(var_14_1, gohelper.Type_TextMesh)
-		var_14_0.txtQuestName.font = arg_14_0._txtCompFont
+		questEditItem.txtQuestName = gohelper.onceAddComponent(goText, gohelper.Type_TextMesh)
+		questEditItem.txtQuestName.font = self._txtCompFont
 
-		recthelper.setSize(var_14_1.transform, var_0_1, var_0_2)
-		recthelper.setSize(var_14_0.go.transform, var_0_1, var_0_2)
+		recthelper.setSize(goText.transform, SingleQuestLabelItemWidth, SingleQuestLabelItemHeight)
+		recthelper.setSize(questEditItem.go.transform, SingleQuestLabelItemWidth, SingleQuestLabelItemHeight)
 
-		arg_14_0._questEditItemTab[arg_14_2] = var_14_0
+		self._questEditItemTab[index] = questEditItem
 	end
 
-	var_14_0.questId = arg_14_3
+	questEditItem.questId = questId
 
-	return var_14_0
+	return questEditItem
 end
 
-function var_0_0.onClose(arg_15_0)
-	if arg_15_0.frameHandle then
-		UpdateBeat:RemoveListener(arg_15_0.frameHandle)
+function AssassinQuestMapEditView:onClose()
+	if self.frameHandle then
+		UpdateBeat:RemoveListener(self.frameHandle)
 	end
 
-	arg_15_0.frameHandle = nil
+	self.frameHandle = nil
 end
 
-function var_0_0.onDestroyView(arg_16_0)
+function AssassinQuestMapEditView:onDestroyView()
 	return
 end
 
-return var_0_0
+return AssassinQuestMapEditView

@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity2_8.molideer.view.game.MoLiDeErResultViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/molideer/view/game/MoLiDeErResultViewContainer.lua
 
-local var_0_0 = class("MoLiDeErResultViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_8.molideer.view.game.MoLiDeErResultViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local MoLiDeErResultViewContainer = class("MoLiDeErResultViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, MoLiDeErResultView.New())
+function MoLiDeErResultViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, MoLiDeErResultView.New())
+
+	return views
 end
 
-return var_0_0
+return MoLiDeErResultViewContainer

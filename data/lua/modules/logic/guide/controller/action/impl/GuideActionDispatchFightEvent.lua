@@ -1,37 +1,39 @@
-﻿module("modules.logic.guide.controller.action.impl.GuideActionDispatchFightEvent", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/GuideActionDispatchFightEvent.lua
 
-local var_0_0 = class("GuideActionDispatchFightEvent", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.GuideActionDispatchFightEvent", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	var_0_0.super.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+local GuideActionDispatchFightEvent = class("GuideActionDispatchFightEvent", BaseGuideAction)
 
-	local var_1_0 = string.split(arg_1_3, "#")
-	local var_1_1 = var_1_0[1]
+function GuideActionDispatchFightEvent:ctor(guideId, stepId, actionParam)
+	GuideActionDispatchFightEvent.super.ctor(self, guideId, stepId, actionParam)
 
-	arg_1_0._evtId = FightEvent[var_1_1]
-	arg_1_0._evtParamList = nil
+	local sp = string.split(actionParam, "#")
+	local evtStr = sp[1]
 
-	for iter_1_0 = 2, #var_1_0, 2 do
-		local var_1_2 = var_1_0[iter_1_0]
-		local var_1_3 = var_1_0[iter_1_0 + 1]
+	self._evtId = FightEvent[evtStr]
+	self._evtParamList = nil
 
-		var_1_2 = string.getValueByType(var_1_2, var_1_3) or var_1_2
-		arg_1_0._evtParamList = arg_1_0._evtParamList or {}
+	for i = 2, #sp, 2 do
+		local value = sp[i]
+		local type = sp[i + 1]
 
-		table.insert(arg_1_0._evtParamList, var_1_2)
+		value = string.getValueByType(value, type) or value
+		self._evtParamList = self._evtParamList or {}
+
+		table.insert(self._evtParamList, value)
 	end
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	var_0_0.super.onStart(arg_2_0, arg_2_1)
+function GuideActionDispatchFightEvent:onStart(context)
+	GuideActionDispatchFightEvent.super.onStart(self, context)
 
-	if arg_2_0._evtParamList then
-		FightController.instance:dispatchEvent(arg_2_0._evtId, unpack(arg_2_0._evtParamList))
+	if self._evtParamList then
+		FightController.instance:dispatchEvent(self._evtId, unpack(self._evtParamList))
 	else
-		FightController.instance:dispatchEvent(arg_2_0._evtId)
+		FightController.instance:dispatchEvent(self._evtId)
 	end
 
-	arg_2_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return GuideActionDispatchFightEvent

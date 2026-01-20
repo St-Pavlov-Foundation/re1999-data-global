@@ -1,80 +1,82 @@
-﻿module("modules.logic.dungeon.view.maze.DungeonMazeResultView", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/maze/DungeonMazeResultView.lua
 
-local var_0_0 = class("DungeonMazeResultView", BaseViewExtended)
-local var_0_1 = DungeonMazeController.instance
+module("modules.logic.dungeon.view.maze.DungeonMazeResultView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._closeBtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_successClick")
-	arg_1_0._exitBtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_btn/#btn_quitgame")
-	arg_1_0._restartBtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_btn/#btn_restart")
-	arg_1_0._goSuccess = gohelper.findChild(arg_1_0.viewGO, "#go_success")
-	arg_1_0._goFail = gohelper.findChild(arg_1_0.viewGO, "#go_fail")
-	arg_1_0._goBtn = gohelper.findChild(arg_1_0.viewGO, "#go_btn")
-	arg_1_0._goClose = gohelper.findChild(arg_1_0.viewGO, "#btn_successClick")
-	arg_1_0._txtStage = gohelper.findChildText(arg_1_0.viewGO, "#go_top/#txt_stage")
-	arg_1_0._txtName = gohelper.findChildText(arg_1_0.viewGO, "#go_top/#txt_name")
+local DungeonMazeResultView = class("DungeonMazeResultView", BaseViewExtended)
+local ctrl = DungeonMazeController.instance
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function DungeonMazeResultView:onInitView()
+	self._closeBtn = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_successClick")
+	self._exitBtn = gohelper.findChildButtonWithAudio(self.viewGO, "#go_btn/#btn_quitgame")
+	self._restartBtn = gohelper.findChildButtonWithAudio(self.viewGO, "#go_btn/#btn_restart")
+	self._goSuccess = gohelper.findChild(self.viewGO, "#go_success")
+	self._goFail = gohelper.findChild(self.viewGO, "#go_fail")
+	self._goBtn = gohelper.findChild(self.viewGO, "#go_btn")
+	self._goClose = gohelper.findChild(self.viewGO, "#btn_successClick")
+	self._txtStage = gohelper.findChildText(self.viewGO, "#go_top/#txt_stage")
+	self._txtName = gohelper.findChildText(self.viewGO, "#go_top/#txt_name")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._closeBtn:AddClickListener(arg_2_0._onClickCloseBtn, arg_2_0)
-	arg_2_0._restartBtn:AddClickListener(arg_2_0._onClickRestartBtn, arg_2_0)
-	arg_2_0._exitBtn:AddClickListener(arg_2_0._onClickExitBtn, arg_2_0)
+function DungeonMazeResultView:addEvents()
+	self._closeBtn:AddClickListener(self._onClickCloseBtn, self)
+	self._restartBtn:AddClickListener(self._onClickRestartBtn, self)
+	self._exitBtn:AddClickListener(self._onClickExitBtn, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._closeBtn:RemoveClickListener()
-	arg_3_0._restartBtn:RemoveClickListener()
-	arg_3_0._exitBtn:RemoveClickListener()
+function DungeonMazeResultView:removeEvents()
+	self._closeBtn:RemoveClickListener()
+	self._restartBtn:RemoveClickListener()
+	self._exitBtn:RemoveClickListener()
 end
 
-function var_0_0._onClickCloseBtn(arg_4_0)
-	var_0_1:dispatchEvent(DungeonMazeEvent.DungeonMazeCompleted)
-	arg_4_0:closeThis()
+function DungeonMazeResultView:_onClickCloseBtn()
+	ctrl:dispatchEvent(DungeonMazeEvent.DungeonMazeCompleted)
+	self:closeThis()
 end
 
-function var_0_0._onClickExitBtn(arg_5_0)
-	var_0_1:dispatchEvent(DungeonMazeEvent.DungeonMazeExit)
-	arg_5_0:closeThis()
+function DungeonMazeResultView:_onClickExitBtn()
+	ctrl:dispatchEvent(DungeonMazeEvent.DungeonMazeExit)
+	self:closeThis()
 end
 
-function var_0_0._onClickRestartBtn(arg_6_0)
-	var_0_1:dispatchEvent(DungeonMazeEvent.DungeonMazeReStart)
-	arg_6_0:closeThis()
+function DungeonMazeResultView:_onClickRestartBtn()
+	ctrl:dispatchEvent(DungeonMazeEvent.DungeonMazeReStart)
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_7_0)
+function DungeonMazeResultView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
+function DungeonMazeResultView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_9_0)
-	local var_9_0 = arg_9_0.viewParam
-	local var_9_1 = var_9_0.isWin
-	local var_9_2 = var_9_0.episodeId
+function DungeonMazeResultView:onOpen()
+	local viewParams = self.viewParam
+	local win = viewParams.isWin
+	local curEpisodeId = viewParams.episodeId
 
-	gohelper.setActive(arg_9_0._goSuccess, var_9_1)
-	gohelper.setActive(arg_9_0._goFail, not var_9_1)
-	gohelper.setActive(arg_9_0._goBtn, not var_9_1)
-	gohelper.setActive(arg_9_0._goClose, var_9_1)
+	gohelper.setActive(self._goSuccess, win)
+	gohelper.setActive(self._goFail, not win)
+	gohelper.setActive(self._goBtn, not win)
+	gohelper.setActive(self._goClose, win)
 
-	local var_9_3 = DungeonConfig.instance:getEpisodeCO(var_9_2)
+	local curEpisode = DungeonConfig.instance:getEpisodeCO(curEpisodeId)
 
-	arg_9_0._txtName.text = string.format("%s", var_9_3.name)
+	self._txtName.text = string.format("%s", curEpisode.name)
 end
 
-function var_0_0.onClose(arg_10_0)
+function DungeonMazeResultView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function DungeonMazeResultView:onDestroyView()
 	return
 end
 
-return var_0_0
+return DungeonMazeResultView

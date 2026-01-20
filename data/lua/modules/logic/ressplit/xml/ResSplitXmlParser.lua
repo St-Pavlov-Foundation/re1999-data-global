@@ -1,26 +1,28 @@
-﻿module("modules.logic.ressplit.xml.ResSplitXmlParser", package.seeall)
+﻿-- chunkname: @modules/logic/ressplit/xml/ResSplitXmlParser.lua
 
-local function var_0_0(arg_1_0)
-	local var_1_0 = tonumber(arg_1_0)
+module("modules.logic.ressplit.xml.ResSplitXmlParser", package.seeall)
 
-	if var_1_0 >= 0 and var_1_0 < 256 then
-		return string.char(var_1_0)
+local function decimalToHtmlChar(code)
+	local num = tonumber(code)
+
+	if num >= 0 and num < 256 then
+		return string.char(num)
 	end
 
-	return "&#" .. arg_1_0 .. ";"
+	return "&#" .. code .. ";"
 end
 
-local function var_0_1(arg_2_0)
-	local var_2_0 = tonumber(arg_2_0, 16)
+local function hexadecimalToHtmlChar(code)
+	local num = tonumber(code, 16)
 
-	if var_2_0 >= 0 and var_2_0 < 256 then
-		return string.char(var_2_0)
+	if num >= 0 and num < 256 then
+		return string.char(num)
 	end
 
-	return "&#x" .. arg_2_0 .. ";"
+	return "&#x" .. code .. ";"
 end
 
-local var_0_2 = {
+local ResSplitXmlParser = {
 	_TAG = "^(.-)%s.*",
 	_DTD2 = "<!DOCTYPE%s+(.-)%s+(PUBLIC)%s+[\"'](.-)[\"']%s+[\"'](.-)[\"']%s*(%b[])%s*>",
 	_DTD4 = "<!DOCTYPE%s+(.-)%s+(SYSTEM)%s+[\"'](.-)[\"']%s*>",
@@ -58,172 +60,172 @@ local var_0_2 = {
 		["&lt;"] = "<",
 		["&amp;"] = "&",
 		["&quot;"] = "\"",
-		["&#(%d+);"] = var_0_0,
-		["&#x(%x+);"] = var_0_1
+		["&#(%d+);"] = decimalToHtmlChar,
+		["&#x(%x+);"] = hexadecimalToHtmlChar
 	}
 }
 
-function var_0_2.new(arg_3_0, arg_3_1)
-	local var_3_0 = {
-		handler = arg_3_0,
-		options = arg_3_1,
+function ResSplitXmlParser.new(_handler, _options)
+	local obj = {
+		handler = _handler,
+		options = _options,
 		_stack = {}
 	}
 
-	setmetatable(var_3_0, var_0_2)
+	setmetatable(obj, ResSplitXmlParser)
 
-	var_3_0.__index = var_0_2
+	obj.__index = ResSplitXmlParser
 
-	return var_3_0
+	return obj
 end
 
-local function var_0_3(arg_4_0, arg_4_1)
-	if arg_4_0 == nil then
+local function fexists(table, elementName)
+	if table == nil then
 		return false
 	end
 
-	if arg_4_0[arg_4_1] == nil then
-		return var_0_3(getmetatable(arg_4_0), arg_4_1)
+	if table[elementName] == nil then
+		return fexists(getmetatable(table), elementName)
 	else
 		return true
 	end
 end
 
-local function var_0_4(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_0.options.errorHandler then
-		arg_5_0.options.errorHandler(arg_5_1, arg_5_2)
+local function err(self, errMsg, pos)
+	if self.options.errorHandler then
+		self.options.errorHandler(errMsg, pos)
 	end
 end
 
-local function var_0_5(arg_6_0, arg_6_1)
-	if arg_6_0.options.stripWS then
-		arg_6_1 = string.gsub(arg_6_1, "^%s+", "")
-		arg_6_1 = string.gsub(arg_6_1, "%s+$", "")
+local function stripWS(self, s)
+	if self.options.stripWS then
+		s = string.gsub(s, "^%s+", "")
+		s = string.gsub(s, "%s+$", "")
 	end
 
-	return arg_6_1
+	return s
 end
 
-local function var_0_6(arg_7_0, arg_7_1)
-	if arg_7_0.options.expandEntities then
-		for iter_7_0, iter_7_1 in pairs(arg_7_0._ENTITIES) do
-			arg_7_1 = string.gsub(arg_7_1, iter_7_0, iter_7_1)
+local function parseEntities(self, s)
+	if self.options.expandEntities then
+		for k, v in pairs(self._ENTITIES) do
+			s = string.gsub(s, k, v)
 		end
 	end
 
-	return arg_7_1
+	return s
 end
 
-local function var_0_7(arg_8_0, arg_8_1)
-	local var_8_0 = {
-		name = string.gsub(arg_8_1, arg_8_0._TAG, "%1"),
+local function parseTag(self, s)
+	local tag = {
+		name = string.gsub(s, self._TAG, "%1"),
 		attrs = {}
 	}
 
-	local function var_8_1(arg_9_0, arg_9_1)
-		var_8_0.attrs[arg_9_0] = var_0_6(arg_8_0, arg_9_1)
-		var_8_0.attrs._ = 1
+	local function parseFunction(k, v)
+		tag.attrs[k] = parseEntities(self, v)
+		tag.attrs._ = 1
 	end
 
-	string.gsub(arg_8_1, arg_8_0._ATTR1, var_8_1)
-	string.gsub(arg_8_1, arg_8_0._ATTR2, var_8_1)
+	string.gsub(s, self._ATTR1, parseFunction)
+	string.gsub(s, self._ATTR2, parseFunction)
 
-	if var_8_0.attrs._ then
-		var_8_0.attrs._ = nil
+	if tag.attrs._ then
+		tag.attrs._ = nil
 	else
-		var_8_0.attrs = nil
+		tag.attrs = nil
 	end
 
-	return var_8_0
+	return tag
 end
 
-local function var_0_8(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_2.match, arg_10_2.endMatch, arg_10_2.text = string.find(arg_10_1, arg_10_0._PI, arg_10_2.pos)
+local function parseXmlDeclaration(self, xml, f)
+	f.match, f.endMatch, f.text = string.find(xml, self._PI, f.pos)
 
-	if not arg_10_2.match then
-		var_0_4(arg_10_0, arg_10_0._errstr.declErr, arg_10_2.pos)
+	if not f.match then
+		err(self, self._errstr.declErr, f.pos)
 	end
 
-	if arg_10_2.match ~= 1 then
-		var_0_4(arg_10_0, arg_10_0._errstr.declStartErr, arg_10_2.pos)
+	if f.match ~= 1 then
+		err(self, self._errstr.declStartErr, f.pos)
 	end
 
-	local var_10_0 = var_0_7(arg_10_0, arg_10_2.text)
+	local tag = parseTag(self, f.text)
 
-	if var_10_0.attrs and var_10_0.attrs.version == nil then
-		var_0_4(arg_10_0, arg_10_0._errstr.declAttrErr, arg_10_2.pos)
+	if tag.attrs and tag.attrs.version == nil then
+		err(self, self._errstr.declAttrErr, f.pos)
 	end
 
-	if var_0_3(arg_10_0.handler, "decl") then
-		arg_10_0.handler:decl(var_10_0, arg_10_2.match, arg_10_2.endMatch)
+	if fexists(self.handler, "decl") then
+		self.handler:decl(tag, f.match, f.endMatch)
 	end
 
-	return var_10_0
+	return tag
 end
 
-local function var_0_9(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = {}
+local function parseXmlProcessingInstruction(self, xml, f)
+	local tag = {}
 
-	arg_11_2.match, arg_11_2.endMatch, arg_11_2.text = string.find(arg_11_1, arg_11_0._PI, arg_11_2.pos)
+	f.match, f.endMatch, f.text = string.find(xml, self._PI, f.pos)
 
-	if not arg_11_2.match then
-		var_0_4(arg_11_0, arg_11_0._errstr.piErr, arg_11_2.pos)
+	if not f.match then
+		err(self, self._errstr.piErr, f.pos)
 	end
 
-	if var_0_3(arg_11_0.handler, "pi") then
-		var_11_0 = var_0_7(arg_11_0, arg_11_2.text)
+	if fexists(self.handler, "pi") then
+		tag = parseTag(self, f.text)
 
-		local var_11_1 = string.sub(arg_11_2.text, string.len(var_11_0.name) + 1)
+		local pi = string.sub(f.text, string.len(tag.name) + 1)
 
-		if var_11_1 ~= "" then
-			if var_11_0.attrs then
-				var_11_0.attrs._text = var_11_1
+		if pi ~= "" then
+			if tag.attrs then
+				tag.attrs._text = pi
 			else
-				var_11_0.attrs = {
-					_text = var_11_1
+				tag.attrs = {
+					_text = pi
 				}
 			end
 		end
 
-		arg_11_0.handler:pi(var_11_0, arg_11_2.match, arg_11_2.endMatch)
+		self.handler:pi(tag, f.match, f.endMatch)
 	end
 
-	return var_11_0
+	return tag
 end
 
-local function var_0_10(arg_12_0, arg_12_1, arg_12_2)
-	arg_12_2.match, arg_12_2.endMatch, arg_12_2.text = string.find(arg_12_1, arg_12_0._COMMENT, arg_12_2.pos)
+local function parseComment(self, xml, f)
+	f.match, f.endMatch, f.text = string.find(xml, self._COMMENT, f.pos)
 
-	if not arg_12_2.match then
-		var_0_4(arg_12_0, arg_12_0._errstr.commentErr, arg_12_2.pos)
+	if not f.match then
+		err(self, self._errstr.commentErr, f.pos)
 	end
 
-	if var_0_3(arg_12_0.handler, "comment") then
-		arg_12_2.text = var_0_6(arg_12_0, var_0_5(arg_12_0, arg_12_2.text))
+	if fexists(self.handler, "comment") then
+		f.text = parseEntities(self, stripWS(self, f.text))
 
-		arg_12_0.handler:comment(arg_12_2.text, next, arg_12_2.match, arg_12_2.endMatch)
+		self.handler:comment(f.text, next, f.match, f.endMatch)
 	end
 end
 
-local function var_0_11(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0 = {
-		arg_13_0._DTD1,
-		arg_13_0._DTD2,
-		arg_13_0._DTD3,
-		arg_13_0._DTD4,
-		arg_13_0._DTD5
+local function _parseDtd(self, xml, pos)
+	local dtdPatterns = {
+		self._DTD1,
+		self._DTD2,
+		self._DTD3,
+		self._DTD4,
+		self._DTD5
 	}
 
-	for iter_13_0, iter_13_1 in pairs(var_13_0) do
-		local var_13_1, var_13_2, var_13_3, var_13_4, var_13_5, var_13_6, var_13_7 = string.find(arg_13_1, iter_13_1, arg_13_2)
+	for _, dtd in pairs(dtdPatterns) do
+		local m, e, r, t, n, u, i = string.find(xml, dtd, pos)
 
-		if var_13_1 then
-			return var_13_1, var_13_2, {
-				_root = var_13_3,
-				_type = var_13_4,
-				_name = var_13_5,
-				_uri = var_13_6,
-				_internal = var_13_7
+		if m then
+			return m, e, {
+				_root = r,
+				_type = t,
+				_name = n,
+				_uri = u,
+				_internal = i
 			}
 		end
 	end
@@ -231,165 +233,165 @@ local function var_0_11(arg_13_0, arg_13_1, arg_13_2)
 	return nil
 end
 
-local function var_0_12(arg_14_0, arg_14_1, arg_14_2)
-	arg_14_2.match, arg_14_2.endMatch, _ = var_0_11(arg_14_0, arg_14_1, arg_14_2.pos)
+local function parseDtd(self, xml, f)
+	f.match, f.endMatch, _ = _parseDtd(self, xml, f.pos)
 
-	if not arg_14_2.match then
-		var_0_4(arg_14_0, arg_14_0._errstr.dtdErr, arg_14_2.pos)
+	if not f.match then
+		err(self, self._errstr.dtdErr, f.pos)
 	end
 
-	if var_0_3(arg_14_0.handler, "dtd") then
-		local var_14_0 = {
+	if fexists(self.handler, "dtd") then
+		local tag = {
 			name = "DOCTYPE",
-			value = string.sub(arg_14_1, arg_14_2.match + 10, arg_14_2.endMatch - 1)
+			value = string.sub(xml, f.match + 10, f.endMatch - 1)
 		}
 
-		arg_14_0.handler:dtd(var_14_0, arg_14_2.match, arg_14_2.endMatch)
+		self.handler:dtd(tag, f.match, f.endMatch)
 	end
 end
 
-local function var_0_13(arg_15_0, arg_15_1, arg_15_2)
-	arg_15_2.match, arg_15_2.endMatch, arg_15_2.text = string.find(arg_15_1, arg_15_0._CDATA, arg_15_2.pos)
+local function parseCdata(self, xml, f)
+	f.match, f.endMatch, f.text = string.find(xml, self._CDATA, f.pos)
 
-	if not arg_15_2.match then
-		var_0_4(arg_15_0, arg_15_0._errstr.cdataErr, arg_15_2.pos)
+	if not f.match then
+		err(self, self._errstr.cdataErr, f.pos)
 	end
 
-	if var_0_3(arg_15_0.handler, "cdata") then
-		arg_15_0.handler:cdata(arg_15_2.text, nil, arg_15_2.match, arg_15_2.endMatch)
+	if fexists(self.handler, "cdata") then
+		self.handler:cdata(f.text, nil, f.match, f.endMatch)
 	end
 end
 
-local function var_0_14(arg_16_0, arg_16_1, arg_16_2)
+local function parseNormalTag(self, xml, f)
 	while true do
-		arg_16_2.errStart, arg_16_2.errEnd = string.find(arg_16_2.tagstr, arg_16_0._ATTRERR1)
+		f.errStart, f.errEnd = string.find(f.tagstr, self._ATTRERR1)
 
-		if arg_16_2.errEnd == nil then
-			arg_16_2.errStart, arg_16_2.errEnd = string.find(arg_16_2.tagstr, arg_16_0._ATTRERR2)
+		if f.errEnd == nil then
+			f.errStart, f.errEnd = string.find(f.tagstr, self._ATTRERR2)
 
-			if arg_16_2.errEnd == nil then
+			if f.errEnd == nil then
 				break
 			end
 		end
 
-		arg_16_2.extStart, arg_16_2.extEnd, arg_16_2.endt2 = string.find(arg_16_1, arg_16_0._TAGEXT, arg_16_2.endMatch + 1)
-		arg_16_2.tagstr = arg_16_2.tagstr .. string.sub(arg_16_1, arg_16_2.endMatch, arg_16_2.extEnd - 1)
+		f.extStart, f.extEnd, f.endt2 = string.find(xml, self._TAGEXT, f.endMatch + 1)
+		f.tagstr = f.tagstr .. string.sub(xml, f.endMatch, f.extEnd - 1)
 
-		if not arg_16_2.match then
-			var_0_4(arg_16_0, arg_16_0._errstr.xmlErr, arg_16_2.pos)
+		if not f.match then
+			err(self, self._errstr.xmlErr, f.pos)
 		end
 
-		arg_16_2.endMatch = arg_16_2.extEnd
+		f.endMatch = f.extEnd
 	end
 
-	local var_16_0 = var_0_7(arg_16_0, arg_16_2.tagstr)
+	local tag = parseTag(self, f.tagstr)
 
-	if arg_16_2.endt1 == "/" then
-		if var_0_3(arg_16_0.handler, "endtag") then
-			if var_16_0.attrs then
-				var_0_4(arg_16_0, string.format("%s (/%s)", arg_16_0._errstr.endTagErr, var_16_0.name), arg_16_2.pos)
+	if f.endt1 == "/" then
+		if fexists(self.handler, "endtag") then
+			if tag.attrs then
+				err(self, string.format("%s (/%s)", self._errstr.endTagErr, tag.name), f.pos)
 			end
 
-			if table.remove(arg_16_0._stack) ~= var_16_0.name then
-				var_0_4(arg_16_0, string.format("%s (/%s)", arg_16_0._errstr.unmatchedTagErr, var_16_0.name), arg_16_2.pos)
+			if table.remove(self._stack) ~= tag.name then
+				err(self, string.format("%s (/%s)", self._errstr.unmatchedTagErr, tag.name), f.pos)
 			end
 
-			arg_16_0.handler:endtag(var_16_0, arg_16_2.match, arg_16_2.endMatch)
+			self.handler:endtag(tag, f.match, f.endMatch)
 		end
 	else
-		table.insert(arg_16_0._stack, var_16_0.name)
+		table.insert(self._stack, tag.name)
 
-		if var_0_3(arg_16_0.handler, "starttag") then
-			arg_16_0.handler:starttag(var_16_0, arg_16_2.match, arg_16_2.endMatch)
+		if fexists(self.handler, "starttag") then
+			self.handler:starttag(tag, f.match, f.endMatch)
 		end
 
-		if arg_16_2.endt2 == "/" then
-			table.remove(arg_16_0._stack)
+		if f.endt2 == "/" then
+			table.remove(self._stack)
 
-			if var_0_3(arg_16_0.handler, "endtag") then
-				arg_16_0.handler:endtag(var_16_0, arg_16_2.match, arg_16_2.endMatch)
+			if fexists(self.handler, "endtag") then
+				self.handler:endtag(tag, f.match, f.endMatch)
 			end
 		end
 	end
 
-	return var_16_0
+	return tag
 end
 
-local function var_0_15(arg_17_0, arg_17_1, arg_17_2)
-	if string.find(string.sub(arg_17_2.tagstr, 1, 5), "?xml%s") then
-		var_0_8(arg_17_0, arg_17_1, arg_17_2)
-	elseif string.sub(arg_17_2.tagstr, 1, 1) == "?" then
-		var_0_9(arg_17_0, arg_17_1, arg_17_2)
-	elseif string.sub(arg_17_2.tagstr, 1, 3) == "!--" then
-		var_0_10(arg_17_0, arg_17_1, arg_17_2)
-	elseif string.sub(arg_17_2.tagstr, 1, 8) == "!DOCTYPE" then
-		var_0_12(arg_17_0, arg_17_1, arg_17_2)
-	elseif string.sub(arg_17_2.tagstr, 1, 8) == "![CDATA[" then
-		var_0_13(arg_17_0, arg_17_1, arg_17_2)
+local function parseTagType(self, xml, f)
+	if string.find(string.sub(f.tagstr, 1, 5), "?xml%s") then
+		parseXmlDeclaration(self, xml, f)
+	elseif string.sub(f.tagstr, 1, 1) == "?" then
+		parseXmlProcessingInstruction(self, xml, f)
+	elseif string.sub(f.tagstr, 1, 3) == "!--" then
+		parseComment(self, xml, f)
+	elseif string.sub(f.tagstr, 1, 8) == "!DOCTYPE" then
+		parseDtd(self, xml, f)
+	elseif string.sub(f.tagstr, 1, 8) == "![CDATA[" then
+		parseCdata(self, xml, f)
 	else
-		var_0_14(arg_17_0, arg_17_1, arg_17_2)
+		parseNormalTag(self, xml, f)
 	end
 end
 
-local function var_0_16(arg_18_0, arg_18_1, arg_18_2)
-	arg_18_2.match, arg_18_2.endMatch, arg_18_2.text, arg_18_2.endt1, arg_18_2.tagstr, arg_18_2.endt2 = string.find(arg_18_1, arg_18_0._XML, arg_18_2.pos)
+local function getNextTag(self, xml, f)
+	f.match, f.endMatch, f.text, f.endt1, f.tagstr, f.endt2 = string.find(xml, self._XML, f.pos)
 
-	if not arg_18_2.match then
-		if string.find(arg_18_1, arg_18_0._WS, arg_18_2.pos) then
-			if #arg_18_0._stack ~= 0 then
-				var_0_4(arg_18_0, arg_18_0._errstr.incompleteXmlErr, arg_18_2.pos)
+	if not f.match then
+		if string.find(xml, self._WS, f.pos) then
+			if #self._stack ~= 0 then
+				err(self, self._errstr.incompleteXmlErr, f.pos)
 			else
 				return false
 			end
 		else
-			var_0_4(arg_18_0, arg_18_0._errstr.xmlErr, arg_18_2.pos)
+			err(self, self._errstr.xmlErr, f.pos)
 		end
 	end
 
-	arg_18_2.text = arg_18_2.text or ""
-	arg_18_2.tagstr = arg_18_2.tagstr or ""
-	arg_18_2.match = arg_18_2.match or 0
+	f.text = f.text or ""
+	f.tagstr = f.tagstr or ""
+	f.match = f.match or 0
 
-	return arg_18_2.endMatch ~= nil
+	return f.endMatch ~= nil
 end
 
-function var_0_2.parse(arg_19_0, arg_19_1, arg_19_2)
-	if type(arg_19_0) ~= "table" or getmetatable(arg_19_0) ~= var_0_2 then
+function ResSplitXmlParser:parse(xml, parseAttributes)
+	if type(self) ~= "table" or getmetatable(self) ~= ResSplitXmlParser then
 		error("You must call xmlparser:parse(parameters) instead of xmlparser.parse(parameters)")
 	end
 
-	if arg_19_2 == nil then
-		arg_19_2 = true
+	if parseAttributes == nil then
+		parseAttributes = true
 	end
 
-	arg_19_0.handler.parseAttributes = arg_19_2
+	self.handler.parseAttributes = parseAttributes
 
-	local var_19_0 = {
+	local f = {
 		match = 0,
 		pos = 1,
 		endMatch = 0
 	}
 
-	while var_19_0.match do
-		if not var_0_16(arg_19_0, arg_19_1, var_19_0) then
+	while f.match do
+		if not getNextTag(self, xml, f) then
 			break
 		end
 
-		var_19_0.startText = var_19_0.match
-		var_19_0.endText = var_19_0.match + string.len(var_19_0.text) - 1
-		var_19_0.match = var_19_0.match + string.len(var_19_0.text)
-		var_19_0.text = var_0_6(arg_19_0, var_0_5(arg_19_0, var_19_0.text))
+		f.startText = f.match
+		f.endText = f.match + string.len(f.text) - 1
+		f.match = f.match + string.len(f.text)
+		f.text = parseEntities(self, stripWS(self, f.text))
 
-		if var_19_0.text ~= "" and var_0_3(arg_19_0.handler, "text") then
-			arg_19_0.handler:text(var_19_0.text, nil, var_19_0.match, var_19_0.endText)
+		if f.text ~= "" and fexists(self.handler, "text") then
+			self.handler:text(f.text, nil, f.match, f.endText)
 		end
 
-		var_0_15(arg_19_0, arg_19_1, var_19_0)
+		parseTagType(self, xml, f)
 
-		var_19_0.pos = var_19_0.endMatch + 1
+		f.pos = f.endMatch + 1
 	end
 end
 
-var_0_2.__index = var_0_2
+ResSplitXmlParser.__index = ResSplitXmlParser
 
-return var_0_2
+return ResSplitXmlParser

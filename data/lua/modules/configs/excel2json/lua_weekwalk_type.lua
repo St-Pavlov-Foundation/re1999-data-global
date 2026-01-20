@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_weekwalk_type", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_weekwalk_type.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_weekwalk_type", package.seeall)
+
+local lua_weekwalk_type = {}
+local fields = {
 	heroCd = 2,
 	isRefresh = 5,
 	starNum = 7,
@@ -10,13 +12,13 @@ local var_0_1 = {
 	canResetLayer = 4,
 	star = 3
 }
-local var_0_2 = {
+local primaryKey = {
 	"type"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_weekwalk_type.onLoad(json)
+	lua_weekwalk_type.configList, lua_weekwalk_type.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_weekwalk_type

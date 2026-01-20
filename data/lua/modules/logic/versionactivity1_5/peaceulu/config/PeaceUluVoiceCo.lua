@@ -1,26 +1,28 @@
-﻿module("modules.logic.versionactivity1_5.peaceulu.config.PeaceUluVoiceCo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/peaceulu/config/PeaceUluVoiceCo.lua
 
-local var_0_0 = pureTable("PeaceUluVoiceCo")
+module("modules.logic.versionactivity1_5.peaceulu.config.PeaceUluVoiceCo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.heroId = 3076
-	arg_1_0.content = arg_1_1.content
-	arg_1_0.encontent = arg_1_1.content
-	arg_1_0.twcontent = arg_1_1.content
-	arg_1_0.jpcontent = arg_1_1.content
-	arg_1_0.kocontent = arg_1_1.content
-	arg_1_0.decontent = arg_1_1.content
-	arg_1_0.frcontent = arg_1_1.content
-	arg_1_0.thaicontent = arg_1_1.content
-	arg_1_0.motion = arg_1_1.motion
-	arg_1_0.twmotion = arg_1_1.motion
-	arg_1_0.jpmotion = arg_1_1.motion
-	arg_1_0.enmotion = arg_1_1.motion
-	arg_1_0.komotion = arg_1_1.motion
-	arg_1_0.demotion = arg_1_1.motion
-	arg_1_0.frmotion = arg_1_1.motion
-	arg_1_0.thaimotion = arg_1_1.motion
-	arg_1_0.displayTime = arg_1_1.displayTime
+local PeaceUluVoiceCo = pureTable("PeaceUluVoiceCo")
+
+function PeaceUluVoiceCo:init(co)
+	self.heroId = 3076
+	self.content = co.content
+	self.encontent = co.content
+	self.twcontent = co.content
+	self.jpcontent = co.content
+	self.kocontent = co.content
+	self.decontent = co.content
+	self.frcontent = co.content
+	self.thaicontent = co.content
+	self.motion = co.motion
+	self.twmotion = co.motion
+	self.jpmotion = co.motion
+	self.enmotion = co.motion
+	self.komotion = co.motion
+	self.demotion = co.motion
+	self.frmotion = co.motion
+	self.thaimotion = co.motion
+	self.displayTime = co.displayTime
 end
 
-return var_0_0
+return PeaceUluVoiceCo

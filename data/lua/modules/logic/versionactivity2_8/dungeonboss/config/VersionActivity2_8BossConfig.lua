@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity2_8.dungeonboss.config.VersionActivity2_8BossConfig", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/dungeonboss/config/VersionActivity2_8BossConfig.lua
 
-local var_0_0 = class("VersionActivity2_8BossConfig", BaseConfig)
+module("modules.logic.versionactivity2_8.dungeonboss.config.VersionActivity2_8BossConfig", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local VersionActivity2_8BossConfig = class("VersionActivity2_8BossConfig", BaseConfig)
+
+function VersionActivity2_8BossConfig:reqConfigNames()
 	return {
 		"story_mode_battle_field",
 		"single_mode_episode",
@@ -10,45 +12,45 @@ function var_0_0.reqConfigNames(arg_1_0)
 	}
 end
 
-function var_0_0.onInit(arg_2_0)
-	arg_2_0._taskDict = {}
+function VersionActivity2_8BossConfig:onInit()
+	self._taskDict = {}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "story_mode_battle_field" then
-		arg_3_0:_initStoryModeBattleField()
+function VersionActivity2_8BossConfig:onConfigLoaded(configName, configTable)
+	if configName == "story_mode_battle_field" then
+		self:_initStoryModeBattleField()
 	end
 end
 
-function var_0_0._initStoryModeBattleField(arg_4_0)
-	arg_4_0._storyEpisodeMapId = {}
+function VersionActivity2_8BossConfig:_initStoryModeBattleField()
+	self._storyEpisodeMapId = {}
 
-	local var_4_0 = lua_story_mode_battle_field.configList
+	local configList = lua_story_mode_battle_field.configList
 
-	for iter_4_0, iter_4_1 in pairs(var_4_0) do
-		local var_4_1 = string.split(iter_4_1.episodeIds, "#")
-		local var_4_2 = string.split(iter_4_1.chapterMapIds, "#")
+	for k, v in pairs(configList) do
+		local episodeIds = string.split(v.episodeIds, "#")
+		local chapterMapIds = string.split(v.chapterMapIds, "#")
 
-		for iter_4_2, iter_4_3 in ipairs(var_4_1) do
-			local var_4_3 = var_4_2[iter_4_2]
+		for i, episodeId in ipairs(episodeIds) do
+			local mapId = chapterMapIds[i]
 
-			arg_4_0._storyEpisodeMapId[tonumber(iter_4_3)] = tonumber(var_4_3)
+			self._storyEpisodeMapId[tonumber(episodeId)] = tonumber(mapId)
 		end
 	end
 end
 
-function var_0_0.getEpisodeMapId(arg_5_0, arg_5_1)
-	return arg_5_0._storyEpisodeMapId[arg_5_1]
+function VersionActivity2_8BossConfig:getEpisodeMapId(episodeId)
+	return self._storyEpisodeMapId[episodeId]
 end
 
-function var_0_0.getHeroGroupId(arg_6_0, arg_6_1)
-	for iter_6_0, iter_6_1 in pairs(lua_story_mode_battle_field.configList) do
-		if string.find(iter_6_1.episodeIds, arg_6_1) then
-			return iter_6_1.heroGroupTypeId
+function VersionActivity2_8BossConfig:getHeroGroupId(episodeId)
+	for k, v in pairs(lua_story_mode_battle_field.configList) do
+		if string.find(v.episodeIds, episodeId) then
+			return v.heroGroupTypeId
 		end
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity2_8BossConfig.instance = VersionActivity2_8BossConfig.New()
 
-return var_0_0
+return VersionActivity2_8BossConfig

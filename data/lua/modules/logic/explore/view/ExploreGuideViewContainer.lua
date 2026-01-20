@@ -1,11 +1,13 @@
-﻿module("modules.logic.explore.view.ExploreGuideViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/explore/view/ExploreGuideViewContainer.lua
 
-local var_0_0 = class("ExploreGuideViewContainer", BaseViewContainer)
+module("modules.logic.explore.view.ExploreGuideViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local ExploreGuideViewContainer = class("ExploreGuideViewContainer", BaseViewContainer)
+
+function ExploreGuideViewContainer:buildViews()
 	return {
 		ExploreGuideView.New()
 	}
 end
 
-return var_0_0
+return ExploreGuideViewContainer

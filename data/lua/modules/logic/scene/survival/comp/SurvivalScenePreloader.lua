@@ -1,140 +1,125 @@
-﻿module("modules.logic.scene.survival.comp.SurvivalScenePreloader", package.seeall)
+﻿-- chunkname: @modules/logic/scene/survival/comp/SurvivalScenePreloader.lua
 
-local var_0_0 = class("SurvivalScenePreloader", BaseSceneComp)
+module("modules.logic.scene.survival.comp.SurvivalScenePreloader", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._mapGroupId = nil
+local SurvivalScenePreloader = class("SurvivalScenePreloader", BaseSceneComp)
 
-	arg_1_0:initMapGroupId()
+function SurvivalScenePreloader:init(sceneId, levelId)
+	self._mapGroupId = nil
 
-	arg_1_0._loader = MultiAbLoader.New()
+	self:initMapGroupId()
 
-	if not GameResMgr.IsFromEditorDir then
-		arg_1_0._loader:addPath(arg_1_0:getMapBlockAbPath())
-		arg_1_0._loader:addPath(arg_1_0:getMapBlockCommonAbPath())
-	else
-		local var_1_0 = SurvivalMapModel.instance:getCurMapCo()
+	self._loader = MultiAbLoader.New()
 
-		arg_1_0._loader:setPathList(tabletool.copy(var_1_0.allPaths))
+	local mapCo = SurvivalMapModel.instance:getCurMapCo()
 
-		for iter_1_0, iter_1_1 in ipairs(lua_survival_block.configList) do
-			local var_1_1 = tonumber(iter_1_1.copyIds) or 0
+	self._loader:setPathList(tabletool.copy(mapCo.allPaths))
 
-			if var_1_1 == 0 or var_1_1 == arg_1_0._mapGroupId then
-				arg_1_0._loader:addPath(arg_1_0:getBlockResPath(var_1_1, iter_1_1.resource))
-			end
+	for i, v in ipairs(lua_survival_block.configList) do
+		local group = tonumber(v.copyIds) or 0
+
+		if group == 0 or group == self._mapGroupId then
+			self._loader:addPath(self:getBlockResPath(group, v.resource))
 		end
-
-		arg_1_0._loader:addPath(arg_1_0:getBlockResPath(0, "survival_cloud"))
-		arg_1_0._loader:addPath(arg_1_0:getBlockResPath(0, "survival_kengdong"))
 	end
 
-	arg_1_0:addPlayerRes()
-	arg_1_0._loader:addPath(SurvivalSceneFogComp.FogResPath)
-	arg_1_0._loader:addPath(SurvivalSceneMapSpBlock.EdgeResPath)
+	self._loader:addPath(self:getBlockResPath(0, "survival_cloud"))
+	self._loader:addPath(self:getBlockResPath(0, "survival_kengdong"))
+	self:addPlayerRes()
+	self._loader:addPath(SurvivalSceneFogComp.FogResPath)
+	self._loader:addPath(SurvivalSceneMapSpBlock.EdgeResPath)
 
-	for iter_1_2, iter_1_3 in pairs(SurvivalSceneMapPath.ResPaths) do
-		arg_1_0._loader:addPath(iter_1_3)
+	for k, v in pairs(SurvivalSceneMapPath.ResPaths) do
+		self._loader:addPath(v)
 	end
 
-	for iter_1_4, iter_1_5 in pairs(SurvivalPointEffectComp.ResPaths) do
-		arg_1_0._loader:addPath(iter_1_5)
+	for k, v in pairs(SurvivalPointEffectComp.ResPaths) do
+		self._loader:addPath(v)
 	end
 
-	arg_1_0._loader:startLoad(arg_1_0._onPreloadFinish, arg_1_0)
+	self._loader:startLoad(self._onPreloadFinish, self)
 end
 
-function var_0_0.addPlayerRes(arg_2_0)
-	arg_2_0._loader:addPath(SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.PlayerRes))
-	arg_2_0._loader:addPath(SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.Vehicle_Miasma))
-	arg_2_0._loader:addPath(SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.Vehicle_Morass))
-	arg_2_0._loader:addPath(SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.Vehicle_Magma))
-	arg_2_0._loader:addPath(SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.Vehicle_Ice))
-	arg_2_0._loader:addPath(SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.Vehicle_Water))
-	arg_2_0._loader:addPath(SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.Vehicle_WaterNormal))
+function SurvivalScenePreloader:addPlayerRes()
+	self._loader:addPath(SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.PlayerRes))
+	self._loader:addPath(SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.Vehicle_Miasma))
+	self._loader:addPath(SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.Vehicle_Morass))
+	self._loader:addPath(SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.Vehicle_Magma))
+	self._loader:addPath(SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.Vehicle_Ice))
+	self._loader:addPath(SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.Vehicle_Water))
+	self._loader:addPath(SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.Vehicle_WaterNormal))
 end
 
-function var_0_0._onPreloadFinish(arg_3_0)
-	arg_3_0:dispatchEvent(SurvivalEvent.OnSurvivalPreloadFinish)
+function SurvivalScenePreloader:_onPreloadFinish()
+	self:dispatchEvent(SurvivalEvent.OnSurvivalPreloadFinish)
 end
 
-function var_0_0.getRes(arg_4_0, arg_4_1)
-	if not arg_4_0._loader or arg_4_0._loader.isLoading then
+function SurvivalScenePreloader:getRes(path)
+	if not self._loader or self._loader.isLoading then
 		return
 	end
 
-	local var_4_0
+	local assetItem = self._loader:getAssetItem(path)
 
-	if not GameResMgr.IsFromEditorDir and string.find(arg_4_1, "survival/scenes/") then
-		var_4_0 = arg_4_0._loader:getAssetItem(arg_4_0:getMapBlockAbPath())
-	else
-		var_4_0 = arg_4_0._loader:getAssetItem(arg_4_1)
-	end
-
-	if not var_4_0 then
+	if not assetItem then
 		return
 	end
 
-	return var_4_0:GetResource(arg_4_1)
+	return assetItem:GetResource(path)
 end
 
-function var_0_0.getBlockRes(arg_5_0, arg_5_1, arg_5_2)
-	if not arg_5_1 then
+function SurvivalScenePreloader:getBlockRes(group, prefabName)
+	if not group then
 		return
 	end
 
-	if not arg_5_0._loader or arg_5_0._loader.isLoading then
+	if not self._loader or self._loader.isLoading then
 		return
 	end
 
-	local var_5_0
-	local var_5_1 = arg_5_1 == 0 and arg_5_0:getMapBlockCommonAbPath() or arg_5_0:getMapBlockAbPath()
-	local var_5_2 = arg_5_0:getBlockResPath(arg_5_1, arg_5_2)
+	local resPath = self:getBlockResPath(group, prefabName)
+	local assetItem = self._loader:getAssetItem(resPath)
 
-	if not GameResMgr.IsFromEditorDir and string.find(var_5_2, "survival/scenes/") then
-		var_5_0 = arg_5_0._loader:getAssetItem(var_5_1)
-	else
-		var_5_0 = arg_5_0._loader:getAssetItem(var_5_2)
-	end
-
-	if not var_5_0 then
+	if not assetItem then
 		return
 	end
 
-	return var_5_0:GetResource(var_5_2)
+	return assetItem:GetResource(resPath)
 end
 
-function var_0_0.getBlockResPath(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = arg_6_1 == 0 and arg_6_0:getMapBlockCommonAbPath() or arg_6_0:getMapBlockAbPath()
+function SurvivalScenePreloader:getBlockResPath(group, prefabName)
+	local abPath = group == 0 and self:getMapBlockCommonAbPath() or self:getMapBlockAbPath()
+	local resPath = string.format("%s/prefab/%s.prefab", abPath, prefabName)
 
-	return (string.format("%s/prefab/%s.prefab", var_6_0, arg_6_2))
+	return resPath
 end
 
-function var_0_0.getMapBlockAbPath(arg_7_0)
-	return "survival/scenes/map0" .. (arg_7_0._mapGroupId or 1)
+function SurvivalScenePreloader:getMapBlockAbPath()
+	return "survival/scenes/map0" .. (self._mapGroupId or 1)
 end
 
-function var_0_0.initMapGroupId(arg_8_0)
-	if not arg_8_0._mapGroupId then
-		local var_8_0 = SurvivalMapModel.instance:getCurMapId()
-		local var_8_1 = lua_survival_map_group_mapping.configDict[var_8_0].id
+function SurvivalScenePreloader:initMapGroupId()
+	if not self._mapGroupId then
+		local mapId = SurvivalMapModel.instance:getCurMapId()
+		local groupId = lua_survival_map_group_mapping.configDict[mapId].id
+		local co = lua_survival_map_group.configDict[groupId]
 
-		arg_8_0._mapGroupId = lua_survival_map_group.configDict[var_8_1].type
+		self._mapGroupId = co.type
 	end
 end
 
-function var_0_0.getMapBlockCommonAbPath(arg_9_0)
+function SurvivalScenePreloader:getMapBlockCommonAbPath()
 	return "survival/scenes/map_common"
 end
 
-function var_0_0.onSceneClose(arg_10_0, arg_10_1, arg_10_2)
-	if arg_10_0._loader then
-		arg_10_0._loader:dispose()
+function SurvivalScenePreloader:onSceneClose(sceneId, levelId)
+	if self._loader then
+		self._loader:dispose()
 
-		arg_10_0._loader = nil
+		self._loader = nil
 	end
 
-	arg_10_0._mapGroupId = nil
+	self._mapGroupId = nil
 end
 
-return var_0_0
+return SurvivalScenePreloader

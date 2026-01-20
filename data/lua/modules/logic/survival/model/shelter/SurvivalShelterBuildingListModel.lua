@@ -1,74 +1,77 @@
-﻿module("modules.logic.survival.model.shelter.SurvivalShelterBuildingListModel", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/shelter/SurvivalShelterBuildingListModel.lua
 
-local var_0_0 = class("SurvivalShelterBuildingListModel", BaseModel)
+module("modules.logic.survival.model.shelter.SurvivalShelterBuildingListModel", package.seeall)
 
-function var_0_0.initViewParam(arg_1_0)
-	arg_1_0.selectBuildingId = 0
+local SurvivalShelterBuildingListModel = class("SurvivalShelterBuildingListModel", BaseModel)
+
+function SurvivalShelterBuildingListModel:initViewParam()
+	self.selectBuildingId = 0
 end
 
-function var_0_0.getSelectBuilding(arg_2_0)
-	return arg_2_0.selectBuildingId
+function SurvivalShelterBuildingListModel:getSelectBuilding()
+	return self.selectBuildingId
 end
 
-function var_0_0.setSelectBuilding(arg_3_0, arg_3_1)
-	if arg_3_0.selectBuildingId == arg_3_1 then
+function SurvivalShelterBuildingListModel:setSelectBuilding(buildingId)
+	if self.selectBuildingId == buildingId then
 		return
 	end
 
-	arg_3_0.selectBuildingId = arg_3_1
+	self.selectBuildingId = buildingId
 
 	return true
 end
 
-function var_0_0.isSelectBuilding(arg_4_0, arg_4_1)
-	return arg_4_0.selectBuildingId == arg_4_1
+function SurvivalShelterBuildingListModel:isSelectBuilding(buildingId)
+	return self.selectBuildingId == buildingId
 end
 
-function var_0_0.getShowList(arg_5_0)
-	local var_5_0 = {}
-	local var_5_1 = {}
-	local var_5_2 = SurvivalShelterModel.instance:getWeekInfo().buildingDict
+function SurvivalShelterBuildingListModel:getShowList()
+	local baseList = {}
+	local tentList = {}
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local buildingDict = weekInfo.buildingDict
 
-	if var_5_2 then
-		for iter_5_0, iter_5_1 in pairs(var_5_2) do
-			if iter_5_1:isEqualType(SurvivalEnum.BuildingType.Tent) then
-				table.insert(var_5_1, iter_5_1)
+	if buildingDict then
+		for _, v in pairs(buildingDict) do
+			if v:isEqualType(SurvivalEnum.BuildingType.Tent) then
+				table.insert(tentList, v)
 			else
-				table.insert(var_5_0, iter_5_1)
+				table.insert(baseList, v)
 			end
 		end
 	end
 
-	if #var_5_0 > 1 then
-		table.sort(var_5_0, SurvivalShelterBuildingMo.sort)
+	if #baseList > 1 then
+		table.sort(baseList, SurvivalShelterBuildingMo.sort)
 	end
 
-	if #var_5_1 > 1 then
-		table.sort(var_5_1, SurvivalShelterBuildingMo.sort)
+	if #tentList > 1 then
+		table.sort(tentList, SurvivalShelterBuildingMo.sort)
 	end
 
-	local var_5_3 = {}
-	local var_5_4 = 2
+	local dataList = {}
+	local lineCount = 2
 
-	for iter_5_2, iter_5_3 in ipairs(var_5_0) do
-		local var_5_5 = math.floor((iter_5_2 - 1) / var_5_4) + 1
-		local var_5_6 = var_5_3[var_5_5]
+	for i, v in ipairs(baseList) do
+		local index = math.floor((i - 1) / lineCount) + 1
+		local item = dataList[index]
 
-		if not var_5_6 then
-			var_5_6 = {}
-			var_5_3[var_5_5] = var_5_6
+		if not item then
+			item = {}
+			dataList[index] = item
 		end
 
-		table.insert(var_5_6, iter_5_3)
+		table.insert(item, v)
 	end
 
-	if arg_5_0.selectBuildingId == nil or arg_5_0.selectBuildingId == 0 then
-		arg_5_0.selectBuildingId = var_5_0[1] and var_5_0[1].id
+	if self.selectBuildingId == nil or self.selectBuildingId == 0 then
+		self.selectBuildingId = baseList[1] and baseList[1].id
 	end
 
-	return var_5_3, var_5_1
+	return dataList, tentList
 end
 
-var_0_0.instance = var_0_0.New()
+SurvivalShelterBuildingListModel.instance = SurvivalShelterBuildingListModel.New()
 
-return var_0_0
+return SurvivalShelterBuildingListModel

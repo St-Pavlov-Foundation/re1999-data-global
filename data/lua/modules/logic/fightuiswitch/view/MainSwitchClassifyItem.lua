@@ -1,89 +1,91 @@
-﻿module("modules.logic.fightuiswitch.view.MainSwitchClassifyItem", package.seeall)
+﻿-- chunkname: @modules/logic/fightuiswitch/view/MainSwitchClassifyItem.lua
 
-local var_0_0 = class("MainSwitchClassifyItem", LuaCompBase)
+module("modules.logic.fightuiswitch.view.MainSwitchClassifyItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "#go_normal")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_normal/#btn_click")
-	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "#go_select")
-	arg_1_0._goline = gohelper.findChild(arg_1_0.viewGO, "image_line")
+local MainSwitchClassifyItem = class("MainSwitchClassifyItem", LuaCompBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function MainSwitchClassifyItem:onInitView()
+	self._gonormal = gohelper.findChild(self.viewGO, "#go_normal")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "#go_normal/#btn_click")
+	self._goselect = gohelper.findChild(self.viewGO, "#go_select")
+	self._goline = gohelper.findChild(self.viewGO, "image_line")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+function MainSwitchClassifyItem:addEventListeners()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
+function MainSwitchClassifyItem:removeEventListeners()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0._btnclickOnClick(arg_4_0)
-	if arg_4_0.clickCb and arg_4_0.clickCbobject then
-		arg_4_0.clickCb(arg_4_0.clickCbobject, arg_4_0._index)
+function MainSwitchClassifyItem:_btnclickOnClick()
+	if self.clickCb and self.clickCbobject then
+		self.clickCb(self.clickCbobject, self._index)
 	end
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._txts = arg_5_0:getUserDataTb_()
+function MainSwitchClassifyItem:_editableInitView()
+	self._txts = self:getUserDataTb_()
 
-	local var_5_0 = gohelper.findChildText(arg_5_0.viewGO, "#go_normal/txt")
-	local var_5_1 = gohelper.findChildText(arg_5_0.viewGO, "#go_select/txt")
+	local txt1 = gohelper.findChildText(self.viewGO, "#go_normal/txt")
+	local txt2 = gohelper.findChildText(self.viewGO, "#go_select/txt")
 
-	table.insert(arg_5_0._txts, var_5_0)
-	table.insert(arg_5_0._txts, var_5_1)
+	table.insert(self._txts, txt1)
+	table.insert(self._txts, txt2)
 
-	arg_5_0._goreddot = gohelper.findChild(arg_5_0.viewGO, "reddot")
+	self._goreddot = gohelper.findChild(self.viewGO, "reddot")
 end
 
-function var_0_0.init(arg_6_0, arg_6_1)
-	arg_6_0.viewGO = arg_6_1
+function MainSwitchClassifyItem:init(go)
+	self.viewGO = go
 
-	arg_6_0:onInitView()
+	self:onInitView()
 end
 
-function var_0_0.onUpdateMO(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_0._mo = arg_7_1
-	arg_7_0._index = arg_7_2
+function MainSwitchClassifyItem:onUpdateMO(mo, index)
+	self._mo = mo
+	self._index = index
 end
 
-function var_0_0.addBtnListeners(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0.clickCb = arg_8_1
-	arg_8_0.clickCbobject = arg_8_2
+function MainSwitchClassifyItem:addBtnListeners(cb, cbObj)
+	self.clickCb = cb
+	self.clickCbobject = cbObj
 end
 
-function var_0_0.setTxt(arg_9_0, arg_9_1)
-	if arg_9_0._txts then
-		for iter_9_0, iter_9_1 in ipairs(arg_9_0._txts) do
-			iter_9_1.text = arg_9_1
+function MainSwitchClassifyItem:setTxt(str)
+	if self._txts then
+		for i, txt in ipairs(self._txts) do
+			txt.text = str
 		end
 	end
 end
 
-function var_0_0.showLine(arg_10_0, arg_10_1)
-	gohelper.setActive(arg_10_0._goline, arg_10_1)
+function MainSwitchClassifyItem:showLine(isShow)
+	gohelper.setActive(self._goline, isShow)
 end
 
-function var_0_0.setActive(arg_11_0, arg_11_1)
-	gohelper.setActive(arg_11_0.viewGO, arg_11_1)
+function MainSwitchClassifyItem:setActive(isActive)
+	gohelper.setActive(self.viewGO, isActive)
 end
 
-function var_0_0.onSelect(arg_12_0, arg_12_1)
-	gohelper.setActive(arg_12_0._gonormal, not arg_12_1)
-	gohelper.setActive(arg_12_0._goselect, arg_12_1)
+function MainSwitchClassifyItem:onSelect(isSelect)
+	gohelper.setActive(self._gonormal, not isSelect)
+	gohelper.setActive(self._goselect, isSelect)
 end
 
-function var_0_0.onSelectByIndex(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0._index == arg_13_1
+function MainSwitchClassifyItem:onSelectByIndex(index)
+	local isSelect = self._index == index
 
-	arg_13_0:onSelect(var_13_0)
+	self:onSelect(isSelect)
 end
 
-function var_0_0.showReddot(arg_14_0, arg_14_1)
-	gohelper.setActive(arg_14_0._goreddot, arg_14_1)
+function MainSwitchClassifyItem:showReddot(isShow)
+	gohelper.setActive(self._goreddot, isShow)
 end
 
-return var_0_0
+return MainSwitchClassifyItem

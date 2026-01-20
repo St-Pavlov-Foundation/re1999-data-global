@@ -1,154 +1,159 @@
-﻿module("modules.logic.explore.view.ExploreBonusSceneRecordView", package.seeall)
+﻿-- chunkname: @modules/logic/explore/view/ExploreBonusSceneRecordView.lua
 
-local var_0_0 = class("ExploreBonusSceneRecordView", BaseView)
-local var_0_1 = 8
+module("modules.logic.explore.view.ExploreBonusSceneRecordView", package.seeall)
 
-function var_0_0._setContentPaddingTop(arg_1_0, arg_1_1)
-	arg_1_0._vLayoutGroup.padding.top = arg_1_1
+local ExploreBonusSceneRecordView = class("ExploreBonusSceneRecordView", BaseView)
+local kMarkTopPaddingTopOffset = 8
+
+function ExploreBonusSceneRecordView:_setContentPaddingTop(value)
+	self._vLayoutGroup.padding.top = value
 end
 
-function var_0_0._updateContentPaddingTop(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_0._originalPaddingTop
+function ExploreBonusSceneRecordView:_updateContentPaddingTop(isContainsMarkTop)
+	local value = self._originalPaddingTop
 
-	if arg_2_1 then
-		var_2_0 = var_2_0 + var_0_1
+	if isContainsMarkTop then
+		value = value + kMarkTopPaddingTopOffset
 	end
 
-	arg_2_0:_setContentPaddingTop(var_2_0)
+	self:_setContentPaddingTop(value)
 end
 
-function var_0_0.onInitView(arg_3_0)
-	arg_3_0._btnclose = gohelper.findChildButtonWithAudio(arg_3_0.viewGO, "#btn_close")
-	arg_3_0._item = gohelper.findChild(arg_3_0.viewGO, "mask/Scroll View/Viewport/Content/#go_chatitem")
-	arg_3_0._itemContent = gohelper.findChild(arg_3_0.viewGO, "mask/Scroll View/Viewport/Content")
-	arg_3_0._simageicon = gohelper.findChildSingleImage(arg_3_0.viewGO, "#simage_icon")
-	arg_3_0._vLayoutGroup = arg_3_0._itemContent:GetComponent(typeof(UnityEngine.UI.VerticalLayoutGroup))
-	arg_3_0._originalPaddingTop = arg_3_0._vLayoutGroup.padding.top
-	arg_3_0._tmpMarkTopTextList = {}
-	arg_3_0._tmpMarkTopTextListList = {}
+function ExploreBonusSceneRecordView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._item = gohelper.findChild(self.viewGO, "mask/Scroll View/Viewport/Content/#go_chatitem")
+	self._itemContent = gohelper.findChild(self.viewGO, "mask/Scroll View/Viewport/Content")
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "#simage_icon")
+	self._vLayoutGroup = self._itemContent:GetComponent(typeof(UnityEngine.UI.VerticalLayoutGroup))
+	self._originalPaddingTop = self._vLayoutGroup.padding.top
+	self._tmpMarkTopTextList = {}
+	self._tmpMarkTopTextListList = {}
 end
 
-function var_0_0.addEvents(arg_4_0)
-	arg_4_0._btnclose:AddClickListener(arg_4_0.closeThis, arg_4_0)
+function ExploreBonusSceneRecordView:addEvents()
+	self._btnclose:AddClickListener(self.closeThis, self)
 end
 
-function var_0_0.removeEvents(arg_5_0)
-	arg_5_0._btnclose:RemoveClickListener()
+function ExploreBonusSceneRecordView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0.onOpen(arg_6_0)
-	local var_6_0 = arg_6_0.viewParam.chapterId
-	local var_6_1 = ExploreSimpleModel.instance:getChapterMo(var_6_0).bonusScene
-	local var_6_2, var_6_3 = next(var_6_1)
-	local var_6_4 = ExploreConfig.instance:getDialogueConfig(var_6_2)
-	local var_6_5 = {}
-	local var_6_6
+function ExploreBonusSceneRecordView:onOpen()
+	local chapterId = self.viewParam.chapterId
+	local chapterBonusSceneDict = ExploreSimpleModel.instance:getChapterMo(chapterId).bonusScene
+	local id, options = next(chapterBonusSceneDict)
+	local cfgs = ExploreConfig.instance:getDialogueConfig(id)
+	local showDatas = {}
+	local icon
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_3) do
-		local var_6_7 = var_6_4[iter_6_0]
+	for index, select in ipairs(options) do
+		local co = cfgs[index]
 
-		if var_6_7 then
-			local var_6_8 = {
-				desc = var_6_7.desc
+		if co then
+			local data = {
+				desc = co.desc
 			}
 
-			if not string.nilorempty(var_6_7.bonusButton) then
-				var_6_8.options = string.split(var_6_7.bonusButton, "|")
-				var_6_8.index = iter_6_1
+			if not string.nilorempty(co.bonusButton) then
+				local arr = string.split(co.bonusButton, "|")
+
+				data.options = arr
+				data.index = select
 			end
 
-			table.insert(var_6_5, var_6_8)
+			table.insert(showDatas, data)
 
-			if not string.nilorempty(var_6_7.picture) then
-				var_6_6 = var_6_7.picture
+			if not string.nilorempty(co.picture) then
+				icon = co.picture
 			end
 		end
 	end
 
-	if not string.nilorempty(var_6_6) then
-		arg_6_0._simageicon:LoadImage(ResUrl.getExploreBg("file/" .. var_6_6))
+	if not string.nilorempty(icon) then
+		self._simageicon:LoadImage(ResUrl.getExploreBg("file/" .. icon))
 	end
 
-	gohelper.CreateObjList(arg_6_0, arg_6_0.onCreateItem, var_6_5, arg_6_0._itemContent, arg_6_0._item)
+	gohelper.CreateObjList(self, self.onCreateItem, showDatas, self._itemContent, self._item)
 end
 
-function var_0_0.onCreateItem(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	local var_7_0 = gohelper.findChildTextMesh(arg_7_1, "info")
-	local var_7_1 = gohelper.findChild(arg_7_1, "bg")
+function ExploreBonusSceneRecordView:onCreateItem(obj, data, index)
+	local info = gohelper.findChildTextMesh(obj, "info")
+	local bg = gohelper.findChild(obj, "bg")
 
-	gohelper.setActive(var_7_0, arg_7_2.desc)
-	gohelper.setActive(var_7_1, arg_7_2.options)
+	gohelper.setActive(info, data.desc)
+	gohelper.setActive(bg, data.options)
 
-	if arg_7_2.desc then
-		local var_7_2 = arg_7_0._tmpMarkTopTextList[arg_7_3]
+	if data.desc then
+		local tmpMarkTopText = self._tmpMarkTopTextList[index]
 
-		if not var_7_2 then
-			var_7_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_7_0.gameObject, TMPMarkTopText)
+		if not tmpMarkTopText then
+			tmpMarkTopText = MonoHelper.addNoUpdateLuaComOnceToGo(info.gameObject, TMPMarkTopText)
 
-			var_7_2:setTopOffset(0, -5.2)
-			var_7_2:setLineSpacing(15)
+			tmpMarkTopText:setTopOffset(0, -5.2)
+			tmpMarkTopText:setLineSpacing(15)
 
-			arg_7_0._tmpMarkTopTextList[arg_7_3] = var_7_2
+			self._tmpMarkTopTextList[index] = tmpMarkTopText
 		else
-			var_7_2:reInitByCmp(var_7_0)
+			tmpMarkTopText:reInitByCmp(info)
 		end
 
-		var_7_2:setData(arg_7_2.desc)
+		tmpMarkTopText:setData(data.desc)
 	end
 
-	if arg_7_3 == 1 then
-		arg_7_0:_updateContentPaddingTop(arg_7_0._tmpMarkTopTextList[arg_7_3]:isContainsMarkTop())
+	if index == 1 then
+		self:_updateContentPaddingTop(self._tmpMarkTopTextList[index]:isContainsMarkTop())
 	end
 
-	if arg_7_2.options then
-		for iter_7_0 = 1, 3 do
-			local var_7_3 = gohelper.findChildTextMesh(var_7_1, "txt" .. iter_7_0)
-			local var_7_4 = gohelper.findChild(var_7_1, "txt" .. iter_7_0 .. "/play")
+	if data.options then
+		for i = 1, 3 do
+			local txt1 = gohelper.findChildTextMesh(bg, "txt" .. i)
+			local play = gohelper.findChild(bg, "txt" .. i .. "/play")
 
-			arg_7_0._tmpMarkTopTextListList[arg_7_3] = arg_7_0._tmpMarkTopTextListList[arg_7_3] or {}
+			self._tmpMarkTopTextListList[index] = self._tmpMarkTopTextListList[index] or {}
 
-			local var_7_5 = arg_7_0._tmpMarkTopTextListList[arg_7_3][iter_7_0]
+			local tmpMarkTopTextList = self._tmpMarkTopTextListList[index]
+			local tmpMarkTopText = tmpMarkTopTextList[i]
 
-			if not var_7_5 then
-				var_7_5 = MonoHelper.addNoUpdateLuaComOnceToGo(var_7_3.gameObject, TMPMarkTopText)
+			if not tmpMarkTopText then
+				tmpMarkTopText = MonoHelper.addNoUpdateLuaComOnceToGo(txt1.gameObject, TMPMarkTopText)
 
-				var_7_5:setTopOffset(0, -5.5)
-				var_7_5:setLineSpacing(7)
+				tmpMarkTopText:setTopOffset(0, -5.5)
+				tmpMarkTopText:setLineSpacing(7)
 
-				arg_7_0._tmpMarkTopTextListList[arg_7_3][iter_7_0] = var_7_5
+				self._tmpMarkTopTextListList[index][i] = tmpMarkTopText
 			else
-				var_7_5:reInitByCmp(var_7_3)
+				tmpMarkTopText:reInitByCmp(txt1)
 			end
 
-			if arg_7_2.options[iter_7_0] then
-				var_7_5:setData(arg_7_2.options[iter_7_0])
-				gohelper.setActive(var_7_4, arg_7_2.index == iter_7_0)
-				SLFramework.UGUI.GuiHelper.SetColor(var_7_3, arg_7_2.index == iter_7_0 and "#445D42" or "#3D3939")
+			if data.options[i] then
+				tmpMarkTopText:setData(data.options[i])
+				gohelper.setActive(play, data.index == i)
+				SLFramework.UGUI.GuiHelper.SetColor(txt1, data.index == i and "#445D42" or "#3D3939")
 			else
-				gohelper.setActive(var_7_3, false)
+				gohelper.setActive(txt1, false)
 			end
 		end
 	end
 end
 
-function var_0_0.onClickModalMask(arg_8_0)
-	arg_8_0:closeThis()
+function ExploreBonusSceneRecordView:onClickModalMask()
+	self:closeThis()
 end
 
-function var_0_0.onClose(arg_9_0)
-	GameUtil.onDestroyViewMemberList(arg_9_0, "_tmpMarkTopTextList")
+function ExploreBonusSceneRecordView:onClose()
+	GameUtil.onDestroyViewMemberList(self, "_tmpMarkTopTextList")
 
-	if arg_9_0._tmpMarkTopTextListList then
-		for iter_9_0, iter_9_1 in pairs(arg_9_0._tmpMarkTopTextListList) do
-			for iter_9_2, iter_9_3 in pairs(iter_9_1) do
-				iter_9_3:onDestroyView()
+	if self._tmpMarkTopTextListList then
+		for _, list in pairs(self._tmpMarkTopTextListList) do
+			for _, item in pairs(list) do
+				item:onDestroyView()
 			end
 		end
 
-		arg_9_0._tmpMarkTopTextListList = nil
+		self._tmpMarkTopTextListList = nil
 	end
 
-	arg_9_0._simageicon:UnLoadImage()
+	self._simageicon:UnLoadImage()
 end
 
-return var_0_0
+return ExploreBonusSceneRecordView

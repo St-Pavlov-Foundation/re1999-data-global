@@ -1,38 +1,40 @@
-﻿module("modules.logic.scene.summon.work.VirtualSummonBehaviorFlow", package.seeall)
+﻿-- chunkname: @modules/logic/scene/summon/work/VirtualSummonBehaviorFlow.lua
 
-local var_0_0 = class("VirtualSummonBehaviorFlow", FlowParallel)
+module("modules.logic.scene.summon.work.VirtualSummonBehaviorFlow", package.seeall)
 
-function var_0_0.ctor(arg_1_0, ...)
-	var_0_0.super.ctor(arg_1_0, ...)
-	arg_1_0:addWork(VirtualSummonBehaviorFlow_Work1.New())
+local VirtualSummonBehaviorFlow = class("VirtualSummonBehaviorFlow", FlowParallel)
+
+function VirtualSummonBehaviorFlow:ctor(...)
+	VirtualSummonBehaviorFlow.super.ctor(self, ...)
+	self:addWork(VirtualSummonBehaviorFlow_Work1.New())
 end
 
-function var_0_0.start(arg_2_0, arg_2_1, arg_2_2)
-	assert(arg_2_1 and #arg_2_1 > 0)
+function VirtualSummonBehaviorFlow:start(heroIdList, backToMainSceneCallBack)
+	assert(heroIdList and #heroIdList > 0)
 
-	arg_2_0._heroIdList = arg_2_1
-	arg_2_0._backToMainSceneCallBack = arg_2_2
+	self._heroIdList = heroIdList
+	self._backToMainSceneCallBack = backToMainSceneCallBack
 
-	var_0_0.super.start(arg_2_0)
+	VirtualSummonBehaviorFlow.super.start(self)
 end
 
-function var_0_0.heroIdList(arg_3_0)
-	return arg_3_0._heroIdList
+function VirtualSummonBehaviorFlow:heroIdList()
+	return self._heroIdList
 end
 
-function var_0_0.backToMainSceneCallBack(arg_4_0)
-	return arg_4_0._backToMainSceneCallBack
+function VirtualSummonBehaviorFlow:backToMainSceneCallBack()
+	return self._backToMainSceneCallBack
 end
 
-function var_0_0.onDestroyView(arg_5_0)
-	arg_5_0:destroy()
+function VirtualSummonBehaviorFlow:onDestroyView()
+	self:destroy()
 end
 
-function var_0_0.addWork(arg_6_0, arg_6_1)
-	var_0_0.super.addWork(arg_6_0, arg_6_1)
-	arg_6_1:setRootInternal(arg_6_0)
+function VirtualSummonBehaviorFlow:addWork(work)
+	VirtualSummonBehaviorFlow.super.addWork(self, work)
+	work:setRootInternal(self)
 
-	return arg_6_1
+	return work
 end
 
-return var_0_0
+return VirtualSummonBehaviorFlow

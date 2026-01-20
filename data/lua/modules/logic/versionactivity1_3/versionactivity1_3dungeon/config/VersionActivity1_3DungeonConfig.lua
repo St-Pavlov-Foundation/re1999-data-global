@@ -1,25 +1,27 @@
-﻿module("modules.logic.versionactivity1_3.versionactivity1_3dungeon.config.VersionActivity1_3DungeonConfig", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/versionactivity1_3dungeon/config/VersionActivity1_3DungeonConfig.lua
 
-local var_0_0 = class("VersionActivity1_3DungeonConfig", BaseConfig)
+module("modules.logic.versionactivity1_3.versionactivity1_3dungeon.config.VersionActivity1_3DungeonConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local VersionActivity1_3DungeonConfig = class("VersionActivity1_3DungeonConfig", BaseConfig)
+
+function VersionActivity1_3DungeonConfig:ctor()
 	return
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function VersionActivity1_3DungeonConfig:reqConfigNames()
 	return {
 		"activity113_const"
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+function VersionActivity1_3DungeonConfig:onConfigLoaded(configName, configTable)
 	return
 end
 
-function var_0_0.getDungeonConst(arg_4_0, arg_4_1)
-	return lua_activity113_const.configDict[VersionActivity1_3Enum.ActivityId.Dungeon][arg_4_1]
+function VersionActivity1_3DungeonConfig:getDungeonConst(key)
+	return lua_activity113_const.configDict[VersionActivity1_3Enum.ActivityId.Dungeon][key]
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity1_3DungeonConfig.instance = VersionActivity1_3DungeonConfig.New()
 
-return var_0_0
+return VersionActivity1_3DungeonConfig

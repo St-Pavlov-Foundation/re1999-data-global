@@ -1,57 +1,59 @@
-﻿module("modules.logic.versionactivity1_3.act119.view.Activity1_3_119TrialHeroItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/act119/view/Activity1_3_119TrialHeroItem.lua
 
-local var_0_0 = class("Activity1_3_119TrialHeroItem")
+module("modules.logic.versionactivity1_3.act119.view.Activity1_3_119TrialHeroItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.go = arg_1_1
-	arg_1_0.index = arg_1_2
+local Activity1_3_119TrialHeroItem = class("Activity1_3_119TrialHeroItem")
 
-	arg_1_0:onInitView()
-	arg_1_0:addEvents()
+function Activity1_3_119TrialHeroItem:init(go, index)
+	self.go = go
+	self.index = index
+
+	self:onInitView()
+	self:addEvents()
 end
 
-function var_0_0.onInitView(arg_2_0)
-	arg_2_0._btn = gohelper.findButtonWithAudio(arg_2_0.go)
-	arg_2_0._quality = gohelper.findChildImage(arg_2_0.go, "#image_QualityBG")
-	arg_2_0._career = gohelper.findChildImage(arg_2_0.go, "image_Career")
-	arg_2_0._icon = gohelper.findChildSingleImage(arg_2_0.go, "image_Mask/#image_RoleIcon")
+function Activity1_3_119TrialHeroItem:onInitView()
+	self._btn = gohelper.findButtonWithAudio(self.go)
+	self._quality = gohelper.findChildImage(self.go, "#image_QualityBG")
+	self._career = gohelper.findChildImage(self.go, "image_Career")
+	self._icon = gohelper.findChildSingleImage(self.go, "image_Mask/#image_RoleIcon")
 end
 
-function var_0_0.addEvents(arg_3_0)
-	arg_3_0._btn:AddClickListener(arg_3_0.onClickHero, arg_3_0)
+function Activity1_3_119TrialHeroItem:addEvents()
+	self._btn:AddClickListener(self.onClickHero, self)
 end
 
-function var_0_0.removeEvents(arg_4_0)
-	arg_4_0._btn:RemoveClickListener()
+function Activity1_3_119TrialHeroItem:removeEvents()
+	self._btn:RemoveClickListener()
 end
 
-function var_0_0.updateMO(arg_5_0)
-	local var_5_0 = HeroGroupTrialModel.instance:getByIndex(arg_5_0.index)
+function Activity1_3_119TrialHeroItem:updateMO()
+	local heroMO = HeroGroupTrialModel.instance:getByIndex(self.index)
 
-	arg_5_0._mo = var_5_0
+	self._mo = heroMO
 
-	local var_5_1 = SkinConfig.instance:getSkinCo(var_5_0.config.skinId)
+	local skinCo = SkinConfig.instance:getSkinCo(heroMO.config.skinId)
 
-	arg_5_0._icon:LoadImage(ResUrl.getRoomHeadIcon(var_5_1.headIcon))
-	UISpriteSetMgr.instance:setCommonSprite(arg_5_0._quality, "bgequip" .. tostring(ItemEnum.Color[var_5_0.config.rare]))
-	UISpriteSetMgr.instance:setCommonSprite(arg_5_0._career, "lssx_" .. tostring(var_5_0.config.career))
+	self._icon:LoadImage(ResUrl.getRoomHeadIcon(skinCo.headIcon))
+	UISpriteSetMgr.instance:setCommonSprite(self._quality, "bgequip" .. tostring(ItemEnum.Color[heroMO.config.rare]))
+	UISpriteSetMgr.instance:setCommonSprite(self._career, "lssx_" .. tostring(heroMO.config.career))
 end
 
-function var_0_0.onClickHero(arg_6_0)
+function Activity1_3_119TrialHeroItem:onClickHero()
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Rolesgo)
-	CharacterController.instance:openCharacterView(arg_6_0._mo, HeroGroupTrialModel.instance:getList())
+	CharacterController.instance:openCharacterView(self._mo, HeroGroupTrialModel.instance:getList())
 end
 
-function var_0_0.dispose(arg_7_0)
-	arg_7_0:removeEvents()
+function Activity1_3_119TrialHeroItem:dispose()
+	self:removeEvents()
 
-	arg_7_0.go = nil
-	arg_7_0.index = nil
-	arg_7_0._quality = nil
+	self.go = nil
+	self.index = nil
+	self._quality = nil
 
-	arg_7_0._icon:UnLoadImage()
+	self._icon:UnLoadImage()
 
-	arg_7_0._icon = nil
+	self._icon = nil
 end
 
-return var_0_0
+return Activity1_3_119TrialHeroItem

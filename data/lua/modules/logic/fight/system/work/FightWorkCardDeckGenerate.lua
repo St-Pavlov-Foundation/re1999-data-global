@@ -1,22 +1,24 @@
-﻿module("modules.logic.fight.system.work.FightWorkCardDeckGenerate", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkCardDeckGenerate.lua
 
-local var_0_0 = class("FightWorkCardDeckGenerate", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkCardDeckGenerate", package.seeall)
 
-function var_0_0.beforePlayEffectData(arg_1_0)
-	arg_1_0.beforeNum = FightDataHelper.fieldMgr.deckNum
+local FightWorkCardDeckGenerate = class("FightWorkCardDeckGenerate", FightEffectBase)
+
+function FightWorkCardDeckGenerate:beforePlayEffectData()
+	self.beforeNum = FightDataHelper.fieldMgr.deckNum
 end
 
-function var_0_0.onStart(arg_2_0)
-	local var_2_0 = FightDataHelper.fieldMgr.deckNum
+function FightWorkCardDeckGenerate:onStart()
+	local curDeckNum = FightDataHelper.fieldMgr.deckNum
 
-	arg_2_0:com_sendFightEvent(FightEvent.CardBoxNumChange, arg_2_0.beforeNum, var_2_0)
-	arg_2_0:com_registFightEvent(FightEvent.CardDeckGenerateDone, arg_2_0._delayDone)
-	arg_2_0:com_sendFightEvent(FightEvent.CardDeckGenerate, arg_2_0.actEffectData.cardInfoList)
-	arg_2_0:onDone(true)
+	self:com_sendFightEvent(FightEvent.CardBoxNumChange, self.beforeNum, curDeckNum)
+	self:com_registFightEvent(FightEvent.CardDeckGenerateDone, self._delayDone)
+	self:com_sendFightEvent(FightEvent.CardDeckGenerate, self.actEffectData.cardInfoList)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
+function FightWorkCardDeckGenerate:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkCardDeckGenerate

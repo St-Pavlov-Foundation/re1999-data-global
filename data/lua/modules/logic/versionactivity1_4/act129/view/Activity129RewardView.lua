@@ -1,410 +1,425 @@
-﻿module("modules.logic.versionactivity1_4.act129.view.Activity129RewardView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act129/view/Activity129RewardView.lua
 
-local var_0_0 = class("Activity129RewardView", BaseView)
+module("modules.logic.versionactivity1_4.act129.view.Activity129RewardView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.goRewards = gohelper.findChild(arg_1_0.viewGO, "#go_Rewards")
-	arg_1_0.goRewardItem = gohelper.findChild(arg_1_0.goRewards, "#scroll_RewardList/Viewport/Content/#go_RewardItem")
-	arg_1_0.goBuy = gohelper.findChild(arg_1_0.viewGO, "#go_Rewards/Buy")
-	arg_1_0.inputValue = gohelper.findChildTextMeshInputField(arg_1_0.goBuy, "ValueBG/#input_Value")
-	arg_1_0.txtCost = gohelper.findChildTextMesh(arg_1_0.goBuy, "#btn_Buy/#txt_Cost")
-	arg_1_0.simageIcon = gohelper.findChildSingleImage(arg_1_0.goBuy, "#btn_Buy/#simage_CostIcon")
-	arg_1_0.txtBuy = gohelper.findChildTextMesh(arg_1_0.goBuy, "#btn_Buy/txt_Buy")
-	arg_1_0.imgBuy = gohelper.findChildImage(arg_1_0.goBuy, "#btn_Buy")
-	arg_1_0.btnBuy = gohelper.findChildButtonWithAudio(arg_1_0.goBuy, "#btn_Buy")
-	arg_1_0.btnMax = gohelper.findChildButtonWithAudio(arg_1_0.goBuy, "#btn_Max")
-	arg_1_0.btnMin = gohelper.findChildButtonWithAudio(arg_1_0.goBuy, "#btn_Min")
-	arg_1_0.goAdd = gohelper.findChild(arg_1_0.goBuy, "#btn_Add")
-	arg_1_0.goSub = gohelper.findChild(arg_1_0.goBuy, "#btn_Sub")
-	arg_1_0.maxDisable = gohelper.findChild(arg_1_0.goBuy, "#btn_Max/image_Disable")
-	arg_1_0.minDisable = gohelper.findChild(arg_1_0.goBuy, "#btn_Min/image_Disable")
-	arg_1_0.goBack = gohelper.findChild(arg_1_0.viewGO, "#go_BackBtns")
-	arg_1_0.goCurreny = gohelper.findChild(arg_1_0.viewGO, "#go_CurrenyBar")
-	arg_1_0.txtTitleEn = gohelper.findChildTextMesh(arg_1_0.goRewards, "RewardTitle/image_RewardTitleBG/txt_RewardTitleEn")
-	arg_1_0.txtTitle = gohelper.findChildTextMesh(arg_1_0.goRewards, "RewardTitle/image_RewardTitleBG/txt_RewardTitle")
-	arg_1_0.anim = arg_1_0.goRewards:GetComponent(typeof(UnityEngine.Animator))
+local Activity129RewardView = class("Activity129RewardView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Activity129RewardView:onInitView()
+	self.goRewards = gohelper.findChild(self.viewGO, "#go_Rewards")
+	self.goRewardItem = gohelper.findChild(self.goRewards, "#scroll_RewardList/Viewport/Content/#go_RewardItem")
+	self.goBuy = gohelper.findChild(self.viewGO, "#go_Rewards/Buy")
+	self.inputValue = gohelper.findChildTextMeshInputField(self.goBuy, "ValueBG/#input_Value")
+	self.txtCost = gohelper.findChildTextMesh(self.goBuy, "#btn_Buy/#txt_Cost")
+	self.simageIcon = gohelper.findChildSingleImage(self.goBuy, "#btn_Buy/#simage_CostIcon")
+	self.txtBuy = gohelper.findChildTextMesh(self.goBuy, "#btn_Buy/txt_Buy")
+	self.imgBuy = gohelper.findChildImage(self.goBuy, "#btn_Buy")
+	self.btnBuy = gohelper.findChildButtonWithAudio(self.goBuy, "#btn_Buy")
+	self.btnMax = gohelper.findChildButtonWithAudio(self.goBuy, "#btn_Max")
+	self.btnMin = gohelper.findChildButtonWithAudio(self.goBuy, "#btn_Min")
+	self.goAdd = gohelper.findChild(self.goBuy, "#btn_Add")
+	self.goSub = gohelper.findChild(self.goBuy, "#btn_Sub")
+	self.maxDisable = gohelper.findChild(self.goBuy, "#btn_Max/image_Disable")
+	self.minDisable = gohelper.findChild(self.goBuy, "#btn_Min/image_Disable")
+	self.goBack = gohelper.findChild(self.viewGO, "#go_BackBtns")
+	self.goCurreny = gohelper.findChild(self.viewGO, "#go_CurrenyBar")
+	self.txtTitleEn = gohelper.findChildTextMesh(self.goRewards, "RewardTitle/image_RewardTitleBG/txt_RewardTitleEn")
+	self.txtTitle = gohelper.findChildTextMesh(self.goRewards, "RewardTitle/image_RewardTitleBG/txt_RewardTitle")
+	self.anim = self.goRewards:GetComponent(typeof(UnityEngine.Animator))
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0.inputValue:AddOnValueChanged(arg_2_0._onValueChanged, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnBuy, arg_2_0.onClickBuy, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnMax, arg_2_0.onClickMax, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnMin, arg_2_0.onClickMin, arg_2_0)
-	arg_2_0:addEventCb(Activity129Controller.instance, Activity129Event.OnEnterPool, arg_2_0.onEnterPool, arg_2_0)
-	arg_2_0:addEventCb(Activity129Controller.instance, Activity129Event.OnLotterySuccess, arg_2_0.onLotterySuccess, arg_2_0)
-	arg_2_0:addEventCb(Activity129Controller.instance, Activity129Event.OnLotteryEnd, arg_2_0.onLotteryEnd, arg_2_0)
-	arg_2_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_2_0._onCurrencyChange, arg_2_0)
+function Activity129RewardView:addEvents()
+	self.inputValue:AddOnValueChanged(self._onValueChanged, self)
+	self:addClickCb(self.btnBuy, self.onClickBuy, self)
+	self:addClickCb(self.btnMax, self.onClickMax, self)
+	self:addClickCb(self.btnMin, self.onClickMin, self)
+	self:addEventCb(Activity129Controller.instance, Activity129Event.OnEnterPool, self.onEnterPool, self)
+	self:addEventCb(Activity129Controller.instance, Activity129Event.OnLotterySuccess, self.onLotterySuccess, self)
+	self:addEventCb(Activity129Controller.instance, Activity129Event.OnLotteryEnd, self.onLotteryEnd, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._onCurrencyChange, self)
 
-	local var_2_0 = {}
+	local timeMatrix = {}
 
-	var_2_0[1] = 0.5
+	timeMatrix[1] = 0.5
 
-	for iter_2_0 = 2, 10 do
-		local var_2_1 = 0.7 * var_2_0[iter_2_0 - 1]
-		local var_2_2 = math.max(var_2_1, 0.1)
+	for i = 2, 10 do
+		local time = 0.7 * timeMatrix[i - 1]
 
-		table.insert(var_2_0, var_2_2)
+		time = math.max(time, 0.1)
+
+		table.insert(timeMatrix, time)
 	end
 
-	arg_2_0._subPress = SLFramework.UGUI.UILongPressListener.Get(arg_2_0.goSub)
+	self._subPress = SLFramework.UGUI.UILongPressListener.Get(self.goSub)
 
-	arg_2_0._subPress:SetLongPressTime(var_2_0)
-	arg_2_0._subPress:AddLongPressListener(arg_2_0._subLongPressTimeEnd, arg_2_0)
+	self._subPress:SetLongPressTime(timeMatrix)
+	self._subPress:AddLongPressListener(self._subLongPressTimeEnd, self)
 
-	arg_2_0._subClick = SLFramework.UGUI.UIClickListener.Get(arg_2_0.goSub)
+	self._subClick = SLFramework.UGUI.UIClickListener.Get(self.goSub)
 
-	arg_2_0._subClick:AddClickListener(arg_2_0.onClickSub, arg_2_0)
-	arg_2_0._subClick:AddClickUpListener(arg_2_0._subClickUp, arg_2_0)
+	self._subClick:AddClickListener(self.onClickSub, self)
+	self._subClick:AddClickUpListener(self._subClickUp, self)
 
-	arg_2_0._addPress = SLFramework.UGUI.UILongPressListener.Get(arg_2_0.goAdd)
+	self._addPress = SLFramework.UGUI.UILongPressListener.Get(self.goAdd)
 
-	arg_2_0._addPress:SetLongPressTime(var_2_0)
-	arg_2_0._addPress:AddLongPressListener(arg_2_0._addLongPressTimeEnd, arg_2_0)
+	self._addPress:SetLongPressTime(timeMatrix)
+	self._addPress:AddLongPressListener(self._addLongPressTimeEnd, self)
 
-	arg_2_0._addClick = SLFramework.UGUI.UIClickListener.Get(arg_2_0.goAdd)
+	self._addClick = SLFramework.UGUI.UIClickListener.Get(self.goAdd)
 
-	arg_2_0._addClick:AddClickListener(arg_2_0.onClickAdd, arg_2_0)
-	arg_2_0._addClick:AddClickUpListener(arg_2_0._addClickUp, arg_2_0)
+	self._addClick:AddClickListener(self.onClickAdd, self)
+	self._addClick:AddClickUpListener(self._addClickUp, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0.inputValue:RemoveOnValueChanged()
-	arg_3_0:removeClickCb(arg_3_0.btnBuy)
-	arg_3_0:removeClickCb(arg_3_0.btnMax)
-	arg_3_0:removeClickCb(arg_3_0.btnMin)
-	arg_3_0:removeEventCb(Activity129Controller.instance, Activity129Event.OnEnterPool, arg_3_0.onEnterPool, arg_3_0)
-	arg_3_0:removeEventCb(Activity129Controller.instance, Activity129Event.OnLotterySuccess, arg_3_0.onLotterySuccess, arg_3_0)
-	arg_3_0:removeEventCb(Activity129Controller.instance, Activity129Event.OnLotteryEnd, arg_3_0.onLotteryEnd, arg_3_0)
-	arg_3_0:removeEventCb(Activity129Controller.instance, Activity129Event.OnLotteryEnd, arg_3_0.onLotteryEnd, arg_3_0)
-	arg_3_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_3_0._onCurrencyChange, arg_3_0)
-	arg_3_0._subPress:RemoveLongPressListener()
-	arg_3_0._subClick:RemoveClickListener()
-	arg_3_0._subClick:RemoveClickUpListener()
-	arg_3_0._addPress:RemoveLongPressListener()
-	arg_3_0._addClick:RemoveClickListener()
-	arg_3_0._addClick:RemoveClickUpListener()
+function Activity129RewardView:removeEvents()
+	self.inputValue:RemoveOnValueChanged()
+	self:removeClickCb(self.btnBuy)
+	self:removeClickCb(self.btnMax)
+	self:removeClickCb(self.btnMin)
+	self:removeEventCb(Activity129Controller.instance, Activity129Event.OnEnterPool, self.onEnterPool, self)
+	self:removeEventCb(Activity129Controller.instance, Activity129Event.OnLotterySuccess, self.onLotterySuccess, self)
+	self:removeEventCb(Activity129Controller.instance, Activity129Event.OnLotteryEnd, self.onLotteryEnd, self)
+	self:removeEventCb(Activity129Controller.instance, Activity129Event.OnLotteryEnd, self.onLotteryEnd, self)
+	self:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._onCurrencyChange, self)
+	self._subPress:RemoveLongPressListener()
+	self._subClick:RemoveClickListener()
+	self._subClick:RemoveClickUpListener()
+	self._addPress:RemoveLongPressListener()
+	self._addClick:RemoveClickListener()
+	self._addClick:RemoveClickUpListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0.poolItems = {}
-	arg_4_0.rewardItems = {}
+function Activity129RewardView:_editableInitView()
+	self.poolItems = {}
+	self.rewardItems = {}
 
-	for iter_4_0 = 1, 2 do
-		local var_4_0 = gohelper.findChild(arg_4_0.goRewards, string.format("#scroll_RewardList/Viewport/Content/Reward%s", iter_4_0))
-		local var_4_1 = {
-			goItem = arg_4_0.goRewardItem,
-			itemList = arg_4_0.rewardItems,
-			rare = iter_4_0 == 1 and 5 or 4
-		}
+	for i = 1, 2 do
+		local go = gohelper.findChild(self.goRewards, string.format("#scroll_RewardList/Viewport/Content/Reward%s", i))
+		local param = {}
 
-		arg_4_0.poolItems[iter_4_0] = MonoHelper.addNoUpdateLuaComOnceToGo(var_4_0, Activity129RewardPoolItem, var_4_1)
+		param.goItem = self.goRewardItem
+		param.itemList = self.rewardItems
+		param.rare = i == 1 and 5 or 4
+		self.poolItems[i] = MonoHelper.addNoUpdateLuaComOnceToGo(go, Activity129RewardPoolItem, param)
 	end
 end
 
-function var_0_0._onCurrencyChange(arg_5_0, arg_5_1)
-	if not arg_5_0.actId then
+function Activity129RewardView:_onCurrencyChange(changeIds)
+	if not self.actId then
 		return
 	end
 
-	if not arg_5_1[Activity129Config.instance:getConstValue1(arg_5_0.actId, Activity129Enum.ConstEnum.CostId)] then
+	local currencyId = Activity129Config.instance:getConstValue1(self.actId, Activity129Enum.ConstEnum.CostId)
+
+	if not changeIds[currencyId] then
 		return
 	end
 
-	arg_5_0:refreshBuyButton()
+	self:refreshBuyButton()
 end
 
-function var_0_0.onLotterySuccess(arg_6_0)
-	gohelper.setActive(arg_6_0.goBack, false)
-	gohelper.setActive(arg_6_0.goCurreny, false)
-	arg_6_0:setVisible(false)
+function Activity129RewardView:onLotterySuccess()
+	gohelper.setActive(self.goBack, false)
+	gohelper.setActive(self.goCurreny, false)
+	self:setVisible(false)
 end
 
-function var_0_0.onLotteryEnd(arg_7_0)
-	gohelper.setActive(arg_7_0.goBack, true)
-	gohelper.setActive(arg_7_0.goCurreny, true)
-	arg_7_0:refreshView()
+function Activity129RewardView:onLotteryEnd()
+	gohelper.setActive(self.goBack, true)
+	gohelper.setActive(self.goCurreny, true)
+	self:refreshView()
 end
 
-function var_0_0.onEnterPool(arg_8_0)
-	arg_8_0.curCount = 1
+function Activity129RewardView:onEnterPool()
+	self.curCount = 1
 
-	arg_8_0:refreshView()
+	self:refreshView()
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0.actId = arg_9_0.viewParam.actId
+function Activity129RewardView:onOpen()
+	self.actId = self.viewParam.actId
 
-	arg_9_0:refreshView()
+	self:refreshView()
 end
 
-function var_0_0.refreshView(arg_10_0)
-	if not Activity129Model.instance:getSelectPoolId() then
-		arg_10_0:setVisible(false)
+function Activity129RewardView:refreshView()
+	local selectPoolId = Activity129Model.instance:getSelectPoolId()
+
+	if not selectPoolId then
+		self:setVisible(false)
 
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_souvenir_open)
-	arg_10_0:setVisible(true)
-	arg_10_0:refreshMaxCount()
-	arg_10_0:refreshReward()
-	arg_10_0:refreshBuy()
+	self:setVisible(true)
+	self:refreshMaxCount()
+	self:refreshReward()
+	self:refreshBuy()
 end
 
-function var_0_0.refreshMaxCount(arg_11_0)
-	local var_11_0 = Activity129Model.instance:getSelectPoolId()
+function Activity129RewardView:refreshMaxCount()
+	local selectPoolId = Activity129Model.instance:getSelectPoolId()
 
-	if not var_11_0 then
+	if not selectPoolId then
 		return
 	end
 
-	arg_11_0.maxCount = Activity129Config.instance:getPoolConfig(arg_11_0.actId, var_11_0).maxDraw or Activity129Config.instance:getConstValue1(arg_11_0.actId, Activity129Enum.ConstEnum.MaxMoreDraw) or 1
+	local poolCfg = Activity129Config.instance:getPoolConfig(self.actId, selectPoolId)
 
-	local var_11_1, var_11_2 = Activity129Model.instance:getActivityMo(arg_11_0.actId):getPoolMo(var_11_0):getPoolDrawCount()
-	local var_11_3 = arg_11_0:_calcAffordableCount(1)
+	self.maxCount = poolCfg.maxDraw or Activity129Config.instance:getConstValue1(self.actId, Activity129Enum.ConstEnum.MaxMoreDraw) or 1
 
-	arg_11_0.maxCount = math.min(var_11_3, arg_11_0.maxCount)
+	local actMo = Activity129Model.instance:getActivityMo(self.actId)
+	local poolMo = actMo:getPoolMo(selectPoolId)
+	local drawCount, maxCount = poolMo:getPoolDrawCount()
+	local affordableCount = self:_calcAffordableCount(1)
 
-	if var_11_2 > 0 then
-		local var_11_4 = var_11_2 - var_11_1
+	self.maxCount = math.min(affordableCount, self.maxCount)
 
-		if var_11_4 <= 0 then
-			var_11_4 = 1
+	if maxCount > 0 then
+		local remainCount = maxCount - drawCount
+
+		if remainCount <= 0 then
+			remainCount = 1
 		end
 
-		arg_11_0.maxCount = math.min(var_11_4, arg_11_0.maxCount)
+		self.maxCount = math.min(remainCount, self.maxCount)
 	end
 
-	arg_11_0.maxCount = math.max(1, arg_11_0.maxCount)
+	self.maxCount = math.max(1, self.maxCount)
 end
 
-function var_0_0.refreshReward(arg_12_0)
-	local var_12_0 = Activity129Model.instance:getSelectPoolId()
+function Activity129RewardView:refreshReward()
+	local selectPoolId = Activity129Model.instance:getSelectPoolId()
 
-	if not var_12_0 then
+	if not selectPoolId then
 		return
 	end
 
-	for iter_12_0, iter_12_1 in ipairs(arg_12_0.rewardItems) do
-		iter_12_1:setHideMark()
+	for i, v in ipairs(self.rewardItems) do
+		v:setHideMark()
 	end
 
-	local var_12_1 = Activity129Config.instance:getGoodsDict(var_12_0)
-	local var_12_2 = {}
+	local dict = Activity129Config.instance:getGoodsDict(selectPoolId)
+	local rare2Goods = {}
 
-	if var_12_1 then
-		for iter_12_2, iter_12_3 in pairs(var_12_1) do
-			var_12_2[iter_12_2] = GameUtil.splitString2(iter_12_3.goodsId, true)
+	if dict then
+		for rare, co in pairs(dict) do
+			rare2Goods[rare] = GameUtil.splitString2(co.goodsId, true)
 		end
 	end
 
-	for iter_12_4, iter_12_5 in ipairs(arg_12_0.poolItems) do
-		iter_12_5:setDict(var_12_2, arg_12_0.actId, var_12_0)
+	for i, item in ipairs(self.poolItems) do
+		item:setDict(rare2Goods, self.actId, selectPoolId)
 	end
 
-	for iter_12_6, iter_12_7 in ipairs(arg_12_0.rewardItems) do
-		iter_12_7:checkHide()
+	for i, v in ipairs(self.rewardItems) do
+		v:checkHide()
 	end
 
-	local var_12_3 = Activity129Config.instance:getPoolConfig(arg_12_0.actId, var_12_0)
+	local poolCfg = Activity129Config.instance:getPoolConfig(self.actId, selectPoolId)
 
-	arg_12_0.txtTitle.text = var_12_3.name
-	arg_12_0.txtTitleEn.text = var_12_3.nameEn
+	self.txtTitle.text = poolCfg.name
+	self.txtTitleEn.text = poolCfg.nameEn
 end
 
-function var_0_0.refreshBuy(arg_13_0)
-	local var_13_0 = arg_13_0.curCount or arg_13_0.maxCount
-	local var_13_1 = arg_13_0:getInputCount(0, var_13_0)
+function Activity129RewardView:refreshBuy()
+	local count = self.curCount or self.maxCount
 
-	arg_13_0:setInputTxt(var_13_1)
-	arg_13_0:refreshBuyButton()
+	count = self:getInputCount(0, count)
+
+	self:setInputTxt(count)
+	self:refreshBuyButton()
 end
 
-function var_0_0.refreshBuyButton(arg_14_0)
-	local var_14_0 = Activity129Model.instance:getSelectPoolId()
+function Activity129RewardView:refreshBuyButton()
+	local selectPoolId = Activity129Model.instance:getSelectPoolId()
 
-	if not var_14_0 then
+	if not selectPoolId then
 		return
 	end
 
-	local var_14_1 = Activity129Config.instance:getPoolConfig(arg_14_0.actId, var_14_0).cost
-	local var_14_2 = arg_14_0.inputValue:GetText()
-	local var_14_3 = tonumber(var_14_2)
-	local var_14_4 = string.splitToNumber(var_14_1, "#")
-	local var_14_5 = var_14_4[3] * var_14_3
-	local var_14_6, var_14_7 = ItemModel.instance:getItemConfigAndIcon(var_14_4[1], var_14_4[2], true)
+	local poolCfg = Activity129Config.instance:getPoolConfig(self.actId, selectPoolId)
+	local cost = poolCfg.cost
+	local txt = self.inputValue:GetText()
+	local count = tonumber(txt)
+	local costData = string.splitToNumber(cost, "#")
+	local costQuantity = costData[3] * count
+	local config, icon = ItemModel.instance:getItemConfigAndIcon(costData[1], costData[2], true)
 
-	arg_14_0.simageIcon:LoadImage(var_14_7)
+	self.simageIcon:LoadImage(icon)
 
-	local var_14_8 = var_14_5 <= ItemModel.instance:getItemQuantity(var_14_4[1], var_14_4[2])
+	local quantity = ItemModel.instance:getItemQuantity(costData[1], costData[2])
+	local isEnough = costQuantity <= quantity
 
-	arg_14_0.txtCost.text = var_14_8 and tostring(var_14_5) or string.format("<color=#d33838>%s</color>", var_14_5)
-	arg_14_0.txtBuy.text = formatLuaLang("v1a4_tokenstore_confirm", GameUtil.getNum2Chinese(var_14_3))
+	self.txtCost.text = isEnough and tostring(costQuantity) or string.format("<color=#d33838>%s</color>", costQuantity)
+	self.txtBuy.text = formatLuaLang("v1a4_tokenstore_confirm", GameUtil.getNum2Chinese(count))
 
-	gohelper.setActive(arg_14_0.maxDisable, false)
-	gohelper.setActive(arg_14_0.minDisable, false)
+	gohelper.setActive(self.maxDisable, false)
+	gohelper.setActive(self.minDisable, false)
 end
 
-function var_0_0._onValueChanged(arg_15_0)
-	local var_15_0 = arg_15_0.inputValue:GetText()
-	local var_15_1 = tonumber(var_15_0)
+function Activity129RewardView:_onValueChanged()
+	local txt = self.inputValue:GetText()
+	local count = tonumber(txt)
 
-	if not var_15_1 or var_15_1 < 1 or var_15_1 > arg_15_0.maxCount then
-		local var_15_2 = arg_15_0:getInputCount(0, var_15_1)
+	if not count or count < 1 or count > self.maxCount then
+		count = self:getInputCount(0, count)
 
-		arg_15_0:setInputTxt(var_15_2)
+		self:setInputTxt(count)
 	end
 
-	arg_15_0:refreshBuyButton()
+	self:refreshBuyButton()
 end
 
-function var_0_0.onClickBuy(arg_16_0)
-	local var_16_0 = Activity129Model.instance:getSelectPoolId()
+function Activity129RewardView:onClickBuy()
+	local selectPoolId = Activity129Model.instance:getSelectPoolId()
 
-	if not var_16_0 then
+	if not selectPoolId then
 		return
 	end
 
-	if Activity129Model.instance:checkPoolIsEmpty(arg_16_0.actId, var_16_0) then
+	if Activity129Model.instance:checkPoolIsEmpty(self.actId, selectPoolId) then
 		GameFacade.showToast(ToastEnum.Activity129PoolIsEmpty)
 		Activity129Controller.instance:dispatchEvent(Activity129Event.OnClickEmptyPool)
 
 		return
 	end
 
-	local var_16_1 = Activity129Config.instance:getPoolConfig(arg_16_0.actId, var_16_0).cost
-	local var_16_2 = arg_16_0.inputValue:GetText()
-	local var_16_3 = tonumber(var_16_2) or 1
-	local var_16_4 = string.splitToNumber(var_16_1, "#")
-	local var_16_5 = {}
-	local var_16_6 = {
-		type = var_16_4[1],
-		id = var_16_4[2],
-		quantity = var_16_4[3] * var_16_3
-	}
+	local poolCfg = Activity129Config.instance:getPoolConfig(self.actId, selectPoolId)
+	local cost = poolCfg.cost
+	local txt = self.inputValue:GetText()
+	local count = tonumber(txt) or 1
+	local costData = string.splitToNumber(cost, "#")
+	local consumeCos = {}
+	local o = {}
 
-	table.insert(var_16_5, var_16_6)
+	o.type = costData[1]
+	o.id = costData[2]
+	o.quantity = costData[3] * count
 
-	local var_16_7, var_16_8, var_16_9 = ItemModel.instance:hasEnoughItems(var_16_5)
+	table.insert(consumeCos, o)
 
-	if not var_16_8 then
-		GameFacade.showToastWithIcon(ToastEnum.NotEnoughId, var_16_9, var_16_7)
+	local notEnoughItemName, enough, icon = ItemModel.instance:hasEnoughItems(consumeCos)
+
+	if not enough then
+		GameFacade.showToastWithIcon(ToastEnum.NotEnoughId, icon, notEnoughItemName)
 
 		return
 	end
 
-	local var_16_10 = Activity129Model.instance:getSelectPoolId()
+	local selectPoolId = Activity129Model.instance:getSelectPoolId()
 
-	if not var_16_10 then
+	if not selectPoolId then
 		return
 	end
 
-	Activity129Rpc.instance:sendAct129LotteryRequest(arg_16_0.actId, var_16_10, var_16_3)
+	Activity129Rpc.instance:sendAct129LotteryRequest(self.actId, selectPoolId, count)
 end
 
-function var_0_0.onClickMin(arg_17_0)
-	arg_17_0:setInputTxt(1)
+function Activity129RewardView:onClickMin()
+	self:setInputTxt(1)
 end
 
-function var_0_0.onClickMax(arg_18_0)
-	arg_18_0:setInputTxt(arg_18_0.maxCount)
+function Activity129RewardView:onClickMax()
+	self:setInputTxt(self.maxCount)
 end
 
-function var_0_0.setInputTxt(arg_19_0, arg_19_1)
-	arg_19_0.curCount = tonumber(arg_19_1)
+function Activity129RewardView:setInputTxt(txt)
+	self.curCount = tonumber(txt)
 
-	arg_19_0.inputValue:SetText(tostring(arg_19_1))
+	self.inputValue:SetText(tostring(txt))
 end
 
-function var_0_0.getInputCount(arg_20_0, arg_20_1, arg_20_2)
-	arg_20_2 = arg_20_2 or tonumber(arg_20_0.inputValue:GetText()) or arg_20_0.curCount or 1
-	arg_20_1 = arg_20_1 or 0
+function Activity129RewardView:getInputCount(offset, input)
+	input = input or tonumber(self.inputValue:GetText()) or self.curCount or 1
+	offset = offset or 0
 
-	return Mathf.Clamp(arg_20_2 + arg_20_1, 1, arg_20_0.maxCount)
+	return Mathf.Clamp(input + offset, 1, self.maxCount)
 end
 
-function var_0_0.onClickAdd(arg_21_0)
-	arg_21_0:setInputTxt(arg_21_0:getInputCount(1))
+function Activity129RewardView:onClickAdd()
+	self:setInputTxt(self:getInputCount(1))
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 end
 
-function var_0_0.onClickSub(arg_22_0)
-	arg_22_0:setInputTxt(arg_22_0:getInputCount(-1))
+function Activity129RewardView:onClickSub()
+	self:setInputTxt(self:getInputCount(-1))
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 end
 
-function var_0_0._subLongPressTimeEnd(arg_23_0)
-	local var_23_0 = arg_23_0._isLongPress
+function Activity129RewardView:_subLongPressTimeEnd()
+	local isLongPress = self._isLongPress
 
-	arg_23_0._isLongPress = true
+	self._isLongPress = true
 
-	arg_23_0:setInputTxt(arg_23_0:getInputCount(-1))
+	self:setInputTxt(self:getInputCount(-1))
 
-	if not var_23_0 then
+	if not isLongPress then
 		AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 	end
 end
 
-function var_0_0._subClickUp(arg_24_0)
-	arg_24_0._isLongPress = false
+function Activity129RewardView:_subClickUp()
+	self._isLongPress = false
 end
 
-function var_0_0._addLongPressTimeEnd(arg_25_0)
-	local var_25_0 = arg_25_0._isLongPress
+function Activity129RewardView:_addLongPressTimeEnd()
+	local isLongPress = self._isLongPress
 
-	arg_25_0._isLongPress = true
+	self._isLongPress = true
 
-	arg_25_0:setInputTxt(arg_25_0:getInputCount(1))
+	self:setInputTxt(self:getInputCount(1))
 
-	if not var_25_0 then
+	if not isLongPress then
 		AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 	end
 end
 
-function var_0_0._addClickUp(arg_26_0)
-	arg_26_0._isLongPress = false
+function Activity129RewardView:_addClickUp()
+	self._isLongPress = false
 end
 
-function var_0_0.setVisible(arg_27_0, arg_27_1)
-	TaskDispatcher.cancelTask(arg_27_0._hide, arg_27_0)
+function Activity129RewardView:setVisible(isVisible)
+	TaskDispatcher.cancelTask(self._hide, self)
 
-	if arg_27_1 then
-		gohelper.setActive(arg_27_0.goRewards, true)
+	if isVisible then
+		gohelper.setActive(self.goRewards, true)
 	else
-		arg_27_0.anim:Play("close")
-		TaskDispatcher.runDelay(arg_27_0._hide, arg_27_0, 0.17)
+		self.anim:Play("close")
+		TaskDispatcher.runDelay(self._hide, self, 0.17)
 	end
 end
 
-function var_0_0._hide(arg_28_0)
-	gohelper.setActive(arg_28_0.goRewards, false)
+function Activity129RewardView:_hide()
+	gohelper.setActive(self.goRewards, false)
 end
 
-function var_0_0.onClose(arg_29_0)
-	TaskDispatcher.cancelTask(arg_29_0._hide, arg_29_0)
+function Activity129RewardView:onClose()
+	TaskDispatcher.cancelTask(self._hide, self)
 end
 
-function var_0_0.onDestroyView(arg_30_0)
-	arg_30_0.simageIcon:UnLoadImage()
+function Activity129RewardView:onDestroyView()
+	self.simageIcon:UnLoadImage()
 end
 
-function var_0_0._calcAffordableCount(arg_31_0, arg_31_1)
-	local var_31_0 = Activity129Model.instance:getSelectPoolId()
+function Activity129RewardView:_calcAffordableCount(fallBackValue)
+	local selectPoolId = Activity129Model.instance:getSelectPoolId()
 
-	if not var_31_0 then
-		return arg_31_1 or 0
+	if not selectPoolId then
+		return fallBackValue or 0
 	end
 
-	local var_31_1 = Activity129Config.instance:getPoolConfig(arg_31_0.actId, var_31_0).cost
-	local var_31_2 = string.splitToNumber(var_31_1, "#")
-	local var_31_3 = var_31_2[3]
-	local var_31_4 = ItemModel.instance:getItemQuantity(var_31_2[1], var_31_2[2])
+	local poolCfg = Activity129Config.instance:getPoolConfig(self.actId, selectPoolId)
+	local cost = poolCfg.cost
+	local costData = string.splitToNumber(cost, "#")
+	local need = costData[3]
+	local has = ItemModel.instance:getItemQuantity(costData[1], costData[2])
 
-	return math.floor(var_31_4 / var_31_3)
+	return math.floor(has / need)
 end
 
-return var_0_0
+return Activity129RewardView

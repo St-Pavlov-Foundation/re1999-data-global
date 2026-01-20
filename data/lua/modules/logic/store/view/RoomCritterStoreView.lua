@@ -1,93 +1,95 @@
-﻿module("modules.logic.store.view.RoomCritterStoreView", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/RoomCritterStoreView.lua
 
-local var_0_0 = class("RoomCritterStoreView", BaseView)
+module("modules.logic.store.view.RoomCritterStoreView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._scrolltab = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_tab")
-	arg_1_0._gotab = gohelper.findChild(arg_1_0.viewGO, "#scroll_tab/Viewport/Content/#go_tab")
-	arg_1_0._scrollgoods = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_goods")
+local RoomCritterStoreView = class("RoomCritterStoreView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomCritterStoreView:onInitView()
+	self._scrolltab = gohelper.findChildScrollRect(self.viewGO, "#scroll_tab")
+	self._gotab = gohelper.findChild(self.viewGO, "#scroll_tab/Viewport/Content/#go_tab")
+	self._scrollgoods = gohelper.findChildScrollRect(self.viewGO, "#scroll_goods")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, arg_2_0._updateInfo, arg_2_0)
-	arg_2_0:addEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, arg_2_0._updateInfo, arg_2_0)
+function RoomCritterStoreView:addEvents()
+	self:addEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, self._updateInfo, self)
+	self:addEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, self._updateInfo, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, arg_3_0._updateInfo, arg_3_0)
-	arg_3_0:removeEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, arg_3_0._updateInfo, arg_3_0)
+function RoomCritterStoreView:removeEvents()
+	self:removeEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, self._updateInfo, self)
+	self:removeEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, self._updateInfo, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function RoomCritterStoreView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function RoomCritterStoreView:onUpdateParam()
 	return
 end
 
-function var_0_0._updateInfo(arg_6_0)
+function RoomCritterStoreView:_updateInfo()
 	StoreCritterGoodsItemListModel.instance:setMOList(StoreEnum.StoreId.CritterStore)
 end
 
-function var_0_0.onOpen(arg_7_0)
-	gohelper.setActive(arg_7_0._gotab, false)
-	gohelper.setActive(arg_7_0._scrolltab.gameObject, false)
+function RoomCritterStoreView:onOpen()
+	gohelper.setActive(self._gotab, false)
+	gohelper.setActive(self._scrolltab.gameObject, false)
 	StoreRpc.instance:sendGetStoreInfosRequest({
 		StoreEnum.StoreId.CritterStore
-	}, arg_7_0._updateInfo, arg_7_0)
+	}, self._updateInfo, self)
 end
 
-function var_0_0._getTabItem(arg_8_0, arg_8_1)
-	if not arg_8_0._tabItems then
-		arg_8_0._tabItems = arg_8_0:getUserDataTb_()
+function RoomCritterStoreView:_getTabItem(index)
+	if not self._tabItems then
+		self._tabItems = self:getUserDataTb_()
 	end
 
-	local var_8_0 = arg_8_0._tabItems[arg_8_1]
+	local item = self._tabItems[index]
 
-	if not var_8_0 then
-		var_8_0 = {}
+	if not item then
+		item = {}
 
-		local var_8_1 = gohelper.cloneInPlace(arg_8_0._gotab)
+		local go = gohelper.cloneInPlace(self._gotab)
 
-		var_8_0.goSelect = gohelper.findChild(var_8_1, "bg/select")
-		var_8_0.btn = gohelper.findChildButtonWithAudio(var_8_1, "bg/btn")
+		item.goSelect = gohelper.findChild(go, "bg/select")
+		item.btn = gohelper.findChildButtonWithAudio(go, "bg/btn")
 
-		var_8_0.btn:AddClickListener(arg_8_0._onClickTab, arg_8_0, arg_8_1)
+		item.btn:AddClickListener(self._onClickTab, self, index)
 
-		var_8_0.txt = gohelper.findChildText(var_8_1, "txt")
-		var_8_0.go = var_8_1
+		item.txt = gohelper.findChildText(go, "txt")
+		item.go = go
 	end
 
-	arg_8_0._tabItems[arg_8_1] = var_8_0
+	self._tabItems[index] = item
 
-	return var_8_0
+	return item
 end
 
-function var_0_0._onClickTab(arg_9_0, arg_9_1)
-	if arg_9_0._selectTabIndex == arg_9_1 then
+function RoomCritterStoreView:_onClickTab(index)
+	if self._selectTabIndex == index then
 		return
 	end
 
-	arg_9_0._selectTabIndex = arg_9_1
+	self._selectTabIndex = index
 
-	arg_9_0:_refreshSelectTab()
+	self:_refreshSelectTab()
 end
 
-function var_0_0.onClose(arg_10_0)
+function RoomCritterStoreView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	if arg_11_0._tabItems then
-		for iter_11_0 = 1, #arg_11_0._tabItems do
-			arg_11_0._tabItems[iter_11_0].btn:RemoveClickListener()
+function RoomCritterStoreView:onDestroyView()
+	if self._tabItems then
+		for i = 1, #self._tabItems do
+			self._tabItems[i].btn:RemoveClickListener()
 		end
 	end
 end
 
-return var_0_0
+return RoomCritterStoreView

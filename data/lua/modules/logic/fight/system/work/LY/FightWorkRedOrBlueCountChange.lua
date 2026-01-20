@@ -1,17 +1,19 @@
-﻿module("modules.logic.fight.system.work.LY.FightWorkRedOrBlueCountChange", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/LY/FightWorkRedOrBlueCountChange.lua
 
-local var_0_0 = class("FightWorkRedOrBlueCountChange", FightEffectBase)
+module("modules.logic.fight.system.work.LY.FightWorkRedOrBlueCountChange", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0.actEffectData.buff
+local FightWorkRedOrBlueCountChange = class("FightWorkRedOrBlueCountChange", FightEffectBase)
 
-	FightDataHelper.LYDataMgr:setLYCountBuff(var_1_0)
+function FightWorkRedOrBlueCountChange:onStart()
+	local buffMo = self.actEffectData.buff
 
-	return arg_1_0:onDone(true)
+	FightDataHelper.LYDataMgr:setLYCountBuff(buffMo)
+
+	return self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkRedOrBlueCountChange:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkRedOrBlueCountChange

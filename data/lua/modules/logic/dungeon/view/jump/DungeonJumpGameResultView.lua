@@ -1,86 +1,88 @@
-﻿module("modules.logic.dungeon.view.jump.DungeonJumpGameResultView", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/jump/DungeonJumpGameResultView.lua
 
-local var_0_0 = class("DungeonJumpGameResultView", BaseViewExtended)
-local var_0_1 = DungeonJumpGameController.instance
+module("modules.logic.dungeon.view.jump.DungeonJumpGameResultView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._closeBtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_successClick")
-	arg_1_0._exitBtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_btn/#btn_quitgame")
-	arg_1_0._restartBtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_btn/#btn_restart")
-	arg_1_0._goSuccess = gohelper.findChild(arg_1_0.viewGO, "#go_success")
-	arg_1_0._goFail = gohelper.findChild(arg_1_0.viewGO, "#go_fail")
-	arg_1_0._goBtn = gohelper.findChild(arg_1_0.viewGO, "#go_btn")
-	arg_1_0._goClose = gohelper.findChild(arg_1_0.viewGO, "#btn_successClick")
-	arg_1_0._txtStage = gohelper.findChildText(arg_1_0.viewGO, "#go_top/#txt_stage")
-	arg_1_0._txtName = gohelper.findChildText(arg_1_0.viewGO, "#go_top/#txt_name")
+local DungeonJumpGameResultView = class("DungeonJumpGameResultView", BaseViewExtended)
+local ctrl = DungeonJumpGameController.instance
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function DungeonJumpGameResultView:onInitView()
+	self._closeBtn = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_successClick")
+	self._exitBtn = gohelper.findChildButtonWithAudio(self.viewGO, "#go_btn/#btn_quitgame")
+	self._restartBtn = gohelper.findChildButtonWithAudio(self.viewGO, "#go_btn/#btn_restart")
+	self._goSuccess = gohelper.findChild(self.viewGO, "#go_success")
+	self._goFail = gohelper.findChild(self.viewGO, "#go_fail")
+	self._goBtn = gohelper.findChild(self.viewGO, "#go_btn")
+	self._goClose = gohelper.findChild(self.viewGO, "#btn_successClick")
+	self._txtStage = gohelper.findChildText(self.viewGO, "#go_top/#txt_stage")
+	self._txtName = gohelper.findChildText(self.viewGO, "#go_top/#txt_name")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._closeBtn:AddClickListener(arg_2_0._onClickCloseBtn, arg_2_0)
-	arg_2_0._restartBtn:AddClickListener(arg_2_0._onClickRestartBtn, arg_2_0)
-	arg_2_0._exitBtn:AddClickListener(arg_2_0._onClickExitBtn, arg_2_0)
+function DungeonJumpGameResultView:addEvents()
+	self._closeBtn:AddClickListener(self._onClickCloseBtn, self)
+	self._restartBtn:AddClickListener(self._onClickRestartBtn, self)
+	self._exitBtn:AddClickListener(self._onClickExitBtn, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._closeBtn:RemoveClickListener()
-	arg_3_0._restartBtn:RemoveClickListener()
-	arg_3_0._exitBtn:RemoveClickListener()
+function DungeonJumpGameResultView:removeEvents()
+	self._closeBtn:RemoveClickListener()
+	self._restartBtn:RemoveClickListener()
+	self._exitBtn:RemoveClickListener()
 end
 
-function var_0_0._onClickCloseBtn(arg_4_0)
+function DungeonJumpGameResultView:_onClickCloseBtn()
 	DungeonJumpGameController.instance:ClearProgress()
-	var_0_1:dispatchEvent(DungeonJumpGameEvent.JumpGameCompleted)
-	arg_4_0:closeThis()
+	ctrl:dispatchEvent(DungeonJumpGameEvent.JumpGameCompleted)
+	self:closeThis()
 end
 
-function var_0_0._onClickExitBtn(arg_5_0)
+function DungeonJumpGameResultView:_onClickExitBtn()
 	DungeonJumpGameController.instance:ClearProgress()
-	var_0_1:dispatchEvent(DungeonJumpGameEvent.JumpGameExit)
-	arg_5_0:closeThis()
+	ctrl:dispatchEvent(DungeonJumpGameEvent.JumpGameExit)
+	self:closeThis()
 end
 
-function var_0_0._onClickRestartBtn(arg_6_0)
-	var_0_1:dispatchEvent(DungeonJumpGameEvent.JumpGameReStart)
-	arg_6_0:closeThis()
+function DungeonJumpGameResultView:_onClickRestartBtn()
+	ctrl:dispatchEvent(DungeonJumpGameEvent.JumpGameReStart)
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_7_0)
+function DungeonJumpGameResultView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
+function DungeonJumpGameResultView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_9_0)
-	local var_9_0 = arg_9_0.viewParam
-	local var_9_1 = var_9_0.isWin
-	local var_9_2 = var_9_0.elementId
-	local var_9_3 = DungeonConfig.instance:getEpisodeByElement(var_9_2)
-	local var_9_4 = DungeonConfig.instance:getEpisodeCO(var_9_3)
+function DungeonJumpGameResultView:onOpen()
+	local viewParams = self.viewParam
+	local win = viewParams.isWin
+	local elementId = viewParams.elementId
+	local episodeId = DungeonConfig.instance:getEpisodeByElement(elementId)
+	local episodeCfg = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-	gohelper.setActive(arg_9_0._goSuccess, var_9_1)
-	gohelper.setActive(arg_9_0._goFail, not var_9_1)
-	gohelper.setActive(arg_9_0._goBtn, not var_9_1)
-	gohelper.setActive(arg_9_0._goClose, var_9_1)
+	gohelper.setActive(self._goSuccess, win)
+	gohelper.setActive(self._goFail, not win)
+	gohelper.setActive(self._goBtn, not win)
+	gohelper.setActive(self._goClose, win)
 
-	arg_9_0._txtName.text = string.format("%s", var_9_4.name)
+	self._txtName.text = string.format("%s", episodeCfg.name)
 
-	if not var_9_1 then
+	if not win then
 		AudioMgr.instance:trigger(AudioEnum2_8.DungeonGame.play_ui_fuleyuan_tiaoyitiao_fail)
 	end
 end
 
-function var_0_0.onClose(arg_10_0)
+function DungeonJumpGameResultView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function DungeonJumpGameResultView:onDestroyView()
 	return
 end
 
-return var_0_0
+return DungeonJumpGameResultView

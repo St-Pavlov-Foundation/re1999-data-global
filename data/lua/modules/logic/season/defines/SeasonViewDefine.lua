@@ -1,13 +1,15 @@
-﻿module("modules.logic.season.defines.SeasonViewDefine", package.seeall)
+﻿-- chunkname: @modules/logic/season/defines/SeasonViewDefine.lua
 
-local var_0_0 = class("SeasonViewDefine")
+module("modules.logic.season.defines.SeasonViewDefine", package.seeall)
 
-function var_0_0.init(arg_1_0)
-	var_0_0.initDefine3_0(arg_1_0)
+local SeasonViewDefine = class("SeasonViewDefine")
+
+function SeasonViewDefine.init(module_views)
+	SeasonViewDefine.initDefine3_0(module_views)
 end
 
-function var_0_0.initDefine3_0(arg_2_0)
-	arg_2_0.Season3_0MainView = {
+function SeasonViewDefine.initDefine3_0(module_views)
+	module_views.Season3_0MainView = {
 		destroy = 0,
 		container = "Season3_0MainViewContainer",
 		mainRes = "ui/viewres/v3a0_season/seasonmainview.prefab",
@@ -35,7 +37,7 @@ function var_0_0.initDefine3_0(arg_2_0)
 			role2 = "scenes/v3a0_m_s15_sj/perfab/m_s15_sj_qz_hongnujian.prefab"
 		}
 	}
-	arg_2_0.Season3_0MarketView = {
+	module_views.Season3_0MarketView = {
 		destroy = 0,
 		container = "Season3_0MarketViewContainer",
 		bgBlur = 4,
@@ -50,7 +52,7 @@ function var_0_0.initDefine3_0(arg_2_0)
 			}
 		}
 	}
-	arg_2_0.Season3_0SpecialMarketView = {
+	module_views.Season3_0SpecialMarketView = {
 		destroy = 0,
 		container = "Season3_0SpecialMarketViewContainer",
 		bgBlur = 4,
@@ -66,7 +68,7 @@ function var_0_0.initDefine3_0(arg_2_0)
 			}
 		}
 	}
-	arg_2_0.Season3_0RetailView = {
+	module_views.Season3_0RetailView = {
 		destroy = 0,
 		container = "Season3_0RetailViewContainer",
 		mainRes = "ui/viewres/v3a0_season/seasonretailview.prefab",
@@ -80,7 +82,7 @@ function var_0_0.initDefine3_0(arg_2_0)
 			}
 		}
 	}
-	arg_2_0.Season3_0RetailLevelInfoView = {
+	module_views.Season3_0RetailLevelInfoView = {
 		destroy = 0,
 		container = "Season3_0RetailLevelInfoViewContainer",
 		mainRes = "ui/viewres/v3a0_season/seasonretaillevelinfoview.prefab",
@@ -95,7 +97,7 @@ function var_0_0.initDefine3_0(arg_2_0)
 			}
 		}
 	}
-	arg_2_0.Season3_0TaskView = {
+	module_views.Season3_0TaskView = {
 		destroy = 0,
 		container = "Season3_0TaskViewContainer",
 		mainRes = "ui/viewres/v3a0_season/seasontaskview.prefab",
@@ -113,7 +115,7 @@ function var_0_0.initDefine3_0(arg_2_0)
 			[1] = "ui/viewres/v3a0_season/seasontaskitem.prefab"
 		}
 	}
-	arg_2_0.Season3_0SettlementView = {
+	module_views.Season3_0SettlementView = {
 		destroy = 0,
 		container = "Season3_0SettlementViewContainer",
 		mainRes = "ui/viewres/v3a0_season/seasonsettlementview.prefab",
@@ -124,7 +126,7 @@ function var_0_0.initDefine3_0(arg_2_0)
 			itemRes = "ui/viewres/v3a0_season/seasonsettlementherogroupitem.prefab"
 		}
 	}
-	arg_2_0.Season3_0CelebrityCardGetlView = {
+	module_views.Season3_0CelebrityCardGetlView = {
 		destroy = 0,
 		container = "Season3_0CelebrityCardGetlViewContainer",
 		bgBlur = 1,
@@ -133,7 +135,7 @@ function var_0_0.initDefine3_0(arg_2_0)
 		viewType = ViewType.Modal,
 		anim = ViewAnim.Default
 	}
-	arg_2_0.Season3_0EquipView = {
+	module_views.Season3_0EquipView = {
 		bgBlur = 0,
 		container = "Season3_0EquipViewContainer",
 		destroy = 0,
@@ -153,7 +155,7 @@ function var_0_0.initDefine3_0(arg_2_0)
 			[2] = "ui/viewres/v3a0_season/seasoncelebritycarditem.prefab"
 		}
 	}
-	arg_2_0.Season3_0EquipHeroView = {
+	module_views.Season3_0EquipHeroView = {
 		bgBlur = 0,
 		container = "Season3_0EquipHeroViewContainer",
 		destroy = 0,
@@ -173,7 +175,7 @@ function var_0_0.initDefine3_0(arg_2_0)
 			[2] = "ui/viewres/v3a0_season/seasoncelebritycarditem.prefab"
 		}
 	}
-	arg_2_0.Season3_0FightFailView = {
+	module_views.Season3_0FightFailView = {
 		destroy = 0,
 		container = "Season3_0FightFailViewContainer",
 		bgBlur = 1,
@@ -182,7 +184,7 @@ function var_0_0.initDefine3_0(arg_2_0)
 		viewType = ViewType.Modal,
 		anim = ViewAnim.Default
 	}
-	arg_2_0.Season3_0FightSuccView = {
+	module_views.Season3_0FightSuccView = {
 		destroy = 0,
 		container = "Season3_0FightSuccViewContainer",
 		bgBlur = 1,
@@ -191,7 +193,7 @@ function var_0_0.initDefine3_0(arg_2_0)
 		viewType = ViewType.Modal,
 		anim = ViewAnim.Default
 	}
-	arg_2_0.Season3_0StoreView = {
+	module_views.Season3_0StoreView = {
 		destroy = 0,
 		container = "Season3_0StoreViewContainer",
 		mainRes = "ui/viewres/v3a0_season/seasonstoreview.prefab",
@@ -214,7 +216,7 @@ function var_0_0.initDefine3_0(arg_2_0)
 			itemPath = "ui/viewres/v3a0_season/seasonstoreitem.prefab"
 		}
 	}
-	arg_2_0.Season3_0EquipSelfChoiceView = {
+	module_views.Season3_0EquipSelfChoiceView = {
 		destroy = 0,
 		container = "Season3_0EquipSelfChoiceViewContainer",
 		bgBlur = 1,
@@ -227,7 +229,7 @@ function var_0_0.initDefine3_0(arg_2_0)
 			[2] = "ui/viewres/v3a0_season/seasoncelebritycarditem.prefab"
 		}
 	}
-	arg_2_0.Season3_0CelebrityCardTipView = {
+	module_views.Season3_0CelebrityCardTipView = {
 		container = "Season3_0CelebrityCardTipViewContainer",
 		bgBlur = 1,
 		mainRes = "ui/viewres/v3a0_season/seasoncelebritycardtipview.prefab",
@@ -242,7 +244,7 @@ function var_0_0.initDefine3_0(arg_2_0)
 			[1] = "ui/viewres/v3a0_season/seasoncelebritycarditem.prefab"
 		}
 	}
-	arg_2_0.Season3_0EquipComposeView = {
+	module_views.Season3_0EquipComposeView = {
 		bgBlur = 0,
 		container = "Season3_0EquipComposeViewContainer",
 		destroy = 0,
@@ -262,7 +264,7 @@ function var_0_0.initDefine3_0(arg_2_0)
 			[2] = "ui/viewres/v3a0_season/seasoncelebritycarditem.prefab"
 		}
 	}
-	arg_2_0.Season3_0EquipBookView = {
+	module_views.Season3_0EquipBookView = {
 		bgBlur = 0,
 		container = "Season3_0EquipBookViewContainer",
 		destroy = 0,
@@ -282,7 +284,7 @@ function var_0_0.initDefine3_0(arg_2_0)
 			[2] = "ui/viewres/v3a0_season/seasoncelebritycarditem.prefab"
 		}
 	}
-	arg_2_0.Season3_0FightRuleTipView = {
+	module_views.Season3_0FightRuleTipView = {
 		destroy = 0,
 		container = "Season3_0FightRuleTipViewContainer",
 		bgBlur = 0,
@@ -301,7 +303,7 @@ function var_0_0.initDefine3_0(arg_2_0)
 			}
 		}
 	}
-	arg_2_0.Season3_0HeroGroupFightView = {
+	module_views.Season3_0HeroGroupFightView = {
 		bgBlur = 4,
 		container = "Season3_0HeroGroupFightViewContainer",
 		destroy = 0,
@@ -325,7 +327,7 @@ function var_0_0.initDefine3_0(arg_2_0)
 			[1] = "ui/viewres/fight/clothskill.prefab"
 		}
 	}
-	arg_2_0.Season3_0AdditionRuleTipView = {
+	module_views.Season3_0AdditionRuleTipView = {
 		destroy = 0,
 		container = "Season3_0AdditionRuleTipViewContainer",
 		bgBlur = 0,
@@ -334,7 +336,7 @@ function var_0_0.initDefine3_0(arg_2_0)
 		viewType = ViewType.Modal,
 		anim = ViewAnim.Default
 	}
-	arg_2_0.Season3_0SumView = {
+	module_views.Season3_0SumView = {
 		destroy = 0,
 		container = "Season3_0SumViewContainer",
 		bgBlur = 3,
@@ -343,7 +345,7 @@ function var_0_0.initDefine3_0(arg_2_0)
 		viewType = ViewType.Modal,
 		anim = ViewAnim.Default
 	}
-	arg_2_0.Season3_0StoryView = {
+	module_views.Season3_0StoryView = {
 		destroy = 0,
 		container = "Season3_0StoryViewContainer",
 		bgBlur = 1,
@@ -359,7 +361,7 @@ function var_0_0.initDefine3_0(arg_2_0)
 			}
 		}
 	}
-	arg_2_0.Season3_0StoryPagePopView = {
+	module_views.Season3_0StoryPagePopView = {
 		destroy = 0,
 		container = "Season3_0StoryPagePopViewContainer",
 		bgBlur = 1,
@@ -370,4 +372,4 @@ function var_0_0.initDefine3_0(arg_2_0)
 	}
 end
 
-return var_0_0
+return SeasonViewDefine

@@ -1,53 +1,56 @@
-﻿module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepStory", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/va3chess/game/step/Va3ChessStepStory.lua
 
-local var_0_0 = class("Va3ChessStepStory", Va3ChessStepBase)
+module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepStory", package.seeall)
 
-function var_0_0.start(arg_1_0)
-	TaskDispatcher.cancelTask(arg_1_0.finish, arg_1_0)
+local Va3ChessStepStory = class("Va3ChessStepStory", Va3ChessStepBase)
 
-	local var_1_0 = arg_1_0.originData.storyId
-	local var_1_1 = Va3ChessModel.instance:getActId()
+function Va3ChessStepStory:start()
+	TaskDispatcher.cancelTask(self.finish, self)
 
-	if Va3ChessConfig.instance:getTipsCfg(var_1_1, var_1_0) ~= nil then
-		Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.GameToastUpdate, var_1_0)
-		TaskDispatcher.runDelay(arg_1_0.finish, arg_1_0, 1)
+	local id = self.originData.storyId
+	local actId = Va3ChessModel.instance:getActId()
+	local isTips = Va3ChessConfig.instance:getTipsCfg(actId, id) ~= nil
+
+	if isTips then
+		Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.GameToastUpdate, id)
+		TaskDispatcher.runDelay(self.finish, self, 1)
 
 		return
 	end
 
-	local var_1_2 = var_1_0
+	local storyId = id
 
-	if var_1_2 then
-		local var_1_3 = {}
+	if storyId then
+		local param = {}
 
-		var_1_3.blur = true
-		var_1_3.hideStartAndEndDark = true
-		var_1_3.mark = true
-		var_1_3.isReplay = false
-		arg_1_0._initMaskActive = PostProcessingMgr.instance:getUIPPValue("LocalMaskActive")
-		arg_1_0._initDistortStrength = PostProcessingMgr.instance:getUIPPValue("LocalDistortStrength")
+		param.blur = true
+		param.hideStartAndEndDark = true
+		param.mark = true
+		param.isReplay = false
+		self._initMaskActive = PostProcessingMgr.instance:getUIPPValue("LocalMaskActive")
+		self._initDistortStrength = PostProcessingMgr.instance:getUIPPValue("LocalDistortStrength")
 
 		PostProcessingMgr.instance:setUIPPValue("LocalMaskActive", false)
 		PostProcessingMgr.instance:setUIPPValue("localDistortStrength", 0)
 		PostProcessingMgr.instance:setUIPPValue("LocalDistortStrength", 0)
-		StoryController.instance:playStory(var_1_2, var_1_3, arg_1_0.afterPlayStory, arg_1_0)
+		StoryController.instance:playStory(storyId, param, self.afterPlayStory, self)
 		Va3ChessGameModel.instance:setPlayingStory(true)
 	else
-		arg_1_0:finish()
+		self:finish()
 	end
 end
 
-function var_0_0.afterPlayStory(arg_2_0)
-	PostProcessingMgr.instance:setUIPPValue("LocalMaskActive", arg_2_0._initMaskActive)
-	PostProcessingMgr.instance:setUIPPValue("LocalDistortStrength", arg_2_0._initDistortStrength)
+function Va3ChessStepStory:afterPlayStory()
+	PostProcessingMgr.instance:setUIPPValue("LocalMaskActive", self._initMaskActive)
+	PostProcessingMgr.instance:setUIPPValue("LocalDistortStrength", self._initDistortStrength)
 	Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.PlayStoryFinish)
 	Va3ChessGameModel.instance:setPlayingStory(false)
-	TaskDispatcher.runDelay(arg_2_0.finish, arg_2_0, 0.3)
+	TaskDispatcher.runDelay(self.finish, self, 0.3)
 end
 
-function var_0_0.dispose(arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0.finish, arg_3_0)
-	var_0_0.super.dispose(arg_3_0)
+function Va3ChessStepStory:dispose()
+	TaskDispatcher.cancelTask(self.finish, self)
+	Va3ChessStepStory.super.dispose(self)
 end
 
-return var_0_0
+return Va3ChessStepStory

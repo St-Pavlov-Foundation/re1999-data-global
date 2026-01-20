@@ -1,19 +1,21 @@
-﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity_1_2_StoryCollectViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/versionactivity1_2dungeon/view/VersionActivity_1_2_StoryCollectViewContainer.lua
 
-local var_0_0 = class("VersionActivity_1_2_StoryCollectViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity_1_2_StoryCollectViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local VersionActivity_1_2_StoryCollectViewContainer = class("VersionActivity_1_2_StoryCollectViewContainer", BaseViewContainer)
+
+function VersionActivity_1_2_StoryCollectViewContainer:buildViews()
 	return {
 		VersionActivity_1_2_StoryCollectView.New()
 	}
 end
 
-function var_0_0.playCloseTransition(arg_2_0)
+function VersionActivity_1_2_StoryCollectViewContainer:playCloseTransition()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_mail_close)
 
-	local var_2_0 = gohelper.findChild(arg_2_0.viewGO, "root")
+	local rootGO = gohelper.findChild(self.viewGO, "root")
 
-	SLFramework.AnimatorPlayer.Get(var_2_0):Play("close", arg_2_0.onPlayCloseTransitionFinish, arg_2_0)
+	SLFramework.AnimatorPlayer.Get(rootGO):Play("close", self.onPlayCloseTransitionFinish, self)
 end
 
-return var_0_0
+return VersionActivity_1_2_StoryCollectViewContainer

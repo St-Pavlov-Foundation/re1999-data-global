@@ -1,59 +1,58 @@
-﻿module("modules.logic.versionactivity2_2.tianshinana.controller.TianShiNaNaHelper", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/tianshinana/controller/TianShiNaNaHelper.lua
 
-local var_0_0 = class("TianShiNaNaHelper")
-local var_0_1 = Vector2()
-local var_0_2 = Vector3()
-local var_0_3 = Vector3()
-local var_0_4 = Quaternion()
+module("modules.logic.versionactivity2_2.tianshinana.controller.TianShiNaNaHelper", package.seeall)
 
-function var_0_0.nodeToV3(arg_1_0)
-	var_0_2.x = (arg_1_0.x + arg_1_0.y) * TianShiNaNaEnum.GridXOffset
-	var_0_2.y = (arg_1_0.y - arg_1_0.x) * TianShiNaNaEnum.GridYOffset
-	var_0_2.z = (arg_1_0.y - arg_1_0.x) * TianShiNaNaEnum.GridZOffset
+local TianShiNaNaHelper = class("TianShiNaNaHelper")
+local tempV2, tempV3, zero, tempQ = Vector2(), Vector3(), Vector3(), Quaternion()
 
-	return var_0_2
+function TianShiNaNaHelper.nodeToV3(node)
+	tempV3.x = (node.x + node.y) * TianShiNaNaEnum.GridXOffset
+	tempV3.y = (node.y - node.x) * TianShiNaNaEnum.GridYOffset
+	tempV3.z = (node.y - node.x) * TianShiNaNaEnum.GridZOffset
+
+	return tempV3
 end
 
-function var_0_0.v3ToNode(arg_2_0)
-	local var_2_0 = arg_2_0.x / TianShiNaNaEnum.GridXOffset
-	local var_2_1 = arg_2_0.y / TianShiNaNaEnum.GridYOffset
+function TianShiNaNaHelper.v3ToNode(pos)
+	local x = pos.x / TianShiNaNaEnum.GridXOffset
+	local y = pos.y / TianShiNaNaEnum.GridYOffset
 
-	var_0_1.x = Mathf.Round((var_2_0 - var_2_1) / 2)
-	var_0_1.y = Mathf.Round((var_2_0 + var_2_1) / 2)
+	tempV2.x = Mathf.Round((x - y) / 2)
+	tempV2.y = Mathf.Round((x + y) / 2)
 
-	return var_0_1
+	return tempV2
 end
 
-function var_0_0.getV2(arg_3_0, arg_3_1)
-	var_0_1.x = arg_3_0 or 0
-	var_0_1.y = arg_3_1 or 0
+function TianShiNaNaHelper.getV2(x, y)
+	tempV2.x = x or 0
+	tempV2.y = y or 0
 
-	return var_0_1
+	return tempV2
 end
 
-function var_0_0.getV3(arg_4_0, arg_4_1, arg_4_2)
-	var_0_2.x = arg_4_0 or 0
-	var_0_2.y = arg_4_1 or 0
-	var_0_2.z = arg_4_2 or 0
+function TianShiNaNaHelper.getV3(x, y, z)
+	tempV3.x = x or 0
+	tempV3.y = y or 0
+	tempV3.z = z or 0
 
-	return var_0_2
+	return tempV3
 end
 
-function var_0_0.getRoundDis(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	return math.abs(arg_5_0 - arg_5_2) + math.abs(arg_5_1 - arg_5_3)
+function TianShiNaNaHelper.getRoundDis(x1, y1, x2, y2)
+	return math.abs(x1 - x2) + math.abs(y1 - y2)
 end
 
-function var_0_0.getMinDis(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	return math.max(math.abs(arg_6_0 - arg_6_2), math.abs(arg_6_1 - arg_6_3))
+function TianShiNaNaHelper.getMinDis(x1, y1, x2, y2)
+	return math.max(math.abs(x1 - x2), math.abs(y1 - y2))
 end
 
-function var_0_0.isPosSame(arg_7_0, arg_7_1)
-	return arg_7_0.x == arg_7_1.x and arg_7_0.y == arg_7_1.y
+function TianShiNaNaHelper.isPosSame(pos1, pos2)
+	return pos1.x == pos2.x and pos1.y == pos2.y
 end
 
-function var_0_0.havePos(arg_8_0, arg_8_1)
-	for iter_8_0, iter_8_1 in pairs(arg_8_0) do
-		if var_0_0.isPosSame(arg_8_1, iter_8_1) then
+function TianShiNaNaHelper.havePos(list, pos)
+	for _, p in pairs(list) do
+		if TianShiNaNaHelper.isPosSame(pos, p) then
 			return true
 		end
 	end
@@ -61,145 +60,147 @@ function var_0_0.havePos(arg_8_0, arg_8_1)
 	return false
 end
 
-function var_0_0.getClickNodePos(arg_9_0)
-	local var_9_0 = CameraMgr.instance:getMainCamera()
-	local var_9_1 = recthelper.screenPosToWorldPos(arg_9_0 or GamepadController.instance:getMousePosition(), var_9_0, var_0_3)
-	local var_9_2 = TianShiNaNaModel.instance.nowScenePos
+function TianShiNaNaHelper.getClickNodePos(position)
+	local mainCamera = CameraMgr.instance:getMainCamera()
+	local worldpos = recthelper.screenPosToWorldPos(position or GamepadController.instance:getMousePosition(), mainCamera, zero)
+	local offset = TianShiNaNaModel.instance.nowScenePos
 
-	var_9_1.x = var_9_1.x - var_9_2.x
-	var_9_1.y = var_9_1.y - var_9_2.y
+	worldpos.x = worldpos.x - offset.x
+	worldpos.y = worldpos.y - offset.y
 
-	return var_0_0.v3ToNode(var_9_1)
+	return TianShiNaNaHelper.v3ToNode(worldpos)
 end
 
-function var_0_0.getSortIndex(arg_10_0, arg_10_1)
-	return 500 + (arg_10_0 - arg_10_1) * 2
+function TianShiNaNaHelper.getSortIndex(x, y)
+	local depth = x - y
+
+	return 500 + depth * 2
 end
 
-function var_0_0.getDir(arg_11_0, arg_11_1, arg_11_2)
-	if arg_11_0.x > arg_11_1.x then
+function TianShiNaNaHelper.getDir(from, to, defaultDir)
+	if from.x > to.x then
 		return TianShiNaNaEnum.OperDir.Left
-	elseif arg_11_0.x < arg_11_1.x then
+	elseif from.x < to.x then
 		return TianShiNaNaEnum.OperDir.Right
-	elseif arg_11_0.y > arg_11_1.y then
+	elseif from.y > to.y then
 		return TianShiNaNaEnum.OperDir.Back
-	elseif arg_11_0.y < arg_11_1.y then
+	elseif from.y < to.y then
 		return TianShiNaNaEnum.OperDir.Forward
 	else
-		return arg_11_2 or TianShiNaNaEnum.OperDir.Right
+		return defaultDir or TianShiNaNaEnum.OperDir.Right
 	end
 end
 
-function var_0_0.lerpQ(arg_12_0, arg_12_1, arg_12_2)
-	arg_12_2 = Mathf.Clamp(arg_12_2, 0, 1)
+function TianShiNaNaHelper.lerpQ(q1, q2, t)
+	t = Mathf.Clamp(t, 0, 1)
 
-	local var_12_0 = var_0_4
+	local q = tempQ
 
-	if Quaternion.Dot(arg_12_0, arg_12_1) < 0 then
-		var_12_0.x = arg_12_0.x + arg_12_2 * (-arg_12_1.x - arg_12_0.x)
-		var_12_0.y = arg_12_0.y + arg_12_2 * (-arg_12_1.y - arg_12_0.y)
-		var_12_0.z = arg_12_0.z + arg_12_2 * (-arg_12_1.z - arg_12_0.z)
-		var_12_0.w = arg_12_0.w + arg_12_2 * (-arg_12_1.w - arg_12_0.w)
+	if Quaternion.Dot(q1, q2) < 0 then
+		q.x = q1.x + t * (-q2.x - q1.x)
+		q.y = q1.y + t * (-q2.y - q1.y)
+		q.z = q1.z + t * (-q2.z - q1.z)
+		q.w = q1.w + t * (-q2.w - q1.w)
 	else
-		var_12_0.x = arg_12_0.x + (arg_12_1.x - arg_12_0.x) * arg_12_2
-		var_12_0.y = arg_12_0.y + (arg_12_1.y - arg_12_0.y) * arg_12_2
-		var_12_0.z = arg_12_0.z + (arg_12_1.z - arg_12_0.z) * arg_12_2
-		var_12_0.w = arg_12_0.w + (arg_12_1.w - arg_12_0.w) * arg_12_2
+		q.x = q1.x + (q2.x - q1.x) * t
+		q.y = q1.y + (q2.y - q1.y) * t
+		q.z = q1.z + (q2.z - q1.z) * t
+		q.w = q1.w + (q2.w - q1.w) * t
 	end
 
-	return var_0_4
+	return tempQ
 end
 
-function var_0_0.lerpV3(arg_13_0, arg_13_1, arg_13_2)
-	arg_13_2 = Mathf.Clamp(arg_13_2, 0, 1)
-	var_0_2.x = arg_13_0.x + (arg_13_1.x - arg_13_0.x) * arg_13_2
-	var_0_2.y = arg_13_0.y + (arg_13_1.y - arg_13_0.y) * arg_13_2
-	var_0_2.z = arg_13_0.z + (arg_13_1.z - arg_13_0.z) * arg_13_2
+function TianShiNaNaHelper.lerpV3(p1, p2, t)
+	t = Mathf.Clamp(t, 0, 1)
+	tempV3.x = p1.x + (p2.x - p1.x) * t
+	tempV3.y = p1.y + (p2.y - p1.y) * t
+	tempV3.z = p1.z + (p2.z - p1.z) * t
 
-	return var_0_2
+	return tempV3
 end
 
-function var_0_0.getCanOperDirs(arg_14_0, arg_14_1)
-	local var_14_0 = {
-		[TianShiNaNaEnum.OperDir.Left] = TianShiNaNaModel.instance:isNodeCanPlace(arg_14_0.x - 1, arg_14_0.y, arg_14_1 == TianShiNaNaEnum.CubeType.Type1),
-		[TianShiNaNaEnum.OperDir.Right] = TianShiNaNaModel.instance:isNodeCanPlace(arg_14_0.x + 1, arg_14_0.y, arg_14_1 == TianShiNaNaEnum.CubeType.Type1),
-		[TianShiNaNaEnum.OperDir.Forward] = TianShiNaNaModel.instance:isNodeCanPlace(arg_14_0.x, arg_14_0.y + 1, arg_14_1 == TianShiNaNaEnum.CubeType.Type1),
-		[TianShiNaNaEnum.OperDir.Back] = TianShiNaNaModel.instance:isNodeCanPlace(arg_14_0.x, arg_14_0.y - 1, arg_14_1 == TianShiNaNaEnum.CubeType.Type1)
-	}
+function TianShiNaNaHelper.getCanOperDirs(heroPos, cubeType)
+	local canPlaceDirs = {}
 
-	if arg_14_1 == TianShiNaNaEnum.CubeType.Type2 then
-		var_14_0[TianShiNaNaEnum.OperDir.Left] = var_14_0[TianShiNaNaEnum.OperDir.Left] and TianShiNaNaModel.instance:isNodeCanPlace(arg_14_0.x - 2, arg_14_0.y)
-		var_14_0[TianShiNaNaEnum.OperDir.Right] = var_14_0[TianShiNaNaEnum.OperDir.Right] and TianShiNaNaModel.instance:isNodeCanPlace(arg_14_0.x + 2, arg_14_0.y)
-		var_14_0[TianShiNaNaEnum.OperDir.Forward] = var_14_0[TianShiNaNaEnum.OperDir.Forward] and TianShiNaNaModel.instance:isNodeCanPlace(arg_14_0.x, arg_14_0.y + 2)
-		var_14_0[TianShiNaNaEnum.OperDir.Back] = var_14_0[TianShiNaNaEnum.OperDir.Back] and TianShiNaNaModel.instance:isNodeCanPlace(arg_14_0.x, arg_14_0.y - 2)
+	canPlaceDirs[TianShiNaNaEnum.OperDir.Left] = TianShiNaNaModel.instance:isNodeCanPlace(heroPos.x - 1, heroPos.y, cubeType == TianShiNaNaEnum.CubeType.Type1)
+	canPlaceDirs[TianShiNaNaEnum.OperDir.Right] = TianShiNaNaModel.instance:isNodeCanPlace(heroPos.x + 1, heroPos.y, cubeType == TianShiNaNaEnum.CubeType.Type1)
+	canPlaceDirs[TianShiNaNaEnum.OperDir.Forward] = TianShiNaNaModel.instance:isNodeCanPlace(heroPos.x, heroPos.y + 1, cubeType == TianShiNaNaEnum.CubeType.Type1)
+	canPlaceDirs[TianShiNaNaEnum.OperDir.Back] = TianShiNaNaModel.instance:isNodeCanPlace(heroPos.x, heroPos.y - 1, cubeType == TianShiNaNaEnum.CubeType.Type1)
+
+	if cubeType == TianShiNaNaEnum.CubeType.Type2 then
+		canPlaceDirs[TianShiNaNaEnum.OperDir.Left] = canPlaceDirs[TianShiNaNaEnum.OperDir.Left] and TianShiNaNaModel.instance:isNodeCanPlace(heroPos.x - 2, heroPos.y)
+		canPlaceDirs[TianShiNaNaEnum.OperDir.Right] = canPlaceDirs[TianShiNaNaEnum.OperDir.Right] and TianShiNaNaModel.instance:isNodeCanPlace(heroPos.x + 2, heroPos.y)
+		canPlaceDirs[TianShiNaNaEnum.OperDir.Forward] = canPlaceDirs[TianShiNaNaEnum.OperDir.Forward] and TianShiNaNaModel.instance:isNodeCanPlace(heroPos.x, heroPos.y + 2)
+		canPlaceDirs[TianShiNaNaEnum.OperDir.Back] = canPlaceDirs[TianShiNaNaEnum.OperDir.Back] and TianShiNaNaModel.instance:isNodeCanPlace(heroPos.x, heroPos.y - 2)
 	end
 
-	var_14_0[TianShiNaNaEnum.OperDir.Left] = var_14_0[TianShiNaNaEnum.OperDir.Left] or nil
-	var_14_0[TianShiNaNaEnum.OperDir.Right] = var_14_0[TianShiNaNaEnum.OperDir.Right] or nil
-	var_14_0[TianShiNaNaEnum.OperDir.Forward] = var_14_0[TianShiNaNaEnum.OperDir.Forward] or nil
-	var_14_0[TianShiNaNaEnum.OperDir.Back] = var_14_0[TianShiNaNaEnum.OperDir.Back] or nil
+	canPlaceDirs[TianShiNaNaEnum.OperDir.Left] = canPlaceDirs[TianShiNaNaEnum.OperDir.Left] or nil
+	canPlaceDirs[TianShiNaNaEnum.OperDir.Right] = canPlaceDirs[TianShiNaNaEnum.OperDir.Right] or nil
+	canPlaceDirs[TianShiNaNaEnum.OperDir.Forward] = canPlaceDirs[TianShiNaNaEnum.OperDir.Forward] or nil
+	canPlaceDirs[TianShiNaNaEnum.OperDir.Back] = canPlaceDirs[TianShiNaNaEnum.OperDir.Back] or nil
 
-	return var_14_0
+	return canPlaceDirs
 end
 
-function var_0_0.getOperDir(arg_15_0, arg_15_1)
-	if arg_15_0 >= 0 and arg_15_1 <= 0 then
+function TianShiNaNaHelper.getOperDir(xDrag, yDrag)
+	if xDrag >= 0 and yDrag <= 0 then
 		return TianShiNaNaEnum.OperDir.Right
-	elseif arg_15_0 <= 0 and arg_15_1 >= 0 then
+	elseif xDrag <= 0 and yDrag >= 0 then
 		return TianShiNaNaEnum.OperDir.Left
-	elseif arg_15_0 >= 0 and arg_15_1 >= 0 then
+	elseif xDrag >= 0 and yDrag >= 0 then
 		return TianShiNaNaEnum.OperDir.Forward
-	elseif arg_15_0 <= 0 and arg_15_1 <= 0 then
+	elseif xDrag <= 0 and yDrag <= 0 then
 		return TianShiNaNaEnum.OperDir.Back
 	end
 end
 
-function var_0_0.isRevertDir(arg_16_0, arg_16_1, arg_16_2)
-	if arg_16_0 == TianShiNaNaEnum.OperDir.Left and arg_16_1 > 0 then
+function TianShiNaNaHelper.isRevertDir(nowOper, xDrag, yDrag)
+	if nowOper == TianShiNaNaEnum.OperDir.Left and xDrag > 0 then
 		return true
-	elseif arg_16_0 == TianShiNaNaEnum.OperDir.Right and arg_16_1 < 0 then
+	elseif nowOper == TianShiNaNaEnum.OperDir.Right and xDrag < 0 then
 		return true
-	elseif arg_16_0 == TianShiNaNaEnum.OperDir.Forward and arg_16_2 < 0 then
+	elseif nowOper == TianShiNaNaEnum.OperDir.Forward and yDrag < 0 then
 		return true
-	elseif arg_16_0 == TianShiNaNaEnum.OperDir.Back and arg_16_2 > 0 then
+	elseif nowOper == TianShiNaNaEnum.OperDir.Back and yDrag > 0 then
 		return true
 	end
 end
 
-function var_0_0.getOperOffset(arg_17_0)
-	var_0_1:Set(0, 0)
+function TianShiNaNaHelper.getOperOffset(dir)
+	tempV2:Set(0, 0)
 
-	if arg_17_0 == TianShiNaNaEnum.OperDir.Left then
-		var_0_1.x = -1
-	elseif arg_17_0 == TianShiNaNaEnum.OperDir.Right then
-		var_0_1.x = 1
-	elseif arg_17_0 == TianShiNaNaEnum.OperDir.Forward then
-		var_0_1.y = 1
-	elseif arg_17_0 == TianShiNaNaEnum.OperDir.Back then
-		var_0_1.y = -1
+	if dir == TianShiNaNaEnum.OperDir.Left then
+		tempV2.x = -1
+	elseif dir == TianShiNaNaEnum.OperDir.Right then
+		tempV2.x = 1
+	elseif dir == TianShiNaNaEnum.OperDir.Forward then
+		tempV2.y = 1
+	elseif dir == TianShiNaNaEnum.OperDir.Back then
+		tempV2.y = -1
 	end
 
-	return var_0_1
+	return tempV2
 end
 
-function var_0_0.getLimitTimeStr()
-	local var_18_0 = ActivityModel.instance:getActMO(VersionActivity2_2Enum.ActivityId.TianShiNaNa)
+function TianShiNaNaHelper.getLimitTimeStr()
+	local actInfoMo = ActivityModel.instance:getActMO(VersionActivity2_2Enum.ActivityId.TianShiNaNa)
 
-	if not var_18_0 then
+	if not actInfoMo then
 		return ""
 	end
 
-	local var_18_1 = var_18_0:getRealEndTimeStamp() - ServerTime.now()
+	local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
 
-	if var_18_1 > 0 then
-		return TimeUtil.SecondToActivityTimeFormat(var_18_1)
+	if offsetSecond > 0 then
+		return TimeUtil.SecondToActivityTimeFormat(offsetSecond)
 	end
 
 	return ""
 end
 
-function var_0_0.isBanOper()
+function TianShiNaNaHelper.isBanOper()
 	return GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.TianShiNaNaBanOper)
 end
 
-return var_0_0
+return TianShiNaNaHelper

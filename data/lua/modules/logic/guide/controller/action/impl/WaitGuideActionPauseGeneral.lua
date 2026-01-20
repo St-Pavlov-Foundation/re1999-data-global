@@ -1,27 +1,30 @@
-﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionPauseGeneral", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/WaitGuideActionPauseGeneral.lua
 
-local var_0_0 = class("WaitGuideActionPauseGeneral", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.WaitGuideActionPauseGeneral", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+local WaitGuideActionPauseGeneral = class("WaitGuideActionPauseGeneral", BaseGuideAction)
 
-	local var_1_0 = string.split(arg_1_0.actionParam, "#")[1]
+function WaitGuideActionPauseGeneral:onStart(context)
+	WaitGuideActionPauseGeneral.super.onStart(self, context)
 
-	arg_1_0._pauseName = var_1_0
-	arg_1_0._pauseEvent = GuideEvent[var_1_0]
+	local arr = string.split(self.actionParam, "#")
+	local arg = arr[1]
 
-	GuideController.instance:registerCallback(arg_1_0._pauseEvent, arg_1_0._triggerPause, arg_1_0)
+	self._pauseName = arg
+	self._pauseEvent = GuideEvent[arg]
+
+	GuideController.instance:registerCallback(self._pauseEvent, self._triggerPause, self)
 end
 
-function var_0_0._triggerPause(arg_2_0, arg_2_1)
-	arg_2_1[arg_2_0._pauseName] = true
+function WaitGuideActionPauseGeneral:_triggerPause(guideParam)
+	guideParam[self._pauseName] = true
 
-	GuideController.instance:unregisterCallback(arg_2_0._pauseEvent, arg_2_0._triggerPause, arg_2_0)
-	arg_2_0:onDone(true)
+	GuideController.instance:unregisterCallback(self._pauseEvent, self._triggerPause, self)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
-	GuideController.instance:unregisterCallback(arg_3_0._pauseEvent, arg_3_0._triggerPause, arg_3_0)
+function WaitGuideActionPauseGeneral:clearWork()
+	GuideController.instance:unregisterCallback(self._pauseEvent, self._triggerPause, self)
 end
 
-return var_0_0
+return WaitGuideActionPauseGeneral

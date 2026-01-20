@@ -1,48 +1,56 @@
-﻿module("modules.logic.versionactivity2_7.lengzhou6.model.skill.EnemyGeneralSkill", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/lengzhou6/model/skill/EnemyGeneralSkill.lua
 
-local var_0_0 = class("EnemyGeneralSkill", SkillBase)
+module("modules.logic.versionactivity2_7.lengzhou6.model.skill.EnemyGeneralSkill", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	var_0_0.super.init(arg_1_0, arg_1_1, arg_1_2)
+local EnemyGeneralSkill = class("EnemyGeneralSkill", SkillBase)
 
-	arg_1_0._skillType = LengZhou6Enum.SkillType.enemyActive
+function EnemyGeneralSkill:init(id, configId)
+	EnemyGeneralSkill.super.init(self, id, configId)
+
+	self._skillType = LengZhou6Enum.SkillType.enemyActive
 end
 
-function var_0_0.execute(arg_2_0)
-	if var_0_0.super.execute(arg_2_0) then
-		local var_2_0 = arg_2_0._effect[1]
-		local var_2_1 = LengZhou6EffectUtils.instance:getHandleFunc(var_2_0)
+function EnemyGeneralSkill:execute()
+	local canUse = EnemyGeneralSkill.super.execute(self)
 
-		if var_2_1 ~= nil then
-			local var_2_2 = LengZhou6GameModel.instance:getSkillEffectUp(arg_2_0._effect[1])
+	if canUse then
+		local effectType = self._effect[1]
+		local func = LengZhou6EffectUtils.instance:getHandleFunc(effectType)
 
-			var_2_1(arg_2_0._effect, var_2_2)
+		if func ~= nil then
+			local exValue = LengZhou6GameModel.instance:getSkillEffectUp(self._effect[1])
+
+			func(self._effect, exValue)
 		end
 	end
 end
 
-function var_0_0.getSkillDesc(arg_3_0)
-	local var_3_0 = arg_3_0:getConfig().desc
+function EnemyGeneralSkill:getSkillDesc()
+	local config = self:getConfig()
+	local desc = config.desc
+	local effectType = self._effect[1]
 
-	if arg_3_0._effect[1] == LengZhou6Enum.SkillEffect.Shuffle then
-		return var_3_0
+	if effectType == LengZhou6Enum.SkillEffect.Shuffle then
+		return desc
 	end
 
-	return GameUtil.getSubPlaceholderLuaLangOneParam(var_3_0, arg_3_0:getTotalValue())
+	return GameUtil.getSubPlaceholderLuaLangOneParam(desc, self:getTotalValue())
 end
 
-function var_0_0.getTotalValue(arg_4_0)
-	if arg_4_0._totalValue == nil then
-		arg_4_0._totalValue = arg_4_0:_getTotalValue()
+function EnemyGeneralSkill:getTotalValue()
+	if self._totalValue == nil then
+		self._totalValue = self:_getTotalValue()
 	end
 
-	return arg_4_0._totalValue
+	return self._totalValue
 end
 
-function var_0_0._getTotalValue(arg_5_0)
-	local var_5_0 = arg_5_0._effect[1]
+function EnemyGeneralSkill:_getTotalValue()
+	local effectType = self._effect[1]
+	local value = self._effect[2] and tonumber(self._effect[2]) or 0
+	local exValue = LengZhou6GameModel.instance:getSkillEffectUp(effectType)
 
-	return (arg_5_0._effect[2] and tonumber(arg_5_0._effect[2]) or 0) + LengZhou6GameModel.instance:getSkillEffectUp(var_5_0)
+	return value + exValue
 end
 
-return var_0_0
+return EnemyGeneralSkill

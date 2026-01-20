@@ -1,7 +1,9 @@
-﻿module("modules.logic.equip.model.EquipSkillCharacterListModel", package.seeall)
+﻿-- chunkname: @modules/logic/equip/model/EquipSkillCharacterListModel.lua
 
-local var_0_0 = class("EquipSkillCharacterListModel", ListScrollModel)
+module("modules.logic.equip.model.EquipSkillCharacterListModel", package.seeall)
 
-var_0_0.instance = var_0_0.New()
+local EquipSkillCharacterListModel = class("EquipSkillCharacterListModel", ListScrollModel)
 
-return var_0_0
+EquipSkillCharacterListModel.instance = EquipSkillCharacterListModel.New()
+
+return EquipSkillCharacterListModel

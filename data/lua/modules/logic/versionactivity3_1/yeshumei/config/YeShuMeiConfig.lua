@@ -1,10 +1,12 @@
-﻿module("modules.logic.versionactivity3_1.yeshumei.config.YeShuMeiConfig", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/yeshumei/config/YeShuMeiConfig.lua
 
-local var_0_0 = class("YeShuMeiConfig", BaseConfig)
+module("modules.logic.versionactivity3_1.yeshumei.config.YeShuMeiConfig", package.seeall)
 
-var_0_0._ActivityDataName = "T_lua_YeShuMei_ActivityData"
+local YeShuMeiConfig = class("YeShuMeiConfig", BaseConfig)
 
-function var_0_0.reqConfigNames(arg_1_0)
+YeShuMeiConfig._ActivityDataName = "T_lua_YeShuMei_ActivityData"
+
+function YeShuMeiConfig:reqConfigNames()
 	return {
 		"activity211_game",
 		"activity211_episode",
@@ -13,159 +15,159 @@ function var_0_0.reqConfigNames(arg_1_0)
 	}
 end
 
-function var_0_0.onInit(arg_2_0)
-	arg_2_0._taskDict = {}
-	arg_2_0._gameconfig = {}
-	arg_2_0._episodeconfig = {}
+function YeShuMeiConfig:onInit()
+	self._taskDict = {}
+	self._gameconfig = {}
+	self._episodeconfig = {}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity211_game" then
-		arg_3_0._gameconfig = arg_3_2
-	elseif arg_3_1 == "activity211_episode" then
-		arg_3_0._episodeconfig = arg_3_2
+function YeShuMeiConfig:onConfigLoaded(configName, configTable)
+	if configName == "activity211_game" then
+		self._gameconfig = configTable
+	elseif configName == "activity211_episode" then
+		self._episodeconfig = configTable
 	end
 end
 
-function var_0_0._initYeShuMeiLevelData(arg_4_0)
-	arg_4_0._yeShuMeiLevelData = {}
+function YeShuMeiConfig:_initYeShuMeiLevelData()
+	self._yeShuMeiLevelData = {}
 
-	if _G[arg_4_0._ActivityDataName] == nil then
+	if _G[self._ActivityDataName] == nil then
 		return
 	end
 
-	for iter_4_0 = 1, #T_lua_YeShuMei_ActivityData do
-		local var_4_0 = _G[arg_4_0._ActivityDataName][iter_4_0]
-		local var_4_1 = YeShuMeiLevelMo.New()
+	for i = 1, #T_lua_YeShuMei_ActivityData do
+		local data = _G[self._ActivityDataName][i]
+		local levelDataMo = YeShuMeiLevelMo.New()
 
-		var_4_1:init(var_4_0)
+		levelDataMo:init(data)
 
-		arg_4_0._yeShuMeiLevelData[var_4_0.id] = var_4_1
+		self._yeShuMeiLevelData[data.id] = levelDataMo
 	end
 end
 
-function var_0_0.getYeShuMeiLevelData(arg_5_0)
-	if arg_5_0._yeShuMeiLevelData == nil then
-		arg_5_0:_initYeShuMeiLevelData()
+function YeShuMeiConfig:getYeShuMeiLevelData()
+	if self._yeShuMeiLevelData == nil then
+		self:_initYeShuMeiLevelData()
 	end
 
-	return arg_5_0._yeShuMeiLevelData
+	return self._yeShuMeiLevelData
 end
 
-function var_0_0.getYeShuMeiLevelDataByLevelId(arg_6_0, arg_6_1)
-	if arg_6_0._yeShuMeiLevelData == nil then
-		arg_6_0:_initYeShuMeiLevelData()
+function YeShuMeiConfig:getYeShuMeiLevelDataByLevelId(id)
+	if self._yeShuMeiLevelData == nil then
+		self:_initYeShuMeiLevelData()
 	end
 
-	return arg_6_0._yeShuMeiLevelData[arg_6_1]
+	return self._yeShuMeiLevelData[id]
 end
 
-function var_0_0.getEpisodeCoList(arg_7_0, arg_7_1)
-	if not arg_7_0._episodeDict then
-		arg_7_0._episodeDict = {}
+function YeShuMeiConfig:getEpisodeCoList(activityId)
+	if not self._episodeDict then
+		self._episodeDict = {}
 
-		for iter_7_0, iter_7_1 in ipairs(lua_activity211_episode.configList) do
-			if not arg_7_0._episodeDict[iter_7_1.activityId] then
-				arg_7_0._episodeDict[iter_7_1.activityId] = {}
+		for _, v in ipairs(lua_activity211_episode.configList) do
+			if not self._episodeDict[v.activityId] then
+				self._episodeDict[v.activityId] = {}
 			end
 
-			table.insert(arg_7_0._episodeDict[iter_7_1.activityId], iter_7_1)
+			table.insert(self._episodeDict[v.activityId], v)
 		end
 	end
 
-	return arg_7_0._episodeDict[arg_7_1] or {}
+	return self._episodeDict[activityId] or {}
 end
 
-function var_0_0.getYeShuMeiEpisodeConfigById(arg_8_0, arg_8_1, arg_8_2)
-	if arg_8_2 and arg_8_0._episodeconfig then
-		return arg_8_0._episodeconfig.configDict[arg_8_1][arg_8_2]
+function YeShuMeiConfig:getYeShuMeiEpisodeConfigById(activityId, episodeId)
+	if episodeId and self._episodeconfig then
+		return self._episodeconfig.configDict[activityId][episodeId]
 	end
 end
 
-function var_0_0.getYeShuMeiGameConfigById(arg_9_0, arg_9_1)
-	if arg_9_1 and arg_9_0._gameconfig then
-		return arg_9_0._gameconfig.configDict[arg_9_1]
+function YeShuMeiConfig:getYeShuMeiGameConfigById(gameId)
+	if gameId and self._gameconfig then
+		return self._gameconfig.configDict[gameId]
 	end
 end
 
-function var_0_0.getEpisodeCo(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = arg_10_0:getEpisodeCoList(arg_10_1)
+function YeShuMeiConfig:getEpisodeCo(activityId, episodeId)
+	local episodeCos = self:getEpisodeCoList(activityId)
 
-	for iter_10_0, iter_10_1 in pairs(var_10_0) do
-		if iter_10_1.episodeId == arg_10_2 then
-			return iter_10_1
+	for _, v in pairs(episodeCos) do
+		if v.episodeId == episodeId then
+			return v
 		end
 	end
 end
 
-function var_0_0.getTaskByActId(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0._taskDict[arg_11_1]
+function YeShuMeiConfig:getTaskByActId(activityId)
+	local list = self._taskDict[activityId]
 
-	if not var_11_0 then
-		var_11_0 = {}
+	if not list then
+		list = {}
 
-		for iter_11_0, iter_11_1 in ipairs(lua_activity211_task.configList) do
-			if iter_11_1.activityId == arg_11_1 then
-				table.insert(var_11_0, iter_11_1)
+		for _, co in ipairs(lua_activity211_task.configList) do
+			if co.activityId == activityId then
+				table.insert(list, co)
 			end
 		end
 
-		arg_11_0._taskDict[arg_11_1] = var_11_0
+		self._taskDict[activityId] = list
 	end
 
-	return var_11_0
+	return list
 end
 
-function var_0_0.getStoryBefore(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = arg_12_0:getEpisodeCo(arg_12_1, arg_12_2)
+function YeShuMeiConfig:getStoryBefore(actId, episodeId)
+	local cfg = self:getEpisodeCo(actId, episodeId)
 
-	return var_12_0 and var_12_0.storyBefore
+	return cfg and cfg.storyBefore
 end
 
-function var_0_0.getStoryClear(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0 = arg_13_0:getEpisodeCo(arg_13_1, arg_13_2)
+function YeShuMeiConfig:getStoryClear(actId, episodeId)
+	local cfg = self:getEpisodeCo(actId, episodeId)
 
-	return var_13_0 and var_13_0.storyClear
+	return cfg and cfg.storyClear
 end
 
-function var_0_0.getConstValueNumber(arg_14_0, arg_14_1)
-	local var_14_0 = VersionActivity3_1Enum.ActivityId.YeShuMei
-	local var_14_1 = lua_activity211_const.configDict[var_14_0]
+function YeShuMeiConfig:getConstValueNumber(id)
+	local activityId = VersionActivity3_1Enum.ActivityId.YeShuMei
+	local activityConstConfig = lua_activity211_const.configDict[activityId]
 
-	if var_14_1 == nil then
-		logError("activity211_const 没有找到对应的配置 activityId = " .. var_14_0)
+	if activityConstConfig == nil then
+		logError("activity211_const 没有找到对应的配置 activityId = " .. activityId)
 
 		return nil
 	end
 
-	local var_14_2 = var_14_1[arg_14_1]
+	local constConfig = activityConstConfig[id]
 
-	if var_14_2 == nil then
-		logError("activity211_const 没有找到对应的配置 id = " .. arg_14_1)
+	if constConfig == nil then
+		logError("activity211_const 没有找到对应的配置 id = " .. id)
 
 		return nil
 	end
 
-	return tonumber(var_14_2.value)
+	return tonumber(constConfig.value)
 end
 
-function var_0_0.getConstValue(arg_15_0, arg_15_1)
-	local var_15_0 = VersionActivity3_1Enum.ActivityId.YeShuMei
-	local var_15_1 = lua_activity211_const.configDict[var_15_0]
+function YeShuMeiConfig:getConstValue(id)
+	local activityId = VersionActivity3_1Enum.ActivityId.YeShuMei
+	local activityConstConfig = lua_activity211_const.configDict[activityId]
 
-	if var_15_1 == nil then
-		logError("activity211_const 没有找到对应的配置 id = " .. arg_15_1)
+	if activityConstConfig == nil then
+		logError("activity211_const 没有找到对应的配置 id = " .. id)
 	end
 
-	local var_15_2 = var_15_1[arg_15_1]
+	local constConfig = activityConstConfig[id]
 
-	return var_15_2.value, var_15_2.value2
+	return constConfig.value, constConfig.value2
 end
 
-function var_0_0.getDragSureRange(arg_16_0)
+function YeShuMeiConfig:getDragSureRange()
 	return 50
 end
 
-var_0_0.instance = var_0_0.New()
+YeShuMeiConfig.instance = YeShuMeiConfig.New()
 
-return var_0_0
+return YeShuMeiConfig

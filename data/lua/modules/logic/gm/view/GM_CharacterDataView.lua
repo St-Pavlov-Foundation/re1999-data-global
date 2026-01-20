@@ -1,55 +1,57 @@
-﻿module("modules.logic.gm.view.GM_CharacterDataView", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GM_CharacterDataView.lua
 
-local var_0_0 = class("GM_CharacterDataView")
+module("modules.logic.gm.view.GM_CharacterDataView", package.seeall)
 
-function var_0_0.register()
-	var_0_0.CharacterDataVoiceView_register(CharacterDataVoiceView)
-	var_0_0.CharacterVoiceItem_register(CharacterVoiceItem)
+local GM_CharacterDataView = class("GM_CharacterDataView")
+
+function GM_CharacterDataView.register()
+	GM_CharacterDataView.CharacterDataVoiceView_register(CharacterDataVoiceView)
+	GM_CharacterDataView.CharacterVoiceItem_register(CharacterVoiceItem)
 end
 
-function var_0_0.CharacterDataVoiceView_register(arg_2_0)
-	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "_editableInitView")
-	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "addEvents")
-	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "removeEvents")
+function GM_CharacterDataView.CharacterDataVoiceView_register(T)
+	GMMinusModel.instance:saveOriginalFunc(T, "_editableInitView")
+	GMMinusModel.instance:saveOriginalFunc(T, "addEvents")
+	GMMinusModel.instance:saveOriginalFunc(T, "removeEvents")
 
-	function arg_2_0._editableInitView(arg_3_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_3_0, "_editableInitView", ...)
-		GMMinusModel.instance:addBtnGM(arg_3_0)
+	function T:_editableInitView(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "_editableInitView", ...)
+		GMMinusModel.instance:addBtnGM(self)
 	end
 
-	function arg_2_0.addEvents(arg_4_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_4_0, "addEvents", ...)
-		GMMinusModel.instance:btnGM_AddClickListener(arg_4_0)
-		GM_CharacterDataVoiceViewContainer.addEvents(arg_4_0)
+	function T:addEvents(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "addEvents", ...)
+		GMMinusModel.instance:btnGM_AddClickListener(self)
+		GM_CharacterDataVoiceViewContainer.addEvents(self)
 	end
 
-	function arg_2_0.removeEvents(arg_5_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_5_0, "removeEvents", ...)
-		GMMinusModel.instance:btnGM_RemoveClickListener(arg_5_0)
-		GM_CharacterDataVoiceViewContainer.removeEvents(arg_5_0)
+	function T:removeEvents(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "removeEvents", ...)
+		GMMinusModel.instance:btnGM_RemoveClickListener(self)
+		GM_CharacterDataVoiceViewContainer.removeEvents(self)
 	end
 
-	function arg_2_0._gm_showAllTabIdUpdate(arg_6_0)
-		arg_6_0:_refreshVoice()
+	function T._gm_showAllTabIdUpdate(selfObj)
+		selfObj:_refreshVoice()
 	end
 end
 
-function var_0_0.CharacterVoiceItem_register(arg_7_0)
-	GMMinusModel.instance:saveOriginalFunc(arg_7_0, "_refreshItem")
+function GM_CharacterDataView.CharacterVoiceItem_register(T)
+	GMMinusModel.instance:saveOriginalFunc(T, "_refreshItem")
 
-	function arg_7_0._refreshItem(arg_8_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_8_0, "_refreshItem", ...)
+	function T._refreshItem(selfObj, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(selfObj, "_refreshItem", ...)
 
 		if not GM_CharacterDataVoiceView.s_ShowAllTabId then
 			return
 		end
 
-		local var_8_0 = arg_8_0._mo
-		local var_8_1 = var_8_0.id
+		local mo = selfObj._mo
+		local id = mo.id
 
-		arg_8_0._txtvoicename.text = tostring(var_8_1) .. " " .. var_8_0.name
-		arg_8_0._txtlockvoicename.text = tostring(var_8_1) .. " " .. CharacterDataConfig.instance:getConditionStringName(var_8_0)
+		selfObj._txtvoicename.text = tostring(id) .. " " .. mo.name
+		selfObj._txtlockvoicename.text = tostring(id) .. " " .. CharacterDataConfig.instance:getConditionStringName(mo)
 	end
 end
 
-return var_0_0
+return GM_CharacterDataView

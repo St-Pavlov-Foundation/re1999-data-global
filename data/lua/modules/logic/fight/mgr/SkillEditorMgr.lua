@@ -1,22 +1,24 @@
-﻿module("modules.logic.fight.mgr.SkillEditorMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/mgr/SkillEditorMgr.lua
 
-local var_0_0 = class("SkillEditorMgr")
+module("modules.logic.fight.mgr.SkillEditorMgr", package.seeall)
 
-var_0_0.OnSelectEntity = 2020
-var_0_0.ShowHeroSelectView = 2021
-var_0_0.OnSubHeroEnter = 2022
-var_0_0.OnSelectSkill = 2023
-var_0_0.OnClickOutline = 2024
-var_0_0.OnSelectStance = 2025
-var_0_0._onSwitchEnityOrSkill = 2026
-var_0_0._StopAutoPlayFlow1 = 2027
-var_0_0._StopAutoPlayFlow2 = 2028
-var_0_0._OpenAutoPlaySkin = 2029
-var_0_0._SelectAutoPlaySkin = 2030
-var_0_0.DefaultSceneLevelId = 10801
-var_0_0.DefaultHeroId = 3023
-var_0_0.DefaultMonsterId = 110401
-var_0_0.SelectType = {
+local SkillEditorMgr = class("SkillEditorMgr")
+
+SkillEditorMgr.OnSelectEntity = 2020
+SkillEditorMgr.ShowHeroSelectView = 2021
+SkillEditorMgr.OnSubHeroEnter = 2022
+SkillEditorMgr.OnSelectSkill = 2023
+SkillEditorMgr.OnClickOutline = 2024
+SkillEditorMgr.OnSelectStance = 2025
+SkillEditorMgr._onSwitchEnityOrSkill = 2026
+SkillEditorMgr._StopAutoPlayFlow1 = 2027
+SkillEditorMgr._StopAutoPlayFlow2 = 2028
+SkillEditorMgr._OpenAutoPlaySkin = 2029
+SkillEditorMgr._SelectAutoPlaySkin = 2030
+SkillEditorMgr.DefaultSceneLevelId = 10801
+SkillEditorMgr.DefaultHeroId = 3023
+SkillEditorMgr.DefaultMonsterId = 110401
+SkillEditorMgr.SelectType = {
 	Group = 3,
 	Monster = 2,
 	MonsterId = 5,
@@ -24,51 +26,51 @@ var_0_0.SelectType = {
 	SubHero = 4
 }
 
-function var_0_0.start(arg_1_0)
-	arg_1_0.inEditMode = true
+function SkillEditorMgr:start()
+	self.inEditMode = true
 
-	local var_1_0 = FightData.New(FightDef_pb.Fight())
+	local fightData = FightData.New(FightDef_pb.Fight())
 
-	var_1_0.version = 999
+	fightData.version = 999
 
-	FightMgr.instance:startFight(var_1_0)
-	arg_1_0:InitDefaultData()
-	LuaEventSystem.addEventMechanism(arg_1_0)
+	FightMgr.instance:startFight(fightData)
+	self:InitDefaultData()
+	LuaEventSystem.addEventMechanism(self)
 
 	UnityEngine.Application.targetFrameRate = 60
 
-	local var_1_1 = lua_scene_level.configList
-	local var_1_2 = FightParam.New()
-	local var_1_3 = arg_1_0:getSceneLevelId() or var_0_0.DefaultSceneLevelId
+	local sceneList = lua_scene_level.configList
+	local fightParam = FightParam.New()
+	local sceneLevelId = self:getSceneLevelId() or SkillEditorMgr.DefaultSceneLevelId
 
-	var_1_2:setSceneLevel(var_1_3)
-	FightModel.instance:setFightParam(var_1_2)
-	arg_1_0:refreshInfo(FightEnum.EntitySide.MySide)
-	arg_1_0:AddSubHeroModelData()
-	arg_1_0:refreshInfo(FightEnum.EntitySide.EnemySide)
-	GameSceneMgr.instance:registerCallback(SceneType.Fight, arg_1_0._onFightSceneStart, arg_1_0)
+	fightParam:setSceneLevel(sceneLevelId)
+	FightModel.instance:setFightParam(fightParam)
+	self:refreshInfo(FightEnum.EntitySide.MySide)
+	self:AddSubHeroModelData()
+	self:refreshInfo(FightEnum.EntitySide.EnemySide)
+	GameSceneMgr.instance:registerCallback(SceneType.Fight, self._onFightSceneStart, self)
 	FightController.instance:enterFightScene()
 end
 
-function var_0_0.InitDefaultData(arg_2_0)
-	arg_2_0.stance_count_limit = 3
-	arg_2_0.enemy_stance_count_limit = 3
-	arg_2_0.stance_id = FightEnum.MySideDefaultStanceId
-	arg_2_0.enemy_stance_id = FightEnum.EnemySideDefaultStanceId
-	arg_2_0.cur_select_entity_id = nil
-	arg_2_0.cur_select_side = FightEnum.EntitySide.MySide
+function SkillEditorMgr:InitDefaultData()
+	self.stance_count_limit = 3
+	self.enemy_stance_count_limit = 3
+	self.stance_id = FightEnum.MySideDefaultStanceId
+	self.enemy_stance_id = FightEnum.EnemySideDefaultStanceId
+	self.cur_select_entity_id = nil
+	self.cur_select_side = FightEnum.EntitySide.MySide
 end
 
-function var_0_0.exit(arg_3_0)
+function SkillEditorMgr:exit()
 	ViewMgr.instance:closeView(ViewName.SkillEditorView)
 	ViewMgr.instance:closeView(ViewName.SkillEffectStatView)
 
-	arg_3_0.inEditMode = false
+	self.inEditMode = false
 end
 
-function var_0_0._onFightSceneStart(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_2 == 1 then
-		GameSceneMgr.instance:unregisterCallback(SceneType.Fight, arg_4_0._onFightSceneStart, arg_4_0)
+function SkillEditorMgr:_onFightSceneStart(sceneLevelId, Exit0Enter1)
+	if Exit0Enter1 == 1 then
+		GameSceneMgr.instance:unregisterCallback(SceneType.Fight, self._onFightSceneStart, self)
 		ViewMgr.instance:closeAllViews()
 		ViewMgr.instance:openView(ViewName.SkillEditorView)
 		ViewMgr.instance:openView(ViewName.SkillEffectStatView)
@@ -76,204 +78,204 @@ function var_0_0._onFightSceneStart(arg_4_0, arg_4_1, arg_4_2)
 	end
 end
 
-function var_0_0.getSceneLevelId(arg_5_0)
+function SkillEditorMgr:getSceneLevelId()
 	return PlayerPrefsHelper.getNumber(PlayerPrefsKey.SkillEditorSceneLevelId, nil)
 end
 
-function var_0_0.setSceneLevelId(arg_6_0, arg_6_1)
-	PlayerPrefsHelper.setNumber(PlayerPrefsKey.SkillEditorSceneLevelId, arg_6_1)
+function SkillEditorMgr:setSceneLevelId(levelId)
+	PlayerPrefsHelper.setNumber(PlayerPrefsKey.SkillEditorSceneLevelId, levelId)
 end
 
-function var_0_0.getTypeInfo(arg_7_0, arg_7_1)
-	if not arg_7_0._saveTypeR then
-		local var_7_0 = PlayerPrefsHelper.getString(PlayerPrefsKey.SkillEditorInfos)
+function SkillEditorMgr:getTypeInfo(side)
+	if not self._saveTypeR then
+		local saveInfoStr = PlayerPrefsHelper.getString(PlayerPrefsKey.SkillEditorInfos)
 
-		arg_7_0._saveTypeR = var_0_0.SelectType.Hero
-		arg_7_0._saveInfoR = {}
-		arg_7_0._saveTypeL = var_0_0.SelectType.Monster
-		arg_7_0._saveInfoL = {}
+		self._saveTypeR = SkillEditorMgr.SelectType.Hero
+		self._saveInfoR = {}
+		self._saveTypeL = SkillEditorMgr.SelectType.Monster
+		self._saveInfoL = {}
 
-		if string.nilorempty(var_7_0) then
-			local var_7_1 = lua_character.configDict[var_0_0.DefaultHeroId]
+		if string.nilorempty(saveInfoStr) then
+			local defaultHeroCO = lua_character.configDict[SkillEditorMgr.DefaultHeroId]
 
-			arg_7_0._saveInfoR.ids = {
-				var_7_1.id
+			self._saveInfoR.ids = {
+				defaultHeroCO.id
 			}
-			arg_7_0._saveInfoR.skinIds = {
-				var_7_1.skinId
+			self._saveInfoR.skinIds = {
+				defaultHeroCO.skinId
 			}
 
-			local var_7_2 = lua_monster.configDict[var_0_0.DefaultMonsterId]
+			local defaultMonsterCO = lua_monster.configDict[SkillEditorMgr.DefaultMonsterId]
 
-			arg_7_0._saveInfoL.ids = {
-				var_7_2.id
+			self._saveInfoL.ids = {
+				defaultMonsterCO.id
 			}
-			arg_7_0._saveInfoL.skinIds = {
-				var_7_2.skinId
+			self._saveInfoL.skinIds = {
+				defaultMonsterCO.skinId
 			}
 		else
-			local var_7_3 = string.split(var_7_0, "|")
+			local saveInfoArr = string.split(saveInfoStr, "|")
 
-			arg_7_0._saveTypeR = tonumber(var_7_3[1])
+			self._saveTypeR = tonumber(saveInfoArr[1])
 
-			local var_7_4 = string.split(var_7_3[2], "#")
+			local tempR = string.split(saveInfoArr[2], "#")
 
-			arg_7_0._saveInfoR.ids = string.splitToNumber(var_7_4[1], ":")
-			arg_7_0._saveInfoR.skinIds = string.splitToNumber(var_7_4[2], ":")
-			arg_7_0._saveInfoR.groupId = arg_7_0._saveTypeR == var_0_0.SelectType.Group and tonumber(var_7_4[3])
-			arg_7_0._saveTypeL = tonumber(var_7_3[3])
+			self._saveInfoR.ids = string.splitToNumber(tempR[1], ":")
+			self._saveInfoR.skinIds = string.splitToNumber(tempR[2], ":")
+			self._saveInfoR.groupId = self._saveTypeR == SkillEditorMgr.SelectType.Group and tonumber(tempR[3])
+			self._saveTypeL = tonumber(saveInfoArr[3])
 
-			local var_7_5 = string.split(var_7_3[4], "#")
+			local tempL = string.split(saveInfoArr[4], "#")
 
-			arg_7_0._saveInfoL.ids = string.splitToNumber(var_7_5[1], ":")
-			arg_7_0._saveInfoL.skinIds = string.splitToNumber(var_7_5[2], ":")
-			arg_7_0._saveInfoL.groupId = arg_7_0._saveTypeL == var_0_0.SelectType.Group and tonumber(var_7_5[3])
+			self._saveInfoL.ids = string.splitToNumber(tempL[1], ":")
+			self._saveInfoL.skinIds = string.splitToNumber(tempL[2], ":")
+			self._saveInfoL.groupId = self._saveTypeL == SkillEditorMgr.SelectType.Group and tonumber(tempL[3])
 		end
 
-		arg_7_0.select_sub_hero_id = arg_7_0._saveInfoR.ids[1]
-		arg_7_0.select_sub_hero_skin_id = arg_7_0._saveInfoR.skinIds[1]
+		self.select_sub_hero_id = self._saveInfoR.ids[1]
+		self.select_sub_hero_skin_id = self._saveInfoR.skinIds[1]
 	end
 
-	if arg_7_1 == FightEnum.EntitySide.MySide then
-		return arg_7_0._saveTypeR, arg_7_0._saveInfoR
+	if side == FightEnum.EntitySide.MySide then
+		return self._saveTypeR, self._saveInfoR
 	else
-		return arg_7_0._saveTypeL, arg_7_0._saveInfoL
+		return self._saveTypeL, self._saveInfoL
 	end
 end
 
-function var_0_0.setTypeInfo(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4, arg_8_5)
-	if arg_8_1 == FightEnum.EntitySide.MySide then
-		arg_8_0._saveTypeR = arg_8_2
-		arg_8_0._saveInfoR.ids = arg_8_3
-		arg_8_0._saveInfoR.skinIds = arg_8_4
-		arg_8_0._saveInfoR.groupId = arg_8_5
+function SkillEditorMgr:setTypeInfo(side, type, ids, skinIds, groupId)
+	if side == FightEnum.EntitySide.MySide then
+		self._saveTypeR = type
+		self._saveInfoR.ids = ids
+		self._saveInfoR.skinIds = skinIds
+		self._saveInfoR.groupId = groupId
 	else
-		arg_8_0._saveTypeL = arg_8_2
-		arg_8_0._saveInfoL.ids = arg_8_3
-		arg_8_0._saveInfoL.skinIds = arg_8_4
-		arg_8_0._saveInfoL.groupId = arg_8_5
+		self._saveTypeL = type
+		self._saveInfoL.ids = ids
+		self._saveInfoL.skinIds = skinIds
+		self._saveInfoL.groupId = groupId
 	end
 
-	local var_8_0 = table.concat(arg_8_0._saveInfoR.ids, ":") .. "#" .. table.concat(arg_8_0._saveInfoR.skinIds, ":")
+	local right = table.concat(self._saveInfoR.ids, ":") .. "#" .. table.concat(self._saveInfoR.skinIds, ":")
 
-	if arg_8_0._saveTypeR == var_0_0.SelectType.Group then
-		var_8_0 = var_8_0 .. "#" .. arg_8_0._saveInfoR.groupId
+	if self._saveTypeR == SkillEditorMgr.SelectType.Group then
+		right = right .. "#" .. self._saveInfoR.groupId
 	end
 
-	local var_8_1 = table.concat(arg_8_0._saveInfoL.ids, ":") .. "#" .. table.concat(arg_8_0._saveInfoL.skinIds, ":")
+	local left = table.concat(self._saveInfoL.ids, ":") .. "#" .. table.concat(self._saveInfoL.skinIds, ":")
 
-	if arg_8_0._saveTypeL == var_0_0.SelectType.Group then
-		var_8_1 = var_8_1 .. "#" .. arg_8_0._saveInfoL.groupId
+	if self._saveTypeL == SkillEditorMgr.SelectType.Group then
+		left = left .. "#" .. self._saveInfoL.groupId
 	end
 
-	local var_8_2 = string.format("%d|%s|%d|%s", arg_8_0._saveTypeR, var_8_0, arg_8_0._saveTypeL, var_8_1)
+	local saveInfoStr = string.format("%d|%s|%d|%s", self._saveTypeR, right, self._saveTypeL, left)
 
-	PlayerPrefsHelper.setString(PlayerPrefsKey.SkillEditorInfos, var_8_2)
+	PlayerPrefsHelper.setString(PlayerPrefsKey.SkillEditorInfos, saveInfoStr)
 end
 
-function var_0_0.refreshInfo(arg_9_0, arg_9_1)
-	local var_9_0, var_9_1 = arg_9_0:getTypeInfo(arg_9_1)
+function SkillEditorMgr:refreshInfo(side)
+	local type, info = self:getTypeInfo(side)
 
-	arg_9_0:setTypeInfo(arg_9_1, var_9_0, var_9_1.ids, var_9_1.skinIds, var_9_1.groupId)
-	arg_9_0:setEntityMOs(arg_9_1, var_9_0, var_9_1.ids, var_9_1.skinIds)
+	self:setTypeInfo(side, type, info.ids, info.skinIds, info.groupId)
+	self:setEntityMOs(side, type, info.ids, info.skinIds)
 end
 
-function var_0_0.setEntityMOs(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4)
-	if arg_10_2 == var_0_0.SelectType.Hero then
-		local var_10_0, var_10_1 = FightHelper.buildHeroEntityMOList(arg_10_1, arg_10_3, arg_10_4)
+function SkillEditorMgr:setEntityMOs(side, type, ids, skinIds)
+	if type == SkillEditorMgr.SelectType.Hero then
+		local main, sub = FightHelper.buildHeroEntityMOList(side, ids, skinIds)
 
-		FightDataHelper.entityMgr:clientTestSetEntity(arg_10_1, var_10_0, var_10_1)
+		FightDataHelper.entityMgr:clientTestSetEntity(side, main, sub)
 	else
-		local var_10_2, var_10_3 = FightHelper.buildMonsterEntityMOList(arg_10_1, arg_10_3)
+		local main, sub = FightHelper.buildMonsterEntityMOList(side, ids)
 
-		FightDataHelper.entityMgr:clientTestSetEntity(arg_10_1, var_10_2, var_10_3)
+		FightDataHelper.entityMgr:clientTestSetEntity(side, main, sub)
 	end
 end
 
-function var_0_0.addSubHero(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = FightEnum.EntitySide.MySide
-	local var_11_1, var_11_2 = arg_11_0:getTypeInfo(var_11_0)
+function SkillEditorMgr:addSubHero(hero_id, skin_id)
+	local side = FightEnum.EntitySide.MySide
+	local type, info = self:getTypeInfo(side)
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_2.ids) do
-		if not lua_character.configDict[iter_11_1] then
+	for i, v in ipairs(info.ids) do
+		if not lua_character.configDict[v] then
 			return
 		end
 	end
 
-	arg_11_0.select_sub_hero_id = arg_11_1
-	arg_11_0.select_sub_hero_skin_id = arg_11_2
+	self.select_sub_hero_id = hero_id
+	self.select_sub_hero_skin_id = skin_id
 
-	var_0_0.instance:rebuildEntitys(var_11_0)
-	var_0_0.instance:dispatchEvent(var_0_0.OnSelectEntity, var_11_0)
+	SkillEditorMgr.instance:rebuildEntitys(side)
+	SkillEditorMgr.instance:dispatchEvent(SkillEditorMgr.OnSelectEntity, side)
 end
 
-function var_0_0.clearSubHero(arg_12_0)
-	arg_12_0.select_sub_hero_id = nil
-	arg_12_0.select_sub_hero_model = nil
+function SkillEditorMgr:clearSubHero()
+	self.select_sub_hero_id = nil
+	self.select_sub_hero_model = nil
 
-	local var_12_0 = FightEnum.EntitySide.MySide
+	local side = FightEnum.EntitySide.MySide
 
-	arg_12_0:refreshInfo(var_12_0)
-	var_0_0.instance:rebuildEntitys(var_12_0)
-	var_0_0.instance:dispatchEvent(var_0_0.OnSelectEntity, var_12_0)
+	self:refreshInfo(side)
+	SkillEditorMgr.instance:rebuildEntitys(side)
+	SkillEditorMgr.instance:dispatchEvent(SkillEditorMgr.OnSelectEntity, side)
 end
 
-function var_0_0.rebuildEntitys(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_1 == FightEnum.EntitySide.MySide and SceneTag.UnitPlayer or SceneTag.UnitMonster
-	local var_13_1 = GameSceneMgr.instance:getCurScene().entityMgr
-	local var_13_2 = var_13_1:getTagUnitDict(var_13_0)
+function SkillEditorMgr:rebuildEntitys(side)
+	local tag = side == FightEnum.EntitySide.MySide and SceneTag.UnitPlayer or SceneTag.UnitMonster
+	local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+	local dict = entityMgr:getTagUnitDict(tag)
 
-	if var_13_2 then
-		for iter_13_0, iter_13_1 in pairs(var_13_2) do
-			if iter_13_1.skill then
-				iter_13_1.skill:stopSkill()
+	if dict then
+		for _, entity in pairs(dict) do
+			if entity.skill then
+				entity.skill:stopSkill()
 			end
 
-			FightController.instance:dispatchEvent(FightEvent.BeforeDeadEffect, iter_13_1.id)
+			FightController.instance:dispatchEvent(FightEvent.BeforeDeadEffect, entity.id)
 		end
 	end
 
-	var_13_1:removeUnits(var_13_0)
+	entityMgr:removeUnits(tag)
 
-	local var_13_3 = FightDataHelper.entityMgr:getNormalList(arg_13_1)
+	local entityMOs = FightDataHelper.entityMgr:getNormalList(side)
 
-	for iter_13_2, iter_13_3 in ipairs(var_13_3) do
-		var_13_1:buildSpine(iter_13_3)
+	for _, entityMO in ipairs(entityMOs) do
+		entityMgr:buildSpine(entityMO)
 	end
 
-	if arg_13_1 == FightEnum.EntitySide.MySide and arg_13_0.select_sub_hero_id then
-		arg_13_0:_buildSubHero()
+	if side == FightEnum.EntitySide.MySide and self.select_sub_hero_id then
+		self:_buildSubHero()
 	end
 end
 
-function var_0_0.AddSubHeroModelData(arg_14_0)
-	if not arg_14_0.select_sub_hero_id then
+function SkillEditorMgr:AddSubHeroModelData()
+	if not self.select_sub_hero_id then
 		return
 	end
 
-	local var_14_0, var_14_1 = FightHelper.buildHeroEntityMOList(FightEnum.EntitySide.MySide, {}, {}, {
-		arg_14_0.select_sub_hero_id
+	local main, sub = FightHelper.buildHeroEntityMOList(FightEnum.EntitySide.MySide, {}, {}, {
+		self.select_sub_hero_id
 	}, {
-		arg_14_0.select_sub_hero_skin_id
+		self.select_sub_hero_skin_id
 	})
 
-	FightDataHelper.entityMgr:clientSetSubEntityList(FightEnum.EntitySide.MySide, var_14_1)
+	FightDataHelper.entityMgr:clientSetSubEntityList(FightEnum.EntitySide.MySide, sub)
 
-	arg_14_0.select_sub_hero_model = var_14_1[1]
+	self.select_sub_hero_model = sub[1]
 end
 
-function var_0_0._buildSubHero(arg_15_0)
-	arg_15_0:AddSubHeroModelData()
+function SkillEditorMgr:_buildSubHero()
+	self:AddSubHeroModelData()
 
-	local var_15_0 = FightDataHelper.entityMgr:getMySubList()
+	local sub_entity = FightDataHelper.entityMgr:getMySubList()
 
-	if var_15_0 then
-		for iter_15_0, iter_15_1 in ipairs(var_15_0) do
-			GameSceneMgr.instance:getCurScene().entityMgr:buildSubSpine(iter_15_1)
+	if sub_entity then
+		for _, entityMO in ipairs(sub_entity) do
+			GameSceneMgr.instance:getCurScene().entityMgr:buildSubSpine(entityMO)
 		end
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+SkillEditorMgr.instance = SkillEditorMgr.New()
 
-return var_0_0
+return SkillEditorMgr

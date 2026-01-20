@@ -1,18 +1,20 @@
-﻿module("modules.logic.fight.system.work.FightWorkSendMsg", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkSendMsg.lua
 
-local var_0_0 = class("FightWorkSendMsg", FightWorkItem)
+module("modules.logic.fight.system.work.FightWorkSendMsg", package.seeall)
 
-function var_0_0.onLogicEnter(arg_1_0, arg_1_1, ...)
-	arg_1_0.msgId = arg_1_1
-	arg_1_0.param = {
+local FightWorkSendMsg = class("FightWorkSendMsg", FightWorkItem)
+
+function FightWorkSendMsg:onLogicEnter(msgId, ...)
+	self.msgId = msgId
+	self.param = {
 		...
 	}
-	arg_1_0.paramCount = select("#", ...)
+	self.paramCount = select("#", ...)
 end
 
-function var_0_0.onStart(arg_2_0)
-	FightMsgMgr.sendMsg(arg_2_0.msgId, unpack(arg_2_0.param, 1, arg_2_0.paramCount))
-	arg_2_0:onDone(true)
+function FightWorkSendMsg:onStart()
+	FightMsgMgr.sendMsg(self.msgId, unpack(self.param, 1, self.paramCount))
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkSendMsg

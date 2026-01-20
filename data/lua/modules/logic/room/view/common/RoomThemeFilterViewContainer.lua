@@ -1,72 +1,75 @@
-﻿module("modules.logic.room.view.common.RoomThemeFilterViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/common/RoomThemeFilterViewContainer.lua
 
-local var_0_0 = class("RoomThemeFilterViewContainer", BaseViewContainer)
-local var_0_1 = 386
-local var_0_2 = 80
-local var_0_3 = 3
+module("modules.logic.room.view.common.RoomThemeFilterViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoomThemeFilterViewContainer = class("RoomThemeFilterViewContainer", BaseViewContainer)
+local Cell_Width = 386
+local Cell_Height = 80
+local Line_Count = 3
 
-	table.insert(var_1_0, RoomThemeFilterView.New())
+function RoomThemeFilterViewContainer:buildViews()
+	local views = {}
 
-	local var_1_1 = ListScrollParam.New()
+	table.insert(views, RoomThemeFilterView.New())
 
-	var_1_1.scrollGOPath = "#go_content/#scroll_theme"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_1.prefabUrl = "#go_content/#go_themeitem"
-	var_1_1.cellClass = RoomThemeFilterItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = var_0_3
-	var_1_1.cellWidth = var_0_1
-	var_1_1.cellHeight = var_0_2
-	var_1_1.cellSpaceH = 0
-	var_1_1.cellSpaceV = 0
-	var_1_1.startSpace = 0
-	var_1_1.endSpace = 0
+	local scrollParam = ListScrollParam.New()
 
-	table.insert(var_1_0, LuaListScrollView.New(RoomThemeFilterListModel.instance, var_1_1))
+	scrollParam.scrollGOPath = "#go_content/#scroll_theme"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "#go_content/#go_themeitem"
+	scrollParam.cellClass = RoomThemeFilterItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = Line_Count
+	scrollParam.cellWidth = Cell_Width
+	scrollParam.cellHeight = Cell_Height
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 0
+	scrollParam.startSpace = 0
+	scrollParam.endSpace = 0
 
-	return var_1_0
+	table.insert(views, LuaListScrollView.New(RoomThemeFilterListModel.instance, scrollParam))
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	arg_2_0:closeThis()
+function RoomThemeFilterViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-function var_0_0.getUIScreenWidth(arg_3_0)
-	local var_3_0 = UnityEngine.GameObject.Find("UIRoot/POPUP_TOP")
+function RoomThemeFilterViewContainer:getUIScreenWidth()
+	local go = UnityEngine.GameObject.Find("UIRoot/POPUP_TOP")
 
-	if var_3_0 then
-		return recthelper.getWidth(var_3_0.transform)
+	if go then
+		return recthelper.getWidth(go.transform)
 	end
 
-	local var_3_1 = 1080 / UnityEngine.Screen.height
+	local scale = 1080 / UnityEngine.Screen.height
+	local screenWidth = math.floor(UnityEngine.Screen.width * scale + 0.5)
 
-	return (math.floor(UnityEngine.Screen.width * var_3_1 + 0.5))
+	return screenWidth
 end
 
-function var_0_0.layoutContentTrs(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = 1220
-	local var_4_1 = arg_4_0:getUIScreenWidth() * 0.5
-	local var_4_2 = RoomThemeFilterListModel.instance:getCount()
-	local var_4_3 = math.floor((var_4_2 + var_0_3 - 1) / var_0_3) * var_0_2 + 130 + 26
+function RoomThemeFilterViewContainer:layoutContentTrs(contentTrs, isBottom)
+	local halfWidth = 1220
+	local halfScreen = self:getUIScreenWidth() * 0.5
+	local itemCount = RoomThemeFilterListModel.instance:getCount()
+	local countHeight = math.floor((itemCount + Line_Count - 1) / Line_Count) * Cell_Height + 130 + 26
 
-	if arg_4_2 then
-		local var_4_4 = 173
-		local var_4_5 = -var_4_1 + var_4_4
+	if isBottom then
+		local left = 173
+		local leftX = -halfScreen + left
 
-		recthelper.setAnchorX(arg_4_1, var_4_5)
+		recthelper.setAnchorX(contentTrs, leftX)
 	else
-		local var_4_6 = 46
-		local var_4_7 = 668
-		local var_4_8 = var_4_1 - var_4_0 - var_4_6
-		local var_4_9 = -var_4_1 + var_4_7
-		local var_4_10 = math.min(var_4_9, var_4_8)
+		local right = 46
+		local left = 668
+		local maxX = halfScreen - halfWidth - right
+		local leftX = -halfScreen + left
+		local x = math.min(leftX, maxX)
 
-		recthelper.setHeight(arg_4_1, math.min(var_4_3, 605))
-		recthelper.setAnchor(arg_4_1, var_4_10, 85)
+		recthelper.setHeight(contentTrs, math.min(countHeight, 605))
+		recthelper.setAnchor(contentTrs, x, 85)
 	end
 end
 
-return var_0_0
+return RoomThemeFilterViewContainer

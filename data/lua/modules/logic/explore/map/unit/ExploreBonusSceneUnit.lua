@@ -1,17 +1,19 @@
-﻿module("modules.logic.explore.map.unit.ExploreBonusSceneUnit", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/unit/ExploreBonusSceneUnit.lua
 
-local var_0_0 = class("ExploreBonusSceneUnit", ExploreBaseMoveUnit)
+module("modules.logic.explore.map.unit.ExploreBonusSceneUnit", package.seeall)
 
-function var_0_0.needInteractAnim(arg_1_0)
+local ExploreBonusSceneUnit = class("ExploreBonusSceneUnit", ExploreBaseMoveUnit)
+
+function ExploreBonusSceneUnit:needInteractAnim()
 	return true
 end
 
-function var_0_0.canTrigger(arg_2_0)
-	if arg_2_0.mo:isInteractActiveState() then
+function ExploreBonusSceneUnit:canTrigger()
+	if self.mo:isInteractActiveState() then
 		return false
 	end
 
-	return var_0_0.super.canTrigger(arg_2_0)
+	return ExploreBonusSceneUnit.super.canTrigger(self)
 end
 
-return var_0_0
+return ExploreBonusSceneUnit

@@ -1,65 +1,69 @@
-﻿module("modules.logic.versionactivity2_6.dicehero.view.DiceHeroCardDiceItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/dicehero/view/DiceHeroCardDiceItem.lua
 
-local var_0_0 = class("DiceHeroCardDiceItem", LuaCompBase)
+module("modules.logic.versionactivity2_6.dicehero.view.DiceHeroCardDiceItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._icon = gohelper.findChildImage(arg_1_1, "")
-	arg_1_0._txtdicenum = gohelper.findChildTextMesh(arg_1_1, "#txt_dicenum")
-	arg_1_0._goselect = gohelper.findChild(arg_1_1, "#go_select")
-	arg_1_0._canvasGroup = gohelper.onceAddComponent(arg_1_1, typeof(UnityEngine.CanvasGroup))
+local DiceHeroCardDiceItem = class("DiceHeroCardDiceItem", LuaCompBase)
+
+function DiceHeroCardDiceItem:init(go)
+	self._icon = gohelper.findChildImage(go, "")
+	self._txtdicenum = gohelper.findChildTextMesh(go, "#txt_dicenum")
+	self._goselect = gohelper.findChild(go, "#go_select")
+	self._canvasGroup = gohelper.onceAddComponent(go, typeof(UnityEngine.CanvasGroup))
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	DiceHeroController.instance:registerCallback(DiceHeroEvent.SkillCardSelectChange, arg_2_0.refreshUI, arg_2_0)
-	DiceHeroController.instance:registerCallback(DiceHeroEvent.SkillCardDiceChange, arg_2_0.refreshUI, arg_2_0)
+function DiceHeroCardDiceItem:addEventListeners()
+	DiceHeroController.instance:registerCallback(DiceHeroEvent.SkillCardSelectChange, self.refreshUI, self)
+	DiceHeroController.instance:registerCallback(DiceHeroEvent.SkillCardDiceChange, self.refreshUI, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	DiceHeroController.instance:unregisterCallback(DiceHeroEvent.SkillCardSelectChange, arg_3_0.refreshUI, arg_3_0)
-	DiceHeroController.instance:unregisterCallback(DiceHeroEvent.SkillCardDiceChange, arg_3_0.refreshUI, arg_3_0)
+function DiceHeroCardDiceItem:removeEventListeners()
+	DiceHeroController.instance:unregisterCallback(DiceHeroEvent.SkillCardSelectChange, self.refreshUI, self)
+	DiceHeroController.instance:unregisterCallback(DiceHeroEvent.SkillCardDiceChange, self.refreshUI, self)
 end
 
-function var_0_0.initData(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	arg_4_0._ruleInfo = arg_4_1
-	arg_4_0._cardMo = arg_4_2
-	arg_4_0._index = arg_4_3
+function DiceHeroCardDiceItem:initData(ruleInfo, cardMo, index)
+	self._ruleInfo = ruleInfo
+	self._cardMo = cardMo
+	self._index = index
 
-	local var_4_0 = arg_4_0._ruleInfo[1]
-	local var_4_1 = arg_4_0._ruleInfo[2]
+	local suitId = self._ruleInfo[1]
+	local pointId = self._ruleInfo[2]
 
-	if var_4_0 == 0 then
-		var_4_0 = 8
+	if suitId == 0 then
+		suitId = 8
 	end
 
-	local var_4_2 = lua_dice_suit.configDict[var_4_0]
-	local var_4_3 = lua_dice_point.configDict[var_4_1]
+	local suitCo = lua_dice_suit.configDict[suitId]
+	local pointCo = lua_dice_point.configDict[pointId]
 
-	if var_4_2 then
-		local var_4_4 = string.split(var_4_2.icon2, "#")
-		local var_4_5 = arg_4_2.matchNums[1] or 0
+	if suitCo then
+		local arr = string.split(suitCo.icon2, "#")
+		local minLen = cardMo.matchNums[1] or 0
 
-		UISpriteSetMgr.instance:setDiceHeroSprite(arg_4_0._icon, var_4_5 < arg_4_0._index and var_4_4[2] or var_4_4[1])
+		UISpriteSetMgr.instance:setDiceHeroSprite(self._icon, minLen < self._index and arr[2] or arr[1])
 	end
 
-	if var_4_3 then
-		arg_4_0._txtdicenum.text = var_4_3.txt
+	if pointCo then
+		self._txtdicenum.text = pointCo.txt
 	end
 
-	arg_4_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_5_0)
-	if DiceHeroFightModel.instance:getGameData().curSelectCardMo == arg_5_0._cardMo then
-		local var_5_0 = arg_5_0._cardMo.curSelectUids[arg_5_0._index]
+function DiceHeroCardDiceItem:refreshUI()
+	local gameInfo = DiceHeroFightModel.instance:getGameData()
 
-		gohelper.setActive(arg_5_0._goselect, var_5_0)
+	if gameInfo.curSelectCardMo == self._cardMo then
+		local isSelect = self._cardMo.curSelectUids[self._index]
 
-		arg_5_0._canvasGroup.alpha = var_5_0 and 1 or 0.4
+		gohelper.setActive(self._goselect, isSelect)
+
+		self._canvasGroup.alpha = isSelect and 1 or 0.4
 	else
-		gohelper.setActive(arg_5_0._goselect, false)
+		gohelper.setActive(self._goselect, false)
 
-		arg_5_0._canvasGroup.alpha = 1
+		self._canvasGroup.alpha = 1
 	end
 end
 
-return var_0_0
+return DiceHeroCardDiceItem

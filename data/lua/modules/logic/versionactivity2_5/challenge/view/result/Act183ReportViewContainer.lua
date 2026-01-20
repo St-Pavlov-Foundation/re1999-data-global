@@ -1,51 +1,55 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.result.Act183ReportViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/result/Act183ReportViewContainer.lua
 
-local var_0_0 = class("Act183ReportViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_5.challenge.view.result.Act183ReportViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Act183ReportViewContainer = class("Act183ReportViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, TabViewGroup.New(1, "root/#go_topleft"))
-	table.insert(var_1_0, Act183ReportView.New())
+function Act183ReportViewContainer:buildViews()
+	local views = {}
 
-	local var_1_1 = ListScrollParam.New()
+	table.insert(views, TabViewGroup.New(1, "root/#go_topleft"))
+	table.insert(views, Act183ReportView.New())
 
-	var_1_1.scrollGOPath = "root/#scroll_report"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_1.cellClass = Act183ReportListItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 1
-	var_1_1.cellWidth = 1636
-	var_1_1.cellHeight = 248
-	var_1_1.cellSpaceH = 0
-	var_1_1.cellSpaceV = 20
-	var_1_1.startSpace = 0
-	var_1_1.endSpace = 0
+	local scrollParam = ListScrollParam.New()
 
-	local var_1_2 = {}
+	scrollParam.scrollGOPath = "root/#scroll_report"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = Act183ReportListItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 1636
+	scrollParam.cellHeight = 248
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 20
+	scrollParam.startSpace = 0
+	scrollParam.endSpace = 0
 
-	for iter_1_0 = 1, 4 do
-		var_1_2[iter_1_0] = (iter_1_0 - 1) * 0.03
+	local animationDelayTimes = {}
+
+	for i = 1, 4 do
+		local delayTime = (i - 1) * 0.03
+
+		animationDelayTimes[i] = delayTime
 	end
 
-	table.insert(var_1_0, LuaListScrollViewWithAnimator.New(Act183ReportListModel.instance, var_1_1, var_1_2))
+	table.insert(views, LuaListScrollViewWithAnimator.New(Act183ReportListModel.instance, scrollParam, animationDelayTimes))
 
-	return var_1_0
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function Act183ReportViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-return var_0_0
+return Act183ReportViewContainer

@@ -1,25 +1,27 @@
-﻿module("modules.logic.explore.model.mo.unit.ExploreDoorUnitMO", package.seeall)
+﻿-- chunkname: @modules/logic/explore/model/mo/unit/ExploreDoorUnitMO.lua
 
-local var_0_0 = pureTable("ExploreDoorUnitMO", ExploreBaseUnitMO)
+module("modules.logic.explore.model.mo.unit.ExploreDoorUnitMO", package.seeall)
 
-function var_0_0.getUnitClass(arg_1_0)
+local ExploreDoorUnitMO = pureTable("ExploreDoorUnitMO", ExploreBaseUnitMO)
+
+function ExploreDoorUnitMO:getUnitClass()
 	return ExploreDoor
 end
 
-function var_0_0.isWalkable(arg_2_0)
-	return arg_2_0:isDoorOpen()
+function ExploreDoorUnitMO:isWalkable()
+	return self:isDoorOpen()
 end
 
-function var_0_0.initTypeData(arg_3_0)
-	arg_3_0.isPreventItem = tonumber(arg_3_0.specialDatas[1]) == 1
+function ExploreDoorUnitMO:initTypeData()
+	self.isPreventItem = tonumber(self.specialDatas[1]) == 1
 end
 
-function var_0_0.updateWalkable(arg_4_0)
-	arg_4_0:setNodeOpenKey(arg_4_0:isWalkable())
+function ExploreDoorUnitMO:updateWalkable()
+	self:setNodeOpenKey(self:isWalkable())
 end
 
-function var_0_0.isDoorOpen(arg_5_0)
-	return arg_5_0:isInteractActiveState()
+function ExploreDoorUnitMO:isDoorOpen()
+	return self:isInteractActiveState()
 end
 
-return var_0_0
+return ExploreDoorUnitMO

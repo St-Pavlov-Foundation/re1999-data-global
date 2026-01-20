@@ -1,34 +1,36 @@
-﻿module("modules.logic.fight.entity.specialIdle.EntitySpecialIdle5", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/specialIdle/EntitySpecialIdle5.lua
 
-local var_0_0 = class("EntitySpecialIdle5", UserDataDispose)
+module("modules.logic.fight.entity.specialIdle.EntitySpecialIdle5", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
-	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, arg_1_0._onSkillPlayFinish, arg_1_0)
+local EntitySpecialIdle5 = class("EntitySpecialIdle5", UserDataDispose)
 
-	arg_1_0._entity = arg_1_1
+function EntitySpecialIdle5:ctor(entity)
+	self:__onInit()
+	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
+
+	self._entity = entity
 end
 
-function var_0_0._onSkillPlayFinish(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	if arg_2_1.id ~= arg_2_0._entity.id then
+function EntitySpecialIdle5:_onSkillPlayFinish(entity, skillId, fightStepData)
+	if entity.id ~= self._entity.id then
 		return
 	end
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0._entity:getMO().skillGroup2) do
-		if arg_2_2 == iter_2_1 then
-			FightController.instance:dispatchEvent(FightEvent.PlaySpecialIdle, arg_2_1.id)
+	for index, skill_id in ipairs(self._entity:getMO().skillGroup2) do
+		if skillId == skill_id then
+			FightController.instance:dispatchEvent(FightEvent.PlaySpecialIdle, entity.id)
 
 			break
 		end
 	end
 end
 
-function var_0_0.releaseSelf(arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, arg_3_0._onSkillPlayFinish, arg_3_0)
+function EntitySpecialIdle5:releaseSelf()
+	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
 
-	arg_3_0._entity = nil
+	self._entity = nil
 
-	arg_3_0:__onDispose()
+	self:__onDispose()
 end
 
-return var_0_0
+return EntitySpecialIdle5

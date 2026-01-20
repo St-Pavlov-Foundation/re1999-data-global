@@ -1,52 +1,54 @@
-﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity1_2DungeonMapScene", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/versionactivity1_2dungeon/view/VersionActivity1_2DungeonMapScene.lua
 
-local var_0_0 = class("VersionActivity1_2DungeonMapScene", VersionActivity1_2DungeonMapBaseScene)
+module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity1_2DungeonMapScene", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gotaskitem = gohelper.findChildClickWithAudio(arg_1_0.viewGO, "#go_tasklist/#go_taskitem", AudioEnum.UI.play_ui_main_shield)
-	arg_1_0._focusBtnStateOff = gohelper.findChild(arg_1_0.viewGO, "#btn_4/icon/#go_off")
-	arg_1_0._focusBtnStateOn = gohelper.findChild(arg_1_0.viewGO, "#btn_4/icon/#go_on")
-	arg_1_0._btn4 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_4")
+local VersionActivity1_2DungeonMapScene = class("VersionActivity1_2DungeonMapScene", VersionActivity1_2DungeonMapBaseScene)
 
-	var_0_0.super.onInitView(arg_1_0)
+function VersionActivity1_2DungeonMapScene:onInitView()
+	self._gotaskitem = gohelper.findChildClickWithAudio(self.viewGO, "#go_tasklist/#go_taskitem", AudioEnum.UI.play_ui_main_shield)
+	self._focusBtnStateOff = gohelper.findChild(self.viewGO, "#btn_4/icon/#go_off")
+	self._focusBtnStateOn = gohelper.findChild(self.viewGO, "#btn_4/icon/#go_on")
+	self._btn4 = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_4")
+
+	VersionActivity1_2DungeonMapScene.super.onInitView(self)
 end
 
-function var_0_0.onOpen(arg_2_0)
-	arg_2_0._btn4:AddClickListener(arg_2_0._onClickBtn4, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._gotaskitem, arg_2_0._onClickDaily, arg_2_0)
-	arg_2_0:addEventCb(VersionActivity1_2DungeonController.instance, VersionActivity1_2DungeonEvent.onReceiveGet116InfosReply, arg_2_0._onReceiveGet116InfosReply, arg_2_0)
-	arg_2_0:addEventCb(VersionActivity1_2DungeonController.instance, VersionActivity1_2DungeonEvent.addElementItem, arg_2_0._onAddElementItem, arg_2_0)
-	arg_2_0:addEventCb(VersionActivity1_2DungeonController.instance, VersionActivity1_2DungeonEvent.onReceivePutTrapReply, arg_2_0._onReceivePutTrapReply, arg_2_0)
-	arg_2_0:addEventCb(VersionActivity1_2DungeonController.instance, VersionActivity1_2DungeonEvent.onReceiveUpgradeElementReply, arg_2_0._onReceiveUpgradeElementReply, arg_2_0)
-	arg_2_0:addEventCb(VersionActivity1_2DungeonController.instance, VersionActivity1_2DungeonEvent.focusMap, arg_2_0._onFocusMap, arg_2_0)
-	arg_2_0:addEventCb(VersionActivity1_2DungeonController.instance, VersionActivity1_2DungeonEvent.selectEpisodeItem, arg_2_0._selectEpisodeItem, arg_2_0)
-	arg_2_0:addEventCb(VersionActivity1_2DungeonController.instance, VersionActivity1_2DungeonEvent.clickDailyEpisode, arg_2_0._clickDailyEpisode, arg_2_0)
-	arg_2_0:addEventCb(DungeonController.instance, DungeonEvent.OnRemoveElement, arg_2_0._OnRemoveElement, arg_2_0)
-	var_0_0.super.onOpen(arg_2_0)
-	arg_2_0:_showDailyBtn()
-	arg_2_0:_showFocusBtn()
+function VersionActivity1_2DungeonMapScene:onOpen()
+	self._btn4:AddClickListener(self._onClickBtn4, self)
+	self:addClickCb(self._gotaskitem, self._onClickDaily, self)
+	self:addEventCb(VersionActivity1_2DungeonController.instance, VersionActivity1_2DungeonEvent.onReceiveGet116InfosReply, self._onReceiveGet116InfosReply, self)
+	self:addEventCb(VersionActivity1_2DungeonController.instance, VersionActivity1_2DungeonEvent.addElementItem, self._onAddElementItem, self)
+	self:addEventCb(VersionActivity1_2DungeonController.instance, VersionActivity1_2DungeonEvent.onReceivePutTrapReply, self._onReceivePutTrapReply, self)
+	self:addEventCb(VersionActivity1_2DungeonController.instance, VersionActivity1_2DungeonEvent.onReceiveUpgradeElementReply, self._onReceiveUpgradeElementReply, self)
+	self:addEventCb(VersionActivity1_2DungeonController.instance, VersionActivity1_2DungeonEvent.focusMap, self._onFocusMap, self)
+	self:addEventCb(VersionActivity1_2DungeonController.instance, VersionActivity1_2DungeonEvent.selectEpisodeItem, self._selectEpisodeItem, self)
+	self:addEventCb(VersionActivity1_2DungeonController.instance, VersionActivity1_2DungeonEvent.clickDailyEpisode, self._clickDailyEpisode, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.OnRemoveElement, self._OnRemoveElement, self)
+	VersionActivity1_2DungeonMapScene.super.onOpen(self)
+	self:_showDailyBtn()
+	self:_showFocusBtn()
 end
 
-function var_0_0._onReceiveGet116InfosReply(arg_3_0)
-	local var_3_0 = arg_3_0.viewContainer.mapSceneElement
-	local var_3_1 = var_3_0 and var_3_0._elementList
+function VersionActivity1_2DungeonMapScene:_onReceiveGet116InfosReply()
+	local elements = self.viewContainer.mapSceneElement
+	local list = elements and elements._elementList
 
-	if var_3_1 then
-		for iter_3_0, iter_3_1 in pairs(var_3_1) do
-			local var_3_2 = iter_3_1._config
+	if list then
+		for i, v in pairs(list) do
+			local elementConfig = v._config
 
-			if var_3_2 and var_3_2.type == DungeonEnum.ElementType.Activity1_2Building_Upgrade then
-				arg_3_0:_onReceiveUpgradeElementReply(var_3_2.id)
+			if elementConfig and elementConfig.type == DungeonEnum.ElementType.Activity1_2Building_Upgrade then
+				self:_onReceiveUpgradeElementReply(elementConfig.id)
 			end
 		end
 	end
 end
 
-function var_0_0._clickDailyEpisode(arg_4_0, arg_4_1)
-	if arg_4_0._dailyEpisodeItems then
-		for iter_4_0, iter_4_1 in ipairs(arg_4_0._dailyEpisodeItems) do
-			if iter_4_1.viewGO.activeInHierarchy and iter_4_1._elementConfig.type == DungeonEnum.ElementType.DailyEpisode and arg_4_1 == iter_4_1._elementConfig.id then
-				iter_4_1:_onClick()
+function VersionActivity1_2DungeonMapScene:_clickDailyEpisode(elementId)
+	if self._dailyEpisodeItems then
+		for i, v in ipairs(self._dailyEpisodeItems) do
+			if v.viewGO.activeInHierarchy and v._elementConfig.type == DungeonEnum.ElementType.DailyEpisode and elementId == v._elementConfig.id then
+				v:_onClick()
 
 				break
 			end
@@ -54,413 +56,418 @@ function var_0_0._clickDailyEpisode(arg_4_0, arg_4_1)
 	end
 end
 
-function var_0_0.reopenViewParamPrecessed(arg_5_0)
-	if arg_5_0.viewParam.focusCamp then
-		arg_5_0:_onClickBtn4()
+function VersionActivity1_2DungeonMapScene:reopenViewParamPrecessed()
+	if self.viewParam.focusCamp then
+		self:_onClickBtn4()
 	end
 end
 
-function var_0_0.getFocusBtnUnlockAniState()
+function VersionActivity1_2DungeonMapScene.getFocusBtnUnlockAniState()
 	return PlayerPrefsHelper.getNumber(PlayerModel.instance:getMyUserId() .. PlayerPrefsKey.Fight1_2FocusBtnUnlockAni, 0)
 end
 
-function var_0_0.setFocusBtnUnlockAniState(arg_7_0)
-	return PlayerPrefsHelper.setNumber(PlayerModel.instance:getMyUserId() .. PlayerPrefsKey.Fight1_2FocusBtnUnlockAni, arg_7_0 or 1)
+function VersionActivity1_2DungeonMapScene.setFocusBtnUnlockAniState(value)
+	return PlayerPrefsHelper.setNumber(PlayerModel.instance:getMyUserId() .. PlayerPrefsKey.Fight1_2FocusBtnUnlockAni, value or 1)
 end
 
-function var_0_0._showFocusBtn(arg_8_0)
-	local var_8_0 = DungeonMapModel.instance:getElementById(12101021)
+function VersionActivity1_2DungeonMapScene:_showFocusBtn()
+	local showBtn = DungeonMapModel.instance:getElementById(12101021)
 
-	gohelper.setActive(arg_8_0._btn4.gameObject, var_8_0)
+	gohelper.setActive(self._btn4.gameObject, showBtn)
 
-	if var_8_0 and var_0_0.getFocusBtnUnlockAniState() == 0 then
-		var_0_0.setFocusBtnUnlockAniState(1)
-		gohelper.onceAddComponent(arg_8_0._btn4.gameObject, typeof(UnityEngine.Animator)):Play("unlock")
+	if showBtn and VersionActivity1_2DungeonMapScene.getFocusBtnUnlockAniState() == 0 then
+		VersionActivity1_2DungeonMapScene.setFocusBtnUnlockAniState(1)
+		gohelper.onceAddComponent(self._btn4.gameObject, typeof(UnityEngine.Animator)):Play("unlock")
 	end
 end
 
-function var_0_0._showFocusBtnState(arg_9_0)
-	if arg_9_0._sceneGo then
-		local var_9_0, var_9_1 = transformhelper.getLocalPos(arg_9_0._sceneGo.transform)
-		local var_9_2 = true
+function VersionActivity1_2DungeonMapScene:_showFocusBtnState()
+	if self._sceneGo then
+		local posx, posy = transformhelper.getLocalPos(self._sceneGo.transform)
+		local on = true
 
-		if math.abs(-88 - var_9_0) >= 10 or math.abs(24 - var_9_1) >= 7 then
-			var_9_2 = false
+		if math.abs(-88 - posx) >= 10 or math.abs(24 - posy) >= 7 then
+			on = false
 		end
 
-		gohelper.setActive(arg_9_0._focusBtnStateOn, var_9_2)
-		gohelper.setActive(arg_9_0._focusBtnStateOff, not var_9_2)
+		gohelper.setActive(self._focusBtnStateOn, on)
+		gohelper.setActive(self._focusBtnStateOff, not on)
 
-		arg_9_0._focusing = var_9_2
+		self._focusing = on
 	end
 end
 
-function var_0_0._onLoadSceneFinish(arg_10_0)
-	MainCameraMgr.instance:addView(ViewName.VersionActivity1_2DungeonView, arg_10_0._initCamera, nil, arg_10_0)
+function VersionActivity1_2DungeonMapScene:_onLoadSceneFinish()
+	MainCameraMgr.instance:addView(ViewName.VersionActivity1_2DungeonView, self._initCamera, nil, self)
 end
 
-function var_0_0._onFocusMap(arg_11_0, arg_11_1)
-	arg_11_0:setScenePosSafety(arg_11_1, true)
+function VersionActivity1_2DungeonMapScene:_onFocusMap(targetPos)
+	self:setScenePosSafety(targetPos, true)
 end
 
-function var_0_0._disposeScene(arg_12_0)
-	arg_12_0:_closeAllDailyEpisode()
-	var_0_0.super._disposeScene(arg_12_0)
+function VersionActivity1_2DungeonMapScene:_disposeScene()
+	self:_closeAllDailyEpisode()
+	VersionActivity1_2DungeonMapScene.super._disposeScene(self)
 end
 
-function var_0_0._showDailyBtn(arg_13_0)
-	arg_13_0._curDailyItem = nil
+function VersionActivity1_2DungeonMapScene:_showDailyBtn()
+	self._curDailyItem = nil
 
-	local var_13_0 = false
+	local showBtn = false
 
-	if arg_13_0._dailyEpisodeItems then
-		table.sort(arg_13_0._dailyEpisodeItems, var_0_0.sortDailyEpisode)
+	if self._dailyEpisodeItems then
+		table.sort(self._dailyEpisodeItems, VersionActivity1_2DungeonMapScene.sortDailyEpisode)
 
-		for iter_13_0, iter_13_1 in ipairs(arg_13_0._dailyEpisodeItems) do
-			if iter_13_1.viewGO.activeInHierarchy then
-				var_13_0 = true
-				gohelper.findChildText(arg_13_0._gotaskitem.gameObject, "bg/info").text = formatLuaLang("versionactivity_1_2_daily_episode_btn", iter_13_1._episodeConfig.name)
+		for i, v in ipairs(self._dailyEpisodeItems) do
+			if v.viewGO.activeInHierarchy then
+				showBtn = true
 
-				local var_13_1 = gohelper.findChildImage(arg_13_0._gotaskitem.gameObject, "bg/icon")
-				local var_13_2
+				local info = gohelper.findChildText(self._gotaskitem.gameObject, "bg/info")
 
-				if iter_13_1._elementConfig.type == DungeonEnum.ElementType.DailyEpisode then
-					var_13_2 = "zhuxianditu_renwuicon_1020"
+				info.text = formatLuaLang("versionactivity_1_2_daily_episode_btn", v._episodeConfig.name)
 
-					if TimeUtil.getDayFirstLoginRed("act1_2DailySpEpisode" .. iter_13_1._elementConfig.id) then
-						TimeUtil.setDayFirstLoginRed("act1_2DailySpEpisode" .. iter_13_1._elementConfig.id)
+				local image = gohelper.findChildImage(self._gotaskitem.gameObject, "bg/icon")
+				local imageName
 
-						local var_13_3 = string.splitToNumber(iter_13_1._elementConfig.pos, "#")
-						local var_13_4 = Vector3(-var_13_3[1], -var_13_3[2] - 3, 0)
+				if v._elementConfig.type == DungeonEnum.ElementType.DailyEpisode then
+					imageName = "zhuxianditu_renwuicon_1020"
 
-						VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.focusMap, var_13_4)
+					if TimeUtil.getDayFirstLoginRed("act1_2DailySpEpisode" .. v._elementConfig.id) then
+						TimeUtil.setDayFirstLoginRed("act1_2DailySpEpisode" .. v._elementConfig.id)
+
+						local posArr = string.splitToNumber(v._elementConfig.pos, "#")
+						local tarPos = Vector3(-posArr[1], -posArr[2] - 3, 0)
+
+						VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.focusMap, tarPos)
 					end
 				else
-					var_13_2 = "zhuxianditu_renwuicon_20"
+					imageName = "zhuxianditu_renwuicon_20"
 				end
 
-				UISpriteSetMgr.instance:setUiFBSprite(var_13_1, var_13_2)
+				UISpriteSetMgr.instance:setUiFBSprite(image, imageName)
 
-				arg_13_0._curDailyItem = iter_13_1
+				self._curDailyItem = v
 
 				break
 			end
 		end
 	end
 
-	gohelper.setActive(arg_13_0._gotaskitem.gameObject, var_13_0)
+	gohelper.setActive(self._gotaskitem.gameObject, showBtn)
 end
 
-function var_0_0.sortDailyEpisode(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_0._elementConfig.type
-	local var_14_1 = arg_14_1._elementConfig.type
+function VersionActivity1_2DungeonMapScene.sortDailyEpisode(item1, item2)
+	local type1 = item1._elementConfig.type
+	local type2 = item2._elementConfig.type
 
-	if var_14_0 == DungeonEnum.ElementType.Activity1_2Fight and var_14_1 == DungeonEnum.ElementType.Activity1_2Fight then
-		return arg_14_0._elementConfig.id < arg_14_1._elementConfig.id
-	elseif var_14_0 == DungeonEnum.ElementType.Activity1_2Fight and var_14_1 == DungeonEnum.ElementType.DailyEpisode then
+	if type1 == DungeonEnum.ElementType.Activity1_2Fight and type2 == DungeonEnum.ElementType.Activity1_2Fight then
+		return item1._elementConfig.id < item2._elementConfig.id
+	elseif type1 == DungeonEnum.ElementType.Activity1_2Fight and type2 == DungeonEnum.ElementType.DailyEpisode then
 		return true
-	elseif var_14_0 == DungeonEnum.ElementType.DailyEpisode and var_14_1 == DungeonEnum.ElementType.Activity1_2Fight then
+	elseif type1 == DungeonEnum.ElementType.DailyEpisode and type2 == DungeonEnum.ElementType.Activity1_2Fight then
 		return false
 	else
-		local var_14_2 = lua_activity116_episode_sp.configDict[arg_14_0._episodeConfig.id]
-		local var_14_3 = lua_activity116_episode_sp.configDict[arg_14_1._episodeConfig.id]
+		local config1 = lua_activity116_episode_sp.configDict[item1._episodeConfig.id]
+		local config2 = lua_activity116_episode_sp.configDict[item2._episodeConfig.id]
 
-		return var_14_2.refreshDay < var_14_3.refreshDay
+		return config1.refreshDay < config2.refreshDay
 	end
 end
 
-function var_0_0._onClickDaily(arg_15_0)
-	if arg_15_0._curDailyItem then
-		arg_15_0._curDailyItem:_onClick()
+function VersionActivity1_2DungeonMapScene:_onClickDaily()
+	if self._curDailyItem then
+		self._curDailyItem:_onClick()
 	end
 end
 
-function var_0_0._onAddElementItem(arg_16_0, arg_16_1)
-	local var_16_0 = gohelper.findChild(arg_16_0._sceneGo, "elementRoot/" .. arg_16_1)
+function VersionActivity1_2DungeonMapScene:_onAddElementItem(elementId)
+	local elementObj = gohelper.findChild(self._sceneGo, "elementRoot/" .. elementId)
 
-	arg_16_0:_detectElementNeedSetPos(arg_16_1)
+	self:_detectElementNeedSetPos(elementId)
 
-	local var_16_1 = lua_chapter_map_element.configDict[arg_16_1]
+	local elementConfig = lua_chapter_map_element.configDict[elementId]
 
-	if var_16_1.type == DungeonEnum.ElementType.DailyEpisode or var_16_1.type == DungeonEnum.ElementType.Activity1_2Fight then
-		if not arg_16_0._dailyEpisodeItems then
-			arg_16_0._dailyEpisodeItems = {}
+	if elementConfig.type == DungeonEnum.ElementType.DailyEpisode or elementConfig.type == DungeonEnum.ElementType.Activity1_2Fight then
+		if not self._dailyEpisodeItems then
+			self._dailyEpisodeItems = {}
 		end
 
-		local var_16_2 = gohelper.findChild(var_16_0, "effect1/root")
-		local var_16_3
+		local tarObj = gohelper.findChild(elementObj, "effect1/root")
+		local childItem
 
-		if var_16_1.type == DungeonEnum.ElementType.DailyEpisode then
-			local var_16_4 = arg_16_0:openSubView(VersionActivity_1_2_MapElementItem, var_16_2, nil, arg_16_1)
+		if elementConfig.type == DungeonEnum.ElementType.DailyEpisode then
+			childItem = self:openSubView(VersionActivity_1_2_MapElementItem, tarObj, nil, elementId)
 
-			table.insert(arg_16_0._dailyEpisodeItems, var_16_4)
+			table.insert(self._dailyEpisodeItems, childItem)
 		else
-			local var_16_5 = arg_16_0:openSubView(VersionActivity_1_2_MapElement105Item, var_16_2, nil, arg_16_1)
+			childItem = self:openSubView(VersionActivity_1_2_MapElement105Item, tarObj, nil, elementId)
 
-			table.insert(arg_16_0._dailyEpisodeItems, 1, var_16_5)
+			table.insert(self._dailyEpisodeItems, 1, childItem)
 		end
 
-		arg_16_0:_showDailyBtn()
-	elseif var_16_1.type == DungeonEnum.ElementType.Activity1_2Building_Trap then
-		arg_16_0:_showTrapObj()
-	elseif var_16_1.type == DungeonEnum.ElementType.Activity1_2Building_Upgrade then
-		arg_16_0:_onReceiveUpgradeElementReply(arg_16_1)
+		self:_showDailyBtn()
+	elseif elementConfig.type == DungeonEnum.ElementType.Activity1_2Building_Trap then
+		self:_showTrapObj()
+	elseif elementConfig.type == DungeonEnum.ElementType.Activity1_2Building_Upgrade then
+		self:_onReceiveUpgradeElementReply(elementId)
 	end
 
-	if arg_16_1 == 12101021 then
-		arg_16_0:_showFocusBtn()
+	if elementId == 12101021 then
+		self:_showFocusBtn()
 	end
 
-	local var_16_6, var_16_7, var_16_8 = transformhelper.getLocalPos(var_16_0.transform)
+	local x, y, z = transformhelper.getLocalPos(elementObj.transform)
 
-	transformhelper.setLocalPos(var_16_0.transform, var_16_6, var_16_7, -20)
+	transformhelper.setLocalPos(elementObj.transform, x, y, -20)
 end
 
-function var_0_0._onReceivePutTrapReply(arg_17_0)
-	arg_17_0:_showTrapObj()
+function VersionActivity1_2DungeonMapScene:_onReceivePutTrapReply()
+	self:_showTrapObj()
 end
 
-function var_0_0._onReceiveUpgradeElementReply(arg_18_0, arg_18_1)
-	local var_18_0 = VersionActivity1_2DungeonModel.instance:haveNextLevel(arg_18_1)
+function VersionActivity1_2DungeonMapScene:_onReceiveUpgradeElementReply(elementId)
+	local haveNextLevel = VersionActivity1_2DungeonModel.instance:haveNextLevel(elementId)
 
-	arg_18_0:_setElementShowState(arg_18_1, var_18_0 and 1 or 2)
+	self:_setElementShowState(elementId, haveNextLevel and 1 or 2)
 end
 
-function var_0_0._reBuildElement(arg_19_0, arg_19_1)
-	arg_19_0.viewContainer.mapSceneElement:_removeElement(arg_19_1)
-	arg_19_0.viewContainer.mapSceneElement:_addElementById(arg_19_1)
+function VersionActivity1_2DungeonMapScene:_reBuildElement(elementId)
+	self.viewContainer.mapSceneElement:_removeElement(elementId)
+	self.viewContainer.mapSceneElement:_addElementById(elementId)
 end
 
-function var_0_0._selectEpisodeItem(arg_20_0, arg_20_1)
-	arg_20_0._curSelectconfig = arg_20_1
+function VersionActivity1_2DungeonMapScene:_selectEpisodeItem(config)
+	self._curSelectconfig = config
 end
 
-function var_0_0._onRemoveTrapAniDone(arg_21_0)
-	if arg_21_0._curTrap then
-		gohelper.destroy(arg_21_0._curTrap)
+function VersionActivity1_2DungeonMapScene:_onRemoveTrapAniDone()
+	if self._curTrap then
+		gohelper.destroy(self._curTrap)
 
-		arg_21_0._curTrap = nil
+		self._curTrap = nil
 	end
 end
 
-function var_0_0._showTrapObj(arg_22_0)
-	local var_22_0 = VersionActivity1_2DungeonModel.instance:getTrapPutting()
+function VersionActivity1_2DungeonMapScene:_showTrapObj()
+	local trapId = VersionActivity1_2DungeonModel.instance:getTrapPutting()
 
-	if arg_22_0._curTrap then
-		if not var_22_0 then
-			gohelper.onceAddComponent(arg_22_0._curTrap, typeof(UnityEngine.Animator)):Play("close")
-			TaskDispatcher.runDelay(arg_22_0._onRemoveTrapAniDone, arg_22_0, 1)
+	if self._curTrap then
+		if not trapId then
+			gohelper.onceAddComponent(self._curTrap, typeof(UnityEngine.Animator)):Play("close")
+			TaskDispatcher.runDelay(self._onRemoveTrapAniDone, self, 1)
 
-			arg_22_0._lastTrapId = nil
+			self._lastTrapId = nil
 		else
-			TaskDispatcher.cancelTask(arg_22_0._onRemoveTrapAniDone, arg_22_0)
-			gohelper.destroy(arg_22_0._curTrap)
+			TaskDispatcher.cancelTask(self._onRemoveTrapAniDone, self)
+			gohelper.destroy(self._curTrap)
 
-			arg_22_0._curTrap = nil
+			self._curTrap = nil
 		end
 	end
 
-	if var_22_0 then
-		if var_22_0 == 10301 then
-			local var_22_1 = "scenes/m_s14_hddt_hd02/prefab/hddt_front_xianjing_b.prefab"
+	if trapId then
+		if trapId == 10301 then
+			local url = "scenes/m_s14_hddt_hd02/prefab/hddt_front_xianjing_b.prefab"
 
-			arg_22_0:com_loadAsset(var_22_1, arg_22_0._onTrapLoaded)
-		elseif var_22_0 == 10302 then
-			local var_22_2 = "scenes/m_s14_hddt_hd02/prefab/hddt_front_xianjing_c.prefab"
+			self:com_loadAsset(url, self._onTrapLoaded)
+		elseif trapId == 10302 then
+			local url = "scenes/m_s14_hddt_hd02/prefab/hddt_front_xianjing_c.prefab"
 
-			arg_22_0:com_loadAsset(var_22_2, arg_22_0._onTrapLoaded)
-		elseif var_22_0 == 10303 then
-			local var_22_3 = "scenes/m_s14_hddt_hd02/prefab/hddt_front_xianjing_a.prefab"
+			self:com_loadAsset(url, self._onTrapLoaded)
+		elseif trapId == 10303 then
+			local url = "scenes/m_s14_hddt_hd02/prefab/hddt_front_xianjing_a.prefab"
 
-			arg_22_0:com_loadAsset(var_22_3, arg_22_0._onTrapLoaded)
+			self:com_loadAsset(url, self._onTrapLoaded)
 		end
 	end
 
-	if gohelper.findChild(arg_22_0._sceneGo, "elementRoot/" .. 12101051) then
-		arg_22_0:_setElementShowState(12101051, var_22_0 and 2 or 1)
+	local elementObj = gohelper.findChild(self._sceneGo, "elementRoot/" .. 12101051)
+
+	if elementObj then
+		self:_setElementShowState(12101051, trapId and 2 or 1)
 	end
 end
 
-function var_0_0._setElementShowState(arg_23_0, arg_23_1, arg_23_2)
-	local var_23_0 = gohelper.findChild(arg_23_0._sceneGo, "elementRoot/" .. arg_23_1)
+function VersionActivity1_2DungeonMapScene:_setElementShowState(elementId, index)
+	local elementObj = gohelper.findChild(self._sceneGo, "elementRoot/" .. elementId)
 
-	if not gohelper.isNil(var_23_0) then
-		local var_23_1 = gohelper.findChild(var_23_0, "effect1")
-		local var_23_2 = gohelper.findChild(var_23_0, "effect2")
+	if not gohelper.isNil(elementObj) then
+		local child1 = gohelper.findChild(elementObj, "effect1")
+		local child2 = gohelper.findChild(elementObj, "effect2")
 
-		if not gohelper.isNil(var_23_0) and not gohelper.isNil(var_23_0) then
-			if arg_23_2 == 1 then
-				if not gohelper.isNil(var_23_1) then
-					transformhelper.setLocalPos(var_23_1.transform, 0, 0, 0)
+		if not gohelper.isNil(elementObj) and not gohelper.isNil(elementObj) then
+			if index == 1 then
+				if not gohelper.isNil(child1) then
+					transformhelper.setLocalPos(child1.transform, 0, 0, 0)
 				end
 
-				if not gohelper.isNil(var_23_2) then
-					transformhelper.setLocalPos(var_23_2.transform, 40000, 0, 0)
+				if not gohelper.isNil(child2) then
+					transformhelper.setLocalPos(child2.transform, 40000, 0, 0)
 				end
 			else
-				if not gohelper.isNil(var_23_1) then
-					transformhelper.setLocalPos(var_23_1.transform, 40000, 0, 0)
+				if not gohelper.isNil(child1) then
+					transformhelper.setLocalPos(child1.transform, 40000, 0, 0)
 				end
 
-				if not gohelper.isNil(var_23_2) then
-					transformhelper.setLocalPos(var_23_2.transform, 0, 0, 0)
+				if not gohelper.isNil(child2) then
+					transformhelper.setLocalPos(child2.transform, 0, 0, 0)
 				end
 			end
 
-			local var_23_3 = lua_chapter_map_element.configDict[arg_23_1]
+			local elementConfig = lua_chapter_map_element.configDict[elementId]
 
-			if var_23_3 and var_23_3.type == DungeonEnum.ElementType.Activity1_2Building_Upgrade then
-				local var_23_4 = VersionActivity1_2DungeonModel.instance:getElementData(arg_23_1)
+			if elementConfig and elementConfig.type == DungeonEnum.ElementType.Activity1_2Building_Upgrade then
+				local buildingData = VersionActivity1_2DungeonModel.instance:getElementData(elementId)
 
-				arg_23_0:_setUpgradeBuildingData(var_23_4, var_23_1)
-				arg_23_0:_setUpgradeBuildingData(var_23_4, var_23_2)
+				self:_setUpgradeBuildingData(buildingData, child1)
+				self:_setUpgradeBuildingData(buildingData, child2)
 			end
 		end
 	end
 end
 
-function var_0_0._setUpgradeBuildingData(arg_24_0, arg_24_1, arg_24_2)
-	for iter_24_0 = 1, 2 do
-		local var_24_0 = gohelper.findChild(arg_24_2, string.format("root/ani/icon%d/anim/txt_lv", iter_24_0))
+function VersionActivity1_2DungeonMapScene:_setUpgradeBuildingData(buildingData, obj)
+	for i = 1, 2 do
+		local txtObj = gohelper.findChild(obj, string.format("root/ani/icon%d/anim/txt_lv", i))
 
-		if var_24_0 then
-			local var_24_1 = var_24_0:GetComponent(typeof(TMPro.TextMeshPro))
+		if txtObj then
+			local txt = txtObj:GetComponent(typeof(TMPro.TextMeshPro))
 
-			if arg_24_1 then
-				var_24_1.text = "Lv. " .. arg_24_1.level
+			if buildingData then
+				txt.text = "Lv. " .. buildingData.level
 
-				if not VersionActivity1_2DungeonModel.instance:haveNextLevel(arg_24_1.elementId) then
-					var_24_1.text = "Lv. Max"
+				if not VersionActivity1_2DungeonModel.instance:haveNextLevel(buildingData.elementId) then
+					txt.text = "Lv. Max"
 				end
 			else
-				var_24_1.text = "Lv. 0"
+				txt.text = "Lv. 0"
 			end
 		end
 	end
 end
 
-function var_0_0._onTrapLoaded(arg_25_0, arg_25_1)
-	local var_25_0 = arg_25_1:GetResource()
-	local var_25_1 = gohelper.findChild(arg_25_0._sceneGo, "elementRoot")
-	local var_25_2 = gohelper.clone(var_25_0, var_25_1)
-	local var_25_3 = VersionActivity1_2DungeonModel.instance:getTrapPutting()
-	local var_25_4 = lua_activity116_building.configDict[var_25_3]
-	local var_25_5 = gohelper.findChild(arg_25_0._sceneGo, "elementRoot/" .. var_25_4.elementId)
+function VersionActivity1_2DungeonMapScene:_onTrapLoaded(loader)
+	local tarPrefab = loader:GetResource()
+	local elementRoot = gohelper.findChild(self._sceneGo, "elementRoot")
+	local trapObj = gohelper.clone(tarPrefab, elementRoot)
+	local trapId = VersionActivity1_2DungeonModel.instance:getTrapPutting()
+	local config = lua_activity116_building.configDict[trapId]
+	local elementObj = gohelper.findChild(self._sceneGo, "elementRoot/" .. config.elementId)
 
-	if var_25_5 then
-		local var_25_6, var_25_7, var_25_8 = transformhelper.getLocalPos(var_25_5.transform)
+	if elementObj then
+		local x, y, z = transformhelper.getLocalPos(elementObj.transform)
 
-		transformhelper.setLocalPos(var_25_2.transform, var_25_6, var_25_7 - 1, -40)
+		transformhelper.setLocalPos(trapObj.transform, x, y - 1, -40)
 	end
 
-	arg_25_0._curTrap = var_25_2
+	self._curTrap = trapObj
 
-	if arg_25_0._lastTrapId ~= var_25_3 then
-		gohelper.onceAddComponent(var_25_2, typeof(UnityEngine.Animator)):Play("open")
+	if self._lastTrapId ~= trapId then
+		gohelper.onceAddComponent(trapObj, typeof(UnityEngine.Animator)):Play("open")
 	else
-		gohelper.onceAddComponent(var_25_2, typeof(UnityEngine.Animator)):Play("idle")
+		gohelper.onceAddComponent(trapObj, typeof(UnityEngine.Animator)):Play("idle")
 	end
 
-	arg_25_0._lastTrapId = var_25_3
+	self._lastTrapId = trapId
 end
 
-function var_0_0._loadSceneFinish(arg_26_0)
-	arg_26_0:_closeAllDailyEpisode()
-	var_0_0.super._loadSceneFinish(arg_26_0)
-	arg_26_0:showBridge()
-	arg_26_0:_showElementLightBg()
-	arg_26_0:_showTentState()
-	arg_26_0:_showTower()
-	arg_26_0:_hideCar()
-	arg_26_0:_showFocusBtnState()
+function VersionActivity1_2DungeonMapScene:_loadSceneFinish()
+	self:_closeAllDailyEpisode()
+	VersionActivity1_2DungeonMapScene.super._loadSceneFinish(self)
+	self:showBridge()
+	self:_showElementLightBg()
+	self:_showTentState()
+	self:_showTower()
+	self:_hideCar()
+	self:_showFocusBtnState()
 end
 
-function var_0_0._showTower(arg_27_0)
-	if not arg_27_0._curSelectconfig then
+function VersionActivity1_2DungeonMapScene:_showTower()
+	if not self._curSelectconfig then
 		return
 	end
 
-	local var_27_0 = arg_27_0._curSelectconfig.id == 1210113 or arg_27_0._curSelectconfig.id == 1210114
-	local var_27_1 = gohelper.findChild(arg_27_0._sceneGo, "Obj-Plant/all/diffuse/s08_hddt_hd_Obj_p")
-	local var_27_2 = gohelper.findChild(arg_27_0._sceneGo, "Obj-Plant/all/diffuse/s08_hddt_hd_zhedang_dt")
+	local showTower = self._curSelectconfig.id == 1210113 or self._curSelectconfig.id == 1210114
+	local tower1 = gohelper.findChild(self._sceneGo, "Obj-Plant/all/diffuse/s08_hddt_hd_Obj_p")
+	local tower2 = gohelper.findChild(self._sceneGo, "Obj-Plant/all/diffuse/s08_hddt_hd_zhedang_dt")
 
-	gohelper.setActive(var_27_1, var_27_0)
-	gohelper.setActive(var_27_2, var_27_0)
+	gohelper.setActive(tower1, showTower)
+	gohelper.setActive(tower2, showTower)
 end
 
-function var_0_0._hideCar(arg_28_0)
-	if not arg_28_0._curSelectconfig then
+function VersionActivity1_2DungeonMapScene:_hideCar()
+	if not self._curSelectconfig then
 		return
 	end
 
-	if arg_28_0._curSelectconfig.id == 1210106 then
-		local var_28_0 = gohelper.findChild(arg_28_0._sceneGo, "Obj-Plant/all/diffuse/s08_hddt_hd_Obj_u")
-		local var_28_1 = gohelper.findChild(arg_28_0._sceneGo, "Obj-Plant/all/diffuse/s08_hddt_hd_Obj_k")
-		local var_28_2 = DungeonModel.instance:hasPassLevelAndStory(1210106)
+	if self._curSelectconfig.id == 1210106 then
+		local car = gohelper.findChild(self._sceneGo, "Obj-Plant/all/diffuse/s08_hddt_hd_Obj_u")
+		local car1 = gohelper.findChild(self._sceneGo, "Obj-Plant/all/diffuse/s08_hddt_hd_Obj_k")
+		local pass = DungeonModel.instance:hasPassLevelAndStory(1210106)
 
-		gohelper.setActive(var_28_0, var_28_2)
-		gohelper.setActive(var_28_1, not var_28_2)
+		gohelper.setActive(car, pass)
+		gohelper.setActive(car1, not pass)
 	end
 end
 
-function var_0_0._showTentState(arg_29_0)
-	local var_29_0 = gohelper.findChild(arg_29_0._sceneGo, "Obj-Plant/all/diffuse/s08_hddt_hd_Obj_t")
+function VersionActivity1_2DungeonMapScene:_showTentState()
+	local tent = gohelper.findChild(self._sceneGo, "Obj-Plant/all/diffuse/s08_hddt_hd_Obj_t")
 
-	gohelper.setActive(var_29_0, not DungeonMapModel.instance:elementIsFinished(12101101))
+	gohelper.setActive(tent, not DungeonMapModel.instance:elementIsFinished(12101101))
 end
 
-function var_0_0._showElementLightBg(arg_30_0)
-	arg_30_0._lightBgDic = arg_30_0:getUserDataTb_()
+function VersionActivity1_2DungeonMapScene:_showElementLightBg()
+	self._lightBgDic = self:getUserDataTb_()
 
-	local var_30_0 = {}
+	local resList = {}
 
-	table.insert(var_30_0, "scenes/m_s14_hddt_hd02/prefab/s08_hddt_hd_gaoliang_a.prefab")
-	table.insert(var_30_0, "scenes/m_s14_hddt_hd02/prefab/s08_hddt_hd_gaoliang_b.prefab")
-	table.insert(var_30_0, "scenes/m_s14_hddt_hd02/prefab/s08_hddt_hd_gaoliang_c.prefab")
-	table.insert(var_30_0, "scenes/m_s14_hddt_hd02/prefab/s08_hddt_hd_gaoliang_d.prefab")
-	table.insert(var_30_0, "scenes/m_s14_hddt_hd02/prefab/s08_hddt_hd_gaoliang_e.prefab")
-	table.insert(var_30_0, "scenes/m_s14_hddt_hd02/prefab/s08_hddt_hd_gaoliang_f.prefab")
-	table.insert(var_30_0, "scenes/m_s14_hddt_hd02/prefab/s08_hddt_hd_gaoliang_g.prefab")
-	arg_30_0:com_loadListAsset(var_30_0, arg_30_0._onLightBgLoaded, arg_30_0._onLightBgLoadFinish)
+	table.insert(resList, "scenes/m_s14_hddt_hd02/prefab/s08_hddt_hd_gaoliang_a.prefab")
+	table.insert(resList, "scenes/m_s14_hddt_hd02/prefab/s08_hddt_hd_gaoliang_b.prefab")
+	table.insert(resList, "scenes/m_s14_hddt_hd02/prefab/s08_hddt_hd_gaoliang_c.prefab")
+	table.insert(resList, "scenes/m_s14_hddt_hd02/prefab/s08_hddt_hd_gaoliang_d.prefab")
+	table.insert(resList, "scenes/m_s14_hddt_hd02/prefab/s08_hddt_hd_gaoliang_e.prefab")
+	table.insert(resList, "scenes/m_s14_hddt_hd02/prefab/s08_hddt_hd_gaoliang_f.prefab")
+	table.insert(resList, "scenes/m_s14_hddt_hd02/prefab/s08_hddt_hd_gaoliang_g.prefab")
+	self:com_loadListAsset(resList, self._onLightBgLoaded, self._onLightBgLoadFinish)
 end
 
-function var_0_0._onLightBgLoaded(arg_31_0, arg_31_1)
-	local var_31_0 = arg_31_1:GetResource()
-	local var_31_1 = gohelper.findChild(arg_31_0._sceneGo, "elementRoot")
-	local var_31_2 = gohelper.clone(var_31_0, var_31_1)
+function VersionActivity1_2DungeonMapScene:_onLightBgLoaded(loader)
+	local tarPrefab = loader:GetResource()
+	local elementRoot = gohelper.findChild(self._sceneGo, "elementRoot")
+	local lightBg = gohelper.clone(tarPrefab, elementRoot)
 
-	gohelper.setActive(var_31_2, false)
-	transformhelper.setLocalPos(var_31_2.transform, 0, 0, -4)
+	gohelper.setActive(lightBg, false)
+	transformhelper.setLocalPos(lightBg.transform, 0, 0, -4)
 
-	arg_31_0._lightBgDic[arg_31_1.ResPath] = var_31_2
+	self._lightBgDic[loader.ResPath] = lightBg
 end
 
-function var_0_0._onLightBgLoadFinish(arg_32_0)
-	arg_32_0:_addMapLight()
+function VersionActivity1_2DungeonMapScene:_onLightBgLoadFinish()
+	self:_addMapLight()
 end
 
-function var_0_0._detectElementNeedSetPos(arg_33_0, arg_33_1)
-	local var_33_0 = VersionActivity1_2DungeonConfig.instance:getBuildingConfigsByElementID(arg_33_1)
+function VersionActivity1_2DungeonMapScene:_detectElementNeedSetPos(elementId)
+	local configDic = VersionActivity1_2DungeonConfig.instance:getBuildingConfigsByElementID(elementId)
 
-	if var_33_0 then
-		for iter_33_0, iter_33_1 in pairs(var_33_0) do
-			if not string.nilorempty(iter_33_1.lightBgUrl) and arg_33_0._lightBgDic[iter_33_1.lightBgUrl] then
-				local var_33_1 = string.splitToNumber(iter_33_1.filterEpisode, "#")
+	if configDic then
+		for k, v in pairs(configDic) do
+			if not string.nilorempty(v.lightBgUrl) and self._lightBgDic[v.lightBgUrl] then
+				local filterEpisode = string.splitToNumber(v.filterEpisode, "#")
 
-				for iter_33_2, iter_33_3 in ipairs(var_33_1) do
-					if iter_33_3 == arg_33_0._curSelectconfig.id then
+				for index, value in ipairs(filterEpisode) do
+					if value == self._curSelectconfig.id then
 						return
 					end
 				end
 
-				gohelper.setActive(arg_33_0._lightBgDic[iter_33_1.lightBgUrl], true)
+				gohelper.setActive(self._lightBgDic[v.lightBgUrl], true)
 
-				local var_33_2 = gohelper.findChild(arg_33_0._sceneGo, "elementRoot/" .. arg_33_1)
+				local elementObj = gohelper.findChild(self._sceneGo, "elementRoot/" .. elementId)
 
-				if var_33_2 then
-					local var_33_3, var_33_4, var_33_5 = transformhelper.getLocalPos(var_33_2.transform)
+				if elementObj then
+					local x, y, z = transformhelper.getLocalPos(elementObj.transform)
 
-					transformhelper.setLocalPos(var_33_2.transform, var_33_3, var_33_4, -20)
+					transformhelper.setLocalPos(elementObj.transform, x, y, -20)
 				end
 
 				return
@@ -469,88 +476,88 @@ function var_0_0._detectElementNeedSetPos(arg_33_0, arg_33_1)
 	end
 end
 
-function var_0_0._closeAllDailyEpisode(arg_34_0)
-	if arg_34_0._dailyEpisodeItems then
-		for iter_34_0, iter_34_1 in ipairs(arg_34_0._dailyEpisodeItems) do
-			arg_34_0:destroySubView(iter_34_1)
+function VersionActivity1_2DungeonMapScene:_closeAllDailyEpisode()
+	if self._dailyEpisodeItems then
+		for i, v in ipairs(self._dailyEpisodeItems) do
+			self:destroySubView(v)
 		end
 
-		arg_34_0._dailyEpisodeItems = {}
+		self._dailyEpisodeItems = {}
 	end
 end
 
-function var_0_0.showBridge(arg_35_0)
-	local var_35_0 = gohelper.findChild(arg_35_0._sceneGo, "Obj-Plant/all/diffuse/s08_hddt_hd_Obj_o")
+function VersionActivity1_2DungeonMapScene:showBridge()
+	local bridge = gohelper.findChild(self._sceneGo, "Obj-Plant/all/diffuse/s08_hddt_hd_Obj_o")
 
-	gohelper.setActive(var_35_0, DungeonMapModel.instance:elementIsFinished(12101011))
+	gohelper.setActive(bridge, DungeonMapModel.instance:elementIsFinished(12101011))
 
-	local var_35_1 = gohelper.findChild(arg_35_0._sceneGo, "Obj-Plant/all/diffuse/s08_hddt_hd_Obj_f")
+	local bridge2 = gohelper.findChild(self._sceneGo, "Obj-Plant/all/diffuse/s08_hddt_hd_Obj_f")
 
-	gohelper.setActive(var_35_1, true)
+	gohelper.setActive(bridge2, true)
 end
 
-function var_0_0._OnRemoveElement(arg_36_0, arg_36_1)
-	if arg_36_1 == 12101011 then
-		arg_36_0:showBridge()
+function VersionActivity1_2DungeonMapScene:_OnRemoveElement(elementId)
+	if elementId == 12101011 then
+		self:showBridge()
 	end
 
-	if arg_36_0._dailyEpisodeItems then
-		for iter_36_0, iter_36_1 in ipairs(arg_36_0._dailyEpisodeItems) do
-			local var_36_0 = iter_36_1._elementConfig
+	if self._dailyEpisodeItems then
+		for i, v in ipairs(self._dailyEpisodeItems) do
+			local elementConfig = v._elementConfig
 
-			if var_36_0.type == DungeonEnum.ElementType.Activity1_2Fight and var_36_0.id == arg_36_1 then
-				local var_36_1 = table.remove(arg_36_0._dailyEpisodeItems, iter_36_0)
+			if elementConfig.type == DungeonEnum.ElementType.Activity1_2Fight and elementConfig.id == elementId then
+				local subView = table.remove(self._dailyEpisodeItems, i)
 
 				break
 			end
 		end
 	end
 
-	arg_36_0:_showDailyBtn()
+	self:_showDailyBtn()
 end
 
-function var_0_0.getInteractiveItem(arg_37_0)
-	return arg_37_0.viewContainer.mapView:openMapInteractiveItem()
+function VersionActivity1_2DungeonMapScene:getInteractiveItem()
+	return self.viewContainer.mapView:openMapInteractiveItem()
 end
 
-function var_0_0.createInteractiveItem(arg_38_0)
-	arg_38_0._uiGo = gohelper.clone(arg_38_0._itemPrefab, arg_38_0._sceneCanvasGo)
-	arg_38_0._interactiveItem = MonoHelper.addLuaComOnceToGo(arg_38_0._uiGo, DungeonMapInteractiveItem)
+function VersionActivity1_2DungeonMapScene:createInteractiveItem()
+	self._uiGo = gohelper.clone(self._itemPrefab, self._sceneCanvasGo)
+	self._interactiveItem = MonoHelper.addLuaComOnceToGo(self._uiGo, DungeonMapInteractiveItem)
 
-	arg_38_0._interactiveItem:setBtnClosePosZ(-5)
-	gohelper.setActive(arg_38_0._uiGo, false)
+	self._interactiveItem:setBtnClosePosZ(-5)
+	gohelper.setActive(self._uiGo, false)
 end
 
-function var_0_0.buildLoadRes(arg_39_0, arg_39_1, arg_39_2)
-	table.insert(arg_39_1, "ui/viewres/dungeon/chaptermap/chaptermapscenecanvas.prefab")
-	table.insert(arg_39_1, "ui/viewres/dungeon/chaptermap/dungeonmapinteractiveitem.prefab")
+function VersionActivity1_2DungeonMapScene:buildLoadRes(allResPath, mapCfg)
+	table.insert(allResPath, "ui/viewres/dungeon/chaptermap/chaptermapscenecanvas.prefab")
+	table.insert(allResPath, "ui/viewres/dungeon/chaptermap/dungeonmapinteractiveitem.prefab")
 
-	local var_39_0 = ResUrl.getDungeonMapRes(arg_39_2.res)
+	local mapRes = ResUrl.getDungeonMapRes(mapCfg.res)
 
-	table.insert(arg_39_1, var_39_0)
-	table.insert(arg_39_1, "scenes/m_s14_hddt_hd02/scene_prefab/activity1_2dungeon_map_audio.prefab")
-	table.insert(arg_39_1, "scenes/m_s08_hddt/scene_prefab/m_s08_hddt_light.prefab")
-	table.insert(arg_39_1, "scenes/m_s14_hddt_hd02/prefab/s08_hddt_hd_fog.prefab")
+	table.insert(allResPath, mapRes)
+	table.insert(allResPath, "scenes/m_s14_hddt_hd02/scene_prefab/activity1_2dungeon_map_audio.prefab")
+	table.insert(allResPath, "scenes/m_s08_hddt/scene_prefab/m_s08_hddt_light.prefab")
+	table.insert(allResPath, "scenes/m_s14_hddt_hd02/prefab/s08_hddt_hd_fog.prefab")
 end
 
-function var_0_0._onClickBtn4(arg_40_0)
-	if arg_40_0._focusing then
+function VersionActivity1_2DungeonMapScene:_onClickBtn4()
+	if self._focusing then
 		GameFacade.showToast(ToastEnum.Activity1_2FocusBtnClick)
 
 		return
 	end
 
-	arg_40_0._focusing = true
+	self._focusing = true
 
-	gohelper.setActive(arg_40_0._focusBtnStateOn, true)
-	gohelper.setActive(arg_40_0._focusBtnStateOff, false)
+	gohelper.setActive(self._focusBtnStateOn, true)
+	gohelper.setActive(self._focusBtnStateOff, false)
 	VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.focusMap, Vector3(-85, 25, 0))
 end
 
-function var_0_0.onClose(arg_41_0)
-	arg_41_0._btn4:RemoveClickListener()
-	TaskDispatcher.cancelTask(arg_41_0._onRemoveTrapAniDone, arg_41_0)
-	var_0_0.super.onClose(arg_41_0)
+function VersionActivity1_2DungeonMapScene:onClose()
+	self._btn4:RemoveClickListener()
+	TaskDispatcher.cancelTask(self._onRemoveTrapAniDone, self)
+	VersionActivity1_2DungeonMapScene.super.onClose(self)
 end
 
-return var_0_0
+return VersionActivity1_2DungeonMapScene

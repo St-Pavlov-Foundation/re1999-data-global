@@ -1,33 +1,35 @@
-﻿module("modules.logic.fight.system.work.FightWorkDamageExtra", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkDamageExtra.lua
 
-local var_0_0 = class("FightWorkDamageExtra", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkDamageExtra", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0._flow = FlowParallel.New()
+local FightWorkDamageExtra = class("FightWorkDamageExtra", FightEffectBase)
 
-	arg_1_0._flow:addWork(FunctionWork.New(arg_1_0._resignDone, arg_1_0))
-	arg_1_0._flow:addWork(FightWork2Work.New(FightWorkEffectDamage, arg_1_0.fightStepData, arg_1_0.actEffectData))
-	arg_1_0._flow:addWork(FunctionWork.New(arg_1_0._resignDone, arg_1_0))
-	arg_1_0._flow:addWork(FightWork2Work.New(FightBuffTriggerEffect, arg_1_0.fightStepData, arg_1_0.actEffectData))
-	arg_1_0._flow:registerDoneListener(arg_1_0._onFlowDone, arg_1_0)
-	arg_1_0._flow:start()
+function FightWorkDamageExtra:onStart()
+	self._flow = FlowParallel.New()
+
+	self._flow:addWork(FunctionWork.New(self._resignDone, self))
+	self._flow:addWork(FightWork2Work.New(FightWorkEffectDamage, self.fightStepData, self.actEffectData))
+	self._flow:addWork(FunctionWork.New(self._resignDone, self))
+	self._flow:addWork(FightWork2Work.New(FightBuffTriggerEffect, self.fightStepData, self.actEffectData))
+	self._flow:registerDoneListener(self._onFlowDone, self)
+	self._flow:start()
 end
 
-function var_0_0._resignDone(arg_2_0)
-	arg_2_0.actEffectData:revertDone()
+function FightWorkDamageExtra:_resignDone()
+	self.actEffectData:revertDone()
 end
 
-function var_0_0._onFlowDone(arg_3_0)
-	arg_3_0:onDone(true)
+function FightWorkDamageExtra:_onFlowDone()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	if arg_4_0._flow then
-		arg_4_0._flow:unregisterDoneListener(arg_4_0._onFlowDone, arg_4_0)
-		arg_4_0._flow:stop()
+function FightWorkDamageExtra:clearWork()
+	if self._flow then
+		self._flow:unregisterDoneListener(self._onFlowDone, self)
+		self._flow:stop()
 
-		arg_4_0._flow = nil
+		self._flow = nil
 	end
 end
 
-return var_0_0
+return FightWorkDamageExtra

@@ -44,7 +44,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 410002,
@@ -91,7 +92,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 410003,
@@ -138,7 +140,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 410004,
@@ -185,7 +188,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 410005,
@@ -232,7 +236,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 410006,
@@ -279,7 +284,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 610001,
@@ -326,7 +332,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 610002,
@@ -373,7 +380,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 610003,
@@ -420,7 +428,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 610004,
@@ -467,7 +476,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 610006,
@@ -514,7 +524,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 710001,
@@ -561,7 +572,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 710002,
@@ -608,7 +620,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 710003,
@@ -655,7 +668,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 410101,
@@ -702,7 +716,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 410102,
@@ -749,7 +764,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 410103,
@@ -796,7 +812,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 410104,
@@ -843,7 +860,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 410105,
@@ -890,7 +908,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 411001,
@@ -937,7 +956,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 411002,
@@ -984,7 +1004,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 411003,
@@ -1031,7 +1052,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 411004,
@@ -1078,7 +1100,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 411005,
@@ -1125,7 +1148,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 411006,
@@ -1172,7 +1196,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 411007,
@@ -1219,7 +1244,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811314,
@@ -1266,7 +1292,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811315,
@@ -1313,7 +1340,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811304,
@@ -1360,7 +1388,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811313,
@@ -1407,7 +1436,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811316,
@@ -1454,7 +1484,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811317,
@@ -1501,7 +1532,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811318,
@@ -1548,7 +1580,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811319,
@@ -1595,7 +1628,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811320,
@@ -1642,7 +1676,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811321,
@@ -1689,7 +1724,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811322,
@@ -1736,7 +1772,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811323,
@@ -1783,7 +1820,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811324,
@@ -1830,7 +1868,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811325,
@@ -1877,7 +1916,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811327,
@@ -1924,7 +1964,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 490001,
@@ -1971,7 +2012,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811348,
@@ -2018,7 +2060,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811349,
@@ -2065,7 +2108,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811344,
@@ -2112,7 +2156,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811345,
@@ -2159,7 +2204,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811354,
@@ -2206,7 +2252,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811355,
@@ -2253,7 +2300,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811346,
@@ -2300,7 +2348,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811347,
@@ -2347,7 +2396,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811352,
@@ -2394,7 +2444,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811353,
@@ -2441,7 +2492,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811350,
@@ -2488,7 +2540,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811351,
@@ -2535,7 +2588,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811356,
@@ -2582,7 +2636,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811357,
@@ -2629,7 +2684,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811358,
@@ -2676,7 +2732,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811359,
@@ -2723,7 +2780,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811328,
@@ -2770,7 +2828,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811329,
@@ -2817,7 +2876,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811330,
@@ -2864,7 +2924,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811331,
@@ -2911,7 +2972,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811332,
@@ -2958,7 +3020,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811333,
@@ -3005,7 +3068,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811334,
@@ -3052,7 +3116,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811335,
@@ -3099,7 +3164,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811336,
@@ -3146,7 +3212,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811337,
@@ -3193,7 +3260,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811338,
@@ -3240,7 +3308,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811339,
@@ -3287,7 +3356,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811340,
@@ -3334,7 +3404,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811341,
@@ -3381,7 +3452,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811342,
@@ -3428,7 +3500,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811343,
@@ -3475,7 +3548,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811360,
@@ -3522,7 +3596,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811361,
@@ -3569,7 +3644,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811362,
@@ -3616,7 +3692,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811363,
@@ -3663,7 +3740,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811364,
@@ -3710,7 +3788,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811365,
@@ -3757,7 +3836,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811366,
@@ -3804,7 +3884,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811367,
@@ -3851,7 +3932,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811368,
@@ -3898,7 +3980,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811369,
@@ -3945,7 +4028,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811370,
@@ -3992,7 +4076,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811371,
@@ -4039,7 +4124,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811372,
@@ -4086,7 +4172,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820001,
@@ -4133,7 +4220,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820002,
@@ -4180,7 +4268,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 490002,
@@ -4227,7 +4316,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820003,
@@ -4274,7 +4364,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820004,
@@ -4321,7 +4412,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811373,
@@ -4368,7 +4460,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811374,
@@ -4415,7 +4508,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811375,
@@ -4462,7 +4556,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811376,
@@ -4509,7 +4604,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811377,
@@ -4556,7 +4652,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811378,
@@ -4603,7 +4700,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811379,
@@ -4650,7 +4748,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811380,
@@ -4697,7 +4796,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811381,
@@ -4744,7 +4844,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811382,
@@ -4791,7 +4892,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811383,
@@ -4838,7 +4940,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811384,
@@ -4885,7 +4988,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811385,
@@ -4932,7 +5036,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811386,
@@ -4979,7 +5084,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811387,
@@ -5026,7 +5132,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811388,
@@ -5073,7 +5180,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811389,
@@ -5120,7 +5228,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811390,
@@ -5167,7 +5276,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820005,
@@ -5214,7 +5324,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820006,
@@ -5261,7 +5372,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811391,
@@ -5308,7 +5420,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811392,
@@ -5355,7 +5468,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811393,
@@ -5402,7 +5516,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811394,
@@ -5449,7 +5564,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811395,
@@ -5496,7 +5612,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811396,
@@ -5543,7 +5660,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811397,
@@ -5590,7 +5708,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811398,
@@ -5637,7 +5756,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811399,
@@ -5684,7 +5804,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811400,
@@ -5731,7 +5852,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811401,
@@ -5778,7 +5900,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811402,
@@ -5825,7 +5948,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811403,
@@ -5872,7 +5996,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811404,
@@ -5919,7 +6044,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820008,
@@ -5966,7 +6092,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820007,
@@ -6013,7 +6140,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820009,
@@ -6060,7 +6188,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811405,
@@ -6107,7 +6236,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811406,
@@ -6154,7 +6284,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811407,
@@ -6201,7 +6332,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811408,
@@ -6248,7 +6380,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811409,
@@ -6295,7 +6428,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811410,
@@ -6342,7 +6476,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811411,
@@ -6389,7 +6524,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811412,
@@ -6436,7 +6572,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811413,
@@ -6483,7 +6620,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811414,
@@ -6530,7 +6668,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811415,
@@ -6577,7 +6716,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811416,
@@ -6624,7 +6764,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811417,
@@ -6671,7 +6812,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811418,
@@ -6718,7 +6860,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811419,
@@ -6765,7 +6908,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811420,
@@ -6812,7 +6956,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811421,
@@ -6859,7 +7004,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811422,
@@ -6906,7 +7052,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811423,
@@ -6953,7 +7100,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811424,
@@ -7000,7 +7148,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811425,
@@ -7047,7 +7196,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811426,
@@ -7094,7 +7244,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811427,
@@ -7141,7 +7292,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811428,
@@ -7188,7 +7340,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811429,
@@ -7235,7 +7388,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811430,
@@ -7282,7 +7436,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811431,
@@ -7329,7 +7484,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811432,
@@ -7376,7 +7532,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811433,
@@ -7423,7 +7580,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811434,
@@ -7470,7 +7628,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811435,
@@ -7517,7 +7676,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820010,
@@ -7564,7 +7724,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820011,
@@ -7611,7 +7772,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811436,
@@ -7658,7 +7820,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811437,
@@ -7705,7 +7868,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811438,
@@ -7752,7 +7916,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811439,
@@ -7799,7 +7964,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811440,
@@ -7846,7 +8012,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811441,
@@ -7893,7 +8060,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811442,
@@ -7940,7 +8108,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811443,
@@ -7987,7 +8156,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811444,
@@ -8034,7 +8204,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811445,
@@ -8081,7 +8252,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811446,
@@ -8128,7 +8300,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811447,
@@ -8175,7 +8348,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820012,
@@ -8222,7 +8396,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820013,
@@ -8269,7 +8444,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820014,
@@ -8316,7 +8492,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 490003,
@@ -8363,7 +8540,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811449,
@@ -8410,7 +8588,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811450,
@@ -8457,7 +8636,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811451,
@@ -8504,7 +8684,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811452,
@@ -8551,7 +8732,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811453,
@@ -8598,7 +8780,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811454,
@@ -8645,7 +8828,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811455,
@@ -8692,7 +8876,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811456,
@@ -8739,7 +8924,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811457,
@@ -8786,7 +8972,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811458,
@@ -8833,7 +9020,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811459,
@@ -8880,7 +9068,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811460,
@@ -8927,7 +9116,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811461,
@@ -8974,7 +9164,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811462,
@@ -9021,7 +9212,8 @@
     "showLinkageTag": true,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820015,
@@ -9068,7 +9260,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820016,
@@ -9115,7 +9308,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820017,
@@ -9162,7 +9356,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820018,
@@ -9209,7 +9404,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820019,
@@ -9256,7 +9452,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820020,
@@ -9303,7 +9500,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811463,
@@ -9350,7 +9548,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811464,
@@ -9397,7 +9596,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811465,
@@ -9444,7 +9644,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811466,
@@ -9491,7 +9692,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811467,
@@ -9538,7 +9740,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811468,
@@ -9585,7 +9788,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811469,
@@ -9632,7 +9836,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811470,
@@ -9679,7 +9884,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811471,
@@ -9726,7 +9932,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811472,
@@ -9773,7 +9980,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811473,
@@ -9820,7 +10028,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811474,
@@ -9867,7 +10076,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811475,
@@ -9914,7 +10124,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811476,
@@ -9961,7 +10172,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811477,
@@ -10008,7 +10220,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811478,
@@ -10055,7 +10268,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811479,
@@ -10102,7 +10316,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811480,
@@ -10149,7 +10364,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811481,
@@ -10196,7 +10412,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811482,
@@ -10243,7 +10460,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811483,
@@ -10290,7 +10508,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811484,
@@ -10337,7 +10556,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811485,
@@ -10384,7 +10604,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811486,
@@ -10431,7 +10652,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811487,
@@ -10478,7 +10700,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811488,
@@ -10525,7 +10748,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811489,
@@ -10572,7 +10796,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811490,
@@ -10619,7 +10844,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811491,
@@ -10666,7 +10892,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811492,
@@ -10713,7 +10940,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811493,
@@ -10760,7 +10988,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811494,
@@ -10807,7 +11036,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811495,
@@ -10854,7 +11084,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811496,
@@ -10901,7 +11132,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811497,
@@ -10948,7 +11180,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811498,
@@ -10995,7 +11228,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811499,
@@ -11042,7 +11276,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820021,
@@ -11056,8 +11291,8 @@
     "product": "",
     "offTag": "",
     "isOnline": true,
-    "onlineTime": "2025-09-19 05:00:00",
-    "offlineTime": "2025-10-30 04:59:59",
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
     "price": 14.99,
     "currencyCode": "USD",
     "originalCost": 0.0,
@@ -11089,7 +11324,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820022,
@@ -11103,8 +11339,8 @@
     "product": "",
     "offTag": "",
     "isOnline": true,
-    "onlineTime": "2025-09-19 05:00:00",
-    "offlineTime": "2025-10-30 04:59:59",
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
     "price": 9.99,
     "currencyCode": "USD",
     "originalCost": 0.0,
@@ -11136,7 +11372,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820023,
@@ -11150,8 +11387,8 @@
     "product": "",
     "offTag": "",
     "isOnline": true,
-    "onlineTime": "2025-09-19 05:00:00",
-    "offlineTime": "2025-10-30 04:59:59",
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
     "price": 9.99,
     "currencyCode": "USD",
     "originalCost": 0.0,
@@ -11183,7 +11420,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820024,
@@ -11197,8 +11435,8 @@
     "product": "",
     "offTag": "",
     "isOnline": true,
-    "onlineTime": "2025-09-19 05:00:00",
-    "offlineTime": "2025-10-30 04:59:59",
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
     "price": 6.99,
     "currencyCode": "USD",
     "originalCost": 0.0,
@@ -11230,7 +11468,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820025,
@@ -11244,8 +11483,8 @@
     "product": "",
     "offTag": "",
     "isOnline": true,
-    "onlineTime": "2025-09-19 05:00:00",
-    "offlineTime": "2025-10-30 04:59:59",
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
     "price": 9.99,
     "currencyCode": "USD",
     "originalCost": 0.0,
@@ -11277,7 +11516,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820026,
@@ -11291,8 +11531,8 @@
     "product": "",
     "offTag": "",
     "isOnline": true,
-    "onlineTime": "2025-09-19 05:00:00",
-    "offlineTime": "2025-10-30 04:59:59",
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
     "price": 6.99,
     "currencyCode": "USD",
     "originalCost": 0.0,
@@ -11324,7 +11564,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811501,
@@ -11371,7 +11612,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811502,
@@ -11418,7 +11660,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811503,
@@ -11465,7 +11708,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811504,
@@ -11512,7 +11756,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811505,
@@ -11559,7 +11804,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811506,
@@ -11606,7 +11852,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811507,
@@ -11653,7 +11900,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811508,
@@ -11700,7 +11948,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811509,
@@ -11747,7 +11996,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811510,
@@ -11794,7 +12044,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811511,
@@ -11841,7 +12092,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811512,
@@ -11888,7 +12140,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811513,
@@ -11935,7 +12188,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811514,
@@ -11982,7 +12236,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811515,
@@ -12029,7 +12284,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811516,
@@ -12076,7 +12332,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811517,
@@ -12123,7 +12380,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811518,
@@ -12170,7 +12428,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811519,
@@ -12217,7 +12476,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811520,
@@ -12264,7 +12524,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811521,
@@ -12311,7 +12572,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811522,
@@ -12358,7 +12620,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811523,
@@ -12405,7 +12668,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811524,
@@ -12452,7 +12716,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811525,
@@ -12499,7 +12764,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811526,
@@ -12546,7 +12812,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811527,
@@ -12593,7 +12860,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811528,
@@ -12640,7 +12908,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811530,
@@ -12687,7 +12956,8 @@
     "showLinkageTag": true,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820027,
@@ -12701,8 +12971,8 @@
     "product": "",
     "offTag": "",
     "isOnline": true,
-    "onlineTime": "2025-09-19 05:00:00",
-    "offlineTime": "2025-10-30 04:59:59",
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
     "price": 9.99,
     "currencyCode": "USD",
     "originalCost": 0.0,
@@ -12734,7 +13004,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820028,
@@ -12748,8 +13019,8 @@
     "product": "",
     "offTag": "",
     "isOnline": true,
-    "onlineTime": "2025-09-19 05:00:00",
-    "offlineTime": "2025-10-30 04:59:59",
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
     "price": 6.99,
     "currencyCode": "USD",
     "originalCost": 0.0,
@@ -12781,7 +13052,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820030,
@@ -12828,7 +13100,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820029,
@@ -12875,7 +13148,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811531,
@@ -12922,7 +13196,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811532,
@@ -12969,7 +13244,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811533,
@@ -13016,7 +13292,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811534,
@@ -13063,7 +13340,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811535,
@@ -13110,7 +13388,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811536,
@@ -13157,7 +13436,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811537,
@@ -13204,7 +13484,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811538,
@@ -13251,7 +13532,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811539,
@@ -13298,7 +13580,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811540,
@@ -13345,7 +13628,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811541,
@@ -13392,7 +13676,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811542,
@@ -13439,7 +13724,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811543,
@@ -13486,7 +13772,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811544,
@@ -13533,7 +13820,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811545,
@@ -13580,7 +13868,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811546,
@@ -13627,7 +13916,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811547,
@@ -13674,7 +13964,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811548,
@@ -13721,7 +14012,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811549,
@@ -13768,7 +14060,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811550,
@@ -13815,7 +14108,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811551,
@@ -13862,7 +14156,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811552,
@@ -13909,7 +14204,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811553,
@@ -13956,7 +14252,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 412001,
@@ -14003,7 +14300,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 412002,
@@ -14050,7 +14348,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 412003,
@@ -14097,7 +14396,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 412004,
@@ -14144,7 +14444,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 412005,
@@ -14191,7 +14492,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 412006,
@@ -14238,7 +14540,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 412007,
@@ -14285,7 +14588,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 412008,
@@ -14332,7 +14636,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 412009,
@@ -14379,7 +14684,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 412010,
@@ -14426,7 +14732,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 412011,
@@ -14473,7 +14780,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 490004,
@@ -14520,7 +14828,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820031,
@@ -14534,8 +14843,8 @@
     "product": "",
     "offTag": "",
     "isOnline": true,
-    "onlineTime": "2025-04-24 05:00:00",
-    "offlineTime": "2025-05-29 04:59:59",
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
     "price": 14.99,
     "currencyCode": "USD",
     "originalCost": 0.0,
@@ -14567,7 +14876,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820033,
@@ -14581,8 +14891,8 @@
     "product": "",
     "offTag": "",
     "isOnline": true,
-    "onlineTime": "2025-04-24 05:00:00",
-    "offlineTime": "2025-05-29 04:59:59",
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
     "price": 9.99,
     "currencyCode": "USD",
     "originalCost": 0.0,
@@ -14614,7 +14924,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820032,
@@ -14628,8 +14939,8 @@
     "product": "",
     "offTag": "",
     "isOnline": true,
-    "onlineTime": "2025-04-24 05:00:00",
-    "offlineTime": "2025-05-29 04:59:59",
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
     "price": 9.99,
     "currencyCode": "USD",
     "originalCost": 0.0,
@@ -14661,7 +14972,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820034,
@@ -14675,8 +14987,8 @@
     "product": "",
     "offTag": "",
     "isOnline": true,
-    "onlineTime": "2025-05-29 05:00:00",
-    "offlineTime": "2025-07-03 04:59:59",
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
     "price": 9.99,
     "currencyCode": "USD",
     "originalCost": 0.0,
@@ -14708,7 +15020,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820035,
@@ -14722,8 +15035,8 @@
     "product": "",
     "offTag": "",
     "isOnline": true,
-    "onlineTime": "2025-05-29 05:00:00",
-    "offlineTime": "2025-07-03 04:59:59",
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
     "price": 6.99,
     "currencyCode": "USD",
     "originalCost": 0.0,
@@ -14755,7 +15068,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811554,
@@ -14802,7 +15116,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811555,
@@ -14849,7 +15164,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811556,
@@ -14896,7 +15212,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811557,
@@ -14943,7 +15260,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811558,
@@ -14990,7 +15308,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811559,
@@ -15037,7 +15356,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811560,
@@ -15084,7 +15404,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811561,
@@ -15131,7 +15452,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811562,
@@ -15178,7 +15500,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811563,
@@ -15225,7 +15548,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811564,
@@ -15272,7 +15596,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811565,
@@ -15319,7 +15644,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811566,
@@ -15366,7 +15692,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820036,
@@ -15380,8 +15707,8 @@
     "product": "",
     "offTag": "",
     "isOnline": true,
-    "onlineTime": "2025-07-03 05:00:00",
-    "offlineTime": "2025-08-07 04:59:59",
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
     "price": 9.99,
     "currencyCode": "USD",
     "originalCost": 0.0,
@@ -15413,7 +15740,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820037,
@@ -15427,8 +15755,8 @@
     "product": "",
     "offTag": "",
     "isOnline": true,
-    "onlineTime": "2025-07-03 05:00:00",
-    "offlineTime": "2025-08-07 04:59:59",
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
     "price": 6.99,
     "currencyCode": "USD",
     "originalCost": 0.0,
@@ -15460,7 +15788,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811567,
@@ -15507,7 +15836,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811568,
@@ -15554,7 +15884,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811569,
@@ -15601,7 +15932,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811570,
@@ -15648,7 +15980,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811571,
@@ -15695,7 +16028,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811572,
@@ -15742,7 +16076,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811573,
@@ -15789,7 +16124,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811574,
@@ -15836,7 +16172,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811575,
@@ -15883,7 +16220,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811576,
@@ -15930,7 +16268,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811577,
@@ -15977,7 +16316,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811578,
@@ -16024,7 +16364,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811579,
@@ -16071,7 +16412,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811580,
@@ -16118,7 +16460,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811581,
@@ -16165,7 +16508,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811582,
@@ -16212,7 +16556,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 830511101,
@@ -16259,7 +16604,8 @@
     "showLinkageTag": false,
     "taskid": 83056301,
     "showLogoTag": true,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 830511102,
@@ -16306,7 +16652,8 @@
     "showLinkageTag": false,
     "taskid": 83056302,
     "showLogoTag": true,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 830511103,
@@ -16353,7 +16700,8 @@
     "showLinkageTag": false,
     "taskid": 83056303,
     "showLogoTag": true,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 830511104,
@@ -16400,7 +16748,8 @@
     "showLinkageTag": false,
     "taskid": 83056304,
     "showLogoTag": true,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 8130516,
@@ -16447,7 +16796,8 @@
     "showLinkageTag": false,
     "taskid": 83056305,
     "showLogoTag": true,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 8130501,
@@ -16494,7 +16844,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 8130502,
@@ -16541,7 +16892,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 8130503,
@@ -16588,7 +16940,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 8130504,
@@ -16635,7 +16988,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 8130505,
@@ -16682,7 +17036,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 8130506,
@@ -16729,7 +17084,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 8130507,
@@ -16776,7 +17132,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": true,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 8130508,
@@ -16823,7 +17180,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": true,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 8130509,
@@ -16870,7 +17228,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": true,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 8130510,
@@ -16917,7 +17276,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": true,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 8130511,
@@ -16964,7 +17324,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 8130512,
@@ -17011,7 +17372,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 8130513,
@@ -17058,7 +17420,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 8130514,
@@ -17105,7 +17468,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": true,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 8130515,
@@ -17152,7 +17516,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": true,
-    "overviewJumpId": "100130504"
+    "overviewJumpId": "100130504",
+    "isShowTurnback": false
   },
   {
     "id": 820039,
@@ -17199,7 +17564,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820038,
@@ -17246,7 +17612,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820040,
@@ -17293,7 +17660,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820041,
@@ -17340,7 +17708,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820042,
@@ -17387,7 +17756,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820043,
@@ -17434,7 +17804,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 820044,
@@ -17481,7 +17852,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811588,
@@ -17528,7 +17900,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811589,
@@ -17575,7 +17948,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811590,
@@ -17622,7 +17996,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811591,
@@ -17669,7 +18044,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811592,
@@ -17716,7 +18092,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811593,
@@ -17763,7 +18140,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811594,
@@ -17810,7 +18188,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811595,
@@ -17857,7 +18236,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811596,
@@ -17904,7 +18284,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811597,
@@ -17951,7 +18332,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811587,
@@ -17998,7 +18380,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811599,
@@ -18045,7 +18428,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811598,
@@ -18092,7 +18476,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811585,
@@ -18139,7 +18524,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811584,
@@ -18186,7 +18572,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811586,
@@ -18233,7 +18620,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811583,
@@ -18280,7 +18668,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811600,
@@ -18327,7 +18716,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811601,
@@ -18374,7 +18764,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811602,
@@ -18421,7 +18812,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 811603,
@@ -18468,7 +18860,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 830001,
@@ -18515,7 +18908,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 830002,
@@ -18562,7 +18956,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 830003,
@@ -18609,7 +19004,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 830004,
@@ -18656,7 +19052,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 830005,
@@ -18703,7 +19100,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 830006,
@@ -18750,7 +19148,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 830007,
@@ -18797,7 +19196,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 830008,
@@ -18844,7 +19244,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 830009,
@@ -18891,7 +19292,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 830010,
@@ -18938,7 +19340,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 830011,
@@ -18985,7 +19388,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 830012,
@@ -19032,7 +19436,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 830013,
@@ -19079,7 +19484,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 830014,
@@ -19126,7 +19532,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 830015,
@@ -19173,7 +19580,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 831001,
@@ -19220,7 +19628,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 831002,
@@ -19267,7 +19676,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 831003,
@@ -19314,7 +19724,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 831004,
@@ -19361,7 +19772,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 831005,
@@ -19408,7 +19820,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 831006,
@@ -19455,7 +19868,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 831007,
@@ -19502,7 +19916,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 831008,
@@ -19549,7 +19964,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 831009,
@@ -19596,7 +20012,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 831010,
@@ -19643,7 +20060,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 831011,
@@ -19690,7 +20108,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 831012,
@@ -19737,7 +20156,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 831013,
@@ -19784,7 +20204,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 831014,
@@ -19831,7 +20252,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 831015,
@@ -19878,7 +20300,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 831016,
@@ -19925,7 +20348,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 831017,
@@ -19972,7 +20396,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 831018,
@@ -20019,7 +20444,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 831019,
@@ -20066,7 +20492,8 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
   },
   {
     "id": 831020,
@@ -20113,6 +20540,1207 @@
     "showLinkageTag": false,
     "taskid": 0,
     "showLogoTag": false,
-    "overviewJumpId": ""
+    "overviewJumpId": "",
+    "isShowTurnback": false
+  },
+  {
+    "id": 832001,
+    "belongStoreId": 510,
+    "type": 1,
+    "order": 2,
+    "name": "language_10100633",
+    "nameEn": "The Last Fluttering Beat",
+    "desc": "伊索尔德",
+    "bigImg": "",
+    "product": "",
+    "offTag": "",
+    "isOnline": true,
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
+    "price": 9.99,
+    "currencyCode": "USD",
+    "originalCost": 0.0,
+    "pricezh": 68.0,
+    "currencyCodezh": "CNY",
+    "originalCostzh": 0.0,
+    "pricejp": 1680.0,
+    "currencyCodejp": "JPY",
+    "originalCostjp": 0.0,
+    "pricekr": 14000.0,
+    "currencyCodekr": "KRW",
+    "originalCostkr": 0.0,
+    "pricetw": 330.0,
+    "currencyCodetw": "TWD",
+    "originalCosttw": 0.0,
+    "diamond": 0,
+    "firstDiamond": 0,
+    "extraDiamond": 0,
+    "item": "5#308104#1",
+    "limit": "1#1",
+    "preGoodsId": 0,
+    "newStartTime": "",
+    "newEndTime": "",
+    "country": "zh,en,jp,tw,kr",
+    "originalCostGoodsId": 490001,
+    "notShowInRecommend": false,
+    "detailDesc": "",
+    "quickUseItemList": "",
+    "showLinkageTag": false,
+    "taskid": 0,
+    "showLogoTag": false,
+    "overviewJumpId": "",
+    "isShowTurnback": false
+  },
+  {
+    "id": 832002,
+    "belongStoreId": 510,
+    "type": 1,
+    "order": 3,
+    "name": "language_10100634",
+    "nameEn": "Till the Sun Falls",
+    "desc": "伽菈波那",
+    "bigImg": "",
+    "product": "",
+    "offTag": "",
+    "isOnline": true,
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
+    "price": 4.99,
+    "currencyCode": "USD",
+    "originalCost": 0.0,
+    "pricezh": 28.0,
+    "currencyCodezh": "CNY",
+    "originalCostzh": 0.0,
+    "pricejp": 680.0,
+    "currencyCodejp": "JPY",
+    "originalCostjp": 0.0,
+    "pricekr": 6000.0,
+    "currencyCodekr": "KRW",
+    "originalCostkr": 0.0,
+    "pricetw": 170.0,
+    "currencyCodetw": "TWD",
+    "originalCosttw": 0.0,
+    "diamond": 0,
+    "firstDiamond": 0,
+    "extraDiamond": 0,
+    "item": "5#307004#1",
+    "limit": "1#1",
+    "preGoodsId": 0,
+    "newStartTime": "",
+    "newEndTime": "",
+    "country": "zh,en,jp,tw,kr",
+    "originalCostGoodsId": 490002,
+    "notShowInRecommend": false,
+    "detailDesc": "",
+    "quickUseItemList": "",
+    "showLinkageTag": false,
+    "taskid": 0,
+    "showLogoTag": false,
+    "overviewJumpId": "",
+    "isShowTurnback": false
+  },
+  {
+    "id": 832003,
+    "belongStoreId": 510,
+    "type": 1,
+    "order": 1,
+    "name": "language_10100635",
+    "nameEn": "Forbidden Fruit",
+    "desc": "天使娜娜皮肤",
+    "bigImg": "",
+    "product": "",
+    "offTag": "",
+    "isOnline": true,
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
+    "price": 14.99,
+    "currencyCode": "USD",
+    "originalCost": 0.0,
+    "pricezh": 98.0,
+    "currencyCodezh": "CNY",
+    "originalCostzh": 0.0,
+    "pricejp": 2380.0,
+    "currencyCodejp": "JPY",
+    "originalCostjp": 0.0,
+    "pricekr": 19000.0,
+    "currencyCodekr": "KRW",
+    "originalCostkr": 0.0,
+    "pricetw": 490.0,
+    "currencyCodetw": "TWD",
+    "originalCosttw": 0.0,
+    "diamond": 0,
+    "firstDiamond": 0,
+    "extraDiamond": 0,
+    "item": "5#310003#1",
+    "limit": "1#1",
+    "preGoodsId": 0,
+    "newStartTime": "",
+    "newEndTime": "",
+    "country": "zh,en,jp,tw,kr",
+    "originalCostGoodsId": 490003,
+    "notShowInRecommend": false,
+    "detailDesc": "",
+    "quickUseItemList": "",
+    "showLinkageTag": false,
+    "taskid": 0,
+    "showLogoTag": false,
+    "overviewJumpId": "",
+    "isShowTurnback": false
+  },
+  {
+    "id": 832004,
+    "belongStoreId": 612,
+    "type": 7,
+    "order": 53,
+    "name": "language_10065865",
+    "nameEn": "Roaring Season",
+    "desc": "§季卡",
+    "bigImg": "8",
+    "product": "2#1#900|10#21#15",
+    "offTag": "",
+    "isOnline": true,
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
+    "price": 9.99,
+    "currencyCode": "USD",
+    "originalCost": 0.0,
+    "pricezh": 68.0,
+    "currencyCodezh": "CNY",
+    "originalCostzh": 0.0,
+    "pricejp": 1480.0,
+    "currencyCodejp": "JPY",
+    "originalCostjp": 0.0,
+    "pricekr": 14000.0,
+    "currencyCodekr": "KRW",
+    "originalCostkr": 0.0,
+    "pricetw": 330.0,
+    "currencyCodetw": "TWD",
+    "originalCosttw": 0.0,
+    "diamond": 0,
+    "firstDiamond": 0,
+    "extraDiamond": 0,
+    "item": "",
+    "limit": "1#1",
+    "preGoodsId": 0,
+    "newStartTime": "",
+    "newEndTime": "",
+    "country": "zh,en,jp,tw,kr",
+    "originalCostGoodsId": 490004,
+    "notShowInRecommend": false,
+    "detailDesc": "language_10068739",
+    "quickUseItemList": "",
+    "showLinkageTag": false,
+    "taskid": 0,
+    "showLogoTag": false,
+    "overviewJumpId": "",
+    "isShowTurnback": true
+  },
+  {
+    "id": 832005,
+    "belongStoreId": 612,
+    "type": 1,
+    "order": 55,
+    "name": "language_10056483",
+    "nameEn": "Souvenir of the Carnival",
+    "desc": "§巡游特殊礼包（198）",
+    "bigImg": "v3a2_01",
+    "product": "1#540002#1|1#140001#10",
+    "offTag": "",
+    "isOnline": true,
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
+    "price": 29.99,
+    "currencyCode": "USD",
+    "originalCost": 0.0,
+    "pricezh": 198.0,
+    "currencyCodezh": "CNY",
+    "originalCostzh": 0.0,
+    "pricejp": 4980.0,
+    "currencyCodejp": "JPY",
+    "originalCostjp": 0.0,
+    "pricekr": 39000.0,
+    "currencyCodekr": "KRW",
+    "originalCostkr": 0.0,
+    "pricetw": 990.0,
+    "currencyCodetw": "TWD",
+    "originalCosttw": 0.0,
+    "diamond": 0,
+    "firstDiamond": 0,
+    "extraDiamond": 0,
+    "item": "1#540002#1|1#140001#10",
+    "limit": "1#1",
+    "preGoodsId": 0,
+    "newStartTime": "",
+    "newEndTime": "",
+    "country": "zh,en,jp,tw,kr",
+    "originalCostGoodsId": 0,
+    "notShowInRecommend": false,
+    "detailDesc": "language_10104435",
+    "quickUseItemList": "",
+    "showLinkageTag": false,
+    "taskid": 0,
+    "showLogoTag": false,
+    "overviewJumpId": "",
+    "isShowTurnback": true
+  },
+  {
+    "id": 832006,
+    "belongStoreId": 612,
+    "type": 1,
+    "order": 180,
+    "name": "language_10103678",
+    "nameEn": "Tea by the Seine",
+    "desc": "§超级体力礼包",
+    "bigImg": "v3a2_05",
+    "product": "10#21#10",
+    "offTag": "",
+    "isOnline": true,
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
+    "price": 2.99,
+    "currencyCode": "USD",
+    "originalCost": 0.0,
+    "pricezh": 18.0,
+    "currencyCodezh": "CNY",
+    "originalCostzh": 0.0,
+    "pricejp": 460.0,
+    "currencyCodejp": "JPY",
+    "originalCostjp": 0.0,
+    "pricekr": 4400.0,
+    "currencyCodekr": "KRW",
+    "originalCostkr": 0.0,
+    "pricetw": 100.0,
+    "currencyCodetw": "TWD",
+    "originalCosttw": 0.0,
+    "diamond": 0,
+    "firstDiamond": 0,
+    "extraDiamond": 0,
+    "item": "10#21#10",
+    "limit": "1#1",
+    "preGoodsId": 0,
+    "newStartTime": "",
+    "newEndTime": "",
+    "country": "zh,en,jp,tw,kr",
+    "originalCostGoodsId": 0,
+    "notShowInRecommend": false,
+    "detailDesc": "",
+    "quickUseItemList": "",
+    "showLinkageTag": false,
+    "taskid": 0,
+    "showLogoTag": false,
+    "overviewJumpId": "",
+    "isShowTurnback": true
+  },
+  {
+    "id": 832007,
+    "belongStoreId": 612,
+    "type": 5,
+    "order": 190,
+    "name": "language_10036748",
+    "nameEn": "Materials Bonanza",
+    "desc": "§30自选礼包",
+    "bigImg": "v2a8_08",
+    "product": "",
+    "offTag": "",
+    "isOnline": true,
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
+    "price": 4.99,
+    "currencyCode": "USD",
+    "originalCost": 0.0,
+    "pricezh": 30.0,
+    "currencyCodezh": "CNY",
+    "originalCostzh": 0.0,
+    "pricejp": 680.0,
+    "currencyCodejp": "JPY",
+    "originalCostjp": 0.0,
+    "pricekr": 6000.0,
+    "currencyCodekr": "KRW",
+    "originalCostkr": 0.0,
+    "pricetw": 170.0,
+    "currencyCodetw": "TWD",
+    "originalCosttw": 0.0,
+    "diamond": 0,
+    "firstDiamond": 0,
+    "extraDiamond": 0,
+    "item": "",
+    "limit": "1#1",
+    "preGoodsId": 0,
+    "newStartTime": "",
+    "newEndTime": "",
+    "country": "zh,en,jp,tw,kr",
+    "originalCostGoodsId": 0,
+    "notShowInRecommend": false,
+    "detailDesc": "",
+    "quickUseItemList": "",
+    "showLinkageTag": false,
+    "taskid": 0,
+    "showLogoTag": false,
+    "overviewJumpId": "",
+    "isShowTurnback": true
+  },
+  {
+    "id": 832008,
+    "belongStoreId": 612,
+    "type": 5,
+    "order": 200,
+    "name": "language_10100577",
+    "nameEn": "Tides of Arcanum",
+    "desc": "§68新材料礼包",
+    "bigImg": "v3a2_03",
+    "product": "",
+    "offTag": "",
+    "isOnline": true,
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
+    "price": 9.99,
+    "currencyCode": "USD",
+    "originalCost": 0.0,
+    "pricezh": 68.0,
+    "currencyCodezh": "CNY",
+    "originalCostzh": 0.0,
+    "pricejp": 1680.0,
+    "currencyCodejp": "JPY",
+    "originalCostjp": 0.0,
+    "pricekr": 14000.0,
+    "currencyCodekr": "KRW",
+    "originalCostkr": 0.0,
+    "pricetw": 330.0,
+    "currencyCodetw": "TWD",
+    "originalCosttw": 0.0,
+    "diamond": 0,
+    "firstDiamond": 0,
+    "extraDiamond": 0,
+    "item": "",
+    "limit": "1#1",
+    "preGoodsId": 0,
+    "newStartTime": "2026-01-20 05:00:00",
+    "newEndTime": "2026-03-05 04:59:59",
+    "country": "zh,en,jp,tw,kr",
+    "originalCostGoodsId": 0,
+    "notShowInRecommend": false,
+    "detailDesc": "",
+    "quickUseItemList": "",
+    "showLinkageTag": false,
+    "taskid": 0,
+    "showLogoTag": false,
+    "overviewJumpId": "",
+    "isShowTurnback": true
+  },
+  {
+    "id": 832009,
+    "belongStoreId": 612,
+    "type": 1,
+    "order": 170,
+    "name": "language_10103679",
+    "nameEn": "Sparks in the Hippocampus",
+    "desc": "§升级特权礼包",
+    "bigImg": "v3a2_04",
+    "product": "1#642801#1|24#489094#1",
+    "offTag": "",
+    "isOnline": true,
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
+    "price": 29.99,
+    "currencyCode": "USD",
+    "originalCost": 0.0,
+    "pricezh": 198.0,
+    "currencyCodezh": "CNY",
+    "originalCostzh": 0.0,
+    "pricejp": 4980.0,
+    "currencyCodejp": "JPY",
+    "originalCostjp": 0.0,
+    "pricekr": 39000.0,
+    "currencyCodekr": "KRW",
+    "originalCostkr": 0.0,
+    "pricetw": 990.0,
+    "currencyCodetw": "TWD",
+    "originalCosttw": 0.0,
+    "diamond": 0,
+    "firstDiamond": 0,
+    "extraDiamond": 0,
+    "item": "1#642801#1|24#489094#1",
+    "limit": "1#1",
+    "preGoodsId": 0,
+    "newStartTime": "",
+    "newEndTime": "",
+    "country": "zh,en,jp,tw,kr",
+    "originalCostGoodsId": 0,
+    "notShowInRecommend": false,
+    "detailDesc": "",
+    "quickUseItemList": "",
+    "showLinkageTag": false,
+    "taskid": 0,
+    "showLogoTag": false,
+    "overviewJumpId": "",
+    "isShowTurnback": true
+  },
+  {
+    "id": 832010,
+    "belongStoreId": 612,
+    "type": 1,
+    "order": 60,
+    "name": "language_10100582",
+    "nameEn": "Gift of Gems",
+    "desc": "§12元小R小额卡券上",
+    "bigImg": "v1a5_02",
+    "product": "1#140001#2|10#10#1",
+    "offTag": "",
+    "isOnline": true,
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-02-12 04:59:59",
+    "price": 1.99,
+    "currencyCode": "USD",
+    "originalCost": 0.0,
+    "pricezh": 12.0,
+    "currencyCodezh": "CNY",
+    "originalCostzh": 0.0,
+    "pricejp": 300.0,
+    "currencyCodejp": "JPY",
+    "originalCostjp": 0.0,
+    "pricekr": 3000.0,
+    "currencyCodekr": "KRW",
+    "originalCostkr": 0.0,
+    "pricetw": 70.0,
+    "currencyCodetw": "TWD",
+    "originalCosttw": 0.0,
+    "diamond": 0,
+    "firstDiamond": 0,
+    "extraDiamond": 0,
+    "item": "1#140001#2|10#10#1",
+    "limit": "1#1",
+    "preGoodsId": 0,
+    "newStartTime": "",
+    "newEndTime": "",
+    "country": "zh,en,jp,tw,kr",
+    "originalCostGoodsId": 0,
+    "notShowInRecommend": false,
+    "detailDesc": "",
+    "quickUseItemList": "",
+    "showLinkageTag": false,
+    "taskid": 0,
+    "showLogoTag": false,
+    "overviewJumpId": "",
+    "isShowTurnback": true
+  },
+  {
+    "id": 832011,
+    "belongStoreId": 612,
+    "type": 1,
+    "order": 60,
+    "name": "language_10100582",
+    "nameEn": "Gift of Gems",
+    "desc": "§12元小R小额卡券下",
+    "bigImg": "v1a5_02",
+    "product": "1#140001#2|10#10#1",
+    "offTag": "",
+    "isOnline": true,
+    "onlineTime": "2026-02-12 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
+    "price": 1.99,
+    "currencyCode": "USD",
+    "originalCost": 0.0,
+    "pricezh": 12.0,
+    "currencyCodezh": "CNY",
+    "originalCostzh": 0.0,
+    "pricejp": 300.0,
+    "currencyCodejp": "JPY",
+    "originalCostjp": 0.0,
+    "pricekr": 3000.0,
+    "currencyCodekr": "KRW",
+    "originalCostkr": 0.0,
+    "pricetw": 70.0,
+    "currencyCodetw": "TWD",
+    "originalCosttw": 0.0,
+    "diamond": 0,
+    "firstDiamond": 0,
+    "extraDiamond": 0,
+    "item": "1#140001#2|10#10#1",
+    "limit": "1#1",
+    "preGoodsId": 0,
+    "newStartTime": "",
+    "newEndTime": "",
+    "country": "zh,en,jp,tw,kr",
+    "originalCostGoodsId": 0,
+    "notShowInRecommend": false,
+    "detailDesc": "",
+    "quickUseItemList": "",
+    "showLinkageTag": false,
+    "taskid": 0,
+    "showLogoTag": false,
+    "overviewJumpId": "",
+    "isShowTurnback": true
+  },
+  {
+    "id": 832012,
+    "belongStoreId": 612,
+    "type": 1,
+    "order": 80,
+    "name": "language_10100580",
+    "nameEn": "Gift of Crystals",
+    "desc": "§28元小R卡券礼包上",
+    "bigImg": "v2a1_02",
+    "product": "1#140001#4|10#10#1|1#120011#5|2#3#30000",
+    "offTag": "",
+    "isOnline": true,
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-02-12 04:59:59",
+    "price": 4.99,
+    "currencyCode": "USD",
+    "originalCost": 0.0,
+    "pricezh": 28.0,
+    "currencyCodezh": "CNY",
+    "originalCostzh": 0.0,
+    "pricejp": 680.0,
+    "currencyCodejp": "JPY",
+    "originalCostjp": 0.0,
+    "pricekr": 6000.0,
+    "currencyCodekr": "KRW",
+    "originalCostkr": 0.0,
+    "pricetw": 170.0,
+    "currencyCodetw": "TWD",
+    "originalCosttw": 0.0,
+    "diamond": 0,
+    "firstDiamond": 0,
+    "extraDiamond": 0,
+    "item": "1#140001#4|10#10#1|1#120011#5|2#3#30000",
+    "limit": "1#1",
+    "preGoodsId": 0,
+    "newStartTime": "",
+    "newEndTime": "",
+    "country": "zh,en,jp,tw,kr",
+    "originalCostGoodsId": 0,
+    "notShowInRecommend": false,
+    "detailDesc": "",
+    "quickUseItemList": "",
+    "showLinkageTag": false,
+    "taskid": 0,
+    "showLogoTag": false,
+    "overviewJumpId": "",
+    "isShowTurnback": true
+  },
+  {
+    "id": 832013,
+    "belongStoreId": 612,
+    "type": 1,
+    "order": 80,
+    "name": "language_10100580",
+    "nameEn": "Gift of Crystals",
+    "desc": "§28元小R卡券礼包下",
+    "bigImg": "v2a1_02",
+    "product": "1#140001#4|10#10#1|1#120011#5|2#3#30000",
+    "offTag": "",
+    "isOnline": true,
+    "onlineTime": "2026-02-12 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
+    "price": 4.99,
+    "currencyCode": "USD",
+    "originalCost": 0.0,
+    "pricezh": 28.0,
+    "currencyCodezh": "CNY",
+    "originalCostzh": 0.0,
+    "pricejp": 680.0,
+    "currencyCodejp": "JPY",
+    "originalCostjp": 0.0,
+    "pricekr": 6000.0,
+    "currencyCodekr": "KRW",
+    "originalCostkr": 0.0,
+    "pricetw": 170.0,
+    "currencyCodetw": "TWD",
+    "originalCosttw": 0.0,
+    "diamond": 0,
+    "firstDiamond": 0,
+    "extraDiamond": 0,
+    "item": "1#140001#4|10#10#1|1#120011#5|2#3#30000",
+    "limit": "1#1",
+    "preGoodsId": 0,
+    "newStartTime": "",
+    "newEndTime": "",
+    "country": "zh,en,jp,tw,kr",
+    "originalCostGoodsId": 0,
+    "notShowInRecommend": false,
+    "detailDesc": "",
+    "quickUseItemList": "",
+    "showLinkageTag": false,
+    "taskid": 0,
+    "showLogoTag": false,
+    "overviewJumpId": "",
+    "isShowTurnback": true
+  },
+  {
+    "id": 832014,
+    "belongStoreId": 612,
+    "type": 1,
+    "order": 150,
+    "name": "language_10075468",
+    "nameEn": "Gift from the Glowhouse",
+    "desc": "§98元中R补抽礼包上",
+    "bigImg": "v2a8_02",
+    "product": "1#140001#10|2#7#600",
+    "offTag": "",
+    "isOnline": true,
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-02-12 04:59:59",
+    "price": 14.99,
+    "currencyCode": "USD",
+    "originalCost": 0.0,
+    "pricezh": 98.0,
+    "currencyCodezh": "CNY",
+    "originalCostzh": 0.0,
+    "pricejp": 2380.0,
+    "currencyCodejp": "JPY",
+    "originalCostjp": 0.0,
+    "pricekr": 19000.0,
+    "currencyCodekr": "KRW",
+    "originalCostkr": 0.0,
+    "pricetw": 490.0,
+    "currencyCodetw": "TWD",
+    "originalCosttw": 0.0,
+    "diamond": 0,
+    "firstDiamond": 0,
+    "extraDiamond": 0,
+    "item": "1#140001#10|2#7#600",
+    "limit": "1#1",
+    "preGoodsId": 0,
+    "newStartTime": "",
+    "newEndTime": "",
+    "country": "zh,en,jp,tw,kr",
+    "originalCostGoodsId": 0,
+    "notShowInRecommend": false,
+    "detailDesc": "",
+    "quickUseItemList": "",
+    "showLinkageTag": false,
+    "taskid": 0,
+    "showLogoTag": false,
+    "overviewJumpId": "",
+    "isShowTurnback": true
+  },
+  {
+    "id": 832015,
+    "belongStoreId": 612,
+    "type": 1,
+    "order": 150,
+    "name": "language_10075468",
+    "nameEn": "Gift from the Glowhouse",
+    "desc": "§98元中R补抽礼包下",
+    "bigImg": "v2a8_02",
+    "product": "1#140001#10|2#7#600",
+    "offTag": "",
+    "isOnline": true,
+    "onlineTime": "2026-02-12 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
+    "price": 14.99,
+    "currencyCode": "USD",
+    "originalCost": 0.0,
+    "pricezh": 98.0,
+    "currencyCodezh": "CNY",
+    "originalCostzh": 0.0,
+    "pricejp": 2380.0,
+    "currencyCodejp": "JPY",
+    "originalCostjp": 0.0,
+    "pricekr": 19000.0,
+    "currencyCodekr": "KRW",
+    "originalCostkr": 0.0,
+    "pricetw": 490.0,
+    "currencyCodetw": "TWD",
+    "originalCosttw": 0.0,
+    "diamond": 0,
+    "firstDiamond": 0,
+    "extraDiamond": 0,
+    "item": "1#140001#10|2#7#600",
+    "limit": "1#1",
+    "preGoodsId": 0,
+    "newStartTime": "",
+    "newEndTime": "",
+    "country": "zh,en,jp,tw,kr",
+    "originalCostGoodsId": 0,
+    "notShowInRecommend": false,
+    "detailDesc": "",
+    "quickUseItemList": "",
+    "showLinkageTag": false,
+    "taskid": 0,
+    "showLogoTag": false,
+    "overviewJumpId": "",
+    "isShowTurnback": true
+  },
+  {
+    "id": 832016,
+    "belongStoreId": 612,
+    "type": 1,
+    "order": 250,
+    "name": "language_10103680",
+    "nameEn": "Harvest of Parades",
+    "desc": "§198中R礼包",
+    "bigImg": "v2a5_04",
+    "product": "1#140001#12|2#2#1200|1#481010#1|1#180002#15|1#120012#10|1#620102#20",
+    "offTag": "",
+    "isOnline": true,
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
+    "price": 29.99,
+    "currencyCode": "USD",
+    "originalCost": 0.0,
+    "pricezh": 198.0,
+    "currencyCodezh": "CNY",
+    "originalCostzh": 0.0,
+    "pricejp": 4980.0,
+    "currencyCodejp": "JPY",
+    "originalCostjp": 0.0,
+    "pricekr": 39000.0,
+    "currencyCodekr": "KRW",
+    "originalCostkr": 0.0,
+    "pricetw": 990.0,
+    "currencyCodetw": "TWD",
+    "originalCosttw": 0.0,
+    "diamond": 0,
+    "firstDiamond": 0,
+    "extraDiamond": 0,
+    "item": "1#140001#12|2#2#1200|1#481010#1|1#180002#15|1#120012#10|1#620102#20",
+    "limit": "1#2",
+    "preGoodsId": 0,
+    "newStartTime": "",
+    "newEndTime": "",
+    "country": "zh,en,jp,tw,kr",
+    "originalCostGoodsId": 0,
+    "notShowInRecommend": false,
+    "detailDesc": "",
+    "quickUseItemList": "",
+    "showLinkageTag": false,
+    "taskid": 0,
+    "showLogoTag": false,
+    "overviewJumpId": "",
+    "isShowTurnback": true
+  },
+  {
+    "id": 832017,
+    "belongStoreId": 612,
+    "type": 1,
+    "order": 260,
+    "name": "language_10100581",
+    "nameEn": "Harvest of Revelry",
+    "desc": "§328大R礼包",
+    "bigImg": "v2a5_05",
+    "product": "1#140001#20|2#2#1500|9#1000#1|1#481010#1|1#620103#3|1#120013#5|1#481007#20|2#3#100000|2#5#150000",
+    "offTag": "",
+    "isOnline": true,
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
+    "price": 49.99,
+    "currencyCode": "USD",
+    "originalCost": 0.0,
+    "pricezh": 328.0,
+    "currencyCodezh": "CNY",
+    "originalCostzh": 0.0,
+    "pricejp": 7680.0,
+    "currencyCodejp": "JPY",
+    "originalCostjp": 0.0,
+    "pricekr": 65000.0,
+    "currencyCodekr": "KRW",
+    "originalCostkr": 0.0,
+    "pricetw": 1690.0,
+    "currencyCodetw": "TWD",
+    "originalCosttw": 0.0,
+    "diamond": 0,
+    "firstDiamond": 0,
+    "extraDiamond": 0,
+    "item": "1#140001#20|2#2#1500|9#1000#1|1#481010#1|1#620103#3|1#120013#5|1#481007#20|2#3#100000|2#5#150000",
+    "limit": "1#2",
+    "preGoodsId": 0,
+    "newStartTime": "",
+    "newEndTime": "",
+    "country": "zh,en,jp,tw,kr",
+    "originalCostGoodsId": 0,
+    "notShowInRecommend": false,
+    "detailDesc": "",
+    "quickUseItemList": "",
+    "showLinkageTag": false,
+    "taskid": 0,
+    "showLogoTag": false,
+    "overviewJumpId": "",
+    "isShowTurnback": true
+  },
+  {
+    "id": 832018,
+    "belongStoreId": 612,
+    "type": 1,
+    "order": 160,
+    "name": "language_10061462",
+    "nameEn": "Decatone - Ripples on the Water",
+    "desc": "§强化线卡池专属抽卡（78）",
+    "bigImg": "v2a3_01",
+    "product": "1#140109#1",
+    "offTag": "",
+    "isOnline": true,
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
+    "price": 10.99,
+    "currencyCode": "USD",
+    "originalCost": 0.0,
+    "pricezh": 78.0,
+    "currencyCodezh": "CNY",
+    "originalCostzh": 0.0,
+    "pricejp": 1780.0,
+    "currencyCodejp": "JPY",
+    "originalCostjp": 0.0,
+    "pricekr": 14800.0,
+    "currencyCodekr": "KRW",
+    "originalCostkr": 0.0,
+    "pricetw": 390.0,
+    "currencyCodetw": "TWD",
+    "originalCosttw": 0.0,
+    "diamond": 0,
+    "firstDiamond": 0,
+    "extraDiamond": 0,
+    "item": "1#140109#1",
+    "limit": "1#2",
+    "preGoodsId": 0,
+    "newStartTime": "",
+    "newEndTime": "",
+    "country": "zh,en,jp,tw,kr",
+    "originalCostGoodsId": 0,
+    "notShowInRecommend": false,
+    "detailDesc": "language_10061463",
+    "quickUseItemList": "",
+    "showLinkageTag": false,
+    "taskid": 0,
+    "showLogoTag": false,
+    "overviewJumpId": "",
+    "isShowTurnback": true
+  },
+  {
+    "id": 832019,
+    "belongStoreId": 612,
+    "type": 1,
+    "order": 155,
+    "name": "language_10056485",
+    "nameEn": "Carnival Celebration - Boon of the Water",
+    "desc": "§9选3up专属抽卡（78）",
+    "bigImg": "v2a2_04",
+    "product": "1#140068#1",
+    "offTag": "",
+    "isOnline": true,
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-02-12 04:59:59",
+    "price": 10.99,
+    "currencyCode": "USD",
+    "originalCost": 0.0,
+    "pricezh": 78.0,
+    "currencyCodezh": "CNY",
+    "originalCostzh": 0.0,
+    "pricejp": 1780.0,
+    "currencyCodejp": "JPY",
+    "originalCostjp": 0.0,
+    "pricekr": 14800.0,
+    "currencyCodekr": "KRW",
+    "originalCostkr": 0.0,
+    "pricetw": 390.0,
+    "currencyCodetw": "TWD",
+    "originalCosttw": 0.0,
+    "diamond": 0,
+    "firstDiamond": 0,
+    "extraDiamond": 0,
+    "item": "1#140068#1",
+    "limit": "1#2",
+    "preGoodsId": 0,
+    "newStartTime": "",
+    "newEndTime": "",
+    "country": "zh,en,jp,tw,kr",
+    "originalCostGoodsId": 0,
+    "notShowInRecommend": false,
+    "detailDesc": "language_10056486",
+    "quickUseItemList": "",
+    "showLinkageTag": false,
+    "taskid": 0,
+    "showLogoTag": false,
+    "overviewJumpId": "",
+    "isShowTurnback": true
+  },
+  {
+    "id": 832020,
+    "belongStoreId": 612,
+    "type": 1,
+    "order": 153,
+    "name": "language_10103681",
+    "nameEn": "Decatone - Longing for Innocence",
+    "desc": "§天使娜娜卡池十连礼包",
+    "bigImg": "v3a2_02",
+    "product": "1#140067#1",
+    "offTag": "",
+    "isOnline": true,
+    "onlineTime": "2026-02-01 05:00:00",
+    "offlineTime": "2026-02-15 04:59:59",
+    "price": 10.99,
+    "currencyCode": "USD",
+    "originalCost": 0.0,
+    "pricezh": 78.0,
+    "currencyCodezh": "CNY",
+    "originalCostzh": 0.0,
+    "pricejp": 1780.0,
+    "currencyCodejp": "JPY",
+    "originalCostjp": 0.0,
+    "pricekr": 14800.0,
+    "currencyCodekr": "KRW",
+    "originalCostkr": 0.0,
+    "pricetw": 390.0,
+    "currencyCodetw": "TWD",
+    "originalCosttw": 0.0,
+    "diamond": 0,
+    "firstDiamond": 0,
+    "extraDiamond": 0,
+    "item": "1#140067#1",
+    "limit": "1#2",
+    "preGoodsId": 0,
+    "newStartTime": "",
+    "newEndTime": "",
+    "country": "zh,en,jp,tw,kr",
+    "originalCostGoodsId": 0,
+    "notShowInRecommend": false,
+    "detailDesc": "language_10104436",
+    "quickUseItemList": "",
+    "showLinkageTag": false,
+    "taskid": 0,
+    "showLogoTag": false,
+    "overviewJumpId": "",
+    "isShowTurnback": true
+  },
+  {
+    "id": 832022,
+    "belongStoreId": 612,
+    "type": 1,
+    "order": 6,
+    "name": "language_10104437",
+    "nameEn": "Beginning of a New Year",
+    "desc": "§元宵礼包18",
+    "bigImg": "v3a3_02",
+    "product": "11#13413#1|1#140001#2",
+    "offTag": "",
+    "isOnline": true,
+    "onlineTime": "2026-02-01 05:00:00",
+    "offlineTime": "2026-02-18 04:59:59",
+    "price": 2.99,
+    "currencyCode": "USD",
+    "originalCost": 0.0,
+    "pricezh": 18.0,
+    "currencyCodezh": "CNY",
+    "originalCostzh": 0.0,
+    "pricejp": 460.0,
+    "currencyCodejp": "JPY",
+    "originalCostjp": 0.0,
+    "pricekr": 4400.0,
+    "currencyCodekr": "KRW",
+    "originalCostkr": 0.0,
+    "pricetw": 100.0,
+    "currencyCodetw": "TWD",
+    "originalCosttw": 0.0,
+    "diamond": 0,
+    "firstDiamond": 0,
+    "extraDiamond": 0,
+    "item": "11#13413#1|1#140001#2",
+    "limit": "1#1",
+    "preGoodsId": 0,
+    "newStartTime": "",
+    "newEndTime": "",
+    "country": "zh,en,jp,tw,kr",
+    "originalCostGoodsId": 0,
+    "notShowInRecommend": false,
+    "detailDesc": "",
+    "quickUseItemList": "",
+    "showLinkageTag": false,
+    "taskid": 0,
+    "showLogoTag": false,
+    "overviewJumpId": "",
+    "isShowTurnback": true
+  },
+  {
+    "id": 832021,
+    "belongStoreId": 612,
+    "type": 1,
+    "order": 5,
+    "name": "language_10104438",
+    "nameEn": "Spring Dragon Dance",
+    "desc": "§春节礼包18",
+    "bigImg": "v3a4_02",
+    "product": "11#13411#1|1#140001#2",
+    "offTag": "",
+    "isOnline": true,
+    "onlineTime": "2026-02-01 05:00:00",
+    "offlineTime": "2026-02-18 04:59:59",
+    "price": 2.99,
+    "currencyCode": "USD",
+    "originalCost": 0.0,
+    "pricezh": 18.0,
+    "currencyCodezh": "CNY",
+    "originalCostzh": 0.0,
+    "pricejp": 460.0,
+    "currencyCodejp": "JPY",
+    "originalCostjp": 0.0,
+    "pricekr": 4400.0,
+    "currencyCodekr": "KRW",
+    "originalCostkr": 0.0,
+    "pricetw": 100.0,
+    "currencyCodetw": "TWD",
+    "originalCosttw": 0.0,
+    "diamond": 0,
+    "firstDiamond": 0,
+    "extraDiamond": 0,
+    "item": "11#13411#1|1#140001#2",
+    "limit": "1#1",
+    "preGoodsId": 0,
+    "newStartTime": "",
+    "newEndTime": "",
+    "country": "zh,en,jp,tw,kr",
+    "originalCostGoodsId": 0,
+    "notShowInRecommend": false,
+    "detailDesc": "",
+    "quickUseItemList": "",
+    "showLinkageTag": false,
+    "taskid": 0,
+    "showLogoTag": false,
+    "overviewJumpId": "",
+    "isShowTurnback": true
+  },
+  {
+    "id": 832023,
+    "belongStoreId": 612,
+    "type": 1,
+    "order": 7,
+    "name": "language_10056491",
+    "nameEn": "Offer of Dushuo",
+    "desc": "§春节礼包168",
+    "bigImg": "v2a5_09",
+    "product": "1#140001#10|2#2#1000|1#481010#1|1#620102#15|2#21#50|1#120012#8",
+    "offTag": "",
+    "isOnline": true,
+    "onlineTime": "2026-02-01 05:00:00",
+    "offlineTime": "2026-02-18 04:59:59",
+    "price": 24.99,
+    "currencyCode": "USD",
+    "originalCost": 0.0,
+    "pricezh": 168.0,
+    "currencyCodezh": "CNY",
+    "originalCostzh": 0.0,
+    "pricejp": 4280.0,
+    "currencyCodejp": "JPY",
+    "originalCostjp": 0.0,
+    "pricekr": 32500.0,
+    "currencyCodekr": "KRW",
+    "originalCostkr": 0.0,
+    "pricetw": 830.0,
+    "currencyCodetw": "TWD",
+    "originalCosttw": 0.0,
+    "diamond": 0,
+    "firstDiamond": 0,
+    "extraDiamond": 0,
+    "item": "1#140001#10|2#2#1000|1#481010#1|1#620102#15|2#21#50|1#120012#8",
+    "limit": "1#1",
+    "preGoodsId": 0,
+    "newStartTime": "",
+    "newEndTime": "",
+    "country": "zh,en,jp,tw,kr",
+    "originalCostGoodsId": 0,
+    "notShowInRecommend": false,
+    "detailDesc": "",
+    "quickUseItemList": "",
+    "showLinkageTag": false,
+    "taskid": 0,
+    "showLogoTag": false,
+    "overviewJumpId": "",
+    "isShowTurnback": false
+  },
+  {
+    "id": 832024,
+    "belongStoreId": 612,
+    "type": 1,
+    "order": 8,
+    "name": "language_10056492",
+    "nameEn": "Bargain of Dushuo",
+    "desc": "§春节礼包258",
+    "bigImg": "v2a5_10",
+    "product": "1#140001#10|2#2#2000|9#1000#1|1#620103#2|2#21#80|1#120013#4|1#481007#15|1#481006#15",
+    "offTag": "",
+    "isOnline": true,
+    "onlineTime": "2026-02-01 05:00:00",
+    "offlineTime": "2026-02-18 04:59:59",
+    "price": 37.99,
+    "currencyCode": "USD",
+    "originalCost": 0.0,
+    "pricezh": 258.0,
+    "currencyCodezh": "CNY",
+    "originalCostzh": 0.0,
+    "pricejp": 5780.0,
+    "currencyCodejp": "JPY",
+    "originalCostjp": 0.0,
+    "pricekr": 50000.0,
+    "currencyCodekr": "KRW",
+    "originalCostkr": 0.0,
+    "pricetw": 1290.0,
+    "currencyCodetw": "TWD",
+    "originalCosttw": 0.0,
+    "diamond": 0,
+    "firstDiamond": 0,
+    "extraDiamond": 0,
+    "item": "1#140001#10|2#2#2000|9#1000#1|1#620103#2|2#21#80|1#120013#4|1#481007#15|1#481006#15",
+    "limit": "1#1",
+    "preGoodsId": 0,
+    "newStartTime": "",
+    "newEndTime": "",
+    "country": "zh,en,jp,tw,kr",
+    "originalCostGoodsId": 0,
+    "notShowInRecommend": false,
+    "detailDesc": "",
+    "quickUseItemList": "",
+    "showLinkageTag": false,
+    "taskid": 0,
+    "showLogoTag": false,
+    "overviewJumpId": "",
+    "isShowTurnback": false
+  },
+  {
+    "id": 832025,
+    "belongStoreId": 612,
+    "type": 1,
+    "order": 9,
+    "name": "language_10104439",
+    "nameEn": "Feast of Dushuo",
+    "desc": "§春节礼包488",
+    "bigImg": "v2a5_11",
+    "product": "1#140001#15|2#2#5000|1#510010#5|1#620103#12|1#620102#120|1#620101#2400|2#3#150000|2#5#200000",
+    "offTag": "",
+    "isOnline": true,
+    "onlineTime": "2026-02-01 05:00:00",
+    "offlineTime": "2026-02-18 04:59:59",
+    "price": 67.99,
+    "currencyCode": "USD",
+    "originalCost": 0.0,
+    "pricezh": 488.0,
+    "currencyCodezh": "CNY",
+    "originalCostzh": 0.0,
+    "pricejp": 11000.0,
+    "currencyCodejp": "JPY",
+    "originalCostjp": 0.0,
+    "pricekr": 98000.0,
+    "currencyCodekr": "KRW",
+    "originalCostkr": 0.0,
+    "pricetw": 2290.0,
+    "currencyCodetw": "TWD",
+    "originalCosttw": 0.0,
+    "diamond": 0,
+    "firstDiamond": 0,
+    "extraDiamond": 0,
+    "item": "1#140001#15|2#2#5000|1#510010#5|1#620103#12|1#620102#120|1#620101#2400|2#3#150000|2#5#200000",
+    "limit": "1#1",
+    "preGoodsId": 0,
+    "newStartTime": "",
+    "newEndTime": "",
+    "country": "zh,en,jp,tw,kr",
+    "originalCostGoodsId": 0,
+    "notShowInRecommend": false,
+    "detailDesc": "",
+    "quickUseItemList": "",
+    "showLinkageTag": false,
+    "taskid": 0,
+    "showLogoTag": false,
+    "overviewJumpId": "",
+    "isShowTurnback": false
   }
 ]

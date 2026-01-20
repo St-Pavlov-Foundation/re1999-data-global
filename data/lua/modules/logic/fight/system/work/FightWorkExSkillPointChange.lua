@@ -1,37 +1,41 @@
-﻿module("modules.logic.fight.system.work.FightWorkExSkillPointChange", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkExSkillPointChange.lua
 
-local var_0_0 = class("FightWorkExSkillPointChange", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkExSkillPointChange", package.seeall)
 
-function var_0_0.beforePlayEffectData(arg_1_0)
-	arg_1_0._entityId = arg_1_0.actEffectData.targetId
-	arg_1_0._entityMO = FightDataHelper.entityMgr:getById(arg_1_0._entityId)
-	arg_1_0._oldValue = arg_1_0._entityMO and arg_1_0._entityMO:getUniqueSkillPoint()
+local FightWorkExSkillPointChange = class("FightWorkExSkillPointChange", FightEffectBase)
+
+function FightWorkExSkillPointChange:beforePlayEffectData()
+	self._entityId = self.actEffectData.targetId
+	self._entityMO = FightDataHelper.entityMgr:getById(self._entityId)
+	self._oldValue = self._entityMO and self._entityMO:getUniqueSkillPoint()
 end
 
-function var_0_0.onStart(arg_2_0)
-	if not FightHelper.getEntity(arg_2_0._entityId) then
-		arg_2_0:onDone(true)
+function FightWorkExSkillPointChange:onStart()
+	local entity = FightHelper.getEntity(self._entityId)
+
+	if not entity then
+		self:onDone(true)
 
 		return
 	end
 
-	if not arg_2_0._entityMO then
-		arg_2_0:onDone(true)
+	if not self._entityMO then
+		self:onDone(true)
 
 		return
 	end
 
-	arg_2_0._newValue = arg_2_0._entityMO and arg_2_0._entityMO:getUniqueSkillPoint()
+	self._newValue = self._entityMO and self._entityMO:getUniqueSkillPoint()
 
-	if arg_2_0._oldValue ~= arg_2_0._newValue then
-		FightController.instance:dispatchEvent(FightEvent.OnExSkillPointChange, arg_2_0.actEffectData.targetId, arg_2_0._oldValue, arg_2_0._newValue)
+	if self._oldValue ~= self._newValue then
+		FightController.instance:dispatchEvent(FightEvent.OnExSkillPointChange, self.actEffectData.targetId, self._oldValue, self._newValue)
 	end
 
-	arg_2_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
+function FightWorkExSkillPointChange:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkExSkillPointChange

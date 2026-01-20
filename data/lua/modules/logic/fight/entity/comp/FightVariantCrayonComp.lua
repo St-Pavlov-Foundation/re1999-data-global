@@ -1,134 +1,138 @@
-﻿module("modules.logic.fight.entity.comp.FightVariantCrayonComp", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/FightVariantCrayonComp.lua
 
-local var_0_0 = class("FightVariantCrayonComp", LuaCompBase)
-local var_0_1 = {
+module("modules.logic.fight.entity.comp.FightVariantCrayonComp", package.seeall)
+
+local FightVariantCrayonComp = class("FightVariantCrayonComp", LuaCompBase)
+local SceneNames = {
 	m_s62_jzsylb = true
 }
-local var_0_2 = "_STYLIZATIONPLAYER_ON"
-local var_0_3 = "_NoiseMap3"
-local var_0_4 = "_ShadowMap"
-local var_0_5 = "crayonmap1_manual"
-local var_0_6 = "crayonmap2_manual"
+local VariantKey = "_STYLIZATIONPLAYER_ON"
+local NoiceMapKey = "_NoiseMap3"
+local ShadowMapKey = "_ShadowMap"
+local NoiceMapName = "crayonmap1_manual"
+local ShadowMapName = "crayonmap2_manual"
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.entity = arg_1_1
+function FightVariantCrayonComp:ctor(entity)
+	self.entity = entity
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
+function FightVariantCrayonComp:init(go)
+	self.go = go
 
-	FightController.instance:registerCallback(FightEvent.OnSpineMaterialChange, arg_2_0._onMatChange, arg_2_0, LuaEventSystem.Low)
-	FightController.instance:registerCallback(FightEvent.OnSpineLoaded, arg_2_0._onSpineLoaded, arg_2_0)
-	GameSceneMgr.instance:registerCallback(SceneEventName.OnLevelLoaded, arg_2_0._onLevelLoaded, arg_2_0)
+	FightController.instance:registerCallback(FightEvent.OnSpineMaterialChange, self._onMatChange, self, LuaEventSystem.Low)
+	FightController.instance:registerCallback(FightEvent.OnSpineLoaded, self._onSpineLoaded, self)
+	GameSceneMgr.instance:registerCallback(SceneEventName.OnLevelLoaded, self._onLevelLoaded, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.OnSpineMaterialChange, arg_3_0._onMatChange, arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, arg_3_0._onSpineLoaded, arg_3_0)
-	GameSceneMgr.instance:unregisterCallback(SceneEventName.OnLevelLoaded, arg_3_0._onLevelLoaded, arg_3_0)
+function FightVariantCrayonComp:removeEventListeners()
+	FightController.instance:unregisterCallback(FightEvent.OnSpineMaterialChange, self._onMatChange, self)
+	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, self._onSpineLoaded, self)
+	GameSceneMgr.instance:unregisterCallback(SceneEventName.OnLevelLoaded, self._onLevelLoaded, self)
 end
 
-function var_0_0._onMatChange(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 == arg_4_0.entity.id then
-		arg_4_0:_change()
+function FightVariantCrayonComp:_onMatChange(entityId, mat)
+	if entityId == self.entity.id then
+		self:_change()
 	end
 end
 
-function var_0_0._onSpineLoaded(arg_5_0, arg_5_1)
-	if arg_5_1 == arg_5_0.entity.spine then
-		arg_5_0:_change()
+function FightVariantCrayonComp:_onSpineLoaded(spine)
+	if spine == self.entity.spine then
+		self:_change()
 	end
 end
 
-function var_0_0._onLevelLoaded(arg_6_0)
-	if arg_6_0:_needChange() then
-		arg_6_0:_change()
+function FightVariantCrayonComp:_onLevelLoaded()
+	if self:_needChange() then
+		self:_change()
 	else
-		local var_6_0 = arg_6_0.entity.spineRenderer:getReplaceMat()
+		local mat = self.entity.spineRenderer:getReplaceMat()
 
-		if not var_6_0 then
+		if not mat then
 			return
 		end
 
-		var_6_0:DisableKeyword(var_0_2)
+		mat:DisableKeyword(VariantKey)
 	end
 end
 
-function var_0_0._needChange(arg_7_0)
-	local var_7_0 = GameSceneMgr.instance:getCurScene():getCurLevelId()
-	local var_7_1 = lua_scene_level.configDict[var_7_0]
+function FightVariantCrayonComp:_needChange()
+	local levelId = GameSceneMgr.instance:getCurScene():getCurLevelId()
+	local sceneLevelCO = lua_scene_level.configDict[levelId]
 
-	return var_0_1[var_7_1.resName] ~= nil
+	return SceneNames[sceneLevelCO.resName] ~= nil
 end
 
-function var_0_0._change(arg_8_0)
-	if not arg_8_0:_needChange() then
+function FightVariantCrayonComp:_change()
+	if not self:_needChange() then
 		return
 	end
 
-	local var_8_0 = arg_8_0.entity.spineRenderer:getReplaceMat()
+	local mat = self.entity.spineRenderer:getReplaceMat()
 
-	if not var_8_0 then
+	if not mat then
 		return
 	end
 
-	var_8_0:EnableKeyword(var_0_2)
+	mat:EnableKeyword(VariantKey)
 
-	arg_8_0._noiceMapPath = ResUrl.getRoleSpineMatTex(var_0_5)
-	arg_8_0._shadowMapPath = ResUrl.getRoleSpineMatTex(var_0_6)
+	self._noiceMapPath = ResUrl.getRoleSpineMatTex(NoiceMapName)
+	self._shadowMapPath = ResUrl.getRoleSpineMatTex(ShadowMapName)
 
-	loadAbAsset(arg_8_0._noiceMapPath, false, arg_8_0._onLoadCallback1, arg_8_0)
-	loadAbAsset(arg_8_0._shadowMapPath, false, arg_8_0._onLoadCallback2, arg_8_0)
+	loadAbAsset(self._noiceMapPath, false, self._onLoadCallback1, self)
+	loadAbAsset(self._shadowMapPath, false, self._onLoadCallback2, self)
 end
 
-function var_0_0._onLoadCallback1(arg_9_0, arg_9_1)
-	if arg_9_1.IsLoadSuccess then
-		local var_9_0 = arg_9_0._assetItem1
+function FightVariantCrayonComp:_onLoadCallback1(assetItem)
+	if assetItem.IsLoadSuccess then
+		local oldAsstet = self._assetItem1
 
-		arg_9_0._assetItem1 = arg_9_1
+		self._assetItem1 = assetItem
 
-		arg_9_1:Retain()
+		assetItem:Retain()
 
-		if var_9_0 then
-			var_9_0:Release()
+		if oldAsstet then
+			oldAsstet:Release()
 		end
 
-		local var_9_1 = arg_9_1:GetResource(arg_9_0._noiceMapPath)
+		local texture = assetItem:GetResource(self._noiceMapPath)
+		local mat = self.entity.spineRenderer:getReplaceMat()
 
-		arg_9_0.entity.spineRenderer:getReplaceMat():SetTexture(var_0_3, var_9_1)
+		mat:SetTexture(NoiceMapKey, texture)
 	end
 end
 
-function var_0_0._onLoadCallback2(arg_10_0, arg_10_1)
-	if arg_10_1.IsLoadSuccess then
-		local var_10_0 = arg_10_0._assetItem2
+function FightVariantCrayonComp:_onLoadCallback2(assetItem)
+	if assetItem.IsLoadSuccess then
+		local oldAsstet = self._assetItem2
 
-		arg_10_0._assetItem2 = arg_10_1
+		self._assetItem2 = assetItem
 
-		arg_10_1:Retain()
+		assetItem:Retain()
 
-		if var_10_0 then
-			var_10_0:Release()
+		if oldAsstet then
+			oldAsstet:Release()
 		end
 
-		local var_10_1 = arg_10_1:GetResource(arg_10_0._shadowMapPath)
+		local texture = assetItem:GetResource(self._shadowMapPath)
+		local mat = self.entity.spineRenderer:getReplaceMat()
 
-		arg_10_0.entity.spineRenderer:getReplaceMat():SetTexture(var_0_4, var_10_1)
+		mat:SetTexture(ShadowMapKey, texture)
 	end
 end
 
-function var_0_0.onDestroy(arg_11_0)
-	if arg_11_0._assetItem1 then
-		arg_11_0._assetItem1:Release()
+function FightVariantCrayonComp:onDestroy()
+	if self._assetItem1 then
+		self._assetItem1:Release()
 
-		arg_11_0._assetItem1 = nil
+		self._assetItem1 = nil
 	end
 
-	if arg_11_0._assetItem2 then
-		arg_11_0._assetItem2:Release()
+	if self._assetItem2 then
+		self._assetItem2:Release()
 
-		arg_11_0._assetItem2 = nil
+		self._assetItem2 = nil
 	end
 end
 
-return var_0_0
+return FightVariantCrayonComp

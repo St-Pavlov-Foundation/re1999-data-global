@@ -1,64 +1,68 @@
-﻿module("modules.logic.survival.view.map.comp.SurvivalWeightPart", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/comp/SurvivalWeightPart.lua
 
-local var_0_0 = class("SurvivalWeightPart", LuaCompBase)
+module("modules.logic.survival.view.map.comp.SurvivalWeightPart", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	if arg_1_1 == nil then
-		arg_1_1 = SurvivalShelterModel.instance:getWeekInfo():getBag(SurvivalEnum.ItemSource.Map)
+local SurvivalWeightPart = class("SurvivalWeightPart", LuaCompBase)
+
+function SurvivalWeightPart:ctor(bag)
+	if bag == nil then
+		local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+
+		bag = weekInfo:getBag(SurvivalEnum.ItemSource.Map)
 	end
 
-	arg_1_0.bag = arg_1_1
+	self.bag = bag
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0._anim = gohelper.findChildAnim(arg_2_1, "")
-	arg_2_0._scrollbar = gohelper.findChildScrollbar(arg_2_1, "Scrollbar Horizon")
-	arg_2_0._image_zhizhen = gohelper.findChildImage(arg_2_1, "Scrollbar Horizon/Sliding Area/Handle/#image_zhizhen")
-	arg_2_0._image_icon = gohelper.findChildImage(arg_2_1, "#image_icon")
-	arg_2_0._txtmass1 = gohelper.findChildTextMesh(arg_2_1, "#go_mass/#txt_mass1")
-	arg_2_0._txtmass2 = gohelper.findChildTextMesh(arg_2_1, "#go_mass/#txt_mass2")
-	arg_2_0._txtmass3 = gohelper.findChildTextMesh(arg_2_1, "#go_mass/#txt_mass3")
+function SurvivalWeightPart:init(go)
+	self._anim = gohelper.findChildAnim(go, "")
+	self._scrollbar = gohelper.findChildScrollbar(go, "Scrollbar Horizon")
+	self._image_zhizhen = gohelper.findChildImage(go, "Scrollbar Horizon/Sliding Area/Handle/#image_zhizhen")
+	self._image_icon = gohelper.findChildImage(go, "#image_icon")
+	self._txtmass1 = gohelper.findChildTextMesh(go, "#go_mass/#txt_mass1")
+	self._txtmass2 = gohelper.findChildTextMesh(go, "#go_mass/#txt_mass2")
+	self._txtmass3 = gohelper.findChildTextMesh(go, "#go_mass/#txt_mass3")
 
-	arg_2_0:refreshView()
+	self:refreshView()
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapBagUpdate, arg_3_0.refreshView, arg_3_0)
+function SurvivalWeightPart:addEventListeners()
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapBagUpdate, self.refreshView, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapBagUpdate, arg_4_0.refreshView, arg_4_0)
+function SurvivalWeightPart:removeEventListeners()
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapBagUpdate, self.refreshView, self)
 end
 
-function var_0_0.refreshView(arg_5_0)
-	local var_5_0 = arg_5_0.bag
-	local var_5_1 = var_5_0.maxWeightLimit + SurvivalShelterModel.instance:getWeekInfo():getAttr(SurvivalEnum.AttrType.AttrWeight)
-	local var_5_2 = var_5_0.totalMass / var_5_1
-	local var_5_3 = string.format("%s/%s", var_5_0.totalMass, var_5_1)
-	local var_5_4 = 1
+function SurvivalWeightPart:refreshView()
+	local bagMo = self.bag
+	local maxWeightLimit = bagMo.maxWeightLimit + SurvivalShelterModel.instance:getWeekInfo():getAttr(SurvivalEnum.AttrType.AttrWeight)
+	local value = bagMo.totalMass / maxWeightLimit
+	local massNum = string.format("%s/%s", bagMo.totalMass, maxWeightLimit)
+	local statu = 1
 
-	if var_5_2 > 1 then
-		var_5_4 = 3
+	if value > 1 then
+		statu = 3
 	end
 
-	for iter_5_0 = 1, 3 do
-		if iter_5_0 == var_5_4 then
-			arg_5_0["_txtmass" .. iter_5_0].text = var_5_3
+	for i = 1, 3 do
+		if i == statu then
+			self["_txtmass" .. i].text = massNum
 		else
-			arg_5_0["_txtmass" .. iter_5_0].text = ""
+			self["_txtmass" .. i].text = ""
 		end
 	end
 
-	UISpriteSetMgr.instance:setSurvivalSprite(arg_5_0._image_icon, "survival_bag_heavyicon_" .. var_5_4)
-	UISpriteSetMgr.instance:setSurvivalSprite(arg_5_0._image_zhizhen, "survival_bag_zhizhen_" .. var_5_4)
+	UISpriteSetMgr.instance:setSurvivalSprite(self._image_icon, "survival_bag_heavyicon_" .. statu)
+	UISpriteSetMgr.instance:setSurvivalSprite(self._image_zhizhen, "survival_bag_zhizhen_" .. statu)
 
-	local var_5_5 = Mathf.Clamp01(var_5_2)
+	value = Mathf.Clamp01(value)
 
-	arg_5_0._scrollbar:SetValue(var_5_5)
+	self._scrollbar:SetValue(value)
 
-	if arg_5_0._anim then
-		arg_5_0._anim:Play("step" .. var_5_4, 0, 0)
+	if self._anim then
+		self._anim:Play("step" .. statu, 0, 0)
 	end
 end
 
-return var_0_0
+return SurvivalWeightPart

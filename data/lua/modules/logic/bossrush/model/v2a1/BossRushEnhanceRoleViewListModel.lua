@@ -1,74 +1,76 @@
-﻿module("modules.logic.bossrush.model.v2a1.BossRushEnhanceRoleViewListModel", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/model/v2a1/BossRushEnhanceRoleViewListModel.lua
 
-local var_0_0 = class("BossRushEnhanceRoleViewListModel", ListScrollModel)
+module("modules.logic.bossrush.model.v2a1.BossRushEnhanceRoleViewListModel", package.seeall)
 
-function var_0_0.setListData(arg_1_0)
-	local var_1_0 = BossRushConfig.instance:getActRoleEnhance()
+local BossRushEnhanceRoleViewListModel = class("BossRushEnhanceRoleViewListModel", ListScrollModel)
 
-	if var_1_0 then
-		local var_1_1 = {}
-		local var_1_2 = 0
+function BossRushEnhanceRoleViewListModel:setListData()
+	local configs = BossRushConfig.instance:getActRoleEnhance()
 
-		for iter_1_0, iter_1_1 in pairs(var_1_0) do
-			local var_1_3 = {
-				characterId = iter_1_1.characterId,
-				sort = iter_1_1.sort
+	if configs then
+		local moList = {}
+		local firstHeroId = 0
+
+		for _, co in pairs(configs) do
+			local mo = {
+				characterId = co.characterId,
+				sort = co.sort
 			}
 
-			if iter_1_1.sort == 1 then
-				var_1_2 = iter_1_1.characterId
+			if co.sort == 1 then
+				firstHeroId = co.characterId
 			end
 
-			table.insert(var_1_1, var_1_3)
+			table.insert(moList, mo)
 		end
 
-		table.sort(var_1_1, arg_1_0.sort)
-		arg_1_0:setList(var_1_1)
+		table.sort(moList, self.sort)
+		self:setList(moList)
 
-		if var_1_2 ~= 0 then
-			arg_1_0:setSelect(var_1_2)
+		if firstHeroId ~= 0 then
+			self:setSelect(firstHeroId)
 		end
 	end
 end
 
-function var_0_0.sort(arg_2_0, arg_2_1)
-	return arg_2_0.sort < arg_2_1.sort
+function BossRushEnhanceRoleViewListModel.sort(a, b)
+	return a.sort < b.sort
 end
 
-function var_0_0.clearSelect(arg_3_0)
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0._scrollViews) do
-		iter_3_1:setSelect(nil)
+function BossRushEnhanceRoleViewListModel:clearSelect()
+	for i, view in ipairs(self._scrollViews) do
+		view:setSelect(nil)
 	end
 
-	arg_3_0._selectHeroId = nil
+	self._selectHeroId = nil
 end
 
-function var_0_0._refreshSelect(arg_4_0)
-	local var_4_0
-	local var_4_1 = arg_4_0:getList()
+function BossRushEnhanceRoleViewListModel:_refreshSelect()
+	local selectMO
+	local moList = self:getList()
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_1) do
-		if iter_4_1.characterId == arg_4_0._selectHeroId then
-			var_4_0 = iter_4_1
+	for i, mo in ipairs(moList) do
+		if mo.characterId == self._selectHeroId then
+			selectMO = mo
 		end
 	end
 
-	for iter_4_2, iter_4_3 in ipairs(arg_4_0._scrollViews) do
-		iter_4_3:setSelect(var_4_0)
+	for i, view in ipairs(self._scrollViews) do
+		view:setSelect(selectMO)
 	end
 end
 
-function var_0_0.setSelect(arg_5_0, arg_5_1)
-	arg_5_0._selectHeroId = arg_5_1
+function BossRushEnhanceRoleViewListModel:setSelect(characterUid)
+	self._selectHeroId = characterUid
 
-	arg_5_0:_refreshSelect()
-	BossRushController.instance:dispatchEvent(BossRushEvent.OnSelectEnhanceRole, arg_5_1)
+	self:_refreshSelect()
+	BossRushController.instance:dispatchEvent(BossRushEvent.OnSelectEnhanceRole, characterUid)
 end
 
-function var_0_0.getSelectHeroId(arg_6_0)
-	return arg_6_0._selectHeroId
+function BossRushEnhanceRoleViewListModel:getSelectHeroId()
+	return self._selectHeroId
 end
 
-var_0_0.instance = var_0_0.New()
+BossRushEnhanceRoleViewListModel.instance = BossRushEnhanceRoleViewListModel.New()
 
-return var_0_0
+return BossRushEnhanceRoleViewListModel

@@ -1,9 +1,11 @@
-﻿module("modules.logic.sp01.act208.controller.Act208Event", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/act208/controller/Act208Event.lua
 
-local var_0_0 = _M
-local var_0_1 = GameUtil.getUniqueTb()
+module("modules.logic.sp01.act208.controller.Act208Event", package.seeall)
 
-var_0_0.onGetInfo = var_0_1()
-var_0_0.onGetBonus = var_0_1()
+local Act208Event = _M
+local _get = GameUtil.getUniqueTb()
 
-return var_0_0
+Act208Event.onGetInfo = _get()
+Act208Event.onGetBonus = _get()
+
+return Act208Event

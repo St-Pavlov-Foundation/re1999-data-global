@@ -1,14 +1,16 @@
-﻿module("modules.logic.versionactivity1_8.dungeon.controller.Activity157GameRule", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_8/dungeon/controller/Activity157GameRule.lua
 
-local var_0_0 = class("Activity157GameRule")
-local var_0_1 = ArmPuzzlePipeEnum.dir.left
-local var_0_2 = ArmPuzzlePipeEnum.dir.right
-local var_0_3 = ArmPuzzlePipeEnum.dir.down
-local var_0_4 = ArmPuzzlePipeEnum.dir.up
-local var_0_5 = 0
+module("modules.logic.versionactivity1_8.dungeon.controller.Activity157GameRule", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._ruleChange = {
+local Activity157GameRule = class("Activity157GameRule")
+local LEFT = ArmPuzzlePipeEnum.dir.left
+local RIGHT = ArmPuzzlePipeEnum.dir.right
+local DOWN = ArmPuzzlePipeEnum.dir.down
+local UP = ArmPuzzlePipeEnum.dir.up
+local EmptyChange = 0
+
+function Activity157GameRule:ctor()
+	self._ruleChange = {
 		[0] = 0,
 		[28] = 46,
 		[248] = 468,
@@ -22,38 +24,38 @@ function var_0_0.ctor(arg_1_0)
 		[68] = 26,
 		[2468] = 2468
 	}
-	arg_1_0._ruleConnect = {}
+	self._ruleConnect = {}
 
-	for iter_1_0, iter_1_1 in pairs(arg_1_0._ruleChange) do
-		local var_1_0 = {}
-		local var_1_1 = iter_1_0
+	for k, v in pairs(self._ruleChange) do
+		local rule = {}
+		local val = k
 
-		while var_1_1 > 0 do
-			local var_1_2 = var_1_1 % 10
+		while val > 0 do
+			local mod = val % 10
 
-			var_1_1 = math.floor(var_1_1 / 10)
-			var_1_0[var_1_2] = true
+			val = math.floor(val / 10)
+			rule[mod] = true
 		end
 
-		arg_1_0._ruleConnect[iter_1_0] = var_1_0
+		self._ruleConnect[k] = rule
 	end
 
-	arg_1_0._ruleConnect[var_0_5] = {
-		[var_0_2] = false,
-		[var_0_1] = false,
-		[var_0_3] = false,
-		[var_0_4] = false
+	self._ruleConnect[EmptyChange] = {
+		[RIGHT] = false,
+		[LEFT] = false,
+		[DOWN] = false,
+		[UP] = false
 	}
 end
 
-function var_0_0.setGameSize(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._gameWidth = arg_2_1
-	arg_2_0._gameHeight = arg_2_2
+function Activity157GameRule:setGameSize(w, h)
+	self._gameWidth = w
+	self._gameHeight = h
 end
 
-function var_0_0.isGameClear(arg_3_0, arg_3_1)
-	for iter_3_0, iter_3_1 in pairs(arg_3_1) do
-		if not arg_3_0:getIsEntryClear(iter_3_0) then
+function Activity157GameRule:isGameClear(resultTable)
+	for entryMo, result in pairs(resultTable) do
+		if not self:getIsEntryClear(entryMo) then
 			return false
 		end
 	end
@@ -61,125 +63,127 @@ function var_0_0.isGameClear(arg_3_0, arg_3_1)
 	return true
 end
 
-function var_0_0.getIsEntryClear(arg_4_0, arg_4_1)
-	if arg_4_1.typeId == ArmPuzzlePipeEnum.type.first or arg_4_1.typeId == ArmPuzzlePipeEnum.type.last then
-		return arg_4_1.entryCount >= 1
+function Activity157GameRule:getIsEntryClear(entryMo)
+	if entryMo.typeId == ArmPuzzlePipeEnum.type.first or entryMo.typeId == ArmPuzzlePipeEnum.type.last then
+		return entryMo.entryCount >= 1
 	end
 
-	return arg_4_1.entryCount >= ArmPuzzlePipeEnum.pipeEntryClearCount and arg_4_1:getConnectValue() >= ArmPuzzlePipeEnum.pipeEntryClearDecimal
+	return entryMo.entryCount >= ArmPuzzlePipeEnum.pipeEntryClearCount and entryMo:getConnectValue() >= ArmPuzzlePipeEnum.pipeEntryClearDecimal
 end
 
-function var_0_0.getReachTable(arg_5_0)
-	local var_5_0 = {}
-	local var_5_1 = {}
-	local var_5_2 = {}
-	local var_5_3 = {}
-	local var_5_4 = Activity157RepairGameModel.instance:getEntryList()
+function Activity157GameRule:getReachTable()
+	local entryTable, resultTable = {}, {}
+	local openSet = {}
+	local orderList = {}
+	local entryList = Activity157RepairGameModel.instance:getEntryList()
 
-	table.sort(var_5_4, var_0_0._sortOrderList)
+	table.sort(entryList, Activity157GameRule._sortOrderList)
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_4) do
-		table.insert(var_5_2, iter_5_1)
+	for i, entryMo in ipairs(entryList) do
+		table.insert(openSet, entryMo)
 
-		local var_5_5, var_5_6 = arg_5_0:_getSearchPipeResult(iter_5_1, var_5_2)
+		local traceTable, resultEntry = self:_getSearchPipeResult(entryMo, openSet)
 
-		var_5_1[iter_5_1] = var_5_6
-		var_5_0[iter_5_1] = var_5_5
-		iter_5_1.entryCount = #var_5_6
+		resultTable[entryMo] = resultEntry
+		entryTable[entryMo] = traceTable
+		entryMo.entryCount = #resultEntry
 
-		if iter_5_1.pathType == ArmPuzzlePipeEnum.PathType.Order then
-			table.insert(var_5_3, iter_5_1)
+		if entryMo.pathType == ArmPuzzlePipeEnum.PathType.Order then
+			table.insert(orderList, entryMo)
 		end
 	end
 
-	if #var_5_3 > 0 then
-		arg_5_0:_mergeReachDir(var_5_0)
-		table.sort(var_5_3, var_0_0._sortOrderList)
+	if #orderList > 0 then
+		self:_mergeReachDir(entryTable)
+		table.sort(orderList, Activity157GameRule._sortOrderList)
 
-		local var_5_7 = false
+		local isCanConn = false
 
-		for iter_5_2, iter_5_3 in ipairs(var_5_3) do
-			if iter_5_3.typeId == ArmPuzzlePipeEnum.type.first then
-				var_5_7 = iter_5_3.entryCount > 0
+		for i, entryMo in ipairs(orderList) do
+			if entryMo.typeId == ArmPuzzlePipeEnum.type.first then
+				isCanConn = entryMo.entryCount > 0
 			else
-				if not var_5_7 then
-					iter_5_3:cleanEntrySet()
+				if not isCanConn then
+					entryMo:cleanEntrySet()
 
-					iter_5_3.entryCount = 0
-					var_5_1[iter_5_3] = {}
-					var_5_0[iter_5_3] = {}
+					entryMo.entryCount = 0
+					resultTable[entryMo] = {}
+					entryTable[entryMo] = {}
 				end
 
-				if var_5_7 and not arg_5_0:getIsEntryClear(iter_5_3) then
-					var_5_7 = false
+				if isCanConn and not self:getIsEntryClear(entryMo) then
+					isCanConn = false
 				end
 			end
 		end
 
-		arg_5_0:_cleaConnMark()
+		self:_cleaConnMark()
 	end
 
-	return var_5_0, var_5_1
+	return entryTable, resultTable
 end
 
-function var_0_0._cleaConnMark(arg_6_0)
-	for iter_6_0 = 1, arg_6_0._gameWidth do
-		for iter_6_1 = 1, arg_6_0._gameHeight do
-			local var_6_0 = Activity157RepairGameModel.instance:getData(iter_6_0, iter_6_1)
+function Activity157GameRule:_cleaConnMark()
+	for x = 1, self._gameWidth do
+		for y = 1, self._gameHeight do
+			local entryMo = Activity157RepairGameModel.instance:getData(x, y)
+			local entryCount = entryMo.entryCount
 
-			var_6_0.entryCount = var_6_0.entryCount, var_6_0:cleanEntrySet()
+			entryMo:cleanEntrySet()
+
+			entryMo.entryCount = entryCount
 		end
 	end
 end
 
-function var_0_0._sortOrderList(arg_7_0, arg_7_1)
-	if arg_7_0.pathIndex ~= arg_7_1.pathIndex then
-		return arg_7_0.pathIndex < arg_7_1.pathIndex
+function Activity157GameRule._sortOrderList(a, b)
+	if a.pathIndex ~= b.pathIndex then
+		return a.pathIndex < b.pathIndex
 	end
 
-	if arg_7_0.numIndex ~= arg_7_1.numIndex then
-		return arg_7_0.numIndex < arg_7_1.numIndex
+	if a.numIndex ~= b.numIndex then
+		return a.numIndex < b.numIndex
 	end
 end
 
-function var_0_0._getSearchPipeResult(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = {}
-	local var_8_1 = {}
+function Activity157GameRule:_getSearchPipeResult(entryMo, openSet)
+	local entryList = {}
+	local traceSet = {}
 
-	while #arg_8_2 > 0 do
-		local var_8_2 = table.remove(arg_8_2)
+	while #openSet > 0 do
+		local tmpMo = table.remove(openSet)
 
-		arg_8_0:_addToOpenSet(var_8_2, var_8_1, arg_8_2, var_8_0)
+		self:_addToOpenSet(tmpMo, traceSet, openSet, entryList)
 	end
 
-	for iter_8_0 = #var_8_0, 1, -1 do
-		local var_8_3 = var_8_0[iter_8_0]
+	for i = #entryList, 1, -1 do
+		local tmpMo = entryList[i]
 
-		if not arg_8_0:_checkEntryConnect(arg_8_1, var_8_3) or arg_8_1 == var_8_3 then
-			var_8_1[var_8_3] = nil
+		if not self:_checkEntryConnect(entryMo, tmpMo) or entryMo == tmpMo then
+			traceSet[tmpMo] = nil
 
-			table.remove(var_8_0, iter_8_0)
+			table.remove(entryList, i)
 		end
 	end
 
-	if #var_8_0 < 1 then
-		var_8_1 = {}
+	if #entryList < 1 then
+		traceSet = {}
 	end
 
-	return var_8_1, var_8_0
+	return traceSet, entryList
 end
 
-function var_0_0._checkEntryConnect(arg_9_0, arg_9_1, arg_9_2)
-	if arg_9_2.pathIndex ~= arg_9_1.pathIndex or arg_9_2.pathType ~= arg_9_1.pathType then
+function Activity157GameRule:_checkEntryConnect(entryMo, tmpMo)
+	if tmpMo.pathIndex ~= entryMo.pathIndex or tmpMo.pathType ~= entryMo.pathType then
 		return false
 	end
 
-	if arg_9_2.pathType == ArmPuzzlePipeEnum.PathType.Order then
-		local var_9_0 = Activity157RepairGameModel.instance
-		local var_9_1 = var_9_0:getIndexByMO(arg_9_2)
-		local var_9_2 = var_9_0:getIndexByMO(arg_9_1)
+	if tmpMo.pathType == ArmPuzzlePipeEnum.PathType.Order then
+		local act157GameModel = Activity157RepairGameModel.instance
+		local tmpIndex = act157GameModel:getIndexByMO(tmpMo)
+		local curIndex = act157GameModel:getIndexByMO(entryMo)
 
-		if math.abs(var_9_2 - var_9_1) ~= 1 then
+		if math.abs(curIndex - tmpIndex) ~= 1 then
 			return false
 		end
 	end
@@ -187,180 +191,177 @@ function var_0_0._checkEntryConnect(arg_9_0, arg_9_1, arg_9_2)
 	return true
 end
 
-function var_0_0._addToOpenSet(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4)
-	for iter_10_0, iter_10_1 in pairs(arg_10_1.connectSet) do
-		local var_10_0, var_10_1, var_10_2 = var_0_0.getIndexByDir(arg_10_1.x, arg_10_1.y, iter_10_0)
+function Activity157GameRule:_addToOpenSet(tmpMo, traceSet, openSet, entryList)
+	for dir, _ in pairs(tmpMo.connectSet) do
+		local nextX, nextY, reverse = Activity157GameRule.getIndexByDir(tmpMo.x, tmpMo.y, dir)
 
-		if var_10_0 > 0 and var_10_0 <= arg_10_0._gameWidth and var_10_1 > 0 and var_10_1 <= arg_10_0._gameHeight then
-			local var_10_3 = Activity157RepairGameModel.instance:getData(var_10_0, var_10_1)
+		if nextX > 0 and nextX <= self._gameWidth and nextY > 0 and nextY <= self._gameHeight then
+			local nextMo = Activity157RepairGameModel.instance:getData(nextX, nextY)
 
-			if not arg_10_2[var_10_3] then
-				arg_10_2[var_10_3] = true
+			if not traceSet[nextMo] then
+				traceSet[nextMo] = true
 
-				if var_10_3:isEntry() then
-					table.insert(arg_10_4, var_10_3)
+				if nextMo:isEntry() then
+					table.insert(entryList, nextMo)
 				else
-					table.insert(arg_10_3, var_10_3)
+					table.insert(openSet, nextMo)
 				end
 			end
 		end
 	end
 
-	arg_10_2[arg_10_1] = true
+	traceSet[tmpMo] = true
 end
 
-function var_0_0._mergeReachDir(arg_11_0, arg_11_1)
-	local var_11_0 = {}
-	local var_11_1 = {}
+function Activity157GameRule:_mergeReachDir(entryTable)
+	local compareList = {}
+	local entryMoList = {}
 
-	for iter_11_0, iter_11_1 in pairs(arg_11_1) do
-		table.insert(var_11_0, iter_11_1)
-		table.insert(var_11_1, iter_11_0)
+	for entryMo, reachMap in pairs(entryTable) do
+		table.insert(compareList, reachMap)
+		table.insert(entryMoList, entryMo)
 	end
 
-	local var_11_2 = #var_11_0
+	local len = #compareList
 
-	for iter_11_2 = 1, var_11_2 do
-		local var_11_3 = {}
+	for i = 1, len do
+		local mergeMap = {}
 
-		for iter_11_3 = iter_11_2 + 1, var_11_2 do
-			local var_11_4 = var_11_1[iter_11_2]
-			local var_11_5 = var_11_1[iter_11_3]
+		for j = i + 1, len do
+			local entryMoI, entryMoJ = entryMoList[i], entryMoList[j]
 
-			if arg_11_0:_checkEntryConnect(var_11_4, var_11_5) then
-				local var_11_6 = var_11_0[iter_11_2]
-				local var_11_7 = var_11_0[iter_11_3]
+			if self:_checkEntryConnect(entryMoI, entryMoJ) then
+				local mapI, mapJ = compareList[i], compareList[j]
 
-				for iter_11_4, iter_11_5 in pairs(var_11_6) do
-					if var_11_7[iter_11_4] then
-						var_11_3[iter_11_4] = var_11_4.pathIndex
+				for mo, _ in pairs(mapI) do
+					if mapJ[mo] then
+						mergeMap[mo] = entryMoI.pathIndex
 					end
 				end
 
-				arg_11_0:_markReachDir(var_11_3)
+				self:_markReachDir(mergeMap)
 			end
 		end
 	end
 end
 
-function var_0_0._markReachDir(arg_12_0, arg_12_1)
-	for iter_12_0, iter_12_1 in pairs(arg_12_1) do
-		for iter_12_2, iter_12_3 in pairs(iter_12_0.connectSet) do
-			local var_12_0, var_12_1, var_12_2 = var_0_0.getIndexByDir(iter_12_0.x, iter_12_0.y, iter_12_2)
+function Activity157GameRule:_markReachDir(mergeMap)
+	for mo, connPathIndex in pairs(mergeMap) do
+		for dir, _ in pairs(mo.connectSet) do
+			local connectX, connectY, reverse = Activity157GameRule.getIndexByDir(mo.x, mo.y, dir)
 
-			if var_12_0 > 0 and var_12_0 <= arg_12_0._gameWidth and var_12_1 > 0 and var_12_1 <= arg_12_0._gameHeight then
-				local var_12_3 = Activity157RepairGameModel.instance:getData(var_12_0, var_12_1)
+			if connectX > 0 and connectX <= self._gameWidth and connectY > 0 and connectY <= self._gameHeight then
+				local connectMo = Activity157RepairGameModel.instance:getData(connectX, connectY)
 
-				if arg_12_1[var_12_3] then
-					iter_12_0.entryConnect[iter_12_2] = true
-					var_12_3.entryConnect[var_12_2] = true
-					iter_12_0.connectPathIndex = iter_12_1
-					var_12_3.connectPathIndex = iter_12_1
+				if mergeMap[connectMo] then
+					mo.entryConnect[dir] = true
+					connectMo.entryConnect[reverse] = true
+					mo.connectPathIndex = connPathIndex
+					connectMo.connectPathIndex = connPathIndex
 				end
 			end
 		end
 	end
 end
 
-function var_0_0._unmarkBranch(arg_13_0)
-	for iter_13_0 = 1, arg_13_0._gameWidth do
-		for iter_13_1 = 1, arg_13_0._gameHeight do
-			local var_13_0 = Activity157RepairGameModel.instance:getData(iter_13_0, iter_13_1)
+function Activity157GameRule:_unmarkBranch()
+	for x = 1, self._gameWidth do
+		for y = 1, self._gameHeight do
+			local mo = Activity157RepairGameModel.instance:getData(x, y)
 
-			arg_13_0:_unmarkSearchNode(var_13_0)
+			self:_unmarkSearchNode(mo)
 		end
 	end
 end
 
-function var_0_0._unmarkSearchNode(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_1
+function Activity157GameRule:_unmarkSearchNode(mo)
+	local searchMo = mo
 
-	while var_14_0 ~= nil do
-		if tabletool.len(var_14_0.entryConnect) == 1 and not var_14_0:isEntry() then
-			local var_14_1
+	while searchMo ~= nil do
+		if tabletool.len(searchMo.entryConnect) == 1 and not searchMo:isEntry() then
+			local dir
 
-			for iter_14_0, iter_14_1 in pairs(var_14_0.entryConnect) do
-				var_14_1 = iter_14_0
+			for k, _ in pairs(searchMo.entryConnect) do
+				dir = k
 			end
 
-			local var_14_2, var_14_3, var_14_4 = var_0_0.getIndexByDir(var_14_0.x, var_14_0.y, var_14_1)
-			local var_14_5 = Activity157RepairGameModel.instance:getData(var_14_2, var_14_3)
+			local nextX, nextY, reverse = Activity157GameRule.getIndexByDir(searchMo.x, searchMo.y, dir)
+			local nextMo = Activity157RepairGameModel.instance:getData(nextX, nextY)
 
-			var_14_0.entryConnect[var_14_1] = nil
-			var_14_5.entryConnect[var_14_4] = nil
-			var_14_0 = var_14_5
+			searchMo.entryConnect[dir] = nil
+			nextMo.entryConnect[reverse] = nil
+			searchMo = nextMo
 		else
-			var_14_0 = nil
+			searchMo = nil
 		end
 	end
 end
 
-function var_0_0.setSingleConnection(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5)
-	if arg_15_1 > 0 and arg_15_1 <= arg_15_0._gameWidth and arg_15_2 > 0 and arg_15_2 <= arg_15_0._gameHeight then
-		local var_15_0 = Activity157RepairGameModel.instance:getData(arg_15_1, arg_15_2)
-		local var_15_1 = arg_15_0._ruleConnect[var_15_0.value]
-		local var_15_2 = arg_15_0._ruleConnect[arg_15_5.value]
-		local var_15_3 = var_15_1[arg_15_3] and var_15_2[arg_15_4]
-		local var_15_4
+function Activity157GameRule:setSingleConnection(x, y, dir, reverse, centerMO)
+	if x > 0 and x <= self._gameWidth and y > 0 and y <= self._gameHeight then
+		local targetMO = Activity157RepairGameModel.instance:getData(x, y)
+		local targetRule = self._ruleConnect[targetMO.value]
+		local selfRule = self._ruleConnect[centerMO.value]
+		local result = targetRule[dir] and selfRule[reverse]
+		local oldSet = targetMO.connectSet[dir] == true
 
-		var_15_4 = var_15_0.connectSet[arg_15_3] == true
-
-		if var_15_3 then
-			var_15_0.connectSet[arg_15_3] = true
-			arg_15_5.connectSet[arg_15_4] = true
+		if result then
+			targetMO.connectSet[dir] = true
+			centerMO.connectSet[reverse] = true
 		else
-			var_15_0.connectSet[arg_15_3] = nil
-			arg_15_5.connectSet[arg_15_4] = nil
+			targetMO.connectSet[dir] = nil
+			centerMO.connectSet[reverse] = nil
 		end
 	end
 end
 
-function var_0_0.changeDirection(arg_16_0, arg_16_1, arg_16_2)
-	local var_16_0 = Activity157RepairGameModel.instance:getData(arg_16_1, arg_16_2)
-	local var_16_1 = arg_16_0._ruleChange[var_16_0.value]
+function Activity157GameRule:changeDirection(x, y)
+	local mo = Activity157RepairGameModel.instance:getData(x, y)
+	local nextVal = self._ruleChange[mo.value]
 
-	if var_16_1 then
-		var_16_0.value = var_16_1
+	if nextVal then
+		mo.value = nextVal
 	end
 
-	return var_16_0
+	return mo
 end
 
-function var_0_0.getRandomSkipSet(arg_17_0)
-	local var_17_0 = {}
-	local var_17_1 = Activity157RepairGameModel.instance:getEntryList()
+function Activity157GameRule:getRandomSkipSet()
+	local skipSet = {}
+	local entryList = Activity157RepairGameModel.instance:getEntryList()
 
-	for iter_17_0, iter_17_1 in ipairs(var_17_1) do
-		var_17_0[iter_17_1] = true
+	for _, entry in ipairs(entryList) do
+		skipSet[entry] = true
 
-		local var_17_2 = iter_17_1.x
-		local var_17_3 = iter_17_1.y
+		local x, y = entry.x, entry.y
 
-		arg_17_0:_insertToSet(var_17_2 - 1, var_17_3, var_17_0)
-		arg_17_0:_insertToSet(var_17_2 + 1, var_17_3, var_17_0)
-		arg_17_0:_insertToSet(var_17_2, var_17_3 - 1, var_17_0)
-		arg_17_0:_insertToSet(var_17_2, var_17_3 + 1, var_17_0)
+		self:_insertToSet(x - 1, y, skipSet)
+		self:_insertToSet(x + 1, y, skipSet)
+		self:_insertToSet(x, y - 1, skipSet)
+		self:_insertToSet(x, y + 1, skipSet)
 	end
 
-	return var_17_0
+	return skipSet
 end
 
-function var_0_0._insertToSet(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	if arg_18_1 > 0 and arg_18_1 <= arg_18_0._gameWidth and arg_18_2 > 0 and arg_18_2 <= arg_18_0._gameHeight then
-		arg_18_3[Activity157RepairGameModel.instance:getData(arg_18_1, arg_18_2)] = true
-	end
-end
+function Activity157GameRule:_insertToSet(x, y, targetSet)
+	if x > 0 and x <= self._gameWidth and y > 0 and y <= self._gameHeight then
+		local mo = Activity157RepairGameModel.instance:getData(x, y)
 
-function var_0_0.getIndexByDir(arg_19_0, arg_19_1, arg_19_2)
-	if arg_19_2 == var_0_1 then
-		return arg_19_0 - 1, arg_19_1, var_0_2
-	elseif arg_19_2 == var_0_2 then
-		return arg_19_0 + 1, arg_19_1, var_0_1
-	elseif arg_19_2 == var_0_4 then
-		return arg_19_0, arg_19_1 + 1, var_0_3
-	elseif arg_19_2 == var_0_3 then
-		return arg_19_0, arg_19_1 - 1, var_0_4
+		targetSet[mo] = true
 	end
 end
 
-return var_0_0
+function Activity157GameRule.getIndexByDir(x, y, dir)
+	if dir == LEFT then
+		return x - 1, y, RIGHT
+	elseif dir == RIGHT then
+		return x + 1, y, LEFT
+	elseif dir == UP then
+		return x, y + 1, DOWN
+	elseif dir == DOWN then
+		return x, y - 1, UP
+	end
+end
+
+return Activity157GameRule

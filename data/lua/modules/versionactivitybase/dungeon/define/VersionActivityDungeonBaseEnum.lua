@@ -1,10 +1,12 @@
-﻿module("modules.versionactivitybase.dungeon.define.VersionActivityDungeonBaseEnum", package.seeall)
+﻿-- chunkname: @modules/versionactivitybase/dungeon/define/VersionActivityDungeonBaseEnum.lua
 
-local var_0_0 = _M
+module("modules.versionactivitybase.dungeon.define.VersionActivityDungeonBaseEnum", package.seeall)
 
-var_0_0.ModeSelectColor = Color.white
-var_0_0.ModeDisSelectColor = Color(0.4, 0.4, 0.4, 1)
-var_0_0.DungeonMode = {
+local VersionActivityDungeonBaseEnum = _M
+
+VersionActivityDungeonBaseEnum.ModeSelectColor = Color.white
+VersionActivityDungeonBaseEnum.ModeDisSelectColor = Color(0.4, 0.4, 0.4, 1)
+VersionActivityDungeonBaseEnum.DungeonMode = {
 	Story3 = 3,
 	Story = 1,
 	Hard = 4,
@@ -12,19 +14,19 @@ var_0_0.DungeonMode = {
 	Story2 = 2,
 	None = 0
 }
-var_0_0.DungeonMode2ChapterIdKey = {
-	[var_0_0.DungeonMode.Story] = "story1ChapterId",
-	[var_0_0.DungeonMode.Story1] = "story1ChapterId",
-	[var_0_0.DungeonMode.Story2] = "story2ChapterId",
-	[var_0_0.DungeonMode.Story3] = "story3ChapterId",
-	[var_0_0.DungeonMode.Hard] = "hardChapterId"
+VersionActivityDungeonBaseEnum.DungeonMode2ChapterIdKey = {
+	[VersionActivityDungeonBaseEnum.DungeonMode.Story] = "story1ChapterId",
+	[VersionActivityDungeonBaseEnum.DungeonMode.Story1] = "story1ChapterId",
+	[VersionActivityDungeonBaseEnum.DungeonMode.Story2] = "story2ChapterId",
+	[VersionActivityDungeonBaseEnum.DungeonMode.Story3] = "story3ChapterId",
+	[VersionActivityDungeonBaseEnum.DungeonMode.Hard] = "hardChapterId"
 }
-var_0_0.ChapterModeNameKey = {
-	[var_0_0.DungeonMode.Story] = "p_versionactivitydungeonmaplevelview_type1",
-	[var_0_0.DungeonMode.Story1] = "p_versionactivitydungeonmaplevelview_type1",
-	[var_0_0.DungeonMode.Story2] = "p_versionactivitydungeonmaplevelview_type2",
-	[var_0_0.DungeonMode.Story3] = "p_versionactivitydungeonmaplevelview_type3",
-	[var_0_0.DungeonMode.Hard] = "p_versionactivitydungeonmaplevelview_type4"
+VersionActivityDungeonBaseEnum.ChapterModeNameKey = {
+	[VersionActivityDungeonBaseEnum.DungeonMode.Story] = "p_versionactivitydungeonmaplevelview_type1",
+	[VersionActivityDungeonBaseEnum.DungeonMode.Story1] = "p_versionactivitydungeonmaplevelview_type1",
+	[VersionActivityDungeonBaseEnum.DungeonMode.Story2] = "p_versionactivitydungeonmaplevelview_type2",
+	[VersionActivityDungeonBaseEnum.DungeonMode.Story3] = "p_versionactivitydungeonmaplevelview_type3",
+	[VersionActivityDungeonBaseEnum.DungeonMode.Hard] = "p_versionactivitydungeonmaplevelview_type4"
 }
 
-return var_0_0
+return VersionActivityDungeonBaseEnum

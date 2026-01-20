@@ -1,25 +1,27 @@
-﻿module("modules.logic.explore.map.unit.ExploreStepUnit", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/unit/ExploreStepUnit.lua
 
-local var_0_0 = class("ExploreStepUnit", ExploreBaseDisplayUnit)
+module("modules.logic.explore.map.unit.ExploreStepUnit", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local ExploreStepUnit = class("ExploreStepUnit", ExploreBaseDisplayUnit)
+
+function ExploreStepUnit:onInit()
 	return
 end
 
-function var_0_0.onRoleEnter(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	if not arg_2_2 then
+function ExploreStepUnit:onRoleEnter(nowNode, preNode, unit)
+	if not preNode then
 		return
 	end
 
-	if not arg_2_0:canTrigger() then
+	if not self:canTrigger() then
 		return
 	end
 
-	if not arg_2_3:isRole() then
+	if not unit:isRole() then
 		return
 	end
 
-	arg_2_0:tryTrigger()
+	self:tryTrigger()
 end
 
-return var_0_0
+return ExploreStepUnit

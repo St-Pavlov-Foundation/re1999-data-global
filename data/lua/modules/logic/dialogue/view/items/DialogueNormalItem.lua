@@ -1,93 +1,96 @@
-﻿module("modules.logic.dialogue.view.items.DialogueNormalItem", package.seeall)
+﻿-- chunkname: @modules/logic/dialogue/view/items/DialogueNormalItem.lua
 
-local var_0_0 = class("DialogueNormalItem", DialogueItem)
+module("modules.logic.dialogue.view.items.DialogueNormalItem", package.seeall)
 
-function var_0_0._showContent(arg_1_0, arg_1_1)
-	TaskDispatcher.cancelTask(arg_1_0._delayShowContent, arg_1_0)
+local DialogueNormalItem = class("DialogueNormalItem", DialogueItem)
 
-	arg_1_1 = arg_1_1 or ""
-	arg_1_0._markTopList = StoryTool.getMarkTopTextList(arg_1_1)
-	arg_1_0._contentStr = StoryTool.filterMarkTop(arg_1_1)
+function DialogueNormalItem:_showContent(content)
+	TaskDispatcher.cancelTask(self._delayShowContent, self)
 
-	arg_1_0:_setLineSpacing(arg_1_0:_getLineSpacing())
+	content = content or ""
+	self._markTopList = StoryTool.getMarkTopTextList(content)
+	self._contentStr = StoryTool.filterMarkTop(content)
 
-	arg_1_0.txtContent.text = arg_1_0._contentStr
+	self:_setLineSpacing(self:_getLineSpacing())
 
-	TaskDispatcher.runDelay(arg_1_0._delayShowContent, arg_1_0, 0.01)
+	self.txtContent.text = self._contentStr
+
+	TaskDispatcher.runDelay(self._delayShowContent, self, 0.01)
 end
 
-function var_0_0._delayShowContent(arg_2_0)
-	arg_2_0._conMark:SetMarksTop(arg_2_0._markTopList)
+function DialogueNormalItem:_delayShowContent()
+	self._conMark:SetMarksTop(self._markTopList)
 end
 
-function var_0_0._getLineSpacing(arg_3_0)
-	return #arg_3_0._markTopList > 0 and arg_3_0._lineSpacing or arg_3_0._originalLineSpacing
+function DialogueNormalItem:_getLineSpacing()
+	return #self._markTopList > 0 and self._lineSpacing or self._originalLineSpacing
 end
 
-function var_0_0._setLineSpacing(arg_4_0, arg_4_1)
-	arg_4_0.txtContent.lineSpacing = arg_4_1 or 0
+function DialogueNormalItem:_setLineSpacing(lineSpacing)
+	self.txtContent.lineSpacing = lineSpacing or 0
 end
 
-function var_0_0.initView(arg_5_0)
-	arg_5_0.simageAvatar = gohelper.findChildSingleImage(arg_5_0.go, "rolebg/#image_avatar")
-	arg_5_0.txtName = gohelper.findChildText(arg_5_0.go, "#txt_name")
-	arg_5_0.txtContent = gohelper.findChildText(arg_5_0.go, "content_bg/#txt_content")
-	arg_5_0.goLoading = gohelper.findChild(arg_5_0.go, "content_bg/#go_loading")
-	arg_5_0.contentBgRectTr = gohelper.findChildComponent(arg_5_0.go, "content_bg", gohelper.Type_RectTransform)
-	arg_5_0.txtRectTr = arg_5_0.txtContent:GetComponent(gohelper.Type_RectTransform)
-	arg_5_0._txtmarktop = IconMgr.instance:getCommonTextMarkTop(arg_5_0.txtContent.gameObject):GetComponent(gohelper.Type_TextMesh)
-	arg_5_0._conMark = gohelper.onceAddComponent(arg_5_0.txtContent.gameObject, typeof(ZProj.TMPMark))
+function DialogueNormalItem:initView()
+	self.simageAvatar = gohelper.findChildSingleImage(self.go, "rolebg/#image_avatar")
+	self.txtName = gohelper.findChildText(self.go, "#txt_name")
+	self.txtContent = gohelper.findChildText(self.go, "content_bg/#txt_content")
+	self.goLoading = gohelper.findChild(self.go, "content_bg/#go_loading")
+	self.contentBgRectTr = gohelper.findChildComponent(self.go, "content_bg", gohelper.Type_RectTransform)
+	self.txtRectTr = self.txtContent:GetComponent(gohelper.Type_RectTransform)
+	self._txtmarktop = IconMgr.instance:getCommonTextMarkTop(self.txtContent.gameObject):GetComponent(gohelper.Type_TextMesh)
+	self._conMark = gohelper.onceAddComponent(self.txtContent.gameObject, typeof(ZProj.TMPMark))
 
-	arg_5_0._conMark:SetMarkTopGo(arg_5_0._txtmarktop.gameObject)
-	arg_5_0._conMark:SetTopOffset(8, -2.4)
+	self._conMark:SetMarkTopGo(self._txtmarktop.gameObject)
+	self._conMark:SetTopOffset(8, -2.4)
 
-	arg_5_0._originalLineSpacing = arg_5_0.txtContent.lineSpacing
-	arg_5_0._lineSpacing = 26
+	self._originalLineSpacing = self.txtContent.lineSpacing
+	self._lineSpacing = 26
 end
 
-function var_0_0.refresh(arg_6_0)
-	arg_6_0.simageAvatar:LoadImage(ResUrl.getHeadIconSmall(arg_6_0.stepCo.avatar))
+function DialogueNormalItem:refresh()
+	self.simageAvatar:LoadImage(ResUrl.getHeadIconSmall(self.stepCo.avatar))
 
-	arg_6_0.txtName.text = arg_6_0.stepCo.name
+	self.txtName.text = self.stepCo.name
 
-	arg_6_0:_showContent(arg_6_0.stepCo.content)
+	self:_showContent(self.stepCo.content)
 	AudioMgr.instance:trigger(AudioEnum.Dialogue.play_ui_wulu_duihua)
 end
 
-function var_0_0.calculateHeight(arg_7_0)
-	local var_7_0 = arg_7_0.txtContent.preferredWidth
+function DialogueNormalItem:calculateHeight()
+	local width = self.txtContent.preferredWidth
 
-	if var_7_0 <= DialogueEnum.MessageTxtMaxWidth then
-		local var_7_1 = DialogueEnum.MessageTxtOneLineHeight + DialogueEnum.MessageBgOffsetHeight
+	if width <= DialogueEnum.MessageTxtMaxWidth then
+		local contentBgHeight = DialogueEnum.MessageTxtOneLineHeight + DialogueEnum.MessageBgOffsetHeight
 
-		recthelper.setSize(arg_7_0.contentBgRectTr, var_7_0 + DialogueEnum.MessageBgOffsetWidth, var_7_1)
-		recthelper.setSize(arg_7_0.txtRectTr, var_7_0, DialogueEnum.MessageTxtOneLineHeight)
+		recthelper.setSize(self.contentBgRectTr, width + DialogueEnum.MessageBgOffsetWidth, contentBgHeight)
+		recthelper.setSize(self.txtRectTr, width, DialogueEnum.MessageTxtOneLineHeight)
 
-		arg_7_0.height = Mathf.Max(DialogueEnum.MinHeight[DialogueEnum.Type.LeftMessage], var_7_1 + DialogueEnum.MessageNameHeight)
+		self.height = Mathf.Max(DialogueEnum.MinHeight[DialogueEnum.Type.LeftMessage], contentBgHeight + DialogueEnum.MessageNameHeight)
 
 		return
 	end
 
-	local var_7_2 = DialogueEnum.MessageTxtMaxWidth
-	local var_7_3 = arg_7_0.txtContent.preferredHeight
-	local var_7_4 = var_7_3 + DialogueEnum.MessageBgOffsetHeight
+	width = DialogueEnum.MessageTxtMaxWidth
 
-	recthelper.setSize(arg_7_0.contentBgRectTr, DialogueEnum.MessageTxtMaxWidth + DialogueEnum.MessageBgOffsetWidth, var_7_4)
-	recthelper.setSize(arg_7_0.txtRectTr, var_7_2, var_7_3)
+	local height = self.txtContent.preferredHeight
+	local contentBgHeight = height + DialogueEnum.MessageBgOffsetHeight
 
-	arg_7_0.height = Mathf.Max(DialogueEnum.MinHeight[DialogueEnum.Type.LeftMessage], var_7_4 + DialogueEnum.MessageNameHeight)
+	recthelper.setSize(self.contentBgRectTr, DialogueEnum.MessageTxtMaxWidth + DialogueEnum.MessageBgOffsetWidth, contentBgHeight)
+	recthelper.setSize(self.txtRectTr, width, height)
+
+	self.height = Mathf.Max(DialogueEnum.MinHeight[DialogueEnum.Type.LeftMessage], contentBgHeight + DialogueEnum.MessageNameHeight)
 end
 
-function var_0_0.logHeight(arg_8_0)
-	logError(string.format("【%s】", arg_8_0.stepCo.id) .. " : " .. arg_8_0.txtContent.preferredHeight)
-	logError(string.format("【%s】", arg_8_0.stepCo.id) .. " : " .. arg_8_0.txtContent.preferredWidth)
-	logError(string.format("【%s】", arg_8_0.stepCo.id) .. " : " .. arg_8_0.txtContent.renderedWidth)
-	logError(string.format("【%s】", arg_8_0.stepCo.id) .. " : " .. arg_8_0.txtContent.renderedHeight)
+function DialogueNormalItem:logHeight()
+	logError(string.format("【%s】", self.stepCo.id) .. " : " .. self.txtContent.preferredHeight)
+	logError(string.format("【%s】", self.stepCo.id) .. " : " .. self.txtContent.preferredWidth)
+	logError(string.format("【%s】", self.stepCo.id) .. " : " .. self.txtContent.renderedWidth)
+	logError(string.format("【%s】", self.stepCo.id) .. " : " .. self.txtContent.renderedHeight)
 end
 
-function var_0_0.onDestroy(arg_9_0)
-	TaskDispatcher.cancelTask(arg_9_0._delayShowContent, arg_9_0)
-	arg_9_0.simageAvatar:UnLoadImage()
+function DialogueNormalItem:onDestroy()
+	TaskDispatcher.cancelTask(self._delayShowContent, self)
+	self.simageAvatar:UnLoadImage()
 end
 
-return var_0_0
+return DialogueNormalItem

@@ -1,35 +1,37 @@
-﻿module("modules.logic.versionactivity2_0.joe.view.ActJoeLevelViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_0/joe/view/ActJoeLevelViewContainer.lua
 
-local var_0_0 = class("ActJoeLevelViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_0.joe.view.ActJoeLevelViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local ActJoeLevelViewContainer = class("ActJoeLevelViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, ActJoeLevelView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
+function ActJoeLevelViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, ActJoeLevelView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_btns"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._navigateButtonsView = NavigateButtonsView.New({
+function ActJoeLevelViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonsView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			arg_2_0._navigateButtonsView
+			self._navigateButtonsView
 		}
 	end
 end
 
-function var_0_0.onContainerInit(arg_3_0)
+function ActJoeLevelViewContainer:onContainerInit()
 	ActivityEnterMgr.instance:enterActivity(VersionActivity2_0Enum.ActivityId.Joe)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
 		VersionActivity2_0Enum.ActivityId.Joe
 	})
 end
 
-return var_0_0
+return ActJoeLevelViewContainer

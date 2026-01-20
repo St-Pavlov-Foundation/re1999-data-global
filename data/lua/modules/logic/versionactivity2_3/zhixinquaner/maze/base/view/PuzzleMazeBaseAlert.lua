@@ -1,31 +1,33 @@
-﻿module("modules.logic.versionactivity2_3.zhixinquaner.maze.base.view.PuzzleMazeBaseAlert", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/zhixinquaner/maze/base/view/PuzzleMazeBaseAlert.lua
 
-local var_0_0 = class("PuzzleMazeBaseAlert", UserDataDispose)
+module("modules.logic.versionactivity2_3.zhixinquaner.maze.base.view.PuzzleMazeBaseAlert", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0, arg_1_1)
+local PuzzleMazeBaseAlert = class("PuzzleMazeBaseAlert", UserDataDispose)
 
-	arg_1_0.go = arg_1_1
+function PuzzleMazeBaseAlert:ctor(go)
+	PuzzleMazeBaseAlert.super.ctor(self, go)
+
+	self.go = go
 end
 
-function var_0_0.onInit(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	arg_2_0.mo = arg_2_1
+function PuzzleMazeBaseAlert:onInit(mo, posX, posY)
+	self.mo = mo
 end
 
-function var_0_0.onEnable(arg_3_0, arg_3_1)
+function PuzzleMazeBaseAlert:onEnable(alertObj)
 	return
 end
 
-function var_0_0.onDisable(arg_4_0)
+function PuzzleMazeBaseAlert:onDisable()
 	return
 end
 
-function var_0_0.onRecycle(arg_5_0)
+function PuzzleMazeBaseAlert:onRecycle()
 	return
 end
 
-function var_0_0.getKey(arg_6_0)
+function PuzzleMazeBaseAlert:getKey()
 	return
 end
 
-return var_0_0
+return PuzzleMazeBaseAlert

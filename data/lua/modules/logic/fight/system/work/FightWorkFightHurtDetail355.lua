@@ -1,56 +1,58 @@
-﻿module("modules.logic.fight.system.work.FightWorkFightHurtDetail355", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkFightHurtDetail355.lua
 
-local var_0_0 = class("FightWorkFightHurtDetail355", FightEffectBase)
-local var_0_1 = {
+module("modules.logic.fight.system.work.FightWorkFightHurtDetail355", package.seeall)
+
+local FightWorkFightHurtDetail355 = class("FightWorkFightHurtDetail355", FightEffectBase)
+local type2class = {
 	[FightEnum.EffectType.KILL] = FightWorkKill110,
 	[FightEnum.EffectType.DAMAGEFROMABSORB] = FightWorkDamageFromAbsorb192
 }
 
-var_0_0.DamageEffectClass = var_0_1
+FightWorkFightHurtDetail355.DamageEffectClass = type2class
 
-local var_0_2 = {
+local type2ParallelEffect = {
 	[FightEnum.EffectType.DEADLYPOISONORIGINDAMAGE] = FightWorkDeadlyPoisonOriginDamage263Parallel,
 	[FightEnum.EffectType.DEADLYPOISONORIGINCRIT] = FightWorkDeadlyPoisonOriginCrit264Parallel,
 	[FightEnum.EffectType.COLDSATURDAYHURT] = FightWorkColdSaturdayHurt336Parallel
 }
 
-setmetatable(var_0_2, {
-	__index = var_0_1
+setmetatable(type2ParallelEffect, {
+	__index = type2class
 })
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0.actEffectData.hurtInfo
-	local var_1_1 = var_1_0.effectType
-	local var_1_2 = var_0_2[var_1_1]
+function FightWorkFightHurtDetail355:onStart()
+	local hurtInfo = self.actEffectData.hurtInfo
+	local effectType = hurtInfo.effectType
+	local class = type2ParallelEffect[effectType]
 
-	if not var_1_2 then
-		local var_1_3 = arg_1_0.actEffectData.targetId
-		local var_1_4 = FightHelper.getEntity(var_1_3)
+	if not class then
+		local entityId = self.actEffectData.targetId
+		local entity = FightHelper.getEntity(entityId)
 
-		if var_1_4 then
-			local var_1_5 = var_1_0.damage
-			local var_1_6 = var_1_0.reduceHp
-			local var_1_7 = var_1_4:isMySide() and -var_1_5 or var_1_5
-			local var_1_8 = var_1_0:getFloatType()
+		if entity then
+			local hurtDamage = hurtInfo.damage
+			local reduceHp = hurtInfo.reduceHp
+			local floatNum = entity:isMySide() and -hurtDamage or hurtDamage
+			local floatType = hurtInfo:getFloatType()
 
-			FightFloatMgr.instance:float(var_1_3, var_1_8, var_1_7, nil, var_1_0.assassinate)
+			FightFloatMgr.instance:float(entityId, floatType, floatNum, nil, hurtInfo.assassinate)
 
-			if var_1_4.nameUI then
-				var_1_4.nameUI:addHp(-var_1_6)
+			if entity.nameUI then
+				entity.nameUI:addHp(-reduceHp)
 			end
 
-			FightController.instance:dispatchEvent(FightEvent.OnHpChange, var_1_4, -var_1_6)
+			FightController.instance:dispatchEvent(FightEvent.OnHpChange, entity, -reduceHp)
 		end
 
-		FightMsgMgr.sendMsg(FightMsgId.EntityHurt, var_1_3, var_1_0)
+		FightMsgMgr.sendMsg(FightMsgId.EntityHurt, entityId, hurtInfo)
 
-		return arg_1_0:onDone(true)
+		return self:onDone(true)
 	end
 
-	local var_1_9 = arg_1_0:com_registFlowSequence()
+	local flow = self:com_registFlowSequence()
 
-	var_1_9:registWork(var_1_2, arg_1_0.actEffectData)
-	arg_1_0:playWorkAndDone(var_1_9)
+	flow:registWork(class, self.actEffectData)
+	self:playWorkAndDone(flow)
 end
 
-return var_0_0
+return FightWorkFightHurtDetail355

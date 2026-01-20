@@ -1,7 +1,9 @@
-﻿module("modules.logic.battlepass.view.BPFaceView", package.seeall)
+﻿-- chunkname: @modules/logic/battlepass/view/BPFaceView.lua
 
-local var_0_0 = class("BPFaceView", BaseView)
-local var_0_1 = {
+module("modules.logic.battlepass.view.BPFaceView", package.seeall)
+
+local BPFaceView = class("BPFaceView", BaseView)
+local Statu = {
 	Idle = 1,
 	CardAnimIdle = 3,
 	FinalIdle = 5,
@@ -9,127 +11,127 @@ local var_0_1 = {
 	TweenAnim = 4
 }
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._anim = gohelper.findChildAnim(arg_1_0.viewGO, "")
-	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "main/#simage_fullbg/icon/#btn_close")
-	arg_1_0._btnCloseBg = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "main/#btn_closeBg")
-	arg_1_0._btnStart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "main/#btn_start")
-	arg_1_0._simagesignature = gohelper.findChildSingleImage(arg_1_0.viewGO, "main/desc/#simage_signature")
-	arg_1_0._txtskinname = gohelper.findChildTextMesh(arg_1_0.viewGO, "main/desc/#txt_skinname")
-	arg_1_0._txtname = gohelper.findChildTextMesh(arg_1_0.viewGO, "main/desc/#txt_skinname/#txt_name")
-	arg_1_0._txtnameEn = gohelper.findChildTextMesh(arg_1_0.viewGO, "main/desc/#txt_skinname/#txt_name/#txt_enname")
-	arg_1_0._btnClickCard = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_fullclick")
+function BPFaceView:onInitView()
+	self._anim = gohelper.findChildAnim(self.viewGO, "")
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "main/#simage_fullbg/icon/#btn_close")
+	self._btnCloseBg = gohelper.findChildButtonWithAudio(self.viewGO, "main/#btn_closeBg")
+	self._btnStart = gohelper.findChildButtonWithAudio(self.viewGO, "main/#btn_start")
+	self._simagesignature = gohelper.findChildSingleImage(self.viewGO, "main/desc/#simage_signature")
+	self._txtskinname = gohelper.findChildTextMesh(self.viewGO, "main/desc/#txt_skinname")
+	self._txtname = gohelper.findChildTextMesh(self.viewGO, "main/desc/#txt_skinname/#txt_name")
+	self._txtnameEn = gohelper.findChildTextMesh(self.viewGO, "main/desc/#txt_skinname/#txt_name/#txt_enname")
+	self._btnClickCard = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_fullclick")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnClose:AddClickListener(arg_2_0.onBtnCloseClick, arg_2_0, BpEnum.ButtonName.Close)
-	arg_2_0._btnCloseBg:AddClickListener(arg_2_0.onBtnCloseClick, arg_2_0, BpEnum.ButtonName.CloseBg)
-	arg_2_0._btnStart:AddClickListener(arg_2_0._openBpView, arg_2_0)
-	arg_2_0._btnClickCard:AddClickListener(arg_2_0._onClickCard, arg_2_0)
+function BPFaceView:addEvents()
+	self._btnClose:AddClickListener(self.onBtnCloseClick, self, BpEnum.ButtonName.Close)
+	self._btnCloseBg:AddClickListener(self.onBtnCloseClick, self, BpEnum.ButtonName.CloseBg)
+	self._btnStart:AddClickListener(self._openBpView, self)
+	self._btnClickCard:AddClickListener(self._onClickCard, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnClose:RemoveClickListener()
-	arg_3_0._btnCloseBg:RemoveClickListener()
-	arg_3_0._btnStart:RemoveClickListener()
-	arg_3_0._btnClickCard:RemoveClickListener()
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_3_0._onViewClose, arg_3_0)
+function BPFaceView:removeEvents()
+	self._btnClose:RemoveClickListener()
+	self._btnCloseBg:RemoveClickListener()
+	self._btnStart:RemoveClickListener()
+	self._btnClickCard:RemoveClickListener()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, self._onViewClose, self)
 end
 
-function var_0_0._openBpView(arg_4_0)
-	if not arg_4_0:canClickClose() then
+function BPFaceView:_openBpView()
+	if not self:canClickClose() then
 		return
 	end
 
-	arg_4_0:statData(BpEnum.ButtonName.Goto)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_4_0._onViewClose, arg_4_0)
+	self:statData(BpEnum.ButtonName.Goto)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, self._onViewClose, self)
 	BpController.instance:openBattlePassView(nil, nil, true)
 end
 
-function var_0_0.onClickModalMask(arg_5_0)
-	if not arg_5_0:canClickClose() then
+function BPFaceView:onClickModalMask()
+	if not self:canClickClose() then
 		return
 	end
 
-	arg_5_0:onBtnCloseClick(BpEnum.ButtonName.CloseBg)
+	self:onBtnCloseClick(BpEnum.ButtonName.CloseBg)
 end
 
-function var_0_0._onClickCard(arg_6_0)
-	if arg_6_0._statu == var_0_1.Idle then
-		arg_6_0._statu = var_0_1.OpenCardAnim
+function BPFaceView:_onClickCard()
+	if self._statu == Statu.Idle then
+		self._statu = Statu.OpenCardAnim
 
-		TaskDispatcher.runDelay(arg_6_0._delayPlayAudio, arg_6_0, 1.5)
-		arg_6_0._anim:Play("tarot_click", 0, 0)
+		TaskDispatcher.runDelay(self._delayPlayAudio, self, 1.5)
+		self._anim:Play("tarot_click", 0, 0)
 		AudioMgr.instance:trigger(AudioEnum2_6.BP.FaceView)
-	elseif arg_6_0._statu == var_0_1.CardAnimIdle then
-		arg_6_0._statu = var_0_1.TweenAnim
+	elseif self._statu == Statu.CardAnimIdle then
+		self._statu = Statu.TweenAnim
 
-		arg_6_0._anim:Play("tarot_click1", 0, 0)
+		self._anim:Play("tarot_click1", 0, 0)
 		AudioMgr.instance:trigger(AudioEnum.Act187.play_ui_yuanxiao_switch)
-		TaskDispatcher.runDelay(arg_6_0._delayFinishAnim, arg_6_0, 1)
+		TaskDispatcher.runDelay(self._delayFinishAnim, self, 1)
 	end
 end
 
-function var_0_0.canClickClose(arg_7_0)
-	return arg_7_0._statu == var_0_1.FinalIdle
+function BPFaceView:canClickClose()
+	return self._statu == Statu.FinalIdle
 end
 
-function var_0_0._delayPlayAudio(arg_8_0)
-	arg_8_0._statu = var_0_1.CardAnimIdle
+function BPFaceView:_delayPlayAudio()
+	self._statu = Statu.CardAnimIdle
 end
 
-function var_0_0._delayFinishAnim(arg_9_0)
-	arg_9_0._statu = var_0_1.FinalIdle
+function BPFaceView:_delayFinishAnim()
+	self._statu = Statu.FinalIdle
 
-	gohelper.setActive(arg_9_0._btnClickCard, false)
+	gohelper.setActive(self._btnClickCard, false)
 end
 
-function var_0_0.onBtnCloseClick(arg_10_0, arg_10_1)
-	if not arg_10_0:canClickClose() then
+function BPFaceView:onBtnCloseClick(statParam)
+	if not self:canClickClose() then
 		return
 	end
 
-	arg_10_0:statData(arg_10_1)
-	arg_10_0:closeThis()
+	self:statData(statParam)
+	self:closeThis()
 end
 
-function var_0_0._onViewClose(arg_11_0, arg_11_1)
-	if arg_11_1 == ViewName.BpView then
-		arg_11_0:closeThis()
+function BPFaceView:_onViewClose(viewName)
+	if viewName == ViewName.BpView then
+		self:closeThis()
 	end
 end
 
-function var_0_0.onOpen(arg_12_0)
-	arg_12_0._statu = var_0_1.Idle
+function BPFaceView:onOpen()
+	self._statu = Statu.Idle
 
-	local var_12_0 = BpConfig.instance:getBpCO(BpModel.instance.id)
+	local co = BpConfig.instance:getBpCO(BpModel.instance.id)
 
-	if var_12_0 then
-		arg_12_0._txtskinname.text = var_12_0.bpSkinDesc
-		arg_12_0._txtname.text = var_12_0.bpSkinNametxt
-		arg_12_0._txtnameEn.text = var_12_0.bpSkinEnNametxt
+	if co then
+		self._txtskinname.text = co.bpSkinDesc
+		self._txtname.text = co.bpSkinNametxt
+		self._txtnameEn.text = co.bpSkinEnNametxt
 
-		local var_12_1 = BpConfig.instance:getCurSkinId(BpModel.instance.id)
-		local var_12_2 = lua_skin.configDict[var_12_1].characterId
-		local var_12_3 = lua_character.configDict[var_12_2]
+		local skinId = BpConfig.instance:getCurSkinId(BpModel.instance.id)
+		local heroId = lua_skin.configDict[skinId].characterId
+		local heroCo = lua_character.configDict[heroId]
 
-		arg_12_0._simagesignature:LoadImage(ResUrl.getSignature(var_12_3.signature))
+		self._simagesignature:LoadImage(ResUrl.getSignature(heroCo.signature))
 	end
 
-	local var_12_4 = string.format("%s#%s#%s", PlayerPrefsKey.FirstShowPatFace, "BPFace", PlayerModel.instance:getPlayinfo().userId)
+	local key = string.format("%s#%s#%s", PlayerPrefsKey.FirstShowPatFace, "BPFace", PlayerModel.instance:getPlayinfo().userId)
 
-	PlayerPrefsHelper.setString(var_12_4, tostring(BpModel.instance.id))
+	PlayerPrefsHelper.setString(key, tostring(BpModel.instance.id))
 end
 
-function var_0_0.statData(arg_13_0, arg_13_1)
+function BPFaceView:statData(param)
 	StatController.instance:track(StatEnum.EventName.BP_Click_Face_Slapping, {
-		[StatEnum.EventProperties.BP_Button_Name] = arg_13_1
+		[StatEnum.EventProperties.BP_Button_Name] = param
 	})
 end
 
-function var_0_0.onClose(arg_14_0)
-	TaskDispatcher.cancelTask(arg_14_0._delayFinishAnim, arg_14_0)
-	TaskDispatcher.cancelTask(arg_14_0._delayPlayAudio, arg_14_0)
+function BPFaceView:onClose()
+	TaskDispatcher.cancelTask(self._delayFinishAnim, self)
+	TaskDispatcher.cancelTask(self._delayPlayAudio, self)
 end
 
-return var_0_0
+return BPFaceView

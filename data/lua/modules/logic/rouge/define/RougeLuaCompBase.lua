@@ -1,144 +1,145 @@
-﻿module("modules.logic.rouge.define.RougeLuaCompBase", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/define/RougeLuaCompBase.lua
 
-local var_0_0 = class("RougeLuaCompBase", ListScrollCellExtend)
+module("modules.logic.rouge.define.RougeLuaCompBase", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
-	var_0_0.super.init(arg_1_0, arg_1_1)
-	arg_1_0:initDLCs(arg_1_1)
+local RougeLuaCompBase = class("RougeLuaCompBase", ListScrollCellExtend)
+
+function RougeLuaCompBase:init(go)
+	self:__onInit()
+	RougeLuaCompBase.super.init(self, go)
+	self:initDLCs(go)
 end
 
-function var_0_0.initDLCs(arg_2_0, arg_2_1)
-	arg_2_0._parentGo = arg_2_1
+function RougeLuaCompBase:initDLCs(go)
+	self._parentGo = go
 
-	arg_2_0:_collectAllClsAndLoadRes()
+	self:_collectAllClsAndLoadRes()
 end
 
-function var_0_0.onUpdateDLC(arg_3_0, ...)
+function RougeLuaCompBase:onUpdateDLC(...)
 	return
 end
 
-function var_0_0.tickUpdateDLCs(arg_4_0, ...)
-	if not arg_4_0._dlcComps or not arg_4_0._resLoadDone then
-		arg_4_0.params = {
+function RougeLuaCompBase:tickUpdateDLCs(...)
+	if not self._dlcComps or not self._resLoadDone then
+		self.params = {
 			...
 		}
 
 		return
 	end
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_0._dlcComps) do
-		iter_4_1:onUpdateDLC(...)
+	for _, dlcComp in ipairs(self._dlcComps) do
+		dlcComp:onUpdateDLC(...)
 	end
 end
 
-function var_0_0._collectAllClsAndLoadRes(arg_5_0)
-	arg_5_0._clsList = arg_5_0:getUserDataTb_()
+function RougeLuaCompBase:_collectAllClsAndLoadRes()
+	self._clsList = self:getUserDataTb_()
 
-	local var_5_0 = {}
-	local var_5_1 = {}
-	local var_5_2 = RougeOutsideModel.instance:season()
-	local var_5_3 = RougeModel.instance:getVersion()
+	local assetUrlList, assetUrlMap = {}, {}
+	local season = RougeOutsideModel.instance:season()
+	local versions = RougeModel.instance:getVersion()
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_3 or {}) do
-		local var_5_4 = string.format("%s_%s_%s", arg_5_0.__cname, var_5_2, iter_5_1)
-		local var_5_5 = _G[var_5_4]
+	for _, version in ipairs(versions or {}) do
+		local clsName = string.format("%s_%s_%s", self.__cname, season, version)
+		local cls = _G[clsName]
 
-		table.insert(arg_5_0._clsList, var_5_5)
-		arg_5_0:_collectNeedLoadRes(var_5_5, var_5_0, var_5_1)
+		table.insert(self._clsList, cls)
+		self:_collectNeedLoadRes(cls, assetUrlList, assetUrlMap)
 	end
 
-	arg_5_0:_loadAllNeedRes(var_5_0)
+	self:_loadAllNeedRes(assetUrlList)
 end
 
-function var_0_0._collectNeedLoadRes(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	local var_6_0 = arg_6_1 and arg_6_1.AssetUrl
+function RougeLuaCompBase:_collectNeedLoadRes(cls, assetUrlList, assetUrlMap)
+	local needLoadRes = cls and cls.AssetUrl
 
-	if var_6_0 then
-		arg_6_3[var_6_0] = true
+	if needLoadRes then
+		assetUrlMap[needLoadRes] = true
 
-		table.insert(arg_6_2, var_6_0)
+		table.insert(assetUrlList, needLoadRes)
 	end
 end
 
-function var_0_0._loadAllNeedRes(arg_7_0, arg_7_1)
-	arg_7_0._resLoadDone = false
+function RougeLuaCompBase:_loadAllNeedRes(assetUrlList)
+	self._resLoadDone = false
 
-	if not arg_7_1 or #arg_7_1 <= 0 then
-		arg_7_0:_resLoadDoneCallBack()
+	if not assetUrlList or #assetUrlList <= 0 then
+		self:_resLoadDoneCallBack()
 
 		return
 	end
 
-	arg_7_0._abLoader = arg_7_0._abLoader or MultiAbLoader.New()
+	self._abLoader = self._abLoader or MultiAbLoader.New()
 
-	arg_7_0._abLoader:setPathList(arg_7_1)
-	arg_7_0._abLoader:startLoad(arg_7_0._resLoadDoneCallBack, arg_7_0)
+	self._abLoader:setPathList(assetUrlList)
+	self._abLoader:startLoad(self._resLoadDoneCallBack, self)
 end
 
-function var_0_0._resLoadDoneCallBack(arg_8_0)
-	arg_8_0._dlcComps = arg_8_0:getUserDataTb_()
+function RougeLuaCompBase:_resLoadDoneCallBack()
+	self._dlcComps = self:getUserDataTb_()
 
-	local var_8_0
+	local unpackParams
 
-	if arg_8_0.params then
-		var_8_0 = unpack(arg_8_0.params)
+	if self.params then
+		unpackParams = unpack(self.params)
 	end
 
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0._clsList) do
-		local var_8_1 = arg_8_0:_createGo(iter_8_1.ParentObjPath, iter_8_1.AssetUrl, iter_8_1.ResInitPosition)
+	for _, cls in ipairs(self._clsList) do
+		local createGO = self:_createGo(cls.ParentObjPath, cls.AssetUrl, cls.ResInitPosition)
 
-		if var_8_1 then
-			local var_8_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_8_1, iter_8_1, arg_8_0)
+		if createGO then
+			local inst = MonoHelper.addNoUpdateLuaComOnceToGo(createGO, cls, self)
 
-			var_8_2:onUpdateDLC(var_8_0)
-			table.insert(arg_8_0._dlcComps, var_8_2)
+			inst:onUpdateDLC(unpackParams)
+			table.insert(self._dlcComps, inst)
 		end
 	end
 
-	arg_8_0._resLoadDone = true
+	self._resLoadDone = true
 end
 
-function var_0_0._createGo(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	if string.nilorempty(arg_9_1) or string.nilorempty(arg_9_2) or not arg_9_0._abLoader then
+function RougeLuaCompBase:_createGo(parentObjPath, assetUrl, resInitPos)
+	if string.nilorempty(parentObjPath) or string.nilorempty(assetUrl) or not self._abLoader then
 		return
 	end
 
-	local var_9_0 = arg_9_0._abLoader:getAssetItem(arg_9_2)
-	local var_9_1 = var_9_0 and var_9_0:GetResource(arg_9_2)
+	local assetItem = self._abLoader:getAssetItem(assetUrl)
+	local res = assetItem and assetItem:GetResource(assetUrl)
 
-	if not var_9_1 then
-		logError("无法找到指定资源 :" .. arg_9_2)
-
-		return
-	end
-
-	local var_9_2 = gohelper.findChild(arg_9_0._parentGo, arg_9_1)
-
-	if gohelper.isNil(var_9_2) then
-		logError("无法找到指定肉鸽DLC界面挂点:" .. tostring(arg_9_1))
+	if not res then
+		logError("无法找到指定资源 :" .. assetUrl)
 
 		return
 	end
 
-	local var_9_3 = gohelper.clone(var_9_1, var_9_2)
+	local goParent = gohelper.findChild(self._parentGo, parentObjPath)
 
-	if arg_9_3 then
-		recthelper.setAnchor(var_9_3.transform, arg_9_3.x or 0, arg_9_3.y or 0)
+	if gohelper.isNil(goParent) then
+		logError("无法找到指定肉鸽DLC界面挂点:" .. tostring(parentObjPath))
+
+		return
 	end
 
-	return var_9_3
-end
+	local createGO = gohelper.clone(res, goParent)
 
-function var_0_0.onDestroy(arg_10_0)
-	if arg_10_0._abLoader then
-		arg_10_0._abLoader:dispose()
-
-		arg_10_0._abLoader = nil
+	if resInitPos then
+		recthelper.setAnchor(createGO.transform, resInitPos.x or 0, resInitPos.y or 0)
 	end
 
-	var_0_0.super.onDestroy(arg_10_0)
-	arg_10_0:__onDispose()
+	return createGO
 end
 
-return var_0_0
+function RougeLuaCompBase:onDestroy()
+	if self._abLoader then
+		self._abLoader:dispose()
+
+		self._abLoader = nil
+	end
+
+	RougeLuaCompBase.super.onDestroy(self)
+	self:__onDispose()
+end
+
+return RougeLuaCompBase

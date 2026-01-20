@@ -1,51 +1,42 @@
-﻿module("modules.logic.scene.fight.FightScene", package.seeall)
+﻿-- chunkname: @modules/logic/scene/fight/FightScene.lua
 
-local var_0_0 = class("FightScene", BaseScene)
+module("modules.logic.scene.fight.FightScene", package.seeall)
 
-function var_0_0._createAllComps(arg_1_0)
-	arg_1_0:_addComp("director", FightSceneDirector)
-	arg_1_0:_addComp("level", FightSceneLevelComp)
-	arg_1_0:_addComp("camera", FightSceneCameraComp)
-	arg_1_0:_addComp("bloom", FightSceneBloomComp)
-	arg_1_0:_addComp("view", FightSceneViewComp)
-	arg_1_0:_addComp("entityMgr", FightSceneEntityMgr)
-	arg_1_0:_addComp("previewEntityMgr", FightScenePreviewEntityMgr)
-	arg_1_0:_addComp("preloader", FightScenePreloader)
-	arg_1_0:_addComp("bgm", FightSceneBgmComp)
-	arg_1_0:_addComp("spineMat", FightSceneSpineMat)
-	arg_1_0:_addComp("weatherEffect", FightSceneWeatherEffect)
-	arg_1_0:_addComp("entityFootRing", FightSceneEntityFootRing)
-	arg_1_0:_addComp("SceneCtrl02", FightSceneCtrl02)
-	arg_1_0:_addComp("scenectrl", CommonSceneCtrlComp)
-	arg_1_0:_addComp("specialIdleMgr", FightSceneSpecialIdleMgr)
-	arg_1_0:_addComp("specialEffectMgr", FightSceneSpecialEffectMgr)
-	arg_1_0:_addComp("cardCamera", FightSceneCardCameraComp)
-	arg_1_0:_addComp("magicCircle", FightSceneMagicCircleComp)
-	arg_1_0:_addComp("mgr", FightSceneMgrComp)
-	arg_1_0:addLowPhoneMemoryComp()
+local FightScene = class("FightScene", BaseScene)
+
+function FightScene:_createAllComps()
+	self:_addComp("director", FightSceneDirector)
+	self:_addComp("level", FightSceneLevelComp)
+	self:_addComp("camera", FightSceneCameraComp)
+	self:_addComp("view", FightSceneViewComp)
+	self:_addComp("entityMgr", FightSceneEntityMgr)
+	self:_addComp("preloader", FightScenePreloader)
+	self:_addComp("cardCamera", FightSceneCardCameraComp)
+	self:_addComp("mgr", FightSceneMgrComp)
+	self:addLowPhoneMemoryComp()
 end
 
-function var_0_0.addLowPhoneMemoryComp(arg_2_0)
+function FightScene:addLowPhoneMemoryComp()
 	if not SLFramework.FrameworkSettings.IsIOSPlayer() then
 		return
 	end
 
-	local var_2_0 = UnityEngine.SystemInfo.systemMemorySize / 1024
+	local memo_G = UnityEngine.SystemInfo.systemMemorySize / 1024
 
-	if var_2_0 > 3.6 then
+	if memo_G > 3.6 then
 		return
 	end
 
-	var_0_0.ios3GBMemory = true
+	FightScene.ios3GBMemory = true
 
-	logNormal(string.format("add FightSceneLowPhoneMemoryComp, memory : %G", var_2_0))
-	arg_2_0:_addComp("lowPhoneMemoryMgr", FightSceneLowPhoneMemoryComp)
+	logNormal(string.format("add FightSceneLowPhoneMemoryComp, memory : %G", memo_G))
+	self:_addComp("lowPhoneMemoryMgr", FightSceneLowPhoneMemoryComp)
 end
 
-function var_0_0.onClose(arg_3_0)
+function FightScene:onClose()
 	FightGameHelper.disposeGameMgr()
-	arg_3_0.mgr:onSceneClose()
-	var_0_0.super.onClose(arg_3_0)
+	self.mgr:onSceneClose()
+	FightScene.super.onClose(self)
 	FightTLEventPool.dispose()
 	FightSkillBehaviorMgr.instance:dispose()
 	FightRenderOrderMgr.instance:dispose()
@@ -60,4 +51,4 @@ function var_0_0.onClose(arg_3_0)
 	FightStrUtil.instance:dispose()
 end
 
-return var_0_0
+return FightScene

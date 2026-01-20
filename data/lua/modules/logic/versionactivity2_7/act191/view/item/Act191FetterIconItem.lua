@@ -1,47 +1,49 @@
-﻿module("modules.logic.versionactivity2_7.act191.view.item.Act191FetterIconItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/act191/view/item/Act191FetterIconItem.lua
 
-local var_0_0 = class("Act191FetterIconItem", LuaCompBase)
+module("modules.logic.versionactivity2_7.act191.view.item.Act191FetterIconItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0.imageFetter = gohelper.findChildImage(arg_1_1, "image_Fetter")
-	arg_1_0.btnClick = gohelper.findChildButtonWithAudio(arg_1_1, "btn_Click")
+local Act191FetterIconItem = class("Act191FetterIconItem", LuaCompBase)
+
+function Act191FetterIconItem:init(go)
+	self.go = go
+	self.imageFetter = gohelper.findChildImage(go, "image_Fetter")
+	self.btnClick = gohelper.findChildButtonWithAudio(go, "btn_Click")
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnClick, arg_2_0.onClick, arg_2_0)
+function Act191FetterIconItem:addEventListeners()
+	self:addClickCb(self.btnClick, self.onClick, self)
 end
 
-function var_0_0.setData(arg_3_0, arg_3_1)
-	arg_3_0.relationCo = Activity191Config.instance:getRelationCo(arg_3_1)
+function Act191FetterIconItem:setData(tag)
+	self.relationCo = Activity191Config.instance:getRelationCo(tag)
 
-	Activity191Helper.setFetterIcon(arg_3_0.imageFetter, arg_3_0.relationCo.icon)
+	Activity191Helper.setFetterIcon(self.imageFetter, self.relationCo.icon)
 end
 
-function var_0_0.onClick(arg_4_0)
-	if arg_4_0.param then
-		Act191StatController.instance:statButtonClick(arg_4_0.param.fromView, string.format("Fetter_%s", arg_4_0.relationCo.name))
+function Act191FetterIconItem:onClick()
+	if self.param then
+		Act191StatController.instance:statButtonClick(self.param.fromView, string.format("Fetter_%s", self.relationCo.name))
 	end
 
-	local var_4_0 = {
-		tag = arg_4_0.relationCo.tag,
-		isEnemy = arg_4_0.isEnemy,
-		isPreview = arg_4_0.preview
+	local param = {
+		tag = self.relationCo.tag,
+		isEnemy = self.isEnemy,
+		isPreview = self.preview
 	}
 
-	Activity191Controller.instance:openFetterTipView(var_4_0)
+	Activity191Controller.instance:openFetterTipView(param)
 end
 
-function var_0_0.setEnemyView(arg_5_0)
-	arg_5_0.isEnemy = true
+function Act191FetterIconItem:setEnemyView()
+	self.isEnemy = true
 end
 
-function var_0_0.setPreview(arg_6_0)
-	arg_6_0.preview = true
+function Act191FetterIconItem:setPreview()
+	self.preview = true
 end
 
-function var_0_0.setExtraParam(arg_7_0, arg_7_1)
-	arg_7_0.param = arg_7_1
+function Act191FetterIconItem:setExtraParam(param)
+	self.param = param
 end
 
-return var_0_0
+return Act191FetterIconItem

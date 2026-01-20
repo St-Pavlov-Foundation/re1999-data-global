@@ -1,152 +1,155 @@
-﻿module("modules.logic.dungeon.view.rolestory.RoleStoryReviewView", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/rolestory/RoleStoryReviewView.lua
 
-local var_0_0 = class("RoleStoryReviewView", BaseView)
+module("modules.logic.dungeon.view.rolestory.RoleStoryReviewView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.storyItems = {}
-	arg_1_0.goStorytItem = gohelper.findChild(arg_1_0.viewGO, "left/#go_herocontainer/#scroll_hero/Viewport/Content/#go_heroitem")
-	arg_1_0.txtTitle = gohelper.findChildTextMesh(arg_1_0.viewGO, "right/#txt_title")
-	arg_1_0.goLayout = gohelper.findChild(arg_1_0.viewGO, "right/layout")
-	arg_1_0.txtEnd = gohelper.findChildTextMesh(arg_1_0.viewGO, "right/#txt_end")
-	arg_1_0.btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#btn_close")
-	arg_1_0.goTalk = gohelper.findChild(arg_1_0.goLayout, "#go_Talk")
-	arg_1_0.goArrow = gohelper.findChild(arg_1_0.goLayout, "#go_Talk/Scroll DecView/Viewport/Content/arrow")
-	arg_1_0.goChatItem = gohelper.findChild(arg_1_0.goLayout, "#go_Talk/Scroll DecView/Viewport/Content/#go_chatitem")
+local RoleStoryReviewView = class("RoleStoryReviewView", BaseView)
 
-	gohelper.setActive(arg_1_0.goChatItem, false)
+function RoleStoryReviewView:onInitView()
+	self.storyItems = {}
+	self.goStorytItem = gohelper.findChild(self.viewGO, "left/#go_herocontainer/#scroll_hero/Viewport/Content/#go_heroitem")
+	self.txtTitle = gohelper.findChildTextMesh(self.viewGO, "right/#txt_title")
+	self.goLayout = gohelper.findChild(self.viewGO, "right/layout")
+	self.txtEnd = gohelper.findChildTextMesh(self.viewGO, "right/#txt_end")
+	self.btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "right/#btn_close")
+	self.goTalk = gohelper.findChild(self.goLayout, "#go_Talk")
+	self.goArrow = gohelper.findChild(self.goLayout, "#go_Talk/Scroll DecView/Viewport/Content/arrow")
+	self.goChatItem = gohelper.findChild(self.goLayout, "#go_Talk/Scroll DecView/Viewport/Content/#go_chatitem")
 
-	arg_1_0.scroll = gohelper.findChildScrollRect(arg_1_0.goLayout, "#go_Talk/Scroll DecView")
-	arg_1_0.talkList = {}
+	gohelper.setActive(self.goChatItem, false)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	self.scroll = gohelper.findChildScrollRect(self.goLayout, "#go_Talk/Scroll DecView")
+	self.talkList = {}
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnClose, arg_2_0.onClickBtnClose, arg_2_0)
-	arg_2_0:addEventCb(RoleStoryController.instance, RoleStoryEvent.ClickReviewItem, arg_2_0._onClickReviewItem, arg_2_0)
+function RoleStoryReviewView:addEvents()
+	self:addClickCb(self.btnClose, self.onClickBtnClose, self)
+	self:addEventCb(RoleStoryController.instance, RoleStoryEvent.ClickReviewItem, self._onClickReviewItem, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RoleStoryReviewView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function RoleStoryReviewView:_editableInitView()
 	return
 end
 
-function var_0_0.onClickBtnClose(arg_5_0)
-	arg_5_0:closeThis()
+function RoleStoryReviewView:onClickBtnClose()
+	self:closeThis()
 end
 
-function var_0_0._onClickReviewItem(arg_6_0, arg_6_1)
-	arg_6_0:refreshDispatchView(arg_6_1)
+function RoleStoryReviewView:_onClickReviewItem(dispatchId)
+	self:refreshDispatchView(dispatchId)
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0.storyId = arg_7_0.viewParam.storyId
+function RoleStoryReviewView:onOpen()
+	self.storyId = self.viewParam.storyId
 
-	arg_7_0:refreshDispatchList()
+	self:refreshDispatchList()
 
-	local var_7_0 = 1
-	local var_7_1 = arg_7_0.storyItems[var_7_0]
+	local defaultIndex = 1
+	local item = self.storyItems[defaultIndex]
 
-	if var_7_1 then
-		var_7_1:onClickBtnClick()
+	if item then
+		item:onClickBtnClick()
 	end
 end
 
-function var_0_0.refreshDispatchList(arg_8_0)
-	local var_8_0 = RoleStoryConfig.instance:getDispatchList(arg_8_0.storyId, RoleStoryEnum.DispatchType.Story) or {}
+function RoleStoryReviewView:refreshDispatchList()
+	local list = RoleStoryConfig.instance:getDispatchList(self.storyId, RoleStoryEnum.DispatchType.Story) or {}
 
-	for iter_8_0 = 1, math.max(#var_8_0, #arg_8_0.storyItems) do
-		arg_8_0:refreshDispatchItem(arg_8_0.storyItems[iter_8_0], var_8_0[iter_8_0], iter_8_0)
+	for i = 1, math.max(#list, #self.storyItems) do
+		self:refreshDispatchItem(self.storyItems[i], list[i], i)
 	end
 end
 
-function var_0_0.refreshDispatchView(arg_9_0, arg_9_1)
-	local var_9_0 = RoleStoryConfig.instance:getDispatchConfig(arg_9_1)
+function RoleStoryReviewView:refreshDispatchView(dispatchId)
+	local config = RoleStoryConfig.instance:getDispatchConfig(dispatchId)
 
-	arg_9_0.txtTitle.text = var_9_0.name
-	arg_9_0.txtEnd.text = var_9_0.completeDesc
+	self.txtTitle.text = config.name
+	self.txtEnd.text = config.completeDesc
 
-	arg_9_0:refreshTalk(var_9_0)
+	self:refreshTalk(config)
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0.storyItems) do
-		iter_9_1:updateSelect(arg_9_1)
+	for i, v in ipairs(self.storyItems) do
+		v:updateSelect(dispatchId)
 	end
 
-	arg_9_0:layoutView()
+	self:layoutView()
 end
 
-function var_0_0.refreshDispatchItem(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	arg_10_1 = arg_10_1 or arg_10_0:createItem(arg_10_3)
+function RoleStoryReviewView:refreshDispatchItem(item, data, index)
+	item = item or self:createItem(index)
 
-	arg_10_1:onUpdateMO(arg_10_2, arg_10_3)
+	item:onUpdateMO(data, index)
 end
 
-function var_0_0.createItem(arg_11_0, arg_11_1)
-	local var_11_0 = gohelper.cloneInPlace(arg_11_0.goStorytItem)
-	local var_11_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_11_0, RoleStoryReviewItem)
+function RoleStoryReviewView:createItem(index)
+	local go = gohelper.cloneInPlace(self.goStorytItem)
+	local item = MonoHelper.addNoUpdateLuaComOnceToGo(go, RoleStoryReviewItem)
 
-	arg_11_0.storyItems[arg_11_1] = var_11_1
+	self.storyItems[index] = item
 
-	return var_11_1
+	return item
 end
 
-function var_0_0.refreshTalk(arg_12_0, arg_12_1)
-	local var_12_0 = string.splitToNumber(arg_12_1.talkIds, "#")
+function RoleStoryReviewView:refreshTalk(config)
+	local talkIds = string.splitToNumber(config.talkIds, "#")
 
-	arg_12_0:refreshTalkList(var_12_0)
+	self:refreshTalkList(talkIds)
 end
 
-function var_0_0.refreshTalkList(arg_13_0, arg_13_1)
-	local var_13_0 = {}
+function RoleStoryReviewView:refreshTalkList(talkIds)
+	local list = {}
 
-	for iter_13_0, iter_13_1 in ipairs(arg_13_1) do
-		local var_13_1 = RoleStoryConfig.instance:getTalkConfig(iter_13_1)
+	for i, v in ipairs(talkIds) do
+		local talkCfg = RoleStoryConfig.instance:getTalkConfig(v)
 
-		table.insert(var_13_0, var_13_1)
+		table.insert(list, talkCfg)
 	end
 
-	for iter_13_2 = 1, math.max(#var_13_0, #arg_13_0.talkList) do
-		arg_13_0:refreshTalkItem(arg_13_0.talkList[iter_13_2], var_13_0[iter_13_2], iter_13_2)
+	for i = 1, math.max(#list, #self.talkList) do
+		self:refreshTalkItem(self.talkList[i], list[i], i)
 	end
 end
 
-function var_0_0.refreshTalkItem(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	arg_14_1 = arg_14_1 or arg_14_0:createTalkItem(arg_14_3)
+function RoleStoryReviewView:refreshTalkItem(item, data, index)
+	item = item or self:createTalkItem(index)
 
-	arg_14_1:onUpdateMO(arg_14_2, arg_14_3)
+	item:onUpdateMO(data, index)
 end
 
-function var_0_0.createTalkItem(arg_15_0, arg_15_1)
-	local var_15_0 = gohelper.cloneInPlace(arg_15_0.goChatItem, string.format("go%s", arg_15_1))
-	local var_15_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_15_0, RoleStoryDispatchTalkItem)
+function RoleStoryReviewView:createTalkItem(index)
+	local go = gohelper.cloneInPlace(self.goChatItem, string.format("go%s", index))
+	local item = MonoHelper.addNoUpdateLuaComOnceToGo(go, RoleStoryDispatchTalkItem)
 
-	arg_15_0.talkList[arg_15_1] = var_15_1
+	self.talkList[index] = item
 
-	return var_15_1
+	return item
 end
 
-function var_0_0.layoutView(arg_16_0)
-	local var_16_0 = recthelper.getHeight(arg_16_0.goLayout.transform)
+function RoleStoryReviewView:layoutView()
+	local layoutHeight = recthelper.getHeight(self.goLayout.transform)
+	local talkHeight = layoutHeight
 
-	recthelper.setHeight(arg_16_0.goTalk.transform, var_16_0)
+	recthelper.setHeight(self.goTalk.transform, talkHeight)
 end
 
-function var_0_0.onClickModalMask(arg_17_0)
+function RoleStoryReviewView:onClickModalMask()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
-	arg_17_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.onClose(arg_18_0)
+function RoleStoryReviewView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_19_0)
+function RoleStoryReviewView:onDestroyView()
 	return
 end
 
-return var_0_0
+return RoleStoryReviewView

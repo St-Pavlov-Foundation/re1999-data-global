@@ -1,12 +1,14 @@
-﻿module("modules.logic.battlepass.model.BpChargeBonusModel", package.seeall)
+﻿-- chunkname: @modules/logic/battlepass/model/BpChargeBonusModel.lua
 
-local var_0_0 = class("BpChargeBonusModel", ListScrollModel)
+module("modules.logic.battlepass.model.BpChargeBonusModel", package.seeall)
 
-function var_0_0.setConfigList(arg_1_0, arg_1_1)
-	arg_1_0:setList(arg_1_1)
+local BpChargeBonusModel = class("BpChargeBonusModel", ListScrollModel)
+
+function BpChargeBonusModel:setConfigList(list)
+	self:setList(list)
 end
 
-var_0_0.left = var_0_0.New()
-var_0_0.right = var_0_0.New()
+BpChargeBonusModel.left = BpChargeBonusModel.New()
+BpChargeBonusModel.right = BpChargeBonusModel.New()
 
-return var_0_0
+return BpChargeBonusModel

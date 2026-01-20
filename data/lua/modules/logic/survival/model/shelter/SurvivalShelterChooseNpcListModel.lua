@@ -1,66 +1,68 @@
-﻿module("modules.logic.survival.model.shelter.SurvivalShelterChooseNpcListModel", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/shelter/SurvivalShelterChooseNpcListModel.lua
 
-local var_0_0 = class("SurvivalShelterChooseNpcListModel", ListScrollModel)
+module("modules.logic.survival.model.shelter.SurvivalShelterChooseNpcListModel", package.seeall)
 
-function var_0_0.isQuickSelect(arg_1_0)
-	return arg_1_0._isQuickSelect
+local SurvivalShelterChooseNpcListModel = class("SurvivalShelterChooseNpcListModel", ListScrollModel)
+
+function SurvivalShelterChooseNpcListModel:isQuickSelect()
+	return self._isQuickSelect
 end
 
-function var_0_0.changeQuickSelect(arg_2_0)
-	arg_2_0._isQuickSelect = not arg_2_0._isQuickSelect
+function SurvivalShelterChooseNpcListModel:changeQuickSelect()
+	self._isQuickSelect = not self._isQuickSelect
 end
 
-function var_0_0.setSelectPos(arg_3_0, arg_3_1)
-	if arg_3_0._selectPos == arg_3_1 then
+function SurvivalShelterChooseNpcListModel:setSelectPos(pos)
+	if self._selectPos == pos then
 		return false
 	end
 
-	arg_3_0._selectPos = arg_3_1
+	self._selectPos = pos
 
 	return true
 end
 
-function var_0_0.setSelectNpcToPos(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_2 = arg_4_2 ~= nil and arg_4_2 or arg_4_0._selectPos
+function SurvivalShelterChooseNpcListModel:setSelectNpcToPos(npcId, pos)
+	pos = pos ~= nil and pos or self._selectPos
 
-	if arg_4_2 == nil then
+	if pos == nil then
 		return
 	end
 
-	if arg_4_0._pos2NpcId == nil then
-		arg_4_0._pos2NpcId = {}
+	if self._pos2NpcId == nil then
+		self._pos2NpcId = {}
 	end
 
-	arg_4_0._pos2NpcId[arg_4_2] = arg_4_1
+	self._pos2NpcId[pos] = npcId
 
 	SurvivalController.instance:dispatchEvent(SurvivalEvent.OnSelectFinish)
 end
 
-function var_0_0.getSelectNpcByPos(arg_5_0, arg_5_1)
-	if arg_5_1 == nil or arg_5_0._pos2NpcId == nil then
+function SurvivalShelterChooseNpcListModel:getSelectNpcByPos(posIndex)
+	if posIndex == nil or self._pos2NpcId == nil then
 		return nil
 	end
 
-	return arg_5_0._pos2NpcId[arg_5_1]
+	return self._pos2NpcId[posIndex]
 end
 
-function var_0_0.getAllSelectPosNpc(arg_6_0)
-	local var_6_0 = {}
+function SurvivalShelterChooseNpcListModel:getAllSelectPosNpc()
+	local list = {}
 
-	if arg_6_0._pos2NpcId then
-		for iter_6_0, iter_6_1 in pairs(arg_6_0._pos2NpcId) do
-			table.insert(var_6_0, iter_6_1)
+	if self._pos2NpcId then
+		for _, npcId in pairs(self._pos2NpcId) do
+			table.insert(list, npcId)
 		end
 	end
 
-	return var_6_0
+	return list
 end
 
-function var_0_0.npcIdIsSelect(arg_7_0, arg_7_1)
-	if arg_7_0._pos2NpcId ~= nil then
-		for iter_7_0, iter_7_1 in pairs(arg_7_0._pos2NpcId) do
-			if arg_7_1 == iter_7_1 then
-				return iter_7_0
+function SurvivalShelterChooseNpcListModel:npcIdIsSelect(npcId)
+	if self._pos2NpcId ~= nil then
+		for i, v in pairs(self._pos2NpcId) do
+			if npcId == v then
+				return i
 			end
 		end
 	end
@@ -68,164 +70,165 @@ function var_0_0.npcIdIsSelect(arg_7_0, arg_7_1)
 	return nil
 end
 
-function var_0_0.getSelectPos(arg_8_0)
-	return arg_8_0._selectPos
+function SurvivalShelterChooseNpcListModel:getSelectPos()
+	return self._selectPos
 end
 
-function var_0_0.getNextCanSelectPosIndex(arg_9_0)
-	if arg_9_0._pos2NpcId == nil then
+function SurvivalShelterChooseNpcListModel:getNextCanSelectPosIndex()
+	if self._pos2NpcId == nil then
 		return nil
 	end
 
-	for iter_9_0 = 1, 3 do
-		if arg_9_0._pos2NpcId[iter_9_0] == nil then
-			return iter_9_0
+	for i = 1, 3 do
+		if self._pos2NpcId[i] == nil then
+			return i
 		end
 	end
 
 	return nil
 end
 
-function var_0_0.setSelectNpc(arg_10_0, arg_10_1)
-	if arg_10_0.selectNpcId == arg_10_1 then
-		arg_10_0.selectNpcId = 0
+function SurvivalShelterChooseNpcListModel:setSelectNpc(npcId)
+	if self.selectNpcId == npcId then
+		self.selectNpcId = 0
 	else
-		arg_10_0.selectNpcId = arg_10_1
+		self.selectNpcId = npcId
 	end
 
 	return true
 end
 
-function var_0_0.getSelectNpc(arg_11_0)
-	return arg_11_0.selectNpcId
+function SurvivalShelterChooseNpcListModel:getSelectNpc()
+	return self.selectNpcId
 end
 
-function var_0_0.clearSelectList(arg_12_0)
-	if arg_12_0._npcList ~= nil then
-		tabletool.clear(arg_12_0._npcList)
+function SurvivalShelterChooseNpcListModel:clearSelectList()
+	if self._npcList ~= nil then
+		tabletool.clear(self._npcList)
 	else
-		arg_12_0._npcList = {}
+		self._npcList = {}
 	end
 end
 
-function var_0_0.setNeedSelectNpcList(arg_13_0, arg_13_1)
-	arg_13_0.selectNpcId = nil
-	arg_13_0._pos2NpcId = nil
-	arg_13_0._isQuickSelect = false
-	arg_13_0._selectPos = nil
+function SurvivalShelterChooseNpcListModel:setNeedSelectNpcList(npcIds)
+	self.selectNpcId = nil
+	self._pos2NpcId = nil
+	self._isQuickSelect = false
+	self._selectPos = nil
 
-	if arg_13_1 == nil then
+	if npcIds == nil then
 		return
 	end
 
-	arg_13_0:clearSelectList()
+	self:clearSelectList()
 
-	for iter_13_0 = 1, #arg_13_1 do
-		local var_13_0 = arg_13_1[iter_13_0]
+	for i = 1, #npcIds do
+		local npcId = npcIds[i]
+		local config = SurvivalConfig.instance:getNpcConfig(npcId)
 
-		if SurvivalConfig.instance:getNpcConfig(var_13_0).subType ~= SurvivalEnum.NpcSubType.Story then
-			local var_13_1 = SurvivalShelterNpcMo.New()
+		if config.subType ~= SurvivalEnum.NpcSubType.Story then
+			local npcMo = SurvivalShelterNpcMo.New()
 
-			var_13_1:init({
-				id = var_13_0
+			npcMo:init({
+				id = npcId
 			})
-			table.insert(arg_13_0._npcList, var_13_1)
+			table.insert(self._npcList, npcMo)
 		end
 	end
 end
 
-function var_0_0.getShowList(arg_14_0)
-	return arg_14_0._npcList or {}
+function SurvivalShelterChooseNpcListModel:getShowList()
+	return self._npcList or {}
 end
 
-function var_0_0.filterNpc(arg_15_0, arg_15_1, arg_15_2)
-	if not arg_15_1 or not next(arg_15_1) then
+function SurvivalShelterChooseNpcListModel:filterNpc(filterList, npcMo)
+	if not filterList or not next(filterList) then
 		return true
 	end
 
-	local var_15_0 = SurvivalConfig.instance:getNpcConfigTag(arg_15_2.id)
-	local var_15_1 = {}
+	local list = SurvivalConfig.instance:getNpcConfigTag(npcMo.id)
+	local dict = {}
 
-	for iter_15_0, iter_15_1 in ipairs(var_15_0) do
-		local var_15_2 = lua_survival_tag.configDict[iter_15_1]
+	for i, v in ipairs(list) do
+		local tagConfig = lua_survival_tag.configDict[v]
 
-		if var_15_2 then
-			var_15_1[var_15_2.tagType] = true
+		if tagConfig then
+			dict[tagConfig.tagType] = true
 		end
 	end
 
-	for iter_15_2, iter_15_3 in pairs(arg_15_1) do
-		if var_15_1[iter_15_3.type] then
+	for k, v in pairs(filterList) do
+		if dict[v.type] then
 			return true
 		end
 	end
 end
 
-function var_0_0.sort(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_0.co.rare
-	local var_16_1 = arg_16_1.co.rare
+function SurvivalShelterChooseNpcListModel.sort(a, b)
+	local rareA = a.co.rare
+	local rareB = b.co.rare
 
-	if var_16_0 ~= var_16_1 then
-		return var_16_1 < var_16_0
+	if rareA ~= rareB then
+		return rareB < rareA
 	end
 
-	return arg_16_0.id < arg_16_1.id
+	return a.id < b.id
 end
 
-function var_0_0.refreshNpcList(arg_17_0, arg_17_1)
-	local var_17_0 = {}
+function SurvivalShelterChooseNpcListModel:refreshNpcList(filterList)
+	local list = {}
 
-	if arg_17_0._npcList then
-		for iter_17_0 = 1, #arg_17_0._npcList do
-			local var_17_1 = arg_17_0._npcList[iter_17_0]
+	if self._npcList then
+		for i = 1, #self._npcList do
+			local npcMo = self._npcList[i]
 
-			if arg_17_0:filterNpc(arg_17_1, var_17_1) then
-				table.insert(var_17_0, var_17_1)
+			if self:filterNpc(filterList, npcMo) then
+				table.insert(list, npcMo)
 			end
 		end
 	end
 
-	if #var_17_0 > 1 then
-		table.sort(var_17_0, arg_17_0.sort)
+	if #list > 1 then
+		table.sort(list, self.sort)
 	end
 
-	arg_17_0:setList(var_17_0)
+	self:setList(list)
 end
 
-local var_0_1 = 3
+local maxSelectCount = 3
 
-function var_0_0.quickSelectNpc(arg_18_0, arg_18_1)
-	local var_18_0 = true
+function SurvivalShelterChooseNpcListModel:quickSelectNpc(npcId)
+	local canSelect = true
 
-	for iter_18_0 = 1, var_0_1 do
-		if arg_18_0._pos2NpcId and arg_18_0._pos2NpcId[iter_18_0] == arg_18_1 then
-			arg_18_0:setSelectNpcToPos(nil, iter_18_0)
-			arg_18_0:setSelectNpc(arg_18_1)
+	for i = 1, maxSelectCount do
+		if self._pos2NpcId and self._pos2NpcId[i] == npcId then
+			self:setSelectNpcToPos(nil, i)
+			self:setSelectNpc(npcId)
 
-			var_18_0 = false
+			canSelect = false
 		end
 	end
 
-	if var_18_0 then
-		local var_18_1 = 1
+	if canSelect then
+		local index = 1
 
-		for iter_18_1 = 1, var_0_1 do
-			if arg_18_0._pos2NpcId == nil or arg_18_0._pos2NpcId[iter_18_1] == nil then
-				var_18_1 = iter_18_1
+		for i = 1, maxSelectCount do
+			if self._pos2NpcId == nil or self._pos2NpcId[i] == nil then
+				index = i
 
 				break
 			end
 		end
 
-		if arg_18_0._pos2NpcId == nil or arg_18_0._pos2NpcId[var_18_1] == nil then
-			arg_18_0:setSelectNpcToPos(arg_18_1, var_18_1)
-			arg_18_0:setSelectNpc(arg_18_1)
+		if self._pos2NpcId == nil or self._pos2NpcId[index] == nil then
+			self:setSelectNpcToPos(npcId, index)
+			self:setSelectNpc(npcId)
 		end
 	end
 
 	SurvivalController.instance:dispatchEvent(SurvivalEvent.OnSelectFinish)
 end
 
-var_0_0.instance = var_0_0.New()
+SurvivalShelterChooseNpcListModel.instance = SurvivalShelterChooseNpcListModel.New()
 
-return var_0_0
+return SurvivalShelterChooseNpcListModel

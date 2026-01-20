@@ -1,178 +1,183 @@
-﻿module("modules.versionactivitybase.enterview.view.VersionActivityEnterViewTabItem", package.seeall)
+﻿-- chunkname: @modules/versionactivitybase/enterview/view/VersionActivityEnterViewTabItem.lua
 
-local var_0_0 = class("VersionActivityEnterViewTabItem", UserDataDispose)
-local var_0_1 = VersionActivityEnterViewTabEnum.ActTabFlag
+module("modules.versionactivitybase.enterview.view.VersionActivityEnterViewTabItem", package.seeall)
 
-var_0_0.activityRemainTimeColor = "#9DD589"
+local VersionActivityEnterViewTabItem = class("VersionActivityEnterViewTabItem", UserDataDispose)
+local ShowActTagEnum = VersionActivityEnterViewTabEnum.ActTabFlag
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.index = arg_1_1
-	arg_1_0.actId = arg_1_2
-	arg_1_0.rootGo = arg_1_3
-	arg_1_0.go_selected = gohelper.findChild(arg_1_0.rootGo, "#go_select")
-	arg_1_0.go_unselected = gohelper.findChild(arg_1_0.rootGo, "#go_normal")
-	arg_1_0.activityNameTexts = arg_1_0:getUserDataTb_()
-	arg_1_0.activityNameTexts.select = gohelper.findChildText(arg_1_0.go_selected, "#txt_name")
-	arg_1_0.activityNameTexts.normal = gohelper.findChildText(arg_1_0.go_unselected, "#txt_name")
-	arg_1_0.txtLockGo = gohelper.findChild(arg_1_3, "lockContainer/lock")
-	arg_1_0.txtLock = gohelper.findChildText(arg_1_3, "lockContainer/lock/txt_lock")
-	arg_1_0.redPoints = arg_1_0:getUserDataTb_()
-	arg_1_0.redPoints.select = gohelper.findChild(arg_1_0.go_selected, "#image_reddot")
-	arg_1_0.redPoints.normal = gohelper.findChild(arg_1_0.go_unselected, "#image_reddot")
-	arg_1_0.newActivityFlags = arg_1_0:getUserDataTb_()
-	arg_1_0.newActivityFlags.select = gohelper.findChild(arg_1_0.go_selected, "#go_newact")
-	arg_1_0.newActivityFlags.normal = gohelper.findChild(arg_1_0.go_unselected, "#go_newact")
-	arg_1_0.newEpisodeFlags = arg_1_0:getUserDataTb_()
-	arg_1_0.newEpisodeFlags.select = gohelper.findChild(arg_1_0.go_selected, "#go_newlevel")
-	arg_1_0.newEpisodeFlags.normal = gohelper.findChild(arg_1_0.go_unselected, "#go_newlevel")
-	arg_1_0.rewardunlock = arg_1_0:getUserDataTb_()
-	arg_1_0.rewardunlock.select = gohelper.findChild(arg_1_0.go_selected, "#go_rewardunlock")
-	arg_1_0.rewardunlock.normal = gohelper.findChild(arg_1_0.go_unselected, "#go_rewardunlock")
-	arg_1_0.timeObjs = arg_1_0:getUserDataTb_()
-	arg_1_0.timeObjs.goTime = arg_1_0:getUserDataTb_()
-	arg_1_0.timeObjs.goTime.select = gohelper.findChild(arg_1_0.go_selected, "#go_time")
-	arg_1_0.timeObjs.goTime.normal = gohelper.findChild(arg_1_0.go_unselected, "#go_time")
-	arg_1_0.timeObjs.txtTime = arg_1_0:getUserDataTb_()
-	arg_1_0.timeObjs.txtTime.select = gohelper.findChildText(arg_1_0.go_selected, "#go_time/bg/#txt_timelimit")
-	arg_1_0.timeObjs.txtTime.normal = gohelper.findChildText(arg_1_0.go_unselected, "#go_time/bg/#txt_timelimit")
-	arg_1_0.timeObjs.timeIcon = arg_1_0:getUserDataTb_()
-	arg_1_0.timeObjs.timeIcon.select = gohelper.findChildImage(arg_1_0.go_selected, "#go_time/bg/#txt_timelimit/#image_timeicon")
-	arg_1_0.timeObjs.timeIcon.normal = gohelper.findChildImage(arg_1_0.go_unselected, "#go_time/bg/#txt_timelimit/#image_timeicon")
-	arg_1_0.imageIcons = arg_1_0:getUserDataTb_()
-	arg_1_0.imageIcons.select = gohelper.findChildImage(arg_1_0.go_selected, "#simage_icon_select")
-	arg_1_0.imageIcons.normal = gohelper.findChildImage(arg_1_0.go_unselected, "#simage_icon_normal")
+VersionActivityEnterViewTabItem.activityRemainTimeColor = "#9DD589"
 
-	local var_1_0 = gohelper.findChild(arg_1_0.rootGo, "#btn_self")
+function VersionActivityEnterViewTabItem:init(index, actId, go)
+	self.index = index
+	self.actId = actId
+	self.rootGo = go
+	self.go_selected = gohelper.findChild(self.rootGo, "#go_select")
+	self.go_unselected = gohelper.findChild(self.rootGo, "#go_normal")
+	self.activityNameTexts = self:getUserDataTb_()
+	self.activityNameTexts.select = gohelper.findChildText(self.go_selected, "#txt_name")
+	self.activityNameTexts.normal = gohelper.findChildText(self.go_unselected, "#txt_name")
+	self.txtLockGo = gohelper.findChild(go, "lockContainer/lock")
+	self.txtLock = gohelper.findChildText(go, "lockContainer/lock/txt_lock")
+	self.redPoints = self:getUserDataTb_()
+	self.redPoints.select = gohelper.findChild(self.go_selected, "#image_reddot")
+	self.redPoints.normal = gohelper.findChild(self.go_unselected, "#image_reddot")
+	self.newActivityFlags = self:getUserDataTb_()
+	self.newActivityFlags.select = gohelper.findChild(self.go_selected, "#go_newact")
+	self.newActivityFlags.normal = gohelper.findChild(self.go_unselected, "#go_newact")
+	self.newEpisodeFlags = self:getUserDataTb_()
+	self.newEpisodeFlags.select = gohelper.findChild(self.go_selected, "#go_newlevel")
+	self.newEpisodeFlags.normal = gohelper.findChild(self.go_unselected, "#go_newlevel")
+	self.rewardunlock = self:getUserDataTb_()
+	self.rewardunlock.select = gohelper.findChild(self.go_selected, "#go_rewardunlock")
+	self.rewardunlock.normal = gohelper.findChild(self.go_unselected, "#go_rewardunlock")
+	self.timeObjs = self:getUserDataTb_()
+	self.timeObjs.goTime = self:getUserDataTb_()
+	self.timeObjs.goTime.select = gohelper.findChild(self.go_selected, "#go_time")
+	self.timeObjs.goTime.normal = gohelper.findChild(self.go_unselected, "#go_time")
+	self.timeObjs.txtTime = self:getUserDataTb_()
+	self.timeObjs.txtTime.select = gohelper.findChildText(self.go_selected, "#go_time/bg/#txt_timelimit")
+	self.timeObjs.txtTime.normal = gohelper.findChildText(self.go_unselected, "#go_time/bg/#txt_timelimit")
+	self.timeObjs.timeIcon = self:getUserDataTb_()
+	self.timeObjs.timeIcon.select = gohelper.findChildImage(self.go_selected, "#go_time/bg/#txt_timelimit/#image_timeicon")
+	self.timeObjs.timeIcon.normal = gohelper.findChildImage(self.go_unselected, "#go_time/bg/#txt_timelimit/#image_timeicon")
+	self.imageIcons = self:getUserDataTb_()
+	self.imageIcons.select = gohelper.findChildImage(self.go_selected, "#simage_icon_select")
+	self.imageIcons.normal = gohelper.findChildImage(self.go_unselected, "#simage_icon_normal")
 
-	arg_1_0.click = SLFramework.UGUI.ButtonWrap.Get(var_1_0)
-	arg_1_0.redPointTagAnimator = arg_1_0.goRedPointTag and arg_1_0.goRedPointTag:GetComponent(typeof(UnityEngine.Animator))
+	local btnGO = gohelper.findChild(self.rootGo, "#btn_self")
 
-	local var_1_1 = ActivityConfig.instance:getActivityCo(arg_1_2)
+	self.click = SLFramework.UGUI.ButtonWrap.Get(btnGO)
+	self.redPointTagAnimator = self.goRedPointTag and self.goRedPointTag:GetComponent(typeof(UnityEngine.Animator))
 
-	arg_1_0.openId = var_1_1 and var_1_1.openId
-	arg_1_0.redDotId = var_1_1 and var_1_1.redDotId
-	arg_1_0.redDotUid = 0
-	arg_1_0._redDotIconSelect = nil
-	arg_1_0._redDotIconNormal = nil
+	local activityCo = ActivityConfig.instance:getActivityCo(actId)
+
+	self.openId = activityCo and activityCo.openId
+	self.redDotId = activityCo and activityCo.redDotId
+	self.redDotUid = 0
+	self._redDotIconSelect = nil
+	self._redDotIconNormal = nil
 end
 
-function var_0_0.setClickFunc(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0.click:AddClickListener(arg_2_1, arg_2_2, arg_2_0)
+function VersionActivityEnterViewTabItem:setClickFunc(clickFunc, callObj)
+	self.click:AddClickListener(clickFunc, callObj, self)
 end
 
-function var_0_0.setShowRemainDayToggle(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0._showOpenRemainDayThreshold = arg_3_2
-	arg_3_0._showOpenRemainDay = arg_3_1
+function VersionActivityEnterViewTabItem:setShowRemainDayToggle(show, showDay)
+	self._showOpenRemainDayThreshold = showDay
+	self._showOpenRemainDay = show
 end
 
-function var_0_0.onClick(arg_4_0)
+function VersionActivityEnterViewTabItem:onClick()
 	return
 end
 
-function var_0_0.refreshSelectState(arg_5_0, arg_5_1)
-	gohelper.setActive(arg_5_0.go_selected, arg_5_1)
-	gohelper.setActive(arg_5_0.go_unselected, not arg_5_1)
+function VersionActivityEnterViewTabItem:refreshSelectState(select)
+	gohelper.setActive(self.go_selected, select)
+	gohelper.setActive(self.go_unselected, not select)
 end
 
-function var_0_0.refreshNameText(arg_6_0)
-	if arg_6_0.activityNameTexts then
-		local var_6_0 = ActivityModel.instance:getActMO(arg_6_0.actId).config.tabName
+function VersionActivityEnterViewTabItem:refreshNameText()
+	if self.activityNameTexts then
+		local actInfoMo = ActivityModel.instance:getActMO(self.actId)
+		local str = actInfoMo.config.tabName
 
-		arg_6_0.activityNameTexts.select.text = var_6_0
-		arg_6_0.activityNameTexts.normal.text = var_6_0
+		self.activityNameTexts.select.text = str
+		self.activityNameTexts.normal.text = str
 	end
 end
 
-function var_0_0.addRedDot(arg_7_0)
-	if arg_7_0._redDotIconNormal ~= nil then
+function VersionActivityEnterViewTabItem:addRedDot()
+	if self._redDotIconNormal ~= nil then
 		return
 	end
 
-	if ActivityHelper.getActivityStatus(arg_7_0.actId) == ActivityEnum.ActivityStatus.Normal and arg_7_0.redDotId and arg_7_0.redDotId ~= 0 then
-		arg_7_0._redDotIconSelect = RedDotController.instance:addRedDot(arg_7_0.redPoints.select, arg_7_0.redDotId, arg_7_0.redDotUid)
-		arg_7_0._redDotIconNormal = RedDotController.instance:addRedDot(arg_7_0.redPoints.normal, arg_7_0.redDotId, arg_7_0.redDotUid)
+	local activityStatus = ActivityHelper.getActivityStatus(self.actId)
+	local isNormalStatus = activityStatus == ActivityEnum.ActivityStatus.Normal
+
+	if isNormalStatus and self.redDotId and self.redDotId ~= 0 then
+		self._redDotIconSelect = RedDotController.instance:addRedDot(self.redPoints.select, self.redDotId, self.redDotUid)
+		self._redDotIconNormal = RedDotController.instance:addRedDot(self.redPoints.normal, self.redDotId, self.redDotUid)
 	end
 end
 
-function var_0_0.refreshActivityItemTag(arg_8_0)
-	local var_8_0 = ActivityHelper.getActivityStatus(arg_8_0.actId)
-	local var_8_1 = var_8_0 == ActivityEnum.ActivityStatus.Normal or var_8_0 == ActivityEnum.ActivityStatus.NotUnlock
+function VersionActivityEnterViewTabItem:refreshActivityItemTag()
+	local activityStatus = ActivityHelper.getActivityStatus(self.actId)
+	local isOpenStatus = activityStatus == ActivityEnum.ActivityStatus.Normal or activityStatus == ActivityEnum.ActivityStatus.NotUnlock
 
-	gohelper.setActive(arg_8_0.newActivityFlags.select, false)
-	gohelper.setActive(arg_8_0.newActivityFlags.normal, false)
-	gohelper.setActive(arg_8_0.newEpisodeFlags.select, false)
-	gohelper.setActive(arg_8_0.newEpisodeFlags.normal, false)
+	gohelper.setActive(self.newActivityFlags.select, false)
+	gohelper.setActive(self.newActivityFlags.normal, false)
+	gohelper.setActive(self.newEpisodeFlags.select, false)
+	gohelper.setActive(self.newEpisodeFlags.normal, false)
 
-	arg_8_0.showTag = nil
+	self.showTag = nil
 
-	if var_8_1 then
-		local var_8_2 = ActivityModel.instance:getActMO(arg_8_0.actId)
-		local var_8_3 = not ActivityEnterMgr.instance:isEnteredActivity(arg_8_0.actId)
+	if isOpenStatus then
+		local actInfoMo = ActivityModel.instance:getActMO(self.actId)
+		local isShowNewAct = not ActivityEnterMgr.instance:isEnteredActivity(self.actId)
 
-		if var_8_3 then
-			arg_8_0.showTag = var_0_1.ShowNewAct
-		elseif var_8_2:isNewStageOpen() then
-			arg_8_0.showTag = var_0_1.ShowNewStage
+		if isShowNewAct then
+			self.showTag = ShowActTagEnum.ShowNewAct
+		elseif actInfoMo:isNewStageOpen() then
+			self.showTag = ShowActTagEnum.ShowNewStage
 		end
 
-		if arg_8_0.actId == VersionActivity1_6Enum.ActivityId.Cachot then
-			local var_8_4 = V1a6_CachotProgressListModel.instance:checkRewardStageChange()
+		if self.actId == VersionActivity1_6Enum.ActivityId.Cachot then
+			local rewardstageunlock = V1a6_CachotProgressListModel.instance:checkRewardStageChange()
 
-			gohelper.setActive(arg_8_0.rewardunlock.select, var_8_4 and not var_8_3)
-			gohelper.setActive(arg_8_0.rewardunlock.normal, var_8_4 and not var_8_3)
+			gohelper.setActive(self.rewardunlock.select, rewardstageunlock and not isShowNewAct)
+			gohelper.setActive(self.rewardunlock.normal, rewardstageunlock and not isShowNewAct)
 		end
 	end
 end
 
-function var_0_0.refreshTimeInfo(arg_9_0)
-	if arg_9_0.showTag == var_0_1.ShowNewAct or arg_9_0.showTag == var_0_1.ShowNewStage then
-		arg_9_0:_setItemObjActive(arg_9_0.timeObjs.goTime, false)
+function VersionActivityEnterViewTabItem:refreshTimeInfo()
+	if self.showTag == ShowActTagEnum.ShowNewAct or self.showTag == ShowActTagEnum.ShowNewStage then
+		self:_setItemObjActive(self.timeObjs.goTime, false)
 
 		return
 	end
 
-	local var_9_0 = ActivityHelper.getActivityStatus(arg_9_0.actId)
-	local var_9_1 = "#FFFFFF"
-	local var_9_2 = ""
-	local var_9_3 = ActivityModel.instance:getActMO(arg_9_0.actId)
+	local activityStatus = ActivityHelper.getActivityStatus(self.actId)
+	local iconColor = "#FFFFFF"
+	local txtStr = ""
+	local actInfoMo = ActivityModel.instance:getActMO(self.actId)
 
-	if (var_9_0 == ActivityEnum.ActivityStatus.Normal or var_9_0 == ActivityEnum.ActivityStatus.NotUnlock) and arg_9_0._showOpenRemainDay then
-		if var_9_3:getRemainDay() < arg_9_0._showOpenRemainDayThreshold then
-			arg_9_0:_setItemObjActive(arg_9_0.timeObjs.goTime, true)
+	if (activityStatus == ActivityEnum.ActivityStatus.Normal or activityStatus == ActivityEnum.ActivityStatus.NotUnlock) and self._showOpenRemainDay then
+		local remainDayNum = actInfoMo:getRemainDay()
 
-			var_9_1 = var_0_0.activityRemainTimeColor
+		if remainDayNum < self._showOpenRemainDayThreshold then
+			self:_setItemObjActive(self.timeObjs.goTime, true)
 
-			local var_9_4 = var_9_3:getRemainTimeStr2ByEndTime()
+			iconColor = VersionActivityEnterViewTabItem.activityRemainTimeColor
+			txtStr = actInfoMo:getRemainTimeStr2ByEndTime()
+			self.timeObjs.txtTime.select.text = txtStr
+			self.timeObjs.txtTime.normal.text = txtStr
 
-			arg_9_0.timeObjs.txtTime.select.text = var_9_4
-			arg_9_0.timeObjs.txtTime.normal.text = var_9_4
-
-			SLFramework.UGUI.GuiHelper.SetColor(arg_9_0.timeObjs.timeIcon.select, var_9_1)
-			SLFramework.UGUI.GuiHelper.SetColor(arg_9_0.timeObjs.timeIcon.normal, var_9_1)
+			SLFramework.UGUI.GuiHelper.SetColor(self.timeObjs.timeIcon.select, iconColor)
+			SLFramework.UGUI.GuiHelper.SetColor(self.timeObjs.timeIcon.normal, iconColor)
 		else
-			arg_9_0:_setItemObjActive(arg_9_0.timeObjs.goTime, false)
+			self:_setItemObjActive(self.timeObjs.goTime, false)
 		end
-	elseif var_9_0 == ActivityEnum.ActivityStatus.NotOpen then
-		local var_9_5 = var_9_3:getRemainOpeningDay()
+	elseif activityStatus == ActivityEnum.ActivityStatus.NotOpen then
+		local openDayNum = actInfoMo:getRemainOpeningDay()
 
-		arg_9_0:_setItemObjActive(arg_9_0.timeObjs.goTime, true)
+		self:_setItemObjActive(self.timeObjs.goTime, true)
 
-		local var_9_6 = var_9_3:getRemainTimeStr2ByOpenTime()
+		txtStr = actInfoMo:getRemainTimeStr2ByOpenTime()
+		self.timeObjs.txtTime.select.text = txtStr
+		self.timeObjs.txtTime.normal.text = txtStr
 
-		arg_9_0.timeObjs.txtTime.select.text = var_9_6
-		arg_9_0.timeObjs.txtTime.normal.text = var_9_6
-
-		SLFramework.UGUI.GuiHelper.SetColor(arg_9_0.timeObjs.timeIcon.select, var_9_1)
-		SLFramework.UGUI.GuiHelper.SetColor(arg_9_0.timeObjs.timeIcon.normal, var_9_1)
+		SLFramework.UGUI.GuiHelper.SetColor(self.timeObjs.timeIcon.select, iconColor)
+		SLFramework.UGUI.GuiHelper.SetColor(self.timeObjs.timeIcon.normal, iconColor)
 	else
-		arg_9_0:_setItemObjActive(arg_9_0.timeObjs.goTime, false)
+		self:_setItemObjActive(self.timeObjs.goTime, false)
 	end
 end
 
-function var_0_0._setItemObjActive(arg_10_0, arg_10_1, arg_10_2)
-	for iter_10_0, iter_10_1 in pairs(arg_10_1) do
-		gohelper.setActive(iter_10_1.gameObject, arg_10_2)
+function VersionActivityEnterViewTabItem:_setItemObjActive(objList, active)
+	for _, obj in pairs(objList) do
+		gohelper.setActive(obj.gameObject, active)
 	end
 end
 
-return var_0_0
+return VersionActivityEnterViewTabItem

@@ -1,28 +1,30 @@
-﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionFightEvent", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/WaitGuideActionFightEvent.lua
 
-local var_0_0 = class("WaitGuideActionFightEvent", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.WaitGuideActionFightEvent", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+local WaitGuideActionFightEvent = class("WaitGuideActionFightEvent", BaseGuideAction)
 
-	arg_1_0._eventName = FightEvent[arg_1_0.actionParam]
+function WaitGuideActionFightEvent:onStart(context)
+	WaitGuideActionFightEvent.super.onStart(self, context)
 
-	if not arg_1_0._eventName then
-		logError("WaitGuideActionFightEvent param error:" .. tostring(arg_1_0.actionParam))
+	self._eventName = FightEvent[self.actionParam]
+
+	if not self._eventName then
+		logError("WaitGuideActionFightEvent param error:" .. tostring(self.actionParam))
 
 		return
 	end
 
-	FightController.instance:registerCallback(arg_1_0._eventName, arg_1_0._onReceiveFightEvent, arg_1_0)
+	FightController.instance:registerCallback(self._eventName, self._onReceiveFightEvent, self)
 end
 
-function var_0_0._onReceiveFightEvent(arg_2_0)
-	FightController.instance:unregisterCallback(arg_2_0._eventName, arg_2_0._onReceiveFightEvent, arg_2_0)
-	arg_2_0:onDone(true)
+function WaitGuideActionFightEvent:_onReceiveFightEvent()
+	FightController.instance:unregisterCallback(self._eventName, self._onReceiveFightEvent, self)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
-	FightController.instance:unregisterCallback(arg_3_0._eventName, arg_3_0._onReceiveFightEvent, arg_3_0)
+function WaitGuideActionFightEvent:clearWork()
+	FightController.instance:unregisterCallback(self._eventName, self._onReceiveFightEvent, self)
 end
 
-return var_0_0
+return WaitGuideActionFightEvent

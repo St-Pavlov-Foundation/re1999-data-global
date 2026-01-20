@@ -1,51 +1,52 @@
-﻿module("modules.configs.excel2json.lua_block_init", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_block_init.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_block_init", package.seeall)
+
+local lua_block_init = {}
+local fields = {
 	packageId = 3,
 	blockId = 2,
 	mainRes = 5,
 	defineId = 1,
 	order = 4
 }
-local var_0_2 = {
+local primaryKey = {
 	"blockId"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict, var_0_0.poscfgDict = var_0_0.json_parse(arg_1_0)
+function lua_block_init.onLoad(json)
+	lua_block_init.configList, lua_block_init.configDict, lua_block_init.poscfgDict = lua_block_init.json_parse(json)
 end
 
-function var_0_0.json_parse(arg_2_0)
-	local var_2_0 = {}
-	local var_2_1 = {}
-	local var_2_2 = {}
+function lua_block_init.json_parse(json)
+	local configList = {}
+	local configDict = {}
+	local poscfgDict = {}
 
-	if arg_2_0.infos then
-		for iter_2_0, iter_2_1 in ipairs(arg_2_0.infos) do
-			local var_2_3 = {
-				blockId = iter_2_1.blockId,
-				defineId = iter_2_1.defineId,
-				mainRes = iter_2_1.mainRes
-			}
+	if json.infos then
+		for i, info in ipairs(json.infos) do
+			local config = {}
 
-			var_2_3.packageId = -1
-			var_2_3.order = -1
+			config.blockId = info.blockId
+			config.defineId = info.defineId
+			config.mainRes = info.mainRes
+			config.packageId = -1
+			config.order = -1
 
-			table.insert(var_2_0, var_2_3)
+			table.insert(configList, config)
 
-			var_2_1[var_2_3.blockId] = var_2_3
+			configDict[config.blockId] = config
 
-			if not var_2_2[iter_2_1.x] then
-				var_2_2[iter_2_1.x] = {}
+			if not poscfgDict[info.x] then
+				poscfgDict[info.x] = {}
 			end
 
-			var_2_2[iter_2_1.x][iter_2_1.y] = iter_2_1
+			poscfgDict[info.x][info.y] = info
 		end
 	end
 
-	return var_2_0, var_2_1, var_2_2
+	return configList, configDict, poscfgDict
 end
 
-return var_0_0
+return lua_block_init

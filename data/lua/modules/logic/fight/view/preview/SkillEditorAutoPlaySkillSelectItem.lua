@@ -1,88 +1,90 @@
-﻿module("modules.logic.fight.view.preview.SkillEditorAutoPlaySkillSelectItem", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/preview/SkillEditorAutoPlaySkillSelectItem.lua
 
-local var_0_0 = class("SkillEditorAutoPlaySkillSelectItem", ListScrollCell)
+module("modules.logic.fight.view.preview.SkillEditorAutoPlaySkillSelectItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._text = gohelper.findChildText(arg_1_1, "Text")
-	arg_1_0._click = gohelper.findChildButtonWithAudio(arg_1_1, "imgRemove")
-	arg_1_0._btnUseSkin = gohelper.findChildButtonWithAudio(arg_1_1, "btn_skin")
-	arg_1_0._goNoUseImg = gohelper.findChild(arg_1_1, "btn_skin/nouse")
-	arg_1_0._goUseImg = gohelper.findChild(arg_1_1, "btn_skin/use")
+local SkillEditorAutoPlaySkillSelectItem = class("SkillEditorAutoPlaySkillSelectItem", ListScrollCell)
 
-	gohelper.setActive(arg_1_1, true)
-	gohelper.setActive(arg_1_0._goNoUseImg, true)
-	gohelper.setActive(arg_1_0._goUseImg, false)
+function SkillEditorAutoPlaySkillSelectItem:init(go)
+	self._text = gohelper.findChildText(go, "Text")
+	self._click = gohelper.findChildButtonWithAudio(go, "imgRemove")
+	self._btnUseSkin = gohelper.findChildButtonWithAudio(go, "btn_skin")
+	self._goNoUseImg = gohelper.findChild(go, "btn_skin/nouse")
+	self._goUseImg = gohelper.findChild(go, "btn_skin/use")
+
+	gohelper.setActive(go, true)
+	gohelper.setActive(self._goNoUseImg, true)
+	gohelper.setActive(self._goUseImg, false)
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._click:AddClickListener(arg_2_0._onClickThis, arg_2_0)
-	arg_2_0._btnUseSkin:AddClickListener(arg_2_0._openSelectScroll, arg_2_0)
-	SkillEditorMgr.instance:registerCallback(SkillEditorMgr._SelectAutoPlaySkin, arg_2_0._selectSkin, arg_2_0)
+function SkillEditorAutoPlaySkillSelectItem:addEventListeners()
+	self._click:AddClickListener(self._onClickThis, self)
+	self._btnUseSkin:AddClickListener(self._openSelectScroll, self)
+	SkillEditorMgr.instance:registerCallback(SkillEditorMgr._SelectAutoPlaySkin, self._selectSkin, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._click:RemoveClickListener()
-	arg_3_0._btnUseSkin:RemoveClickListener()
-	SkillEditorMgr.instance:unregisterCallback(SkillEditorMgr._SelectAutoPlaySkin, arg_3_0._selectSkin, arg_3_0)
+function SkillEditorAutoPlaySkillSelectItem:removeEventListeners()
+	self._click:RemoveClickListener()
+	self._btnUseSkin:RemoveClickListener()
+	SkillEditorMgr.instance:unregisterCallback(SkillEditorMgr._SelectAutoPlaySkin, self._selectSkin, self)
 end
 
-function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
-	arg_4_0._mo = arg_4_1
+function SkillEditorAutoPlaySkillSelectItem:onUpdateMO(mo)
+	self._mo = mo
 
-	local var_4_0 = arg_4_1.co
+	local co = mo.co
 
-	if arg_4_1.type == SkillEditorMgr.SelectType.Hero then
-		arg_4_0._text.text = var_4_0.skinId .. (var_4_0.name and "\n" .. var_4_0.name or "")
-	elseif arg_4_1.type == SkillEditorMgr.SelectType.Monster then
-		local var_4_1 = FightConfig.instance:getSkinCO(var_4_0.skinId)
-		local var_4_2 = var_4_1 and var_4_1.name or nil
+	if mo.type == SkillEditorMgr.SelectType.Hero then
+		self._text.text = co.skinId .. (co.name and "\n" .. co.name or "")
+	elseif mo.type == SkillEditorMgr.SelectType.Monster then
+		local skin_config = FightConfig.instance:getSkinCO(co.skinId)
+		local show_name = skin_config and skin_config.name or nil
 
-		if not var_4_1 then
-			logError("皮肤表找不到id,怪物模型id：", var_4_0.skinId)
+		if not skin_config then
+			logError("皮肤表找不到id,怪物模型id：", co.skinId)
 		end
 
-		arg_4_0._text.text = var_4_0.skinId .. (var_4_2 and "\n" .. var_4_2 or "")
-	elseif arg_4_1.type == SkillEditorMgr.SelectType.Group then
-		local var_4_3 = string.splitToNumber(var_4_0.monster, "#")
-		local var_4_4 = lua_monster.configDict[var_4_3[1]]
+		self._text.text = co.skinId .. (show_name and "\n" .. show_name or "")
+	elseif mo.type == SkillEditorMgr.SelectType.Group then
+		local monsterIds = string.splitToNumber(co.monster, "#")
+		local monsterCO = lua_monster.configDict[monsterIds[1]]
 
-		for iter_4_0 = 2, #var_4_3 do
-			if tabletool.indexOf(string.splitToNumber(var_4_0.bossId, "#"), var_4_3[iter_4_0]) then
-				var_4_4 = lua_monster.configDict[var_4_3[iter_4_0]]
+		for i = 2, #monsterIds do
+			if tabletool.indexOf(string.splitToNumber(co.bossId, "#"), monsterIds[i]) then
+				monsterCO = lua_monster.configDict[monsterIds[i]]
 
 				break
 			end
 		end
 
-		arg_4_0._text.text = var_4_0.id .. (var_4_4 and var_4_4.name and "\n" .. var_4_4.name or "")
+		self._text.text = co.id .. (monsterCO and monsterCO.name and "\n" .. monsterCO.name or "")
 	else
-		arg_4_0._text.text = var_4_0.id .. (var_4_0.name and "\n" .. var_4_0.name or "")
+		self._text.text = co.id .. (co.name and "\n" .. co.name or "")
 	end
 end
 
-function var_0_0._openSelectScroll(arg_5_0)
-	SkillEditorMgr.instance:dispatchEvent(SkillEditorMgr._OpenAutoPlaySkin, arg_5_0._mo)
+function SkillEditorAutoPlaySkillSelectItem:_openSelectScroll()
+	SkillEditorMgr.instance:dispatchEvent(SkillEditorMgr._OpenAutoPlaySkin, self._mo)
 end
 
-function var_0_0._selectSkin(arg_6_0, arg_6_1)
-	if arg_6_0._mo.co.id == arg_6_1.roleid then
-		local var_6_0 = arg_6_0._mo.skinId ~= arg_6_1.skinid
+function SkillEditorAutoPlaySkillSelectItem:_selectSkin(param)
+	if self._mo.co.id == param.roleid then
+		local isChange = self._mo.skinId ~= param.skinid
 
-		gohelper.setActive(arg_6_0._goNoUseImg, not var_6_0)
-		gohelper.setActive(arg_6_0._goUseImg, var_6_0)
+		gohelper.setActive(self._goNoUseImg, not isChange)
+		gohelper.setActive(self._goUseImg, isChange)
 
-		if var_6_0 then
-			arg_6_0._mo.skinId = arg_6_1.skinid
+		if isChange then
+			self._mo.skinId = param.skinid
 		else
-			arg_6_0._mo.skinId = arg_6_0._mo.co.skinId
+			self._mo.skinId = self._mo.co.skinId
 		end
 
-		SkillEditorToolAutoPlaySkillSelectModel.instance:addAt(arg_6_0._mo, arg_6_0._index)
+		SkillEditorToolAutoPlaySkillSelectModel.instance:addAt(self._mo, self._index)
 	end
 end
 
-function var_0_0._onClickThis(arg_7_0)
-	SkillEditorToolAutoPlaySkillSelectModel.instance:removeAt(arg_7_0._index)
+function SkillEditorAutoPlaySkillSelectItem:_onClickThis()
+	SkillEditorToolAutoPlaySkillSelectModel.instance:removeAt(self._index)
 end
 
-return var_0_0
+return SkillEditorAutoPlaySkillSelectItem

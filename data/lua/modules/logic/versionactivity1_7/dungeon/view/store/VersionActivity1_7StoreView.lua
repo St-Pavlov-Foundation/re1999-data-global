@@ -1,63 +1,66 @@
-﻿module("modules.logic.versionactivity1_7.dungeon.view.store.VersionActivity1_7StoreView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_7/dungeon/view/store/VersionActivity1_7StoreView.lua
 
-local var_0_0 = class("VersionActivity1_7StoreView", BaseView)
+module("modules.logic.versionactivity1_7.dungeon.view.store.VersionActivity1_7StoreView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._scrollstore = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_store")
-	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "#scroll_store/Viewport/#go_Content")
-	arg_1_0._gostoreItem = gohelper.findChild(arg_1_0.viewGO, "#scroll_store/Viewport/#go_Content/#go_storeItem")
-	arg_1_0._gostoregoodsitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_store/Viewport/#go_Content/#go_storeItem/#go_storegoodsitem")
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "title/#txt_time")
+local VersionActivity1_7StoreView = class("VersionActivity1_7StoreView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity1_7StoreView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._scrollstore = gohelper.findChildScrollRect(self.viewGO, "#scroll_store")
+	self._goContent = gohelper.findChild(self.viewGO, "#scroll_store/Viewport/#go_Content")
+	self._gostoreItem = gohelper.findChild(self.viewGO, "#scroll_store/Viewport/#go_Content/#go_storeItem")
+	self._gostoregoodsitem = gohelper.findChild(self.viewGO, "#scroll_store/Viewport/#go_Content/#go_storeItem/#go_storegoodsitem")
+	self._txttime = gohelper.findChildText(self.viewGO, "title/#txt_time")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function VersionActivity1_7StoreView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function VersionActivity1_7StoreView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._simagebg:LoadImage("singlebg/v1a7_mainactivity_singlebg/v1a7_store_fullbg.png")
-	arg_4_0:addEventCb(VersionActivityController.instance, VersionActivityEvent.OnBuy107GoodsSuccess, arg_4_0.onBuyGoodsSuccess, arg_4_0)
-	arg_4_0:addEventCb(JumpController.instance, JumpEvent.BeforeJump, arg_4_0.closeThis, arg_4_0)
+function VersionActivity1_7StoreView:_editableInitView()
+	self._simagebg:LoadImage("singlebg/v1a7_mainactivity_singlebg/v1a7_store_fullbg.png")
+	self:addEventCb(VersionActivityController.instance, VersionActivityEvent.OnBuy107GoodsSuccess, self.onBuyGoodsSuccess, self)
+	self:addEventCb(JumpController.instance, JumpEvent.BeforeJump, self.closeThis, self)
 end
 
-function var_0_0.onBuyGoodsSuccess(arg_5_0)
-	arg_5_0:refreshStore()
+function VersionActivity1_7StoreView:onBuyGoodsSuccess()
+	self:refreshStore()
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:refreshUI()
+function VersionActivity1_7StoreView:onOpen()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_7_0)
-	arg_7_0:refreshStore()
-	arg_7_0:refreshTime()
+function VersionActivity1_7StoreView:refreshUI()
+	self:refreshStore()
+	self:refreshTime()
 end
 
-function var_0_0.refreshStore(arg_8_0)
+function VersionActivity1_7StoreView:refreshStore()
 	VersionActivity1_7StoreListModel.instance:refreshStore()
 end
 
-function var_0_0.refreshTime(arg_9_0)
-	local var_9_0 = ActivityModel.instance:getActivityInfo()[VersionActivity1_7Enum.ActivityId.DungeonStore]:getRealEndTimeStamp() - ServerTime.now()
+function VersionActivity1_7StoreView:refreshTime()
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[VersionActivity1_7Enum.ActivityId.DungeonStore]
+	local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
 
-	arg_9_0._txttime.text = TimeUtil.SecondToActivityTimeFormat(var_9_0)
+	self._txttime.text = TimeUtil.SecondToActivityTimeFormat(offsetSecond)
 end
 
-function var_0_0.onClose(arg_10_0)
+function VersionActivity1_7StoreView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	arg_11_0._simagebg:UnLoadImage()
+function VersionActivity1_7StoreView:onDestroyView()
+	self._simagebg:UnLoadImage()
 end
 
-return var_0_0
+return VersionActivity1_7StoreView

@@ -1,11 +1,13 @@
-﻿module("modules.logic.survival.view.map.SurvivalHeroGroupFightView_Rule", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/SurvivalHeroGroupFightView_Rule.lua
 
-local var_0_0 = class("SurvivalHeroGroupFightView_Rule", HeroGroupFightViewRule)
+module("modules.logic.survival.view.map.SurvivalHeroGroupFightView_Rule", package.seeall)
 
-function var_0_0._getRuleList(arg_1_0, arg_1_1)
-	local var_1_0 = var_0_0.super._getRuleList(arg_1_0, arg_1_1)
+local SurvivalHeroGroupFightView_Rule = class("SurvivalHeroGroupFightView_Rule", HeroGroupFightViewRule)
 
-	return SurvivalShelterModel.instance:addExRule(var_1_0)
+function SurvivalHeroGroupFightView_Rule:_getRuleList(episodeConfig)
+	local list = SurvivalHeroGroupFightView_Rule.super._getRuleList(self, episodeConfig)
+
+	return SurvivalShelterModel.instance:addExRule(list)
 end
 
-return var_0_0
+return SurvivalHeroGroupFightView_Rule

@@ -1,240 +1,251 @@
-﻿module("modules.logic.room.view.trade.RoomDailyOrderView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/trade/RoomDailyOrderView.lua
 
-local var_0_0 = class("RoomDailyOrderView", BaseView)
+module("modules.logic.room.view.trade.RoomDailyOrderView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gotip = gohelper.findChild(arg_1_0.viewGO, "tip")
-	arg_1_0._txttip1 = gohelper.findChildText(arg_1_0.viewGO, "tip/#txt_tip1")
-	arg_1_0._txttip2 = gohelper.findChildText(arg_1_0.viewGO, "tip/#txt_tip2")
-	arg_1_0._goroot = gohelper.findChild(arg_1_0.viewGO, "#go_root")
-	arg_1_0._gonotorder = gohelper.findChild(arg_1_0.viewGO, "#go_notorder")
-	arg_1_0._gorole = gohelper.findChild(arg_1_0.viewGO, "#go_notorder/spine/#go_role")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#go_notorder/barrage/namebg/#txt_name")
-	arg_1_0._scrollbarrage = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_notorder/barrage/#scroll_barrage")
-	arg_1_0._txtbarrage = gohelper.findChildText(arg_1_0.viewGO, "#go_notorder/barrage/#scroll_barrage/Viewport/#txt_barrage")
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_notorder/#simage_icon")
-	arg_1_0._gonotorder2 = gohelper.findChild(arg_1_0.viewGO, "#go_notorder2")
-	arg_1_0._simageicon2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_notorder2/#simage_icon")
-	arg_1_0._txtbarrage2 = gohelper.findChildText(arg_1_0.viewGO, "#go_notorder2/barrage/#scroll_barrage/Viewport/#txt_barrage")
-	arg_1_0._txtname2 = gohelper.findChildText(arg_1_0.viewGO, "#go_notorder2/barrage/namebg/#txt_name")
+local RoomDailyOrderView = class("RoomDailyOrderView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomDailyOrderView:onInitView()
+	self._gotip = gohelper.findChild(self.viewGO, "tip")
+	self._txttip1 = gohelper.findChildText(self.viewGO, "tip/#txt_tip1")
+	self._txttip2 = gohelper.findChildText(self.viewGO, "tip/#txt_tip2")
+	self._goroot = gohelper.findChild(self.viewGO, "#go_root")
+	self._gonotorder = gohelper.findChild(self.viewGO, "#go_notorder")
+	self._gorole = gohelper.findChild(self.viewGO, "#go_notorder/spine/#go_role")
+	self._txtname = gohelper.findChildText(self.viewGO, "#go_notorder/barrage/namebg/#txt_name")
+	self._scrollbarrage = gohelper.findChildScrollRect(self.viewGO, "#go_notorder/barrage/#scroll_barrage")
+	self._txtbarrage = gohelper.findChildText(self.viewGO, "#go_notorder/barrage/#scroll_barrage/Viewport/#txt_barrage")
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "#go_notorder/#simage_icon")
+	self._gonotorder2 = gohelper.findChild(self.viewGO, "#go_notorder2")
+	self._simageicon2 = gohelper.findChildSingleImage(self.viewGO, "#go_notorder2/#simage_icon")
+	self._txtbarrage2 = gohelper.findChildText(self.viewGO, "#go_notorder2/barrage/#scroll_barrage/Viewport/#txt_barrage")
+	self._txtname2 = gohelper.findChildText(self.viewGO, "#go_notorder2/barrage/namebg/#txt_name")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	BackpackController.instance:registerCallback(BackpackEvent.UpdateItemList, arg_2_0.refrshCurrency, arg_2_0)
-	RoomTradeController.instance:registerCallback(RoomTradeEvent.OnGetTradeOrderInfo, arg_2_0.onRefresh, arg_2_0)
-	RoomTradeController.instance:registerCallback(RoomTradeEvent.OnFinishOrder, arg_2_0.finishOrder, arg_2_0)
-	RoomTradeController.instance:registerCallback(RoomTradeEvent.OnRefreshDailyOrder, arg_2_0.refreshOrder, arg_2_0)
-	RoomTradeController.instance:registerCallback(RoomTradeEvent.OnTracedDailyOrder, arg_2_0.refreshTraced, arg_2_0)
-	RoomTradeController.instance:registerCallback(RoomTradeEvent.OnLockedDailyOrder, arg_2_0.refreshLocked, arg_2_0)
+function RoomDailyOrderView:addEvents()
+	BackpackController.instance:registerCallback(BackpackEvent.UpdateItemList, self.refrshCurrency, self)
+	RoomTradeController.instance:registerCallback(RoomTradeEvent.OnGetTradeOrderInfo, self.onRefresh, self)
+	RoomTradeController.instance:registerCallback(RoomTradeEvent.OnFinishOrder, self.finishOrder, self)
+	RoomTradeController.instance:registerCallback(RoomTradeEvent.OnRefreshDailyOrder, self.refreshOrder, self)
+	RoomTradeController.instance:registerCallback(RoomTradeEvent.OnTracedDailyOrder, self.refreshTraced, self)
+	RoomTradeController.instance:registerCallback(RoomTradeEvent.OnLockedDailyOrder, self.refreshLocked, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	BackpackController.instance:unregisterCallback(BackpackEvent.UpdateItemList, arg_3_0.refrshCurrency, arg_3_0)
-	RoomTradeController.instance:unregisterCallback(RoomTradeEvent.OnGetTradeOrderInfo, arg_3_0.onRefresh, arg_3_0)
-	RoomTradeController.instance:unregisterCallback(RoomTradeEvent.OnFinishOrder, arg_3_0.finishOrder, arg_3_0)
-	RoomTradeController.instance:unregisterCallback(RoomTradeEvent.OnRefreshDailyOrder, arg_3_0.refreshOrder, arg_3_0)
-	RoomTradeController.instance:unregisterCallback(RoomTradeEvent.OnTracedDailyOrder, arg_3_0.refreshTraced, arg_3_0)
-	RoomTradeController.instance:unregisterCallback(RoomTradeEvent.OnLockedDailyOrder, arg_3_0.refreshLocked, arg_3_0)
+function RoomDailyOrderView:removeEvents()
+	BackpackController.instance:unregisterCallback(BackpackEvent.UpdateItemList, self.refrshCurrency, self)
+	RoomTradeController.instance:unregisterCallback(RoomTradeEvent.OnGetTradeOrderInfo, self.onRefresh, self)
+	RoomTradeController.instance:unregisterCallback(RoomTradeEvent.OnFinishOrder, self.finishOrder, self)
+	RoomTradeController.instance:unregisterCallback(RoomTradeEvent.OnRefreshDailyOrder, self.refreshOrder, self)
+	RoomTradeController.instance:unregisterCallback(RoomTradeEvent.OnTracedDailyOrder, self.refreshTraced, self)
+	RoomTradeController.instance:unregisterCallback(RoomTradeEvent.OnLockedDailyOrder, self.refreshLocked, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	local var_4_0 = ServerTime.ReplaceUTCStr(luaLang("p_roomdailyorderview_txt_notoder"))
+function RoomDailyOrderView:_editableInitView()
+	local str = ServerTime.ReplaceUTCStr(luaLang("p_roomdailyorderview_txt_notoder"))
 
-	arg_4_0._tips1 = gohelper.findChildText(arg_4_0.viewGO, "#go_notorder/tipsbg/txt_tips")
-	arg_4_0._tips2 = gohelper.findChildText(arg_4_0.viewGO, "#go_notorder2/tipsbg/txt_tips")
-	arg_4_0._tips1.text = var_4_0
-	arg_4_0._tips2.text = var_4_0
-	arg_4_0._animator = arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._tips1 = gohelper.findChildText(self.viewGO, "#go_notorder/tipsbg/txt_tips")
+	self._tips2 = gohelper.findChildText(self.viewGO, "#go_notorder2/tipsbg/txt_tips")
+	self._tips1.text = str
+	self._tips2.text = str
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function RoomDailyOrderView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:onRefresh()
+function RoomDailyOrderView:onOpen()
+	self:onRefresh()
 end
 
-function var_0_0.onRefresh(arg_7_0)
-	arg_7_0:refreshOrderItem()
-	arg_7_0:refreshFinishCount()
-	arg_7_0:refreshRefreshCount()
+function RoomDailyOrderView:onRefresh()
+	self:refreshOrderItem()
+	self:refreshFinishCount()
+	self:refreshRefreshCount()
 end
 
-function var_0_0._getOrderItem(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0._orderItems[arg_8_1]
+function RoomDailyOrderView:_getOrderItem(index)
+	local item = self._orderItems[index]
 
-	if not var_8_0 then
-		local var_8_1 = arg_8_0:getResInst(RoomDailyOrderItem.ResUrl, arg_8_0._goroot, string.format("roomdailyorderitem%s", arg_8_1))
+	if not item then
+		local child = self:getResInst(RoomDailyOrderItem.ResUrl, self._goroot, string.format("roomdailyorderitem%s", index))
 
-		var_8_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_8_1, RoomDailyOrderItem)
-		var_8_0.viewContainer = arg_8_0.viewContainer
-		arg_8_0._orderItems[arg_8_1] = var_8_0
+		item = MonoHelper.addNoUpdateLuaComOnceToGo(child, RoomDailyOrderItem)
+		item.viewContainer = self.viewContainer
+		self._orderItems[index] = item
 
-		var_8_0:playOpenAnim(arg_8_1)
+		item:playOpenAnim(index)
 	end
 
-	return var_8_0
+	return item
 end
 
-function var_0_0.refreshFinishCount(arg_9_0)
-	local var_9_0 = luaLang("room_tade_dailyorder_tip")
-	local var_9_1, var_9_2 = RoomTradeModel.instance:getDailyOrderFinishCount()
-	local var_9_3 = var_9_2 <= var_9_1
-	local var_9_4 = var_9_3 and "#a63838" or "#EFEFEF"
+function RoomDailyOrderView:refreshFinishCount()
+	local lang = luaLang("room_tade_dailyorder_tip")
+	local count, max = RoomTradeModel.instance:getDailyOrderFinishCount()
+	local isFinishAll = max <= count
+	local color = isFinishAll and "#a63838" or "#EFEFEF"
 
-	arg_9_0._txttip1.text = GameUtil.getSubPlaceholderLuaLangThreeParam(var_9_0, var_9_4, var_9_1, var_9_2)
+	self._txttip1.text = GameUtil.getSubPlaceholderLuaLangThreeParam(lang, color, count, max)
 
-	arg_9_0:refreshFinishBarrage(var_9_3)
+	self:refreshFinishBarrage(isFinishAll)
 end
 
-function var_0_0.refreshRefreshCount(arg_10_0)
-	local var_10_0 = luaLang("room_tade_dailyorder_active_refresh_tip")
-	local var_10_1, var_10_2 = RoomTradeModel.instance:getRefreshCount()
-	local var_10_3 = var_10_2 - var_10_1
-	local var_10_4 = var_10_2 <= var_10_3 and "#a63838" or "#EFEFEF"
+function RoomDailyOrderView:refreshRefreshCount()
+	local lang = luaLang("room_tade_dailyorder_active_refresh_tip")
+	local count, max = RoomTradeModel.instance:getRefreshCount()
 
-	arg_10_0._txttip2.text = GameUtil.getSubPlaceholderLuaLangThreeParam(var_10_0, var_10_4, var_10_3, var_10_2)
+	count = max - count
 
-	gohelper.setActive(arg_10_0._txttip2, var_10_2 > 0)
+	local isFinishAll = max <= count
+	local color = isFinishAll and "#a63838" or "#EFEFEF"
+
+	self._txttip2.text = GameUtil.getSubPlaceholderLuaLangThreeParam(lang, color, count, max)
+
+	gohelper.setActive(self._txttip2, max > 0)
 end
 
-function var_0_0.refreshFinishBarrage(arg_11_0, arg_11_1)
-	if arg_11_1 then
-		local var_11_0 = RoomTradeModel.instance:getBarrageCo(RoomTradeEnum.BarrageType.DailyOrder)
-		local var_11_1 = var_11_0.heroId
-		local var_11_2 = var_11_0.icon
-		local var_11_3
-		local var_11_4
+function RoomDailyOrderView:refreshFinishBarrage(isFinishAll)
+	if isFinishAll then
+		local barrageCo = RoomTradeModel.instance:getBarrageCo(RoomTradeEnum.BarrageType.DailyOrder)
+		local heroId = barrageCo.heroId
+		local barrageIcon = barrageCo.icon
+		local config, icon
 
-		if not string.nilorempty(var_11_2) then
-			local var_11_5 = tonumber(var_11_2)
+		if not string.nilorempty(barrageIcon) then
+			local itemId = tonumber(barrageIcon)
 
-			var_11_3, var_11_4 = ItemModel.instance:getItemConfigAndIcon(MaterialEnum.MaterialType.Item, var_11_5)
+			config, icon = ItemModel.instance:getItemConfigAndIcon(MaterialEnum.MaterialType.Item, itemId)
 		end
 
-		if var_11_1 and var_11_1 ~= 0 then
-			local var_11_6 = HeroConfig.instance:getHeroCO(var_11_1).skinId
+		if heroId and heroId ~= 0 then
+			local heroConfig = HeroConfig.instance:getHeroCO(heroId)
+			local skinId = heroConfig.skinId
 
-			arg_11_0.skinCo = SkinConfig.instance:getSkinCo(var_11_6)
+			self.skinCo = SkinConfig.instance:getSkinCo(skinId)
 
-			if not arg_11_0.smallSpine then
-				arg_11_0.smallSpine = GuiSpine.Create(arg_11_0._gorole, false)
+			if not self.smallSpine then
+				self.smallSpine = GuiSpine.Create(self._gorole, false)
 			end
 
-			arg_11_0.smallSpine:stopVoice()
-			arg_11_0.smallSpine:setResPath(ResUrl.getSpineUIPrefab(arg_11_0.skinCo.spine), arg_11_0._onSpineLoaded, arg_11_0, true)
+			self.smallSpine:stopVoice()
+			self.smallSpine:setResPath(ResUrl.getSpineUIPrefab(self.skinCo.spine), self._onSpineLoaded, self, true)
 
-			if not string.nilorempty(var_11_4) then
-				arg_11_0._simageicon:LoadImage(var_11_4)
+			if not string.nilorempty(icon) then
+				self._simageicon:LoadImage(icon)
 			end
 
-			if var_11_3 then
-				arg_11_0._txtname.text = var_11_3.name
+			if config then
+				self._txtname.text = config.name
 			end
 
-			arg_11_0._txtbarrage.text = var_11_0.desc
+			self._txtbarrage.text = barrageCo.desc
 
-			gohelper.setActive(arg_11_0._gonotorder, true)
-			gohelper.setActive(arg_11_0._gonotorder2, false)
+			gohelper.setActive(self._gonotorder, true)
+			gohelper.setActive(self._gonotorder2, false)
 		else
-			if not string.nilorempty(var_11_4) then
-				arg_11_0._simageicon2:LoadImage(var_11_4)
+			if not string.nilorempty(icon) then
+				self._simageicon2:LoadImage(icon)
 			end
 
-			if var_11_3 then
-				arg_11_0._txtname2.text = var_11_3.name
+			if config then
+				self._txtname2.text = config.name
 			end
 
-			arg_11_0._txtbarrage2.text = var_11_0.desc
+			self._txtbarrage2.text = barrageCo.desc
 
-			gohelper.setActive(arg_11_0._gonotorder, false)
-			gohelper.setActive(arg_11_0._gonotorder2, true)
+			gohelper.setActive(self._gonotorder, false)
+			gohelper.setActive(self._gonotorder2, true)
 		end
 
-		arg_11_0._animator:Play(RoomTradeEnum.TradeAnim.DailyOrderOpen, 0, 0)
+		self._animator:Play(RoomTradeEnum.TradeAnim.DailyOrderOpen, 0, 0)
 	else
-		gohelper.setActive(arg_11_0._gonotorder, false)
-		gohelper.setActive(arg_11_0._gonotorder2, false)
+		gohelper.setActive(self._gonotorder, false)
+		gohelper.setActive(self._gonotorder2, false)
 	end
 
-	gohelper.setActive(arg_11_0._goroot, not arg_11_1)
-	gohelper.setActive(arg_11_0._gotip, not arg_11_1)
+	gohelper.setActive(self._goroot, not isFinishAll)
+	gohelper.setActive(self._gotip, not isFinishAll)
 end
 
-function var_0_0._onSpineLoaded(arg_12_0)
-	local var_12_0 = SkinConfig.instance:getSkinOffset(arg_12_0.skinCo.skinSpineOffset)
+function RoomDailyOrderView:_onSpineLoaded()
+	local offsets = SkinConfig.instance:getSkinOffset(self.skinCo.skinSpineOffset)
 
-	recthelper.setAnchor(arg_12_0._gorole.transform, tonumber(var_12_0[1]), tonumber(var_12_0[2]))
-	transformhelper.setLocalScale(arg_12_0._gorole.transform, tonumber(var_12_0[3]), tonumber(var_12_0[3]), tonumber(var_12_0[3]))
+	recthelper.setAnchor(self._gorole.transform, tonumber(offsets[1]), tonumber(offsets[2]))
+	transformhelper.setLocalScale(self._gorole.transform, tonumber(offsets[3]), tonumber(offsets[3]), tonumber(offsets[3]))
 end
 
-function var_0_0.refreshOrderItem(arg_13_0)
-	local var_13_0 = RoomTradeModel.instance:getDailyOrders()
+function RoomDailyOrderView:refreshOrderItem()
+	local orders = RoomTradeModel.instance:getDailyOrders()
 
-	if not arg_13_0._orderItems then
-		arg_13_0._orderItems = arg_13_0:getUserDataTb_()
+	if not self._orderItems then
+		self._orderItems = self:getUserDataTb_()
 	end
 
-	if var_13_0 then
-		for iter_13_0, iter_13_1 in ipairs(var_13_0) do
-			arg_13_0:_getOrderItem(iter_13_0):onUpdateMo(iter_13_1)
+	if orders then
+		for i, order in ipairs(orders) do
+			local item = self:_getOrderItem(i)
+
+			item:onUpdateMo(order)
 		end
 
-		for iter_13_2 = #var_13_0 + 1, #arg_13_0._orderItems do
-			gohelper.setActive(arg_13_0._orderItems[iter_13_2].viewGO, false)
+		for i = #orders + 1, #self._orderItems do
+			gohelper.setActive(self._orderItems[i].viewGO, false)
 		end
 	end
 end
 
-function var_0_0.finishOrder(arg_14_0, arg_14_1)
-	if arg_14_1 ~= RoomTradeEnum.Mode.DailyOrder then
+function RoomDailyOrderView:finishOrder(orderType)
+	if orderType ~= RoomTradeEnum.Mode.DailyOrder then
 		return
 	end
 
-	arg_14_0:onRefresh()
+	self:onRefresh()
 end
 
-function var_0_0.refreshOrder(arg_15_0)
-	arg_15_0:onRefresh()
+function RoomDailyOrderView:refreshOrder()
+	self:onRefresh()
 end
 
-function var_0_0.refrshCurrency(arg_16_0)
-	local var_16_0 = RoomTradeModel.instance:getDailyOrders()
+function RoomDailyOrderView:refrshCurrency()
+	local orders = RoomTradeModel.instance:getDailyOrders()
 
-	if var_16_0 then
-		for iter_16_0 = 1, #var_16_0 do
-			arg_16_0:_getOrderItem(iter_16_0):onRefresh()
+	if orders then
+		for i = 1, #orders do
+			local item = self:_getOrderItem(i)
+
+			item:onRefresh()
 		end
 	end
 end
 
-function var_0_0.refreshTraced(arg_17_0, arg_17_1)
-	local var_17_0, var_17_1 = RoomTradeModel.instance:getDailyOrderById(arg_17_1)
+function RoomDailyOrderView:refreshTraced(orderId)
+	local _, index = RoomTradeModel.instance:getDailyOrderById(orderId)
+	local item = self:_getOrderItem(index)
 
-	arg_17_0:_getOrderItem(var_17_1):refreshTraced()
+	item:refreshTraced()
 end
 
-function var_0_0.refreshLocked(arg_18_0, arg_18_1)
-	local var_18_0, var_18_1 = RoomTradeModel.instance:getDailyOrderById(arg_18_1)
+function RoomDailyOrderView:refreshLocked(orderId)
+	local _, index = RoomTradeModel.instance:getDailyOrderById(orderId)
+	local item = self:_getOrderItem(index)
 
-	arg_18_0:_getOrderItem(var_18_1):refreshLocked()
+	item:refreshLocked()
 end
 
-function var_0_0.onClose(arg_19_0)
+function RoomDailyOrderView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_20_0)
-	if arg_20_0.smallSpine then
-		arg_20_0.smallSpine:stopVoice()
+function RoomDailyOrderView:onDestroyView()
+	if self.smallSpine then
+		self.smallSpine:stopVoice()
 
-		arg_20_0.smallSpine = nil
+		self.smallSpine = nil
 	end
 end
 
-return var_0_0
+return RoomDailyOrderView

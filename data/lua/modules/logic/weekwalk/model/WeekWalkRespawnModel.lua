@@ -1,26 +1,28 @@
-﻿module("modules.logic.weekwalk.model.WeekWalkRespawnModel", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk/model/WeekWalkRespawnModel.lua
 
-local var_0_0 = class("WeekWalkRespawnModel", ListScrollModel)
+module("modules.logic.weekwalk.model.WeekWalkRespawnModel", package.seeall)
 
-function var_0_0.setRespawnList(arg_1_0)
-	local var_1_0 = WeekWalkModel.instance:getInfo()
+local WeekWalkRespawnModel = class("WeekWalkRespawnModel", ListScrollModel)
+
+function WeekWalkRespawnModel:setRespawnList()
+	local info = WeekWalkModel.instance:getInfo()
 
 	CharacterModel.instance:setCharacterList(false, CharacterEnum.FilterType.WeekWalk)
 
-	local var_1_1 = CharacterBackpackCardListModel.instance:getCharacterCardList()
-	local var_1_2 = {}
+	local list = CharacterBackpackCardListModel.instance:getCharacterCardList()
+	local result = {}
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_1) do
-		local var_1_3 = var_1_0:getHeroHp(iter_1_1.heroId)
+	for i, v in ipairs(list) do
+		local hp = info:getHeroHp(v.heroId)
 
-		if var_1_3 and var_1_3 <= 0 then
-			table.insert(var_1_2, iter_1_1)
+		if hp and hp <= 0 then
+			table.insert(result, v)
 		end
 	end
 
-	arg_1_0:setList(var_1_2)
+	self:setList(result)
 end
 
-var_0_0.instance = var_0_0.New()
+WeekWalkRespawnModel.instance = WeekWalkRespawnModel.New()
 
-return var_0_0
+return WeekWalkRespawnModel

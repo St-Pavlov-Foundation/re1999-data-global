@@ -1,56 +1,58 @@
-﻿module("modules.logic.versionactivity2_3.zhixinquaner.maze.controller.ZhiXinQuanErDialogStep", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/zhixinquaner/maze/controller/ZhiXinQuanErDialogStep.lua
 
-local var_0_0 = class("ZhiXinQuanErDialogStep", BaseWork)
+module("modules.logic.versionactivity2_3.zhixinquaner.maze.controller.ZhiXinQuanErDialogStep", package.seeall)
 
-function var_0_0.initData(arg_1_0, arg_1_1)
-	arg_1_0._data = arg_1_1
-	arg_1_0._dialogueId = tonumber(arg_1_1.param)
+local ZhiXinQuanErDialogStep = class("ZhiXinQuanErDialogStep", BaseWork)
+
+function ZhiXinQuanErDialogStep:initData(data)
+	self._data = data
+	self._dialogueId = tonumber(data.param)
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	if arg_2_0._data.param == 0 then
-		return arg_2_0:onDone(true)
+function ZhiXinQuanErDialogStep:onStart(context)
+	if self._data.param == 0 then
+		return self:onDone(true)
 	end
 
-	arg_2_0:beginPlayDialog()
+	self:beginPlayDialog()
 end
 
-function var_0_0.beginPlayDialog(arg_3_0)
-	local var_3_0 = Activity176Config.instance:getBubbleCo(VersionActivity2_3Enum.ActivityId.ZhiXinQuanEr, arg_3_0._dialogueId)
+function ZhiXinQuanErDialogStep:beginPlayDialog()
+	local co = Activity176Config.instance:getBubbleCo(VersionActivity2_3Enum.ActivityId.ZhiXinQuanEr, self._dialogueId)
 
-	if not var_3_0 then
-		logError("纸信圈儿对话配置不存在" .. arg_3_0._dialogueId)
-		arg_3_0:onDone(true)
+	if not co then
+		logError("纸信圈儿对话配置不存在" .. self._dialogueId)
+		self:onDone(true)
 
 		return
 	end
 
-	PuzzleMazeDrawController.instance:registerCallback(PuzzleEvent.OnFinishDialog, arg_3_0._onFinishDialog, arg_3_0)
+	PuzzleMazeDrawController.instance:registerCallback(PuzzleEvent.OnFinishDialog, self._onFinishDialog, self)
 
-	local var_3_1, var_3_2 = arg_3_0:_getDialogPos()
-	local var_3_3 = {
-		co = var_3_0,
-		dialogPosX = var_3_1,
-		dialogPosY = var_3_2
+	local dialogPosX, dialogPosY = self:_getDialogPos()
+	local params = {
+		co = co,
+		dialogPosX = dialogPosX,
+		dialogPosY = dialogPosY
 	}
 
-	PuzzleMazeDrawController.instance:dispatchEvent(PuzzleEvent.OnStartDialog, var_3_3)
+	PuzzleMazeDrawController.instance:dispatchEvent(PuzzleEvent.OnStartDialog, params)
 end
 
-function var_0_0._getDialogPos(arg_4_0)
-	local var_4_0, var_4_1 = PuzzleMazeDrawController.instance:getLastPos()
-	local var_4_2, var_4_3 = PuzzleMazeDrawModel.instance:getObjectAnchor(var_4_0, var_4_1)
+function ZhiXinQuanErDialogStep:_getDialogPos()
+	local pawnPosX, pawnPosY = PuzzleMazeDrawController.instance:getLastPos()
+	local pawnAnchorX, pawnAnchorY = PuzzleMazeDrawModel.instance:getObjectAnchor(pawnPosX, pawnPosY)
 
-	return var_4_2, var_4_3 + 100
+	return pawnAnchorX, pawnAnchorY + 100
 end
 
-function var_0_0._onFinishDialog(arg_5_0)
-	PuzzleMazeDrawController.instance:unregisterAllCallback(PuzzleEvent.OnFinishDialog, arg_5_0._onFinishDialog, arg_5_0)
-	arg_5_0:onDone(true)
+function ZhiXinQuanErDialogStep:_onFinishDialog()
+	PuzzleMazeDrawController.instance:unregisterAllCallback(PuzzleEvent.OnFinishDialog, self._onFinishDialog, self)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_6_0)
-	PuzzleMazeDrawController.instance:unregisterCallback(PuzzleEvent.OnFinishDialog, arg_6_0._onFinishDialog, arg_6_0)
+function ZhiXinQuanErDialogStep:clearWork()
+	PuzzleMazeDrawController.instance:unregisterCallback(PuzzleEvent.OnFinishDialog, self._onFinishDialog, self)
 end
 
-return var_0_0
+return ZhiXinQuanErDialogStep

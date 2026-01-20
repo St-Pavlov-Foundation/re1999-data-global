@@ -1,13 +1,15 @@
-﻿module("modules.logic.explore.controller.trigger.ExploreTriggerSpike", package.seeall)
+﻿-- chunkname: @modules/logic/explore/controller/trigger/ExploreTriggerSpike.lua
 
-local var_0_0 = class("ExploreTriggerSpike", ExploreTriggerBase)
+module("modules.logic.explore.controller.trigger.ExploreTriggerSpike", package.seeall)
 
-function var_0_0.handle(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0:sendTriggerRequest()
+local ExploreTriggerSpike = class("ExploreTriggerSpike", ExploreTriggerBase)
+
+function ExploreTriggerSpike:handle(id, unit)
+	self:sendTriggerRequest()
 end
 
-function var_0_0.onReply(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	arg_2_0:onDone(true)
+function ExploreTriggerSpike:onReply(cmd, resultCode, msg)
+	self:onDone(true)
 end
 
-return var_0_0
+return ExploreTriggerSpike

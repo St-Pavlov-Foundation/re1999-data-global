@@ -1,68 +1,76 @@
-﻿module("modules.logic.survival.model.shelter.SurvivalShelterMonsterModel", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/shelter/SurvivalShelterMonsterModel.lua
 
-local var_0_0 = class("SurvivalShelterMonsterModel", BaseModel)
+module("modules.logic.survival.model.shelter.SurvivalShelterMonsterModel", package.seeall)
 
-function var_0_0.calBuffIsRepress(arg_1_0, arg_1_1)
-	return SurvivalShelterModel.instance:getWeekInfo():getMonsterFight():getIntrudeSchemeMo(arg_1_1).survivalIntrudeScheme.repress
+local SurvivalShelterMonsterModel = class("SurvivalShelterMonsterModel", BaseModel)
+
+function SurvivalShelterMonsterModel:calBuffIsRepress(buffId)
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local fight = weekInfo:getMonsterFight()
+	local survivalIntrudeSchemeMo = fight:getIntrudeSchemeMo(buffId)
+
+	return survivalIntrudeSchemeMo.survivalIntrudeScheme.repress
 end
 
-function var_0_0.getMonsterSelectNpc(arg_2_0)
-	local var_2_0 = {}
-	local var_2_1 = SurvivalShelterModel.instance:getWeekInfo().npcDict
+function SurvivalShelterMonsterModel:getMonsterSelectNpc()
+	local list = {}
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local npcDict = weekInfo.npcDict
 
-	if var_2_1 then
-		for iter_2_0, iter_2_1 in pairs(var_2_1) do
-			if arg_2_0:isFilterNpc(iter_2_1.co) then
-				table.insert(var_2_0, iter_2_1)
+	if npcDict then
+		for _, v in pairs(npcDict) do
+			if self:isFilterNpc(v.co) then
+				table.insert(list, v)
 			end
 		end
 	end
 
-	if #var_2_0 > 1 then
-		table.sort(var_2_0, SurvivalShelterNpcMo.sort)
+	if #list > 1 then
+		table.sort(list, SurvivalShelterNpcMo.sort)
 	end
 
-	return var_2_0
+	return list
 end
 
-local var_0_1 = {}
-local var_0_2
+local allBuffTags = {}
+local lastFightId
 
-function var_0_0.calRecommendNum(arg_3_0, arg_3_1)
-	if arg_3_1 == nil then
+function SurvivalShelterMonsterModel:calRecommendNum(npcId)
+	if npcId == nil then
 		return 0
 	end
 
-	local var_3_0 = SurvivalShelterModel.instance:getWeekInfo():getMonsterFight()
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local fight = weekInfo:getMonsterFight()
 
-	if var_0_2 == nil or var_0_2 ~= var_3_0.fightId then
-		local var_3_1 = var_3_0.schemes
+	if lastFightId == nil or lastFightId ~= fight.fightId then
+		local schemes = fight.schemes
 
-		if var_0_1 then
-			tabletool.clear(var_0_1)
+		if allBuffTags then
+			tabletool.clear(allBuffTags)
 		end
 
-		for iter_3_0, iter_3_1 in pairs(var_3_1) do
-			local var_3_2 = SurvivalConfig.instance:getMonsterBuffConfigTag(iter_3_0)
+		for buffId, _ in pairs(schemes) do
+			local needTags = SurvivalConfig.instance:getMonsterBuffConfigTag(buffId)
 
-			for iter_3_2 = 1, #var_3_2 do
-				var_0_1[#var_0_1 + 1] = var_3_2[iter_3_2]
+			for j = 1, #needTags do
+				allBuffTags[#allBuffTags + 1] = needTags[j]
 			end
 		end
 
-		var_0_2 = var_3_0.fightId
+		lastFightId = fight.fightId
 	end
 
-	local var_3_3 = SurvivalConfig.instance:getNpcConfigTag(arg_3_1)
-	local var_3_4 = 0
+	local npcTags = SurvivalConfig.instance:getNpcConfigTag(npcId)
+	local num = 0
 
-	if var_3_3 then
-		for iter_3_3 = 1, #var_3_3 do
-			local var_3_5 = var_3_3[iter_3_3]
+	if npcTags then
+		for i = 1, #npcTags do
+			local tag = npcTags[i]
 
-			for iter_3_4 = 1, #var_0_1 do
-				if var_3_5 == var_0_1[iter_3_4] then
-					var_3_4 = var_3_4 + 1
+			for j = 1, #allBuffTags do
+				if tag == allBuffTags[j] then
+					num = num + 1
 
 					break
 				end
@@ -70,17 +78,19 @@ function var_0_0.calRecommendNum(arg_3_0, arg_3_1)
 		end
 	end
 
-	return var_3_4
+	return num
 end
 
-function var_0_0.isNeedNpcTag(arg_4_0, arg_4_1)
-	local var_4_0 = SurvivalShelterModel.instance:getWeekInfo():getMonsterFight().schemes
+function SurvivalShelterMonsterModel:isNeedNpcTag(npcTag)
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local fight = weekInfo:getMonsterFight()
+	local schemes = fight.schemes
 
-	for iter_4_0, iter_4_1 in pairs(var_4_0) do
-		local var_4_1 = SurvivalConfig.instance:getMonsterBuffConfigTag(iter_4_0)
+	for buffId, _ in pairs(schemes) do
+		local needTags = SurvivalConfig.instance:getMonsterBuffConfigTag(buffId)
 
-		for iter_4_2 = 1, #var_4_1 do
-			if var_4_1[iter_4_2] == arg_4_1 then
+		for j = 1, #needTags do
+			if needTags[j] == npcTag then
 				return true
 			end
 		end
@@ -89,6 +99,6 @@ function var_0_0.isNeedNpcTag(arg_4_0, arg_4_1)
 	return false
 end
 
-var_0_0.instance = var_0_0.New()
+SurvivalShelterMonsterModel.instance = SurvivalShelterMonsterModel.New()
 
-return var_0_0
+return SurvivalShelterMonsterModel

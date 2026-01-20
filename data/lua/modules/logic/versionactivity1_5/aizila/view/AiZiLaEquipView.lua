@@ -1,261 +1,263 @@
-﻿module("modules.logic.versionactivity1_5.aizila.view.AiZiLaEquipView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/aizila/view/AiZiLaEquipView.lua
 
-local var_0_0 = class("AiZiLaEquipView", BaseView)
+module("modules.logic.versionactivity1_5.aizila.view.AiZiLaEquipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagePanelBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_PanelBG")
-	arg_1_0._goequipitem = gohelper.findChild(arg_1_0.viewGO, "Left/Sticker1/#go_equipitem")
-	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "Right/#txt_Title")
-	arg_1_0._txtEffect = gohelper.findChildText(arg_1_0.viewGO, "Right/#txt_Effect")
-	arg_1_0._txtNextEffect = gohelper.findChildText(arg_1_0.viewGO, "Right/#txt_Effect/#txt_NextEffect")
-	arg_1_0._goLv = gohelper.findChild(arg_1_0.viewGO, "Right/#go_Lv")
-	arg_1_0._txtlevel = gohelper.findChildText(arg_1_0.viewGO, "Right/#go_Lv/#txt_level")
-	arg_1_0._txtnextlevel = gohelper.findChildText(arg_1_0.viewGO, "Right/#go_Lv/#txt_nextlevel")
-	arg_1_0._scrolluplevelItem = gohelper.findChildScrollRect(arg_1_0.viewGO, "Right/#go_Lv/#scroll_uplevelItem")
-	arg_1_0._gouplevelItems = gohelper.findChild(arg_1_0.viewGO, "Right/#go_Lv/#scroll_uplevelItem/Viewport/#go_uplevelItems")
-	arg_1_0._btnuplevel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#go_Lv/Btn/#btn_uplevel")
-	arg_1_0._goRedPoint = gohelper.findChild(arg_1_0.viewGO, "Right/#go_Lv/Btn/#btn_uplevel/#go_RedPoint")
-	arg_1_0._btnunUplevel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#go_Lv/Btn/#btn_unUplevel")
-	arg_1_0._goLvMax = gohelper.findChild(arg_1_0.viewGO, "Right/#go_LvMax")
-	arg_1_0._goBackBtns = gohelper.findChild(arg_1_0.viewGO, "#go_BackBtns")
+local AiZiLaEquipView = class("AiZiLaEquipView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function AiZiLaEquipView:onInitView()
+	self._simagePanelBG = gohelper.findChildSingleImage(self.viewGO, "#simage_PanelBG")
+	self._goequipitem = gohelper.findChild(self.viewGO, "Left/Sticker1/#go_equipitem")
+	self._txtTitle = gohelper.findChildText(self.viewGO, "Right/#txt_Title")
+	self._txtEffect = gohelper.findChildText(self.viewGO, "Right/#txt_Effect")
+	self._txtNextEffect = gohelper.findChildText(self.viewGO, "Right/#txt_Effect/#txt_NextEffect")
+	self._goLv = gohelper.findChild(self.viewGO, "Right/#go_Lv")
+	self._txtlevel = gohelper.findChildText(self.viewGO, "Right/#go_Lv/#txt_level")
+	self._txtnextlevel = gohelper.findChildText(self.viewGO, "Right/#go_Lv/#txt_nextlevel")
+	self._scrolluplevelItem = gohelper.findChildScrollRect(self.viewGO, "Right/#go_Lv/#scroll_uplevelItem")
+	self._gouplevelItems = gohelper.findChild(self.viewGO, "Right/#go_Lv/#scroll_uplevelItem/Viewport/#go_uplevelItems")
+	self._btnuplevel = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#go_Lv/Btn/#btn_uplevel")
+	self._goRedPoint = gohelper.findChild(self.viewGO, "Right/#go_Lv/Btn/#btn_uplevel/#go_RedPoint")
+	self._btnunUplevel = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#go_Lv/Btn/#btn_unUplevel")
+	self._goLvMax = gohelper.findChild(self.viewGO, "Right/#go_LvMax")
+	self._goBackBtns = gohelper.findChild(self.viewGO, "#go_BackBtns")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnuplevel:AddClickListener(arg_2_0._btnuplevelOnClick, arg_2_0)
-	arg_2_0._btnunUplevel:AddClickListener(arg_2_0._btnunUplevelOnClick, arg_2_0)
+function AiZiLaEquipView:addEvents()
+	self._btnuplevel:AddClickListener(self._btnuplevelOnClick, self)
+	self._btnunUplevel:AddClickListener(self._btnunUplevelOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnuplevel:RemoveClickListener()
-	arg_3_0._btnunUplevel:RemoveClickListener()
+function AiZiLaEquipView:removeEvents()
+	self._btnuplevel:RemoveClickListener()
+	self._btnunUplevel:RemoveClickListener()
 end
 
-function var_0_0._btnclickOnClick(arg_4_0)
+function AiZiLaEquipView:_btnclickOnClick()
 	return
 end
 
-function var_0_0._btnuplevelOnClick(arg_5_0)
-	if arg_5_0._isLockUpLevel then
+function AiZiLaEquipView:_btnuplevelOnClick()
+	if self._isLockUpLevel then
 		GameFacade.showToast(ToastEnum.V1a5AiZiLaUpLevelInGame)
 
 		return
 	end
 
-	local var_5_0 = arg_5_0._equipCfg or arg_5_0._nextEquipCfg
+	local equipCfg = self._equipCfg or self._nextEquipCfg
 
-	if var_5_0 and var_5_0.equipId and not arg_5_0:_isLockType(var_5_0.typeId) then
-		arg_5_0:_setLockType(var_5_0.typeId, 0.5)
-		Activity144Rpc.instance:sendAct144UpgradeEquipRequest(arg_5_0._actId, var_5_0.equipId)
+	if equipCfg and equipCfg.equipId and not self:_isLockType(equipCfg.typeId) then
+		self:_setLockType(equipCfg.typeId, 0.5)
+		Activity144Rpc.instance:sendAct144UpgradeEquipRequest(self._actId, equipCfg.equipId)
 	end
 end
 
-function var_0_0._btnunUplevelOnClick(arg_6_0)
-	GameFacade.showToast(arg_6_0._isLockUpLevel and ToastEnum.V1a5AiZiLaUpLevelInGame or ToastEnum.V1a5AiZiLaUpLevelItemLack)
+function AiZiLaEquipView:_btnunUplevelOnClick()
+	GameFacade.showToast(self._isLockUpLevel and ToastEnum.V1a5AiZiLaUpLevelInGame or ToastEnum.V1a5AiZiLaUpLevelItemLack)
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0._animator = arg_7_0.viewGO:GetComponent(AiZiLaEnum.ComponentType.Animator)
-	arg_7_0._animatorRight = gohelper.findChildComponent(arg_7_0.viewGO, "Right", AiZiLaEnum.ComponentType.Animator)
-	arg_7_0._equipItemList = {}
-	arg_7_0._actId = VersionActivity1_5Enum.ActivityId.AiZiLa
-	arg_7_0._equipCoTypeList = AiZiLaConfig.instance:getEquipCoTypeList(arg_7_0._actId)
-	arg_7_0._upLevelNextTimeDic = {}
+function AiZiLaEquipView:_editableInitView()
+	self._animator = self.viewGO:GetComponent(AiZiLaEnum.ComponentType.Animator)
+	self._animatorRight = gohelper.findChildComponent(self.viewGO, "Right", AiZiLaEnum.ComponentType.Animator)
+	self._equipItemList = {}
+	self._actId = VersionActivity1_5Enum.ActivityId.AiZiLa
+	self._equipCoTypeList = AiZiLaConfig.instance:getEquipCoTypeList(self._actId)
+	self._upLevelNextTimeDic = {}
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0._equipCoTypeList) do
-		local var_7_0 = gohelper.findChild(arg_7_0.viewGO, "Left/Sticker" .. iter_7_0)
-		local var_7_1 = gohelper.clone(arg_7_0._goequipitem, var_7_0, "go_equipitem")
-		local var_7_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_7_1, AiZiLaEquipItem, arg_7_0)
+	for i, cfg in ipairs(self._equipCoTypeList) do
+		local parentGO = gohelper.findChild(self.viewGO, "Left/Sticker" .. i)
+		local cloneGO = gohelper.clone(self._goequipitem, parentGO, "go_equipitem")
+		local equipItem = MonoHelper.addNoUpdateLuaComOnceToGo(cloneGO, AiZiLaEquipItem, self)
 
-		if arg_7_0._selectTypeId == nil then
-			arg_7_0._selectTypeId = iter_7_1.typeId
+		if self._selectTypeId == nil then
+			self._selectTypeId = cfg.typeId
 		end
 
-		var_7_2:setCfg(iter_7_1)
-		table.insert(arg_7_0._equipItemList, var_7_2)
+		equipItem:setCfg(cfg)
+		table.insert(self._equipItemList, equipItem)
 	end
 
-	gohelper.setActive(arg_7_0._goequipitem, false)
+	gohelper.setActive(self._goequipitem, false)
 
-	arg_7_0._goodsItemGo = arg_7_0:getResInst(AiZiLaGoodsItem.prefabPath2, arg_7_0.viewGO)
+	self._goodsItemGo = self:getResInst(AiZiLaGoodsItem.prefabPath2, self.viewGO)
 
-	gohelper.setActive(arg_7_0._goodsItemGo, false)
+	gohelper.setActive(self._goodsItemGo, false)
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
+function AiZiLaEquipView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0._isLockUpLevel = ViewMgr.instance:isOpen(ViewName.AiZiLaGameView)
+function AiZiLaEquipView:onOpen()
+	self._isLockUpLevel = ViewMgr.instance:isOpen(ViewName.AiZiLaGameView)
 
-	if arg_9_0.viewContainer then
-		NavigateMgr.instance:addEscape(arg_9_0.viewContainer.viewName, arg_9_0.closeThis, arg_9_0)
+	if self.viewContainer then
+		NavigateMgr.instance:addEscape(self.viewContainer.viewName, self.closeThis, self)
 	end
 
-	arg_9_0:addEventCb(AiZiLaController.instance, AiZiLaEvent.UISelectEquipType, arg_9_0._onSelectEquitType, arg_9_0)
-	arg_9_0:addEventCb(AiZiLaController.instance, AiZiLaEvent.OnEquipUpLevel, arg_9_0._onEquipUpLevel, arg_9_0)
+	self:addEventCb(AiZiLaController.instance, AiZiLaEvent.UISelectEquipType, self._onSelectEquitType, self)
+	self:addEventCb(AiZiLaController.instance, AiZiLaEvent.OnEquipUpLevel, self._onEquipUpLevel, self)
 	AudioMgr.instance:trigger(AudioEnum.V1a5AiZiLa.play_ui_wulu_aizila_forward_paper2)
-	arg_9_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.onClose(arg_10_0)
+function AiZiLaEquipView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0._onDelayRefreshUI, arg_11_0)
+function AiZiLaEquipView:onDestroyView()
+	TaskDispatcher.cancelTask(self._onDelayRefreshUI, self)
 end
 
-function var_0_0._onEquipUpLevel(arg_12_0, arg_12_1)
-	local var_12_0 = AiZiLaModel.instance:getCurActivityID()
-	local var_12_1 = AiZiLaConfig.instance:getEquipCo(var_12_0, arg_12_1)
+function AiZiLaEquipView:_onEquipUpLevel(newEquipId)
+	local actId = AiZiLaModel.instance:getCurActivityID()
+	local equipCfg = AiZiLaConfig.instance:getEquipCo(actId, newEquipId)
 
-	if var_12_1 then
-		if arg_12_0._selectTypeId == var_12_1.typeId and arg_12_0._animatorRight then
-			arg_12_0:_refreshData()
+	if equipCfg then
+		if self._selectTypeId == equipCfg.typeId and self._animatorRight then
+			self:_refreshData()
 
-			if not arg_12_0._isDelayRefreshUIIng then
-				arg_12_0._isDelayRefreshUIIng = true
+			if not self._isDelayRefreshUIIng then
+				self._isDelayRefreshUIIng = true
 
-				arg_12_0._animatorRight:Play("refresh", 0, 0)
-				arg_12_0:_setLockType(var_12_1.typeId, 0.53)
-				TaskDispatcher.runDelay(arg_12_0._onDelayRefreshUI, arg_12_0, 0.5)
+				self._animatorRight:Play("refresh", 0, 0)
+				self:_setLockType(equipCfg.typeId, 0.53)
+				TaskDispatcher.runDelay(self._onDelayRefreshUI, self, 0.5)
 				AudioMgr.instance:trigger(AudioEnum.V1a5AiZiLa.play_ui_wulu_aizila_equip_update)
 			end
 		else
-			arg_12_0:refreshUI()
+			self:refreshUI()
 		end
 
-		arg_12_0:_refreshEquipItemUpLevel(var_12_1.typeId)
+		self:_refreshEquipItemUpLevel(equipCfg.typeId)
 	else
-		arg_12_0:refreshUI()
+		self:refreshUI()
 	end
 end
 
-function var_0_0._onDelayRefreshUI(arg_13_0)
-	arg_13_0._isDelayRefreshUIIng = false
+function AiZiLaEquipView:_onDelayRefreshUI()
+	self._isDelayRefreshUIIng = false
 
-	arg_13_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0._onSelectEquitType(arg_14_0, arg_14_1)
-	arg_14_0._selectTypeId = arg_14_1
+function AiZiLaEquipView:_onSelectEquitType(typeId)
+	self._selectTypeId = typeId
 
-	arg_14_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0._refreshData(arg_15_0)
-	arg_15_0._selectEquipMO = AiZiLaModel.instance:getEquipMO(arg_15_0._selectTypeId)
+function AiZiLaEquipView:_refreshData()
+	self._selectEquipMO = AiZiLaModel.instance:getEquipMO(self._selectTypeId)
 
-	if arg_15_0._selectEquipMO then
-		arg_15_0._equipCfg = arg_15_0._selectEquipMO:getConfig()
-		arg_15_0._nextEquipCfg = arg_15_0._selectEquipMO:getNextConfig()
-		arg_15_0._costparams = arg_15_0._selectEquipMO:getCostParams()
+	if self._selectEquipMO then
+		self._equipCfg = self._selectEquipMO:getConfig()
+		self._nextEquipCfg = self._selectEquipMO:getNextConfig()
+		self._costparams = self._selectEquipMO:getCostParams()
 	else
-		arg_15_0._equipCfg = nil
-		arg_15_0._nextEquipCfg = arg_15_0:_findInitCfg(arg_15_0._selectTypeId)
-		arg_15_0._costparams = AiZiLaHelper.getCostParams(arg_15_0._nextEquipCfg)
+		self._equipCfg = nil
+		self._nextEquipCfg = self:_findInitCfg(self._selectTypeId)
+		self._costparams = AiZiLaHelper.getCostParams(self._nextEquipCfg)
 	end
 end
 
-function var_0_0.refreshUI(arg_16_0)
-	arg_16_0:_refreshData()
+function AiZiLaEquipView:refreshUI()
+	self:_refreshData()
 
-	local var_16_0 = false
+	local isMaxLevel = false
 
-	if arg_16_0._selectEquipMO then
-		var_16_0 = arg_16_0._selectEquipMO:isMaxLevel()
-		arg_16_0._txtlevel.text = formatLuaLang("v1a5_aizila_level", arg_16_0._equipCfg.level)
-		arg_16_0._txtEffect.text = formatLuaLang("v1a5_aizila_equip_effect", arg_16_0._equipCfg.effectDesc)
-		arg_16_0._txtTitle.text = arg_16_0._equipCfg.name
+	if self._selectEquipMO then
+		isMaxLevel = self._selectEquipMO:isMaxLevel()
+		self._txtlevel.text = formatLuaLang("v1a5_aizila_level", self._equipCfg.level)
+		self._txtEffect.text = formatLuaLang("v1a5_aizila_equip_effect", self._equipCfg.effectDesc)
+		self._txtTitle.text = self._equipCfg.name
 	else
-		arg_16_0._txtlevel.text = luaLang("v1a5_aizila_nolevel")
-		arg_16_0._txtEffect.text = luaLang("v1a5_aizila_equip_noeffect")
-		arg_16_0._txtTitle.text = arg_16_0._nextEquipCfg.name
+		self._txtlevel.text = luaLang("v1a5_aizila_nolevel")
+		self._txtEffect.text = luaLang("v1a5_aizila_equip_noeffect")
+		self._txtTitle.text = self._nextEquipCfg.name
 	end
 
-	if not var_16_0 then
-		arg_16_0._txtnextlevel.text = formatLuaLang("v1a5_aizila_level", arg_16_0._nextEquipCfg.level)
-		arg_16_0._txtNextEffect.text = formatLuaLang("v1a5_aizila_equip_effect_nextlv", arg_16_0._nextEquipCfg.effectDesc)
+	if not isMaxLevel then
+		self._txtnextlevel.text = formatLuaLang("v1a5_aizila_level", self._nextEquipCfg.level)
+		self._txtNextEffect.text = formatLuaLang("v1a5_aizila_equip_effect_nextlv", self._nextEquipCfg.effectDesc)
 
-		local var_16_1 = not arg_16_0._isLockUpLevel and AiZiLaHelper.checkCostParams(arg_16_0._costparams)
+		local isCan = not self._isLockUpLevel and AiZiLaHelper.checkCostParams(self._costparams)
 
-		gohelper.setActive(arg_16_0._btnuplevel, var_16_1)
-		gohelper.setActive(arg_16_0._btnunUplevel, not var_16_1)
-		RedDotController.instance:addRedDot(arg_16_0._goRedPoint, RedDotEnum.DotNode.V1a5AiZiLaEquipUpLevel, arg_16_0._selectTypeId)
+		gohelper.setActive(self._btnuplevel, isCan)
+		gohelper.setActive(self._btnunUplevel, not isCan)
+		RedDotController.instance:addRedDot(self._goRedPoint, RedDotEnum.DotNode.V1a5AiZiLaEquipUpLevel, self._selectTypeId)
 	end
 
-	gohelper.setActive(arg_16_0._goLvMax, var_16_0)
-	gohelper.setActive(arg_16_0._goLv, not var_16_0)
-	gohelper.setActive(arg_16_0._txtnextlevel, not var_16_0)
-	gohelper.setActive(arg_16_0._txtNextEffect, not var_16_0)
-	gohelper.CreateObjList(arg_16_0, arg_16_0._onShowUplevelItem, arg_16_0._costparams, arg_16_0._gouplevelItems, arg_16_0._goodsItemGo, AiZiLaGoodsItem)
-	arg_16_0:_refreshEquipItem()
+	gohelper.setActive(self._goLvMax, isMaxLevel)
+	gohelper.setActive(self._goLv, not isMaxLevel)
+	gohelper.setActive(self._txtnextlevel, not isMaxLevel)
+	gohelper.setActive(self._txtNextEffect, not isMaxLevel)
+	gohelper.CreateObjList(self, self._onShowUplevelItem, self._costparams, self._gouplevelItems, self._goodsItemGo, AiZiLaGoodsItem)
+	self:_refreshEquipItem()
 end
 
-function var_0_0._onShowUplevelItem(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	arg_17_1:onUpdateMO(arg_17_2)
+function AiZiLaEquipView:_onShowUplevelItem(cell_component, data, index)
+	cell_component:onUpdateMO(data)
 
-	if arg_17_1._isUpLevelInit ~= true then
-		arg_17_1._isUpLevelInit = true
+	if cell_component._isUpLevelInit ~= true then
+		cell_component._isUpLevelInit = true
 
-		arg_17_1:setShowCount(true, false)
+		cell_component:setShowCount(true, false)
 	end
 
-	local var_17_0 = arg_17_2.itemNum
-	local var_17_1 = AiZiLaModel.instance:getItemQuantity(arg_17_2.itemId)
-	local var_17_2 = var_17_1 < var_17_0 and "#de4618" or "#4a7900"
+	local count = data.itemNum
+	local quantity = AiZiLaModel.instance:getItemQuantity(data.itemId)
+	local color = quantity < count and "#de4618" or "#4a7900"
 
-	arg_17_1:setCountStr(string.format("<color=%s>%s</color><color=#3C322B>/%s</color>", var_17_2, var_17_1, var_17_0))
+	cell_component:setCountStr(string.format("<color=%s>%s</color><color=#3C322B>/%s</color>", color, quantity, count))
 end
 
-function var_0_0._findInitCfg(arg_18_0, arg_18_1)
-	for iter_18_0, iter_18_1 in ipairs(arg_18_0._equipCoTypeList) do
-		if iter_18_1.typeId == arg_18_1 then
-			return iter_18_1
-		end
-	end
-end
-
-function var_0_0._refreshEquipItem(arg_19_0)
-	for iter_19_0, iter_19_1 in ipairs(arg_19_0._equipItemList) do
-		iter_19_1:onSelect(iter_19_1:getTypeId() == arg_19_0._selectTypeId)
-		iter_19_1:refreshUI(arg_19_0._isLockUpLevel)
-	end
-end
-
-function var_0_0._refreshEquipItemUpLevel(arg_20_0, arg_20_1)
-	for iter_20_0, iter_20_1 in ipairs(arg_20_0._equipItemList) do
-		if iter_20_1:getTypeId() == arg_20_1 then
-			iter_20_1:refreshUpLevel()
+function AiZiLaEquipView:_findInitCfg(typeId)
+	for i, equipCfg in ipairs(self._equipCoTypeList) do
+		if equipCfg.typeId == typeId then
+			return equipCfg
 		end
 	end
 end
 
-function var_0_0.playViewAnimator(arg_21_0, arg_21_1)
-	if arg_21_0._animator then
-		arg_21_0._animator.enabled = true
-
-		arg_21_0._animator:Play(arg_21_1, 0, 0)
+function AiZiLaEquipView:_refreshEquipItem()
+	for i, item in ipairs(self._equipItemList) do
+		item:onSelect(item:getTypeId() == self._selectTypeId)
+		item:refreshUI(self._isLockUpLevel)
 	end
 end
 
-function var_0_0._isLockType(arg_22_0, arg_22_1)
-	if arg_22_1 and arg_22_0._upLevelNextTimeDic[arg_22_1] and arg_22_0._upLevelNextTimeDic[arg_22_1] > Time.time then
+function AiZiLaEquipView:_refreshEquipItemUpLevel(typeId)
+	for i, item in ipairs(self._equipItemList) do
+		if item:getTypeId() == typeId then
+			item:refreshUpLevel()
+		end
+	end
+end
+
+function AiZiLaEquipView:playViewAnimator(animName)
+	if self._animator then
+		self._animator.enabled = true
+
+		self._animator:Play(animName, 0, 0)
+	end
+end
+
+function AiZiLaEquipView:_isLockType(equipType)
+	if equipType and self._upLevelNextTimeDic[equipType] and self._upLevelNextTimeDic[equipType] > Time.time then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0._setLockType(arg_23_0, arg_23_1, arg_23_2)
-	if arg_23_1 and arg_23_2 then
-		arg_23_0._upLevelNextTimeDic[arg_23_1] = Time.time + arg_23_2
+function AiZiLaEquipView:_setLockType(equipType, lockTime)
+	if equipType and lockTime then
+		self._upLevelNextTimeDic[equipType] = Time.time + lockTime
 	end
 end
 
-return var_0_0
+return AiZiLaEquipView

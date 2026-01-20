@@ -1,14 +1,16 @@
-﻿module("modules.logic.versionactivity1_8.dungeon.controller.VersionActivity1_8DungeonEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_8/dungeon/controller/VersionActivity1_8DungeonEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_8.dungeon.controller.VersionActivity1_8DungeonEvent", package.seeall)
 
-var_0_0.OnMapPosChanged = 1
-var_0_0.OnClickElement = 2
-var_0_0.FocusElement = 3
-var_0_0.OnHideInteractUI = 4
-var_0_0.OnAddOneElement = 5
-var_0_0.OnRemoveElement = 6
-var_0_0.OnRecycleAllElement = 7
-var_0_0.ManualClickElement = 8
+local VersionActivity1_8DungeonEvent = _M
 
-return var_0_0
+VersionActivity1_8DungeonEvent.OnMapPosChanged = 1
+VersionActivity1_8DungeonEvent.OnClickElement = 2
+VersionActivity1_8DungeonEvent.FocusElement = 3
+VersionActivity1_8DungeonEvent.OnHideInteractUI = 4
+VersionActivity1_8DungeonEvent.OnAddOneElement = 5
+VersionActivity1_8DungeonEvent.OnRemoveElement = 6
+VersionActivity1_8DungeonEvent.OnRecycleAllElement = 7
+VersionActivity1_8DungeonEvent.ManualClickElement = 8
+
+return VersionActivity1_8DungeonEvent

@@ -1,19 +1,21 @@
-﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionFightResultClose", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/WaitGuideActionFightResultClose.lua
 
-local var_0_0 = class("WaitGuideActionFightResultClose", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.WaitGuideActionFightResultClose", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
-	FightController.instance:registerCallback(FightEvent.OnResultViewClose, arg_1_0._onResultViewClose, arg_1_0)
+local WaitGuideActionFightResultClose = class("WaitGuideActionFightResultClose", BaseGuideAction)
+
+function WaitGuideActionFightResultClose:onStart(context)
+	WaitGuideActionFightResultClose.super.onStart(self, context)
+	FightController.instance:registerCallback(FightEvent.OnResultViewClose, self._onResultViewClose, self)
 end
 
-function var_0_0._onResultViewClose(arg_2_0)
-	FightController.instance:unregisterCallback(FightEvent.OnResultViewClose, arg_2_0._onResultViewClose, arg_2_0)
-	arg_2_0:onDone(true)
+function WaitGuideActionFightResultClose:_onResultViewClose()
+	FightController.instance:unregisterCallback(FightEvent.OnResultViewClose, self._onResultViewClose, self)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.OnResultViewClose, arg_3_0._onResultViewClose, arg_3_0)
+function WaitGuideActionFightResultClose:clearWork()
+	FightController.instance:unregisterCallback(FightEvent.OnResultViewClose, self._onResultViewClose, self)
 end
 
-return var_0_0
+return WaitGuideActionFightResultClose

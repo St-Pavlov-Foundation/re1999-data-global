@@ -1,28 +1,30 @@
-﻿module("modules.logic.rouge.map.view.store.RougeMapStoreViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/view/store/RougeMapStoreViewContainer.lua
 
-local var_0_0 = class("RougeMapStoreViewContainer", BaseViewContainer)
+module("modules.logic.rouge.map.view.store.RougeMapStoreViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RougeMapStoreViewContainer = class("RougeMapStoreViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RougeMapStoreView.New())
-	table.insert(var_1_0, RougeMapCoinView.New())
+function RougeMapStoreViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RougeMapStoreView.New())
+	table.insert(views, RougeMapCoinView.New())
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	arg_2_0.navigateView = NavigateButtonsView.New({
+function RougeMapStoreViewContainer:buildTabViews(tabContainerId)
+	self.navigateView = NavigateButtonsView.New({
 		true,
 		false,
 		false
 	})
 
-	arg_2_0.navigateView:setOverrideClose(RougeMapHelper.backToMainScene)
+	self.navigateView:setOverrideClose(RougeMapHelper.backToMainScene)
 
 	return {
-		arg_2_0.navigateView
+		self.navigateView
 	}
 end
 
-return var_0_0
+return RougeMapStoreViewContainer

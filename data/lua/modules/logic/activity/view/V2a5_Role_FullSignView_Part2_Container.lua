@@ -1,9 +1,11 @@
-﻿module("modules.logic.activity.view.V2a5_Role_FullSignView_Part2_Container", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/V2a5_Role_FullSignView_Part2_Container.lua
 
-local var_0_0 = class("V2a5_Role_FullSignView_Part2_Container", V2a5_Role_SignItem_SignViewContainer)
+module("modules.logic.activity.view.V2a5_Role_FullSignView_Part2_Container", package.seeall)
 
-function var_0_0.onGetMainViewClassType(arg_1_0)
+local V2a5_Role_FullSignView_Part2_Container = class("V2a5_Role_FullSignView_Part2_Container", V2a5_Role_SignItem_SignViewContainer)
+
+function V2a5_Role_FullSignView_Part2_Container:onGetMainViewClassType()
 	return V2a5_Role_FullSignView_Part2
 end
 
-return var_0_0
+return V2a5_Role_FullSignView_Part2_Container

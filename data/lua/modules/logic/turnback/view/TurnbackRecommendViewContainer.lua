@@ -1,11 +1,13 @@
-﻿module("modules.logic.turnback.view.TurnbackRecommendViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/turnback/view/TurnbackRecommendViewContainer.lua
 
-local var_0_0 = class("TurnbackRecommendViewContainer", BaseViewContainer)
+module("modules.logic.turnback.view.TurnbackRecommendViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local TurnbackRecommendViewContainer = class("TurnbackRecommendViewContainer", BaseViewContainer)
+
+function TurnbackRecommendViewContainer:buildViews()
 	return {
 		TurnbackRecommendView.New()
 	}
 end
 
-return var_0_0
+return TurnbackRecommendViewContainer

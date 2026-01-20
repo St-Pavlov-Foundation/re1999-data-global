@@ -1,17 +1,19 @@
-﻿module("modules.logic.activitywelfare.view.NewWelfarePanelContainer", package.seeall)
+﻿-- chunkname: @modules/logic/activitywelfare/view/NewWelfarePanelContainer.lua
 
-local var_0_0 = class("NewWelfarePanelContainer", BaseViewContainer)
+module("modules.logic.activitywelfare.view.NewWelfarePanelContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local NewWelfarePanelContainer = class("NewWelfarePanelContainer", BaseViewContainer)
 
-	table.insert(var_1_0, NewWelfarePanel.New())
+function NewWelfarePanelContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, NewWelfarePanel.New())
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	arg_2_0:closeThis()
+function NewWelfarePanelContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return NewWelfarePanelContainer

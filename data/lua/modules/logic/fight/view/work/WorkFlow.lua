@@ -1,80 +1,82 @@
-﻿module("modules.logic.fight.view.work.WorkFlow", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/work/WorkFlow.lua
 
-local var_0_0 = class("WorkFlow", BaseFlow)
+module("modules.logic.fight.view.work.WorkFlow", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._work = nil
+local WorkFlow = class("WorkFlow", BaseFlow)
+
+function WorkFlow:ctor()
+	self._work = nil
 end
 
-function var_0_0.deserialize(arg_2_0, arg_2_1)
-	if arg_2_1 then
-		local var_2_0 = arg_2_0:_parse(arg_2_1)
+function WorkFlow:deserialize(data)
+	if data then
+		local root = self:_parse(data)
 
-		arg_2_0:addChild(var_2_0)
+		self:addChild(root)
 	end
 end
 
-function var_0_0._parse(arg_3_0, arg_3_1)
-	local var_3_0 = _G[arg_3_1.type]
+function WorkFlow:_parse(data)
+	local cls = _G[data.type]
 
-	if var_3_0 then
-		local var_3_1 = var_3_0.New(arg_3_1.paramTable)
-		local var_3_2 = arg_3_0:_parse(arg_3_1)
+	if cls then
+		local root = cls.New(data.paramTable)
+		local node = self:_parse(data)
 
-		arg_3_0:addChild(var_3_1)
+		self:addChild(root)
 	end
 end
 
-function var_0_0.addWork(arg_4_0, arg_4_1)
-	var_0_0.super.addWork(arg_4_0, arg_4_1)
+function WorkFlow:addWork(work)
+	WorkFlow.super.addWork(self, work)
 
-	arg_4_0._work = arg_4_1
+	self._work = work
 end
 
-function var_0_0.onWorkDone(arg_5_0, arg_5_1)
-	arg_5_0:onDone(arg_5_0._work.isSuccess)
-	arg_5_0._work:onResetInternal()
+function WorkFlow:onWorkDone(work)
+	self:onDone(self._work.isSuccess)
+	self._work:onResetInternal()
 end
 
-function var_0_0.onStartInternal(arg_6_0, arg_6_1)
-	var_0_0.super.onStartInternal(arg_6_0, arg_6_1)
-	arg_6_0._work:onStartInternal(arg_6_0.context)
+function WorkFlow:onStartInternal(context)
+	WorkFlow.super.onStartInternal(self, context)
+	self._work:onStartInternal(self.context)
 end
 
-function var_0_0.onStopInternal(arg_7_0)
-	var_0_0.super.onStopInternal(arg_7_0)
+function WorkFlow:onStopInternal()
+	WorkFlow.super.onStopInternal(self)
 
-	if arg_7_0._work.status == WorkStatus.Running then
-		arg_7_0._work:onStopInternal()
+	if self._work.status == WorkStatus.Running then
+		self._work:onStopInternal()
 	end
 end
 
-function var_0_0.onResumeInternal(arg_8_0)
-	var_0_0.super.onResumeInternal(arg_8_0)
+function WorkFlow:onResumeInternal()
+	WorkFlow.super.onResumeInternal(self)
 
-	if arg_8_0._work.status == WorkStatus.Stopped then
-		arg_8_0._work:onResumeInternal()
+	if self._work.status == WorkStatus.Stopped then
+		self._work:onResumeInternal()
 	end
 end
 
-function var_0_0.onResetInternal(arg_9_0)
-	var_0_0.super.onResetInternal(arg_9_0)
+function WorkFlow:onResetInternal()
+	WorkFlow.super.onResetInternal(self)
 
-	if arg_9_0._work.status == WorkStatus.Running or arg_9_0._work.status == WorkStatus.Stopped then
-		arg_9_0._work:onResetInternal()
+	if self._work.status == WorkStatus.Running or self._work.status == WorkStatus.Stopped then
+		self._work:onResetInternal()
 	end
 end
 
-function var_0_0.onDestroyInternal(arg_10_0)
-	var_0_0.super.onDestroyInternal(arg_10_0)
+function WorkFlow:onDestroyInternal()
+	WorkFlow.super.onDestroyInternal(self)
 
-	if arg_10_0._work.status == WorkStatus.Running then
-		arg_10_0._work:onStopInternal()
+	if self._work.status == WorkStatus.Running then
+		self._work:onStopInternal()
 	end
 
-	arg_10_0._work:onResetInternal()
+	self._work:onResetInternal()
 
-	arg_10_0._work = nil
+	self._work = nil
 end
 
-return var_0_0
+return WorkFlow

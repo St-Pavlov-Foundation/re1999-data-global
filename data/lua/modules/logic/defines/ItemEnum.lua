@@ -1,28 +1,35 @@
-﻿module("modules.logic.defines.ItemEnum", package.seeall)
+﻿-- chunkname: @modules/logic/defines/ItemEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.defines.ItemEnum", package.seeall)
 
-var_0_0.SubType = {
+local ItemEnum = _M
+
+ItemEnum.SubType = {
 	RandomGift = 49,
 	CommonItem = 14,
 	PlayerBg = 21,
 	UtmStickers = 33,
-	RoomManufactureAccelerateItem = 26,
+	UdimoBgItem = 37,
 	SpecifiedGift = 48,
 	SkinTicket = 61,
-	RoomBlockGift = 66,
+	UdimoItem = 36,
 	RoomTicket = 60,
 	MainSceneSkin = 24,
-	FightCard = 67,
+	RoomManufactureAccelerateItem = 26,
 	MultipleCoupon = 16,
-	FightFloatType = 68,
+	UdimoDecorationItem = 38,
 	CritterAccelerateItem = 34,
 	ResonanceItem = 12,
 	SummonSimulationPick = 54,
 	Portrait = 17,
+	SkinSelelctGift = 71,
 	SelfSelectSix = 65,
+	FightCard = 67,
+	FightFloatType = 68,
 	InsightItem = 11,
+	RoomBlockGift = 66,
 	AdventureItem = 15,
+	EquipSelectGift = 75,
 	OptionalGift = 53,
 	BreachItem = 13,
 	CritterIncubate = 30,
@@ -41,37 +48,40 @@ var_0_0.SubType = {
 	MainUISkin = 35,
 	DestinyStoneUp = 64
 }
-var_0_0.CategoryType = {
+ItemEnum.CategoryType = {
 	All = 1,
 	Equip = 4,
 	Antique = 5,
 	Material = 2,
 	UseType = 3
 }
-var_0_0.Color = {
+ItemEnum.Color = {
 	2,
 	3,
 	4,
 	5,
 	6
 }
-var_0_0.ItemIconEffect = {
+ItemEnum.ItemIconEffect = {
 	["2#1401"] = 1
 }
-var_0_0.RoomBackpackPropSubType = {
-	[var_0_0.SubType.RoomManufactureItem] = true,
-	[var_0_0.SubType.RoomManufactureAccelerateItem] = true,
-	[var_0_0.SubType.CritterFood] = true,
-	[var_0_0.SubType.CritterTrain] = true,
-	[var_0_0.SubType.CritterSummon] = true,
-	[var_0_0.SubType.CritterIncubate] = true,
-	[var_0_0.SubType.CritterAccelerateItem] = true
+ItemEnum.RoomBackpackPropSubType = {
+	[ItemEnum.SubType.RoomManufactureItem] = true,
+	[ItemEnum.SubType.RoomManufactureAccelerateItem] = true,
+	[ItemEnum.SubType.CritterFood] = true,
+	[ItemEnum.SubType.CritterTrain] = true,
+	[ItemEnum.SubType.CritterSummon] = true,
+	[ItemEnum.SubType.CritterIncubate] = true,
+	[ItemEnum.SubType.CritterAccelerateItem] = true
 }
-var_0_0.NewbiePackGiftId = 520010
-var_0_0.NoExpiredNum = 70128
-var_0_0.Tag = {
+ItemEnum.NewbiePackGiftId = 520010
+ItemEnum.NoExpiredNum = 70128
+ItemEnum.Tag = {
 	PackageSkin = 2,
 	SummonSkin = 1
 }
+ItemEnum.GetApproach2Tag = {
+	[MaterialEnum.GetApproach.MonthCard] = 1
+}
 
-return var_0_0
+return ItemEnum

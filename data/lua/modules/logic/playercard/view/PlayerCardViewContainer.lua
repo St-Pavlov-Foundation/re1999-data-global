@@ -1,67 +1,69 @@
-﻿module("modules.logic.playercard.view.PlayerCardViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/playercard/view/PlayerCardViewContainer.lua
 
-local var_0_0 = class("PlayerCardViewContainer", BaseViewContainer)
+module("modules.logic.playercard.view.PlayerCardViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local PlayerCardViewContainer = class("PlayerCardViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, PlayerCardCharacterView.New())
-	table.insert(var_1_0, PlayerCardView.New())
-	table.insert(var_1_0, PlayerCardThemeView.New())
+function PlayerCardViewContainer:buildViews()
+	local views = {}
 
-	arg_1_0.animatorView = PlayerCardAnimatorView.New()
+	table.insert(views, PlayerCardCharacterView.New())
+	table.insert(views, PlayerCardView.New())
+	table.insert(views, PlayerCardThemeView.New())
 
-	table.insert(var_1_0, arg_1_0.animatorView)
-	arg_1_0:buildThemeScrollView(var_1_0)
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_lefttop"))
+	self.animatorView = PlayerCardAnimatorView.New()
 
-	return var_1_0
+	table.insert(views, self.animatorView)
+	self:buildThemeScrollView(views)
+	table.insert(views, TabViewGroup.New(1, "#go_lefttop"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function PlayerCardViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
-		arg_2_0.navigateView:setOverrideClose(arg_2_0._overrideClose, arg_2_0)
+		self.navigateView:setOverrideClose(self._overrideClose, self)
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-function var_0_0.buildThemeScrollView(arg_3_0, arg_3_1)
-	local var_3_0 = ListScrollParam.New()
+function PlayerCardViewContainer:buildThemeScrollView(views)
+	local scrollParam = ListScrollParam.New()
 
-	var_3_0.scrollGOPath = "Bottom/#scroll_theme"
-	var_3_0.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_3_0.prefabUrl = "Bottom/#scroll_theme/viewport/Content/#go_themeitem"
-	var_3_0.cellClass = PlayerCardThemeItem
-	var_3_0.scrollDir = ScrollEnum.ScrollDirH
-	var_3_0.lineCount = 1
-	var_3_0.cellWidth = 404
-	var_3_0.cellHeight = 172
-	var_3_0.cellSpaceH = 16
-	var_3_0.cellSpaceV = 0
-	var_3_0.startSpace = 4
-	var_3_0.endSpace = 0
-	arg_3_0.scrollView = LuaListScrollView.New(PlayerCardThemeListModel.instance, var_3_0)
+	scrollParam.scrollGOPath = "Bottom/#scroll_theme"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "Bottom/#scroll_theme/viewport/Content/#go_themeitem"
+	scrollParam.cellClass = PlayerCardThemeItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirH
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 404
+	scrollParam.cellHeight = 172
+	scrollParam.cellSpaceH = 16
+	scrollParam.cellSpaceV = 0
+	scrollParam.startSpace = 4
+	scrollParam.endSpace = 0
+	self.scrollView = LuaListScrollView.New(PlayerCardThemeListModel.instance, scrollParam)
 
-	table.insert(arg_3_1, arg_3_0.scrollView)
+	table.insert(views, self.scrollView)
 end
 
-function var_0_0._overrideClose(arg_4_0)
-	if arg_4_0.animatorView:isInThemeView() then
-		arg_4_0.animatorView:closeThemeView()
+function PlayerCardViewContainer:_overrideClose()
+	if self.animatorView:isInThemeView() then
+		self.animatorView:closeThemeView()
 
 		return
 	end
 
-	arg_4_0:closeThis()
+	self:closeThis()
 end
 
-return var_0_0
+return PlayerCardViewContainer

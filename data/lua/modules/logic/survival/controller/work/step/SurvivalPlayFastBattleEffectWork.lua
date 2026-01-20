@@ -1,19 +1,22 @@
-﻿module("modules.logic.survival.controller.work.step.SurvivalPlayFastBattleEffectWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/step/SurvivalPlayFastBattleEffectWork.lua
 
-local var_0_0 = class("SurvivalPlayFastBattleEffectWork", SurvivalStepBaseWork)
+module("modules.logic.survival.controller.work.step.SurvivalPlayFastBattleEffectWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = SurvivalMapModel.instance:getSceneMo().unitsById[arg_1_0._stepMo.id]
+local SurvivalPlayFastBattleEffectWork = class("SurvivalPlayFastBattleEffectWork", SurvivalStepBaseWork)
 
-	if var_1_0 then
-		SurvivalMapHelper.instance:addPointEffect(var_1_0.pos, SurvivalPointEffectComp.ResPaths.fastfight)
+function SurvivalPlayFastBattleEffectWork:onStart(context)
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
+	local unitMo = sceneMo.unitsById[self._stepMo.id]
 
-		for iter_1_0, iter_1_1 in ipairs(var_1_0.exPoints) do
-			SurvivalMapHelper.instance:addPointEffect(iter_1_1, SurvivalPointEffectComp.ResPaths.fastfight)
+	if unitMo then
+		SurvivalMapHelper.instance:addPointEffect(unitMo.pos, SurvivalPointEffectComp.ResPaths.fastfight)
+
+		for _, exPos in ipairs(unitMo.exPoints) do
+			SurvivalMapHelper.instance:addPointEffect(exPos, SurvivalPointEffectComp.ResPaths.fastfight)
 		end
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return SurvivalPlayFastBattleEffectWork

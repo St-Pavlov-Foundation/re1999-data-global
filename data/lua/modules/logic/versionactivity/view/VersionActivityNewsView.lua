@@ -1,177 +1,178 @@
-﻿module("modules.logic.versionactivity.view.VersionActivityNewsView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity/view/VersionActivityNewsView.lua
 
-local var_0_0 = class("VersionActivityNewsView", BaseView)
+module("modules.logic.versionactivity.view.VersionActivityNewsView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goclose = gohelper.findChild(arg_1_0.viewGO, "#go_close")
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "#txt_title")
-	arg_1_0._goinfoitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_info/Viewport/Content/#go_infoitem")
+local VersionActivityNewsView = class("VersionActivityNewsView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivityNewsView:onInitView()
+	self._goclose = gohelper.findChild(self.viewGO, "#go_close")
+	self._txttitle = gohelper.findChildText(self.viewGO, "#txt_title")
+	self._goinfoitem = gohelper.findChild(self.viewGO, "#scroll_info/Viewport/Content/#go_infoitem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function VersionActivityNewsView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function VersionActivityNewsView:removeEvents()
 	return
 end
 
-var_0_0.ParagraphDelimiter = "{p}"
-var_0_0.ImageString = "{img}"
-var_0_0.ImageStringLen = #var_0_0.ImageString
-var_0_0.Anchor = {
+VersionActivityNewsView.ParagraphDelimiter = "{p}"
+VersionActivityNewsView.ImageString = "{img}"
+VersionActivityNewsView.ImageStringLen = #VersionActivityNewsView.ImageString
+VersionActivityNewsView.Anchor = {
 	Left = Vector2.New(0, 1),
 	Center = Vector2.New(0.5, 1),
 	Right = Vector2.New(1, 1)
 }
-var_0_0.Align = {
+VersionActivityNewsView.Align = {
 	Right = 3,
 	Left = 1,
 	Center = 2
 }
 
-function var_0_0.closeViewOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function VersionActivityNewsView:closeViewOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	gohelper.setActive(arg_5_0._goinfoitem, false)
+function VersionActivityNewsView:_editableInitView()
+	gohelper.setActive(self._goinfoitem, false)
 
-	arg_5_0.closeViewClick = gohelper.getClick(arg_5_0._goclose)
+	self.closeViewClick = gohelper.getClick(self._goclose)
 
-	arg_5_0.closeViewClick:AddClickListener(arg_5_0.closeViewOnClick, arg_5_0)
+	self.closeViewClick:AddClickListener(self.closeViewOnClick, self)
 
-	arg_5_0.contentItemList = {}
+	self.contentItemList = {}
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function VersionActivityNewsView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	local var_7_0 = arg_7_0.viewParam.fragmentId
+function VersionActivityNewsView:onOpen()
+	local fragmentId = self.viewParam.fragmentId
 
-	arg_7_0.fragmentCo = lua_chapter_map_fragment.configDict[var_7_0]
+	self.fragmentCo = lua_chapter_map_fragment.configDict[fragmentId]
 
-	if not arg_7_0.fragmentCo then
-		logError("not found fragment : " .. var_7_0)
-		arg_7_0:closeThis()
+	if not self.fragmentCo then
+		logError("not found fragment : " .. fragmentId)
+		self:closeThis()
 
 		return
 	end
 
-	arg_7_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_8_0)
-	arg_8_0._txttitle.text = arg_8_0.fragmentCo.title
+function VersionActivityNewsView:refreshUI()
+	self._txttitle.text = self.fragmentCo.title
 
-	local var_8_0 = string.split(arg_8_0.fragmentCo.content, var_0_0.ParagraphDelimiter)
-	local var_8_1 = 0
-	local var_8_2
-	local var_8_3
+	local contentList = string.split(self.fragmentCo.content, VersionActivityNewsView.ParagraphDelimiter)
+	local count = 0
+	local contentItem, isImgType
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_0) do
-		if not string.nilorempty(iter_8_1) then
-			var_8_1 = var_8_1 + 1
-			iter_8_1 = string.trim(iter_8_1)
+	for _, content in ipairs(contentList) do
+		if not string.nilorempty(content) then
+			count = count + 1
+			content = string.trim(content)
+			contentItem = self.contentItemList[count]
+			contentItem = contentItem or self:createContentItem()
 
-			local var_8_4 = arg_8_0.contentItemList[var_8_1] or arg_8_0:createContentItem()
+			gohelper.setActive(contentItem.go, true)
 
-			gohelper.setActive(var_8_4.go, true)
+			isImgType = string.find(content, VersionActivityNewsView.ImageString) and true or false
 
-			local var_8_5 = string.find(iter_8_1, var_0_0.ImageString) and true or false
+			gohelper.setActive(contentItem.goPlainText, not isImgType)
+			gohelper.setActive(contentItem.goImgText, isImgType)
 
-			gohelper.setActive(var_8_4.goPlainText, not var_8_5)
-			gohelper.setActive(var_8_4.goImgText, var_8_5)
+			if isImgType then
+				local align = self:getImageAlign(content)
 
-			if var_8_5 then
-				local var_8_6 = arg_8_0:getImageAlign(iter_8_1)
+				content = string.gsub(content, VersionActivityNewsView.ImageString, "")
+				contentItem.txtImgText.text = content
 
-				iter_8_1 = string.gsub(iter_8_1, var_0_0.ImageString, "")
-				var_8_4.txtImgText.text = iter_8_1
+				contentItem.simageIcon:LoadImage(ResUrl.getVersionActivityIcon(self.fragmentCo.res))
 
-				var_8_4.simageIcon:LoadImage(ResUrl.getVersionActivityIcon(arg_8_0.fragmentCo.res))
+				local iconWidth = recthelper.getWidth(contentItem.iconRectTr)
 
-				local var_8_7 = recthelper.getWidth(var_8_4.iconRectTr)
+				if align == VersionActivityNewsView.Align.Left then
+					contentItem.iconRectTr.anchorMin = VersionActivityNewsView.Anchor.Left
+					contentItem.iconRectTr.anchorMax = VersionActivityNewsView.Anchor.Left
 
-				if var_8_6 == var_0_0.Align.Left then
-					var_8_4.iconRectTr.anchorMin = var_0_0.Anchor.Left
-					var_8_4.iconRectTr.anchorMax = var_0_0.Anchor.Left
+					recthelper.setAnchor(contentItem.iconRectTr, iconWidth / 2, 0)
+				elseif align == VersionActivityNewsView.Align.Center then
+					contentItem.iconRectTr.anchorMin = VersionActivityNewsView.Anchor.Center
+					contentItem.iconRectTr.anchorMax = VersionActivityNewsView.Anchor.Center
 
-					recthelper.setAnchor(var_8_4.iconRectTr, var_8_7 / 2, 0)
-				elseif var_8_6 == var_0_0.Align.Center then
-					var_8_4.iconRectTr.anchorMin = var_0_0.Anchor.Center
-					var_8_4.iconRectTr.anchorMax = var_0_0.Anchor.Center
+					recthelper.setAnchor(contentItem.iconRectTr, 0, 0)
+				elseif align == VersionActivityNewsView.Align.Right then
+					contentItem.iconRectTr.anchorMin = VersionActivityNewsView.Anchor.Right
+					contentItem.iconRectTr.anchorMax = VersionActivityNewsView.Anchor.Right
 
-					recthelper.setAnchor(var_8_4.iconRectTr, 0, 0)
-				elseif var_8_6 == var_0_0.Align.Right then
-					var_8_4.iconRectTr.anchorMin = var_0_0.Anchor.Right
-					var_8_4.iconRectTr.anchorMax = var_0_0.Anchor.Right
-
-					recthelper.setAnchor(var_8_4.iconRectTr, -var_8_7 / 2, 0)
+					recthelper.setAnchor(contentItem.iconRectTr, -iconWidth / 2, 0)
 				end
 			else
-				var_8_4.txtPlainText.text = iter_8_1
+				contentItem.txtPlainText.text = content
 			end
 		end
 	end
 
-	for iter_8_2 = var_8_1 + 1, #arg_8_0.contentItemList do
-		gohelper.setActive(arg_8_0.contentItemList[iter_8_2].go, false)
+	for i = count + 1, #self.contentItemList do
+		gohelper.setActive(self.contentItemList[i].go, false)
 	end
 end
 
-function var_0_0.checkIsImageType(arg_9_0, arg_9_1)
-	return string.find(arg_9_1, var_0_0.ImageString)
+function VersionActivityNewsView:checkIsImageType(content)
+	return string.find(content, VersionActivityNewsView.ImageString)
 end
 
-function var_0_0.getImageAlign(arg_10_0, arg_10_1)
-	local var_10_0, var_10_1 = string.find(arg_10_1, var_0_0.ImageString)
+function VersionActivityNewsView:getImageAlign(content)
+	local startIndex, endIndex = string.find(content, VersionActivityNewsView.ImageString)
 
-	if not var_10_0 then
-		return var_0_0.Align.Right
+	if not startIndex then
+		return VersionActivityNewsView.Align.Right
 	end
 
-	if var_10_0 ~= 1 then
-		return var_0_0.Align.Right
+	if startIndex ~= 1 then
+		return VersionActivityNewsView.Align.Right
 	end
 
-	if string.nilorempty(string.sub(arg_10_1, var_10_1 + 1, var_10_1 + 1)) then
-		return var_0_0.Align.Center
+	if string.nilorempty(string.sub(content, endIndex + 1, endIndex + 1)) then
+		return VersionActivityNewsView.Align.Center
 	end
 
-	return var_0_0.Align.Left
+	return VersionActivityNewsView.Align.Left
 end
 
-function var_0_0.createContentItem(arg_11_0)
-	local var_11_0 = arg_11_0:getUserDataTb_()
+function VersionActivityNewsView:createContentItem()
+	local contentItem = self:getUserDataTb_()
 
-	var_11_0.go = gohelper.cloneInPlace(arg_11_0._goinfoitem)
-	var_11_0.goPlainText = gohelper.findChild(var_11_0.go, "type1")
-	var_11_0.txtPlainText = gohelper.findChildText(var_11_0.go, "type1")
-	var_11_0.goImgText = gohelper.findChild(var_11_0.go, "type2")
-	var_11_0.txtImgText = gohelper.findChildText(var_11_0.go, "type2/info")
-	var_11_0.simageIcon = gohelper.findChildSingleImage(var_11_0.go, "type2/icon")
-	var_11_0.iconRectTr = var_11_0.simageIcon.gameObject.transform
+	contentItem.go = gohelper.cloneInPlace(self._goinfoitem)
+	contentItem.goPlainText = gohelper.findChild(contentItem.go, "type1")
+	contentItem.txtPlainText = gohelper.findChildText(contentItem.go, "type1")
+	contentItem.goImgText = gohelper.findChild(contentItem.go, "type2")
+	contentItem.txtImgText = gohelper.findChildText(contentItem.go, "type2/info")
+	contentItem.simageIcon = gohelper.findChildSingleImage(contentItem.go, "type2/icon")
+	contentItem.iconRectTr = contentItem.simageIcon.gameObject.transform
 
-	return var_11_0
+	return contentItem
 end
 
-function var_0_0.onClose(arg_12_0)
+function VersionActivityNewsView:onClose()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 
-	for iter_12_0, iter_12_1 in ipairs(arg_12_0.contentItemList) do
-		iter_12_1.simageIcon:UnLoadImage()
+	for _, contentItem in ipairs(self.contentItemList) do
+		contentItem.simageIcon:UnLoadImage()
 	end
 end
 
-function var_0_0.onDestroyView(arg_13_0)
-	arg_13_0.closeViewClick:RemoveClickListener()
+function VersionActivityNewsView:onDestroyView()
+	self.closeViewClick:RemoveClickListener()
 end
 
-return var_0_0
+return VersionActivityNewsView

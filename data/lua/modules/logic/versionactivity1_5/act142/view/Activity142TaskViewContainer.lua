@@ -1,49 +1,53 @@
-﻿module("modules.logic.versionactivity1_5.act142.view.Activity142TaskViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/act142/view/Activity142TaskViewContainer.lua
 
-local var_0_0 = class("Activity142TaskViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_5.act142.view.Activity142TaskViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+local Activity142TaskViewContainer = class("Activity142TaskViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "#scroll_TaskList"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_1.cellClass = Activity142TaskItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.cellWidth = 1160
-	var_1_1.cellHeight = 165
+function Activity142TaskViewContainer:buildViews()
+	local views = {}
+	local scrollParam = ListScrollParam.New()
 
-	local var_1_2 = {}
+	scrollParam.scrollGOPath = "#scroll_TaskList"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = Activity142TaskItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.cellWidth = 1160
+	scrollParam.cellHeight = 165
 
-	for iter_1_0 = 1, 10 do
-		var_1_2[iter_1_0] = (iter_1_0 - 1) * 0.06
+	local animationDelayTimes = {}
+
+	for i = 1, 10 do
+		local delayTime = (i - 1) * 0.06
+
+		animationDelayTimes[i] = delayTime
 	end
 
-	table.insert(var_1_0, LuaListScrollViewWithAnimator.New(Activity142TaskListModel.instance, var_1_1, var_1_2))
-	table.insert(var_1_0, Activity142TaskView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_BackBtns"))
+	table.insert(views, LuaListScrollViewWithAnimator.New(Activity142TaskListModel.instance, scrollParam, animationDelayTimes))
+	table.insert(views, Activity142TaskView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_BackBtns"))
 
-	return var_1_0
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._navigateButtonView = NavigateButtonsView.New({
+function Activity142TaskViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			arg_2_0._navigateButtonView
+			self._navigateButtonView
 		}
 	end
 end
 
-function var_0_0.onContainerClickModalMask(arg_3_0)
+function Activity142TaskViewContainer:onContainerClickModalMask()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	arg_3_0:closeThis()
+	self:closeThis()
 end
 
-return var_0_0
+return Activity142TaskViewContainer

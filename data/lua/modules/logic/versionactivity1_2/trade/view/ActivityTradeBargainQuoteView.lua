@@ -1,70 +1,72 @@
-﻿module("modules.logic.versionactivity1_2.trade.view.ActivityTradeBargainQuoteView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/trade/view/ActivityTradeBargainQuoteView.lua
 
-local var_0_0 = class("ActivityTradeBargainQuoteView", BaseView)
+module("modules.logic.versionactivity1_2.trade.view.ActivityTradeBargainQuoteView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gotrade = gohelper.findChild(arg_1_0.viewGO, "#go_trade")
+local ActivityTradeBargainQuoteView = class("ActivityTradeBargainQuoteView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ActivityTradeBargainQuoteView:onInitView()
+	self._gotrade = gohelper.findChild(self.viewGO, "#go_trade")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function ActivityTradeBargainQuoteView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function ActivityTradeBargainQuoteView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0.tradeItem = ActivityQuoteTradeItem.New(arg_4_0._gotrade)
+function ActivityTradeBargainQuoteView:_editableInitView()
+	self.tradeItem = ActivityQuoteTradeItem.New(self._gotrade)
 end
 
-function var_0_0.onDestroyView(arg_5_0)
-	if arg_5_0.tradeItem then
-		arg_5_0.tradeItem:destory()
+function ActivityTradeBargainQuoteView:onDestroyView()
+	if self.tradeItem then
+		self.tradeItem:destory()
 
-		arg_5_0.tradeItem = nil
+		self.tradeItem = nil
 	end
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:addEventCb(Activity117Controller.instance, Activity117Event.ReceiveInfos, arg_6_0.refreshUI, arg_6_0)
-	arg_6_0:addEventCb(Activity117Controller.instance, Activity117Event.RefreshQuoteView, arg_6_0.refreshUI, arg_6_0)
-	arg_6_0:addEventCb(Activity117Controller.instance, Activity117Event.ReceiveDeal, arg_6_0.refreshUI, arg_6_0)
-	arg_6_0:addEventCb(Activity117Controller.instance, Activity117Event.ReceiveNegotiate, arg_6_0.onNegotiate, arg_6_0)
-	arg_6_0:_refreshUI()
+function ActivityTradeBargainQuoteView:onOpen()
+	self:addEventCb(Activity117Controller.instance, Activity117Event.ReceiveInfos, self.refreshUI, self)
+	self:addEventCb(Activity117Controller.instance, Activity117Event.RefreshQuoteView, self.refreshUI, self)
+	self:addEventCb(Activity117Controller.instance, Activity117Event.ReceiveDeal, self.refreshUI, self)
+	self:addEventCb(Activity117Controller.instance, Activity117Event.ReceiveNegotiate, self.onNegotiate, self)
+	self:_refreshUI()
 end
 
-function var_0_0.onClose(arg_7_0)
-	arg_7_0:removeEventCb(Activity117Controller.instance, Activity117Event.ReceiveInfos, arg_7_0.refreshUI, arg_7_0)
-	arg_7_0:removeEventCb(Activity117Controller.instance, Activity117Event.RefreshQuoteView, arg_7_0.refreshUI, arg_7_0)
-	arg_7_0:removeEventCb(Activity117Controller.instance, Activity117Event.ReceiveDeal, arg_7_0.refreshUI, arg_7_0)
-	arg_7_0:removeEventCb(Activity117Controller.instance, Activity117Event.ReceiveNegotiate, arg_7_0.onNegotiate, arg_7_0)
+function ActivityTradeBargainQuoteView:onClose()
+	self:removeEventCb(Activity117Controller.instance, Activity117Event.ReceiveInfos, self.refreshUI, self)
+	self:removeEventCb(Activity117Controller.instance, Activity117Event.RefreshQuoteView, self.refreshUI, self)
+	self:removeEventCb(Activity117Controller.instance, Activity117Event.ReceiveDeal, self.refreshUI, self)
+	self:removeEventCb(Activity117Controller.instance, Activity117Event.ReceiveNegotiate, self.onNegotiate, self)
 end
 
-function var_0_0._refreshUI(arg_8_0)
-	local var_8_0 = arg_8_0.viewContainer:getActId()
+function ActivityTradeBargainQuoteView:_refreshUI()
+	local actId = self.viewContainer:getActId()
 
-	arg_8_0.tradeItem:refresh(var_8_0)
+	self.tradeItem:refresh(actId)
 end
 
-function var_0_0.refreshUI(arg_9_0, arg_9_1)
-	if arg_9_1 ~= arg_9_0.viewContainer:getActId() then
+function ActivityTradeBargainQuoteView:refreshUI(actId)
+	if actId ~= self.viewContainer:getActId() then
 		return
 	end
 
-	arg_9_0:_refreshUI()
+	self:_refreshUI()
 end
 
-function var_0_0.onNegotiate(arg_10_0, arg_10_1)
-	if arg_10_1 ~= arg_10_0.viewContainer:getActId() then
+function ActivityTradeBargainQuoteView:onNegotiate(actId)
+	if actId ~= self.viewContainer:getActId() then
 		return
 	end
 
-	arg_10_0.tradeItem:onNegotiate()
+	self.tradeItem:onNegotiate()
 end
 
-return var_0_0
+return ActivityTradeBargainQuoteView

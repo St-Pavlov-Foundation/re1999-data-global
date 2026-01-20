@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "element": 3210201,
+    "res": "v3a2_dungeon_collect_pic3",
+    "desc": "language_10104251"
+  },
+  {
+    "id": 2,
+    "element": 3210202,
+    "res": "v3a2_dungeon_collect_pic5",
+    "desc": "language_10104252"
+  },
+  {
+    "id": 3,
+    "element": 3210203,
+    "res": "v3a2_dungeon_collect_pic2",
+    "desc": "language_10104253"
+  },
+  {
+    "id": 4,
+    "element": 3210204,
+    "res": "v3a2_dungeon_collect_pic4",
+    "desc": "language_10104254"
+  },
+  {
+    "id": 5,
+    "element": 3210205,
+    "res": "v3a2_dungeon_collect_pic1",
+    "desc": "language_10104255"
+  },
+  {
+    "id": 6,
+    "element": 3210206,
+    "res": "v3a2_dungeon_collect_pic6",
+    "desc": "language_10104256"
+  }
+]

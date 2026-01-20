@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_turnback_sign_in", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_turnback_sign_in.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_turnback_sign_in", package.seeall)
+
+local lua_turnback_sign_in = {}
+local fields = {
 	bonus = 3,
 	name = 5,
 	characterId = 4,
@@ -9,16 +11,17 @@ local var_0_1 = {
 	content = 6,
 	day = 2
 }
-local var_0_2 = {
+local primaryKey = {
 	"turnbackId",
 	"day"
 }
-local var_0_3 = {
-	content = 1
+local mlStringKey = {
+	content = 2,
+	name = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_turnback_sign_in.onLoad(json)
+	lua_turnback_sign_in.configList, lua_turnback_sign_in.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_turnback_sign_in

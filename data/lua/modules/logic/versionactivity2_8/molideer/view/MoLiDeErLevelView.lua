@@ -1,323 +1,327 @@
-﻿module("modules.logic.versionactivity2_8.molideer.view.MoLiDeErLevelView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/molideer/view/MoLiDeErLevelView.lua
 
-local var_0_0 = class("MoLiDeErLevelView", BaseView)
+module("modules.logic.versionactivity2_8.molideer.view.MoLiDeErLevelView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._gopath = gohelper.findChild(arg_1_0.viewGO, "#go_path")
-	arg_1_0._goscrollcontent = gohelper.findChild(arg_1_0.viewGO, "#go_path/#go_scrollcontent")
-	arg_1_0._gostages = gohelper.findChild(arg_1_0.viewGO, "#go_path/#go_scrollcontent/#go_stages")
-	arg_1_0._gotitle = gohelper.findChild(arg_1_0.viewGO, "#go_title")
-	arg_1_0._simagetitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_title/#simage_title")
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "#go_title/image_LimitTimeBG/#txt_LimitTime")
-	arg_1_0._btntask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_task")
-	arg_1_0._goreddotreward = gohelper.findChild(arg_1_0.viewGO, "#btn_task/#go_reddotreward")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._golefttop = gohelper.findChild(arg_1_0.viewGO, "#go_lefttop")
-	arg_1_0._goPathParent = gohelper.findChild(arg_1_0.viewGO, "#go_path/#go_scrollcontent/path/path_2")
+local MoLiDeErLevelView = class("MoLiDeErLevelView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function MoLiDeErLevelView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._gopath = gohelper.findChild(self.viewGO, "#go_path")
+	self._goscrollcontent = gohelper.findChild(self.viewGO, "#go_path/#go_scrollcontent")
+	self._gostages = gohelper.findChild(self.viewGO, "#go_path/#go_scrollcontent/#go_stages")
+	self._gotitle = gohelper.findChild(self.viewGO, "#go_title")
+	self._simagetitle = gohelper.findChildSingleImage(self.viewGO, "#go_title/#simage_title")
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "#go_title/image_LimitTimeBG/#txt_LimitTime")
+	self._btntask = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_task")
+	self._goreddotreward = gohelper.findChild(self.viewGO, "#btn_task/#go_reddotreward")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._golefttop = gohelper.findChild(self.viewGO, "#go_lefttop")
+	self._goPathParent = gohelper.findChild(self.viewGO, "#go_path/#go_scrollcontent/path/path_2")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btntask:AddClickListener(arg_2_0._btntaskOnClick, arg_2_0)
-	arg_2_0:addEventCb(MoLiDeErController.instance, MoLiDeErEvent.OnFinishEpisode, arg_2_0.onEpisodeFinish, arg_2_0)
-	arg_2_0:addEventCb(MoLiDeErController.instance, MoLiDeErEvent.OnClickEpisodeItem, arg_2_0.onClickEpisodeItem, arg_2_0)
+function MoLiDeErLevelView:addEvents()
+	self._btntask:AddClickListener(self._btntaskOnClick, self)
+	self:addEventCb(MoLiDeErController.instance, MoLiDeErEvent.OnFinishEpisode, self.onEpisodeFinish, self)
+	self:addEventCb(MoLiDeErController.instance, MoLiDeErEvent.OnClickEpisodeItem, self.onClickEpisodeItem, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btntask:RemoveClickListener()
-	arg_3_0:removeEventCb(MoLiDeErController.instance, MoLiDeErEvent.OnFinishEpisode, arg_3_0.onEpisodeFinish, arg_3_0)
-	arg_3_0:removeEventCb(MoLiDeErController.instance, MoLiDeErEvent.OnClickEpisodeItem, arg_3_0.onClickEpisodeItem, arg_3_0)
+function MoLiDeErLevelView:removeEvents()
+	self._btntask:RemoveClickListener()
+	self:removeEventCb(MoLiDeErController.instance, MoLiDeErEvent.OnFinishEpisode, self.onEpisodeFinish, self)
+	self:removeEventCb(MoLiDeErController.instance, MoLiDeErEvent.OnClickEpisodeItem, self.onClickEpisodeItem, self)
 end
 
-function var_0_0._btntaskOnClick(arg_4_0)
+function MoLiDeErLevelView:_btntaskOnClick()
 	ViewMgr.instance:openView(ViewName.MoLiDeErTaskView)
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._taskAnimator = arg_5_0._btntask.gameObject:GetComponentInChildren(typeof(UnityEngine.Animator))
+function MoLiDeErLevelView:_editableInitView()
+	self._taskAnimator = self._btntask.gameObject:GetComponentInChildren(typeof(UnityEngine.Animator))
 
-	RedDotController.instance:addRedDot(arg_5_0._goreddotreward, RedDotEnum.DotNode.V2a8MoLiDeEr, nil, arg_5_0._refreshRedDot, arg_5_0)
-	arg_5_0:_initLevelItem()
+	RedDotController.instance:addRedDot(self._goreddotreward, RedDotEnum.DotNode.V2a8MoLiDeEr, nil, self._refreshRedDot, self)
+	self:_initLevelItem()
 
-	arg_5_0._viewAnimator = arg_5_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._viewAnimator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function var_0_0._initLevelItem(arg_6_0)
-	arg_6_0._levelItemList = {}
+function MoLiDeErLevelView:_initLevelItem()
+	self._levelItemList = {}
 
-	local var_6_0 = arg_6_0._gostages.transform
-	local var_6_1 = var_6_0.childCount
+	local parentTran = self._gostages.transform
+	local count = parentTran.childCount
 
-	for iter_6_0 = 1, var_6_1 do
-		local var_6_2 = var_6_0:GetChild(iter_6_0 - 1)
-		local var_6_3 = string.format("item_%s", iter_6_0)
-		local var_6_4 = arg_6_0:getResInst(arg_6_0.viewContainer._viewSetting.otherRes[1], var_6_2.gameObject, var_6_3)
-		local var_6_5 = MonoHelper.addNoUpdateLuaComOnceToGo(var_6_4, MoLiDeErLevelItem)
+	for i = 1, count do
+		local itemParent = parentTran:GetChild(i - 1)
+		local name = string.format("item_%s", i)
+		local itemObj = self:getResInst(self.viewContainer._viewSetting.otherRes[1], itemParent.gameObject, name)
+		local item = MonoHelper.addNoUpdateLuaComOnceToGo(itemObj, MoLiDeErLevelItem)
 
-		table.insert(arg_6_0._levelItemList, var_6_5)
+		table.insert(self._levelItemList, item)
 	end
 
-	arg_6_0._pathAnimItemList = {}
+	self._pathAnimItemList = {}
 
-	local var_6_6 = arg_6_0._goPathParent.transform
-	local var_6_7 = var_6_6.childCount
+	local pathParentTran = self._goPathParent.transform
+	local pathCount = pathParentTran.childCount
 
-	for iter_6_1 = 1, var_6_7 do
-		local var_6_8 = var_6_6:GetChild(iter_6_1 - 1)
-		local var_6_9 = var_6_8:GetComponent(typeof(UnityEngine.Animator))
+	for i = 1, pathCount do
+		local itemParent = pathParentTran:GetChild(i - 1)
+		local animatorComp = itemParent:GetComponent(typeof(UnityEngine.Animator))
+		local name = string.format("path_%s", i + 1)
 
-		var_6_8.name = string.format("path_%s", iter_6_1 + 1)
+		itemParent.name = name
 
-		table.insert(arg_6_0._pathAnimItemList, var_6_9)
+		table.insert(self._pathAnimItemList, animatorComp)
 	end
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function MoLiDeErLevelView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
-	TaskDispatcher.runRepeat(arg_8_0.updateTime, arg_8_0, TimeUtil.OneMinuteSecond)
+function MoLiDeErLevelView:onOpen()
+	TaskDispatcher.runRepeat(self.updateTime, self, TimeUtil.OneMinuteSecond)
 
-	arg_8_0._actId = MoLiDeErModel.instance:getCurActId()
+	self._actId = MoLiDeErModel.instance:getCurActId()
 
-	arg_8_0:updateTime()
-	arg_8_0:refreshUI()
+	self:updateTime()
+	self:refreshUI()
 
-	local var_8_0 = arg_8_0.viewParam.episodeId
+	local episodeId = self.viewParam.episodeId
 
-	if var_8_0 then
-		arg_8_0:onClickEpisodeItem(0, var_8_0)
+	if episodeId then
+		self:onClickEpisodeItem(0, episodeId)
 	end
 
-	if arg_8_0:_checkFirstEnter() then
-		arg_8_0._levelItemList[1]:setAnimState(MoLiDeErEnum.LevelState.Unlock, true)
+	if self:_checkFirstEnter() then
+		local item = self._levelItemList[1]
+
+		item:setAnimState(MoLiDeErEnum.LevelState.Unlock, true)
 		AudioMgr.instance:trigger(AudioEnum2_8.MoLiDeEr.play_ui_yuzhou_level_lit)
-		arg_8_0:_lockScreen(true)
-		TaskDispatcher.runDelay(arg_8_0._playFirstUnlock, arg_8_0, 0.8)
+		self:_lockScreen(true)
+		TaskDispatcher.runDelay(self._playFirstUnlock, self, 0.8)
 	end
 end
 
-function var_0_0.refreshUI(arg_9_0)
-	local var_9_0 = MoLiDeErConfig.instance:getEpisodeListById(arg_9_0._actId)
+function MoLiDeErLevelView:refreshUI()
+	local noGameEpisodeList = MoLiDeErConfig.instance:getEpisodeListById(self._actId)
 
-	if #var_9_0 ~= #arg_9_0._levelItemList then
+	if #noGameEpisodeList ~= #self._levelItemList then
 		logError("levelItem Count not match")
 
 		return
 	end
 
-	local var_9_1 = 1
-	local var_9_2
-	local var_9_3 = arg_9_0._actId
+	local focusIndex = 1
+	local focusEpisodeId
+	local actId = self._actId
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0._levelItemList) do
-		local var_9_4 = var_9_0[iter_9_0]
-		local var_9_5 = var_9_4.preEpisodeId
-		local var_9_6 = MoLiDeErModel.instance:isEpisodeFinish(var_9_3, var_9_5)
-		local var_9_7 = MoLiDeErModel.instance:isEpisodeFinish(var_9_3, var_9_4.episodeId)
-		local var_9_8 = var_9_5 == nil or var_9_5 == 0 or var_9_6
+	for index, item in ipairs(self._levelItemList) do
+		local config = noGameEpisodeList[index]
+		local preEpisodeId = config.preEpisodeId
+		local isPreFinish = MoLiDeErModel.instance:isEpisodeFinish(actId, preEpisodeId)
+		local isFinish = MoLiDeErModel.instance:isEpisodeFinish(actId, config.episodeId)
+		local isUnlock = preEpisodeId == nil or preEpisodeId == 0 or isPreFinish
 
-		iter_9_1:setActive(var_9_8)
-		iter_9_1:setData(iter_9_0, var_9_4)
+		item:setActive(isUnlock)
+		item:setData(index, config)
 
-		if var_9_8 then
-			iter_9_1:refreshUI(false)
+		if isUnlock then
+			item:refreshUI(false)
 
-			local var_9_9 = iter_9_0
-
-			var_9_2 = var_9_4.episodeId
+			focusIndex = index
+			focusEpisodeId = config.episodeId
 		end
 
-		arg_9_0:setPathItemState(iter_9_0, var_9_7, false)
+		self:setPathItemState(index, isFinish, false)
 	end
 
-	arg_9_0:_focusStoryItem(var_9_2)
+	self:_focusStoryItem(focusEpisodeId)
 end
 
-function var_0_0._focusStoryItem(arg_10_0, arg_10_1)
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0._levelItemList) do
-		local var_10_0 = iter_10_1.episodeId == arg_10_1
+function MoLiDeErLevelView:_focusStoryItem(focusEpisodeId)
+	for index, item in ipairs(self._levelItemList) do
+		local focus = item.episodeId == focusEpisodeId
 
-		iter_10_1:setFocus(var_10_0)
+		item:setFocus(focus)
 	end
 end
 
-function var_0_0.setPathItemState(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	local var_11_0 = arg_11_0._pathAnimItemList[arg_11_1]
+function MoLiDeErLevelView:setPathItemState(index, isFinish, playAnim)
+	local pathAnimItem = self._pathAnimItemList[index]
 
-	if var_11_0 then
-		gohelper.setActive(var_11_0.gameObject, arg_11_2)
+	if pathAnimItem then
+		gohelper.setActive(pathAnimItem.gameObject, isFinish)
 
-		if not arg_11_2 then
+		if not isFinish then
 			return
 		end
 
-		local var_11_1 = arg_11_3 and MoLiDeErEnum.AnimName.LevelPathItemFinish or MoLiDeErEnum.AnimName.LevelPathItemFinished
+		local animName = playAnim and MoLiDeErEnum.AnimName.LevelPathItemFinish or MoLiDeErEnum.AnimName.LevelPathItemFinished
 
-		var_11_0:Play(var_11_1, 0)
+		pathAnimItem:Play(animName, 0)
 	end
 end
 
-function var_0_0.onClickEpisodeItem(arg_12_0, arg_12_1, arg_12_2)
-	MoLiDeErController.instance:enterEpisode(arg_12_0._actId, arg_12_2)
+function MoLiDeErLevelView:onClickEpisodeItem(index, episodeId)
+	MoLiDeErController.instance:enterEpisode(self._actId, episodeId)
 end
 
-function var_0_0.onEpisodeFinish(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	if arg_13_1 ~= arg_13_0._actId then
+function MoLiDeErLevelView:onEpisodeFinish(actId, episodeId, isSkipGame)
+	if actId ~= self._actId then
 		return
 	end
 
-	if not arg_13_3 then
-		arg_13_0:_checkRedDot()
+	if not isSkipGame then
+		self:_checkRedDot()
 	end
 
-	arg_13_0._finishEpisodeId = arg_13_2
-	arg_13_0._isSkipGame = arg_13_3
+	self._finishEpisodeId = episodeId
+	self._isSkipGame = isSkipGame
 
-	arg_13_0:_lockScreen(true)
-	arg_13_0._viewAnimator:Play(MoLiDeErEnum.AnimName.LevelViewOpen)
-	TaskDispatcher.runDelay(arg_13_0.onLevelOpenAnimTimeEnd, arg_13_0, MoLiDeErEnum.LevelAnimTime.LevelViewOpen)
-	TaskDispatcher.runDelay(arg_13_0.forceEndBlock, arg_13_0, MoLiDeErEnum.LevelAnimTime.LevelForceEndBlock)
+	self:_lockScreen(true)
+	self._viewAnimator:Play(MoLiDeErEnum.AnimName.LevelViewOpen)
+	TaskDispatcher.runDelay(self.onLevelOpenAnimTimeEnd, self, MoLiDeErEnum.LevelAnimTime.LevelViewOpen)
+	TaskDispatcher.runDelay(self.forceEndBlock, self, MoLiDeErEnum.LevelAnimTime.LevelForceEndBlock)
 end
 
-function var_0_0._checkRedDot(arg_14_0)
+function MoLiDeErLevelView:_checkRedDot()
 	logNormal("莫莉德尔角色活动 关卡完成 请求红点")
 	RedDotRpc.instance:sendGetRedDotInfosRequest({
 		RedDotEnum.DotNode.V2a8MoLiDeErTask
 	})
 end
 
-function var_0_0.forceEndBlock(arg_15_0)
+function MoLiDeErLevelView:forceEndBlock()
 	logError("莫莉德尔角色活动 关卡解锁表现超时")
-	arg_15_0:_lockScreen(false)
+	self:_lockScreen(false)
 end
 
-function var_0_0.onLevelOpenAnimTimeEnd(arg_16_0)
-	TaskDispatcher.cancelTask(arg_16_0.onLevelOpenAnimTimeEnd, arg_16_0)
+function MoLiDeErLevelView:onLevelOpenAnimTimeEnd()
+	TaskDispatcher.cancelTask(self.onLevelOpenAnimTimeEnd, self)
 
-	local var_16_0 = arg_16_0._finishEpisodeId
-	local var_16_1
+	local finishEpisodeId = self._finishEpisodeId
+	local finishItem
 
-	for iter_16_0, iter_16_1 in ipairs(arg_16_0._levelItemList) do
-		if iter_16_1.episodeId == var_16_0 then
-			var_16_1 = iter_16_1
+	for _, item in ipairs(self._levelItemList) do
+		if item.episodeId == finishEpisodeId then
+			finishItem = item
 
 			break
 		end
 	end
 
-	if var_16_1 == nil then
-		logError("莫莉德尔 角色活动 不存在对应关卡id的level item id:" .. tostring(var_16_0))
+	if finishItem == nil then
+		logError("莫莉德尔 角色活动 不存在对应关卡id的level item id:" .. tostring(finishEpisodeId))
 
 		return
 	end
 
-	if not MoLiDeErModel.instance:isEpisodeFinish(arg_16_0._actId, var_16_0, true) or arg_16_0._isSkipGame == true then
+	if not MoLiDeErModel.instance:isEpisodeFinish(self._actId, finishEpisodeId, true) or self._isSkipGame == true then
 		logNormal("莫莉德尔 角色活动 非首次通关")
 
-		if not arg_16_0._isSkipGame then
-			var_16_1:setStarState(true)
+		if not self._isSkipGame then
+			finishItem:setStarState(true)
 		end
 
-		arg_16_0:onLevelUnlockAnimTimeEnd()
+		self:onLevelUnlockAnimTimeEnd()
 
-		arg_16_0._isSkipGame = false
+		self._isSkipGame = false
 
 		return
 	end
 
-	var_16_1:refreshUI(true)
+	finishItem:refreshUI(true)
 	AudioMgr.instance:trigger(AudioEnum2_8.MoLiDeEr.play_ui_yuzhou_level_lit)
 
-	local var_16_2 = var_16_1.index
+	local index = finishItem.index
 
-	arg_16_0:setPathItemState(var_16_2, true, true)
+	self:setPathItemState(index, true, true)
 
-	if var_16_2 < #arg_16_0._levelItemList then
-		TaskDispatcher.runDelay(arg_16_0.onLevelFinishAnimTimeEnd, arg_16_0, MoLiDeErEnum.LevelAnimTime.LevelItemFinish)
+	if index < #self._levelItemList then
+		TaskDispatcher.runDelay(self.onLevelFinishAnimTimeEnd, self, MoLiDeErEnum.LevelAnimTime.LevelItemFinish)
 	else
-		arg_16_0:_focusStoryItem(var_16_1.episodeId)
-		TaskDispatcher.runDelay(arg_16_0.onLevelUnlockAnimTimeEnd, arg_16_0, MoLiDeErEnum.LevelAnimTime.LevelItemFinish)
+		self:_focusStoryItem(finishItem.episodeId)
+		TaskDispatcher.runDelay(self.onLevelUnlockAnimTimeEnd, self, MoLiDeErEnum.LevelAnimTime.LevelItemFinish)
 	end
 end
 
-function var_0_0.onLevelFinishAnimTimeEnd(arg_17_0)
-	TaskDispatcher.cancelTask(arg_17_0.onLevelFinishAnimTimeEnd, arg_17_0)
+function MoLiDeErLevelView:onLevelFinishAnimTimeEnd()
+	TaskDispatcher.cancelTask(self.onLevelFinishAnimTimeEnd, self)
 
-	local var_17_0 = arg_17_0._finishEpisodeId
-	local var_17_1
+	local finishEpisodeId = self._finishEpisodeId
+	local finishItem
 
-	for iter_17_0, iter_17_1 in ipairs(arg_17_0._levelItemList) do
-		if iter_17_1.preEpisodeId == var_17_0 then
-			var_17_1 = iter_17_1
+	for _, item in ipairs(self._levelItemList) do
+		if item.preEpisodeId == finishEpisodeId then
+			finishItem = item
 
 			break
 		end
 	end
 
-	if var_17_1 == nil then
-		logError("莫莉德尔 角色活动 不存在对应关卡id的level item id:" .. tostring(var_17_0))
+	if finishItem == nil then
+		logError("莫莉德尔 角色活动 不存在对应关卡id的level item id:" .. tostring(finishEpisodeId))
 
 		return
 	end
 
-	var_17_1:setActive(true)
-	var_17_1:refreshUI(true)
+	finishItem:setActive(true)
+	finishItem:refreshUI(true)
 	AudioMgr.instance:trigger(AudioEnum2_8.MoLiDeEr.play_ui_fuleyuan_newlevels_unlock)
-	arg_17_0:_focusStoryItem(var_17_1.episodeId)
-	TaskDispatcher.runDelay(arg_17_0.onLevelUnlockAnimTimeEnd, arg_17_0, MoLiDeErEnum.LevelAnimTime.LevelItemUnlock)
+	self:_focusStoryItem(finishItem.episodeId)
+	TaskDispatcher.runDelay(self.onLevelUnlockAnimTimeEnd, self, MoLiDeErEnum.LevelAnimTime.LevelItemUnlock)
 end
 
-function var_0_0.onLevelUnlockAnimTimeEnd(arg_18_0)
-	TaskDispatcher.cancelTask(arg_18_0.onLevelUnlockAnimTimeEnd, arg_18_0)
-	TaskDispatcher.cancelTask(arg_18_0.forceEndBlock, arg_18_0)
+function MoLiDeErLevelView:onLevelUnlockAnimTimeEnd()
+	TaskDispatcher.cancelTask(self.onLevelUnlockAnimTimeEnd, self)
+	TaskDispatcher.cancelTask(self.forceEndBlock, self)
 
-	arg_18_0._finishEpisodeId = nil
+	self._finishEpisodeId = nil
 
-	arg_18_0:_lockScreen(false)
+	self:_lockScreen(false)
 end
 
-function var_0_0._playFirstUnlock(arg_19_0)
-	TaskDispatcher.cancelTask(arg_19_0._playFirstUnlock, arg_19_0)
-	arg_19_0:_lockScreen(false)
+function MoLiDeErLevelView:_playFirstUnlock()
+	TaskDispatcher.cancelTask(self._playFirstUnlock, self)
+	self:_lockScreen(false)
 end
 
-function var_0_0.updateTime(arg_20_0)
-	local var_20_0 = arg_20_0._actId
-	local var_20_1 = ActivityModel.instance:getActivityInfo()[var_20_0]
+function MoLiDeErLevelView:updateTime()
+	local activityId = self._actId
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[activityId]
 
-	if var_20_1 then
-		local var_20_2 = var_20_1:getRealEndTimeStamp() - ServerTime.now()
+	if actInfoMo then
+		local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
 
-		if var_20_2 > 0 then
-			if arg_20_0._txtLimitTime ~= nil then
-				local var_20_3 = TimeUtil.SecondToActivityTimeFormat(var_20_2)
+		if offsetSecond > 0 then
+			if self._txtLimitTime ~= nil then
+				local dateStr = TimeUtil.SecondToActivityTimeFormat(offsetSecond)
 
-				arg_20_0._txtLimitTime.text = var_20_3
+				self._txtLimitTime.text = dateStr
 			end
 
 			return
 		end
 	end
 
-	TaskDispatcher.cancelTask(arg_20_0.updateTime, arg_20_0)
+	TaskDispatcher.cancelTask(self.updateTime, self)
 end
 
-function var_0_0._refreshRedDot(arg_21_0, arg_21_1)
-	arg_21_1:defaultRefreshDot()
+function MoLiDeErLevelView:_refreshRedDot(reddot)
+	reddot:defaultRefreshDot()
 
-	local var_21_0 = arg_21_1.show
+	local showRedDot = reddot.show
 
-	arg_21_0._taskAnimator:Play(var_21_0 and "loop" or "idle")
+	self._taskAnimator:Play(showRedDot and "loop" or "idle")
 end
 
-function var_0_0._lockScreen(arg_22_0, arg_22_1)
-	if arg_22_1 then
+function MoLiDeErLevelView:_lockScreen(lock)
+	if lock then
 		UIBlockMgrExtend.setNeedCircleMv(false)
 		UIBlockMgr.instance:startBlock("MoLiDeErLevelView")
 	else
@@ -326,14 +330,15 @@ function var_0_0._lockScreen(arg_22_0, arg_22_1)
 	end
 end
 
-function var_0_0._checkFirstEnter(arg_23_0)
-	local var_23_0 = arg_23_0._levelItemList[2]
+function MoLiDeErLevelView:_checkFirstEnter()
+	local item = self._levelItemList[2]
 
-	if var_23_0 and not MoLiDeErModel.instance:isEpisodeFinish(arg_23_0._actId, var_23_0.preEpisodeId) then
-		local var_23_1 = string.format("ActMoLiDeErFirstEnter_%s", PlayerModel.instance:getMyUserId())
+	if item and not MoLiDeErModel.instance:isEpisodeFinish(self._actId, item.preEpisodeId) then
+		local key = string.format("ActMoLiDeErFirstEnter_%s", PlayerModel.instance:getMyUserId())
+		local record = PlayerPrefsHelper.getNumber(key, 0)
 
-		if PlayerPrefsHelper.getNumber(var_23_1, 0) == 0 then
-			PlayerPrefsHelper.setNumber(var_23_1, 1)
+		if record == 0 then
+			PlayerPrefsHelper.setNumber(key, 1)
 
 			return true
 		end
@@ -342,12 +347,12 @@ function var_0_0._checkFirstEnter(arg_23_0)
 	return false
 end
 
-function var_0_0.onClose(arg_24_0)
-	TaskDispatcher.cancelTask(arg_24_0.updateTime, arg_24_0)
+function MoLiDeErLevelView:onClose()
+	TaskDispatcher.cancelTask(self.updateTime, self)
 end
 
-function var_0_0.onDestroyView(arg_25_0)
-	TaskDispatcher.cancelTask(arg_25_0.updateTime, arg_25_0)
+function MoLiDeErLevelView:onDestroyView()
+	TaskDispatcher.cancelTask(self.updateTime, self)
 end
 
-return var_0_0
+return MoLiDeErLevelView

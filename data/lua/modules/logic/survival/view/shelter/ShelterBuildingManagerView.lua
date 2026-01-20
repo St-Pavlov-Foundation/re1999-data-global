@@ -1,273 +1,275 @@
-﻿module("modules.logic.survival.view.shelter.ShelterBuildingManagerView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/ShelterBuildingManagerView.lua
 
-local var_0_0 = class("ShelterBuildingManagerView", BaseView)
+module("modules.logic.survival.view.shelter.ShelterBuildingManagerView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.goBase = gohelper.findChild(arg_1_0.viewGO, "Panel/Left/#scroll_List/Viewport/Content/#go_Base")
-	arg_1_0.goTent = gohelper.findChild(arg_1_0.viewGO, "Panel/Left/#scroll_List/Viewport/Content/#go_Tent")
-	arg_1_0.goTentGrid = gohelper.findChild(arg_1_0.goTent, "#go_GridExpand")
-	arg_1_0.goBaseItem = gohelper.findChild(arg_1_0.viewGO, "Panel/Left/#scroll_List/Viewport/Content/#go_Base/#go_BaseItem")
-	arg_1_0.goBaseSmallItem = gohelper.findChild(arg_1_0.viewGO, "Panel/Left/#scroll_List/Viewport/Content/#go_baseSmallItem")
-	arg_1_0.goSmallItem = gohelper.findChild(arg_1_0.viewGO, "Panel/Left/#scroll_List/Viewport/Content/#go_SmallItem")
+local ShelterBuildingManagerView = class("ShelterBuildingManagerView", BaseView)
 
-	gohelper.setActive(arg_1_0.goBaseItem, false)
-	gohelper.setActive(arg_1_0.goBaseSmallItem, false)
-	gohelper.setActive(arg_1_0.goSmallItem, false)
+function ShelterBuildingManagerView:onInitView()
+	self.goBase = gohelper.findChild(self.viewGO, "Panel/Left/#scroll_List/Viewport/Content/#go_Base")
+	self.goTent = gohelper.findChild(self.viewGO, "Panel/Left/#scroll_List/Viewport/Content/#go_Tent")
+	self.goTentGrid = gohelper.findChild(self.goTent, "#go_GridExpand")
+	self.goBaseItem = gohelper.findChild(self.viewGO, "Panel/Left/#scroll_List/Viewport/Content/#go_Base/#go_BaseItem")
+	self.goBaseSmallItem = gohelper.findChild(self.viewGO, "Panel/Left/#scroll_List/Viewport/Content/#go_baseSmallItem")
+	self.goSmallItem = gohelper.findChild(self.viewGO, "Panel/Left/#scroll_List/Viewport/Content/#go_SmallItem")
 
-	arg_1_0.baseItemList = {}
-	arg_1_0.smallItemList = {}
+	gohelper.setActive(self.goBaseItem, false)
+	gohelper.setActive(self.goBaseSmallItem, false)
+	gohelper.setActive(self.goSmallItem, false)
+
+	self.baseItemList = {}
+	self.smallItemList = {}
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(SurvivalController.instance, SurvivalEvent.OnBuildingInfoUpdate, arg_2_0.onBuildingInfoUpdate, arg_2_0)
+function ShelterBuildingManagerView:addEvents()
+	self:addEventCb(SurvivalController.instance, SurvivalEvent.OnBuildingInfoUpdate, self.onBuildingInfoUpdate, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(SurvivalController.instance, SurvivalEvent.OnBuildingInfoUpdate, arg_3_0.onBuildingInfoUpdate, arg_3_0)
+function ShelterBuildingManagerView:removeEvents()
+	self:removeEventCb(SurvivalController.instance, SurvivalEvent.OnBuildingInfoUpdate, self.onBuildingInfoUpdate, self)
 end
 
-function var_0_0.onBuildingInfoUpdate(arg_4_0)
-	arg_4_0:refreshView()
+function ShelterBuildingManagerView:onBuildingInfoUpdate()
+	self:refreshView()
 end
 
-function var_0_0.onClickBaseSmallItem(arg_5_0, arg_5_1)
-	if not arg_5_1.data then
+function ShelterBuildingManagerView:onClickBaseSmallItem(item)
+	if not item.data then
 		return
 	end
 
-	local var_5_0 = arg_5_1.data.id
+	local buildingId = item.data.id
 
-	if SurvivalShelterBuildingListModel.instance:setSelectBuilding(var_5_0) then
-		arg_5_0:refreshView()
+	if SurvivalShelterBuildingListModel.instance:setSelectBuilding(buildingId) then
+		self:refreshView()
 	end
 end
 
-function var_0_0.onClickSmallItem(arg_6_0, arg_6_1)
-	if not arg_6_1.data then
+function ShelterBuildingManagerView:onClickSmallItem(item)
+	if not item.data then
 		return
 	end
 
-	local var_6_0 = arg_6_1.data.id
+	local buildingId = item.data.id
 
-	if SurvivalShelterBuildingListModel.instance:setSelectBuilding(var_6_0) then
-		arg_6_0:refreshView()
+	if SurvivalShelterBuildingListModel.instance:setSelectBuilding(buildingId) then
+		self:refreshView()
 	end
 end
 
-function var_0_0.onOpen(arg_7_0)
+function ShelterBuildingManagerView:onOpen()
 	SurvivalShelterBuildingListModel.instance:initViewParam()
-	arg_7_0:refreshView()
+	self:refreshView()
 end
 
-function var_0_0.refreshView(arg_8_0)
-	arg_8_0:refreshList()
-	arg_8_0:refreshInfoView()
+function ShelterBuildingManagerView:refreshView()
+	self:refreshList()
+	self:refreshInfoView()
 end
 
-function var_0_0.refreshList(arg_9_0)
-	local var_9_0, var_9_1 = SurvivalShelterBuildingListModel.instance:getShowList()
+function ShelterBuildingManagerView:refreshList()
+	local baseList, tentList = SurvivalShelterBuildingListModel.instance:getShowList()
 
-	for iter_9_0 = 1, math.max(#var_9_0, #arg_9_0.baseItemList) do
-		local var_9_2 = arg_9_0:getBaseItem(iter_9_0)
+	for i = 1, math.max(#baseList, #self.baseItemList) do
+		local item = self:getBaseItem(i)
 
-		arg_9_0:refreshBaseItem(var_9_2, var_9_0[iter_9_0])
+		self:refreshBaseItem(item, baseList[i])
 	end
 
-	local var_9_3 = #var_9_1
+	local tentCount = #tentList
 
-	for iter_9_1 = 1, math.max(var_9_3, #arg_9_0.smallItemList) do
-		local var_9_4 = arg_9_0:getSmallItem(iter_9_1, arg_9_0.goTentGrid)
+	for i = 1, math.max(tentCount, #self.smallItemList) do
+		local item = self:getSmallItem(i, self.goTentGrid)
 
-		arg_9_0:refreshSmallItem(var_9_4, var_9_1[iter_9_1])
+		self:refreshSmallItem(item, tentList[i])
 	end
 end
 
-function var_0_0.getBaseItem(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0.baseItemList[arg_10_1]
+function ShelterBuildingManagerView:getBaseItem(index)
+	local item = self.baseItemList[index]
 
-	if not var_10_0 then
-		var_10_0 = arg_10_0:getUserDataTb_()
-		var_10_0.index = arg_10_1
-		var_10_0.go = gohelper.cloneInPlace(arg_10_0.goBaseItem, tostring(arg_10_1))
-		var_10_0.goGrid = gohelper.findChild(var_10_0.go, "Grid")
-		var_10_0.itemList = {}
-		arg_10_0.baseItemList[arg_10_1] = var_10_0
+	if not item then
+		item = self:getUserDataTb_()
+		item.index = index
+		item.go = gohelper.cloneInPlace(self.goBaseItem, tostring(index))
+		item.goGrid = gohelper.findChild(item.go, "Grid")
+		item.itemList = {}
+		self.baseItemList[index] = item
 	end
 
-	return var_10_0
+	return item
 end
 
-function var_0_0.refreshBaseItem(arg_11_0, arg_11_1, arg_11_2)
-	arg_11_1.data = arg_11_2
+function ShelterBuildingManagerView:refreshBaseItem(item, data)
+	item.data = data
 
-	if not arg_11_2 then
-		gohelper.setActive(arg_11_1.go, false)
+	if not data then
+		gohelper.setActive(item.go, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_11_1.go, true)
+	gohelper.setActive(item.go, true)
 
-	for iter_11_0 = 1, math.max(#arg_11_2, #arg_11_1.itemList) do
-		local var_11_0 = arg_11_0:getBaseSmallItem(arg_11_1, iter_11_0)
+	for i = 1, math.max(#data, #item.itemList) do
+		local smallItem = self:getBaseSmallItem(item, i)
 
-		arg_11_0:refreshSmallItem(var_11_0, arg_11_2[iter_11_0])
+		self:refreshSmallItem(smallItem, data[i])
 	end
 end
 
-function var_0_0.getBaseSmallItem(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = arg_12_1.itemList[arg_12_2]
+function ShelterBuildingManagerView:getBaseSmallItem(baseItem, index)
+	local item = baseItem.itemList[index]
 
-	if not var_12_0 then
-		var_12_0 = arg_12_0:getUserDataTb_()
-		var_12_0.index = arg_12_2
-		var_12_0.go = gohelper.clone(arg_12_0.goBaseSmallItem, arg_12_1.goGrid, tostring(arg_12_2))
-		var_12_0.txtName = gohelper.findChildTextMesh(var_12_0.go, "#txt_BuildingName")
-		var_12_0.txtLev = gohelper.findChildTextMesh(var_12_0.go, "#txt_BuildingLv")
-		var_12_0.goSelect = gohelper.findChild(var_12_0.go, "#go_Selected")
-		var_12_0.simageBuild = gohelper.findChildSingleImage(var_12_0.go, "#image_Building")
-		var_12_0.imageBuild = gohelper.findChildImage(var_12_0.go, "#image_Building")
-		var_12_0.goImageBuild = gohelper.findChild(var_12_0.go, "#image_Building")
-		var_12_0.goLevUp = gohelper.findChild(var_12_0.go, "#go_LvUp")
-		var_12_0.goDestroyed = gohelper.findChild(var_12_0.go, "#go_Destroyed")
-		var_12_0.goAdd = gohelper.findChild(var_12_0.go, "#go_Add")
-		var_12_0.goLock = gohelper.findChild(var_12_0.go, "#go_Locked")
-		var_12_0.btn = gohelper.findButtonWithAudio(var_12_0.go)
+	if not item then
+		item = self:getUserDataTb_()
+		item.index = index
+		item.go = gohelper.clone(self.goBaseSmallItem, baseItem.goGrid, tostring(index))
+		item.txtName = gohelper.findChildTextMesh(item.go, "#txt_BuildingName")
+		item.txtLev = gohelper.findChildTextMesh(item.go, "#txt_BuildingLv")
+		item.goSelect = gohelper.findChild(item.go, "#go_Selected")
+		item.simageBuild = gohelper.findChildSingleImage(item.go, "#image_Building")
+		item.imageBuild = gohelper.findChildImage(item.go, "#image_Building")
+		item.goImageBuild = gohelper.findChild(item.go, "#image_Building")
+		item.goLevUp = gohelper.findChild(item.go, "#go_LvUp")
+		item.goDestroyed = gohelper.findChild(item.go, "#go_Destroyed")
+		item.goAdd = gohelper.findChild(item.go, "#go_Add")
+		item.goLock = gohelper.findChild(item.go, "#go_Locked")
+		item.btn = gohelper.findButtonWithAudio(item.go)
 
-		var_12_0.btn:AddClickListener(arg_12_0.onClickBaseSmallItem, arg_12_0, var_12_0)
+		item.btn:AddClickListener(self.onClickBaseSmallItem, self, item)
 
-		var_12_0.goNew = gohelper.findChild(var_12_0.go, "#go_New")
-		arg_12_1.itemList[arg_12_2] = var_12_0
+		item.goNew = gohelper.findChild(item.go, "#go_New")
+		baseItem.itemList[index] = item
 	end
 
-	return var_12_0
+	return item
 end
 
-function var_0_0.refreshBaseSmallItem(arg_13_0, arg_13_1, arg_13_2)
-	arg_13_0:refreshBuildingItem(arg_13_1, arg_13_2)
+function ShelterBuildingManagerView:refreshBaseSmallItem(item, data)
+	self:refreshBuildingItem(item, data)
 end
 
-function var_0_0.getSmallItem(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = arg_14_0.smallItemList[arg_14_1]
+function ShelterBuildingManagerView:getSmallItem(index, parentGO)
+	local item = self.smallItemList[index]
 
-	if not var_14_0 then
-		var_14_0 = arg_14_0:getUserDataTb_()
-		var_14_0.index = arg_14_1
-		var_14_0.go = gohelper.clone(arg_14_0.goSmallItem, arg_14_2, tostring(arg_14_1))
-		var_14_0.txtName = gohelper.findChildTextMesh(var_14_0.go, "#txt_Name")
-		var_14_0.txtLev = gohelper.findChildTextMesh(var_14_0.go, "#txt_Lv")
-		var_14_0.goLevUp = gohelper.findChild(var_14_0.go, "#go_LvUp")
-		var_14_0.goDestroyed = gohelper.findChild(var_14_0.go, "#go_Destroyed")
-		var_14_0.goAdd = gohelper.findChild(var_14_0.go, "#go_Add")
-		var_14_0.goLock = gohelper.findChild(var_14_0.go, "#go_Locked")
-		var_14_0.goSelect = gohelper.findChild(var_14_0.go, "#go_Selected")
-		var_14_0.simageBuild = gohelper.findChildSingleImage(var_14_0.go, "#image_Building")
-		var_14_0.imageBuild = gohelper.findChildImage(var_14_0.go, "#image_Building")
-		var_14_0.goImageBuild = gohelper.findChild(var_14_0.go, "#image_Building")
-		var_14_0.btn = gohelper.findButtonWithAudio(var_14_0.go)
+	if not item then
+		item = self:getUserDataTb_()
+		item.index = index
+		item.go = gohelper.clone(self.goSmallItem, parentGO, tostring(index))
+		item.txtName = gohelper.findChildTextMesh(item.go, "#txt_Name")
+		item.txtLev = gohelper.findChildTextMesh(item.go, "#txt_Lv")
+		item.goLevUp = gohelper.findChild(item.go, "#go_LvUp")
+		item.goDestroyed = gohelper.findChild(item.go, "#go_Destroyed")
+		item.goAdd = gohelper.findChild(item.go, "#go_Add")
+		item.goLock = gohelper.findChild(item.go, "#go_Locked")
+		item.goSelect = gohelper.findChild(item.go, "#go_Selected")
+		item.simageBuild = gohelper.findChildSingleImage(item.go, "#image_Building")
+		item.imageBuild = gohelper.findChildImage(item.go, "#image_Building")
+		item.goImageBuild = gohelper.findChild(item.go, "#image_Building")
+		item.btn = gohelper.findButtonWithAudio(item.go)
 
-		var_14_0.btn:AddClickListener(arg_14_0.onClickSmallItem, arg_14_0, var_14_0)
+		item.btn:AddClickListener(self.onClickSmallItem, self, item)
 
-		var_14_0.goNew = gohelper.findChild(var_14_0.go, "#go_New")
-		arg_14_0.smallItemList[arg_14_1] = var_14_0
+		item.goNew = gohelper.findChild(item.go, "#go_New")
+		self.smallItemList[index] = item
 	else
-		gohelper.addChild(arg_14_2, var_14_0.go)
-		gohelper.setAsLastSibling(var_14_0.go)
+		gohelper.addChild(parentGO, item.go)
+		gohelper.setAsLastSibling(item.go)
 	end
 
-	return var_14_0
+	return item
 end
 
-function var_0_0.onLoadedImage(arg_15_0)
-	arg_15_0.imageBuild:SetNativeSize()
+function ShelterBuildingManagerView.onLoadedImage(item)
+	item.imageBuild:SetNativeSize()
 end
 
-function var_0_0.refreshSmallItem(arg_16_0, arg_16_1, arg_16_2)
-	arg_16_0:refreshBuildingItem(arg_16_1, arg_16_2)
+function ShelterBuildingManagerView:refreshSmallItem(item, data)
+	self:refreshBuildingItem(item, data)
 end
 
-function var_0_0.refreshBuildingItem(arg_17_0, arg_17_1, arg_17_2)
-	arg_17_1.data = arg_17_2
+function ShelterBuildingManagerView:refreshBuildingItem(item, data)
+	item.data = data
 
-	if not arg_17_2 then
-		gohelper.setActive(arg_17_1.go, false)
+	if not data then
+		gohelper.setActive(item.go, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_17_1.go, true)
+	gohelper.setActive(item.go, true)
 
-	local var_17_0 = SurvivalShelterModel.instance:getWeekInfo()
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
 
-	arg_17_1.txtName.text = arg_17_2.baseCo.name
+	item.txtName.text = data.baseCo.name
 
-	gohelper.setActive(arg_17_1.goSelect, SurvivalShelterBuildingListModel.instance:isSelectBuilding(arg_17_2.id))
+	gohelper.setActive(item.goSelect, SurvivalShelterBuildingListModel.instance:isSelectBuilding(data.id))
 
-	local var_17_1 = var_17_0:isBuildingUnlock(arg_17_2.buildingId, arg_17_2.level + 1)
-	local var_17_2 = arg_17_2.level == 0
-	local var_17_3 = false
-	local var_17_4 = var_17_0:isBuildingCanLevup(arg_17_2, arg_17_2.level + 1, false)
+	local isUnLock = weekInfo:isBuildingUnlock(data.buildingId, data.level + 1)
+	local isUnBuild = data.level == 0
+	local isGray = false
+	local canLevUp = weekInfo:isBuildingCanLevup(data, data.level + 1, false)
 
-	if var_17_2 then
-		gohelper.setActive(arg_17_1.goLevUp, false)
-		gohelper.setActive(arg_17_1.goDestroyed, false)
+	if isUnBuild then
+		gohelper.setActive(item.goLevUp, false)
+		gohelper.setActive(item.goDestroyed, false)
 
-		if var_17_1 then
-			gohelper.setActive(arg_17_1.goAdd, true)
-			gohelper.setActive(arg_17_1.goLock, false)
+		if isUnLock then
+			gohelper.setActive(item.goAdd, true)
+			gohelper.setActive(item.goLock, false)
 
-			arg_17_1.txtLev.text = luaLang("survivalbuildingmanageview_unbuild_txt")
+			item.txtLev.text = luaLang("survivalbuildingmanageview_unbuild_txt")
 		else
-			gohelper.setActive(arg_17_1.goAdd, false)
-			gohelper.setActive(arg_17_1.goLock, true)
+			gohelper.setActive(item.goAdd, false)
+			gohelper.setActive(item.goLock, true)
 
-			arg_17_1.txtLev.text = luaLang("survivalbuildingmanageview_buildinglock_txt")
+			item.txtLev.text = luaLang("survivalbuildingmanageview_buildinglock_txt")
 		end
 
-		var_17_3 = true
+		isGray = true
 	else
-		gohelper.setActive(arg_17_1.goLevUp, var_17_4)
-		gohelper.setActive(arg_17_1.goDestroyed, arg_17_2.status == SurvivalEnum.BuildingStatus.Destroy)
-		gohelper.setActive(arg_17_1.goAdd, false)
-		gohelper.setActive(arg_17_1.goLock, false)
+		gohelper.setActive(item.goLevUp, canLevUp)
+		gohelper.setActive(item.goDestroyed, data.status == SurvivalEnum.BuildingStatus.Destroy)
+		gohelper.setActive(item.goAdd, false)
+		gohelper.setActive(item.goLock, false)
 
-		arg_17_1.txtLev.text = string.format("Lv.%s", arg_17_2.level)
-		var_17_3 = arg_17_2.status == SurvivalEnum.BuildingStatus.Destroy
+		item.txtLev.text = string.format("Lv.%s", data.level)
+		isGray = data.status == SurvivalEnum.BuildingStatus.Destroy
 	end
 
-	arg_17_1.simageBuild:LoadImage(arg_17_2.baseCo.icon, var_0_0.onLoadedImage, arg_17_1)
-	ZProj.UGUIHelper.SetGrayscale(arg_17_1.goImageBuild, var_17_3)
-	gohelper.setActive(arg_17_1.goNew, var_17_2 and var_17_4)
+	item.simageBuild:LoadImage(data.baseCo.icon, ShelterBuildingManagerView.onLoadedImage, item)
+	ZProj.UGUIHelper.SetGrayscale(item.goImageBuild, isGray)
+	gohelper.setActive(item.goNew, isUnBuild and canLevUp)
 end
 
-function var_0_0.refreshInfoView(arg_18_0)
-	if not arg_18_0.infoView then
-		local var_18_0 = arg_18_0.viewContainer:getRes(arg_18_0.viewContainer:getSetting().otherRes.infoView)
-		local var_18_1 = gohelper.findChild(arg_18_0.viewGO, "Panel/Right/go_manageinfo")
+function ShelterBuildingManagerView:refreshInfoView()
+	if not self.infoView then
+		local prefabRes = self.viewContainer:getRes(self.viewContainer:getSetting().otherRes.infoView)
+		local parentGO = gohelper.findChild(self.viewGO, "Panel/Right/go_manageinfo")
 
-		arg_18_0.infoView = ShelterManagerInfoView.getView(var_18_0, var_18_1, "infoView")
+		self.infoView = ShelterManagerInfoView.getView(prefabRes, parentGO, "infoView")
 	end
 
-	local var_18_2 = {
-		showType = SurvivalEnum.InfoShowType.Building,
-		showId = SurvivalShelterBuildingListModel.instance:getSelectBuilding()
-	}
+	local param = {}
 
-	arg_18_0.infoView:refreshParam(var_18_2)
+	param.showType = SurvivalEnum.InfoShowType.Building
+	param.showId = SurvivalShelterBuildingListModel.instance:getSelectBuilding()
+
+	self.infoView:refreshParam(param)
 end
 
-function var_0_0.onClose(arg_19_0)
-	for iter_19_0, iter_19_1 in pairs(arg_19_0.baseItemList) do
-		for iter_19_2, iter_19_3 in pairs(iter_19_1.itemList) do
-			iter_19_3.btn:RemoveClickListener()
-			iter_19_3.simageBuild:UnLoadImage()
+function ShelterBuildingManagerView:onClose()
+	for _, v in pairs(self.baseItemList) do
+		for _, vv in pairs(v.itemList) do
+			vv.btn:RemoveClickListener()
+			vv.simageBuild:UnLoadImage()
 		end
 	end
 
-	for iter_19_4, iter_19_5 in pairs(arg_19_0.smallItemList) do
-		iter_19_5.btn:RemoveClickListener()
-		iter_19_5.simageBuild:UnLoadImage()
+	for _, v in pairs(self.smallItemList) do
+		v.btn:RemoveClickListener()
+		v.simageBuild:UnLoadImage()
 	end
 end
 
-return var_0_0
+return ShelterBuildingManagerView

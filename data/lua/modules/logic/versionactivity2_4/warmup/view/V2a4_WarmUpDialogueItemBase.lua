@@ -1,270 +1,280 @@
-﻿module("modules.logic.versionactivity2_4.warmup.view.V2a4_WarmUpDialogueItemBase", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/warmup/view/V2a4_WarmUpDialogueItemBase.lua
 
-local var_0_0 = class("V2a4_WarmUpDialogueItemBase", RougeSimpleItemBase)
-local var_0_1 = typeof(ZProj.TMPMark)
+module("modules.logic.versionactivity2_4.warmup.view.V2a4_WarmUpDialogueItemBase", package.seeall)
 
-function var_0_0.ctor(arg_1_0, ...)
-	arg_1_0:__onInit()
-	var_0_0.super.ctor(arg_1_0, ...)
+local V2a4_WarmUpDialogueItemBase = class("V2a4_WarmUpDialogueItemBase", RougeSimpleItemBase)
+local kType_TMPMark = typeof(ZProj.TMPMark)
 
-	arg_1_0.__txtCmpList = arg_1_0:getUserDataTb_()
-	arg_1_0.__txtmarktopList = arg_1_0:getUserDataTb_()
-	arg_1_0.__txtmarktopGoList = arg_1_0:getUserDataTb_()
-	arg_1_0.__txtConMarkList = arg_1_0:getUserDataTb_()
-	arg_1_0.__txtmarktopIndex = 0
-	arg_1_0.__fTimerList = {}
-	arg_1_0.__lineSpacing = {}
-	arg_1_0.__originalLineSpacing = {}
-	arg_1_0.__markTopListList = {}
-	arg_1_0._isFlushed = false
-	arg_1_0._isReadyStepEnd = false
-	arg_1_0._isGrayscaled = false
+function V2a4_WarmUpDialogueItemBase:ctor(...)
+	self:__onInit()
+	V2a4_WarmUpDialogueItemBase.super.ctor(self, ...)
+
+	self.__txtCmpList = self:getUserDataTb_()
+	self.__txtmarktopList = self:getUserDataTb_()
+	self.__txtmarktopGoList = self:getUserDataTb_()
+	self.__txtConMarkList = self:getUserDataTb_()
+	self.__txtmarktopIndex = 0
+	self.__fTimerList = {}
+	self.__lineSpacing = {}
+	self.__originalLineSpacing = {}
+	self.__markTopListList = {}
+	self._isFlushed = false
+	self._isReadyStepEnd = false
+	self._isGrayscaled = false
 end
 
-function var_0_0.setTopOffset(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	local var_2_0 = arg_2_0.__txtConMarkList[arg_2_1]
+function V2a4_WarmUpDialogueItemBase:setTopOffset(index, offsetX, offsetY)
+	local txtConMark = self.__txtConMarkList[index]
 
-	if not var_2_0 then
+	if not txtConMark then
 		return
 	end
 
-	var_2_0:SetTopOffset(arg_2_2 or 0, arg_2_3 or 0)
+	txtConMark:SetTopOffset(offsetX or 0, offsetY or 0)
 end
 
-function var_0_0.createMarktopCmp(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_0.__txtmarktopIndex + 1
+function V2a4_WarmUpDialogueItemBase:createMarktopCmp(textCmp)
+	local index = self.__txtmarktopIndex + 1
 
-	arg_3_0.__txtmarktopIndex = var_3_0
+	self.__txtmarktopIndex = index
 
-	local var_3_1 = arg_3_1.gameObject
-	local var_3_2 = IconMgr.instance:getCommonTextMarkTop(var_3_1)
-	local var_3_3 = var_3_2:GetComponent(gohelper.Type_TextMesh)
-	local var_3_4 = gohelper.onceAddComponent(var_3_1, var_0_1)
+	local textGo = textCmp.gameObject
+	local txtmarktopGo = IconMgr.instance:getCommonTextMarkTop(textGo)
+	local txtmarktop = txtmarktopGo:GetComponent(gohelper.Type_TextMesh)
+	local txtConMark = gohelper.onceAddComponent(textGo, kType_TMPMark)
 
-	arg_3_0.__txtCmpList[var_3_0] = arg_3_1
-	arg_3_0.__txtmarktopGoList[var_3_0] = var_3_2
-	arg_3_0.__txtmarktopList[var_3_0] = var_3_3
-	arg_3_0.__txtConMarkList[var_3_0] = var_3_4
-	arg_3_0.__originalLineSpacing[var_3_0] = arg_3_1.lineSpacing
+	self.__txtCmpList[index] = textCmp
+	self.__txtmarktopGoList[index] = txtmarktopGo
+	self.__txtmarktopList[index] = txtmarktop
+	self.__txtConMarkList[index] = txtConMark
+	self.__originalLineSpacing[index] = textCmp.lineSpacing
 
-	var_3_4:SetMarkTopGo(var_3_2)
+	txtConMark:SetMarkTopGo(txtmarktopGo)
 
-	return var_3_0
+	return index
 end
 
-function var_0_0.setTextWithMarktopByIndex(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0.__markTopListList[arg_4_1] = StoryTool.getMarkTopTextList(arg_4_2)
+function V2a4_WarmUpDialogueItemBase:setTextWithMarktopByIndex(index, str)
+	self.__markTopListList[index] = StoryTool.getMarkTopTextList(str)
 
-	arg_4_0:_setText(arg_4_1, StoryTool.filterMarkTop(arg_4_2))
-	arg_4_0:_unregftimer(arg_4_1)
+	self:_setText(index, StoryTool.filterMarkTop(str))
+	self:_unregftimer(index)
 
-	local var_4_0 = FrameTimerController.instance:register(function()
-		local var_5_0 = arg_4_0.__txtmarktopList[arg_4_1]
-		local var_5_1 = arg_4_0.__txtmarktopGoList[arg_4_1]
-		local var_5_2 = arg_4_0.__txtConMarkList[arg_4_1]
-		local var_5_3 = arg_4_0.__markTopListList[arg_4_1]
+	local fTimer = FrameTimerController.instance:register(function()
+		local txtmarktop = self.__txtmarktopList[index]
+		local txtmarktopGo = self.__txtmarktopGoList[index]
+		local txtConMark = self.__txtConMarkList[index]
+		local markTopList = self.__markTopListList[index]
 
-		if var_5_3 and var_5_0 and var_5_2 and not gohelper.isNil(var_5_1) then
-			var_5_2:SetMarksTop(var_5_3)
+		if markTopList and txtmarktop and txtConMark and not gohelper.isNil(txtmarktopGo) then
+			txtConMark:SetMarksTop(markTopList)
 		end
 	end, nil, 1)
 
-	arg_4_0.__fTimerList[arg_4_1] = var_4_0
+	self.__fTimerList[index] = fTimer
 
-	var_4_0:Start()
+	fTimer:Start()
 end
 
-function var_0_0._setText(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = arg_6_0.__txtCmpList[arg_6_1]
+function V2a4_WarmUpDialogueItemBase:_setText(index, str)
+	local textCmp = self.__txtCmpList[index]
 
-	if not var_6_0 then
+	if not textCmp then
 		return
 	end
 
-	var_6_0.lineSpacing = arg_6_0:getLineSpacing(arg_6_1)
-	var_6_0.text = arg_6_2
+	textCmp.lineSpacing = self:getLineSpacing(index)
+	textCmp.text = str
 end
 
-function var_0_0.setLineSpacing(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_0.__lineSpacing[arg_7_1] = arg_7_2 or 0
+function V2a4_WarmUpDialogueItemBase:setLineSpacing(index, lineSpacing)
+	self.__lineSpacing[index] = lineSpacing or 0
 end
 
-function var_0_0.getLineSpacing(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0.__markTopListList[arg_8_1]
-	local var_8_1 = arg_8_0.__lineSpacing[arg_8_1]
-	local var_8_2 = arg_8_0.__originalLineSpacing[arg_8_1]
+function V2a4_WarmUpDialogueItemBase:getLineSpacing(index)
+	local markTopList = self.__markTopListList[index]
+	local lineSpacing = self.__lineSpacing[index]
+	local original = self.__originalLineSpacing[index]
 
-	return var_8_0 and #var_8_0 > 0 and var_8_1 or var_8_2 or 0
+	return markTopList and #markTopList > 0 and lineSpacing or original or 0
 end
 
-function var_0_0._unregftimer(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0.__fTimerList[arg_9_1]
+function V2a4_WarmUpDialogueItemBase:_unregftimer(index)
+	local fTimer = self.__fTimerList[index]
 
-	if not var_9_0 then
+	if not fTimer then
 		return
 	end
 
-	FrameTimerController.instance:unregister(var_9_0)
+	FrameTimerController.instance:unregister(fTimer)
 
-	arg_9_0.__fTimerList[arg_9_1] = nil
+	self.__fTimerList[index] = nil
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	for iter_10_0, iter_10_1 in pairs(arg_10_0.__fTimerList) do
-		arg_10_0:_unregftimer(iter_10_0)
+function V2a4_WarmUpDialogueItemBase:onDestroyView()
+	for index, _ in pairs(self.__fTimerList) do
+		self:_unregftimer(index)
 	end
 
-	FrameTimerController.onDestroyViewMember(arg_10_0, "__fTimerSetTxt")
-	var_0_0.super.onDestroyView(arg_10_0)
-	arg_10_0:__onDispose()
+	FrameTimerController.onDestroyViewMember(self, "__fTimerSetTxt")
+	V2a4_WarmUpDialogueItemBase.super.onDestroyView(self)
+	self:__onDispose()
 end
 
-function var_0_0.isFlushed(arg_11_0)
-	return arg_11_0._isFlushed
+function V2a4_WarmUpDialogueItemBase:isFlushed()
+	return self._isFlushed
 end
 
-function var_0_0.isReadyStepEnd(arg_12_0)
-	return arg_12_0._isReadyStepEnd
+function V2a4_WarmUpDialogueItemBase:isReadyStepEnd()
+	return self._isReadyStepEnd
 end
 
-function var_0_0.waveMO(arg_13_0)
-	return arg_13_0._mo.waveMO
+function V2a4_WarmUpDialogueItemBase:waveMO()
+	return self._mo.waveMO
 end
 
-function var_0_0.roundMO(arg_14_0)
-	return arg_14_0._mo.roundMO
+function V2a4_WarmUpDialogueItemBase:roundMO()
+	return self._mo.roundMO
 end
 
-function var_0_0.dialogCO(arg_15_0)
-	return arg_15_0._mo.dialogCO
+function V2a4_WarmUpDialogueItemBase:dialogCO()
+	return self._mo.dialogCO
 end
 
-function var_0_0.addContentItem(arg_16_0, arg_16_1)
-	arg_16_0:parent():onAddContentItem(arg_16_0, arg_16_1)
+function V2a4_WarmUpDialogueItemBase:addContentItem(curBgHeight)
+	local p = self:parent()
+
+	p:onAddContentItem(self, curBgHeight)
 end
 
-function var_0_0.uiInfo(arg_17_0)
-	return arg_17_0:parent():uiInfo()
+function V2a4_WarmUpDialogueItemBase:uiInfo()
+	local p = self:parent()
+
+	return p:uiInfo()
 end
 
-function var_0_0.stY(arg_18_0)
-	return arg_18_0:uiInfo().stY or 0
+function V2a4_WarmUpDialogueItemBase:stY()
+	return self:uiInfo().stY or 0
 end
 
-function var_0_0.getTemplateGo(arg_19_0)
+function V2a4_WarmUpDialogueItemBase:getTemplateGo()
 	assert(false, "please override this function")
 end
 
-function var_0_0.onRefreshLineInfo(arg_20_0)
-	arg_20_0:stepEnd()
+function V2a4_WarmUpDialogueItemBase:onRefreshLineInfo()
+	self:stepEnd()
 end
 
-function var_0_0.onFlush(arg_21_0)
-	if arg_21_0._isFlushed then
+function V2a4_WarmUpDialogueItemBase:onFlush()
+	if self._isFlushed then
 		return
 	end
 
-	arg_21_0._isFlushed = true
+	self._isFlushed = true
 
-	arg_21_0:setActive_Txt(true)
+	self:setActive_Txt(true)
 end
 
-function var_0_0.stepEnd(arg_22_0)
-	arg_22_0:parent():onStepEnd(arg_22_0:waveMO(), arg_22_0:roundMO())
+function V2a4_WarmUpDialogueItemBase:stepEnd()
+	local p = self:parent()
+
+	p:onStepEnd(self:waveMO(), self:roundMO())
 end
 
-function var_0_0.lineCount(arg_23_0)
-	return arg_23_0._txtcontent:GetTextInfo(arg_23_0._txtcontent.text).lineCount
+function V2a4_WarmUpDialogueItemBase:lineCount()
+	local t = self._txtcontent:GetTextInfo(self._txtcontent.text)
+
+	return t.lineCount
 end
 
-function var_0_0.preferredWidthTxt(arg_24_0)
-	return arg_24_0._txtcontent.preferredWidth
+function V2a4_WarmUpDialogueItemBase:preferredWidthTxt()
+	return self._txtcontent.preferredWidth
 end
 
-function var_0_0.preferredHeightTxt(arg_25_0)
-	return arg_25_0._txtcontent.preferredHeight
+function V2a4_WarmUpDialogueItemBase:preferredHeightTxt()
+	return self._txtcontent.preferredHeight
 end
 
-function var_0_0.setActive_Txt(arg_26_0, arg_26_1)
-	GameUtil.setActive01(arg_26_0._txtTrans, arg_26_1)
+function V2a4_WarmUpDialogueItemBase:setActive_Txt(isActive)
+	GameUtil.setActive01(self._txtTrans, isActive)
 end
 
-function var_0_0.setActive_loading(arg_27_0, arg_27_1)
-	gohelper.setActive(arg_27_0._goloading, arg_27_1)
+function V2a4_WarmUpDialogueItemBase:setActive_loading(isActive)
+	gohelper.setActive(self._goloading, isActive)
 end
 
-function var_0_0.setFontColor(arg_28_0, arg_28_1)
-	arg_28_0._txtcontent.color = GameUtil.parseColor(arg_28_1)
+function V2a4_WarmUpDialogueItemBase:setFontColor(hexColor)
+	self._txtcontent.color = GameUtil.parseColor(hexColor)
 end
 
-function var_0_0.grayscale(arg_29_0, arg_29_1, arg_29_2, arg_29_3, arg_29_4, arg_29_5)
-	if arg_29_0._isGrayscaled == arg_29_1 then
+function V2a4_WarmUpDialogueItemBase:grayscale(isGray, go1, go2, go3, go4)
+	if self._isGrayscaled == isGray then
 		return
 	end
 
-	arg_29_0._isGrayscaled = true
+	self._isGrayscaled = true
 
-	if arg_29_2 then
-		arg_29_0:setGrayscale(arg_29_2, arg_29_1)
+	if go1 then
+		self:setGrayscale(go1, isGray)
 	end
 
-	if arg_29_3 then
-		arg_29_0:setGrayscale(arg_29_3, arg_29_1)
+	if go2 then
+		self:setGrayscale(go2, isGray)
 	end
 
-	if arg_29_4 then
-		arg_29_0:setGrayscale(arg_29_4, arg_29_1)
+	if go3 then
+		self:setGrayscale(go3, isGray)
 	end
 
-	if arg_29_5 then
-		arg_29_0:setGrayscale(arg_29_5, arg_29_1)
+	if go4 then
+		self:setGrayscale(go4, isGray)
 	end
 end
 
-function var_0_0.refreshLineInfo(arg_30_0)
-	local var_30_0 = arg_30_0._txtcontent:GetTextInfo(arg_30_0._txtcontent.text)
-	local var_30_1 = var_30_0.lineCount
+function V2a4_WarmUpDialogueItemBase:refreshLineInfo()
+	local textInfo = self._txtcontent:GetTextInfo(self._txtcontent.text)
+	local lineCount = textInfo.lineCount
 
-	arg_30_0._lineCount = var_30_1
+	self._lineCount = lineCount
 
-	if var_30_1 > 0 then
-		local var_30_2 = var_30_0.lineInfo[0]
+	if lineCount > 0 then
+		local lineInfo = textInfo.lineInfo[0]
 
-		arg_30_0._lineHeight = var_30_2.lineHeight
-		arg_30_0._lineWidth = var_30_2.width
+		self._lineHeight = lineInfo.lineHeight
+		self._lineWidth = lineInfo.width
 	else
-		arg_30_0._lineHeight = recthelper.getHeight(arg_30_0._txtTrans)
-		arg_30_0._lineWidth = arg_30_0._txtcontent.preferredWidth
+		self._lineHeight = recthelper.getHeight(self._txtTrans)
+		self._lineWidth = self._txtcontent.preferredWidth
 	end
 
-	arg_30_0._isReadyStepEnd = true
+	self._isReadyStepEnd = true
 
-	arg_30_0:onRefreshLineInfo()
+	self:onRefreshLineInfo()
 end
 
-function var_0_0.setData(arg_31_0, arg_31_1)
-	var_0_0.super.setData(arg_31_0, arg_31_1)
-	recthelper.setAnchorY(arg_31_0:transform(), arg_31_0:stY())
+function V2a4_WarmUpDialogueItemBase:setData(mo)
+	V2a4_WarmUpDialogueItemBase.super.setData(self, mo)
+	recthelper.setAnchorY(self:transform(), self:stY())
 end
 
-function var_0_0.setText(arg_32_0, arg_32_1, arg_32_2)
-	arg_32_0._txtcontent.text = arg_32_1
-	arg_32_0._isFlushed = arg_32_2
+function V2a4_WarmUpDialogueItemBase:setText(str, isFlush)
+	self._txtcontent.text = str
+	self._isFlushed = isFlush
 
-	arg_32_0:setActive_Txt(false)
-	FrameTimerController.onDestroyViewMember(arg_32_0, "__fTimerSetTxt")
+	self:setActive_Txt(false)
+	FrameTimerController.onDestroyViewMember(self, "__fTimerSetTxt")
 
-	arg_32_0.__fTimerSetTxt = FrameTimerController.instance:register(function()
-		if not gohelper.isNil(arg_32_0._txtGo) then
-			arg_32_0:refreshLineInfo()
+	self.__fTimerSetTxt = FrameTimerController.instance:register(function()
+		if not gohelper.isNil(self._txtGo) then
+			self:refreshLineInfo()
 
-			if arg_32_0._isFlushed then
-				arg_32_0:setActive_Txt(true)
+			if self._isFlushed then
+				self:setActive_Txt(true)
 			end
 		end
 	end, nil, 1)
 
-	arg_32_0.__fTimerSetTxt:Start()
+	self.__fTimerSetTxt:Start()
 end
 
-return var_0_0
+return V2a4_WarmUpDialogueItemBase

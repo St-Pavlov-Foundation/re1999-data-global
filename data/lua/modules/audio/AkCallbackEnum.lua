@@ -1,8 +1,10 @@
-﻿module("modules.audio.AkCallbackEnum", package.seeall)
+﻿-- chunkname: @modules/audio/AkCallbackEnum.lua
 
-local var_0_0 = _M
+module("modules.audio.AkCallbackEnum", package.seeall)
 
-var_0_0.Type = {
+local AkCallbackEnum = _M
+
+AkCallbackEnum.Type = {
 	AK_EndOfEvent = 1,
 	AK_MusicPlaylistSelect = 64,
 	AK_MusicSyncBar = 512,
@@ -30,4 +32,4 @@ var_0_0.Type = {
 	AK_EndOfDynamicSequenceItem = 2
 }
 
-return var_0_0
+return AkCallbackEnum

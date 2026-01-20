@@ -1,32 +1,36 @@
-﻿module("modules.logic.bossrush.view.V1a4_BossRush_ScheduleViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/view/V1a4_BossRush_ScheduleViewContainer.lua
 
-local var_0_0 = class("V1a4_BossRush_ScheduleViewContainer", BaseViewContainer)
+module("modules.logic.bossrush.view.V1a4_BossRush_ScheduleViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = ListScrollParam.New()
+local V1a4_BossRush_ScheduleViewContainer = class("V1a4_BossRush_ScheduleViewContainer", BaseViewContainer)
 
-	var_1_0.cellClass = V1a4_BossRush_ScheduleItem
-	var_1_0.scrollGOPath = "Root/#scroll_Reward"
-	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_0.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_0.scrollDir = ScrollEnum.ScrollDirH
-	var_1_0.lineCount = 1
-	var_1_0.cellWidth = 200
-	var_1_0.cellHeight = 700
-	var_1_0.cellSpaceH = 150
-	var_1_0.cellSpaceV = 0
-	var_1_0.startSpace = 0
-	var_1_0.endSpace = 150
-	arg_1_0._listScrollParam = var_1_0
-	arg_1_0._scheduleView = V1a4_BossRush_ScheduleView.New()
+function V1a4_BossRush_ScheduleViewContainer:buildViews()
+	local scrollParam = ListScrollParam.New()
 
-	return {
-		arg_1_0._scheduleView
+	scrollParam.cellClass = V1a4_BossRush_ScheduleItem
+	scrollParam.scrollGOPath = "Root/#scroll_Reward"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.scrollDir = ScrollEnum.ScrollDirH
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 200
+	scrollParam.cellHeight = 700
+	scrollParam.cellSpaceH = 150
+	scrollParam.cellSpaceV = 0
+	scrollParam.startSpace = 0
+	scrollParam.endSpace = 150
+	self._listScrollParam = scrollParam
+	self._scheduleView = V1a4_BossRush_ScheduleView.New()
+
+	local views = {
+		self._scheduleView
 	}
+
+	return views
 end
 
-function var_0_0.getListScrollParam(arg_2_0)
-	return arg_2_0._listScrollParam
+function V1a4_BossRush_ScheduleViewContainer:getListScrollParam()
+	return self._listScrollParam
 end
 
-return var_0_0
+return V1a4_BossRush_ScheduleViewContainer

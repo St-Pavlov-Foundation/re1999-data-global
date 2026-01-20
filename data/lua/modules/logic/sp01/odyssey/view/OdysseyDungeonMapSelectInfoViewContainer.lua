@@ -1,13 +1,15 @@
-﻿module("modules.logic.sp01.odyssey.view.OdysseyDungeonMapSelectInfoViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/view/OdysseyDungeonMapSelectInfoViewContainer.lua
 
-local var_0_0 = class("OdysseyDungeonMapSelectInfoViewContainer", BaseViewContainer)
+module("modules.logic.sp01.odyssey.view.OdysseyDungeonMapSelectInfoViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local OdysseyDungeonMapSelectInfoViewContainer = class("OdysseyDungeonMapSelectInfoViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, OdysseyDungeonMapSelectInfoView.New())
+function OdysseyDungeonMapSelectInfoViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, OdysseyDungeonMapSelectInfoView.New())
+
+	return views
 end
 
-return var_0_0
+return OdysseyDungeonMapSelectInfoViewContainer

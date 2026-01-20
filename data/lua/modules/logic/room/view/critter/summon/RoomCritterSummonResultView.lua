@@ -1,159 +1,161 @@
-﻿module("modules.logic.room.view.critter.summon.RoomCritterSummonResultView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/critter/summon/RoomCritterSummonResultView.lua
 
-local var_0_0 = class("RoomCritterSummonResultView", BaseView)
+module("modules.logic.room.view.critter.summon.RoomCritterSummonResultView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._txtclose = gohelper.findChildText(arg_1_0.viewGO, "#btn_close/#txt_close")
-	arg_1_0._goposcontent = gohelper.findChild(arg_1_0.viewGO, "#go_pos_content")
-	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "#go_item")
-	arg_1_0._goegg = gohelper.findChild(arg_1_0.viewGO, "#go_item/#go_egg")
-	arg_1_0._gocritter = gohelper.findChild(arg_1_0.viewGO, "#go_item/#go_critter")
-	arg_1_0._imagequality = gohelper.findChildImage(arg_1_0.viewGO, "#go_item/#go_critter/#image_quality")
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_item/#go_critter/#simage_icon")
-	arg_1_0._btnopenEgg = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_item/#btn_openEgg")
-	arg_1_0._btnopenall = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_openall")
-	arg_1_0._btnskip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_skip")
-	arg_1_0._imageskip = gohelper.findChildImage(arg_1_0.viewGO, "#btn_skip/#image_skip")
+local RoomCritterSummonResultView = class("RoomCritterSummonResultView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomCritterSummonResultView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._txtclose = gohelper.findChildText(self.viewGO, "#btn_close/#txt_close")
+	self._goposcontent = gohelper.findChild(self.viewGO, "#go_pos_content")
+	self._goitem = gohelper.findChild(self.viewGO, "#go_item")
+	self._goegg = gohelper.findChild(self.viewGO, "#go_item/#go_egg")
+	self._gocritter = gohelper.findChild(self.viewGO, "#go_item/#go_critter")
+	self._imagequality = gohelper.findChildImage(self.viewGO, "#go_item/#go_critter/#image_quality")
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "#go_item/#go_critter/#simage_icon")
+	self._btnopenEgg = gohelper.findChildButtonWithAudio(self.viewGO, "#go_item/#btn_openEgg")
+	self._btnopenall = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_openall")
+	self._btnskip = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_skip")
+	self._imageskip = gohelper.findChildImage(self.viewGO, "#btn_skip/#image_skip")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnopenEgg:AddClickListener(arg_2_0._btnopenEggOnClick, arg_2_0)
-	arg_2_0._btnopenall:AddClickListener(arg_2_0._btnopenallOnClick, arg_2_0)
-	arg_2_0._btnskip:AddClickListener(arg_2_0._btnskipOnClick, arg_2_0)
+function RoomCritterSummonResultView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnopenEgg:AddClickListener(self._btnopenEggOnClick, self)
+	self._btnopenall:AddClickListener(self._btnopenallOnClick, self)
+	self._btnskip:AddClickListener(self._btnskipOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnopenEgg:RemoveClickListener()
-	arg_3_0._btnopenall:RemoveClickListener()
-	arg_3_0._btnskip:RemoveClickListener()
+function RoomCritterSummonResultView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btnopenEgg:RemoveClickListener()
+	self._btnopenall:RemoveClickListener()
+	self._btnskip:RemoveClickListener()
 end
 
-function var_0_0._btnskipOnClick(arg_4_0)
-	arg_4_0:_setAllOpen(true)
-	arg_4_0:_refreshUI()
+function RoomCritterSummonResultView:_btnskipOnClick()
+	self:_setAllOpen(true)
+	self:_refreshUI()
 end
 
-function var_0_0._btnopenallOnClick(arg_5_0)
-	local var_5_0 = arg_5_0:_findNotOpenMOList()
+function RoomCritterSummonResultView:_btnopenallOnClick()
+	local moList = self:_findNotOpenMOList()
 
-	if var_5_0 and #var_5_0 > 0 then
-		local var_5_1 = {
+	if moList and #moList > 0 then
+		local param = {
 			mode = RoomSummonEnum.SummonType.Summon,
-			critterMo = var_5_0[1],
-			critterMOList = var_5_0
+			critterMo = moList[1],
+			critterMOList = moList
 		}
 
-		CritterSummonController.instance:openSummonGetCritterView(var_5_1, true)
-		arg_5_0:_setAllOpen()
+		CritterSummonController.instance:openSummonGetCritterView(param, true)
+		self:_setAllOpen()
 	end
 end
 
-function var_0_0._btncloseOnClick(arg_6_0)
-	if arg_6_0:isAllOpen() then
-		arg_6_0:closeThis()
+function RoomCritterSummonResultView:_btncloseOnClick()
+	if self:isAllOpen() then
+		self:closeThis()
 		CritterController.instance:dispatchEvent(CritterEvent.CritterBuildingViewRefreshCamera)
 		CritterSummonController.instance:dispatchEvent(CritterSummonEvent.onCloseGetCritter)
 	end
 end
 
-function var_0_0._btnopenEggOnClick(arg_7_0)
+function RoomCritterSummonResultView:_btnopenEggOnClick()
 	return
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0._itemCompList = {}
+function RoomCritterSummonResultView:_editableInitView()
+	self._itemCompList = {}
 
-	for iter_8_0 = 1, 10 do
-		local var_8_0 = gohelper.findChild(arg_8_0._goposcontent, "go_pos" .. iter_8_0)
-		local var_8_1 = gohelper.clone(arg_8_0._goitem, var_8_0)
-		local var_8_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_8_1, RoomCritterSummonResultItem)
+	for i = 1, 10 do
+		local parentGO = gohelper.findChild(self._goposcontent, "go_pos" .. i)
+		local childGO = gohelper.clone(self._goitem, parentGO)
+		local itemComp = MonoHelper.addNoUpdateLuaComOnceToGo(childGO, RoomCritterSummonResultItem)
 
-		var_8_2._view = arg_8_0
-		arg_8_0._itemCompList[iter_8_0] = var_8_2
+		itemComp._view = self
+		self._itemCompList[i] = itemComp
 	end
 
-	gohelper.setActive(arg_8_0._goitem)
+	gohelper.setActive(self._goitem)
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
+function RoomCritterSummonResultView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_10_0)
+function RoomCritterSummonResultView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_niudan_obtain)
-	arg_10_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_10_0._onOpenCloseView, arg_10_0)
-	arg_10_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_10_0._onOpenCloseView, arg_10_0)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenCloseView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onOpenCloseView, self)
 
-	local var_10_0 = {}
+	local critterMOList = {}
 
-	if arg_10_0.viewParam and arg_10_0.viewParam.critterMOList then
-		tabletool.addValues(var_10_0, arg_10_0.viewParam.critterMOList)
+	if self.viewParam and self.viewParam.critterMOList then
+		tabletool.addValues(critterMOList, self.viewParam.critterMOList)
 	end
 
-	arg_10_0._critterMOList = var_10_0
+	self._critterMOList = critterMOList
 
-	arg_10_0:_refreshCritterUI()
-	arg_10_0:_refreshUI()
+	self:_refreshCritterUI()
+	self:_refreshUI()
 end
 
-function var_0_0.onClose(arg_11_0)
+function RoomCritterSummonResultView:onClose()
 	return
 end
 
-function var_0_0._onOpenCloseView(arg_12_0)
-	local var_12_0 = ViewMgr.instance:isOpen(ViewName.RoomGetCritterView)
+function RoomCritterSummonResultView:_onOpenCloseView()
+	local isOpen = ViewMgr.instance:isOpen(ViewName.RoomGetCritterView)
 
-	if arg_12_0._lastIsOpen ~= var_12_0 then
-		arg_12_0._lastIsOpen = var_12_0
+	if self._lastIsOpen ~= isOpen then
+		self._lastIsOpen = isOpen
 
-		arg_12_0:_refreshUI()
+		self:_refreshUI()
 
-		if not var_12_0 then
-			local var_12_1 = false
+		if not isOpen then
+			local hasOpen = false
 
-			for iter_12_0 = 1, #arg_12_0._itemCompList do
-				local var_12_2 = arg_12_0._itemCompList[iter_12_0]
+			for i = 1, #self._itemCompList do
+				local comp = self._itemCompList[i]
 
-				if var_12_2.critterMO then
-					local var_12_3 = var_12_2:isOpenEgg()
+				if comp.critterMO then
+					local isOpenEgg = comp:isOpenEgg()
 
-					if var_12_2:playAnim(var_12_3) then
-						var_12_1 = true
+					if comp:playAnim(isOpenEgg) then
+						hasOpen = true
 					end
 				end
 			end
 
-			if var_12_1 then
+			if hasOpen then
 				AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_niudan_shilian1)
 			end
 		end
 	end
 end
 
-function var_0_0._refreshUI(arg_13_0)
-	local var_13_0 = arg_13_0:isAllOpen()
+function RoomCritterSummonResultView:_refreshUI()
+	local isAllOpen = self:isAllOpen()
 
-	gohelper.setActive(arg_13_0._txtclose, var_13_0)
-	gohelper.setActive(arg_13_0._btnopenall, not var_13_0)
-	gohelper.setActive(arg_13_0._btnskip, not var_13_0)
+	gohelper.setActive(self._txtclose, isAllOpen)
+	gohelper.setActive(self._btnopenall, not isAllOpen)
+	gohelper.setActive(self._btnskip, not isAllOpen)
 end
 
-function var_0_0._refreshCritterUI(arg_14_0)
-	for iter_14_0 = 1, #arg_14_0._itemCompList do
-		arg_14_0._itemCompList[iter_14_0]:onUpdateMO(arg_14_0._critterMOList[iter_14_0])
+function RoomCritterSummonResultView:_refreshCritterUI()
+	for i = 1, #self._itemCompList do
+		self._itemCompList[i]:onUpdateMO(self._critterMOList[i])
 	end
 end
 
-function var_0_0.isAllOpen(arg_15_0)
-	for iter_15_0 = 1, #arg_15_0._itemCompList do
-		if not arg_15_0._itemCompList[iter_15_0]:isOpenEgg() and arg_15_0._critterMOList[iter_15_0] then
+function RoomCritterSummonResultView:isAllOpen()
+	for i = 1, #self._itemCompList do
+		if not self._itemCompList[i]:isOpenEgg() and self._critterMOList[i] then
 			return false
 		end
 	end
@@ -161,44 +163,44 @@ function var_0_0.isAllOpen(arg_15_0)
 	return true
 end
 
-function var_0_0._findNotOpenMOList(arg_16_0, arg_16_1)
-	local var_16_0
+function RoomCritterSummonResultView:_findNotOpenMOList(isSetCompOpen)
+	local moList
 
-	for iter_16_0 = 1, #arg_16_0._itemCompList do
-		if not arg_16_0._itemCompList[iter_16_0]:isOpenEgg() and arg_16_0._critterMOList[iter_16_0] then
-			var_16_0 = var_16_0 or {}
+	for i = 1, #self._itemCompList do
+		if not self._itemCompList[i]:isOpenEgg() and self._critterMOList[i] then
+			moList = moList or {}
 
-			table.insert(var_16_0, arg_16_0._critterMOList[iter_16_0])
+			table.insert(moList, self._critterMOList[i])
 		end
 	end
 
-	return var_16_0
+	return moList
 end
 
-function var_0_0._setAllOpen(arg_17_0, arg_17_1)
-	local var_17_0 = false
+function RoomCritterSummonResultView:_setAllOpen(isPlayAnim)
+	local hasOpen = false
 
-	for iter_17_0 = 1, #arg_17_0._itemCompList do
-		if arg_17_0._critterMOList[iter_17_0] then
-			local var_17_1 = arg_17_0._itemCompList[iter_17_0]
+	for i = 1, #self._itemCompList do
+		if self._critterMOList[i] then
+			local comp = self._itemCompList[i]
 
-			var_17_1:setOpenEgg(true)
+			comp:setOpenEgg(true)
 
-			if arg_17_1 and var_17_1:playAnim(true) then
-				var_17_0 = true
+			if isPlayAnim and comp:playAnim(true) then
+				hasOpen = true
 			end
 		end
 	end
 
-	if var_17_0 then
+	if hasOpen then
 		AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_niudan_shilian1)
 	end
 end
 
-function var_0_0.onDestroyView(arg_18_0)
-	for iter_18_0, iter_18_1 in ipairs(arg_18_0._itemCompList) do
-		iter_18_1:onDestroy()
+function RoomCritterSummonResultView:onDestroyView()
+	for _, itemComp in ipairs(self._itemCompList) do
+		itemComp:onDestroy()
 	end
 end
 
-return var_0_0
+return RoomCritterSummonResultView

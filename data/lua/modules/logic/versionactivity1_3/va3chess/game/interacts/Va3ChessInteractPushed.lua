@@ -1,90 +1,95 @@
-﻿module("modules.logic.versionactivity1_3.va3chess.game.interacts.Va3ChessInteractPushed", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/va3chess/game/interacts/Va3ChessInteractPushed.lua
 
-local var_0_0 = class("Va3ChessInteractPushed", Va3ChessInteractBase)
+module("modules.logic.versionactivity1_3.va3chess.game.interacts.Va3ChessInteractPushed", package.seeall)
 
-function var_0_0.checkCanBlock(arg_1_0, arg_1_1, arg_1_2)
-	if arg_1_2 == Va3ChessEnum.InteractType.AssistPlayer then
+local Va3ChessInteractPushed = class("Va3ChessInteractPushed", Va3ChessInteractBase)
+
+function Va3ChessInteractPushed:checkCanBlock(fromDir, targetObjType)
+	if targetObjType == Va3ChessEnum.InteractType.AssistPlayer then
 		return true
 	end
 
-	if arg_1_0._target.originData.data.status then
+	if self._target.originData.data.status then
 		return true
 	end
 
-	local var_1_0, var_1_1 = Va3ChessMapUtils.CalNextCellPos(arg_1_0._target.originData.posX, arg_1_0._target.originData.posY, arg_1_1)
+	local nextPosX, nextPosY = Va3ChessMapUtils.CalNextCellPos(self._target.originData.posX, self._target.originData.posY, fromDir)
+	local isNextPosNoTile = self:checkNoTileByXY(nextPosX, nextPosY)
 
-	if arg_1_0:checkNoTileByXY(var_1_0, var_1_1) then
+	if isNextPosNoTile then
 		return true
 	end
 
-	if Va3ChessGameController.instance:searchInteractByPos(var_1_0, var_1_1) > 0 then
+	local count = Va3ChessGameController.instance:searchInteractByPos(nextPosX, nextPosY)
+
+	if count > 0 then
 		return true
 	end
 end
 
-function var_0_0.checkNoTileByXY(arg_2_0, arg_2_1, arg_2_2)
-	if not Va3ChessGameModel.instance:isPosInChessBoard(arg_2_1, arg_2_2) then
+function Va3ChessInteractPushed:checkNoTileByXY(x, y)
+	if not Va3ChessGameModel.instance:isPosInChessBoard(x, y) then
 		return true
 	end
 
-	local var_2_0 = Va3ChessGameModel.instance:getTileMO(arg_2_1, arg_2_2)
+	local tileMO = Va3ChessGameModel.instance:getTileMO(x, y)
 
-	if not var_2_0 or var_2_0.tileType == Va3ChessEnum.TileBaseType.None or var_2_0:isFinishTrigger(Va3ChessEnum.TileTrigger.PoSui) then
+	if not tileMO or tileMO.tileType == Va3ChessEnum.TileBaseType.None or tileMO:isFinishTrigger(Va3ChessEnum.TileTrigger.PoSui) then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.showStateView(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == Va3ChessEnum.ObjState.Idle then
-		arg_3_0:showIdleStateView()
-	elseif arg_3_1 == Va3ChessEnum.ObjState.Interoperable then
-		arg_3_0:showPushableStateView(arg_3_2)
+function Va3ChessInteractPushed:showStateView(objState, params)
+	if objState == Va3ChessEnum.ObjState.Idle then
+		self:showIdleStateView()
+	elseif objState == Va3ChessEnum.ObjState.Interoperable then
+		self:showPushableStateView(params)
 	end
 end
 
-function var_0_0.showIdleStateView(arg_4_0)
-	arg_4_0:setArrawDir(0)
+function Va3ChessInteractPushed:showIdleStateView()
+	self:setArrawDir(0)
 end
 
-function var_0_0.showPushableStateView(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_1.dir
+function Va3ChessInteractPushed:showPushableStateView(params)
+	local dir = params.dir
 
-	arg_5_0:setArrawDir(var_5_0)
+	self:setArrawDir(dir)
 end
 
-function var_0_0.onAvatarLoaded(arg_6_0)
-	var_0_0.super.onAvatarLoaded(arg_6_0)
+function Va3ChessInteractPushed:onAvatarLoaded()
+	Va3ChessInteractPushed.super.onAvatarLoaded(self)
 
-	local var_6_0 = arg_6_0._target.avatar.loader:getInstGO()
+	local go = self._target.avatar.loader:getInstGO()
 
-	for iter_6_0, iter_6_1 in ipairs(Va3ChessInteractObject.DirectionList) do
-		arg_6_0._target.avatar["arraw" .. iter_6_1] = gohelper.findChild(var_6_0, "icon/icon_direction/dir_" .. iter_6_1)
+	for _, dir in ipairs(Va3ChessInteractObject.DirectionList) do
+		self._target.avatar["arraw" .. dir] = gohelper.findChild(go, "icon/icon_direction/dir_" .. dir)
 	end
 end
 
-function var_0_0.setArrawDir(arg_7_0, arg_7_1)
-	if arg_7_0._target.avatar then
-		for iter_7_0, iter_7_1 in ipairs(Va3ChessInteractObject.DirectionList) do
-			local var_7_0 = arg_7_0._target.avatar["arraw" .. iter_7_1]
+function Va3ChessInteractPushed:setArrawDir(dir)
+	if self._target.avatar then
+		for i, tmpDir in ipairs(Va3ChessInteractObject.DirectionList) do
+			local child = self._target.avatar["arraw" .. tmpDir]
 
-			if not gohelper.isNil(var_7_0) then
-				gohelper.setActive(var_7_0, arg_7_1 == iter_7_1)
+			if not gohelper.isNil(child) then
+				gohelper.setActive(child, dir == tmpDir)
 			end
 		end
 	end
 end
 
-local var_0_1 = "vx_smoke"
+local smokeEffect = "vx_smoke"
 
-function var_0_0.onMoveBegin(arg_8_0)
-	local var_8_0 = arg_8_0._target.avatar.loader:getInstGO()
-	local var_8_1 = gohelper.findChild(var_8_0, var_0_1)
+function Va3ChessInteractPushed:onMoveBegin()
+	local go = self._target.avatar.loader:getInstGO()
+	local smokeGo = gohelper.findChild(go, smokeEffect)
 
-	gohelper.setActive(var_8_1, false)
-	gohelper.setActive(var_8_1, true)
+	gohelper.setActive(smokeGo, false)
+	gohelper.setActive(smokeGo, true)
 	AudioMgr.instance:trigger(AudioEnum.Role2ChessGame1_3.PushStone)
 end
 
-return var_0_0
+return Va3ChessInteractPushed

@@ -1,20 +1,22 @@
-﻿module("modules.logic.antique.model.AntiqueMo", package.seeall)
+﻿-- chunkname: @modules/logic/antique/model/AntiqueMo.lua
 
-local var_0_0 = pureTable("AntiqueMo")
+module("modules.logic.antique.model.AntiqueMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.id = 0
-	arg_1_0.getTime = 0
+local AntiqueMo = pureTable("AntiqueMo")
+
+function AntiqueMo:ctor()
+	self.id = 0
+	self.getTime = 0
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.id = tonumber(arg_2_1.antiqueId)
-	arg_2_0.getTime = arg_2_1.getTime
+function AntiqueMo:init(info)
+	self.id = tonumber(info.antiqueId)
+	self.getTime = info.getTime
 end
 
-function var_0_0.reset(arg_3_0, arg_3_1)
-	arg_3_0.id = tonumber(arg_3_1.antiqueId)
-	arg_3_0.getTime = arg_3_1.getTime
+function AntiqueMo:reset(info)
+	self.id = tonumber(info.antiqueId)
+	self.getTime = info.getTime
 end
 
-return var_0_0
+return AntiqueMo

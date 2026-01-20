@@ -1,96 +1,98 @@
-﻿module("modules.logic.achievement.controller.AchievementMainController", package.seeall)
+﻿-- chunkname: @modules/logic/achievement/controller/AchievementMainController.lua
 
-local var_0_0 = class("AchievementMainController", BaseController)
+module("modules.logic.achievement.controller.AchievementMainController", package.seeall)
 
-function var_0_0.onOpenView(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	arg_1_1 = arg_1_1 or AchievementEnum.Type.Story
+local AchievementMainController = class("AchievementMainController", BaseController)
 
-	AchievementMainCommonModel.instance:initDatas(arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	arg_1_0:cleanTabNew(arg_1_1)
-	AchievementController.instance:registerCallback(AchievementEvent.UpdateAchievements, arg_1_0.notifyUpdateView, arg_1_0)
+function AchievementMainController:onOpenView(category, viewType, sortType, filterType)
+	category = category or AchievementEnum.Type.Story
+
+	AchievementMainCommonModel.instance:initDatas(category, viewType, sortType, filterType)
+	self:cleanTabNew(category)
+	AchievementController.instance:registerCallback(AchievementEvent.UpdateAchievements, self.notifyUpdateView, self)
 end
 
-function var_0_0.updateAchievementState(arg_2_0)
-	local var_2_0 = AchievementMainCommonModel.instance:getCurrentCategory()
-	local var_2_1 = AchievementMainCommonModel.instance:getCurrentViewType()
-	local var_2_2 = AchievementMainCommonModel.instance:getCurrentSortType()
-	local var_2_3 = AchievementMainCommonModel.instance:getCurrentFilterType()
+function AchievementMainController:updateAchievementState()
+	local curCategory = AchievementMainCommonModel.instance:getCurrentCategory()
+	local curViewType = AchievementMainCommonModel.instance:getCurrentViewType()
+	local curSortType = AchievementMainCommonModel.instance:getCurrentSortType()
+	local curFilterType = AchievementMainCommonModel.instance:getCurrentFilterType()
 
-	AchievementMainCommonModel.instance:initDatas(var_2_0, var_2_1, var_2_2, var_2_3)
+	AchievementMainCommonModel.instance:initDatas(curCategory, curViewType, curSortType, curFilterType)
 end
 
-function var_0_0.onCloseView(arg_3_0)
-	AchievementController.instance:unregisterCallback(AchievementEvent.UpdateAchievements, arg_3_0.notifyUpdateView, arg_3_0)
+function AchievementMainController:onCloseView()
+	AchievementController.instance:unregisterCallback(AchievementEvent.UpdateAchievements, self.notifyUpdateView, self)
 
-	local var_3_0 = AchievementMainCommonModel.instance:getCurrentCategory()
+	local category = AchievementMainCommonModel.instance:getCurrentCategory()
 
-	arg_3_0:cleanCategoryNewFlag(var_3_0)
+	self:cleanCategoryNewFlag(category)
 end
 
-function var_0_0.setCategory(arg_4_0, arg_4_1)
+function AchievementMainController:setCategory(category)
 	AchievementMainTileModel.instance:resetScrollFocusIndex()
 	AchievementMainTileModel.instance:setHasPlayOpenAnim(false)
 	AchievementMainCommonModel.instance:markCurrentScrollFocusing(true)
 
-	local var_4_0 = AchievementMainCommonModel.instance:getCurrentCategory()
+	local lastCategory = AchievementMainCommonModel.instance:getCurrentCategory()
 
-	AchievementMainCommonModel.instance:switchCategory(arg_4_1)
-	arg_4_0:cleanCategoryNewFlag(var_4_0)
-	arg_4_0:cleanTabNew(arg_4_1)
-	arg_4_0:dispatchEvent(AchievementEvent.OnSwitchCategory)
-	arg_4_0:dispatchEvent(AchievementEvent.AchievementMainViewUpdate)
+	AchievementMainCommonModel.instance:switchCategory(category)
+	self:cleanCategoryNewFlag(lastCategory)
+	self:cleanTabNew(category)
+	self:dispatchEvent(AchievementEvent.OnSwitchCategory)
+	self:dispatchEvent(AchievementEvent.AchievementMainViewUpdate)
 end
 
-function var_0_0.switchViewType(arg_5_0, arg_5_1)
+function AchievementMainController:switchViewType(viewType)
 	AchievementMainCommonModel.instance:markCurrentScrollFocusing(true)
-	AchievementMainCommonModel.instance:switchViewType(arg_5_1)
-	arg_5_0:dispatchEvent(AchievementEvent.OnSwitchViewType)
-	arg_5_0:dispatchEvent(AchievementEvent.AchievementMainViewUpdate)
+	AchievementMainCommonModel.instance:switchViewType(viewType)
+	self:dispatchEvent(AchievementEvent.OnSwitchViewType)
+	self:dispatchEvent(AchievementEvent.AchievementMainViewUpdate)
 end
 
-function var_0_0.switchSortType(arg_6_0, arg_6_1)
-	AchievementMainCommonModel.instance:switchSortType(arg_6_1)
-	arg_6_0:dispatchEvent(AchievementEvent.AchievementMainViewUpdate)
+function AchievementMainController:switchSortType(sortType)
+	AchievementMainCommonModel.instance:switchSortType(sortType)
+	self:dispatchEvent(AchievementEvent.AchievementMainViewUpdate)
 end
 
-function var_0_0.switchSearchFilterType(arg_7_0, arg_7_1)
-	AchievementMainCommonModel.instance:switchSearchFilterType(arg_7_1)
-	arg_7_0:dispatchEvent(AchievementEvent.AchievementMainViewUpdate)
+function AchievementMainController:switchSearchFilterType(searchFilerType)
+	AchievementMainCommonModel.instance:switchSearchFilterType(searchFilerType)
+	self:dispatchEvent(AchievementEvent.AchievementMainViewUpdate)
 end
 
-function var_0_0.cleanTabNew(arg_8_0, arg_8_1)
-	AchievementMainCommonModel.instance.categoryNewDict[arg_8_1] = false
+function AchievementMainController:cleanTabNew(category)
+	AchievementMainCommonModel.instance.categoryNewDict[category] = false
 end
 
-function var_0_0.cleanCategoryNewFlag(arg_9_0, arg_9_1)
-	local var_9_0 = AchievementMainCommonModel.instance:getCategoryAchievementConfigList(arg_9_1)
-	local var_9_1 = {}
+function AchievementMainController:cleanCategoryNewFlag(category)
+	local coList = AchievementMainCommonModel.instance:getCategoryAchievementConfigList(category)
+	local taskIds = {}
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
-		local var_9_2 = AchievementModel.instance:getAchievementTaskCoList(iter_9_1.id)
+	for i, achievementCo in ipairs(coList) do
+		local taskCoList = AchievementModel.instance:getAchievementTaskCoList(achievementCo.id)
 
-		if var_9_2 then
-			for iter_9_2, iter_9_3 in ipairs(var_9_2) do
-				local var_9_3 = AchievementModel.instance:getById(iter_9_3.id)
+		if taskCoList then
+			for _, taskCo in ipairs(taskCoList) do
+				local taskMo = AchievementModel.instance:getById(taskCo.id)
 
-				if var_9_3 and var_9_3.isNew then
-					table.insert(var_9_1, iter_9_3.id)
+				if taskMo and taskMo.isNew then
+					table.insert(taskIds, taskCo.id)
 				end
 			end
 		end
 	end
 
-	if #var_9_1 > 0 then
-		AchievementRpc.instance:sendReadNewAchievementRequest(var_9_1)
+	if #taskIds > 0 then
+		AchievementRpc.instance:sendReadNewAchievementRequest(taskIds)
 	end
 end
 
-function var_0_0.notifyUpdateView(arg_10_0)
+function AchievementMainController:notifyUpdateView()
 	AchievementMainTileModel.instance:onModelUpdate()
 end
 
-var_0_0.instance = var_0_0.New()
+AchievementMainController.instance = AchievementMainController.New()
 
-LuaEventSystem.addEventMechanism(var_0_0.instance)
+LuaEventSystem.addEventMechanism(AchievementMainController.instance)
 
-return var_0_0
+return AchievementMainController

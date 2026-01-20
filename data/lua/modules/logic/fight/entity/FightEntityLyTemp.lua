@@ -1,11 +1,13 @@
-﻿module("modules.logic.fight.entity.FightEntityLyTemp", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/FightEntityLyTemp.lua
 
-local var_0_0 = class("FightEntityLyTemp", FightEntityTemp)
+module("modules.logic.fight.entity.FightEntityLyTemp", package.seeall)
 
-function var_0_0.initComponents(arg_1_0)
-	arg_1_0:addComp("spine", UnitSpine)
-	arg_1_0:addComp("spineRenderer", UnitSpineRenderer)
-	arg_1_0:addComp("effect", FightEffectComp)
+local FightEntityLyTemp = class("FightEntityLyTemp", FightEntityTemp)
+
+function FightEntityLyTemp:initComponents()
+	self:addComp("spine", UnitSpine)
+	self:addComp("spineRenderer", UnitSpineRenderer)
+	self:addComp("effect", FightEffectComp)
 end
 
-return var_0_0
+return FightEntityLyTemp

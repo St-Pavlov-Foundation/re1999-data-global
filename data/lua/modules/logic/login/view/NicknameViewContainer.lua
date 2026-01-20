@@ -1,11 +1,13 @@
-﻿module("modules.logic.login.view.NicknameViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/login/view/NicknameViewContainer.lua
 
-local var_0_0 = class("NicknameViewContainer", BaseViewContainer)
+module("modules.logic.login.view.NicknameViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local NicknameViewContainer = class("NicknameViewContainer", BaseViewContainer)
+
+function NicknameViewContainer:buildViews()
 	return {
 		NicknameView.New()
 	}
 end
 
-return var_0_0
+return NicknameViewContainer

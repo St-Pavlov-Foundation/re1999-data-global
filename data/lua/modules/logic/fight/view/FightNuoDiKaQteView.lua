@@ -1,118 +1,122 @@
-﻿module("modules.logic.fight.view.FightNuoDiKaQteView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightNuoDiKaQteView.lua
 
-local var_0_0 = class("FightNuoDiKaQteView", FightBaseView)
+module("modules.logic.fight.view.FightNuoDiKaQteView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.level0 = gohelper.findChild(arg_1_0.viewGO, "operate/root/level0")
-	arg_1_0.level1 = gohelper.findChild(arg_1_0.viewGO, "operate/root/level1")
-	arg_1_0.level2 = gohelper.findChild(arg_1_0.viewGO, "operate/root/level2")
-	arg_1_0.level3 = gohelper.findChild(arg_1_0.viewGO, "operate/root/level3")
-	arg_1_0.countText = gohelper.findChildText(arg_1_0.viewGO, "operate/root/num/#txt_num")
-	arg_1_0.countEffectText = gohelper.findChildText(arg_1_0.viewGO, "operate/root/num/#txt_num_effect")
-	arg_1_0.text1 = gohelper.findChildText(arg_1_0.viewGO, "operate/root/level1/#txt_num")
-	arg_1_0.text2 = gohelper.findChildText(arg_1_0.viewGO, "operate/root/level2/#txt_num")
-	arg_1_0.text3 = gohelper.findChildText(arg_1_0.viewGO, "operate/root/level3/#txt_num")
-	arg_1_0.btnClick = gohelper.findChildClick(arg_1_0.viewGO, "operate/root/#btn_click")
-	arg_1_0.ani = gohelper.onceAddComponent(arg_1_0.viewGO, typeof(UnityEngine.Animator))
-	arg_1_0.numAni = gohelper.findChildComponent(arg_1_0.viewGO, "operate/root/num", typeof(UnityEngine.Animator))
-	arg_1_0._longPress = SLFramework.UGUI.UILongPressListener.Get(arg_1_0.btnClick.gameObject)
+local FightNuoDiKaQteView = class("FightNuoDiKaQteView", FightBaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function FightNuoDiKaQteView:onInitView()
+	self.level0 = gohelper.findChild(self.viewGO, "operate/root/level0")
+	self.level1 = gohelper.findChild(self.viewGO, "operate/root/level1")
+	self.level2 = gohelper.findChild(self.viewGO, "operate/root/level2")
+	self.level3 = gohelper.findChild(self.viewGO, "operate/root/level3")
+	self.countText = gohelper.findChildText(self.viewGO, "operate/root/num/#txt_num")
+	self.countEffectText = gohelper.findChildText(self.viewGO, "operate/root/num/#txt_num_effect")
+	self.text1 = gohelper.findChildText(self.viewGO, "operate/root/level1/#txt_num")
+	self.text2 = gohelper.findChildText(self.viewGO, "operate/root/level2/#txt_num")
+	self.text3 = gohelper.findChildText(self.viewGO, "operate/root/level3/#txt_num")
+	self.btnClick = gohelper.findChildClick(self.viewGO, "operate/root/#btn_click")
+	self.ani = gohelper.onceAddComponent(self.viewGO, typeof(UnityEngine.Animator))
+	self.numAni = gohelper.findChildComponent(self.viewGO, "operate/root/num", typeof(UnityEngine.Animator))
+	self._longPress = SLFramework.UGUI.UILongPressListener.Get(self.btnClick.gameObject)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:com_registClick(arg_2_0.btnClick, arg_2_0.onBtnClick)
-	arg_2_0:com_registLongPress(arg_2_0._longPress, arg_2_0._onLongPress)
-	arg_2_0._longPress:SetLongPressTime({
+function FightNuoDiKaQteView:addEvents()
+	self:com_registClick(self.btnClick, self.onBtnClick)
+	self:com_registLongPress(self._longPress, self._onLongPress)
+	self._longPress:SetLongPressTime({
 		0.1
 	})
-	arg_2_0:com_registFightEvent(FightEvent.PlayOnceQteWhenTimeout, arg_2_0.onPlayOnceQteWhenTimeout)
+	self:com_registFightEvent(FightEvent.PlayOnceQteWhenTimeout, self.onPlayOnceQteWhenTimeout)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function FightNuoDiKaQteView:removeEvents()
 	return
 end
 
-function var_0_0.onConstructor(arg_4_0)
+function FightNuoDiKaQteView:onConstructor()
 	return
 end
 
-function var_0_0.onPlayOnceQteWhenTimeout(arg_5_0)
-	arg_5_0:clickFunc()
+function FightNuoDiKaQteView:onPlayOnceQteWhenTimeout()
+	self:clickFunc()
 end
 
-function var_0_0.onBtnClick(arg_6_0)
-	if arg_6_0.clickCount == arg_6_0.maxCount then
+function FightNuoDiKaQteView:onBtnClick()
+	if self.clickCount == self.maxCount then
 		return
 	end
 
-	local var_6_0 = Time.time
+	local curTime = Time.time
 
-	arg_6_0.time = arg_6_0.time or var_6_0
+	self.time = self.time or curTime
 
-	if var_6_0 - arg_6_0.time > arg_6_0.timeLimit then
-		arg_6_0.time = var_6_0
+	if curTime - self.time > self.timeLimit then
+		self.time = curTime
 
-		arg_6_0:clickFunc()
+		self:clickFunc()
 	end
 end
 
-function var_0_0._onLongPress(arg_7_0)
-	arg_7_0:onBtnClick()
+function FightNuoDiKaQteView:_onLongPress()
+	self:onBtnClick()
 end
 
-function var_0_0.clickFunc(arg_8_0)
-	if arg_8_0:com_sendMsg(FightMsgId.OperationForPlayEffect, arg_8_0.effectType) then
-		arg_8_0.clickCount = arg_8_0.clickCount + 1
+function FightNuoDiKaQteView:clickFunc()
+	local success = self:com_sendMsg(FightMsgId.OperationForPlayEffect, self.effectType)
 
-		local var_8_0 = arg_8_0:refreshBtn()
-		local var_8_1 = var_8_0 == 1 and "click" or "click" .. var_8_0
+	if success then
+		self.clickCount = self.clickCount + 1
 
-		arg_8_0.ani:Play(var_8_1, 0, 0)
-		arg_8_0.numAni:Play("update", 0, 0)
+		local level = self:refreshBtn()
+		local clickName = level == 1 and "click" or "click" .. level
+
+		self.ani:Play(clickName, 0, 0)
+		self.numAni:Play("update", 0, 0)
 		AudioMgr.instance:trigger(20280402)
 
-		if arg_8_0.clickCount == 1 then
+		if self.clickCount == 1 then
 			AudioMgr.instance:trigger(20280401)
 		end
 	end
 end
 
-function var_0_0.refreshText(arg_9_0)
-	local var_9_0 = arg_9_0.maxCount - arg_9_0.clickCount
+function FightNuoDiKaQteView:refreshText()
+	local count = self.maxCount - self.clickCount
 
-	arg_9_0.countText.text = var_9_0
-	arg_9_0.countEffectText.text = var_9_0
+	self.countText.text = count
+	self.countEffectText.text = count
 end
 
-function var_0_0.refreshBtn(arg_10_0)
-	arg_10_0:refreshText()
+function FightNuoDiKaQteView:refreshBtn()
+	self:refreshText()
 
-	if arg_10_0.clickCount <= arg_10_0.levelCount[1] then
-		gohelper.setActive(arg_10_0.level0, false)
-		gohelper.setActive(arg_10_0.level1, true)
-		gohelper.setActive(arg_10_0.level2, false)
-		gohelper.setActive(arg_10_0.level3, false)
+	if self.clickCount <= self.levelCount[1] then
+		gohelper.setActive(self.level0, false)
+		gohelper.setActive(self.level1, true)
+		gohelper.setActive(self.level2, false)
+		gohelper.setActive(self.level3, false)
 
 		return 1
 	end
 
-	if arg_10_0.clickCount <= arg_10_0.levelCount[2] then
-		gohelper.setActive(arg_10_0.level0, false)
-		gohelper.setActive(arg_10_0.level1, false)
-		gohelper.setActive(arg_10_0.level2, true)
-		gohelper.setActive(arg_10_0.level3, false)
+	if self.clickCount <= self.levelCount[2] then
+		gohelper.setActive(self.level0, false)
+		gohelper.setActive(self.level1, false)
+		gohelper.setActive(self.level2, true)
+		gohelper.setActive(self.level3, false)
 
 		return 2
 	end
 
-	if arg_10_0.clickCount <= arg_10_0.levelCount[3] then
-		gohelper.setActive(arg_10_0.level0, false)
-		gohelper.setActive(arg_10_0.level1, false)
-		gohelper.setActive(arg_10_0.level2, false)
-		gohelper.setActive(arg_10_0.level3, true)
+	if self.clickCount <= self.levelCount[3] then
+		gohelper.setActive(self.level0, false)
+		gohelper.setActive(self.level1, false)
+		gohelper.setActive(self.level2, false)
+		gohelper.setActive(self.level3, true)
 
 		return 3
 	end
@@ -120,62 +124,64 @@ function var_0_0.refreshBtn(arg_10_0)
 	return 3
 end
 
-function var_0_0.onOpen(arg_11_0)
-	arg_11_0.time = 0
-	arg_11_0.effectType = arg_11_0.viewParam.effectType
-	arg_11_0.timeLimit = arg_11_0.viewParam.timeLimit
-	arg_11_0.paramsArr = arg_11_0.viewParam.paramsArr
-	arg_11_0.fightStepData = arg_11_0.viewParam.fightStepData
-	arg_11_0.maxCount = 0
+function FightNuoDiKaQteView:onOpen()
+	self.time = 0
+	self.effectType = self.viewParam.effectType
+	self.timeLimit = self.viewParam.timeLimit
+	self.paramsArr = self.viewParam.paramsArr
+	self.fightStepData = self.viewParam.fightStepData
+	self.maxCount = 0
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0.fightStepData.actEffect) do
-		if iter_11_1.effectType == arg_11_0.effectType then
-			arg_11_0.maxCount = string.splitToNumber(iter_11_1.reserveStr, "#")[2] or 0
+	for i, actEffectData in ipairs(self.fightStepData.actEffect) do
+		if actEffectData.effectType == self.effectType then
+			self.maxCount = string.splitToNumber(actEffectData.reserveStr, "#")[2] or 0
 
 			break
 		end
 	end
 
-	local var_11_0 = GameUtil.splitString2(arg_11_0.paramsArr[2], false, ",", "#") or {}
+	local arr = GameUtil.splitString2(self.paramsArr[2], false, ",", "#") or {}
 
-	arg_11_0.levelCount = {}
-	arg_11_0.clickCount = 0
+	self.levelCount = {}
+	self.clickCount = 0
 
-	for iter_11_2, iter_11_3 in ipairs(var_11_0) do
-		local var_11_1 = tonumber(iter_11_3[1])
+	for i, v in ipairs(arr) do
+		local count = tonumber(v[1])
 
-		arg_11_0.levelCount[iter_11_2] = var_11_1
+		self.levelCount[i] = count
 	end
 
-	gohelper.setActive(arg_11_0.level0, true)
-	gohelper.setActive(arg_11_0.level1, false)
-	gohelper.setActive(arg_11_0.level2, false)
-	gohelper.setActive(arg_11_0.level3, false)
-	arg_11_0:refreshText()
-	arg_11_0:com_registUpdate(arg_11_0.onUpdate)
-	arg_11_0:com_sendFightEvent(FightEvent.SetBossHpVisibleWhenHidingFightView, true)
+	gohelper.setActive(self.level0, true)
+	gohelper.setActive(self.level1, false)
+	gohelper.setActive(self.level2, false)
+	gohelper.setActive(self.level3, false)
+	self:refreshText()
+	self:com_registUpdate(self.onUpdate)
+	self:com_sendFightEvent(FightEvent.SetBossHpVisibleWhenHidingFightView, true)
 
-	arg_11_0.showBtnNames = {
+	self.showBtnNames = {
 		"btnSpeed",
 		"btnAuto"
 	}
 
-	arg_11_0:com_sendFightEvent(FightEvent.SetBtnListVisibleWhenHidingFightView, true, arg_11_0.showBtnNames)
+	self:com_sendFightEvent(FightEvent.SetBtnListVisibleWhenHidingFightView, true, self.showBtnNames)
 end
 
-function var_0_0.onUpdate(arg_12_0)
-	if FightDataHelper.stateMgr:getIsAuto() or FightDataHelper.stateMgr.isReplay then
-		arg_12_0:onBtnClick()
+function FightNuoDiKaQteView:onUpdate()
+	local isAuto = FightDataHelper.stateMgr:getIsAuto() or FightDataHelper.stateMgr.isReplay
+
+	if isAuto then
+		self:onBtnClick()
 	end
 end
 
-function var_0_0.onClose(arg_13_0)
-	arg_13_0:com_sendFightEvent(FightEvent.SetBossHpVisibleWhenHidingFightView, false)
-	arg_13_0:com_sendFightEvent(FightEvent.SetBtnListVisibleWhenHidingFightView, false, arg_13_0.showBtnNames)
+function FightNuoDiKaQteView:onClose()
+	self:com_sendFightEvent(FightEvent.SetBossHpVisibleWhenHidingFightView, false)
+	self:com_sendFightEvent(FightEvent.SetBtnListVisibleWhenHidingFightView, false, self.showBtnNames)
 end
 
-function var_0_0.onDestroyView(arg_14_0)
+function FightNuoDiKaQteView:onDestroyView()
 	return
 end
 
-return var_0_0
+return FightNuoDiKaQteView

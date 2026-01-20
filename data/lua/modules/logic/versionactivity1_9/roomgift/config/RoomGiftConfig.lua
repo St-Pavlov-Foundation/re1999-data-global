@@ -1,121 +1,123 @@
-﻿module("modules.logic.versionactivity1_9.roomgift.config.RoomGiftConfig", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/roomgift/config/RoomGiftConfig.lua
 
-local var_0_0 = class("RoomGiftConfig", BaseConfig)
+module("modules.logic.versionactivity1_9.roomgift.config.RoomGiftConfig", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local RoomGiftConfig = class("RoomGiftConfig", BaseConfig)
+
+function RoomGiftConfig:reqConfigNames()
 	return {
 		"activity159",
 		"activity159_critter"
 	}
 end
 
-function var_0_0.onInit(arg_2_0)
+function RoomGiftConfig:onInit()
 	return
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+function RoomGiftConfig:onConfigLoaded(configName, configTable)
 	return
 end
 
-local function var_0_1(arg_4_0)
-	local var_4_0
+local function getRoomGiftSpineCfg(name)
+	local cfg
 
-	if not string.nilorempty(arg_4_0) then
-		var_4_0 = lua_activity159_critter.configDict[arg_4_0]
+	if not string.nilorempty(name) then
+		cfg = lua_activity159_critter.configDict[name]
 	end
 
-	if not var_4_0 then
-		logError(string.format("RoomGiftConfig.getRoomGiftSpineCfg error, no cfg, name:%s", arg_4_0))
+	if not cfg then
+		logError(string.format("RoomGiftConfig.getRoomGiftSpineCfg error, no cfg, name:%s", name))
 	end
 
-	return var_4_0
+	return cfg
 end
 
-function var_0_0.getAllRoomGiftSpineList(arg_5_0)
-	local var_5_0 = {}
+function RoomGiftConfig:getAllRoomGiftSpineList()
+	local result = {}
 
-	for iter_5_0, iter_5_1 in ipairs(lua_activity159_critter.configList) do
-		var_5_0[#var_5_0 + 1] = iter_5_1.name
+	for _, cfg in ipairs(lua_activity159_critter.configList) do
+		result[#result + 1] = cfg.name
 	end
 
-	return var_5_0
+	return result
 end
 
-function var_0_0.getRoomGiftSpineRes(arg_6_0, arg_6_1)
-	local var_6_0
-	local var_6_1 = var_0_1(arg_6_1)
+function RoomGiftConfig:getRoomGiftSpineRes(name)
+	local result
+	local cfg = getRoomGiftSpineCfg(name)
 
-	if var_6_1 then
-		var_6_0 = var_6_1.res
+	if cfg then
+		result = cfg.res
 	end
 
-	return var_6_0
+	return result
 end
 
-function var_0_0.getRoomGiftSpineAnim(arg_7_0, arg_7_1)
-	local var_7_0
-	local var_7_1 = var_0_1(arg_7_1)
+function RoomGiftConfig:getRoomGiftSpineAnim(name)
+	local result
+	local cfg = getRoomGiftSpineCfg(name)
 
-	if var_7_1 then
-		var_7_0 = var_7_1.anim
+	if cfg then
+		result = cfg.anim
 	end
 
-	return var_7_0
+	return result
 end
 
-function var_0_0.getRoomGiftSpineStartPos(arg_8_0, arg_8_1)
-	local var_8_0 = {
+function RoomGiftConfig:getRoomGiftSpineStartPos(name)
+	local result = {
 		0,
 		0,
 		0
 	}
-	local var_8_1 = var_0_1(arg_8_1)
+	local cfg = getRoomGiftSpineCfg(name)
 
-	if var_8_1 then
-		var_8_0 = string.splitToNumber(var_8_1.startPos, "#")
+	if cfg then
+		result = string.splitToNumber(cfg.startPos, "#")
 	end
 
-	return var_8_0
+	return result
 end
 
-function var_0_0.getRoomGiftSpineScale(arg_9_0, arg_9_1)
-	local var_9_0 = 1
-	local var_9_1 = var_0_1(arg_9_1)
+function RoomGiftConfig:getRoomGiftSpineScale(name)
+	local result = 1
+	local cfg = getRoomGiftSpineCfg(name)
 
-	if var_9_1 then
-		var_9_0 = var_9_1.scale
+	if cfg then
+		result = cfg.scale
 	end
 
-	return var_9_0
+	return result
 end
 
-local function var_0_2(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0
+local function getActivity159Cfg(actId, day, nilError)
+	local cfg
 
-	if arg_10_0 and arg_10_1 then
-		local var_10_1 = lua_activity159.configDict[arg_10_0]
+	if actId and day then
+		local actCfgDict = lua_activity159.configDict[actId]
 
-		var_10_0 = var_10_1 and var_10_1[arg_10_1]
+		cfg = actCfgDict and actCfgDict[day]
 	end
 
-	if not var_10_0 and arg_10_2 then
-		logError(string.format("RoomGiftConfig:getActivity159Cfg error, cfg is nil, actId:%s  day:%s", arg_10_0, arg_10_1))
+	if not cfg and nilError then
+		logError(string.format("RoomGiftConfig:getActivity159Cfg error, cfg is nil, actId:%s  day:%s", actId, day))
 	end
 
-	return var_10_0
+	return cfg
 end
 
-function var_0_0.getRoomGiftBonus(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0
-	local var_11_1 = var_0_2(arg_11_1, arg_11_2)
+function RoomGiftConfig:getRoomGiftBonus(actId, day)
+	local result
+	local cfg = getActivity159Cfg(actId, day)
 
-	if var_11_1 then
-		var_11_0 = var_11_1.bonus
+	if cfg then
+		result = cfg.bonus
 	end
 
-	return var_11_0
+	return result
 end
 
-var_0_0.instance = var_0_0.New()
+RoomGiftConfig.instance = RoomGiftConfig.New()
 
-return var_0_0
+return RoomGiftConfig

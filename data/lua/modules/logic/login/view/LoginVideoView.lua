@@ -1,71 +1,80 @@
-﻿module("modules.logic.login.view.LoginVideoView", package.seeall)
+﻿-- chunkname: @modules/logic/login/view/LoginVideoView.lua
 
-local var_0_0 = class("LoginVideoView", BaseView)
+module("modules.logic.login.view.LoginVideoView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goBgRoot = gohelper.findChild(arg_1_0.viewGO, "#go_bg")
+local LoginVideoView = class("LoginVideoView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function LoginVideoView:onInitView()
+	self._goBgRoot = gohelper.findChild(self.viewGO, "#go_bg")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0._editableInitView(arg_2_0)
-	arg_2_0._isShowVideo = LoginController.instance:isShowLoginVideo()
+function LoginVideoView:_editableInitView()
+	self._isShowVideo = LoginPageController.instance:isShowLoginVideo()
 end
 
-function var_0_0.onOpenFinish(arg_3_0)
-	if arg_3_0._isShowVideo then
+function LoginVideoView:onOpenFinish()
+	self._isShowVideo = false
+
+	local pageCfg = LoginPageController.instance:getCurPageCfg()
+
+	self._videoName = pageCfg and pageCfg.video
+
+	if not string.nilorempty(self._videoName) then
+		self._isShowVideo = true
+
 		LoginController.instance:dispatchEvent(LoginEvent.OnLoginBgLoaded)
 	end
 
-	if arg_3_0._isShowVideo and not arg_3_0._videoPlayer then
-		arg_3_0._videoPlayer, arg_3_0._displayUGUI, arg_3_0._videoGo = AvProMgr.instance:getVideoPlayer(arg_3_0.viewGO, "voideplayer")
+	if self._isShowVideo and not self._videoPlayer then
+		self._videoPlayer, self._videoGo = VideoPlayerMgr.instance:createGoAndVideoPlayer(self.viewGO, "LoginVideoPlayer")
 
-		gohelper.setSiblingAfter(arg_3_0._videoGo, arg_3_0._goBgRoot)
-		arg_3_0:play()
-		arg_3_0:addEventCb(arg_3_0.viewContainer, LoginEvent.OnLoginVideoSwitch, arg_3_0._playByPath, arg_3_0)
+		gohelper.setSiblingAfter(self._videoGo, self._goBgRoot)
+		self:play()
+		self:addEventCb(self.viewContainer, LoginEvent.OnLoginVideoSwitch, self._playByPath, self)
 
-		local var_3_0 = arg_3_0._videoGo:GetComponent(typeof(ZProj.UIBgSelfAdapter))
+		local bgAdapter = self._videoGo:GetComponent(typeof(ZProj.UIBgSelfAdapter))
 
-		if var_3_0 then
-			var_3_0.enabled = false
+		if bgAdapter then
+			bgAdapter.enabled = false
 		end
 	end
 end
 
-function var_0_0.onDestroyView(arg_4_0)
-	if arg_4_0._videoPlayer then
-		arg_4_0._videoPlayer:Stop()
-		arg_4_0._videoPlayer:Clear()
+function LoginVideoView:onDestroyView()
+	if self._videoPlayer then
+		self._videoPlayer:stop()
 
-		arg_4_0._videoPlayer = nil
-		arg_4_0._videoGo = nil
+		self._videoPlayer = nil
+		self._videoGo = nil
 	end
 end
 
-function var_0_0.play(arg_5_0)
-	local var_5_0 = CommonConfig.instance:getConstStr(ConstEnum.LoginViewVideoPathId)
+function LoginVideoView:play()
+	local videlPath = CommonConfig.instance:getConstStr(ConstEnum.LoginViewVideoPathId)
 
-	arg_5_0:_playByPath(langVideoUrl(var_5_0))
+	self:_playByPath(videlPath)
 end
 
-function var_0_0._playByPath(arg_6_0, arg_6_1)
-	if not arg_6_1 or string.nilorempty(arg_6_1) or arg_6_0._curPlayVideoPath == arg_6_1 then
+function LoginVideoView:_playByPath(videoPath)
+	if not videoPath or string.nilorempty(videoPath) or self._curPlayVideoPath == videoPath then
 		return
 	end
 
-	if arg_6_0._videoPlayer then
-		arg_6_0._curPlayVideoPath = arg_6_1
+	if self._videoPlayer then
+		self._curPlayVideoPath = videoPath
 
-		arg_6_0._videoPlayer:Play(arg_6_0._displayUGUI, arg_6_1, true, arg_6_0._videoStatusUpdate, arg_6_0)
+		self._videoPlayer:play(videoPath, true, self._videoStatusUpdate, self)
 	end
 end
 
-function var_0_0._videoStatusUpdate(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	if (arg_7_2 == AvProEnum.PlayerStatus.Error or arg_7_3 ~= AvProEnum.ErrorCode.None) and not gohelper.isNil(arg_7_0._videoGo) then
-		gohelper.setActive(arg_7_0._videoGo, false)
+function LoginVideoView:_videoStatusUpdate(path, status, errorCode)
+	if status == VideoEnum.PlayerStatus.Error and not gohelper.isNil(self._videoGo) then
+		gohelper.setActive(self._videoGo, false)
 	end
 end
 
-return var_0_0
+return LoginVideoView

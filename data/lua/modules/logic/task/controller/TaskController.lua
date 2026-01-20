@@ -1,36 +1,38 @@
-﻿module("modules.logic.task.controller.TaskController", package.seeall)
+﻿-- chunkname: @modules/logic/task/controller/TaskController.lua
 
-local var_0_0 = class("TaskController", BaseController)
+module("modules.logic.task.controller.TaskController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local TaskController = class("TaskController", BaseController)
+
+function TaskController:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function TaskController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_3_0._onDailyRefresh, arg_3_0)
+function TaskController:addConstEvents()
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self._onDailyRefresh, self)
 end
 
-function var_0_0.reInit(arg_4_0)
+function TaskController:reInit()
 	return
 end
 
-function var_0_0.enterTaskView(arg_5_0, arg_5_1)
-	ViewMgr.instance:openView(ViewName.TaskView, arg_5_1)
+function TaskController:enterTaskView(taskType)
+	ViewMgr.instance:openView(ViewName.TaskView, taskType)
 end
 
-function var_0_0.enterTaskViewCheckUnlock(arg_6_0)
+function TaskController:enterTaskViewCheckUnlock()
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Task) then
-		var_0_0.instance:enterTaskView()
+		TaskController.instance:enterTaskView()
 	else
 		GameFacade.showToast(OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.Task))
 	end
 end
 
-function var_0_0._onDailyRefresh(arg_7_0)
+function TaskController:_onDailyRefresh()
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.Daily,
 		TaskEnum.TaskType.Weekly,
@@ -38,16 +40,16 @@ function var_0_0._onDailyRefresh(arg_7_0)
 	})
 end
 
-function var_0_0.getRewardByLine(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	if not arg_8_0._priority then
-		arg_8_0._priority = 10000
+function TaskController:getRewardByLine(getApproach, viewName, param)
+	if not self._priority then
+		self._priority = 10000
 	end
 
-	arg_8_0._priority = arg_8_0._priority - 1
+	self._priority = self._priority - 1
 
-	PopupController.instance:addPopupView(arg_8_0._priority, arg_8_2, arg_8_3)
+	PopupController.instance:addPopupView(self._priority, viewName, param)
 end
 
-var_0_0.instance = var_0_0.New()
+TaskController.instance = TaskController.New()
 
-return var_0_0
+return TaskController

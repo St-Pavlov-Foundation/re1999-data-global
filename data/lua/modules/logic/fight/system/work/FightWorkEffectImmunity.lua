@@ -1,10 +1,12 @@
-﻿module("modules.logic.fight.system.work.FightWorkEffectImmunity", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkEffectImmunity.lua
 
-local var_0_0 = class("FightWorkEffectImmunity", BaseWork)
+module("modules.logic.fight.system.work.FightWorkEffectImmunity", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	FightFloatMgr.instance:float(arg_1_0.actEffectData.targetId, FightEnum.FloatType.buff, luaLang("fight_buff_reject"), FightEnum.BuffFloatEffectType.Good, false)
-	arg_1_0:onDone(true)
+local FightWorkEffectImmunity = class("FightWorkEffectImmunity", BaseWork)
+
+function FightWorkEffectImmunity:onStart()
+	FightFloatMgr.instance:float(self.actEffectData.targetId, FightEnum.FloatType.buff, luaLang("fight_buff_reject"), FightEnum.BuffFloatEffectType.Good, false)
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkEffectImmunity

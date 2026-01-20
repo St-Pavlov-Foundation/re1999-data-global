@@ -1,31 +1,33 @@
-﻿module("modules.logic.versionactivity2_6.dicehero.controller.effect.DiceHeroUpdateSkillCardWork", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/dicehero/controller/effect/DiceHeroUpdateSkillCardWork.lua
 
-local var_0_0 = class("DiceHeroUpdateSkillCardWork", DiceHeroBaseEffectWork)
+module("modules.logic.versionactivity2_6.dicehero.controller.effect.DiceHeroUpdateSkillCardWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	for iter_1_0, iter_1_1 in pairs(DiceHeroHelper.instance._cardDict) do
-		iter_1_1:playRefreshAnim()
+local DiceHeroUpdateSkillCardWork = class("DiceHeroUpdateSkillCardWork", DiceHeroBaseEffectWork)
+
+function DiceHeroUpdateSkillCardWork:onStart(context)
+	for k, v in pairs(DiceHeroHelper.instance._cardDict) do
+		v:playRefreshAnim()
 	end
 
-	TaskDispatcher.runDelay(arg_1_0._delayRefreshCard, arg_1_0, 0.167)
+	TaskDispatcher.runDelay(self._delayRefreshCard, self, 0.167)
 end
 
-function var_0_0._delayRefreshCard(arg_2_0)
-	local var_2_0 = DiceHeroFightModel.instance:getGameData()
+function DiceHeroUpdateSkillCardWork:_delayRefreshCard()
+	local gameInfo = DiceHeroFightModel.instance:getGameData()
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0._effectMo.skillCards) do
-		local var_2_1 = var_2_0:getCardMoBySkillId(iter_2_1.skillId)
+	for _, v in ipairs(self._effectMo.skillCards) do
+		local cardMo = gameInfo:getCardMoBySkillId(v.skillId)
 
-		if var_2_1 then
-			var_2_1:init(iter_2_1)
+		if cardMo then
+			cardMo:init(v)
 		end
 	end
 
-	arg_2_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0._delayRefreshCard, arg_3_0)
+function DiceHeroUpdateSkillCardWork:clearWork()
+	TaskDispatcher.cancelTask(self._delayRefreshCard, self)
 end
 
-return var_0_0
+return DiceHeroUpdateSkillCardWork

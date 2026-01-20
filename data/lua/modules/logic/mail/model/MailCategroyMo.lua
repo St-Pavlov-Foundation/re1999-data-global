@@ -1,58 +1,62 @@
-﻿module("modules.logic.mail.model.MailCategroyMo", package.seeall)
+﻿-- chunkname: @modules/logic/mail/model/MailCategroyMo.lua
 
-local var_0_0 = class("MailCategroyMo")
+module("modules.logic.mail.model.MailCategroyMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.id = 0
-	arg_1_0.mailId = 1
-	arg_1_0.state = MailEnum.ReadStatus.Unread
-	arg_1_0.createTime = 0
-	arg_1_0.params = ""
-	arg_1_0.itemGroup = {}
-	arg_1_0.sender = ""
-	arg_1_0.senderMap = {}
-	arg_1_0.senderType = 1
-	arg_1_0.titleMap = {}
-	arg_1_0.title = ""
-	arg_1_0.contentMap = {}
-	arg_1_0.icon = ""
-	arg_1_0.addressee = ""
-	arg_1_0.copy = ""
-	arg_1_0.jumpTitle = ""
-	arg_1_0.jump = ""
-	arg_1_0.expireTime = 0
-	arg_1_0.image = ""
-	arg_1_0.needShowToast = 0
-	arg_1_0.specialTag = nil
+local MailCategroyMo = class("MailCategroyMo")
+
+function MailCategroyMo:ctor()
+	self.id = 0
+	self.mailId = 1
+	self.state = MailEnum.ReadStatus.Unread
+	self.createTime = 0
+	self.params = ""
+	self.itemGroup = {}
+	self.sender = ""
+	self.senderMap = {}
+	self.senderType = 1
+	self.titleMap = {}
+	self.title = ""
+	self.contentMap = {}
+	self.icon = ""
+	self.addressee = ""
+	self.copy = ""
+	self.jumpTitle = ""
+	self.jump = ""
+	self.expireTime = 0
+	self.image = ""
+	self.needShowToast = 0
+	self.specialTag = nil
+	self.isLock = nil
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.mailId = arg_2_1.id
-	arg_2_0.sender = arg_2_0:getTemplateSender()
-	arg_2_0.title = arg_2_0:getTemplateTitle()
-	arg_2_0.icon = arg_2_1.icon
-	arg_2_0.addressee = arg_2_1.addressee
-	arg_2_0.copy = arg_2_1.copy
-	arg_2_0.jumpTitle = arg_2_0:getTemplateJumpTitle()
-	arg_2_0.jump = arg_2_1.jump
-	arg_2_0.image = arg_2_1.image
-	arg_2_0.specialTag = arg_2_1.specialTag
-	arg_2_0.senderType = arg_2_1.senderType
+function MailCategroyMo:init(info)
+	self.mailId = info.id
+	self.sender = self:getTemplateSender()
+	self.title = self:getTemplateTitle()
+	self.icon = info.icon
+	self.addressee = info.addressee
+	self.copy = info.copy
+	self.jumpTitle = self:getTemplateJumpTitle()
+	self.jump = info.jump
+	self.image = info.image
+	self.specialTag = info.specialTag
+	self.senderType = info.senderType
+	self.isLock = info.isLock
 end
 
-function var_0_0.getItem(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = {}
+function MailCategroyMo:getItem(iteminfo, configInfo)
+	local orderedInfo = {}
 
-	if arg_3_2 then
-		for iter_3_0, iter_3_1 in ipairs(arg_3_2) do
-			local var_3_1 = string.split(iter_3_1, "#")
+	if configInfo then
+		for _, config in ipairs(configInfo) do
+			local configParams = string.split(config, "#")
 
-			for iter_3_2, iter_3_3 in ipairs(arg_3_1) do
-				local var_3_2 = string.split(iter_3_3, "#")
+			for i, item in ipairs(iteminfo) do
+				local itemParams = string.split(item, "#")
 
-				if var_3_1[1] == var_3_2[1] and var_3_1[2] == var_3_2[2] and var_3_1[3] == var_3_2[3] then
-					table.insert(var_3_0, iter_3_3)
-					table.remove(arg_3_1, iter_3_2)
+				if configParams[1] == itemParams[1] and configParams[2] == itemParams[2] and configParams[3] == itemParams[3] then
+					table.insert(orderedInfo, item)
+					table.remove(iteminfo, i)
 
 					break
 				end
@@ -60,186 +64,200 @@ function var_0_0.getItem(arg_3_0, arg_3_1, arg_3_2)
 		end
 	end
 
-	for iter_3_4 = 1, #arg_3_1 do
-		local var_3_3 = arg_3_1[iter_3_4]
+	for i = 1, #iteminfo do
+		local item = iteminfo[i]
 
-		table.insert(var_3_0, var_3_3)
+		table.insert(orderedInfo, item)
 	end
 
-	for iter_3_5, iter_3_6 in pairs(var_3_0) do
-		local var_3_4 = string.split(iter_3_6, "#")
+	for k, v in pairs(orderedInfo) do
+		local info = string.split(v, "#")
 
-		table.insert(arg_3_0.itemGroup, var_3_4)
-	end
-end
-
-function var_0_0.getExpireTime(arg_4_0, arg_4_1)
-	arg_4_0.expireTime = arg_4_1
-end
-
-function var_0_0.getRpc(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4, arg_5_5, arg_5_6)
-	arg_5_0.id = tonumber(arg_5_4)
-	arg_5_0.state = arg_5_1
-	arg_5_0.createTime = arg_5_2
-	arg_5_0.params = arg_5_3
-	arg_5_0.needShowToast = arg_5_5
-	arg_5_0.mailId = arg_5_6
-end
-
-function var_0_0.getMailType1(arg_6_0, arg_6_1)
-	arg_6_0.mailId = 0
-	arg_6_0.id = tonumber(arg_6_1.incrId)
-	arg_6_0.params = arg_6_1.params
-	arg_6_0.state = arg_6_1.state
-	arg_6_0.createTime = arg_6_1.createTime
-	arg_6_0.senderMap = cjson.decode(arg_6_1.sender)
-	arg_6_0.titleMap = cjson.decode(arg_6_1.title)
-	arg_6_0.contentMap = cjson.decode(arg_6_1.content)
-	arg_6_0.copy = arg_6_1.copy
-	arg_6_0.expireTime = arg_6_1.expireTime
-	arg_6_0.senderType = arg_6_1.senderType or 1
-	arg_6_0.jumpTitle = not string.nilorempty(arg_6_1.jumpTitle) and cjson.decode(arg_6_1.jumpTitle) or nil
-	arg_6_0.jump = not string.nilorempty(arg_6_1.jump) and cjson.decode(arg_6_1.jump) or nil
-end
-
-function var_0_0.getLangTitle(arg_7_0)
-	local var_7_0 = LangSettings.instance:getCurLangShortcut()
-	local var_7_1 = arg_7_0.titleMap[var_7_0]
-
-	if string.nilorempty(var_7_1) then
-		local var_7_2 = LangSettings.instance:getDefaultLangShortcut()
-
-		var_7_1 = arg_7_0.titleMap[var_7_2] or arg_7_0:getTemplateTitle()
-	end
-
-	if var_7_1 then
-		return var_7_1
+		table.insert(self.itemGroup, info)
 	end
 end
 
-function var_0_0.getJumpLink(arg_8_0)
-	if arg_8_0.mailId == 0 then
-		local var_8_0 = LangSettings.instance:getCurLangShortcut()
+function MailCategroyMo:getExpireTime(time)
+	self.expireTime = time
+end
 
-		if arg_8_0.jump then
-			local var_8_1 = arg_8_0.jump[var_8_0]
+function MailCategroyMo:getRpc(state, createTime, params, incrId, needShowToast, mailId, isLock)
+	self.id = tonumber(incrId)
+	self.state = state
+	self.createTime = createTime
+	self.params = params
+	self.needShowToast = needShowToast
+	self.mailId = mailId
+	self.isLock = isLock
+end
 
-			if string.nilorempty(var_8_1) then
-				local var_8_2 = LangSettings.instance:getDefaultLangShortcut()
+function MailCategroyMo:getMailType1(info)
+	self.mailId = 0
+	self.id = tonumber(info.incrId)
+	self.params = info.params
+	self.state = info.state
+	self.createTime = info.createTime
+	self.senderMap = cjson.decode(info.sender)
+	self.titleMap = cjson.decode(info.title)
+	self.contentMap = cjson.decode(info.content)
+	self.copy = info.copy
+	self.expireTime = info.expireTime
+	self.senderType = info.senderType or 1
+	self.jumpTitle = not string.nilorempty(info.jumpTitle) and cjson.decode(info.jumpTitle) or nil
+	self.jump = not string.nilorempty(info.jump) and cjson.decode(info.jump) or nil
+	self.isLock = info.isLock
+end
 
-				var_8_1 = arg_8_0.jump[var_8_2] or ""
+function MailCategroyMo:getLangTitle()
+	local curLang = LangSettings.instance:getCurLangShortcut()
+	local title = self.titleMap[curLang]
+
+	if string.nilorempty(title) then
+		local defaultLang = LangSettings.instance:getDefaultLangShortcut()
+
+		title = self.titleMap[defaultLang] or self:getTemplateTitle()
+	end
+
+	if title then
+		return title
+	end
+end
+
+function MailCategroyMo:getJumpLink()
+	if self.mailId == 0 then
+		local curLang = LangSettings.instance:getCurLangShortcut()
+
+		if self.jump then
+			local jump = self.jump[curLang]
+
+			if string.nilorempty(jump) then
+				local defaultLang = LangSettings.instance:getDefaultLangShortcut()
+
+				jump = self.jump[defaultLang] or ""
 			end
 
-			return var_8_1
+			return jump
 		end
 	end
 
-	return arg_8_0.jump
+	return self.jump
 end
 
-function var_0_0.getSenderType(arg_9_0)
-	if arg_9_0.senderType == 0 or arg_9_0.senderType == nil then
+function MailCategroyMo:getSenderType()
+	if self.senderType == 0 or self.senderType == nil then
 		return 1
 	end
 
-	return arg_9_0.senderType
+	return self.senderType
 end
 
-function var_0_0.getTemplateTitle(arg_10_0)
-	local var_10_0 = lua_mail.configDict[arg_10_0.mailId]
+function MailCategroyMo:getTemplateTitle()
+	local co = lua_mail.configDict[self.mailId]
 
-	if not var_10_0 then
+	if not co then
 		return ""
 	end
 
-	return var_10_0.title
+	return co.title
 end
 
-function var_0_0.getTemplateJumpTitle(arg_11_0)
-	if arg_11_0.mailId == 0 then
-		local var_11_0 = LangSettings.instance:getCurLangShortcut()
+function MailCategroyMo:getTemplateJumpTitle()
+	if self.mailId == 0 then
+		local curLang = LangSettings.instance:getCurLangShortcut()
 
-		if arg_11_0.jumpTitle then
-			local var_11_1 = arg_11_0.jumpTitle[var_11_0]
+		if self.jumpTitle then
+			local jumpTitle = self.jumpTitle[curLang]
 
-			if string.nilorempty(var_11_1) then
-				local var_11_2 = LangSettings.instance:getDefaultLangShortcut()
+			if string.nilorempty(jumpTitle) then
+				local defaultLang = LangSettings.instance:getDefaultLangShortcut()
 
-				var_11_1 = arg_11_0.jumpTitle[var_11_2] or ""
+				jumpTitle = self.jumpTitle[defaultLang] or ""
 			end
 
-			return var_11_1
+			return jumpTitle
 		else
 			return ""
 		end
 	end
 
-	return lua_mail.configDict[arg_11_0.mailId].jumpTitle
+	local co = lua_mail.configDict[self.mailId]
+
+	return co.jumpTitle
 end
 
-function var_0_0.getLangSender(arg_12_0)
-	local var_12_0 = LangSettings.instance:getCurLangShortcut()
-	local var_12_1 = arg_12_0.senderMap[var_12_0]
+function MailCategroyMo:getLangSender()
+	local curLang = LangSettings.instance:getCurLangShortcut()
+	local sender = self.senderMap[curLang]
 
-	if string.nilorempty(var_12_1) then
-		local var_12_2 = LangSettings.instance:getDefaultLangShortcut()
+	if string.nilorempty(sender) then
+		local defaultLang = LangSettings.instance:getDefaultLangShortcut()
 
-		var_12_1 = arg_12_0.senderMap[var_12_2] or arg_12_0:getTemplateSender()
+		sender = self.senderMap[defaultLang] or self:getTemplateSender()
 	end
 
-	if var_12_1 then
-		return var_12_1
+	if sender then
+		return sender
 	end
 end
 
-function var_0_0.getTemplateSender(arg_13_0)
-	local var_13_0 = lua_mail.configDict[arg_13_0.mailId]
+function MailCategroyMo:getTemplateSender()
+	local co = lua_mail.configDict[self.mailId]
 
-	if not var_13_0 then
+	if not co then
 		return ""
 	end
 
-	return var_13_0.sender
+	return co.sender
 end
 
-function var_0_0.haveBonus(arg_14_0)
-	return arg_14_0.itemGroup[1][3] ~= nil
+function MailCategroyMo:haveBonus()
+	return self.itemGroup[1][3] ~= nil
 end
 
-function var_0_0.getLangContent(arg_15_0)
-	local var_15_0 = LangSettings.instance:getCurLangShortcut()
-	local var_15_1 = arg_15_0.contentMap[var_15_0]
+function MailCategroyMo:getLangContent()
+	local curLang = LangSettings.instance:getCurLangShortcut()
+	local content = self.contentMap[curLang]
 
-	if string.nilorempty(var_15_1) then
-		local var_15_2 = LangSettings.instance:getDefaultLangShortcut()
+	if string.nilorempty(content) then
+		local defaultLang = LangSettings.instance:getDefaultLangShortcut()
 
-		var_15_1 = arg_15_0.contentMap[var_15_2] or arg_15_0:getTemplateContent()
+		content = self.contentMap[defaultLang] or self:getTemplateContent()
 	end
 
-	if var_15_1 then
-		return var_15_1
+	if content then
+		return content
 	end
 end
 
-function var_0_0.getTemplateContent(arg_16_0)
-	local var_16_0 = lua_mail.configDict[arg_16_0.mailId]
+function MailCategroyMo:getTemplateContent()
+	local co = lua_mail.configDict[self.mailId]
 
-	if not var_16_0 then
+	if not co then
 		return ""
 	end
 
-	if arg_16_0.params ~= "" then
-		local var_16_1 = var_16_0.content
-		local var_16_2 = string.split(arg_16_0.params, "#")
+	if self.params ~= "" then
+		local langContent = co.content
+		local contents = string.split(self.params, "#")
 
-		for iter_16_0, iter_16_1 in ipairs(var_16_2) do
-			var_16_2[iter_16_0] = serverLang(iter_16_1)
+		for i, v in ipairs(contents) do
+			contents[i] = serverLang(v)
 		end
 
-		return (GameUtil.getSubPlaceholderLuaLang(var_16_1, var_16_2))
+		langContent = GameUtil.getSubPlaceholderLuaLang(langContent, contents)
+
+		return langContent
 	else
-		return var_16_0.content
+		return co.content
 	end
 end
 
-return var_0_0
+function MailCategroyMo:hasLockOp()
+	if self.isLock == true or self.isLock == false then
+		return true
+	end
+
+	return false
+end
+
+return MailCategroyMo

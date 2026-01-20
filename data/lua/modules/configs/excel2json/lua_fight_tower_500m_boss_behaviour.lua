@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_fight_tower_500m_boss_behaviour", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_fight_tower_500m_boss_behaviour.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_fight_tower_500m_boss_behaviour", package.seeall)
+
+local lua_fight_tower_500m_boss_behaviour = {}
+local fields = {
 	monsterid = 2,
 	param2 = 4,
 	hpColor = 13,
@@ -16,13 +18,13 @@ local var_0_1 = {
 	param4 = 6,
 	level = 1
 }
-local var_0_2 = {
+local primaryKey = {
 	"level"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_fight_tower_500m_boss_behaviour.onLoad(json)
+	lua_fight_tower_500m_boss_behaviour.configList, lua_fight_tower_500m_boss_behaviour.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_fight_tower_500m_boss_behaviour

@@ -1,47 +1,49 @@
-﻿module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepCallEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/va3chess/game/step/Va3ChessStepCallEvent.lua
 
-local var_0_0 = class("Va3ChessStepCallEvent", Va3ChessStepBase)
+module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepCallEvent", package.seeall)
 
-function var_0_0.start(arg_1_0)
-	local var_1_0 = arg_1_0.originData.event
-	local var_1_1 = Va3ChessGameController.instance.event
+local Va3ChessStepCallEvent = class("Va3ChessStepCallEvent", Va3ChessStepBase)
 
-	if var_1_1 then
-		var_1_1:setCurEventByObj(var_1_0)
+function Va3ChessStepCallEvent:start()
+	local evtServerData = self.originData.event
+	local evtMgr = Va3ChessGameController.instance.event
 
-		arg_1_0._curEvent = var_1_1:getCurEvent()
+	if evtMgr then
+		evtMgr:setCurEventByObj(evtServerData)
+
+		self._curEvent = evtMgr:getCurEvent()
 	end
 
-	if arg_1_0._curEvent then
-		Va3ChessGameController.instance:registerCallback(Va3ChessEvent.EventFinishPlay, arg_1_0.onReceiveFinished, arg_1_0)
+	if self._curEvent then
+		Va3ChessGameController.instance:registerCallback(Va3ChessEvent.EventFinishPlay, self.onReceiveFinished, self)
 	else
-		arg_1_0:finish()
+		self:finish()
 	end
 end
 
-function var_0_0.onReceiveFinished(arg_2_0, arg_2_1)
-	if arg_2_0._curEvent == arg_2_1 then
-		Va3ChessGameController.instance:unregisterCallback(Va3ChessEvent.EventFinishPlay, arg_2_0.onReceiveFinished, arg_2_0)
-		arg_2_0:finish()
+function Va3ChessStepCallEvent:onReceiveFinished(evt)
+	if self._curEvent == evt then
+		Va3ChessGameController.instance:unregisterCallback(Va3ChessEvent.EventFinishPlay, self.onReceiveFinished, self)
+		self:finish()
 	end
 end
 
-function var_0_0.finish(arg_3_0)
-	local var_3_0 = Va3ChessGameController.instance.event
+function Va3ChessStepCallEvent:finish()
+	local evtMgr = Va3ChessGameController.instance.event
 
-	if var_3_0 then
-		var_3_0:setLockEvent()
+	if evtMgr then
+		evtMgr:setLockEvent()
 	end
 
-	var_0_0.super.finish(arg_3_0)
+	Va3ChessStepCallEvent.super.finish(self)
 end
 
-function var_0_0.dispose(arg_4_0)
-	Va3ChessGameController.instance:unregisterCallback(Va3ChessEvent.EventFinishPlay, arg_4_0.onReceiveFinished, arg_4_0)
+function Va3ChessStepCallEvent:dispose()
+	Va3ChessGameController.instance:unregisterCallback(Va3ChessEvent.EventFinishPlay, self.onReceiveFinished, self)
 
-	arg_4_0._curEvent = nil
+	self._curEvent = nil
 
-	var_0_0.super.dispose(arg_4_0)
+	Va3ChessStepCallEvent.super.dispose(self)
 end
 
-return var_0_0
+return Va3ChessStepCallEvent

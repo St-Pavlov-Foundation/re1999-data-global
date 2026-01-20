@@ -1,53 +1,55 @@
-﻿module("modules.logic.versionactivity1_5.enter.view.VersionActivity1_5EnterView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/enter/view/VersionActivity1_5EnterView.lua
 
-local var_0_0 = class("VersionActivity1_5EnterView", VersionActivityEnterBaseViewWithGroup)
+module("modules.logic.versionactivity1_5.enter.view.VersionActivity1_5EnterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	var_0_0.super.onInitView(arg_1_0)
+local VersionActivity1_5EnterView = class("VersionActivity1_5EnterView", VersionActivityEnterBaseViewWithGroup)
 
-	arg_1_0._txtremaintime = gohelper.findChildText(arg_1_0.viewGO, "logo/Time/timebg/#txt_remaintime")
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "logo/Time/#txt_time")
-	arg_1_0.txtDungeonStoreNum1 = gohelper.findChildText(arg_1_0.viewGO, "entrance/#go_group1/activityContainer4/normal/#txt_num")
-	arg_1_0.txtDungeonStoreNum2 = gohelper.findChildText(arg_1_0.viewGO, "entrance/#go_group2/activityContainer10/normal/#txt_num")
-	arg_1_0.txtDungeonStoreRemainTime1 = gohelper.findChildText(arg_1_0.viewGO, "entrance/#go_group1/activityContainer4/#go_time/#txt_time")
-	arg_1_0.txtDungeonStoreRemainTime2 = gohelper.findChildText(arg_1_0.viewGO, "entrance/#go_group2/activityContainer10/#go_time/#txt_time")
-	arg_1_0._btnseasonstore = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "entrance/#go_group2/#btn_seasonstore")
-	arg_1_0._txtseasonstorenum = gohelper.findChildText(arg_1_0.viewGO, "entrance/#go_group2/#btn_seasonstore/normal/storeBG/#txt_num")
-	arg_1_0._txtseasonstoretime = gohelper.findChildText(arg_1_0.viewGO, "entrance/#go_group2/#btn_seasonstore/normal/#go_bg1/#txt_time")
-	arg_1_0._btnachievementpreview = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "entrance/#btn_achievementpreview")
-	arg_1_0.gobg1 = gohelper.findChild(arg_1_0.viewGO, "bg1")
-	arg_1_0.gobg2 = gohelper.findChild(arg_1_0.viewGO, "bg2")
+function VersionActivity1_5EnterView:onInitView()
+	VersionActivity1_5EnterView.super.onInitView(self)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	self._txtremaintime = gohelper.findChildText(self.viewGO, "logo/Time/timebg/#txt_remaintime")
+	self._txttime = gohelper.findChildText(self.viewGO, "logo/Time/#txt_time")
+	self.txtDungeonStoreNum1 = gohelper.findChildText(self.viewGO, "entrance/#go_group1/activityContainer4/normal/#txt_num")
+	self.txtDungeonStoreNum2 = gohelper.findChildText(self.viewGO, "entrance/#go_group2/activityContainer10/normal/#txt_num")
+	self.txtDungeonStoreRemainTime1 = gohelper.findChildText(self.viewGO, "entrance/#go_group1/activityContainer4/#go_time/#txt_time")
+	self.txtDungeonStoreRemainTime2 = gohelper.findChildText(self.viewGO, "entrance/#go_group2/activityContainer10/#go_time/#txt_time")
+	self._btnseasonstore = gohelper.findChildButtonWithAudio(self.viewGO, "entrance/#go_group2/#btn_seasonstore")
+	self._txtseasonstorenum = gohelper.findChildText(self.viewGO, "entrance/#go_group2/#btn_seasonstore/normal/storeBG/#txt_num")
+	self._txtseasonstoretime = gohelper.findChildText(self.viewGO, "entrance/#go_group2/#btn_seasonstore/normal/#go_bg1/#txt_time")
+	self._btnachievementpreview = gohelper.findChildButtonWithAudio(self.viewGO, "entrance/#btn_achievementpreview")
+	self.gobg1 = gohelper.findChild(self.viewGO, "bg1")
+	self.gobg2 = gohelper.findChild(self.viewGO, "bg2")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	var_0_0.super.addEvents(arg_2_0)
-	arg_2_0._btnseasonstore:AddClickListener(arg_2_0._btnseasonstoreOnClick, arg_2_0)
-	arg_2_0._btnachievementpreview:AddClickListener(arg_2_0._btnachievementpreviewOnClick, arg_2_0)
+function VersionActivity1_5EnterView:addEvents()
+	VersionActivity1_5EnterView.super.addEvents(self)
+	self._btnseasonstore:AddClickListener(self._btnseasonstoreOnClick, self)
+	self._btnachievementpreview:AddClickListener(self._btnachievementpreviewOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	var_0_0.super.removeEvents(arg_3_0)
-	arg_3_0._btnseasonstore:RemoveClickListener()
-	arg_3_0._btnachievementpreview:RemoveClickListener()
+function VersionActivity1_5EnterView:removeEvents()
+	VersionActivity1_5EnterView.super.removeEvents(self)
+	self._btnseasonstore:RemoveClickListener()
+	self._btnachievementpreview:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	var_0_0.super._editableInitView(arg_4_0)
-	arg_4_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_4_0.refreshCurrency, arg_4_0)
+function VersionActivity1_5EnterView:_editableInitView()
+	VersionActivity1_5EnterView.super._editableInitView(self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self.refreshCurrency, self)
 end
 
-function var_0_0._btnseasonstoreOnClick(arg_5_0)
-	local var_5_0 = Activity104Model.instance:getCurSeasonId()
-	local var_5_1 = Activity104Enum.SeasonStore[var_5_0]
-	local var_5_2, var_5_3, var_5_4 = ActivityHelper.getActivityStatusAndToast(var_5_1)
+function VersionActivity1_5EnterView:_btnseasonstoreOnClick()
+	local actId = Activity104Model.instance:getCurSeasonId()
+	local storeActId = Activity104Enum.SeasonStore[actId]
+	local status, toastId, toastParam = ActivityHelper.getActivityStatusAndToast(storeActId)
 
-	if var_5_2 ~= ActivityEnum.ActivityStatus.Normal then
-		if var_5_3 then
-			GameFacade.showToast(var_5_3, var_5_4)
+	if status ~= ActivityEnum.ActivityStatus.Normal then
+		if toastId then
+			GameFacade.showToast(toastId, toastParam)
 		end
 
 		return
@@ -56,256 +58,263 @@ function var_0_0._btnseasonstoreOnClick(arg_5_0)
 	Activity104Controller.instance:openSeasonStoreView()
 end
 
-function var_0_0._btnachievementpreviewOnClick(arg_6_0)
-	local var_6_0 = ActivityConfig.instance:getActivityCo(arg_6_0.actId)
+function VersionActivity1_5EnterView:_btnachievementpreviewOnClick()
+	local actCfg = ActivityConfig.instance:getActivityCo(self.actId)
 
-	if var_6_0 and var_6_0.achievementGroup ~= 0 then
-		AchievementController.instance:openAchievementGroupPreView(arg_6_0.actId, var_6_0.achievementGroup)
+	if actCfg and actCfg.achievementGroup ~= 0 then
+		AchievementController.instance:openAchievementGroupPreView(self.actId, actCfg.achievementGroup)
 	end
 end
 
-function var_0_0.refreshSingleBgUI(arg_7_0)
-	gohelper.setActive(arg_7_0.gobg1, arg_7_0.showGroupIndex == 1)
-	gohelper.setActive(arg_7_0.gobg2, arg_7_0.showGroupIndex == 2)
+function VersionActivity1_5EnterView:refreshSingleBgUI()
+	gohelper.setActive(self.gobg1, self.showGroupIndex == 1)
+	gohelper.setActive(self.gobg2, self.showGroupIndex == 2)
 end
 
-function var_0_0.onClickActivity1(arg_8_0)
+function VersionActivity1_5EnterView:onClickActivity1()
 	Activity142Controller.instance:openMapView()
 end
 
-function var_0_0.onClickActivity2(arg_9_0)
+function VersionActivity1_5EnterView:onClickActivity2()
 	BossRushController.instance:openMainView()
 end
 
-function var_0_0.onClickActivity3(arg_10_0)
+function VersionActivity1_5EnterView:onClickActivity3()
 	SportsNewsController.instance:openSportsNewsMainView()
 end
 
-function var_0_0.onClickActivity4(arg_11_0)
+function VersionActivity1_5EnterView:onClickActivity4()
 	VersionActivity1_5DungeonController.instance:openStoreView()
 end
 
-function var_0_0.onClickActivity5(arg_12_0)
+function VersionActivity1_5EnterView:onClickActivity5()
 	VersionActivity1_5DungeonController.instance:openVersionActivityDungeonMapView()
 end
 
-function var_0_0.onClickActivity6(arg_13_0)
+function VersionActivity1_5EnterView:onClickActivity6()
 	PeaceUluController.instance:openPeaceUluView()
 end
 
-function var_0_0.onClickActivity7(arg_14_0)
+function VersionActivity1_5EnterView:onClickActivity7()
 	BossRushController.instance:openMainView()
 end
 
-function var_0_0.onClickActivity8(arg_15_0)
+function VersionActivity1_5EnterView:onClickActivity8()
 	Activity104Controller.instance:openSeasonMainView()
 end
 
-function var_0_0.onClickActivity9(arg_16_0)
+function VersionActivity1_5EnterView:onClickActivity9()
 	AiZiLaController.instance:openMapView()
 end
 
-function var_0_0.onClickActivity10(arg_17_0)
+function VersionActivity1_5EnterView:onClickActivity10()
 	VersionActivity1_5DungeonController.instance:openStoreView()
 end
 
-function var_0_0.onClickActivity11(arg_18_0)
+function VersionActivity1_5EnterView:onClickActivity11()
 	VersionActivity1_5DungeonController.instance:openVersionActivityDungeonMapView()
 end
 
-function var_0_0.singleBgUI(arg_19_0)
+function VersionActivity1_5EnterView:singleBgUI()
 	return
 end
 
-function var_0_0.refreshUI(arg_20_0)
-	var_0_0.super.refreshUI(arg_20_0)
-	arg_20_0:refreshEnterViewTime()
-	arg_20_0:updateAchievementBtnVisible()
-	arg_20_0:refreshSeasonStore()
-	arg_20_0:refreshCurrency()
-	arg_20_0:refreshDungeonStoreTime()
+function VersionActivity1_5EnterView:refreshUI()
+	VersionActivity1_5EnterView.super.refreshUI(self)
+	self:refreshEnterViewTime()
+	self:updateAchievementBtnVisible()
+	self:refreshSeasonStore()
+	self:refreshCurrency()
+	self:refreshDungeonStoreTime()
 end
 
-function var_0_0.refreshEnterViewTime(arg_21_0)
-	arg_21_0:refreshDurationTime()
-	arg_21_0:refreshRemainTime()
+function VersionActivity1_5EnterView:refreshEnterViewTime()
+	self:refreshDurationTime()
+	self:refreshRemainTime()
 end
 
-function var_0_0.refreshCurrency(arg_22_0)
-	local var_22_0 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.V1a5Dungeon)
-	local var_22_1 = var_22_0 and var_22_0.quantity or 0
+function VersionActivity1_5EnterView:refreshCurrency()
+	local currencyMO = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.V1a5Dungeon)
+	local quantity = currencyMO and currencyMO.quantity or 0
 
-	arg_22_0.txtDungeonStoreNum1.text = var_22_1
-	arg_22_0.txtDungeonStoreNum2.text = var_22_1
+	self.txtDungeonStoreNum1.text = quantity
+	self.txtDungeonStoreNum2.text = quantity
 end
 
-function var_0_0.refreshDungeonStoreTime(arg_23_0)
-	local var_23_0 = ActivityModel.instance:getActivityInfo()[VersionActivity1_5Enum.ActivityId.DungeonStore]:getRealEndTimeStamp() - ServerTime.now()
+function VersionActivity1_5EnterView:refreshDungeonStoreTime()
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[VersionActivity1_5Enum.ActivityId.DungeonStore]
+	local endTime = actInfoMo:getRealEndTimeStamp()
+	local offsetSecond = endTime - ServerTime.now()
 
-	if var_23_0 > TimeUtil.OneDaySecond then
-		local var_23_1 = Mathf.Floor(var_23_0 / TimeUtil.OneDaySecond) .. "d"
+	if offsetSecond > TimeUtil.OneDaySecond then
+		local day = Mathf.Floor(offsetSecond / TimeUtil.OneDaySecond)
+		local timeStr = day .. "d"
 
-		arg_23_0.txtDungeonStoreRemainTime1.text = var_23_1
-		arg_23_0.txtDungeonStoreRemainTime2.text = var_23_1
+		self.txtDungeonStoreRemainTime1.text = timeStr
+		self.txtDungeonStoreRemainTime2.text = timeStr
 
 		return
 	end
 
-	if var_23_0 > TimeUtil.OneHourSecond then
-		local var_23_2 = Mathf.Floor(var_23_0 / TimeUtil.OneHourSecond) .. "h"
+	if offsetSecond > TimeUtil.OneHourSecond then
+		local hour = Mathf.Floor(offsetSecond / TimeUtil.OneHourSecond)
+		local timeStr = hour .. "h"
 
-		arg_23_0.txtDungeonStoreRemainTime1.text = var_23_2
-		arg_23_0.txtDungeonStoreRemainTime2.text = var_23_2
+		self.txtDungeonStoreRemainTime1.text = timeStr
+		self.txtDungeonStoreRemainTime2.text = timeStr
 
 		return
 	end
 
-	arg_23_0.txtDungeonStoreRemainTime1.text = "1h"
-	arg_23_0.txtDungeonStoreRemainTime2.text = "1h"
+	self.txtDungeonStoreRemainTime1.text = "1h"
+	self.txtDungeonStoreRemainTime2.text = "1h"
 end
 
-function var_0_0.refreshRemainTime(arg_24_0)
-	local var_24_0 = ActivityModel.instance:getActivityInfo()[arg_24_0.actId]:getRemainTimeStr3()
+function VersionActivity1_5EnterView:refreshRemainTime()
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[self.actId]
+	local timeStr = actInfoMo:getRemainTimeStr3()
 
-	arg_24_0._txtremaintime.text = formatLuaLang("remain", var_24_0)
+	self._txtremaintime.text = formatLuaLang("remain", timeStr)
 end
 
-function var_0_0.refreshDurationTime(arg_25_0)
-	local var_25_0 = ActivityModel.instance:getActivityInfo()[arg_25_0.actId]
+function VersionActivity1_5EnterView:refreshDurationTime()
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[self.actId]
 
-	if arg_25_0._txttime then
-		arg_25_0._txttime.text = var_25_0:getStartTimeStr() .. " ~ " .. var_25_0:getEndTimeStr()
+	if self._txttime then
+		self._txttime.text = actInfoMo:getStartTimeStr() .. " ~ " .. actInfoMo:getEndTimeStr()
 	end
 end
 
-function var_0_0.everyMinuteCall(arg_26_0)
-	var_0_0.super.everyMinuteCall(arg_26_0)
-	arg_26_0:refreshRemainTime()
-	arg_26_0:refreshDungeonStoreTime()
+function VersionActivity1_5EnterView:everyMinuteCall()
+	VersionActivity1_5EnterView.super.everyMinuteCall(self)
+	self:refreshRemainTime()
+	self:refreshDungeonStoreTime()
 end
 
-function var_0_0.onDestroyView(arg_27_0)
-	var_0_0.super.onDestroyView(arg_27_0)
+function VersionActivity1_5EnterView:onDestroyView()
+	VersionActivity1_5EnterView.super.onDestroyView(self)
 end
 
-function var_0_0.onRefreshActivity8(arg_28_0, arg_28_1)
-	local var_28_0 = ActivityHelper.getActivityStatus(arg_28_1.actId) == ActivityEnum.ActivityStatus.Normal
-	local var_28_1 = gohelper.findChild(arg_28_1.goNormal, "week")
-	local var_28_2 = gohelper.findChild(arg_28_1.goNormal, "score")
+function VersionActivity1_5EnterView:onRefreshActivity8(activityItem)
+	local status = ActivityHelper.getActivityStatus(activityItem.actId)
+	local isNormal = status == ActivityEnum.ActivityStatus.Normal
+	local goWeek = gohelper.findChild(activityItem.goNormal, "week")
+	local goScore = gohelper.findChild(activityItem.goNormal, "score")
 
-	gohelper.setActive(var_28_1, var_28_0 and Activity104Model.instance:isEnterSpecial())
-	gohelper.setActive(var_28_2, var_28_0)
+	gohelper.setActive(goWeek, isNormal and Activity104Model.instance:isEnterSpecial())
+	gohelper.setActive(goScore, isNormal)
 
-	if var_28_0 and Activity104Model.instance:tryGetActivityInfo(arg_28_1.actId, arg_28_0.checkNeedRefreshUI, arg_28_0) then
-		local var_28_3 = Activity104Model.instance:getAct104CurStage()
-		local var_28_4 = gohelper.findChildImage(arg_28_1.rootGo, "normal/score/stage7")
+	if isNormal and Activity104Model.instance:tryGetActivityInfo(activityItem.actId, self.checkNeedRefreshUI, self) then
+		local stage = Activity104Model.instance:getAct104CurStage()
+		local stage7 = gohelper.findChildImage(activityItem.rootGo, "normal/score/stage7")
 
-		gohelper.setActive(var_28_4, var_28_3 == 7)
+		gohelper.setActive(stage7, stage == 7)
 
-		for iter_28_0 = 1, 7 do
-			local var_28_5 = gohelper.findChildImage(arg_28_1.rootGo, "normal/score/stage" .. iter_28_0)
+		for i = 1, 7 do
+			local image = gohelper.findChildImage(activityItem.rootGo, "normal/score/stage" .. i)
 
-			UISpriteSetMgr.instance:setV1a5EnterViewSprite(var_28_5, iter_28_0 <= var_28_3 and "v1a5_enterview_scorefg" or "v1a5_enterview_scorebg", true)
+			UISpriteSetMgr.instance:setV1a5EnterViewSprite(image, i <= stage and "v1a5_enterview_scorefg" or "v1a5_enterview_scorebg", true)
 		end
 	end
 
 	if GameConfig:GetCurLangType() ~= LangSettings.zh then
-		local var_28_6 = gohelper.findChild(arg_28_1.goNormal, "txt_Activity2")
-		local var_28_7 = var_28_0 and -12 or -20
+		local txt_activity = gohelper.findChild(activityItem.goNormal, "txt_Activity2")
+		local txtPosY = isNormal and -12 or -20
 
-		transformhelper.setLocalPosXY(var_28_6.transform, var_28_6.transform.localPosition.x, var_28_7)
+		transformhelper.setLocalPosXY(txt_activity.transform, txt_activity.transform.localPosition.x, txtPosY)
 	end
 end
 
-function var_0_0.refreshSeasonStore(arg_29_0)
-	local var_29_0 = Activity104Model.instance:getCurSeasonId()
+function VersionActivity1_5EnterView:refreshSeasonStore()
+	local actId = Activity104Model.instance:getCurSeasonId()
+	local activityStatus = ActivityHelper.getActivityStatus(actId)
 
-	if ActivityHelper.getActivityStatus(var_29_0) == ActivityEnum.ActivityStatus.Normal then
-		gohelper.setActive(arg_29_0._btnseasonstore, false)
+	if activityStatus == ActivityEnum.ActivityStatus.Normal then
+		gohelper.setActive(self._btnseasonstore, false)
 
 		return
 	end
 
-	local var_29_1 = Activity104Enum.SeasonStore[var_29_0]
-	local var_29_2 = ActivityHelper.getActivityStatus(var_29_1)
+	local storeActId = Activity104Enum.SeasonStore[actId]
+	local storeActivityStatus = ActivityHelper.getActivityStatus(storeActId)
 
-	gohelper.setActive(arg_29_0._btnseasonstore, var_29_2 == ActivityEnum.ActivityStatus.Normal)
+	gohelper.setActive(self._btnseasonstore, storeActivityStatus == ActivityEnum.ActivityStatus.Normal)
 
-	if var_29_2 ~= ActivityEnum.ActivityStatus.Normal then
+	if storeActivityStatus ~= ActivityEnum.ActivityStatus.Normal then
 		return
 	end
 
-	local var_29_3 = CurrencyModel.instance:getCurrency(Activity104Enum.StoreUTTU[var_29_0])
-	local var_29_4 = var_29_3 and var_29_3.quantity or 0
+	local currencyMO = CurrencyModel.instance:getCurrency(Activity104Enum.StoreUTTU[actId])
+	local quantity = currencyMO and currencyMO.quantity or 0
 
-	arg_29_0._txtseasonstorenum.text = GameUtil.numberDisplay(var_29_4)
+	self._txtseasonstorenum.text = GameUtil.numberDisplay(quantity)
 
-	local var_29_5 = ActivityModel.instance:getActMO(var_29_1)
+	local actInfoMo = ActivityModel.instance:getActMO(storeActId)
 
-	arg_29_0._txtseasonstoretime.text = var_29_5 and var_29_5:getRemainTimeStr2ByEndTime(true) or ""
+	self._txtseasonstoretime.text = actInfoMo and actInfoMo:getRemainTimeStr2ByEndTime(true) or ""
 end
 
-function var_0_0.updateAchievementBtnVisible(arg_30_0)
-	local var_30_0 = ActivityConfig.instance:getActivityCo(arg_30_0.actId)
+function VersionActivity1_5EnterView:updateAchievementBtnVisible()
+	local actCfg = ActivityConfig.instance:getActivityCo(self.actId)
 
-	gohelper.setActive(arg_30_0._btnachievementpreview.gameObject, var_30_0 and var_30_0.achievementGroup ~= 0)
+	gohelper.setActive(self._btnachievementpreview.gameObject, actCfg and actCfg.achievementGroup ~= 0)
 end
 
-function var_0_0.getLockTextFunc1(arg_31_0, arg_31_1, arg_31_2)
-	if arg_31_2 == ActivityEnum.ActivityStatus.NotUnlock then
-		return arg_31_0:getLockTextByOpenCo(arg_31_1.openId)
+function VersionActivity1_5EnterView:getLockTextFunc1(activityItem, activityStatus)
+	if activityStatus == ActivityEnum.ActivityStatus.NotUnlock then
+		return self:getLockTextByOpenCo(activityItem.openId)
 	end
 
-	return arg_31_0:getLockText(arg_31_1, arg_31_2)
+	return self:getLockText(activityItem, activityStatus)
 end
 
-function var_0_0.getLockTextFunc9(arg_32_0, arg_32_1, arg_32_2)
-	if arg_32_2 == ActivityEnum.ActivityStatus.NotUnlock then
-		return arg_32_0:getLockTextByOpenCo(arg_32_1.openId)
+function VersionActivity1_5EnterView:getLockTextFunc9(activityItem, activityStatus)
+	if activityStatus == ActivityEnum.ActivityStatus.NotUnlock then
+		return self:getLockTextByOpenCo(activityItem.openId)
 	end
 
-	return arg_32_0:getLockText(arg_32_1, arg_32_2)
+	return self:getLockText(activityItem, activityStatus)
 end
 
-function var_0_0.getLockTextByOpenCo(arg_33_0, arg_33_1)
-	local var_33_0 = lua_open.configDict[arg_33_1]
-	local var_33_1 = DungeonConfig.instance:getEpisodeCO(var_33_0.episodeId)
-	local var_33_2 = DungeonConfig.instance:getChapterCO(var_33_1.chapterId).chapterIndex
-	local var_33_3 = var_33_1.id % 100
+function VersionActivity1_5EnterView:getLockTextByOpenCo(openId)
+	local openCo = lua_open.configDict[openId]
+	local episodeCo = DungeonConfig.instance:getEpisodeCO(openCo.episodeId)
+	local chapterIndex = DungeonConfig.instance:getChapterCO(episodeCo.chapterId).chapterIndex
+	local episodeIndex = episodeCo.id % 100
 
-	return string.format(luaLang("versionactivity1_3_hardlocktip"), string.format("%s-%s", var_33_2, var_33_3))
+	return string.format(luaLang("versionactivity1_3_hardlocktip"), string.format("%s-%s", chapterIndex, episodeIndex))
 end
 
-function var_0_0.onOpenViewFinish(arg_34_0, arg_34_1)
-	var_0_0.super.onOpenViewFinish(arg_34_0, arg_34_1)
+function VersionActivity1_5EnterView:onOpenViewFinish(viewName)
+	VersionActivity1_5EnterView.super.onOpenViewFinish(self, viewName)
 
-	if arg_34_1 == ViewName.VersionActivity1_5DungeonMapView then
-		arg_34_0:closeBgmLeadSinger()
-	end
-end
-
-function var_0_0.onCloseViewFinish(arg_35_0, arg_35_1)
-	var_0_0.super.onCloseViewFinish(arg_35_0, arg_35_1)
-
-	if ViewHelper.instance:checkViewOnTheTop(arg_35_0.viewName) then
-		arg_35_0:openBgmLeadSinger()
+	if viewName == ViewName.VersionActivity1_5DungeonMapView then
+		self:closeBgmLeadSinger()
 	end
 end
 
-function var_0_0.playBgm(arg_36_0)
-	arg_36_0.switchGroupId = AudioMgr.instance:getIdFromString("music_vocal_filter")
-	arg_36_0.originalStateId = AudioMgr.instance:getIdFromString("original")
-	arg_36_0.accompanimentStateId = AudioMgr.instance:getIdFromString("accompaniment")
+function VersionActivity1_5EnterView:onCloseViewFinish(viewName)
+	VersionActivity1_5EnterView.super.onCloseViewFinish(self, viewName)
 
-	arg_36_0:openBgmLeadSinger()
+	if ViewHelper.instance:checkViewOnTheTop(self.viewName) then
+		self:openBgmLeadSinger()
+	end
 end
 
-function var_0_0.openBgmLeadSinger(arg_37_0)
-	AudioMgr.instance:setSwitch(arg_37_0.switchGroupId, arg_37_0.originalStateId)
+function VersionActivity1_5EnterView:playBgm()
+	self.switchGroupId = AudioMgr.instance:getIdFromString("music_vocal_filter")
+	self.originalStateId = AudioMgr.instance:getIdFromString("original")
+	self.accompanimentStateId = AudioMgr.instance:getIdFromString("accompaniment")
+
+	self:openBgmLeadSinger()
 end
 
-function var_0_0.closeBgmLeadSinger(arg_38_0)
-	AudioMgr.instance:setSwitch(arg_38_0.switchGroupId, arg_38_0.accompanimentStateId)
+function VersionActivity1_5EnterView:openBgmLeadSinger()
+	AudioMgr.instance:setSwitch(self.switchGroupId, self.originalStateId)
 end
 
-return var_0_0
+function VersionActivity1_5EnterView:closeBgmLeadSinger()
+	AudioMgr.instance:setSwitch(self.switchGroupId, self.accompanimentStateId)
+end
+
+return VersionActivity1_5EnterView

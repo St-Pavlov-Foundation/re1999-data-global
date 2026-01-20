@@ -1,67 +1,69 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.view.Activity114TravelView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/view/Activity114TravelView.lua
 
-local var_0_0 = class("Activity114TravelView", BaseView)
+module("modules.logic.versionactivity1_2.jiexika.view.Activity114TravelView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagemaskbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_maskbg")
-	arg_1_0._simagebg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg1")
-	arg_1_0._simagebg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg2")
-	arg_1_0._simagebg3 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg3")
-	arg_1_0._simagebg5 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg5")
-	arg_1_0._simageqianbi = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_qianbi")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+local Activity114TravelView = class("Activity114TravelView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Activity114TravelView:onInitView()
+	self._simagemaskbg = gohelper.findChildSingleImage(self.viewGO, "#simage_maskbg")
+	self._simagebg1 = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_bg1")
+	self._simagebg2 = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_bg2")
+	self._simagebg3 = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_bg3")
+	self._simagebg5 = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_bg5")
+	self._simageqianbi = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_qianbi")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function Activity114TravelView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function Activity114TravelView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function Activity114TravelView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._simagemaskbg:LoadImage(ResUrl.getVersionActivityTrip_1_2("bg_beijing"))
-	arg_5_0._simagebg1:LoadImage(ResUrl.getVersionActivityTrip_1_2("bg_zhizhang1"))
-	arg_5_0._simagebg2:LoadImage(ResUrl.getVersionActivityTrip_1_2("bg_zhizhang2"))
-	arg_5_0._simagebg3:LoadImage(ResUrl.getVersionActivityTrip_1_2("bg_zhizhang3"))
-	arg_5_0._simagebg5:LoadImage(ResUrl.getVersionActivityTrip_1_2("bg_zhizhang5"))
-	arg_5_0._simageqianbi:LoadImage(ResUrl.getVersionActivityTrip_1_2("bg_qianbi"))
+function Activity114TravelView:_editableInitView()
+	self._simagemaskbg:LoadImage(ResUrl.getVersionActivityTrip_1_2("bg_beijing"))
+	self._simagebg1:LoadImage(ResUrl.getVersionActivityTrip_1_2("bg_zhizhang1"))
+	self._simagebg2:LoadImage(ResUrl.getVersionActivityTrip_1_2("bg_zhizhang2"))
+	self._simagebg3:LoadImage(ResUrl.getVersionActivityTrip_1_2("bg_zhizhang3"))
+	self._simagebg5:LoadImage(ResUrl.getVersionActivityTrip_1_2("bg_zhizhang5"))
+	self._simageqianbi:LoadImage(ResUrl.getVersionActivityTrip_1_2("bg_qianbi"))
 
-	arg_5_0.entrances = {}
+	self.entrances = {}
 
-	for iter_5_0 = 1, 6 do
-		arg_5_0.entrances[iter_5_0] = Activity114TravelItem.New(gohelper.findChild(arg_5_0.viewGO, "entrances/entrance" .. iter_5_0), iter_5_0)
+	for i = 1, 6 do
+		self.entrances[i] = Activity114TravelItem.New(gohelper.findChild(self.viewGO, "entrances/entrance" .. i), i)
 	end
 end
 
-function var_0_0.onOpen(arg_6_0)
+function Activity114TravelView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.TeachNote.play_ui_mail_open)
 end
 
-function var_0_0.onClose(arg_7_0)
+function Activity114TravelView:onClose()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_delete)
 end
 
-function var_0_0.onDestroyView(arg_8_0)
-	arg_8_0._simagemaskbg:UnLoadImage()
-	arg_8_0._simagebg1:UnLoadImage()
-	arg_8_0._simagebg2:UnLoadImage()
-	arg_8_0._simagebg3:UnLoadImage()
-	arg_8_0._simagebg5:UnLoadImage()
-	arg_8_0._simageqianbi:UnLoadImage()
+function Activity114TravelView:onDestroyView()
+	self._simagemaskbg:UnLoadImage()
+	self._simagebg1:UnLoadImage()
+	self._simagebg2:UnLoadImage()
+	self._simagebg3:UnLoadImage()
+	self._simagebg5:UnLoadImage()
+	self._simageqianbi:UnLoadImage()
 
-	for iter_8_0 = 1, 6 do
-		arg_8_0.entrances[iter_8_0]:onDestroy()
+	for i = 1, 6 do
+		self.entrances[i]:onDestroy()
 	end
 end
 
-return var_0_0
+return Activity114TravelView

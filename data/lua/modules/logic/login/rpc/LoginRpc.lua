@@ -1,15 +1,17 @@
-﻿module("modules.logic.login.rpc.LoginRpc", package.seeall)
+﻿-- chunkname: @modules/logic/login/rpc/LoginRpc.lua
 
-local var_0_0 = class("LoginRpc", BaseRpc)
+module("modules.logic.login.rpc.LoginRpc", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local LoginRpc = class("LoginRpc", BaseRpc)
+
+function LoginRpc:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function LoginRpc:reInit()
 	return
 end
 
-var_0_0.instance = var_0_0.New()
+LoginRpc.instance = LoginRpc.New()
 
-return var_0_0
+return LoginRpc

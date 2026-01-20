@@ -1,43 +1,47 @@
-﻿module("modules.logic.fight.system.work.FightWorkMaxHpChange", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkMaxHpChange.lua
 
-local var_0_0 = class("FightWorkMaxHpChange", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkMaxHpChange", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0:_startChangeMaxHp()
+local FightWorkMaxHpChange = class("FightWorkMaxHpChange", FightEffectBase)
+
+function FightWorkMaxHpChange:onStart()
+	self:_startChangeMaxHp()
 end
 
-function var_0_0.beforePlayEffectData(arg_2_0)
-	arg_2_0._entityId = arg_2_0.actEffectData.targetId
-	arg_2_0._entityMO = FightDataHelper.entityMgr:getById(arg_2_0._entityId)
-	arg_2_0._oldValue = arg_2_0._entityMO and arg_2_0._entityMO.attrMO.hp
+function FightWorkMaxHpChange:beforePlayEffectData()
+	self._entityId = self.actEffectData.targetId
+	self._entityMO = FightDataHelper.entityMgr:getById(self._entityId)
+	self._oldValue = self._entityMO and self._entityMO.attrMO.hp
 end
 
-function var_0_0._startChangeMaxHp(arg_3_0)
-	if not FightHelper.getEntity(arg_3_0._entityId) then
-		arg_3_0:onDone(true)
+function FightWorkMaxHpChange:_startChangeMaxHp()
+	local entity = FightHelper.getEntity(self._entityId)
+
+	if not entity then
+		self:onDone(true)
 
 		return
 	end
 
-	if not arg_3_0._entityMO then
-		arg_3_0:onDone(true)
+	if not self._entityMO then
+		self:onDone(true)
 
 		return
 	end
 
-	arg_3_0._newValue = arg_3_0._entityMO and arg_3_0._entityMO.attrMO.hp
+	self._newValue = self._entityMO and self._entityMO.attrMO.hp
 
-	FightController.instance:dispatchEvent(FightEvent.OnMaxHpChange, arg_3_0.actEffectData.targetId, arg_3_0._oldValue, arg_3_0._newValue)
-	arg_3_0:_onDone()
+	FightController.instance:dispatchEvent(FightEvent.OnMaxHpChange, self.actEffectData.targetId, self._oldValue, self._newValue)
+	self:_onDone()
 end
 
-function var_0_0._onDone(arg_4_0)
-	arg_4_0:clearWork()
-	arg_4_0:onDone(true)
+function FightWorkMaxHpChange:_onDone()
+	self:clearWork()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_5_0)
+function FightWorkMaxHpChange:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkMaxHpChange

@@ -1,46 +1,52 @@
-﻿module("modules.logic.login.controller.work.LoginPreLoadWork", package.seeall)
+﻿-- chunkname: @modules/logic/login/controller/work/LoginPreLoadWork.lua
 
-local var_0_0 = class("LoginPreLoadWork", BaseWork)
-local var_0_1 = {
+module("modules.logic.login.controller.work.LoginPreLoadWork", package.seeall)
+
+local LoginPreLoadWork = class("LoginPreLoadWork", BaseWork)
+local PreLoadPathList = {
 	"ui/viewres/scene/loadingview.prefab",
 	"ui/viewres/scene/loadingblackview.prefab",
 	"ui/viewres/scene/loadingheadsetview.prefab"
 }
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	if not arg_1_0._loader then
+function LoginPreLoadWork:onStart(context)
+	if not self._loader then
 		UIBlockMgr.instance:startBlock(UIBlockKey.Loading)
 
-		arg_1_0._loader = MultiAbLoader.New()
+		self._loader = MultiAbLoader.New()
 
-		arg_1_0._loader:setPathList(var_0_1)
-		arg_1_0._loader:startLoad(arg_1_0._onLoaded, arg_1_0)
+		self._loader:setPathList(PreLoadPathList)
+		self._loader:startLoad(self._onLoaded, self)
 	else
-		arg_1_0:_done()
+		self:_done()
 	end
 end
 
-function var_0_0._onLoaded(arg_2_0)
+function LoginPreLoadWork:_onLoaded()
 	UIBlockMgr.instance:endBlock(UIBlockKey.Loading)
-	arg_2_0:_done()
+	self:_done()
 end
 
-function var_0_0._isFirstGuide(arg_3_0)
-	return not (GuideModel.instance:isGuideFinish(101) or GuideController.instance:isForbidGuides())
+function LoginPreLoadWork:_isFirstGuide()
+	local finished = GuideModel.instance:isGuideFinish(101)
+
+	finished = finished or GuideController.instance:isForbidGuides()
+
+	return not finished
 end
 
-function var_0_0._done(arg_4_0)
-	local var_4_0 = gohelper.find("UIRoot/OriginBg")
+function LoginPreLoadWork:_done()
+	local bgGo = gohelper.find("UIRoot/OriginBg")
 
-	gohelper.setActive(var_4_0, false)
+	gohelper.setActive(bgGo, false)
 	ViewMgr.instance:closeView(ViewName.LoginView)
 
-	if arg_4_0:_isFirstGuide() then
+	if self:_isFirstGuide() then
 		GameSceneMgr.instance:dispatchEvent(SceneEventName.SetLoadingTypeOnce, GameLoadingState.LoadingHeadsetView)
 	end
 
 	GameSceneMgr.instance:dispatchEvent(SceneEventName.OpenLoading, SceneType.Main)
-	arg_4_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return LoginPreLoadWork

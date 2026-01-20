@@ -1,11 +1,13 @@
-﻿module("modules.logic.equip.view.EquipSkillLevelUpViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/equip/view/EquipSkillLevelUpViewContainer.lua
 
-local var_0_0 = class("EquipSkillLevelUpViewContainer", BaseViewContainer)
+module("modules.logic.equip.view.EquipSkillLevelUpViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local EquipSkillLevelUpViewContainer = class("EquipSkillLevelUpViewContainer", BaseViewContainer)
+
+function EquipSkillLevelUpViewContainer:buildViews()
 	return {
 		EquipSkillLevelUpView.New()
 	}
 end
 
-return var_0_0
+return EquipSkillLevelUpViewContainer

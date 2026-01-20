@@ -1,81 +1,84 @@
-﻿module("modules.logic.activity.view.V2a1_MoonFestival_SignItemViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/V2a1_MoonFestival_SignItemViewContainer.lua
 
-local var_0_0 = class("V2a1_MoonFestival_SignItemViewContainer", Activity101SignViewBaseContainer)
+module("modules.logic.activity.view.V2a1_MoonFestival_SignItemViewContainer", package.seeall)
 
-function var_0_0.onModifyListScrollParam(arg_1_0, arg_1_1)
-	arg_1_1.cellClass = V2a1_MoonFestival_SignItem
-	arg_1_1.scrollGOPath = "Root/#scroll_ItemList"
-	arg_1_1.cellWidth = 220
-	arg_1_1.cellHeight = 600
-	arg_1_1.cellSpaceH = -16
+local V2a1_MoonFestival_SignItemViewContainer = class("V2a1_MoonFestival_SignItemViewContainer", Activity101SignViewBaseContainer)
+
+function V2a1_MoonFestival_SignItemViewContainer:onModifyListScrollParam(refListScrollParam)
+	refListScrollParam.cellClass = V2a1_MoonFestival_SignItem
+	refListScrollParam.scrollGOPath = "Root/#scroll_ItemList"
+	refListScrollParam.cellWidth = 220
+	refListScrollParam.cellHeight = 600
+	refListScrollParam.cellSpaceH = -16
 end
 
-function var_0_0.onBuildViews(arg_2_0)
+function V2a1_MoonFestival_SignItemViewContainer:onBuildViews()
 	return {
-		(arg_2_0:getMainView())
+		(self:getMainView())
 	}
 end
 
-function var_0_0.getCurrentTaskCO(arg_3_0)
-	local var_3_0 = arg_3_0:actId()
+function V2a1_MoonFestival_SignItemViewContainer:getCurrentTaskCO()
+	local actId = self:actId()
 
-	return ActivityType101Config.instance:getMoonFestivalTaskCO(var_3_0)
+	return ActivityType101Config.instance:getMoonFestivalTaskCO(actId)
 end
 
-function var_0_0.getCurrentDayCO(arg_4_0)
-	local var_4_0 = arg_4_0:actId()
+function V2a1_MoonFestival_SignItemViewContainer:getCurrentDayCO()
+	local actId = self:actId()
+	local actMO = ActivityModel.instance:getActMO(actId)
 
-	if not ActivityModel.instance:getActMO(var_4_0) then
+	if not actMO then
 		return
 	end
 
-	local var_4_1 = ActivityType101Config.instance:getMoonFestivalSignMaxDay(var_4_0)
+	local maxDay = ActivityType101Config.instance:getMoonFestivalSignMaxDay(actId)
 
-	if var_4_1 <= 0 then
+	if maxDay <= 0 then
 		return
 	end
 
-	local var_4_2 = ActivityType101Model.instance:getType101LoginCount(var_4_0)
-	local var_4_3 = GameUtil.clamp(var_4_2, 1, var_4_1)
+	local loginCount = ActivityType101Model.instance:getType101LoginCount(actId)
+	local day = GameUtil.clamp(loginCount, 1, maxDay)
 
-	return ActivityType101Config.instance:getMoonFestivalByDay(var_4_0, var_4_3)
+	return ActivityType101Config.instance:getMoonFestivalByDay(actId, day)
 end
 
-function var_0_0.isNone(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0:actId()
+function V2a1_MoonFestival_SignItemViewContainer:isNone(id)
+	local actId = self:actId()
 
-	return ActivityType101Model.instance:isType101SpRewardUncompleted(var_5_0, arg_5_1)
+	return ActivityType101Model.instance:isType101SpRewardUncompleted(actId, id)
 end
 
-function var_0_0.isFinishedTask(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0:actId()
+function V2a1_MoonFestival_SignItemViewContainer:isFinishedTask(id)
+	local actId = self:actId()
 
-	return ActivityType101Model.instance:isType101SpRewardGot(var_6_0, arg_6_1)
+	return ActivityType101Model.instance:isType101SpRewardGot(actId, id)
 end
 
-function var_0_0.isRewardable(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0:actId()
+function V2a1_MoonFestival_SignItemViewContainer:isRewardable(id)
+	local actId = self:actId()
 
-	return ActivityType101Model.instance:isType101SpRewardCouldGet(var_7_0, arg_7_1)
+	return ActivityType101Model.instance:isType101SpRewardCouldGet(actId, id)
 end
 
-function var_0_0.sendGet101SpBonusRequest(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = arg_8_0:getCurrentTaskCO()
+function V2a1_MoonFestival_SignItemViewContainer:sendGet101SpBonusRequest(sucCb, sucCbObj)
+	local CO = self:getCurrentTaskCO()
 
-	if not var_8_0 then
+	if not CO then
 		return
 	end
 
-	local var_8_1 = arg_8_0:actId()
-	local var_8_2 = var_8_0.id
+	local actId = self:actId()
+	local id = CO.id
 
-	if not ActivityType101Model.instance:isType101SpRewardCouldGet(var_8_1, var_8_2) then
+	if not ActivityType101Model.instance:isType101SpRewardCouldGet(actId, id) then
 		return
 	end
 
-	Activity101Rpc.instance:sendGet101SpBonusRequest(var_8_1, var_8_2, arg_8_1, arg_8_2)
+	Activity101Rpc.instance:sendGet101SpBonusRequest(actId, id, sucCb, sucCbObj)
 
 	return true
 end
 
-return var_0_0
+return V2a1_MoonFestival_SignItemViewContainer

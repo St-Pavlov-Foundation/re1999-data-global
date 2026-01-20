@@ -1,45 +1,47 @@
-﻿module("modules.logic.versionactivity3_1.bpoper.view.V3a1_BpOperActShowView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/bpoper/view/V3a1_BpOperActShowView.lua
 
-local var_0_0 = class("V3a1_BpOperActShowView", BaseView)
+module("modules.logic.versionactivity3_1.bpoper.view.V3a1_BpOperActShowView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg")
-	arg_1_0._goskin = gohelper.findChild(arg_1_0.viewGO, "Left/image_Skin")
-	arg_1_0._skinClick = gohelper.getClickWithAudio(arg_1_0._goskin, AudioEnum.UI.play_artificial_ui_carddisappear)
-	arg_1_0._simagelogo2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "Right/#simage_logo2")
-	arg_1_0._btnInfo = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Info")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "Right/#txt_desc")
-	arg_1_0._txtremainTime = gohelper.findChildText(arg_1_0.viewGO, "Right/#txt_remainTime")
-	arg_1_0._goscrollList = gohelper.findChild(arg_1_0.viewGO, "Right/#go_scroll_List")
-	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "Right/#go_scroll_List/Viewport/Content/#go_item")
-	arg_1_0._txtlv = gohelper.findChildText(arg_1_0.viewGO, "Right/Bottom/Level/icon/#txt_lv")
-	arg_1_0._txttotal = gohelper.findChildText(arg_1_0.viewGO, "Right/Bottom/txt_decibel/#txt_total")
-	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "Right/Bottom/#go_reddot")
-	arg_1_0._btnarrow = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/Bottom/#btn_arrow")
-	arg_1_0._gomax = gohelper.findChild(arg_1_0.viewGO, "Right/#go_max")
-	arg_1_0._txtmax = gohelper.findChildText(arg_1_0.viewGO, "Right/#go_max/txt_MAX")
+local V3a1_BpOperActShowView = class("V3a1_BpOperActShowView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V3a1_BpOperActShowView:onInitView()
+	self._simagefullbg = gohelper.findChildSingleImage(self.viewGO, "#simage_fullbg")
+	self._goskin = gohelper.findChild(self.viewGO, "Left/image_Skin")
+	self._skinClick = gohelper.getClickWithAudio(self._goskin, AudioEnum.UI.play_artificial_ui_carddisappear)
+	self._simagelogo2 = gohelper.findChildSingleImage(self.viewGO, "Right/#simage_logo2")
+	self._btnInfo = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_Info")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "Right/#txt_desc")
+	self._txtremainTime = gohelper.findChildText(self.viewGO, "Right/#txt_remainTime")
+	self._goscrollList = gohelper.findChild(self.viewGO, "Right/#go_scroll_List")
+	self._goitem = gohelper.findChild(self.viewGO, "Right/#go_scroll_List/Viewport/Content/#go_item")
+	self._txtlv = gohelper.findChildText(self.viewGO, "Right/Bottom/Level/icon/#txt_lv")
+	self._txttotal = gohelper.findChildText(self.viewGO, "Right/Bottom/txt_decibel/#txt_total")
+	self._goreddot = gohelper.findChild(self.viewGO, "Right/Bottom/#go_reddot")
+	self._btnarrow = gohelper.findChildButtonWithAudio(self.viewGO, "Right/Bottom/#btn_arrow")
+	self._gomax = gohelper.findChild(self.viewGO, "Right/#go_max")
+	self._txtmax = gohelper.findChildText(self.viewGO, "Right/#go_max/txt_MAX")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnInfo:AddClickListener(arg_2_0._btnInfoOnClick, arg_2_0)
-	arg_2_0._btnarrow:AddClickListener(arg_2_0._btnarrowOnClick, arg_2_0)
-	arg_2_0._skinClick:AddClickListener(arg_2_0._onSkinClick, arg_2_0)
+function V3a1_BpOperActShowView:addEvents()
+	self._btnInfo:AddClickListener(self._btnInfoOnClick, self)
+	self._btnarrow:AddClickListener(self._btnarrowOnClick, self)
+	self._skinClick:AddClickListener(self._onSkinClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnInfo:RemoveClickListener()
-	arg_3_0._btnarrow:RemoveClickListener()
-	arg_3_0._skinClick:RemoveClickListener()
+function V3a1_BpOperActShowView:removeEvents()
+	self._btnInfo:RemoveClickListener()
+	self._btnarrow:RemoveClickListener()
+	self._skinClick:RemoveClickListener()
 end
 
-function var_0_0._btnarrowOnClick(arg_4_0)
+function V3a1_BpOperActShowView:_btnarrowOnClick()
 	GameUtil.playerPrefsSetNumberByUserId(PlayerPrefsKey.BpOperActLvUpReddotShow, 0)
-	gohelper.setActive(arg_4_0._goreddot, false)
-	arg_4_0:closeThis()
+	gohelper.setActive(self._goreddot, false)
+	self:closeThis()
 
 	if ViewMgr.instance:isOpen(ViewName.ActivityBeginnerView) then
 		ViewMgr.instance:closeView(ViewName.ActivityBeginnerView)
@@ -48,107 +50,107 @@ function var_0_0._btnarrowOnClick(arg_4_0)
 	BpController.instance:openBattlePassView()
 end
 
-function var_0_0._btnInfoOnClick(arg_5_0)
-	local var_5_0 = CommonConfig.instance:getConstStr(ConstEnum.BPOperActTitle)
-	local var_5_1 = CommonConfig.instance:getConstStr(ConstEnum.BPOperActDesc)
+function V3a1_BpOperActShowView:_btnInfoOnClick()
+	local title = CommonConfig.instance:getConstStr(ConstEnum.BPOperActTitle)
+	local desc = CommonConfig.instance:getConstStr(ConstEnum.BPOperActDesc)
 
-	HelpController.instance:openStoreTipView(var_5_1, var_5_0)
+	HelpController.instance:openStoreTipView(desc, title)
 end
 
-function var_0_0._onSkinClick(arg_6_0)
+function V3a1_BpOperActShowView:_onSkinClick()
 	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.HeroSkin, BpConfig.instance:getCurSkinId(BpModel.instance.id), false, nil, false)
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0._taskItems = {}
+function V3a1_BpOperActShowView:_editableInitView()
+	self._taskItems = {}
 
-	arg_7_0:_addEvents()
+	self:_addEvents()
 end
 
-function var_0_0._getInfoSuccess(arg_8_0, arg_8_1)
-	local var_8_0 = false
+function V3a1_BpOperActShowView:_getInfoSuccess(typeIds)
+	local contain = false
 
-	for iter_8_0, iter_8_1 in ipairs(arg_8_1) do
-		if iter_8_1 == TaskEnum.TaskType.BpOperAct then
-			var_8_0 = true
+	for _, typeId in ipairs(typeIds) do
+		if typeId == TaskEnum.TaskType.BpOperAct then
+			contain = true
 		end
 	end
 
-	if not var_8_0 then
+	if not contain then
 		return
 	end
 
-	arg_8_0:_refresh(true)
+	self:_refresh(true)
 end
 
-function var_0_0._addEvents(arg_9_0)
-	arg_9_0:addEventCb(BpController.instance, BpEvent.OnLevelUp, arg_9_0._onBpLevelUp, arg_9_0)
-	arg_9_0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_9_0._updateTask, arg_9_0)
+function V3a1_BpOperActShowView:_addEvents()
+	self:addEventCb(BpController.instance, BpEvent.OnLevelUp, self._onBpLevelUp, self)
+	self:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, self._updateTask, self)
 end
 
-function var_0_0._removeEvents(arg_10_0)
-	arg_10_0:removeEventCb(BpController.instance, BpEvent.OnLevelUp, arg_10_0._onBpLevelUp, arg_10_0)
-	arg_10_0:removeEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_10_0._updateTask, arg_10_0)
+function V3a1_BpOperActShowView:_removeEvents()
+	self:removeEventCb(BpController.instance, BpEvent.OnLevelUp, self._onBpLevelUp, self)
+	self:removeEventCb(TaskController.instance, TaskEvent.UpdateTaskList, self._updateTask, self)
 end
 
-function var_0_0._onBpLevelUp(arg_11_0, arg_11_1)
-	GameUtil.playerPrefsSetNumberByUserId(PlayerPrefsKey.BpOperActLvUpReddotShow, arg_11_1)
-	arg_11_0:_refresh()
+function V3a1_BpOperActShowView:_onBpLevelUp(lv)
+	GameUtil.playerPrefsSetNumberByUserId(PlayerPrefsKey.BpOperActLvUpReddotShow, lv)
+	self:_refresh()
 end
 
-function var_0_0._updateTask(arg_12_0)
-	arg_12_0:_refresh()
+function V3a1_BpOperActShowView:_updateTask()
+	self:_refresh()
 end
 
-function var_0_0.onUpdateParam(arg_13_0)
+function V3a1_BpOperActShowView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_14_0)
-	local var_14_0 = arg_14_0.viewParam.parent
+function V3a1_BpOperActShowView:onOpen()
+	local parentGO = self.viewParam.parent
 
-	gohelper.addChild(var_14_0, arg_14_0.viewGO)
+	gohelper.addChild(parentGO, self.viewGO)
 	AudioMgr.instance:trigger(AudioEnum3_1.BpOperAct.play_ui_bpoper_turn_card)
 
-	arg_14_0._actId = arg_14_0.viewParam.actId
-	arg_14_0._config = ActivityConfig.instance:getActivityCo(arg_14_0._actId)
-	arg_14_0._txtdesc.text = arg_14_0._config.actDesc
+	self._actId = self.viewParam.actId
+	self._config = ActivityConfig.instance:getActivityCo(self._actId)
+	self._txtdesc.text = self._config.actDesc
 
-	arg_14_0:_refreshRemainTime()
-	gohelper.setActive(arg_14_0._gomax, false)
-	arg_14_0:_refresh(true)
-	TaskDispatcher.runRepeat(arg_14_0._refreshRemainTime, arg_14_0, TimeUtil.OneMinuteSecond)
+	self:_refreshRemainTime()
+	gohelper.setActive(self._gomax, false)
+	self:_refresh(true)
+	TaskDispatcher.runRepeat(self._refreshRemainTime, self, TimeUtil.OneMinuteSecond)
 end
 
-function var_0_0._refreshRemainTime(arg_15_0)
-	arg_15_0._txtremainTime.text = arg_15_0:_getRemainTimeStr()
+function V3a1_BpOperActShowView:_refreshRemainTime()
+	self._txtremainTime.text = self:_getRemainTimeStr()
 end
 
-function var_0_0._getRemainTimeStr(arg_16_0)
-	local var_16_0 = ActivityModel.instance:getRemainTimeSec(arg_16_0._actId) or 0
+function V3a1_BpOperActShowView:_getRemainTimeStr()
+	local remainTimeSec = ActivityModel.instance:getRemainTimeSec(self._actId) or 0
 
-	if var_16_0 <= 0 then
+	if remainTimeSec <= 0 then
 		return luaLang("turnback_end")
 	end
 
-	local var_16_1, var_16_2, var_16_3, var_16_4 = TimeUtil.secondsToDDHHMMSS(var_16_0)
+	local day, hour, min, sec = TimeUtil.secondsToDDHHMMSS(remainTimeSec)
 
-	if var_16_1 > 0 then
+	if day > 0 then
 		return GameUtil.getSubPlaceholderLuaLang(luaLang("time_day_hour2"), {
-			var_16_1,
-			var_16_2
+			day,
+			hour
 		})
-	elseif var_16_2 > 0 then
+	elseif hour > 0 then
 		return GameUtil.getSubPlaceholderLuaLang(luaLang("summonmain_deadline_time"), {
-			var_16_2,
-			var_16_3
+			hour,
+			min
 		})
-	elseif var_16_3 > 0 then
+	elseif min > 0 then
 		return GameUtil.getSubPlaceholderLuaLang(luaLang("summonmain_deadline_time"), {
 			0,
-			var_16_3
+			min
 		})
-	elseif var_16_4 > 0 then
+	elseif sec > 0 then
 		return GameUtil.getSubPlaceholderLuaLang(luaLang("summonmain_deadline_time"), {
 			0,
 			1
@@ -158,72 +160,72 @@ function var_0_0._getRemainTimeStr(arg_16_0)
 	return luaLang("turnback_end")
 end
 
-function var_0_0._refresh(arg_17_0, arg_17_1)
-	local var_17_0 = BpConfig.instance:getLevelScore(BpModel.instance.id)
-	local var_17_1 = math.floor(BpModel.instance.score / var_17_0)
-	local var_17_2 = BpModel.instance.score % var_17_0
+function V3a1_BpOperActShowView:_refresh(withAnim)
+	local levelScore = BpConfig.instance:getLevelScore(BpModel.instance.id)
+	local level = math.floor(BpModel.instance.score / levelScore)
+	local scoreInThisLevel = BpModel.instance.score % levelScore
 
-	arg_17_0._txtlv.text = var_17_1
-	arg_17_0._txttotal.text = var_17_2 .. "/" .. var_17_0
+	self._txtlv.text = level
+	self._txttotal.text = scoreInThisLevel .. "/" .. levelScore
 
-	local var_17_3 = NationalGiftModel.instance:isNeedShowReddot()
+	local reddotShow = NationalGiftModel.instance:isNeedShowReddot()
 
-	gohelper.setActive(arg_17_0._goreddot, var_17_3)
-	arg_17_0:_refreshTask(arg_17_1)
+	gohelper.setActive(self._goreddot, reddotShow)
+	self:_refreshTask(withAnim)
 end
 
-function var_0_0._refreshTask(arg_18_0, arg_18_1)
-	local var_18_0 = V3a1_BpOperActModel.instance:isAllTaskFinihshed()
-	local var_18_1 = BpModel.instance:isMaxLevel()
+function V3a1_BpOperActShowView:_refreshTask(withAnim)
+	local isAllFinished = V3a1_BpOperActModel.instance:isAllTaskFinihshed()
+	local isLvMax = BpModel.instance:isMaxLevel()
 
-	gohelper.setActive(arg_18_0._gomax, var_18_0 or var_18_1)
+	gohelper.setActive(self._gomax, isAllFinished or isLvMax)
 
-	if var_18_0 then
-		arg_18_0._txtmax.text = luaLang("v3a1_bpoperactshowview_txt_finish")
+	if isAllFinished then
+		self._txtmax.text = luaLang("v3a1_bpoperactshowview_txt_finish")
 	end
 
-	if var_18_1 then
-		arg_18_0._txtmax.text = luaLang("v3a1_bpoperactshowview_txt_MAX")
+	if isLvMax then
+		self._txtmax.text = luaLang("v3a1_bpoperactshowview_txt_MAX")
 	end
 
-	local var_18_2 = V3a1_BpOperActModel.instance:getAllShowTask()
+	local taskList = V3a1_BpOperActModel.instance:getAllShowTask(self._actId)
 
-	for iter_18_0, iter_18_1 in pairs(arg_18_0._taskItems) do
-		iter_18_1:show(false)
+	for _, taskItem in pairs(self._taskItems) do
+		taskItem:show(false)
 	end
 
-	for iter_18_2, iter_18_3 in ipairs(var_18_2) do
-		local var_18_3 = V3a1_BpOperActConfig.instance:getTaskCO(iter_18_3)
+	for index, taskId in ipairs(taskList) do
+		local taskCo = V3a1_BpOperActConfig.instance:getTaskCO(taskId)
 
-		if not arg_18_0._taskItems[var_18_3.id] then
-			arg_18_0._taskItems[var_18_3.id] = V3a1_BpOperActShowTaskItem.New()
+		if not self._taskItems[taskCo.id] then
+			self._taskItems[taskCo.id] = V3a1_BpOperActShowTaskItem.New()
 
-			local var_18_4 = gohelper.cloneInPlace(arg_18_0._goitem)
+			local go = gohelper.cloneInPlace(self._goitem)
 
-			arg_18_0._taskItems[var_18_3.id]:init(var_18_4, var_18_3, iter_18_2)
+			self._taskItems[taskCo.id]:init(go, taskCo, index)
 		end
 
-		gohelper.setSibling(arg_18_0._taskItems[var_18_3.id].go, iter_18_2 - 1)
-		arg_18_0._taskItems[var_18_3.id]:show(true, arg_18_1)
-		arg_18_0._taskItems[var_18_3.id]:refresh()
+		gohelper.setSibling(self._taskItems[taskCo.id].go, index - 1)
+		self._taskItems[taskCo.id]:show(true, withAnim)
+		self._taskItems[taskCo.id]:refresh()
 	end
 end
 
-function var_0_0.onClose(arg_19_0)
+function V3a1_BpOperActShowView:onClose()
 	GameUtil.playerPrefsSetNumberByUserId(PlayerPrefsKey.BpOperActLvUpReddotShow, 0)
 end
 
-function var_0_0.onDestroyView(arg_20_0)
-	arg_20_0:_removeEvents()
-	TaskDispatcher.cancelTask(arg_20_0._refreshRemainTime, arg_20_0)
+function V3a1_BpOperActShowView:onDestroyView()
+	self:_removeEvents()
+	TaskDispatcher.cancelTask(self._refreshRemainTime, self)
 
-	if arg_20_0._taskItems then
-		for iter_20_0, iter_20_1 in pairs(arg_20_0._taskItems) do
-			iter_20_1:destroy()
+	if self._taskItems then
+		for _, v in pairs(self._taskItems) do
+			v:destroy()
 		end
 
-		arg_20_0._taskItems = nil
+		self._taskItems = nil
 	end
 end
 
-return var_0_0
+return V3a1_BpOperActShowView

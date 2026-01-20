@@ -1,23 +1,25 @@
-﻿module("modules.logic.guide.controller.action.impl.GuideActionShowToast", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/GuideActionShowToast.lua
 
-local var_0_0 = class("GuideActionShowToast", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.GuideActionShowToast", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	var_0_0.super.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+local GuideActionShowToast = class("GuideActionShowToast", BaseGuideAction)
 
-	arg_1_0._toastId = tonumber(arg_1_3)
+function GuideActionShowToast:ctor(guideId, stepId, actionParam)
+	GuideActionShowToast.super.ctor(self, guideId, stepId, actionParam)
+
+	self._toastId = tonumber(actionParam)
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	var_0_0.super.onStart(arg_2_0, arg_2_1)
+function GuideActionShowToast:onStart(context)
+	GuideActionShowToast.super.onStart(self, context)
 
-	if arg_2_0._toastId then
-		GameFacade.showToast(arg_2_0._toastId)
+	if self._toastId then
+		GameFacade.showToast(self._toastId)
 	else
 		logError("指引飘字失败，没配飘字id")
 	end
 
-	arg_2_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return GuideActionShowToast

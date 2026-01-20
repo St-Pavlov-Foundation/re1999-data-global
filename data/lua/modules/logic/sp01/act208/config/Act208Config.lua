@@ -1,56 +1,58 @@
-﻿module("modules.logic.sp01.act208.config.Act208Config", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/act208/config/Act208Config.lua
 
-local var_0_0 = class("Act208Config", BaseConfig)
+module("modules.logic.sp01.act208.config.Act208Config", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local Act208Config = class("Act208Config", BaseConfig)
+
+function Act208Config:reqConfigNames()
 	return {
 		"activity208_bonus"
 	}
 end
 
-function var_0_0.onInit(arg_2_0)
-	arg_2_0._bonusListDic = {}
+function Act208Config:onInit()
+	self._bonusListDic = {}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity208_bonus" then
-		arg_3_0._activityConfig = arg_3_2
+function Act208Config:onConfigLoaded(configName, configTable)
+	if configName == "activity208_bonus" then
+		self._activityConfig = configTable
 	end
 end
 
-function var_0_0.getBonusById(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_0._activityConfig == nil or arg_4_0._activityConfig.configDict[arg_4_1] == nil then
+function Act208Config:getBonusById(activityId, bonusType)
+	if self._activityConfig == nil or self._activityConfig.configDict[activityId] == nil then
 		return nil
 	end
 
-	return arg_4_0._activityConfig.configDict[arg_4_1][arg_4_2]
+	return self._activityConfig.configDict[activityId][bonusType]
 end
 
-function var_0_0.getBonusListById(arg_5_0, arg_5_1)
-	if not arg_5_0._activityConfig.configDict[arg_5_1] then
+function Act208Config:getBonusListById(activityId)
+	if not self._activityConfig.configDict[activityId] then
 		return nil
 	end
 
-	if not arg_5_0._bonusListDic[arg_5_1] then
-		local var_5_0 = arg_5_0._activityConfig.configDict[arg_5_1]
-		local var_5_1 = {}
+	if not self._bonusListDic[activityId] then
+		local bonusDic = self._activityConfig.configDict[activityId]
+		local list = {}
 
-		for iter_5_0, iter_5_1 in ipairs(var_5_0) do
-			table.insert(var_5_1, iter_5_1)
+		for _, bonus in ipairs(bonusDic) do
+			table.insert(list, bonus)
 		end
 
-		table.sort(var_5_1, arg_5_0.sortBonus)
+		table.sort(list, self.sortBonus)
 
-		arg_5_0._bonusListDic[arg_5_1] = var_5_1
+		self._bonusListDic[activityId] = list
 	end
 
-	return arg_5_0._bonusListDic[arg_5_1]
+	return self._bonusListDic[activityId]
 end
 
-function var_0_0.sortBonus(arg_6_0, arg_6_1)
-	return arg_6_0.id >= arg_6_1.id
+function Act208Config.sortBonus(a, b)
+	return a.id >= b.id
 end
 
-var_0_0.instance = var_0_0.New()
+Act208Config.instance = Act208Config.New()
 
-return var_0_0
+return Act208Config

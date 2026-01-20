@@ -1,27 +1,29 @@
-﻿module("modules.logic.fight.view.FightViewDragChangeSubHero", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightViewDragChangeSubHero.lua
 
-local var_0_0 = class("FightViewDragChangeSubHero", BaseView)
+module("modules.logic.fight.view.FightViewDragChangeSubHero", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._containerGO = gohelper.findChild(arg_1_0.viewGO, "root/changeSub")
+local FightViewDragChangeSubHero = class("FightViewDragChangeSubHero", BaseView)
 
-	gohelper.setActive(arg_1_0._containerGO, false)
+function FightViewDragChangeSubHero:onInitView()
+	self._containerGO = gohelper.findChild(self.viewGO, "root/changeSub")
+
+	gohelper.setActive(self._containerGO, false)
 end
 
-function var_0_0.addEvents(arg_2_0)
+function FightViewDragChangeSubHero:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function FightViewDragChangeSubHero:removeEvents()
 	return
 end
 
-function var_0_0.onOpen(arg_4_0)
+function FightViewDragChangeSubHero:onOpen()
 	return
 end
 
-function var_0_0.onClose(arg_5_0)
+function FightViewDragChangeSubHero:onClose()
 	return
 end
 
-return var_0_0
+return FightViewDragChangeSubHero

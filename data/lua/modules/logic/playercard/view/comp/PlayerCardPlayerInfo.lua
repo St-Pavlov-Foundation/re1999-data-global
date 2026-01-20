@@ -1,152 +1,163 @@
-﻿module("modules.logic.playercard.view.comp.PlayerCardPlayerInfo", package.seeall)
+﻿-- chunkname: @modules/logic/playercard/view/comp/PlayerCardPlayerInfo.lua
 
-local var_0_0 = class("PlayerCardPlayerInfo", BaseView)
+module("modules.logic.playercard.view.comp.PlayerCardPlayerInfo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.viewGO = arg_1_1
+local PlayerCardPlayerInfo = class("PlayerCardPlayerInfo", BaseView)
 
-	arg_1_0:onInitView()
+function PlayerCardPlayerInfo:init(go)
+	self.viewGO = go
+
+	self:onInitView()
 end
 
-function var_0_0.canOpen(arg_2_0)
-	arg_2_0:onOpen()
-	arg_2_0:addEvents()
+function PlayerCardPlayerInfo:canOpen()
+	self:onOpen()
+	self:addEvents()
 end
 
-function var_0_0.onInitView(arg_3_0)
-	arg_3_0.go = gohelper.findChild(arg_3_0.viewGO, "root/main/playerinfo")
-	arg_3_0._simageheadicon = gohelper.findChildSingleImage(arg_3_0.go, "ani/headframe/#simage_headicon")
-	arg_3_0._btnheadicon = gohelper.findChildButtonWithAudio(arg_3_0.go, "ani/headframe/#simage_headicon")
-	arg_3_0._goframenode = gohelper.findChild(arg_3_0.go, "ani/headframe/#simage_headicon/#go_framenode")
-	arg_3_0._txtlevel = gohelper.findChildText(arg_3_0.go, "ani/lv/#txt_level")
-	arg_3_0._txtplayerid = gohelper.findChildText(arg_3_0.go, "ani/#txt_playerid")
-	arg_3_0._btnplayerid = gohelper.findChildButtonWithAudio(arg_3_0.go, "ani/#txt_playerid/#btn_playerid")
-	arg_3_0._txtname = gohelper.findChildText(arg_3_0.go, "ani/#txt_name")
+function PlayerCardPlayerInfo:onInitView()
+	self.go = gohelper.findChild(self.viewGO, "root/main/playerinfo")
+	self._simageheadicon = gohelper.findChildSingleImage(self.go, "ani/headframe/#simage_headicon")
+	self._btnheadicon = gohelper.findChildButtonWithAudio(self.go, "ani/headframe/#simage_headicon")
+	self._goframenode = gohelper.findChild(self.go, "ani/headframe/#simage_headicon/#go_framenode")
+	self._txtlevel = gohelper.findChildText(self.go, "ani/lv/#txt_level")
+	self._txtplayerid = gohelper.findChildText(self.go, "ani/#txt_playerid")
+	self._btnplayerid = gohelper.findChildButtonWithAudio(self.go, "ani/#txt_playerid/#btn_playerid")
+	self._txtname = gohelper.findChildText(self.go, "ani/#txt_name")
 end
 
-function var_0_0.addEvents(arg_4_0)
-	arg_4_0._btnplayerid:AddClickListener(arg_4_0._btnplayeridOnClick, arg_4_0)
-	arg_4_0._btnheadicon:AddClickListener(arg_4_0._changeIcon, arg_4_0)
-	arg_4_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.UpdateCardInfo, arg_4_0.onRefreshView, arg_4_0)
-	arg_4_0:addEventCb(PlayerController.instance, PlayerEvent.SetPortrait, arg_4_0.onRefreshView, arg_4_0)
+function PlayerCardPlayerInfo:addEvents()
+	self._btnplayerid:AddClickListener(self._btnplayeridOnClick, self)
+	self._btnheadicon:AddClickListener(self._changeIcon, self)
+	self:addEventCb(PlayerCardController.instance, PlayerCardEvent.UpdateCardInfo, self.onRefreshView, self)
+	self:addEventCb(PlayerController.instance, PlayerEvent.SetPortrait, self.onRefreshView, self)
 end
 
-function var_0_0.removeEvents(arg_5_0)
-	arg_5_0._btnplayerid:RemoveClickListener()
-	arg_5_0._btnheadicon:RemoveClickListener()
+function PlayerCardPlayerInfo:removeEvents()
+	self._btnplayerid:RemoveClickListener()
+	self._btnheadicon:RemoveClickListener()
 end
 
-function var_0_0._changeIcon(arg_6_0)
-	if arg_6_0:isPlayerSelf() then
+function PlayerCardPlayerInfo:_changeIcon()
+	if self:isPlayerSelf() then
 		ViewMgr.instance:openView(ViewName.IconTipView)
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Magazinespage)
 	end
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0.userId = arg_7_0.viewParam.userId
+function PlayerCardPlayerInfo:onOpen()
+	local param = self.viewParam
 
-	arg_7_0:updateBaseInfo()
+	self.userId = param.userId
+
+	self:updateBaseInfo()
 end
 
-function var_0_0.getCardInfo(arg_8_0)
-	return PlayerCardModel.instance:getCardInfo(arg_8_0.userId)
+function PlayerCardPlayerInfo:getCardInfo()
+	return PlayerCardModel.instance:getCardInfo(self.userId)
 end
 
-function var_0_0.isPlayerSelf(arg_9_0)
-	local var_9_0 = arg_9_0:getCardInfo()
+function PlayerCardPlayerInfo:isPlayerSelf()
+	local cardInfo = self:getCardInfo()
 
-	return var_9_0 and var_9_0:isSelf()
+	return cardInfo and cardInfo:isSelf()
 end
 
-function var_0_0.getPlayerInfo(arg_10_0)
-	local var_10_0 = arg_10_0:getCardInfo()
+function PlayerCardPlayerInfo:getPlayerInfo()
+	local cardInfo = self:getCardInfo()
 
-	return var_10_0 and var_10_0:getPlayerInfo()
+	return cardInfo and cardInfo:getPlayerInfo()
 end
 
-function var_0_0._btnplayeridOnClick(arg_11_0)
-	local var_11_0 = arg_11_0:getPlayerInfo()
+function PlayerCardPlayerInfo:_btnplayeridOnClick()
+	local info = self:getPlayerInfo()
 
-	if not var_11_0 then
+	if not info then
 		return
 	end
 
-	arg_11_0._txtplayerid.text = var_11_0.userId
+	self._txtplayerid.text = info.userId
 
-	ZProj.UGUIHelper.CopyText(arg_11_0._txtplayerid.text)
+	ZProj.UGUIHelper.CopyText(self._txtplayerid.text)
 
-	arg_11_0._txtplayerid.text = string.format("ID:%s", var_11_0.userId)
+	self._txtplayerid.text = string.format("ID:%s", info.userId)
 
 	GameFacade.showToast(ToastEnum.ClickPlayerId)
 end
 
-function var_0_0.onRefreshView(arg_12_0)
-	arg_12_0:updateBaseInfo()
+function PlayerCardPlayerInfo:onRefreshView()
+	self:updateBaseInfo()
 end
 
-function var_0_0.updateBaseInfo(arg_13_0)
-	local var_13_0 = arg_13_0:getPlayerInfo()
+function PlayerCardPlayerInfo:updateBaseInfo()
+	local info = self:getPlayerInfo()
 
-	if not var_13_0 then
+	if not info then
 		return
 	end
 
-	arg_13_0._txtname.text = var_13_0.name
-	arg_13_0._txtplayerid.text = string.format("ID:%s", var_13_0.userId)
-	arg_13_0._txtlevel.text = var_13_0.level
+	self._txtname.text = info.name
+	self._txtplayerid.text = string.format("ID:%s", info.userId)
+	self._txtlevel.text = info.level
 
-	local var_13_1 = lua_item.configDict[var_13_0.portrait]
+	local config = lua_item.configDict[info.portrait]
 
-	if not arg_13_0._liveHeadIcon then
-		arg_13_0._liveHeadIcon = IconMgr.instance:getCommonLiveHeadIcon(arg_13_0._simageheadicon)
+	if not self._liveHeadIcon then
+		local commonLiveIcon = IconMgr.instance:getCommonLiveHeadIcon(self._simageheadicon)
+
+		self._liveHeadIcon = commonLiveIcon
 	end
 
-	arg_13_0._liveHeadIcon:setLiveHead(var_13_0.portrait)
+	self._liveHeadIcon:setLiveHead(info.portrait)
 
-	local var_13_2 = string.split(var_13_1.effect, "#")
+	local effectArr = string.split(config.effect, "#")
 
-	if #var_13_2 > 1 then
-		if var_13_1.id == tonumber(var_13_2[#var_13_2]) then
-			gohelper.setActive(arg_13_0._goframenode, true)
+	if #effectArr > 1 then
+		if config.id == tonumber(effectArr[#effectArr]) then
+			gohelper.setActive(self._goframenode, true)
 
-			if not arg_13_0.frame and not arg_13_0._loader then
-				arg_13_0._loader = MultiAbLoader.New()
+			if not self.frame and not self._loader then
+				self._loader = MultiAbLoader.New()
 
-				local var_13_3 = "ui/viewres/common/effect/frame.prefab"
+				local framePath = "ui/viewres/common/effect/frame.prefab"
 
-				arg_13_0._loader:addPath(var_13_3)
-				arg_13_0._loader:startLoad(arg_13_0._onLoadCallback, arg_13_0)
+				self._loader:addPath(framePath)
+				self._loader:startLoad(self._onLoadCallback, self)
 			end
 		end
 	else
-		gohelper.setActive(arg_13_0._goframenode, false)
+		gohelper.setActive(self._goframenode, false)
 	end
 end
 
-function var_0_0._onLoadCallback(arg_14_0)
-	local var_14_0 = arg_14_0._loader:getFirstAssetItem():GetResource()
+function PlayerCardPlayerInfo:_onLoadCallback()
+	local framePrefab = self._loader:getFirstAssetItem():GetResource()
 
-	gohelper.clone(var_14_0, arg_14_0._goframenode, "frame")
+	gohelper.clone(framePrefab, self._goframenode, "frame")
 
-	arg_14_0.frame = gohelper.findChild(arg_14_0._goframenode, "frame")
-	arg_14_0.frame:GetComponent(gohelper.Type_Image).enabled = false
+	self.frame = gohelper.findChild(self._goframenode, "frame")
 
-	local var_14_1 = 1.41 * (recthelper.getWidth(arg_14_0._simageheadicon.transform) / recthelper.getWidth(arg_14_0.frame.transform))
+	local img = self.frame:GetComponent(gohelper.Type_Image)
 
-	transformhelper.setLocalScale(arg_14_0.frame.transform, var_14_1, var_14_1, 1)
+	img.enabled = false
+
+	local iconwidth = recthelper.getWidth(self._simageheadicon.transform)
+	local framenodewidth = recthelper.getWidth(self.frame.transform)
+	local scale = 1.41 * (iconwidth / framenodewidth)
+
+	transformhelper.setLocalScale(self.frame.transform, scale, scale, 1)
 end
 
-function var_0_0.onDestroy(arg_15_0)
-	arg_15_0._simageheadicon:UnLoadImage()
+function PlayerCardPlayerInfo:onDestroy()
+	self._simageheadicon:UnLoadImage()
 
-	if arg_15_0._loader then
-		arg_15_0._loader:dispose()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_15_0._loader = nil
+		self._loader = nil
 	end
 
-	arg_15_0:removeEvents()
+	self:removeEvents()
 end
 
-return var_0_0
+return PlayerCardPlayerInfo

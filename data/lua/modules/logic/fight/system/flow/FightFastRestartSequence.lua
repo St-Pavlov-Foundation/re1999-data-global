@@ -1,14 +1,16 @@
-﻿module("modules.logic.fight.system.flow.FightFastRestartSequence", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/flow/FightFastRestartSequence.lua
 
-local var_0_0 = class("FightFastRestartSequence", FightWorkItem)
+module("modules.logic.fight.system.flow.FightFastRestartSequence", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0:com_registFlowSequence()
-	local var_1_1 = FightModel.instance:getFightParam()
+local FightFastRestartSequence = class("FightFastRestartSequence", FightWorkItem)
 
-	var_1_0:addWork(FightWorkRestartBefore.New(var_1_1))
-	var_1_0:addWork(FightWorkFastRestartRequest.New(var_1_1))
-	arg_1_0:playWorkAndDone(var_1_0)
+function FightFastRestartSequence:onStart()
+	local flow = self:com_registFlowSequence()
+	local fight_param = FightModel.instance:getFightParam()
+
+	flow:addWork(FightWorkRestartBefore.New(fight_param))
+	flow:addWork(FightWorkFastRestartRequest.New(fight_param))
+	self:playWorkAndDone(flow)
 end
 
-return var_0_0
+return FightFastRestartSequence

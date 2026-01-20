@@ -1,621 +1,627 @@
-﻿module("modules.logic.survival.view.shelter.SurvivalEquipView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/SurvivalEquipView.lua
 
-local var_0_0 = class("SurvivalEquipView", BaseView)
+module("modules.logic.survival.view.shelter.SurvivalEquipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnAttr = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_Overview")
-	arg_1_0._animscore = gohelper.findChildAnim(arg_1_0.viewGO, "Left/Assess")
-	arg_1_0._txtTotalScore = gohelper.findChildTextMesh(arg_1_0.viewGO, "Left/Assess/image_NumBG/#txt_Num")
-	arg_1_0._imageScore = gohelper.findChildImage(arg_1_0.viewGO, "Left/Assess/image_NumBG/#txt_Num/txt_Assess/image_AssessIon")
-	arg_1_0._goscroll = gohelper.findChild(arg_1_0.viewGO, "Right/scroll_collection")
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "Right/scroll_collection/Viewport/Content")
-	arg_1_0._goinfoview = gohelper.findChild(arg_1_0.viewGO, "#go_infoview")
-	arg_1_0._gosort = gohelper.findChild(arg_1_0.viewGO, "Right/#go_sort")
-	arg_1_0._goplan = gohelper.findChild(arg_1_0.viewGO, "Left/plans")
-	arg_1_0._goplanitem = gohelper.findChild(arg_1_0.viewGO, "Left/plans/item")
-	arg_1_0._goequipitem = gohelper.findChild(arg_1_0.viewGO, "Left/equips/item")
-	arg_1_0._gospequipitem = gohelper.findChild(arg_1_0.viewGO, "Left/equips/#go_sppos/item_sppos")
-	arg_1_0._animskill = gohelper.findChildAnim(arg_1_0.viewGO, "Left/equips/Middle")
-	arg_1_0._btnEquipSkill = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/equips/Middle/#btn_click")
-	arg_1_0._gohas = gohelper.findChild(arg_1_0.viewGO, "Left/equips/Middle/#go_Has")
-	arg_1_0._imageSkill = gohelper.findChildSingleImage(arg_1_0.viewGO, "Left/equips/Middle/#go_Has")
-	arg_1_0._imageFrequency = gohelper.findChildImage(arg_1_0.viewGO, "Left/equips/Middle/#go_Has/Frequency/image_NumBG/#txt_Num/image_FrequencyIcon")
-	arg_1_0._txtFrequency = gohelper.findChildTextMesh(arg_1_0.viewGO, "Left/equips/Middle/#go_Has/Frequency/image_NumBG/#txt_Num")
-	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "Left/equips/Middle/#go_Empty")
-	arg_1_0._golevel32 = gohelper.findChild(arg_1_0.viewGO, "Left/equips/Middle/#level3")
-	arg_1_0._golevel1 = gohelper.findChild(arg_1_0.viewGO, "Left/equips/Middle/#go_Has/#level1")
-	arg_1_0._golevel2 = gohelper.findChild(arg_1_0.viewGO, "Left/equips/Middle/#go_Has/#level2")
-	arg_1_0._golevel3 = gohelper.findChild(arg_1_0.viewGO, "Left/equips/Middle/#go_Has/#level3")
-	arg_1_0._btn_onekeyEquip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_onekeyEquip")
-	arg_1_0._goequipred = gohelper.findChild(arg_1_0.viewGO, "Left/#btn_onekeyEquip/#go_arrow")
-	arg_1_0._btn_onekeyUnEquip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_onekeyUnEquip")
-	arg_1_0._goonekeyEquipTips = gohelper.findChild(arg_1_0.viewGO, "Left/#btn_onekeyEquip/#go_tips")
-	arg_1_0._goonekeyEquipTipsItem = gohelper.findChild(arg_1_0.viewGO, "Left/#btn_onekeyEquip/#go_tips/#go_item")
-	arg_1_0._anim = gohelper.findChildAnim(arg_1_0.viewGO, "")
+local SurvivalEquipView = class("SurvivalEquipView", BaseView)
+
+function SurvivalEquipView:onInitView()
+	self._btnAttr = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_Overview")
+	self._animscore = gohelper.findChildAnim(self.viewGO, "Left/Assess")
+	self._txtTotalScore = gohelper.findChildTextMesh(self.viewGO, "Left/Assess/image_NumBG/#txt_Num")
+	self._imageScore = gohelper.findChildImage(self.viewGO, "Left/Assess/image_NumBG/#txt_Num/txt_Assess/image_AssessIon")
+	self._goscroll = gohelper.findChild(self.viewGO, "Right/scroll_collection")
+	self._gocontent = gohelper.findChild(self.viewGO, "Right/scroll_collection/Viewport/Content")
+	self._goinfoview = gohelper.findChild(self.viewGO, "#go_infoview")
+	self._gosort = gohelper.findChild(self.viewGO, "Right/#go_sort")
+	self._goplan = gohelper.findChild(self.viewGO, "Left/plans")
+	self._goplanitem = gohelper.findChild(self.viewGO, "Left/plans/item")
+	self._goequipitem = gohelper.findChild(self.viewGO, "Left/equips/item")
+	self._gospequipitem = gohelper.findChild(self.viewGO, "Left/equips/#go_sppos/item_sppos")
+	self._animskill = gohelper.findChildAnim(self.viewGO, "Left/equips/Middle")
+	self._btnEquipSkill = gohelper.findChildButtonWithAudio(self.viewGO, "Left/equips/Middle/#btn_click")
+	self._gohas = gohelper.findChild(self.viewGO, "Left/equips/Middle/#go_Has")
+	self._imageSkill = gohelper.findChildSingleImage(self.viewGO, "Left/equips/Middle/#go_Has")
+	self._imageFrequency = gohelper.findChildImage(self.viewGO, "Left/equips/Middle/#go_Has/Frequency/image_NumBG/#txt_Num/image_FrequencyIcon")
+	self._txtFrequency = gohelper.findChildTextMesh(self.viewGO, "Left/equips/Middle/#go_Has/Frequency/image_NumBG/#txt_Num")
+	self._goempty = gohelper.findChild(self.viewGO, "Left/equips/Middle/#go_Empty")
+	self._golevel32 = gohelper.findChild(self.viewGO, "Left/equips/Middle/#level3")
+	self._golevel1 = gohelper.findChild(self.viewGO, "Left/equips/Middle/#go_Has/#level1")
+	self._golevel2 = gohelper.findChild(self.viewGO, "Left/equips/Middle/#go_Has/#level2")
+	self._golevel3 = gohelper.findChild(self.viewGO, "Left/equips/Middle/#go_Has/#level3")
+	self._btn_onekeyEquip = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_onekeyEquip")
+	self._goequipred = gohelper.findChild(self.viewGO, "Left/#btn_onekeyEquip/#go_arrow")
+	self._btn_onekeyUnEquip = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_onekeyUnEquip")
+	self._goonekeyEquipTips = gohelper.findChild(self.viewGO, "Left/#btn_onekeyEquip/#go_tips")
+	self._goonekeyEquipTipsItem = gohelper.findChild(self.viewGO, "Left/#btn_onekeyEquip/#go_tips/#go_item")
+	self._anim = gohelper.findChildAnim(self.viewGO, "")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnEquipSkill:AddClickListener(arg_2_0.onAttrClick, arg_2_0)
-	arg_2_0._btnAttr:AddClickListener(arg_2_0.onAttrClick, arg_2_0)
-	arg_2_0._btn_onekeyEquip:AddClickListener(arg_2_0.oneKeyEquip, arg_2_0)
-	arg_2_0._btn_onekeyUnEquip:AddClickListener(arg_2_0.oneKeyUnEquip, arg_2_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapBagUpdate, arg_2_0._refreshBag, arg_2_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnShelterBagUpdate, arg_2_0._refreshBag, arg_2_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnEquipInfoUpdate, arg_2_0.onChangePlan, arg_2_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnEquipMaxTagUpdate, arg_2_0.onMaxTagChange, arg_2_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnEquipRedUpdate, arg_2_0.updateRed, arg_2_0)
-	arg_2_0:addEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreen, arg_2_0.onTouchScreen, arg_2_0)
-	CommonDragHelper.instance:registerDragObj(arg_2_0._gocontent, arg_2_0._beginDrag, arg_2_0._onDrag, arg_2_0._endDrag, nil, arg_2_0, nil, true)
+function SurvivalEquipView:addEvents()
+	self._btnEquipSkill:AddClickListener(self.onAttrClick, self)
+	self._btnAttr:AddClickListener(self.onAttrClick, self)
+	self._btn_onekeyEquip:AddClickListener(self.oneKeyEquip, self)
+	self._btn_onekeyUnEquip:AddClickListener(self.oneKeyUnEquip, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapBagUpdate, self._refreshBag, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnShelterBagUpdate, self._refreshBag, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnEquipInfoUpdate, self.onChangePlan, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnEquipMaxTagUpdate, self.onMaxTagChange, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnEquipRedUpdate, self.updateRed, self)
+	self:addEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreen, self.onTouchScreen, self)
+	CommonDragHelper.instance:registerDragObj(self._gocontent, self._beginDrag, self._onDrag, self._endDrag, nil, self, nil, true)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	CommonDragHelper.instance:unregisterDragObj(arg_3_0._gocontent)
-	arg_3_0._btnEquipSkill:RemoveClickListener()
-	arg_3_0._btnAttr:RemoveClickListener()
-	arg_3_0._btn_onekeyEquip:RemoveClickListener()
-	arg_3_0._btn_onekeyUnEquip:RemoveClickListener()
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapBagUpdate, arg_3_0._refreshBag, arg_3_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnShelterBagUpdate, arg_3_0._refreshBag, arg_3_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnEquipInfoUpdate, arg_3_0.onChangePlan, arg_3_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnEquipMaxTagUpdate, arg_3_0.onMaxTagChange, arg_3_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnEquipRedUpdate, arg_3_0.updateRed, arg_3_0)
+function SurvivalEquipView:removeEvents()
+	CommonDragHelper.instance:unregisterDragObj(self._gocontent)
+	self._btnEquipSkill:RemoveClickListener()
+	self._btnAttr:RemoveClickListener()
+	self._btn_onekeyEquip:RemoveClickListener()
+	self._btn_onekeyUnEquip:RemoveClickListener()
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapBagUpdate, self._refreshBag, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnShelterBagUpdate, self._refreshBag, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnEquipInfoUpdate, self.onChangePlan, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnEquipMaxTagUpdate, self.onMaxTagChange, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnEquipRedUpdate, self.updateRed, self)
 end
 
-function var_0_0.onOpen(arg_4_0)
-	arg_4_0._equipBox = SurvivalShelterModel.instance:getWeekInfo().equipBox
+function SurvivalEquipView:onOpen()
+	self._equipBox = SurvivalShelterModel.instance:getWeekInfo().equipBox
 
-	local var_4_0 = arg_4_0:isInSurvival()
+	local inSurvival = self:isInSurvival()
 
-	gohelper.setActive(arg_4_0._goplan, not var_4_0)
+	gohelper.setActive(self._goplan, not inSurvival)
 
-	if not var_4_0 then
-		arg_4_0._planSelects = {}
+	if not inSurvival then
+		self._planSelects = {}
 
-		gohelper.CreateObjList(arg_4_0, arg_4_0._createPlanItem, {
+		gohelper.CreateObjList(self, self._createPlanItem, {
 			1,
 			2,
 			3,
 			4
-		}, nil, arg_4_0._goplanitem)
+		}, nil, self._goplanitem)
 	end
 
-	local var_4_1 = arg_4_0.viewContainer._viewSetting.otherRes.itemRes
+	local itemRes = self.viewContainer._viewSetting.otherRes.itemRes
 
-	arg_4_0._item = arg_4_0:getResInst(var_4_1, arg_4_0.viewGO)
+	self._item = self:getResInst(itemRes, self.viewGO)
 
-	gohelper.setActive(arg_4_0._item, false)
+	gohelper.setActive(self._item, false)
 
-	local var_4_2 = arg_4_0:getResInst(var_4_1, arg_4_0.viewGO)
-	local var_4_3 = gohelper.findChildAnim(var_4_2, "")
+	local dragGo = self:getResInst(itemRes, self.viewGO)
+	local anim = gohelper.findChildAnim(dragGo, "")
 
-	if var_4_3 then
-		var_4_3.enabled = false
+	if anim then
+		anim.enabled = false
 	end
 
-	arg_4_0._dragItem = MonoHelper.addNoUpdateLuaComOnceToGo(var_4_2, SurvivalBagItem)
+	self._dragItem = MonoHelper.addNoUpdateLuaComOnceToGo(dragGo, SurvivalBagItem)
 
-	arg_4_0._dragItem:setShowNum(false)
-	gohelper.setActive(var_4_2, false)
+	self._dragItem:setShowNum(false)
+	gohelper.setActive(dragGo, false)
 
-	arg_4_0._equipItems = {}
+	self._equipItems = {}
 
-	local var_4_4 = #arg_4_0._equipBox.slots
-	local var_4_5 = gohelper.findChild(arg_4_0.viewGO, "Left/equips/#go_Pos1")
+	local len = #self._equipBox.slots
+	local root = gohelper.findChild(self.viewGO, "Left/equips/#go_Pos1")
 
-	arg_4_0._gopos = arg_4_0:getUserDataTb_()
+	self._gopos = self:getUserDataTb_()
 
-	for iter_4_0 = 1, var_4_4 do
-		local var_4_6 = gohelper.findChild(var_4_5, "pos" .. iter_4_0)
-		local var_4_7 = gohelper.clone(arg_4_0._goequipitem, var_4_6)
-		local var_4_8 = MonoHelper.addNoUpdateLuaComOnceToGo(var_4_7, SurvivalEquipItem)
+	for i = 1, len do
+		local go = gohelper.findChild(root, "pos" .. i)
+		local cloneGo = gohelper.clone(self._goequipitem, go)
+		local equipItem = MonoHelper.addNoUpdateLuaComOnceToGo(cloneGo, SurvivalEquipItem)
 
-		var_4_8:initIndex(iter_4_0)
-		var_4_8:setParentView(arg_4_0)
-		var_4_8:setItemRes(arg_4_0._item)
-		var_4_8:setClickCallback(arg_4_0._onClickEquipItem, arg_4_0)
-		var_4_8:setParentRoot(arg_4_0.viewGO.transform)
+		equipItem:initIndex(i)
+		equipItem:setParentView(self)
+		equipItem:setItemRes(self._item)
+		equipItem:setClickCallback(self._onClickEquipItem, self)
+		equipItem:setParentRoot(self.viewGO.transform)
 
-		arg_4_0._equipItems[iter_4_0] = var_4_8
-		arg_4_0._gopos[iter_4_0] = var_4_6
+		self._equipItems[i] = equipItem
+		self._gopos[i] = go
 	end
 
-	arg_4_0._spEquipItems = {}
-	arg_4_0._spGoPos = {}
+	self._spEquipItems = {}
+	self._spGoPos = {}
 
-	for iter_4_1 = 1, 3 do
-		local var_4_9 = gohelper.findChild(arg_4_0.viewGO, "Left/equips/#go_sppos/#go_pos" .. iter_4_1)
-		local var_4_10 = gohelper.clone(arg_4_0._gospequipitem, var_4_9)
-		local var_4_11 = MonoHelper.addNoUpdateLuaComOnceToGo(var_4_10, SurvivalSpEquipItem)
+	for i = 1, 3 do
+		local go = gohelper.findChild(self.viewGO, "Left/equips/#go_sppos/#go_pos" .. i)
+		local cloneGo = gohelper.clone(self._gospequipitem, go)
+		local equipItem = MonoHelper.addNoUpdateLuaComOnceToGo(cloneGo, SurvivalSpEquipItem)
 
-		var_4_11:initIndex(iter_4_1)
-		var_4_11:setParentView(arg_4_0)
-		var_4_11:setClickCallback(arg_4_0._onClickEquipItem2, arg_4_0)
-		var_4_11:setParentRoot(arg_4_0.viewGO.transform)
+		equipItem:initIndex(i)
+		equipItem:setParentView(self)
+		equipItem:setClickCallback(self._onClickEquipItem2, self)
+		equipItem:setParentRoot(self.viewGO.transform)
 
-		arg_4_0._spEquipItems[iter_4_1] = var_4_11
-		arg_4_0._spGoPos[iter_4_1] = var_4_9
+		self._spEquipItems[i] = equipItem
+		self._spGoPos[i] = go
 	end
 
-	gohelper.setActive(arg_4_0._goequipitem, false)
-	gohelper.setActive(arg_4_0._gospequipitem, false)
+	gohelper.setActive(self._goequipitem, false)
+	gohelper.setActive(self._gospequipitem, false)
 
-	local var_4_12 = MonoHelper.addNoUpdateLuaComOnceToGo(arg_4_0._gosort, SurvivalSortAndFilterPart)
-	local var_4_13 = {
-		{
-			desc = luaLang("survival_sort_time"),
-			type = SurvivalEnum.ItemSortType.Time
-		},
-		{
-			desc = luaLang("survival_sort_mass"),
-			type = SurvivalEnum.ItemSortType.Mass
-		},
-		{
-			desc = luaLang("survival_sort_worth"),
-			type = SurvivalEnum.ItemSortType.Worth
-		},
-		{
-			desc = luaLang("survival_sort_type"),
-			type = SurvivalEnum.ItemSortType.Type
-		}
+	local sortComp = MonoHelper.addNoUpdateLuaComOnceToGo(self._gosort, SurvivalSortAndFilterPart)
+	local sortOptions = {}
+
+	sortOptions[1] = {
+		desc = luaLang("survival_sort_time"),
+		type = SurvivalEnum.ItemSortType.Time
 	}
-	local var_4_14 = {}
+	sortOptions[2] = {
+		desc = luaLang("survival_sort_mass"),
+		type = SurvivalEnum.ItemSortType.Mass
+	}
+	sortOptions[3] = {
+		desc = luaLang("survival_sort_worth"),
+		type = SurvivalEnum.ItemSortType.Worth
+	}
+	sortOptions[4] = {
+		desc = luaLang("survival_sort_type"),
+		type = SurvivalEnum.ItemSortType.Type
+	}
 
-	for iter_4_2, iter_4_3 in ipairs(lua_survival_equip_found.configList) do
-		table.insert(var_4_14, {
-			desc = iter_4_3.name,
-			type = iter_4_3.id
+	local filterOptions = {}
+
+	for i, co in ipairs(lua_survival_equip_found.configList) do
+		table.insert(filterOptions, {
+			desc = co.name,
+			type = co.id
 		})
 	end
 
-	arg_4_0._curSort = var_4_13[1]
-	arg_4_0._isDec = true
-	arg_4_0._filterList = {}
+	self._curSort = sortOptions[1]
+	self._isDec = true
+	self._filterList = {}
 
-	var_4_12:setOptions(var_4_13, var_4_14, arg_4_0._curSort, arg_4_0._isDec)
-	var_4_12:setOptionChangeCallback(arg_4_0._onSortChange, arg_4_0)
+	sortComp:setOptions(sortOptions, filterOptions, self._curSort, self._isDec)
+	sortComp:setOptionChangeCallback(self._onSortChange, self)
 
-	local var_4_15 = arg_4_0.viewContainer._viewSetting.otherRes.infoView
-	local var_4_16 = arg_4_0:getResInst(var_4_15, arg_4_0._goinfoview)
+	local infoViewRes = self.viewContainer._viewSetting.otherRes.infoView
+	local infoGo = self:getResInst(infoViewRes, self._goinfoview)
 
-	arg_4_0._infoPanel = MonoHelper.addNoUpdateLuaComOnceToGo(var_4_16, SurvivalBagInfoPart)
+	self._infoPanel = MonoHelper.addNoUpdateLuaComOnceToGo(infoGo, SurvivalBagInfoPart)
 
-	local var_4_17 = {
+	local t = {
 		[SurvivalEnum.ItemSource.Map] = SurvivalEnum.ItemSource.EquipBag,
 		[SurvivalEnum.ItemSource.Shelter] = SurvivalEnum.ItemSource.EquipBag
 	}
 
-	arg_4_0._infoPanel:setChangeSource(var_4_17)
-	arg_4_0._infoPanel:setCloseShow(true, arg_4_0._onTipsClose, arg_4_0)
+	self._infoPanel:setChangeSource(t)
+	self._infoPanel:setCloseShow(true, self._onTipsClose, self)
 
-	arg_4_0._simpleList = MonoHelper.addNoUpdateLuaComOnceToGo(arg_4_0._goscroll, SurvivalSimpleListPart)
+	self._simpleList = MonoHelper.addNoUpdateLuaComOnceToGo(self._goscroll, SurvivalSimpleListPart)
 
-	arg_4_0._simpleList:setCellUpdateCallBack(arg_4_0._createItem, arg_4_0, SurvivalBagItem, arg_4_0._item)
-	arg_4_0:_refreshBag()
-	arg_4_0:onChangePlan(true)
+	self._simpleList:setCellUpdateCallBack(self._createItem, self, SurvivalBagItem, self._item)
+	self:_refreshBag()
+	self:onChangePlan(true)
 
-	arg_4_0._equipTagRed = arg_4_0:getUserDataTb_()
+	self._equipTagRed = self:getUserDataTb_()
 
-	gohelper.CreateObjList(arg_4_0, arg_4_0._createOneKeyEquipItem, var_4_14, nil, arg_4_0._goonekeyEquipTipsItem, nil, nil, nil, 1)
-	arg_4_0:updateRed()
+	gohelper.CreateObjList(self, self._createOneKeyEquipItem, filterOptions, nil, self._goonekeyEquipTipsItem, nil, nil, nil, 1)
+	self:updateRed()
 end
 
-function var_0_0.getDragIndex(arg_5_0, arg_5_1, arg_5_2)
-	if gohelper.isMouseOverGo(arg_5_0._goscroll) then
+function SurvivalEquipView:getDragIndex(position, isSp)
+	if gohelper.isMouseOverGo(self._goscroll) then
 		return -1
 	end
 
-	if arg_5_2 then
-		for iter_5_0, iter_5_1 in ipairs(arg_5_0._spGoPos) do
-			if gohelper.isMouseOverGo(iter_5_1, arg_5_1) then
-				return iter_5_0, arg_5_0._spEquipItems[iter_5_0]
+	if isSp then
+		for i, go in ipairs(self._spGoPos) do
+			if gohelper.isMouseOverGo(go, position) then
+				return i, self._spEquipItems[i]
 			end
 		end
 	else
-		for iter_5_2, iter_5_3 in ipairs(arg_5_0._gopos) do
-			if gohelper.isMouseOverGo(iter_5_3, arg_5_1) then
-				return iter_5_2, arg_5_0._equipItems[iter_5_2]
+		for i, go in ipairs(self._gopos) do
+			if gohelper.isMouseOverGo(go, position) then
+				return i, self._equipItems[i]
 			end
 		end
 	end
 end
 
-function var_0_0._createOneKeyEquipItem(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	local var_6_0 = gohelper.findChildTextMesh(arg_6_1, "#txt_desc")
-	local var_6_1 = gohelper.findChild(arg_6_1, "#go_arrow")
+function SurvivalEquipView:_createOneKeyEquipItem(obj, data, index)
+	local txtdesc = gohelper.findChildTextMesh(obj, "#txt_desc")
+	local equipTagRed = gohelper.findChild(obj, "#go_arrow")
 
-	var_6_0.text = arg_6_2.desc
+	txtdesc.text = data.desc
 
-	local var_6_2 = gohelper.getClick(arg_6_1)
+	local click = gohelper.getClick(obj)
 
-	arg_6_0:addClickCb(var_6_2, arg_6_0._onClickFilterItem, arg_6_0, arg_6_2)
+	self:addClickCb(click, self._onClickFilterItem, self, data)
 
-	arg_6_0._equipTagRed[arg_6_2.type] = var_6_1
+	self._equipTagRed[data.type] = equipTagRed
 end
 
-function var_0_0.updateRed(arg_7_0)
-	gohelper.setActive(arg_7_0._goequipred, SurvivalEquipRedDotHelper.instance.reddotType >= 0)
+function SurvivalEquipView:updateRed()
+	gohelper.setActive(self._goequipred, SurvivalEquipRedDotHelper.instance.reddotType >= 0)
 
-	for iter_7_0, iter_7_1 in pairs(arg_7_0._equipTagRed) do
-		gohelper.setActive(iter_7_1, iter_7_0 == SurvivalEquipRedDotHelper.instance.reddotType)
+	for tag, go in pairs(self._equipTagRed) do
+		gohelper.setActive(go, tag == SurvivalEquipRedDotHelper.instance.reddotType)
 	end
 end
 
-function var_0_0._onClickFilterItem(arg_8_0, arg_8_1)
+function SurvivalEquipView:_onClickFilterItem(data)
 	GameFacade.showToast(ToastEnum.SurvivalOneKeyEquip)
-	gohelper.setActive(arg_8_0._goonekeyEquipTips, false)
-	SurvivalWeekRpc.instance:sendSurvivalEquipOneKeyWear(arg_8_1.type)
+	gohelper.setActive(self._goonekeyEquipTips, false)
+	SurvivalWeekRpc.instance:sendSurvivalEquipOneKeyWear(data.type)
 end
 
-function var_0_0.onAttrClick(arg_9_0)
+function SurvivalEquipView:onAttrClick()
 	ViewMgr.instance:openView(ViewName.SurvivalEquipOverView)
 end
 
-function var_0_0.oneKeyEquip(arg_10_0)
-	gohelper.setActive(arg_10_0._goonekeyEquipTips, not arg_10_0._goonekeyEquipTips.activeSelf)
+function SurvivalEquipView:oneKeyEquip()
+	gohelper.setActive(self._goonekeyEquipTips, not self._goonekeyEquipTips.activeSelf)
 end
 
-function var_0_0.oneKeyUnEquip(arg_11_0)
+function SurvivalEquipView:oneKeyUnEquip()
 	GameFacade.showToast(ToastEnum.SurvivalOneKeyUnEquip)
 	SurvivalWeekRpc.instance:sendSurvivalEquipOneKeyDemount()
 end
 
-function var_0_0._createPlanItem(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	arg_12_0._planSelects[arg_12_3] = gohelper.findChild(arg_12_1, "#go_select")
+function SurvivalEquipView:_createPlanItem(obj, data, index)
+	self._planSelects[index] = gohelper.findChild(obj, "#go_select")
 
-	local var_12_0 = gohelper.findChildTextMesh(arg_12_1, "#txt_planId")
-	local var_12_1 = gohelper.findChildTextMesh(arg_12_1, "#go_select/#txt_planId")
+	local txt = gohelper.findChildTextMesh(obj, "#txt_planId")
+	local txt2 = gohelper.findChildTextMesh(obj, "#go_select/#txt_planId")
 
-	var_12_0.text = string.format("%02d", arg_12_3)
-	var_12_1.text = string.format("%02d", arg_12_3)
+	txt.text = string.format("%02d", index)
+	txt2.text = string.format("%02d", index)
 
-	local var_12_2 = gohelper.findChildButtonWithAudio(arg_12_1, "#btn_click")
+	local btn = gohelper.findChildButtonWithAudio(obj, "#btn_click")
 
-	arg_12_0:addClickCb(var_12_2, arg_12_0._onClickPlan, arg_12_0, arg_12_3)
+	self:addClickCb(btn, self._onClickPlan, self, index)
 end
 
-function var_0_0._onClickPlan(arg_13_0, arg_13_1)
-	if arg_13_0._equipBox.currPlanId == arg_13_1 then
+function SurvivalEquipView:_onClickPlan(index)
+	if self._equipBox.currPlanId == index then
 		return
 	end
 
-	arg_13_0._lockUpdate = true
+	self._lockUpdate = true
 
-	SurvivalWeekRpc.instance:sendSurvivalEquipSwitchPlan(arg_13_1, arg_13_0._onServerSwitchPlan, arg_13_0)
+	SurvivalWeekRpc.instance:sendSurvivalEquipSwitchPlan(index, self._onServerSwitchPlan, self)
 end
 
-function var_0_0._onServerSwitchPlan(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	if arg_14_2 == 0 then
-		arg_14_0._anim:Play("switch", 0, 0)
+function SurvivalEquipView:_onServerSwitchPlan(cmd, resultCode, msg)
+	if resultCode == 0 then
+		self._anim:Play("switch", 0, 0)
 		UIBlockHelper.instance:startBlock("SurvivalEquipView_swicth", 0.167)
-		TaskDispatcher.runDelay(arg_14_0.onChangePlanBySwitch, arg_14_0, 0.167)
+		TaskDispatcher.runDelay(self.onChangePlanBySwitch, self, 0.167)
 	end
 
-	arg_14_0._lockUpdate = false
+	self._lockUpdate = false
 end
 
-function var_0_0.onChangePlanBySwitch(arg_15_0)
-	arg_15_0:onChangePlan(true)
+function SurvivalEquipView:onChangePlanBySwitch()
+	self:onChangePlan(true)
 end
 
-local var_0_1 = {
+local scoreColor = {
 	"#617B8E",
 	"#855AA1",
 	"#AF490B"
 }
 
-function var_0_0.onChangePlan(arg_16_0, arg_16_1)
-	if arg_16_0._lockUpdate then
+function SurvivalEquipView:onChangePlan(isNoAnim)
+	if self._lockUpdate then
 		return
 	end
 
-	if arg_16_0._planSelects then
-		for iter_16_0, iter_16_1 in pairs(arg_16_0._planSelects) do
-			gohelper.setActive(iter_16_1, arg_16_0._equipBox.currPlanId == iter_16_0)
+	if self._planSelects then
+		for index, select in pairs(self._planSelects) do
+			gohelper.setActive(select, self._equipBox.currPlanId == index)
 		end
 	end
 
-	local var_16_0 = 0
+	local totalScore = 0
 
-	for iter_16_2 = 1, #arg_16_0._equipItems do
-		if arg_16_0._equipBox.slots[iter_16_2] then
-			var_16_0 = var_16_0 + arg_16_0._equipBox.slots[iter_16_2]:getScore()
+	for i = 1, #self._equipItems do
+		if self._equipBox.slots[i] then
+			totalScore = totalScore + self._equipBox.slots[i]:getScore()
 		end
 
-		arg_16_0._equipItems[iter_16_2]:initData(arg_16_0._equipBox.slots[iter_16_2], arg_16_1)
+		self._equipItems[i]:initData(self._equipBox.slots[i], isNoAnim)
 	end
 
-	for iter_16_3 = 1, #arg_16_0._spEquipItems do
-		if arg_16_0._equipBox.jewelrySlots[iter_16_3] then
-			var_16_0 = var_16_0 + arg_16_0._equipBox.jewelrySlots[iter_16_3]:getScore()
+	for i = 1, #self._spEquipItems do
+		if self._equipBox.jewelrySlots[i] then
+			totalScore = totalScore + self._equipBox.jewelrySlots[i]:getScore()
 		end
 
-		arg_16_0._spEquipItems[iter_16_3]:initData(arg_16_0._equipBox.jewelrySlots[iter_16_3], arg_16_1)
+		self._spEquipItems[i]:initData(self._equipBox.jewelrySlots[i], isNoAnim)
 	end
 
-	if arg_16_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_16_0._tweenId, true)
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId, true)
 
-		arg_16_0._tweenId = nil
+		self._tweenId = nil
 	end
 
-	if arg_16_1 or not arg_16_0._nowScore or arg_16_0._nowScore == var_16_0 then
-		arg_16_0:onScoreChange(var_16_0)
+	if isNoAnim or not self._nowScore or self._nowScore == totalScore then
+		self:onScoreChange(totalScore)
 	else
-		arg_16_0._tweenId = ZProj.TweenHelper.DOTweenFloat(arg_16_0._nowScore, var_16_0, 1, arg_16_0.onScoreChange, arg_16_0.onScoreEnd, arg_16_0)
+		self._tweenId = ZProj.TweenHelper.DOTweenFloat(self._nowScore, totalScore, 1, self.onScoreChange, self.onScoreEnd, self)
 	end
 
-	arg_16_0:onMaxTagChange(arg_16_1)
+	self:onMaxTagChange(isNoAnim)
 end
 
-function var_0_0.onScoreEnd(arg_17_0)
-	arg_17_0._tweenId = nil
+function SurvivalEquipView:onScoreEnd()
+	self._tweenId = nil
 
-	arg_17_0._animscore:Play("change", 0, 0)
+	self._animscore:Play("change", 0, 0)
 end
 
-function var_0_0.onScoreChange(arg_18_0, arg_18_1)
-	arg_18_1 = math.floor(arg_18_1)
-	arg_18_0._nowScore = arg_18_1
+function SurvivalEquipView:onScoreChange(totalScore)
+	totalScore = math.floor(totalScore)
+	self._nowScore = totalScore
 
-	local var_18_0 = SurvivalShelterModel.instance:getWeekInfo():getAttr(SurvivalEnum.AttrType.WorldLevel)
-	local var_18_1 = lua_survival_equip_score.configDict[var_18_0][2].level
-	local var_18_2 = 1
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local worldLevel = weekInfo:getAttr(SurvivalEnum.AttrType.WorldLevel)
+	local str = lua_survival_equip_score.configDict[worldLevel][2].level
+	local level = 1
 
-	if not string.nilorempty(var_18_1) then
-		for iter_18_0, iter_18_1 in ipairs(string.splitToNumber(var_18_1, "#")) do
-			if iter_18_1 <= arg_18_1 then
-				var_18_2 = iter_18_0 + 1
+	if not string.nilorempty(str) then
+		for i, v in ipairs(string.splitToNumber(str, "#")) do
+			if v <= totalScore then
+				level = i + 1
 			end
 		end
 	end
 
-	UISpriteSetMgr.instance:setSurvivalSprite(arg_18_0._imageScore, "survivalequip_scoreicon_" .. var_18_2)
+	UISpriteSetMgr.instance:setSurvivalSprite(self._imageScore, "survivalequip_scoreicon_" .. level)
 
-	arg_18_0._txtTotalScore.text = string.format("<color=%s>%s</color>", var_0_1[var_18_2] or var_0_1[1], arg_18_1)
+	self._txtTotalScore.text = string.format("<color=%s>%s</color>", scoreColor[level] or scoreColor[1], totalScore)
 end
 
-function var_0_0.onMaxTagChange(arg_19_0, arg_19_1)
-	local var_19_0 = lua_survival_equip_found.configDict[arg_19_0._equipBox.maxTagId]
-	local var_19_1 = 0
+function SurvivalEquipView:onMaxTagChange(isNoAnim)
+	local tagCo = lua_survival_equip_found.configDict[self._equipBox.maxTagId]
+	local level = 0
 
-	if var_19_0 then
-		local var_19_2 = arg_19_0._equipBox.values[var_19_0.value] or 0
-		local var_19_3 = string.splitToNumber(var_19_0.level, "#") or {}
+	if tagCo then
+		local attrNum = self._equipBox.values[tagCo.value] or 0
+		local arr = string.splitToNumber(tagCo.level, "#") or {}
 
-		for iter_19_0, iter_19_1 in ipairs(var_19_3) do
-			if iter_19_1 <= var_19_2 then
-				var_19_1 = iter_19_0
+		for k, v in ipairs(arr) do
+			if v <= attrNum then
+				level = k
 			end
 		end
 	end
 
-	if arg_19_0._preLv == var_19_1 and arg_19_0._preTagCo == var_19_0 then
-		if var_19_0 then
-			UISpriteSetMgr.instance:setSurvivalSprite(arg_19_0._imageFrequency, var_19_0.value)
+	if self._preLv == level and self._preTagCo == tagCo then
+		if tagCo then
+			UISpriteSetMgr.instance:setSurvivalSprite(self._imageFrequency, tagCo.value)
 
-			arg_19_0._txtFrequency.text = arg_19_0._equipBox.values[var_19_0.value] or 0
+			self._txtFrequency.text = self._equipBox.values[tagCo.value] or 0
 		end
 
 		return
 	end
 
-	if arg_19_0._nextLv then
-		arg_19_0._preLv = arg_19_0._nextLv
+	if self._nextLv then
+		self._preLv = self._nextLv
 	end
 
-	TaskDispatcher.cancelTask(arg_19_0._delayShowTagCo, arg_19_0)
+	TaskDispatcher.cancelTask(self._delayShowTagCo, self)
 
-	if arg_19_1 or not arg_19_0._preLv then
-		arg_19_0._preLv = var_19_1
-		arg_19_0._preTagCo = var_19_0
+	if isNoAnim or not self._preLv then
+		self._preLv = level
+		self._preTagCo = tagCo
 
-		gohelper.setActive(arg_19_0._gohas, var_19_0)
-		gohelper.setActive(arg_19_0._goempty, not var_19_0)
-		gohelper.setActive(arg_19_0._golevel32, var_19_1 == 3)
-		gohelper.setActive(arg_19_0._golevel1, var_19_1 == 1)
-		gohelper.setActive(arg_19_0._golevel2, var_19_1 == 2)
-		gohelper.setActive(arg_19_0._golevel3, var_19_1 == 3)
+		gohelper.setActive(self._gohas, tagCo)
+		gohelper.setActive(self._goempty, not tagCo)
+		gohelper.setActive(self._golevel32, level == 3)
+		gohelper.setActive(self._golevel1, level == 1)
+		gohelper.setActive(self._golevel2, level == 2)
+		gohelper.setActive(self._golevel3, level == 3)
 
-		if var_19_0 then
-			arg_19_0._imageSkill:LoadImage(ResUrl.getSurvivalEquipIcon(var_19_0.icon))
-			UISpriteSetMgr.instance:setSurvivalSprite(arg_19_0._imageFrequency, var_19_0.value)
+		if tagCo then
+			self._imageSkill:LoadImage(ResUrl.getSurvivalEquipIcon(tagCo.icon))
+			UISpriteSetMgr.instance:setSurvivalSprite(self._imageFrequency, tagCo.value)
 
-			arg_19_0._txtFrequency.text = arg_19_0._equipBox.values[var_19_0.value] or 0
+			self._txtFrequency.text = self._equipBox.values[tagCo.value] or 0
 
-			arg_19_0._animskill:Play("equip_in", 0, 1)
+			self._animskill:Play("equip_in", 0, 1)
 		else
-			arg_19_0._animskill:Play("empty_in", 0, 1)
+			self._animskill:Play("empty_in", 0, 1)
 		end
-	elseif arg_19_0._preTagCo ~= var_19_0 then
-		arg_19_0._preLv = var_19_1
-		arg_19_0._nextTagCo = var_19_0
+	elseif self._preTagCo ~= tagCo then
+		self._preLv = level
+		self._nextTagCo = tagCo
 
-		arg_19_0._animskill:Play(arg_19_0._preTagCo and "equipout" or "emptyout", 0, 0)
-		TaskDispatcher.runDelay(arg_19_0._delayShowTagCo, arg_19_0, 0.1)
+		self._animskill:Play(self._preTagCo and "equipout" or "emptyout", 0, 0)
+		TaskDispatcher.runDelay(self._delayShowTagCo, self, 0.1)
 
-		arg_19_0._preTagCo = var_19_0
+		self._preTagCo = tagCo
 	else
-		if var_19_0 then
-			UISpriteSetMgr.instance:setSurvivalSprite(arg_19_0._imageFrequency, var_19_0.value)
+		if tagCo then
+			UISpriteSetMgr.instance:setSurvivalSprite(self._imageFrequency, tagCo.value)
 
-			arg_19_0._txtFrequency.text = arg_19_0._equipBox.values[var_19_0.value] or 0
+			self._txtFrequency.text = self._equipBox.values[tagCo.value] or 0
 		end
 
-		arg_19_0._nextLv = var_19_1
+		self._nextLv = level
 
-		arg_19_0:_delayShowLevelAnim()
+		self:_delayShowLevelAnim()
 	end
 end
 
-function var_0_0._delayShowTagCo(arg_20_0)
-	gohelper.setActive(arg_20_0._gohas, arg_20_0._nextTagCo)
-	gohelper.setActive(arg_20_0._goempty, not arg_20_0._nextTagCo)
-	arg_20_0._animskill:Play(arg_20_0._nextTagCo and "equip_in" or "empty_in", 0, 0)
+function SurvivalEquipView:_delayShowTagCo()
+	gohelper.setActive(self._gohas, self._nextTagCo)
+	gohelper.setActive(self._goempty, not self._nextTagCo)
+	self._animskill:Play(self._nextTagCo and "equip_in" or "empty_in", 0, 0)
 
-	if arg_20_0._nextTagCo then
-		arg_20_0._imageSkill:LoadImage(ResUrl.getSurvivalEquipIcon(arg_20_0._nextTagCo.icon))
-		UISpriteSetMgr.instance:setSurvivalSprite(arg_20_0._imageFrequency, arg_20_0._nextTagCo.value)
+	if self._nextTagCo then
+		self._imageSkill:LoadImage(ResUrl.getSurvivalEquipIcon(self._nextTagCo.icon))
+		UISpriteSetMgr.instance:setSurvivalSprite(self._imageFrequency, self._nextTagCo.value)
 
-		arg_20_0._txtFrequency.text = arg_20_0._equipBox.values[arg_20_0._nextTagCo.value] or 0
+		self._txtFrequency.text = self._equipBox.values[self._nextTagCo.value] or 0
 	end
 
-	gohelper.setActive(arg_20_0._golevel32, arg_20_0._preLv == 3)
-	gohelper.setActive(arg_20_0._golevel1, arg_20_0._preLv == 1)
-	gohelper.setActive(arg_20_0._golevel2, arg_20_0._preLv == 2)
-	gohelper.setActive(arg_20_0._golevel3, arg_20_0._preLv == 3)
+	gohelper.setActive(self._golevel32, self._preLv == 3)
+	gohelper.setActive(self._golevel1, self._preLv == 1)
+	gohelper.setActive(self._golevel2, self._preLv == 2)
+	gohelper.setActive(self._golevel3, self._preLv == 3)
 end
 
-function var_0_0._delayShowLevelAnim(arg_21_0)
-	if arg_21_0._nextLv ~= arg_21_0._preLv and arg_21_0._preTagCo then
-		if arg_21_0._nextLv > arg_21_0._preLv then
-			arg_21_0._animskill:Play("equip_levelup")
+function SurvivalEquipView:_delayShowLevelAnim()
+	if self._nextLv ~= self._preLv and self._preTagCo then
+		if self._nextLv > self._preLv then
+			self._animskill:Play("equip_levelup")
 		else
-			arg_21_0._animskill:Play("equip_leveldown")
+			self._animskill:Play("equip_leveldown")
 		end
 
-		arg_21_0._preLv = arg_21_0._nextLv
-		arg_21_0._nextLv = nil
+		self._preLv = self._nextLv
+		self._nextLv = nil
 
-		gohelper.setActive(arg_21_0._golevel32, arg_21_0._preLv == 3)
-		gohelper.setActive(arg_21_0._golevel1, arg_21_0._preLv == 1)
-		gohelper.setActive(arg_21_0._golevel2, arg_21_0._preLv == 2)
-		gohelper.setActive(arg_21_0._golevel3, arg_21_0._preLv == 3)
+		gohelper.setActive(self._golevel32, self._preLv == 3)
+		gohelper.setActive(self._golevel1, self._preLv == 1)
+		gohelper.setActive(self._golevel2, self._preLv == 2)
+		gohelper.setActive(self._golevel3, self._preLv == 3)
 	end
 end
 
-function var_0_0._onClickEquipItem(arg_22_0, arg_22_1)
-	local var_22_0 = arg_22_0._equipItems[arg_22_1].mo.item
+function SurvivalEquipView:_onClickEquipItem(index)
+	local itemMo = self._equipItems[index].mo.item
 
-	if not var_22_0:isEmpty() then
-		gohelper.setActive(arg_22_0._btncloseinfoview, true)
-		arg_22_0._infoPanel:updateMo(var_22_0)
+	if not itemMo:isEmpty() then
+		gohelper.setActive(self._btncloseinfoview, true)
+		self._infoPanel:updateMo(itemMo)
 	end
 end
 
-function var_0_0._onClickEquipItem2(arg_23_0, arg_23_1)
-	local var_23_0 = arg_23_0._spEquipItems[arg_23_1].mo.item
+function SurvivalEquipView:_onClickEquipItem2(index)
+	local itemMo = self._spEquipItems[index].mo.item
 
-	if not var_23_0:isEmpty() then
-		gohelper.setActive(arg_23_0._btncloseinfoview, true)
-		arg_23_0._infoPanel:updateMo(var_23_0)
+	if not itemMo:isEmpty() then
+		gohelper.setActive(self._btncloseinfoview, true)
+		self._infoPanel:updateMo(itemMo)
 	end
 end
 
-function var_0_0._onSortChange(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
-	arg_24_0._curSort = arg_24_1
-	arg_24_0._isDec = arg_24_2
-	arg_24_0._filterList = arg_24_3
+function SurvivalEquipView:_onSortChange(sortData, isDec, filterList)
+	self._curSort = sortData
+	self._isDec = isDec
+	self._filterList = filterList
 
-	arg_24_0:_refreshBag()
+	self:_refreshBag()
 end
 
-function var_0_0.isInSurvival(arg_25_0)
-	return SurvivalShelterModel.instance:getWeekInfo().inSurvival
+function SurvivalEquipView:isInSurvival()
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+
+	return weekInfo.inSurvival
 end
 
-function var_0_0.getBag(arg_26_0)
-	local var_26_0 = SurvivalShelterModel.instance:getWeekInfo()
-	local var_26_1 = var_26_0:getBag(SurvivalEnum.ItemSource.Shelter)
-	local var_26_2
+function SurvivalEquipView:getBag()
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local bag = weekInfo:getBag(SurvivalEnum.ItemSource.Shelter)
+	local bag2
 
-	if var_26_0.inSurvival then
-		var_26_2 = var_26_0:getBag(SurvivalEnum.ItemSource.Map)
+	if weekInfo.inSurvival then
+		bag2 = weekInfo:getBag(SurvivalEnum.ItemSource.Map)
 	end
 
-	return var_26_1, var_26_2
+	return bag, bag2
 end
 
-function var_0_0._refreshBag(arg_27_0)
-	local var_27_0, var_27_1 = arg_27_0:getBag()
-	local var_27_2 = {}
-	local var_27_3
+function SurvivalEquipView:_refreshBag()
+	local bag, bag2 = self:getBag()
+	local itemMos = {}
+	local preSelectUid
 
-	for iter_27_0, iter_27_1 in ipairs(var_27_0.items) do
-		if iter_27_1.co.type == SurvivalEnum.ItemType.Equip and SurvivalBagSortHelper.filterEquipMo(arg_27_0._filterList, iter_27_1) then
-			table.insert(var_27_2, iter_27_1)
+	for _, itemMo in ipairs(bag.items) do
+		if itemMo.co.type == SurvivalEnum.ItemType.Equip and SurvivalBagSortHelper.filterEquipMo(self._filterList, itemMo) then
+			table.insert(itemMos, itemMo)
 
-			if arg_27_0._preSelectUid == iter_27_1.uid then
-				var_27_3 = iter_27_1.uid
+			if self._preSelectUid == itemMo.uid then
+				preSelectUid = itemMo.uid
 			end
 		end
 	end
 
-	if var_27_1 then
-		for iter_27_2, iter_27_3 in ipairs(var_27_1.items) do
-			if iter_27_3.co.type == SurvivalEnum.ItemType.Equip and SurvivalBagSortHelper.filterEquipMo(arg_27_0._filterList, iter_27_3) then
-				table.insert(var_27_2, iter_27_3)
+	if bag2 then
+		for _, itemMo in ipairs(bag2.items) do
+			if itemMo.co.type == SurvivalEnum.ItemType.Equip and SurvivalBagSortHelper.filterEquipMo(self._filterList, itemMo) then
+				table.insert(itemMos, itemMo)
 
-				if arg_27_0._preSelectUid == iter_27_3.uid then
-					var_27_3 = iter_27_3.uid
+				if self._preSelectUid == itemMo.uid then
+					preSelectUid = itemMo.uid
 				end
 			end
 		end
 	end
 
-	SurvivalBagSortHelper.sortItems(var_27_2, arg_27_0._curSort.type, arg_27_0._isDec)
-	SurvivalHelper.instance:makeArrFull(var_27_2, SurvivalBagItemMo.Empty, 5, 4)
+	SurvivalBagSortHelper.sortItems(itemMos, self._curSort.type, self._isDec)
+	SurvivalHelper.instance:makeArrFull(itemMos, SurvivalBagItemMo.Empty, 5, 4)
 
-	arg_27_0._preSelectUid = var_27_3
+	self._preSelectUid = preSelectUid
 
-	arg_27_0._simpleList:setList(var_27_2)
-	arg_27_0:_refreshInfo()
+	self._simpleList:setList(itemMos)
+	self:_refreshInfo()
 end
 
-function var_0_0._createItem(arg_28_0, arg_28_1, arg_28_2, arg_28_3)
-	arg_28_1:updateMo(arg_28_2)
-	arg_28_1:setClickCallback(arg_28_0._onItemClick, arg_28_0)
+function SurvivalEquipView:_createItem(obj, data, index)
+	obj:updateMo(data)
+	obj:setClickCallback(self._onItemClick, self)
 
-	if arg_28_2.uid == arg_28_0._preSelectUid and arg_28_0._preSelectUid then
-		arg_28_1:setIsSelect(true)
+	if data.uid == self._preSelectUid and self._preSelectUid then
+		obj:setIsSelect(true)
 	end
 end
 
-function var_0_0._onItemClick(arg_29_0, arg_29_1)
-	if arg_29_1._mo:isEmpty() then
+function SurvivalEquipView:_onItemClick(item)
+	if item._mo:isEmpty() then
 		return
 	end
 
-	arg_29_0._preSelectUid = arg_29_1._mo.uid
+	self._preSelectUid = item._mo.uid
 
-	for iter_29_0 in pairs(arg_29_0._simpleList:getAllComps()) do
-		iter_29_0:setIsSelect(arg_29_0._preSelectUid and iter_29_0._mo.uid == arg_29_0._preSelectUid)
+	for comp in pairs(self._simpleList:getAllComps()) do
+		comp:setIsSelect(self._preSelectUid and comp._mo.uid == self._preSelectUid)
 	end
 
-	arg_29_0:_refreshInfo()
+	self:_refreshInfo()
 end
 
-function var_0_0._onTipsClose(arg_30_0)
-	arg_30_0._preSelectUid = nil
+function SurvivalEquipView:_onTipsClose()
+	self._preSelectUid = nil
 
-	for iter_30_0 in pairs(arg_30_0._simpleList:getAllComps()) do
-		iter_30_0:setIsSelect(false)
+	for comp in pairs(self._simpleList:getAllComps()) do
+		comp:setIsSelect(false)
 	end
 end
 
-function var_0_0._refreshInfo(arg_31_0)
-	local var_31_0, var_31_1 = arg_31_0:getBag()
-	local var_31_2 = arg_31_0._preSelectUid and (var_31_0.itemsByUid[arg_31_0._preSelectUid] or var_31_1 and var_31_1.itemsByUid[arg_31_0._preSelectUid])
+function SurvivalEquipView:_refreshInfo()
+	local bag, bag2 = self:getBag()
+	local itemMo = self._preSelectUid and (bag.itemsByUid[self._preSelectUid] or bag2 and bag2.itemsByUid[self._preSelectUid])
 
-	arg_31_0._infoPanel:updateMo(var_31_2)
+	self._infoPanel:updateMo(itemMo)
 end
 
-function var_0_0.onTouchScreen(arg_32_0)
-	if arg_32_0._goonekeyEquipTips.activeSelf then
-		if gohelper.isMouseOverGo(arg_32_0._goonekeyEquipTips) or gohelper.isMouseOverGo(arg_32_0._btn_onekeyEquip) then
+function SurvivalEquipView:onTouchScreen()
+	if self._goonekeyEquipTips.activeSelf then
+		if gohelper.isMouseOverGo(self._goonekeyEquipTips) or gohelper.isMouseOverGo(self._btn_onekeyEquip) then
 			return
 		end
 
-		gohelper.setActive(arg_32_0._goonekeyEquipTips, false)
+		gohelper.setActive(self._goonekeyEquipTips, false)
 	end
 end
 
-function var_0_0._beginDrag(arg_33_0, arg_33_1, arg_33_2)
-	ZProj.UGUIHelper.PassEvent(arg_33_0._goscroll, arg_33_2, 4)
+function SurvivalEquipView:_beginDrag(_, pointerEventData)
+	ZProj.UGUIHelper.PassEvent(self._goscroll, pointerEventData, 4)
 
-	for iter_33_0 in pairs(arg_33_0._simpleList:getAllComps()) do
-		if gohelper.isMouseOverGo(iter_33_0.go) then
-			if not iter_33_0._mo:isEmpty() then
-				arg_33_0._curPressItem = iter_33_0
+	for bagItem in pairs(self._simpleList:getAllComps()) do
+		if gohelper.isMouseOverGo(bagItem.go) then
+			if not bagItem._mo:isEmpty() then
+				self._curPressItem = bagItem
 			end
 
 			break
@@ -623,112 +629,112 @@ function var_0_0._beginDrag(arg_33_0, arg_33_1, arg_33_2)
 	end
 end
 
-function var_0_0._onDrag(arg_34_0, arg_34_1, arg_34_2)
-	local var_34_0
+function SurvivalEquipView:_onDrag(_, pointerEventData)
+	local isFirst
 
-	if not arg_34_0._isDragOut then
-		ZProj.UGUIHelper.PassEvent(arg_34_0._goscroll, arg_34_2, 5)
+	if not self._isDragOut then
+		ZProj.UGUIHelper.PassEvent(self._goscroll, pointerEventData, 5)
 
-		if arg_34_0._curPressItem and arg_34_2.position.x - arg_34_2.pressPosition.x < -100 then
-			arg_34_0._isDragOut = true
+		if self._curPressItem and pointerEventData.position.x - pointerEventData.pressPosition.x < -100 then
+			self._isDragOut = true
 
-			arg_34_0._dragItem:updateMo(arg_34_0._curPressItem._mo)
-			gohelper.setActive(arg_34_0._dragItem.go, true)
+			self._dragItem:updateMo(self._curPressItem._mo)
+			gohelper.setActive(self._dragItem.go, true)
 
-			var_34_0 = true
+			isFirst = true
 
-			ZProj.UGUIHelper.PassEvent(arg_34_0._goscroll, arg_34_2, 6)
+			ZProj.UGUIHelper.PassEvent(self._goscroll, pointerEventData, 6)
 		end
 	end
 
-	if arg_34_0._isDragOut then
-		local var_34_1 = recthelper.screenPosToAnchorPos(arg_34_2.position, arg_34_0.viewGO.transform)
-		local var_34_2 = arg_34_0._dragItem.go.transform
-		local var_34_3, var_34_4 = recthelper.getAnchor(var_34_2)
+	if self._isDragOut then
+		local anchorPos = recthelper.screenPosToAnchorPos(pointerEventData.position, self.viewGO.transform)
+		local trans = self._dragItem.go.transform
+		local curAnchorX, curAnchorY = recthelper.getAnchor(trans)
 
-		if not var_34_0 and (math.abs(var_34_3 - var_34_1.x) > 10 or math.abs(var_34_4 - var_34_1.y) > 10) then
-			ZProj.TweenHelper.DOAnchorPos(var_34_2, var_34_1.x, var_34_1.y, 0.2)
+		if not isFirst and (math.abs(curAnchorX - anchorPos.x) > 10 or math.abs(curAnchorY - anchorPos.y) > 10) then
+			ZProj.TweenHelper.DOAnchorPos(trans, anchorPos.x, anchorPos.y, 0.2)
 		else
-			recthelper.setAnchor(var_34_2, var_34_1.x, var_34_1.y)
+			recthelper.setAnchor(trans, anchorPos.x, anchorPos.y)
 		end
 
-		local var_34_5 = arg_34_0._curPressItem._mo.equipCo.equipType == 1
-		local var_34_6, var_34_7 = arg_34_0:getDragIndex(arg_34_2.position, var_34_5)
+		local isSp = self._curPressItem._mo.equipCo.equipType == 1
+		local _, equipItem = self:getDragIndex(pointerEventData.position, isSp)
 
-		if var_34_7 ~= arg_34_0._curOverEquip then
-			if arg_34_0._curOverEquip then
-				arg_34_0._curOverEquip:setLightActive(false)
+		if equipItem ~= self._curOverEquip then
+			if self._curOverEquip then
+				self._curOverEquip:setLightActive(false)
 			end
 
-			arg_34_0._curOverEquip = var_34_7
+			self._curOverEquip = equipItem
 
-			if arg_34_0._curOverEquip then
-				arg_34_0._curOverEquip:setLightActive(true)
+			if self._curOverEquip then
+				self._curOverEquip:setLightActive(true)
 			end
 		end
 	end
 end
 
-function var_0_0._endDrag(arg_35_0, arg_35_1, arg_35_2)
-	if arg_35_0._curOverEquip then
-		arg_35_0._curOverEquip:setLightActive(false)
+function SurvivalEquipView:_endDrag(_, pointerEventData)
+	if self._curOverEquip then
+		self._curOverEquip:setLightActive(false)
 
-		arg_35_0._curOverEquip = nil
+		self._curOverEquip = nil
 	end
 
-	if arg_35_0._isDragOut then
-		arg_35_0._isDragOut = nil
+	if self._isDragOut then
+		self._isDragOut = nil
 
-		gohelper.setActive(arg_35_0._dragItem.go, false)
+		gohelper.setActive(self._dragItem.go, false)
 
-		local var_35_0 = arg_35_0._curPressItem._mo
-		local var_35_1 = var_35_0.equipCo.equipType == 1
+		local itemMo = self._curPressItem._mo
+		local isSp = itemMo.equipCo.equipType == 1
 
-		arg_35_0._curPressItem = nil
+		self._curPressItem = nil
 
-		local var_35_2 = arg_35_0:getDragIndex(arg_35_2.position, var_35_1)
+		local index = self:getDragIndex(pointerEventData.position, isSp)
 
-		if var_35_2 and var_35_2 > 0 then
-			local var_35_3 = var_35_1 and arg_35_0._equipBox.jewelrySlots or arg_35_0._equipBox.slots
+		if index and index > 0 then
+			local slots = isSp and self._equipBox.jewelrySlots or self._equipBox.slots
 
-			if not var_35_3[var_35_2] then
+			if not slots[index] then
 				return
 			end
 
-			if not var_35_3[var_35_2].unlock then
+			if not slots[index].unlock then
 				GameFacade.showToast(ToastEnum.SurvivalEquipLock)
 
 				return
 			end
 
-			if var_35_0.equipLevel > var_35_3[var_35_2].level then
+			if itemMo.equipLevel > slots[index].level then
 				GameFacade.showToast(ToastEnum.SurvivalEquipLevelLimit)
 
 				return false
 			end
 
-			if var_35_1 then
-				SurvivalWeekRpc.instance:sendSurvivalJewelryEquipWear(var_35_2, var_35_0.uid)
+			if isSp then
+				SurvivalWeekRpc.instance:sendSurvivalJewelryEquipWear(index, itemMo.uid)
 			else
-				SurvivalWeekRpc.instance:sendSurvivalEquipWear(var_35_2, var_35_0.uid)
+				SurvivalWeekRpc.instance:sendSurvivalEquipWear(index, itemMo.uid)
 			end
 		end
 	else
-		arg_35_0._curPressItem = nil
+		self._curPressItem = nil
 
-		ZProj.UGUIHelper.PassEvent(arg_35_0._goscroll, arg_35_2, 6)
+		ZProj.UGUIHelper.PassEvent(self._goscroll, pointerEventData, 6)
 	end
 end
 
-function var_0_0.onClose(arg_36_0)
-	if arg_36_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_36_0._tweenId)
+function SurvivalEquipView:onClose()
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_36_0._tweenId = nil
+		self._tweenId = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_36_0.onChangePlanBySwitch, arg_36_0)
-	TaskDispatcher.cancelTask(arg_36_0._delayShowTagCo, arg_36_0)
+	TaskDispatcher.cancelTask(self.onChangePlanBySwitch, self)
+	TaskDispatcher.cancelTask(self._delayShowTagCo, self)
 end
 
-return var_0_0
+return SurvivalEquipView

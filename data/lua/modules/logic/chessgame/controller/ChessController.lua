@@ -1,280 +1,283 @@
-﻿module("modules.logic.chessgame.controller.ChessController", package.seeall)
+﻿-- chunkname: @modules/logic/chessgame/controller/ChessController.lua
 
-local var_0_0 = class("ChessController", BaseController)
+module("modules.logic.chessgame.controller.ChessController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._activityId = nil
-	arg_1_0._chessMapId = nil
-	arg_1_0._statViewTime = nil
+local ChessController = class("ChessController", BaseController)
+
+function ChessController:onInit()
+	self._activityId = nil
+	self._chessMapId = nil
+	self._statViewTime = nil
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._statViewTime = nil
+function ChessController:reInit()
+	self._statViewTime = nil
 end
 
-function var_0_0.initMapData(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	local var_3_0 = ChessGameModel.instance:getGameState()
+function ChessController:initMapData(actId, episodeId, map)
+	local state = ChessGameModel.instance:getGameState()
 
-	if arg_3_3.dead and var_3_0 == ChessGameEnum.GameState.Fail then
-		ChessRpcController.instance:sendActRollBackRequest(arg_3_1, arg_3_2, ChessGameEnum.RollBack.CheckPoint)
+	if map.dead and state == ChessGameEnum.GameState.Fail then
+		ChessRpcController.instance:sendActRollBackRequest(actId, episodeId, ChessGameEnum.RollBack.CheckPoint)
 
 		return
 	end
 
-	if arg_3_3.win and var_3_0 == ChessGameEnum.GameState.Win then
-		ChessRpcController.instance:sendActReStartEpisodeRequest(arg_3_1, arg_3_2)
+	if map.win and state == ChessGameEnum.GameState.Win then
+		ChessRpcController.instance:sendActReStartEpisodeRequest(actId, episodeId)
 		ChessGameModel.instance:setGameState(nil)
 
 		return
 	end
 
-	if arg_3_3 and arg_3_3.episodeId ~= 0 then
-		ChessModel.instance:setActId(arg_3_1)
-		ChessModel.instance:setEpisodeId(arg_3_3.episodeId)
+	if map and map.episodeId ~= 0 then
+		ChessModel.instance:setActId(actId)
+		ChessModel.instance:setEpisodeId(map.episodeId)
 		ChessGameModel.instance:setGameState(nil)
-		ChessGameController.instance:initServerMap(arg_3_1, arg_3_3)
+		ChessGameController.instance:initServerMap(actId, map)
 	end
 
 	ChessGameController.instance:dispatchEvent(ChessGameEvent.GameMapDataUpdate)
 end
 
-function var_0_0.startNewEpisode(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4, arg_4_5, arg_4_6)
-	arg_4_0._startEpisodeCallback = arg_4_2
-	arg_4_0._startEpisodeCallbackObj = arg_4_3
+function ChessController:startNewEpisode(episodeId, callback, callbackObj, viewName, storyEpisodeEndCb, storyEpisodeEndCbObj)
+	self._startEpisodeCallback = callback
+	self._startEpisodeCallbackObj = callbackObj
 
-	local var_4_0 = ChessModel.instance:getActId()
+	local actId = ChessModel.instance:getActId()
+	local isStoryEpisode = ChessConfig.instance:isStoryEpisode(actId, episodeId)
 
-	if ChessConfig.instance:isStoryEpisode(var_4_0, arg_4_1) then
-		arg_4_0:storyEpisodePlayStory(var_4_0, arg_4_1, arg_4_5, arg_4_6)
+	if isStoryEpisode then
+		self:storyEpisodePlayStory(actId, episodeId, storyEpisodeEndCb, storyEpisodeEndCbObj)
 	else
-		ChessGameController.instance:setViewName(arg_4_4)
-		ChessRpcController.instance:sendActStartEpisodeRequest(var_4_0, arg_4_1, arg_4_0.handleReceiveStartEpisode, arg_4_0)
+		ChessGameController.instance:setViewName(viewName)
+		ChessRpcController.instance:sendActStartEpisodeRequest(actId, episodeId, self.handleReceiveStartEpisode, self)
 	end
 end
 
-function var_0_0.storyEpisodePlayStory(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
-	arg_5_0.tmpPlayStoryFinishCb = arg_5_3
-	arg_5_0.tmpPlayStoryFinishCbObj = arg_5_4
+function ChessController:storyEpisodePlayStory(actId, episodeId, storyEndCb, storyEndCbObj)
+	self.tmpPlayStoryFinishCb = storyEndCb
+	self.tmpPlayStoryFinishCbObj = storyEndCbObj
 
-	local var_5_0 = {
-		actId = arg_5_1,
-		episodeId = arg_5_2
+	local storyPlayOverParam = {
+		actId = actId,
+		episodeId = episodeId
 	}
-	local var_5_1 = ChessConfig.instance:getEpisodeCo(arg_5_1, arg_5_2)
+	local episodeCfg = ChessConfig.instance:getEpisodeCo(actId, episodeId)
 
-	if not var_5_1 then
-		arg_5_0:onStoryEpisodePlayOver(var_5_0)
+	if not episodeCfg then
+		self:onStoryEpisodePlayOver(storyPlayOverParam)
 
 		return
 	end
 
-	local var_5_2 = var_5_1.storyBefore
-	local var_5_3 = var_5_2 and var_5_2 ~= 0 or false
-	local var_5_4 = var_5_1.storyRepeat == 1
-	local var_5_5 = StoryModel.instance:isStoryHasPlayed(var_5_2)
+	local storyId = episodeCfg.storyBefore
+	local isValidStoryId = storyId and storyId ~= 0 or false
+	local isCanRepeat = episodeCfg.storyRepeat == 1
+	local isStoryHasPlayed = StoryModel.instance:isStoryHasPlayed(storyId)
 
-	if var_5_3 and (var_5_4 or not var_5_5) then
-		local var_5_6 = {}
+	if isValidStoryId and (isCanRepeat or not isStoryHasPlayed) then
+		local storyParam = {}
 
-		var_5_6.blur = true
-		var_5_6.mark = true
-		var_5_6.hideStartAndEndDark = true
+		storyParam.blur = true
+		storyParam.mark = true
+		storyParam.hideStartAndEndDark = true
 
 		StoryController.instance:playStories({
-			var_5_2
-		}, var_5_6, arg_5_0.onStoryEpisodePlayOver, arg_5_0, var_5_0)
+			storyId
+		}, storyParam, self.onStoryEpisodePlayOver, self, storyPlayOverParam)
 	else
-		arg_5_0:onStoryEpisodePlayOver(var_5_0)
+		self:onStoryEpisodePlayOver(storyPlayOverParam)
 	end
 
-	if arg_5_0._startEpisodeCallback then
-		arg_5_0._startEpisodeCallback(arg_5_0._startEpisodeCallbackObj)
+	if self._startEpisodeCallback then
+		self._startEpisodeCallback(self._startEpisodeCallbackObj)
 	end
 
-	arg_5_0._startEpisodeCallback = nil
-	arg_5_0._startEpisodeCallbackObj = nil
+	self._startEpisodeCallback = nil
+	self._startEpisodeCallbackObj = nil
 end
 
-function var_0_0.onStoryEpisodePlayOver(arg_6_0, arg_6_1)
-	if not arg_6_1 then
+function ChessController:onStoryEpisodePlayOver(storyOverParam)
+	if not storyOverParam then
 		return
 	end
 
-	ChessRpcController.instance:sendActStartEpisodeRequest(arg_6_1.actId, arg_6_1.episodeId, arg_6_0.onSendPlayOverCb, arg_6_0)
+	ChessRpcController.instance:sendActStartEpisodeRequest(storyOverParam.actId, storyOverParam.episodeId, self.onSendPlayOverCb, self)
 end
 
-function var_0_0.onSendPlayOverCb(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	arg_7_0:reGetActInfo(arg_7_0.tmpPlayStoryFinishCb, arg_7_0.tmpPlayStoryFinishCbObj)
+function ChessController:onSendPlayOverCb(cmd, resultCode, msg)
+	self:reGetActInfo(self.tmpPlayStoryFinishCb, self.tmpPlayStoryFinishCbObj)
 
-	arg_7_0.tmpPlayStoryFinishCb = nil
-	arg_7_0.tmpPlayStoryFinishCbObj = nil
+	self.tmpPlayStoryFinishCb = nil
+	self.tmpPlayStoryFinishCbObj = nil
 end
 
-function var_0_0.reGetActInfo(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = ChessModel.instance:getActId()
+function ChessController:reGetActInfo(cb, cbObj)
+	local actId = ChessModel.instance:getActId()
 
-	ChessRpcController.instance:sendGetActInfoRequest(var_8_0, arg_8_1, arg_8_2)
+	ChessRpcController.instance:sendGetActInfoRequest(actId, cb, cbObj)
 end
 
-function var_0_0.startResetEpisode(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
-	local var_9_0 = ChessModel.instance:getActId()
+function ChessController:startResetEpisode(episodeId, callback, callbackObj, viewName)
+	local actId = ChessModel.instance:getActId()
 
-	arg_9_0._startEpisodeCallback = arg_9_2
-	arg_9_0._startEpisodeCallbackObj = arg_9_3
+	self._startEpisodeCallback = callback
+	self._startEpisodeCallbackObj = callbackObj
 
-	ChessGameController.instance:setViewName(arg_9_4)
-	ChessRpcController.instance:sendActStartEpisodeRequest(var_9_0, arg_9_1, arg_9_0.handleReceiveResetEpisode, arg_9_0)
+	ChessGameController.instance:setViewName(viewName)
+	ChessRpcController.instance:sendActStartEpisodeRequest(actId, episodeId, self.handleReceiveResetEpisode, self)
 end
 
-function var_0_0.handleReceiveStartEpisode(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = arg_10_0._startEpisodeCallback
-	local var_10_1 = arg_10_0._startEpisodeCallbackObj
+function ChessController:handleReceiveStartEpisode(cmd, resultCode)
+	local callback = self._startEpisodeCallback
+	local callbackObj = self._startEpisodeCallbackObj
 
-	arg_10_0._startEpisodeCallback = nil
-	arg_10_0._startEpisodeCallbackObj = nil
+	self._startEpisodeCallback = nil
+	self._startEpisodeCallbackObj = nil
 
-	if arg_10_2 ~= 0 then
+	if resultCode ~= 0 then
 		return
 	end
 
-	arg_10_0:openGameView(arg_10_1, arg_10_2)
+	self:openGameView(cmd, resultCode)
 
-	if var_10_0 then
-		var_10_0(var_10_1)
+	if callback then
+		callback(callbackObj)
 	end
 end
 
-function var_0_0.handleReceiveResetEpisode(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = arg_11_0._startEpisodeCallback
-	local var_11_1 = arg_11_0._startEpisodeCallbackObj
+function ChessController:handleReceiveResetEpisode(cmd, resultCode)
+	local callback = self._startEpisodeCallback
+	local callbackObj = self._startEpisodeCallbackObj
 
-	arg_11_0._startEpisodeCallback = nil
-	arg_11_0._startEpisodeCallbackObj = nil
+	self._startEpisodeCallback = nil
+	self._startEpisodeCallbackObj = nil
 
-	if arg_11_2 ~= 0 then
+	if resultCode ~= 0 then
 		return
 	end
 
-	arg_11_0:openGameView(arg_11_1, arg_11_2, true)
+	self:openGameView(cmd, resultCode, true)
 
-	if var_11_0 then
-		var_11_0(var_11_1)
+	if callback then
+		callback(callbackObj)
 	end
 end
 
-function var_0_0.openGameView(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	if arg_12_2 ~= 0 then
+function ChessController:openGameView(cmd, resultCode, reset)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_12_0 = ChessModel.instance:getActId()
-	local var_12_1 = ChessModel.instance:getEpisodeId()
+	local actId = ChessModel.instance:getActId()
+	local episodeId = ChessModel.instance:getEpisodeId()
 
-	if var_12_0 ~= nil and var_12_1 ~= nil then
-		local var_12_2 = ChessConfig.instance:getEpisodeCo(var_12_0, var_12_1)
+	if actId ~= nil and episodeId ~= nil then
+		local episodeCfg = ChessConfig.instance:getEpisodeCo(actId, episodeId)
 
-		if var_12_2 and var_12_2.storyBefore == 0 then
-			var_0_0.onOpenGameStoryPlayOver()
+		if episodeCfg and episodeCfg.storyBefore == 0 then
+			ChessController.onOpenGameStoryPlayOver()
 
 			return
 		end
 
-		local var_12_3 = var_12_2.storyBefore
+		local story = episodeCfg.storyBefore
 
-		if not arg_12_3 and (var_12_2.storyRepeat == 1 or not StoryModel.instance:isStoryHasPlayed(var_12_3)) then
-			local var_12_4 = {}
+		if not reset and (episodeCfg.storyRepeat == 1 or not StoryModel.instance:isStoryHasPlayed(story)) then
+			local param = {}
 
-			var_12_4.blur = true
-			var_12_4.mark = true
-			var_12_4.hideStartAndEndDark = true
+			param.blur = true
+			param.mark = true
+			param.hideStartAndEndDark = true
 
 			StoryController.instance:playStories({
-				var_12_3
-			}, var_12_4, var_0_0.onOpenGameStoryPlayOver)
+				story
+			}, param, ChessController.onOpenGameStoryPlayOver)
 		else
-			var_0_0.onOpenGameStoryPlayOver()
+			ChessController.onOpenGameStoryPlayOver()
 		end
 	end
 end
 
-function var_0_0.onOpenGameStoryPlayOver()
-	local var_13_0 = ChessModel.instance:getActId()
-	local var_13_1 = ChessModel.instance:getEpisodeId()
-	local var_13_2 = ChessConfig.instance:getEpisodeCo(var_13_0, var_13_1).mapIds
+function ChessController.onOpenGameStoryPlayOver()
+	local actId = ChessModel.instance:getActId()
+	local episodeId = ChessModel.instance:getEpisodeId()
+	local episodeCfg = ChessConfig.instance:getEpisodeCo(actId, episodeId)
+	local mapGroupId = episodeCfg.mapIds
 
-	if ChessGameController.instance:existGame() and var_13_2 then
-		ChessGameController.instance:enterChessGame(var_13_0, var_13_2, ChessGameController.instance:getViewName())
+	if ChessGameController.instance:existGame() and mapGroupId then
+		ChessGameController.instance:enterChessGame(actId, mapGroupId, ChessGameController.instance:getViewName())
 	end
 end
 
-function var_0_0.openGameAfterFight(arg_14_0, arg_14_1)
-	local var_14_0 = FightModel.instance:getFightReason()
+function ChessController:openGameAfterFight(refuseBattle)
+	local reconnectFightReason = FightModel.instance:getFightReason()
 
-	if var_14_0 and var_14_0.fromChessGame then
-		ChessModel.instance:setActId(var_14_0.actId)
-		ChessModel.instance:setEpisodeId(var_14_0.actEpisodeId)
+	if reconnectFightReason and reconnectFightReason.fromChessGame then
+		ChessModel.instance:setActId(reconnectFightReason.actId)
+		ChessModel.instance:setEpisodeId(reconnectFightReason.actEpisodeId)
 	end
 
-	local var_14_1 = ChessModel.instance:getActId()
-	local var_14_2 = ChessModel.instance:getEpisodeId()
+	local actId = ChessModel.instance:getActId()
+	local episodeId = ChessModel.instance:getEpisodeId()
 
-	arg_14_0._isRefuseBattle = nil
+	self._isRefuseBattle = nil
 
-	if var_14_1 and var_14_2 then
-		arg_14_0._isRefuseBattle = arg_14_1
+	if actId and episodeId then
+		self._isRefuseBattle = refuseBattle
 
-		ChessRpcController.instance:sendGetActInfoRequest(var_14_1, arg_14_0.onReceiveInfoAfterFight, arg_14_0)
+		ChessRpcController.instance:sendGetActInfoRequest(actId, self.onReceiveInfoAfterFight, self)
 	end
 end
 
-function var_0_0.onReceiveInfoAfterFight(arg_15_0, arg_15_1, arg_15_2)
-	if arg_15_2 ~= 0 then
+function ChessController:onReceiveInfoAfterFight(cmd, resultCode)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_15_0 = ChessModel.instance:getActId()
-	local var_15_1 = ChessModel.instance:getEpisodeId()
-	local var_15_2 = ChessModel.instance:getMapId()
+	local actId = ChessModel.instance:getActId()
+	local episodeId = ChessModel.instance:getEpisodeId()
+	local mapId = ChessModel.instance:getMapId()
 
-	if var_15_1 and var_15_2 then
-		ChessGameController.instance:enterChessGame(var_15_0, var_15_2, ChessGameController.instance:getViewName())
+	if episodeId and mapId then
+		ChessGameController.instance:enterChessGame(actId, mapId, ChessGameController.instance:getViewName())
 	else
 		logNormal("no map return entry")
 	end
 
-	arg_15_0._isRefuseBattle = nil
+	self._isRefuseBattle = nil
 end
 
-function var_0_0.getFromRefuseBattle(arg_16_0)
-	return arg_16_0._isRefuseBattle
+function ChessController:getFromRefuseBattle()
+	return self._isRefuseBattle
 end
 
-function var_0_0.getFightSourceEpisode(arg_17_0)
-	local var_17_0 = ChessModel.instance:getActId()
-	local var_17_1 = ChessModel.instance:getEpisodeId()
+function ChessController:getFightSourceEpisode()
+	local actId, episodeId = ChessModel.instance:getActId(), ChessModel.instance:getEpisodeId()
 
-	if var_17_0 and var_17_1 then
-		return var_17_0, var_17_1
+	if actId and episodeId then
+		return actId, episodeId
 	else
-		local var_17_2 = FightModel.instance:getFightReason()
+		local reason = FightModel.instance:getFightReason()
 
-		if var_17_2 ~= nil then
-			return var_17_2.actId, var_17_2.actEpisodeId
+		if reason ~= nil then
+			return reason.actId, reason.actEpisodeId
 		end
 	end
 end
 
-function var_0_0.enterActivityFight(arg_18_0, arg_18_1)
-	local var_18_0 = ChessModel.instance:getActId()
-	local var_18_1, var_18_2 = ChessConfig.instance:getChapterEpisodeId(var_18_0)
+function ChessController:enterActivityFight(battleId)
+	local actId = ChessModel.instance:getActId()
+	local chapterId, episodeId = ChessConfig.instance:getChapterEpisodeId(actId)
 
-	var_18_1 = var_18_1 or DungeonConfig.instance:getEpisodeCO(arg_18_1).chapterId
+	chapterId = chapterId or DungeonConfig.instance:getEpisodeCO(battleId).chapterId
 
-	if var_18_1 and var_18_2 then
-		DungeonFightController.instance:enterFightByBattleId(var_18_1, var_18_2, arg_18_1)
+	if chapterId and episodeId then
+		DungeonFightController.instance:enterFightByBattleId(chapterId, episodeId, battleId)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+ChessController.instance = ChessController.New()
 
-return var_0_0
+return ChessController

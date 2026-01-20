@@ -1,10 +1,12 @@
-﻿module("modules.logic.explore.controller.steps.ExploreTriggerAudioStep", package.seeall)
+﻿-- chunkname: @modules/logic/explore/controller/steps/ExploreTriggerAudioStep.lua
 
-local var_0_0 = class("ExploreTriggerAudioStep", ExploreStepBase)
+module("modules.logic.explore.controller.steps.ExploreTriggerAudioStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	AudioMgr.instance:trigger(arg_1_0._data.id)
-	arg_1_0:onDone()
+local ExploreTriggerAudioStep = class("ExploreTriggerAudioStep", ExploreStepBase)
+
+function ExploreTriggerAudioStep:onStart()
+	AudioMgr.instance:trigger(self._data.id)
+	self:onDone()
 end
 
-return var_0_0
+return ExploreTriggerAudioStep

@@ -1,228 +1,232 @@
-﻿module("modules.logic.versionactivity1_9.enter.view.VersionActivityEnterBaseViewWithList1_9", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/enter/view/VersionActivityEnterBaseViewWithList1_9.lua
 
-local var_0_0 = class("VersionActivityEnterBaseViewWithList1_9", BaseView)
+module("modules.logic.versionactivity1_9.enter.view.VersionActivityEnterBaseViewWithList1_9", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goActivityItem1 = gohelper.findChild(arg_1_0.viewGO, "#go_tabcontainer/#scroll_tab/Viewport/Content/#go_tabitem1")
-	arg_1_0._goActivityItem2 = gohelper.findChild(arg_1_0.viewGO, "#go_tabcontainer/#scroll_tab/Viewport/Content/#go_tabitem2")
-	arg_1_0._goActivityLine = gohelper.findChild(arg_1_0.viewGO, "#go_tabcontainer/#scroll_tab/Viewport/Content/#go_line")
+local VersionActivityEnterBaseViewWithList1_9 = class("VersionActivityEnterBaseViewWithList1_9", BaseView)
+
+function VersionActivityEnterBaseViewWithList1_9:onInitView()
+	self._goActivityItem1 = gohelper.findChild(self.viewGO, "#go_tabcontainer/#scroll_tab/Viewport/Content/#go_tabitem1")
+	self._goActivityItem2 = gohelper.findChild(self.viewGO, "#go_tabcontainer/#scroll_tab/Viewport/Content/#go_tabitem2")
+	self._goActivityLine = gohelper.findChild(self.viewGO, "#go_tabcontainer/#scroll_tab/Viewport/Content/#go_line")
 end
 
-function var_0_0.addEvents(arg_2_0)
+function VersionActivityEnterBaseViewWithList1_9:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function VersionActivityEnterBaseViewWithList1_9:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	gohelper.setActive(arg_4_0._goActivityItem1, false)
-	gohelper.setActive(arg_4_0._goActivityItem2, false)
-	gohelper.setActive(arg_4_0._goActivityLine, false)
+function VersionActivityEnterBaseViewWithList1_9:_editableInitView()
+	gohelper.setActive(self._goActivityItem1, false)
+	gohelper.setActive(self._goActivityItem2, false)
+	gohelper.setActive(self._goActivityLine, false)
 
-	arg_4_0.activityTabItemList = {}
-	arg_4_0.activityTabItemDict = {}
-	arg_4_0.openActIdList = {}
-	arg_4_0.noOpenActList = {}
-	arg_4_0.removeActList = {}
-	arg_4_0.actLevel2GoItem = arg_4_0:getUserDataTb_()
-	arg_4_0.actLevel2GoItem[VersionActivity1_9Enum.ActLevel.First] = arg_4_0._goActivityItem1
-	arg_4_0.actLevel2GoItem[VersionActivity1_9Enum.ActLevel.Second] = arg_4_0._goActivityItem2
-	arg_4_0.actLevel2Cls = {
+	self.activityTabItemList = {}
+	self.activityTabItemDict = {}
+	self.openActIdList = {}
+	self.noOpenActList = {}
+	self.removeActList = {}
+	self.actLevel2GoItem = self:getUserDataTb_()
+	self.actLevel2GoItem[VersionActivity1_9Enum.ActLevel.First] = self._goActivityItem1
+	self.actLevel2GoItem[VersionActivity1_9Enum.ActLevel.Second] = self._goActivityItem2
+	self.actLevel2Cls = {
 		[VersionActivity1_9Enum.ActLevel.First] = VersionActivity1_9EnterViewTabItem1,
 		[VersionActivity1_9Enum.ActLevel.Second] = VersionActivity1_9EnterViewTabItem2
 	}
 
-	arg_4_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_4_0.onRefreshActivity, arg_4_0)
-	arg_4_0:addEventCb(VersionActivityBaseController.instance, VersionActivityEnterViewEvent.SelectActId, arg_4_0.onSelectActId, arg_4_0)
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self.onRefreshActivity, self)
+	self:addEventCb(VersionActivityBaseController.instance, VersionActivityEnterViewEvent.SelectActId, self.onSelectActId, self)
 
-	arg_4_0.defaultTabIndex = 1
-	arg_4_0.curTabIndex = -1
-	arg_4_0.curActId = 0
+	self.defaultTabIndex = 1
+	self.curTabIndex = -1
+	self.curActId = 0
 end
 
-function var_0_0.onRefreshActivity(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0.curStoreId or arg_5_0.curActId
-	local var_5_1 = ActivityHelper.getActivityStatus(var_5_0)
+function VersionActivityEnterBaseViewWithList1_9:onRefreshActivity(actId)
+	local checkActId = self.curStoreId or self.curActId
+	local status = ActivityHelper.getActivityStatus(checkActId)
 
-	if var_5_1 == ActivityEnum.ActivityStatus.NotOnLine or var_5_1 == ActivityEnum.ActivityStatus.Expired then
+	if status == ActivityEnum.ActivityStatus.NotOnLine or status == ActivityEnum.ActivityStatus.Expired then
 		MessageBoxController.instance:showSystemMsgBox(MessageBoxIdDefine.EndActivity, MsgBoxEnum.BoxType.Yes, ActivityLiveMgr.yesCallback)
 
 		return
 	end
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0.activityIdList) do
-		if arg_5_0:checkCanRemove(iter_5_1) then
-			arg_5_0:removeActItem(iter_5_1)
+	for _, actMo in ipairs(self.activityIdList) do
+		if self:checkCanRemove(actMo) then
+			self:removeActItem(actMo)
 		end
 	end
 
-	for iter_5_2, iter_5_3 in ipairs(arg_5_0.activityTabItemList) do
-		local var_5_2 = iter_5_3.actId
+	for _, tabItem in ipairs(self.activityTabItemList) do
+		local preActId = tabItem.actId
 
-		if iter_5_3:updateActId() then
-			arg_5_0.activityTabItemDict[iter_5_3.actId] = iter_5_3
+		if tabItem:updateActId() then
+			self.activityTabItemDict[tabItem.actId] = tabItem
 
-			if iter_5_3.actId and var_5_2 then
-				iter_5_3:refreshData()
+			if tabItem.actId and preActId then
+				tabItem:refreshData()
 			end
 		end
 	end
 
-	arg_5_0:refreshItemSiblingAndActive()
+	self:refreshItemSiblingAndActive()
 end
 
-function var_0_0.onSelectActId(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_0.curActId == arg_6_1 then
+function VersionActivityEnterBaseViewWithList1_9:onSelectActId(actId, tabItem)
+	if self.curActId == actId then
 		return
 	end
 
-	arg_6_0.curActId = arg_6_1
-	arg_6_0.curStoreId = arg_6_2 and arg_6_2.storeId
+	self.curActId = actId
+	self.curStoreId = tabItem and tabItem.storeId
 
-	local var_6_0 = VersionActivityEnterHelper.getTabIndex(arg_6_0.activityIdList, arg_6_1)
+	local tabIndex = VersionActivityEnterHelper.getTabIndex(self.activityIdList, actId)
 
-	arg_6_0.viewContainer:selectActTab(var_6_0, arg_6_0.curActId)
-	ActivityEnterMgr.instance:enterActivity(arg_6_0.curActId)
+	self.viewContainer:selectActTab(tabIndex, self.curActId)
+	ActivityEnterMgr.instance:enterActivity(self.curActId)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
-		arg_6_0.curActId
+		self.curActId
 	})
 end
 
-function var_0_0.initViewParam(arg_7_0)
-	arg_7_0.actId = arg_7_0.viewParam.actId
-	arg_7_0.skipOpenAnim = arg_7_0.viewParam.skipOpenAnim
-	arg_7_0.activityIdList = arg_7_0.viewParam.activityIdList
-	arg_7_0.defaultTabIndex = VersionActivityEnterHelper.getTabIndex(arg_7_0.activityIdList, arg_7_0.viewParam.jumpActId)
+function VersionActivityEnterBaseViewWithList1_9:initViewParam()
+	self.actId = self.viewParam.actId
+	self.skipOpenAnim = self.viewParam.skipOpenAnim
+	self.activityIdList = self.viewParam.activityIdList
+	self.defaultTabIndex = VersionActivityEnterHelper.getTabIndex(self.activityIdList, self.viewParam.jumpActId)
 
-	local var_7_0 = arg_7_0.activityIdList[arg_7_0.defaultTabIndex]
+	local actMo = self.activityIdList[self.defaultTabIndex]
 
-	arg_7_0.curActId = VersionActivityEnterHelper.getActId(var_7_0)
-	arg_7_0.curStoreId = var_7_0 and var_7_0.storeId
+	self.curActId = VersionActivityEnterHelper.getActId(actMo)
+	self.curStoreId = actMo and actMo.storeId
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0:initViewParam()
-	arg_8_0:initActivityItemList()
-	arg_8_0:refreshUI()
+function VersionActivityEnterBaseViewWithList1_9:onOpen()
+	self:initViewParam()
+	self:initActivityItemList()
+	self:refreshUI()
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
-	arg_9_0:initViewParam()
-	arg_9_0:refreshUI()
+function VersionActivityEnterBaseViewWithList1_9:onUpdateParam()
+	self:initViewParam()
+	self:refreshUI()
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0.activityTabItemList) do
-		iter_10_1:dispose()
+function VersionActivityEnterBaseViewWithList1_9:onDestroyView()
+	for _, activityItem in ipairs(self.activityTabItemList) do
+		activityItem:dispose()
 	end
 
-	arg_10_0.activityTabItemList = nil
-	arg_10_0.activityTabItemDict = nil
+	self.activityTabItemList = nil
+	self.activityTabItemDict = nil
 end
 
-function var_0_0.initActivityItemList(arg_11_0)
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0.activityIdList) do
-		if not arg_11_0:checkCanRemove(iter_11_1) then
-			local var_11_0 = VersionActivityEnterHelper.getActId(iter_11_1)
-			local var_11_1 = arg_11_0.actLevel2GoItem[iter_11_1.actLevel]
-			local var_11_2 = arg_11_0.actLevel2Cls[iter_11_1.actLevel]
-			local var_11_3 = gohelper.cloneInPlace(var_11_1, var_11_0)
-			local var_11_4 = var_11_2.New()
+function VersionActivityEnterBaseViewWithList1_9:initActivityItemList()
+	for i, actMo in ipairs(self.activityIdList) do
+		if not self:checkCanRemove(actMo) then
+			local actId = VersionActivityEnterHelper.getActId(actMo)
+			local goItem = self.actLevel2GoItem[actMo.actLevel]
+			local cls = self.actLevel2Cls[actMo.actLevel]
+			local activityItemGo = gohelper.cloneInPlace(goItem, actId)
+			local tabItem = cls.New()
 
-			var_11_4:init(iter_11_0, iter_11_1, var_11_3)
-			var_11_4:refreshSelect(arg_11_0.curActId)
+			tabItem:init(i, actMo, activityItemGo)
+			tabItem:refreshSelect(self.curActId)
 
-			local var_11_5 = arg_11_0["onClickActivity" .. var_11_0]
+			local customClickHandle = self["onClickActivity" .. actId]
 
-			if var_11_5 then
-				var_11_4:overrideOnClickHandle(var_11_5, arg_11_0)
+			if customClickHandle then
+				tabItem:overrideOnClickHandle(customClickHandle, self)
 			end
 
-			table.insert(arg_11_0.activityTabItemList, var_11_4)
+			table.insert(self.activityTabItemList, tabItem)
 
-			arg_11_0.activityTabItemDict[var_11_0] = var_11_4
+			self.activityTabItemDict[actId] = tabItem
 		end
 	end
 end
 
-function var_0_0.refreshUI(arg_12_0)
-	for iter_12_0, iter_12_1 in ipairs(arg_12_0.activityTabItemList) do
-		iter_12_1:refreshUI()
+function VersionActivityEnterBaseViewWithList1_9:refreshUI()
+	for _, tabItem in ipairs(self.activityTabItemList) do
+		tabItem:refreshUI()
 	end
 
-	arg_12_0:refreshItemSiblingAndActive()
+	self:refreshItemSiblingAndActive()
 end
 
-function var_0_0.refreshItemSiblingAndActive(arg_13_0)
-	tabletool.clear(arg_13_0.openActIdList)
-	tabletool.clear(arg_13_0.noOpenActList)
+function VersionActivityEnterBaseViewWithList1_9:refreshItemSiblingAndActive()
+	tabletool.clear(self.openActIdList)
+	tabletool.clear(self.noOpenActList)
 
-	for iter_13_0, iter_13_1 in ipairs(arg_13_0.activityTabItemList) do
-		if ActivityHelper.getActivityStatus(iter_13_1.actId) == ActivityEnum.ActivityStatus.NotOpen then
-			table.insert(arg_13_0.noOpenActList, iter_13_1.actId)
+	for _, tabItem in ipairs(self.activityTabItemList) do
+		local status = ActivityHelper.getActivityStatus(tabItem.actId)
+
+		if status == ActivityEnum.ActivityStatus.NotOpen then
+			table.insert(self.noOpenActList, tabItem.actId)
 		else
-			table.insert(arg_13_0.openActIdList, iter_13_1.actId)
+			table.insert(self.openActIdList, tabItem.actId)
 		end
 	end
 
-	table.sort(arg_13_0.openActIdList, arg_13_0.openActItemSortFunc)
+	table.sort(self.openActIdList, self.openActItemSortFunc)
 
-	for iter_13_2, iter_13_3 in ipairs(arg_13_0.openActIdList) do
-		local var_13_0 = arg_13_0.activityTabItemDict[iter_13_3]
+	for index, actId in ipairs(self.openActIdList) do
+		local activityItem = self.activityTabItemDict[actId]
 
-		gohelper.setSibling(var_13_0.rootGo, iter_13_2)
+		gohelper.setSibling(activityItem.rootGo, index)
 	end
 
-	if #arg_13_0.noOpenActList < 1 then
-		gohelper.setActive(arg_13_0._goActivityLine, false)
+	if #self.noOpenActList < 1 then
+		gohelper.setActive(self._goActivityLine, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_13_0._goActivityLine, true)
+	gohelper.setActive(self._goActivityLine, true)
 
-	local var_13_1 = #arg_13_0.openActIdList
+	local activeActLen = #self.openActIdList
 
-	gohelper.setSibling(arg_13_0._goActivityLine, var_13_1 + 1)
-	table.sort(arg_13_0.noOpenActList, arg_13_0.noOpenActItemSortFunc)
+	gohelper.setSibling(self._goActivityLine, activeActLen + 1)
+	table.sort(self.noOpenActList, self.noOpenActItemSortFunc)
 
-	for iter_13_4, iter_13_5 in ipairs(arg_13_0.noOpenActList) do
-		local var_13_2 = arg_13_0.activityTabItemDict[iter_13_5]
+	for index, actId in ipairs(self.noOpenActList) do
+		local activityItem = self.activityTabItemDict[actId]
 
-		gohelper.setSibling(var_13_2.rootGo, var_13_1 + 1 + iter_13_4)
+		gohelper.setSibling(activityItem.rootGo, activeActLen + 1 + index)
 	end
 end
 
-function var_0_0.removeActItem(arg_14_0, arg_14_1)
-	for iter_14_0 = #arg_14_0.activityTabItemList, 1, -1 do
-		local var_14_0 = arg_14_0.activityTabItemList[iter_14_0]
+function VersionActivityEnterBaseViewWithList1_9:removeActItem(actMo)
+	for i = #self.activityTabItemList, 1, -1 do
+		local tabItem = self.activityTabItemList[i]
 
-		if VersionActivityEnterHelper.checkIsSameAct(arg_14_1, var_14_0.actId) then
-			table.remove(arg_14_0.activityTabItemList, iter_14_0)
+		if VersionActivityEnterHelper.checkIsSameAct(actMo, tabItem.actId) then
+			table.remove(self.activityTabItemList, i)
 
-			arg_14_0.activityTabItemDict[var_14_0.actId] = nil
+			self.activityTabItemDict[tabItem.actId] = nil
 
-			local var_14_1 = var_14_0.rootGo
+			local rootGo = tabItem.rootGo
 
-			var_14_0:dispose()
-			gohelper.destroy(var_14_1)
+			tabItem:dispose()
+			gohelper.destroy(rootGo)
 		end
 	end
 end
 
-function var_0_0.checkCanRemove(arg_15_0, arg_15_1)
-	if arg_15_1.actType == VersionActivity1_9Enum.ActType.Single then
-		local var_15_0 = arg_15_1.storeId and ActivityHelper.getActivityStatus(arg_15_1.storeId) or ActivityHelper.getActivityStatus(arg_15_1.actId)
+function VersionActivityEnterBaseViewWithList1_9:checkCanRemove(actMo)
+	if actMo.actType == VersionActivity1_9Enum.ActType.Single then
+		local status = actMo.storeId and ActivityHelper.getActivityStatus(actMo.storeId) or ActivityHelper.getActivityStatus(actMo.actId)
 
-		return var_15_0 == ActivityEnum.ActivityStatus.Expired or var_15_0 == ActivityEnum.ActivityStatus.NotOnLine
+		return status == ActivityEnum.ActivityStatus.Expired or status == ActivityEnum.ActivityStatus.NotOnLine
 	end
 
-	for iter_15_0, iter_15_1 in ipairs(arg_15_1.actId) do
-		local var_15_1 = ActivityHelper.getActivityStatus(iter_15_1)
+	for _, v in ipairs(actMo.actId) do
+		local status = ActivityHelper.getActivityStatus(v)
 
-		if var_15_1 ~= ActivityEnum.ActivityStatus.Expired and var_15_1 ~= ActivityEnum.ActivityStatus.NotOnLine then
+		if status ~= ActivityEnum.ActivityStatus.Expired and status ~= ActivityEnum.ActivityStatus.NotOnLine then
 			return false
 		end
 	end
@@ -230,44 +234,44 @@ function var_0_0.checkCanRemove(arg_15_0, arg_15_1)
 	return true
 end
 
-function var_0_0.openActItemSortFunc(arg_16_0, arg_16_1)
-	local var_16_0 = ActivityModel.instance:getActMO(arg_16_0)
-	local var_16_1 = ActivityModel.instance:getActMO(arg_16_1)
-	local var_16_2 = var_16_0.config.displayPriority
-	local var_16_3 = var_16_1.config.displayPriority
+function VersionActivityEnterBaseViewWithList1_9.openActItemSortFunc(actId1, actId2)
+	local act1Info = ActivityModel.instance:getActMO(actId1)
+	local act2Info = ActivityModel.instance:getActMO(actId2)
+	local displayOrder1 = act1Info.config.displayPriority
+	local displayOrder2 = act2Info.config.displayPriority
 
-	if var_16_2 ~= var_16_3 then
-		return var_16_2 < var_16_3
+	if displayOrder1 ~= displayOrder2 then
+		return displayOrder1 < displayOrder2
 	end
 
-	local var_16_4 = var_16_0:getRealStartTimeStamp()
-	local var_16_5 = var_16_1:getRealStartTimeStamp()
+	local act1OpenTime = act1Info:getRealStartTimeStamp()
+	local act2OpenTime = act2Info:getRealStartTimeStamp()
 
-	if var_16_4 ~= var_16_5 then
-		return var_16_5 < var_16_4
+	if act1OpenTime ~= act2OpenTime then
+		return act2OpenTime < act1OpenTime
 	end
 
-	return arg_16_0 < arg_16_1
+	return actId1 < actId2
 end
 
-function var_0_0.noOpenActItemSortFunc(arg_17_0, arg_17_1)
-	local var_17_0 = ActivityModel.instance:getActMO(arg_17_0)
-	local var_17_1 = ActivityModel.instance:getActMO(arg_17_1)
-	local var_17_2 = var_17_0:getRealStartTimeStamp()
-	local var_17_3 = var_17_1:getRealStartTimeStamp()
+function VersionActivityEnterBaseViewWithList1_9.noOpenActItemSortFunc(actId1, actId2)
+	local act1Info = ActivityModel.instance:getActMO(actId1)
+	local act2Info = ActivityModel.instance:getActMO(actId2)
+	local act1OpenTime = act1Info:getRealStartTimeStamp()
+	local act2OpenTime = act2Info:getRealStartTimeStamp()
 
-	if var_17_2 ~= var_17_3 then
-		return var_17_2 < var_17_3
+	if act1OpenTime ~= act2OpenTime then
+		return act1OpenTime < act2OpenTime
 	end
 
-	local var_17_4 = var_17_0.config.displayPriority
-	local var_17_5 = var_17_1.config.displayPriority
+	local displayOrder1 = act1Info.config.displayPriority
+	local displayOrder2 = act2Info.config.displayPriority
 
-	if var_17_4 ~= var_17_5 then
-		return var_17_4 < var_17_5
+	if displayOrder1 ~= displayOrder2 then
+		return displayOrder1 < displayOrder2
 	end
 
-	return arg_17_0 < arg_17_1
+	return actId1 < actId2
 end
 
-return var_0_0
+return VersionActivityEnterBaseViewWithList1_9

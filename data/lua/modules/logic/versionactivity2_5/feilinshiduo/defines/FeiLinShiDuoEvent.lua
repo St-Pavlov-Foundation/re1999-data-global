@@ -1,22 +1,24 @@
-﻿module("modules.logic.versionactivity2_5.feilinshiduo.defines.FeiLinShiDuoEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/feilinshiduo/defines/FeiLinShiDuoEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity2_5.feilinshiduo.defines.FeiLinShiDuoEvent", package.seeall)
 
-var_0_0.changePlayerColor = 10000
-var_0_0.playerChangeAnim = 10001
-var_0_0.resetGame = 10002
-var_0_0.SelectEpisode = 10003
-var_0_0.OnFinishEpisode = 10004
-var_0_0.GameOver = 10005
-var_0_0.OneClickClaimReward = 10006
-var_0_0.ResultResetGame = 10007
-var_0_0.RefreshEpisodeInfo = 10008
-var_0_0.CleanTopBoxBottomInfo = 10009
-var_0_0.OnClickGuideRightMoveBtn = 11011
-var_0_0.PlayerInGuideCheckPos = 11012
-var_0_0.OnClickGuideRightMoveUpBtn = 11013
-var_0_0.EpisodeItemPlayFinishAnim = 10010
-var_0_0.NextEpisodePlayUnlockAnim = 10011
-var_0_0.SwitchBG = 10012
+local FeiLinShiDuoEvent = _M
 
-return var_0_0
+FeiLinShiDuoEvent.changePlayerColor = 10000
+FeiLinShiDuoEvent.playerChangeAnim = 10001
+FeiLinShiDuoEvent.resetGame = 10002
+FeiLinShiDuoEvent.SelectEpisode = 10003
+FeiLinShiDuoEvent.OnFinishEpisode = 10004
+FeiLinShiDuoEvent.GameOver = 10005
+FeiLinShiDuoEvent.OneClickClaimReward = 10006
+FeiLinShiDuoEvent.ResultResetGame = 10007
+FeiLinShiDuoEvent.RefreshEpisodeInfo = 10008
+FeiLinShiDuoEvent.CleanTopBoxBottomInfo = 10009
+FeiLinShiDuoEvent.OnClickGuideRightMoveBtn = 11011
+FeiLinShiDuoEvent.PlayerInGuideCheckPos = 11012
+FeiLinShiDuoEvent.OnClickGuideRightMoveUpBtn = 11013
+FeiLinShiDuoEvent.EpisodeItemPlayFinishAnim = 10010
+FeiLinShiDuoEvent.NextEpisodePlayUnlockAnim = 10011
+FeiLinShiDuoEvent.SwitchBG = 10012
+
+return FeiLinShiDuoEvent

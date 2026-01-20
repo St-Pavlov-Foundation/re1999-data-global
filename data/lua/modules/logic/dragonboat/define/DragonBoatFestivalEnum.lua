@@ -1,18 +1,20 @@
-﻿module("modules.logic.dragonboat.define.DragonBoatFestivalEnum", package.seeall)
+﻿-- chunkname: @modules/logic/dragonboat/define/DragonBoatFestivalEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.dragonboat.define.DragonBoatFestivalEnum", package.seeall)
 
-var_0_0.PuzzleState = {
+local DragonBoatFestivalEnum = _M
+
+DragonBoatFestivalEnum.PuzzleState = {
 	Lock = 0,
 	RewardGet = 4,
 	Answering = 2,
 	UnAnswer = 1,
 	Solved = 3
 }
-var_0_0.OptionState = {
+DragonBoatFestivalEnum.OptionState = {
 	UnAnswer = 0,
 	Wrong = 1,
 	Right = 2
 }
 
-return var_0_0
+return DragonBoatFestivalEnum

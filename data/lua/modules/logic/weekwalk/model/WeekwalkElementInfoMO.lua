@@ -1,93 +1,102 @@
-﻿module("modules.logic.weekwalk.model.WeekwalkElementInfoMO", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk/model/WeekwalkElementInfoMO.lua
 
-local var_0_0 = pureTable("WeekwalkElementInfoMO")
+module("modules.logic.weekwalk.model.WeekwalkElementInfoMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.elementId = arg_1_1.elementId
-	arg_1_0.isFinish = arg_1_1.isFinish
-	arg_1_0.index = arg_1_1.index
-	arg_1_0.historylist = arg_1_1.historylist
-	arg_1_0.visible = arg_1_1.visible
-	arg_1_0.config = WeekWalkConfig.instance:getElementConfig(arg_1_0.elementId)
+local WeekwalkElementInfoMO = pureTable("WeekwalkElementInfoMO")
 
-	if not arg_1_0.config then
-		logError(string.format("WeekwalkElementInfoMO no config id:%s", arg_1_0.elementId))
+function WeekwalkElementInfoMO:init(info)
+	self.elementId = info.elementId
+	self.isFinish = info.isFinish
+	self.index = info.index
+	self.historylist = info.historylist
+	self.visible = info.visible
+	self.config = WeekWalkConfig.instance:getElementConfig(self.elementId)
+
+	if not self.config then
+		logError(string.format("WeekwalkElementInfoMO no config id:%s", self.elementId))
 
 		return
 	end
 
-	arg_1_0.typeList = string.splitToNumber(arg_1_0.config.type, "#")
-	arg_1_0.paramList = string.split(arg_1_0.config.param, "|")
+	self.typeList = string.splitToNumber(self.config.type, "#")
+	self.paramList = string.split(self.config.param, "|")
 end
 
-function var_0_0.getRes(arg_2_0)
-	if arg_2_0._mapInfo:getLayer() >= WeekWalkEnum.FirstDeepLayer and arg_2_0.config.roundId ~= 0 then
-		local var_2_0 = arg_2_0._mapInfo:getMapConfig()
-		local var_2_1 = arg_2_0.config.roundId == WeekWalkEnum.OneDeepLayerFirstBattle and var_2_0.resIdFront or var_2_0.resIdRear
+function WeekwalkElementInfoMO:getRes()
+	local layer = self._mapInfo:getLayer()
 
-		if var_2_1 > 0 then
-			local var_2_2 = lua_weekwalk_element_res.configDict[var_2_1]
+	if layer >= WeekWalkEnum.FirstDeepLayer and self.config.roundId ~= 0 then
+		local mapConfig = self._mapInfo:getMapConfig()
+		local resId = self.config.roundId == WeekWalkEnum.OneDeepLayerFirstBattle and mapConfig.resIdFront or mapConfig.resIdRear
 
-			if var_2_2 then
-				return var_2_2.res
+		if resId > 0 then
+			local resConfig = lua_weekwalk_element_res.configDict[resId]
+
+			if resConfig then
+				return resConfig.res
 			end
 		end
 	end
 
-	return arg_2_0.config.res
+	return self.config.res
 end
 
-function var_0_0.setMapInfo(arg_3_0, arg_3_1)
-	arg_3_0._mapInfo = arg_3_1
+function WeekwalkElementInfoMO:setMapInfo(info)
+	self._mapInfo = info
 end
 
-function var_0_0.isAvailable(arg_4_0)
-	return not arg_4_0.isFinish and arg_4_0.visible
+function WeekwalkElementInfoMO:isAvailable()
+	return not self.isFinish and self.visible
 end
 
-function var_0_0.updateHistoryList(arg_5_0, arg_5_1)
-	arg_5_0.historylist = arg_5_1
+function WeekwalkElementInfoMO:updateHistoryList(list)
+	self.historylist = list
 end
 
-function var_0_0.getType(arg_6_0)
-	return arg_6_0.typeList[arg_6_0.index + 1]
+function WeekwalkElementInfoMO:getType()
+	return self.typeList[self.index + 1]
 end
 
-function var_0_0.getNextType(arg_7_0)
-	return arg_7_0.typeList[arg_7_0.index + 2]
+function WeekwalkElementInfoMO:getNextType()
+	return self.typeList[self.index + 2]
 end
 
-function var_0_0.getParam(arg_8_0)
-	return arg_8_0.paramList[arg_8_0.index + 1]
+function WeekwalkElementInfoMO:getParam()
+	return self.paramList[self.index + 1]
 end
 
-function var_0_0.getPrevParam(arg_9_0)
-	return arg_9_0.paramList[arg_9_0.index]
+function WeekwalkElementInfoMO:getPrevParam()
+	return self.paramList[self.index]
 end
 
-function var_0_0.getBattleId(arg_10_0)
-	return arg_10_0:_getBattleId()
+function WeekwalkElementInfoMO:getBattleId()
+	return self:_getBattleId()
 end
 
-function var_0_0._getBattleId(arg_11_0)
-	if arg_11_0._mapInfo:getLayer() >= WeekWalkEnum.FirstDeepLayer and arg_11_0.config.roundId ~= 0 then
-		local var_11_0 = arg_11_0._mapInfo:getMapConfig()
-		local var_11_1 = arg_11_0.config.roundId == WeekWalkEnum.OneDeepLayerFirstBattle and var_11_0.fightIdFront or var_11_0.fightIdRear
+function WeekwalkElementInfoMO:_getBattleId()
+	local layer = self._mapInfo:getLayer()
 
-		if arg_11_0:_checkBattleId(var_11_1, true) then
-			return var_11_1
+	if layer >= WeekWalkEnum.FirstDeepLayer and self.config.roundId ~= 0 then
+		local mapConfig = self._mapInfo:getMapConfig()
+		local battleId = self.config.roundId == WeekWalkEnum.OneDeepLayerFirstBattle and mapConfig.fightIdFront or mapConfig.fightIdRear
+
+		if self:_checkBattleId(battleId, true) then
+			return battleId
 		end
 	end
 
-	local var_11_2 = arg_11_0:getParam()
+	local param = self:getParam()
+	local battleId = tonumber(param)
 
-	return (tonumber(var_11_2))
+	return battleId
 end
 
-function var_0_0._checkBattleId(arg_12_0, arg_12_1, arg_12_2)
-	if arg_12_1 and arg_12_1 > 0 then
-		if not arg_12_0._mapInfo:getBattleInfo(arg_12_1) then
-			logError(string.format("WeekwalkElementInfoMO no battleInfo mapId:%s elementId:%s battleId:%s isFromMap:%s", arg_12_0._mapInfo.id, arg_12_0.elementId, arg_12_1, arg_12_2))
+function WeekwalkElementInfoMO:_checkBattleId(battleId, isFromMap)
+	if battleId and battleId > 0 then
+		local battleInfo = self._mapInfo:getBattleInfo(battleId)
+
+		if not battleInfo then
+			logError(string.format("WeekwalkElementInfoMO no battleInfo mapId:%s elementId:%s battleId:%s isFromMap:%s", self._mapInfo.id, self.elementId, battleId, isFromMap))
 
 			return false
 		end
@@ -96,22 +105,22 @@ function var_0_0._checkBattleId(arg_12_0, arg_12_1, arg_12_2)
 	end
 end
 
-function var_0_0.getConfigBattleId(arg_13_0)
-	for iter_13_0, iter_13_1 in ipairs(arg_13_0.typeList) do
-		if iter_13_1 == WeekWalkEnum.ElementType.Battle then
-			local var_13_0 = arg_13_0.paramList[iter_13_0]
+function WeekwalkElementInfoMO:getConfigBattleId()
+	for i, v in ipairs(self.typeList) do
+		if v == WeekWalkEnum.ElementType.Battle then
+			local param = self.paramList[i]
 
-			return tonumber(var_13_0)
+			return tonumber(param)
 		end
 	end
 end
 
-function var_0_0._isBattleElement(arg_14_0)
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0.typeList) do
-		if iter_14_1 == WeekWalkEnum.ElementType.Battle then
+function WeekwalkElementInfoMO:_isBattleElement()
+	for i, v in ipairs(self.typeList) do
+		if v == WeekWalkEnum.ElementType.Battle then
 			return true
 		end
 	end
 end
 
-return var_0_0
+return WeekwalkElementInfoMO

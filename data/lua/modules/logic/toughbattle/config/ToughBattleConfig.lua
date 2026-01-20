@@ -1,15 +1,17 @@
-﻿module("modules.logic.toughbattle.config.ToughBattleConfig", package.seeall)
+﻿-- chunkname: @modules/logic/toughbattle/config/ToughBattleConfig.lua
 
-local var_0_0 = class("ToughBattleConfig", BaseConfig)
+module("modules.logic.toughbattle.config.ToughBattleConfig", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._diffcultToCOs = nil
-	arg_1_0._storyCOs = nil
-	arg_1_0._allActEpisodeIds = nil
-	arg_1_0._episodeIdToCO = nil
+local ToughBattleConfig = class("ToughBattleConfig", BaseConfig)
+
+function ToughBattleConfig:onInit()
+	self._diffcultToCOs = nil
+	self._storyCOs = nil
+	self._allActEpisodeIds = nil
+	self._episodeIdToCO = nil
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function ToughBattleConfig:reqConfigNames()
 	return {
 		"activity158_challenge",
 		"activity158_const",
@@ -20,139 +22,141 @@ function var_0_0.reqConfigNames(arg_2_0)
 	}
 end
 
-function var_0_0.getRoundDesc(arg_3_0, arg_3_1)
-	for iter_3_0, iter_3_1 in ipairs(lua_activity158_evaluate.configList) do
-		if arg_3_1 <= iter_3_1.round then
-			return iter_3_1.desc
+function ToughBattleConfig:getRoundDesc(round)
+	for _, co in ipairs(lua_activity158_evaluate.configList) do
+		if round <= co.round then
+			return co.desc
 		end
 	end
 
 	return ""
 end
 
-function var_0_0.isActEleCo(arg_4_0, arg_4_1)
-	if not arg_4_1 then
+function ToughBattleConfig:isActEleCo(elementCo)
+	if not elementCo then
 		return false
 	end
 
-	if arg_4_1.type ~= DungeonEnum.ElementType.ToughBattle then
+	if elementCo.type ~= DungeonEnum.ElementType.ToughBattle then
 		return false
 	end
 
-	if (tonumber(arg_4_1.param) or 0) ~= 0 then
+	local actId = tonumber(elementCo.param) or 0
+
+	if actId ~= 0 then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.getConstValue(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = ""
-	local var_5_1 = lua_activity158_const.configDict[arg_5_1]
+function ToughBattleConfig:getConstValue(id, isNumber)
+	local value = ""
+	local co = lua_activity158_const.configDict[id]
 
-	if var_5_1 then
-		var_5_0 = var_5_1.value
+	if co then
+		value = co.value
 	end
 
-	if arg_5_2 then
-		return tonumber(var_5_0) or 0
+	if isNumber then
+		return tonumber(value) or 0
 	else
-		return var_5_0
+		return value
 	end
 end
 
-function var_0_0._initActInfo(arg_6_0)
-	if not arg_6_0._episodeIdToCO then
-		arg_6_0._allActEpisodeIds = {}
-		arg_6_0._episodeIdToCO = {}
+function ToughBattleConfig:_initActInfo()
+	if not self._episodeIdToCO then
+		self._allActEpisodeIds = {}
+		self._episodeIdToCO = {}
 
-		for iter_6_0, iter_6_1 in ipairs(lua_activity158_challenge.configList) do
-			arg_6_0._allActEpisodeIds[iter_6_1.episodeId] = true
-			arg_6_0._episodeIdToCO[iter_6_1.episodeId] = iter_6_1
+		for _, co in ipairs(lua_activity158_challenge.configList) do
+			self._allActEpisodeIds[co.episodeId] = true
+			self._episodeIdToCO[co.episodeId] = co
 		end
 
-		for iter_6_2, iter_6_3 in ipairs(lua_siege_battle.configList) do
-			arg_6_0._episodeIdToCO[iter_6_3.episodeId] = iter_6_3
+		for _, co in ipairs(lua_siege_battle.configList) do
+			self._episodeIdToCO[co.episodeId] = co
 		end
 	end
 end
 
-function var_0_0.isActStage2EpisodeId(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0:getCoByEpisodeId(arg_7_1)
+function ToughBattleConfig:isActStage2EpisodeId(episodeId)
+	local co = self:getCoByEpisodeId(episodeId)
 
-	if not var_7_0 then
+	if not co then
 		return false
 	end
 
-	return var_7_0.stage == 2 and arg_7_0._allActEpisodeIds[var_7_0.episodeId]
+	return co.stage == 2 and self._allActEpisodeIds[co.episodeId]
 end
 
-function var_0_0.isStage1EpisodeId(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0:getCoByEpisodeId(arg_8_1)
+function ToughBattleConfig:isStage1EpisodeId(episodeId)
+	local co = self:getCoByEpisodeId(episodeId)
 
-	if not var_8_0 then
+	if not co then
 		return false
 	end
 
-	return var_8_0.stage == 1
+	return co.stage == 1
 end
 
-function var_0_0.isActEpisodeId(arg_9_0, arg_9_1)
-	arg_9_0:_initActInfo()
+function ToughBattleConfig:isActEpisodeId(episodeId)
+	self:_initActInfo()
 
-	return arg_9_0._allActEpisodeIds[arg_9_1]
+	return self._allActEpisodeIds[episodeId]
 end
 
-function var_0_0.getCoByEpisodeId(arg_10_0, arg_10_1)
-	arg_10_0:_initActInfo()
+function ToughBattleConfig:getCoByEpisodeId(episodeId)
+	self:_initActInfo()
 
-	return arg_10_0._episodeIdToCO[arg_10_1]
+	return self._episodeIdToCO[episodeId]
 end
 
-function var_0_0.getCOByDiffcult(arg_11_0, arg_11_1)
-	if not arg_11_0._diffcultToCOs then
-		arg_11_0._diffcultToCOs = {}
+function ToughBattleConfig:getCOByDiffcult(diffcultId)
+	if not self._diffcultToCOs then
+		self._diffcultToCOs = {}
 
-		for iter_11_0, iter_11_1 in ipairs(lua_activity158_challenge.configList) do
-			local var_11_0 = arg_11_0._diffcultToCOs[iter_11_1.difficulty] or {}
+		for _, co in ipairs(lua_activity158_challenge.configList) do
+			local diffcultCo = self._diffcultToCOs[co.difficulty] or {}
 
-			arg_11_0._diffcultToCOs[iter_11_1.difficulty] = var_11_0
+			self._diffcultToCOs[co.difficulty] = diffcultCo
 
-			if iter_11_1.stage == 2 then
-				var_11_0.stage2 = iter_11_1
+			if co.stage == 2 then
+				diffcultCo.stage2 = co
 			else
-				if not var_11_0.stage1 then
-					var_11_0.stage1 = {}
+				if not diffcultCo.stage1 then
+					diffcultCo.stage1 = {}
 				end
 
-				var_11_0.stage1[iter_11_1.sort] = iter_11_1
+				diffcultCo.stage1[co.sort] = co
 			end
 		end
 	end
 
-	return arg_11_0._diffcultToCOs[arg_11_1]
+	return self._diffcultToCOs[diffcultId]
 end
 
-function var_0_0.getStoryCO(arg_12_0)
-	if not arg_12_0._storyCOs then
-		arg_12_0._storyCOs = {}
+function ToughBattleConfig:getStoryCO()
+	if not self._storyCOs then
+		self._storyCOs = {}
 
-		for iter_12_0, iter_12_1 in ipairs(lua_siege_battle.configList) do
-			if iter_12_1.stage == 2 then
-				arg_12_0._storyCOs.stage2 = iter_12_1
+		for _, co in ipairs(lua_siege_battle.configList) do
+			if co.stage == 2 then
+				self._storyCOs.stage2 = co
 			else
-				if not arg_12_0._storyCOs.stage1 then
-					arg_12_0._storyCOs.stage1 = {}
+				if not self._storyCOs.stage1 then
+					self._storyCOs.stage1 = {}
 				end
 
-				arg_12_0._storyCOs.stage1[iter_12_1.sort] = iter_12_1
+				self._storyCOs.stage1[co.sort] = co
 			end
 		end
 	end
 
-	return arg_12_0._storyCOs
+	return self._storyCOs
 end
 
-var_0_0.instance = var_0_0.New()
+ToughBattleConfig.instance = ToughBattleConfig.New()
 
-return var_0_0
+return ToughBattleConfig

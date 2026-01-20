@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_block_resource", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_block_resource.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_block_resource", package.seeall)
+
+local lua_block_resource = {}
+local fields = {
 	itemId = 4,
 	name = 2,
 	occupied = 6,
@@ -13,15 +15,15 @@ local var_0_1 = {
 	id = 1,
 	blockLight = 7
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	name = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_block_resource.onLoad(json)
+	lua_block_resource.configList, lua_block_resource.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_block_resource

@@ -1,47 +1,49 @@
-﻿module("modules.configs.excel2json.lua_block_package_data", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_block_package_data.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_block_package_data", package.seeall)
+
+local lua_block_package_data = {}
+local fields = {
 	packageId = 3,
 	blockId = 2,
 	mainRes = 5,
 	defineId = 1,
 	order = 4
 }
-local var_0_2 = {
+local primaryKey = {
 	"blockId"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict, var_0_0.packageDict = var_0_0.json_parse(arg_1_0)
+function lua_block_package_data.onLoad(json)
+	lua_block_package_data.configList, lua_block_package_data.configDict, lua_block_package_data.packageDict = lua_block_package_data.json_parse(json)
 end
 
-function var_0_0.json_parse(arg_2_0)
-	local var_2_0 = {}
-	local var_2_1 = {}
-	local var_2_2 = {}
+function lua_block_package_data.json_parse(json)
+	local configList = {}
+	local configDict = {}
+	local packageDict = {}
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0) do
-		if not var_2_2[iter_2_1.id] then
-			var_2_2[iter_2_1.id] = {}
+	for _, packageCfg in ipairs(json) do
+		if not packageDict[packageCfg.id] then
+			packageDict[packageCfg.id] = {}
 		end
 
-		local var_2_3 = var_2_2[iter_2_1.id]
+		local packageList = packageDict[packageCfg.id]
 
-		for iter_2_2, iter_2_3 in ipairs(iter_2_1.infos) do
-			iter_2_3.packageId = iter_2_1.id
-			iter_2_3.packageOrder = iter_2_2
+		for i, cfg in ipairs(packageCfg.infos) do
+			cfg.packageId = packageCfg.id
+			cfg.packageOrder = i
 
-			table.insert(var_2_0, iter_2_3)
+			table.insert(configList, cfg)
 
-			var_2_1[iter_2_3.blockId] = iter_2_3
+			configDict[cfg.blockId] = cfg
 
-			table.insert(var_2_3, iter_2_3)
+			table.insert(packageList, cfg)
 		end
 	end
 
-	return var_2_0, var_2_1, var_2_2
+	return configList, configDict, packageDict
 end
 
-return var_0_0
+return lua_block_package_data

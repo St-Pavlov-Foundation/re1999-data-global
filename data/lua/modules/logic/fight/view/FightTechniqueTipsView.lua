@@ -1,74 +1,76 @@
-﻿module("modules.logic.fight.view.FightTechniqueTipsView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightTechniqueTipsView.lua
 
-local var_0_0 = class("FightTechniqueTipsView", BaseView)
+module("modules.logic.fight.view.FightTechniqueTipsView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goclose = gohelper.findChildClick(arg_1_0.viewGO, "#go_close")
-	arg_1_0._gocenter = gohelper.findChild(arg_1_0.viewGO, "#go_center")
-	arg_1_0._txttemp = gohelper.findChildText(arg_1_0.viewGO, "#txt_temp")
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_center/#simage_icon")
-	arg_1_0._mask = gohelper.findChildClickWithAudio(arg_1_0.viewGO, "mask")
+local FightTechniqueTipsView = class("FightTechniqueTipsView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function FightTechniqueTipsView:onInitView()
+	self._goclose = gohelper.findChildClick(self.viewGO, "#go_close")
+	self._gocenter = gohelper.findChild(self.viewGO, "#go_center")
+	self._txttemp = gohelper.findChildText(self.viewGO, "#txt_temp")
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "#go_center/#simage_icon")
+	self._mask = gohelper.findChildClickWithAudio(self.viewGO, "mask")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._goclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._mask:AddClickListener(arg_2_0.closeThis, arg_2_0)
+function FightTechniqueTipsView:addEvents()
+	self._goclose:AddClickListener(self._btncloseOnClick, self)
+	self._mask:AddClickListener(self.closeThis, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._goclose:RemoveClickListener()
-	arg_3_0._mask:RemoveClickListener()
+function FightTechniqueTipsView:removeEvents()
+	self._goclose:RemoveClickListener()
+	self._mask:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function FightTechniqueTipsView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function FightTechniqueTipsView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
-	arg_6_0:_refreshView()
+function FightTechniqueTipsView:onUpdateParam()
+	self:_refreshView()
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0:_refreshView()
+function FightTechniqueTipsView:onOpen()
+	self:_refreshView()
 end
 
-function var_0_0._refreshView(arg_8_0)
-	if arg_8_0.viewParam.isGMShow then
-		arg_8_0.config = arg_8_0.viewParam.config
+function FightTechniqueTipsView:_refreshView()
+	if self.viewParam.isGMShow then
+		self.config = self.viewParam.config
 	else
-		arg_8_0.config = arg_8_0.viewParam
+		self.config = self.viewParam
 
-		FightViewTechniqueModel.instance:readTechnique(arg_8_0.config.id)
+		FightViewTechniqueModel.instance:readTechnique(self.config.id)
 	end
 
-	arg_8_0._simageicon:LoadImage(ResUrl.getTechniqueLangIcon(arg_8_0.config.picture2 or ""))
+	self._simageicon:LoadImage(ResUrl.getTechniqueLangIcon(self.config.picture2 or ""))
 
-	local var_8_0 = FightStrUtil.instance:getSplitCache(arg_8_0.config.content1, "|")
+	local string_list = FightStrUtil.instance:getSplitCache(self.config.content1, "|")
 
-	for iter_8_0, iter_8_1 in pairs(lua_fight_technique.configDict) do
-		local var_8_1 = gohelper.findChild(arg_8_0.viewGO, "#go_center/content/" .. iter_8_1.id)
+	for k, v in pairs(lua_fight_technique.configDict) do
+		local obj = gohelper.findChild(self.viewGO, "#go_center/content/" .. v.id)
 
-		if var_8_1 then
-			gohelper.setActive(var_8_1, iter_8_1.id == arg_8_0.config.id)
+		if obj then
+			gohelper.setActive(obj, v.id == self.config.id)
 
-			if arg_8_0.config.id == iter_8_1.id then
-				for iter_8_2, iter_8_3 in ipairs(var_8_0) do
-					iter_8_3 = string.gsub(iter_8_3, "%{", string.format("<color=%s>", "#ff906a"))
-					iter_8_3 = string.gsub(iter_8_3, "%}", "</color>")
+			if self.config.id == v.id then
+				for i, str in ipairs(string_list) do
+					str = string.gsub(str, "%{", string.format("<color=%s>", "#ff906a"))
+					str = string.gsub(str, "%}", "</color>")
 
-					local var_8_2 = var_8_1:GetComponentsInChildren(gohelper.Type_TextMesh)
+					local textTab = obj:GetComponentsInChildren(gohelper.Type_TextMesh)
 
-					for iter_8_4 = 0, var_8_2.Length - 1 do
-						if var_8_2[iter_8_4].gameObject.name == "txt_" .. iter_8_2 then
-							var_8_2[iter_8_4].text = iter_8_3
+					for index = 0, textTab.Length - 1 do
+						if textTab[index].gameObject.name == "txt_" .. i then
+							textTab[index].text = str
 						end
 					end
 				end
@@ -79,12 +81,12 @@ function var_0_0._refreshView(arg_8_0)
 	FightAudioMgr.instance:obscureBgm(true)
 end
 
-function var_0_0.onClose(arg_9_0)
+function FightTechniqueTipsView:onClose()
 	FightAudioMgr.instance:obscureBgm(false)
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	arg_10_0._simageicon:UnLoadImage()
+function FightTechniqueTipsView:onDestroyView()
+	self._simageicon:UnLoadImage()
 end
 
-return var_0_0
+return FightTechniqueTipsView

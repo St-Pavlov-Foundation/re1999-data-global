@@ -1,13 +1,16 @@
-﻿module("modules.configs.excel2json.lua_turnback_task", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_turnback_task.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_turnback_task", package.seeall)
+
+local lua_turnback_task = {}
+local fields = {
 	sortId = 11,
 	name = 6,
 	unlockDay = 17,
 	type = 18,
 	isOnlineTimeTask = 19,
 	acceptNeedOnlineSeconds = 20,
+	showDay = 21,
 	desc = 7,
 	listenerParam = 9,
 	params = 14,
@@ -23,17 +26,17 @@ local var_0_1 = {
 	turnbackId = 2,
 	bonus = 16
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	name = 2,
 	minType = 1,
 	desc = 3
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_turnback_task.onLoad(json)
+	lua_turnback_task.configList, lua_turnback_task.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_turnback_task

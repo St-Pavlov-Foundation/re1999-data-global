@@ -1,52 +1,54 @@
-﻿module("modules.logic.equip.model.EquipCategoryListModel", package.seeall)
+﻿-- chunkname: @modules/logic/equip/model/EquipCategoryListModel.lua
 
-local var_0_0 = class("EquipCategoryListModel", ListScrollModel)
+module("modules.logic.equip.model.EquipCategoryListModel", package.seeall)
 
-var_0_0.ViewIndex = {
+local EquipCategoryListModel = class("EquipCategoryListModel", ListScrollModel)
+
+EquipCategoryListModel.ViewIndex = {
 	EquipInfoViewIndex = 1,
 	EquipRefineViewIndex = 3,
 	EquipStrengthenViewIndex = 2,
 	EquipStoryViewIndex = 4
 }
 
-function var_0_0.initCategory(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = {}
+function EquipCategoryListModel:initCategory(equipMO, config)
+	local data = {}
 
-	table.insert(var_1_0, arg_1_0:packMo(luaLang("equip_lang_18"), luaLang("p_equip_35"), var_0_0.ViewIndex.EquipInfoViewIndex))
+	table.insert(data, self:packMo(luaLang("equip_lang_18"), luaLang("p_equip_35"), EquipCategoryListModel.ViewIndex.EquipInfoViewIndex))
 
-	if arg_1_1 and arg_1_2.isExpEquip ~= 1 and arg_1_2.id ~= EquipConfig.instance:getEquipUniversalId() and not EquipHelper.isSpRefineEquip(arg_1_2) then
-		table.insert(var_1_0, arg_1_0:packMo(luaLang("equip_lang_19"), luaLang("p_equip_36"), var_0_0.ViewIndex.EquipStrengthenViewIndex))
-		table.insert(var_1_0, arg_1_0:packMo(luaLang("equip_lang_21"), luaLang("p_equip_39"), var_0_0.ViewIndex.EquipRefineViewIndex))
+	if equipMO and config.isExpEquip ~= 1 and config.id ~= EquipConfig.instance:getEquipUniversalId() and not EquipHelper.isSpRefineEquip(config) then
+		table.insert(data, self:packMo(luaLang("equip_lang_19"), luaLang("p_equip_36"), EquipCategoryListModel.ViewIndex.EquipStrengthenViewIndex))
+		table.insert(data, self:packMo(luaLang("equip_lang_21"), luaLang("p_equip_39"), EquipCategoryListModel.ViewIndex.EquipRefineViewIndex))
 	end
 
-	table.insert(var_1_0, arg_1_0:packMo(luaLang("equip_lang_20"), luaLang("p_equip_38"), var_0_0.ViewIndex.EquipStoryViewIndex))
-	arg_1_0:setList(var_1_0)
+	table.insert(data, self:packMo(luaLang("equip_lang_20"), luaLang("p_equip_38"), EquipCategoryListModel.ViewIndex.EquipStoryViewIndex))
+	self:setList(data)
 end
 
-function var_0_0.packMo(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	arg_2_0._moList = arg_2_0._moList or {}
+function EquipCategoryListModel:packMo(cnName, enName, index)
+	self._moList = self._moList or {}
 
-	local var_2_0 = arg_2_0._moList[arg_2_3]
+	local t = self._moList[index]
 
-	if not var_2_0 then
-		var_2_0 = {}
-		arg_2_0._moList[arg_2_3] = var_2_0
-		var_2_0.cnName = arg_2_1
-		var_2_0.enName = arg_2_2
-		var_2_0.resIndex = arg_2_3
+	if not t then
+		t = {}
+		self._moList[index] = t
+		t.cnName = cnName
+		t.enName = enName
+		t.resIndex = index
 	end
 
-	if var_2_0.cnName ~= arg_2_1 or var_2_0.enName ~= arg_2_2 or var_2_0.resIndex ~= arg_2_3 then
-		var_2_0 = {}
-		arg_2_0._moList[arg_2_3] = var_2_0
-		var_2_0.cnName = arg_2_1
-		var_2_0.enName = arg_2_2
-		var_2_0.resIndex = arg_2_3
+	if t.cnName ~= cnName or t.enName ~= enName or t.resIndex ~= index then
+		t = {}
+		self._moList[index] = t
+		t.cnName = cnName
+		t.enName = enName
+		t.resIndex = index
 	end
 
-	return var_2_0
+	return t
 end
 
-var_0_0.instance = var_0_0.New()
+EquipCategoryListModel.instance = EquipCategoryListModel.New()
 
-return var_0_0
+return EquipCategoryListModel

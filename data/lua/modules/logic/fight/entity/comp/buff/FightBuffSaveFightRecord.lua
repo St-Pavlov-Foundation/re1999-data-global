@@ -1,26 +1,28 @@
-﻿module("modules.logic.fight.entity.comp.buff.FightBuffSaveFightRecord", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/buff/FightBuffSaveFightRecord.lua
 
-local var_0_0 = class("FightBuffSaveFightRecord")
+module("modules.logic.fight.entity.comp.buff.FightBuffSaveFightRecord", package.seeall)
 
-function var_0_0.onBuffStart(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = FightStrUtil.instance:getSplitToNumberCache(arg_1_2.actCommonParams, "#")
+local FightBuffSaveFightRecord = class("FightBuffSaveFightRecord")
 
-	if var_1_0 then
-		FightModel.instance:setRoundOffset(tonumber(var_1_0[2]))
+function FightBuffSaveFightRecord:onBuffStart(entity, buffMo)
+	local array = FightStrUtil.instance:getSplitToNumberCache(buffMo.actCommonParams, "#")
+
+	if array then
+		FightModel.instance:setRoundOffset(tonumber(array[2]))
 		FightController.instance:dispatchEvent(FightEvent.RefreshUIRound)
 	end
 end
 
-function var_0_0.clear(arg_2_0)
+function FightBuffSaveFightRecord:clear()
 	return
 end
 
-function var_0_0.onBuffEnd(arg_3_0)
-	arg_3_0:clear()
+function FightBuffSaveFightRecord:onBuffEnd()
+	self:clear()
 end
 
-function var_0_0.dispose(arg_4_0)
-	arg_4_0:clear()
+function FightBuffSaveFightRecord:dispose()
+	self:clear()
 end
 
-return var_0_0
+return FightBuffSaveFightRecord

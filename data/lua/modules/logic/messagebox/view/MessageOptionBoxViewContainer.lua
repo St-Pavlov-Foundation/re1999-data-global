@@ -1,13 +1,15 @@
-﻿module("modules.logic.messagebox.view.MessageOptionBoxViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/messagebox/view/MessageOptionBoxViewContainer.lua
 
-local var_0_0 = class("MessageOptionBoxViewContainer", BaseViewContainer)
+module("modules.logic.messagebox.view.MessageOptionBoxViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local MessageOptionBoxViewContainer = class("MessageOptionBoxViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, MessageOptionBoxView.New())
+function MessageOptionBoxViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, MessageOptionBoxView.New())
+
+	return views
 end
 
-return var_0_0
+return MessageOptionBoxViewContainer

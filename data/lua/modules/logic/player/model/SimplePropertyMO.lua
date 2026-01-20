@@ -1,10 +1,12 @@
-﻿module("modules.logic.player.model.SimplePropertyMO", package.seeall)
+﻿-- chunkname: @modules/logic/player/model/SimplePropertyMO.lua
 
-local var_0_0 = pureTable("SimplePropertyMO")
+module("modules.logic.player.model.SimplePropertyMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1.id
-	arg_1_0.property = arg_1_1.property
+local SimplePropertyMO = pureTable("SimplePropertyMO")
+
+function SimplePropertyMO:init(info)
+	self.id = info.id
+	self.property = info.property
 end
 
-return var_0_0
+return SimplePropertyMO

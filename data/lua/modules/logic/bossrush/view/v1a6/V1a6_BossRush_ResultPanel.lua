@@ -1,242 +1,245 @@
-﻿module("modules.logic.bossrush.view.v1a6.V1a6_BossRush_ResultPanel", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/view/v1a6/V1a6_BossRush_ResultPanel.lua
 
-local var_0_0 = class("V1a6_BossRush_ResultPanel", BaseView)
+module("modules.logic.bossrush.view.v1a6.V1a6_BossRush_ResultPanel", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._goscore = gohelper.findChild(arg_1_0.viewGO, "#go_score")
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_score/#simage_FullBG")
-	arg_1_0._imgScorebg = gohelper.findChildImage(arg_1_0.viewGO, "#go_score/Right/Score/image_ScoreBG")
-	arg_1_0._txtScore = gohelper.findChildText(arg_1_0.viewGO, "#go_score/Right/Score/image_ScoreBG/#txt_Score")
-	arg_1_0._gonewrecord = gohelper.findChild(arg_1_0.viewGO, "#go_score/Right/Title/go_newrecord")
-	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "#go_score/Right/Title/txt_Title")
-	arg_1_0._txtTitleEn = gohelper.findChildText(arg_1_0.viewGO, "#go_score/Right/Title/txt_TitleEn")
-	arg_1_0._goAffixItem = gohelper.findChild(arg_1_0.viewGO, "#go_score/Right/Affix/#go_AffixItem")
-	arg_1_0._txtAffix = gohelper.findChildText(arg_1_0.viewGO, "#go_score/Right/Affix/#go_AffixItem/#txt_Affix")
-	arg_1_0._goAssessNotEmpty = gohelper.findChild(arg_1_0.viewGO, "#go_score/#go_AssessNotEmpty")
-	arg_1_0._imgAssessbg = gohelper.findChildImage(arg_1_0.viewGO, "#go_score/#go_AssessNotEmpty/image_AssessLight")
-	arg_1_0._goAssessIcon = gohelper.findChild(arg_1_0.viewGO, "#go_score/#go_AssessIcon")
-	arg_1_0._goassess = gohelper.findChild(arg_1_0.viewGO, "#go_assess")
-	arg_1_0._goRigth = gohelper.findChild(arg_1_0.viewGO, "#go_score/Right")
-	arg_1_0._go3s = gohelper.findChild(arg_1_0.viewGO, "#go_score/3s")
-	arg_1_0._go4s = gohelper.findChild(arg_1_0.viewGO, "#go_score/4s")
-	arg_1_0._animatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_1_0.viewGO)
-	arg_1_0._animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._animationEvent = arg_1_0.viewGO:GetComponent(gohelper.Type_AnimationEventWrap)
+local V1a6_BossRush_ResultPanel = class("V1a6_BossRush_ResultPanel", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V1a6_BossRush_ResultPanel:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._goscore = gohelper.findChild(self.viewGO, "#go_score")
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#go_score/#simage_FullBG")
+	self._imgScorebg = gohelper.findChildImage(self.viewGO, "#go_score/Right/Score/image_ScoreBG")
+	self._txtScore = gohelper.findChildText(self.viewGO, "#go_score/Right/Score/image_ScoreBG/#txt_Score")
+	self._gonewrecord = gohelper.findChild(self.viewGO, "#go_score/Right/Title/go_newrecord")
+	self._txtTitle = gohelper.findChildText(self.viewGO, "#go_score/Right/Title/txt_Title")
+	self._txtTitleEn = gohelper.findChildText(self.viewGO, "#go_score/Right/Title/txt_TitleEn")
+	self._goAffixItem = gohelper.findChild(self.viewGO, "#go_score/Right/Affix/#go_AffixItem")
+	self._txtAffix = gohelper.findChildText(self.viewGO, "#go_score/Right/Affix/#go_AffixItem/#txt_Affix")
+	self._goAssessNotEmpty = gohelper.findChild(self.viewGO, "#go_score/#go_AssessNotEmpty")
+	self._imgAssessbg = gohelper.findChildImage(self.viewGO, "#go_score/#go_AssessNotEmpty/image_AssessLight")
+	self._goAssessIcon = gohelper.findChild(self.viewGO, "#go_score/#go_AssessIcon")
+	self._goassess = gohelper.findChild(self.viewGO, "#go_assess")
+	self._goRigth = gohelper.findChild(self.viewGO, "#go_score/Right")
+	self._go3s = gohelper.findChild(self.viewGO, "#go_score/3s")
+	self._go4s = gohelper.findChild(self.viewGO, "#go_score/4s")
+	self._animatorPlayer = ZProj.ProjAnimatorPlayer.Get(self.viewGO)
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._animationEvent = self.viewGO:GetComponent(gohelper.Type_AnimationEventWrap)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	BossRushController.instance:registerCallback(BossRushEvent.OnReceiveGet128EvaluateReply, arg_2_0.refreshEvaluate, arg_2_0)
-	arg_2_0._animationEvent:AddEventListener(BossRushEnum.AnimEvtResultPanel.ScoreTween, arg_2_0._scoreTweenCallback, arg_2_0)
+function V1a6_BossRush_ResultPanel:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	BossRushController.instance:registerCallback(BossRushEvent.OnReceiveGet128EvaluateReply, self.refreshEvaluate, self)
+	self._animationEvent:AddEventListener(BossRushEnum.AnimEvtResultPanel.ScoreTween, self._scoreTweenCallback, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	BossRushController.instance:unregisterCallback(BossRushEvent.OnReceiveGet128EvaluateReply, arg_3_0.refreshEvaluate, arg_3_0)
-	arg_3_0._animationEvent:RemoveEventListener(BossRushEnum.AnimEvtResultPanel.ScoreTween)
+function V1a6_BossRush_ResultPanel:removeEvents()
+	self._btnclose:RemoveClickListener()
+	BossRushController.instance:unregisterCallback(BossRushEvent.OnReceiveGet128EvaluateReply, self.refreshEvaluate, self)
+	self._animationEvent:RemoveEventListener(BossRushEnum.AnimEvtResultPanel.ScoreTween)
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	if arg_4_0._clickCount < 60 and not arg_4_0._isCanSkip then
-		arg_4_0._clickCount = arg_4_0._clickCount + 1
+function V1a6_BossRush_ResultPanel:_btncloseOnClick()
+	if self._clickCount < 60 and not self._isCanSkip then
+		self._clickCount = self._clickCount + 1
 
 		return
 	end
 
-	arg_4_0:_openResultView()
+	self:_openResultView()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._curStage, arg_5_0._curLayer = BossRushModel.instance:getBattleStageAndLayer()
-	arg_5_0.fightScore = BossRushModel.instance:getFightScore() or 0
-	arg_5_0._txtScore.text = 0
-	arg_5_0._isSpecialLayer = BossRushModel.instance:isSpecialLayer(arg_5_0._curLayer)
+function V1a6_BossRush_ResultPanel:_editableInitView()
+	self._curStage, self._curLayer = BossRushModel.instance:getBattleStageAndLayer()
+	self.fightScore = BossRushModel.instance:getFightScore() or 0
+	self._txtScore.text = 0
+	self._isSpecialLayer = BossRushModel.instance:isSpecialLayer(self._curLayer)
 
-	arg_5_0:createResultAssess()
-	arg_5_0:setAssessIcon()
-	arg_5_0:initEvaluate()
-	arg_5_0:checkIsNewRecord()
+	self:createResultAssess()
+	self:setAssessIcon()
+	self:initEvaluate()
+	self:checkIsNewRecord()
 end
 
-function var_0_0._openResultView(arg_6_0)
-	ViewMgr.instance:openView(ViewName.V1a6_BossRush_ResultView, arg_6_0.viewParam)
-	arg_6_0:closeThis()
+function V1a6_BossRush_ResultPanel:_openResultView()
+	ViewMgr.instance:openView(ViewName.V1a6_BossRush_ResultView, self.viewParam)
+	self:closeThis()
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function V1a6_BossRush_ResultPanel:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0._isCanSkip = false
-	arg_8_0._clickCount = 0
+function V1a6_BossRush_ResultPanel:onOpen()
+	self._isCanSkip = false
+	self._clickCount = 0
 end
 
-function var_0_0.onClose(arg_9_0)
-	if arg_9_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_9_0._tweenId)
+function V1a6_BossRush_ResultPanel:onClose()
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_9_0._tweenId = nil
+		self._tweenId = nil
 	end
 
-	arg_9_0:_onTweenFinish()
+	self:_onTweenFinish()
 end
 
-function var_0_0.onDestroyView(arg_10_0)
+function V1a6_BossRush_ResultPanel:onDestroyView()
 	return
 end
 
-function var_0_0.onClickModalMask(arg_11_0)
-	arg_11_0:_btncloseOnClick()
+function V1a6_BossRush_ResultPanel:onClickModalMask()
+	self:_btncloseOnClick()
 end
 
-function var_0_0.setAssessIcon(arg_12_0)
-	local var_12_0 = BossRushModel.instance:isSpecialLayer(arg_12_0._curLayer)
-	local var_12_1, var_12_2, var_12_3 = BossRushConfig.instance:getAssessSpriteName(arg_12_0._curStage, arg_12_0.fightScore, var_12_0)
-	local var_12_4 = string.nilorempty(var_12_1)
+function V1a6_BossRush_ResultPanel:setAssessIcon()
+	local type = self._isSpecialLayer and BossRushEnum.AssessType.Layer4 or BossRushEnum.AssessType.Normal
+	local res, level, strLevel = BossRushConfig.instance:getAssessSpriteName(self._curStage, self.fightScore, type)
+	local _isEmpty = string.nilorempty(res)
 
-	gohelper.setActive(arg_12_0._goAssessNotEmpty, not var_12_4)
+	gohelper.setActive(self._goAssessNotEmpty, not _isEmpty)
 
-	if arg_12_0._resultAssessItem then
-		if not var_12_4 then
-			arg_12_0._resultAssessItem:setData(arg_12_0._curStage, arg_12_0.fightScore, var_12_2, arg_12_0, arg_12_0._isSpecialLayer)
-		elseif not arg_12_0._assessItem then
-			arg_12_0:createAssessIcon()
-			arg_12_0._assessItem:setData(arg_12_0._curStage, arg_12_0.fightScore, arg_12_0._isSpecialLayer)
+	if self._resultAssessItem then
+		self._resultAssessItem:setData(self._curStage, self.fightScore, level, self, type)
+	else
+		if not self._assessItem then
+			self:createAssessIcon()
+			self._assessItem:setData(self._curStage, self.fightScore, type)
 		end
 
-		arg_12_0._resultAssessItem:playAnim(var_12_4, arg_12_0._animFinishCallback, arg_12_0)
-		arg_12_0._resultAssessItem:refreshLayerGo(arg_12_0._isSpecialLayer)
+		self._resultAssessItem:playAnim(_isEmpty, self._animFinishCallback, self)
+		self._resultAssessItem:refreshLayerGo(self._isSpecialLayer)
 	end
 
-	local var_12_5 = var_12_4 and BossRushEnum.V1a6_ResultAnimName.OpenEmpty or BossRushEnum.V1a6_ResultAnimName.Open
+	local anim = _isEmpty and BossRushEnum.V1a6_ResultAnimName.OpenEmpty or BossRushEnum.V1a6_ResultAnimName.Open
 
-	arg_12_0._animatorPlayer:Play(var_12_5, arg_12_0._openAnimCallback, arg_12_0)
+	self._animatorPlayer:Play(anim, self._openAnimCallback, self)
 
-	var_12_2 = var_12_2 or -1
+	level = level or -1
 
-	local var_12_6 = var_12_2 > BossRushEnum.ScoreLevel.S_AA
-	local var_12_7 = var_12_6 and SLFramework.UGUI.GuiHelper.ParseColor("#D6816C") or Color.white
-	local var_12_8 = var_12_6 and SLFramework.UGUI.GuiHelper.ParseColor("#E78263") or Color.white
+	local is4S = level > BossRushEnum.ScoreLevel.S_AA
+	local scoreColor = is4S and SLFramework.UGUI.GuiHelper.ParseColor("#D6816C") or Color.white
+	local assessColor = is4S and SLFramework.UGUI.GuiHelper.ParseColor("#E78263") or Color.white
 
-	arg_12_0._imgScorebg.color = var_12_7
-	arg_12_0._imgAssessbg.color = var_12_8
+	self._imgScorebg.color = scoreColor
+	self._imgAssessbg.color = assessColor
 
-	gohelper.setActive(arg_12_0._go3s, not arg_12_0._isSpecialLayer and not var_12_6)
-	gohelper.setActive(arg_12_0._go4s, not arg_12_0._isSpecialLayer and var_12_6)
+	gohelper.setActive(self._go3s, not self._isSpecialLayer and not is4S)
+	gohelper.setActive(self._go4s, not self._isSpecialLayer and is4S)
 
-	local var_12_9 = gohelper.findChild(arg_12_0.viewGO, "#go_score/Layer4")
+	local layer4_1 = gohelper.findChild(self.viewGO, "#go_score/Layer4")
 
-	gohelper.setActive(var_12_9, arg_12_0._isSpecialLayer)
+	gohelper.setActive(layer4_1, self._isSpecialLayer)
 end
 
-function var_0_0.createResultAssess(arg_13_0)
-	local var_13_0 = BossRushEnum.ResPath.v1a6_bossrush_result_assess
-	local var_13_1 = arg_13_0:getResInst(var_13_0, arg_13_0._goassess, "ResultAssess")
+function V1a6_BossRush_ResultPanel:createResultAssess()
+	local path = BossRushEnum.ResPath.v1a6_bossrush_result_assess
+	local childGO = self:getResInst(path, self._goassess, "ResultAssess")
 
-	arg_13_0._resultAssessItem = MonoHelper.addNoUpdateLuaComOnceToGo(var_13_1, V1a6_BossRush_ResultAssess)
+	self._resultAssessItem = MonoHelper.addNoUpdateLuaComOnceToGo(childGO, V1a6_BossRush_ResultAssess)
 end
 
-function var_0_0.createAssessIcon(arg_14_0)
-	local var_14_0 = BossRushEnum.ResPath.v1a4_bossrush_result_assess
-	local var_14_1 = arg_14_0:getResInst(var_14_0, arg_14_0._goAssessIcon.gameObject, "AssessIcon")
+function V1a6_BossRush_ResultPanel:createAssessIcon()
+	local path = BossRushEnum.ResPath.v1a4_bossrush_result_assess
+	local childGO = self:getResInst(path, self._goAssessIcon.gameObject, "AssessIcon")
 
-	arg_14_0._assessItem = MonoHelper.addNoUpdateLuaComOnceToGo(var_14_1, V1a6_BossRush_AssessIcon)
+	self._assessItem = MonoHelper.addNoUpdateLuaComOnceToGo(childGO, V1a6_BossRush_AssessIcon)
 end
 
-function var_0_0._animFinishCallback(arg_15_0)
+function V1a6_BossRush_ResultPanel:_animFinishCallback()
 	return
 end
 
-function var_0_0._openAnimCallback(arg_16_0)
-	if arg_16_0._evaluateList then
-		for iter_16_0, iter_16_1 in pairs(arg_16_0._evaluateList) do
-			iter_16_1.anim:Play(BossRushEnum.V1a6_ResultAnimName.Open, 0, 0)
+function V1a6_BossRush_ResultPanel:_openAnimCallback()
+	if self._evaluateList then
+		for _, v in pairs(self._evaluateList) do
+			v.anim:Play(BossRushEnum.V1a6_ResultAnimName.Open, 0, 0)
 		end
 	end
 end
 
-function var_0_0._scoreTweenCallback(arg_17_0)
-	arg_17_0._tweenId = ZProj.TweenHelper.DOTweenFloat(0, arg_17_0.fightScore, 0.5, arg_17_0._onTweenUpdate, arg_17_0._onTweenFinish, arg_17_0)
+function V1a6_BossRush_ResultPanel:_scoreTweenCallback()
+	self._tweenId = ZProj.TweenHelper.DOTweenFloat(0, self.fightScore, 0.5, self._onTweenUpdate, self._onTweenFinish, self)
 end
 
-function var_0_0._onTweenUpdate(arg_18_0, arg_18_1)
-	if arg_18_0._txtScore then
-		arg_18_0._txtScore.text = Mathf.Ceil(arg_18_1)
+function V1a6_BossRush_ResultPanel:_onTweenUpdate(value)
+	if self._txtScore then
+		self._txtScore.text = Mathf.Ceil(value)
 	end
 end
 
-function var_0_0._onTweenFinish(arg_19_0)
-	arg_19_0._isCanSkip = true
-	arg_19_0._txtScore.text = arg_19_0.fightScore
+function V1a6_BossRush_ResultPanel:_onTweenFinish()
+	self._isCanSkip = true
+	self._txtScore.text = self.fightScore
 end
 
-function var_0_0.initEvaluate(arg_20_0)
-	gohelper.setActive(arg_20_0._goAffixItem, false)
+function V1a6_BossRush_ResultPanel:initEvaluate()
+	gohelper.setActive(self._goAffixItem, false)
 
-	local var_20_0 = gohelper.findChildImage(arg_20_0._goAffixItem, "image_AffixBG")
-	local var_20_1 = arg_20_0._isSpecialLayer and "v2a1_bossrush_affixbg" or "v1a6_bossrush_affixbg"
+	local image = gohelper.findChildImage(self._goAffixItem, "image_AffixBG")
+	local icon = self._isSpecialLayer and "v2a1_bossrush_affixbg" or "v1a6_bossrush_affixbg"
 
-	UISpriteSetMgr.instance:setV1a4BossRushSprite(var_20_0, var_20_1)
+	UISpriteSetMgr.instance:setV1a4BossRushSprite(image, icon)
 
-	arg_20_0._evaluateList = arg_20_0:getUserDataTb_()
+	self._evaluateList = self:getUserDataTb_()
 
-	arg_20_0:refreshEvaluate()
+	self:refreshEvaluate()
 end
 
-function var_0_0.refreshEvaluate(arg_21_0)
-	local var_21_0 = BossRushModel.instance:getEvaluateList()
+function V1a6_BossRush_ResultPanel:refreshEvaluate()
+	local ids = BossRushModel.instance:getEvaluateList()
+	local isHasEvaluate = ids and #ids > 0
 
-	if var_21_0 and #var_21_0 > 0 then
-		for iter_21_0, iter_21_1 in pairs(var_21_0) do
-			local var_21_1 = arg_21_0:getEvaluateItem(iter_21_0)
-			local var_21_2, var_21_3 = BossRushConfig.instance:getEvaluateInfo(iter_21_1)
+	if isHasEvaluate then
+		for i, id in pairs(ids) do
+			local item = self:getEvaluateItem(i)
+			local name, desc = BossRushConfig.instance:getEvaluateInfo(id)
 
-			var_21_1.txt.text = var_21_2
+			item.txt.text = name
 
-			gohelper.setActive(var_21_1.go, true)
+			gohelper.setActive(item.go, true)
 		end
 
-		if #arg_21_0._evaluateList > #var_21_0 then
-			for iter_21_2 = #var_21_0 + 1, #arg_21_0._evaluateList do
-				gohelper.setActive(arg_21_0._evaluateList[iter_21_2].go, false)
+		if #self._evaluateList > #ids then
+			for i = #ids + 1, #self._evaluateList do
+				gohelper.setActive(self._evaluateList[i].go, false)
 			end
 		end
 	end
 end
 
-function var_0_0.getEvaluateItem(arg_22_0, arg_22_1)
-	local var_22_0 = arg_22_0._evaluateList[arg_22_1]
+function V1a6_BossRush_ResultPanel:getEvaluateItem(index)
+	local item = self._evaluateList[index]
 
-	if not var_22_0 then
-		local var_22_1 = gohelper.cloneInPlace(arg_22_0._goAffixItem, "evaluate_" .. arg_22_1)
+	if not item then
+		local go = gohelper.cloneInPlace(self._goAffixItem, "evaluate_" .. index)
 
-		var_22_0 = {
-			go = var_22_1,
-			txt = gohelper.findChildText(var_22_1, "#txt_Affix"),
-			anim = var_22_1:GetComponent(typeof(UnityEngine.Animator))
+		item = {
+			go = go,
+			txt = gohelper.findChildText(go, "#txt_Affix"),
+			anim = go:GetComponent(typeof(UnityEngine.Animator))
 		}
-		arg_22_0._evaluateList[arg_22_1] = var_22_0
+		self._evaluateList[index] = item
 	end
 
-	return var_22_0
+	return item
 end
 
-function var_0_0.checkIsNewRecord(arg_23_0)
-	if arg_23_0._curStage then
-		local var_23_0 = BossRushModel.instance:checkIsNewHighestPointRecord(arg_23_0._curStage)
-		local var_23_1 = var_23_0 and "v1a4_bossrush_resultview_txt_newrecord" or "v1a4_bossrush_resultview_txt_score"
+function V1a6_BossRush_ResultPanel:checkIsNewRecord()
+	if self._curStage then
+		local isNew = BossRushModel.instance:checkIsNewHighestPointRecord(self._curStage)
+		local str = isNew and "v1a4_bossrush_resultview_txt_newrecord" or "v1a4_bossrush_resultview_txt_score"
 
-		arg_23_0._txtTitle.text = luaLang(var_23_1)
-		arg_23_0._txtTitleEn.text = luaLang(var_23_1 .. "_en")
+		self._txtTitle.text = luaLang(str)
+		self._txtTitleEn.text = luaLang(str .. "_en")
 
-		gohelper.setActive(arg_23_0._gonewrecord, var_23_0)
+		gohelper.setActive(self._gonewrecord, isNew)
 	end
 end
 
-return var_0_0
+return V1a6_BossRush_ResultPanel

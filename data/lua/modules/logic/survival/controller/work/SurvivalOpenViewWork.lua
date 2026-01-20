@@ -1,40 +1,42 @@
-﻿module("modules.logic.survival.controller.work.SurvivalOpenViewWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/SurvivalOpenViewWork.lua
 
-local var_0_0 = class("SurvivalOpenViewWork", BaseWork)
+module("modules.logic.survival.controller.work.SurvivalOpenViewWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.viewName = arg_1_1.viewName
-	arg_1_0.viewParam = arg_1_1.viewParam
-	arg_1_0.isImmediate = arg_1_1.isImmediate
+local SurvivalOpenViewWork = class("SurvivalOpenViewWork", BaseWork)
+
+function SurvivalOpenViewWork:ctor(param)
+	self.viewName = param.viewName
+	self.viewParam = param.viewParam
+	self.isImmediate = param.isImmediate
 end
 
-function var_0_0.onStart(arg_2_0)
-	local var_2_0, var_2_1 = pcall(arg_2_0.open, arg_2_0)
+function SurvivalOpenViewWork:onStart()
+	local ok, msg = pcall(self.open, self)
 
-	if not var_2_0 then
-		__G__TRACKBACK__(var_2_1)
-		arg_2_0:onDone(false)
+	if not ok then
+		__G__TRACKBACK__(msg)
+		self:onDone(false)
 
 		return
 	end
 
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_2_0.onOpenView, arg_2_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, self.onOpenView, self)
 end
 
-function var_0_0.open(arg_3_0)
-	ViewMgr.instance:openView(arg_3_0.viewName, arg_3_0.viewParam, arg_3_0.isImmediate)
+function SurvivalOpenViewWork:open()
+	ViewMgr.instance:openView(self.viewName, self.viewParam, self.isImmediate)
 end
 
-function var_0_0.onOpenView(arg_4_0)
-	arg_4_0:onDone(true)
+function SurvivalOpenViewWork:onOpenView()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_5_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, arg_5_0.onOpenView, arg_5_0)
+function SurvivalOpenViewWork:clearWork()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, self.onOpenView, self)
 end
 
-function var_0_0.onDestroy(arg_6_0)
+function SurvivalOpenViewWork:onDestroy()
 	return
 end
 
-return var_0_0
+return SurvivalOpenViewWork

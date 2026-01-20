@@ -1,43 +1,45 @@
-﻿module("modules.ugui.uieffect.UIEffectUnit", package.seeall)
+﻿-- chunkname: @modules/ugui/uieffect/UIEffectUnit.lua
 
-local var_0_0 = class("UIEffectUnit", LuaCompBase)
-local var_0_1 = SLFramework.EffectPhotographerPool.Instance
+module("modules.ugui.uieffect.UIEffectUnit", package.seeall)
 
-function var_0_0.Refresh(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4, arg_1_5, arg_1_6)
-	if arg_1_0._rawImage == nil then
-		local var_1_0 = gohelper.onceAddComponent(arg_1_1, gohelper.Type_RawImage)
+local UIEffectUnit = class("UIEffectUnit", LuaCompBase)
+local photographerPool = SLFramework.EffectPhotographerPool.Instance
 
-		var_1_0.raycastTarget = false
-		arg_1_0._rawImage = var_1_0
+function UIEffectUnit:Refresh(targetGo, effectPath, width, height, rawImageWidth, rawImageHeight)
+	if self._rawImage == nil then
+		local rawImage = gohelper.onceAddComponent(targetGo, gohelper.Type_RawImage)
+
+		rawImage.raycastTarget = false
+		self._rawImage = rawImage
 	end
 
-	local var_1_1 = arg_1_1.transform
+	local transform = targetGo.transform
 
-	recthelper.setSize(var_1_1, arg_1_5 or arg_1_3, arg_1_6 or arg_1_4)
+	recthelper.setSize(transform, rawImageWidth or width, rawImageHeight or height)
 
-	if arg_1_0._effectPath and arg_1_0._effectPath == arg_1_2 and arg_1_0._width == arg_1_3 and arg_1_0._height == arg_1_4 then
+	if self._effectPath and self._effectPath == effectPath and self._width == width and self._height == height then
 		return
 	end
 
-	arg_1_0:_releaseEffect()
+	self:_releaseEffect()
 
-	arg_1_0._effectPath = arg_1_2
-	arg_1_0._width = arg_1_3
-	arg_1_0._height = arg_1_4
+	self._effectPath = effectPath
+	self._width = width
+	self._height = height
 
-	UIEffectManager.instance:_getEffect(arg_1_2, arg_1_3, arg_1_4, arg_1_0._rawImage)
+	UIEffectManager.instance:_getEffect(effectPath, width, height, self._rawImage)
 end
 
-function var_0_0.onDestroy(arg_2_0)
-	arg_2_0:_releaseEffect()
+function UIEffectUnit:onDestroy()
+	self:_releaseEffect()
 end
 
-function var_0_0._releaseEffect(arg_3_0)
-	if arg_3_0._effectPath then
-		UIEffectManager.instance:_putEffect(arg_3_0._effectPath, arg_3_0._width, arg_3_0._height)
+function UIEffectUnit:_releaseEffect()
+	if self._effectPath then
+		UIEffectManager.instance:_putEffect(self._effectPath, self._width, self._height)
 
-		arg_3_0._effectPath = nil
+		self._effectPath = nil
 	end
 end
 
-return var_0_0
+return UIEffectUnit

@@ -1,75 +1,77 @@
-﻿module("modules.logic.versionactivity1_8.weila.view.ActWeilaTaskView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_8/weila/view/ActWeilaTaskView.lua
 
-local var_0_0 = class("ActWeilaTaskView", BaseView)
+module("modules.logic.versionactivity1_8.weila.view.ActWeilaTaskView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._simagelangtxt = gohelper.findChildSingleImage(arg_1_0.viewGO, "Left/#simage_langtxt")
-	arg_1_0._goLimitTime = gohelper.findChild(arg_1_0.viewGO, "Left/LimitTime/image_LimitTimeBG")
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_LimitTime")
-	arg_1_0._scrollTaskList = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_TaskList")
-	arg_1_0._goBackBtns = gohelper.findChild(arg_1_0.viewGO, "#go_lefttop")
+local ActWeilaTaskView = class("ActWeilaTaskView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ActWeilaTaskView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._simagelangtxt = gohelper.findChildSingleImage(self.viewGO, "Left/#simage_langtxt")
+	self._goLimitTime = gohelper.findChild(self.viewGO, "Left/LimitTime/image_LimitTimeBG")
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_LimitTime")
+	self._scrollTaskList = gohelper.findChildScrollRect(self.viewGO, "#scroll_TaskList")
+	self._goBackBtns = gohelper.findChild(self.viewGO, "#go_lefttop")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function ActWeilaTaskView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function ActWeilaTaskView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function ActWeilaTaskView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function ActWeilaTaskView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_6_0._oneClaimReward, arg_6_0)
-	arg_6_0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_6_0._onFinishTask, arg_6_0)
+function ActWeilaTaskView:onOpen()
+	self:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, self._oneClaimReward, self)
+	self:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, self._onFinishTask, self)
 	ActWeilaTaskListModel.instance:init()
 
-	local var_6_0 = ActivityConfig.instance:getActivityCo(VersionActivity1_8Enum.ActivityId.Weila)
-	local var_6_1 = var_6_0 and var_6_0.isRetroAcitivity == 2
+	local actId = ActivityConfig.instance:getActivityCo(VersionActivity1_8Enum.ActivityId.Weila)
+	local isRetroAcitivity = actId and actId.isRetroAcitivity == 2
 
-	gohelper.setActive(arg_6_0._goLimitTime.gameObject, not var_6_1)
+	gohelper.setActive(self._goLimitTime.gameObject, not isRetroAcitivity)
 
-	if not var_6_1 then
-		TaskDispatcher.runRepeat(arg_6_0._showLeftTime, arg_6_0, TimeUtil.OneMinuteSecond)
-		arg_6_0:_showLeftTime()
+	if not isRetroAcitivity then
+		TaskDispatcher.runRepeat(self._showLeftTime, self, TimeUtil.OneMinuteSecond)
+		self:_showLeftTime()
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_mission_open)
 end
 
-function var_0_0._oneClaimReward(arg_7_0)
+function ActWeilaTaskView:_oneClaimReward()
 	ActWeilaTaskListModel.instance:refreshData()
 end
 
-function var_0_0._onFinishTask(arg_8_0, arg_8_1)
-	if ActWeilaTaskListModel.instance:getById(arg_8_1) then
+function ActWeilaTaskView:_onFinishTask(taskId)
+	if ActWeilaTaskListModel.instance:getById(taskId) then
 		ActWeilaTaskListModel.instance:refreshData()
 	end
 end
 
-function var_0_0._showLeftTime(arg_9_0)
-	arg_9_0._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(VersionActivity1_8Enum.ActivityId.Weila)
+function ActWeilaTaskView:_showLeftTime()
+	self._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(VersionActivity1_8Enum.ActivityId.Weila)
 end
 
-function var_0_0.onClose(arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._showLeftTime, arg_10_0)
+function ActWeilaTaskView:onClose()
+	TaskDispatcher.cancelTask(self._showLeftTime, self)
 	ActWeilaTaskListModel.instance:clear()
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function ActWeilaTaskView:onDestroyView()
 	return
 end
 
-return var_0_0
+return ActWeilaTaskView

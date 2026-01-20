@@ -1,39 +1,41 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.view.eliminateChess.EliminateEffectViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/view/eliminateChess/EliminateEffectViewContainer.lua
 
-local var_0_0 = class("EliminateEffectViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_2.eliminate.view.eliminateChess.EliminateEffectViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local EliminateEffectViewContainer = class("EliminateEffectViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, EliminateEffectView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_lefttop"))
+function EliminateEffectViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, EliminateEffectView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_lefttop"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function EliminateEffectViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
-		arg_2_0.navigateView:setOverrideClose(arg_2_0._overrideCloseFunc, arg_2_0)
+		self.navigateView:setOverrideClose(self._overrideCloseFunc, self)
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-function var_0_0._overrideCloseFunc(arg_3_0)
-	GameFacade.showMessageBox(MessageBoxIdDefine.EliminateLevelClose, MsgBoxEnum.BoxType.Yes_No, arg_3_0._closeLevel, nil, nil, arg_3_0, nil, nil)
+function EliminateEffectViewContainer:_overrideCloseFunc()
+	GameFacade.showMessageBox(MessageBoxIdDefine.EliminateLevelClose, MsgBoxEnum.BoxType.Yes_No, self._closeLevel, nil, nil, self, nil, nil)
 end
 
-function var_0_0._closeLevel(arg_4_0)
+function EliminateEffectViewContainer:_closeLevel()
 	EliminateLevelModel.instance:sendStatData(EliminateLevelEnum.resultStatUse.draw)
 	EliminateLevelController.instance:closeLevel()
 end
 
-return var_0_0
+return EliminateEffectViewContainer

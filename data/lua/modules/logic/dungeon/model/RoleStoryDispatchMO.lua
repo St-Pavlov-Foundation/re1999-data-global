@@ -1,231 +1,240 @@
-﻿module("modules.logic.dungeon.model.RoleStoryDispatchMO", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/model/RoleStoryDispatchMO.lua
 
-local var_0_0 = pureTable("RoleStoryDispatchMO")
+module("modules.logic.dungeon.model.RoleStoryDispatchMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.id = arg_1_1
-	arg_1_0.storyId = arg_1_2
-	arg_1_0.config = RoleStoryConfig.instance:getDispatchConfig(arg_1_1)
-	arg_1_0.heroIds = {}
-	arg_1_0.gainReward = false
-	arg_1_0.endTime = 0
+local RoleStoryDispatchMO = pureTable("RoleStoryDispatchMO")
+
+function RoleStoryDispatchMO:init(dispatchId, storyId)
+	self.id = dispatchId
+	self.storyId = storyId
+	self.config = RoleStoryConfig.instance:getDispatchConfig(dispatchId)
+	self.heroIds = {}
+	self.gainReward = false
+	self.endTime = 0
 end
 
-function var_0_0.updateInfo(arg_2_0, arg_2_1)
-	arg_2_0.endTime = tonumber(arg_2_1.endTime)
-	arg_2_0.gainReward = arg_2_1.gainReward
-	arg_2_0.heroIds = {}
+function RoleStoryDispatchMO:updateInfo(info)
+	self.endTime = tonumber(info.endTime)
+	self.gainReward = info.gainReward
+	self.heroIds = {}
 
-	for iter_2_0 = 1, #arg_2_1.heroIds do
-		arg_2_0.heroIds[iter_2_0] = arg_2_1.heroIds[iter_2_0]
+	for i = 1, #info.heroIds do
+		self.heroIds[i] = info.heroIds[i]
 	end
 
-	arg_2_0:clearFinishAnimFlag()
-	arg_2_0:clearRefreshAnimFlag()
+	self:clearFinishAnimFlag()
+	self:clearRefreshAnimFlag()
 end
 
-function var_0_0.updateTime(arg_3_0, arg_3_1)
-	arg_3_0.endTime = tonumber(arg_3_1.endTime)
+function RoleStoryDispatchMO:updateTime(info)
+	self.endTime = tonumber(info.endTime)
 end
 
-function var_0_0.completeDispatch(arg_4_0)
-	arg_4_0.gainReward = true
+function RoleStoryDispatchMO:completeDispatch()
+	self.gainReward = true
 
-	arg_4_0:clearRefreshAnimFlag()
+	self:clearRefreshAnimFlag()
 end
 
-function var_0_0.resetDispatch(arg_5_0)
-	arg_5_0.endTime = 0
-	arg_5_0.heroIds = {}
+function RoleStoryDispatchMO:resetDispatch()
+	self.endTime = 0
+	self.heroIds = {}
 end
 
-function var_0_0.getDispatchState(arg_6_0)
-	if arg_6_0.gainReward then
+function RoleStoryDispatchMO:getDispatchState()
+	if self.gainReward then
 		return RoleStoryEnum.DispatchState.Finish
 	end
 
-	if arg_6_0.endTime > 0 then
-		if ServerTime.now() >= arg_6_0.endTime * 0.001 then
+	if self.endTime > 0 then
+		if ServerTime.now() >= self.endTime * 0.001 then
 			return RoleStoryEnum.DispatchState.Canget
 		else
 			return RoleStoryEnum.DispatchState.Dispatching
 		end
 	end
 
-	local var_6_0 = arg_6_0.config.unlockEpisodeId
+	local unlockEpisodeId = self.config.unlockEpisodeId
 
-	if var_6_0 == 0 or DungeonModel.instance:hasPassLevelAndStory(var_6_0) then
+	if unlockEpisodeId == 0 or DungeonModel.instance:hasPassLevelAndStory(unlockEpisodeId) then
 		return RoleStoryEnum.DispatchState.Normal
 	end
 
 	return RoleStoryEnum.DispatchState.Locked
 end
 
-function var_0_0.getEffectHeros(arg_7_0)
-	local var_7_0 = {}
-	local var_7_1 = arg_7_0.config.effectCondition
+function RoleStoryDispatchMO:getEffectHeros()
+	local dict = {}
+	local effectCondition = self.config.effectCondition
 
-	if string.nilorempty(var_7_1) then
-		return var_7_0
+	if string.nilorempty(effectCondition) then
+		return dict
 	end
 
-	local var_7_2 = GameUtil.splitString2(var_7_1, true)
-	local var_7_3 = var_7_2[1][1]
-	local var_7_4 = var_7_2[3]
+	local arr = GameUtil.splitString2(effectCondition, true)
+	local type = arr[1][1]
+	local heroConditions = arr[3]
 
-	if var_7_3 == RoleStoryEnum.EffectConditionType.Heros then
-		for iter_7_0, iter_7_1 in ipairs(var_7_4) do
-			var_7_0[iter_7_1] = true
+	if type == RoleStoryEnum.EffectConditionType.Heros then
+		for _, condition in ipairs(heroConditions) do
+			dict[condition] = true
 		end
-	elseif var_7_3 == RoleStoryEnum.EffectConditionType.Career then
-		local var_7_5 = HeroConfig.instance:getHeroesList()
-		local var_7_6 = {}
+	elseif type == RoleStoryEnum.EffectConditionType.Career then
+		local heros = HeroConfig.instance:getHeroesList()
+		local careerDict = {}
 
-		for iter_7_2, iter_7_3 in ipairs(var_7_4) do
-			var_7_6[iter_7_3] = 1
+		for _, condition in ipairs(heroConditions) do
+			careerDict[condition] = 1
 		end
 
-		for iter_7_4, iter_7_5 in ipairs(var_7_5) do
-			if var_7_6[iter_7_5.career] then
-				var_7_0[iter_7_5.id] = true
+		for _, heroCfg in ipairs(heros) do
+			if careerDict[heroCfg.career] then
+				dict[heroCfg.id] = true
 			end
 		end
 	end
 
-	return var_7_0
+	return dict
 end
 
-function var_0_0.isMeetEffectCondition(arg_8_0)
-	return arg_8_0:checkHerosMeetEffectCondition(arg_8_0.heroIds)
+function RoleStoryDispatchMO:isMeetEffectCondition()
+	return self:checkHerosMeetEffectCondition(self.heroIds)
 end
 
-function var_0_0.checkHerosMeetEffectCondition(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0.config.effectCondition
+function RoleStoryDispatchMO:checkHerosMeetEffectCondition(heros)
+	local effectCondition = self.config.effectCondition
 
-	if string.nilorempty(var_9_0) then
+	if string.nilorempty(effectCondition) then
 		return false
 	end
 
-	local var_9_1 = GameUtil.splitString2(var_9_0, true)
-	local var_9_2 = var_9_1[1][1]
-	local var_9_3 = var_9_1[2][1] or 0
-	local var_9_4 = var_9_1[3]
+	local arr = GameUtil.splitString2(effectCondition, true)
+	local type = arr[1][1]
+	local count = arr[2][1] or 0
+	local heroConditions = arr[3]
 
-	if var_9_2 == RoleStoryEnum.EffectConditionType.Heros then
-		local var_9_5 = 0
+	if type == RoleStoryEnum.EffectConditionType.Heros then
+		local meetCount = 0
 
-		for iter_9_0, iter_9_1 in ipairs(arg_9_1) do
-			for iter_9_2, iter_9_3 in ipairs(var_9_4) do
-				if iter_9_1 == iter_9_3 then
-					var_9_5 = var_9_5 + 1
+		for _, hero in ipairs(heros) do
+			for _, condition in ipairs(heroConditions) do
+				if hero == condition then
+					meetCount = meetCount + 1
 
 					break
 				end
 			end
 		end
 
-		return var_9_3 <= var_9_5
-	elseif var_9_2 == RoleStoryEnum.EffectConditionType.Career then
-		local var_9_6 = 0
-		local var_9_7 = {}
+		return count <= meetCount
+	elseif type == RoleStoryEnum.EffectConditionType.Career then
+		local meetCount = 0
+		local careerDict = {}
 
-		for iter_9_4, iter_9_5 in ipairs(var_9_4) do
-			var_9_7[iter_9_5] = 1
+		for _, condition in ipairs(heroConditions) do
+			careerDict[condition] = 1
 		end
 
-		for iter_9_6, iter_9_7 in ipairs(arg_9_1) do
-			if var_9_7[HeroConfig.instance:getHeroCO(iter_9_7).career] then
-				var_9_6 = var_9_6 + 1
+		for _, hero in ipairs(heros) do
+			local heroCfg = HeroConfig.instance:getHeroCO(hero)
+
+			if careerDict[heroCfg.career] then
+				meetCount = meetCount + 1
 			end
 		end
 
-		return var_9_3 <= var_9_6
+		return count <= meetCount
 	end
 
 	return false
 end
 
-function var_0_0.getEffectAddRewardCount(arg_10_0)
-	local var_10_0 = arg_10_0.config.effect
+function RoleStoryDispatchMO:getEffectAddRewardCount()
+	local effect = self.config.effect
+	local arr = string.splitToNumber(effect, "_")
+	local addPer = arr[2] or 1
 
-	return ((string.splitToNumber(var_10_0, "_")[2] or 1) - 1) * arg_10_0.config.scoreReward
+	return (addPer - 1) * self.config.scoreReward
 end
 
-function var_0_0.getEffectDelTimeCount(arg_11_0)
-	local var_11_0 = arg_11_0.config.effect
+function RoleStoryDispatchMO:getEffectDelTimeCount()
+	local effect = self.config.effect
+	local arr = string.splitToNumber(effect, "_")
 
-	return string.splitToNumber(var_11_0, "_")[1] or 0
+	return arr[1] or 0
 end
 
-function var_0_0.isNewFinish(arg_12_0)
-	local var_12_0 = arg_12_0:getDispatchState()
-	local var_12_1 = arg_12_0.lastState
+function RoleStoryDispatchMO:isNewFinish()
+	local state = self:getDispatchState()
+	local lastState = self.lastState
 
-	arg_12_0.lastState = var_12_0
+	self.lastState = state
 
-	if var_12_0 == RoleStoryEnum.DispatchState.Canget and var_12_1 == RoleStoryEnum.DispatchState.Dispatching then
+	if state == RoleStoryEnum.DispatchState.Canget and lastState == RoleStoryEnum.DispatchState.Dispatching then
 		return true
 	end
 end
 
-function var_0_0.checkFinishAnimIsPlayed(arg_13_0)
-	local var_13_0 = string.format("%s_%s_%s_%s", PlayerModel.instance:getMyUserId(), PlayerPrefsKey.RoleStoryDispatchFinishAnim, arg_13_0.storyId, arg_13_0.id)
+function RoleStoryDispatchMO:checkFinishAnimIsPlayed()
+	local key = string.format("%s_%s_%s_%s", PlayerModel.instance:getMyUserId(), PlayerPrefsKey.RoleStoryDispatchFinishAnim, self.storyId, self.id)
+	local flag = PlayerPrefsHelper.getNumber(key, 0)
 
-	return PlayerPrefsHelper.getNumber(var_13_0, 0) == 1
+	return flag == 1
 end
 
-function var_0_0.clearFinishAnimFlag(arg_14_0)
-	if arg_14_0:getDispatchState() == RoleStoryEnum.DispatchState.Finish then
+function RoleStoryDispatchMO:clearFinishAnimFlag()
+	if self:getDispatchState() == RoleStoryEnum.DispatchState.Finish then
 		return
 	end
 
-	local var_14_0 = string.format("%s_%s_%s_%s", PlayerModel.instance:getMyUserId(), PlayerPrefsKey.RoleStoryDispatchFinishAnim, arg_14_0.storyId, arg_14_0.id)
-	local var_14_1 = 0
+	local key = string.format("%s_%s_%s_%s", PlayerModel.instance:getMyUserId(), PlayerPrefsKey.RoleStoryDispatchFinishAnim, self.storyId, self.id)
+	local flag = 0
 
-	PlayerPrefsHelper.setNumber(var_14_0, var_14_1)
+	PlayerPrefsHelper.setNumber(key, flag)
 end
 
-function var_0_0.setFinishAnimFlag(arg_15_0)
-	if arg_15_0:getDispatchState() ~= RoleStoryEnum.DispatchState.Finish then
+function RoleStoryDispatchMO:setFinishAnimFlag()
+	if self:getDispatchState() ~= RoleStoryEnum.DispatchState.Finish then
 		return
 	end
 
-	local var_15_0 = string.format("%s_%s_%s_%s", PlayerModel.instance:getMyUserId(), PlayerPrefsKey.RoleStoryDispatchFinishAnim, arg_15_0.storyId, arg_15_0.id)
-	local var_15_1 = 1
+	local key = string.format("%s_%s_%s_%s", PlayerModel.instance:getMyUserId(), PlayerPrefsKey.RoleStoryDispatchFinishAnim, self.storyId, self.id)
+	local flag = 1
 
-	PlayerPrefsHelper.setNumber(var_15_0, var_15_1)
+	PlayerPrefsHelper.setNumber(key, flag)
 end
 
-function var_0_0.canPlayRefreshAnim(arg_16_0)
-	if arg_16_0:getDispatchState() ~= RoleStoryEnum.DispatchState.Normal then
+function RoleStoryDispatchMO:canPlayRefreshAnim()
+	if self:getDispatchState() ~= RoleStoryEnum.DispatchState.Normal then
 		return
 	end
 
-	local var_16_0 = string.format("%s_%s_%s_%s", PlayerModel.instance:getMyUserId(), PlayerPrefsKey.RoleStoryDispatchRefreshAnim, arg_16_0.storyId, arg_16_0.id)
+	local key = string.format("%s_%s_%s_%s", PlayerModel.instance:getMyUserId(), PlayerPrefsKey.RoleStoryDispatchRefreshAnim, self.storyId, self.id)
+	local flag = PlayerPrefsHelper.getNumber(key, 0)
 
-	return PlayerPrefsHelper.getNumber(var_16_0, 0) == 0
+	return flag == 0
 end
 
-function var_0_0.clearRefreshAnimFlag(arg_17_0)
-	local var_17_0 = arg_17_0:getDispatchState()
+function RoleStoryDispatchMO:clearRefreshAnimFlag()
+	local state = self:getDispatchState()
 
-	if var_17_0 == RoleStoryEnum.DispatchState.Finish or var_17_0 == RoleStoryEnum.DispatchState.Locked then
-		local var_17_1 = string.format("%s_%s_%s_%s", PlayerModel.instance:getMyUserId(), PlayerPrefsKey.RoleStoryDispatchRefreshAnim, arg_17_0.storyId, arg_17_0.id)
-		local var_17_2 = 0
+	if state == RoleStoryEnum.DispatchState.Finish or state == RoleStoryEnum.DispatchState.Locked then
+		local key = string.format("%s_%s_%s_%s", PlayerModel.instance:getMyUserId(), PlayerPrefsKey.RoleStoryDispatchRefreshAnim, self.storyId, self.id)
+		local flag = 0
 
-		PlayerPrefsHelper.setNumber(var_17_1, var_17_2)
+		PlayerPrefsHelper.setNumber(key, flag)
 	end
 end
 
-function var_0_0.setRefreshAnimFlag(arg_18_0)
-	if arg_18_0:getDispatchState() ~= RoleStoryEnum.DispatchState.Normal then
+function RoleStoryDispatchMO:setRefreshAnimFlag()
+	if self:getDispatchState() ~= RoleStoryEnum.DispatchState.Normal then
 		return
 	end
 
-	local var_18_0 = string.format("%s_%s_%s_%s", PlayerModel.instance:getMyUserId(), PlayerPrefsKey.RoleStoryDispatchRefreshAnim, arg_18_0.storyId, arg_18_0.id)
-	local var_18_1 = 1
+	local key = string.format("%s_%s_%s_%s", PlayerModel.instance:getMyUserId(), PlayerPrefsKey.RoleStoryDispatchRefreshAnim, self.storyId, self.id)
+	local flag = 1
 
-	PlayerPrefsHelper.setNumber(var_18_0, var_18_1)
+	PlayerPrefsHelper.setNumber(key, flag)
 end
 
-return var_0_0
+return RoleStoryDispatchMO

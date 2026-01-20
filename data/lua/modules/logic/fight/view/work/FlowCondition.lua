@@ -1,96 +1,98 @@
-﻿module("modules.logic.fight.view.work.FlowCondition", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/work/FlowCondition.lua
 
-local var_0_0 = class("FlowCondition", BaseFlow)
+module("modules.logic.fight.view.work.FlowCondition", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._conditionWork = nil
-	arg_1_0._trueWork = nil
-	arg_1_0._falseWork = nil
+local FlowCondition = class("FlowCondition", BaseFlow)
+
+function FlowCondition:ctor()
+	self._conditionWork = nil
+	self._trueWork = nil
+	self._falseWork = nil
 end
 
-function var_0_0.addWork(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	var_0_0.super.addWork(arg_2_0, arg_2_1)
-	var_0_0.super.addWork(arg_2_0, arg_2_2)
-	var_0_0.super.addWork(arg_2_0, arg_2_3)
+function FlowCondition:addWork(conditionWork, trueWork, falseWork)
+	FlowCondition.super.addWork(self, conditionWork)
+	FlowCondition.super.addWork(self, trueWork)
+	FlowCondition.super.addWork(self, falseWork)
 
-	arg_2_0._conditionWork = arg_2_1
-	arg_2_0._trueWork = arg_2_2
-	arg_2_0._falseWork = arg_2_3
+	self._conditionWork = conditionWork
+	self._trueWork = trueWork
+	self._falseWork = falseWork
 end
 
-function var_0_0.onWorkDone(arg_3_0, arg_3_1)
-	if arg_3_1 == arg_3_0._conditionWork then
-		if arg_3_1.isSuccess then
-			arg_3_0._trueWork:onStartInternal(arg_3_0.context)
+function FlowCondition:onWorkDone(work)
+	if work == self._conditionWork then
+		if work.isSuccess then
+			self._trueWork:onStartInternal(self.context)
 		else
-			arg_3_0._falseWork:onStartInternal(arg_3_0.context)
+			self._falseWork:onStartInternal(self.context)
 		end
 	else
-		arg_3_0.status = arg_3_1.status
+		self.status = work.status
 
-		arg_3_0:onDone(arg_3_1.isSuccess)
+		self:onDone(work.isSuccess)
 	end
 
-	arg_3_1:onResetInternal()
+	work:onResetInternal()
 end
 
-function var_0_0.onStartInternal(arg_4_0, arg_4_1)
-	var_0_0.super.onStartInternal(arg_4_0, arg_4_1)
-	arg_4_0._conditionWork:onStartInternal(arg_4_0.context)
+function FlowCondition:onStartInternal(context)
+	FlowCondition.super.onStartInternal(self, context)
+	self._conditionWork:onStartInternal(self.context)
 end
 
-function var_0_0.onStopInternal(arg_5_0)
-	var_0_0.super.onStopInternal(arg_5_0)
+function FlowCondition:onStopInternal()
+	FlowCondition.super.onStopInternal(self)
 
-	if arg_5_0._trueWork.status == WorkStatus.Running then
-		arg_5_0._trueWork:onStopInternal()
-	elseif arg_5_0._falseWork.status == WorkStatus.Running then
-		arg_5_0._falseWork:onStopInternal()
-	end
-end
-
-function var_0_0.onResumeInternal(arg_6_0)
-	var_0_0.super.onResumeInternal(arg_6_0)
-
-	if arg_6_0._trueWork.status == WorkStatus.Stopped then
-		arg_6_0._trueWork:onResumeInternal()
-	elseif arg_6_0._falseWork.status == WorkStatus.Stopped then
-		arg_6_0._falseWork:onResumeInternal()
+	if self._trueWork.status == WorkStatus.Running then
+		self._trueWork:onStopInternal()
+	elseif self._falseWork.status == WorkStatus.Running then
+		self._falseWork:onStopInternal()
 	end
 end
 
-function var_0_0.onResetInternal(arg_7_0)
-	var_0_0.super.onResetInternal(arg_7_0)
+function FlowCondition:onResumeInternal()
+	FlowCondition.super.onResumeInternal(self)
 
-	if arg_7_0._trueWork.status == WorkStatus.Running or arg_7_0._trueWork.status == WorkStatus.Stopped then
-		arg_7_0._trueWork:onResumeInternal()
-	elseif arg_7_0._falseWork.status == WorkStatus.Running or arg_7_0._falseWork.status == WorkStatus.Stopped then
-		arg_7_0._falseWork:onResumeInternal()
+	if self._trueWork.status == WorkStatus.Stopped then
+		self._trueWork:onResumeInternal()
+	elseif self._falseWork.status == WorkStatus.Stopped then
+		self._falseWork:onResumeInternal()
 	end
 end
 
-function var_0_0.onDestroyInternal(arg_8_0)
-	var_0_0.super.onDestroyInternal(arg_8_0)
+function FlowCondition:onResetInternal()
+	FlowCondition.super.onResetInternal(self)
 
-	if arg_8_0._trueWork.status == WorkStatus.Running then
-		arg_8_0._trueWork:onStopInternal()
-	elseif arg_8_0._falseWork.status == WorkStatus.Running then
-		arg_8_0._falseWork:onStopInternal()
+	if self._trueWork.status == WorkStatus.Running or self._trueWork.status == WorkStatus.Stopped then
+		self._trueWork:onResumeInternal()
+	elseif self._falseWork.status == WorkStatus.Running or self._falseWork.status == WorkStatus.Stopped then
+		self._falseWork:onResumeInternal()
 	end
-
-	if arg_8_0._trueWork.status == WorkStatus.Stopped then
-		arg_8_0._trueWork:onResetInternal()
-	elseif arg_8_0._falseWork.status == WorkStatus.Stopped then
-		arg_8_0._falseWork:onResetInternal()
-	end
-
-	arg_8_0._conditionWork:onDestroyInternal()
-	arg_8_0._trueWork:onDestroyInternal()
-	arg_8_0._falseWork:onDestroyInternal()
-
-	arg_8_0._conditionWork = nil
-	arg_8_0._trueWork = nil
-	arg_8_0._falseWork = nil
 end
 
-return var_0_0
+function FlowCondition:onDestroyInternal()
+	FlowCondition.super.onDestroyInternal(self)
+
+	if self._trueWork.status == WorkStatus.Running then
+		self._trueWork:onStopInternal()
+	elseif self._falseWork.status == WorkStatus.Running then
+		self._falseWork:onStopInternal()
+	end
+
+	if self._trueWork.status == WorkStatus.Stopped then
+		self._trueWork:onResetInternal()
+	elseif self._falseWork.status == WorkStatus.Stopped then
+		self._falseWork:onResetInternal()
+	end
+
+	self._conditionWork:onDestroyInternal()
+	self._trueWork:onDestroyInternal()
+	self._falseWork:onDestroyInternal()
+
+	self._conditionWork = nil
+	self._trueWork = nil
+	self._falseWork = nil
+end
+
+return FlowCondition

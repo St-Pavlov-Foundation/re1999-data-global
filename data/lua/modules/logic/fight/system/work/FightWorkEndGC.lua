@@ -1,11 +1,13 @@
-﻿module("modules.logic.fight.system.work.FightWorkEndGC", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkEndGC.lua
 
-local var_0_0 = class("FightWorkEndGC", BaseWork)
+module("modules.logic.fight.system.work.FightWorkEndGC", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
+local FightWorkEndGC = class("FightWorkEndGC", BaseWork)
+
+function FightWorkEndGC:onStart()
 	FightPreloadController.instance:releaseTimelineRefAsset()
 	FightHelper.clearNoUseEffect()
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkEndGC

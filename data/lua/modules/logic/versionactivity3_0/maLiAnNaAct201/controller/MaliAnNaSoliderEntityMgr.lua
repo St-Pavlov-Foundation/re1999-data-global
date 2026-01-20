@@ -1,170 +1,178 @@
-﻿module("modules.logic.versionactivity3_0.maLiAnNaAct201.controller.MaliAnNaSoliderEntityMgr", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/maLiAnNaAct201/controller/MaliAnNaSoliderEntityMgr.lua
 
-local var_0_0 = class("MaliAnNaSoliderEntityMgr")
+module("modules.logic.versionactivity3_0.maLiAnNaAct201.controller.MaliAnNaSoliderEntityMgr", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._soliderItem = arg_1_1
-	arg_1_0._heroItem = arg_1_2
-	arg_1_0._soliderEntityDict = {}
+local MaliAnNaSoliderEntityMgr = class("MaliAnNaSoliderEntityMgr")
+
+function MaliAnNaSoliderEntityMgr:init(soliderItem, heroItem)
+	self._soliderItem = soliderItem
+	self._heroItem = heroItem
+	self._soliderEntityDict = {}
 end
 
-function var_0_0.getSoliderEntity(arg_2_0)
-	return arg_2_0._soliderEntityDict
+function MaliAnNaSoliderEntityMgr:getSoliderEntity()
+	return self._soliderEntityDict
 end
 
-function var_0_0._initPool(arg_3_0)
-	local var_3_0 = 20
+function MaliAnNaSoliderEntityMgr:_initPool()
+	local maxCount = 20
 
-	arg_3_0._playerSoliderEntityPool = LuaObjPool.New(var_3_0, function()
-		return (arg_3_0:cloneSolider())
-	end, function(arg_5_0)
-		if arg_5_0 ~= nil then
-			arg_5_0:onDestroy()
+	self._playerSoliderEntityPool = LuaObjPool.New(maxCount, function()
+		local entity = self:cloneSolider()
+
+		return entity
+	end, function(entity)
+		if entity ~= nil then
+			entity:onDestroy()
 		end
-	end, function(arg_6_0)
-		if arg_6_0 ~= nil then
-			arg_6_0:clear()
-		end
-	end)
-	arg_3_0._enemySoliderEntityPool = LuaObjPool.New(var_3_0, function()
-		return (arg_3_0:cloneSolider())
-	end, function(arg_8_0)
-		if arg_8_0 ~= nil then
-			arg_8_0:onDestroy()
-		end
-	end, function(arg_9_0)
-		if arg_9_0 ~= nil then
-			arg_9_0:clear()
+	end, function(entity)
+		if entity ~= nil then
+			entity:clear()
 		end
 	end)
+	self._enemySoliderEntityPool = LuaObjPool.New(maxCount, function()
+		local entity = self:cloneSolider()
+
+		return entity
+	end, function(entity)
+		if entity ~= nil then
+			entity:onDestroy()
+		end
+	end, function(entity)
+		if entity ~= nil then
+			entity:clear()
+		end
+	end)
 end
 
-function var_0_0.cloneSolider(arg_10_0)
-	local var_10_0 = gohelper.cloneInPlace(arg_10_0._soliderItem, "solider")
+function MaliAnNaSoliderEntityMgr:cloneSolider()
+	local go = gohelper.cloneInPlace(self._soliderItem, "solider")
+	local entity = MonoHelper.addLuaComOnceToGo(go, MaLiAnNaSoliderEntity)
 
-	return (MonoHelper.addLuaComOnceToGo(var_10_0, MaLiAnNaSoliderEntity))
+	return entity
 end
 
-function var_0_0.cloneHeroSolider(arg_11_0)
-	local var_11_0 = gohelper.cloneInPlace(arg_11_0._heroItem, "hero")
+function MaliAnNaSoliderEntityMgr:cloneHeroSolider()
+	local go = gohelper.cloneInPlace(self._heroItem, "hero")
+	local entity = MonoHelper.addLuaComOnceToGo(go, MaLiAnNaSoliderHeroEntity)
 
-	return (MonoHelper.addLuaComOnceToGo(var_11_0, MaLiAnNaSoliderHeroEntity))
+	return entity
 end
 
-function var_0_0.getEntity(arg_12_0, arg_12_1)
-	local var_12_0
+function MaliAnNaSoliderEntityMgr:getEntity(soliderMo)
+	local entity
 
-	if arg_12_1:isHero() then
-		var_12_0 = arg_12_0:cloneHeroSolider()
+	if soliderMo:isHero() then
+		entity = self:cloneHeroSolider()
 	else
-		if arg_12_0._playerSoliderEntityPool == nil or arg_12_0._enemySoliderEntityPool == nil then
-			arg_12_0:_initPool()
+		if self._playerSoliderEntityPool == nil or self._enemySoliderEntityPool == nil then
+			self:_initPool()
 		end
 
-		if arg_12_1:getCamp() == Activity201MaLiAnNaEnum.CampType.Player then
-			var_12_0 = arg_12_0._playerSoliderEntityPool:getObject(arg_12_1)
+		if soliderMo:getCamp() == Activity201MaLiAnNaEnum.CampType.Player then
+			entity = self._playerSoliderEntityPool:getObject(soliderMo)
 		else
-			var_12_0 = arg_12_0._enemySoliderEntityPool:getObject(arg_12_1)
+			entity = self._enemySoliderEntityPool:getObject(soliderMo)
 		end
 
-		if var_12_0 == nil or var_12_0:getGo() == nil then
-			var_12_0 = arg_12_0:cloneSolider()
+		if entity == nil or entity:getGo() == nil then
+			entity = self:cloneSolider()
 		end
 	end
 
-	if var_12_0 then
-		var_12_0:initSoliderInfo(arg_12_1)
+	if entity then
+		entity:initSoliderInfo(soliderMo)
 
-		arg_12_0._soliderEntityDict[arg_12_1:getId()] = var_12_0
+		self._soliderEntityDict[soliderMo:getId()] = entity
 
-		gohelper.setAsFirstSibling(var_12_0._go)
+		gohelper.setAsFirstSibling(entity._go)
 	end
 
-	return var_12_0
+	return entity
 end
 
-function var_0_0.recycleEntity(arg_13_0, arg_13_1)
-	if arg_13_0._soliderEntityDict == nil or arg_13_1 == nil then
+function MaliAnNaSoliderEntityMgr:recycleEntity(soliderMo)
+	if self._soliderEntityDict == nil or soliderMo == nil then
 		return
 	end
 
-	local var_13_0 = arg_13_1:getId()
-	local var_13_1 = arg_13_0._soliderEntityDict[var_13_0]
+	local id = soliderMo:getId()
+	local entity = self._soliderEntityDict[id]
 
-	if var_13_1 == nil then
+	if entity == nil then
 		return
 	end
 
-	if not arg_13_1:isHero() then
-		if arg_13_1:getCamp() == Activity201MaLiAnNaEnum.CampType.Player then
-			if arg_13_0._playerSoliderEntityPool then
-				arg_13_0._playerSoliderEntityPool:putObject(var_13_1)
+	if not soliderMo:isHero() then
+		if soliderMo:getCamp() == Activity201MaLiAnNaEnum.CampType.Player then
+			if self._playerSoliderEntityPool then
+				self._playerSoliderEntityPool:putObject(entity)
 			end
-		elseif arg_13_0._enemySoliderEntityPool then
-			arg_13_0._enemySoliderEntityPool:putObject(var_13_1)
+		elseif self._enemySoliderEntityPool then
+			self._enemySoliderEntityPool:putObject(entity)
 		end
 	else
-		var_13_1:onDestroy()
+		entity:onDestroy()
 	end
 
-	arg_13_0._soliderEntityDict[var_13_0] = nil
+	self._soliderEntityDict[id] = nil
 end
 
-function var_0_0.setHideEntity(arg_14_0, arg_14_1, arg_14_2)
-	if arg_14_1 == nil or arg_14_0._soliderEntityDict == nil then
+function MaliAnNaSoliderEntityMgr:setHideEntity(soliderMo, state)
+	if soliderMo == nil or self._soliderEntityDict == nil then
 		return
 	end
 
-	local var_14_0 = arg_14_1:getId()
-	local var_14_1 = arg_14_0._soliderEntityDict[var_14_0]
+	local id = soliderMo:getId()
+	local entity = self._soliderEntityDict[id]
 
-	if var_14_1 then
-		var_14_1:setHide(arg_14_2)
+	if entity then
+		entity:setHide(state)
 	end
 end
 
-function var_0_0.clear(arg_15_0)
-	if arg_15_0._soliderEntityDict ~= nil then
-		for iter_15_0, iter_15_1 in pairs(arg_15_0._soliderEntityDict) do
-			if iter_15_1 then
-				iter_15_1:onDestroy()
+function MaliAnNaSoliderEntityMgr:clear()
+	if self._soliderEntityDict ~= nil then
+		for _, entity in pairs(self._soliderEntityDict) do
+			if entity then
+				entity:onDestroy()
 			end
 		end
 
-		tabletool.clear(arg_15_0._soliderEntityDict)
+		tabletool.clear(self._soliderEntityDict)
 	end
 end
 
-function var_0_0.onDestroy(arg_16_0)
-	arg_16_0:clear()
+function MaliAnNaSoliderEntityMgr:onDestroy()
+	self:clear()
 
-	arg_16_0._soliderEntityDict = nil
+	self._soliderEntityDict = nil
 
-	if arg_16_0._playerSoliderEntityPool ~= nil then
-		arg_16_0._playerSoliderEntityPool:dispose()
+	if self._playerSoliderEntityPool ~= nil then
+		self._playerSoliderEntityPool:dispose()
 
-		arg_16_0._playerSoliderEntityPool = nil
+		self._playerSoliderEntityPool = nil
 	end
 
-	if arg_16_0._enemySoliderEntityPool ~= nil then
-		arg_16_0._enemySoliderEntityPool:dispose()
+	if self._enemySoliderEntityPool ~= nil then
+		self._enemySoliderEntityPool:dispose()
 
-		arg_16_0._enemySoliderEntityPool = nil
+		self._enemySoliderEntityPool = nil
 	end
 
-	if arg_16_0._soliderItem ~= nil then
-		gohelper.destroy(arg_16_0._soliderItem)
+	if self._soliderItem ~= nil then
+		gohelper.destroy(self._soliderItem)
 
-		arg_16_0._soliderItem = nil
+		self._soliderItem = nil
 	end
 
-	if arg_16_0._heroItem ~= nil then
-		gohelper.destroy(arg_16_0._heroItem)
+	if self._heroItem ~= nil then
+		gohelper.destroy(self._heroItem)
 
-		arg_16_0._heroItem = nil
+		self._heroItem = nil
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+MaliAnNaSoliderEntityMgr.instance = MaliAnNaSoliderEntityMgr.New()
 
-return var_0_0
+return MaliAnNaSoliderEntityMgr

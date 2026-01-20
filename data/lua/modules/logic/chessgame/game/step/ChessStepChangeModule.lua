@@ -1,22 +1,24 @@
-﻿module("modules.logic.chessgame.game.step.ChessStepChangeModule", package.seeall)
+﻿-- chunkname: @modules/logic/chessgame/game/step/ChessStepChangeModule.lua
 
-local var_0_0 = class("ChessStepChangeModule", BaseWork)
+module("modules.logic.chessgame.game.step.ChessStepChangeModule", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.originData = arg_1_1
+local ChessStepChangeModule = class("ChessStepChangeModule", BaseWork)
+
+function ChessStepChangeModule:init(stepData)
+	self.originData = stepData
 end
 
-function var_0_0.onStart(arg_2_0)
-	local var_2_0 = arg_2_0.originData.interactId
-	local var_2_1 = arg_2_0.originData.path
-	local var_2_2 = ChessGameController.instance.interactsMgr:get(var_2_0)
-	local var_2_3 = ChessGameInteractModel.instance:getInteractById(var_2_0)
+function ChessStepChangeModule:onStart()
+	local id = self.originData.interactId
+	local path = self.originData.path
+	local comp = ChessGameController.instance.interactsMgr:get(id)
+	local mo = ChessGameInteractModel.instance:getInteractById(id)
 
-	if var_2_3 and var_2_3:isInCurrentMap() then
-		var_2_2:changeModule(var_2_1)
+	if mo and mo:isInCurrentMap() then
+		comp:changeModule(path)
 	end
 
-	arg_2_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return ChessStepChangeModule

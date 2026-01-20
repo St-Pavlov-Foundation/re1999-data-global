@@ -1,317 +1,320 @@
-﻿module("modules.logic.mainsceneswitch.view.MainSceneSkinMaterialTipViewBanner", package.seeall)
+﻿-- chunkname: @modules/logic/mainsceneswitch/view/MainSceneSkinMaterialTipViewBanner.lua
 
-local var_0_0 = class("MainSceneSkinMaterialTipViewBanner", BaseView)
+module("modules.logic.mainsceneswitch.view.MainSceneSkinMaterialTipViewBanner", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gobannerContent = gohelper.findChild(arg_1_0.viewGO, "left/banner/#go_bannerContent")
-	arg_1_0._goroominfoItem = gohelper.findChild(arg_1_0.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem")
-	arg_1_0._goslider = gohelper.findChild(arg_1_0.viewGO, "left/banner/#go_slider")
-	arg_1_0._gobannerscroll = gohelper.findChild(arg_1_0.viewGO, "left/banner/#go_bannerscroll")
-	arg_1_0._gobannerSelectItem = gohelper.findChild(arg_1_0.viewGO, "left/banner/#go_slider/go_bannerSelectItem")
+local MainSceneSkinMaterialTipViewBanner = class("MainSceneSkinMaterialTipViewBanner", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function MainSceneSkinMaterialTipViewBanner:onInitView()
+	self._gobannerContent = gohelper.findChild(self.viewGO, "left/banner/#go_bannerContent")
+	self._goroominfoItem = gohelper.findChild(self.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem")
+	self._goslider = gohelper.findChild(self.viewGO, "left/banner/#go_slider")
+	self._gobannerscroll = gohelper.findChild(self.viewGO, "left/banner/#go_bannerscroll")
+	self._gobannerSelectItem = gohelper.findChild(self.viewGO, "left/banner/#go_slider/go_bannerSelectItem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._bannerscroll:AddDragBeginListener(arg_2_0._onScrollDragBegin, arg_2_0)
-	arg_2_0._bannerscroll:AddDragEndListener(arg_2_0._onScrollDragEnd, arg_2_0)
+function MainSceneSkinMaterialTipViewBanner:addEvents()
+	self._bannerscroll:AddDragBeginListener(self._onScrollDragBegin, self)
+	self._bannerscroll:AddDragEndListener(self._onScrollDragEnd, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._bannerscroll:RemoveDragBeginListener()
-	arg_3_0._bannerscroll:RemoveDragEndListener()
+function MainSceneSkinMaterialTipViewBanner:removeEvents()
+	self._bannerscroll:RemoveDragBeginListener()
+	self._bannerscroll:RemoveDragEndListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	gohelper.setActive(arg_4_0._gojumpItem, false)
+function MainSceneSkinMaterialTipViewBanner:_editableInitView()
+	gohelper.setActive(self._gojumpItem, false)
 
-	arg_4_0._bannerscroll = SLFramework.UGUI.UIDragListener.Get(arg_4_0._gobannerscroll)
-	arg_4_0._infoItemTbList = arg_4_0:getUserDataTb_()
-	arg_4_0._infoItemDataList = arg_4_0:getUserDataTb_()
-	arg_4_0._pageItemTbList = arg_4_0:getUserDataTb_()
+	self._bannerscroll = SLFramework.UGUI.UIDragListener.Get(self._gobannerscroll)
+	self._infoItemTbList = self:getUserDataTb_()
+	self._infoItemDataList = self:getUserDataTb_()
+	self._pageItemTbList = self:getUserDataTb_()
 
-	arg_4_0:_createInfoItemUserDataTb_(arg_4_0._goroominfoItem)
-	arg_4_0:_createPageItemUserDataTb_(arg_4_0._gobannerSelectItem)
-	transformhelper.setLocalPosXY(arg_4_0._gobannerContent.transform, -1, 0)
+	self:_createInfoItemUserDataTb_(self._goroominfoItem)
+	self:_createPageItemUserDataTb_(self._gobannerSelectItem)
+	transformhelper.setLocalPosXY(self._gobannerContent.transform, -1, 0)
 end
 
-function var_0_0._getMaxPage(arg_5_0)
-	return arg_5_0._infoItemDataList and #arg_5_0._infoItemDataList or 0
+function MainSceneSkinMaterialTipViewBanner:_getMaxPage()
+	return self._infoItemDataList and #self._infoItemDataList or 0
 end
 
-function var_0_0._checkCurPage(arg_6_0)
-	local var_6_0 = arg_6_0:_getMaxPage()
+function MainSceneSkinMaterialTipViewBanner:_checkCurPage()
+	local maxPage = self:_getMaxPage()
 
-	if not arg_6_0._curPage or var_6_0 < arg_6_0._curPage then
-		arg_6_0._curPage = 1
+	if not self._curPage or maxPage < self._curPage then
+		self._curPage = 1
 	end
 
-	if arg_6_0._curPage < 1 then
-		arg_6_0._curPage = var_6_0
+	if self._curPage < 1 then
+		self._curPage = maxPage
 	end
 
-	return arg_6_0._curPage
+	return self._curPage
 end
 
-function var_0_0._isFirstPage(arg_7_0)
-	return arg_7_0:_checkCurPage() <= 1
+function MainSceneSkinMaterialTipViewBanner:_isFirstPage()
+	return self:_checkCurPage() <= 1
 end
 
-function var_0_0._isLastPage(arg_8_0)
-	return arg_8_0:_checkCurPage() >= arg_8_0:_getMaxPage()
+function MainSceneSkinMaterialTipViewBanner:_isLastPage()
+	return self:_checkCurPage() >= self:_getMaxPage()
 end
 
-function var_0_0._getItemDataList(arg_9_0)
-	local var_9_0 = {}
-	local var_9_1 = {
-		itemId = arg_9_0.viewParam.id,
-		itemType = arg_9_0.viewParam.type
+function MainSceneSkinMaterialTipViewBanner:_getItemDataList()
+	local list = {}
+	local data = {
+		itemId = self.viewParam.id,
+		itemType = self.viewParam.type
 	}
 
-	table.insert(var_9_0, var_9_1)
+	table.insert(list, data)
 
-	return var_9_0
+	return list
 end
 
-function var_0_0._onScrollDragBegin(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_0._scrollStartPosX = GamepadController.instance:getMousePosition().x
+function MainSceneSkinMaterialTipViewBanner:_onScrollDragBegin(param, eventData)
+	self._scrollStartPosX = GamepadController.instance:getMousePosition().x
 end
 
-function var_0_0._onScrollDragEnd(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = GamepadController.instance:getMousePosition().x - arg_11_0._scrollStartPosX
+function MainSceneSkinMaterialTipViewBanner:_onScrollDragEnd(param, eventData)
+	local scrollEndPos = GamepadController.instance:getMousePosition()
+	local deltaX = scrollEndPos.x - self._scrollStartPosX
 
-	if var_11_0 > 80 then
-		arg_11_0:_runSwithPage(true)
-	elseif var_11_0 < -80 then
-		arg_11_0:_runSwithPage(false)
+	if deltaX > 80 then
+		self:_runSwithPage(true)
+	elseif deltaX < -80 then
+		self:_runSwithPage(false)
 	end
 end
 
-function var_0_0._startAutoSwitch(arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0._onSwitch, arg_12_0)
+function MainSceneSkinMaterialTipViewBanner:_startAutoSwitch()
+	TaskDispatcher.cancelTask(self._onSwitch, self)
 
-	if arg_12_0:_getMaxPage() > 1 then
-		TaskDispatcher.runRepeat(arg_12_0._onSwitch, arg_12_0, 3)
+	if self:_getMaxPage() > 1 then
+		TaskDispatcher.runRepeat(self._onSwitch, self, 3)
 	end
 end
 
-function var_0_0._onSwitch(arg_13_0)
-	if arg_13_0:_getMaxPage() <= 1 then
-		TaskDispatcher.cancelTask(arg_13_0._onSwitch, arg_13_0)
+function MainSceneSkinMaterialTipViewBanner:_onSwitch()
+	if self:_getMaxPage() <= 1 then
+		TaskDispatcher.cancelTask(self._onSwitch, self)
 
 		return
 	end
 
-	if not arg_13_0._nextRunSwitchTime or arg_13_0._nextRunSwitchTime <= Time.time then
-		arg_13_0:_runSwithPage(false)
+	if not self._nextRunSwitchTime or self._nextRunSwitchTime <= Time.time then
+		self:_runSwithPage(false)
 	end
 end
 
-function var_0_0._runSwithPage(arg_14_0, arg_14_1)
-	arg_14_0._nextRunSwitchTime = Time.time + 2
+function MainSceneSkinMaterialTipViewBanner:_runSwithPage(isforward)
+	self._nextRunSwitchTime = Time.time + 2
 
-	local var_14_0 = arg_14_0:_checkCurPage()
-	local var_14_1 = false
+	local curPage = self:_checkCurPage()
+	local isJomp = false
 
-	if arg_14_1 then
-		var_14_1 = arg_14_0:_isFirstPage()
-		arg_14_0._curPage = var_14_0 - 1
+	if isforward then
+		isJomp = self:_isFirstPage()
+		self._curPage = curPage - 1
 	else
-		var_14_1 = arg_14_0:_isLastPage()
-		arg_14_0._curPage = var_14_0 + 1
+		isJomp = self:_isLastPage()
+		self._curPage = curPage + 1
 	end
 
-	if var_14_1 and arg_14_0:_getMaxPage() > 2 then
-		local var_14_2 = arg_14_1 and arg_14_0:_getMaxPage() - 1 or 2
-		local var_14_3 = arg_14_0:_getPosXByPage(var_14_2)
+	if isJomp and self:_getMaxPage() > 2 then
+		local jompPage = isforward and self:_getMaxPage() - 1 or 2
+		local anchorX = self:_getPosXByPage(jompPage)
 
-		recthelper.setAnchorX(arg_14_0._gobannerContent.transform, -var_14_3)
+		recthelper.setAnchorX(self._gobannerContent.transform, -anchorX)
 	end
 
-	if var_14_0 == arg_14_0:_checkCurPage() then
+	if curPage == self:_checkCurPage() then
 		return
 	end
 
-	arg_14_0:_refreshUI()
+	self:_refreshUI()
 end
 
-function var_0_0._refreshUI(arg_15_0)
-	arg_15_0:_refreshPageUI()
-	arg_15_0:_refreshInfoUI()
+function MainSceneSkinMaterialTipViewBanner:_refreshUI()
+	self:_refreshPageUI()
+	self:_refreshInfoUI()
 end
 
-function var_0_0._refreshPageUI(arg_16_0)
-	local var_16_0 = arg_16_0:_getMaxPage()
-	local var_16_1 = arg_16_0:_checkCurPage()
+function MainSceneSkinMaterialTipViewBanner:_refreshPageUI()
+	local maxPage = self:_getMaxPage()
+	local curPage = self:_checkCurPage()
 
-	gohelper.setActive(arg_16_0._goslider, var_16_0 > 1)
+	gohelper.setActive(self._goslider, maxPage > 1)
 
-	for iter_16_0 = 1, var_16_0 do
-		local var_16_2 = arg_16_0._pageItemTbList[iter_16_0]
+	for i = 1, maxPage do
+		local tb = self._pageItemTbList[i]
 
-		if not var_16_2 then
-			local var_16_3 = gohelper.clone(arg_16_0._gobannerSelectItem, arg_16_0._goslider, "go_bannerSelectItem" .. iter_16_0)
+		if not tb then
+			local cloneGo = gohelper.clone(self._gobannerSelectItem, self._goslider, "go_bannerSelectItem" .. i)
 
-			var_16_2 = arg_16_0:_createPageItemUserDataTb_(var_16_3)
+			tb = self:_createPageItemUserDataTb_(cloneGo)
 		end
 
-		arg_16_0:_updatePageItemUI(var_16_2, iter_16_0 == var_16_1)
-		gohelper.setActive(var_16_2._go, true)
+		self:_updatePageItemUI(tb, i == curPage)
+		gohelper.setActive(tb._go, true)
 	end
 
-	for iter_16_1 = var_16_0 + 1, #arg_16_0._pageItemTbList do
-		local var_16_4 = arg_16_0._pageItemTbList[iter_16_1]
+	for i = maxPage + 1, #self._pageItemTbList do
+		local tb = self._pageItemTbList[i]
 
-		gohelper.setActive(var_16_4._go, false)
+		gohelper.setActive(tb._go, false)
 	end
 end
 
-function var_0_0._refreshInfoUI(arg_17_0)
-	local var_17_0 = arg_17_0:_getMaxPage()
-	local var_17_1 = arg_17_0:_checkCurPage()
-	local var_17_2 = math.min(3, var_17_0)
+function MainSceneSkinMaterialTipViewBanner:_refreshInfoUI()
+	local maxPage = self:_getMaxPage()
+	local curPage = self:_checkCurPage()
+	local count = math.min(3, maxPage)
 
-	for iter_17_0 = #arg_17_0._infoItemTbList + 1, var_17_2 do
-		local var_17_3 = gohelper.clone(arg_17_0._goroominfoItem, arg_17_0._gobannerContent, "go_bannerSelectItem" .. iter_17_0)
+	for i = #self._infoItemTbList + 1, count do
+		local cloneGo = gohelper.clone(self._goroominfoItem, self._gobannerContent, "go_bannerSelectItem" .. i)
 
-		arg_17_0:_createInfoItemUserDataTb_(var_17_3)
+		self:_createInfoItemUserDataTb_(cloneGo)
 	end
 
-	local var_17_4 = 0
+	local offPage = 0
 
-	if var_17_0 < #arg_17_0._infoItemTbList or arg_17_0:_isFirstPage() then
-		var_17_4 = 0
-	elseif arg_17_0:_isLastPage() then
-		var_17_4 = var_17_0 - 3
+	if maxPage < #self._infoItemTbList or self:_isFirstPage() then
+		offPage = 0
+	elseif self:_isLastPage() then
+		offPage = maxPage - 3
 	else
-		var_17_4 = var_17_1 - 2
+		offPage = curPage - 2
 	end
 
-	for iter_17_1 = 1, #arg_17_0._infoItemTbList do
-		arg_17_0:_refreshInfoItem(iter_17_1, var_17_4 + iter_17_1)
+	for i = 1, #self._infoItemTbList do
+		self:_refreshInfoItem(i, offPage + i)
 	end
 
-	if var_17_0 > 0 then
-		local var_17_5 = arg_17_0:_getPosXByPage(var_17_1)
+	if maxPage > 0 then
+		local posX = self:_getPosXByPage(curPage)
 
-		ZProj.TweenHelper.DOAnchorPosX(arg_17_0._gobannerContent.transform, -var_17_5, 0.75)
-	end
-end
-
-function var_0_0._refreshInfoItem(arg_18_0, arg_18_1, arg_18_2)
-	local var_18_0 = arg_18_0._infoItemDataList[arg_18_2]
-	local var_18_1 = arg_18_0._infoItemTbList[arg_18_1]
-
-	if var_18_0 then
-		arg_18_0:_updateInfoItemUI(var_18_1, var_18_0.itemId, var_18_0.itemType)
-
-		local var_18_2 = arg_18_0:_getPosXByPage(arg_18_2)
-
-		transformhelper.setLocalPosXY(var_18_1._go.transform, var_18_2, 0)
-	end
-
-	if var_18_1 then
-		gohelper.setActive(var_18_1._go, var_18_0 and true or false)
+		ZProj.TweenHelper.DOAnchorPosX(self._gobannerContent.transform, -posX, 0.75)
 	end
 end
 
-function var_0_0._getPosXByPage(arg_19_0, arg_19_1)
-	return (arg_19_1 - 1) * 1030
+function MainSceneSkinMaterialTipViewBanner:_refreshInfoItem(tbIndex, page)
+	local data = self._infoItemDataList[page]
+	local tb = self._infoItemTbList[tbIndex]
+
+	if data then
+		self:_updateInfoItemUI(tb, data.itemId, data.itemType)
+
+		local posX = self:_getPosXByPage(page)
+
+		transformhelper.setLocalPosXY(tb._go.transform, posX, 0)
+	end
+
+	if tb then
+		gohelper.setActive(tb._go, data and true or false)
+	end
 end
 
-function var_0_0._createPageItemUserDataTb_(arg_20_0, arg_20_1)
-	local var_20_0 = arg_20_0:getUserDataTb_()
-
-	var_20_0._go = arg_20_1
-	var_20_0._gonomalstar = gohelper.findChild(arg_20_1, "go_nomalstar")
-	var_20_0._golightstar = gohelper.findChild(arg_20_1, "go_lightstar")
-
-	table.insert(arg_20_0._pageItemTbList, var_20_0)
-
-	return var_20_0
+function MainSceneSkinMaterialTipViewBanner:_getPosXByPage(page)
+	return (page - 1) * 1030
 end
 
-function var_0_0._updatePageItemUI(arg_21_0, arg_21_1, arg_21_2)
-	local var_21_0 = arg_21_1
+function MainSceneSkinMaterialTipViewBanner:_createPageItemUserDataTb_(goItem)
+	local tb = self:getUserDataTb_()
 
-	gohelper.setActive(var_21_0._gonomalstar, not arg_21_2)
-	gohelper.setActive(var_21_0._golightstar, arg_21_2)
+	tb._go = goItem
+	tb._gonomalstar = gohelper.findChild(goItem, "go_nomalstar")
+	tb._golightstar = gohelper.findChild(goItem, "go_lightstar")
+
+	table.insert(self._pageItemTbList, tb)
+
+	return tb
 end
 
-function var_0_0._createInfoItemUserDataTb_(arg_22_0, arg_22_1)
-	local var_22_0 = arg_22_0:getUserDataTb_()
+function MainSceneSkinMaterialTipViewBanner:_updatePageItemUI(pageItemTb, isSelect)
+	local tb = pageItemTb
 
-	var_22_0._go = arg_22_1
-	var_22_0._gotag = gohelper.findChild(arg_22_1, "#go_tag")
-	var_22_0._txtdesc = gohelper.findChildText(arg_22_1, "txt_desc")
-	var_22_0._txtname = gohelper.findChildText(arg_22_1, "txt_desc/txt_name")
-	var_22_0._simageinfobg = gohelper.findChildSingleImage(arg_22_1, "#simage_pic")
-	var_22_0._btn = gohelper.findChildButtonWithAudio(arg_22_1, "txt_desc/txt_name/#btn_Info")
+	gohelper.setActive(tb._gonomalstar, not isSelect)
+	gohelper.setActive(tb._golightstar, isSelect)
+end
 
-	var_22_0._btn:AddClickListener(function()
-		if not var_22_0._sceneSkinId then
+function MainSceneSkinMaterialTipViewBanner:_createInfoItemUserDataTb_(goItem)
+	local tb = self:getUserDataTb_()
+
+	tb._go = goItem
+	tb._gotag = gohelper.findChild(goItem, "#go_tag")
+	tb._txtdesc = gohelper.findChildText(goItem, "txt_desc")
+	tb._txtname = gohelper.findChildText(goItem, "txt_desc/txt_name")
+	tb._simageinfobg = gohelper.findChildSingleImage(goItem, "#simage_pic")
+	tb._btn = gohelper.findChildButtonWithAudio(goItem, "txt_desc/txt_name/#btn_Info")
+
+	tb._btn:AddClickListener(function()
+		if not tb._sceneSkinId then
 			return
 		end
 
 		ViewMgr.instance:openView(ViewName.MainSceneSwitchInfoView, {
 			isPreview = true,
 			noInfoEffect = true,
-			sceneSkinId = var_22_0._sceneSkinId
+			sceneSkinId = tb._sceneSkinId
 		})
-	end, var_22_0)
+	end, tb)
 
-	arg_22_0._infoItemTbList = arg_22_0._infoItemTbList or {}
+	self._infoItemTbList = self._infoItemTbList or {}
 
-	table.insert(arg_22_0._infoItemTbList, var_22_0)
+	table.insert(self._infoItemTbList, tb)
 
-	return var_22_0
+	return tb
 end
 
-function var_0_0._updateInfoItemUI(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
-	local var_24_0 = arg_24_1
-	local var_24_1 = ItemModel.instance:getItemConfig(arg_24_3, arg_24_2)
+function MainSceneSkinMaterialTipViewBanner:_updateInfoItemUI(itemUserDataTb, itemId, itemType)
+	local tb = itemUserDataTb
+	local config = ItemModel.instance:getItemConfig(itemType, itemId)
 
-	var_24_0._txtdesc.text = var_24_1.desc
-	var_24_0._txtname.text = var_24_1.name
+	tb._txtdesc.text = config.desc
+	tb._txtname.text = config.name
 
-	gohelper.setActive(var_24_0._gotag, true)
+	gohelper.setActive(tb._gotag, true)
 
-	local var_24_2 = MainSceneSwitchConfig.instance:getConfigByItemId(arg_24_2)
+	local sceneConfig = MainSceneSwitchConfig.instance:getConfigByItemId(itemId)
 
-	var_24_0._sceneSkinId = var_24_2.id
+	tb._sceneSkinId = sceneConfig.id
 
-	var_24_0._simageinfobg:LoadImage(ResUrl.getMainSceneSwitchIcon(var_24_2.previewIcon))
+	tb._simageinfobg:LoadImage(ResUrl.getMainSceneSwitchIcon(sceneConfig.previewIcon))
 end
 
-function var_0_0.onUpdateParam(arg_25_0)
-	arg_25_0._infoItemDataList = {}
+function MainSceneSkinMaterialTipViewBanner:onUpdateParam()
+	self._infoItemDataList = {}
 
-	tabletool.addValues(arg_25_0._infoItemDataList, arg_25_0:_getItemDataList())
-	arg_25_0:_refreshUI()
-	arg_25_0:_startAutoSwitch()
+	tabletool.addValues(self._infoItemDataList, self:_getItemDataList())
+	self:_refreshUI()
+	self:_startAutoSwitch()
 end
 
-function var_0_0.onOpen(arg_26_0)
-	arg_26_0._infoItemDataList = {}
+function MainSceneSkinMaterialTipViewBanner:onOpen()
+	self._infoItemDataList = {}
 
-	tabletool.addValues(arg_26_0._infoItemDataList, arg_26_0:_getItemDataList())
-	arg_26_0:_refreshUI()
-	arg_26_0:_startAutoSwitch()
+	tabletool.addValues(self._infoItemDataList, self:_getItemDataList())
+	self:_refreshUI()
+	self:_startAutoSwitch()
 end
 
-function var_0_0.onClose(arg_27_0)
+function MainSceneSkinMaterialTipViewBanner:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_28_0)
-	TaskDispatcher.cancelTask(arg_28_0._onSwitch, arg_28_0)
+function MainSceneSkinMaterialTipViewBanner:onDestroyView()
+	TaskDispatcher.cancelTask(self._onSwitch, self)
 
-	for iter_28_0, iter_28_1 in ipairs(arg_28_0._infoItemTbList) do
-		iter_28_1._simageinfobg:UnLoadImage()
-		iter_28_1._btn:RemoveClickListener()
+	for i, v in ipairs(self._infoItemTbList) do
+		v._simageinfobg:UnLoadImage()
+		v._btn:RemoveClickListener()
 	end
 end
 
-return var_0_0
+return MainSceneSkinMaterialTipViewBanner

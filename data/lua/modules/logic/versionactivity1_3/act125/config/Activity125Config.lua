@@ -1,14 +1,15 @@
-﻿module("modules.logic.versionactivity1_3.act125.config.Activity125Config", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/act125/config/Activity125Config.lua
 
-local var_0_0 = class("Activity125Config", BaseConfig)
+module("modules.logic.versionactivity1_3.act125.config.Activity125Config", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._configTab = nil
-	arg_1_0._channelValueList = {}
-	arg_1_0._episodeCount = nil
+local Activity125Config = class("Activity125Config", BaseConfig)
+
+function Activity125Config:ctor()
+	self._configTab = nil
+	self._channelValueList = {}
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function Activity125Config:reqConfigNames()
 	return {
 		"activity125",
 		"activity125_task",
@@ -16,65 +17,66 @@ function var_0_0.reqConfigNames(arg_2_0)
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = arg_3_0[string.format("on%sConfigLoaded", arg_3_1)]
+function Activity125Config:onConfigLoaded(configName, configTable)
+	local funcName = string.format("on%sConfigLoaded", configName)
+	local func = self[funcName]
 
-	if var_3_0 then
-		var_3_0(arg_3_0, arg_3_1, arg_3_2)
+	if func then
+		func(self, configName, configTable)
 	end
 end
 
-function var_0_0.onactivity125ConfigLoaded(arg_4_0, arg_4_1, arg_4_2)
-	if not arg_4_0._configTab then
-		arg_4_0._configTab = {}
+function Activity125Config:onactivity125ConfigLoaded(configName, configTable)
+	if not self._configTab then
+		self._configTab = {}
 	end
 
-	arg_4_0._configTab[arg_4_1] = arg_4_2.configDict
+	self._configTab[configName] = configTable.configDict
 end
 
-function var_0_0.onactivity125_taskConfigLoaded(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0:__initTaskList(arg_5_2)
+function Activity125Config:onactivity125_taskConfigLoaded(configName, configTable)
+	self:__initTaskList(configTable)
 end
 
-local var_0_1 = string.format
-local var_0_2 = "ReadTask"
+local sf = string.format
+local kListenerType_ReadTask = "ReadTask"
 
-function var_0_0.__initTaskList(arg_6_0, arg_6_1)
-	arg_6_0.__ReadTasksTagTaskCoDict = {}
+function Activity125Config:__initTaskList(configTable)
+	self.__ReadTasksTagTaskCoDict = {}
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_1.configList) do
-		local var_6_0 = iter_6_1.activityId
-		local var_6_1 = arg_6_0.__ReadTasksTagTaskCoDict[var_6_0]
+	for _, CO in ipairs(configTable.configList) do
+		local actId = CO.activityId
+		local actTable = self.__ReadTasksTagTaskCoDict[actId]
 
-		if not var_6_1 then
-			var_6_1 = {}
+		if not actTable then
+			actTable = {}
 
-			for iter_6_2, iter_6_3 in pairs(ActivityWarmUpEnum.Activity125TaskTag) do
-				if isDebugBuild and var_6_1[iter_6_3] then
-					logError(var_0_1("[Activity125Config]: ActivityWarmUpEnum.Activity125TaskTag error redefined enum value: enum=%s, enum value = %s", iter_6_2, iter_6_3))
+			for k, v in pairs(ActivityWarmUpEnum.Activity125TaskTag) do
+				if isDebugBuild and actTable[v] then
+					logError(sf("[Activity125Config]: ActivityWarmUpEnum.Activity125TaskTag error redefined enum value: enum=%s, enum value = %s", k, v))
 				end
 
-				var_6_1[iter_6_3] = {}
+				actTable[v] = {}
 			end
 
-			arg_6_0.__ReadTasksTagTaskCoDict[var_6_0] = var_6_1
+			self.__ReadTasksTagTaskCoDict[actId] = actTable
 		end
 
-		if iter_6_1.isOnline then
-			local var_6_2 = iter_6_1.id
+		if CO.isOnline then
+			local taskId = CO.id
 
-			if iter_6_1.listenerType == var_0_2 then
-				local var_6_3 = ActivityWarmUpEnum.Activity125TaskTag[iter_6_1.tag]
+			if CO.listenerType == kListenerType_ReadTask then
+				local tag = ActivityWarmUpEnum.Activity125TaskTag[CO.tag]
 
-				if not var_6_3 then
-					logError(var_0_1("[Activity125Config]: lua_activity125_task error actId: %s, id: %s", var_6_0, var_6_2))
+				if not tag then
+					logError(sf("[Activity125Config]: lua_activity125_task error actId: %s, id: %s", actId, taskId))
 				else
-					local var_6_4 = var_6_1[var_6_3]
+					local tagTable = actTable[tag]
 
-					if var_6_4 then
-						var_6_4[var_6_2] = iter_6_1
+					if tagTable then
+						tagTable[taskId] = CO
 					else
-						logError(var_0_1("[Activity125Config]: unsupported lua_activity125_task actId: %s tag: %s", var_6_0, var_6_3))
+						logError(sf("[Activity125Config]: unsupported lua_activity125_task actId: %s tag: %s", actId, tag))
 					end
 				end
 			end
@@ -82,142 +84,145 @@ function var_0_0.__initTaskList(arg_6_0, arg_6_1)
 	end
 end
 
-function var_0_0.getActConfig(arg_7_0, arg_7_1, arg_7_2)
-	if arg_7_1 and arg_7_2 and arg_7_0._configTab and arg_7_0._configTab[arg_7_1] then
-		return arg_7_0._configTab[arg_7_1][arg_7_2]
+function Activity125Config:getActConfig(configName, actId)
+	if configName and actId and self._configTab and self._configTab[configName] then
+		return self._configTab[configName][actId]
 	end
 
 	return nil
 end
 
-function var_0_0.getAct125Config(arg_8_0, arg_8_1)
-	return arg_8_0:getActConfig("activity125", arg_8_1)
+function Activity125Config:getAct125Config(actId)
+	return self:getActConfig("activity125", actId)
 end
 
-function var_0_0.getEpisodeConfig(arg_9_0, arg_9_1, arg_9_2)
-	return arg_9_0:getAct125Config(arg_9_1)[arg_9_2]
+function Activity125Config:getEpisodeConfig(actId, episodeId)
+	return self:getAct125Config(actId)[episodeId]
 end
 
-var_0_0.ChannelCfgType = {
+Activity125Config.ChannelCfgType = {
 	Range = "Range",
 	Point = "Point"
 }
 
-function var_0_0.parseChannelCfg(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = GameUtil.splitString2(arg_10_1, false, "|", "#")
-	local var_10_1 = {}
-	local var_10_2 = 0
-	local var_10_3 = #var_10_0
-	local var_10_4
+function Activity125Config:parseChannelCfg(channelCfg, targetFrequencyIndex)
+	local channelvalueList = GameUtil.splitString2(channelCfg, false, "|", "#")
+	local parseResult = {}
+	local lastIndex = 0
+	local channelCfgCount = #channelvalueList
+	local targetFrequencyValue
 
-	for iter_10_0 = 1, var_10_3 do
-		local var_10_5 = var_10_0[iter_10_0]
+	for i = 1, channelCfgCount do
+		local part = channelvalueList[i]
 
-		var_10_1[iter_10_0] = {}
+		parseResult[i] = {}
 
-		local var_10_6 = #var_10_5
+		local partLength = #part
 
-		var_10_1[iter_10_0].startIndex = tonumber(var_10_5[1])
-		var_10_1[iter_10_0].startValue = var_10_5[2]
+		parseResult[i].startIndex = tonumber(part[1])
+		parseResult[i].startValue = part[2]
 
-		if var_10_6 == 2 then
-			var_10_1[iter_10_0].lastIndex = var_10_2
-			var_10_2 = var_10_1[iter_10_0].startIndex
-			var_10_1[iter_10_0].type = var_0_0.ChannelCfgType.Point
-		elseif var_10_6 == 4 then
-			var_10_1[iter_10_0].endIndex = tonumber(var_10_5[3])
-			var_10_1[iter_10_0].endValue = var_10_5[4]
-			var_10_2 = var_10_1[iter_10_0].endIndex
-			var_10_1[iter_10_0].type = var_0_0.ChannelCfgType.Range
+		if partLength == 2 then
+			parseResult[i].lastIndex = lastIndex
+			lastIndex = parseResult[i].startIndex
+			parseResult[i].type = Activity125Config.ChannelCfgType.Point
+		elseif partLength == 4 then
+			parseResult[i].endIndex = tonumber(part[3])
+			parseResult[i].endValue = part[4]
+			lastIndex = parseResult[i].endIndex
+			parseResult[i].type = Activity125Config.ChannelCfgType.Range
 		else
 			logError("config error")
 		end
 
-		if not var_10_4 then
-			local var_10_7 = var_10_1[iter_10_0].startIndex
-			local var_10_8 = var_10_1[iter_10_0].endIndex
-			local var_10_9 = var_10_1[iter_10_0].startValue
-			local var_10_10 = var_10_1[iter_10_0].endValue
+		if not targetFrequencyValue then
+			local startIndex, endIndex = parseResult[i].startIndex, parseResult[i].endIndex
+			local startValue, endValue = parseResult[i].startValue, parseResult[i].endValue
+			local tmpvalue = self:getRealFrequencyValue(targetFrequencyIndex, startIndex, startValue, endIndex, endValue)
 
-			var_10_4 = arg_10_0:getRealFrequencyValue(arg_10_2, var_10_7, var_10_9, var_10_8, var_10_10) or var_10_4
+			targetFrequencyValue = tmpvalue or targetFrequencyValue
 		end
 	end
 
-	var_10_1.targetFrequencyValue = var_10_4
-	var_10_1.wholeEndIndex = var_10_2
-	var_10_1.wholeStartIndex = var_10_1[1].startIndex
+	parseResult.targetFrequencyValue = targetFrequencyValue
+	parseResult.wholeEndIndex = lastIndex
+	parseResult.wholeStartIndex = parseResult[1].startIndex
 
-	return var_10_1
+	return parseResult
 end
 
-function var_0_0.getChannelParseResult(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = arg_11_0._channelValueList and arg_11_0._channelValueList[arg_11_2]
-	local var_11_1 = arg_11_0:getEpisodeConfig(arg_11_1, arg_11_2).frequency
+function Activity125Config:getChannelParseResult(actId, episodeId)
+	local targetChannelValueList = self._channelValueList and self._channelValueList[episodeId]
+	local channelCfg = self:getEpisodeConfig(actId, episodeId).frequency
 
-	if not var_11_0 then
-		local var_11_2 = arg_11_0:getEpisodeConfig(arg_11_1, arg_11_2).targetFrequency
+	if not targetChannelValueList then
+		local targetFrequencyIndex = self:getEpisodeConfig(actId, episodeId).targetFrequency
 
-		arg_11_0._channelValueList[arg_11_2] = var_0_0.instance:parseChannelCfg(var_11_1, var_11_2)
-		var_11_0 = arg_11_0._channelValueList[arg_11_2]
+		self._channelValueList[episodeId] = Activity125Config.instance:parseChannelCfg(channelCfg, targetFrequencyIndex)
+		targetChannelValueList = self._channelValueList[episodeId]
 	end
 
-	return var_11_0
+	return targetChannelValueList
 end
 
-function var_0_0.getRealFrequencyValue(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4, arg_12_5)
-	if not arg_12_4 or not arg_12_5 then
-		return arg_12_1 == arg_12_2 and arg_12_3 or nil
+function Activity125Config:getRealFrequencyValue(targetIndex, startIndex, startValue, endIndex, endValue)
+	if not endIndex or not endValue then
+		return targetIndex == startIndex and startValue or nil
 	end
 
-	if arg_12_1 < arg_12_2 or arg_12_4 < arg_12_1 then
+	if targetIndex < startIndex or endIndex < targetIndex then
 		return nil
 	end
 
-	return (arg_12_5 - arg_12_3) / (arg_12_4 - arg_12_2) * (arg_12_1 - arg_12_2) + arg_12_3
+	return (endValue - startValue) / (endIndex - startIndex) * (targetIndex - startIndex) + startValue
 end
 
-function var_0_0.getChannelIndexRange(arg_13_0, arg_13_1, arg_13_2)
-	return arg_13_0:getChannelParseResult(arg_13_1, arg_13_2).wholeStartIndex, arg_13_0:getChannelParseResult(arg_13_1, arg_13_2).wholeEndIndex
+function Activity125Config:getChannelIndexRange(actId, episodeId)
+	return self:getChannelParseResult(actId, episodeId).wholeStartIndex, self:getChannelParseResult(actId, episodeId).wholeEndIndex
 end
 
-function var_0_0.getEpisodeCount(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_0._episodeCount or tabletool.len(arg_14_0:getAct125Config(arg_14_1))
-
-	arg_14_0._episodeCount = var_14_0
-
-	return var_14_0
+function Activity125Config:getEpisodeCount(actId)
+	return tabletool.len(self:getAct125Config(actId))
 end
 
-function var_0_0.getTaskCO(arg_15_0, arg_15_1)
-	return lua_activity125_task.configDict[arg_15_1]
+function Activity125Config:getTaskCO(id)
+	return lua_activity125_task.configDict[id]
 end
 
-function var_0_0.getTaskCO_ReadTask(arg_16_0, arg_16_1)
-	return arg_16_0.__ReadTasksTagTaskCoDict[arg_16_1]
+function Activity125Config:getTaskCO_ReadTask(actId)
+	return self.__ReadTasksTagTaskCoDict[actId]
 end
 
-function var_0_0.getTaskCO_ReadTask_Tag(arg_17_0, arg_17_1, arg_17_2)
-	return arg_17_0:getTaskCO_ReadTask(arg_17_1)[arg_17_2]
+function Activity125Config:getTaskCO_ReadTask_Tag(actId, eActivityWarmUpEnum_Activity125TaskTag)
+	local actTable = self:getTaskCO_ReadTask(actId)
+
+	return actTable[eActivityWarmUpEnum_Activity125TaskTag]
 end
 
-function var_0_0.getTaskCO_ReadTask_Tag_TaskId(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	return arg_18_0:getTaskCO_ReadTask_Tag(arg_18_1, arg_18_2)[arg_18_3]
+function Activity125Config:getTaskCO_ReadTask_Tag_TaskId(actId, eActivityWarmUpEnum_Activity125TaskTag, taskId)
+	local tagTable = self:getTaskCO_ReadTask_Tag(actId, eActivityWarmUpEnum_Activity125TaskTag)
+
+	return tagTable[taskId]
 end
 
-function var_0_0.getLinkCO(arg_19_0, arg_19_1)
-	return lua_activity125_link.configDict[arg_19_1]
+function Activity125Config:getLinkCO(id)
+	return lua_activity125_link.configDict[id]
 end
 
-function var_0_0.getH5BaseUrl(arg_20_0, arg_20_1)
-	local var_20_0 = arg_20_0:getLinkCO(arg_20_1)
+function Activity125Config:getH5BaseUrl(actId)
+	local CO = self:getLinkCO(actId)
 
-	if not var_20_0 then
+	if not CO then
 		return
 	end
 
-	return SettingsModel.instance:extractByRegion(var_20_0.link)
+	return SettingsModel.instance:extractByRegion(CO.link)
 end
 
-var_0_0.instance = var_0_0.New()
+function Activity125Config:getCultivationDestinyActId(fallback)
+	return ActivityConfig.instance:getConstAsNum(7, fallback or 13210)
+end
 
-return var_0_0
+Activity125Config.instance = Activity125Config.New()
+
+return Activity125Config

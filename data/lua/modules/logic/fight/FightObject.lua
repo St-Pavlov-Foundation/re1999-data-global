@@ -1,268 +1,274 @@
-﻿module("modules.logic.fight.FightObject", package.seeall)
+﻿-- chunkname: @modules/logic/fight/FightObject.lua
 
-local var_0_0 = class("FightObject")
-local var_0_1 = __G__TRACKBACK__
-local var_0_2 = xpcall
-local var_0_3 = rawget
+module("modules.logic.fight.FightObject", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, ...)
-	arg_1_0.INSTANTIATE_CLASS_LIST = nil
-	arg_1_0.COMPONENT_LIST = nil
-	arg_1_0.IS_RELEASING = nil
-	arg_1_0.IS_DISPOSED = nil
+local FightObject = class("FightObject")
+local __G__TRACKBACK__ = __G__TRACKBACK__
+local xpcall = xpcall
+local rawget = rawget
+
+function FightObject:onConstructor(...)
+	self.INSTANTIATE_CLASS_LIST = nil
+	self.COMPONENT_LIST = nil
+	self.IS_RELEASING = nil
+	self.IS_DISPOSED = nil
 end
 
-function var_0_0.onLogicEnter(arg_2_0, ...)
+function FightObject:onLogicEnter(...)
 	return
 end
 
-function var_0_0.onLogicExit(arg_3_0)
+function FightObject:onLogicExit()
 	return
 end
 
-function var_0_0.onDestructor(arg_4_0)
-	if arg_4_0.COMPONENT_LIST then
-		local var_4_0 = arg_4_0.COMPONENT_LIST
+function FightObject:onDestructor()
+	if self.COMPONENT_LIST then
+		local list = self.COMPONENT_LIST
 
-		for iter_4_0 = arg_4_0.COMP_COUNT, 1, -1 do
-			local var_4_1 = var_4_0[iter_4_0]
+		for i = self.COMP_COUNT, 1, -1 do
+			local comp = list[i]
 
-			if not var_4_1.IS_DISPOSED then
-				var_4_1:disposeSelf()
+			if not comp.IS_DISPOSED then
+				comp:disposeSelf()
 			end
 		end
 
-		arg_4_0.COMPONENT_LIST = nil
+		self.COMPONENT_LIST = nil
 	end
 
-	arg_4_0.INSTANTIATE_CLASS_LIST = nil
+	self.INSTANTIATE_CLASS_LIST = nil
 end
 
-function var_0_0.onDestructorFinish(arg_5_0)
+function FightObject:onDestructorFinish()
 	return
 end
 
-function var_0_0.newClass(arg_6_0, arg_6_1, ...)
-	if arg_6_0.IS_DISPOSED or arg_6_0.IS_RELEASING then
-		logError("生命周期已经结束了,但是又调用注册类的方法,请检查代码,类名:" .. arg_6_0.__cname)
-	end
-
-	if not arg_6_0.INSTANTIATE_CLASS_LIST then
-		arg_6_0.INSTANTIATE_CLASS_LIST = {}
-		arg_6_0.OBJ_COUNT = 0
-	end
-
-	local var_6_0 = setmetatable({}, arg_6_1)
-
-	var_6_0.class = arg_6_1
-	var_6_0.PARENT_ROOT_OBJECT = arg_6_0
-	arg_6_0.OBJ_COUNT = arg_6_0.OBJ_COUNT + 1
-	arg_6_0.INSTANTIATE_CLASS_LIST[arg_6_0.OBJ_COUNT] = var_6_0
-
-	var_6_0:ctor(...)
-
-	return var_6_0
+function FightObject:isActive()
+	return not self.IS_DISPOSED and not self.IS_RELEASING
 end
 
-function var_0_0.addComponent(arg_7_0, arg_7_1)
-	if arg_7_0.IS_DISPOSED then
-		logError("生命周期已经结束了,但是又调用了添加组件的方法,请检查代码,类名:" .. arg_7_0.__cname)
+function FightObject:newClass(class, ...)
+	if self.IS_DISPOSED or self.IS_RELEASING then
+		logError("生命周期已经结束了,但是又调用注册类的方法,请检查代码,类名:" .. self.__cname)
 	end
 
-	if not arg_7_0.COMPONENT_LIST then
-		arg_7_0.COMPONENT_LIST = {}
-		arg_7_0.COMP_COUNT = 0
+	if not self.INSTANTIATE_CLASS_LIST then
+		self.INSTANTIATE_CLASS_LIST = {}
+		self.OBJ_COUNT = 0
 	end
 
-	local var_7_0 = setmetatable({}, arg_7_1)
+	local obj = setmetatable({}, class)
 
-	var_7_0.class = arg_7_1
-	var_7_0.PARENT_ROOT_OBJECT = arg_7_0
-	arg_7_0.COMP_COUNT = arg_7_0.COMP_COUNT + 1
-	arg_7_0.COMPONENT_LIST[arg_7_0.COMP_COUNT] = var_7_0
+	obj.class = class
+	obj.PARENT_ROOT_OBJECT = self
+	self.OBJ_COUNT = self.OBJ_COUNT + 1
+	self.INSTANTIATE_CLASS_LIST[self.OBJ_COUNT] = obj
 
-	var_7_0:ctor()
+	obj:ctor(...)
 
-	return var_7_0
+	return obj
 end
 
-function var_0_0.removeComponent(arg_8_0, arg_8_1)
-	if not arg_8_1 then
+function FightObject:addComponent(clsDefine)
+	if self.IS_DISPOSED then
+		logError("生命周期已经结束了,但是又调用了添加组件的方法,请检查代码,类名:" .. self.__cname)
+	end
+
+	if not self.COMPONENT_LIST then
+		self.COMPONENT_LIST = {}
+		self.COMP_COUNT = 0
+	end
+
+	local comp = setmetatable({}, clsDefine)
+
+	comp.class = clsDefine
+	comp.PARENT_ROOT_OBJECT = self
+	self.COMP_COUNT = self.COMP_COUNT + 1
+	self.COMPONENT_LIST[self.COMP_COUNT] = comp
+
+	comp:ctor()
+
+	return comp
+end
+
+function FightObject:removeComponent(comp)
+	if not comp then
 		return
 	end
 
-	arg_8_1:disposeSelf()
+	comp:disposeSelf()
 end
 
-function var_0_0.disposeSelf(arg_9_0)
-	if arg_9_0.IS_DISPOSED then
+function FightObject:disposeSelf()
+	if self.IS_DISPOSED then
 		return
 	end
 
-	arg_9_0.IS_DISPOSED = true
+	self.IS_DISPOSED = true
 
-	local var_9_0 = arg_9_0.GAMEOBJECT
+	local gameObject = self.GAMEOBJECT
 
-	var_0_2(arg_9_0.disposeSelfInternal, var_0_1, arg_9_0)
+	xpcall(self.disposeSelfInternal, __G__TRACKBACK__, self)
 
-	if var_9_0 then
-		gohelper.destroy(var_9_0)
+	if gameObject then
+		gohelper.destroy(gameObject)
 	end
 end
 
-function var_0_0.ctor(arg_10_0, ...)
-	arg_10_0:initializationInternal(arg_10_0.class, arg_10_0, ...)
+function FightObject:ctor(...)
+	self:initializationInternal(self.class, self, ...)
 
-	return arg_10_0:onLogicEnter(...)
+	return self:onLogicEnter(...)
 end
 
-function var_0_0.initializationInternal(arg_11_0, arg_11_1, arg_11_2, ...)
-	local var_11_0 = arg_11_1.super
+function FightObject:initializationInternal(class, handle, ...)
+	local super = class.super
 
-	if var_11_0 then
-		arg_11_0:initializationInternal(var_11_0, arg_11_2, ...)
+	if super then
+		self:initializationInternal(super, handle, ...)
 	end
 
-	local var_11_1 = var_0_3(arg_11_1, "onConstructor")
+	local func = rawget(class, "onConstructor")
 
-	if var_11_1 then
-		return var_11_1(arg_11_2, ...)
+	if func then
+		return func(handle, ...)
 	end
 end
 
-function var_0_0.disposeSelfInternal(arg_12_0)
-	if not arg_12_0.IS_RELEASING then
-		if arg_12_0.PARENT_ROOT_OBJECT then
-			arg_12_0.PARENT_ROOT_OBJECT:clearDeadInstantiatedClass()
+function FightObject:disposeSelfInternal()
+	if not self.IS_RELEASING then
+		if self.PARENT_ROOT_OBJECT then
+			self.PARENT_ROOT_OBJECT:clearDeadInstantiatedClass()
 		end
 
-		arg_12_0:markReleasing()
-		arg_12_0:releaseChildRoot()
+		self:markReleasing()
+		self:releaseChildRoot()
 	end
 
-	var_0_2(arg_12_0.onLogicExit, var_0_1, arg_12_0)
-	arg_12_0:destructorInternal(arg_12_0.class, arg_12_0)
+	xpcall(self.onLogicExit, __G__TRACKBACK__, self)
+	self:destructorInternal(self.class, self)
 
-	return var_0_2(arg_12_0.onDestructorFinish, var_0_1, arg_12_0)
+	return xpcall(self.onDestructorFinish, __G__TRACKBACK__, self)
 end
 
-function var_0_0.clearDeadInstantiatedClass(arg_13_0)
-	if arg_13_0.IS_DISPOSED then
+function FightObject:clearDeadInstantiatedClass()
+	if self.IS_DISPOSED then
 		return
 	end
 
-	if arg_13_0.CLEARTIMER then
+	if self.CLEARTIMER then
 		return
 	end
 
-	arg_13_0.CLEARTIMER = arg_13_0:com_registRepeatTimer(arg_13_0.internalClearDeadInstantiatedClass, 1, 1)
+	self.CLEARTIMER = self:com_registRepeatTimer(self.internalClearDeadInstantiatedClass, 1, 1)
 end
 
-function var_0_0.internalClearDeadInstantiatedClass(arg_14_0)
-	if arg_14_0.IS_DISPOSED then
-		logError("生命周期已经结束了,但是又调用了清除已经死亡的类的方法,请检查代码,类名:" .. arg_14_0.__cname)
+function FightObject:internalClearDeadInstantiatedClass()
+	if self.IS_DISPOSED then
+		logError("生命周期已经结束了,但是又调用了清除已经死亡的类的方法,请检查代码,类名:" .. self.__cname)
 	end
 
-	arg_14_0.CLEARTIMER = nil
+	self.CLEARTIMER = nil
 
-	local var_14_0 = arg_14_0.INSTANTIATE_CLASS_LIST
+	local list = self.INSTANTIATE_CLASS_LIST
 
-	if var_14_0 then
-		local var_14_1 = 1
+	if list then
+		local j = 1
 
-		for iter_14_0 = 1, arg_14_0.OBJ_COUNT do
-			local var_14_2 = var_14_0[iter_14_0]
+		for i = 1, self.OBJ_COUNT do
+			local obj = list[i]
 
-			if not var_14_2.IS_DISPOSED then
-				if iter_14_0 ~= var_14_1 then
-					var_14_0[var_14_1] = var_14_2
-					var_14_0[iter_14_0] = nil
+			if not obj.IS_DISPOSED then
+				if i ~= j then
+					list[j] = obj
+					list[i] = nil
 				end
 
-				var_14_1 = var_14_1 + 1
+				j = j + 1
 			else
-				var_14_0[iter_14_0] = nil
+				list[i] = nil
 			end
 		end
 
-		arg_14_0.OBJ_COUNT = var_14_1 - 1
+		self.OBJ_COUNT = j - 1
 	end
 end
 
-function var_0_0.markReleasing(arg_15_0)
-	local var_15_0 = arg_15_0
+function FightObject:markReleasing()
+	local root = self
 
-	while var_15_0 do
-		local var_15_1 = var_15_0.INSTANTIATE_CLASS_LIST
+	while root do
+		local childList = root.INSTANTIATE_CLASS_LIST
 
-		if not var_15_0.IS_RELEASING then
-			var_15_0.IS_RELEASING = 0
+		if not root.IS_RELEASING then
+			root.IS_RELEASING = 0
 		end
 
-		local var_15_2 = var_15_0.IS_RELEASING + 1
-		local var_15_3 = var_15_1 and var_15_1[var_15_2]
+		local markIndex = root.IS_RELEASING + 1
+		local childRoot = childList and childList[markIndex]
 
-		if not var_15_3 then
-			if var_15_0 == arg_15_0 then
+		if not childRoot then
+			if root == self then
 				return
 			end
 
-			var_15_0 = var_15_0.PARENT_ROOT_OBJECT
+			root = root.PARENT_ROOT_OBJECT
 		else
-			var_15_0.IS_RELEASING = var_15_2
+			root.IS_RELEASING = markIndex
 
-			if not var_15_3.IS_RELEASING then
-				var_15_0 = var_15_3
+			if not childRoot.IS_RELEASING then
+				root = childRoot
 			end
 		end
 	end
 end
 
-function var_0_0.releaseChildRoot(arg_16_0)
-	local var_16_0 = arg_16_0
+function FightObject:releaseChildRoot()
+	local root = self
 
-	while var_16_0 do
-		local var_16_1 = var_16_0.INSTANTIATE_CLASS_LIST
+	while root do
+		local childList = root.INSTANTIATE_CLASS_LIST
 
-		if not var_16_0.DISPOSEINDEX then
-			var_16_0.DISPOSEINDEX = var_16_1 and var_16_0.OBJ_COUNT + 1 or 1
+		if not root.DISPOSEINDEX then
+			root.DISPOSEINDEX = childList and root.OBJ_COUNT + 1 or 1
 		end
 
-		local var_16_2 = var_16_0.DISPOSEINDEX - 1
-		local var_16_3 = var_16_1 and var_16_1[var_16_2]
+		local disposeIndex = root.DISPOSEINDEX - 1
+		local childRoot = childList and childList[disposeIndex]
 
-		if not var_16_3 then
-			if var_16_0 == arg_16_0 then
+		if not childRoot then
+			if root == self then
 				return
 			end
 
-			if not var_16_0.IS_DISPOSED then
-				var_16_0:disposeSelf()
+			if not root.IS_DISPOSED then
+				root:disposeSelf()
 			end
 
-			var_16_0 = var_16_0.PARENT_ROOT_OBJECT
+			root = root.PARENT_ROOT_OBJECT
 		else
-			var_16_0.DISPOSEINDEX = var_16_2
+			root.DISPOSEINDEX = disposeIndex
 
-			if not var_16_3.DISPOSEINDEX then
-				var_16_0 = var_16_3
+			if not childRoot.DISPOSEINDEX then
+				root = childRoot
 			end
 		end
 	end
 end
 
-function var_0_0.destructorInternal(arg_17_0, arg_17_1, arg_17_2)
-	local var_17_0 = var_0_3(arg_17_1, "onDestructor")
+function FightObject:destructorInternal(class, handle)
+	local func = rawget(class, "onDestructor")
 
-	if var_17_0 then
-		var_0_2(var_17_0, var_0_1, arg_17_2)
+	if func then
+		xpcall(func, __G__TRACKBACK__, handle)
 	end
 
-	local var_17_1 = arg_17_1.super
+	local super = class.super
 
-	if var_17_1 then
-		return arg_17_0:destructorInternal(var_17_1, arg_17_2)
+	if super then
+		return self:destructorInternal(super, handle)
 	end
 end
 
-return var_0_0
+return FightObject

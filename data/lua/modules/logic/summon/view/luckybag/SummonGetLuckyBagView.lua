@@ -1,89 +1,93 @@
-﻿module("modules.logic.summon.view.luckybag.SummonGetLuckyBagView", package.seeall)
+﻿-- chunkname: @modules/logic/summon/view/luckybag/SummonGetLuckyBagView.lua
 
-local var_0_0 = class("SummonGetLuckyBagView", BaseView)
+module("modules.logic.summon.view.luckybag.SummonGetLuckyBagView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg1")
-	arg_1_0._gocollection = gohelper.findChild(arg_1_0.viewGO, "content/#go_collection")
+local SummonGetLuckyBagView = class("SummonGetLuckyBagView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SummonGetLuckyBagView:onInitView()
+	self._simagebg1 = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_bg1")
+	self._gocollection = gohelper.findChild(self.viewGO, "content/#go_collection")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function SummonGetLuckyBagView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function SummonGetLuckyBagView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._bgClick = gohelper.getClick(arg_4_0.viewGO)
+function SummonGetLuckyBagView:_editableInitView()
+	self._bgClick = gohelper.getClick(self.viewGO)
 
-	arg_4_0._bgClick:AddClickListener(arg_4_0._onClickBG, arg_4_0)
-	gohelper.setActive(arg_4_0._gocollection, false)
+	self._bgClick:AddClickListener(self._onClickBG, self)
+	gohelper.setActive(self._gocollection, false)
 
-	arg_4_0._simageIconList = arg_4_0:getUserDataTb_()
+	self._simageIconList = self:getUserDataTb_()
 end
 
-function var_0_0.onDestroyView(arg_5_0)
-	arg_5_0._bgClick:RemoveClickListener()
+function SummonGetLuckyBagView:onDestroyView()
+	self._bgClick:RemoveClickListener()
 end
 
-function var_0_0.onOpen(arg_6_0)
+function SummonGetLuckyBagView:onOpen()
 	logNormal("SummonGetLuckyBagView onOpen")
 	AudioMgr.instance:trigger(AudioEnum.Summon.play_ui_wulu_lucky_bag_gain)
-	arg_6_0:refreshView()
+	self:refreshView()
 end
 
-function var_0_0.onClose(arg_7_0)
+function SummonGetLuckyBagView:onClose()
 	return
 end
 
-function var_0_0.refreshView(arg_8_0)
-	arg_8_0.poolId = arg_8_0.viewParam.poolId
+function SummonGetLuckyBagView:refreshView()
+	local poolId = self.viewParam.poolId
 
-	local var_8_0 = arg_8_0.viewParam.luckyBagIdList
+	self.poolId = poolId
 
-	if #var_8_0 <= 0 then
+	local luckyBagIdList = self.viewParam.luckyBagIdList
+
+	if #luckyBagIdList <= 0 then
 		logError("抽卡 福袋 id列表为空")
 
 		return
 	end
 
-	gohelper.CreateObjList(arg_8_0, arg_8_0.onShowItem, var_8_0, nil, arg_8_0._gocollection)
+	gohelper.CreateObjList(self, self.onShowItem, luckyBagIdList, nil, self._gocollection)
 end
 
-function var_0_0.onShowItem(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = SummonConfig.instance:getLuckyBag(arg_9_0.poolId, arg_9_2)
+function SummonGetLuckyBagView:onShowItem(itemGo, luckyBagId)
+	local luckyBagCo = SummonConfig.instance:getLuckyBag(self.poolId, luckyBagId)
 
-	if var_9_0 then
-		local var_9_1 = gohelper.findChildTextMesh(arg_9_1, "txt_name")
-		local var_9_2 = gohelper.findChildTextMesh(arg_9_1, "en")
-		local var_9_3 = gohelper.findChildSingleImage(arg_9_1, "#simage_icon")
+	if luckyBagCo then
+		local txtName = gohelper.findChildTextMesh(itemGo, "txt_name")
+		local txtNameEn = gohelper.findChildTextMesh(itemGo, "en")
+		local simageIcon = gohelper.findChildSingleImage(itemGo, "#simage_icon")
 
-		var_9_1.text = var_9_0.name
-		var_9_2.text = var_9_0.nameEn or ""
+		txtName.text = luckyBagCo.name
+		txtNameEn.text = luckyBagCo.nameEn or ""
 
-		table.insert(arg_9_0._simageIconList, var_9_3)
-		var_9_3:LoadImage(ResUrl.getSummonCoverBg(var_9_0.icon))
+		table.insert(self._simageIconList, simageIcon)
+		simageIcon:LoadImage(ResUrl.getSummonCoverBg(luckyBagCo.icon))
 	end
 end
 
-function var_0_0._onClickBG(arg_10_0)
-	arg_10_0:closeThis()
+function SummonGetLuckyBagView:_onClickBG()
+	self:closeThis()
 
-	if arg_10_0._simageIconList and next(arg_10_0._simageIconList) then
-		for iter_10_0, iter_10_1 in ipairs(arg_10_0._simageIconList) do
-			iter_10_1:UnLoadImage()
+	if self._simageIconList and next(self._simageIconList) then
+		for _, simageIcon in ipairs(self._simageIconList) do
+			simageIcon:UnLoadImage()
 		end
 
-		tabletool.clear(arg_10_0._simageIconList)
+		tabletool.clear(self._simageIconList)
 
-		arg_10_0._simageIconList = nil
+		self._simageIconList = nil
 	end
 end
 
-return var_0_0
+return SummonGetLuckyBagView

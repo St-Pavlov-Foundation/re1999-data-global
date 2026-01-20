@@ -1,103 +1,108 @@
-﻿module("modules.logic.versionactivity1_2.yaxian.view.game.YaXianGameContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/yaxian/view/game/YaXianGameContainer.lua
 
-local var_0_0 = class("YaXianGameContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_2.yaxian.view.game.YaXianGameContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local YaXianGameContainer = class("YaXianGameContainer", BaseViewContainer)
 
-	table.insert(var_1_0, YaXianGameSceneView.New())
-	table.insert(var_1_0, YaXianGameTipAreaView.New())
-	table.insert(var_1_0, YaXianGamePathView.New())
-	table.insert(var_1_0, YaXianGameView.New())
-	table.insert(var_1_0, YaXianGameSkillView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
+function YaXianGameContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, YaXianGameSceneView.New())
+	table.insert(views, YaXianGameTipAreaView.New())
+	table.insert(views, YaXianGamePathView.New())
+	table.insert(views, YaXianGameView.New())
+	table.insert(views, YaXianGameSkillView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_btns"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		local var_2_0 = NavigateButtonsView.New({
+function YaXianGameContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		local navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			true
 		}, HelpEnum.HelpId.YaxianChessHelp)
 
-		var_2_0:setOverrideClose(arg_2_0.overrideOnCloseClick, arg_2_0)
+		navigateView:setOverrideClose(self.overrideOnCloseClick, self)
 
 		return {
-			var_2_0
+			navigateView
 		}
 	end
 end
 
-function var_0_0.onContainerInit(arg_3_0)
-	arg_3_0:refreshViewGo()
+function YaXianGameContainer:onContainerInit()
+	self:refreshViewGo()
 end
 
-function var_0_0.refreshViewGo(arg_4_0)
-	gohelper.setActive(arg_4_0.viewGO, not YaXianModel.instance:checkIsPlayingClickAnimation())
+function YaXianGameContainer:refreshViewGo()
+	gohelper.setActive(self.viewGO, not YaXianModel.instance:checkIsPlayingClickAnimation())
 end
 
-function var_0_0.onContainerOpen(arg_5_0)
-	local var_5_0 = YaXianGameModel.instance:getEpisodeCo()
-	local var_5_1 = YaXianConfig.instance:getChapterConfig(var_5_0.chapterId)
+function YaXianGameContainer:onContainerOpen()
+	local episodeCo = YaXianGameModel.instance:getEpisodeCo()
+	local chapterCo = YaXianConfig.instance:getChapterConfig(episodeCo.chapterId)
 
-	AudioMgr.instance:trigger(var_5_1.ambientAudio)
+	AudioMgr.instance:trigger(chapterCo.ambientAudio)
 	AudioMgr.instance:trigger(AudioEnum.UI.set_state_bgm_decrease)
 end
 
-function var_0_0.onContainerClose(arg_6_0)
+function YaXianGameContainer:onContainerClose()
 	AudioMgr.instance:trigger(AudioEnum.UI.stop_ui_noise_allarea)
 	AudioMgr.instance:trigger(AudioEnum.UI.set_state_bgm_redecrease)
 	ViewMgr.instance:closeView(ViewName.YaXianGameResultView)
 end
 
-function var_0_0.onContainerCloseFinish(arg_7_0)
+function YaXianGameContainer:onContainerCloseFinish()
 	YaXianGameController.instance:release()
 	YaXianGameModel.instance:release()
 end
 
-function var_0_0.setRootSceneGo(arg_8_0, arg_8_1)
-	arg_8_0.sceneGo = arg_8_1
+function YaXianGameContainer:setRootSceneGo(sceneGo)
+	self.sceneGo = sceneGo
 end
 
-function var_0_0.getRootSceneGo(arg_9_0)
-	return arg_9_0.sceneGo
+function YaXianGameContainer:getRootSceneGo()
+	return self.sceneGo
 end
 
-function var_0_0.getScenePosOffsetY(arg_10_0)
-	if arg_10_0.sceneOffsetY then
-		return arg_10_0.sceneOffsetY
+function YaXianGameContainer:getScenePosOffsetY()
+	if self.sceneOffsetY then
+		return self.sceneOffsetY
 	end
 
-	local var_10_0, var_10_1, var_10_2 = transformhelper.getLocalPos(CameraMgr.instance:getMainCameraTrs().parent)
+	local _, offsetY, _ = transformhelper.getLocalPos(CameraMgr.instance:getMainCameraTrs().parent)
 
-	arg_10_0.sceneOffsetY = var_10_1
+	self.sceneOffsetY = offsetY
 
-	return arg_10_0.sceneOffsetY
+	return self.sceneOffsetY
 end
 
-function var_0_0.playOpenTransition(arg_11_0)
-	arg_11_0:_cancelBlock()
-	arg_11_0:_stopOpenCloseAnim()
-	arg_11_0:onPlayOpenTransitionFinish()
+function YaXianGameContainer:playOpenTransition()
+	self:_cancelBlock()
+	self:_stopOpenCloseAnim()
+	self:onPlayOpenTransitionFinish()
 end
 
-function var_0_0.playCloseTransition(arg_12_0)
-	arg_12_0:_cancelBlock()
-	arg_12_0:_stopOpenCloseAnim()
-	arg_12_0:__getAnimatorPlayer():Play("close", arg_12_0.onPlayCloseTransitionFinish, arg_12_0)
-	TaskDispatcher.runDelay(arg_12_0.onPlayCloseTransitionFinish, arg_12_0, 2)
+function YaXianGameContainer:playCloseTransition()
+	self:_cancelBlock()
+	self:_stopOpenCloseAnim()
+
+	local animatorPlayer = self:__getAnimatorPlayer()
+
+	animatorPlayer:Play("close", self.onPlayCloseTransitionFinish, self)
+	TaskDispatcher.runDelay(self.onPlayCloseTransitionFinish, self, 2)
 end
 
-function var_0_0.overrideOnCloseClick(arg_13_0)
-	GameFacade.showMessageBox(MessageBoxIdDefine.QuitPushBoxEpisode, MsgBoxEnum.BoxType.Yes_No, arg_13_0.yesCallback, nil, nil, arg_13_0)
+function YaXianGameContainer:overrideOnCloseClick()
+	GameFacade.showMessageBox(MessageBoxIdDefine.QuitPushBoxEpisode, MsgBoxEnum.BoxType.Yes_No, self.yesCallback, nil, nil, self)
 end
 
-function var_0_0.yesCallback(arg_14_0)
+function YaXianGameContainer:yesCallback()
 	Stat1_2Controller.instance:yaXianStatEnd(StatEnum.Result.Abort)
-	arg_14_0:closeThis()
+	self:closeThis()
 end
 
-return var_0_0
+return YaXianGameContainer

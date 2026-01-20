@@ -1,32 +1,37 @@
-﻿module("modules.logic.scene.cachot.comp.CachotLightComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/cachot/comp/CachotLightComp.lua
 
-local var_0_0 = class("CachotLightComp", BaseSceneComp)
+module("modules.logic.scene.cachot.comp.CachotLightComp", package.seeall)
 
-function var_0_0.onScenePrepared(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._scene = arg_1_0:getCurScene()
-	arg_1_0._preloadComp = arg_1_0._scene.preloader
-	arg_1_0._lightGo = gohelper.create3d(arg_1_0._scene:getSceneContainerGO(), "Light")
-	arg_1_0._lightAnim = arg_1_0._preloadComp:getResInst(CachotScenePreloader.LightPath, arg_1_0._lightGo):GetComponent(typeof(UnityEngine.Animator))
+local CachotLightComp = class("CachotLightComp", BaseSceneComp)
 
-	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.BeginTriggerEvent, arg_1_0._playClickAnim, arg_1_0)
+function CachotLightComp:onScenePrepared(sceneId, levelId)
+	self._scene = self:getCurScene()
+	self._preloadComp = self._scene.preloader
+	self._lightGo = gohelper.create3d(self._scene:getSceneContainerGO(), "Light")
+
+	local go = self._preloadComp:getResInst(CachotScenePreloader.LightPath, self._lightGo)
+
+	self._lightAnim = go:GetComponent(typeof(UnityEngine.Animator))
+
+	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.BeginTriggerEvent, self._playClickAnim, self)
 end
 
-function var_0_0._playClickAnim(arg_2_0)
-	arg_2_0._lightAnim:Play("open", 0, 0)
+function CachotLightComp:_playClickAnim()
+	self._lightAnim:Play("open", 0, 0)
 end
 
-function var_0_0.onSceneClose(arg_3_0)
-	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.BeginTriggerEvent, arg_3_0._playClickAnim, arg_3_0)
+function CachotLightComp:onSceneClose()
+	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.BeginTriggerEvent, self._playClickAnim, self)
 
-	if arg_3_0._lightGo then
-		gohelper.destroy(arg_3_0._lightGo)
+	if self._lightGo then
+		gohelper.destroy(self._lightGo)
 
-		arg_3_0._lightGo = nil
+		self._lightGo = nil
 	end
 
-	arg_3_0._preloadComp = nil
-	arg_3_0._scene = nil
-	arg_3_0._lightAnim = nil
+	self._preloadComp = nil
+	self._scene = nil
+	self._lightAnim = nil
 end
 
-return var_0_0
+return CachotLightComp

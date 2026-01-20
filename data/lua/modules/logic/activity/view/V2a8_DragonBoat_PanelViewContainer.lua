@@ -1,15 +1,17 @@
-﻿module("modules.logic.activity.view.V2a8_DragonBoat_PanelViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/V2a8_DragonBoat_PanelViewContainer.lua
 
-local var_0_0 = class("V2a8_DragonBoat_PanelViewContainer", V2a8_DragonBoat_RewardItemViewContainer)
+module("modules.logic.activity.view.V2a8_DragonBoat_PanelViewContainer", package.seeall)
 
-function var_0_0.onModifyListScrollParam(arg_1_0, arg_1_1)
-	V2a8_DragonBoat_RewardItemViewContainer.onModifyListScrollParam(arg_1_0, arg_1_1)
+local V2a8_DragonBoat_PanelViewContainer = class("V2a8_DragonBoat_PanelViewContainer", V2a8_DragonBoat_RewardItemViewContainer)
 
-	arg_1_1.scrollGOPath = "root/#scroll_ItemList"
+function V2a8_DragonBoat_PanelViewContainer:onModifyListScrollParam(refListScrollParam)
+	V2a8_DragonBoat_RewardItemViewContainer.onModifyListScrollParam(self, refListScrollParam)
+
+	refListScrollParam.scrollGOPath = "root/#scroll_ItemList"
 end
 
-function var_0_0.onGetMainViewClassType(arg_2_0)
+function V2a8_DragonBoat_PanelViewContainer:onGetMainViewClassType()
 	return V2a8_DragonBoat_PanelView
 end
 
-return var_0_0
+return V2a8_DragonBoat_PanelViewContainer

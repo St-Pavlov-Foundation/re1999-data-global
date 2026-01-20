@@ -1,34 +1,36 @@
-﻿module("modules.logic.versionactivity2_4.wuerlixi.controller.WuErLiXiController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/wuerlixi/controller/WuErLiXiController.lua
 
-local var_0_0 = class("WuErLiXiController", BaseController)
+module("modules.logic.versionactivity2_4.wuerlixi.controller.WuErLiXiController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local WuErLiXiController = class("WuErLiXiController", BaseController)
+
+function WuErLiXiController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function WuErLiXiController:reInit()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function WuErLiXiController:addConstEvents()
 	return
 end
 
-function var_0_0.enterLevelView(arg_4_0)
-	Activity180Rpc.instance:sendGet180InfosRequest(VersionActivity2_4Enum.ActivityId.WuErLiXi, arg_4_0._onRecInfo, arg_4_0)
+function WuErLiXiController:enterLevelView()
+	Activity180Rpc.instance:sendGet180InfosRequest(VersionActivity2_4Enum.ActivityId.WuErLiXi, self._onRecInfo, self)
 end
 
-function var_0_0._onRecInfo(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	if arg_5_2 == 0 and arg_5_3.activityId == VersionActivity2_4Enum.ActivityId.WuErLiXi then
-		WuErLiXiModel.instance:initInfos(arg_5_3.act180EpisodeNO)
+function WuErLiXiController:_onRecInfo(cmd, resultCode, msg)
+	if resultCode == 0 and msg.activityId == VersionActivity2_4Enum.ActivityId.WuErLiXi then
+		WuErLiXiModel.instance:initInfos(msg.act180EpisodeNO)
 		ViewMgr.instance:openView(ViewName.WuErLiXiLevelView)
 	end
 end
 
-function var_0_0.enterGameView(arg_6_0, arg_6_1, arg_6_2)
-	ViewMgr.instance:openView(ViewName.WuErLiXiGameView, arg_6_1, arg_6_2)
+function WuErLiXiController:enterGameView(mapId, data)
+	ViewMgr.instance:openView(ViewName.WuErLiXiGameView, mapId, data)
 end
 
-var_0_0.instance = var_0_0.New()
+WuErLiXiController.instance = WuErLiXiController.New()
 
-return var_0_0
+return WuErLiXiController

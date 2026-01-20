@@ -1,47 +1,51 @@
-﻿module("modules.logic.dispatch.controller.DispatchController", package.seeall)
+﻿-- chunkname: @modules/logic/dispatch/controller/DispatchController.lua
 
-local var_0_0 = class("DispatchController", BaseController)
+module("modules.logic.dispatch.controller.DispatchController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local DispatchController = class("DispatchController", BaseController)
+
+function DispatchController:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function DispatchController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function DispatchController:addConstEvents()
 	return
 end
 
-function var_0_0.reInit(arg_4_0)
+function DispatchController:reInit()
 	return
 end
 
-function var_0_0.openDispatchView(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	local var_5_0
+function DispatchController:openDispatchView(actId, elementId, dispatchId)
+	local viewName
 
-	if arg_5_1 then
-		var_5_0 = DispatchEnum.ActId2View[arg_5_1]
+	if actId then
+		viewName = DispatchEnum.ActId2View[actId]
 	end
 
-	if not var_5_0 then
-		logError(string.format("DispatchController:openDispatchView error,DispatchEnum.ActId2View not have view, actId:%s", arg_5_1))
+	if not viewName then
+		logError(string.format("DispatchController:openDispatchView error,DispatchEnum.ActId2View not have view, actId:%s", actId))
 
 		return
 	end
 
-	if DispatchModel.instance:getDispatchStatus(arg_5_2, arg_5_3) == DispatchEnum.DispatchStatus.Finished then
+	local status = DispatchModel.instance:getDispatchStatus(elementId, dispatchId)
+
+	if status == DispatchEnum.DispatchStatus.Finished then
 		return
 	end
 
 	DispatchModel.instance:checkDispatchFinish()
-	ViewMgr.instance:openView(var_5_0, {
-		elementId = arg_5_2,
-		dispatchId = arg_5_3
+	ViewMgr.instance:openView(viewName, {
+		elementId = elementId,
+		dispatchId = dispatchId
 	})
 end
 
-var_0_0.instance = var_0_0.New()
+DispatchController.instance = DispatchController.New()
 
-return var_0_0
+return DispatchController

@@ -1,16 +1,18 @@
-﻿module("modules.logic.fight.system.work.FightWorkInjuryBankHealContainer", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkInjuryBankHealContainer.lua
 
-local var_0_0 = class("FightWorkInjuryBankHealContainer", FightStepEffectFlow)
-local var_0_1 = {
+module("modules.logic.fight.system.work.FightWorkInjuryBankHealContainer", package.seeall)
+
+local FightWorkInjuryBankHealContainer = class("FightWorkInjuryBankHealContainer", FightStepEffectFlow)
+local parallelEffectType = {
 	[FightEnum.EffectType.FIGHTSTEP] = true
 }
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0:playAdjacentParallelEffect(var_0_1, true)
+function FightWorkInjuryBankHealContainer:onStart()
+	self:playAdjacentParallelEffect(parallelEffectType, true)
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkInjuryBankHealContainer:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkInjuryBankHealContainer

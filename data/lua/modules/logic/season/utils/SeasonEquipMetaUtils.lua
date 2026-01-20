@@ -1,8 +1,10 @@
-﻿module("modules.logic.season.utils.SeasonEquipMetaUtils", package.seeall)
+﻿-- chunkname: @modules/logic/season/utils/SeasonEquipMetaUtils.lua
 
-local var_0_0 = class("SeasonEquipMetaUtils")
+module("modules.logic.season.utils.SeasonEquipMetaUtils", package.seeall)
 
-var_0_0.attrKey = {
+local SeasonEquipMetaUtils = class("SeasonEquipMetaUtils")
+
+SeasonEquipMetaUtils.attrKey = {
 	atk = "attack",
 	def = "defense",
 	dropDmg = "dropDmg",
@@ -21,149 +23,150 @@ var_0_0.attrKey = {
 	clutch = "clutch"
 }
 
-function var_0_0.getEquipPropsDescStr(arg_1_0)
-	local var_1_0 = ""
-	local var_1_1 = SeasonConfig.instance:getSeasonEquipCo(arg_1_0)
+function SeasonEquipMetaUtils.getEquipPropsDescStr(itemId)
+	local resultStr = ""
+	local itemCO = SeasonConfig.instance:getSeasonEquipCo(itemId)
 
-	if var_1_1 then
-		local var_1_2 = var_0_0.getEquipPropsStrList(var_1_1.attrId)
+	if itemCO then
+		local attrList = SeasonEquipMetaUtils.getEquipPropsStrList(itemCO.attrId)
 
-		for iter_1_0, iter_1_1 in ipairs(var_1_2) do
-			if string.nilorempty(var_1_0) then
-				var_1_0 = var_1_0 .. iter_1_1
+		for i, str in ipairs(attrList) do
+			if string.nilorempty(resultStr) then
+				resultStr = resultStr .. str
 			else
-				var_1_0 = var_1_0 .. "\n" .. iter_1_1
+				resultStr = resultStr .. "\n" .. str
 			end
 		end
 
-		local var_1_3 = var_0_0.getSkillEffectStrList(var_1_1)
+		local skillList = SeasonEquipMetaUtils.getSkillEffectStrList(itemCO)
 
-		for iter_1_2, iter_1_3 in ipairs(var_1_3) do
-			local var_1_4 = string.format(luaLang("season_effect_desc_template"), iter_1_3)
+		for i, str in ipairs(skillList) do
+			local skillDescStr = string.format(luaLang("season_effect_desc_template"), str)
 
-			if string.nilorempty(var_1_0) then
-				var_1_0 = var_1_0 .. var_1_4
+			if string.nilorempty(resultStr) then
+				resultStr = resultStr .. skillDescStr
 			else
-				var_1_0 = var_1_0 .. "\n" .. var_1_4
+				resultStr = resultStr .. "\n" .. skillDescStr
 			end
 		end
 
-		if string.nilorempty(var_1_0) then
-			var_1_0 = var_1_0 .. "\n"
+		if string.nilorempty(resultStr) then
+			resultStr = resultStr .. "\n"
 		end
 
-		return var_1_0
+		return resultStr
 	else
-		logError(string.format("can't find season equip config, id = [%s]", arg_1_0))
+		logError(string.format("can't find season equip config, id = [%s]", itemId))
 	end
 
-	return var_1_0
+	return resultStr
 end
 
-var_0_0.PropValueColorPattern = "<color=#d2c197>%s</color>"
+SeasonEquipMetaUtils.PropValueColorPattern = "<color=#d2c197>%s</color>"
 
-function var_0_0.getEquipPropsStrList(arg_2_0, arg_2_1)
-	local var_2_0 = {}
-	local var_2_1
+function SeasonEquipMetaUtils.getEquipPropsStrList(attrId, skipColorFormat)
+	local list = {}
+	local attrCO
 
-	if arg_2_0 then
-		var_2_1 = SeasonConfig.instance:getSeasonEquipAttrCo(arg_2_0)
+	if attrId then
+		attrCO = SeasonConfig.instance:getSeasonEquipAttrCo(attrId)
 	end
 
-	if not var_2_1 then
-		return var_2_0
+	if not attrCO then
+		return list
 	end
 
-	for iter_2_0, iter_2_1 in pairs(var_0_0.attrKey) do
-		local var_2_2 = var_2_1[iter_2_0]
+	for seasonAttrKey, charAttrKey in pairs(SeasonEquipMetaUtils.attrKey) do
+		local attrValue = attrCO[seasonAttrKey]
 
-		if var_2_2 and var_2_2 ~= 0 then
-			local var_2_3 = HeroConfig.instance:getIDByAttrType(iter_2_1)
-			local var_2_4 = HeroConfig.instance:getHeroAttributeCO(var_2_3)
+		if attrValue and attrValue ~= 0 then
+			local charAttrId = HeroConfig.instance:getIDByAttrType(charAttrKey)
+			local charAttrCO = HeroConfig.instance:getHeroAttributeCO(charAttrId)
 
-			if var_2_4 then
-				local var_2_5 = var_2_4.name
-				local var_2_6 = var_2_4.showType == 1 and "%" or ""
-				local var_2_7 = var_2_4.showType == 1 and 10 or 1
-				local var_2_8 = var_0_0.PropValueColorPattern
+			if charAttrCO then
+				local attrStr = charAttrCO.name
+				local perStr = charAttrCO.showType == 1 and "%" or ""
+				local rate = charAttrCO.showType == 1 and 10 or 1
+				local appendValuePattern = SeasonEquipMetaUtils.PropValueColorPattern
 
-				if arg_2_1 then
-					var_2_8 = "%s"
+				if skipColorFormat then
+					appendValuePattern = "%s"
 				end
 
 				if LangSettings.instance:isEn() then
-					if var_2_2 > 0 then
-						var_2_5 = var_2_5 .. " " .. luaLang("season_attr_up") .. string.format(var_2_8, tostring(var_2_2 / var_2_7) .. var_2_6)
+					if attrValue > 0 then
+						attrStr = attrStr .. " " .. luaLang("season_attr_up") .. string.format(appendValuePattern, tostring(attrValue / rate) .. perStr)
 					else
-						var_2_5 = var_2_5 .. " " .. luaLang("season_attr_down") .. string.format(var_2_8, tostring(-var_2_2 / var_2_7) .. var_2_6)
+						attrStr = attrStr .. " " .. luaLang("season_attr_down") .. string.format(appendValuePattern, tostring(-attrValue / rate) .. perStr)
 					end
-				elseif var_2_2 > 0 then
-					var_2_5 = var_2_5 .. luaLang("season_attr_up") .. " " .. string.format(var_2_8, tostring(var_2_2 / var_2_7) .. var_2_6)
+				elseif attrValue > 0 then
+					attrStr = attrStr .. luaLang("season_attr_up") .. " " .. string.format(appendValuePattern, tostring(attrValue / rate) .. perStr)
 				else
-					var_2_5 = var_2_5 .. luaLang("season_attr_down") .. " " .. string.format(var_2_8, tostring(-var_2_2 / var_2_7) .. var_2_6)
+					attrStr = attrStr .. luaLang("season_attr_down") .. " " .. string.format(appendValuePattern, tostring(-attrValue / rate) .. perStr)
 				end
 
-				table.insert(var_2_0, var_2_5)
+				table.insert(list, attrStr)
 			end
 		end
 	end
 
-	return var_2_0
+	return list
 end
 
-function var_0_0.getSkillEffectStrList(arg_3_0)
-	local var_3_0 = arg_3_0.skillId
-	local var_3_1 = {}
-	local var_3_2
+function SeasonEquipMetaUtils.getSkillEffectStrList(itemCO)
+	local skillId = itemCO.skillId
+	local list = {}
+	local attrCO
 
-	if var_3_0 then
-		local var_3_3
+	if skillId then
+		local cfgIds
 
-		if arg_3_0.rare == Activity104Enum.MainRoleRare then
-			local var_3_4 = string.split(var_3_0, "|")
+		if itemCO.rare == Activity104Enum.MainRoleRare then
+			local strArr = string.split(skillId, "|")
 
-			var_3_3 = {}
+			cfgIds = {}
 
-			for iter_3_0, iter_3_1 in ipairs(var_3_4) do
-				local var_3_5 = string.splitToNumber(iter_3_1, "#")
+			for _, str in ipairs(strArr) do
+				local strNumArr = string.splitToNumber(str, "#")
 
-				if #var_3_5 >= 2 and var_3_5[2] ~= nil then
-					table.insert(var_3_3, var_3_5[2])
+				if #strNumArr >= 2 and strNumArr[2] ~= nil then
+					table.insert(cfgIds, strNumArr[2])
 				end
 			end
 		else
-			var_3_3 = string.splitToNumber(var_3_0, "#")
+			cfgIds = string.splitToNumber(skillId, "#")
 		end
 
-		for iter_3_2, iter_3_3 in ipairs(var_3_3) do
-			local var_3_6 = FightConfig.instance:getSkillEffectCO(iter_3_3)
+		for _, cfgId in ipairs(cfgIds) do
+			local skillCfg = FightConfig.instance:getSkillEffectCO(cfgId)
 
-			if var_3_6 then
-				table.insert(var_3_1, FightConfig.instance:getSkillEffectDesc(nil, var_3_6))
+			if skillCfg then
+				table.insert(list, FightConfig.instance:getSkillEffectDesc(nil, skillCfg))
 			else
-				logError(string.format("can't find skill config ID = [%s]", iter_3_3))
+				logError(string.format("can't find skill config ID = [%s]", cfgId))
 			end
 		end
 	end
 
-	return var_3_1
+	return list
 end
 
-function var_0_0.isMainRoleCard(arg_4_0)
-	return arg_4_0 == Activity104Enum.MainRoleRare
+function SeasonEquipMetaUtils.isMainRoleCard(rare)
+	return rare == Activity104Enum.MainRoleRare
 end
 
-function var_0_0.getCurSeasonEquipCount(arg_5_0)
-	local var_5_0 = Activity104Model.instance:getCurSeasonId()
+function SeasonEquipMetaUtils.getCurSeasonEquipCount(itemId)
+	local seasonActId = Activity104Model.instance:getCurSeasonId()
+	local isDataReady = Activity104Model.instance:isSeasonDataReady(seasonActId)
 
-	if Activity104Model.instance:isSeasonDataReady(var_5_0) then
-		return var_0_0.getEquipCount(var_5_0, arg_5_0)
+	if isDataReady then
+		return SeasonEquipMetaUtils.getEquipCount(seasonActId, itemId)
 	end
 
 	return 0
 end
 
-var_0_0.Text_Career_Color_Bright_Bg = {
+SeasonEquipMetaUtils.Text_Career_Color_Bright_Bg = {
 	["0"] = "#252525",
 	["1"] = "#ac5320",
 	["2"] = "#324bb6",
@@ -172,18 +175,18 @@ var_0_0.Text_Career_Color_Bright_Bg = {
 	["4"] = "#9f342c"
 }
 
-function var_0_0.getCareerColorBrightBg(arg_6_0)
-	local var_6_0 = SeasonConfig.instance:getSeasonEquipCo(arg_6_0)
+function SeasonEquipMetaUtils.getCareerColorBrightBg(itemId)
+	local cfg = SeasonConfig.instance:getSeasonEquipCo(itemId)
 
-	if var_6_0 and var_6_0.career then
-		return var_0_0.Text_Career_Color_Bright_Bg[var_6_0.career] or var_0_0.Text_Career_Color_Bright_Bg["0"]
+	if cfg and cfg.career then
+		return SeasonEquipMetaUtils.Text_Career_Color_Bright_Bg[cfg.career] or SeasonEquipMetaUtils.Text_Career_Color_Bright_Bg["0"]
 	end
 
-	return var_0_0.Text_Career_Color_Bright_Bg["0"]
+	return SeasonEquipMetaUtils.Text_Career_Color_Bright_Bg["0"]
 end
 
-var_0_0.No_Effect_Alpha = "66"
-var_0_0.Text_Career_Color_Dark_Bg = {
+SeasonEquipMetaUtils.No_Effect_Alpha = "66"
+SeasonEquipMetaUtils.Text_Career_Color_Dark_Bg = {
 	["0"] = "#cac8c5",
 	["1"] = "#e99b56",
 	["2"] = "#6384e5",
@@ -192,77 +195,73 @@ var_0_0.Text_Career_Color_Dark_Bg = {
 	["4"] = "#d97373"
 }
 
-function var_0_0.getCareerColorDarkBg(arg_7_0)
-	local var_7_0 = SeasonConfig.instance:getSeasonEquipCo(arg_7_0)
+function SeasonEquipMetaUtils.getCareerColorDarkBg(itemId)
+	local cfg = SeasonConfig.instance:getSeasonEquipCo(itemId)
 
-	if var_7_0 and var_7_0.career then
-		return var_0_0.Text_Career_Color_Dark_Bg[var_7_0.career] or var_0_0.Text_Career_Color_Dark_Bg["0"]
+	if cfg and cfg.career then
+		return SeasonEquipMetaUtils.Text_Career_Color_Dark_Bg[cfg.career] or SeasonEquipMetaUtils.Text_Career_Color_Dark_Bg["0"]
 	end
 
-	return var_0_0.Text_Career_Color_Dark_Bg["0"]
+	return SeasonEquipMetaUtils.Text_Career_Color_Dark_Bg["0"]
 end
 
-function var_0_0.getEquipCount(arg_8_0, arg_8_1)
-	local var_8_0 = Activity104Model.instance:getAllItemMo(arg_8_0)
+function SeasonEquipMetaUtils.getEquipCount(actId, itemId)
+	local itemMap = Activity104Model.instance:getAllItemMo(actId)
 
-	if var_8_0 then
-		local var_8_1 = 0
+	if itemMap then
+		local count = 0
 
-		for iter_8_0, iter_8_1 in pairs(var_8_0) do
-			if iter_8_1.itemId == arg_8_1 then
-				var_8_1 = var_8_1 + 1
+		for _, itemMO in pairs(itemMap) do
+			if itemMO.itemId == itemId then
+				count = count + 1
 			end
 
-			return var_8_1
+			return count
 		end
 	end
 
 	return 0
 end
 
-function var_0_0.applyIconOffset(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = SeasonConfig.instance:getSeasonEquipCo(arg_9_0)
+function SeasonEquipMetaUtils.applyIconOffset(itemId, imageIcon, imageSignature)
+	local cfg = SeasonConfig.instance:getSeasonEquipCo(itemId)
 
-	if var_9_0 then
-		local var_9_1 = 0
-		local var_9_2 = 0
-		local var_9_3 = 1
-		local var_9_4 = 26
-		local var_9_5 = -180
-		local var_9_6 = 0.76
+	if cfg then
+		local iconOffsetX, iconOffsetY, iconScale = 0, 0, 1
+		local signOffsetX, signOffsetY, signScale = 26, -180, 0.76
 
-		if not string.nilorempty(var_9_0.iconOffset) then
-			local var_9_7 = string.splitToNumber(var_9_0.iconOffset, "#")
+		if not string.nilorempty(cfg.iconOffset) then
+			local numberArr = string.splitToNumber(cfg.iconOffset, "#")
 
-			var_9_1, var_9_2, var_9_3 = var_9_7[1], var_9_7[2], var_9_7[3]
+			iconOffsetX, iconOffsetY, iconScale = numberArr[1], numberArr[2], numberArr[3]
 		end
 
-		if not string.nilorempty(var_9_0.signOffset) then
-			local var_9_8 = string.splitToNumber(var_9_0.signOffset, "#")
+		if not string.nilorempty(cfg.signOffset) then
+			local numberArr = string.splitToNumber(cfg.signOffset, "#")
 
-			var_9_4, var_9_5, var_9_6 = var_9_8[1], var_9_8[2], var_9_8[3]
+			signOffsetX, signOffsetY, signScale = numberArr[1], numberArr[2], numberArr[3]
 		end
 
-		if arg_9_1 then
-			transformhelper.setLocalScale(arg_9_1.transform, var_9_3, var_9_3, 1)
-			recthelper.setAnchor(arg_9_1.transform, var_9_1, var_9_2)
+		if imageIcon then
+			transformhelper.setLocalScale(imageIcon.transform, iconScale, iconScale, 1)
+			recthelper.setAnchor(imageIcon.transform, iconOffsetX, iconOffsetY)
 		end
 
-		if arg_9_2 then
-			transformhelper.setLocalScale(arg_9_2.transform, var_9_6, var_9_6, 1)
-			recthelper.setAnchor(arg_9_2.transform, var_9_4, var_9_5)
+		if imageSignature then
+			transformhelper.setLocalScale(imageSignature.transform, signScale, signScale, 1)
+			recthelper.setAnchor(imageSignature.transform, signOffsetX, signOffsetY)
 		end
 	end
 end
 
-function var_0_0.isBanActivity(arg_10_0, arg_10_1)
-	return arg_10_0.activityId ~= arg_10_1
+function SeasonEquipMetaUtils.isBanActivity(itemCo, actId)
+	return itemCo.activityId ~= actId
 end
 
-function var_0_0.isContainTag(arg_11_0, arg_11_1)
-	local var_11_0 = string.splitToNumber(arg_11_0.tag, "#")
+function SeasonEquipMetaUtils.isContainTag(itemCo, tag)
+	local list = string.splitToNumber(itemCo.tag, "#")
 
-	return tabletool.indexOf(var_11_0, arg_11_1) ~= nil
+	return tabletool.indexOf(list, tag) ~= nil
 end
 
-return var_0_0
+return SeasonEquipMetaUtils

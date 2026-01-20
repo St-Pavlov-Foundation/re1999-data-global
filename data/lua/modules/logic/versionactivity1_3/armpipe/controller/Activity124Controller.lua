@@ -1,23 +1,25 @@
-﻿module("modules.logic.versionactivity1_3.armpipe.controller.Activity124Controller", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/armpipe/controller/Activity124Controller.lua
 
-local var_0_0 = class("Activity124Controller", BaseController)
+module("modules.logic.versionactivity1_3.armpipe.controller.Activity124Controller", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local Activity124Controller = class("Activity124Controller", BaseController)
+
+function Activity124Controller:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function Activity124Controller:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function Activity124Controller:addConstEvents()
 	return
 end
 
-function var_0_0.reInit(arg_4_0)
+function Activity124Controller:reInit()
 	return
 end
 
-var_0_0.instance = var_0_0.New()
+Activity124Controller.instance = Activity124Controller.New()
 
-return var_0_0
+return Activity124Controller

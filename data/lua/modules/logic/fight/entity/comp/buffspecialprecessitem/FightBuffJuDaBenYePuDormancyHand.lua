@@ -1,21 +1,23 @@
-﻿module("modules.logic.fight.entity.comp.buffspecialprecessitem.FightBuffJuDaBenYePuDormancyHand", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/buffspecialprecessitem/FightBuffJuDaBenYePuDormancyHand.lua
 
-local var_0_0 = class("FightBuffJuDaBenYePuDormancyHand", FightBuffJuDaBenYePuDormancyTail)
+module("modules.logic.fight.entity.comp.buffspecialprecessitem.FightBuffJuDaBenYePuDormancyHand", package.seeall)
 
-function var_0_0.getPlayValue(arg_1_0)
-	local var_1_0 = MaterialUtil.getPropValueFromMat(arg_1_0._entityMat, "_TempOffset3", "Vector4")
-	local var_1_1 = MaterialUtil.getPropValueFromStr("Vector4", string.format("3,0,%f,0", var_1_0.z))
-	local var_1_2 = MaterialUtil.getPropValueFromStr("Vector4", string.format("3,1,%f,0", var_1_0.z))
+local FightBuffJuDaBenYePuDormancyHand = class("FightBuffJuDaBenYePuDormancyHand", FightBuffJuDaBenYePuDormancyTail)
 
-	return var_1_1, var_1_2
+function FightBuffJuDaBenYePuDormancyHand:getPlayValue()
+	local oldValue = MaterialUtil.getPropValueFromMat(self._entityMat, "_TempOffset3", "Vector4")
+	local startValue = MaterialUtil.getPropValueFromStr("Vector4", string.format("3,0,%f,0", oldValue.z))
+	local endValue = MaterialUtil.getPropValueFromStr("Vector4", string.format("3,1,%f,0", oldValue.z))
+
+	return startValue, endValue
 end
 
-function var_0_0.getCloseValue(arg_2_0)
-	local var_2_0 = MaterialUtil.getPropValueFromMat(arg_2_0._entityMat, "_TempOffset3", "Vector4")
-	local var_2_1 = MaterialUtil.getPropValueFromStr("Vector4", string.format("3,1,%f,0", var_2_0.z))
-	local var_2_2 = MaterialUtil.getPropValueFromStr("Vector4", string.format("3,0,%f,0", var_2_0.z))
+function FightBuffJuDaBenYePuDormancyHand:getCloseValue()
+	local oldValue = MaterialUtil.getPropValueFromMat(self._entityMat, "_TempOffset3", "Vector4")
+	local startValue = MaterialUtil.getPropValueFromStr("Vector4", string.format("3,1,%f,0", oldValue.z))
+	local endValue = MaterialUtil.getPropValueFromStr("Vector4", string.format("3,0,%f,0", oldValue.z))
 
-	return var_2_1, var_2_2
+	return startValue, endValue
 end
 
-return var_0_0
+return FightBuffJuDaBenYePuDormancyHand

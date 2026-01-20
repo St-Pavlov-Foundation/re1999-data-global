@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity2_8.activity2nd.config.Activity2ndConfig", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/activity2nd/config/Activity2ndConfig.lua
 
-local var_0_0 = class("Activity2ndConfig", BaseConfig)
+module("modules.logic.versionactivity2_8.activity2nd.config.Activity2ndConfig", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local Activity2ndConfig = class("Activity2ndConfig", BaseConfig)
+
+function Activity2ndConfig:reqConfigNames()
 	return {
 		"activity196",
 		"activity200",
@@ -10,47 +12,47 @@ function var_0_0.reqConfigNames(arg_1_0)
 	}
 end
 
-function var_0_0.onInit(arg_2_0)
-	arg_2_0._strDict = {}
-	arg_2_0._strList = {}
-	arg_2_0._act200config = {}
-	arg_2_0._act196const = {}
+function Activity2ndConfig:onInit()
+	self._strDict = {}
+	self._strList = {}
+	self._act200config = {}
+	self._act196const = {}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity196" then
-		for iter_3_0, iter_3_1 in ipairs(arg_3_2.configList) do
-			arg_3_0._strDict[iter_3_1.code] = iter_3_1.id
+function Activity2ndConfig:onConfigLoaded(configName, configTable)
+	if configName == "activity196" then
+		for _, strCo in ipairs(configTable.configList) do
+			self._strDict[strCo.code] = strCo.id
 		end
 
-		arg_3_0._strList = arg_3_2.configList
-	elseif arg_3_1 == "activity200" then
-		arg_3_0._act200config = arg_3_2
-	elseif arg_3_1 == "activity196_const" then
-		arg_3_0._act196const = arg_3_2
+		self._strList = configTable.configList
+	elseif configName == "activity200" then
+		self._act200config = configTable
+	elseif configName == "activity196_const" then
+		self._act196const = configTable
 	end
 end
 
-function var_0_0.getIdByStr(arg_4_0, arg_4_1)
-	return arg_4_0._strDict[arg_4_1]
+function Activity2ndConfig:getIdByStr(str)
+	return self._strDict[str]
 end
 
-function var_0_0.getStrList(arg_5_0)
-	return arg_5_0._strList
+function Activity2ndConfig:getStrList()
+	return self._strList
 end
 
-function var_0_0.getAct200ConfigList(arg_6_0)
-	return arg_6_0._act200config.configList
+function Activity2ndConfig:getAct200ConfigList()
+	return self._act200config.configList
 end
 
-function var_0_0.getAct200ConfigById(arg_7_0, arg_7_1)
-	return arg_7_0._act200config.configList[arg_7_1]
+function Activity2ndConfig:getAct200ConfigById(id)
+	return self._act200config.configList[id]
 end
 
-function var_0_0.getAct196ConstById(arg_8_0, arg_8_1)
-	return arg_8_0._act196const.configDict[arg_8_1]
+function Activity2ndConfig:getAct196ConstById(actId)
+	return self._act196const.configDict[actId]
 end
 
-var_0_0.instance = var_0_0.New()
+Activity2ndConfig.instance = Activity2ndConfig.New()
 
-return var_0_0
+return Activity2ndConfig

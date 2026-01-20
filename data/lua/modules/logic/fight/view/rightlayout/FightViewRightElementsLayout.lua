@@ -1,140 +1,151 @@
-﻿module("modules.logic.fight.view.rightlayout.FightViewRightElementsLayout", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/rightlayout/FightViewRightElementsLayout.lua
 
-local var_0_0 = class("FightViewRightElementsLayout", BaseView)
+module("modules.logic.fight.view.rightlayout.FightViewRightElementsLayout", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.goRightRoot = gohelper.findChild(arg_1_0.viewGO, "root/right_elements/top")
+local FightViewRightElementsLayout = class("FightViewRightElementsLayout", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function FightViewRightElementsLayout:onInitView()
+	self.goRightRoot = gohelper.findChild(self.viewGO, "root/right_elements/top")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.RightElements_ShowElement, arg_2_0.showElement, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.RightElements_HideElement, arg_2_0.hideElement, arg_2_0)
+function FightViewRightElementsLayout:addEvents()
+	self:addEventCb(FightController.instance, FightEvent.RightElements_ShowElement, self.showElement, self)
+	self:addEventCb(FightController.instance, FightEvent.RightElements_HideElement, self.hideElement, self)
+	self:addEventCb(FightController.instance, FightEvent.RightElements_SetElementAtLast, self.setElementAtLast, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function FightViewRightElementsLayout:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0.showElementDict = {}
-	arg_4_0.preShowElementDict = {}
-	arg_4_0.tempElementHeightDict = {}
-	arg_4_0.tweenIdList = {}
-	arg_4_0.elementGoDict = arg_4_0:getUserDataTb_()
-	arg_4_0.elementRectTrDict = arg_4_0:getUserDataTb_()
+function FightViewRightElementsLayout:_editableInitView()
+	self.showElementDict = {}
+	self.preShowElementDict = {}
+	self.tempElementHeightDict = {}
+	self.tweenIdList = {}
+	self.elementGoDict = self:getUserDataTb_()
+	self.elementRectTrDict = self:getUserDataTb_()
 
-	for iter_4_0, iter_4_1 in pairs(FightRightElementEnum.Elements) do
-		local var_4_0 = gohelper.findChild(arg_4_0.goRightRoot, FightRightElementEnum.ElementsNodeName[iter_4_1])
+	for _, element in pairs(FightRightElementEnum.Elements) do
+		local goElement = gohelper.findChild(self.goRightRoot, FightRightElementEnum.ElementsNodeName[element])
 
-		arg_4_0.elementGoDict[iter_4_1] = var_4_0
-		arg_4_0.elementRectTrDict[iter_4_1] = var_4_0:GetComponent(gohelper.Type_RectTransform)
+		self.elementGoDict[element] = goElement
+		self.elementRectTrDict[element] = goElement:GetComponent(gohelper.Type_RectTransform)
 
-		gohelper.setAsLastSibling(var_4_0)
-		gohelper.setActive(var_4_0, false)
+		gohelper.setAsLastSibling(goElement)
+		gohelper.setActive(goElement, false)
 
-		local var_4_1 = FightRightElementEnum.ElementsSizeDict[iter_4_1]
+		local size = FightRightElementEnum.ElementsSizeDict[element]
 
-		recthelper.setSize(arg_4_0.elementRectTrDict[iter_4_1], var_4_1.x, var_4_1.y)
+		recthelper.setSize(self.elementRectTrDict[element], size.x, size.y)
 	end
 
-	local var_4_2 = arg_4_0.goRightRoot:GetComponent(gohelper.Type_RectTransform)
+	local rootTransform = self.goRightRoot:GetComponent(gohelper.Type_RectTransform)
 
-	arg_4_0.maxHeight = recthelper.getHeight(var_4_2)
+	self.maxHeight = recthelper.getHeight(rootTransform)
 end
 
-function var_0_0.getElementContainer(arg_5_0, arg_5_1)
-	return arg_5_0.elementGoDict[arg_5_1]
+function FightViewRightElementsLayout:getElementContainer(element)
+	return self.elementGoDict[element]
 end
 
-function var_0_0.showElement(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_0.showElementDict[arg_6_1] = true
-	arg_6_0.tempElementHeightDict[arg_6_1] = arg_6_2
+function FightViewRightElementsLayout:showElement(element, height)
+	self.showElementDict[element] = true
+	self.tempElementHeightDict[element] = height
 
-	arg_6_0:refreshLayout()
+	self:refreshLayout()
 end
 
-function var_0_0.hideElement(arg_7_0, arg_7_1)
-	arg_7_0.showElementDict[arg_7_1] = nil
-	arg_7_0.tempElementHeightDict[arg_7_1] = nil
+function FightViewRightElementsLayout:hideElement(element)
+	self.showElementDict[element] = nil
+	self.tempElementHeightDict[element] = nil
 
-	arg_7_0:refreshLayout()
+	self:refreshLayout()
 end
 
-function var_0_0.refreshLayout(arg_8_0)
-	arg_8_0:clearTweenId()
+function FightViewRightElementsLayout:setElementAtLast(element)
+	gohelper.setAsLastSibling(self.elementGoDict[element])
+end
 
-	local var_8_0 = 0
-	local var_8_1 = 0
-	local var_8_2 = 0
-	local var_8_3 = 0
+function FightViewRightElementsLayout:refreshLayout()
+	self:clearTweenId()
 
-	for iter_8_0, iter_8_1 in ipairs(FightRightElementEnum.Priority) do
-		local var_8_4 = arg_8_0.showElementDict[iter_8_1]
+	local preUsedAnchorX = 0
+	local preUsedAnchorY = 0
+	local curColumnMaxWidth = 0
+	local columnCount = 0
 
-		if var_8_4 then
-			gohelper.setActive(arg_8_0.elementGoDict[iter_8_1], true)
+	for _, element in ipairs(FightRightElementEnum.Priority) do
+		local isShow = self.showElementDict[element]
 
-			local var_8_5 = arg_8_0:getElementWidth(iter_8_1)
-			local var_8_6 = arg_8_0:getElementHeight(iter_8_1)
+		if isShow then
+			gohelper.setActive(self.elementGoDict[element], true)
 
-			if var_8_3 < 1 or var_8_1 + var_8_6 <= arg_8_0.maxHeight then
-				if var_8_2 < var_8_5 then
-					var_8_2 = var_8_5
+			local elementWidth = self:getElementWidth(element)
+			local elementHeight = self:getElementHeight(element)
+
+			if columnCount < 1 or preUsedAnchorY + elementHeight <= self.maxHeight then
+				if curColumnMaxWidth < elementWidth then
+					curColumnMaxWidth = elementWidth
 				end
 			else
-				var_8_0 = var_8_0 + var_8_2
-				var_8_1 = 0
-				var_8_3 = 0
+				preUsedAnchorX = preUsedAnchorX + curColumnMaxWidth
+				preUsedAnchorY = 0
+				columnCount = 0
 			end
 
-			recthelper.setSize(arg_8_0.elementRectTrDict[iter_8_1], var_8_5, var_8_6)
+			recthelper.setSize(self.elementRectTrDict[element], elementWidth, elementHeight)
 
-			if arg_8_0.preShowElementDict[iter_8_1] then
-				local var_8_7 = ZProj.TweenHelper.DOAnchorPos(arg_8_0.elementRectTrDict[iter_8_1], -var_8_0, -var_8_1, FightRightElementEnum.AnchorTweenDuration)
+			if self.preShowElementDict[element] then
+				local tweenId = ZProj.TweenHelper.DOAnchorPos(self.elementRectTrDict[element], -preUsedAnchorX, -preUsedAnchorY, FightRightElementEnum.AnchorTweenDuration)
 
-				table.insert(arg_8_0.tweenIdList, var_8_7)
+				table.insert(self.tweenIdList, tweenId)
 			else
-				recthelper.setAnchor(arg_8_0.elementRectTrDict[iter_8_1], -var_8_0, -var_8_1)
+				recthelper.setAnchor(self.elementRectTrDict[element], -preUsedAnchorX, -preUsedAnchorY)
 			end
 
-			var_8_3 = var_8_3 + 1
-			var_8_1 = var_8_1 + var_8_6
+			columnCount = columnCount + 1
+			preUsedAnchorY = preUsedAnchorY + elementHeight
 
-			gohelper.setAsLastSibling(arg_8_0.elementGoDict[iter_8_1])
+			gohelper.setAsLastSibling(self.elementGoDict[element])
 		else
-			gohelper.setActive(arg_8_0.elementGoDict[iter_8_1], false)
+			gohelper.setActive(self.elementGoDict[element], false)
 		end
 
-		arg_8_0.preShowElementDict[iter_8_1] = var_8_4
+		self.preShowElementDict[element] = isShow
 	end
 end
 
-function var_0_0.getElementHeight(arg_9_0, arg_9_1)
-	if arg_9_0.tempElementHeightDict[arg_9_1] then
-		return arg_9_0.tempElementHeightDict[arg_9_1]
+function FightViewRightElementsLayout:getElementHeight(element)
+	if self.tempElementHeightDict[element] then
+		return self.tempElementHeightDict[element]
 	end
 
-	return FightRightElementEnum.ElementsSizeDict[arg_9_1].y
+	local size = FightRightElementEnum.ElementsSizeDict[element]
+
+	return size.y
 end
 
-function var_0_0.getElementWidth(arg_10_0, arg_10_1)
-	return FightRightElementEnum.ElementsSizeDict[arg_10_1].x
+function FightViewRightElementsLayout:getElementWidth(element)
+	local size = FightRightElementEnum.ElementsSizeDict[element]
+
+	return size.x
 end
 
-function var_0_0.clearTweenId(arg_11_0)
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0.tweenIdList) do
-		ZProj.TweenHelper.KillById(iter_11_1)
+function FightViewRightElementsLayout:clearTweenId()
+	for _, tweenId in ipairs(self.tweenIdList) do
+		ZProj.TweenHelper.KillById(tweenId)
 	end
 
-	tabletool.clear(arg_11_0.tweenIdList)
+	tabletool.clear(self.tweenIdList)
 end
 
-function var_0_0.onDestroyView(arg_12_0)
-	arg_12_0:clearTweenId()
+function FightViewRightElementsLayout:onDestroyView()
+	self:clearTweenId()
 end
 
-return var_0_0
+return FightViewRightElementsLayout

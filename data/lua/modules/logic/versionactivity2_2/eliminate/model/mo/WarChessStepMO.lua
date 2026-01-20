@@ -1,112 +1,114 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.model.mo.WarChessStepMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/model/mo/WarChessStepMO.lua
 
-local var_0_0 = class("WarChessStepMO")
+module("modules.logic.versionactivity2_2.eliminate.model.mo.WarChessStepMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.actionType = arg_1_1.actionType
-	arg_1_0.reasonId = arg_1_1.reasonId
-	arg_1_0.fromId = arg_1_1.fromId
-	arg_1_0.toId = arg_1_1.toId
+local WarChessStepMO = class("WarChessStepMO")
 
-	if arg_1_1.effect then
-		arg_1_0.effect = GameUtil.rpcInfosToList(arg_1_1.effect, WarChessEffectMO)
+function WarChessStepMO:init(info)
+	self.actionType = info.actionType
+	self.reasonId = info.reasonId
+	self.fromId = info.fromId
+	self.toId = info.toId
+
+	if info.effect then
+		self.effect = GameUtil.rpcInfosToList(info.effect, WarChessEffectMO)
 	end
 end
 
-local var_0_1 = {}
+local effectData = {}
 
-function var_0_0.buildSteps(arg_2_0)
-	local var_2_0 = {}
-	local var_2_1 = FlowParallel.New()
-	local var_2_2 = FlowParallel.New()
+function WarChessStepMO:buildSteps()
+	local steps = {}
+	local parallelStepFlow = FlowParallel.New()
+	local growUpParallelStepFlow = FlowParallel.New()
 
-	if arg_2_0.actionType == EliminateTeamChessEnum.StepActionType.chessSkill then
-		local var_2_3 = EliminateConfig.instance:getSoliderSkillConfig(arg_2_0.reasonId)
+	if self.actionType == EliminateTeamChessEnum.StepActionType.chessSkill then
+		local skillConfig = EliminateConfig.instance:getSoliderSkillConfig(self.reasonId)
 
-		if not string.nilorempty(var_2_3.type) then
-			tabletool.clear(var_0_1)
+		if not string.nilorempty(skillConfig.type) then
+			tabletool.clear(effectData)
 
-			var_0_1.uid = arg_2_0.fromId
-			var_0_1.effectType = EliminateTeamChessEnum.StepWorkType.teamChessShowVxEffect
+			effectData.uid = self.fromId
+			effectData.effectType = EliminateTeamChessEnum.StepWorkType.teamChessShowVxEffect
 
-			if var_2_3.type == EliminateTeamChessEnum.SoliderSkillType.Die then
-				var_0_1.vxEffectType = EliminateTeamChessEnum.VxEffectType.WangYu
-				var_0_1.time = EliminateTeamChessEnum.VxEffectTypePlayTime[var_0_1.vxEffectType]
+			if skillConfig.type == EliminateTeamChessEnum.SoliderSkillType.Die then
+				effectData.vxEffectType = EliminateTeamChessEnum.VxEffectType.WangYu
+				effectData.time = EliminateTeamChessEnum.VxEffectTypePlayTime[effectData.vxEffectType]
 			end
 
-			if var_2_3.type == EliminateTeamChessEnum.SoliderSkillType.Raw or var_2_3.type == EliminateTeamChessEnum.SoliderSkillType.GrowUp then
-				var_0_1.vxEffectType = EliminateTeamChessEnum.VxEffectType.ZhanHou
-				var_0_1.time = EliminateTeamChessEnum.VxEffectTypePlayTime[var_0_1.vxEffectType]
+			if skillConfig.type == EliminateTeamChessEnum.SoliderSkillType.Raw or skillConfig.type == EliminateTeamChessEnum.SoliderSkillType.GrowUp then
+				effectData.vxEffectType = EliminateTeamChessEnum.VxEffectType.ZhanHou
+				effectData.time = EliminateTeamChessEnum.VxEffectTypePlayTime[effectData.vxEffectType]
 			end
 
-			local var_2_4 = arg_2_0.reasonId
+			local reasonId = self.reasonId
 
-			if var_2_4 ~= nil and EliminateTeamChessModel.instance.chessSkillIsGrowUp(tonumber(var_2_4)) then
-				var_0_1.time = EliminateTeamChessEnum.teamChessGrowUpZhanHouStepTime
+			if reasonId ~= nil and EliminateTeamChessModel.instance.chessSkillIsGrowUp(tonumber(reasonId)) then
+				effectData.time = EliminateTeamChessEnum.teamChessGrowUpZhanHouStepTime
 			end
 
-			local var_2_5 = EliminateTeamChessStepUtil.createStep(var_0_1)
+			local step = EliminateTeamChessStepUtil.createStep(effectData)
 
-			var_2_0[#var_2_0 + 1] = var_2_5
+			steps[#steps + 1] = step
 		end
 	end
 
-	local var_2_6 = true
+	local needAddUpdateForecast = true
 
-	for iter_2_0 = 1, #arg_2_0.effect do
-		local var_2_7 = arg_2_0.effect[iter_2_0]
+	for i = 1, #self.effect do
+		local effect = self.effect[i]
 
-		if var_2_7.effectType == EliminateTeamChessEnum.StepWorkType.chessPowerChange then
-			if arg_2_0.actionType == EliminateTeamChessEnum.StepActionType.chessSkill or arg_2_0.actionType == EliminateTeamChessEnum.StepActionType.strongHoldSkill then
-				var_2_7.needShowDamage = true
+		if effect.effectType == EliminateTeamChessEnum.StepWorkType.chessPowerChange then
+			if self.actionType == EliminateTeamChessEnum.StepActionType.chessSkill or self.actionType == EliminateTeamChessEnum.StepActionType.strongHoldSkill then
+				effect.needShowDamage = true
 			else
-				var_2_7.needShowDamage = false
+				effect.needShowDamage = false
 			end
 		end
 
-		if var_2_7.effectType == EliminateTeamChessEnum.StepWorkType.placeChess then
-			local var_2_8 = var_2_7.chessPiece
+		if effect.effectType == EliminateTeamChessEnum.StepWorkType.placeChess then
+			local chessPiece = effect.chessPiece
 
-			if tonumber(var_2_8.uid) < 0 and var_2_6 then
-				local var_2_9 = EliminateTeamChessStepUtil.createStep(nil, EliminateTeamChessEnum.StepWorkType.teamChessUpdateForecast)
+			if tonumber(chessPiece.uid) < 0 and needAddUpdateForecast then
+				local step = EliminateTeamChessStepUtil.createStep(nil, EliminateTeamChessEnum.StepWorkType.teamChessUpdateForecast)
 
-				var_2_0[#var_2_0 + 1] = var_2_9
-				var_2_6 = false
+				steps[#steps + 1] = step
+				needAddUpdateForecast = false
 			end
 		end
 
-		local var_2_10, var_2_11 = var_2_7:buildStep(arg_2_0)
+		local effectSteps, nextSteps = effect:buildStep(self)
 
-		if var_2_7.effectType == EliminateTeamChessEnum.StepWorkType.chessPowerChange then
-			for iter_2_1, iter_2_2 in ipairs(var_2_10) do
-				var_2_1:addWork(iter_2_2)
+		if effect.effectType == EliminateTeamChessEnum.StepWorkType.chessPowerChange then
+			for _, _step in ipairs(effectSteps) do
+				parallelStepFlow:addWork(_step)
 			end
 
-			if #var_2_10 == #var_2_1:getWorkList() then
-				var_2_0[#var_2_0 + 1] = var_2_1
+			if #effectSteps == #parallelStepFlow:getWorkList() then
+				steps[#steps + 1] = parallelStepFlow
 			end
-		elseif var_2_7.effectType == EliminateTeamChessEnum.StepWorkType.chessGrowUpChange then
-			for iter_2_3, iter_2_4 in ipairs(var_2_10) do
-				var_2_2:addWork(iter_2_4)
+		elseif effect.effectType == EliminateTeamChessEnum.StepWorkType.chessGrowUpChange then
+			for _, _step in ipairs(effectSteps) do
+				growUpParallelStepFlow:addWork(_step)
 			end
 
-			if #var_2_10 == #var_2_2:getWorkList() then
-				var_2_0[#var_2_0 + 1] = var_2_2
+			if #effectSteps == #growUpParallelStepFlow:getWorkList() then
+				steps[#steps + 1] = growUpParallelStepFlow
 			end
 		else
-			for iter_2_5, iter_2_6 in ipairs(var_2_10) do
-				var_2_0[#var_2_0 + 1] = iter_2_6
+			for _, _step in ipairs(effectSteps) do
+				steps[#steps + 1] = _step
 			end
 		end
 
-		if var_2_11 then
-			for iter_2_7, iter_2_8 in ipairs(var_2_11) do
-				var_2_0[#var_2_0 + 1] = iter_2_8
+		if nextSteps then
+			for _, _step in ipairs(nextSteps) do
+				steps[#steps + 1] = _step
 			end
 		end
 	end
 
-	return var_2_0
+	return steps
 end
 
-return var_0_0
+return WarChessStepMO

@@ -1,12 +1,14 @@
-﻿module("modules.logic.versionactivity1_3.act126.model.UserDungeonSpStatusMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/act126/model/UserDungeonSpStatusMO.lua
 
-local var_0_0 = pureTable("UserDungeonSpStatusMO")
+module("modules.logic.versionactivity1_3.act126.model.UserDungeonSpStatusMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.chapterId = arg_1_1.chapterId
-	arg_1_0.episodeId = arg_1_1.episodeId
-	arg_1_0.status = arg_1_1.status
-	arg_1_0.refreshTime = arg_1_1.refreshTime
+local UserDungeonSpStatusMO = pureTable("UserDungeonSpStatusMO")
+
+function UserDungeonSpStatusMO:init(info)
+	self.chapterId = info.chapterId
+	self.episodeId = info.episodeId
+	self.status = info.status
+	self.refreshTime = info.refreshTime
 end
 
-return var_0_0
+return UserDungeonSpStatusMO

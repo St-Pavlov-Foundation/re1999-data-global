@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotTeamViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/view/V1a6_CachotTeamViewContainer.lua
 
-local var_0_0 = class("V1a6_CachotTeamViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotTeamViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local V1a6_CachotTeamViewContainer = class("V1a6_CachotTeamViewContainer", BaseViewContainer)
+
+function V1a6_CachotTeamViewContainer:buildViews()
 	return {
 		V1a6_CachotTeamItemListView.New(),
 		V1a6_CachotTeamView.New(),
@@ -10,7 +12,7 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function V1a6_CachotTeamViewContainer:buildTabViews(tabContainerId)
 	return {
 		NavigateButtonsView.New({
 			true,
@@ -20,4 +22,4 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	}
 end
 
-return var_0_0
+return V1a6_CachotTeamViewContainer

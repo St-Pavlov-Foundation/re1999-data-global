@@ -1,226 +1,229 @@
-﻿module("modules.logic.versionactivity2_2.tianshinana.entity.TianShiNaNaUnitEntityBase", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/tianshinana/entity/TianShiNaNaUnitEntityBase.lua
 
-local var_0_0 = class("TianShiNaNaUnitEntityBase", LuaCompBase)
+module("modules.logic.versionactivity2_2.tianshinana.entity.TianShiNaNaUnitEntityBase", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0.trans = arg_1_1.transform
+local TianShiNaNaUnitEntityBase = class("TianShiNaNaUnitEntityBase", LuaCompBase)
+
+function TianShiNaNaUnitEntityBase:init(go)
+	self.go = go
+	self.trans = go.transform
 end
 
-function var_0_0.updateMo(arg_2_0, arg_2_1)
-	arg_2_0._unitMo = arg_2_1
+function TianShiNaNaUnitEntityBase:updateMo(unitMo)
+	self._unitMo = unitMo
 
-	if not string.nilorempty(arg_2_1.co.unitPath) and not arg_2_0._loader then
-		arg_2_0._loader = PrefabInstantiate.Create(arg_2_0.go)
+	if not string.nilorempty(unitMo.co.unitPath) and not self._loader then
+		self._loader = PrefabInstantiate.Create(self.go)
 
-		arg_2_0._loader:startLoad(arg_2_1.co.unitPath, arg_2_0._onResLoaded, arg_2_0)
+		self._loader:startLoad(unitMo.co.unitPath, self._onResLoaded, self)
 	end
 
-	local var_2_0 = TianShiNaNaHelper.nodeToV3(arg_2_1)
+	local pos = TianShiNaNaHelper.nodeToV3(unitMo)
 
-	transformhelper.setLocalPos(arg_2_0.trans, var_2_0.x, var_2_0.y, var_2_0.z)
+	transformhelper.setLocalPos(self.trans, pos.x, pos.y, pos.z)
 end
 
-function var_0_0.updatePosAndDir(arg_3_0)
-	arg_3_0:_killTween()
+function TianShiNaNaUnitEntityBase:updatePosAndDir()
+	self:_killTween()
 
-	local var_3_0 = TianShiNaNaHelper.nodeToV3(arg_3_0._unitMo)
+	local pos = TianShiNaNaHelper.nodeToV3(self._unitMo)
 
-	transformhelper.setLocalPos(arg_3_0.trans, var_3_0.x, var_3_0.y, var_3_0.z)
-	arg_3_0:setDir()
-	arg_3_0:updateSortOrder()
+	transformhelper.setLocalPos(self.trans, pos.x, pos.y, pos.z)
+	self:setDir()
+	self:updateSortOrder()
 end
 
-function var_0_0.getWorldPos(arg_4_0)
-	local var_4_0, var_4_1, var_4_2 = transformhelper.getPos(arg_4_0.trans)
+function TianShiNaNaUnitEntityBase:getWorldPos()
+	local x, y, z = transformhelper.getPos(self.trans)
 
-	return TianShiNaNaHelper.getV3(var_4_0, var_4_1, var_4_2)
+	return TianShiNaNaHelper.getV3(x, y, z)
 end
 
-function var_0_0.getLocalPos(arg_5_0)
-	local var_5_0, var_5_1, var_5_2 = transformhelper.getLocalPos(arg_5_0.trans)
+function TianShiNaNaUnitEntityBase:getLocalPos()
+	local x, y, z = transformhelper.getLocalPos(self.trans)
 
-	return TianShiNaNaHelper.getV3(var_5_0, var_5_1, var_5_2)
+	return TianShiNaNaHelper.getV3(x, y, z)
 end
 
-function var_0_0.moveTo(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5)
-	if arg_6_1 == arg_6_0._unitMo.x and arg_6_2 == arg_6_0._unitMo.y then
-		if arg_6_3 ~= arg_6_0._unitMo.dir then
-			arg_6_0._unitMo.dir = arg_6_3
+function TianShiNaNaUnitEntityBase:moveTo(x, y, dir, callback, callbackObj)
+	if x == self._unitMo.x and y == self._unitMo.y then
+		if dir ~= self._unitMo.dir then
+			self._unitMo.dir = dir
 
-			arg_6_0:setDir()
+			self:setDir()
 		end
 
-		arg_6_4(arg_6_5)
+		callback(callbackObj)
 
 		return
 	end
 
-	local var_6_0 = arg_6_0._unitMo.x
-	local var_6_1 = arg_6_0._unitMo.y
+	local preX = self._unitMo.x
+	local preY = self._unitMo.y
 
-	arg_6_0._unitMo.x = arg_6_1
-	arg_6_0._unitMo.y = arg_6_2
-	arg_6_0._unitMo.dir = arg_6_3
-	arg_6_0._moveEndCall = arg_6_4
-	arg_6_0._moveEndCallObj = arg_6_5
+	self._unitMo.x = x
+	self._unitMo.y = y
+	self._unitMo.dir = dir
+	self._moveEndCall = callback
+	self._moveEndCallObj = callbackObj
 
-	arg_6_0:setDir()
+	self:setDir()
 
-	if arg_6_0._isMoveHalf then
-		arg_6_0._isMoveHalf = false
+	if self._isMoveHalf then
+		self._isMoveHalf = false
 
-		arg_6_0:_killTween()
-		arg_6_0:_onEndMoveHalf()
+		self:_killTween()
+		self:_onEndMoveHalf()
 	else
-		local var_6_2 = TianShiNaNaHelper.nodeToV3(TianShiNaNaHelper.getV2((arg_6_1 + var_6_0) / 2, (arg_6_2 + var_6_1) / 2))
+		local halfPos = TianShiNaNaHelper.nodeToV3(TianShiNaNaHelper.getV2((x + preX) / 2, (y + preY) / 2))
 
-		arg_6_0:_beginMoveHalf(var_6_2)
+		self:_beginMoveHalf(halfPos)
 	end
 end
 
-function var_0_0.moveToHalf(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4)
-	if arg_7_0._unitMo:isPosEqual(arg_7_1, arg_7_2) then
-		arg_7_3(arg_7_4)
+function TianShiNaNaUnitEntityBase:moveToHalf(x, y, callback, callbackObj)
+	if self._unitMo:isPosEqual(x, y) then
+		callback(callbackObj)
 
 		return
 	end
 
-	arg_7_0._isMoveHalf = true
+	self._isMoveHalf = true
 
-	local var_7_0 = TianShiNaNaHelper.getV2(arg_7_1, arg_7_2)
+	local targetPos = TianShiNaNaHelper.getV2(x, y)
 
-	arg_7_0:changeDir(arg_7_1, arg_7_2)
+	self:changeDir(x, y)
 
-	arg_7_0._moveEndCall = arg_7_3
-	arg_7_0._moveEndCallObj = arg_7_4
+	self._moveEndCall = callback
+	self._moveEndCallObj = callbackObj
 
-	arg_7_0:_killTween()
-	var_7_0:Add(arg_7_0._unitMo):Div(2)
+	self:_killTween()
+	targetPos:Add(self._unitMo):Div(2)
 
-	arg_7_0._targetPos = TianShiNaNaHelper.nodeToV3(var_7_0):Clone()
-	arg_7_0._beginPos = arg_7_0:getLocalPos():Clone()
-	arg_7_0._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.15, arg_7_0._onMoving, arg_7_0._onEndMove, arg_7_0, nil, EaseType.Linear)
+	local pos = TianShiNaNaHelper.nodeToV3(targetPos)
+
+	self._targetPos = pos:Clone()
+	self._beginPos = self:getLocalPos():Clone()
+	self._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.15, self._onMoving, self._onEndMove, self, nil, EaseType.Linear)
 end
 
-function var_0_0.changeDir(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = TianShiNaNaHelper.getV2(arg_8_1, arg_8_2)
+function TianShiNaNaUnitEntityBase:changeDir(x, y)
+	local targetPos = TianShiNaNaHelper.getV2(x, y)
 
-	arg_8_0._unitMo.dir = TianShiNaNaHelper.getDir(arg_8_0._unitMo, var_8_0, arg_8_0._unitMo.dir)
+	self._unitMo.dir = TianShiNaNaHelper.getDir(self._unitMo, targetPos, self._unitMo.dir)
 
-	arg_8_0:setDir()
+	self:setDir()
 end
 
-function var_0_0._beginMoveHalf(arg_9_0, arg_9_1)
-	arg_9_0:_killTween()
+function TianShiNaNaUnitEntityBase:_beginMoveHalf(pos)
+	self:_killTween()
 
-	arg_9_0._targetPos = arg_9_1:Clone()
-	arg_9_0._beginPos = arg_9_0:getLocalPos():Clone()
-	arg_9_0._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.15, arg_9_0._onMoving, arg_9_0._onEndMoveHalf, arg_9_0, nil, EaseType.Linear)
+	self._targetPos = pos:Clone()
+	self._beginPos = self:getLocalPos():Clone()
+	self._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.15, self._onMoving, self._onEndMoveHalf, self, nil, EaseType.Linear)
 end
 
-function var_0_0._onEndMoveHalf(arg_10_0)
-	arg_10_0:updateSortOrder()
+function TianShiNaNaUnitEntityBase:_onEndMoveHalf()
+	self:updateSortOrder()
 
-	arg_10_0._targetPos = TianShiNaNaHelper.nodeToV3(arg_10_0._unitMo):Clone()
-	arg_10_0._beginPos = arg_10_0:getLocalPos():Clone()
-	arg_10_0._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.15, arg_10_0._onMoving, arg_10_0._onEndMove, arg_10_0, nil, EaseType.Linear)
+	self._targetPos = TianShiNaNaHelper.nodeToV3(self._unitMo):Clone()
+	self._beginPos = self:getLocalPos():Clone()
+	self._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.15, self._onMoving, self._onEndMove, self, nil, EaseType.Linear)
 end
 
-function var_0_0._onEndMove(arg_11_0)
-	arg_11_0._tweenId = nil
+function TianShiNaNaUnitEntityBase:_onEndMove()
+	self._tweenId = nil
 
-	local var_11_0 = arg_11_0._moveEndCall
-	local var_11_1 = arg_11_0._moveEndCallObj
+	local endCall, callObj = self._moveEndCall, self._moveEndCallObj
 
-	arg_11_0._moveEndCall = nil
-	arg_11_0._moveEndCallObj = nil
+	self._moveEndCall = nil
+	self._moveEndCallObj = nil
 
-	if var_11_0 then
-		var_11_0(var_11_1)
+	if endCall then
+		endCall(callObj)
 	end
 end
 
-function var_0_0._onMoving(arg_12_0, arg_12_1)
-	if not arg_12_0._beginPos or not arg_12_0._targetPos then
+function TianShiNaNaUnitEntityBase:_onMoving(value)
+	if not self._beginPos or not self._targetPos then
 		return
 	end
 
-	local var_12_0 = TianShiNaNaHelper.lerpV3(arg_12_0._beginPos, arg_12_0._targetPos, arg_12_1)
+	local lerpPos = TianShiNaNaHelper.lerpV3(self._beginPos, self._targetPos, value)
 
-	transformhelper.setLocalPos(arg_12_0.trans, var_12_0.x, var_12_0.y, var_12_0.z)
-	arg_12_0:onMoving()
+	transformhelper.setLocalPos(self.trans, lerpPos.x, lerpPos.y, lerpPos.z)
+	self:onMoving()
 end
 
-function var_0_0.onMoving(arg_13_0)
+function TianShiNaNaUnitEntityBase:onMoving()
 	return
 end
 
-function var_0_0._onResLoaded(arg_14_0)
-	arg_14_0._resGo = arg_14_0._loader:getInstGO()
-	arg_14_0._dirs = arg_14_0:getUserDataTb_()
+function TianShiNaNaUnitEntityBase:_onResLoaded()
+	self._resGo = self._loader:getInstGO()
+	self._dirs = self:getUserDataTb_()
 
-	for iter_14_0, iter_14_1 in pairs(TianShiNaNaEnum.OperDir) do
-		arg_14_0._dirs[iter_14_1] = gohelper.findChild(arg_14_0._resGo, TianShiNaNaEnum.ResDirPath[iter_14_1])
+	for _, dir in pairs(TianShiNaNaEnum.OperDir) do
+		self._dirs[dir] = gohelper.findChild(self._resGo, TianShiNaNaEnum.ResDirPath[dir])
 	end
 
-	local var_14_0 = arg_14_0._resGo:GetComponentsInChildren(typeof(UnityEngine.Renderer), true)
+	local renderers = self._resGo:GetComponentsInChildren(typeof(UnityEngine.Renderer), true)
 
-	if var_14_0.Length > 0 then
-		arg_14_0._renderers = {}
+	if renderers.Length > 0 then
+		self._renderers = {}
 
-		for iter_14_2 = 0, var_14_0.Length - 1 do
-			arg_14_0._renderers[iter_14_2 + 1] = var_14_0[iter_14_2]
+		for i = 0, renderers.Length - 1 do
+			self._renderers[i + 1] = renderers[i]
 		end
 	end
 
-	arg_14_0:setDir()
-	arg_14_0:updateSortOrder()
-	arg_14_0:onResLoaded()
+	self:setDir()
+	self:updateSortOrder()
+	self:onResLoaded()
 end
 
-function var_0_0.onResLoaded(arg_15_0)
+function TianShiNaNaUnitEntityBase:onResLoaded()
 	return
 end
 
-function var_0_0.reAdd(arg_16_0)
+function TianShiNaNaUnitEntityBase:reAdd()
 	return
 end
 
-function var_0_0._killTween(arg_17_0)
-	if arg_17_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_17_0._tweenId)
+function TianShiNaNaUnitEntityBase:_killTween()
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_17_0._tweenId = nil
+		self._tweenId = nil
 	end
 end
 
-function var_0_0.setDir(arg_18_0)
-	if not arg_18_0._resGo then
+function TianShiNaNaUnitEntityBase:setDir()
+	if not self._resGo then
 		return
 	end
 
-	for iter_18_0, iter_18_1 in pairs(arg_18_0._dirs) do
-		gohelper.setActive(iter_18_1, iter_18_0 == arg_18_0._unitMo.dir)
+	for dir, go in pairs(self._dirs) do
+		gohelper.setActive(go, dir == self._unitMo.dir)
 	end
 end
 
-function var_0_0.updateSortOrder(arg_19_0)
-	if not arg_19_0._renderers then
+function TianShiNaNaUnitEntityBase:updateSortOrder()
+	if not self._renderers then
 		return
 	end
 
-	for iter_19_0, iter_19_1 in pairs(arg_19_0._renderers) do
-		iter_19_1.sortingOrder = TianShiNaNaHelper.getSortIndex(arg_19_0._unitMo.x, arg_19_0._unitMo.y)
+	for _, renderer in pairs(self._renderers) do
+		renderer.sortingOrder = TianShiNaNaHelper.getSortIndex(self._unitMo.x, self._unitMo.y)
 	end
 end
 
-function var_0_0.onDestroy(arg_20_0)
-	arg_20_0:_killTween()
+function TianShiNaNaUnitEntityBase:onDestroy()
+	self:_killTween()
 end
 
-function var_0_0.dispose(arg_21_0)
-	gohelper.destroy(arg_21_0.go)
+function TianShiNaNaUnitEntityBase:dispose()
+	gohelper.destroy(self.go)
 end
 
-return var_0_0
+return TianShiNaNaUnitEntityBase

@@ -1,78 +1,82 @@
-﻿module("modules.logic.dungeon.view.rolestory.RoleStoryReviewItem", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/rolestory/RoleStoryReviewItem.lua
 
-local var_0_0 = class("RoleStoryReviewItem", ListScrollCellExtend)
+module("modules.logic.dungeon.view.rolestory.RoleStoryReviewItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.goSelect = gohelper.findChild(arg_1_0.viewGO, "selectbg")
-	arg_1_0.txtSelectOrder = gohelper.findChildTextMesh(arg_1_0.goSelect, "#txt_selectorder")
-	arg_1_0.goNormal = gohelper.findChild(arg_1_0.viewGO, "normalbg")
-	arg_1_0.txtNormalOrder = gohelper.findChildTextMesh(arg_1_0.goNormal, "#txt_normalorder")
-	arg_1_0.txtStoryName = gohelper.findChildTextMesh(arg_1_0.viewGO, "#txt_storyname")
-	arg_1_0.btnClick = gohelper.findButtonWithAudio(arg_1_0.viewGO)
+local RoleStoryReviewItem = class("RoleStoryReviewItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoleStoryReviewItem:onInitView()
+	self.goSelect = gohelper.findChild(self.viewGO, "selectbg")
+	self.txtSelectOrder = gohelper.findChildTextMesh(self.goSelect, "#txt_selectorder")
+	self.goNormal = gohelper.findChild(self.viewGO, "normalbg")
+	self.txtNormalOrder = gohelper.findChildTextMesh(self.goNormal, "#txt_normalorder")
+	self.txtStoryName = gohelper.findChildTextMesh(self.viewGO, "#txt_storyname")
+	self.btnClick = gohelper.findButtonWithAudio(self.viewGO)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnClick, arg_2_0.onClickBtnClick, arg_2_0)
+function RoleStoryReviewItem:addEvents()
+	self:addClickCb(self.btnClick, self.onClickBtnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RoleStoryReviewItem:removeEvents()
 	return
 end
 
-function var_0_0.onClickBtnClick(arg_4_0)
-	if not arg_4_0.data then
+function RoleStoryReviewItem:onClickBtnClick()
+	if not self.data then
 		return
 	end
 
-	if arg_4_0.selectDispatchId == arg_4_0.data.id then
+	local selelcted = self.selectDispatchId == self.data.id
+
+	if selelcted then
 		return
 	end
 
-	RoleStoryController.instance:dispatchEvent(RoleStoryEvent.ClickReviewItem, arg_4_0.data.id)
+	RoleStoryController.instance:dispatchEvent(RoleStoryEvent.ClickReviewItem, self.data.id)
 end
 
-function var_0_0.refreshItem(arg_5_0)
-	if not arg_5_0.data then
-		gohelper.setActive(arg_5_0.viewGO, false)
+function RoleStoryReviewItem:refreshItem()
+	if not self.data then
+		gohelper.setActive(self.viewGO, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_5_0.viewGO, true)
+	gohelper.setActive(self.viewGO, true)
 
-	arg_5_0.txtSelectOrder.text = string.format("%02d", arg_5_0.index)
-	arg_5_0.txtNormalOrder.text = string.format("%02d", arg_5_0.index)
-	arg_5_0.txtStoryName.text = arg_5_0.data.name
+	self.txtSelectOrder.text = string.format("%02d", self.index)
+	self.txtNormalOrder.text = string.format("%02d", self.index)
+	self.txtStoryName.text = self.data.name
 
-	local var_5_0 = arg_5_0.selectDispatchId == arg_5_0.data.id
+	local selelcted = self.selectDispatchId == self.data.id
 
-	gohelper.setActive(arg_5_0.goSelect, var_5_0)
-	gohelper.setActive(arg_5_0.goNormal, not var_5_0)
+	gohelper.setActive(self.goSelect, selelcted)
+	gohelper.setActive(self.goNormal, not selelcted)
 end
 
-function var_0_0.onUpdateMO(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_0.data = arg_6_1
-	arg_6_0.index = arg_6_2
+function RoleStoryReviewItem:onUpdateMO(data, index)
+	self.data = data
+	self.index = index
 
-	arg_6_0:refreshItem()
+	self:refreshItem()
 end
 
-function var_0_0.updateSelect(arg_7_0, arg_7_1)
-	arg_7_0.selectDispatchId = arg_7_1
+function RoleStoryReviewItem:updateSelect(dispatchId)
+	self.selectDispatchId = dispatchId
 
-	arg_7_0:refreshItem()
+	self:refreshItem()
 end
 
-function var_0_0._editableInitView(arg_8_0)
+function RoleStoryReviewItem:_editableInitView()
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
+function RoleStoryReviewItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return RoleStoryReviewItem

@@ -1,14 +1,16 @@
-﻿module("modules.logic.room.define.RoomBuildingEnum", package.seeall)
+﻿-- chunkname: @modules/logic/room/define/RoomBuildingEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.room.define.RoomBuildingEnum", package.seeall)
 
-var_0_0.BuildingState = {
+local RoomBuildingEnum = _M
+
+RoomBuildingEnum.BuildingState = {
 	Revert = 4,
 	Inventory = 3,
 	Temp = 2,
 	Map = 1
 }
-var_0_0.BuildingType = {
+RoomBuildingEnum.BuildingType = {
 	Collect = 1,
 	Manufacture = 3,
 	FishingStore = 9,
@@ -20,65 +22,65 @@ var_0_0.BuildingType = {
 	Fishing = 8,
 	Transport = 6
 }
-var_0_0.BuildingListViewResTabType = {
+RoomBuildingEnum.BuildingListViewResTabType = {
 	All = 1,
 	Play = 4,
 	Adornment = 2,
 	Produce = 3
 }
-var_0_0.BuildingTypeAreName = {
-	[var_0_0.BuildingType.Collect] = "room_area_name_collect",
-	[var_0_0.BuildingType.Process] = "room_area_name_process",
-	[var_0_0.BuildingType.Manufacture] = "room_area_name_manufacture"
+RoomBuildingEnum.BuildingTypeAreName = {
+	[RoomBuildingEnum.BuildingType.Collect] = "room_area_name_collect",
+	[RoomBuildingEnum.BuildingType.Process] = "room_area_name_process",
+	[RoomBuildingEnum.BuildingType.Manufacture] = "room_area_name_manufacture"
 }
-var_0_0.BuildingTypeSiteLangKey = {
-	[var_0_0.BuildingType.Collect] = "room_building_sitename_collect",
-	[var_0_0.BuildingType.Process] = "room_building_sitename_process",
-	[var_0_0.BuildingType.Manufacture] = "room_building_sitename_manufacture"
+RoomBuildingEnum.BuildingTypeSiteLangKey = {
+	[RoomBuildingEnum.BuildingType.Collect] = "room_building_sitename_collect",
+	[RoomBuildingEnum.BuildingType.Process] = "room_building_sitename_process",
+	[RoomBuildingEnum.BuildingType.Manufacture] = "room_building_sitename_manufacture"
 }
-var_0_0.BuildingTypeLineIcon = {
-	[var_0_0.BuildingType.Collect] = "room_transport_icon_1",
-	[var_0_0.BuildingType.Process] = "room_transport_icon_2",
-	[var_0_0.BuildingType.Manufacture] = "room_transport_icon_3"
+RoomBuildingEnum.BuildingTypeLineIcon = {
+	[RoomBuildingEnum.BuildingType.Collect] = "room_transport_icon_1",
+	[RoomBuildingEnum.BuildingType.Process] = "room_transport_icon_2",
+	[RoomBuildingEnum.BuildingType.Manufacture] = "room_transport_icon_3"
 }
-var_0_0.CanDateleBuildingType = {
-	[var_0_0.BuildingType.Decoration] = true
+RoomBuildingEnum.CanDateleBuildingType = {
+	[RoomBuildingEnum.BuildingType.Decoration] = true
 }
-var_0_0.CanClickTouchBuildingType = {
-	[var_0_0.BuildingType.Collect] = true,
-	[var_0_0.BuildingType.Process] = true,
-	[var_0_0.BuildingType.Manufacture] = true,
-	[var_0_0.BuildingType.Trade] = true,
-	[var_0_0.BuildingType.Rest] = true,
-	[var_0_0.BuildingType.Interact] = true
+RoomBuildingEnum.CanClickTouchBuildingType = {
+	[RoomBuildingEnum.BuildingType.Collect] = true,
+	[RoomBuildingEnum.BuildingType.Process] = true,
+	[RoomBuildingEnum.BuildingType.Manufacture] = true,
+	[RoomBuildingEnum.BuildingType.Trade] = true,
+	[RoomBuildingEnum.BuildingType.Rest] = true,
+	[RoomBuildingEnum.BuildingType.Interact] = true
 }
-var_0_0.BuildingArea = {
-	[var_0_0.BuildingType.Collect] = true,
-	[var_0_0.BuildingType.Process] = true,
-	[var_0_0.BuildingType.Manufacture] = true
+RoomBuildingEnum.BuildingArea = {
+	[RoomBuildingEnum.BuildingType.Collect] = true,
+	[RoomBuildingEnum.BuildingType.Process] = true,
+	[RoomBuildingEnum.BuildingType.Manufacture] = true
 }
-var_0_0.BuildingMapUiIcon = {
-	[var_0_0.BuildingType.Interact] = "critter_buildingicon_5"
+RoomBuildingEnum.BuildingMapUiIcon = {
+	[RoomBuildingEnum.BuildingType.Interact] = "critter_buildingicon_5"
 }
-var_0_0.FormulaBuildingType = {
+RoomBuildingEnum.FormulaBuildingType = {
 	Gather = 1,
 	ExpTree = 6,
 	Machine = 2,
 	Trade = 4,
 	Change = 3
 }
-var_0_0.FormulaType = {
+RoomBuildingEnum.FormulaType = {
 	Gather = 4,
 	Trade = 3,
 	Machine = 1,
 	Change = 2
 }
-var_0_0.EffectType = {
+RoomBuildingEnum.EffectType = {
 	Reserve = 1,
 	Slot = 3,
 	Time = 2
 }
-var_0_0.FormulaOrderType = {
+RoomBuildingEnum.FormulaOrderType = {
 	OrderDown = 6,
 	CostTimeUp = 3,
 	OrderUp = 5,
@@ -86,14 +88,14 @@ var_0_0.FormulaOrderType = {
 	CostTimeDown = 4,
 	RareUp = 1
 }
-var_0_0.FormulaMaxCountErrorCode = {
+RoomBuildingEnum.FormulaMaxCountErrorCode = {
 	TimeCountLimit = -3,
 	HasQuantityLimit = -1,
 	FitResourceLimit = -5,
 	ReserveCountLimit = -4,
 	AccelerateItemMaxCountLimit = -2
 }
-var_0_0.ConfirmPlaceBuildingErrorCode = {
+RoomBuildingEnum.ConfirmPlaceBuildingErrorCode = {
 	InTransportPath = -6,
 	ResourceArea = -3,
 	NoAreaMainBuilding = -4,
@@ -101,25 +103,25 @@ var_0_0.ConfirmPlaceBuildingErrorCode = {
 	OutSizeAreaBuilding = -5,
 	ResourceId = -2
 }
-var_0_0.RareIcon = {
+RoomBuildingEnum.RareIcon = {
 	"bg_jianzudi_2",
 	"bg_jianzudi_3",
 	"bg_jianzudi_4",
 	"bg_jianzudi_5",
 	"bg_jianzudi_6"
 }
-var_0_0.RareFrame = {
+RoomBuildingEnum.RareFrame = {
 	"room_qualityframe_1",
 	"room_qualityframe_2",
 	"room_qualityframe_3",
 	"room_qualityframe_4",
 	"room_qualityframe_5"
 }
-var_0_0.MachineSlotMaxCount = 99
-var_0_0.AccelerateItemMaxCount = 999
-var_0_0.SpecialStrengthItemId = 190008
-var_0_0.BuildingAreaRange = 2
-var_0_0.Crossload = {
+RoomBuildingEnum.MachineSlotMaxCount = 99
+RoomBuildingEnum.AccelerateItemMaxCount = 999
+RoomBuildingEnum.SpecialStrengthItemId = 190008
+RoomBuildingEnum.BuildingAreaRange = 2
+RoomBuildingEnum.Crossload = {
 	[5009] = {
 		AnimPath = "",
 		AnimStatus = {
@@ -194,19 +196,19 @@ var_0_0.Crossload = {
 		}
 	}
 }
-var_0_0.AudioExtendType = {
+RoomBuildingEnum.AudioExtendType = {
 	AnimatorEvent = 2,
 	Clock12Hour = 1
 }
-var_0_0.VehicleInitOffestY = 0.11
-var_0_0.VehicleTypeOffestY = {
-	var_0_0.VehicleInitOffestY
+RoomBuildingEnum.VehicleInitOffestY = 0.11
+RoomBuildingEnum.VehicleTypeOffestY = {
+	RoomBuildingEnum.VehicleInitOffestY
 }
-var_0_0.MaxBuildingOccupyNum = 7
-var_0_0.NotPlaceBlockAnimDict = {
+RoomBuildingEnum.MaxBuildingOccupyNum = 7
+RoomBuildingEnum.NotPlaceBlockAnimDict = {
 	[11311] = true
 }
-var_0_0.AnimName = {
+RoomBuildingEnum.AnimName = {
 	Open = "open",
 	Takeoff = "takeoff",
 	Close = "close",
@@ -214,8 +216,8 @@ var_0_0.AnimName = {
 	Landing = "landing",
 	Idel = "idel"
 }
-var_0_0.TransportBuyTosatDic = {
+RoomBuildingEnum.TransportBuyTosatDic = {
 	[22204] = 220910
 }
 
-return var_0_0
+return RoomBuildingEnum

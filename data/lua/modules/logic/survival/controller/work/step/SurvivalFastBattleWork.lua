@@ -1,47 +1,49 @@
-﻿module("modules.logic.survival.controller.work.step.SurvivalFastBattleWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/step/SurvivalFastBattleWork.lua
 
-local var_0_0 = class("SurvivalFastBattleWork", SurvivalStepBaseWork)
+module("modules.logic.survival.controller.work.step.SurvivalFastBattleWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_0._stepMo.paramInt[1] or 0
-	local var_1_1 = SurvivalMapHelper.instance:getEntity(var_1_0)
+local SurvivalFastBattleWork = class("SurvivalFastBattleWork", SurvivalStepBaseWork)
 
-	if not var_1_1 then
-		arg_1_0:onDone(true)
+function SurvivalFastBattleWork:onStart(context)
+	local unitId = self._stepMo.paramInt[1] or 0
+	local entity = SurvivalMapHelper.instance:getEntity(unitId)
+
+	if not entity then
+		self:onDone(true)
 
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_fuleyuan_tansuo_killed)
-	var_1_1:addEffect(SurvivalConst.UnitEffectPath.FastFight)
+	entity:addEffect(SurvivalConst.UnitEffectPath.FastFight)
 
-	arg_1_0._entity = var_1_1
+	self._entity = entity
 
-	TaskDispatcher.runDelay(arg_1_0._delayDone, arg_1_0, SurvivalConst.UnitEffectTime[SurvivalConst.UnitEffectPath.FastFight])
+	TaskDispatcher.runDelay(self._delayDone, self, SurvivalConst.UnitEffectTime[SurvivalConst.UnitEffectPath.FastFight])
 end
 
-function var_0_0._delayDone(arg_2_0)
-	arg_2_0._entity:removeEffect(SurvivalConst.UnitEffectPath.FastFight)
-	arg_2_0:onDone(true)
+function SurvivalFastBattleWork:_delayDone()
+	self._entity:removeEffect(SurvivalConst.UnitEffectPath.FastFight)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
-	arg_3_0._entity = nil
+function SurvivalFastBattleWork:clearWork()
+	self._entity = nil
 
-	TaskDispatcher.cancelTask(arg_3_0._delayDone, arg_3_0)
+	TaskDispatcher.cancelTask(self._delayDone, self)
 end
 
-function var_0_0.getRunOrder(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_2:addWork(arg_4_0)
+function SurvivalFastBattleWork:getRunOrder(params, flow)
+	flow:addWork(self)
 
-	arg_4_1.beforeFlow = FlowParallel.New()
+	params.beforeFlow = FlowParallel.New()
 
-	arg_4_2:addWork(arg_4_1.beforeFlow)
+	flow:addWork(params.beforeFlow)
 
-	arg_4_1.moveIdSet = {}
-	arg_4_1.haveHeroMove = false
+	params.moveIdSet = {}
+	params.haveHeroMove = false
 
 	return SurvivalEnum.StepRunOrder.None
 end
 
-return var_0_0
+return SurvivalFastBattleWork

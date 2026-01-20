@@ -54,5 +54,12 @@
     "name": "language_10070524",
     "nameEn": "Lucidscape",
     "displayPriority": 8
+  },
+  {
+    "id": 9,
+    "type": 1,
+    "name": "language_10000065",
+    "nameEn": "Witness Level",
+    "displayPriority": 9
   }
 ]

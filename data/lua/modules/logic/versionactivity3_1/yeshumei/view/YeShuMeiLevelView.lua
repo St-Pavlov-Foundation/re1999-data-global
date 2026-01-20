@@ -1,229 +1,234 @@
-﻿module("modules.logic.versionactivity3_1.yeshumei.view.YeShuMeiLevelView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/yeshumei/view/YeShuMeiLevelView.lua
 
-local var_0_0 = class("YeShuMeiLevelView", BaseView)
-local var_0_1 = 0.5
+module("modules.logic.versionactivity3_1.yeshumei.view.YeShuMeiLevelView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._trsBg = gohelper.findChild(arg_1_0.viewGO, "#simage_FullBG").transform
-	arg_1_0._gostoryScroll = gohelper.findChild(arg_1_0.viewGO, "#go_storyPath/#go_storyScroll")
-	arg_1_0._scrollstory = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_storyPath")
-	arg_1_0._gostages = gohelper.findChild(arg_1_0.viewGO, "#go_storyPath/#go_storyScroll/#go_storyStages")
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "#go_Title/#go_time/image_LimitTimeBG/#txt_limittime")
-	arg_1_0._btntask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Task")
-	arg_1_0._goreddotreward = gohelper.findChild(arg_1_0.viewGO, "#btn_Task/#go_reddot")
-	arg_1_0._gotaskani = gohelper.findChild(arg_1_0.viewGO, "#btn_Task/ani")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
-	arg_1_0._animTask = arg_1_0._gotaskani:GetComponent(typeof(UnityEngine.Animator))
+local YeShuMeiLevelView = class("YeShuMeiLevelView", BaseView)
+local FocusDuration = 0.5
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function YeShuMeiLevelView:onInitView()
+	self._trsBg = gohelper.findChild(self.viewGO, "#simage_FullBG").transform
+	self._gostoryScroll = gohelper.findChild(self.viewGO, "#go_storyPath/#go_storyScroll")
+	self._scrollstory = gohelper.findChildScrollRect(self.viewGO, "#go_storyPath")
+	self._gostages = gohelper.findChild(self.viewGO, "#go_storyPath/#go_storyScroll/#go_storyStages")
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "#go_Title/#go_time/image_LimitTimeBG/#txt_limittime")
+	self._btntask = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Task")
+	self._goreddotreward = gohelper.findChild(self.viewGO, "#btn_Task/#go_reddot")
+	self._gotaskani = gohelper.findChild(self.viewGO, "#btn_Task/ani")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._gotopleft = gohelper.findChild(self.viewGO, "#go_topleft")
+	self._animTask = self._gotaskani:GetComponent(typeof(UnityEngine.Animator))
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btntask:AddClickListener(arg_2_0._btntaskOnClick, arg_2_0)
-	arg_2_0:addEventCb(YeShuMeiController.instance, YeShuMeiEvent.EpisodeFinished, arg_2_0._onEpisodeFinished, arg_2_0)
-	arg_2_0:addEventCb(YeShuMeiController.instance, YeShuMeiEvent.OnBackToLevel, arg_2_0._onBackToLevel, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0._onCloseView, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.ReOpenWhileOpen, arg_2_0._onOpenView, arg_2_0)
-	arg_2_0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_2_0._onScreenSizeChange, arg_2_0)
-	arg_2_0._scrollstory:AddOnValueChanged(arg_2_0.onValueChanged, arg_2_0)
+function YeShuMeiLevelView:addEvents()
+	self._btntask:AddClickListener(self._btntaskOnClick, self)
+	self:addEventCb(YeShuMeiController.instance, YeShuMeiEvent.EpisodeFinished, self._onEpisodeFinished, self)
+	self:addEventCb(YeShuMeiController.instance, YeShuMeiEvent.OnBackToLevel, self._onBackToLevel, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.ReOpenWhileOpen, self._onOpenView, self)
+	self:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, self._onScreenSizeChange, self)
+	self._scrollstory:AddOnValueChanged(self.onValueChanged, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btntask:RemoveClickListener()
-	arg_3_0:removeEventCb(YeShuMeiController.instance, YeShuMeiEvent.EpisodeFinished, arg_3_0._onEpisodeFinished, arg_3_0)
-	arg_3_0:removeEventCb(YeShuMeiController.instance, YeShuMeiEvent.OnBackToLevel, arg_3_0._onBackToLevel, arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0._onCloseView, arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.ReOpenWhileOpen, arg_3_0._onOpenView, arg_3_0)
-	arg_3_0:removeEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_3_0._onScreenSizeChange, arg_3_0)
-	arg_3_0._scrollstory:RemoveOnValueChanged()
+function YeShuMeiLevelView:removeEvents()
+	self._btntask:RemoveClickListener()
+	self:removeEventCb(YeShuMeiController.instance, YeShuMeiEvent.EpisodeFinished, self._onEpisodeFinished, self)
+	self:removeEventCb(YeShuMeiController.instance, YeShuMeiEvent.OnBackToLevel, self._onBackToLevel, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.ReOpenWhileOpen, self._onOpenView, self)
+	self:removeEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, self._onScreenSizeChange, self)
+	self._scrollstory:RemoveOnValueChanged()
 end
 
-function var_0_0.onValueChanged(arg_4_0)
-	local var_4_0 = arg_4_0._scrollstory.horizontalNormalizedPosition
+function YeShuMeiLevelView:onValueChanged()
+	local per = self._scrollstory.horizontalNormalizedPosition
 
-	if var_4_0 > 1 then
-		var_4_0 = 1
+	if per > 1 then
+		per = 1
 	end
 
-	local var_4_1 = arg_4_0._canMoveBgWidth * var_4_0
+	local moveX = self._canMoveBgWidth * per
 
-	recthelper.setAnchorX(arg_4_0._trsBg, -var_4_1)
+	recthelper.setAnchorX(self._trsBg, -moveX)
 end
 
-function var_0_0._btntaskOnClick(arg_5_0)
+function YeShuMeiLevelView:_btntaskOnClick()
 	ViewMgr.instance:openView(ViewName.YeShuMeiTaskView)
 end
 
-function var_0_0._refreshTask(arg_6_0)
+function YeShuMeiLevelView:_refreshTask()
 	if RedDotModel.instance:isDotShow(RedDotEnum.DotNode.V3a1YeShuMeiTask, 0) then
-		arg_6_0._animTask:Play("loop")
+		self._animTask:Play("loop")
 	else
-		arg_6_0._animTask:Play("idle")
+		self._animTask:Play("idle")
 	end
 end
 
-function var_0_0._onCloseTask(arg_7_0)
-	arg_7_0:_refreshTask()
+function YeShuMeiLevelView:_onCloseTask()
+	self:_refreshTask()
 end
 
-function var_0_0._removeEvents(arg_8_0)
+function YeShuMeiLevelView:_removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_9_0)
-	arg_9_0.actId = VersionActivity3_1Enum.ActivityId.YeShuMei
-	arg_9_0._viewAnimator = arg_9_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function YeShuMeiLevelView:_editableInitView()
+	self.actId = VersionActivity3_1Enum.ActivityId.YeShuMei
+	self._viewAnimator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	local var_9_0 = recthelper.getWidth(ViewMgr.instance:getUIRoot().transform)
+	local width = recthelper.getWidth(ViewMgr.instance:getUIRoot().transform)
+	local bgwidth = recthelper.getWidth(self._trsBg)
 
-	arg_9_0._halfbg = recthelper.getWidth(arg_9_0._trsBg) / 2
-	arg_9_0._offsetX = var_9_0 / 2
-	arg_9_0._canMoveBgWidth = arg_9_0._halfbg - arg_9_0._offsetX
-	arg_9_0.minContentAnchorX = -4000 + var_9_0
+	self._halfbg = bgwidth / 2
+	self._offsetX = width / 2
+	self._canMoveBgWidth = self._halfbg - self._offsetX
+	self.minContentAnchorX = -4000 + width
 
-	RedDotController.instance:addRedDot(arg_9_0._goreddotreward, RedDotEnum.DotNode.V3a1YeShuMeiTask)
+	RedDotController.instance:addRedDot(self._goreddotreward, RedDotEnum.DotNode.V3a1YeShuMeiTask)
 end
 
-function var_0_0._onOpenView(arg_10_0)
-	arg_10_0._focusId = arg_10_0.viewParam and arg_10_0.viewParam.episodeId
+function YeShuMeiLevelView:_onOpenView()
+	self._focusId = self.viewParam and self.viewParam.episodeId
 
-	local var_10_0 = YeShuMeiModel.instance:getEpisodeIndex(arg_10_0._focusId)
+	local index = YeShuMeiModel.instance:getEpisodeIndex(self._focusId)
 
-	arg_10_0:_focusStoryItem(var_10_0, true)
+	self:_focusStoryItem(index, true)
 
-	arg_10_0._focusId = nil
+	self._focusId = nil
 end
 
-function var_0_0.onOpen(arg_11_0)
-	arg_11_0._focusId = arg_11_0.viewParam and arg_11_0.viewParam.episodeId
+function YeShuMeiLevelView:onOpen()
+	self._focusId = self.viewParam and self.viewParam.episodeId
 
-	arg_11_0:_initLines()
-	arg_11_0:_initLevelItems()
-	arg_11_0:_refreshLines()
-	arg_11_0:_refreshLeftTime()
-	TaskDispatcher.runRepeat(arg_11_0._refreshLeftTime, arg_11_0, 1)
-	arg_11_0:_refreshTask()
+	self:_initLines()
+	self:_initLevelItems()
+	self:_refreshLines()
+	self:_refreshLeftTime()
+	TaskDispatcher.runRepeat(self._refreshLeftTime, self, 1)
+	self:_refreshTask()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_theft_open)
 end
 
-function var_0_0._initLines(arg_12_0)
-	arg_12_0._linesList = {}
+function YeShuMeiLevelView:_initLines()
+	self._linesList = {}
 
-	for iter_12_0 = 1, 7 do
-		local var_12_0 = arg_12_0:getUserDataTb_()
+	for i = 1, 7 do
+		local line = self:getUserDataTb_()
 
-		var_12_0.go = gohelper.findChild(arg_12_0.viewGO, "#go_storyPath/#go_storyScroll/path/path2/Line" .. iter_12_0)
-		var_12_0.animator = var_12_0.go:GetComponent(typeof(UnityEngine.Animator))
+		line.go = gohelper.findChild(self.viewGO, "#go_storyPath/#go_storyScroll/path/path2/Line" .. i)
+		line.animator = line.go:GetComponent(typeof(UnityEngine.Animator))
 
-		gohelper.setActive(var_12_0.go, false)
-		table.insert(arg_12_0._linesList, var_12_0)
+		gohelper.setActive(line.go, false)
+		table.insert(self._linesList, line)
 	end
 end
 
-function var_0_0._refreshLines(arg_13_0)
-	for iter_13_0 = 1, arg_13_0._curEpisodeIndex - 1 do
-		local var_13_0 = arg_13_0._linesList[iter_13_0]
+function YeShuMeiLevelView:_refreshLines()
+	for i = 1, self._curEpisodeIndex - 1 do
+		local line = self._linesList[i]
 
-		if var_13_0 then
-			gohelper.setActive(var_13_0.go, true)
+		if line then
+			gohelper.setActive(line.go, true)
 		end
 	end
 end
 
-function var_0_0._refreshLeftTime(arg_14_0)
-	arg_14_0._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(arg_14_0.actId)
+function YeShuMeiLevelView:_refreshLeftTime()
+	self._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(self.actId)
 end
 
-function var_0_0._initLevelItems(arg_15_0)
-	local var_15_0 = arg_15_0.viewContainer:getSetting().otherRes[1]
+function YeShuMeiLevelView:_initLevelItems()
+	local path = self.viewContainer:getSetting().otherRes[1]
 
-	arg_15_0._episodeItems = {}
+	self._episodeItems = {}
 
-	local var_15_1 = YeShuMeiConfig.instance:getEpisodeCoList(arg_15_0.actId)
-	local var_15_2 = YeShuMeiModel.instance:getMaxUnlockEpisodeId()
+	local episodeCos = YeShuMeiConfig.instance:getEpisodeCoList(self.actId)
+	local maxUnlockEpisode = YeShuMeiModel.instance:getMaxUnlockEpisodeId()
 
-	arg_15_0._curEpisodeIndex = YeShuMeiModel.instance:getEpisodeIndex(var_15_2)
+	self._curEpisodeIndex = YeShuMeiModel.instance:getEpisodeIndex(maxUnlockEpisode)
 
-	YeShuMeiModel.instance:setCurEpisode(arg_15_0._curEpisodeIndex, var_15_2)
+	YeShuMeiModel.instance:setCurEpisode(self._curEpisodeIndex, maxUnlockEpisode)
 
-	for iter_15_0 = 1, #var_15_1 do
-		local var_15_3 = gohelper.findChild(arg_15_0._gostages, "stage" .. iter_15_0)
-		local var_15_4 = arg_15_0:getResInst(var_15_0, var_15_3)
-		local var_15_5 = MonoHelper.addNoUpdateLuaComOnceToGo(var_15_4, YeShuMeiStoryItem, arg_15_0)
+	for i = 1, #episodeCos do
+		local nodeRoot = gohelper.findChild(self._gostages, "stage" .. i)
+		local cloneGo = self:getResInst(path, nodeRoot)
+		local stageItem = MonoHelper.addNoUpdateLuaComOnceToGo(cloneGo, YeShuMeiStoryItem, self)
 
-		arg_15_0._episodeItems[iter_15_0] = var_15_5
+		self._episodeItems[i] = stageItem
 
-		arg_15_0._episodeItems[iter_15_0]:setParam(var_15_1[iter_15_0], iter_15_0, arg_15_0.actId)
+		self._episodeItems[i]:setParam(episodeCos[i], i, self.actId)
 	end
 
-	if not arg_15_0._focusId then
-		arg_15_0:_focusStoryItem(arg_15_0._curEpisodeIndex)
+	if not self._focusId then
+		self:_focusStoryItem(self._curEpisodeIndex)
 	else
-		local var_15_6 = YeShuMeiModel.instance:getEpisodeIndex(arg_15_0._focusId)
+		local index = YeShuMeiModel.instance:getEpisodeIndex(self._focusId)
 
-		arg_15_0:_focusStoryItem(var_15_6)
+		self:_focusStoryItem(index)
 
-		arg_15_0._focusId = nil
+		self._focusId = nil
 	end
 end
 
-function var_0_0._focusStoryItem(arg_16_0, arg_16_1, arg_16_2)
-	local var_16_0 = recthelper.getAnchorX(arg_16_0._episodeItems[arg_16_1].transform.parent)
-	local var_16_1 = arg_16_0._offsetX - var_16_0
+function YeShuMeiLevelView:_focusStoryItem(index, needPlay)
+	local contentAnchorX = recthelper.getAnchorX(self._episodeItems[index].transform.parent)
+	local offsetX = self._offsetX - contentAnchorX
 
-	if var_16_1 > 0 then
-		var_16_1 = 0
-	elseif var_16_1 < arg_16_0.minContentAnchorX then
-		var_16_1 = arg_16_0.minContentAnchorX
+	if offsetX > 0 then
+		offsetX = 0
+	elseif offsetX < self.minContentAnchorX then
+		offsetX = self.minContentAnchorX
 	end
 
-	if arg_16_2 then
-		ZProj.TweenHelper.DOAnchorPosX(arg_16_0._gostoryScroll.transform, var_16_1, var_0_1)
+	if needPlay then
+		ZProj.TweenHelper.DOAnchorPosX(self._gostoryScroll.transform, offsetX, FocusDuration)
 	else
-		recthelper.setAnchorX(arg_16_0._gostoryScroll.transform, var_16_1)
+		recthelper.setAnchorX(self._gostoryScroll.transform, offsetX)
 	end
 end
 
-function var_0_0.onStoryItemClick(arg_17_0, arg_17_1)
-	arg_17_0:_focusStoryItem(arg_17_1, true)
+function YeShuMeiLevelView:onStoryItemClick(index)
+	self:_focusStoryItem(index, true)
 end
 
-function var_0_0._onBackToLevel(arg_18_0)
-	local var_18_0 = YeShuMeiModel.instance:getNewFinishEpisode()
+function YeShuMeiLevelView:_onBackToLevel()
+	local newEpisode = YeShuMeiModel.instance:getNewFinishEpisode()
 
-	if var_18_0 and var_18_0 ~= 0 then
-		local var_18_1 = YeShuMeiModel.instance:getMaxUnlockEpisodeId()
+	if newEpisode and newEpisode ~= 0 then
+		local maxUnlockEpisode = YeShuMeiModel.instance:getMaxUnlockEpisodeId()
 
-		arg_18_0._curEpisodeIndex = YeShuMeiModel.instance:getEpisodeIndex(var_18_1)
+		self._curEpisodeIndex = YeShuMeiModel.instance:getEpisodeIndex(maxUnlockEpisode)
 
-		YeShuMeiModel.instance:setCurEpisode(arg_18_0._curEpisodeIndex, var_18_1)
+		YeShuMeiModel.instance:setCurEpisode(self._curEpisodeIndex, maxUnlockEpisode)
 	end
 
-	arg_18_0:_refreshTask()
+	self:_refreshTask()
 end
 
-function var_0_0._onEpisodeFinished(arg_19_0)
-	if YeShuMeiModel.instance:getNewFinishEpisode() then
-		TaskDispatcher.runDelay(arg_19_0._playStoryFinishAnim, arg_19_0, 1)
+function YeShuMeiLevelView:_onEpisodeFinished()
+	local newEpisode = YeShuMeiModel.instance:getNewFinishEpisode()
+
+	if newEpisode then
+		TaskDispatcher.runDelay(self._playStoryFinishAnim, self, 1)
 	end
 end
 
-function var_0_0._playStoryFinishAnim(arg_20_0)
-	TaskDispatcher.cancelTask(arg_20_0._playStoryFinishAnim, arg_20_0)
+function YeShuMeiLevelView:_playStoryFinishAnim()
+	TaskDispatcher.cancelTask(self._playStoryFinishAnim, self)
 
-	local var_20_0 = YeShuMeiModel.instance:getNewFinishEpisode()
+	local newEpisode = YeShuMeiModel.instance:getNewFinishEpisode()
 
-	if var_20_0 then
-		for iter_20_0, iter_20_1 in ipairs(arg_20_0._episodeItems) do
-			if iter_20_1.id == var_20_0 then
-				arg_20_0._finishEpisodeIndex = iter_20_0
+	if newEpisode then
+		for k, episodeItem in ipairs(self._episodeItems) do
+			if episodeItem.id == newEpisode then
+				self._finishEpisodeIndex = k
 
-				iter_20_1:playFinish()
-				iter_20_1:playStarAnim()
-				TaskDispatcher.runDelay(arg_20_0._finishStoryEnd, arg_20_0, 1.5)
+				episodeItem:playFinish()
+				episodeItem:playStarAnim()
+				TaskDispatcher.runDelay(self._finishStoryEnd, self, 1.5)
 
 				break
 			end
@@ -233,76 +238,77 @@ function var_0_0._playStoryFinishAnim(arg_20_0)
 	end
 end
 
-function var_0_0._finishStoryEnd(arg_21_0)
-	if arg_21_0._finishEpisodeIndex == #arg_21_0._episodeItems then
-		arg_21_0._curEpisodeIndex = arg_21_0._finishEpisodeIndex
-		arg_21_0._finishEpisodeIndex = nil
+function YeShuMeiLevelView:_finishStoryEnd()
+	if self._finishEpisodeIndex == #self._episodeItems then
+		self._curEpisodeIndex = self._finishEpisodeIndex
+		self._finishEpisodeIndex = nil
 	else
-		arg_21_0._curEpisodeIndex = arg_21_0._finishEpisodeIndex + 1
+		self._curEpisodeIndex = self._finishEpisodeIndex + 1
 
-		arg_21_0:_unlockStory()
+		self:_unlockStory()
 	end
 end
 
-function var_0_0._unlockStory(arg_22_0)
-	arg_22_0._episodeItems[arg_22_0._finishEpisodeIndex + 1]:refreshUI()
-	arg_22_0._episodeItems[arg_22_0._finishEpisodeIndex + 1]:playUnlock()
+function YeShuMeiLevelView:_unlockStory()
+	self._episodeItems[self._finishEpisodeIndex + 1]:refreshUI()
+	self._episodeItems[self._finishEpisodeIndex + 1]:playUnlock()
 
-	local var_22_0 = arg_22_0._linesList[arg_22_0._finishEpisodeIndex]
+	local line = self._linesList[self._finishEpisodeIndex]
 
-	if var_22_0 then
-		gohelper.setActive(var_22_0.go, true)
-		var_22_0.animator:Play("open", 0, 0)
+	if line then
+		gohelper.setActive(line.go, true)
+		line.animator:Play("open", 0, 0)
 	end
 
-	arg_22_0:_focusStoryItem(arg_22_0._finishEpisodeIndex + 1, true)
-	TaskDispatcher.runDelay(arg_22_0._unlockLvEnd, arg_22_0, 1.5)
+	self:_focusStoryItem(self._finishEpisodeIndex + 1, true)
+	TaskDispatcher.runDelay(self._unlockLvEnd, self, 1.5)
 end
 
-function var_0_0._unlockLvEnd(arg_23_0)
-	arg_23_0._finishEpisodeIndex = nil
+function YeShuMeiLevelView:_unlockLvEnd()
+	self._finishEpisodeIndex = nil
 end
 
-function var_0_0._onScreenSizeChange(arg_24_0)
-	local var_24_0 = recthelper.getWidth(ViewMgr.instance:getUIRoot().transform)
+function YeShuMeiLevelView:_onScreenSizeChange()
+	local width = recthelper.getWidth(ViewMgr.instance:getUIRoot().transform)
+	local bgwidth = recthelper.getWidth(self._trsBg)
 
-	arg_24_0._halfbg = recthelper.getWidth(arg_24_0._trsBg) / 2
-	arg_24_0._offsetX = var_24_0 / 2
-	arg_24_0._canMoveBgWidth = arg_24_0._halfbg - arg_24_0._offsetX
-	arg_24_0.minContentAnchorX = -4000 + var_24_0
+	self._halfbg = bgwidth / 2
+	self._offsetX = width / 2
+	self._canMoveBgWidth = self._halfbg - self._offsetX
+	self.minContentAnchorX = -4000 + width
 
-	local var_24_1 = arg_24_0._scrollstory.horizontalNormalizedPosition
+	local per = self._scrollstory.horizontalNormalizedPosition
 
-	if var_24_1 > 1 then
-		var_24_1 = 1
+	if per > 1 then
+		per = 1
 	end
 
-	local var_24_2 = arg_24_0._canMoveBgWidth * var_24_1
+	local moveX = self._canMoveBgWidth * per
 
-	recthelper.setAnchorX(arg_24_0._trsBg, -var_24_2)
+	recthelper.setAnchorX(self._trsBg, -moveX)
 end
 
-function var_0_0.onClose(arg_25_0)
-	TaskDispatcher.cancelTask(arg_25_0._refreshLeftTime, arg_25_0)
-	TaskDispatcher.cancelTask(arg_25_0._playStoryFinishAnim, arg_25_0)
-	TaskDispatcher.cancelTask(arg_25_0._finishStoryEnd, arg_25_0)
-	TaskDispatcher.cancelTask(arg_25_0._unlockLvEnd, arg_25_0)
+function YeShuMeiLevelView:onClose()
+	TaskDispatcher.cancelTask(self._refreshLeftTime, self)
+	TaskDispatcher.cancelTask(self._playStoryFinishAnim, self)
+	TaskDispatcher.cancelTask(self._finishStoryEnd, self)
+	TaskDispatcher.cancelTask(self._unlockLvEnd, self)
 end
 
-function var_0_0.onDestroyView(arg_26_0)
-	arg_26_0:_removeEvents()
+function YeShuMeiLevelView:onDestroyView()
+	self:_removeEvents()
 
-	arg_26_0._episodeItems = nil
+	self._episodeItems = nil
 
-	TaskDispatcher.cancelTask(arg_26_0._refreshLeftTime, arg_26_0)
+	TaskDispatcher.cancelTask(self._refreshLeftTime, self)
 end
 
-function var_0_0._onCloseView(arg_27_0, arg_27_1)
-	if arg_27_1 == ViewName.YeShuMeiGameView then
-		gohelper.setActive(arg_27_0.viewGO, true)
-	elseif arg_27_1 == ViewName.YeShuMeiTaskView then
-		arg_27_0:_onCloseTask()
+function YeShuMeiLevelView:_onCloseView(viewName)
+	if viewName == ViewName.YeShuMeiGameView then
+		gohelper.setActive(self.viewGO, true)
+	elseif viewName == ViewName.YeShuMeiTaskView then
+		self:_onCloseTask()
 	end
 end
 
-return var_0_0
+return YeShuMeiLevelView

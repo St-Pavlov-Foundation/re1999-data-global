@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.Va_1_2_CharacterTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/versionactivity1_2dungeon/view/Va_1_2_CharacterTipViewContainer.lua
 
-local var_0_0 = class("Va_1_2_CharacterTipViewContainer", CharacterTipViewContainer)
+module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.Va_1_2_CharacterTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local Va_1_2_CharacterTipViewContainer = class("Va_1_2_CharacterTipViewContainer", CharacterTipViewContainer)
+
+function Va_1_2_CharacterTipViewContainer:buildViews()
 	return {
 		Va_1_2_CharacterTipView.New()
 	}
 end
 
-return var_0_0
+return Va_1_2_CharacterTipViewContainer

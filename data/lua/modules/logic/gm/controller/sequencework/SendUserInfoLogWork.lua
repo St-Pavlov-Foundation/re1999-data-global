@@ -1,28 +1,30 @@
-﻿module("modules.logic.gm.controller.sequencework.SendUserInfoLogWork", package.seeall)
+﻿-- chunkname: @modules/logic/gm/controller/sequencework/SendUserInfoLogWork.lua
 
-local var_0_0 = class("SendUserInfoLogWork", BaseWork)
+module("modules.logic.gm.controller.sequencework.SendUserInfoLogWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
+local SendUserInfoLogWork = class("SendUserInfoLogWork", BaseWork)
+
+function SendUserInfoLogWork:onStart()
 	ZProj.OpenSelectFileWindow.OpenExplorer(SendFightLogWork.logDirPath)
-	SendWeWorkFileHelper.SendUserInfo(arg_1_0.onSendUserInfoDone, arg_1_0)
+	SendWeWorkFileHelper.SendUserInfo(self.onSendUserInfoDone, self)
 end
 
-function var_0_0.onSendUserInfoDone(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_0.status ~= WorkStatus.Running then
+function SendUserInfoLogWork:onSendUserInfoDone(success, msg)
+	if self.status ~= WorkStatus.Running then
 		return
 	end
 
-	if arg_2_1 then
+	if success then
 		GameFacade.showToast(ToastEnum.IconId, "send success")
 	else
-		GameFacade.showToast(ToastEnum.IconId, "send fail " .. tostring(arg_2_2))
+		GameFacade.showToast(ToastEnum.IconId, "send fail " .. tostring(msg))
 	end
 
-	arg_2_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
+function SendUserInfoLogWork:clearWork()
 	return
 end
 
-return var_0_0
+return SendUserInfoLogWork

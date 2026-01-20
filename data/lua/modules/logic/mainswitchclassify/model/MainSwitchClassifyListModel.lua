@@ -1,21 +1,23 @@
-﻿module("modules.logic.mainswitchclassify.model.MainSwitchClassifyListModel", package.seeall)
+﻿-- chunkname: @modules/logic/mainswitchclassify/model/MainSwitchClassifyListModel.lua
 
-local var_0_0 = class("MainSwitchClassifyListModel", ListScrollModel)
+module("modules.logic.mainswitchclassify.model.MainSwitchClassifyListModel", package.seeall)
 
-function var_0_0.initMoList(arg_1_0)
-	local var_1_0 = {}
+local MainSwitchClassifyListModel = class("MainSwitchClassifyListModel", ListScrollModel)
 
-	for iter_1_0, iter_1_1 in ipairs(MainSwitchClassifyEnum.StyleClassifyInfo) do
-		table.insert(var_1_0, iter_1_1)
+function MainSwitchClassifyListModel:initMoList()
+	local moList = {}
+
+	for _, info in ipairs(MainSwitchClassifyEnum.StyleClassifyInfo) do
+		table.insert(moList, info)
 	end
 
-	table.sort(var_1_0, function(arg_2_0, arg_2_1)
-		return arg_2_0.Sort < arg_2_1.Sort
+	table.sort(moList, function(a, b)
+		return a.Sort < b.Sort
 	end)
-	arg_1_0:setList(var_1_0)
-	arg_1_0:selectCell(1, true)
+	self:setList(moList)
+	self:selectCell(1, true)
 end
 
-var_0_0.instance = var_0_0.New()
+MainSwitchClassifyListModel.instance = MainSwitchClassifyListModel.New()
 
-return var_0_0
+return MainSwitchClassifyListModel

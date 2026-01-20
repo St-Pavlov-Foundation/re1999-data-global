@@ -1,276 +1,283 @@
-﻿module("modules.logic.versionactivity1_2.trade.model.Activity117MO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/trade/model/Activity117MO.lua
 
-local var_0_0 = pureTable("Activity117MO")
+module("modules.logic.versionactivity1_2.trade.model.Activity117MO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._actId = arg_1_1
-	arg_1_0._durationDay = Activity117Config.instance:getTotalActivityDays(arg_1_1)
+local Activity117MO = pureTable("Activity117MO")
 
-	arg_1_0:initRewardDict()
-	arg_1_0:resetData()
+function Activity117MO:init(actId)
+	self._actId = actId
+	self._durationDay = Activity117Config.instance:getTotalActivityDays(actId)
+
+	self:initRewardDict()
+	self:resetData()
 end
 
-function var_0_0.resetData(arg_2_0)
-	arg_2_0._orderDataDict = {}
-	arg_2_0._score = 0
-	arg_2_0._inQuote = nil
+function Activity117MO:resetData()
+	self._orderDataDict = {}
+	self._score = 0
+	self._inQuote = nil
 
-	arg_2_0:setSelectOrder()
+	self:setSelectOrder()
 end
 
-function var_0_0.onNegotiateResult(arg_3_0, arg_3_1)
-	arg_3_0:setInQuote(false)
-	arg_3_0:updateOrder(arg_3_1.order)
+function Activity117MO:onNegotiateResult(serverData)
+	self:setInQuote(false)
+	self:updateOrder(serverData.order)
 end
 
-function var_0_0.onDealSuccess(arg_4_0, arg_4_1)
-	arg_4_0:setInQuote(false)
-	arg_4_0:setSelectOrder()
+function Activity117MO:onDealSuccess(serverData)
+	self:setInQuote(false)
+	self:setSelectOrder()
 
-	local var_4_0 = arg_4_0:updateOrder(arg_4_1.order)
+	local data = self:updateOrder(serverData.order)
 
-	if var_4_0 then
-		local var_4_1 = var_4_0:getLastRound() or 0
+	if data then
+		local source = data:getLastRound() or 0
+		local priceType = data:checkPrice(source)
 
-		if var_4_0:checkPrice(var_4_1) == Activity117Enum.PriceType.Bad then
-			var_4_1 = var_4_0:getMinPrice()
+		if priceType == Activity117Enum.PriceType.Bad then
+			source = data:getMinPrice()
 		end
 
-		local var_4_2 = {
-			score = var_4_1,
-			curScore = arg_4_0._score,
-			nextScore = arg_4_0:getNextScore(arg_4_0._score)
-		}
+		local param = {}
 
-		arg_4_0._score = arg_4_0._score + var_4_1
+		param.score = source
+		param.curScore = self._score
+		param.nextScore = self:getNextScore(self._score)
+		self._score = self._score + source
 
-		Activity117Controller.instance:openTradeSuccessView(var_4_2)
+		Activity117Controller.instance:openTradeSuccessView(param)
 	end
 end
 
-function var_0_0.onOrderPush(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0:getOrderData(arg_5_1.order.id)
-	local var_5_1 = var_5_0 and var_5_0:isProgressEnough()
-	local var_5_2 = arg_5_0:updateOrder(arg_5_1.order)
+function Activity117MO:onOrderPush(serverData)
+	local oldData = self:getOrderData(serverData.order.id)
+	local isProgressEnough = oldData and oldData:isProgressEnough()
+	local newData = self:updateOrder(serverData.order)
 
-	if not var_5_1 and var_5_2 and var_5_2:isProgressEnough() then
-		local var_5_3 = Activity117Config.instance:getOrderConfig(arg_5_0._actId, var_5_2.id)
+	if not isProgressEnough and newData and newData:isProgressEnough() then
+		local cfg = Activity117Config.instance:getOrderConfig(self._actId, newData.id)
 
-		if var_5_3 then
-			local var_5_4 = string.match(var_5_3.name, "<.->(.-)<.->") or var_5_3.name
+		if cfg then
+			local name = string.match(cfg.name, "<.->(.-)<.->") or cfg.name
 
-			GameFacade.showToast(ToastEnum.TradeSuccess, var_5_4)
+			GameFacade.showToast(ToastEnum.TradeSuccess, name)
 		end
 	end
 end
 
-function var_0_0.onInitServerData(arg_6_0, arg_6_1)
-	arg_6_0:resetData()
-	arg_6_0:updateOrders(arg_6_1.orders)
+function Activity117MO:onInitServerData(serverData)
+	self:resetData()
+	self:updateOrders(serverData.orders)
 
-	arg_6_0._score = arg_6_1.score
+	self._score = serverData.score
 
-	arg_6_0:updateHasGetBonusIds(arg_6_1.hasGetBonusIds)
+	self:updateHasGetBonusIds(serverData.hasGetBonusIds)
 end
 
-function var_0_0.updateHasGetBonusIds(arg_7_0, arg_7_1)
-	if not arg_7_1 then
+function Activity117MO:updateHasGetBonusIds(rewardIds)
+	if not rewardIds then
 		return
 	end
 
-	for iter_7_0 = 1, #arg_7_1 do
-		local var_7_0 = arg_7_0:getRewardData(arg_7_1[iter_7_0])
+	for i = 1, #rewardIds do
+		local data = self:getRewardData(rewardIds[i])
 
-		if var_7_0 then
-			var_7_0:updateServerData(true)
+		if data then
+			data:updateServerData(true)
 		end
 	end
 end
 
-function var_0_0.updateOrders(arg_8_0, arg_8_1)
-	if not arg_8_1 then
+function Activity117MO:updateOrders(orders)
+	if not orders then
 		return
 	end
 
-	for iter_8_0 = 1, #arg_8_1 do
-		arg_8_0:updateOrder(arg_8_1[iter_8_0])
+	for i = 1, #orders do
+		self:updateOrder(orders[i])
 	end
 end
 
-function var_0_0.updateOrder(arg_9_0, arg_9_1)
-	if not arg_9_1 then
+function Activity117MO:updateOrder(order)
+	if not order then
 		return
 	end
 
-	local var_9_0 = arg_9_0:getOrderData(arg_9_1.id)
+	local data = self:getOrderData(order.id)
 
-	if var_9_0 then
-		var_9_0:updateServerData(arg_9_1)
+	if data then
+		data:updateServerData(order)
 	end
 
-	return var_9_0
+	return data
 end
 
-function var_0_0.getOrderData(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = arg_10_0._orderDataDict
-	local var_10_1 = var_10_0[arg_10_1]
+function Activity117MO:getOrderData(id, noCreate)
+	local dict = self._orderDataDict
+	local data = dict[id]
 
-	if not var_10_0[arg_10_1] and not arg_10_2 then
-		var_10_1 = Activity117OrderMO.New()
+	if not dict[id] and not noCreate then
+		data = Activity117OrderMO.New()
 
-		var_10_1:init(arg_10_0._actId, arg_10_1)
+		data:init(self._actId, id)
 
-		var_10_0[arg_10_1] = var_10_1
+		dict[id] = data
 	end
 
-	return var_10_1
+	return data
 end
 
-function var_0_0.getOrderList(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0._orderDataDict
-	local var_11_1 = {}
+function Activity117MO:getOrderList(noSort)
+	local dict = self._orderDataDict
+	local list = {}
 
-	if var_11_0 then
-		for iter_11_0, iter_11_1 in pairs(var_11_0) do
-			table.insert(var_11_1, iter_11_1)
+	if dict then
+		for k, v in pairs(dict) do
+			table.insert(list, v)
 		end
 
-		if not arg_11_1 then
-			table.sort(var_11_1, Activity117OrderMO.sortOrderFunc)
+		if not noSort then
+			table.sort(list, Activity117OrderMO.sortOrderFunc)
 		end
 	end
 
-	return var_11_1
+	return list
 end
 
-function var_0_0.setInQuote(arg_12_0, arg_12_1)
-	arg_12_0._inQuote = arg_12_1
+function Activity117MO:setInQuote(inQuote)
+	self._inQuote = inQuote
 end
 
-function var_0_0.isInQuote(arg_13_0)
-	return arg_13_0._inQuote
+function Activity117MO:isInQuote()
+	return self._inQuote
 end
 
-function var_0_0.getRemainDay(arg_14_0)
-	local var_14_0 = ActivityModel.instance:getActMO(arg_14_0._actId)
-	local var_14_1 = (var_14_0 and var_14_0.endTime or 0) / 1000
-	local var_14_2 = ServerTime.nowInLocal()
+function Activity117MO:getRemainDay()
+	local actMO = ActivityModel.instance:getActMO(self._actId)
+	local endTime = actMO and actMO.endTime or 0
 
-	return TimeUtil.secondsToDDHHMMSS(var_14_1 - var_14_2)
+	endTime = endTime / 1000
+
+	local curTime = ServerTime.nowInLocal()
+
+	return TimeUtil.secondsToDDHHMMSS(endTime - curTime)
 end
 
-function var_0_0.getCurrentScore(arg_15_0)
-	return arg_15_0._score or 0
+function Activity117MO:getCurrentScore()
+	return self._score or 0
 end
 
-function var_0_0.getActId(arg_16_0)
-	return arg_16_0._actId
+function Activity117MO:getActId()
+	return self._actId
 end
 
-function var_0_0.setSelectOrder(arg_17_0, arg_17_1)
-	if arg_17_1 == arg_17_0._selectOrder then
+function Activity117MO:setSelectOrder(order)
+	if order == self._selectOrder then
 		return
 	end
 
-	arg_17_0._selectOrder = arg_17_1
+	self._selectOrder = order
 
-	if not arg_17_1 then
-		Activity117Controller.instance:dispatchEvent(Activity117Event.PlayTalk, arg_17_0._actId)
+	if not order then
+		Activity117Controller.instance:dispatchEvent(Activity117Event.PlayTalk, self._actId)
 	end
 
-	Activity117Controller.instance:dispatchEvent(Activity117Event.BargainStatusChange, arg_17_0._actId)
+	Activity117Controller.instance:dispatchEvent(Activity117Event.BargainStatusChange, self._actId)
 end
 
-function var_0_0.getSelectOrder(arg_18_0)
-	return arg_18_0._selectOrder
+function Activity117MO:getSelectOrder()
+	return self._selectOrder
 end
 
-function var_0_0.initRewardDict(arg_19_0)
-	local var_19_0 = Activity117Config.instance:getAllBonusConfig(arg_19_0._actId)
+function Activity117MO:initRewardDict()
+	local cfgList = Activity117Config.instance:getAllBonusConfig(self._actId)
 
-	arg_19_0.rewardDict = {}
+	self.rewardDict = {}
 
-	if var_19_0 then
-		for iter_19_0, iter_19_1 in ipairs(var_19_0) do
-			arg_19_0:getRewardData(iter_19_1.id, true):updateServerData(false)
+	if cfgList then
+		for i, v in ipairs(cfgList) do
+			local data = self:getRewardData(v.id, true)
+
+			data:updateServerData(false)
 		end
 	end
 end
 
-function var_0_0.getRewardData(arg_20_0, arg_20_1, arg_20_2)
-	local var_20_0 = arg_20_0.rewardDict[arg_20_1]
+function Activity117MO:getRewardData(id, create)
+	local data = self.rewardDict[id]
 
-	if not var_20_0 and arg_20_2 then
-		local var_20_1 = Activity117Config.instance:getBonusConfig(arg_20_0._actId, arg_20_1)
+	if not data and create then
+		local co = Activity117Config.instance:getBonusConfig(self._actId, id)
 
-		if var_20_1 then
-			var_20_0 = Activity117RewardMO.New()
+		if co then
+			data = Activity117RewardMO.New()
 
-			var_20_0:init(var_20_1)
+			data:init(co)
 
-			arg_20_0.rewardDict[arg_20_1] = var_20_0
+			self.rewardDict[id] = data
 		end
 	end
 
-	return var_20_0
+	return data
 end
 
-function var_0_0.getRewardList(arg_21_0)
-	local var_21_0 = {}
-	local var_21_1 = 0
+function Activity117MO:getRewardList()
+	local list = {}
+	local count = 0
 
-	for iter_21_0, iter_21_1 in pairs(arg_21_0.rewardDict) do
-		if iter_21_1:getStatus() == Activity117Enum.Status.CanGet then
-			var_21_1 = var_21_1 + 1
+	for k, v in pairs(self.rewardDict) do
+		if v:getStatus() == Activity117Enum.Status.CanGet then
+			count = count + 1
 		end
 
-		table.insert(var_21_0, iter_21_1)
+		table.insert(list, v)
 	end
 
-	table.sort(var_21_0, Activity117RewardMO.sortFunc)
+	table.sort(list, Activity117RewardMO.sortFunc)
 
-	return var_21_0, var_21_1
+	return list, count
 end
 
-function var_0_0.getFinishOrderCount(arg_22_0)
-	local var_22_0 = CommonConfig.instance:getConstNum(ConstEnum.ActivityTradeMaxTimes)
-	local var_22_1 = arg_22_0:getOrderList(true)
-	local var_22_2 = 0
+function Activity117MO:getFinishOrderCount()
+	local limitCount = CommonConfig.instance:getConstNum(ConstEnum.ActivityTradeMaxTimes)
+	local list = self:getOrderList(true)
+	local finishCount = 0
 
-	for iter_22_0, iter_22_1 in pairs(var_22_1) do
-		if iter_22_1.hasGetBonus then
-			var_22_2 = var_22_2 + 1
+	for k, v in pairs(list) do
+		if v.hasGetBonus then
+			finishCount = finishCount + 1
 		end
 	end
 
-	return var_22_2, var_22_0
+	return finishCount, limitCount
 end
 
-function var_0_0.getNextScore(arg_23_0, arg_23_1)
-	local var_23_0 = Activity117Config.instance:getAllBonusConfig(arg_23_0._actId)
-	local var_23_1 = 0
+function Activity117MO:getNextScore(score)
+	local cfgList = Activity117Config.instance:getAllBonusConfig(self._actId)
+	local nextScore = 0
 
-	if var_23_0 then
-		local var_23_2 = {}
+	if cfgList then
+		local list = {}
 
-		for iter_23_0, iter_23_1 in pairs(var_23_0) do
-			table.insert(var_23_2, iter_23_1)
+		for k, v in pairs(cfgList) do
+			table.insert(list, v)
 		end
 
-		table.sort(var_23_2, function(arg_24_0, arg_24_1)
-			return arg_24_0.needScore < arg_24_1.needScore
+		table.sort(list, function(a, b)
+			return a.needScore < b.needScore
 		end)
 
-		for iter_23_2, iter_23_3 in ipairs(var_23_2) do
-			if arg_23_1 < iter_23_3.needScore then
-				var_23_1 = iter_23_3.needScore
+		for i, v in ipairs(list) do
+			if score < v.needScore then
+				nextScore = v.needScore
 
 				break
 			end
 		end
 	end
 
-	return var_23_1
+	return nextScore
 end
 
-return var_0_0
+return Activity117MO

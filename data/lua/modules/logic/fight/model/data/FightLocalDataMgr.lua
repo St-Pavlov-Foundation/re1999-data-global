@@ -1,10 +1,12 @@
-﻿module("modules.logic.fight.model.data.FightLocalDataMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightLocalDataMgr.lua
 
-local var_0_0 = class("FightLocalDataMgr", FightDataMgr)
+module("modules.logic.fight.model.data.FightLocalDataMgr", package.seeall)
 
-var_0_0.isLocalDataMgr = true
-var_0_0.instance = var_0_0.New()
+local FightLocalDataMgr = class("FightLocalDataMgr", FightDataMgr)
 
-var_0_0.instance:initDataMgr()
+FightLocalDataMgr.isLocalDataMgr = true
+FightLocalDataMgr.instance = FightLocalDataMgr.New()
 
-return var_0_0
+FightLocalDataMgr.instance:initDataMgr()
+
+return FightLocalDataMgr

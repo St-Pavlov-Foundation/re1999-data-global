@@ -1,53 +1,55 @@
-﻿module("modules.logic.activity.controller.chessmap.step.ActivityChessStepSyncObject", package.seeall)
+﻿-- chunkname: @modules/logic/activity/controller/chessmap/step/ActivityChessStepSyncObject.lua
 
-local var_0_0 = class("ActivityChessStepSyncObject", ActivityChessStepBase)
+module("modules.logic.activity.controller.chessmap.step.ActivityChessStepSyncObject", package.seeall)
 
-function var_0_0.start(arg_1_0)
-	local var_1_0 = arg_1_0.originData.object
-	local var_1_1 = var_1_0.id
-	local var_1_2 = var_1_0.data
-	local var_1_3 = ActivityChessGameModel.instance:getObjectDataById(var_1_1)
-	local var_1_4 = var_1_3.data
-	local var_1_5 = ActivityChessGameModel.instance:syncObjectData(var_1_1, var_1_2)
+local ActivityChessStepSyncObject = class("ActivityChessStepSyncObject", ActivityChessStepBase)
 
-	if var_1_5 ~= nil then
-		local var_1_6 = var_1_3.data
+function ActivityChessStepSyncObject:start()
+	local newServerData = self.originData.object
+	local interactId = newServerData.id
+	local extendData = newServerData.data
+	local interactMO = ActivityChessGameModel.instance:getObjectDataById(interactId)
+	local oldData = interactMO.data
+	local deltaDatas = ActivityChessGameModel.instance:syncObjectData(interactId, extendData)
 
-		if arg_1_0:dataHasChanged(var_1_5, "alertArea") then
+	if deltaDatas ~= nil then
+		local newData = interactMO.data
+
+		if self:dataHasChanged(deltaDatas, "alertArea") then
 			ActivityChessGameController.instance:dispatchEvent(ActivityChessEvent.RefreshAlarmArea)
 		end
 
-		if arg_1_0:dataHasChanged(var_1_5, "goToObject") then
-			local var_1_7 = ActivityChessGameController.instance.interacts:get(var_1_1)
+		if self:dataHasChanged(deltaDatas, "goToObject") then
+			local interactObj = ActivityChessGameController.instance.interacts:get(interactId)
 
-			if var_1_7 then
-				var_1_7.goToObject:updateGoToObject()
+			if interactObj then
+				interactObj.goToObject:updateGoToObject()
 			end
 		end
 
-		if arg_1_0:dataHasChanged(var_1_5, "lostTarget") then
-			local var_1_8 = ActivityChessGameController.instance.interacts:get(var_1_1)
+		if self:dataHasChanged(deltaDatas, "lostTarget") then
+			local interactObj = ActivityChessGameController.instance.interacts:get(interactId)
 
-			if var_1_8 then
-				var_1_8.effect:refreshSearchFailed()
-				var_1_8.goToObject:refreshTarget()
+			if interactObj then
+				interactObj.effect:refreshSearchFailed()
+				interactObj.goToObject:refreshTarget()
 			end
 		end
 	end
 
-	arg_1_0:finish()
+	self:finish()
 end
 
-function var_0_0.dataHasChanged(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1[arg_2_2] ~= nil or arg_2_1.__deleteFields and arg_2_1.__deleteFields[arg_2_2] then
+function ActivityChessStepSyncObject:dataHasChanged(deltaDatas, fieldName)
+	if deltaDatas[fieldName] ~= nil or deltaDatas.__deleteFields and deltaDatas.__deleteFields[fieldName] then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.finish(arg_3_0)
-	var_0_0.super.finish(arg_3_0)
+function ActivityChessStepSyncObject:finish()
+	ActivityChessStepSyncObject.super.finish(self)
 end
 
-return var_0_0
+return ActivityChessStepSyncObject

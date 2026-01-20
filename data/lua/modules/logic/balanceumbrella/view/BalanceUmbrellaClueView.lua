@@ -1,78 +1,80 @@
-﻿module("modules.logic.balanceumbrella.view.BalanceUmbrellaClueView", package.seeall)
+﻿-- chunkname: @modules/logic/balanceumbrella/view/BalanceUmbrellaClueView.lua
 
-local var_0_0 = class("BalanceUmbrellaClueView", BaseView)
+module("modules.logic.balanceumbrella.view.BalanceUmbrellaClueView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goget = gohelper.findChild(arg_1_0.viewGO, "#go_get")
-	arg_1_0._godetail = gohelper.findChild(arg_1_0.viewGO, "#go_detail")
-	arg_1_0._animget = arg_1_0._goget:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._animdetail = arg_1_0._godetail:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._btngetClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_get/#btn_close")
-	arg_1_0._simagegetclue = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_get/#simage_clue")
-	arg_1_0._btndetailclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_detail/#btn_close")
-	arg_1_0._simagedetailclue = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_detail/Left/#simage_clue")
-	arg_1_0._txtroledesc = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_detail/Right/#scroll_desc/viewport/content/#txt_dec")
-	arg_1_0._txtdesc = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_detail/Right/#scroll_desc/viewport/content/#txt_cluedec")
-	arg_1_0._txtname = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_detail/Right/titlebg/#txt_cluename")
+local BalanceUmbrellaClueView = class("BalanceUmbrellaClueView", BaseView)
+
+function BalanceUmbrellaClueView:onInitView()
+	self._goget = gohelper.findChild(self.viewGO, "#go_get")
+	self._godetail = gohelper.findChild(self.viewGO, "#go_detail")
+	self._animget = self._goget:GetComponent(typeof(UnityEngine.Animator))
+	self._animdetail = self._godetail:GetComponent(typeof(UnityEngine.Animator))
+	self._btngetClose = gohelper.findChildButtonWithAudio(self.viewGO, "#go_get/#btn_close")
+	self._simagegetclue = gohelper.findChildSingleImage(self.viewGO, "#go_get/#simage_clue")
+	self._btndetailclose = gohelper.findChildButtonWithAudio(self.viewGO, "#go_detail/#btn_close")
+	self._simagedetailclue = gohelper.findChildSingleImage(self.viewGO, "#go_detail/Left/#simage_clue")
+	self._txtroledesc = gohelper.findChildTextMesh(self.viewGO, "#go_detail/Right/#scroll_desc/viewport/content/#txt_dec")
+	self._txtdesc = gohelper.findChildTextMesh(self.viewGO, "#go_detail/Right/#scroll_desc/viewport/content/#txt_cluedec")
+	self._txtname = gohelper.findChildTextMesh(self.viewGO, "#go_detail/Right/titlebg/#txt_cluename")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btngetClose:AddClickListener(arg_2_0.closeThis, arg_2_0)
-	arg_2_0._btndetailclose:AddClickListener(arg_2_0.closeThis, arg_2_0)
+function BalanceUmbrellaClueView:addEvents()
+	self._btngetClose:AddClickListener(self.closeThis, self)
+	self._btndetailclose:AddClickListener(self.closeThis, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btngetClose:RemoveClickListener()
-	arg_3_0._btndetailclose:RemoveClickListener()
+function BalanceUmbrellaClueView:removeEvents()
+	self._btngetClose:RemoveClickListener()
+	self._btndetailclose:RemoveClickListener()
 end
 
-function var_0_0.onOpen(arg_4_0)
-	gohelper.setActive(arg_4_0._goget, arg_4_0.viewParam.isGet)
-	gohelper.setActive(arg_4_0._godetail, not arg_4_0.viewParam.isGet)
-	arg_4_0._simagegetclue:LoadImage(string.format("singlebg/balance_singlebg/item/balance_bigitem_%02d.png", arg_4_0.viewParam.id))
-	arg_4_0._simagedetailclue:LoadImage(string.format("singlebg/balance_singlebg/item/balance_bigitem_%02d.png", arg_4_0.viewParam.id))
+function BalanceUmbrellaClueView:onOpen()
+	gohelper.setActive(self._goget, self.viewParam.isGet)
+	gohelper.setActive(self._godetail, not self.viewParam.isGet)
+	self._simagegetclue:LoadImage(string.format("singlebg/balance_singlebg/item/balance_bigitem_%02d.png", self.viewParam.id))
+	self._simagedetailclue:LoadImage(string.format("singlebg/balance_singlebg/item/balance_bigitem_%02d.png", self.viewParam.id))
 
-	local var_4_0 = lua_balance_umbrella.configDict[arg_4_0.viewParam.id]
+	local co = lua_balance_umbrella.configDict[self.viewParam.id]
 
-	if not var_4_0 then
+	if not co then
 		return
 	end
 
-	arg_4_0._txtname.text = var_4_0.name
-	arg_4_0._txtdesc.text = var_4_0.desc
-	arg_4_0._txtroledesc.text = var_4_0.players
+	self._txtname.text = co.name
+	self._txtdesc.text = co.desc
+	self._txtroledesc.text = co.players
 
-	if arg_4_0.viewParam.isGet then
+	if self.viewParam.isGet then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_season_succeed)
-		UIBlockHelper.instance:startBlock("BalanceUmbrellaClueView_Get", 1, arg_4_0.viewName)
-		TaskDispatcher.runDelay(arg_4_0._showDetail, arg_4_0, 1)
-		arg_4_0._animget:Play("open", 0, 0)
+		UIBlockHelper.instance:startBlock("BalanceUmbrellaClueView_Get", 1, self.viewName)
+		TaskDispatcher.runDelay(self._showDetail, self, 1)
+		self._animget:Play("open", 0, 0)
 	else
-		arg_4_0._animdetail:Play("open", 0, 0)
+		self._animdetail:Play("open", 0, 0)
 	end
 end
 
-function var_0_0._showDetail(arg_5_0)
-	gohelper.setActive(arg_5_0._godetail, true)
-	arg_5_0._animget:Play("close", 0, 0)
-	arg_5_0._animdetail:Play("switch", 0, 0)
+function BalanceUmbrellaClueView:_showDetail()
+	gohelper.setActive(self._godetail, true)
+	self._animget:Play("close", 0, 0)
+	self._animdetail:Play("switch", 0, 0)
 end
 
-function var_0_0.onClickModalMask(arg_6_0)
-	arg_6_0:closeThis()
+function BalanceUmbrellaClueView:onClickModalMask()
+	self:closeThis()
 end
 
-function var_0_0.onClose(arg_7_0)
-	if arg_7_0.viewParam.isGet then
+function BalanceUmbrellaClueView:onClose()
+	if self.viewParam.isGet then
 		BalanceUmbrellaController.instance:dispatchEvent(BalanceUmbrellaEvent.ShowGetEffect)
 	end
 end
 
-function var_0_0.onDestroyView(arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0._showDetail, arg_8_0)
+function BalanceUmbrellaClueView:onDestroyView()
+	TaskDispatcher.cancelTask(self._showDetail, self)
 	BalanceUmbrellaController.instance:dispatchEvent(BalanceUmbrellaEvent.GuideClueViewClose)
-	arg_8_0._simagegetclue:UnLoadImage()
-	arg_8_0._simagedetailclue:UnLoadImage()
+	self._simagegetclue:UnLoadImage()
+	self._simagedetailclue:UnLoadImage()
 end
 
-return var_0_0
+return BalanceUmbrellaClueView

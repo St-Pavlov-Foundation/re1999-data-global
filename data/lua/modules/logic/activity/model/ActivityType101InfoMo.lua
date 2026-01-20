@@ -1,15 +1,17 @@
-﻿module("modules.logic.activity.model.ActivityType101InfoMo", package.seeall)
+﻿-- chunkname: @modules/logic/activity/model/ActivityType101InfoMo.lua
 
-local var_0_0 = pureTable("ActivityType101InfoMo")
+module("modules.logic.activity.model.ActivityType101InfoMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.id = 0
-	arg_1_0.state = 0
+local ActivityType101InfoMo = pureTable("ActivityType101InfoMo")
+
+function ActivityType101InfoMo:ctor()
+	self.id = 0
+	self.state = 0
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.id = arg_2_1.id
-	arg_2_0.state = arg_2_1.state
+function ActivityType101InfoMo:init(info)
+	self.id = info.id
+	self.state = info.state
 end
 
-return var_0_0
+return ActivityType101InfoMo

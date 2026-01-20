@@ -1,15 +1,17 @@
-﻿module("modules.logic.fight.system.work.FightWorkDoneFlowSequence", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkDoneFlowSequence.lua
 
-local var_0_0 = class("FightWorkDoneFlowSequence", FightWorkFlowSequence)
+module("modules.logic.fight.system.work.FightWorkDoneFlowSequence", package.seeall)
 
-function var_0_0.start(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_0.PARENT_ROOT_OBJECT and arg_1_0.PARENT_ROOT_OBJECT.PARENT_ROOT_OBJECT
+local FightWorkDoneFlowSequence = class("FightWorkDoneFlowSequence", FightWorkFlowSequence)
 
-	if var_1_0 and var_1_0.cancelFightWorkSafeTimer then
-		var_1_0:cancelFightWorkSafeTimer()
+function FightWorkDoneFlowSequence:start(context)
+	local logicClass = self.PARENT_ROOT_OBJECT and self.PARENT_ROOT_OBJECT.PARENT_ROOT_OBJECT
+
+	if logicClass and logicClass.cancelFightWorkSafeTimer then
+		logicClass:cancelFightWorkSafeTimer()
 	end
 
-	return var_0_0.super.start(arg_1_0, arg_1_1)
+	return FightWorkDoneFlowSequence.super.start(self, context)
 end
 
-return var_0_0
+return FightWorkDoneFlowSequence

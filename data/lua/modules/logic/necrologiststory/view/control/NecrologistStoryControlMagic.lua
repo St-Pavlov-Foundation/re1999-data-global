@@ -1,9 +1,11 @@
-﻿module("modules.logic.necrologiststory.view.control.NecrologistStoryControlMagic", package.seeall)
+﻿-- chunkname: @modules/logic/necrologiststory/view/control/NecrologistStoryControlMagic.lua
 
-local var_0_0 = class("NecrologistStoryControlMagic", NecrologistStoryControlMgrItem)
+module("modules.logic.necrologiststory.view.control.NecrologistStoryControlMagic", package.seeall)
 
-function var_0_0.onPlayControl(arg_1_0)
-	arg_1_0:getControlItem(NecrologistStoryMagicItem)
+local NecrologistStoryControlMagic = class("NecrologistStoryControlMagic", NecrologistStoryControlMgrItem)
+
+function NecrologistStoryControlMagic:onPlayControl()
+	self:getControlItem(NecrologistStoryMagicItem)
 end
 
-return var_0_0
+return NecrologistStoryControlMagic

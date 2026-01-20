@@ -1,303 +1,310 @@
-﻿module("modules.ugui.icon.common.CommonLiveHeadIcon", package.seeall)
+﻿-- chunkname: @modules/ugui/icon/common/CommonLiveHeadIcon.lua
 
-local var_0_0 = class("CommonLiveHeadIcon", LuaCompBase)
+module("modules.ugui.icon.common.CommonLiveHeadIcon", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._simageHeadIcon = arg_1_1
-	arg_1_0._imageComp = arg_1_0._simageHeadIcon.gameObject:GetComponent(gohelper.Type_Image)
+local CommonLiveHeadIcon = class("CommonLiveHeadIcon", LuaCompBase)
+
+function CommonLiveHeadIcon:init(simageheadicon)
+	self._simageHeadIcon = simageheadicon
+	self._imageComp = self._simageHeadIcon.gameObject:GetComponent(gohelper.Type_Image)
 end
 
-function var_0_0.setLiveHead(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4, arg_2_5)
-	arg_2_1 = tonumber(arg_2_1)
-	arg_2_2 = arg_2_2 and true or false
-	arg_2_3 = arg_2_3 and true or false
+function CommonLiveHeadIcon:setLiveHead(itemId, setNativeSize, isParallel, callBack, callBackObj)
+	itemId = tonumber(itemId)
+	setNativeSize = setNativeSize and true or false
+	isParallel = isParallel and true or false
 
-	if not arg_2_1 then
+	if not itemId then
 		return
 	end
 
-	local var_2_0 = lua_item.configDict[arg_2_1]
+	local config = lua_item.configDict[itemId]
 
-	if var_2_0 == nil then
+	if config == nil then
 		return
 	end
 
-	local var_2_1 = tonumber(var_2_0.icon)
-	local var_2_2 = var_2_0.isDynamic == IconMgrConfig.HeadIconType.Dynamic
+	local portraitId = tonumber(config.icon)
+	local isDynamic = config.isDynamic == IconMgrConfig.HeadIconType.Dynamic
 
-	arg_2_0.isDynamic = var_2_2
-	arg_2_0.setNativeSize = arg_2_2
-	arg_2_0.isParallel = arg_2_3
-	arg_2_0.isGray = false
+	self.isDynamic = isDynamic
+	self.setNativeSize = setNativeSize
+	self.isParallel = isParallel
+	self.isGray = false
 
-	if arg_2_0.portraitId and arg_2_0.portraitId == var_2_1 then
-		arg_2_0:syncAnimationTime()
-		arg_2_0:calculateSize()
+	if self.portraitId and self.portraitId == portraitId then
+		self:syncAnimationTime()
+		self:calculateSize()
 
-		if arg_2_4 and arg_2_5 then
-			arg_2_4(arg_2_5, arg_2_0)
+		if callBack and callBackObj then
+			callBack(callBackObj, self)
 		end
 
 		return
 	end
 
-	if not arg_2_0._loader then
-		arg_2_0._loader = PrefabInstantiate.Create(arg_2_0._simageHeadIcon.gameObject)
+	if not self._loader then
+		self._loader = PrefabInstantiate.Create(self._simageHeadIcon.gameObject)
 	end
 
-	if not gohelper.isNil(arg_2_0._dynamicIconObj) then
-		logNormal("destroy liveHead icon" .. tostring(arg_2_0._dynamicIconObj.name))
-		arg_2_0:removeHeadLiveIcon()
-		arg_2_0._loader:dispose()
+	if not gohelper.isNil(self._dynamicIconObj) then
+		logNormal("destroy liveHead icon" .. tostring(self._dynamicIconObj.name))
+		self:removeHeadLiveIcon()
+		self._loader:dispose()
 
-		arg_2_0.animation = nil
-	elseif arg_2_0._loader:getPath() then
-		arg_2_0._loader:dispose()
+		self.animation = nil
+	elseif self._loader:getPath() then
+		self._loader:dispose()
 	end
 
-	arg_2_0.portraitId = var_2_1
-	arg_2_0.callBack = arg_2_4
-	arg_2_0.callBackObj = arg_2_5
+	self.portraitId = portraitId
+	self.callBack = callBack
+	self.callBackObj = callBackObj
 
-	if not var_2_2 then
-		logNormal("set static icon portraitId: " .. tostring(var_2_1))
-		arg_2_0._simageHeadIcon:LoadImage(ResUrl.getPlayerHeadIcon(var_2_1), arg_2_0._onStaticLoadCallBack, arg_2_0)
+	if not isDynamic then
+		logNormal("set static icon portraitId: " .. tostring(portraitId))
+		self._simageHeadIcon:LoadImage(ResUrl.getPlayerHeadIcon(portraitId), self._onStaticLoadCallBack, self)
 	else
-		logNormal("set dynamic icon portraitId: " .. tostring(var_2_1))
-		arg_2_0:setDynamicIcon(var_2_1)
+		logNormal("set dynamic icon portraitId: " .. tostring(portraitId))
+		self:setDynamicIcon(portraitId)
 	end
 end
 
-function var_0_0.setDynamicIcon(arg_3_0, arg_3_1)
-	arg_3_0.portraitId = arg_3_1
+function CommonLiveHeadIcon:setDynamicIcon(portraitId)
+	self.portraitId = portraitId
 
-	local var_3_0 = ResUrl.getLiveHeadIconPrefab(arg_3_1)
+	local framePath = ResUrl.getLiveHeadIconPrefab(portraitId)
 
-	arg_3_0._loader:startLoad(var_3_0, arg_3_0._onLoadCallBack, arg_3_0)
+	self._loader:startLoad(framePath, self._onLoadCallBack, self)
 end
 
-function var_0_0._onStaticLoadCallBack(arg_4_0)
-	if arg_4_0.setNativeSize then
-		arg_4_0._imageComp:SetNativeSize()
+function CommonLiveHeadIcon:_onStaticLoadCallBack()
+	if self.setNativeSize then
+		self._imageComp:SetNativeSize()
 	end
 
-	arg_4_0:invokeCallBack()
+	self:invokeCallBack()
 end
 
-function var_0_0._onLoadCallBack(arg_5_0)
-	arg_5_0:reInitComp()
-	arg_5_0:syncAnimationTime()
-	arg_5_0:setMaterial()
-	arg_5_0:calculateSize()
-	arg_5_0:invokeCallBack()
+function CommonLiveHeadIcon:_onLoadCallBack()
+	self:reInitComp()
+	self:syncAnimationTime()
+	self:setMaterial()
+	self:calculateSize()
+	self:invokeCallBack()
 end
 
-function var_0_0.reInitComp(arg_6_0)
-	arg_6_0._dynamicIconObj = arg_6_0._loader:getInstGO()
-	arg_6_0._root = gohelper.findChild(arg_6_0._dynamicIconObj, "root")
-	arg_6_0.animation = gohelper.findChildComponent(arg_6_0._dynamicIconObj, "root", gohelper.Type_Animation)
+function CommonLiveHeadIcon:reInitComp()
+	local iconPrefab = self._loader:getInstGO()
 
-	if arg_6_0.animation ~= nil and arg_6_0.animation.clip ~= nil then
-		local var_6_0 = arg_6_0.animation.clip
+	self._dynamicIconObj = iconPrefab
+	self._root = gohelper.findChild(self._dynamicIconObj, "root")
+	self.animation = gohelper.findChildComponent(self._dynamicIconObj, "root", gohelper.Type_Animation)
 
-		arg_6_0.animationState = arg_6_0.animation:get_Item(var_6_0.name)
+	if self.animation ~= nil and self.animation.clip ~= nil then
+		local clip = self.animation.clip
+
+		self.animationState = self.animation:get_Item(clip.name)
 	end
 
-	IconMgr.instance:addLiveIconAnimationReferenceTime(arg_6_0.portraitId)
+	IconMgr.instance:addLiveIconAnimationReferenceTime(self.portraitId)
 end
 
-function var_0_0.invokeCallBack(arg_7_0)
-	if not arg_7_0.callBack or not arg_7_0.callBackObj then
+function CommonLiveHeadIcon:invokeCallBack()
+	if not self.callBack or not self.callBackObj then
 		return
 	end
 
-	arg_7_0.callBack(arg_7_0.callBackObj, arg_7_0)
+	self.callBack(self.callBackObj, self)
 
-	arg_7_0.callBack = nil
-	arg_7_0.callBackObj = nil
+	self.callBack = nil
+	self.callBackObj = nil
 end
 
-function var_0_0.calculateSize(arg_8_0)
-	if gohelper.isNil(arg_8_0._dynamicIconObj) then
+function CommonLiveHeadIcon:calculateSize()
+	if gohelper.isNil(self._dynamicIconObj) then
 		return
 	end
 
-	if arg_8_0.isParallel then
-		arg_8_0._dynamicIconObj.transform.parent = arg_8_0._simageHeadIcon.transform.parent
+	if self.isParallel then
+		self._dynamicIconObj.transform.parent = self._simageHeadIcon.transform.parent
 	else
-		arg_8_0._dynamicIconObj.transform.parent = arg_8_0._simageHeadIcon.transform
+		self._dynamicIconObj.transform.parent = self._simageHeadIcon.transform
 	end
 
-	arg_8_0:setDynamicVisible(arg_8_0.isDynamic and not arg_8_0.isGray)
-	arg_8_0:setStaticVisible(not arg_8_0.isDynamic or arg_8_0.isGray)
+	self:setDynamicVisible(self.isDynamic and not self.isGray)
+	self:setStaticVisible(not self.isDynamic or self.isGray)
 
-	local var_8_0 = arg_8_0._simageHeadIcon.gameObject.transform
-	local var_8_1 = recthelper.getWidth(arg_8_0._root.transform)
+	local imageReferenceTran = self._simageHeadIcon.gameObject.transform
+	local iconWidth = recthelper.getWidth(self._root.transform)
 
-	if not arg_8_0.isParallel then
-		local var_8_2 = 1
+	if not self.isParallel then
+		local scale = 1
 
-		if not arg_8_0.setNativeSize then
-			gohelper.setAsFirstSibling(arg_8_0._dynamicIconObj)
+		if not self.setNativeSize then
+			gohelper.setAsFirstSibling(self._dynamicIconObj)
 
-			local var_8_3 = recthelper.getWidth(arg_8_0._simageHeadIcon.transform)
-			local var_8_4 = recthelper.getWidth(arg_8_0._root.transform)
-			local var_8_5 = math.max(0, var_8_3 / var_8_4)
+			local parentWidth = recthelper.getWidth(self._simageHeadIcon.transform)
+			local iconWidth = recthelper.getWidth(self._root.transform)
 
-			transformhelper.setLocalScale(arg_8_0._dynamicIconObj.transform, var_8_5, var_8_5, 1)
+			scale = math.max(0, parentWidth / iconWidth)
+
+			transformhelper.setLocalScale(self._dynamicIconObj.transform, scale, scale, 1)
 		else
-			recthelper.setSize(var_8_0, var_8_1, var_8_1)
+			recthelper.setSize(imageReferenceTran, iconWidth, iconWidth)
 		end
 
 		return
 	end
 
-	gohelper.setSiblingAfter(arg_8_0._dynamicIconObj, arg_8_0._simageHeadIcon.gameObject)
+	gohelper.setSiblingAfter(self._dynamicIconObj, self._simageHeadIcon.gameObject)
 
-	local var_8_6, var_8_7 = transformhelper.getLocalScale(var_8_0)
-	local var_8_8, var_8_9, var_8_10 = transformhelper.getPos(var_8_0)
-	local var_8_11 = 1
+	local scaleX, scaleY = transformhelper.getLocalScale(imageReferenceTran)
+	local posX, posY, posZ = transformhelper.getPos(imageReferenceTran)
+	local scale = 1
 
-	if not arg_8_0.setNativeSize then
-		local var_8_12 = recthelper.getWidth(var_8_0)
+	if not self.setNativeSize then
+		local parentWidth = recthelper.getWidth(imageReferenceTran)
 
-		var_8_11 = math.max(0, var_8_12 / var_8_1)
+		scale = math.max(0, parentWidth / iconWidth)
 	else
-		recthelper.setSize(var_8_0, var_8_1, var_8_1)
+		recthelper.setSize(imageReferenceTran, iconWidth, iconWidth)
 	end
 
-	local var_8_13, var_8_14, var_8_15 = transformhelper.getLocalRotation(var_8_0)
+	local rotateX, rotateY, rotateZ = transformhelper.getLocalRotation(imageReferenceTran)
 
-	transformhelper.setLocalRotation(arg_8_0._dynamicIconObj.transform, var_8_13, var_8_14, var_8_15)
-	transformhelper.setLocalScale(arg_8_0._dynamicIconObj.transform, var_8_11 * var_8_6, var_8_11 * var_8_7, 1)
-	transformhelper.setPos(arg_8_0._dynamicIconObj.transform, var_8_8, var_8_9, var_8_10)
+	transformhelper.setLocalRotation(self._dynamicIconObj.transform, rotateX, rotateY, rotateZ)
+	transformhelper.setLocalScale(self._dynamicIconObj.transform, scale * scaleX, scale * scaleY, 1)
+	transformhelper.setPos(self._dynamicIconObj.transform, posX, posY, posZ)
 end
 
-function var_0_0.setMaterial(arg_9_0)
-	if not arg_9_0.isDynamic then
+function CommonLiveHeadIcon:setMaterial()
+	if not self.isDynamic then
 		return
 	end
 
-	local var_9_0 = gohelper.findChildImage(arg_9_0.imageReference, "")
+	local image = gohelper.findChildImage(self.imageReference, "")
 
-	if var_9_0 == nil or var_9_0.material == nil then
+	if image == nil or image.material == nil then
 		return
 	end
 
-	arg_9_0:traverseReplaceChildrenMaterial(arg_9_0._root, var_9_0.material)
+	self:traverseReplaceChildrenMaterial(self._root, image.material)
 end
 
-function var_0_0.traverseReplaceChildrenMaterial(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = arg_10_1:GetComponentsInChildren(gohelper.Type_Image)
-	local var_10_1 = var_10_0.Length
+function CommonLiveHeadIcon:traverseReplaceChildrenMaterial(root, material)
+	local allImage = root:GetComponentsInChildren(gohelper.Type_Image)
+	local childCount = allImage.Length
 
-	if var_10_1 <= 0 then
+	if childCount <= 0 then
 		return
 	end
 
-	for iter_10_0 = 0, var_10_1 - 1 do
-		local var_10_2 = var_10_0[iter_10_0]
+	for i = 0, childCount - 1 do
+		local image = allImage[i]
 
-		if var_10_2 and var_10_2.material == var_10_2.defaultMaterial then
-			var_10_2.material = arg_10_2
+		if image and image.material == image.defaultMaterial then
+			image.material = material
 		end
 	end
 end
 
-function var_0_0.setAlpha(arg_11_0, arg_11_1)
-	if not arg_11_1 then
+function CommonLiveHeadIcon:setAlpha(alpha)
+	if not alpha then
 		return
 	end
 
-	if not arg_11_0.isDynamic then
-		ZProj.UGUIHelper.SetColorAlpha(arg_11_0._imageComp, arg_11_1)
+	if not self.isDynamic then
+		ZProj.UGUIHelper.SetColorAlpha(self._imageComp, alpha)
 
 		return
 	end
 
-	if arg_11_0.canvasGroup == nil then
-		arg_11_0.canvasGroup = gohelper.onceAddComponent(arg_11_0._dynamicIconObj, gohelper.Type_CanvasGroup)
+	if self.canvasGroup == nil then
+		local canvasGroup = gohelper.onceAddComponent(self._dynamicIconObj, gohelper.Type_CanvasGroup)
+
+		self.canvasGroup = canvasGroup
 	end
 
-	if arg_11_0.canvasGroup then
-		arg_11_0.canvasGroup.alpha = arg_11_1
+	if self.canvasGroup then
+		self.canvasGroup.alpha = alpha
 	end
 end
 
-function var_0_0.setAnimationTime(arg_12_0, arg_12_1)
-	if not arg_12_0.isDynamic or gohelper.isNil(arg_12_0._dynamicIconObj) or arg_12_0.animationState == nil then
+function CommonLiveHeadIcon:setAnimationTime(referenceTime)
+	if not self.isDynamic or gohelper.isNil(self._dynamicIconObj) or self.animationState == nil then
 		return
 	end
 
-	local var_12_0 = arg_12_0.animationState
-	local var_12_1 = UnityEngine.Time.timeSinceLevelLoad - arg_12_1
-	local var_12_2 = var_12_0.length
+	local state = self.animationState
+	local offsetTime = UnityEngine.Time.timeSinceLevelLoad - referenceTime
+	local length = state.length
 
-	if var_12_2 == nil then
+	if length == nil then
 		return
 	end
 
-	var_12_0.time = var_12_1 % var_12_2
+	state.time = offsetTime % length
 end
 
-function var_0_0.setGray(arg_13_0, arg_13_1)
-	ZProj.UGUIHelper.SetGrayscale(arg_13_0._simageHeadIcon.gameObject, arg_13_1)
+function CommonLiveHeadIcon:setGray(isGray)
+	ZProj.UGUIHelper.SetGrayscale(self._simageHeadIcon.gameObject, isGray)
 
-	arg_13_0.isGray = arg_13_1
+	self.isGray = isGray
 
-	if not arg_13_0.isDynamic then
+	if not self.isDynamic then
 		return
 	end
 
-	arg_13_0:setStaticVisible(arg_13_1)
-	arg_13_0:setDynamicVisible(not arg_13_1)
-	arg_13_0._simageHeadIcon:LoadImage(ResUrl.getPlayerHeadIcon(arg_13_0.portraitId))
+	self:setStaticVisible(isGray)
+	self:setDynamicVisible(not isGray)
+	self._simageHeadIcon:LoadImage(ResUrl.getPlayerHeadIcon(self.portraitId))
 end
 
-function var_0_0.setDynamicVisible(arg_14_0, arg_14_1)
-	gohelper.setActive(arg_14_0._dynamicIconObj, arg_14_0.isDynamic and arg_14_1)
+function CommonLiveHeadIcon:setDynamicVisible(isVisible)
+	gohelper.setActive(self._dynamicIconObj, self.isDynamic and isVisible)
 end
 
-function var_0_0.setStaticVisible(arg_15_0, arg_15_1)
-	if arg_15_0.isParallel then
-		gohelper.setActive(arg_15_0._simageHeadIcon, arg_15_1)
+function CommonLiveHeadIcon:setStaticVisible(isVisible)
+	if self.isParallel then
+		gohelper.setActive(self._simageHeadIcon, isVisible)
 	end
 end
 
-function var_0_0.onEnable(arg_16_0)
-	arg_16_0:syncAnimationTime()
+function CommonLiveHeadIcon:onEnable()
+	self:syncAnimationTime()
 end
 
-function var_0_0.syncAnimationTime(arg_17_0)
-	if not arg_17_0.isDynamic or gohelper.isNil(arg_17_0._dynamicIconObj) or arg_17_0.animationState == nil then
+function CommonLiveHeadIcon:syncAnimationTime()
+	if not self.isDynamic or gohelper.isNil(self._dynamicIconObj) or self.animationState == nil then
 		return
 	end
 
-	local var_17_0 = IconMgr.instance:getLiveIconReferenceTime(arg_17_0.portraitId)
+	local time = IconMgr.instance:getLiveIconReferenceTime(self.portraitId)
 
-	if var_17_0 then
-		arg_17_0:setAnimationTime(var_17_0)
+	if time then
+		self:setAnimationTime(time)
 	end
 end
 
-function var_0_0.removeHeadLiveIcon(arg_18_0)
-	if not arg_18_0.isDynamic or gohelper.isNil(arg_18_0._dynamicIconObj) then
+function CommonLiveHeadIcon:removeHeadLiveIcon()
+	if not self.isDynamic or gohelper.isNil(self._dynamicIconObj) then
 		return
 	end
 
-	IconMgr.instance:removeHeadLiveIcon(arg_18_0.portraitId)
+	IconMgr.instance:removeHeadLiveIcon(self.portraitId)
 
-	arg_18_0._dynamicIconObj = nil
+	self._dynamicIconObj = nil
 end
 
-function var_0_0.onDestroy(arg_19_0)
-	arg_19_0:removeHeadLiveIcon()
+function CommonLiveHeadIcon:onDestroy()
+	self:removeHeadLiveIcon()
 
-	if arg_19_0._loader then
-		arg_19_0._loader:dispose()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_19_0._loader = nil
+		self._loader = nil
 	end
 end
 
-return var_0_0
+return CommonLiveHeadIcon

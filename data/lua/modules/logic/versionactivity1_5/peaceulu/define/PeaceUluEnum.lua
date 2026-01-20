@@ -1,27 +1,29 @@
-﻿module("modules.logic.versionactivity1_5.peaceulu.define.PeaceUluEnum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/peaceulu/define/PeaceUluEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_5.peaceulu.define.PeaceUluEnum", package.seeall)
 
-var_0_0.TabIndex = {
+local PeaceUluEnum = _M
+
+PeaceUluEnum.TabIndex = {
 	Game = 2,
 	Result = 3,
 	Main = 1
 }
-var_0_0.Game = {
+PeaceUluEnum.Game = {
 	Rock = 2,
 	Scissors = 1,
 	Paper = 3
 }
-var_0_0.GameResult = {
+PeaceUluEnum.GameResult = {
 	Fail = 2,
 	Draw = 0,
 	Win = 1
 }
-var_0_0.RoleID = {
+PeaceUluEnum.RoleID = {
 	Idle = 307601,
 	Happy = 307602
 }
-var_0_0.VoiceType = {
+PeaceUluEnum.VoiceType = {
 	GetReward = 6,
 	FinishAllTask = 8,
 	Fail = 2,
@@ -30,7 +32,7 @@ var_0_0.VoiceType = {
 	RemoveTask = 3,
 	Win = 4
 }
-var_0_0.TaskGetAnimTime = 0.5
-var_0_0.TaskMaskTime = 0.67
+PeaceUluEnum.TaskGetAnimTime = 0.5
+PeaceUluEnum.TaskMaskTime = 0.67
 
-return var_0_0
+return PeaceUluEnum

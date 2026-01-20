@@ -1,139 +1,141 @@
-﻿module("modules.logic.room.entity.RoomMapVehicleEntity", package.seeall)
+﻿-- chunkname: @modules/logic/room/entity/RoomMapVehicleEntity.lua
 
-local var_0_0 = class("RoomMapVehicleEntity", RoomBaseEntity)
+module("modules.logic.room.entity.RoomMapVehicleEntity", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0)
+local RoomMapVehicleEntity = class("RoomMapVehicleEntity", RoomBaseEntity)
 
-	arg_1_0.id = arg_1_1
-	arg_1_0.entityId = arg_1_0.id
-	arg_1_0._isShow = true
+function RoomMapVehicleEntity:ctor(entityId)
+	RoomMapVehicleEntity.super.ctor(self)
+
+	self.id = entityId
+	self.entityId = self.id
+	self._isShow = true
 end
 
-function var_0_0.getTag(arg_2_0)
+function RoomMapVehicleEntity:getTag()
 	return SceneTag.Untagged
 end
 
-function var_0_0.init(arg_3_0, arg_3_1)
-	arg_3_0.containerGO = gohelper.create3d(arg_3_1, RoomEnum.EntityChildKey.ContainerGOKey)
-	arg_3_0.staticContainerGO = arg_3_0.containerGO
-	arg_3_0.containerGOTrs = arg_3_0.containerGO.transform
-	arg_3_0.goTrs = arg_3_1.transform
+function RoomMapVehicleEntity:init(go)
+	self.containerGO = gohelper.create3d(go, RoomEnum.EntityChildKey.ContainerGOKey)
+	self.staticContainerGO = self.containerGO
+	self.containerGOTrs = self.containerGO.transform
+	self.goTrs = go.transform
 
-	var_0_0.super.init(arg_3_0, arg_3_1)
+	RoomMapVehicleEntity.super.init(self, go)
 
-	arg_3_0._scene = GameSceneMgr.instance:getCurScene()
+	self._scene = GameSceneMgr.instance:getCurScene()
 
-	arg_3_0:refreshVehicle()
+	self:refreshVehicle()
 end
 
-function var_0_0.refreshVehicle(arg_4_0)
+function RoomMapVehicleEntity:refreshVehicle()
 	if RoomController.instance:isObMode() then
-		local var_4_0 = arg_4_0._lastVehicleId
-		local var_4_1 = arg_4_0:getMO()
-		local var_4_2 = var_4_1 and var_4_1:getReplaceDefideCfg()
-		local var_4_3 = RoomEnum.EffectKey.VehicleGOKey
+		local lastvehicleId = self._lastVehicleId
+		local mo = self:getMO()
+		local vehicleCfg = mo and mo:getReplaceDefideCfg()
+		local effectKey = RoomEnum.EffectKey.VehicleGOKey
 
-		if not arg_4_0.effect:isHasEffectGOByKey(var_4_3) or var_4_2 and var_4_0 ~= var_4_2.id then
-			arg_4_0._lastVehicleId = var_4_2.id
+		if not self.effect:isHasEffectGOByKey(effectKey) or vehicleCfg and lastvehicleId ~= vehicleCfg.id then
+			self._lastVehicleId = vehicleCfg.id
 
-			local var_4_4 = var_4_2 and var_4_2.rotate or 0
+			local rotateY = vehicleCfg and vehicleCfg.rotate or 0
 
-			arg_4_0.effect:addParams({
-				[var_4_3] = {
+			self.effect:addParams({
+				[effectKey] = {
 					deleteChildPath = "0",
-					res = arg_4_0:getRes(),
-					localRotation = Vector3(0, var_4_4, 0)
+					res = self:getRes(),
+					localRotation = Vector3(0, rotateY, 0)
 				}
 			})
-			arg_4_0.effect:refreshEffect()
+			self.effect:refreshEffect()
 		end
 
-		if var_4_0 and var_4_0 ~= arg_4_0._lastVehicleId then
-			arg_4_0:dispatchEvent(RoomEvent.VehicleIdChange)
+		if lastvehicleId and lastvehicleId ~= self._lastVehicleId then
+			self:dispatchEvent(RoomEvent.VehicleIdChange)
 		end
 	end
 end
 
-function var_0_0.refreshReplaceType(arg_5_0)
-	local var_5_0 = arg_5_0:getMO()
+function RoomMapVehicleEntity:refreshReplaceType()
+	local mo = self:getMO()
 
-	if var_5_0 and arg_5_0.vehickleTransport then
-		local var_5_1 = arg_5_0.vehickleTransport:checkIsInRiver()
+	if mo and self.vehickleTransport then
+		local isRiver = self.vehickleTransport:checkIsInRiver()
 
-		var_5_0:setReplaceType(var_5_1 and RoomVehicleEnum.ReplaceType.Water or RoomVehicleEnum.ReplaceType.Land)
+		mo:setReplaceType(isRiver and RoomVehicleEnum.ReplaceType.Water or RoomVehicleEnum.ReplaceType.Land)
 	end
 end
 
-function var_0_0.getRes(arg_6_0)
-	local var_6_0 = arg_6_0:getMO()
-	local var_6_1 = var_6_0 and var_6_0:getReplaceDefideCfg()
-	local var_6_2 = var_6_1 and var_6_1.id
+function RoomMapVehicleEntity:getRes()
+	local mo = self:getMO()
+	local vehicleCfg = mo and mo:getReplaceDefideCfg()
+	local vehicleId = vehicleCfg and vehicleCfg.id
 
-	return RoomResHelper.getVehiclePath(var_6_2)
+	return RoomResHelper.getVehiclePath(vehicleId)
 end
 
-function var_0_0.changeVehicle(arg_7_0)
+function RoomMapVehicleEntity:changeVehicle()
 	return
 end
 
-function var_0_0.initComponents(arg_8_0)
-	local var_8_0 = arg_8_0:getMO()
+function RoomMapVehicleEntity:initComponents()
+	local mo = self:getMO()
 
-	arg_8_0:addComp("vehiclemove", RoomVehicleMoveComp)
-	arg_8_0:addComp("vehiclefollow", RoomVehicleFollowComp)
-	arg_8_0:addComp("effect", RoomEffectComp)
-	arg_8_0:addComp("nightlight", RoomNightLightComp)
-	arg_8_0.nightlight:setEffectKey(RoomEnum.EffectKey.VehicleGOKey)
-	arg_8_0:addComp("cameraFollowTargetComp", RoomCameraFollowTargetComp)
+	self:addComp("vehiclemove", RoomVehicleMoveComp)
+	self:addComp("vehiclefollow", RoomVehicleFollowComp)
+	self:addComp("effect", RoomEffectComp)
+	self:addComp("nightlight", RoomNightLightComp)
+	self.nightlight:setEffectKey(RoomEnum.EffectKey.VehicleGOKey)
+	self:addComp("cameraFollowTargetComp", RoomCameraFollowTargetComp)
 
-	if var_8_0 and var_8_0.ownerType == RoomVehicleEnum.OwnerType.TransportSite then
-		arg_8_0:addComp("vehickleTransport", RoomVehicleTransportComp)
+	if mo and mo.ownerType == RoomVehicleEnum.OwnerType.TransportSite then
+		self:addComp("vehickleTransport", RoomVehicleTransportComp)
 	end
 end
 
-function var_0_0.onStart(arg_9_0)
-	var_0_0.super.onStart(arg_9_0)
+function RoomMapVehicleEntity:onStart()
+	RoomMapVehicleEntity.super.onStart(self)
 end
 
-function var_0_0.setLocalPos(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	transformhelper.setLocalPos(arg_10_0.goTrs, arg_10_1, arg_10_2, arg_10_3)
+function RoomMapVehicleEntity:setLocalPos(x, y, z)
+	transformhelper.setLocalPos(self.goTrs, x, y, z)
 end
 
-function var_0_0.getMO(arg_11_0)
-	return RoomMapVehicleModel.instance:getById(arg_11_0.id)
+function RoomMapVehicleEntity:getMO()
+	return RoomMapVehicleModel.instance:getById(self.id)
 end
 
-function var_0_0.getVehicleMO(arg_12_0)
-	return arg_12_0:getMO()
+function RoomMapVehicleEntity:getVehicleMO()
+	return self:getMO()
 end
 
-function var_0_0.setShow(arg_13_0, arg_13_1)
-	arg_13_0._isShow = arg_13_1 and true or false
+function RoomMapVehicleEntity:setShow(isShow)
+	self._isShow = isShow and true or false
 
-	gohelper.setActive(arg_13_0.containerGO, arg_13_1)
+	gohelper.setActive(self.containerGO, isShow)
 
-	if arg_13_1 then
-		arg_13_0.vehiclemove:restart()
-		arg_13_0.vehiclefollow:restart()
+	if isShow then
+		self.vehiclemove:restart()
+		self.vehiclefollow:restart()
 	else
-		arg_13_0.vehiclemove:stop()
+		self.vehiclemove:stop()
 	end
 
-	arg_13_0.vehiclefollow:setShow(arg_13_1)
+	self.vehiclefollow:setShow(isShow)
 end
 
-function var_0_0.getIsShow(arg_14_0)
-	return arg_14_0._isShow
+function RoomMapVehicleEntity:getIsShow()
+	return self._isShow
 end
 
-function var_0_0.beforeDestroy(arg_15_0)
-	var_0_0.super.beforeDestroy(arg_15_0)
-	AudioMgr.instance:trigger(AudioEnum.Room.stop_amb_home, arg_15_0.go)
+function RoomMapVehicleEntity:beforeDestroy()
+	RoomMapVehicleEntity.super.beforeDestroy(self)
+	AudioMgr.instance:trigger(AudioEnum.Room.stop_amb_home, self.go)
 end
 
-function var_0_0.getMainEffectKey(arg_16_0)
+function RoomMapVehicleEntity:getMainEffectKey()
 	return RoomEnum.EffectKey.VehicleGOKey
 end
 
-return var_0_0
+return RoomMapVehicleEntity

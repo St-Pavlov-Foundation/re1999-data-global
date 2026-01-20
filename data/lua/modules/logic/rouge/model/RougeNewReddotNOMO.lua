@@ -1,27 +1,29 @@
-﻿module("modules.logic.rouge.model.RougeNewReddotNOMO", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/model/RougeNewReddotNOMO.lua
 
-local var_0_0 = pureTable("RougeNewReddotNOMO")
+module("modules.logic.rouge.model.RougeNewReddotNOMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.type = arg_1_1.type
-	arg_1_0.idNum = #arg_1_1.ids
-	arg_1_0.idMap = {}
+local RougeNewReddotNOMO = pureTable("RougeNewReddotNOMO")
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1.ids) do
-		arg_1_0.idMap[iter_1_1] = iter_1_1
+function RougeNewReddotNOMO:init(info)
+	self.type = info.type
+	self.idNum = #info.ids
+	self.idMap = {}
+
+	for i, v in ipairs(info.ids) do
+		self.idMap[v] = v
 	end
 end
 
-function var_0_0.removeId(arg_2_0, arg_2_1)
-	if arg_2_1 == 0 then
-		arg_2_0.idMap = {}
-		arg_2_0.idNum = 0
+function RougeNewReddotNOMO:removeId(id)
+	if id == 0 then
+		self.idMap = {}
+		self.idNum = 0
 	end
 
-	if arg_2_0.idMap[arg_2_1] then
-		arg_2_0.idMap[arg_2_1] = nil
-		arg_2_0.idNum = arg_2_0.idNum - 1
+	if self.idMap[id] then
+		self.idMap[id] = nil
+		self.idNum = self.idNum - 1
 	end
 end
 
-return var_0_0
+return RougeNewReddotNOMO

@@ -1,180 +1,182 @@
-﻿module("modules.common.others.LoaderComponent", package.seeall)
+﻿-- chunkname: @modules/common/others/LoaderComponent.lua
 
-local var_0_0 = class("LoaderComponent", UserDataDispose)
+module("modules.common.others.LoaderComponent", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0:__onInit()
+local LoaderComponent = class("LoaderComponent", UserDataDispose)
 
-	arg_1_0._urlDic = {}
-	arg_1_0._callback = {}
-	arg_1_0._assetDic = arg_1_0:getUserDataTb_()
-	arg_1_0._assetList = arg_1_0:getUserDataTb_()
-	arg_1_0._failedDic = {}
-	arg_1_0._listLoadCallback = {}
+function LoaderComponent:ctor()
+	self:__onInit()
+
+	self._urlDic = {}
+	self._callback = {}
+	self._assetDic = self:getUserDataTb_()
+	self._assetList = self:getUserDataTb_()
+	self._failedDic = {}
+	self._listLoadCallback = {}
 end
 
-function var_0_0.getAssetItem(arg_2_0, arg_2_1)
-	return arg_2_0._assetDic[arg_2_1]
+function LoaderComponent:getAssetItem(url)
+	return self._assetDic[url]
 end
 
-function var_0_0.loadAsset(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	if arg_3_0.component_dead then
+function LoaderComponent:loadAsset(url, call_back, handler, failedCallback)
+	if self.component_dead then
 		return
 	end
 
-	if arg_3_0._failedDic[arg_3_1] then
-		if arg_3_4 then
-			arg_3_4(arg_3_3, arg_3_1)
+	if self._failedDic[url] then
+		if failedCallback then
+			failedCallback(handler, url)
 		end
 
 		return
 	end
 
-	if arg_3_0._assetDic[arg_3_1] then
-		arg_3_2(arg_3_3, arg_3_0._assetDic[arg_3_1])
+	if self._assetDic[url] then
+		call_back(handler, self._assetDic[url])
 
 		return
 	end
 
-	if not arg_3_0._callback[arg_3_1] then
-		arg_3_0._callback[arg_3_1] = {}
+	if not self._callback[url] then
+		self._callback[url] = {}
 	end
 
-	table.insert(arg_3_0._callback[arg_3_1], {
-		call_back = arg_3_2,
-		handler = arg_3_3,
-		failedCallback = arg_3_4
+	table.insert(self._callback[url], {
+		call_back = call_back,
+		handler = handler,
+		failedCallback = failedCallback
 	})
 
-	if not arg_3_0._urlDic[arg_3_1] then
-		arg_3_0._urlDic[arg_3_1] = true
+	if not self._urlDic[url] then
+		self._urlDic[url] = true
 
-		loadAbAsset(arg_3_1, false, arg_3_0._onLoadCallback, arg_3_0)
+		loadAbAsset(url, false, self._onLoadCallback, self)
 	end
 end
 
-function var_0_0.loadListAsset(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4, arg_4_5, arg_4_6)
-	if arg_4_0.component_dead then
+function LoaderComponent:loadListAsset(urlList, oneCallback, finishCallback, handler, oneFailedCallback, listFailedCallback)
+	if self.component_dead then
 		return
 	end
 
-	if arg_4_3 then
-		arg_4_0._listLoadCallback[arg_4_1] = {
-			finishCallback = arg_4_3,
-			handler = arg_4_4,
-			listFailedCallback = arg_4_6
+	if finishCallback then
+		self._listLoadCallback[urlList] = {
+			finishCallback = finishCallback,
+			handler = handler,
+			listFailedCallback = listFailedCallback
 		}
 	end
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
-		arg_4_0:loadAsset(iter_4_1, arg_4_2, arg_4_4, arg_4_5)
+	for i, v in ipairs(urlList) do
+		self:loadAsset(v, oneCallback, handler, oneFailedCallback)
 	end
 
-	arg_4_0:_invokeUrlListCallback()
+	self:_invokeUrlListCallback()
 end
 
-function var_0_0._invokeUrlListCallback(arg_5_0)
-	if not arg_5_0._listLoadCallback then
+function LoaderComponent:_invokeUrlListCallback()
+	if not self._listLoadCallback then
 		return
 	end
 
-	if arg_5_0.component_dead then
+	if self.component_dead then
 		return
 	end
 
-	for iter_5_0, iter_5_1 in pairs(arg_5_0._listLoadCallback) do
-		local var_5_0 = 0
-		local var_5_1 = false
+	for k, v in pairs(self._listLoadCallback) do
+		local count = 0
+		local failed = false
 
-		for iter_5_2, iter_5_3 in ipairs(iter_5_0) do
-			if arg_5_0._assetDic[iter_5_3] then
-				var_5_0 = var_5_0 + 1
+		for index, url in ipairs(k) do
+			if self._assetDic[url] then
+				count = count + 1
 			end
 
-			if arg_5_0._failedDic[iter_5_3] then
-				var_5_0 = var_5_0 + 1
-				var_5_1 = true
+			if self._failedDic[url] then
+				count = count + 1
+				failed = true
 			end
 		end
 
-		if var_5_0 == #iter_5_0 then
-			if var_5_1 then
-				if iter_5_1.listFailedCallback then
-					iter_5_1.listFailedCallback(iter_5_1.handler)
+		if count == #k then
+			if failed then
+				if v.listFailedCallback then
+					v.listFailedCallback(v.handler)
 				end
 			else
-				iter_5_1.finishCallback(iter_5_1.handler)
+				v.finishCallback(v.handler)
 			end
 
-			arg_5_0._listLoadCallback[iter_5_0] = nil
+			self._listLoadCallback[k] = nil
 
-			if arg_5_0.component_dead then
+			if self.component_dead then
 				return
 			end
 		end
 	end
 end
 
-function var_0_0._onLoadCallback(arg_6_0, arg_6_1)
-	if arg_6_0.component_dead then
+function LoaderComponent:_onLoadCallback(assetItem)
+	if self.component_dead then
 		return
 	end
 
-	local var_6_0 = arg_6_1.ResPath
-	local var_6_1 = arg_6_1.IsLoadSuccess
+	local url = assetItem.ResPath
+	local success = assetItem.IsLoadSuccess
 
-	if var_6_1 then
-		table.insert(arg_6_0._assetList, arg_6_1)
+	if success then
+		table.insert(self._assetList, assetItem)
 
-		arg_6_0._assetDic[var_6_0] = arg_6_1
+		self._assetDic[url] = assetItem
 
-		arg_6_1:Retain()
+		assetItem:Retain()
 	else
-		arg_6_0._failedDic[var_6_0] = true
+		self._failedDic[url] = true
 
-		logError("资源加载失败,URL:" .. var_6_0)
+		logError("资源加载失败,URL:" .. url)
 	end
 
-	if arg_6_0._callback[var_6_0] then
-		for iter_6_0, iter_6_1 in ipairs(arg_6_0._callback[var_6_0]) do
-			if var_6_1 then
-				iter_6_1.call_back(iter_6_1.handler, arg_6_1)
-			elseif iter_6_1.failedCallback then
-				iter_6_1.failedCallback(iter_6_1.handler, var_6_0)
+	if self._callback[url] then
+		for i, v in ipairs(self._callback[url]) do
+			if success then
+				v.call_back(v.handler, assetItem)
+			elseif v.failedCallback then
+				v.failedCallback(v.handler, url)
 			end
 
-			if arg_6_0.component_dead then
+			if self.component_dead then
 				return
 			end
 		end
 	end
 
-	arg_6_0:_invokeUrlListCallback()
+	self:_invokeUrlListCallback()
 
-	arg_6_0._callback[var_6_0] = nil
+	self._callback[url] = nil
 end
 
-function var_0_0.releaseSelf(arg_7_0)
-	arg_7_0.component_dead = true
+function LoaderComponent:releaseSelf()
+	self.component_dead = true
 
-	for iter_7_0, iter_7_1 in pairs(arg_7_0._urlDic) do
-		removeAssetLoadCb(iter_7_0, arg_7_0._onLoadCallback, arg_7_0)
+	for k, v in pairs(self._urlDic) do
+		removeAssetLoadCb(k, self._onLoadCallback, self)
 	end
 
-	if arg_7_0._assetList then
-		for iter_7_2, iter_7_3 in ipairs(arg_7_0._assetList) do
-			iter_7_3:Release()
+	if self._assetList then
+		for i, assetItem in ipairs(self._assetList) do
+			assetItem:Release()
 		end
 
-		arg_7_0._assetList = nil
+		self._assetList = nil
 	end
 
-	arg_7_0._urlDic = nil
-	arg_7_0._callback = nil
-	arg_7_0._listLoadCallback = nil
-	arg_7_0._failedDic = nil
+	self._urlDic = nil
+	self._callback = nil
+	self._listLoadCallback = nil
+	self._failedDic = nil
 
-	arg_7_0:__onDispose()
+	self:__onDispose()
 end
 
-return var_0_0
+return LoaderComponent

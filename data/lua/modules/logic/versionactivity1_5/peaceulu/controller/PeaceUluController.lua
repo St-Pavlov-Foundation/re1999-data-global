@@ -1,35 +1,37 @@
-﻿module("modules.logic.versionactivity1_5.peaceulu.controller.PeaceUluController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/peaceulu/controller/PeaceUluController.lua
 
-local var_0_0 = class("PeaceUluController", BaseController)
+module("modules.logic.versionactivity1_5.peaceulu.controller.PeaceUluController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local PeaceUluController = class("PeaceUluController", BaseController)
+
+function PeaceUluController:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function PeaceUluController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
-	TaskController.instance:registerCallback(TaskEvent.UpdateTaskList, arg_3_0._onUpdateTaskList, arg_3_0)
+function PeaceUluController:addConstEvents()
+	TaskController.instance:registerCallback(TaskEvent.UpdateTaskList, self._onUpdateTaskList, self)
 end
 
-function var_0_0._onUpdateTaskList(arg_4_0, arg_4_1)
-	PeaceUluModel.instance:setTasksInfo(arg_4_1.taskInfo)
+function PeaceUluController:_onUpdateTaskList(msg)
+	PeaceUluModel.instance:setTasksInfo(msg.taskInfo)
 end
 
-function var_0_0.openPeaceUluView(arg_5_0, arg_5_1)
+function PeaceUluController:openPeaceUluView(param)
 	PeaceUluRpc.instance:sendGet145InfosRequest(VersionActivity1_5Enum.ActivityId.PeaceUlu, function()
 		ViewMgr.instance:openView(ViewName.PeaceUluView, {
-			param = arg_5_1
+			param = param
 		})
-	end, arg_5_0)
+	end, self)
 end
 
-function var_0_0.reInit(arg_7_0)
+function PeaceUluController:reInit()
 	return
 end
 
-var_0_0.instance = var_0_0.New()
+PeaceUluController.instance = PeaceUluController.New()
 
-return var_0_0
+return PeaceUluController

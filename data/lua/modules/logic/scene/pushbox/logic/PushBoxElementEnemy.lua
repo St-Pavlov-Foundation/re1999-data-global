@@ -1,197 +1,202 @@
-﻿module("modules.logic.scene.pushbox.logic.PushBoxElementEnemy", package.seeall)
+﻿-- chunkname: @modules/logic/scene/pushbox/logic/PushBoxElementEnemy.lua
 
-local var_0_0 = class("PushBoxElementEnemy", UserDataDispose)
+module("modules.logic.scene.pushbox.logic.PushBoxElementEnemy", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0:__onInit()
+local PushBoxElementEnemy = class("PushBoxElementEnemy", UserDataDispose)
 
-	arg_1_0._game_mgr = GameSceneMgr.instance:getCurScene().gameMgr
-	arg_1_0._gameObject = arg_1_1
-	arg_1_0._transform = arg_1_1.transform
-	arg_1_0._cell = arg_1_2
-	arg_1_0._ani = arg_1_0:getUserDataTb_()
+function PushBoxElementEnemy:ctor(gameObject, cell)
+	self:__onInit()
 
-	arg_1_0:addEventCb(PushBoxController.instance, PushBoxEvent.RefreshElement, arg_1_0._onRefreshElement, arg_1_0)
-	arg_1_0:addEventCb(PushBoxController.instance, PushBoxEvent.StepFinished, arg_1_0._onStepFinished, arg_1_0)
-	arg_1_0:addEventCb(PushBoxController.instance, PushBoxEvent.RevertStep, arg_1_0._onRevertStep, arg_1_0)
-	arg_1_0:addEventCb(PushBoxController.instance, PushBoxEvent.StartElement, arg_1_0._onStartElement, arg_1_0)
+	self._game_mgr = GameSceneMgr.instance:getCurScene().gameMgr
+	self._gameObject = gameObject
+	self._transform = gameObject.transform
+	self._cell = cell
+	self._ani = self:getUserDataTb_()
+
+	self:addEventCb(PushBoxController.instance, PushBoxEvent.RefreshElement, self._onRefreshElement, self)
+	self:addEventCb(PushBoxController.instance, PushBoxEvent.StepFinished, self._onStepFinished, self)
+	self:addEventCb(PushBoxController.instance, PushBoxEvent.RevertStep, self._onRevertStep, self)
+	self:addEventCb(PushBoxController.instance, PushBoxEvent.StartElement, self._onStartElement, self)
 end
 
-function var_0_0.setRendererIndex(arg_2_0)
-	local var_2_0 = arg_2_0._cell:getRendererIndex()
+function PushBoxElementEnemy:setRendererIndex()
+	local final_renderer_index = self._cell:getRendererIndex()
 
-	for iter_2_0 = 0, arg_2_0._transform.childCount - 1 do
-		local var_2_1 = arg_2_0._transform:GetChild(iter_2_0)
+	for i = 0, self._transform.childCount - 1 do
+		local tar_transform = self._transform:GetChild(i)
+		local meshRenderer = tar_transform:GetChild(0):GetComponent("MeshRenderer")
 
-		var_2_1:GetChild(0):GetComponent("MeshRenderer").sortingOrder = var_2_0
+		meshRenderer.sortingOrder = final_renderer_index
 
-		table.insert(arg_2_0._ani, gohelper.findChildComponent(var_2_1.gameObject, "eyeglow", typeof(UnityEngine.Animator)))
+		table.insert(self._ani, gohelper.findChildComponent(tar_transform.gameObject, "eyeglow", typeof(UnityEngine.Animator)))
 	end
 end
 
-function var_0_0._onStartElement(arg_3_0)
-	local var_3_0 = arg_3_0._game_mgr:getEnemyIndex(arg_3_0)
-	local var_3_1 = arg_3_0._game_mgr:getConfig()
+function PushBoxElementEnemy:_onStartElement()
+	local rule_index = self._game_mgr:getEnemyIndex(self)
+	local episode_config = self._game_mgr:getConfig()
 
-	arg_3_0._act_rule = GameUtil.splitString2(string.split(var_3_1.enemy_act, "_")[var_3_0], true, "|", "#")
-	arg_3_0._alarm_value = var_3_1.enemy_alarm
-	arg_3_0._index = 1
-	arg_3_0._next_act_time = arg_3_0._act_rule[arg_3_0._index][2] + Time.realtimeSinceStartup
+	self._act_rule = GameUtil.splitString2(string.split(episode_config.enemy_act, "_")[rule_index], true, "|", "#")
+	self._alarm_value = episode_config.enemy_alarm
+	self._index = 1
+	self._next_act_time = self._act_rule[self._index][2] + Time.realtimeSinceStartup
 
-	arg_3_0:_startAct()
-	TaskDispatcher.runDelay(arg_3_0._onTime, arg_3_0, arg_3_0._act_rule[arg_3_0._index][2])
+	self:_startAct()
+	TaskDispatcher.runDelay(self._onTime, self, self._act_rule[self._index][2])
 end
 
-function var_0_0._onRevertStep(arg_4_0, arg_4_1)
-	if arg_4_1.enemy_direction then
-		for iter_4_0, iter_4_1 in ipairs(arg_4_1.enemy_direction) do
-			if iter_4_1.pos_x == arg_4_0._cell:getPosX() and iter_4_1.pos_y == arg_4_0._cell:getPosY() then
-				arg_4_0._index = iter_4_1.index
+function PushBoxElementEnemy:_onRevertStep(step_data)
+	if step_data.enemy_direction then
+		for i, v in ipairs(step_data.enemy_direction) do
+			if v.pos_x == self._cell:getPosX() and v.pos_y == self._cell:getPosY() then
+				self._index = v.index
 
-				arg_4_0:doAct()
+				self:doAct()
 			end
 		end
 	end
 end
 
-function var_0_0._onTime(arg_5_0)
-	if arg_5_0._in_area and arg_5_0:_characterInArea() then
+function PushBoxElementEnemy:_onTime()
+	if self._in_area and self:_characterInArea() then
 		return
 	end
 
-	arg_5_0._index = arg_5_0._index + 1
+	self._index = self._index + 1
 
-	if arg_5_0._index > #arg_5_0._act_rule then
-		arg_5_0._index = 1
+	if self._index > #self._act_rule then
+		self._index = 1
 	end
 
-	arg_5_0:doAct()
+	self:doAct()
 end
 
-function var_0_0.doAct(arg_6_0)
-	arg_6_0:_startAct()
+function PushBoxElementEnemy:doAct()
+	self:_startAct()
 
-	arg_6_0._next_act_time = arg_6_0._act_rule[arg_6_0._index][2] + Time.realtimeSinceStartup
+	self._next_act_time = self._act_rule[self._index][2] + Time.realtimeSinceStartup
 
-	TaskDispatcher.runDelay(arg_6_0._onTime, arg_6_0, arg_6_0._act_rule[arg_6_0._index][2])
+	TaskDispatcher.runDelay(self._onTime, self, self._act_rule[self._index][2])
 end
 
-function var_0_0._onRefreshElement(arg_7_0)
-	arg_7_0._check_warning = true
+function PushBoxElementEnemy:_onRefreshElement()
+	self._check_warning = true
 
-	if arg_7_0._in_area and not arg_7_0:_characterInArea() then
-		if Time.realtimeSinceStartup > arg_7_0._next_act_time then
-			arg_7_0:_onTime()
+	local state = self._in_area
+
+	if state and not self:_characterInArea() then
+		if Time.realtimeSinceStartup > self._next_act_time then
+			self:_onTime()
 		end
 
-		arg_7_0._check_warning = false
+		self._check_warning = false
 
 		return
 	end
 end
 
-function var_0_0._onStepFinished(arg_8_0)
-	if not arg_8_0._check_warning then
+function PushBoxElementEnemy:_onStepFinished()
+	if not self._check_warning then
 		return
 	end
 
-	if arg_8_0._game_mgr:cellIsInvincible(arg_8_0._act_cell_x, arg_8_0._act_cell_y) then
+	if self._game_mgr:cellIsInvincible(self._act_cell_x, self._act_cell_y) then
 		return
 	end
 
-	if arg_8_0:_characterInArea() then
-		arg_8_0._game_mgr:changeWarning(arg_8_0._alarm_value)
+	if self:_characterInArea() then
+		self._game_mgr:changeWarning(self._alarm_value)
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_activity_alert)
 	end
 end
 
-function var_0_0._startAct(arg_9_0)
-	arg_9_0._act_cell_x = arg_9_0._cell:getPosX()
-	arg_9_0._act_cell_y = arg_9_0._cell:getPosY()
+function PushBoxElementEnemy:_startAct()
+	self._act_cell_x = self._cell:getPosX()
+	self._act_cell_y = self._cell:getPosY()
 
-	local var_9_0 = arg_9_0._act_rule[arg_9_0._index][1]
+	local direction = self._act_rule[self._index][1]
 
-	if var_9_0 == PushBoxGameMgr.Direction.Up then
-		arg_9_0._act_cell_y = arg_9_0._act_cell_y - 1
-	elseif var_9_0 == PushBoxGameMgr.Direction.Down then
-		arg_9_0._act_cell_y = arg_9_0._act_cell_y + 1
-	elseif var_9_0 == PushBoxGameMgr.Direction.Left then
-		arg_9_0._act_cell_x = arg_9_0._act_cell_x - 1
-	elseif var_9_0 == PushBoxGameMgr.Direction.Right then
-		arg_9_0._act_cell_x = arg_9_0._act_cell_x + 1
+	if direction == PushBoxGameMgr.Direction.Up then
+		self._act_cell_y = self._act_cell_y - 1
+	elseif direction == PushBoxGameMgr.Direction.Down then
+		self._act_cell_y = self._act_cell_y + 1
+	elseif direction == PushBoxGameMgr.Direction.Left then
+		self._act_cell_x = self._act_cell_x - 1
+	elseif direction == PushBoxGameMgr.Direction.Right then
+		self._act_cell_x = self._act_cell_x + 1
 	end
 
-	arg_9_0._act_cell = arg_9_0._game_mgr:getCell(arg_9_0._act_cell_x, arg_9_0._act_cell_y)
+	self._act_cell = self._game_mgr:getCell(self._act_cell_x, self._act_cell_y)
 
-	local var_9_1 = tostring(var_9_0)
+	local show_obj = tostring(direction)
 
-	for iter_9_0 = 0, 3 do
-		local var_9_2 = arg_9_0._gameObject.transform:GetChild(iter_9_0)
+	for i = 0, 3 do
+		local tar_transform = self._gameObject.transform:GetChild(i)
 
-		gohelper.setActive(var_9_2.gameObject, var_9_1 == var_9_2.name)
+		gohelper.setActive(tar_transform.gameObject, show_obj == tar_transform.name)
 
-		local var_9_3 = gohelper.findChild(var_9_2.gameObject, "eyeglow"):GetComponentsInChildren(typeof(UnityEngine.MeshRenderer))
+		local meshRenderer = gohelper.findChild(tar_transform.gameObject, "eyeglow"):GetComponentsInChildren(typeof(UnityEngine.MeshRenderer))
 
-		if var_9_3 then
-			for iter_9_1 = 0, var_9_3.Length - 1 do
-				var_9_3[iter_9_1].sortingOrder = arg_9_0._act_cell:getRendererIndex() + 2
+		if meshRenderer then
+			for index = 0, meshRenderer.Length - 1 do
+				meshRenderer[index].sortingOrder = self._act_cell:getRendererIndex() + 2
 			end
 		end
 	end
 
-	if arg_9_0._game_mgr:cellIsInvincible(arg_9_0._act_cell_x, arg_9_0._act_cell_y) then
+	if self._game_mgr:cellIsInvincible(self._act_cell_x, self._act_cell_y) then
 		return
 	end
 
-	if arg_9_0:_characterInArea() then
-		arg_9_0._game_mgr:changeWarning(arg_9_0._alarm_value)
+	if self:_characterInArea() then
+		self._game_mgr:changeWarning(self._alarm_value)
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_activity_alert)
-		arg_9_0._game_mgr:detectGameOver()
+		self._game_mgr:detectGameOver()
 	end
 end
 
-function var_0_0._characterInArea(arg_10_0)
-	arg_10_0._in_area = arg_10_0._game_mgr:characterInArea(arg_10_0._act_cell_x, arg_10_0._act_cell_y)
+function PushBoxElementEnemy:_characterInArea()
+	self._in_area = self._game_mgr:characterInArea(self._act_cell_x, self._act_cell_y)
 
-	if arg_10_0._ani then
-		for iter_10_0, iter_10_1 in ipairs(arg_10_0._ani) do
-			iter_10_1:Play(arg_10_0._in_area and "click" or "loop")
+	if self._ani then
+		for i, v in ipairs(self._ani) do
+			v:Play(self._in_area and "click" or "loop")
 		end
 	end
 
-	return arg_10_0._in_area
+	return self._in_area
 end
 
-function var_0_0.getIndex(arg_11_0)
-	return arg_11_0._index
+function PushBoxElementEnemy:getIndex()
+	return self._index
 end
 
-function var_0_0.getPosX(arg_12_0)
-	return arg_12_0._cell:getPosX()
+function PushBoxElementEnemy:getPosX()
+	return self._cell:getPosX()
 end
 
-function var_0_0.getPosY(arg_13_0)
-	return arg_13_0._cell:getPosY()
+function PushBoxElementEnemy:getPosY()
+	return self._cell:getPosY()
 end
 
-function var_0_0.getObj(arg_14_0)
-	return arg_14_0._gameObject
+function PushBoxElementEnemy:getObj()
+	return self._gameObject
 end
 
-function var_0_0.getCell(arg_15_0)
-	return arg_15_0._cell
+function PushBoxElementEnemy:getCell()
+	return self._cell
 end
 
-function var_0_0.releaseSelf(arg_16_0)
-	TaskDispatcher.cancelTask(arg_16_0._onTime, arg_16_0)
-	arg_16_0:__onDispose()
+function PushBoxElementEnemy:releaseSelf()
+	TaskDispatcher.cancelTask(self._onTime, self)
+	self:__onDispose()
 end
 
-var_0_0.Direction = {
+PushBoxElementEnemy.Direction = {
 	180,
 	0,
 	90,
 	-90
 }
 
-return var_0_0
+return PushBoxElementEnemy

@@ -1,194 +1,197 @@
-﻿module("modules.logic.sp01.odyssey.view.OdysseyEquipTipItem", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/view/OdysseyEquipTipItem.lua
 
-local var_0_0 = class("OdysseyEquipTipItem", LuaCompBase)
+module("modules.logic.sp01.odyssey.view.OdysseyEquipTipItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._goitemTip = gohelper.findChild(arg_1_0.viewGO, "#go_itemTip")
-	arg_1_0._imagerare = gohelper.findChildImage(arg_1_0.viewGO, "#go_itemTip/title/#image_rare")
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_itemTip/title/#simage_icon")
-	arg_1_0._txtitemName = gohelper.findChildText(arg_1_0.viewGO, "#go_itemTip/title/name/#txt_itemName")
-	arg_1_0._goequipType = gohelper.findChild(arg_1_0.viewGO, "#go_itemTip/title/name/#go_equipType")
-	arg_1_0._txtequipType = gohelper.findChildText(arg_1_0.viewGO, "#go_itemTip/title/name/#go_equipType/#txt_equipType")
-	arg_1_0._goequipSuit = gohelper.findChild(arg_1_0.viewGO, "#go_itemTip/#scroll_desc/Viewport/Content/#go_equipSuit")
-	arg_1_0._txtsuitName = gohelper.findChildText(arg_1_0.viewGO, "#go_itemTip/#scroll_desc/Viewport/Content/#go_equipSuit/suit/#txt_suitName")
-	arg_1_0._scrolldesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_itemTip/#scroll_desc")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#go_itemTip/#scroll_desc/Viewport/Content/#txt_desc")
-	arg_1_0._txtdesc1 = gohelper.findChildText(arg_1_0.viewGO, "#go_itemTip/#scroll_desc/Viewport/Content/#txt_desc1")
-	arg_1_0._btnreplace = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_itemTip/Btn/#btn_replace")
-	arg_1_0._btnunload = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_itemTip/Btn/#btn_unload")
-	arg_1_0._btnequip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_itemTip/Btn/#btn_equip")
-	arg_1_0._btnsuit = gohelper.findChildButton(arg_1_0.viewGO, "#go_itemTip/#scroll_desc/Viewport/Content/#go_equipSuit/#btn_suit")
+local OdysseyEquipTipItem = class("OdysseyEquipTipItem", LuaCompBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function OdysseyEquipTipItem:init(go)
+	self.viewGO = go
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._goitemTip = gohelper.findChild(self.viewGO, "#go_itemTip")
+	self._imagerare = gohelper.findChildImage(self.viewGO, "#go_itemTip/title/#image_rare")
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "#go_itemTip/title/#simage_icon")
+	self._txtitemName = gohelper.findChildText(self.viewGO, "#go_itemTip/title/name/#txt_itemName")
+	self._goequipType = gohelper.findChild(self.viewGO, "#go_itemTip/title/name/#go_equipType")
+	self._txtequipType = gohelper.findChildText(self.viewGO, "#go_itemTip/title/name/#go_equipType/#txt_equipType")
+	self._goequipSuit = gohelper.findChild(self.viewGO, "#go_itemTip/#scroll_desc/Viewport/Content/#go_equipSuit")
+	self._txtsuitName = gohelper.findChildText(self.viewGO, "#go_itemTip/#scroll_desc/Viewport/Content/#go_equipSuit/suit/#txt_suitName")
+	self._scrolldesc = gohelper.findChildScrollRect(self.viewGO, "#go_itemTip/#scroll_desc")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "#go_itemTip/#scroll_desc/Viewport/Content/#txt_desc")
+	self._txtdesc1 = gohelper.findChildText(self.viewGO, "#go_itemTip/#scroll_desc/Viewport/Content/#txt_desc1")
+	self._btnreplace = gohelper.findChildButtonWithAudio(self.viewGO, "#go_itemTip/Btn/#btn_replace")
+	self._btnunload = gohelper.findChildButtonWithAudio(self.viewGO, "#go_itemTip/Btn/#btn_unload")
+	self._btnequip = gohelper.findChildButtonWithAudio(self.viewGO, "#go_itemTip/Btn/#btn_equip")
+	self._btnsuit = gohelper.findChildButton(self.viewGO, "#go_itemTip/#scroll_desc/Viewport/Content/#go_equipSuit/#btn_suit")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnreplace:AddClickListener(arg_2_0._btnreplaceOnClick, arg_2_0)
-	arg_2_0._btnunload:AddClickListener(arg_2_0._btnunloadOnClick, arg_2_0)
-	arg_2_0._btnequip:AddClickListener(arg_2_0._btnequipOnClick, arg_2_0)
-	arg_2_0._btnsuit:AddClickListener(arg_2_0._btnsuitOnClick, arg_2_0)
-	arg_2_0:addEventCb(OdysseyHeroGroupController.instance, OdysseyEvent.OnHeroGroupUpdate, arg_2_0.refreshUI, arg_2_0)
+function OdysseyEquipTipItem:addEventListeners()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnreplace:AddClickListener(self._btnreplaceOnClick, self)
+	self._btnunload:AddClickListener(self._btnunloadOnClick, self)
+	self._btnequip:AddClickListener(self._btnequipOnClick, self)
+	self._btnsuit:AddClickListener(self._btnsuitOnClick, self)
+	self:addEventCb(OdysseyHeroGroupController.instance, OdysseyEvent.OnHeroGroupUpdate, self.refreshUI, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnreplace:RemoveClickListener()
-	arg_3_0._btnunload:RemoveClickListener()
-	arg_3_0._btnequip:RemoveClickListener()
-	arg_3_0._btnsuit:RemoveClickListener()
-	arg_3_0:removeEventCb(OdysseyHeroGroupController.instance, OdysseyEvent.OnHeroGroupUpdate, arg_3_0.refreshUI, arg_3_0)
+function OdysseyEquipTipItem:removeEventListeners()
+	self._btnclose:RemoveClickListener()
+	self._btnreplace:RemoveClickListener()
+	self._btnunload:RemoveClickListener()
+	self._btnequip:RemoveClickListener()
+	self._btnsuit:RemoveClickListener()
+	self:removeEventCb(OdysseyHeroGroupController.instance, OdysseyEvent.OnHeroGroupUpdate, self.refreshUI, self)
 end
 
-var_0_0.TipHalfWidth = 419
+OdysseyEquipTipItem.TipHalfWidth = 419
 
-function var_0_0._btncloseOnClick(arg_4_0)
+function OdysseyEquipTipItem:_btncloseOnClick()
 	OdysseyController.instance:dispatchEvent(OdysseyEvent.OnTipSubViewClose)
 end
 
-function var_0_0._btnsuitOnClick(arg_5_0)
-	local var_5_0 = {
-		suitId = arg_5_0.config.suitId,
-		bagType = OdysseyEnum.BagType.Bag,
-		pos = recthelper.uiPosToScreenPos(arg_5_0._btnsuit.transform)
-	}
+function OdysseyEquipTipItem:_btnsuitOnClick()
+	local param = {}
 
-	OdysseyController.instance:openSuitTipsView(var_5_0)
+	param.suitId = self.config.suitId
+	param.bagType = OdysseyEnum.BagType.Bag
+	param.pos = recthelper.uiPosToScreenPos(self._btnsuit.transform)
+
+	OdysseyController.instance:openSuitTipsView(param)
 end
 
-function var_0_0._btnreplaceOnClick(arg_6_0)
-	OdysseyHeroGroupController.instance:replaceOdysseyEquip(arg_6_0.heroPos, arg_6_0.equipIndex, arg_6_0.equipUid)
+function OdysseyEquipTipItem:_btnreplaceOnClick()
+	OdysseyHeroGroupController.instance:replaceOdysseyEquip(self.heroPos, self.equipIndex, self.equipUid)
 end
 
-function var_0_0._btnunloadOnClick(arg_7_0)
-	OdysseyHeroGroupController.instance:unloadOdysseyEquip(arg_7_0.heroPos, arg_7_0.equipIndex)
+function OdysseyEquipTipItem:_btnunloadOnClick()
+	OdysseyHeroGroupController.instance:unloadOdysseyEquip(self.heroPos, self.equipIndex)
 end
 
-function var_0_0._btnequipOnClick(arg_8_0)
-	OdysseyHeroGroupController.instance:setOdysseyEquip(arg_8_0.heroPos, arg_8_0.equipIndex, arg_8_0.equipUid)
+function OdysseyEquipTipItem:_btnequipOnClick()
+	OdysseyHeroGroupController.instance:setOdysseyEquip(self.heroPos, self.equipIndex, self.equipUid)
 end
 
-function var_0_0._editableInitView(arg_9_0)
-	arg_9_0._goBtn = gohelper.findChild(arg_9_0.viewGO, "#go_itemTip/Btn")
-	arg_9_0._imageicon = gohelper.findChildImage(arg_9_0.viewGO, "#go_itemTip/#scroll_desc/Viewport/Content/#go_equipSuit/suit/icon")
-	arg_9_0._anim = arg_9_0.viewGO:GetComponent(gohelper.Type_Animator)
+function OdysseyEquipTipItem:_editableInitView()
+	self._goBtn = gohelper.findChild(self.viewGO, "#go_itemTip/Btn")
+	self._imageicon = gohelper.findChildImage(self.viewGO, "#go_itemTip/#scroll_desc/Viewport/Content/#go_equipSuit/suit/icon")
+	self._anim = self.viewGO:GetComponent(gohelper.Type_Animator)
 end
 
-function var_0_0.setData(arg_10_0, arg_10_1)
-	arg_10_0.param = arg_10_1
-	arg_10_0.itemId = arg_10_0.param.itemId
-	arg_10_0.heroPos = arg_10_0.param.heroPos
-	arg_10_0.equipUid = arg_10_0.param.equipUid
-	arg_10_0.equipIndex = arg_10_0.param.equipIndex
+function OdysseyEquipTipItem:setData(param)
+	self.param = param
+	self.itemId = self.param.itemId
+	self.heroPos = self.param.heroPos
+	self.equipUid = self.param.equipUid
+	self.equipIndex = self.param.equipIndex
 
-	arg_10_0:refreshUI()
-	arg_10_0:showOpenAnim()
+	self:refreshUI()
+	self:showOpenAnim()
 end
 
-function var_0_0.refreshUI(arg_11_0)
-	arg_11_0:refreshItemInfo()
-	arg_11_0:refreshBtnState()
+function OdysseyEquipTipItem:refreshUI()
+	self:refreshItemInfo()
+	self:refreshBtnState()
 end
 
-function var_0_0.refreshItemInfo(arg_12_0)
-	arg_12_0._scrolldesc.verticalNormalizedPosition = 1
-	arg_12_0.config = OdysseyConfig.instance:getItemConfig(arg_12_0.itemId)
+function OdysseyEquipTipItem:refreshItemInfo()
+	self._scrolldesc.verticalNormalizedPosition = 1
+	self.config = OdysseyConfig.instance:getItemConfig(self.itemId)
 
-	UISpriteSetMgr.instance:setSp01OdysseyDungeonSprite(arg_12_0._imagerare, "odyssey_herogroup_quality_" .. tostring(arg_12_0.config.rare))
-	gohelper.setActive(arg_12_0._goequipType, arg_12_0.config.type == OdysseyEnum.ItemType.Equip)
-	gohelper.setActive(arg_12_0._goequipSuit, arg_12_0.config.type == OdysseyEnum.ItemType.Equip)
-	gohelper.setActive(arg_12_0._txtdesc1.gameObject, arg_12_0.config.type == OdysseyEnum.ItemType.Equip)
+	UISpriteSetMgr.instance:setSp01OdysseyDungeonSprite(self._imagerare, "odyssey_herogroup_quality_" .. tostring(self.config.rare))
+	gohelper.setActive(self._goequipType, self.config.type == OdysseyEnum.ItemType.Equip)
+	gohelper.setActive(self._goequipSuit, self.config.type == OdysseyEnum.ItemType.Equip)
+	gohelper.setActive(self._txtdesc1.gameObject, self.config.type == OdysseyEnum.ItemType.Equip)
 
-	arg_12_0._txtitemName.text = arg_12_0.config.name
+	self._txtitemName.text = self.config.name
 
-	if arg_12_0.config.type == OdysseyEnum.ItemType.Item then
-		arg_12_0:refreshDesc(arg_12_0._txtdesc, arg_12_0.config.desc)
-		arg_12_0._simageicon:LoadImage(ResUrl.getPropItemIcon(arg_12_0.config.icon))
-	elseif arg_12_0.config.type == OdysseyEnum.ItemType.Equip then
-		arg_12_0._simageicon:LoadImage(ResUrl.getSp01OdysseyItemSingleBg(arg_12_0.config.icon))
+	if self.config.type == OdysseyEnum.ItemType.Item then
+		self:refreshDesc(self._txtdesc, self.config.desc)
+		self._simageicon:LoadImage(ResUrl.getPropItemIcon(self.config.icon))
+	elseif self.config.type == OdysseyEnum.ItemType.Equip then
+		self._simageicon:LoadImage(ResUrl.getSp01OdysseyItemSingleBg(self.config.icon))
 
-		local var_12_0 = arg_12_0.config.suitId
-		local var_12_1 = OdysseyConfig.instance:getEquipSuitConfig(var_12_0)
+		local suitId = self.config.suitId
+		local suitConfig = OdysseyConfig.instance:getEquipSuitConfig(suitId)
 
-		arg_12_0._txtsuitName.text = var_12_1.name
+		self._txtsuitName.text = suitConfig.name
 
-		arg_12_0:refreshDesc(arg_12_0._txtdesc, arg_12_0.config.skillDesc)
-		arg_12_0:refreshDesc(arg_12_0._txtdesc1, arg_12_0.config.desc)
+		self:refreshDesc(self._txtdesc, self.config.skillDesc)
+		self:refreshDesc(self._txtdesc1, self.config.desc)
 
-		local var_12_2 = luaLang(OdysseyEnum.EquipTypeLang[arg_12_0.config.rare])
-		local var_12_3 = OdysseyEnum.EquipRareColor[arg_12_0.config.rare]
+		local rareDesc = luaLang(OdysseyEnum.EquipTypeLang[self.config.rare])
+		local rareColorStr = OdysseyEnum.EquipRareColor[self.config.rare]
 
-		arg_12_0._txtequipType.text = string.format("<color=%s>%s</color>", var_12_3, var_12_2)
+		self._txtequipType.text = string.format("<color=%s>%s</color>", rareColorStr, rareDesc)
 
-		UISpriteSetMgr.instance:setSp01OdysseyDungeonSprite(arg_12_0._imageicon, var_12_1.icon)
+		UISpriteSetMgr.instance:setSp01OdysseyDungeonSprite(self._imageicon, suitConfig.icon)
 	end
 end
 
-function var_0_0.refreshDesc(arg_13_0, arg_13_1, arg_13_2)
-	arg_13_1.text = SkillHelper.buildDesc(arg_13_2)
+function OdysseyEquipTipItem:refreshDesc(textItem, desc)
+	textItem.text = SkillHelper.buildDesc(desc)
 
-	local var_13_0 = MonoHelper.addNoUpdateLuaComOnceToGo(arg_13_1.gameObject, FixTmpBreakLine)
+	local fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(textItem.gameObject, FixTmpBreakLine)
 
-	SkillHelper.addHyperLinkClick(arg_13_1, arg_13_0._onHyperLinkClick, arg_13_0)
-	var_13_0:refreshTmpContent(arg_13_1)
+	SkillHelper.addHyperLinkClick(textItem, self._onHyperLinkClick, self)
+	fixTmpBreakLine:refreshTmpContent(textItem)
 end
 
-function var_0_0._onHyperLinkClick(arg_14_0, arg_14_1, arg_14_2)
-	CommonBuffTipController.instance:openCommonTipView(tonumber(arg_14_1), arg_14_2)
+function OdysseyEquipTipItem:_onHyperLinkClick(effId, clickPosition)
+	CommonBuffTipController.instance:openCommonTipView(tonumber(effId), clickPosition)
 end
 
-function var_0_0.refreshBtnState(arg_15_0)
-	local var_15_0 = arg_15_0.equipUid == nil or arg_15_0.equipUid == 0
+function OdysseyEquipTipItem:refreshBtnState()
+	local noEquip = self.equipUid == nil or self.equipUid == 0
 
-	gohelper.setActive(arg_15_0._goBtn, not var_15_0)
+	gohelper.setActive(self._goBtn, not noEquip)
 
-	if var_15_0 then
+	if noEquip then
 		return
 	end
 
-	local var_15_1 = OdysseyHeroGroupModel.instance:getCurHeroGroup()
-	local var_15_2 = arg_15_0.heroPos
-	local var_15_3 = arg_15_0.equipIndex
-	local var_15_4 = var_15_1:getOdysseyEquips(var_15_2 - 1).equipUid[var_15_3]
-	local var_15_5
-	local var_15_6 = arg_15_0.equipUid
+	local heroGroupMo = OdysseyHeroGroupModel.instance:getCurHeroGroup()
+	local heroPos = self.heroPos
+	local equipIndex = self.equipIndex
+	local equipUidMo = heroGroupMo:getOdysseyEquips(heroPos - 1)
+	local curEquipUid = equipUidMo.equipUid[equipIndex]
+	local state
+	local equipUid = self.equipUid
 
-	if var_15_4 == nil or var_15_4 == 0 then
-		var_15_5 = OdysseyEnum.EquipOptionType.Equip
-	elseif var_15_4 == var_15_6 then
-		var_15_5 = OdysseyEnum.EquipOptionType.Unload
+	if curEquipUid == nil or curEquipUid == 0 then
+		state = OdysseyEnum.EquipOptionType.Equip
+	elseif curEquipUid == equipUid then
+		state = OdysseyEnum.EquipOptionType.Unload
 	else
-		var_15_5 = OdysseyEnum.EquipOptionType.Replace
+		state = OdysseyEnum.EquipOptionType.Replace
 	end
 
-	gohelper.setActive(arg_15_0._btnequip, var_15_5 == OdysseyEnum.EquipOptionType.Equip)
-	gohelper.setActive(arg_15_0._btnunload, var_15_5 == OdysseyEnum.EquipOptionType.Unload)
-	gohelper.setActive(arg_15_0._btnreplace, var_15_5 == OdysseyEnum.EquipOptionType.Replace)
+	gohelper.setActive(self._btnequip, state == OdysseyEnum.EquipOptionType.Equip)
+	gohelper.setActive(self._btnunload, state == OdysseyEnum.EquipOptionType.Unload)
+	gohelper.setActive(self._btnreplace, state == OdysseyEnum.EquipOptionType.Replace)
 end
 
-function var_0_0.setActive(arg_16_0, arg_16_1)
-	gohelper.setActive(arg_16_0.viewGO, arg_16_1)
+function OdysseyEquipTipItem:setActive(active)
+	gohelper.setActive(self.viewGO, active)
 end
 
-function var_0_0.showOpenAnim(arg_17_0)
-	if arg_17_0.curItemUid ~= arg_17_0.equipUid then
-		arg_17_0._anim:Play("open", 0, 0)
-		arg_17_0._anim:Update(0)
+function OdysseyEquipTipItem:showOpenAnim()
+	if self.curItemUid ~= self.equipUid then
+		self._anim:Play("open", 0, 0)
+		self._anim:Update(0)
 
-		arg_17_0.curItemUid = arg_17_0.equipUid
+		self.curItemUid = self.equipUid
 	end
 end
 
-function var_0_0.onClose(arg_18_0)
-	arg_18_0._simageicon:UnLoadImage()
+function OdysseyEquipTipItem:onClose()
+	self._simageicon:UnLoadImage()
 end
 
-function var_0_0.onDestroyView(arg_19_0)
+function OdysseyEquipTipItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return OdysseyEquipTipItem

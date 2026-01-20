@@ -1,179 +1,185 @@
-﻿module("modules.logic.sp01.assassin2.outside.view.AssassinEquipView", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/outside/view/AssassinEquipView.lua
 
-local var_0_0 = class("AssassinEquipView", BaseView)
+module("modules.logic.sp01.assassin2.outside.view.AssassinEquipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._golayout = gohelper.findChild(arg_1_0.viewGO, "root/#go_layout")
-	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "root/#go_layout/#go_item")
-	arg_1_0._btnconfirm = gohelper.findChildClickWithAudio(arg_1_0.viewGO, "root/#btn_confirm", AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
+local AssassinEquipView = class("AssassinEquipView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function AssassinEquipView:onInitView()
+	self._golayout = gohelper.findChild(self.viewGO, "root/#go_layout")
+	self._goitem = gohelper.findChild(self.viewGO, "root/#go_layout/#go_item")
+	self._btnconfirm = gohelper.findChildClickWithAudio(self.viewGO, "root/#btn_confirm", AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnconfirm:AddClickListener(arg_2_0._btnconfirmOnClick, arg_2_0)
+function AssassinEquipView:addEvents()
+	self._btnconfirm:AddClickListener(self._btnconfirmOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnconfirm:RemoveClickListener()
+function AssassinEquipView:removeEvents()
+	self._btnconfirm:RemoveClickListener()
 
-	if arg_3_0._careerEquipItemList then
-		for iter_3_0, iter_3_1 in ipairs(arg_3_0._careerEquipItemList) do
-			iter_3_1.btnunlockClick:RemoveClickListener()
-			iter_3_1.btnlockedClick:RemoveClickListener()
+	if self._careerEquipItemList then
+		for _, equipItem in ipairs(self._careerEquipItemList) do
+			equipItem.btnunlockClick:RemoveClickListener()
+			equipItem.btnlockedClick:RemoveClickListener()
 		end
 	end
 end
 
-function var_0_0._btnconfirmOnClick(arg_4_0)
-	if not arg_4_0._curSelectedIndex then
+function AssassinEquipView:_btnconfirmOnClick()
+	if not self._curSelectedIndex then
 		return
 	end
 
-	local var_4_0 = arg_4_0._careerEquipItemList[arg_4_0._curSelectedIndex]
+	local careerEquipItem = self._careerEquipItemList[self._curSelectedIndex]
 
-	AssassinController.instance:changeCareerEquip(arg_4_0.assassinHeroId, var_4_0 and var_4_0.id)
-	arg_4_0:closeThis()
+	AssassinController.instance:changeCareerEquip(self.assassinHeroId, careerEquipItem and careerEquipItem.id)
+	self:closeThis()
 end
 
-function var_0_0._btnItemOnClick(arg_5_0, arg_5_1)
-	if arg_5_0._curSelectedIndex == arg_5_1 then
+function AssassinEquipView:_btnItemOnClick(index)
+	if self._curSelectedIndex == index then
 		return
 	end
 
-	local var_5_0 = arg_5_0._careerEquipItemList[arg_5_1]
+	local careerEquipItem = self._careerEquipItemList[index]
+	local isUnlock = AssassinHeroModel.instance:isUnlockCareer(careerEquipItem and careerEquipItem.id)
 
-	if not AssassinHeroModel.instance:isUnlockCareer(var_5_0 and var_5_0.id) then
+	if not isUnlock then
 		return
 	end
 
-	arg_5_0._curSelectedIndex = arg_5_1
+	self._curSelectedIndex = index
 
-	arg_5_0:refreshSelectedEquipItem()
+	self:refreshSelectedEquipItem()
 end
 
-function var_0_0._btnItemLockOnClick(arg_6_0, arg_6_1)
+function AssassinEquipView:_btnItemLockOnClick(index)
 	return
 end
 
-function var_0_0._editableInitView(arg_7_0)
+function AssassinEquipView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
-	arg_8_0.assassinHeroId = arg_8_0.viewParam.assassinHeroId
+function AssassinEquipView:onUpdateParam()
+	self.assassinHeroId = self.viewParam.assassinHeroId
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0:onUpdateParam()
-	arg_9_0:setEquipItemList()
+function AssassinEquipView:onOpen()
+	self:onUpdateParam()
+	self:setEquipItemList()
 
-	local var_9_0 = AssassinHeroModel.instance:getAssassinCareerId(arg_9_0.assassinHeroId)
+	local assassinCareerId = AssassinHeroModel.instance:getAssassinCareerId(self.assassinHeroId)
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0._careerEquipItemList) do
-		if iter_9_1.id == var_9_0 then
-			arg_9_0:_btnItemOnClick(iter_9_0)
+	for i, careerEquipItem in ipairs(self._careerEquipItemList) do
+		if careerEquipItem.id == assassinCareerId then
+			self:_btnItemOnClick(i)
 
 			return
 		end
 	end
 end
 
-function var_0_0.setEquipItemList(arg_10_0)
-	arg_10_0._careerEquipItemList = {}
+function AssassinEquipView:setEquipItemList()
+	self._careerEquipItemList = {}
 
-	local var_10_0 = AssassinConfig.instance:getAssassinHeroCareerList(arg_10_0.assassinHeroId)
+	local careerList = AssassinConfig.instance:getAssassinHeroCareerList(self.assassinHeroId)
 
-	gohelper.CreateObjList(arg_10_0, arg_10_0._onCreateEquipItem, var_10_0, arg_10_0._golayout, arg_10_0._goitem)
+	gohelper.CreateObjList(self, self._onCreateEquipItem, careerList, self._golayout, self._goitem)
 end
 
-function var_0_0._onCreateEquipItem(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	local var_11_0 = arg_11_0:getUserDataTb_()
+function AssassinEquipView:_onCreateEquipItem(obj, data, index)
+	local careerEquipItem = self:getUserDataTb_()
 
-	var_11_0.go = arg_11_1
-	var_11_0.id = arg_11_2
-	var_11_0.unlockCanvasGroup = gohelper.findChild(var_11_0.go, "#go_unlock"):GetComponent(typeof(UnityEngine.CanvasGroup))
-	var_11_0.goselected = gohelper.findChild(var_11_0.go, "#go_unlock/#go_selected")
-	var_11_0.txtcareer = gohelper.findChildText(var_11_0.go, "#go_unlock/career/#txt_career")
-	var_11_0.txtname = gohelper.findChildText(var_11_0.go, "#go_unlock/#txt_name")
-	var_11_0.simageicon = gohelper.findChildSingleImage(var_11_0.go, "#go_unlock/#simage_icon")
-	var_11_0.goitemLayout = gohelper.findChild(var_11_0.go, "#go_unlock/#go_itemLayout")
-	var_11_0.goitemGrid = gohelper.findChild(var_11_0.go, "#go_unlock/#go_itemLayout/#go_itemGrid")
-	var_11_0.goattrLayout = gohelper.findChild(var_11_0.go, "#go_unlock/#go_attrLayout")
-	var_11_0.goattrItem = gohelper.findChild(var_11_0.go, "#go_unlock/#go_attrLayout/#go_attrItem")
-	var_11_0.txtdesc = gohelper.findChildText(var_11_0.go, "#go_unlock/#go_assassinSkill/ScrollView/Viewport/#txt_desc")
-	var_11_0.btnunlockClick = gohelper.findChildClickWithAudio(var_11_0.go, "#go_unlock/#go_assassinSkill/ScrollView/#btn_click", AudioEnum2_9.StealthGame.play_ui_cikeshang_skillchoose)
+	careerEquipItem.go = obj
+	careerEquipItem.id = data
 
-	var_11_0.btnunlockClick:AddClickListener(arg_11_0._btnItemOnClick, arg_11_0, arg_11_3)
+	local gounlock = gohelper.findChild(careerEquipItem.go, "#go_unlock")
 
-	var_11_0.golocked = gohelper.findChild(var_11_0.go, "#go_locked")
-	var_11_0.btnlockedClick = gohelper.findChildClickWithAudio(var_11_0.go, "#go_locked/#btn_click", AudioEnum2_9.StealthGame.play_ui_cikeshang_skillchoose)
+	careerEquipItem.unlockCanvasGroup = gounlock:GetComponent(typeof(UnityEngine.CanvasGroup))
+	careerEquipItem.goselected = gohelper.findChild(careerEquipItem.go, "#go_unlock/#go_selected")
+	careerEquipItem.txtcareer = gohelper.findChildText(careerEquipItem.go, "#go_unlock/career/#txt_career")
+	careerEquipItem.txtname = gohelper.findChildText(careerEquipItem.go, "#go_unlock/#txt_name")
+	careerEquipItem.simageicon = gohelper.findChildSingleImage(careerEquipItem.go, "#go_unlock/#simage_icon")
+	careerEquipItem.goitemLayout = gohelper.findChild(careerEquipItem.go, "#go_unlock/#go_itemLayout")
+	careerEquipItem.goitemGrid = gohelper.findChild(careerEquipItem.go, "#go_unlock/#go_itemLayout/#go_itemGrid")
+	careerEquipItem.goattrLayout = gohelper.findChild(careerEquipItem.go, "#go_unlock/#go_attrLayout")
+	careerEquipItem.goattrItem = gohelper.findChild(careerEquipItem.go, "#go_unlock/#go_attrLayout/#go_attrItem")
+	careerEquipItem.txtdesc = gohelper.findChildText(careerEquipItem.go, "#go_unlock/#go_assassinSkill/ScrollView/Viewport/#txt_desc")
+	careerEquipItem.btnunlockClick = gohelper.findChildClickWithAudio(careerEquipItem.go, "#go_unlock/#go_assassinSkill/ScrollView/#btn_click", AudioEnum2_9.StealthGame.play_ui_cikeshang_skillchoose)
 
-	var_11_0.btnlockedClick:AddClickListener(arg_11_0._btnItemLockOnClick, arg_11_0, arg_11_3)
+	careerEquipItem.btnunlockClick:AddClickListener(self._btnItemOnClick, self, index)
 
-	var_11_0.txtcareer.text = AssassinConfig.instance:getAssassinCareerTitle(var_11_0.id)
-	var_11_0.txtname.text = AssassinConfig.instance:getAssassinCareerEquipName(var_11_0.id)
+	careerEquipItem.golocked = gohelper.findChild(careerEquipItem.go, "#go_locked")
+	careerEquipItem.btnlockedClick = gohelper.findChildClickWithAudio(careerEquipItem.go, "#go_locked/#btn_click", AudioEnum2_9.StealthGame.play_ui_cikeshang_skillchoose)
 
-	local var_11_1 = AssassinConfig.instance:getAssassinCareerEquipPic(var_11_0.id)
-	local var_11_2 = ResUrl.getSp01AssassinSingleBg("weapon/" .. var_11_1)
+	careerEquipItem.btnlockedClick:AddClickListener(self._btnItemLockOnClick, self, index)
 
-	var_11_0.simageicon:LoadImage(var_11_2)
+	careerEquipItem.txtcareer.text = AssassinConfig.instance:getAssassinCareerTitle(careerEquipItem.id)
+	careerEquipItem.txtname.text = AssassinConfig.instance:getAssassinCareerEquipName(careerEquipItem.id)
 
-	local var_11_3 = AssassinConfig.instance:getAssassinSkillIdByHeroCareer(arg_11_0.assassinHeroId, var_11_0.id)
+	local pic = AssassinConfig.instance:getAssassinCareerEquipPic(careerEquipItem.id)
+	local picPath = ResUrl.getSp01AssassinSingleBg("weapon/" .. pic)
 
-	var_11_0.txtdesc.text = AssassinConfig.instance:getAssassinCareerSkillDesc(var_11_3)
+	careerEquipItem.simageicon:LoadImage(picPath)
 
-	local var_11_4 = AssassinConfig.instance:getAssassinCareerCapacity(var_11_0.id)
+	local skillId = AssassinConfig.instance:getAssassinSkillIdByHeroCareer(self.assassinHeroId, careerEquipItem.id)
 
-	gohelper.CreateNumObjList(var_11_0.goitemLayout, var_11_0.goitemGrid, var_11_4)
+	careerEquipItem.txtdesc.text = AssassinConfig.instance:getAssassinCareerSkillDesc(skillId)
 
-	local var_11_5 = AssassinConfig.instance:getAssassinCareerAttrList(var_11_0.id)
+	local bagCapacity = AssassinConfig.instance:getAssassinCareerCapacity(careerEquipItem.id)
 
-	gohelper.CreateObjList(arg_11_0, arg_11_0._onCreateCareerEquipAttrItem, var_11_5, var_11_0.goattrLayout, var_11_0.goattrItem)
+	gohelper.CreateNumObjList(careerEquipItem.goitemLayout, careerEquipItem.goitemGrid, bagCapacity)
 
-	local var_11_6 = AssassinHeroModel.instance:isUnlockCareer(var_11_0.id)
+	local equipAttrList = AssassinConfig.instance:getAssassinCareerAttrList(careerEquipItem.id)
 
-	var_11_0.unlockCanvasGroup.alpha = var_11_6 and 1 or 0.25
+	gohelper.CreateObjList(self, self._onCreateCareerEquipAttrItem, equipAttrList, careerEquipItem.goattrLayout, careerEquipItem.goattrItem)
 
-	gohelper.setActive(var_11_0.golocked, not var_11_6)
-	gohelper.setActive(var_11_0.goselected, false)
+	local isUnlock = AssassinHeroModel.instance:isUnlockCareer(careerEquipItem.id)
 
-	arg_11_0._careerEquipItemList[arg_11_3] = var_11_0
+	careerEquipItem.unlockCanvasGroup.alpha = isUnlock and 1 or 0.25
+
+	gohelper.setActive(careerEquipItem.golocked, not isUnlock)
+	gohelper.setActive(careerEquipItem.goselected, false)
+
+	self._careerEquipItemList[index] = careerEquipItem
 end
 
-function var_0_0._onCreateCareerEquipAttrItem(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	local var_12_0 = gohelper.findChildImage(arg_12_1, "icon")
-	local var_12_1 = gohelper.findChildText(arg_12_1, "#txt_attrName")
-	local var_12_2 = gohelper.findChildText(arg_12_1, "#txt_attrValue")
-	local var_12_3 = arg_12_2[1]
-	local var_12_4 = HeroConfig.instance:getHeroAttributeCO(var_12_3)
+function AssassinEquipView:_onCreateCareerEquipAttrItem(obj, data, index)
+	local attrIcon = gohelper.findChildImage(obj, "icon")
+	local attrName = gohelper.findChildText(obj, "#txt_attrName")
+	local attrValue = gohelper.findChildText(obj, "#txt_attrValue")
+	local attrId = data[1]
+	local attrCO = HeroConfig.instance:getHeroAttributeCO(attrId)
 
-	CharacterController.instance:SetAttriIcon(var_12_0, var_12_3, GameUtil.parseColor("#675C58"))
+	CharacterController.instance:SetAttriIcon(attrIcon, attrId, GameUtil.parseColor("#675C58"))
 
-	var_12_1.text = var_12_4.name
-	var_12_2.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("add_percent_value"), (arg_12_2[2] or 0) / 10)
+	attrName.text = attrCO.name
+	attrValue.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("add_percent_value"), (data[2] or 0) / 10)
 end
 
-function var_0_0.refreshSelectedEquipItem(arg_13_0)
-	if arg_13_0._careerEquipItemList then
-		for iter_13_0, iter_13_1 in ipairs(arg_13_0._careerEquipItemList) do
-			gohelper.setActive(iter_13_1.goselected, arg_13_0._curSelectedIndex == iter_13_0)
+function AssassinEquipView:refreshSelectedEquipItem()
+	if self._careerEquipItemList then
+		for index, careerEquipItem in ipairs(self._careerEquipItemList) do
+			gohelper.setActive(careerEquipItem.goselected, self._curSelectedIndex == index)
 		end
 	end
 end
 
-function var_0_0.onClose(arg_14_0)
+function AssassinEquipView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_15_0)
-	if arg_15_0._careerEquipItemList then
-		for iter_15_0, iter_15_1 in ipairs(arg_15_0._careerEquipItemList) do
-			iter_15_1.simageicon:UnLoadImage()
+function AssassinEquipView:onDestroyView()
+	if self._careerEquipItemList then
+		for _, equipItem in ipairs(self._careerEquipItemList) do
+			equipItem.simageicon:UnLoadImage()
 		end
 	end
 end
 
-return var_0_0
+return AssassinEquipView

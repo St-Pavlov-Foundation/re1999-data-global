@@ -1,108 +1,110 @@
-﻿module("modules.logic.scene.room.comp.entitymgr.RoomSceneTransportSiteEntityMgr", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/comp/entitymgr/RoomSceneTransportSiteEntityMgr.lua
 
-local var_0_0 = class("RoomSceneTransportSiteEntityMgr", BaseSceneUnitMgr)
+module("modules.logic.scene.room.comp.entitymgr.RoomSceneTransportSiteEntityMgr", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local RoomSceneTransportSiteEntityMgr = class("RoomSceneTransportSiteEntityMgr", BaseSceneUnitMgr)
+
+function RoomSceneTransportSiteEntityMgr:onInit()
 	return
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0:_addEvents()
+function RoomSceneTransportSiteEntityMgr:init(sceneId, levelId)
+	self:_addEvents()
 
-	arg_2_0._scene = arg_2_0:getCurScene()
+	self._scene = self:getCurScene()
 
-	arg_2_0:refreshAllSiteEntity()
+	self:refreshAllSiteEntity()
 end
 
-function var_0_0.onSwitchMode(arg_3_0)
-	arg_3_0:refreshAllSiteEntity()
+function RoomSceneTransportSiteEntityMgr:onSwitchMode()
+	self:refreshAllSiteEntity()
 end
 
-function var_0_0._addEvents(arg_4_0)
-	if arg_4_0._isInitAddEvent then
+function RoomSceneTransportSiteEntityMgr:_addEvents()
+	if self._isInitAddEvent then
 		return
 	end
 
-	arg_4_0._isInitAddEvent = true
+	self._isInitAddEvent = true
 
-	RoomMapController.instance:registerCallback(RoomEvent.TransportPathLineChanged, arg_4_0.refreshAllSiteEntity, arg_4_0)
+	RoomMapController.instance:registerCallback(RoomEvent.TransportPathLineChanged, self.refreshAllSiteEntity, self)
 end
 
-function var_0_0._removeEvents(arg_5_0)
-	if not arg_5_0._isInitAddEvent then
+function RoomSceneTransportSiteEntityMgr:_removeEvents()
+	if not self._isInitAddEvent then
 		return
 	end
 
-	arg_5_0._isInitAddEvent = false
+	self._isInitAddEvent = false
 
-	RoomMapController.instance:unregisterCallback(RoomEvent.TransportPathLineChanged, arg_5_0.refreshAllSiteEntity, arg_5_0)
+	RoomMapController.instance:unregisterCallback(RoomEvent.TransportPathLineChanged, self.refreshAllSiteEntity, self)
 end
 
-function var_0_0.refreshAllSiteEntity(arg_6_0)
-	local var_6_0 = RoomTransportHelper.getSiteBuildingTypeList()
+function RoomSceneTransportSiteEntityMgr:refreshAllSiteEntity()
+	local buildingTypeList = RoomTransportHelper.getSiteBuildingTypeList()
 
-	for iter_6_0 = 1, #var_6_0 do
-		local var_6_1 = var_6_0[iter_6_0]
-		local var_6_2 = RoomMapTransportPathModel.instance:getSiteHexPointByType(var_6_1)
-		local var_6_3 = arg_6_0:getSiteEntity(var_6_1)
+	for i = 1, #buildingTypeList do
+		local siteType = buildingTypeList[i]
+		local hexPoint = RoomMapTransportPathModel.instance:getSiteHexPointByType(siteType)
+		local entity = self:getSiteEntity(siteType)
 
-		if var_6_2 then
-			if var_6_3 then
-				arg_6_0:moveToHexPoint(var_6_3, var_6_2)
+		if hexPoint then
+			if entity then
+				self:moveToHexPoint(entity, hexPoint)
 			else
-				var_6_3 = arg_6_0:spawnRoomTransportSite(var_6_1, var_6_2)
+				entity = self:spawnRoomTransportSite(siteType, hexPoint)
 			end
 
-			var_6_3:refreshBuilding()
-		elseif var_6_3 then
-			arg_6_0:destroySiteEntity(var_6_3)
+			entity:refreshBuilding()
+		elseif entity then
+			self:destroySiteEntity(entity)
 		end
 	end
 end
 
-function var_0_0.spawnRoomTransportSite(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = arg_7_0._scene.go.buildingRoot
-	local var_7_1 = gohelper.create3d(var_7_0, string.format("site_%s", arg_7_1))
-	local var_7_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_7_1, RoomTransportSiteEntity, arg_7_1)
+function RoomSceneTransportSiteEntityMgr:spawnRoomTransportSite(siteType, hexPoint)
+	local buildingRoot = self._scene.go.buildingRoot
+	local siteGO = gohelper.create3d(buildingRoot, string.format("site_%s", siteType))
+	local entity = MonoHelper.addNoUpdateLuaComOnceToGo(siteGO, RoomTransportSiteEntity, siteType)
 
-	arg_7_0:addUnit(var_7_2)
-	gohelper.addChild(var_7_0, var_7_1)
-	arg_7_0:moveToHexPoint(var_7_2, arg_7_2)
+	self:addUnit(entity)
+	gohelper.addChild(buildingRoot, siteGO)
+	self:moveToHexPoint(entity, hexPoint)
 
-	return var_7_2
+	return entity
 end
 
-function var_0_0.moveToHexPoint(arg_8_0, arg_8_1, arg_8_2)
-	if arg_8_1 and arg_8_2 then
-		local var_8_0, var_8_1 = HexMath.hexXYToPosXY(arg_8_2.x, arg_8_2.y, RoomBlockEnum.BlockSize)
+function RoomSceneTransportSiteEntityMgr:moveToHexPoint(entity, hexPoint)
+	if entity and hexPoint then
+		local posX, posZ = HexMath.hexXYToPosXY(hexPoint.x, hexPoint.y, RoomBlockEnum.BlockSize)
 
-		arg_8_1:setLocalPos(var_8_0, 0, var_8_1)
+		entity:setLocalPos(posX, 0, posZ)
 	end
 end
 
-function var_0_0.moveTo(arg_9_0, arg_9_1, arg_9_2)
-	arg_9_1:setLocalPos(arg_9_2.x, arg_9_2.y, arg_9_2.z)
+function RoomSceneTransportSiteEntityMgr:moveTo(entity, position)
+	entity:setLocalPos(position.x, position.y, position.z)
 end
 
-function var_0_0.destroySiteEntity(arg_10_0, arg_10_1)
-	arg_10_0:removeUnit(arg_10_1:getTag(), arg_10_1.id)
+function RoomSceneTransportSiteEntityMgr:destroySiteEntity(entity)
+	self:removeUnit(entity:getTag(), entity.id)
 end
 
-function var_0_0.getSiteEntity(arg_11_0, arg_11_1)
-	return arg_11_0:getUnit(RoomTransportSiteEntity:getTag(), arg_11_1)
+function RoomSceneTransportSiteEntityMgr:getSiteEntity(id)
+	return self:getUnit(RoomTransportSiteEntity:getTag(), id)
 end
 
-function var_0_0.getRoomSiteEntityDict(arg_12_0)
-	return arg_12_0._tagUnitDict[RoomTransportSiteEntity:getTag()] or {}
+function RoomSceneTransportSiteEntityMgr:getRoomSiteEntityDict()
+	return self._tagUnitDict[RoomTransportSiteEntity:getTag()] or {}
 end
 
-function var_0_0._onUpdate(arg_13_0)
+function RoomSceneTransportSiteEntityMgr:_onUpdate()
 	return
 end
 
-function var_0_0.onSceneClose(arg_14_0)
-	var_0_0.super.onSceneClose(arg_14_0)
-	arg_14_0:_removeEvents()
+function RoomSceneTransportSiteEntityMgr:onSceneClose()
+	RoomSceneTransportSiteEntityMgr.super.onSceneClose(self)
+	self:_removeEvents()
 end
 
-return var_0_0
+return RoomSceneTransportSiteEntityMgr

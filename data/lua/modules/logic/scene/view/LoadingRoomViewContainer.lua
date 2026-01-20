@@ -1,21 +1,23 @@
-﻿module("modules.logic.scene.view.LoadingRoomViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/scene/view/LoadingRoomViewContainer.lua
 
-local var_0_0 = class("LoadingRoomViewContainer", BaseViewContainer)
+module("modules.logic.scene.view.LoadingRoomViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local LoadingRoomViewContainer = class("LoadingRoomViewContainer", BaseViewContainer)
+
+function LoadingRoomViewContainer:buildViews()
 	return {
 		LoadingRoomView.New()
 	}
 end
 
-function var_0_0.playCloseTransition(arg_2_0)
+function LoadingRoomViewContainer:playCloseTransition()
 	UIBlockMgrExtend.setNeedCircleMv(false)
-	var_0_0.super.playCloseTransition(arg_2_0)
+	LoadingRoomViewContainer.super.playCloseTransition(self)
 end
 
-function var_0_0.onPlayCloseTransitionFinish(arg_3_0)
+function LoadingRoomViewContainer:onPlayCloseTransitionFinish()
 	UIBlockMgrExtend.setNeedCircleMv(true)
-	var_0_0.super.onPlayCloseTransitionFinish(arg_3_0)
+	LoadingRoomViewContainer.super.onPlayCloseTransitionFinish(self)
 end
 
-return var_0_0
+return LoadingRoomViewContainer

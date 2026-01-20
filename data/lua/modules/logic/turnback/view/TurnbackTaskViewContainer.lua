@@ -1,28 +1,32 @@
-﻿module("modules.logic.turnback.view.TurnbackTaskViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/turnback/view/TurnbackTaskViewContainer.lua
 
-local var_0_0 = class("TurnbackTaskViewContainer", BaseViewContainer)
+module("modules.logic.turnback.view.TurnbackTaskViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = ListScrollParam.New()
+local TurnbackTaskViewContainer = class("TurnbackTaskViewContainer", BaseViewContainer)
 
-	var_1_0.scrollGOPath = "right/#scroll_task"
-	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_0.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_0.cellClass = TurnbackTaskItem
-	var_1_0.scrollDir = ScrollEnum.ScrollDirV
-	var_1_0.lineCount = 1
-	var_1_0.cellWidth = 800
-	var_1_0.cellHeight = 140
-	var_1_0.cellSpaceH = 0
-	var_1_0.cellSpaceV = 0
-	var_1_0.startSpace = 6
-	var_1_0.frameUpdateMs = 100
-	arg_1_0._scrollView = LuaListScrollView.New(TurnbackTaskModel.instance, var_1_0)
+function TurnbackTaskViewContainer:buildViews()
+	local scrollParam = ListScrollParam.New()
 
-	return {
-		arg_1_0._scrollView,
+	scrollParam.scrollGOPath = "right/#scroll_task"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = TurnbackTaskItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 800
+	scrollParam.cellHeight = 140
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 0
+	scrollParam.startSpace = 6
+	scrollParam.frameUpdateMs = 100
+	self._scrollView = LuaListScrollView.New(TurnbackTaskModel.instance, scrollParam)
+
+	local views = {
+		self._scrollView,
 		TurnbackTaskView.New()
 	}
+
+	return views
 end
 
-return var_0_0
+return TurnbackTaskViewContainer

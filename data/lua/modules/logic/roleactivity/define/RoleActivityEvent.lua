@@ -1,10 +1,12 @@
-﻿module("modules.logic.roleactivity.define.RoleActivityEvent", package.seeall)
+﻿-- chunkname: @modules/logic/roleactivity/define/RoleActivityEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.roleactivity.define.RoleActivityEvent", package.seeall)
 
-var_0_0.OneClickClaimReward = 1
-var_0_0.StoryItemClick = 2
-var_0_0.FightItemClick = 3
-var_0_0.TabSwitch = 4
+local RoleActivityEvent = _M
 
-return var_0_0
+RoleActivityEvent.OneClickClaimReward = 1
+RoleActivityEvent.StoryItemClick = 2
+RoleActivityEvent.FightItemClick = 3
+RoleActivityEvent.TabSwitch = 4
+
+return RoleActivityEvent

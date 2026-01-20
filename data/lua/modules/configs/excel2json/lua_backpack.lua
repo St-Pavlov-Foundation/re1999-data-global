@@ -1,22 +1,24 @@
-﻿module("modules.configs.excel2json.lua_backpack", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_backpack.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_backpack", package.seeall)
+
+local lua_backpack = {}
+local fields = {
 	includecurrency = 5,
 	name = 2,
 	includeitem = 4,
 	subname = 3,
 	id = 1
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	name = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_backpack.onLoad(json)
+	lua_backpack.configList, lua_backpack.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_backpack

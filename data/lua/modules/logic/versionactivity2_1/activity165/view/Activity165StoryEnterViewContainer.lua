@@ -1,17 +1,19 @@
-﻿module("modules.logic.versionactivity2_1.activity165.view.Activity165StoryEnterViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_1/activity165/view/Activity165StoryEnterViewContainer.lua
 
-local var_0_0 = class("Activity165StoryEnterViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_1.activity165.view.Activity165StoryEnterViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Activity165StoryEnterViewContainer = class("Activity165StoryEnterViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Activity165StoryEnterView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
+function Activity165StoryEnterViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Activity165StoryEnterView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_topleft"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function Activity165StoryEnterViewContainer:buildTabViews(tabContainerId)
 	return {
 		NavigateButtonsView.New({
 			true,
@@ -21,4 +23,4 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	}
 end
 
-return var_0_0
+return Activity165StoryEnterViewContainer

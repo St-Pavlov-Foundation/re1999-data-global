@@ -1,81 +1,91 @@
-﻿module("modules.logic.fight.system.work.FightWorkPlay2Operate", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkPlay2Operate.lua
 
-local var_0_0 = class("FightWorkPlay2Operate", FightWorkItem)
+module("modules.logic.fight.system.work.FightWorkPlay2Operate", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.isStart = arg_1_1
-	arg_1_0.isClothSkill = arg_1_2
+local FightWorkPlay2Operate = class("FightWorkPlay2Operate", FightWorkItem)
+
+function FightWorkPlay2Operate:onConstructor(isStart, isClothSkill)
+	self.isStart = isStart
+	self.isClothSkill = isClothSkill
 end
 
-function var_0_0.onStart(arg_2_0)
+function FightWorkPlay2Operate:onStart()
 	FightViewPartVisible.set(true, true, true, false, false)
 
-	local var_2_0 = arg_2_0:com_registFlowSequence()
+	local flow = self:com_registFlowSequence()
 
-	var_2_0:registFinishCallback(arg_2_0.exitPlay, arg_2_0)
+	flow:registFinishCallback(self.exitPlay, self)
 
-	var_2_0.CALLBACK_EVEN_IF_UNFINISHED = true
+	flow.CALLBACK_EVEN_IF_UNFINISHED = true
 
-	if not arg_2_0.isClothSkill then
-		var_2_0:registWork(FightWorkRefreshEnemyAiUseCard)
+	if not self.isClothSkill then
+		flow:registWork(FightWorkRefreshEnemyAiUseCard)
 	end
 
 	if FightDataHelper.stateMgr.isReplay then
-		arg_2_0:playWorkAndDone(var_2_0)
+		self:playWorkAndDone(flow)
 
 		return
 	end
 
 	if FightDataHelper.fieldMgr:isDouQuQu() then
-		arg_2_0:playWorkAndDone(var_2_0)
+		self:playWorkAndDone(flow)
 
 		return
 	end
 
 	if SkillEditorMgr and SkillEditorMgr.instance.inEditMode then
-		arg_2_0:playWorkAndDone(var_2_0)
+		self:playWorkAndDone(flow)
 
 		return
 	end
 
 	if FightModel.instance:isFinish() then
-		arg_2_0:playWorkAndDone(var_2_0)
+		self:playWorkAndDone(flow)
 
 		return
 	end
 
-	if FightMsgMgr.sendMsg(FightMsgId.CheckGuideBeforeOperate) then
-		var_2_0:registWork(FightWorkFunction, arg_2_0.isGuiding, arg_2_0)
-		arg_2_0:playWorkAndDone(var_2_0)
+	local guiding = FightMsgMgr.sendMsg(FightMsgId.CheckGuideBeforeOperate)
+
+	if guiding then
+		flow:registWork(FightWorkFunction, self.isGuiding, self)
+		self:playWorkAndDone(flow)
 
 		return
 	end
 
-	local var_2_1 = FightModel.instance:getCurRoundId()
+	local curRoundId = FightModel.instance:getCurRoundId()
 
-	var_2_0:addWork(FightWorkNormalDialog.New(FightViewDialog.Type.RoundStart, var_2_1))
+	flow:addWork(FightWorkNormalDialog.New(FightViewDialog.Type.RoundStart, curRoundId))
 
 	if FightDataHelper.stateMgr:getIsAuto() then
-		var_2_0:registWork(FightWorkRequestAutoFight)
+		flow:registWork(FightWorkRequestAutoFight)
 	else
-		var_2_0:registWork(FightWorkCheckUseAiJiAoQte)
-		var_2_0:registWork(FightWorkClearAiJiAoQteTempData)
-		var_2_0:registWork(FightWorkCheckNewSeasonSubSkill)
-		var_2_0:registWork(FightWorkCheckNaNaBindContract)
-		var_2_0:registWork(FightWorkCheckLuXiHeroUpgrade)
+		flow:registWork(FightWorkCheckUseAiJiAoQte)
+		flow:registWork(FightWorkClearAiJiAoQteTempData)
+		flow:registWork(FightWorkCheckNewSeasonSubSkill)
+		flow:registWork(FightWorkCheckNaNaBindContract)
+		flow:registWork(FightWorkCheckLuXiHeroUpgrade)
+		flow:registWork(FightWorkBLESelectCrystal)
 	end
 
-	arg_2_0:playWorkAndDone(var_2_0)
+	flow:addWork(FightMsgMgr.sendMsg(FightMsgId.PlayCameraAnimWhenOperateStage))
+	self:playWorkAndDone(flow)
 end
 
-function var_0_0.isGuiding(arg_3_0)
+function FightWorkPlay2Operate:isGuiding()
 	FightDataHelper.stateMgr:setAutoState(false)
 	FightDataHelper.stageMgr:setStage(FightStageMgr.StageType.Operate)
 	FightMsgMgr.sendMsg(FightMsgId.ContinueGuideBeforeOperate)
 end
 
-function var_0_0.exitPlay(arg_4_0)
+function FightWorkPlay2Operate:exitPlay()
 	FightDataHelper.stageMgr:setStage(FightStageMgr.StageType.Operate)
 end
 
-return var_0_0
+function FightWorkPlay2Operate:gcFunc()
+	SLFramework.UnityHelper.LuaGC()
+end
+
+return FightWorkPlay2Operate

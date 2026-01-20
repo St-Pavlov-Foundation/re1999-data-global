@@ -1,181 +1,185 @@
-﻿module("modules.logic.versionactivity2_5.challenge.rpc.Activity183Rpc", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/rpc/Activity183Rpc.lua
 
-local var_0_0 = class("Activity183Rpc", BaseRpc)
+module("modules.logic.versionactivity2_5.challenge.rpc.Activity183Rpc", package.seeall)
 
-function var_0_0.sendAct183GetInfoRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = Activity183Module_pb.Act183GetInfoRequest()
+local Activity183Rpc = class("Activity183Rpc", BaseRpc)
 
-	var_1_0.activityId = arg_1_1
+function Activity183Rpc:sendAct183GetInfoRequest(activityId, callback, callbackObj)
+	local req = Activity183Module_pb.Act183GetInfoRequest()
 
-	return arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
+	req.activityId = activityId
+
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveAct183GetInfoReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 ~= 0 then
+function Activity183Rpc:onReceiveAct183GetInfoReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	Act183Model.instance:init(arg_2_2.activityId, arg_2_2.actInfo)
+	Act183Model.instance:init(msg.activityId, msg.actInfo)
 end
 
-function var_0_0.sendAct183ResetGroupRequest(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = Activity183Module_pb.Act183ResetGroupRequest()
+function Activity183Rpc:sendAct183ResetGroupRequest(activityId, groupId)
+	local req = Activity183Module_pb.Act183ResetGroupRequest()
 
-	var_3_0.activityId = arg_3_1
-	var_3_0.groupId = arg_3_2
+	req.activityId = activityId
+	req.groupId = groupId
 
-	return arg_3_0:sendMsg(var_3_0)
+	return self:sendMsg(req)
 end
 
-function var_0_0.onReceiveAct183ResetGroupReply(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 ~= 0 then
+function Activity183Rpc:onReceiveAct183ResetGroupReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_4_0 = arg_4_2.activityId
-	local var_4_1 = arg_4_2.group
+	local activityId = msg.activityId
+	local groupInfo = msg.group
 
-	Act183Controller.instance:updateResetGroupEpisodeInfo(var_4_0, var_4_1)
+	Act183Controller.instance:updateResetGroupEpisodeInfo(activityId, groupInfo)
 end
 
-function var_0_0.sendAct183ResetEpisodeRequest(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = Activity183Module_pb.Act183ResetEpisodeRequest()
+function Activity183Rpc:sendAct183ResetEpisodeRequest(activityId, episodeId)
+	local req = Activity183Module_pb.Act183ResetEpisodeRequest()
 
-	var_5_0.activityId = arg_5_1
-	var_5_0.episodeId = arg_5_2
+	req.activityId = activityId
+	req.episodeId = episodeId
 
-	return arg_5_0:sendMsg(var_5_0)
+	return self:sendMsg(req)
 end
 
-function var_0_0.onReceiveAct183ResetEpisodeReply(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_1 ~= 0 then
+function Activity183Rpc:onReceiveAct183ResetEpisodeReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_6_0 = arg_6_2.group
+	local groupInfo = msg.group
 
-	Act183Controller.instance:updateResetEpisodeInfo(var_6_0)
+	Act183Controller.instance:updateResetEpisodeInfo(groupInfo)
 end
 
-function var_0_0.sendAct183ChooseRepressRequest(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4, arg_7_5, arg_7_6)
-	local var_7_0 = Activity183Module_pb.Act183ChooseRepressRequest()
+function Activity183Rpc:sendAct183ChooseRepressRequest(activityId, episodeId, ruleIndex, heroIndex, callback, callbackObj)
+	local req = Activity183Module_pb.Act183ChooseRepressRequest()
 
-	var_7_0.activityId = arg_7_1
-	var_7_0.episodeId = arg_7_2
-	var_7_0.ruleIndex = arg_7_3
-	var_7_0.heroIndex = arg_7_4
+	req.activityId = activityId
+	req.episodeId = episodeId
+	req.ruleIndex = ruleIndex
+	req.heroIndex = heroIndex
 
-	return arg_7_0:sendMsg(var_7_0, arg_7_5, arg_7_6)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveAct183ChooseRepressReply(arg_8_0, arg_8_1, arg_8_2)
-	if arg_8_1 ~= 0 then
+function Activity183Rpc:onReceiveAct183ChooseRepressReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_8_0 = arg_8_2.episodeId
-	local var_8_1 = arg_8_2.repress
+	local episodeId = msg.episodeId
+	local repressInfo = msg.repress
 
-	Act183Controller.instance:updateChooseRepressInfo(var_8_0, var_8_1)
+	Act183Controller.instance:updateChooseRepressInfo(episodeId, repressInfo)
 end
 
-function var_0_0.sendAct183GetRecordRequest(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	local var_9_0 = Activity183Module_pb.Act183GetRecordRequest()
+function Activity183Rpc:sendAct183GetRecordRequest(activityId, callback, callbackObj)
+	local req = Activity183Module_pb.Act183GetRecordRequest()
 
-	var_9_0.activityId = arg_9_1
+	req.activityId = activityId
 
-	return arg_9_0:sendMsg(var_9_0, arg_9_2, arg_9_3)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveAct183GetRecordReply(arg_10_0, arg_10_1, arg_10_2)
-	if arg_10_1 ~= 0 then
+function Activity183Rpc:onReceiveAct183GetRecordReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_10_0 = arg_10_2.activityId
-	local var_10_1 = Act183Helper.rpcInfosToList(arg_10_2.groupList, Act183GroupEpisodeRecordMO, var_10_0)
+	local activityId = msg.activityId
+	local groupList = Act183Helper.rpcInfosToList(msg.groupList, Act183GroupEpisodeRecordMO, activityId)
 
-	Act183ReportListModel.instance:init(var_10_0, var_10_1)
+	Act183ReportListModel.instance:init(activityId, groupList)
 end
 
-function var_0_0.sendAct183ReplaceResultRequest(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4)
-	local var_11_0 = Activity183Module_pb.Act183ReplaceResultRequest()
+function Activity183Rpc:sendAct183ReplaceResultRequest(activityId, episodeId, callback, callbackObj)
+	local req = Activity183Module_pb.Act183ReplaceResultRequest()
 
-	var_11_0.activityId = arg_11_1
-	var_11_0.episodeId = arg_11_2
+	req.activityId = activityId
+	req.episodeId = episodeId
 
-	return arg_11_0:sendMsg(var_11_0, arg_11_3, arg_11_4)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveAct183ReplaceResultReply(arg_12_0, arg_12_1, arg_12_2)
-	if arg_12_1 ~= 0 then
+function Activity183Rpc:onReceiveAct183ReplaceResultReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_12_0 = arg_12_2.activityId
-	local var_12_1 = arg_12_2.episode
-	local var_12_2 = var_12_1.episodeId
-	local var_12_3 = Act183Model.instance:getEpisodeMo(var_12_0, var_12_2)
+	local activityId = msg.activityId
+	local episodeNO = msg.episode
+	local episodeId = episodeNO.episodeId
+	local episodeMo = Act183Model.instance:getEpisodeMo(activityId, episodeId)
 
-	if var_12_3 then
-		var_12_3:init(var_12_1)
+	if episodeMo then
+		episodeMo:init(episodeNO)
 	end
 end
 
-function var_0_0.onReceiveAct183BadgeNumUpdatePush(arg_13_0, arg_13_1, arg_13_2)
-	if arg_13_1 ~= 0 then
+function Activity183Rpc:onReceiveAct183BadgeNumUpdatePush(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_13_0 = arg_13_2.activityId
-	local var_13_1 = arg_13_2.badgeNum
+	local activityId = msg.activityId
+	local badgeNum = msg.badgeNum
+	local actInfo = Act183Model.instance:getActInfo()
 
-	Act183Model.instance:getActInfo():updateBadgeNum(var_13_1)
+	actInfo:updateBadgeNum(badgeNum)
 	Act183Controller.instance:dispatchEvent(Act183Event.OnUpdateBadgeNum)
 	Act183Controller.instance:dispatchEvent(Act183Event.RefreshMedalReddot)
 end
 
-function var_0_0.onReceiveAct183BattleFinishPush(arg_14_0, arg_14_1, arg_14_2)
-	if arg_14_1 ~= 0 then
+function Activity183Rpc:onReceiveAct183BattleFinishPush(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_14_0 = arg_14_2.activityId
-	local var_14_1
-	local var_14_2 = Act183EpisodeMO.New()
+	local activityId = msg.activityId
+	local episodeMo
 
-	var_14_2:init(arg_14_2.episode)
+	episodeMo = Act183EpisodeMO.New()
 
-	local var_14_3
+	episodeMo:init(msg.episode)
 
-	if arg_14_2:HasField("fightResult") then
-		var_14_3 = Act183FightResultMO.New()
+	local fightResultMo
 
-		var_14_3:init(arg_14_2.fightResult)
+	if msg:HasField("fightResult") then
+		fightResultMo = Act183FightResultMO.New()
+
+		fightResultMo:init(msg.fightResult)
 	end
 
-	local var_14_4
+	local record
 
-	if arg_14_2:HasField("record") then
-		var_14_4 = Act183GroupEpisodeRecordMO.New()
+	if msg:HasField("record") then
+		record = Act183GroupEpisodeRecordMO.New()
 
-		var_14_4:init(arg_14_2.record)
+		record:init(msg.record)
 	end
 
-	local var_14_5 = {
-		activityId = var_14_0,
-		episodeMo = var_14_2,
-		groupFinished = arg_14_2.groupFinished,
-		win = arg_14_2.win,
-		record = var_14_4,
-		reChallenge = arg_14_2.reChallenge,
-		fightResultMo = var_14_3,
-		params = arg_14_2.params
+	local battleFinishedInfo = {
+		activityId = activityId,
+		episodeMo = episodeMo,
+		groupFinished = msg.groupFinished,
+		win = msg.win,
+		record = record,
+		reChallenge = msg.reChallenge,
+		fightResultMo = fightResultMo,
+		params = msg.params
 	}
 
-	Act183Model.instance:recordBattleFinishedInfo(var_14_5)
+	Act183Model.instance:recordBattleFinishedInfo(battleFinishedInfo)
 end
 
-var_0_0.instance = var_0_0.New()
+Activity183Rpc.instance = Activity183Rpc.New()
 
-return var_0_0
+return Activity183Rpc

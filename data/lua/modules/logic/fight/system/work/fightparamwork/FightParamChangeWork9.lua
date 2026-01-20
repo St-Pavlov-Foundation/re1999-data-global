@@ -1,10 +1,12 @@
-﻿module("modules.logic.fight.system.work.fightparamwork.FightParamChangeWork9", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/fightparamwork/FightParamChangeWork9.lua
 
-local var_0_0 = class("FightParamChangeWork9", FightParamWorkBase)
+module("modules.logic.fight.system.work.fightparamwork.FightParamChangeWork9", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	FightController.instance:dispatchEvent(FightEvent.UpdateFightParam, arg_1_0.keyId, arg_1_0.oldValue, arg_1_0.currValue, arg_1_0.offset)
-	arg_1_0:onDone(true)
+local FightParamChangeWork9 = class("FightParamChangeWork9", FightParamWorkBase)
+
+function FightParamChangeWork9:onStart()
+	FightController.instance:dispatchEvent(FightEvent.UpdateFightParam, self.keyId, self.oldValue, self.currValue, self.offset)
+	self:onDone(true)
 end
 
-return var_0_0
+return FightParamChangeWork9

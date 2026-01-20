@@ -1,86 +1,94 @@
-﻿module("modules.logic.room.model.backpack.RoomBackpackPropListModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/backpack/RoomBackpackPropListModel.lua
 
-local var_0_0 = class("RoomBackpackPropListModel", ListScrollModel)
+module("modules.logic.room.model.backpack.RoomBackpackPropListModel", package.seeall)
 
-local function var_0_1(arg_1_0, arg_1_1)
-	if not arg_1_0 or not arg_1_1 then
+local RoomBackpackPropListModel = class("RoomBackpackPropListModel", ListScrollModel)
+
+local function _sortPropItem(aPropItem, bPropItem)
+	if not aPropItem or not bPropItem then
 		return false
 	end
 
-	local var_1_0 = arg_1_0.id
-	local var_1_1 = arg_1_1.id
-	local var_1_2 = arg_1_0.config
-	local var_1_3 = arg_1_1.config
+	local aId = aPropItem.id
+	local bId = bPropItem.id
+	local aConfig = aPropItem.config
+	local bConfig = bPropItem.config
+	local aRare = aConfig.rare
+	local bRare = bConfig.rare
 
-	if var_1_2.rare ~= var_1_3.rare then
-		return var_1_2.rare > var_1_3.rare
+	if aRare ~= bRare then
+		return aConfig.rare > bConfig.rare
 	end
 
-	return var_1_1 < var_1_0
+	return bId < aId
 end
 
-function var_0_0.onInit(arg_2_0)
-	arg_2_0:clear()
-	arg_2_0:clearData()
+function RoomBackpackPropListModel:onInit()
+	self:clear()
+	self:clearData()
 end
 
-function var_0_0.reInit(arg_3_0)
-	arg_3_0:clearData()
+function RoomBackpackPropListModel:reInit()
+	self:clearData()
 end
 
-function var_0_0.clearData(arg_4_0)
+function RoomBackpackPropListModel:clearData()
 	return
 end
 
-function var_0_0.setBackpackPropList(arg_5_0)
-	local var_5_0 = {}
-	local var_5_1 = ItemModel.instance:getItemList() or {}
+function RoomBackpackPropListModel:setBackpackPropList()
+	local list = {}
+	local itemList = ItemModel.instance:getItemList() or {}
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_1) do
-		local var_5_2 = ItemModel.instance:getItemConfig(MaterialEnum.MaterialType.Item, iter_5_1.id)
-		local var_5_3 = var_5_2 and var_5_2.subType
+	for _, itemMO in ipairs(itemList) do
+		local itemConfig = ItemModel.instance:getItemConfig(MaterialEnum.MaterialType.Item, itemMO.id)
+		local subType = itemConfig and itemConfig.subType
 
-		if ItemEnum.RoomBackpackPropSubType[var_5_3] then
-			local var_5_4 = arg_5_0:_convert2PropItem(iter_5_1)
+		if ItemEnum.RoomBackpackPropSubType[subType] then
+			local propItem = self:_convert2PropItem(itemMO)
 
-			if var_5_4 then
-				table.insert(var_5_0, var_5_4)
+			if propItem then
+				table.insert(list, propItem)
 			end
 		end
 	end
 
-	table.sort(var_5_0, var_0_1)
-	arg_5_0:setList(var_5_0)
+	table.sort(list, _sortPropItem)
+	self:setList(list)
 end
 
-function var_0_0._convert2PropItem(arg_6_0, arg_6_1)
-	local var_6_0
-	local var_6_1 = arg_6_1 and arg_6_1.id
-	local var_6_2 = arg_6_1 and arg_6_1.quantity
-	local var_6_3 = ManufactureConfig.instance:getManufactureItemListByItemId(var_6_1)[1]
+function RoomBackpackPropListModel:_convert2PropItem(itemMO)
+	local result
+	local id = itemMO and itemMO.id
+	local quantity = itemMO and itemMO.quantity
+	local manufactureItemIdList = ManufactureConfig.instance:getManufactureItemListByItemId(id)
+	local manufactureItemId = manufactureItemIdList[1]
 
-	if var_6_3 then
-		var_6_2 = ManufactureModel.instance:getManufactureItemCount(var_6_3)
+	if manufactureItemId then
+		quantity = ManufactureModel.instance:getManufactureItemCount(manufactureItemId)
 	end
 
-	local var_6_4 = ItemModel.instance:getItemConfig(MaterialEnum.MaterialType.Item, var_6_1)
+	local config = ItemModel.instance:getItemConfig(MaterialEnum.MaterialType.Item, id)
 
-	if var_6_1 and var_6_2 and var_6_2 > 0 and var_6_4 then
-		var_6_0 = {
+	if id and quantity and quantity > 0 and config then
+		result = {
 			type = MaterialEnum.MaterialType.Item,
-			id = var_6_1,
-			quantity = var_6_2,
-			config = var_6_4
+			id = id,
+			quantity = quantity,
+			config = config
 		}
 	end
 
-	return var_6_0
+	return result
 end
 
-function var_0_0.isBackpackEmpty(arg_7_0)
-	return arg_7_0:getCount() <= 0
+function RoomBackpackPropListModel:isBackpackEmpty()
+	local count = self:getCount()
+	local result = count <= 0
+
+	return result
 end
 
-var_0_0.instance = var_0_0.New()
+RoomBackpackPropListModel.instance = RoomBackpackPropListModel.New()
 
-return var_0_0
+return RoomBackpackPropListModel

@@ -1,439 +1,448 @@
-﻿module("modules.logic.sp01.odyssey.view.OdysseyEquipView", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/view/OdysseyEquipView.lua
 
-local var_0_0 = class("OdysseyEquipView", BaseView)
+module("modules.logic.sp01.odyssey.view.OdysseyEquipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/BG/#simage_fullbg")
-	arg_1_0._scrollLeftTab = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/#scroll_LeftTab")
-	arg_1_0._goTabItem = gohelper.findChild(arg_1_0.viewGO, "root/#scroll_LeftTab/Viewport/Content/#go_TabItem")
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "root/#scroll_LeftTab/Viewport/Content/#go_TabItem/#image_icon")
-	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "root/#scroll_LeftTab/Viewport/Content/#go_TabItem/#go_select")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#scroll_LeftTab/Viewport/Content/#go_TabItem/#btn_click")
-	arg_1_0._gocontainer = gohelper.findChild(arg_1_0.viewGO, "root/#go_container")
-	arg_1_0._scrollEquip = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/#go_container/#scroll_Equip")
-	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "root/#go_container/#go_empty")
-	arg_1_0._btnleft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/hero/#btn_left")
-	arg_1_0._btnright = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/hero/#btn_right")
-	arg_1_0._scrollSuit = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/#scroll_Suit")
-	arg_1_0._goOdysseyEquipParent = gohelper.findChild(arg_1_0.viewGO, "root/hero/go_Equip")
-	arg_1_0._simageHero = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/hero/Hero/#simage_hero")
-	arg_1_0._goTipsItem = gohelper.findChild(arg_1_0.viewGO, "root/hero/#go_tipsitem")
+local OdysseyEquipView = class("OdysseyEquipView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function OdysseyEquipView:onInitView()
+	self._simagefullbg = gohelper.findChildSingleImage(self.viewGO, "root/BG/#simage_fullbg")
+	self._scrollLeftTab = gohelper.findChildScrollRect(self.viewGO, "root/#scroll_LeftTab")
+	self._goTabItem = gohelper.findChild(self.viewGO, "root/#scroll_LeftTab/Viewport/Content/#go_TabItem")
+	self._imageicon = gohelper.findChildImage(self.viewGO, "root/#scroll_LeftTab/Viewport/Content/#go_TabItem/#image_icon")
+	self._goselect = gohelper.findChild(self.viewGO, "root/#scroll_LeftTab/Viewport/Content/#go_TabItem/#go_select")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "root/#scroll_LeftTab/Viewport/Content/#go_TabItem/#btn_click")
+	self._gocontainer = gohelper.findChild(self.viewGO, "root/#go_container")
+	self._scrollEquip = gohelper.findChildScrollRect(self.viewGO, "root/#go_container/#scroll_Equip")
+	self._goempty = gohelper.findChild(self.viewGO, "root/#go_container/#go_empty")
+	self._btnleft = gohelper.findChildButtonWithAudio(self.viewGO, "root/hero/#btn_left")
+	self._btnright = gohelper.findChildButtonWithAudio(self.viewGO, "root/hero/#btn_right")
+	self._scrollSuit = gohelper.findChildScrollRect(self.viewGO, "root/#scroll_Suit")
+	self._goOdysseyEquipParent = gohelper.findChild(self.viewGO, "root/hero/go_Equip")
+	self._simageHero = gohelper.findChildSingleImage(self.viewGO, "root/hero/Hero/#simage_hero")
+	self._goTipsItem = gohelper.findChild(self.viewGO, "root/hero/#go_tipsitem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
-	arg_2_0._btnleft:AddClickListener(arg_2_0._btnleftOnClick, arg_2_0)
-	arg_2_0._btnright:AddClickListener(arg_2_0._btnrightOnClick, arg_2_0)
-	arg_2_0:addEventCb(OdysseyController.instance, OdysseyEvent.OnEquipItemSelect, arg_2_0.onItemSelect, arg_2_0)
-	arg_2_0:addEventCb(OdysseyController.instance, OdysseyEvent.OnEquipSuitSelect, arg_2_0.OnEquipSuitSelect, arg_2_0)
-	arg_2_0:addEventCb(OdysseyController.instance, OdysseyEvent.OnEquipPosSelect, arg_2_0.onEquipPosSelect, arg_2_0)
-	arg_2_0:addEventCb(OdysseyController.instance, OdysseyEvent.OnTipSubViewClose, arg_2_0.onTipSubViewClose, arg_2_0)
-	arg_2_0:addEventCb(OdysseyHeroGroupController.instance, OdysseyEvent.OnHeroGroupUpdate, arg_2_0.onHeroGroupUpdate, arg_2_0)
+function OdysseyEquipView:addEvents()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
+	self._btnleft:AddClickListener(self._btnleftOnClick, self)
+	self._btnright:AddClickListener(self._btnrightOnClick, self)
+	self:addEventCb(OdysseyController.instance, OdysseyEvent.OnEquipItemSelect, self.onItemSelect, self)
+	self:addEventCb(OdysseyController.instance, OdysseyEvent.OnEquipSuitSelect, self.OnEquipSuitSelect, self)
+	self:addEventCb(OdysseyController.instance, OdysseyEvent.OnEquipPosSelect, self.onEquipPosSelect, self)
+	self:addEventCb(OdysseyController.instance, OdysseyEvent.OnTipSubViewClose, self.onTipSubViewClose, self)
+	self:addEventCb(OdysseyHeroGroupController.instance, OdysseyEvent.OnHeroGroupUpdate, self.onHeroGroupUpdate, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
-	arg_3_0._btnleft:RemoveClickListener()
-	arg_3_0._btnright:RemoveClickListener()
-	arg_3_0:removeEventCb(OdysseyController.instance, OdysseyEvent.OnEquipItemSelect, arg_3_0.onItemSelect, arg_3_0)
-	arg_3_0:removeEventCb(OdysseyController.instance, OdysseyEvent.OnEquipSuitSelect, arg_3_0.OnEquipSuitSelect, arg_3_0)
-	arg_3_0:removeEventCb(OdysseyController.instance, OdysseyEvent.OnEquipPosSelect, arg_3_0.onEquipPosSelect, arg_3_0)
-	arg_3_0:removeEventCb(OdysseyController.instance, OdysseyEvent.OnTipSubViewClose, arg_3_0.onTipSubViewClose, arg_3_0)
-	arg_3_0:removeEventCb(OdysseyHeroGroupController.instance, OdysseyEvent.OnHeroGroupUpdate, arg_3_0.onHeroGroupUpdate, arg_3_0)
+function OdysseyEquipView:removeEvents()
+	self._btnclick:RemoveClickListener()
+	self._btnleft:RemoveClickListener()
+	self._btnright:RemoveClickListener()
+	self:removeEventCb(OdysseyController.instance, OdysseyEvent.OnEquipItemSelect, self.onItemSelect, self)
+	self:removeEventCb(OdysseyController.instance, OdysseyEvent.OnEquipSuitSelect, self.OnEquipSuitSelect, self)
+	self:removeEventCb(OdysseyController.instance, OdysseyEvent.OnEquipPosSelect, self.onEquipPosSelect, self)
+	self:removeEventCb(OdysseyController.instance, OdysseyEvent.OnTipSubViewClose, self.onTipSubViewClose, self)
+	self:removeEventCb(OdysseyHeroGroupController.instance, OdysseyEvent.OnHeroGroupUpdate, self.onHeroGroupUpdate, self)
 end
 
-function var_0_0._btnclickOnClick(arg_4_0)
+function OdysseyEquipView:_btnclickOnClick()
 	return
 end
 
-function var_0_0._btnleftOnClick(arg_5_0)
-	local var_5_0 = arg_5_0._heroPosIndex - 1
+function OdysseyEquipView:_btnleftOnClick()
+	local heroIndex = self._heroPosIndex - 1
 
-	if var_5_0 <= 0 then
+	if heroIndex <= 0 then
 		return
 	end
 
-	arg_5_0._heroPosIndex = var_5_0
+	self._heroPosIndex = heroIndex
 
-	arg_5_0._animHero:Play("left", 0, 0)
+	self._animHero:Play("left", 0, 0)
 end
 
-function var_0_0._btnrightOnClick(arg_6_0)
-	local var_6_0 = arg_6_0._heroPosIndex + 1
+function OdysseyEquipView:_btnrightOnClick()
+	local heroIndex = self._heroPosIndex + 1
 
-	if var_6_0 > arg_6_0._heroPosMax then
+	if heroIndex > self._heroPosMax then
 		return
 	end
 
-	arg_6_0._heroPosIndex = var_6_0
+	self._heroPosIndex = heroIndex
 
-	arg_6_0._animHero:Play("right", 0, 0)
+	self._animHero:Play("right", 0, 0)
 end
 
-function var_0_0._editableInitView(arg_7_0)
+function OdysseyEquipView:_editableInitView()
 	OdysseyEquipSuitTabListModel.instance:initList()
 
-	arg_7_0._equipFilterType = nil
-	arg_7_0._odysseyItemList = {}
+	self._equipFilterType = nil
+	self._odysseyItemList = {}
 
-	local var_7_0 = arg_7_0._goOdysseyEquipParent.transform
-	local var_7_1 = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.MainHeroEquipCount)
-	local var_7_2 = tonumber(var_7_1.value)
+	local parent = self._goOdysseyEquipParent.transform
+	local mainCountConstCo = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.MainHeroEquipCount)
+	local childCount = tonumber(mainCountConstCo.value)
 
-	for iter_7_0 = 1, var_7_2 do
-		local var_7_3 = arg_7_0:getResInst(arg_7_0.viewContainer:getSetting().otherRes[2], var_7_0.gameObject)
-		local var_7_4 = MonoHelper.addNoUpdateLuaComOnceToGo(var_7_3.gameObject, OdysseyHeroGroupEquipItem)
+	for i = 1, childCount do
+		local child = self:getResInst(self.viewContainer:getSetting().otherRes[2], parent.gameObject)
+		local item = MonoHelper.addNoUpdateLuaComOnceToGo(child.gameObject, OdysseyHeroGroupEquipItem)
 
-		table.insert(arg_7_0._odysseyItemList, var_7_4)
+		table.insert(self._odysseyItemList, item)
 	end
 
-	arg_7_0.equipTipItem = MonoHelper.addNoUpdateLuaComOnceToGo(arg_7_0._goTipsItem, OdysseyEquipTipItem)
+	self.equipTipItem = MonoHelper.addNoUpdateLuaComOnceToGo(self._goTipsItem, OdysseyEquipTipItem)
 
-	arg_7_0.equipTipItem:setActive(false)
+	self.equipTipItem:setActive(false)
 
-	arg_7_0._gohero = gohelper.findChild(arg_7_0.viewGO, "root/hero")
-	arg_7_0._goEmptyHero = gohelper.findChild(arg_7_0.viewGO, "root/hero/Hero/empty")
-	arg_7_0._animHero = arg_7_0._gohero:GetComponent(gohelper.Type_Animator)
-	arg_7_0._animEventWrap = arg_7_0._gohero:GetComponent(gohelper.Type_AnimationEventWrap)
+	self._gohero = gohelper.findChild(self.viewGO, "root/hero")
+	self._goEmptyHero = gohelper.findChild(self.viewGO, "root/hero/Hero/empty")
+	self._animHero = self._gohero:GetComponent(gohelper.Type_Animator)
+	self._animEventWrap = self._gohero:GetComponent(gohelper.Type_AnimationEventWrap)
 
-	arg_7_0._animEventWrap:AddEventListener("switch", arg_7_0.onSelectHeroAnimEvent, arg_7_0)
+	self._animEventWrap:AddEventListener("switch", self.onSelectHeroAnimEvent, self)
 
-	arg_7_0._animScroll = gohelper.findChildComponent(arg_7_0.viewGO, "root/#go_container", gohelper.Type_Animator)
+	self._animScroll = gohelper.findChildComponent(self.viewGO, "root/#go_container", gohelper.Type_Animator)
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
+function OdysseyEquipView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_9_0)
-	local var_9_0 = arg_9_0.viewParam
-	local var_9_1 = var_9_0.index
-	local var_9_2 = var_9_0.heroPos
+function OdysseyEquipView:onOpen()
+	local param = self.viewParam
+	local index = param.index
+	local heroPos = param.heroPos
 
-	arg_9_0:refreshList(false, true)
-	arg_9_0:initSwitchList(var_9_2, var_9_1)
+	self:refreshList(false, true)
+	self:initSwitchList(heroPos, index)
 end
 
-function var_0_0.onSelectHeroAnimEvent(arg_10_0)
-	arg_10_0:onSelectHero(arg_10_0._heroPosIndex)
+function OdysseyEquipView:onSelectHeroAnimEvent()
+	self:onSelectHero(self._heroPosIndex)
 end
 
-function var_0_0.onSelectHero(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	arg_11_0._heroPosIndex = arg_11_1
-	arg_11_2 = arg_11_2 or OdysseyEnum.EquipDefaultIndex
-	arg_11_0._equipIndex = arg_11_2
-	arg_11_0._heroPos = arg_11_0._heroPosList[arg_11_1]
+function OdysseyEquipView:onSelectHero(heroPosIndex, equipIndex, selectCurrent)
+	self._heroPosIndex = heroPosIndex
+	equipIndex = equipIndex or OdysseyEnum.EquipDefaultIndex
+	self._equipIndex = equipIndex
+	self._heroPos = self._heroPosList[heroPosIndex]
 
-	arg_11_0:refreshHero()
-	arg_11_0:refreshItem()
-	arg_11_0:selectEquipPos(arg_11_2, arg_11_3)
-	arg_11_0:refreshSwitchState()
+	self:refreshHero()
+	self:refreshItem()
+	self:selectEquipPos(equipIndex, selectCurrent)
+	self:refreshSwitchState()
 end
 
-function var_0_0.refreshHero(arg_12_0)
-	local var_12_0 = HeroGroupModel.instance:getCurGroupMO()
-	local var_12_1 = arg_12_0._heroPos
-	local var_12_2 = var_12_0.heroIdPosDic[arg_12_0._heroPos]
-	local var_12_3 = false
+function OdysseyEquipView:refreshHero()
+	local heroGroupMo = HeroGroupModel.instance:getCurGroupMO()
+	local heroPos = self._heroPos
+	local heroId = heroGroupMo.heroIdPosDic[self._heroPos]
+	local haveHero = false
 
-	if var_12_2 ~= nil and var_12_2 ~= 0 then
-		local var_12_4
+	if heroId ~= nil and heroId ~= 0 then
+		local skinCo
 
-		if var_12_2 < 0 then
-			local var_12_5 = lua_hero_trial.configDict[-var_12_2][0]
+		if heroId < 0 then
+			local trialCo = lua_hero_trial.configDict[-heroId][0]
 
-			var_12_4 = SkinConfig.instance:getSkinCo(var_12_5.skin)
+			skinCo = SkinConfig.instance:getSkinCo(trialCo.skin)
 		else
-			local var_12_6 = HeroModel.instance:getByHeroId(var_12_2)
+			local heroMo = HeroModel.instance:getByHeroId(heroId)
 
-			var_12_4 = SkinConfig.instance:getSkinCo(var_12_6.skin)
+			skinCo = SkinConfig.instance:getSkinCo(heroMo.skin)
 		end
 
-		if var_12_4 == nil then
-			logError("奥德赛角色活动 角色皮肤表id为空：装备uid：" .. tostring(arg_12_0.mo.uid))
+		if skinCo == nil then
+			logError("奥德赛角色活动 角色皮肤表id为空：装备uid：" .. tostring(self.mo.uid))
 		else
-			if var_12_4.gainApproach ~= CharacterEnum.SkinGainApproach.Init then
-				local var_12_7 = var_12_4.characterId
-				local var_12_8
-				local var_12_9 = SkinConfig.instance:getCharacterSkinCoList(var_12_7)
+			if skinCo.gainApproach ~= CharacterEnum.SkinGainApproach.Init then
+				local characterId = skinCo.characterId
+				local initConfig
+				local skinConfigList = SkinConfig.instance:getCharacterSkinCoList(characterId)
 
-				if var_12_9 ~= nil and next(var_12_9) then
-					for iter_12_0, iter_12_1 in ipairs(var_12_9) do
-						if iter_12_1.gainApproach == CharacterEnum.SkinGainApproach.Init then
-							var_12_8 = iter_12_1
+				if skinConfigList ~= nil and next(skinConfigList) then
+					for _, config in ipairs(skinConfigList) do
+						if config.gainApproach == CharacterEnum.SkinGainApproach.Init then
+							initConfig = config
 
 							break
 						end
 					end
 
-					if var_12_8 == nil then
-						logError("奥德赛角色活动 角色默认皮肤表id为空：角色：" .. tostring(var_12_7))
+					if initConfig == nil then
+						logError("奥德赛角色活动 角色默认皮肤表id为空：角色：" .. tostring(characterId))
 					else
-						var_12_3 = true
-						var_12_4 = var_12_8
+						haveHero = true
+						skinCo = initConfig
 					end
 				else
-					logError("奥德赛角色活动 角色皮肤列表为空：角色：" .. tostring(var_12_7))
+					logError("奥德赛角色活动 角色皮肤列表为空：角色：" .. tostring(characterId))
 				end
 			else
-				var_12_3 = true
+				haveHero = true
 			end
 
-			local var_12_10 = ResUrl.getHeadIconImg(var_12_4.id)
+			local heroIconPath = ResUrl.getHeadIconImg(skinCo.id)
 
-			arg_12_0.skinCo = var_12_4
+			self.skinCo = skinCo
 
-			arg_12_0._simageHero:LoadImage(var_12_10, arg_12_0.onLoadHeadIcon, arg_12_0)
+			self._simageHero:LoadImage(heroIconPath, self.onLoadHeadIcon, self)
 		end
 	end
 
-	gohelper.setActive(arg_12_0._simageHero, var_12_3)
-	gohelper.setActive(arg_12_0._goEmptyHero, not var_12_3)
-	logNormal(string.format("索引:%s Id:%s", var_12_1, var_12_2))
+	gohelper.setActive(self._simageHero, haveHero)
+	gohelper.setActive(self._goEmptyHero, not haveHero)
+	logNormal(string.format("索引:%s Id:%s", heroPos, heroId))
 end
 
-function var_0_0.onLoadHeadIcon(arg_13_0)
-	ZProj.UGUIHelper.SetImageSize(arg_13_0._simageHero.gameObject)
+function OdysseyEquipView:onLoadHeadIcon()
+	ZProj.UGUIHelper.SetImageSize(self._simageHero.gameObject)
 
-	local var_13_0 = arg_13_0.skinCo.playercardViewImgOffset
+	local offsetStr = self.skinCo.playercardViewImgOffset
 
-	if string.nilorempty(var_13_0) then
-		var_13_0 = arg_13_0.skinCo.characterViewImgOffset
+	if string.nilorempty(offsetStr) then
+		offsetStr = self.skinCo.characterViewImgOffset
 	end
 
-	if not string.nilorempty(var_13_0) then
-		local var_13_1 = string.splitToNumber(var_13_0, "#")
+	if not string.nilorempty(offsetStr) then
+		local offsets = string.splitToNumber(offsetStr, "#")
 
-		recthelper.setAnchor(arg_13_0._simageHero.transform, tonumber(var_13_1[1]), tonumber(var_13_1[2]))
-		transformhelper.setLocalScale(arg_13_0._simageHero.transform, tonumber(var_13_1[3]), tonumber(var_13_1[3]), tonumber(var_13_1[3]))
+		recthelper.setAnchor(self._simageHero.transform, tonumber(offsets[1]), tonumber(offsets[2]))
+		transformhelper.setLocalScale(self._simageHero.transform, tonumber(offsets[3]), tonumber(offsets[3]), tonumber(offsets[3]))
 	end
 end
 
-function var_0_0.initSwitchList(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = 1
-	local var_14_1 = HeroGroupModel.instance:getCurGroupMO()
-	local var_14_2 = {}
+function OdysseyEquipView:initSwitchList(heroPos, equipIndex)
+	local tempPosIndex = 1
+	local heroGroupMo = HeroGroupModel.instance:getCurGroupMO()
+	local tempPosList = {}
 
-	for iter_14_0, iter_14_1 in ipairs(var_14_1.heroList) do
-		table.insert(var_14_2, iter_14_0)
+	for pos, hero in ipairs(heroGroupMo.heroList) do
+		table.insert(tempPosList, pos)
 	end
 
-	for iter_14_2, iter_14_3 in ipairs(var_14_2) do
-		if iter_14_3 == arg_14_1 then
-			var_14_0 = iter_14_2
+	for index, pos in ipairs(tempPosList) do
+		if pos == heroPos then
+			tempPosIndex = index
 
 			break
 		end
 	end
 
-	arg_14_0._heroPosMax = #var_14_2
-	arg_14_0._heroPosList = var_14_2
+	self._heroPosMax = #tempPosList
+	self._heroPosList = tempPosList
 
-	arg_14_0:onSelectHero(var_14_0, arg_14_2, true)
+	self:onSelectHero(tempPosIndex, equipIndex, true)
 end
 
-function var_0_0.onHeroGroupUpdate(arg_15_0)
-	arg_15_0:refreshList(true, false)
-	arg_15_0:refreshItem()
+function OdysseyEquipView:onHeroGroupUpdate()
+	self:refreshList(true, false)
+	self:refreshItem()
 
-	local var_15_0 = OdysseyHeroGroupModel.instance:getSaveType()
+	local saveType = OdysseyHeroGroupModel.instance:getSaveType()
 
 	OdysseyHeroGroupModel.instance:setSaveType(nil)
 
-	if var_15_0 and var_15_0 == OdysseyEnum.HeroGroupSaveType.ItemEquip or var_15_0 == OdysseyEnum.HeroGroupSaveType.ItemReplace then
-		arg_15_0:checkChangeEquipPos()
+	if saveType and saveType == OdysseyEnum.HeroGroupSaveType.ItemEquip or saveType == OdysseyEnum.HeroGroupSaveType.ItemReplace then
+		self:checkChangeEquipPos()
 	else
-		arg_15_0:selectCurItemAndPos()
+		self:selectCurItemAndPos()
 	end
 end
 
-function var_0_0.selectCurItemAndPos(arg_16_0)
-	arg_16_0:selectEquipPos(arg_16_0._equipIndex)
+function OdysseyEquipView:selectCurItemAndPos()
+	self:selectEquipPos(self._equipIndex)
 	OdysseyEquipListModel.instance:setSelect(nil)
 end
 
-function var_0_0.checkChangeEquipPos(arg_17_0)
-	if arg_17_0.equipCount <= 1 then
-		arg_17_0:selectCurItemAndPos()
+function OdysseyEquipView:checkChangeEquipPos()
+	if self.equipCount <= 1 then
+		self:selectCurItemAndPos()
 
 		return
 	end
 
-	local var_17_0 = arg_17_0._equipIndex
-	local var_17_1 = arg_17_0._heroPos
-	local var_17_2 = HeroGroupModel.instance:getCurGroupMO():getOdysseyEquips(var_17_1 - 1)
+	local equipIndex = self._equipIndex
+	local heroPos = self._heroPos
+	local heroGroupMo = HeroGroupModel.instance:getCurGroupMO()
+	local equipMo = heroGroupMo:getOdysseyEquips(heroPos - 1)
 
-	for iter_17_0, iter_17_1 in ipairs(var_17_2.equipUid) do
-		local var_17_3 = tonumber(iter_17_1)
+	for index, equipIdParam in ipairs(equipMo.equipUid) do
+		local equipId = tonumber(equipIdParam)
 
-		if iter_17_0 ~= var_17_0 and var_17_3 ~= nil and var_17_3 == 0 then
-			var_17_0 = iter_17_0
+		if index ~= equipIndex and equipId ~= nil and equipId == 0 then
+			equipIndex = index
 
-			arg_17_0:onEquipPosSelect(var_17_0)
+			self:onEquipPosSelect(equipIndex)
 
 			return
 		end
 	end
 
-	arg_17_0:selectCurItemAndPos()
+	self:selectCurItemAndPos()
 end
 
-function var_0_0.onTipSubViewClose(arg_18_0)
-	arg_18_0:onItemSelect(nil)
+function OdysseyEquipView:onTipSubViewClose()
+	self:onItemSelect(nil)
 end
 
-function var_0_0.refreshSwitchState(arg_19_0)
-	local var_19_0 = arg_19_0._heroPosIndex
+function OdysseyEquipView:refreshSwitchState()
+	local index = self._heroPosIndex
 
-	gohelper.setActive(arg_19_0._btnleft, var_19_0 > 1)
-	gohelper.setActive(arg_19_0._btnright, var_19_0 < arg_19_0._heroPosMax)
+	gohelper.setActive(self._btnleft, index > 1)
+	gohelper.setActive(self._btnright, index < self._heroPosMax)
 end
 
-function var_0_0.refreshItem(arg_20_0)
-	local var_20_0 = arg_20_0._heroPos
-	local var_20_1 = HeroGroupModel.instance:getCurGroupMO():getOdysseyEquips(var_20_0 - 1)
+function OdysseyEquipView:refreshItem()
+	local heroPos = self._heroPos
+	local heroGroupMo = HeroGroupModel.instance:getCurGroupMO()
+	local equipMo = heroGroupMo:getOdysseyEquips(heroPos - 1)
 
-	for iter_20_0, iter_20_1 in ipairs(var_20_1.equipUid) do
-		local var_20_2 = arg_20_0._odysseyItemList[iter_20_0]
+	for index, equipIdParam in ipairs(equipMo.equipUid) do
+		local item = self._odysseyItemList[index]
 
-		if not var_20_2 then
-			logError("奥德赛编队界面 装备索引超过上限 index: " .. tostring(iter_20_0))
+		if not item then
+			logError("奥德赛编队界面 装备索引超过上限 index: " .. tostring(index))
 		else
-			local var_20_3 = tonumber(iter_20_1)
+			local equipId = tonumber(equipIdParam)
 
-			var_20_2:setActive(true)
-			var_20_2:setInfo(var_20_0, iter_20_0, var_20_3, OdysseyEnum.BagType.Bag)
-			var_20_2:refreshUI()
+			item:setActive(true)
+			item:setInfo(heroPos, index, equipId, OdysseyEnum.BagType.Bag)
+			item:refreshUI()
 		end
 	end
 
-	local var_20_4 = #arg_20_0._odysseyItemList
-	local var_20_5 = #var_20_1.equipUid
+	local itemCount = #self._odysseyItemList
+	local equipCount = #equipMo.equipUid
 
-	arg_20_0.equipCount = var_20_5
+	self.equipCount = equipCount
 
-	if var_20_5 < var_20_4 then
-		for iter_20_2 = var_20_5 + 1, var_20_4 do
-			local var_20_6 = arg_20_0._odysseyItemList[iter_20_2]
+	if equipCount < itemCount then
+		for i = equipCount + 1, itemCount do
+			local item = self._odysseyItemList[i]
 
-			var_20_6:clear()
-			var_20_6:setActive(false)
+			item:clear()
+			item:setActive(false)
 		end
 	end
 end
 
-function var_0_0.refreshList(arg_21_0, arg_21_1, arg_21_2)
-	if arg_21_0._equipFilterType == nil then
+function OdysseyEquipView:refreshList(keepOrder, showAnim)
+	if self._equipFilterType == nil then
 		OdysseyEquipSuitTabListModel.instance:selectAllTag()
 	end
 
-	OdysseyEquipListModel.instance:copyListFromEquipModel(OdysseyEnum.ItemType.Equip, arg_21_0._equipFilterType, OdysseyEnum.BagType.FightPrepare, arg_21_1)
+	OdysseyEquipListModel.instance:copyListFromEquipModel(OdysseyEnum.ItemType.Equip, self._equipFilterType, OdysseyEnum.BagType.FightPrepare, keepOrder)
 
-	if arg_21_2 then
-		arg_21_0._animScroll:Play("flash", 0, 0)
+	if showAnim then
+		self._animScroll:Play("flash", 0, 0)
 	end
 end
 
-function var_0_0.onItemSelect(arg_22_0, arg_22_1)
-	arg_22_0._equipMo = arg_22_1
+function OdysseyEquipView:onItemSelect(mo)
+	self._equipMo = mo
 
-	if arg_22_1 ~= nil then
-		if arg_22_1.uid == 0 then
+	if mo ~= nil then
+		local equipUid = mo.uid
+
+		if equipUid == 0 then
 			logError("奥德赛 下半活动 背包道具uid 为0")
 
 			return
 		else
-			local var_22_0 = OdysseyHeroGroupModel.instance:getCurHeroGroup():getEquipByUid(arg_22_1.uid)
+			local infoMo = OdysseyHeroGroupModel.instance:getCurHeroGroup()
+			local itemMo = infoMo:getEquipByUid(mo.uid)
 
-			if var_22_0 ~= nil and var_22_0.heroPos == arg_22_0._heroPos and var_22_0.slotId ~= arg_22_0._equipIndex then
-				arg_22_0:onEquipPosSelect(var_22_0.slotId)
-				arg_22_0:onItemSelect(arg_22_1)
+			if itemMo ~= nil and itemMo.heroPos == self._heroPos and itemMo.slotId ~= self._equipIndex then
+				self:onEquipPosSelect(itemMo.slotId)
+				self:onItemSelect(mo)
 			else
-				local var_22_1 = {
-					itemId = arg_22_1.itemId,
-					equipUid = arg_22_1.uid,
-					equipIndex = arg_22_0._equipIndex,
-					heroPos = arg_22_0._heroPos
-				}
+				local viewParam = {}
 
-				arg_22_0.equipTipItem:setActive(true)
-				arg_22_0.equipTipItem:setData(var_22_1)
+				viewParam.itemId = mo.itemId
+				viewParam.equipUid = mo.uid
+				viewParam.equipIndex = self._equipIndex
+				viewParam.heroPos = self._heroPos
+
+				self.equipTipItem:setActive(true)
+				self.equipTipItem:setData(viewParam)
 			end
 		end
 	else
 		OdysseyEquipListModel.instance:clearSelect()
-		arg_22_0.equipTipItem:setActive(false)
+		self.equipTipItem:setActive(false)
 	end
 end
 
-function var_0_0.onEquipPosSelect(arg_23_0, arg_23_1)
-	arg_23_0:selectEquipPos(arg_23_1, true)
+function OdysseyEquipView:onEquipPosSelect(pos)
+	self:selectEquipPos(pos, true)
 end
 
-function var_0_0.selectEquipPos(arg_24_0, arg_24_1, arg_24_2)
-	arg_24_0._equipIndex = arg_24_1
+function OdysseyEquipView:selectEquipPos(pos, selectCurrent)
+	self._equipIndex = pos
 
-	for iter_24_0, iter_24_1 in ipairs(arg_24_0._odysseyItemList) do
-		iter_24_1:setSelect(arg_24_1)
+	for _, item in ipairs(self._odysseyItemList) do
+		item:setSelect(pos)
 	end
 
 	OdysseyEquipListModel.instance:clearSelect()
 
-	if arg_24_0._equipIndex ~= nil and arg_24_2 then
-		local var_24_0 = arg_24_0._heroPos
-		local var_24_1 = HeroGroupModel.instance:getCurGroupMO():getOdysseyEquips(var_24_0 - 1):getEquipUID(arg_24_1)
+	if self._equipIndex ~= nil and selectCurrent then
+		local heroPos = self._heroPos
+		local heroGroupMo = HeroGroupModel.instance:getCurGroupMO()
+		local equipMo = heroGroupMo:getOdysseyEquips(heroPos - 1)
+		local equipUid = equipMo:getEquipUID(pos)
 
-		if var_24_1 and var_24_1 ~= 0 then
-			local var_24_2 = OdysseyItemModel.instance:getItemMoByUid(var_24_1)
+		if equipUid and equipUid ~= 0 then
+			local itemMo = OdysseyItemModel.instance:getItemMoByUid(equipUid)
 
-			if var_24_2 then
-				local var_24_3 = OdysseyEquipSuitTabListModel.instance:getSelect()
+			if itemMo then
+				local selectSuitMo = OdysseyEquipSuitTabListModel.instance:getSelect()
 
-				if var_24_3 and var_24_3.type ~= OdysseyEnum.EquipSuitType.All and var_24_2.config.suitId ~= var_24_3.suitId then
+				if selectSuitMo and selectSuitMo.type ~= OdysseyEnum.EquipSuitType.All and itemMo.config.suitId ~= selectSuitMo.suitId then
 					OdysseyEquipSuitTabListModel.instance:selectAllTag(true)
 					logNormal("选中全部类型装备标签")
 				end
 			end
 
-			OdysseyEquipListModel.instance:setSelect(var_24_1)
+			OdysseyEquipListModel.instance:setSelect(equipUid)
 		else
-			arg_24_0:onItemSelect(nil)
+			self:onItemSelect(nil)
 		end
 	else
-		arg_24_0:onItemSelect(nil)
+		self:onItemSelect(nil)
 	end
 end
 
-function var_0_0.OnEquipSuitSelect(arg_25_0, arg_25_1)
-	local var_25_0
+function OdysseyEquipView:OnEquipSuitSelect(mo)
+	local suitType
 
-	if arg_25_1.type == OdysseyEnum.EquipSuitType.All then
+	if mo.type == OdysseyEnum.EquipSuitType.All then
 		-- block empty
 	else
-		var_25_0 = arg_25_1 and arg_25_1.suitId
+		suitType = mo and mo.suitId
 
-		if arg_25_0._equipFilterType == var_25_0 then
+		if self._equipFilterType == suitType then
 			return
 		end
 	end
 
-	arg_25_0._equipFilterType = var_25_0
+	self._equipFilterType = suitType
 
 	OdysseyEquipListModel.instance:clearSelect()
-	arg_25_0:onItemSelect(nil)
-	arg_25_0:refreshList(false, true)
+	self:onItemSelect(nil)
+	self:refreshList(false, true)
 end
 
-function var_0_0.onClose(arg_26_0)
-	arg_26_0._animEventWrap:RemoveAllEventListener()
+function OdysseyEquipView:onClose()
+	self._animEventWrap:RemoveAllEventListener()
 end
 
-function var_0_0.onDestroyView(arg_27_0)
+function OdysseyEquipView:onDestroyView()
 	return
 end
 
-return var_0_0
+return OdysseyEquipView

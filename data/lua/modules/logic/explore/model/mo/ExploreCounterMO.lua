@@ -1,64 +1,71 @@
-﻿module("modules.logic.explore.model.mo.ExploreCounterMO", package.seeall)
+﻿-- chunkname: @modules/logic/explore/model/mo/ExploreCounterMO.lua
 
-local var_0_0 = pureTable("ExploreCounterMO")
+module("modules.logic.explore.model.mo.ExploreCounterMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1
-	arg_1_0.tarUnitId = arg_1_1
-	arg_1_0.dic = {}
-	arg_1_0.tarCount = 0
-	arg_1_0.nowCount = 0
+local ExploreCounterMO = pureTable("ExploreCounterMO")
+
+function ExploreCounterMO:init(id)
+	self.id = id
+	self.tarUnitId = id
+	self.dic = {}
+	self.tarCount = 0
+	self.nowCount = 0
 end
 
-function var_0_0.addTarCount(arg_2_0)
-	arg_2_0.tarCount = arg_2_0.tarCount + 1
+function ExploreCounterMO:addTarCount()
+	self.tarCount = self.tarCount + 1
 end
 
-function var_0_0.addCountSource(arg_3_0, arg_3_1)
-	arg_3_0.dic[arg_3_1] = false
-	arg_3_0.tarCount = tabletool.len(arg_3_0.dic)
+function ExploreCounterMO:addCountSource(unitId)
+	self.dic[unitId] = false
+	self.tarCount = tabletool.len(self.dic)
 end
 
-function var_0_0.reCalcCount(arg_4_0)
-	local var_4_0 = ExploreMapModel.instance:getUnitDic()
+function ExploreCounterMO:reCalcCount()
+	local dict = ExploreMapModel.instance:getUnitDic()
 
-	for iter_4_0 in pairs(arg_4_0.dic) do
-		local var_4_1 = var_4_0[iter_4_0]:getInteractInfoMO()
+	for unitId in pairs(self.dic) do
+		local unitMO = dict[unitId]
+		local interactInfoMO = unitMO:getInteractInfoMO()
 
-		arg_4_0.dic[iter_4_0] = var_4_1:getBitByIndex(ExploreEnum.InteractIndex.ActiveState) == 1
+		self.dic[unitId] = interactInfoMO:getBitByIndex(ExploreEnum.InteractIndex.ActiveState) == 1
 	end
 
-	arg_4_0:updateNowCount()
+	self:updateNowCount()
 end
 
-function var_0_0.add(arg_5_0, arg_5_1)
-	arg_5_0.dic[arg_5_1] = true
+function ExploreCounterMO:add(unitId)
+	self.dic[unitId] = true
 
-	local var_5_0 = arg_5_0.nowCount
+	local oldCount = self.nowCount
 
-	arg_5_0:updateNowCount()
+	self:updateNowCount()
 
-	return var_5_0 < arg_5_0.tarCount and arg_5_0.nowCount >= arg_5_0.tarCount
+	local isTrigger = oldCount < self.tarCount and self.nowCount >= self.tarCount
+
+	return isTrigger
 end
 
-function var_0_0.reduce(arg_6_0, arg_6_1)
-	arg_6_0.dic[arg_6_1] = false
+function ExploreCounterMO:reduce(unitId)
+	self.dic[unitId] = false
 
-	local var_6_0 = arg_6_0.nowCount
+	local oldCount = self.nowCount
 
-	arg_6_0:updateNowCount()
+	self:updateNowCount()
 
-	return var_6_0 >= arg_6_0.tarCount and arg_6_0.nowCount < arg_6_0.tarCount
+	local cancelTrigger = oldCount >= self.tarCount and self.nowCount < self.tarCount
+
+	return cancelTrigger
 end
 
-function var_0_0.updateNowCount(arg_7_0)
-	arg_7_0.nowCount = 0
+function ExploreCounterMO:updateNowCount()
+	self.nowCount = 0
 
-	for iter_7_0, iter_7_1 in pairs(arg_7_0.dic) do
-		if iter_7_1 then
-			arg_7_0.nowCount = arg_7_0.nowCount + 1
+	for i, v in pairs(self.dic) do
+		if v then
+			self.nowCount = self.nowCount + 1
 		end
 	end
 end
 
-return var_0_0
+return ExploreCounterMO

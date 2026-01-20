@@ -1,31 +1,33 @@
-﻿module("modules.logic.antique.config.AntiqueConfig", package.seeall)
+﻿-- chunkname: @modules/logic/antique/config/AntiqueConfig.lua
 
-local var_0_0 = class("AntiqueConfig", BaseConfig)
+module("modules.logic.antique.config.AntiqueConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._antiqueConfig = nil
+local AntiqueConfig = class("AntiqueConfig", BaseConfig)
+
+function AntiqueConfig:ctor()
+	self._antiqueConfig = nil
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function AntiqueConfig:reqConfigNames()
 	return {
 		"antique"
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "antique" then
-		arg_3_0._antiqueConfig = arg_3_2
+function AntiqueConfig:onConfigLoaded(configName, configTable)
+	if configName == "antique" then
+		self._antiqueConfig = configTable
 	end
 end
 
-function var_0_0.getAntiquesCo(arg_4_0)
-	return arg_4_0._antiqueConfig.configDict
+function AntiqueConfig:getAntiquesCo()
+	return self._antiqueConfig.configDict
 end
 
-function var_0_0.getAntiqueCo(arg_5_0, arg_5_1)
-	return arg_5_0._antiqueConfig.configDict[arg_5_1]
+function AntiqueConfig:getAntiqueCo(antiqueId)
+	return self._antiqueConfig.configDict[antiqueId]
 end
 
-var_0_0.instance = var_0_0.New()
+AntiqueConfig.instance = AntiqueConfig.New()
 
-return var_0_0
+return AntiqueConfig

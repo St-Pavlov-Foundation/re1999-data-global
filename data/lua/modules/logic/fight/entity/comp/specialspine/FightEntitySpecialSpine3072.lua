@@ -1,60 +1,62 @@
-﻿module("modules.logic.fight.entity.comp.specialspine.FightEntitySpecialSpine3072", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/specialspine/FightEntitySpecialSpine3072.lua
 
-local var_0_0 = class("FightEntitySpecialSpine3072", UserDataDispose)
+module("modules.logic.fight.entity.comp.specialspine.FightEntitySpecialSpine3072", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+local FightEntitySpecialSpine3072 = class("FightEntitySpecialSpine3072", UserDataDispose)
 
-	arg_1_0._entity = arg_1_1
-	arg_1_0._maskEffect = FightEntitySpecialSpine3072_Mask.New(arg_1_1)
+function FightEntitySpecialSpine3072:ctor(entity)
+	self:__onInit()
+
+	self._entity = entity
+	self._maskEffect = FightEntitySpecialSpine3072_Mask.New(entity)
 end
 
-function var_0_0.playAnim(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	arg_2_0._maskEffect:playAnim(arg_2_1, arg_2_2, arg_2_3)
+function FightEntitySpecialSpine3072:playAnim(animState, loop, reStart)
+	self._maskEffect:playAnim(animState, loop, reStart)
 end
 
-function var_0_0.setFreeze(arg_3_0, arg_3_1)
-	arg_3_0._maskEffect:setFreeze(arg_3_1)
+function FightEntitySpecialSpine3072:setFreeze(isFreeze)
+	self._maskEffect:setFreeze(isFreeze)
 end
 
-function var_0_0.setTimeScale(arg_4_0, arg_4_1)
-	arg_4_0._maskEffect:setTimeScale(arg_4_1)
+function FightEntitySpecialSpine3072:setTimeScale(timeScale)
+	self._maskEffect:setTimeScale(timeScale)
 end
 
-function var_0_0.setLayer(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0._maskEffect:setLayer(arg_5_1, arg_5_2)
+function FightEntitySpecialSpine3072:setLayer(layer, recursive)
+	self._maskEffect:setLayer(layer, recursive)
 end
 
-function var_0_0.setRenderOrder(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_0._maskEffect:setRenderOrder(arg_6_1, arg_6_2)
+function FightEntitySpecialSpine3072:setRenderOrder(order, force)
+	self._maskEffect:setRenderOrder(order, force)
 end
 
-function var_0_0.changeLookDir(arg_7_0, arg_7_1)
-	arg_7_0._maskEffect:changeLookDir(arg_7_1)
+function FightEntitySpecialSpine3072:changeLookDir(dir)
+	self._maskEffect:changeLookDir(dir)
 end
 
-function var_0_0._changeLookDir(arg_8_0)
-	arg_8_0._maskEffect:_changeLookDir()
+function FightEntitySpecialSpine3072:_changeLookDir()
+	self._maskEffect:_changeLookDir()
 end
 
-function var_0_0.setActive(arg_9_0, arg_9_1)
-	arg_9_0._maskEffect:setActive(arg_9_1)
+function FightEntitySpecialSpine3072:setActive(isActive)
+	self._maskEffect:setActive(isActive)
 end
 
-function var_0_0.setAnimation(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	arg_10_0._maskEffect:setAnimation(arg_10_1, arg_10_2, arg_10_3)
+function FightEntitySpecialSpine3072:setAnimation(animState, loop, mixTime)
+	self._maskEffect:setAnimation(animState, loop, mixTime)
 end
 
-function var_0_0.releaseSelf(arg_11_0)
-	if arg_11_0._maskEffect then
-		arg_11_0._maskEffect:releaseSelf()
+function FightEntitySpecialSpine3072:releaseSelf()
+	if self._maskEffect then
+		self._maskEffect:releaseSelf()
 
-		arg_11_0._maskEffect = nil
+		self._maskEffect = nil
 	end
 
-	arg_11_0._entity = nil
+	self._entity = nil
 
-	arg_11_0:__onDispose()
+	self:__onDispose()
 end
 
-return var_0_0
+return FightEntitySpecialSpine3072

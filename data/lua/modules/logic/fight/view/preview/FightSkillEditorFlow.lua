@@ -1,93 +1,100 @@
-﻿module("modules.logic.fight.view.preview.FightSkillEditorFlow", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/preview/FightSkillEditorFlow.lua
 
-local var_0_0 = class("FightSkillEditorFlow", BaseFlow)
+module("modules.logic.fight.view.preview.FightSkillEditorFlow", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.fightStepData = arg_1_1
-	arg_1_0._skillReleaseFlow = FlowParallel.New()
+local FightSkillEditorFlow = class("FightSkillEditorFlow", BaseFlow)
 
-	arg_1_0._skillReleaseFlow:addWork(FunctionWork.New(arg_1_0._playSkill, arg_1_0))
+function FightSkillEditorFlow:ctor(fightStepData)
+	self.fightStepData = fightStepData
+	self._skillReleaseFlow = FlowParallel.New()
 
-	local var_1_0
+	self._skillReleaseFlow:addWork(FunctionWork.New(self._playSkill, self))
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1.actEffect) do
-		if (iter_1_1.effectType == FightEnum.EffectType.HEAL or iter_1_1.effectType == FightEnum.EffectType.HEALCRIT) and iter_1_1.effectNum > 0 then
-			if not var_1_0 then
-				var_1_0 = FightWorkSkillFinallyHeal.New(arg_1_1)
+	local effectHealWork
 
-				arg_1_0._skillReleaseFlow:addWork(var_1_0)
+	for _, actEffectData in ipairs(fightStepData.actEffect) do
+		local isHealEffect = actEffectData.effectType == FightEnum.EffectType.HEAL or actEffectData.effectType == FightEnum.EffectType.HEALCRIT
+
+		if isHealEffect and actEffectData.effectNum > 0 then
+			if not effectHealWork then
+				effectHealWork = FightWorkSkillFinallyHeal.New(fightStepData)
+
+				self._skillReleaseFlow:addWork(effectHealWork)
 			end
 
-			var_1_0:addActEffectData(iter_1_1)
+			effectHealWork:addActEffectData(actEffectData)
 		end
 	end
 end
 
-function var_0_0._playSkill(arg_2_0)
-	arg_2_0._attacker = FightHelper.getEntity(arg_2_0.fightStepData.fromId)
-	arg_2_0._skillId = arg_2_0.fightStepData.actId
+function FightSkillEditorFlow:_playSkill()
+	self._attacker = FightHelper.getEntity(self.fightStepData.fromId)
+	self._skillId = self.fightStepData.actId
 
-	local var_2_0 = arg_2_0._attacker:getMO()
-	local var_2_1 = var_2_0 and var_2_0.skin
-	local var_2_2 = FightConfig.instance:getSkinSkillTimeline(var_2_1, arg_2_0._skillId)
+	local mo = self._attacker:getMO()
+	local skinId = mo and mo.skin
+	local timeline = FightConfig.instance:getSkinSkillTimeline(skinId, self._skillId)
 
-	if string.nilorempty(var_2_2) then
-		arg_2_0:onDone(true)
+	if string.nilorempty(timeline) then
+		self:onDone(true)
 
 		return
 	end
 
-	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, arg_2_0._onSkillEnd, arg_2_0)
+	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, self._onSkillEnd, self)
 
-	if FightSkillMgr.instance:isEntityPlayingTimeline(arg_2_0._attacker.id) then
-		TaskDispatcher.runRepeat(arg_2_0._checkNoSkillPlaying, arg_2_0, 0.01)
+	if FightSkillMgr.instance:isEntityPlayingTimeline(self._attacker.id) then
+		TaskDispatcher.runRepeat(self._checkNoSkillPlaying, self, 0.01)
 	else
-		arg_2_0._attacker.skill:playSkill(arg_2_0._skillId, arg_2_0.fightStepData)
+		self._attacker.skill:playSkill(self._skillId, self.fightStepData)
 	end
 end
 
-function var_0_0._checkNoSkillPlaying(arg_3_0)
-	if not FightSkillMgr.instance:isEntityPlayingTimeline(arg_3_0._attacker.id) then
-		TaskDispatcher.cancelTask(arg_3_0._checkNoSkillPlaying, arg_3_0)
-		arg_3_0._attacker.skill:playSkill(arg_3_0._skillId, arg_3_0.fightStepData)
+function FightSkillEditorFlow:_checkNoSkillPlaying()
+	if not FightSkillMgr.instance:isEntityPlayingTimeline(self._attacker.id) then
+		TaskDispatcher.cancelTask(self._checkNoSkillPlaying, self)
+		self._attacker.skill:playSkill(self._skillId, self.fightStepData)
 	end
 end
 
-function var_0_0._onSkillEnd(arg_4_0)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, arg_4_0._onSkillEnd, arg_4_0)
-	arg_4_0:onDone(true)
+function FightSkillEditorFlow:_onSkillEnd()
+	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, self._onSkillEnd, self)
+	self:onDone(true)
 end
 
-function var_0_0.onStart(arg_5_0)
-	arg_5_0._skillReleaseFlow:start()
+function FightSkillEditorFlow:onStart()
+	self._skillReleaseFlow:start()
 end
 
-function var_0_0.clearWork(arg_6_0)
+function FightSkillEditorFlow:clearWork()
 	return
 end
 
-function var_0_0.onDestroy(arg_7_0)
-	if arg_7_0._skillReleaseFlow then
-		arg_7_0._skillReleaseFlow:stop()
+function FightSkillEditorFlow:onDestroy()
+	if self._skillReleaseFlow then
+		self._skillReleaseFlow:stop()
 
-		arg_7_0._skillReleaseFlow = nil
+		self._skillReleaseFlow = nil
 	end
 
-	var_0_0.super.onDestroy(arg_7_0)
+	FightSkillEditorFlow.super.onDestroy(self)
 end
 
-function var_0_0.stopSkillFlow(arg_8_0)
-	if arg_8_0._skillReleaseFlow and arg_8_0._skillReleaseFlow.status == WorkStatus.Running then
-		local var_8_0 = arg_8_0._skillReleaseFlow:getWorkList()
+function FightSkillEditorFlow:stopSkillFlow()
+	if self._skillReleaseFlow and self._skillReleaseFlow.status == WorkStatus.Running then
+		local workList = self._skillReleaseFlow:getWorkList()
+		local curWorkIdx = self._skillReleaseFlow._curIndex
 
-		for iter_8_0 = arg_8_0._skillReleaseFlow._curIndex, #var_8_0 do
-			var_8_0[iter_8_0]:onDone(true)
+		for i = curWorkIdx, #workList do
+			local work = workList[i]
+
+			work:onDone(true)
 		end
 
-		arg_8_0._skillReleaseFlow:stop()
+		self._skillReleaseFlow:stop()
 
-		arg_8_0._skillReleaseFlow = nil
+		self._skillReleaseFlow = nil
 	end
 end
 
-return var_0_0
+return FightSkillEditorFlow

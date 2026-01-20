@@ -1,86 +1,94 @@
-﻿module("modules.logic.versionactivity2_7.lengzhou6.model.LengZhou6InfoMo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/lengzhou6/model/LengZhou6InfoMo.lua
 
-local var_0_0 = pureTable("LengZhou6InfoMo")
+module("modules.logic.versionactivity2_7.lengzhou6.model.LengZhou6InfoMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.actId = arg_1_1
-	arg_1_0.episodeId = arg_1_2
-	arg_1_0.isFinish = arg_1_3
+local LengZhou6InfoMo = pureTable("LengZhou6InfoMo")
 
-	local var_1_0 = LengZhou6Config.instance:getEpisodeConfig(arg_1_0.actId, arg_1_0.episodeId)
+function LengZhou6InfoMo:init(actId, episodeId, isFinish)
+	self.actId = actId
+	self.episodeId = episodeId
+	self.isFinish = isFinish
 
-	if var_1_0 == nil then
-		logError("config is nil" .. arg_1_2)
+	local config = LengZhou6Config.instance:getEpisodeConfig(self.actId, self.episodeId)
+
+	if config == nil then
+		logError("config is nil" .. episodeId)
 
 		return
 	end
 
-	arg_1_0._config = var_1_0
-	arg_1_0.preEpisodeId = var_1_0.preEpisodeId
+	self._config = config
+	self.preEpisodeId = config.preEpisodeId
 end
 
-function var_0_0.updateInfo(arg_2_0, arg_2_1)
-	arg_2_0:updateIsFinish(arg_2_1.isFinished)
+function LengZhou6InfoMo:updateInfo(info)
+	self:updateIsFinish(info.isFinished)
 
-	arg_2_0.progress = arg_2_1.progress
+	self.progress = info.progress
 end
 
-function var_0_0.updateIsFinish(arg_3_0, arg_3_1)
-	arg_3_0.isFinish = arg_3_1
+function LengZhou6InfoMo:updateIsFinish(state)
+	self.isFinish = state
 end
 
-function var_0_0.updateProgress(arg_4_0, arg_4_1)
-	arg_4_0.progress = arg_4_1
+function LengZhou6InfoMo:updateProgress(progress)
+	self.progress = progress
 end
 
-function var_0_0.isEndlessEpisode(arg_5_0)
-	return LengZhou6Model.instance:getEpisodeIsEndLess(arg_5_0._config)
+function LengZhou6InfoMo:isEndlessEpisode()
+	return LengZhou6Model.instance:getEpisodeIsEndLess(self._config)
 end
 
-function var_0_0.getEpisodeName(arg_6_0)
-	return arg_6_0._config.name
+function LengZhou6InfoMo:getEpisodeName()
+	return self._config.name
 end
 
-function var_0_0.haveEliminate(arg_7_0)
-	return arg_7_0._config.eliminateLevelId ~= 0
+function LengZhou6InfoMo:haveEliminate()
+	local eliminateId = self._config.eliminateLevelId
+
+	return eliminateId ~= 0
 end
 
-function var_0_0.isDown(arg_8_0)
-	return arg_8_0.episodeId % 2 ~= 0
+function LengZhou6InfoMo:isDown()
+	return self.episodeId % 2 ~= 0
 end
 
-function var_0_0.canShowItem(arg_9_0)
-	if arg_9_0:isEndlessEpisode() then
-		return arg_9_0:unLock()
+function LengZhou6InfoMo:canShowItem()
+	if self:isEndlessEpisode() then
+		return self:unLock()
 	end
 
 	return true
 end
 
-function var_0_0.unLock(arg_10_0)
-	local var_10_0 = arg_10_0.preEpisodeId
+function LengZhou6InfoMo:unLock()
+	local preEpisodeId = self.preEpisodeId
 
-	return var_10_0 == 0 or LengZhou6Model.instance:isEpisodeFinish(var_10_0)
+	return preEpisodeId == 0 or LengZhou6Model.instance:isEpisodeFinish(preEpisodeId)
 end
 
-function var_0_0.getLevel(arg_11_0)
-	if not string.nilorempty(arg_11_0.progress) then
-		return cjson.decode(arg_11_0.progress).endLessLayer or LengZhou6Enum.DefaultEndLessBeginRound
+function LengZhou6InfoMo:getLevel()
+	if not string.nilorempty(self.progress) then
+		local jsonData = cjson.decode(self.progress)
+
+		return jsonData.endLessLayer or LengZhou6Enum.DefaultEndLessBeginRound
 	end
 
 	return LengZhou6Enum.DefaultEndLessBeginRound
 end
 
-function var_0_0.getEndLessBattleProgress(arg_12_0)
-	if not string.nilorempty(arg_12_0.progress) then
-		return cjson.decode(arg_12_0.progress).endLessBattleProgress
+function LengZhou6InfoMo:getEndLessBattleProgress()
+	if not string.nilorempty(self.progress) then
+		local jsonData = cjson.decode(self.progress)
+
+		return jsonData.endLessBattleProgress
 	end
 
 	return nil
 end
 
-function var_0_0.setProgress(arg_13_0, arg_13_1)
-	arg_13_0.progress = arg_13_1
+function LengZhou6InfoMo:setProgress(progress)
+	self.progress = progress
 end
 
-return var_0_0
+return LengZhou6InfoMo

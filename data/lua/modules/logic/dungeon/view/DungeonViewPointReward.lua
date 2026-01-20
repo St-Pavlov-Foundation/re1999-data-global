@@ -1,98 +1,103 @@
-﻿module("modules.logic.dungeon.view.DungeonViewPointReward", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/DungeonViewPointReward.lua
 
-local var_0_0 = class("DungeonViewPointReward", BaseView)
+module("modules.logic.dungeon.view.DungeonViewPointReward", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btntipreward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_story/layout/#btn_tipreward")
-	arg_1_0._txtrewardprogress = gohelper.findChildText(arg_1_0.viewGO, "#go_story/layout/#btn_tipreward/#txt_rewardprogress")
-	arg_1_0._gorewardredpoint = gohelper.findChild(arg_1_0.viewGO, "#go_story/layout/#btn_tipreward/#go_rewardredpoint")
+local DungeonViewPointReward = class("DungeonViewPointReward", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function DungeonViewPointReward:onInitView()
+	self._btntipreward = gohelper.findChildButtonWithAudio(self.viewGO, "#go_story/layout/#btn_tipreward")
+	self._txtrewardprogress = gohelper.findChildText(self.viewGO, "#go_story/layout/#btn_tipreward/#txt_rewardprogress")
+	self._gorewardredpoint = gohelper.findChild(self.viewGO, "#go_story/layout/#btn_tipreward/#go_rewardredpoint")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btntipreward:AddClickListener(arg_2_0._btntiprewardOnClick, arg_2_0)
+function DungeonViewPointReward:addEvents()
+	self._btntipreward:AddClickListener(self._btntiprewardOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btntipreward:RemoveClickListener()
+function DungeonViewPointReward:removeEvents()
+	self._btntipreward:RemoveClickListener()
 end
 
-function var_0_0._btntiprewardOnClick(arg_4_0)
+function DungeonViewPointReward:_btntiprewardOnClick()
 	DungeonController.instance:openDungeonCumulativeRewardsView()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._animTipsReward = arg_5_0._btntipreward.gameObject:GetComponent(typeof(UnityEngine.Animation))
+function DungeonViewPointReward:_editableInitView()
+	self._animTipsReward = self._btntipreward.gameObject:GetComponent(typeof(UnityEngine.Animation))
 
-	arg_5_0:_updateMapTip()
+	self:_updateMapTip()
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function DungeonViewPointReward:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_7_0._onCloseViewFinish, arg_7_0)
-	DungeonController.instance:registerCallback(DungeonEvent.OnGetPointReward, arg_7_0._updateMapTip, arg_7_0)
+function DungeonViewPointReward:onOpen()
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	DungeonController.instance:registerCallback(DungeonEvent.OnGetPointReward, self._updateMapTip, self)
 end
 
-function var_0_0.onOpenFinish(arg_8_0)
+function DungeonViewPointReward:onOpenFinish()
 	return
 end
 
-function var_0_0.onClose(arg_9_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_9_0._onCloseViewFinish, arg_9_0)
-	DungeonController.instance:unregisterCallback(DungeonEvent.OnGetPointReward, arg_9_0._updateMapTip, arg_9_0)
-	TaskDispatcher.cancelTask(arg_9_0._refreshProgress, arg_9_0)
+function DungeonViewPointReward:onClose()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	DungeonController.instance:unregisterCallback(DungeonEvent.OnGetPointReward, self._updateMapTip, self)
+	TaskDispatcher.cancelTask(self._refreshProgress, self)
 end
 
-function var_0_0._onCloseViewFinish(arg_10_0, arg_10_1, arg_10_2)
-	if arg_10_1 == ViewName.DungeonMapView then
-		arg_10_0:_updateMapTip()
+function DungeonViewPointReward:_onCloseViewFinish(viewName, viewParam)
+	if viewName == ViewName.DungeonMapView then
+		self:_updateMapTip()
 	end
 end
 
-function var_0_0._isShowBtnGift(arg_11_0)
+function DungeonViewPointReward:_isShowBtnGift()
 	return OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.ChapterReward)
 end
 
-function var_0_0._updateMapTip(arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0._refreshProgress, arg_12_0)
-	TaskDispatcher.runDelay(arg_12_0._refreshProgress, arg_12_0, 0)
+function DungeonViewPointReward:_updateMapTip()
+	TaskDispatcher.cancelTask(self._refreshProgress, self)
+	TaskDispatcher.runDelay(self._refreshProgress, self, 0)
 end
 
-function var_0_0._refreshProgress(arg_13_0)
-	local var_13_0 = arg_13_0:_isShowBtnGift()
+function DungeonViewPointReward:_refreshProgress()
+	local showBtn = self:_isShowBtnGift()
 
-	gohelper.setActive(arg_13_0._btntipreward.gameObject, var_13_0)
+	gohelper.setActive(self._btntipreward.gameObject, showBtn)
 
-	if not var_13_0 then
+	if not showBtn then
 		return
 	end
 
-	arg_13_0._maxChapterId = lua_chapter_point_reward.configList[#lua_chapter_point_reward.configList].chapterId
+	local lastConfig = lua_chapter_point_reward.configList[#lua_chapter_point_reward.configList]
 
-	local var_13_1 = DungeonMapModel.instance:canGetRewardsList(arg_13_0._maxChapterId)
+	self._maxChapterId = lastConfig.chapterId
 
-	if var_13_1 and #var_13_1 > 0 then
-		arg_13_0._animTipsReward:Play("btn_tipreward_loop")
-		gohelper.setActive(arg_13_0._gorewardredpoint, true)
+	local rewards = DungeonMapModel.instance:canGetRewardsList(self._maxChapterId)
+	local canGetRewards = rewards and #rewards > 0
+
+	if canGetRewards then
+		self._animTipsReward:Play("btn_tipreward_loop")
+		gohelper.setActive(self._gorewardredpoint, true)
 	else
-		arg_13_0._animTipsReward:Play("btn_tipreward")
-		gohelper.setActive(arg_13_0._gorewardredpoint, false)
+		self._animTipsReward:Play("btn_tipreward")
+		gohelper.setActive(self._gorewardredpoint, false)
 	end
 
-	local var_13_2 = DungeonMapModel.instance:getRewardPointInfo()
-	local var_13_3 = DungeonMapModel.instance:getUnfinishedTargetReward()
+	local pointRewardInfo = DungeonMapModel.instance:getRewardPointInfo()
+	local targetReward = DungeonMapModel.instance:getUnfinishedTargetReward()
 
-	arg_13_0._txtrewardprogress.text = string.format("%s/%s", var_13_2.rewardPoint, var_13_3.rewardPointNum)
+	self._txtrewardprogress.text = string.format("%s/%s", pointRewardInfo.rewardPoint, targetReward.rewardPointNum)
 end
 
-function var_0_0.onDestroyView(arg_14_0)
+function DungeonViewPointReward:onDestroyView()
 	return
 end
 
-return var_0_0
+return DungeonViewPointReward

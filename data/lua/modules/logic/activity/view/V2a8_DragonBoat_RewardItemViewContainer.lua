@@ -1,127 +1,130 @@
-﻿module("modules.logic.activity.view.V2a8_DragonBoat_RewardItemViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/V2a8_DragonBoat_RewardItemViewContainer.lua
 
-local var_0_0 = class("V2a8_DragonBoat_RewardItemViewContainer", Activity101SignViewBaseContainer)
+module("modules.logic.activity.view.V2a8_DragonBoat_RewardItemViewContainer", package.seeall)
 
-function var_0_0.onModifyListScrollParam(arg_1_0, arg_1_1)
-	arg_1_1.cellClass = V2a8_DragonBoat_RewardItem
-	arg_1_1.cellWidth = 355
-	arg_1_1.cellHeight = 638
-	arg_1_1.cellSpaceH = 30
-	arg_1_1.rectMaskSoftness = {
+local V2a8_DragonBoat_RewardItemViewContainer = class("V2a8_DragonBoat_RewardItemViewContainer", Activity101SignViewBaseContainer)
+
+function V2a8_DragonBoat_RewardItemViewContainer:onModifyListScrollParam(refListScrollParam)
+	refListScrollParam.cellClass = V2a8_DragonBoat_RewardItem
+	refListScrollParam.cellWidth = 355
+	refListScrollParam.cellHeight = 638
+	refListScrollParam.cellSpaceH = 30
+	refListScrollParam.rectMaskSoftness = {
 		30,
 		0
 	}
 end
 
-function var_0_0.onBuildViews(arg_2_0)
+function V2a8_DragonBoat_RewardItemViewContainer:onBuildViews()
 	return {
-		(arg_2_0:getMainView())
+		(self:getMainView())
 	}
 end
 
-function var_0_0.getCurrentTaskCO(arg_3_0)
-	local var_3_0 = arg_3_0:actId()
+function V2a8_DragonBoat_RewardItemViewContainer:getCurrentTaskCO()
+	local actId = self:actId()
 
-	return ActivityType101Config.instance:getMoonFestivalTaskCO(var_3_0)
+	return ActivityType101Config.instance:getMoonFestivalTaskCO(actId)
 end
 
-function var_0_0.getCurrentDayCO(arg_4_0)
-	local var_4_0 = arg_4_0:actId()
-	local var_4_1 = ActivityType101Model.instance:getType101LoginCount(var_4_0)
+function V2a8_DragonBoat_RewardItemViewContainer:getCurrentDayCO()
+	local actId = self:actId()
+	local loginCount = ActivityType101Model.instance:getType101LoginCount(actId)
 
-	return arg_4_0:getDayCO(var_4_1)
+	return self:getDayCO(loginCount)
 end
 
-function var_0_0.getDayCO(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0:actId()
+function V2a8_DragonBoat_RewardItemViewContainer:getDayCO(day)
+	local actId = self:actId()
+	local actMO = ActivityModel.instance:getActMO(actId)
 
-	if not ActivityModel.instance:getActMO(var_5_0) then
+	if not actMO then
 		return
 	end
 
-	local var_5_1 = ActivityType101Config.instance:getMoonFestivalSignMaxDay(var_5_0)
+	local maxDay = ActivityType101Config.instance:getMoonFestivalSignMaxDay(actId)
 
-	if var_5_1 <= 0 then
+	if maxDay <= 0 then
 		return
 	end
 
-	arg_5_1 = GameUtil.clamp(arg_5_1, 1, var_5_1)
+	day = GameUtil.clamp(day, 1, maxDay)
 
-	return ActivityType101Config.instance:getMoonFestivalByDay(var_5_0, arg_5_1)
+	return ActivityType101Config.instance:getMoonFestivalByDay(actId, day)
 end
 
-function var_0_0.isNone(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0:actId()
+function V2a8_DragonBoat_RewardItemViewContainer:isNone(id)
+	local actId = self:actId()
 
-	return ActivityType101Model.instance:isType101SpRewardUncompleted(var_6_0, arg_6_1)
+	return ActivityType101Model.instance:isType101SpRewardUncompleted(actId, id)
 end
 
-function var_0_0.isFinishedTask(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0:actId()
+function V2a8_DragonBoat_RewardItemViewContainer:isFinishedTask(id)
+	local actId = self:actId()
 
-	return ActivityType101Model.instance:isType101SpRewardGot(var_7_0, arg_7_1)
+	return ActivityType101Model.instance:isType101SpRewardGot(actId, id)
 end
 
-function var_0_0.isRewardable(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0:actId()
+function V2a8_DragonBoat_RewardItemViewContainer:isRewardable(id)
+	local actId = self:actId()
 
-	return ActivityType101Model.instance:isType101SpRewardCouldGet(var_8_0, arg_8_1)
+	return ActivityType101Model.instance:isType101SpRewardCouldGet(actId, id)
 end
 
-function var_0_0.sendGet101SpBonusRequest(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = arg_9_0:getCurrentTaskCO()
+function V2a8_DragonBoat_RewardItemViewContainer:sendGet101SpBonusRequest(sucCb, sucCbObj)
+	local CO = self:getCurrentTaskCO()
 
-	if not var_9_0 then
+	if not CO then
 		return
 	end
 
-	local var_9_1 = arg_9_0:actId()
-	local var_9_2 = var_9_0.id
+	local actId = self:actId()
+	local id = CO.id
 
-	if not ActivityType101Model.instance:isType101SpRewardCouldGet(var_9_1, var_9_2) then
+	if not ActivityType101Model.instance:isType101SpRewardCouldGet(actId, id) then
 		return
 	end
 
-	Activity101Rpc.instance:sendGet101SpBonusRequest(var_9_1, var_9_2, arg_9_1, arg_9_2)
+	Activity101Rpc.instance:sendGet101SpBonusRequest(actId, id, sucCb, sucCbObj)
 
 	return true
 end
 
-local var_0_1 = {
+local StateDay = {
 	Done = 1999,
 	None = 0
 }
 
-function var_0_0._getPrefsKey(arg_10_0, arg_10_1)
-	return arg_10_0:getPrefsKeyPrefix() .. tostring(arg_10_1)
+function V2a8_DragonBoat_RewardItemViewContainer:_getPrefsKey(day)
+	return self:getPrefsKeyPrefix() .. tostring(day)
 end
 
-function var_0_0.saveState(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = arg_11_0:_getPrefsKey(arg_11_1)
+function V2a8_DragonBoat_RewardItemViewContainer:saveState(day, value)
+	local key = self:_getPrefsKey(day)
 
-	arg_11_0:saveInt(var_11_0, arg_11_2 or var_0_1.None)
+	self:saveInt(key, value or StateDay.None)
 end
 
-function var_0_0.getState(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = arg_12_0:_getPrefsKey(arg_12_1)
+function V2a8_DragonBoat_RewardItemViewContainer:getState(day, defaultValue)
+	local key = self:_getPrefsKey(day)
 
-	return arg_12_0:getInt(var_12_0, arg_12_2 or var_0_1.None)
+	return self:getInt(key, defaultValue or StateDay.None)
 end
 
-function var_0_0.saveStateDone(arg_13_0, arg_13_1, arg_13_2)
-	arg_13_0:saveState(arg_13_1, arg_13_2 and var_0_1.Done or var_0_1.None)
+function V2a8_DragonBoat_RewardItemViewContainer:saveStateDone(day, isDone)
+	self:saveState(day, isDone and StateDay.Done or StateDay.None)
 end
 
-function var_0_0.isStateDone(arg_14_0, arg_14_1)
-	return arg_14_0:getState(arg_14_1) == var_0_1.Done
+function V2a8_DragonBoat_RewardItemViewContainer:isStateDone(day)
+	return self:getState(day) == StateDay.Done
 end
 
-function var_0_0.isPlayAnimAvaliable(arg_15_0, arg_15_1)
-	if arg_15_0:isType101RewardCouldGet(arg_15_1) then
-		return not arg_15_0:isStateDone(arg_15_1)
+function V2a8_DragonBoat_RewardItemViewContainer:isPlayAnimAvaliable(day)
+	if self:isType101RewardCouldGet(day) then
+		return not self:isStateDone(day)
 	end
 
 	return false
 end
 
-return var_0_0
+return V2a8_DragonBoat_RewardItemViewContainer

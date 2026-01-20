@@ -1,25 +1,27 @@
-﻿module("modules.logic.common.rpc.CommonRpc", package.seeall)
+﻿-- chunkname: @modules/logic/common/rpc/CommonRpc.lua
 
-local var_0_0 = class("CommonRpc", BaseRpc)
+module("modules.logic.common.rpc.CommonRpc", package.seeall)
 
-function var_0_0.sendGetServerTimeRequest(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = CommonModule_pb.GetServerTimeRequest()
+local CommonRpc = class("CommonRpc", BaseRpc)
 
-	return arg_1_0:sendMsg(var_1_0, arg_1_1, arg_1_2)
+function CommonRpc:sendGetServerTimeRequest(callback, callbackObj)
+	local req = CommonModule_pb.GetServerTimeRequest()
+
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveGetServerTimeReply(arg_2_0, arg_2_1, arg_2_2)
-	local var_2_0 = tonumber(arg_2_2.offsetTime)
-	local var_2_1 = math.floor(var_2_0 / 1000)
+function CommonRpc:onReceiveGetServerTimeReply(resultCode, msg)
+	local offsetTime = tonumber(msg.offsetTime)
+	local offsetTimeSecond = math.floor(offsetTime / 1000)
 
-	ServerTime.init(var_2_1)
+	ServerTime.init(offsetTimeSecond)
 
-	local var_2_2 = tonumber(arg_2_2.serverTime)
-	local var_2_3 = math.floor(var_2_2 / 1000)
+	local serverTimeStamp = tonumber(msg.serverTime)
+	local serverTimeStampSecond = math.floor(serverTimeStamp / 1000)
 
-	ServerTime.update(var_2_3)
+	ServerTime.update(serverTimeStampSecond)
 end
 
-var_0_0.instance = var_0_0.New()
+CommonRpc.instance = CommonRpc.New()
 
-return var_0_0
+return CommonRpc

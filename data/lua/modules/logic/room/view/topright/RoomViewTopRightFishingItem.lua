@@ -1,9 +1,14 @@
-﻿module("modules.logic.room.view.topright.RoomViewTopRightFishingItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/topright/RoomViewTopRightFishingItem.lua
 
-local var_0_0 = class("RoomViewTopRightFishingItem", RoomViewTopRightMaterialItem)
+module("modules.logic.room.view.topright.RoomViewTopRightFishingItem", package.seeall)
 
-function var_0_0._onClick(arg_1_0)
-	if ItemModel.instance:getItemQuantity(arg_1_0._item.type, arg_1_0._item.id) >= (FishingConfig.instance:getFishingConst(FishingEnum.ConstId.MaxHasFishingCurrency, true) or 0) then
+local RoomViewTopRightFishingItem = class("RoomViewTopRightFishingItem", RoomViewTopRightMaterialItem)
+
+function RoomViewTopRightFishingItem:_onClick()
+	local quantity = ItemModel.instance:getItemQuantity(self._item.type, self._item.id)
+	local maxCount = FishingConfig.instance:getFishingConst(FishingEnum.ConstId.MaxHasFishingCurrency, true) or 0
+
+	if maxCount <= quantity then
 		GameFacade.showToast(ToastEnum.FishingCurrencyFull)
 
 		return
@@ -12,23 +17,23 @@ function var_0_0._onClick(arg_1_0)
 	FishingController.instance:openFishingExchange()
 end
 
-function var_0_0._setQuantity(arg_2_0, arg_2_1)
-	arg_2_1 = math.floor(arg_2_1)
+function RoomViewTopRightFishingItem:_setQuantity(quantity)
+	quantity = math.floor(quantity)
 
-	local var_2_0 = FishingConfig.instance:getFishingConst(FishingEnum.ConstId.MaxHasFishingCurrency, true)
-	local var_2_1 = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("room_wholesale_weekly_revenue"), arg_2_1, var_2_0 or 0)
+	local maxCount = FishingConfig.instance:getFishingConst(FishingEnum.ConstId.MaxHasFishingCurrency, true)
+	local str = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("room_wholesale_weekly_revenue"), quantity, maxCount or 0)
 
-	arg_2_0._resourceItem.txtquantity.text = var_2_1
-	arg_2_0._quantity = arg_2_1
+	self._resourceItem.txtquantity.text = str
+	self._quantity = quantity
 end
 
-function var_0_0._tweenFinishCallback(arg_3_0)
-	local var_3_0 = ItemModel.instance:getItemQuantity(arg_3_0._item.type, arg_3_0._item.id)
-	local var_3_1 = FishingConfig.instance:getFishingConst(FishingEnum.ConstId.MaxHasFishingCurrency, true)
-	local var_3_2 = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("room_wholesale_weekly_revenue"), var_3_0, var_3_1 or 0)
+function RoomViewTopRightFishingItem:_tweenFinishCallback()
+	local quantity = ItemModel.instance:getItemQuantity(self._item.type, self._item.id)
+	local maxCount = FishingConfig.instance:getFishingConst(FishingEnum.ConstId.MaxHasFishingCurrency, true)
+	local str = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("room_wholesale_weekly_revenue"), quantity, maxCount or 0)
 
-	arg_3_0._resourceItem.txtquantity.text = var_3_2
-	arg_3_0._quantity = var_3_0
+	self._resourceItem.txtquantity.text = str
+	self._quantity = quantity
 end
 
-return var_0_0
+return RoomViewTopRightFishingItem

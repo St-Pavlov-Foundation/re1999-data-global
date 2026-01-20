@@ -1,37 +1,39 @@
-﻿module("modules.logic.playercard.view.comp.PlayerCardAssitItem", package.seeall)
+﻿-- chunkname: @modules/logic/playercard/view/comp/PlayerCardAssitItem.lua
 
-local var_0_0 = class("PlayerCardAssitItem", LuaCompBase)
+module("modules.logic.playercard.view.comp.PlayerCardAssitItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0.goEmpty = gohelper.findChild(arg_1_1, "empty")
-	arg_1_0.goRole = gohelper.findChild(arg_1_1, "#go_roleitem")
-	arg_1_0.simageHead = gohelper.findChildSingleImage(arg_1_1, "#go_roleitem/rolehead")
-	arg_1_0.imageCareer = gohelper.findChildImage(arg_1_1, "#go_roleitem/career")
-	arg_1_0.imageLevel = gohelper.findChildImage(arg_1_1, "#go_roleitem/layout/level")
-	arg_1_0.txtLevel = gohelper.findChildTextMesh(arg_1_1, "#go_roleitem/layout/#txt_level")
-	arg_1_0.imagQuality = gohelper.findChildImage(arg_1_1, "#go_roleitem/quality")
-	arg_1_0.goExskill = gohelper.findChild(arg_1_1, "#go_exskill")
-	arg_1_0.imageExskill = gohelper.findChildImage(arg_1_1, "#go_exskill/#image_exskill")
-	arg_1_0.btnClick = gohelper.findChildButtonWithAudio(arg_1_1, "#btn_clickarea")
-	arg_1_0.goSelectedEff = gohelper.findChild(arg_1_1, "selected_eff")
+local PlayerCardAssitItem = class("PlayerCardAssitItem", LuaCompBase)
+
+function PlayerCardAssitItem:init(go)
+	self.viewGO = go
+	self.goEmpty = gohelper.findChild(go, "empty")
+	self.goRole = gohelper.findChild(go, "#go_roleitem")
+	self.simageHead = gohelper.findChildSingleImage(go, "#go_roleitem/rolehead")
+	self.imageCareer = gohelper.findChildImage(go, "#go_roleitem/career")
+	self.imageLevel = gohelper.findChildImage(go, "#go_roleitem/layout/level")
+	self.txtLevel = gohelper.findChildTextMesh(go, "#go_roleitem/layout/#txt_level")
+	self.imagQuality = gohelper.findChildImage(go, "#go_roleitem/quality")
+	self.goExskill = gohelper.findChild(go, "#go_exskill")
+	self.imageExskill = gohelper.findChildImage(go, "#go_exskill/#image_exskill")
+	self.btnClick = gohelper.findChildButtonWithAudio(go, "#btn_clickarea")
+	self.goSelectedEff = gohelper.findChild(go, "selected_eff")
 end
 
-function var_0_0.playSelelctEffect(arg_2_0)
-	gohelper.setActive(arg_2_0.goSelectedEff, false)
-	gohelper.setActive(arg_2_0.goSelectedEff, true)
+function PlayerCardAssitItem:playSelelctEffect()
+	gohelper.setActive(self.goSelectedEff, false)
+	gohelper.setActive(self.goSelectedEff, true)
 	PlayerCardController.instance:playChangeEffectAudio()
 end
 
-function var_0_0.setData(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	arg_3_0.info = arg_3_1
-	arg_3_0.isPlayerSelf = arg_3_2
-	arg_3_0.compType = arg_3_3
+function PlayerCardAssitItem:setData(info, isPlayerSelf, compType)
+	self.info = info
+	self.isPlayerSelf = isPlayerSelf
+	self.compType = compType
 
-	arg_3_0:showcharacterinfo(arg_3_1)
+	self:showcharacterinfo(info)
 end
 
-local var_0_1 = {
+local breakImgValue = {
 	0.23,
 	0.42,
 	0.59,
@@ -39,75 +41,75 @@ local var_0_1 = {
 	1
 }
 
-function var_0_0.showcharacterinfo(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_1 and arg_4_1 ~= 0 and arg_4_1.heroId and arg_4_1.heroId ~= "0" and arg_4_1.heroId ~= 0
+function PlayerCardAssitItem:showcharacterinfo(info)
+	local notIsEmpty = info and info ~= 0 and info.heroId and info.heroId ~= "0" and info.heroId ~= 0
 
-	gohelper.setActive(arg_4_0.goEmpty, arg_4_0.isPlayerSelf and not var_4_0)
-	gohelper.setActive(arg_4_0.goRole, var_4_0)
+	gohelper.setActive(self.goEmpty, self.isPlayerSelf and not notIsEmpty)
+	gohelper.setActive(self.goRole, notIsEmpty)
 
-	if var_4_0 then
-		if arg_4_0.isPlayerSelf then
-			arg_4_1 = HeroModel.instance:getByHeroId(arg_4_1.heroId)
+	if notIsEmpty then
+		if self.isPlayerSelf then
+			info = HeroModel.instance:getByHeroId(info.heroId)
 		end
 
-		local var_4_1 = HeroConfig.instance:getHeroCO(arg_4_1.heroId)
-		local var_4_2 = SkinConfig.instance:getSkinCo(arg_4_1.skin)
+		local heroConfig = HeroConfig.instance:getHeroCO(info.heroId)
+		local skinConfig = SkinConfig.instance:getSkinCo(info.skin)
 
-		arg_4_0.simageHead:LoadImage(ResUrl.getHeadIconSmall(var_4_2.retangleIcon))
+		self.simageHead:LoadImage(ResUrl.getHeadIconSmall(skinConfig.retangleIcon))
 
-		local var_4_3, var_4_4 = HeroConfig.instance:getShowLevel(arg_4_1.level)
+		local lev, rank = HeroConfig.instance:getShowLevel(info.level)
 
-		UISpriteSetMgr.instance:setCommonSprite(arg_4_0.imageCareer, string.format("lssx_%s", var_4_1.career), true)
+		UISpriteSetMgr.instance:setCommonSprite(self.imageCareer, string.format("lssx_%s", heroConfig.career), true)
 
-		if var_4_4 > 1 then
-			UISpriteSetMgr.instance:setCommonSprite(arg_4_0.imageLevel, string.format("dongxi_xiao_%s", var_4_4 - 1), true)
-			gohelper.setActive(arg_4_0.imageLevel, true)
+		if rank > 1 then
+			UISpriteSetMgr.instance:setCommonSprite(self.imageLevel, string.format("dongxi_xiao_%s", rank - 1), true)
+			gohelper.setActive(self.imageLevel, true)
 		else
-			gohelper.setActive(arg_4_0.imageLevel, false)
+			gohelper.setActive(self.imageLevel, false)
 		end
 
-		arg_4_0.txtLevel.text = var_4_3
+		self.txtLevel.text = lev
 
-		local var_4_5 = arg_4_1.exSkillLevel and var_0_1[arg_4_1.exSkillLevel] or 0
+		local val = info.exSkillLevel and breakImgValue[info.exSkillLevel] or 0
 
-		arg_4_0.imageExskill.fillAmount = var_4_5
+		self.imageExskill.fillAmount = val
 
-		gohelper.setActive(arg_4_0.goExskill, var_4_5 > 0)
-		UISpriteSetMgr.instance:setRoomSprite(arg_4_0.imagQuality, "quality_" .. CharacterEnum.Color[var_4_1.rare])
+		gohelper.setActive(self.goExskill, val > 0)
+		UISpriteSetMgr.instance:setRoomSprite(self.imagQuality, "quality_" .. CharacterEnum.Color[heroConfig.rare])
 
-		arg_4_0.heroId = var_4_1.id
+		self.heroId = heroConfig.id
 	else
-		gohelper.setActive(arg_4_0.goExskill, false)
+		gohelper.setActive(self.goExskill, false)
 
-		arg_4_0.heroId = nil
+		self.heroId = nil
 	end
 
-	if arg_4_0.notIsFirst and arg_4_0.heroId ~= arg_4_0.tempHeroId then
-		arg_4_0:playSelelctEffect()
+	if self.notIsFirst and self.heroId ~= self.tempHeroId then
+		self:playSelelctEffect()
 	end
 
-	arg_4_0.tempHeroId = arg_4_0.heroId
-	arg_4_0.notIsFirst = true
+	self.tempHeroId = self.heroId
+	self.notIsFirst = true
 end
 
-function var_0_0.btnClickOnClick(arg_5_0)
-	if arg_5_0.isPlayerSelf and arg_5_0.compType == PlayerCardEnum.CompType.Normal then
+function PlayerCardAssitItem:btnClickOnClick()
+	if self.isPlayerSelf and self.compType == PlayerCardEnum.CompType.Normal then
 		ViewMgr.instance:openView(ViewName.ShowCharacterView, {
 			notRepeatUpdateAssistReward = true
 		})
 	end
 end
 
-function var_0_0.addEventListeners(arg_6_0)
-	arg_6_0.btnClick:AddClickListener(arg_6_0.btnClickOnClick, arg_6_0)
+function PlayerCardAssitItem:addEventListeners()
+	self.btnClick:AddClickListener(self.btnClickOnClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_7_0)
-	arg_7_0.btnClick:RemoveClickListener()
+function PlayerCardAssitItem:removeEventListeners()
+	self.btnClick:RemoveClickListener()
 end
 
-function var_0_0.onDestroy(arg_8_0)
-	arg_8_0.simageHead:UnLoadImage()
+function PlayerCardAssitItem:onDestroy()
+	self.simageHead:UnLoadImage()
 end
 
-return var_0_0
+return PlayerCardAssitItem

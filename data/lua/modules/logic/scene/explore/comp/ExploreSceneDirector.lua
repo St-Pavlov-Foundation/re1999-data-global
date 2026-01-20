@@ -1,44 +1,46 @@
-﻿module("modules.logic.scene.explore.comp.ExploreSceneDirector", package.seeall)
+﻿-- chunkname: @modules/logic/scene/explore/comp/ExploreSceneDirector.lua
 
-local var_0_0 = class("ExploreSceneDirector", BaseSceneComp)
+module("modules.logic.scene.explore.comp.ExploreSceneDirector", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._scene = arg_1_0:getCurScene()
+local ExploreSceneDirector = class("ExploreSceneDirector", BaseSceneComp)
+
+function ExploreSceneDirector:onInit()
+	self._scene = self:getCurScene()
 end
 
-function var_0_0.onSceneStart(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._scene = arg_2_0:getCurScene()
-	arg_2_0._compInitSequence = FlowSequence.New()
+function ExploreSceneDirector:onSceneStart(sceneId, levelId)
+	self._scene = self:getCurScene()
+	self._compInitSequence = FlowSequence.New()
 
-	local var_2_0 = FlowParallel.New()
+	local levelAndPreloadWork = FlowParallel.New()
 
-	arg_2_0._compInitSequence:addWork(var_2_0)
-	var_2_0:addWork(RoomSceneWaitEventCompWork.New(arg_2_0._scene.map, ExploreEvent.InitMapDone))
-	var_2_0:addWork(RoomSceneWaitEventCompWork.New(arg_2_0._scene.level, CommonSceneLevelComp.OnLevelLoaded))
-	var_2_0:addWork(RoomSceneWaitEventCompWork.New(arg_2_0._scene.preloader, ExploreEvent.OnExplorePreloadFinish))
-	arg_2_0._compInitSequence:registerDoneListener(arg_2_0._compInitDone, arg_2_0)
-	arg_2_0._compInitSequence:start({
-		sceneId = arg_2_1,
-		levelId = arg_2_2
+	self._compInitSequence:addWork(levelAndPreloadWork)
+	levelAndPreloadWork:addWork(RoomSceneWaitEventCompWork.New(self._scene.map, ExploreEvent.InitMapDone))
+	levelAndPreloadWork:addWork(RoomSceneWaitEventCompWork.New(self._scene.level, CommonSceneLevelComp.OnLevelLoaded))
+	levelAndPreloadWork:addWork(RoomSceneWaitEventCompWork.New(self._scene.preloader, ExploreEvent.OnExplorePreloadFinish))
+	self._compInitSequence:registerDoneListener(self._compInitDone, self)
+	self._compInitSequence:start({
+		sceneId = sceneId,
+		levelId = levelId
 	})
 end
 
-function var_0_0._compInitDone(arg_3_0)
-	arg_3_0._scene:onPrepared()
+function ExploreSceneDirector:_compInitDone()
+	self._scene:onPrepared()
 
-	arg_3_0._compInitSequence = nil
+	self._compInitSequence = nil
 end
 
-function var_0_0.onSceneClose(arg_4_0)
-	if arg_4_0._compInitSequence then
-		arg_4_0._compInitSequence:destroy()
+function ExploreSceneDirector:onSceneClose()
+	if self._compInitSequence then
+		self._compInitSequence:destroy()
 
-		arg_4_0._compInitSequence = nil
+		self._compInitSequence = nil
 	end
 end
 
-function var_0_0._onLevelLoaded(arg_5_0, arg_5_1)
+function ExploreSceneDirector:_onLevelLoaded(levelId)
 	return
 end
 
-return var_0_0
+return ExploreSceneDirector

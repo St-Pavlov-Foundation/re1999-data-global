@@ -1,10 +1,12 @@
-﻿local var_0_0 = class("OdysseyConfig", BaseConfig)
+﻿-- chunkname: @modules/logic/sp01/odyssey/config/OdysseyConfig.lua
 
-function var_0_0.ctor(arg_1_0)
+local OdysseyConfig = class("OdysseyConfig", BaseConfig)
+
+function OdysseyConfig:ctor()
 	return
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function OdysseyConfig:reqConfigNames()
 	return {
 		"odyssey_const",
 		"odyssey_map",
@@ -29,331 +31,334 @@ function var_0_0.reqConfigNames(arg_2_0)
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "odyssey_const" then
-		arg_3_0._constConfig = arg_3_2
-	elseif arg_3_1 == "odyssey_map" then
-		arg_3_0._mapConfig = arg_3_2
-	elseif arg_3_1 == "odyssey_element" then
-		arg_3_0._elementConfig = arg_3_2
-		arg_3_0._mapElementDict = {}
-		arg_3_0._mapElementList = {}
+function OdysseyConfig:onConfigLoaded(configName, configTable)
+	if configName == "odyssey_const" then
+		self._constConfig = configTable
+	elseif configName == "odyssey_map" then
+		self._mapConfig = configTable
+	elseif configName == "odyssey_element" then
+		self._elementConfig = configTable
+		self._mapElementDict = {}
+		self._mapElementList = {}
 
-		arg_3_0:buildMapElementConfig()
-	elseif arg_3_1 == "odyssey_option_element" then
-		arg_3_0._optionElementConfig = arg_3_2
-	elseif arg_3_1 == "odyssey_option" then
-		arg_3_0._optionConfig = arg_3_2
-		arg_3_0._dataBaseOptionDict = {}
+		self:buildMapElementConfig()
+	elseif configName == "odyssey_option_element" then
+		self._optionElementConfig = configTable
+	elseif configName == "odyssey_option" then
+		self._optionConfig = configTable
+		self._dataBaseOptionDict = {}
 
-		arg_3_0:buildDataBaseOptionConfig()
-	elseif arg_3_1 == "odyssey_dialog_element" then
-		arg_3_0._dialogElementConfig = arg_3_2
-	elseif arg_3_1 == "odyssey_fight_element" then
-		arg_3_0._fightElementConfig = arg_3_2
-	elseif arg_3_1 == "odyssey_map_task" then
-		arg_3_0._mapTaskConfig = arg_3_2
-	elseif arg_3_1 == "odyssey_drop" then
-		arg_3_0._dropConfig = arg_3_2
-	elseif arg_3_1 == "odyssey_religion" then
-		arg_3_0._religionConfig = arg_3_2
-	elseif arg_3_1 == "odyssey_religion_clue" then
-		arg_3_0._religionClueConfig = arg_3_2
-	elseif arg_3_1 == "odyssey_item" then
-		arg_3_0._itemConfig = arg_3_2
-	elseif arg_3_1 == "odyssey_level" then
-		arg_3_0._levelConfig = arg_3_2
-	elseif arg_3_1 == "odyssey_level_suppress" then
-		arg_3_0._levelSuppressConfig = arg_3_2
-	elseif arg_3_1 == "odyssey_equip_suit" then
-		arg_3_0._equipSuitConfig = arg_3_2
-	elseif arg_3_1 == "odyssey_equip_suit_effect" then
-		arg_3_0._equipSuitEffectConfig = arg_3_2
-		arg_3_0._suitAllEffectList = {}
-	elseif arg_3_1 == "odyssey_talent" then
-		arg_3_0._talentConfig = arg_3_2
-		arg_3_0._talentAllEffectList = {}
-		arg_3_0._talentTypeCoList = {}
-		arg_3_0._talentNodePreCoList = {}
+		self:buildDataBaseOptionConfig()
+	elseif configName == "odyssey_dialog_element" then
+		self._dialogElementConfig = configTable
+	elseif configName == "odyssey_fight_element" then
+		self._fightElementConfig = configTable
+	elseif configName == "odyssey_map_task" then
+		self._mapTaskConfig = configTable
+	elseif configName == "odyssey_drop" then
+		self._dropConfig = configTable
+	elseif configName == "odyssey_religion" then
+		self._religionConfig = configTable
+	elseif configName == "odyssey_religion_clue" then
+		self._religionClueConfig = configTable
+	elseif configName == "odyssey_item" then
+		self._itemConfig = configTable
+	elseif configName == "odyssey_level" then
+		self._levelConfig = configTable
+	elseif configName == "odyssey_level_suppress" then
+		self._levelSuppressConfig = configTable
+	elseif configName == "odyssey_equip_suit" then
+		self._equipSuitConfig = configTable
+	elseif configName == "odyssey_equip_suit_effect" then
+		self._equipSuitEffectConfig = configTable
+		self._suitAllEffectList = {}
+	elseif configName == "odyssey_talent" then
+		self._talentConfig = configTable
+		self._talentAllEffectList = {}
+		self._talentTypeCoList = {}
+		self._talentNodePreCoList = {}
 
-		arg_3_0:buildTalentCoList()
-	elseif arg_3_1 == "odyssey_myth" then
-		arg_3_0._mythConfig = arg_3_2
-	elseif arg_3_1 == "odyssey_task" then
-		arg_3_0._taskConfig = arg_3_2
-	elseif arg_3_1 == "odyssey_fight_task_desc" then
-		arg_3_0._fightTaskDescConfig = arg_3_2
+		self:buildTalentCoList()
+	elseif configName == "odyssey_myth" then
+		self._mythConfig = configTable
+	elseif configName == "odyssey_task" then
+		self._taskConfig = configTable
+	elseif configName == "odyssey_fight_task_desc" then
+		self._fightTaskDescConfig = configTable
 	end
 end
 
-function var_0_0.getConstConfig(arg_4_0, arg_4_1)
-	return arg_4_0._constConfig.configDict[arg_4_1]
+function OdysseyConfig:getConstConfig(id)
+	return self._constConfig.configDict[id]
 end
 
-function var_0_0.buildMapElementConfig(arg_5_0)
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0._elementConfig.configList) do
-		local var_5_0 = arg_5_0._mapElementDict[iter_5_1.mapId]
+function OdysseyConfig:buildMapElementConfig()
+	for index, elementCo in ipairs(self._elementConfig.configList) do
+		local elementMap = self._mapElementDict[elementCo.mapId]
 
-		if not var_5_0 then
-			var_5_0 = {}
-			arg_5_0._mapElementDict[iter_5_1.mapId] = var_5_0
-			arg_5_0._mapElementList[iter_5_1.mapId] = {}
+		if not elementMap then
+			elementMap = {}
+			self._mapElementDict[elementCo.mapId] = elementMap
+			self._mapElementList[elementCo.mapId] = {}
 		end
 
-		if not var_5_0[iter_5_1.id] then
-			var_5_0[iter_5_1.id] = iter_5_1
+		if not elementMap[elementCo.id] then
+			elementMap[elementCo.id] = elementCo
 
-			table.insert(arg_5_0._mapElementList[iter_5_1.mapId], iter_5_1)
+			table.insert(self._mapElementList[elementCo.mapId], elementCo)
 		end
 	end
 end
 
-function var_0_0.getDungeonMapConfig(arg_6_0, arg_6_1)
-	return arg_6_0._mapConfig.configDict[arg_6_1]
+function OdysseyConfig:getDungeonMapConfig(id)
+	return self._mapConfig.configDict[id]
 end
 
-function var_0_0.getAllDungeonMapCoList(arg_7_0)
-	return arg_7_0._mapConfig.configList
+function OdysseyConfig:getAllDungeonMapCoList()
+	return self._mapConfig.configList
 end
 
-function var_0_0.getMapAllElementCoList(arg_8_0, arg_8_1)
-	return arg_8_0._mapElementList[arg_8_1]
+function OdysseyConfig:getMapAllElementCoList(mapId)
+	return self._mapElementList[mapId]
 end
 
-function var_0_0.getElementConfig(arg_9_0, arg_9_1)
-	return arg_9_0._elementConfig.configDict[arg_9_1]
+function OdysseyConfig:getElementConfig(elementId)
+	return self._elementConfig.configDict[elementId]
 end
 
-function var_0_0.getAllElementCoList(arg_10_0)
-	return arg_10_0._elementConfig.configList
+function OdysseyConfig:getAllElementCoList()
+	return self._elementConfig.configList
 end
 
-function var_0_0.getMainTaskConfig(arg_11_0, arg_11_1)
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0._mapTaskConfig.configList) do
-		local var_11_0 = string.splitToNumber(iter_11_1.elementList, "#")
+function OdysseyConfig:getMainTaskConfig(elementId)
+	for _, mapTaskCo in ipairs(self._mapTaskConfig.configList) do
+		local mainElementList = string.splitToNumber(mapTaskCo.elementList, "#")
 
-		for iter_11_2, iter_11_3 in ipairs(var_11_0) do
-			if iter_11_3 == arg_11_1 then
-				return iter_11_1
+		for _, taskElemenetId in ipairs(mainElementList) do
+			if taskElemenetId == elementId then
+				return mapTaskCo
 			end
 		end
 	end
 end
 
-function var_0_0.getMapTaskCo(arg_12_0, arg_12_1)
-	return arg_12_0._mapTaskConfig.configDict[arg_12_1]
+function OdysseyConfig:getMapTaskCo(mapTaskId)
+	return self._mapTaskConfig.configDict[mapTaskId]
 end
 
-function var_0_0.getDialogConfig(arg_13_0, arg_13_1, arg_13_2)
-	return arg_13_0._dialogElementConfig.configDict[arg_13_1] and arg_13_0._dialogElementConfig.configDict[arg_13_1][arg_13_2]
+function OdysseyConfig:getDialogConfig(elementId, stepId)
+	return self._dialogElementConfig.configDict[elementId] and self._dialogElementConfig.configDict[elementId][stepId]
 end
 
-function var_0_0.buildDataBaseOptionConfig(arg_14_0)
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0._optionConfig.configList) do
-		if iter_14_1.dataBase > 0 then
-			arg_14_0._dataBaseOptionDict[iter_14_1.dataBase] = iter_14_1
+function OdysseyConfig:buildDataBaseOptionConfig()
+	for index, optionCo in ipairs(self._optionConfig.configList) do
+		if optionCo.dataBase > 0 then
+			self._dataBaseOptionDict[optionCo.dataBase] = optionCo
 		end
 	end
 end
 
-function var_0_0.getOptionConfig(arg_15_0, arg_15_1)
-	return arg_15_0._optionConfig.configDict[arg_15_1]
+function OdysseyConfig:getOptionConfig(id)
+	return self._optionConfig.configDict[id]
 end
 
-function var_0_0.checkIsOptionDataBase(arg_16_0, arg_16_1)
-	return arg_16_0._dataBaseOptionDict[arg_16_1]
+function OdysseyConfig:checkIsOptionDataBase(dataBaeId)
+	return self._dataBaseOptionDict[dataBaeId]
 end
 
-function var_0_0.getElementFightConfig(arg_17_0, arg_17_1)
-	return arg_17_0._fightElementConfig.configDict[arg_17_1]
+function OdysseyConfig:getElementFightConfig(id)
+	return self._fightElementConfig.configDict[id]
 end
 
-function var_0_0.getElemenetOptionConfig(arg_18_0, arg_18_1)
-	return arg_18_0._optionElementConfig.configDict[arg_18_1]
+function OdysseyConfig:getElemenetOptionConfig(id)
+	return self._optionElementConfig.configDict[id]
 end
 
-function var_0_0.getItemConfig(arg_19_0, arg_19_1)
-	return arg_19_0._itemConfig.configDict[arg_19_1]
+function OdysseyConfig:getItemConfig(id)
+	return self._itemConfig.configDict[id]
 end
 
-function var_0_0.getItemConfigList(arg_20_0)
-	return arg_20_0._itemConfig.configList
+function OdysseyConfig:getItemConfigList()
+	return self._itemConfig.configList
 end
 
-function var_0_0.getEquipSuitConfig(arg_21_0, arg_21_1)
-	return arg_21_0._equipSuitConfig.configDict[arg_21_1]
+function OdysseyConfig:getEquipSuitConfig(id)
+	return self._equipSuitConfig.configDict[id]
 end
 
-function var_0_0.getEquipSuitConfigList(arg_22_0)
-	return arg_22_0._equipSuitConfig.configList
+function OdysseyConfig:getEquipSuitConfigList()
+	return self._equipSuitConfig.configList
 end
 
-function var_0_0.getLevelSuppressConfig(arg_23_0, arg_23_1)
-	for iter_23_0, iter_23_1 in ipairs(arg_23_0._levelSuppressConfig.configList) do
-		if iter_23_1.levelDifference == arg_23_1 then
-			return iter_23_1
+function OdysseyConfig:getLevelSuppressConfig(levelDifference)
+	for index, config in ipairs(self._levelSuppressConfig.configList) do
+		if config.levelDifference == levelDifference then
+			return config
 		end
 	end
 end
 
-function var_0_0.getLevelConfig(arg_24_0, arg_24_1)
-	return arg_24_0._levelConfig.configDict[arg_24_1]
+function OdysseyConfig:getLevelConfig(level)
+	return self._levelConfig.configDict[level]
 end
 
-function var_0_0.getLevelConfigList(arg_25_0)
-	return arg_25_0._levelConfig.configList
+function OdysseyConfig:getLevelConfigList()
+	return self._levelConfig.configList
 end
 
-function var_0_0.getEquipDropConfig(arg_26_0, arg_26_1)
-	return arg_26_0._dropConfig.configDict[arg_26_1]
+function OdysseyConfig:getEquipDropConfig(dropId)
+	return self._dropConfig.configDict[dropId]
 end
 
-function var_0_0.getEquipSuitAllEffect(arg_27_0, arg_27_1)
-	local var_27_0 = arg_27_0._suitAllEffectList[arg_27_1]
+function OdysseyConfig:getEquipSuitAllEffect(suitId)
+	local allEffectList = self._suitAllEffectList[suitId]
 
-	if not var_27_0 then
-		if not arg_27_0._equipSuitEffectConfig.configDict[arg_27_1] then
+	if not allEffectList then
+		if not self._equipSuitEffectConfig.configDict[suitId] then
 			return nil
 		end
 
-		var_27_0 = tabletool.copy(arg_27_0._equipSuitEffectConfig.configDict[arg_27_1])
+		allEffectList = tabletool.copy(self._equipSuitEffectConfig.configDict[suitId])
 
-		table.sort(var_27_0, function(arg_28_0, arg_28_1)
-			return arg_28_0.level < arg_28_1.level
+		table.sort(allEffectList, function(a, b)
+			return a.level < b.level
 		end)
 
-		arg_27_0._suitAllEffectList[arg_27_1] = var_27_0
+		self._suitAllEffectList[suitId] = allEffectList
 	end
 
-	return var_27_0
+	return allEffectList
 end
 
-function var_0_0.getEquipSuitEffectConfig(arg_29_0, arg_29_1, arg_29_2)
-	return arg_29_0._equipSuitEffectConfig.configDict[arg_29_1] and arg_29_0._equipSuitEffectConfig.configDict[arg_29_1][arg_29_2]
+function OdysseyConfig:getEquipSuitEffectConfig(suitId, level)
+	return self._equipSuitEffectConfig.configDict[suitId] and self._equipSuitEffectConfig.configDict[suitId][level]
 end
 
-function var_0_0.getTalentConfig(arg_30_0, arg_30_1, arg_30_2)
-	return arg_30_0._talentConfig.configDict[arg_30_1] and arg_30_0._talentConfig.configDict[arg_30_1][arg_30_2]
+function OdysseyConfig:getTalentConfig(nodeId, level)
+	return self._talentConfig.configDict[nodeId] and self._talentConfig.configDict[nodeId][level]
 end
 
-function var_0_0.buildTalentCoList(arg_31_0)
-	for iter_31_0, iter_31_1 in ipairs(arg_31_0._talentConfig.configList) do
-		if not arg_31_0._talentAllEffectList[iter_31_1.nodeId] then
-			local var_31_0 = tabletool.copy(arg_31_0._talentConfig.configDict[iter_31_1.nodeId])
+function OdysseyConfig:buildTalentCoList()
+	for index, config in ipairs(self._talentConfig.configList) do
+		local allTalentList = self._talentAllEffectList[config.nodeId]
 
-			table.sort(var_31_0, function(arg_32_0, arg_32_1)
-				return arg_32_0.level < arg_32_1.level
+		if not allTalentList then
+			allTalentList = tabletool.copy(self._talentConfig.configDict[config.nodeId])
+
+			table.sort(allTalentList, function(a, b)
+				return a.level < b.level
 			end)
 
-			arg_31_0._talentAllEffectList[iter_31_1.nodeId] = var_31_0
+			self._talentAllEffectList[config.nodeId] = allTalentList
 
-			if not arg_31_0._talentTypeCoList[iter_31_1.type] then
-				arg_31_0._talentTypeCoList[iter_31_1.type] = {}
+			if not self._talentTypeCoList[config.type] then
+				self._talentTypeCoList[config.type] = {}
 			end
 
-			table.insert(arg_31_0._talentTypeCoList[iter_31_1.type], iter_31_1)
+			table.insert(self._talentTypeCoList[config.type], config)
 		end
 	end
 
-	for iter_31_2, iter_31_3 in pairs(arg_31_0._talentTypeCoList) do
-		table.sort(iter_31_3, function(arg_33_0, arg_33_1)
-			return arg_33_0.nodeId < arg_33_1.nodeId
+	for type, talentTypeList in pairs(self._talentTypeCoList) do
+		table.sort(talentTypeList, function(a, b)
+			return a.nodeId < b.nodeId
 		end)
 	end
 end
 
-function var_0_0.getAllTalentEffectConfigByNodeId(arg_34_0, arg_34_1)
-	return arg_34_0._talentAllEffectList[arg_34_1]
+function OdysseyConfig:getAllTalentEffectConfigByNodeId(nodeId)
+	return self._talentAllEffectList[nodeId]
 end
 
-function var_0_0.getAllTalentConfigByType(arg_35_0, arg_35_1)
-	return arg_35_0._talentTypeCoList[arg_35_1]
+function OdysseyConfig:getAllTalentConfigByType(talentType)
+	return self._talentTypeCoList[talentType]
 end
 
-function var_0_0.getTalentParentNodeConfig(arg_36_0, arg_36_1)
-	local var_36_0 = arg_36_0._talentNodePreCoList[arg_36_1]
+function OdysseyConfig:getTalentParentNodeConfig(nodeId)
+	local preNodeCo = self._talentNodePreCoList[nodeId]
 
-	if not var_36_0 then
-		local var_36_1 = arg_36_0:getAllTalentEffectConfigByNodeId(arg_36_1)[1].unlockCondition
+	if not preNodeCo then
+		local effectCoList = self:getAllTalentEffectConfigByNodeId(nodeId)
+		local unlockConditionStr = effectCoList[1].unlockCondition
 
-		if string.nilorempty(var_36_1) then
+		if string.nilorempty(unlockConditionStr) then
 			return nil
 		end
 
-		local var_36_2 = GameUtil.splitString2(var_36_1)
+		local unlockConditionList = GameUtil.splitString2(unlockConditionStr)
 
-		for iter_36_0, iter_36_1 in ipairs(var_36_2) do
-			if iter_36_1[1] == OdysseyEnum.TalentUnlockCondition.TalentNode then
-				local var_36_3 = tonumber(iter_36_1[2])
+		for _, unlockConditionData in ipairs(unlockConditionList) do
+			if unlockConditionData[1] == OdysseyEnum.TalentUnlockCondition.TalentNode then
+				local preNodeId = tonumber(unlockConditionData[2])
 
-				var_36_0 = arg_36_0:getTalentConfig(var_36_3, 1)
+				preNodeCo = self:getTalentConfig(preNodeId, 1)
 
 				break
 			end
 		end
 
-		arg_36_0._talentNodePreCoList[arg_36_1] = var_36_0
+		self._talentNodePreCoList[nodeId] = preNodeCo
 	end
 
-	return var_36_0
+	return preNodeCo
 end
 
-function var_0_0.getFightElementCoListByType(arg_37_0, arg_37_1)
-	local var_37_0 = {}
+function OdysseyConfig:getFightElementCoListByType(fightType)
+	local elementCoList = {}
 
-	for iter_37_0, iter_37_1 in ipairs(arg_37_0._fightElementConfig.configList) do
-		if iter_37_1.type == arg_37_1 then
-			table.insert(var_37_0, iter_37_1)
+	for index, config in ipairs(self._fightElementConfig.configList) do
+		if config.type == fightType then
+			table.insert(elementCoList, config)
 		end
 	end
 
-	return var_37_0
+	return elementCoList
 end
 
-function var_0_0.getMythConfig(arg_38_0, arg_38_1)
-	return arg_38_0._mythConfig.configDict[arg_38_1]
+function OdysseyConfig:getMythConfig(id)
+	return self._mythConfig.configDict[id]
 end
 
-function var_0_0.getMythConfigList(arg_39_0)
-	return arg_39_0._mythConfig.configList
+function OdysseyConfig:getMythConfigList()
+	return self._mythConfig.configList
 end
 
-function var_0_0.getReligionConfig(arg_40_0, arg_40_1)
-	return arg_40_0._religionConfig.configDict[arg_40_1]
+function OdysseyConfig:getReligionConfig(id)
+	return self._religionConfig.configDict[id]
 end
 
-function var_0_0.getReligionConfigList(arg_41_0)
-	return arg_41_0._religionConfig.configList
+function OdysseyConfig:getReligionConfigList()
+	return self._religionConfig.configList
 end
 
-function var_0_0.getReligionClueConfig(arg_42_0, arg_42_1)
-	return arg_42_0._religionClueConfig.configDict[arg_42_1]
+function OdysseyConfig:getReligionClueConfig(id)
+	return self._religionClueConfig.configDict[id]
 end
 
-function var_0_0.getTaskConfig(arg_43_0, arg_43_1)
-	return arg_43_0._taskConfig.configDict[arg_43_1]
+function OdysseyConfig:getTaskConfig(id)
+	return self._taskConfig.configDict[id]
 end
 
-function var_0_0.getBigRewardTaskConfig(arg_44_0)
-	for iter_44_0, iter_44_1 in ipairs(arg_44_0._taskConfig.configList) do
-		if iter_44_1.isKeyReward == 1 then
-			return iter_44_1
-		end
-	end
-end
-
-function var_0_0.getFightTaskDescConfig(arg_45_0, arg_45_1)
-	return arg_45_0._fightTaskDescConfig.configDict[arg_45_1]
-end
-
-function var_0_0.getMythConfigByElementId(arg_46_0, arg_46_1)
-	for iter_46_0, iter_46_1 in ipairs(arg_46_0._mythConfig.configList) do
-		if iter_46_1.elementId == arg_46_1 then
-			return iter_46_1
+function OdysseyConfig:getBigRewardTaskConfig()
+	for index, taskConfig in ipairs(self._taskConfig.configList) do
+		if taskConfig.isKeyReward == 1 then
+			return taskConfig
 		end
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+function OdysseyConfig:getFightTaskDescConfig(id)
+	return self._fightTaskDescConfig.configDict[id]
+end
 
-return var_0_0
+function OdysseyConfig:getMythConfigByElementId(elementId)
+	for index, co in ipairs(self._mythConfig.configList) do
+		if co.elementId == elementId then
+			return co
+		end
+	end
+end
+
+OdysseyConfig.instance = OdysseyConfig.New()
+
+return OdysseyConfig

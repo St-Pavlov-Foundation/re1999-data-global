@@ -1,17 +1,19 @@
-﻿module("modules.logic.story.model.StoryGroupMo", package.seeall)
+﻿-- chunkname: @modules/logic/story/model/StoryGroupMo.lua
 
-local var_0_0 = pureTable("StoryGroupMo")
+module("modules.logic.story.model.StoryGroupMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.id = 0
-	arg_1_0.branchId = 0
-	arg_1_0.branchName = ""
+local StoryGroupMo = pureTable("StoryGroupMo")
+
+function StoryGroupMo:ctor()
+	self.id = 0
+	self.branchId = 0
+	self.branchName = ""
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.id = arg_2_1[1]
-	arg_2_0.branchId = arg_2_1[2]
-	arg_2_0.branchName = arg_2_1[3]
+function StoryGroupMo:init(info)
+	self.id = info[1]
+	self.branchId = info[2]
+	self.branchName = info[3]
 end
 
-return var_0_0
+return StoryGroupMo

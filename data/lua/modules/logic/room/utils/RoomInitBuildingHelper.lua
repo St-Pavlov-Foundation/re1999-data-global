@@ -1,118 +1,132 @@
-﻿module("modules.logic.room.utils.RoomInitBuildingHelper", package.seeall)
+﻿-- chunkname: @modules/logic/room/utils/RoomInitBuildingHelper.lua
 
-local var_0_0 = {}
+module("modules.logic.room.utils.RoomInitBuildingHelper", package.seeall)
 
-function var_0_0.canLevelUp()
-	local var_1_0 = RoomConfig.instance:getMaxRoomLevel()
-	local var_1_1 = RoomModel.instance:getRoomLevel()
+local RoomInitBuildingHelper = {}
 
-	if var_1_0 <= var_1_1 then
+function RoomInitBuildingHelper.canLevelUp()
+	local maxRoomLevel = RoomConfig.instance:getMaxRoomLevel()
+	local roomLevel = RoomModel.instance:getRoomLevel()
+
+	if maxRoomLevel <= roomLevel then
 		return false, RoomInitBuildingEnum.CanLevelUpErrorCode.MaxLevel
 	end
 
-	local var_1_2 = var_1_1 + 1
-	local var_1_3 = RoomConfig.instance:getRoomLevelConfig(var_1_2)
+	local nextRoomLevel = roomLevel + 1
+	local roomLevelConfig = RoomConfig.instance:getRoomLevelConfig(nextRoomLevel)
+	local enough = RoomInitBuildingHelper.hasLevelUpItemEnough()
 
-	if not var_0_0.hasLevelUpItemEnough() then
+	if not enough then
 		return false, RoomInitBuildingEnum.CanLevelUpErrorCode.NotEnoughItem
 	end
 
-	if var_1_3.needBlockCount > RoomMapBlockModel.instance:getConfirmBlockCount() then
+	local needBlockCount = roomLevelConfig.needBlockCount
+	local confirmBlockCount = RoomMapBlockModel.instance:getConfirmBlockCount()
+
+	if confirmBlockCount < needBlockCount then
 		return false, RoomInitBuildingEnum.CanLevelUpErrorCode.NotEnoughBlock
 	end
 
 	return true
 end
 
-function var_0_0.hasLevelUpItemEnough()
-	local var_2_0 = RoomModel.instance:getRoomLevel() + 1
-	local var_2_1 = RoomConfig.instance:getRoomLevelConfig(var_2_0)
-	local var_2_2 = RoomProductionHelper.getFormulaItemParamList(var_2_1.cost)
-	local var_2_3, var_2_4 = ItemModel.instance:hasEnoughItems(var_2_2)
+function RoomInitBuildingHelper.hasLevelUpItemEnough()
+	local roomLevel = RoomModel.instance:getRoomLevel()
+	local nextRoomLevel = roomLevel + 1
+	local roomLevelConfig = RoomConfig.instance:getRoomLevelConfig(nextRoomLevel)
+	local costItemParamList = RoomProductionHelper.getFormulaItemParamList(roomLevelConfig.cost)
+	local _, enough = ItemModel.instance:hasEnoughItems(costItemParamList)
 
-	return var_2_4
+	return enough
 end
 
-function var_0_0.getModelPath(arg_3_0)
-	local var_3_0
-	local var_3_1 = RoomSkinModel.instance:getShowSkin(arg_3_0)
+function RoomInitBuildingHelper.getModelPath(partId)
+	local result
+	local showSkinId = RoomSkinModel.instance:getShowSkin(partId)
+	local isDefaultRoomSkin = RoomSkinModel.instance:isDefaultRoomSkin(partId, showSkinId)
 
-	if RoomSkinModel.instance:isDefaultRoomSkin(arg_3_0, var_3_1) then
-		var_3_0 = var_0_0.getDefaultSkinModelPath(arg_3_0)
+	if isDefaultRoomSkin then
+		result = RoomInitBuildingHelper.getDefaultSkinModelPath(partId)
 	else
-		var_3_0 = RoomConfig.instance:getRoomSkinModelPath(var_3_1) or var_0_0.getDefaultSkinModelPath(arg_3_0)
+		local modelPath = RoomConfig.instance:getRoomSkinModelPath(showSkinId)
+
+		result = modelPath or RoomInitBuildingHelper.getDefaultSkinModelPath(partId)
 	end
 
-	return var_3_0
+	return result
 end
 
-function var_0_0.getDefaultSkinModelPath(arg_4_0)
-	local var_4_0 = RoomConfig.instance:getProductionPartConfig(arg_4_0)
+function RoomInitBuildingHelper.getDefaultSkinModelPath(partId)
+	local partConfig = RoomConfig.instance:getProductionPartConfig(partId)
 
-	if not var_4_0 then
+	if not partConfig then
 		return nil
 	end
 
-	local var_4_1 = var_4_0.productionLines
-	local var_4_2 = 0
-	local var_4_3
+	local lineIds = partConfig.productionLines
+	local maxLevel = 0
+	local maxLevelLineId
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_1) do
-		local var_4_4 = 0
+	for i, lineId in ipairs(lineIds) do
+		local level = 0
 
 		if RoomController.instance:isVisitMode() then
-			var_4_4 = RoomMapModel.instance:getOtherLineLevelDict()[iter_4_1] or 0
+			local otherLineLevelDict = RoomMapModel.instance:getOtherLineLevelDict()
+
+			level = otherLineLevelDict[lineId] or 0
 		elseif RoomController.instance:isDebugMode() then
-			var_4_3 = iter_4_1
-			var_4_2 = 1
+			maxLevelLineId = lineId
+			maxLevel = 1
 
 			break
 		else
-			local var_4_5 = RoomProductionModel.instance:getLineMO(iter_4_1)
+			local lineMO = RoomProductionModel.instance:getLineMO(lineId)
 
-			var_4_4 = var_4_5 and var_4_5.level or 0
+			level = lineMO and lineMO.level or 0
 		end
 
-		if (not var_4_3 or var_4_2 < var_4_4) and var_4_4 > 0 then
-			var_4_3 = iter_4_1
-			var_4_2 = var_4_4
+		if (not maxLevelLineId or maxLevel < level) and level > 0 then
+			maxLevelLineId = lineId
+			maxLevel = level
 		end
 	end
 
-	if not var_4_3 then
+	if not maxLevelLineId then
 		return nil
 	end
 
-	local var_4_6 = RoomConfig.instance:getProductionLineConfig(var_4_3)
-	local var_4_7 = RoomConfig.instance:getProductionLineLevelConfig(var_4_6.levelGroup, var_4_2)
-	local var_4_8 = var_4_7 and var_4_7.modulePart
+	local lineConfig = RoomConfig.instance:getProductionLineConfig(maxLevelLineId)
+	local levelCO = RoomConfig.instance:getProductionLineLevelConfig(lineConfig.levelGroup, maxLevel)
+	local modulePart = levelCO and levelCO.modulePart
 
-	if string.nilorempty(var_4_8) then
+	if string.nilorempty(modulePart) then
 		return nil
 	end
 
-	return string.format("scenes/m_s07_xiaowu/prefab/jianzhu/a_rukou/%s.prefab", var_4_8)
+	return string.format("scenes/m_s07_xiaowu/prefab/jianzhu/a_rukou/%s.prefab", modulePart)
 end
 
-function var_0_0.getPartRealCameraParam(arg_5_0)
-	local var_5_0
+function RoomInitBuildingHelper.getPartRealCameraParam(partId)
+	local cameraParam
 
-	if arg_5_0 == 0 then
-		var_5_0 = CommonConfig.instance:getConstStr(ConstEnum.RoomInitBuildingCameraParam)
+	if partId == 0 then
+		cameraParam = CommonConfig.instance:getConstStr(ConstEnum.RoomInitBuildingCameraParam)
 	else
-		var_5_0 = RoomConfig.instance:getProductionPartConfig(arg_5_0).cameraParam
+		local partConfig = RoomConfig.instance:getProductionPartConfig(partId)
+
+		cameraParam = partConfig.cameraParam
 	end
 
-	if not string.nilorempty(var_5_0) then
-		local var_5_1 = string.splitToNumber(var_5_0, "#")
+	if not string.nilorempty(cameraParam) then
+		local paramList = string.splitToNumber(cameraParam, "#")
 
 		return {
-			rotate = var_5_1[1],
-			angle = var_5_1[2],
-			distance = var_5_1[3],
-			height = var_5_1[4]
+			rotate = paramList[1],
+			angle = paramList[2],
+			distance = paramList[3],
+			height = paramList[4]
 		}
 	end
 end
 
-return var_0_0
+return RoomInitBuildingHelper

@@ -1,36 +1,38 @@
-﻿module("modules.logic.necrologiststory.view.control.NecrologistStoryControlBgm", package.seeall)
+﻿-- chunkname: @modules/logic/necrologiststory/view/control/NecrologistStoryControlBgm.lua
 
-local var_0_0 = class("NecrologistStoryControlBgm", NecrologistStoryControlMgrItem)
+module("modules.logic.necrologiststory.view.control.NecrologistStoryControlBgm", package.seeall)
 
-function var_0_0.onPlayControl(arg_1_0)
-	arg_1_0:playAudio()
-	arg_1_0:onPlayControlFinish()
+local NecrologistStoryControlBgm = class("NecrologistStoryControlBgm", NecrologistStoryControlMgrItem)
+
+function NecrologistStoryControlBgm:onPlayControl()
+	self:playAudio()
+	self:onPlayControlFinish()
 end
 
-function var_0_0.playAudio(arg_2_0)
-	local var_2_0 = string.split(arg_2_0.controlParam, "#")
-	local var_2_1 = tonumber(var_2_0[2]) or 1
-	local var_2_2 = tonumber(var_2_0[3]) or 0
-	local var_2_3 = tonumber(var_2_0[4]) or 0
-	local var_2_4 = AudioParam.New()
+function NecrologistStoryControlBgm:playAudio()
+	local attr = string.split(self.controlParam, "#")
+	local volume = tonumber(attr[2]) or 1
+	local inTime = tonumber(attr[3]) or 0
+	local outTime = tonumber(attr[4]) or 0
+	local param = AudioParam.New()
 
-	var_2_4.loopNum = 999999
-	var_2_4.fadeInTime = var_2_2
-	var_2_4.fadeOutTime = var_2_3
-	var_2_4.volume = var_2_1 * 100
-	arg_2_0.audioId = tonumber(var_2_0[1])
+	param.loopNum = 999999
+	param.fadeInTime = inTime
+	param.fadeOutTime = outTime
+	param.volume = volume * 100
+	self.audioId = tonumber(attr[1])
 
-	if arg_2_0.audioId then
-		AudioEffectMgr.instance:playAudio(arg_2_0.audioId, var_2_4)
+	if self.audioId then
+		AudioEffectMgr.instance:playAudio(self.audioId, param)
 	end
 end
 
-function var_0_0.onDestory(arg_3_0)
-	if arg_3_0.audioId then
-		AudioEffectMgr.instance:stopAudio(arg_3_0.audioId)
+function NecrologistStoryControlBgm:onDestory()
+	if self.audioId then
+		AudioEffectMgr.instance:stopAudio(self.audioId)
 	end
 
-	var_0_0.super.onDestory(arg_3_0)
+	NecrologistStoryControlBgm.super.onDestory(self)
 end
 
-return var_0_0
+return NecrologistStoryControlBgm

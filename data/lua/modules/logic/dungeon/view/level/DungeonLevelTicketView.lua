@@ -1,78 +1,80 @@
-﻿module("modules.logic.dungeon.view.level.DungeonLevelTicketView", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/level/DungeonLevelTicketView.lua
 
-local var_0_0 = class("DungeonLevelTicketView", BaseChildView)
+module("modules.logic.dungeon.view.level.DungeonLevelTicketView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goticketinfo = gohelper.findChild(arg_1_0.viewGO, "#go_ticketinfo")
-	arg_1_0._simageticket = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ticketinfo/#simage_ticket")
-	arg_1_0._txtticket = gohelper.findChildText(arg_1_0.viewGO, "#go_ticketinfo/#txt_ticket")
-	arg_1_0._gonoticket = gohelper.findChild(arg_1_0.viewGO, "#go_noticket")
-	arg_1_0._txtnoticket1 = gohelper.findChildText(arg_1_0.viewGO, "#go_noticket/#txt_noticket1")
-	arg_1_0._txtnoticket2 = gohelper.findChildText(arg_1_0.viewGO, "#go_noticket/#txt_noticket2")
+local DungeonLevelTicketView = class("DungeonLevelTicketView", BaseChildView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function DungeonLevelTicketView:onInitView()
+	self._goticketinfo = gohelper.findChild(self.viewGO, "#go_ticketinfo")
+	self._simageticket = gohelper.findChildSingleImage(self.viewGO, "#go_ticketinfo/#simage_ticket")
+	self._txtticket = gohelper.findChildText(self.viewGO, "#go_ticketinfo/#txt_ticket")
+	self._gonoticket = gohelper.findChild(self.viewGO, "#go_noticket")
+	self._txtnoticket1 = gohelper.findChildText(self.viewGO, "#go_noticket/#txt_noticket1")
+	self._txtnoticket2 = gohelper.findChildText(self.viewGO, "#go_noticket/#txt_noticket2")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function DungeonLevelTicketView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function DungeonLevelTicketView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0:onUpdateParam()
+function DungeonLevelTicketView:_editableInitView()
+	self:onUpdateParam()
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
-	local var_5_0 = arg_5_0.viewParam
+function DungeonLevelTicketView:onUpdateParam()
+	local ticketId = self.viewParam
 
-	arg_5_0._goticketinfo:SetActive(var_5_0 ~= 0)
-	arg_5_0._gonoticket:SetActive(var_5_0 == 0)
+	self._goticketinfo:SetActive(ticketId ~= 0)
+	self._gonoticket:SetActive(ticketId == 0)
 
-	if var_5_0 ~= 0 then
-		local var_5_1 = ItemConfig.instance:getItemIconById(var_5_0)
+	if ticketId ~= 0 then
+		local icon = ItemConfig.instance:getItemIconById(ticketId)
 
-		arg_5_0._simageticket:LoadImage(ResUrl.getPropItemIcon(var_5_1))
+		self._simageticket:LoadImage(ResUrl.getPropItemIcon(icon))
 
-		arg_5_0._txtticket.text = ItemModel.instance:getItemCount(var_5_0)
+		self._txtticket.text = ItemModel.instance:getItemCount(ticketId)
 	else
-		arg_5_0._txtnoticket1.gameObject:SetActive(arg_5_0._click ~= nil)
-		arg_5_0._txtnoticket2.gameObject:SetActive(not arg_5_0._click)
+		self._txtnoticket1.gameObject:SetActive(self._click ~= nil)
+		self._txtnoticket2.gameObject:SetActive(not self._click)
 	end
 end
 
-function var_0_0._onClick(arg_6_0)
-	DungeonController.instance:dispatchEvent(DungeonEvent.OnSelectTicket, arg_6_0.viewParam)
+function DungeonLevelTicketView:_onClick()
+	DungeonController.instance:dispatchEvent(DungeonEvent.OnSelectTicket, self.viewParam)
 end
 
-function var_0_0.addClick(arg_7_0)
-	if arg_7_0._click then
+function DungeonLevelTicketView:addClick()
+	if self._click then
 		return
 	end
 
-	arg_7_0._canvasGroup = gohelper.onceAddComponent(arg_7_0.viewGO, typeof(UnityEngine.CanvasGroup))
-	arg_7_0._canvasGroup.blocksRaycasts = true
-	arg_7_0._click = SLFramework.UGUI.UIClickListener.Get(arg_7_0.viewGO)
+	self._canvasGroup = gohelper.onceAddComponent(self.viewGO, typeof(UnityEngine.CanvasGroup))
+	self._canvasGroup.blocksRaycasts = true
+	self._click = SLFramework.UGUI.UIClickListener.Get(self.viewGO)
 
-	arg_7_0._click:AddClickListener(arg_7_0._onClick, arg_7_0)
+	self._click:AddClickListener(self._onClick, self)
 end
 
-function var_0_0.onOpen(arg_8_0)
+function DungeonLevelTicketView:onOpen()
 	return
 end
 
-function var_0_0.onClose(arg_9_0)
-	if arg_9_0._click then
-		arg_9_0._click:RemoveClickListener()
+function DungeonLevelTicketView:onClose()
+	if self._click then
+		self._click:RemoveClickListener()
 	end
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	arg_10_0._simageticket:UnLoadImage()
+function DungeonLevelTicketView:onDestroyView()
+	self._simageticket:UnLoadImage()
 end
 
-return var_0_0
+return DungeonLevelTicketView

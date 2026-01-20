@@ -1,13 +1,15 @@
-﻿module("modules.logic.scene.pushbox.comp.PushBoxSceneViewComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/pushbox/comp/PushBoxSceneViewComp.lua
 
-local var_0_0 = class("PushBoxSceneViewComp", BaseSceneComp)
+module("modules.logic.scene.pushbox.comp.PushBoxSceneViewComp", package.seeall)
 
-function var_0_0.onScenePrepared(arg_1_0, arg_1_1, arg_1_2)
+local PushBoxSceneViewComp = class("PushBoxSceneViewComp", BaseSceneComp)
+
+function PushBoxSceneViewComp:onScenePrepared(sceneId, levelId)
 	ViewMgr.instance:openView(ViewName.VersionActivityPushBoxLevelView)
 end
 
-function var_0_0.onSceneClose(arg_2_0, arg_2_1, arg_2_2)
+function PushBoxSceneViewComp:onSceneClose(sceneId, levelId)
 	ViewMgr.instance:closeView(ViewName.PushBoxView)
 end
 
-return var_0_0
+return PushBoxSceneViewComp

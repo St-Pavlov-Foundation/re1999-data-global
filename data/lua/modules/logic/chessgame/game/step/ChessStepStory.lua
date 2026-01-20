@@ -1,60 +1,63 @@
-﻿module("modules.logic.chessgame.game.step.ChessStepStory", package.seeall)
+﻿-- chunkname: @modules/logic/chessgame/game/step/ChessStepStory.lua
 
-local var_0_0 = class("ChessStepStory", BaseWork)
+module("modules.logic.chessgame.game.step.ChessStepStory", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.originData = arg_1_1
+local ChessStepStory = class("ChessStepStory", BaseWork)
+
+function ChessStepStory:init(stepData)
+	self.originData = stepData
 end
 
-function var_0_0.onStart(arg_2_0)
-	TaskDispatcher.cancelTask(arg_2_0.onDoneTrue, arg_2_0)
+function ChessStepStory:onStart()
+	TaskDispatcher.cancelTask(self.onDoneTrue, self)
 
-	local var_2_0 = arg_2_0.originData.storyId
-	local var_2_1 = ChessModel.instance:getActId()
+	local id = self.originData.storyId
+	local actId = ChessModel.instance:getActId()
+	local isTips = ChessConfig.instance:getTipsCo(actId, id) ~= nil
 
-	if ChessConfig.instance:getTipsCo(var_2_1, var_2_0) ~= nil then
-		ChessGameController.instance:dispatchEvent(ChessGameEvent.GameToastUpdate, var_2_0)
-		TaskDispatcher.runDelay(arg_2_0.onDoneTrue, arg_2_0, 1)
+	if isTips then
+		ChessGameController.instance:dispatchEvent(ChessGameEvent.GameToastUpdate, id)
+		TaskDispatcher.runDelay(self.onDoneTrue, self, 1)
 
 		return
 	end
 
-	local var_2_2 = var_2_0
+	local storyId = id
 
-	if var_2_2 then
-		local var_2_3 = {}
+	if storyId then
+		local param = {}
 
-		var_2_3.blur = true
-		var_2_3.hideStartAndEndDark = true
-		var_2_3.mark = true
-		var_2_3.isReplay = false
-		arg_2_0._initMaskActive = PostProcessingMgr.instance:getUIPPValue("LocalMaskActive")
-		arg_2_0._initDistortStrength = PostProcessingMgr.instance:getUIPPValue("LocalDistortStrength")
+		param.blur = true
+		param.hideStartAndEndDark = true
+		param.mark = true
+		param.isReplay = false
+		self._initMaskActive = PostProcessingMgr.instance:getUIPPValue("LocalMaskActive")
+		self._initDistortStrength = PostProcessingMgr.instance:getUIPPValue("LocalDistortStrength")
 
 		PostProcessingMgr.instance:setUIPPValue("LocalMaskActive", false)
 		PostProcessingMgr.instance:setUIPPValue("localDistortStrength", 0)
 		PostProcessingMgr.instance:setUIPPValue("LocalDistortStrength", 0)
-		StoryController.instance:playStory(var_2_2, var_2_3, arg_2_0.afterPlayStory, arg_2_0)
+		StoryController.instance:playStory(storyId, param, self.afterPlayStory, self)
 		ChessGameModel.instance:setPlayingStory(true)
 	else
-		arg_2_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0.onDoneTrue(arg_3_0)
-	arg_3_0:onDone(true)
+function ChessStepStory:onDoneTrue()
+	self:onDone(true)
 end
 
-function var_0_0.afterPlayStory(arg_4_0)
-	PostProcessingMgr.instance:setUIPPValue("LocalMaskActive", arg_4_0._initMaskActive)
-	PostProcessingMgr.instance:setUIPPValue("LocalDistortStrength", arg_4_0._initDistortStrength)
+function ChessStepStory:afterPlayStory()
+	PostProcessingMgr.instance:setUIPPValue("LocalMaskActive", self._initMaskActive)
+	PostProcessingMgr.instance:setUIPPValue("LocalDistortStrength", self._initDistortStrength)
 	ChessGameController.instance:dispatchEvent(ChessGameEvent.PlayStoryonDone)
 	ChessGameModel.instance:setPlayingStory(false)
-	TaskDispatcher.runDelay(arg_4_0.onDoneTrue, arg_4_0, 0.3)
+	TaskDispatcher.runDelay(self.onDoneTrue, self, 0.3)
 end
 
-function var_0_0.clearWork(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0.onDoneTrue, arg_5_0)
+function ChessStepStory:clearWork()
+	TaskDispatcher.cancelTask(self.onDoneTrue, self)
 end
 
-return var_0_0
+return ChessStepStory

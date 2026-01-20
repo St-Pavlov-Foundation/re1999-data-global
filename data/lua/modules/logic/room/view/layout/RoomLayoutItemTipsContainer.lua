@@ -1,46 +1,49 @@
-﻿module("modules.logic.room.view.layout.RoomLayoutItemTipsContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/layout/RoomLayoutItemTipsContainer.lua
 
-local var_0_0 = class("RoomLayoutItemTipsContainer", BaseViewContainer)
+module("modules.logic.room.view.layout.RoomLayoutItemTipsContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoomLayoutItemTipsContainer = class("RoomLayoutItemTipsContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RoomLayoutItemTips.New())
+function RoomLayoutItemTipsContainer:buildViews()
+	local views = {}
 
-	local var_1_1 = ListScrollParam.New()
+	table.insert(views, RoomLayoutItemTips.New())
 
-	var_1_1.scrollGOPath = "#go_content/#scroll_ItemList"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_1.prefabUrl = "#go_content/#go_normalitem"
-	var_1_1.cellClass = RoomLayoutItemTipsItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 1
-	var_1_1.cellWidth = 550
-	var_1_1.cellHeight = 52
-	var_1_1.cellSpaceH = 0
-	var_1_1.cellSpaceV = 0
-	var_1_1.startSpace = 0
+	local scrollParam = ListScrollParam.New()
 
-	table.insert(var_1_0, LuaListScrollView.New(RoomLayoutItemListModel.instance, var_1_1))
+	scrollParam.scrollGOPath = "#go_content/#scroll_ItemList"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "#go_content/#go_normalitem"
+	scrollParam.cellClass = RoomLayoutItemTipsItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 550
+	scrollParam.cellHeight = 52
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 0
+	scrollParam.startSpace = 0
 
-	return var_1_0
+	table.insert(views, LuaListScrollView.New(RoomLayoutItemListModel.instance, scrollParam))
+
+	return views
 end
 
-function var_0_0.getTipsHeight(arg_2_0)
-	local var_2_0 = RoomLayoutItemListModel.instance:getCount()
-	local var_2_1 = 0
-	local var_2_2 = 12.5
-	local var_2_3 = 52
-	local var_2_4 = 88
-	local var_2_5 = 20
+function RoomLayoutItemTipsContainer:getTipsHeight()
+	local count = RoomLayoutItemListModel.instance:getCount()
+	local minShowCount = 0
+	local maxShowCount = 12.5
+	local lineHeight = 52
+	local top = 88
+	local bottom = 20
 
-	if var_2_0 > 0 then
-		var_2_0 = var_2_0 + 0.5
+	if count > 0 then
+		count = count + 0.5
 	end
 
-	local var_2_6 = math.max(var_2_1, var_2_0)
+	count = math.max(minShowCount, count)
+	count = math.min(maxShowCount, count)
 
-	return math.min(var_2_2, var_2_6) * var_2_3 + var_2_4 + var_2_5
+	return count * lineHeight + top + bottom
 end
 
-return var_0_0
+return RoomLayoutItemTipsContainer

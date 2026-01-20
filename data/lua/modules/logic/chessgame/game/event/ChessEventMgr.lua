@@ -1,186 +1,188 @@
-﻿module("modules.logic.chessgame.game.event.ChessEventMgr", package.seeall)
+﻿-- chunkname: @modules/logic/chessgame/game/event/ChessEventMgr.lua
 
-local var_0_0 = class("ChessEventMgr")
+module("modules.logic.chessgame.game.event.ChessEventMgr", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._stepList = {}
-	arg_1_0._stepPool = nil
-	arg_1_0._curStep = nil
-	arg_1_0._curEventData = nil
-	arg_1_0._curEvent = nil
-	arg_1_0._flow = nil
-	arg_1_0._lastWork = nil
+local ChessEventMgr = class("ChessEventMgr")
+
+function ChessEventMgr:ctor()
+	self._stepList = {}
+	self._stepPool = nil
+	self._curStep = nil
+	self._curEventData = nil
+	self._curEvent = nil
+	self._flow = nil
+	self._lastWork = nil
 end
 
-var_0_0.EventClzMap = {
+ChessEventMgr.EventClzMap = {
 	[ChessGameEnum.GameEventType.Normal] = ChessStateNormal
 }
 
-function var_0_0.setCurEvent(arg_2_0, arg_2_1)
-	if arg_2_1 ~= nil and not string.nilorempty(arg_2_1.param) then
-		arg_2_0._curEventData = cjson.decode(arg_2_1.param)
+function ChessEventMgr:setCurEvent(serverEvt)
+	if serverEvt ~= nil and not string.nilorempty(serverEvt.param) then
+		self._curEventData = cjson.decode(serverEvt.param)
 	else
-		arg_2_0._curEventData = nil
+		self._curEventData = nil
 	end
 
-	arg_2_0:buildEventState()
+	self:buildEventState()
 end
 
-function var_0_0.setCurEventByObj(arg_3_0, arg_3_1)
-	if arg_3_1 then
-		arg_3_0._curEventData = arg_3_1
+function ChessEventMgr:setCurEventByObj(obj)
+	if obj then
+		self._curEventData = obj
 	else
-		arg_3_0._curEventData = nil
+		self._curEventData = nil
 	end
 
-	arg_3_0:buildEventState()
+	self:buildEventState()
 end
 
-function var_0_0.buildEventState(arg_4_0)
-	local var_4_0
+function ChessEventMgr:buildEventState()
+	local eventType
 
-	if not arg_4_0._curEventData then
-		var_4_0 = ChessGameEnum.GameEventType.Normal
+	if not self._curEventData then
+		eventType = ChessGameEnum.GameEventType.Normal
 	else
-		var_4_0 = arg_4_0._curEventData.eventType
+		eventType = self._curEventData.eventType
 	end
 
-	if arg_4_0._curEvent and arg_4_0._curEvent:getStateType() == var_4_0 then
+	if self._curEvent and self._curEvent:getStateType() == eventType then
 		return
 	end
 
-	local var_4_1 = var_0_0.EventClzMap[var_4_0]
+	local clz = ChessEventMgr.EventClzMap[eventType]
 
-	if var_4_1 then
-		arg_4_0:disposeEventState()
+	if clz then
+		self:disposeEventState()
 
-		arg_4_0._curEvent = var_4_1.New()
+		self._curEvent = clz.New()
 
-		arg_4_0._curEvent:init(var_4_0, arg_4_0._curEventData)
-		arg_4_0._curEvent:start()
+		self._curEvent:init(eventType, self._curEventData)
+		self._curEvent:start()
 	end
 end
 
-function var_0_0.setLockEvent(arg_5_0)
-	arg_5_0:disposeEventState()
+function ChessEventMgr:setLockEvent()
+	self:disposeEventState()
 
-	arg_5_0._curEventData = nil
-	arg_5_0._curEvent = ChessStateLock.New()
+	self._curEventData = nil
+	self._curEvent = ChessStateLock.New()
 
-	arg_5_0._curEvent:init()
-	arg_5_0._curEvent:start()
+	self._curEvent:init()
+	self._curEvent:start()
 end
 
-function var_0_0.disposeEventState(arg_6_0)
-	if arg_6_0._curEvent ~= nil then
-		arg_6_0._curEvent:dispose()
+function ChessEventMgr:disposeEventState()
+	if self._curEvent ~= nil then
+		self._curEvent:dispose()
 
-		arg_6_0._curEvent = nil
+		self._curEvent = nil
 	end
 end
 
-function var_0_0.getCurEvent(arg_7_0)
-	return arg_7_0._curEvent
+function ChessEventMgr:getCurEvent()
+	return self._curEvent
 end
 
-function var_0_0.insertStepList(arg_8_0, arg_8_1)
-	arg_8_0._flow = FlowSequence.New()
+function ChessEventMgr:insertStepList(steps)
+	self._flow = FlowSequence.New()
 
-	local var_8_0 = #arg_8_1
+	local len = #steps
 
-	for iter_8_0 = 1, var_8_0 do
-		local var_8_1 = arg_8_1[iter_8_0]
+	for i = 1, len do
+		local stepData = steps[i]
 
-		arg_8_0:insertStep2(arg_8_0._flow, var_8_1)
+		self:insertStep2(self._flow, stepData)
 	end
 
-	arg_8_0._flow:addWork(ChessCheckIsCatch.New())
+	self._flow:addWork(ChessCheckIsCatch.New())
 
-	arg_8_0._moveFlow = nil
+	self._moveFlow = nil
 
-	arg_8_0._flow:registerDoneListener(arg_8_0._onFlowDone, arg_8_0)
+	self._flow:registerDoneListener(self._onFlowDone, self)
 
-	local var_8_2 = ChessGameModel.instance:getCatchObj()
+	local catchObj = ChessGameModel.instance:getCatchObj()
 
-	arg_8_0._flow:start(var_8_2)
+	self._flow:start(catchObj)
 end
 
-function var_0_0._onFlowDone(arg_9_0)
+function ChessEventMgr:_onFlowDone()
 	if not ChessGameModel.instance:isTalking() then
 		ChessGameController.instance:dispatchEvent(ChessGameEvent.GameMapDataUpdate)
 	end
 
-	arg_9_0._flow = nil
-	arg_9_0._lastWork = nil
+	self._flow = nil
+	self._lastWork = nil
 end
 
-function var_0_0.isPlayingFlow(arg_10_0)
-	if arg_10_0._flow then
+function ChessEventMgr:isPlayingFlow()
+	if self._flow then
 		return true
 	end
 end
 
-function var_0_0.stopFlow(arg_11_0)
-	if arg_11_0._flow and arg_11_0._flow.status == WorkStatus.Running then
-		arg_11_0._flow:stop()
+function ChessEventMgr:stopFlow()
+	if self._flow and self._flow.status == WorkStatus.Running then
+		self._flow:stop()
 	end
 
-	arg_11_0._flow = nil
+	self._flow = nil
 end
 
-function var_0_0.insertStep2(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = arg_12_0:buildStep(arg_12_2)
+function ChessEventMgr:insertStep2(flow, stepData)
+	local work = self:buildStep(stepData)
 
-	if var_12_0.originData.stepType == ChessGameEnum.StepType.Move then
-		if arg_12_0._lastWork and arg_12_0._lastWork.originData.id == var_12_0.originData.id then
-			arg_12_0._moveFlow = nil
+	if work.originData.stepType == ChessGameEnum.StepType.Move then
+		if self._lastWork and self._lastWork.originData.id == work.originData.id then
+			self._moveFlow = nil
 
-			arg_12_1:addWork(var_12_0)
+			flow:addWork(work)
 
-			arg_12_0._lastWork = var_12_0
+			self._lastWork = work
 		else
-			if not arg_12_0._moveFlow then
-				arg_12_0._moveFlow = FlowParallel.New()
+			if not self._moveFlow then
+				self._moveFlow = FlowParallel.New()
 
-				arg_12_1:addWork(arg_12_0._moveFlow)
+				flow:addWork(self._moveFlow)
 
-				arg_12_0._lastWork = var_12_0
+				self._lastWork = work
 			end
 
-			arg_12_0._moveFlow:addWork(var_12_0)
+			self._moveFlow:addWork(work)
 
-			arg_12_0._lastWork = var_12_0
+			self._lastWork = work
 		end
 	else
-		arg_12_0._moveFlow = nil
+		self._moveFlow = nil
 
-		arg_12_1:addWork(var_12_0)
+		flow:addWork(work)
 
-		arg_12_0._lastWork = var_12_0
+		self._lastWork = work
 	end
 end
 
-function var_0_0.isNeedBlock(arg_13_0)
-	if arg_13_0._stepList then
-		for iter_13_0 = 1, #arg_13_0._stepList do
-			if arg_13_0:_chekNeedBlock(arg_13_0._stepList[iter_13_0]) then
+function ChessEventMgr:isNeedBlock()
+	if self._stepList then
+		for i = 1, #self._stepList do
+			if self:_chekNeedBlock(self._stepList[i]) then
 				return true
 			end
 		end
 	end
 
-	if arg_13_0:_chekNeedBlock(arg_13_0._curStep) then
+	if self:_chekNeedBlock(self._curStep) then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0._chekNeedBlock(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_1 and arg_14_1.originData and arg_14_1.originData.stepType
+function ChessEventMgr:_chekNeedBlock(stepObj)
+	local stepId = stepObj and stepObj.originData and stepObj.originData.stepType
 
-	if not arg_14_0._needBlockStepMap then
-		arg_14_0._needBlockStepMap = {
+	if not self._needBlockStepMap then
+		self._needBlockStepMap = {
 			[ChessGameEnum.StepType.Story] = true,
 			[ChessGameEnum.StepType.Move] = true,
 			[ChessGameEnum.StepType.InteractDelete] = true,
@@ -189,10 +191,10 @@ function var_0_0._chekNeedBlock(arg_14_0, arg_14_1)
 		}
 	end
 
-	return arg_14_0._needBlockStepMap[var_14_0]
+	return self._needBlockStepMap[stepId]
 end
 
-var_0_0.StepClzMap = {
+ChessEventMgr.StepClzMap = {
 	[ChessGameEnum.StepType.UpdateRound] = ChessStepUpdateRound,
 	[ChessGameEnum.StepType.Move] = ChessStepMove,
 	[ChessGameEnum.StepType.Transport] = ChessStepTransport,
@@ -212,85 +214,85 @@ var_0_0.StepClzMap = {
 	[ChessGameEnum.StepType.RefreshTarget] = ChessStepRefreshTarget
 }
 
-function var_0_0.buildStep(arg_15_0, arg_15_1)
-	local var_15_0 = cjson.decode(arg_15_1.param)
-	local var_15_1 = ChessModel.instance:getActId()
-	local var_15_2 = var_0_0.StepClzMap[var_15_0.stepType]
+function ChessEventMgr:buildStep(serverData)
+	local data = cjson.decode(serverData.param)
+	local actId = ChessModel.instance:getActId()
+	local stepClz = ChessEventMgr.StepClzMap[data.stepType]
 
-	if var_15_2 then
-		local var_15_3
+	if stepClz then
+		local stepObj
 
-		arg_15_0._stepPool = arg_15_0._stepPool or {}
+		self._stepPool = self._stepPool or {}
 
-		if arg_15_0._stepPool[var_15_2] ~= nil and #arg_15_0._stepPool[var_15_2] >= 1 then
-			local var_15_4 = #arg_15_0._stepPool[var_15_2]
+		if self._stepPool[stepClz] ~= nil and #self._stepPool[stepClz] >= 1 then
+			local len = #self._stepPool[stepClz]
 
-			var_15_3 = arg_15_0._stepPool[var_15_2][var_15_4]
-			arg_15_0._stepPool[var_15_2][var_15_4] = nil
+			stepObj = self._stepPool[stepClz][len]
+			self._stepPool[stepClz][len] = nil
 		else
-			var_15_3 = var_15_2.New()
+			stepObj = stepClz.New()
 		end
 
-		var_15_3:init(var_15_0)
+		stepObj:init(data)
 
-		return var_15_3
+		return stepObj
 	end
 end
 
-function var_0_0.nextStep(arg_16_0)
-	arg_16_0:recycleCurStep()
+function ChessEventMgr:nextStep()
+	self:recycleCurStep()
 
-	if not arg_16_0._isStepStarting then
-		arg_16_0._isStepStarting = true
+	if not self._isStepStarting then
+		self._isStepStarting = true
 
-		while arg_16_0._stepList and #arg_16_0._stepList > 0 and arg_16_0._curStep == nil do
-			arg_16_0._curStep = arg_16_0._stepList[1]
+		while self._stepList and #self._stepList > 0 and self._curStep == nil do
+			self._curStep = self._stepList[1]
 
-			table.remove(arg_16_0._stepList, 1)
-			arg_16_0._curStep:start()
+			table.remove(self._stepList, 1)
+			self._curStep:start()
 		end
 
-		arg_16_0._isStepStarting = false
+		self._isStepStarting = false
 	end
 end
 
-function var_0_0.recycleCurStep(arg_17_0)
-	if arg_17_0._curStep then
-		arg_17_0._curStep:dispose()
+function ChessEventMgr:recycleCurStep()
+	if self._curStep then
+		self._curStep:dispose()
 
-		arg_17_0._stepPool[arg_17_0._curStep.class] = arg_17_0._stepPool[arg_17_0._curStep.class] or {}
+		self._stepPool[self._curStep.class] = self._stepPool[self._curStep.class] or {}
 
-		table.insert(arg_17_0._stepPool[arg_17_0._curStep.class], arg_17_0._curStep)
+		table.insert(self._stepPool[self._curStep.class], self._curStep)
 
-		arg_17_0._curStep = nil
+		self._curStep = nil
 	end
 end
 
-function var_0_0.disposeAllStep(arg_18_0)
-	if arg_18_0._curStep then
-		arg_18_0._curStep:dispose()
+function ChessEventMgr:disposeAllStep()
+	if self._curStep then
+		self._curStep:dispose()
 
-		arg_18_0._curStep = nil
+		self._curStep = nil
 	end
 
-	if arg_18_0._stepList then
-		for iter_18_0, iter_18_1 in pairs(arg_18_0._stepList) do
-			iter_18_1:dispose()
+	if self._stepList then
+		for _, step in pairs(self._stepList) do
+			step:dispose()
 		end
 
-		arg_18_0._stepList = nil
+		self._stepList = nil
 	end
 
-	arg_18_0._stepPool = nil
-	arg_18_0._isStepStarting = false
+	self._stepPool = nil
+	self._isStepStarting = false
 end
 
-function var_0_0.removeAll(arg_19_0)
-	arg_19_0._stepList = nil
-	arg_19_0._curStep = nil
+function ChessEventMgr:removeAll()
+	self._stepList = nil
+	self._curStep = nil
 
-	arg_19_0:disposeAllStep()
-	arg_19_0:disposeEventState()
+	self:disposeAllStep()
+	self:disposeEventState()
 end
 
-return var_0_0
+return ChessEventMgr

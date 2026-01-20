@@ -1,149 +1,157 @@
-﻿module("modules.logic.room.model.map.RoomProductionLineMO", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/map/RoomProductionLineMO.lua
 
-local var_0_0 = pureTable("RoomProductionLineMO")
+module("modules.logic.room.model.map.RoomProductionLineMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1
-	arg_1_0.config = RoomConfig.instance:getProductionLineConfig(arg_1_0.id)
-	arg_1_0.finishCount = 0
-	arg_1_0.reserve = arg_1_0.config.reserve
-	arg_1_0.useReserve = 0
-	arg_1_0.level = 0
+local RoomProductionLineMO = pureTable("RoomProductionLineMO")
 
-	if arg_1_0.config.levelGroup > 0 then
-		arg_1_0.levelGroupCO = RoomConfig.instance:getProductionLineLevelGroupIdConfig(arg_1_0.config.levelGroup)
+function RoomProductionLineMO:init(id)
+	self.id = id
+	self.config = RoomConfig.instance:getProductionLineConfig(self.id)
+	self.finishCount = 0
+	self.reserve = self.config.reserve
+	self.useReserve = 0
+	self.level = 0
+
+	if self.config.levelGroup > 0 then
+		self.levelGroupCO = RoomConfig.instance:getProductionLineLevelGroupIdConfig(self.config.levelGroup)
 	end
 
-	arg_1_0:updateMaxLevel()
+	self:updateMaxLevel()
 end
 
-function var_0_0.updateMaxLevel(arg_2_0)
-	local var_2_0 = RoomModel.instance:getRoomLevel()
+function RoomProductionLineMO:updateMaxLevel()
+	local roomLevel = RoomModel.instance:getRoomLevel()
 
-	arg_2_0.maxLevel = 0
-	arg_2_0.maxConfigLevel = 0
+	self.maxLevel = 0
+	self.maxConfigLevel = 0
 
-	if arg_2_0.config.levelGroup > 0 and arg_2_0.levelGroupCO then
-		for iter_2_0, iter_2_1 in ipairs(arg_2_0.levelGroupCO) do
-			if var_2_0 >= iter_2_1.needRoomLevel then
-				arg_2_0.maxLevel = math.max(iter_2_1.id, arg_2_0.maxLevel)
+	if self.config.levelGroup > 0 and self.levelGroupCO then
+		for i, levelGroupConfig in ipairs(self.levelGroupCO) do
+			if roomLevel >= levelGroupConfig.needRoomLevel then
+				self.maxLevel = math.max(levelGroupConfig.id, self.maxLevel)
 			end
 
-			arg_2_0.maxConfigLevel = math.max(iter_2_1.id, arg_2_0.maxConfigLevel)
+			self.maxConfigLevel = math.max(levelGroupConfig.id, self.maxConfigLevel)
 		end
 	end
 end
 
-function var_0_0.updateInfo(arg_3_0, arg_3_1)
-	arg_3_0.formulaId = arg_3_1.formulaId
-	arg_3_0.finishCount = arg_3_1.finishCount or 0
-	arg_3_0.nextFinishTime = arg_3_1.nextFinishTime
-	arg_3_0.pauseTime = arg_3_1.pauseTime
-	arg_3_0.reserve = arg_3_0.config.reserve
-	arg_3_0.useReserve = 0
+function RoomProductionLineMO:updateInfo(info)
+	self.formulaId = info.formulaId
+	self.finishCount = info.finishCount or 0
+	self.nextFinishTime = info.nextFinishTime
+	self.pauseTime = info.pauseTime
+	self.reserve = self.config.reserve
+	self.useReserve = 0
 
-	arg_3_0:updateLevel(arg_3_1.level or 1)
+	self:updateLevel(info.level or 1)
 end
 
-function var_0_0.updateLevel(arg_4_0, arg_4_1)
-	arg_4_0.level = arg_4_1
+function RoomProductionLineMO:updateLevel(level)
+	self.level = level
 
-	if arg_4_0.config.levelGroup > 0 then
-		arg_4_0.levelCO = RoomConfig.instance:getProductionLineLevelConfig(arg_4_0.config.levelGroup, arg_4_0.level)
+	if self.config.levelGroup > 0 then
+		self.levelCO = RoomConfig.instance:getProductionLineLevelConfig(self.config.levelGroup, self.level)
 
-		local var_4_0 = GameUtil.splitString2(arg_4_0.levelCO.effect, true)
-		local var_4_1 = 0
+		local arr = GameUtil.splitString2(self.levelCO.effect, true)
+		local totalDecRate = 0
 
-		if var_4_0 then
-			for iter_4_0, iter_4_1 in ipairs(var_4_0) do
-				if iter_4_1[1] == RoomBuildingEnum.EffectType.Reserve then
-					arg_4_0.reserve = arg_4_0.reserve + iter_4_1[2]
-				elseif iter_4_1[1] == RoomBuildingEnum.EffectType.Time then
-					var_4_1 = var_4_1 + iter_4_1[2]
+		if arr then
+			for i, v in ipairs(arr) do
+				if v[1] == RoomBuildingEnum.EffectType.Reserve then
+					self.reserve = self.reserve + v[2]
+				elseif v[1] == RoomBuildingEnum.EffectType.Time then
+					totalDecRate = totalDecRate + v[2]
 				end
 			end
 		end
 
-		arg_4_0.formulaCO = RoomConfig.instance:getFormulaConfig(arg_4_0.formulaId)
+		self.formulaCO = RoomConfig.instance:getFormulaConfig(self.formulaId)
 
-		if not arg_4_0.formulaCO then
+		if not self.formulaCO then
 			return
 		end
 
-		arg_4_0.useReserve = arg_4_0.formulaCO.costReserve * arg_4_0.finishCount
+		self.useReserve = self.formulaCO.costReserve * self.finishCount
 
-		local var_4_2 = math.max(0, 1000 - var_4_1)
+		local remainRate = math.max(0, 1000 - totalDecRate)
 
-		arg_4_0.costTime = math.floor(arg_4_0.formulaCO.costTime * var_4_2 / 1000)
-		arg_4_0.produceSpeed = string.splitToNumber(arg_4_0.formulaCO.produce, "#")[3]
+		self.costTime = math.floor(self.formulaCO.costTime * remainRate / 1000)
 
-		local var_4_3 = arg_4_0.reserve - (arg_4_0.useReserve + arg_4_0.formulaCO.costReserve)
+		local produceArr = string.splitToNumber(self.formulaCO.produce, "#")
+		local produceNum = produceArr[3]
 
-		arg_4_0.allFinishTime = arg_4_0.nextFinishTime
+		self.produceSpeed = produceNum
 
-		if var_4_3 > 0 then
-			arg_4_0.allFinishTime = arg_4_0.allFinishTime + math.ceil(var_4_3 / arg_4_0.formulaCO.costReserve) * arg_4_0.costTime
-		elseif var_4_3 < 0 then
-			arg_4_0.allFinishTime = 0
+		local leftCount = self.reserve - (self.useReserve + self.formulaCO.costReserve)
+
+		self.allFinishTime = self.nextFinishTime
+
+		if leftCount > 0 then
+			self.allFinishTime = self.allFinishTime + math.ceil(leftCount / self.formulaCO.costReserve) * self.costTime
+		elseif leftCount < 0 then
+			self.allFinishTime = 0
 		end
 	end
 end
 
-function var_0_0.isCanGain(arg_5_0)
-	return arg_5_0.useReserve > 0
+function RoomProductionLineMO:isCanGain()
+	return self.useReserve > 0
 end
 
-function var_0_0.isLock(arg_6_0)
-	return arg_6_0.level == 0
+function RoomProductionLineMO:isLock()
+	return self.level == 0
 end
 
-function var_0_0.isRoomLevelUnLockNext(arg_7_0)
-	local var_7_0 = RoomModel.instance:getRoomLevel()
+function RoomProductionLineMO:isRoomLevelUnLockNext()
+	local roomLevel = RoomModel.instance:getRoomLevel()
 
-	return arg_7_0.config.needRoomLevel == var_7_0 + 1
+	return self.config.needRoomLevel == roomLevel + 1
 end
 
-function var_0_0.isPause(arg_8_0)
-	return arg_8_0.pauseTime and arg_8_0.pauseTime > 0
+function RoomProductionLineMO:isPause()
+	return self.pauseTime and self.pauseTime > 0
 end
 
-function var_0_0.getReservePer(arg_9_0)
-	local var_9_0 = arg_9_0.useReserve / arg_9_0.reserve
-	local var_9_1 = math.min(1, var_9_0)
-	local var_9_2 = 0
+function RoomProductionLineMO:getReservePer()
+	local per = self.useReserve / self.reserve
 
-	if var_9_1 ~= 0 then
-		var_9_2 = math.max(1, math.floor(var_9_1 * 100))
+	per = math.min(1, per)
+
+	local per100 = 0
+
+	if per ~= 0 then
+		per100 = math.max(1, math.floor(per * 100))
 	end
 
-	return var_9_1, var_9_2
+	return per, per100
 end
 
-function var_0_0.isFull(arg_10_0)
-	return arg_10_0.useReserve >= arg_10_0.reserve
+function RoomProductionLineMO:isFull()
+	return self.useReserve >= self.reserve
 end
 
-function var_0_0.isIdle(arg_11_0)
-	return not arg_11_0.formulaId or arg_11_0.formulaId <= 0
+function RoomProductionLineMO:isIdle()
+	return not self.formulaId or self.formulaId <= 0
 end
 
-function var_0_0.getGathericon(arg_12_0)
-	local var_12_0 = arg_12_0.formulaId
-	local var_12_1 = RoomProductionHelper.getFormulaProduceItem(var_12_0)
+function RoomProductionLineMO:getGathericon()
+	local formulaId = self.formulaId
+	local produceItemParam = RoomProductionHelper.getFormulaProduceItem(formulaId)
 
-	if var_12_1 then
-		local var_12_2
+	if produceItemParam then
+		local icon
 
-		if var_12_1.type == MaterialEnum.MaterialType.Currency then
-			local var_12_3 = CurrencyConfig.instance:getCurrencyCo(var_12_1.id).icon
+		if produceItemParam.type == MaterialEnum.MaterialType.Currency then
+			local currencyname = CurrencyConfig.instance:getCurrencyCo(produceItemParam.id).icon
 
-			var_12_2 = ResUrl.getCurrencyItemIcon(var_12_3 .. "_room")
+			icon = ResUrl.getCurrencyItemIcon(currencyname .. "_room")
 		else
-			var_12_2 = ResUrl.getCurrencyItemIcon(var_12_1.id .. "_room")
+			icon = ResUrl.getCurrencyItemIcon(produceItemParam.id .. "_room")
 		end
 
-		return var_12_2
+		return icon
 	end
 end
 
-return var_0_0
+return RoomProductionLineMO

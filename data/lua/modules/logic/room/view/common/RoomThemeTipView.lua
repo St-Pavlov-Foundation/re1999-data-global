@@ -1,149 +1,151 @@
-﻿module("modules.logic.room.view.common.RoomThemeTipView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/common/RoomThemeTipView.lua
 
-local var_0_0 = class("RoomThemeTipView", BaseView)
+module("modules.logic.room.view.common.RoomThemeTipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._simageblockpackageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "content/blockpackageiconmask/#simage_blockpackageicon")
-	arg_1_0._gosuitcollect = gohelper.findChild(arg_1_0.viewGO, "content/blockpackageiconmask/#go_suitcollect")
-	arg_1_0._simagebuildingicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "content/blockpackageiconmask/#go_suitcollect/#simage_buildingicon")
-	arg_1_0._btnsuitcollect = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "content/blockpackageiconmask/#go_suitcollect/#btn_suitcollect")
-	arg_1_0._gocollecticon = gohelper.findChild(arg_1_0.viewGO, "content/blockpackageiconmask/#go_suitcollect/#go_collecticon")
-	arg_1_0._txtbuildingname = gohelper.findChildText(arg_1_0.viewGO, "content/blockpackageiconmask/#go_suitcollect/#txt_buildingname")
-	arg_1_0._txtcollectdesc = gohelper.findChildText(arg_1_0.viewGO, "content/blockpackageiconmask/#go_suitcollect/#txt_collectdesc")
-	arg_1_0._gonormaltitle = gohelper.findChild(arg_1_0.viewGO, "content/title/#go_normaltitle")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "content/title/#go_normaltitle/#txt_name")
-	arg_1_0._gohascollect = gohelper.findChild(arg_1_0.viewGO, "content/title/#go_hascollect")
-	arg_1_0._txtname2 = gohelper.findChildText(arg_1_0.viewGO, "content/title/#go_hascollect/#txt_name2")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "content/desc/#txt_desc")
-	arg_1_0._scrollitem = gohelper.findChildScrollRect(arg_1_0.viewGO, "content/go_scroll/#scroll_item")
-	arg_1_0._gocobrand = gohelper.findChild(arg_1_0.viewGO, "content/#go_cobrand")
+local RoomThemeTipView = class("RoomThemeTipView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomThemeTipView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._simageblockpackageicon = gohelper.findChildSingleImage(self.viewGO, "content/blockpackageiconmask/#simage_blockpackageicon")
+	self._gosuitcollect = gohelper.findChild(self.viewGO, "content/blockpackageiconmask/#go_suitcollect")
+	self._simagebuildingicon = gohelper.findChildSingleImage(self.viewGO, "content/blockpackageiconmask/#go_suitcollect/#simage_buildingicon")
+	self._btnsuitcollect = gohelper.findChildButtonWithAudio(self.viewGO, "content/blockpackageiconmask/#go_suitcollect/#btn_suitcollect")
+	self._gocollecticon = gohelper.findChild(self.viewGO, "content/blockpackageiconmask/#go_suitcollect/#go_collecticon")
+	self._txtbuildingname = gohelper.findChildText(self.viewGO, "content/blockpackageiconmask/#go_suitcollect/#txt_buildingname")
+	self._txtcollectdesc = gohelper.findChildText(self.viewGO, "content/blockpackageiconmask/#go_suitcollect/#txt_collectdesc")
+	self._gonormaltitle = gohelper.findChild(self.viewGO, "content/title/#go_normaltitle")
+	self._txtname = gohelper.findChildText(self.viewGO, "content/title/#go_normaltitle/#txt_name")
+	self._gohascollect = gohelper.findChild(self.viewGO, "content/title/#go_hascollect")
+	self._txtname2 = gohelper.findChildText(self.viewGO, "content/title/#go_hascollect/#txt_name2")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "content/desc/#txt_desc")
+	self._scrollitem = gohelper.findChildScrollRect(self.viewGO, "content/go_scroll/#scroll_item")
+	self._gocobrand = gohelper.findChild(self.viewGO, "content/#go_cobrand")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnsuitcollect:AddClickListener(arg_2_0._btnsuitcollectOnClick, arg_2_0)
+function RoomThemeTipView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnsuitcollect:AddClickListener(self._btnsuitcollectOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnsuitcollect:RemoveClickListener()
+function RoomThemeTipView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btnsuitcollect:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function RoomThemeTipView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnsuitcollectOnClick(arg_5_0)
-	if RoomModel.instance:isHasGetThemeRewardById(arg_5_0._themeId) then
+function RoomThemeTipView:_btnsuitcollectOnClick()
+	if RoomModel.instance:isHasGetThemeRewardById(self._themeId) then
 		return
 	end
 
-	if arg_5_0._collectionBonus and #arg_5_0._collectionBonus > 0 then
-		local var_5_0 = arg_5_0._collectionBonus[1]
-		local var_5_1 = {
-			type = var_5_0[1],
-			id = var_5_0[2]
+	if self._collectionBonus and #self._collectionBonus > 0 then
+		local bonus = self._collectionBonus[1]
+		local data = {
+			type = bonus[1],
+			id = bonus[2]
 		}
 
-		MaterialTipController.instance:showMaterialInfoWithData(var_5_1.type, var_5_1.id, var_5_1)
+		MaterialTipController.instance:showMaterialInfoWithData(data.type, data.id, data)
 	end
 end
 
-function var_0_0._editableInitView(arg_6_0)
+function RoomThemeTipView:_editableInitView()
 	RoomThemeItemListModel.instance:setItemShowType(RoomThemeItemListModel.SwitchType.Collect)
-	gohelper.setActive(gohelper.findChild(arg_6_0.viewGO, "content/themeitem"), false)
+	gohelper.setActive(gohelper.findChild(self.viewGO, "content/themeitem"), false)
 
-	arg_6_0._gocollecticonanimator = arg_6_0._gocollecticon:GetComponent(typeof(UnityEngine.Animator))
-	arg_6_0.cobrandLogoItem = MonoHelper.addNoUpdateLuaComOnceToGo(arg_6_0._gocobrand, RoomSourcesCobrandLogoItem, arg_6_0)
+	self._gocollecticonanimator = self._gocollecticon:GetComponent(typeof(UnityEngine.Animator))
+	self.cobrandLogoItem = MonoHelper.addNoUpdateLuaComOnceToGo(self._gocobrand, RoomSourcesCobrandLogoItem, self)
 end
 
-function var_0_0._refreshUI(arg_7_0)
-	arg_7_0._themeId = RoomConfig.instance:getThemeIdByItem(arg_7_0._itemId, arg_7_0._itemType) or 1
+function RoomThemeTipView:_refreshUI()
+	self._themeId = RoomConfig.instance:getThemeIdByItem(self._itemId, self._itemType) or 1
 
-	local var_7_0 = RoomConfig.instance:getThemeConfig(arg_7_0._themeId)
+	local config = RoomConfig.instance:getThemeConfig(self._themeId)
 
-	arg_7_0._collectionBonus = RoomConfig.instance:getThemeCollectionRewards(arg_7_0._themeId)
-	arg_7_0._hasCollectionReward = arg_7_0._collectionBonus and #arg_7_0._collectionBonus > 0
+	self._collectionBonus = RoomConfig.instance:getThemeCollectionRewards(self._themeId)
+	self._hasCollectionReward = self._collectionBonus and #self._collectionBonus > 0
 
-	if var_7_0 then
-		arg_7_0._simageblockpackageicon:LoadImage(ResUrl.getRoomThemeRewardIcon(var_7_0.rewardIcon))
-		RoomThemeItemListModel.instance:setThemeId(arg_7_0._themeId)
+	if config then
+		self._simageblockpackageicon:LoadImage(ResUrl.getRoomThemeRewardIcon(config.rewardIcon))
+		RoomThemeItemListModel.instance:setThemeId(self._themeId)
 
-		arg_7_0._txtname.text = var_7_0.name
-		arg_7_0._txtname2.text = var_7_0.name
-		arg_7_0._txtdesc.text = var_7_0.desc
+		self._txtname.text = config.name
+		self._txtname2.text = config.name
+		self._txtdesc.text = config.desc
 	end
 
-	arg_7_0.cobrandLogoItem:setSourcesTypeStr(var_7_0 and var_7_0.sourcesType)
+	self.cobrandLogoItem:setSourcesTypeStr(config and config.sourcesType)
 
-	local var_7_1 = arg_7_0._hasCollectionReward and RoomModel.instance:isGetThemeRewardById(arg_7_0._themeId)
-	local var_7_2 = var_7_1 or RoomModel.instance:isFinshThemeById(arg_7_0._themeId)
+	local isGet = self._hasCollectionReward and RoomModel.instance:isGetThemeRewardById(self._themeId)
+	local isFinsh = isGet or RoomModel.instance:isFinshThemeById(self._themeId)
 
-	gohelper.setActive(arg_7_0._gosuitcollect, arg_7_0._hasCollectionReward)
-	gohelper.setActive(arg_7_0._gonormaltitle, not var_7_2)
-	gohelper.setActive(arg_7_0._gohascollect, var_7_2)
+	gohelper.setActive(self._gosuitcollect, self._hasCollectionReward)
+	gohelper.setActive(self._gonormaltitle, not isFinsh)
+	gohelper.setActive(self._gohascollect, isFinsh)
 
-	if arg_7_0._hasCollectionReward then
-		gohelper.setActive(arg_7_0._gocollecticon, var_7_1)
-		gohelper.setActive(arg_7_0._btnsuitcollect, not var_7_1)
+	if self._hasCollectionReward then
+		gohelper.setActive(self._gocollecticon, isGet)
+		gohelper.setActive(self._btnsuitcollect, not isGet)
 
-		local var_7_3 = arg_7_0._collectionBonus[1]
-		local var_7_4, var_7_5 = ItemModel.instance:getItemConfigAndIcon(var_7_3[1], var_7_3[2], true)
+		local bonus = self._collectionBonus[1]
+		local cfg, icons = ItemModel.instance:getItemConfigAndIcon(bonus[1], bonus[2], true)
 
-		arg_7_0._simagebuildingicon:LoadImage(var_7_5)
+		self._simagebuildingicon:LoadImage(icons)
 
-		arg_7_0._txtbuildingname.text = var_7_4.name
-	end
-end
-
-function var_0_0._onUpdateRoomThemeReward(arg_8_0, arg_8_1)
-	if arg_8_0._themeId == arg_8_1 then
-		arg_8_0:_refreshUI()
+		self._txtbuildingname.text = cfg.name
 	end
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0._itemType = arg_9_0.viewParam.type
-	arg_9_0._itemId = arg_9_0.viewParam.id
-
-	arg_9_0:addEventCb(RoomController.instance, RoomEvent.UpdateRoomThemeReward, arg_9_0._onUpdateRoomThemeReward, arg_9_0)
-	arg_9_0:_refreshUI()
-	TaskDispatcher.runDelay(arg_9_0._checkSendReward, arg_9_0, 1.5)
-
-	if RoomModel.instance:isHasGetThemeRewardById(arg_9_0._themeId) then
-		gohelper.setActive(arg_9_0._gocollecticonanimator, true)
-		arg_9_0._gocollecticonanimator:Play("open", 0, 0)
+function RoomThemeTipView:_onUpdateRoomThemeReward(themeId)
+	if self._themeId == themeId then
+		self:_refreshUI()
 	end
 end
 
-function var_0_0.onUpdateParam(arg_10_0)
-	arg_10_0._itemType = arg_10_0.viewParam.type
-	arg_10_0._itemId = arg_10_0.viewParam.id
+function RoomThemeTipView:onOpen()
+	self._itemType = self.viewParam.type
+	self._itemId = self.viewParam.id
 
-	arg_10_0:_refreshUI()
-	arg_10_0:_checkSendReward()
-end
+	self:addEventCb(RoomController.instance, RoomEvent.UpdateRoomThemeReward, self._onUpdateRoomThemeReward, self)
+	self:_refreshUI()
+	TaskDispatcher.runDelay(self._checkSendReward, self, 1.5)
 
-function var_0_0._checkSendReward(arg_11_0)
-	if RoomModel.instance:isHasGetThemeRewardById(arg_11_0._themeId) then
-		RoomRpc.instance:sendGetRoomThemeCollectionBonusRequest(arg_11_0._themeId)
+	if RoomModel.instance:isHasGetThemeRewardById(self._themeId) then
+		gohelper.setActive(self._gocollecticonanimator, true)
+		self._gocollecticonanimator:Play("open", 0, 0)
 	end
 end
 
-function var_0_0.onClose(arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0._checkSendReward, arg_12_0)
-	arg_12_0:_checkSendReward()
+function RoomThemeTipView:onUpdateParam()
+	self._itemType = self.viewParam.type
+	self._itemId = self.viewParam.id
+
+	self:_refreshUI()
+	self:_checkSendReward()
 end
 
-function var_0_0.onDestroyView(arg_13_0)
-	arg_13_0._simageblockpackageicon:UnLoadImage()
-	arg_13_0._simagebuildingicon:UnLoadImage()
-	arg_13_0.cobrandLogoItem:onDestroy()
+function RoomThemeTipView:_checkSendReward()
+	if RoomModel.instance:isHasGetThemeRewardById(self._themeId) then
+		RoomRpc.instance:sendGetRoomThemeCollectionBonusRequest(self._themeId)
+	end
 end
 
-return var_0_0
+function RoomThemeTipView:onClose()
+	TaskDispatcher.cancelTask(self._checkSendReward, self)
+	self:_checkSendReward()
+end
+
+function RoomThemeTipView:onDestroyView()
+	self._simageblockpackageicon:UnLoadImage()
+	self._simagebuildingicon:UnLoadImage()
+	self.cobrandLogoItem:onDestroy()
+end
+
+return RoomThemeTipView

@@ -1,18 +1,20 @@
-﻿module("modules.logic.guide.controller.trigger.GuideTriggerEnterActivity109Chess", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/trigger/GuideTriggerEnterActivity109Chess.lua
 
-local var_0_0 = class("GuideTriggerEnterActivity109Chess", BaseGuideTrigger)
+module("modules.logic.guide.controller.trigger.GuideTriggerEnterActivity109Chess", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0, arg_1_1)
-	Activity109ChessController.instance:registerCallback(ActivityChessEvent.GuideOnEnterMap, arg_1_0._onEnterMap, arg_1_0)
+local GuideTriggerEnterActivity109Chess = class("GuideTriggerEnterActivity109Chess", BaseGuideTrigger)
+
+function GuideTriggerEnterActivity109Chess:ctor(triggerKey)
+	GuideTriggerEnterActivity109Chess.super.ctor(self, triggerKey)
+	Activity109ChessController.instance:registerCallback(ActivityChessEvent.GuideOnEnterMap, self._onEnterMap, self)
 end
 
-function var_0_0.assertGuideSatisfy(arg_2_0, arg_2_1, arg_2_2)
-	return arg_2_1 == arg_2_2
+function GuideTriggerEnterActivity109Chess:assertGuideSatisfy(param, configParam)
+	return param == configParam
 end
 
-function var_0_0._onEnterMap(arg_3_0, arg_3_1)
-	arg_3_0:checkStartGuide(arg_3_1)
+function GuideTriggerEnterActivity109Chess:_onEnterMap(episodeIdStr)
+	self:checkStartGuide(episodeIdStr)
 end
 
-return var_0_0
+return GuideTriggerEnterActivity109Chess

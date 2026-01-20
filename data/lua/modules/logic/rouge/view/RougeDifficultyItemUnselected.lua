@@ -1,51 +1,53 @@
-﻿module("modules.logic.rouge.view.RougeDifficultyItemUnselected", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeDifficultyItemUnselected.lua
 
-local var_0_0 = class("RougeDifficultyItemUnselected", RougeDifficultyItem_Base)
+module("modules.logic.rouge.view.RougeDifficultyItemUnselected", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goBg1 = gohelper.findChild(arg_1_0.viewGO, "bg/#go_Bg1")
-	arg_1_0._goBg2 = gohelper.findChild(arg_1_0.viewGO, "bg/#go_Bg2")
-	arg_1_0._goBg3 = gohelper.findChild(arg_1_0.viewGO, "bg/#go_Bg3")
-	arg_1_0._txtnum1 = gohelper.findChildText(arg_1_0.viewGO, "num/#txt_num1")
-	arg_1_0._txtnum2 = gohelper.findChildText(arg_1_0.viewGO, "num/#txt_num2")
-	arg_1_0._txtnum3 = gohelper.findChildText(arg_1_0.viewGO, "num/#txt_num3")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#txt_name")
-	arg_1_0._txten = gohelper.findChildText(arg_1_0.viewGO, "#txt_name/#txt_en")
-	arg_1_0._scrolldesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_desc")
-	arg_1_0._txtScrollDesc = gohelper.findChildText(arg_1_0.viewGO, "#scroll_desc/viewport/content/#txt_ScrollDesc")
-	arg_1_0._goarrow = gohelper.findChild(arg_1_0.viewGO, "#go_arrow")
+local RougeDifficultyItemUnselected = class("RougeDifficultyItemUnselected", RougeDifficultyItem_Base)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeDifficultyItemUnselected:onInitView()
+	self._goBg1 = gohelper.findChild(self.viewGO, "bg/#go_Bg1")
+	self._goBg2 = gohelper.findChild(self.viewGO, "bg/#go_Bg2")
+	self._goBg3 = gohelper.findChild(self.viewGO, "bg/#go_Bg3")
+	self._txtnum1 = gohelper.findChildText(self.viewGO, "num/#txt_num1")
+	self._txtnum2 = gohelper.findChildText(self.viewGO, "num/#txt_num2")
+	self._txtnum3 = gohelper.findChildText(self.viewGO, "num/#txt_num3")
+	self._txtname = gohelper.findChildText(self.viewGO, "#txt_name")
+	self._txten = gohelper.findChildText(self.viewGO, "#txt_name/#txt_en")
+	self._scrolldesc = gohelper.findChildScrollRect(self.viewGO, "#scroll_desc")
+	self._txtScrollDesc = gohelper.findChildText(self.viewGO, "#scroll_desc/viewport/content/#txt_ScrollDesc")
+	self._goarrow = gohelper.findChild(self.viewGO, "#go_arrow")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RougeDifficultyItemUnselected:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RougeDifficultyItemUnselected:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	RougeDifficultyItem_Base._editableInitView(arg_4_0)
+function RougeDifficultyItemUnselected:_editableInitView()
+	RougeDifficultyItem_Base._editableInitView(self)
 
-	arg_4_0._scrolldescLimitScrollRectCmp = arg_4_0._scrolldesc.gameObject:GetComponent(gohelper.Type_LimitedScrollRect)
+	self._scrolldescLimitScrollRectCmp = self._scrolldesc.gameObject:GetComponent(gohelper.Type_LimitedScrollRect)
 
-	arg_4_0:_onSetScrollParentGameObject(arg_4_0._scrolldescLimitScrollRectCmp)
+	self:_onSetScrollParentGameObject(self._scrolldescLimitScrollRectCmp)
 end
 
-function var_0_0.onDestroyView(arg_5_0)
-	RougeDifficultyItem_Base.onDestroyView(arg_5_0)
+function RougeDifficultyItemUnselected:onDestroyView()
+	RougeDifficultyItem_Base.onDestroyView(self)
 end
 
-function var_0_0.setData(arg_6_0, arg_6_1)
-	RougeDifficultyItem_Base.setData(arg_6_0, arg_6_1)
+function RougeDifficultyItemUnselected:setData(mo)
+	RougeDifficultyItem_Base.setData(self, mo)
 
-	local var_6_0 = arg_6_1.difficultyCO
+	local difficultyCO = mo.difficultyCO
 
-	arg_6_0._txtScrollDesc.text = var_6_0.desc
+	self._txtScrollDesc.text = difficultyCO.desc
 end
 
-return var_0_0
+return RougeDifficultyItemUnselected

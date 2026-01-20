@@ -1,107 +1,109 @@
-﻿module("modules.logic.versionactivity2_8.dungeonboss.view.VersionActivity2_8BossStoryEnterView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/dungeonboss/view/VersionActivity2_8BossStoryEnterView.lua
 
-local var_0_0 = class("VersionActivity2_8BossStoryEnterView", BaseView)
+module("modules.logic.versionactivity2_8.dungeonboss.view.VersionActivity2_8BossStoryEnterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._simagedecbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_decbg")
-	arg_1_0._simagelangtxt = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_langtxt")
-	arg_1_0._btnreset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_reset")
-	arg_1_0._btntask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_task")
-	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "#btn_task/#go_reddot")
-	arg_1_0._btnstart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_start")
-	arg_1_0._btncontinue = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_continue")
-	arg_1_0._goprogress = gohelper.findChild(arg_1_0.viewGO, "#go_progress")
-	arg_1_0._golefttop = gohelper.findChild(arg_1_0.viewGO, "#go_lefttop")
-	arg_1_0._btnmap = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_map")
-	arg_1_0._gosnow = gohelper.findChild(arg_1_0.viewGO, "#go_snow")
+local VersionActivity2_8BossStoryEnterView = class("VersionActivity2_8BossStoryEnterView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity2_8BossStoryEnterView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._simagedecbg = gohelper.findChildSingleImage(self.viewGO, "#simage_decbg")
+	self._simagelangtxt = gohelper.findChildSingleImage(self.viewGO, "#simage_langtxt")
+	self._btnreset = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_reset")
+	self._btntask = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_task")
+	self._goreddot = gohelper.findChild(self.viewGO, "#btn_task/#go_reddot")
+	self._btnstart = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_start")
+	self._btncontinue = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_continue")
+	self._goprogress = gohelper.findChild(self.viewGO, "#go_progress")
+	self._golefttop = gohelper.findChild(self.viewGO, "#go_lefttop")
+	self._btnmap = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_map")
+	self._gosnow = gohelper.findChild(self.viewGO, "#go_snow")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnreset:AddClickListener(arg_2_0._btnresetOnClick, arg_2_0)
-	arg_2_0._btntask:AddClickListener(arg_2_0._btntaskOnClick, arg_2_0)
-	arg_2_0._btnstart:AddClickListener(arg_2_0._btnstartOnClick, arg_2_0)
-	arg_2_0._btncontinue:AddClickListener(arg_2_0._btncontinueOnClick, arg_2_0)
-	arg_2_0._btnmap:AddClickListener(arg_2_0._btnmapOnClick, arg_2_0)
+function VersionActivity2_8BossStoryEnterView:addEvents()
+	self._btnreset:AddClickListener(self._btnresetOnClick, self)
+	self._btntask:AddClickListener(self._btntaskOnClick, self)
+	self._btnstart:AddClickListener(self._btnstartOnClick, self)
+	self._btncontinue:AddClickListener(self._btncontinueOnClick, self)
+	self._btnmap:AddClickListener(self._btnmapOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnreset:RemoveClickListener()
-	arg_3_0._btntask:RemoveClickListener()
-	arg_3_0._btnstart:RemoveClickListener()
-	arg_3_0._btncontinue:RemoveClickListener()
-	arg_3_0._btnmap:RemoveClickListener()
+function VersionActivity2_8BossStoryEnterView:removeEvents()
+	self._btnreset:RemoveClickListener()
+	self._btntask:RemoveClickListener()
+	self._btnstart:RemoveClickListener()
+	self._btncontinue:RemoveClickListener()
+	self._btnmap:RemoveClickListener()
 end
 
-function var_0_0._btnmapOnClick(arg_4_0)
+function VersionActivity2_8BossStoryEnterView:_btnmapOnClick()
 	return
 end
 
-function var_0_0._btnresetOnClick(arg_5_0)
+function VersionActivity2_8BossStoryEnterView:_btnresetOnClick()
 	GameFacade.showMessageBox(MessageBoxIdDefine.BossStoryTip2, MsgBoxEnum.BoxType.Yes_No, function()
-		VersionActivity2_8BossRpc.instance:sendBossFightResetChapterRequest(DungeonEnum.ChapterId.BossStory, arg_5_0._onResetHandler, arg_5_0)
+		VersionActivity2_8BossRpc.instance:sendBossFightResetChapterRequest(DungeonEnum.ChapterId.BossStory, self._onResetHandler, self)
 	end, nil, nil)
 end
 
-function var_0_0._onResetHandler(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	if arg_7_2 ~= 0 then
+function VersionActivity2_8BossStoryEnterView:_onResetHandler(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	arg_7_0:_updateStars()
+	self:_updateStars()
 end
 
-function var_0_0._btntaskOnClick(arg_8_0)
+function VersionActivity2_8BossStoryEnterView:_btntaskOnClick()
 	VersionActivity2_8DungeonController.instance:openTaskView()
 end
 
-function var_0_0._btnstartOnClick(arg_9_0)
-	arg_9_0:_enterFight()
+function VersionActivity2_8BossStoryEnterView:_btnstartOnClick()
+	self:_enterFight()
 end
 
-function var_0_0._btncontinueOnClick(arg_10_0)
-	arg_10_0:_enterFight()
+function VersionActivity2_8BossStoryEnterView:_btncontinueOnClick()
+	self:_enterFight()
 end
 
-function var_0_0._enterFight(arg_11_0)
-	if not arg_11_0._episodeId then
+function VersionActivity2_8BossStoryEnterView:_enterFight()
+	if not self._episodeId then
 		logError("VersionActivity2_8BossStoryEnterView:_enterFight episodeId is nil")
 
 		return
 	end
 
-	if arg_11_0:_checkAfterStoryFinish() then
+	if self:_checkAfterStoryFinish() then
 		return
 	end
 
-	if arg_11_0._episodeId == VersionActivity2_8BossEnum.StoryBossSecondEpisode and not GuideController.instance:isForbidGuides() and not GuideModel.instance:isGuideFinish(VersionActivity2_8BossEnum.StoryBossSecondEpisodeGuideId) then
-		StoryController.instance:playStory(VersionActivity2_8BossEnum.StoryBoss_EpisodeStoryId, nil, arg_11_0._startEnterFight, arg_11_0)
+	if self._episodeId == VersionActivity2_8BossEnum.StoryBossSecondEpisode and not GuideController.instance:isForbidGuides() and not GuideModel.instance:isGuideFinish(VersionActivity2_8BossEnum.StoryBossSecondEpisodeGuideId) then
+		StoryController.instance:playStory(VersionActivity2_8BossEnum.StoryBoss_EpisodeStoryId, nil, self._startEnterFight, self)
 
 		return
 	end
 
-	arg_11_0:_startEnterFight()
+	self:_startEnterFight()
 end
 
-function var_0_0._checkAfterStoryFinish(arg_12_0)
-	if not DungeonModel.instance:hasPassLevel(arg_12_0._episodeId) then
+function VersionActivity2_8BossStoryEnterView:_checkAfterStoryFinish()
+	if not DungeonModel.instance:hasPassLevel(self._episodeId) then
 		return false
 	end
 
-	local var_12_0 = DungeonConfig.instance:getEpisodeCO(arg_12_0._episodeId)
+	local episodeConfig = DungeonConfig.instance:getEpisodeCO(self._episodeId)
 
-	if var_12_0.afterStory > 0 and not StoryModel.instance:isStoryFinished(var_12_0.afterStory) then
-		local var_12_1 = {}
+	if episodeConfig.afterStory > 0 and not StoryModel.instance:isStoryFinished(episodeConfig.afterStory) then
+		local param = {}
 
-		var_12_1.mark = true
-		var_12_1.episodeId = arg_12_0._episodeId
+		param.mark = true
+		param.episodeId = self._episodeId
 
-		StoryController.instance:playStory(var_12_0.afterStory, var_12_1, function()
-			arg_12_0:closeThis()
+		StoryController.instance:playStory(episodeConfig.afterStory, param, function()
+			self:closeThis()
 			VersionActivity2_8DungeonBossController.instance:forceFinishElement()
 		end)
 
@@ -111,89 +113,91 @@ function var_0_0._checkAfterStoryFinish(arg_12_0)
 	return false
 end
 
-function var_0_0._startEnterFight(arg_14_0)
-	VersionActivity2_8BossModel.instance:enterBossStoryFight(arg_14_0._episodeId)
+function VersionActivity2_8BossStoryEnterView:_startEnterFight()
+	VersionActivity2_8BossModel.instance:enterBossStoryFight(self._episodeId)
 
-	local var_14_0 = DungeonConfig.instance:getEpisodeCO(arg_14_0._episodeId)
+	local config = DungeonConfig.instance:getEpisodeCO(self._episodeId)
 
-	DungeonFightController.instance:enterFight(var_14_0.chapterId, arg_14_0._episodeId)
+	DungeonFightController.instance:enterFight(config.chapterId, self._episodeId)
 end
 
-function var_0_0._editableInitView(arg_15_0)
-	gohelper.setActive(arg_15_0._btncontinue, false)
-	gohelper.setActive(arg_15_0._btnstart, false)
-	gohelper.setActive(arg_15_0._btntask, false)
-	gohelper.setActive(arg_15_0._btnreset, false)
+function VersionActivity2_8BossStoryEnterView:_editableInitView()
+	gohelper.setActive(self._btncontinue, false)
+	gohelper.setActive(self._btnstart, false)
+	gohelper.setActive(self._btntask, false)
+	gohelper.setActive(self._btnreset, false)
 end
 
-function var_0_0.onUpdateParam(arg_16_0)
+function VersionActivity2_8BossStoryEnterView:onUpdateParam()
 	return
 end
 
-function var_0_0.onRefreshActivityState(arg_17_0)
-	local var_17_0 = false
+function VersionActivity2_8BossStoryEnterView:onRefreshActivityState()
+	local isNormal = false
 
-	gohelper.setActive(arg_17_0._btntask, var_17_0)
+	gohelper.setActive(self._btntask, isNormal)
 end
 
-function var_0_0.onOpen(arg_18_0)
-	arg_18_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_18_0.onRefreshActivityState, arg_18_0)
-	arg_18_0:onRefreshActivityState()
-	gohelper.setActive(arg_18_0._btnstart, true)
-	arg_18_0:_initStars()
-	arg_18_0:_updateStars()
+function VersionActivity2_8BossStoryEnterView:onOpen()
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self.onRefreshActivityState, self)
+	self:onRefreshActivityState()
+	gohelper.setActive(self._btnstart, true)
+	self:_initStars()
+	self:_updateStars()
 end
 
-function var_0_0._initStars(arg_19_0)
-	if arg_19_0._lightList then
+function VersionActivity2_8BossStoryEnterView:_initStars()
+	if self._lightList then
 		return
 	end
 
-	local var_19_0 = arg_19_0._goprogress.transform
-	local var_19_1 = var_19_0.childCount
+	local transform = self._goprogress.transform
+	local childCount = transform.childCount
 
-	arg_19_0._lightList = arg_19_0:getUserDataTb_()
+	self._lightList = self:getUserDataTb_()
 
-	for iter_19_0 = 0, var_19_1 - 1 do
-		local var_19_2 = var_19_0:GetChild(iter_19_0):GetChild(0).gameObject
+	for i = 0, childCount - 1 do
+		local child = transform:GetChild(i)
+		local light = child:GetChild(0)
+		local go = light.gameObject
 
-		gohelper.setActive(var_19_2, false)
-		table.insert(arg_19_0._lightList, var_19_2)
+		gohelper.setActive(go, false)
+		table.insert(self._lightList, go)
 	end
 end
 
-function var_0_0._updateStars(arg_20_0)
-	local var_20_0 = DungeonConfig.instance:getChapterEpisodeCOList(DungeonEnum.ChapterId.BossStory)
+function VersionActivity2_8BossStoryEnterView:_updateStars()
+	local list = DungeonConfig.instance:getChapterEpisodeCOList(DungeonEnum.ChapterId.BossStory)
 
-	arg_20_0._episodeId = nil
+	self._episodeId = nil
 
-	local var_20_1 = 0
+	local num = 0
 
-	for iter_20_0, iter_20_1 in ipairs(var_20_0) do
-		local var_20_2 = DungeonModel.instance:hasPassLevelAndStory(iter_20_1.id)
+	for i, v in ipairs(list) do
+		local pass = DungeonModel.instance:hasPassLevelAndStory(v.id)
 
-		if not var_20_2 and not arg_20_0._episodeId then
-			arg_20_0._episodeId = iter_20_1.id
+		if not pass and not self._episodeId then
+			self._episodeId = v.id
 		end
 
-		local var_20_3 = arg_20_0._lightList[iter_20_0]
+		local starGo = self._lightList[i]
 
-		gohelper.setActive(var_20_3, var_20_2)
+		gohelper.setActive(starGo, pass)
 
-		if var_20_2 then
-			var_20_1 = var_20_1 + 1
+		if pass then
+			num = num + 1
 		end
 	end
 
-	gohelper.setActive(arg_20_0._btnreset, var_20_1 > 0)
+	gohelper.setActive(self._btnreset, num > 0)
 end
 
-function var_0_0.onClose(arg_21_0)
+function VersionActivity2_8BossStoryEnterView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_22_0)
+function VersionActivity2_8BossStoryEnterView:onDestroyView()
 	return
 end
 
-return var_0_0
+return VersionActivity2_8BossStoryEnterView

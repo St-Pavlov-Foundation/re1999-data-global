@@ -1,30 +1,32 @@
-﻿module("modules.logic.gm.view.GMAudioBankViewItem", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GMAudioBankViewItem.lua
 
-local var_0_0 = class("GMAudioBankViewItem", ListScrollCell)
+module("modules.logic.gm.view.GMAudioBankViewItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._guideCO = nil
-	arg_1_0._txtAudioId = gohelper.findChildText(arg_1_1, "txtAudioID")
-	arg_1_0._txtEventName = gohelper.findChildText(arg_1_1, "txtEventName")
-	arg_1_0._btnShow = gohelper.findChildButtonWithAudio(arg_1_1, "btnShow")
+local GMAudioBankViewItem = class("GMAudioBankViewItem", ListScrollCell)
 
-	arg_1_0._btnShow:AddClickListener(arg_1_0._onClickShow, arg_1_0)
+function GMAudioBankViewItem:init(go)
+	self._guideCO = nil
+	self._txtAudioId = gohelper.findChildText(go, "txtAudioID")
+	self._txtEventName = gohelper.findChildText(go, "txtEventName")
+	self._btnShow = gohelper.findChildButtonWithAudio(go, "btnShow")
+
+	self._btnShow:AddClickListener(self._onClickShow, self)
 end
 
-function var_0_0.onUpdateMO(arg_2_0, arg_2_1)
-	arg_2_0._audioCO = arg_2_1
-	arg_2_0._configId = arg_2_1.id
-	arg_2_0._txtAudioId.text = arg_2_0._configId
-	arg_2_0._txtEventName.text = arg_2_0._audioCO.eventName
+function GMAudioBankViewItem:onUpdateMO(config)
+	self._audioCO = config
+	self._configId = config.id
+	self._txtAudioId.text = self._configId
+	self._txtEventName.text = self._audioCO.eventName
 end
 
-function var_0_0._onClickShow(arg_3_0)
+function GMAudioBankViewItem:_onClickShow()
 	AudioMgr.instance:trigger(3000031)
-	AudioMgr.instance:trigger(arg_3_0._configId)
+	AudioMgr.instance:trigger(self._configId)
 end
 
-function var_0_0.onDestroy(arg_4_0)
-	arg_4_0._btnShow:RemoveClickListener()
+function GMAudioBankViewItem:onDestroy()
+	self._btnShow:RemoveClickListener()
 end
 
-return var_0_0
+return GMAudioBankViewItem

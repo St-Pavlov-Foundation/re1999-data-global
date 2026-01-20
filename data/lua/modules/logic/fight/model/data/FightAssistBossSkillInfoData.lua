@@ -1,12 +1,14 @@
-﻿module("modules.logic.fight.model.data.FightAssistBossSkillInfoData", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightAssistBossSkillInfoData.lua
 
-local var_0_0 = FightDataClass("FightAssistBossSkillInfoData")
+module("modules.logic.fight.model.data.FightAssistBossSkillInfoData", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1)
-	arg_1_0.skillId = arg_1_1.skillId
-	arg_1_0.needPower = arg_1_1.needPower
-	arg_1_0.powerLow = arg_1_1.powerLow
-	arg_1_0.powerHigh = arg_1_1.powerHigh
+local FightAssistBossSkillInfoData = FightDataClass("FightAssistBossSkillInfoData")
+
+function FightAssistBossSkillInfoData:onConstructor(proto)
+	self.skillId = proto.skillId
+	self.needPower = proto.needPower
+	self.powerLow = proto.powerLow
+	self.powerHigh = proto.powerHigh
 end
 
-return var_0_0
+return FightAssistBossSkillInfoData

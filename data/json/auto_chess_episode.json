@@ -178,5 +178,23 @@
     "firstBounds": "",
     "masterLibraryId": 28001,
     "functionOn": "1#2"
+  },
+  {
+    "activityId": 13211,
+    "id": 32001,
+    "name": "",
+    "image": "",
+    "type": 1,
+    "preEpisode": 0,
+    "enemyId": 0,
+    "npcEnemyId": 11007,
+    "mallIds": "32001#2001",
+    "maxRound": 12,
+    "winCondition": "",
+    "lostCondition": "",
+    "masterId": 0,
+    "firstBounds": "",
+    "masterLibraryId": 0,
+    "functionOn": ""
   }
 ]

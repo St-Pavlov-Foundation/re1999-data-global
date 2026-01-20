@@ -1,65 +1,71 @@
-﻿module("modules.logic.equip.model.EquipTeamAttrListModel", package.seeall)
+﻿-- chunkname: @modules/logic/equip/model/EquipTeamAttrListModel.lua
 
-local var_0_0 = class("EquipTeamAttrListModel", ListScrollModel)
+module("modules.logic.equip.model.EquipTeamAttrListModel", package.seeall)
 
-function var_0_0.init(arg_1_0)
+local EquipTeamAttrListModel = class("EquipTeamAttrListModel", ListScrollModel)
+
+function EquipTeamAttrListModel:init()
 	return
 end
 
-function var_0_0.SetAttrList(arg_2_0)
-	local var_2_0 = {}
-	local var_2_1 = EquipTeamListModel.instance:getTeamEquip()
+function EquipTeamAttrListModel:SetAttrList()
+	local attrList = {}
+	local equipList = EquipTeamListModel.instance:getTeamEquip()
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_1) do
-		local var_2_2 = EquipModel.instance:getEquip(iter_2_1)
+	for _, uid in ipairs(equipList) do
+		local mo = EquipModel.instance:getEquip(uid)
 
-		if var_2_2 then
-			local var_2_3, var_2_4, var_2_5, var_2_6, var_2_7 = EquipConfig.instance:getEquipStrengthenAttr(var_2_2)
+		if mo then
+			local hp, atk, def, mdef, upAttrs = EquipConfig.instance:getEquipStrengthenAttr(mo)
 
-			arg_2_0:setAttr(var_2_0, 101, 0, var_2_3)
-			arg_2_0:setAttr(var_2_0, 102, 0, var_2_4)
-			arg_2_0:setAttr(var_2_0, 103, 0, var_2_5)
-			arg_2_0:setAttr(var_2_0, 104, 0, var_2_6)
+			self:setAttr(attrList, 101, 0, hp)
+			self:setAttr(attrList, 102, 0, atk)
+			self:setAttr(attrList, 103, 0, def)
+			self:setAttr(attrList, 104, 0, mdef)
 
-			for iter_2_2, iter_2_3 in pairs(lua_character_attribute.configDict) do
-				if iter_2_3.type == 2 or iter_2_3.type == 3 then
-					arg_2_0:setAttr(var_2_0, iter_2_2, iter_2_3.showType, var_2_7[iter_2_3.attrType])
+			for id, config in pairs(lua_character_attribute.configDict) do
+				if config.type == 2 or config.type == 3 then
+					self:setAttr(attrList, id, config.showType, upAttrs[config.attrType])
 				end
 			end
 		end
 	end
 
-	local var_2_8 = {}
+	local result = {}
 
-	for iter_2_4, iter_2_5 in pairs(var_2_0) do
-		for iter_2_6, iter_2_7 in pairs(iter_2_5) do
-			table.insert(var_2_8, {
-				attrId = iter_2_4,
-				showType = iter_2_6,
-				value = iter_2_7
+	for id, typeList in pairs(attrList) do
+		for type, value in pairs(typeList) do
+			table.insert(result, {
+				attrId = id,
+				showType = type,
+				value = value
 			})
 		end
 	end
 
-	table.sort(var_2_8, var_0_0._sort)
-	arg_2_0:setList(var_2_8)
+	table.sort(result, EquipTeamAttrListModel._sort)
+	self:setList(result)
 end
 
-function var_0_0._sort(arg_3_0, arg_3_1)
-	return arg_3_0.attrId < arg_3_1.attrId
+function EquipTeamAttrListModel._sort(a, b)
+	return a.attrId < b.attrId
 end
 
-function var_0_0.setAttr(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
-	if arg_4_4 <= -1 then
+function EquipTeamAttrListModel:setAttr(list, id, type, value)
+	if value <= -1 then
 		return
 	end
 
-	local var_4_0 = arg_4_1[arg_4_2] or {}
+	local typeList = list[id] or {}
 
-	arg_4_1[arg_4_2] = var_4_0
-	var_4_0[arg_4_3] = (var_4_0[arg_4_3] or 0) + arg_4_4
+	list[id] = typeList
+
+	local v = typeList[type] or 0
+
+	v = v + value
+	typeList[type] = v
 end
 
-var_0_0.instance = var_0_0.New()
+EquipTeamAttrListModel.instance = EquipTeamAttrListModel.New()
 
-return var_0_0
+return EquipTeamAttrListModel

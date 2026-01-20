@@ -1,51 +1,53 @@
-﻿module("modules.logic.store.view.SummonStoreGoodsViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/SummonStoreGoodsViewContainer.lua
 
-local var_0_0 = class("SummonStoreGoodsViewContainer", BaseViewContainer)
+module("modules.logic.store.view.SummonStoreGoodsViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local SummonStoreGoodsViewContainer = class("SummonStoreGoodsViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topright"))
-	table.insert(var_1_0, SummonStoreGoodsView.New())
+function SummonStoreGoodsViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, TabViewGroup.New(1, "#go_topright"))
+	table.insert(views, SummonStoreGoodsView.New())
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	arg_2_0._currencyView = CurrencyView.New({})
+function SummonStoreGoodsViewContainer:buildTabViews(tabContainerId)
+	self._currencyView = CurrencyView.New({})
 
 	return {
-		arg_2_0._currencyView
+		self._currencyView
 	}
 end
 
-function var_0_0.setCurrencyType(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	local var_3_0
+function SummonStoreGoodsViewContainer:setCurrencyType(currencyId, currencyType, icon)
+	local currencyTypeParam
 
-	if CurrencyEnum.CurrencyType.FreeDiamondCoupon == arg_3_1 then
-		var_3_0 = {
+	if CurrencyEnum.CurrencyType.FreeDiamondCoupon == currencyId then
+		currencyTypeParam = {
 			CurrencyEnum.CurrencyType.Diamond,
 			CurrencyEnum.CurrencyType.FreeDiamondCoupon
 		}
 	else
-		var_3_0 = {
+		currencyTypeParam = {
 			{
 				isCurrencySprite = true,
-				id = arg_3_1,
-				icon = arg_3_3,
+				id = currencyId,
+				icon = icon,
 				type = MaterialEnum.MaterialType.Item
 			}
 		}
 	end
 
-	if arg_3_0._currencyView then
-		arg_3_0._currencyView:setCurrencyType(var_3_0)
+	if self._currencyView then
+		self._currencyView:setCurrencyType(currencyTypeParam)
 	end
 end
 
-function var_0_0.onContainerClickModalMask(arg_4_0)
+function SummonStoreGoodsViewContainer:onContainerClickModalMask()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	arg_4_0:closeThis()
+	self:closeThis()
 end
 
-return var_0_0
+return SummonStoreGoodsViewContainer

@@ -1,146 +1,155 @@
-﻿module("modules.logic.versionactivity2_2.act169.model.SummonNewCustomPickViewModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/act169/model/SummonNewCustomPickViewModel.lua
 
-local var_0_0 = class("SummonNewCustomPickViewModel", BaseModel)
+module("modules.logic.versionactivity2_2.act169.model.SummonNewCustomPickViewModel", package.seeall)
 
-var_0_0.DEFAULT_HERO_ID = 0
-var_0_0.MAX_SELECT_COUNT = 1
+local SummonNewCustomPickViewModel = class("SummonNewCustomPickViewModel", BaseModel)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._activityMoDic = {}
-	arg_1_0._showFx = {}
+SummonNewCustomPickViewModel.DEFAULT_HERO_ID = 0
+SummonNewCustomPickViewModel.MAX_SELECT_COUNT = 1
+
+function SummonNewCustomPickViewModel:onInit()
+	self._activityMoDic = {}
+	self._showFx = {}
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._activityMoDic = {}
-	arg_2_0._showFx = {}
+function SummonNewCustomPickViewModel:reInit()
+	self._activityMoDic = {}
+	self._showFx = {}
 end
 
-function var_0_0.onGetInfo(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0:setReward(arg_3_1, arg_3_2)
+function SummonNewCustomPickViewModel:onGetInfo(activityId, heroId)
+	self:setReward(activityId, heroId)
 end
 
-function var_0_0.getHaveFirstDayLogin(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0:getDaliyLoginKey(arg_4_1)
+function SummonNewCustomPickViewModel:getHaveFirstDayLogin(activityId)
+	local key = self:getDaliyLoginKey(activityId)
 
-	return TimeUtil.getDayFirstLoginRed(var_4_0)
+	return TimeUtil.getDayFirstLoginRed(key)
 end
 
-function var_0_0.setHaveFirstDayLogin(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0:getDaliyLoginKey(arg_5_1)
+function SummonNewCustomPickViewModel:setHaveFirstDayLogin(activityId)
+	local key = self:getDaliyLoginKey(activityId)
 
-	TimeUtil.setDayFirstLoginRed(var_5_0)
+	TimeUtil.setDayFirstLoginRed(key)
 end
 
-function var_0_0.getDaliyLoginKey(arg_6_0, arg_6_1)
-	return PlayerPrefsKey.Version2_2SummonNewCustomPatFace .. tostring(arg_6_1)
+function SummonNewCustomPickViewModel:getDaliyLoginKey(activityId)
+	return PlayerPrefsKey.Version2_2SummonNewCustomPatFace .. tostring(activityId)
 end
 
-function var_0_0.setCurActId(arg_7_0, arg_7_1)
-	arg_7_0._actId = arg_7_1
+function SummonNewCustomPickViewModel:setCurActId(activityId)
+	self._actId = activityId
 
-	SummonNewCustomPickChoiceController.instance:onSelectActivity(arg_7_1)
+	SummonNewCustomPickChoiceController.instance:onSelectActivity(activityId)
 end
 
-function var_0_0.getCurActId(arg_8_0)
-	return arg_8_0._actId
+function SummonNewCustomPickViewModel:getCurActId()
+	return self._actId
 end
 
-function var_0_0.setReward(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = arg_9_0:getActivityInfo(arg_9_1)
+function SummonNewCustomPickViewModel:setReward(activityId, heroId)
+	local activityMo = self:getActivityInfo(activityId)
 
-	if var_9_0 then
-		var_9_0.heroId = arg_9_2
+	if activityMo then
+		activityMo.heroId = heroId
 	end
 
-	local var_9_1 = SummonNewCustomPickViewMo.New(arg_9_1, arg_9_2)
-
-	arg_9_0._activityMoDic[arg_9_1] = var_9_1
+	activityMo = SummonNewCustomPickViewMo.New(activityId, heroId)
+	self._activityMoDic[activityId] = activityMo
 end
 
-function var_0_0.setSelect(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = arg_10_0:getActivityInfo(arg_10_1)
+function SummonNewCustomPickViewModel:setSelect(activityId, selectId)
+	local activityMo = self:getActivityInfo(activityId)
 
-	if not var_10_0 then
+	if not activityMo then
 		return
 	end
 
-	if arg_10_0:isSelect(var_10_0) then
+	if self:isSelect(activityMo) then
 		return
 	end
 
-	var_10_0.selectId = arg_10_2
+	activityMo.selectId = selectId
 end
 
-function var_0_0.getMaxSelectCount(arg_11_0)
-	return arg_11_0.MAX_SELECT_COUNT
+function SummonNewCustomPickViewModel:getMaxSelectCount()
+	return self.MAX_SELECT_COUNT
 end
 
-function var_0_0.getSummonPickScope(arg_12_0, arg_12_1)
-	return SummonNewCustomPickViewConfig.instance:getSummonConfigById(arg_12_1).heroIds
+function SummonNewCustomPickViewModel:getSummonPickScope(activityId)
+	local config = SummonNewCustomPickViewConfig.instance:getSummonConfigById(activityId)
+
+	return config.heroIds
 end
 
-function var_0_0.getSummonInfo(arg_13_0, arg_13_1)
-	SummonNewCustomPickViewRpc.instance:sendGet169InfoRequest(arg_13_1)
+function SummonNewCustomPickViewModel:getSummonInfo(activityId)
+	SummonNewCustomPickViewRpc.instance:sendGet169InfoRequest(activityId)
 end
 
-function var_0_0.isSelect(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_0:getActivityInfo(arg_14_1)
+function SummonNewCustomPickViewModel:isSelect(activityId)
+	local activityMo = self:getActivityInfo(activityId)
 
-	if var_14_0 == nil then
+	if activityMo == nil then
 		return false
 	end
 
-	return arg_14_0:isMoSelect(var_14_0)
+	return self:isMoSelect(activityMo)
 end
 
-function var_0_0.isActivityOpen(arg_15_0, arg_15_1)
-	local var_15_0 = ServerTime.now() * 1000
+function SummonNewCustomPickViewModel:isActivityOpen(activityId)
+	local nowTime = ServerTime.now() * 1000
 
-	if not arg_15_1 or not ActivityModel.instance:isActOnLine(arg_15_1) then
+	if not activityId or not ActivityModel.instance:isActOnLine(activityId) then
 		return false
 	end
 
-	if var_15_0 < ActivityModel.instance:getActStartTime(arg_15_1) then
+	local startTime = ActivityModel.instance:getActStartTime(activityId)
+
+	if nowTime < startTime then
 		return false
 	end
 
-	if var_15_0 >= ActivityModel.instance:getActEndTime(arg_15_1) then
+	local endTime = ActivityModel.instance:getActEndTime(activityId)
+
+	if endTime <= nowTime then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0.isMoSelect(arg_16_0, arg_16_1)
-	return arg_16_1.activityId ~= var_0_0.DEFAULT_HERO_ID
+function SummonNewCustomPickViewModel:isMoSelect(activityMo)
+	return activityMo.activityId ~= SummonNewCustomPickViewModel.DEFAULT_HERO_ID
 end
 
-function var_0_0.isNewbiePoolExist(arg_17_0)
+function SummonNewCustomPickViewModel:isNewbiePoolExist()
 	return SummonMainModel.instance:getNewbiePoolExist()
 end
 
-function var_0_0.isGetReward(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_0:getActivityInfo(arg_18_1)
+function SummonNewCustomPickViewModel:isGetReward(activityId)
+	local activityMo = self:getActivityInfo(activityId)
 
-	if var_18_0 == nil then
+	if activityMo == nil then
 		return false
 	end
 
-	return var_18_0.heroId ~= arg_18_0.DEFAULT_HERO_ID
+	return activityMo.heroId ~= self.DEFAULT_HERO_ID
 end
 
-function var_0_0.getActivityInfo(arg_19_0, arg_19_1)
-	return arg_19_0._activityMoDic[arg_19_1]
+function SummonNewCustomPickViewModel:getActivityInfo(activityId)
+	local activityMo = self._activityMoDic[activityId]
+
+	return activityMo
 end
 
-function var_0_0.setGetRewardFxState(arg_20_0, arg_20_1, arg_20_2)
-	arg_20_0._showFx[arg_20_1] = arg_20_2
+function SummonNewCustomPickViewModel:setGetRewardFxState(activityId, state)
+	self._showFx[activityId] = state
 end
 
-function var_0_0.getGetRewardFxState(arg_21_0, arg_21_1)
-	return arg_21_0._showFx[arg_21_1] and true or false
+function SummonNewCustomPickViewModel:getGetRewardFxState(activityId)
+	return self._showFx[activityId] and true or false
 end
 
-var_0_0.instance = var_0_0.New()
+SummonNewCustomPickViewModel.instance = SummonNewCustomPickViewModel.New()
 
-return var_0_0
+return SummonNewCustomPickViewModel

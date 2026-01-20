@@ -1,41 +1,43 @@
-﻿module("modules.logic.guide.controller.trigger.GuideTriggerEpisodeFinishWithOpen", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/trigger/GuideTriggerEpisodeFinishWithOpen.lua
 
-local var_0_0 = class("GuideTriggerEpisodeFinishWithOpen", BaseGuideTrigger)
+module("modules.logic.guide.controller.trigger.GuideTriggerEpisodeFinishWithOpen", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0, arg_1_1)
-	DungeonController.instance:registerCallback(DungeonEvent.OnEndDungeonPush, arg_1_0._checkStartGuide, arg_1_0)
-	StoryController.instance:registerCallback(StoryEvent.Finish, arg_1_0._checkStartGuide, arg_1_0)
-	GameSceneMgr.instance:registerCallback(SceneType.Main, arg_1_0._onMainScene, arg_1_0)
+local GuideTriggerEpisodeFinishWithOpen = class("GuideTriggerEpisodeFinishWithOpen", BaseGuideTrigger)
+
+function GuideTriggerEpisodeFinishWithOpen:ctor(triggerKey)
+	GuideTriggerEpisodeFinishWithOpen.super.ctor(self, triggerKey)
+	DungeonController.instance:registerCallback(DungeonEvent.OnEndDungeonPush, self._checkStartGuide, self)
+	StoryController.instance:registerCallback(StoryEvent.Finish, self._checkStartGuide, self)
+	GameSceneMgr.instance:registerCallback(SceneType.Main, self._onMainScene, self)
 end
 
-function var_0_0.assertGuideSatisfy(arg_2_0, arg_2_1, arg_2_2)
-	local var_2_0 = tonumber(arg_2_2)
-	local var_2_1 = OpenConfig.instance:getOpenCo(var_2_0)
+function GuideTriggerEpisodeFinishWithOpen:assertGuideSatisfy(param, configParam)
+	local openId = tonumber(configParam)
+	local openCO = OpenConfig.instance:getOpenCo(openId)
 
-	if not var_2_1 then
+	if not openCO then
 		return false
 	end
 
-	local var_2_2 = var_2_1.episodeId
-	local var_2_3 = DungeonModel.instance:getEpisodeInfo(var_2_2)
-	local var_2_4 = DungeonConfig.instance:getEpisodeCO(var_2_2)
+	local configEpisodeId = openCO.episodeId
+	local episodeMO = DungeonModel.instance:getEpisodeInfo(configEpisodeId)
+	local episodeCO = DungeonConfig.instance:getEpisodeCO(configEpisodeId)
 
-	if var_2_4 and var_2_3 and var_2_3.star > DungeonEnum.StarType.None then
-		return var_2_4.afterStory <= 0 or var_2_4.afterStory > 0 and StoryModel.instance:isStoryFinished(var_2_4.afterStory)
+	if episodeCO and episodeMO and episodeMO.star > DungeonEnum.StarType.None then
+		return episodeCO.afterStory <= 0 or episodeCO.afterStory > 0 and StoryModel.instance:isStoryFinished(episodeCO.afterStory)
 	else
 		return false
 	end
 end
 
-function var_0_0._onMainScene(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_2 == 1 then
-		arg_3_0:checkStartGuide()
+function GuideTriggerEpisodeFinishWithOpen:_onMainScene(sceneLevelId, Exit0Enter1)
+	if Exit0Enter1 == 1 then
+		self:checkStartGuide()
 	end
 end
 
-function var_0_0._checkStartGuide(arg_4_0)
-	arg_4_0:checkStartGuide()
+function GuideTriggerEpisodeFinishWithOpen:_checkStartGuide()
+	self:checkStartGuide()
 end
 
-return var_0_0
+return GuideTriggerEpisodeFinishWithOpen

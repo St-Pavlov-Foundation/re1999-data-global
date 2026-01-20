@@ -1,53 +1,55 @@
-﻿module("modules.logic.prototest.view.ProtoTestFileView", package.seeall)
+﻿-- chunkname: @modules/logic/prototest/view/ProtoTestFileView.lua
 
-local var_0_0 = class("ProtoTestFileView", BaseView)
+module("modules.logic.prototest.view.ProtoTestFileView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnSave = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Panel_storage/Panel_newFile/Btn_save")
-	arg_1_0._btnRefresh = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Panel_storage/Panel_oprator/Btn_refresh")
-	arg_1_0._btnOpenFolder = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Panel_storage/Panel_oprator/Btn_openFolder")
-	arg_1_0._inputFileName = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "Panel_storage/Panel_newFile/Field_newcaseroot")
+local ProtoTestFileView = class("ProtoTestFileView", BaseView)
+
+function ProtoTestFileView:onInitView()
+	self._btnSave = gohelper.findChildButtonWithAudio(self.viewGO, "Panel_storage/Panel_newFile/Btn_save")
+	self._btnRefresh = gohelper.findChildButtonWithAudio(self.viewGO, "Panel_storage/Panel_oprator/Btn_refresh")
+	self._btnOpenFolder = gohelper.findChildButtonWithAudio(self.viewGO, "Panel_storage/Panel_oprator/Btn_openFolder")
+	self._inputFileName = gohelper.findChildTextMeshInputField(self.viewGO, "Panel_storage/Panel_newFile/Field_newcaseroot")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnSave:AddClickListener(arg_2_0._onClickBtnSave, arg_2_0)
-	arg_2_0._btnRefresh:AddClickListener(arg_2_0._onClickBtnRefresh, arg_2_0)
-	arg_2_0._btnOpenFolder:AddClickListener(arg_2_0._onClickBtnOpenFolder, arg_2_0)
+function ProtoTestFileView:addEvents()
+	self._btnSave:AddClickListener(self._onClickBtnSave, self)
+	self._btnRefresh:AddClickListener(self._onClickBtnRefresh, self)
+	self._btnOpenFolder:AddClickListener(self._onClickBtnOpenFolder, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnSave:RemoveClickListener()
-	arg_3_0._btnRefresh:RemoveClickListener()
-	arg_3_0._btnOpenFolder:RemoveClickListener()
+function ProtoTestFileView:removeEvents()
+	self._btnSave:RemoveClickListener()
+	self._btnRefresh:RemoveClickListener()
+	self._btnOpenFolder:RemoveClickListener()
 end
 
-function var_0_0.onOpen(arg_4_0)
+function ProtoTestFileView:onOpen()
 	return
 end
 
-function var_0_0._onClickBtnSave(arg_5_0)
-	local var_5_0 = arg_5_0._inputFileName:GetText()
+function ProtoTestFileView:_onClickBtnSave()
+	local fileName = self._inputFileName:GetText()
 
 	if ProtoTestMgr.instance:isRecording() then
 		GameFacade.showToast(ToastEnum.ProtoModifyNotString)
-	elseif string.nilorempty(var_5_0) then
+	elseif string.nilorempty(fileName) then
 		GameFacade.showToast(ToastEnum.ProtoModifyIsEmpty)
-	elseif SLFramework.FileHelper.IsFileExists(ProtoFileHelper.getFullPathByFileName(var_5_0)) then
+	elseif SLFramework.FileHelper.IsFileExists(ProtoFileHelper.getFullPathByFileName(fileName)) then
 		GameFacade.showToast(ToastEnum.ProtoModifyIsFileExists)
 	else
-		local var_5_1 = ProtoTestCaseModel.instance:getList()
+		local list = ProtoTestCaseModel.instance:getList()
 
-		ProtoTestMgr.instance:saveToFile(var_5_0, var_5_1)
+		ProtoTestMgr.instance:saveToFile(fileName, list)
 		ProtoTestFileModel.instance:refreshFileList()
 	end
 end
 
-function var_0_0._onClickBtnRefresh(arg_6_0)
+function ProtoTestFileView:_onClickBtnRefresh()
 	ProtoTestFileModel.instance:refreshFileList()
 end
 
-function var_0_0._onClickBtnOpenFolder(arg_7_0)
+function ProtoTestFileView:_onClickBtnOpenFolder()
 	ZProj.OpenSelectFileWindow.OpenExplorer(ProtoFileHelper.DirPath)
 end
 
-return var_0_0
+return ProtoTestFileView

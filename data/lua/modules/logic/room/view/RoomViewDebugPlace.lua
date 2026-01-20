@@ -1,225 +1,227 @@
-﻿module("modules.logic.room.view.RoomViewDebugPlace", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomViewDebugPlace.lua
 
-local var_0_0 = class("RoomViewDebugPlace", BaseView)
+module("modules.logic.room.view.RoomViewDebugPlace", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local RoomViewDebugPlace = class("RoomViewDebugPlace", BaseView)
+
+function RoomViewDebugPlace:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RoomViewDebugPlace:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RoomViewDebugPlace:removeEvents()
 	return
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
+function RoomViewDebugPlace:_btncloseOnClick()
 	RoomDebugController.instance:setDebugPlaceListShow(false)
 end
 
-function var_0_0._btncategoryOnClick(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0._categoryItemList[arg_5_1].category
+function RoomViewDebugPlace:_btncategoryOnClick(index)
+	local categoryItem = self._categoryItemList[index]
+	local category = categoryItem.category
 
-	if var_5_0 == "未分类" or string.nilorempty(var_5_0) then
+	if category == "未分类" or string.nilorempty(category) then
 		RoomDebugPlaceListModel.instance:setFilterCategory(nil)
 	else
-		RoomDebugPlaceListModel.instance:setFilterCategory(var_5_0)
+		RoomDebugPlaceListModel.instance:setFilterCategory(category)
 	end
 
 	RoomDebugPlaceListModel.instance:setDebugPlaceList()
 	RoomDebugPlaceListModel.instance:clearSelect()
-	arg_5_0:_refreshCategory()
+	self:_refreshCategory()
 
-	arg_5_0._scrolldebugplace.horizontalNormalizedPosition = 0
+	self._scrolldebugplace.horizontalNormalizedPosition = 0
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._godebugplace = gohelper.findChild(arg_6_0.viewGO, "go_normalroot/go_debugplace")
-	arg_6_0._gocategoryitem = gohelper.findChild(arg_6_0.viewGO, "go_normalroot/go_debugplace/filtercategory/viewport/content/go_categoryitem")
-	arg_6_0._btnclose = gohelper.findChildButtonWithAudio(arg_6_0.viewGO, "go_normalroot/go_debugplace/btn_close")
-	arg_6_0._scrolldebugplace = gohelper.findChildScrollRect(arg_6_0.viewGO, "go_normalroot/go_debugplace/scroll_debugplace")
-	arg_6_0._gopackageiditem = gohelper.findChild(arg_6_0.viewGO, "go_normalroot/go_debugplace/filterpackageid/viewport/content/go_packageiditem")
+function RoomViewDebugPlace:_editableInitView()
+	self._godebugplace = gohelper.findChild(self.viewGO, "go_normalroot/go_debugplace")
+	self._gocategoryitem = gohelper.findChild(self.viewGO, "go_normalroot/go_debugplace/filtercategory/viewport/content/go_categoryitem")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "go_normalroot/go_debugplace/btn_close")
+	self._scrolldebugplace = gohelper.findChildScrollRect(self.viewGO, "go_normalroot/go_debugplace/scroll_debugplace")
+	self._gopackageiditem = gohelper.findChild(self.viewGO, "go_normalroot/go_debugplace/filterpackageid/viewport/content/go_packageiditem")
 
-	arg_6_0._btnclose:AddClickListener(arg_6_0._btncloseOnClick, arg_6_0)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 
-	arg_6_0._isShowDebugPlace = false
+	self._isShowDebugPlace = false
 
-	gohelper.setActive(arg_6_0._godebugplace, false)
+	gohelper.setActive(self._godebugplace, false)
 
-	arg_6_0._scene = GameSceneMgr.instance:getCurScene()
-	arg_6_0._categoryItemList = {}
+	self._scene = GameSceneMgr.instance:getCurScene()
+	self._categoryItemList = {}
 
-	gohelper.setActive(arg_6_0._gocategoryitem, false)
+	gohelper.setActive(self._gocategoryitem, false)
 
-	arg_6_0._packageIdItemList = {}
+	self._packageIdItemList = {}
 
-	gohelper.setActive(arg_6_0._gopackageiditem, false)
-	arg_6_0:_initCategory()
-	arg_6_0:_initPackageId()
+	gohelper.setActive(self._gopackageiditem, false)
+	self:_initCategory()
+	self:_initPackageId()
 	OrthCameraRTMgr.instance:initRT()
 	CameraMgr.instance:setOrthCameraActive(true)
 end
 
-function var_0_0._initPackageId(arg_7_0)
-	local var_7_0 = lua_block_package.configList
+function RoomViewDebugPlace:_initPackageId()
+	local list = lua_block_package.configList
 
-	table.sort(var_7_0, function(arg_8_0, arg_8_1)
-		return arg_8_0.id < arg_8_1.id
+	table.sort(list, function(x, y)
+		return x.id < y.id
 	end)
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-		local var_7_1 = arg_7_0:getUserDataTb_()
+	for i, packageConfig in ipairs(list) do
+		local packageIdItem = self:getUserDataTb_()
 
-		var_7_1.index = iter_7_0
-		var_7_1.go = gohelper.cloneInPlace(arg_7_0._gopackageiditem, "item" .. iter_7_0)
-		var_7_1.gobeselect = gohelper.findChild(var_7_1.go, "go_beselect")
-		var_7_1.gounselect = gohelper.findChild(var_7_1.go, "go_unselect")
-		var_7_1.txtbeselectname = gohelper.findChildText(var_7_1.go, "go_beselect/txt_name")
-		var_7_1.txtunselectname = gohelper.findChildText(var_7_1.go, "go_unselect/txt_name")
-		var_7_1.btnclick = gohelper.findChildButtonWithAudio(var_7_1.go, "btn_click")
+		packageIdItem.index = i
+		packageIdItem.go = gohelper.cloneInPlace(self._gopackageiditem, "item" .. i)
+		packageIdItem.gobeselect = gohelper.findChild(packageIdItem.go, "go_beselect")
+		packageIdItem.gounselect = gohelper.findChild(packageIdItem.go, "go_unselect")
+		packageIdItem.txtbeselectname = gohelper.findChildText(packageIdItem.go, "go_beselect/txt_name")
+		packageIdItem.txtunselectname = gohelper.findChildText(packageIdItem.go, "go_unselect/txt_name")
+		packageIdItem.btnclick = gohelper.findChildButtonWithAudio(packageIdItem.go, "btn_click")
 
-		var_7_1.btnclick:AddClickListener(arg_7_0._btnpackageidOnClick, arg_7_0, var_7_1.index)
+		packageIdItem.btnclick:AddClickListener(self._btnpackageidOnClick, self, packageIdItem.index)
 
-		var_7_1.packageId = iter_7_1.id
-		var_7_1.txtbeselectname.text = iter_7_1.name
-		var_7_1.txtunselectname.text = iter_7_1.name
+		packageIdItem.packageId = packageConfig.id
+		packageIdItem.txtbeselectname.text = packageConfig.name
+		packageIdItem.txtunselectname.text = packageConfig.name
 
-		table.insert(arg_7_0._packageIdItemList, var_7_1)
-		gohelper.setActive(var_7_1.go, true)
+		table.insert(self._packageIdItemList, packageIdItem)
+		gohelper.setActive(packageIdItem.go, true)
 	end
 
-	arg_7_0:_refreshPackageId()
+	self:_refreshPackageId()
 end
 
-function var_0_0._initCategory(arg_9_0)
-	local var_9_0 = RoomConfig.instance:getBlockDefineConfigDict()
-	local var_9_1 = {}
-	local var_9_2 = {}
+function RoomViewDebugPlace:_initCategory()
+	local blockDefineConfigDict = RoomConfig.instance:getBlockDefineConfigDict()
+	local list = {}
+	local dict = {}
 
-	for iter_9_0, iter_9_1 in pairs(var_9_0) do
-		local var_9_3 = iter_9_1.category
+	for _, blockDefineConfig in pairs(blockDefineConfigDict) do
+		local category = blockDefineConfig.category
 
-		if string.nilorempty(var_9_3) then
-			var_9_3 = "未分类"
+		if string.nilorempty(category) then
+			category = "未分类"
 		end
 
-		if not var_9_2[var_9_3] then
-			var_9_2[var_9_3] = {}
+		if not dict[category] then
+			dict[category] = {}
 
-			table.insert(var_9_1, var_9_3)
+			table.insert(list, category)
 		end
 	end
 
-	for iter_9_2, iter_9_3 in ipairs(var_9_1) do
-		local var_9_4 = arg_9_0._categoryItemList[iter_9_2]
+	for i, category in ipairs(list) do
+		local categoryItem = self._categoryItemList[i]
 
-		if not var_9_4 then
-			var_9_4 = arg_9_0:getUserDataTb_()
-			var_9_4.index = iter_9_2
-			var_9_4.go = gohelper.cloneInPlace(arg_9_0._gocategoryitem, "item" .. iter_9_2)
-			var_9_4.gobeselect = gohelper.findChild(var_9_4.go, "go_beselect")
-			var_9_4.gounselect = gohelper.findChild(var_9_4.go, "go_unselect")
-			var_9_4.txtbeselectname = gohelper.findChildText(var_9_4.go, "go_beselect/txt_name")
-			var_9_4.txtunselectname = gohelper.findChildText(var_9_4.go, "go_unselect/txt_name")
-			var_9_4.btnclick = gohelper.findChildButtonWithAudio(var_9_4.go, "btn_click")
+		if not categoryItem then
+			categoryItem = self:getUserDataTb_()
+			categoryItem.index = i
+			categoryItem.go = gohelper.cloneInPlace(self._gocategoryitem, "item" .. i)
+			categoryItem.gobeselect = gohelper.findChild(categoryItem.go, "go_beselect")
+			categoryItem.gounselect = gohelper.findChild(categoryItem.go, "go_unselect")
+			categoryItem.txtbeselectname = gohelper.findChildText(categoryItem.go, "go_beselect/txt_name")
+			categoryItem.txtunselectname = gohelper.findChildText(categoryItem.go, "go_unselect/txt_name")
+			categoryItem.btnclick = gohelper.findChildButtonWithAudio(categoryItem.go, "btn_click")
 
-			var_9_4.btnclick:AddClickListener(arg_9_0._btncategoryOnClick, arg_9_0, var_9_4.index)
-			table.insert(arg_9_0._categoryItemList, var_9_4)
+			categoryItem.btnclick:AddClickListener(self._btncategoryOnClick, self, categoryItem.index)
+			table.insert(self._categoryItemList, categoryItem)
 		end
 
-		var_9_4.category = iter_9_3
-		var_9_4.txtbeselectname.text = var_9_4.category
-		var_9_4.txtunselectname.text = var_9_4.category
+		categoryItem.category = category
+		categoryItem.txtbeselectname.text = categoryItem.category
+		categoryItem.txtunselectname.text = categoryItem.category
 
-		gohelper.setActive(var_9_4.go, true)
+		gohelper.setActive(categoryItem.go, true)
 	end
 
-	for iter_9_4 = #var_9_1 + 1, #arg_9_0._categoryItemList do
-		local var_9_5 = arg_9_0._categoryItemList[iter_9_4]
+	for i = #list + 1, #self._categoryItemList do
+		local categoryItem = self._categoryItemList[i]
 
-		gohelper.setActive(var_9_5.go, false)
+		gohelper.setActive(categoryItem.go, false)
 	end
 
-	arg_9_0:_refreshCategory()
+	self:_refreshCategory()
 end
 
-function var_0_0._refreshCategory(arg_10_0)
-	local var_10_0 = RoomDebugPlaceListModel.instance:getFilterCategory()
+function RoomViewDebugPlace:_refreshCategory()
+	local filterCategory = RoomDebugPlaceListModel.instance:getFilterCategory()
 
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0._categoryItemList) do
-		local var_10_1 = var_10_0 == iter_10_1.category
+	for i, categoryItem in ipairs(self._categoryItemList) do
+		local select = filterCategory == categoryItem.category
 
-		if string.nilorempty(var_10_0) and iter_10_1.category == "未分类" then
-			var_10_1 = true
+		if string.nilorempty(filterCategory) and categoryItem.category == "未分类" then
+			select = true
 		end
 
-		gohelper.setActive(iter_10_1.gobeselect, var_10_1)
-		gohelper.setActive(iter_10_1.gounselect, not var_10_1)
+		gohelper.setActive(categoryItem.gobeselect, select)
+		gohelper.setActive(categoryItem.gounselect, not select)
 	end
 end
 
-function var_0_0._refreshUI(arg_11_0)
-	arg_11_0:_refreshPackageId()
+function RoomViewDebugPlace:_refreshUI()
+	self:_refreshPackageId()
 end
 
-function var_0_0._btnpackageidOnClick(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0._packageIdItemList[arg_12_1]
+function RoomViewDebugPlace:_btnpackageidOnClick(index)
+	local packageIdItem = self._packageIdItemList[index]
 
-	RoomDebugPlaceListModel.instance:setFilterPackageId(var_12_0.packageId)
+	RoomDebugPlaceListModel.instance:setFilterPackageId(packageIdItem.packageId)
 	RoomDebugPlaceListModel.instance:setDebugPlaceList()
 	RoomDebugPlaceListModel.instance:clearSelect()
-	arg_12_0:_refreshPackageId()
+	self:_refreshPackageId()
 end
 
-function var_0_0._refreshPackageId(arg_13_0)
-	for iter_13_0, iter_13_1 in ipairs(arg_13_0._packageIdItemList) do
-		gohelper.setActive(iter_13_1.gobeselect, RoomDebugPlaceListModel.instance:isFilterPackageId(iter_13_1.packageId))
-		gohelper.setActive(iter_13_1.gounselect, not RoomDebugPlaceListModel.instance:isFilterPackageId(iter_13_1.packageId))
+function RoomViewDebugPlace:_refreshPackageId()
+	for i, packageIdItem in ipairs(self._packageIdItemList) do
+		gohelper.setActive(packageIdItem.gobeselect, RoomDebugPlaceListModel.instance:isFilterPackageId(packageIdItem.packageId))
+		gohelper.setActive(packageIdItem.gounselect, not RoomDebugPlaceListModel.instance:isFilterPackageId(packageIdItem.packageId))
 	end
 end
 
-function var_0_0._debugPlaceListViewShowChanged(arg_14_0, arg_14_1)
-	local var_14_0
+function RoomViewDebugPlace:_debugPlaceListViewShowChanged(isShowDebugPlace)
+	local changed = self._isShowDebugPlace ~= isShowDebugPlace
 
-	var_14_0 = arg_14_0._isShowDebugPlace ~= arg_14_1
-	arg_14_0._isShowDebugPlace = arg_14_1
+	self._isShowDebugPlace = isShowDebugPlace
 
 	RoomDebugPlaceListModel.instance:clearSelect()
-	gohelper.setActive(arg_14_0._godebugplace, arg_14_1)
+	gohelper.setActive(self._godebugplace, isShowDebugPlace)
 
-	if arg_14_1 then
+	if isShowDebugPlace then
 		RoomDebugPlaceListModel.instance:setDebugPlaceList()
 
-		arg_14_0._scrolldebugplace.horizontalNormalizedPosition = 0
+		self._scrolldebugplace.horizontalNormalizedPosition = 0
 	end
 end
 
-function var_0_0._addBtnAudio(arg_15_0)
-	gohelper.addUIClickAudio(arg_15_0._btnclose.gameObject, AudioEnum.UI.UI_vertical_first_tabs_click)
+function RoomViewDebugPlace:_addBtnAudio()
+	gohelper.addUIClickAudio(self._btnclose.gameObject, AudioEnum.UI.UI_vertical_first_tabs_click)
 end
 
-function var_0_0.onOpen(arg_16_0)
-	arg_16_0:_refreshUI()
-	arg_16_0:_addBtnAudio()
-	arg_16_0:addEventCb(RoomDebugController.instance, RoomEvent.DebugPlaceListShowChanged, arg_16_0._debugPlaceListViewShowChanged, arg_16_0)
+function RoomViewDebugPlace:onOpen()
+	self:_refreshUI()
+	self:_addBtnAudio()
+	self:addEventCb(RoomDebugController.instance, RoomEvent.DebugPlaceListShowChanged, self._debugPlaceListViewShowChanged, self)
 end
 
-function var_0_0.onClose(arg_17_0)
+function RoomViewDebugPlace:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_18_0)
-	for iter_18_0, iter_18_1 in ipairs(arg_18_0._categoryItemList) do
-		iter_18_1.btnclick:RemoveClickListener()
+function RoomViewDebugPlace:onDestroyView()
+	for i, categoryItem in ipairs(self._categoryItemList) do
+		categoryItem.btnclick:RemoveClickListener()
 	end
 
-	arg_18_0._btnclose:RemoveClickListener()
-	arg_18_0._scrolldebugplace:RemoveOnValueChanged()
+	self._btnclose:RemoveClickListener()
+	self._scrolldebugplace:RemoveOnValueChanged()
 	OrthCameraRTMgr.instance:destroyRT()
 	CameraMgr.instance:setOrthCameraActive(false)
 end
 
-return var_0_0
+return RoomViewDebugPlace

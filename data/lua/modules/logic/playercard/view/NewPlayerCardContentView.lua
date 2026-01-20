@@ -1,281 +1,288 @@
-﻿module("modules.logic.playercard.view.NewPlayerCardContentView", package.seeall)
+﻿-- chunkname: @modules/logic/playercard/view/NewPlayerCardContentView.lua
 
-local var_0_0 = class("NewPlayerCardContentView", BaseView)
+module("modules.logic.playercard.view.NewPlayerCardContentView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "view")
-	arg_1_0._goLoading = gohelper.findChild(arg_1_0.viewGO, "loadingmainview")
-	arg_1_0._loadAnim = arg_1_0._goLoading:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._goBottom = gohelper.findChild(arg_1_0.viewGO, "bottom")
-	arg_1_0._btnbottomclose = gohelper.findChildButton(arg_1_0.viewGO, "bottom/#btn_bottomclose")
-	arg_1_0._goskinpreviewnode = gohelper.findChild(arg_1_0.viewGO, "bottom/#go_skinpreview")
-	arg_1_0._btnswitchskin = gohelper.findChildButton(arg_1_0.viewGO, "#btn_switch")
-	arg_1_0._goswitchskinreddot = gohelper.findChild(arg_1_0.viewGO, "#btn_switch/#go_reddot")
-	arg_1_0._bgreddot = RedDotController.instance:addNotEventRedDot(arg_1_0._goswitchskinreddot, arg_1_0._isShowRedDot, arg_1_0)
-	arg_1_0._openswitchskin = false
-	arg_1_0._firstopen = true
-	arg_1_0._bottomAnimator = arg_1_0._goBottom:GetComponent(typeof(UnityEngine.Animator))
+local NewPlayerCardContentView = class("NewPlayerCardContentView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function NewPlayerCardContentView:onInitView()
+	self._goContent = gohelper.findChild(self.viewGO, "view")
+	self._goLoading = gohelper.findChild(self.viewGO, "loadingmainview")
+	self._loadAnim = self._goLoading:GetComponent(typeof(UnityEngine.Animator))
+	self._goBottom = gohelper.findChild(self.viewGO, "bottom")
+	self._btnbottomclose = gohelper.findChildButton(self.viewGO, "bottom/#btn_bottomclose")
+	self._goskinpreviewnode = gohelper.findChild(self.viewGO, "bottom/#go_skinpreview")
+	self._btnswitchskin = gohelper.findChildButton(self.viewGO, "#btn_switch")
+	self._goswitchskinreddot = gohelper.findChild(self.viewGO, "#btn_switch/#go_reddot")
+	self._bgreddot = RedDotController.instance:addNotEventRedDot(self._goswitchskinreddot, self._isShowRedDot, self)
+	self._openswitchskin = false
+	self._firstopen = true
+	self._bottomAnimator = self._goBottom:GetComponent(typeof(UnityEngine.Animator))
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnbottomclose:AddClickListener(arg_2_0._btnswitchskinOnClick, arg_2_0)
-	arg_2_0._btnswitchskin:AddClickListener(arg_2_0._btnswitchskinOnClick, arg_2_0)
-	arg_2_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.SwitchTheme, arg_2_0.SwitchTheme, arg_2_0)
-	arg_2_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.ChangeSkin, arg_2_0.ChangeSkin, arg_2_0)
+function NewPlayerCardContentView:addEvents()
+	self._btnbottomclose:AddClickListener(self._btnswitchskinOnClick, self)
+	self._btnswitchskin:AddClickListener(self._btnswitchskinOnClick, self)
+	self:addEventCb(PlayerCardController.instance, PlayerCardEvent.SwitchTheme, self.SwitchTheme, self)
+	self:addEventCb(PlayerCardController.instance, PlayerCardEvent.ChangeSkin, self.ChangeSkin, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnbottomclose:RemoveClickListener()
-	arg_3_0._btnswitchskin:RemoveClickListener()
-	arg_3_0:removeEventCb(PlayerCardController.instance, PlayerCardEvent.SwitchTheme, arg_3_0.SwitchTheme, arg_3_0)
-	arg_3_0:removeEventCb(PlayerCardController.instance, PlayerCardEvent.ChangeSkin, arg_3_0.ChangeSkin, arg_3_0)
+function NewPlayerCardContentView:removeEvents()
+	self._btnbottomclose:RemoveClickListener()
+	self._btnswitchskin:RemoveClickListener()
+	self:removeEventCb(PlayerCardController.instance, PlayerCardEvent.SwitchTheme, self.SwitchTheme, self)
+	self:removeEventCb(PlayerCardController.instance, PlayerCardEvent.ChangeSkin, self.ChangeSkin, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function NewPlayerCardContentView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function NewPlayerCardContentView:onUpdateParam()
 	return
 end
 
-function var_0_0._isShowRedDot(arg_6_0)
+function NewPlayerCardContentView:_isShowRedDot()
 	return PlayerCardModel.instance:getShowRed()
 end
 
-function var_0_0.onOpen(arg_7_0)
-	if arg_7_0.viewParam and arg_7_0.viewParam.userId then
-		arg_7_0.userId = arg_7_0.viewParam.userId
+function NewPlayerCardContentView:onOpen()
+	if self.viewParam and self.viewParam.userId then
+		self.userId = self.viewParam.userId
 	end
 
-	arg_7_0.playercardinfo = PlayerCardModel.instance:getCardInfo(arg_7_0.userId)
+	self.playercardinfo = PlayerCardModel.instance:getCardInfo(self.userId)
 
-	gohelper.setActive(arg_7_0._goBottom, arg_7_0._openswitchskin)
-	gohelper.setActive(arg_7_0._btnswitchskin.gameObject, arg_7_0.playercardinfo:isSelf())
+	gohelper.setActive(self._goBottom, self._openswitchskin)
+	gohelper.setActive(self._btnswitchskin.gameObject, self.playercardinfo:isSelf())
 
-	arg_7_0.skinId = arg_7_0.playercardinfo:getThemeId()
+	self.skinId = self.playercardinfo:getThemeId()
 
-	arg_7_0:loadRes(arg_7_0.skinId)
-	arg_7_0:_initSkinPreView()
+	self:loadRes(self.skinId)
+	self:_initSkinPreView()
 end
 
-function var_0_0._initSkinPreView(arg_8_0)
-	local var_8_0 = arg_8_0.viewContainer:getSetting().otherRes.skinpreview
-	local var_8_1 = arg_8_0.viewContainer:getRes(var_8_0)
+function NewPlayerCardContentView:_initSkinPreView()
+	local otherResPath = self.viewContainer:getSetting().otherRes.skinpreview
+	local otherRes = self.viewContainer:getRes(otherResPath)
 
-	arg_8_0.goskinpreview = gohelper.clone(var_8_1, arg_8_0._goskinpreviewnode)
-	arg_8_0.skinpreviewcls = MonoHelper.addNoUpdateLuaComOnceToGo(arg_8_0.goskinpreview, PlayerCardSkinPreView)
-	arg_8_0._skinCls = MonoHelper.addNoUpdateLuaComOnceToGo(arg_8_0.viewGO, PlayerCardThemeView)
-	arg_8_0._skinCls.viewParam = arg_8_0.viewParam
+	self.goskinpreview = gohelper.clone(otherRes, self._goskinpreviewnode)
+	self.skinpreviewcls = MonoHelper.addNoUpdateLuaComOnceToGo(self.goskinpreview, PlayerCardSkinPreView)
+	self._skinCls = MonoHelper.addNoUpdateLuaComOnceToGo(self.viewGO, PlayerCardThemeView)
+	self._skinCls.viewParam = self.viewParam
 
-	arg_8_0._skinCls:canOpen()
+	self._skinCls:canOpen()
 end
 
-function var_0_0.loadRes(arg_9_0, arg_9_1)
-	local var_9_0 = "playercardview"
+function NewPlayerCardContentView:loadRes(skinId)
+	local pathname = "playercardview"
 
-	if not string.nilorempty(arg_9_1) and arg_9_1 ~= 0 then
-		var_9_0 = var_9_0 .. "_" .. arg_9_1
+	if not string.nilorempty(skinId) and skinId ~= 0 then
+		pathname = pathname .. "_" .. skinId
 	end
 
-	arg_9_0._path = string.format("ui/viewres/player/playercard/%s.prefab", var_9_0)
-	arg_9_0._loader = MultiAbLoader.New()
+	self._path = string.format("ui/viewres/player/playercard/%s.prefab", pathname)
+	self._loader = MultiAbLoader.New()
 
-	arg_9_0._loader:addPath(arg_9_0._path)
-	arg_9_0._loader:startLoad(arg_9_0._onLoadFinish, arg_9_0)
+	self._loader:addPath(self._path)
+	self._loader:startLoad(self._onLoadFinish, self)
 end
 
-function var_0_0._onLoadFinish(arg_10_0)
-	local var_10_0 = arg_10_0._loader:getAssetItem(arg_10_0._path):GetResource(arg_10_0._path)
+function NewPlayerCardContentView:_onLoadFinish()
+	local assetItem = self._loader:getAssetItem(self._path)
+	local viewPrefab = assetItem:GetResource(self._path)
 
-	arg_10_0._viewGo = gohelper.clone(var_10_0, arg_10_0._goContent)
-	arg_10_0._viewCls = MonoHelper.addNoUpdateLuaComOnceToGo(arg_10_0._viewGo, NewPlayerCardView)
-	arg_10_0._achievementCls = MonoHelper.addNoUpdateLuaComOnceToGo(arg_10_0._viewGo, PlayerCardAchievement)
-	arg_10_0._infoCls = MonoHelper.addNoUpdateLuaComOnceToGo(arg_10_0._viewGo, PlayerCardPlayerInfo)
-	arg_10_0._viewCls.viewParam = arg_10_0.viewParam
-	arg_10_0._viewCls.viewContainer = arg_10_0.viewContainer
-	arg_10_0._viewCls.contentview = arg_10_0
-	arg_10_0._achievementCls.viewParam = arg_10_0.viewParam
-	arg_10_0._achievementCls.viewContainer = arg_10_0.viewContainer
-	arg_10_0._infoCls.viewParam = arg_10_0.viewParam
+	self._viewGo = gohelper.clone(viewPrefab, self._goContent)
+	self._viewCls = MonoHelper.addNoUpdateLuaComOnceToGo(self._viewGo, NewPlayerCardView)
+	self._achievementCls = MonoHelper.addNoUpdateLuaComOnceToGo(self._viewGo, PlayerCardAchievement)
+	self._infoCls = MonoHelper.addNoUpdateLuaComOnceToGo(self._viewGo, PlayerCardPlayerInfo)
+	self._viewCls.viewParam = self.viewParam
+	self._viewCls.viewContainer = self.viewContainer
+	self._viewCls.contentview = self
+	self._achievementCls.viewParam = self.viewParam
+	self._achievementCls.viewContainer = self.viewContainer
+	self._infoCls.viewParam = self.viewParam
 
-	if arg_10_0._changeSkin then
-		arg_10_0:closeLoading()
+	if self._changeSkin then
+		self:closeLoading()
 	end
 
-	if arg_10_0._tempSkinId then
-		arg_10_0._viewCls:toBottomView()
+	if self._tempSkinId then
+		self._viewCls:toBottomView()
 	else
-		arg_10_0:closeLoading()
+		self:closeLoading()
 
-		if not arg_10_0._firstopen then
-			arg_10_0._viewCls:backBottomView()
+		if not self._firstopen then
+			self._viewCls:backBottomView()
 		end
 	end
 
-	arg_10_0._firstopen = false
+	self._firstopen = false
 end
 
-function var_0_0.afterOpenAnim(arg_11_0)
-	arg_11_0._viewCls:toBottomView()
+function NewPlayerCardContentView:afterOpenAnim()
+	self._viewCls:toBottomView()
 end
 
-function var_0_0._btnswitchskinOnClick(arg_12_0)
-	if arg_12_0.playercardinfo:isSelf() then
-		arg_12_0._openswitchskin = not arg_12_0._openswitchskin
+function NewPlayerCardContentView:_btnswitchskinOnClick()
+	if self.playercardinfo:isSelf() then
+		self._openswitchskin = not self._openswitchskin
 
-		if not arg_12_0._openswitchskin then
-			arg_12_0:onClickCloseBottomView()
-			arg_12_0._viewCls:backBottomView()
+		if not self._openswitchskin then
+			self:onClickCloseBottomView()
+			self._viewCls:backBottomView()
 		else
-			gohelper.setActive(arg_12_0._goBottom, arg_12_0._openswitchskin)
-			gohelper.setActive(arg_12_0._btnswitchskin.gameObject, not arg_12_0._openswitchskin)
+			gohelper.setActive(self._goBottom, self._openswitchskin)
+			gohelper.setActive(self._btnswitchskin.gameObject, not self._openswitchskin)
 		end
 
-		if arg_12_0._openswitchskin then
+		if self._openswitchskin then
 			AudioMgr.instance:trigger(AudioEnum.VersionActivity1_3.play_ui_molu_astrology_move)
-			arg_12_0._viewCls:toBottomView()
+			self._viewCls:toBottomView()
 			PlayerCardModel.instance:setIsOpenSkinView(true)
 			PlayerCardController.instance:dispatchEvent(PlayerCardEvent.ShowTheme)
 		end
 	end
 end
 
-function var_0_0.closeLoading(arg_13_0)
-	arg_13_0:checkCanOpen()
-	arg_13_0._loadAnim:Play("close")
-	TaskDispatcher.runDelay(arg_13_0.afterClose, arg_13_0, 0.3)
+function NewPlayerCardContentView:closeLoading()
+	self:checkCanOpen()
+	self._loadAnim:Play("close")
+	TaskDispatcher.runDelay(self.afterClose, self, 0.3)
 end
 
-function var_0_0.afterClose(arg_14_0)
-	TaskDispatcher.cancelTask(arg_14_0.afterClose, arg_14_0)
-	gohelper.setActive(arg_14_0._goLoading, false)
+function NewPlayerCardContentView:afterClose()
+	TaskDispatcher.cancelTask(self.afterClose, self)
+	gohelper.setActive(self._goLoading, false)
 
-	arg_14_0._changeSkin = false
+	self._changeSkin = false
 
 	UIBlockMgr.instance:endBlock("NewPlayerCardContentView")
 end
 
-function var_0_0.SwitchTheme(arg_15_0, arg_15_1)
-	if not arg_15_1 then
+function NewPlayerCardContentView:SwitchTheme(newSkinId)
+	if not newSkinId then
 		return
 	end
 
-	if not arg_15_0._tempSkinId and arg_15_1 == arg_15_0.skinId then
+	if not self._tempSkinId and newSkinId == self.skinId then
 		return
 	end
 
-	if arg_15_0._tempSkinId == arg_15_1 then
+	if self._tempSkinId == newSkinId then
 		return
 	end
 
-	arg_15_0._tempSkinId = arg_15_1
+	self._tempSkinId = newSkinId
 
-	if not arg_15_0._oldViewGo then
-		arg_15_0._oldViewGo = arg_15_0._viewGo
+	if not self._oldViewGo then
+		self._oldViewGo = self._viewGo
 	end
 
-	if arg_15_0._loader then
-		arg_15_0._loader:dispose()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_15_0._loader = nil
+		self._loader = nil
 	end
 
-	arg_15_0._changeSkin = true
+	self._changeSkin = true
 
-	gohelper.setActive(arg_15_0._goLoading, true)
+	gohelper.setActive(self._goLoading, true)
 	UIBlockMgr.instance:startBlock("NewPlayerCardContentView")
-	TaskDispatcher.runDelay(arg_15_0.afterOpenLoad, arg_15_0, 0.3)
-	gohelper.setActive(arg_15_0._goswitchskinreddot, arg_15_0:_isShowRedDot())
+	TaskDispatcher.runDelay(self.afterOpenLoad, self, 0.3)
+	gohelper.setActive(self._goswitchskinreddot, self:_isShowRedDot())
 end
 
-function var_0_0.afterOpenLoad(arg_16_0)
-	TaskDispatcher.cancelTask(arg_16_0.afterOpenLoad, arg_16_0)
-	arg_16_0:disposeView()
+function NewPlayerCardContentView:afterOpenLoad()
+	TaskDispatcher.cancelTask(self.afterOpenLoad, self)
+	self:disposeView()
 
-	if arg_16_0._isreset and not arg_16_0._tempSkinId then
-		arg_16_0:loadRes(arg_16_0.skinId)
+	if self._isreset and not self._tempSkinId then
+		self:loadRes(self.skinId)
 	else
-		arg_16_0:loadRes(arg_16_0._tempSkinId)
+		self:loadRes(self._tempSkinId)
 	end
 end
 
-function var_0_0.ChangeSkin(arg_17_0, arg_17_1)
-	arg_17_0._tempSkinId = nil
-	arg_17_0.skinId = arg_17_1
+function NewPlayerCardContentView:ChangeSkin(skinId)
+	self._tempSkinId = nil
+	self.skinId = skinId
 end
 
-function var_0_0.getCurrentView(arg_18_0)
-	return arg_18_0._viewCls
+function NewPlayerCardContentView:getCurrentView()
+	return self._viewCls
 end
 
-function var_0_0.checkCanOpen(arg_19_0)
-	arg_19_0._viewCls:canOpen(arg_19_0._tempSkinId)
-	arg_19_0._achievementCls:canOpen()
-	arg_19_0._infoCls:canOpen()
+function NewPlayerCardContentView:checkCanOpen()
+	self._viewCls:canOpen(self._tempSkinId)
+	self._achievementCls:canOpen()
+	self._infoCls:canOpen()
 end
 
-function var_0_0.onClickCloseBottomView(arg_20_0)
-	arg_20_0._bottomAnimator:Play("close")
+function NewPlayerCardContentView:onClickCloseBottomView()
+	self._bottomAnimator:Play("close")
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2EliminateChess.play_ui_pkls_enemy_move)
 
-	if arg_20_0._tempSkinId and arg_20_0._tempSkinId ~= arg_20_0.skinId then
-		arg_20_0:SwitchTheme(arg_20_0.skinId)
+	if self._tempSkinId and self._tempSkinId ~= self.skinId then
+		self:SwitchTheme(self.skinId)
 
-		arg_20_0._isreset = true
-		arg_20_0._tempSkinId = nil
+		self._isreset = true
+		self._tempSkinId = nil
 
-		gohelper.setActive(arg_20_0._goBottom, arg_20_0._openswitchskin)
+		gohelper.setActive(self._goBottom, self._openswitchskin)
 	else
-		gohelper.setActive(arg_20_0._goswitchskinreddot, arg_20_0:_isShowRedDot())
-		TaskDispatcher.runDelay(arg_20_0.afterAnim, arg_20_0, 0.2)
+		gohelper.setActive(self._goswitchskinreddot, self:_isShowRedDot())
+		TaskDispatcher.runDelay(self.afterAnim, self, 0.2)
 	end
 
 	PlayerCardModel.instance:setIsOpenSkinView(false)
 
-	local var_20_0 = PlayerCardThemeListModel.instance:getMoById(arg_20_0.skinId)
+	local mo = PlayerCardThemeListModel.instance:getMoById(self.skinId)
 
-	PlayerCardModel.instance:setSelectSkinMO(var_20_0)
-	arg_20_0.skinpreviewcls:onHide()
-	gohelper.setActive(arg_20_0._btnswitchskin.gameObject, not arg_20_0._openswitchskin)
+	PlayerCardModel.instance:setSelectSkinMO(mo)
+	self.skinpreviewcls:onHide()
+	gohelper.setActive(self._btnswitchskin.gameObject, not self._openswitchskin)
 end
 
-function var_0_0.afterAnim(arg_21_0)
-	gohelper.setActive(arg_21_0._goBottom, arg_21_0._openswitchskin)
+function NewPlayerCardContentView:afterAnim()
+	gohelper.setActive(self._goBottom, self._openswitchskin)
 end
 
-function var_0_0.disposeView(arg_22_0)
-	arg_22_0._achievementCls:onCloseInternal()
-	arg_22_0._skinCls:onCloseInternal()
-	arg_22_0._infoCls:onCloseInternal()
-	arg_22_0._viewCls:onCloseInternal()
+function NewPlayerCardContentView:disposeView()
+	self._achievementCls:onCloseInternal()
+	self._skinCls:onCloseInternal()
+	self._infoCls:onCloseInternal()
+	self._viewCls:onCloseInternal()
 
-	if arg_22_0._oldViewGo then
-		gohelper.destroy(arg_22_0._oldViewGo)
+	if self._oldViewGo then
+		gohelper.destroy(self._oldViewGo)
 
-		arg_22_0._oldViewGo = nil
+		self._oldViewGo = nil
 	end
 end
 
-function var_0_0.onClose(arg_23_0)
-	arg_23_0:disposeView()
-	TaskDispatcher.cancelTask(arg_23_0.afterOpenLoad, arg_23_0)
-	TaskDispatcher.cancelTask(arg_23_0.afterClose, arg_23_0)
-	TaskDispatcher.cancelTask(arg_23_0.closeLoading, arg_23_0)
+function NewPlayerCardContentView:onClose()
+	self:disposeView()
+	TaskDispatcher.cancelTask(self.afterOpenLoad, self)
+	TaskDispatcher.cancelTask(self.afterClose, self)
+	TaskDispatcher.cancelTask(self.closeLoading, self)
 
-	if arg_23_0._loader then
-		arg_23_0._loader:dispose()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_23_0._loader = nil
+		self._loader = nil
 	end
 end
 
-function var_0_0.onDestroyView(arg_24_0)
-	return
+function NewPlayerCardContentView:onDestroyView()
+	if self.skinpreviewcls then
+		self.skinpreviewcls:onDestroy()
+	end
+
+	self.skinpreviewcls = nil
 end
 
-return var_0_0
+return NewPlayerCardContentView

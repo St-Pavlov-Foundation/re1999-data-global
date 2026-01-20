@@ -1,118 +1,122 @@
-﻿module("modules.logic.survival.model.handbook.SurvivalHandbookMo", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/handbook/SurvivalHandbookMo.lua
 
-local var_0_0 = pureTable("SurvivalHandbookMo")
+module("modules.logic.survival.model.handbook.SurvivalHandbookMo", package.seeall)
 
-function var_0_0.setData(arg_1_0, arg_1_1)
-	arg_1_0.cfg = arg_1_1
-	arg_1_0.id = arg_1_1.id
-	arg_1_0.links = string.splitToNumber(arg_1_1.link, "|")
-	arg_1_0.isUnlock = false
+local SurvivalHandbookMo = pureTable("SurvivalHandbookMo")
+
+function SurvivalHandbookMo:setData(cfg)
+	self.cfg = cfg
+	self.id = cfg.id
+	self.links = string.splitToNumber(cfg.link, "|")
+	self.isUnlock = false
 end
 
-function var_0_0.setCellCfgId(arg_2_0, arg_2_1)
-	arg_2_0.cellCfgId = arg_2_1
+function SurvivalHandbookMo:setCellCfgId(cellCfgId)
+	self.cellCfgId = cellCfgId
 
-	arg_2_0:updateSurvivalBagItemMo()
+	self:updateSurvivalBagItemMo()
 end
 
-function var_0_0.getCellCfgId(arg_3_0)
-	return arg_3_0.cellCfgId
+function SurvivalHandbookMo:getCellCfgId()
+	return self.cellCfgId
 end
 
-function var_0_0.getRare(arg_4_0)
-	if arg_4_0.isUnlock then
-		local var_4_0 = arg_4_0:getSurvivalBagItemMo()
+function SurvivalHandbookMo:getRare()
+	if self.isUnlock then
+		local mo = self:getSurvivalBagItemMo()
 
-		if var_4_0 then
-			return var_4_0:getRare()
+		if mo then
+			return mo:getRare()
 		end
 	end
 
 	return 0
 end
 
-function var_0_0.setIsNew(arg_5_0, arg_5_1)
-	arg_5_0.isNew = arg_5_1
+function SurvivalHandbookMo:setIsNew(value)
+	self.isNew = value
 end
 
-function var_0_0.getType(arg_6_0)
-	return arg_6_0.cfg.type
+function SurvivalHandbookMo:getType()
+	return self.cfg.type
 end
 
-function var_0_0.getSubType(arg_7_0)
-	return arg_7_0.cfg.subtype
+function SurvivalHandbookMo:getSubType()
+	return self.cfg.subtype
 end
 
-function var_0_0.getName(arg_8_0)
-	return arg_8_0.cfg.name
+function SurvivalHandbookMo:getName()
+	return self.cfg.name
 end
 
-function var_0_0.getDesc(arg_9_0)
-	return arg_9_0.cfg.desc
+function SurvivalHandbookMo:getDesc()
+	return self.cfg.desc
 end
 
-function var_0_0.isLinkGroup(arg_10_0, arg_10_1)
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0.links) do
-		if iter_10_1 == arg_10_1 then
+function SurvivalHandbookMo:isLinkGroup(groupId)
+	for i, v in ipairs(self.links) do
+		if v == groupId then
 			return true
 		end
 	end
 end
 
-function var_0_0.setIsUnlock(arg_11_0, arg_11_1)
-	arg_11_0.isUnlock = arg_11_1
+function SurvivalHandbookMo:setIsUnlock(value)
+	self.isUnlock = value
 
-	if arg_11_0.survivalBagItemMo then
-		arg_11_0.survivalBagItemMo.isUnknown = not arg_11_0.isUnlock
+	if self.survivalBagItemMo then
+		self.survivalBagItemMo.isUnknown = not self.isUnlock
 	end
 end
 
-function var_0_0.getSurvivalBagItemMo(arg_12_0)
-	if arg_12_0.survivalBagItemMo == nil then
-		arg_12_0.survivalBagItemMo = SurvivalBagItemMo.New()
+function SurvivalHandbookMo:getSurvivalBagItemMo()
+	if self.survivalBagItemMo == nil then
+		self.survivalBagItemMo = SurvivalBagItemMo.New()
 
-		arg_12_0:updateSurvivalBagItemMo()
+		self:updateSurvivalBagItemMo()
 	end
 
-	return arg_12_0.survivalBagItemMo
+	return self.survivalBagItemMo
 end
 
-function var_0_0.updateSurvivalBagItemMo(arg_13_0)
-	if not arg_13_0.survivalBagItemMo then
+function SurvivalHandbookMo:updateSurvivalBagItemMo()
+	if not self.survivalBagItemMo then
 		return
 	end
 
-	local var_13_0 = arg_13_0:getCellCfgId()
+	local cfgId = self:getCellCfgId()
 
-	arg_13_0.survivalBagItemMo:init({
+	self.survivalBagItemMo:init({
 		count = 1,
-		id = var_13_0
+		id = cfgId
 	})
 
-	arg_13_0.survivalBagItemMo.source = SurvivalEnum.ItemSource.None
-	arg_13_0.survivalBagItemMo.isUnknown = not arg_13_0.isUnlock
+	self.survivalBagItemMo.source = SurvivalEnum.ItemSource.None
+	self.survivalBagItemMo.isUnknown = not self.isUnlock
 end
 
-function var_0_0.getEventShowId(arg_14_0)
-	if arg_14_0.cfg.eventId > 0 then
-		return arg_14_0.cfg.eventId
+function SurvivalHandbookMo:getEventShowId()
+	if self.cfg.eventId > 0 then
+		return self.cfg.eventId
 	end
 end
 
-function var_0_0.getResultTitle(arg_15_0)
-	return arg_15_0:getName()
+function SurvivalHandbookMo:getResultTitle()
+	return self:getName()
 end
 
-function var_0_0.getResultDesc(arg_16_0)
-	local var_16_0 = arg_16_0:getCellCfgId()
+function SurvivalHandbookMo:getResultDesc()
+	local id = self:getCellCfgId()
+	local cfg = lua_survival_end.configDict[id]
 
-	return lua_survival_end.configDict[var_16_0].endDesc
+	return cfg.endDesc
 end
 
-function var_0_0.getResultImage(arg_17_0)
-	local var_17_0 = arg_17_0:getCellCfgId()
+function SurvivalHandbookMo:getResultImage()
+	local id = self:getCellCfgId()
+	local cfg = lua_survival_end.configDict[id]
 
-	return lua_survival_end.configDict[var_17_0].endImg
+	return cfg.endImg
 end
 
-return var_0_0
+return SurvivalHandbookMo

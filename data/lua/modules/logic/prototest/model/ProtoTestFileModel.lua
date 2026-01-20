@@ -1,32 +1,34 @@
-﻿module("modules.logic.prototest.model.ProtoTestFileModel", package.seeall)
+﻿-- chunkname: @modules/logic/prototest/model/ProtoTestFileModel.lua
 
-local var_0_0 = class("ProtoTestFileModel", ListScrollModel)
+module("modules.logic.prototest.model.ProtoTestFileModel", package.seeall)
 
-function var_0_0.refreshFileList(arg_1_0)
+local ProtoTestFileModel = class("ProtoTestFileModel", ListScrollModel)
+
+function ProtoTestFileModel:refreshFileList()
 	SLFramework.FileHelper.EnsureDir(ProtoFileHelper.DirPath)
 
-	local var_1_0 = SLFramework.FileHelper.GetDirFilePaths(ProtoFileHelper.DirPath)
-	local var_1_1 = arg_1_0:getList()
+	local filePaths = SLFramework.FileHelper.GetDirFilePaths(ProtoFileHelper.DirPath)
+	local list = self:getList()
 
-	for iter_1_0 = 1, var_1_0.Length do
-		local var_1_2 = var_1_0[iter_1_0 - 1]
-		local var_1_3 = SLFramework.FileHelper.GetFileName(var_1_2, false)
-		local var_1_4 = var_1_1[iter_1_0]
+	for i = 1, filePaths.Length do
+		local filePath = filePaths[i - 1]
+		local fileName = SLFramework.FileHelper.GetFileName(filePath, false)
+		local mo = list[i]
 
-		if not var_1_4 then
-			var_1_4 = ProtoTestFileMO.New()
+		if not mo then
+			mo = ProtoTestFileMO.New()
 
-			table.insert(var_1_1, var_1_4)
+			table.insert(list, mo)
 		end
 
-		var_1_4.id = iter_1_0
-		var_1_4.filePath = var_1_2
-		var_1_4.fileName = var_1_3
+		mo.id = i
+		mo.filePath = filePath
+		mo.fileName = fileName
 	end
 
-	arg_1_0:setList(var_1_1)
+	self:setList(list)
 end
 
-var_0_0.instance = var_0_0.New()
+ProtoTestFileModel.instance = ProtoTestFileModel.New()
 
-return var_0_0
+return ProtoTestFileModel

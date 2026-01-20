@@ -1,13 +1,15 @@
-﻿module("modules.logic.fight.system.work.FightWorkLayerHaloSync", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkLayerHaloSync.lua
 
-local var_0_0 = class("FightWorkLayerHaloSync", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkLayerHaloSync", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0:onDone(true)
+local FightWorkLayerHaloSync = class("FightWorkLayerHaloSync", FightEffectBase)
+
+function FightWorkLayerHaloSync:onStart()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkLayerHaloSync:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkLayerHaloSync

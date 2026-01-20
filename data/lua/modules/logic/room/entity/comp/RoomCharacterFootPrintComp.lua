@@ -1,90 +1,93 @@
-﻿module("modules.logic.room.entity.comp.RoomCharacterFootPrintComp", package.seeall)
+﻿-- chunkname: @modules/logic/room/entity/comp/RoomCharacterFootPrintComp.lua
 
-local var_0_0 = class("RoomCharacterFootPrintComp", LuaCompBase)
+module("modules.logic.room.entity.comp.RoomCharacterFootPrintComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.entity = arg_1_1
+local RoomCharacterFootPrintComp = class("RoomCharacterFootPrintComp", LuaCompBase)
+
+function RoomCharacterFootPrintComp:ctor(entity)
+	self.entity = entity
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
-	arg_2_0.goTrs = arg_2_1.transform
+function RoomCharacterFootPrintComp:init(go)
+	self.go = go
+	self.goTrs = go.transform
 
-	local var_2_0, var_2_1, var_2_2 = transformhelper.getPos(arg_2_0.goTrs)
+	local x, y, z = transformhelper.getPos(self.goTrs)
 
-	arg_2_0._lastPosition = Vector3(var_2_0, var_2_1, var_2_2)
-	arg_2_0._scene = GameSceneMgr.instance:getCurScene()
-	arg_2_0._footDistance = 0.05
+	self._lastPosition = Vector3(x, y, z)
+	self._scene = GameSceneMgr.instance:getCurScene()
+	self._footDistance = 0.05
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	RoomCharacterController.instance:registerCallback(RoomEvent.UpdateCharacterMove, arg_3_0._updateCharacterMove, arg_3_0)
+function RoomCharacterFootPrintComp:addEventListeners()
+	RoomCharacterController.instance:registerCallback(RoomEvent.UpdateCharacterMove, self._updateCharacterMove, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	RoomCharacterController.instance:unregisterCallback(RoomEvent.UpdateCharacterMove, arg_4_0._updateCharacterMove, arg_4_0)
+function RoomCharacterFootPrintComp:removeEventListeners()
+	RoomCharacterController.instance:unregisterCallback(RoomEvent.UpdateCharacterMove, self._updateCharacterMove, self)
 end
 
-function var_0_0._updateCharacterMove(arg_5_0)
-	arg_5_0:_updateMovingLookDir()
+function RoomCharacterFootPrintComp:_updateCharacterMove()
+	self:_updateMovingLookDir()
 end
 
-function var_0_0._updateMovingLookDir(arg_6_0)
-	if arg_6_0.entity.isPressing then
+function RoomCharacterFootPrintComp:_updateMovingLookDir()
+	if self.entity.isPressing then
 		return
 	end
 
-	local var_6_0 = arg_6_0.entity:getMO()
+	local mo = self.entity:getMO()
 
-	if not var_6_0 then
+	if not mo then
 		return
 	end
 
-	if arg_6_0._scene.character:isLock() then
+	if self._scene.character:isLock() then
 		return
 	end
 
-	if var_6_0.roomCharacterConfig.hideFootprint ~= 0 then
+	if mo.roomCharacterConfig.hideFootprint ~= 0 then
 		return
 	end
 
-	if var_6_0:getMoveState() ~= RoomCharacterEnum.CharacterMoveState.Move then
-		arg_6_0._needFootPrint = true
+	if mo:getMoveState() ~= RoomCharacterEnum.CharacterMoveState.Move then
+		self._needFootPrint = true
 
 		return
 	end
 
-	local var_6_1 = var_6_0:getMovingDir()
-	local var_6_2 = var_6_1.x
-	local var_6_3 = var_6_1.y
+	local moveDir = mo:getMovingDir()
+	local moveX = moveDir.x
+	local moveY = moveDir.y
 
-	if var_6_2 == 0 and var_6_3 == 0 then
+	if moveX == 0 and moveY == 0 then
 		return
 	end
 
-	local var_6_4, var_6_5, var_6_6 = transformhelper.getPos(arg_6_0.goTrs)
-	local var_6_7 = Vector3(var_6_4, var_6_5, var_6_6)
+	local x, y, z = transformhelper.getPos(self.goTrs)
+	local position = Vector3(x, y, z)
 
-	if arg_6_0._needFootPrint or Vector3.Distance(arg_6_0._lastPosition, var_6_7) >= arg_6_0._footDistance then
-		local var_6_8, var_6_9 = HexMath.posXYToRoundHexYX(var_6_4, var_6_6, RoomBlockEnum.BlockSize)
-		local var_6_10 = RoomMapBlockModel.instance:getBlockMO(var_6_8, var_6_9)
+	if self._needFootPrint or Vector3.Distance(self._lastPosition, position) >= self._footDistance then
+		local hexX, hexY = HexMath.posXYToRoundHexYX(x, z, RoomBlockEnum.BlockSize)
+		local blockMO = RoomMapBlockModel.instance:getBlockMO(hexX, hexY)
 
-		if var_6_10 and var_6_10:isInMapBlock() and RoomBlockEnum.FootPrintDict[var_6_10:getDefineBlockType()] then
-			arg_6_0._needFootPrint = false
-			arg_6_0._lastPosition = var_6_7
+		if blockMO and blockMO:isInMapBlock() and RoomBlockEnum.FootPrintDict[blockMO:getDefineBlockType()] then
+			self._needFootPrint = false
+			self._lastPosition = position
 
-			local var_6_11 = Vector3(var_6_2, 0, var_6_3)
-			local var_6_12 = Quaternion.LookRotation(var_6_11, Vector3.up).eulerAngles
+			local targetDir = Vector3(moveX, 0, moveY)
+			local toRotation = Quaternion.LookRotation(targetDir, Vector3.up)
+			local rotationV3 = toRotation.eulerAngles
 
-			arg_6_0._isLeftFoot = arg_6_0._isLeftFoot == false
+			self._isLeftFoot = self._isLeftFoot == false
 
-			RoomMapController.instance:dispatchEvent(RoomEvent.AddCharacterFootPrint, var_6_12, var_6_7, arg_6_0._isLeftFoot)
+			RoomMapController.instance:dispatchEvent(RoomEvent.AddCharacterFootPrint, rotationV3, position, self._isLeftFoot)
 		end
 	end
 end
 
-function var_0_0.beforeDestroy(arg_7_0)
-	arg_7_0:removeEventListeners()
+function RoomCharacterFootPrintComp:beforeDestroy()
+	self:removeEventListeners()
 end
 
-return var_0_0
+return RoomCharacterFootPrintComp

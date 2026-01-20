@@ -1,61 +1,63 @@
-﻿module("modules.logic.versionactivity2_5.liangyue.rpc.LiangYueRpc", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/liangyue/rpc/LiangYueRpc.lua
 
-local var_0_0 = class("LiangYueRpc", BaseRpc)
+module("modules.logic.versionactivity2_5.liangyue.rpc.LiangYueRpc", package.seeall)
 
-function var_0_0.sendGetAct184InfoRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = Activity184Module_pb.GetAct184InfoRequest()
+local LiangYueRpc = class("LiangYueRpc", BaseRpc)
 
-	var_1_0.activityId = arg_1_1
+function LiangYueRpc:sendGetAct184InfoRequest(activityId, callback, callbackObj)
+	local req = Activity184Module_pb.GetAct184InfoRequest()
 
-	arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
+	req.activityId = activityId
+
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveGetAct184InfoReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 ~= 0 then
+function LiangYueRpc:onReceiveGetAct184InfoReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_2_0 = arg_2_2.activityId
-	local var_2_1 = arg_2_2.episodes
+	local activityId = msg.activityId
+	local episodes = msg.episodes
 
-	LiangYueModel.instance:onGetActInfo(arg_2_2)
+	LiangYueModel.instance:onGetActInfo(msg)
 	LiangYueController.instance:dispatchEvent(LiangYueEvent.OnReceiveEpisodeInfo)
 end
 
-function var_0_0.sendAct184FinishEpisodeRequest(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5)
-	local var_3_0 = Activity184Module_pb.Act184FinishEpisodeRequest()
+function LiangYueRpc:sendAct184FinishEpisodeRequest(activityId, episodeId, puzzle, callback, callbackObj)
+	local req = Activity184Module_pb.Act184FinishEpisodeRequest()
 
-	var_3_0.activityId = arg_3_1
-	var_3_0.episodeId = arg_3_2
-	var_3_0.puzzle = arg_3_3 or ""
+	req.activityId = activityId
+	req.episodeId = episodeId
+	req.puzzle = puzzle or ""
 
-	arg_3_0:sendMsg(var_3_0, arg_3_4, arg_3_5)
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveAct184FinishEpisodeReply(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 ~= 0 then
+function LiangYueRpc:onReceiveAct184FinishEpisodeReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_4_0 = arg_4_2.activityId
-	local var_4_1 = arg_4_2.episodeId
+	local activityId = msg.activityId
+	local episodeId = msg.episodeId
 
-	LiangYueModel.instance:setEpisodeInfo(arg_4_2)
-	LiangYueController.instance:dispatchEvent(LiangYueEvent.OnFinishEpisode, var_4_0, var_4_1)
+	LiangYueModel.instance:setEpisodeInfo(msg)
+	LiangYueController.instance:dispatchEvent(LiangYueEvent.OnFinishEpisode, activityId, episodeId)
 end
 
-function var_0_0.onReceiveAct184EpisodePush(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_1 ~= 0 then
+function LiangYueRpc:onReceiveAct184EpisodePush(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_5_0 = arg_5_2.activityId
-	local var_5_1 = arg_5_2.episodes
+	local activityId = msg.activityId
+	local episodes = msg.episodes
 
-	LiangYueModel.instance:onActInfoPush(arg_5_2)
+	LiangYueModel.instance:onActInfoPush(msg)
 	LiangYueController.instance:dispatchEvent(LiangYueEvent.OnEpisodeInfoPush)
 end
 
-var_0_0.instance = var_0_0.New()
+LiangYueRpc.instance = LiangYueRpc.New()
 
-return var_0_0
+return LiangYueRpc

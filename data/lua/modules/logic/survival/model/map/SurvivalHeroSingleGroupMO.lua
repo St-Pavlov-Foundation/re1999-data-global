@@ -1,9 +1,13 @@
-﻿module("modules.logic.survival.model.map.SurvivalHeroSingleGroupMO", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/map/SurvivalHeroSingleGroupMO.lua
 
-local var_0_0 = class("SurvivalHeroSingleGroupMO", HeroSingleGroupMO)
+module("modules.logic.survival.model.map.SurvivalHeroSingleGroupMO", package.seeall)
 
-function var_0_0.getHeroMO(arg_1_0)
-	return SurvivalMapModel.instance:getSceneMo().teamInfo:getHeroMo(arg_1_0.heroUid)
+local SurvivalHeroSingleGroupMO = class("SurvivalHeroSingleGroupMO", HeroSingleGroupMO)
+
+function SurvivalHeroSingleGroupMO:getHeroMO()
+	local tempInfo = SurvivalMapModel.instance:getSceneMo().teamInfo
+
+	return tempInfo:getHeroMo(self.heroUid)
 end
 
-return var_0_0
+return SurvivalHeroSingleGroupMO

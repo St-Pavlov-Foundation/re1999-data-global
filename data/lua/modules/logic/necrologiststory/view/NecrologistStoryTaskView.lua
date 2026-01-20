@@ -1,54 +1,56 @@
-﻿module("modules.logic.necrologiststory.view.NecrologistStoryTaskView", package.seeall)
+﻿-- chunkname: @modules/logic/necrologiststory/view/NecrologistStoryTaskView.lua
 
-local var_0_0 = class("NecrologistStoryTaskView", BaseView)
+module("modules.logic.necrologiststory.view.NecrologistStoryTaskView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.simage_Photo = gohelper.findChildSingleImage(arg_1_0.viewGO, "left/#simage_Photo")
+local NecrologistStoryTaskView = class("NecrologistStoryTaskView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function NecrologistStoryTaskView:onInitView()
+	self.simage_Photo = gohelper.findChildSingleImage(self.viewGO, "left/#simage_Photo")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_2_0.updateTask, arg_2_0)
-	arg_2_0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_2_0.updateTask, arg_2_0)
+function NecrologistStoryTaskView:addEvents()
+	self:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, self.updateTask, self)
+	self:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, self.updateTask, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_3_0.updateTask, arg_3_0)
-	arg_3_0:removeEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_3_0.updateTask, arg_3_0)
+function NecrologistStoryTaskView:removeEvents()
+	self:removeEventCb(TaskController.instance, TaskEvent.UpdateTaskList, self.updateTask, self)
+	self:removeEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, self.updateTask, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function NecrologistStoryTaskView:_editableInitView()
 	return
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0.roleStoryId = arg_5_0.viewParam.roleStoryId
+function NecrologistStoryTaskView:onOpen()
+	self.roleStoryId = self.viewParam.roleStoryId
 
-	local var_5_0 = RoleStoryConfig.instance:getStoryById(arg_5_0.roleStoryId)
+	local cfg = RoleStoryConfig.instance:getStoryById(self.roleStoryId)
 
-	arg_5_0.simage_Photo:LoadImage(ResUrl.getRoleStoryPhotoIcon(var_5_0.photo))
-	arg_5_0:refreshTask(true)
+	self.simage_Photo:LoadImage(ResUrl.getRoleStoryPhotoIcon(cfg.photo))
+	self:refreshTask(true)
 end
 
-function var_0_0.onClose(arg_6_0)
+function NecrologistStoryTaskView:onClose()
 	return
 end
 
-function var_0_0.updateTask(arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0.refreshTask, arg_7_0)
-	TaskDispatcher.runDelay(arg_7_0.refreshTask, arg_7_0, 0.2)
+function NecrologistStoryTaskView:updateTask()
+	TaskDispatcher.cancelTask(self.refreshTask, self)
+	TaskDispatcher.runDelay(self.refreshTask, self, 0.2)
 end
 
-function var_0_0.refreshTask(arg_8_0, arg_8_1)
-	NecrologistStoryTaskListModel.instance:refreshList(arg_8_0.roleStoryId)
+function NecrologistStoryTaskView:refreshTask(open)
+	NecrologistStoryTaskListModel.instance:refreshList(self.roleStoryId)
 end
 
-function var_0_0.onDestroyView(arg_9_0)
-	TaskDispatcher.cancelTask(arg_9_0.refreshTask, arg_9_0)
-	arg_9_0.simage_Photo:UnLoadImage()
+function NecrologistStoryTaskView:onDestroyView()
+	TaskDispatcher.cancelTask(self.refreshTask, self)
+	self.simage_Photo:UnLoadImage()
 end
 
-return var_0_0
+return NecrologistStoryTaskView

@@ -1,15 +1,19 @@
-﻿module("modules.logic.fight.entity.comp.skill.FightTLEventChangeScene", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skill/FightTLEventChangeScene.lua
 
-local var_0_0 = class("FightTLEventChangeScene", FightTimelineTrackItem)
+module("modules.logic.fight.entity.comp.skill.FightTLEventChangeScene", package.seeall)
 
-function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	if not string.nilorempty(arg_1_3[1]) then
-		GameSceneMgr.instance:getScene(SceneType.Fight).level:loadLevelNoEffect(tonumber(arg_1_3[1]))
+local FightTLEventChangeScene = class("FightTLEventChangeScene", FightTimelineTrackItem)
+
+function FightTLEventChangeScene:onTrackStart(fightStepData, duration, paramsArr)
+	if not string.nilorempty(paramsArr[1]) then
+		local fightScene = GameSceneMgr.instance:getScene(SceneType.Fight)
+
+		fightScene.level:loadLevelNoEffect(tonumber(paramsArr[1]))
 	end
 end
 
-function var_0_0.onTrackEnd(arg_2_0)
+function FightTLEventChangeScene:onTrackEnd()
 	return
 end
 
-return var_0_0
+return FightTLEventChangeScene

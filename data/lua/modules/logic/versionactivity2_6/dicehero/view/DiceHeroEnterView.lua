@@ -1,87 +1,89 @@
-﻿module("modules.logic.versionactivity2_6.dicehero.view.DiceHeroEnterView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/dicehero/view/DiceHeroEnterView.lua
 
-local var_0_0 = class("DiceHeroEnterView", VersionActivityEnterBaseSubView)
+module("modules.logic.versionactivity2_6.dicehero.view.DiceHeroEnterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnEnter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Enter", AudioEnum2_6.DiceHero.play_ui_wenming_alaifugameplay)
-	arg_1_0._btnLocked = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Locked")
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Right/image_LimitTimeBG/#txt_LimitTime")
-	arg_1_0._txtLockTxt = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/#btn_Locked/#txt_UnLocked")
-	arg_1_0._txtDescr = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/#txt_Descr")
-	arg_1_0._gored = gohelper.findChild(arg_1_0.viewGO, "Right/#btn_Enter/#go_reddot")
-	arg_1_0._btnTrial = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#go_Try/image_TryBtn")
+local DiceHeroEnterView = class("DiceHeroEnterView", VersionActivityEnterBaseSubView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function DiceHeroEnterView:onInitView()
+	self._btnEnter = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_Enter", AudioEnum2_6.DiceHero.play_ui_wenming_alaifugameplay)
+	self._btnLocked = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_Locked")
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "Right/image_LimitTimeBG/#txt_LimitTime")
+	self._txtLockTxt = gohelper.findChildTextMesh(self.viewGO, "Right/#btn_Locked/#txt_UnLocked")
+	self._txtDescr = gohelper.findChildTextMesh(self.viewGO, "Right/#txt_Descr")
+	self._gored = gohelper.findChild(self.viewGO, "Right/#btn_Enter/#go_reddot")
+	self._btnTrial = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#go_Try/image_TryBtn")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnEnter:AddClickListener(arg_2_0._onEnterClick, arg_2_0)
-	arg_2_0._btnLocked:AddClickListener(arg_2_0._onLockClick, arg_2_0)
-	arg_2_0._btnTrial:AddClickListener(arg_2_0._clickTrial, arg_2_0)
+function DiceHeroEnterView:addEvents()
+	self._btnEnter:AddClickListener(self._onEnterClick, self)
+	self._btnLocked:AddClickListener(self._onLockClick, self)
+	self._btnTrial:AddClickListener(self._clickTrial, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnEnter:RemoveClickListener()
-	arg_3_0._btnLocked:RemoveClickListener()
-	arg_3_0._btnTrial:RemoveClickListener()
+function DiceHeroEnterView:removeEvents()
+	self._btnEnter:RemoveClickListener()
+	self._btnLocked:RemoveClickListener()
+	self._btnTrial:RemoveClickListener()
 end
 
-function var_0_0.onOpen(arg_4_0)
-	var_0_0.super.onOpen(arg_4_0)
-	RedDotController.instance:addRedDot(arg_4_0._gored, RedDotEnum.DotNode.V2a6DiceHero)
+function DiceHeroEnterView:onOpen()
+	DiceHeroEnterView.super.onOpen(self)
+	RedDotController.instance:addRedDot(self._gored, RedDotEnum.DotNode.V2a6DiceHero)
 
-	local var_4_0 = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.DiceHero)
+	local isOpen = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.DiceHero)
 
-	gohelper.setActive(arg_4_0._btnEnter, var_4_0)
-	gohelper.setActive(arg_4_0._btnLocked, not var_4_0)
+	gohelper.setActive(self._btnEnter, isOpen)
+	gohelper.setActive(self._btnLocked, not isOpen)
 
-	if not var_4_0 then
-		local var_4_1 = OpenConfig.instance:getOpenCo(OpenEnum.UnlockFunc.DiceHero).episodeId
-		local var_4_2 = DungeonConfig.instance:getEpisodeDisplay(var_4_1)
+	if not isOpen then
+		local episodeId = OpenConfig.instance:getOpenCo(OpenEnum.UnlockFunc.DiceHero).episodeId
+		local episodetxt = DungeonConfig.instance:getEpisodeDisplay(episodeId)
 
-		arg_4_0._txtLockTxt.text = string.format(luaLang("dungeon_unlock_episode_mode_sp"), var_4_2)
+		self._txtLockTxt.text = string.format(luaLang("dungeon_unlock_episode_mode_sp"), episodetxt)
 	end
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0.config = ActivityConfig.instance:getActivityCo(VersionActivity2_6Enum.ActivityId.DiceHero)
-	arg_5_0._txtDescr.text = arg_5_0.config.actDesc
+function DiceHeroEnterView:_editableInitView()
+	self.config = ActivityConfig.instance:getActivityCo(VersionActivity2_6Enum.ActivityId.DiceHero)
+	self._txtDescr.text = self.config.actDesc
 end
 
-function var_0_0._onEnterClick(arg_6_0)
+function DiceHeroEnterView:_onEnterClick()
 	ViewMgr.instance:openView(ViewName.DiceHeroMainView)
 end
 
-function var_0_0._clickTrial(arg_7_0)
+function DiceHeroEnterView:_clickTrial()
 	if ActivityHelper.getActivityStatus(VersionActivity2_6Enum.ActivityId.DiceHero) == ActivityEnum.ActivityStatus.Normal then
-		local var_7_0 = arg_7_0.config.tryoutEpisode
+		local episodeId = self.config.tryoutEpisode
 
-		if var_7_0 <= 0 then
+		if episodeId <= 0 then
 			logError("没有配置对应的试用关卡")
 
 			return
 		end
 
-		local var_7_1 = DungeonConfig.instance:getEpisodeCO(var_7_0)
+		local config = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-		DungeonFightController.instance:enterFight(var_7_1.chapterId, var_7_0)
+		DungeonFightController.instance:enterFight(config.chapterId, episodeId)
 	else
-		arg_7_0:_onLockClick()
+		self:_onLockClick()
 	end
 end
 
-function var_0_0.everySecondCall(arg_8_0)
-	arg_8_0._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(VersionActivity2_6Enum.ActivityId.DiceHero)
+function DiceHeroEnterView:everySecondCall()
+	self._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(VersionActivity2_6Enum.ActivityId.DiceHero)
 end
 
-function var_0_0._onLockClick(arg_9_0)
-	local var_9_0, var_9_1 = OpenHelper.getToastIdAndParam(OpenEnum.UnlockFunc.DiceHero)
+function DiceHeroEnterView:_onLockClick()
+	local toastId, toastParamList = OpenHelper.getToastIdAndParam(OpenEnum.UnlockFunc.DiceHero)
 
-	if var_9_0 and var_9_0 ~= 0 then
-		GameFacade.showToastWithTableParam(var_9_0, var_9_1)
+	if toastId and toastId ~= 0 then
+		GameFacade.showToastWithTableParam(toastId, toastParamList)
 	end
 end
 
-return var_0_0
+return DiceHeroEnterView

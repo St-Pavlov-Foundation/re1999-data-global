@@ -1,43 +1,45 @@
-﻿module("modules.logic.survival.view.shelter.SurvivalHardViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/SurvivalHardViewContainer.lua
 
-local var_0_0 = class("SurvivalHardViewContainer", BaseViewContainer)
+module("modules.logic.survival.view.shelter.SurvivalHardViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+local SurvivalHardViewContainer = class("SurvivalHardViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "Panel/Right/#scroll_List"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_1.prefabUrl = "Panel/Right/#scroll_List/Viewport/Content/#go_Item"
-	var_1_1.cellClass = SurvivalHardItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 1
-	var_1_1.cellWidth = 740
-	var_1_1.cellHeight = 150
-	var_1_1.cellSpaceH = 0
-	var_1_1.cellSpaceV = 0
-	var_1_1.startSpace = 0
-	arg_1_0.scrollView = LuaListScrollViewWithAnimator.New(SurvivalDifficultyModel.instance, var_1_1)
+function SurvivalHardViewContainer:buildViews()
+	local views = {}
+	local scrollParam1 = ListScrollParam.New()
 
-	table.insert(var_1_0, arg_1_0.scrollView)
-	table.insert(var_1_0, SurvivalHardView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_lefttop"))
+	scrollParam1.scrollGOPath = "Panel/Right/#scroll_List"
+	scrollParam1.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam1.prefabUrl = "Panel/Right/#scroll_List/Viewport/Content/#go_Item"
+	scrollParam1.cellClass = SurvivalHardItem
+	scrollParam1.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam1.lineCount = 1
+	scrollParam1.cellWidth = 740
+	scrollParam1.cellHeight = 150
+	scrollParam1.cellSpaceH = 0
+	scrollParam1.cellSpaceV = 0
+	scrollParam1.startSpace = 0
+	self.scrollView = LuaListScrollViewWithAnimator.New(SurvivalDifficultyModel.instance, scrollParam1)
 
-	return var_1_0
+	table.insert(views, self.scrollView)
+	table.insert(views, SurvivalHardView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_lefttop"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		local var_2_0 = NavigateButtonsView.New({
+function SurvivalHardViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		local navView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			var_2_0
+			navView
 		}
 	end
 end
 
-return var_0_0
+return SurvivalHardViewContainer

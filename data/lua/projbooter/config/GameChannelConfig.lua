@@ -1,8 +1,10 @@
-﻿module("projbooter.config.GameChannelConfig", package.seeall)
+﻿-- chunkname: @projbooter/config/GameChannelConfig.lua
 
-local var_0_0 = class("GameChannelConfig")
+module("projbooter.config.GameChannelConfig", package.seeall)
 
-var_0_0.SDKType = {
+local GameChannelConfig = class("GameChannelConfig")
+
+GameChannelConfig.SDKType = {
 	xfsdk = 2,
 	longcheng = 8,
 	previewsdk = 5,
@@ -12,7 +14,7 @@ var_0_0.SDKType = {
 	slsdk = 1,
 	gp_global = 4
 }
-var_0_0.ServerType = {
+GameChannelConfig.ServerType = {
 	OutDevelop2 = 7,
 	OutDevelop5 = 10,
 	OutDevelop4 = 9,
@@ -25,22 +27,22 @@ var_0_0.ServerType = {
 	OutDevelop = 2,
 	Develop = 1
 }
-var_0_0._cfg = {
-	[var_0_0.SDKType.xfsdk] = {
+GameChannelConfig._cfg = {
+	[GameChannelConfig.SDKType.xfsdk] = {
 		gameCode = "ssgame",
 		packageName = "com.bluepoch.m.reverse1999",
 		channelId = "100",
 		packageNamewin = "com.bluepoch.m.reverse1999.win",
 		gameId = "50001"
 	},
-	[var_0_0.SDKType.slsdk] = {
+	[GameChannelConfig.SDKType.slsdk] = {
 		gameCode = "ssgame",
 		packageName = "com.shenlan.m.proj1",
 		channelId = "100",
 		packageNamewin = "com.shenlan.m.proj1.shenlanwin",
 		gameId = "50001"
 	},
-	[var_0_0.SDKType.bilibili] = {
+	[GameChannelConfig.SDKType.bilibili] = {
 		gameCode = "ssgame",
 		subChannelId = "1",
 		channelId = "101",
@@ -49,55 +51,55 @@ var_0_0._cfg = {
 	}
 }
 
-function var_0_0.isSlsdk()
-	return GameConfig:GetCurSDKType() == var_0_0.SDKType.slsdk
+function GameChannelConfig.isSlsdk()
+	return GameConfig:GetCurSDKType() == GameChannelConfig.SDKType.slsdk
 end
 
-function var_0_0.isXfsdk()
-	return GameConfig:GetCurSDKType() == var_0_0.SDKType.xfsdk
+function GameChannelConfig.isXfsdk()
+	return GameConfig:GetCurSDKType() == GameChannelConfig.SDKType.xfsdk
 end
 
-function var_0_0.isBilibili()
-	return GameConfig:GetCurSDKType() == var_0_0.SDKType.bilibili
+function GameChannelConfig.isBilibili()
+	return GameConfig:GetCurSDKType() == GameChannelConfig.SDKType.bilibili
 end
 
-function var_0_0.isGpGlobal()
-	return GameConfig:GetCurSDKType() == var_0_0.SDKType.gp_global
+function GameChannelConfig.isGpGlobal()
+	return GameConfig:GetCurSDKType() == GameChannelConfig.SDKType.gp_global
 end
 
-function var_0_0.isGpJapan()
-	return GameConfig:GetCurSDKType() == var_0_0.SDKType.gp_japan
+function GameChannelConfig.isGpJapan()
+	return GameConfig:GetCurSDKType() == GameChannelConfig.SDKType.gp_japan
 end
 
-function var_0_0.isLongCheng()
-	return GameConfig:GetCurSDKType() == var_0_0.SDKType.longcheng
+function GameChannelConfig.isLongCheng()
+	return GameConfig:GetCurSDKType() == GameChannelConfig.SDKType.longcheng
 end
 
-function var_0_0.isEfun()
-	return GameConfig:GetCurSDKType() == var_0_0.SDKType.efun
+function GameChannelConfig.isEfun()
+	return GameConfig:GetCurSDKType() == GameChannelConfig.SDKType.efun
 end
 
-function var_0_0._getCurCfg()
-	return var_0_0._cfg[GameConfig:GetCurSDKType()]
+function GameChannelConfig._getCurCfg()
+	return GameChannelConfig._cfg[GameConfig:GetCurSDKType()]
 end
 
-function var_0_0.getGameId()
-	return var_0_0._getCurCfg().gameId
+function GameChannelConfig.getGameId()
+	return GameChannelConfig._getCurCfg().gameId
 end
 
-function var_0_0.getPackageName()
+function GameChannelConfig.getPackageName()
 	if BootNativeUtil.isWindows() then
-		return var_0_0._getCurCfg().packageNamewin
+		return GameChannelConfig._getCurCfg().packageNamewin
 	end
 
-	return var_0_0._getCurCfg().packageName
+	return GameChannelConfig._getCurCfg().packageName
 end
 
-function var_0_0.getChannelId()
-	return var_0_0._getCurCfg().channelId
+function GameChannelConfig.getChannelId()
+	return GameChannelConfig._getCurCfg().channelId
 end
 
-function var_0_0.getSubChannelId()
+function GameChannelConfig.getSubChannelId()
 	if BootNativeUtil.isAndroid() then
 		return "1002"
 	end
@@ -113,26 +115,28 @@ function var_0_0.getSubChannelId()
 	return "1003"
 end
 
-function var_0_0.getGameCode()
-	return var_0_0._getCurCfg().gameCode
+function GameChannelConfig.getGameCode()
+	return GameChannelConfig._getCurCfg().gameCode
 end
 
-function var_0_0.getServerType()
-	local var_14_0 = GameConfig:GetCurServerType()
+function GameChannelConfig.getServerType()
+	local serverType = GameConfig:GetCurServerType()
 
-	if var_14_0 == 6 or var_14_0 == 7 then
-		var_14_0 = 2
+	if serverType == 6 or serverType == 7 then
+		serverType = 2
 	end
 
-	if var_14_0 == 8 then
-		var_14_0 = 5
+	if serverType == 8 then
+		serverType = 5
 	end
 
-	return var_14_0
+	return serverType
 end
 
-function var_0_0.isExternalTest()
-	return GameConfig:GetCurServerType() == 6
+function GameChannelConfig.isExternalTest()
+	local serverType = GameConfig:GetCurServerType()
+
+	return serverType == 6
 end
 
-return var_0_0
+return GameChannelConfig

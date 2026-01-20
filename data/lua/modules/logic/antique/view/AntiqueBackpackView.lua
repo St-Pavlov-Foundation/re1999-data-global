@@ -1,57 +1,59 @@
-﻿module("modules.logic.antique.view.AntiqueBackpackView", package.seeall)
+﻿-- chunkname: @modules/logic/antique/view/AntiqueBackpackView.lua
 
-local var_0_0 = class("AntiqueBackpackView", BaseView)
+module("modules.logic.antique.view.AntiqueBackpackView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._scrollantique = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_antique")
+local AntiqueBackpackView = class("AntiqueBackpackView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function AntiqueBackpackView:onInitView()
+	self._scrollantique = gohelper.findChildScrollRect(self.viewGO, "#scroll_antique")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function AntiqueBackpackView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function AntiqueBackpackView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._ani = arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function AntiqueBackpackView:_editableInitView()
+	self._ani = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function AntiqueBackpackView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0.viewContainer:setCurrentSelectCategoryId(ItemEnum.CategoryType.Antique)
+function AntiqueBackpackView:onOpen()
+	self.viewContainer:setCurrentSelectCategoryId(ItemEnum.CategoryType.Antique)
 
-	arg_6_0._ani.enabled = #arg_6_0.tabContainer._tabAbLoaders < 2
-	arg_6_0._scrollantique.verticalNormalizedPosition = 1
+	self._ani.enabled = #self.tabContainer._tabAbLoaders < 2
+	self._scrollantique.verticalNormalizedPosition = 1
 
-	arg_6_0:refreshAntique()
+	self:refreshAntique()
 end
 
-function var_0_0.refreshAntique(arg_7_0)
-	local var_7_0 = AntiqueModel.instance:getAntiqueList()
-	local var_7_1 = {}
+function AntiqueBackpackView:refreshAntique()
+	local antiqueList = AntiqueModel.instance:getAntiqueList()
+	local list = {}
 
-	for iter_7_0, iter_7_1 in pairs(var_7_0) do
-		table.insert(var_7_1, iter_7_1)
+	for _, mo in pairs(antiqueList) do
+		table.insert(list, mo)
 	end
 
-	AntiqueBackpackListModel.instance:setAntiqueList(var_7_1)
+	AntiqueBackpackListModel.instance:setAntiqueList(list)
 end
 
-function var_0_0.onClose(arg_8_0)
+function AntiqueBackpackView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
+function AntiqueBackpackView:onDestroyView()
 	AntiqueBackpackListModel.instance:clearAntiqueList()
 end
 
-return var_0_0
+return AntiqueBackpackView

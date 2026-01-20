@@ -1,64 +1,66 @@
-﻿module("modules.logic.survival.controller.work.SurvivalMsgPushWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/SurvivalMsgPushWork.lua
 
-local var_0_0 = class("SurvivalMsgPushWork", BaseWork)
+module("modules.logic.survival.controller.work.SurvivalMsgPushWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._msgName = arg_1_1 or ""
-	arg_1_0._msg = arg_1_2
+local SurvivalMsgPushWork = class("SurvivalMsgPushWork", BaseWork)
+
+function SurvivalMsgPushWork:ctor(msgName, msg)
+	self._msgName = msgName or ""
+	self._msg = msg
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_0["onReceive" .. arg_2_0._msgName]
+function SurvivalMsgPushWork:onStart(context)
+	local handler = self["onReceive" .. self._msgName]
 
-	if var_2_0 and var_2_0(arg_2_0, arg_2_0._msg) then
+	if handler and handler(self, self._msg) then
 		return
 	end
 
-	arg_2_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.onReceiveSurvivalHeroUpdatePush(arg_3_0, arg_3_1)
-	local var_3_0 = SurvivalShelterModel.instance:getWeekInfo()
+function SurvivalMsgPushWork:onReceiveSurvivalHeroUpdatePush(msg)
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
 
-	if var_3_0 then
-		var_3_0:updateHeroHealth(arg_3_1.hero)
+	if weekInfo then
+		weekInfo:updateHeroHealth(msg.hero)
 		SurvivalController.instance:dispatchEvent(SurvivalEvent.OnSurvivalHeroHealthUpdate)
 	end
 end
 
-function var_0_0.onReceiveSurvivalBagUpdatePush(arg_4_0, arg_4_1)
-	local var_4_0 = SurvivalShelterModel.instance:getWeekInfo()
+function SurvivalMsgPushWork:onReceiveSurvivalBagUpdatePush(msg)
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
 
-	if not var_4_0 then
+	if not weekInfo then
 		return
 	end
 
-	local var_4_1 = var_4_0:getBag(arg_4_1.type)
+	local bag = weekInfo:getBag(msg.type)
 
-	if not var_4_1 then
+	if not bag then
 		return
 	end
 
-	var_4_1:addOrUpdateItems(arg_4_1.updateItems)
-	var_4_1:removeItems(arg_4_1.delItemUids)
+	bag:addOrUpdateItems(msg.updateItems)
+	bag:removeItems(msg.delItemUids)
 
-	if arg_4_1.type == SurvivalEnum.ItemSource.Map then
-		SurvivalController.instance:dispatchEvent(SurvivalEvent.OnMapBagUpdate, arg_4_1)
-	elseif arg_4_1.type == SurvivalEnum.ItemSource.Shelter then
-		SurvivalController.instance:dispatchEvent(SurvivalEvent.OnShelterBagUpdate, arg_4_1)
+	if msg.type == SurvivalEnum.ItemSource.Map then
+		SurvivalController.instance:dispatchEvent(SurvivalEvent.OnMapBagUpdate, msg)
+	elseif msg.type == SurvivalEnum.ItemSource.Shelter then
+		SurvivalController.instance:dispatchEvent(SurvivalEvent.OnShelterBagUpdate, msg)
 	end
 
 	SurvivalEquipRedDotHelper.instance:checkRed()
 end
 
-function var_0_0.onReceiveSurvivalTaskUpdatePush(arg_5_0, arg_5_1)
-	local var_5_0 = SurvivalShelterModel.instance:getWeekInfo()
+function SurvivalMsgPushWork:onReceiveSurvivalTaskUpdatePush(msg)
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
 
-	if var_5_0 then
-		var_5_0.taskPanel:addOrUpdateTasks(arg_5_1.boxs)
-		var_5_0.taskPanel:removeTasks(arg_5_1.removeTaskInfo)
+	if weekInfo then
+		weekInfo.taskPanel:addOrUpdateTasks(msg.boxs)
+		weekInfo.taskPanel:removeTasks(msg.removeTaskInfo)
 		SurvivalController.instance:dispatchEvent(SurvivalEvent.OnTaskDataUpdate)
 	end
 end
 
-return var_0_0
+return SurvivalMsgPushWork

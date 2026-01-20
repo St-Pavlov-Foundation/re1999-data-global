@@ -1,143 +1,147 @@
-﻿module("modules.logic.seasonver.act123.model.Season123CardPackageModel", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/model/Season123CardPackageModel.lua
 
-local var_0_0 = class("Season123CardPackageModel", ListScrollModel)
+module("modules.logic.seasonver.act123.model.Season123CardPackageModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local Season123CardPackageModel = class("Season123CardPackageModel", ListScrollModel)
 
-	arg_1_0.packageMap = {}
+function Season123CardPackageModel:onInit()
+	self:reInit()
+
+	self.packageMap = {}
 end
 
-function var_0_0.release(arg_2_0)
-	arg_2_0:clear()
+function Season123CardPackageModel:release()
+	self:clear()
 
-	arg_2_0.cardItemList = {}
-	arg_2_0.cardItemMap = {}
-	arg_2_0.curActId = nil
+	self.cardItemList = {}
+	self.cardItemMap = {}
+	self.curActId = nil
 end
 
-function var_0_0.reInit(arg_3_0)
-	arg_3_0.curActId = nil
-	arg_3_0.packageConfigMap = {}
-	arg_3_0.cardItemList = {}
-	arg_3_0.cardItemMap = {}
-	arg_3_0.packageCount = 0
-	arg_3_0.packageMap = {}
+function Season123CardPackageModel:reInit()
+	self.curActId = nil
+	self.packageConfigMap = {}
+	self.cardItemList = {}
+	self.cardItemMap = {}
+	self.packageCount = 0
+	self.packageMap = {}
 end
 
-function var_0_0.initData(arg_4_0, arg_4_1)
-	arg_4_0.curActId = arg_4_1
+function Season123CardPackageModel:initData(curActId)
+	self.curActId = curActId
 
-	arg_4_0:initOpenPackageMO(arg_4_1)
-	arg_4_0:initPackageCount()
+	self:initOpenPackageMO(curActId)
+	self:initPackageCount()
 end
 
-function var_0_0.getOpenPackageMO(arg_5_0)
-	if arg_5_0.packageCount > 0 then
-		for iter_5_0, iter_5_1 in pairs(arg_5_0.packageMap) do
-			if ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, iter_5_1.id) > 0 then
-				return iter_5_1
+function Season123CardPackageModel:getOpenPackageMO()
+	if self.packageCount > 0 then
+		for index, itemMO in pairs(self.packageMap) do
+			local itemCount = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, itemMO.id)
+
+			if itemCount > 0 then
+				return itemMO
 			end
 		end
 	end
 end
 
-function var_0_0.initOpenPackageMO(arg_6_0, arg_6_1)
-	local var_6_0 = ItemModel.instance:getDict()
+function Season123CardPackageModel:initOpenPackageMO(curActId)
+	local itemDict = ItemModel.instance:getDict()
 
-	if GameUtil.getTabLen(arg_6_0.packageConfigMap) == 0 then
-		arg_6_0:initCurActCardPackageConfigMap(arg_6_1)
+	if GameUtil.getTabLen(self.packageConfigMap) == 0 then
+		self:initCurActCardPackageConfigMap(curActId)
 	end
 
-	for iter_6_0, iter_6_1 in pairs(arg_6_0.packageConfigMap) do
-		local var_6_1 = var_6_0[iter_6_1.id]
-		local var_6_2 = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, iter_6_1.id)
+	for index, config in pairs(self.packageConfigMap) do
+		local itemMO = itemDict[config.id]
+		local itemCount = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, config.id)
 
-		if var_6_1 and var_6_2 > 0 then
-			arg_6_0.packageMap[var_6_1.id] = var_6_1
+		if itemMO and itemCount > 0 then
+			self.packageMap[itemMO.id] = itemMO
 		end
 	end
 end
 
-function var_0_0.initCurActCardPackageConfigMap(arg_7_0, arg_7_1)
-	local var_7_0 = ItemConfig.instance:getItemListBySubType(Activity123Enum.CardPackageSubType) or {}
+function Season123CardPackageModel:initCurActCardPackageConfigMap(curActId)
+	local packageItemList = ItemConfig.instance:getItemListBySubType(Activity123Enum.CardPackageSubType) or {}
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-		if iter_7_1.activityId == arg_7_1 then
-			arg_7_0.packageConfigMap[iter_7_1.id] = iter_7_1
+	for index, config in ipairs(packageItemList) do
+		if config.activityId == curActId then
+			self.packageConfigMap[config.id] = config
 		end
 	end
 end
 
-function var_0_0.initPackageCount(arg_8_0)
-	arg_8_0.packageCount = 0
+function Season123CardPackageModel:initPackageCount()
+	self.packageCount = 0
 
-	if GameUtil.getTabLen(arg_8_0.packageMap) == 0 then
-		arg_8_0:initOpenPackageMO(arg_8_0.curActId)
+	if GameUtil.getTabLen(self.packageMap) == 0 then
+		self:initOpenPackageMO(self.curActId)
 	end
 
-	for iter_8_0, iter_8_1 in pairs(arg_8_0.packageMap) do
-		local var_8_0 = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, iter_8_1.id)
+	for index, itemMO in pairs(self.packageMap) do
+		local itemCount = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, itemMO.id)
 
-		arg_8_0.packageCount = arg_8_0.packageCount + var_8_0
+		self.packageCount = self.packageCount + itemCount
 	end
 
-	return arg_8_0.packageCount
+	return self.packageCount
 end
 
-function var_0_0.setCardItemList(arg_9_0, arg_9_1)
-	arg_9_0.cardItemList = {}
-	arg_9_0.cardItemMap = {}
+function Season123CardPackageModel:setCardItemList(cardItems)
+	self.cardItemList = {}
+	self.cardItemMap = {}
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_1) do
-		local var_9_0 = arg_9_0.cardItemMap[iter_9_1]
+	for index, itemId in ipairs(cardItems) do
+		local itemMO = self.cardItemMap[itemId]
 
-		if not var_9_0 then
-			var_9_0 = Season123CardPackageItemMO.New()
+		if not itemMO then
+			itemMO = Season123CardPackageItemMO.New()
 
-			var_9_0:init(iter_9_1)
+			itemMO:init(itemId)
 
-			arg_9_0.cardItemMap[iter_9_1] = var_9_0
+			self.cardItemMap[itemId] = itemMO
 
-			table.insert(arg_9_0.cardItemList, var_9_0)
+			table.insert(self.cardItemList, itemMO)
 		else
-			var_9_0.count = var_9_0.count + 1
+			itemMO.count = itemMO.count + 1
 		end
 	end
 
-	table.sort(arg_9_0.cardItemList, arg_9_0.sortCardItemList)
-	arg_9_0:setList(arg_9_0.cardItemList)
+	table.sort(self.cardItemList, self.sortCardItemList)
+	self:setList(self.cardItemList)
 end
 
-function var_0_0.sortCardItemList(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0.config
-	local var_10_1 = arg_10_1.config
+function Season123CardPackageModel.sortCardItemList(a, b)
+	local configA = a.config
+	local configB = b.config
 
-	if var_10_0 ~= nil and var_10_1 ~= nil then
-		if var_10_0.rare ~= var_10_1.rare then
-			return var_10_0.rare > var_10_1.rare
+	if configA ~= nil and configB ~= nil then
+		if configA.rare ~= configB.rare then
+			return configA.rare > configB.rare
 		else
-			return var_10_0.equipId > var_10_1.equipId
+			return configA.equipId > configB.equipId
 		end
 	else
-		return arg_10_0.itemId < arg_10_1.itemId
+		return a.itemId < b.itemId
 	end
 end
 
-function var_0_0.getCardMaxRare(arg_11_0)
-	local var_11_0 = 0
+function Season123CardPackageModel:getCardMaxRare()
+	local maxRare = 0
 
-	for iter_11_0, iter_11_1 in pairs(arg_11_0.cardItemList) do
-		if iter_11_1.config and var_11_0 < iter_11_1.config.rare then
-			var_11_0 = iter_11_1.config.rare
-		elseif not iter_11_1.config then
-			logError("activity123_equip config id is not exit: " .. tostring(iter_11_1.itemId))
+	for index, itemMO in pairs(self.cardItemList) do
+		if itemMO.config and maxRare < itemMO.config.rare then
+			maxRare = itemMO.config.rare
+		elseif not itemMO.config then
+			logError("activity123_equip config id is not exit: " .. tostring(itemMO.itemId))
 		end
 	end
 
-	return var_11_0
+	return maxRare
 end
 
-var_0_0.instance = var_0_0.New()
+Season123CardPackageModel.instance = Season123CardPackageModel.New()
 
-return var_0_0
+return Season123CardPackageModel

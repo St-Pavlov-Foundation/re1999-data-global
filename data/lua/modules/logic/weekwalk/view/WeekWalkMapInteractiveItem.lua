@@ -1,511 +1,519 @@
-﻿module("modules.logic.weekwalk.view.WeekWalkMapInteractiveItem", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk/view/WeekWalkMapInteractiveItem.lua
 
-local var_0_0 = class("WeekWalkMapInteractiveItem", LuaCompBase)
+module("modules.logic.weekwalk.view.WeekWalkMapInteractiveItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "rotate/bg/#simage_bg")
-	arg_1_0._txtinfo = gohelper.findChildText(arg_1_0.viewGO, "rotate/bg/#txt_info")
-	arg_1_0._gomask = gohelper.findChild(arg_1_0.viewGO, "rotate/bg/#go_mask")
-	arg_1_0._goscroll = gohelper.findChild(arg_1_0.viewGO, "rotate/bg/#go_mask/Scroll View/Viewport/#go_scroll")
-	arg_1_0._gochatarea = gohelper.findChild(arg_1_0.viewGO, "rotate/bg/#go_chatarea")
-	arg_1_0._gochatitem = gohelper.findChild(arg_1_0.viewGO, "rotate/bg/#go_chatarea/#go_chatitem")
-	arg_1_0._goimportanttips = gohelper.findChild(arg_1_0.viewGO, "rotate/bg/#go_importanttips")
-	arg_1_0._txttipsinfo = gohelper.findChildText(arg_1_0.viewGO, "rotate/bg/#go_importanttips/bg/#txt_tipsinfo")
-	arg_1_0._goop1 = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op1")
-	arg_1_0._gorewards = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op1/#go_rewards")
-	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op1/#go_normal")
-	arg_1_0._gonorewards = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op1/#go_normal/#go_norewards")
-	arg_1_0._gohasrewards = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op1/#go_normal/#go_hasrewards")
-	arg_1_0._goboss = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op1/#go_boss")
-	arg_1_0._gobossnorewards = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op1/#go_boss/#go_bossnorewards")
-	arg_1_0._gobosshasrewards = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op1/#go_boss/#go_bosshasrewards")
-	arg_1_0._btndoit = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rotate/#go_op1/#btn_doit")
-	arg_1_0._goop2 = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op2")
-	arg_1_0._gounfinishtask = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op2/#go_unfinishtask")
-	arg_1_0._txtunfinishtask = gohelper.findChildText(arg_1_0.viewGO, "rotate/#go_op2/#go_unfinishtask/#txt_unfinishtask")
-	arg_1_0._btnunfinishtask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rotate/#go_op2/#go_unfinishtask/#btn_unfinishtask")
-	arg_1_0._gofinishtask = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op2/#go_finishtask")
-	arg_1_0._txtfinishtask = gohelper.findChildText(arg_1_0.viewGO, "rotate/#go_op2/#go_finishtask/#txt_finishtask")
-	arg_1_0._btnfinishtask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rotate/#go_op2/#go_finishtask/#btn_finishtask")
-	arg_1_0._goop3 = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op3")
-	arg_1_0._gofinishFight = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op3/#go_finishFight")
-	arg_1_0._txtwin = gohelper.findChildText(arg_1_0.viewGO, "rotate/#go_op3/#go_finishFight/bg/#txt_win")
-	arg_1_0._btnwin = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rotate/#go_op3/#go_finishFight/bg/#btn_win")
-	arg_1_0._gounfinishedFight = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op3/#go_unfinishedFight")
-	arg_1_0._txtfight = gohelper.findChildText(arg_1_0.viewGO, "rotate/#go_op3/#go_unfinishedFight/bg/#txt_fight")
-	arg_1_0._btnfight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rotate/#go_op3/#go_unfinishedFight/bg/#btn_fight")
-	arg_1_0._goop4 = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op4")
-	arg_1_0._gonext = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op4/#go_next")
-	arg_1_0._btnnext = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rotate/#go_op4/#go_next/#btn_next")
-	arg_1_0._gooptions = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op4/#go_options")
-	arg_1_0._gotalkitem = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op4/#go_options/#go_talkitem")
-	arg_1_0._gofinishtalk = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op4/#go_finishtalk")
-	arg_1_0._btnfinishtalk = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rotate/#go_op4/#go_finishtalk/#btn_finishtalk")
-	arg_1_0._goop5 = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op5")
-	arg_1_0._gosubmit = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op5/#go_submit")
-	arg_1_0._btnsubmit = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rotate/#go_op5/#go_submit/#btn_submit")
-	arg_1_0._inputanswer = gohelper.findChildInputField(arg_1_0.viewGO, "rotate/#go_op5/#input_answer")
+local WeekWalkMapInteractiveItem = class("WeekWalkMapInteractiveItem", LuaCompBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function WeekWalkMapInteractiveItem:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "rotate/bg/#simage_bg")
+	self._txtinfo = gohelper.findChildText(self.viewGO, "rotate/bg/#txt_info")
+	self._gomask = gohelper.findChild(self.viewGO, "rotate/bg/#go_mask")
+	self._goscroll = gohelper.findChild(self.viewGO, "rotate/bg/#go_mask/Scroll View/Viewport/#go_scroll")
+	self._gochatarea = gohelper.findChild(self.viewGO, "rotate/bg/#go_chatarea")
+	self._gochatitem = gohelper.findChild(self.viewGO, "rotate/bg/#go_chatarea/#go_chatitem")
+	self._goimportanttips = gohelper.findChild(self.viewGO, "rotate/bg/#go_importanttips")
+	self._txttipsinfo = gohelper.findChildText(self.viewGO, "rotate/bg/#go_importanttips/bg/#txt_tipsinfo")
+	self._goop1 = gohelper.findChild(self.viewGO, "rotate/#go_op1")
+	self._gorewards = gohelper.findChild(self.viewGO, "rotate/#go_op1/#go_rewards")
+	self._gonormal = gohelper.findChild(self.viewGO, "rotate/#go_op1/#go_normal")
+	self._gonorewards = gohelper.findChild(self.viewGO, "rotate/#go_op1/#go_normal/#go_norewards")
+	self._gohasrewards = gohelper.findChild(self.viewGO, "rotate/#go_op1/#go_normal/#go_hasrewards")
+	self._goboss = gohelper.findChild(self.viewGO, "rotate/#go_op1/#go_boss")
+	self._gobossnorewards = gohelper.findChild(self.viewGO, "rotate/#go_op1/#go_boss/#go_bossnorewards")
+	self._gobosshasrewards = gohelper.findChild(self.viewGO, "rotate/#go_op1/#go_boss/#go_bosshasrewards")
+	self._btndoit = gohelper.findChildButtonWithAudio(self.viewGO, "rotate/#go_op1/#btn_doit")
+	self._goop2 = gohelper.findChild(self.viewGO, "rotate/#go_op2")
+	self._gounfinishtask = gohelper.findChild(self.viewGO, "rotate/#go_op2/#go_unfinishtask")
+	self._txtunfinishtask = gohelper.findChildText(self.viewGO, "rotate/#go_op2/#go_unfinishtask/#txt_unfinishtask")
+	self._btnunfinishtask = gohelper.findChildButtonWithAudio(self.viewGO, "rotate/#go_op2/#go_unfinishtask/#btn_unfinishtask")
+	self._gofinishtask = gohelper.findChild(self.viewGO, "rotate/#go_op2/#go_finishtask")
+	self._txtfinishtask = gohelper.findChildText(self.viewGO, "rotate/#go_op2/#go_finishtask/#txt_finishtask")
+	self._btnfinishtask = gohelper.findChildButtonWithAudio(self.viewGO, "rotate/#go_op2/#go_finishtask/#btn_finishtask")
+	self._goop3 = gohelper.findChild(self.viewGO, "rotate/#go_op3")
+	self._gofinishFight = gohelper.findChild(self.viewGO, "rotate/#go_op3/#go_finishFight")
+	self._txtwin = gohelper.findChildText(self.viewGO, "rotate/#go_op3/#go_finishFight/bg/#txt_win")
+	self._btnwin = gohelper.findChildButtonWithAudio(self.viewGO, "rotate/#go_op3/#go_finishFight/bg/#btn_win")
+	self._gounfinishedFight = gohelper.findChild(self.viewGO, "rotate/#go_op3/#go_unfinishedFight")
+	self._txtfight = gohelper.findChildText(self.viewGO, "rotate/#go_op3/#go_unfinishedFight/bg/#txt_fight")
+	self._btnfight = gohelper.findChildButtonWithAudio(self.viewGO, "rotate/#go_op3/#go_unfinishedFight/bg/#btn_fight")
+	self._goop4 = gohelper.findChild(self.viewGO, "rotate/#go_op4")
+	self._gonext = gohelper.findChild(self.viewGO, "rotate/#go_op4/#go_next")
+	self._btnnext = gohelper.findChildButtonWithAudio(self.viewGO, "rotate/#go_op4/#go_next/#btn_next")
+	self._gooptions = gohelper.findChild(self.viewGO, "rotate/#go_op4/#go_options")
+	self._gotalkitem = gohelper.findChild(self.viewGO, "rotate/#go_op4/#go_options/#go_talkitem")
+	self._gofinishtalk = gohelper.findChild(self.viewGO, "rotate/#go_op4/#go_finishtalk")
+	self._btnfinishtalk = gohelper.findChildButtonWithAudio(self.viewGO, "rotate/#go_op4/#go_finishtalk/#btn_finishtalk")
+	self._goop5 = gohelper.findChild(self.viewGO, "rotate/#go_op5")
+	self._gosubmit = gohelper.findChild(self.viewGO, "rotate/#go_op5/#go_submit")
+	self._btnsubmit = gohelper.findChildButtonWithAudio(self.viewGO, "rotate/#go_op5/#go_submit/#btn_submit")
+	self._inputanswer = gohelper.findChildInputField(self.viewGO, "rotate/#go_op5/#input_answer")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btndoit:AddClickListener(arg_2_0._btndoitOnClick, arg_2_0)
-	arg_2_0._btnunfinishtask:AddClickListener(arg_2_0._btnunfinishtaskOnClick, arg_2_0)
-	arg_2_0._btnfinishtask:AddClickListener(arg_2_0._btnfinishtaskOnClick, arg_2_0)
-	arg_2_0._btnwin:AddClickListener(arg_2_0._btnwinOnClick, arg_2_0)
-	arg_2_0._btnfight:AddClickListener(arg_2_0._btnfightOnClick, arg_2_0)
-	arg_2_0._btnnext:AddClickListener(arg_2_0._btnnextOnClick, arg_2_0)
-	arg_2_0._btnfinishtalk:AddClickListener(arg_2_0._btnfinishtalkOnClick, arg_2_0)
-	arg_2_0._btnsubmit:AddClickListener(arg_2_0._btnsubmitOnClick, arg_2_0)
+function WeekWalkMapInteractiveItem:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btndoit:AddClickListener(self._btndoitOnClick, self)
+	self._btnunfinishtask:AddClickListener(self._btnunfinishtaskOnClick, self)
+	self._btnfinishtask:AddClickListener(self._btnfinishtaskOnClick, self)
+	self._btnwin:AddClickListener(self._btnwinOnClick, self)
+	self._btnfight:AddClickListener(self._btnfightOnClick, self)
+	self._btnnext:AddClickListener(self._btnnextOnClick, self)
+	self._btnfinishtalk:AddClickListener(self._btnfinishtalkOnClick, self)
+	self._btnsubmit:AddClickListener(self._btnsubmitOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btndoit:RemoveClickListener()
-	arg_3_0._btnunfinishtask:RemoveClickListener()
-	arg_3_0._btnfinishtask:RemoveClickListener()
-	arg_3_0._btnwin:RemoveClickListener()
-	arg_3_0._btnfight:RemoveClickListener()
-	arg_3_0._btnnext:RemoveClickListener()
-	arg_3_0._btnfinishtalk:RemoveClickListener()
-	arg_3_0._btnsubmit:RemoveClickListener()
+function WeekWalkMapInteractiveItem:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btndoit:RemoveClickListener()
+	self._btnunfinishtask:RemoveClickListener()
+	self._btnfinishtask:RemoveClickListener()
+	self._btnwin:RemoveClickListener()
+	self._btnfight:RemoveClickListener()
+	self._btnnext:RemoveClickListener()
+	self._btnfinishtalk:RemoveClickListener()
+	self._btnsubmit:RemoveClickListener()
 end
 
-function var_0_0._btnsubmitOnClick(arg_4_0)
-	arg_4_0._inputanswer = gohelper.findChildTextMeshInputField(arg_4_0.viewGO, "rotate/#go_op5/#input_answer")
+function WeekWalkMapInteractiveItem:_btnsubmitOnClick()
+	self._inputanswer = gohelper.findChildTextMeshInputField(self.viewGO, "rotate/#go_op5/#input_answer")
 
-	if arg_4_0._inputanswer:GetText() == arg_4_0._config.param then
-		arg_4_0:_onHide()
-		DungeonRpc.instance:sendMapElementRequest(arg_4_0._config.id)
+	local text = self._inputanswer:GetText()
+
+	if text == self._config.param then
+		self:_onHide()
+		DungeonRpc.instance:sendMapElementRequest(self._config.id)
 	else
-		arg_4_0._inputanswer:SetText("")
+		self._inputanswer:SetText("")
 		GameFacade.showToast(ToastEnum.DungeonMapInteractive)
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuemesh)
 end
 
-function var_0_0._btncloseOnClick(arg_5_0)
-	if arg_5_0._playScrollAnim then
+function WeekWalkMapInteractiveItem:_btncloseOnClick()
+	if self._playScrollAnim then
 		return
 	end
 
-	arg_5_0:_onHide()
+	self:_onHide()
 end
 
-function var_0_0._btnfinishtalkOnClick(arg_6_0)
-	arg_6_0:_onHide()
+function WeekWalkMapInteractiveItem:_btnfinishtalkOnClick()
+	self:_onHide()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuemesh)
 
-	if arg_6_0._config.skipFinish == 1 then
+	if self._config.skipFinish == 1 then
 		return
 	end
 
-	arg_6_0:_sendFinishDialog()
+	self:_sendFinishDialog()
 end
 
-function var_0_0._sendFinishDialog(arg_7_0)
-	if arg_7_0._elementInfo:getType() == WeekWalkEnum.ElementType.Dialog then
-		WeekwalkRpc.instance:sendWeekwalkDialogRequest(arg_7_0._config.id, tonumber(arg_7_0._option_param) or 0)
+function WeekWalkMapInteractiveItem:_sendFinishDialog()
+	if self._elementInfo:getType() == WeekWalkEnum.ElementType.Dialog then
+		WeekwalkRpc.instance:sendWeekwalkDialogRequest(self._config.id, tonumber(self._option_param) or 0)
 	end
 end
 
-function var_0_0._btndoitOnClick(arg_8_0)
-	arg_8_0:_onHide()
+function WeekWalkMapInteractiveItem:_btndoitOnClick()
+	self:_onHide()
 
-	local var_8_0 = arg_8_0._elementInfo.elementId
+	local id = self._elementInfo.elementId
 
-	WeekWalkModel.instance:setBattleElementId(var_8_0)
-	WeekwalkRpc.instance:sendBeforeStartWeekwalkBattleRequest(var_8_0)
+	WeekWalkModel.instance:setBattleElementId(id)
+	WeekwalkRpc.instance:sendBeforeStartWeekwalkBattleRequest(id)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuemesh)
 end
 
-function var_0_0._btnfightOnClick(arg_9_0)
-	arg_9_0:_onHide()
+function WeekWalkMapInteractiveItem:_btnfightOnClick()
+	self:_onHide()
 
-	local var_9_0 = tonumber(arg_9_0._config.param)
+	local episodeId = tonumber(self._config.param)
 
-	DungeonModel.instance.curLookEpisodeId = var_9_0
+	DungeonModel.instance.curLookEpisodeId = episodeId
 
-	local var_9_1 = DungeonConfig.instance:getEpisodeCO(var_9_0)
+	local config = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-	DungeonFightController.instance:enterFight(var_9_1.chapterId, var_9_0)
+	DungeonFightController.instance:enterFight(config.chapterId, episodeId)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuemesh)
 end
 
-function var_0_0._btnunfinishtaskOnClick(arg_10_0)
-	arg_10_0:_onHide()
+function WeekWalkMapInteractiveItem:_btnunfinishtaskOnClick()
+	self:_onHide()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuemesh)
 end
 
-function var_0_0._btnfinishtaskOnClick(arg_11_0)
-	arg_11_0:_onHide()
+function WeekWalkMapInteractiveItem:_btnfinishtaskOnClick()
+	self:_onHide()
 
-	local var_11_0 = arg_11_0._elementInfo.elementId
+	local id = self._elementInfo.elementId
 
-	WeekwalkRpc.instance:sendWeekwalkGeneralRequest(var_11_0)
+	WeekwalkRpc.instance:sendWeekwalkGeneralRequest(id)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuemesh)
 end
 
-function var_0_0._btnnextOnClick(arg_12_0)
-	if arg_12_0._playScrollAnim then
+function WeekWalkMapInteractiveItem:_btnnextOnClick()
+	if self._playScrollAnim then
 		return
 	end
 
-	arg_12_0:_playNextSectionOrDialog()
+	self:_playNextSectionOrDialog()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuemesh)
 end
 
-function var_0_0._btntalkitemOnClick(arg_13_0)
+function WeekWalkMapInteractiveItem:_btntalkitemOnClick()
 	return
 end
 
-function var_0_0._editableInitView(arg_14_0)
-	arg_14_0._nextAnimator = arg_14_0._gonext:GetComponent(typeof(UnityEngine.Animator))
-	arg_14_0._imgMask = arg_14_0._gomask:GetComponent(gohelper.Type_Image)
+function WeekWalkMapInteractiveItem:_editableInitView()
+	self._nextAnimator = self._gonext:GetComponent(typeof(UnityEngine.Animator))
+	self._imgMask = self._gomask:GetComponent(gohelper.Type_Image)
 end
 
-function var_0_0._playAnim(arg_15_0, arg_15_1, arg_15_2)
-	arg_15_1:GetComponent(typeof(UnityEngine.Animator)):Play(arg_15_2)
+function WeekWalkMapInteractiveItem:_playAnim(go, name)
+	local animator = go:GetComponent(typeof(UnityEngine.Animator))
+
+	animator:Play(name)
 end
 
-function var_0_0._onShow(arg_16_0)
-	if arg_16_0._show then
+function WeekWalkMapInteractiveItem:_onShow()
+	if self._show then
 		return
 	end
 
-	arg_16_0._mapElement:setWenHaoVisible(false)
+	self._mapElement:setWenHaoVisible(false)
 
-	arg_16_0._show = true
+	self._show = true
 
-	gohelper.setActive(arg_16_0.viewGO, true)
-	arg_16_0:_playAnim(arg_16_0._gonext, "dungeonmap_interactive_in")
-	TaskDispatcher.cancelTask(arg_16_0._showCloseBtn, arg_16_0)
-	TaskDispatcher.runDelay(arg_16_0._showCloseBtn, arg_16_0, 0)
+	gohelper.setActive(self.viewGO, true)
+	self:_playAnim(self._gonext, "dungeonmap_interactive_in")
+	TaskDispatcher.cancelTask(self._showCloseBtn, self)
+	TaskDispatcher.runDelay(self._showCloseBtn, self, 0)
 	WeekWalkController.instance:dispatchEvent(WeekWalkEvent.OnSetEpisodeListVisible, false)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_warnopen)
 end
 
-function var_0_0._showCloseBtn(arg_17_0)
-	gohelper.setActive(arg_17_0._btnclose.gameObject, true)
+function WeekWalkMapInteractiveItem:_showCloseBtn()
+	gohelper.setActive(self._btnclose.gameObject, true)
 end
 
-function var_0_0._onOutAnimationFinished(arg_18_0)
-	gohelper.setActive(arg_18_0.viewGO, false)
+function WeekWalkMapInteractiveItem:_onOutAnimationFinished()
+	gohelper.setActive(self.viewGO, false)
 	UIBlockMgr.instance:endBlock("dungeonmap_interactive_out")
-	gohelper.destroy(arg_18_0.viewGO)
+	gohelper.destroy(self.viewGO)
 end
 
-function var_0_0._onHide(arg_19_0)
-	if not arg_19_0._show then
+function WeekWalkMapInteractiveItem:_onHide()
+	if not self._show then
 		return
 	end
 
-	arg_19_0:_clearScroll()
-	arg_19_0._mapElement:setWenHaoVisible(true)
+	self:_clearScroll()
+	self._mapElement:setWenHaoVisible(true)
 
-	arg_19_0._show = false
+	self._show = false
 
-	gohelper.setActive(arg_19_0._btnclose.gameObject, false)
+	gohelper.setActive(self._btnclose.gameObject, false)
 	UIBlockMgr.instance:startBlock("dungeonmap_interactive_out")
-	arg_19_0:_playAnim(arg_19_0._gonext, "dungeonmap_interactive_btn_out")
-	arg_19_0:_playAnim(arg_19_0._gofinishtalk, "dungeonmap_interactive_btn_out")
+	self:_playAnim(self._gonext, "dungeonmap_interactive_btn_out")
+	self:_playAnim(self._gofinishtalk, "dungeonmap_interactive_btn_out")
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuedisappear)
 
-	for iter_19_0, iter_19_1 in pairs(arg_19_0._optionBtnList) do
-		arg_19_0:_playAnim(iter_19_1[1], "dungeonmap_interactive_btn_out")
+	for k, v in pairs(self._optionBtnList) do
+		self:_playAnim(v[1], "dungeonmap_interactive_btn_out")
 	end
 
-	TaskDispatcher.runDelay(arg_19_0._onOutAnimationFinished, arg_19_0, 0.23)
+	TaskDispatcher.runDelay(self._onOutAnimationFinished, self, 0.23)
 	WeekWalkController.instance:dispatchEvent(WeekWalkEvent.OnSetEpisodeListVisible, true)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_warnclose)
 end
 
-function var_0_0.init(arg_20_0, arg_20_1)
-	arg_20_0.viewGO = arg_20_1
-	arg_20_0._optionBtnList = arg_20_0:getUserDataTb_()
-	arg_20_0._dialogItemList = arg_20_0:getUserDataTb_()
-	arg_20_0._dialogItemCacheList = arg_20_0:getUserDataTb_()
+function WeekWalkMapInteractiveItem:init(go)
+	self.viewGO = go
+	self._optionBtnList = self:getUserDataTb_()
+	self._dialogItemList = self:getUserDataTb_()
+	self._dialogItemCacheList = self:getUserDataTb_()
 
-	arg_20_0:onInitView()
-	arg_20_0:addEvents()
-	arg_20_0:_editableAddEvents()
+	self:onInitView()
+	self:addEvents()
+	self:_editableAddEvents()
 end
 
-function var_0_0._editableAddEvents(arg_21_0)
+function WeekWalkMapInteractiveItem:_editableAddEvents()
 	return
 end
 
-function var_0_0._OnClickElement(arg_22_0, arg_22_1)
-	arg_22_0._mapElement = arg_22_1
+function WeekWalkMapInteractiveItem:_OnClickElement(mapElement)
+	self._mapElement = mapElement
 
-	if arg_22_0._show then
-		arg_22_0:_onHide()
+	if self._show then
+		self:_onHide()
 
 		return
 	end
 
-	arg_22_0:_onShow()
+	self:_onShow()
 
-	arg_22_0._config = arg_22_0._mapElement._config
-	arg_22_0._elementGo = arg_22_0._mapElement._go
-	arg_22_0._elementInfo = arg_22_0._mapElement._info
-	arg_22_0._elementX, arg_22_0._elementY, arg_22_0._elementZ = transformhelper.getPos(arg_22_0._elementGo.transform)
+	self._config = self._mapElement._config
+	self._elementGo = self._mapElement._go
+	self._elementInfo = self._mapElement._info
+	self._elementX, self._elementY, self._elementZ = transformhelper.getPos(self._elementGo.transform)
 
-	local var_22_0 = arg_22_0._config.offsetPos or "2#3"
+	local offsetPosConfig = self._config.offsetPos or "2#3"
 
-	if not string.nilorempty(var_22_0) then
-		local var_22_1 = string.splitToNumber(var_22_0, "#")
+	if not string.nilorempty(offsetPosConfig) then
+		local offsetPos = string.splitToNumber(offsetPosConfig, "#")
 
-		arg_22_0._elementAddX = arg_22_0._elementX + (var_22_1[1] or 0)
-		arg_22_0._elementAddY = arg_22_0._elementY + (var_22_1[2] or 0)
+		self._elementAddX = self._elementX + (offsetPos[1] or 0)
+		self._elementAddY = self._elementY + (offsetPos[2] or 0)
 	end
 
-	arg_22_0.viewGO.transform.position = Vector3(arg_22_0._elementAddX, arg_22_0._elementAddY, arg_22_0._elementZ)
+	self.viewGO.transform.position = Vector3(self._elementAddX, self._elementAddY, self._elementZ)
 
-	local var_22_2 = not string.nilorempty(arg_22_0._config.flagText)
+	local showTip = not string.nilorempty(self._config.flagText)
 
-	gohelper.setActive(arg_22_0._goimportanttips, var_22_2)
+	gohelper.setActive(self._goimportanttips, showTip)
 
-	if var_22_2 then
-		arg_22_0._txttipsinfo.text = arg_22_0._config.flagText
+	if showTip then
+		self._txttipsinfo.text = self._config.flagText
 	end
 
-	local var_22_3 = arg_22_0._elementInfo:getType()
-	local var_22_4 = var_22_3 == WeekWalkEnum.ElementType.Dialog
+	local type = self._elementInfo:getType()
+	local isStoryType = type == WeekWalkEnum.ElementType.Dialog
 
-	gohelper.setActive(arg_22_0._txtinfo.gameObject, false)
-	gohelper.setActive(arg_22_0._gochatarea, var_22_4)
+	gohelper.setActive(self._txtinfo.gameObject, false)
+	gohelper.setActive(self._gochatarea, isStoryType)
 
-	if var_22_3 == WeekWalkEnum.ElementType.General then
-		arg_22_0:_directlyComplete()
-	elseif var_22_3 == WeekWalkEnum.ElementType.Battle then
-		local var_22_5 = tonumber(arg_22_0._elementInfo:getPrevParam())
+	if type == WeekWalkEnum.ElementType.General then
+		self:_directlyComplete()
+	elseif type == WeekWalkEnum.ElementType.Battle then
+		local prevId = tonumber(self._elementInfo:getPrevParam())
 
-		if var_22_5 then
-			gohelper.setActive(arg_22_0._gochatarea, true)
-			arg_22_0:_playStory(var_22_5)
+		if prevId then
+			gohelper.setActive(self._gochatarea, true)
+			self:_playStory(prevId)
 		end
 
-		arg_22_0:_showTypeGo(var_22_3)
-	elseif var_22_3 == DungeonEnum.ElementType.Task then
-		arg_22_0:_showTask()
-	elseif var_22_4 then
-		arg_22_0:_showTypeGo(var_22_3)
-		arg_22_0:_playStory()
-	elseif var_22_3 == DungeonEnum.ElementType.Question then
-		arg_22_0:_playQuestion()
+		self:_showTypeGo(type)
+	elseif type == DungeonEnum.ElementType.Task then
+		self:_showTask()
+	elseif isStoryType then
+		self:_showTypeGo(type)
+		self:_playStory()
+	elseif type == DungeonEnum.ElementType.Question then
+		self:_playQuestion()
 	else
 		logError("element type undefined!")
 	end
 
-	arg_22_0._simagebg:LoadImage(ResUrl.getWeekWalkBg("tc3.png"))
+	self._simagebg:LoadImage(ResUrl.getWeekWalkBg("tc3.png"))
 end
 
-function var_0_0._showTypeGo(arg_23_0, arg_23_1)
-	for iter_23_0 = 1, WeekWalkEnum.ElementType.MaxCount do
-		gohelper.setActive(arg_23_0["_goop" .. iter_23_0], iter_23_0 == arg_23_1)
+function WeekWalkMapInteractiveItem:_showTypeGo(type)
+	for i = 1, WeekWalkEnum.ElementType.MaxCount do
+		gohelper.setActive(self["_goop" .. i], i == type)
 	end
 
-	if arg_23_1 == WeekWalkEnum.ElementType.Battle then
-		local var_23_0 = arg_23_0._config.isBoss > 0
+	if type == WeekWalkEnum.ElementType.Battle then
+		local isBoss = self._config.isBoss > 0
 
-		gohelper.setActive(arg_23_0._gonormal, not var_23_0)
-		gohelper.setActive(arg_23_0._goboss, var_23_0)
-		arg_23_0:_showRewards(var_23_0)
+		gohelper.setActive(self._gonormal, not isBoss)
+		gohelper.setActive(self._goboss, isBoss)
+		self:_showRewards(isBoss)
 	end
 end
 
-function var_0_0._showRewards(arg_24_0, arg_24_1)
-	local var_24_0 = string.splitToNumber(arg_24_0._config.bonusGroup, "#")[2] or 0
+function WeekWalkMapInteractiveItem:_showRewards(isBoss)
+	local list = string.splitToNumber(self._config.bonusGroup, "#")
+	local groupId = list[2] or 0
+	local hasRewards = groupId > 0
 
-	if not (var_24_0 > 0) then
-		gohelper.setActive(not arg_24_1 and arg_24_0._gonorewards or arg_24_0._gobossnorewards, true)
+	if not hasRewards then
+		gohelper.setActive(not isBoss and self._gonorewards or self._gobossnorewards, true)
 
 		return
 	end
 
-	gohelper.setActive(not arg_24_1 and arg_24_0._gohasrewards or arg_24_0._gobosshasrewards, true)
+	gohelper.setActive(not isBoss and self._gohasrewards or self._gobosshasrewards, true)
 
-	local var_24_1 = WeekWalkModel.instance:getLevel()
-	local var_24_2 = WeekWalkConfig.instance:getBonus(var_24_0, var_24_1)
-	local var_24_3 = GameUtil.splitString2(var_24_2, true, "|", "#")
+	local level = WeekWalkModel.instance:getLevel()
+	local rewards = WeekWalkConfig.instance:getBonus(groupId, level)
+	local rewardList = GameUtil.splitString2(rewards, true, "|", "#")
 
-	if not var_24_3 then
+	if not rewardList then
 		return
 	end
 
-	for iter_24_0, iter_24_1 in ipairs(var_24_3) do
-		local var_24_4 = IconMgr.instance:getCommonItemIcon(arg_24_0._gorewards)
+	for i, reward in ipairs(rewardList) do
+		local item = IconMgr.instance:getCommonItemIcon(self._gorewards)
 
-		var_24_4:setMOValue(iter_24_1[1], iter_24_1[2], iter_24_1[3])
-		var_24_4:setScale(0.39)
-		var_24_4:customOnClickCallback(arg_24_0._openRewardView, var_24_3)
+		item:setMOValue(reward[1], reward[2], reward[3])
+		item:setScale(0.39)
+		item:customOnClickCallback(self._openRewardView, rewardList)
 	end
 end
 
-function var_0_0._playQuestion(arg_25_0)
-	arg_25_0._txtinfo.text = arg_25_0._config.desc
+function WeekWalkMapInteractiveItem:_playQuestion()
+	self._txtinfo.text = self._config.desc
 end
 
-function var_0_0._showTask(arg_26_0)
-	arg_26_0._txtinfo.text = arg_26_0._config.desc
+function WeekWalkMapInteractiveItem:_showTask()
+	self._txtinfo.text = self._config.desc
 
-	local var_26_0 = arg_26_0._config.param
-	local var_26_1 = string.splitToNumber(var_26_0, "#")
-	local var_26_2 = var_26_1[3]
-	local var_26_3 = ItemModel.instance:getItemConfig(var_26_1[1], var_26_1[2])
-	local var_26_4 = ItemModel.instance:getItemQuantity(var_26_1[1], var_26_1[2])
+	local paramStr = self._config.param
+	local itemParam = string.splitToNumber(paramStr, "#")
+	local needNum = itemParam[3]
+	local itemConfig = ItemModel.instance:getItemConfig(itemParam[1], itemParam[2])
+	local quantity = ItemModel.instance:getItemQuantity(itemParam[1], itemParam[2])
 
-	arg_26_0._finishTask = var_26_2 <= var_26_4
+	self._finishTask = needNum <= quantity
 
-	gohelper.setActive(arg_26_0._gofinishtask, arg_26_0._finishTask)
-	gohelper.setActive(arg_26_0._gounfinishtask, not arg_26_0._finishTask)
+	gohelper.setActive(self._gofinishtask, self._finishTask)
+	gohelper.setActive(self._gounfinishtask, not self._finishTask)
 
-	if arg_26_0._finishTask then
-		arg_26_0._txtfinishtask.text = string.format("%s%s<color=#00ff00>%s</color>/%s", luaLang("dungeon_map_submit"), var_26_3.name, var_26_4, var_26_2)
+	if self._finishTask then
+		self._txtfinishtask.text = string.format("%s%s<color=#00ff00>%s</color>/%s", luaLang("dungeon_map_submit"), itemConfig.name, quantity, needNum)
 	else
-		arg_26_0._txtunfinishtask.text = string.format("%s%s<color=#ff0000>%s</color>/%s", luaLang("dungeon_map_submit"), var_26_3.name, var_26_4, var_26_2)
+		self._txtunfinishtask.text = string.format("%s%s<color=#ff0000>%s</color>/%s", luaLang("dungeon_map_submit"), itemConfig.name, quantity, needNum)
 	end
 end
 
-function var_0_0._directlyComplete(arg_27_0)
-	arg_27_0._txtinfo.text = arg_27_0._config.desc
+function WeekWalkMapInteractiveItem:_directlyComplete()
+	self._txtinfo.text = self._config.desc
 end
 
-function var_0_0._playNextSectionOrDialog(arg_28_0)
-	arg_28_0:_clearDialog()
+function WeekWalkMapInteractiveItem:_playNextSectionOrDialog()
+	self:_clearDialog()
 
-	if #arg_28_0._sectionList >= arg_28_0._dialogIndex then
-		arg_28_0:_playNextDialog()
+	if #self._sectionList >= self._dialogIndex then
+		self:_playNextDialog()
 
 		return
 	end
 
-	local var_28_0 = table.remove(arg_28_0._sectionStack)
+	local prevSectionInfo = table.remove(self._sectionStack)
 
-	if var_28_0 then
-		arg_28_0:_playSection(var_28_0[1], var_28_0[2])
+	if prevSectionInfo then
+		self:_playSection(prevSectionInfo[1], prevSectionInfo[2])
 	else
-		arg_28_0:_refreshDialogBtnState()
+		self:_refreshDialogBtnState()
 	end
 end
 
-function var_0_0._playStory(arg_29_0, arg_29_1)
-	arg_29_0:_clearDialog()
+function WeekWalkMapInteractiveItem:_playStory(id)
+	self:_clearDialog()
 
-	arg_29_0._sectionStack = {}
-	arg_29_0._optionId = 0
-	arg_29_0._mainSectionId = "0"
-	arg_29_0._sectionId = arg_29_0._mainSectionId
-	arg_29_0._dialogIndex = nil
-	arg_29_0._historyList = {}
-	arg_29_0._dialogId = arg_29_1 or tonumber(arg_29_0._elementInfo:getParam())
+	self._sectionStack = {}
+	self._optionId = 0
+	self._mainSectionId = "0"
+	self._sectionId = self._mainSectionId
+	self._dialogIndex = nil
+	self._historyList = {}
+	self._dialogId = id or tonumber(self._elementInfo:getParam())
 
-	arg_29_0:_initHistoryItem()
+	self:_initHistoryItem()
 
-	arg_29_0._historyList.id = arg_29_0._dialogId
+	self._historyList.id = self._dialogId
 
-	arg_29_0:_playSection(arg_29_0._sectionId, arg_29_0._dialogIndex)
+	self:_playSection(self._sectionId, self._dialogIndex)
 end
 
-function var_0_0._initHistoryItem(arg_30_0)
-	local var_30_0 = arg_30_0._elementInfo.historylist
+function WeekWalkMapInteractiveItem:_initHistoryItem()
+	local historyList = self._elementInfo.historylist
 
-	if #var_30_0 == 0 then
+	if #historyList == 0 then
 		return
 	end
 
-	for iter_30_0, iter_30_1 in ipairs(var_30_0) do
-		local var_30_1 = string.split(iter_30_1, "#")
+	for i, v in ipairs(historyList) do
+		local param = string.split(v, "#")
 
-		arg_30_0._historyList[var_30_1[1]] = tonumber(var_30_1[2])
+		self._historyList[param[1]] = tonumber(param[2])
 	end
 
-	local var_30_2 = arg_30_0._historyList.id
+	local historyId = self._historyList.id
 
-	if not var_30_2 or var_30_2 ~= arg_30_0._dialogId then
-		arg_30_0._historyList = {}
+	if not historyId or historyId ~= self._dialogId then
+		self._historyList = {}
 
 		return
 	end
 
-	arg_30_0._option_param = arg_30_0._historyList.option
+	self._option_param = self._historyList.option
 
-	local var_30_3 = arg_30_0._mainSectionId
-	local var_30_4 = arg_30_0._historyList[var_30_3]
+	local sectionId = self._mainSectionId
+	local dialogIndex = self._historyList[sectionId]
 
-	arg_30_0:_addSectionHistory(var_30_3, var_30_4)
+	self:_addSectionHistory(sectionId, dialogIndex)
 
-	if not arg_30_0._dialogIndex then
-		arg_30_0._dialogIndex = var_30_4
-		arg_30_0._sectionId = var_30_3
+	if not self._dialogIndex then
+		self._dialogIndex = dialogIndex
+		self._sectionId = sectionId
 	end
 end
 
-function var_0_0._addSectionHistory(arg_31_0, arg_31_1, arg_31_2)
-	local var_31_0 = WeekWalkConfig.instance:getDialog(arg_31_0._dialogId, arg_31_1)
-	local var_31_1
+function WeekWalkMapInteractiveItem:_addSectionHistory(sectionId, dialogIndex)
+	local dialogList = WeekWalkConfig.instance:getDialog(self._dialogId, sectionId)
+	local finish
 
-	if arg_31_1 == arg_31_0._mainSectionId then
-		var_31_1 = arg_31_2 > #var_31_0
+	if sectionId == self._mainSectionId then
+		finish = dialogIndex > #dialogList
 	else
-		var_31_1 = arg_31_2 >= #var_31_0
+		finish = dialogIndex >= #dialogList
 	end
 
-	for iter_31_0, iter_31_1 in ipairs(var_31_0) do
-		if iter_31_0 < arg_31_2 or var_31_1 then
-			if iter_31_1.type == "dialog" then
-				local var_31_2 = arg_31_0:_addDialogItem("dialog", iter_31_1.content, iter_31_1.speaker)
+	for i, v in ipairs(dialogList) do
+		if i < dialogIndex or finish then
+			if v.type == "dialog" then
+				local item = self:_addDialogItem("dialog", v.content, v.speaker)
 
-				table.insert(arg_31_0._dialogItemList, var_31_2)
+				table.insert(self._dialogItemList, item)
 			end
 
-			if iter_31_1.type == "options" then
-				local var_31_3 = string.split(iter_31_1.content, "#")
-				local var_31_4 = string.split(iter_31_1.param, "#")
-				local var_31_5 = {}
-				local var_31_6 = {}
+			if v.type == "options" then
+				local optionList = string.split(v.content, "#")
+				local sectionIdList = string.split(v.param, "#")
+				local allContentList = {}
+				local allSectionList = {}
 
-				for iter_31_2, iter_31_3 in ipairs(var_31_4) do
-					local var_31_7 = WeekWalkConfig.instance:getDialog(arg_31_0._dialogId, iter_31_3)
+				for j, id in ipairs(sectionIdList) do
+					local list = WeekWalkConfig.instance:getDialog(self._dialogId, id)
 
-					if var_31_7 and var_31_7.type == "random" then
-						for iter_31_4, iter_31_5 in ipairs(var_31_7) do
-							local var_31_8 = string.split(iter_31_5.option_param, "#")
-							local var_31_9 = var_31_8[2]
-							local var_31_10 = var_31_8[3]
+					if list and list.type == "random" then
+						for _, randomDialog in ipairs(list) do
+							local paramList = string.split(randomDialog.option_param, "#")
+							local succSectionId = paramList[2]
+							local failSectionId = paramList[3]
 
-							table.insert(var_31_5, var_31_3[iter_31_2])
-							table.insert(var_31_6, var_31_9)
-							table.insert(var_31_5, var_31_3[iter_31_2])
-							table.insert(var_31_6, var_31_10)
+							table.insert(allContentList, optionList[j])
+							table.insert(allSectionList, succSectionId)
+							table.insert(allContentList, optionList[j])
+							table.insert(allSectionList, failSectionId)
 						end
-					elseif var_31_7 then
-						table.insert(var_31_5, var_31_3[iter_31_2])
-						table.insert(var_31_6, iter_31_3)
+					elseif list then
+						table.insert(allContentList, optionList[j])
+						table.insert(allSectionList, id)
 					else
-						local var_31_11 = string.format("<indent=4.7em><color=#c95318>\"%s\"</color>", var_31_3[iter_31_2])
-						local var_31_12 = arg_31_0:_addDialogItem("option", var_31_11)
+						local text = string.format("<indent=4.7em><color=#c95318>\"%s\"</color>", optionList[j])
+						local item = self:_addDialogItem("option", text)
 
-						table.insert(arg_31_0._dialogItemList, var_31_12)
+						table.insert(self._dialogItemList, item)
 					end
 				end
 
-				for iter_31_6, iter_31_7 in ipairs(var_31_6) do
-					local var_31_13 = arg_31_0._historyList[iter_31_7]
+				for j, id in ipairs(allSectionList) do
+					local index = self._historyList[id]
 
-					if var_31_13 then
-						local var_31_14 = string.format("<indent=4.7em><color=#C66030>\"%s\"</color>", var_31_5[iter_31_6])
-						local var_31_15 = arg_31_0:_addDialogItem("option", var_31_14)
+					if index then
+						local text = string.format("<indent=4.7em><color=#C66030>\"%s\"</color>", allContentList[j])
+						local item = self:_addDialogItem("option", text)
 
-						table.insert(arg_31_0._dialogItemList, var_31_15)
-						arg_31_0:_addSectionHistory(iter_31_7, var_31_13)
+						table.insert(self._dialogItemList, item)
+						self:_addSectionHistory(id, index)
 					end
 				end
 			end
@@ -514,397 +522,405 @@ function var_0_0._addSectionHistory(arg_31_0, arg_31_1, arg_31_2)
 		end
 	end
 
-	if not var_31_1 then
-		if not arg_31_0._dialogIndex then
-			arg_31_0._dialogIndex = arg_31_2
-			arg_31_0._sectionId = arg_31_1
+	if not finish then
+		if not self._dialogIndex then
+			self._dialogIndex = dialogIndex
+			self._sectionId = sectionId
 
 			return
 		end
 
-		table.insert(arg_31_0._sectionStack, 1, {
-			arg_31_1,
-			arg_31_2
+		table.insert(self._sectionStack, 1, {
+			sectionId,
+			dialogIndex
 		})
 	end
 end
 
-function var_0_0._playSection(arg_32_0, arg_32_1, arg_32_2)
-	arg_32_0:_setSectionData(arg_32_1, arg_32_2)
-	arg_32_0:_playNextDialog()
+function WeekWalkMapInteractiveItem:_playSection(sectionId, dialogIndex)
+	self:_setSectionData(sectionId, dialogIndex)
+	self:_playNextDialog()
 end
 
-function var_0_0._setSectionData(arg_33_0, arg_33_1, arg_33_2)
-	arg_33_0._sectionList = WeekWalkConfig.instance:getDialog(arg_33_0._dialogId, arg_33_1)
+function WeekWalkMapInteractiveItem:_setSectionData(sectionId, dialogIndex)
+	self._sectionList = WeekWalkConfig.instance:getDialog(self._dialogId, sectionId)
 
-	if arg_33_0._sectionList and not string.nilorempty(arg_33_0._sectionList.option_param) then
-		arg_33_0._option_param = arg_33_0._sectionList.option_param
+	if self._sectionList and not string.nilorempty(self._sectionList.option_param) then
+		self._option_param = self._sectionList.option_param
 	end
 
-	if not string.nilorempty(arg_33_0._option_param) then
-		arg_33_0._historyList.option = arg_33_0._option_param
+	if not string.nilorempty(self._option_param) then
+		self._historyList.option = self._option_param
 	end
 
-	arg_33_0._dialogIndex = arg_33_2 or 1
-	arg_33_0._sectionId = arg_33_1
+	self._dialogIndex = dialogIndex or 1
+	self._sectionId = sectionId
 end
 
-function var_0_0._playNextDialog(arg_34_0)
-	local var_34_0 = arg_34_0._sectionList[arg_34_0._dialogIndex]
+function WeekWalkMapInteractiveItem:_playNextDialog()
+	local config = self._sectionList[self._dialogIndex]
 
-	if var_34_0 and var_34_0.type == "dialog" then
-		arg_34_0:_showDialog("dialog", var_34_0.content, var_34_0.speaker)
-	elseif var_34_0 and var_34_0.type == "options" then
-		arg_34_0:_showOptionByConfig(var_34_0)
+	if config and config.type == "dialog" then
+		self:_showDialog("dialog", config.content, config.speaker)
+	elseif config and config.type == "options" then
+		self:_showOptionByConfig(config)
 
 		return
 	end
 
-	arg_34_0._dialogIndex = arg_34_0._dialogIndex + 1
+	self._dialogIndex = self._dialogIndex + 1
 
-	if #arg_34_0._sectionStack > 0 and #arg_34_0._sectionList < arg_34_0._dialogIndex then
-		local var_34_1 = table.remove(arg_34_0._sectionStack)
+	if #self._sectionStack > 0 and #self._sectionList < self._dialogIndex then
+		local prevSectionInfo = table.remove(self._sectionStack)
 
-		arg_34_0:_setSectionData(var_34_1[1], var_34_1[2])
+		self:_setSectionData(prevSectionInfo[1], prevSectionInfo[2])
 	end
 
-	local var_34_2 = arg_34_0._sectionList[arg_34_0._dialogIndex]
+	local nextConfig = self._sectionList[self._dialogIndex]
 
-	arg_34_0:_showOptionByConfig(var_34_2)
+	self:_showOptionByConfig(nextConfig)
 
-	if arg_34_0._dissolveInfo then
-		gohelper.setActive(arg_34_0._curBtnGo, false)
+	if self._dissolveInfo then
+		gohelper.setActive(self._curBtnGo, false)
 	end
 end
 
-function var_0_0._showOptionByConfig(arg_35_0, arg_35_1)
-	local var_35_0 = false
+function WeekWalkMapInteractiveItem:_showOptionByConfig(nextConfig)
+	local showOption = false
 
-	if arg_35_1 and arg_35_1.type == "options" then
-		arg_35_0._dialogIndex = arg_35_0._dialogIndex + 1
+	if nextConfig and nextConfig.type == "options" then
+		self._dialogIndex = self._dialogIndex + 1
 
-		local var_35_1 = string.split(arg_35_1.content, "#")
-		local var_35_2 = string.split(arg_35_1.param, "#")
+		local optionList = string.split(nextConfig.content, "#")
+		local sectionIdList = string.split(nextConfig.param, "#")
 
-		for iter_35_0, iter_35_1 in pairs(arg_35_0._optionBtnList) do
-			gohelper.setActive(iter_35_1[1], false)
+		for k, v in pairs(self._optionBtnList) do
+			gohelper.setActive(v[1], false)
 		end
 
-		for iter_35_2, iter_35_3 in ipairs(var_35_1) do
-			arg_35_0:_addDialogOption(iter_35_2, var_35_2[iter_35_2], iter_35_3)
+		for i, v in ipairs(optionList) do
+			self:_addDialogOption(i, sectionIdList[i], v)
 		end
 
-		var_35_0 = true
+		showOption = true
 	end
 
-	arg_35_0:_refreshDialogBtnState(var_35_0)
+	self:_refreshDialogBtnState(showOption)
 end
 
-function var_0_0._refreshDialogBtnState(arg_36_0, arg_36_1)
-	gohelper.setActive(arg_36_0._gooptions, arg_36_1)
+function WeekWalkMapInteractiveItem:_refreshDialogBtnState(showOption)
+	gohelper.setActive(self._gooptions, showOption)
 
-	if arg_36_1 then
-		arg_36_0._nextAnimator:Play("dungeonmap_interactive_btn_out")
+	if showOption then
+		self._nextAnimator:Play("dungeonmap_interactive_btn_out")
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuedisappear)
-		gohelper.setActive(arg_36_0._gofinishtalk.gameObject, false)
+		gohelper.setActive(self._gofinishtalk.gameObject, false)
 
-		arg_36_0._curBtnGo = arg_36_0._gooptions
+		self._curBtnGo = self._gooptions
 
 		return
 	end
 
-	local var_36_0 = #arg_36_0._sectionStack > 0 or #arg_36_0._sectionList >= arg_36_0._dialogIndex
+	local hasNext = #self._sectionStack > 0 or #self._sectionList >= self._dialogIndex
 
-	if var_36_0 then
-		arg_36_0._curBtnGo = arg_36_0._gonext
+	if hasNext then
+		self._curBtnGo = self._gonext
 
-		gohelper.setActive(arg_36_0._gonext.gameObject, var_36_0)
-		arg_36_0._nextAnimator:Play("dungeonmap_interactive_btn_in1")
+		gohelper.setActive(self._gonext.gameObject, hasNext)
+		self._nextAnimator:Play("dungeonmap_interactive_btn_in1")
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continueappear)
 	else
-		arg_36_0._nextAnimator:Play("dungeonmap_interactive_btn_out")
+		self._nextAnimator:Play("dungeonmap_interactive_btn_out")
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuedisappear)
 
-		arg_36_0._curBtnGo = arg_36_0._gofinishtalk
+		self._curBtnGo = self._gofinishtalk
 	end
 
-	local var_36_1 = not var_36_0
+	local isFinish = not hasNext
 
-	gohelper.setActive(arg_36_0._gofinishtalk.gameObject, var_36_1)
+	gohelper.setActive(self._gofinishtalk.gameObject, isFinish)
 
-	if var_36_1 then
-		local var_36_2 = arg_36_0._elementInfo:getNextType()
+	if isFinish then
+		local type = self._elementInfo:getNextType()
 
-		if not var_36_2 then
+		if not type then
 			return
 		end
 
-		arg_36_0:_sendFinishDialog()
-		arg_36_0:_showTypeGo(var_36_2)
+		self:_sendFinishDialog()
+		self:_showTypeGo(type)
 	end
 end
 
-function var_0_0._addDialogOption(arg_37_0, arg_37_1, arg_37_2, arg_37_3)
-	local var_37_0 = arg_37_0._optionBtnList[arg_37_1] and arg_37_0._optionBtnList[arg_37_1][1] or gohelper.cloneInPlace(arg_37_0._gotalkitem)
+function WeekWalkMapInteractiveItem:_addDialogOption(index, sectionId, text)
+	local item = self._optionBtnList[index] and self._optionBtnList[index][1] or gohelper.cloneInPlace(self._gotalkitem)
 
-	arg_37_0._maxOptionIndex = arg_37_1
+	self._maxOptionIndex = index
 
-	gohelper.setActive(var_37_0, false)
+	gohelper.setActive(item, false)
 
-	gohelper.findChildText(var_37_0, "txt_talkitem").text = arg_37_3
+	local txt = gohelper.findChildText(item, "txt_talkitem")
 
-	local var_37_1 = gohelper.findChildButtonWithAudio(var_37_0, "btn_talkitem")
+	txt.text = text
 
-	var_37_1:AddClickListener(arg_37_0._onOptionClick, arg_37_0, {
-		arg_37_2,
-		arg_37_3,
-		arg_37_1
+	local btn = gohelper.findChildButtonWithAudio(item, "btn_talkitem")
+
+	btn:AddClickListener(self._onOptionClick, self, {
+		sectionId,
+		text,
+		index
 	})
 
-	if not arg_37_0._optionBtnList[arg_37_1] then
-		arg_37_0._optionBtnList[arg_37_1] = {
-			var_37_0,
-			var_37_1
+	if not self._optionBtnList[index] then
+		self._optionBtnList[index] = {
+			item,
+			btn
 		}
 	end
 end
 
-function var_0_0._onOptionClick(arg_38_0, arg_38_1)
-	if arg_38_0._playScrollAnim then
+function WeekWalkMapInteractiveItem:_onOptionClick(param)
+	if self._playScrollAnim then
 		return
 	end
 
-	local var_38_0 = arg_38_1[1]
-	local var_38_1 = string.format("<indent=4.7em><color=#C66030>\"%s\"</color>", arg_38_1[2])
+	local sectionId = param[1]
+	local text = string.format("<indent=4.7em><color=#C66030>\"%s\"</color>", param[2])
 
-	arg_38_0:_clearDialog()
-	arg_38_0:_showDialog("option", var_38_1)
+	self:_clearDialog()
+	self:_showDialog("option", text)
 
-	arg_38_0._showOption = true
-	arg_38_0._optionId = arg_38_1[3]
+	self._showOption = true
+	self._optionId = param[3]
 
-	arg_38_0:_checkOption(var_38_0)
+	self:_checkOption(sectionId)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuemesh)
 end
 
-function var_0_0._checkOption(arg_39_0, arg_39_1)
-	local var_39_0 = WeekWalkConfig.instance:getDialog(arg_39_0._dialogId, arg_39_1)
+function WeekWalkMapInteractiveItem:_checkOption(sectionId)
+	local dialogList = WeekWalkConfig.instance:getDialog(self._dialogId, sectionId)
 
-	if not var_39_0 then
-		arg_39_0:_playNextSectionOrDialog()
+	if not dialogList then
+		self:_playNextSectionOrDialog()
 
 		return
 	end
 
-	if #arg_39_0._sectionList >= arg_39_0._dialogIndex then
-		table.insert(arg_39_0._sectionStack, {
-			arg_39_0._sectionId,
-			arg_39_0._dialogIndex
+	if #self._sectionList >= self._dialogIndex then
+		table.insert(self._sectionStack, {
+			self._sectionId,
+			self._dialogIndex
 		})
 	end
 
-	if var_39_0.type == "random" then
-		for iter_39_0, iter_39_1 in ipairs(var_39_0) do
-			local var_39_1 = string.split(iter_39_1.option_param, "#")
-			local var_39_2 = tonumber(var_39_1[1])
-			local var_39_3 = var_39_1[2]
-			local var_39_4 = var_39_1[3]
-			local var_39_5 = math.random(100)
-			local var_39_6
+	if dialogList.type == "random" then
+		for i, v in ipairs(dialogList) do
+			local paramList = string.split(v.option_param, "#")
+			local value = tonumber(paramList[1])
+			local succSectionId = paramList[2]
+			local failSectionId = paramList[3]
+			local randomValue = math.random(100)
+			local randomSectionId
 
-			if var_39_5 <= var_39_2 then
-				var_39_6 = var_39_3
+			if randomValue <= value then
+				randomSectionId = succSectionId
 			else
-				var_39_6 = var_39_4
+				randomSectionId = failSectionId
 			end
 
-			arg_39_0:_playSection(var_39_6)
+			self:_playSection(randomSectionId)
 
 			break
 		end
 	else
-		arg_39_0:_playSection(arg_39_1)
+		self:_playSection(sectionId)
 	end
 end
 
-function var_0_0._showDialog(arg_40_0, arg_40_1, arg_40_2, arg_40_3)
-	if arg_40_0._elementInfo:getType() == WeekWalkEnum.ElementType.Dialog then
-		arg_40_0._historyList[arg_40_0._sectionId] = arg_40_0._dialogIndex
+function WeekWalkMapInteractiveItem:_showDialog(type, text, speaker)
+	if self._elementInfo:getType() == WeekWalkEnum.ElementType.Dialog then
+		self._historyList[self._sectionId] = self._dialogIndex
 
-		local var_40_0 = {}
+		local list = {}
 
-		for iter_40_0, iter_40_1 in pairs(arg_40_0._historyList) do
-			table.insert(var_40_0, string.format("%s#%s", iter_40_0, iter_40_1))
+		for k, v in pairs(self._historyList) do
+			table.insert(list, string.format("%s#%s", k, v))
 		end
 
-		WeekwalkRpc.instance:sendWeekwalkDialogHistoryRequest(arg_40_0._config.id, var_40_0)
-		arg_40_0._elementInfo:updateHistoryList(var_40_0)
+		WeekwalkRpc.instance:sendWeekwalkDialogHistoryRequest(self._config.id, list)
+		self._elementInfo:updateHistoryList(list)
 	end
 
-	local var_40_1 = arg_40_0:_addDialogItem(arg_40_1, arg_40_2, arg_40_3)
+	local item = self:_addDialogItem(type, text, speaker)
 
-	if arg_40_0._showOption and arg_40_0._addDialog then
+	if self._showOption and self._addDialog then
 		-- block empty
 	end
 
-	arg_40_0._showOption = false
+	self._showOption = false
 
-	table.insert(arg_40_0._dialogItemList, var_40_1)
+	table.insert(self._dialogItemList, item)
 
-	arg_40_0._addDialog = true
+	self._addDialog = true
 end
 
-function var_0_0._addDialogItem(arg_41_0, arg_41_1, arg_41_2, arg_41_3)
-	local var_41_0 = table.remove(arg_41_0._dialogItemCacheList) or gohelper.cloneInPlace(arg_41_0._gochatitem)
+function WeekWalkMapInteractiveItem:_addDialogItem(type, text, speaker)
+	local item = table.remove(self._dialogItemCacheList) or gohelper.cloneInPlace(self._gochatitem)
 
-	transformhelper.setLocalPos(var_41_0.transform, 0, 0, 200)
-	gohelper.setActive(var_41_0, true)
-	gohelper.setAsLastSibling(var_41_0)
+	transformhelper.setLocalPos(item.transform, 0, 0, 200)
+	gohelper.setActive(item, true)
+	gohelper.setAsLastSibling(item)
 
-	gohelper.findChildText(var_41_0, "name").text = not string.nilorempty(arg_41_3) and arg_41_3 .. ":" or ""
+	local nameText = gohelper.findChildText(item, "name")
 
-	local var_41_1 = gohelper.findChild(var_41_0, "usericon")
+	nameText.text = not string.nilorempty(speaker) and speaker .. ":" or ""
 
-	gohelper.setActive(var_41_1, not arg_41_3)
+	local iconGo = gohelper.findChild(item, "usericon")
 
-	local var_41_2 = gohelper.findChildText(var_41_0, "info")
+	gohelper.setActive(iconGo, not speaker)
 
-	var_41_2.text = string.nilorempty(arg_41_3) and arg_41_2 or "<indent=4.7em>" .. arg_41_2
+	local infoText = gohelper.findChildText(item, "info")
 
-	SLFramework.UGUI.GuiHelper.SetColor(var_41_2, string.nilorempty(arg_41_3) and "#9E967B" or "#D0CFCF")
+	infoText.text = string.nilorempty(speaker) and text or "<indent=4.7em>" .. text
 
-	return var_41_0
+	SLFramework.UGUI.GuiHelper.SetColor(infoText, string.nilorempty(speaker) and "#9E967B" or "#D0CFCF")
+
+	return item
 end
 
-function var_0_0._clearDialog(arg_42_0)
-	arg_42_0._playScrollAnim = true
+function WeekWalkMapInteractiveItem:_clearDialog()
+	self._playScrollAnim = true
 
-	gohelper.setActive(arg_42_0._gomask, false)
-	TaskDispatcher.runDelay(arg_42_0._delayScroll, arg_42_0, 0)
+	gohelper.setActive(self._gomask, false)
+	TaskDispatcher.runDelay(self._delayScroll, self, 0)
 end
 
-function var_0_0._delayScroll(arg_43_0)
-	gohelper.setActive(arg_43_0._gomask, true)
+function WeekWalkMapInteractiveItem:_delayScroll()
+	gohelper.setActive(self._gomask, true)
 
-	arg_43_0._imgMask.enabled = true
+	self._imgMask.enabled = true
 
-	local var_43_0 = arg_43_0._curScrollGo or arg_43_0._goscroll
+	local scrollGo = self._curScrollGo or self._goscroll
 
-	for iter_43_0, iter_43_1 in ipairs(arg_43_0._dialogItemList) do
-		local var_43_1 = iter_43_1.transform.position
+	for i, item in ipairs(self._dialogItemList) do
+		local pos = item.transform.position
 
-		gohelper.addChild(var_43_0, iter_43_1)
+		gohelper.addChild(scrollGo, item)
 
-		iter_43_1.transform.position = var_43_1
+		item.transform.position = pos
 
-		local var_43_2, var_43_3, var_43_4 = transformhelper.getLocalPos(iter_43_1.transform)
+		local x, y, z = transformhelper.getLocalPos(item.transform)
 
-		transformhelper.setLocalPos(iter_43_1.transform, var_43_2, var_43_3, 0)
+		transformhelper.setLocalPos(item.transform, x, y, 0)
 	end
 
-	arg_43_0._dialogItemList = arg_43_0:getUserDataTb_()
+	self._dialogItemList = self:getUserDataTb_()
 
-	gohelper.setActive(var_43_0, true)
+	gohelper.setActive(scrollGo, true)
 
-	arg_43_0._curScrollGo = var_43_0
+	self._curScrollGo = scrollGo
 
-	if var_43_0 then
-		if arg_43_0._dissolveInfo then
-			local var_43_5 = arg_43_0._dissolveInfo[2]
-			local var_43_6 = arg_43_0._dissolveInfo[3]
+	if scrollGo then
+		if self._dissolveInfo then
+			local infoText = self._dissolveInfo[2]
+			local text = self._dissolveInfo[3]
 
-			var_43_5.text = ""
+			infoText.text = ""
 		end
 
-		arg_43_0:_scrollEnd(var_43_0)
+		self:_scrollEnd(scrollGo)
 	end
 end
 
-function var_0_0._scrollEnd(arg_44_0, arg_44_1)
-	if arg_44_1 ~= arg_44_0._curScrollGo then
-		gohelper.destroy(arg_44_1)
+function WeekWalkMapInteractiveItem:_scrollEnd(scrollGo)
+	if scrollGo ~= self._curScrollGo then
+		gohelper.destroy(scrollGo)
 	else
-		if arg_44_0._dissolveInfo then
-			TaskDispatcher.runDelay(arg_44_0._onDissolveStart, arg_44_0, 0.3)
+		if self._dissolveInfo then
+			TaskDispatcher.runDelay(self._onDissolveStart, self, 0.3)
 
 			return
 		end
 
-		arg_44_0:_onDissolveFinish()
+		self:_onDissolveFinish()
 	end
 end
 
-function var_0_0._onDissolveStart(arg_45_0)
-	local var_45_0 = arg_45_0._dissolveInfo[1]
+function WeekWalkMapInteractiveItem:_onDissolveStart()
+	local item = self._dissolveInfo[1]
+	local infoText = self._dissolveInfo[2]
+	local text = self._dissolveInfo[3]
 
-	arg_45_0._dissolveInfo[2].text = arg_45_0._dissolveInfo[3]
-	arg_45_0._imgMask.enabled = false
+	infoText.text = text
+	self._imgMask.enabled = false
 
-	var_45_0:GetComponent(typeof(UnityEngine.Animation)):Play("dungeonmap_chatarea")
-	TaskDispatcher.runDelay(arg_45_0._onDissolveFinish, arg_45_0, 1.3)
+	local anim = item:GetComponent(typeof(UnityEngine.Animation))
+
+	anim:Play("dungeonmap_chatarea")
+	TaskDispatcher.runDelay(self._onDissolveFinish, self, 1.3)
 end
 
-function var_0_0._onDissolveFinish(arg_46_0)
-	gohelper.setActive(arg_46_0._curBtnGo, true)
+function WeekWalkMapInteractiveItem:_onDissolveFinish()
+	gohelper.setActive(self._curBtnGo, true)
 
-	arg_46_0._dissolveInfo = nil
-	arg_46_0._playScrollAnim = false
+	self._dissolveInfo = nil
+	self._playScrollAnim = false
 
-	if arg_46_0._curBtnGo == arg_46_0._gooptions then
-		for iter_46_0 = 1, arg_46_0._maxOptionIndex do
-			local var_46_0 = (iter_46_0 - 1) * 0.03
-			local var_46_1 = arg_46_0._optionBtnList[iter_46_0][1]
+	if self._curBtnGo == self._gooptions then
+		for index = 1, self._maxOptionIndex do
+			local time = (index - 1) * 0.03
+			local item = self._optionBtnList[index][1]
 
-			if var_46_0 > 0 then
-				gohelper.setActive(var_46_1, false)
+			if time > 0 then
+				gohelper.setActive(item, false)
 				TaskDispatcher.runDelay(function()
-					if not gohelper.isNil(var_46_1) then
-						gohelper.setActive(var_46_1, true)
+					if not gohelper.isNil(item) then
+						gohelper.setActive(item, true)
 					end
-				end, nil, var_46_0)
+				end, nil, time)
 			else
-				gohelper.setActive(var_46_1, true)
+				gohelper.setActive(item, true)
 			end
 		end
 	end
 end
 
-function var_0_0._clearScroll(arg_48_0)
-	arg_48_0._showOption = false
-	arg_48_0._dissolveInfo = nil
-	arg_48_0._playScrollAnim = false
+function WeekWalkMapInteractiveItem:_clearScroll()
+	self._showOption = false
+	self._dissolveInfo = nil
+	self._playScrollAnim = false
 
-	TaskDispatcher.cancelTask(arg_48_0._delayScroll, arg_48_0)
+	TaskDispatcher.cancelTask(self._delayScroll, self)
 
-	if arg_48_0._oldScrollGo then
-		gohelper.destroy(arg_48_0._oldScrollGo)
+	if self._oldScrollGo then
+		gohelper.destroy(self._oldScrollGo)
 
-		arg_48_0._oldScrollGo = nil
+		self._oldScrollGo = nil
 	end
 
-	if arg_48_0._curScrollGo then
-		gohelper.destroy(arg_48_0._curScrollGo)
+	if self._curScrollGo then
+		gohelper.destroy(self._curScrollGo)
 
-		arg_48_0._curScrollGo = nil
+		self._curScrollGo = nil
 	end
 
-	arg_48_0._dialogItemList = arg_48_0:getUserDataTb_()
+	self._dialogItemList = self:getUserDataTb_()
 end
 
-function var_0_0._editableRemoveEvents(arg_49_0)
-	for iter_49_0, iter_49_1 in pairs(arg_49_0._optionBtnList) do
-		iter_49_1[2]:RemoveClickListener()
+function WeekWalkMapInteractiveItem:_editableRemoveEvents()
+	for k, v in pairs(self._optionBtnList) do
+		v[2]:RemoveClickListener()
 	end
 end
 
-function var_0_0.onDestroy(arg_50_0)
-	TaskDispatcher.cancelTask(arg_50_0._showCloseBtn, arg_50_0)
-	TaskDispatcher.cancelTask(arg_50_0._delayScroll, arg_50_0)
-	TaskDispatcher.cancelTask(arg_50_0._onDissolveStart, arg_50_0)
-	TaskDispatcher.cancelTask(arg_50_0._onDissolveFinish, arg_50_0)
-	arg_50_0:removeEvents()
-	arg_50_0:_editableRemoveEvents()
-	arg_50_0._simagebg:UnLoadImage()
+function WeekWalkMapInteractiveItem:onDestroy()
+	TaskDispatcher.cancelTask(self._showCloseBtn, self)
+	TaskDispatcher.cancelTask(self._delayScroll, self)
+	TaskDispatcher.cancelTask(self._onDissolveStart, self)
+	TaskDispatcher.cancelTask(self._onDissolveFinish, self)
+	self:removeEvents()
+	self:_editableRemoveEvents()
+	self._simagebg:UnLoadImage()
 end
 
-return var_0_0
+return WeekWalkMapInteractiveItem

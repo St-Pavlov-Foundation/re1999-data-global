@@ -1,68 +1,70 @@
-﻿module("modules.logic.versionactivity3_0.maLiAnNaAct201.model.skill.MaLiAnNaSkillUtils", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/maLiAnNaAct201/model/skill/MaLiAnNaSkillUtils.lua
 
-local var_0_0 = class("MaLiAnNaSkillUtils")
-local var_0_1 = 0
+module("modules.logic.versionactivity3_0.maLiAnNaAct201.model.skill.MaLiAnNaSkillUtils", package.seeall)
 
-function var_0_0.createSkill(arg_1_0)
-	local var_1_0
+local MaLiAnNaSkillUtils = class("MaLiAnNaSkillUtils")
+local index = 0
 
-	if Activity201MaLiAnNaConfig.instance:getActiveSkillConfig(arg_1_0) == nil then
-		local var_1_1 = Activity201MaLiAnNaConfig.instance:getPassiveSkillConfig(arg_1_0)
+function MaLiAnNaSkillUtils.createSkill(configId)
+	local skill
+	local config = Activity201MaLiAnNaConfig.instance:getActiveSkillConfig(configId)
 
-		var_1_0 = MaLiAnNaPassiveSkill.New()
+	if config == nil then
+		config = Activity201MaLiAnNaConfig.instance:getPassiveSkillConfig(configId)
+		skill = MaLiAnNaPassiveSkill.New()
 	else
-		var_1_0 = MaLiAnNaActiveSkill.New()
+		skill = MaLiAnNaActiveSkill.New()
 	end
 
-	if var_1_0 ~= nil then
-		var_1_0:init(var_0_1, arg_1_0)
+	if skill ~= nil then
+		skill:init(index, configId)
 
-		var_0_1 = var_0_1 + 1
+		index = index + 1
 	end
 
-	return var_1_0
+	return skill
 end
 
-function var_0_0.createSkillBySlotType(arg_2_0)
-	if string.nilorempty(arg_2_0) then
+function MaLiAnNaSkillUtils.createSkillBySlotType(slotTypeStr)
+	if string.nilorempty(slotTypeStr) then
 		return nil
 	end
 
-	local var_2_0 = string.splitToNumber(arg_2_0, "#")
+	local allParams = string.splitToNumber(slotTypeStr, "#")
 
-	if #var_2_0 < 2 then
+	if #allParams < 2 then
 		return nil
 	end
 
-	local var_2_1 = var_2_0[1]
+	local slotType = allParams[1]
 
-	if var_2_1 == Activity201MaLiAnNaEnum.SlotType.trench then
-		local var_2_2 = MaLiAnNaSlotShieldPassiveSkill.New()
+	if slotType == Activity201MaLiAnNaEnum.SlotType.trench then
+		local skill = MaLiAnNaSlotShieldPassiveSkill.New()
 
-		var_2_0[1] = Activity201MaLiAnNaEnum.SkillAction.slotShield
+		allParams[1] = Activity201MaLiAnNaEnum.SkillAction.slotShield
 
-		var_2_2:init(var_0_1, var_2_0)
+		skill:init(index, allParams)
 
-		var_0_1 = var_0_1 + 1
+		index = index + 1
 
-		return var_2_2
+		return skill
 	end
 
-	if var_2_1 == Activity201MaLiAnNaEnum.SlotType.bunker then
-		local var_2_3 = MaLiAnNaSlotKillSoliderPassiveSkill.New()
+	if slotType == Activity201MaLiAnNaEnum.SlotType.bunker then
+		local skill = MaLiAnNaSlotKillSoliderPassiveSkill.New()
 
-		var_2_0[1] = Activity201MaLiAnNaEnum.SkillAction.killSolider
+		allParams[1] = Activity201MaLiAnNaEnum.SkillAction.killSolider
 
-		var_2_3:init(var_0_1, var_2_0)
+		skill:init(index, allParams)
 
-		var_0_1 = var_0_1 + 1
+		index = index + 1
 
-		return var_2_3
+		return skill
 	end
 
 	return nil
 end
 
-var_0_0.instance = var_0_0.New()
+MaLiAnNaSkillUtils.instance = MaLiAnNaSkillUtils.New()
 
-return var_0_0
+return MaLiAnNaSkillUtils

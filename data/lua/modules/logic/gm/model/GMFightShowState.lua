@@ -1,36 +1,38 @@
-﻿module("modules.logic.gm.model.GMFightShowState", package.seeall)
+﻿-- chunkname: @modules/logic/gm/model/GMFightShowState.lua
 
-local var_0_0 = _M
+module("modules.logic.gm.model.GMFightShowState", package.seeall)
 
-var_0_0.clothSkill = true
-var_0_0.Desc_clothSkill = "维尔汀的技能"
-var_0_0.topRightPause = true
-var_0_0.Desc_topRightPause = "暂停退出按钮"
-var_0_0.topRightRound = true
-var_0_0.Desc_topRightRound = "轮次回合计数"
-var_0_0.monsterSelect = true
-var_0_0.Desc_monsterSelect = "技能集火图标"
-var_0_0.handCardRestrain = true
-var_0_0.Desc_handCardRestrain = "手牌克制标签"
-var_0_0.bottomEnemyRound = true
-var_0_0.Desc_bottomEnemyRound = "敌方回合提示"
-var_0_0.topLeftTotal = true
-var_0_0.Desc_topLeftTotal = "总的伤害计算"
-var_0_0.bossHp = true
-var_0_0.Desc_bossHp = "Boss血条"
-var_0_0.leftMonster = true
-var_0_0.Desc_leftMonster = "怪物剩余数量"
-var_0_0.cards = true
-var_0_0.Desc_cards = "手牌区出牌区"
-var_0_0.enemyOp = true
-var_0_0.Desc_enemyOp = "敌方头顶卡牌"
-var_0_0.screenTouchEffect = true
-var_0_0.Desc_screenTouchEffect = "屏幕触摸特效"
-var_0_0.roundSpecialView = true
-var_0_0.Desc_roundSpecialView = "入场战斗弹窗"
-var_0_0.playSkillDes = true
-var_0_0.Desc_playSkillDes = "技能卡描述"
-var_0_0._descList = {
+local GMFightShowState = _M
+
+GMFightShowState.clothSkill = true
+GMFightShowState.Desc_clothSkill = "维尔汀的技能"
+GMFightShowState.topRightPause = true
+GMFightShowState.Desc_topRightPause = "暂停退出按钮"
+GMFightShowState.topRightRound = true
+GMFightShowState.Desc_topRightRound = "轮次回合计数"
+GMFightShowState.monsterSelect = true
+GMFightShowState.Desc_monsterSelect = "技能集火图标"
+GMFightShowState.handCardRestrain = true
+GMFightShowState.Desc_handCardRestrain = "手牌克制标签"
+GMFightShowState.bottomEnemyRound = true
+GMFightShowState.Desc_bottomEnemyRound = "敌方回合提示"
+GMFightShowState.topLeftTotal = true
+GMFightShowState.Desc_topLeftTotal = "总的伤害计算"
+GMFightShowState.bossHp = true
+GMFightShowState.Desc_bossHp = "Boss血条"
+GMFightShowState.leftMonster = true
+GMFightShowState.Desc_leftMonster = "怪物剩余数量"
+GMFightShowState.cards = true
+GMFightShowState.Desc_cards = "手牌区出牌区"
+GMFightShowState.enemyOp = true
+GMFightShowState.Desc_enemyOp = "敌方头顶卡牌"
+GMFightShowState.screenTouchEffect = true
+GMFightShowState.Desc_screenTouchEffect = "屏幕触摸特效"
+GMFightShowState.roundSpecialView = true
+GMFightShowState.Desc_roundSpecialView = "入场战斗弹窗"
+GMFightShowState.playSkillDes = true
+GMFightShowState.Desc_playSkillDes = "技能卡描述"
+GMFightShowState._descList = {
 	{
 		valueKey = "clothSkill"
 	},
@@ -75,23 +77,23 @@ var_0_0._descList = {
 	}
 }
 
-function var_0_0.getList()
-	for iter_1_0, iter_1_1 in ipairs(var_0_0._descList) do
-		if not iter_1_1.id then
-			iter_1_1.id = iter_1_0
-			iter_1_1.desc = var_0_0["Desc_" .. iter_1_1.valueKey]
+function GMFightShowState.getList()
+	for i, one in ipairs(GMFightShowState._descList) do
+		if not one.id then
+			one.id = i
+			one.desc = GMFightShowState["Desc_" .. one.valueKey]
 		end
 	end
 
-	return var_0_0._descList
+	return GMFightShowState._descList
 end
 
-function var_0_0.getStatus(arg_2_0)
-	return var_0_0[arg_2_0]
+function GMFightShowState.getStatus(valueKey)
+	return GMFightShowState[valueKey]
 end
 
-function var_0_0.setStatus(arg_3_0, arg_3_1)
-	var_0_0[arg_3_0] = arg_3_1
+function GMFightShowState.setStatus(valueKey, value)
+	GMFightShowState[valueKey] = value
 end
 
-return var_0_0
+return GMFightShowState

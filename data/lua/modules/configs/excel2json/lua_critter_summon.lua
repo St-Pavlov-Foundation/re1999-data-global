@@ -1,18 +1,20 @@
-﻿module("modules.configs.excel2json.lua_critter_summon", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_critter_summon.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_critter_summon", package.seeall)
+
+local lua_critter_summon = {}
+local fields = {
 	cost = 2,
 	serverSummon = 3,
 	poolId = 1
 }
-local var_0_2 = {
+local primaryKey = {
 	"poolId"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_critter_summon.onLoad(json)
+	lua_critter_summon.configList, lua_critter_summon.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_critter_summon

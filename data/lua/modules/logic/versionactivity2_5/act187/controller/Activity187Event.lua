@@ -1,12 +1,14 @@
-﻿module("modules.logic.versionactivity2_5.act187.controller.Activity187Event", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/act187/controller/Activity187Event.lua
 
-local var_0_0 = _M
-local var_0_1 = GameUtil.getUniqueTb()
+module("modules.logic.versionactivity2_5.act187.controller.Activity187Event", package.seeall)
 
-var_0_0.GetAct187Info = var_0_1()
-var_0_0.FinishPainting = var_0_1()
-var_0_0.GetAccrueReward = var_0_1()
-var_0_0.RefreshAccrueReward = var_0_1()
-var_0_0.PaintViewDisplayChange = var_0_1()
+local Activity187Event = _M
+local _get = GameUtil.getUniqueTb()
 
-return var_0_0
+Activity187Event.GetAct187Info = _get()
+Activity187Event.FinishPainting = _get()
+Activity187Event.GetAccrueReward = _get()
+Activity187Event.RefreshAccrueReward = _get()
+Activity187Event.PaintViewDisplayChange = _get()
+
+return Activity187Event

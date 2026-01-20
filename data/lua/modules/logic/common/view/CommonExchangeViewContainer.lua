@@ -1,36 +1,38 @@
-﻿module("modules.logic.common.view.CommonExchangeViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/common/view/CommonExchangeViewContainer.lua
 
-local var_0_0 = class("CommonExchangeViewContainer", BaseViewContainer)
+module("modules.logic.common.view.CommonExchangeViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local CommonExchangeViewContainer = class("CommonExchangeViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, CommonExchangeView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_righttop"))
+function CommonExchangeViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, CommonExchangeView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_righttop"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		return arg_2_0:_buildCurrency()
+function CommonExchangeViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		return self:_buildCurrency()
 	end
 end
 
-function var_0_0._buildCurrency(arg_3_0)
-	local var_3_0 = arg_3_0.viewParam.costMatData
+function CommonExchangeViewContainer:_buildCurrency()
+	local costMatData = self.viewParam.costMatData
 
-	arg_3_0._currencyView = CurrencyView.New({
+	self._currencyView = CurrencyView.New({
 		{
 			isHideAddBtn = true,
-			type = var_3_0.materilType,
-			id = var_3_0.materilId
+			type = costMatData.materilType,
+			id = costMatData.materilId
 		}
 	}, nil, nil, nil, true)
 
 	return {
-		arg_3_0._currencyView
+		self._currencyView
 	}
 end
 
-return var_0_0
+return CommonExchangeViewContainer

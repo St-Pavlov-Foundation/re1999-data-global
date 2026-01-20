@@ -1,13 +1,15 @@
-﻿module("modules.logic.seasonver.act166.view.Season166TalentInfoViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act166/view/Season166TalentInfoViewContainer.lua
 
-local var_0_0 = class("Season166TalentInfoViewContainer", BaseViewContainer)
+module("modules.logic.seasonver.act166.view.Season166TalentInfoViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Season166TalentInfoViewContainer = class("Season166TalentInfoViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Season166TalentInfoView.New())
+function Season166TalentInfoViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Season166TalentInfoView.New())
+
+	return views
 end
 
-return var_0_0
+return Season166TalentInfoViewContainer

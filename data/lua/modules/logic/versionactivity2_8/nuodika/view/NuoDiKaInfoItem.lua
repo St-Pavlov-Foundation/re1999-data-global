@@ -1,39 +1,41 @@
-﻿module("modules.logic.versionactivity2_8.nuodika.view.NuoDiKaInfoItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/nuodika/view/NuoDiKaInfoItem.lua
 
-local var_0_0 = class("NuoDiKaInfoItem", LuaCompBase)
+module("modules.logic.versionactivity2_8.nuodika.view.NuoDiKaInfoItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.go = arg_1_1
-	arg_1_0._txtname = gohelper.findChildText(arg_1_1, "txt_namecn")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_1, "txt_desc")
-	arg_1_0._goicon = gohelper.findChild(arg_1_1, "go_icon")
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_1, "go_icon/image_icon")
-	arg_1_0._gonew = gohelper.findChild(arg_1_1, "go_icon/go_new")
-	arg_1_0._type = arg_1_2
+local NuoDiKaInfoItem = class("NuoDiKaInfoItem", LuaCompBase)
 
-	gohelper.setActive(arg_1_0._gonew, false)
+function NuoDiKaInfoItem:init(go, itemType)
+	self.go = go
+	self._txtname = gohelper.findChildText(go, "txt_namecn")
+	self._txtdesc = gohelper.findChildText(go, "txt_desc")
+	self._goicon = gohelper.findChild(go, "go_icon")
+	self._simageicon = gohelper.findChildSingleImage(go, "go_icon/image_icon")
+	self._gonew = gohelper.findChild(go, "go_icon/go_new")
+	self._type = itemType
+
+	gohelper.setActive(self._gonew, false)
 end
 
-function var_0_0.setItem(arg_2_0, arg_2_1)
-	gohelper.setActive(arg_2_0.go, true)
+function NuoDiKaInfoItem:setItem(co)
+	gohelper.setActive(self.go, true)
 
-	arg_2_0._config = arg_2_1
-	arg_2_0._txtname.text = arg_2_0._config.name
-	arg_2_0._txtdesc.text = arg_2_0._config.desc
+	self._config = co
+	self._txtname.text = self._config.name
+	self._txtdesc.text = self._config.desc
 
-	if arg_2_0._type == NuoDiKaEnum.EventType.Enemy then
-		arg_2_0._simageicon:LoadImage(ResUrl.getNuoDiKaMonsterIcon(arg_2_0._config.picture))
-	elseif arg_2_0._type == NuoDiKaEnum.EventType.Item then
-		arg_2_0._simageicon:LoadImage(ResUrl.getNuoDiKaItemIcon(arg_2_0._config.picture))
+	if self._type == NuoDiKaEnum.EventType.Enemy then
+		self._simageicon:LoadImage(ResUrl.getNuoDiKaMonsterIcon(self._config.picture))
+	elseif self._type == NuoDiKaEnum.EventType.Item then
+		self._simageicon:LoadImage(ResUrl.getNuoDiKaItemIcon(self._config.picture))
 	end
 end
 
-function var_0_0.hide(arg_3_0)
-	gohelper.setActive(arg_3_0.go, false)
+function NuoDiKaInfoItem:hide()
+	gohelper.setActive(self.go, false)
 end
 
-function var_0_0.destory(arg_4_0)
-	arg_4_0._simageicon:UnLoadImage()
+function NuoDiKaInfoItem:destory()
+	self._simageicon:UnLoadImage()
 end
 
-return var_0_0
+return NuoDiKaInfoItem

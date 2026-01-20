@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.result.Act183FinishViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/result/Act183FinishViewContainer.lua
 
-local var_0_0 = class("Act183FinishViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_5.challenge.view.result.Act183FinishViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Act183FinishViewContainer = class("Act183FinishViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Act183FinishView.New())
+function Act183FinishViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Act183FinishView.New())
+
+	return views
 end
 
-return var_0_0
+return Act183FinishViewContainer

@@ -1,30 +1,32 @@
-﻿module("modules.logic.dungeon.model.UserDungeonMO", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/model/UserDungeonMO.lua
 
-local var_0_0 = pureTable("UserDungeonMO")
+module("modules.logic.dungeon.model.UserDungeonMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.chapterId = arg_1_1.chapterId
-	arg_1_0.episodeId = arg_1_1.episodeId
-	arg_1_0.star = arg_1_1.star
-	arg_1_0.challengeCount = arg_1_1.challengeCount
-	arg_1_0.hasRecord = arg_1_1.hasRecord
-	arg_1_0.todayPassNum = arg_1_1.todayPassNum
-	arg_1_0.todayTotalNum = arg_1_1.todayTotalNum
+local UserDungeonMO = pureTable("UserDungeonMO")
+
+function UserDungeonMO:init(info)
+	self.chapterId = info.chapterId
+	self.episodeId = info.episodeId
+	self.star = info.star
+	self.challengeCount = info.challengeCount
+	self.hasRecord = info.hasRecord
+	self.todayPassNum = info.todayPassNum
+	self.todayTotalNum = info.todayTotalNum
 end
 
-function var_0_0.initFromManual(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
-	arg_2_0.chapterId = arg_2_1
-	arg_2_0.episodeId = arg_2_2
-	arg_2_0.star = arg_2_3
-	arg_2_0.challengeCount = arg_2_4
-	arg_2_0._manual = true
-	arg_2_0.isNew = true
-	arg_2_0.hasRecord = false
+function UserDungeonMO:initFromManual(chapterId, episodeId, star, challengeCount)
+	self.chapterId = chapterId
+	self.episodeId = episodeId
+	self.star = star
+	self.challengeCount = challengeCount
+	self._manual = true
+	self.isNew = true
+	self.hasRecord = false
 
-	local var_2_0 = DungeonConfig.instance:getEpisodeCO(arg_2_2)
+	local episodeConfig = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-	arg_2_0.todayPassNum = 0
-	arg_2_0.todayTotalNum = var_2_0.dayNum
+	self.todayPassNum = 0
+	self.todayTotalNum = episodeConfig.dayNum
 end
 
-return var_0_0
+return UserDungeonMO

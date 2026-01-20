@@ -1,4 +1,6 @@
-﻿return {
+﻿-- chunkname: @modules/configs/survival/lua_survival_shelter_building_1001.lua
+
+return {
 	{
 		{
 			1,

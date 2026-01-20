@@ -1,63 +1,65 @@
-﻿module("modules.logic.chessgame.game.effect.ChessHeroEffect", package.seeall)
+﻿-- chunkname: @modules/logic/chessgame/game/effect/ChessHeroEffect.lua
 
-local var_0_0 = class("ChessHeroEffect", ChessEffectBase)
+module("modules.logic.chessgame.game.effect.ChessHeroEffect", package.seeall)
 
-function var_0_0.refreshEffect(arg_1_0)
+local ChessHeroEffect = class("ChessHeroEffect", ChessEffectBase)
+
+function ChessHeroEffect:refreshEffect()
 	return
 end
 
-function var_0_0.onDispose(arg_2_0)
+function ChessHeroEffect:onDispose()
 	return
 end
 
-function var_0_0.onSelected(arg_3_0)
-	arg_3_0._isSelected = true
+function ChessHeroEffect:onSelected()
+	self._isSelected = true
 
-	arg_3_0:refreshPlayerSelected()
+	self:refreshPlayerSelected()
 end
 
-function var_0_0.onCancelSelect(arg_4_0)
-	arg_4_0._isSelected = false
+function ChessHeroEffect:onCancelSelect()
+	self._isSelected = false
 
-	arg_4_0:refreshPlayerSelected()
+	self:refreshPlayerSelected()
 end
 
-function var_0_0.refreshPlayerSelected(arg_5_0)
-	if ChessGameController.instance:isTempSelectObj(arg_5_0._target.id) then
+function ChessHeroEffect:refreshPlayerSelected()
+	if ChessGameController.instance:isTempSelectObj(self._target.id) then
 		return
 	end
 
-	local var_5_0 = not arg_5_0._isSelected
+	local showSelectableFlag = not self._isSelected
 
-	gohelper.setActive(arg_5_0._target.avatar.goSelectable, var_5_0)
+	gohelper.setActive(self._target.avatar.goSelectable, showSelectableFlag)
 end
 
-function var_0_0.onAvatarLoaded(arg_6_0)
-	local var_6_0 = arg_6_0._loader
+function ChessHeroEffect:onAvatarLoaded()
+	local loader = self._loader
 
-	if not arg_6_0._loader then
+	if not self._loader then
 		return
 	end
 
-	local var_6_1 = var_6_0:getInstGO()
+	local go = loader:getInstGO()
 
-	if not gohelper.isNil(var_6_1) then
-		local var_6_2 = gohelper.findChild(var_6_1, "vx_tracked")
-		local var_6_3 = gohelper.findChild(var_6_1, "select")
-		local var_6_4 = gohelper.findChild(var_6_1, "vx_daoju")
+	if not gohelper.isNil(go) then
+		local goTracked = gohelper.findChild(go, "vx_tracked")
+		local goSelectable = gohelper.findChild(go, "select")
+		local goInteractEff = gohelper.findChild(go, "vx_daoju")
 
-		gohelper.setActive(arg_6_0._target.avatar.goTracked, false)
-		gohelper.setActive(arg_6_0._target.avatar.goInteractEff, false)
-		gohelper.setActive(var_6_2, false)
-		gohelper.setActive(var_6_3, false)
-		gohelper.setActive(var_6_4, false)
+		gohelper.setActive(self._target.avatar.goTracked, false)
+		gohelper.setActive(self._target.avatar.goInteractEff, false)
+		gohelper.setActive(goTracked, false)
+		gohelper.setActive(goSelectable, false)
+		gohelper.setActive(goInteractEff, false)
 
-		arg_6_0._target.avatar.goTracked = var_6_2
-		arg_6_0._target.avatar.goSelectable = var_6_3
-		arg_6_0._target.avatar.goInteractEff = var_6_4
+		self._target.avatar.goTracked = goTracked
+		self._target.avatar.goSelectable = goSelectable
+		self._target.avatar.goInteractEff = goInteractEff
 	end
 
-	arg_6_0:refreshPlayerSelected()
+	self:refreshPlayerSelected()
 end
 
-return var_0_0
+return ChessHeroEffect

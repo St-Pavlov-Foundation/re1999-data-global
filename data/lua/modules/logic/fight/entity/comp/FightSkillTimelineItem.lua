@@ -1,93 +1,95 @@
-﻿module("modules.logic.fight.entity.comp.FightSkillTimelineItem", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/FightSkillTimelineItem.lua
 
-local var_0_0 = class("FightSkillTimelineItem", FightBaseClass)
+module("modules.logic.fight.entity.comp.FightSkillTimelineItem", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1)
-	arg_1_0.workTimelineItem = arg_1_1
-	arg_1_0.entity = arg_1_1.entity
-	arg_1_0.fightStepData = arg_1_1.fightStepData
-	arg_1_0.timelineName = arg_1_1.timelineName
-	arg_1_0.timelineUrl = arg_1_1.timelineUrl
-	arg_1_0.assetLoader = arg_1_1.assetLoader
-	arg_1_0.timelineObj = gohelper.create3d(arg_1_0.entity.go, "_skill_playable")
-	arg_1_0.binder = ZProj.PlayableAssetBinder.Get(arg_1_0.timelineObj)
-	arg_1_0.trackDic = {}
-	arg_1_0.timelineContext = {}
+local FightSkillTimelineItem = class("FightSkillTimelineItem", FightBaseClass)
+
+function FightSkillTimelineItem:onConstructor(workTimelineItem)
+	self.workTimelineItem = workTimelineItem
+	self.entity = workTimelineItem.entity
+	self.fightStepData = workTimelineItem.fightStepData
+	self.timelineName = workTimelineItem.timelineName
+	self.timelineUrl = workTimelineItem.timelineUrl
+	self.assetLoader = workTimelineItem.assetLoader
+	self.timelineObj = gohelper.create3d(self.entity.go, "_skill_playable")
+	self.binder = ZProj.PlayableAssetBinder.Get(self.timelineObj)
+	self.trackDic = {}
+	self.timelineContext = {}
 end
 
-function var_0_0.setSameSkillParam(arg_2_0)
-	if arg_2_0.entity.skill:sameSkillPlaying() then
-		local var_2_0 = arg_2_0.entity.skill.sameSkillParam[arg_2_0.fightStepData.stepUid]
+function FightSkillTimelineItem:setSameSkillParam()
+	if self.entity.skill:sameSkillPlaying() then
+		local sameSkillParam = self.entity.skill.sameSkillParam[self.fightStepData.stepUid]
 
-		if not var_2_0 then
+		if not sameSkillParam then
 			return
 		end
 
-		if not var_2_0.startParam then
+		if not sameSkillParam.startParam then
 			return
 		end
 
-		local var_2_1 = var_2_0.startParam
+		local param = sameSkillParam.startParam
 
-		arg_2_0.timelineStartTime = tonumber(var_2_1[1])
-		arg_2_0.audioStartTime = tonumber(var_2_1[2])
-		arg_2_0.spineStartTime = tonumber(var_2_1[3])
-		arg_2_0.spineDelayTime = tonumber(var_2_1[4])
-		arg_2_0.timelineStartTime = arg_2_0.timelineStartTime ~= 0 and arg_2_0.timelineStartTime or nil
-		arg_2_0.audioStartTime = arg_2_0.audioStartTime ~= 0 and arg_2_0.audioStartTime or nil
-		arg_2_0.spineStartTime = arg_2_0.spineStartTime ~= 0 and arg_2_0.spineStartTime or nil
-		arg_2_0.spineDelayTime = arg_2_0.spineDelayTime ~= 0 and arg_2_0.spineDelayTime or nil
-		arg_2_0.curAnimState = var_2_0.curAnimState
-		arg_2_0.audioId = var_2_0.audioId
+		self.timelineStartTime = tonumber(param[1])
+		self.audioStartTime = tonumber(param[2])
+		self.spineStartTime = tonumber(param[3])
+		self.spineDelayTime = tonumber(param[4])
+		self.timelineStartTime = self.timelineStartTime ~= 0 and self.timelineStartTime or nil
+		self.audioStartTime = self.audioStartTime ~= 0 and self.audioStartTime or nil
+		self.spineStartTime = self.spineStartTime ~= 0 and self.spineStartTime or nil
+		self.spineDelayTime = self.spineDelayTime ~= 0 and self.spineDelayTime or nil
+		self.curAnimState = sameSkillParam.curAnimState
+		self.audioId = sameSkillParam.audioId
 
 		if FightWorkBFSGSkillStart.BeiFangShaoGeUniqueSkill and FightWorkBFSGSkillStart.BeiFangShaoGeUniqueSkill <= 0 then
-			arg_2_0.audioId = nil
+			self.audioId = nil
 		end
 	end
 end
 
-function var_0_0.setTimeScale(arg_3_0, arg_3_1)
-	arg_3_0.timeScale = arg_3_1
+function FightSkillTimelineItem:setTimeScale(timeScale)
+	self.timeScale = timeScale
 end
 
-function var_0_0.play(arg_4_0)
-	arg_4_0:setSameSkillParam()
-	arg_4_0:dealDamageFromLostHp()
+function FightSkillTimelineItem:play()
+	self:setSameSkillParam()
+	self:dealDamageFromLostHp()
 
-	arg_4_0._startTime = Time.time
-	arg_4_0.timeScale = arg_4_0.entity.skill.timeScale
+	self._startTime = Time.time
+	self.timeScale = self.entity.skill.timeScale
 
-	arg_4_0.binder:AddFrameEventCallback(arg_4_0._onFrameEventCallback, arg_4_0)
-	arg_4_0.binder:AddEndCallback(arg_4_0._onTimelineEndCallback, arg_4_0)
+	self.binder:AddFrameEventCallback(self._onFrameEventCallback, self)
+	self.binder:AddEndCallback(self._onTimelineEndCallback, self)
 
-	arg_4_0.endCallbackFunc = arg_4_0.timelineEndNormalFunc
-	arg_4_0.binder.director.enabled = true
+	self.endCallbackFunc = self.timelineEndNormalFunc
+	self.binder.director.enabled = true
 
-	if arg_4_0.timelineStartTime then
-		arg_4_0.binder:SetTime(arg_4_0.timelineStartTime)
+	if self.timelineStartTime then
+		self.binder:SetTime(self.timelineStartTime)
 	end
 
-	if arg_4_0.audioStartTime and arg_4_0.audioId then
-		arg_4_0._lock_skill_bgm = true
-		arg_4_0.fightStepData.atkAudioId = arg_4_0.audioId
+	if self.audioStartTime and self.audioId then
+		self._lock_skill_bgm = true
+		self.fightStepData.atkAudioId = self.audioId
 
-		AudioEffectMgr.instance:playAudio(arg_4_0.audioId)
-		AudioEffectMgr.instance:seekMilliSeconds(arg_4_0.audioId, arg_4_0.audioStartTime * 1000)
+		AudioEffectMgr.instance:playAudio(self.audioId)
+		AudioEffectMgr.instance:seekMilliSeconds(self.audioId, self.audioStartTime * 1000)
 	end
 
-	arg_4_0.binder:Play(arg_4_0.assetLoader, arg_4_0.timelineUrl)
-	arg_4_0:com_registUpdate(arg_4_0.onUpdate)
+	self.binder:Play(self.assetLoader, self.timelineUrl)
+	self:com_registUpdate(self.onUpdate)
 end
 
-function var_0_0.onUpdate(arg_5_0, arg_5_1)
-	arg_5_0.binder:Evaluate(arg_5_0.timeScale * arg_5_1)
+function FightSkillTimelineItem:onUpdate(deltaTime)
+	self.binder:Evaluate(self.timeScale * deltaTime)
 end
 
-function var_0_0._onFrameEventCallback(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5)
-	if arg_6_3 then
-		arg_6_0:_onFrameEventPlayCallback(arg_6_1, arg_6_2, arg_6_4, arg_6_5)
+function FightSkillTimelineItem:_onFrameEventCallback(type, id, isBegin, duration, paramStr)
+	if isBegin then
+		self:_onFrameEventPlayCallback(type, id, duration, paramStr)
 	else
-		arg_6_0:_onFrameEventPauseCallback(arg_6_1, arg_6_2)
+		self:_onFrameEventPauseCallback(type, id)
 	end
 
 	if FightDataHelper.stateMgr.isReplay then
@@ -95,163 +97,163 @@ function var_0_0._onFrameEventCallback(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6
 	end
 end
 
-function var_0_0._onFrameEventPlayCallback(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4)
-	if arg_7_0._same_skill_after_hit then
+function FightSkillTimelineItem:_onFrameEventPlayCallback(type, id, duration, paramStr)
+	if self._same_skill_after_hit then
 		return
 	end
 
-	local var_7_0 = cjson.decode(arg_7_4)
-	local var_7_1 = FightSkillComp.FrameEventHandlerCls[arg_7_1]
+	local param = cjson.decode(paramStr)
+	local typeCls = FightSkillComp.FrameEventHandlerCls[type]
 
-	if var_7_1 then
-		if arg_7_1 == 30 and arg_7_0.entity.skill:sameSkillPlaying() then
+	if typeCls then
+		if type == 30 and self.entity.skill:sameSkillPlaying() then
 			return
 		end
 
-		if arg_7_0._lock_skill_bgm and arg_7_1 == 10 then
+		if self._lock_skill_bgm and type == 10 then
 			return
 		end
 
-		if arg_7_0.fightStepData.cusParam_lockTimelineTypes and arg_7_0.fightStepData.cusParam_lockTimelineTypes[arg_7_1] then
+		if self.fightStepData.cusParam_lockTimelineTypes and self.fightStepData.cusParam_lockTimelineTypes[type] then
 			return
 		end
 
-		local var_7_2 = arg_7_0:newClass(var_7_1, arg_7_2, arg_7_1, arg_7_0.binder, arg_7_0)
+		local track = self:newClass(typeCls, id, type, self.binder, self)
 
-		arg_7_0.trackDic[arg_7_2] = var_7_2
+		self.trackDic[id] = track
 
-		if var_7_2.setContext then
-			var_7_2:setContext(arg_7_0.timelineContext)
+		if track.setContext then
+			track:setContext(self.timelineContext)
 		end
 
-		local var_7_3 = FightModel.instance:getSpeed()
+		local speed = FightModel.instance:getSpeed()
 
-		arg_7_3 = var_7_3 > 0 and arg_7_3 / var_7_3 or arg_7_3
+		duration = speed > 0 and duration / speed or duration
 
-		var_7_2:onTrackStart(arg_7_0.fightStepData, arg_7_3, var_7_0)
+		track:onTrackStart(self.fightStepData, duration, param)
 	else
-		logError(string.format("%s 帧事件类型未实现: %s", arg_7_0._timelineName or "nil", arg_7_1))
+		logError(string.format("%s 帧事件类型未实现: %s", self._timelineName or "nil", type))
 	end
 end
 
-function var_0_0.skipSkill(arg_8_0)
-	for iter_8_0, iter_8_1 in pairs(arg_8_0.trackDic) do
-		if iter_8_1.skipSkill then
-			iter_8_1:skipSkill()
+function FightSkillTimelineItem:skipSkill()
+	for _, track in pairs(self.trackDic) do
+		if track.skipSkill then
+			track:skipSkill()
 		end
 	end
 end
 
-function var_0_0._onTimelineEndCallback(arg_9_0)
-	if arg_9_0.finishWork then
-		arg_9_0.finishWork:registFinishCallback(arg_9_0.onTimelineEnd, arg_9_0)
-		arg_9_0.finishWork:start()
+function FightSkillTimelineItem:_onTimelineEndCallback()
+	if self.finishWork then
+		self.finishWork:registFinishCallback(self.onTimelineEnd, self)
+		self.finishWork:start()
 	else
-		arg_9_0:onTimelineEnd()
+		self:onTimelineEnd()
 	end
 end
 
-function var_0_0.addWork2FinishWork(arg_10_0, arg_10_1)
-	if not arg_10_0.finishWork then
-		arg_10_0.finishWork = arg_10_0:com_registFlowSequence()
+function FightSkillTimelineItem:addWork2FinishWork(work)
+	if not self.finishWork then
+		self.finishWork = self:com_registFlowSequence()
 	end
 
-	arg_10_0.finishWork:addWork(arg_10_1)
+	self.finishWork:addWork(work)
 end
 
-function var_0_0.onTimelineEnd(arg_11_0)
-	arg_11_0.endCallbackFunc(arg_11_0)
+function FightSkillTimelineItem:onTimelineEnd()
+	self.endCallbackFunc(self)
 end
 
-function var_0_0.timelineEndNormalFunc(arg_12_0)
-	for iter_12_0, iter_12_1 in pairs(arg_12_0.trackDic) do
-		if not iter_12_1.signOfInvokedTrackEnd then
-			iter_12_1.signOfInvokedTrackEnd = true
+function FightSkillTimelineItem:timelineEndNormalFunc()
+	for k, track in pairs(self.trackDic) do
+		if not track.signOfInvokedTrackEnd then
+			track.signOfInvokedTrackEnd = true
 
-			xpcall(iter_12_1.onTrackEnd, __G__TRACKBACK__, iter_12_1)
+			xpcall(track.onTrackEnd, __G__TRACKBACK__, track)
 		end
 	end
 
-	arg_12_0.entity.skill:clearSameSkillParam(arg_12_0.fightStepData)
-	arg_12_0.workTimelineItem:onTimelineFinish()
+	self.entity.skill:clearSameSkillParam(self.fightStepData)
+	self.workTimelineItem:onTimelineFinish()
 end
 
-function var_0_0._sameSkillFlowOneDone(arg_13_0)
+function FightSkillTimelineItem:_sameSkillFlowOneDone()
 	return
 end
 
-function var_0_0._onFrameEventPauseCallback(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = true
+function FightSkillTimelineItem:_onFrameEventPauseCallback(type, id)
+	local invokeTrackEnd = true
 
-	if arg_14_0._same_skill_after_hit then
-		var_14_0 = false
+	if self._same_skill_after_hit then
+		invokeTrackEnd = false
 	end
 
-	if arg_14_0.entity.skill:sameSkillPlaying() then
-		if arg_14_1 == 30 then
-			var_14_0 = false
+	if self.entity.skill:sameSkillPlaying() then
+		if type == 30 then
+			invokeTrackEnd = false
 		end
 
-		if arg_14_1 ~= 9 or arg_14_0.fightStepData.cus_Param_invokeSpineActTimelineEnd then
+		if type ~= 9 or self.fightStepData.cus_Param_invokeSpineActTimelineEnd then
 			-- block empty
-		elseif arg_14_0.entity.skill:isLastWork(arg_14_0.workTimelineItem) then
+		elseif self.entity.skill:isLastWork(self.workTimelineItem) then
 			-- block empty
 		else
-			var_14_0 = false
+			invokeTrackEnd = false
 		end
 	end
 
-	local var_14_1 = arg_14_0.trackDic[arg_14_2]
+	local track = self.trackDic[id]
 
-	if var_14_1 and var_14_0 and not var_14_1.signOfInvokedTrackEnd then
-		var_14_1.signOfInvokedTrackEnd = true
+	if track and invokeTrackEnd and not track.signOfInvokedTrackEnd then
+		track.signOfInvokedTrackEnd = true
 
-		var_14_1:onTrackEnd()
+		track:onTrackEnd()
 	end
 end
 
-function var_0_0.stopCurTimelineWaitPlaySameSkill(arg_15_0, arg_15_1, arg_15_2)
-	arg_15_0._same_skill_after_hit = arg_15_1 == 0
-	arg_15_0.curAnimState = arg_15_2
-	arg_15_0.endCallbackFunc = arg_15_0._sameSkillFlowOneDone
+function FightSkillTimelineItem:stopCurTimelineWaitPlaySameSkill(same_skill_jump_type, act_ani_state)
+	self._same_skill_after_hit = same_skill_jump_type == 0
+	self.curAnimState = act_ani_state
+	self.endCallbackFunc = self._sameSkillFlowOneDone
 
-	if gohelper.isNil(arg_15_0.entity.go) then
+	if gohelper.isNil(self.entity.go) then
 		return
 	end
 
-	FightSkillMgr.instance:afterTimeline(arg_15_0.entity, arg_15_0.fightStepData)
-	FightMsgMgr.sendMsg(FightMsgId.PlayTimelineSkillFinish, arg_15_0.entity, arg_15_0.fightStepData.actId, arg_15_0.fightStepData, arg_15_0._timelineName)
-	FightController.instance:dispatchEvent(FightEvent.OnSkillPlayFinish, arg_15_0.entity, arg_15_0.fightStepData.actId, arg_15_0.fightStepData, arg_15_0._timelineName)
-	FightController.instance:dispatchEvent(FightEvent.ForceEndSkillStep, arg_15_0.fightStepData)
+	FightSkillMgr.instance:afterTimeline(self.entity, self.fightStepData)
+	FightMsgMgr.sendMsg(FightMsgId.PlayTimelineSkillFinish, self.entity, self.fightStepData.actId, self.fightStepData, self._timelineName)
+	FightController.instance:dispatchEvent(FightEvent.OnSkillPlayFinish, self.entity, self.fightStepData.actId, self.fightStepData, self._timelineName)
+	FightController.instance:dispatchEvent(FightEvent.ForceEndSkillStep, self.fightStepData)
 end
 
-function var_0_0.stopSkill(arg_16_0)
-	arg_16_0:onLogicExit()
+function FightSkillTimelineItem:stopSkill()
+	self:onLogicExit()
 end
 
-function var_0_0.GetDuration(arg_17_0)
-	return arg_17_0.binder:GetDuration()
+function FightSkillTimelineItem:GetDuration()
+	return self.binder:GetDuration()
 end
 
-function var_0_0.onLogicExit(arg_18_0)
-	arg_18_0.binder:RemoveFrameEventCallback()
-	arg_18_0.binder:RemoveEndCallback()
-	arg_18_0.binder:Stop(true)
-	gohelper.destroy(arg_18_0.timelineObj)
+function FightSkillTimelineItem:onLogicExit()
+	self.binder:RemoveFrameEventCallback()
+	self.binder:RemoveEndCallback()
+	self.binder:Stop(true)
+	gohelper.destroy(self.timelineObj)
 end
 
-function var_0_0.dealDamageFromLostHp(arg_19_0)
-	for iter_19_0, iter_19_1 in ipairs(arg_19_0.fightStepData.actEffect) do
-		if iter_19_1.effectType == FightEnum.EffectType.DAMAGEFROMLOSTHP then
-			arg_19_0.flowForDamageFromLostHp = arg_19_0.flowForDamageFromLostHp or arg_19_0:com_registFlowSequence()
+function FightSkillTimelineItem:dealDamageFromLostHp()
+	for i, v in ipairs(self.fightStepData.actEffect) do
+		if v.effectType == FightEnum.EffectType.DAMAGEFROMLOSTHP then
+			self.flowForDamageFromLostHp = self.flowForDamageFromLostHp or self:com_registFlowSequence()
 
-			arg_19_0.flowForDamageFromLostHp:registWork(FightWorkDamageFromLostHp, arg_19_0.fightStepData, iter_19_1)
+			self.flowForDamageFromLostHp:registWork(FightWorkDamageFromLostHp, self.fightStepData, v)
 		end
 	end
 
-	if arg_19_0.flowForDamageFromLostHp then
-		arg_19_0.flowForDamageFromLostHp:start()
+	if self.flowForDamageFromLostHp then
+		self.flowForDamageFromLostHp:start()
 	end
 end
 
-return var_0_0
+return FightSkillTimelineItem

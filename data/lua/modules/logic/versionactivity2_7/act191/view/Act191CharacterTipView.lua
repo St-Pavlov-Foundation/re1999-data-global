@@ -1,289 +1,299 @@
-﻿module("modules.logic.versionactivity2_7.act191.view.Act191CharacterTipView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/act191/view/Act191CharacterTipView.lua
 
-local var_0_0 = class("Act191CharacterTipView", BaseView)
+module("modules.logic.versionactivity2_7.act191.view.Act191CharacterTipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gopassiveskilltip = gohelper.findChild(arg_1_0.viewGO, "#go_passiveskilltip")
-	arg_1_0._simageshadow = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_passiveskilltip/mask/root/scrollview/#simage_shadow")
-	arg_1_0._goeffectdesc = gohelper.findChild(arg_1_0.viewGO, "#go_passiveskilltip/mask/root/scrollview/viewport/content/#go_effectdesc")
-	arg_1_0._goeffectdescitem = gohelper.findChild(arg_1_0.viewGO, "#go_passiveskilltip/mask/root/scrollview/viewport/content/#go_effectdesc/#go_effectdescitem")
-	arg_1_0._scrollview = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_passiveskilltip/mask/root/scrollview")
-	arg_1_0._gomask1 = gohelper.findChild(arg_1_0.viewGO, "#go_passiveskilltip/mask/root/scrollview/#go_mask1")
-	arg_1_0._txtpassivename = gohelper.findChildText(arg_1_0.viewGO, "#go_passiveskilltip/name/bg/#txt_passivename")
-	arg_1_0._btnclosepassivetip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_passiveskilltip/#btn_closepassivetip")
+local Act191CharacterTipView = class("Act191CharacterTipView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Act191CharacterTipView:onInitView()
+	self._gopassiveskilltip = gohelper.findChild(self.viewGO, "#go_passiveskilltip")
+	self._simageshadow = gohelper.findChildSingleImage(self.viewGO, "#go_passiveskilltip/mask/root/scrollview/#simage_shadow")
+	self._goeffectdesc = gohelper.findChild(self.viewGO, "#go_passiveskilltip/mask/root/scrollview/viewport/content/#go_effectdesc")
+	self._goeffectdescitem = gohelper.findChild(self.viewGO, "#go_passiveskilltip/mask/root/scrollview/viewport/content/#go_effectdesc/#go_effectdescitem")
+	self._scrollview = gohelper.findChildScrollRect(self.viewGO, "#go_passiveskilltip/mask/root/scrollview")
+	self._gomask1 = gohelper.findChild(self.viewGO, "#go_passiveskilltip/mask/root/scrollview/#go_mask1")
+	self._txtpassivename = gohelper.findChildText(self.viewGO, "#go_passiveskilltip/name/bg/#txt_passivename")
+	self._btnclosepassivetip = gohelper.findChildButtonWithAudio(self.viewGO, "#go_passiveskilltip/#btn_closepassivetip")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclosepassivetip:AddClickListener(arg_2_0._btnclosepassivetipOnClick, arg_2_0)
+function Act191CharacterTipView:addEvents()
+	self._btnclosepassivetip:AddClickListener(self._btnclosepassivetipOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclosepassivetip:RemoveClickListener()
+function Act191CharacterTipView:removeEvents()
+	self._btnclosepassivetip:RemoveClickListener()
 end
 
-function var_0_0._btnclosepassivetipOnClick(arg_4_0)
+function Act191CharacterTipView:_btnclosepassivetipOnClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	arg_4_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._passiveskilltipcontent = gohelper.findChild(arg_5_0._gopassiveskilltip, "mask/root/scrollview/viewport/content")
-	arg_5_0._passiveskilltipmask = gohelper.findChild(arg_5_0._gopassiveskilltip, "mask"):GetComponent(typeof(UnityEngine.UI.RectMask2D))
+function Act191CharacterTipView:_editableInitView()
+	self._passiveskilltipcontent = gohelper.findChild(self._gopassiveskilltip, "mask/root/scrollview/viewport/content")
+	self._passiveskilltipmask = gohelper.findChild(self._gopassiveskilltip, "mask"):GetComponent(typeof(UnityEngine.UI.RectMask2D))
 
-	arg_5_0._simageshadow:LoadImage(ResUrl.getCharacterIcon("bg_shade"))
+	self._simageshadow:LoadImage(ResUrl.getCharacterIcon("bg_shade"))
 
-	arg_5_0._passiveskillitems = {}
+	self._passiveskillitems = {}
 
-	for iter_5_0 = 0, 3 do
-		local var_5_0 = arg_5_0:getUserDataTb_()
+	for i = 0, 3 do
+		local o = self:getUserDataTb_()
 
-		var_5_0.go = gohelper.findChild(arg_5_0._gopassiveskilltip, "mask/root/scrollview/viewport/content/talentstar" .. tostring(iter_5_0))
-		var_5_0.desc = gohelper.findChildTextMesh(var_5_0.go, "desctxt")
-		var_5_0.hyperLinkClick = SkillHelper.addHyperLinkClick(var_5_0.desc, arg_5_0._onHyperLinkClick, arg_5_0)
-		var_5_0.fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(var_5_0.desc.gameObject, FixTmpBreakLine)
-		var_5_0.on = gohelper.findChild(var_5_0.go, "#go_passiveskills/passiveskill/on")
-		var_5_0.unlocktxt = gohelper.findChildText(var_5_0.go, "#go_passiveskills/passiveskill/unlocktxt")
-		var_5_0.canvasgroup = gohelper.onceAddComponent(var_5_0.go, typeof(UnityEngine.CanvasGroup))
-		var_5_0.connectline = gohelper.findChild(var_5_0.go, "line")
-		arg_5_0._passiveskillitems[iter_5_0] = var_5_0
+		o.go = gohelper.findChild(self._gopassiveskilltip, "mask/root/scrollview/viewport/content/talentstar" .. tostring(i))
+		o.desc = gohelper.findChildTextMesh(o.go, "desctxt")
+		o.hyperLinkClick = SkillHelper.addHyperLinkClick(o.desc, self._onHyperLinkClick, self)
+		o.fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(o.desc.gameObject, FixTmpBreakLine)
+		o.on = gohelper.findChild(o.go, "#go_passiveskills/passiveskill/on")
+		o.unlocktxt = gohelper.findChildText(o.go, "#go_passiveskills/passiveskill/unlocktxt")
+		o.canvasgroup = gohelper.onceAddComponent(o.go, typeof(UnityEngine.CanvasGroup))
+		o.connectline = gohelper.findChild(o.go, "line")
+		self._passiveskillitems[i] = o
 	end
 
-	arg_5_0._txtpassivename = gohelper.findChildText(arg_5_0.viewGO, "#go_passiveskilltip/name/bg/#txt_passivename")
-	arg_5_0._skillEffectDescItems = arg_5_0:getUserDataTb_()
+	self._txtpassivename = gohelper.findChildText(self.viewGO, "#go_passiveskilltip/name/bg/#txt_passivename")
+	self._skillEffectDescItems = self:getUserDataTb_()
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function Act191CharacterTipView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	local var_7_0 = arg_7_0.viewParam
+function Act191CharacterTipView:onOpen()
+	local info = self.viewParam
 
-	arg_7_0.config = Activity191Config.instance:getRoleCo(var_7_0.id)
+	self.config = Activity191Config.instance:getRoleCo(info.id)
 
-	arg_7_0:_setPassiveSkill(var_7_0.anchorParams, var_7_0.tipPos)
+	self:_setPassiveSkill(info.anchorParams, info.tipPos)
 end
 
-function var_0_0.onClose(arg_8_0)
+function Act191CharacterTipView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
+function Act191CharacterTipView:onDestroyView()
 	return
 end
 
-function var_0_0._setPassiveSkill(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_0._matchSkillNames = {}
+function Act191CharacterTipView:_setPassiveSkill(anchorParams, tipPos)
+	self._matchSkillNames = {}
 
-	local var_10_0 = Activity191Config.instance:getHeroPassiveSkillIdList(arg_10_0.config.id)
+	local skillIds = Activity191Config.instance:getHeroPassiveSkillIdList(self.config.id)
 
-	if arg_10_0.viewParam.stoneId then
-		var_10_0 = Activity191Helper.replaceSkill(arg_10_0.viewParam.stoneId, var_10_0)
+	if self.viewParam.stoneId then
+		skillIds = Activity191Helper.replaceSkill(self.viewParam.stoneId, skillIds)
 	end
 
-	local var_10_1 = var_10_0[1]
+	local firstSkill = skillIds[1]
 
-	arg_10_0._txtpassivename.text = lua_skill.configDict[var_10_1].name
+	self._txtpassivename.text = lua_skill.configDict[firstSkill].name
 
-	local var_10_2 = {}
+	local txtTab = {}
 
-	for iter_10_0, iter_10_1 in pairs(var_10_0) do
-		local var_10_3 = lua_skill.configDict[iter_10_1]
+	for i, skillId in pairs(skillIds) do
+		local skillCo = lua_skill.configDict[skillId]
+		local desc = FightConfig.instance:getSkillEffectDesc(self.config.name, skillCo)
 
-		var_10_2[iter_10_0] = FightConfig.instance:getSkillEffectDesc(arg_10_0.config.name, var_10_3)
+		txtTab[i] = desc
 	end
 
-	local var_10_4 = HeroSkillModel.instance:getSkillEffectTagIdsFormDescTabRecursion(var_10_2)
-	local var_10_5 = {}
-	local var_10_6 = {}
+	local matchTxtTab = HeroSkillModel.instance:getSkillEffectTagIdsFormDescTabRecursion(txtTab)
+	local tagNameExistDict = {}
+	local skillEffectDescTab = {}
 
-	for iter_10_2 = 0, 3 do
-		local var_10_7 = arg_10_0._passiveskillitems[iter_10_2]
-		local var_10_8 = var_10_0[iter_10_2]
+	for i = 0, 3 do
+		local passiveItem = self._passiveskillitems[i]
+		local skillId = skillIds[i]
 
-		if var_10_8 then
-			local var_10_9 = true
-			local var_10_10 = lua_skill.configDict[var_10_8]
-			local var_10_11 = FightConfig.instance:getSkillEffectDesc(arg_10_0.config.name, var_10_10)
+		if skillId then
+			local unlock = true
+			local skillCo = lua_skill.configDict[skillId]
+			local txt = FightConfig.instance:getSkillEffectDesc(self.config.name, skillCo)
 
-			for iter_10_3, iter_10_4 in pairs(var_10_4[iter_10_2]) do
-				local var_10_12 = SkillConfig.instance:getSkillEffectDescCo(iter_10_4)
-				local var_10_13 = var_10_12.name
+			for _, v in pairs(matchTxtTab[i]) do
+				local effectCo = SkillConfig.instance:getSkillEffectDescCo(v)
+				local name = effectCo.name
+				local canShowSkillTag = HeroSkillModel.instance:canShowSkillTag(name, true)
 
-				if HeroSkillModel.instance:canShowSkillTag(var_10_13, true) and not var_10_5[var_10_13] then
-					var_10_5[var_10_13] = true
+				if canShowSkillTag and not tagNameExistDict[name] then
+					tagNameExistDict[name] = true
 
-					if var_10_12.isSpecialCharacter == 1 then
-						local var_10_14 = var_10_12.desc
+					if effectCo.isSpecialCharacter == 1 then
+						local desc = effectCo.desc
 
-						var_10_11 = string.format("%s", var_10_11)
+						txt = string.format("%s", txt)
 
-						local var_10_15 = SkillHelper.buildDesc(var_10_14)
+						local skillEffectDesc = SkillHelper.buildDesc(desc)
 
-						table.insert(var_10_6, {
-							desc = var_10_15,
-							title = var_10_12.name
+						table.insert(skillEffectDescTab, {
+							desc = skillEffectDesc,
+							title = effectCo.name
 						})
 					end
 				end
 			end
 
-			local var_10_16 = SkillHelper.buildDesc(var_10_11)
+			local desc = SkillHelper.buildDesc(txt)
 
-			var_10_7.desc.text = var_10_16
+			passiveItem.desc.text = desc
 
-			local var_10_17
+			local unlockTxt
 
-			if iter_10_2 == 0 then
-				var_10_17 = luaLang("character_skill_passive_0")
+			if i == 0 then
+				unlockTxt = luaLang("character_skill_passive_0")
 			else
-				local var_10_18 = arg_10_0:_getTargetRankByEffect(arg_10_0.config.roleId, iter_10_2)
+				local ranknum = self:_getTargetRankByEffect(self.config.roleId, i)
 
-				var_10_17 = string.format(luaLang("character_passive_unlock"), GameUtil.getRomanNums(var_10_18))
+				unlockTxt = string.format(luaLang("character_passive_unlock"), GameUtil.getRomanNums(ranknum))
 			end
 
-			var_10_7.unlocktxt.text = var_10_17
+			passiveItem.unlocktxt.text = unlockTxt
 
-			SLFramework.UGUI.GuiHelper.SetColor(var_10_7.unlocktxt, "#313B33")
+			SLFramework.UGUI.GuiHelper.SetColor(passiveItem.unlocktxt, "#313B33")
 
-			var_10_7.canvasgroup.alpha = var_10_9 and 1 or 0.83
+			passiveItem.canvasgroup.alpha = unlock and 1 or 0.83
 
-			gohelper.setActive(var_10_7.on, var_10_9)
-			var_10_7.fixTmpBreakLine:refreshTmpContent(var_10_7.desc)
-			SLFramework.UGUI.GuiHelper.SetColor(var_10_7.desc, var_10_9 and "#272525" or "#3A3A3A")
-			gohelper.setActive(var_10_7.go, true)
-			gohelper.setActive(var_10_7.connectline, iter_10_2 ~= #var_10_0)
+			gohelper.setActive(passiveItem.on, unlock)
+			passiveItem.fixTmpBreakLine:refreshTmpContent(passiveItem.desc)
+			SLFramework.UGUI.GuiHelper.SetColor(passiveItem.desc, unlock and "#272525" or "#3A3A3A")
+			gohelper.setActive(passiveItem.go, true)
+			gohelper.setActive(passiveItem.connectline, i ~= #skillIds)
 		end
 
-		gohelper.setActive(var_10_7.go, var_10_8 ~= nil)
+		gohelper.setActive(passiveItem.go, skillId ~= nil)
 	end
 
-	arg_10_0:_showSkillEffectDesc(var_10_6)
-	arg_10_0:_refreshPassiveSkillScroll()
-	arg_10_0:_setTipPos(arg_10_0._gopassiveskilltip.transform, arg_10_2, arg_10_1)
+	self:_showSkillEffectDesc(skillEffectDescTab)
+	self:_refreshPassiveSkillScroll()
+	self:_setTipPos(self._gopassiveskilltip.transform, tipPos, anchorParams)
 end
 
-function var_0_0._getTargetRankByEffect(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = SkillConfig.instance:getheroranksCO(arg_11_1)
+function Act191CharacterTipView:_getTargetRankByEffect(heroid, skilllv)
+	local rankCo = SkillConfig.instance:getheroranksCO(heroid)
 
-	for iter_11_0, iter_11_1 in pairs(var_11_0) do
-		if CharacterModel.instance:getrankEffects(arg_11_1, iter_11_0)[2] == arg_11_2 then
-			return iter_11_0 - 1
+	for k, _ in pairs(rankCo) do
+		local effect = CharacterModel.instance:getrankEffects(heroid, k)
+
+		if effect[2] == skilllv then
+			return k - 1
 		end
 	end
 
 	return 0
 end
 
-function var_0_0._showSkillEffectDesc(arg_12_0, arg_12_1)
-	gohelper.setActive(arg_12_0._goeffectdesc, arg_12_1 and #arg_12_1 > 0)
+function Act191CharacterTipView:_showSkillEffectDesc(skillEffectDescTab)
+	gohelper.setActive(self._goeffectdesc, skillEffectDescTab and #skillEffectDescTab > 0)
 
-	for iter_12_0 = 1, #arg_12_1 do
-		local var_12_0 = arg_12_1[iter_12_0]
-		local var_12_1 = arg_12_0:_getSkillEffectDescItem(iter_12_0)
+	for i = 1, #skillEffectDescTab do
+		local skillDesc = skillEffectDescTab[i]
+		local descItem = self:_getSkillEffectDescItem(i)
 
-		var_12_1.desc.text = var_12_0.desc
-		var_12_1.title.text = SkillHelper.removeRichTag(var_12_0.title)
+		descItem.desc.text = skillDesc.desc
+		descItem.title.text = SkillHelper.removeRichTag(skillDesc.title)
 
-		var_12_1.fixTmpBreakLine:refreshTmpContent(var_12_1.desc)
-		gohelper.setActive(var_12_1.go, true)
+		descItem.fixTmpBreakLine:refreshTmpContent(descItem.desc)
+		gohelper.setActive(descItem.go, true)
 	end
 
-	for iter_12_1 = #arg_12_1 + 1, #arg_12_0._skillEffectDescItems do
-		gohelper.setActive(arg_12_0._passiveskillitems[iter_12_1].go, false)
+	for i = #skillEffectDescTab + 1, #self._skillEffectDescItems do
+		gohelper.setActive(self._passiveskillitems[i].go, false)
 	end
 end
 
-function var_0_0._getSkillEffectDescItem(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0._skillEffectDescItems[arg_13_1]
+function Act191CharacterTipView:_getSkillEffectDescItem(index)
+	local descItem = self._skillEffectDescItems[index]
 
-	if not var_13_0 then
-		var_13_0 = arg_13_0:getUserDataTb_()
-		var_13_0.go = gohelper.cloneInPlace(arg_13_0._goeffectdescitem, "descitem" .. arg_13_1)
-		var_13_0.desc = gohelper.findChildText(var_13_0.go, "effectdesc")
-		var_13_0.title = gohelper.findChildText(var_13_0.go, "titlebg/bg/name")
-		var_13_0.fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(var_13_0.desc.gameObject, FixTmpBreakLine)
-		var_13_0.hyperLinkClick = SkillHelper.addHyperLinkClick(var_13_0.desc, arg_13_0._onHyperLinkClick, arg_13_0)
+	if not descItem then
+		descItem = self:getUserDataTb_()
+		descItem.go = gohelper.cloneInPlace(self._goeffectdescitem, "descitem" .. index)
+		descItem.desc = gohelper.findChildText(descItem.go, "effectdesc")
+		descItem.title = gohelper.findChildText(descItem.go, "titlebg/bg/name")
+		descItem.fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(descItem.desc.gameObject, FixTmpBreakLine)
+		descItem.hyperLinkClick = SkillHelper.addHyperLinkClick(descItem.desc, self._onHyperLinkClick, self)
 
-		table.insert(arg_13_0._skillEffectDescItems, arg_13_1, var_13_0)
+		table.insert(self._skillEffectDescItems, index, descItem)
 	end
 
-	return var_13_0
+	return descItem
 end
 
-function var_0_0._refreshPassiveSkillScroll(arg_14_0)
-	local var_14_0 = gohelper.findChild(arg_14_0._gopassiveskilltip, "mask/root")
+function Act191CharacterTipView:_refreshPassiveSkillScroll()
+	local root = gohelper.findChild(self._gopassiveskilltip, "mask/root")
 
-	ZProj.UGUIHelper.RebuildLayout(var_14_0.transform)
+	ZProj.UGUIHelper.RebuildLayout(root.transform)
 
-	arg_14_0._couldScroll = recthelper.getHeight(arg_14_0._passiveskilltipcontent.transform) > recthelper.getHeight(arg_14_0._scrollview.transform)
+	local scrollContentHeight = recthelper.getHeight(self._passiveskilltipcontent.transform)
+	local scrollViewHeight = recthelper.getHeight(self._scrollview.transform)
 
-	gohelper.setActive(arg_14_0._gomask1, arg_14_0._couldScroll and not (gohelper.getRemindFourNumberFloat(arg_14_0._scrollview.verticalNormalizedPosition) <= 0))
+	self._couldScroll = scrollViewHeight < scrollContentHeight
 
-	arg_14_0._passiveskilltipmask.enabled = false
+	gohelper.setActive(self._gomask1, self._couldScroll and not (gohelper.getRemindFourNumberFloat(self._scrollview.verticalNormalizedPosition) <= 0))
 
-	local var_14_1 = gohelper.findChild(arg_14_0._gopassiveskilltip, "mask/root/scrollview/viewport")
-	local var_14_2 = gohelper.onceAddComponent(var_14_1, gohelper.Type_VerticalLayoutGroup)
-	local var_14_3 = gohelper.onceAddComponent(var_14_1, typeof(UnityEngine.UI.LayoutElement))
-	local var_14_4 = recthelper.getHeight(var_14_1.transform)
+	self._passiveskilltipmask.enabled = false
 
-	var_14_2.enabled = false
-	var_14_3.enabled = true
-	var_14_3.preferredHeight = var_14_4
+	local passviewskilltipviewport = gohelper.findChild(self._gopassiveskilltip, "mask/root/scrollview/viewport")
+	local psviewportVerticalGroup = gohelper.onceAddComponent(passviewskilltipviewport, gohelper.Type_VerticalLayoutGroup)
+	local psviewportLayoutElement = gohelper.onceAddComponent(passviewskilltipviewport, typeof(UnityEngine.UI.LayoutElement))
+	local height = recthelper.getHeight(passviewskilltipviewport.transform)
+
+	psviewportVerticalGroup.enabled = false
+	psviewportLayoutElement.enabled = true
+	psviewportLayoutElement.preferredHeight = height
 end
 
-function var_0_0._setTipPos(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	if not arg_15_1 then
+function Act191CharacterTipView:_setTipPos(tipTran, tipPos, anchorParams)
+	if not tipTran then
 		return
 	end
 
-	local var_15_0 = arg_15_3 and arg_15_3[1] or Vector2.New(0.5, 0.5)
-	local var_15_1 = arg_15_3 and arg_15_3[2] or Vector2.New(0.5, 0.5)
-	local var_15_2 = arg_15_2 and arg_15_2 or Vector2.New(0, 0)
+	local targetAnchorMin = anchorParams and anchorParams[1] or Vector2.New(0.5, 0.5)
+	local targetAnchorMax = anchorParams and anchorParams[2] or Vector2.New(0.5, 0.5)
+	local targetTipPos = tipPos and tipPos or Vector2.New(0, 0)
 
-	arg_15_0._gopassiveskilltip.transform.anchorMin = var_15_0
-	arg_15_0._gopassiveskilltip.transform.anchorMax = var_15_1
+	self._gopassiveskilltip.transform.anchorMin = targetAnchorMin
+	self._gopassiveskilltip.transform.anchorMax = targetAnchorMax
 
-	recthelper.setAnchor(arg_15_1, var_15_2.x, var_15_2.y)
+	recthelper.setAnchor(tipTran, targetTipPos.x, targetTipPos.y)
 end
 
-var_0_0.LeftWidth = 470
-var_0_0.RightWidth = 190
-var_0_0.TopHeight = 292
-var_0_0.Interval = 10
+Act191CharacterTipView.LeftWidth = 470
+Act191CharacterTipView.RightWidth = 190
+Act191CharacterTipView.TopHeight = 292
+Act191CharacterTipView.Interval = 10
 
-function var_0_0._onHyperLinkClick(arg_16_0, arg_16_1, arg_16_2)
-	CommonBuffTipController.instance:openCommonTipViewWithCustomPosCallback(tonumber(arg_16_1), arg_16_0.setTipPosCallback, arg_16_0)
+function Act191CharacterTipView:_onHyperLinkClick(effectId, clickPosition)
+	CommonBuffTipController.instance:openCommonTipViewWithCustomPosCallback(tonumber(effectId), self.setTipPosCallback, self)
 end
 
-function var_0_0.setTipPosCallback(arg_17_0, arg_17_1, arg_17_2)
-	arg_17_0.rectTrPassive = arg_17_0.rectTrPassive or arg_17_0._gopassiveskilltip:GetComponent(gohelper.Type_RectTransform)
+function Act191CharacterTipView:setTipPosCallback(rectTrTipViewGo, rectTrScrollTip)
+	self.rectTrPassive = self.rectTrPassive or self._gopassiveskilltip:GetComponent(gohelper.Type_RectTransform)
 
-	local var_17_0 = GameUtil.getViewSize() / 2
-	local var_17_1, var_17_2 = recthelper.uiPosToScreenPos2(arg_17_0.rectTrPassive)
-	local var_17_3, var_17_4 = SLFramework.UGUI.RectTrHelper.ScreenPosXYToAnchorPosXY(var_17_1, var_17_2, arg_17_1, CameraMgr.instance:getUICamera(), nil, nil)
-	local var_17_5 = var_17_0 + var_17_3 - var_0_0.LeftWidth - var_0_0.Interval
-	local var_17_6 = recthelper.getWidth(arg_17_2)
-	local var_17_7 = var_17_6 <= var_17_5
+	local w = GameUtil.getViewSize()
+	local halfW = w / 2
+	local screenPosX, screenPosY = recthelper.uiPosToScreenPos2(self.rectTrPassive)
+	local localPosX, localPosY = SLFramework.UGUI.RectTrHelper.ScreenPosXYToAnchorPosXY(screenPosX, screenPosY, rectTrTipViewGo, CameraMgr.instance:getUICamera(), nil, nil)
+	local leftRemainWidth = halfW + localPosX - Act191CharacterTipView.LeftWidth - Act191CharacterTipView.Interval
+	local scrollTipWidth = recthelper.getWidth(rectTrScrollTip)
+	local showLeft = scrollTipWidth <= leftRemainWidth
 
-	arg_17_2.pivot = CommonBuffTipEnum.Pivot.Right
+	rectTrScrollTip.pivot = CommonBuffTipEnum.Pivot.Right
 
-	local var_17_8 = var_17_3
-	local var_17_9 = var_17_4
+	local anchorX = localPosX
+	local anchorY = localPosY
 
-	if var_17_7 then
-		var_17_8 = var_17_8 - var_0_0.LeftWidth - var_0_0.Interval
+	if showLeft then
+		anchorX = anchorX - Act191CharacterTipView.LeftWidth - Act191CharacterTipView.Interval
 	else
-		var_17_8 = var_17_8 + var_0_0.RightWidth + var_0_0.Interval + var_17_6
+		anchorX = anchorX + Act191CharacterTipView.RightWidth + Act191CharacterTipView.Interval + scrollTipWidth
 	end
 
-	local var_17_10 = var_17_9 + var_0_0.TopHeight
+	anchorY = anchorY + Act191CharacterTipView.TopHeight
 
-	recthelper.setAnchor(arg_17_2, var_17_8, var_17_10)
+	recthelper.setAnchor(rectTrScrollTip, anchorX, anchorY)
 end
 
-return var_0_0
+return Act191CharacterTipView

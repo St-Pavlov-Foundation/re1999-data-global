@@ -1,18 +1,20 @@
-﻿module("modules.logic.dispatch.define.DispatchEnum", package.seeall)
+﻿-- chunkname: @modules/logic/dispatch/define/DispatchEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.dispatch.define.DispatchEnum", package.seeall)
 
-var_0_0.DispatchStatus = {
+local DispatchEnum = _M
+
+DispatchEnum.DispatchStatus = {
 	Finished = 3,
 	NotDispatch = 1,
 	Dispatching = 2
 }
-var_0_0.DispatchShortedType = {
+DispatchEnum.DispatchShortedType = {
 	Career = 1,
 	HeroId = 2
 }
-var_0_0.ActId2View = {
+DispatchEnum.ActId2View = {
 	[VersionActivity1_8Enum.ActivityId.Dungeon] = ViewName.VersionActivity1_8DispatchView
 }
 
-return var_0_0
+return DispatchEnum

@@ -1,25 +1,27 @@
-﻿module("modules.logic.equip.model.EquipSelectedListModel", package.seeall)
+﻿-- chunkname: @modules/logic/equip/model/EquipSelectedListModel.lua
 
-local var_0_0 = class("EquipSelectedListModel", ListScrollModel)
+module("modules.logic.equip.model.EquipSelectedListModel", package.seeall)
 
-function var_0_0.initList(arg_1_0)
-	arg_1_0:updateList()
+local EquipSelectedListModel = class("EquipSelectedListModel", ListScrollModel)
+
+function EquipSelectedListModel:initList()
+	self:updateList()
 end
 
-function var_0_0.updateList(arg_2_0, arg_2_1)
-	local var_2_0 = {}
+function EquipSelectedListModel:updateList(value)
+	local list = {}
 
-	for iter_2_0 = 1, EquipEnum.StrengthenMaxCount do
-		table.insert(var_2_0, arg_2_1 and arg_2_1[iter_2_0] or {})
+	for i = 1, EquipEnum.StrengthenMaxCount do
+		table.insert(list, value and value[i] or {})
 	end
 
-	arg_2_0:setList(var_2_0)
+	self:setList(list)
 end
 
-function var_0_0.clearList(arg_3_0)
-	arg_3_0:clear()
+function EquipSelectedListModel:clearList()
+	self:clear()
 end
 
-var_0_0.instance = var_0_0.New()
+EquipSelectedListModel.instance = EquipSelectedListModel.New()
 
-return var_0_0
+return EquipSelectedListModel

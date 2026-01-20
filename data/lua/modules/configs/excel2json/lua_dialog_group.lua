@@ -1,18 +1,20 @@
-﻿module("modules.configs.excel2json.lua_dialog_group", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_dialog_group.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_dialog_group", package.seeall)
+
+local lua_dialog_group = {}
+local fields = {
 	dialogue_id = 1,
 	id = 2
 }
-local var_0_2 = {
+local primaryKey = {
 	"dialogue_id",
 	"id"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_dialog_group.onLoad(json)
+	lua_dialog_group.configList, lua_dialog_group.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_dialog_group

@@ -1,103 +1,108 @@
-﻿module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicFreeNoteView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/music/view/VersionActivity2_4MusicFreeNoteView.lua
 
-local var_0_0 = class("VersionActivity2_4MusicFreeNoteView", BaseView)
+module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicFreeNoteView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gomusic1 = gohelper.findChild(arg_1_0.viewGO, "root/right/#go_music1")
-	arg_1_0._gomusic2 = gohelper.findChild(arg_1_0.viewGO, "root/right/#go_music2")
-	arg_1_0._goinstruments = gohelper.findChild(arg_1_0.viewGO, "root/right/bottom/#go_instruments")
+local VersionActivity2_4MusicFreeNoteView = class("VersionActivity2_4MusicFreeNoteView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity2_4MusicFreeNoteView:onInitView()
+	self._gomusic1 = gohelper.findChild(self.viewGO, "root/right/#go_music1")
+	self._gomusic2 = gohelper.findChild(self.viewGO, "root/right/#go_music2")
+	self._goinstruments = gohelper.findChild(self.viewGO, "root/right/bottom/#go_instruments")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function VersionActivity2_4MusicFreeNoteView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function VersionActivity2_4MusicFreeNoteView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function VersionActivity2_4MusicFreeNoteView:_editableInitView()
 	return
 end
 
-function var_0_0._initNoteList(arg_5_0)
-	arg_5_0._noteList = arg_5_0:getUserDataTb_()
+function VersionActivity2_4MusicFreeNoteView:_initNoteList()
+	self._noteList = self:getUserDataTb_()
 
-	for iter_5_0 = 1, 2 do
-		arg_5_0:_addNoteListItem(iter_5_0)
+	for i = 1, 2 do
+		self:_addNoteListItem(i)
 	end
 
-	arg_5_0:_updateNoteListItem()
+	self:_updateNoteListItem()
 end
 
-function var_0_0._addNoteListItem(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0.viewContainer:getSetting().otherRes[2]
-	local var_6_1 = arg_6_0:getResInst(var_6_0, arg_6_0["_gomusic" .. arg_6_1], "note_" .. tostring(arg_6_1))
-	local var_6_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_6_1, VersionActivity2_4MusicFreeNoteListItem)
+function VersionActivity2_4MusicFreeNoteView:_addNoteListItem(index)
+	local path = self.viewContainer:getSetting().otherRes[2]
+	local childGO = self:getResInst(path, self["_gomusic" .. index], "note_" .. tostring(index))
+	local item = MonoHelper.addNoUpdateLuaComOnceToGo(childGO, VersionActivity2_4MusicFreeNoteListItem)
 
-	table.insert(arg_6_0._noteList, arg_6_1, var_6_2)
-	var_6_2:initNoteItemList(arg_6_0._addNoteItem, arg_6_0)
+	table.insert(self._noteList, index, item)
+	item:initNoteItemList(self._addNoteItem, self)
 end
 
-function var_0_0._updateNoteListItem(arg_7_0)
-	local var_7_0 = VersionActivity2_4MusicFreeModel.instance:getInstrumentIndexList()
+function VersionActivity2_4MusicFreeNoteView:_updateNoteListItem()
+	local list = VersionActivity2_4MusicFreeModel.instance:getInstrumentIndexList()
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0._noteList) do
-		iter_7_1:onUpdateMO(var_7_0[iter_7_0])
-	end
-end
-
-function var_0_0._addNoteItem(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0.viewContainer:getSetting().otherRes[3]
-	local var_8_1 = arg_8_0:getResInst(var_8_0, arg_8_1)
-
-	return (MonoHelper.addNoUpdateLuaComOnceToGo(var_8_1, VersionActivity2_4MusicFreeNoteItem))
-end
-
-function var_0_0._initInstruments(arg_9_0)
-	arg_9_0._instrumentList = arg_9_0:getUserDataTb_()
-
-	local var_9_0 = Activity179Config.instance:getInstrumentNoSwitchList()
-
-	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
-		arg_9_0:_addInstrumentItem(iter_9_0):onUpdateMO(iter_9_1)
+	for i, v in ipairs(self._noteList) do
+		v:onUpdateMO(list[i])
 	end
 end
 
-function var_0_0._addInstrumentItem(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0.viewContainer:getSetting().otherRes[4]
-	local var_10_1 = arg_10_0:getResInst(var_10_0, arg_10_0._goinstruments, "instrument_" .. tostring(arg_10_1))
-	local var_10_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_10_1, VersionActivity2_4MusicFreeInstrumentItem)
+function VersionActivity2_4MusicFreeNoteView:_addNoteItem(go)
+	local path = self.viewContainer:getSetting().otherRes[3]
+	local childGO = self:getResInst(path, go)
+	local item = MonoHelper.addNoUpdateLuaComOnceToGo(childGO, VersionActivity2_4MusicFreeNoteItem)
 
-	table.insert(arg_10_0._instrumentList, arg_10_1, var_10_2)
-
-	return var_10_2
+	return item
 end
 
-function var_0_0.onUpdateParam(arg_11_0)
+function VersionActivity2_4MusicFreeNoteView:_initInstruments()
+	self._instrumentList = self:getUserDataTb_()
+
+	local list = Activity179Config.instance:getInstrumentNoSwitchList()
+
+	for i, v in ipairs(list) do
+		local item = self:_addInstrumentItem(i)
+
+		item:onUpdateMO(v)
+	end
+end
+
+function VersionActivity2_4MusicFreeNoteView:_addInstrumentItem(index)
+	local path = self.viewContainer:getSetting().otherRes[4]
+	local childGO = self:getResInst(path, self._goinstruments, "instrument_" .. tostring(index))
+	local item = MonoHelper.addNoUpdateLuaComOnceToGo(childGO, VersionActivity2_4MusicFreeInstrumentItem)
+
+	table.insert(self._instrumentList, index, item)
+
+	return item
+end
+
+function VersionActivity2_4MusicFreeNoteView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_12_0)
-	arg_12_0:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.InstrumentSelectChange, arg_12_0._onInstrumentSelectChange, arg_12_0)
-	arg_12_0:_initNoteList()
-	arg_12_0:_initInstruments()
+function VersionActivity2_4MusicFreeNoteView:onOpen()
+	self:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.InstrumentSelectChange, self._onInstrumentSelectChange, self)
+	self:_initNoteList()
+	self:_initInstruments()
 end
 
-function var_0_0._onInstrumentSelectChange(arg_13_0)
-	arg_13_0:_updateNoteListItem()
+function VersionActivity2_4MusicFreeNoteView:_onInstrumentSelectChange()
+	self:_updateNoteListItem()
 end
 
-function var_0_0.onClose(arg_14_0)
+function VersionActivity2_4MusicFreeNoteView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_15_0)
+function VersionActivity2_4MusicFreeNoteView:onDestroyView()
 	return
 end
 
-return var_0_0
+return VersionActivity2_4MusicFreeNoteView

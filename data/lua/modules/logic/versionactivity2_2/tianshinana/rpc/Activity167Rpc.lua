@@ -1,115 +1,117 @@
-﻿module("modules.logic.versionactivity2_2.tianshinana.rpc.Activity167Rpc", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/tianshinana/rpc/Activity167Rpc.lua
 
-local var_0_0 = class("Activity167Rpc", BaseRpc)
+module("modules.logic.versionactivity2_2.tianshinana.rpc.Activity167Rpc", package.seeall)
 
-function var_0_0.sendGetAct167InfoRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = Activity167Module_pb.GetAct167InfoRequest()
+local Activity167Rpc = class("Activity167Rpc", BaseRpc)
 
-	var_1_0.activityId = arg_1_1
+function Activity167Rpc:sendGetAct167InfoRequest(activityId, callback, callbackobj)
+	local msg = Activity167Module_pb.GetAct167InfoRequest()
 
-	arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
+	msg.activityId = activityId
+
+	self:sendMsg(msg, callback, callbackobj)
 end
 
-function var_0_0.onReceiveGetAct167InfoReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 == 0 then
-		TianShiNaNaModel.instance.currEpisodeId = arg_2_2.currEpisodeId
+function Activity167Rpc:onReceiveGetAct167InfoReply(resultCode, msg)
+	if resultCode == 0 then
+		TianShiNaNaModel.instance.currEpisodeId = msg.currEpisodeId
 
-		TianShiNaNaModel.instance:initInfo(arg_2_2.episodes)
+		TianShiNaNaModel.instance:initInfo(msg.episodes)
 	end
 end
 
-function var_0_0.sendAct167StartEpisodeRequest(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	local var_3_0 = Activity167Module_pb.Act167StartEpisodeRequest()
+function Activity167Rpc:sendAct167StartEpisodeRequest(activityId, episodeId, callback, callbackobj)
+	local msg = Activity167Module_pb.Act167StartEpisodeRequest()
 
-	var_3_0.activityId = arg_3_1
-	var_3_0.episodeId = arg_3_2
+	msg.activityId = activityId
+	msg.episodeId = episodeId
 
-	arg_3_0:sendMsg(var_3_0, arg_3_3, arg_3_4)
+	self:sendMsg(msg, callback, callbackobj)
 end
 
-function var_0_0.onReceiveAct167StartEpisodeReply(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 == 0 then
-		TianShiNaNaModel.instance:initDatas(arg_4_2.episodeId, arg_4_2.scene)
+function Activity167Rpc:onReceiveAct167StartEpisodeReply(resultCode, msg)
+	if resultCode == 0 then
+		TianShiNaNaModel.instance:initDatas(msg.episodeId, msg.scene)
 	end
 end
 
-function var_0_0.sendAct167ReStartEpisodeRequest(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
-	local var_5_0 = Activity167Module_pb.Act167ReStartEpisodeRequest()
+function Activity167Rpc:sendAct167ReStartEpisodeRequest(activityId, episodeId, callback, callbackobj)
+	local msg = Activity167Module_pb.Act167ReStartEpisodeRequest()
 
-	var_5_0.activityId = arg_5_1
-	var_5_0.episodeId = arg_5_2
+	msg.activityId = activityId
+	msg.episodeId = episodeId
 	TianShiNaNaModel.instance.sceneLevelLoadFinish = false
 
-	arg_5_0:sendMsg(var_5_0, arg_5_3, arg_5_4)
+	self:sendMsg(msg, callback, callbackobj)
 end
 
-function var_0_0.onReceiveAct167ReStartEpisodeReply(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_1 == 0 then
+function Activity167Rpc:onReceiveAct167ReStartEpisodeReply(resultCode, msg)
+	if resultCode == 0 then
 		TianShiNaNaModel.instance.sceneLevelLoadFinish = true
 
-		TianShiNaNaModel.instance:resetScene(arg_6_2.scene, true)
+		TianShiNaNaModel.instance:resetScene(msg.scene, true)
 		TianShiNaNaController.instance:dispatchEvent(TianShiNaNaEvent.ResetScene)
 	else
 		TianShiNaNaModel.instance.waitStartFlow = false
 	end
 end
 
-function var_0_0.sendAct167BeginRoundRequest(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	local var_7_0 = Activity167Module_pb.Act167BeginRoundRequest()
+function Activity167Rpc:sendAct167BeginRoundRequest(activityId, episodeId, operations)
+	local msg = Activity167Module_pb.Act167BeginRoundRequest()
 
-	var_7_0.activityId = arg_7_1
-	var_7_0.episodeId = arg_7_2
+	msg.activityId = activityId
+	msg.episodeId = episodeId
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_3) do
-		table.insert(var_7_0.operations, iter_7_1)
+	for _, oper in ipairs(operations) do
+		table.insert(msg.operations, oper)
 	end
 
-	arg_7_0:sendMsg(var_7_0)
+	self:sendMsg(msg)
 end
 
-function var_0_0.onReceiveAct167BeginRoundReply(arg_8_0, arg_8_1, arg_8_2)
-	if arg_8_1 ~= 0 then
+function Activity167Rpc:onReceiveAct167BeginRoundReply(resultCode, msg)
+	if resultCode ~= 0 then
 		TianShiNaNaController.instance:dispatchEvent(TianShiNaNaEvent.RoundFail)
 	end
 end
 
-function var_0_0.sendAct167AbortRequest(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
-	local var_9_0 = Activity167Module_pb.Act167AbortRequest()
+function Activity167Rpc:sendAct167AbortRequest(activityId, episodeId, callback, callbackobj)
+	local msg = Activity167Module_pb.Act167AbortRequest()
 
-	var_9_0.activityId = arg_9_1
-	var_9_0.episodeId = arg_9_2
+	msg.activityId = activityId
+	msg.episodeId = episodeId
 
-	arg_9_0:sendMsg(var_9_0, arg_9_3, arg_9_4)
+	self:sendMsg(msg, callback, callbackobj)
 end
 
-function var_0_0.onReceiveAct167AbortReply(arg_10_0, arg_10_1, arg_10_2)
-	if arg_10_1 == 0 then
+function Activity167Rpc:onReceiveAct167AbortReply(resultCode, msg)
+	if resultCode == 0 then
 		-- block empty
 	end
 end
 
-function var_0_0.sendAct167RollbackRequest(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4)
-	local var_11_0 = Activity167Module_pb.Act167RollbackRequest()
+function Activity167Rpc:sendAct167RollbackRequest(activityId, episodeId, callback, callbackobj)
+	local msg = Activity167Module_pb.Act167RollbackRequest()
 
-	var_11_0.activityId = arg_11_1
-	var_11_0.episodeId = arg_11_2
+	msg.activityId = activityId
+	msg.episodeId = episodeId
 
-	arg_11_0:sendMsg(var_11_0, arg_11_3, arg_11_4)
+	self:sendMsg(msg, callback, callbackobj)
 end
 
-function var_0_0.onReceiveAct167RollbackReply(arg_12_0, arg_12_1, arg_12_2)
-	if arg_12_1 == 0 then
-		TianShiNaNaModel.instance:resetScene(arg_12_2.scene)
+function Activity167Rpc:onReceiveAct167RollbackReply(resultCode, msg)
+	if resultCode == 0 then
+		TianShiNaNaModel.instance:resetScene(msg.scene)
 		TianShiNaNaController.instance:dispatchEvent(TianShiNaNaEvent.ResetScene)
 	end
 end
 
-function var_0_0.onReceiveAct167StepPush(arg_13_0, arg_13_1, arg_13_2)
-	if arg_13_1 == 0 then
-		TianShiNaNaController.instance:buildFlow(arg_13_2.steps)
+function Activity167Rpc:onReceiveAct167StepPush(resultCode, msg)
+	if resultCode == 0 then
+		TianShiNaNaController.instance:buildFlow(msg.steps)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+Activity167Rpc.instance = Activity167Rpc.New()
 
-return var_0_0
+return Activity167Rpc

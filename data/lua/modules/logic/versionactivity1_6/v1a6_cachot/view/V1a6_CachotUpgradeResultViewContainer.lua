@@ -1,12 +1,14 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotUpgradeResultViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/view/V1a6_CachotUpgradeResultViewContainer.lua
 
-local var_0_0 = class("V1a6_CachotUpgradeResultViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotUpgradeResultViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local V1a6_CachotUpgradeResultViewContainer = class("V1a6_CachotUpgradeResultViewContainer", BaseViewContainer)
+
+function V1a6_CachotUpgradeResultViewContainer:buildViews()
 	return {
 		V1a6_CachotUpgradeResultView.New(),
 		V1a6_CachotCurrencyView.New("top")
 	}
 end
 
-return var_0_0
+return V1a6_CachotUpgradeResultViewContainer

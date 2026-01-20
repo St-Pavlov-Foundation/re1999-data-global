@@ -1,232 +1,240 @@
-﻿module("modules.logic.room.view.manufacture.RoomCritterListView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/manufacture/RoomCritterListView.lua
 
-local var_0_0 = class("RoomCritterListView", BaseView)
+module("modules.logic.room.view.manufacture.RoomCritterListView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gomood = gohelper.findChild(arg_1_0.viewGO, "#go_critter/sort/#btn_mood")
-	arg_1_0._gorare = gohelper.findChild(arg_1_0.viewGO, "#go_critter/sort/#btn_rare")
-	arg_1_0._btnfilter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_critter/sort/#btn_filter")
-	arg_1_0._gonotfilter = gohelper.findChild(arg_1_0.viewGO, "#go_critter/sort/#btn_filter/#go_notfilter")
-	arg_1_0._gofilter = gohelper.findChild(arg_1_0.viewGO, "#go_critter/sort/#btn_filter/#go_filter")
-	arg_1_0._scrollrect = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_critter/#scroll_critter")
-	arg_1_0._btncloseCritter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_critter/#btn_closeCritter")
-	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "#go_critter/#go_empty")
+local RoomCritterListView = class("RoomCritterListView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomCritterListView:onInitView()
+	self._gomood = gohelper.findChild(self.viewGO, "#go_critter/sort/#btn_mood")
+	self._gorare = gohelper.findChild(self.viewGO, "#go_critter/sort/#btn_rare")
+	self._btnfilter = gohelper.findChildButtonWithAudio(self.viewGO, "#go_critter/sort/#btn_filter")
+	self._gonotfilter = gohelper.findChild(self.viewGO, "#go_critter/sort/#btn_filter/#go_notfilter")
+	self._gofilter = gohelper.findChild(self.viewGO, "#go_critter/sort/#btn_filter/#go_filter")
+	self._scrollrect = gohelper.findChildScrollRect(self.viewGO, "#go_critter/#scroll_critter")
+	self._btncloseCritter = gohelper.findChildButtonWithAudio(self.viewGO, "#go_critter/#btn_closeCritter")
+	self._goempty = gohelper.findChild(self.viewGO, "#go_critter/#go_empty")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnfilter:AddClickListener(arg_2_0._btnfilterOnClick, arg_2_0)
-	arg_2_0._btncloseCritter:AddClickListener(arg_2_0._btncloseCritterOnClick, arg_2_0)
-	arg_2_0:addEventCb(ManufactureController.instance, ManufactureEvent.ChangeSelectedCritterSlotItem, arg_2_0._onChangeSelectedCritterSlotItem, arg_2_0)
-	arg_2_0:addEventCb(ManufactureController.instance, ManufactureEvent.ChangeSelectedTransportPath, arg_2_0._onChangeSelectedTransportPath, arg_2_0)
-	arg_2_0:addEventCb(CritterController.instance, CritterEvent.CritterChangeFilterType, arg_2_0.onCritterFilterTypeChange, arg_2_0)
-	arg_2_0:addEventCb(CritterController.instance, CritterEvent.CritterListUpdate, arg_2_0.onCritterListUpdate, arg_2_0)
-	arg_2_0:addEventCb(CritterController.instance, CritterEvent.CritterListResetScrollPos, arg_2_0.resetScrollPos, arg_2_0)
+function RoomCritterListView:addEvents()
+	self._btnfilter:AddClickListener(self._btnfilterOnClick, self)
+	self._btncloseCritter:AddClickListener(self._btncloseCritterOnClick, self)
+	self:addEventCb(ManufactureController.instance, ManufactureEvent.ChangeSelectedCritterSlotItem, self._onChangeSelectedCritterSlotItem, self)
+	self:addEventCb(ManufactureController.instance, ManufactureEvent.ChangeSelectedTransportPath, self._onChangeSelectedTransportPath, self)
+	self:addEventCb(CritterController.instance, CritterEvent.CritterChangeFilterType, self.onCritterFilterTypeChange, self)
+	self:addEventCb(CritterController.instance, CritterEvent.CritterListUpdate, self.onCritterListUpdate, self)
+	self:addEventCb(CritterController.instance, CritterEvent.CritterListResetScrollPos, self.resetScrollPos, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnfilter:RemoveClickListener()
-	arg_3_0._btncloseCritter:RemoveClickListener()
+function RoomCritterListView:removeEvents()
+	self._btnfilter:RemoveClickListener()
+	self._btncloseCritter:RemoveClickListener()
 
-	if arg_3_0.sortMoodItem then
-		arg_3_0.sortMoodItem.btnsort:RemoveClickListener()
+	if self.sortMoodItem then
+		self.sortMoodItem.btnsort:RemoveClickListener()
 	end
 
-	if arg_3_0.sortRareItem then
-		arg_3_0.sortRareItem.btnsort:RemoveClickListener()
+	if self.sortRareItem then
+		self.sortRareItem.btnsort:RemoveClickListener()
 	end
 
-	arg_3_0:removeEventCb(ManufactureController.instance, ManufactureEvent.ChangeSelectedCritterSlotItem, arg_3_0._onChangeSelectedCritterSlotItem, arg_3_0)
-	arg_3_0:removeEventCb(ManufactureController.instance, ManufactureEvent.ChangeSelectedTransportPath, arg_3_0._onChangeSelectedTransportPath, arg_3_0)
-	arg_3_0:removeEventCb(CritterController.instance, CritterEvent.CritterChangeFilterType, arg_3_0.onCritterFilterTypeChange, arg_3_0)
-	arg_3_0:removeEventCb(CritterController.instance, CritterEvent.CritterListUpdate, arg_3_0.onCritterListUpdate, arg_3_0)
-	arg_3_0:removeEventCb(CritterController.instance, CritterEvent.CritterListResetScrollPos, arg_3_0.resetScrollPos, arg_3_0)
+	self:removeEventCb(ManufactureController.instance, ManufactureEvent.ChangeSelectedCritterSlotItem, self._onChangeSelectedCritterSlotItem, self)
+	self:removeEventCb(ManufactureController.instance, ManufactureEvent.ChangeSelectedTransportPath, self._onChangeSelectedTransportPath, self)
+	self:removeEventCb(CritterController.instance, CritterEvent.CritterChangeFilterType, self.onCritterFilterTypeChange, self)
+	self:removeEventCb(CritterController.instance, CritterEvent.CritterListUpdate, self.onCritterListUpdate, self)
+	self:removeEventCb(CritterController.instance, CritterEvent.CritterListResetScrollPos, self.resetScrollPos, self)
 end
 
-function var_0_0._btnsortOnClick(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_1.orderDown
+function RoomCritterListView:_btnsortOnClick(sortItem)
+	local newOrder = sortItem.orderDown
+	local order = ManufactureCritterListModel.instance:getOrder()
 
-	if ManufactureCritterListModel.instance:getOrder() == arg_4_1.orderDown then
-		var_4_0 = arg_4_1.orderUp
+	if order == sortItem.orderDown then
+		newOrder = sortItem.orderUp
 	end
 
-	ManufactureCritterListModel.instance:setOrder(var_4_0)
-	arg_4_0:refreshSort()
-	arg_4_0:refreshList()
+	ManufactureCritterListModel.instance:setOrder(newOrder)
+	self:refreshSort()
+	self:refreshList()
 end
 
-function var_0_0._btnfilterOnClick(arg_5_0)
-	local var_5_0 = {
+function RoomCritterListView:_btnfilterOnClick()
+	local filterTypeList = {
 		CritterEnum.FilterType.Race,
 		CritterEnum.FilterType.SkillTag
 	}
 
-	CritterController.instance:openCritterFilterView(var_5_0, arg_5_0.viewName)
+	CritterController.instance:openCritterFilterView(filterTypeList, self.viewName)
 end
 
-function var_0_0._btncloseCritterOnClick(arg_6_0)
-	if arg_6_0:getPathId() then
+function RoomCritterListView:_btncloseCritterOnClick()
+	local pathId = self:getPathId()
+
+	if pathId then
 		ManufactureController.instance:clearSelectTransportPath()
 	else
 		ManufactureController.instance:clearSelectCritterSlotItem()
 	end
 end
 
-function var_0_0._onChangeSelectedCritterSlotItem(arg_7_0)
-	if arg_7_0:getPathId() then
+function RoomCritterListView:_onChangeSelectedCritterSlotItem()
+	local pathId = self:getPathId()
+
+	if pathId then
 		return
 	end
 
-	local var_7_0 = ManufactureModel.instance:getSelectedCritterSlot()
+	local selectedBuildingUid = ManufactureModel.instance:getSelectedCritterSlot()
+	local curBuildingUid = self:getViewBuilding()
 
-	if var_7_0 == arg_7_0:getViewBuilding() then
+	if selectedBuildingUid == curBuildingUid then
 		return
 	end
 
-	local var_7_1 = RoomMapBuildingModel.instance:getBuildingMOById(var_7_0)
+	local buildingMO = RoomMapBuildingModel.instance:getBuildingMOById(selectedBuildingUid)
 
-	if var_7_1 then
-		arg_7_0.viewContainer:setContainerViewBelongId(var_7_0)
-		CritterController.instance:setManufactureCritterList(var_7_1.buildingId, var_7_0, false, arg_7_0.filterMO)
+	if buildingMO then
+		self.viewContainer:setContainerViewBelongId(selectedBuildingUid)
+		CritterController.instance:setManufactureCritterList(buildingMO.buildingId, selectedBuildingUid, false, self.filterMO)
 	end
 end
 
-function var_0_0._onChangeSelectedTransportPath(arg_8_0)
-	local var_8_0 = arg_8_0:getPathId()
+function RoomCritterListView:_onChangeSelectedTransportPath()
+	local pathId = self:getPathId()
 
-	if not var_8_0 then
+	if not pathId then
 		return
 	end
 
-	local var_8_1 = ManufactureModel.instance:getSelectedTransportPath()
+	local selectedPathId = ManufactureModel.instance:getSelectedTransportPath()
 
-	if var_8_1 == var_8_0 then
+	if selectedPathId == pathId then
 		return
 	end
 
-	arg_8_0.viewContainer:setContainerViewBelongId(nil, var_8_1)
+	self.viewContainer:setContainerViewBelongId(nil, selectedPathId)
 
-	local var_8_2, var_8_3, var_8_4 = arg_8_0:getViewBuilding()
+	local _, _, curBuildingId = self:getViewBuilding()
 
-	CritterController.instance:setManufactureCritterList(var_8_4, var_8_1, true, arg_8_0.filterMO)
+	CritterController.instance:setManufactureCritterList(curBuildingId, selectedPathId, true, self.filterMO)
 end
 
-function var_0_0.onCritterFilterTypeChange(arg_9_0, arg_9_1)
-	if arg_9_1 ~= arg_9_0.viewName then
+function RoomCritterListView:onCritterFilterTypeChange(viewName)
+	if viewName ~= self.viewName then
 		return
 	end
 
-	arg_9_0:refreshFilterBtn()
-	arg_9_0:refreshList()
+	self:refreshFilterBtn()
+	self:refreshList()
 end
 
-function var_0_0.onCritterListUpdate(arg_10_0)
-	local var_10_0 = ManufactureCritterListModel.instance:isCritterListEmpty()
+function RoomCritterListView:onCritterListUpdate()
+	local isEmpty = ManufactureCritterListModel.instance:isCritterListEmpty()
 
-	gohelper.setActive(arg_10_0._goempty, var_10_0)
+	gohelper.setActive(self._goempty, isEmpty)
 end
 
-function var_0_0.resetScrollPos(arg_11_0)
-	arg_11_0._scrollrect.verticalNormalizedPosition = 1
+function RoomCritterListView:resetScrollPos()
+	self._scrollrect.verticalNormalizedPosition = 1
 end
 
-function var_0_0._editableInitView(arg_12_0)
-	arg_12_0.sortMoodItem = arg_12_0:getUserDataTb_()
-	arg_12_0.sortRareItem = arg_12_0:getUserDataTb_()
+function RoomCritterListView:_editableInitView()
+	self.sortMoodItem = self:getUserDataTb_()
+	self.sortRareItem = self:getUserDataTb_()
 
-	arg_12_0:_initSortItem(arg_12_0.sortMoodItem, arg_12_0._gomood, CritterEnum.OrderType.MoodUp, CritterEnum.OrderType.MoodDown)
-	arg_12_0:_initSortItem(arg_12_0.sortRareItem, arg_12_0._gorare, CritterEnum.OrderType.RareUp, CritterEnum.OrderType.RareDown)
+	self:_initSortItem(self.sortMoodItem, self._gomood, CritterEnum.OrderType.MoodUp, CritterEnum.OrderType.MoodDown)
+	self:_initSortItem(self.sortRareItem, self._gorare, CritterEnum.OrderType.RareUp, CritterEnum.OrderType.RareDown)
 end
 
-function var_0_0._initSortItem(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4)
-	arg_13_1.btnsort = gohelper.findChildButtonWithAudio(arg_13_2, "")
-	arg_13_1.go1 = gohelper.findChild(arg_13_2, "#go_normal")
-	arg_13_1.go2 = gohelper.findChild(arg_13_2, "#go_selected")
-	arg_13_1.goarrow = gohelper.findChild(arg_13_2, "#go_selected/txt/arrow")
-	arg_13_1.orderUp = arg_13_3
-	arg_13_1.orderDown = arg_13_4
+function RoomCritterListView:_initSortItem(sortItem, go, orderUp, orderDown)
+	sortItem.btnsort = gohelper.findChildButtonWithAudio(go, "")
+	sortItem.go1 = gohelper.findChild(go, "#go_normal")
+	sortItem.go2 = gohelper.findChild(go, "#go_selected")
+	sortItem.goarrow = gohelper.findChild(go, "#go_selected/txt/arrow")
+	sortItem.orderUp = orderUp
+	sortItem.orderDown = orderDown
 
-	arg_13_1.btnsort:AddClickListener(arg_13_0._btnsortOnClick, arg_13_0, arg_13_1)
+	sortItem.btnsort:AddClickListener(self._btnsortOnClick, self, sortItem)
 end
 
-function var_0_0.onUpdateParam(arg_14_0)
+function RoomCritterListView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_15_0)
-	arg_15_0.filterMO = CritterFilterModel.instance:generateFilterMO(arg_15_0.viewName)
+function RoomCritterListView:onOpen()
+	self.filterMO = CritterFilterModel.instance:generateFilterMO(self.viewName)
 
-	arg_15_0:refreshSort()
-	arg_15_0:refreshFilterBtn()
-	arg_15_0:refreshList()
+	self:refreshSort()
+	self:refreshFilterBtn()
+	self:refreshList()
 end
 
-function var_0_0.refreshList(arg_16_0)
-	local var_16_0 = arg_16_0:getPathId()
-	local var_16_1, var_16_2, var_16_3 = arg_16_0:getViewBuilding()
-	local var_16_4 = var_16_0 and true or false
+function RoomCritterListView:refreshList()
+	local pathId = self:getPathId()
+	local curBuildingUid, _, curBuildingId = self:getViewBuilding()
+	local isTransport = pathId and true or false
 
-	CritterController.instance:setManufactureCritterList(var_16_3, var_16_0 or var_16_1, var_16_4, arg_16_0.filterMO)
+	CritterController.instance:setManufactureCritterList(curBuildingId, pathId or curBuildingUid, isTransport, self.filterMO)
 end
 
-function var_0_0.refreshSort(arg_17_0)
-	arg_17_0:_refreshSortItemSort(arg_17_0.sortMoodItem)
-	arg_17_0:_refreshSortItemSort(arg_17_0.sortRareItem)
+function RoomCritterListView:refreshSort()
+	self:_refreshSortItemSort(self.sortMoodItem)
+	self:_refreshSortItemSort(self.sortRareItem)
 end
 
-function var_0_0._refreshSortItemSort(arg_18_0, arg_18_1)
-	local var_18_0 = ManufactureCritterListModel.instance:getOrder()
+function RoomCritterListView:_refreshSortItemSort(sortItem)
+	local order = ManufactureCritterListModel.instance:getOrder()
 
-	arg_18_0:_setSort(arg_18_1, var_18_0 == arg_18_1.orderUp or var_18_0 == arg_18_1.orderDown, var_18_0 == arg_18_1.orderUp)
+	self:_setSort(sortItem, order == sortItem.orderUp or order == sortItem.orderDown, order == sortItem.orderUp)
 end
 
-function var_0_0._setSort(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
-	if arg_19_2 then
-		gohelper.setActive(arg_19_1.go1, false)
-		gohelper.setActive(arg_19_1.go2, true)
-		arg_19_0:_setReverse(arg_19_1.goarrow.transform, arg_19_3)
+function RoomCritterListView:_setSort(sortItem, select, reverse)
+	if select then
+		gohelper.setActive(sortItem.go1, false)
+		gohelper.setActive(sortItem.go2, true)
+		self:_setReverse(sortItem.goarrow.transform, reverse)
 	else
-		gohelper.setActive(arg_19_1.go1, true)
-		gohelper.setActive(arg_19_1.go2, false)
+		gohelper.setActive(sortItem.go1, true)
+		gohelper.setActive(sortItem.go2, false)
 	end
 end
 
-function var_0_0._setReverse(arg_20_0, arg_20_1, arg_20_2)
-	local var_20_0, var_20_1, var_20_2 = transformhelper.getLocalScale(arg_20_1)
+function RoomCritterListView:_setReverse(transform, reverse)
+	local scaleX, scaleY, scaleZ = transformhelper.getLocalScale(transform)
 
-	if arg_20_2 then
-		transformhelper.setLocalScale(arg_20_1, var_20_0, -math.abs(var_20_1), var_20_2)
+	if reverse then
+		transformhelper.setLocalScale(transform, scaleX, -math.abs(scaleY), scaleZ)
 	else
-		transformhelper.setLocalScale(arg_20_1, var_20_0, math.abs(var_20_1), var_20_2)
+		transformhelper.setLocalScale(transform, scaleX, math.abs(scaleY), scaleZ)
 	end
 end
 
-function var_0_0.refreshFilterBtn(arg_21_0)
-	local var_21_0 = arg_21_0.filterMO:isFiltering()
+function RoomCritterListView:refreshFilterBtn()
+	local isFiltering = self.filterMO:isFiltering()
 
-	gohelper.setActive(arg_21_0._gonotfilter, not var_21_0)
-	gohelper.setActive(arg_21_0._gofilter, var_21_0)
+	gohelper.setActive(self._gonotfilter, not isFiltering)
+	gohelper.setActive(self._gofilter, isFiltering)
 end
 
-function var_0_0.getViewBuilding(arg_22_0)
-	local var_22_0, var_22_1, var_22_2 = arg_22_0.viewContainer:getContainerViewBuilding()
+function RoomCritterListView:getViewBuilding()
+	local viewBuildingUid, viewBuildingMO, viewBuildingId = self.viewContainer:getContainerViewBuilding()
 
-	return var_22_0, var_22_1, var_22_2
+	return viewBuildingUid, viewBuildingMO, viewBuildingId
 end
 
-function var_0_0.getPathId(arg_23_0)
-	return arg_23_0.viewContainer:getContainerPathId()
+function RoomCritterListView:getPathId()
+	return self.viewContainer:getContainerPathId()
 end
 
-function var_0_0.onClose(arg_24_0)
+function RoomCritterListView:onClose()
 	ManufactureCritterListModel.instance:clearSort()
 end
 
-function var_0_0.onDestroyView(arg_25_0)
+function RoomCritterListView:onDestroyView()
 	return
 end
 
-return var_0_0
+return RoomCritterListView

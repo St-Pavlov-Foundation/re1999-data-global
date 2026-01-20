@@ -1,53 +1,56 @@
-﻿module("modules.logic.activity.view.show.ActivityGuestBindViewItem", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/show/ActivityGuestBindViewItem.lua
 
-local var_0_0 = class("ActivityGuestBindViewItem", ListScrollCellExtend)
+module("modules.logic.activity.view.show.ActivityGuestBindViewItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "#go_item")
+local ActivityGuestBindViewItem = class("ActivityGuestBindViewItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ActivityGuestBindViewItem:onInitView()
+	self._goitem = gohelper.findChild(self.viewGO, "#go_item")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function ActivityGuestBindViewItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function ActivityGuestBindViewItem:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._item = IconMgr.instance:getCommonPropItemIcon(arg_4_0._goitem)
+function ActivityGuestBindViewItem:_editableInitView()
+	self._item = IconMgr.instance:getCommonPropItemIcon(self._goitem)
 end
 
-function var_0_0._editableAddEvents(arg_5_0)
+function ActivityGuestBindViewItem:_editableAddEvents()
 	return
 end
 
-function var_0_0._editableRemoveEvents(arg_6_0)
+function ActivityGuestBindViewItem:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_7_0, arg_7_1)
-	arg_7_0._mo = arg_7_1
+function ActivityGuestBindViewItem:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_7_0:_refresh()
+	self:_refresh()
 end
 
-function var_0_0.onSelect(arg_8_0, arg_8_1)
+function ActivityGuestBindViewItem:onSelect(isSelect)
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
+function ActivityGuestBindViewItem:onDestroyView()
 	return
 end
 
-function var_0_0._refresh(arg_10_0)
-	local var_10_0 = arg_10_0._mo.itemCO
+function ActivityGuestBindViewItem:_refresh()
+	local mo = self._mo
+	local itemCO = mo.itemCO
 
-	arg_10_0._item:setMOValue(var_10_0[1], var_10_0[2], var_10_0[3], nil, true)
+	self._item:setMOValue(itemCO[1], itemCO[2], itemCO[3], nil, true)
 end
 
-return var_0_0
+return ActivityGuestBindViewItem

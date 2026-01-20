@@ -1,25 +1,27 @@
-﻿module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepNextRound", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/va3chess/game/step/Va3ChessStepNextRound.lua
 
-local var_0_0 = class("Va3ChessStepNextRound", Va3ChessStepBase)
+module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepNextRound", package.seeall)
 
-function var_0_0.start(arg_1_0)
-	arg_1_0:finish()
+local Va3ChessStepNextRound = class("Va3ChessStepNextRound", Va3ChessStepBase)
+
+function Va3ChessStepNextRound:start()
+	self:finish()
 end
 
-function var_0_0.finish(arg_2_0)
-	local var_2_0 = Va3ChessGameController.instance.event
-	local var_2_1 = arg_2_0.originData.currentRound
+function Va3ChessStepNextRound:finish()
+	local evtMgr = Va3ChessGameController.instance.event
+	local curRound = self.originData.currentRound
 
-	Va3ChessGameModel.instance:setRound(var_2_1)
+	Va3ChessGameModel.instance:setRound(curRound)
 	Va3ChessGameController.instance:tryResumeSelectObj()
 	Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.CurrentRoundUpdate)
 
-	if var_2_0 then
-		var_2_0:setCurEvent(nil)
+	if evtMgr then
+		evtMgr:setCurEvent(nil)
 	end
 
 	Va3ChessGameController.instance:forceRefreshObjSelectedView()
-	var_0_0.super.finish(arg_2_0)
+	Va3ChessStepNextRound.super.finish(self)
 end
 
-return var_0_0
+return Va3ChessStepNextRound

@@ -1,73 +1,79 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_panelsign.view.V1a6_Role_PanelSignView_ActCenterItemBtn", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_panelsign/view/V1a6_Role_PanelSignView_ActCenterItemBtn.lua
 
-local var_0_0 = class("V1a6_Role_PanelSignView_ActCenterItemBtn", ActCenterItemBase)
+module("modules.logic.versionactivity1_6.v1a6_panelsign.view.V1a6_Role_PanelSignView_ActCenterItemBtn", package.seeall)
 
-function var_0_0.onInit(arg_1_0, arg_1_1)
+local V1a6_Role_PanelSignView_ActCenterItemBtn = class("V1a6_Role_PanelSignView_ActCenterItemBtn", ActCenterItemBase)
+
+function V1a6_Role_PanelSignView_ActCenterItemBtn:onInit(go)
 	return
 end
 
-function var_0_0.onAddEvent(arg_2_0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, arg_2_0._refreshRedDot, arg_2_0)
+function V1a6_Role_PanelSignView_ActCenterItemBtn:onAddEvent()
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, self._refreshRedDot, self)
 end
 
-function var_0_0.onRemoveEvent(arg_3_0)
-	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, arg_3_0._refreshRedDot, arg_3_0)
+function V1a6_Role_PanelSignView_ActCenterItemBtn:onRemoveEvent()
+	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, self._refreshRedDot, self)
 end
 
-function var_0_0.onClick(arg_4_0)
-	local var_4_0 = arg_4_0:_viewNameAndParam()
+function V1a6_Role_PanelSignView_ActCenterItemBtn:onClick()
+	local viewName = self:_viewNameAndParam()
 
-	if ViewMgr.instance:isOpen(var_4_0) then
+	if ViewMgr.instance:isOpen(viewName) then
 		return
 	end
 
-	local var_4_1 = arg_4_0:_actId()
+	local actId = self:_actId()
 
-	Activity101Rpc.instance:sendGet101InfosRequest(var_4_1, arg_4_0._onReceiveGet101InfosReply, arg_4_0)
+	Activity101Rpc.instance:sendGet101InfosRequest(actId, self._onReceiveGet101InfosReply, self)
 end
 
-function var_0_0._onReceiveGet101InfosReply(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_2 == 0 then
-		local var_5_0, var_5_1 = arg_5_0:_viewNameAndParam()
+function V1a6_Role_PanelSignView_ActCenterItemBtn:_onReceiveGet101InfosReply(_, resultCode)
+	if resultCode == 0 then
+		local viewName, viewParam = self:_viewNameAndParam()
 
-		ViewMgr.instance:openView(var_5_0, var_5_1)
+		ViewMgr.instance:openView(viewName, viewParam)
 	else
 		GameFacade.showToast(ToastEnum.BattlePass)
 	end
 end
 
-function var_0_0._viewNameAndParam(arg_6_0)
-	local var_6_0 = arg_6_0:getCustomData()
-	local var_6_1 = var_6_0.viewParam
+function V1a6_Role_PanelSignView_ActCenterItemBtn:_viewNameAndParam()
+	local data = self:getCustomData()
+	local viewParam = data.viewParam
+	local viewName = data.viewName
 
-	return var_6_0.viewName, var_6_1
+	return viewName, viewParam
 end
 
-function var_0_0._actId(arg_7_0)
-	return arg_7_0:getCustomData().viewParam.actId
+function V1a6_Role_PanelSignView_ActCenterItemBtn:_actId()
+	local data = self:getCustomData()
+	local viewParam = data.viewParam
+
+	return viewParam.actId
 end
 
-function var_0_0._tryInit(arg_8_0)
-	local var_8_0 = arg_8_0:_actId()
+function V1a6_Role_PanelSignView_ActCenterItemBtn:_tryInit()
+	local actId = self:_actId()
 
-	if not ActivityType101Model.instance:isInit(var_8_0) then
-		Activity101Rpc.instance:sendGet101InfosRequest(var_8_0)
+	if not ActivityType101Model.instance:isInit(actId) then
+		Activity101Rpc.instance:sendGet101InfosRequest(actId)
 	end
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0:_tryInit()
-	arg_9_0:_addNotEventRedDot(arg_9_0._checkRed, arg_9_0)
+function V1a6_Role_PanelSignView_ActCenterItemBtn:onOpen()
+	self:_tryInit()
+	self:_addNotEventRedDot(self._checkRed, self)
 end
 
-function var_0_0.onRefresh(arg_10_0)
-	arg_10_0:_setMainSprite("v1a6_act_icon3")
+function V1a6_Role_PanelSignView_ActCenterItemBtn:onRefresh()
+	self:_setMainSprite("v1a6_act_icon3")
 end
 
-function var_0_0._checkRed(arg_11_0)
-	local var_11_0 = arg_11_0:_actId()
+function V1a6_Role_PanelSignView_ActCenterItemBtn:_checkRed()
+	local actId = self:_actId()
 
-	return ActivityType101Model.instance:isType101RewardCouldGetAnyOne(var_11_0) and true or false
+	return ActivityType101Model.instance:isType101RewardCouldGetAnyOne(actId) and true or false
 end
 
-return var_0_0
+return V1a6_Role_PanelSignView_ActCenterItemBtn

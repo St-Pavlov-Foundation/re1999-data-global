@@ -1,25 +1,27 @@
-﻿module("modules.logic.fight.buffbehaviours.FightBuffBehaviour_ScrollLife", package.seeall)
+﻿-- chunkname: @modules/logic/fight/buffbehaviours/FightBuffBehaviour_ScrollLife.lua
 
-local var_0_0 = class("FightBuffBehaviour_ScrollLife", FightBuffBehaviourBase)
+module("modules.logic.fight.buffbehaviours.FightBuffBehaviour_ScrollLife", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	var_0_0.super.init(arg_1_0, arg_1_1, arg_1_2)
+local FightBuffBehaviour_ScrollLife = class("FightBuffBehaviour_ScrollLife", FightBuffBehaviourBase)
+
+function FightBuffBehaviour_ScrollLife:init(viewGo, viewContainer)
+	FightBuffBehaviour_ScrollLife.super.init(self, viewGo, viewContainer)
 end
 
-function var_0_0.onAddBuff(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+function FightBuffBehaviour_ScrollLife:onAddBuff(entityId, buffId, buffMo)
 	return
 end
 
-function var_0_0.onUpdateBuff(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+function FightBuffBehaviour_ScrollLife:onUpdateBuff(entityId, buffId, buffMo)
 	return
 end
 
-function var_0_0.onRemoveBuff(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+function FightBuffBehaviour_ScrollLife:onRemoveBuff(entityId, buffId, buffMo)
 	return
 end
 
-function var_0_0.onDestroy(arg_5_0)
-	var_0_0.super.onDestroy(arg_5_0)
+function FightBuffBehaviour_ScrollLife:onDestroy()
+	FightBuffBehaviour_ScrollLife.super.onDestroy(self)
 end
 
-return var_0_0
+return FightBuffBehaviour_ScrollLife

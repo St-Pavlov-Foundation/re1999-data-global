@@ -1,13 +1,15 @@
-﻿module("modules.logic.activity.controller.chessmap.event.ActivityChessStateLock", package.seeall)
+﻿-- chunkname: @modules/logic/activity/controller/chessmap/event/ActivityChessStateLock.lua
 
-local var_0_0 = class("ActivityChessStateLock", ActivityChessStateBase)
+module("modules.logic.activity.controller.chessmap.event.ActivityChessStateLock", package.seeall)
 
-function var_0_0.start(arg_1_0)
+local ActivityChessStateLock = class("ActivityChessStateLock", ActivityChessStateBase)
+
+function ActivityChessStateLock:start()
 	logNormal("ActivityChessStateLock start")
 end
 
-function var_0_0.onClickPos(arg_2_0, arg_2_1, arg_2_2)
+function ActivityChessStateLock:onClickPos(x, y)
 	return
 end
 
-return var_0_0
+return ActivityChessStateLock

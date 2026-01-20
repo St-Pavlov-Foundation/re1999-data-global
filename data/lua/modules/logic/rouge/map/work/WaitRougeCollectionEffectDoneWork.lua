@@ -1,29 +1,33 @@
-﻿module("modules.logic.rouge.map.work.WaitRougeCollectionEffectDoneWork", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/work/WaitRougeCollectionEffectDoneWork.lua
 
-local var_0_0 = class("WaitRougeCollectionEffectDoneWork", BaseWork)
+module("modules.logic.rouge.map.work.WaitRougeCollectionEffectDoneWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local WaitRougeCollectionEffectDoneWork = class("WaitRougeCollectionEffectDoneWork", BaseWork)
+
+function WaitRougeCollectionEffectDoneWork:ctor()
 	return
 end
 
-function var_0_0.onStart(arg_2_0)
-	if not RougeCollectionModel.instance:checkHasTmpTriggerEffectInfo() then
-		return arg_2_0:onDone(true)
+function WaitRougeCollectionEffectDoneWork:onStart()
+	local hasTriggerEffects = RougeCollectionModel.instance:checkHasTmpTriggerEffectInfo()
+
+	if not hasTriggerEffects then
+		return self:onDone(true)
 	end
 
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_2_0._onCloseViewFinish, arg_2_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 	RougePopController.instance:addPopViewWithViewName(ViewName.RougeCollectionChessView)
 end
 
-function var_0_0._onCloseViewFinish(arg_3_0, arg_3_1)
-	if arg_3_1 == ViewName.RougeCollectionChessView then
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_3_0._onCloseViewFinish, arg_3_0)
-		arg_3_0:onDone(true)
+function WaitRougeCollectionEffectDoneWork:_onCloseViewFinish(viewName)
+	if viewName == ViewName.RougeCollectionChessView then
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+		self:onDone(true)
 	end
 end
 
-function var_0_0.clearWork(arg_4_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_4_0._onCloseViewFinish, arg_4_0)
+function WaitRougeCollectionEffectDoneWork:clearWork()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 end
 
-return var_0_0
+return WaitRougeCollectionEffectDoneWork

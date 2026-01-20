@@ -1,67 +1,69 @@
-﻿module("modules.logic.sp01.library.AssassinLibraryVideoListView", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/library/AssassinLibraryVideoListView.lua
 
-local var_0_0 = class("AssassinLibraryVideoListView", BaseView)
+module("modules.logic.sp01.library.AssassinLibraryVideoListView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._scrollvideo = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_video")
-	arg_1_0._govideoitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_video/Viewport/Content/#go_videoitem")
+local AssassinLibraryVideoListView = class("AssassinLibraryVideoListView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function AssassinLibraryVideoListView:onInitView()
+	self._scrollvideo = gohelper.findChildScrollRect(self.viewGO, "#scroll_video")
+	self._govideoitem = gohelper.findChild(self.viewGO, "#scroll_video/Viewport/Content/#go_videoitem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function AssassinLibraryVideoListView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function AssassinLibraryVideoListView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0:addScrollView()
+function AssassinLibraryVideoListView:_editableInitView()
+	self:addScrollView()
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function AssassinLibraryVideoListView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0._actId = AssassinLibraryModel.instance:getCurActId()
-	arg_6_0._libType = AssassinLibraryModel.instance:getCurLibType()
-	arg_6_0._libraryCoList = AssassinConfig.instance:getLibraryConfigs(arg_6_0._actId, arg_6_0._libType)
+function AssassinLibraryVideoListView:onOpen()
+	self._actId = AssassinLibraryModel.instance:getCurActId()
+	self._libType = AssassinLibraryModel.instance:getCurLibType()
+	self._libraryCoList = AssassinConfig.instance:getLibraryConfigs(self._actId, self._libType)
 
-	arg_6_0._scrollInst:setList(arg_6_0._libraryCoList)
+	self._scrollInst:setList(self._libraryCoList)
 end
 
-function var_0_0.addScrollView(arg_7_0)
-	local var_7_0 = ListScrollParam.New()
+function AssassinLibraryVideoListView:addScrollView()
+	local scrollParam = ListScrollParam.New()
 
-	var_7_0.scrollGOPath = "#scroll_video"
-	var_7_0.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_7_0.prefabUrl = "#scroll_video/Viewport/Content/#go_videoitem"
-	var_7_0.cellClass = AssassinLibraryVideoListItem
-	var_7_0.scrollDir = ScrollEnum.ScrollDirV
-	var_7_0.lineCount = 1
-	var_7_0.cellWidth = 1300
-	var_7_0.cellHeight = 234
-	var_7_0.cellSpaceH = 0
-	var_7_0.cellSpaceV = 0
-	var_7_0.startSpace = 16
-	var_7_0.endSpace = 16
-	arg_7_0._scrollInst = ListScrollModel.New()
-	arg_7_0._scrollView = LuaListScrollView.New(arg_7_0._scrollInst, var_7_0)
+	scrollParam.scrollGOPath = "#scroll_video"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "#scroll_video/Viewport/Content/#go_videoitem"
+	scrollParam.cellClass = AssassinLibraryVideoListItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 1300
+	scrollParam.cellHeight = 234
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 0
+	scrollParam.startSpace = 16
+	scrollParam.endSpace = 16
+	self._scrollInst = ListScrollModel.New()
+	self._scrollView = LuaListScrollView.New(self._scrollInst, scrollParam)
 
-	arg_7_0:addChildView(arg_7_0._scrollView)
+	self:addChildView(self._scrollView)
 end
 
-function var_0_0.onClose(arg_8_0)
+function AssassinLibraryVideoListView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
+function AssassinLibraryVideoListView:onDestroyView()
 	return
 end
 
-return var_0_0
+return AssassinLibraryVideoListView

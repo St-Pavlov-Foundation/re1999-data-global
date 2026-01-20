@@ -1,16 +1,18 @@
-﻿module("modules.logic.survival.view.map.SurvivalPickAssistViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/SurvivalPickAssistViewContainer.lua
 
-local var_0_0 = class("SurvivalPickAssistViewContainer", PickAssistViewContainer)
+module("modules.logic.survival.view.map.SurvivalPickAssistViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	arg_1_0.viewOpenAnimTime = 0.4
-	arg_1_0.scrollView = arg_1_0:instantiateListScrollView()
+local SurvivalPickAssistViewContainer = class("SurvivalPickAssistViewContainer", PickAssistViewContainer)
+
+function SurvivalPickAssistViewContainer:buildViews()
+	self.viewOpenAnimTime = 0.4
+	self.scrollView = self:instantiateListScrollView()
 
 	return {
 		SurvivalPickAssistView.New(),
-		arg_1_0.scrollView,
+		self.scrollView,
 		TabViewGroup.New(1, "#go_lefttopbtns")
 	}
 end
 
-return var_0_0
+return SurvivalPickAssistViewContainer

@@ -1,45 +1,47 @@
-﻿module("modules.logic.fight.buffbehaviours.FightBuffBehaviour_500M_Progress", package.seeall)
+﻿-- chunkname: @modules/logic/fight/buffbehaviours/FightBuffBehaviour_500M_Progress.lua
 
-local var_0_0 = class("FightBuffBehaviour_500M_Progress", FightBuffBehaviourBase)
-local var_0_1 = "ui/viewres/fight/fighttower/fightprogressview.prefab"
+module("modules.logic.fight.buffbehaviours.FightBuffBehaviour_500M_Progress", package.seeall)
 
-function var_0_0.onAddBuff(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.goRoot = gohelper.findChild(arg_1_0.viewGo, "root/topLeftContent")
+local FightBuffBehaviour_500M_Progress = class("FightBuffBehaviour_500M_Progress", FightBuffBehaviourBase)
+local resPath = "ui/viewres/fight/fighttower/fightprogressview.prefab"
 
-	loadAbAsset(var_0_1, true, arg_1_0.onLoadFinish, arg_1_0)
+function FightBuffBehaviour_500M_Progress:onAddBuff(entityId, buffId, buffMo)
+	self.goRoot = gohelper.findChild(self.viewGo, "root/topLeftContent")
+
+	loadAbAsset(resPath, true, self.onLoadFinish, self)
 end
 
-function var_0_0.onLoadFinish(arg_2_0, arg_2_1)
-	if not arg_2_1.IsLoadSuccess then
+function FightBuffBehaviour_500M_Progress:onLoadFinish(assetItem)
+	if not assetItem.IsLoadSuccess then
 		return
 	end
 
-	local var_2_0 = arg_2_0.assetItem
+	local oldAsstet = self.assetItem
 
-	arg_2_0.assetItem = arg_2_1
+	self.assetItem = assetItem
 
-	arg_2_1:Retain()
+	assetItem:Retain()
 
-	if var_2_0 then
-		var_2_0:Release()
+	if oldAsstet then
+		oldAsstet:Release()
 	end
 
-	arg_2_0.goProgress = gohelper.clone(arg_2_1:GetResource(var_0_1), arg_2_0.goRoot)
+	self.goProgress = gohelper.clone(assetItem:GetResource(resPath), self.goRoot)
 end
 
-function var_0_0.onRemoveBuff(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	gohelper.destroy(arg_3_0.goProgress)
+function FightBuffBehaviour_500M_Progress:onRemoveBuff(entityId, buffId, buffMo)
+	gohelper.destroy(self.goProgress)
 end
 
-function var_0_0.onDestroy(arg_4_0)
-	if arg_4_0.assetItem then
-		arg_4_0.assetItem:Release()
+function FightBuffBehaviour_500M_Progress:onDestroy()
+	if self.assetItem then
+		self.assetItem:Release()
 
-		arg_4_0.assetItem = nil
+		self.assetItem = nil
 	end
 
-	removeAssetLoadCb(var_0_1, arg_4_0.onLoadFinish, arg_4_0)
-	var_0_0.super.onDestroy(arg_4_0)
+	removeAssetLoadCb(resPath, self.onLoadFinish, self)
+	FightBuffBehaviour_500M_Progress.super.onDestroy(self)
 end
 
-return var_0_0
+return FightBuffBehaviour_500M_Progress

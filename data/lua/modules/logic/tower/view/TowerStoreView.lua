@@ -1,161 +1,163 @@
-﻿module("modules.logic.tower.view.TowerStoreView", package.seeall)
+﻿-- chunkname: @modules/logic/tower/view/TowerStoreView.lua
 
-local var_0_0 = class("TowerStoreView", BaseView)
+module("modules.logic.tower.view.TowerStoreView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._scrollstore = gohelper.findChildScrollRect(arg_1_0.viewGO, "mask/#scroll_store")
-	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "mask/#scroll_store/Viewport/#go_Content")
-	arg_1_0._gostoreItem = gohelper.findChild(arg_1_0.viewGO, "mask/#scroll_store/Viewport/#go_Content/#go_storeItem")
-	arg_1_0._goTime = gohelper.findChild(arg_1_0.viewGO, "mask/#scroll_store/Viewport/#go_Content/#go_storeItem/tag1/#go_Time")
-	arg_1_0._txtTime = gohelper.findChildText(arg_1_0.viewGO, "mask/#scroll_store/Viewport/#go_Content/#go_storeItem/tag1/#go_Time/image_TipsBG/#txt_Time")
-	arg_1_0._btnTips = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "mask/#scroll_store/Viewport/#go_Content/#go_storeItem/tag1/#go_Time/image_TipsBG/#txt_Time/#btn_Tips")
-	arg_1_0._goTips = gohelper.findChild(arg_1_0.viewGO, "mask/#scroll_store/Viewport/#go_Content/#go_storeItem/tag1/#go_Time/image_TipsBG/#txt_Time/#go_Tips")
-	arg_1_0._txtTimeTips = gohelper.findChildText(arg_1_0.viewGO, "mask/#scroll_store/Viewport/#go_Content/#go_storeItem/tag1/#go_Time/image_TipsBG/#txt_Time/#go_Tips/image_Tips/#txt_TimeTips")
-	arg_1_0._btnclosetip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "mask/#scroll_store/Viewport/#go_Content/#go_storeItem/tag1/#go_Time/image_TipsBG/#txt_Time/#go_Tips/#btn_closetip")
-	arg_1_0._gostoregoodsitem = gohelper.findChild(arg_1_0.viewGO, "mask/#scroll_store/Viewport/#go_Content/#go_storeItem/#go_storegoodsitem")
-	arg_1_0._golimit = gohelper.findChild(arg_1_0.viewGO, "mask/#scroll_store/Viewport/#go_Content/#go_storeItem/#go_storegoodsitem/go_tag/#go_limit")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._gorighttop = gohelper.findChild(arg_1_0.viewGO, "#go_righttop")
-	arg_1_0._gotag = gohelper.findChild(arg_1_0.viewGO, "Tag2")
-	arg_1_0._gotaglimit = gohelper.findChild(arg_1_0.viewGO, "Tag2/#go_taglimit")
-	arg_1_0._txtlimit = gohelper.findChildText(arg_1_0.viewGO, "Tag2/#go_taglimit/#txt_limit")
-	arg_1_0._txtTagName = gohelper.findChildText(arg_1_0.viewGO, "Tag2/txt_tagName")
-	arg_1_0._btnTask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Task")
-	arg_1_0._gotaskReddot = gohelper.findChild(arg_1_0.viewGO, "#btn_Task/#go_taskReddot")
+local TowerStoreView = class("TowerStoreView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function TowerStoreView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._scrollstore = gohelper.findChildScrollRect(self.viewGO, "mask/#scroll_store")
+	self._goContent = gohelper.findChild(self.viewGO, "mask/#scroll_store/Viewport/#go_Content")
+	self._gostoreItem = gohelper.findChild(self.viewGO, "mask/#scroll_store/Viewport/#go_Content/#go_storeItem")
+	self._goTime = gohelper.findChild(self.viewGO, "mask/#scroll_store/Viewport/#go_Content/#go_storeItem/tag1/#go_Time")
+	self._txtTime = gohelper.findChildText(self.viewGO, "mask/#scroll_store/Viewport/#go_Content/#go_storeItem/tag1/#go_Time/image_TipsBG/#txt_Time")
+	self._btnTips = gohelper.findChildButtonWithAudio(self.viewGO, "mask/#scroll_store/Viewport/#go_Content/#go_storeItem/tag1/#go_Time/image_TipsBG/#txt_Time/#btn_Tips")
+	self._goTips = gohelper.findChild(self.viewGO, "mask/#scroll_store/Viewport/#go_Content/#go_storeItem/tag1/#go_Time/image_TipsBG/#txt_Time/#go_Tips")
+	self._txtTimeTips = gohelper.findChildText(self.viewGO, "mask/#scroll_store/Viewport/#go_Content/#go_storeItem/tag1/#go_Time/image_TipsBG/#txt_Time/#go_Tips/image_Tips/#txt_TimeTips")
+	self._btnclosetip = gohelper.findChildButtonWithAudio(self.viewGO, "mask/#scroll_store/Viewport/#go_Content/#go_storeItem/tag1/#go_Time/image_TipsBG/#txt_Time/#go_Tips/#btn_closetip")
+	self._gostoregoodsitem = gohelper.findChild(self.viewGO, "mask/#scroll_store/Viewport/#go_Content/#go_storeItem/#go_storegoodsitem")
+	self._golimit = gohelper.findChild(self.viewGO, "mask/#scroll_store/Viewport/#go_Content/#go_storeItem/#go_storegoodsitem/go_tag/#go_limit")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._gorighttop = gohelper.findChild(self.viewGO, "#go_righttop")
+	self._gotag = gohelper.findChild(self.viewGO, "Tag2")
+	self._gotaglimit = gohelper.findChild(self.viewGO, "Tag2/#go_taglimit")
+	self._txtlimit = gohelper.findChildText(self.viewGO, "Tag2/#go_taglimit/#txt_limit")
+	self._txtTagName = gohelper.findChildText(self.viewGO, "Tag2/txt_tagName")
+	self._btnTask = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Task")
+	self._gotaskReddot = gohelper.findChild(self.viewGO, "#btn_Task/#go_taskReddot")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnTips:AddClickListener(arg_2_0._btnTipsOnClick, arg_2_0)
-	arg_2_0._btnclosetip:AddClickListener(arg_2_0._btnclosetipOnClick, arg_2_0)
-	arg_2_0._btnTask:AddClickListener(arg_2_0._btntaskOnClick, arg_2_0)
-	arg_2_0:addEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, arg_2_0.refreshStoreContent, arg_2_0)
-	arg_2_0:addEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, arg_2_0.refreshStoreContent, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.OnHandleInStoreView, arg_2_0._OnHandleInStoreView, arg_2_0)
+function TowerStoreView:addEvents()
+	self._btnTips:AddClickListener(self._btnTipsOnClick, self)
+	self._btnclosetip:AddClickListener(self._btnclosetipOnClick, self)
+	self._btnTask:AddClickListener(self._btntaskOnClick, self)
+	self:addEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, self.refreshStoreContent, self)
+	self:addEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, self.refreshStoreContent, self)
+	self:addEventCb(TowerController.instance, TowerEvent.OnHandleInStoreView, self._OnHandleInStoreView, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnTips:RemoveClickListener()
-	arg_3_0._btnclosetip:RemoveClickListener()
-	arg_3_0._btnTask:RemoveClickListener()
-	arg_3_0:removeEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, arg_3_0.refreshStoreContent, arg_3_0)
-	arg_3_0:removeEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, arg_3_0.refreshStoreContent, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.OnHandleInStoreView, arg_3_0._OnHandleInStoreView, arg_3_0)
+function TowerStoreView:removeEvents()
+	self._btnTips:RemoveClickListener()
+	self._btnclosetip:RemoveClickListener()
+	self._btnTask:RemoveClickListener()
+	self:removeEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, self.refreshStoreContent, self)
+	self:removeEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, self.refreshStoreContent, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.OnHandleInStoreView, self._OnHandleInStoreView, self)
 end
 
-function var_0_0._btnclosetipOnClick(arg_4_0)
+function TowerStoreView:_btnclosetipOnClick()
 	return
 end
 
-function var_0_0._btnTipsOnClick(arg_5_0)
+function TowerStoreView:_btnTipsOnClick()
 	return
 end
 
-function var_0_0._btntaskOnClick(arg_6_0)
-	local var_6_0 = TowerTimeLimitLevelModel.instance:getCurOpenTimeLimitTower()
-	local var_6_1 = {
-		towerType = TowerEnum.TowerType.Limited,
-		towerId = var_6_0.towerId
-	}
+function TowerStoreView:_btntaskOnClick()
+	local curOpenTimeLimitTowerMo = TowerTimeLimitLevelModel.instance:getCurOpenTimeLimitTower()
+	local param = {}
 
-	TowerController.instance:openTowerTaskView(var_6_1)
+	param.towerType = TowerEnum.TowerType.Limited
+	param.towerId = curOpenTimeLimitTowerMo.towerId
+
+	TowerController.instance:openTowerTaskView(param)
 end
 
-function var_0_0._btntagOnClick(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0.itemNormalized[arg_7_1]
+function TowerStoreView:_btntagOnClick(index)
+	local _itemNormalized = self.itemNormalized[index]
 
-	if var_7_0 and var_7_0.centerNormalized then
-		arg_7_0:killTween()
+	if _itemNormalized and _itemNormalized.centerNormalized then
+		self:killTween()
 
-		arg_7_0.tweenId = ZProj.TweenHelper.DOTweenFloat(arg_7_0._scrollstore.verticalNormalizedPosition, var_7_0.centerNormalized, 0.5, arg_7_0.tweenFrameCallback, nil, arg_7_0)
+		self.tweenId = ZProj.TweenHelper.DOTweenFloat(self._scrollstore.verticalNormalizedPosition, _itemNormalized.centerNormalized, 0.5, self.tweenFrameCallback, nil, self)
 	end
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	gohelper.setActive(arg_8_0._gostoreItem, false)
+function TowerStoreView:_editableInitView()
+	gohelper.setActive(self._gostoreItem, false)
 
-	arg_8_0.storeItemList = arg_8_0:getUserDataTb_()
-	arg_8_0._tagList = arg_8_0:getUserDataTb_()
-	arg_8_0.showTagIndex = {
+	self.storeItemList = self:getUserDataTb_()
+	self._tagList = self:getUserDataTb_()
+	self.showTagIndex = {
 		2
 	}
 
-	for iter_8_0 = 1, 3 do
-		local var_8_0 = gohelper.findChild(arg_8_0.viewGO, "Tag" .. iter_8_0)
+	for i = 1, 3 do
+		local go = gohelper.findChild(self.viewGO, "Tag" .. i)
 
-		if var_8_0 then
-			local var_8_1 = gohelper.findChildButtonWithAudio(var_8_0, "image_tagType/btn_tag")
-			local var_8_2 = gohelper.findChildText(var_8_0, "txt_tagName")
-			local var_8_3 = gohelper.findChild(var_8_0, "#go_taglimit")
-			local var_8_4 = gohelper.findChildText(var_8_0, "#go_taglimit/#txt_limit")
-			local var_8_5 = var_8_0:GetComponent(typeof(UnityEngine.CanvasGroup))
-			local var_8_6 = {
-				go = var_8_0
-			}
+		if go then
+			local btn = gohelper.findChildButtonWithAudio(go, "image_tagType/btn_tag")
+			local titleTxt = gohelper.findChildText(go, "txt_tagName")
+			local limitgo = gohelper.findChild(go, "#go_taglimit")
+			local limitTxt = gohelper.findChildText(go, "#go_taglimit/#txt_limit")
+			local canvasGroup = go:GetComponent(typeof(UnityEngine.CanvasGroup))
+			local tag = {}
 
-			if var_8_1 then
-				var_8_1:AddClickListener(arg_8_0._btntagOnClick, arg_8_0, iter_8_0)
+			tag.go = go
 
-				var_8_6.btn = var_8_1
+			if btn then
+				btn:AddClickListener(self._btntagOnClick, self, i)
+
+				tag.btn = btn
 			end
 
-			if var_8_2 then
-				var_8_6.titleTxt = var_8_2
+			if titleTxt then
+				tag.titleTxt = titleTxt
 			end
 
-			if var_8_3 then
-				var_8_6.limitgo = var_8_3
+			if limitgo then
+				tag.limitgo = limitgo
 
-				if var_8_4 then
-					var_8_6.limitTxt = var_8_4
+				if limitTxt then
+					tag.limitTxt = limitTxt
 				end
 			end
 
-			if var_8_5 then
-				var_8_6.canvasGroup = var_8_5
+			if canvasGroup then
+				tag.canvasGroup = canvasGroup
 			end
 
-			arg_8_0._tagList[iter_8_0] = var_8_6
+			self._tagList[i] = tag
 
-			gohelper.setActive(var_8_0, false)
+			gohelper.setActive(go, false)
 		end
 	end
 
-	local var_8_7, var_8_8 = TowerStoreModel.instance:getStoreGroupName(StoreEnum.TowerStore.NormalStore)
+	local nameCn, nameEn = TowerStoreModel.instance:getStoreGroupName(StoreEnum.TowerStore.NormalStore)
 
-	arg_8_0._txtTagName.text = var_8_7
+	self._txtTagName.text = nameCn
 
-	gohelper.setActive(arg_8_0._gotaglimit, false)
+	gohelper.setActive(self._gotaglimit, false)
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
+function TowerStoreView:onUpdateParam()
 	return
 end
 
-function var_0_0._onScrollValueChanged(arg_10_0)
-	if #arg_10_0.storeItemList > 0 then
-		for iter_10_0, iter_10_1 in ipairs(arg_10_0.storeItemList) do
-			if iter_10_0 == 1 then
-				iter_10_1:refreshTagClip(arg_10_0._scrollstore)
+function TowerStoreView:_onScrollValueChanged()
+	if #self.storeItemList > 0 then
+		for k, v in ipairs(self.storeItemList) do
+			if k == 1 then
+				v:refreshTagClip(self._scrollstore)
 			end
 		end
 	end
 
-	arg_10_0:checkEnableTag()
+	self:checkEnableTag()
 end
 
-function var_0_0.onOpen(arg_11_0)
-	arg_11_0._scrollstore:AddOnValueChanged(arg_11_0._onScrollValueChanged, arg_11_0)
-	RedDotController.instance:addRedDot(arg_11_0._gotaskReddot, RedDotEnum.DotNode.TowerTask)
+function TowerStoreView:onOpen()
+	self._scrollstore:AddOnValueChanged(self._onScrollValueChanged, self)
+	RedDotController.instance:addRedDot(self._gotaskReddot, RedDotEnum.DotNode.TowerTask)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_souvenir_open)
-	TaskDispatcher.runRepeat(arg_11_0.refreshTime, arg_11_0, TimeUtil.OneMinuteSecond)
-	arg_11_0:refreshTime()
-	arg_11_0:refreshStoreContent()
-	arg_11_0:_onScrollValueChanged()
+	TaskDispatcher.runRepeat(self.refreshTime, self, TimeUtil.OneMinuteSecond)
+	self:refreshTime()
+	self:refreshStoreContent()
+	self:_onScrollValueChanged()
 
 	if not TowerStoreModel.instance:isUpdateStoreEmpty() then
 		TowerStoreModel.instance:setNotNewStoreGoods()
@@ -164,238 +166,244 @@ function var_0_0.onOpen(arg_11_0)
 	TowerController.instance:dispatchEvent(TowerEvent.OnEnterStoreView)
 end
 
-function var_0_0.onOpenFinish(arg_12_0)
-	arg_12_0._scrollstore.verticalNormalizedPosition = 1
+function TowerStoreView:onOpenFinish()
+	self._scrollstore.verticalNormalizedPosition = 1
 
-	local var_12_0 = TowerStoreModel.instance:getStoreGroupMO()
-	local var_12_1 = var_12_0 and var_12_0[StoreEnum.TowerStore.UpdateStore]
+	local storeGroupMo = TowerStoreModel.instance:getStoreGroupMO()
+	local updateStoreGroupMo = storeGroupMo and storeGroupMo[StoreEnum.TowerStore.UpdateStore]
+	local isNilupdateStoreMo = updateStoreGroupMo and next(updateStoreGroupMo:getGoodsList()) == nil
 
-	if not (var_12_1 and next(var_12_1:getGoodsList()) == nil) then
-		TaskDispatcher.runDelay(arg_12_0.checkFirstEnterOneDay, arg_12_0, 0.7)
+	if not isNilupdateStoreMo then
+		TaskDispatcher.runDelay(self.checkFirstEnterOneDay, self, 0.7)
 	end
 end
 
-function var_0_0._OnHandleInStoreView(arg_13_0)
-	arg_13_0._isHandleInStoreView = true
+function TowerStoreView:_OnHandleInStoreView()
+	self._isHandleInStoreView = true
 end
 
-function var_0_0.checkFirstEnterOneDay(arg_14_0)
-	if arg_14_0:getFirstEnterOneDayPref() == 0 then
-		if not arg_14_0._isHandleInStoreView and arg_14_0._scrollstore.verticalNormalizedPosition == 1 then
-			arg_14_0:_btntagOnClick(1)
+function TowerStoreView:checkFirstEnterOneDay()
+	local isFirstEnter = self:getFirstEnterOneDayPref()
+
+	if isFirstEnter == 0 then
+		if not self._isHandleInStoreView and self._scrollstore.verticalNormalizedPosition == 1 then
+			self:_btntagOnClick(1)
 		end
 
-		arg_14_0:setFirstEnterOneDayPref()
+		self:setFirstEnterOneDayPref()
 	end
 end
 
-function var_0_0.refreshStoreContent(arg_15_0)
-	local var_15_0 = TowerStoreModel.instance:getStoreGroupMO()
-	local var_15_1 = TowerStoreModel.instance:getStore()
+function TowerStoreView:refreshStoreContent()
+	local storeGroupMoList = TowerStoreModel.instance:getStoreGroupMO()
+	local storeIdList = TowerStoreModel.instance:getStore()
 
-	for iter_15_0, iter_15_1 in pairs(var_15_1) do
-		local var_15_2 = var_15_0[iter_15_1]
+	for index, storeId in pairs(storeIdList) do
+		local groupMo = storeGroupMoList[storeId]
 
-		if var_15_2.goodsInfos and #var_15_2:getGoodsList() > 0 then
-			local var_15_3 = arg_15_0.storeItemList[iter_15_1]
+		if groupMo.goodsInfos and #groupMo:getGoodsList() > 0 then
+			local storeItem = self.storeItemList[storeId]
 
-			if not var_15_3 then
-				var_15_3 = TowerStoreItem.New()
+			if not storeItem then
+				storeItem = TowerStoreItem.New()
 
-				local var_15_4 = gohelper.cloneInPlace(arg_15_0._gostoreItem, iter_15_1)
+				local go = gohelper.cloneInPlace(self._gostoreItem, storeId)
 
-				var_15_3:onInitView(var_15_4)
+				storeItem:onInitView(go)
 
-				arg_15_0.storeItemList[iter_15_1] = var_15_3
+				self.storeItemList[storeId] = storeItem
 			end
 
-			var_15_3:updateInfo(iter_15_0, var_15_2)
-		elseif arg_15_0.storeItemList[iter_15_1] then
-			arg_15_0.storeItemList[iter_15_1]:hideStoreItem()
-			arg_15_0.storeItemList[iter_15_1]:onClose()
-			arg_15_0.storeItemList[iter_15_1]:onDestroy()
+			storeItem:updateInfo(index, groupMo)
+		elseif self.storeItemList[storeId] then
+			self.storeItemList[storeId]:hideStoreItem()
+			self.storeItemList[storeId]:onClose()
+			self.storeItemList[storeId]:onDestroy()
 
-			arg_15_0.storeItemList[iter_15_1] = nil
+			self.storeItemList[storeId] = nil
 		end
 	end
 
-	for iter_15_2, iter_15_3 in pairs(arg_15_0.storeItemList) do
-		gohelper.setSibling(iter_15_3.go, iter_15_3.groupId or iter_15_2)
+	for i, item in pairs(self.storeItemList) do
+		gohelper.setSibling(item.go, item.groupId or i)
 	end
 
-	arg_15_0:refreshItemNormalized()
+	self:refreshItemNormalized()
 end
 
-function var_0_0.onClose(arg_16_0)
-	arg_16_0._scrollstore:RemoveOnValueChanged()
-	TaskDispatcher.cancelTask(arg_16_0.refreshTime, arg_16_0)
-	TaskDispatcher.cancelTask(arg_16_0.checkFirstEnterOneDay, arg_16_0)
-	arg_16_0:killTween()
+function TowerStoreView:onClose()
+	self._scrollstore:RemoveOnValueChanged()
+	TaskDispatcher.cancelTask(self.refreshTime, self)
+	TaskDispatcher.cancelTask(self.checkFirstEnterOneDay, self)
+	self:killTween()
 
-	if arg_16_0._tagList then
-		for iter_16_0, iter_16_1 in pairs(arg_16_0._tagList) do
-			if iter_16_1.btn then
-				iter_16_1.btn:RemoveClickListener()
+	if self._tagList then
+		for _, tag in pairs(self._tagList) do
+			if tag.btn then
+				tag.btn:RemoveClickListener()
 			end
 		end
 	end
 
-	if arg_16_0.storeItemList then
-		for iter_16_2, iter_16_3 in pairs(arg_16_0.storeItemList) do
-			iter_16_3:onClose()
+	if self.storeItemList then
+		for _, item in pairs(self.storeItemList) do
+			item:onClose()
 		end
 	end
 
 	TowerStoreModel.instance:saveAllStoreGroupNewData()
 end
 
-function var_0_0.onDestroyView(arg_17_0)
-	for iter_17_0, iter_17_1 in pairs(arg_17_0.storeItemList) do
-		iter_17_1:onDestroy()
+function TowerStoreView:onDestroyView()
+	for _, storeItem in pairs(self.storeItemList) do
+		storeItem:onDestroy()
 	end
 end
 
-function var_0_0.refreshTime(arg_18_0)
-	local var_18_0 = TowerStoreModel.instance:checkUpdateStoreActivity()
-	local var_18_1 = ActivityModel.instance:getActivityInfo()[var_18_0]
+function TowerStoreView:refreshTime()
+	local actId = TowerStoreModel.instance:checkUpdateStoreActivity()
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[actId]
 
-	if var_18_1 then
-		local var_18_2 = var_18_1:getRealEndTimeStamp() - ServerTime.now()
+	if actInfoMo then
+		local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
 
-		gohelper.setActive(arg_18_0._txtTime.gameObject, var_18_2 > 0)
+		gohelper.setActive(self._txtTime.gameObject, offsetSecond > 0)
 
-		if var_18_2 > 0 then
-			local var_18_3 = TimeUtil.SecondToActivityTimeFormat(var_18_2)
+		if offsetSecond > 0 then
+			local dateStr = TimeUtil.SecondToActivityTimeFormat(offsetSecond)
 
-			arg_18_0._txtTime.text = string.format(luaLang("v1a4_bossrush_scoreview_txt_closetime"), var_18_3)
+			self._txtTime.text = string.format(luaLang("v1a4_bossrush_scoreview_txt_closetime"), dateStr)
 		end
 	else
-		gohelper.setActive(arg_18_0._txtTime.gameObject, false)
+		gohelper.setActive(self._txtTime.gameObject, false)
 	end
 end
 
-function var_0_0.refreshItemNormalized(arg_19_0)
-	if arg_19_0.storeItemList then
-		ZProj.UGUIHelper.RebuildLayout(arg_19_0._goContent.transform)
+function TowerStoreView:refreshItemNormalized()
+	if self.storeItemList then
+		ZProj.UGUIHelper.RebuildLayout(self._goContent.transform)
 
-		local var_19_0 = recthelper.getHeight(arg_19_0._goContent.transform)
+		local contentHeight = recthelper.getHeight(self._goContent.transform)
 
-		arg_19_0.itemNormalized = {}
+		self.itemNormalized = {}
 
-		local var_19_1 = recthelper.getHeight(arg_19_0._scrollstore.transform)
-		local var_19_2 = {}
+		local scrollHeigth = recthelper.getHeight(self._scrollstore.transform)
+		local itemList = {}
 
-		for iter_19_0, iter_19_1 in pairs(arg_19_0.storeItemList) do
-			table.insert(var_19_2, iter_19_1)
+		for _, item in pairs(self.storeItemList) do
+			table.insert(itemList, item)
 		end
 
-		table.sort(var_19_2, function(arg_20_0, arg_20_1)
-			return arg_20_0.groupId < arg_20_1.groupId
+		table.sort(itemList, function(a, b)
+			return a.groupId < b.groupId
 		end)
 
-		if var_19_0 > 0 then
-			local var_19_3 = 0
-			local var_19_4 = 0
-			local var_19_5 = 90
-			local var_19_6 = var_19_0 - var_19_1
+		if contentHeight > 0 then
+			local endPosY = 0
+			local preHeight = 0
+			local spacing = 90
 
-			for iter_19_2, iter_19_3 in ipairs(var_19_2) do
-				local var_19_7 = iter_19_3:getHeight()
-				local var_19_8 = {}
-				local var_19_9 = var_19_3 == 0 and 0 or var_19_3
-				local var_19_10 = var_19_4 + (var_19_7 - var_19_1)
-				local var_19_11 = var_19_4
+			contentHeight = contentHeight - scrollHeigth
 
-				var_19_3 = var_19_10 + var_19_5
-				var_19_4 = var_19_11 + var_19_7 + var_19_5
-				var_19_8.startNormalized = 1 - var_19_9 / var_19_6
-				var_19_8.endNormalized = 1 - var_19_3 / var_19_6
-				var_19_8.centerNormalized = 1 - var_19_11 / var_19_6
+			for _, item in ipairs(itemList) do
+				local _height = item:getHeight()
+				local _normalized = {}
+				local _startPosY = endPosY == 0 and 0 or endPosY
+				local _endPosY = preHeight + (_height - scrollHeigth)
+				local _preHeight = preHeight
 
-				table.insert(arg_19_0.itemNormalized, var_19_8)
+				endPosY = _endPosY + spacing
+				preHeight = _preHeight + _height + spacing
+				_normalized.startNormalized = 1 - _startPosY / contentHeight
+				_normalized.endNormalized = 1 - endPosY / contentHeight
+				_normalized.centerNormalized = 1 - _preHeight / contentHeight
+
+				table.insert(self.itemNormalized, _normalized)
 			end
 		end
 
-		arg_19_0:checkEnableTag()
+		self:checkEnableTag()
 	end
 end
 
-function var_0_0.checkEnableTag(arg_21_0)
-	if not arg_21_0.itemNormalized then
-		for iter_21_0, iter_21_1 in ipairs(arg_21_0._tagList) do
-			gohelper.setActive(iter_21_1.go, false)
+function TowerStoreView:checkEnableTag()
+	if not self.itemNormalized then
+		for _, v in ipairs(self._tagList) do
+			gohelper.setActive(v.go, false)
 		end
 
 		return
 	end
 
-	for iter_21_2, iter_21_3 in pairs(arg_21_0._tagList) do
-		gohelper.setActive(iter_21_3.go, arg_21_0.itemNormalized[iter_21_2])
+	for index, v in pairs(self._tagList) do
+		gohelper.setActive(v.go, self.itemNormalized[index])
 	end
 
-	for iter_21_4, iter_21_5 in ipairs(arg_21_0.showTagIndex) do
-		if not arg_21_0.itemNormalized[iter_21_5] then
+	for _, v in ipairs(self.showTagIndex) do
+		if not self.itemNormalized[v] then
 			return
 		end
 
-		local var_21_0 = arg_21_0.itemNormalized[iter_21_5].startNormalized - 0.05
-		local var_21_1 = arg_21_0._scrollstore.verticalNormalizedPosition
-		local var_21_2 = arg_21_0._tagList[iter_21_5]
+		local startNormal = self.itemNormalized[v].startNormalized - 0.05
+		local verticalNormalizedPosition = self._scrollstore.verticalNormalizedPosition
+		local tag = self._tagList[v]
 
-		if var_21_2 and var_21_0 then
-			local var_21_3 = var_21_1 - var_21_0
-			local var_21_4 = 0
+		if tag and startNormal then
+			local offset = verticalNormalizedPosition - startNormal
+			local aphla = 0
 
-			gohelper.setActive(var_21_2.go, true)
+			gohelper.setActive(tag.go, true)
 
-			local var_21_5 = 1 - (0.05 - var_21_3) / 0.05
-			local var_21_6 = Mathf.Clamp01(var_21_5)
+			aphla = 1 - (0.05 - offset) / 0.05
+			aphla = Mathf.Clamp01(aphla)
+			tag.canvasGroup.alpha = aphla
 
-			var_21_2.canvasGroup.alpha = var_21_6
-
-			transformhelper.setLocalPosXY(arg_21_0._gotag.transform, arg_21_0._gotag.transform.localPosition.x, -455 + var_21_6 * 83)
+			transformhelper.setLocalPosXY(self._gotag.transform, self._gotag.transform.localPosition.x, -455 + aphla * 83)
 		end
 	end
 
-	local var_21_7 = TowerStoreModel.instance:getStoreGroupMO()
-	local var_21_8 = var_21_7 and var_21_7[StoreEnum.TowerStore.UpdateStore]
+	local storeGroupMo = TowerStoreModel.instance:getStoreGroupMO()
+	local updateStoreGroupMo = storeGroupMo and storeGroupMo[StoreEnum.TowerStore.UpdateStore]
+	local isNilupdateStoreMo = updateStoreGroupMo and next(updateStoreGroupMo:getGoodsList()) == nil
 
-	if var_21_8 and next(var_21_8:getGoodsList()) == nil then
-		for iter_21_6, iter_21_7 in ipairs(arg_21_0._tagList) do
-			gohelper.setActive(iter_21_7.go, false)
+	if isNilupdateStoreMo then
+		for _, v in ipairs(self._tagList) do
+			gohelper.setActive(v.go, false)
 		end
 	end
 end
 
-function var_0_0.killTween(arg_22_0)
-	if arg_22_0.tweenId then
-		ZProj.TweenHelper.KillById(arg_22_0.tweenId)
+function TowerStoreView:killTween()
+	if self.tweenId then
+		ZProj.TweenHelper.KillById(self.tweenId)
 
-		arg_22_0.tweenId = nil
+		self.tweenId = nil
 	end
 end
 
-function var_0_0.tweenFrameCallback(arg_23_0, arg_23_1)
-	arg_23_0._scrollstore.verticalNormalizedPosition = arg_23_1
+function TowerStoreView:tweenFrameCallback(value)
+	self._scrollstore.verticalNormalizedPosition = value
 end
 
-function var_0_0.getFirstEnterOneDayPref(arg_24_0)
-	local var_24_0 = arg_24_0:getFirstEnterOneDayPrefKey()
+function TowerStoreView:getFirstEnterOneDayPref()
+	local key = self:getFirstEnterOneDayPrefKey()
+	local pref = PlayerPrefsHelper.getNumber(key, 0)
 
-	return (PlayerPrefsHelper.getNumber(var_24_0, 0))
+	return pref
 end
 
-function var_0_0.setFirstEnterOneDayPref(arg_25_0)
-	local var_25_0 = arg_25_0:getFirstEnterOneDayPrefKey()
+function TowerStoreView:setFirstEnterOneDayPref()
+	local key = self:getFirstEnterOneDayPrefKey()
 
-	PlayerPrefsHelper.setNumber(var_25_0, 1)
+	PlayerPrefsHelper.setNumber(key, 1)
 end
 
-function var_0_0.getFirstEnterOneDayPrefKey(arg_26_0)
-	local var_26_0 = PlayerModel.instance:getPlayinfo()
-	local var_26_1 = var_26_0 and var_26_0.userId or 1999
+function TowerStoreView:getFirstEnterOneDayPrefKey()
+	local playerInfo = PlayerModel.instance:getPlayinfo()
+	local playerId = playerInfo and playerInfo.userId or 1999
+	local key = "TowerStoreView_FirstEnterOneDay_" .. playerId
 
-	return "TowerStoreView_FirstEnterOneDay_" .. var_26_1
+	return key
 end
 
-return var_0_0
+return TowerStoreView

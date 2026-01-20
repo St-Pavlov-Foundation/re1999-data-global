@@ -1,34 +1,36 @@
-﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.define.VersionActivity1_2DungeonEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/versionactivity1_2dungeon/define/VersionActivity1_2DungeonEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.define.VersionActivity1_2DungeonEvent", package.seeall)
 
-var_0_0.onReceiveGet116InfosReply = 100
-var_0_0.onReceiveUpgradeElementReply = 101
-var_0_0.onReceiveBuildTrapReply = 102
-var_0_0.onReceivePutTrapReply = 103
-var_0_0.onReceiveAct116InfoUpdatePush = 104
-var_0_0.setDungeonViewVisible = 1001
-var_0_0.addElementItem = 1002
-var_0_0.enterFight = 1003
-var_0_0.focusMap = 1004
-var_0_0.skipLineWork = 1005
-var_0_0.afterCollectLastShow = 1006
-var_0_0.focusEpisodeItem = 1007
-var_0_0.showNoteUnlock = 1008
-var_0_0.clickEpisodeItem = 1009
-var_0_0.selectEpisodeItem = 1010
-var_0_0.removeTrap = 1011
-var_0_0.clickDailyEpisode = 1012
-var_0_0.closeChildElementView = 1013
-var_0_0.onReceiveGet121InfosReply = 2001
-var_0_0.onReceiveGet121BonusReply = 2002
-var_0_0.onReceiveAct121UpdatePush = 2003
-var_0_0.onDailyEpisodeItemOpen = 3001
-var_0_0.CollectStoryAniEnd = 3002
-var_0_0.closeBuildingRepairItem = 3003
-var_0_0.closeElementView = 3004
-var_0_0.focusCollectedAllClueTab = 3005
-var_0_0.unlockEpisodeItemByGuide = 3006
-var_0_0.guideOnLoadSceneFinish = 3007
+local VersionActivity1_2DungeonEvent = _M
 
-return var_0_0
+VersionActivity1_2DungeonEvent.onReceiveGet116InfosReply = 100
+VersionActivity1_2DungeonEvent.onReceiveUpgradeElementReply = 101
+VersionActivity1_2DungeonEvent.onReceiveBuildTrapReply = 102
+VersionActivity1_2DungeonEvent.onReceivePutTrapReply = 103
+VersionActivity1_2DungeonEvent.onReceiveAct116InfoUpdatePush = 104
+VersionActivity1_2DungeonEvent.setDungeonViewVisible = 1001
+VersionActivity1_2DungeonEvent.addElementItem = 1002
+VersionActivity1_2DungeonEvent.enterFight = 1003
+VersionActivity1_2DungeonEvent.focusMap = 1004
+VersionActivity1_2DungeonEvent.skipLineWork = 1005
+VersionActivity1_2DungeonEvent.afterCollectLastShow = 1006
+VersionActivity1_2DungeonEvent.focusEpisodeItem = 1007
+VersionActivity1_2DungeonEvent.showNoteUnlock = 1008
+VersionActivity1_2DungeonEvent.clickEpisodeItem = 1009
+VersionActivity1_2DungeonEvent.selectEpisodeItem = 1010
+VersionActivity1_2DungeonEvent.removeTrap = 1011
+VersionActivity1_2DungeonEvent.clickDailyEpisode = 1012
+VersionActivity1_2DungeonEvent.closeChildElementView = 1013
+VersionActivity1_2DungeonEvent.onReceiveGet121InfosReply = 2001
+VersionActivity1_2DungeonEvent.onReceiveGet121BonusReply = 2002
+VersionActivity1_2DungeonEvent.onReceiveAct121UpdatePush = 2003
+VersionActivity1_2DungeonEvent.onDailyEpisodeItemOpen = 3001
+VersionActivity1_2DungeonEvent.CollectStoryAniEnd = 3002
+VersionActivity1_2DungeonEvent.closeBuildingRepairItem = 3003
+VersionActivity1_2DungeonEvent.closeElementView = 3004
+VersionActivity1_2DungeonEvent.focusCollectedAllClueTab = 3005
+VersionActivity1_2DungeonEvent.unlockEpisodeItemByGuide = 3006
+VersionActivity1_2DungeonEvent.guideOnLoadSceneFinish = 3007
+
+return VersionActivity1_2DungeonEvent

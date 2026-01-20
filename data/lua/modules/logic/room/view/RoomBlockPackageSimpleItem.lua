@@ -1,37 +1,39 @@
-﻿module("modules.logic.room.view.RoomBlockPackageSimpleItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomBlockPackageSimpleItem.lua
 
-local var_0_0 = class("RoomBlockPackageSimpleItem", RoomBlockPackageItem)
+module("modules.logic.room.view.RoomBlockPackageSimpleItem", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	arg_1_0._go = arg_1_0.viewGO
-	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "item")
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "item/image_rare/bottom/txt_num")
-	arg_1_0._txtdegree = gohelper.findChildText(arg_1_0.viewGO, "item/image_rare/bottom/txt_degree")
-	arg_1_0._imagerare = gohelper.findChildImage(arg_1_0.viewGO, "item/image_rare")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "item/image_rare/txt_name")
-	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "item/image_rare/go_reddot")
-	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "item/image_rare/go_select")
-	arg_1_0._btnItem = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "item")
-	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "item/image_rare/bottom/go_empty")
-	arg_1_0._simagedegree = gohelper.findChildImage(arg_1_0.viewGO, "item/image_rare/bottom/txt_degree/icon")
+local RoomBlockPackageSimpleItem = class("RoomBlockPackageSimpleItem", RoomBlockPackageItem)
 
-	arg_1_0._btnItem:AddClickListener(arg_1_0._btnitemOnClick, arg_1_0)
-	UISpriteSetMgr.instance:setRoomSprite(arg_1_0._simagedegree, "jianshezhi")
-	arg_1_0:_onInit(arg_1_0.viewGO)
+function RoomBlockPackageSimpleItem:_editableInitView()
+	self._go = self.viewGO
+	self._goitem = gohelper.findChild(self.viewGO, "item")
+	self._txtnum = gohelper.findChildText(self.viewGO, "item/image_rare/bottom/txt_num")
+	self._txtdegree = gohelper.findChildText(self.viewGO, "item/image_rare/bottom/txt_degree")
+	self._imagerare = gohelper.findChildImage(self.viewGO, "item/image_rare")
+	self._txtname = gohelper.findChildText(self.viewGO, "item/image_rare/txt_name")
+	self._goreddot = gohelper.findChild(self.viewGO, "item/image_rare/go_reddot")
+	self._goselect = gohelper.findChild(self.viewGO, "item/image_rare/go_select")
+	self._btnItem = gohelper.findChildButtonWithAudio(self.viewGO, "item")
+	self._goempty = gohelper.findChild(self.viewGO, "item/image_rare/bottom/go_empty")
+	self._simagedegree = gohelper.findChildImage(self.viewGO, "item/image_rare/bottom/txt_degree/icon")
+
+	self._btnItem:AddClickListener(self._btnitemOnClick, self)
+	UISpriteSetMgr.instance:setRoomSprite(self._simagedegree, "jianshezhi")
+	self:_onInit(self.viewGO)
 end
 
-function var_0_0._onInit(arg_2_0, arg_2_1)
-	gohelper.setActive(arg_2_0._goselect, false)
+function RoomBlockPackageSimpleItem:_onInit(go)
+	gohelper.setActive(self._goselect, false)
 end
 
-function var_0_0._onRefreshUI(arg_3_0)
-	local var_3_0 = RoomBlockPackageEnum.RareIcon[arg_3_0._packageCfg.rare] or RoomBlockPackageEnum.RareIcon[1]
+function RoomBlockPackageSimpleItem:_onRefreshUI()
+	local splitName = RoomBlockPackageEnum.RareIcon[self._packageCfg.rare] or RoomBlockPackageEnum.RareIcon[1]
 
-	UISpriteSetMgr.instance:setRoomSprite(arg_3_0._imagerare, var_3_0)
+	UISpriteSetMgr.instance:setRoomSprite(self._imagerare, splitName)
 end
 
-function var_0_0._onSelectUI(arg_4_0)
+function RoomBlockPackageSimpleItem:_onSelectUI()
 	return
 end
 
-return var_0_0
+return RoomBlockPackageSimpleItem

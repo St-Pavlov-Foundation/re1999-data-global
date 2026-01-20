@@ -1,32 +1,34 @@
-﻿module("modules.logic.versionactivity2_0.dungeon.rpc.Activity161Rpc", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_0/dungeon/rpc/Activity161Rpc.lua
 
-local var_0_0 = class("Activity161Rpc", BaseRpc)
+module("modules.logic.versionactivity2_0.dungeon.rpc.Activity161Rpc", package.seeall)
 
-function var_0_0.sendAct161GetInfoRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = Activity161Module_pb.Act161GetInfoRequest()
+local Activity161Rpc = class("Activity161Rpc", BaseRpc)
 
-	var_1_0.activityId = arg_1_1
+function Activity161Rpc:sendAct161GetInfoRequest(activityId, callback, callbackObj)
+	local req = Activity161Module_pb.Act161GetInfoRequest()
 
-	return arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
+	req.activityId = activityId
+
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveAct161GetInfoReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 == 0 then
-		Activity161Model.instance:setGraffitiInfo(arg_2_2)
+function Activity161Rpc:onReceiveAct161GetInfoReply(resultCold, msg)
+	if resultCold == 0 then
+		Activity161Model.instance:setGraffitiInfo(msg)
 		Activity161Controller.instance:checkGraffitiCdInfo()
 	end
 end
 
-function var_0_0.sendAct161RefreshElementsRequest(arg_3_0, arg_3_1)
-	local var_3_0 = Activity161Module_pb.Act161RefreshElementsRequest()
+function Activity161Rpc:sendAct161RefreshElementsRequest(activityId)
+	local req = Activity161Module_pb.Act161RefreshElementsRequest()
 
-	var_3_0.activityId = arg_3_1
+	req.activityId = activityId
 
-	return arg_3_0:sendMsg(var_3_0)
+	return self:sendMsg(req)
 end
 
-function var_0_0.onReceiveAct161RefreshElementsReply(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 == 0 then
+function Activity161Rpc:onReceiveAct161RefreshElementsReply(resultCold, msg)
+	if resultCold == 0 then
 		Activity161Controller.instance:dispatchEvent(Activity161Event.RefreshGraffitiView)
 
 		if Activity161Model.instance.isNeedRefreshNewElement then
@@ -35,28 +37,28 @@ function var_0_0.onReceiveAct161RefreshElementsReply(arg_4_0, arg_4_1, arg_4_2)
 	end
 end
 
-function var_0_0.sendAct161GainMilestoneRewardRequest(arg_5_0, arg_5_1)
-	local var_5_0 = Activity161Module_pb.Act161GainMilestoneRewardRequest()
+function Activity161Rpc:sendAct161GainMilestoneRewardRequest(activityId)
+	local req = Activity161Module_pb.Act161GainMilestoneRewardRequest()
 
-	var_5_0.activityId = arg_5_1
+	req.activityId = activityId
 
-	return arg_5_0:sendMsg(var_5_0)
+	return self:sendMsg(req)
 end
 
-function var_0_0.onReceiveAct161GainMilestoneRewardReply(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_1 == 0 then
-		Activity161Model.instance:setRewardInfo(arg_6_2)
+function Activity161Rpc:onReceiveAct161GainMilestoneRewardReply(resultCold, msg)
+	if resultCold == 0 then
+		Activity161Model.instance:setRewardInfo(msg)
 		Activity161Controller.instance:dispatchEvent(Activity161Event.GetGraffitiReward)
 	end
 end
 
-function var_0_0.onReceiveAct161CdBeginPush(arg_7_0, arg_7_1, arg_7_2)
-	if arg_7_1 == 0 then
-		Activity161Model.instance:setGraffitiInfo(arg_7_2)
+function Activity161Rpc:onReceiveAct161CdBeginPush(resultCold, msg)
+	if resultCold == 0 then
+		Activity161Model.instance:setGraffitiInfo(msg)
 		Activity161Controller.instance:checkGraffitiCdInfo()
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+Activity161Rpc.instance = Activity161Rpc.New()
 
-return var_0_0
+return Activity161Rpc

@@ -1,6 +1,8 @@
-﻿module("modules.logic.nfc.controller.NFCEvent", package.seeall)
+﻿-- chunkname: @modules/logic/nfc/controller/NFCEvent.lua
 
-local var_0_0 = _M
-local var_0_1 = GameUtil.getUniqueTb()
+module("modules.logic.nfc.controller.NFCEvent", package.seeall)
 
-return var_0_0
+local NFCEvent = _M
+local _get = GameUtil.getUniqueTb()
+
+return NFCEvent

@@ -1,29 +1,31 @@
-﻿module("modules.logic.fight.FightMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/FightMgr.lua
 
-local var_0_0 = class("FightMgr", FightBaseClass)
+module("modules.logic.fight.FightMgr", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
+local FightMgr = class("FightMgr", FightBaseClass)
+
+function FightMgr:onConstructor()
 	return
 end
 
-function var_0_0.startFight(arg_2_0, arg_2_1, arg_2_2)
+function FightMgr:startFight(fightData, roundData)
 	FightDataHelper.initDataMgr()
-	FightDataHelper.initFightData(arg_2_1)
+	FightDataHelper.initFightData(fightData)
 	FightDataHelper.stageMgr:setStage(FightStageMgr.StageType.Play)
 	FightDataHelper.stageMgr:enterFightState(FightStageMgr.FightStateType.Enter)
 end
 
-function var_0_0.cancelOperation(arg_3_0)
-	arg_3_0:com_sendFightEvent(FightEvent.BeforeCancelOperation)
+function FightMgr:cancelOperation()
+	self:com_sendFightEvent(FightEvent.BeforeCancelOperation)
 	FightDataMgr.instance:cancelOperation()
 	FightLocalDataMgr.instance:cancelOperation()
-	arg_3_0:com_sendFightEvent(FightEvent.CancelOperation)
+	self:com_sendFightEvent(FightEvent.CancelOperation)
 end
 
-function var_0_0.reconnectFight(arg_4_0)
+function FightMgr:reconnectFight()
 	return
 end
 
-var_0_0.instance = var_0_0.New()
+FightMgr.instance = FightMgr.New()
 
-return var_0_0
+return FightMgr

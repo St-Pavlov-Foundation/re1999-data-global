@@ -1,127 +1,129 @@
-﻿module("modules.spine.UnitSpineRenderer_500M", package.seeall)
+﻿-- chunkname: @modules/spine/UnitSpineRenderer_500M.lua
 
-local var_0_0 = class("UnitSpineRenderer_500M", LuaCompBase)
+module("modules.spine.UnitSpineRenderer_500M", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._entity = arg_1_1
+local UnitSpineRenderer_500M = class("UnitSpineRenderer_500M", LuaCompBase)
+
+function UnitSpineRenderer_500M:ctor(entity)
+	self._entity = entity
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
+function UnitSpineRenderer_500M:init(go)
+	self.go = go
 end
 
-function var_0_0.setSpine(arg_3_0, arg_3_1)
-	if not arg_3_0.centerSpineRender then
-		arg_3_0.centerSpineRender = MonoHelper.addLuaComOnceToGo(arg_3_1.centerSpine:getSpineGO(), UnitSpineRenderer, arg_3_0._entity)
+function UnitSpineRenderer_500M:setSpine(unitSpine)
+	if not self.centerSpineRender then
+		self.centerSpineRender = MonoHelper.addLuaComOnceToGo(unitSpine.centerSpine:getSpineGO(), UnitSpineRenderer, self._entity)
 	end
 
-	arg_3_0.centerSpineRender:setSpine(arg_3_1.centerSpine)
+	self.centerSpineRender:setSpine(unitSpine.centerSpine)
 
-	if not arg_3_0.frontSpineRender then
-		arg_3_0.frontSpineRender = MonoHelper.addLuaComOnceToGo(arg_3_1.frontSpine:getSpineGO(), UnitSpineRenderer, arg_3_0._entity)
+	if not self.frontSpineRender then
+		self.frontSpineRender = MonoHelper.addLuaComOnceToGo(unitSpine.frontSpine:getSpineGO(), UnitSpineRenderer, self._entity)
 	end
 
-	arg_3_0.frontSpineRender:setSpine(arg_3_1.frontSpine)
+	self.frontSpineRender:setSpine(unitSpine.frontSpine)
 
-	if not arg_3_0.behindSpineRender then
-		arg_3_0.behindSpineRender = MonoHelper.addLuaComOnceToGo(arg_3_1.behindSpine:getSpineGO(), UnitSpineRenderer, arg_3_0._entity)
+	if not self.behindSpineRender then
+		self.behindSpineRender = MonoHelper.addLuaComOnceToGo(unitSpine.behindSpine:getSpineGO(), UnitSpineRenderer, self._entity)
 	end
 
-	arg_3_0.behindSpineRender:setSpine(arg_3_1.behindSpine)
+	self.behindSpineRender:setSpine(unitSpine.behindSpine)
 end
 
-function var_0_0.getReplaceMat(arg_4_0)
-	if arg_4_0.centerSpineRender then
-		return arg_4_0.centerSpineRender:getReplaceMat()
-	end
-end
-
-function var_0_0.getCloneOriginMat(arg_5_0)
-	if arg_5_0.centerSpineRender then
-		return arg_5_0.centerSpineRender:getCloneOriginMat()
+function UnitSpineRenderer_500M:getReplaceMat()
+	if self.centerSpineRender then
+		return self.centerSpineRender:getReplaceMat()
 	end
 end
 
-function var_0_0.getSpineRenderMat(arg_6_0)
-	if arg_6_0.centerSpineRender then
-		return arg_6_0.centerSpineRender:getSpineRenderMat()
+function UnitSpineRenderer_500M:getCloneOriginMat()
+	if self.centerSpineRender then
+		return self.centerSpineRender:getCloneOriginMat()
 	end
 end
 
-function var_0_0._setReplaceMat(arg_7_0, arg_7_1, arg_7_2)
+function UnitSpineRenderer_500M:getSpineRenderMat()
+	if self.centerSpineRender then
+		return self.centerSpineRender:getSpineRenderMat()
+	end
+end
+
+function UnitSpineRenderer_500M:_setReplaceMat(originMat, replaceMat)
 	return
 end
 
-function var_0_0.replaceSpineMat(arg_8_0, arg_8_1)
-	if arg_8_0.centerSpineRender then
-		arg_8_0.centerSpineRender:replaceSpineMat(arg_8_1)
+function UnitSpineRenderer_500M:replaceSpineMat(mat)
+	if self.centerSpineRender then
+		self.centerSpineRender:replaceSpineMat(mat)
 	end
 end
 
-function var_0_0.resetSpineMat(arg_9_0)
-	if arg_9_0.frontSpineRender then
-		arg_9_0.frontSpineRender:resetSpineMat()
+function UnitSpineRenderer_500M:resetSpineMat()
+	if self.frontSpineRender then
+		self.frontSpineRender:resetSpineMat()
 	end
 end
 
-function var_0_0.setAlpha(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_0:callFunc("setAlpha", arg_10_1, arg_10_2)
+function UnitSpineRenderer_500M:setAlpha(alpha, duration)
+	self:callFunc("setAlpha", alpha, duration)
 end
 
-function var_0_0.setColor(arg_11_0, arg_11_1)
-	arg_11_0:callFunc("setColor", arg_11_1)
+function UnitSpineRenderer_500M:setColor(color)
+	self:callFunc("setColor", color)
 end
 
-function var_0_0._frameCallback(arg_12_0, arg_12_1)
+function UnitSpineRenderer_500M:_frameCallback(alpha)
 	return
 end
 
-function var_0_0._finishCallback(arg_13_0)
+function UnitSpineRenderer_500M:_finishCallback()
 	return
 end
 
-function var_0_0._stopAlphaTween(arg_14_0)
+function UnitSpineRenderer_500M:_stopAlphaTween()
 	return
 end
 
-function var_0_0._setRendererEnabled(arg_15_0, arg_15_1)
+function UnitSpineRenderer_500M:_setRendererEnabled(state)
 	return
 end
 
-function var_0_0.onDestroy(arg_16_0)
+function UnitSpineRenderer_500M:onDestroy()
 	return
 end
 
-function var_0_0.callFunc(arg_17_0, arg_17_1, ...)
-	if arg_17_0.frontSpineRender then
-		local var_17_0 = arg_17_0.frontSpineRender[arg_17_1]
+function UnitSpineRenderer_500M:callFunc(funcName, ...)
+	if self.frontSpineRender then
+		local func = self.frontSpineRender[funcName]
 
-		if var_17_0 then
-			var_17_0(arg_17_0.frontSpineRender, ...)
+		if func then
+			func(self.frontSpineRender, ...)
 		else
-			logError("not found func int frontSpineRender : " .. tostring(arg_17_1))
+			logError("not found func int frontSpineRender : " .. tostring(funcName))
 		end
 	end
 
-	if arg_17_0.behindSpineRender then
-		local var_17_1 = arg_17_0.behindSpineRender[arg_17_1]
+	if self.behindSpineRender then
+		local func = self.behindSpineRender[funcName]
 
-		if var_17_1 then
-			var_17_1(arg_17_0.behindSpineRender, ...)
+		if func then
+			func(self.behindSpineRender, ...)
 		else
-			logError("not found func int behindSpineRender : " .. tostring(arg_17_1))
+			logError("not found func int behindSpineRender : " .. tostring(funcName))
 		end
 	end
 
-	if arg_17_0.centerSpineRender then
-		local var_17_2 = arg_17_0.centerSpineRender[arg_17_1]
+	if self.centerSpineRender then
+		local func = self.centerSpineRender[funcName]
 
-		if var_17_2 then
-			return var_17_2(arg_17_0.centerSpineRender, ...)
+		if func then
+			return func(self.centerSpineRender, ...)
 		else
-			logError("not found func int centerSpineRender : " .. tostring(arg_17_1))
+			logError("not found func int centerSpineRender : " .. tostring(funcName))
 		end
 	end
 end
 
-return var_0_0
+return UnitSpineRenderer_500M

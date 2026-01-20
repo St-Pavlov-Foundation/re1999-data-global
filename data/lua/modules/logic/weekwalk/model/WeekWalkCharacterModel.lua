@@ -1,11 +1,13 @@
-﻿module("modules.logic.weekwalk.model.WeekWalkCharacterModel", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk/model/WeekWalkCharacterModel.lua
 
-local var_0_0 = class("WeekWalkCharacterModel", CharacterModel)
+module("modules.logic.weekwalk.model.WeekWalkCharacterModel", package.seeall)
 
-function var_0_0._setCharacterCardList(arg_1_0, arg_1_1)
-	WeekWalkCardListModel.instance:setCharacterList(arg_1_1)
+local WeekWalkCharacterModel = class("WeekWalkCharacterModel", CharacterModel)
+
+function WeekWalkCharacterModel:_setCharacterCardList(cardList)
+	WeekWalkCardListModel.instance:setCharacterList(cardList)
 end
 
-var_0_0.instance = var_0_0.New()
+WeekWalkCharacterModel.instance = WeekWalkCharacterModel.New()
 
-return var_0_0
+return WeekWalkCharacterModel

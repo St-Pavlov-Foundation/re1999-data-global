@@ -1,26 +1,28 @@
-﻿module("modules.logic.survival.model.map.SurvivalTeamInfoMo", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/map/SurvivalTeamInfoMo.lua
 
-local var_0_0 = pureTable("SurvivalTeamInfoMo")
+module("modules.logic.survival.model.map.SurvivalTeamInfoMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.heros = {}
-	arg_1_0.heroUids = {}
+local SurvivalTeamInfoMo = pureTable("SurvivalTeamInfoMo")
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1.hero) do
-		arg_1_0.heroUids[iter_1_1.uid] = true
+function SurvivalTeamInfoMo:init(data)
+	self.heros = {}
+	self.heroUids = {}
 
-		table.insert(arg_1_0.heros, iter_1_1.uid)
+	for _, v in ipairs(data.hero) do
+		self.heroUids[v.uid] = true
+
+		table.insert(self.heros, v.uid)
 	end
 
-	arg_1_0.npcId = arg_1_1.npcId
+	self.npcId = data.npcId
 end
 
-function var_0_0.getHeroMo(arg_2_0, arg_2_1)
-	if not arg_2_0.heroUids[arg_2_1] then
+function SurvivalTeamInfoMo:getHeroMo(uid)
+	if not self.heroUids[uid] then
 		return
 	end
 
-	return HeroModel.instance:getById(arg_2_1)
+	return HeroModel.instance:getById(uid)
 end
 
-return var_0_0
+return SurvivalTeamInfoMo

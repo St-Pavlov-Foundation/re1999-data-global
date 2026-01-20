@@ -1,145 +1,149 @@
-﻿module("modules.logic.versionactivity2_7.common.VersionActivity2_7JumpHandleFunc", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/common/VersionActivity2_7JumpHandleFunc.lua
 
-local var_0_0 = class("VersionActivity2_7JumpHandleFunc")
+module("modules.logic.versionactivity2_7.common.VersionActivity2_7JumpHandleFunc", package.seeall)
 
-function var_0_0.jumpTo12003(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_1[2]
-	local var_1_1 = arg_1_1[3]
+local VersionActivity2_7JumpHandleFunc = class("VersionActivity2_7JumpHandleFunc")
 
-	table.insert(arg_1_0.waitOpenViewNames, ViewName.VersionActivity2_7EnterView)
-	table.insert(arg_1_0.closeViewNames, ViewName.VersionActivity2_0DungeonMapLevelView)
+function VersionActivity2_7JumpHandleFunc:jumpTo12003(paramsList)
+	local actId = paramsList[2]
+	local episodeId = paramsList[3]
 
-	if var_1_1 then
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity2_7EnterView)
+	table.insert(self.closeViewNames, ViewName.VersionActivity2_0DungeonMapLevelView)
+
+	if episodeId then
 		VersionActivityFixedHelper.getVersionActivityEnterController().instance:openVersionActivityEnterViewIfNotOpened(function()
-			VersionActivity2_0DungeonController.instance:openVersionActivityDungeonMapView(nil, var_1_1, function()
-				if VersionActivity2_0DungeonModel.instance:getOpenGraffitiEntranceState() then
+			VersionActivity2_0DungeonController.instance:openVersionActivityDungeonMapView(nil, episodeId, function()
+				local isOpenGraffitiEntrance = VersionActivity2_0DungeonModel.instance:getOpenGraffitiEntranceState()
+
+				if isOpenGraffitiEntrance then
 					ViewMgr.instance:closeView(ViewName.VersionActivity2_0DungeonMapGraffitiEnterView)
 				end
 
 				ViewMgr.instance:openView(ViewName.VersionActivity2_0DungeonMapLevelView, {
 					isJump = true,
-					episodeId = var_1_1
+					episodeId = episodeId
 				})
 			end)
-		end, nil, var_1_0, true)
+		end, nil, actId, true)
 	else
-		VersionActivityFixedHelper.getVersionActivityEnterController().instance:openVersionActivityEnterViewIfNotOpened(VersionActivity2_0DungeonController.openVersionActivityDungeonMapView, VersionActivity2_0DungeonController.instance, var_1_0, true)
+		VersionActivityFixedHelper.getVersionActivityEnterController().instance:openVersionActivityEnterViewIfNotOpened(VersionActivity2_0DungeonController.openVersionActivityDungeonMapView, VersionActivity2_0DungeonController.instance, actId, true)
 	end
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpTo12713(arg_4_0, arg_4_1)
-	table.insert(arg_4_0.waitOpenViewNames, ViewName.VersionActivity2_7EnterView)
+function VersionActivity2_7JumpHandleFunc:jumpTo12713(paramsList)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity2_7EnterView)
 	VersionActivityFixedHelper.getVersionActivityEnterController().instance:openVersionActivityEnterViewIfNotOpened(function()
-		table.insert(arg_4_0.waitOpenViewNames, ViewName.ReactivityStoreView)
+		table.insert(self.waitOpenViewNames, ViewName.ReactivityStoreView)
 		ReactivityController.instance:openReactivityStoreView(VersionActivity2_7Enum.ActivityId.Reactivity)
 	end)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpTo12005(arg_6_0, arg_6_1)
-	table.insert(arg_6_0.waitOpenViewNames, VersionActivityFixedHelper.getVersionActivityEnterViewName())
-	table.insert(arg_6_0.waitOpenViewNames, ViewName.VersionActivity2_0DungeonMapView)
-	table.insert(arg_6_0.waitOpenViewNames, ViewName.VersionActivity2_0DungeonGraffitiView)
+function VersionActivity2_7JumpHandleFunc:jumpTo12005(paramsList)
+	table.insert(self.waitOpenViewNames, VersionActivityFixedHelper.getVersionActivityEnterViewName())
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity2_0DungeonMapView)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity2_0DungeonGraffitiView)
 
-	local function var_6_0()
+	local function openGraffitiFunc()
 		Activity161Controller.instance:openGraffitiView()
 	end
 
-	local function var_6_1()
+	local function openDungeonMapFunc()
 		if ViewMgr.instance:isOpen(ViewName.VersionActivity2_0DungeonMapView) then
-			var_6_0()
+			openGraffitiFunc()
 		else
-			VersionActivity2_0DungeonController.instance:openVersionActivityDungeonMapView(nil, nil, var_6_0)
+			VersionActivity2_0DungeonController.instance:openVersionActivityDungeonMapView(nil, nil, openGraffitiFunc)
 		end
 	end
 
-	VersionActivityFixedHelper.getVersionActivityEnterController().instance:openVersionActivityEnterViewIfNotOpened(var_6_1, nil, nil, true)
+	VersionActivityFixedHelper.getVersionActivityEnterController().instance:openVersionActivityEnterViewIfNotOpened(openDungeonMapFunc, nil, nil, true)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpTo12701(arg_9_0)
-	local var_9_0 = VersionActivity2_7Enum.ActivityId.Act191
+function VersionActivity2_7JumpHandleFunc:jumpTo12701()
+	local activityId = VersionActivity2_7Enum.ActivityId.Act191
 
 	VersionActivityFixedHelper.getVersionActivityEnterController().instance:openVersionActivityEnterView(function()
-		Activity191Controller.instance:enterActivity(var_9_0)
-	end, nil, var_9_0, true)
+		Activity191Controller.instance:enterActivity(activityId)
+	end, nil, activityId, true)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpTo12706(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_1[2]
-	local var_11_1 = arg_11_1[3]
-	local var_11_2 = VersionActivityFixedHelper.getVersionActivityDungeonMapLevelViewName()
+function VersionActivity2_7JumpHandleFunc:jumpTo12706(paramsList)
+	local actId = paramsList[2]
+	local episodeId = paramsList[3]
+	local mapLevelViewName = VersionActivityFixedHelper.getVersionActivityDungeonMapLevelViewName()
 
-	table.insert(arg_11_0.waitOpenViewNames, ViewName.VersionActivity2_7EnterView)
-	table.insert(arg_11_0.closeViewNames, var_11_2)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity2_7EnterView)
+	table.insert(self.closeViewNames, mapLevelViewName)
 	VersionActivityFixedDungeonModel.instance:setMapNeedTweenState(true)
 
-	local var_11_3 = VersionActivityFixedHelper.getVersionActivityDungeonController()
+	local dungeonController = VersionActivityFixedHelper.getVersionActivityDungeonController()
 
-	if var_11_1 then
+	if episodeId then
 		VersionActivityFixedHelper.getVersionActivityEnterController().instance:openVersionActivityEnterViewIfNotOpened(function()
-			var_11_3.instance:openVersionActivityDungeonMapView(nil, var_11_1, function()
-				ViewMgr.instance:openView(var_11_2, {
+			dungeonController.instance:openVersionActivityDungeonMapView(nil, episodeId, function()
+				ViewMgr.instance:openView(mapLevelViewName, {
 					isJump = true,
-					episodeId = var_11_1
+					episodeId = episodeId
 				})
 			end)
-		end, nil, var_11_0, true)
+		end, nil, actId, true)
 	else
-		VersionActivityFixedHelper.getVersionActivityEnterController().instance:openVersionActivityEnterViewIfNotOpened(var_11_3.openVersionActivityDungeonMapView, var_11_3.instance, var_11_0, true)
+		VersionActivityFixedHelper.getVersionActivityEnterController().instance:openVersionActivityEnterViewIfNotOpened(dungeonController.openVersionActivityDungeonMapView, dungeonController.instance, actId, true)
 	end
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpTo12707(arg_14_0, arg_14_1)
-	local var_14_0 = VersionActivityFixedHelper.getVersionActivityDungeonController()
+function VersionActivity2_7JumpHandleFunc:jumpTo12707(paramsList)
+	local dungeonController = VersionActivityFixedHelper.getVersionActivityDungeonController()
 
-	VersionActivityFixedHelper.getVersionActivityEnterController().instance:openVersionActivityEnterViewIfNotOpened(var_14_0.openStoreView, var_14_0.instance, VersionActivityFixedHelper.getVersionActivityEnum().ActivityId.Dungeon, true)
-
-	return JumpEnum.JumpResult.Success
-end
-
-function var_0_0.jumpTo12714(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_1[2]
-
-	VersionActivityFixedHelper.getVersionActivityEnterController().instance:openVersionActivityEnterViewIfNotOpened(var_0_0.enterRoleActivity, var_15_0, var_15_0)
+	VersionActivityFixedHelper.getVersionActivityEnterController().instance:openVersionActivityEnterViewIfNotOpened(dungeonController.openStoreView, dungeonController.instance, VersionActivityFixedHelper.getVersionActivityEnum().ActivityId.Dungeon, true)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.enterRoleActivity(arg_16_0)
-	RoleActivityController.instance:enterActivity(arg_16_0)
-end
+function VersionActivity2_7JumpHandleFunc:jumpTo12714(paramsList)
+	local actId = paramsList[2]
 
-function var_0_0.jumpTo12702(arg_17_0, arg_17_1)
-	local var_17_0 = arg_17_1[2]
-
-	VersionActivityFixedHelper.getVersionActivityEnterController().instance:openVersionActivityEnterViewIfNotOpened(nil, nil, var_17_0)
+	VersionActivityFixedHelper.getVersionActivityEnterController().instance:openVersionActivityEnterViewIfNotOpened(VersionActivity2_7JumpHandleFunc.enterRoleActivity, actId, actId)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpTo12703(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_1[2]
+function VersionActivity2_7JumpHandleFunc.enterRoleActivity(actId)
+	RoleActivityController.instance:enterActivity(actId)
+end
 
-	VersionActivityFixedHelper.getVersionActivityEnterController().instance:openVersionActivityEnterViewIfNotOpened(nil, nil, var_18_0)
+function VersionActivity2_7JumpHandleFunc:jumpTo12702(paramsList)
+	local actId = paramsList[2]
+
+	VersionActivityFixedHelper.getVersionActivityEnterController().instance:openVersionActivityEnterViewIfNotOpened(nil, nil, actId)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpTo12704(arg_19_0, arg_19_1)
-	local var_19_0 = arg_19_1[2]
+function VersionActivity2_7JumpHandleFunc:jumpTo12703(paramsList)
+	local actId = paramsList[2]
 
-	VersionActivityFixedHelper.getVersionActivityEnterController():openVersionActivityEnterView(nil, nil, var_19_0)
+	VersionActivityFixedHelper.getVersionActivityEnterController().instance:openVersionActivityEnterViewIfNotOpened(nil, nil, actId)
 
 	return JumpEnum.JumpResult.Success
 end
 
-return var_0_0
+function VersionActivity2_7JumpHandleFunc:jumpTo12704(paramsList)
+	local actId = paramsList[2]
+
+	VersionActivityFixedHelper.getVersionActivityEnterController():openVersionActivityEnterView(nil, nil, actId)
+
+	return JumpEnum.JumpResult.Success
+end
+
+return VersionActivity2_7JumpHandleFunc

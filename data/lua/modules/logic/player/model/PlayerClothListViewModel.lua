@@ -1,33 +1,35 @@
-﻿module("modules.logic.player.model.PlayerClothListViewModel", package.seeall)
+﻿-- chunkname: @modules/logic/player/model/PlayerClothListViewModel.lua
 
-local var_0_0 = class("PlayerClothListViewModel", ListScrollModel)
+module("modules.logic.player.model.PlayerClothListViewModel", package.seeall)
 
-function var_0_0.setGroupModel(arg_1_0, arg_1_1)
-	arg_1_0._groupModel = arg_1_1
+local PlayerClothListViewModel = class("PlayerClothListViewModel", ListScrollModel)
+
+function PlayerClothListViewModel:setGroupModel(model)
+	self._groupModel = model
 end
 
-function var_0_0.getGroupModel(arg_2_0)
-	return arg_2_0._groupModel
+function PlayerClothListViewModel:getGroupModel()
+	return self._groupModel
 end
 
-function var_0_0.update(arg_3_0)
-	local var_3_0 = PlayerClothModel.instance:getList()
-	local var_3_1 = {}
-	local var_3_2 = PlayerClothModel.instance:getSpEpisodeClothID()
+function PlayerClothListViewModel:update()
+	local list = PlayerClothModel.instance:getList()
+	local newList = {}
+	local sp_episode_cloth_id = PlayerClothModel.instance:getSpEpisodeClothID()
 
-	if var_3_2 then
-		table.insert(var_3_1, PlayerClothModel.instance:getById(var_3_2))
+	if sp_episode_cloth_id then
+		table.insert(newList, PlayerClothModel.instance:getById(sp_episode_cloth_id))
 	else
-		for iter_3_0, iter_3_1 in ipairs(var_3_0) do
-			if PlayerClothModel.instance:hasCloth(iter_3_1.id) then
-				table.insert(var_3_1, iter_3_1)
+		for _, mo in ipairs(list) do
+			if PlayerClothModel.instance:hasCloth(mo.id) then
+				table.insert(newList, mo)
 			end
 		end
 	end
 
-	arg_3_0:setList(var_3_1)
+	self:setList(newList)
 end
 
-var_0_0.instance = var_0_0.New()
+PlayerClothListViewModel.instance = PlayerClothListViewModel.New()
 
-return var_0_0
+return PlayerClothListViewModel

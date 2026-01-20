@@ -1,48 +1,50 @@
-﻿module("modules.logic.versionactivity1_8.dungeon.config.VersionActivity1_8DungeonConfig", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_8/dungeon/config/VersionActivity1_8DungeonConfig.lua
 
-local var_0_0 = class("VersionActivity1_8DungeonConfig", BaseConfig)
+module("modules.logic.versionactivity1_8.dungeon.config.VersionActivity1_8DungeonConfig", package.seeall)
 
-local function var_0_1(arg_1_0)
-	local var_1_0 = DungeonConfig.instance:getEpisodeCO(arg_1_0)
+local VersionActivity1_8DungeonConfig = class("VersionActivity1_8DungeonConfig", BaseConfig)
 
-	if var_1_0.chapterId ~= VersionActivity1_8DungeonEnum.DungeonChapterId.ElementFight then
-		if var_1_0.chapterId == VersionActivity1_8DungeonEnum.DungeonChapterId.Hard then
-			arg_1_0 = arg_1_0 - 10000
-			var_1_0 = DungeonConfig.instance:getEpisodeCO(arg_1_0)
+local function getStoryEpisodeCo(episodeId)
+	local episodeConfig = DungeonConfig.instance:getEpisodeCO(episodeId)
+
+	if episodeConfig.chapterId ~= VersionActivity1_8DungeonEnum.DungeonChapterId.ElementFight then
+		if episodeConfig.chapterId == VersionActivity1_8DungeonEnum.DungeonChapterId.Hard then
+			episodeId = episodeId - 10000
+			episodeConfig = DungeonConfig.instance:getEpisodeCO(episodeId)
 		else
-			while var_1_0.chapterId ~= VersionActivity1_8DungeonEnum.DungeonChapterId.Story do
-				var_1_0 = DungeonConfig.instance:getEpisodeCO(var_1_0.preEpisode)
+			while episodeConfig.chapterId ~= VersionActivity1_8DungeonEnum.DungeonChapterId.Story do
+				episodeConfig = DungeonConfig.instance:getEpisodeCO(episodeConfig.preEpisode)
 			end
 		end
 	end
 
-	return var_1_0
+	return episodeConfig
 end
 
-function var_0_0.getEpisodeMapConfig(arg_2_0, arg_2_1)
-	local var_2_0 = var_0_1(arg_2_1)
+function VersionActivity1_8DungeonConfig:getEpisodeMapConfig(episodeId)
+	local episodeCo = getStoryEpisodeCo(episodeId)
 
-	return DungeonConfig.instance:getChapterMapCfg(VersionActivity1_8DungeonEnum.DungeonChapterId.Story, var_2_0.preEpisode)
+	return DungeonConfig.instance:getChapterMapCfg(VersionActivity1_8DungeonEnum.DungeonChapterId.Story, episodeCo.preEpisode)
 end
 
-function var_0_0.getEpisodeIndex(arg_3_0, arg_3_1)
-	local var_3_0 = var_0_1(arg_3_1)
+function VersionActivity1_8DungeonConfig:getEpisodeIndex(episodeId)
+	local episodeConfig = getStoryEpisodeCo(episodeId)
 
-	return DungeonConfig.instance:getChapterEpisodeIndexWithSP(var_3_0.chapterId, var_3_0.id)
+	return DungeonConfig.instance:getChapterEpisodeIndexWithSP(episodeConfig.chapterId, episodeConfig.id)
 end
 
-function var_0_0.checkElementBelongMapId(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = {
-		arg_4_1.mapId
+function VersionActivity1_8DungeonConfig:checkElementBelongMapId(elementCo, mapId)
+	local belongMapIdList = {
+		elementCo.mapId
 	}
 
-	return tabletool.indexOf(var_4_0, arg_4_2)
+	return tabletool.indexOf(belongMapIdList, mapId)
 end
 
-function var_0_0.getStoryEpisodeCo(arg_5_0, arg_5_1)
-	return var_0_1(arg_5_1)
+function VersionActivity1_8DungeonConfig:getStoryEpisodeCo(episodeId)
+	return getStoryEpisodeCo(episodeId)
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity1_8DungeonConfig.instance = VersionActivity1_8DungeonConfig.New()
 
-return var_0_0
+return VersionActivity1_8DungeonConfig

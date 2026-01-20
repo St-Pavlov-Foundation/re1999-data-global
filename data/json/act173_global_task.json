@@ -382,5 +382,257 @@
     "id": 7,
     "endValue": 19990000,
     "isVisible": 0
+  },
+  {
+    "activityId": 13218,
+    "id": 1,
+    "endValue": 0,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13218,
+    "id": 2,
+    "endValue": 1000000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13218,
+    "id": 3,
+    "endValue": 1920000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13218,
+    "id": 4,
+    "endValue": 3100000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13218,
+    "id": 5,
+    "endValue": 4480000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13218,
+    "id": 6,
+    "endValue": 5521321,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13218,
+    "id": 7,
+    "endValue": 7749000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13218,
+    "id": 8,
+    "endValue": 9340311,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13218,
+    "id": 9,
+    "endValue": 10000000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13219,
+    "id": 1,
+    "endValue": 0,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13219,
+    "id": 2,
+    "endValue": 1935000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13219,
+    "id": 3,
+    "endValue": 2380000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13219,
+    "id": 4,
+    "endValue": 3512000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13219,
+    "id": 5,
+    "endValue": 6643000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13219,
+    "id": 6,
+    "endValue": 8433000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13219,
+    "id": 7,
+    "endValue": 10523592,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13219,
+    "id": 8,
+    "endValue": 13460000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13219,
+    "id": 9,
+    "endValue": 15002312,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13219,
+    "id": 10,
+    "endValue": 16893412,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13219,
+    "id": 11,
+    "endValue": 17321890,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13219,
+    "id": 12,
+    "endValue": 18932131,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13219,
+    "id": 13,
+    "endValue": 19990000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13220,
+    "id": 1,
+    "endValue": 0,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13220,
+    "id": 2,
+    "endValue": 1500000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13220,
+    "id": 3,
+    "endValue": 4000000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13220,
+    "id": 4,
+    "endValue": 7900000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13220,
+    "id": 5,
+    "endValue": 11500000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13220,
+    "id": 6,
+    "endValue": 17641300,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13220,
+    "id": 7,
+    "endValue": 19194100,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13220,
+    "id": 8,
+    "endValue": 22341000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13220,
+    "id": 9,
+    "endValue": 25213120,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13220,
+    "id": 10,
+    "endValue": 39990000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13221,
+    "id": 1,
+    "endValue": 0,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13221,
+    "id": 2,
+    "endValue": 9404000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13221,
+    "id": 3,
+    "endValue": 12310000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13221,
+    "id": 4,
+    "endValue": 18000000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13221,
+    "id": 5,
+    "endValue": 22231000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13221,
+    "id": 6,
+    "endValue": 29119100,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13221,
+    "id": 7,
+    "endValue": 35011200,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13221,
+    "id": 8,
+    "endValue": 31011200,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13221,
+    "id": 9,
+    "endValue": 35012310,
+    "isVisible": 0
+  },
+  {
+    "activityId": 13221,
+    "id": 10,
+    "endValue": 59990000,
+    "isVisible": 0
   }
 ]

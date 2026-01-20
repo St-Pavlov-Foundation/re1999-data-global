@@ -1,81 +1,103 @@
-﻿module("modules.logic.turnback.model.TurnbackSignInModel", package.seeall)
+﻿-- chunkname: @modules/logic/turnback/model/TurnbackSignInModel.lua
 
-local var_0_0 = class("TurnbackSignInModel", ListScrollModel)
+module("modules.logic.turnback.model.TurnbackSignInModel", package.seeall)
 
-function var_0_0.OnInit(arg_1_0)
-	arg_1_0:reInit()
+local TurnbackSignInModel = class("TurnbackSignInModel", ListScrollModel)
+
+function TurnbackSignInModel:OnInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0.signInInfoMoList = {}
+function TurnbackSignInModel:reInit()
+	self.signInInfoMoList = {}
 end
 
-function var_0_0.setSignInInfoList(arg_3_0, arg_3_1)
-	arg_3_0.signInInfoMoList = {}
+function TurnbackSignInModel:setSignInInfoList(signInInfos)
+	self.signInInfoMoList = {}
 
-	local var_3_0 = TurnbackModel.instance:getCurTurnbackId()
+	local curTurnbackId = TurnbackModel.instance:getCurTurnbackId()
 
-	for iter_3_0 = 1, #arg_3_1 do
-		local var_3_1 = TurnbackSignInInfoMo.New()
+	for i = 1, #signInInfos do
+		local signInInfoMo = TurnbackSignInInfoMo.New()
 
-		var_3_1:init(arg_3_1[iter_3_0], var_3_0)
-		table.insert(arg_3_0.signInInfoMoList, var_3_1)
+		signInInfoMo:init(signInInfos[i], curTurnbackId)
+		table.insert(self.signInInfoMoList, signInInfoMo)
 	end
 
-	table.sort(arg_3_0.signInInfoMoList, function(arg_4_0, arg_4_1)
-		return arg_4_0.id < arg_4_1.id
+	table.sort(self.signInInfoMoList, function(a, b)
+		return a.id < b.id
 	end)
-	arg_3_0:setSignInList()
+	self:setSignInList()
 end
 
-function var_0_0.getSignInInfoMoList(arg_5_0)
-	return arg_5_0.signInInfoMoList
+function TurnbackSignInModel:getSignInInfoMoList()
+	return self.signInInfoMoList
 end
 
-function var_0_0.getSignInStateById(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0.signInInfoMoList[arg_6_1]
+function TurnbackSignInModel:getSignInStateById(id)
+	local mo = self.signInInfoMoList[id]
 
-	if var_6_0 then
-		return var_6_0.state
+	if mo then
+		return mo.state
 	end
 end
 
-function var_0_0.setSignInList(arg_7_0)
-	if GameUtil.getTabLen(arg_7_0.signInInfoMoList) > 0 then
-		arg_7_0:setList(arg_7_0.signInInfoMoList)
+function TurnbackSignInModel:setSignInList()
+	if GameUtil.getTabLen(self.signInInfoMoList) > 0 then
+		self:setList(self.signInInfoMoList)
 	end
 end
 
-function var_0_0.updateSignInInfoState(arg_8_0, arg_8_1, arg_8_2)
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0.signInInfoMoList) do
-		if iter_8_1.id == arg_8_1 then
-			iter_8_1:updateState(arg_8_2)
+function TurnbackSignInModel:updateSignInInfoState(id, state)
+	for _, info in ipairs(self.signInInfoMoList) do
+		if info.id == id then
+			info:updateState(state)
 
 			break
 		end
 	end
 
-	arg_8_0:setList(arg_8_0.signInInfoMoList)
+	self:setList(self.signInInfoMoList)
 end
 
-function var_0_0.getTheFirstCanGetIndex(arg_9_0)
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0.signInInfoMoList) do
-		if iter_9_1.state == TurnbackEnum.SignInState.CanGet then
-			return iter_9_0
+function TurnbackSignInModel:getTheFirstCanGetIndex()
+	for index, info in ipairs(self.signInInfoMoList) do
+		if info.state == TurnbackEnum.SignInState.CanGet then
+			return index
 		end
 	end
 
 	return 0
 end
 
-function var_0_0.setOpenTimeStamp(arg_10_0)
-	arg_10_0.startTimeStamp = UnityEngine.Time.realtimeSinceStartup
+function TurnbackSignInModel:setOpenTimeStamp()
+	self.startTimeStamp = UnityEngine.Time.realtimeSinceStartup
 end
 
-function var_0_0.getOpenTimeStamp(arg_11_0)
-	return arg_11_0.startTimeStamp
+function TurnbackSignInModel:getOpenTimeStamp()
+	return self.startTimeStamp
 end
 
-var_0_0.instance = var_0_0.New()
+function TurnbackSignInModel:checkShowNextTag(curItemDay)
+	local curSignInDay = TurnbackModel.instance:getCurSignInDay()
 
-return var_0_0
+	if curSignInDay and curSignInDay < 7 and curItemDay == curSignInDay + 1 then
+		return true
+	end
+
+	return false
+end
+
+function TurnbackSignInModel:checkGetAllSignInReward()
+	for index, mo in ipairs(self.signInInfoMoList) do
+		if mo.state ~= TurnbackEnum.SignInState.HasGet then
+			return false
+		end
+	end
+
+	return true
+end
+
+TurnbackSignInModel.instance = TurnbackSignInModel.New()
+
+return TurnbackSignInModel

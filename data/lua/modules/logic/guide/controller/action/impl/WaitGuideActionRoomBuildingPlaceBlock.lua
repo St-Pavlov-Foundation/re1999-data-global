@@ -1,64 +1,66 @@
-﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionRoomBuildingPlaceBlock", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/WaitGuideActionRoomBuildingPlaceBlock.lua
 
-local var_0_0 = class("WaitGuideActionRoomBuildingPlaceBlock", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.WaitGuideActionRoomBuildingPlaceBlock", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+local WaitGuideActionRoomBuildingPlaceBlock = class("WaitGuideActionRoomBuildingPlaceBlock", BaseGuideAction)
 
-	arg_1_0._sceneType = SceneType.Room
+function WaitGuideActionRoomBuildingPlaceBlock:onStart(context)
+	WaitGuideActionRoomBuildingPlaceBlock.super.onStart(self, context)
 
-	local var_1_0 = string.splitToNumber(arg_1_0.actionParam, "#")
+	self._sceneType = SceneType.Room
 
-	arg_1_0._buildingId = var_1_0[1]
-	arg_1_0._toastId = var_1_0[2]
+	local arr = string.splitToNumber(self.actionParam, "#")
 
-	if GameSceneMgr.instance:getCurSceneType() == arg_1_0._sceneType and not GameSceneMgr.instance:isLoading() then
-		arg_1_0:_check()
+	self._buildingId = arr[1]
+	self._toastId = arr[2]
+
+	if GameSceneMgr.instance:getCurSceneType() == self._sceneType and not GameSceneMgr.instance:isLoading() then
+		self:_check()
 	else
-		arg_1_0:addEvents()
+		self:addEvents()
 	end
 end
 
-function var_0_0._onEnterScene(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_2 == 1 then
-		arg_2_0:_check()
+function WaitGuideActionRoomBuildingPlaceBlock:_onEnterScene(sceneId, enterOrExit)
+	if enterOrExit == 1 then
+		self:_check()
 	end
 end
 
-function var_0_0._check(arg_3_0)
-	if not GuideExceptionChecker.checkBuildingPut(nil, nil, arg_3_0._buildingId) then
-		arg_3_0:onDone(true)
+function WaitGuideActionRoomBuildingPlaceBlock:_check()
+	if not GuideExceptionChecker.checkBuildingPut(nil, nil, self._buildingId) then
+		self:onDone(true)
 	else
-		if arg_3_0._toastId then
-			GameFacade.showToast(arg_3_0._toastId)
+		if self._toastId then
+			GameFacade.showToast(self._toastId)
 		end
 
-		arg_3_0:addEvents()
+		self:addEvents()
 	end
 end
 
-function var_0_0.addEvents(arg_4_0)
-	if arg_4_0.hasAddEvents then
+function WaitGuideActionRoomBuildingPlaceBlock:addEvents()
+	if self.hasAddEvents then
 		return
 	end
 
-	arg_4_0.hasAddEvents = true
+	self.hasAddEvents = true
 
-	GameSceneMgr.instance:registerCallback(arg_4_0._sceneType, arg_4_0._onEnterScene, arg_4_0)
+	GameSceneMgr.instance:registerCallback(self._sceneType, self._onEnterScene, self)
 end
 
-function var_0_0.removeEvents(arg_5_0)
-	if not arg_5_0.hasAddEvents then
+function WaitGuideActionRoomBuildingPlaceBlock:removeEvents()
+	if not self.hasAddEvents then
 		return
 	end
 
-	arg_5_0.hasAddEvents = false
+	self.hasAddEvents = false
 
-	GameSceneMgr.instance:unregisterCallback(arg_5_0._sceneType, arg_5_0._onEnterScene, arg_5_0)
+	GameSceneMgr.instance:unregisterCallback(self._sceneType, self._onEnterScene, self)
 end
 
-function var_0_0.clearWork(arg_6_0)
-	arg_6_0:removeEvents()
+function WaitGuideActionRoomBuildingPlaceBlock:clearWork()
+	self:removeEvents()
 end
 
-return var_0_0
+return WaitGuideActionRoomBuildingPlaceBlock

@@ -1,184 +1,190 @@
-﻿module("modules.logic.versionactivity1_5.act142.controller.Activity142Controller", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/act142/controller/Activity142Controller.lua
 
-local var_0_0 = class("Activity142Controller", BaseController)
+module("modules.logic.versionactivity1_5.act142.controller.Activity142Controller", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:clear()
+local Activity142Controller = class("Activity142Controller", BaseController)
+
+function Activity142Controller:onInit()
+	self:clear()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clear()
+function Activity142Controller:reInit()
+	self:clear()
 end
 
-function var_0_0.clear(arg_3_0)
-	arg_3_0:_endBlock()
+function Activity142Controller:clear()
+	self:_endBlock()
 end
 
-function var_0_0.openMapView(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	arg_4_0._tmpOpenMapViewCb = arg_4_1
-	arg_4_0._tmpOpenMapViewCbObj = arg_4_2
-	arg_4_0._tmpOpenMapViewCbParam = arg_4_3
+function Activity142Controller:openMapView(cb, cbObj, cbParam)
+	self._tmpOpenMapViewCb = cb
+	self._tmpOpenMapViewCbObj = cbObj
+	self._tmpOpenMapViewCbParam = cbParam
 
-	local var_4_0 = Activity142Model.instance:getActivityId()
+	local actId = Activity142Model.instance:getActivityId()
 
-	Va3ChessRpcController.instance:sendGetActInfoRequest(var_4_0, arg_4_0._onOpenMapViewGetActInfoCb, arg_4_0)
+	Va3ChessRpcController.instance:sendGetActInfoRequest(actId, self._onOpenMapViewGetActInfoCb, self)
 end
 
-function var_0_0._onOpenMapViewGetActInfoCb(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	if arg_5_2 ~= 0 then
+function Activity142Controller:_onOpenMapViewGetActInfoCb(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_5_0 = Activity142Model.instance:getActivityId()
-	local var_5_1 = Activity142Model.instance:isEpisodeOpen(var_5_0, Activity142Enum.AUTO_ENTER_EPISODE_ID)
-	local var_5_2 = Activity142Model.instance:isEpisodeClear(Activity142Enum.AUTO_ENTER_EPISODE_ID)
+	local actId = Activity142Model.instance:getActivityId()
+	local isOpen = Activity142Model.instance:isEpisodeOpen(actId, Activity142Enum.AUTO_ENTER_EPISODE_ID)
+	local isClear = Activity142Model.instance:isEpisodeClear(Activity142Enum.AUTO_ENTER_EPISODE_ID)
 
-	if var_5_1 and not var_5_2 then
-		arg_5_0:enterChessGame(Activity142Enum.AUTO_ENTER_EPISODE_ID, arg_5_0._realOpenMapView, arg_5_0)
+	if isOpen and not isClear then
+		self:enterChessGame(Activity142Enum.AUTO_ENTER_EPISODE_ID, self._realOpenMapView, self)
 	else
-		arg_5_0:_realOpenMapView()
+		self:_realOpenMapView()
 	end
 end
 
-function var_0_0._realOpenMapView(arg_6_0)
+function Activity142Controller:_realOpenMapView()
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.Activity142
 	})
 	ViewMgr.instance:openView(ViewName.Activity142MapView, nil, true)
 
-	if arg_6_0._tmpOpenMapViewCb then
-		arg_6_0._tmpOpenMapViewCb(arg_6_0._tmpOpenMapViewCbObj, arg_6_0._tmpOpenMapViewCbParam)
+	if self._tmpOpenMapViewCb then
+		self._tmpOpenMapViewCb(self._tmpOpenMapViewCbObj, self._tmpOpenMapViewCbParam)
 	end
 
-	arg_6_0._tmpOpenMapViewCb = nil
-	arg_6_0._tmpOpenMapViewCbObj = nil
-	arg_6_0._tmpOpenMapViewCbParam = nil
+	self._tmpOpenMapViewCb = nil
+	self._tmpOpenMapViewCbObj = nil
+	self._tmpOpenMapViewCbParam = nil
 end
 
-function var_0_0.openStoryView(arg_7_0, arg_7_1)
-	if Activity142Model.instance:isEpisodeClear(arg_7_1) then
-		local var_7_0 = Activity142Model.instance:getActivityId()
+function Activity142Controller:openStoryView(episodeId)
+	if Activity142Model.instance:isEpisodeClear(episodeId) then
+		local actId = Activity142Model.instance:getActivityId()
 
-		if var_7_0 then
+		if actId then
 			ViewMgr.instance:openView(ViewName.Activity142StoryView, {
-				actId = var_7_0,
-				episodeId = arg_7_1
+				actId = actId,
+				episodeId = episodeId
 			})
 		end
 	end
 end
 
-function var_0_0.enterChessGame(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+function Activity142Controller:enterChessGame(episodeId, storyEpisodeEndCb, storyEpisodeEndCbObj)
 	Va3ChessGameModel.instance:clearLastMapRound()
 
-	local var_8_0 = Activity142Model.instance:getActivityId()
+	local actId = Activity142Model.instance:getActivityId()
 
-	Va3ChessModel.instance:setActId(var_8_0)
-	Activity142Model.instance:setCurEpisodeId(arg_8_1)
+	Va3ChessModel.instance:setActId(actId)
+	Activity142Model.instance:setCurEpisodeId(episodeId)
 	Activity142Helper.setAct142UIBlock(true)
-	Va3ChessController.instance:startNewEpisode(arg_8_1, arg_8_0._afterEnterChessGame, arg_8_0, ViewName.Activity142GameView, arg_8_2, arg_8_3)
+	Va3ChessController.instance:startNewEpisode(episodeId, self._afterEnterChessGame, self, ViewName.Activity142GameView, storyEpisodeEndCb, storyEpisodeEndCbObj)
 
-	if not Va3ChessConfig.instance:isStoryEpisode(var_8_0, arg_8_1) then
+	local isStoryEpisode = Va3ChessConfig.instance:isStoryEpisode(actId, episodeId)
+
+	if not isStoryEpisode then
 		Activity142StatController.instance:statStart()
 	end
 end
 
-function var_0_0._afterEnterChessGame(arg_9_0)
-	arg_9_0:_endBlock()
+function Activity142Controller:_afterEnterChessGame()
+	self:_endBlock()
 end
 
-function var_0_0._endBlock(arg_10_0)
+function Activity142Controller:_endBlock()
 	Activity142Helper.setAct142UIBlock(false)
 end
 
-function var_0_0.act142Back2CheckPoint(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = Activity142Model.instance:getActivityId()
+function Activity142Controller:act142Back2CheckPoint(callback, callbackObj)
+	local actId = Activity142Model.instance:getActivityId()
 
-	Activity142Rpc.instance:sendAct142CheckPointRequest(var_11_0, true, arg_11_1, arg_11_2)
+	Activity142Rpc.instance:sendAct142CheckPointRequest(actId, true, callback, callbackObj)
 end
 
-function var_0_0.act142ResetGame(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = Va3ChessModel.instance:getEpisodeId()
+function Activity142Controller:act142ResetGame(callback, callbackObj)
+	local episodeId = Va3ChessModel.instance:getEpisodeId()
 
-	if not var_12_0 then
+	if not episodeId then
 		return
 	end
 
-	arg_12_0._tmpResetCallback = arg_12_1
-	arg_12_0._tmpResetCallbackObj = arg_12_2
+	self._tmpResetCallback = callback
+	self._tmpResetCallbackObj = callbackObj
 
-	local var_12_1 = Activity142Model.instance:getActivityId()
+	local actId = Activity142Model.instance:getActivityId()
 
-	Va3ChessModel.instance:setActId(var_12_1)
+	Va3ChessModel.instance:setActId(actId)
 	Va3ChessGameModel.instance:clearLastMapRound()
-	Va3ChessController.instance:startResetEpisode(var_12_0, arg_12_0._act142ResetCallback, arg_12_0, ViewName.Activity142GameView)
+	Va3ChessController.instance:startResetEpisode(episodeId, self._act142ResetCallback, self, ViewName.Activity142GameView)
 end
 
-function var_0_0._act142ResetCallback(arg_13_0)
-	if arg_13_0._tmpResetCallback then
-		arg_13_0._tmpResetCallback(arg_13_0._tmpResetCallbackObj)
+function Activity142Controller:_act142ResetCallback()
+	if self._tmpResetCallback then
+		self._tmpResetCallback(self._tmpResetCallbackObj)
 
-		arg_13_0._tmpResetCallback = nil
-		arg_13_0._tmpResetCallbackObj = nil
+		self._tmpResetCallback = nil
+		self._tmpResetCallbackObj = nil
 	end
 
 	Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.GameReset)
 end
 
-function var_0_0.delayRequestGetReward(arg_14_0, arg_14_1, arg_14_2)
-	if arg_14_0._tmpTaskMO == nil and arg_14_2 then
-		arg_14_0._tmpTaskMO = arg_14_2
+function Activity142Controller:delayRequestGetReward(delayTime, taskMO)
+	if self._tmpTaskMO == nil and taskMO then
+		self._tmpTaskMO = taskMO
 
-		TaskDispatcher.runDelay(arg_14_0.requestGetReward, arg_14_0, arg_14_1)
+		TaskDispatcher.runDelay(self.requestGetReward, self, delayTime)
 	end
 end
 
-function var_0_0.requestGetReward(arg_15_0)
-	if arg_15_0._tmpTaskMO == nil then
+function Activity142Controller:requestGetReward()
+	if self._tmpTaskMO == nil then
 		return
 	end
 
-	if arg_15_0._tmpTaskMO.id == Activity142Enum.TASK_ALL_RECEIVE_ITEM_EMPTY_ID then
+	if self._tmpTaskMO.id == Activity142Enum.TASK_ALL_RECEIVE_ITEM_EMPTY_ID then
 		TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.Activity142)
-	elseif arg_15_0._tmpTaskMO:haveRewardToGet() then
-		TaskRpc.instance:sendFinishTaskRequest(arg_15_0._tmpTaskMO.id)
+	elseif self._tmpTaskMO:haveRewardToGet() then
+		TaskRpc.instance:sendFinishTaskRequest(self._tmpTaskMO.id)
 	end
 
-	arg_15_0._tmpTaskMO = nil
+	self._tmpTaskMO = nil
 end
 
-function var_0_0.dispatchAllTaskItemGotReward(arg_16_0)
-	arg_16_0:dispatchEvent(Activity142Event.OneClickClaimReward)
+function Activity142Controller:dispatchAllTaskItemGotReward()
+	self:dispatchEvent(Activity142Event.OneClickClaimReward)
 end
 
-function var_0_0.setPlayedUnlockAni(arg_17_0, arg_17_1)
-	local var_17_0 = Activity142Model.instance:getPlayerCacheData()
+function Activity142Controller:setPlayedUnlockAni(key)
+	local playerCacheData = Activity142Model.instance:getPlayerCacheData()
 
-	if not var_17_0 then
+	if not playerCacheData then
 		return
 	end
 
-	var_17_0[arg_17_1] = true
+	playerCacheData[key] = true
 
 	Activity142Model.instance:saveCacheData()
 end
 
-function var_0_0.havePlayedUnlockAni(arg_18_0, arg_18_1)
-	local var_18_0 = false
+function Activity142Controller:havePlayedUnlockAni(key)
+	local result = false
 
-	if not arg_18_1 then
-		return var_18_0
+	if not key then
+		return result
 	end
 
-	local var_18_1 = Activity142Model.instance:getPlayerCacheData()
+	local playerCacheData = Activity142Model.instance:getPlayerCacheData()
 
-	if not var_18_1 then
-		return var_18_0
+	if not playerCacheData then
+		return result
 	end
 
-	return var_18_1[arg_18_1] or false
+	result = playerCacheData[key] or false
+
+	return result
 end
 
-var_0_0.instance = var_0_0.New()
+Activity142Controller.instance = Activity142Controller.New()
 
-return var_0_0
+return Activity142Controller

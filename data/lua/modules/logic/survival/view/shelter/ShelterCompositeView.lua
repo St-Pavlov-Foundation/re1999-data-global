@@ -1,195 +1,201 @@
-﻿module("modules.logic.survival.view.shelter.ShelterCompositeView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/ShelterCompositeView.lua
 
-local var_0_0 = class("ShelterCompositeView", BaseView)
+module("modules.logic.survival.view.shelter.ShelterCompositeView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.goMaterial1 = gohelper.findChild(arg_1_0.viewGO, "Panel/Left/#go_material1")
-	arg_1_0.goMaterial2 = gohelper.findChild(arg_1_0.viewGO, "Panel/Left/#go_material2")
-	arg_1_0.materialItem1 = MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0.goMaterial1, ShelterCompositeItem, {
+local ShelterCompositeView = class("ShelterCompositeView", BaseView)
+
+function ShelterCompositeView:onInitView()
+	self.goMaterial1 = gohelper.findChild(self.viewGO, "Panel/Left/#go_material1")
+	self.goMaterial2 = gohelper.findChild(self.viewGO, "Panel/Left/#go_material2")
+	self.materialItem1 = MonoHelper.addNoUpdateLuaComOnceToGo(self.goMaterial1, ShelterCompositeItem, {
 		index = 1,
-		compositeView = arg_1_0
+		compositeView = self
 	})
-	arg_1_0.materialItem2 = MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0.goMaterial2, ShelterCompositeItem, {
+	self.materialItem2 = MonoHelper.addNoUpdateLuaComOnceToGo(self.goMaterial2, ShelterCompositeItem, {
 		index = 2,
-		compositeView = arg_1_0
+		compositeView = self
 	})
-	arg_1_0.goRightEmpty = gohelper.findChild(arg_1_0.viewGO, "Panel/Right/#go_material3/empty")
-	arg_1_0.goRightHas = gohelper.findChild(arg_1_0.viewGO, "Panel/Right/#go_material3/has")
-	arg_1_0.imageRightQuality = gohelper.findChildImage(arg_1_0.viewGO, "Panel/Right/#go_material3/has/#image_quality")
-	arg_1_0.txtRightTips = gohelper.findChildTextMesh(arg_1_0.viewGO, "Panel/Right/#go_material3/has/tips/#txt_tips")
-	arg_1_0.txtCount = gohelper.findChildTextMesh(arg_1_0.viewGO, "Panel/Right/#txt_count")
-	arg_1_0.btnUncomposite = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Panel/Right/#btn_uncomposite")
-	arg_1_0.btnComposite = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Panel/Right/#btn_composite")
+	self.goRightEmpty = gohelper.findChild(self.viewGO, "Panel/Right/#go_material3/empty")
+	self.goRightHas = gohelper.findChild(self.viewGO, "Panel/Right/#go_material3/has")
+	self.imageRightQuality = gohelper.findChildImage(self.viewGO, "Panel/Right/#go_material3/has/#image_quality")
+	self.txtRightTips = gohelper.findChildTextMesh(self.viewGO, "Panel/Right/#go_material3/has/tips/#txt_tips")
+	self.txtCount = gohelper.findChildTextMesh(self.viewGO, "Panel/Right/#txt_count")
+	self.btnUncomposite = gohelper.findChildButtonWithAudio(self.viewGO, "Panel/Right/#btn_uncomposite")
+	self.btnComposite = gohelper.findChildButtonWithAudio(self.viewGO, "Panel/Right/#btn_composite")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnUncomposite, arg_2_0.onClickUncomposite, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnComposite, arg_2_0.onClickComposite, arg_2_0)
-	arg_2_0:addEventCb(SurvivalController.instance, SurvivalEvent.OnClickBagItem, arg_2_0.onClickBagItem, arg_2_0)
-	arg_2_0:addEventCb(SurvivalController.instance, SurvivalEvent.OnShelterBagUpdate, arg_2_0.onShelterBagUpdate, arg_2_0)
+function ShelterCompositeView:addEvents()
+	self:addClickCb(self.btnUncomposite, self.onClickUncomposite, self)
+	self:addClickCb(self.btnComposite, self.onClickComposite, self)
+	self:addEventCb(SurvivalController.instance, SurvivalEvent.OnClickBagItem, self.onClickBagItem, self)
+	self:addEventCb(SurvivalController.instance, SurvivalEvent.OnShelterBagUpdate, self.onShelterBagUpdate, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeClickCb(arg_3_0.btnUncomposite)
-	arg_3_0:removeClickCb(arg_3_0.btnComposite)
-	arg_3_0:removeEventCb(SurvivalController.instance, SurvivalEvent.OnClickBagItem, arg_3_0.onClickBagItem, arg_3_0)
-	arg_3_0:removeEventCb(SurvivalController.instance, SurvivalEvent.OnShelterBagUpdate, arg_3_0.onShelterBagUpdate, arg_3_0)
+function ShelterCompositeView:removeEvents()
+	self:removeClickCb(self.btnUncomposite)
+	self:removeClickCb(self.btnComposite)
+	self:removeEventCb(SurvivalController.instance, SurvivalEvent.OnClickBagItem, self.onClickBagItem, self)
+	self:removeEventCb(SurvivalController.instance, SurvivalEvent.OnShelterBagUpdate, self.onShelterBagUpdate, self)
 end
 
-function var_0_0.onShelterBagUpdate(arg_4_0)
-	arg_4_0:refreshView()
+function ShelterCompositeView:onShelterBagUpdate()
+	self:refreshView()
 end
 
-function var_0_0.onEquipCompound(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	if arg_5_2 == 0 then
-		local var_5_0 = arg_5_3.item
-		local var_5_1 = SurvivalBagItemMo.New()
+function ShelterCompositeView:onEquipCompound(cmd, resultCode, msg)
+	if resultCode == 0 then
+		local item = msg.item
+		local itemMo = SurvivalBagItemMo.New()
 
-		var_5_1:init(var_5_0)
+		itemMo:init(item)
 
-		var_5_1.source = SurvivalEnum.ItemSource.Shelter
+		itemMo.source = SurvivalEnum.ItemSource.Shelter
 
-		local var_5_2 = {
-			itemMo = var_5_1
+		local param = {
+			itemMo = itemMo
 		}
 
-		ViewMgr.instance:openView(ViewName.ShelterCompositeSuccessView, var_5_2)
+		ViewMgr.instance:openView(ViewName.ShelterCompositeSuccessView, param)
 	end
 end
 
-function var_0_0.onClickUncomposite(arg_6_0)
-	arg_6_0:onClickComposite()
+function ShelterCompositeView:onClickUncomposite()
+	self:onClickComposite()
 end
 
-function var_0_0.onClickComposite(arg_7_0)
-	local var_7_0 = arg_7_0:getSelectData(1)
-	local var_7_1 = arg_7_0:getSelectData(2)
+function ShelterCompositeView:onClickComposite()
+	local data1 = self:getSelectData(1)
+	local data2 = self:getSelectData(2)
+	local allSelect = data1 ~= nil and data2 ~= nil
 
-	if not (var_7_0 ~= nil and var_7_1 ~= nil) then
+	if not allSelect then
 		GameFacade.showToast(ToastEnum.SurvivalCompositeSelectItem)
 
 		return
 	end
 
-	local var_7_2 = SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.ShelterCompositeCost)
-	local var_7_3, var_7_4, var_7_5, var_7_6 = arg_7_0:getBag():costIsEnough(var_7_2)
+	local costStr = SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.ShelterCompositeCost)
+	local isEnough, itemId, costCount, curCount = self:getBag():costIsEnough(costStr)
 
-	if not var_7_3 then
-		local var_7_7 = lua_survival_item.configDict[var_7_4]
+	if not isEnough then
+		local itemConfig = lua_survival_item.configDict[itemId]
 
-		GameFacade.showToast(ToastEnum.DiamondBuy, var_7_7.name)
+		GameFacade.showToast(ToastEnum.DiamondBuy, itemConfig.name)
 
 		return
 	end
 
-	local var_7_8 = {}
+	local uids = {}
 
-	table.insert(var_7_8, var_7_0.uid)
-	table.insert(var_7_8, var_7_1.uid)
-	SurvivalWeekRpc.instance:sendSurvivalEquipCompound(var_7_8, arg_7_0.onEquipCompound, arg_7_0)
+	table.insert(uids, data1.uid)
+	table.insert(uids, data2.uid)
+	SurvivalWeekRpc.instance:sendSurvivalEquipCompound(uids, self.onEquipCompound, self)
 end
 
-function var_0_0.onClickBagItem(arg_8_0, arg_8_1)
-	if not arg_8_0.selectIndex then
+function ShelterCompositeView:onClickBagItem(itemMo)
+	if not self.selectIndex then
 		return
 	end
 
-	arg_8_0.selectData[arg_8_0.selectIndex] = arg_8_1 and arg_8_1.uid or nil
+	self.selectData[self.selectIndex] = itemMo and itemMo.uid or nil
 
-	arg_8_0.viewContainer:closeMaterialView()
-	arg_8_0:refreshView()
+	self.viewContainer:closeMaterialView()
+	self:refreshView()
 end
 
-function var_0_0.showMaterialView(arg_9_0, arg_9_1)
-	arg_9_0.selectIndex = arg_9_1
+function ShelterCompositeView:showMaterialView(index)
+	self.selectIndex = index
 
-	arg_9_0.viewContainer:showMaterialView(arg_9_1)
+	self.viewContainer:showMaterialView(index)
 end
 
-function var_0_0.removeMaterialData(arg_10_0, arg_10_1)
-	arg_10_0.selectData[arg_10_1] = nil
+function ShelterCompositeView:removeMaterialData(index)
+	self.selectData[index] = nil
 
-	arg_10_0:refreshView()
+	self:refreshView()
 end
 
-function var_0_0.isSelectItem(arg_11_0, arg_11_1, arg_11_2)
-	if not arg_11_2 then
+function ShelterCompositeView:isSelectItem(slotId, itemMo)
+	if not itemMo then
 		return false
 	end
 
-	for iter_11_0, iter_11_1 in pairs(arg_11_0.selectData) do
-		if iter_11_0 ~= arg_11_1 and iter_11_1 == arg_11_2.uid then
+	for k, uid in pairs(self.selectData) do
+		if k ~= slotId and uid == itemMo.uid then
 			return true
 		end
 	end
 end
 
-function var_0_0.onOpen(arg_12_0)
+function ShelterCompositeView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_fuleyuan_tansuo_general_1)
-	arg_12_0:refreshParam()
-	arg_12_0:refreshView()
+	self:refreshParam()
+	self:refreshView()
 end
 
-function var_0_0.refreshParam(arg_13_0)
-	arg_13_0.selectData = {}
-	arg_13_0.selectIndex = nil
+function ShelterCompositeView:refreshParam()
+	self.selectData = {}
+	self.selectIndex = nil
 end
 
-function var_0_0.refreshView(arg_14_0)
-	arg_14_0:refreshMaterialItem()
-	arg_14_0:refreshRight()
+function ShelterCompositeView:refreshView()
+	self:refreshMaterialItem()
+	self:refreshRight()
 end
 
-function var_0_0.refreshMaterialItem(arg_15_0)
-	arg_15_0.materialItem1:onUpdateMO(arg_15_0:getSelectData(1))
-	arg_15_0.materialItem2:onUpdateMO(arg_15_0:getSelectData(2))
+function ShelterCompositeView:refreshMaterialItem()
+	self.materialItem1:onUpdateMO(self:getSelectData(1))
+	self.materialItem2:onUpdateMO(self:getSelectData(2))
 end
 
-function var_0_0.refreshRight(arg_16_0)
-	local var_16_0 = arg_16_0:getSelectData(1)
-	local var_16_1 = arg_16_0:getSelectData(2)
-	local var_16_2 = var_16_0 ~= nil and var_16_1 ~= nil
+function ShelterCompositeView:refreshRight()
+	local data1 = self:getSelectData(1)
+	local data2 = self:getSelectData(2)
+	local allSelect = data1 ~= nil and data2 ~= nil
 
-	gohelper.setActive(arg_16_0.goRightEmpty, not var_16_2)
-	gohelper.setActive(arg_16_0.goRightHas, var_16_2)
+	gohelper.setActive(self.goRightEmpty, not allSelect)
+	gohelper.setActive(self.goRightHas, allSelect)
 
-	if var_16_2 then
-		local var_16_3 = math.min(var_16_0.co.rare, var_16_1.co.rare)
+	if allSelect then
+		local quality = math.min(data1.co.rare, data2.co.rare)
 
-		UISpriteSetMgr.instance:setSurvivalSprite(arg_16_0.imageRightQuality, string.format("survival_bag_itemquality%s", var_16_3))
+		UISpriteSetMgr.instance:setSurvivalSprite(self.imageRightQuality, string.format("survival_bag_itemquality%s", quality))
 
-		arg_16_0.txtRightTips.text = luaLang(string.format("survivalcompositeview_equip_tip%s", var_16_3))
+		self.txtRightTips.text = luaLang(string.format("survivalcompositeview_equip_tip%s", quality))
 	end
 
-	local var_16_4 = SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.ShelterCompositeCost)
-	local var_16_5, var_16_6, var_16_7, var_16_8 = arg_16_0:getBag():costIsEnough(var_16_4)
+	local costStr = SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.ShelterCompositeCost)
+	local isEnough, itemId, costCount, curCount = self:getBag():costIsEnough(costStr)
 
-	if var_16_5 then
-		arg_16_0.txtCount.text = string.format("%s/%s", var_16_8, var_16_7)
+	if isEnough then
+		self.txtCount.text = string.format("%s/%s", curCount, costCount)
 	else
-		arg_16_0.txtCount.text = string.format("<color=#D74242>%s</color>/%s", var_16_8, var_16_7)
+		self.txtCount.text = string.format("<color=#D74242>%s</color>/%s", curCount, costCount)
 	end
 
-	gohelper.setActive(arg_16_0.btnUncomposite, not var_16_2 or not var_16_5)
-	gohelper.setActive(arg_16_0.btnComposite, var_16_2 and var_16_5)
+	gohelper.setActive(self.btnUncomposite, not allSelect or not isEnough)
+	gohelper.setActive(self.btnComposite, allSelect and isEnough)
 end
 
-function var_0_0.getBag(arg_17_0)
+function ShelterCompositeView:getBag()
 	return SurvivalMapHelper.instance:getBagMo()
 end
 
-function var_0_0.getSelectData(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_0.selectData[arg_18_1]
+function ShelterCompositeView:getSelectData(index)
+	local uid = self.selectData[index]
 
-	if not var_18_0 then
+	if not uid then
 		return
 	end
 
-	return (arg_18_0:getBag():getItemByUid(var_18_0))
+	local bag = self:getBag()
+	local itemMo = bag:getItemByUid(uid)
+
+	return itemMo
 end
 
-function var_0_0.onClose(arg_19_0)
+function ShelterCompositeView:onClose()
 	return
 end
 
-return var_0_0
+return ShelterCompositeView

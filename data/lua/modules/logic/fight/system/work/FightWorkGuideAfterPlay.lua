@@ -1,46 +1,48 @@
-﻿module("modules.logic.fight.system.work.FightWorkGuideAfterPlay", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkGuideAfterPlay.lua
 
-local var_0_0 = class("FightWorkGuideAfterPlay", FightWorkItem)
+module("modules.logic.fight.system.work.FightWorkGuideAfterPlay", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
+local FightWorkGuideAfterPlay = class("FightWorkGuideAfterPlay", FightWorkItem)
+
+function FightWorkGuideAfterPlay:onStart()
 	if SkillEditorMgr and SkillEditorMgr.instance.inEditMode then
-		arg_1_0:onDone(true)
+		self:onDone(true)
 
 		return
 	end
 
 	if FightDataHelper.stateMgr.isReplay then
-		arg_1_0:onDone(true)
+		self:onDone(true)
 
 		return
 	end
 
 	if FightGameMgr.stageMgr:getCurStage() == FightStageMgr.StageType.Play then
-		arg_1_0:onDone(true)
+		self:onDone(true)
 
 		return
 	end
 
 	if FightDataHelper.operationDataMgr:isCardOpEnd() then
-		arg_1_0:onDone(true)
+		self:onDone(true)
 
 		return
 	end
 
 	if FightModel.instance:isFinish() then
-		arg_1_0:onDone(true)
+		self:onDone(true)
 
 		return
 	end
 
 	if ViewMgr.instance:isOpen(ViewName.GuideView) then
-		arg_1_0:onDone(true)
+		self:onDone(true)
 
 		return
 	end
 
 	FightMsgMgr.sendMsg(FightMsgId.CheckGuideFightItemPlayerSkillGroup)
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkGuideAfterPlay

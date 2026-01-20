@@ -1,312 +1,322 @@
-﻿module("modules.logic.season.view1_4.Season1_4FightSuccView", package.seeall)
+﻿-- chunkname: @modules/logic/season/view1_4/Season1_4FightSuccView.lua
 
-local var_0_0 = class("Season1_4FightSuccView", FightSuccView)
+module("modules.logic.season.view1_4.Season1_4FightSuccView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnData = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btnData")
-	arg_1_0._simagecharacterbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_characterbg")
-	arg_1_0._simagemaskImage = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_maskImage")
-	arg_1_0._godetails = gohelper.findChild(arg_1_0.viewGO, "#go_details")
-	arg_1_0._gocoverrecordpart = gohelper.findChild(arg_1_0.viewGO, "#go_cover_record_part")
-	arg_1_0._btncoverrecord = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_cover_record_part/#btn_cover_record")
-	arg_1_0._txtcurroundcount = gohelper.findChildText(arg_1_0.viewGO, "#go_cover_record_part/tipbg/container/current/#txt_curroundcount")
-	arg_1_0._txtmaxroundcount = gohelper.findChildText(arg_1_0.viewGO, "#go_cover_record_part/tipbg/container/memory/#txt_maxroundcount")
-	arg_1_0._goCoverLessThan = gohelper.findChild(arg_1_0.viewGO, "#go_cover_record_part/tipbg/container/middle/#go_lessthan")
-	arg_1_0._goCoverMuchThan = gohelper.findChild(arg_1_0.viewGO, "#go_cover_record_part/tipbg/container/middle/#go_muchthan")
-	arg_1_0._goCoverEqual = gohelper.findChild(arg_1_0.viewGO, "#go_cover_record_part/tipbg/container/middle/#go_equal")
-	arg_1_0._bonusItemGo = gohelper.findChild(arg_1_0.viewGO, "scroll/item")
-	arg_1_0._favorIcon = gohelper.findChild(arg_1_0.viewGO, "scroll/viewport/content/favor")
-	arg_1_0._txtFbName = gohelper.findChildText(arg_1_0.viewGO, "txtFbName")
-	arg_1_0._txtFbNameEn = gohelper.findChildText(arg_1_0.viewGO, "txtFbNameen")
-	arg_1_0._goallist = gohelper.findChild(arg_1_0.viewGO, "goalcontent/goallist")
-	arg_1_0._txtLv = gohelper.findChildText(arg_1_0.viewGO, "goalcontent/txtLv")
-	arg_1_0._sliderExp = gohelper.findChildSlider(arg_1_0.viewGO, "goalcontent/txtLv/progress")
-	arg_1_0._txtExp = gohelper.findChildText(arg_1_0.viewGO, "goalcontent/txtLv/txtExp")
-	arg_1_0._txtAddExp = gohelper.findChildText(arg_1_0.viewGO, "goalcontent/txtLv/progress/txtAddExp")
-	arg_1_0._gospine = gohelper.findChild(arg_1_0.viewGO, "spineContainer/spine")
-	arg_1_0._uiSpine = GuiModelAgent.Create(arg_1_0._gospine, true)
-	arg_1_0._goCondition = gohelper.findChild(arg_1_0.viewGO, "goalcontent/goallist/fightgoal")
-	arg_1_0._goPlatCondition = gohelper.findChild(arg_1_0.viewGO, "goalcontent/goallist/platinum")
-	arg_1_0._goPlatCondition2 = gohelper.findChild(arg_1_0.viewGO, "goalcontent/goallist/platinum2")
-	arg_1_0._bonusItemContainer = gohelper.findChild(arg_1_0.viewGO, "scroll/viewport/content")
-	arg_1_0._bonusItemGo = gohelper.findChild(arg_1_0.viewGO, "scroll/item")
+local Season1_4FightSuccView = class("Season1_4FightSuccView", FightSuccView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Season1_4FightSuccView:onInitView()
+	self._btnData = gohelper.findChildButtonWithAudio(self.viewGO, "btnData")
+	self._simagecharacterbg = gohelper.findChildSingleImage(self.viewGO, "#simage_characterbg")
+	self._simagemaskImage = gohelper.findChildSingleImage(self.viewGO, "#simage_maskImage")
+	self._godetails = gohelper.findChild(self.viewGO, "#go_details")
+	self._gocoverrecordpart = gohelper.findChild(self.viewGO, "#go_cover_record_part")
+	self._btncoverrecord = gohelper.findChildButtonWithAudio(self.viewGO, "#go_cover_record_part/#btn_cover_record")
+	self._txtcurroundcount = gohelper.findChildText(self.viewGO, "#go_cover_record_part/tipbg/container/current/#txt_curroundcount")
+	self._txtmaxroundcount = gohelper.findChildText(self.viewGO, "#go_cover_record_part/tipbg/container/memory/#txt_maxroundcount")
+	self._goCoverLessThan = gohelper.findChild(self.viewGO, "#go_cover_record_part/tipbg/container/middle/#go_lessthan")
+	self._goCoverMuchThan = gohelper.findChild(self.viewGO, "#go_cover_record_part/tipbg/container/middle/#go_muchthan")
+	self._goCoverEqual = gohelper.findChild(self.viewGO, "#go_cover_record_part/tipbg/container/middle/#go_equal")
+	self._bonusItemGo = gohelper.findChild(self.viewGO, "scroll/item")
+	self._favorIcon = gohelper.findChild(self.viewGO, "scroll/viewport/content/favor")
+	self._txtFbName = gohelper.findChildText(self.viewGO, "txtFbName")
+	self._txtFbNameEn = gohelper.findChildText(self.viewGO, "txtFbNameen")
+	self._goallist = gohelper.findChild(self.viewGO, "goalcontent/goallist")
+	self._txtLv = gohelper.findChildText(self.viewGO, "goalcontent/txtLv")
+	self._sliderExp = gohelper.findChildSlider(self.viewGO, "goalcontent/txtLv/progress")
+	self._txtExp = gohelper.findChildText(self.viewGO, "goalcontent/txtLv/txtExp")
+	self._txtAddExp = gohelper.findChildText(self.viewGO, "goalcontent/txtLv/progress/txtAddExp")
+	self._gospine = gohelper.findChild(self.viewGO, "spineContainer/spine")
+	self._uiSpine = GuiModelAgent.Create(self._gospine, true)
+	self._goCondition = gohelper.findChild(self.viewGO, "goalcontent/goallist/fightgoal")
+	self._goPlatCondition = gohelper.findChild(self.viewGO, "goalcontent/goallist/platinum")
+	self._goPlatCondition2 = gohelper.findChild(self.viewGO, "goalcontent/goallist/platinum2")
+	self._bonusItemContainer = gohelper.findChild(self.viewGO, "scroll/viewport/content")
+	self._bonusItemGo = gohelper.findChild(self.viewGO, "scroll/item")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnData:AddClickListener(arg_2_0._onClickData, arg_2_0)
-	arg_2_0._click:AddClickListener(arg_2_0._onClickClose, arg_2_0)
-	arg_2_0._btncoverrecord:AddClickListener(arg_2_0._onBtnCoverRecordClick, arg_2_0)
-	arg_2_0:addEventCb(DungeonController.instance, DungeonEvent.OnCoverDungeonRecordReply, arg_2_0._onCoverDungeonRecordReply, arg_2_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_2_0._onCloseViewFinish, arg_2_0)
+function Season1_4FightSuccView:addEvents()
+	self._btnData:AddClickListener(self._onClickData, self)
+	self._click:AddClickListener(self._onClickClose, self)
+	self._btncoverrecord:AddClickListener(self._onBtnCoverRecordClick, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.OnCoverDungeonRecordReply, self._onCoverDungeonRecordReply, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnData:RemoveClickListener()
-	arg_3_0._click:RemoveClickListener()
-	arg_3_0._btncoverrecord:RemoveClickListener()
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_3_0._onCloseViewFinish, arg_3_0)
+function Season1_4FightSuccView:removeEvents()
+	self._btnData:RemoveClickListener()
+	self._click:RemoveClickListener()
+	self._btncoverrecord:RemoveClickListener()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._click = gohelper.getClick(arg_4_0.viewGO)
+function Season1_4FightSuccView:_editableInitView()
+	self._click = gohelper.getClick(self.viewGO)
 end
 
-function var_0_0._onClickClose(arg_5_0)
-	if arg_5_0._showEquipCard then
+function Season1_4FightSuccView:_onClickClose()
+	if self._showEquipCard then
 		return
 	end
 
-	var_0_0.super._onClickClose(arg_5_0)
+	Season1_4FightSuccView.super._onClickClose(self)
 end
 
-function var_0_0.onOpen(arg_6_0)
-	var_0_0.super.onOpen(arg_6_0)
-	gohelper.setActive(arg_6_0._bonusItemContainer, false)
-	arg_6_0:_dealGetCard()
-	arg_6_0:_showGoal()
+function Season1_4FightSuccView:onOpen()
+	Season1_4FightSuccView.super.onOpen(self)
+	gohelper.setActive(self._bonusItemContainer, false)
+	self:_dealGetCard()
+	self:_showGoal()
 end
 
-function var_0_0._dealGetCard(arg_7_0)
-	local var_7_0 = {}
+function Season1_4FightSuccView:_dealGetCard()
+	local reward_list = {}
 
-	tabletool.addValues(var_7_0, FightResultModel.instance:getFirstMaterialDataList())
-	tabletool.addValues(var_7_0, FightResultModel.instance:getExtraMaterialDataList())
-	tabletool.addValues(var_7_0, FightResultModel.instance:getMaterialDataList())
+	tabletool.addValues(reward_list, FightResultModel.instance:getFirstMaterialDataList())
+	tabletool.addValues(reward_list, FightResultModel.instance:getExtraMaterialDataList())
+	tabletool.addValues(reward_list, FightResultModel.instance:getMaterialDataList())
 
-	local var_7_1 = {}
+	local equip_cards = {}
 
-	for iter_7_0 = #var_7_0, 1, -1 do
-		if var_7_0[iter_7_0].materilType == MaterialEnum.MaterialType.EquipCard then
-			local var_7_2 = table.remove(var_7_0, iter_7_0)
+	for i = #reward_list, 1, -1 do
+		local data = reward_list[i]
 
-			table.insert(var_7_1, var_7_2.materilId)
+		if data.materilType == MaterialEnum.MaterialType.EquipCard then
+			local tar_reward = table.remove(reward_list, i)
+
+			table.insert(equip_cards, tar_reward.materilId)
 		end
 	end
 
-	arg_7_0._showEquipCard = {}
-	arg_7_0._choiceCards = {}
-	arg_7_0._newCardDic = {}
+	self._showEquipCard = {}
+	self._choiceCards = {}
+	self._newCardDic = {}
 
-	for iter_7_1, iter_7_2 in ipairs(var_7_1) do
-		if SeasonConfig.instance:getEquipIsOptional(iter_7_2) then
-			table.insert(arg_7_0._choiceCards, iter_7_2)
-		elseif Activity104Model.instance:isNew104Equip(iter_7_2) then
-			table.insert(arg_7_0._showEquipCard, iter_7_2)
+	for i, cardId in ipairs(equip_cards) do
+		if SeasonConfig.instance:getEquipIsOptional(cardId) then
+			table.insert(self._choiceCards, cardId)
+		elseif Activity104Model.instance:isNew104Equip(cardId) then
+			table.insert(self._showEquipCard, cardId)
 
-			arg_7_0._newCardDic[iter_7_2] = true
+			self._newCardDic[cardId] = true
 		end
 	end
 
-	if #arg_7_0._showEquipCard > 0 then
-		local var_7_3 = {}
+	if #self._showEquipCard > 0 then
+		local idDict = {}
 
-		for iter_7_3 = #arg_7_0._showEquipCard, 1, -1 do
-			local var_7_4 = arg_7_0._showEquipCard[iter_7_3]
+		for i = #self._showEquipCard, 1, -1 do
+			local cardId = self._showEquipCard[i]
 
-			if var_7_3[var_7_4] then
-				table.remove(arg_7_0._showEquipCard, iter_7_3)
+			if idDict[cardId] then
+				table.remove(self._showEquipCard, i)
 			else
-				var_7_3[var_7_4] = true
+				idDict[cardId] = true
 			end
 		end
 
-		TaskDispatcher.runDelay(arg_7_0._showGetCardView, arg_7_0, 2)
-	elseif #arg_7_0._choiceCards > 0 then
-		TaskDispatcher.runDelay(arg_7_0._showChoiceCardView, arg_7_0, 2)
+		TaskDispatcher.runDelay(self._showGetCardView, self, 2)
+	elseif #self._choiceCards > 0 then
+		TaskDispatcher.runDelay(self._showChoiceCardView, self, 2)
 	else
-		arg_7_0:_showRewardPart()
+		self:_showRewardPart()
 	end
 end
 
-function var_0_0._loadBonusItems(arg_8_0)
+function Season1_4FightSuccView:_loadBonusItems()
 	return
 end
 
-function var_0_0._showGetCardView(arg_9_0)
+function Season1_4FightSuccView:_showGetCardView()
 	Activity104Controller.instance:openSeasonCelebrityCardGetlView({
 		is_item_id = true,
-		data = arg_9_0._showEquipCard
+		data = self._showEquipCard
 	})
 end
 
-function var_0_0._onTipsClose(arg_10_0)
-	arg_10_0:_showRewardPart()
-	arg_10_0:_showPlayerLevelUpView()
+function Season1_4FightSuccView:_onTipsClose()
+	self:_showRewardPart()
+	self:_showPlayerLevelUpView()
 end
 
-function var_0_0._showRewardPart(arg_11_0)
-	arg_11_0._showEquipCard = nil
+function Season1_4FightSuccView:_showRewardPart()
+	self._showEquipCard = nil
 
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_11_0._onCloseViewFinish, arg_11_0)
-	gohelper.setActive(arg_11_0._bonusItemContainer, true)
-	var_0_0.super._loadBonusItems(arg_11_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	gohelper.setActive(self._bonusItemContainer, true)
+	Season1_4FightSuccView.super._loadBonusItems(self)
 end
 
-function var_0_0._onCloseViewFinish(arg_12_0, arg_12_1)
-	if arg_12_1 == SeasonViewHelper.getViewName(Activity104Model.instance:getCurSeasonId(), Activity104Enum.ViewName.CelebrityCardGetlView) then
-		if arg_12_0:_showChoiceCardView() then
+function Season1_4FightSuccView:_onCloseViewFinish(viewName)
+	local getViewName = SeasonViewHelper.getViewName(Activity104Model.instance:getCurSeasonId(), Activity104Enum.ViewName.CelebrityCardGetlView)
+
+	if viewName == getViewName then
+		if self:_showChoiceCardView() then
 			return
 		end
 
-		arg_12_0:_onTipsClose()
+		self:_onTipsClose()
 	end
 end
 
-function var_0_0._showChoiceCardView(arg_13_0)
-	if arg_13_0._choiceCards and #arg_13_0._choiceCards > 0 then
-		local var_13_0 = table.remove(arg_13_0._choiceCards, 1)
-		local var_13_1 = Activity104Model.instance:getItemEquipUid(var_13_0)
+function Season1_4FightSuccView:_showChoiceCardView()
+	if self._choiceCards and #self._choiceCards > 0 then
+		local cardId = table.remove(self._choiceCards, 1)
+		local cardUid = Activity104Model.instance:getItemEquipUid(cardId)
 
-		if var_13_1 then
-			local var_13_2 = {
-				actId = Activity104Model.instance:getCurSeasonId(),
-				costItemUid = var_13_1
-			}
+		if cardUid then
+			local param = {}
 
-			Activity104Controller.instance:openSeasonEquipSelectChoiceView(var_13_2)
+			param.actId = Activity104Model.instance:getCurSeasonId()
+			param.costItemUid = cardUid
+
+			Activity104Controller.instance:openSeasonEquipSelectChoiceView(param)
 
 			return true
 		end
 	end
 end
 
-function var_0_0._addItem(arg_14_0, arg_14_1)
-	local var_14_0 = gohelper.clone(arg_14_0._bonusItemGo, arg_14_0._bonusItemContainer, arg_14_1.id)
-	local var_14_1 = gohelper.findChild(var_14_0, "container/tag")
-	local var_14_2 = gohelper.findChild(var_14_0, "container/tag/imgFirst")
-	local var_14_3 = gohelper.findChild(var_14_0, "container/tag/imgFirstHard")
-	local var_14_4 = gohelper.findChild(var_14_0, "container/tag/imgNormal")
-	local var_14_5 = gohelper.findChild(var_14_0, "container/tag/imgAdvance")
-	local var_14_6 = gohelper.findChild(var_14_0, "container/tag/imgEquipDaily")
-	local var_14_7 = gohelper.findChild(var_14_0, "container")
+function Season1_4FightSuccView:_addItem(material)
+	local go = gohelper.clone(self._bonusItemGo, self._bonusItemContainer, material.id)
+	local tagGO = gohelper.findChild(go, "container/tag")
+	local imgFirstGO = gohelper.findChild(go, "container/tag/imgFirst")
+	local imgFirstHardGO = gohelper.findChild(go, "container/tag/imgFirstHard")
+	local imgNormalGO = gohelper.findChild(go, "container/tag/imgNormal")
+	local imgAdvanceGO = gohelper.findChild(go, "container/tag/imgAdvance")
+	local imgEquipDailyGO = gohelper.findChild(go, "container/tag/imgEquipDaily")
+	local containerGO = gohelper.findChild(go, "container")
 
-	gohelper.setActive(var_14_7, false)
-	gohelper.setActive(var_14_1, arg_14_1.bonusTag)
+	gohelper.setActive(containerGO, false)
+	gohelper.setActive(tagGO, material.bonusTag)
 
-	if arg_14_1.bonusTag then
-		gohelper.setActive(var_14_2, arg_14_1.bonusTag == FightEnum.FightBonusTag.FirstBonus and not arg_14_0._hardMode)
-		gohelper.setActive(var_14_3, arg_14_1.bonusTag == FightEnum.FightBonusTag.FirstBonus and arg_14_0._hardMode)
-		gohelper.setActive(var_14_4, false)
-		gohelper.setActive(var_14_5, arg_14_1.bonusTag == FightEnum.FightBonusTag.AdvencedBonus)
-		gohelper.setActive(var_14_6, arg_14_1.bonusTag == FightEnum.FightBonusTag.EquipDailyFreeBonus)
+	if material.bonusTag then
+		gohelper.setActive(imgFirstGO, material.bonusTag == FightEnum.FightBonusTag.FirstBonus and not self._hardMode)
+		gohelper.setActive(imgFirstHardGO, material.bonusTag == FightEnum.FightBonusTag.FirstBonus and self._hardMode)
+		gohelper.setActive(imgNormalGO, false)
+		gohelper.setActive(imgAdvanceGO, material.bonusTag == FightEnum.FightBonusTag.AdvencedBonus)
+		gohelper.setActive(imgEquipDailyGO, material.bonusTag == FightEnum.FightBonusTag.EquipDailyFreeBonus)
 	end
 
-	arg_14_1.isIcon = true
+	material.isIcon = true
 
-	if arg_14_1.materilType == MaterialEnum.MaterialType.EquipCard then
-		local var_14_8 = arg_14_0._newCardDic[arg_14_1.materilId]
+	if material.materilType == MaterialEnum.MaterialType.EquipCard then
+		local isNew = self._newCardDic[material.materilId]
 
-		if not arg_14_0._equipCards then
-			arg_14_0._equipCards = {}
+		if not self._equipCards then
+			self._equipCards = {}
 		end
 
-		local var_14_9 = Season1_4CelebrityCardItem.New()
+		local cardItem = Season1_4CelebrityCardItem.New()
 
-		var_14_9:init(gohelper.findChild(var_14_0, "container/cardicon"), arg_14_1.materilId)
-		var_14_9:showNewFlag(var_14_8)
-		table.insert(arg_14_0._equipCards, var_14_9)
+		cardItem:init(gohelper.findChild(go, "container/cardicon"), material.materilId)
+		cardItem:showNewFlag(isNew)
+		table.insert(self._equipCards, cardItem)
 
-		for iter_14_0 = 1, 5 do
-			local var_14_10 = gohelper.findChild(var_14_0, "container/cardicon/#vx_glow/" .. iter_14_0)
-			local var_14_11 = SeasonConfig.instance:getSeasonEquipCo(arg_14_1.materilId)
+		for i = 1, 5 do
+			local effectObj = gohelper.findChild(go, "container/cardicon/#vx_glow/" .. i)
+			local config = SeasonConfig.instance:getSeasonEquipCo(material.materilId)
 
-			gohelper.setActive(var_14_10, iter_14_0 == var_14_11.rare)
+			gohelper.setActive(effectObj, i == config.rare)
 		end
 	else
-		local var_14_12 = gohelper.findChild(var_14_0, "container/itemIcon")
-		local var_14_13 = IconMgr.instance:getCommonPropItemIcon(var_14_12)
+		local itemIconGO = gohelper.findChild(go, "container/itemIcon")
+		local itemIcon = IconMgr.instance:getCommonPropItemIcon(itemIconGO)
 
-		var_14_13:onUpdateMO(arg_14_1)
-		var_14_13:setCantJump(true)
-		var_14_13:setCountFontSize(40)
-		var_14_13:setAutoPlay(true)
-		var_14_13:isShowEquipRefineLv(true)
+		itemIcon:onUpdateMO(material)
+		itemIcon:setCantJump(true)
+		itemIcon:setCountFontSize(40)
+		itemIcon:setAutoPlay(true)
+		itemIcon:isShowEquipRefineLv(true)
 	end
 
-	gohelper.setActive(var_14_0, false)
+	gohelper.setActive(go, false)
 
-	var_14_1:GetComponent(typeof(UnityEngine.CanvasGroup)).alpha = 0
+	local canvasGroup = tagGO:GetComponent(typeof(UnityEngine.CanvasGroup))
 
-	arg_14_0:applyBonusVfx(arg_14_1, var_14_0)
+	canvasGroup.alpha = 0
 
-	return var_14_7, var_14_0
+	self:applyBonusVfx(material, go)
+
+	return containerGO, go
 end
 
-function var_0_0._setFbName(arg_15_0, arg_15_1)
-	if arg_15_1.type == DungeonEnum.EpisodeType.SeasonRetail then
-		local var_15_0 = math.min(Activity104Model.instance:getAct104CurStage(), 6)
-		local var_15_1 = Activity104Model.instance.curBattleRetail
-		local var_15_2 = Activity104Model.instance:getCurSeasonId()
-		local var_15_3 = SeasonConfig.instance:getSeasonTagDesc(var_15_2, var_15_1.tag)
+function Season1_4FightSuccView:_setFbName(episodeCO)
+	if episodeCO.type == DungeonEnum.EpisodeType.SeasonRetail then
+		local showStage = math.min(Activity104Model.instance:getAct104CurStage(), 6)
+		local retail = Activity104Model.instance.curBattleRetail
+		local actId = Activity104Model.instance:getCurSeasonId()
+		local tagCo = SeasonConfig.instance:getSeasonTagDesc(actId, retail.tag)
 
-		arg_15_0._txtFbName.text = string.format("%s %s", var_15_3 and var_15_3.name, GameUtil.getRomanNums(var_15_0))
+		self._txtFbName.text = string.format("%s %s", tagCo and tagCo.name, GameUtil.getRomanNums(showStage))
 	else
-		arg_15_0._txtFbName.text = arg_15_1.name
+		self._txtFbName.text = episodeCO.name
 	end
 end
 
-function var_0_0._showGoal(arg_16_0)
-	gohelper.setActive(arg_16_0._goallist, false)
+function Season1_4FightSuccView:_showGoal()
+	gohelper.setActive(self._goallist, false)
 
-	local var_16_0 = lua_episode.configDict[arg_16_0._curEpisodeId]
+	local curEpisodeConfig = lua_episode.configDict[self._curEpisodeId]
 
-	if var_16_0 and var_16_0.type == DungeonEnum.EpisodeType.SeasonRetail then
-		local var_16_1 = Activity104Model.instance.curBattleRetail
-		local var_16_2 = var_16_1.advancedId
-		local var_16_3 = lua_condition.configDict[var_16_2]
+	if curEpisodeConfig and curEpisodeConfig.type == DungeonEnum.EpisodeType.SeasonRetail then
+		local retail = Activity104Model.instance.curBattleRetail
+		local advancedId = retail.advancedId
+		local conditionConfig = lua_condition.configDict[advancedId]
 
-		if var_16_3 then
-			gohelper.setActive(arg_16_0._goallist, true)
-			gohelper.setActive(gohelper.findChild(arg_16_0._goallist, "fightgoal"), true)
+		if conditionConfig then
+			gohelper.setActive(self._goallist, true)
+			gohelper.setActive(gohelper.findChild(self._goallist, "fightgoal"), true)
 
-			gohelper.findChildText(arg_16_0._goallist, "fightgoal/condition").text = var_16_3.desc
+			local condition = gohelper.findChildText(self._goallist, "fightgoal/condition")
 
-			local var_16_4 = "#87898C"
+			condition.text = conditionConfig.desc
 
-			if var_16_1.star >= 2 then
-				if var_16_1.advancedRare == 1 then
-					var_16_4 = "#A3F14C"
-				elseif var_16_1.advancedRare == 2 then
-					var_16_4 = "#FF423F"
+			local starColor = "#87898C"
+
+			if retail.star >= 2 then
+				if retail.advancedRare == 1 then
+					starColor = "#A3F14C"
+				elseif retail.advancedRare == 2 then
+					starColor = "#FF423F"
 				end
 			end
 
-			local var_16_5 = gohelper.findChildImage(arg_16_0._goallist, "fightgoal/star")
+			local star = gohelper.findChildImage(self._goallist, "fightgoal/star")
 
-			SLFramework.UGUI.GuiHelper.SetColor(var_16_5, var_16_4)
+			SLFramework.UGUI.GuiHelper.SetColor(star, starColor)
 		end
 	end
 end
 
-function var_0_0._checkTypeDetails(arg_17_0)
+function Season1_4FightSuccView:_checkTypeDetails()
 	return
 end
 
-function var_0_0._hideGoDemand(arg_18_0)
+function Season1_4FightSuccView:_hideGoDemand()
 	return
 end
 
-function var_0_0.onClose(arg_19_0)
-	TaskDispatcher.cancelTask(arg_19_0._showGetCardView, arg_19_0)
-	TaskDispatcher.cancelTask(arg_19_0._showChoiceCardView, arg_19_0)
+function Season1_4FightSuccView:onClose()
+	TaskDispatcher.cancelTask(self._showGetCardView, self)
+	TaskDispatcher.cancelTask(self._showChoiceCardView, self)
 
-	if arg_19_0._equipCards then
-		for iter_19_0, iter_19_1 in ipairs(arg_19_0._equipCards) do
-			iter_19_1:destroy()
+	if self._equipCards then
+		for i, v in ipairs(self._equipCards) do
+			v:destroy()
 		end
 
-		arg_19_0._equipCards = nil
+		self._equipCards = nil
 	end
 
-	var_0_0.super.onClose(arg_19_0)
+	Season1_4FightSuccView.super.onClose(self)
 end
 
-function var_0_0.onDestroyView(arg_20_0)
-	var_0_0.super.onDestroyView(arg_20_0)
+function Season1_4FightSuccView:onDestroyView()
+	Season1_4FightSuccView.super.onDestroyView(self)
 end
 
-return var_0_0
+return Season1_4FightSuccView

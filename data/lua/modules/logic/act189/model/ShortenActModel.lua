@@ -1,23 +1,25 @@
-﻿module("modules.logic.act189.model.ShortenActModel", package.seeall)
+﻿-- chunkname: @modules/logic/act189/model/ShortenActModel.lua
 
-local var_0_0 = class("ShortenActModel", BaseModel)
+module("modules.logic.act189.model.ShortenActModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local ShortenActModel = class("ShortenActModel", BaseModel)
+
+function ShortenActModel:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
+function ShortenActModel:reInit()
 	return
 end
 
-function var_0_0.getActivityId(arg_3_0)
+function ShortenActModel:getActivityId()
 	return ShortenActConfig.instance:getActivityId()
 end
 
-function var_0_0.isClaimable(arg_4_0)
-	return Activity189Model.instance:isClaimable(arg_4_0:getActivityId())
+function ShortenActModel:isClaimable()
+	return Activity189Model.instance:isClaimable(self:getActivityId())
 end
 
-var_0_0.instance = var_0_0.New()
+ShortenActModel.instance = ShortenActModel.New()
 
-return var_0_0
+return ShortenActModel

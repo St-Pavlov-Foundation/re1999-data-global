@@ -1,49 +1,51 @@
-﻿module("modules.logic.rouge.view.RougeCollectionCompositeViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeCollectionCompositeViewContainer.lua
 
-local var_0_0 = class("RougeCollectionCompositeViewContainer", BaseViewContainer)
+module("modules.logic.rouge.view.RougeCollectionCompositeViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = ListScrollParam.New()
+local RougeCollectionCompositeViewContainer = class("RougeCollectionCompositeViewContainer", BaseViewContainer)
 
-	var_1_0.scrollGOPath = "left/#go_list/ListView"
-	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_0.prefabUrl = "left/#go_list/ListView/Viewport/Content/#go_listitem"
-	var_1_0.cellClass = RougeCollectionCompositeListItem
-	var_1_0.scrollDir = ScrollEnum.ScrollDirV
-	var_1_0.lineCount = 2
-	var_1_0.cellWidth = 170
-	var_1_0.cellHeight = 170
-	var_1_0.cellSpaceH = 20
-	var_1_0.cellSpaceV = 0
-	var_1_0.startSpace = 20
-	var_1_0.endSpace = 0
+function RougeCollectionCompositeViewContainer:buildViews()
+	local scrollParam = ListScrollParam.New()
 
-	local var_1_1 = {}
+	scrollParam.scrollGOPath = "left/#go_list/ListView"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "left/#go_list/ListView/Viewport/Content/#go_listitem"
+	scrollParam.cellClass = RougeCollectionCompositeListItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 2
+	scrollParam.cellWidth = 170
+	scrollParam.cellHeight = 170
+	scrollParam.cellSpaceH = 20
+	scrollParam.cellSpaceV = 0
+	scrollParam.startSpace = 20
+	scrollParam.endSpace = 0
 
-	table.insert(var_1_1, RougeCollectionCompositeView.New())
-	table.insert(var_1_1, TabViewGroup.New(1, "#go_topleft"))
-	table.insert(var_1_1, TabViewGroup.New(2, "#go_rougemapdetailcontainer"))
-	table.insert(var_1_1, LuaListScrollView.New(RougeCollectionCompositeListModel.instance, var_1_0))
+	local views = {}
 
-	return var_1_1
+	table.insert(views, RougeCollectionCompositeView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_topleft"))
+	table.insert(views, TabViewGroup.New(2, "#go_rougemapdetailcontainer"))
+	table.insert(views, LuaListScrollView.New(RougeCollectionCompositeListModel.instance, scrollParam))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function RougeCollectionCompositeViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
-	elseif arg_2_1 == 2 then
+	elseif tabContainerId == 2 then
 		return {
 			RougeCollectionDetailBtnComp.New()
 		}
 	end
 end
 
-return var_0_0
+return RougeCollectionCompositeViewContainer

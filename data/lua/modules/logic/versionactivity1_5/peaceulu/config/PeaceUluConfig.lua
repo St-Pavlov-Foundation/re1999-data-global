@@ -1,14 +1,16 @@
-﻿module("modules.logic.versionactivity1_5.peaceulu.config.PeaceUluConfig", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/peaceulu/config/PeaceUluConfig.lua
 
-local var_0_0 = class("PeaceUluConfig", BaseConfig)
+module("modules.logic.versionactivity1_5.peaceulu.config.PeaceUluConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._act145taskList = {}
-	arg_1_0._act145bonusList = {}
-	arg_1_0._act145voiceList = {}
+local PeaceUluConfig = class("PeaceUluConfig", BaseConfig)
+
+function PeaceUluConfig:ctor()
+	self._act145taskList = {}
+	self._act145bonusList = {}
+	self._act145voiceList = {}
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function PeaceUluConfig:reqConfigNames()
 	return {
 		"activity145_task",
 		"activity145_task_bonus",
@@ -18,81 +20,82 @@ function var_0_0.reqConfigNames(arg_2_0)
 	}
 end
 
-function var_0_0.onInit(arg_3_0)
+function PeaceUluConfig:onInit()
 	return
 end
 
-function var_0_0.onConfigLoaded(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 == "activity145_task_bonus" then
-		for iter_4_0, iter_4_1 in ipairs(arg_4_2.configList) do
-			table.insert(arg_4_0._act145bonusList, iter_4_1)
+function PeaceUluConfig:onConfigLoaded(configName, configTable)
+	if configName == "activity145_task_bonus" then
+		for _, bonusCo in ipairs(configTable.configList) do
+			table.insert(self._act145bonusList, bonusCo)
 		end
-	elseif arg_4_1 == "activity145_task" then
-		for iter_4_2, iter_4_3 in ipairs(arg_4_2.configList) do
-			table.insert(arg_4_0._act145taskList, iter_4_3)
+	elseif configName == "activity145_task" then
+		for _, taskCo in ipairs(configTable.configList) do
+			table.insert(self._act145taskList, taskCo)
 		end
-	elseif arg_4_1 == "activity145_movement" then
-		for iter_4_4, iter_4_5 in ipairs(arg_4_2.configList) do
-			table.insert(arg_4_0._act145voiceList, iter_4_5)
-		end
-	end
-end
-
-function var_0_0.getBonusCoList(arg_5_0)
-	return arg_5_0._act145bonusList
-end
-
-function var_0_0.getBonusCount(arg_6_0)
-	return #arg_6_0._act145bonusList
-end
-
-function var_0_0.getVoiceList(arg_7_0)
-	return arg_7_0._act145voiceList
-end
-
-function var_0_0.getVoiceConfigByType(arg_8_0, arg_8_1)
-	for iter_8_0, iter_8_1 in pairs(arg_8_0._act145voiceList) do
-		if arg_8_1 == iter_8_1.type then
-			return iter_8_1
+	elseif configName == "activity145_movement" then
+		for _, voiceCo in ipairs(configTable.configList) do
+			table.insert(self._act145voiceList, voiceCo)
 		end
 	end
 end
 
-function var_0_0.getMaxProgress(arg_9_0)
-	local var_9_0 = arg_9_0._act145bonusList[#arg_9_0._act145bonusList]
-
-	return string.split(var_9_0.needProgress, "#")[3]
+function PeaceUluConfig:getBonusCoList()
+	return self._act145bonusList
 end
 
-function var_0_0.getProgressByIndex(arg_10_0, arg_10_1)
-	if arg_10_1 < 1 and arg_10_1 > #arg_10_0._act145bonusList then
+function PeaceUluConfig:getBonusCount()
+	return #self._act145bonusList
+end
+
+function PeaceUluConfig:getVoiceList()
+	return self._act145voiceList
+end
+
+function PeaceUluConfig:getVoiceConfigByType(type)
+	for key, voiceCo in pairs(self._act145voiceList) do
+		if type == voiceCo.type then
+			return voiceCo
+		end
+	end
+end
+
+function PeaceUluConfig:getMaxProgress()
+	local co = self._act145bonusList[#self._act145bonusList]
+	local temp = string.split(co.needProgress, "#")
+
+	return temp[3]
+end
+
+function PeaceUluConfig:getProgressByIndex(index)
+	if index < 1 and index > #self._act145bonusList then
 		return
 	end
 
-	local var_10_0 = arg_10_0._act145bonusList[arg_10_1]
-	local var_10_1 = string.split(var_10_0.needProgress, "#")
+	local co = self._act145bonusList[index]
+	local temp = string.split(co.needProgress, "#")
 
-	return tonumber(var_10_1[3])
+	return tonumber(temp[3])
 end
 
-function var_0_0.getTaskCoList(arg_11_0)
-	return arg_11_0._act145taskList
+function PeaceUluConfig:getTaskCoList()
+	return self._act145taskList
 end
 
-function var_0_0.getTaskCo(arg_12_0, arg_12_1)
-	for iter_12_0, iter_12_1 in ipairs(arg_12_0._act145taskList) do
-		if iter_12_1.id == arg_12_1 then
-			return iter_12_1
+function PeaceUluConfig:getTaskCo(id)
+	for i, v in ipairs(self._act145taskList) do
+		if v.id == id then
+			return v
 		end
 	end
 
-	return arg_12_0._act145taskList[arg_12_1]
+	return self._act145taskList[id]
 end
 
-function var_0_0.getGameTimes(arg_13_0)
+function PeaceUluConfig:getGameTimes()
 	return 3
 end
 
-var_0_0.instance = var_0_0.New()
+PeaceUluConfig.instance = PeaceUluConfig.New()
 
-return var_0_0
+return PeaceUluConfig

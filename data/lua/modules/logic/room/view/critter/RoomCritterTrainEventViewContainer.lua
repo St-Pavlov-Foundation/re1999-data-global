@@ -1,32 +1,34 @@
-﻿module("modules.logic.room.view.critter.RoomCritterTrainEventViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/critter/RoomCritterTrainEventViewContainer.lua
 
-local var_0_0 = class("RoomCritterTrainEventViewContainer", BaseViewContainer)
+module("modules.logic.room.view.critter.RoomCritterTrainEventViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoomCritterTrainEventViewContainer = class("RoomCritterTrainEventViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RoomCritterTrainEventView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_BackBtns"))
+function RoomCritterTrainEventViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RoomCritterTrainEventView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_BackBtns"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function RoomCritterTrainEventViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-function var_0_0._onCurrencyOpen(arg_3_0)
+function RoomCritterTrainEventViewContainer:_onCurrencyOpen()
 	logError("_onCurrencyOpen")
 end
 
-return var_0_0
+return RoomCritterTrainEventViewContainer

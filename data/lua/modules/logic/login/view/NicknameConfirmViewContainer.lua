@@ -1,11 +1,13 @@
-﻿module("modules.logic.login.view.NicknameConfirmViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/login/view/NicknameConfirmViewContainer.lua
 
-local var_0_0 = class("NicknameConfirmViewContainer", BaseViewContainer)
+module("modules.logic.login.view.NicknameConfirmViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local NicknameConfirmViewContainer = class("NicknameConfirmViewContainer", BaseViewContainer)
+
+function NicknameConfirmViewContainer:buildViews()
 	return {
 		NickNameConfirmView.New()
 	}
 end
 
-return var_0_0
+return NicknameConfirmViewContainer

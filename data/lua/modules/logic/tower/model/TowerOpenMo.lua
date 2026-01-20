@@ -1,32 +1,34 @@
-﻿module("modules.logic.tower.model.TowerOpenMo", package.seeall)
+﻿-- chunkname: @modules/logic/tower/model/TowerOpenMo.lua
 
-local var_0_0 = pureTable("TowerOpenMo")
+module("modules.logic.tower.model.TowerOpenMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1
+local TowerOpenMo = pureTable("TowerOpenMo")
+
+function TowerOpenMo:init(id)
+	self.id = id
 end
 
-function var_0_0.updateInfo(arg_2_0, arg_2_1)
-	arg_2_0.type = arg_2_1.type
-	arg_2_0.towerId = arg_2_1.towerId
-	arg_2_0.id = arg_2_1.towerId
-	arg_2_0.status = arg_2_1.status
-	arg_2_0.round = arg_2_1.round
-	arg_2_0.nextTime = arg_2_1.nextTime
-	arg_2_0.towerStartTime = tonumber(arg_2_1.towerStartTime)
-	arg_2_0.taskEndTime = tonumber(arg_2_1.taskEndTime)
+function TowerOpenMo:updateInfo(info)
+	self.type = info.type
+	self.towerId = info.towerId
+	self.id = info.towerId
+	self.status = info.status
+	self.round = info.round
+	self.nextTime = info.nextTime
+	self.towerStartTime = tonumber(info.towerStartTime)
+	self.taskEndTime = tonumber(info.taskEndTime)
 end
 
-function var_0_0.getTaskRemainTime(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_0.taskEndTime / 1000 - ServerTime.now()
+function TowerOpenMo:getTaskRemainTime(useEn)
+	local offsetSecond = self.taskEndTime / 1000 - ServerTime.now()
 
-	if var_3_0 > 0 then
-		local var_3_1, var_3_2 = TimeUtil.secondToRoughTime(var_3_0, arg_3_1)
+	if offsetSecond > 0 then
+		local date, dateFormat = TimeUtil.secondToRoughTime(offsetSecond, useEn)
 
-		return var_3_1, var_3_2
+		return date, dateFormat
 	else
 		return nil
 	end
 end
 
-return var_0_0
+return TowerOpenMo

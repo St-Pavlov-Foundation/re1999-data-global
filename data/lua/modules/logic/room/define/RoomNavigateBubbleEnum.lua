@@ -1,11 +1,13 @@
-﻿module("modules.logic.room.define.RoomNavigateBubbleEnum", package.seeall)
+﻿-- chunkname: @modules/logic/room/define/RoomNavigateBubbleEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.room.define.RoomNavigateBubbleEnum", package.seeall)
 
-var_0_0.CategoryType = {
+local RoomNavigateBubbleEnum = _M
+
+RoomNavigateBubbleEnum.CategoryType = {
 	Factory = 1
 }
-var_0_0.FactoryBubbleType = {
+RoomNavigateBubbleEnum.FactoryBubbleType = {
 	FaithFull = 4,
 	RoomGift = 5,
 	Manufacture = 6,
@@ -14,19 +16,19 @@ var_0_0.FactoryBubbleType = {
 	FaithReward = 3,
 	BuildingUpgrade = 2
 }
-var_0_0.Bubble2ResPath = {
-	[var_0_0.FactoryBubbleType.ProductProgress] = "xw_bubbleicon_8",
-	[var_0_0.FactoryBubbleType.BuildingUpgrade] = "xw_bubbleicon_up",
-	[var_0_0.FactoryBubbleType.FaithReward] = "xw_bubbleicon_4",
-	[var_0_0.FactoryBubbleType.FaithFull] = "xw_bubbleicon_max",
-	[var_0_0.FactoryBubbleType.RoomGift] = "xw_bubbleicon_7",
-	[var_0_0.FactoryBubbleType.Manufacture] = "xw_bubbleicon_9",
-	[var_0_0.FactoryBubbleType.Critter] = "xw_bubbleicon_10"
+RoomNavigateBubbleEnum.Bubble2ResPath = {
+	[RoomNavigateBubbleEnum.FactoryBubbleType.ProductProgress] = "xw_bubbleicon_8",
+	[RoomNavigateBubbleEnum.FactoryBubbleType.BuildingUpgrade] = "xw_bubbleicon_up",
+	[RoomNavigateBubbleEnum.FactoryBubbleType.FaithReward] = "xw_bubbleicon_4",
+	[RoomNavigateBubbleEnum.FactoryBubbleType.FaithFull] = "xw_bubbleicon_max",
+	[RoomNavigateBubbleEnum.FactoryBubbleType.RoomGift] = "xw_bubbleicon_7",
+	[RoomNavigateBubbleEnum.FactoryBubbleType.Manufacture] = "xw_bubbleicon_9",
+	[RoomNavigateBubbleEnum.FactoryBubbleType.Critter] = "xw_bubbleicon_10"
 }
-var_0_0.BubbleHideNum = {
-	[var_0_0.FactoryBubbleType.BuildingUpgrade] = true,
-	[var_0_0.FactoryBubbleType.RoomGift] = true
+RoomNavigateBubbleEnum.BubbleHideNum = {
+	[RoomNavigateBubbleEnum.FactoryBubbleType.BuildingUpgrade] = true,
+	[RoomNavigateBubbleEnum.FactoryBubbleType.RoomGift] = true
 }
-var_0_0.HallId = -1
+RoomNavigateBubbleEnum.HallId = -1
 
-return var_0_0
+return RoomNavigateBubbleEnum

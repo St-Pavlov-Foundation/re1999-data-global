@@ -1,215 +1,221 @@
-﻿module("modules.logic.weekwalk.view.WeekWalkReviveView", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk/view/WeekWalkReviveView.lua
 
-local var_0_0 = class("WeekWalkReviveView", BaseView)
+module("modules.logic.weekwalk.view.WeekWalkReviveView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._txtruledesc = gohelper.findChildText(arg_1_0.viewGO, "#txt_ruledesc")
-	arg_1_0._btndetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bottomLeft/#btn_detail")
-	arg_1_0._btnok = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_ok")
-	arg_1_0._gocardlist = gohelper.findChild(arg_1_0.viewGO, "#go_cardlist")
-	arg_1_0._gotemplate = gohelper.findChild(arg_1_0.viewGO, "#go_cardlist/#go_template")
-	arg_1_0._gorecommendAttr = gohelper.findChild(arg_1_0.viewGO, "#go_recommendAttr")
-	arg_1_0._goattritem = gohelper.findChild(arg_1_0.viewGO, "#go_recommendAttr/attrlist/#go_attritem")
+local WeekWalkReviveView = class("WeekWalkReviveView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function WeekWalkReviveView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._txtruledesc = gohelper.findChildText(self.viewGO, "#txt_ruledesc")
+	self._btndetail = gohelper.findChildButtonWithAudio(self.viewGO, "bottomLeft/#btn_detail")
+	self._btnok = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_ok")
+	self._gocardlist = gohelper.findChild(self.viewGO, "#go_cardlist")
+	self._gotemplate = gohelper.findChild(self.viewGO, "#go_cardlist/#go_template")
+	self._gorecommendAttr = gohelper.findChild(self.viewGO, "#go_recommendAttr")
+	self._goattritem = gohelper.findChild(self.viewGO, "#go_recommendAttr/attrlist/#go_attritem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btndetail:AddClickListener(arg_2_0._btndetailOnClick, arg_2_0)
-	arg_2_0._btnok:AddClickListener(arg_2_0._btnokOnClick, arg_2_0)
+function WeekWalkReviveView:addEvents()
+	self._btndetail:AddClickListener(self._btndetailOnClick, self)
+	self._btnok:AddClickListener(self._btnokOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btndetail:RemoveClickListener()
-	arg_3_0._btnok:RemoveClickListener()
+function WeekWalkReviveView:removeEvents()
+	self._btndetail:RemoveClickListener()
+	self._btnok:RemoveClickListener()
 end
 
-function var_0_0._btndetailOnClick(arg_4_0)
-	EnemyInfoController.instance:openWeekWalkEnemyInfoView(arg_4_0._mapInfo.id)
+function WeekWalkReviveView:_btndetailOnClick()
+	EnemyInfoController.instance:openWeekWalkEnemyInfoView(self._mapInfo.id)
 end
 
-function var_0_0._btnokOnClick(arg_5_0)
-	local var_5_0 = {}
+function WeekWalkReviveView:_btnokOnClick()
+	local heroList = {}
 
-	for iter_5_0, iter_5_1 in pairs(arg_5_0._heroItemList) do
-		if iter_5_1._isSelected then
-			table.insert(var_5_0, iter_5_1._mo.heroId)
+	for k, v in pairs(self._heroItemList) do
+		if v._isSelected then
+			table.insert(heroList, v._mo.heroId)
 		end
 	end
 
-	if #var_5_0 <= 0 then
+	if #heroList <= 0 then
 		return
 	end
 
-	WeekwalkRpc.instance:sendSelectNotCdHeroRequest(var_5_0)
+	WeekwalkRpc.instance:sendSelectNotCdHeroRequest(heroList)
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnSelectNotCdHeroReply, arg_6_0.closeThis, arg_6_0)
-	arg_6_0._simagebg:LoadImage(ResUrl.getWeekWalkBg("full/bg_beijigntu.png"))
-	gohelper.addUIClickAudio(arg_6_0._btnok.gameObject, AudioEnum.WeekWalk.play_artificial_ui_commonchoose)
-	gohelper.addUIClickAudio(arg_6_0._btndetail.gameObject, AudioEnum.UI.play_ui_action_explore)
+function WeekWalkReviveView:_editableInitView()
+	self:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnSelectNotCdHeroReply, self.closeThis, self)
+	self._simagebg:LoadImage(ResUrl.getWeekWalkBg("full/bg_beijigntu.png"))
+	gohelper.addUIClickAudio(self._btnok.gameObject, AudioEnum.WeekWalk.play_artificial_ui_commonchoose)
+	gohelper.addUIClickAudio(self._btndetail.gameObject, AudioEnum.UI.play_ui_action_explore)
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function WeekWalkReviveView:onUpdateParam()
 	return
 end
 
-function var_0_0._recommendCareer(arg_8_0)
-	local var_8_0 = arg_8_0._mapInfo:getNoStarBattleInfo()
+function WeekWalkReviveView:_recommendCareer()
+	local battleInfo = self._mapInfo:getNoStarBattleInfo()
 
-	if not var_8_0 then
-		gohelper.setActive(arg_8_0._gorecommendAttr, false)
+	if not battleInfo then
+		gohelper.setActive(self._gorecommendAttr, false)
 
 		return
 	end
 
-	local var_8_1 = var_8_0.battleId
-	local var_8_2 = lua_battle.configDict[var_8_1]
-	local var_8_3 = string.splitToNumber(var_8_2.monsterGroupIds, "#")
-	local var_8_4, var_8_5 = FightHelper.getAttributeCounter(var_8_3)
-	local var_8_6 = #var_8_4
+	local battleId = battleInfo.battleId
+	local battleConfig = lua_battle.configDict[battleId]
+	local monsterGroupIds = string.splitToNumber(battleConfig.monsterGroupIds, "#")
+	local recommended, counter = FightHelper.getAttributeCounter(monsterGroupIds)
+	local data_len = #recommended
 
-	gohelper.setActive(arg_8_0._gorecommendAttr, var_8_6 > 0)
+	gohelper.setActive(self._gorecommendAttr, data_len > 0)
 
-	if var_8_6 > 0 then
-		for iter_8_0, iter_8_1 in ipairs(var_8_4) do
-			local var_8_7 = "career_" .. iter_8_1
-			local var_8_8 = gohelper.cloneInPlace(arg_8_0._goattritem)
+	if data_len > 0 then
+		for i, v in ipairs(recommended) do
+			local career = "career_" .. v
+			local go = gohelper.cloneInPlace(self._goattritem)
 
-			gohelper.setActive(var_8_8, true)
+			gohelper.setActive(go, true)
 
-			local var_8_9 = gohelper.findChildImage(var_8_8, "icon")
+			local icon = gohelper.findChildImage(go, "icon")
 
-			UISpriteSetMgr.instance:setHeroGroupSprite(var_8_9, var_8_7)
+			UISpriteSetMgr.instance:setHeroGroupSprite(icon, career)
 		end
 	end
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0._mapInfo = WeekWalkModel.instance:getCurMapInfo()
-	arg_9_0._mapConfig = WeekWalkModel.instance:getCurMapConfig()
-	arg_9_0._heroItemList = {}
-	arg_9_0._txtruledesc.text = formatLuaLang("weekwalkreviveview_ruledesc", arg_9_0._mapConfig.notCdHeroCount)
+function WeekWalkReviveView:onOpen()
+	self._mapInfo = WeekWalkModel.instance:getCurMapInfo()
+	self._mapConfig = WeekWalkModel.instance:getCurMapConfig()
+	self._heroItemList = {}
+	self._txtruledesc.text = formatLuaLang("weekwalkreviveview_ruledesc", self._mapConfig.notCdHeroCount)
 
-	arg_9_0:_showHeroList()
-	arg_9_0:_updateBtn()
-	arg_9_0:_recommendCareer()
+	self:_showHeroList()
+	self:_updateBtn()
+	self:_recommendCareer()
 
-	if GameSceneMgr.instance:getCurSceneType() == SceneType.Fight then
-		arg_9_0:_playBgm(AudioEnum.WeekWalk.play_artificial_layer_type_1)
+	local sceneType = GameSceneMgr.instance:getCurSceneType()
+
+	if sceneType == SceneType.Fight then
+		self:_playBgm(AudioEnum.WeekWalk.play_artificial_layer_type_1)
 	end
 end
 
-function var_0_0._playBgm(arg_10_0, arg_10_1)
-	arg_10_0._bgmId = arg_10_1
+function WeekWalkReviveView:_playBgm(bgmId)
+	self._bgmId = bgmId
 
-	AudioMgr.instance:trigger(arg_10_0._bgmId)
+	AudioMgr.instance:trigger(self._bgmId)
 end
 
-function var_0_0._stopBgm(arg_11_0)
-	if arg_11_0._bgmId then
+function WeekWalkReviveView:_stopBgm()
+	if self._bgmId then
 		AudioMgr.instance:trigger(AudioEnum.WeekWalk.stop_sleepwalkingaudio)
 
-		arg_11_0._bgmId = nil
+		self._bgmId = nil
 	end
 end
 
-function var_0_0._showHeroList(arg_12_0)
-	local var_12_0 = arg_12_0._mapInfo:getHeroInfoList()
+function WeekWalkReviveView:_showHeroList()
+	local heroList = self._mapInfo:getHeroInfoList()
 
-	for iter_12_0, iter_12_1 in ipairs(var_12_0) do
-		arg_12_0:_addHeroItem(iter_12_1)
+	for i, v in ipairs(heroList) do
+		self:_addHeroItem(v)
 	end
 end
 
-function var_0_0._addHeroItem(arg_13_0, arg_13_1)
-	local var_13_0 = gohelper.cloneInPlace(arg_13_0._gotemplate)
+function WeekWalkReviveView:_addHeroItem(heroInfo)
+	local child = gohelper.cloneInPlace(self._gotemplate)
 
-	gohelper.setActive(var_13_0, true)
+	gohelper.setActive(child, true)
 
-	local var_13_1 = gohelper.findChild(var_13_0, "go_retain")
+	local retainGo = gohelper.findChild(child, "go_retain")
 
-	gohelper.setActive(var_13_1, false)
+	gohelper.setActive(retainGo, false)
 
-	local var_13_2 = gohelper.findChild(var_13_0, "hero")
-	local var_13_3 = IconMgr.instance:getCommonHeroItem(var_13_2)
-	local var_13_4 = arg_13_1.heroId
-	local var_13_5 = HeroModel.instance:getByHeroId(var_13_4)
+	local heroGo = gohelper.findChild(child, "hero")
+	local heroItem = IconMgr.instance:getCommonHeroItem(heroGo)
+	local heroId = heroInfo.heroId
+	local mo = HeroModel.instance:getByHeroId(heroId)
 
-	var_13_3:setStyle_CharacterBackpack()
-	var_13_3:onUpdateMO(var_13_5)
-	var_13_3:addClickListener(arg_13_0._heroItemClick, arg_13_0)
-	var_13_3:setDamage(true)
-	var_13_3:setNewShow(false)
-	var_13_3:setEffectVisible(false)
-	var_13_3:setInjuryTxtVisible(false)
+	heroItem:setStyle_CharacterBackpack()
+	heroItem:onUpdateMO(mo)
+	heroItem:addClickListener(self._heroItemClick, self)
+	heroItem:setDamage(true)
+	heroItem:setNewShow(false)
+	heroItem:setEffectVisible(false)
+	heroItem:setInjuryTxtVisible(false)
 
-	local var_13_6 = arg_13_0:getUserDataTb_()
+	local heroObj = self:getUserDataTb_()
 
-	var_13_6._mo = var_13_5
-	var_13_6._isSelected = false
-	var_13_6._heroItem = var_13_3
-	var_13_6._retainGo = var_13_1
-	arg_13_0._heroItemList[var_13_5] = var_13_6
+	heroObj._mo = mo
+	heroObj._isSelected = false
+	heroObj._heroItem = heroItem
+	heroObj._retainGo = retainGo
+	self._heroItemList[mo] = heroObj
 end
 
-function var_0_0._heroItemClick(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_0._heroItemList[arg_14_1]
+function WeekWalkReviveView:_heroItemClick(mo)
+	local heroObj = self._heroItemList[mo]
 
 	AudioMgr.instance:trigger(AudioEnum.WeekWalk.play_artificial_ui_fight_choosecard)
 
-	if not var_14_0._isSelected and arg_14_0._canRevive then
+	if not heroObj._isSelected and self._canRevive then
 		GameFacade.showToast(ToastEnum.WeekWalkRevive)
 
 		return
 	end
 
-	var_14_0._isSelected = not var_14_0._isSelected
+	heroObj._isSelected = not heroObj._isSelected
 
-	arg_14_0:_updateBtn()
+	self:_updateBtn()
 end
 
-function var_0_0._updateBtn(arg_15_0)
-	local var_15_0 = 0
-	local var_15_1 = 0
+function WeekWalkReviveView:_updateBtn()
+	local num = 0
+	local heroNum = 0
 
-	for iter_15_0, iter_15_1 in pairs(arg_15_0._heroItemList) do
-		var_15_1 = var_15_1 + 1
+	for k, v in pairs(self._heroItemList) do
+		heroNum = heroNum + 1
 
-		if iter_15_1._isSelected then
-			var_15_0 = var_15_0 + 1
+		if v._isSelected then
+			num = num + 1
 		end
 	end
 
-	arg_15_0._canRevive = var_15_0 >= math.min(var_15_1, arg_15_0._mapConfig.notCdHeroCount)
-	arg_15_0._btnok.button.interactable = arg_15_0._canRevive
+	local targetNum = math.min(heroNum, self._mapConfig.notCdHeroCount)
 
-	for iter_15_2, iter_15_3 in pairs(arg_15_0._heroItemList) do
-		iter_15_3._heroItem:setSelect(false)
+	self._canRevive = targetNum <= num
+	self._btnok.button.interactable = self._canRevive
 
-		if iter_15_3._isSelected then
-			gohelper.setActive(iter_15_3._retainGo, true)
-			iter_15_3._heroItem:setDamage(false)
-			iter_15_3._heroItem:setInjuryTxtVisible(false)
-			iter_15_3._heroItem:setSelect(true)
+	for k, v in pairs(self._heroItemList) do
+		v._heroItem:setSelect(false)
+
+		if v._isSelected then
+			gohelper.setActive(v._retainGo, true)
+			v._heroItem:setDamage(false)
+			v._heroItem:setInjuryTxtVisible(false)
+			v._heroItem:setSelect(true)
 		else
-			gohelper.setActive(iter_15_3._retainGo, false)
-			iter_15_3._heroItem:setDamage(true)
-			iter_15_3._heroItem:setInjuryTxtVisible(false)
+			gohelper.setActive(v._retainGo, false)
+			v._heroItem:setDamage(true)
+			v._heroItem:setInjuryTxtVisible(false)
 		end
 	end
 end
 
-function var_0_0.onClose(arg_16_0)
-	arg_16_0:_stopBgm()
+function WeekWalkReviveView:onClose()
+	self:_stopBgm()
 end
 
-function var_0_0.onDestroyView(arg_17_0)
-	arg_17_0._simagebg:UnLoadImage()
+function WeekWalkReviveView:onDestroyView()
+	self._simagebg:UnLoadImage()
 end
 
-return var_0_0
+return WeekWalkReviveView

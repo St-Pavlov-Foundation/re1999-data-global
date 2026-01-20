@@ -1,82 +1,99 @@
-﻿module("modules.common.facade.GameFacade", package.seeall)
+﻿-- chunkname: @modules/common/facade/GameFacade.lua
 
-local var_0_0 = {
-	openInputBox = function(arg_1_0)
-		ViewMgr.instance:openView(ViewName.CommonInputView, arg_1_0)
-	end,
-	closeInputBox = function()
-		ViewMgr.instance:closeView(ViewName.CommonInputView)
-	end,
-	jump = function(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-		return JumpController.instance:jump(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	end,
-	jumpByAdditionParam = function(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-		return JumpController.instance:jumpByAdditionParam(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	end,
-	jumpByStr = function(arg_5_0)
-		CommonJumpUtil.jump(arg_5_0)
-	end,
-	showMessageBox = function(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5, arg_6_6, arg_6_7, ...)
-		MessageBoxController.instance:showMsgBox(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5, arg_6_6, arg_6_7, ...)
-	end,
-	showToastWithTableParam = function(arg_7_0, arg_7_1)
-		if arg_7_1 then
-			ToastController.instance:showToast(arg_7_0, unpack(arg_7_1))
-		else
-			ToastController.instance:showToast(arg_7_0)
-		end
-	end,
-	showToast = function(arg_8_0, ...)
-		ToastController.instance:showToast(arg_8_0, ...)
-	end,
-	showToastString = function(arg_9_0)
-		ToastController.instance:showToastWithString(arg_9_0)
-	end,
-	showToastWithIcon = function(arg_10_0, arg_10_1, ...)
-		ToastController.instance:showToastWithIcon(arg_10_0, arg_10_1, ...)
-	end
-}
+module("modules.common.facade.GameFacade", package.seeall)
 
-function var_0_0.showIconToastWithTableParam(arg_11_0, arg_11_1, arg_11_2)
-	if type(arg_11_2) == "table" then
-		var_0_0.showToastWithIcon(arg_11_0, arg_11_1, unpack(arg_11_2))
+local GameFacade = {}
+
+function GameFacade.openInputBox(commonInputMO)
+	ViewMgr.instance:openView(ViewName.CommonInputView, commonInputMO)
+end
+
+function GameFacade.closeInputBox()
+	ViewMgr.instance:closeView(ViewName.CommonInputView)
+end
+
+function GameFacade.jump(jumpId, callback, callbackObj, recordFarmItem)
+	return JumpController.instance:jump(jumpId, callback, callbackObj, recordFarmItem)
+end
+
+function GameFacade.jumpByAdditionParam(param, callback, callbackObj, recordFarmItem)
+	return JumpController.instance:jumpByAdditionParam(param, callback, callbackObj, recordFarmItem)
+end
+
+function GameFacade.jumpByStr(jumpString)
+	CommonJumpUtil.jump(jumpString)
+end
+
+function GameFacade.showMessageBox(messageBoxId, msgBoxType, yesCallback, noCallback, openCallback, yesCallbackObj, noCallbackObj, openCallbackObj, ...)
+	MessageBoxController.instance:showMsgBox(messageBoxId, msgBoxType, yesCallback, noCallback, openCallback, yesCallbackObj, noCallbackObj, openCallbackObj, ...)
+end
+
+function GameFacade.showToastWithTableParam(toastId, paramList)
+	if paramList then
+		ToastController.instance:showToast(toastId, unpack(paramList))
 	else
-		var_0_0.showToastWithIcon(arg_11_0, arg_11_1)
+		ToastController.instance:showToast(toastId)
 	end
 end
 
-function var_0_0.isExternalTest()
-	return GameConfig:GetCurServerType() == 6 and SettingsModel.instance:isZhRegion()
+function GameFacade.showToast(toastId, ...)
+	ToastController.instance:showToast(toastId, ...)
 end
 
-function var_0_0.isKOLTest()
-	local var_13_0 = GameConfig:GetCurServerType()
-
-	return var_13_0 == GameUrlConfig.ServerType.OutExperience or var_13_0 == 8
+function GameFacade.showToastString(msg)
+	ToastController.instance:showToastWithString(msg)
 end
 
-function var_0_0.showOptionMessageBox(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4, arg_14_5, arg_14_6, arg_14_7, arg_14_8, ...)
-	if not MessageBoxController.instance:canShowMessageOptionBoxView(arg_14_0, arg_14_2) then
-		if arg_14_3 then
-			arg_14_3(arg_14_6)
+function GameFacade.showToastWithIcon(toastId, icon, ...)
+	ToastController.instance:showToastWithIcon(toastId, icon, ...)
+end
+
+function GameFacade.showIconToastWithTableParam(toastId, icon, paramList)
+	if type(paramList) == "table" then
+		GameFacade.showToastWithIcon(toastId, icon, unpack(paramList))
+	else
+		GameFacade.showToastWithIcon(toastId, icon)
+	end
+end
+
+function GameFacade.isExternalTest()
+	local serverType = GameConfig:GetCurServerType()
+
+	return serverType == 6 and SettingsModel.instance:isZhRegion()
+end
+
+function GameFacade.isKOLTest()
+	local serverType = GameConfig:GetCurServerType()
+
+	return serverType == GameUrlConfig.ServerType.OutExperience or serverType == 8
+end
+
+function GameFacade.showOptionMessageBox(messageBoxId, msgBoxType, optionType, yesCallback, noCallback, openCallback, yesCallbackObj, noCallbackObj, openCallbackObj, ...)
+	local canShowView = MessageBoxController.instance:canShowMessageOptionBoxView(messageBoxId, optionType)
+
+	if not canShowView then
+		if yesCallback then
+			yesCallback(yesCallbackObj)
 		end
 
 		return
 	end
 
-	MessageBoxController.instance:showOptionMsgBox(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4, arg_14_5, arg_14_6, arg_14_7, arg_14_8, ...)
+	MessageBoxController.instance:showOptionMsgBox(messageBoxId, msgBoxType, optionType, yesCallback, noCallback, openCallback, yesCallbackObj, noCallbackObj, openCallbackObj, ...)
 end
 
-function var_0_0.showOptionAndParamsMessageBox(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5, arg_15_6, arg_15_7, arg_15_8, arg_15_9, ...)
-	if not MessageBoxController.instance:canShowMessageOptionBoxView(arg_15_0, arg_15_2, arg_15_3) then
-		if arg_15_4 then
-			arg_15_4(arg_15_7)
+function GameFacade.showOptionAndParamsMessageBox(messageBoxId, msgBoxType, optionType, optionExParam, yesCallback, noCallback, openCallback, yesCallbackObj, noCallbackObj, openCallbackObj, ...)
+	local canShowView = MessageBoxController.instance:canShowMessageOptionBoxView(messageBoxId, optionType, optionExParam)
+
+	if not canShowView then
+		if yesCallback then
+			yesCallback(yesCallbackObj)
 		end
 
 		return
 	end
 
-	MessageBoxController.instance:showOptionAndParamsMsgBox(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5, arg_15_6, arg_15_7, arg_15_8, arg_15_9, ...)
+	MessageBoxController.instance:showOptionAndParamsMsgBox(messageBoxId, msgBoxType, optionType, optionExParam, yesCallback, noCallback, openCallback, yesCallbackObj, noCallbackObj, openCallbackObj, ...)
 end
 
-return var_0_0
+return GameFacade

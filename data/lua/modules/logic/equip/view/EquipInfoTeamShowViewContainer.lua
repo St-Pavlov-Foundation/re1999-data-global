@@ -1,88 +1,90 @@
-﻿module("modules.logic.equip.view.EquipInfoTeamShowViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/equip/view/EquipInfoTeamShowViewContainer.lua
 
-local var_0_0 = class("EquipInfoTeamShowViewContainer", BaseViewContainer)
+module("modules.logic.equip.view.EquipInfoTeamShowViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = ListScrollParam.New()
+local EquipInfoTeamShowViewContainer = class("EquipInfoTeamShowViewContainer", BaseViewContainer)
 
-	var_1_0.scrollGOPath = "#go_equipcontainer/#scroll_equip"
-	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_0.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_0.scrollDir = ScrollEnum.ScrollDirV
-	var_1_0.lineCount = 3
-	var_1_0.cellWidth = 170
-	var_1_0.cellHeight = 157.5
-	var_1_0.cellSpaceH = 22
-	var_1_0.cellSpaceV = 31
-	var_1_0.startSpace = 13
-	var_1_0.minUpdateCountInFrame = 15
+function EquipInfoTeamShowViewContainer:buildViews()
+	local equipScrollParam = ListScrollParam.New()
 
-	local var_1_1 = arg_1_0.viewParam.heroMo and arg_1_0.viewParam.heroMo:isTrial()
-	local var_1_2 = arg_1_0.viewParam.heroMo and arg_1_0.viewParam.heroMo:isOtherPlayerHero()
+	equipScrollParam.scrollGOPath = "#go_equipcontainer/#scroll_equip"
+	equipScrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	equipScrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	equipScrollParam.scrollDir = ScrollEnum.ScrollDirV
+	equipScrollParam.lineCount = 3
+	equipScrollParam.cellWidth = 170
+	equipScrollParam.cellHeight = 157.5
+	equipScrollParam.cellSpaceH = 22
+	equipScrollParam.cellSpaceV = 31
+	equipScrollParam.startSpace = 13
+	equipScrollParam.minUpdateCountInFrame = 15
 
-	if arg_1_0.viewParam.fromView == EquipEnum.FromViewEnum.FromHeroGroupFightView or var_1_1 or var_1_2 then
-		arg_1_0.listModel = EquipInfoTeamListModel.instance
-		var_1_0.cellClass = EquipInfoTeamItem
-	elseif arg_1_0.viewParam.fromView == EquipEnum.FromViewEnum.FromCharacterView then
-		arg_1_0.listModel = CharacterEquipSettingListModel.instance
-		var_1_0.cellClass = CharacterEquipSettingItem
-	elseif arg_1_0.viewParam.fromView == EquipEnum.FromViewEnum.FromSeasonFightView or arg_1_0.viewParam.fromView == EquipEnum.FromViewEnum.FromSeason123HeroGroupFightView or arg_1_0.viewParam.fromView == EquipEnum.FromViewEnum.FromSeason166HeroGroupFightView then
-		arg_1_0.listModel = EquipInfoTeamListModel.instance
-		var_1_0.cellClass = EquipInfoTeamItem
-	elseif arg_1_0.viewParam.fromView == EquipEnum.FromViewEnum.FromCachotHeroGroupView then
-		arg_1_0.listModel = EquipInfoTeamListModel.instance
-		var_1_0.cellClass = EquipInfoTeamItem
-	elseif arg_1_0.viewParam.fromView == EquipEnum.FromViewEnum.FromPresetPreviewView then
-		arg_1_0.listModel = EquipInfoTeamListModel.instance
-		var_1_0.cellClass = EquipInfoTeamItem
-	elseif arg_1_0.viewParam.fromView == EquipEnum.FromViewEnum.FromCachotHeroGroupFightView then
-		arg_1_0.listModel = V1a6_CachotEquipInfoTeamListModel.instance
-		var_1_0.cellClass = V1a6_CachotEquipInfoTeamItem
-	elseif arg_1_0.viewParam.fromView == EquipEnum.FromViewEnum.FromOdysseyHeroGroupFightView then
-		arg_1_0.listModel = OdysseyEquipInfoTeamListModel.instance
-		var_1_0.cellClass = OdysseyEquipInfoTeamItem
+	local isTrial = self.viewParam.heroMo and self.viewParam.heroMo:isTrial()
+	local isOtherPlayerHero = self.viewParam.heroMo and self.viewParam.heroMo:isOtherPlayerHero()
+
+	if self.viewParam.fromView == EquipEnum.FromViewEnum.FromHeroGroupFightView or isTrial or isOtherPlayerHero then
+		self.listModel = EquipInfoTeamListModel.instance
+		equipScrollParam.cellClass = EquipInfoTeamItem
+	elseif self.viewParam.fromView == EquipEnum.FromViewEnum.FromCharacterView then
+		self.listModel = CharacterEquipSettingListModel.instance
+		equipScrollParam.cellClass = CharacterEquipSettingItem
+	elseif self.viewParam.fromView == EquipEnum.FromViewEnum.FromSeasonFightView or self.viewParam.fromView == EquipEnum.FromViewEnum.FromSeason123HeroGroupFightView or self.viewParam.fromView == EquipEnum.FromViewEnum.FromSeason166HeroGroupFightView then
+		self.listModel = EquipInfoTeamListModel.instance
+		equipScrollParam.cellClass = EquipInfoTeamItem
+	elseif self.viewParam.fromView == EquipEnum.FromViewEnum.FromCachotHeroGroupView then
+		self.listModel = EquipInfoTeamListModel.instance
+		equipScrollParam.cellClass = EquipInfoTeamItem
+	elseif self.viewParam.fromView == EquipEnum.FromViewEnum.FromPresetPreviewView then
+		self.listModel = EquipInfoTeamListModel.instance
+		equipScrollParam.cellClass = EquipInfoTeamItem
+	elseif self.viewParam.fromView == EquipEnum.FromViewEnum.FromCachotHeroGroupFightView then
+		self.listModel = V1a6_CachotEquipInfoTeamListModel.instance
+		equipScrollParam.cellClass = V1a6_CachotEquipInfoTeamItem
+	elseif self.viewParam.fromView == EquipEnum.FromViewEnum.FromOdysseyHeroGroupFightView then
+		self.listModel = OdysseyEquipInfoTeamListModel.instance
+		equipScrollParam.cellClass = OdysseyEquipInfoTeamItem
 	else
 		logError("not found from view ...")
 
-		arg_1_0.listModel = EquipInfoTeamListModel.instance
-		var_1_0.cellClass = EquipInfoTeamItem
+		self.listModel = EquipInfoTeamListModel.instance
+		equipScrollParam.cellClass = EquipInfoTeamItem
 	end
 
 	return {
 		EquipInfoTeamShowView.New(),
 		TabViewGroup.New(1, "#go_btns"),
-		LuaListScrollView.New(arg_1_0.listModel, var_1_0)
+		LuaListScrollView.New(self.listModel, equipScrollParam)
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._navigateButtonView = NavigateButtonsView.New({
+function EquipInfoTeamShowViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			true
 		}, HelpEnum.HelpId.EquipInfo)
 
 		return {
-			arg_2_0._navigateButtonView
+			self._navigateButtonView
 		}
 	end
 end
 
-function var_0_0.getBalanceEquipLv(arg_3_0)
-	local var_3_0 = arg_3_0.viewParam.balanceEquipLv
+function EquipInfoTeamShowViewContainer:getBalanceEquipLv()
+	local balanceEquipLv = self.viewParam.balanceEquipLv
 
-	if var_3_0 then
-		return var_3_0
+	if balanceEquipLv then
+		return balanceEquipLv
 	end
 
-	local var_3_1, var_3_2, var_3_3 = HeroGroupBalanceHelper.getBalanceLv()
+	local _, _, equipLv = HeroGroupBalanceHelper.getBalanceLv()
 
-	return var_3_3
+	return equipLv
 end
 
-function var_0_0.getListModel(arg_4_0)
-	return arg_4_0.listModel
+function EquipInfoTeamShowViewContainer:getListModel()
+	return self.listModel
 end
 
-return var_0_0
+return EquipInfoTeamShowViewContainer

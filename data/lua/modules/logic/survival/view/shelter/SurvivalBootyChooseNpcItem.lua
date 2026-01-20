@@ -1,47 +1,49 @@
-﻿module("modules.logic.survival.view.shelter.SurvivalBootyChooseNpcItem", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/SurvivalBootyChooseNpcItem.lua
 
-local var_0_0 = class("SurvivalBootyChooseNpcItem", ShelterTentManagerNpcItem)
+module("modules.logic.survival.view.shelter.SurvivalBootyChooseNpcItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	var_0_0.super.onInitView(arg_1_0)
+local SurvivalBootyChooseNpcItem = class("SurvivalBootyChooseNpcItem", ShelterTentManagerNpcItem)
 
-	arg_1_0._imgQuality = gohelper.findChildImage(arg_1_0.viewGO, "#image_quality")
+function SurvivalBootyChooseNpcItem:onInitView()
+	SurvivalBootyChooseNpcItem.super.onInitView(self)
+
+	self._imgQuality = gohelper.findChildImage(self.viewGO, "#image_quality")
 end
 
-function var_0_0.onClickNpcItem(arg_2_0)
-	if not arg_2_0.mo then
+function SurvivalBootyChooseNpcItem:onClickNpcItem()
+	if not self.mo then
 		return
 	end
 
 	if SurvivalShelterChooseNpcListModel.instance:isQuickSelect() then
-		SurvivalShelterChooseNpcListModel.instance:quickSelectNpc(arg_2_0.mo.id)
+		SurvivalShelterChooseNpcListModel.instance:quickSelectNpc(self.mo.id)
 	else
-		SurvivalShelterChooseNpcListModel.instance:setSelectNpc(arg_2_0.mo.id)
-		arg_2_0._view.viewContainer:refreshNpcChooseView()
+		SurvivalShelterChooseNpcListModel.instance:setSelectNpc(self.mo.id)
+		self._view.viewContainer:refreshNpcChooseView()
 	end
 end
 
-function var_0_0.refreshItem(arg_3_0, arg_3_1)
-	local var_3_0 = SurvivalShelterChooseNpcListModel.instance:getSelectNpc()
-	local var_3_1 = SurvivalShelterChooseNpcListModel.instance:npcIdIsSelect(arg_3_1.id)
-	local var_3_2 = SurvivalShelterChooseNpcListModel.instance:isQuickSelect()
+function SurvivalBootyChooseNpcItem:refreshItem(data)
+	local selectNpcId = SurvivalShelterChooseNpcListModel.instance:getSelectNpc()
+	local selectIndex = SurvivalShelterChooseNpcListModel.instance:npcIdIsSelect(data.id)
+	local quickSelect = SurvivalShelterChooseNpcListModel.instance:isQuickSelect()
 
-	gohelper.setActive(arg_3_0.goSelected, var_3_0 == arg_3_1.id and not var_3_2)
-	gohelper.setActive(arg_3_0.goTips, var_3_1 ~= nil)
+	gohelper.setActive(self.goSelected, selectNpcId == data.id and not quickSelect)
+	gohelper.setActive(self.goTips, selectIndex ~= nil)
 
-	if var_3_1 ~= nil then
-		arg_3_0.txtBuildName.text = luaLang("SurvivalShelterChooseNpcItem_Tips")
+	if selectIndex ~= nil then
+		self.txtBuildName.text = luaLang("SurvivalShelterChooseNpcItem_Tips")
 	end
 
-	arg_3_0.txtName.text = arg_3_1.co.name
+	self.txtName.text = data.co.name
 
-	if not string.nilorempty(arg_3_1.co.headIcon) then
-		SurvivalUnitIconHelper.instance:setNpcIcon(arg_3_0.imageNpc, arg_3_1.co.headIcon)
+	if not string.nilorempty(data.co.headIcon) then
+		SurvivalUnitIconHelper.instance:setNpcIcon(self.imageNpc, data.co.headIcon)
 	end
 
-	if arg_3_1.co.rare ~= nil then
-		UISpriteSetMgr.instance:setSurvivalSprite(arg_3_0._imgQuality, string.format("survival_bag_itemquality2_%s", arg_3_1.co.rare))
+	if data.co.rare ~= nil then
+		UISpriteSetMgr.instance:setSurvivalSprite(self._imgQuality, string.format("survival_bag_itemquality2_%s", data.co.rare))
 	end
 end
 
-return var_0_0
+return SurvivalBootyChooseNpcItem

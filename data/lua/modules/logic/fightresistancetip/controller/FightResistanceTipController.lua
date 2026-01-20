@@ -1,14 +1,16 @@
-﻿module("modules.logic.fightresistancetip.controller.FightResistanceTipController", package.seeall)
+﻿-- chunkname: @modules/logic/fightresistancetip/controller/FightResistanceTipController.lua
 
-local var_0_0 = class("FightResistanceTipController")
+module("modules.logic.fightresistancetip.controller.FightResistanceTipController", package.seeall)
 
-function var_0_0.openFightResistanceTipView(arg_1_0, arg_1_1, arg_1_2)
+local FightResistanceTipController = class("FightResistanceTipController")
+
+function FightResistanceTipController:openFightResistanceTipView(resistanceDict, screenPos)
 	ViewMgr.instance:openView(ViewName.FightResistanceTipView, {
-		resistanceDict = arg_1_1,
-		screenPos = arg_1_2
+		resistanceDict = resistanceDict,
+		screenPos = screenPos
 	})
 end
 
-var_0_0.instance = var_0_0.New()
+FightResistanceTipController.instance = FightResistanceTipController.New()
 
-return var_0_0
+return FightResistanceTipController

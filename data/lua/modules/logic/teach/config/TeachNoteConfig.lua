@@ -1,43 +1,45 @@
-﻿module("modules.logic.teach.config.TeachNoteConfig", package.seeall)
+﻿-- chunkname: @modules/logic/teach/config/TeachNoteConfig.lua
 
-local var_0_0 = class("TeachNoteConfig", BaseConfig)
+module("modules.logic.teach.config.TeachNoteConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.topicConfig = nil
-	arg_1_0.levelConfig = nil
+local TeachNoteConfig = class("TeachNoteConfig", BaseConfig)
+
+function TeachNoteConfig:ctor()
+	self.topicConfig = nil
+	self.levelConfig = nil
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function TeachNoteConfig:reqConfigNames()
 	return {
 		"instruction_topic",
 		"instruction_level"
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "instruction_topic" then
-		arg_3_0.topicConfig = arg_3_2
-	elseif arg_3_1 == "instruction_level" then
-		arg_3_0.levelConfig = arg_3_2
+function TeachNoteConfig:onConfigLoaded(configName, configTable)
+	if configName == "instruction_topic" then
+		self.topicConfig = configTable
+	elseif configName == "instruction_level" then
+		self.levelConfig = configTable
 	end
 end
 
-function var_0_0.getInstructionTopicCos(arg_4_0)
-	return arg_4_0.topicConfig.configDict
+function TeachNoteConfig:getInstructionTopicCos()
+	return self.topicConfig.configDict
 end
 
-function var_0_0.getInstructionLevelCos(arg_5_0)
-	return arg_5_0.levelConfig.configDict
+function TeachNoteConfig:getInstructionLevelCos()
+	return self.levelConfig.configDict
 end
 
-function var_0_0.getInstructionTopicCO(arg_6_0, arg_6_1)
-	return arg_6_0.topicConfig.configDict[arg_6_1]
+function TeachNoteConfig:getInstructionTopicCO(id)
+	return self.topicConfig.configDict[id]
 end
 
-function var_0_0.getInstructionLevelCO(arg_7_0, arg_7_1)
-	return arg_7_0.levelConfig.configDict[arg_7_1]
+function TeachNoteConfig:getInstructionLevelCO(id)
+	return self.levelConfig.configDict[id]
 end
 
-var_0_0.instance = var_0_0.New()
+TeachNoteConfig.instance = TeachNoteConfig.New()
 
-return var_0_0
+return TeachNoteConfig

@@ -1,102 +1,107 @@
-﻿module("modules.logic.turnback.model.TurnbackRecommendModel", package.seeall)
+﻿-- chunkname: @modules/logic/turnback/model/TurnbackRecommendModel.lua
 
-local var_0_0 = class("TurnbackRecommendModel", BaseModel)
+module("modules.logic.turnback.model.TurnbackRecommendModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0.recommendOpenMap = {}
-	arg_1_0.turnbackId = 0
+local TurnbackRecommendModel = class("TurnbackRecommendModel", BaseModel)
+
+function TurnbackRecommendModel:onInit()
+	self.recommendOpenMap = {}
+	self.turnbackId = 0
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0.recommendOpenMap = {}
-	arg_2_0.turnbackId = 0
+function TurnbackRecommendModel:reInit()
+	self.recommendOpenMap = {}
+	self.turnbackId = 0
 end
 
-function var_0_0.initReommendShowState(arg_3_0, arg_3_1)
-	arg_3_0.turnbackId = arg_3_1
+function TurnbackRecommendModel:initReommendShowState(turnbackId)
+	self.turnbackId = turnbackId
 
-	local var_3_0 = TurnbackConfig.instance:getAllRecommendCo(arg_3_1) or {}
+	local allRecommend = TurnbackConfig.instance:getAllRecommendCo(turnbackId) or {}
 
-	for iter_3_0, iter_3_1 in pairs(var_3_0) do
-		if not arg_3_0.recommendOpenMap[arg_3_1] then
-			arg_3_0.recommendOpenMap[arg_3_1] = {}
+	for id, config in pairs(allRecommend) do
+		if not self.recommendOpenMap[turnbackId] then
+			self.recommendOpenMap[turnbackId] = {}
 		end
 
-		arg_3_0.recommendOpenMap[arg_3_1][iter_3_0] = arg_3_0:checkReommendShowState(arg_3_1, iter_3_0)
+		self.recommendOpenMap[turnbackId][id] = self:checkReommendShowState(turnbackId, id)
 	end
 end
 
-function var_0_0.checkReommendShowState(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = TurnbackConfig.instance:getRecommendCo(arg_4_1, arg_4_2)
+function TurnbackRecommendModel:checkReommendShowState(turnbackId, id)
+	local config = TurnbackConfig.instance:getRecommendCo(turnbackId, id)
 
-	if not var_4_0 then
+	if not config then
 		return false
 	end
 
-	local var_4_1 = arg_4_0:checkRecommendIsInTime(var_4_0)
-	local var_4_2 = true
+	local isInTime = self:checkRecommendIsInTime(config)
+	local isUnlock = true
 
-	if string.nilorempty(var_4_0.relateActId) and var_4_0.openId > 0 then
-		var_4_2 = OpenModel.instance:isFunctionUnlock(var_4_0.openId)
+	if string.nilorempty(config.relateActId) and config.openId > 0 then
+		isUnlock = OpenModel.instance:isFunctionUnlock(config.openId)
 	end
 
-	return var_4_1 and var_4_2
+	return isInTime and isUnlock
 end
 
-function var_0_0.checkRecommendIsInTime(arg_5_0, arg_5_1)
-	local var_5_0 = TurnbackModel.instance:getLeaveTime()
-	local var_5_1 = 0
-	local var_5_2 = 0
-	local var_5_3 = 0
-	local var_5_4 = not string.nilorempty(arg_5_1.onlineTime)
+function TurnbackRecommendModel:checkRecommendIsInTime(config)
+	local leaveTime = TurnbackModel.instance:getLeaveTime()
+	local constTime = 0
+	local onlineTimeStamp = 0
+	local offlineTimeStamp = 0
+	local hasOnlineTime = not string.nilorempty(config.onlineTime)
 
-	if var_5_4 then
-		var_5_2 = TimeUtil.stringToTimestamp(arg_5_1.onlineTime)
+	if hasOnlineTime then
+		onlineTimeStamp = TimeUtil.stringToTimestamp(config.onlineTime)
 	end
 
-	local var_5_5 = not string.nilorempty(arg_5_1.offlineTime)
+	local hasOfflineTime = not string.nilorempty(config.offlineTime)
 
-	if var_5_5 then
-		var_5_3 = TimeUtil.stringToTimestamp(arg_5_1.offlineTime)
+	if hasOfflineTime then
+		offlineTimeStamp = TimeUtil.stringToTimestamp(config.offlineTime)
 	end
 
-	local var_5_6 = not string.nilorempty(arg_5_1.constTime)
+	local hasConstTime = not string.nilorempty(config.constTime)
 
-	if var_5_6 then
-		var_5_1 = TimeUtil.stringToTimestamp(arg_5_1.constTime)
+	if hasConstTime then
+		constTime = TimeUtil.stringToTimestamp(config.constTime)
 	end
 
-	local var_5_7 = var_5_4 and ServerTime.now() - var_5_2 >= 0
-	local var_5_8 = var_5_5 and ServerTime.now() - var_5_3 > 0
-	local var_5_9 = var_5_6 and var_5_1 - var_5_0 > 0 and var_5_0 > 0
-	local var_5_10 = arg_5_0:checkHasOpenRelateAct(arg_5_1)
-	local var_5_11 = not string.nilorempty(arg_5_1.relateActId)
+	local isStart = hasOnlineTime and ServerTime.now() - onlineTimeStamp >= 0
+	local isEnd = hasOfflineTime and ServerTime.now() - offlineTimeStamp > 0
+	local isInConstTime = hasConstTime and constTime - leaveTime > 0 and leaveTime > 0
+	local hasOpenRelateAct = self:checkHasOpenRelateAct(config)
+	local hasRelateAct = not string.nilorempty(config.relateActId)
 
-	if var_5_0 <= 0 then
+	if leaveTime <= 0 then
 		return false
 	end
 
-	if var_5_11 and var_5_10 and var_5_9 then
+	if hasRelateAct and hasOpenRelateAct and isInConstTime then
 		return true
-	elseif var_5_11 and var_5_10 and not var_5_6 then
+	elseif hasRelateAct and hasOpenRelateAct and not hasConstTime then
 		return true
-	elseif not var_5_11 and not var_5_6 then
+	elseif not hasRelateAct and not hasConstTime then
 		return true
-	elseif not var_5_11 and var_5_7 and not var_5_8 and var_5_9 then
+	elseif not hasRelateAct and isStart and not isEnd and isInConstTime then
 		return true
 	else
 		return false
 	end
 end
 
-function var_0_0.checkHasOpenRelateAct(arg_6_0, arg_6_1)
-	local var_6_0 = {}
+function TurnbackRecommendModel:checkHasOpenRelateAct(config)
+	local relateActList = {}
+	local hasRelateAct = not string.nilorempty(config.relateActId)
 
-	if not string.nilorempty(arg_6_1.relateActId) then
-		local var_6_1 = string.splitToNumber(arg_6_1.relateActId, "#")
+	if hasRelateAct then
+		relateActList = string.splitToNumber(config.relateActId, "#")
 
-		for iter_6_0, iter_6_1 in ipairs(var_6_1) do
-			if ActivityHelper.getActivityStatusAndToast(iter_6_1) == ActivityEnum.ActivityStatus.Normal then
+		for index, actId in ipairs(relateActList) do
+			local state = ActivityHelper.getActivityStatusAndToast(actId)
+
+			if state == ActivityEnum.ActivityStatus.Normal then
 				return true
 			end
 		end
@@ -105,45 +110,49 @@ function var_0_0.checkHasOpenRelateAct(arg_6_0, arg_6_1)
 	return false
 end
 
-function var_0_0.checkRecommendCanShow(arg_7_0, arg_7_1)
-	if not string.nilorempty(arg_7_1.prepose) then
-		local var_7_0 = string.splitToNumber(arg_7_1.prepose, "#")
+function TurnbackRecommendModel:checkRecommendCanShow(config)
+	if not string.nilorempty(config.prepose) then
+		local preposeList = string.splitToNumber(config.prepose, "#")
 
-		for iter_7_0, iter_7_1 in pairs(var_7_0) do
-			local var_7_1 = TurnbackConfig.instance:getRecommendCo(arg_7_0.turnbackId, iter_7_1)
+		for _, id in pairs(preposeList) do
+			local co = TurnbackConfig.instance:getRecommendCo(self.turnbackId, id)
 
-			if not var_7_1 then
-				logError("推荐页或前置推荐页id不存在,请检查配置，id: " .. tostring(iter_7_1))
+			if not co then
+				logError("推荐页或前置推荐页id不存在,请检查配置，id: " .. tostring(id))
 
 				return
 			end
 
-			if arg_7_0:checkRecommendCanShow(var_7_1) then
+			local checkState = self:checkRecommendCanShow(co)
+
+			if checkState then
 				return false
 			end
 		end
 	end
 
-	return arg_7_0.recommendOpenMap[arg_7_0.turnbackId][arg_7_1.id]
+	return self.recommendOpenMap[self.turnbackId][config.id]
 end
 
-function var_0_0.getCanShowRecommendList(arg_8_0)
-	local var_8_0 = {}
-	local var_8_1 = tabletool.copy(TurnbackConfig.instance:getAllRecommendCo(arg_8_0.turnbackId))
+function TurnbackRecommendModel:getCanShowRecommendList()
+	local canShowRecommends = {}
+	local allRecommend = tabletool.copy(TurnbackConfig.instance:getAllRecommendCo(self.turnbackId))
 
-	for iter_8_0, iter_8_1 in pairs(var_8_1) do
-		if arg_8_0:checkRecommendCanShow(iter_8_1) then
-			table.insert(var_8_0, iter_8_1)
+	for id, config in pairs(allRecommend) do
+		if self:checkRecommendCanShow(config) then
+			table.insert(canShowRecommends, config)
 		end
 	end
 
-	return var_8_0
+	return canShowRecommends
 end
 
-function var_0_0.getCanShowRecommendCount(arg_9_0)
-	return #arg_9_0:getCanShowRecommendList()
+function TurnbackRecommendModel:getCanShowRecommendCount()
+	local recommendList = self:getCanShowRecommendList()
+
+	return #recommendList
 end
 
-var_0_0.instance = var_0_0.New()
+TurnbackRecommendModel.instance = TurnbackRecommendModel.New()
 
-return var_0_0
+return TurnbackRecommendModel

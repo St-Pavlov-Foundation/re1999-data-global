@@ -1,56 +1,58 @@
-﻿module("modules.logic.player.model.KeyValueSimplePropertyMO", package.seeall)
+﻿-- chunkname: @modules/logic/player/model/KeyValueSimplePropertyMO.lua
 
-local var_0_0 = pureTable("KeyValueSimplePropertyMO")
+module("modules.logic.player.model.KeyValueSimplePropertyMO", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._isNumber = true
+local KeyValueSimplePropertyMO = pureTable("KeyValueSimplePropertyMO")
+
+function KeyValueSimplePropertyMO:ctor()
+	self._isNumber = true
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.id = arg_2_1.id
-	arg_2_0.property = arg_2_1.property
-	arg_2_0._map = {}
+function KeyValueSimplePropertyMO:init(info)
+	self.id = info.id
+	self.property = info.property
+	self._map = {}
 
-	local var_2_0 = GameUtil.splitString2(arg_2_1.property, arg_2_0._isNumber, "|", "#")
+	local list = GameUtil.splitString2(info.property, self._isNumber, "|", "#")
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_0) do
-		local var_2_1 = iter_2_1[1]
-		local var_2_2 = iter_2_1[2]
+	for i, v in ipairs(list) do
+		local id = v[1]
+		local value = v[2]
 
-		arg_2_0._map[var_2_1] = var_2_2
+		self._map[id] = value
 	end
 end
 
-function var_0_0.getValue(arg_3_0, arg_3_1, arg_3_2)
-	return arg_3_0._map and arg_3_0._map[arg_3_1] or arg_3_2
+function KeyValueSimplePropertyMO:getValue(id, defaultValue)
+	return self._map and self._map[id] or defaultValue
 end
 
-function var_0_0.setValue(arg_4_0, arg_4_1, arg_4_2)
-	if not arg_4_0._map then
-		arg_4_0._map = {}
+function KeyValueSimplePropertyMO:setValue(id, state)
+	if not self._map then
+		self._map = {}
 	end
 
-	arg_4_0._map[arg_4_1] = arg_4_2
+	self._map[id] = state
 end
 
-function var_0_0.getString(arg_5_0)
-	local var_5_0 = ""
+function KeyValueSimplePropertyMO:getString()
+	local result = ""
 
-	if not arg_5_0._map then
-		return var_5_0
+	if not self._map then
+		return result
 	end
 
-	for iter_5_0, iter_5_1 in pairs(arg_5_0._map) do
-		local var_5_1 = string.format("%s#%s", iter_5_0, iter_5_1)
+	for k, v in pairs(self._map) do
+		local str = string.format("%s#%s", k, v)
 
-		if not string.nilorempty(var_5_0) then
-			var_5_0 = var_5_0 .. "|" .. var_5_1
+		if not string.nilorempty(result) then
+			result = result .. "|" .. str
 		else
-			var_5_0 = var_5_1
+			result = str
 		end
 	end
 
-	return var_5_0
+	return result
 end
 
-return var_0_0
+return KeyValueSimplePropertyMO

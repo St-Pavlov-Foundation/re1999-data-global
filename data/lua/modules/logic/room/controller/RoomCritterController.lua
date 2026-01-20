@@ -1,540 +1,554 @@
-﻿module("modules.logic.room.controller.RoomCritterController", package.seeall)
+﻿-- chunkname: @modules/logic/room/controller/RoomCritterController.lua
 
-local var_0_0 = class("RoomCritterController", BaseController)
+module("modules.logic.room.controller.RoomCritterController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:clear()
+local RoomCritterController = class("RoomCritterController", BaseController)
+
+function RoomCritterController:onInit()
+	self:clear()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clear()
+function RoomCritterController:reInit()
+	self:clear()
 end
 
-function var_0_0.clear(arg_3_0)
-	if arg_3_0._isInitAddEvent then
-		arg_3_0._isInitAddEvent = false
+function RoomCritterController:clear()
+	if self._isInitAddEvent then
+		self._isInitAddEvent = false
 
-		CritterController.instance:unregisterCallback(CritterEvent.CritterTrainStarted, arg_3_0._onTrainEventStarted, arg_3_0)
-		CritterController.instance:unregisterCallback(CritterEvent.CritterTrainFinished, arg_3_0._onTrainEventFinished, arg_3_0)
-		CritterController.instance:unregisterCallback(CritterEvent.TrainFinishTrainCritterReply, arg_3_0._startCheckTrainTask, arg_3_0)
-		CritterController.instance:unregisterCallback(CritterEvent.TrainCancelTrainReply, arg_3_0._startCheckTrainTask, arg_3_0)
-		CritterController.instance:unregisterCallback(CritterEvent.TrainStartTrainCritterReply, arg_3_0._startCheckTrainTask, arg_3_0)
+		CritterController.instance:unregisterCallback(CritterEvent.CritterTrainStarted, self._onTrainEventStarted, self)
+		CritterController.instance:unregisterCallback(CritterEvent.CritterTrainFinished, self._onTrainEventFinished, self)
+		CritterController.instance:unregisterCallback(CritterEvent.TrainFinishTrainCritterReply, self._startCheckTrainTask, self)
+		CritterController.instance:unregisterCallback(CritterEvent.TrainCancelTrainReply, self._startCheckTrainTask, self)
+		CritterController.instance:unregisterCallback(CritterEvent.TrainStartTrainCritterReply, self._startCheckTrainTask, self)
 	end
 
-	arg_3_0._isHasCheckeTrainTask = false
-	arg_3_0._isPlayTrainEventStory = false
+	self._isHasCheckeTrainTask = false
+	self._isPlayTrainEventStory = false
 
-	TaskDispatcher.cancelTask(arg_3_0._onRunCheckTrainTask, arg_3_0)
+	TaskDispatcher.cancelTask(self._onRunCheckTrainTask, self)
 end
 
-function var_0_0.addConstEvents(arg_4_0)
+function RoomCritterController:addConstEvents()
 	return
 end
 
-function var_0_0.init(arg_5_0)
-	if not arg_5_0._isInitAddEvent then
-		arg_5_0._isInitAddEvent = true
+function RoomCritterController:init()
+	if not self._isInitAddEvent then
+		self._isInitAddEvent = true
 
-		CritterController.instance:registerCallback(CritterEvent.CritterTrainStarted, arg_5_0._onTrainEventStarted, arg_5_0)
-		CritterController.instance:registerCallback(CritterEvent.CritterTrainFinished, arg_5_0._onTrainEventFinished, arg_5_0)
-		CritterController.instance:registerCallback(CritterEvent.TrainFinishTrainCritterReply, arg_5_0._startCheckTrainTask, arg_5_0)
-		CritterController.instance:registerCallback(CritterEvent.TrainCancelTrainReply, arg_5_0._startCheckTrainTask, arg_5_0)
-		CritterController.instance:registerCallback(CritterEvent.TrainStartTrainCritterReply, arg_5_0._startCheckTrainTask, arg_5_0)
+		CritterController.instance:registerCallback(CritterEvent.CritterTrainStarted, self._onTrainEventStarted, self)
+		CritterController.instance:registerCallback(CritterEvent.CritterTrainFinished, self._onTrainEventFinished, self)
+		CritterController.instance:registerCallback(CritterEvent.TrainFinishTrainCritterReply, self._startCheckTrainTask, self)
+		CritterController.instance:registerCallback(CritterEvent.TrainCancelTrainReply, self._startCheckTrainTask, self)
+		CritterController.instance:registerCallback(CritterEvent.TrainStartTrainCritterReply, self._startCheckTrainTask, self)
 	end
 
-	arg_5_0._isPlayTrainEventStory = false
+	self._isPlayTrainEventStory = false
 end
 
-function var_0_0._onTrainEventStarted(arg_6_0)
-	local var_6_0 = RoomCameraController.instance:getRoomScene()
+function RoomCritterController:_onTrainEventStarted()
+	local scene = RoomCameraController.instance:getRoomScene()
 
-	if var_6_0 and ViewMgr.instance:isOpen(ViewName.RoomCritterTrainStoryView) then
-		gohelper.setActive(var_6_0.go.characterRoot, false)
-		gohelper.setActive(var_6_0.go.critterRoot, false)
+	if scene and ViewMgr.instance:isOpen(ViewName.RoomCritterTrainStoryView) then
+		gohelper.setActive(scene.go.characterRoot, false)
+		gohelper.setActive(scene.go.critterRoot, false)
 
-		arg_6_0._isPlayTrainEventStory = true
+		self._isPlayTrainEventStory = true
 	end
 end
 
-function var_0_0._onTrainEventFinished(arg_7_0)
-	local var_7_0 = RoomCameraController.instance:getRoomScene()
+function RoomCritterController:_onTrainEventFinished()
+	local scene = RoomCameraController.instance:getRoomScene()
 
-	if var_7_0 then
-		gohelper.setActive(var_7_0.go.characterRoot, true)
-		gohelper.setActive(var_7_0.go.critterRoot, true)
+	if scene then
+		gohelper.setActive(scene.go.characterRoot, true)
+		gohelper.setActive(scene.go.critterRoot, true)
 	end
 
-	arg_7_0._isPlayTrainEventStory = false
+	self._isPlayTrainEventStory = false
 
 	RoomCharacterController.instance:dispatchEvent(RoomEvent.PauseCharacterMove)
 end
 
-function var_0_0.getPlayingInteractionParam(arg_8_0)
-	return arg_8_0._interactionParam
+function RoomCritterController:getPlayingInteractionParam()
+	return self._interactionParam
 end
 
-function var_0_0.setInteractionParam(arg_9_0, arg_9_1)
-	if arg_9_1 and arg_9_1 ~= 0 then
-		arg_9_0._interactionParam = {
-			heroId = arg_9_1
+function RoomCritterController:setInteractionParam(heroId)
+	if heroId and heroId ~= 0 then
+		self._interactionParam = {
+			heroId = heroId
 		}
 	else
-		arg_9_0._interactionParam = nil
+		self._interactionParam = nil
 	end
 end
 
-function var_0_0.isPlayTrainEventStory(arg_10_0)
-	return arg_10_0._isPlayTrainEventStory
+function RoomCritterController:isPlayTrainEventStory()
+	return self._isPlayTrainEventStory
 end
 
-function var_0_0.initMapTrainCritter(arg_11_0)
-	local var_11_0 = CritterModel.instance:getCultivatingCritters()
-	local var_11_1 = RoomConfig.instance:getBlockPlacePositionCfgList()
-	local var_11_2 = {}
-	local var_11_3 = 0.001
+function RoomCritterController:initMapTrainCritter()
+	local critterMOList = CritterModel.instance:getCultivatingCritters()
+	local pposCfgList = RoomConfig.instance:getBlockPlacePositionCfgList()
+	local posList = {}
+	local pre = 0.001
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_1) do
-		table.insert(var_11_2, Vector3(iter_11_1.x * var_11_3, iter_11_1.y * var_11_3, iter_11_1.z * var_11_3))
+	for _, cfg in ipairs(pposCfgList) do
+		table.insert(posList, Vector3(cfg.x * pre, cfg.y * pre, cfg.z * pre))
 	end
 
-	RoomHelper.randomArray(var_11_2)
+	RoomHelper.randomArray(posList)
 
-	local var_11_4 = #var_11_2
+	local count = #posList
 
-	for iter_11_2, iter_11_3 in ipairs(var_11_0) do
-		local var_11_5 = var_11_2[(iter_11_2 - 1) % var_11_4 + 1]
+	for i, critterMO in ipairs(critterMOList) do
+		local index = (i - 1) % count + 1
+		local currentPosition = posList[index]
 
-		arg_11_0:_addMapTrainCritter(iter_11_3, var_11_5)
-	end
-end
-
-function var_0_0._startCheckTrainTask(arg_12_0)
-	if not arg_12_0._isHasCheckeTrainTask then
-		arg_12_0._isHasCheckeTrainTask = true
-
-		TaskDispatcher.runDelay(arg_12_0._onRunCheckTrainTask, arg_12_0, 0.1)
+		self:_addMapTrainCritter(critterMO, currentPosition)
 	end
 end
 
-function var_0_0._onRunCheckTrainTask(arg_13_0)
-	arg_13_0._isHasCheckeTrainTask = false
+function RoomCritterController:_startCheckTrainTask()
+	if not self._isHasCheckeTrainTask then
+		self._isHasCheckeTrainTask = true
 
-	local var_13_0 = RoomCameraController.instance:getRoomScene()
+		TaskDispatcher.runDelay(self._onRunCheckTrainTask, self, 0.1)
+	end
+end
 
-	if not var_13_0 then
+function RoomCritterController:_onRunCheckTrainTask()
+	self._isHasCheckeTrainTask = false
+
+	local scene = RoomCameraController.instance:getRoomScene()
+
+	if not scene then
 		return
 	end
 
-	arg_13_0:initMapTrainCritter()
+	self:initMapTrainCritter()
 
-	local var_13_1 = CritterModel.instance:getCultivatingCritters()
-	local var_13_2 = {}
-	local var_13_3 = {}
-	local var_13_4
+	local critterMOList = CritterModel.instance:getCultivatingCritters()
+	local critterUidDict = {}
+	local heroIdDict = {}
+	local spCharacterMOList
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_1) do
-		local var_13_5 = iter_13_1.trainInfo.heroId
-		local var_13_6 = iter_13_1.uid
+	for i, critterMO in ipairs(critterMOList) do
+		local heroId = critterMO.trainInfo.heroId
+		local critterUid = critterMO.uid
 
-		var_13_2[var_13_6] = true
-		var_13_3[var_13_5] = true
+		critterUidDict[critterUid] = true
+		heroIdDict[heroId] = true
 
-		if var_13_0.charactermgr:getCharacterEntity(var_13_5, SceneTag.RoomCharacter) == nil then
-			local var_13_7 = RoomCharacterModel.instance:getCharacterMOById(var_13_5)
+		local characterEnitty = scene.charactermgr:getCharacterEntity(heroId, SceneTag.RoomCharacter)
 
-			if var_13_7 then
-				local var_13_8 = var_13_0.charactermgr:spawnRoomCharacter(var_13_7)
+		if characterEnitty == nil then
+			local roomCharacterMO = RoomCharacterModel.instance:getCharacterMOById(heroId)
 
-				var_13_4 = var_13_4 or {}
+			if roomCharacterMO then
+				characterEnitty = scene.charactermgr:spawnRoomCharacter(roomCharacterMO)
+				spCharacterMOList = spCharacterMOList or {}
 
-				table.insert(var_13_4, var_13_7)
+				table.insert(spCharacterMOList, roomCharacterMO)
 			end
 		end
 
-		local var_13_9 = var_13_0.crittermgr:getCritterEntity(var_13_6, SceneTag.RoomCharacter)
+		local critterEntity = scene.crittermgr:getCritterEntity(critterUid, SceneTag.RoomCharacter)
 
-		if var_13_9 == nil then
-			local var_13_10 = RoomCritterModel.instance:getCritterMOById(var_13_6)
+		if critterEntity == nil then
+			local roomCritterMO = RoomCritterModel.instance:getCritterMOById(critterUid)
 
-			if var_13_10 then
-				var_13_9 = var_13_0.crittermgr:spawnRoomCritter(var_13_10)
+			if roomCritterMO then
+				critterEntity = scene.crittermgr:spawnRoomCritter(roomCritterMO)
 			end
 		end
 
-		if var_13_9 then
-			var_13_9.critterfollower:delaySetFollow()
+		if critterEntity then
+			critterEntity.critterfollower:delaySetFollow()
 		end
 	end
 
-	local var_13_11 = {}
+	local roomCritterMOList = {}
 
-	tabletool.addValues(var_13_11, RoomCritterModel.instance:getTrainCritterMOList())
+	tabletool.addValues(roomCritterMOList, RoomCritterModel.instance:getTrainCritterMOList())
 
-	for iter_13_2, iter_13_3 in ipairs(var_13_11) do
-		if not var_13_2[iter_13_3.uid] then
-			local var_13_12 = var_13_0.crittermgr:getCritterEntity(iter_13_3.uid, SceneTag.RoomCharacter)
+	for i, roomCritterMO in ipairs(roomCritterMOList) do
+		if not critterUidDict[roomCritterMO.uid] then
+			local critterEntity = scene.crittermgr:getCritterEntity(roomCritterMO.uid, SceneTag.RoomCharacter)
 
-			if var_13_12 then
-				var_13_0.crittermgr:destroyCritter(var_13_12)
+			if critterEntity then
+				scene.crittermgr:destroyCritter(critterEntity)
 			end
 
-			RoomCritterModel.instance:removeTrainCritterMO(iter_13_3)
+			RoomCritterModel.instance:removeTrainCritterMO(roomCritterMO)
 		end
 	end
 
-	local var_13_13 = {}
+	local characterMOList = {}
 
-	tabletool.addValues(var_13_13, RoomCharacterModel.instance:getList())
+	tabletool.addValues(characterMOList, RoomCharacterModel.instance:getList())
 
-	for iter_13_4, iter_13_5 in ipairs(var_13_13) do
-		local var_13_14 = iter_13_5.id
+	for i, characterMO in ipairs(characterMOList) do
+		local heroId = characterMO.id
 
-		if iter_13_5:isTrainSourceState() and not var_13_3[var_13_14] then
-			local var_13_15 = var_13_0.charactermgr:getCharacterEntity(var_13_14, SceneTag.RoomCharacter)
+		if characterMO:isTrainSourceState() and not heroIdDict[heroId] then
+			local characterEnitty = scene.charactermgr:getCharacterEntity(heroId, SceneTag.RoomCharacter)
 
-			if var_13_15 then
-				var_13_0.charactermgr:destroyCharacter(var_13_15)
+			if characterEnitty then
+				scene.charactermgr:destroyCharacter(characterEnitty)
 			end
 
-			RoomCharacterModel.instance:deleteCharacterMO(var_13_14)
+			RoomCharacterModel.instance:deleteCharacterMO(heroId)
 		end
 	end
 
-	if var_13_4 and #var_13_4 > 0 then
-		RoomCharacterController.instance:tryRandomByCharacterList(var_13_4)
+	if spCharacterMOList and #spCharacterMOList > 0 then
+		RoomCharacterController.instance:tryRandomByCharacterList(spCharacterMOList)
 	end
 
 	RoomMapController.instance:dispatchEvent(RoomEvent.SceneTrainChangeSpine)
 end
 
-function var_0_0._addMapTrainCritter(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = arg_14_1.trainInfo.heroId
-	local var_14_1 = arg_14_1.uid
-	local var_14_2 = RoomCritterModel.instance:getCritterMOById(var_14_1)
+function RoomCritterController:_addMapTrainCritter(critterMO, position)
+	local heroId = critterMO.trainInfo.heroId
+	local critterUid = critterMO.uid
+	local roomCritterMO = RoomCritterModel.instance:getCritterMOById(critterUid)
 
-	if var_14_2 == nil then
-		var_14_2 = RoomCritterMO.New()
+	if roomCritterMO == nil then
+		roomCritterMO = RoomCritterMO.New()
 
-		local var_14_3 = {
-			uid = var_14_1,
-			critterId = arg_14_1.defineId,
-			skinId = arg_14_1:getSkinId(),
-			currentPosition = arg_14_2
+		local info = {
+			uid = critterUid,
+			critterId = critterMO.defineId,
+			skinId = critterMO:getSkinId(),
+			currentPosition = position
 		}
 
-		var_14_2:init(var_14_3)
-		RoomCritterModel.instance:addAtLast(var_14_2)
+		roomCritterMO:init(info)
+		RoomCritterModel.instance:addAtLast(roomCritterMO)
 	end
 
-	var_14_2.characterId = var_14_0
-	var_14_2.heroId = var_14_0
+	roomCritterMO.characterId = heroId
+	roomCritterMO.heroId = heroId
 
-	local var_14_4 = RoomCharacterModel.instance:getCharacterMOById(var_14_0)
+	local characterMO = RoomCharacterModel.instance:getCharacterMOById(heroId)
 
-	if var_14_4 == nil then
-		local var_14_5 = 0
-		local var_14_6 = HeroModel.instance:getByHeroId(var_14_0)
+	if characterMO == nil then
+		local skinId = 0
+		local heroMO = HeroModel.instance:getByHeroId(heroId)
 
-		if var_14_6 then
-			var_14_5 = var_14_6.skin
+		if heroMO then
+			skinId = heroMO.skin
 		else
-			local var_14_7 = HeroConfig.instance:getHeroCO(var_14_0)
+			local heroCo = HeroConfig.instance:getHeroCO(heroId)
 
-			if var_14_7 then
-				var_14_5 = var_14_7.skinId
+			if heroCo then
+				skinId = heroCo.skinId
 			end
 		end
 
-		var_14_4 = RoomCharacterMO.New()
+		characterMO = RoomCharacterMO.New()
 
-		local var_14_8 = RoomInfoHelper.generateTrainCharacterInfo(var_14_0, arg_14_2, var_14_5)
+		local info = RoomInfoHelper.generateTrainCharacterInfo(heroId, position, skinId)
 
-		var_14_4:init(var_14_8)
-		RoomCharacterModel.instance:addAtLast(var_14_4)
+		characterMO:init(info)
+		RoomCharacterModel.instance:addAtLast(characterMO)
 	end
 
-	var_14_4.trainCritterUid = var_14_1
+	characterMO.trainCritterUid = critterUid
 end
 
-function var_0_0.showTrainSceneHero(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	local var_15_0 = RoomCameraController.instance:getRoomScene()
+function RoomCritterController:showTrainSceneHero(trainHeroMO, buildingUid, slitId)
+	local scene = RoomCameraController.instance:getRoomScene()
 
-	if not var_15_0 then
+	if not scene then
 		return
 	end
 
-	if not arg_15_1 then
-		var_15_0.charactermgr:spawnTempCharacterByMO(nil)
+	if not trainHeroMO then
+		scene.charactermgr:spawnTempCharacterByMO(nil)
 
 		return
 	end
 
-	local var_15_1 = var_15_0.buildingmgr:getBuildingEntity(arg_15_2)
-	local var_15_2 = 0
-	local var_15_3 = 0
-	local var_15_4 = 0
+	local buildingEntity = scene.buildingmgr:getBuildingEntity(buildingUid)
+	local px = 0
+	local py = 0
+	local pz = 0
 
-	if var_15_1 then
-		local var_15_5 = var_15_1:getCritterPoint(arg_15_3)
+	if buildingEntity then
+		local goPos1 = buildingEntity:getCritterPoint(slitId)
 
-		if var_15_5 then
-			var_15_2, var_15_3, var_15_4 = transformhelper.getPos(var_15_5.transform)
+		if goPos1 then
+			px, py, pz = transformhelper.getPos(goPos1.transform)
 		end
 	end
 
-	local var_15_6 = RoomCharacterModel.instance:getTrainTempMO()
+	local roomCharacterMO = RoomCharacterModel.instance:getTrainTempMO()
 
-	if var_15_6 and var_15_6.heroId ~= arg_15_1.heroId then
-		local var_15_7 = RoomInfoHelper.generateTempCharacterInfo(arg_15_1.heroId, Vector3(var_15_2, var_15_3, var_15_4), arg_15_1.skinId)
+	if roomCharacterMO and roomCharacterMO.heroId ~= trainHeroMO.heroId then
+		local info = RoomInfoHelper.generateTempCharacterInfo(trainHeroMO.heroId, Vector3(px, py, pz), trainHeroMO.skinId)
 
-		var_15_6:init(var_15_7)
+		roomCharacterMO:init(info)
 
-		var_15_6.id = "train_" .. arg_15_1.heroId
+		roomCharacterMO.id = "train_" .. trainHeroMO.heroId
 	end
 
-	var_15_0.charactermgr:spawnTempCharacterByMO(var_15_6):setLocalPos(var_15_2, var_15_3, var_15_4)
+	local characterEntity = scene.charactermgr:spawnTempCharacterByMO(roomCharacterMO)
+
+	characterEntity:setLocalPos(px, py, pz)
 end
 
-function var_0_0.showTrainSceneCritter(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
-	local var_16_0 = RoomCameraController.instance:getRoomScene()
+function RoomCritterController:showTrainSceneCritter(critterMO, buildingUid, slitId)
+	local scene = RoomCameraController.instance:getRoomScene()
 
-	if not var_16_0 then
+	if not scene then
 		return
 	end
 
-	if not arg_16_1 then
-		var_16_0.crittermgr:spawnTempCritterByMO(nil)
+	if not critterMO then
+		scene.crittermgr:spawnTempCritterByMO(nil)
 
 		return
 	end
 
-	local var_16_1 = RoomCritterModel.instance:getTempCritterMO()
-	local var_16_2 = arg_16_1:getSkinId()
+	local roomCritterMO = RoomCritterModel.instance:getTempCritterMO()
+	local skinId = critterMO:getSkinId()
 
-	if var_16_1.skinId ~= var_16_2 then
-		local var_16_3 = {
-			uid = "train_" .. var_16_2,
-			critterId = arg_16_1:getDefineId(),
-			skinId = var_16_2
+	if roomCritterMO.skinId ~= skinId then
+		local init = {
+			uid = "train_" .. skinId,
+			critterId = critterMO:getDefineId(),
+			skinId = skinId
 		}
 
-		var_16_1:init(var_16_3)
+		roomCritterMO:init(init)
 	end
 
-	local var_16_4 = var_16_0.crittermgr:spawnTempCritterByMO(var_16_1)
-	local var_16_5 = var_16_0.buildingmgr:getBuildingEntity(arg_16_2)
+	local critterEntity = scene.crittermgr:spawnTempCritterByMO(roomCritterMO)
+	local buildingEntity = scene.buildingmgr:getBuildingEntity(buildingUid)
 
-	if var_16_5 then
-		local var_16_6 = var_16_5:getCritterPoint(arg_16_3)
+	if buildingEntity then
+		local goPos1 = buildingEntity:getCritterPoint(slitId)
 
-		if var_16_6 then
-			local var_16_7, var_16_8, var_16_9 = transformhelper.getPos(var_16_6.transform)
+		if goPos1 then
+			local x, y, z = transformhelper.getPos(goPos1.transform)
 
-			var_16_4:setLocalPos(var_16_7, var_16_8, var_16_9)
+			critterEntity:setLocalPos(x, y, z)
 		end
 	end
 end
 
-function var_0_0.openTrainAccelerateView(arg_17_0, arg_17_1)
+function RoomCritterController:openTrainAccelerateView(critterUid)
 	ViewMgr.instance:openView(ViewName.RoomTrainAccelerateView, {
-		critterUid = arg_17_1
+		critterUid = critterUid
 	})
 end
 
-function var_0_0.openTrainReporView(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
+function RoomCritterController:openTrainReporView(critterUid, heroId, finishCount)
 	ViewMgr.instance:openView(ViewName.RoomCritterTrainReportView, {
-		critterUid = arg_18_1,
-		heroId = arg_18_2,
-		tranNum = arg_18_3,
-		finishCount = arg_18_3
+		critterUid = critterUid,
+		heroId = heroId,
+		tranNum = finishCount,
+		finishCount = finishCount
 	})
 end
 
-function var_0_0.openTrainEventView(arg_19_0, arg_19_1)
+function RoomCritterController:openTrainEventView(critterUid)
 	ViewMgr.instance:openView(ViewName.RoomCritterTrainEventView, {
-		critterUid = arg_19_1
+		critterUid = critterUid
 	})
 end
 
-function var_0_0.openRenameView(arg_20_0, arg_20_1)
-	local var_20_0 = CritterModel.instance:getCritterMOByUid(arg_20_1)
+function RoomCritterController:openRenameView(critterUid)
+	local critterMO = CritterModel.instance:getCritterMOByUid(critterUid)
 
-	if var_20_0 then
+	if critterMO then
 		ViewMgr.instance:openView(ViewName.RoomCritterRenameView, {
-			critterMO = var_20_0
+			critterMO = critterMO
 		})
 	end
 end
 
-function var_0_0.openExchangeView(arg_21_0, arg_21_1)
-	ViewMgr.instance:openView(ViewName.RoomCritterExchangeView, arg_21_1)
+function RoomCritterController:openExchangeView(data)
+	ViewMgr.instance:openView(ViewName.RoomCritterExchangeView, data)
 end
 
-function var_0_0.sendCritterRename(arg_22_0, arg_22_1, arg_22_2)
-	CritterRpc.instance:sendCritterRenameRequest(arg_22_1, arg_22_2, arg_22_0._onCritterRenameReply, arg_22_0)
+function RoomCritterController:sendCritterRename(critterUid, critterName)
+	CritterRpc.instance:sendCritterRenameRequest(critterUid, critterName, self._onCritterRenameReply, self)
 end
 
-function var_0_0._onCritterRenameReply(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
-	if arg_23_2 == 0 then
+function RoomCritterController:_onCritterRenameReply(cmd, resultCode, msg)
+	if resultCode == 0 then
 		GameFacade.showToast(ToastEnum.RoomCritterRenameSuccess)
 		ViewMgr.instance:closeView(ViewName.RoomCritterRenameView)
 	end
 end
 
-function var_0_0.sendFinishTrainCritter(arg_24_0, arg_24_1)
-	if not arg_24_0._lastSendFinishTrainCritterTime or arg_24_0._lastSendFinishTrainCritterTime + 3 < Time.time then
-		arg_24_0._lastSendFinishTrainCritterTime = Time.time
+function RoomCritterController:sendFinishTrainCritter(critterUid)
+	if not self._lastSendFinishTrainCritterTime or self._lastSendFinishTrainCritterTime + 3 < Time.time then
+		self._lastSendFinishTrainCritterTime = Time.time
 
-		CritterRpc.instance:sendFinishTrainCritterRequest(arg_24_1, arg_24_0._onFinishTrainCritterReply, arg_24_0)
+		CritterRpc.instance:sendFinishTrainCritterRequest(critterUid, self._onFinishTrainCritterReply, self)
 	end
 end
 
-function var_0_0._onFinishTrainCritterReply(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
-	arg_25_0._lastSendFinishTrainCritterTime = nil
+function RoomCritterController:_onFinishTrainCritterReply(cmd, resultCode, msg)
+	self._lastSendFinishTrainCritterTime = nil
 
-	if arg_25_2 == 0 then
-		var_0_0.instance:openTrainReporView(arg_25_3.uid, arg_25_3.heroId, arg_25_3.totalFinishCount)
+	if resultCode == 0 then
+		RoomCritterController.instance:openTrainReporView(msg.uid, msg.heroId, msg.totalFinishCount)
 	end
 end
 
-function var_0_0.sendFastForwardTrain(arg_26_0, arg_26_1, arg_26_2, arg_26_3)
-	CritterRpc.instance:sendFastForwardTrainRequest(arg_26_1, arg_26_2, arg_26_3, arg_26_0._onFastForwardTrainReply, arg_26_0)
+function RoomCritterController:sendFastForwardTrain(critterUid, itemId, itemCoun)
+	CritterRpc.instance:sendFastForwardTrainRequest(critterUid, itemId, itemCoun, self._onFastForwardTrainReply, self)
 end
 
-function var_0_0._onFastForwardTrainReply(arg_27_0, arg_27_1, arg_27_2, arg_27_3)
+function RoomCritterController:_onFastForwardTrainReply(cmd, resultCode, msg)
 	return
 end
 
-function var_0_0.startTrain(arg_28_0, arg_28_1, arg_28_2, arg_28_3)
-	local var_28_0 = CritterConfig.instance:getCritterTrainEventCfg(arg_28_1)
+function RoomCritterController:startTrain(eventId, critterUid, heroId)
+	local eventCfg = CritterConfig.instance:getCritterTrainEventCfg(eventId)
 
-	if not var_28_0 then
+	if not eventCfg then
 		return
 	end
 
-	local var_28_1 = string.splitToNumber(var_28_0.cost, "#")
-	local var_28_2 = var_28_1 and var_28_1[1]
-	local var_28_3 = var_28_1 and var_28_1[2]
-	local var_28_4 = var_28_1 and var_28_1[3]
+	local costList = string.splitToNumber(eventCfg.cost, "#")
+	local itemType = costList and costList[1]
+	local itemId = costList and costList[2]
+	local itemCount = costList and costList[3]
 
-	if var_28_4 and var_28_4 > 0 and var_28_4 > ItemModel.instance:getItemQuantity(var_28_2, var_28_3) then
-		GameFacade.showMessageBox(MessageBoxIdDefine.RoomCritterTrainItemInsufficiency, MsgBoxEnum.BoxType.Yes_No, arg_28_0._onYesOpenTradeView, nil, nil, arg_28_0, nil, nil)
+	if itemCount and itemCount > 0 and itemCount > ItemModel.instance:getItemQuantity(itemType, itemId) then
+		GameFacade.showMessageBox(MessageBoxIdDefine.RoomCritterTrainItemInsufficiency, MsgBoxEnum.BoxType.Yes_No, self._onYesOpenTradeView, nil, nil, self, nil, nil)
 
 		return
 	end
 
-	if var_28_0.type == CritterEnum.EventType.Special then
-		local var_28_5 = RoomConfig.instance:getCharacterInteractionConfig(var_28_0.roomDialogId)
+	if eventCfg.type == CritterEnum.EventType.Special then
+		local config = RoomConfig.instance:getCharacterInteractionConfig(eventCfg.roomDialogId)
 
-		if var_28_5 then
-			RoomCharacterController.instance:startDialogTrainCritter(var_28_5, arg_28_2, arg_28_3)
+		if config then
+			RoomCharacterController.instance:startDialogTrainCritter(config, critterUid, heroId)
 		else
-			CritterController.instance:finishTrainSpecialEventByUid(arg_28_2)
+			CritterController.instance:finishTrainSpecialEventByUid(critterUid)
 		end
-	elseif var_28_0.type == CritterEnum.EventType.ActiveTime then
+	elseif eventCfg.type == CritterEnum.EventType.ActiveTime then
 		RoomTrainCritterModel.instance:clearSelectOptionInfos()
 
-		local var_28_6 = CritterModel.instance:getCritterMOByUid(arg_28_2).trainInfo:getEvents(arg_28_1)
+		local critterMO = CritterModel.instance:getCritterMOByUid(critterUid)
+		local eventInfo = critterMO.trainInfo:getEvents(eventId)
 
-		RoomTrainCritterModel.instance:setOptionsSelectTotalCount(var_28_6.remainCount)
+		RoomTrainCritterModel.instance:setOptionsSelectTotalCount(eventInfo.remainCount)
 
-		if not RoomTrainCritterModel.instance:isEventTrainStoryPlayed(arg_28_3) then
-			arg_28_0:_startEnterTrainWithStory(arg_28_1, arg_28_3, arg_28_2, var_28_0)
+		local storyPlayed = RoomTrainCritterModel.instance:isEventTrainStoryPlayed(heroId)
+
+		if not storyPlayed then
+			self:_startEnterTrainWithStory(eventId, heroId, critterUid, eventCfg)
 		else
-			arg_28_0:_directEnterTrain(arg_28_1, arg_28_3, arg_28_2, var_28_0)
+			self:_directEnterTrain(eventId, heroId, critterUid, eventCfg)
 		end
 	end
 
 	return true
 end
 
-function var_0_0._onYesOpenTradeView(arg_29_0)
+function RoomCritterController:_onYesOpenTradeView()
 	GameFacade.jump(JumpEnum.JumpId.RoomStoreTabFluff)
 end
 
-function var_0_0._startEnterTrainWithStory(arg_30_0, arg_30_1, arg_30_2, arg_30_3, arg_30_4)
-	arg_30_0._trainData = {}
-	arg_30_0._trainData.eventId = arg_30_1
-	arg_30_0._trainData.heroId = arg_30_2
-	arg_30_0._trainData.critterUid = arg_30_3
-	arg_30_0._trainData.skipStory = false
+function RoomCritterController:_startEnterTrainWithStory(eventId, heroId, critterUid, eventCfg)
+	self._trainData = {}
+	self._trainData.eventId = eventId
+	self._trainData.heroId = heroId
+	self._trainData.critterUid = critterUid
+	self._trainData.skipStory = false
 
-	local var_30_0 = RoomTrainCritterModel.instance:getCritterTrainStory(arg_30_2, arg_30_4.initStoryId)
-	local var_30_1 = {}
+	local storyId = RoomTrainCritterModel.instance:getCritterTrainStory(heroId, eventCfg.initStoryId)
+	local param = {}
 
-	var_30_1.hideStartAndEndDark = true
-	var_30_1.hideBtn = true
+	param.hideStartAndEndDark = true
+	param.hideBtn = true
 
-	StoryController.instance:playStory(var_30_0, var_30_1)
-	StoryController.instance:registerCallback(StoryEvent.StartFirstStep, arg_30_0._onStoryStart, arg_30_0)
+	StoryController.instance:playStory(storyId, param)
+	StoryController.instance:registerCallback(StoryEvent.StartFirstStep, self._onStoryStart, self)
 end
 
-function var_0_0._onStoryStart(arg_31_0)
-	StoryController.instance:unregisterCallback(StoryEvent.StartFirstStep, arg_31_0._onStoryStart, arg_31_0)
+function RoomCritterController:_onStoryStart()
+	StoryController.instance:unregisterCallback(StoryEvent.StartFirstStep, self._onStoryStart, self)
 	StoryController.instance:dispatchEvent(StoryEvent.HideTopBtns, true)
 	StoryModel.instance:setNeedWaitStoryFinish(true)
 
-	ViewMgr.instance:getSetting(ViewName.RoomCritterTrainStoryView).viewType = ViewType.Normal
+	local viewSetting = ViewMgr.instance:getSetting(ViewName.RoomCritterTrainStoryView)
 
-	ViewMgr.instance:openView(ViewName.RoomCritterTrainStoryView, arg_31_0._trainData)
+	viewSetting.viewType = ViewType.Normal
+
+	ViewMgr.instance:openView(ViewName.RoomCritterTrainStoryView, self._trainData)
 end
 
-function var_0_0._directEnterTrain(arg_32_0, arg_32_1, arg_32_2, arg_32_3, arg_32_4)
-	arg_32_0._trainData = {}
-	arg_32_0._trainData.eventId = arg_32_1
-	arg_32_0._trainData.heroId = arg_32_2
-	arg_32_0._trainData.critterUid = arg_32_3
-	arg_32_0._trainData.skipStory = true
-	ViewMgr.instance:getSetting(ViewName.RoomCritterTrainStoryView).viewType = ViewType.Normal
+function RoomCritterController:_directEnterTrain(eventId, heroId, critterUid, eventCfg)
+	self._trainData = {}
+	self._trainData.eventId = eventId
+	self._trainData.heroId = heroId
+	self._trainData.critterUid = critterUid
+	self._trainData.skipStory = true
 
-	ViewMgr.instance:openView(ViewName.RoomCritterTrainStoryView, arg_32_0._trainData)
+	local viewSetting = ViewMgr.instance:getSetting(ViewName.RoomCritterTrainStoryView)
+
+	viewSetting.viewType = ViewType.Normal
+
+	ViewMgr.instance:openView(ViewName.RoomCritterTrainStoryView, self._trainData)
 end
 
-function var_0_0.startAttributeResult(arg_33_0, arg_33_1, arg_33_2, arg_33_3, arg_33_4)
-	arg_33_0._trainData = {}
-	arg_33_0._trainData.eventId = arg_33_1
-	arg_33_0._trainData.heroId = arg_33_3
-	arg_33_0._trainData.critterUid = arg_33_2
+function RoomCritterController:startAttributeResult(eventId, critterUid, heroId, attributeId)
+	self._trainData = {}
+	self._trainData.eventId = eventId
+	self._trainData.heroId = heroId
+	self._trainData.critterUid = critterUid
 
-	local var_33_0 = CritterConfig.instance:getCritterHeroPreferenceCfg(arg_33_3)
-	local var_33_1 = CritterConfig.instance:getCritterTrainEventCfg(arg_33_1)
-	local var_33_2 = RoomTrainCritterModel.instance:getCritterTrainStory(arg_33_3, var_33_1.normalStoryId)
+	local heroPreferenceCo = CritterConfig.instance:getCritterHeroPreferenceCfg(heroId)
+	local eventCfg = CritterConfig.instance:getCritterTrainEventCfg(eventId)
+	local storyId = RoomTrainCritterModel.instance:getCritterTrainStory(heroId, eventCfg.normalStoryId)
 
-	if var_33_0.effectAttribute == arg_33_4 then
-		var_33_2 = RoomTrainCritterModel.instance:getCritterTrainStory(arg_33_3, var_33_1.skilledStoryId)
+	if heroPreferenceCo.effectAttribute == attributeId then
+		storyId = RoomTrainCritterModel.instance:getCritterTrainStory(heroId, eventCfg.skilledStoryId)
 	end
 
-	local var_33_3 = {}
+	local param = {}
 
-	var_33_3.hideStartAndEndDark = true
-	var_33_3.hideBtn = true
+	param.hideStartAndEndDark = true
+	param.hideBtn = true
 
-	StoryController.instance:playStory(var_33_2, var_33_3)
-	StoryController.instance:registerCallback(StoryEvent.StartFirstStep, arg_33_0._onStoryAttributeStart, arg_33_0)
+	StoryController.instance:playStory(storyId, param)
+	StoryController.instance:registerCallback(StoryEvent.StartFirstStep, self._onStoryAttributeStart, self)
 end
 
-function var_0_0._onStoryAttributeStart(arg_34_0)
-	StoryController.instance:unregisterCallback(StoryEvent.StartFirstStep, arg_34_0._onStoryAttributeStart, arg_34_0)
+function RoomCritterController:_onStoryAttributeStart()
+	StoryController.instance:unregisterCallback(StoryEvent.StartFirstStep, self._onStoryAttributeStart, self)
 	StoryController.instance:dispatchEvent(StoryEvent.HideTopBtns, true)
 	StoryModel.instance:setNeedWaitStoryFinish(false)
-	ViewMgr.instance:openView(ViewName.RoomCritterTrainStoryView, arg_34_0._trainData)
+	ViewMgr.instance:openView(ViewName.RoomCritterTrainStoryView, self._trainData)
 end
 
-function var_0_0.endTrain(arg_35_0, arg_35_1)
-	local var_35_0 = CritterConfig.instance:getCritterTrainEventCfg(arg_35_1)
+function RoomCritterController:endTrain(eventId)
+	local eventCfg = CritterConfig.instance:getCritterTrainEventCfg(eventId)
 
-	if not var_35_0 then
+	if not eventCfg then
 		return
 	end
 
-	if var_35_0.type == CritterEnum.EventType.Special then
+	if eventCfg.type == CritterEnum.EventType.Special then
 		-- block empty
-	elseif var_35_0.type == CritterEnum.EventType.ActiveTime then
-		StoryController.instance:unregisterCallback(StoryEvent.StartFirstStep, arg_35_0._onStoryStart, arg_35_0)
-		StoryController.instance:unregisterCallback(StoryEvent.StartFirstStep, arg_35_0._onStoryAttributeStart, arg_35_0)
+	elseif eventCfg.type == CritterEnum.EventType.ActiveTime then
+		StoryController.instance:unregisterCallback(StoryEvent.StartFirstStep, self._onStoryStart, self)
+		StoryController.instance:unregisterCallback(StoryEvent.StartFirstStep, self._onStoryAttributeStart, self)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+RoomCritterController.instance = RoomCritterController.New()
 
-return var_0_0
+return RoomCritterController

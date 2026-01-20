@@ -1,315 +1,314 @@
-﻿module("modules.logic.dungeon.view.DungeonWeekWalkView", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/DungeonWeekWalkView.lua
 
-local var_0_0 = class("DungeonWeekWalkView", BaseView)
+module("modules.logic.dungeon.view.DungeonWeekWalkView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "anim/rewards/#go_empty")
-	arg_1_0._gohasrewards = gohelper.findChild(arg_1_0.viewGO, "anim/rewards/#go_hasrewards")
-	arg_1_0._gorewards = gohelper.findChild(arg_1_0.viewGO, "anim/rewards/#go_hasrewards/Scroll View/Viewport/#go_rewards")
-	arg_1_0._btnshop = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "anim/#btn_shop")
-	arg_1_0._btnstart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "anim/#btn_start")
-	arg_1_0._simageline = gohelper.findChildSingleImage(arg_1_0.viewGO, "anim/#simage_line")
-	arg_1_0._goeasy = gohelper.findChild(arg_1_0.viewGO, "anim/map/scenetype/#go_easy")
-	arg_1_0._gohard = gohelper.findChild(arg_1_0.viewGO, "anim/map/scenetype/#go_hard")
-	arg_1_0._txtscenetype = gohelper.findChildText(arg_1_0.viewGO, "anim/map/scenetype/#txt_scenetype")
-	arg_1_0._txtcurprogress = gohelper.findChildText(arg_1_0.viewGO, "anim/map/#txt_curprogress")
-	arg_1_0._btnreward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "anim/#btn_reward")
-	arg_1_0._golingqu = gohelper.findChild(arg_1_0.viewGO, "anim/#btn_reward/#go_lingqu")
-	arg_1_0._gorewardredpoint = gohelper.findChild(arg_1_0.viewGO, "anim/#btn_reward/#go_rewardredpoint")
-	arg_1_0._txttaskprogress = gohelper.findChildText(arg_1_0.viewGO, "anim/#btn_reward/#txt_taskprogress")
-	arg_1_0._txtmaptaskprogress = gohelper.findChildText(arg_1_0.viewGO, "anim/#txt_maptaskprogress")
-	arg_1_0._gomapprogressitem = gohelper.findChild(arg_1_0.viewGO, "anim/mapprogresslist/#go_mapprogressitem")
-	arg_1_0._txtresettime = gohelper.findChildText(arg_1_0.viewGO, "anim/#txt_resettime")
-	arg_1_0._simagebgimgnext = gohelper.findChildSingleImage(arg_1_0.viewGO, "transition/ani/#simage_bgimg_next")
+local DungeonWeekWalkView = class("DungeonWeekWalkView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function DungeonWeekWalkView:onInitView()
+	self._goempty = gohelper.findChild(self.viewGO, "anim/rewards/#go_empty")
+	self._gohasrewards = gohelper.findChild(self.viewGO, "anim/rewards/#go_hasrewards")
+	self._gorewards = gohelper.findChild(self.viewGO, "anim/rewards/#go_hasrewards/Scroll View/Viewport/#go_rewards")
+	self._btnshop = gohelper.findChildButtonWithAudio(self.viewGO, "anim/#btn_shop")
+	self._btnstart = gohelper.findChildButtonWithAudio(self.viewGO, "anim/#btn_start")
+	self._simageline = gohelper.findChildSingleImage(self.viewGO, "anim/#simage_line")
+	self._goeasy = gohelper.findChild(self.viewGO, "anim/map/scenetype/#go_easy")
+	self._gohard = gohelper.findChild(self.viewGO, "anim/map/scenetype/#go_hard")
+	self._txtscenetype = gohelper.findChildText(self.viewGO, "anim/map/scenetype/#txt_scenetype")
+	self._txtcurprogress = gohelper.findChildText(self.viewGO, "anim/map/#txt_curprogress")
+	self._btnreward = gohelper.findChildButtonWithAudio(self.viewGO, "anim/#btn_reward")
+	self._golingqu = gohelper.findChild(self.viewGO, "anim/#btn_reward/#go_lingqu")
+	self._gorewardredpoint = gohelper.findChild(self.viewGO, "anim/#btn_reward/#go_rewardredpoint")
+	self._txttaskprogress = gohelper.findChildText(self.viewGO, "anim/#btn_reward/#txt_taskprogress")
+	self._txtmaptaskprogress = gohelper.findChildText(self.viewGO, "anim/#txt_maptaskprogress")
+	self._gomapprogressitem = gohelper.findChild(self.viewGO, "anim/mapprogresslist/#go_mapprogressitem")
+	self._txtresettime = gohelper.findChildText(self.viewGO, "anim/#txt_resettime")
+	self._simagebgimgnext = gohelper.findChildSingleImage(self.viewGO, "transition/ani/#simage_bgimg_next")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnshop:AddClickListener(arg_2_0._btnshopOnClick, arg_2_0)
-	arg_2_0._btnstart:AddClickListener(arg_2_0._btnstartOnClick, arg_2_0)
-	arg_2_0._btnreward:AddClickListener(arg_2_0._btnrewardOnClick, arg_2_0)
+function DungeonWeekWalkView:addEvents()
+	self._btnshop:AddClickListener(self._btnshopOnClick, self)
+	self._btnstart:AddClickListener(self._btnstartOnClick, self)
+	self._btnreward:AddClickListener(self._btnrewardOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnshop:RemoveClickListener()
-	arg_3_0._btnstart:RemoveClickListener()
-	arg_3_0._btnreward:RemoveClickListener()
+function DungeonWeekWalkView:removeEvents()
+	self._btnshop:RemoveClickListener()
+	self._btnstart:RemoveClickListener()
+	self._btnreward:RemoveClickListener()
 end
 
-function var_0_0._btnrewardOnClick(arg_4_0)
+function DungeonWeekWalkView:_btnrewardOnClick()
 	WeekWalkController.instance:openWeekWalkRewardView()
 end
 
-function var_0_0._btnshopOnClick(arg_5_0)
+function DungeonWeekWalkView:_btnshopOnClick()
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Bank) then
-		arg_5_0:_openStoreView()
+		self:_openStoreView()
 	else
 		GameFacade.showToast(OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.Bank))
 	end
 end
 
-function var_0_0._updateTaskStatus(arg_6_0)
-	local var_6_0 = WeekWalkTaskListModel.instance:canGetReward(WeekWalkEnum.TaskType.Week)
+function DungeonWeekWalkView:_updateTaskStatus()
+	local canGet = WeekWalkTaskListModel.instance:canGetReward(WeekWalkEnum.TaskType.Week)
 
-	gohelper.setActive(arg_6_0._golingqu, var_6_0)
-	gohelper.setActive(arg_6_0._gorewardredpoint, var_6_0)
+	gohelper.setActive(self._golingqu, canGet)
+	gohelper.setActive(self._gorewardredpoint, canGet)
 end
 
-function var_0_0._openStoreView(arg_7_0)
+function DungeonWeekWalkView:_openStoreView()
 	StoreController.instance:openStoreView(StoreEnum.StoreId.WeekWalk)
 end
 
-function var_0_0._btnstartOnClick(arg_8_0)
-	arg_8_0:openWeekWalkView()
+function DungeonWeekWalkView:_btnstartOnClick()
+	self:openWeekWalkView()
 end
 
-function var_0_0._initImgs(arg_9_0)
-	arg_9_0._simagebg = gohelper.findChildSingleImage(arg_9_0.viewGO, "bg/#bg")
-	arg_9_0._simagexingdian1 = gohelper.findChildSingleImage(arg_9_0.viewGO, "bg/#xingdian1")
-	arg_9_0._simagexingdian2 = gohelper.findChildSingleImage(arg_9_0.viewGO, "bg/#xingdian2")
-	arg_9_0._simagerightdownglow = gohelper.findChildSingleImage(arg_9_0.viewGO, "bg/#rightdown_glow")
-	arg_9_0._simagecentertopglow = gohelper.findChildSingleImage(arg_9_0.viewGO, "bg/#centertop_glow")
-	arg_9_0._simagelefttopglow = gohelper.findChildSingleImage(arg_9_0.viewGO, "bg/#lefttop_glow")
-	arg_9_0._simagelefttopglow2 = gohelper.findChildSingleImage(arg_9_0.viewGO, "bg/#lefttop_glow2")
-	arg_9_0._simageleftdownglow = gohelper.findChildSingleImage(arg_9_0.viewGO, "bg/#leftdown_glow")
-	arg_9_0._simagerihtttopglow = gohelper.findChildSingleImage(arg_9_0.viewGO, "bg/#rihtttop_glow")
-	arg_9_0._simagerihtttopblack = gohelper.findChildSingleImage(arg_9_0.viewGO, "bg/#rihtttop_black")
-	arg_9_0._simagecenterdown = gohelper.findChildSingleImage(arg_9_0.viewGO, "bg/#centerdown")
+function DungeonWeekWalkView:_initImgs()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "bg/#bg")
+	self._simagexingdian1 = gohelper.findChildSingleImage(self.viewGO, "bg/#xingdian1")
+	self._simagexingdian2 = gohelper.findChildSingleImage(self.viewGO, "bg/#xingdian2")
+	self._simagerightdownglow = gohelper.findChildSingleImage(self.viewGO, "bg/#rightdown_glow")
+	self._simagecentertopglow = gohelper.findChildSingleImage(self.viewGO, "bg/#centertop_glow")
+	self._simagelefttopglow = gohelper.findChildSingleImage(self.viewGO, "bg/#lefttop_glow")
+	self._simagelefttopglow2 = gohelper.findChildSingleImage(self.viewGO, "bg/#lefttop_glow2")
+	self._simageleftdownglow = gohelper.findChildSingleImage(self.viewGO, "bg/#leftdown_glow")
+	self._simagerihtttopglow = gohelper.findChildSingleImage(self.viewGO, "bg/#rihtttop_glow")
+	self._simagerihtttopblack = gohelper.findChildSingleImage(self.viewGO, "bg/#rihtttop_black")
+	self._simagecenterdown = gohelper.findChildSingleImage(self.viewGO, "bg/#centerdown")
 
-	arg_9_0._simagebg:LoadImage(ResUrl.getWeekWalkBg("full/weekwalkbg.jpg"))
-	arg_9_0._simagexingdian1:LoadImage(ResUrl.getWeekWalkBg("xingdian.png"))
-	arg_9_0._simagexingdian2:LoadImage(ResUrl.getWeekWalkBg("xingdian.png"))
-	arg_9_0._simagerightdownglow:LoadImage(ResUrl.getWeekWalkBg("rightdown_glow.png"))
-	arg_9_0._simagecentertopglow:LoadImage(ResUrl.getWeekWalkBg("centertop_hlow.png"))
-	arg_9_0._simagelefttopglow:LoadImage(ResUrl.getWeekWalkBg("lefttop_glow.png"))
-	arg_9_0._simagelefttopglow2:LoadImage(ResUrl.getWeekWalkBg("lefttop_glow2.png"))
-	arg_9_0._simageleftdownglow:LoadImage(ResUrl.getWeekWalkBg("leftdown_glow.png"))
-	arg_9_0._simagerihtttopglow:LoadImage(ResUrl.getWeekWalkBg("righttop_glow.png"))
-	arg_9_0._simagerihtttopblack:LoadImage(ResUrl.getWeekWalkBg("leftdown_black.png"))
-	arg_9_0._simagecenterdown:LoadImage(ResUrl.getWeekWalkBg("centerdown.png"))
-	arg_9_0._simagebgimgnext:LoadImage(ResUrl.getWeekWalkBg("full/weekwalkbg.jpg"))
+	self._simagebg:LoadImage(ResUrl.getWeekWalkBg("full/weekwalkbg.jpg"))
+	self._simagexingdian1:LoadImage(ResUrl.getWeekWalkBg("xingdian.png"))
+	self._simagexingdian2:LoadImage(ResUrl.getWeekWalkBg("xingdian.png"))
+	self._simagerightdownglow:LoadImage(ResUrl.getWeekWalkBg("rightdown_glow.png"))
+	self._simagecentertopglow:LoadImage(ResUrl.getWeekWalkBg("centertop_hlow.png"))
+	self._simagelefttopglow:LoadImage(ResUrl.getWeekWalkBg("lefttop_glow.png"))
+	self._simagelefttopglow2:LoadImage(ResUrl.getWeekWalkBg("lefttop_glow2.png"))
+	self._simageleftdownglow:LoadImage(ResUrl.getWeekWalkBg("leftdown_glow.png"))
+	self._simagerihtttopglow:LoadImage(ResUrl.getWeekWalkBg("righttop_glow.png"))
+	self._simagerihtttopblack:LoadImage(ResUrl.getWeekWalkBg("leftdown_black.png"))
+	self._simagecenterdown:LoadImage(ResUrl.getWeekWalkBg("centerdown.png"))
+	self._simagebgimgnext:LoadImage(ResUrl.getWeekWalkBg("full/weekwalkbg.jpg"))
 end
 
-function var_0_0._editableInitView(arg_10_0)
+function DungeonWeekWalkView:_editableInitView()
 	WeekWalkController.instance:requestTask()
-	arg_10_0:_showBonus()
-	arg_10_0:_updateTaskStatus()
-	arg_10_0:_showDeadline()
+	self:_showBonus()
+	self:_updateTaskStatus()
+	self:_showDeadline()
 	WeekWalkController.instance:startCheckTime()
-	arg_10_0:_initImgs()
+	self:_initImgs()
 
-	arg_10_0._viewAnim = arg_10_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._viewAnim = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	arg_10_0._simageline:LoadImage(ResUrl.getWeekWalkBg("hw2.png"))
-	arg_10_0:_showProgress()
-	gohelper.addUIClickAudio(arg_10_0._btnstart.gameObject, AudioEnum.WeekWalk.play_artificial_ui_entrance)
-	gohelper.addUIClickAudio(arg_10_0._btnreward.gameObject, AudioEnum.WeekWalk.play_artificial_ui_taskopen)
-	gohelper.addUIClickAudio(arg_10_0._btnshop.gameObject, AudioEnum.UI.play_ui_checkpoint_sources_open)
-	arg_10_0:_initOnOpen()
+	self._simageline:LoadImage(ResUrl.getWeekWalkBg("hw2.png"))
+	self:_showProgress()
+	gohelper.addUIClickAudio(self._btnstart.gameObject, AudioEnum.WeekWalk.play_artificial_ui_entrance)
+	gohelper.addUIClickAudio(self._btnreward.gameObject, AudioEnum.WeekWalk.play_artificial_ui_taskopen)
+	gohelper.addUIClickAudio(self._btnshop.gameObject, AudioEnum.UI.play_ui_checkpoint_sources_open)
+	self:_initOnOpen()
 end
 
-function var_0_0._updateDegrade(arg_11_0)
-	local var_11_0 = WeekWalkModel.instance:getLevel()
-	local var_11_1 = WeekWalkModel.instance:getChangeLevel()
+function DungeonWeekWalkView:_updateDegrade()
+	local level = WeekWalkModel.instance:getLevel()
+	local nums = WeekWalkModel.instance:getChangeLevel()
 
-	gohelper.setActive(arg_11_0._btndegrade.gameObject, var_11_0 >= 2 and var_11_1 <= 0)
+	gohelper.setActive(self._btndegrade.gameObject, level >= 2 and nums <= 0)
 end
 
-function var_0_0._showProgress(arg_12_0)
-	local var_12_0 = WeekWalkModel.instance:getInfo()
-	local var_12_1, var_12_2 = var_12_0:getNotFinishedMap()
-	local var_12_3 = lua_weekwalk_scene.configDict[var_12_1.sceneId]
+function DungeonWeekWalkView:_showProgress()
+	local info = WeekWalkModel.instance:getInfo()
+	local map, index = info:getNotFinishedMap()
+	local sceneConfig = lua_weekwalk_scene.configDict[map.sceneId]
 
-	arg_12_0._txtcurprogress.text = formatLuaLang("DungeonWeekWalkView_txtcurprogress_battleName", var_12_3.battleName)
-	arg_12_0._txtscenetype.text = GameUtil.getSubPlaceholderLuaLang(luaLang("DungeonWeekWalkView_txtscenetype_typeName_name"), {
-		var_12_3.typeName,
-		var_12_3.name
+	self._txtcurprogress.text = formatLuaLang("DungeonWeekWalkView_txtcurprogress_battleName", sceneConfig.battleName)
+	self._txtscenetype.text = GameUtil.getSubPlaceholderLuaLang(luaLang("DungeonWeekWalkView_txtscenetype_typeName_name"), {
+		sceneConfig.typeName,
+		sceneConfig.name
 	})
 
-	if var_12_1 then
-		local var_12_4, var_12_5 = var_12_1:getCurStarInfo()
+	if map then
+		local cur, total = map:getCurStarInfo()
 
-		arg_12_0._txtmaptaskprogress.text = string.format("%s/%s", var_12_4, var_12_5)
+		self._txtmaptaskprogress.text = string.format("%s/%s", cur, total)
 	else
-		arg_12_0._txtmaptaskprogress.text = "0/10"
+		self._txtmaptaskprogress.text = "0/10"
 	end
 
-	local var_12_6 = WeekWalkModel.isShallowMap(var_12_1.sceneId)
+	local isShallow = WeekWalkModel.isShallowMap(map.sceneId)
 
-	gohelper.setActive(arg_12_0._goeasy, var_12_6)
-	gohelper.setActive(arg_12_0._gohard, not var_12_6)
+	gohelper.setActive(self._goeasy, isShallow)
+	gohelper.setActive(self._gohard, not isShallow)
 
-	arg_12_0._mapFinishItemTab = arg_12_0._mapFinishItemTab or arg_12_0:getUserDataTb_()
+	self._mapFinishItemTab = self._mapFinishItemTab or self:getUserDataTb_()
 
-	local var_12_7 = var_12_0:getMapInfos()
-	local var_12_8 = 1
-	local var_12_9 = 10
+	local mapInfos = info:getMapInfos()
+	local startIndex = 1
+	local endIndex = 10
 
-	if not var_12_6 then
-		local var_12_10 = WeekWalkModel.instance:getInfo()
-		local var_12_11 = WeekWalkConfig.instance:getDeepLayer(var_12_10.issueId)
+	if not isShallow then
+		local info = WeekWalkModel.instance:getInfo()
+		local deepLayerList = WeekWalkConfig.instance:getDeepLayer(info.issueId)
 
-		var_12_8 = 11
-		var_12_9 = var_12_8 + #var_12_11 - 1
+		startIndex = 11
+		endIndex = startIndex + #deepLayerList - 1
 	end
 
-	for iter_12_0, iter_12_1 in pairs(arg_12_0._mapFinishItemTab) do
-		gohelper.setActive(iter_12_1, false)
+	for k, v in pairs(self._mapFinishItemTab) do
+		gohelper.setActive(v, false)
 	end
 
-	for iter_12_2 = var_12_8, var_12_9 do
-		local var_12_12 = arg_12_0._mapFinishItemTab[iter_12_2]
+	for i = startIndex, endIndex do
+		local item = self._mapFinishItemTab[i]
 
-		if not var_12_12 then
-			var_12_12 = gohelper.cloneInPlace(arg_12_0._gomapprogressitem, "item_" .. iter_12_2)
-			arg_12_0._mapFinishItemTab[iter_12_2] = var_12_12
+		if not item then
+			item = gohelper.cloneInPlace(self._gomapprogressitem, "item_" .. i)
+			self._mapFinishItemTab[i] = item
 		end
 
-		gohelper.setActive(var_12_12, true)
+		gohelper.setActive(item, true)
 
-		local var_12_13 = gohelper.findChild(var_12_12, "finish")
-		local var_12_14 = var_12_7[iter_12_2]
-		local var_12_15 = var_12_14 and var_12_14.isFinished > 0
+		local finishImg = gohelper.findChild(item, "finish")
+		local mapInfo = mapInfos[i]
+		local isFinish = mapInfo and mapInfo.isFinished > 0
 
-		gohelper.setActive(var_12_13, var_12_15)
+		gohelper.setActive(finishImg, isFinish)
 
-		local var_12_16 = gohelper.findChildImage(var_12_12, "unfinish")
-		local var_12_17 = gohelper.findChildImage(var_12_12, "finish")
+		local _unfinishImg = gohelper.findChildImage(item, "unfinish")
+		local _finishImg = gohelper.findChildImage(item, "finish")
 
 		if not UISpriteSetMgr.instance:getWeekWalkSpriteSetUnit() then
-			arg_12_0:_setImgAlpha(var_12_16, 0)
-			arg_12_0:_setImgAlpha(var_12_17, 0)
+			self:_setImgAlpha(_unfinishImg, 0)
+			self:_setImgAlpha(_finishImg, 0)
 		end
 
-		UISpriteSetMgr.instance:setWeekWalkSprite(var_12_16, var_12_6 and "btn_dian2" or "btn_dian4", true, 1)
-		UISpriteSetMgr.instance:setWeekWalkSprite(var_12_17, var_12_6 and "btn_dian1" or "btn_dian3", true, 1)
-		gohelper.setActive(gohelper.findChild(var_12_12, "finish_light_deepdream01"), not var_12_6 and var_12_15)
-		gohelper.setActive(gohelper.findChild(var_12_12, "finish_light"), var_12_6 and var_12_15)
+		UISpriteSetMgr.instance:setWeekWalkSprite(_unfinishImg, isShallow and "btn_dian2" or "btn_dian4", true, 1)
+		UISpriteSetMgr.instance:setWeekWalkSprite(_finishImg, isShallow and "btn_dian1" or "btn_dian3", true, 1)
+		gohelper.setActive(gohelper.findChild(item, "finish_light_deepdream01"), not isShallow and isFinish)
+		gohelper.setActive(gohelper.findChild(item, "finish_light"), isShallow and isFinish)
 	end
 end
 
-function var_0_0._setImgAlpha(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0 = arg_13_1.color
+function DungeonWeekWalkView:_setImgAlpha(image, alpha)
+	local color = image.color
 
-	var_13_0.a = arg_13_2
-	arg_13_1.color = var_13_0
+	color.a = alpha
+	image.color = color
 end
 
-function var_0_0.getWeekTaskProgress()
-	local var_14_0 = 0
-	local var_14_1 = 0
-	local var_14_2 = {}
+function DungeonWeekWalkView.getWeekTaskProgress()
+	local progress, maxProgress = 0, 0
+	local rewardSet = {}
 
 	WeekWalkTaskListModel.instance:showTaskList(WeekWalkEnum.TaskType.Week)
 
-	local var_14_3 = WeekWalkTaskListModel.instance:getList()
+	local list = WeekWalkTaskListModel.instance:getList()
 
-	for iter_14_0, iter_14_1 in ipairs(var_14_3) do
-		local var_14_4 = WeekWalkTaskListModel.instance:getTaskMo(iter_14_1.id)
+	for i, v in ipairs(list) do
+		local taskMo = WeekWalkTaskListModel.instance:getTaskMo(v.id)
 
-		if var_14_4 and (var_14_4.finishCount > 0 or var_14_4.hasFinished) then
-			local var_14_5 = GameUtil.splitString2(iter_14_1.bonus, true, "|", "#")
+		if taskMo and (taskMo.finishCount > 0 or taskMo.hasFinished) then
+			local rewardList = GameUtil.splitString2(v.bonus, true, "|", "#")
 
-			for iter_14_2, iter_14_3 in ipairs(var_14_5) do
-				local var_14_6 = iter_14_3[1]
-				local var_14_7 = iter_14_3[2]
-				local var_14_8 = iter_14_3[3]
-				local var_14_9 = string.format("%s_%s", var_14_6, var_14_7)
-				local var_14_10 = var_14_2[var_14_9]
+			for _, reward in ipairs(rewardList) do
+				local type, id, num = reward[1], reward[2], reward[3]
+				local key = string.format("%s_%s", type, id)
+				local exitReward = rewardSet[key]
 
-				if not var_14_10 then
-					var_14_2[var_14_9] = iter_14_3
+				if not exitReward then
+					rewardSet[key] = reward
 				else
-					var_14_10[3] = var_14_10[3] + var_14_8
-					var_14_2[var_14_9] = var_14_10
+					exitReward[3] = exitReward[3] + num
+					rewardSet[key] = exitReward
 				end
 			end
 		end
 
-		if var_14_4 then
-			var_14_0 = math.max(var_14_4.progress or 0, var_14_0)
+		if taskMo then
+			progress = math.max(taskMo.progress or 0, progress)
 		end
 
-		local var_14_11 = lua_task_weekwalk.configDict[iter_14_1.id]
+		local config = lua_task_weekwalk.configDict[v.id]
 
-		if var_14_11 then
-			var_14_1 = math.max(var_14_11.maxProgress or 0, var_14_1)
+		if config then
+			maxProgress = math.max(config.maxProgress or 0, maxProgress)
 		end
 	end
 
-	local var_14_12 = {}
+	local list = {}
 
-	for iter_14_4, iter_14_5 in pairs(var_14_2) do
-		table.insert(var_14_12, iter_14_5)
+	for i, reward in pairs(rewardSet) do
+		table.insert(list, reward)
 	end
 
-	table.sort(var_14_12, var_0_0._sort)
+	table.sort(list, DungeonWeekWalkView._sort)
 
-	return var_14_0, var_14_1, var_14_12
+	return progress, maxProgress, list
 end
 
-function var_0_0._sort(arg_15_0, arg_15_1)
-	local var_15_0 = ItemModel.instance:getItemConfig(arg_15_0[1], arg_15_0[2])
-	local var_15_1 = ItemModel.instance:getItemConfig(arg_15_1[1], arg_15_1[2])
+function DungeonWeekWalkView._sort(a, b)
+	local a_config = ItemModel.instance:getItemConfig(a[1], a[2])
+	local b_config = ItemModel.instance:getItemConfig(b[1], b[2])
 
-	if var_15_0.rare ~= var_15_1.rare then
-		return var_15_0.rare > var_15_1.rare
+	if a_config.rare ~= b_config.rare then
+		return a_config.rare > b_config.rare
 	end
 
-	return arg_15_0[3] > arg_15_1[3]
+	return a[3] > b[3]
 end
 
-function var_0_0._showBonus(arg_16_0)
+function DungeonWeekWalkView:_showBonus()
 	if not WeekWalkTaskListModel.instance:hasTaskList() then
 		return
 	end
 
-	local var_16_0, var_16_1, var_16_2 = var_0_0.getWeekTaskProgress()
+	local progress, maxProgress, list = DungeonWeekWalkView.getWeekTaskProgress()
 
-	arg_16_0._txttaskprogress.text = string.format("%s/%s", var_16_0, var_16_1)
+	self._txttaskprogress.text = string.format("%s/%s", progress, maxProgress)
 
-	gohelper.destroyAllChildren(arg_16_0._gorewards)
+	gohelper.destroyAllChildren(self._gorewards)
 
-	for iter_16_0, iter_16_1 in ipairs(var_16_2) do
-		local var_16_3 = IconMgr.instance:getCommonItemIcon(arg_16_0._gorewards)
+	for i, reward in ipairs(list) do
+		local item = IconMgr.instance:getCommonItemIcon(self._gorewards)
 
-		var_16_3:setMOValue(iter_16_1[1], iter_16_1[2], iter_16_1[3])
-		var_16_3:isShowCount(true)
-		var_16_3:setCountFontSize(31)
+		item:setMOValue(reward[1], reward[2], reward[3])
+		item:isShowCount(true)
+		item:setCountFontSize(31)
 	end
 
-	local var_16_4 = #var_16_2 > 0
+	local hasReward = #list > 0
 
-	gohelper.setActive(arg_16_0._goempty, not var_16_4)
-	gohelper.setActive(arg_16_0._gohasrewards, var_16_4)
+	gohelper.setActive(self._goempty, not hasReward)
+	gohelper.setActive(self._gohasrewards, hasReward)
 end
 
-function var_0_0.onUpdateParam(arg_17_0)
-	arg_17_0._viewAnim:Play("dungeonweekwalk_in", 0, 0)
+function DungeonWeekWalkView:onUpdateParam()
+	self._viewAnim:Play("dungeonweekwalk_in", 0, 0)
 end
 
-function var_0_0.onShow(arg_18_0)
-	arg_18_0.viewContainer:setNavigateButtonViewHelpId()
-	arg_18_0:_showWeekWalkSettlementView()
+function DungeonWeekWalkView:onShow()
+	self.viewContainer:setNavigateButtonViewHelpId()
+	self:_showWeekWalkSettlementView()
 
-	if arg_18_0._bgmId then
+	if self._bgmId then
 		return
 	end
 end
 
-function var_0_0._onFinishGuide(arg_19_0, arg_19_1)
-	if arg_19_1 == 501 then
-		arg_19_0:_showWeekWalkSettlementView()
+function DungeonWeekWalkView:_onFinishGuide(guideId)
+	if guideId == 501 then
+		self:_showWeekWalkSettlementView()
 	end
 end
 
-function var_0_0._showWeekWalkSettlementView(arg_20_0)
-	local var_20_0 = GameGlobalMgr.instance:getLoadingState()
+function DungeonWeekWalkView:_showWeekWalkSettlementView()
+	local loadingState = GameGlobalMgr.instance:getLoadingState()
 
-	if var_20_0 and var_20_0:getLoadingViewName() then
+	if loadingState and loadingState:getLoadingViewName() then
 		return
 	end
 
@@ -323,179 +322,181 @@ function var_0_0._showWeekWalkSettlementView(arg_20_0)
 		return
 	end
 
-	local var_20_1 = WeekWalkModel.instance:getInfo()
+	local info = WeekWalkModel.instance:getInfo()
 
-	if var_20_1.isPopShallowSettle then
+	if info.isPopShallowSettle then
 		WeekWalkController.instance:openWeekWalkShallowSettlementView()
 
 		return
 	end
 
-	if var_20_1.isPopDeepSettle then
+	if info.isPopDeepSettle then
 		WeekWalkController.instance:checkOpenWeekWalkDeepLayerNoticeView()
 
 		return
 	end
 end
 
-function var_0_0.onHide(arg_21_0)
-	arg_21_0.viewContainer:resetNavigateButtonViewHelpId()
+function DungeonWeekWalkView:onHide()
+	self.viewContainer:resetNavigateButtonViewHelpId()
 end
 
-function var_0_0.onOpen(arg_22_0)
-	HelpController.instance:registerCallback(HelpEvent.RefreshHelp, arg_22_0._refreshHelpFunc, arg_22_0._refreshTarget)
-	arg_22_0:onShow()
+function DungeonWeekWalkView:onOpen()
+	HelpController.instance:registerCallback(HelpEvent.RefreshHelp, self._refreshHelpFunc, self._refreshTarget)
+	self:onShow()
 end
 
-function var_0_0._showDeadline(arg_23_0)
-	TaskDispatcher.cancelTask(arg_23_0._onRefreshDeadline, arg_23_0)
+function DungeonWeekWalkView:_showDeadline()
+	TaskDispatcher.cancelTask(self._onRefreshDeadline, self)
 
-	arg_23_0._endTime = WeekWalkController.getTaskEndTime(WeekWalkEnum.TaskType.Week)
+	self._endTime = WeekWalkController.getTaskEndTime(WeekWalkEnum.TaskType.Week)
 
-	if not arg_23_0._endTime then
+	if not self._endTime then
 		return
 	end
 
-	TaskDispatcher.runRepeat(arg_23_0._onRefreshDeadline, arg_23_0, 1)
-	arg_23_0:_onRefreshDeadline()
+	TaskDispatcher.runRepeat(self._onRefreshDeadline, self, 1)
+	self:_onRefreshDeadline()
 end
 
-function var_0_0._onRefreshDeadline(arg_24_0)
-	local var_24_0 = arg_24_0._endTime - ServerTime.now()
+function DungeonWeekWalkView:_onRefreshDeadline()
+	local limitSec = self._endTime - ServerTime.now()
 
-	if var_24_0 <= 0 then
+	if limitSec <= 0 then
 		WeekWalkController.instance:requestTask(true)
-		TaskDispatcher.cancelTask(arg_24_0._onRefreshDeadline, arg_24_0)
+		TaskDispatcher.cancelTask(self._onRefreshDeadline, self)
 	end
 
-	local var_24_1, var_24_2 = TimeUtil.secondToRoughTime2(math.floor(var_24_0))
-	local var_24_3 = {
-		var_24_1,
-		var_24_2
+	local time, format = TimeUtil.secondToRoughTime2(math.floor(limitSec))
+	local tag = {
+		time,
+		format
 	}
 
-	arg_24_0._txtresettime.text = GameUtil.getSubPlaceholderLuaLang(luaLang("dungeonweekwalkview_resettime"), var_24_3)
+	self._txtresettime.text = GameUtil.getSubPlaceholderLuaLang(luaLang("dungeonweekwalkview_resettime"), tag)
 end
 
-function var_0_0._onGetInfo(arg_25_0)
-	arg_25_0:_showDeadline()
+function DungeonWeekWalkView:_onGetInfo()
+	self:_showDeadline()
 end
 
-function var_0_0._onWeekwalkTaskUpdate(arg_26_0)
+function DungeonWeekWalkView:_onWeekwalkTaskUpdate()
 	if ViewMgr.instance:isOpen(ViewName.WeekWalkRewardView) or ViewMgr.instance:isOpen(ViewName.WeekWalkLayerRewardView) then
 		return
 	end
 
-	arg_26_0:_updateTaskStatus()
-	arg_26_0:_showBonus()
-	arg_26_0:_showDeadline()
+	self:_updateTaskStatus()
+	self:_showBonus()
+	self:_showDeadline()
 end
 
-function var_0_0._initOnOpen(arg_27_0)
-	local var_27_0 = arg_27_0.viewContainer._navigateButtonView
+function DungeonWeekWalkView:_initOnOpen()
+	local parentNavigateButtonView = self.viewContainer._navigateButtonView
 
-	arg_27_0._refreshHelpFunc = var_27_0.showHelpBtnIcon
-	arg_27_0._refreshTarget = var_27_0
+	self._refreshHelpFunc = parentNavigateButtonView.showHelpBtnIcon
+	self._refreshTarget = parentNavigateButtonView
 
-	arg_27_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnSelectLevel, arg_27_0._OnSelectLevel, arg_27_0)
-	arg_27_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_27_0._onCloseView, arg_27_0, LuaEventSystem.Low)
-	arg_27_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_27_0._onOpenView, arg_27_0, LuaEventSystem.Low)
-	arg_27_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_27_0._onOpenViewFinish, arg_27_0, LuaEventSystem.Low)
-	arg_27_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnWeekwalkTaskUpdate, arg_27_0._onWeekwalkTaskUpdate, arg_27_0)
-	arg_27_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnGetInfo, arg_27_0._onGetInfo, arg_27_0)
-	arg_27_0:addEventCb(GuideController.instance, GuideEvent.FinishGuide, arg_27_0._onFinishGuide, arg_27_0)
+	self:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnSelectLevel, self._OnSelectLevel, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self, LuaEventSystem.Low)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self, LuaEventSystem.Low)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self, LuaEventSystem.Low)
+	self:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnWeekwalkTaskUpdate, self._onWeekwalkTaskUpdate, self)
+	self:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnGetInfo, self._onGetInfo, self)
+	self:addEventCb(GuideController.instance, GuideEvent.FinishGuide, self._onFinishGuide, self)
 end
 
-function var_0_0._OnSelectLevel(arg_28_0)
-	arg_28_0._dropLevel.dropDown.enabled = false
+function DungeonWeekWalkView:_OnSelectLevel()
+	self._dropLevel.dropDown.enabled = false
 
-	if WeekWalkModel.instance:getChangeLevel() > 0 then
+	local nums = WeekWalkModel.instance:getChangeLevel()
+
+	if nums > 0 then
 		return
 	end
 
-	arg_28_0:openWeekWalkView()
+	self:openWeekWalkView()
 end
 
-function var_0_0.openWeekWalkView(arg_29_0)
+function DungeonWeekWalkView:openWeekWalkView()
 	module_views_preloader.WeekWalkLayerViewPreload(function()
-		arg_29_0:delayOpenWeekWalkView()
+		self:delayOpenWeekWalkView()
 	end)
 end
 
-function var_0_0.delayOpenWeekWalkView(arg_31_0)
+function DungeonWeekWalkView:delayOpenWeekWalkView()
 	WeekWalkController.instance:openWeekWalkLayerView()
 end
 
-function var_0_0._onOpenViewFinish(arg_32_0, arg_32_1)
-	if arg_32_1 == ViewName.WeekWalkLayerView or arg_32_1 == ViewName.StoreView then
-		local var_32_0 = ViewMgr.instance:getContainer(ViewName.DungeonView)
-		local var_32_1 = gohelper.findChild(var_32_0.viewGO, "top_left")
+function DungeonWeekWalkView:_onOpenViewFinish(viewName)
+	if viewName == ViewName.WeekWalkLayerView or viewName == ViewName.StoreView then
+		local dungeonView = ViewMgr.instance:getContainer(ViewName.DungeonView)
+		local top_left = gohelper.findChild(dungeonView.viewGO, "top_left")
 
-		gohelper.setActive(var_32_1, true)
+		gohelper.setActive(top_left, true)
 	end
 end
 
-function var_0_0._onOpenView(arg_33_0, arg_33_1)
-	if arg_33_1 == ViewName.WeekWalkLayerView then
+function DungeonWeekWalkView:_onOpenView(viewName)
+	if viewName == ViewName.WeekWalkLayerView then
 		-- block empty
 	end
 
-	if arg_33_1 == ViewName.WeekWalkLayerView or arg_33_1 == ViewName.StoreView then
-		arg_33_0._viewAnim:Play("dungeonweekwalk_out", 0, 0)
+	if viewName == ViewName.WeekWalkLayerView or viewName == ViewName.StoreView then
+		self._viewAnim:Play("dungeonweekwalk_out", 0, 0)
 
-		local var_33_0 = ViewMgr.instance:getContainer(ViewName.DungeonView)
+		local dungeonView = ViewMgr.instance:getContainer(ViewName.DungeonView)
 
-		gohelper.setAsLastSibling(var_33_0.viewGO)
+		gohelper.setAsLastSibling(dungeonView.viewGO)
 
-		local var_33_1 = gohelper.findChild(var_33_0.viewGO, "top_left")
+		local top_left = gohelper.findChild(dungeonView.viewGO, "top_left")
 
-		gohelper.setActive(var_33_1, false)
+		gohelper.setActive(top_left, false)
 	end
 end
 
-function var_0_0._onCloseView(arg_34_0, arg_34_1)
-	if arg_34_1 == ViewName.WeekWalkLayerView then
-		arg_34_0:_showProgress()
-		arg_34_0._viewAnim:Play("dungeonweekwalk_in", 0, 0)
-	elseif arg_34_1 == ViewName.StoreView then
-		arg_34_0._viewAnim:Play("dungeonweekwalk_in", 0, 0)
-	elseif arg_34_1 == ViewName.WeekWalkRewardView then
-		arg_34_0:_onWeekwalkTaskUpdate()
+function DungeonWeekWalkView:_onCloseView(viewName)
+	if viewName == ViewName.WeekWalkLayerView then
+		self:_showProgress()
+		self._viewAnim:Play("dungeonweekwalk_in", 0, 0)
+	elseif viewName == ViewName.StoreView then
+		self._viewAnim:Play("dungeonweekwalk_in", 0, 0)
+	elseif viewName == ViewName.WeekWalkRewardView then
+		self:_onWeekwalkTaskUpdate()
 	end
 end
 
-function var_0_0.onClose(arg_35_0)
-	arg_35_0:onHide()
-	HelpController.instance:unregisterCallback(HelpEvent.RefreshHelp, arg_35_0._refreshHelpFunc, arg_35_0._refreshTarget)
+function DungeonWeekWalkView:onClose()
+	self:onHide()
+	HelpController.instance:unregisterCallback(HelpEvent.RefreshHelp, self._refreshHelpFunc, self._refreshTarget)
 end
 
-function var_0_0._clearOnDestroy(arg_36_0)
-	TaskDispatcher.cancelTask(arg_36_0.delayOpenWeekWalkView, arg_36_0)
-	TaskDispatcher.cancelTask(arg_36_0._openStoreView, arg_36_0)
-	arg_36_0:removeEventCb(WeekWalkController.instance, WeekWalkEvent.OnSelectLevel, arg_36_0._OnSelectLevel, arg_36_0)
-	arg_36_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_36_0._onCloseView, arg_36_0, LuaEventSystem.Low)
-	arg_36_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_36_0._onOpenView, arg_36_0, LuaEventSystem.Low)
-	arg_36_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_36_0._onOpenViewFinish, arg_36_0, LuaEventSystem.Low)
-	arg_36_0:removeEventCb(WeekWalkController.instance, WeekWalkEvent.OnWeekwalkTaskUpdate, arg_36_0._onWeekwalkTaskUpdate, arg_36_0)
-	arg_36_0:removeEventCb(GuideController.instance, GuideEvent.FinishGuide, arg_36_0._onFinishGuide, arg_36_0)
-	TaskDispatcher.cancelTask(arg_36_0._onRefreshDeadline, arg_36_0)
+function DungeonWeekWalkView:_clearOnDestroy()
+	TaskDispatcher.cancelTask(self.delayOpenWeekWalkView, self)
+	TaskDispatcher.cancelTask(self._openStoreView, self)
+	self:removeEventCb(WeekWalkController.instance, WeekWalkEvent.OnSelectLevel, self._OnSelectLevel, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self, LuaEventSystem.Low)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self, LuaEventSystem.Low)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self, LuaEventSystem.Low)
+	self:removeEventCb(WeekWalkController.instance, WeekWalkEvent.OnWeekwalkTaskUpdate, self._onWeekwalkTaskUpdate, self)
+	self:removeEventCb(GuideController.instance, GuideEvent.FinishGuide, self._onFinishGuide, self)
+	TaskDispatcher.cancelTask(self._onRefreshDeadline, self)
 end
 
-function var_0_0.onDestroyView(arg_37_0)
-	arg_37_0:_clearOnDestroy()
-	arg_37_0._simagebg:UnLoadImage()
-	arg_37_0._simageline:UnLoadImage()
-	arg_37_0._simagexingdian1:UnLoadImage()
-	arg_37_0._simagexingdian2:UnLoadImage()
-	arg_37_0._simagerightdownglow:UnLoadImage()
-	arg_37_0._simagecentertopglow:UnLoadImage()
-	arg_37_0._simagelefttopglow:UnLoadImage()
-	arg_37_0._simagelefttopglow2:UnLoadImage()
-	arg_37_0._simageleftdownglow:UnLoadImage()
-	arg_37_0._simagerihtttopglow:UnLoadImage()
-	arg_37_0._simagerihtttopblack:UnLoadImage()
-	arg_37_0._simagecenterdown:UnLoadImage()
-	arg_37_0._simagebgimgnext:UnLoadImage()
+function DungeonWeekWalkView:onDestroyView()
+	self:_clearOnDestroy()
+	self._simagebg:UnLoadImage()
+	self._simageline:UnLoadImage()
+	self._simagexingdian1:UnLoadImage()
+	self._simagexingdian2:UnLoadImage()
+	self._simagerightdownglow:UnLoadImage()
+	self._simagecentertopglow:UnLoadImage()
+	self._simagelefttopglow:UnLoadImage()
+	self._simagelefttopglow2:UnLoadImage()
+	self._simageleftdownglow:UnLoadImage()
+	self._simagerihtttopglow:UnLoadImage()
+	self._simagerihtttopblack:UnLoadImage()
+	self._simagecenterdown:UnLoadImage()
+	self._simagebgimgnext:UnLoadImage()
 end
 
-return var_0_0
+return DungeonWeekWalkView

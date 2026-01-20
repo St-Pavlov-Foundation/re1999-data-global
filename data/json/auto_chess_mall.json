@@ -268,5 +268,55 @@
     "capacity": 1,
     "canRefresh": false,
     "isFree": true
+  },
+  {
+    "id": 32001,
+    "type": 1,
+    "round": 1,
+    "showLevel": 1,
+    "groups": "32001#100",
+    "capacity": 3,
+    "canRefresh": true,
+    "isFree": false
+  },
+  {
+    "id": 32002,
+    "type": 1,
+    "round": 3,
+    "showLevel": 2,
+    "groups": "32001#100|32002#100",
+    "capacity": 4,
+    "canRefresh": true,
+    "isFree": false
+  },
+  {
+    "id": 32003,
+    "type": 1,
+    "round": 5,
+    "showLevel": 3,
+    "groups": "32001#100|32002#100|32003#100",
+    "capacity": 4,
+    "canRefresh": true,
+    "isFree": false
+  },
+  {
+    "id": 32004,
+    "type": 1,
+    "round": 7,
+    "showLevel": 4,
+    "groups": "32001#100|32002#100|32003#100|32004#100",
+    "capacity": 5,
+    "canRefresh": true,
+    "isFree": false
+  },
+  {
+    "id": 32005,
+    "type": 1,
+    "round": 9,
+    "showLevel": 5,
+    "groups": "32001#100|32002#100|32003#100|32004#100|32005#100",
+    "capacity": 5,
+    "canRefresh": true,
+    "isFree": false
   }
 ]

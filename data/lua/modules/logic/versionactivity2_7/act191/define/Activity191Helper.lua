@@ -1,153 +1,157 @@
-﻿module("modules.logic.versionactivity2_7.act191.define.Activity191Helper", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/act191/define/Activity191Helper.lua
 
-local var_0_0 = class("Activity191Helper")
-local var_0_1 = "<u><link=%s>%s</link></u>"
+module("modules.logic.versionactivity2_7.act191.define.Activity191Helper", package.seeall)
 
-var_0_0.enBuildDescFmtDict = {
-	[Activity191Enum.HyperLinkPattern.EnhanceDestiny] = string.format("[%s]", var_0_1),
-	[Activity191Enum.HyperLinkPattern.EnhanceItem] = string.format("\"%s\"", var_0_1),
-	[Activity191Enum.HyperLinkPattern.SkillDesc] = string.format("[%s]", var_0_1),
-	[Activity191Enum.HyperLinkPattern.Hero] = string.format("[%s]", var_0_1)
+local Activity191Helper = class("Activity191Helper")
+local kLinkFmt = "<u><link=%s>%s</link></u>"
+
+Activity191Helper.enBuildDescFmtDict = {
+	[Activity191Enum.HyperLinkPattern.EnhanceDestiny] = string.format("[%s]", kLinkFmt),
+	[Activity191Enum.HyperLinkPattern.EnhanceItem] = string.format("\"%s\"", kLinkFmt),
+	[Activity191Enum.HyperLinkPattern.SkillDesc] = string.format("[%s]", kLinkFmt),
+	[Activity191Enum.HyperLinkPattern.Hero] = string.format("[%s]", kLinkFmt)
 }
-var_0_0.jpBuildDescFmtDict = {
-	[Activity191Enum.HyperLinkPattern.EnhanceItem] = string.format("「%s」", var_0_1)
+Activity191Helper.jpBuildDescFmtDict = {
+	[Activity191Enum.HyperLinkPattern.EnhanceItem] = string.format("「%s」", kLinkFmt)
 }
-var_0_0.krBuildDescFmtDict = {
-	[Activity191Enum.HyperLinkPattern.Hero] = string.format("<%s>", var_0_1)
+Activity191Helper.krBuildDescFmtDict = {
+	[Activity191Enum.HyperLinkPattern.Hero] = string.format("<%s>", kLinkFmt)
 }
 
-function var_0_0.replaceSymbol(arg_1_0)
+function Activity191Helper.replaceSymbol(_txtDesc)
 	if LangSettings.instance:isJp() then
-		arg_1_0 = string.gsub(arg_1_0, "『", "「")
-		arg_1_0 = string.gsub(arg_1_0, "』", "」")
+		_txtDesc = string.gsub(_txtDesc, "『", "「")
+		_txtDesc = string.gsub(_txtDesc, "』", "」")
 	end
 
 	if LangSettings.instance:isEn() then
-		arg_1_0 = string.gsub(arg_1_0, "『", "\"")
-		arg_1_0 = string.gsub(arg_1_0, "』", "\"")
-		arg_1_0 = string.gsub(arg_1_0, "「", "[")
-		arg_1_0 = string.gsub(arg_1_0, "」", "]")
-		arg_1_0 = string.gsub(arg_1_0, "﹝", "[")
-		arg_1_0 = string.gsub(arg_1_0, "﹞", "]")
+		_txtDesc = string.gsub(_txtDesc, "『", "\"")
+		_txtDesc = string.gsub(_txtDesc, "』", "\"")
+		_txtDesc = string.gsub(_txtDesc, "「", "[")
+		_txtDesc = string.gsub(_txtDesc, "」", "]")
+		_txtDesc = string.gsub(_txtDesc, "﹝", "[")
+		_txtDesc = string.gsub(_txtDesc, "﹞", "]")
 	end
 
-	return arg_1_0
+	return _txtDesc
 end
 
-function var_0_0.setFetterIcon(arg_2_0, arg_2_1)
-	UISpriteSetMgr.instance:setAct174Sprite(arg_2_0, arg_2_1)
+function Activity191Helper.setFetterIcon(image, resName)
+	UISpriteSetMgr.instance:setAct174Sprite(image, resName)
 end
 
-function var_0_0.getHeadIconSmall(arg_3_0)
-	if arg_3_0.type == Activity191Enum.CharacterType.Hero then
-		return ResUrl.getHeadIconSmall(arg_3_0.skinId)
+function Activity191Helper.getHeadIconSmall(config)
+	if config.type == Activity191Enum.CharacterType.Hero then
+		return ResUrl.getHeadIconSmall(config.skinId)
 	else
-		return ResUrl.monsterHeadIcon(arg_3_0.skinId)
+		return ResUrl.monsterHeadIcon(config.skinId)
 	end
 end
 
-function var_0_0.getNodeIcon(arg_4_0)
-	arg_4_0 = tonumber(arg_4_0)
+function Activity191Helper.getNodeIcon(nodeType)
+	nodeType = tonumber(nodeType)
 
-	if arg_4_0 == 0 then
+	if nodeType == 0 then
 		return "act191_progress_largeicon_0"
-	elseif arg_4_0 == Activity191Enum.NodeType.MixStore then
+	elseif nodeType == Activity191Enum.NodeType.MixStore then
 		return "act191_progress_largeicon_1"
-	elseif var_0_0.isPveBattle(arg_4_0) then
+	elseif Activity191Helper.isPveBattle(nodeType) then
 		return "act191_progress_largeicon_2"
-	elseif var_0_0.isPvpBattle(arg_4_0) then
+	elseif Activity191Helper.isPvpBattle(nodeType) then
 		return "act191_progress_largeicon_3"
-	elseif arg_4_0 == Activity191Enum.NodeType.RewardEvent or arg_4_0 == Activity191Enum.NodeType.BattleEvent then
+	elseif nodeType == Activity191Enum.NodeType.RewardEvent or nodeType == Activity191Enum.NodeType.BattleEvent then
 		return "act191_progress_largeicon_4"
-	elseif arg_4_0 == Activity191Enum.NodeType.MixStore then
+	elseif nodeType == Activity191Enum.NodeType.MixStore then
 		return "act191_progress_largeicon_5"
-	elseif arg_4_0 == Activity191Enum.NodeType.RoleShop or arg_4_0 == Activity191Enum.NodeType.CollectionShop or tabletool.indexOf(Activity191Enum.TagShopField, arg_4_0) then
+	elseif nodeType == Activity191Enum.NodeType.RoleShop or nodeType == Activity191Enum.NodeType.CollectionShop or tabletool.indexOf(Activity191Enum.TagShopField, nodeType) then
 		return "act191_progress_largeicon_6"
-	elseif arg_4_0 == Activity191Enum.NodeType.Enhance then
+	elseif nodeType == Activity191Enum.NodeType.Enhance then
 		return "act191_progress_largeicon_7"
-	elseif arg_4_0 == Activity191Enum.NodeType.ReplaceEvent or arg_4_0 == Activity191Enum.NodeType.UpgradeEvent then
+	elseif nodeType == Activity191Enum.NodeType.ReplaceEvent or nodeType == Activity191Enum.NodeType.UpgradeEvent then
 		return "act191_progress_largeicon_8"
 	end
 end
 
-function var_0_0.lockScreen(arg_5_0, arg_5_1)
-	if arg_5_1 then
+function Activity191Helper.lockScreen(key, lock)
+	if lock then
 		UIBlockMgrExtend.setNeedCircleMv(false)
-		UIBlockMgr.instance:startBlock(arg_5_0)
+		UIBlockMgr.instance:startBlock(key)
 	else
-		UIBlockMgr.instance:endBlock(arg_5_0)
+		UIBlockMgr.instance:endBlock(key)
 		UIBlockMgrExtend.setNeedCircleMv(true)
 	end
 end
 
-function var_0_0.getPlayerPrefs(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = PlayerModel.instance:getMyUserId() .. arg_6_0 .. arg_6_1
+function Activity191Helper.getPlayerPrefs(actId, key, defaultValue)
+	local userId = PlayerModel.instance:getMyUserId()
+	local prefsKey = userId .. actId .. key
 
-	return PlayerPrefsHelper.getNumber(var_6_0, arg_6_2)
+	return PlayerPrefsHelper.getNumber(prefsKey, defaultValue)
 end
 
-function var_0_0.setPlayerPrefs(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = PlayerModel.instance:getMyUserId() .. arg_7_0 .. arg_7_1
+function Activity191Helper.setPlayerPrefs(actId, key, value)
+	local userId = PlayerModel.instance:getMyUserId()
+	local prefsKey = userId .. actId .. key
 
-	PlayerPrefsHelper.setNumber(var_7_0, arg_7_2)
+	PlayerPrefsHelper.setNumber(prefsKey, value)
 end
 
-function var_0_0.calcIndex(arg_8_0, arg_8_1)
-	for iter_8_0, iter_8_1 in pairs(arg_8_1) do
-		if gohelper.isMouseOverGo(iter_8_1, arg_8_0) then
-			return iter_8_0
+function Activity191Helper.calcIndex(position, trList)
+	for k, tr in pairs(trList) do
+		if gohelper.isMouseOverGo(tr, position) then
+			return k
 		end
 	end
 end
 
-function var_0_0.matchKeyInArray(arg_9_0, arg_9_1, arg_9_2)
-	if not arg_9_0 then
+function Activity191Helper.matchKeyInArray(array, value, key)
+	if not array then
 		logError("array is nil")
 
 		return
 	end
 
-	arg_9_2 = arg_9_2 or "index"
+	key = key or "index"
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0) do
-		if iter_9_1[arg_9_2] == arg_9_1 then
-			return iter_9_1
+	for _, v in ipairs(array) do
+		if v[key] == value then
+			return v
 		end
 	end
 end
 
-function var_0_0.isPveBattle(arg_10_0)
-	if tabletool.indexOf(Activity191Enum.PveFiled, arg_10_0) then
+function Activity191Helper.isPveBattle(type)
+	if tabletool.indexOf(Activity191Enum.PveFiled, type) then
 		return true
 	end
 end
 
-function var_0_0.isPvpBattle(arg_11_0)
-	if tabletool.indexOf(Activity191Enum.PvpFiled, arg_11_0) then
+function Activity191Helper.isPvpBattle(type)
+	if tabletool.indexOf(Activity191Enum.PvpFiled, type) then
 		return true
 	end
 end
 
-function var_0_0.isShopNode(arg_12_0)
-	if arg_12_0 == Activity191Enum.NodeType.MixStore or arg_12_0 == Activity191Enum.NodeType.RoleShop or arg_12_0 == Activity191Enum.NodeType.CollectionShop or tabletool.indexOf(Activity191Enum.TagShopField, arg_12_0) then
+function Activity191Helper.isShopNode(type)
+	if type == Activity191Enum.NodeType.MixStore or type == Activity191Enum.NodeType.RoleShop or type == Activity191Enum.NodeType.CollectionShop or tabletool.indexOf(Activity191Enum.TagShopField, type) then
 		return true
 	end
 end
 
-function var_0_0.getActiveFetterInfoList(arg_13_0)
-	local var_13_0 = {}
+function Activity191Helper.getActiveFetterInfoList(fetterCntDic)
+	local fetterInfoList = {}
 
-	for iter_13_0, iter_13_1 in pairs(arg_13_0) do
-		local var_13_1 = Activity191Config.instance:getRelationCoList(iter_13_0)
+	for tag, cnt in pairs(fetterCntDic) do
+		local fetterCoList = Activity191Config.instance:getRelationCoList(tag)
 
-		if var_13_1 then
-			for iter_13_2 = #var_13_1, 0, -1 do
-				local var_13_2 = var_13_1[iter_13_2]
+		if fetterCoList then
+			for i = #fetterCoList, 0, -1 do
+				local fetterCo = fetterCoList[i]
 
-				if iter_13_1 >= var_13_2.activeNum then
-					var_13_0[#var_13_0 + 1] = {
-						config = var_13_2,
-						count = iter_13_1
+				if cnt >= fetterCo.activeNum then
+					fetterInfoList[#fetterInfoList + 1] = {
+						config = fetterCo,
+						count = cnt
 					}
 
 					break
@@ -156,98 +160,99 @@ function var_0_0.getActiveFetterInfoList(arg_13_0)
 		end
 	end
 
-	table.sort(var_13_0, function(arg_14_0, arg_14_1)
-		if arg_14_0.config.level == arg_14_1.config.level then
-			if arg_14_0.count == arg_14_1.count then
-				return arg_14_0.config.id < arg_14_1.config.id
+	table.sort(fetterInfoList, function(a, b)
+		if a.config.level == b.config.level then
+			if a.count == b.count then
+				return a.config.id < b.config.id
 			else
-				return arg_14_0.count > arg_14_1.count
+				return a.count > b.count
 			end
 		else
-			return arg_14_0.config.level > arg_14_1.config.level
+			return a.config.level > b.config.level
 		end
 	end)
 
-	return var_13_0
+	return fetterInfoList
 end
 
-function var_0_0.sortRoleCo(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_0.type == Activity191Enum.CharacterType.Hero
+function Activity191Helper.sortRoleCo(a, b)
+	local aIsHero = a.type == Activity191Enum.CharacterType.Hero
+	local bIsHero = b.type == Activity191Enum.CharacterType.Hero
 
-	if var_15_0 ~= (arg_15_1.type == Activity191Enum.CharacterType.Hero) then
-		return var_15_0
+	if aIsHero ~= bIsHero then
+		return aIsHero
 	end
 
-	if arg_15_0.quality ~= arg_15_1.quality then
-		return arg_15_0.quality < arg_15_1.quality
+	if a.quality ~= b.quality then
+		return a.quality < b.quality
 	end
 
-	return arg_15_0.roleId < arg_15_1.roleId
+	return a.roleId < b.roleId
 end
 
-function var_0_0.sortFetterHeroList(arg_16_0, arg_16_1)
-	if arg_16_0.inBag == arg_16_1.inBag then
-		if arg_16_0.transfer == arg_16_1.transfer then
-			if arg_16_0.config.quality == arg_16_1.config.quality then
-				return arg_16_0.config.roleId < arg_16_1.config.roleId
+function Activity191Helper.sortFetterHeroList(a, b)
+	if a.inBag == b.inBag then
+		if a.transfer == b.transfer then
+			if a.config.quality == b.config.quality then
+				return a.config.roleId < b.config.roleId
 			else
-				return arg_16_0.config.quality < arg_16_1.config.quality
+				return a.config.quality < b.config.quality
 			end
 		else
-			return arg_16_0.transfer < arg_16_1.transfer
+			return a.transfer < b.transfer
 		end
 	else
-		return arg_16_0.inBag > arg_16_1.inBag
+		return a.inBag > b.inBag
 	end
 end
 
-function var_0_0.getWithBuildBattleHeroInfo(arg_17_0, arg_17_1)
-	local var_17_0 = var_0_0.matchKeyInArray(arg_17_0, arg_17_1)
+function Activity191Helper.getWithBuildBattleHeroInfo(battleHeroInfos, index)
+	local battleHeroInfo = Activity191Helper.matchKeyInArray(battleHeroInfos, index)
 
-	if not var_17_0 then
-		var_17_0 = Activity191Module_pb.Act191BattleHeroInfo()
-		var_17_0.index = arg_17_1
-		var_17_0.heroId = 0
-		var_17_0.itemUid1 = 0
-		var_17_0.itemUid2 = 0
+	if not battleHeroInfo then
+		battleHeroInfo = Activity191Module_pb.Act191BattleHeroInfo()
+		battleHeroInfo.index = index
+		battleHeroInfo.heroId = 0
+		battleHeroInfo.itemUid1 = 0
+		battleHeroInfo.itemUid2 = 0
 
-		table.insert(arg_17_0, var_17_0)
+		table.insert(battleHeroInfos, battleHeroInfo)
 	end
 
-	return var_17_0
+	return battleHeroInfo
 end
 
-function var_0_0.getWithBuildSubHeroInfo(arg_18_0, arg_18_1)
-	local var_18_0 = var_0_0.matchKeyInArray(arg_18_0, arg_18_1)
+function Activity191Helper.getWithBuildSubHeroInfo(subHeroInfos, index)
+	local subHeroInfo = Activity191Helper.matchKeyInArray(subHeroInfos, index)
 
-	if not var_18_0 then
-		var_18_0 = Activity191Module_pb.Act191SubHeroInfo()
-		var_18_0.index = arg_18_1
-		var_18_0.heroId = 0
+	if not subHeroInfo then
+		subHeroInfo = Activity191Module_pb.Act191SubHeroInfo()
+		subHeroInfo.index = index
+		subHeroInfo.heroId = 0
 
-		table.insert(arg_18_0, var_18_0)
+		table.insert(subHeroInfos, subHeroInfo)
 	end
 
-	return var_18_0
+	return subHeroInfo
 end
 
-function var_0_0.replaceSkill(arg_19_0, arg_19_1)
-	if arg_19_1 then
-		local var_19_0 = CharacterDestinyConfig.instance:getDestinyFacets(arg_19_0, 4)
+function Activity191Helper.replaceSkill(stoneId, skillIdList)
+	if skillIdList then
+		local co = CharacterDestinyConfig.instance:getDestinyFacets(stoneId, 4)
 
-		if var_19_0 then
-			local var_19_1 = var_19_0.exchangeSkills
+		if co then
+			local exchangeSkills = co.exchangeSkills
 
-			if not string.nilorempty(var_19_1) then
-				local var_19_2 = GameUtil.splitString2(var_19_1, true)
+			if not string.nilorempty(exchangeSkills) then
+				local splitSkillId = GameUtil.splitString2(exchangeSkills, true)
 
-				for iter_19_0 = 1, #arg_19_1 do
-					for iter_19_1, iter_19_2 in ipairs(var_19_2) do
-						local var_19_3 = iter_19_2[1]
-						local var_19_4 = iter_19_2[2]
+				for i = 1, #skillIdList do
+					for _, skillId in ipairs(splitSkillId) do
+						local orignSkillId = skillId[1]
+						local newSkillId = skillId[2]
 
-						if arg_19_1[iter_19_0] == var_19_3 then
-							arg_19_1[iter_19_0] = var_19_4
+						if skillIdList[i] == orignSkillId then
+							skillIdList[i] = newSkillId
 						end
 					end
 				end
@@ -255,101 +260,101 @@ function var_0_0.replaceSkill(arg_19_0, arg_19_1)
 		end
 	end
 
-	return arg_19_1
+	return skillIdList
 end
 
-function var_0_0.buildDesc(arg_20_0, arg_20_1, arg_20_2)
-	local var_20_0
+function Activity191Helper.buildDesc(desc, pattern, linkParam)
+	local repl
 
-	if arg_20_2 then
-		var_20_0 = string.format(luaLang("Activity191Helper_buildDesc"), arg_20_2, "%1")
+	if linkParam then
+		repl = string.format(luaLang("Activity191Helper_buildDesc"), linkParam, "%1")
 	else
-		var_20_0 = luaLang("Activity191Helper_buildDesc1")
+		repl = luaLang("Activity191Helper_buildDesc1")
 	end
 
-	local var_20_1 = var_0_0[tostring(LangSettings.instance:getCurLang()) .. "BuildDescFmtDict"]
+	local fmtDict = Activity191Helper[tostring(LangSettings.instance:getCurLang()) .. "BuildDescFmtDict"]
 
-	if var_20_1 then
-		local var_20_2 = var_20_1[arg_20_1]
+	if fmtDict then
+		local fmt = fmtDict[pattern]
 
-		if var_20_2 then
-			var_20_0 = string.format(var_20_2, arg_20_2 or "%1", "%1")
+		if fmt then
+			repl = string.format(fmt, linkParam or "%1", "%1")
 		end
 	end
 
-	arg_20_0 = string.gsub(arg_20_0, arg_20_1, var_20_0)
-	arg_20_0 = var_0_0.addColor(arg_20_0)
+	desc = string.gsub(desc, pattern, repl)
+	desc = Activity191Helper.addColor(desc)
 
-	return arg_20_0
+	return desc
 end
 
-function var_0_0.addColor(arg_21_0)
-	local var_21_0 = string.format("<color=%s>%s</color>", "#4e6698", "%1")
+function Activity191Helper.addColor(desc)
+	local bracketColorFormat = string.format("<color=%s>%s</color>", "#4e6698", "%1")
 
-	arg_21_0 = string.gsub(arg_21_0, "【.-】", var_21_0)
+	desc = string.gsub(desc, "【.-】", bracketColorFormat)
 
-	local var_21_1 = string.format("<color=%s>%s</color>", "#C66030", "%1")
+	local percentColorFormat = string.format("<color=%s>%s</color>", "#C66030", "%1")
 
-	arg_21_0 = string.gsub(arg_21_0, "[+-]?%d+%.%d+%%", var_21_1)
-	arg_21_0 = string.gsub(arg_21_0, "[+-]?%d+%%", var_21_1)
+	desc = string.gsub(desc, "[+-]?%d+%.%d+%%", percentColorFormat)
+	desc = string.gsub(desc, "[+-]?%d+%%", percentColorFormat)
 
-	return arg_21_0
+	return desc
 end
 
-function var_0_0.clickHyperLinkDestiny(arg_22_0)
-	local var_22_0 = string.splitToNumber(arg_22_0, "#")
-	local var_22_1 = {
-		config = Activity191Config.instance:getRoleCoByNativeId(var_22_0[1], 1),
-		stoneId = var_22_0[2]
+function Activity191Helper.clickHyperLinkDestiny(typeParam)
+	local params = string.splitToNumber(typeParam, "#")
+	local param = {
+		config = Activity191Config.instance:getRoleCoByNativeId(params[1], 1),
+		stoneId = params[2]
 	}
 
-	ViewMgr.instance:openView(ViewName.Act191CharacterDestinyView, var_22_1)
+	ViewMgr.instance:openView(ViewName.Act191CharacterDestinyView, param)
 end
 
-function var_0_0.clickHyperLinkItem(arg_23_0, arg_23_1)
-	if string.find(arg_23_0, "#") then
-		local var_23_0 = string.splitToNumber(arg_23_0, "#")[1]
+function Activity191Helper.clickHyperLinkItem(param, clickPosition)
+	if string.find(param, "#") then
+		local itemId = string.splitToNumber(param, "#")[1]
 
 		Activity191Controller.instance:openCollectionTipView({
-			itemId = var_23_0
+			itemId = itemId
 		})
 	else
-		SkillHelper.defaultClick(arg_23_0, arg_23_1)
+		SkillHelper.defaultClick(param, clickPosition)
 	end
 end
 
-function var_0_0.clickHyperLinkSkill(arg_24_0, arg_24_1)
-	if tonumber(arg_24_0) then
-		SkillHelper.defaultClick(arg_24_0, arg_24_1)
+function Activity191Helper.clickHyperLinkSkill(name, clickPosition)
+	if tonumber(name) then
+		SkillHelper.defaultClick(name, clickPosition)
 
 		return
 	end
 
-	local var_24_0 = {
-		effectId = arg_24_0,
-		clickPosition = arg_24_1
+	local param = {
+		effectId = name,
+		clickPosition = clickPosition
 	}
 
-	ViewMgr.instance:openView(ViewName.Act191BuffTipView, var_24_0)
+	ViewMgr.instance:openView(ViewName.Act191BuffTipView, param)
 end
 
-function var_0_0.clickHyperLinkRole(arg_25_0, arg_25_1)
-	if string.find(arg_25_0, "#") then
-		local var_25_0 = string.splitToNumber(arg_25_0, "#")[1]
+function Activity191Helper.clickHyperLinkRole(param, clickPosition)
+	if string.find(param, "#") then
+		local id = string.splitToNumber(param, "#")[1]
 
-		if var_25_0 then
-			local var_25_1 = {
+		if id then
+			local viewParam = {
 				preview = true,
 				heroList = {
-					tonumber(var_25_0)
+					tonumber(id)
 				}
 			}
 
-			Activity191Controller.instance:openHeroTipView(var_25_1)
+			Activity191Controller.instance:openHeroTipView(viewParam)
 		end
 	else
-		SkillHelper.defaultClick(arg_25_0, arg_25_1)
+		SkillHelper.defaultClick(param, clickPosition)
 	end
 end
 
-return var_0_0
+return Activity191Helper

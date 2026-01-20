@@ -1,58 +1,60 @@
-﻿module("modules.logic.achievement.model.PlayerViewAchievementModel", package.seeall)
+﻿-- chunkname: @modules/logic/achievement/model/PlayerViewAchievementModel.lua
 
-local var_0_0 = class("PlayerViewAchievementModel", BaseModel)
+module("modules.logic.achievement.model.PlayerViewAchievementModel", package.seeall)
 
-function var_0_0.decodeShowAchievement(arg_1_0, arg_1_1)
-	local var_1_0, var_1_1 = AchievementUtils.decodeShowStr(arg_1_1)
-	local var_1_2 = {}
+local PlayerViewAchievementModel = class("PlayerViewAchievementModel", BaseModel)
 
-	for iter_1_0, iter_1_1 in pairs(var_1_0) do
-		local var_1_3 = AchievementConfig.instance:getTask(iter_1_1)
+function PlayerViewAchievementModel:decodeShowAchievement(showStr)
+	local singeTaskSet, groupTaskSet = AchievementUtils.decodeShowStr(showStr)
+	local singleSet = {}
 
-		if var_1_3 then
-			table.insert(var_1_2, var_1_3.id)
+	for _, taskId in pairs(singeTaskSet) do
+		local taskCO = AchievementConfig.instance:getTask(taskId)
+
+		if taskCO then
+			table.insert(singleSet, taskCO.id)
 		end
 	end
 
-	local var_1_4 = {}
+	local groupSet = {}
 
-	for iter_1_2, iter_1_3 in pairs(var_1_1) do
-		local var_1_5 = AchievementConfig.instance:getTask(iter_1_3)
+	for _, taskId in pairs(groupTaskSet) do
+		local taskCO = AchievementConfig.instance:getTask(taskId)
 
-		if var_1_5 then
-			local var_1_6 = AchievementConfig.instance:getAchievement(var_1_5.achievementId)
+		if taskCO then
+			local achievementCO = AchievementConfig.instance:getAchievement(taskCO.achievementId)
 
-			if var_1_6.groupId ~= 0 then
-				var_1_4[var_1_6.groupId] = var_1_4[var_1_6.groupId] or {}
+			if achievementCO.groupId ~= 0 then
+				groupSet[achievementCO.groupId] = groupSet[achievementCO.groupId] or {}
 
-				table.insert(var_1_4[var_1_6.groupId], var_1_5.id)
+				table.insert(groupSet[achievementCO.groupId], taskCO.id)
 			end
 		end
 	end
 
-	return var_1_2, var_1_4
+	return singleSet, groupSet
 end
 
-function var_0_0.getShowAchievements(arg_2_0, arg_2_1)
-	local var_2_0, var_2_1 = arg_2_0:decodeShowAchievement(arg_2_1)
-	local var_2_2 = arg_2_0:checkIsNamePlate(var_2_0)
-	local var_2_3 = var_2_1 and tabletool.len(var_2_1) > 0
+function PlayerViewAchievementModel:getShowAchievements(showStr)
+	local singleSet, groupSet = self:decodeShowAchievement(showStr)
+	local isNamePlate = self:checkIsNamePlate(singleSet)
+	local isGroup = groupSet and tabletool.len(groupSet) > 0
 
-	return var_2_3, var_2_3 and var_2_1 or var_2_0, var_2_2
+	return isGroup, isGroup and groupSet or singleSet, isNamePlate
 end
 
-function var_0_0.checkIsNamePlate(arg_3_0, arg_3_1)
-	if not arg_3_1 then
+function PlayerViewAchievementModel:checkIsNamePlate(singleSet)
+	if not singleSet then
 		return false
 	end
 
-	if arg_3_1 and #arg_3_1 == 1 then
-		local var_3_0 = AchievementConfig.instance:getTask(arg_3_1[1])
+	if singleSet and #singleSet == 1 then
+		local taskCO = AchievementConfig.instance:getTask(singleSet[1])
 
-		if var_3_0 then
-			local var_3_1 = AchievementConfig.instance:getAchievement(var_3_0.achievementId)
+		if taskCO then
+			local achievementCO = AchievementConfig.instance:getAchievement(taskCO.achievementId)
 
-			if var_3_1 and var_3_1.category == AchievementEnum.Type.NamePlate then
+			if achievementCO and achievementCO.category == AchievementEnum.Type.NamePlate then
 				return true
 			end
 		end
@@ -61,6 +63,6 @@ function var_0_0.checkIsNamePlate(arg_3_0, arg_3_1)
 	return false
 end
 
-var_0_0.instance = var_0_0.New()
+PlayerViewAchievementModel.instance = PlayerViewAchievementModel.New()
 
-return var_0_0
+return PlayerViewAchievementModel

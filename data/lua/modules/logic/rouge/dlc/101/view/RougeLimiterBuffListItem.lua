@@ -1,99 +1,101 @@
-﻿module("modules.logic.rouge.dlc.101.view.RougeLimiterBuffListItem", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/dlc/101/view/RougeLimiterBuffListItem.lua
 
-local var_0_0 = class("RougeLimiterBuffListItem", ListScrollCellExtend)
+module("modules.logic.rouge.dlc.101.view.RougeLimiterBuffListItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._imagebuffbg = gohelper.findChildImage(arg_1_0.viewGO, "#image_buffbg")
-	arg_1_0._imagebufficon = gohelper.findChildImage(arg_1_0.viewGO, "#image_bufficon")
-	arg_1_0._goequiped = gohelper.findChild(arg_1_0.viewGO, "#go_equiped")
-	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "#go_select")
-	arg_1_0._golocked = gohelper.findChild(arg_1_0.viewGO, "#go_locked")
-	arg_1_0._gounnecessary = gohelper.findChild(arg_1_0.viewGO, "#go_unnecessary")
-	arg_1_0._txtunnecessary = gohelper.findChildText(arg_1_0.viewGO, "#go_unnecessary/txt_unnecessary")
-	arg_1_0._gocd = gohelper.findChild(arg_1_0.viewGO, "#go_cd")
-	arg_1_0._txtcd = gohelper.findChildText(arg_1_0.viewGO, "#go_cd/#txt_cd")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_click")
-	arg_1_0._lockedAnimator = ZProj.ProjAnimatorPlayer.Get(arg_1_0._golocked)
-	arg_1_0._isSelect = false
+local RougeLimiterBuffListItem = class("RougeLimiterBuffListItem", ListScrollCellExtend)
+
+function RougeLimiterBuffListItem:onInitView()
+	self._imagebuffbg = gohelper.findChildImage(self.viewGO, "#image_buffbg")
+	self._imagebufficon = gohelper.findChildImage(self.viewGO, "#image_bufficon")
+	self._goequiped = gohelper.findChild(self.viewGO, "#go_equiped")
+	self._goselect = gohelper.findChild(self.viewGO, "#go_select")
+	self._golocked = gohelper.findChild(self.viewGO, "#go_locked")
+	self._gounnecessary = gohelper.findChild(self.viewGO, "#go_unnecessary")
+	self._txtunnecessary = gohelper.findChildText(self.viewGO, "#go_unnecessary/txt_unnecessary")
+	self._gocd = gohelper.findChild(self.viewGO, "#go_cd")
+	self._txtcd = gohelper.findChildText(self.viewGO, "#go_cd/#txt_cd")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_click")
+	self._lockedAnimator = ZProj.ProjAnimatorPlayer.Get(self._golocked)
+	self._isSelect = false
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
-	arg_2_0:addEventCb(RougeDLCController101.instance, RougeDLCEvent101.UpdateBuffState, arg_2_0._onUpdateBuffState, arg_2_0)
+function RougeLimiterBuffListItem:addEvents()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
+	self:addEventCb(RougeDLCController101.instance, RougeDLCEvent101.UpdateBuffState, self._onUpdateBuffState, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
+function RougeLimiterBuffListItem:removeEvents()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0._btnclickOnClick(arg_4_0)
-	local var_4_0 = not arg_4_0._isSelect
+function RougeLimiterBuffListItem:_btnclickOnClick()
+	local isSelect = not self._isSelect
 
-	arg_4_0._view:selectCell(arg_4_0._index, var_4_0)
-	RougeDLCController101.instance:dispatchEvent(RougeDLCEvent101.OnSelectBuff, arg_4_0._mo.id, var_4_0)
+	self._view:selectCell(self._index, isSelect)
+	RougeDLCController101.instance:dispatchEvent(RougeDLCEvent101.OnSelectBuff, self._mo.id, isSelect)
 end
 
-function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
-	arg_5_0._mo = arg_5_1
-	arg_5_0._buffState = nil
+function RougeLimiterBuffListItem:onUpdateMO(mo)
+	self._mo = mo
+	self._buffState = nil
 
-	arg_5_0:refreshSelectUI()
-	arg_5_0:refreshBuff()
+	self:refreshSelectUI()
+	self:refreshBuff()
 end
 
-function var_0_0.refreshBuff(arg_6_0)
-	arg_6_0:refreshBuffState()
-	UISpriteSetMgr.instance:setRouge4Sprite(arg_6_0._imagebufficon, arg_6_0._mo.icon)
-	UISpriteSetMgr.instance:setRouge3Sprite(arg_6_0._imagebuffbg, "rouge_dlc1_buffbg" .. arg_6_0._mo.buffType)
+function RougeLimiterBuffListItem:refreshBuff()
+	self:refreshBuffState()
+	UISpriteSetMgr.instance:setRouge4Sprite(self._imagebufficon, self._mo.icon)
+	UISpriteSetMgr.instance:setRouge3Sprite(self._imagebuffbg, "rouge_dlc1_buffbg" .. self._mo.buffType)
 end
 
-function var_0_0.refreshSelectUI(arg_7_0)
-	local var_7_0 = arg_7_0._view:getFirstSelect() == arg_7_0._mo
+function RougeLimiterBuffListItem:refreshSelectUI()
+	local isSelect = self._view:getFirstSelect() == self._mo
 
-	gohelper.setActive(arg_7_0._goselect, var_7_0)
+	gohelper.setActive(self._goselect, isSelect)
 end
 
-function var_0_0.refreshBuffState(arg_8_0)
-	local var_8_0 = RougeDLCModel101.instance:getLimiterBuffState(arg_8_0._mo.id)
-	local var_8_1 = arg_8_0._buffState == RougeDLCEnum101.BuffState.Locked
-	local var_8_2 = var_8_0 ~= RougeDLCEnum101.BuffState.Locked
+function RougeLimiterBuffListItem:refreshBuffState()
+	local curBuffState = RougeDLCModel101.instance:getLimiterBuffState(self._mo.id)
+	local isPreLocked = self._buffState == RougeDLCEnum101.BuffState.Locked
+	local isCurUnlocked = curBuffState ~= RougeDLCEnum101.BuffState.Locked
 
-	arg_8_0._buffState = var_8_0
+	self._buffState = curBuffState
 
-	arg_8_0._lockedAnimator:Stop()
+	self._lockedAnimator:Stop()
 
-	if var_8_1 and var_8_2 then
-		arg_8_0._lockedAnimator:Play("unlock", arg_8_0.refreshUI, arg_8_0)
+	if isPreLocked and isCurUnlocked then
+		self._lockedAnimator:Play("unlock", self.refreshUI, self)
 
 		return
 	end
 
-	arg_8_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_9_0)
-	gohelper.setActive(arg_9_0._golocked, arg_9_0._buffState == RougeDLCEnum101.BuffState.Locked)
-	gohelper.setActive(arg_9_0._goequiped, arg_9_0._buffState == RougeDLCEnum101.BuffState.Equiped)
-	gohelper.setActive(arg_9_0._gocd, arg_9_0._buffState == RougeDLCEnum101.BuffState.CD)
-	gohelper.setActive(arg_9_0._gounnecessary, arg_9_0._mo.blank == 1)
+function RougeLimiterBuffListItem:refreshUI()
+	gohelper.setActive(self._golocked, self._buffState == RougeDLCEnum101.BuffState.Locked)
+	gohelper.setActive(self._goequiped, self._buffState == RougeDLCEnum101.BuffState.Equiped)
+	gohelper.setActive(self._gocd, self._buffState == RougeDLCEnum101.BuffState.CD)
+	gohelper.setActive(self._gounnecessary, self._mo.blank == 1)
 
-	if arg_9_0._buffState == RougeDLCEnum101.BuffState.CD then
-		arg_9_0._txtcd.text = RougeDLCModel101.instance:getLimiterBuffCD(arg_9_0._mo.id)
+	if self._buffState == RougeDLCEnum101.BuffState.CD then
+		self._txtcd.text = RougeDLCModel101.instance:getLimiterBuffCD(self._mo.id)
 	end
 end
 
-function var_0_0._onUpdateBuffState(arg_10_0, arg_10_1)
-	arg_10_0:refreshBuffState()
+function RougeLimiterBuffListItem:_onUpdateBuffState(buffId)
+	self:refreshBuffState()
 end
 
-function var_0_0.onSelect(arg_11_0, arg_11_1)
-	arg_11_0._isSelect = arg_11_1
+function RougeLimiterBuffListItem:onSelect(isSelect)
+	self._isSelect = isSelect
 
-	gohelper.setActive(arg_11_0._goselect, arg_11_1)
+	gohelper.setActive(self._goselect, isSelect)
 end
 
-function var_0_0.onDestroyView(arg_12_0)
+function RougeLimiterBuffListItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return RougeLimiterBuffListItem

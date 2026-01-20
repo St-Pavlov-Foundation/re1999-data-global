@@ -1,182 +1,184 @@
-﻿module("modules.logic.main.controller.MainController", package.seeall)
+﻿-- chunkname: @modules/logic/main/controller/MainController.lua
 
-local var_0_0 = class("MainController", BaseController)
+module("modules.logic.main.controller.MainController", package.seeall)
 
-function var_0_0.addConstEvents(arg_1_0)
-	LoginController.instance:registerCallback(LoginEvent.OnLoginEnterMainScene, arg_1_0._onLoginEnterMainScene, arg_1_0)
-	PlayerController.instance:registerCallback(PlayerEvent.OnDailyRefresh, arg_1_0._onDailyRefresh, arg_1_0)
-	ActivityController.instance:registerCallback(ActivityEvent.UpdateActivity, arg_1_0._onActivityUpdate, arg_1_0)
-	var_0_0.instance:registerCallback(MainEvent.ManuallyOpenMainView, arg_1_0._onManuallyOpenMainView, arg_1_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_1_0._onCloseView, arg_1_0, LuaEventSystem.Low)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_1_0._onCloseViewFinish, arg_1_0, LuaEventSystem.Low)
+local MainController = class("MainController", BaseController)
+
+function MainController:addConstEvents()
+	LoginController.instance:registerCallback(LoginEvent.OnLoginEnterMainScene, self._onLoginEnterMainScene, self)
+	PlayerController.instance:registerCallback(PlayerEvent.OnDailyRefresh, self._onDailyRefresh, self)
+	ActivityController.instance:registerCallback(ActivityEvent.UpdateActivity, self._onActivityUpdate, self)
+	MainController.instance:registerCallback(MainEvent.ManuallyOpenMainView, self._onManuallyOpenMainView, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, self._onCloseView, self, LuaEventSystem.Low)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self, LuaEventSystem.Low)
 end
 
-function var_0_0.onInit(arg_2_0)
-	arg_2_0.firstEnterMainScene = true
-	arg_2_0._inPopupFlow = false
-	arg_2_0._needOpenMainView = false
+function MainController:onInit()
+	self.firstEnterMainScene = true
+	self._inPopupFlow = false
+	self._needOpenMainView = false
 end
 
-function var_0_0.reInit(arg_3_0)
-	arg_3_0:_destroyPopupFlow()
+function MainController:reInit()
+	self:_destroyPopupFlow()
 
-	arg_3_0.firstEnterMainScene = true
-	arg_3_0._inPopupFlow = false
-	arg_3_0._needOpenMainView = false
+	self.firstEnterMainScene = true
+	self._inPopupFlow = false
+	self._needOpenMainView = false
 end
 
-function var_0_0._startPopupFlow(arg_4_0)
-	arg_4_0:_destroyPopupFlow()
+function MainController:_startPopupFlow()
+	self:_destroyPopupFlow()
 
-	arg_4_0._popupFlow = FlowSequence.New()
+	self._popupFlow = FlowSequence.New()
 
-	arg_4_0._popupFlow:addWork(MainGuideWork.New())
-	arg_4_0._popupFlow:addWork(MainLimitedRoleEffect.New())
-	arg_4_0._popupFlow:addWork(FunctionWork.New(function()
+	self._popupFlow:addWork(MainGuideWork.New())
+	self._popupFlow:addWork(MainLimitedRoleEffect.New())
+	self._popupFlow:addWork(FunctionWork.New(function()
 		BGMSwitchController.instance:startAllOnLogin()
 	end))
-	arg_4_0._popupFlow:addWork(MainAchievementToast.New())
-	arg_4_0._popupFlow:addWork(MainThumbnailWork.New())
-	arg_4_0._popupFlow:addWork(MainMailWork.New())
-	arg_4_0._popupFlow:addWork(MainUseExpireItemWork.New())
-	arg_4_0._popupFlow:addWork(MainSignInWork.New())
-	arg_4_0._popupFlow:addWork(MainFightReconnectWork.New())
-	arg_4_0._popupFlow:addWork(MainPatFaceWork.New())
-	arg_4_0._popupFlow:addWork(MainParallelGuideWork.New())
-	arg_4_0._popupFlow:addWork(AutoOpenNoticeWork.New())
-	arg_4_0._popupFlow:registerDoneListener(arg_4_0._onPopupFlowDone, arg_4_0)
-	arg_4_0._popupFlow:start({})
+	self._popupFlow:addWork(MainAchievementToast.New())
+	self._popupFlow:addWork(MainThumbnailWork.New())
+	self._popupFlow:addWork(MainMailWork.New())
+	self._popupFlow:addWork(MainUseExpireItemWork.New())
+	self._popupFlow:addWork(MainSignInWork.New())
+	self._popupFlow:addWork(MainFightReconnectWork.New())
+	self._popupFlow:addWork(MainPatFaceWork.New())
+	self._popupFlow:addWork(MainParallelGuideWork.New())
+	self._popupFlow:addWork(AutoOpenNoticeWork.New())
+	self._popupFlow:registerDoneListener(self._onPopupFlowDone, self)
+	self._popupFlow:start({})
 
-	arg_4_0._inPopupFlow = true
+	self._inPopupFlow = true
 end
 
-function var_0_0._destroyPopupFlow(arg_6_0)
-	if arg_6_0._popupFlow then
-		arg_6_0._popupFlow:destroy()
+function MainController:_destroyPopupFlow()
+	if self._popupFlow then
+		self._popupFlow:destroy()
 
-		arg_6_0._popupFlow = nil
-		arg_6_0._inPopupFlow = false
+		self._popupFlow = nil
+		self._inPopupFlow = false
 	end
 end
 
-function var_0_0._onLoginEnterMainScene(arg_7_0)
-	var_0_0.instance:dispatchEvent(MainEvent.OnFirstEnterMain)
-	arg_7_0:_startPopupFlow()
+function MainController:_onLoginEnterMainScene()
+	MainController.instance:dispatchEvent(MainEvent.OnFirstEnterMain)
+	self:_startPopupFlow()
 end
 
-function var_0_0._onDailyRefresh(arg_8_0)
-	arg_8_0:_onCheckAutoPop(true)
+function MainController:_onDailyRefresh()
+	self:_onCheckAutoPop(true)
 end
 
-function var_0_0._onActivityUpdate(arg_9_0)
-	arg_9_0:_onCheckAutoPop(false)
+function MainController:_onActivityUpdate()
+	self:_onCheckAutoPop(false)
 end
 
-function var_0_0._onCheckAutoPop(arg_10_0, arg_10_1)
-	arg_10_0._isDailyRefresh = arg_10_1
+function MainController:_onCheckAutoPop(isDailyRefresh)
+	self._isDailyRefresh = isDailyRefresh
 
-	if arg_10_0._inPopupFlow then
-		arg_10_0:registerCallback(MainEvent.OnMainPopupFlowFinish, arg_10_0._onCheckFlowDone, arg_10_0)
+	if self._inPopupFlow then
+		self:registerCallback(MainEvent.OnMainPopupFlowFinish, self._onCheckFlowDone, self)
 
 		return
 	end
 
-	arg_10_0:_setDailyRefreshPopUp()
+	self:_setDailyRefreshPopUp()
 end
 
-function var_0_0._onCheckFlowDone(arg_11_0)
-	arg_11_0:unregisterCallback(MainEvent.OnMainPopupFlowFinish, arg_11_0._onCheckFlowDone, arg_11_0)
-	arg_11_0:_setDailyRefreshPopUp()
+function MainController:_onCheckFlowDone()
+	self:unregisterCallback(MainEvent.OnMainPopupFlowFinish, self._onCheckFlowDone, self)
+	self:_setDailyRefreshPopUp()
 end
 
-function var_0_0._setDailyRefreshPopUp(arg_12_0)
-	arg_12_0:_destroyPopupFlow()
+function MainController:_setDailyRefreshPopUp()
+	self:_destroyPopupFlow()
 
-	arg_12_0._popupFlow = FlowSequence.New()
+	self._popupFlow = FlowSequence.New()
 
-	arg_12_0._popupFlow:addWork(MainSignInWork.New())
+	self._popupFlow:addWork(MainSignInWork.New())
 
-	if arg_12_0._isDailyRefresh then
-		arg_12_0._popupFlow:addWork(MainPatFaceWork.New())
+	if self._isDailyRefresh then
+		self._popupFlow:addWork(MainPatFaceWork.New())
 	else
-		arg_12_0._popupFlow:addWork(Activity152PatFaceWork.New())
+		self._popupFlow:addWork(Activity152PatFaceWork.New())
 	end
 
-	arg_12_0._popupFlow:registerDoneListener(arg_12_0._onPopupFlowDailyDone, arg_12_0)
+	self._popupFlow:registerDoneListener(self._onPopupFlowDailyDone, self)
 
-	arg_12_0._inPopupFlow = true
+	self._inPopupFlow = true
 
-	arg_12_0._popupFlow:start({
-		dailyRefresh = arg_12_0._isDailyRefresh
+	self._popupFlow:start({
+		dailyRefresh = self._isDailyRefresh
 	})
 end
 
-function var_0_0._onPopupFlowDailyDone(arg_13_0)
-	arg_13_0._inPopupFlow = false
+function MainController:_onPopupFlowDailyDone()
+	self._inPopupFlow = false
 
-	var_0_0.instance:dispatchEvent(MainEvent.OnDailyPopupFlowFinish)
+	MainController.instance:dispatchEvent(MainEvent.OnDailyPopupFlowFinish)
 end
 
-function var_0_0._onPopupFlowDone(arg_14_0, arg_14_1)
-	arg_14_0._inPopupFlow = false
+function MainController:_onPopupFlowDone(isSuccess)
+	self._inPopupFlow = false
 
-	var_0_0.instance:dispatchEvent(MainEvent.OnMainPopupFlowFinish)
+	MainController.instance:dispatchEvent(MainEvent.OnMainPopupFlowFinish)
 end
 
-function var_0_0.enterMainScene(arg_15_0, arg_15_1, arg_15_2)
-	GameSceneMgr.instance:startSceneDefaultLevel(SceneType.Main, 101, arg_15_1, arg_15_2)
+function MainController:enterMainScene(forceStarting, forceSceneType)
+	GameSceneMgr.instance:startSceneDefaultLevel(SceneType.Main, 101, forceStarting, forceSceneType)
 end
 
-function var_0_0.openMainThumbnailView(arg_16_0, arg_16_1, arg_16_2)
-	var_0_0.instance:dispatchEvent(MainEvent.OnClickSwitchRole)
-	ViewMgr.instance:openView(ViewName.MainThumbnailView, arg_16_1, arg_16_2)
+function MainController:openMainThumbnailView(param, isImmediate)
+	MainController.instance:dispatchEvent(MainEvent.OnClickSwitchRole)
+	ViewMgr.instance:openView(ViewName.MainThumbnailView, param, isImmediate)
 end
 
-function var_0_0.setRequestNoticeTime(arg_17_0)
-	arg_17_0.requestTime = Time.realtimeSinceStartup
+function MainController:setRequestNoticeTime()
+	self.requestTime = Time.realtimeSinceStartup
 end
 
-function var_0_0.getLastRequestNoticeTime(arg_18_0)
-	return arg_18_0.requestTime
+function MainController:getLastRequestNoticeTime()
+	return self.requestTime
 end
 
-function var_0_0.isInMainView(arg_19_0)
-	local var_19_0 = ViewMgr.instance:getOpenViewNameList()
-	local var_19_1 = {}
+function MainController:isInMainView()
+	local openViews = ViewMgr.instance:getOpenViewNameList()
+	local openFullView = {}
 
-	for iter_19_0, iter_19_1 in ipairs(var_19_0) do
-		local var_19_2 = ViewMgr.instance:getSetting(iter_19_1)
+	for _, v in ipairs(openViews) do
+		local setting = ViewMgr.instance:getSetting(v)
 
-		if var_19_2.layer ~= UILayerName.Message and var_19_2.layer ~= UILayerName.IDCanvasPopUp then
-			table.insert(var_19_1, iter_19_1)
+		if setting.layer ~= UILayerName.Message and setting.layer ~= UILayerName.IDCanvasPopUp then
+			table.insert(openFullView, v)
 		end
 	end
 
-	local var_19_3 = true
+	local isInMainView = true
 
-	if #var_19_1 > 1 or var_19_1[1] ~= ViewName.MainView then
-		var_19_3 = false
+	if #openFullView > 1 or openFullView[1] ~= ViewName.MainView then
+		isInMainView = false
 	end
 
-	return var_19_3
+	return isInMainView
 end
 
-function var_0_0.isInPopupFlow(arg_20_0)
-	return arg_20_0._inPopupFlow
+function MainController:isInPopupFlow()
+	return self._inPopupFlow
 end
 
-function var_0_0.clearOpenMainViewFlag(arg_21_0)
-	arg_21_0._needOpenMainView = false
+function MainController:clearOpenMainViewFlag()
+	self._needOpenMainView = false
 end
 
-function var_0_0._onManuallyOpenMainView(arg_22_0)
-	arg_22_0._needOpenMainView = true
+function MainController:_onManuallyOpenMainView()
+	self._needOpenMainView = true
 
-	arg_22_0:_checkOpenMainView()
+	self:_checkOpenMainView()
 end
 
-function var_0_0._checkOpenMainView(arg_23_0)
-	if not arg_23_0._needOpenMainView or ViewMgr.instance:hasOpenFullView() then
+function MainController:_checkOpenMainView()
+	if not self._needOpenMainView or ViewMgr.instance:hasOpenFullView() then
 		return
 	end
 
@@ -184,7 +186,7 @@ function var_0_0._checkOpenMainView(arg_23_0)
 		return
 	end
 
-	arg_23_0._needOpenMainView = false
+	self._needOpenMainView = false
 
 	if ViewMgr.instance:isOpen(ViewName.MainView) then
 		return
@@ -193,14 +195,14 @@ function var_0_0._checkOpenMainView(arg_23_0)
 	ViewMgr.instance:openView(ViewName.MainView)
 end
 
-function var_0_0._onCloseView(arg_24_0)
-	arg_24_0:_checkOpenMainView()
+function MainController:_onCloseView()
+	self:_checkOpenMainView()
 end
 
-function var_0_0._onCloseViewFinish(arg_25_0)
-	arg_25_0:_checkOpenMainView()
+function MainController:_onCloseViewFinish()
+	self:_checkOpenMainView()
 end
 
-var_0_0.instance = var_0_0.New()
+MainController.instance = MainController.New()
 
-return var_0_0
+return MainController

@@ -1,94 +1,96 @@
-﻿module("modules.logic.versionactivity2_2.warmup.view.V2a2_WarmUpLeftView_Day3", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/warmup/view/V2a2_WarmUpLeftView_Day3.lua
 
-local var_0_0 = require("modules.logic.versionactivity2_2.warmup.view.V2a2_WarmUpLeftView_DayBase")
-local var_0_1 = class("V2a2_WarmUpLeftView_Day3", var_0_0)
+module("modules.logic.versionactivity2_2.warmup.view.V2a2_WarmUpLeftView_Day3", package.seeall)
 
-function var_0_1.onInitView(arg_1_0)
-	arg_1_0._simageicon1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "before/#simage_icon1")
-	arg_1_0._btn1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "before/#btn_1")
-	arg_1_0._simageicon2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "after/#simage_icon2")
+local Base = require("modules.logic.versionactivity2_2.warmup.view.V2a2_WarmUpLeftView_DayBase")
+local V2a2_WarmUpLeftView_Day3 = class("V2a2_WarmUpLeftView_Day3", Base)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V2a2_WarmUpLeftView_Day3:onInitView()
+	self._simageicon1 = gohelper.findChildSingleImage(self.viewGO, "before/#simage_icon1")
+	self._btn1 = gohelper.findChildButtonWithAudio(self.viewGO, "before/#btn_1")
+	self._simageicon2 = gohelper.findChildSingleImage(self.viewGO, "after/#simage_icon2")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_1.addEvents(arg_2_0)
-	arg_2_0._btn1:AddClickListener(arg_2_0._btn1OnClick, arg_2_0)
+function V2a2_WarmUpLeftView_Day3:addEvents()
+	self._btn1:AddClickListener(self._btn1OnClick, self)
 end
 
-function var_0_1.removeEvents(arg_3_0)
-	arg_3_0._btn1:RemoveClickListener()
+function V2a2_WarmUpLeftView_Day3:removeEvents()
+	self._btn1:RemoveClickListener()
 end
 
-function var_0_1._btn1OnClick(arg_4_0)
+function V2a2_WarmUpLeftView_Day3:_btn1OnClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_youyu_yure_key_click_20220220)
-	arg_4_0:markGuided()
-	arg_4_0:_setActive_guide(false)
+	self:markGuided()
+	self:_setActive_guide(false)
 
-	if not arg_4_0._allowClick then
+	if not self._allowClick then
 		return
 	end
 
-	arg_4_0._allowClick = false
+	self._allowClick = false
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_youyu_yure_key_move_20220221)
-	arg_4_0:playAnim_before_click(arg_4_0._click_before_doneCb, arg_4_0)
+	self:playAnim_before_click(self._click_before_doneCb, self)
 end
 
-function var_0_1._click_before_doneCb(arg_5_0)
-	arg_5_0._allowClick = false
-	arg_5_0._needWaitCount = 2
+function V2a2_WarmUpLeftView_Day3:_click_before_doneCb()
+	self._allowClick = false
+	self._needWaitCount = 2
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_youyu_yure_door_open_20220222)
-	arg_5_0:playAnim_before_out(arg_5_0._onAfterDone, arg_5_0)
-	arg_5_0:playAnim_after_in(arg_5_0._onAfterDone, arg_5_0)
+	self:playAnim_before_out(self._onAfterDone, self)
+	self:playAnim_after_in(self._onAfterDone, self)
 end
 
-function var_0_1._onAfterDone(arg_6_0)
-	arg_6_0._needWaitCount = arg_6_0._needWaitCount - 1
+function V2a2_WarmUpLeftView_Day3:_onAfterDone()
+	self._needWaitCount = self._needWaitCount - 1
 
-	if arg_6_0._needWaitCount > 0 then
+	if self._needWaitCount > 0 then
 		return
 	end
 
-	arg_6_0:markIsFinishedInteractive(true)
-	arg_6_0:saveStateDone(true)
-	arg_6_0:setActive_before(false)
-	arg_6_0:setActive_after(true)
-	arg_6_0:openDesc()
+	self:markIsFinishedInteractive(true)
+	self:saveStateDone(true)
+	self:setActive_before(false)
+	self:setActive_after(true)
+	self:openDesc()
 end
 
-function var_0_1.ctor(arg_7_0, arg_7_1)
-	var_0_0.ctor(arg_7_0, arg_7_1)
+function V2a2_WarmUpLeftView_Day3:ctor(ctorParam)
+	Base.ctor(self, ctorParam)
 
-	arg_7_0._needWaitCount = 0
-	arg_7_0._allowClick = false
+	self._needWaitCount = 0
+	self._allowClick = false
 end
 
-function var_0_1._editableInitView(arg_8_0)
-	var_0_0._editableInitView(arg_8_0)
+function V2a2_WarmUpLeftView_Day3:_editableInitView()
+	Base._editableInitView(self)
 
-	arg_8_0._guideGo = gohelper.findChild(arg_8_0.viewGO, "guide_day3")
+	self._guideGo = gohelper.findChild(self.viewGO, "guide_day3")
 end
 
-function var_0_1.onDestroyView(arg_9_0)
-	var_0_0.onDestroyView(arg_9_0)
+function V2a2_WarmUpLeftView_Day3:onDestroyView()
+	Base.onDestroyView(self)
 end
 
-function var_0_1.setData(arg_10_0)
-	var_0_0.setData(arg_10_0)
+function V2a2_WarmUpLeftView_Day3:setData()
+	Base.setData(self)
 
-	local var_10_0 = arg_10_0:checkIsDone()
+	local isDone = self:checkIsDone()
 
-	if not var_10_0 then
-		arg_10_0:playAnimRaw_before_idle(0, 1)
+	if not isDone then
+		self:playAnimRaw_before_idle(0, 1)
 	end
 
-	arg_10_0._allowClick = not var_10_0
+	self._allowClick = not isDone
 
-	arg_10_0:setActive_before(not var_10_0)
-	arg_10_0:setActive_after(var_10_0)
+	self:setActive_before(not isDone)
+	self:setActive_after(isDone)
 end
 
-return var_0_1
+return V2a2_WarmUpLeftView_Day3

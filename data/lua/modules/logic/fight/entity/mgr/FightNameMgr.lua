@@ -1,133 +1,137 @@
-﻿module("modules.logic.fight.entity.mgr.FightNameMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/mgr/FightNameMgr.lua
 
-local var_0_0 = class("FightNameMgr")
+module("modules.logic.fight.entity.mgr.FightNameMgr", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._hasReplaceNameBar = nil
-	arg_1_0._nameParent = nil
-	arg_1_0._fightNameUIList = nil
+local FightNameMgr = class("FightNameMgr")
+
+function FightNameMgr:ctor()
+	self._hasReplaceNameBar = nil
+	self._nameParent = nil
+	self._fightNameUIList = nil
 end
 
-function var_0_0.init(arg_2_0)
-	local var_2_0 = arg_2_0:getHudGO()
+function FightNameMgr:init()
+	local hudLayer = self:getHudGO()
 
-	arg_2_0._nameParent = gohelper.create2d(var_2_0, "NameBar")
-	arg_2_0._fightNameUIList = {}
+	self._nameParent = gohelper.create2d(hudLayer, "NameBar")
+	self._fightNameUIList = {}
 end
 
-function var_0_0.getHudGO(arg_3_0)
+function FightNameMgr:getHudGO()
 	return ViewMgr.instance:getUILayer(UILayerName.Hud)
 end
 
-function var_0_0.dispose(arg_4_0)
-	arg_4_0._hasReplaceNameBar = nil
+function FightNameMgr:dispose()
+	self._hasReplaceNameBar = nil
 
-	if arg_4_0._nameParent then
-		gohelper.destroy(arg_4_0._nameParent)
+	if self._nameParent then
+		gohelper.destroy(self._nameParent)
 
-		arg_4_0._nameParent = nil
+		self._nameParent = nil
 	end
 
-	arg_4_0._fightNameUIList = {}
+	self._fightNameUIList = {}
 
-	TaskDispatcher.cancelTask(arg_4_0._delayAdujstUISibling, arg_4_0)
+	TaskDispatcher.cancelTask(self._delayAdujstUISibling, self)
 end
 
-function var_0_0.onRestartStage(arg_5_0)
-	arg_5_0._fightNameUIList = {}
+function FightNameMgr:onRestartStage()
+	self._fightNameUIList = {}
 
-	TaskDispatcher.cancelTask(arg_5_0._delayAdujstUISibling, arg_5_0)
+	TaskDispatcher.cancelTask(self._delayAdujstUISibling, self)
 end
 
-function var_0_0.getNameParent(arg_6_0)
-	return arg_6_0._nameParent
+function FightNameMgr:getNameParent()
+	return self._nameParent
 end
 
-function var_0_0.register(arg_7_0, arg_7_1)
-	table.insert(arg_7_0._fightNameUIList, arg_7_1)
-	TaskDispatcher.cancelTask(arg_7_0._delayAdujstUISibling, arg_7_0)
-	TaskDispatcher.runDelay(arg_7_0._delayAdujstUISibling, arg_7_0, 1)
-	arg_7_0:_replaceNameBar()
+function FightNameMgr:register(fightNameUI)
+	table.insert(self._fightNameUIList, fightNameUI)
+	TaskDispatcher.cancelTask(self._delayAdujstUISibling, self)
+	TaskDispatcher.runDelay(self._delayAdujstUISibling, self, 1)
+	self:_replaceNameBar()
 end
 
-function var_0_0.unregister(arg_8_0, arg_8_1)
-	tabletool.removeValue(arg_8_0._fightNameUIList, arg_8_1)
+function FightNameMgr:unregister(fightNameUI)
+	tabletool.removeValue(self._fightNameUIList, fightNameUI)
 end
 
-function var_0_0._replaceNameBar(arg_9_0)
-	if arg_9_0._hasReplaceNameBar or #arg_9_0._fightNameUIList == 0 then
+function FightNameMgr:_replaceNameBar()
+	if self._hasReplaceNameBar or #self._fightNameUIList == 0 then
 		return
 	end
 
-	local var_9_0 = arg_9_0._fightNameUIList[1]:getUIGO()
+	local first = self._fightNameUIList[1]
+	local firstGO = first:getUIGO()
 
-	if gohelper.isNil(var_9_0) then
+	if gohelper.isNil(firstGO) then
 		return
 	end
 
-	arg_9_0._hasReplaceNameBar = true
+	self._hasReplaceNameBar = true
 
-	local var_9_1 = gohelper.findChild(var_9_0, "NameBar")
+	local nameBarGOWithCanvas = gohelper.findChild(firstGO, "NameBar")
 
-	if gohelper.isNil(var_9_1) then
+	if gohelper.isNil(nameBarGOWithCanvas) then
 		return
 	end
 
-	local var_9_2 = arg_9_0:getHudGO()
-	local var_9_3 = gohelper.clone(var_9_1, var_9_2, "NameBar")
+	local hudLayer = self:getHudGO()
+	local newNameParent = gohelper.clone(nameBarGOWithCanvas, hudLayer, "NameBar")
 
-	if gohelper.isNil(arg_9_0._nameParent) or gohelper.isNil(var_9_3) then
+	if gohelper.isNil(self._nameParent) or gohelper.isNil(newNameParent) then
 		return
 	end
 
-	local var_9_4 = arg_9_0._nameParent.transform
-	local var_9_5 = var_9_3.transform
+	local nameParentTr = self._nameParent.transform
+	local newNameParentTr = newNameParent.transform
+	local count = nameParentTr.childCount
 
-	for iter_9_0 = var_9_4.childCount - 1, 0, -1 do
-		local var_9_6 = var_9_4:GetChild(iter_9_0)
+	for i = count - 1, 0, -1 do
+		local tr = nameParentTr:GetChild(i)
 
-		if not gohelper.isNil(var_9_6) then
-			var_9_6:SetParent(var_9_5, false)
+		if not gohelper.isNil(tr) then
+			tr:SetParent(newNameParentTr, false)
 		end
 	end
 
-	gohelper.setSiblingAfter(var_9_3, arg_9_0._nameParent)
-	gohelper.destroy(arg_9_0._nameParent)
+	gohelper.setSiblingAfter(newNameParent, self._nameParent)
+	gohelper.destroy(self._nameParent)
 
-	arg_9_0._nameParent = var_9_3
+	self._nameParent = newNameParent
 
-	gohelper.setActive(arg_9_0._nameParent, true)
+	gohelper.setActive(self._nameParent, true)
 end
 
-function var_0_0._delayAdujstUISibling(arg_10_0)
-	arg_10_0:_replaceNameBar()
+function FightNameMgr:_delayAdujstUISibling()
+	self:_replaceNameBar()
 
-	if #arg_10_0._fightNameUIList <= 1 then
+	if #self._fightNameUIList <= 1 then
 		return
 	end
 
-	table.sort(arg_10_0._fightNameUIList, function(arg_11_0, arg_11_1)
-		local var_11_0 = arg_11_0.entity.go.transform.position
-		local var_11_1 = arg_11_1.entity.go.transform.position
+	table.sort(self._fightNameUIList, function(nameUI1, nameUI2)
+		local pos1 = nameUI1.entity.go.transform.position
+		local pos2 = nameUI2.entity.go.transform.position
 
-		if var_11_0.z ~= var_11_1.z then
-			return var_11_0.z > var_11_1.z
-		elseif var_11_0.x ~= var_11_1.x then
-			return math.abs(var_11_0.x) > math.abs(var_11_1.x)
+		if pos1.z ~= pos2.z then
+			return pos1.z > pos2.z
+		elseif pos1.x ~= pos2.x then
+			return math.abs(pos1.x) > math.abs(pos2.x)
 		else
-			return arg_11_0.entity.id > arg_11_1.entity.id
+			return nameUI1.entity.id > nameUI2.entity.id
 		end
 	end)
-	gohelper.setAsFirstSibling(arg_10_0._fightNameUIList[1]:getGO())
+	gohelper.setAsFirstSibling(self._fightNameUIList[1]:getGO())
 
-	for iter_10_0 = 2, #arg_10_0._fightNameUIList do
-		local var_10_0 = arg_10_0._fightNameUIList[iter_10_0]
-		local var_10_1 = arg_10_0._fightNameUIList[iter_10_0 - 1]
+	for i = 2, #self._fightNameUIList do
+		local curNameUI = self._fightNameUIList[i]
+		local preNameUI = self._fightNameUIList[i - 1]
 
-		gohelper.setSiblingAfter(var_10_0:getGO(), var_10_1:getGO())
+		gohelper.setSiblingAfter(curNameUI:getGO(), preNameUI:getGO())
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+FightNameMgr.instance = FightNameMgr.New()
 
-return var_0_0
+return FightNameMgr

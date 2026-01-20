@@ -1,41 +1,45 @@
-﻿module("modules.logic.activitywelfare.model.ActivityWelfareListModel", package.seeall)
+﻿-- chunkname: @modules/logic/activitywelfare/model/ActivityWelfareListModel.lua
 
-local var_0_0 = class("ActivityWelfareListModel", ListScrollModel)
+module("modules.logic.activitywelfare.model.ActivityWelfareListModel", package.seeall)
 
-function var_0_0.setCategoryList(arg_1_0, arg_1_1)
-	arg_1_0._moList = arg_1_1 and arg_1_1 or {}
+local ActivityWelfareListModel = class("ActivityWelfareListModel", ListScrollModel)
 
-	table.sort(arg_1_0._moList, var_0_0._sort)
-	arg_1_0:setList(arg_1_0._moList)
-	arg_1_0.checkTargetCategory(arg_1_0._moList)
+function ActivityWelfareListModel:setCategoryList(Infos)
+	self._moList = Infos and Infos or {}
+
+	table.sort(self._moList, ActivityWelfareListModel._sort)
+	self:setList(self._moList)
+	self.checkTargetCategory(self._moList)
 end
 
-function var_0_0.checkTargetCategory(arg_2_0)
-	if ActivityModel.instance:getCurTargetActivityCategoryId() > 0 or not arg_2_0 or #arg_2_0 <= 0 then
+function ActivityWelfareListModel.checkTargetCategory(Infos)
+	local id = ActivityModel.instance:getCurTargetActivityCategoryId()
+
+	if id > 0 or not Infos or #Infos <= 0 then
 		return
 	end
 
-	table.sort(arg_2_0, var_0_0._sort)
-	ActivityModel.instance:setTargetActivityCategoryId(arg_2_0[1].co.id)
+	table.sort(Infos, ActivityWelfareListModel._sort)
+	ActivityModel.instance:setTargetActivityCategoryId(Infos[1].co.id)
 end
 
-function var_0_0._sort(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_0.co.id
-	local var_3_1 = arg_3_1.co.id
-	local var_3_2 = arg_3_0.co.defaultPriority
-	local var_3_3 = arg_3_1.co.defaultPriority
+function ActivityWelfareListModel._sort(a, b)
+	local aId = a.co.id
+	local bId = b.co.id
+	local aPriority = a.co.defaultPriority
+	local bPriority = b.co.defaultPriority
 
-	if var_3_2 == var_3_3 then
-		return var_3_1 < var_3_0
+	if aPriority == bPriority then
+		return bId < aId
 	end
 
-	return var_3_3 < var_3_2
+	return bPriority < aPriority
 end
 
-function var_0_0.setOpenViewTime(arg_4_0)
-	arg_4_0.openViewTime = Time.realtimeSinceStartup
+function ActivityWelfareListModel:setOpenViewTime()
+	self.openViewTime = Time.realtimeSinceStartup
 end
 
-var_0_0.instance = var_0_0.New()
+ActivityWelfareListModel.instance = ActivityWelfareListModel.New()
 
-return var_0_0
+return ActivityWelfareListModel

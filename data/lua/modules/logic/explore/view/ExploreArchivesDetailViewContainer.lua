@@ -1,11 +1,13 @@
-﻿module("modules.logic.explore.view.ExploreArchivesDetailViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/explore/view/ExploreArchivesDetailViewContainer.lua
 
-local var_0_0 = class("ExploreArchivesDetailViewContainer", BaseViewContainer)
+module("modules.logic.explore.view.ExploreArchivesDetailViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local ExploreArchivesDetailViewContainer = class("ExploreArchivesDetailViewContainer", BaseViewContainer)
+
+function ExploreArchivesDetailViewContainer:buildViews()
 	return {
 		ExploreArchivesDetailView.New()
 	}
 end
 
-return var_0_0
+return ExploreArchivesDetailViewContainer

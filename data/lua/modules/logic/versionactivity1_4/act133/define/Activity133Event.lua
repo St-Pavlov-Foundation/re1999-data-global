@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity1_4.act133.define.Activity133Event", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act133/define/Activity133Event.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_4.act133.define.Activity133Event", package.seeall)
 
-var_0_0.OnUpdateInfo = 1
-var_0_0.OnGetBonus = 2
-var_0_0.OnSelectCheckNote = 3
-var_0_0.OnTaskUpdate = 4
-var_0_0.OnRedDotUpdate = 5
-var_0_0.OnViewFixAniFinish = 6
-var_0_0.OnItemFixAniFinish = 7
+local Activity133Event = _M
 
-return var_0_0
+Activity133Event.OnUpdateInfo = 1
+Activity133Event.OnGetBonus = 2
+Activity133Event.OnSelectCheckNote = 3
+Activity133Event.OnTaskUpdate = 4
+Activity133Event.OnRedDotUpdate = 5
+Activity133Event.OnViewFixAniFinish = 6
+Activity133Event.OnItemFixAniFinish = 7
+
+return Activity133Event

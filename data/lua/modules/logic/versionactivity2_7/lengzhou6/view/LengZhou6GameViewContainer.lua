@@ -1,41 +1,45 @@
-﻿module("modules.logic.versionactivity2_7.lengzhou6.view.LengZhou6GameViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/lengzhou6/view/LengZhou6GameViewContainer.lua
 
-local var_0_0 = class("LengZhou6GameViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_7.lengzhou6.view.LengZhou6GameViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	return {
+local LengZhou6GameViewContainer = class("LengZhou6GameViewContainer", BaseViewContainer)
+
+function LengZhou6GameViewContainer:buildViews()
+	local views = {
 		LengZhou6GameView.New(),
 		TabViewGroup.New(1, "#go_btns"),
 		LengZhou6EliminateView.New()
 	}
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		local var_2_0 = arg_2_0:_getHelpId()
+function LengZhou6GameViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		local helpId = self:_getHelpId()
 
-		arg_2_0.navigationView = NavigateButtonsView.New({
+		self.navigationView = NavigateButtonsView.New({
 			true,
 			false,
-			var_2_0 ~= nil
-		}, var_2_0)
+			helpId ~= nil
+		}, helpId)
 
-		arg_2_0.navigationView:setOverrideClose(arg_2_0._overrideClose, arg_2_0)
+		self.navigationView:setOverrideClose(self._overrideClose, self)
 
 		return {
-			arg_2_0.navigationView
+			self.navigationView
 		}
 	end
 end
 
-function var_0_0._overrideClose(arg_3_0)
-	local var_3_0 = LengZhou6Model.instance:getCurEpisodeId()
-	local var_3_1 = LengZhou6Model.instance:getEpisodeInfoMo(var_3_0)
+function LengZhou6GameViewContainer:_overrideClose()
+	local episodeId = LengZhou6Model.instance:getCurEpisodeId()
+	local info = LengZhou6Model.instance:getEpisodeInfoMo(episodeId)
 
-	if var_3_1 then
-		local var_3_2 = var_3_1:isEndlessEpisode() and LengZhou6Enum.GameResult.infiniteCancel or LengZhou6Enum.GameResult.normalCancel
+	if info then
+		local result = info:isEndlessEpisode() and LengZhou6Enum.GameResult.infiniteCancel or LengZhou6Enum.GameResult.normalCancel
 
-		LengZhou6StatHelper.instance:setGameResult(var_3_2)
+		LengZhou6StatHelper.instance:setGameResult(result)
 	end
 
 	LengZhou6GameController.instance:levelGame(true)
@@ -43,20 +47,20 @@ function var_0_0._overrideClose(arg_3_0)
 	LengZhou6StatHelper.instance:sendGameExit()
 end
 
-function var_0_0.refreshHelpId(arg_4_0)
-	local var_4_0 = arg_4_0:_getHelpId()
+function LengZhou6GameViewContainer:refreshHelpId()
+	local helpId = self:_getHelpId()
 
-	if var_4_0 ~= nil and arg_4_0.navigationView ~= nil then
-		arg_4_0.navigationView:setHelpId(var_4_0)
+	if helpId ~= nil and self.navigationView ~= nil then
+		self.navigationView:setHelpId(helpId)
 	end
 end
 
-function var_0_0._getHelpId(arg_5_0)
+function LengZhou6GameViewContainer:_getHelpId()
 	return 2500200
 end
 
-function var_0_0.onContainerInit(arg_6_0)
-	arg_6_0:addEventCb(HelpController.instance, HelpEvent.RefreshHelp, arg_6_0.refreshHelpId, arg_6_0)
+function LengZhou6GameViewContainer:onContainerInit()
+	self:addEventCb(HelpController.instance, HelpEvent.RefreshHelp, self.refreshHelpId, self)
 end
 
-return var_0_0
+return LengZhou6GameViewContainer

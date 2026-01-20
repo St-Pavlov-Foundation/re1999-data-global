@@ -1,94 +1,96 @@
-﻿module("modules.logic.versionactivity2_5.challenge.define.Act183Enum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/define/Act183Enum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity2_5.challenge.define.Act183Enum", package.seeall)
 
-var_0_0.EpisodeType = {
+local Act183Enum = _M
+
+Act183Enum.EpisodeType = {
 	Sub = 2,
 	Boss = 1
 }
-var_0_0.GroupType = {
+Act183Enum.GroupType = {
 	NormalMain = 2,
 	Daily = 1,
 	HardMain = 3
 }
-var_0_0.EpisodeClsType = {
-	[Act183Helper.getEpisodeClsKey(var_0_0.GroupType.Daily, var_0_0.EpisodeType.Boss)] = Act183DailyEpisodeItem,
-	[Act183Helper.getEpisodeClsKey(var_0_0.GroupType.Daily, var_0_0.EpisodeType.Sub)] = Act183DailyEpisodeItem,
-	[Act183Helper.getEpisodeClsKey(var_0_0.GroupType.NormalMain, var_0_0.EpisodeType.Boss)] = Act183MainBossEpisodeItem,
-	[Act183Helper.getEpisodeClsKey(var_0_0.GroupType.NormalMain, var_0_0.EpisodeType.Sub)] = Act183MainNormalEpisodeItem,
-	[Act183Helper.getEpisodeClsKey(var_0_0.GroupType.HardMain, var_0_0.EpisodeType.Boss)] = Act183MainBossEpisodeItem,
-	[Act183Helper.getEpisodeClsKey(var_0_0.GroupType.HardMain, var_0_0.EpisodeType.Sub)] = Act183MainNormalEpisodeItem
+Act183Enum.EpisodeClsType = {
+	[Act183Helper.getEpisodeClsKey(Act183Enum.GroupType.Daily, Act183Enum.EpisodeType.Boss)] = Act183DailyEpisodeItem,
+	[Act183Helper.getEpisodeClsKey(Act183Enum.GroupType.Daily, Act183Enum.EpisodeType.Sub)] = Act183DailyEpisodeItem,
+	[Act183Helper.getEpisodeClsKey(Act183Enum.GroupType.NormalMain, Act183Enum.EpisodeType.Boss)] = Act183MainBossEpisodeItem,
+	[Act183Helper.getEpisodeClsKey(Act183Enum.GroupType.NormalMain, Act183Enum.EpisodeType.Sub)] = Act183MainNormalEpisodeItem,
+	[Act183Helper.getEpisodeClsKey(Act183Enum.GroupType.HardMain, Act183Enum.EpisodeType.Boss)] = Act183MainBossEpisodeItem,
+	[Act183Helper.getEpisodeClsKey(Act183Enum.GroupType.HardMain, Act183Enum.EpisodeType.Sub)] = Act183MainNormalEpisodeItem
 }
-var_0_0.GroupEntranceItemClsType = {
-	[var_0_0.GroupType.Daily] = Act183DailyGroupEntranceItem,
-	[var_0_0.GroupType.NormalMain] = Act183MainGroupEntranceItem,
-	[var_0_0.GroupType.HardMain] = Act183MainGroupEntranceItem
+Act183Enum.GroupEntranceItemClsType = {
+	[Act183Enum.GroupType.Daily] = Act183DailyGroupEntranceItem,
+	[Act183Enum.GroupType.NormalMain] = Act183MainGroupEntranceItem,
+	[Act183Enum.GroupType.HardMain] = Act183MainGroupEntranceItem
 }
-var_0_0.GroupCategoryClsType = {
-	[var_0_0.GroupType.Daily] = Act183DungeonBaseGroupItem,
-	[var_0_0.GroupType.NormalMain] = Act183DungeonBaseGroupItem,
-	[var_0_0.GroupType.HardMain] = Act183DungeonHardMainGroupItem
+Act183Enum.GroupCategoryClsType = {
+	[Act183Enum.GroupType.Daily] = Act183DungeonBaseGroupItem,
+	[Act183Enum.GroupType.NormalMain] = Act183DungeonBaseGroupItem,
+	[Act183Enum.GroupType.HardMain] = Act183DungeonHardMainGroupItem
 }
-var_0_0.EpisodeStatus = {
+Act183Enum.EpisodeStatus = {
 	Finished = 3,
 	Locked = 1,
 	Unlocked = 2
 }
-var_0_0.GroupStatus = {
+Act183Enum.GroupStatus = {
 	Finished = 3,
 	Locked = 1,
 	Unlocked = 2
 }
-var_0_0.RuleStatus = {
+Act183Enum.RuleStatus = {
 	Repress = 2,
 	Enabled = 0,
 	Escape = 1
 }
-var_0_0.TaskListItemType = {
+Act183Enum.TaskListItemType = {
 	Head = 1,
 	Task = 2,
 	OneKey = 3
 }
-var_0_0.TaskItemHeightMap = {
-	[var_0_0.TaskListItemType.Head] = 52,
-	[var_0_0.TaskListItemType.Task] = 158,
-	[var_0_0.TaskListItemType.OneKey] = 158
+Act183Enum.TaskItemHeightMap = {
+	[Act183Enum.TaskListItemType.Head] = 52,
+	[Act183Enum.TaskListItemType.Task] = 158,
+	[Act183Enum.TaskListItemType.OneKey] = 158
 }
-var_0_0.TaskType = {
+Act183Enum.TaskType = {
 	NormalMain = 2,
 	Daily = 1,
 	HardMain = 3
 }
-var_0_0.TaskSubType = {
+Act183Enum.TaskSubType = {
 	Core = 1,
 	Addition = 2
 }
-var_0_0.GroupTypeToTaskType = {
-	[var_0_0.GroupType.Daily] = var_0_0.TaskType.Daily,
-	[var_0_0.GroupType.NormalMain] = var_0_0.TaskType.NormalMain,
-	[var_0_0.GroupType.HardMain] = var_0_0.TaskType.HardMain
+Act183Enum.GroupTypeToTaskType = {
+	[Act183Enum.GroupType.Daily] = Act183Enum.TaskType.Daily,
+	[Act183Enum.GroupType.NormalMain] = Act183Enum.TaskType.NormalMain,
+	[Act183Enum.GroupType.HardMain] = Act183Enum.TaskType.HardMain
 }
-var_0_0.TaskNameLangId = {
-	[var_0_0.TaskType.Daily] = "act183taskview_dailytask",
-	[var_0_0.TaskType.NormalMain] = "act183taskview_normalmaintask",
-	[var_0_0.TaskType.HardMain] = "act183taskview_hardmaintask"
+Act183Enum.TaskNameLangId = {
+	[Act183Enum.TaskType.Daily] = "act183taskview_dailytask",
+	[Act183Enum.TaskType.NormalMain] = "act183taskview_normalmaintask",
+	[Act183Enum.TaskType.HardMain] = "act183taskview_hardmaintask"
 }
-var_0_0.HeroType = {
+Act183Enum.HeroType = {
 	Trial = 2,
 	Normal = 1
 }
-var_0_0.MaxMainSubEpisodesNum = 4
-var_0_0.MaxDailySubEpisodesNum = 3
-var_0_0.MainGroupBossEpisodeNum = 1
-var_0_0.BossEpisodeMaxHeroNum = 5
-var_0_0.Const = {
+Act183Enum.MaxMainSubEpisodesNum = 4
+Act183Enum.MaxDailySubEpisodesNum = 3
+Act183Enum.MainGroupBossEpisodeNum = 1
+Act183Enum.BossEpisodeMaxHeroNum = 5
+Act183Enum.Const = {
 	MaxBadgeNum = 1,
 	RoundStage = 5,
 	PlayerClothIds = 7,
 	BadgeItemId = 6,
 	MainBannerUrl = 8
 }
-var_0_0.RuleEscapeAnimType = {
+Act183Enum.RuleEscapeAnimType = {
 	RightTop2Center = 10,
 	RightTop2LeftBottom = 6,
 	LeftTop2RightBottom = 5,
@@ -102,24 +104,24 @@ var_0_0.RuleEscapeAnimType = {
 	Right2Left = 4,
 	Left2Right = 3
 }
-var_0_0.ConditionStatus = {
+Act183Enum.ConditionStatus = {
 	Pass = 2,
 	Pass_Unselect = 3,
 	Pass_Select = 4,
 	Unpass = 1
 }
-var_0_0.ConditionStarImgName = {
-	[var_0_0.ConditionStatus.Unpass] = "v2a5_challenge_settlement_bossstar1",
-	[var_0_0.ConditionStatus.Pass] = "v2a5_challenge_settlement_bossstar2",
-	[var_0_0.ConditionStatus.Pass_Unselect] = "v2a5_challenge_settlement_bossstar3",
-	[var_0_0.ConditionStatus.Pass_Select] = "v2a5_challenge_settlement_bossstar2"
+Act183Enum.ConditionStarImgName = {
+	[Act183Enum.ConditionStatus.Unpass] = "v2a5_challenge_settlement_bossstar1",
+	[Act183Enum.ConditionStatus.Pass] = "v2a5_challenge_settlement_bossstar2",
+	[Act183Enum.ConditionStatus.Pass_Unselect] = "v2a5_challenge_settlement_bossstar3",
+	[Act183Enum.ConditionStatus.Pass_Select] = "v2a5_challenge_settlement_bossstar2"
 }
-var_0_0.BattleNumToSnapShotType = {
+Act183Enum.BattleNumToSnapShotType = {
 	Default = ModuleEnum.HeroGroupSnapshotType.Act183Boss,
 	[4] = ModuleEnum.HeroGroupSnapshotType.Act183Normal,
 	[5] = ModuleEnum.HeroGroupSnapshotType.Act183Boss
 }
-var_0_0.ActType = 183
-var_0_0.StoreEntryPrefabUrl = "ui/viewres/versionactivity_2_5/challenge/v2a5_challenge_storeentry.prefab"
+Act183Enum.ActType = 183
+Act183Enum.StoreEntryPrefabUrl = "ui/viewres/versionactivity_2_5/challenge/v2a5_challenge_storeentry.prefab"
 
-return var_0_0
+return Act183Enum

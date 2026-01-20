@@ -1,51 +1,53 @@
-﻿module("modules.logic.survival.controller.work.step.SurvivalMapTickAfterWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/step/SurvivalMapTickAfterWork.lua
 
-local var_0_0 = class("SurvivalMapTickAfterWork", SurvivalStepBaseWork)
+module("modules.logic.survival.controller.work.step.SurvivalMapTickAfterWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_0._stepMo.paramInt[1] or 0
-	local var_1_1 = arg_1_0._stepMo.paramInt[2] or 0
-	local var_1_2 = arg_1_0._stepMo.paramInt[3] or 0
+local SurvivalMapTickAfterWork = class("SurvivalMapTickAfterWork", SurvivalStepBaseWork)
 
-	arg_1_0._curRound = var_1_0
-	arg_1_0._totalRound = var_1_1
+function SurvivalMapTickAfterWork:onStart(context)
+	local curRound = self._stepMo.paramInt[1] or 0
+	local totalRound = self._stepMo.paramInt[2] or 0
+	local reason = self._stepMo.paramInt[3] or 0
 
-	if var_1_2 == 2 and not arg_1_0.context.fastExecute then
-		SurvivalController.instance:dispatchEvent(SurvivalEvent.ShowSurvivalHeroTick, var_1_0, var_1_1)
-		TaskDispatcher.runDelay(arg_1_0._delayDone, arg_1_0, SurvivalConst.PlayerMoveSpeed)
+	self._curRound = curRound
+	self._totalRound = totalRound
+
+	if reason == 2 and not self.context.fastExecute then
+		SurvivalController.instance:dispatchEvent(SurvivalEvent.ShowSurvivalHeroTick, curRound, totalRound)
+		TaskDispatcher.runDelay(self._delayDone, self, SurvivalConst.PlayerMoveSpeed)
 		ViewMgr.instance:closeAllPopupViews()
 
-		local var_1_3 = SurvivalMapModel.instance:getSceneMo().player
-		local var_1_4, var_1_5, var_1_6 = SurvivalHelper.instance:hexPointToWorldPoint(var_1_3.pos.q, var_1_3.pos.r)
+		local player = SurvivalMapModel.instance:getSceneMo().player
+		local x, y, z = SurvivalHelper.instance:hexPointToWorldPoint(player.pos.q, player.pos.r)
 
-		SurvivalController.instance:dispatchEvent(SurvivalEvent.TweenCameraFocus, Vector3(var_1_4, var_1_5, var_1_6))
+		SurvivalController.instance:dispatchEvent(SurvivalEvent.TweenCameraFocus, Vector3(x, y, z))
 		UIBlockMgrExtend.setNeedCircleMv(false)
 
-		if var_1_0 == 1 then
+		if curRound == 1 then
 			AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_fuleyuan_tansuo_dutiao_loop)
 		end
 
 		UIBlockHelper.instance:startBlock("SurvivalMapTickAfterWork", SurvivalConst.PlayerMoveSpeed)
 	else
-		arg_1_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._delayDone(arg_2_0)
-	if arg_2_0._curRound == arg_2_0._totalRound then
+function SurvivalMapTickAfterWork:_delayDone()
+	if self._curRound == self._totalRound then
 		AudioMgr.instance:trigger(AudioEnum2_8.Survival.stop_ui_fuleyuan_tansuo_dutiao_loop)
 	end
 
-	arg_2_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
+function SurvivalMapTickAfterWork:clearWork()
 	UIBlockMgrExtend.setNeedCircleMv(true)
-	TaskDispatcher.cancelTask(arg_3_0._delayDone, arg_3_0)
+	TaskDispatcher.cancelTask(self._delayDone, self)
 end
 
-function var_0_0.getRunOrder(arg_4_0, arg_4_1, arg_4_2)
+function SurvivalMapTickAfterWork:getRunOrder(params, flow)
 	return SurvivalEnum.StepRunOrder.Before
 end
 
-return var_0_0
+return SurvivalMapTickAfterWork

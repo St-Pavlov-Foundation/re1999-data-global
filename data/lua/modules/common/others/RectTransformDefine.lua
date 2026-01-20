@@ -1,8 +1,10 @@
-﻿module("modules.common.others.RectTransformDefine", package.seeall)
+﻿-- chunkname: @modules/common/others/RectTransformDefine.lua
 
-local var_0_0 = _M
+module("modules.common.others.RectTransformDefine", package.seeall)
 
-var_0_0.Anchor = {
+local RectTransformDefine = _M
+
+RectTransformDefine.Anchor = {
 	LeftUp = Vector2.New(0, 1),
 	LeftMiddle = Vector2.New(0, 0.5),
 	LeftBottom = Vector2.New(0, 0),
@@ -14,4 +16,4 @@ var_0_0.Anchor = {
 	RightBottom = Vector2.New(1, 0)
 }
 
-return var_0_0
+return RectTransformDefine

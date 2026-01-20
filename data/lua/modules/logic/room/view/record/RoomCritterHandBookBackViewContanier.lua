@@ -1,35 +1,37 @@
-﻿module("modules.logic.room.view.record.RoomCritterHandBookBackViewContanier", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/record/RoomCritterHandBookBackViewContanier.lua
 
-local var_0_0 = class("RoomCritterHandBookBackViewContanier", BaseViewContainer)
+module("modules.logic.room.view.record.RoomCritterHandBookBackViewContanier", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = ListScrollParam.New()
+local RoomCritterHandBookBackViewContanier = class("RoomCritterHandBookBackViewContanier", BaseViewContainer)
 
-	var_1_0.scrollGOPath = "bg/#scroll_view/"
-	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_0.prefabUrl = "bg/#scroll_view/Viewport/Content/item"
-	var_1_0.cellClass = RoomCritterHandBookBackItem
-	var_1_0.scrollDir = ScrollEnum.ScrollDirV
-	var_1_0.cellWidth = 230
-	var_1_0.cellHeight = 220
-	var_1_0.cellSpaceV = 0
-	var_1_0.cellSpaceH = 20
-	var_1_0.startSpace = 20
-	var_1_0.cellSpaceH = 0
-	var_1_0.lineCount = 4
-	arg_1_0._handbookbackView = RoomCritterHandBookBackView.New()
-	arg_1_0._handbookbackScrollView = LuaListScrollView.New(RoomHandBookBackListModel.instance, var_1_0)
+function RoomCritterHandBookBackViewContanier:buildViews()
+	local handbookbackScrollParam = ListScrollParam.New()
 
-	local var_1_1 = {}
+	handbookbackScrollParam.scrollGOPath = "bg/#scroll_view/"
+	handbookbackScrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	handbookbackScrollParam.prefabUrl = "bg/#scroll_view/Viewport/Content/item"
+	handbookbackScrollParam.cellClass = RoomCritterHandBookBackItem
+	handbookbackScrollParam.scrollDir = ScrollEnum.ScrollDirV
+	handbookbackScrollParam.cellWidth = 230
+	handbookbackScrollParam.cellHeight = 220
+	handbookbackScrollParam.cellSpaceV = 0
+	handbookbackScrollParam.cellSpaceH = 20
+	handbookbackScrollParam.startSpace = 20
+	handbookbackScrollParam.cellSpaceH = 0
+	handbookbackScrollParam.lineCount = 4
+	self._handbookbackView = RoomCritterHandBookBackView.New()
+	self._handbookbackScrollView = LuaListScrollView.New(RoomHandBookBackListModel.instance, handbookbackScrollParam)
 
-	table.insert(var_1_1, arg_1_0._handbookbackView)
-	table.insert(var_1_1, arg_1_0._handbookbackScrollView)
+	local views = {}
 
-	return var_1_1
+	table.insert(views, self._handbookbackView)
+	table.insert(views, self._handbookbackScrollView)
+
+	return views
 end
 
-function var_0_0.getScrollView(arg_2_0)
-	return arg_2_0._handbookbackScrollView
+function RoomCritterHandBookBackViewContanier:getScrollView()
+	return self._handbookbackScrollView
 end
 
-return var_0_0
+return RoomCritterHandBookBackViewContanier

@@ -5,6 +5,9 @@
     "onceBonus": "2#1#60|10#21#1",
     "days": 6,
     "limit": 1,
-    "overMaxDayBonus": "2#1#60"
+    "overMaxDayBonus": "2#1#60",
+    "itemSource": 125,
+    "signatureDays": 29,
+    "signingItem": 2929001
   }
 ]

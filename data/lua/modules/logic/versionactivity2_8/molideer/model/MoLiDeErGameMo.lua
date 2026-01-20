@@ -1,291 +1,304 @@
-﻿module("modules.logic.versionactivity2_8.molideer.model.MoLiDeErGameMo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/molideer/model/MoLiDeErGameMo.lua
 
-local var_0_0 = pureTable("MoLiDeErGameMo")
+module("modules.logic.versionactivity2_8.molideer.model.MoLiDeErGameMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	arg_1_0.actId = arg_1_1
-	arg_1_0.episodeId = arg_1_2.episodeId
-	arg_1_0.gameId = MoLiDeErConfig.instance:getEpisodeConfig(arg_1_1, arg_1_2.episodeId).gameId
-	arg_1_0.previousRound = arg_1_0.currentRound
-	arg_1_0.previousRoundEnergy = arg_1_0.leftRoundEnergy
-	arg_1_0.currentRound = arg_1_2.currentRound
-	arg_1_0.totalRoundEnergy = arg_1_2.totalRoundEnergy
-	arg_1_0.leftRoundEnergy = arg_1_2.leftRoundEnergy
-	arg_1_0.eventInfos = arg_1_2.eventInfos
-	arg_1_0.teamInfos = arg_1_2.teamInfos
-	arg_1_0.itemInfos = arg_1_2.itemInfos
-	arg_1_0.buffIds = arg_1_2.buffIds
-	arg_1_0.itemBuffIds = arg_1_2.itemBuffIds
-	arg_1_0.finishedEventInfos = arg_1_2.finishedEventInfos
-	arg_1_0.isExtraStar = arg_1_2.isExtraStar
-	arg_1_0.isEpisodeFinish = arg_1_3
-	arg_1_0.passStar = arg_1_4
+local MoLiDeErGameMo = pureTable("MoLiDeErGameMo")
 
-	arg_1_0:initEquipInfo()
-	arg_1_0:initEventInfo()
-	arg_1_0:initFinishEventInfo()
-	arg_1_0:initTeamInfo()
-	arg_1_0:initEventProgressInfo()
+function MoLiDeErGameMo:init(activityId, episodeInfo, isEpisodeFinish, passStar)
+	self.actId = activityId
+	self.episodeId = episodeInfo.episodeId
+
+	local episodeConfig = MoLiDeErConfig.instance:getEpisodeConfig(activityId, episodeInfo.episodeId)
+
+	self.gameId = episodeConfig.gameId
+	self.previousRound = self.currentRound
+	self.previousRoundEnergy = self.leftRoundEnergy
+	self.currentRound = episodeInfo.currentRound
+	self.totalRoundEnergy = episodeInfo.totalRoundEnergy
+	self.leftRoundEnergy = episodeInfo.leftRoundEnergy
+	self.eventInfos = episodeInfo.eventInfos
+	self.teamInfos = episodeInfo.teamInfos
+	self.itemInfos = episodeInfo.itemInfos
+	self.buffIds = episodeInfo.buffIds
+	self.itemBuffIds = episodeInfo.itemBuffIds
+	self.finishedEventInfos = episodeInfo.finishedEventInfos
+	self.isExtraStar = episodeInfo.isExtraStar
+	self.isEpisodeFinish = isEpisodeFinish
+	self.passStar = passStar
+
+	self:initEquipInfo()
+	self:initEventInfo()
+	self:initFinishEventInfo()
+	self:initTeamInfo()
+	self:initEventProgressInfo()
 end
 
-function var_0_0.initEquipInfo(arg_2_0)
-	local var_2_0 = {}
-	local var_2_1 = {}
-	local var_2_2 = {}
+function MoLiDeErGameMo:initEquipInfo()
+	local tempEquipInfoDic = {}
+	local newGetItem = {}
+	local newGetItemDic = {}
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0.itemInfos) do
-		local var_2_3 = iter_2_1.itemId
+	for _, info in ipairs(self.itemInfos) do
+		local itemId = info.itemId
 
-		var_2_0[var_2_3] = iter_2_1
+		tempEquipInfoDic[itemId] = info
 
-		if arg_2_0._equipInfoDic and arg_2_0._equipInfoDic[var_2_3] == nil then
-			logNormal("莫莉德尔 角色活动 获得新装备 id:" .. tostring(var_2_3))
-			table.insert(var_2_1, var_2_3)
+		if self._equipInfoDic and self._equipInfoDic[itemId] == nil then
+			logNormal("莫莉德尔 角色活动 获得新装备 id:" .. tostring(itemId))
+			table.insert(newGetItem, itemId)
 
-			var_2_2[var_2_3] = true
+			newGetItemDic[itemId] = true
 		end
 	end
 
-	arg_2_0._equipInfoDic = var_2_0
-	arg_2_0.newGetItem = var_2_1
-	arg_2_0.newGetItemDic = var_2_2
+	self._equipInfoDic = tempEquipInfoDic
+	self.newGetItem = newGetItem
+	self.newGetItemDic = newGetItemDic
 end
 
-function var_0_0.initEventInfo(arg_3_0)
-	arg_3_0._eventInfoDic = {}
-	arg_3_0._dispatchDic = {}
-	arg_3_0._allDispatch = true
+function MoLiDeErGameMo:initEventInfo()
+	self._eventInfoDic = {}
+	self._dispatchDic = {}
+	self._allDispatch = true
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0.eventInfos) do
-		arg_3_0._eventInfoDic[iter_3_1.eventId] = iter_3_1
+	for _, info in ipairs(self.eventInfos) do
+		self._eventInfoDic[info.eventId] = info
 
-		if iter_3_1.teamId ~= nil or iter_3_1.teamId ~= 0 then
-			arg_3_0._dispatchDic[iter_3_1.teamId] = true
-			arg_3_0._allDispatch = false
+		if info.teamId ~= nil or info.teamId ~= 0 then
+			self._dispatchDic[info.teamId] = true
+			self._allDispatch = false
 		end
 	end
 end
 
-function var_0_0.getEventInfo(arg_4_0, arg_4_1)
-	return arg_4_0._eventInfoDic[arg_4_1]
+function MoLiDeErGameMo:getEventInfo(eventId)
+	return self._eventInfoDic[eventId]
 end
 
-function var_0_0.getEquipInfo(arg_5_0, arg_5_1)
-	return arg_5_0._equipInfoDic[arg_5_1]
+function MoLiDeErGameMo:getEquipInfo(itemId)
+	return self._equipInfoDic[itemId]
 end
 
-function var_0_0.canEquipUse(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0:getEquipInfo(arg_6_1)
+function MoLiDeErGameMo:canEquipUse(itemId)
+	local equipInfo = self:getEquipInfo(itemId)
 
-	if var_6_0 == nil then
+	if equipInfo == nil then
 		return false
 	end
 
-	local var_6_1 = MoLiDeErConfig.instance:getItemConfig(arg_6_1)
+	local itemConfig = MoLiDeErConfig.instance:getItemConfig(itemId)
 
-	if var_6_1 == nil then
-		logError("不存在的道具id:" .. arg_6_1)
+	if itemConfig == nil then
+		logError("不存在的道具id:" .. itemId)
 	end
 
-	return var_6_1.isUse == MoLiDeErEnum.ItemType.Initiative and var_6_0.quantity > 0
+	return itemConfig.isUse == MoLiDeErEnum.ItemType.Initiative and equipInfo.quantity > 0
 end
 
-function var_0_0.initTeamInfo(arg_7_0)
-	local var_7_0 = {}
-	local var_7_1 = {}
-	local var_7_2 = {}
+function MoLiDeErGameMo:initTeamInfo()
+	local tempTeamInfoDic = {}
+	local newGetTeam = {}
+	local newGetTeamDic = {}
 
-	arg_7_0._allActTimeNotMatch = true
+	self._allActTimeNotMatch = true
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0.teamInfos) do
-		local var_7_3 = iter_7_1.teamId
+	for _, info in ipairs(self.teamInfos) do
+		local teamId = info.teamId
 
-		var_7_0[var_7_3] = iter_7_1
+		tempTeamInfoDic[teamId] = info
 
-		if arg_7_0._allActTimeNotMatch == true and iter_7_1.roundActionTime > 0 and iter_7_1.roundActedTime < iter_7_1.roundActionTime then
-			arg_7_0._allActTimeNotMatch = false
+		if self._allActTimeNotMatch == true and info.roundActionTime > 0 and info.roundActedTime < info.roundActionTime then
+			self._allActTimeNotMatch = false
 		end
 
-		if arg_7_0._teamInfoDic and arg_7_0._teamInfoDic[var_7_3] == nil then
-			logNormal("莫莉德尔 角色活动 获得新小队 id:" .. tostring(var_7_3))
-			table.insert(var_7_1, var_7_3)
+		if self._teamInfoDic and self._teamInfoDic[teamId] == nil then
+			logNormal("莫莉德尔 角色活动 获得新小队 id:" .. tostring(teamId))
+			table.insert(newGetTeam, teamId)
 
-			var_7_2[var_7_3] = true
+			newGetTeamDic[teamId] = true
 		end
 	end
 
-	arg_7_0._teamInfoDic = var_7_0
-	arg_7_0.newGetTeam = var_7_1
-	arg_7_0.newGetTeamDic = var_7_2
-	arg_7_0._teamDispatchDic = {}
-	arg_7_0._teamDispatchEventDic = {}
+	self._teamInfoDic = tempTeamInfoDic
+	self.newGetTeam = newGetTeam
+	self.newGetTeamDic = newGetTeamDic
+	self._teamDispatchDic = {}
+	self._teamDispatchEventDic = {}
 
-	for iter_7_2, iter_7_3 in ipairs(arg_7_0.eventInfos) do
-		if iter_7_3.teamId ~= nil and iter_7_3.teamId ~= 0 then
-			arg_7_0._teamDispatchDic[iter_7_3.teamId] = iter_7_3.eventId
-			arg_7_0._teamDispatchEventDic[iter_7_3.eventId] = iter_7_3.teamId
+	for _, eventInfo in ipairs(self.eventInfos) do
+		if eventInfo.teamId ~= nil and eventInfo.teamId ~= 0 then
+			self._teamDispatchDic[eventInfo.teamId] = eventInfo.eventId
+			self._teamDispatchEventDic[eventInfo.eventId] = eventInfo.teamId
 		end
 	end
 end
 
-function var_0_0.initFinishEventInfo(arg_8_0)
-	arg_8_0._finishEventDic = {}
+function MoLiDeErGameMo:initFinishEventInfo()
+	self._finishEventDic = {}
 
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0.finishedEventInfos) do
-		arg_8_0._finishEventDic[iter_8_1.finishedEventId] = iter_8_1
+	for _, info in ipairs(self.finishedEventInfos) do
+		self._finishEventDic[info.finishedEventId] = info
 	end
 end
 
-function var_0_0.isNewFinishEvent(arg_9_0, arg_9_1)
-	return arg_9_0._finishEventDic[arg_9_1] == nil
+function MoLiDeErGameMo:isNewFinishEvent(eventId)
+	return self._finishEventDic[eventId] == nil
 end
 
-function var_0_0.isNewEvent(arg_10_0, arg_10_1)
-	return arg_10_0._eventInfoDic[arg_10_1] == nil
+function MoLiDeErGameMo:isNewEvent(eventId)
+	return self._eventInfoDic[eventId] == nil
 end
 
-function var_0_0.isDispatchTeam(arg_11_0, arg_11_1)
-	return arg_11_0._teamDispatchDic[arg_11_1] ~= nil
+function MoLiDeErGameMo:isDispatchTeam(teamId)
+	return self._teamDispatchDic[teamId] ~= nil
 end
 
-function var_0_0.getEventDispatchTeam(arg_12_0, arg_12_1)
-	return arg_12_0._teamDispatchEventDic[arg_12_1]
+function MoLiDeErGameMo:getEventDispatchTeam(eventId)
+	return self._teamDispatchEventDic[eventId]
 end
 
-function var_0_0.getTeamInfo(arg_13_0, arg_13_1)
-	return arg_13_0._teamInfoDic[arg_13_1]
+function MoLiDeErGameMo:getTeamInfo(teamId)
+	return self._teamInfoDic[teamId]
 end
 
-function var_0_0.canDispatchTeam(arg_14_0, arg_14_1)
-	if arg_14_0:getTeamInfo(arg_14_1) == nil then
+function MoLiDeErGameMo:canDispatchTeam(teamId)
+	local teamInfo = self:getTeamInfo(teamId)
+
+	if teamInfo == nil then
 		return false
 	end
 
-	return not arg_14_0:isInDispatching(arg_14_1)
+	return not self:isInDispatching(teamId)
 end
 
-function var_0_0.isInDispatching(arg_15_0, arg_15_1)
-	return arg_15_0._dispatchDic[arg_15_1] ~= nil
+function MoLiDeErGameMo:isInDispatching(teamId)
+	return self._dispatchDic[teamId] ~= nil
 end
 
-function var_0_0.isAllInDispatching(arg_16_0)
-	return arg_16_0._allDispatch
+function MoLiDeErGameMo:isAllInDispatching()
+	return self._allDispatch
 end
 
-function var_0_0.isAllActTimesNotMatch(arg_17_0)
-	return arg_17_0._allActTimeNotMatch
+function MoLiDeErGameMo:isAllActTimesNotMatch()
+	return self._allActTimeNotMatch
 end
 
-function var_0_0.initEventProgressInfo(arg_18_0)
-	arg_18_0._targetProgressDic = {}
-	arg_18_0._targetNewCompleteDic = {}
-	arg_18_0._targetNewFailDic = {}
+function MoLiDeErGameMo:initEventProgressInfo()
+	self._targetProgressDic = {}
+	self._targetNewCompleteDic = {}
+	self._targetNewFailDic = {}
 
-	local var_18_0 = {}
-	local var_18_1 = {}
-	local var_18_2 = MoLiDeErConfig.instance:getGameConfig(arg_18_0.gameId)
+	local tempTargetCompleteDic = {}
+	local tempTargetFailDic = {}
+	local gameConfig = MoLiDeErConfig.instance:getGameConfig(self.gameId)
 
-	if arg_18_0.isEpisodeFinish and arg_18_0.passStar == -1 then
-		arg_18_0._targetProgressDic[MoLiDeErEnum.TargetId.Main] = MoLiDeErEnum.ProgressRange.Failed
-		var_18_1[MoLiDeErEnum.TargetId.Main] = true
+	if self.isEpisodeFinish and self.passStar == -1 then
+		self._targetProgressDic[MoLiDeErEnum.TargetId.Main] = MoLiDeErEnum.ProgressRange.Failed
+		tempTargetFailDic[MoLiDeErEnum.TargetId.Main] = true
 
 		logNormal("莫莉德尔 角色活动 主目标失败")
 	end
 
-	if arg_18_0.isExtraStar then
-		arg_18_0._targetProgressDic[MoLiDeErEnum.TargetId.Extra] = MoLiDeErEnum.ProgressRange.Success
-		var_18_0[MoLiDeErEnum.TargetId.Extra] = true
+	if self.isExtraStar then
+		self._targetProgressDic[MoLiDeErEnum.TargetId.Extra] = MoLiDeErEnum.ProgressRange.Success
+		tempTargetCompleteDic[MoLiDeErEnum.TargetId.Extra] = true
 	else
-		local var_18_3 = var_18_2.extraCondition
+		local extraConditionParam = gameConfig.extraCondition
 
-		if not string.nilorempty(var_18_3) then
-			local var_18_4 = string.splitToNumber(var_18_3, "#")
-			local var_18_5 = var_18_4[1]
+		if not string.nilorempty(extraConditionParam) then
+			local data = string.splitToNumber(extraConditionParam, "#")
+			local type = data[1]
 
-			if (var_18_5 == MoLiDeErEnum.TargetConditionType.RoundLimitedFinishAll or var_18_5 == MoLiDeErEnum.TargetConditionType.RoundLimitedFinishAny) and var_18_4[2] < arg_18_0.currentRound then
-				arg_18_0._targetProgressDic[MoLiDeErEnum.TargetId.Extra] = MoLiDeErEnum.ProgressRange.Failed
-				var_18_1[MoLiDeErEnum.TargetId.Extra] = true
+			if type == MoLiDeErEnum.TargetConditionType.RoundLimitedFinishAll or type == MoLiDeErEnum.TargetConditionType.RoundLimitedFinishAny then
+				local round = data[2]
+
+				if round < self.currentRound then
+					self._targetProgressDic[MoLiDeErEnum.TargetId.Extra] = MoLiDeErEnum.ProgressRange.Failed
+					tempTargetFailDic[MoLiDeErEnum.TargetId.Extra] = true
+				end
 			end
 		end
 	end
 
-	if arg_18_0.finishedEventInfos and arg_18_0.finishedEventInfos[1] then
-		for iter_18_0, iter_18_1 in ipairs(arg_18_0.finishedEventInfos) do
-			local var_18_6 = MoLiDeErConfig.instance:getProgressConfig(iter_18_1.optionId)
+	if self.finishedEventInfos and self.finishedEventInfos[1] then
+		for _, info in ipairs(self.finishedEventInfos) do
+			local progressConfig = MoLiDeErConfig.instance:getProgressConfig(info.optionId)
 
-			if var_18_6 ~= nil then
-				local var_18_7 = string.split(var_18_6.condition, "|")
+			if progressConfig ~= nil then
+				local conditionParams = string.split(progressConfig.condition, "|")
 
-				for iter_18_2, iter_18_3 in ipairs(var_18_7) do
-					local var_18_8 = string.splitToNumber(iter_18_3, "#")
-					local var_18_9 = var_18_8[1]
-					local var_18_10 = var_18_8[2]
+				for _, conditionParam in ipairs(conditionParams) do
+					local conditionData = string.splitToNumber(conditionParam, "#")
+					local gameId = conditionData[1]
+					local targetId = conditionData[2]
 
-					if var_18_9 == arg_18_0.gameId then
-						local var_18_11 = arg_18_0._targetProgressDic[var_18_10] or 0
+					if gameId == self.gameId then
+						local curProgress = self._targetProgressDic[targetId]
 
-						if var_18_11 > MoLiDeErEnum.ProgressRange.Failed and var_18_11 < MoLiDeErEnum.ProgressRange.Success then
-							local var_18_12 = var_18_6.progressChange
-							local var_18_13 = var_18_6.progressNum
+						curProgress = curProgress or 0
 
-							if var_18_12 == MoLiDeErEnum.ProgressChangeType.Percentage then
-								var_18_11 = Mathf.Clamp(var_18_11 + var_18_13, MoLiDeErEnum.ProgressRange.Failed, MoLiDeErEnum.ProgressRange.Success)
-							elseif var_18_12 == MoLiDeErEnum.ProgressChangeType.Success then
-								var_18_11 = MoLiDeErEnum.ProgressRange.Success
-								var_18_0[var_18_10] = true
-							elseif var_18_12 == MoLiDeErEnum.ProgressChangeType.Failed then
-								var_18_11 = MoLiDeErEnum.ProgressRange.Failed
+						if curProgress > MoLiDeErEnum.ProgressRange.Failed and curProgress < MoLiDeErEnum.ProgressRange.Success then
+							local changeType = progressConfig.progressChange
+							local changeNum = progressConfig.progressNum
+
+							if changeType == MoLiDeErEnum.ProgressChangeType.Percentage then
+								curProgress = Mathf.Clamp(curProgress + changeNum, MoLiDeErEnum.ProgressRange.Failed, MoLiDeErEnum.ProgressRange.Success)
+							elseif changeType == MoLiDeErEnum.ProgressChangeType.Success then
+								curProgress = MoLiDeErEnum.ProgressRange.Success
+								tempTargetCompleteDic[targetId] = true
+							elseif changeType == MoLiDeErEnum.ProgressChangeType.Failed then
+								curProgress = MoLiDeErEnum.ProgressRange.Failed
 							end
 						end
 
-						arg_18_0._targetProgressDic[var_18_10] = var_18_11
+						self._targetProgressDic[targetId] = curProgress
 					end
 				end
 			end
 		end
 	end
 
-	if arg_18_0.isEpisodeFinish and (arg_18_0.passStar == -1 or arg_18_0.passStar == 1) and arg_18_0._targetProgressDic[MoLiDeErEnum.TargetId.Extra] ~= MoLiDeErEnum.ProgressRange.Success then
-		arg_18_0._targetProgressDic[MoLiDeErEnum.TargetId.Extra] = MoLiDeErEnum.ProgressRange.Failed
-		var_18_1[MoLiDeErEnum.TargetId.Extra] = true
+	if self.isEpisodeFinish and (self.passStar == -1 or self.passStar == 1) and self._targetProgressDic[MoLiDeErEnum.TargetId.Extra] ~= MoLiDeErEnum.ProgressRange.Success then
+		self._targetProgressDic[MoLiDeErEnum.TargetId.Extra] = MoLiDeErEnum.ProgressRange.Failed
+		tempTargetFailDic[MoLiDeErEnum.TargetId.Extra] = true
 
 		logNormal("莫莉德尔 角色活动 额外目标失败")
 	end
 
-	if arg_18_0._targetCompleteDic then
-		for iter_18_4, iter_18_5 in pairs(var_18_0) do
-			if arg_18_0._targetCompleteDic[iter_18_4] == nil then
-				arg_18_0._targetNewCompleteDic[iter_18_4] = true
+	if self._targetCompleteDic then
+		for targetId, state in pairs(tempTargetCompleteDic) do
+			if self._targetCompleteDic[targetId] == nil then
+				self._targetNewCompleteDic[targetId] = true
 
-				logNormal("莫莉德尔 角色活动 存在新的完成目标 id: " .. tostring(iter_18_4))
+				logNormal("莫莉德尔 角色活动 存在新的完成目标 id: " .. tostring(targetId))
 			end
 		end
 	end
 
-	if arg_18_0._targetFailDic then
-		for iter_18_6, iter_18_7 in pairs(var_18_1) do
-			if arg_18_0._targetFailDic[iter_18_6] == nil then
-				arg_18_0._targetNewFailDic[iter_18_6] = true
+	if self._targetFailDic then
+		for targetId, state in pairs(tempTargetFailDic) do
+			if self._targetFailDic[targetId] == nil then
+				self._targetNewFailDic[targetId] = true
 
-				logNormal("莫莉德尔 角色活动 存在新的失败目标 id: " .. tostring(iter_18_6))
+				logNormal("莫莉德尔 角色活动 存在新的失败目标 id: " .. tostring(targetId))
 			end
 		end
 	end
 
-	arg_18_0._targetCompleteDic = var_18_0
-	arg_18_0._targetFailDic = var_18_1
+	self._targetCompleteDic = tempTargetCompleteDic
+	self._targetFailDic = tempTargetFailDic
 end
 
-function var_0_0.getTargetProgress(arg_19_0, arg_19_1)
-	return arg_19_0._targetProgressDic[arg_19_1] or 0
+function MoLiDeErGameMo:getTargetProgress(targetId)
+	return self._targetProgressDic[targetId] or 0
 end
 
-function var_0_0.isNewCompleteTarget(arg_20_0, arg_20_1)
-	return arg_20_0._targetNewCompleteDic[arg_20_1]
+function MoLiDeErGameMo:isNewCompleteTarget(targetId)
+	return self._targetNewCompleteDic[targetId]
 end
 
-function var_0_0.isNewFailTarget(arg_21_0, arg_21_1)
-	return arg_21_0._targetNewFailDic[arg_21_1]
+function MoLiDeErGameMo:isNewFailTarget(targetId)
+	return self._targetNewFailDic[targetId]
 end
 
-return var_0_0
+return MoLiDeErGameMo

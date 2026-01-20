@@ -1,31 +1,55 @@
-﻿module("modules.logic.character.model.DestinyStoneMO", package.seeall)
+﻿-- chunkname: @modules/logic/character/model/DestinyStoneMO.lua
 
-local var_0_0 = class("DestinyStoneMO")
+module("modules.logic.character.model.DestinyStoneMO", package.seeall)
 
-function var_0_0.initMo(arg_1_0, arg_1_1)
-	arg_1_0.stoneId = arg_1_1
-	arg_1_0.facetCos = CharacterDestinyConfig.instance:getDestinyFacetCo(arg_1_1)
-	arg_1_0.conusmeCo = CharacterDestinyConfig.instance:getDestinyFacetConsumeCo(arg_1_1)
+local DestinyStoneMO = class("DestinyStoneMO")
+
+function DestinyStoneMO:initMo(stoneId)
+	self.stoneId = stoneId
+	self.facetCos = CharacterDestinyConfig.instance:getDestinyFacetCo(stoneId)
+	self.conusmeCo = CharacterDestinyConfig.instance:getDestinyFacetConsumeCo(stoneId)
 end
 
-function var_0_0.refresUnlock(arg_2_0, arg_2_1)
-	arg_2_0.isUnlock = arg_2_1
+function DestinyStoneMO:refresUnlock(isUnlock)
+	self.isUnlock = isUnlock
 end
 
-function var_0_0.refreshUse(arg_3_0, arg_3_1)
-	arg_3_0.isUse = arg_3_1
+function DestinyStoneMO:refreshUse(isUse)
+	self.isUse = isUse
 end
 
-function var_0_0.getFacetCo(arg_4_0, arg_4_1)
-	if arg_4_1 then
-		return arg_4_0.facetCos[arg_4_1]
+function DestinyStoneMO:getFacetCo(level)
+	if level then
+		return self.facetCos[level]
 	end
 
-	return arg_4_0.facetCos
+	return self.facetCos
 end
 
-function var_0_0.getNameAndIcon(arg_5_0)
-	return arg_5_0.conusmeCo.name, ResUrl.getDestinyIcon(arg_5_0.conusmeCo.icon), arg_5_0.conusmeCo
+function DestinyStoneMO:getNameAndIcon()
+	return self.conusmeCo.name, ResUrl.getDestinyIcon(self.conusmeCo.icon), self.conusmeCo
 end
 
-return var_0_0
+function DestinyStoneMO:isReshape()
+	return self.conusmeCo.type == CharacterDestinyEnum.StoneType.Reshape
+end
+
+function DestinyStoneMO:getReshapeDesc()
+	if not self:isReshape() then
+		return
+	end
+
+	local cos = CharacterDestinyConfig.instance:getSkillExlevelCos(self.stoneId)
+
+	self._reshapeDesc = {}
+
+	for _, co in pairs(cos) do
+		if not string.nilorempty(co.desc) then
+			self._reshapeDesc[co.skillLevel] = co.desc
+		end
+	end
+
+	return self._reshapeDesc
+end
+
+return DestinyStoneMO

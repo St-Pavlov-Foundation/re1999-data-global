@@ -1,161 +1,166 @@
-﻿module("modules.logic.scene.room.comp.RoomSceneBloomComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/comp/RoomSceneBloomComp.lua
 
-local var_0_0 = class("RoomSceneBloomComp", BaseSceneComp)
+module("modules.logic.scene.room.comp.RoomSceneBloomComp", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._originalBloomColor = nil
-	arg_1_0._originalBloomActive = nil
-	arg_1_0._originalBloomlocalActive = nil
-	arg_1_0._originalBloomIntensity = nil
-	arg_1_0._originalBloomThreshold = nil
-	arg_1_0._originalBloomDiffusion = nil
-	arg_1_0._originalBloomRTDownTimes = nil
-	arg_1_0._originalBloomPercent = nil
-	arg_1_0._originalMaskActive = nil
-	arg_1_0._originalMainCameraVolumeTrigger = nil
-	arg_1_0._originalMainCameraUsePostProcess = nil
-	arg_1_0._originalMainCameraVolumeMask = nil
+local RoomSceneBloomComp = class("RoomSceneBloomComp", BaseSceneComp)
+
+function RoomSceneBloomComp:onInit()
+	self._originalBloomColor = nil
+	self._originalBloomActive = nil
+	self._originalBloomlocalActive = nil
+	self._originalBloomIntensity = nil
+	self._originalBloomThreshold = nil
+	self._originalBloomDiffusion = nil
+	self._originalBloomRTDownTimes = nil
+	self._originalBloomPercent = nil
+	self._originalMaskActive = nil
+	self._originalMainCameraVolumeTrigger = nil
+	self._originalMainCameraUsePostProcess = nil
+	self._originalMainCameraVolumeMask = nil
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
-	local var_2_0 = lua_scene_level.configDict[arg_2_2]
-	local var_2_1 = GameGlobalMgr.instance:getScreenState().grade
+function RoomSceneBloomComp:init(sceneId, levelId)
+	local levelConfig = lua_scene_level.configDict[levelId]
+	local screenState = GameGlobalMgr.instance:getScreenState()
+	local grade = screenState.grade
 
-	arg_2_0._unitPPVolume = gohelper.findChildComponent(CameraMgr.instance:getMainCameraGO(), "PPVolume", PostProcessingMgr.PPVolumeWrapType)
-	arg_2_0._originalBloomColor = arg_2_0:_getUnitPPValue("localBloomColor")
+	self._unitPPVolume = gohelper.findChildComponent(CameraMgr.instance:getMainCameraGO(), "PPVolume", PostProcessingMgr.PPVolumeWrapType)
+	self._originalBloomColor = self:_getUnitPPValue("localBloomColor")
 
-	arg_2_0:_setUnitPPValue("localBloomColor", Color.New(var_2_0.bloomR, var_2_0.bloomG, var_2_0.bloomB, var_2_0.bloomA))
+	self:_setUnitPPValue("localBloomColor", Color.New(levelConfig.bloomR, levelConfig.bloomG, levelConfig.bloomB, levelConfig.bloomA))
 
-	arg_2_0._originalBloomActive = arg_2_0:_getUnitPPValue("bloomActive")
+	self._originalBloomActive = self:_getUnitPPValue("bloomActive")
 
-	arg_2_0:_setUnitPPValue("bloomActive", var_2_0.useBloom == 1 and var_2_1 ~= ModuleEnum.Performance.Low)
+	self:_setUnitPPValue("bloomActive", levelConfig.useBloom == 1 and grade ~= ModuleEnum.Performance.Low)
 
-	arg_2_0._originalBloomlocalActive = arg_2_0:_getUnitPPValue("localBloomActive")
+	self._originalBloomlocalActive = self:_getUnitPPValue("localBloomActive")
 
-	arg_2_0:_setUnitPPValue("localBloomActive", false)
+	self:_setUnitPPValue("localBloomActive", false)
 
-	arg_2_0._originalBloomIntensity = arg_2_0:_getUnitPPValue("bloomIntensity")
+	self._originalBloomIntensity = self:_getUnitPPValue("bloomIntensity")
 
-	arg_2_0:_setUnitPPValue("bloomIntensity", 11)
+	self:_setUnitPPValue("bloomIntensity", 11)
 
-	arg_2_0._originalBloomThreshold = arg_2_0:_getUnitPPValue("bloomThreshold")
+	self._originalBloomThreshold = self:_getUnitPPValue("bloomThreshold")
 
-	arg_2_0:_setUnitPPValue("bloomThreshold", 1)
+	self:_setUnitPPValue("bloomThreshold", 1)
 
-	arg_2_0._originalBloomDiffusion = arg_2_0:_getUnitPPValue("bloomDiffusion")
+	self._originalBloomDiffusion = self:_getUnitPPValue("bloomDiffusion")
 
-	arg_2_0:_setUnitPPValue("bloomDiffusion", 4)
+	self:_setUnitPPValue("bloomDiffusion", 4)
 
-	arg_2_0._originalBloomRTDownTimes = arg_2_0:_getUnitPPValue("bloomRTDownTimes")
+	self._originalBloomRTDownTimes = self:_getUnitPPValue("bloomRTDownTimes")
 
-	arg_2_0:_setUnitPPValue("bloomRTDownTimes", 1)
+	self:_setUnitPPValue("bloomRTDownTimes", 1)
 
-	arg_2_0._originalBloomPercent = arg_2_0:_getUnitPPValue("bloomPercent")
+	self._originalBloomPercent = self:_getUnitPPValue("bloomPercent")
 
-	arg_2_0:_setUnitPPValue("bloomPercent", 1)
+	self:_setUnitPPValue("bloomPercent", 1)
 
-	arg_2_0._originalMaskActive = arg_2_0:_getUnitPPValue("localMaskActive")
+	self._originalMaskActive = self:_getUnitPPValue("localMaskActive")
 
-	arg_2_0:_setUnitPPValue("localMaskActive", false)
-	arg_2_0:_setUnitPPValue("LocalMaskActive", false)
-	arg_2_0:_setCamera()
+	self:_setUnitPPValue("localMaskActive", false)
+	self:_setUnitPPValue("LocalMaskActive", false)
+	self:_setCamera()
 end
 
-function var_0_0._setCamera(arg_3_0)
-	local var_3_0 = CameraMgr.instance:getMainCameraGO():GetComponent(PostProcessingMgr.PPCustomCamDataType)
+function RoomSceneBloomComp:_setCamera()
+	local mainCameraGO = CameraMgr.instance:getMainCameraGO()
+	local mainCustomCameraData = mainCameraGO:GetComponent(PostProcessingMgr.PPCustomCamDataType)
 
-	arg_3_0._originalMainCameraVolumeTrigger = var_3_0.volumeTrigger
+	self._originalMainCameraVolumeTrigger = mainCustomCameraData.volumeTrigger
 
-	if arg_3_0._unitPPVolume then
-		var_3_0.volumeTrigger = arg_3_0._unitPPVolume.transform
+	if self._unitPPVolume then
+		mainCustomCameraData.volumeTrigger = self._unitPPVolume.transform
 	end
 
-	arg_3_0._originalMainCameraUsePostProcess = var_3_0.usePostProcess
-	var_3_0.usePostProcess = true
-	arg_3_0._originalMainCameraVolumeMask = var_3_0.volumeMask
-	var_3_0.volumeMask = LayerMask.GetMask("Unit")
+	self._originalMainCameraUsePostProcess = mainCustomCameraData.usePostProcess
+	mainCustomCameraData.usePostProcess = true
+	self._originalMainCameraVolumeMask = mainCustomCameraData.volumeMask
+	mainCustomCameraData.volumeMask = LayerMask.GetMask("Unit")
 end
 
-function var_0_0._setUnitPPValue(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_0._unitPPVolume then
-		arg_4_0._unitPPVolume.refresh = true
-		arg_4_0._unitPPVolume[arg_4_1] = arg_4_2
-	end
-end
-
-function var_0_0._getUnitPPValue(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_0._unitPPVolume then
-		return arg_5_0._unitPPVolume[arg_5_1]
+function RoomSceneBloomComp:_setUnitPPValue(key, value)
+	if self._unitPPVolume then
+		self._unitPPVolume.refresh = true
+		self._unitPPVolume[key] = value
 	end
 end
 
-function var_0_0.onSceneClose(arg_6_0)
-	if arg_6_0._originalBloomColor ~= nil then
-		arg_6_0:_setUnitPPValue("localBloomColor", arg_6_0._originalBloomColor)
-
-		arg_6_0._originalBloomColor = nil
+function RoomSceneBloomComp:_getUnitPPValue(key, value)
+	if self._unitPPVolume then
+		return self._unitPPVolume[key]
 	end
-
-	if arg_6_0._originalBloomActive ~= nil then
-		arg_6_0:_setUnitPPValue("bloomActive", arg_6_0._originalBloomActive)
-
-		arg_6_0._originalBloomActive = nil
-	end
-
-	if arg_6_0._originalBloomlocalActive ~= nil then
-		arg_6_0:_setUnitPPValue("localBloomActive", arg_6_0._originalBloomlocalActive)
-
-		arg_6_0._originalBloomlocalActive = nil
-	end
-
-	if arg_6_0._originalBloomIntensity ~= nil then
-		arg_6_0:_setUnitPPValue("bloomIntensity", arg_6_0._originalBloomIntensity)
-
-		arg_6_0._originalBloomIntensity = nil
-	end
-
-	if arg_6_0._originalBloomThreshold ~= nil then
-		arg_6_0:_setUnitPPValue("bloomThreshold", arg_6_0._originalBloomThreshold)
-
-		arg_6_0._originalBloomThreshold = nil
-	end
-
-	if arg_6_0._originalBloomDiffusion ~= nil then
-		arg_6_0:_setUnitPPValue("bloomDiffusion", arg_6_0._originalBloomDiffusion)
-
-		arg_6_0._originalBloomDiffusion = nil
-	end
-
-	if arg_6_0._originalBloomRTDownTimes ~= nil then
-		arg_6_0:_setUnitPPValue("bloomRTDownTimes", arg_6_0._originalBloomRTDownTimes)
-
-		arg_6_0._originalBloomRTDownTimes = nil
-	end
-
-	if arg_6_0._originalBloomPercent ~= nil then
-		arg_6_0:_setUnitPPValue("bloomPercent", arg_6_0._originalBloomPercent)
-
-		arg_6_0._originalBloomPercent = nil
-	end
-
-	if arg_6_0._originalMaskActive ~= nil then
-		arg_6_0:_setUnitPPValue("localMaskActive", arg_6_0._originalMaskActive)
-		arg_6_0:_setUnitPPValue("LocalMaskActive", arg_6_0._originalMaskActive)
-
-		arg_6_0._originalMaskActive = nil
-	end
-
-	arg_6_0:_resetCamera()
-
-	arg_6_0._unitPPVolume = nil
 end
 
-function var_0_0._resetCamera(arg_7_0)
-	local var_7_0 = CameraMgr.instance:getMainCameraGO():GetComponent(PostProcessingMgr.PPCustomCamDataType)
+function RoomSceneBloomComp:onSceneClose()
+	if self._originalBloomColor ~= nil then
+		self:_setUnitPPValue("localBloomColor", self._originalBloomColor)
 
-	var_7_0.volumeTrigger = arg_7_0._originalMainCameraVolumeTrigger
-	var_7_0.usePostProcess = arg_7_0._originalMainCameraUsePostProcess
-	var_7_0.volumeMask = arg_7_0._originalMainCameraVolumeMask
+		self._originalBloomColor = nil
+	end
+
+	if self._originalBloomActive ~= nil then
+		self:_setUnitPPValue("bloomActive", self._originalBloomActive)
+
+		self._originalBloomActive = nil
+	end
+
+	if self._originalBloomlocalActive ~= nil then
+		self:_setUnitPPValue("localBloomActive", self._originalBloomlocalActive)
+
+		self._originalBloomlocalActive = nil
+	end
+
+	if self._originalBloomIntensity ~= nil then
+		self:_setUnitPPValue("bloomIntensity", self._originalBloomIntensity)
+
+		self._originalBloomIntensity = nil
+	end
+
+	if self._originalBloomThreshold ~= nil then
+		self:_setUnitPPValue("bloomThreshold", self._originalBloomThreshold)
+
+		self._originalBloomThreshold = nil
+	end
+
+	if self._originalBloomDiffusion ~= nil then
+		self:_setUnitPPValue("bloomDiffusion", self._originalBloomDiffusion)
+
+		self._originalBloomDiffusion = nil
+	end
+
+	if self._originalBloomRTDownTimes ~= nil then
+		self:_setUnitPPValue("bloomRTDownTimes", self._originalBloomRTDownTimes)
+
+		self._originalBloomRTDownTimes = nil
+	end
+
+	if self._originalBloomPercent ~= nil then
+		self:_setUnitPPValue("bloomPercent", self._originalBloomPercent)
+
+		self._originalBloomPercent = nil
+	end
+
+	if self._originalMaskActive ~= nil then
+		self:_setUnitPPValue("localMaskActive", self._originalMaskActive)
+		self:_setUnitPPValue("LocalMaskActive", self._originalMaskActive)
+
+		self._originalMaskActive = nil
+	end
+
+	self:_resetCamera()
+
+	self._unitPPVolume = nil
 end
 
-return var_0_0
+function RoomSceneBloomComp:_resetCamera()
+	local mainCameraGO = CameraMgr.instance:getMainCameraGO()
+	local mainCustomCameraData = mainCameraGO:GetComponent(PostProcessingMgr.PPCustomCamDataType)
+
+	mainCustomCameraData.volumeTrigger = self._originalMainCameraVolumeTrigger
+	mainCustomCameraData.usePostProcess = self._originalMainCameraUsePostProcess
+	mainCustomCameraData.volumeMask = self._originalMainCameraVolumeMask
+end
+
+return RoomSceneBloomComp

@@ -1,56 +1,58 @@
-﻿module("modules.logic.versionactivity3_1.gaosiniao.work.GaoSiNiaoWork_WaitViewOnTheTop", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/gaosiniao/work/GaoSiNiaoWork_WaitViewOnTheTop.lua
 
-local var_0_0 = class("GaoSiNiaoWork_WaitViewOnTheTop", GaoSiNiaoWorkBase)
+module("modules.logic.versionactivity3_1.gaosiniao.work.GaoSiNiaoWork_WaitViewOnTheTop", package.seeall)
 
-function var_0_0.s_create(arg_1_0, arg_1_1)
-	local var_1_0 = var_0_0.New()
+local GaoSiNiaoWork_WaitViewOnTheTop = class("GaoSiNiaoWork_WaitViewOnTheTop", GaoSiNiaoWorkBase)
 
-	var_1_0._viewName = arg_1_0
-	var_1_0._ignoreViewList = arg_1_1
+function GaoSiNiaoWork_WaitViewOnTheTop.s_create(viewName, optIgnoreViewList)
+	local work = GaoSiNiaoWork_WaitViewOnTheTop.New()
 
-	return var_1_0
+	work._viewName = viewName
+	work._ignoreViewList = optIgnoreViewList
+
+	return work
 end
 
-function var_0_0._checkViewOnTheTop(arg_2_0)
-	return ViewHelper.instance:checkViewOnTheTop(arg_2_0._viewName, arg_2_0._ignoreViewList)
+function GaoSiNiaoWork_WaitViewOnTheTop:_checkViewOnTheTop()
+	return ViewHelper.instance:checkViewOnTheTop(self._viewName, self._ignoreViewList)
 end
 
-function var_0_0.onStart(arg_3_0)
-	arg_3_0:clearWork()
+function GaoSiNiaoWork_WaitViewOnTheTop:onStart()
+	self:clearWork()
 
-	local var_3_0 = arg_3_0._viewName
+	local viewName = self._viewName
 
-	if string.nilorempty(var_3_0) then
+	if string.nilorempty(viewName) then
 		logWarn("viewName is invalid")
-		arg_3_0:onSucc()
+		self:onSucc()
 
 		return
 	end
 
-	if not ViewMgr.instance:isOpen(var_3_0) then
-		logWarn("viewName is not open: " .. tostring(var_3_0))
-		arg_3_0:onSucc()
+	if not ViewMgr.instance:isOpen(viewName) then
+		logWarn("viewName is not open: " .. tostring(viewName))
+		self:onSucc()
 
 		return
 	end
 
-	if arg_3_0:_checkViewOnTheTop() then
-		arg_3_0:onSucc()
+	if self:_checkViewOnTheTop() then
+		self:onSucc()
 	else
-		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_3_0._onCloseViewFinish, arg_3_0)
+		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 	end
 end
 
-function var_0_0._onCloseViewFinish(arg_4_0)
-	if arg_4_0:_checkViewOnTheTop() then
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_4_0._onCloseViewFinish, arg_4_0)
-		arg_4_0:onSucc()
+function GaoSiNiaoWork_WaitViewOnTheTop:_onCloseViewFinish()
+	if self:_checkViewOnTheTop() then
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+		self:onSucc()
 	end
 end
 
-function var_0_0.clearWork(arg_5_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_5_0._onCloseViewFinish, arg_5_0)
-	var_0_0.super.clearWork(arg_5_0)
+function GaoSiNiaoWork_WaitViewOnTheTop:clearWork()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	GaoSiNiaoWork_WaitViewOnTheTop.super.clearWork(self)
 end
 
-return var_0_0
+return GaoSiNiaoWork_WaitViewOnTheTop

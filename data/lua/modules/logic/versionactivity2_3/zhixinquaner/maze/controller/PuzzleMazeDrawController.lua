@@ -1,188 +1,192 @@
-﻿module("modules.logic.versionactivity2_3.zhixinquaner.maze.controller.PuzzleMazeDrawController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/zhixinquaner/maze/controller/PuzzleMazeDrawController.lua
 
-local var_0_0 = class("PuzzleMazeDrawController", PuzzleMazeDrawBaseController)
+module("modules.logic.versionactivity2_3.zhixinquaner.maze.controller.PuzzleMazeDrawController", package.seeall)
 
-function var_0_0.openGame(arg_1_0, arg_1_1)
-	arg_1_0:setModelInst(PuzzleMazeDrawModel.instance)
-	var_0_0.super.openGame(arg_1_0, arg_1_1)
+local PuzzleMazeDrawController = class("PuzzleMazeDrawController", PuzzleMazeDrawBaseController)
+
+function PuzzleMazeDrawController:openGame(elementCo)
+	self:setModelInst(PuzzleMazeDrawModel.instance)
+	PuzzleMazeDrawController.super.openGame(self, elementCo)
 	ViewMgr.instance:openView(ViewName.PuzzleMazeDrawView)
 end
 
-function var_0_0.interactSwitchObj(arg_2_0, arg_2_1, arg_2_2)
+function PuzzleMazeDrawController:interactSwitchObj(interactPosX, interactPosY)
 	PuzzleMazeDrawModel.instance:setCanFlyPane(false)
-	PuzzleMazeDrawModel.instance:setPlanePlacePos(arg_2_1, arg_2_2)
-	PuzzleMazeDrawModel.instance:switchLine(PuzzleEnum.LineState.Switch_On, arg_2_1, arg_2_2)
-	var_0_0.instance:dispatchEvent(PuzzleEvent.SimulatePlane, arg_2_1, arg_2_2)
+	PuzzleMazeDrawModel.instance:setPlanePlacePos(interactPosX, interactPosY)
+	PuzzleMazeDrawModel.instance:switchLine(PuzzleEnum.LineState.Switch_On, interactPosX, interactPosY)
+	PuzzleMazeDrawController.instance:dispatchEvent(PuzzleEvent.SimulatePlane, interactPosX, interactPosY)
 end
 
-function var_0_0.recyclePlane(arg_3_0)
-	local var_3_0, var_3_1 = PuzzleMazeDrawModel.instance:getCurPlanePos()
+function PuzzleMazeDrawController:recyclePlane()
+	local planePosX, planePosY = PuzzleMazeDrawModel.instance:getCurPlanePos()
 
-	PuzzleMazeDrawModel.instance:switchLine(PuzzleEnum.LineState.Switch_Off, var_3_0, var_3_1)
+	PuzzleMazeDrawModel.instance:switchLine(PuzzleEnum.LineState.Switch_Off, planePosX, planePosY)
 	PuzzleMazeDrawModel.instance:setCanFlyPane(true)
-	var_0_0.instance:dispatchEvent(PuzzleEvent.RecyclePlane)
+	PuzzleMazeDrawController.instance:dispatchEvent(PuzzleEvent.RecyclePlane)
 end
 
-function var_0_0.processPath(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
-		local var_4_0 = iter_4_1[1]
-		local var_4_1 = iter_4_1[2]
-		local var_4_2 = iter_4_1[3]
-		local var_4_3 = arg_4_0:isBackward(var_4_1, var_4_2)
-		local var_4_4
+function PuzzleMazeDrawController:processPath(passPosList, progressX, progressY)
+	for _, pos in ipairs(passPosList) do
+		local goDir, nextX, nextY = pos[1], pos[2], pos[3]
+		local isBack = self:isBackward(nextX, nextY)
+		local valueMo
 
-		if not var_4_3 then
-			for iter_4_2, iter_4_3 in pairs(arg_4_0._alertMoMap) do
+		if not isBack then
+			for k, v in pairs(self._alertMoMap) do
 				return false
 			end
 
-			var_4_4 = 1
+			valueMo = 1
 		end
 
-		local var_4_5 = PuzzleMazeHelper.getLineKey(arg_4_0._curPosX, arg_4_0._curPosY, var_4_1, var_4_2)
-		local var_4_6 = PuzzleMazeDrawModel.instance:getObjAtLine(arg_4_0._curPosX, arg_4_0._curPosY, var_4_1, var_4_2)
+		local key = PuzzleMazeHelper.getLineKey(self._curPosX, self._curPosY, nextX, nextY)
+		local mo = PuzzleMazeDrawModel.instance:getObjAtLine(self._curPosX, self._curPosY, nextX, nextY)
 
-		if var_4_6 ~= nil and var_4_6.objType == PuzzleEnum.MazeObjType.Block then
-			arg_4_0._alertMoMap[var_4_5] = PuzzleEnum.MazeAlertType.VisitBlock
+		if mo ~= nil and mo.objType == PuzzleEnum.MazeObjType.Block then
+			self._alertMoMap[key] = PuzzleEnum.MazeAlertType.VisitBlock
 		end
 
-		if var_4_3 then
-			local var_4_7 = PuzzleMazeHelper.getPosKey(arg_4_0._curPosX, arg_4_0._curPosY)
+		if isBack then
+			local curKey = PuzzleMazeHelper.getPosKey(self._curPosX, self._curPosY)
 
-			arg_4_0._alertMoMap[var_4_7] = nil
+			self._alertMoMap[curKey] = nil
+			curKey = PuzzleMazeHelper.getLineKey(self._curPosX, self._curPosY, nextX, nextY)
+			self._alertMoMap[curKey] = nil
+			mo = PuzzleMazeDrawModel.instance:getObjAtPos(self._curPosX, self._curPosY)
 
-			local var_4_8 = PuzzleMazeHelper.getLineKey(arg_4_0._curPosX, arg_4_0._curPosY, var_4_1, var_4_2)
-
-			arg_4_0._alertMoMap[var_4_8] = nil
-
-			local var_4_9 = PuzzleMazeDrawModel.instance:getObjAtPos(arg_4_0._curPosX, arg_4_0._curPosY)
-
-			if var_4_9 ~= nil and var_4_9.objType == PuzzleEnum.MazeObjType.CheckPoint and not arg_4_0:alreadyPassed(arg_4_0._curPosX, arg_4_0._curPosY, true) then
-				arg_4_0._passedCheckPoint[var_4_9] = var_4_4
+			if mo ~= nil and mo.objType == PuzzleEnum.MazeObjType.CheckPoint and not self:alreadyPassed(self._curPosX, self._curPosY, true) then
+				self._passedCheckPoint[mo] = valueMo
 			end
 		else
-			if not arg_4_0:canPassLine(var_4_1, var_4_2) then
-				arg_4_0._alertMoMap[var_4_5] = PuzzleEnum.MazeAlertType.DisconnectLine
-			elseif arg_4_0:alreadyPassed(var_4_1, var_4_2) then
-				local var_4_10 = PuzzleMazeHelper.getPosKey(var_4_1, var_4_2)
+			if not self:canPassLine(nextX, nextY) then
+				self._alertMoMap[key] = PuzzleEnum.MazeAlertType.DisconnectLine
+			elseif self:alreadyPassed(nextX, nextY) then
+				local key = PuzzleMazeHelper.getPosKey(nextX, nextY)
 
-				arg_4_0._alertMoMap[var_4_10] = PuzzleEnum.MazeAlertType.VisitRepeat
+				self._alertMoMap[key] = PuzzleEnum.MazeAlertType.VisitRepeat
 			end
 
-			local var_4_11 = PuzzleMazeDrawModel.instance:getObjAtPos(var_4_1, var_4_2)
+			mo = PuzzleMazeDrawModel.instance:getObjAtPos(nextX, nextY)
 
-			if var_4_11 ~= nil and var_4_11.objType == PuzzleEnum.MazeObjType.CheckPoint then
-				arg_4_0._passedCheckPoint[var_4_11] = var_4_4
+			if mo ~= nil and mo.objType == PuzzleEnum.MazeObjType.CheckPoint then
+				self._passedCheckPoint[mo] = valueMo
 			end
 		end
 
-		if var_4_3 then
-			arg_4_0._passedPosX[#arg_4_0._passedPosX] = nil
-			arg_4_0._passedPosY[#arg_4_0._passedPosY] = nil
+		if isBack then
+			self._passedPosX[#self._passedPosX] = nil
+			self._passedPosY[#self._passedPosY] = nil
 		else
-			table.insert(arg_4_0._passedPosX, var_4_1)
-			table.insert(arg_4_0._passedPosY, var_4_2)
+			table.insert(self._passedPosX, nextX)
+			table.insert(self._passedPosY, nextY)
 		end
 
-		arg_4_0._curPosX = var_4_1
-		arg_4_0._curPosY = var_4_2
-		arg_4_0._nextDir = var_4_0
-		arg_4_0._lineDirty = true
+		self._curPosX = nextX
+		self._curPosY = nextY
+		self._nextDir = goDir
+		self._lineDirty = true
 	end
 
 	return true
 end
 
-function var_0_0.canPassLine(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = PuzzleMazeDrawModel.instance:getMapLineState(arg_5_0._curPosX, arg_5_0._curPosY, arg_5_1, arg_5_2)
+function PuzzleMazeDrawController:canPassLine(nextPosX, nextPosY)
+	local lineState = PuzzleMazeDrawModel.instance:getMapLineState(self._curPosX, self._curPosY, nextPosX, nextPosY)
 
-	return var_5_0 ~= PuzzleEnum.LineState.Disconnect and var_5_0 ~= PuzzleEnum.LineState.Switch_Off
+	return lineState ~= PuzzleEnum.LineState.Disconnect and lineState ~= PuzzleEnum.LineState.Switch_Off
 end
 
-function var_0_0.savePuzzleProgress(arg_6_0)
-	local var_6_0 = PuzzleMazeDrawModel.instance:getElementCo()
+function PuzzleMazeDrawController:savePuzzleProgress()
+	local elementCo = PuzzleMazeDrawModel.instance:getElementCo()
 
-	if not var_6_0 then
+	if not elementCo then
 		return
 	end
 
-	if arg_6_0:hasAlertObj() then
+	local hasAlertObj = self:hasAlertObj()
+
+	if hasAlertObj then
 		return
 	end
 
-	local var_6_1, var_6_2 = arg_6_0:getPassedPoints()
-	local var_6_3, var_6_4 = PuzzleMazeDrawModel.instance:getInteractPos()
-	local var_6_5 = {
-		passX = var_6_1,
-		passY = var_6_2
+	local passX, passY = self:getPassedPoints()
+	local interactPosX, interactPosY = PuzzleMazeDrawModel.instance:getInteractPos()
+	local map = {
+		passX = passX,
+		passY = passY
 	}
 
-	if var_6_3 and var_6_4 then
-		var_6_5.interactPosX = var_6_3
-		var_6_5.interactPosY = var_6_4
+	if interactPosX and interactPosY then
+		map.interactPosX = interactPosX
+		map.interactPosY = interactPosY
 	end
 
-	local var_6_6 = cjson.encode(var_6_5)
+	local progressStr = cjson.encode(map)
 
-	DungeonRpc.instance:sendSavePuzzleProgressRequest(var_6_0.id, var_6_6)
+	DungeonRpc.instance:sendSavePuzzleProgressRequest(elementCo.id, progressStr)
 end
 
-function var_0_0.getPuzzleDrawProgress(arg_7_0)
-	local var_7_0 = PuzzleMazeDrawModel.instance:getElementCo()
+function PuzzleMazeDrawController:getPuzzleDrawProgress()
+	local elementCo = PuzzleMazeDrawModel.instance:getElementCo()
 
-	if not var_7_0 then
+	if not elementCo then
 		return
 	end
 
-	DungeonRpc.instance:sendGetPuzzleProgressRequest(var_7_0.id)
+	DungeonRpc.instance:sendGetPuzzleProgressRequest(elementCo.id)
 end
 
-function var_0_0.onGetPuzzleDrawProgress(arg_8_0, arg_8_1, arg_8_2)
-	if string.nilorempty(arg_8_2) then
+function PuzzleMazeDrawController:onGetPuzzleDrawProgress(elementId, progressStr)
+	if string.nilorempty(progressStr) then
 		return
 	end
 
-	local var_8_0 = cjson.decode(arg_8_2)
+	local progress = cjson.decode(progressStr)
 
-	if var_8_0.interactPosX and var_8_0.interactPosY then
-		arg_8_0:interactSwitchObj(var_8_0.interactPosX, var_8_0.interactPosY)
+	if progress.interactPosX and progress.interactPosY then
+		self:interactSwitchObj(progress.interactPosX, progress.interactPosY)
 	end
 
-	local var_8_1 = var_8_0.passX and #var_8_0.passX or 0
+	local passXCount = progress.passX and #progress.passX or 0
 
-	for iter_8_0 = 1, var_8_1 do
-		local var_8_2 = var_8_0.passX[iter_8_0]
-		local var_8_3 = var_8_0.passY[iter_8_0]
-		local var_8_4 = var_8_0.passX[iter_8_0 - 1]
-		local var_8_5 = var_8_0.passY[iter_8_0 - 1]
-		local var_8_6 = false
+	for i = 1, passXCount do
+		local passX = progress.passX[i]
+		local passY = progress.passY[i]
+		local prePassX = progress.passX[i - 1]
+		local prePassY = progress.passY[i - 1]
+		local dirty = false
 
-		if var_8_4 ~= nil and arg_8_0._modelInst:getMapLineState(var_8_4, var_8_5, var_8_2, var_8_3) == PuzzleEnum.LineState.Switch_Off then
-			arg_8_0._modelInst:setMapLineState(var_8_4, var_8_5, var_8_2, var_8_3, PuzzleEnum.LineState.Switch_On)
+		if prePassX ~= nil then
+			local lineState = self._modelInst:getMapLineState(prePassX, prePassY, passX, passY)
 
-			var_8_6 = true
+			if lineState == PuzzleEnum.LineState.Switch_Off then
+				self._modelInst:setMapLineState(prePassX, prePassY, passX, passY, PuzzleEnum.LineState.Switch_On)
+
+				dirty = true
+			end
 		end
 
-		arg_8_0:goPassPos(var_8_2, var_8_3)
+		self:goPassPos(passX, passY)
 
-		if var_8_6 then
-			arg_8_0._modelInst:setMapLineState(var_8_4, var_8_5, var_8_2, var_8_3, PuzzleEnum.LineState.Switch_Off)
+		if dirty then
+			self._modelInst:setMapLineState(prePassX, prePassY, passX, passY, PuzzleEnum.LineState.Switch_Off)
 		end
 	end
 end
 
-function var_0_0.hasAlertObj(arg_9_0)
-	for iter_9_0, iter_9_1 in pairs(arg_9_0._alertMoMap) do
+function PuzzleMazeDrawController:hasAlertObj()
+	for alertObj, _ in pairs(self._alertMoMap) do
 		return true
 	end
 
-	local var_9_0 = arg_9_0._passedPosX and #arg_9_0._passedPosX or 0
+	local len = self._passedPosX and #self._passedPosX or 0
 
-	if var_9_0 >= 2 then
-		local var_9_1 = arg_9_0._passedPosX and arg_9_0._passedPosX[var_9_0]
-		local var_9_2 = arg_9_0._passedPosY and arg_9_0._passedPosY[var_9_0]
+	if len >= 2 then
+		local lastPosX = self._passedPosX and self._passedPosX[len]
+		local lastPosY = self._passedPosY and self._passedPosY[len]
+		local objMo = self._modelInst:getObjAtPos(lastPosX, lastPosY)
 
-		if not arg_9_0._modelInst:getObjAtPos(var_9_1, var_9_2) then
+		if not objMo then
 			return true
 		end
 	end
@@ -190,34 +194,35 @@ function var_0_0.hasAlertObj(arg_9_0)
 	return false
 end
 
-function var_0_0.goBackPos(arg_10_0)
-	local var_10_0 = #arg_10_0._passedPosX
+function PuzzleMazeDrawController:goBackPos()
+	local len = #self._passedPosX
 
-	if var_10_0 >= 2 then
-		arg_10_0:goPassPos(arg_10_0._passedPosX[var_10_0 - 1], arg_10_0._passedPosY[var_10_0 - 1])
+	if len >= 2 then
+		self:goPassPos(self._passedPosX[len - 1], self._passedPosY[len - 1])
 
-		for iter_10_0 = var_10_0 - 1, 2, -1 do
-			local var_10_1 = arg_10_0._passedPosX[iter_10_0]
-			local var_10_2 = arg_10_0._passedPosY[iter_10_0]
+		for i = len - 1, 2, -1 do
+			local posX = self._passedPosX[i]
+			local posY = self._passedPosY[i]
+			local objMo = self._modelInst:getObjAtPos(posX, posY)
 
-			if arg_10_0._modelInst:getObjAtPos(var_10_1, var_10_2) then
+			if objMo then
 				break
 			end
 
-			arg_10_0:goPassPos(arg_10_0._passedPosX[iter_10_0 - 1], arg_10_0._passedPosY[iter_10_0 - 1])
+			self:goPassPos(self._passedPosX[i - 1], self._passedPosY[i - 1])
 		end
 	end
 end
 
-function var_0_0.restartGame(arg_11_0)
-	local var_11_0 = arg_11_0._modelInst:getTriggerEffectDoneMap()
+function PuzzleMazeDrawController:restartGame()
+	local effectDoneMap = self._modelInst:getTriggerEffectDoneMap()
 
-	var_0_0.super.restartGame(arg_11_0)
-	arg_11_0._modelInst:setTriggerEffectDoneMap(var_11_0)
+	PuzzleMazeDrawController.super.restartGame(self)
+	self._modelInst:setTriggerEffectDoneMap(effectDoneMap)
 end
 
-var_0_0.instance = var_0_0.New()
+PuzzleMazeDrawController.instance = PuzzleMazeDrawController.New()
 
-LuaEventSystem.addEventMechanism(var_0_0.instance)
+LuaEventSystem.addEventMechanism(PuzzleMazeDrawController.instance)
 
-return var_0_0
+return PuzzleMazeDrawController

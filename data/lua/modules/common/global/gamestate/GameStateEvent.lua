@@ -1,12 +1,14 @@
-﻿module("modules.common.global.gamestate.GameStateEvent", package.seeall)
+﻿-- chunkname: @modules/common/global/gamestate/GameStateEvent.lua
 
-local var_0_0 = {}
+module("modules.common.global.gamestate.GameStateEvent", package.seeall)
 
-var_0_0.onApplicationPause = 1
-var_0_0.OnTouchScreen = 2
-var_0_0.OnTouchScreenUp = 4
-var_0_0.OnQualityChange = 3
-var_0_0.OnScreenResize = 5
-var_0_0.OnApplicationQuit = 6
+local GameStateEvent = {}
 
-return var_0_0
+GameStateEvent.onApplicationPause = 1
+GameStateEvent.OnTouchScreen = 2
+GameStateEvent.OnTouchScreenUp = 4
+GameStateEvent.OnQualityChange = 3
+GameStateEvent.OnScreenResize = 5
+GameStateEvent.OnApplicationQuit = 6
+
+return GameStateEvent

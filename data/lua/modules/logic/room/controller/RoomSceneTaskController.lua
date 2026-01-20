@@ -1,189 +1,197 @@
-﻿module("modules.logic.room.controller.RoomSceneTaskController", package.seeall)
+﻿-- chunkname: @modules/logic/room/controller/RoomSceneTaskController.lua
 
-local var_0_0 = class("RoomSceneTaskController", BaseController)
+module("modules.logic.room.controller.RoomSceneTaskController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local RoomSceneTaskController = class("RoomSceneTaskController", BaseController)
+
+function RoomSceneTaskController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clear()
+function RoomSceneTaskController:reInit()
+	self:clear()
 end
 
-function var_0_0.clear(arg_3_0)
-	arg_3_0:release()
+function RoomSceneTaskController:clear()
+	self:release()
 end
 
-function var_0_0.release(arg_4_0)
-	TaskController.instance:unregisterCallback(TaskEvent.SetTaskList, arg_4_0.refreshData, arg_4_0)
-	TaskController.instance:unregisterCallback(TaskEvent.UpdateTaskList, arg_4_0.updateData, arg_4_0)
+function RoomSceneTaskController:release()
+	TaskController.instance:unregisterCallback(TaskEvent.SetTaskList, self.refreshData, self)
+	TaskController.instance:unregisterCallback(TaskEvent.UpdateTaskList, self.updateData, self)
 	RoomTaskModel.instance:clear()
 
-	arg_4_0._taskList = nil
-	arg_4_0._cfgGroup = nil
-	arg_4_0._allTaskList = nil
-	arg_4_0._taskMOIdSet = nil
-	arg_4_0._needCheckFinish = true
+	self._taskList = nil
+	self._cfgGroup = nil
+	self._allTaskList = nil
+	self._taskMOIdSet = nil
+	self._needCheckFinish = true
 end
 
-function var_0_0.init(arg_5_0)
-	arg_5_0:release()
-	TaskController.instance:registerCallback(TaskEvent.SetTaskList, arg_5_0.refreshData, arg_5_0)
-	TaskController.instance:registerCallback(TaskEvent.UpdateTaskList, arg_5_0.updateData, arg_5_0)
+function RoomSceneTaskController:init()
+	self:release()
+	TaskController.instance:registerCallback(TaskEvent.SetTaskList, self.refreshData, self)
+	TaskController.instance:registerCallback(TaskEvent.UpdateTaskList, self.updateData, self)
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.Room
 	})
 	RoomTaskModel.instance:buildDatas()
 end
 
-function var_0_0.showHideRoomTopTaskUI(arg_6_0, arg_6_1)
-	arg_6_0:dispatchEvent(RoomEvent.TaskShowHideAnim, arg_6_1 == true)
+function RoomSceneTaskController:showHideRoomTopTaskUI(isHide)
+	self:dispatchEvent(RoomEvent.TaskShowHideAnim, isHide == true)
 end
 
-function var_0_0.refreshData(arg_7_0)
+function RoomSceneTaskController:refreshData()
 	RoomTaskModel.instance:handleTaskUpdate()
-	arg_7_0:dispatchEvent(RoomEvent.TaskUpdate)
-	arg_7_0:checkTaskFinished()
+	self:dispatchEvent(RoomEvent.TaskUpdate)
+	self:checkTaskFinished()
 end
 
-function var_0_0.updateData(arg_8_0)
+function RoomSceneTaskController:updateData()
 	RoomTaskModel.instance:handleTaskUpdate()
-	arg_8_0:dispatchEvent(RoomEvent.TaskUpdate)
+	self:dispatchEvent(RoomEvent.TaskUpdate)
 
-	if arg_8_0._needCheckFinish then
-		arg_8_0:checkTaskFinished()
+	if self._needCheckFinish then
+		self:checkTaskFinished()
 	end
 end
 
-function var_0_0.checkTaskFinished(arg_9_0)
-	local var_9_0, var_9_1 = arg_9_0:isFirstTaskFinished()
+function RoomSceneTaskController:checkTaskFinished()
+	local rs, taskIds = self:isFirstTaskFinished()
 
-	if var_9_0 then
-		arg_9_0:dispatchEvent(RoomEvent.TaskCanFinish, var_9_1)
+	if rs then
+		self:dispatchEvent(RoomEvent.TaskCanFinish, taskIds)
 	end
 
-	return var_9_0
+	return rs
 end
 
-function var_0_0.setTaskCheckFinishFlag(arg_10_0, arg_10_1)
-	arg_10_0._needCheckFinish = arg_10_1
+function RoomSceneTaskController:setTaskCheckFinishFlag(value)
+	self._needCheckFinish = value
 end
 
-function var_0_0.isFirstTaskFinished(arg_11_0)
-	local var_11_0 = RoomTaskModel.instance:getShowList()
+function RoomSceneTaskController:isFirstTaskFinished()
+	local list = RoomTaskModel.instance:getShowList()
 
-	if var_11_0 ~= nil and #var_11_0 > 0 then
-		local var_11_1
+	if list ~= nil and #list > 0 then
+		local result
 
-		for iter_11_0, iter_11_1 in ipairs(var_11_0) do
-			local var_11_2 = iter_11_1.id
-			local var_11_3 = RoomTaskModel.instance:tryGetTaskMO(var_11_2)
+		for i, taskCo in ipairs(list) do
+			local taskId = taskCo.id
+			local taskMO = RoomTaskModel.instance:tryGetTaskMO(taskId)
 
-			if var_11_3 and var_11_3.hasFinished and var_11_3.finishCount <= 0 then
-				var_11_1 = var_11_1 or {}
+			if taskMO and taskMO.hasFinished and taskMO.finishCount <= 0 then
+				result = result or {}
 
-				table.insert(var_11_1, var_11_2)
+				table.insert(result, taskId)
 			else
-				return var_11_1 ~= nil, var_11_1
+				return result ~= nil, result
 			end
 		end
 
-		return var_11_1 ~= nil, var_11_1
+		return result ~= nil, result
 	end
 
 	return false
 end
 
-function var_0_0.getProgressStatus(arg_12_0)
-	return arg_12_0.hasFinished, arg_12_0.progress
+function RoomSceneTaskController.getProgressStatus(taskMO)
+	return taskMO.hasFinished, taskMO.progress
 end
 
-function var_0_0.hasLocalModifyBlock(arg_13_0)
-	if arg_13_0.hasFinished then
+function RoomSceneTaskController.hasLocalModifyBlock(taskMO)
+	if taskMO.hasFinished then
 		return false
 	end
 
-	if not RoomSceneTaskValidator.canGetByLocal(arg_13_0) then
+	if not RoomSceneTaskValidator.canGetByLocal(taskMO) then
 		return false
 	end
 
 	if RoomMapBlockModel.instance:getTempBlockMO() or RoomMapBuildingModel.instance:getTempBuildingMO() then
 		return true
 	else
-		local var_13_0 = RoomMapBlockModel.instance:getBackBlockModel()
+		local backModel = RoomMapBlockModel.instance:getBackBlockModel()
 
-		if var_13_0 then
-			return var_13_0:getCount() > 0
+		if backModel then
+			return backModel:getCount() > 0
 		end
 	end
 
 	return false
 end
 
-function var_0_0.sortTask(arg_14_0, arg_14_1)
-	return var_0_0.sortTaskConfig(arg_14_0.config, arg_14_1.config)
+function RoomSceneTaskController.sortTask(taskA, taskB)
+	return RoomSceneTaskController.sortTaskConfig(taskA.config, taskB.config)
 end
 
-function var_0_0.sortTaskConfig(arg_15_0, arg_15_1)
-	local var_15_0 = var_0_0.getOrder(arg_15_0)
-	local var_15_1 = var_0_0.getOrder(arg_15_1)
+function RoomSceneTaskController.sortTaskConfig(taskA, taskB)
+	local orderA = RoomSceneTaskController.getOrder(taskA)
+	local orderB = RoomSceneTaskController.getOrder(taskB)
 
-	if var_15_0 ~= var_15_1 then
-		return var_15_0 < var_15_1
+	if orderA ~= orderB then
+		return orderA < orderB
 	else
-		return arg_15_0.id < arg_15_1.id
+		return taskA.id < taskB.id
 	end
 end
 
-function var_0_0.getOrder(arg_16_0)
-	if not string.nilorempty(arg_16_0.order) then
-		local var_16_0 = string.match(arg_16_0.order, "%d+")
+function RoomSceneTaskController.getOrder(taskCo)
+	if not string.nilorempty(taskCo.order) then
+		local rs = string.match(taskCo.order, "%d+")
 
-		if not string.nilorempty(var_16_0) then
-			return tonumber(var_16_0)
+		if not string.nilorempty(rs) then
+			return tonumber(rs)
 		end
 	end
 
 	return 0
 end
 
-function var_0_0.getTaskTypeKey(arg_17_0, arg_17_1)
-	if arg_17_0 == RoomSceneTaskEnum.ListenerType.EditResTypeReach then
-		return tostring(arg_17_0) .. "_" .. tostring(arg_17_1)
+function RoomSceneTaskController.getTaskTypeKey(listenerType, param)
+	if listenerType == RoomSceneTaskEnum.ListenerType.EditResTypeReach then
+		return tostring(listenerType) .. "_" .. tostring(param)
 	else
-		return arg_17_0
+		return listenerType
 	end
 end
 
-function var_0_0.isTaskOverUnlockLevel(arg_18_0)
-	return RoomMapModel.instance:getRoomLevel() >= var_0_0.getTaskUnlockLevel(arg_18_0.openLimit)
+function RoomSceneTaskController.isTaskOverUnlockLevel(taskCO)
+	local curLv = RoomMapModel.instance:getRoomLevel()
+	local nextLv = RoomSceneTaskController.getTaskUnlockLevel(taskCO.openLimit)
+
+	return nextLv <= curLv
 end
 
-function var_0_0.getTaskUnlockLevel(arg_19_0)
-	local var_19_0 = {}
+function RoomSceneTaskController.getTaskUnlockLevel(param)
+	local paramData = {}
 
-	for iter_19_0, iter_19_1 in string.gmatch(arg_19_0, "(%w+)=(%w+)") do
-		var_19_0[iter_19_0] = iter_19_1
+	for k, v in string.gmatch(param, "(%w+)=(%w+)") do
+		paramData[k] = v
 	end
 
-	return tonumber(var_19_0.RoomLevel) or 0
+	local result = tonumber(paramData.RoomLevel) or 0
+
+	return result
 end
 
-function var_0_0.getRewardConfigAndIcon(arg_20_0)
-	if arg_20_0 then
-		local var_20_0 = string.split(arg_20_0.bonus, "|")
+function RoomSceneTaskController.getRewardConfigAndIcon(taskCO)
+	if taskCO then
+		local bonusArr = string.split(taskCO.bonus, "|")
 
-		if #var_20_0 > 0 then
-			local var_20_1 = string.splitToNumber(var_20_0[1], "#")
-			local var_20_2, var_20_3 = ItemModel.instance:getItemConfigAndIcon(var_20_1[1], var_20_1[2])
+		if #bonusArr > 0 then
+			bonusArr = string.splitToNumber(bonusArr[1], "#")
 
-			return var_20_2, var_20_3, tonumber(var_20_1[3])
+			local itemCo, icon = ItemModel.instance:getItemConfigAndIcon(bonusArr[1], bonusArr[2])
+
+			return itemCo, icon, tonumber(bonusArr[3])
 		end
 	end
 
 	return nil
 end
 
-var_0_0.instance = var_0_0.New()
+RoomSceneTaskController.instance = RoomSceneTaskController.New()
 
-return var_0_0
+return RoomSceneTaskController

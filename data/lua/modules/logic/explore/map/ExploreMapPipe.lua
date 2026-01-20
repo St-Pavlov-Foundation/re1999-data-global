@@ -1,203 +1,206 @@
-﻿module("modules.logic.explore.map.ExploreMapPipe", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/ExploreMapPipe.lua
 
-local var_0_0 = class("ExploreMapPipe")
-local var_0_1 = ExploreEnum.PipeColor
-local var_0_2 = {
-	[var_0_1.Color1] = var_0_1.Color1,
-	[var_0_1.Color2] = var_0_1.Color2,
-	[var_0_1.Color3] = var_0_1.Color3,
-	[bit.bor(var_0_1.Color1, var_0_1.Color2)] = var_0_1.Color3,
-	[bit.bor(var_0_1.Color3, var_0_1.Color2)] = var_0_1.Color1,
-	[bit.bor(var_0_1.Color1, var_0_1.Color3)] = var_0_1.Color2
+module("modules.logic.explore.map.ExploreMapPipe", package.seeall)
+
+local ExploreMapPipe = class("ExploreMapPipe")
+local PipeColor = ExploreEnum.PipeColor
+local finalColorDict = {
+	[PipeColor.Color1] = PipeColor.Color1,
+	[PipeColor.Color2] = PipeColor.Color2,
+	[PipeColor.Color3] = PipeColor.Color3,
+	[bit.bor(PipeColor.Color1, PipeColor.Color2)] = PipeColor.Color3,
+	[bit.bor(PipeColor.Color3, PipeColor.Color2)] = PipeColor.Color1,
+	[bit.bor(PipeColor.Color1, PipeColor.Color3)] = PipeColor.Color2
 }
 
-GameUtil.setDefaultValue(var_0_2, var_0_1.None)
+GameUtil.setDefaultValue(finalColorDict, PipeColor.None)
 
-function var_0_0.loadMap(arg_1_0)
+function ExploreMapPipe:loadMap()
 	return
 end
 
-function var_0_0.init(arg_2_0)
-	local var_2_0 = ExploreController.instance:getMap():getUnitsByTypeDict(ExploreEnum.PipeTypes)
+function ExploreMapPipe:init()
+	local map = ExploreController.instance:getMap()
+	local allPipes = map:getUnitsByTypeDict(ExploreEnum.PipeTypes)
 
-	if #var_2_0 <= 0 then
+	if #allPipes <= 0 then
 		return
 	end
 
-	arg_2_0._allPipeMos = {}
-	arg_2_0._allPipeComps = {}
+	self._allPipeMos = {}
+	self._allPipeComps = {}
 
-	for iter_2_0, iter_2_1 in pairs(var_2_0) do
-		local var_2_1 = ExploreHelper.getKey(iter_2_1.mo.nodePos)
+	for _, pipe in pairs(allPipes) do
+		local key = ExploreHelper.getKey(pipe.mo.nodePos)
 
-		arg_2_0._allPipeMos[var_2_1] = iter_2_1.mo
-		arg_2_0._allPipeComps[var_2_1] = iter_2_1.pipeComp
+		self._allPipeMos[key] = pipe.mo
+		self._allPipeComps[key] = pipe.pipeComp
 	end
 
-	arg_2_0:initColors(true)
+	self:initColors(true)
 
-	arg_2_0._tweenId = nil
+	self._tweenId = nil
 end
 
-function var_0_0.sortUnitById(arg_3_0, arg_3_1)
-	return arg_3_0.id < arg_3_1.id
+function ExploreMapPipe.sortUnitById(a, b)
+	return a.id < b.id
 end
 
-function var_0_0.initColors(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	if arg_4_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_4_0._tweenId)
+function ExploreMapPipe:initColors(isFirst, cacheActiveSensor, calcHistory)
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_4_0._tweenId = nil
+		self._tweenId = nil
 	end
 
-	arg_4_3 = arg_4_3 or {}
+	calcHistory = calcHistory or {}
 
-	if #arg_4_3 > 50 then
-		local var_4_0 = ""
+	if #calcHistory > 50 then
+		local str = ""
 
 		if isDebugBuild then
-			for iter_4_0, iter_4_1 in pairs(arg_4_0._allPipeMos) do
-				var_4_0 = string.format("%s\n[%s,%s,%s]", var_4_0, iter_4_1.id, iter_4_1:getColor(0), iter_4_1:isInteractActiveState())
+			for _, pipeMo in pairs(self._allPipeMos) do
+				str = string.format("%s\n[%s,%s,%s]", str, pipeMo.id, pipeMo:getColor(0), pipeMo:isInteractActiveState())
 			end
 		end
 
-		logError("密室管道死循环了？？？" .. var_4_0)
+		logError("密室管道死循环了？？？" .. str)
 
 		return
 	end
 
-	arg_4_0._all = nil
-	arg_4_0._allOutColor = nil
+	self._all = nil
+	self._allOutColor = nil
 
-	local var_4_1 = {}
-	local var_4_2 = {}
+	local all = {}
+	local allOutColor = {}
 
-	arg_4_2 = arg_4_2 or {}
-	arg_4_0._cacheActiveSensor = arg_4_2
+	cacheActiveSensor = cacheActiveSensor or {}
+	self._cacheActiveSensor = cacheActiveSensor
 
-	local var_4_3 = ExploreController.instance:getMap()
-	local var_4_4 = var_4_3:getUnitsByType(ExploreEnum.ItemType.PipeEntrance)
+	local map = ExploreController.instance:getMap()
+	local allPipeEntrance = map:getUnitsByType(ExploreEnum.ItemType.PipeEntrance)
 
-	table.sort(var_4_4, var_0_0.sortUnitById)
+	table.sort(allPipeEntrance, ExploreMapPipe.sortUnitById)
 
-	for iter_4_2, iter_4_3 in ipairs(var_4_4) do
-		local var_4_5 = iter_4_3.mo:getColor()
+	for _, unit in ipairs(allPipeEntrance) do
+		local color = unit.mo:getColor()
 
-		if var_4_5 ~= ExploreEnum.PipeColor.None then
-			var_4_2[iter_4_3.id] = var_4_5
+		if color ~= ExploreEnum.PipeColor.None then
+			allOutColor[unit.id] = color
 
-			arg_4_0:calcRelation(iter_4_3.mo, iter_4_3.id, var_4_1, nil, iter_4_3.mo:getPipeOutDir())
+			self:calcRelation(unit.mo, unit.id, all, nil, unit.mo:getPipeOutDir())
 		end
 	end
 
-	local var_4_6 = var_4_3:getUnitsByType(ExploreEnum.ItemType.PipeSensor)
+	local allPipeSensor = map:getUnitsByType(ExploreEnum.ItemType.PipeSensor)
 
-	table.sort(var_4_6, var_0_0.sortUnitById)
+	table.sort(allPipeSensor, ExploreMapPipe.sortUnitById)
 
-	for iter_4_4, iter_4_5 in ipairs(var_4_6) do
-		local var_4_7 = iter_4_5.mo:getColor()
+	for _, unit in ipairs(allPipeSensor) do
+		local color = unit.mo:getColor()
 
-		if var_4_7 ~= ExploreEnum.PipeColor.None then
-			var_4_2[iter_4_5.id] = var_4_7
+		if color ~= ExploreEnum.PipeColor.None then
+			allOutColor[unit.id] = color
 
-			arg_4_0:calcRelation(iter_4_5.mo, iter_4_5.id, var_4_1, nil, iter_4_5.mo:getPipeOutDir())
+			self:calcRelation(unit.mo, unit.id, all, nil, unit.mo:getPipeOutDir())
 		end
 	end
 
-	local var_4_8 = var_4_3:getUnitsByType(ExploreEnum.ItemType.PipeMemory)
+	local allPipeMemory = map:getUnitsByType(ExploreEnum.ItemType.PipeMemory)
 
-	table.sort(var_4_8, var_0_0.sortUnitById)
+	table.sort(allPipeMemory, ExploreMapPipe.sortUnitById)
 
-	for iter_4_6, iter_4_7 in ipairs(var_4_8) do
-		local var_4_9 = iter_4_7.mo:getColor()
+	for _, unit in ipairs(allPipeMemory) do
+		local color = unit.mo:getColor()
 
-		if var_4_9 ~= ExploreEnum.PipeColor.None then
-			var_4_2[iter_4_7.id] = var_4_9
+		if color ~= ExploreEnum.PipeColor.None then
+			allOutColor[unit.id] = color
 
-			arg_4_0:calcRelation(iter_4_7.mo, iter_4_7.id, var_4_1, nil, iter_4_7.mo:getPipeOutDir())
+			self:calcRelation(unit.mo, unit.id, all, nil, unit.mo:getPipeOutDir())
 		end
 	end
 
-	arg_4_0:delUnUseDir(var_4_1)
+	self:delUnUseDir(all)
 
-	local var_4_10 = {}
-	local var_4_11 = {}
+	local fromDict = {}
+	local allNoOutDivisive = {}
 
-	for iter_4_8, iter_4_9 in ipairs(var_4_1) do
-		if iter_4_9.isDivisive then
-			if not var_4_10[iter_4_9.toId] then
-				var_4_10[iter_4_9.toId] = {
-					[iter_4_9.fromId] = true
+	for _, item in ipairs(all) do
+		if item.isDivisive then
+			if not fromDict[item.toId] then
+				fromDict[item.toId] = {
+					[item.fromId] = true
 				}
 			else
-				var_4_10[iter_4_9.toId][iter_4_9.fromId] = true
+				fromDict[item.toId][item.fromId] = true
 			end
 
-			if iter_4_9.noOutDivisive then
-				var_4_11[iter_4_9.toId] = true
+			if item.noOutDivisive then
+				allNoOutDivisive[item.toId] = true
 			end
 		end
 	end
 
-	local var_4_12 = true
+	local clean = true
 
-	while var_4_12 do
-		var_4_12 = false
+	while clean do
+		clean = false
 
-		for iter_4_10, iter_4_11 in pairs(var_4_10) do
-			local var_4_13 = var_0_1.None
+		for toId, fromIdList in pairs(fromDict) do
+			local color = PipeColor.None
 
-			for iter_4_12 in pairs(iter_4_11) do
-				if iter_4_12 ~= iter_4_10 then
-					if var_4_2[iter_4_12] then
-						var_4_13 = bit.bor(var_4_13, var_4_2[iter_4_12])
+			for id in pairs(fromIdList) do
+				if id ~= toId then
+					if allOutColor[id] then
+						color = bit.bor(color, allOutColor[id])
 					else
-						var_4_13 = nil
+						color = nil
 
 						break
 					end
 				end
 			end
 
-			if var_4_13 then
-				local var_4_14 = var_0_2[var_4_13]
+			if color then
+				local finalColor = finalColorDict[color]
 
-				if var_4_11[iter_4_10] and not arg_4_0:haveValue(var_0_1, var_4_13) then
-					var_4_14 = var_0_1.None
+				if allNoOutDivisive[toId] and not self:haveValue(PipeColor, color) then
+					finalColor = PipeColor.None
 				end
 
-				var_4_2[iter_4_10] = var_4_14
-				var_4_12 = true
-				var_4_10[iter_4_10] = nil
+				allOutColor[toId] = finalColor
+				clean = true
+				fromDict[toId] = nil
 			end
 		end
 
-		if not var_4_12 and next(var_4_10) then
-			for iter_4_13, iter_4_14 in pairs(var_4_10) do
-				local var_4_15 = var_0_1.None
+		if not clean and next(fromDict) then
+			for toId, fromIdList in pairs(fromDict) do
+				local color = PipeColor.None
 
-				for iter_4_15 in pairs(iter_4_14) do
-					if iter_4_15 ~= iter_4_13 then
-						if var_4_2[iter_4_15] then
-							var_4_15 = bit.bor(var_4_15, var_4_2[iter_4_15])
-						elseif not arg_4_0:isRound({}, iter_4_13, iter_4_15, var_4_10) then
-							var_4_15 = nil
+				for id in pairs(fromIdList) do
+					if id ~= toId then
+						if allOutColor[id] then
+							color = bit.bor(color, allOutColor[id])
+						elseif not self:isRound({}, toId, id, fromDict) then
+							color = nil
 
 							break
 						end
 					end
 				end
 
-				if var_4_15 ~= var_0_1.None and var_4_15 then
-					local var_4_16 = var_0_2[var_4_15]
+				if color ~= PipeColor.None and color then
+					local finalColor = finalColorDict[color]
 
-					if var_4_11[iter_4_13] and not arg_4_0:haveValue(var_0_1, var_4_15) then
-						var_4_16 = var_0_1.None
+					if allNoOutDivisive[toId] and not self:haveValue(PipeColor, color) then
+						finalColor = PipeColor.None
 					end
 
-					var_4_2[iter_4_13] = var_4_16
-					var_4_12 = true
-					var_4_10[iter_4_13] = nil
+					allOutColor[toId] = finalColor
+					clean = true
+					fromDict[toId] = nil
 
 					break
 				end
@@ -205,76 +208,76 @@ function var_0_0.initColors(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
 		end
 	end
 
-	local var_4_17 = {}
+	local history = {}
 
-	for iter_4_16, iter_4_17 in ipairs(var_4_6) do
-		local var_4_18 = iter_4_17.mo:getColor()
+	for _, unit in ipairs(allPipeSensor) do
+		local color = unit.mo:getColor()
 
-		if not arg_4_2[iter_4_17.id] and var_4_18 == ExploreEnum.PipeColor.None then
-			local var_4_19 = ExploreHelper.dirToXY(iter_4_17.mo.unitDir)
-			local var_4_20 = ExploreHelper.getKeyXY(iter_4_17.mo.nodePos.x + var_4_19.x, iter_4_17.mo.nodePos.y + var_4_19.y)
-			local var_4_21 = arg_4_0._allPipeMos[var_4_20]
+		if not cacheActiveSensor[unit.id] and color == ExploreEnum.PipeColor.None then
+			local xy = ExploreHelper.dirToXY(unit.mo.unitDir)
+			local inKey = ExploreHelper.getKeyXY(unit.mo.nodePos.x + xy.x, unit.mo.nodePos.y + xy.y)
+			local inUnitMo = self._allPipeMos[inKey]
 
-			if var_4_21 and arg_4_0:getOutDirColor(var_4_1, var_4_2, ExploreHelper.getDir(iter_4_17.mo.unitDir + 180), var_4_21.id, ExploreEnum.PipeDirMatchMode.Single) == iter_4_17.mo:getNeedColor() then
-				arg_4_2[iter_4_17.id] = true
-				var_4_17[iter_4_17.id] = 1
+			if inUnitMo and self:getOutDirColor(all, allOutColor, ExploreHelper.getDir(unit.mo.unitDir + 180), inUnitMo.id, ExploreEnum.PipeDirMatchMode.Single) == unit.mo:getNeedColor() then
+				cacheActiveSensor[unit.id] = true
+				history[unit.id] = 1
 			end
 		end
 	end
 
-	for iter_4_18, iter_4_19 in ipairs(var_4_8) do
-		local var_4_22 = iter_4_19.mo:getColor()
-		local var_4_23 = ExploreHelper.dirToXY(iter_4_19.mo.unitDir)
-		local var_4_24 = ExploreHelper.getKeyXY(iter_4_19.mo.nodePos.x + var_4_23.x, iter_4_19.mo.nodePos.y + var_4_23.y)
-		local var_4_25 = arg_4_0._allPipeMos[var_4_24]
-		local var_4_26 = var_4_25 and arg_4_0:getOutDirColor(var_4_1, var_4_2, ExploreHelper.getDir(iter_4_19.mo.unitDir + 180), var_4_25.id, ExploreEnum.PipeDirMatchMode.Single) or ExploreEnum.PipeColor.None
+	for _, unit in ipairs(allPipeMemory) do
+		local color = unit.mo:getColor()
+		local xy = ExploreHelper.dirToXY(unit.mo.unitDir)
+		local inKey = ExploreHelper.getKeyXY(unit.mo.nodePos.x + xy.x, unit.mo.nodePos.y + xy.y)
+		local inUnitMo = self._allPipeMos[inKey]
+		local nowColor = inUnitMo and self:getOutDirColor(all, allOutColor, ExploreHelper.getDir(unit.mo.unitDir + 180), inUnitMo.id, ExploreEnum.PipeDirMatchMode.Single) or ExploreEnum.PipeColor.None
 
-		if var_4_26 ~= var_4_22 and var_4_26 ~= ExploreEnum.PipeColor.None then
-			iter_4_19.mo:setCacheColor(var_4_26)
+		if nowColor ~= color and nowColor ~= ExploreEnum.PipeColor.None then
+			unit.mo:setCacheColor(nowColor)
 
-			var_4_17[iter_4_19.id] = var_4_26
+			history[unit.id] = nowColor
 		end
 	end
 
-	if not arg_4_0:haveHistory(arg_4_3, var_4_17) then
-		table.insert(arg_4_3, var_4_17)
+	if not self:haveHistory(calcHistory, history) then
+		table.insert(calcHistory, history)
 
-		return arg_4_0:initColors(arg_4_1, arg_4_2, arg_4_3)
+		return self:initColors(isFirst, cacheActiveSensor, calcHistory)
 	end
 
-	arg_4_0._all = var_4_1
-	arg_4_0._allOutColor = var_4_2
+	self._all = all
+	self._allOutColor = allOutColor
 
-	if arg_4_1 then
-		arg_4_0._initDone = true
+	if isFirst then
+		self._initDone = true
 	end
 
-	for iter_4_20, iter_4_21 in pairs(arg_4_0._allPipeComps) do
-		iter_4_21:applyColor(arg_4_1)
+	for _, comp in pairs(self._allPipeComps) do
+		comp:applyColor(isFirst)
 	end
 
-	if not arg_4_1 then
+	if not isFirst then
 		ExploreModel.instance:setStepPause(true)
 		ExploreModel.instance:setHeroControl(false, ExploreEnum.HeroLock.Pipe)
 
-		arg_4_0._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.4, arg_4_0._frameCall, arg_4_0._finishCall, arg_4_0, nil, EaseType.Linear)
+		self._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.4, self._frameCall, self._finishCall, self, nil, EaseType.Linear)
 	end
 end
 
-function var_0_0.haveHistory(arg_5_0, arg_5_1, arg_5_2)
-	for iter_5_0, iter_5_1 in pairs(arg_5_1) do
-		if tabletool.len(iter_5_1) == tabletool.len(arg_5_2) then
-			local var_5_0 = true
+function ExploreMapPipe:haveHistory(calcHistory, history)
+	for _, preHistory in pairs(calcHistory) do
+		if tabletool.len(preHistory) == tabletool.len(history) then
+			local isSame = true
 
-			for iter_5_2, iter_5_3 in pairs(iter_5_1) do
-				if arg_5_2[iter_5_2] ~= iter_5_3 then
-					var_5_0 = false
+			for k, v in pairs(preHistory) do
+				if history[k] ~= v then
+					isSame = false
 
 					break
 				end
 			end
 
-			if var_5_0 then
+			if isSame then
 				return true
 			end
 		end
@@ -283,31 +286,33 @@ function var_0_0.haveHistory(arg_5_0, arg_5_1, arg_5_2)
 	return false
 end
 
-function var_0_0.isRound(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
-	if arg_6_2 == arg_6_3 then
+function ExploreMapPipe:isRound(cache, toId, checkId, fromDict)
+	if toId == checkId then
 		return true
 	end
 
-	arg_6_3 = arg_6_3 or arg_6_2
+	checkId = checkId or toId
 
-	if arg_6_1[arg_6_3] then
+	if cache[checkId] then
 		return
 	end
 
-	arg_6_1[arg_6_3] = true
+	cache[checkId] = true
 
-	if arg_6_4[arg_6_3] then
-		for iter_6_0 in pairs(arg_6_4) do
-			if arg_6_0:isRound(arg_6_1, arg_6_2, iter_6_0, arg_6_4) then
+	local list = fromDict[checkId]
+
+	if list then
+		for fromId in pairs(fromDict) do
+			if self:isRound(cache, toId, fromId, fromDict) then
 				return true
 			end
 		end
 	end
 end
 
-function var_0_0.haveValue(arg_7_0, arg_7_1, arg_7_2)
-	for iter_7_0, iter_7_1 in pairs(arg_7_1) do
-		if iter_7_1 == arg_7_2 then
+function ExploreMapPipe:haveValue(t, value)
+	for k, v in pairs(t) do
+		if v == value then
 			return true
 		end
 	end
@@ -315,134 +320,135 @@ function var_0_0.haveValue(arg_7_0, arg_7_1, arg_7_2)
 	return false
 end
 
-function var_0_0.isCacheActive(arg_8_0, arg_8_1)
-	if not arg_8_0._cacheActiveSensor then
+function ExploreMapPipe:isCacheActive(id)
+	if not self._cacheActiveSensor then
 		return
 	end
 
-	return arg_8_0._cacheActiveSensor[arg_8_1]
+	return self._cacheActiveSensor[id]
 end
 
-function var_0_0._frameCall(arg_9_0, arg_9_1)
-	for iter_9_0, iter_9_1 in pairs(arg_9_0._allPipeComps) do
-		iter_9_1:tweenColor(arg_9_1)
+function ExploreMapPipe:_frameCall(value)
+	for _, comp in pairs(self._allPipeComps) do
+		comp:tweenColor(value)
 	end
 end
 
-function var_0_0._finishCall(arg_10_0)
+function ExploreMapPipe:_finishCall()
 	ExploreModel.instance:setStepPause(false)
 	ExploreModel.instance:setHeroControl(true, ExploreEnum.HeroLock.Pipe)
 end
 
-function var_0_0.getDirColor(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = arg_11_0._all
-	local var_11_1 = arg_11_0._allOutColor
+function ExploreMapPipe:getDirColor(id, dir)
+	local all = self._all
+	local allOutColor = self._allOutColor
+	local unitMo = ExploreController.instance:getMap():getUnit(id).mo
 
-	if ExploreController.instance:getMap():getUnit(arg_11_1).mo:isDivisive() then
-		local var_11_2
+	if unitMo:isDivisive() then
+		local inItem
 
-		for iter_11_0, iter_11_1 in ipairs(var_11_0) do
-			if iter_11_1.toId == arg_11_1 and arg_11_2 == iter_11_1.inDir then
-				var_11_2 = iter_11_1
+		for _, item in ipairs(all) do
+			if item.toId == id and dir == item.inDir then
+				inItem = item
 
 				break
 			end
 		end
 
-		if var_11_2 then
-			return var_11_2 and var_11_1[var_11_2.fromId] or arg_11_0:getOutDirColor(var_11_0, var_11_1, arg_11_2, arg_11_1, ExploreEnum.PipeDirMatchMode.Single)
+		if inItem then
+			return inItem and allOutColor[inItem.fromId] or self:getOutDirColor(all, allOutColor, dir, id, ExploreEnum.PipeDirMatchMode.Single)
 		end
 	end
 
-	return arg_11_0:getOutDirColor(var_11_0, var_11_1, arg_11_2, arg_11_1, ExploreEnum.PipeDirMatchMode.Both)
+	return self:getOutDirColor(all, allOutColor, dir, id, ExploreEnum.PipeDirMatchMode.Both)
 end
 
-function var_0_0.getCenterColor(arg_12_0, arg_12_1)
-	return arg_12_0:getOutDirColor(nil, nil, nil, arg_12_1, ExploreEnum.PipeDirMatchMode.All)
+function ExploreMapPipe:getCenterColor(toId)
+	return self:getOutDirColor(nil, nil, nil, toId, ExploreEnum.PipeDirMatchMode.All)
 end
 
-function var_0_0.getOutDirColor(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4, arg_13_5)
-	arg_13_1 = arg_13_1 or arg_13_0._all
-	arg_13_2 = arg_13_2 or arg_13_0._allOutColor
+function ExploreMapPipe:getOutDirColor(all, allOutColor, outDir, toId, matchInDir)
+	all = all or self._all
+	allOutColor = allOutColor or self._allOutColor
 
-	if not arg_13_1 then
+	if not all then
 		return ExploreEnum.PipeColor.None
 	end
 
-	if arg_13_2[arg_13_4] then
-		local var_13_0 = ExploreMapModel.instance:getUnitMO(arg_13_4)
+	if allOutColor[toId] then
+		local unitMO = ExploreMapModel.instance:getUnitMO(toId)
 
-		if not var_13_0 then
+		if not unitMO then
 			return ExploreEnum.PipeColor.None
 		end
 
-		if arg_13_3 and not var_13_0:isOutDir(arg_13_3) then
+		if outDir and not unitMO:isOutDir(outDir) then
 			return ExploreEnum.PipeColor.None
 		end
 
-		return arg_13_2[arg_13_4]
+		return allOutColor[toId]
 	end
 
-	local var_13_1
+	local matchItem
 
-	for iter_13_0, iter_13_1 in ipairs(arg_13_1) do
-		local var_13_2 = false
+	for _, item in ipairs(all) do
+		local isMatch = false
 
-		if arg_13_5 == ExploreEnum.PipeDirMatchMode.Single then
-			var_13_2 = arg_13_3 == iter_13_1.outDir
-		elseif arg_13_5 == ExploreEnum.PipeDirMatchMode.Both then
-			var_13_2 = arg_13_3 == iter_13_1.outDir or arg_13_3 == iter_13_1.inDir
-		elseif arg_13_5 == ExploreEnum.PipeDirMatchMode.All then
-			var_13_2 = true
+		if matchInDir == ExploreEnum.PipeDirMatchMode.Single then
+			isMatch = outDir == item.outDir
+		elseif matchInDir == ExploreEnum.PipeDirMatchMode.Both then
+			isMatch = outDir == item.outDir or outDir == item.inDir
+		elseif matchInDir == ExploreEnum.PipeDirMatchMode.All then
+			isMatch = true
 		end
 
-		if iter_13_1.toId == arg_13_4 and var_13_2 then
-			var_13_1 = iter_13_1
+		if item.toId == toId and isMatch then
+			matchItem = item
 
 			break
 		end
 	end
 
-	return var_13_1 and arg_13_2[var_13_1.fromId] or ExploreEnum.PipeColor.None
+	return matchItem and allOutColor[matchItem.fromId] or ExploreEnum.PipeColor.None
 end
 
-function var_0_0.delUnUseDir(arg_14_0, arg_14_1)
-	local var_14_0 = true
+function ExploreMapPipe:delUnUseDir(all)
+	local haveRemomve = true
 
-	while var_14_0 do
-		var_14_0 = false
+	while haveRemomve do
+		haveRemomve = false
 
-		for iter_14_0, iter_14_1 in ipairs(arg_14_1) do
-			if iter_14_1.isDivisive then
-				local var_14_1 = {}
+		for _, item in ipairs(all) do
+			if item.isDivisive then
+				local removeKeys = {}
 
-				for iter_14_2, iter_14_3 in ipairs(arg_14_1) do
-					if iter_14_3.fromId == iter_14_1.toId and iter_14_1.inDir == iter_14_3.fromDir or iter_14_3.toId == iter_14_1.toId and iter_14_1.inDir == iter_14_3.outDir then
-						table.insert(var_14_1, iter_14_2)
+				for key, item2 in ipairs(all) do
+					if item2.fromId == item.toId and item.inDir == item2.fromDir or item2.toId == item.toId and item.inDir == item2.outDir then
+						table.insert(removeKeys, key)
 					end
 				end
 
-				for iter_14_4 = #var_14_1, 1, -1 do
-					table.remove(arg_14_1, var_14_1[iter_14_4])
+				for i = #removeKeys, 1, -1 do
+					table.remove(all, removeKeys[i])
 
-					var_14_0 = true
+					haveRemomve = true
 				end
 			end
 
-			if var_14_0 then
+			if haveRemomve then
 				break
 			end
 		end
 	end
 
-	for iter_14_5 = #arg_14_1, 1, -1 do
-		local var_14_2 = arg_14_1[iter_14_5]
+	for i = #all, 1, -1 do
+		local itemA = all[i]
 
-		for iter_14_6 = iter_14_5 - 1, 1, -1 do
-			local var_14_3 = arg_14_1[iter_14_6]
+		for j = i - 1, 1, -1 do
+			local itemB = all[j]
 
-			if not var_14_2.isDivisive and var_14_2.toId == var_14_3.toId and var_14_2.inDir == var_14_3.outDir then
-				table.remove(arg_14_1, iter_14_5)
+			if not itemA.isDivisive and itemA.toId == itemB.toId and itemA.inDir == itemB.outDir then
+				table.remove(all, i)
 
 				break
 			end
@@ -450,72 +456,72 @@ function var_0_0.delUnUseDir(arg_14_0, arg_14_1)
 	end
 end
 
-function var_0_0.calcRelation(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5)
-	local var_15_0, var_15_1, var_15_2 = arg_15_1:getPipeOutDir(arg_15_4)
+function ExploreMapPipe:calcRelation(unitMo, fromId, all, inDir, fromDir)
+	local dir1, dir2, dir3 = unitMo:getPipeOutDir(inDir)
 
-	arg_15_0:calcRelationDir(var_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5)
-	arg_15_0:calcRelationDir(var_15_1, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5)
-	arg_15_0:calcRelationDir(var_15_2, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5)
+	self:calcRelationDir(dir1, unitMo, fromId, all, inDir, fromDir)
+	self:calcRelationDir(dir2, unitMo, fromId, all, inDir, fromDir)
+	self:calcRelationDir(dir3, unitMo, fromId, all, inDir, fromDir)
 end
 
-function var_0_0.calcRelationDir(arg_16_0, arg_16_1, arg_16_2, arg_16_3, arg_16_4, arg_16_5, arg_16_6)
-	if not arg_16_1 then
+function ExploreMapPipe:calcRelationDir(dir, unitMo, fromId, all, inDir, fromDir)
+	if not dir then
 		return
 	end
 
-	for iter_16_0, iter_16_1 in ipairs(arg_16_4) do
-		if iter_16_1.inDir == arg_16_5 and iter_16_1.toId == arg_16_2.id and iter_16_1.outDir == arg_16_1 then
+	for _, relationInfo in ipairs(all) do
+		if relationInfo.inDir == inDir and relationInfo.toId == unitMo.id and relationInfo.outDir == dir then
 			return
 		end
 	end
 
-	table.insert(arg_16_4, {
-		fromId = arg_16_3,
-		inDir = arg_16_5,
-		toId = arg_16_2.id,
-		outDir = arg_16_1,
-		fromDir = arg_16_6,
-		isDivisive = arg_16_2:isDivisive(),
-		noOutDivisive = arg_16_2:isDivisive() and not arg_16_2:haveOutDir()
+	table.insert(all, {
+		fromId = fromId,
+		inDir = inDir,
+		toId = unitMo.id,
+		outDir = dir,
+		fromDir = fromDir,
+		isDivisive = unitMo:isDivisive(),
+		noOutDivisive = unitMo:isDivisive() and not unitMo:haveOutDir()
 	})
 
-	local var_16_0 = ExploreHelper.dirToXY(arg_16_1)
-	local var_16_1 = ExploreHelper.getKeyXY(arg_16_2.nodePos.x + var_16_0.x, arg_16_2.nodePos.y + var_16_0.y)
-	local var_16_2 = arg_16_0._allPipeMos[var_16_1]
+	local xy = ExploreHelper.dirToXY(dir)
+	local nextKey = ExploreHelper.getKeyXY(unitMo.nodePos.x + xy.x, unitMo.nodePos.y + xy.y)
+	local nextUnitMo = self._allPipeMos[nextKey]
 
-	if not var_16_2 or var_16_2.type ~= ExploreEnum.ItemType.Pipe then
+	if not nextUnitMo or nextUnitMo.type ~= ExploreEnum.ItemType.Pipe then
 		return
 	end
 
-	if arg_16_2:isDivisive() then
-		arg_16_3 = arg_16_2.id
-		arg_16_6 = arg_16_1
+	if unitMo:isDivisive() then
+		fromId = unitMo.id
+		fromDir = dir
 	end
 
-	return arg_16_0:calcRelation(var_16_2, arg_16_3, arg_16_4, ExploreHelper.getDir(arg_16_1 + 180), arg_16_6)
+	return self:calcRelation(nextUnitMo, fromId, all, ExploreHelper.getDir(dir + 180), fromDir)
 end
 
-function var_0_0.isInitDone(arg_17_0)
-	return arg_17_0._initDone
+function ExploreMapPipe:isInitDone()
+	return self._initDone
 end
 
-function var_0_0.unloadMap(arg_18_0)
-	arg_18_0:destroy()
+function ExploreMapPipe:unloadMap()
+	self:destroy()
 end
 
-function var_0_0.destroy(arg_19_0)
-	if arg_19_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_19_0._tweenId)
+function ExploreMapPipe:destroy()
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_19_0._tweenId = nil
+		self._tweenId = nil
 	end
 
-	arg_19_0._initDone = false
-	arg_19_0._allPipeMos = {}
-	arg_19_0._allPipeComps = {}
-	arg_19_0._all = nil
-	arg_19_0._allOutColor = nil
-	arg_19_0._cacheActiveSensor = nil
+	self._initDone = false
+	self._allPipeMos = {}
+	self._allPipeComps = {}
+	self._all = nil
+	self._allOutColor = nil
+	self._cacheActiveSensor = nil
 end
 
-return var_0_0
+return ExploreMapPipe

@@ -1,11 +1,13 @@
-﻿module("modules.logic.season.view.SeasonCelebrityCardTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/season/view/SeasonCelebrityCardTipViewContainer.lua
 
-local var_0_0 = class("SeasonCelebrityCardTipViewContainer", BaseViewContainer)
+module("modules.logic.season.view.SeasonCelebrityCardTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local SeasonCelebrityCardTipViewContainer = class("SeasonCelebrityCardTipViewContainer", BaseViewContainer)
+
+function SeasonCelebrityCardTipViewContainer:buildViews()
 	return {
 		SeasonCelebrityCardTipView.New()
 	}
 end
 
-return var_0_0
+return SeasonCelebrityCardTipViewContainer

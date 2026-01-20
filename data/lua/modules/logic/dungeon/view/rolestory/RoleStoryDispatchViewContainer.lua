@@ -1,32 +1,34 @@
-﻿module("modules.logic.dungeon.view.rolestory.RoleStoryDispatchViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/rolestory/RoleStoryDispatchViewContainer.lua
 
-local var_0_0 = class("RoleStoryDispatchViewContainer", BaseViewContainer)
+module("modules.logic.dungeon.view.rolestory.RoleStoryDispatchViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoleStoryDispatchViewContainer = class("RoleStoryDispatchViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RoleStoryDispatchNormalView.New())
-	table.insert(var_1_0, RoleStoryDispatchStoryView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
-	table.insert(var_1_0, TabViewGroup.New(2, "#go_topright"))
+function RoleStoryDispatchViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RoleStoryDispatchNormalView.New())
+	table.insert(views, RoleStoryDispatchStoryView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_topleft"))
+	table.insert(views, TabViewGroup.New(2, "#go_topright"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		local var_2_0 = NavigateButtonsView.New({
+function RoleStoryDispatchViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		local view = NavigateButtonsView.New({
 			true,
 			true,
 			true
 		}, 1820001)
 
 		return {
-			var_2_0
+			view
 		}
 	end
 
-	local var_2_1 = {
+	local currencyParam = {
 		{
 			isIcon = true,
 			type = MaterialEnum.MaterialType.Item,
@@ -34,12 +36,12 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 		}
 	}
 
-	arg_2_0.currencyView = CurrencyView.New(var_2_1)
-	arg_2_0.currencyView.foreHideBtn = true
+	self.currencyView = CurrencyView.New(currencyParam)
+	self.currencyView.foreHideBtn = true
 
 	return {
-		arg_2_0.currencyView
+		self.currencyView
 	}
 end
 
-return var_0_0
+return RoleStoryDispatchViewContainer

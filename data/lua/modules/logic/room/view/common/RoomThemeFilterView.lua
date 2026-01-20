@@ -1,33 +1,37 @@
-﻿module("modules.logic.room.view.common.RoomThemeFilterView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/common/RoomThemeFilterView.lua
 
-local var_0_0 = class("RoomThemeFilterView", BaseView)
+module("modules.logic.room.view.common.RoomThemeFilterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#go_content")
-	arg_1_0._gobuildingArrow = gohelper.findChild(arg_1_0.viewGO, "#go_content/bg/#go_buildingArrow")
-	arg_1_0._goblockpackageArrow = gohelper.findChild(arg_1_0.viewGO, "#go_content/bg/#go_blockpackageArrow")
-	arg_1_0._goall = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_all")
-	arg_1_0._goselected = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_all/#go_selected")
-	arg_1_0._gounselected = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_all/#go_unselected")
-	arg_1_0._btnall = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_content/#go_all/#btn_all")
-	arg_1_0._scrolltheme = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_content/#scroll_theme")
-	arg_1_0._gothemeitem = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_themeitem")
+local RoomThemeFilterView = class("RoomThemeFilterView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomThemeFilterView:onInitView()
+	self._gocontent = gohelper.findChild(self.viewGO, "#go_content")
+	self._gobuildingArrow = gohelper.findChild(self.viewGO, "#go_content/bg/#go_buildingArrow")
+	self._goblockpackageArrow = gohelper.findChild(self.viewGO, "#go_content/bg/#go_blockpackageArrow")
+	self._goall = gohelper.findChild(self.viewGO, "#go_content/#go_all")
+	self._goselected = gohelper.findChild(self.viewGO, "#go_content/#go_all/#go_selected")
+	self._gounselected = gohelper.findChild(self.viewGO, "#go_content/#go_all/#go_unselected")
+	self._btnall = gohelper.findChildButtonWithAudio(self.viewGO, "#go_content/#go_all/#btn_all")
+	self._scrolltheme = gohelper.findChildScrollRect(self.viewGO, "#go_content/#scroll_theme")
+	self._gothemeitem = gohelper.findChild(self.viewGO, "#go_content/#go_themeitem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnall:AddClickListener(arg_2_0._btnallOnClick, arg_2_0)
+function RoomThemeFilterView:addEvents()
+	self._btnall:AddClickListener(self._btnallOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnall:RemoveClickListener()
+function RoomThemeFilterView:removeEvents()
+	self._btnall:RemoveClickListener()
 end
 
-function var_0_0._btnallOnClick(arg_4_0)
-	if RoomThemeFilterListModel.instance:getIsAll() then
+function RoomThemeFilterView:_btnallOnClick()
+	local isSelect = RoomThemeFilterListModel.instance:getIsAll()
+
+	if isSelect then
 		RoomThemeFilterListModel.instance:clearFilterData()
 	else
 		RoomThemeFilterListModel.instance:selectAll()
@@ -37,59 +41,59 @@ function var_0_0._btnallOnClick(arg_4_0)
 	RoomMapController.instance:dispatchEvent(RoomEvent.UIRoomThemeFilterChanged)
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function RoomThemeFilterView:_editableInitView()
 	return
 end
 
-function var_0_0._onThemeFilterChanged(arg_6_0)
-	arg_6_0:_refreshUI()
+function RoomThemeFilterView:_onThemeFilterChanged()
+	self:_refreshUI()
 end
 
-function var_0_0._refreshUI(arg_7_0)
-	local var_7_0 = RoomThemeFilterListModel.instance:getIsAll()
+function RoomThemeFilterView:_refreshUI()
+	local isSelect = RoomThemeFilterListModel.instance:getIsAll()
 
-	if arg_7_0._lastSelect ~= var_7_0 then
-		arg_7_0._lastSelect = var_7_0
+	if self._lastSelect ~= isSelect then
+		self._lastSelect = isSelect
 
-		gohelper.setActive(arg_7_0._goselected, var_7_0)
-		gohelper.setActive(arg_7_0._gounselected, not var_7_0)
+		gohelper.setActive(self._goselected, isSelect)
+		gohelper.setActive(self._gounselected, not isSelect)
 	end
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
+function RoomThemeFilterView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0:addEventCb(RoomMapController.instance, RoomEvent.UIRoomThemeFilterChanged, arg_9_0._onThemeFilterChanged, arg_9_0)
-	arg_9_0:_refreshUI()
+function RoomThemeFilterView:onOpen()
+	self:addEventCb(RoomMapController.instance, RoomEvent.UIRoomThemeFilterChanged, self._onThemeFilterChanged, self)
+	self:_refreshUI()
 
-	local var_9_0 = false
+	local isBottom = false
 
-	if arg_9_0.viewParam then
-		if arg_9_0.viewParam.isGift then
-			gohelper.setActive(arg_9_0._gobuildingArrow, false)
-			gohelper.setActive(arg_9_0._goblockpackageArrow, true)
-			arg_9_0.viewContainer:layoutContentTrs(arg_9_0._gocontent.transform, var_9_0)
-			recthelper.setAnchorY(arg_9_0._gocontent.transform, 400)
+	if self.viewParam then
+		if self.viewParam.isGift then
+			gohelper.setActive(self._gobuildingArrow, false)
+			gohelper.setActive(self._goblockpackageArrow, true)
+			self.viewContainer:layoutContentTrs(self._gocontent.transform, isBottom)
+			recthelper.setAnchorY(self._gocontent.transform, 400)
 
 			return
 		end
 
-		var_9_0 = arg_9_0.viewParam.isBottom
+		isBottom = self.viewParam.isBottom
 	end
 
-	gohelper.setActive(arg_9_0._gobuildingArrow, var_9_0)
-	gohelper.setActive(arg_9_0._goblockpackageArrow, not var_9_0)
-	arg_9_0.viewContainer:layoutContentTrs(arg_9_0._gocontent.transform, var_9_0)
+	gohelper.setActive(self._gobuildingArrow, isBottom)
+	gohelper.setActive(self._goblockpackageArrow, not isBottom)
+	self.viewContainer:layoutContentTrs(self._gocontent.transform, isBottom)
 end
 
-function var_0_0.onClose(arg_10_0)
+function RoomThemeFilterView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function RoomThemeFilterView:onDestroyView()
 	return
 end
 
-return var_0_0
+return RoomThemeFilterView

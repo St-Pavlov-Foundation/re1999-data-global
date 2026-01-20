@@ -1,12 +1,14 @@
-﻿module("modules.logic.room.model.map.RoomShowBlockPackageMO", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/map/RoomShowBlockPackageMO.lua
 
-local var_0_0 = pureTable("RoomShowBlockPackageMO")
+module("modules.logic.room.model.map.RoomShowBlockPackageMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.id = arg_1_1
-	arg_1_0.packageId = arg_1_1
-	arg_1_0.num = arg_1_2 or 0
-	arg_1_0.rare = arg_1_3 or 0
+local RoomShowBlockPackageMO = pureTable("RoomShowBlockPackageMO")
+
+function RoomShowBlockPackageMO:init(packageId, num, rare)
+	self.id = packageId
+	self.packageId = packageId
+	self.num = num or 0
+	self.rare = rare or 0
 end
 
-return var_0_0
+return RoomShowBlockPackageMO

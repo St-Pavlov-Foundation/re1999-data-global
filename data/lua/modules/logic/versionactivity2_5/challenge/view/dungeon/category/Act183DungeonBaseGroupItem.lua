@@ -1,156 +1,157 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.dungeon.category.Act183DungeonBaseGroupItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/dungeon/category/Act183DungeonBaseGroupItem.lua
 
-local var_0_0 = class("Act183DungeonBaseGroupItem", LuaCompBase)
+module("modules.logic.versionactivity2_5.challenge.view.dungeon.category.Act183DungeonBaseGroupItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._goselect = gohelper.findChild(arg_1_0.go, "go_select")
-	arg_1_0._txtselecttitle = gohelper.findChildText(arg_1_0.go, "go_select/txt_title")
-	arg_1_0._gounselect = gohelper.findChild(arg_1_0.go, "go_unselect")
-	arg_1_0._txtunselecttitle = gohelper.findChildText(arg_1_0.go, "go_unselect/txt_title")
-	arg_1_0._golock = gohelper.findChild(arg_1_0.go, "go_lock")
-	arg_1_0._imagelockicon = gohelper.findChildImage(arg_1_0.go, "go_lock/icon")
-	arg_1_0._txtlocktitle = gohelper.findChildText(arg_1_0.go, "go_lock/txt_title")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.go, "btn_click")
-	arg_1_0._imageselect = gohelper.findChildImage(arg_1_0.go, "go_select/image_Selected")
-	arg_1_0._imageunselect = gohelper.findChildImage(arg_1_0.go, "go_unselect/image_UnSelected")
-	arg_1_0._imagelock = gohelper.findChildImage(arg_1_0.go, "go_lock/image_Locked")
-	arg_1_0._gofinished = gohelper.findChild(arg_1_0.go, "go_finished")
-	arg_1_0._goselect_normaleffect = gohelper.findChild(arg_1_0.go, "go_select/vx_normal")
-	arg_1_0._goselect_hardeffect = gohelper.findChild(arg_1_0.go, "go_select/vx_hard")
-	arg_1_0._animfinish = gohelper.onceAddComponent(arg_1_0._gofinished, gohelper.Type_Animator)
+local Act183DungeonBaseGroupItem = class("Act183DungeonBaseGroupItem", LuaCompBase)
+
+function Act183DungeonBaseGroupItem:init(go)
+	self.go = go
+	self._goselect = gohelper.findChild(self.go, "go_select")
+	self._txtselecttitle = gohelper.findChildText(self.go, "go_select/txt_title")
+	self._gounselect = gohelper.findChild(self.go, "go_unselect")
+	self._txtunselecttitle = gohelper.findChildText(self.go, "go_unselect/txt_title")
+	self._golock = gohelper.findChild(self.go, "go_lock")
+	self._imagelockicon = gohelper.findChildImage(self.go, "go_lock/icon")
+	self._txtlocktitle = gohelper.findChildText(self.go, "go_lock/txt_title")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.go, "btn_click")
+	self._imageselect = gohelper.findChildImage(self.go, "go_select/image_Selected")
+	self._imageunselect = gohelper.findChildImage(self.go, "go_unselect/image_UnSelected")
+	self._imagelock = gohelper.findChildImage(self.go, "go_lock/image_Locked")
+	self._gofinished = gohelper.findChild(self.go, "go_finished")
+	self._goselect_normaleffect = gohelper.findChild(self.go, "go_select/vx_normal")
+	self._goselect_hardeffect = gohelper.findChild(self.go, "go_select/vx_hard")
+	self._animfinish = gohelper.onceAddComponent(self._gofinished, gohelper.Type_Animator)
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
-	arg_2_0:addEventCb(Act183Controller.instance, Act183Event.OnClickSwitchGroup, arg_2_0._onClickSwitchGroup, arg_2_0)
-	arg_2_0:addEventCb(Act183Controller.instance, Act183Event.OnGroupAllTaskFinished, arg_2_0._onGroupAllTaskFinished, arg_2_0)
+function Act183DungeonBaseGroupItem:addEventListeners()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
+	self:addEventCb(Act183Controller.instance, Act183Event.OnClickSwitchGroup, self._onClickSwitchGroup, self)
+	self:addEventCb(Act183Controller.instance, Act183Event.OnGroupAllTaskFinished, self._onGroupAllTaskFinished, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
+function Act183DungeonBaseGroupItem:removeEventListeners()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0._btnclickOnClick(arg_4_0)
-	if not arg_4_0._isUnlock then
+function Act183DungeonBaseGroupItem:_btnclickOnClick()
+	if not self._isUnlock then
 		GameFacade.showToast(ToastEnum.Act183GroupNotOpen)
 
 		return
 	end
 
-	gohelper.setActive(arg_4_0._goselect_normaleffect, arg_4_0._groupType ~= Act183Enum.GroupType.HardMain)
-	gohelper.setActive(arg_4_0._goselect_hardeffect, arg_4_0._groupType == Act183Enum.GroupType.HardMain)
+	gohelper.setActive(self._goselect_normaleffect, self._groupType ~= Act183Enum.GroupType.HardMain)
+	gohelper.setActive(self._goselect_hardeffect, self._groupType == Act183Enum.GroupType.HardMain)
 
-	if arg_4_0._groupType ~= Act183Enum.GroupType.Daily then
-		local var_4_0 = Act183Model.instance:getActivityId()
+	if self._groupType ~= Act183Enum.GroupType.Daily then
+		local activityId = Act183Model.instance:getActivityId()
 
-		Act183Helper.saveLastEnterMainGroupTypeInLocal(var_4_0, arg_4_0._groupType)
+		Act183Helper.saveLastEnterMainGroupTypeInLocal(activityId, self._groupType)
 	end
 
-	Act183Controller.instance:dispatchEvent(Act183Event.OnClickSwitchGroup, arg_4_0._groupId)
+	Act183Controller.instance:dispatchEvent(Act183Event.OnClickSwitchGroup, self._groupId)
 end
 
-function var_0_0._onClickSwitchGroup(arg_5_0, arg_5_1)
-	arg_5_0:onSelect(arg_5_0._groupId == arg_5_1)
+function Act183DungeonBaseGroupItem:_onClickSwitchGroup(groupId)
+	self:onSelect(self._groupId == groupId)
 end
 
-function var_0_0.onUpdateMO(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_0._groupMo = arg_6_1
-	arg_6_0._groupId = arg_6_1:getGroupId()
-	arg_6_0._groupType = arg_6_1:getGroupType()
-	arg_6_0._status = arg_6_1:getStatus()
-	arg_6_0._index = arg_6_2
-	arg_6_0._isUnlock = arg_6_0._status ~= Act183Enum.GroupStatus.Locked
+function Act183DungeonBaseGroupItem:onUpdateMO(groupMo, index)
+	self._groupMo = groupMo
+	self._groupId = groupMo:getGroupId()
+	self._groupType = groupMo:getGroupType()
+	self._status = groupMo:getStatus()
+	self._index = index
+	self._isUnlock = self._status ~= Act183Enum.GroupStatus.Locked
 
-	gohelper.setActive(arg_6_0.go, true)
-	gohelper.setActive(arg_6_0._golock, not arg_6_0._isUnlock)
-	arg_6_0:refreshTitleAndBg()
-	arg_6_0:refreshGroupTaskProgress()
+	gohelper.setActive(self.go, true)
+	gohelper.setActive(self._golock, not self._isUnlock)
+	self:refreshTitleAndBg()
+	self:refreshGroupTaskProgress()
 end
 
-function var_0_0.refreshTitleAndBg(arg_7_0)
-	local var_7_0 = ""
-	local var_7_1 = "#E1E1E1"
-	local var_7_2 = "#969696"
-	local var_7_3 = ""
-	local var_7_4 = ""
-	local var_7_5
+function Act183DungeonBaseGroupItem:refreshTitleAndBg()
+	local titleStr = ""
+	local titleColor = "#E1E1E1"
+	local lockIconColor = "#969696"
+	local selectBgName = ""
+	local unselectBgName = ""
 
-	if arg_7_0._groupType == Act183Enum.GroupType.NormalMain then
-		var_7_0 = luaLang("act183dungeonview_normalmainepisode")
-		var_7_3 = "v2a5_challenge_dungeon_normaltabselected"
-		var_7_5 = "v2a5_challenge_dungeon_normaltabunselected"
-	elseif arg_7_0._groupType == Act183Enum.GroupType.HardMain then
-		var_7_0 = luaLang("act183dungeonview_hardmainepisode")
-		var_7_1 = "#C04E40"
-		var_7_2 = "#C04E40"
-		var_7_3 = "v2a5_challenge_dungeon_hardtabselected"
-		var_7_5 = "v2a5_challenge_dungeon_hardtabunselected"
+	if self._groupType == Act183Enum.GroupType.NormalMain then
+		titleStr = luaLang("act183dungeonview_normalmainepisode")
+		selectBgName = "v2a5_challenge_dungeon_normaltabselected"
+		unselectBgName = "v2a5_challenge_dungeon_normaltabunselected"
+	elseif self._groupType == Act183Enum.GroupType.HardMain then
+		titleStr = luaLang("act183dungeonview_hardmainepisode")
+		titleColor = "#C04E40"
+		lockIconColor = "#C04E40"
+		selectBgName = "v2a5_challenge_dungeon_hardtabselected"
+		unselectBgName = "v2a5_challenge_dungeon_hardtabunselected"
 	else
-		var_7_0 = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("act183dungeonview_dailyepisode"), GameUtil.getRomanNums(arg_7_0._index))
-		var_7_3 = "v2a5_challenge_dungeon_dailytabselected"
-		var_7_5 = "v2a5_challenge_dungeon_dailytabunselected"
+		titleStr = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("act183dungeonview_dailyepisode"), GameUtil.getRomanNums(self._index))
+		selectBgName = "v2a5_challenge_dungeon_dailytabselected"
+		unselectBgName = "v2a5_challenge_dungeon_dailytabunselected"
 	end
 
-	arg_7_0._txtselecttitle.text = var_7_0
-	arg_7_0._txtunselecttitle.text = var_7_0
-	arg_7_0._txtlocktitle.text = var_7_0
+	self._txtselecttitle.text = titleStr
+	self._txtunselecttitle.text = titleStr
+	self._txtlocktitle.text = titleStr
 
-	SLFramework.UGUI.GuiHelper.SetColor(arg_7_0._txtselecttitle, var_7_1)
-	SLFramework.UGUI.GuiHelper.SetColor(arg_7_0._txtunselecttitle, var_7_1)
-	SLFramework.UGUI.GuiHelper.SetColor(arg_7_0._imagelockicon, var_7_2)
-	ZProj.UGUIHelper.SetColorAlpha(arg_7_0._txtselecttitle, 1)
-	ZProj.UGUIHelper.SetColorAlpha(arg_7_0._txtunselecttitle, 0.5)
-	UISpriteSetMgr.instance:setChallengeSprite(arg_7_0._imageselect, var_7_3)
-	UISpriteSetMgr.instance:setChallengeSprite(arg_7_0._imageunselect, var_7_5)
-	UISpriteSetMgr.instance:setChallengeSprite(arg_7_0._imagelock, var_7_5)
-	gohelper.setActive(arg_7_0._goselect_normaleffect, arg_7_0._groupType ~= Act183Enum.GroupType.HardMain)
-	gohelper.setActive(arg_7_0._goselect_hardeffect, arg_7_0._groupType == Act183Enum.GroupType.HardMain)
+	SLFramework.UGUI.GuiHelper.SetColor(self._txtselecttitle, titleColor)
+	SLFramework.UGUI.GuiHelper.SetColor(self._txtunselecttitle, titleColor)
+	SLFramework.UGUI.GuiHelper.SetColor(self._imagelockicon, lockIconColor)
+	ZProj.UGUIHelper.SetColorAlpha(self._txtselecttitle, 1)
+	ZProj.UGUIHelper.SetColorAlpha(self._txtunselecttitle, 0.5)
+	UISpriteSetMgr.instance:setChallengeSprite(self._imageselect, selectBgName)
+	UISpriteSetMgr.instance:setChallengeSprite(self._imageunselect, unselectBgName)
+	UISpriteSetMgr.instance:setChallengeSprite(self._imagelock, unselectBgName)
+	gohelper.setActive(self._goselect_normaleffect, self._groupType ~= Act183Enum.GroupType.HardMain)
+	gohelper.setActive(self._goselect_hardeffect, self._groupType == Act183Enum.GroupType.HardMain)
 end
 
-function var_0_0._onFinishTask(arg_8_0)
-	arg_8_0:refreshGroupTaskProgress()
+function Act183DungeonBaseGroupItem:_onFinishTask()
+	self:refreshGroupTaskProgress()
 end
 
-function var_0_0.refreshGroupTaskProgress(arg_9_0)
-	local var_9_0 = Act183Model.instance:getActivityId()
-	local var_9_1, var_9_2 = Act183Helper.getGroupEpisodeTaskProgress(var_9_0, arg_9_0._groupId)
-	local var_9_3 = var_9_1 <= var_9_2
+function Act183DungeonBaseGroupItem:refreshGroupTaskProgress()
+	local actId = Act183Model.instance:getActivityId()
+	local taskCount, taskFinishCount = Act183Helper.getGroupEpisodeTaskProgress(actId, self._groupId)
+	local isFinished = taskCount <= taskFinishCount
 
-	gohelper.setActive(arg_9_0._gofinished, var_9_3)
+	gohelper.setActive(self._gofinished, isFinished)
 end
 
-function var_0_0._onGroupAllTaskFinished(arg_10_0, arg_10_1)
-	if arg_10_0._groupId ~= arg_10_1 then
+function Act183DungeonBaseGroupItem:_onGroupAllTaskFinished(groupId)
+	if self._groupId ~= groupId then
 		return
 	end
 
-	arg_10_0._animfinish:Play("in", 0, 0)
+	self._animfinish:Play("in", 0, 0)
 end
 
-function var_0_0.onUnlock(arg_11_0)
+function Act183DungeonBaseGroupItem:onUnlock()
 	return
 end
 
-function var_0_0.onLocked(arg_12_0)
+function Act183DungeonBaseGroupItem:onLocked()
 	return
 end
 
-function var_0_0.onSelect(arg_13_0, arg_13_1)
-	gohelper.setActive(arg_13_0._goselect, arg_13_0._isUnlock and arg_13_1)
-	gohelper.setActive(arg_13_0._gounselect, arg_13_0._isUnlock and not arg_13_1)
+function Act183DungeonBaseGroupItem:onSelect(isSelect)
+	gohelper.setActive(self._goselect, self._isUnlock and isSelect)
+	gohelper.setActive(self._gounselect, self._isUnlock and not isSelect)
 end
 
-function var_0_0.getHeight(arg_14_0)
-	return recthelper.getHeight(arg_14_0.go.transform)
+function Act183DungeonBaseGroupItem:getHeight()
+	return recthelper.getHeight(self.go.transform)
 end
 
-function var_0_0.destroySelf(arg_15_0)
-	gohelper.destroy(arg_15_0.go)
+function Act183DungeonBaseGroupItem:destroySelf()
+	gohelper.destroy(self.go)
 end
 
-function var_0_0.onDestroy(arg_16_0)
+function Act183DungeonBaseGroupItem:onDestroy()
 	return
 end
 
-return var_0_0
+return Act183DungeonBaseGroupItem

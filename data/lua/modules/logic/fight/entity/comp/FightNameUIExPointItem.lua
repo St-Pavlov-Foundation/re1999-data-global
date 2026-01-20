@@ -1,41 +1,43 @@
-﻿module("modules.logic.fight.entity.comp.FightNameUIExPointItem", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/FightNameUIExPointItem.lua
 
-local var_0_0 = class("FightNameUIExPointItem", FightNameUIExPointBaseItem)
+module("modules.logic.fight.entity.comp.FightNameUIExPointItem", package.seeall)
 
-function var_0_0.GetExPointItem(arg_1_0)
-	local var_1_0 = var_0_0.New()
+local FightNameUIExPointItem = class("FightNameUIExPointItem", FightNameUIExPointBaseItem)
 
-	var_1_0:init(arg_1_0)
+function FightNameUIExPointItem.GetExPointItem(exPointGo)
+	local pointItem = FightNameUIExPointItem.New()
 
-	return var_1_0
+	pointItem:init(exPointGo)
+
+	return pointItem
 end
 
-function var_0_0.getType(arg_2_0)
-	return var_0_0.ExPointType.Normal
+function FightNameUIExPointItem:getType()
+	return FightNameUIExPointItem.ExPointType.Normal
 end
 
-function var_0_0.init(arg_3_0, arg_3_1)
-	var_0_0.super.init(arg_3_0, arg_3_1)
+function FightNameUIExPointItem:init(exPointGo)
+	FightNameUIExPointItem.super.init(self, exPointGo)
 
-	arg_3_0.goFull2 = gohelper.findChild(arg_3_0.exPointGo, "full2")
-	arg_3_0.imageFull2 = arg_3_0.goFull2:GetComponent(gohelper.Type_Image)
+	self.goFull2 = gohelper.findChild(self.exPointGo, "full2")
+	self.imageFull2 = self.goFull2:GetComponent(gohelper.Type_Image)
 end
 
-function var_0_0.resetToEmpty(arg_4_0)
-	var_0_0.super.resetToEmpty(arg_4_0)
-	gohelper.setActive(arg_4_0.goFull2, false)
+function FightNameUIExPointItem:resetToEmpty()
+	FightNameUIExPointItem.super.resetToEmpty(self)
+	gohelper.setActive(self.goFull2, false)
 
-	arg_4_0.imageFull2.color = Color.white
+	self.imageFull2.color = Color.white
 end
 
-function var_0_0.directSetStoredState(arg_5_0, arg_5_1)
-	var_0_0.super.directSetStoredState(arg_5_0)
-	gohelper.setActive(arg_5_0.goFull2, true)
+function FightNameUIExPointItem:directSetStoredState(preState)
+	FightNameUIExPointItem.super.directSetStoredState(self)
+	gohelper.setActive(self.goFull2, true)
 end
 
-function var_0_0.switchToStoredState(arg_6_0, arg_6_1)
-	var_0_0.super.switchToStoredState(arg_6_0)
-	gohelper.setActive(arg_6_0.goFull2, true)
+function FightNameUIExPointItem:switchToStoredState(preState)
+	FightNameUIExPointItem.super.switchToStoredState(self)
+	gohelper.setActive(self.goFull2, true)
 end
 
-return var_0_0
+return FightNameUIExPointItem

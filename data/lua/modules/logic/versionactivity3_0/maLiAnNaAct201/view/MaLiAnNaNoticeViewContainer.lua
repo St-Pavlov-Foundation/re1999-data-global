@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity3_0.maLiAnNaAct201.view.MaLiAnNaNoticeViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/maLiAnNaAct201/view/MaLiAnNaNoticeViewContainer.lua
 
-local var_0_0 = class("MaLiAnNaNoticeViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity3_0.maLiAnNaAct201.view.MaLiAnNaNoticeViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local MaLiAnNaNoticeViewContainer = class("MaLiAnNaNoticeViewContainer", BaseViewContainer)
+
+function MaLiAnNaNoticeViewContainer:buildViews()
 	return {
 		MaLiAnNaNoticeView.New()
 	}
 end
 
-return var_0_0
+return MaLiAnNaNoticeViewContainer

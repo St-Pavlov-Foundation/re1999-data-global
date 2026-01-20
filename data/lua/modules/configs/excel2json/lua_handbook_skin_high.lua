@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_handbook_skin_high", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_handbook_skin_high.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_handbook_skin_high", package.seeall)
+
+local lua_handbook_skin_high = {}
+local fields = {
 	scenePath = 7,
 	name = 2,
 	order = 5,
@@ -12,16 +14,16 @@ local var_0_1 = {
 	nameRes = 8,
 	nameEn = 3
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	des = 2,
 	name = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_handbook_skin_high.onLoad(json)
+	lua_handbook_skin_high.configList, lua_handbook_skin_high.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_handbook_skin_high

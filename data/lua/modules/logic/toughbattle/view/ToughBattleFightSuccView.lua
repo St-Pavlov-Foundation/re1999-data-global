@@ -1,72 +1,74 @@
-﻿module("modules.logic.toughbattle.view.ToughBattleFightSuccView", package.seeall)
+﻿-- chunkname: @modules/logic/toughbattle/view/ToughBattleFightSuccView.lua
 
-local var_0_0 = class("ToughBattleFightSuccView", FightSuccView)
+module("modules.logic.toughbattle.view.ToughBattleFightSuccView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goalcontent = gohelper.findChild(arg_1_0.viewGO, "goalcontent")
-	arg_1_0._gotoughbattle = gohelper.findChild(arg_1_0.viewGO, "#go_toughbattle")
-	arg_1_0._gotoughbattlerole = gohelper.findChild(arg_1_0.viewGO, "#go_toughbattle_role")
-	arg_1_0._txtdiffcult = gohelper.findChildText(arg_1_0.viewGO, "#go_toughbattle/info/txt_difficulty/#txt_diff")
-	arg_1_0._txtround = gohelper.findChildText(arg_1_0.viewGO, "#go_toughbattle/info/txt_order/#txt_num")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#go_toughbattle/desc/#txt_desc")
-	arg_1_0._simagetoughbattlerole = gohelper.findChildImage(arg_1_0.viewGO, "#go_toughbattle_role/role/#simage_rolehead")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_toughbattle_role/role/#btn_click")
+local ToughBattleFightSuccView = class("ToughBattleFightSuccView", FightSuccView)
 
-	var_0_0.super.onInitView(arg_1_0)
+function ToughBattleFightSuccView:onInitView()
+	self._goalcontent = gohelper.findChild(self.viewGO, "goalcontent")
+	self._gotoughbattle = gohelper.findChild(self.viewGO, "#go_toughbattle")
+	self._gotoughbattlerole = gohelper.findChild(self.viewGO, "#go_toughbattle_role")
+	self._txtdiffcult = gohelper.findChildText(self.viewGO, "#go_toughbattle/info/txt_difficulty/#txt_diff")
+	self._txtround = gohelper.findChildText(self.viewGO, "#go_toughbattle/info/txt_order/#txt_num")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "#go_toughbattle/desc/#txt_desc")
+	self._simagetoughbattlerole = gohelper.findChildImage(self.viewGO, "#go_toughbattle_role/role/#simage_rolehead")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "#go_toughbattle_role/role/#btn_click")
+
+	ToughBattleFightSuccView.super.onInitView(self)
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0.onClickSkill, arg_2_0)
-	var_0_0.super.addEvents(arg_2_0)
+function ToughBattleFightSuccView:addEvents()
+	self._btnclick:AddClickListener(self.onClickSkill, self)
+	ToughBattleFightSuccView.super.addEvents(self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
-	var_0_0.super.removeEvents(arg_3_0)
+function ToughBattleFightSuccView:removeEvents()
+	self._btnclick:RemoveClickListener()
+	ToughBattleFightSuccView.super.removeEvents(self)
 end
 
-function var_0_0.onOpen(arg_4_0)
-	var_0_0.super.onOpen(arg_4_0)
-	gohelper.setActive(arg_4_0._gotoughbattle, false)
-	gohelper.setActive(arg_4_0._gotoughbattlerole, false)
-	arg_4_0:setToughInfo()
+function ToughBattleFightSuccView:onOpen()
+	ToughBattleFightSuccView.super.onOpen(self)
+	gohelper.setActive(self._gotoughbattle, false)
+	gohelper.setActive(self._gotoughbattlerole, false)
+	self:setToughInfo()
 end
 
-function var_0_0.setToughInfo(arg_5_0)
-	if ToughBattleConfig.instance:isActStage2EpisodeId(arg_5_0._curEpisodeId) then
-		gohelper.setActive(arg_5_0._goalcontent, false)
-		gohelper.setActive(arg_5_0._gotoughbattle, true)
+function ToughBattleFightSuccView:setToughInfo()
+	if ToughBattleConfig.instance:isActStage2EpisodeId(self._curEpisodeId) then
+		gohelper.setActive(self._goalcontent, false)
+		gohelper.setActive(self._gotoughbattle, true)
 
-		local var_5_0 = ToughBattleConfig.instance:getCoByEpisodeId(arg_5_0._curEpisodeId)
-		local var_5_1 = var_5_0 and var_5_0.difficulty or 1
+		local co = ToughBattleConfig.instance:getCoByEpisodeId(self._curEpisodeId)
+		local difficult = co and co.difficulty or 1
 
-		arg_5_0._txtdiffcult.text = luaLang("toughbattle_diffcult_" .. var_5_1)
-		arg_5_0._txtround.text = FightResultModel.instance.totalRound or 0
-		arg_5_0._txtdesc.text = ToughBattleConfig.instance:getRoundDesc(FightResultModel.instance.totalRound or 0)
+		self._txtdiffcult.text = luaLang("toughbattle_diffcult_" .. difficult)
+		self._txtround.text = FightResultModel.instance.totalRound or 0
+		self._txtdesc.text = ToughBattleConfig.instance:getRoundDesc(FightResultModel.instance.totalRound or 0)
 	else
-		gohelper.setActive(arg_5_0._gotoughbattlerole, true)
+		gohelper.setActive(self._gotoughbattlerole, true)
 
-		local var_5_2 = ToughBattleConfig.instance:getCoByEpisodeId(arg_5_0._curEpisodeId)
+		local co = ToughBattleConfig.instance:getCoByEpisodeId(self._curEpisodeId)
 
-		UISpriteSetMgr.instance:setToughBattleRoleSprite(arg_5_0._simagetoughbattlerole, "roleheadpic0" .. var_5_2.sort)
+		UISpriteSetMgr.instance:setToughBattleRoleSprite(self._simagetoughbattlerole, "roleheadpic0" .. co.sort)
 	end
 end
 
-function var_0_0.onClickSkill(arg_6_0)
-	local var_6_0 = ToughBattleConfig.instance:getCoByEpisodeId(arg_6_0._curEpisodeId)
+function ToughBattleFightSuccView:onClickSkill()
+	local co = ToughBattleConfig.instance:getCoByEpisodeId(self._curEpisodeId)
 
 	ViewMgr.instance:openView(ViewName.ToughBattleSkillView, {
 		isShowList = false,
-		showCo = var_6_0
+		showCo = co
 	})
 end
 
-function var_0_0._addItem(arg_7_0, arg_7_1, ...)
-	if arg_7_1.bonusTag == FightEnum.FightBonusTag.FirstBonus then
-		arg_7_1.bonusTag = FightEnum.FightBonusTag.TimeFirstBonus
+function ToughBattleFightSuccView:_addItem(material, ...)
+	if material.bonusTag == FightEnum.FightBonusTag.FirstBonus then
+		material.bonusTag = FightEnum.FightBonusTag.TimeFirstBonus
 	end
 
-	return var_0_0.super._addItem(arg_7_0, arg_7_1, ...)
+	return ToughBattleFightSuccView.super._addItem(self, material, ...)
 end
 
-return var_0_0
+return ToughBattleFightSuccView

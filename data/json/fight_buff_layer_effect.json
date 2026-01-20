@@ -19,7 +19,9 @@
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
     "releaseDestroyEffectTime": 0,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 30950111,
@@ -41,7 +43,9 @@
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
     "releaseDestroyEffectTime": 0,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 30950112,
@@ -63,7 +67,9 @@
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
     "releaseDestroyEffectTime": 0,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 30950112,
@@ -85,7 +91,9 @@
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
     "releaseDestroyEffectTime": 0,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 30950113,
@@ -107,7 +115,9 @@
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
     "releaseDestroyEffectTime": 0,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 30950113,
@@ -129,7 +139,9 @@
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
     "releaseDestroyEffectTime": 0,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 6240522,
@@ -151,7 +163,9 @@
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
     "releaseDestroyEffectTime": 0,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31170006,
@@ -173,7 +187,9 @@
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
     "releaseDestroyEffectTime": 0,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31170006,
@@ -195,7 +211,9 @@
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
     "releaseDestroyEffectTime": 0,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31170006,
@@ -217,7 +235,9 @@
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
     "releaseDestroyEffectTime": 0,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31170012,
@@ -239,7 +259,9 @@
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
     "releaseDestroyEffectTime": 0,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31170012,
@@ -261,7 +283,9 @@
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
     "releaseDestroyEffectTime": 0,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31170012,
@@ -283,7 +307,9 @@
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
     "releaseDestroyEffectTime": 0,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31170035,
@@ -305,7 +331,9 @@
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
     "releaseDestroyEffectTime": 0,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31170035,
@@ -327,7 +355,9 @@
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
     "releaseDestroyEffectTime": 0,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31170035,
@@ -349,7 +379,9 @@
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
     "releaseDestroyEffectTime": 0,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31090111,
@@ -371,7 +403,9 @@
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
     "releaseDestroyEffectTime": 1500,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31090112,
@@ -393,7 +427,9 @@
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
     "releaseDestroyEffectTime": 1500,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31090113,
@@ -415,7 +451,9 @@
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
     "releaseDestroyEffectTime": 1500,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31090114,
@@ -437,7 +475,9 @@
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
     "releaseDestroyEffectTime": 1500,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31090115,
@@ -459,7 +499,9 @@
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
     "releaseDestroyEffectTime": 1500,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31090116,
@@ -481,7 +523,9 @@
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
     "releaseDestroyEffectTime": 1500,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31090117,
@@ -503,7 +547,9 @@
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
     "releaseDestroyEffectTime": 1500,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31090118,
@@ -525,7 +571,9 @@
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
     "releaseDestroyEffectTime": 1500,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31090111,
@@ -547,7 +595,9 @@
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
     "releaseDestroyEffectTime": 1500,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31090112,
@@ -569,7 +619,9 @@
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
     "releaseDestroyEffectTime": 1500,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31090113,
@@ -591,7 +643,9 @@
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
     "releaseDestroyEffectTime": 1500,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31090114,
@@ -613,7 +667,9 @@
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
     "releaseDestroyEffectTime": 1500,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31090115,
@@ -635,7 +691,9 @@
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
     "releaseDestroyEffectTime": 1500,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31090116,
@@ -657,7 +715,9 @@
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
     "releaseDestroyEffectTime": 1500,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31090117,
@@ -679,7 +739,9 @@
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
     "releaseDestroyEffectTime": 1500,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31090118,
@@ -701,7 +763,9 @@
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
     "releaseDestroyEffectTime": 1500,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31090111,
@@ -723,7 +787,9 @@
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
     "releaseDestroyEffectTime": 1500,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31090112,
@@ -745,7 +811,9 @@
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
     "releaseDestroyEffectTime": 1500,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31090113,
@@ -767,7 +835,9 @@
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
     "releaseDestroyEffectTime": 1500,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31090114,
@@ -789,7 +859,9 @@
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
     "releaseDestroyEffectTime": 1500,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31090115,
@@ -811,7 +883,9 @@
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
     "releaseDestroyEffectTime": 1500,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31090116,
@@ -833,7 +907,9 @@
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
     "releaseDestroyEffectTime": 1500,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31090117,
@@ -855,7 +931,9 @@
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
     "releaseDestroyEffectTime": 1500,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31090118,
@@ -877,7 +955,9 @@
     "destroyEffectRoot": "mountmiddle",
     "destroyEffectAudio": 431090142,
     "releaseDestroyEffectTime": 1500,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31150111,
@@ -899,7 +979,9 @@
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
     "releaseDestroyEffectTime": 0,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31150111,
@@ -921,7 +1003,9 @@
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
     "releaseDestroyEffectTime": 0,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31170006,
@@ -943,7 +1027,9 @@
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
     "releaseDestroyEffectTime": 0,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31170006,
@@ -965,7 +1051,9 @@
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
     "releaseDestroyEffectTime": 0,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31170006,
@@ -987,7 +1075,9 @@
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
     "releaseDestroyEffectTime": 0,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31170012,
@@ -1009,7 +1099,9 @@
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
     "releaseDestroyEffectTime": 0,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31170012,
@@ -1031,7 +1123,9 @@
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
     "releaseDestroyEffectTime": 0,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31170012,
@@ -1053,7 +1147,9 @@
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
     "releaseDestroyEffectTime": 0,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31170035,
@@ -1075,7 +1171,9 @@
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
     "releaseDestroyEffectTime": 0,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31170035,
@@ -1097,7 +1195,9 @@
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
     "releaseDestroyEffectTime": 0,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31170035,
@@ -1119,7 +1219,9 @@
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
     "releaseDestroyEffectTime": 0,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31260121,
@@ -1141,7 +1243,9 @@
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
     "releaseDestroyEffectTime": 0,
-    "hideEffectWhenPlaying": 1
+    "hideEffectWhenPlaying": 1,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31260121,
@@ -1163,7 +1267,9 @@
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
     "releaseDestroyEffectTime": 0,
-    "hideEffectWhenPlaying": 1
+    "hideEffectWhenPlaying": 1,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31260121,
@@ -1185,7 +1291,9 @@
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
     "releaseDestroyEffectTime": 0,
-    "hideEffectWhenPlaying": 1
+    "hideEffectWhenPlaying": 1,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31260122,
@@ -1207,7 +1315,9 @@
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
     "releaseDestroyEffectTime": 0,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31260122,
@@ -1229,7 +1339,9 @@
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
     "releaseDestroyEffectTime": 0,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 31260122,
@@ -1251,7 +1363,225 @@
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
     "releaseDestroyEffectTime": 0,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
+  },
+  {
+    "id": 1083200151,
+    "skin": 670308,
+    "layer": 1,
+    "loopEffect": "v3a2_tndll/buff_tounao",
+    "loopEffectRoot": "special3",
+    "loopEffectAudio": 467030851,
+    "addLayerAudio": 0,
+    "addLayerEffect": "",
+    "addLayerEffectRoot": "",
+    "releaseAddLayerEffectTime": 0,
+    "createEffect": "",
+    "createEffectRoot": "",
+    "createAudio": 0,
+    "releaseCreateEffectTime": 0,
+    "delayTimeBeforeLoop": 0,
+    "destroyEffect": "",
+    "destroyEffectRoot": "",
+    "destroyEffectAudio": 0,
+    "releaseDestroyEffectTime": 0,
+    "hideEffectWhenPlaying": 0,
+    "lE": 1,
+    "hideEffectWhenBigSkill": 1
+  },
+  {
+    "id": 1083200151,
+    "skin": 670308,
+    "layer": 2,
+    "loopEffect": "v3a2_tndll/buff_tounao",
+    "loopEffectRoot": "special6",
+    "loopEffectAudio": 467030851,
+    "addLayerAudio": 0,
+    "addLayerEffect": "",
+    "addLayerEffectRoot": "",
+    "releaseAddLayerEffectTime": 0,
+    "createEffect": "",
+    "createEffectRoot": "",
+    "createAudio": 0,
+    "releaseCreateEffectTime": 0,
+    "delayTimeBeforeLoop": 0,
+    "destroyEffect": "",
+    "destroyEffectRoot": "",
+    "destroyEffectAudio": 0,
+    "releaseDestroyEffectTime": 0,
+    "hideEffectWhenPlaying": 0,
+    "lE": 1,
+    "hideEffectWhenBigSkill": 1
+  },
+  {
+    "id": 1083200151,
+    "skin": 670308,
+    "layer": 3,
+    "loopEffect": "v3a2_tndll/buff_tounao",
+    "loopEffectRoot": "special4",
+    "loopEffectAudio": 467030851,
+    "addLayerAudio": 0,
+    "addLayerEffect": "",
+    "addLayerEffectRoot": "",
+    "releaseAddLayerEffectTime": 0,
+    "createEffect": "",
+    "createEffectRoot": "",
+    "createAudio": 0,
+    "releaseCreateEffectTime": 0,
+    "delayTimeBeforeLoop": 0,
+    "destroyEffect": "",
+    "destroyEffectRoot": "",
+    "destroyEffectAudio": 0,
+    "releaseDestroyEffectTime": 0,
+    "hideEffectWhenPlaying": 0,
+    "lE": 1,
+    "hideEffectWhenBigSkill": 1
+  },
+  {
+    "id": 1083200151,
+    "skin": 670308,
+    "layer": 4,
+    "loopEffect": "v3a2_tndll/buff_tounao",
+    "loopEffectRoot": "special7",
+    "loopEffectAudio": 467030851,
+    "addLayerAudio": 0,
+    "addLayerEffect": "",
+    "addLayerEffectRoot": "",
+    "releaseAddLayerEffectTime": 0,
+    "createEffect": "",
+    "createEffectRoot": "",
+    "createAudio": 0,
+    "releaseCreateEffectTime": 0,
+    "delayTimeBeforeLoop": 0,
+    "destroyEffect": "",
+    "destroyEffectRoot": "",
+    "destroyEffectAudio": 0,
+    "releaseDestroyEffectTime": 0,
+    "hideEffectWhenPlaying": 0,
+    "lE": 1,
+    "hideEffectWhenBigSkill": 1
+  },
+  {
+    "id": 1083200151,
+    "skin": 670308,
+    "layer": 5,
+    "loopEffect": "v3a2_tndll/buff_tounao",
+    "loopEffectRoot": "special5",
+    "loopEffectAudio": 467030851,
+    "addLayerAudio": 0,
+    "addLayerEffect": "",
+    "addLayerEffectRoot": "",
+    "releaseAddLayerEffectTime": 0,
+    "createEffect": "",
+    "createEffectRoot": "",
+    "createAudio": 0,
+    "releaseCreateEffectTime": 0,
+    "delayTimeBeforeLoop": 0,
+    "destroyEffect": "",
+    "destroyEffectRoot": "",
+    "destroyEffectAudio": 0,
+    "releaseDestroyEffectTime": 0,
+    "hideEffectWhenPlaying": 0,
+    "lE": 1,
+    "hideEffectWhenBigSkill": 1
+  },
+  {
+    "id": 1083200151,
+    "skin": 670308,
+    "layer": 6,
+    "loopEffect": "v3a2_tndll/buff_tounao",
+    "loopEffectRoot": "special8",
+    "loopEffectAudio": 467030851,
+    "addLayerAudio": 0,
+    "addLayerEffect": "",
+    "addLayerEffectRoot": "",
+    "releaseAddLayerEffectTime": 0,
+    "createEffect": "",
+    "createEffectRoot": "",
+    "createAudio": 0,
+    "releaseCreateEffectTime": 0,
+    "delayTimeBeforeLoop": 0,
+    "destroyEffect": "",
+    "destroyEffectRoot": "",
+    "destroyEffectAudio": 0,
+    "releaseDestroyEffectTime": 0,
+    "hideEffectWhenPlaying": 0,
+    "lE": 1,
+    "hideEffectWhenBigSkill": 1
+  },
+  {
+    "id": 108300101,
+    "skin": 0,
+    "layer": 1,
+    "loopEffect": "buff/rouge_liliang_1",
+    "loopEffectRoot": "mountroot",
+    "loopEffectAudio": 411000022,
+    "addLayerAudio": 0,
+    "addLayerEffect": "",
+    "addLayerEffectRoot": "",
+    "releaseAddLayerEffectTime": 0,
+    "createEffect": "",
+    "createEffectRoot": "",
+    "createAudio": 0,
+    "releaseCreateEffectTime": 0,
+    "delayTimeBeforeLoop": 0,
+    "destroyEffect": "",
+    "destroyEffectRoot": "",
+    "destroyEffectAudio": 0,
+    "releaseDestroyEffectTime": 0,
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
+  },
+  {
+    "id": 108300101,
+    "skin": 0,
+    "layer": 2,
+    "loopEffect": "buff/rouge_liliang_2",
+    "loopEffectRoot": "mountroot",
+    "loopEffectAudio": 411000022,
+    "addLayerAudio": 0,
+    "addLayerEffect": "",
+    "addLayerEffectRoot": "",
+    "releaseAddLayerEffectTime": 0,
+    "createEffect": "",
+    "createEffectRoot": "",
+    "createAudio": 0,
+    "releaseCreateEffectTime": 0,
+    "delayTimeBeforeLoop": 0,
+    "destroyEffect": "",
+    "destroyEffectRoot": "",
+    "destroyEffectAudio": 0,
+    "releaseDestroyEffectTime": 0,
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
+  },
+  {
+    "id": 108300101,
+    "skin": 0,
+    "layer": 3,
+    "loopEffect": "buff/rouge_liliang_3",
+    "loopEffectRoot": "mountroot",
+    "loopEffectAudio": 411000022,
+    "addLayerAudio": 0,
+    "addLayerEffect": "",
+    "addLayerEffectRoot": "",
+    "releaseAddLayerEffectTime": 0,
+    "createEffect": "",
+    "createEffectRoot": "",
+    "createAudio": 0,
+    "releaseCreateEffectTime": 0,
+    "delayTimeBeforeLoop": 0,
+    "destroyEffect": "",
+    "destroyEffectRoot": "",
+    "destroyEffectAudio": 0,
+    "releaseDestroyEffectTime": 0,
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 30950111,
@@ -1273,7 +1603,9 @@
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
     "releaseDestroyEffectTime": 0,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 30950111,
@@ -1295,7 +1627,9 @@
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
     "releaseDestroyEffectTime": 0,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 30950112,
@@ -1317,7 +1651,9 @@
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
     "releaseDestroyEffectTime": 0,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 30950112,
@@ -1339,7 +1675,9 @@
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
     "releaseDestroyEffectTime": 0,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 30950113,
@@ -1361,7 +1699,9 @@
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
     "releaseDestroyEffectTime": 0,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   },
   {
     "id": 30950113,
@@ -1383,6 +1723,8 @@
     "destroyEffectRoot": "",
     "destroyEffectAudio": 0,
     "releaseDestroyEffectTime": 0,
-    "hideEffectWhenPlaying": 0
+    "hideEffectWhenPlaying": 0,
+    "lE": 0,
+    "hideEffectWhenBigSkill": 0
   }
 ]

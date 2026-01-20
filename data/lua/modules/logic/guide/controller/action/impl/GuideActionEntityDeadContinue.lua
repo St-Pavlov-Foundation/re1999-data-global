@@ -1,11 +1,13 @@
-﻿module("modules.logic.guide.controller.action.impl.GuideActionEntityDeadContinue", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/GuideActionEntityDeadContinue.lua
 
-local var_0_0 = class("GuideActionEntityDeadContinue", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.GuideActionEntityDeadContinue", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+local GuideActionEntityDeadContinue = class("GuideActionEntityDeadContinue", BaseGuideAction)
+
+function GuideActionEntityDeadContinue:onStart(context)
+	GuideActionEntityDeadContinue.super.onStart(self, context)
 	FightController.instance:dispatchEvent(FightEvent.OnGuideEntityDeadContinue)
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return GuideActionEntityDeadContinue

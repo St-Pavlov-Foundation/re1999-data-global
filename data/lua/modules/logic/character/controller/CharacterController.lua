@@ -1,361 +1,368 @@
-﻿module("modules.logic.character.controller.CharacterController", package.seeall)
+﻿-- chunkname: @modules/logic/character/controller/CharacterController.lua
 
-local var_0_0 = class("CharacterController", BaseController)
+module("modules.logic.character.controller.CharacterController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._statTalentInfo = nil
+local CharacterController = class("CharacterController", BaseController)
+
+function CharacterController:onInit()
+	self._statTalentInfo = nil
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._statTalentInfo = nil
+function CharacterController:reInit()
+	self._statTalentInfo = nil
 end
 
-function var_0_0.onInitFinish(arg_3_0)
+function CharacterController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_4_0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_4_0.dailyRefresh, arg_4_0)
-	arg_4_0:registerCallback(CharacterEvent.characterFirstToShow, arg_4_0._onCharacterFirstToShow, arg_4_0)
+function CharacterController:addConstEvents()
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self.dailyRefresh, self)
+	self:registerCallback(CharacterEvent.characterFirstToShow, self._onCharacterFirstToShow, self)
 end
 
-function var_0_0._onCharacterFirstToShow(arg_5_0, arg_5_1)
-	CharacterBackpackCardListModel.instance:setFirstShowCharacter(tonumber(arg_5_1))
+function CharacterController:_onCharacterFirstToShow(id)
+	CharacterBackpackCardListModel.instance:setFirstShowCharacter(tonumber(id))
 end
 
-function var_0_0.openCharacterView(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+function CharacterController:openCharacterView(param, heroMOList, param2)
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Role) then
-		CharacterBackpackCardListModel.instance:setCharacterViewDragMOList(arg_6_2)
+		CharacterBackpackCardListModel.instance:setCharacterViewDragMOList(heroMOList)
 
-		CharacterView._externalParam = arg_6_3
+		CharacterView._externalParam = param2
 
-		ViewMgr.instance:openView(ViewName.CharacterView, arg_6_1)
+		ViewMgr.instance:openView(ViewName.CharacterView, param)
 	else
 		GameFacade.showToast(OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.Role))
 	end
 end
 
-function var_0_0.openCharacterTalentView(arg_7_0, arg_7_1)
-	ViewMgr.instance:openView(ViewName.CharacterTalentView, arg_7_1)
+function CharacterController:openCharacterTalentView(param)
+	ViewMgr.instance:openView(ViewName.CharacterTalentView, param)
 end
 
-function var_0_0.openCharacterTalentChessView(arg_8_0, arg_8_1)
-	ViewMgr.instance:openView(ViewName.CharacterTalentChessView, arg_8_1)
+function CharacterController:openCharacterTalentChessView(param)
+	ViewMgr.instance:openView(ViewName.CharacterTalentChessView, param)
 end
 
-function var_0_0.openCharacterTalentLevelUpView(arg_9_0, arg_9_1)
-	ViewMgr.instance:openView(ViewName.CharacterTalentLevelUpView, arg_9_1)
+function CharacterController:openCharacterTalentLevelUpView(param)
+	ViewMgr.instance:openView(ViewName.CharacterTalentLevelUpView, param)
 end
 
-function var_0_0.openCharacterTalentLevelUpResultView(arg_10_0, arg_10_1)
-	ViewMgr.instance:openView(ViewName.CharacterTalentLevelUpResultView, arg_10_1)
+function CharacterController:openCharacterTalentLevelUpResultView(param)
+	ViewMgr.instance:openView(ViewName.CharacterTalentLevelUpResultView, param)
 end
 
-function var_0_0.openCharacterTalentTipView(arg_11_0, arg_11_1)
-	ViewMgr.instance:openView(ViewName.CharacterTalentTipView, arg_11_1)
+function CharacterController:openCharacterTalentTipView(param)
+	ViewMgr.instance:openView(ViewName.CharacterTalentTipView, param)
 end
 
-function var_0_0.openCharacterTipView(arg_12_0, arg_12_1)
-	ViewMgr.instance:openView(ViewName.CharacterTipView, arg_12_1)
+function CharacterController:openCharacterTipView(param)
+	ViewMgr.instance:openView(ViewName.CharacterTipView, param)
 end
 
-function var_0_0.openCharacterSkinView(arg_13_0, arg_13_1)
-	ViewMgr.instance:openView(ViewName.CharacterSkinView, arg_13_1)
+function CharacterController:openCharacterSkinView(heroMo)
+	ViewMgr.instance:openView(ViewName.CharacterSkinView, heroMo)
 end
 
-function var_0_0.openCharacterSkinTipView(arg_14_0, arg_14_1)
-	ViewMgr.instance:openView(ViewName.CharacterSkinTipView, arg_14_1)
+function CharacterController:openCharacterSkinTipView(skinIdOrViewParam)
+	ViewMgr.instance:openView(ViewName.CharacterSkinTipView, skinIdOrViewParam)
 end
 
-function var_0_0.openCharacterSkinGainView(arg_15_0, arg_15_1)
-	ViewMgr.instance:openView(ViewName.CharacterSkinGainView, arg_15_1)
+function CharacterController:openCharacterSkinGainView(param)
+	ViewMgr.instance:openView(ViewName.CharacterSkinGainView, param)
 end
 
-function var_0_0.openCharacterLevelUpView(arg_16_0, arg_16_1, arg_16_2)
-	local var_16_0 = ViewMgr.instance:getSetting(ViewName.CharacterLevelUpView)
+function CharacterController:openCharacterLevelUpView(heroMO, enterViewName)
+	local viewSetting = ViewMgr.instance:getSetting(ViewName.CharacterLevelUpView)
 
-	if arg_16_2 == ViewName.HeroGroupEditView then
-		var_16_0.anim = ViewAnim.CharacterLevelUpView2
+	if enterViewName == ViewName.HeroGroupEditView then
+		viewSetting.anim = ViewAnim.CharacterLevelUpView2
 	else
-		var_16_0.anim = ViewAnim.CharacterLevelUpView
+		viewSetting.anim = ViewAnim.CharacterLevelUpView
 	end
 
 	ViewMgr.instance:openView(ViewName.CharacterLevelUpView, {
-		heroMO = arg_16_1,
-		enterViewName = arg_16_2
+		heroMO = heroMO,
+		enterViewName = enterViewName
 	})
 end
 
-function var_0_0.openCharacterRankUpView(arg_17_0, arg_17_1)
-	local var_17_0 = arg_17_1 and arg_17_1.heroId
+function CharacterController:openCharacterRankUpView(param)
+	local heroId = param and param.heroId
 
-	if var_17_0 and HeroModel.instance:getByHeroId(var_17_0) then
-		ViewMgr.instance:openView(ViewName.CharacterRankUpView, arg_17_1)
+	if heroId and HeroModel.instance:getByHeroId(heroId) then
+		ViewMgr.instance:openView(ViewName.CharacterRankUpView, param)
 	else
 		GameFacade.showToast(ToastEnum.DontHaveCharacter)
 	end
 end
 
-function var_0_0.openCharacterRankUpResultView(arg_18_0, arg_18_1)
-	ViewMgr.instance:openView(ViewName.CharacterRankUpResultView, arg_18_1)
+function CharacterController:openCharacterRankUpResultView(heroId)
+	ViewMgr.instance:openView(ViewName.CharacterRankUpResultView, heroId)
 end
 
-function var_0_0.openCharacterSkinFullScreenView(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
+function CharacterController:openCharacterSkinFullScreenView(skinCo, isImmediate, showEnum)
 	ViewMgr.instance:openView(ViewName.CharacterSkinFullScreenView, {
-		skinCo = arg_19_1,
-		showEnum = arg_19_3 or CharacterEnum.ShowSkinEnum.Static
-	}, arg_19_2)
+		skinCo = skinCo,
+		showEnum = showEnum or CharacterEnum.ShowSkinEnum.Static
+	}, isImmediate)
 end
 
-function var_0_0.openCharacterDataView(arg_20_0, arg_20_1)
-	ViewMgr.instance:openView(ViewName.CharacterDataView, arg_20_1)
+function CharacterController:openCharacterDataView(param)
+	ViewMgr.instance:openView(ViewName.CharacterDataView, param)
 end
 
-function var_0_0.openCharacterExSkillView(arg_21_0, arg_21_1)
-	ViewMgr.instance:openView(ViewName.CharacterExSkillView, arg_21_1)
+function CharacterController:openCharacterExSkillView(param)
+	ViewMgr.instance:openView(ViewName.CharacterExSkillView, param)
 end
 
-function var_0_0.openCharacterGetView(arg_22_0, arg_22_1)
-	ViewMgr.instance:openView(ViewName.CharacterGetView, arg_22_1)
+function CharacterController:openCharacterGetView(param)
+	ViewMgr.instance:openView(ViewName.CharacterGetView, param)
 end
 
-function var_0_0.openCharacterSkinGetDetailView(arg_23_0, arg_23_1)
-	ViewMgr.instance:openView(ViewName.CharacterSkinGetDetailView, arg_23_1)
+function CharacterController:openCharacterSkinGetDetailView(param)
+	ViewMgr.instance:openView(ViewName.CharacterSkinGetDetailView, param)
 end
 
-function var_0_0.openCharacterTalentStyleView(arg_24_0, arg_24_1)
-	ViewMgr.instance:openView(ViewName.CharacterTalentStyleView, arg_24_1)
+function CharacterController:openCharacterTalentStyleView(param)
+	ViewMgr.instance:openView(ViewName.CharacterTalentStyleView, param)
 end
 
-function var_0_0.openCharacterTalentStatView(arg_25_0, arg_25_1)
-	ViewMgr.instance:openView(ViewName.CharacterTalentStatView, arg_25_1)
+function CharacterController:openCharacterTalentStatView(param)
+	ViewMgr.instance:openView(ViewName.CharacterTalentStatView, param)
 end
 
-function var_0_0.openCharacterSkillTalentView(arg_26_0, arg_26_1)
-	if arg_26_1.trialCo then
+function CharacterController:openCharacterSkillTalentView(param)
+	if param.trialCo then
 		OdysseyTalentModel.instance:setTrialCassandraTreeInfo()
-		ViewMgr.instance:openView(ViewName.OdysseyTrialCharacterTalentView, arg_26_1)
+		ViewMgr.instance:openView(ViewName.OdysseyTrialCharacterTalentView, param)
 	else
-		ViewMgr.instance:openView(ViewName.CharacterSkillTalentView, arg_26_1)
+		ViewMgr.instance:openView(ViewName.CharacterSkillTalentView, param)
 	end
 end
 
-function var_0_0.openCharacterWeaponView(arg_27_0, arg_27_1)
-	ViewMgr.instance:openView(ViewName.CharacterWeaponView, arg_27_1)
+function CharacterController:openCharacterWeaponView(param)
+	ViewMgr.instance:openView(ViewName.CharacterWeaponView, param)
 end
 
-function var_0_0.openCharacterWeaponEffectView(arg_28_0, arg_28_1)
-	ViewMgr.instance:openView(ViewName.CharacterWeaponEffectView, arg_28_1)
+function CharacterController:openCharacterWeaponEffectView(param)
+	ViewMgr.instance:openView(ViewName.CharacterWeaponEffectView, param)
 end
 
-function var_0_0.enterCharacterBackpack(arg_29_0, arg_29_1)
+function CharacterController:enterCharacterBackpack(jumpTab)
 	ShaderKeyWordMgr.enableKeyWordAutoDisable(ShaderKeyWordMgr.CLIPALPHA, 1.533)
 
-	local var_29_0 = {
-		jumpTab = arg_29_1
-	}
+	local param = {}
 
-	ViewMgr.instance:openView(ViewName.CharacterBackpackView, var_29_0)
+	param.jumpTab = jumpTab
+
+	ViewMgr.instance:openView(ViewName.CharacterBackpackView, param)
 end
 
-function var_0_0.openCharacterSwitchView(arg_30_0, arg_30_1, arg_30_2)
-	ViewMgr.instance:openView(ViewName.CharacterSwitchView, arg_30_1, arg_30_2)
+function CharacterController:openCharacterSwitchView(param, isImmediate)
+	ViewMgr.instance:openView(ViewName.CharacterSwitchView, param, isImmediate)
 end
 
-function var_0_0.openCharacterFilterView(arg_31_0, arg_31_1)
-	ViewMgr.instance:openView(ViewName.CharacterBackpackSearchFilterView, arg_31_1)
+function CharacterController:openCharacterFilterView(param)
+	ViewMgr.instance:openView(ViewName.CharacterBackpackSearchFilterView, param)
 end
 
-function var_0_0.playRoleVoice(arg_32_0, arg_32_1)
-	local var_32_0 = HeroModel.instance:getVoiceConfig(arg_32_1, CharacterEnum.VoiceType.MainViewNoInteraction)
+function CharacterController:playRoleVoice(heroId)
+	local voices = HeroModel.instance:getVoiceConfig(heroId, CharacterEnum.VoiceType.MainViewNoInteraction)
 
-	if var_32_0 and #var_32_0 > 0 then
-		local var_32_1 = var_32_0[1].audio
+	if voices and #voices > 0 then
+		local voiceCo = voices[1]
+		local audio = voiceCo.audio
 
-		AudioMgr.instance:trigger(var_32_1)
+		AudioMgr.instance:trigger(audio)
 	end
 end
 
-function var_0_0.SetAttriIcon(arg_33_0, arg_33_1, arg_33_2, arg_33_3)
-	UISpriteSetMgr.instance:setCommonSprite(arg_33_1, "icon_att_" .. tostring(arg_33_2))
+function CharacterController:SetAttriIcon(simage, id, color)
+	UISpriteSetMgr.instance:setCommonSprite(simage, "icon_att_" .. tostring(id))
 
-	gohelper.onceAddComponent(arg_33_1.gameObject, typeof(UnityEngine.UI.Image)).color = arg_33_3 or CharacterEnum.AttrLightColor
+	local image = gohelper.onceAddComponent(simage.gameObject, typeof(UnityEngine.UI.Image))
+
+	image.color = color or CharacterEnum.AttrLightColor
 end
 
-function var_0_0.dailyRefresh(arg_34_0)
+function CharacterController:dailyRefresh()
 	HeroRpc.instance:sendHeroInfoListRequest()
 end
 
-function var_0_0.statCharacterData(arg_35_0, arg_35_1, arg_35_2, arg_35_3, arg_35_4, arg_35_5)
-	local var_35_0 = HeroConfig.instance:getHeroCO(arg_35_2)
+function CharacterController:statCharacterData(eventName, heroId, dataId, viewTime, isHandbook)
+	local heroConfig = HeroConfig.instance:getHeroCO(heroId)
 
-	if not var_35_0 then
+	if not heroConfig then
 		return
 	end
 
-	local var_35_1 = HeroModel.instance:getByHeroId(arg_35_2)
-	local var_35_2 = var_35_1 and var_35_1.faith or 0
-	local var_35_3 = HeroConfig.instance:getFaithPercent(var_35_2)
-	local var_35_4 = var_35_3 and var_35_3[1] * 100 or 0
-	local var_35_5 = {
-		[StatEnum.EventProperties.HeroId] = tonumber(arg_35_2),
-		[StatEnum.EventProperties.HeroName] = var_35_0.name,
-		[StatEnum.EventProperties.Faith] = var_35_4,
-		[StatEnum.EventProperties.Entrance] = arg_35_5 and luaLang("datatrack_entrance_handbook") or luaLang("datatrack_entrance_normal")
-	}
+	local heroMO = HeroModel.instance:getByHeroId(heroId)
+	local faith = heroMO and heroMO.faith or 0
+	local faithInfo = HeroConfig.instance:getFaithPercent(faith)
+	local faithLevel = faithInfo and faithInfo[1] * 100 or 0
+	local properties = {}
 
-	if arg_35_1 == StatEnum.EventName.PlayerVoice then
-		local var_35_6, var_35_7, var_35_8 = SettingsRoleVoiceModel.instance:getCharVoiceLangPrefValue(arg_35_2)
-		local var_35_9 = GameConfig:GetCurVoiceShortcut()
+	properties[StatEnum.EventProperties.HeroId] = tonumber(heroId)
+	properties[StatEnum.EventProperties.HeroName] = heroConfig.name
+	properties[StatEnum.EventProperties.Faith] = faithLevel
+	properties[StatEnum.EventProperties.Entrance] = isHandbook and luaLang("datatrack_entrance_handbook") or luaLang("datatrack_entrance_normal")
 
-		var_35_5[StatEnum.EventProperties.VoiceId] = tostring(arg_35_3 or "")
-		var_35_5[StatEnum.EventProperties.CharVoiceLang] = var_35_8 and var_35_9 or var_35_7
-		var_35_5[StatEnum.EventProperties.GlobalVoiceLang] = var_35_9
-	elseif arg_35_1 == StatEnum.EventName.ReadHeroItem then
+	if eventName == StatEnum.EventName.PlayerVoice then
+		local langId, langStr, usingDefaultLang = SettingsRoleVoiceModel.instance:getCharVoiceLangPrefValue(heroId)
+		local globalVoiceLang = GameConfig:GetCurVoiceShortcut()
+
+		properties[StatEnum.EventProperties.VoiceId] = tostring(dataId or "")
+		properties[StatEnum.EventProperties.CharVoiceLang] = usingDefaultLang and globalVoiceLang or langStr
+		properties[StatEnum.EventProperties.GlobalVoiceLang] = globalVoiceLang
+	elseif eventName == StatEnum.EventName.ReadHeroItem then
 		-- block empty
-	elseif arg_35_1 == StatEnum.EventName.ReadHeroCulture then
-		var_35_5[StatEnum.EventProperties.CultureId] = tostring(arg_35_3 or "")
+	elseif eventName == StatEnum.EventName.ReadHeroCulture then
+		properties[StatEnum.EventProperties.CultureId] = tostring(dataId or "")
 	end
 
-	if arg_35_4 then
-		var_35_5[StatEnum.EventProperties.Time] = arg_35_4
+	if viewTime then
+		properties[StatEnum.EventProperties.Time] = viewTime
 	end
 
-	StatController.instance:track(arg_35_1, var_35_5)
+	StatController.instance:track(eventName, properties)
 end
 
-function var_0_0.statCharacterSkinVideoData(arg_36_0, arg_36_1, arg_36_2, arg_36_3, arg_36_4)
-	local var_36_0 = StatEnum.EventName.ClickSkinVideoInlet
-	local var_36_1 = {
-		[StatEnum.EventProperties.HeroId] = arg_36_1,
-		[StatEnum.EventProperties.HeroName] = arg_36_2,
-		[StatEnum.EventProperties.skinId] = arg_36_3,
-		[StatEnum.EventProperties.skinName] = arg_36_4
+function CharacterController:statCharacterSkinVideoData(heroId, heroName, skinId, skinName)
+	local eventName = StatEnum.EventName.ClickSkinVideoInlet
+	local properties = {
+		[StatEnum.EventProperties.HeroId] = heroId,
+		[StatEnum.EventProperties.HeroName] = heroName,
+		[StatEnum.EventProperties.skinId] = skinId,
+		[StatEnum.EventProperties.skinName] = skinName
 	}
 
-	StatController.instance:track(var_36_0, var_36_1)
+	StatController.instance:track(eventName, properties)
 end
 
-function var_0_0.showCharacterGetToast(arg_37_0, arg_37_1, arg_37_2)
-	local var_37_0 = HeroConfig.instance:getHeroCO(arg_37_1)
-	local var_37_1 = {}
-	local var_37_2
+function CharacterController:showCharacterGetToast(heroId, duplicateCount)
+	local config = HeroConfig.instance:getHeroCO(heroId)
+	local rewards = {}
+	local reward
 
-	if arg_37_2 <= 0 then
-		var_37_2 = var_37_0.firstItem
-	elseif arg_37_2 >= CommonConfig.instance:getConstNum(ConstEnum.HeroDuplicateGetCount) - 1 then
-		var_37_2 = var_37_0.duplicateItem2
+	if duplicateCount <= 0 then
+		reward = config.firstItem
 	else
-		var_37_2 = var_37_0.duplicateItem
-	end
+		local constVal = CommonConfig.instance:getConstNum(ConstEnum.HeroDuplicateGetCount)
 
-	if not string.nilorempty(var_37_2) then
-		local var_37_3 = string.split(var_37_2, "|")
-
-		for iter_37_0, iter_37_1 in ipairs(var_37_3) do
-			local var_37_4 = string.splitToNumber(iter_37_1, "#")
-			local var_37_5 = var_37_4[1]
-			local var_37_6 = var_37_4[2]
-			local var_37_7 = var_37_4[3]
-			local var_37_8 = {}
-
-			var_37_8.config, var_37_8.icon = ItemModel.instance:getItemConfigAndIcon(var_37_5, var_37_6)
-			var_37_8.quantity = var_37_7
-			var_37_8.desc = arg_37_2 <= 0 and luaLang("character_first_tips") or luaLang("character_duplicate_tips")
-
-			table.insert(var_37_1, var_37_8)
+		if duplicateCount >= constVal - 1 then
+			reward = config.duplicateItem2
+		else
+			reward = config.duplicateItem
 		end
 	end
 
-	local var_37_9
-	local var_37_10
-	local var_37_11
+	if not string.nilorempty(reward) then
+		local items = string.split(reward, "|")
+
+		for i, item in ipairs(items) do
+			local itemParams = string.splitToNumber(item, "#")
+			local itemType = itemParams[1]
+			local itemId = itemParams[2]
+			local itemQuantity = itemParams[3]
+			local mo = {}
+
+			mo.config, mo.icon = ItemModel.instance:getItemConfigAndIcon(itemType, itemId)
+			mo.quantity = itemQuantity
+			mo.desc = duplicateCount <= 0 and luaLang("character_first_tips") or luaLang("character_duplicate_tips")
+
+			table.insert(rewards, mo)
+		end
+	end
+
+	local langSpace1, langSpace2
 
 	if GameConfig:GetCurLangType() == LangSettings.en then
-		var_37_9 = "\n"
-		var_37_11 = " "
+		langSpace1 = "\n"
+		langSpace2 = " "
 	elseif GameConfig:GetCurLangType() == LangSettings.kr then
-		var_37_9 = " "
-		var_37_11 = ""
+		langSpace1 = " "
+		langSpace2 = ""
 	else
-		var_37_9 = ""
-		var_37_11 = ""
+		langSpace1 = ""
+		langSpace2 = ""
 	end
 
-	for iter_37_2, iter_37_3 in ipairs(var_37_1) do
-		local var_37_12 = "%s%s%s\n%s%s%s%s"
-		local var_37_13 = string.format(var_37_12, iter_37_3.desc, var_37_9, var_37_0.name, iter_37_3.config.name, var_37_11, luaLang("multiple"), iter_37_3.quantity)
+	for i, mo in ipairs(rewards) do
+		local format = "%s%s%s\n%s%s%s%s"
+		local toast = string.format(format, mo.desc, langSpace1, config.name, mo.config.name, langSpace2, luaLang("multiple"), mo.quantity)
 
-		if GameConfig:GetCurLangType() == LangSettings.jp and arg_37_2 > 0 then
-			var_37_13 = string.format("%s%s\n%s%s%s", var_37_0.name, iter_37_3.desc, iter_37_3.config.name, luaLang("multiple"), iter_37_3.quantity)
+		if GameConfig:GetCurLangType() == LangSettings.jp and duplicateCount > 0 then
+			toast = string.format("%s%s\n%s%s%s", config.name, mo.desc, mo.config.name, luaLang("multiple"), mo.quantity)
 		end
 
-		GameFacade.showToastWithIcon(ToastEnum.IconId, iter_37_3.icon, var_37_13)
+		GameFacade.showToastWithIcon(ToastEnum.IconId, mo.icon, toast)
 	end
 end
 
-function var_0_0.showCharacterGetTicket(arg_38_0, arg_38_1, arg_38_2)
-	if not arg_38_2 then
+function CharacterController:showCharacterGetTicket(heroId, ticketId)
+	if not ticketId then
 		return
 	end
 
-	local var_38_0, var_38_1 = ItemModel.instance:getItemConfigAndIcon(MaterialEnum.MaterialType.Item, arg_38_2)
-	local var_38_2 = HeroConfig.instance:getHeroCO(arg_38_1)
+	local cfg, icon = ItemModel.instance:getItemConfigAndIcon(MaterialEnum.MaterialType.Item, ticketId)
+	local heroCo = HeroConfig.instance:getHeroCO(heroId)
 
-	GameFacade.showToastWithIcon(ToastEnum.IconId, var_38_1, string.format(luaLang("summon_limit_ticket_gain"), var_38_0.name))
+	GameFacade.showToastWithIcon(ToastEnum.IconId, icon, string.format(luaLang("summon_limit_ticket_gain"), cfg.name))
 end
 
-function var_0_0.setTalentHeroId(arg_39_0, arg_39_1)
-	arg_39_0._talentHeroId = arg_39_1
+function CharacterController:setTalentHeroId(id)
+	self._talentHeroId = id
 end
 
-function var_0_0.getTalentHeroId(arg_40_0)
-	return arg_40_0._talentHeroId
+function CharacterController:getTalentHeroId()
+	return self._talentHeroId
 end
 
-function var_0_0.statTalentStart(arg_41_0, arg_41_1)
-	arg_41_0._statTalentInfo = arg_41_0:getStatTalentInfo(arg_41_1)
+function CharacterController:statTalentStart(heroId)
+	self._statTalentInfo = self:getStatTalentInfo(heroId)
 end
 
-function var_0_0.getStatTalentInfo(arg_42_0, arg_42_1)
-	local var_42_0 = {}
-	local var_42_1 = HeroModel.instance:getByHeroId(arg_42_1)
-	local var_42_2 = var_42_1 and var_42_1.talentCubeInfos
+function CharacterController:getStatTalentInfo(heroId)
+	local statTalentInfo = {}
+	local heroMO = HeroModel.instance:getByHeroId(heroId)
+	local talentCubeInfos = heroMO and heroMO.talentCubeInfos
 
-	if not var_42_2 then
+	if not talentCubeInfos then
 		return nil
 	end
 
-	var_42_0.heroId = arg_42_1
-	var_42_0.talent = var_42_1.talent
-	var_42_0.dataDict = {}
+	statTalentInfo.heroId = heroId
+	statTalentInfo.talent = heroMO.talent
+	statTalentInfo.dataDict = {}
 
-	for iter_42_0, iter_42_1 in ipairs(var_42_2.data_list) do
-		local var_42_3 = iter_42_1.cubeId
+	for i, data in ipairs(talentCubeInfos.data_list) do
+		local _cubeId = data.cubeId
 
-		if var_42_3 == var_42_2.own_main_cube_id then
-			var_42_3 = var_42_1:getHeroUseStyleCubeId()
+		if _cubeId == talentCubeInfos.own_main_cube_id then
+			_cubeId = heroMO:getHeroUseStyleCubeId()
 		end
 
-		var_42_0.dataDict[string.format("%d_%d_%d_%d", var_42_3, iter_42_1.direction, iter_42_1.posX, iter_42_1.posY)] = true
+		statTalentInfo.dataDict[string.format("%d_%d_%d_%d", _cubeId, data.direction, data.posX, data.posY)] = true
 	end
 
-	return var_42_0
+	return statTalentInfo
 end
 
-function var_0_0.hasStatTalentInfoChanged(arg_43_0, arg_43_1, arg_43_2)
-	if arg_43_1.talent ~= arg_43_2.talent then
+function CharacterController:hasStatTalentInfoChanged(statTalentInfoStart, statTalentInfoEnd)
+	if statTalentInfoStart.talent ~= statTalentInfoEnd.talent then
 		return true
 	end
 
-	for iter_43_0, iter_43_1 in pairs(arg_43_1.dataDict) do
-		if not arg_43_2.dataDict[iter_43_0] then
+	for key, _ in pairs(statTalentInfoStart.dataDict) do
+		if not statTalentInfoEnd.dataDict[key] then
 			return true
 		end
 	end
 
-	for iter_43_2, iter_43_3 in pairs(arg_43_2.dataDict) do
-		if not arg_43_1.dataDict[iter_43_2] then
+	for key, _ in pairs(statTalentInfoEnd.dataDict) do
+		if not statTalentInfoStart.dataDict[key] then
 			return true
 		end
 	end
@@ -363,106 +370,148 @@ function var_0_0.hasStatTalentInfoChanged(arg_43_0, arg_43_1, arg_43_2)
 	return false
 end
 
-function var_0_0.statTalentEnd(arg_44_0, arg_44_1)
-	local var_44_0 = arg_44_0._statTalentInfo
+function CharacterController:statTalentEnd(heroId)
+	local statTalentInfoStart = self._statTalentInfo
 
-	arg_44_0._statTalentInfo = nil
+	self._statTalentInfo = nil
 
-	if not var_44_0 or var_44_0.heroId ~= arg_44_1 then
+	if not statTalentInfoStart or statTalentInfoStart.heroId ~= heroId then
 		return
 	end
 
-	local var_44_1 = arg_44_0:getStatTalentInfo(arg_44_1)
+	local statTalentInfoEnd = self:getStatTalentInfo(heroId)
 
-	if not var_44_1 then
+	if not statTalentInfoEnd then
 		return
 	end
 
-	if not arg_44_0:hasStatTalentInfoChanged(var_44_0, var_44_1) then
+	local hasChanged = self:hasStatTalentInfoChanged(statTalentInfoStart, statTalentInfoEnd)
+
+	if not hasChanged then
 		return
 	end
 
-	arg_44_0:stateTalent(arg_44_1)
+	self:stateTalent(heroId)
 end
 
-function var_0_0.stateTalent(arg_45_0, arg_45_1)
-	local var_45_0 = HeroModel.instance:getByHeroId(arg_45_1)
+function CharacterController:stateTalent(heroId)
+	local heroMO = HeroModel.instance:getByHeroId(heroId)
 
-	if not var_45_0 then
+	if not heroMO then
 		return
 	end
 
-	local var_45_1 = var_45_0.talentCubeInfos
-	local var_45_2 = {}
+	local talentCubeInfos = heroMO.talentCubeInfos
+	local ruensStateArray = {}
 
-	for iter_45_0, iter_45_1 in pairs(var_45_1.own_cube_dic) do
-		local var_45_3 = iter_45_1.id
+	for id, ownData in pairs(talentCubeInfos.own_cube_dic) do
+		local _cubeId = ownData.id
 
-		if var_45_3 == var_45_1.own_main_cube_id then
-			var_45_3 = var_45_0:getHeroUseStyleCubeId()
+		if _cubeId == talentCubeInfos.own_main_cube_id then
+			_cubeId = heroMO:getHeroUseStyleCubeId()
 		end
 
-		table.insert(var_45_2, {
-			ruens_id = var_45_3,
-			ruens_num = iter_45_1.use,
-			ruens_hold_num = iter_45_1.own + iter_45_1.use
+		table.insert(ruensStateArray, {
+			ruens_id = _cubeId,
+			ruens_num = ownData.use,
+			ruens_hold_num = ownData.own + ownData.use
 		})
 	end
 
-	local var_45_4 = {}
+	local ruensStateGroup = {}
 
-	for iter_45_2, iter_45_3 in ipairs(var_45_1.data_list) do
-		local var_45_5 = iter_45_3.cubeId
+	for i, data in ipairs(talentCubeInfos.data_list) do
+		local _cubeId = data.cubeId
 
-		if var_45_5 == var_45_1.own_main_cube_id then
-			var_45_5 = var_45_0:getHeroUseStyleCubeId()
+		if _cubeId == talentCubeInfos.own_main_cube_id then
+			_cubeId = heroMO:getHeroUseStyleCubeId()
 		end
 
-		table.insert(var_45_4, var_45_5)
+		table.insert(ruensStateGroup, _cubeId)
 	end
 
 	StatController.instance:track(StatEnum.EventName.TalentRuensPreserve, {
-		[StatEnum.EventProperties.HeroName] = var_45_0.config.name,
-		[StatEnum.EventProperties.TalentLevel] = var_45_0.talent,
-		[StatEnum.EventProperties.RuensStateArray] = var_45_2,
-		[StatEnum.EventProperties.RuensStateGroup] = var_45_4
+		[StatEnum.EventProperties.HeroName] = heroMO.config.name,
+		[StatEnum.EventProperties.TalentLevel] = heroMO.talent,
+		[StatEnum.EventProperties.RuensStateArray] = ruensStateArray,
+		[StatEnum.EventProperties.RuensStateGroup] = ruensStateGroup
 	})
 end
 
-function var_0_0.tryStatAllTalent(arg_46_0)
-	local var_46_0 = HeroModel.instance:getList()
+function CharacterController:tryStatAllTalent()
+	local heroMOList = HeroModel.instance:getList()
 
-	for iter_46_0, iter_46_1 in ipairs(var_46_0) do
-		if iter_46_1.rank >= CharacterEnum.TalentRank then
-			arg_46_0:stateTalent(iter_46_1.heroId)
+	for i, heroMO in ipairs(heroMOList) do
+		if heroMO.rank >= CharacterEnum.TalentRank then
+			self:stateTalent(heroMO.heroId)
 		end
 	end
 end
 
-function var_0_0.trackInteractiveSkinDetails(arg_47_0, arg_47_1, arg_47_2, arg_47_3)
-	local var_47_0 = HeroConfig.instance:getHeroCO(arg_47_1)
+function CharacterController:trackInteractiveSkinDetails(heroId, skinId, clickType)
+	local heroCfg = HeroConfig.instance:getHeroCO(heroId)
 
-	if not var_47_0 then
+	if not heroCfg then
 		return
 	end
 
-	local var_47_1 = SkinConfig.instance:getSkinCo(arg_47_2)
+	local skinCo = SkinConfig.instance:getSkinCo(skinId)
 
-	if not var_47_1 then
+	if not skinCo then
 		return
 	end
 
-	local var_47_2 = {
-		[StatEnum.EventProperties.HeroId] = tonumber(arg_47_1),
-		[StatEnum.EventProperties.HeroName] = var_47_0.name,
-		[StatEnum.EventProperties.skinId] = arg_47_2,
-		[StatEnum.EventProperties.skinName] = var_47_1.characterSkin,
-		[StatEnum.EventProperties.clickType] = arg_47_3
-	}
+	local properties = {}
 
-	StatController.instance:track(StatEnum.EventName.InteractiveSkinDetails, var_47_2)
+	properties[StatEnum.EventProperties.HeroId] = tonumber(heroId)
+	properties[StatEnum.EventProperties.HeroName] = heroCfg.name
+	properties[StatEnum.EventProperties.skinId] = skinId
+	properties[StatEnum.EventProperties.skinName] = skinCo.characterSkin
+	properties[StatEnum.EventProperties.clickType] = clickType
+
+	StatController.instance:track(StatEnum.EventName.InteractiveSkinDetails, properties)
 end
 
-var_0_0.instance = var_0_0.New()
+function CharacterController:useSkinGiftItem(itemId)
+	local itemCount = ItemModel.instance:getItemCount(itemId)
 
-return var_0_0
+	if not itemCount or itemCount <= 0 then
+		return
+	end
+
+	local config = ItemConfig.instance:getItemCo(itemId)
+	local effect = config and config.effect or ""
+	local param = GameUtil.splitString2(effect, true)
+	local skinList = param[1]
+	local isAllHasSkin = true
+
+	for i, v in ipairs(skinList) do
+		if not HeroModel.instance:checkHasSkin(v) then
+			isAllHasSkin = false
+
+			break
+		end
+	end
+
+	if isAllHasSkin then
+		ItemRpc.instance:simpleSendUseItemRequest(itemId, 1, 0, self._onUseSkinGiftItemCallback, self)
+
+		return
+	end
+
+	ViewMgr.instance:openView(ViewName.DecorateSkinSelectView, {
+		itemId = itemId
+	})
+end
+
+function CharacterController:_onUseSkinGiftItemCallback(cmd, resultCode, msg)
+	if resultCode ~= 0 then
+		return
+	end
+
+	GameFacade.showToast(ToastEnum.SkinGiftExChangeTips)
+end
+
+CharacterController.instance = CharacterController.New()
+
+return CharacterController

@@ -1,7 +1,9 @@
-﻿module("modules.logic.bossrush.model.V1a4_BossRush_ResultPanelListModel", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/model/V1a4_BossRush_ResultPanelListModel.lua
 
-local var_0_0 = class("V1a4_BossRush_ResultPanelListModel", ListScrollModel)
+module("modules.logic.bossrush.model.V1a4_BossRush_ResultPanelListModel", package.seeall)
 
-var_0_0.instance = var_0_0.New()
+local V1a4_BossRush_ResultPanelListModel = class("V1a4_BossRush_ResultPanelListModel", ListScrollModel)
 
-return var_0_0
+V1a4_BossRush_ResultPanelListModel.instance = V1a4_BossRush_ResultPanelListModel.New()
+
+return V1a4_BossRush_ResultPanelListModel

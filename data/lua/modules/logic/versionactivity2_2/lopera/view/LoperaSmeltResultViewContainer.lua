@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity2_2.lopera.view.LoperaSmeltResultViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/lopera/view/LoperaSmeltResultViewContainer.lua
 
-local var_0_0 = class("LoperaSmeltResultViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_2.lopera.view.LoperaSmeltResultViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local LoperaSmeltResultViewContainer = class("LoperaSmeltResultViewContainer", BaseViewContainer)
+
+function LoperaSmeltResultViewContainer:buildViews()
 	return {
 		LoperaSmeltResultView.New()
 	}
 end
 
-return var_0_0
+return LoperaSmeltResultViewContainer

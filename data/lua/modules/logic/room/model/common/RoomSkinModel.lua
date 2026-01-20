@@ -1,237 +1,254 @@
-﻿module("modules.logic.room.model.common.RoomSkinModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/common/RoomSkinModel.lua
 
-local var_0_0 = class("RoomSkinModel", BaseModel)
+module("modules.logic.room.model.common.RoomSkinModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:clear()
+local RoomSkinModel = class("RoomSkinModel", BaseModel)
+
+function RoomSkinModel:onInit()
+	self:clear()
 end
 
-function var_0_0.reInit(arg_2_0)
+function RoomSkinModel:reInit()
 	return
 end
 
-function var_0_0.clear(arg_3_0)
-	arg_3_0:_clearData()
-	var_0_0.super.clear(arg_3_0)
+function RoomSkinModel:clear()
+	self:_clearData()
+	RoomSkinModel.super.clear(self)
 end
 
-function var_0_0._clearData(arg_4_0)
-	arg_4_0._isInitSkinMoList = false
-	arg_4_0._otherPlayerRoomSkinDict = nil
+function RoomSkinModel:_clearData()
+	self._isInitSkinMoList = false
+	self._otherPlayerRoomSkinDict = nil
 
-	arg_4_0:setIsShowRoomSkinList(false)
+	self:setIsShowRoomSkinList(false)
 end
 
-function var_0_0.initSkinMoList(arg_5_0)
-	local var_5_0 = RoomConfig.instance:getAllSkinIdList()
+function RoomSkinModel:initSkinMoList()
+	local allSkinIdList = RoomConfig.instance:getAllSkinIdList()
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_0) do
-		if not arg_5_0:getById(iter_5_1) then
-			local var_5_1 = RoomSkinMO.New()
+	for _, skinId in ipairs(allSkinIdList) do
+		local skinMO = self:getById(skinId)
 
-			var_5_1:init(iter_5_1)
-			arg_5_0:addAtLast(var_5_1)
+		if not skinMO then
+			skinMO = RoomSkinMO.New()
+
+			skinMO:init(skinId)
+			self:addAtLast(skinMO)
 		end
 	end
 
-	arg_5_0._isInitSkinMoList = true
+	self._isInitSkinMoList = true
 end
 
-function var_0_0.updateRoomSkinInfo(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = {}
+function RoomSkinModel:updateRoomSkinInfo(roomSkinInfoList, isCheckInit)
+	local hasSetSkinPartDict = {}
 
-	if arg_6_1 then
-		for iter_6_0, iter_6_1 in ipairs(arg_6_1) do
-			arg_6_0:setRoomSkinEquipped(iter_6_1.id, iter_6_1.skinId)
+	if roomSkinInfoList then
+		for _, skinInfo in ipairs(roomSkinInfoList) do
+			self:setRoomSkinEquipped(skinInfo.id, skinInfo.skinId)
 
-			var_6_0[iter_6_1.id] = true
+			hasSetSkinPartDict[skinInfo.id] = true
 		end
 	end
 
-	if arg_6_2 then
-		for iter_6_2, iter_6_3 in pairs(RoomInitBuildingEnum.InitBuildingId) do
-			if not var_6_0[iter_6_3] then
-				arg_6_0:setRoomSkinEquipped(iter_6_3, RoomInitBuildingEnum.InitRoomSkinId[iter_6_3])
+	if isCheckInit then
+		for _, partId in pairs(RoomInitBuildingEnum.InitBuildingId) do
+			if not hasSetSkinPartDict[partId] then
+				self:setRoomSkinEquipped(partId, RoomInitBuildingEnum.InitRoomSkinId[partId])
 			end
 		end
 	end
 end
 
-function var_0_0.setRoomSkinEquipped(arg_7_0, arg_7_1, arg_7_2)
-	if not arg_7_1 or not arg_7_2 then
+function RoomSkinModel:setRoomSkinEquipped(partId, skinId)
+	if not partId or not skinId then
 		return
 	end
 
-	local var_7_0 = arg_7_0:getRoomSkinMO(arg_7_2, true)
+	local newSkinMo = self:getRoomSkinMO(skinId, true)
 
-	if not var_7_0 then
+	if not newSkinMo then
 		return
 	end
 
-	local var_7_1 = arg_7_0:getEquipRoomSkin(arg_7_1)
-	local var_7_2 = var_7_1 and arg_7_0:getRoomSkinMO(var_7_1, true)
+	local lastEquipSkin = self:getEquipRoomSkin(partId)
+	local lastSkinMo = lastEquipSkin and self:getRoomSkinMO(lastEquipSkin, true)
 
-	if var_7_2 then
-		var_7_2:setIsEquipped(false)
+	if lastSkinMo then
+		lastSkinMo:setIsEquipped(false)
 	end
 
-	var_7_0:setIsEquipped(true)
+	newSkinMo:setIsEquipped(true)
 end
 
-function var_0_0.setIsShowRoomSkinList(arg_8_0, arg_8_1)
-	arg_8_0._isShowRoomSkinList = arg_8_1
+function RoomSkinModel:setIsShowRoomSkinList(isShow)
+	self._isShowRoomSkinList = isShow
 end
 
-function var_0_0.setOtherPlayerRoomSkinDict(arg_9_0, arg_9_1)
-	arg_9_0._otherPlayerRoomSkinDict = {}
+function RoomSkinModel:setOtherPlayerRoomSkinDict(skinInfos)
+	self._otherPlayerRoomSkinDict = {}
 
-	if not arg_9_1 then
+	if not skinInfos then
 		return
 	end
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_1) do
-		arg_9_0._otherPlayerRoomSkinDict[iter_9_1.id] = iter_9_1.skinId
+	for _, info in ipairs(skinInfos) do
+		self._otherPlayerRoomSkinDict[info.id] = info.skinId
 	end
 end
 
-function var_0_0.getRoomSkinMO(arg_10_0, arg_10_1, arg_10_2)
-	if not arg_10_0._isInitSkinMoList then
-		arg_10_0:initSkinMoList()
+function RoomSkinModel:getRoomSkinMO(skinId, nilError)
+	if not self._isInitSkinMoList then
+		self:initSkinMoList()
 	end
 
-	local var_10_0 = arg_10_1 and arg_10_0:getById(arg_10_1)
+	local result = skinId and self:getById(skinId)
 
-	if not var_10_0 and arg_10_2 then
-		logError(string.format("RoomSkinModel:getRoomSkinMO error, skinMO is nil, skinId:%s", arg_10_1))
+	if not result and nilError then
+		logError(string.format("RoomSkinModel:getRoomSkinMO error, skinMO is nil, skinId:%s", skinId))
 	end
 
-	return var_10_0
+	return result
 end
 
-function var_0_0.getIsShowRoomSkinList(arg_11_0)
-	return arg_11_0._isShowRoomSkinList
+function RoomSkinModel:getIsShowRoomSkinList()
+	return self._isShowRoomSkinList
 end
 
-function var_0_0.getShowSkin(arg_12_0, arg_12_1)
-	if not arg_12_1 then
+function RoomSkinModel:getShowSkin(partId)
+	if not partId then
 		return
 	end
 
-	local var_12_0
+	local skinId
+	local isVisitMode = RoomController.instance:isVisitMode()
 
-	if RoomController.instance:isVisitMode() then
-		local var_12_1 = arg_12_0:getOtherPlayerRoomSkinDict()
+	if isVisitMode then
+		local otherPlayerRoomSkinDict = self:getOtherPlayerRoomSkinDict()
 
-		var_12_0 = var_12_1 and var_12_1[arg_12_1]
+		skinId = otherPlayerRoomSkinDict and otherPlayerRoomSkinDict[partId]
 
-		if not var_12_0 or var_12_0 == 0 then
-			var_12_0 = RoomInitBuildingEnum.InitRoomSkinId[arg_12_1]
+		if not skinId or skinId == 0 then
+			skinId = RoomInitBuildingEnum.InitRoomSkinId[partId]
 		end
 	else
-		local var_12_2 = RoomSkinListModel.instance:getCurPreviewSkinId()
-		local var_12_3 = var_12_2 and RoomConfig.instance:getBelongPart(var_12_2)
+		local previewSkinId = RoomSkinListModel.instance:getCurPreviewSkinId()
+		local previewSkinBelongPart = previewSkinId and RoomConfig.instance:getBelongPart(previewSkinId)
 
-		if var_12_3 and var_12_3 == arg_12_1 then
-			var_12_0 = var_12_2
+		if previewSkinBelongPart and previewSkinBelongPart == partId then
+			skinId = previewSkinId
 		else
-			var_12_0 = arg_12_0:getEquipRoomSkin(arg_12_1)
+			skinId = self:getEquipRoomSkin(partId)
 		end
 	end
 
-	if not var_12_0 then
-		logError(string.format("RoomSkinModel:getShowSkin error, show skin is nil, partId:%s", arg_12_1))
+	if not skinId then
+		logError(string.format("RoomSkinModel:getShowSkin error, show skin is nil, partId:%s", partId))
 
-		var_12_0 = RoomInitBuildingEnum.InitRoomSkinId[arg_12_1]
+		skinId = RoomInitBuildingEnum.InitRoomSkinId[partId]
 	end
 
-	return var_12_0
+	return skinId
 end
 
-function var_0_0.getEquipRoomSkin(arg_13_0, arg_13_1)
-	local var_13_0
+function RoomSkinModel:getEquipRoomSkin(partId)
+	local result
 
-	if not arg_13_1 then
-		return var_13_0
+	if not partId then
+		return result
 	end
 
-	local var_13_1 = RoomConfig.instance:getSkinIdList(arg_13_1)
+	local skinIdList = RoomConfig.instance:getSkinIdList(partId)
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_1) do
-		if arg_13_0:isEquipRoomSkin(iter_13_1) then
-			var_13_0 = iter_13_1
+	for _, skinId in ipairs(skinIdList) do
+		local isEquipped = self:isEquipRoomSkin(skinId)
+
+		if isEquipped then
+			result = skinId
 
 			break
 		end
 	end
 
-	return var_13_0
+	return result
 end
 
-function var_0_0.isUnlockRoomSkin(arg_14_0, arg_14_1)
-	local var_14_0 = false
+function RoomSkinModel:isUnlockRoomSkin(skinId)
+	local result = false
 
-	if not arg_14_1 then
-		return var_14_0
+	if not skinId then
+		return result
 	end
 
-	local var_14_1 = arg_14_0:getRoomSkinMO(arg_14_1)
+	local skinMo = self:getRoomSkinMO(skinId)
 
-	return var_14_1 and var_14_1:isUnlock()
+	result = skinMo and skinMo:isUnlock()
+
+	return result
 end
 
-function var_0_0.isNewRoomSkin(arg_15_0, arg_15_1)
-	if not arg_15_1 then
+function RoomSkinModel:isNewRoomSkin(skinId)
+	if not skinId then
 		return false
 	end
 
-	return (RedDotModel.instance:isDotShow(RedDotEnum.DotNode.RoomNewSkinItem, arg_15_1))
+	local result = RedDotModel.instance:isDotShow(RedDotEnum.DotNode.RoomNewSkinItem, skinId)
+
+	return result
 end
 
-function var_0_0.isHasNewRoomSkin(arg_16_0, arg_16_1)
-	local var_16_0 = false
+function RoomSkinModel:isHasNewRoomSkin(partId)
+	local result = false
 
-	if not arg_16_1 then
-		return var_16_0
+	if not partId then
+		return result
 	end
 
-	local var_16_1 = RoomConfig.instance:getSkinIdList(arg_16_1)
+	local skinIdList = RoomConfig.instance:getSkinIdList(partId)
 
-	for iter_16_0, iter_16_1 in ipairs(var_16_1) do
-		if arg_16_0:isNewRoomSkin(iter_16_1) then
-			var_16_0 = true
+	for _, skinId in ipairs(skinIdList) do
+		local isNew = self:isNewRoomSkin(skinId)
+
+		if isNew then
+			result = true
 
 			break
 		end
 	end
 
-	return var_16_0
+	return result
 end
 
-function var_0_0.isEquipRoomSkin(arg_17_0, arg_17_1)
-	local var_17_0 = false
-	local var_17_1 = arg_17_0:getRoomSkinMO(arg_17_1, true)
+function RoomSkinModel:isEquipRoomSkin(skinId)
+	local result = false
+	local roomSkinMo = self:getRoomSkinMO(skinId, true)
 
-	if var_17_1 then
-		var_17_0 = var_17_1:isEquipped()
+	if roomSkinMo then
+		result = roomSkinMo:isEquipped()
 	end
 
-	return var_17_0
+	return result
 end
 
-function var_0_0.isDefaultRoomSkin(arg_18_0, arg_18_1, arg_18_2)
-	local var_18_0 = false
+function RoomSkinModel:isDefaultRoomSkin(partId, skinId)
+	local result = false
 
-	if not arg_18_1 or not arg_18_2 then
-		return var_18_0
+	if not partId or not skinId then
+		return result
 	end
 
-	return arg_18_2 == RoomInitBuildingEnum.InitRoomSkinId[arg_18_1]
+	local defaultSkinId = RoomInitBuildingEnum.InitRoomSkinId[partId]
+
+	result = skinId == defaultSkinId
+
+	return result
 end
 
-function var_0_0.getOtherPlayerRoomSkinDict(arg_19_0)
-	return arg_19_0._otherPlayerRoomSkinDict
+function RoomSkinModel:getOtherPlayerRoomSkinDict()
+	return self._otherPlayerRoomSkinDict
 end
 
-var_0_0.instance = var_0_0.New()
+RoomSkinModel.instance = RoomSkinModel.New()
 
-return var_0_0
+return RoomSkinModel

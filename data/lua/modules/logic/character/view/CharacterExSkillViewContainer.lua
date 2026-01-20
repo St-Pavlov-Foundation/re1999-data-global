@@ -1,8 +1,10 @@
-﻿module("modules.logic.character.view.CharacterExSkillViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterExSkillViewContainer.lua
 
-local var_0_0 = class("CharacterExSkillViewContainer", BaseViewContainer)
+module("modules.logic.character.view.CharacterExSkillViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local CharacterExSkillViewContainer = class("CharacterExSkillViewContainer", BaseViewContainer)
+
+function CharacterExSkillViewContainer:buildViews()
 	return {
 		CharacterExSkillView.New(),
 		TabViewGroup.New(1, "#go_btn"),
@@ -10,29 +12,29 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	arg_2_0.navigateView = NavigateButtonsView.New({
+function CharacterExSkillViewContainer:buildTabViews(tabContainerId)
+	self.navigateView = NavigateButtonsView.New({
 		true,
 		true,
 		false
 	})
 
 	return {
-		arg_2_0.navigateView
+		self.navigateView
 	}
 end
 
-function var_0_0.onContainerOpenFinish(arg_3_0)
-	arg_3_0.navigateView:resetCloseBtnAudioId(AudioEnum.UI.Play_ui_mould_close)
-	arg_3_0.navigateView:resetHomeBtnAudioId(AudioEnum.UI.Play_ui_mould_close)
+function CharacterExSkillViewContainer:onContainerOpenFinish()
+	self.navigateView:resetCloseBtnAudioId(AudioEnum.UI.Play_ui_mould_close)
+	self.navigateView:resetHomeBtnAudioId(AudioEnum.UI.Play_ui_mould_close)
 end
 
-function var_0_0.hideHomeBtn(arg_4_0)
-	arg_4_0.navigateView:setParam({
+function CharacterExSkillViewContainer:hideHomeBtn()
+	self.navigateView:setParam({
 		true,
 		false,
 		false
 	})
 end
 
-return var_0_0
+return CharacterExSkillViewContainer

@@ -1,17 +1,19 @@
-﻿module("modules.logic.dungeon.view.DungeonHuaRongViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/DungeonHuaRongViewContainer.lua
 
-local var_0_0 = class("DungeonHuaRongViewContainer", BaseViewContainer)
+module("modules.logic.dungeon.view.DungeonHuaRongViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local DungeonHuaRongViewContainer = class("DungeonHuaRongViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, DungeonHuaRongView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "top_left"))
+function DungeonHuaRongViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, DungeonHuaRongView.New())
+	table.insert(views, TabViewGroup.New(1, "top_left"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function DungeonHuaRongViewContainer:buildTabViews(tabContainerId)
 	return {
 		NavigateButtonsView.New({
 			true,
@@ -21,4 +23,4 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	}
 end
 
-return var_0_0
+return DungeonHuaRongViewContainer

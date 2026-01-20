@@ -1,7 +1,9 @@
-﻿module("modules.logic.chessgame.game.interact.ChessInteractComp", package.seeall)
+﻿-- chunkname: @modules/logic/chessgame/game/interact/ChessInteractComp.lua
 
-local var_0_0 = class("ChessInteractComp")
-local var_0_1 = {
+module("modules.logic.chessgame.game.interact.ChessInteractComp", package.seeall)
+
+local ChessInteractComp = class("ChessInteractComp")
+local HandlerClzMap = {
 	[ChessGameEnum.InteractType.Normal] = ChessInteractBase,
 	[ChessGameEnum.InteractType.Role] = ChessInteractPlayer,
 	[ChessGameEnum.InteractType.Teleport] = ChessInteractBase,
@@ -11,324 +13,334 @@ local var_0_1 = {
 	[ChessGameEnum.InteractType.Prey] = ChessInteractBase,
 	[ChessGameEnum.InteractType.Obstacle] = ChessInteractObstacle
 }
-local var_0_2 = {}
-local var_0_3 = {
+local ActHandlerClzMap = {}
+local EffectClzMap = {
 	[ChessGameEnum.GameEffectType.Display] = ChessEffectBase,
 	[ChessGameEnum.GameEffectType.Talk] = ChessEffectBase
 }
-local var_0_4 = {}
+local ActEffectClzMap = {}
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.mo = arg_1_2
-	arg_1_0.mapId = arg_1_1
+function ChessInteractComp:init(mapId, interactMO)
+	self.mo = interactMO
+	self.mapId = mapId
 
-	local var_1_0 = arg_1_0.mo:getConfig()
+	local cfg = self.mo:getConfig()
 
-	arg_1_0.id = arg_1_0.mo:getId()
+	self.id = self.mo:getId()
 
-	if var_1_0 then
-		arg_1_0.objType = var_1_0.interactType
-		arg_1_0.config = var_1_0
+	if cfg then
+		self.objType = cfg.interactType
+		self.config = cfg
 
-		local var_1_1 = var_1_0.interactType
+		local interactType = cfg.interactType
+		local handlerClz = HandlerClzMap[interactType] or ChessInteractComp
 
-		arg_1_0._handler = (var_0_1[var_1_1] or var_0_0).New()
+		self._handler = handlerClz.New()
 
-		arg_1_0._handler:init(arg_1_0)
+		self._handler:init(self)
 	end
 
-	local var_1_2 = arg_1_0.mo:getEffectType()
+	local effectType = self.mo:getEffectType()
 
-	if var_1_2 and var_1_2 ~= ChessGameEnum.GameEffectType.None then
-		local var_1_3 = var_0_4[arg_1_2.actId]
+	if effectType and effectType ~= ChessGameEnum.GameEffectType.None then
+		local actEffectClzMap = ActEffectClzMap[interactMO.actId]
+		local actEffectClz = actEffectClzMap and actEffectClzMap[effectType]
+		local effectClz = actEffectClz or EffectClzMap[effectType]
 
-		arg_1_0.chessEffectObj = (var_1_3 and var_1_3[var_1_2] or var_0_3[var_1_2]).New(arg_1_0)
+		self.chessEffectObj = effectClz.New(self)
 	end
 
-	arg_1_0.avatar = nil
+	self.avatar = nil
 end
 
-function var_0_0.updateComp(arg_2_0, arg_2_1)
-	arg_2_0.mo = arg_2_1
+function ChessInteractComp:updateComp(interactMO)
+	self.mo = interactMO
 
-	local var_2_0 = arg_2_0.mo:getConfig()
+	local co = self.mo:getConfig()
 
-	arg_2_0:updatePos(var_2_0)
+	self:updatePos(co)
 
-	if arg_2_0.objType == ChessGameEnum.InteractType.Hunter then
-		arg_2_0:getHandler():refreshAlarmArea()
+	if self.objType == ChessGameEnum.InteractType.Hunter then
+		self:getHandler():refreshAlarmArea()
 	end
 end
 
-function var_0_0.setAvatar(arg_3_0, arg_3_1)
-	arg_3_0.avatar = arg_3_1
+function ChessInteractComp:setAvatar(avatarObj)
+	self.avatar = avatarObj
 
-	arg_3_0:updateAvatarInScene()
+	self:updateAvatarInScene()
 end
 
-function var_0_0.checkShowAvatar(arg_4_0)
-	return arg_4_0.avatar and arg_4_0.avatar.isLoaded
+function ChessInteractComp:checkShowAvatar()
+	return self.avatar and self.avatar.isLoaded
 end
 
-function var_0_0.setCurrpath(arg_5_0, arg_5_1)
-	arg_5_0._path = arg_5_1
+function ChessInteractComp:setCurrpath(path)
+	self._path = path
 end
 
-function var_0_0.getCurrpath(arg_6_0)
-	return arg_6_0._path
+function ChessInteractComp:getCurrpath()
+	return self._path
 end
 
-function var_0_0.checkHaveAvatarPath(arg_7_0)
-	local var_7_0 = arg_7_0.mo:getConfig().path
+function ChessInteractComp:checkHaveAvatarPath()
+	local co = self.mo:getConfig()
+	local resPath = co.path
 
-	if not string.nilorempty(var_7_0) then
+	if not string.nilorempty(resPath) then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.updateAvatarInScene(arg_8_0)
-	if not arg_8_0.avatar or not arg_8_0.avatar.sceneGo then
+function ChessInteractComp:updateAvatarInScene()
+	if not self.avatar or not self.avatar.sceneGo then
 		return
 	end
 
-	local var_8_0 = arg_8_0.mo:getConfig()
+	local co = self.mo:getConfig()
 
-	arg_8_0:updatePos(var_8_0)
+	self:updatePos(co)
 
-	if arg_8_0.avatar.loader and var_8_0 then
-		local var_8_1 = var_8_0.path
+	if self.avatar.loader and co then
+		local resPath = co.path
 
-		arg_8_0.avatar.name = SLFramework.FileHelper.GetFileName(var_8_1, false)
+		self.avatar.name = SLFramework.FileHelper.GetFileName(resPath, false)
 
-		if not string.nilorempty(var_8_1) then
-			if arg_8_0:getCurrpath() == var_8_1 then
+		if not string.nilorempty(resPath) then
+			local currPath = self:getCurrpath()
+
+			if currPath == resPath then
 				return
 			end
 
-			if not arg_8_0.avatar.loader:getAssetItem(var_8_1) then
-				arg_8_0.avatar.loader:startLoad(var_8_1, arg_8_0.onSceneObjectLoadFinish, arg_8_0)
-				arg_8_0:setCurrpath(var_8_1)
+			local go = self.avatar.loader:getAssetItem(resPath)
+
+			if not go then
+				self.avatar.loader:startLoad(resPath, self.onSceneObjectLoadFinish, self)
+				self:setCurrpath(resPath)
 			end
 		end
 	end
 end
 
-function var_0_0.updatePos(arg_9_0, arg_9_1)
-	if not arg_9_0.avatar or not arg_9_0.avatar.sceneGo then
+function ChessInteractComp:updatePos(co)
+	if not self.avatar or not self.avatar.sceneGo then
 		return
 	end
 
-	if arg_9_0.mo.posX and arg_9_0.mo.posY and arg_9_1 then
-		local var_9_0 = arg_9_1.offset
+	if self.mo.posX and self.mo.posY and co then
+		local offset = co.offset
 
-		arg_9_0.avatar.sceneX = arg_9_0.mo.posX or arg_9_1.x
-		arg_9_0.avatar.sceneY = arg_9_0.mo.posY or arg_9_1.x
+		self.avatar.sceneX = self.mo.posX or co.x
+		self.avatar.sceneY = self.mo.posY or co.x
 
-		local var_9_1 = {
+		local position = {
 			z = 0,
-			x = arg_9_0.mo.posX,
-			y = arg_9_0.mo.posY
+			x = self.mo.posX,
+			y = self.mo.posY
 		}
-		local var_9_2 = ChessGameHelper.nodePosToWorldPos(var_9_1)
+		local v3 = ChessGameHelper.nodePosToWorldPos(position)
 
-		transformhelper.setLocalPos(arg_9_0.avatar.sceneTf, var_9_2.x + var_9_0.x, var_9_2.y + var_9_0.y, var_9_2.z + var_9_0.z)
+		transformhelper.setLocalPos(self.avatar.sceneTf, v3.x + offset.x, v3.y + offset.y, v3.z + offset.z)
 
-		local var_9_3 = arg_9_0.mo.direction or arg_9_1.dir
+		local dir = self.mo.direction or co.dir
 
-		arg_9_0._handler:faceTo(var_9_3)
+		self._handler:faceTo(dir)
 	end
 end
 
-function var_0_0.changeModule(arg_10_0, arg_10_1)
-	if arg_10_0:getCurrpath() == arg_10_1 then
+function ChessInteractComp:changeModule(newPath)
+	local currPath = self:getCurrpath()
+
+	if currPath == newPath then
 		return
 	end
 
-	if not arg_10_0._oldLoader then
-		arg_10_0._oldLoader = arg_10_0.avatar.loader
-	elseif arg_10_0.avatar.loader then
-		arg_10_0.avatar.loader:dispose()
+	if not self._oldLoader then
+		self._oldLoader = self.avatar.loader
+	elseif self.avatar.loader then
+		self.avatar.loader:dispose()
 
-		arg_10_0.avatar.loader = nil
+		self.avatar.loader = nil
 	end
 
-	arg_10_0:loadModule(arg_10_1)
+	self:loadModule(newPath)
 end
 
-function var_0_0.loadModule(arg_11_0, arg_11_1)
-	gohelper.destroyAllChildren(arg_11_0.avatar.sceneGo)
+function ChessInteractComp:loadModule(path)
+	gohelper.destroyAllChildren(self.avatar.sceneGo)
 
-	arg_11_0.avatar.loader = PrefabInstantiate.Create(arg_11_0.avatar.sceneGo)
+	self.avatar.loader = PrefabInstantiate.Create(self.avatar.sceneGo)
 
-	if not string.nilorempty(arg_11_1) then
-		local var_11_0 = arg_11_0.avatar.loader:getAssetItem(arg_11_1)
+	if not string.nilorempty(path) then
+		local go = self.avatar.loader:getAssetItem(path)
 
-		if not gohelper.isNil(var_11_0) then
-			arg_11_0.avatar.loader:startLoad(arg_11_1, arg_11_0.onSceneObjectLoadFinish, arg_11_0)
-			arg_11_0:setCurrpath(arg_11_1)
+		if not gohelper.isNil(go) then
+			self.avatar.loader:startLoad(path, self.onSceneObjectLoadFinish, self)
+			self:setCurrpath(path)
 		end
 	end
 end
 
-var_0_0.DirectionList = {
+ChessInteractComp.DirectionList = {
 	2,
 	4,
 	6,
 	8
 }
-var_0_0.DirectionSet = {}
+ChessInteractComp.DirectionSet = {}
 
-for iter_0_0, iter_0_1 in pairs(var_0_0.DirectionList) do
-	var_0_0.DirectionSet[iter_0_1] = true
+for k, v in pairs(ChessInteractComp.DirectionList) do
+	ChessInteractComp.DirectionSet[v] = true
 end
 
-function var_0_0.onSceneObjectLoadFinish(arg_12_0)
-	if arg_12_0.avatar and arg_12_0.avatar.loader then
-		local var_12_0 = arg_12_0.avatar.loader:getInstGO()
+function ChessInteractComp:onSceneObjectLoadFinish()
+	if self.avatar and self.avatar.loader then
+		local go = self.avatar.loader:getInstGO()
 
-		if not gohelper.isNil(var_12_0) and not arg_12_0.avatar.isLoaded then
-			local var_12_1 = gohelper.findChild(var_12_0, "Canvas")
+		if not gohelper.isNil(go) and not self.avatar.isLoaded then
+			local canvasGo = gohelper.findChild(go, "Canvas")
 
-			if var_12_1 then
-				local var_12_2 = var_12_1:GetComponent(typeof(UnityEngine.Canvas))
+			if canvasGo then
+				local canvas = canvasGo:GetComponent(typeof(UnityEngine.Canvas))
 
-				if var_12_2 then
-					var_12_2.worldCamera = CameraMgr.instance:getMainCamera()
+				if canvas then
+					canvas.worldCamera = CameraMgr.instance:getMainCamera()
 				end
 			end
 
-			for iter_12_0, iter_12_1 in ipairs(var_0_0.DirectionList) do
-				arg_12_0.avatar["goFaceTo" .. iter_12_1] = gohelper.findChild(var_12_0, "dir_" .. iter_12_1)
+			for _, dir in ipairs(ChessInteractComp.DirectionList) do
+				self.avatar["goFaceTo" .. dir] = gohelper.findChild(go, "dir_" .. dir)
 			end
 
-			arg_12_0.avatar.effectNode = gohelper.findChild(var_12_0, "icon")
+			self.avatar.effectNode = gohelper.findChild(go, "icon")
 		end
 
-		arg_12_0.avatar.isLoaded = true
+		self.avatar.isLoaded = true
 
-		arg_12_0:getHandler():onAvatarLoaded()
-		ChessGameController.instance.interactsMgr:checkCompleletedLoaded(arg_12_0.mo.id)
+		self:getHandler():onAvatarLoaded()
+		ChessGameController.instance.interactsMgr:checkCompleletedLoaded(self.mo.id)
 	end
 end
 
-function var_0_0.tryGetGameObject(arg_13_0)
-	if arg_13_0.avatar and arg_13_0.avatar.loader then
-		local var_13_0 = arg_13_0.avatar.loader:getInstGO()
+function ChessInteractComp:tryGetGameObject()
+	if self.avatar and self.avatar.loader then
+		local go = self.avatar.loader:getInstGO()
 
-		if not gohelper.isNil(var_13_0) then
-			return var_13_0
+		if not gohelper.isNil(go) then
+			return go
 		end
 	end
 end
 
-function var_0_0.tryGetSceneGO(arg_14_0)
-	if arg_14_0.avatar and not gohelper.isNil(arg_14_0.avatar.sceneGo) then
-		return arg_14_0.avatar.sceneGo
+function ChessInteractComp:tryGetSceneGO()
+	if self.avatar and not gohelper.isNil(self.avatar.sceneGo) then
+		return self.avatar.sceneGo
 	end
 end
 
-function var_0_0.hideSelf(arg_15_0)
-	if arg_15_0.avatar and not gohelper.isNil(arg_15_0.avatar.sceneGo) then
-		gohelper.setActive(arg_15_0.avatar.sceneGo, false)
+function ChessInteractComp:hideSelf()
+	if self.avatar and not gohelper.isNil(self.avatar.sceneGo) then
+		gohelper.setActive(self.avatar.sceneGo, false)
 	end
 end
 
-function var_0_0.isShow(arg_16_0)
-	if not arg_16_0.mo then
+function ChessInteractComp:isShow()
+	if not self.mo then
 		return false
 	else
-		return arg_16_0.mo:isShow()
+		return self.mo:isShow()
 	end
 end
 
-function var_0_0.getAvatarName(arg_17_0)
-	local var_17_0 = arg_17_0.mo.actId
-	local var_17_1 = arg_17_0.mo.id
-	local var_17_2 = ChessGameConfig.instance:getInteractObjectCo(var_17_0, var_17_1)
+function ChessInteractComp:getAvatarName()
+	local actId = self.mo.actId
+	local objId = self.mo.id
+	local co = ChessGameConfig.instance:getInteractObjectCo(actId, objId)
 
-	if var_17_2 then
-		return var_17_2.avatar
+	if co then
+		return co.avatar
 	end
 end
 
-function var_0_0.getObjId(arg_18_0)
-	return arg_18_0.id
+function ChessInteractComp:getObjId()
+	return self.id
 end
 
-function var_0_0.getObjType(arg_19_0)
-	return arg_19_0.objType
+function ChessInteractComp:getObjType()
+	return self.objType
 end
 
-function var_0_0.getObjPosIndex(arg_20_0)
-	return arg_20_0.mo:getPosIndex()
+function ChessInteractComp:getObjPosIndex()
+	return self.mo:getPosIndex()
 end
 
-function var_0_0.getHandler(arg_21_0)
-	return arg_21_0._handler
+function ChessInteractComp:getHandler()
+	return self._handler
 end
 
-function var_0_0.onCancelSelect(arg_22_0)
-	if arg_22_0:getHandler() then
-		arg_22_0:getHandler():onCancelSelect()
+function ChessInteractComp:onCancelSelect()
+	if self:getHandler() then
+		self:getHandler():onCancelSelect()
 	end
 
-	if arg_22_0.chessEffectObj then
-		arg_22_0.chessEffectObj:onCancelSelect()
-	end
-end
-
-function var_0_0.onSelected(arg_23_0)
-	if arg_23_0:getHandler() then
-		arg_23_0:getHandler():onSelected()
-	end
-
-	if arg_23_0.chessEffectObj then
-		arg_23_0.chessEffectObj:onSelected()
+	if self.chessEffectObj then
+		self.chessEffectObj:onCancelSelect()
 	end
 end
 
-function var_0_0.canSelect(arg_24_0)
-	return arg_24_0.config and arg_24_0.config.interactType == ChessGameEnum.InteractType.Player or arg_24_0.config.interactType == ChessGameEnum.InteractType.AssistPlayer
+function ChessInteractComp:onSelected()
+	if self:getHandler() then
+		self:getHandler():onSelected()
+	end
+
+	if self.chessEffectObj then
+		self.chessEffectObj:onSelected()
+	end
 end
 
-function var_0_0.dispose(arg_25_0)
-	if arg_25_0.avatar ~= nil then
-		if arg_25_0.avatar.loader then
-			arg_25_0.avatar.loader:dispose()
+function ChessInteractComp:canSelect()
+	return self.config and self.config.interactType == ChessGameEnum.InteractType.Player or self.config.interactType == ChessGameEnum.InteractType.AssistPlayer
+end
 
-			arg_25_0.avatar.loader = nil
+function ChessInteractComp:dispose()
+	if self.avatar ~= nil then
+		if self.avatar.loader then
+			self.avatar.loader:dispose()
+
+			self.avatar.loader = nil
 		end
 
-		if not gohelper.isNil(arg_25_0.avatar.sceneGo) then
-			gohelper.setActive(arg_25_0.avatar.sceneGo, false)
-			gohelper.destroy(arg_25_0.avatar.sceneGo)
+		if not gohelper.isNil(self.avatar.sceneGo) then
+			gohelper.setActive(self.avatar.sceneGo, false)
+			gohelper.destroy(self.avatar.sceneGo)
 		end
 
-		ChessGameController.instance:dispatchEvent(ChessGameEvent.DeleteInteractAvatar, arg_25_0.id)
+		ChessGameController.instance:dispatchEvent(ChessGameEvent.DeleteInteractAvatar, self.id)
 
-		arg_25_0.avatar = nil
+		self.avatar = nil
 	end
 
-	local var_25_0 = {
+	local disposeCompName = {
 		"_handler",
 		"chessEffectObj"
 	}
 
-	for iter_25_0, iter_25_1 in ipairs(var_25_0) do
-		if arg_25_0[iter_25_1] ~= nil then
-			arg_25_0[iter_25_1]:dispose()
+	for i, name in ipairs(disposeCompName) do
+		if self[name] ~= nil then
+			self[name]:dispose()
 
-			arg_25_0[iter_25_1] = nil
+			self[name] = nil
 		end
 	end
 end
 
-function var_0_0.showStateView(arg_26_0, arg_26_1, arg_26_2)
-	if arg_26_0:getHandler().showStateView then
-		return arg_26_0:getHandler():showStateView(arg_26_1, arg_26_2)
+function ChessInteractComp:showStateView(objState, params)
+	if self:getHandler().showStateView then
+		return self:getHandler():showStateView(objState, params)
 	end
 end
 
-return var_0_0
+return ChessInteractComp

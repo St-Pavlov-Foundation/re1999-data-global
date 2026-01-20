@@ -1,70 +1,84 @@
-﻿module("modules.logic.character.view.CharacterViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterViewContainer.lua
 
-local var_0_0 = class("CharacterViewContainer", BaseViewContainer)
+module("modules.logic.character.view.CharacterViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local CharacterViewContainer = class("CharacterViewContainer", BaseViewContainer)
 
-	arg_1_0._equipView = CharacterDefaultEquipView.New()
-	arg_1_0._extraView = CharacterDefaultExtraView.New()
+function CharacterViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, CharacterView.New())
-	table.insert(var_1_0, arg_1_0._equipView)
-	table.insert(var_1_0, arg_1_0._extraView)
-	table.insert(var_1_0, CharacterSpineGCView.New())
-	table.insert(var_1_0, CommonRainEffectView.New("anim/bgcanvas/#go_glowcontainer"))
+	self._equipView = CharacterDefaultEquipView.New()
+	self._extraView = CharacterDefaultExtraView.New()
+	self._destinyView = CharacterDefaultDestinyView.New()
 
-	arg_1_0.helpShowView = HelpShowView.New()
+	table.insert(views, CharacterView.New())
+	table.insert(views, self._equipView)
+	table.insert(views, self._extraView)
+	table.insert(views, self._destinyView)
+	table.insert(views, CharacterSpineGCView.New())
+	table.insert(views, CommonRainEffectView.New("anim/bgcanvas/#go_glowcontainer"))
 
-	table.insert(var_1_0, arg_1_0.helpShowView)
+	self.helpShowView = HelpShowView.New()
 
-	return var_1_0
+	table.insert(views, self.helpShowView)
+
+	return views
 end
 
-function var_0_0.getEquipView(arg_2_0)
-	return arg_2_0._equipView
+function CharacterViewContainer:getEquipView()
+	return self._equipView
 end
 
-function var_0_0.playOpenTransition(arg_3_0)
-	arg_3_0:_cancelBlock()
-	arg_3_0:_stopOpenCloseAnim()
+function CharacterViewContainer:getDestinyView()
+	return self._destinyView
+end
+
+function CharacterViewContainer:playOpenTransition()
+	self:_cancelBlock()
+	self:_stopOpenCloseAnim()
 	UnityEngine.Shader.EnableKeyword("_CLIPALPHA_ON")
-	ZProj.ProjAnimatorPlayer.Get(arg_3_0.viewGO):Play(UIAnimationName.Open, arg_3_0.onOpenAnimDone, arg_3_0)
-	arg_3_0:startViewOpenBlock()
+
+	local animator = ZProj.ProjAnimatorPlayer.Get(self.viewGO)
+
+	animator:Play(UIAnimationName.Open, self.onOpenAnimDone, self)
+	self:startViewOpenBlock()
 end
 
-function var_0_0.onOpenAnimDone(arg_4_0)
+function CharacterViewContainer:onOpenAnimDone()
 	UnityEngine.Shader.DisableKeyword("_CLIPALPHA_ON")
-	arg_4_0:onPlayOpenTransitionFinish()
-	arg_4_0:_cancelBlock()
-	arg_4_0:_stopOpenCloseAnim()
+	self:onPlayOpenTransitionFinish()
+	self:_cancelBlock()
+	self:_stopOpenCloseAnim()
 end
 
-function var_0_0.playCloseTransition(arg_5_0)
-	arg_5_0:_cancelBlock()
-	arg_5_0:_stopOpenCloseAnim()
+function CharacterViewContainer:playCloseTransition()
+	self:_cancelBlock()
+	self:_stopOpenCloseAnim()
 	UnityEngine.Shader.EnableKeyword("_CLIPALPHA_ON")
-	ZProj.ProjAnimatorPlayer.Get(arg_5_0.viewGO):Play(UIAnimationName.Close, arg_5_0.onCloseAnimDone, arg_5_0)
-	arg_5_0:startViewCloseBlock()
+
+	local animator = ZProj.ProjAnimatorPlayer.Get(self.viewGO)
+
+	animator:Play(UIAnimationName.Close, self.onCloseAnimDone, self)
+	self:startViewCloseBlock()
 end
 
-function var_0_0.onCloseAnimDone(arg_6_0)
+function CharacterViewContainer:onCloseAnimDone()
 	UnityEngine.Shader.DisableKeyword("_CLIPALPHA_ON")
-	arg_6_0:onPlayCloseTransitionFinish()
-	arg_6_0:_cancelBlock()
-	arg_6_0:_stopOpenCloseAnim()
+	self:onPlayCloseTransitionFinish()
+	self:_cancelBlock()
+	self:_stopOpenCloseAnim()
 end
 
-function var_0_0.setIsOwnHero(arg_7_0, arg_7_1)
-	if arg_7_1 then
-		arg_7_0._isOwnHero = arg_7_1.isOwnHero
+function CharacterViewContainer:setIsOwnHero(externalParam)
+	if externalParam then
+		self._isOwnHero = externalParam.isOwnHero
 	else
-		arg_7_0._isOwnHero = true
+		self._isOwnHero = true
 	end
 end
 
-function var_0_0.isOwnHero(arg_8_0)
-	return arg_8_0._isOwnHero
+function CharacterViewContainer:isOwnHero()
+	return self._isOwnHero
 end
 
-return var_0_0
+return CharacterViewContainer

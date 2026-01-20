@@ -1,31 +1,33 @@
-﻿module("modules.logic.versionactivity2_8.common.VersionActivity2_8CanJumpFunc", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/common/VersionActivity2_8CanJumpFunc.lua
 
-local var_0_0 = class("VersionActivity2_8CanJumpFunc")
+module("modules.logic.versionactivity2_8.common.VersionActivity2_8CanJumpFunc", package.seeall)
 
-function var_0_0.canJumpTo12810(arg_1_0, arg_1_1)
-	local var_1_0, var_1_1, var_1_2 = ActivityHelper.getActivityStatusAndToast(VersionActivity2_8Enum.ActivityId.EnterView)
+local VersionActivity2_8CanJumpFunc = class("VersionActivity2_8CanJumpFunc")
 
-	if var_1_0 ~= ActivityEnum.ActivityStatus.Normal then
-		return false, var_1_1, var_1_2
+function VersionActivity2_8CanJumpFunc:canJumpTo12810(jumpParamArray)
+	local status, toastId, toastParamList = ActivityHelper.getActivityStatusAndToast(VersionActivity2_8Enum.ActivityId.EnterView)
+
+	if status ~= ActivityEnum.ActivityStatus.Normal then
+		return false, toastId, toastParamList
 	end
 
-	local var_1_3 = VersionActivity2_8Enum.ActivityId.NuoDiKa
-	local var_1_4, var_1_5, var_1_6 = ActivityHelper.getActivityStatusAndToast(var_1_3)
+	local actId = VersionActivity2_8Enum.ActivityId.NuoDiKa
+	local actStatus, actToastId, actToastParamList = ActivityHelper.getActivityStatusAndToast(actId)
 
-	if var_1_4 ~= ActivityEnum.ActivityStatus.Normal then
-		return false, var_1_5, var_1_6
+	if actStatus ~= ActivityEnum.ActivityStatus.Normal then
+		return false, actToastId, actToastParamList
 	end
 
-	local var_1_7 = arg_1_1[3]
+	local episodeId = jumpParamArray[3]
 
-	if var_1_7 then
-		local var_1_8 = NuoDiKaConfig.instance:getEpisodeCo(var_1_3, var_1_7)
+	if episodeId then
+		local episodeCo = NuoDiKaConfig.instance:getEpisodeCo(actId, episodeId)
 
-		if not var_1_8 then
+		if not episodeCo then
 			return false, ToastEnum.EpisodeNotExist, JumpController.DefaultToastParam
 		end
 
-		if var_1_7 ~= 0 and var_1_8.preEpisode and var_1_8.preEpisode ~= 0 and not NuoDiKaModel.instance:isEpisodePass(var_1_8.preEpisode) then
+		if episodeId ~= 0 and episodeCo.preEpisode and episodeCo.preEpisode ~= 0 and not NuoDiKaModel.instance:isEpisodePass(episodeCo.preEpisode) then
 			return false, ToastEnum.Act194EpisodeLock, JumpController.DefaultToastParam
 		end
 	end
@@ -33,32 +35,32 @@ function var_0_0.canJumpTo12810(arg_1_0, arg_1_1)
 	return true, JumpController.DefaultToastId, JumpController.DefaultToastParam
 end
 
-function var_0_0.canJumpTo12811(arg_2_0, arg_2_1)
-	local var_2_0, var_2_1, var_2_2 = ActivityHelper.getActivityStatusAndToast(VersionActivity2_8Enum.ActivityId.EnterView)
+function VersionActivity2_8CanJumpFunc:canJumpTo12811(jumpParamArray)
+	local status, toastId, toastParamList = ActivityHelper.getActivityStatusAndToast(VersionActivity2_8Enum.ActivityId.EnterView)
 
-	if var_2_0 ~= ActivityEnum.ActivityStatus.Normal then
-		return false, var_2_1, var_2_2
+	if status ~= ActivityEnum.ActivityStatus.Normal then
+		return false, toastId, toastParamList
 	end
 
-	local var_2_3 = VersionActivity2_8Enum.ActivityId.MoLiDeEr
-	local var_2_4, var_2_5, var_2_6 = ActivityHelper.getActivityStatusAndToast(var_2_3)
+	local actId = VersionActivity2_8Enum.ActivityId.MoLiDeEr
+	local actStatus, actToastId, actToastParamList = ActivityHelper.getActivityStatusAndToast(actId)
 
-	if var_2_4 ~= ActivityEnum.ActivityStatus.Normal then
-		return false, var_2_5, var_2_6
+	if actStatus ~= ActivityEnum.ActivityStatus.Normal then
+		return false, actToastId, actToastParamList
 	end
 
-	local var_2_7 = arg_2_1[3]
+	local episodeId = jumpParamArray[3]
 
-	if var_2_7 then
-		local var_2_8 = MoLiDeErConfig.instance:getEpisodeConfig(var_2_3, var_2_7)
+	if episodeId then
+		local episodeCo = MoLiDeErConfig.instance:getEpisodeConfig(actId, episodeId)
 
-		if not var_2_8 then
-			logError("not found episode : " .. var_2_7)
+		if not episodeCo then
+			logError("not found episode : " .. episodeId)
 
 			return false, ToastEnum.EpisodeNotExist, JumpController.DefaultToastParam
 		end
 
-		if var_2_7 ~= 0 and var_2_8.preEpisodeId and var_2_8.preEpisodeId ~= 0 and not MoLiDeErModel.instance:isEpisodeFinish(var_2_3, var_2_8.preEpisodeId) then
+		if episodeId ~= 0 and episodeCo.preEpisodeId and episodeCo.preEpisodeId ~= 0 and not MoLiDeErModel.instance:isEpisodeFinish(actId, episodeCo.preEpisodeId) then
 			return false, ToastEnum.Act194EpisodeLock, JumpController.DefaultToastParam
 		end
 	end
@@ -66,4 +68,4 @@ function var_0_0.canJumpTo12811(arg_2_0, arg_2_1)
 	return true, JumpController.DefaultToastId, JumpController.DefaultToastParam
 end
 
-return var_0_0
+return VersionActivity2_8CanJumpFunc

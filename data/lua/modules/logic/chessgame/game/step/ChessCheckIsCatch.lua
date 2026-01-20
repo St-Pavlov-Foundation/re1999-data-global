@@ -1,53 +1,55 @@
-﻿module("modules.logic.chessgame.game.step.ChessCheckIsCatch", package.seeall)
+﻿-- chunkname: @modules/logic/chessgame/game/step/ChessCheckIsCatch.lua
 
-local var_0_0 = class("ChessCheckIsCatch", BaseWork)
+module("modules.logic.chessgame.game.step.ChessCheckIsCatch", package.seeall)
 
-function var_0_0.init(arg_1_0)
+local ChessCheckIsCatch = class("ChessCheckIsCatch", BaseWork)
+
+function ChessCheckIsCatch:init()
 	return
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	arg_2_0:checkIsCatchObj(arg_2_1)
+function ChessCheckIsCatch:onStart(catchObj)
+	self:checkIsCatchObj(catchObj)
 end
 
-function var_0_0.checkIsCatchObj(arg_3_0, arg_3_1)
-	if arg_3_1 then
-		if not ChessGameInteractModel.instance:getInteractById(arg_3_1.mo.id) then
-			local var_3_0 = ChessGameController.instance.interactsMgr:getMainPlayer()
-			local var_3_1, var_3_2 = var_3_0.mo:getXY()
+function ChessCheckIsCatch:checkIsCatchObj(catchObj)
+	if catchObj then
+		if not ChessGameInteractModel.instance:getInteractById(catchObj.mo.id) then
+			local player = ChessGameController.instance.interactsMgr:getMainPlayer()
+			local x, y = player.mo:getXY()
 
-			var_3_0:getHandler():moveTo(var_3_1, var_3_2, arg_3_0.afterReturnBack, arg_3_0)
+			player:getHandler():moveTo(x, y, self.afterReturnBack, self)
 		else
 			ChessGameController.instance:dispatchEvent(ChessGameEvent.SetNeedChooseDirectionVisible, {
 				visible = false
 			})
 			ChessGameController.instance:autoSelectPlayer()
 
-			local var_3_3 = ChessGameController.instance.interactsMgr:getMainPlayer()
+			local player = ChessGameController.instance.interactsMgr:getMainPlayer()
 
-			if var_3_3 then
-				var_3_3:getHandler():_refreshNodeArea()
-				arg_3_1:getHandler():withCatch()
+			if player then
+				player:getHandler():_refreshNodeArea()
+				catchObj:getHandler():withCatch()
 				ChessGameController.instance:setClickStatus(ChessGameEnum.SelectPosStatus.CatchObj)
-				arg_3_0:onDone(true)
+				self:onDone(true)
 			else
-				arg_3_0:onDone(true)
+				self:onDone(true)
 			end
 		end
 	else
-		arg_3_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0.afterReturnBack(arg_4_0)
-	local var_4_0 = ChessGameController.instance.interactsMgr:getMainPlayer()
+function ChessCheckIsCatch:afterReturnBack()
+	local player = ChessGameController.instance.interactsMgr:getMainPlayer()
 
-	var_4_0:getHandler():calCanWalkArea()
+	player:getHandler():calCanWalkArea()
 
-	local var_4_1 = var_4_0.mo:getDirection()
+	local dir = player.mo:getDirection()
 
-	var_4_0:getHandler():faceTo(var_4_1)
-	arg_4_0:onDone(true)
+	player:getHandler():faceTo(dir)
+	self:onDone(true)
 end
 
-return var_0_0
+return ChessCheckIsCatch

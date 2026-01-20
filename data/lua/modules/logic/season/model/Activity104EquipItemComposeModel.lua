@@ -1,201 +1,203 @@
-﻿module("modules.logic.season.model.Activity104EquipItemComposeModel", package.seeall)
+﻿-- chunkname: @modules/logic/season/model/Activity104EquipItemComposeModel.lua
 
-local var_0_0 = class("Activity104EquipItemComposeModel", ListScrollModel)
+module("modules.logic.season.model.Activity104EquipItemComposeModel", package.seeall)
 
-var_0_0.ComposeMaxCount = 3
-var_0_0.EmptyUid = "0"
-var_0_0.MainRoleHeroUid = "main_role"
+local Activity104EquipItemComposeModel = class("Activity104EquipItemComposeModel", ListScrollModel)
 
-function var_0_0.initDatas(arg_1_0, arg_1_1)
-	arg_1_0.activityId = arg_1_1
+Activity104EquipItemComposeModel.ComposeMaxCount = 3
+Activity104EquipItemComposeModel.EmptyUid = "0"
+Activity104EquipItemComposeModel.MainRoleHeroUid = "main_role"
 
-	arg_1_0:clearSelectMap()
-	arg_1_0:initSubModel()
-	arg_1_0:initItemMap()
-	arg_1_0:initPosList()
-	arg_1_0:initList()
+function Activity104EquipItemComposeModel:initDatas(activityId)
+	self.activityId = activityId
+
+	self:clearSelectMap()
+	self:initSubModel()
+	self:initItemMap()
+	self:initPosList()
+	self:initList()
 end
 
-function var_0_0.clear(arg_2_0)
-	var_0_0.super.clear(arg_2_0)
+function Activity104EquipItemComposeModel:clear()
+	Activity104EquipItemComposeModel.super.clear(self)
 
-	arg_2_0.curSelectMap = nil
-	arg_2_0._curSelectUidPosSet = nil
-	arg_2_0._itemUid2HeroUid = nil
-	arg_2_0._itemMap = nil
-	arg_2_0._itemDefaultList = {}
-	arg_2_0._itemStartAnimTime = nil
-	arg_2_0.tagModel = nil
-	arg_2_0.countModel = nil
-	arg_2_0._itemCountDict = nil
+	self.curSelectMap = nil
+	self._curSelectUidPosSet = nil
+	self._itemUid2HeroUid = nil
+	self._itemMap = nil
+	self._itemDefaultList = {}
+	self._itemStartAnimTime = nil
+	self.tagModel = nil
+	self.countModel = nil
+	self._itemCountDict = nil
 end
 
-function var_0_0.clearSelectMap(arg_3_0)
-	arg_3_0.curSelectMap = {}
-	arg_3_0._curSelectUidPosSet = {}
+function Activity104EquipItemComposeModel:clearSelectMap()
+	self.curSelectMap = {}
+	self._curSelectUidPosSet = {}
 
-	for iter_3_0 = 1, var_0_0.ComposeMaxCount do
-		arg_3_0.curSelectMap[iter_3_0] = var_0_0.EmptyUid
+	for pos = 1, Activity104EquipItemComposeModel.ComposeMaxCount do
+		self.curSelectMap[pos] = Activity104EquipItemComposeModel.EmptyUid
 	end
 end
 
-function var_0_0.initSubModel(arg_4_0)
-	arg_4_0.tagModel = Activity104EquipTagModel.New()
+function Activity104EquipItemComposeModel:initSubModel()
+	self.tagModel = Activity104EquipTagModel.New()
 
-	arg_4_0.tagModel:init(arg_4_0.activityId)
+	self.tagModel:init(self.activityId)
 
-	arg_4_0.countModel = Activity104EquipCountModel.New()
+	self.countModel = Activity104EquipCountModel.New()
 
-	arg_4_0.countModel:init(arg_4_0.activityId)
+	self.countModel:init(self.activityId)
 end
 
-function var_0_0.initItemMap(arg_5_0)
-	arg_5_0._itemMap = Activity104Model.instance:getAllItemMo(arg_5_0.activityId) or {}
+function Activity104EquipItemComposeModel:initItemMap()
+	self._itemMap = Activity104Model.instance:getAllItemMo(self.activityId) or {}
 
-	arg_5_0:initDefaultList()
+	self:initDefaultList()
 
-	if arg_5_0.countModel then
-		arg_5_0.countModel:refreshData(arg_5_0._itemDefaultList)
+	if self.countModel then
+		self.countModel:refreshData(self._itemDefaultList)
 	end
 end
 
-function var_0_0.initPosList(arg_6_0)
-	arg_6_0._itemUid2HeroUid = {}
+function Activity104EquipItemComposeModel:initPosList()
+	self._itemUid2HeroUid = {}
 
-	local var_6_0 = Activity104Model.instance:getSeasonAllHeroGroup(arg_6_0.activityId)
+	local heroGroupList = Activity104Model.instance:getSeasonAllHeroGroup(self.activityId)
 
-	if not var_6_0 then
+	if not heroGroupList then
 		return
 	end
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
-		local var_6_1 = iter_6_1.activity104Equips
+	for groupIndex, heroGroupMO in ipairs(heroGroupList) do
+		local equips = heroGroupMO.activity104Equips
 
-		if var_6_1 then
-			arg_6_0:parseHeroGroupEquips(iter_6_1, var_6_1)
+		if equips then
+			self:parseHeroGroupEquips(heroGroupMO, equips)
 		end
 	end
 end
 
-function var_0_0.parseHeroGroupEquips(arg_7_0, arg_7_1, arg_7_2)
-	for iter_7_0, iter_7_1 in pairs(arg_7_2) do
-		local var_7_0 = iter_7_1.index
-		local var_7_1 = arg_7_1:getHeroByIndex(var_7_0 + 1)
+function Activity104EquipItemComposeModel:parseHeroGroupEquips(heroGroupMO, equips)
+	for _, equipMO in pairs(equips) do
+		local pos = equipMO.index
+		local heroUid = heroGroupMO:getHeroByIndex(pos + 1)
 
-		if var_7_0 == Activity104EquipItemListModel.MainCharPos then
-			var_7_1 = var_0_0.MainRoleHeroUid
+		if pos == Activity104EquipItemListModel.MainCharPos then
+			heroUid = Activity104EquipItemComposeModel.MainRoleHeroUid
 		end
 
-		if var_7_1 then
-			for iter_7_2, iter_7_3 in pairs(iter_7_1.equipUid) do
-				if iter_7_3 ~= var_0_0.EmptyUid and (not arg_7_0._itemUid2HeroUid[iter_7_3] or arg_7_0._itemUid2HeroUid[iter_7_3] == var_0_0.EmptyUid) and arg_7_0._itemMap[iter_7_3] ~= nil then
-					arg_7_0._itemUid2HeroUid[iter_7_3] = var_7_1
+		if heroUid then
+			for _, equipUid in pairs(equipMO.equipUid) do
+				if equipUid ~= Activity104EquipItemComposeModel.EmptyUid and (not self._itemUid2HeroUid[equipUid] or self._itemUid2HeroUid[equipUid] == Activity104EquipItemComposeModel.EmptyUid) and self._itemMap[equipUid] ~= nil then
+					self._itemUid2HeroUid[equipUid] = heroUid
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.initDefaultList(arg_8_0)
-	local var_8_0 = {}
+function Activity104EquipItemComposeModel:initDefaultList()
+	local list = {}
 
-	for iter_8_0, iter_8_1 in pairs(arg_8_0._itemMap) do
-		if not SeasonConfig.instance:getEquipIsOptional(iter_8_1.itemId) then
-			local var_8_1 = SeasonConfig.instance:getSeasonEquipCo(iter_8_1.itemId)
+	for itemUid, itemMO in pairs(self._itemMap) do
+		if not SeasonConfig.instance:getEquipIsOptional(itemMO.itemId) then
+			local itemCO = SeasonConfig.instance:getSeasonEquipCo(itemMO.itemId)
 
-			if var_8_1 and not SeasonEquipMetaUtils.isBanActivity(var_8_1, arg_8_0.activityId) and var_8_1.rare ~= Activity104Enum.MainRoleRare then
-				local var_8_2 = Activity104EquipComposeMo.New()
+			if itemCO and not SeasonEquipMetaUtils.isBanActivity(itemCO, self.activityId) and itemCO.rare ~= Activity104Enum.MainRoleRare then
+				local mo = Activity104EquipComposeMo.New()
 
-				var_8_2:init(iter_8_1)
-				table.insert(var_8_0, var_8_2)
+				mo:init(itemMO)
+				table.insert(list, mo)
 			end
 		end
 	end
 
-	arg_8_0._itemDefaultList = var_8_0
+	self._itemDefaultList = list
 end
 
-function var_0_0.initList(arg_9_0)
-	arg_9_0._itemCountDict = {}
+function Activity104EquipItemComposeModel:initList()
+	self._itemCountDict = {}
 
-	local var_9_0 = {}
+	local list = {}
 
-	for iter_9_0, iter_9_1 in pairs(arg_9_0._itemDefaultList) do
-		local var_9_1 = SeasonConfig.instance:getSeasonEquipCo(iter_9_1.itemId)
+	for _, mo in pairs(self._itemDefaultList) do
+		local itemCO = SeasonConfig.instance:getSeasonEquipCo(mo.itemId)
 
-		if var_9_1 and arg_9_0:isCardCanShow(var_9_1) then
-			table.insert(var_9_0, iter_9_1)
-			arg_9_0:_addItemToCountDict(iter_9_1.itemId)
+		if itemCO and self:isCardCanShow(itemCO) then
+			table.insert(list, mo)
+			self:_addItemToCountDict(mo.itemId)
 		end
 	end
 
-	table.sort(var_9_0, var_0_0.sortItemMOList)
-	arg_9_0:setList(var_9_0)
+	table.sort(list, Activity104EquipItemComposeModel.sortItemMOList)
+	self:setList(list)
 end
 
-function var_0_0._addItemToCountDict(arg_10_0, arg_10_1)
-	if not arg_10_0._itemCountDict then
-		arg_10_0._itemCountDict = {}
+function Activity104EquipItemComposeModel:_addItemToCountDict(itemId)
+	if not self._itemCountDict then
+		self._itemCountDict = {}
 	end
 
-	if not arg_10_0._itemCountDict[arg_10_1] then
-		arg_10_0._itemCountDict[arg_10_1] = 0
+	if not self._itemCountDict[itemId] then
+		self._itemCountDict[itemId] = 0
 	end
 
-	arg_10_0._itemCountDict[arg_10_1] = arg_10_0._itemCountDict[arg_10_1] + 1
+	self._itemCountDict[itemId] = self._itemCountDict[itemId] + 1
 end
 
-function var_0_0._getItemCount(arg_11_0, arg_11_1)
-	if not arg_11_0._itemCountDict then
-		arg_11_0._itemCountDict = {}
+function Activity104EquipItemComposeModel:_getItemCount(itemId)
+	if not self._itemCountDict then
+		self._itemCountDict = {}
 	end
 
-	return arg_11_0._itemCountDict[arg_11_1] or 0
+	return self._itemCountDict[itemId] or 0
 end
 
-function var_0_0.isCardCanShow(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0.tagModel:isCardNeedShow(arg_12_1.tag)
-	local var_12_1 = arg_12_0.countModel:isCardNeedShow(arg_12_1.equipId, arg_12_0:_getItemCount(arg_12_1.equipId))
+function Activity104EquipItemComposeModel:isCardCanShow(itemCo)
+	local flag1 = self.tagModel:isCardNeedShow(itemCo.tag)
+	local flag2 = self.countModel:isCardNeedShow(itemCo.equipId, self:_getItemCount(itemCo.equipId))
 
-	return var_12_0 and var_12_1
+	return flag1 and flag2
 end
 
-function var_0_0.sortItemMOList(arg_13_0, arg_13_1)
-	local var_13_0 = var_0_0.instance:getEquipedHeroUid(arg_13_0.id) ~= nil
-	local var_13_1 = var_0_0.instance:getEquipedHeroUid(arg_13_1.id) ~= nil
+function Activity104EquipItemComposeModel.sortItemMOList(a, b)
+	local aEquiped = Activity104EquipItemComposeModel.instance:getEquipedHeroUid(a.id) ~= nil
+	local bEquiped = Activity104EquipItemComposeModel.instance:getEquipedHeroUid(b.id) ~= nil
 
-	if var_13_0 ~= var_13_1 then
-		return var_13_1
+	if aEquiped ~= bEquiped then
+		return bEquiped
 	end
 
-	local var_13_2 = SeasonConfig.instance:getSeasonEquipCo(arg_13_0.itemId)
-	local var_13_3 = SeasonConfig.instance:getSeasonEquipCo(arg_13_1.itemId)
+	local cfgA = SeasonConfig.instance:getSeasonEquipCo(a.itemId)
+	local cfgB = SeasonConfig.instance:getSeasonEquipCo(b.itemId)
 
-	if var_13_2 ~= nil and var_13_3 ~= nil then
-		if var_13_2.rare ~= var_13_3.rare then
-			return var_13_2.rare > var_13_3.rare
+	if cfgA ~= nil and cfgB ~= nil then
+		if cfgA.rare ~= cfgB.rare then
+			return cfgA.rare > cfgB.rare
 		else
-			return var_13_2.equipId > var_13_3.equipId
+			return cfgA.equipId > cfgB.equipId
 		end
 	else
-		return arg_13_0.id < arg_13_1.id
+		return a.id < b.id
 	end
 end
 
-function var_0_0.checkResetCurSelected(arg_14_0)
-	for iter_14_0 = 1, var_0_0.ComposeMaxCount do
-		local var_14_0 = arg_14_0.curSelectMap[iter_14_0]
+function Activity104EquipItemComposeModel:checkResetCurSelected()
+	for pos = 1, Activity104EquipItemComposeModel.ComposeMaxCount do
+		local itemUid = self.curSelectMap[pos]
 
-		if not arg_14_0._itemMap[var_14_0] then
-			arg_14_0.curSelectMap[iter_14_0] = var_0_0.EmptyUid
+		if not self._itemMap[itemUid] then
+			self.curSelectMap[pos] = Activity104EquipItemComposeModel.EmptyUid
 		end
 	end
 end
 
-function var_0_0.setSelectEquip(arg_15_0, arg_15_1)
-	for iter_15_0 = 1, var_0_0.ComposeMaxCount do
-		if var_0_0.EmptyUid == arg_15_0.curSelectMap[iter_15_0] then
-			arg_15_0:selectEquip(arg_15_1, iter_15_0)
+function Activity104EquipItemComposeModel:setSelectEquip(itemUid)
+	for pos = 1, Activity104EquipItemComposeModel.ComposeMaxCount do
+		if Activity104EquipItemComposeModel.EmptyUid == self.curSelectMap[pos] then
+			self:selectEquip(itemUid, pos)
 
 			return true
 		end
@@ -204,35 +206,35 @@ function var_0_0.setSelectEquip(arg_15_0, arg_15_1)
 	return false
 end
 
-function var_0_0.selectEquip(arg_16_0, arg_16_1, arg_16_2)
-	arg_16_0.curSelectMap[arg_16_2] = arg_16_1
-	arg_16_0._curSelectUidPosSet[arg_16_1] = arg_16_2
+function Activity104EquipItemComposeModel:selectEquip(itemUid, pos)
+	self.curSelectMap[pos] = itemUid
+	self._curSelectUidPosSet[itemUid] = pos
 end
 
-function var_0_0.getEquipMO(arg_17_0, arg_17_1)
-	return arg_17_0._itemMap[arg_17_1]
+function Activity104EquipItemComposeModel:getEquipMO(itemUid)
+	return self._itemMap[itemUid]
 end
 
-function var_0_0.unloadEquip(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_0._curSelectUidPosSet[arg_18_1]
+function Activity104EquipItemComposeModel:unloadEquip(itemUid)
+	local pos = self._curSelectUidPosSet[itemUid]
 
-	if var_18_0 then
-		arg_18_0.curSelectMap[var_18_0] = var_0_0.EmptyUid
-		arg_18_0._curSelectUidPosSet[arg_18_1] = nil
+	if pos then
+		self.curSelectMap[pos] = Activity104EquipItemComposeModel.EmptyUid
+		self._curSelectUidPosSet[itemUid] = nil
 	end
 end
 
-function var_0_0.getEquipedHeroUid(arg_19_0, arg_19_1)
-	return arg_19_0._itemUid2HeroUid[arg_19_1]
+function Activity104EquipItemComposeModel:getEquipedHeroUid(itemUid)
+	return self._itemUid2HeroUid[itemUid]
 end
 
-function var_0_0.isEquipSelected(arg_20_0, arg_20_1)
-	return arg_20_0._curSelectUidPosSet[arg_20_1] ~= nil
+function Activity104EquipItemComposeModel:isEquipSelected(itemUid)
+	return self._curSelectUidPosSet[itemUid] ~= nil
 end
 
-function var_0_0.existSelectedMaterial(arg_21_0)
-	for iter_21_0 = 1, var_0_0.ComposeMaxCount do
-		if arg_21_0.curSelectMap[iter_21_0] ~= var_0_0.EmptyUid then
+function Activity104EquipItemComposeModel:existSelectedMaterial()
+	for pos = 1, Activity104EquipItemComposeModel.ComposeMaxCount do
+		if self.curSelectMap[pos] ~= Activity104EquipItemComposeModel.EmptyUid then
 			return true
 		end
 	end
@@ -240,24 +242,24 @@ function var_0_0.existSelectedMaterial(arg_21_0)
 	return false
 end
 
-function var_0_0.getSelectedRare(arg_22_0)
-	for iter_22_0 = 1, var_0_0.ComposeMaxCount do
-		local var_22_0 = arg_22_0.curSelectMap[iter_22_0]
+function Activity104EquipItemComposeModel:getSelectedRare()
+	for pos = 1, Activity104EquipItemComposeModel.ComposeMaxCount do
+		local itemUid = self.curSelectMap[pos]
 
-		if var_22_0 ~= var_0_0.EmptyUid then
-			local var_22_1 = arg_22_0:getEquipMO(var_22_0)
-			local var_22_2 = SeasonConfig.instance:getSeasonEquipCo(var_22_1.itemId)
+		if itemUid ~= Activity104EquipItemComposeModel.EmptyUid then
+			local itemMO = self:getEquipMO(itemUid)
+			local itemCo = SeasonConfig.instance:getSeasonEquipCo(itemMO.itemId)
 
-			if var_22_2 then
-				return var_22_2.rare
+			if itemCo then
+				return itemCo.rare
 			end
 		end
 	end
 end
 
-function var_0_0.isMaterialAllReady(arg_23_0)
-	for iter_23_0 = 1, var_0_0.ComposeMaxCount do
-		if arg_23_0.curSelectMap[iter_23_0] == var_0_0.EmptyUid then
+function Activity104EquipItemComposeModel:isMaterialAllReady()
+	for pos = 1, Activity104EquipItemComposeModel.ComposeMaxCount do
+		if self.curSelectMap[pos] == Activity104EquipItemComposeModel.EmptyUid then
 			return false
 		end
 	end
@@ -265,108 +267,108 @@ function var_0_0.isMaterialAllReady(arg_23_0)
 	return true
 end
 
-function var_0_0.getMaterialList(arg_24_0)
-	local var_24_0 = {}
+function Activity104EquipItemComposeModel:getMaterialList()
+	local list = {}
 
-	for iter_24_0 = 1, var_0_0.ComposeMaxCount do
-		table.insert(var_24_0, arg_24_0.curSelectMap[iter_24_0])
+	for pos = 1, Activity104EquipItemComposeModel.ComposeMaxCount do
+		table.insert(list, self.curSelectMap[pos])
 	end
 
-	return var_24_0
+	return list
 end
 
-function var_0_0.getDelayPlayTime(arg_25_0, arg_25_1)
-	if arg_25_1 == nil then
+function Activity104EquipItemComposeModel:getDelayPlayTime(mo)
+	if mo == nil then
 		return -1
 	end
 
-	local var_25_0 = Time.time
+	local curTime = Time.time
 
-	if arg_25_0._itemStartAnimTime == nil then
-		arg_25_0._itemStartAnimTime = var_25_0 + SeasonEquipComposeItem.OpenAnimStartTime
+	if self._itemStartAnimTime == nil then
+		self._itemStartAnimTime = curTime + SeasonEquipComposeItem.OpenAnimStartTime
 	end
 
-	local var_25_1 = arg_25_0:getIndex(arg_25_1)
+	local index = self:getIndex(mo)
 
-	if not var_25_1 or var_25_1 > SeasonEquipComposeItem.AnimRowCount * SeasonEquipComposeItem.ColumnCount then
+	if not index or index > SeasonEquipComposeItem.AnimRowCount * SeasonEquipComposeItem.ColumnCount then
 		return -1
 	end
 
-	local var_25_2 = math.floor((var_25_1 - 1) / SeasonEquipComposeItem.ColumnCount) * SeasonEquipComposeItem.OpenAnimTime + SeasonEquipComposeItem.OpenAnimStartTime
-	local var_25_3 = var_25_0 - arg_25_0._itemStartAnimTime
+	local delayTime = math.floor((index - 1) / SeasonEquipComposeItem.ColumnCount) * SeasonEquipComposeItem.OpenAnimTime + SeasonEquipComposeItem.OpenAnimStartTime
+	local passTime = curTime - self._itemStartAnimTime
 
-	if var_25_2 < var_25_3 then
+	if delayTime < passTime then
 		return -1
 	else
-		return var_25_2 - var_25_3
+		return delayTime - passTime
 	end
 end
 
-function var_0_0.checkAutoSelectEquip(arg_26_0)
-	arg_26_0:clearSelectMap()
+function Activity104EquipItemComposeModel:checkAutoSelectEquip()
+	self:clearSelectMap()
 
-	local var_26_0 = arg_26_0:getList()
-	local var_26_1 = {}
+	local list = self:getList()
+	local itemList = {}
 
-	for iter_26_0, iter_26_1 in pairs(var_26_0) do
-		table.insert(var_26_1, iter_26_1)
+	for _, mo in pairs(list) do
+		table.insert(itemList, mo)
 	end
 
-	table.sort(var_26_1, var_0_0.sortAutoSelectItemMOList)
+	table.sort(itemList, Activity104EquipItemComposeModel.sortAutoSelectItemMOList)
 
-	local var_26_2 = {}
-	local var_26_3 = {}
+	local rareDict = {}
+	local rareList = {}
 
-	for iter_26_2, iter_26_3 in ipairs(var_26_1) do
-		local var_26_4 = SeasonConfig.instance:getSeasonEquipCo(iter_26_3.itemId)
+	for i, v in ipairs(itemList) do
+		local cfg = SeasonConfig.instance:getSeasonEquipCo(v.itemId)
 
-		if not var_26_2[var_26_4.rare] then
-			var_26_2[var_26_4.rare] = {}
+		if not rareDict[cfg.rare] then
+			rareDict[cfg.rare] = {}
 
-			table.insert(var_26_3, var_26_4.rare)
+			table.insert(rareList, cfg.rare)
 		end
 
-		table.insert(var_26_2[var_26_4.rare], iter_26_3)
+		table.insert(rareDict[cfg.rare], v)
 	end
 
-	table.sort(var_26_3, function(arg_27_0, arg_27_1)
-		return arg_27_0 < arg_27_1
+	table.sort(rareList, function(a, b)
+		return a < b
 	end)
 
-	local var_26_5 = false
+	local result = false
 
-	for iter_26_4, iter_26_5 in ipairs(var_26_3) do
-		local var_26_6 = var_26_2[iter_26_5]
+	for _, v in ipairs(rareList) do
+		local rareItemList = rareDict[v]
 
-		if #var_26_6 >= var_0_0.ComposeMaxCount then
-			var_26_5 = true
+		if #rareItemList >= Activity104EquipItemComposeModel.ComposeMaxCount then
+			result = true
 
-			for iter_26_6 = 1, var_0_0.ComposeMaxCount do
-				arg_26_0:setSelectEquip(var_26_6[iter_26_6].id)
+			for i = 1, Activity104EquipItemComposeModel.ComposeMaxCount do
+				self:setSelectEquip(rareItemList[i].id)
 			end
 
 			break
 		end
 	end
 
-	return var_26_5
+	return result
 end
 
-function var_0_0.sortAutoSelectItemMOList(arg_28_0, arg_28_1)
-	local var_28_0 = SeasonConfig.instance:getSeasonEquipCo(arg_28_0.itemId)
-	local var_28_1 = SeasonConfig.instance:getSeasonEquipCo(arg_28_1.itemId)
+function Activity104EquipItemComposeModel.sortAutoSelectItemMOList(a, b)
+	local cfgA = SeasonConfig.instance:getSeasonEquipCo(a.itemId)
+	local cfgB = SeasonConfig.instance:getSeasonEquipCo(b.itemId)
 
-	if var_28_0 ~= nil and var_28_1 ~= nil then
-		if var_28_0.rare ~= var_28_1.rare then
-			return var_28_0.rare < var_28_1.rare
+	if cfgA ~= nil and cfgB ~= nil then
+		if cfgA.rare ~= cfgB.rare then
+			return cfgA.rare < cfgB.rare
 		else
-			return var_28_0.equipId < var_28_1.equipId
+			return cfgA.equipId < cfgB.equipId
 		end
 	else
-		return arg_28_0.id < arg_28_1.id
+		return a.id < b.id
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+Activity104EquipItemComposeModel.instance = Activity104EquipItemComposeModel.New()
 
-return var_0_0
+return Activity104EquipItemComposeModel

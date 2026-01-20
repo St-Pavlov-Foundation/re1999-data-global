@@ -1,188 +1,192 @@
-﻿module("modules.logic.seasonver.act123.model.Season123EpisodeListModel", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/model/Season123EpisodeListModel.lua
 
-local var_0_0 = class("Season123EpisodeListModel", BaseModel)
+module("modules.logic.seasonver.act123.model.Season123EpisodeListModel", package.seeall)
 
-function var_0_0.reInit(arg_1_0)
-	arg_1_0._loadingRecordMap = nil
+local Season123EpisodeListModel = class("Season123EpisodeListModel", BaseModel)
+
+function Season123EpisodeListModel:reInit()
+	self._loadingRecordMap = nil
 end
 
-function var_0_0.onInit(arg_2_0)
+function Season123EpisodeListModel:onInit()
 	return
 end
 
-function var_0_0.release(arg_3_0)
-	arg_3_0.activityId = nil
-	arg_3_0.stage = nil
-	arg_3_0.lastSendEpisodeCfg = nil
-	arg_3_0.curSelectLayer = nil
+function Season123EpisodeListModel:release()
+	self.activityId = nil
+	self.stage = nil
+	self.lastSendEpisodeCfg = nil
+	self.curSelectLayer = nil
 
-	arg_3_0:clear()
+	self:clear()
 end
 
-function var_0_0.init(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0.activityId = arg_4_1
-	arg_4_0.stage = arg_4_2
+function Season123EpisodeListModel:init(actId, stage)
+	self.activityId = actId
+	self.stage = stage
 
-	arg_4_0:initEpisodeList()
-	arg_4_0:initSelectLayer()
+	self:initEpisodeList()
+	self:initSelectLayer()
 end
 
-function var_0_0.initEpisodeList(arg_5_0)
-	local var_5_0 = {}
-	local var_5_1 = Season123Config.instance:getSeasonEpisodeByStage(arg_5_0.activityId, arg_5_0.stage)
+function Season123EpisodeListModel:initEpisodeList()
+	local episodeList = {}
+	local episodeCfgs = Season123Config.instance:getSeasonEpisodeByStage(self.activityId, self.stage)
 
-	logNormal("episode list length : " .. tostring(#var_5_1))
+	logNormal("episode list length : " .. tostring(#episodeCfgs))
 
-	local var_5_2 = Season123Model.instance:getActInfo(arg_5_0.activityId):getStageMO(arg_5_0.stage)
+	local seasonMO = Season123Model.instance:getActInfo(self.activityId)
+	local curStageMO = seasonMO:getStageMO(self.stage)
 
-	if var_5_2 then
-		for iter_5_0 = 1, #var_5_1 do
-			local var_5_3 = var_5_1[iter_5_0]
-			local var_5_4 = var_5_2.episodeMap[var_5_3.layer]
-			local var_5_5 = Season123EpisodeListMO.New()
+	if curStageMO then
+		for i = 1, #episodeCfgs do
+			local episodeCfg = episodeCfgs[i]
+			local episodeMO = curStageMO.episodeMap[episodeCfg.layer]
+			local mo = Season123EpisodeListMO.New()
 
-			var_5_5:init(var_5_4, var_5_3)
-			table.insert(var_5_0, var_5_5)
+			mo:init(episodeMO, episodeCfg)
+			table.insert(episodeList, mo)
 		end
 	end
 
-	arg_5_0:setList(var_5_0)
+	self:setList(episodeList)
 end
 
-function var_0_0.initSelectLayer(arg_6_0)
-	arg_6_0.curSelectLayer = arg_6_0:getCurrentChallengeLayer()
+function Season123EpisodeListModel:initSelectLayer()
+	self.curSelectLayer = self:getCurrentChallengeLayer()
 end
 
-function var_0_0.isEpisodeUnlock(arg_7_0, arg_7_1)
-	local var_7_0 = Season123Model.instance:getActInfo(arg_7_0.activityId)
+function Season123EpisodeListModel:isEpisodeUnlock(layer)
+	local seasonMO = Season123Model.instance:getActInfo(self.activityId)
+	local curLayerMO = self:getById(layer)
 
-	if arg_7_0:getById(arg_7_1).isFinished then
+	if curLayerMO.isFinished then
 		return true
 	end
 
-	if arg_7_1 <= 1 then
-		if not var_7_0 then
+	if layer <= 1 then
+		if not seasonMO then
 			return false
 		end
 
-		return arg_7_0.stage == var_7_0.stage
+		return self.stage == seasonMO.stage
 	end
 
-	local var_7_1 = arg_7_0:getById(arg_7_1 - 1)
+	local prevLayerMO = self:getById(layer - 1)
 
-	if not var_7_1 or not var_7_1.isFinished then
+	if not prevLayerMO or not prevLayerMO.isFinished then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0.inCurrentStage(arg_8_0)
-	local var_8_0 = Season123Model.instance:getActInfo(arg_8_0.activityId)
+function Season123EpisodeListModel:inCurrentStage()
+	local actMO = Season123Model.instance:getActInfo(self.activityId)
 
-	return var_8_0 ~= nil and not var_8_0:isNotInStage() and var_8_0.stage == var_0_0.instance.stage
+	return actMO ~= nil and not actMO:isNotInStage() and actMO.stage == Season123EpisodeListModel.instance.stage
 end
 
-function var_0_0.getCurrentChallengeLayer(arg_9_0)
-	local var_9_0 = arg_9_0:getList()
+function Season123EpisodeListModel:getCurrentChallengeLayer()
+	local list = self:getList()
 
-	if not var_9_0 or #var_9_0 <= 0 then
+	if not list or #list <= 0 then
 		return 0
 	end
 
-	for iter_9_0 = 1, #var_9_0 do
-		if not var_9_0[iter_9_0].isFinished then
-			return iter_9_0
+	for i = 1, #list do
+		if not list[i].isFinished then
+			return i
 		end
 	end
 
-	return var_9_0[#var_9_0].cfg.layer
+	return list[#list].cfg.layer
 end
 
-function var_0_0.getEnemyCareerList(arg_10_0, arg_10_1)
-	local var_10_0 = FightParam.New()
+function Season123EpisodeListModel:getEnemyCareerList(episodeId)
+	local fightParam = FightParam.New()
 
-	var_10_0:setEpisodeId(arg_10_1)
+	fightParam:setEpisodeId(episodeId)
 
-	local var_10_1 = {}
-	local var_10_2 = {}
-	local var_10_3 = {}
-	local var_10_4 = {}
+	local bossCareerDict = {}
+	local enemyCareerDict = {}
+	local enemyList = {}
+	local enemyBossList = {}
 
-	for iter_10_0, iter_10_1 in ipairs(var_10_0.monsterGroupIds) do
-		local var_10_5 = lua_monster_group.configDict[iter_10_1].bossId
-		local var_10_6 = string.splitToNumber(lua_monster_group.configDict[iter_10_1].monster, "#")
+	for i, v in ipairs(fightParam.monsterGroupIds) do
+		local bossId = lua_monster_group.configDict[v].bossId
+		local ids = string.splitToNumber(lua_monster_group.configDict[v].monster, "#")
 
-		for iter_10_2, iter_10_3 in ipairs(var_10_6) do
-			local var_10_7 = lua_monster.configDict[iter_10_3].career
+		for index, id in ipairs(ids) do
+			local enemyCareer = lua_monster.configDict[id].career
 
-			if iter_10_3 == var_10_5 then
-				var_10_1[var_10_7] = (var_10_1[var_10_7] or 0) + 1
+			if id == bossId then
+				bossCareerDict[enemyCareer] = (bossCareerDict[enemyCareer] or 0) + 1
 
-				table.insert(var_10_4, iter_10_3)
+				table.insert(enemyBossList, id)
 			else
-				var_10_2[var_10_7] = (var_10_2[var_10_7] or 0) + 1
+				enemyCareerDict[enemyCareer] = (enemyCareerDict[enemyCareer] or 0) + 1
 
-				table.insert(var_10_3, iter_10_3)
+				table.insert(enemyList, id)
 			end
 		end
 	end
 
-	local var_10_8 = {}
+	local enemyCareerList = {}
 
-	for iter_10_4, iter_10_5 in pairs(var_10_1) do
-		table.insert(var_10_8, {
-			career = iter_10_4,
-			count = iter_10_5
+	for k, v in pairs(bossCareerDict) do
+		table.insert(enemyCareerList, {
+			career = k,
+			count = v
 		})
 	end
 
-	local var_10_9 = #var_10_8
+	local enemyBossEndIndex = #enemyCareerList
 
-	for iter_10_6, iter_10_7 in pairs(var_10_2) do
-		table.insert(var_10_8, {
-			career = iter_10_6,
-			count = iter_10_7
+	for k, v in pairs(enemyCareerDict) do
+		table.insert(enemyCareerList, {
+			career = k,
+			count = v
 		})
 	end
 
-	return var_10_8, var_10_9
+	return enemyCareerList, enemyBossEndIndex
 end
 
-function var_0_0.setSelectLayer(arg_11_0, arg_11_1)
-	arg_11_0.curSelectLayer = arg_11_1
+function Season123EpisodeListModel:setSelectLayer(layer)
+	self.curSelectLayer = layer
 end
 
-function var_0_0.cleanPlayLoadingAnimRecord(arg_12_0, arg_12_1)
-	if not arg_12_0._loadingRecordMap then
+function Season123EpisodeListModel:cleanPlayLoadingAnimRecord(stage)
+	if not self._loadingRecordMap then
 		return
 	end
 
-	arg_12_0._loadingRecordMap = arg_12_0._loadingRecordMap or {}
-	arg_12_0._loadingRecordMap[arg_12_1] = nil
+	self._loadingRecordMap = self._loadingRecordMap or {}
+	self._loadingRecordMap[stage] = nil
 end
 
-function var_0_0.savePlayLoadingAnimRecord(arg_13_0, arg_13_1)
-	arg_13_0._loadingRecordMap = arg_13_0._loadingRecordMap or {}
-	arg_13_0._loadingRecordMap[arg_13_1] = true
+function Season123EpisodeListModel:savePlayLoadingAnimRecord(stage)
+	self._loadingRecordMap = self._loadingRecordMap or {}
+	self._loadingRecordMap[stage] = true
 end
 
-function var_0_0.isLoadingAnimNeedPlay(arg_14_0, arg_14_1)
-	return arg_14_0._loadingRecordMap == nil or arg_14_0._loadingRecordMap[arg_14_1] == nil
+function Season123EpisodeListModel:isLoadingAnimNeedPlay(stage)
+	return self._loadingRecordMap == nil or self._loadingRecordMap[stage] == nil
 end
 
-function var_0_0.stageIsPassed(arg_15_0)
-	local var_15_0 = Season123Model.instance:getActInfo(arg_15_0.activityId)
+function Season123EpisodeListModel:stageIsPassed()
+	local seasonMO = Season123Model.instance:getActInfo(self.activityId)
 
-	if not var_15_0 then
+	if not seasonMO then
 		return false
 	end
 
-	local var_15_1 = var_15_0.stageMap[arg_15_0.stage]
+	local stageMO = seasonMO.stageMap[self.stage]
 
-	return var_15_1 and var_15_1.isPass
+	return stageMO and stageMO.isPass
 end
 
-var_0_0.instance = var_0_0.New()
+Season123EpisodeListModel.instance = Season123EpisodeListModel.New()
 
-return var_0_0
+return Season123EpisodeListModel

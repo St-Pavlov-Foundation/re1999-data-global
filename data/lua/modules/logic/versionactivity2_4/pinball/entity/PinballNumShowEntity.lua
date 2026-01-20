@@ -1,29 +1,31 @@
-﻿module("modules.logic.versionactivity2_4.pinball.entity.PinballNumShowEntity", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/pinball/entity/PinballNumShowEntity.lua
 
-local var_0_0 = class("PinballNumShowEntity", LuaCompBase)
+module("modules.logic.versionactivity2_4.pinball.entity.PinballNumShowEntity", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._trans = arg_1_1.transform
-	arg_1_0._txtnum = gohelper.findChildTextMesh(arg_1_1, "#txt_num")
+local PinballNumShowEntity = class("PinballNumShowEntity", LuaCompBase)
 
-	TaskDispatcher.runDelay(arg_1_0.dispose, arg_1_0, 2)
+function PinballNumShowEntity:init(go)
+	self.go = go
+	self._trans = go.transform
+	self._txtnum = gohelper.findChildTextMesh(go, "#txt_num")
+
+	TaskDispatcher.runDelay(self.dispose, self, 2)
 end
 
-function var_0_0.setType(arg_2_0, arg_2_1)
-	arg_2_0._txtnum.text = arg_2_1
+function PinballNumShowEntity:setType(num)
+	self._txtnum.text = num
 end
 
-function var_0_0.setPos(arg_3_0, arg_3_1, arg_3_2)
-	recthelper.setAnchor(arg_3_0._trans, arg_3_1, arg_3_2)
+function PinballNumShowEntity:setPos(x, y)
+	recthelper.setAnchor(self._trans, x, y)
 end
 
-function var_0_0.dispose(arg_4_0)
-	gohelper.destroy(arg_4_0.go)
+function PinballNumShowEntity:dispose()
+	gohelper.destroy(self.go)
 end
 
-function var_0_0.onDestroy(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0.dispose, arg_5_0)
+function PinballNumShowEntity:onDestroy()
+	TaskDispatcher.cancelTask(self.dispose, self)
 end
 
-return var_0_0
+return PinballNumShowEntity

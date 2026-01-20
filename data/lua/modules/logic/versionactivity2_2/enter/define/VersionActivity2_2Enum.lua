@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity2_2.enter.define.VersionActivity2_2Enum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/enter/define/VersionActivity2_2Enum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity2_2.enter.define.VersionActivity2_2Enum", package.seeall)
 
-var_0_0.ActivityId = {
+local VersionActivity2_2Enum = _M
+
+VersionActivity2_2Enum.ActivityId = {
 	BossRush = 12209,
 	TurnBackInvitation = 12222,
 	RoleStory1 = 12207,
@@ -18,68 +20,68 @@ var_0_0.ActivityId = {
 	LimitDecorate = 12236,
 	EnterView = 12201
 }
-var_0_0.EnterViewActSetting = {
+VersionActivity2_2Enum.EnterViewActSetting = {
 	{
-		actId = var_0_0.ActivityId.Dungeon,
+		actId = VersionActivity2_2Enum.ActivityId.Dungeon,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.First,
 		actType = VersionActivityEnterViewEnum.ActType.Single,
-		storeId = var_0_0.ActivityId.DungeonStore
+		storeId = VersionActivity2_2Enum.ActivityId.DungeonStore
 	},
 	{
-		actId = var_0_0.ActivityId.TianShiNaNa,
+		actId = VersionActivity2_2Enum.ActivityId.TianShiNaNa,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Single,
-		redDotUid = var_0_0.ActivityId.TianShiNaNa
+		redDotUid = VersionActivity2_2Enum.ActivityId.TianShiNaNa
 	},
 	{
-		actId = var_0_0.ActivityId.Eliminate,
+		actId = VersionActivity2_2Enum.ActivityId.Eliminate,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Single
 	},
 	{
-		actId = var_0_0.ActivityId.Season,
+		actId = VersionActivity2_2Enum.ActivityId.Season,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Single
 	},
 	{
-		actId = var_0_0.ActivityId.BossRush,
+		actId = VersionActivity2_2Enum.ActivityId.BossRush,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Single
 	},
 	{
 		actId = {
-			var_0_0.ActivityId.RoleStory1,
-			var_0_0.ActivityId.RoleStory2
+			VersionActivity2_2Enum.ActivityId.RoleStory1,
+			VersionActivity2_2Enum.ActivityId.RoleStory2
 		},
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Multi
 	},
 	{
-		actId = var_0_0.ActivityId.Lopera,
+		actId = VersionActivity2_2Enum.ActivityId.Lopera,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Single,
-		redDotUid = var_0_0.ActivityId.Lopera
+		redDotUid = VersionActivity2_2Enum.ActivityId.Lopera
 	},
 	{
-		actId = var_0_0.ActivityId.RoomCritter,
+		actId = VersionActivity2_2Enum.ActivityId.RoomCritter,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Single
 	}
 }
-var_0_0.EnterViewActIdListWithRedDot = {
-	var_0_0.ActivityId.Dungeon,
-	var_0_0.ActivityId.BossRush,
-	var_0_0.ActivityId.Season,
-	var_0_0.ActivityId.TurnBackInvitation
+VersionActivity2_2Enum.EnterViewActIdListWithRedDot = {
+	VersionActivity2_2Enum.ActivityId.Dungeon,
+	VersionActivity2_2Enum.ActivityId.BossRush,
+	VersionActivity2_2Enum.ActivityId.Season,
+	VersionActivity2_2Enum.ActivityId.TurnBackInvitation
 }
-var_0_0.TabSetting = {
+VersionActivity2_2Enum.TabSetting = {
 	select = {
 		fontSize = 42,
 		cnColor = "#FFFFFF",
 		enFontSize = 14,
 		enColor = "#337C61",
 		act2TabImg = {
-			[var_0_0.ActivityId.Dungeon] = "singlebg_lang/txt_v2a2_mainactivity_singlebg/v2a2_enterview_itemtitleselected.png"
+			[VersionActivity2_2Enum.ActivityId.Dungeon] = "singlebg_lang/txt_v2a2_mainactivity_singlebg/v2a2_enterview_itemtitleselected.png"
 		}
 	},
 	unselect = {
@@ -88,11 +90,11 @@ var_0_0.TabSetting = {
 		enFontSize = 14,
 		enColor = "#485143",
 		act2TabImg = {
-			[var_0_0.ActivityId.Dungeon] = "singlebg_lang/txt_v2a2_mainactivity_singlebg/v2a2_enterview_itemtitleselected.png"
+			[VersionActivity2_2Enum.ActivityId.Dungeon] = "singlebg_lang/txt_v2a2_mainactivity_singlebg/v2a2_enterview_itemtitleselected.png"
 		}
 	}
 }
-var_0_0.MaxShowTimeOffset = 3 * TimeUtil.OneDaySecond
-var_0_0.RedDotOffsetY = 56
+VersionActivity2_2Enum.MaxShowTimeOffset = 3 * TimeUtil.OneDaySecond
+VersionActivity2_2Enum.RedDotOffsetY = 56
 
-return var_0_0
+return VersionActivity2_2Enum

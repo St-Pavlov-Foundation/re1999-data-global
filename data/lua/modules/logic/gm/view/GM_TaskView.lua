@@ -1,271 +1,281 @@
-﻿module("modules.logic.gm.view.GM_TaskView", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GM_TaskView.lua
 
-local var_0_0 = class("GM_TaskView")
+module("modules.logic.gm.view.GM_TaskView", package.seeall)
 
-function var_0_0.register()
-	var_0_0.TaskDailyView_register(TaskDailyView)
-	var_0_0.TaskWeeklyView_register(TaskWeeklyView)
-	var_0_0.TaskListCommonItem_register(TaskListCommonItem)
+local GM_TaskView = class("GM_TaskView")
+
+function GM_TaskView.register()
+	GM_TaskView.TaskDailyView_register(TaskDailyView)
+	GM_TaskView.TaskWeeklyView_register(TaskWeeklyView)
+	GM_TaskView.TaskListCommonItem_register(TaskListCommonItem)
 end
 
-local function var_0_1(arg_2_0, arg_2_1, arg_2_2)
-	local var_2_0 = getGlobal("GMRpc")
+local function _gm(cmd, callback, callbackObj)
+	local rpc = getGlobal("GMRpc")
 
-	if not var_2_0 then
+	if not rpc then
 		logError("are u already login?")
 
 		return
 	end
 
-	logNormal(arg_2_0)
-	var_2_0.instance:sendGMRequest(arg_2_0, arg_2_1, arg_2_2)
+	logNormal(cmd)
+	rpc.instance:sendGMRequest(cmd, callback, callbackObj)
 end
 
-local function var_0_2(arg_3_0, arg_3_1, arg_3_2)
-	if not arg_3_0 then
-		if arg_3_1 then
-			arg_3_1(arg_3_2)
+local function _set_taskfinish(taskIdListOrTaskId, callback, callbackObj)
+	if not taskIdListOrTaskId then
+		if callback then
+			callback(callbackObj)
 		end
 
 		return
 	end
 
-	local var_3_0 = "set taskfinish "
+	local cmd = "set taskfinish "
 
-	if type(arg_3_0) == "table" then
-		if #arg_3_0 == 0 then
+	if type(taskIdListOrTaskId) == "table" then
+		if #taskIdListOrTaskId == 0 then
 			return
 		end
 
-		var_3_0 = var_3_0 .. table.concat(arg_3_0, " ")
+		cmd = cmd .. table.concat(taskIdListOrTaskId, " ")
 	else
-		var_3_0 = var_3_0 .. arg_3_0
+		cmd = cmd .. taskIdListOrTaskId
 	end
 
-	var_0_1(var_3_0, arg_3_1, arg_3_2)
+	_gm(cmd, callback, callbackObj)
 end
 
-local function var_0_3(arg_4_0, arg_4_1)
-	if TaskModel.instance:isAllRewardGet(arg_4_0) then
+local function _gm_onClickFinishAll(taskType, selfObj)
+	local allRewardGet = TaskModel.instance:isAllRewardGet(taskType)
+
+	if allRewardGet then
 		return
 	end
 
-	local var_4_0 = TaskModel.instance:getAllUnlockTasks(arg_4_0)
-	local var_4_1 = {}
-	local var_4_2 = {}
+	local tasks = TaskModel.instance:getAllUnlockTasks(taskType)
+	local taskIdList = {}
+	local taskMoRefList = {}
 
-	for iter_4_0, iter_4_1 in pairs(var_4_0) do
-		if not TaskModel.instance:taskHasFinished(arg_4_0, iter_4_0) then
-			table.insert(var_4_2, iter_4_1)
-			table.insert(var_4_1, iter_4_0)
+	for taskId, mo in pairs(tasks) do
+		if not TaskModel.instance:taskHasFinished(taskType, taskId) then
+			table.insert(taskMoRefList, mo)
+			table.insert(taskIdList, taskId)
 		end
 	end
 
-	if #var_4_1 == 0 then
+	if #taskIdList == 0 then
 		return
 	end
 
-	var_0_2(var_4_1, function(arg_5_0)
-		for iter_5_0, iter_5_1 in ipairs(var_4_2) do
-			iter_5_1.hasFinished = true
+	_set_taskfinish(taskIdList, function(_)
+		for _, mo in ipairs(taskMoRefList) do
+			mo.hasFinished = true
 		end
 
 		TaskController.instance:dispatchEvent(TaskEvent.SetTaskList)
-	end, arg_4_1)
+	end, selfObj)
 end
 
-function var_0_0.TaskDailyView_register(arg_6_0)
-	GMMinusModel.instance:saveOriginalFunc(arg_6_0, "_editableInitView")
-	GMMinusModel.instance:saveOriginalFunc(arg_6_0, "addEvents")
-	GMMinusModel.instance:saveOriginalFunc(arg_6_0, "removeEvents")
+function GM_TaskView.TaskDailyView_register(T)
+	GMMinusModel.instance:saveOriginalFunc(T, "_editableInitView")
+	GMMinusModel.instance:saveOriginalFunc(T, "addEvents")
+	GMMinusModel.instance:saveOriginalFunc(T, "removeEvents")
 
-	function arg_6_0._editableInitView(arg_7_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_7_0, "_editableInitView", ...)
+	function T:_editableInitView(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "_editableInitView", ...)
 
-		local var_7_0 = GMMinusModel.instance:addBtnGM(arg_7_0)
+		local btnGM = GMMinusModel.instance:addBtnGM(self)
 
-		UIDockingHelper.setDock(UIDockingHelper.Dock.MR_R, var_7_0.transform, arg_7_0._txtLeftTime.transform, 15)
+		UIDockingHelper.setDock(UIDockingHelper.Dock.MR_R, btnGM.transform, self._txtLeftTime.transform, 15)
 	end
 
-	function arg_6_0.addEvents(arg_8_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_8_0, "addEvents", ...)
-		GMMinusModel.instance:btnGM_AddClickListener(arg_8_0)
-		GM_TaskDailyViewContainer.addEvents(arg_8_0)
+	function T:addEvents(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "addEvents", ...)
+		GMMinusModel.instance:btnGM_AddClickListener(self)
+		GM_TaskDailyViewContainer.addEvents(self)
 	end
 
-	function arg_6_0.removeEvents(arg_9_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_9_0, "removeEvents", ...)
-		GMMinusModel.instance:btnGM_RemoveClickListener(arg_9_0)
-		GM_TaskDailyViewContainer.removeEvents(arg_9_0)
+	function T:removeEvents(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "removeEvents", ...)
+		GMMinusModel.instance:btnGM_RemoveClickListener(self)
+		GM_TaskDailyViewContainer.removeEvents(self)
 	end
 
-	function arg_6_0._gm_showAllTabIdUpdate(arg_10_0)
+	function T._gm_showAllTabIdUpdate(selfObj)
 		TaskController.instance:dispatchEvent(TaskEvent.SetTaskList)
 	end
 
-	function arg_6_0._gm_enableFinishOnSelect(arg_11_0)
+	function T._gm_enableFinishOnSelect(selfObj)
 		TaskController.instance:dispatchEvent(TaskEvent.SetTaskList)
 	end
 
-	function arg_6_0._gm_onClickFinishAll(arg_12_0)
-		var_0_3(TaskEnum.TaskType.Daily, arg_12_0)
-	end
-end
-
-function var_0_0.TaskWeeklyView_register(arg_13_0)
-	GMMinusModel.instance:saveOriginalFunc(arg_13_0, "_editableInitView")
-	GMMinusModel.instance:saveOriginalFunc(arg_13_0, "addEvents")
-	GMMinusModel.instance:saveOriginalFunc(arg_13_0, "removeEvents")
-
-	function arg_13_0._editableInitView(arg_14_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_14_0, "_editableInitView", ...)
-
-		local var_14_0 = GMMinusModel.instance:addBtnGM(arg_14_0)
-
-		UIDockingHelper.setDock(UIDockingHelper.Dock.MR_R, var_14_0.transform, arg_14_0._txtLeftTime.transform, 15)
-	end
-
-	function arg_13_0.addEvents(arg_15_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_15_0, "addEvents", ...)
-		GMMinusModel.instance:btnGM_AddClickListener(arg_15_0)
-		GM_TaskWeeklyViewContainer.addEvents(arg_15_0)
-	end
-
-	function arg_13_0.removeEvents(arg_16_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_16_0, "removeEvents", ...)
-		GMMinusModel.instance:btnGM_RemoveClickListener(arg_16_0)
-		GM_TaskWeeklyViewContainer.removeEvents(arg_16_0)
-	end
-
-	function arg_13_0._gm_showAllTabIdUpdate(arg_17_0)
-		TaskController.instance:dispatchEvent(TaskEvent.SetTaskList)
-	end
-
-	function arg_13_0._gm_enableFinishOnSelect(arg_18_0)
-		TaskController.instance:dispatchEvent(TaskEvent.SetTaskList)
-	end
-
-	function arg_13_0._gm_onClickFinishAll(arg_19_0)
-		var_0_3(TaskEnum.TaskType.Weekly, arg_19_0)
+	function T._gm_onClickFinishAll(selfObj)
+		_gm_onClickFinishAll(TaskEnum.TaskType.Daily, selfObj)
 	end
 end
 
-local var_0_4
+function GM_TaskView.TaskWeeklyView_register(T)
+	GMMinusModel.instance:saveOriginalFunc(T, "_editableInitView")
+	GMMinusModel.instance:saveOriginalFunc(T, "addEvents")
+	GMMinusModel.instance:saveOriginalFunc(T, "removeEvents")
 
-function var_0_0.TaskListCommonItem_register(arg_20_0)
-	GMMinusModel.instance:saveOriginalFunc(arg_20_0, "init")
-	GMMinusModel.instance:saveOriginalFunc(arg_20_0, "_refreshCommonItem")
-	GMMinusModel.instance:saveOriginalFunc(arg_20_0, "_btnnotfinishbgOnClick")
+	function T:_editableInitView(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "_editableInitView", ...)
 
-	if not var_0_4 then
-		var_0_4 = {}
+		local btnGM = GMMinusModel.instance:addBtnGM(self)
 
-		for iter_20_0, iter_20_1 in pairs(TaskEnum.TaskType) do
-			var_0_4[iter_20_1] = iter_20_0
+		UIDockingHelper.setDock(UIDockingHelper.Dock.MR_R, btnGM.transform, self._txtLeftTime.transform, 15)
+	end
+
+	function T:addEvents(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "addEvents", ...)
+		GMMinusModel.instance:btnGM_AddClickListener(self)
+		GM_TaskWeeklyViewContainer.addEvents(self)
+	end
+
+	function T:removeEvents(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "removeEvents", ...)
+		GMMinusModel.instance:btnGM_RemoveClickListener(self)
+		GM_TaskWeeklyViewContainer.removeEvents(self)
+	end
+
+	function T._gm_showAllTabIdUpdate(selfObj)
+		TaskController.instance:dispatchEvent(TaskEvent.SetTaskList)
+	end
+
+	function T._gm_enableFinishOnSelect(selfObj)
+		TaskController.instance:dispatchEvent(TaskEvent.SetTaskList)
+	end
+
+	function T._gm_onClickFinishAll(selfObj)
+		_gm_onClickFinishAll(TaskEnum.TaskType.Weekly, selfObj)
+	end
+end
+
+local k_rTaskType
+
+function GM_TaskView.TaskListCommonItem_register(T)
+	GMMinusModel.instance:saveOriginalFunc(T, "init")
+	GMMinusModel.instance:saveOriginalFunc(T, "_refreshCommonItem")
+	GMMinusModel.instance:saveOriginalFunc(T, "_btnnotfinishbgOnClick")
+
+	if not k_rTaskType then
+		k_rTaskType = {}
+
+		for k, v in pairs(TaskEnum.TaskType) do
+			k_rTaskType[v] = k
 		end
 	end
 
-	function arg_20_0.init(arg_21_0, arg_21_1, ...)
-		local var_21_0 = gohelper.findChild(arg_21_1, "#go_common/#go_notget/#btn_notfinishbg/text")
+	function T.init(selfObj, go, ...)
+		local btnnotFinishBgTextGo = gohelper.findChild(go, "#go_common/#go_notget/#btn_notfinishbg/text")
 
-		arg_21_0.__btnnotFinishBgText = gohelper.findChildText(var_21_0, "")
-		arg_21_0.__btnnotFinishBgTextLangTxtCmp = var_21_0:GetComponent(typeof(SLFramework.LangTxt))
+		selfObj.__btnnotFinishBgText = gohelper.findChildText(btnnotFinishBgTextGo, "")
+		selfObj.__btnnotFinishBgTextLangTxtCmp = btnnotFinishBgTextGo:GetComponent(typeof(SLFramework.LangTxt))
 
-		GMMinusModel.instance:callOriginalSelfFunc(arg_21_0, "init", arg_21_1, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(selfObj, "init", go, ...)
 	end
 
-	function arg_20_0._refreshCommonItem(arg_22_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_22_0, "_refreshCommonItem", ...)
+	function T._refreshCommonItem(selfObj, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(selfObj, "_refreshCommonItem", ...)
 
-		if not arg_22_0._mo then
+		local mo = selfObj._mo
+
+		if not mo then
 			return
 		end
 
-		arg_20_0._gm_s_callFunc("_refreshCommonItem", arg_22_0, ...)
+		T._gm_s_callFunc("_refreshCommonItem", selfObj, ...)
 	end
 
-	function arg_20_0._btnnotfinishbgOnClick(arg_23_0, ...)
-		arg_20_0._gm_s_callFunc("_btnnotfinishbgOnClick", arg_23_0, ...)
+	function T._btnnotfinishbgOnClick(selfObj, ...)
+		T._gm_s_callFunc("_btnnotfinishbgOnClick", selfObj, ...)
 	end
 
-	local var_20_0 = "_gm_"
-	local var_20_1 = var_20_0 .. "s_"
+	local kGmFuncPrefix = "_gm_"
+	local kGmStaticFuncPrefix = kGmFuncPrefix .. "s_"
 
-	function arg_20_0._gm_refreshCommonItem_showAllTabId(arg_24_0, ...)
-		local var_24_0 = arg_24_0._mo.config
-		local var_24_1 = var_24_0.id
-		local var_24_2 = gohelper.getRichColorText(tostring(var_24_1), "#FF0000")
+	function T._gm_refreshCommonItem_showAllTabId(selfObj, ...)
+		local mo = selfObj._mo
+		local co = mo.config
+		local taskId = co.id
+		local taskIdStr = gohelper.getRichColorText(tostring(taskId), "#FF0000")
 
-		arg_24_0._txttaskdes.text = var_24_2 .. string.format(var_24_0.desc, var_24_0.maxProgress)
+		selfObj._txttaskdes.text = taskIdStr .. string.format(co.desc, co.maxProgress)
 	end
 
-	function arg_20_0._gm_refreshCommonItem_enableFinishSelectedTask(arg_25_0, arg_25_1)
-		if not arg_25_0.__btnnotFinishBgText then
+	function T._gm_refreshCommonItem_enableFinishSelectedTask(selfObj, isActive)
+		if not selfObj.__btnnotFinishBgText then
 			return
 		end
 
-		arg_25_0.__btnnotFinishBgText.text = arg_25_1 and "立即\n完成" or luaLang("p_task_nofinish")
+		selfObj.__btnnotFinishBgText.text = isActive and "立即\n完成" or luaLang("p_task_nofinish")
 	end
 
-	function arg_20_0._gm_s_callFunc(arg_26_0, arg_26_1, ...)
-		local var_26_0 = arg_26_1._taskType
-		local var_26_1 = var_0_4[var_26_0]
-		local var_26_2 = arg_26_1[var_20_0 .. arg_26_0 .. var_26_1]
+	function T._gm_s_callFunc(kMagicPrefix, selfObj, ...)
+		local taskType = selfObj._taskType
+		local taskTypeEnumName = k_rTaskType[taskType]
+		local specialFuncName = kGmFuncPrefix .. kMagicPrefix .. taskTypeEnumName
+		local selfObjFunc = selfObj[specialFuncName]
 
-		if var_26_2 then
-			var_26_2(arg_26_1, ...)
-
-			return
-		end
-
-		local var_26_3 = "GM_Task" .. var_26_1 .. "View"
-		local var_26_4 = _G.getModulePath(var_26_3)
-
-		if not var_26_4 then
-			logWarn("[GM_TaskView] lua class not found " .. var_26_3)
+		if selfObjFunc then
+			selfObjFunc(selfObj, ...)
 
 			return
 		end
 
-		local var_26_5 = addGlobalModule(var_26_4)
-		local var_26_6 = var_20_1 .. arg_26_0
-		local var_26_7 = arg_20_0[var_26_6]
+		local GM_ViewName = "GM_Task" .. taskTypeEnumName .. "View"
+		local clsPath = _G.getModulePath(GM_ViewName)
 
-		assert(var_26_7, "please impl default function: T['" .. var_26_6 .. "']")
-		var_26_7(var_26_5, arg_26_1, ...)
-	end
+		if not clsPath then
+			logWarn("[GM_TaskView] lua class not found " .. GM_ViewName)
 
-	function arg_20_0._gm_s__refreshCommonItem(arg_27_0, arg_27_1, ...)
-		if arg_27_0.s_ShowAllTabId then
-			arg_27_1:_gm_refreshCommonItem_showAllTabId(arg_27_1, ...)
+			return
 		end
 
-		local var_27_0 = false
-		local var_27_1 = arg_27_1._mo
+		local cls = addGlobalModule(clsPath)
+		local defaultFuncName = kGmStaticFuncPrefix .. kMagicPrefix
+		local staticFunc = T[defaultFuncName]
 
-		if arg_27_0.s_enableFinishSelectedTask then
-			arg_27_1.__btnnotFinishBgTextLangTxtCmp.enabled = false
-			var_27_0 = not var_27_1.hasFinished
-		end
-
-		arg_27_1:_gm_refreshCommonItem_enableFinishSelectedTask(var_27_0)
+		assert(staticFunc, "please impl default function: T['" .. defaultFuncName .. "']")
+		staticFunc(cls, selfObj, ...)
 	end
 
-	function arg_20_0._gm_s__btnnotfinishbgOnClick(arg_28_0, arg_28_1, ...)
-		local var_28_0 = arg_28_1._mo
+	function T._gm_s__refreshCommonItem(GM_TaskXXXView, selfObj, ...)
+		if GM_TaskXXXView.s_ShowAllTabId then
+			selfObj:_gm_refreshCommonItem_showAllTabId(selfObj, ...)
+		end
 
-		if var_28_0 and arg_28_0.s_enableFinishSelectedTask and not var_28_0.hasFinished then
-			local var_28_1 = var_28_0.config.id
+		local isActive = false
+		local mo = selfObj._mo
 
-			var_0_2(var_28_1, function(arg_29_0)
-				var_28_0.hasFinished = true
+		if GM_TaskXXXView.s_enableFinishSelectedTask then
+			selfObj.__btnnotFinishBgTextLangTxtCmp.enabled = false
+			isActive = not mo.hasFinished
+		end
+
+		selfObj:_gm_refreshCommonItem_enableFinishSelectedTask(isActive)
+	end
+
+	function T._gm_s__btnnotfinishbgOnClick(GM_TaskXXXView, selfObj, ...)
+		local mo = selfObj._mo
+		local isInject = mo and GM_TaskXXXView.s_enableFinishSelectedTask and not mo.hasFinished
+
+		if isInject then
+			local co = mo.config
+			local taskId = co.id
+
+			_set_taskfinish(taskId, function(_)
+				mo.hasFinished = true
 
 				TaskController.instance:dispatchEvent(TaskEvent.SetTaskList)
-			end, arg_28_1)
+			end, selfObj)
 		else
-			GMMinusModel.instance:callOriginalSelfFunc(arg_28_1, "_btnnotfinishbgOnClick", ...)
+			GMMinusModel.instance:callOriginalSelfFunc(selfObj, "_btnnotfinishbgOnClick", ...)
 		end
 	end
 end
 
-return var_0_0
+return GM_TaskView

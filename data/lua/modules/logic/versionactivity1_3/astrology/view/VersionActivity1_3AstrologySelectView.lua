@@ -1,308 +1,315 @@
-﻿module("modules.logic.versionactivity1_3.astrology.view.VersionActivity1_3AstrologySelectView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/astrology/view/VersionActivity1_3AstrologySelectView.lua
 
-local var_0_0 = class("VersionActivity1_3AstrologySelectView", BaseView)
+module("modules.logic.versionactivity1_3.astrology.view.VersionActivity1_3AstrologySelectView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageDec1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "SelectStar/#simage_Dec1")
-	arg_1_0._simageDec2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "SelectStar/#simage_Dec2")
-	arg_1_0._scrollPlanetList = gohelper.findChildScrollRect(arg_1_0.viewGO, "SelectStar/#scroll_PlanetList")
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "SelectStar/#scroll_PlanetList/Viewport/#go_content")
-	arg_1_0._txtStarName = gohelper.findChildText(arg_1_0.viewGO, "SelectStar/#txt_StarName")
-	arg_1_0._txtAdjustTimes = gohelper.findChildText(arg_1_0.viewGO, "SelectStar/AdjustTimes/image_AdjustTimesBG/#txt_AdjustTimes")
-	arg_1_0._txtCurrentAngle = gohelper.findChildText(arg_1_0.viewGO, "CurrentAngle/image_CurrentAngleBG/#txt_CurrentAngle")
-	arg_1_0._goBtns = gohelper.findChild(arg_1_0.viewGO, "#go_Btns")
-	arg_1_0._goToGet = gohelper.findChild(arg_1_0.viewGO, "#go_Btns/#go_ToGet")
-	arg_1_0._btnToGet = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_Btns/#go_ToGet/#btn_ToGet")
-	arg_1_0._txtToGetTips = gohelper.findChildText(arg_1_0.viewGO, "#go_Btns/#go_ToGet/#txt_ToGetTips")
-	arg_1_0._goConfirm = gohelper.findChild(arg_1_0.viewGO, "#go_Btns/#go_Confirm")
-	arg_1_0._btnConfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_Btns/#go_Confirm/#btn_Confirm")
-	arg_1_0._txtConfirmTips = gohelper.findChildText(arg_1_0.viewGO, "#go_Btns/#go_Confirm/#txt_ConfirmTips")
-	arg_1_0._goTips = gohelper.findChild(arg_1_0.viewGO, "#go_Btns/#go_Tips")
-	arg_1_0._txtTips = gohelper.findChildText(arg_1_0.viewGO, "#go_Btns/#go_Tips/#txt_Tips")
+local VersionActivity1_3AstrologySelectView = class("VersionActivity1_3AstrologySelectView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity1_3AstrologySelectView:onInitView()
+	self._simageDec1 = gohelper.findChildSingleImage(self.viewGO, "SelectStar/#simage_Dec1")
+	self._simageDec2 = gohelper.findChildSingleImage(self.viewGO, "SelectStar/#simage_Dec2")
+	self._scrollPlanetList = gohelper.findChildScrollRect(self.viewGO, "SelectStar/#scroll_PlanetList")
+	self._gocontent = gohelper.findChild(self.viewGO, "SelectStar/#scroll_PlanetList/Viewport/#go_content")
+	self._txtStarName = gohelper.findChildText(self.viewGO, "SelectStar/#txt_StarName")
+	self._txtAdjustTimes = gohelper.findChildText(self.viewGO, "SelectStar/AdjustTimes/image_AdjustTimesBG/#txt_AdjustTimes")
+	self._txtCurrentAngle = gohelper.findChildText(self.viewGO, "CurrentAngle/image_CurrentAngleBG/#txt_CurrentAngle")
+	self._goBtns = gohelper.findChild(self.viewGO, "#go_Btns")
+	self._goToGet = gohelper.findChild(self.viewGO, "#go_Btns/#go_ToGet")
+	self._btnToGet = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Btns/#go_ToGet/#btn_ToGet")
+	self._txtToGetTips = gohelper.findChildText(self.viewGO, "#go_Btns/#go_ToGet/#txt_ToGetTips")
+	self._goConfirm = gohelper.findChild(self.viewGO, "#go_Btns/#go_Confirm")
+	self._btnConfirm = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Btns/#go_Confirm/#btn_Confirm")
+	self._txtConfirmTips = gohelper.findChildText(self.viewGO, "#go_Btns/#go_Confirm/#txt_ConfirmTips")
+	self._goTips = gohelper.findChild(self.viewGO, "#go_Btns/#go_Tips")
+	self._txtTips = gohelper.findChildText(self.viewGO, "#go_Btns/#go_Tips/#txt_Tips")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnToGet:AddClickListener(arg_2_0._btnToGetOnClick, arg_2_0)
-	arg_2_0._btnConfirm:AddClickListener(arg_2_0._btnConfirmOnClick, arg_2_0)
+function VersionActivity1_3AstrologySelectView:addEvents()
+	self._btnToGet:AddClickListener(self._btnToGetOnClick, self)
+	self._btnConfirm:AddClickListener(self._btnConfirmOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnToGet:RemoveClickListener()
-	arg_3_0._btnConfirm:RemoveClickListener()
+function VersionActivity1_3AstrologySelectView:removeEvents()
+	self._btnToGet:RemoveClickListener()
+	self._btnConfirm:RemoveClickListener()
 end
 
-function var_0_0._btnToGetOnClick(arg_4_0)
+function VersionActivity1_3AstrologySelectView:_btnToGetOnClick()
 	JumpController.instance:jump(VersionActivity1_3DungeonEnum.JumpDaily)
 end
 
-function var_0_0._btnConfirmOnClick(arg_5_0)
-	arg_5_0.viewContainer:sendUpdateProgressRequest()
+function VersionActivity1_3AstrologySelectView:_btnConfirmOnClick()
+	self.viewContainer:sendUpdateProgressRequest()
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._viewPortTrans = arg_6_0._gocontent.transform.parent
+function VersionActivity1_3AstrologySelectView:_editableInitView()
+	self._viewPortTrans = self._gocontent.transform.parent
 
-	arg_6_0:_addItems()
-	arg_6_0:addEventCb(VersionActivity1_3AstrologyController.instance, VersionActivity1_3AstrologyEvent.adjustPreviewAngle, arg_6_0._adjustPreviewAngle, arg_6_0)
-	arg_6_0:addEventCb(Activity126Controller.instance, Activity126Event.onUpdateProgressReply, arg_6_0._onUpdateProgressReply, arg_6_0)
-	arg_6_0:addEventCb(Activity126Controller.instance, Activity126Event.onGetHoroscopeReply, arg_6_0._onGetHoroscopeReply, arg_6_0)
+	self:_addItems()
+	self:addEventCb(VersionActivity1_3AstrologyController.instance, VersionActivity1_3AstrologyEvent.adjustPreviewAngle, self._adjustPreviewAngle, self)
+	self:addEventCb(Activity126Controller.instance, Activity126Event.onUpdateProgressReply, self._onUpdateProgressReply, self)
+	self:addEventCb(Activity126Controller.instance, Activity126Event.onGetHoroscopeReply, self._onGetHoroscopeReply, self)
 
-	arg_6_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_6_0._viewPortTrans.gameObject)
+	self._drag = SLFramework.UGUI.UIDragListener.Get(self._viewPortTrans.gameObject)
 
-	arg_6_0._drag:AddDragBeginListener(arg_6_0._onDragBeginHandler, arg_6_0)
-	arg_6_0._drag:AddDragEndListener(arg_6_0._onDragEndHandler, arg_6_0)
-	arg_6_0._drag:AddDragListener(arg_6_0._onDrag, arg_6_0)
+	self._drag:AddDragBeginListener(self._onDragBeginHandler, self)
+	self._drag:AddDragEndListener(self._onDragEndHandler, self)
+	self._drag:AddDragListener(self._onDrag, self)
 end
 
-function var_0_0._onDragBeginHandler(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_0._startDragPos = recthelper.screenPosToAnchorPos(arg_7_2.position, arg_7_0._viewPortTrans)
-	arg_7_0._selectedIndex = tabletool.indexOf(arg_7_0._planetMoList, arg_7_0._selectedItem:getPlanetMo())
+function VersionActivity1_3AstrologySelectView:_onDragBeginHandler(param, pointerEventData)
+	self._startDragPos = recthelper.screenPosToAnchorPos(pointerEventData.position, self._viewPortTrans)
+	self._selectedIndex = tabletool.indexOf(self._planetMoList, self._selectedItem:getPlanetMo())
 end
 
-function var_0_0._onDragEndHandler(arg_8_0, arg_8_1, arg_8_2)
+function VersionActivity1_3AstrologySelectView:_onDragEndHandler(param, pointerEventData)
 	return
 end
 
-function var_0_0._onDrag(arg_9_0, arg_9_1, arg_9_2)
-	if not arg_9_0._startDragPos then
+function VersionActivity1_3AstrologySelectView:_onDrag(param, pointerEventData)
+	if not self._startDragPos then
 		return
 	end
 
-	local var_9_0 = recthelper.screenPosToAnchorPos(arg_9_2.position, arg_9_0._viewPortTrans) - arg_9_0._startDragPos
-	local var_9_1 = math.floor(math.abs(var_9_0.x) / 120)
-	local var_9_2 = arg_9_0._selectedIndex + (var_9_0.x > 0 and -var_9_1 or var_9_1)
-	local var_9_3 = arg_9_0._planetMoList[var_9_2]
+	local endPos = recthelper.screenPosToAnchorPos(pointerEventData.position, self._viewPortTrans)
+	local deltaPos = endPos - self._startDragPos
+	local deltaIndex = math.floor(math.abs(deltaPos.x) / 120)
+	local targetIndex = self._selectedIndex + (deltaPos.x > 0 and -deltaIndex or deltaIndex)
+	local targetMo = self._planetMoList[targetIndex]
 
-	if var_9_3 then
-		local var_9_4 = arg_9_0._itemList[var_9_3.id]
+	if targetMo then
+		local planetItem = self._itemList[targetMo.id]
 
-		arg_9_0:setSelected(var_9_4)
+		self:setSelected(planetItem)
 	end
 end
 
-function var_0_0._onGetHoroscopeReply(arg_10_0)
+function VersionActivity1_3AstrologySelectView:_onGetHoroscopeReply()
 	return
 end
 
-function var_0_0._onUpdateProgressReply(arg_11_0, arg_11_1)
-	if arg_11_1 and arg_11_1.fromReset then
-		arg_11_0:_sortAndSelectFirst()
-		arg_11_0:_refresh()
+function VersionActivity1_3AstrologySelectView:_onUpdateProgressReply(param)
+	if param and param.fromReset then
+		self:_sortAndSelectFirst()
+		self:_refresh()
 	else
-		if not VersionActivity1_3AstrologyModel.instance:getStarReward() then
-			arg_11_0:_refresh()
+		local list = VersionActivity1_3AstrologyModel.instance:getStarReward()
+
+		if not list then
+			self:_refresh()
 
 			return
 		end
 
-		TaskDispatcher.cancelTask(arg_11_0._refresh, arg_11_0)
-		TaskDispatcher.runDelay(arg_11_0._refresh, arg_11_0, 2.5)
+		TaskDispatcher.cancelTask(self._refresh, self)
+		TaskDispatcher.runDelay(self._refresh, self, 2.5)
 	end
 end
 
-function var_0_0._refresh(arg_12_0)
-	arg_12_0:updateItemNum()
-	arg_12_0:_updatePlanetItemInfo()
+function VersionActivity1_3AstrologySelectView:_refresh()
+	self:updateItemNum()
+	self:_updatePlanetItemInfo()
 end
 
-function var_0_0._adjustPreviewAngle(arg_13_0)
-	arg_13_0:_updatePlanetItemInfo()
+function VersionActivity1_3AstrologySelectView:_adjustPreviewAngle()
+	self:_updatePlanetItemInfo()
 end
 
-function var_0_0.onOpen(arg_14_0)
+function VersionActivity1_3AstrologySelectView:onOpen()
 	return
 end
 
-function var_0_0._sortItems(arg_15_0)
-	table.sort(arg_15_0._planetMoList, var_0_0._sort)
+function VersionActivity1_3AstrologySelectView:_sortItems()
+	table.sort(self._planetMoList, VersionActivity1_3AstrologySelectView._sort)
 
-	for iter_15_0, iter_15_1 in ipairs(arg_15_0._planetMoList) do
-		local var_15_0 = arg_15_0._itemList[iter_15_1.id]
+	for i, v in ipairs(self._planetMoList) do
+		local planetItem = self._itemList[v.id]
 
-		gohelper.setAsLastSibling(var_15_0.viewGO)
+		gohelper.setAsLastSibling(planetItem.viewGO)
 	end
 end
 
-function var_0_0._sort(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_0.num > 0
-	local var_16_1 = arg_16_1.num > 0
+function VersionActivity1_3AstrologySelectView._sort(a, b)
+	local num1 = a.num > 0
+	local num2 = b.num > 0
 
-	if var_16_0 and var_16_1 then
-		return arg_16_0.id < arg_16_1.id
-	elseif var_16_0 then
+	if num1 and num2 then
+		return a.id < b.id
+	elseif num1 then
 		return true
-	elseif var_16_1 then
+	elseif num2 then
 		return false
 	end
 
-	return arg_16_0.id < arg_16_1.id
+	return a.id < b.id
 end
 
-function var_0_0._addItems(arg_17_0)
-	arg_17_0._itemList = arg_17_0:getUserDataTb_()
-	arg_17_0._planetMoList = {}
+function VersionActivity1_3AstrologySelectView:_addItems()
+	self._itemList = self:getUserDataTb_()
+	self._planetMoList = {}
 
-	local var_17_0 = arg_17_0.viewContainer:getSetting().otherRes[1]
+	local path = self.viewContainer:getSetting().otherRes[1]
 
-	for iter_17_0 = VersionActivity1_3AstrologyEnum.Planet.shuixing, VersionActivity1_3AstrologyEnum.Planet.tuxing do
-		local var_17_1 = arg_17_0:getResInst(var_17_0, arg_17_0._gocontent)
-		local var_17_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_17_1, VersionActivity1_3AstrologyPlanetItem, {
-			iter_17_0,
-			arg_17_0
+	for id = VersionActivity1_3AstrologyEnum.Planet.shuixing, VersionActivity1_3AstrologyEnum.Planet.tuxing do
+		local itemGO = self:getResInst(path, self._gocontent)
+		local planetItem = MonoHelper.addNoUpdateLuaComOnceToGo(itemGO, VersionActivity1_3AstrologyPlanetItem, {
+			id,
+			self
 		})
 
-		arg_17_0._itemList[iter_17_0] = var_17_2
+		self._itemList[id] = planetItem
 
-		table.insert(arg_17_0._planetMoList, var_17_2:getPlanetMo())
+		table.insert(self._planetMoList, planetItem:getPlanetMo())
 	end
 
-	arg_17_0:_sortAndSelectFirst()
+	self:_sortAndSelectFirst()
 end
 
-function var_0_0._sortAndSelectFirst(arg_18_0)
-	arg_18_0:_sortItems()
-	arg_18_0:setSelected(arg_18_0._itemList[arg_18_0._planetMoList[1].id])
+function VersionActivity1_3AstrologySelectView:_sortAndSelectFirst()
+	self:_sortItems()
+	self:setSelected(self._itemList[self._planetMoList[1].id])
 end
 
-function var_0_0.setSelected(arg_19_0, arg_19_1)
-	if arg_19_0._selectedItem == arg_19_1 then
+function VersionActivity1_3AstrologySelectView:setSelected(item)
+	if self._selectedItem == item then
 		return
 	end
 
-	arg_19_0._selectedItem = arg_19_1
-	arg_19_0._planetMo = arg_19_0._selectedItem:getPlanetMo()
-	arg_19_0._txtStarName.text = arg_19_0._planetMo:getItemName()
+	self._selectedItem = item
+	self._planetMo = self._selectedItem:getPlanetMo()
+	self._txtStarName.text = self._planetMo:getItemName()
 
-	for iter_19_0, iter_19_1 in pairs(arg_19_0._itemList) do
-		iter_19_1:setSelected(iter_19_1 == arg_19_1)
+	for k, v in pairs(self._itemList) do
+		v:setSelected(v == item)
 	end
 
-	ZProj.UGUIHelper.RebuildLayout(arg_19_0._gocontent.transform)
-	TaskDispatcher.cancelTask(arg_19_0._focusItem, arg_19_0)
-	TaskDispatcher.runDelay(arg_19_0._focusItem, arg_19_0, 0)
-	VersionActivity1_3AstrologyController.instance:dispatchEvent(VersionActivity1_3AstrologyEvent.selectPlanetItem, arg_19_1)
-	arg_19_0:_updatePlanetItemInfo()
+	ZProj.UGUIHelper.RebuildLayout(self._gocontent.transform)
+	TaskDispatcher.cancelTask(self._focusItem, self)
+	TaskDispatcher.runDelay(self._focusItem, self, 0)
+	VersionActivity1_3AstrologyController.instance:dispatchEvent(VersionActivity1_3AstrologyEvent.selectPlanetItem, item)
+	self:_updatePlanetItemInfo()
 end
 
-function var_0_0._focusItem(arg_20_0)
-	local var_20_0 = -(recthelper.getAnchorX(arg_20_0._selectedItem.viewGO.transform) - 470) - 42
+function VersionActivity1_3AstrologySelectView:_focusItem()
+	local x = recthelper.getAnchorX(self._selectedItem.viewGO.transform) - 470
+	local targetX = -x - 42
 
-	arg_20_0:_clearTween()
+	self:_clearTween()
 
-	arg_20_0._contentTweenId = ZProj.TweenHelper.DOAnchorPosX(arg_20_0._gocontent.transform, var_20_0, 0.2)
+	self._contentTweenId = ZProj.TweenHelper.DOAnchorPosX(self._gocontent.transform, targetX, 0.2)
 end
 
-function var_0_0._clearTween(arg_21_0)
-	if arg_21_0._contentTweenId then
-		ZProj.TweenHelper.KillById(arg_21_0._contentTweenId)
+function VersionActivity1_3AstrologySelectView:_clearTween()
+	if self._contentTweenId then
+		ZProj.TweenHelper.KillById(self._contentTweenId)
 
-		arg_21_0._contentTweenId = nil
-	end
-end
-
-function var_0_0.updateItemNum(arg_22_0)
-	for iter_22_0, iter_22_1 in pairs(arg_22_0._itemList) do
-		iter_22_1:updateNum()
+		self._contentTweenId = nil
 	end
 end
 
-function var_0_0._updatePlanetItemInfo(arg_23_0)
-	local var_23_0 = arg_23_0._planetMo.num
-	local var_23_1 = arg_23_0._planetMo:getRemainNum()
+function VersionActivity1_3AstrologySelectView:updateItemNum()
+	for k, v in pairs(self._itemList) do
+		v:updateNum()
+	end
+end
 
-	arg_23_0:_updateNum(var_23_0, var_23_1)
-	arg_23_0:_updateAngle(arg_23_0._planetMo.previewAngle)
+function VersionActivity1_3AstrologySelectView:_updatePlanetItemInfo()
+	local totalNum = self._planetMo.num
+	local remainNum = self._planetMo:getRemainNum()
 
-	local var_23_2 = Activity126Model.instance:getStarNum() >= 10
-	local var_23_3 = VersionActivity1_3AstrologyModel.instance:hasAdjust()
-	local var_23_4 = var_23_0 <= 0
+	self:_updateNum(totalNum, remainNum)
+	self:_updateAngle(self._planetMo.previewAngle)
 
-	gohelper.setActive(arg_23_0._goConfirm, false)
-	gohelper.setActive(arg_23_0._goTips, false)
-	gohelper.setActive(arg_23_0._goToGet, false)
+	local num = Activity126Model.instance:getStarNum()
+	local canAstrology = num >= 10
+	local hasAdjust = VersionActivity1_3AstrologyModel.instance:hasAdjust()
+	local needToGet = totalNum <= 0
 
-	if var_23_2 then
-		if var_23_3 then
-			gohelper.setActive(arg_23_0._goConfirm, true)
+	gohelper.setActive(self._goConfirm, false)
+	gohelper.setActive(self._goTips, false)
+	gohelper.setActive(self._goToGet, false)
 
-			arg_23_0._txtConfirmTips.text = luaLang("astrology_tip6")
+	if canAstrology then
+		if hasAdjust then
+			gohelper.setActive(self._goConfirm, true)
+
+			self._txtConfirmTips.text = luaLang("astrology_tip6")
 
 			return
 		end
 
-		if var_23_4 then
-			gohelper.setActive(arg_23_0._goToGet, true)
+		if needToGet then
+			gohelper.setActive(self._goToGet, true)
 
-			arg_23_0._txtToGetTips.text = luaLang("astrology_tip4")
+			self._txtToGetTips.text = luaLang("astrology_tip4")
 
 			return
 		end
 
-		gohelper.setActive(arg_23_0._goTips, true)
+		gohelper.setActive(self._goTips, true)
 
-		arg_23_0._txtTips.text = luaLang("astrology_tip5")
+		self._txtTips.text = luaLang("astrology_tip5")
 	else
-		if var_23_3 then
-			gohelper.setActive(arg_23_0._goConfirm, true)
+		if hasAdjust then
+			gohelper.setActive(self._goConfirm, true)
 
-			arg_23_0._txtConfirmTips.text = luaLang("astrology_tip3")
-
-			return
-		end
-
-		if var_23_4 then
-			gohelper.setActive(arg_23_0._goToGet, true)
-
-			arg_23_0._txtToGetTips.text = luaLang("astrology_tip1")
+			self._txtConfirmTips.text = luaLang("astrology_tip3")
 
 			return
 		end
 
-		gohelper.setActive(arg_23_0._goTips, true)
+		if needToGet then
+			gohelper.setActive(self._goToGet, true)
 
-		arg_23_0._txtTips.text = luaLang("astrology_tip2")
+			self._txtToGetTips.text = luaLang("astrology_tip1")
+
+			return
+		end
+
+		gohelper.setActive(self._goTips, true)
+
+		self._txtTips.text = luaLang("astrology_tip2")
 	end
 end
 
-function var_0_0._updateNum(arg_24_0, arg_24_1, arg_24_2)
-	if arg_24_1 > 0 then
-		if arg_24_1 ~= arg_24_2 then
-			arg_24_0._txtAdjustTimes.text = string.format("%s%s<color=#b73850>-%s</color>", luaLang("adjustNum"), arg_24_1, arg_24_1 - arg_24_2)
+function VersionActivity1_3AstrologySelectView:_updateNum(totalNum, remainNum)
+	if totalNum > 0 then
+		if totalNum ~= remainNum then
+			self._txtAdjustTimes.text = string.format("%s%s<color=#b73850>-%s</color>", luaLang("adjustNum"), totalNum, totalNum - remainNum)
 		else
-			arg_24_0._txtAdjustTimes.text = string.format("%s%s", luaLang("adjustNum"), arg_24_1)
+			self._txtAdjustTimes.text = string.format("%s%s", luaLang("adjustNum"), totalNum)
 		end
 	else
-		arg_24_0._txtAdjustTimes.text = string.format("%s<color=#b73850>%s</color>", luaLang("adjustNum"), 0)
+		self._txtAdjustTimes.text = string.format("%s<color=#b73850>%s</color>", luaLang("adjustNum"), 0)
 	end
 end
 
-function var_0_0._updateAngle(arg_25_0, arg_25_1)
-	arg_25_0._txtCurrentAngle.text = string.format("%s°", arg_25_1 % 360)
+function VersionActivity1_3AstrologySelectView:_updateAngle(value)
+	self._txtCurrentAngle.text = string.format("%s°", value % 360)
 end
 
-function var_0_0.getSelectedPlanetId(arg_26_0)
-	for iter_26_0, iter_26_1 in pairs(arg_26_0._itemList) do
-		if iter_26_1:isSelected() then
-			return iter_26_0
+function VersionActivity1_3AstrologySelectView:getSelectedPlanetId()
+	for id, v in pairs(self._itemList) do
+		if v:isSelected() then
+			return id
 		end
 	end
 end
 
-function var_0_0.onClose(arg_27_0)
+function VersionActivity1_3AstrologySelectView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_28_0)
-	TaskDispatcher.cancelTask(arg_28_0._focusItem, arg_28_0)
-	arg_28_0:_clearTween()
-	arg_28_0._drag:RemoveDragBeginListener()
-	arg_28_0._drag:RemoveDragListener()
-	arg_28_0._drag:RemoveDragEndListener()
-	TaskDispatcher.cancelTask(arg_28_0._refresh, arg_28_0)
+function VersionActivity1_3AstrologySelectView:onDestroyView()
+	TaskDispatcher.cancelTask(self._focusItem, self)
+	self:_clearTween()
+	self._drag:RemoveDragBeginListener()
+	self._drag:RemoveDragListener()
+	self._drag:RemoveDragEndListener()
+	TaskDispatcher.cancelTask(self._refresh, self)
 end
 
-return var_0_0
+return VersionActivity1_3AstrologySelectView

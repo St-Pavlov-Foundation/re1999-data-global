@@ -1,26 +1,28 @@
-﻿module("modules.logic.versionactivity1_6.getian.controller.ActGeTianController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/getian/controller/ActGeTianController.lua
 
-local var_0_0 = class("ActGeTianController", BaseController)
+module("modules.logic.versionactivity1_6.getian.controller.ActGeTianController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local ActGeTianController = class("ActGeTianController", BaseController)
+
+function ActGeTianController:onInit()
 	return
 end
 
-function var_0_0.addConstEvents(arg_2_0)
-	DungeonController.instance:registerCallback(DungeonEvent.OnUpdateDungeonInfo, arg_2_0.OnUpdateDungeonInfo, arg_2_0)
+function ActGeTianController:addConstEvents()
+	DungeonController.instance:registerCallback(DungeonEvent.OnUpdateDungeonInfo, self.OnUpdateDungeonInfo, self)
 end
 
-function var_0_0.OnUpdateDungeonInfo(arg_3_0, arg_3_1)
-	if arg_3_1 then
-		ActGeTianModel.instance:checkFinishLevel(arg_3_1.episodeId, arg_3_1.star)
+function ActGeTianController:OnUpdateDungeonInfo(dungeonInfo)
+	if dungeonInfo then
+		ActGeTianModel.instance:checkFinishLevel(dungeonInfo.episodeId, dungeonInfo.star)
 	end
 end
 
-function var_0_0.delayReward(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_0._actTaskMO == nil and arg_4_2 then
-		arg_4_0._actTaskMO = arg_4_2
+function ActGeTianController:delayReward(delayTime, taskMO)
+	if self._actTaskMO == nil and taskMO then
+		self._actTaskMO = taskMO
 
-		TaskDispatcher.runDelay(arg_4_0._onPreFinish, arg_4_0, arg_4_1)
+		TaskDispatcher.runDelay(self._onPreFinish, self, delayTime)
 
 		return true
 	end
@@ -28,74 +30,75 @@ function var_0_0.delayReward(arg_4_0, arg_4_1, arg_4_2)
 	return false
 end
 
-function var_0_0._onPreFinish(arg_5_0)
-	local var_5_0 = arg_5_0._actTaskMO
+function ActGeTianController:_onPreFinish()
+	local actTaskMO = self._actTaskMO
 
-	arg_5_0._actTaskMO = nil
+	self._actTaskMO = nil
 
-	if var_5_0 and (var_5_0.id == ActGeTianEnum.TaskMOAllFinishId or var_5_0:alreadyGotReward()) then
-		ActGeTianTaskListModel.instance:preFinish(var_5_0)
+	if actTaskMO and (actTaskMO.id == ActGeTianEnum.TaskMOAllFinishId or actTaskMO:alreadyGotReward()) then
+		ActGeTianTaskListModel.instance:preFinish(actTaskMO)
 
-		arg_5_0._actTaskId = var_5_0.id
+		self._actTaskId = actTaskMO.id
 
-		TaskDispatcher.runDelay(arg_5_0._onRewardTask, arg_5_0, ActGeTianEnum.AnimatorTime.TaskRewardMoveUp)
+		TaskDispatcher.runDelay(self._onRewardTask, self, ActGeTianEnum.AnimatorTime.TaskRewardMoveUp)
 	end
 end
 
-function var_0_0._onRewardTask(arg_6_0)
-	local var_6_0 = arg_6_0._actTaskId
+function ActGeTianController:_onRewardTask()
+	local taskId = self._actTaskId
 
-	arg_6_0._actTaskId = nil
+	self._actTaskId = nil
 
-	if var_6_0 then
-		if var_6_0 == ActGeTianEnum.TaskMOAllFinishId then
+	if taskId then
+		if taskId == ActGeTianEnum.TaskMOAllFinishId then
 			TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.RoleActivity, nil, nil, nil, nil, ActGeTianEnum.ActivityId)
 		else
-			TaskRpc.instance:sendFinishTaskRequest(var_6_0)
+			TaskRpc.instance:sendFinishTaskRequest(taskId)
 		end
 	end
 end
 
-function var_0_0.oneClaimReward(arg_7_0, arg_7_1)
-	local var_7_0 = ActGeTianTaskListModel.instance:getList()
+function ActGeTianController:oneClaimReward(actId)
+	local list = ActGeTianTaskListModel.instance:getList()
 
-	for iter_7_0, iter_7_1 in pairs(var_7_0) do
-		if iter_7_1:alreadyGotReward() and iter_7_1.id ~= ActGeTianEnum.TaskMOAllFinishId then
-			TaskRpc.instance:sendFinishTaskRequest(iter_7_1.id)
+	for _, taskMO in pairs(list) do
+		if taskMO:alreadyGotReward() and taskMO.id ~= ActGeTianEnum.TaskMOAllFinishId then
+			TaskRpc.instance:sendFinishTaskRequest(taskMO.id)
 		end
 	end
 end
 
-function var_0_0.enterActivity(arg_8_0)
-	local var_8_0 = ActivityConfig.instance:getActivityCo(ActGeTianEnum.ActivityId).storyId
+function ActGeTianController:enterActivity()
+	local actConfig = ActivityConfig.instance:getActivityCo(ActGeTianEnum.ActivityId)
+	local storyId = actConfig.storyId
 
-	if var_8_0 > 0 and not StoryModel.instance:isStoryFinished(var_8_0) then
-		StoryController.instance:playStory(var_8_0, nil, arg_8_0.storyCallback, arg_8_0)
+	if storyId > 0 and not StoryModel.instance:isStoryFinished(storyId) then
+		StoryController.instance:playStory(storyId, nil, self.storyCallback, self)
 		ActGeTianModel.instance:setFirstEnter()
 	else
-		arg_8_0:_drirectOpenLevelView()
+		self:_drirectOpenLevelView()
 	end
 end
 
-function var_0_0.storyCallback(arg_9_0)
-	arg_9_0:_drirectOpenLevelView()
+function ActGeTianController:storyCallback()
+	self:_drirectOpenLevelView()
 end
 
-function var_0_0.openLevelView(arg_10_0, arg_10_1)
+function ActGeTianController:openLevelView(viewParam)
 	if ViewMgr.instance:isOpen(ViewName.ActGeTianLevelView) then
-		if arg_10_1 ~= nil then
-			arg_10_0:dispatchEvent(ActGeTianEvent.TabSwitch, arg_10_1.needShowFight)
+		if viewParam ~= nil then
+			self:dispatchEvent(ActGeTianEvent.TabSwitch, viewParam.needShowFight)
 		end
 	else
-		arg_10_0:_drirectOpenLevelView(arg_10_1)
+		self:_drirectOpenLevelView(viewParam)
 	end
 end
 
-function var_0_0._drirectOpenLevelView(arg_11_0, arg_11_1)
-	ViewMgr.instance:openView(ViewName.ActGeTianLevelView, arg_11_1)
+function ActGeTianController:_drirectOpenLevelView(viewParam)
+	ViewMgr.instance:openView(ViewName.ActGeTianLevelView, viewParam)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_shuori_story_open)
 end
 
-var_0_0.instance = var_0_0.New()
+ActGeTianController.instance = ActGeTianController.New()
 
-return var_0_0
+return ActGeTianController

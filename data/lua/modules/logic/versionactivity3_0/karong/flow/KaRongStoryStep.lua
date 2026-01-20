@@ -1,39 +1,41 @@
-﻿module("modules.logic.versionactivity3_0.karong.flow.KaRongStoryStep", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/karong/flow/KaRongStoryStep.lua
 
-local var_0_0 = class("KaRongStoryStep", BaseWork)
+module("modules.logic.versionactivity3_0.karong.flow.KaRongStoryStep", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._data = arg_1_1
+local KaRongStoryStep = class("KaRongStoryStep", BaseWork)
+
+function KaRongStoryStep:ctor(data)
+	self._data = data
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	local var_2_0 = tonumber(arg_2_0._data.param)
-	local var_2_1 = {}
+function KaRongStoryStep:onStart(context)
+	local storyId = tonumber(self._data.param)
+	local param = {}
 
-	var_2_1.blur = true
-	var_2_1.hideStartAndEndDark = true
-	var_2_1.mark = true
-	var_2_1.isReplay = false
-	arg_2_0._initMaskActive = PostProcessingMgr.instance:getUIPPValue("LocalMaskActive")
-	arg_2_0._initDistortStrength = PostProcessingMgr.instance:getUIPPValue("LocalDistortStrength")
+	param.blur = true
+	param.hideStartAndEndDark = true
+	param.mark = true
+	param.isReplay = false
+	self._initMaskActive = PostProcessingMgr.instance:getUIPPValue("LocalMaskActive")
+	self._initDistortStrength = PostProcessingMgr.instance:getUIPPValue("LocalDistortStrength")
 
 	PostProcessingMgr.instance:setUIPPValue("LocalMaskActive", false)
 	PostProcessingMgr.instance:setUIPPValue("localDistortStrength", 0)
-	StoryController.instance:playStory(var_2_0, var_2_1, arg_2_0.afterPlayStory, arg_2_0)
+	StoryController.instance:playStory(storyId, param, self.afterPlayStory, self)
 end
 
-function var_0_0.afterPlayStory(arg_3_0)
-	TaskDispatcher.runDelay(arg_3_0.onDoneTrue, arg_3_0, 0.3)
+function KaRongStoryStep:afterPlayStory()
+	TaskDispatcher.runDelay(self.onDoneTrue, self, 0.3)
 end
 
-function var_0_0.onDoneTrue(arg_4_0)
-	arg_4_0:onDone(true)
+function KaRongStoryStep:onDoneTrue()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_5_0)
-	PostProcessingMgr.instance:setUIPPValue("LocalMaskActive", arg_5_0._initMaskActive)
-	PostProcessingMgr.instance:setUIPPValue("LocalDistortStrength", arg_5_0._initDistortStrength)
-	TaskDispatcher.cancelTask(arg_5_0.onDoneTrue, arg_5_0)
+function KaRongStoryStep:clearWork()
+	PostProcessingMgr.instance:setUIPPValue("LocalMaskActive", self._initMaskActive)
+	PostProcessingMgr.instance:setUIPPValue("LocalDistortStrength", self._initDistortStrength)
+	TaskDispatcher.cancelTask(self.onDoneTrue, self)
 end
 
-return var_0_0
+return KaRongStoryStep

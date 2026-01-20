@@ -1,48 +1,47 @@
-﻿module("modules.logic.survival.model.map.SurvivalBlockCo", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/map/SurvivalBlockCo.lua
 
-local var_0_0 = pureTable("SurvivalBlockCo")
+module("modules.logic.survival.model.map.SurvivalBlockCo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.pos = SurvivalHexNode.New(arg_1_1[1], arg_1_1[2])
-	arg_1_0.walkable = arg_1_1[3]
-	arg_1_0.dir = arg_1_1[4]
-	arg_1_0.assetPath = arg_1_2[arg_1_1[5]]
-	arg_1_0.exNodes = {}
+local SurvivalBlockCo = pureTable("SurvivalBlockCo")
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1[6]) do
-		table.insert(arg_1_0.exNodes, SurvivalHexNode.New(iter_1_1[1] + arg_1_0.pos.q, iter_1_1[2] + arg_1_0.pos.r))
+function SurvivalBlockCo:init(data, allPaths)
+	self.pos = SurvivalHexNode.New(data[1], data[2])
+	self.walkable = data[3]
+	self.dir = data[4]
+	self.assetPath = allPaths[data[5]]
+	self.exNodes = {}
+
+	for _, data1 in ipairs(data[6]) do
+		table.insert(self.exNodes, SurvivalHexNode.New(data1[1] + self.pos.q, data1[2] + self.pos.r))
 	end
 end
 
-function var_0_0.getRange(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
-	local var_2_0, var_2_1, var_2_2, var_2_3 = arg_2_0:getSelfRange()
+function SurvivalBlockCo:getRange(minX, maxX, minY, maxY)
+	local selfMinX, selfMaxX, selfMinY, selfMaxY = self:getSelfRange()
 
-	if not arg_2_1 then
-		return var_2_0, var_2_1, var_2_2, var_2_3
+	if not minX then
+		return selfMinX, selfMaxX, selfMinY, selfMaxY
 	else
-		return math.min(arg_2_1, var_2_0), math.max(arg_2_2, var_2_1), math.min(arg_2_3, var_2_2), math.max(arg_2_4, var_2_3)
+		return math.min(minX, selfMinX), math.max(maxX, selfMaxX), math.min(minY, selfMinY), math.max(maxY, selfMaxY)
 	end
 end
 
-function var_0_0.getSelfRange(arg_3_0)
-	local var_3_0 = arg_3_0.pos.q + arg_3_0.pos.r / 2
-	local var_3_1 = -arg_3_0.pos.r
-	local var_3_2 = var_3_0
-	local var_3_3 = var_3_0
-	local var_3_4 = var_3_1
-	local var_3_5 = var_3_1
+function SurvivalBlockCo:getSelfRange()
+	local x = self.pos.q + self.pos.r / 2
+	local y = -self.pos.r
+	local minX, maxX, minY, maxY = x, x, y, y
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0.exNodes) do
-		local var_3_6 = iter_3_1.q + iter_3_1.r / 2
-		local var_3_7 = -iter_3_1.r
+	for _, point in ipairs(self.exNodes) do
+		local pointX = point.q + point.r / 2
+		local pointY = -point.r
 
-		var_3_2 = math.min(var_3_2, var_3_6)
-		var_3_3 = math.max(var_3_3, var_3_6)
-		var_3_4 = math.min(var_3_4, var_3_7)
-		var_3_5 = math.max(var_3_5, var_3_7)
+		minX = math.min(minX, pointX)
+		maxX = math.max(maxX, pointX)
+		minY = math.min(minY, pointY)
+		maxY = math.max(maxY, pointY)
 	end
 
-	return var_3_2, var_3_3, var_3_4, var_3_5
+	return minX, maxX, minY, maxY
 end
 
-return var_0_0
+return SurvivalBlockCo

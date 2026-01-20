@@ -1,354 +1,356 @@
-﻿module("modules.logic.character.view.CharacterSkinGainView", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterSkinGainView.lua
 
-local var_0_0 = class("CharacterSkinGainView", BaseView)
+module("modules.logic.character.view.CharacterSkinGainView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/bgroot/#simage_bg")
-	arg_1_0._simagelefticon = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/bgroot/#simage_lefticon")
-	arg_1_0._simagerighticon = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/bgroot/#simage_righticon")
-	arg_1_0._goskincontainer = gohelper.findChild(arg_1_0.viewGO, "root/bgroot/#go_skincontainer")
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/bgroot/#go_skincontainer/#simage_icon")
-	arg_1_0._simagemask = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/bgroot/#simage_mask")
-	arg_1_0._imagecareericon = gohelper.findChildImage(arg_1_0.viewGO, "root/bgroot/#image_careericon")
-	arg_1_0._imagecareerline = gohelper.findChildImage(arg_1_0.viewGO, "root/bgroot/#image_careericon/#image_careerline")
-	arg_1_0._txtlinecn = gohelper.findChildText(arg_1_0.viewGO, "root/bottom/#txt_line_cn")
-	arg_1_0._txtlineen = gohelper.findChildText(arg_1_0.viewGO, "root/bottom/#txt_line_cn/#txt_line_en")
-	arg_1_0._simagesignature = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/left/#simage_bg/#simage_signature")
-	arg_1_0._txtskinname = gohelper.findChildText(arg_1_0.viewGO, "root/left/#simage_bg/#txt_skinname")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "root/left/#simage_bg/#txt_skinname/#txt_name")
-	arg_1_0._txtnameen = gohelper.findChildText(arg_1_0.viewGO, "root/left/#simage_bg/#txt_skinname/#txt_name/#txt_name_en")
-	arg_1_0._btndress = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/right/#btn_clothing")
-	arg_1_0._goclothed = gohelper.findChild(arg_1_0.viewGO, "root/right/#go_clothed")
-	arg_1_0._gocontentbg = gohelper.findChild(arg_1_0.viewGO, "root/bottom/#go_contentbg")
-	arg_1_0._txtanacn = gohelper.findChildText(arg_1_0.viewGO, "root/bottom/#txt_ana_cn")
-	arg_1_0._txtanaen = gohelper.findChildText(arg_1_0.viewGO, "root/bottom/#txt_ana_en")
-	arg_1_0._golive2dcontainer = gohelper.findChild(arg_1_0.viewGO, "root/bgroot/#go_live2dcontainer/live2dcontainer/#go_live2d")
+local CharacterSkinGainView = class("CharacterSkinGainView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CharacterSkinGainView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "root/bgroot/#simage_bg")
+	self._simagelefticon = gohelper.findChildSingleImage(self.viewGO, "root/bgroot/#simage_lefticon")
+	self._simagerighticon = gohelper.findChildSingleImage(self.viewGO, "root/bgroot/#simage_righticon")
+	self._goskincontainer = gohelper.findChild(self.viewGO, "root/bgroot/#go_skincontainer")
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "root/bgroot/#go_skincontainer/#simage_icon")
+	self._simagemask = gohelper.findChildSingleImage(self.viewGO, "root/bgroot/#simage_mask")
+	self._imagecareericon = gohelper.findChildImage(self.viewGO, "root/bgroot/#image_careericon")
+	self._imagecareerline = gohelper.findChildImage(self.viewGO, "root/bgroot/#image_careericon/#image_careerline")
+	self._txtlinecn = gohelper.findChildText(self.viewGO, "root/bottom/#txt_line_cn")
+	self._txtlineen = gohelper.findChildText(self.viewGO, "root/bottom/#txt_line_cn/#txt_line_en")
+	self._simagesignature = gohelper.findChildSingleImage(self.viewGO, "root/left/#simage_bg/#simage_signature")
+	self._txtskinname = gohelper.findChildText(self.viewGO, "root/left/#simage_bg/#txt_skinname")
+	self._txtname = gohelper.findChildText(self.viewGO, "root/left/#simage_bg/#txt_skinname/#txt_name")
+	self._txtnameen = gohelper.findChildText(self.viewGO, "root/left/#simage_bg/#txt_skinname/#txt_name/#txt_name_en")
+	self._btndress = gohelper.findChildButtonWithAudio(self.viewGO, "root/right/#btn_clothing")
+	self._goclothed = gohelper.findChild(self.viewGO, "root/right/#go_clothed")
+	self._gocontentbg = gohelper.findChild(self.viewGO, "root/bottom/#go_contentbg")
+	self._txtanacn = gohelper.findChildText(self.viewGO, "root/bottom/#txt_ana_cn")
+	self._txtanaen = gohelper.findChildText(self.viewGO, "root/bottom/#txt_ana_en")
+	self._golive2dcontainer = gohelper.findChild(self.viewGO, "root/bgroot/#go_live2dcontainer/live2dcontainer/#go_live2d")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btndress:AddClickListener(arg_2_0._btndressOnClick, arg_2_0)
+function CharacterSkinGainView:addEvents()
+	self._btndress:AddClickListener(self._btndressOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btndress:RemoveClickListener()
+function CharacterSkinGainView:removeEvents()
+	self._btndress:RemoveClickListener()
 end
 
-function var_0_0._btndressOnClick(arg_4_0)
-	if not arg_4_0._switchFinish then
+function CharacterSkinGainView:_btndressOnClick()
+	if not self._switchFinish then
 		return
 	end
 
-	HeroRpc.instance:sendUseSkinRequest(arg_4_0._skinCo.characterId, arg_4_0._skinCo.id)
+	HeroRpc.instance:sendUseSkinRequest(self._skinCo.characterId, self._skinCo.id)
 end
 
-function var_0_0._onBgClick(arg_5_0)
-	if arg_5_0._switchFinish then
-		arg_5_0:closeThis()
-	elseif arg_5_0._animFinish then
-		arg_5_0:_playSwitchAnimation()
+function CharacterSkinGainView:_onBgClick()
+	if self._switchFinish then
+		self:closeThis()
+	elseif self._animFinish then
+		self:_playSwitchAnimation()
 	end
 end
 
-function var_0_0._editableInitView(arg_6_0)
+function CharacterSkinGainView:_editableInitView()
 	UnityEngine.Shader.DisableKeyword("_CLIPALPHA_ON")
 
-	arg_6_0._bgClick = gohelper.getClickWithAudio(arg_6_0.viewGO)
+	self._bgClick = gohelper.getClickWithAudio(self.viewGO)
 
-	arg_6_0._bgClick:AddClickListener(arg_6_0._onBgClick, arg_6_0)
-	arg_6_0._simagebg:LoadImage("singlebg/characterskin/full/bg_huode.png")
-	arg_6_0._simagelefticon:LoadImage("singlebg/characterskin/bg_huode_leftup.png")
-	arg_6_0._simagerighticon:LoadImage("singlebg/characterskin/bg_huode_rightdown.png")
-	arg_6_0._simagemask:LoadImage("singlebg/characterskin/full/bg_huode_mask.png")
+	self._bgClick:AddClickListener(self._onBgClick, self)
+	self._simagebg:LoadImage("singlebg/characterskin/full/bg_huode.png")
+	self._simagelefticon:LoadImage("singlebg/characterskin/bg_huode_leftup.png")
+	self._simagerighticon:LoadImage("singlebg/characterskin/bg_huode_rightdown.png")
+	self._simagemask:LoadImage("singlebg/characterskin/full/bg_huode_mask.png")
 
-	arg_6_0._simagecareericon = gohelper.findChildSingleImage(arg_6_0.viewGO, "root/bgroot/#image_careericon_big")
-	arg_6_0.goRight = gohelper.findChild(arg_6_0.viewGO, "root/right")
-	arg_6_0._animatorPlayer = SLFramework.AnimatorPlayer.Get(arg_6_0.viewGO)
+	self._simagecareericon = gohelper.findChildSingleImage(self.viewGO, "root/bgroot/#image_careericon_big")
+	self.goRight = gohelper.findChild(self.viewGO, "root/right")
+	self._animatorPlayer = SLFramework.AnimatorPlayer.Get(self.viewGO)
 
-	local var_6_0 = gohelper.findChild(arg_6_0.viewGO, "root/bgroot/videoplayer")
+	local parentGO = gohelper.findChild(self.viewGO, "root/bgroot/videoplayer")
 
-	arg_6_0._videoPlayer, arg_6_0._displauUGUI = AvProMgr.instance:getVideoPlayer(var_6_0)
+	self._videoPlayer, _ = VideoPlayerMgr.instance:createGoAndVideoPlayer(parentGO)
 
-	arg_6_0._videoPlayer:AddDisplayUGUI(arg_6_0._displauUGUI)
-	arg_6_0._videoPlayer:SetEventListener(arg_6_0._videoStatusUpdate, arg_6_0)
-	arg_6_0._videoPlayer:LoadMedia(langVideoUrl("character_get_start"))
+	self._videoPlayer:setEventListener(self._videoStatusUpdate, self)
+	self._videoPlayer:loadMedia("character_get_start")
 
-	arg_6_0._gostarList = gohelper.findChild(arg_6_0.viewGO, "root/effect/xingxing")
-	arg_6_0._starList = arg_6_0:getUserDataTb_()
+	self._gostarList = gohelper.findChild(self.viewGO, "root/effect/xingxing")
+	self._starList = self:getUserDataTb_()
 
-	for iter_6_0 = 1, 6 do
-		local var_6_1 = gohelper.findChild(arg_6_0._gostarList, "star" .. iter_6_0)
+	for i = 1, 6 do
+		local starGO = gohelper.findChild(self._gostarList, "star" .. i)
 
-		table.insert(arg_6_0._starList, var_6_1)
+		table.insert(self._starList, starGO)
 	end
 
-	gohelper.setActive(arg_6_0._gocontentbg, false)
+	gohelper.setActive(self._gocontentbg, false)
 
-	arg_6_0._txtanacn.text = ""
-	arg_6_0._txtanaen.text = ""
+	self._txtanacn.text = ""
+	self._txtanaen.text = ""
 
-	arg_6_0:addEventCb(CharacterController.instance, CharacterEvent.successDressUpSkin, arg_6_0._successDressUpSkin, arg_6_0)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successDressUpSkin, self._successDressUpSkin, self)
 end
 
-function var_0_0._videoStatusUpdate(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	if arg_7_2 == AvProEnum.PlayerStatus.Started then
+function CharacterSkinGainView:_videoStatusUpdate(path, status, errorCode)
+	if status == VideoEnum.PlayerStatus.Started then
 		AudioMgr.instance:trigger(AudioEnum.Summon.play_ui_skin_get)
-	elseif arg_7_2 == AvProEnum.PlayerStatus.FinishedPlaying then
-		arg_7_0:_resetVideo()
+	elseif status == VideoEnum.PlayerStatus.FinishedPlaying then
+		self:_resetVideo()
 	end
 end
 
-function var_0_0._resetVideo(arg_8_0)
+function CharacterSkinGainView:_resetVideo()
 	if BootNativeUtil.isAndroid() or BootNativeUtil.isWindows() then
-		arg_8_0._videoPlayer:Stop()
+		self._videoPlayer:stop()
 	else
-		arg_8_0._videoPlayer:Stop()
+		self._videoPlayer:stop()
 	end
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
+function CharacterSkinGainView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_10_0)
-	if arg_10_0.playHeroVoice then
-		arg_10_0.playHeroVoice:dispose()
+function CharacterSkinGainView:onOpen()
+	if self.playHeroVoice then
+		self.playHeroVoice:dispose()
 	end
 
-	if arg_10_0._uiSpine then
-		arg_10_0._uiSpine:stopVoice()
+	if self._uiSpine then
+		self._uiSpine:stopVoice()
 	end
 
-	arg_10_0._animFinish = false
-	arg_10_0._switchFinish = false
+	self._animFinish = false
+	self._switchFinish = false
 
-	NavigateMgr.instance:addEscape(arg_10_0.viewName, arg_10_0._onBgClick, arg_10_0)
-	arg_10_0:_refreshView()
-	arg_10_0:_playOpenAnimation()
+	NavigateMgr.instance:addEscape(self.viewName, self._onBgClick, self)
+	self:_refreshView()
+	self:_playOpenAnimation()
 end
 
-function var_0_0._refreshView(arg_11_0)
-	arg_11_0._skinCo = SkinConfig.instance:getSkinCo(arg_11_0.viewParam.skinId)
-	arg_11_0._heroMo = HeroModel.instance:getByHeroId(arg_11_0._skinCo.characterId)
+function CharacterSkinGainView:_refreshView()
+	self._skinCo = SkinConfig.instance:getSkinCo(self.viewParam.skinId)
+	self._heroMo = HeroModel.instance:getByHeroId(self._skinCo.characterId)
 
-	local var_11_0 = HeroConfig.instance:getHeroCO(arg_11_0._skinCo.characterId)
+	local heroConfig = HeroConfig.instance:getHeroCO(self._skinCo.characterId)
 
-	arg_11_0:_setNameBgWidth(arg_11_0._skinCo.characterSkin, var_11_0 and var_11_0.name or "")
+	self:_setNameBgWidth(self._skinCo.characterSkin, heroConfig and heroConfig.name or "")
 
-	arg_11_0._txtskinname.text = arg_11_0._skinCo.characterSkin
+	self._txtskinname.text = self._skinCo.characterSkin
 
-	if var_11_0 then
-		gohelper.setActive(arg_11_0._txtname.gameObject, true)
+	if heroConfig then
+		gohelper.setActive(self._txtname.gameObject, true)
 
-		arg_11_0._txtname.text = var_11_0.name
+		self._txtname.text = heroConfig.name
 	else
-		gohelper.setActive(arg_11_0._txtname.gameObject, false)
+		gohelper.setActive(self._txtname.gameObject, false)
 	end
 
-	arg_11_0._txtnameen.text = arg_11_0._skinCo.nameEng
-	arg_11_0._uiSpine = GuiModelAgent.Create(arg_11_0._golive2dcontainer, true)
+	self._txtnameen.text = heroConfig.nameEng
+	self._uiSpine = GuiModelAgent.Create(self._golive2dcontainer, true)
 
-	arg_11_0._uiSpine:setResPath(arg_11_0._skinCo, arg_11_0._onUISpineLoaded, arg_11_0)
-	arg_11_0._simageicon:LoadImage(ResUrl.getHeadIconImg(arg_11_0._skinCo.id), arg_11_0._loadedImage, arg_11_0)
-	arg_11_0._simagesignature:LoadImage(ResUrl.getSignature(var_11_0.signature))
-	UISpriteSetMgr.instance:setCharactergetSprite(arg_11_0._imagecareericon, "charactercareer" .. var_11_0.career)
-	UISpriteSetMgr.instance:setCharactergetSprite(arg_11_0._imagecareerline, "line_" .. var_11_0.career)
-	arg_11_0._simagecareericon:LoadImage(ResUrl.getCharacterGetIcon("charactercareer_big_0" .. var_11_0.career))
+	self._uiSpine:setResPath(self._skinCo, self._onUISpineLoaded, self)
+	self._simageicon:LoadImage(ResUrl.getHeadIconImg(self._skinCo.id), self._loadedImage, self)
+	self._simagesignature:LoadImage(ResUrl.getSignature(heroConfig.signature))
+	UISpriteSetMgr.instance:setCharactergetSprite(self._imagecareericon, "charactercareer" .. heroConfig.career)
+	UISpriteSetMgr.instance:setCharactergetSprite(self._imagecareerline, "line_" .. heroConfig.career)
+	self._simagecareericon:LoadImage(ResUrl.getCharacterGetIcon("charactercareer_big_0" .. heroConfig.career))
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0._starList) do
-		gohelper.setActive(iter_11_1, iter_11_0 <= CharacterEnum.Star[var_11_0.rare])
+	for i, starGO in ipairs(self._starList) do
+		gohelper.setActive(starGO, i <= CharacterEnum.Star[heroConfig.rare])
 	end
 
-	arg_11_0:refreshDressStatus()
+	self:refreshDressStatus()
 end
 
-function var_0_0._onUISpineLoaded(arg_12_0)
-	local var_12_0 = arg_12_0._skinCo.skinGainViewLive2dOffset
+function CharacterSkinGainView:_onUISpineLoaded()
+	local offsetStr = self._skinCo.skinGainViewLive2dOffset
 
-	if string.nilorempty(var_12_0) then
-		var_12_0 = arg_12_0._skinCo.characterViewOffset
+	if string.nilorempty(offsetStr) then
+		offsetStr = self._skinCo.characterViewOffset
 	end
 
-	local var_12_1 = SkinConfig.instance:getSkinOffset(var_12_0)
+	local offsets = SkinConfig.instance:getSkinOffset(offsetStr)
 
-	recthelper.setAnchor(arg_12_0._golive2dcontainer.transform, tonumber(var_12_1[1]), tonumber(var_12_1[2]))
-	transformhelper.setLocalScale(arg_12_0._golive2dcontainer.transform, tonumber(var_12_1[3]), tonumber(var_12_1[3]), tonumber(var_12_1[3]))
+	recthelper.setAnchor(self._golive2dcontainer.transform, tonumber(offsets[1]), tonumber(offsets[2]))
+	transformhelper.setLocalScale(self._golive2dcontainer.transform, tonumber(offsets[3]), tonumber(offsets[3]), tonumber(offsets[3]))
 end
 
-function var_0_0._loadedImage(arg_13_0)
-	ZProj.UGUIHelper.SetImageSize(arg_13_0._simageicon.gameObject)
+function CharacterSkinGainView:_loadedImage()
+	ZProj.UGUIHelper.SetImageSize(self._simageicon.gameObject)
 
-	local var_13_0 = arg_13_0._skinCo.skinGainViewImgOffset
+	local offsetStr = self._skinCo.skinGainViewImgOffset
 
-	if not string.nilorempty(var_13_0) then
-		local var_13_1 = string.splitToNumber(var_13_0, "#")
+	if not string.nilorempty(offsetStr) then
+		local offsets = string.splitToNumber(offsetStr, "#")
 
-		recthelper.setAnchor(arg_13_0._goskincontainer.transform, tonumber(var_13_1[1]), tonumber(var_13_1[2]))
-		transformhelper.setLocalScale(arg_13_0._goskincontainer.transform, tonumber(var_13_1[3]), tonumber(var_13_1[3]), tonumber(var_13_1[3]))
+		recthelper.setAnchor(self._goskincontainer.transform, tonumber(offsets[1]), tonumber(offsets[2]))
+		transformhelper.setLocalScale(self._goskincontainer.transform, tonumber(offsets[3]), tonumber(offsets[3]), tonumber(offsets[3]))
 	else
-		recthelper.setAnchor(arg_13_0._goskincontainer.transform, 0, 0)
-		transformhelper.setLocalScale(arg_13_0._goskincontainer.transform, 1, 1, 1)
+		recthelper.setAnchor(self._goskincontainer.transform, 0, 0)
+		transformhelper.setLocalScale(self._goskincontainer.transform, 1, 1, 1)
 	end
 end
 
-function var_0_0._onSingleItemLoaded(arg_14_0)
-	local var_14_0 = SkinConfig.instance:getSkinOffset(arg_14_0._skinCo.skinGetDetailViewIconOffset)
+function CharacterSkinGainView:_onSingleItemLoaded()
+	local offsets = SkinConfig.instance:getSkinOffset(self._skinCo.skinGetDetailViewIconOffset)
 
-	recthelper.setAnchor(arg_14_0._simagesingleItemIcon.transform, tonumber(var_14_0[1]), tonumber(var_14_0[2]))
-	transformhelper.setLocalScale(arg_14_0._simagesingleItemIcon.transform, tonumber(var_14_0[3]), tonumber(var_14_0[3]), tonumber(var_14_0[3]))
+	recthelper.setAnchor(self._simagesingleItemIcon.transform, tonumber(offsets[1]), tonumber(offsets[2]))
+	transformhelper.setLocalScale(self._simagesingleItemIcon.transform, tonumber(offsets[3]), tonumber(offsets[3]), tonumber(offsets[3]))
 end
 
-function var_0_0._playOpenAnimation(arg_15_0)
-	TaskDispatcher.cancelTask(arg_15_0._openAnimFinish, arg_15_0)
-	TaskDispatcher.runDelay(arg_15_0._openAnimFinish, arg_15_0, 10)
+function CharacterSkinGainView:_playOpenAnimation()
+	TaskDispatcher.cancelTask(self._openAnimFinish, self)
+	TaskDispatcher.runDelay(self._openAnimFinish, self, 10)
 
-	arg_15_0._animFinish = false
+	self._animFinish = false
 
-	arg_15_0._animatorPlayer:Play(UIAnimationName.Open, arg_15_0._openAnimFinish, arg_15_0)
-	arg_15_0._videoPlayer:Play(arg_15_0._displauUGUI, false)
+	self._animatorPlayer:Play(UIAnimationName.Open, self._openAnimFinish, self)
+	self._videoPlayer:playLoadMedia(false)
 end
 
-function var_0_0._playSwitchAnimation(arg_16_0)
-	TaskDispatcher.cancelTask(arg_16_0._switchAnimFinish, arg_16_0)
-	TaskDispatcher.runDelay(arg_16_0._switchAnimFinish, arg_16_0, 10)
+function CharacterSkinGainView:_playSwitchAnimation()
+	TaskDispatcher.cancelTask(self._switchAnimFinish, self)
+	TaskDispatcher.runDelay(self._switchAnimFinish, self, 10)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_skin_get_1)
 
-	arg_16_0._switchFinish = false
-	arg_16_0._animFinish = false
+	self._switchFinish = false
+	self._animFinish = false
 
-	arg_16_0._animatorPlayer:Play(UIAnimationName.Switch, arg_16_0._switchAnimFinish, arg_16_0)
+	self._animatorPlayer:Play(UIAnimationName.Switch, self._switchAnimFinish, self)
 end
 
-function var_0_0._openAnimFinish(arg_17_0)
-	TaskDispatcher.cancelTask(arg_17_0._openAnimFinish, arg_17_0)
+function CharacterSkinGainView:_openAnimFinish()
+	TaskDispatcher.cancelTask(self._openAnimFinish, self)
 
-	arg_17_0._animFinish = true
+	self._animFinish = true
 end
 
-function var_0_0._switchAnimFinish(arg_18_0)
-	TaskDispatcher.cancelTask(arg_18_0._switchAnimFinish, arg_18_0)
-	arg_18_0:_playVoice()
+function CharacterSkinGainView:_switchAnimFinish()
+	TaskDispatcher.cancelTask(self._switchAnimFinish, self)
+	self:_playVoice()
 
-	arg_18_0._switchFinish = true
+	self._switchFinish = true
 
-	arg_18_0:refreshDressStatus()
+	self:refreshDressStatus()
 end
 
-function var_0_0._successDressUpSkin(arg_19_0)
-	GameFacade.showToast(ToastEnum.CharacterSkinGain, HeroConfig.instance:getHeroCO(arg_19_0._skinCo.characterId).name)
-	arg_19_0:refreshDressStatus()
+function CharacterSkinGainView:_successDressUpSkin()
+	GameFacade.showToast(ToastEnum.CharacterSkinGain, HeroConfig.instance:getHeroCO(self._skinCo.characterId).name)
+	self:refreshDressStatus()
 end
 
-function var_0_0._playVoice(arg_20_0)
-	local var_20_0
+function CharacterSkinGainView:_playVoice()
+	local voiceType
 
-	if arg_20_0._skinCo.gainApproach == CharacterEnum.SkinGainApproach.Rank then
-		var_20_0 = CharacterEnum.VoiceType.GetSkin
+	if self._skinCo.gainApproach == CharacterEnum.SkinGainApproach.Rank then
+		voiceType = CharacterEnum.VoiceType.GetSkin
 	else
-		var_20_0 = CharacterEnum.VoiceType.Summon
+		voiceType = CharacterEnum.VoiceType.Summon
 	end
 
-	if not var_20_0 then
+	if not voiceType then
 		return
 	end
 
-	local var_20_1 = HeroModel.instance:getVoiceConfig(arg_20_0._skinCo.characterId, var_20_0, nil, arg_20_0._skinCo.id)
+	local voiceConfigs = HeroModel.instance:getVoiceConfig(self._skinCo.characterId, voiceType, nil, self._skinCo.id)
 
-	if not var_20_1 or #var_20_1 <= 0 then
+	if not voiceConfigs or #voiceConfigs <= 0 then
 		GameFacade.showToast(ToastEnum.DontHaveCharacter)
 
-		local var_20_2 = CharacterDataConfig.instance:getCharacterVoicesCo(arg_20_0._skinCo.characterId)
+		local voices = CharacterDataConfig.instance:getCharacterVoicesCo(self._skinCo.characterId)
 
-		var_20_1 = {}
+		voiceConfigs = {}
 
-		if var_20_2 then
-			for iter_20_0, iter_20_1 in pairs(var_20_2) do
-				if iter_20_1.type == var_20_0 and HeroModel.instance:_checkSkin(nil, iter_20_1, arg_20_0._skinCo.id) then
-					table.insert(var_20_1, iter_20_1)
+		if voices then
+			for _, config in pairs(voices) do
+				if config.type == voiceType and HeroModel.instance:_checkSkin(nil, config, self._skinCo.id) then
+					table.insert(voiceConfigs, config)
 				end
 			end
 		end
 	end
 
-	if not var_20_1 or #var_20_1 <= 0 then
-		logNormal("没有对应的角色语音类型:" .. tostring(var_20_0))
+	if not voiceConfigs or #voiceConfigs <= 0 then
+		logNormal("没有对应的角色语音类型:" .. tostring(voiceType))
 
 		return
 	end
 
-	local var_20_3 = var_20_1[math.random(#var_20_1)]
+	local voiceConfig = voiceConfigs[math.random(#voiceConfigs)]
 
-	arg_20_0._uiSpine:playVoice(var_20_3, nil, arg_20_0._txtanacn, arg_20_0._txtanaen, arg_20_0._gocontentbg)
+	self._uiSpine:playVoice(voiceConfig, nil, self._txtanacn, self._txtanaen, self._gocontentbg)
 end
 
-function var_0_0._setNameBgWidth(arg_21_0, arg_21_1, arg_21_2)
-	arg_21_0._nameBgRoot = gohelper.findChild(arg_21_0.viewGO, "root/left/#simage_bg")
-	arg_21_0._nameBg = gohelper.findChild(arg_21_0._nameBgRoot, "bg")
+function CharacterSkinGainView:_setNameBgWidth(skinName, name)
+	self._nameBgRoot = gohelper.findChild(self.viewGO, "root/left/#simage_bg")
+	self._nameBg = gohelper.findChild(self._nameBgRoot, "bg")
 
-	local var_21_0 = SLFramework.UGUI.GuiHelper.GetPreferredWidth(arg_21_0._txtskinname, arg_21_1)
-	local var_21_1 = SLFramework.UGUI.GuiHelper.GetPreferredWidth(arg_21_0._txtname, arg_21_2)
-	local var_21_2 = recthelper.getAnchorX(arg_21_0._txtname.transform) or 0
-	local var_21_3 = var_21_0 + (var_21_1 - math.abs(var_21_2)) + 450
+	local skinNameWidth = SLFramework.UGUI.GuiHelper.GetPreferredWidth(self._txtskinname, skinName)
+	local nameWidth = SLFramework.UGUI.GuiHelper.GetPreferredWidth(self._txtname, name)
+	local namePosX = recthelper.getAnchorX(self._txtname.transform) or 0
+	local addWidth = nameWidth - math.abs(namePosX)
+	local bgWidth = skinNameWidth + addWidth + 450
 
-	recthelper.setWidth(arg_21_0._nameBg.transform, var_21_3)
+	recthelper.setWidth(self._nameBg.transform, bgWidth)
 end
 
-function var_0_0.refreshDressStatus(arg_22_0)
-	gohelper.setActive(arg_22_0.goRight, arg_22_0._heroMo)
+function CharacterSkinGainView:refreshDressStatus()
+	gohelper.setActive(self.goRight, self._heroMo)
 
-	if not arg_22_0._switchFinish then
-		gohelper.setActive(arg_22_0._btndress.gameObject, false)
-		gohelper.setActive(arg_22_0._goclothed, false)
+	if not self._switchFinish then
+		gohelper.setActive(self._btndress.gameObject, false)
+		gohelper.setActive(self._goclothed, false)
 
 		return
 	end
 
-	if arg_22_0._heroMo then
-		gohelper.setActive(arg_22_0._btndress.gameObject, arg_22_0._skinCo.id ~= arg_22_0._heroMo.skin)
-		gohelper.setActive(arg_22_0._goclothed, arg_22_0._skinCo.id == arg_22_0._heroMo.skin)
+	if self._heroMo then
+		gohelper.setActive(self._btndress.gameObject, self._skinCo.id ~= self._heroMo.skin)
+		gohelper.setActive(self._goclothed, self._skinCo.id == self._heroMo.skin)
 	end
 end
 
-function var_0_0.onClose(arg_23_0)
-	TaskDispatcher.cancelTask(arg_23_0._switchAnimFinish, arg_23_0)
-	TaskDispatcher.cancelTask(arg_23_0._openAnimFinish, arg_23_0)
-	arg_23_0._simagesignature:UnLoadImage()
+function CharacterSkinGainView:onClose()
+	TaskDispatcher.cancelTask(self._switchAnimFinish, self)
+	TaskDispatcher.cancelTask(self._openAnimFinish, self)
+	self._simagesignature:UnLoadImage()
 end
 
-function var_0_0.onDestroyView(arg_24_0)
-	if arg_24_0._videoPlayer then
+function CharacterSkinGainView:onDestroyView()
+	if self._videoPlayer then
 		if not BootNativeUtil.isIOS() then
-			arg_24_0._videoPlayer:Stop()
+			self._videoPlayer:stop()
 		end
 
-		arg_24_0._videoPlayer:Clear()
+		self._videoPlayer:clear()
 
-		arg_24_0._videoPlayer = nil
+		self._videoPlayer = nil
 	end
 
-	if arg_24_0._uiSpine then
-		arg_24_0._uiSpine:stopVoice()
-		arg_24_0._uiSpine:onDestroy()
+	if self._uiSpine then
+		self._uiSpine:stopVoice()
+		self._uiSpine:onDestroy()
 
-		arg_24_0._uiSpine = nil
+		self._uiSpine = nil
 	end
 
-	if arg_24_0.playHeroVoice then
-		arg_24_0.playHeroVoice:dispose()
+	if self.playHeroVoice then
+		self.playHeroVoice:dispose()
 	end
 
-	if arg_24_0._bgClick then
-		arg_24_0._bgClick:RemoveClickListener()
+	if self._bgClick then
+		self._bgClick:RemoveClickListener()
 	end
 
-	NavigateMgr.instance:removeEscape(arg_24_0.viewName, arg_24_0._onBgClick, arg_24_0)
-	arg_24_0._simagebg:UnLoadImage()
-	arg_24_0._simagemask:UnLoadImage()
-	arg_24_0._simagelefticon:UnLoadImage()
-	arg_24_0._simagerighticon:UnLoadImage()
+	NavigateMgr.instance:removeEscape(self.viewName, self._onBgClick, self)
+	self._simagebg:UnLoadImage()
+	self._simagemask:UnLoadImage()
+	self._simagelefticon:UnLoadImage()
+	self._simagerighticon:UnLoadImage()
 end
 
-return var_0_0
+return CharacterSkinGainView

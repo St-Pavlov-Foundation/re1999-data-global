@@ -1,12 +1,14 @@
-﻿module("modules.logic.fight.model.mo.FightSkillDisplayMO", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/mo/FightSkillDisplayMO.lua
 
-local var_0_0 = pureTable("FightSkillDisplayMO")
+module("modules.logic.fight.model.mo.FightSkillDisplayMO", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.entityId = nil
-	arg_1_0.skillId = nil
-	arg_1_0.targetId = nil
-	arg_1_0.isCopyCard = nil
+local FightSkillDisplayMO = pureTable("FightSkillDisplayMO")
+
+function FightSkillDisplayMO:ctor()
+	self.entityId = nil
+	self.skillId = nil
+	self.targetId = nil
+	self.isCopyCard = nil
 end
 
-return var_0_0
+return FightSkillDisplayMO

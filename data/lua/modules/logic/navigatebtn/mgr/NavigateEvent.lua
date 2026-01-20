@@ -1,9 +1,11 @@
-﻿module("modules.logic.navigatebtn.mgr.NavigateEvent", package.seeall)
+﻿-- chunkname: @modules/logic/navigatebtn/mgr/NavigateEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.navigatebtn.mgr.NavigateEvent", package.seeall)
 
-var_0_0.StoryNext = 1
-var_0_0.BeforeClickHome = 9
-var_0_0.ClickHome = 10
+local NavigateEvent = _M
 
-return var_0_0
+NavigateEvent.StoryNext = 1
+NavigateEvent.BeforeClickHome = 9
+NavigateEvent.ClickHome = 10
+
+return NavigateEvent

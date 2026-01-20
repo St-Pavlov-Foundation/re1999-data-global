@@ -1,13 +1,15 @@
-﻿module("modules.logic.room.define.RoomSummonEnum", package.seeall)
+﻿-- chunkname: @modules/logic/room/define/RoomSummonEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.room.define.RoomSummonEnum", package.seeall)
 
-var_0_0.SummonType = {
+local RoomSummonEnum = _M
+
+RoomSummonEnum.SummonType = {
 	ItemGet = 3,
 	Summon = 1,
 	Incubate = 2
 }
-var_0_0.SummonMode = {
+RoomSummonEnum.SummonMode = {
 	{
 		CameraId = 2229,
 		EggRoot = "1/v2a2_bxhy_simulate_kafeiguan_01/v2a2_bxhy_simulate_niudanji_01/mesh/scale",
@@ -52,4 +54,4 @@ var_0_0.SummonMode = {
 	}
 }
 
-return var_0_0
+return RoomSummonEnum

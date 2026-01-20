@@ -1,53 +1,57 @@
-﻿module("modules.logic.explore.view.ExploreRewardViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/explore/view/ExploreRewardViewContainer.lua
 
-local var_0_0 = class("ExploreRewardViewContainer", BaseViewContainer)
+module("modules.logic.explore.view.ExploreRewardViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = ListScrollParam.New()
+local ExploreRewardViewContainer = class("ExploreRewardViewContainer", BaseViewContainer)
 
-	var_1_0.scrollGOPath = "mask/#scroll_view1"
-	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_0.prefabUrl = "#go_rewarditem"
-	var_1_0.cellClass = ExploreBonusItem
-	var_1_0.scrollDir = ScrollEnum.ScrollDirV
-	var_1_0.lineCount = 1
-	var_1_0.cellWidth = 700
-	var_1_0.cellHeight = 154
-	var_1_0.cellSpaceH = 0
-	var_1_0.cellSpaceV = 0
-	var_1_0.startSpace = 25
-	var_1_0.frameUpdateMs = 100
+function ExploreRewardViewContainer:buildViews()
+	local scrollParam = ListScrollParam.New()
 
-	local var_1_1 = ListScrollParam.New()
+	scrollParam.scrollGOPath = "mask/#scroll_view1"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "#go_rewarditem"
+	scrollParam.cellClass = ExploreBonusItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 700
+	scrollParam.cellHeight = 154
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 0
+	scrollParam.startSpace = 25
+	scrollParam.frameUpdateMs = 100
 
-	var_1_1.scrollGOPath = "mask/#scroll_view2"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_1.prefabUrl = "#go_rewarditem"
-	var_1_1.cellClass = ExploreBonusItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 1
-	var_1_1.cellWidth = 700
-	var_1_1.cellHeight = 154
-	var_1_1.cellSpaceH = 0
-	var_1_1.cellSpaceV = 0
-	var_1_1.startSpace = 25
-	var_1_1.frameUpdateMs = 100
+	local scrollParam2 = ListScrollParam.New()
 
-	local var_1_2 = {}
+	scrollParam2.scrollGOPath = "mask/#scroll_view2"
+	scrollParam2.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam2.prefabUrl = "#go_rewarditem"
+	scrollParam2.cellClass = ExploreBonusItem
+	scrollParam2.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam2.lineCount = 1
+	scrollParam2.cellWidth = 700
+	scrollParam2.cellHeight = 154
+	scrollParam2.cellSpaceH = 0
+	scrollParam2.cellSpaceV = 0
+	scrollParam2.startSpace = 25
+	scrollParam2.frameUpdateMs = 100
 
-	for iter_1_0 = 1, 10 do
-		var_1_2[iter_1_0] = (iter_1_0 - 1) * 0.06
+	local animationDelayTimes = {}
+
+	for i = 1, 10 do
+		local delayTime = (i - 1) * 0.06
+
+		animationDelayTimes[i] = delayTime
 	end
 
 	return {
 		ExploreRewardView.New(),
-		LuaListScrollViewWithAnimator.New(ExploreTaskModel.instance:getTaskList(1), var_1_0, var_1_2),
-		LuaListScrollViewWithAnimator.New(ExploreTaskModel.instance:getTaskList(2), var_1_1, var_1_2),
+		LuaListScrollViewWithAnimator.New(ExploreTaskModel.instance:getTaskList(1), scrollParam, animationDelayTimes),
+		LuaListScrollViewWithAnimator.New(ExploreTaskModel.instance:getTaskList(2), scrollParam2, animationDelayTimes),
 		TabViewGroup.New(1, "#go_btns")
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function ExploreRewardViewContainer:buildTabViews(tabContainerId)
 	return {
 		NavigateButtonsView.New({
 			true,
@@ -57,4 +61,4 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	}
 end
 
-return var_0_0
+return ExploreRewardViewContainer

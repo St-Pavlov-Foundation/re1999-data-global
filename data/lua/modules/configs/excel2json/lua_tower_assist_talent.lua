@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_tower_assist_talent", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_tower_assist_talent.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_tower_assist_talent", package.seeall)
+
+local lua_tower_assist_talent = {}
+local fields = {
 	bossId = 1,
 	nodeId = 2,
 	startNode = 4,
@@ -17,17 +19,17 @@ local var_0_1 = {
 	preNodeIds = 3,
 	bossPassiveSkills = 6
 }
-local var_0_2 = {
+local primaryKey = {
 	"bossId",
 	"nodeId"
 }
-local var_0_3 = {
+local mlStringKey = {
 	nodeName = 1,
 	nodeDesc = 2
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_tower_assist_talent.onLoad(json)
+	lua_tower_assist_talent.configList, lua_tower_assist_talent.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_tower_assist_talent

@@ -1,11 +1,13 @@
-﻿module("modules.logic.messagebox.view.TopMessageBoxViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/messagebox/view/TopMessageBoxViewContainer.lua
 
-local var_0_0 = class("TopMessageBoxViewContainer", BaseViewContainer)
+module("modules.logic.messagebox.view.TopMessageBoxViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local TopMessageBoxViewContainer = class("TopMessageBoxViewContainer", BaseViewContainer)
+
+function TopMessageBoxViewContainer:buildViews()
 	return {
 		MessageBoxView.New()
 	}
 end
 
-return var_0_0
+return TopMessageBoxViewContainer

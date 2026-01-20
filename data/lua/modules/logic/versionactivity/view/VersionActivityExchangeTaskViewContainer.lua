@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity.view.VersionActivityExchangeTaskViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity/view/VersionActivityExchangeTaskViewContainer.lua
 
-local var_0_0 = class("VersionActivityExchangeTaskViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity.view.VersionActivityExchangeTaskViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local VersionActivityExchangeTaskViewContainer = class("VersionActivityExchangeTaskViewContainer", BaseViewContainer)
+
+function VersionActivityExchangeTaskViewContainer:buildViews()
 	return {
 		VersionActivityExchangeTaskView.New()
 	}
 end
 
-return var_0_0
+return VersionActivityExchangeTaskViewContainer

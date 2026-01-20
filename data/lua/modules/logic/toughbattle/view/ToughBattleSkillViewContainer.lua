@@ -1,11 +1,13 @@
-﻿module("modules.logic.toughbattle.view.ToughBattleSkillViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/toughbattle/view/ToughBattleSkillViewContainer.lua
 
-local var_0_0 = class("ToughBattleSkillViewContainer", BaseViewContainer)
+module("modules.logic.toughbattle.view.ToughBattleSkillViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local ToughBattleSkillViewContainer = class("ToughBattleSkillViewContainer", BaseViewContainer)
+
+function ToughBattleSkillViewContainer:buildViews()
 	return {
 		ToughBattleSkillView.New()
 	}
 end
 
-return var_0_0
+return ToughBattleSkillViewContainer

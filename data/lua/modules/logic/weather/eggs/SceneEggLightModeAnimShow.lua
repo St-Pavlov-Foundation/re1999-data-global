@@ -1,37 +1,39 @@
-﻿module("modules.logic.weather.eggs.SceneEggLightModeAnimShow", package.seeall)
+﻿-- chunkname: @modules/logic/weather/eggs/SceneEggLightModeAnimShow.lua
 
-local var_0_0 = class("SceneEggLightModeAnimShow", SceneBaseEgg)
+module("modules.logic.weather.eggs.SceneEggLightModeAnimShow", package.seeall)
 
-function var_0_0._onInit(arg_1_0)
-	arg_1_0._animNameList = string.split(arg_1_0._eggConfig.actionParams, "#")
+local SceneEggLightModeAnimShow = class("SceneEggLightModeAnimShow", SceneBaseEgg)
 
-	arg_1_0:setGoListVisible(false)
+function SceneEggLightModeAnimShow:_onInit()
+	self._animNameList = string.split(self._eggConfig.actionParams, "#")
+
+	self:setGoListVisible(false)
 end
 
-function var_0_0._onEnable(arg_2_0)
-	if not arg_2_0._lightMode then
+function SceneEggLightModeAnimShow:_onEnable()
+	if not self._lightMode then
 		return
 	end
 
-	local var_2_0 = arg_2_0._animNameList[arg_2_0._lightMode]
+	local animName = self._animNameList[self._lightMode]
 
-	if not var_2_0 then
+	if not animName then
 		return
 	end
 
-	arg_2_0:playAnim(var_2_0)
+	self:playAnim(animName)
 end
 
-function var_0_0._onDisable(arg_3_0)
-	arg_3_0:setGoListVisible(false)
+function SceneEggLightModeAnimShow:_onDisable()
+	self:setGoListVisible(false)
 end
 
-function var_0_0._onReportChange(arg_4_0, arg_4_1)
-	if not arg_4_1 then
+function SceneEggLightModeAnimShow:_onReportChange(report)
+	if not report then
 		return
 	end
 
-	arg_4_0._lightMode = arg_4_1.lightMode
+	self._lightMode = report.lightMode
 end
 
-return var_0_0
+return SceneEggLightModeAnimShow

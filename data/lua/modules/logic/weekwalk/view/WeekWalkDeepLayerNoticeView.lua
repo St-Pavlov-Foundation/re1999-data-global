@@ -1,236 +1,240 @@
-﻿module("modules.logic.weekwalk.view.WeekWalkDeepLayerNoticeView", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk/view/WeekWalkDeepLayerNoticeView.lua
 
-local var_0_0 = class("WeekWalkDeepLayerNoticeView", BaseView)
+module("modules.logic.weekwalk.view.WeekWalkDeepLayerNoticeView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg1")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._simagemask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_mask")
-	arg_1_0._simagebg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg2")
-	arg_1_0._txtlastprogress = gohelper.findChildText(arg_1_0.viewGO, "rule/#txt_lastprogress")
-	arg_1_0._imageruleicon = gohelper.findChildImage(arg_1_0.viewGO, "rule/ruleinfo/#image_ruleicon")
-	arg_1_0._imageruletag = gohelper.findChildImage(arg_1_0.viewGO, "rule/ruleinfo/#image_ruletag")
-	arg_1_0._txtruledesc = gohelper.findChildText(arg_1_0.viewGO, "rule/ruleinfo/#txt_ruledesc")
-	arg_1_0._simageruledescicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "rule/ruleinfo/mask/#simage_ruledescicon")
-	arg_1_0._scrollrewards = gohelper.findChildScrollRect(arg_1_0.viewGO, "rewards/#scroll_rewards")
-	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.viewGO, "rewards/#scroll_rewards/Viewport/Content/#go_rewarditem")
-	arg_1_0._btnstart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rewards/#btn_start")
-	arg_1_0._btnruledetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rule/ruleinfo/#btn_ruledetail")
+local WeekWalkDeepLayerNoticeView = class("WeekWalkDeepLayerNoticeView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function WeekWalkDeepLayerNoticeView:onInitView()
+	self._simagebg1 = gohelper.findChildSingleImage(self.viewGO, "#simage_bg1")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._simagemask = gohelper.findChildSingleImage(self.viewGO, "#simage_mask")
+	self._simagebg2 = gohelper.findChildSingleImage(self.viewGO, "#simage_bg2")
+	self._txtlastprogress = gohelper.findChildText(self.viewGO, "rule/#txt_lastprogress")
+	self._imageruleicon = gohelper.findChildImage(self.viewGO, "rule/ruleinfo/#image_ruleicon")
+	self._imageruletag = gohelper.findChildImage(self.viewGO, "rule/ruleinfo/#image_ruletag")
+	self._txtruledesc = gohelper.findChildText(self.viewGO, "rule/ruleinfo/#txt_ruledesc")
+	self._simageruledescicon = gohelper.findChildSingleImage(self.viewGO, "rule/ruleinfo/mask/#simage_ruledescicon")
+	self._scrollrewards = gohelper.findChildScrollRect(self.viewGO, "rewards/#scroll_rewards")
+	self._gorewarditem = gohelper.findChild(self.viewGO, "rewards/#scroll_rewards/Viewport/Content/#go_rewarditem")
+	self._btnstart = gohelper.findChildButtonWithAudio(self.viewGO, "rewards/#btn_start")
+	self._btnruledetail = gohelper.findChildButtonWithAudio(self.viewGO, "rule/ruleinfo/#btn_ruledetail")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnstart:AddClickListener(arg_2_0._btnstartOnClick, arg_2_0)
-	arg_2_0._btnruledetail:AddClickListener(arg_2_0._btnruledetailOnClick, arg_2_0)
+function WeekWalkDeepLayerNoticeView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnstart:AddClickListener(self._btnstartOnClick, self)
+	self._btnruledetail:AddClickListener(self._btnruledetailOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnstart:RemoveClickListener()
-	arg_3_0._btnruledetail:RemoveClickListener()
+function WeekWalkDeepLayerNoticeView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btnstart:RemoveClickListener()
+	self._btnruledetail:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function WeekWalkDeepLayerNoticeView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnstartOnClick(arg_5_0)
-	arg_5_0._clickStart = true
+function WeekWalkDeepLayerNoticeView:_btnstartOnClick()
+	self._clickStart = true
 
-	arg_5_0:openWeekWalkView()
+	self:openWeekWalkView()
 end
 
-function var_0_0._btnruledetailOnClick(arg_6_0)
+function WeekWalkDeepLayerNoticeView:_btnruledetailOnClick()
 	WeekWalkController.instance:openWeekWalkRuleView()
 end
 
-function var_0_0.openWeekWalkView(arg_7_0)
+function WeekWalkDeepLayerNoticeView:openWeekWalkView()
 	module_views_preloader.WeekWalkLayerViewPreload(function()
-		arg_7_0:delayOpenWeekWalkView()
+		self:delayOpenWeekWalkView()
 	end)
 end
 
-function var_0_0.delayOpenWeekWalkView(arg_9_0)
-	arg_9_0:closeThis()
+function WeekWalkDeepLayerNoticeView:delayOpenWeekWalkView()
+	self:closeThis()
 	WeekWalkController.instance:openWeekWalkLayerView()
 end
 
-function var_0_0._editableInitView(arg_10_0)
-	arg_10_0._info = WeekWalkModel.instance:getInfo()
+function WeekWalkDeepLayerNoticeView:_editableInitView()
+	self._info = WeekWalkModel.instance:getInfo()
 
-	if arg_10_0._info.isPopDeepSettle then
-		arg_10_0._info.isPopDeepSettle = false
+	if self._info.isPopDeepSettle then
+		self._info.isPopDeepSettle = false
 
 		WeekwalkRpc.instance:sendMarkPopDeepSettleRequest()
 	end
 
-	arg_10_0._simagebg1:LoadImage(ResUrl.getWeekWalkBg("full/beijing_shen.jpg"))
-	arg_10_0._simagemask:LoadImage(ResUrl.getWeekWalkBg("zhezhao.png"))
-	arg_10_0._simagebg2:LoadImage(ResUrl.getWeekWalkBg("shenmian_tcdi.png"))
+	self._simagebg1:LoadImage(ResUrl.getWeekWalkBg("full/beijing_shen.jpg"))
+	self._simagemask:LoadImage(ResUrl.getWeekWalkBg("zhezhao.png"))
+	self._simagebg2:LoadImage(ResUrl.getWeekWalkBg("shenmian_tcdi.png"))
 end
 
-function var_0_0.onUpdateParam(arg_11_0)
+function WeekWalkDeepLayerNoticeView:onUpdateParam()
 	return
 end
 
-function var_0_0._getRewardList()
-	local var_12_0 = {}
+function WeekWalkDeepLayerNoticeView._getRewardList()
+	local rewardSet = {}
 
-	for iter_12_0, iter_12_1 in ipairs(lua_task_weekwalk.configList) do
-		if iter_12_1.minTypeId == 4 and WeekWalkTaskListModel.instance:checkPeriods(iter_12_1) then
-			local var_12_1 = GameUtil.splitString2(iter_12_1.bonus, true, "|", "#")
+	for _, v in ipairs(lua_task_weekwalk.configList) do
+		if v.minTypeId == 4 and WeekWalkTaskListModel.instance:checkPeriods(v) then
+			local rewardList = GameUtil.splitString2(v.bonus, true, "|", "#")
 
-			for iter_12_2, iter_12_3 in ipairs(var_12_1) do
-				local var_12_2 = iter_12_3[1]
-				local var_12_3 = iter_12_3[2]
-				local var_12_4 = iter_12_3[3]
-				local var_12_5 = string.format("%s_%s", var_12_2, var_12_3)
-				local var_12_6 = var_12_0[var_12_5]
+			for i, reward in ipairs(rewardList) do
+				local type, id, num = reward[1], reward[2], reward[3]
+				local key = string.format("%s_%s", type, id)
+				local existReward = rewardSet[key]
 
-				if not var_12_6 then
-					var_12_0[var_12_5] = iter_12_3
+				if not existReward then
+					rewardSet[key] = reward
 				else
-					var_12_6[3] = var_12_6[3] + var_12_4
-					var_12_0[var_12_5] = var_12_6
+					existReward[3] = existReward[3] + num
+					rewardSet[key] = existReward
 				end
 			end
 		end
 	end
 
-	local var_12_7 = {}
+	local list = {}
 
-	for iter_12_4, iter_12_5 in pairs(var_12_0) do
-		table.insert(var_12_7, iter_12_5)
+	for i, reward in pairs(rewardSet) do
+		table.insert(list, reward)
 	end
 
-	table.sort(var_12_7, DungeonWeekWalkView._sort)
+	table.sort(list, DungeonWeekWalkView._sort)
 
-	return var_12_7
+	return list
 end
 
-function var_0_0._showRewardList(arg_13_0)
-	local var_13_0 = var_0_0._getRewardList()
+function WeekWalkDeepLayerNoticeView:_showRewardList()
+	local list = WeekWalkDeepLayerNoticeView._getRewardList()
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
-		local var_13_1 = gohelper.cloneInPlace(arg_13_0._gorewarditem)
+	for i, reward in ipairs(list) do
+		local go = gohelper.cloneInPlace(self._gorewarditem)
 
-		gohelper.setActive(var_13_1, true)
+		gohelper.setActive(go, true)
 
-		local var_13_2 = IconMgr.instance:getCommonItemIcon(gohelper.findChild(var_13_1, "go_item"))
+		local item = IconMgr.instance:getCommonItemIcon(gohelper.findChild(go, "go_item"))
 
-		var_13_2:setMOValue(iter_13_1[1], iter_13_1[2], iter_13_1[3])
-		var_13_2:isShowCount(true)
-		var_13_2:setCountFontSize(31)
+		item:setMOValue(reward[1], reward[2], reward[3])
+		item:isShowCount(true)
+		item:setCountFontSize(31)
 	end
 end
 
-function var_0_0.onOpen(arg_14_0)
-	if arg_14_0.viewParam and arg_14_0.viewParam.openFromGuide then
-		gohelper.findChildText(arg_14_0.viewGO, "rule/resettip").text = luaLang("p_weekwalkdeeplayernoticeview_title_open")
+function WeekWalkDeepLayerNoticeView:onOpen()
+	local guideOpen = self.viewParam and self.viewParam.openFromGuide
 
-		local var_14_0 = gohelper.findChild(arg_14_0.viewGO, "rewards")
+	if guideOpen then
+		local txt = gohelper.findChildText(self.viewGO, "rule/resettip")
 
-		recthelper.setAnchorY(var_14_0.transform, -208)
-		gohelper.setActive(arg_14_0._txtlastprogress, false)
+		txt.text = luaLang("p_weekwalkdeeplayernoticeview_title_open")
+
+		local rewards = gohelper.findChild(self.viewGO, "rewards")
+
+		recthelper.setAnchorY(rewards.transform, -208)
+		gohelper.setActive(self._txtlastprogress, false)
 	end
 
-	local var_14_1 = arg_14_0._info.deepProgress
-	local var_14_2 = string.splitToNumber(var_14_1, "#")
-	local var_14_3 = var_14_2[1]
-	local var_14_4 = var_14_2[2]
+	local deepProgress = self._info.deepProgress
+	local progressParamList = string.splitToNumber(deepProgress, "#")
+	local layerId = progressParamList[1]
+	local battleIndex = progressParamList[2]
 
-	if var_14_3 and var_14_4 then
-		local var_14_5 = lua_weekwalk.configDict[var_14_3]
-		local var_14_6 = lua_weekwalk_scene.configDict[var_14_5.sceneId]
-		local var_14_7 = {
-			var_14_6.name,
-			"0" .. (var_14_4 or 1)
+	if layerId and battleIndex then
+		local layerConfig = lua_weekwalk.configDict[layerId]
+		local sceneConfig = lua_weekwalk_scene.configDict[layerConfig.sceneId]
+		local tag = {
+			sceneConfig.name,
+			"0" .. (battleIndex or 1)
 		}
 
-		arg_14_0._txtlastprogress.text = GameUtil.getSubPlaceholderLuaLang(luaLang("weekwalkdeeplayernoticeview_lastprogress"), var_14_7)
+		self._txtlastprogress.text = GameUtil.getSubPlaceholderLuaLang(luaLang("weekwalkdeeplayernoticeview_lastprogress"), tag)
 	else
-		arg_14_0._txtlastprogress.text = luaLang("weekwalkdeeplayernoticeview_noprogress")
+		self._txtlastprogress.text = luaLang("weekwalkdeeplayernoticeview_noprogress")
 	end
 
-	arg_14_0:_showRewardList()
+	self:_showRewardList()
 
-	local var_14_8 = arg_14_0._info.issueId
-	local var_14_9 = lua_weekwalk_rule.configDict[var_14_8]
-	local var_14_10 = var_14_9.isCn == 1
-	local var_14_11
+	local issueId = self._info.issueId
+	local ruleConfig = lua_weekwalk_rule.configDict[issueId]
+	local isIncludeCn = ruleConfig.isCn == 1
+	local icon
 
-	if var_14_10 then
-		local var_14_12 = ResUrl.getWeekWalkIconLangPath(var_14_9.icon)
+	if isIncludeCn then
+		icon = ResUrl.getWeekWalkIconLangPath(ruleConfig.icon)
 	else
-		local var_14_13 = ResUrl.getWeekWalkBg("rule/" .. var_14_9.icon .. ".png")
+		icon = ResUrl.getWeekWalkBg("rule/" .. ruleConfig.icon .. ".png")
 	end
 
-	local var_14_14 = ResUrl.getWeekWalkBg("rule/" .. var_14_9.icon .. ".png")
+	icon = ResUrl.getWeekWalkBg("rule/" .. ruleConfig.icon .. ".png")
 
-	arg_14_0._simageruledescicon:LoadImage(var_14_14)
+	self._simageruledescicon:LoadImage(icon)
 
-	local var_14_15 = var_14_9.additionRule
+	local additionRule = ruleConfig.additionRule
 
-	if string.nilorempty(var_14_15) then
+	if string.nilorempty(additionRule) then
 		return
 	end
 
-	local var_14_16 = GameUtil.splitString2(var_14_15, true, "|", "#")
+	local ruleList = GameUtil.splitString2(additionRule, true, "|", "#")
 
-	arg_14_0._ruleList = var_14_16
+	self._ruleList = ruleList
 
-	for iter_14_0, iter_14_1 in ipairs(var_14_16) do
-		local var_14_17 = iter_14_1[1]
-		local var_14_18 = iter_14_1[2]
-		local var_14_19 = lua_rule.configDict[var_14_18]
+	for i, v in ipairs(ruleList) do
+		local targetId = v[1]
+		local ruleId = v[2]
+		local ruleCo = lua_rule.configDict[ruleId]
 
-		arg_14_0:_setRuleDescItem(var_14_19, var_14_17)
+		self:_setRuleDescItem(ruleCo, targetId)
 
 		break
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.WeekWalk.play_ui_artificial_installation_open)
-	NavigateMgr.instance:addEscape(arg_14_0.viewName, arg_14_0.closeThis, arg_14_0)
+	NavigateMgr.instance:addEscape(self.viewName, self.closeThis, self)
 end
 
-function var_0_0._setRuleDescItem(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0 = {
+function WeekWalkDeepLayerNoticeView:_setRuleDescItem(ruleCo, targetId)
+	local tagColor = {
 		"#6384E5",
 		"#D05B4C",
 		"#C7b376"
 	}
 
-	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(arg_15_0._imageruleicon, arg_15_1.icon)
-	UISpriteSetMgr.instance:setCommonSprite(arg_15_0._imageruletag, "wz_" .. arg_15_2)
+	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(self._imageruleicon, ruleCo.icon)
+	UISpriteSetMgr.instance:setCommonSprite(self._imageruletag, "wz_" .. targetId)
 
-	local var_15_1 = string.gsub(arg_15_1.desc, "%【(.-)%】", "<color=#FF906A>[%1]</color>")
-	local var_15_2 = "\n" .. HeroSkillModel.instance:getEffectTagDescFromDescRecursion(arg_15_1.desc, var_15_0[1])
-	local var_15_3 = luaLang("dungeon_add_rule_target_" .. arg_15_2)
-	local var_15_4 = var_15_0[arg_15_2]
-	local var_15_5 = var_15_1 .. var_15_2
+	local descContent = string.gsub(ruleCo.desc, "%【(.-)%】", "<color=#FF906A>[%1]</color>")
+	local wordContent = "\n" .. HeroSkillModel.instance:getEffectTagDescFromDescRecursion(ruleCo.desc, tagColor[1])
+	local side = luaLang("dungeon_add_rule_target_" .. targetId)
+	local color = tagColor[targetId]
 
-	arg_15_0._txtruledesc.text = formatLuaLang("fight_rule_desc", var_15_4, var_15_3, var_15_5)
+	descContent = descContent .. wordContent
+	self._txtruledesc.text = formatLuaLang("fight_rule_desc", color, side, descContent)
 end
 
-function var_0_0.onClose(arg_16_0)
-	arg_16_0._simageruledescicon:UnLoadImage()
+function WeekWalkDeepLayerNoticeView:onClose()
+	self._simageruledescicon:UnLoadImage()
 	AudioMgr.instance:trigger(AudioEnum.WeekWalk.play_ui_artificial_settlement_close)
 end
 
-function var_0_0.onCloseFinish(arg_17_0)
-	if not arg_17_0._clickStart then
+function WeekWalkDeepLayerNoticeView:onCloseFinish()
+	if not self._clickStart then
 		WeekWalk_2Controller.instance:checkOpenWeekWalk_2DeepLayerNoticeView()
 	end
 end
 
-function var_0_0.onDestroyView(arg_18_0)
-	arg_18_0._simagebg1:UnLoadImage()
-	arg_18_0._simagemask:UnLoadImage()
-	arg_18_0._simagebg2:UnLoadImage()
+function WeekWalkDeepLayerNoticeView:onDestroyView()
+	self._simagebg1:UnLoadImage()
+	self._simagemask:UnLoadImage()
+	self._simagebg2:UnLoadImage()
 end
 
-return var_0_0
+return WeekWalkDeepLayerNoticeView

@@ -1,118 +1,118 @@
-﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.model.VersionActivity1_2DungeonModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/versionactivity1_2dungeon/model/VersionActivity1_2DungeonModel.lua
 
-local var_0_0 = class("VersionActivity1_2DungeonModel", BaseModel)
+module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.model.VersionActivity1_2DungeonModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local VersionActivity1_2DungeonModel = class("VersionActivity1_2DungeonModel", BaseModel)
+
+function VersionActivity1_2DungeonModel:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function VersionActivity1_2DungeonModel:reInit()
 	return
 end
 
-function var_0_0.getTrapPutting(arg_3_0)
-	return arg_3_0.putTrap ~= 0 and arg_3_0.putTrap
+function VersionActivity1_2DungeonModel:getTrapPutting()
+	return self.putTrap ~= 0 and self.putTrap
 end
 
-function var_0_0.onReceiveGet116InfosReply(arg_4_0, arg_4_1)
-	arg_4_0._activity_id = arg_4_1.activityId
-	arg_4_0.element_data = {}
+function VersionActivity1_2DungeonModel:onReceiveGet116InfosReply(proto)
+	self._activity_id = proto.activityId
+	self.element_data = {}
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_1.infos) do
-		local var_4_0 = iter_4_1.elementId
-		local var_4_1 = {
-			elementId = iter_4_1.elementId,
-			level = iter_4_1.level
-		}
+	for i, v in ipairs(proto.infos) do
+		local element_id = v.elementId
+		local tab = {}
 
-		arg_4_0.element_data[var_4_0] = var_4_1
+		tab.elementId = v.elementId
+		tab.level = v.level
+		self.element_data[element_id] = tab
 	end
 
-	arg_4_0.trapIds = {}
+	self.trapIds = {}
 
-	for iter_4_2, iter_4_3 in ipairs(arg_4_1.trapIds) do
-		arg_4_0.trapIds[iter_4_3] = iter_4_3
+	for i, v in ipairs(proto.trapIds) do
+		self.trapIds[v] = v
 	end
 
-	arg_4_0.putTrap = arg_4_1.putTrap
-	arg_4_0.spStatus = {}
+	self.putTrap = proto.putTrap
+	self.spStatus = {}
 
-	for iter_4_4, iter_4_5 in ipairs(arg_4_1.spStatus) do
-		local var_4_2 = iter_4_5.episodeId
-		local var_4_3 = {
-			episodeId = iter_4_5.episodeId,
-			chapterId = iter_4_5.chapterId,
-			status = iter_4_5.status,
-			refreshTime = iter_4_5.refreshTime
-		}
+	for i, v in ipairs(proto.spStatus) do
+		local episodeId = v.episodeId
+		local tab = {}
 
-		arg_4_0.spStatus[var_4_2] = var_4_3
+		tab.episodeId = v.episodeId
+		tab.chapterId = v.chapterId
+		tab.status = v.status
+		tab.refreshTime = v.refreshTime
+		self.spStatus[episodeId] = tab
 	end
 
 	VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.onReceiveGet116InfosReply)
 end
 
-function var_0_0.getSpStatus(arg_5_0, arg_5_1)
-	return arg_5_0.spStatus and arg_5_0.spStatus[arg_5_1]
+function VersionActivity1_2DungeonModel:getSpStatus(episodeId)
+	return self.spStatus and self.spStatus[episodeId]
 end
 
-function var_0_0.onReceiveAct116InfoUpdatePush(arg_6_0, arg_6_1)
-	arg_6_0.newSp = {}
+function VersionActivity1_2DungeonModel:onReceiveAct116InfoUpdatePush(proto)
+	self.newSp = {}
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_1.spStatus) do
-		if arg_6_0.spStatus then
-			if iter_6_1.status == 1 and arg_6_0.spStatus[iter_6_1.episodeId].status ~= 1 then
-				arg_6_0.newSp[iter_6_1.episodeId] = true
+	for i, v in ipairs(proto.spStatus) do
+		if self.spStatus then
+			if v.status == 1 and self.spStatus[v.episodeId].status ~= 1 then
+				self.newSp[v.episodeId] = true
 			end
 		else
-			arg_6_0.newSp[iter_6_1.episodeId] = true
+			self.newSp[v.episodeId] = true
 		end
 	end
 
-	arg_6_0:onReceiveGet116InfosReply(arg_6_1)
+	self:onReceiveGet116InfosReply(proto)
 	VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.onReceiveAct116InfoUpdatePush)
 end
 
-function var_0_0.onReceiveUpgradeElementReply(arg_7_0, arg_7_1)
-	arg_7_0.element_data = arg_7_0.element_data or {}
-	arg_7_0.element_data[arg_7_1.elementId] = {}
-	arg_7_0.element_data[arg_7_1.elementId].elementId = arg_7_1.elementId
-	arg_7_0.element_data[arg_7_1.elementId].level = arg_7_1.level
+function VersionActivity1_2DungeonModel:onReceiveUpgradeElementReply(proto)
+	self.element_data = self.element_data or {}
+	self.element_data[proto.elementId] = {}
+	self.element_data[proto.elementId].elementId = proto.elementId
+	self.element_data[proto.elementId].level = proto.level
 
-	VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.onReceiveUpgradeElementReply, arg_7_1.elementId)
+	VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.onReceiveUpgradeElementReply, proto.elementId)
 end
 
-function var_0_0.getElementData(arg_8_0, arg_8_1)
-	return arg_8_0.element_data and arg_8_0.element_data[arg_8_1]
+function VersionActivity1_2DungeonModel:getElementData(id)
+	return self.element_data and self.element_data[id]
 end
 
-function var_0_0.onReceiveBuildTrapReply(arg_9_0, arg_9_1)
-	arg_9_0.trapIds = arg_9_0.trapIds or {}
-	arg_9_0.trapIds[arg_9_1.trapId] = arg_9_1.trapId
+function VersionActivity1_2DungeonModel:onReceiveBuildTrapReply(proto)
+	self.trapIds = self.trapIds or {}
+	self.trapIds[proto.trapId] = proto.trapId
 
-	VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.onReceiveBuildTrapReply, arg_9_1.trapId)
+	VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.onReceiveBuildTrapReply, proto.trapId)
 end
 
-function var_0_0.onReceivePutTrapReply(arg_10_0, arg_10_1)
-	arg_10_0.putTrap = arg_10_1.trapId
+function VersionActivity1_2DungeonModel:onReceivePutTrapReply(proto)
+	self.putTrap = proto.trapId
 
 	VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.onReceivePutTrapReply)
 end
 
-function var_0_0.getCurActivityID(arg_11_0)
-	return arg_11_0._activity_id or VersionActivity1_2Enum.ActivityId.Dungeon
+function VersionActivity1_2DungeonModel:getCurActivityID()
+	return self._activity_id or VersionActivity1_2Enum.ActivityId.Dungeon
 end
 
-function var_0_0.getAttrUpDic(arg_12_0)
-	local var_12_0 = {}
+function VersionActivity1_2DungeonModel:getAttrUpDic()
+	local _configList = {}
 
-	for iter_12_0, iter_12_1 in pairs(arg_12_0.element_data) do
-		if iter_12_1.level > 0 then
-			local var_12_1 = VersionActivity1_2DungeonConfig.instance:getBuildingConfigsByElementID(iter_12_1.elementId)
+	for k, v in pairs(self.element_data) do
+		if v.level > 0 then
+			local configList = VersionActivity1_2DungeonConfig.instance:getBuildingConfigsByElementID(v.elementId)
 
-			for iter_12_2, iter_12_3 in pairs(var_12_1) do
-				if iter_12_3.level == iter_12_1.level then
-					table.insert(var_12_0, iter_12_3)
+			for index, config in pairs(configList) do
+				if config.level == v.level then
+					table.insert(_configList, config)
 
 					break
 				end
@@ -120,36 +120,36 @@ function var_0_0.getAttrUpDic(arg_12_0)
 		end
 	end
 
-	local var_12_2 = {}
+	local upDic = {}
 
-	for iter_12_4, iter_12_5 in ipairs(var_12_0) do
-		if iter_12_5.buildingType == 2 then
-			local var_12_3 = string.split(iter_12_5.configType, "|")
+	for i, config in ipairs(_configList) do
+		if config.buildingType == 2 then
+			local arr = string.split(config.configType, "|")
 
-			for iter_12_6, iter_12_7 in ipairs(var_12_3) do
-				local var_12_4 = string.splitToNumber(iter_12_7, "#")
-				local var_12_5 = var_12_4[1]
-				local var_12_6 = var_12_4[2]
+			for index, attrStr in ipairs(arr) do
+				local attrData = string.splitToNumber(attrStr, "#")
+				local attrId = attrData[1]
+				local addValue = attrData[2]
 
-				var_12_2[var_12_5] = (var_12_2[var_12_5] or 0) + var_12_6
+				upDic[attrId] = (upDic[attrId] or 0) + addValue
 			end
 		end
 	end
 
-	return var_12_2
+	return upDic
 end
 
-function var_0_0.getBuildingGainList(arg_13_0)
-	local var_13_0 = {}
+function VersionActivity1_2DungeonModel:getBuildingGainList()
+	local _configList = {}
 
-	if arg_13_0.element_data then
-		for iter_13_0, iter_13_1 in pairs(arg_13_0.element_data) do
-			if iter_13_1.level > 0 then
-				local var_13_1 = VersionActivity1_2DungeonConfig.instance:getBuildingConfigsByElementID(iter_13_1.elementId)
+	if self.element_data then
+		for k, v in pairs(self.element_data) do
+			if v.level > 0 then
+				local configList = VersionActivity1_2DungeonConfig.instance:getBuildingConfigsByElementID(v.elementId)
 
-				for iter_13_2, iter_13_3 in pairs(var_13_1) do
-					if (iter_13_3.buildingType == 2 or iter_13_3.buildingType == 3) and iter_13_3.level == iter_13_1.level then
-						table.insert(var_13_0, iter_13_3)
+				for index, config in pairs(configList) do
+					if (config.buildingType == 2 or config.buildingType == 3) and config.level == v.level then
+						table.insert(_configList, config)
 
 						break
 					end
@@ -158,100 +158,101 @@ function var_0_0.getBuildingGainList(arg_13_0)
 		end
 	end
 
-	if arg_13_0.putTrap ~= 0 then
-		table.insert(var_13_0, lua_activity116_building.configDict[arg_13_0.putTrap])
+	if self.putTrap ~= 0 then
+		table.insert(_configList, lua_activity116_building.configDict[self.putTrap])
 	end
 
-	return var_13_0
+	return _configList
 end
 
-function var_0_0.haveNextLevel(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_0:getElementData(arg_14_1)
+function VersionActivity1_2DungeonModel:haveNextLevel(elementId)
+	local elementData = self:getElementData(elementId)
 
-	if not var_14_0 then
+	if not elementData then
 		return true
 	end
 
-	local var_14_1 = {}
+	local levelList = {}
 
-	for iter_14_0, iter_14_1 in pairs(VersionActivity1_2DungeonConfig.instance:getBuildingConfigsByElementID(arg_14_1)) do
-		table.insert(var_14_1, iter_14_1)
+	for k, v in pairs(VersionActivity1_2DungeonConfig.instance:getBuildingConfigsByElementID(elementId)) do
+		table.insert(levelList, v)
 	end
 
-	table.sort(var_14_1, function(arg_15_0, arg_15_1)
-		return arg_15_0.level < arg_15_1.level
+	table.sort(levelList, function(item1, item2)
+		return item1.level < item2.level
 	end)
 
-	return var_14_1[var_14_0.level + 2]
+	return levelList[elementData.level + 2]
 end
 
-function var_0_0.getDailyEpisodeConfigByElementId(arg_16_0, arg_16_1)
-	local var_16_0 = lua_chapter_map_element.configDict[arg_16_1]
+function VersionActivity1_2DungeonModel:getDailyEpisodeConfigByElementId(elementId)
+	local elementConfig = lua_chapter_map_element.configDict[elementId]
 
-	if var_16_0.type == DungeonEnum.ElementType.DailyEpisode then
-		local var_16_1 = VersionActivity1_2DungeonConfig.instance:getBuildingConfigsByElementID(var_16_0.id)
-		local var_16_2
+	if elementConfig.type == DungeonEnum.ElementType.DailyEpisode then
+		local buildingConfigDic = VersionActivity1_2DungeonConfig.instance:getBuildingConfigsByElementID(elementConfig.id)
+		local buildingConfig
 
-		if var_16_1 then
-			for iter_16_0, iter_16_1 in pairs(var_16_1) do
-				var_16_2 = iter_16_1
+		if buildingConfigDic then
+			for k, v in pairs(buildingConfigDic) do
+				buildingConfig = v
 
 				break
 			end
 		end
 
-		if var_16_2 then
-			local var_16_3 = string.splitToNumber(var_16_2.configType, "#")
+		if buildingConfig then
+			local episodeList = string.splitToNumber(buildingConfig.configType, "#")
 
-			for iter_16_2, iter_16_3 in ipairs(var_16_3) do
-				local var_16_4 = var_0_0.instance:getSpStatus(iter_16_3)
+			for index, episodeId in ipairs(episodeList) do
+				local data = VersionActivity1_2DungeonModel.instance:getSpStatus(episodeId)
 
-				if var_16_4 and var_16_4.status == 1 then
-					return DungeonConfig.instance:getEpisodeCO(iter_16_3)
+				if data and data.status == 1 then
+					return DungeonConfig.instance:getEpisodeCO(episodeId)
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.jump2DailyEpisode(arg_17_0, arg_17_1)
-	local var_17_0 = JumpConfig.instance:getJumpConfig(arg_17_1)
-	local var_17_1 = string.splitToNumber(var_17_0.param, "#")
+function VersionActivity1_2DungeonModel:jump2DailyEpisode(jumpId)
+	local jumpConfig = JumpConfig.instance:getJumpConfig(jumpId)
+	local paramArr = string.splitToNumber(jumpConfig.param, "#")
 
-	if var_17_1[1] == 100 and var_17_1[2] == JumpEnum.ActIdEnum.Act1_2Dungeon and var_17_1[3] == JumpEnum.Activity1_2DungeonJump.Jump2Daily then
-		local var_17_2 = var_17_1[4]
-		local var_17_3 = VersionActivity1_2DungeonConfig.instance:getConfigByEpisodeId(var_17_2)
+	if paramArr[1] == 100 and paramArr[2] == JumpEnum.ActIdEnum.Act1_2Dungeon and paramArr[3] == JumpEnum.Activity1_2DungeonJump.Jump2Daily then
+		local tarEpisodeId = paramArr[4]
+		local buildingConfig = VersionActivity1_2DungeonConfig.instance:getConfigByEpisodeId(tarEpisodeId)
 
-		if var_17_3 then
-			local var_17_4 = var_17_3.elementId
+		if buildingConfig then
+			local elementId = buildingConfig.elementId
+			local elementData = DungeonMapModel.instance:getElementById(elementId)
 
-			if not DungeonMapModel.instance:getElementById(var_17_4) then
-				local var_17_5 = lua_chapter_map_element.configDict[var_17_4]
-				local var_17_6 = string.splitToNumber(var_17_5.condition, "=")[2]
-				local var_17_7 = DungeonConfig.instance:getEpisodeCO(var_17_6)
-				local var_17_8 = DungeonConfig.instance:getChapterCO(var_17_7.chapterId)
-				local var_17_9 = string.format(luaLang("dungeon_unlock_episode_mode"), luaLang("dungeon_story_mode") .. var_17_8.chapterIndex .. "-" .. VersionActivity1_2DungeonConfig.instance:getEpisodeIndex(var_17_6))
+			if not elementData then
+				local elementConfig = lua_chapter_map_element.configDict[elementId]
+				local unlockEpisodeId = string.splitToNumber(elementConfig.condition, "=")[2]
+				local unlockEpisodeConfig = DungeonConfig.instance:getEpisodeCO(unlockEpisodeId)
+				local chapterConfig = DungeonConfig.instance:getChapterCO(unlockEpisodeConfig.chapterId)
+				local unlockStr = string.format(luaLang("dungeon_unlock_episode_mode"), luaLang("dungeon_story_mode") .. chapterConfig.chapterIndex .. "-" .. VersionActivity1_2DungeonConfig.instance:getEpisodeIndex(unlockEpisodeId))
 
-				GameFacade.showToastString(var_17_9)
+				GameFacade.showToastString(unlockStr)
 			else
-				local var_17_10 = arg_17_0:getDailyEpisodeConfigByElementId(var_17_4)
+				local fightEpisodeConfig = self:getDailyEpisodeConfigByElementId(elementId)
 
-				if var_17_10 then
-					if var_17_10.id == var_17_2 then
+				if fightEpisodeConfig then
+					if fightEpisodeConfig.id == tarEpisodeId then
 						ViewMgr.instance:closeView(ViewName.VersionActivity1_2TaskView)
-						VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.clickDailyEpisode, var_17_4)
+						VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.clickDailyEpisode, elementId)
 					else
 						GameFacade.showMessageBox(MessageBoxIdDefine.Dungeon1_2Jump2Daily, MsgBoxEnum.BoxType.Yes_No, function()
 							ViewMgr.instance:closeView(ViewName.VersionActivity1_2TaskView)
-							VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.clickDailyEpisode, var_17_4)
+							VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.clickDailyEpisode, elementId)
 						end)
 					end
 				else
-					for iter_17_0, iter_17_1 in ipairs(VersionActivity1_2DungeonConfig.instance:getType4List()) do
-						if arg_17_0:getDailyEpisodeConfigByElementId(iter_17_1.elementId) then
+					for i, v in ipairs(VersionActivity1_2DungeonConfig.instance:getType4List()) do
+						if self:getDailyEpisodeConfigByElementId(v.elementId) then
 							GameFacade.showMessageBox(MessageBoxIdDefine.Dungeon1_2Jump2Daily, MsgBoxEnum.BoxType.Yes_No, function()
 								ViewMgr.instance:closeView(ViewName.VersionActivity1_2TaskView)
-								VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.clickDailyEpisode, iter_17_1.elementId)
+								VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.clickDailyEpisode, v.elementId)
 							end)
 
 							return true
@@ -269,6 +270,6 @@ function var_0_0.jump2DailyEpisode(arg_17_0, arg_17_1)
 	return false
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity1_2DungeonModel.instance = VersionActivity1_2DungeonModel.New()
 
-return var_0_0
+return VersionActivity1_2DungeonModel

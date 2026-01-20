@@ -1,9 +1,11 @@
-﻿module("modules.spine.SpineLookDir", package.seeall)
+﻿-- chunkname: @modules/spine/SpineLookDir.lua
 
-local var_0_0 = {}
+module("modules.spine.SpineLookDir", package.seeall)
 
-var_0_0.Left = 1
-var_0_0.Right = -1
-var_0_0.Default = var_0_0.Left
+local SpineLookDir = {}
 
-return var_0_0
+SpineLookDir.Left = 1
+SpineLookDir.Right = -1
+SpineLookDir.Default = SpineLookDir.Left
+
+return SpineLookDir

@@ -1,53 +1,93 @@
-﻿module("modules.logic.sdk.controller.SDKController", package.seeall)
+﻿-- chunkname: @modules/logic/sdk/controller/SDKController.lua
 
-local var_0_0 = class("SDKController", BaseController)
+module("modules.logic.sdk.controller.SDKController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local SDKController = class("SDKController", BaseController)
+
+function SDKController:onInit()
 	SDKChannelEventModel.instance:onInit()
+
+	self._checkShowATTWithGetIDFATime = Time.time + 900
 end
 
-function var_0_0.reInit(arg_2_0)
+function SDKController:reInit()
 	SDKChannelEventModel.instance:reInit()
 end
 
-function var_0_0.addConstEvents(arg_3_0)
-	SDKMgr.instance:setDataPropertiesChangeCallBack(arg_3_0._onDataPropertiesChangeCallBack, arg_3_0)
+function SDKController:addConstEvents()
+	SDKMgr.instance:setDataPropertiesChangeCallBack(self._onDataPropertiesChangeCallBack, self)
+
+	if (GameChannelConfig.isGpGlobal() or GameChannelConfig.isGpJapan()) and VersionValidator.instance:isInReviewing() == false and BootNativeUtil.isIOS() and SDKModel.instance:getNeedShowATTWithGetIDFA() then
+		MainController.instance:registerCallback(MainEvent.ShowMainView, self._checkShowATTWithGetIDFA, self)
+		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	end
 end
 
-function var_0_0.onLoginSuccess(arg_4_0)
+function SDKController:onLoginSuccess()
 	SDKModel.instance:updateBaseProperties()
 end
 
-function var_0_0.openSDKExitView(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = {
-		loginCallback = arg_5_1,
-		exitCallback = arg_5_2
-	}
+function SDKController:openSDKExitView(loginCallback, exitCallback)
+	local param = {}
 
-	ViewMgr.instance:openView(ViewName.SDKExitGameView, var_5_0)
+	param.loginCallback = loginCallback
+	param.exitCallback = exitCallback
+
+	ViewMgr.instance:openView(ViewName.SDKExitGameView, param)
 end
 
-function var_0_0._onDataPropertiesChangeCallBack(arg_6_0, arg_6_1, arg_6_2)
-	SDKModel.instance:updateBaseProperties(arg_6_1, arg_6_2)
+function SDKController:_onDataPropertiesChangeCallBack(code, msg)
+	SDKModel.instance:updateBaseProperties(code, msg)
 end
 
-function var_0_0.openSDKScoreJumpView(arg_7_0)
-	PlayerPrefsHelper.setNumber(PlayerPrefsKey.AppReview, 1)
-	SDKChannelEventModel.instance:setNeedAppReview(false)
+function SDKController:_onCloseViewFinish()
+	local viewNameList = ViewMgr.instance:getOpenViewNameList()
+	local topView = viewNameList[#viewNameList]
 
-	local var_7_0 = BootNativeUtil.getPackageName()
+	if topView == ViewName.MainView then
+		self:_checkShowATTWithGetIDFA()
+	end
+end
 
-	if var_7_0 == "en.shenlan.m.reverse1999.huawei" or var_7_0 == "jp.shenlan.m.reverse1999.huawei" then
+function SDKController:_checkShowATTWithGetIDFA()
+	if Time.time < self._checkShowATTWithGetIDFATime then
 		return
 	end
 
-	local var_7_1 = UnityEngine.Application.version
+	if (GameChannelConfig.isGpGlobal() or GameChannelConfig.isGpJapan()) and VersionValidator.instance:isInReviewing() == false and BootNativeUtil.isIOS() and GuideController.instance:isGuiding() == false and SDKModel.instance:getNeedShowATTWithGetIDFA() then
+		SDKModel.instance:setNeedShowATTWithGetIDFA(false)
+		ZProj.SDKMgr.Instance:ShowATTWithGetIDFA()
+	end
+end
 
-	if GameChannelConfig.isGpGlobal() and var_7_1 == "1.0.4" then
+function SDKController:_onFinishAllPatFace()
+	if Time.time < self._checkShowATTWithGetIDFATime then
+		return
+	end
+
+	if (GameChannelConfig.isGpGlobal() or GameChannelConfig.isGpJapan()) and VersionValidator.instance:isInReviewing() == false and BootNativeUtil.isIOS() and SDKModel.instance:getNeedShowATTWithGetIDFA() then
+		SDKModel.instance:setNeedShowATTWithGetIDFA(false)
+		ZProj.SDKMgr.Instance:ShowATTWithGetIDFA()
+	end
+end
+
+function SDKController:openSDKScoreJumpView()
+	PlayerPrefsHelper.setNumber(PlayerPrefsKey.AppReview, 1)
+	SDKChannelEventModel.instance:setNeedAppReview(false)
+
+	local packageName = BootNativeUtil.getPackageName()
+
+	if packageName == "en.shenlan.m.reverse1999.huawei" or packageName == "jp.shenlan.m.reverse1999.huawei" then
+		return
+	end
+
+	local version = UnityEngine.Application.version
+
+	if GameChannelConfig.isGpGlobal() and version == "1.0.4" then
 		if BootNativeUtil.isAndroid() then
 			ViewMgr.instance:openView(ViewName.SDKScoreJumpView)
 		end
-	elseif GameChannelConfig.isGpJapan() and var_7_1 == "1.0.5" then
+	elseif GameChannelConfig.isGpJapan() and version == "1.0.5" then
 		if BootNativeUtil.isAndroid() then
 			ViewMgr.instance:openView(ViewName.SDKScoreJumpView)
 		end
@@ -56,6 +96,6 @@ function var_0_0.openSDKScoreJumpView(arg_7_0)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+SDKController.instance = SDKController.New()
 
-return var_0_0
+return SDKController

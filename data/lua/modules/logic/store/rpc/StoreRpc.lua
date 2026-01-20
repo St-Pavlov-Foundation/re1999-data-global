@@ -1,76 +1,78 @@
-﻿module("modules.logic.store.rpc.StoreRpc", package.seeall)
+﻿-- chunkname: @modules/logic/store/rpc/StoreRpc.lua
 
-local var_0_0 = class("StoreRpc", BaseRpc)
+module("modules.logic.store.rpc.StoreRpc", package.seeall)
 
-function var_0_0.sendGetStoreInfosRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = StoreModule_pb.GetStoreInfosRequest()
+local StoreRpc = class("StoreRpc", BaseRpc)
 
-	if not arg_1_1 or #arg_1_1 <= 0 then
-		arg_1_1 = StoreConfig.instance:getAllStoreIds()
+function StoreRpc:sendGetStoreInfosRequest(storeIds, callback, callbackObj)
+	local req = StoreModule_pb.GetStoreInfosRequest()
+
+	if not storeIds or #storeIds <= 0 then
+		storeIds = StoreConfig.instance:getAllStoreIds()
 	end
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1) do
-		table.insert(var_1_0.storeIds, iter_1_1)
+	for i, storeId in ipairs(storeIds) do
+		table.insert(req.storeIds, storeId)
 	end
 
-	return arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveGetStoreInfosReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 == 0 then
-		StoreModel.instance:getStoreInfosReply(arg_2_2)
+function StoreRpc:onReceiveGetStoreInfosReply(resultCode, msg)
+	if resultCode == 0 then
+		StoreModel.instance:getStoreInfosReply(msg)
 		StoreController.instance:dispatchEvent(StoreEvent.StoreInfoChanged)
 	end
 end
 
-function var_0_0.sendBuyGoodsRequest(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5, arg_3_6)
-	local var_3_0 = StoreModule_pb.BuyGoodsRequest()
+function StoreRpc:sendBuyGoodsRequest(storeId, goodsId, num, callback, callbackObj, selectCost)
+	local req = StoreModule_pb.BuyGoodsRequest()
 
-	var_3_0.storeId = arg_3_1
-	var_3_0.goodsId = arg_3_2
-	var_3_0.num = arg_3_3
-	var_3_0.selectCost = arg_3_6 or 1
+	req.storeId = storeId
+	req.goodsId = goodsId
+	req.num = num
+	req.selectCost = selectCost or 1
 
-	return arg_3_0:sendMsg(var_3_0, arg_3_4, arg_3_5)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveBuyGoodsReply(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 == 0 then
-		StoreModel.instance:buyGoodsReply(arg_4_2)
+function StoreRpc:onReceiveBuyGoodsReply(resultCode, msg)
+	if resultCode == 0 then
+		StoreModel.instance:buyGoodsReply(msg)
 
-		local var_4_0 = {}
+		local storeIds = {}
 
-		table.insert(var_4_0, arg_4_2.storeId)
+		table.insert(storeIds, msg.storeId)
 
-		if arg_4_2.storeId ~= StoreEnum.StoreId.NewRoomStore and arg_4_2.storeId ~= StoreEnum.StoreId.OldRoomStore then
-			var_0_0.instance:sendGetStoreInfosRequest(var_4_0)
+		if msg.storeId ~= StoreEnum.StoreId.NewRoomStore and msg.storeId ~= StoreEnum.StoreId.OldRoomStore then
+			StoreRpc.instance:sendGetStoreInfosRequest(storeIds)
 		end
 
-		StoreController.instance:dispatchEvent(StoreEvent.GoodsModelChanged, arg_4_2.goodsId)
+		StoreController.instance:dispatchEvent(StoreEvent.GoodsModelChanged, msg.goodsId)
 		RedDotController.instance:dispatchEvent(RedDotEvent.UpdateRelateDotInfo, {
 			[RedDotEnum.DotNode.StoreBtn] = true
 		})
 	end
 
-	ChargePushStatController.instance:statBuyFinished(arg_4_1, arg_4_2)
+	ChargePushStatController.instance:statBuyFinished(resultCode, msg)
 end
 
-function var_0_0.sendReadStoreNewRequest(arg_5_0, arg_5_1)
-	local var_5_0 = StoreModule_pb.ReadStoreNewRequest()
+function StoreRpc:sendReadStoreNewRequest(goodsIds)
+	local req = StoreModule_pb.ReadStoreNewRequest()
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
-		table.insert(var_5_0.goodsIds, iter_5_1)
+	for i, goodsId in ipairs(goodsIds) do
+		table.insert(req.goodsIds, goodsId)
 	end
 
-	return arg_5_0:sendMsg(var_5_0)
+	return self:sendMsg(req)
 end
 
-function var_0_0.onReceiveReadStoreNewReply(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_1 == 0 then
+function StoreRpc:onReceiveReadStoreNewReply(resultCode, msg)
+	if resultCode == 0 then
 		-- block empty
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+StoreRpc.instance = StoreRpc.New()
 
-return var_0_0
+return StoreRpc

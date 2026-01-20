@@ -1,130 +1,132 @@
-﻿module("modules.logic.versionactivity2_4.common.VersionActivity2_4JumpHandleFunc", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/common/VersionActivity2_4JumpHandleFunc.lua
 
-local var_0_0 = class("VersionActivity2_4JumpHandleFunc")
+module("modules.logic.versionactivity2_4.common.VersionActivity2_4JumpHandleFunc", package.seeall)
 
-function var_0_0.jumpTo12401(arg_1_0)
+local VersionActivity2_4JumpHandleFunc = class("VersionActivity2_4JumpHandleFunc")
+
+function VersionActivity2_4JumpHandleFunc:jumpTo12401()
 	VersionActivity2_4EnterController.instance:openVersionActivityEnterView()
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpTo12402(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_1[2]
-	local var_2_1 = arg_2_1[3]
+function VersionActivity2_4JumpHandleFunc:jumpTo12402(paramsList)
+	local actId = paramsList[2]
+	local episodeId = paramsList[3]
 
-	table.insert(arg_2_0.waitOpenViewNames, ViewName.VersionActivity2_4EnterView)
-	table.insert(arg_2_0.closeViewNames, ViewName.VersionActivity2_4DungeonMapLevelView)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity2_4EnterView)
+	table.insert(self.closeViewNames, ViewName.VersionActivity2_4DungeonMapLevelView)
 	VersionActivity2_4DungeonModel.instance:setMapNeedTweenState(true)
 
-	if var_2_1 then
+	if episodeId then
 		VersionActivity2_4EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
-			VersionActivity2_4DungeonController.instance:openVersionActivityDungeonMapView(nil, var_2_1, function()
+			VersionActivity2_4DungeonController.instance:openVersionActivityDungeonMapView(nil, episodeId, function()
 				ViewMgr.instance:openView(ViewName.VersionActivity2_4DungeonMapLevelView, {
 					isJump = true,
-					episodeId = var_2_1
+					episodeId = episodeId
 				})
 			end)
-		end, nil, var_2_0, true)
+		end, nil, actId, true)
 	else
-		VersionActivity2_4EnterController.instance:openVersionActivityEnterViewIfNotOpened(VersionActivity2_4DungeonController.openVersionActivityDungeonMapView, VersionActivity2_4DungeonController.instance, var_2_0, true)
+		VersionActivity2_4EnterController.instance:openVersionActivityEnterViewIfNotOpened(VersionActivity2_4DungeonController.openVersionActivityDungeonMapView, VersionActivity2_4DungeonController.instance, actId, true)
 	end
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpTo12403(arg_5_0, arg_5_1)
+function VersionActivity2_4JumpHandleFunc:jumpTo12403(paramsList)
 	VersionActivity2_4EnterController.instance:openVersionActivityEnterViewIfNotOpened(VersionActivity2_4DungeonController.openStoreView, VersionActivity2_4DungeonController.instance, VersionActivity2_4Enum.ActivityId.Dungeon, true)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpTo12404(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_1[2]
+function VersionActivity2_4JumpHandleFunc:jumpTo12404(paramsList)
+	local actId = paramsList[2]
 
 	VersionActivity2_4EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
 		PinballController.instance:openMainView()
-	end, nil, var_6_0)
+	end, nil, actId)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpTo12405(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_1[2]
+function VersionActivity2_4JumpHandleFunc:jumpTo12405(paramsList)
+	local actId = paramsList[2]
 
 	VersionActivity2_4EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
 		VersionActivity2_4MusicController.instance:openVersionActivity2_4MusicChapterView()
-	end, nil, var_8_0)
+	end, nil, actId)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpTo11804(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_1[2]
-	local var_10_1 = arg_10_1[3]
+function VersionActivity2_4JumpHandleFunc:jumpTo11804(paramsList)
+	local actId = paramsList[2]
+	local episodeId = paramsList[3]
 
-	table.insert(arg_10_0.waitOpenViewNames, ViewName.VersionActivity2_4EnterView)
-	table.insert(arg_10_0.closeViewNames, ViewName.VersionActivity1_8DungeonMapLevelView)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity2_4EnterView)
+	table.insert(self.closeViewNames, ViewName.VersionActivity1_8DungeonMapLevelView)
 
-	if var_10_1 then
+	if episodeId then
 		VersionActivity2_4EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
-			VersionActivity1_8DungeonController.instance:openVersionActivityDungeonMapView(nil, var_10_1, function()
+			VersionActivity1_8DungeonController.instance:openVersionActivityDungeonMapView(nil, episodeId, function()
 				ViewMgr.instance:openView(ViewName.VersionActivity1_8DungeonMapLevelView, {
 					isJump = true,
-					episodeId = var_10_1
+					episodeId = episodeId
 				})
 			end)
-		end, nil, var_10_0, true)
+		end, nil, actId, true)
 	else
-		VersionActivity2_4EnterController.instance:openVersionActivityEnterViewIfNotOpened(VersionActivity1_8DungeonController.openVersionActivityDungeonMapView, VersionActivity1_8DungeonController.instance, var_10_0, true)
+		VersionActivity2_4EnterController.instance:openVersionActivityEnterViewIfNotOpened(VersionActivity1_8DungeonController.openVersionActivityDungeonMapView, VersionActivity1_8DungeonController.instance, actId, true)
 	end
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpTo11815(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_1 and arg_13_1[3] == 2
+function VersionActivity2_4JumpHandleFunc:jumpTo11815(paramsList)
+	local isOpenFactoryBlueprint = paramsList and paramsList[3] == 2
 
-	table.insert(arg_13_0.waitOpenViewNames, ViewName.VersionActivity2_4EnterView)
-	table.insert(arg_13_0.waitOpenViewNames, ViewName.VersionActivity1_8DungeonMapView)
-	table.insert(arg_13_0.waitOpenViewNames, ViewName.VersionActivity1_8FactoryMapView)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity2_4EnterView)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_8DungeonMapView)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_8FactoryMapView)
 
-	if not var_13_0 then
-		table.insert(arg_13_0.closeViewNames, ViewName.VersionActivity1_8FactoryBlueprintView)
+	if not isOpenFactoryBlueprint then
+		table.insert(self.closeViewNames, ViewName.VersionActivity1_8FactoryBlueprintView)
 	end
 
-	local function var_13_1()
-		Activity157Controller.instance:openFactoryMapView(var_13_0)
+	local function openFactoryFunc()
+		Activity157Controller.instance:openFactoryMapView(isOpenFactoryBlueprint)
 	end
 
-	local function var_13_2()
+	local function openDungeonMapFunc()
 		if ViewMgr.instance:isOpen(ViewName.VersionActivity1_8DungeonMapView) then
-			var_13_1()
+			openFactoryFunc()
 		else
-			VersionActivity1_8DungeonController.instance:openVersionActivityDungeonMapView(nil, nil, var_13_1)
+			VersionActivity1_8DungeonController.instance:openVersionActivityDungeonMapView(nil, nil, openFactoryFunc)
 		end
 	end
 
-	VersionActivity2_4EnterController.instance:openVersionActivityEnterViewIfNotOpened(var_13_2, nil, nil, true)
+	VersionActivity2_4EnterController.instance:openVersionActivityEnterViewIfNotOpened(openDungeonMapFunc, nil, nil, true)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpTo12408(arg_16_0, arg_16_1)
-	table.insert(arg_16_0.waitOpenViewNames, ViewName.VersionActivity2_4EnterView)
+function VersionActivity2_4JumpHandleFunc:jumpTo12408(paramsList)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity2_4EnterView)
 	VersionActivity2_4EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
-		table.insert(arg_16_0.waitOpenViewNames, ViewName.ReactivityStoreView)
+		table.insert(self.waitOpenViewNames, ViewName.ReactivityStoreView)
 		ReactivityController.instance:openReactivityStoreView(VersionActivity2_4Enum.ActivityId.Reactivity)
 	end)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpTo12400(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_1[2]
+function VersionActivity2_4JumpHandleFunc:jumpTo12400(paramsList)
+	local actId = paramsList[2]
 
-	VersionActivity2_4EnterController.instance:openVersionActivityEnterViewIfNotOpened(nil, nil, var_18_0, true)
+	VersionActivity2_4EnterController.instance:openVersionActivityEnterViewIfNotOpened(nil, nil, actId, true)
 
 	return JumpEnum.JumpResult.Success
 end
 
-return var_0_0
+return VersionActivity2_4JumpHandleFunc

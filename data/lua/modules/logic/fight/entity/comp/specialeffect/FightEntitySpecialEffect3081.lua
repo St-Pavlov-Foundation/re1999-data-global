@@ -1,9 +1,11 @@
-﻿module("modules.logic.fight.entity.comp.specialeffect.FightEntitySpecialEffect3081", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/specialeffect/FightEntitySpecialEffect3081.lua
 
-local var_0_0 = class("FightEntitySpecialEffect3081", FightEntitySpecialEffectBase)
+module("modules.logic.fight.entity.comp.specialeffect.FightEntitySpecialEffect3081", package.seeall)
 
-function var_0_0.initClass(arg_1_0)
+local FightEntitySpecialEffect3081 = class("FightEntitySpecialEffect3081", FightEntitySpecialEffectBase)
+
+function FightEntitySpecialEffect3081:initClass()
 	return
 end
 
-return var_0_0
+return FightEntitySpecialEffect3081

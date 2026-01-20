@@ -1,38 +1,42 @@
-﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity_1_2_HeroGroupEditViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/versionactivity1_2dungeon/view/VersionActivity_1_2_HeroGroupEditViewContainer.lua
 
-local var_0_0 = class("VersionActivity_1_2_HeroGroupEditViewContainer", HeroGroupEditViewContainer)
+module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity_1_2_HeroGroupEditViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = ListScrollParam.New()
+local VersionActivity_1_2_HeroGroupEditViewContainer = class("VersionActivity_1_2_HeroGroupEditViewContainer", HeroGroupEditViewContainer)
 
-	var_1_0.scrollGOPath = "#go_rolecontainer/#scroll_card"
-	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_0.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_0.cellClass = HeroGroupEditItem
-	var_1_0.scrollDir = ScrollEnum.ScrollDirV
-	var_1_0.lineCount = 5
-	var_1_0.cellWidth = 200
-	var_1_0.cellHeight = 440
-	var_1_0.cellSpaceH = 12
-	var_1_0.cellSpaceV = 10
-	var_1_0.startSpace = 37
+function VersionActivity_1_2_HeroGroupEditViewContainer:buildViews()
+	local scrollParam = ListScrollParam.New()
 
-	local var_1_1 = {}
+	scrollParam.scrollGOPath = "#go_rolecontainer/#scroll_card"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = HeroGroupEditItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 5
+	scrollParam.cellWidth = 200
+	scrollParam.cellHeight = 440
+	scrollParam.cellSpaceH = 12
+	scrollParam.cellSpaceV = 10
+	scrollParam.startSpace = 37
 
-	for iter_1_0 = 1, 15 do
-		var_1_1[iter_1_0] = math.ceil((iter_1_0 - 1) % 5) * 0.03
+	local animationDelayTimes = {}
+
+	for i = 1, 15 do
+		local delayTime = math.ceil((i - 1) % 5) * 0.03
+
+		animationDelayTimes[i] = delayTime
 	end
 
 	return {
 		VersionActivity_1_2_HeroGroupEditView.New(),
-		LuaListScrollViewWithAnimator.New(HeroGroupEditListModel.instance, var_1_0, var_1_1),
-		arg_1_0:getQuickEditScroll(),
+		LuaListScrollViewWithAnimator.New(HeroGroupEditListModel.instance, scrollParam, animationDelayTimes),
+		self:getQuickEditScroll(),
 		CommonRainEffectView.New("bg/#go_raincontainer"),
 		TabViewGroup.New(1, "#go_btns")
 	}
 end
 
-function var_0_0._overrideClose(arg_2_0)
+function VersionActivity_1_2_HeroGroupEditViewContainer:_overrideClose()
 	if ViewMgr.instance:isOpen(ViewName.CharacterLevelUpView) then
 		ViewMgr.instance:closeView(ViewName.CharacterLevelUpView, nil, true)
 	elseif ViewMgr.instance:isOpen(ViewName.VersionActivity_1_2_HeroGroupEditView) then
@@ -40,4 +44,4 @@ function var_0_0._overrideClose(arg_2_0)
 	end
 end
 
-return var_0_0
+return VersionActivity_1_2_HeroGroupEditViewContainer

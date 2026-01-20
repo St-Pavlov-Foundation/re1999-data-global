@@ -1,30 +1,32 @@
-﻿module("modules.logic.fight.view.FightEntityView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightEntityView.lua
 
-local var_0_0 = class("FightEntityView", FightBaseClass)
+module("modules.logic.fight.view.FightEntityView", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.entityId = arg_1_1
-	arg_1_0.entityData = FightDataHelper.entityMgr:getById(arg_1_1)
-	arg_1_0.fightNameObj = arg_1_2
-	arg_1_0.viewComp = arg_1_0:addComponent(FightViewComponent)
+local FightEntityView = class("FightEntityView", FightBaseClass)
+
+function FightEntityView:onConstructor(entityId, fightNameObj)
+	self.entityId = entityId
+	self.entityData = FightDataHelper.entityMgr:getById(entityId)
+	self.fightNameObj = fightNameObj
+	self.viewComp = self:addComponent(FightViewComponent)
 end
 
-function var_0_0.onLogicEnter(arg_2_0)
-	arg_2_0:showEnemyAiUseCardView()
+function FightEntityView:onLogicEnter()
+	self:showEnemyAiUseCardView()
 end
 
-function var_0_0.showEnemyAiUseCardView(arg_3_0)
-	local var_3_0 = gohelper.findChild(arg_3_0.fightNameObj, "layout/top/op")
+function FightEntityView:showEnemyAiUseCardView()
+	local root = gohelper.findChild(self.fightNameObj, "layout/top/op")
 
-	if arg_3_0.entityData:isEnemySide() then
-		arg_3_0.viewComp:openSubView(FightEnemyEntityAiUseCardView, var_3_0, nil, arg_3_0.entityData)
+	if self.entityData:isEnemySide() then
+		self.viewComp:openSubView(FightEnemyEntityAiUseCardView, root, nil, self.entityData)
 	else
-		gohelper.setActive(var_3_0, false)
+		gohelper.setActive(root, false)
 	end
 end
 
-function var_0_0.onDestructor(arg_4_0)
+function FightEntityView:onDestructor()
 	return
 end
 
-return var_0_0
+return FightEntityView

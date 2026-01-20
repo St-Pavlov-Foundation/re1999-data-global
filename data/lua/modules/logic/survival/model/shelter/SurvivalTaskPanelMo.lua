@@ -1,37 +1,43 @@
-﻿module("modules.logic.survival.model.shelter.SurvivalTaskPanelMo", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/shelter/SurvivalTaskPanelMo.lua
 
-local var_0_0 = pureTable("SurvivalTaskPanelMo")
+module("modules.logic.survival.model.shelter.SurvivalTaskPanelMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.taskBoxs = {}
+local SurvivalTaskPanelMo = pureTable("SurvivalTaskPanelMo")
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1.boxs) do
-		local var_1_0 = SurvivalTaskBoxMo.New()
+function SurvivalTaskPanelMo:init(data)
+	self.taskBoxs = {}
 
-		var_1_0:init(iter_1_1)
+	for _, v in ipairs(data.boxs) do
+		local taskBox = SurvivalTaskBoxMo.New()
 
-		arg_1_0.taskBoxs[var_1_0.moduleId] = var_1_0
+		taskBox:init(v)
+
+		self.taskBoxs[taskBox.moduleId] = taskBox
 	end
 end
 
-function var_0_0.getTaskBoxMo(arg_2_0, arg_2_1)
-	if not arg_2_0.taskBoxs[arg_2_1] then
-		arg_2_0.taskBoxs[arg_2_1] = SurvivalTaskBoxMo.Create(arg_2_1)
+function SurvivalTaskPanelMo:getTaskBoxMo(moduleId)
+	if not self.taskBoxs[moduleId] then
+		self.taskBoxs[moduleId] = SurvivalTaskBoxMo.Create(moduleId)
 	end
 
-	return arg_2_0.taskBoxs[arg_2_1]
+	return self.taskBoxs[moduleId]
 end
 
-function var_0_0.addOrUpdateTasks(arg_3_0, arg_3_1)
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
-		arg_3_0:getTaskBoxMo(iter_3_1.moduleId):addOrUpdateTasks(iter_3_1.tasks)
-	end
-end
+function SurvivalTaskPanelMo:addOrUpdateTasks(taskBoxs)
+	for _, v in ipairs(taskBoxs) do
+		local taskBox = self:getTaskBoxMo(v.moduleId)
 
-function var_0_0.removeTasks(arg_4_0, arg_4_1)
-	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
-		arg_4_0:getTaskBoxMo(iter_4_1.moduleId):removeTasks(iter_4_1.taskId)
+		taskBox:addOrUpdateTasks(v.tasks)
 	end
 end
 
-return var_0_0
+function SurvivalTaskPanelMo:removeTasks(removes)
+	for _, v in ipairs(removes) do
+		local taskBox = self:getTaskBoxMo(v.moduleId)
+
+		taskBox:removeTasks(v.taskId)
+	end
+end
+
+return SurvivalTaskPanelMo

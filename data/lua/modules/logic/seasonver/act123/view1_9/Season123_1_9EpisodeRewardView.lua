@@ -1,237 +1,238 @@
-﻿module("modules.logic.seasonver.act123.view1_9.Season123_1_9EpisodeRewardView", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view1_9/Season123_1_9EpisodeRewardView.lua
 
-local var_0_0 = class("Season123_1_9EpisodeRewardView", BaseView)
+module("modules.logic.seasonver.act123.view1_9.Season123_1_9EpisodeRewardView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goRwards = gohelper.findChild(arg_1_0.viewGO, "#go_rewards")
-	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_rewards/#btn_close")
-	arg_1_0._scrollreward = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_rewards/#scroll_rewardview")
-	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "#go_rewards/#scroll_rewardview/Viewport/#go_Content")
-	arg_1_0._gofillbg = gohelper.findChild(arg_1_0.viewGO, "#go_rewards/#scroll_rewardview/Viewport/#go_Content/#go_fillbg")
-	arg_1_0._gofill = gohelper.findChild(arg_1_0.viewGO, "#go_rewards/#scroll_rewardview/Viewport/#go_Content/#go_fillbg/#go_fill")
-	arg_1_0._gorewardContent = gohelper.findChild(arg_1_0.viewGO, "#go_rewards/#scroll_rewardview/Viewport/#go_Content/#go_rewardContent")
-	arg_1_0._gorewardItem = gohelper.findChild(arg_1_0.viewGO, "#go_rewards/#scroll_rewardview/Viewport/#go_Content/#go_rewardContent/#go_rewarditem")
+local Season123_1_9EpisodeRewardView = class("Season123_1_9EpisodeRewardView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Season123_1_9EpisodeRewardView:onInitView()
+	self._goRwards = gohelper.findChild(self.viewGO, "#go_rewards")
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "#go_rewards/#btn_close")
+	self._scrollreward = gohelper.findChildScrollRect(self.viewGO, "#go_rewards/#scroll_rewardview")
+	self._goContent = gohelper.findChild(self.viewGO, "#go_rewards/#scroll_rewardview/Viewport/#go_Content")
+	self._gofillbg = gohelper.findChild(self.viewGO, "#go_rewards/#scroll_rewardview/Viewport/#go_Content/#go_fillbg")
+	self._gofill = gohelper.findChild(self.viewGO, "#go_rewards/#scroll_rewardview/Viewport/#go_Content/#go_fillbg/#go_fill")
+	self._gorewardContent = gohelper.findChild(self.viewGO, "#go_rewards/#scroll_rewardview/Viewport/#go_Content/#go_rewardContent")
+	self._gorewardItem = gohelper.findChild(self.viewGO, "#go_rewards/#scroll_rewardview/Viewport/#go_Content/#go_rewardContent/#go_rewarditem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnClose:AddClickListener(arg_2_0._btnCloseOnClick, arg_2_0)
-	arg_2_0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_2_0.refreshUI, arg_2_0)
-	arg_2_0:addEventCb(Season123Controller.instance, Season123Event.OpenEpisodeRewardView, arg_2_0.refreshUI, arg_2_0)
+function Season123_1_9EpisodeRewardView:addEvents()
+	self._btnClose:AddClickListener(self._btnCloseOnClick, self)
+	self:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, self.refreshUI, self)
+	self:addEventCb(Season123Controller.instance, Season123Event.OpenEpisodeRewardView, self.refreshUI, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnClose:RemoveClickListener()
-	arg_3_0:removeEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_3_0.refreshUI, arg_3_0)
-	arg_3_0:removeEventCb(Season123Controller.instance, Season123Event.OpenEpisodeRewardView, arg_3_0.refreshUI, arg_3_0)
+function Season123_1_9EpisodeRewardView:removeEvents()
+	self._btnClose:RemoveClickListener()
+	self:removeEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, self.refreshUI, self)
+	self:removeEventCb(Season123Controller.instance, Season123Event.OpenEpisodeRewardView, self.refreshUI, self)
 end
 
-function var_0_0._btnCloseOnClick(arg_4_0)
-	arg_4_0:resetView()
+function Season123_1_9EpisodeRewardView:_btnCloseOnClick()
+	self:resetView()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._rewardItems = arg_5_0:getUserDataTb_()
-	arg_5_0._goContentHLayout = arg_5_0._goContent:GetComponent(typeof(UnityEngine.UI.HorizontalLayoutGroup))
+function Season123_1_9EpisodeRewardView:_editableInitView()
+	self._rewardItems = self:getUserDataTb_()
+	self._goContentHLayout = self._goContent:GetComponent(typeof(UnityEngine.UI.HorizontalLayoutGroup))
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0.actId = arg_6_0.viewParam.actId
-	arg_6_0.stage = arg_6_0.viewParam.stage
-	arg_6_0.targetNumList = {}
+function Season123_1_9EpisodeRewardView:onOpen()
+	self.actId = self.viewParam.actId
+	self.stage = self.viewParam.stage
+	self.targetNumList = {}
 end
 
-function var_0_0.refreshUI(arg_7_0)
-	local var_7_0 = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Season123) or {}
+function Season123_1_9EpisodeRewardView:refreshUI()
+	local seasonMOTasks = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Season123) or {}
 
-	Season123EpisodeRewardModel.instance:init(arg_7_0.actId, var_7_0)
-	gohelper.setActive(arg_7_0._goRwards, true)
-	Season123EpisodeRewardModel.instance:setTaskInfoList(arg_7_0.stage)
+	Season123EpisodeRewardModel.instance:init(self.actId, seasonMOTasks)
+	gohelper.setActive(self._goRwards, true)
+	Season123EpisodeRewardModel.instance:setTaskInfoList(self.stage)
 
-	arg_7_0.itemList = Season123EpisodeRewardModel.instance:getList()
+	self.itemList = Season123EpisodeRewardModel.instance:getList()
 
-	arg_7_0:initTargetNumList()
+	self:initTargetNumList()
 
-	local var_7_1 = Season123Model.instance:getActInfo(arg_7_0.actId):getStageMO(arg_7_0.stage)
+	local stageMOInfo = Season123Model.instance:getActInfo(self.actId):getStageMO(self.stage)
 
-	arg_7_0.stageMinRound = var_7_1.minRound
-	arg_7_0.stageIsPass = var_7_1.isPass
-	arg_7_0.defaultProgress = arg_7_0.targetNumList[1] + 5
-	arg_7_0.curProgress = (arg_7_0.stageMinRound == 0 or not arg_7_0.stageIsPass) and arg_7_0.defaultProgress or arg_7_0.stageMinRound
+	self.stageMinRound = stageMOInfo.minRound
+	self.stageIsPass = stageMOInfo.isPass
+	self.defaultProgress = self.targetNumList[1] + 5
+	self.curProgress = (self.stageMinRound == 0 or not self.stageIsPass) and self.defaultProgress or self.stageMinRound
 
-	arg_7_0:createAndRefreshRewardItem()
-	arg_7_0:refreshProgressBar()
-	arg_7_0:refreshScrollPos()
+	self:createAndRefreshRewardItem()
+	self:refreshProgressBar()
+	self:refreshScrollPos()
 end
 
-function var_0_0.createAndRefreshRewardItem(arg_8_0)
-	gohelper.CreateObjList(arg_8_0, arg_8_0.rewardItemShow, arg_8_0.itemList, arg_8_0._gorewardContent, arg_8_0._gorewardItem)
+function Season123_1_9EpisodeRewardView:createAndRefreshRewardItem()
+	gohelper.CreateObjList(self, self.rewardItemShow, self.itemList, self._gorewardContent, self._gorewardItem)
 end
 
-function var_0_0.rewardItemShow(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	arg_9_1.name = "rewardItem" .. arg_9_3
+function Season123_1_9EpisodeRewardView:rewardItemShow(obj, data, index)
+	obj.name = "rewardItem" .. index
 
-	local var_9_0 = gohelper.findChildTextMesh(arg_9_1, "txt_score")
-	local var_9_1 = gohelper.findChild(arg_9_1, "darkpoint")
-	local var_9_2 = gohelper.findChild(arg_9_1, "lightpoint")
-	local var_9_3 = gohelper.findChild(arg_9_1, "layout")
-	local var_9_4 = gohelper.findChild(arg_9_1, "layout/go_reward")
+	local txtScore = gohelper.findChildTextMesh(obj, "txt_score")
+	local godarkPoint = gohelper.findChild(obj, "darkpoint")
+	local golightPoint = gohelper.findChild(obj, "lightpoint")
+	local gocontent = gohelper.findChild(obj, "layout")
+	local goreward = gohelper.findChild(obj, "layout/go_reward")
 
-	gohelper.setActive(var_9_4, false)
+	gohelper.setActive(goreward, false)
 
-	local var_9_5 = string.split(arg_9_2.config.listenerParam, "#")
+	local paramList = string.split(data.config.listenerParam, "#")
 
-	var_9_0.text = var_9_5[2]
+	txtScore.text = paramList[2]
 
-	local var_9_6 = tonumber(var_9_5[2])
+	local targetProgress = tonumber(paramList[2])
 
-	SLFramework.UGUI.GuiHelper.SetColor(var_9_0, var_9_6 >= arg_9_0.curProgress and "#E27F45" or "#9F9F9F")
-	gohelper.setActive(var_9_1, var_9_6 < arg_9_0.curProgress)
-	gohelper.setActive(var_9_2, var_9_6 >= arg_9_0.curProgress)
+	SLFramework.UGUI.GuiHelper.SetColor(txtScore, targetProgress >= self.curProgress and "#E27F45" or "#9F9F9F")
+	gohelper.setActive(godarkPoint, targetProgress < self.curProgress)
+	gohelper.setActive(golightPoint, targetProgress >= self.curProgress)
 
-	local var_9_7 = arg_9_0._rewardItems[arg_9_3]
-	local var_9_8 = GameUtil.splitString2(arg_9_2.config.bonus, true, "|", "#")
+	local itemIconList = self._rewardItems[index]
+	local bonusList = GameUtil.splitString2(data.config.bonus, true, "|", "#")
 
-	if not var_9_7 then
-		var_9_7 = {}
+	if not itemIconList then
+		itemIconList = {}
 
-		for iter_9_0, iter_9_1 in ipairs(var_9_8) do
-			local var_9_9 = {
-				itemGO = gohelper.cloneInPlace(var_9_4, "item" .. tostring(arg_9_3))
-			}
+		for itemIndex, bonus in ipairs(bonusList) do
+			local itemTab = {}
 
-			var_9_9.goItemPos = gohelper.findChild(var_9_9.itemGO, "go_itempos")
-			var_9_9.icon = IconMgr.instance:getCommonPropItemIcon(var_9_9.goItemPos)
-			var_9_9.goHasGet = gohelper.findChild(var_9_9.itemGO, "go_hasget")
-			var_9_9.goCanGet = gohelper.findChild(var_9_9.itemGO, "go_canget")
-			var_9_9.btnCanGet = gohelper.findChildButtonWithAudio(var_9_9.itemGO, "go_canget")
+			itemTab.itemGO = gohelper.cloneInPlace(goreward, "item" .. tostring(index))
+			itemTab.goItemPos = gohelper.findChild(itemTab.itemGO, "go_itempos")
+			itemTab.icon = IconMgr.instance:getCommonPropItemIcon(itemTab.goItemPos)
+			itemTab.goHasGet = gohelper.findChild(itemTab.itemGO, "go_hasget")
+			itemTab.goCanGet = gohelper.findChild(itemTab.itemGO, "go_canget")
+			itemTab.btnCanGet = gohelper.findChildButtonWithAudio(itemTab.itemGO, "go_canget")
 
-			var_9_9.btnCanGet:AddClickListener(arg_9_0.onItemGetClick, arg_9_0)
-			gohelper.setActive(var_9_9.itemGO, true)
-			var_9_9.icon:setMOValue(iter_9_1[1], iter_9_1[2], iter_9_1[3])
-			var_9_9.icon:setHideLvAndBreakFlag(true)
-			var_9_9.icon:hideEquipLvAndBreak(true)
-			var_9_9.icon:setCountFontSize(51)
+			itemTab.btnCanGet:AddClickListener(self.onItemGetClick, self)
+			gohelper.setActive(itemTab.itemGO, true)
+			itemTab.icon:setMOValue(bonus[1], bonus[2], bonus[3])
+			itemTab.icon:setHideLvAndBreakFlag(true)
+			itemTab.icon:hideEquipLvAndBreak(true)
+			itemTab.icon:setCountFontSize(51)
 
-			var_9_7[iter_9_0] = var_9_9
+			itemIconList[itemIndex] = itemTab
 		end
 	end
 
-	arg_9_0._rewardItems[arg_9_3] = var_9_7
+	self._rewardItems[index] = itemIconList
 
-	for iter_9_2, iter_9_3 in pairs(var_9_7) do
-		gohelper.setActive(iter_9_3.goHasGet, arg_9_2.finishCount >= arg_9_2.config.maxFinishCount)
-		gohelper.setActive(iter_9_3.goCanGet, arg_9_2.progress >= arg_9_2.config.maxProgress and arg_9_2.hasFinished)
+	for index, item in pairs(itemIconList) do
+		gohelper.setActive(item.goHasGet, data.finishCount >= data.config.maxFinishCount)
+		gohelper.setActive(item.goCanGet, data.progress >= data.config.maxProgress and data.hasFinished)
 	end
 end
 
-function var_0_0.onItemGetClick(arg_10_0)
-	local var_10_0 = Season123EpisodeRewardModel.instance:getCurStageCanGetReward()
+function Season123_1_9EpisodeRewardView:onItemGetClick()
+	local canGetRewardList = Season123EpisodeRewardModel.instance:getCurStageCanGetReward()
 
-	if #var_10_0 ~= 0 then
-		TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.Season123, 0, var_10_0, nil, nil, 0)
+	if #canGetRewardList ~= 0 then
+		TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.Season123, 0, canGetRewardList, nil, nil, 0)
 	end
 end
 
-function var_0_0.refreshProgressBar(arg_11_0)
-	local var_11_0 = arg_11_0._goContentHLayout.padding.left + 98
-	local var_11_1 = arg_11_0._goContentHLayout.padding.right + 102 - 20
-	local var_11_2 = 40
-	local var_11_3 = 236
-	local var_11_4 = arg_11_0.defaultProgress
-	local var_11_5 = 0
-	local var_11_6 = 0
-	local var_11_7 = 0
-	local var_11_8 = 0
-	local var_11_9 = 0
+function Season123_1_9EpisodeRewardView:refreshProgressBar()
+	local firstPartH = self._goContentHLayout.padding.left + 98
+	local endH = self._goContentHLayout.padding.right + 102 - 20
+	local tagH = 40
+	local normalPartH = 236
+	local firstNum = self.defaultProgress
+	local nowIndex = 0
+	local nowIndexValue = 0
+	local nextIndexValue = 0
+	local offsetValue = 0
+	local processH = 0
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0.targetNumList) do
-		if iter_11_1 >= arg_11_0.curProgress then
-			var_11_5 = iter_11_0
-			var_11_6 = iter_11_1
-			var_11_7 = iter_11_1
-		elseif var_11_6 <= var_11_7 then
-			var_11_7 = iter_11_1
+	for index, targetNum in ipairs(self.targetNumList) do
+		if targetNum >= self.curProgress then
+			nowIndex = index
+			nowIndexValue = targetNum
+			nextIndexValue = targetNum
+		elseif nowIndexValue <= nextIndexValue then
+			nextIndexValue = targetNum
 		end
 	end
 
-	if var_11_7 ~= var_11_6 then
-		var_11_8 = (arg_11_0.curProgress - var_11_6) / (var_11_7 - var_11_6)
+	if nextIndexValue ~= nowIndexValue then
+		offsetValue = (self.curProgress - nowIndexValue) / (nextIndexValue - nowIndexValue)
 	end
 
-	if var_11_5 == 0 then
-		if var_11_4 <= arg_11_0.curProgress then
-			var_11_9 = var_11_0 / 2
+	if nowIndex == 0 then
+		if firstNum <= self.curProgress then
+			processH = firstPartH / 2
 		else
-			var_11_9 = var_11_0 / 2 + (var_11_4 - arg_11_0.curProgress) / (var_11_0 / 2)
+			processH = firstPartH / 2 + (firstNum - self.curProgress) / (firstPartH / 2)
 		end
 	else
-		var_11_9 = var_11_0 + var_11_5 * var_11_2 + (var_11_5 - 1) * var_11_3 + var_11_8 * var_11_3
+		processH = firstPartH + nowIndex * tagH + (nowIndex - 1) * normalPartH + offsetValue * normalPartH
 	end
 
-	local var_11_10 = #arg_11_0.targetNumList
+	local targetCount = #self.targetNumList
 
-	arg_11_0.totalWidth = math.max(1287, var_11_0 + (var_11_10 - 1) * var_11_3 + var_11_10 * var_11_2 + var_11_1)
+	self.totalWidth = math.max(1287, firstPartH + (targetCount - 1) * normalPartH + targetCount * tagH + endH)
 
-	if var_11_5 == var_11_10 then
-		var_11_9 = arg_11_0.totalWidth
+	if nowIndex == targetCount then
+		processH = self.totalWidth
 	end
 
-	recthelper.setWidth(arg_11_0._gofill.transform, var_11_9)
+	recthelper.setWidth(self._gofill.transform, processH)
 end
 
-function var_0_0.initTargetNumList(arg_12_0)
-	if #arg_12_0.targetNumList == 0 then
-		for iter_12_0, iter_12_1 in pairs(arg_12_0.itemList) do
-			local var_12_0 = tonumber(string.split(iter_12_1.config.listenerParam, "#")[2])
+function Season123_1_9EpisodeRewardView:initTargetNumList()
+	if #self.targetNumList == 0 then
+		for index, mo in pairs(self.itemList) do
+			local targetNum = tonumber(string.split(mo.config.listenerParam, "#")[2])
 
-			table.insert(arg_12_0.targetNumList, var_12_0)
+			table.insert(self.targetNumList, targetNum)
 		end
 	end
 end
 
-function var_0_0.refreshScrollPos(arg_13_0)
-	local var_13_0 = 240
-	local var_13_1 = 36
-	local var_13_2 = arg_13_0:getCurCanGetIndex()
-	local var_13_3 = recthelper.getWidth(arg_13_0._scrollreward.transform)
+function Season123_1_9EpisodeRewardView:refreshScrollPos()
+	local itemWidth = 240
+	local itemSpaceH = 36
+	local getCurCanGetIndex = self:getCurCanGetIndex()
+	local scrollWidth = recthelper.getWidth(self._scrollreward.transform)
 
-	if var_13_2 == nil or var_13_2 <= 0 then
-		arg_13_0._scrollreward.horizontalNormalizedPosition = 1
+	if getCurCanGetIndex == nil or getCurCanGetIndex <= 0 then
+		self._scrollreward.horizontalNormalizedPosition = 1
 	else
-		local var_13_4 = math.max(0, (var_13_2 - 0.5) * (var_13_0 + var_13_1))
+		local moveOffset = math.max(0, (getCurCanGetIndex - 0.5) * (itemWidth + itemSpaceH))
 
-		arg_13_0._scrollreward.horizontalNormalizedPosition = Mathf.Clamp01(var_13_4 / (arg_13_0.totalWidth + 20 - var_13_3))
+		self._scrollreward.horizontalNormalizedPosition = Mathf.Clamp01(moveOffset / (self.totalWidth + 20 - scrollWidth))
 	end
 end
 
-function var_0_0.getCurCanGetIndex(arg_14_0)
-	for iter_14_0, iter_14_1 in pairs(arg_14_0.itemList) do
-		if iter_14_1.progress >= iter_14_1.config.maxProgress and iter_14_1.hasFinished or iter_14_1.finishCount < iter_14_1.config.maxFinishCount then
-			return iter_14_0 - 1
+function Season123_1_9EpisodeRewardView:getCurCanGetIndex()
+	for index, rewardMO in pairs(self.itemList) do
+		if rewardMO.progress >= rewardMO.config.maxProgress and rewardMO.hasFinished or rewardMO.finishCount < rewardMO.config.maxFinishCount then
+			return index - 1
 		end
 	end
 
 	return nil
 end
 
-function var_0_0.resetView(arg_15_0)
-	gohelper.setActive(arg_15_0._goRwards, false)
+function Season123_1_9EpisodeRewardView:resetView()
+	gohelper.setActive(self._goRwards, false)
 end
 
-function var_0_0.onClose(arg_16_0)
+function Season123_1_9EpisodeRewardView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_17_0)
-	for iter_17_0, iter_17_1 in pairs(arg_17_0._rewardItems) do
-		for iter_17_2, iter_17_3 in pairs(iter_17_1) do
-			iter_17_3.btnCanGet:RemoveClickListener()
+function Season123_1_9EpisodeRewardView:onDestroyView()
+	for _, rewardItem in pairs(self._rewardItems) do
+		for index, item in pairs(rewardItem) do
+			item.btnCanGet:RemoveClickListener()
 		end
 	end
 end
 
-return var_0_0
+return Season123_1_9EpisodeRewardView

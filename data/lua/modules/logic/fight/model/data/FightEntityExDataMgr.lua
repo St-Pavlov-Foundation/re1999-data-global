@@ -1,24 +1,26 @@
-﻿module("modules.logic.fight.model.data.FightEntityExDataMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightEntityExDataMgr.lua
 
-local var_0_0 = FightDataClass("FightEntityExDataMgr", FightDataMgrBase)
+module("modules.logic.fight.model.data.FightEntityExDataMgr", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0.exDataDic = {}
+local FightEntityExDataMgr = FightDataClass("FightEntityExDataMgr", FightDataMgrBase)
+
+function FightEntityExDataMgr:onConstructor()
+	self.exDataDic = {}
 end
 
-function var_0_0.getById(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_0.exDataDic[arg_2_1]
+function FightEntityExDataMgr:getById(entityId)
+	local data = self.exDataDic[entityId]
 
-	if not var_2_0 then
-		var_2_0 = FightEntityExData.New()
-		arg_2_0.exDataDic[arg_2_1] = var_2_0
+	if not data then
+		data = FightEntityExData.New()
+		self.exDataDic[entityId] = data
 	end
 
-	return var_2_0
+	return data
 end
 
-function var_0_0.onStageChanged(arg_3_0)
+function FightEntityExDataMgr:onStageChanged()
 	return
 end
 
-return var_0_0
+return FightEntityExDataMgr

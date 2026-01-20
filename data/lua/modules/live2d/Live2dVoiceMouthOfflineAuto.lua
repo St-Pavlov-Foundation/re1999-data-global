@@ -1,281 +1,283 @@
-﻿module("modules.live2d.Live2dVoiceMouthOfflineAuto", package.seeall)
+﻿-- chunkname: @modules/live2d/Live2dVoiceMouthOfflineAuto.lua
 
-local var_0_0 = class("Live2dVoiceMouthOfflineAuto", SpineVoiceMouth)
+module("modules.live2d.Live2dVoiceMouthOfflineAuto", package.seeall)
 
-var_0_0.AutoActionName = "_auto"
-var_0_0.AutoMouthThreshold = 0.1
+local Live2dVoiceMouthOfflineAuto = class("Live2dVoiceMouthOfflineAuto", SpineVoiceMouth)
 
-function var_0_0._playMouthActionList(arg_1_0, arg_1_1)
-	arg_1_0._lastMouthId = nil
-	arg_1_0._lastFaceAction = nil
-	arg_1_0._faceActionSpList = nil
-	arg_1_0._voiceStartTime = Time.time
-	arg_1_0._autoMouthRunning = false
-	arg_1_0._manualMouthRunning = false
-	arg_1_0._forceFace = nil
+Live2dVoiceMouthOfflineAuto.AutoActionName = "_auto"
+Live2dVoiceMouthOfflineAuto.AutoMouthThreshold = 0.1
 
-	if arg_1_0._forceNoMouth then
-		arg_1_0:_onMouthEnd()
+function Live2dVoiceMouthOfflineAuto:_playMouthActionList(mouth)
+	self._lastMouthId = nil
+	self._lastFaceAction = nil
+	self._faceActionSpList = nil
+	self._voiceStartTime = Time.time
+	self._autoMouthRunning = false
+	self._manualMouthRunning = false
+	self._forceFace = nil
+
+	if self._forceNoMouth then
+		self:_onMouthEnd()
 
 		return
 	end
 
-	if arg_1_0._voiceConfig.heroId == 3038 and not arg_1_0._hasAudio then
-		arg_1_0:_onMouthEnd()
+	if self._voiceConfig.heroId == 3038 and not self._hasAudio then
+		self:_onMouthEnd()
 	end
 
-	logNormal("start audio mouth: " .. tostring(arg_1_1))
-	logNormal("start audio face: " .. arg_1_0:getFace(arg_1_0._voiceConfig))
+	logNormal("start audio mouth: " .. tostring(mouth))
+	logNormal("start audio face: " .. self:getFace(self._voiceConfig))
 
-	if LuaUtil.isEmptyStr(arg_1_1) then
-		if arg_1_0._hasAudio then
-			TaskDispatcher.runRepeat(arg_1_0._mouthRepeat, arg_1_0, 0.03, 2000)
+	if LuaUtil.isEmptyStr(mouth) then
+		if self._hasAudio then
+			TaskDispatcher.runRepeat(self._mouthRepeat, self, 0.03, 2000)
 		else
-			arg_1_0:_onMouthEnd()
+			self:_onMouthEnd()
 		end
 	else
-		arg_1_0._mouthDelayCallbackList = {}
+		self._mouthDelayCallbackList = {}
 
-		local var_1_0
+		local mouthActionList
 
-		if not string.nilorempty(arg_1_1) then
-			var_1_0 = string.split(arg_1_1, "|")
+		if not string.nilorempty(mouth) then
+			mouthActionList = string.split(mouth, "|")
 
-			arg_1_0:_configValidity(var_1_0, arg_1_0._spine)
+			self:_configValidity(mouthActionList, self._spine)
 		else
-			var_1_0 = {}
+			mouthActionList = {}
 		end
 
-		arg_1_0:startLipSync()
+		self:startLipSync()
 
-		local var_1_1 = #var_1_0
+		local count = #mouthActionList
 
-		for iter_1_0, iter_1_1 in ipairs(var_1_0) do
-			local var_1_2 = string.split(iter_1_1, "#")
-			local var_1_3 = var_1_2[1]
-			local var_1_4 = tonumber(var_1_2[2])
-			local var_1_5 = tonumber(var_1_2[3])
+		for i, v in ipairs(mouthActionList) do
+			local param = string.split(v, "#")
+			local mouthAction = param[1]
+			local mouthStart = tonumber(param[2])
+			local mouthEnd = tonumber(param[3])
 
-			if arg_1_0:_hasAuto(var_1_3) and var_1_3 ~= var_0_0.AutoActionName then
-				arg_1_0._forceFace = string.gsub(var_1_3, var_0_0.AutoActionName, "")
-				var_1_3 = var_0_0.AutoActionName
+			if self:_hasAuto(mouthAction) and mouthAction ~= Live2dVoiceMouthOfflineAuto.AutoActionName then
+				self._forceFace = string.gsub(mouthAction, Live2dVoiceMouthOfflineAuto.AutoActionName, "")
+				mouthAction = Live2dVoiceMouthOfflineAuto.AutoActionName
 			end
 
-			if not arg_1_0:_hasAuto(var_1_3) then
-				arg_1_0:_addMouth(iter_1_0 == var_1_1, var_1_3, var_1_4, var_1_5)
+			if not self:_hasAuto(mouthAction) then
+				self:_addMouth(i == count, mouthAction, mouthStart, mouthEnd)
 			end
 		end
 
-		if var_1_1 <= 0 then
-			arg_1_0:_onMouthEnd()
+		if count <= 0 then
+			self:_onMouthEnd()
 		end
 	end
 end
 
-function var_0_0._hasAuto(arg_2_0, arg_2_1)
-	return string.find(arg_2_1, var_0_0.AutoActionName)
+function Live2dVoiceMouthOfflineAuto:_hasAuto(action)
+	return string.find(action, Live2dVoiceMouthOfflineAuto.AutoActionName)
 end
 
-function var_0_0._configValidity(arg_3_0, arg_3_1, arg_3_2)
-	for iter_3_0 = #arg_3_1, 1, -1 do
-		local var_3_0 = arg_3_1[iter_3_0]
-		local var_3_1 = string.split(var_3_0, "#")
-		local var_3_2 = true
+function Live2dVoiceMouthOfflineAuto:_configValidity(list, spine)
+	for i = #list, 1, -1 do
+		local action = list[i]
+		local actionParam = string.split(action, "#")
+		local invalid = true
 
-		if #var_3_1 == 3 then
-			local var_3_3 = "t_" .. var_3_1[1]
+		if #actionParam == 3 then
+			local str = "t_" .. actionParam[1]
 
-			if arg_3_2:hasAnimation(var_3_3) or arg_3_0:_hasAuto(var_3_1[1]) then
-				var_3_2 = false
+			if spine:hasAnimation(str) or self:_hasAuto(actionParam[1]) then
+				invalid = false
 			end
 		end
 
-		if var_3_2 then
-			logError(string.format("id：%s 语音 mouth 无效的配置：%s mouth:%s", arg_3_0._voiceConfig.audio, var_3_0, arg_3_0._voiceConfig.mouth))
-			table.remove(arg_3_1, iter_3_0)
+		if invalid then
+			logError(string.format("id：%s 语音 mouth 无效的配置：%s mouth:%s", self._voiceConfig.audio, action, self._voiceConfig.mouth))
+			table.remove(list, i)
 		end
 	end
 end
 
-function var_0_0._addMouth(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
-	local function var_4_0()
-		if arg_4_0._spine then
-			arg_4_0._curMouth = "t_" .. arg_4_2
-			arg_4_0._lastFaceAction = arg_4_2 or arg_4_0._lastFaceAction
-			arg_4_0._curMouthEnd = nil
+function Live2dVoiceMouthOfflineAuto:_addMouth(lastOne, mouthAction, mouthStart, mouthEnd)
+	local function startCallback()
+		if self._spine then
+			self._curMouth = "t_" .. mouthAction
+			self._lastFaceAction = mouthAction or self._lastFaceAction
+			self._curMouthEnd = nil
 
-			arg_4_0._spine:setMouthAnimation(arg_4_0._curMouth, true, 0)
+			self._spine:setMouthAnimation(self._curMouth, true, 0)
 
-			arg_4_0._manualMouthRunning = true
+			self._manualMouthRunning = true
 		end
 	end
 
-	local function var_4_1()
-		if arg_4_0._spine then
-			arg_4_0:stopMouthCallback(true)
+	local function stopCallback()
+		if self._spine then
+			self:stopMouthCallback(true)
 
-			arg_4_0._manualMouthRunning = false
+			self._manualMouthRunning = false
 
-			if arg_4_0._autoMouthRunning then
+			if self._autoMouthRunning then
 				-- block empty
 			end
 		end
 	end
 
-	table.insert(arg_4_0._mouthDelayCallbackList, var_4_0)
-	table.insert(arg_4_0._mouthDelayCallbackList, var_4_1)
+	table.insert(self._mouthDelayCallbackList, startCallback)
+	table.insert(self._mouthDelayCallbackList, stopCallback)
 
-	if arg_4_3 > 0 then
-		TaskDispatcher.runDelay(var_4_0, nil, arg_4_3)
+	if mouthStart > 0 then
+		TaskDispatcher.runDelay(startCallback, nil, mouthStart)
 	else
-		var_4_0()
+		startCallback()
 	end
 
-	TaskDispatcher.runDelay(var_4_1, nil, arg_4_4)
+	TaskDispatcher.runDelay(stopCallback, nil, mouthEnd)
 end
 
-function var_0_0.startLipSync(arg_7_0)
-	local var_7_0 = arg_7_0._spine and arg_7_0._spine:getMouthController()
+function Live2dVoiceMouthOfflineAuto:startLipSync()
+	local ctrl = self._spine and self._spine:getMouthController()
 
-	if not gohelper.isNil(var_7_0) then
-		var_7_0:StartListen()
-		TaskDispatcher.runRepeat(arg_7_0._lipSyncUpdate, arg_7_0, 0.01, 2000)
+	if not gohelper.isNil(ctrl) then
+		ctrl:StartListen()
+		TaskDispatcher.runRepeat(self._lipSyncUpdate, self, 0.01, 2000)
 	end
 end
 
-function var_0_0.stopLipSync(arg_8_0)
-	local var_8_0 = arg_8_0._spine and arg_8_0._spine:getMouthController()
+function Live2dVoiceMouthOfflineAuto:stopLipSync()
+	local ctrl = self._spine and self._spine:getMouthController()
 
-	if not gohelper.isNil(var_8_0) then
-		var_8_0:Stop()
+	if not gohelper.isNil(ctrl) then
+		ctrl:Stop()
 	end
 
-	TaskDispatcher.cancelTask(arg_8_0._lipSyncUpdate, arg_8_0)
+	TaskDispatcher.cancelTask(self._lipSyncUpdate, self)
 end
 
-function var_0_0._lipSyncUpdate(arg_9_0)
-	local var_9_0 = arg_9_0._spine._cubismMouthController.MouthValue
+function Live2dVoiceMouthOfflineAuto:_lipSyncUpdate()
+	local evaluateValue = self._spine._cubismMouthController.MouthValue
 
-	if arg_9_0._manualMouthRunning then
+	if self._manualMouthRunning then
 		return
 	end
 
-	local var_9_1 = Time.time - arg_9_0._voiceStartTime
-	local var_9_2 = arg_9_0:_getFaceActionList()
-	local var_9_3
+	local t = Time.time - self._voiceStartTime
+	local faceActionList = self:_getFaceActionList()
+	local faceAction
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_2) do
-		if var_9_1 >= iter_9_1[2] and var_9_1 < iter_9_1[3] then
-			var_9_3 = iter_9_1[1]
+	for _, one in ipairs(faceActionList) do
+		if t >= one[2] and t < one[3] then
+			faceAction = one[1]
 		end
 	end
 
-	if arg_9_0._forceFace then
-		var_9_3 = arg_9_0._forceFace
+	if self._forceFace then
+		faceAction = self._forceFace
 	end
 
-	local var_9_4 = var_9_3 and "t_" .. var_9_3
+	local mouthAction = faceAction and "t_" .. faceAction
 
-	arg_9_0._lastFaceAction = var_9_3 or arg_9_0._lastFaceAction
+	self._lastFaceAction = faceAction or self._lastFaceAction
 
-	if var_9_0 > var_0_0.AutoMouthThreshold then
-		if var_9_3 and arg_9_0._spine:hasAnimation(var_9_4) then
-			if var_9_4 ~= arg_9_0._curMouth then
-				arg_9_0._curMouth = var_9_4
-				arg_9_0._curMouthEnd = nil
+	if evaluateValue > Live2dVoiceMouthOfflineAuto.AutoMouthThreshold then
+		if faceAction and self._spine:hasAnimation(mouthAction) then
+			if mouthAction ~= self._curMouth then
+				self._curMouth = mouthAction
+				self._curMouthEnd = nil
 
-				arg_9_0._spine:setMouthAnimation(arg_9_0._curMouth, true, 0)
+				self._spine:setMouthAnimation(self._curMouth, true, 0)
 			end
-		elseif arg_9_0._spine:hasAnimation(StoryAnimName.T_ZhengChang) and arg_9_0._curMouth ~= StoryAnimName.T_ZhengChang then
-			arg_9_0._curMouth = StoryAnimName.T_ZhengChang
+		elseif self._spine:hasAnimation(StoryAnimName.T_ZhengChang) and self._curMouth ~= StoryAnimName.T_ZhengChang then
+			self._curMouth = StoryAnimName.T_ZhengChang
 
-			arg_9_0._spine:setMouthAnimation(arg_9_0._curMouth, true, 0)
+			self._spine:setMouthAnimation(self._curMouth, true, 0)
 		end
 	else
-		arg_9_0:_setBiZui()
+		self:_setBiZui()
 	end
 end
 
-function var_0_0._getFaceActionList(arg_10_0)
-	if not arg_10_0._faceActionSpList then
-		arg_10_0._faceActionSpList = {}
+function Live2dVoiceMouthOfflineAuto:_getFaceActionList()
+	if not self._faceActionSpList then
+		self._faceActionSpList = {}
 
-		local var_10_0 = arg_10_0:getFace(arg_10_0._voiceConfig)
-		local var_10_1 = string.split(var_10_0, "|")
+		local langFace = self:getFace(self._voiceConfig)
+		local faceList = string.split(langFace, "|")
 
-		for iter_10_0, iter_10_1 in ipairs(var_10_1) do
-			local var_10_2 = string.split(iter_10_1, "#")
+		for _, action in ipairs(faceList) do
+			local actionParam = string.split(action, "#")
 
-			if #var_10_2 >= 3 then
-				local var_10_3 = var_10_2[1]
-				local var_10_4 = tonumber(var_10_2[2])
-				local var_10_5 = tonumber(var_10_2[3])
+			if #actionParam >= 3 then
+				local faceActionName = actionParam[1]
+				local startTime = tonumber(actionParam[2])
+				local endTime = tonumber(actionParam[3])
 
-				table.insert(arg_10_0._faceActionSpList, {
-					var_10_3,
-					var_10_4,
-					var_10_5
+				table.insert(self._faceActionSpList, {
+					faceActionName,
+					startTime,
+					endTime
 				})
 			end
 		end
 	end
 
-	return arg_10_0._faceActionSpList
+	return self._faceActionSpList
 end
 
-function var_0_0._mouthRepeat(arg_11_0)
+function Live2dVoiceMouthOfflineAuto:_mouthRepeat()
 	return
 end
 
-function var_0_0._setBiZui(arg_12_0)
-	if not string.nilorempty(arg_12_0._lastFaceAction) and not arg_12_0._isVoiceStop then
-		local var_12_0 = string.format("t_%s_%s", arg_12_0._lastFaceAction, "bizui")
+function Live2dVoiceMouthOfflineAuto:_setBiZui()
+	if not string.nilorempty(self._lastFaceAction) and not self._isVoiceStop then
+		local bizuiAction = string.format("t_%s_%s", self._lastFaceAction, "bizui")
 
-		if arg_12_0._spine:hasAnimation(var_12_0) then
-			if arg_12_0._curMouth ~= var_12_0 then
-				arg_12_0._curMouth = var_12_0
+		if self._spine:hasAnimation(bizuiAction) then
+			if self._curMouth ~= bizuiAction then
+				self._curMouth = bizuiAction
 
-				arg_12_0._spine:setMouthAnimation(arg_12_0._curMouth, true, 0)
+				self._spine:setMouthAnimation(self._curMouth, true, 0)
 			end
 
 			return
 		end
 	end
 
-	if arg_12_0._curMouth ~= StoryAnimName.T_BiZui then
-		if arg_12_0._spine:hasAnimation(StoryAnimName.T_BiZui) then
-			arg_12_0._curMouth = StoryAnimName.T_BiZui
+	if self._curMouth ~= StoryAnimName.T_BiZui then
+		if self._spine:hasAnimation(StoryAnimName.T_BiZui) then
+			self._curMouth = StoryAnimName.T_BiZui
 
-			arg_12_0._spine:setMouthAnimation(arg_12_0._curMouth, true, 0)
+			self._spine:setMouthAnimation(self._curMouth, true, 0)
 		else
-			arg_12_0._curMouth = StoryAnimName.T_BiZui
+			self._curMouth = StoryAnimName.T_BiZui
 
-			logError("no animation:t_bizui, heroId = " .. (arg_12_0._voiceConfig and arg_12_0._voiceConfig.heroId or "nil"))
+			logError("no animation:t_bizui, heroId = " .. (self._voiceConfig and self._voiceConfig.heroId or "nil"))
 		end
 	end
 end
 
-function var_0_0.onVoiceStop(arg_13_0)
-	arg_13_0._isVoiceStop = true
+function Live2dVoiceMouthOfflineAuto:onVoiceStop()
+	self._isVoiceStop = true
 
-	arg_13_0:stopMouth()
+	self:stopMouth()
 
-	arg_13_0._isVoiceStop = false
+	self._isVoiceStop = false
 
-	arg_13_0:removeTaskActions()
+	self:removeTaskActions()
 
-	arg_13_0._autoMouthRunning = false
-	arg_13_0._manualMouthRunning = false
-	arg_13_0._faceActionSpList = nil
+	self._autoMouthRunning = false
+	self._manualMouthRunning = false
+	self._faceActionSpList = nil
 end
 
-function var_0_0.removeTaskActions(arg_14_0)
-	var_0_0.super.removeTaskActions(arg_14_0)
-	arg_14_0:stopLipSync()
+function Live2dVoiceMouthOfflineAuto:removeTaskActions()
+	Live2dVoiceMouthOfflineAuto.super.removeTaskActions(self)
+	self:stopLipSync()
 end
 
-function var_0_0.suspend(arg_15_0)
-	arg_15_0:removeTaskActions()
+function Live2dVoiceMouthOfflineAuto:suspend()
+	self:removeTaskActions()
 end
 
-return var_0_0
+return Live2dVoiceMouthOfflineAuto

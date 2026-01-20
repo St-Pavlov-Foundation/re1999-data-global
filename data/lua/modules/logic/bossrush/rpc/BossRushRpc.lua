@@ -1,100 +1,129 @@
-﻿module("modules.logic.bossrush.rpc.BossRushRpc", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/rpc/BossRushRpc.lua
 
-local var_0_0 = class("BossRushRpc", Activity128Rpc)
+module("modules.logic.bossrush.rpc.BossRushRpc", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	Activity128Rpc.instance = arg_1_0
+local BossRushRpc = class("BossRushRpc", Activity128Rpc)
+
+function BossRushRpc:ctor()
+	Activity128Rpc.instance = self
 end
 
-local function var_0_1(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_1.activityId
+local function _isValid(resultCode, msg)
+	local activityId = msg.activityId
 
-	if not BossRushConfig.instance:checkActivityId(var_2_0) then
+	if not BossRushConfig.instance:checkActivityId(activityId) then
 		return false
 	end
 
-	if arg_2_0 ~= 0 then
+	if resultCode ~= 0 then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0.sendGet128InfosRequest(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = BossRushConfig.instance:getActivityId()
+function BossRushRpc:sendGet128InfosRequest(callback, cbObj)
+	local activityId = BossRushConfig.instance:getActivityId()
 
-	Activity128Rpc.sendGet128InfosRequest(arg_3_0, var_3_0, arg_3_1, arg_3_2)
+	Activity128Rpc.sendGet128InfosRequest(self, activityId, callback, cbObj)
 end
 
-function var_0_0.sendAct128GetTotalRewardsRequest(arg_4_0, arg_4_1)
-	local var_4_0 = BossRushConfig.instance:getActivityId()
+function BossRushRpc:sendAct128GetTotalRewardsRequest(bossId)
+	local activityId = BossRushConfig.instance:getActivityId()
 
-	Activity128Rpc.sendAct128GetTotalRewardsRequest(arg_4_0, var_4_0, arg_4_1)
+	Activity128Rpc.sendAct128GetTotalRewardsRequest(self, activityId, bossId)
 end
 
-function var_0_0.sendAct128DoublePointRequest(arg_5_0, arg_5_1)
-	local var_5_0 = BossRushConfig.instance:getActivityId()
+function BossRushRpc:sendAct128DoublePointRequest(bossId)
+	local activityId = BossRushConfig.instance:getActivityId()
 
-	Activity128Rpc.sendAct128DoublePointRequest(arg_5_0, var_5_0, arg_5_1)
+	Activity128Rpc.sendAct128DoublePointRequest(self, activityId, bossId)
 end
 
-function var_0_0.sendAct128GetTotalSingleRewardRequest(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = BossRushConfig.instance:getActivityId()
+function BossRushRpc:sendAct128GetTotalSingleRewardRequest(bossId, index)
+	local activityId = BossRushConfig.instance:getActivityId()
 
-	Activity128Rpc.sendAct128GetTotalSingleRewardRequest(arg_6_0, var_6_0, arg_6_1, arg_6_2)
+	Activity128Rpc.sendAct128GetTotalSingleRewardRequest(self, activityId, bossId, index)
 end
 
-function var_0_0._onReceiveGet128InfosReply(arg_7_0, arg_7_1, arg_7_2)
-	if not var_0_1(arg_7_1, arg_7_2) then
+function BossRushRpc:_onReceiveGet128InfosReply(resultCode, msg)
+	if not _isValid(resultCode, msg) then
 		return
 	end
 
-	BossRushModel.instance:onReceiveGet128InfosReply(arg_7_2)
-	V2a9BossRushModel.instance:onRefresh128InfosReply(arg_7_2)
+	BossRushModel.instance:onReceiveGet128InfosReply(msg)
+	V2a9BossRushModel.instance:onRefresh128InfosReply(msg)
+	V3a2_BossRushModel.instance:onRefresh128InfosReply(msg)
 end
 
-function var_0_0._onReceiveAct128GetTotalRewardsReply(arg_8_0, arg_8_1, arg_8_2)
-	if not var_0_1(arg_8_1, arg_8_2) then
+function BossRushRpc:_onReceiveAct128GetTotalRewardsReply(resultCode, msg)
+	if not _isValid(resultCode, msg) then
 		return
 	end
 
-	BossRushModel.instance:onReceiveAct128GetTotalRewardsReply(arg_8_2)
+	BossRushModel.instance:onReceiveAct128GetTotalRewardsReply(msg)
 end
 
-function var_0_0._onReceiveAct128DoublePointReply(arg_9_0, arg_9_1, arg_9_2)
-	if not var_0_1(arg_9_1, arg_9_2) then
+function BossRushRpc:_onReceiveAct128DoublePointReply(resultCode, msg)
+	if not _isValid(resultCode, msg) then
 		return
 	end
 
-	BossRushModel.instance:onReceiveAct128DoublePointReply(arg_9_2)
+	BossRushModel.instance:onReceiveAct128DoublePointReply(msg)
 end
 
-function var_0_0._onReceiveAct128InfoUpdatePush(arg_10_0, arg_10_1, arg_10_2)
-	if not var_0_1(arg_10_1, arg_10_2) then
+function BossRushRpc:_onReceiveAct128InfoUpdatePush(resultCode, msg)
+	if not _isValid(resultCode, msg) then
 		return
 	end
 
-	BossRushModel.instance:onReceiveAct128InfoUpdatePush(arg_10_2)
-	V2a9BossRushModel.instance:onRefresh128InfosReply(arg_10_2)
+	BossRushModel.instance:onReceiveAct128InfoUpdatePush(msg)
+	V2a9BossRushModel.instance:onRefresh128InfosReply(msg)
+	V3a2_BossRushModel.instance:onRefresh128InfosReply(msg)
 end
 
-function var_0_0._onReceiveAct128GetTotalSingleRewardReply(arg_11_0, arg_11_1, arg_11_2)
-	if not var_0_1(arg_11_1, arg_11_2) then
+function BossRushRpc:_onReceiveAct128GetTotalSingleRewardReply(resultCode, msg)
+	if not _isValid(resultCode, msg) then
 		return
 	end
 
-	BossRushModel.instance:onReceiveAct128SingleRewardReply(arg_11_2)
+	BossRushModel.instance:onReceiveAct128SingleRewardReply(msg)
 end
 
-function var_0_0._onReceiveAct128SpFirstHalfSelectItemReply(arg_12_0, arg_12_1, arg_12_2)
-	if not var_0_1(arg_12_1, arg_12_2) then
+function BossRushRpc:_onReceiveAct128SpFirstHalfSelectItemReply(resultCode, msg)
+	if not _isValid(resultCode, msg) then
 		return
 	end
 
-	V2a9BossRushModel.instance:onReceiveAct128SpFirstHalfSelectItemReply(arg_12_2)
+	V2a9BossRushModel.instance:onReceiveAct128SpFirstHalfSelectItemReply(msg)
 	BossRushController.instance:dispatchEvent(BossRushEvent.onReceiveAct128SpFirstHalfSelectItemReply)
 end
 
-var_0_0.instance = var_0_0.New()
+function BossRushRpc:_onReceiveAct128GetExpReply(resultCode, msg)
+	if not _isValid(resultCode, msg) then
+		return
+	end
 
-return var_0_0
+	V3a2_BossRushModel.instance:onReceiveAct128GetExpReply(msg)
+	BossRushController.instance:dispatchEvent(BossRushEvent.onReceiveAct128GetExpReply)
+end
+
+function BossRushRpc:_onReceiveAct128GetMilestoneBonusReply(resultCode, msg)
+	if not _isValid(resultCode, msg) then
+		return
+	end
+
+	V3a2_BossRushModel.instance:_onReceiveAct128GetMilestoneBonusReply(msg)
+end
+
+function BossRushRpc:_onReceiveGetGalleryInfosReply(resultCode, msg)
+	if not _isValid(resultCode, msg) then
+		return
+	end
+
+	V3a2_BossRushModel.instance:onRefreshHandBookInfo(msg)
+end
+
+BossRushRpc.instance = BossRushRpc.New()
+
+return BossRushRpc

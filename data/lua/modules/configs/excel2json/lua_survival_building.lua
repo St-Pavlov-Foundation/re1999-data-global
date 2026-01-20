@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_survival_building", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_survival_building.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_survival_building", package.seeall)
+
+local lua_survival_building = {}
+local fields = {
 	destruction = 10,
 	name = 4,
 	ruins = 8,
@@ -17,17 +19,17 @@ local var_0_1 = {
 	lvUpCost = 7,
 	level = 2
 }
-local var_0_2 = {
+local primaryKey = {
 	"id",
 	"level"
 }
-local var_0_3 = {
+local mlStringKey = {
 	desc = 2,
 	name = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_survival_building.onLoad(json)
+	lua_survival_building.configList, lua_survival_building.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_survival_building

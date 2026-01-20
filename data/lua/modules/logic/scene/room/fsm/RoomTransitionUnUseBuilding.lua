@@ -1,49 +1,51 @@
-﻿module("modules.logic.scene.room.fsm.RoomTransitionUnUseBuilding", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/fsm/RoomTransitionUnUseBuilding.lua
 
-local var_0_0 = class("RoomTransitionUnUseBuilding", SimpleFSMBaseTransition)
+module("modules.logic.scene.room.fsm.RoomTransitionUnUseBuilding", package.seeall)
 
-function var_0_0.start(arg_1_0)
-	arg_1_0._scene = GameSceneMgr.instance:getCurScene()
+local RoomTransitionUnUseBuilding = class("RoomTransitionUnUseBuilding", SimpleFSMBaseTransition)
+
+function RoomTransitionUnUseBuilding:start()
+	self._scene = GameSceneMgr.instance:getCurScene()
 end
 
-function var_0_0.check(arg_2_0)
+function RoomTransitionUnUseBuilding:check()
 	return true
 end
 
-function var_0_0.onStart(arg_3_0, arg_3_1)
-	arg_3_0._param = arg_3_1
+function RoomTransitionUnUseBuilding:onStart(param)
+	self._param = param
 
-	local var_3_0 = arg_3_0._param.buildingInfos
-	local var_3_1 = RoomMapBuildingModel.instance:getTempBuildingMO()
-	local var_3_2 = {}
-	local var_3_3 = {}
-	local var_3_4
+	local buildingInfos = self._param.buildingInfos
+	local tempBuildingMO = RoomMapBuildingModel.instance:getTempBuildingMO()
+	local nearBlockEntityList = {}
+	local nearEmptyBlockEntityList = {}
+	local builingInfo
 
-	for iter_3_0 = 1, #var_3_0 do
-		local var_3_5 = arg_3_0._scene.buildingmgr:getBuildingEntity(var_3_0[iter_3_0].uid, SceneTag.RoomBuilding)
+	for i = 1, #buildingInfos do
+		local curEntity = self._scene.buildingmgr:getBuildingEntity(buildingInfos[i].uid, SceneTag.RoomBuilding)
 
-		if var_3_5 then
-			var_3_5:refreshRotation()
-			var_3_5:refreshBuilding()
+		if curEntity then
+			curEntity:refreshRotation()
+			curEntity:refreshBuilding()
 
-			local var_3_6 = var_3_5:getMO()
+			local buildingMO = curEntity:getMO()
 
-			arg_3_0._scene.buildingmgr:destroyBuilding(var_3_5)
+			self._scene.buildingmgr:destroyBuilding(curEntity)
 
-			if var_3_6 then
-				RoomBuildingController.instance:addWaitRefreshBuildingNearBlock(var_3_6.buildingId, var_3_6.hexPoint, var_3_6.rotate)
-				RoomCharacterController.instance:interruptInteraction(var_3_6:getCurrentInteractionId())
+			if buildingMO then
+				RoomBuildingController.instance:addWaitRefreshBuildingNearBlock(buildingMO.buildingId, buildingMO.hexPoint, buildingMO.rotate)
+				RoomCharacterController.instance:interruptInteraction(buildingMO:getCurrentInteractionId())
 			end
 
-			RoomMapBuildingModel.instance:removeBuildingMO(var_3_6)
+			RoomMapBuildingModel.instance:removeBuildingMO(buildingMO)
 
-			if var_3_1 and var_3_1.id == var_3_5.id then
+			if tempBuildingMO and tempBuildingMO.id == curEntity.id then
 				RoomMapBuildingModel.instance:removeTempBuildingMO()
 			end
 		end
 	end
 
-	arg_3_0:onDone()
+	self:onDone()
 	RoomMapBuildingModel.instance:refreshAllOccupyDict()
 	RoomBuildingController.instance:cancelPressBuilding()
 	RoomResourceModel.instance:clearLightResourcePoint()
@@ -54,28 +56,28 @@ function var_0_0.onStart(arg_3_0, arg_3_1)
 	RoomBuildingController.instance:refreshBuildingOccupy()
 end
 
-function var_0_0._addBlockEntityList(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_1 = arg_4_1 or {}
+function RoomTransitionUnUseBuilding:_addBlockEntityList(targetList, addList)
+	targetList = targetList or {}
 
-	local var_4_0
+	local blockEntity
 
-	for iter_4_0 = 1, #arg_4_2 do
-		local var_4_1 = arg_4_2[iter_4_0]
+	for i = 1, #addList do
+		blockEntity = addList[i]
 
-		if not tabletool.indexOf(arg_4_1, var_4_1) then
-			table.insert(arg_4_1, var_4_1)
+		if not tabletool.indexOf(targetList, blockEntity) then
+			table.insert(targetList, blockEntity)
 		end
 	end
 
-	return arg_4_1
+	return targetList
 end
 
-function var_0_0.stop(arg_5_0)
+function RoomTransitionUnUseBuilding:stop()
 	return
 end
 
-function var_0_0.clear(arg_6_0)
+function RoomTransitionUnUseBuilding:clear()
 	return
 end
 
-return var_0_0
+return RoomTransitionUnUseBuilding

@@ -1,49 +1,51 @@
-﻿module("modules.logic.prototest.model.ProtoReqListModel", package.seeall)
+﻿-- chunkname: @modules/logic/prototest/model/ProtoReqListModel.lua
 
-local var_0_0 = class("ProtoReqListModel", ListScrollModel)
+module("modules.logic.prototest.model.ProtoReqListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._reqList = nil
+local ProtoReqListModel = class("ProtoReqListModel", ListScrollModel)
+
+function ProtoReqListModel:onInit()
+	self._reqList = nil
 end
 
-function var_0_0.getFilterList(arg_2_0, arg_2_1)
-	arg_2_0:_checkInitReqList()
+function ProtoReqListModel:getFilterList(filterStr)
+	self:_checkInitReqList()
 
-	local var_2_0 = {}
+	local list = {}
 
-	arg_2_1 = string.lower(arg_2_1)
+	filterStr = string.lower(filterStr)
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0._reqList) do
-		if string.nilorempty(arg_2_1) or string.find(iter_2_1.cmdStr, arg_2_1) or string.find(iter_2_1.reqLower, arg_2_1) or string.find(iter_2_1.moduleLower, arg_2_1) then
-			table.insert(var_2_0, iter_2_1)
+	for _, reqObj in ipairs(self._reqList) do
+		if string.nilorempty(filterStr) or string.find(reqObj.cmdStr, filterStr) or string.find(reqObj.reqLower, filterStr) or string.find(reqObj.moduleLower, filterStr) then
+			table.insert(list, reqObj)
 		end
 	end
 
-	return var_2_0
+	return list
 end
 
-function var_0_0._checkInitReqList(arg_3_0)
-	if arg_3_0._reqList then
+function ProtoReqListModel:_checkInitReqList()
+	if self._reqList then
 		return
 	end
 
-	arg_3_0._reqList = {}
+	self._reqList = {}
 
-	local var_3_0 = LuaSocketMgr.instance:getCmdSettingDict()
+	local cmdDict = LuaSocketMgr.instance:getCmdSettingDict()
 
-	if var_3_0 then
-		for iter_3_0, iter_3_1 in pairs(var_3_0) do
-			if #iter_3_1 >= 3 then
-				local var_3_1 = {
-					cmd = iter_3_0,
-					cmdStr = tostring(iter_3_0),
-					req = iter_3_1[2],
-					reqLower = string.lower(iter_3_1[2]),
-					module = iter_3_1[1],
-					moduleLower = string.lower(iter_3_1[1])
-				}
+	if cmdDict then
+		for cmd, cmdObj in pairs(cmdDict) do
+			if #cmdObj >= 3 then
+				local mo = {}
 
-				table.insert(arg_3_0._reqList, var_3_1)
+				mo.cmd = cmd
+				mo.cmdStr = tostring(cmd)
+				mo.req = cmdObj[2]
+				mo.reqLower = string.lower(cmdObj[2])
+				mo.module = cmdObj[1]
+				mo.moduleLower = string.lower(cmdObj[1])
+
+				table.insert(self._reqList, mo)
 			end
 		end
 	else
@@ -51,6 +53,6 @@ function var_0_0._checkInitReqList(arg_3_0)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+ProtoReqListModel.instance = ProtoReqListModel.New()
 
-return var_0_0
+return ProtoReqListModel

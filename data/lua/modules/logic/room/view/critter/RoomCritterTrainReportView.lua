@@ -1,340 +1,342 @@
-﻿module("modules.logic.room.view.critter.RoomCritterTrainReportView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/critter/RoomCritterTrainReportView.lua
 
-local var_0_0 = class("RoomCritterTrainReportView", BaseView)
+module("modules.logic.room.view.critter.RoomCritterTrainReportView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._simagepage = gohelper.findChildSingleImage(arg_1_0.viewGO, "page1/#simage_page")
-	arg_1_0._simagetitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "page1/top/#simage_title")
-	arg_1_0._goqualityhigh = gohelper.findChild(arg_1_0.viewGO, "page1/top/#go_qualityhigh")
-	arg_1_0._goqualitylow = gohelper.findChild(arg_1_0.viewGO, "page1/top/#go_qualitylow")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "page1/top/#txt_name")
-	arg_1_0._btnnameedit = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "page1/top/#txt_name/#btn_nameedit")
-	arg_1_0._gocrittericon = gohelper.findChild(arg_1_0.viewGO, "page1/top/critter/#go_crittericon")
-	arg_1_0._gostarList = gohelper.findChild(arg_1_0.viewGO, "page1/top/#go_starList")
-	arg_1_0._scrolldes = gohelper.findChildScrollRect(arg_1_0.viewGO, "page1/top/#scroll_des")
-	arg_1_0._txtDesc = gohelper.findChildText(arg_1_0.viewGO, "page1/top/#scroll_des/viewport/content/#txt_Desc")
-	arg_1_0._txttag1 = gohelper.findChildText(arg_1_0.viewGO, "page1/top/tag/#txt_tag1")
-	arg_1_0._txttag2 = gohelper.findChildText(arg_1_0.viewGO, "page1/top/tag/#txt_tag2")
-	arg_1_0._txtwork = gohelper.findChildText(arg_1_0.viewGO, "page1/middle/work/#txt_work")
-	arg_1_0._imagelvwork = gohelper.findChildImage(arg_1_0.viewGO, "page1/middle/work/#image_lv_work")
-	arg_1_0._txtheart = gohelper.findChildText(arg_1_0.viewGO, "page1/middle/heart/#txt_heart")
-	arg_1_0._imagelvheart = gohelper.findChildImage(arg_1_0.viewGO, "page1/middle/heart/#image_lv_heart")
-	arg_1_0._txtlucky = gohelper.findChildText(arg_1_0.viewGO, "page1/middle/lucky/#txt_lucky")
-	arg_1_0._imagelvlucky = gohelper.findChildImage(arg_1_0.viewGO, "page1/middle/lucky/#image_lv_lucky")
-	arg_1_0._scrollskill = gohelper.findChildScrollRect(arg_1_0.viewGO, "page1/bottom/1/#scroll_skill")
-	arg_1_0._goskillItem = gohelper.findChild(arg_1_0.viewGO, "page1/bottom/1/#scroll_skill/viewport/content/#go_skillItem")
-	arg_1_0._txtskillname = gohelper.findChildText(arg_1_0.viewGO, "page1/bottom/1/#scroll_skill/viewport/content/#go_skillItem/title/#txt_skillname")
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "page1/bottom/1/#scroll_skill/viewport/content/#go_skillItem/title/#txt_skillname/#image_icon")
-	arg_1_0._txtskilldec = gohelper.findChildText(arg_1_0.viewGO, "page1/bottom/1/#scroll_skill/viewport/content/#go_skillItem/#txt_skilldec")
-	arg_1_0._btnsubtag1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "page1/bottom/#btn_subtag1")
-	arg_1_0._btnsubtag2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "page1/bottom/#btn_subtag2")
-	arg_1_0._btnsubtag3 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "page1/bottom/#btn_subtag3")
-	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "page1/bottom/#go_empty")
-	arg_1_0._simagesmallpage = gohelper.findChildSingleImage(arg_1_0.viewGO, "page2/#simage_smallpage")
-	arg_1_0._imagequality = gohelper.findChildImage(arg_1_0.viewGO, "page2/heroinfo/#image_quality")
-	arg_1_0._simageheroicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "page2/heroinfo/#image_quality/#simage_heroicon")
-	arg_1_0._txtheroname = gohelper.findChildText(arg_1_0.viewGO, "page2/heroinfo/#txt_heroname")
-	arg_1_0._txtherolevel = gohelper.findChildText(arg_1_0.viewGO, "page2/heroinfo/#txt_herolevel")
-	arg_1_0._scrollcomments = gohelper.findChildScrollRect(arg_1_0.viewGO, "page2/#scroll_comments")
-	arg_1_0._txtdec = gohelper.findChildText(arg_1_0.viewGO, "page2/#scroll_comments/viewport/content/#txt_dec")
-	arg_1_0._simagesignature = gohelper.findChildSingleImage(arg_1_0.viewGO, "page2/#simage_signature")
+local RoomCritterTrainReportView = class("RoomCritterTrainReportView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomCritterTrainReportView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._simagepage = gohelper.findChildSingleImage(self.viewGO, "page1/#simage_page")
+	self._simagetitle = gohelper.findChildSingleImage(self.viewGO, "page1/top/#simage_title")
+	self._goqualityhigh = gohelper.findChild(self.viewGO, "page1/top/#go_qualityhigh")
+	self._goqualitylow = gohelper.findChild(self.viewGO, "page1/top/#go_qualitylow")
+	self._txtname = gohelper.findChildText(self.viewGO, "page1/top/#txt_name")
+	self._btnnameedit = gohelper.findChildButtonWithAudio(self.viewGO, "page1/top/#txt_name/#btn_nameedit")
+	self._gocrittericon = gohelper.findChild(self.viewGO, "page1/top/critter/#go_crittericon")
+	self._gostarList = gohelper.findChild(self.viewGO, "page1/top/#go_starList")
+	self._scrolldes = gohelper.findChildScrollRect(self.viewGO, "page1/top/#scroll_des")
+	self._txtDesc = gohelper.findChildText(self.viewGO, "page1/top/#scroll_des/viewport/content/#txt_Desc")
+	self._txttag1 = gohelper.findChildText(self.viewGO, "page1/top/tag/#txt_tag1")
+	self._txttag2 = gohelper.findChildText(self.viewGO, "page1/top/tag/#txt_tag2")
+	self._txtwork = gohelper.findChildText(self.viewGO, "page1/middle/work/#txt_work")
+	self._imagelvwork = gohelper.findChildImage(self.viewGO, "page1/middle/work/#image_lv_work")
+	self._txtheart = gohelper.findChildText(self.viewGO, "page1/middle/heart/#txt_heart")
+	self._imagelvheart = gohelper.findChildImage(self.viewGO, "page1/middle/heart/#image_lv_heart")
+	self._txtlucky = gohelper.findChildText(self.viewGO, "page1/middle/lucky/#txt_lucky")
+	self._imagelvlucky = gohelper.findChildImage(self.viewGO, "page1/middle/lucky/#image_lv_lucky")
+	self._scrollskill = gohelper.findChildScrollRect(self.viewGO, "page1/bottom/1/#scroll_skill")
+	self._goskillItem = gohelper.findChild(self.viewGO, "page1/bottom/1/#scroll_skill/viewport/content/#go_skillItem")
+	self._txtskillname = gohelper.findChildText(self.viewGO, "page1/bottom/1/#scroll_skill/viewport/content/#go_skillItem/title/#txt_skillname")
+	self._imageicon = gohelper.findChildImage(self.viewGO, "page1/bottom/1/#scroll_skill/viewport/content/#go_skillItem/title/#txt_skillname/#image_icon")
+	self._txtskilldec = gohelper.findChildText(self.viewGO, "page1/bottom/1/#scroll_skill/viewport/content/#go_skillItem/#txt_skilldec")
+	self._btnsubtag1 = gohelper.findChildButtonWithAudio(self.viewGO, "page1/bottom/#btn_subtag1")
+	self._btnsubtag2 = gohelper.findChildButtonWithAudio(self.viewGO, "page1/bottom/#btn_subtag2")
+	self._btnsubtag3 = gohelper.findChildButtonWithAudio(self.viewGO, "page1/bottom/#btn_subtag3")
+	self._goempty = gohelper.findChild(self.viewGO, "page1/bottom/#go_empty")
+	self._simagesmallpage = gohelper.findChildSingleImage(self.viewGO, "page2/#simage_smallpage")
+	self._imagequality = gohelper.findChildImage(self.viewGO, "page2/heroinfo/#image_quality")
+	self._simageheroicon = gohelper.findChildSingleImage(self.viewGO, "page2/heroinfo/#image_quality/#simage_heroicon")
+	self._txtheroname = gohelper.findChildText(self.viewGO, "page2/heroinfo/#txt_heroname")
+	self._txtherolevel = gohelper.findChildText(self.viewGO, "page2/heroinfo/#txt_herolevel")
+	self._scrollcomments = gohelper.findChildScrollRect(self.viewGO, "page2/#scroll_comments")
+	self._txtdec = gohelper.findChildText(self.viewGO, "page2/#scroll_comments/viewport/content/#txt_dec")
+	self._simagesignature = gohelper.findChildSingleImage(self.viewGO, "page2/#simage_signature")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnnameedit:AddClickListener(arg_2_0._btnnameeditOnClick, arg_2_0)
-	arg_2_0._btnsubtag1:AddClickListener(arg_2_0._btnsubtag1OnClick, arg_2_0)
-	arg_2_0._btnsubtag2:AddClickListener(arg_2_0._btnsubtag2OnClick, arg_2_0)
-	arg_2_0._btnsubtag3:AddClickListener(arg_2_0._btnsubtag3OnClick, arg_2_0)
+function RoomCritterTrainReportView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnnameedit:AddClickListener(self._btnnameeditOnClick, self)
+	self._btnsubtag1:AddClickListener(self._btnsubtag1OnClick, self)
+	self._btnsubtag2:AddClickListener(self._btnsubtag2OnClick, self)
+	self._btnsubtag3:AddClickListener(self._btnsubtag3OnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnnameedit:RemoveClickListener()
-	arg_3_0._btnsubtag1:RemoveClickListener()
-	arg_3_0._btnsubtag2:RemoveClickListener()
-	arg_3_0._btnsubtag3:RemoveClickListener()
+function RoomCritterTrainReportView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btnnameedit:RemoveClickListener()
+	self._btnsubtag1:RemoveClickListener()
+	self._btnsubtag2:RemoveClickListener()
+	self._btnsubtag3:RemoveClickListener()
 end
 
-function var_0_0._btnnameeditOnClick(arg_4_0)
-	RoomCritterController.instance:openRenameView(arg_4_0._critterUid)
+function RoomCritterTrainReportView:_btnnameeditOnClick()
+	RoomCritterController.instance:openRenameView(self._critterUid)
 end
 
-function var_0_0._btnsubtag1OnClick(arg_5_0)
-	arg_5_0:_selectSubTag(CritterEnum.SkilTagType.Common)
+function RoomCritterTrainReportView:_btnsubtag1OnClick()
+	self:_selectSubTag(CritterEnum.SkilTagType.Common)
 end
 
-function var_0_0._btnsubtag2OnClick(arg_6_0)
-	arg_6_0:_selectSubTag(CritterEnum.SkilTagType.Base)
+function RoomCritterTrainReportView:_btnsubtag2OnClick()
+	self:_selectSubTag(CritterEnum.SkilTagType.Base)
 end
 
-function var_0_0._btnsubtag3OnClick(arg_7_0)
-	arg_7_0:_selectSubTag(CritterEnum.SkilTagType.Race)
+function RoomCritterTrainReportView:_btnsubtag3OnClick()
+	self:_selectSubTag(CritterEnum.SkilTagType.Race)
 end
 
-function var_0_0._btncloseOnClick(arg_8_0)
-	arg_8_0:closeThis()
+function RoomCritterTrainReportView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_9_0)
-	arg_9_0._starTbList = arg_9_0:getUserDataTb_()
+function RoomCritterTrainReportView:_editableInitView()
+	self._starTbList = self:getUserDataTb_()
 
-	for iter_9_0 = 1, 6 do
-		local var_9_0 = gohelper.findChild(arg_9_0._gostarList, "star" .. iter_9_0)
+	for i = 1, 6 do
+		local go = gohelper.findChild(self._gostarList, "star" .. i)
 
-		table.insert(arg_9_0._starTbList, var_9_0)
+		table.insert(self._starTbList, go)
 	end
 
-	arg_9_0._tagsTbListDict = {}
-	arg_9_0._tagType2IdxDict = {}
-	arg_9_0._goskillItemDict = arg_9_0:getUserDataTb_()
-	arg_9_0._goSubTagList = arg_9_0:getUserDataTb_()
-	arg_9_0._tagTypeList = {
+	self._tagsTbListDict = {}
+	self._tagType2IdxDict = {}
+	self._goskillItemDict = self:getUserDataTb_()
+	self._goSubTagList = self:getUserDataTb_()
+	self._tagTypeList = {
 		CritterEnum.SkilTagType.Common,
 		CritterEnum.SkilTagType.Base,
 		CritterEnum.SkilTagType.Race
 	}
-	arg_9_0._tagsCfgMap = {}
+	self._tagsCfgMap = {}
 
-	for iter_9_1 = 1, #arg_9_0._tagTypeList do
-		local var_9_1 = gohelper.findChild(arg_9_0.viewGO, "page1/bottom/" .. iter_9_1)
+	for i = 1, #self._tagTypeList do
+		local goSubTag = gohelper.findChild(self.viewGO, "page1/bottom/" .. i)
 
-		arg_9_0._goSubTagList[iter_9_1] = var_9_1
+		self._goSubTagList[i] = goSubTag
 
-		local var_9_2 = gohelper.findChild(var_9_1, "#scroll_skill/viewport/content/#go_skillItem")
-		local var_9_3 = arg_9_0._tagTypeList[iter_9_1]
+		local go = gohelper.findChild(goSubTag, "#scroll_skill/viewport/content/#go_skillItem")
+		local tagTyp = self._tagTypeList[i]
 
-		arg_9_0._tagType2IdxDict[var_9_3] = iter_9_1
-		arg_9_0._goskillItemDict[var_9_3] = var_9_2
-		arg_9_0._tagsTbListDict[var_9_3] = {}
+		self._tagType2IdxDict[tagTyp] = i
+		self._goskillItemDict[tagTyp] = go
+		self._tagsTbListDict[tagTyp] = {}
 
-		table.insert(arg_9_0._tagsTbListDict[var_9_3], arg_9_0:_createTagTB(var_9_2))
+		table.insert(self._tagsTbListDict[tagTyp], self:_createTagTB(go))
 	end
 end
 
-function var_0_0.onUpdateParam(arg_10_0)
+function RoomCritterTrainReportView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_11_0)
-	arg_11_0:addEventCb(CritterController.instance, CritterEvent.CritterRenameReply, arg_11_0._onCritterRenameReply, arg_11_0)
+function RoomCritterTrainReportView:onOpen()
+	self:addEventCb(CritterController.instance, CritterEvent.CritterRenameReply, self._onCritterRenameReply, self)
 
-	arg_11_0._critterUid = arg_11_0.viewParam and arg_11_0.viewParam.critterUid
-	arg_11_0._heroId = arg_11_0.viewParam and arg_11_0.viewParam.heroId
-	arg_11_0._trainNum = arg_11_0.viewParam and arg_11_0.viewParam.tranNum or 1
-	arg_11_0._critterMO = CritterModel.instance:getCritterMOByUid(arg_11_0._critterUid)
-	arg_11_0._heroMO = HeroModel.instance:getByHeroId(arg_11_0._heroId)
-	arg_11_0._tagsCfgMap = {}
+	self._critterUid = self.viewParam and self.viewParam.critterUid
+	self._heroId = self.viewParam and self.viewParam.heroId
+	self._trainNum = self.viewParam and self.viewParam.tranNum or 1
+	self._critterMO = CritterModel.instance:getCritterMOByUid(self._critterUid)
+	self._heroMO = HeroModel.instance:getByHeroId(self._heroId)
+	self._tagsCfgMap = {}
 
-	if arg_11_0._critterMO and arg_11_0._critterMO.skillInfo then
-		local var_11_0 = arg_11_0._critterMO.skillInfo.tags or {}
+	if self._critterMO and self._critterMO.skillInfo then
+		local tagList = self._critterMO.skillInfo.tags or {}
 
-		for iter_11_0 = 1, #var_11_0 do
-			local var_11_1 = CritterConfig.instance:getCritterTagCfg(var_11_0[iter_11_0])
+		for i = 1, #tagList do
+			local tagCfg = CritterConfig.instance:getCritterTagCfg(tagList[i])
 
-			if var_11_1 then
-				arg_11_0._tagsCfgMap[var_11_1.type] = arg_11_0._tagsCfgMap[var_11_1.type] or {}
+			if tagCfg then
+				self._tagsCfgMap[tagCfg.type] = self._tagsCfgMap[tagCfg.type] or {}
 
-				table.insert(arg_11_0._tagsCfgMap[var_11_1.type], var_11_1)
+				table.insert(self._tagsCfgMap[tagCfg.type], tagCfg)
 			end
 		end
 	end
 
-	arg_11_0:refreshUI()
+	self:refreshUI()
 
-	local var_11_2
+	local openTag
 
-	for iter_11_1, iter_11_2 in ipairs(arg_11_0._tagTypeList) do
-		local var_11_3 = arg_11_0._tagsCfgMap[iter_11_2]
+	for _, tagType in ipairs(self._tagTypeList) do
+		local tagsList = self._tagsCfgMap[tagType]
 
-		if var_11_3 and #var_11_3 > 0 then
-			var_11_2 = iter_11_2
+		if tagsList and #tagsList > 0 then
+			openTag = tagType
 
 			break
 		end
 	end
 
-	arg_11_0:_selectSubTag(var_11_2 or CritterEnum.SkilTagType.Base)
+	self:_selectSubTag(openTag or CritterEnum.SkilTagType.Base)
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_mj_dabiao)
 end
 
-function var_0_0.onClose(arg_12_0)
-	arg_12_0._simageheroicon:UnLoadImage()
+function RoomCritterTrainReportView:onClose()
+	self._simageheroicon:UnLoadImage()
 end
 
-function var_0_0.onDestroyView(arg_13_0)
+function RoomCritterTrainReportView:onDestroyView()
 	return
 end
 
-function var_0_0._onCritterRenameReply(arg_14_0, arg_14_1)
-	if arg_14_0._critterMO and arg_14_0._critterUid == arg_14_1 then
-		arg_14_0._txtname.text = arg_14_0._critterMO:getName()
+function RoomCritterTrainReportView:_onCritterRenameReply(critterUid)
+	if self._critterMO and self._critterUid == critterUid then
+		self._txtname.text = self._critterMO:getName()
 	end
 end
 
-function var_0_0._createTagTB(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_0:getUserDataTb_()
+function RoomCritterTrainReportView:_createTagTB(go)
+	local tagTb = self:getUserDataTb_()
 
-	var_15_0.go = arg_15_1
-	var_15_0._txtskillname = gohelper.findChildText(arg_15_1, "title/#txt_skillname")
-	var_15_0._imageicon = gohelper.findChildImage(arg_15_1, "title/#txt_skillname/#image_icon")
-	var_15_0._txtskilldec = gohelper.findChildText(arg_15_1, "#txt_skilldec")
+	tagTb.go = go
+	tagTb._txtskillname = gohelper.findChildText(go, "title/#txt_skillname")
+	tagTb._imageicon = gohelper.findChildImage(go, "title/#txt_skillname/#image_icon")
+	tagTb._txtskilldec = gohelper.findChildText(go, "#txt_skilldec")
 
-	return var_15_0
+	return tagTb
 end
 
-function var_0_0._selectSubTag(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_0._tagType2IdxDict and arg_16_0._tagType2IdxDict[arg_16_1] or 1
+function RoomCritterTrainReportView:_selectSubTag(tagType)
+	local index = self._tagType2IdxDict and self._tagType2IdxDict[tagType] or 1
 
-	for iter_16_0, iter_16_1 in ipairs(arg_16_0._goSubTagList) do
-		gohelper.setActive(iter_16_1, iter_16_0 == var_16_0)
+	for i, goSubTag in ipairs(self._goSubTagList) do
+		gohelper.setActive(goSubTag, i == index)
 	end
 
-	local var_16_1 = arg_16_0._tagsCfgMap[arg_16_1]
+	local tagsList = self._tagsCfgMap[tagType]
 
-	gohelper.setActive(arg_16_0._goempty, not var_16_1 or #var_16_1 < 1)
+	gohelper.setActive(self._goempty, not tagsList or #tagsList < 1)
 end
 
-function var_0_0.refreshUI(arg_17_0)
-	arg_17_0:_refreshCritterTagUI()
-	arg_17_0:_refreshHeroUI()
-	arg_17_0:_refreshCritterUI()
+function RoomCritterTrainReportView:refreshUI()
+	self:_refreshCritterTagUI()
+	self:_refreshHeroUI()
+	self:_refreshCritterUI()
 end
 
-function var_0_0._refreshCritterTagUI(arg_18_0)
-	for iter_18_0, iter_18_1 in ipairs(arg_18_0._tagTypeList) do
-		arg_18_0:_refreshTagTBByTyp(iter_18_1, arg_18_0._tagsCfgMap[iter_18_1])
+function RoomCritterTrainReportView:_refreshCritterTagUI()
+	for i, tagType in ipairs(self._tagTypeList) do
+		self:_refreshTagTBByTyp(tagType, self._tagsCfgMap[tagType])
 	end
 end
 
-function var_0_0._refreshTagTBByTyp(arg_19_0, arg_19_1, arg_19_2)
-	local var_19_0 = 0
-	local var_19_1 = arg_19_0._tagsTbListDict[arg_19_1]
+function RoomCritterTrainReportView:_refreshTagTBByTyp(tagType, tagCfgs)
+	local count = 0
+	local tagTbList = self._tagsTbListDict[tagType]
 
-	if not var_19_1 then
+	if not tagTbList then
 		return
 	end
 
-	if arg_19_2 and #arg_19_2 > 0 then
-		for iter_19_0, iter_19_1 in ipairs(arg_19_2) do
-			var_19_0 = var_19_0 + 1
+	if tagCfgs and #tagCfgs > 0 then
+		for i, tagCfg in ipairs(tagCfgs) do
+			count = count + 1
 
-			local var_19_2 = var_19_1[iter_19_0]
+			local tagTb = tagTbList[i]
 
-			if not var_19_2 then
-				local var_19_3 = gohelper.cloneInPlace(arg_19_0._goskillItemDict[arg_19_1])
+			if not tagTb then
+				local go = gohelper.cloneInPlace(self._goskillItemDict[tagType])
 
-				var_19_2 = arg_19_0:_createTagTB(var_19_3)
+				tagTb = self:_createTagTB(go)
 
-				table.insert(var_19_1, var_19_2)
+				table.insert(tagTbList, tagTb)
 			end
 
-			var_19_2._txtskillname.text = iter_19_1.name
-			var_19_2._txtskilldec.text = iter_19_1.desc
+			tagTb._txtskillname.text = tagCfg.name
+			tagTb._txtskilldec.text = tagCfg.desc
 
-			UISpriteSetMgr.instance:setCritterSprite(var_19_2._imageicon, iter_19_1.skillIcon)
+			UISpriteSetMgr.instance:setCritterSprite(tagTb._imageicon, tagCfg.skillIcon)
 		end
 	end
 
-	for iter_19_2 = 1, #var_19_1 do
-		gohelper.setActive(var_19_1[iter_19_2].go, iter_19_2 <= var_19_0)
+	for i = 1, #tagTbList do
+		gohelper.setActive(tagTbList[i].go, i <= count)
 	end
 end
 
-function var_0_0._refreshCritterUI(arg_20_0)
-	if not arg_20_0._critterMO then
+function RoomCritterTrainReportView:_refreshCritterUI()
+	if not self._critterMO then
 		return
 	end
 
-	local var_20_0 = arg_20_0._critterMO:getDefineCfg()
-	local var_20_1 = arg_20_0._critterMO.isHighQuality
-	local var_20_2 = arg_20_0._critterMO.efficiency
-	local var_20_3 = arg_20_0._critterMO.patience
-	local var_20_4 = arg_20_0._critterMO.lucky
+	local cfg = self._critterMO:getDefineCfg()
+	local isHighQuality = self._critterMO.isHighQuality
+	local efficiency = self._critterMO.efficiency
+	local patience = self._critterMO.patience
+	local lucky = self._critterMO.lucky
 
-	arg_20_0._txtwork.text = var_20_2
-	arg_20_0._txtheart.text = var_20_3
-	arg_20_0._txtlucky.text = var_20_4
+	self._txtwork.text = efficiency
+	self._txtheart.text = patience
+	self._txtlucky.text = lucky
 
-	UISpriteSetMgr.instance:setCritterSprite(arg_20_0._imagelvwork, arg_20_0:_getLevelIconName(var_20_2))
-	UISpriteSetMgr.instance:setCritterSprite(arg_20_0._imagelvheart, arg_20_0:_getLevelIconName(var_20_3))
-	UISpriteSetMgr.instance:setCritterSprite(arg_20_0._imagelvlucky, arg_20_0:_getLevelIconName(var_20_4))
+	UISpriteSetMgr.instance:setCritterSprite(self._imagelvwork, self:_getLevelIconName(efficiency))
+	UISpriteSetMgr.instance:setCritterSprite(self._imagelvheart, self:_getLevelIconName(patience))
+	UISpriteSetMgr.instance:setCritterSprite(self._imagelvlucky, self:_getLevelIconName(lucky))
 
-	arg_20_0._txtname.text = arg_20_0._critterMO:getName()
-	arg_20_0._txtDesc.text = var_20_0 and var_20_0.desc or ""
+	self._txtname.text = self._critterMO:getName()
+	self._txtDesc.text = cfg and cfg.desc or ""
 
-	gohelper.setActive(arg_20_0._txttag2, arg_20_0._critterMO.specialSkin)
-	gohelper.setActive(arg_20_0._goqualityhigh, var_20_1)
-	gohelper.setActive(arg_20_0._goqualitylow, not var_20_1)
+	gohelper.setActive(self._txttag2, self._critterMO.specialSkin)
+	gohelper.setActive(self._goqualityhigh, isHighQuality)
+	gohelper.setActive(self._goqualitylow, not isHighQuality)
 
-	if not arg_20_0.critterIcon then
-		arg_20_0.critterIcon = IconMgr.instance:getCommonCritterIcon(arg_20_0._gocrittericon)
+	if not self.critterIcon then
+		self.critterIcon = IconMgr.instance:getCommonCritterIcon(self._gocrittericon)
 	end
 
-	arg_20_0.critterIcon:setMOValue(arg_20_0._critterMO:getId(), arg_20_0._critterMO:getDefineId())
+	self.critterIcon:setMOValue(self._critterMO:getId(), self._critterMO:getDefineId())
 
-	local var_20_5 = var_20_0 and var_20_0.rare or 3
+	local rare = cfg and cfg.rare or 3
 
-	for iter_20_0 = 1, #arg_20_0._starTbList do
-		gohelper.setActive(arg_20_0._starTbList[iter_20_0], iter_20_0 <= var_20_5 + 1)
+	for i = 1, #self._starTbList do
+		gohelper.setActive(self._starTbList[i], i <= rare + 1)
 	end
 
-	local var_20_6 = arg_20_0._critterMO:isMaturity() and "room_critter_adult" or "room_critter_child"
+	local langKey = self._critterMO:isMaturity() and "room_critter_adult" or "room_critter_child"
 
-	arg_20_0._txttag1.text = luaLang(var_20_6)
+	self._txttag1.text = luaLang(langKey)
 
-	local var_20_7 = arg_20_0._tagsCfgMap[CritterEnum.SkilTagType.Common]
-	local var_20_8 = arg_20_0._trainNum
-	local var_20_9 = arg_20_0:_getMaxAttrName()
-	local var_20_10 = var_20_7 and #var_20_7 or 0
+	local tags = self._tagsCfgMap[CritterEnum.SkilTagType.Common]
+	local trainNum = self._trainNum
+	local maxAttName = self:_getMaxAttrName()
+	local skillNum = tags and #tags or 0
 
-	arg_20_0._txtdec.text = GameUtil.getSubPlaceholderLuaLangThreeParam(luaLang("critter_report_comment_txt"), var_20_8, var_20_9, var_20_10)
+	self._txtdec.text = GameUtil.getSubPlaceholderLuaLangThreeParam(luaLang("critter_report_comment_txt"), trainNum, maxAttName, skillNum)
 end
 
-function var_0_0._getLevelIconName(arg_21_0, arg_21_1)
-	local var_21_0 = CritterConfig.instance:getCritterAttributeLevelCfgByValue(arg_21_1)
+function RoomCritterTrainReportView:_getLevelIconName(value)
+	local cfg = CritterConfig.instance:getCritterAttributeLevelCfgByValue(value)
 
-	return var_21_0 and var_21_0.icon or ""
+	return cfg and cfg.icon or ""
 end
 
-function var_0_0._refreshHeroUI(arg_22_0)
-	if arg_22_0._heroMO then
-		local var_22_0 = arg_22_0._heroMO.config
-		local var_22_1 = SkinConfig.instance:getSkinCo(arg_22_0._heroMO.skin)
+function RoomCritterTrainReportView:_refreshHeroUI()
+	if self._heroMO then
+		local heroCfg = self._heroMO.config
+		local skinCfg = SkinConfig.instance:getSkinCo(self._heroMO.skin)
 
-		arg_22_0._simageheroicon:LoadImage(ResUrl.getRoomHeadIcon(var_22_1.headIcon))
+		self._simageheroicon:LoadImage(ResUrl.getRoomHeadIcon(skinCfg.headIcon))
 
-		arg_22_0._txtheroname.text = var_22_0.name
+		self._txtheroname.text = heroCfg.name
 
-		arg_22_0._simagesignature:LoadImage(ResUrl.getSignature(var_22_0.signature))
-		UISpriteSetMgr.instance:setCritterSprite(arg_22_0._imagequality, CritterEnum.QualityImageNameMap[var_22_0.rare])
+		self._simagesignature:LoadImage(ResUrl.getSignature(heroCfg.signature))
+		UISpriteSetMgr.instance:setCritterSprite(self._imagequality, CritterEnum.QualityImageNameMap[heroCfg.rare])
 
-		arg_22_0._txtherolevel.text = luaLang(CritterEnum.LangKey.HeroTrainLevel)
+		self._txtherolevel.text = luaLang(CritterEnum.LangKey.HeroTrainLevel)
 	end
 end
 
-function var_0_0._getMaxAttrName(arg_23_0)
-	if not arg_23_0._critterMO then
+function RoomCritterTrainReportView:_getMaxAttrName()
+	if not self._critterMO then
 		return ""
 	end
 
-	local var_23_0 = arg_23_0._critterMO:getAttributeInfos()
-	local var_23_1
+	local attrInfos = self._critterMO:getAttributeInfos()
+	local maxInfo
 
-	for iter_23_0, iter_23_1 in pairs(var_23_0) do
-		if var_23_1 == nil or var_23_1.value < iter_23_1.value then
-			var_23_1 = iter_23_1
+	for i, info in pairs(attrInfos) do
+		if maxInfo == nil or maxInfo.value < info.value then
+			maxInfo = info
 		end
 	end
 
-	local var_23_2 = var_23_1 and CritterConfig.instance:getCritterAttributeCfg(var_23_1.attributeId)
+	local attrCfg = maxInfo and CritterConfig.instance:getCritterAttributeCfg(maxInfo.attributeId)
 
-	return var_23_2 and var_23_2.name or ""
+	return attrCfg and attrCfg.name or ""
 end
 
-return var_0_0
+return RoomCritterTrainReportView

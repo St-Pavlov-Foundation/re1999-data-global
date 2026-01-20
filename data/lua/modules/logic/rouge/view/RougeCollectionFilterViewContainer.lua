@@ -1,13 +1,15 @@
-﻿module("modules.logic.rouge.view.RougeCollectionFilterViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeCollectionFilterViewContainer.lua
 
-local var_0_0 = class("RougeCollectionFilterViewContainer", BaseViewContainer)
+module("modules.logic.rouge.view.RougeCollectionFilterViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RougeCollectionFilterViewContainer = class("RougeCollectionFilterViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RougeCollectionFilterView.New())
+function RougeCollectionFilterViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RougeCollectionFilterView.New())
+
+	return views
 end
 
-return var_0_0
+return RougeCollectionFilterViewContainer

@@ -1,162 +1,177 @@
-﻿module("modules.logic.messagebox.view.MessageBoxView", package.seeall)
+﻿-- chunkname: @modules/logic/messagebox/view/MessageBoxView.lua
 
-local var_0_0 = class("MessageBoxView", BaseView)
+module("modules.logic.messagebox.view.MessageBoxView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagehuawen1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "tipbg/#simage_huawen1")
-	arg_1_0._simagehuawen2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "tipbg/#simage_huawen2")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#txt_desc")
+local MessageBoxView = class("MessageBoxView", BaseView)
+
+function MessageBoxView:onInitView()
+	self._simagehuawen1 = gohelper.findChildSingleImage(self.viewGO, "tipbg/#simage_huawen1")
+	self._simagehuawen2 = gohelper.findChildSingleImage(self.viewGO, "tipbg/#simage_huawen2")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "#txt_desc")
+	self._txttitleCn = gohelper.findChildText(self.viewGO, "topTip/txtCn")
 
 	if MessageBoxController.instance.enableClickAudio then
-		arg_1_0._btnyes = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_yes")
-		arg_1_0._btnno = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_no")
+		self._btnyes = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_yes")
+		self._btnno = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_no")
 	else
-		arg_1_0._btnyes = gohelper.findChildButton(arg_1_0.viewGO, "#btn_yes")
-		arg_1_0._btnno = gohelper.findChildButton(arg_1_0.viewGO, "#btn_no")
+		self._btnyes = gohelper.findChildButton(self.viewGO, "#btn_yes")
+		self._btnno = gohelper.findChildButton(self.viewGO, "#btn_no")
 	end
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnyes:AddClickListener(arg_2_0._btnyesOnClick, arg_2_0)
-	arg_2_0._btnno:AddClickListener(arg_2_0._btnnoOnClick, arg_2_0)
-	arg_2_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyCommonCancel, arg_2_0._btnnoOnClick, arg_2_0)
-	arg_2_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyCommonConfirm, arg_2_0._btnyesOnClick, arg_2_0)
-	arg_2_0:addEventCb(MessageBoxController.instance, MessageBoxEvent.CloseSpecificMessageBoxView, arg_2_0._onCloseSpecificMessageBoxView, arg_2_0)
+function MessageBoxView:addEvents()
+	self._btnyes:AddClickListener(self._btnyesOnClick, self)
+	self._btnno:AddClickListener(self._btnnoOnClick, self)
+	self:addEventCb(PCInputController.instance, PCInputEvent.NotifyCommonCancel, self._btnnoOnClick, self)
+	self:addEventCb(PCInputController.instance, PCInputEvent.NotifyCommonConfirm, self._btnyesOnClick, self)
+	self:addEventCb(MessageBoxController.instance, MessageBoxEvent.CloseSpecificMessageBoxView, self._onCloseSpecificMessageBoxView, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnyes:RemoveClickListener()
-	arg_3_0._btnno:RemoveClickListener()
-	arg_3_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyCommonCancel, arg_3_0._btnnoOnClick, arg_3_0)
-	arg_3_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyCommonConfirm, arg_3_0._btnyesOnClick, arg_3_0)
-	arg_3_0:removeEventCb(MessageBoxController.instance, MessageBoxEvent.CloseSpecificMessageBoxView, arg_3_0._onCloseSpecificMessageBoxView, arg_3_0)
+function MessageBoxView:removeEvents()
+	self._btnyes:RemoveClickListener()
+	self._btnno:RemoveClickListener()
+	self:removeEventCb(PCInputController.instance, PCInputEvent.NotifyCommonCancel, self._btnnoOnClick, self)
+	self:removeEventCb(PCInputController.instance, PCInputEvent.NotifyCommonConfirm, self._btnyesOnClick, self)
+	self:removeEventCb(MessageBoxController.instance, MessageBoxEvent.CloseSpecificMessageBoxView, self._onCloseSpecificMessageBoxView, self)
 end
 
-local var_0_1 = MsgBoxEnum.CloseType
-local var_0_2 = MsgBoxEnum.BoxType
+local closeType = MsgBoxEnum.CloseType
+local boxType = MsgBoxEnum.BoxType
 
-function var_0_0._btnyesOnClick(arg_4_0)
-	arg_4_0:_closeInvokeCallback(var_0_1.Yes)
+function MessageBoxView:_btnyesOnClick()
+	self:_closeInvokeCallback(closeType.Yes)
 end
 
-function var_0_0._btnnoOnClick(arg_5_0)
-	arg_5_0:_closeInvokeCallback(var_0_1.No)
+function MessageBoxView:_btnnoOnClick()
+	self:_closeInvokeCallback(closeType.No)
 end
 
-function var_0_0._closeInvokeCallback(arg_6_0, arg_6_1)
+function MessageBoxView:_closeInvokeCallback(result)
 	if not MessageBoxController.instance:_showNextMsgBox() then
-		arg_6_0:closeThis()
+		self:closeThis()
 	end
 
-	if arg_6_1 == var_0_1.Yes then
-		if arg_6_0.viewParam.yesCallback then
-			arg_6_0.viewParam.yesCallback(arg_6_0.viewParam.yesCallbackObj)
+	if result == closeType.Yes then
+		if self.viewParam.yesCallback then
+			self.viewParam.yesCallback(self.viewParam.yesCallbackObj)
 		end
-	elseif arg_6_0.viewParam.noCallback then
-		arg_6_0.viewParam.noCallback(arg_6_0.viewParam.noCallbackObj)
+	elseif self.viewParam.noCallback then
+		self.viewParam.noCallback(self.viewParam.noCallbackObj)
 	end
 end
 
-function var_0_0._onCloseSpecificMessageBoxView(arg_7_0, arg_7_1)
-	if not arg_7_1 or not arg_7_0.viewParam or not arg_7_0.viewParam.messageBoxId then
+function MessageBoxView:_onCloseSpecificMessageBoxView(messageBoxId)
+	if not messageBoxId or not self.viewParam or not self.viewParam.messageBoxId then
 		return
 	end
 
-	if arg_7_0.viewParam.messageBoxId == arg_7_1 then
-		arg_7_0:_btnnoOnClick()
+	if self.viewParam.messageBoxId == messageBoxId then
+		self:_btnnoOnClick()
 	end
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0._simagehuawen1:LoadImage(ResUrl.getMessageIcon("huawen1_002"))
-	arg_8_0._simagehuawen2:LoadImage(ResUrl.getMessageIcon("huawen2_003"))
+function MessageBoxView:_editableInitView()
+	self._simagehuawen1:LoadImage(ResUrl.getMessageIcon("huawen1_002"))
+	self._simagehuawen2:LoadImage(ResUrl.getMessageIcon("huawen2_003"))
 
-	arg_8_0._goNo = arg_8_0._btnno.gameObject
-	arg_8_0._goYes = arg_8_0._btnyes.gameObject
-	arg_8_0._keyTipsNo = gohelper.findChild(arg_8_0._goNo, "#go_pcbtn")
-	arg_8_0._keyTipsYes = gohelper.findChild(arg_8_0._goYes, "#go_pcbtn")
+	self._goNo = self._btnno.gameObject
+	self._goYes = self._btnyes.gameObject
+	self._keyTipsNo = gohelper.findChild(self._goNo, "#go_pcbtn")
+	self._keyTipsYes = gohelper.findChild(self._goYes, "#go_pcbtn")
 
 	if MessageBoxController.instance.enableClickAudio then
-		gohelper.addUIClickAudio(arg_8_0._btnyes.gameObject, AudioEnum.UI.Play_UI_Universal_Click)
-		gohelper.addUIClickAudio(arg_8_0._btnno.gameObject, AudioEnum.UI.Play_UI_Universal_Click)
+		gohelper.addUIClickAudio(self._btnyes.gameObject, AudioEnum.UI.Play_UI_Universal_Click)
+		gohelper.addUIClickAudio(self._btnno.gameObject, AudioEnum.UI.Play_UI_Universal_Click)
 	end
 
-	arg_8_0._txtYes = gohelper.findChildText(arg_8_0._goYes, "yes")
-	arg_8_0._txtNo = gohelper.findChildText(arg_8_0._goNo, "no")
-	arg_8_0._txtYesen = gohelper.findChildText(arg_8_0._goYes, "yesen")
-	arg_8_0._txtNoen = gohelper.findChildText(arg_8_0._goNo, "noen")
+	self._txtYes = gohelper.findChildText(self._goYes, "yes")
+	self._txtNo = gohelper.findChildText(self._goNo, "no")
+	self._txtYesen = gohelper.findChildText(self._goYes, "yesen")
+	self._txtNoen = gohelper.findChildText(self._goNo, "noen")
 
-	PCInputController.instance:showkeyTips(arg_8_0._keyTipsNo, nil, nil, "Esc")
-	PCInputController.instance:showkeyTips(arg_8_0._keyTipsYes, nil, nil, "Return")
+	PCInputController.instance:showkeyTips(self._keyTipsNo, nil, nil, "Esc")
+	PCInputController.instance:showkeyTips(self._keyTipsYes, nil, nil, "Return")
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
-	arg_9_0:onOpen()
+function MessageBoxView:onUpdateParam()
+	self:onOpen()
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	arg_10_0._simagehuawen1:UnLoadImage()
-	arg_10_0._simagehuawen2:UnLoadImage()
+function MessageBoxView:onDestroyView()
+	self._simagehuawen1:UnLoadImage()
+	self._simagehuawen2:UnLoadImage()
 end
 
-function var_0_0.onOpen(arg_11_0)
-	if not string.nilorempty(arg_11_0.viewParam.msg) and arg_11_0.viewParam.extra and #arg_11_0.viewParam.extra > 0 then
-		local var_11_0 = arg_11_0.viewParam.msg
-		local var_11_1 = GameUtil.getSubPlaceholderLuaLang(var_11_0, arg_11_0.viewParam.extra)
+function MessageBoxView:onOpen()
+	if not string.nilorempty(self.viewParam.msg) and self.viewParam.extra and #self.viewParam.extra > 0 then
+		local tip = self.viewParam.msg
 
-		arg_11_0._txtdesc.text = var_11_1
+		tip = GameUtil.getSubPlaceholderLuaLang(tip, self.viewParam.extra)
+		self._txtdesc.text = tip
 	else
-		arg_11_0._txtdesc.text = arg_11_0.viewParam.msg or ""
+		self._txtdesc.text = self.viewParam.msg or ""
 	end
 
-	if arg_11_0.viewParam.openCallback then
-		if arg_11_0.viewParam.openCallbackObj then
-			arg_11_0.viewParam.openCallback(arg_11_0.viewParam.openCallbackObj, arg_11_0)
+	if not string.nilorempty(self.viewParam.title) then
+		self._txttitleCn.text = self.viewParam.title
+	end
+
+	self:_updateCurrency()
+
+	if self.viewParam.openCallback then
+		if self.viewParam.openCallbackObj then
+			self.viewParam.openCallback(self.viewParam.openCallbackObj, self)
 		else
-			arg_11_0.viewParam.openCallback(arg_11_0)
+			self.viewParam.openCallback(self)
 		end
 	end
 
-	local var_11_2 = arg_11_0.viewParam.yesStr or luaLang("confirm")
-	local var_11_3 = arg_11_0.viewParam.noStr or luaLang("cancel")
-	local var_11_4 = arg_11_0.viewParam.yesStrEn or "CONFIRM"
-	local var_11_5 = arg_11_0.viewParam.noStrEn or "CANCEL"
+	local yesStr = self.viewParam.yesStr or luaLang("confirm")
+	local noStr = self.viewParam.noStr or luaLang("cancel")
+	local yesStrEn = self.viewParam.yesStrEn or "CONFIRM"
+	local noStrEn = self.viewParam.noStrEn or "CANCEL"
 
-	arg_11_0._txtYes.text = var_11_2
-	arg_11_0._txtNo.text = var_11_3
-	arg_11_0._txtYesen.text = var_11_4
-	arg_11_0._txtNoen.text = var_11_5
+	self._txtYes.text = yesStr
+	self._txtNo.text = noStr
+	self._txtYesen.text = yesStrEn
+	self._txtNoen.text = noStrEn
 
-	if arg_11_0.viewParam.msgBoxType == var_0_2.Yes then
-		gohelper.setActive(arg_11_0._goNo, false)
-		gohelper.setActive(arg_11_0._goYes, true)
-		recthelper.setAnchorX(arg_11_0._goYes.transform, 0)
-	elseif arg_11_0.viewParam.msgBoxType == var_0_2.NO then
-		gohelper.setActive(arg_11_0._goYes, false)
-		gohelper.setActive(arg_11_0._goNo, true)
-		recthelper.setAnchorX(arg_11_0._goNo.transform, 0)
-	elseif arg_11_0.viewParam.msgBoxType == var_0_2.Yes_No then
-		gohelper.setActive(arg_11_0._goNo, true)
-		gohelper.setActive(arg_11_0._goYes, true)
-		recthelper.setAnchorX(arg_11_0._goYes.transform, 248)
-		recthelper.setAnchorX(arg_11_0._goNo.transform, -248)
+	if self.viewParam.msgBoxType == boxType.Yes then
+		gohelper.setActive(self._goNo, false)
+		gohelper.setActive(self._goYes, true)
+		recthelper.setAnchorX(self._goYes.transform, 0)
+	elseif self.viewParam.msgBoxType == boxType.NO then
+		gohelper.setActive(self._goYes, false)
+		gohelper.setActive(self._goNo, true)
+		recthelper.setAnchorX(self._goNo.transform, 0)
+	elseif self.viewParam.msgBoxType == boxType.Yes_No then
+		gohelper.setActive(self._goNo, true)
+		gohelper.setActive(self._goYes, true)
+		recthelper.setAnchorX(self._goYes.transform, 248)
+		recthelper.setAnchorX(self._goNo.transform, -248)
 	end
 
-	NavigateMgr.instance:addEscape(ViewName.MessageBoxView, arg_11_0._onEscapeBtnClick, arg_11_0)
+	NavigateMgr.instance:addEscape(ViewName.MessageBoxView, self._onEscapeBtnClick, self)
 end
 
-function var_0_0._onEscapeBtnClick(arg_12_0)
-	if arg_12_0._goNo.gameObject.activeInHierarchy then
-		arg_12_0:_closeInvokeCallback(var_0_1.No)
+function MessageBoxView:_updateCurrency()
+	if self.viewParam.currencyParam and #self.viewParam.currencyParam > 0 then
+		self.viewContainer:setCurrencyByParams(self.viewParam.currencyParam)
 	end
 end
 
-function var_0_0.onClose(arg_13_0)
+function MessageBoxView:_onEscapeBtnClick()
+	if self._goNo.gameObject.activeInHierarchy then
+		self:_closeInvokeCallback(closeType.No)
+	end
+end
+
+function MessageBoxView:onClose()
 	return
 end
 
-return var_0_0
+return MessageBoxView

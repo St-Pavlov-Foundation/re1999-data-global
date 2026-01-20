@@ -1,73 +1,75 @@
-﻿module("modules.logic.fight.view.FightExPointBeliefView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightExPointBeliefView.lua
 
-local var_0_0 = class("FightExPointBeliefView", FightBaseView)
+module("modules.logic.fight.view.FightExPointBeliefView", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1)
-	arg_1_0.entityData = arg_1_1
-	arg_1_0.entityId = arg_1_1.id
+local FightExPointBeliefView = class("FightExPointBeliefView", FightBaseView)
+
+function FightExPointBeliefView:onConstructor(entityData)
+	self.entityData = entityData
+	self.entityId = entityData.id
 end
 
-function var_0_0.onInitView(arg_2_0)
-	arg_2_0.root1 = gohelper.findChild(arg_2_0.viewGO, "expointContainer/exPointLine1")
-	arg_2_0.root2 = gohelper.findChild(arg_2_0.viewGO, "expointContainer/exPointLine2")
-	arg_2_0.objItem = gohelper.findChild(arg_2_0.viewGO, "expointContainer/#go_pointItem")
+function FightExPointBeliefView:onInitView()
+	self.root1 = gohelper.findChild(self.viewGO, "expointContainer/exPointLine1")
+	self.root2 = gohelper.findChild(self.viewGO, "expointContainer/exPointLine2")
+	self.objItem = gohelper.findChild(self.viewGO, "expointContainer/#go_pointItem")
 end
 
-function var_0_0.addEvents(arg_3_0)
-	arg_3_0:com_registFightEvent(FightEvent.OnExpointMaxAdd, arg_3_0.onExPointMaxAdd)
+function FightExPointBeliefView:addEvents()
+	self:com_registFightEvent(FightEvent.OnExpointMaxAdd, self.onExPointMaxAdd)
 end
 
-function var_0_0.removeEvents(arg_4_0)
+function FightExPointBeliefView:removeEvents()
 	return
 end
 
-function var_0_0.onGetExPointView(arg_5_0, arg_5_1)
-	if arg_5_1 == arg_5_0.entityId then
-		arg_5_0:com_replyMsg(FightMsgId.GetExPointView, arg_5_0)
+function FightExPointBeliefView:onGetExPointView(entityId)
+	if entityId == self.entityId then
+		self:com_replyMsg(FightMsgId.GetExPointView, self)
 	end
 end
 
-function var_0_0.onOpen(arg_6_0)
-	gohelper.setActive(arg_6_0.objItem, false)
+function FightExPointBeliefView:onOpen()
+	gohelper.setActive(self.objItem, false)
 
-	arg_6_0.itemList = {}
+	self.itemList = {}
 
-	arg_6_0:createObjList()
+	self:createObjList()
 end
 
-function var_0_0.createObjList(arg_7_0)
-	local var_7_0 = arg_7_0.entityData:getMaxExPoint()
+function FightExPointBeliefView:createObjList()
+	local max = self.entityData:getMaxExPoint()
 
-	for iter_7_0 = 1, var_7_0 do
-		if not arg_7_0.itemList[iter_7_0] then
-			local var_7_1 = iter_7_0 <= 4 and arg_7_0.root1 or arg_7_0.root2
-			local var_7_2 = gohelper.clone(arg_7_0.objItem, var_7_1, iter_7_0)
+	for i = 1, max do
+		if not self.itemList[i] then
+			local parentGO = i <= 4 and self.root1 or self.root2
+			local obj = gohelper.clone(self.objItem, parentGO, i)
 
-			arg_7_0.itemList[iter_7_0] = arg_7_0:com_openSubView(FightExPointBeliefItemView, var_7_2, var_7_1, iter_7_0, arg_7_0.entityData)
+			self.itemList[i] = self:com_openSubView(FightExPointBeliefItemView, obj, parentGO, i, self.entityData)
 		end
 
-		gohelper.setActive(arg_7_0.itemList[iter_7_0].viewGO, true)
+		gohelper.setActive(self.itemList[i].viewGO, true)
 	end
 
-	for iter_7_1 = var_7_0 + 1, #arg_7_0.itemList do
-		gohelper.setActive(arg_7_0.itemList[iter_7_1].viewGO, false)
+	for i = max + 1, #self.itemList do
+		gohelper.setActive(self.itemList[i].viewGO, false)
 	end
 end
 
-function var_0_0.onExPointMaxAdd(arg_8_0, arg_8_1, arg_8_2)
-	if arg_8_1 ~= arg_8_0.entityId then
+function FightExPointBeliefView:onExPointMaxAdd(entityId, offsetNum)
+	if entityId ~= self.entityId then
 		return
 	end
 
-	arg_8_0:createObjList()
+	self:createObjList()
 end
 
-function var_0_0.onClose(arg_9_0)
+function FightExPointBeliefView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_10_0)
+function FightExPointBeliefView:onDestroyView()
 	return
 end
 
-return var_0_0
+return FightExPointBeliefView

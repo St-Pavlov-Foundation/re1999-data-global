@@ -1,104 +1,107 @@
-﻿module("modules.logic.versionactivity1_6.enter.view.Va1_6GeTianEnterView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/enter/view/Va1_6GeTianEnterView.lua
 
-local var_0_0 = class("Va1_6GeTianEnterView", VersionActivityEnterBaseSubView)
+module("modules.logic.versionactivity1_6.enter.view.Va1_6GeTianEnterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._simageTitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "Right/#simage_Title")
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Right/#txt_LimitTime")
-	arg_1_0._txtDescr = gohelper.findChildText(arg_1_0.viewGO, "Right/#txt_Descr")
-	arg_1_0._gorewards = gohelper.findChild(arg_1_0.viewGO, "Right/scroll_Reward/Viewport/#go_rewards")
-	arg_1_0._btnEnter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Enter")
-	arg_1_0._btnLocked = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Locked")
-	arg_1_0._txtLocked = gohelper.findChildText(arg_1_0.viewGO, "Right/#btn_Locked/#txt_UnLocked")
+local Va1_6GeTianEnterView = class("Va1_6GeTianEnterView", VersionActivityEnterBaseSubView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Va1_6GeTianEnterView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._simageTitle = gohelper.findChildSingleImage(self.viewGO, "Right/#simage_Title")
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "Right/#txt_LimitTime")
+	self._txtDescr = gohelper.findChildText(self.viewGO, "Right/#txt_Descr")
+	self._gorewards = gohelper.findChild(self.viewGO, "Right/scroll_Reward/Viewport/#go_rewards")
+	self._btnEnter = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_Enter")
+	self._btnLocked = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_Locked")
+	self._txtLocked = gohelper.findChildText(self.viewGO, "Right/#btn_Locked/#txt_UnLocked")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnEnter:AddClickListener(arg_2_0._btnEnterOnClick, arg_2_0)
-	arg_2_0._btnLocked:AddClickListener(arg_2_0._btnLockedOnClick, arg_2_0)
+function Va1_6GeTianEnterView:addEvents()
+	self._btnEnter:AddClickListener(self._btnEnterOnClick, self)
+	self._btnLocked:AddClickListener(self._btnLockedOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnEnter:RemoveClickListener()
-	arg_3_0._btnLocked:RemoveClickListener()
+function Va1_6GeTianEnterView:removeEvents()
+	self._btnEnter:RemoveClickListener()
+	self._btnLocked:RemoveClickListener()
 end
 
-function var_0_0._btnEnterOnClick(arg_4_0)
+function Va1_6GeTianEnterView:_btnEnterOnClick()
 	ActGeTianController.instance:enterActivity()
 end
 
-function var_0_0._btnLockedOnClick(arg_5_0)
-	local var_5_0, var_5_1, var_5_2 = ActivityHelper.getActivityStatusAndToast(arg_5_0.actId)
+function Va1_6GeTianEnterView:_btnLockedOnClick()
+	local status, toastId, paramList = ActivityHelper.getActivityStatusAndToast(self.actId)
 
-	if var_5_0 == ActivityEnum.ActivityStatus.NotUnlock and var_5_1 then
-		GameFacade.showToastWithTableParam(var_5_1, var_5_2)
+	if status == ActivityEnum.ActivityStatus.NotUnlock and toastId then
+		GameFacade.showToastWithTableParam(toastId, paramList)
 	end
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0.actId = VersionActivity1_6Enum.ActivityId.Role2
-	arg_6_0.config = ActivityConfig.instance:getActivityCo(arg_6_0.actId)
-	arg_6_0._txtDescr.text = arg_6_0.config.actDesc
+function Va1_6GeTianEnterView:_editableInitView()
+	self.actId = VersionActivity1_6Enum.ActivityId.Role2
+	self.config = ActivityConfig.instance:getActivityCo(self.actId)
+	self._txtDescr.text = self.config.actDesc
 
-	local var_6_0 = OpenHelper.getActivityUnlockTxt(arg_6_0.config.openId)
+	local unlockTxt = OpenHelper.getActivityUnlockTxt(self.config.openId)
 
-	arg_6_0._txtLocked.text = var_6_0
+	self._txtLocked.text = unlockTxt
 
-	arg_6_0:initRewards()
+	self:initRewards()
 end
 
-function var_0_0.onOpen(arg_7_0)
-	var_0_0.super.onOpen(arg_7_0)
-	arg_7_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_7_0._onActStatusChange, arg_7_0)
+function Va1_6GeTianEnterView:onOpen()
+	Va1_6GeTianEnterView.super.onOpen(self)
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self._onActStatusChange, self)
 
-	local var_7_0 = gohelper.findChild(arg_7_0._btnEnter.gameObject, "#go_reddot")
+	local goreddot = gohelper.findChild(self._btnEnter.gameObject, "#go_reddot")
+	local redDotIcon = RedDotController.instance:addRedDot(goreddot, RedDotEnum.DotNode.V1a6RoleActivityTask, self.actId)
 
-	RedDotController.instance:addRedDot(var_7_0, RedDotEnum.DotNode.V1a6RoleActivityTask, arg_7_0.actId):setRedDotTranScale(RedDotEnum.Style.Normal, 1.4, 1.4)
-	arg_7_0:_freshUnlockStatus()
-	arg_7_0:_showLeftTime()
+	redDotIcon:setRedDotTranScale(RedDotEnum.Style.Normal, 1.4, 1.4)
+	self:_freshUnlockStatus()
+	self:_showLeftTime()
 end
 
-function var_0_0.onClose(arg_8_0)
-	var_0_0.super.onClose(arg_8_0)
+function Va1_6GeTianEnterView:onClose()
+	Va1_6GeTianEnterView.super.onClose(self)
 end
 
-function var_0_0.onDestroyView(arg_9_0)
+function Va1_6GeTianEnterView:onDestroyView()
 	return
 end
 
-function var_0_0._freshUnlockStatus(arg_10_0)
-	local var_10_0 = ActivityHelper.getActivityStatus(arg_10_0.actId)
+function Va1_6GeTianEnterView:_freshUnlockStatus()
+	local status = ActivityHelper.getActivityStatus(self.actId)
 
-	gohelper.setActive(arg_10_0._btnEnter, var_10_0 ~= ActivityEnum.ActivityStatus.NotUnlock)
-	gohelper.setActive(arg_10_0._btnLocked, var_10_0 == ActivityEnum.ActivityStatus.NotUnlock)
+	gohelper.setActive(self._btnEnter, status ~= ActivityEnum.ActivityStatus.NotUnlock)
+	gohelper.setActive(self._btnLocked, status == ActivityEnum.ActivityStatus.NotUnlock)
 end
 
-function var_0_0.initRewards(arg_11_0)
-	local var_11_0 = string.split(arg_11_0.config.activityBonus, "|")
+function Va1_6GeTianEnterView:initRewards()
+	local rewards = string.split(self.config.activityBonus, "|")
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
-		local var_11_1 = string.splitToNumber(iter_11_1, "#")
-		local var_11_2 = IconMgr.instance:getCommonItemIcon(arg_11_0._gorewards)
+	for _, reward in ipairs(rewards) do
+		local itemCo = string.splitToNumber(reward, "#")
+		local item = IconMgr.instance:getCommonItemIcon(self._gorewards)
 
-		var_11_2:setMOValue(var_11_1[1], var_11_1[2], 1)
-		var_11_2:isShowCount(false)
+		item:setMOValue(itemCo[1], itemCo[2], 1)
+		item:isShowCount(false)
 	end
 end
 
-function var_0_0._showLeftTime(arg_12_0)
-	arg_12_0._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(arg_12_0.actId)
+function Va1_6GeTianEnterView:_showLeftTime()
+	self._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(self.actId)
 end
 
-function var_0_0._onActStatusChange(arg_13_0)
-	arg_13_0:_freshUnlockStatus()
+function Va1_6GeTianEnterView:_onActStatusChange()
+	self:_freshUnlockStatus()
 end
 
-function var_0_0.everySecondCall(arg_14_0)
-	arg_14_0:_showLeftTime()
+function Va1_6GeTianEnterView:everySecondCall()
+	self:_showLeftTime()
 end
 
-return var_0_0
+return Va1_6GeTianEnterView

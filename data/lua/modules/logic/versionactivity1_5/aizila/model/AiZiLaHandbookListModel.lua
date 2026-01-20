@@ -1,38 +1,40 @@
-﻿module("modules.logic.versionactivity1_5.aizila.model.AiZiLaHandbookListModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/aizila/model/AiZiLaHandbookListModel.lua
 
-local var_0_0 = class("AiZiLaHandbookListModel", ListScrollModel)
+module("modules.logic.versionactivity1_5.aizila.model.AiZiLaHandbookListModel", package.seeall)
 
-function var_0_0.init(arg_1_0)
-	local var_1_0 = {}
+local AiZiLaHandbookListModel = class("AiZiLaHandbookListModel", ListScrollModel)
 
-	tabletool.addValues(var_1_0, AiZiLaModel.instance:getHandbookMOList())
-	table.sort(var_1_0, var_0_0.sortFunc)
-	arg_1_0:setList(var_1_0)
+function AiZiLaHandbookListModel:init()
+	local dataList = {}
+
+	tabletool.addValues(dataList, AiZiLaModel.instance:getHandbookMOList())
+	table.sort(dataList, AiZiLaHandbookListModel.sortFunc)
+	self:setList(dataList)
 end
 
-function var_0_0.sortFunc(arg_2_0, arg_2_1)
-	local var_2_0 = var_0_0.getSortIdx(arg_2_0)
-	local var_2_1 = var_0_0.getSortIdx(arg_2_1)
+function AiZiLaHandbookListModel.sortFunc(a, b)
+	local aIdx = AiZiLaHandbookListModel.getSortIdx(a)
+	local bIdx = AiZiLaHandbookListModel.getSortIdx(b)
 
-	if var_2_0 ~= var_2_1 then
-		return var_2_0 < var_2_1
+	if aIdx ~= bIdx then
+		return aIdx < bIdx
 	end
 
-	local var_2_2 = arg_2_0:getConfig()
-	local var_2_3 = arg_2_1:getConfig()
+	local aCfg = a:getConfig()
+	local bCfg = b:getConfig()
 
-	if var_2_2.rare ~= var_2_3.rare then
-		return var_2_2.rare > var_2_3.rare
+	if aCfg.rare ~= bCfg.rare then
+		return aCfg.rare > bCfg.rare
 	end
 
-	if arg_2_0.itemId ~= arg_2_1.itemId then
-		return arg_2_0.itemId < arg_2_1.itemId
+	if a.itemId ~= b.itemId then
+		return a.itemId < b.itemId
 	end
 end
 
-function var_0_0.getSortIdx(arg_3_0)
-	if AiZiLaModel.instance:isCollectItemId(arg_3_0.itemId) then
-		if arg_3_0:getQuantity() > 0 then
+function AiZiLaHandbookListModel.getSortIdx(a)
+	if AiZiLaModel.instance:isCollectItemId(a.itemId) then
+		if a:getQuantity() > 0 then
 			return 1
 		end
 
@@ -42,28 +44,28 @@ function var_0_0.getSortIdx(arg_3_0)
 	return 100
 end
 
-function var_0_0._refreshSelect(arg_4_0)
-	local var_4_0 = arg_4_0:getById(arg_4_0._selectItemId)
+function AiZiLaHandbookListModel:_refreshSelect()
+	local selectMO = self:getById(self._selectItemId)
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_0._scrollViews) do
-		iter_4_1:setSelect(var_4_0)
+	for i, view in ipairs(self._scrollViews) do
+		view:setSelect(selectMO)
 	end
 end
 
-function var_0_0.setSelect(arg_5_0, arg_5_1)
-	arg_5_0._selectItemId = arg_5_1
+function AiZiLaHandbookListModel:setSelect(itemId)
+	self._selectItemId = itemId
 
-	arg_5_0:_refreshSelect()
+	self:_refreshSelect()
 end
 
-function var_0_0.getSelect(arg_6_0)
-	return arg_6_0._selectItemId
+function AiZiLaHandbookListModel:getSelect()
+	return self._selectItemId
 end
 
-function var_0_0.getSelectMO(arg_7_0)
-	return arg_7_0:getById(arg_7_0._selectItemId)
+function AiZiLaHandbookListModel:getSelectMO()
+	return self:getById(self._selectItemId)
 end
 
-var_0_0.instance = var_0_0.New()
+AiZiLaHandbookListModel.instance = AiZiLaHandbookListModel.New()
 
-return var_0_0
+return AiZiLaHandbookListModel

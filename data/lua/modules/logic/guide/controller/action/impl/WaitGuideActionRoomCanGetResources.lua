@@ -1,44 +1,50 @@
-﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionRoomCanGetResources", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/WaitGuideActionRoomCanGetResources.lua
 
-local var_0_0 = class("WaitGuideActionRoomCanGetResources", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.WaitGuideActionRoomCanGetResources", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+local WaitGuideActionRoomCanGetResources = class("WaitGuideActionRoomCanGetResources", BaseGuideAction)
 
-	arg_1_0._partId = tonumber(arg_1_0.actionParam)
+function WaitGuideActionRoomCanGetResources:onStart(context)
+	WaitGuideActionRoomCanGetResources.super.onStart(self, context)
 
-	GameSceneMgr.instance:registerCallback(SceneEventName.EnterSceneFinish, arg_1_0._onEnterOneSceneFinish, arg_1_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_1_0._onOpenViewFinish, arg_1_0)
+	self._partId = tonumber(self.actionParam)
+
+	GameSceneMgr.instance:registerCallback(SceneEventName.EnterSceneFinish, self._onEnterOneSceneFinish, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
 end
 
-function var_0_0._onEnterOneSceneFinish(arg_2_0, arg_2_1)
-	if arg_2_0:checkGuideLock() then
+function WaitGuideActionRoomCanGetResources:_onEnterOneSceneFinish(sceneType)
+	if self:checkGuideLock() then
 		return
 	end
 
-	if arg_2_1 == SceneType.Room and RoomController.instance:isObMode() and #RoomProductionHelper.getCanGainLineIdList(arg_2_0._partId) > 0 then
-		GuidePriorityController.instance:add(arg_2_0.guideId, arg_2_0._satisfyPriority, arg_2_0, 0.01)
+	if sceneType == SceneType.Room and RoomController.instance:isObMode() then
+		local requestLineIdList = RoomProductionHelper.getCanGainLineIdList(self._partId)
+
+		if #requestLineIdList > 0 then
+			GuidePriorityController.instance:add(self.guideId, self._satisfyPriority, self, 0.01)
+		end
 	end
 end
 
-function var_0_0._onOpenViewFinish(arg_3_0, arg_3_1)
-	if arg_3_0:checkGuideLock() then
+function WaitGuideActionRoomCanGetResources:_onOpenViewFinish(viewName)
+	if self:checkGuideLock() then
 		return
 	end
 
-	if arg_3_1 == ViewName.RoomInitBuildingView then
-		arg_3_0:onDone(true)
+	if viewName == ViewName.RoomInitBuildingView then
+		self:onDone(true)
 	end
 end
 
-function var_0_0.clearWork(arg_4_0)
-	GameSceneMgr.instance:unregisterCallback(SceneEventName.EnterSceneFinish, arg_4_0._onEnterOneSceneFinish, arg_4_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_4_0._onOpenViewFinish, arg_4_0)
-	GuidePriorityController.instance:remove(arg_4_0.guideId)
+function WaitGuideActionRoomCanGetResources:clearWork()
+	GameSceneMgr.instance:unregisterCallback(SceneEventName.EnterSceneFinish, self._onEnterOneSceneFinish, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
+	GuidePriorityController.instance:remove(self.guideId)
 end
 
-function var_0_0._satisfyPriority(arg_5_0)
-	arg_5_0:onDone(true)
+function WaitGuideActionRoomCanGetResources:_satisfyPriority()
+	self:onDone(true)
 end
 
-return var_0_0
+return WaitGuideActionRoomCanGetResources

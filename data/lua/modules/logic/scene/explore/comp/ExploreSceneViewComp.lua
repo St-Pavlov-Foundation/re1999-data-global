@@ -1,28 +1,30 @@
-﻿module("modules.logic.scene.explore.comp.ExploreSceneViewComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/explore/comp/ExploreSceneViewComp.lua
 
-local var_0_0 = class("ExploreSceneViewComp", BaseSceneComp)
+module("modules.logic.scene.explore.comp.ExploreSceneViewComp", package.seeall)
 
-function var_0_0.onScenePrepared(arg_1_0, arg_1_1, arg_1_2)
+local ExploreSceneViewComp = class("ExploreSceneViewComp", BaseSceneComp)
+
+function ExploreSceneViewComp:onScenePrepared(sceneId, levelId)
 	ViewMgr.instance:openView(ViewName.ExploreView)
 
-	local var_1_0 = ViewMgr.instance:getUILayer(UILayerName.PopUpTop)
+	local popLayer = ViewMgr.instance:getUILayer(UILayerName.PopUpTop)
 
-	arg_1_0._uiRoot = gohelper.create2d(var_1_0, "ExploreUnitUI")
+	self._uiRoot = gohelper.create2d(popLayer, "ExploreUnitUI")
 end
 
-function var_0_0.getRoot(arg_2_0)
-	return arg_2_0._uiRoot
+function ExploreSceneViewComp:getRoot()
+	return self._uiRoot
 end
 
-function var_0_0.setActive(arg_3_0, arg_3_1)
-	gohelper.setActive(arg_3_0._uiRoot, arg_3_1)
+function ExploreSceneViewComp:setActive(isActive)
+	gohelper.setActive(self._uiRoot, isActive)
 end
 
-function var_0_0.onSceneClose(arg_4_0, arg_4_1, arg_4_2)
+function ExploreSceneViewComp:onSceneClose(sceneId, levelId)
 	ViewMgr.instance:closeView(ViewName.ExploreView)
-	gohelper.destroy(arg_4_0._uiRoot)
+	gohelper.destroy(self._uiRoot)
 
-	arg_4_0._uiRoot = nil
+	self._uiRoot = nil
 end
 
-return var_0_0
+return ExploreSceneViewComp

@@ -1,18 +1,20 @@
-﻿module("modules.logic.versionactivity2_7.act191.view.Act191CharacterTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/act191/view/Act191CharacterTipViewContainer.lua
 
-local var_0_0 = class("Act191CharacterTipViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_7.act191.view.Act191CharacterTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Act191CharacterTipViewContainer = class("Act191CharacterTipViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Act191CharacterTipView.New())
+function Act191CharacterTipViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Act191CharacterTipView.New())
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
+function Act191CharacterTipViewContainer:onContainerClickModalMask()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	arg_2_0:closeThis()
+	self:closeThis()
 end
 
-return var_0_0
+return Act191CharacterTipViewContainer

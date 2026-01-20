@@ -1,13 +1,15 @@
-﻿module("modules.logic.activity.view.warmup.ActivityWarmUpTipsContainer", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/warmup/ActivityWarmUpTipsContainer.lua
 
-local var_0_0 = class("ActivityWarmUpTipsContainer", BaseViewContainer)
+module("modules.logic.activity.view.warmup.ActivityWarmUpTipsContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local ActivityWarmUpTipsContainer = class("ActivityWarmUpTipsContainer", BaseViewContainer)
 
-	table.insert(var_1_0, ActivityWarmUpTips.New())
+function ActivityWarmUpTipsContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, ActivityWarmUpTips.New())
+
+	return views
 end
 
-return var_0_0
+return ActivityWarmUpTipsContainer

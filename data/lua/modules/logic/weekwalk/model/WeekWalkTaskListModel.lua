@@ -1,206 +1,213 @@
-﻿module("modules.logic.weekwalk.model.WeekWalkTaskListModel", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk/model/WeekWalkTaskListModel.lua
 
-local var_0_0 = class("WeekWalkTaskListModel", ListScrollModel)
+module("modules.logic.weekwalk.model.WeekWalkTaskListModel", package.seeall)
 
-function var_0_0.setTaskRewardList(arg_1_0, arg_1_1)
-	arg_1_0._rewardList = arg_1_1
+local WeekWalkTaskListModel = class("WeekWalkTaskListModel", ListScrollModel)
+
+function WeekWalkTaskListModel:setTaskRewardList(value)
+	self._rewardList = value
 end
 
-function var_0_0.getTaskRewardList(arg_2_0)
-	return arg_2_0._rewardList
+function WeekWalkTaskListModel:getTaskRewardList()
+	return self._rewardList
 end
 
-function var_0_0.getLayerTaskMapId(arg_3_0)
-	return arg_3_0._layerTaskMapId
+function WeekWalkTaskListModel:getLayerTaskMapId()
+	return self._layerTaskMapId
 end
 
-function var_0_0.getSortIndex(arg_4_0, arg_4_1)
-	return arg_4_0._sortMap[arg_4_1] or 0
+function WeekWalkTaskListModel:getSortIndex(mo)
+	return self._sortMap[mo] or 0
 end
 
-function var_0_0._canGet(arg_5_0, arg_5_1)
-	local var_5_0 = var_0_0.instance:getTaskMo(arg_5_1)
+function WeekWalkTaskListModel:_canGet(id)
+	local taskMo = WeekWalkTaskListModel.instance:getTaskMo(id)
 
-	if var_5_0 then
-		local var_5_1 = lua_task_weekwalk.configDict[arg_5_1]
-		local var_5_2 = var_5_0.finishCount >= var_5_1.maxFinishCount
+	if taskMo then
+		local config = lua_task_weekwalk.configDict[id]
+		local isGet = taskMo.finishCount >= config.maxFinishCount
+		local isFinish = taskMo.hasFinished
 
-		if var_5_0.hasFinished and not var_5_2 then
+		if isFinish and not isGet then
 			return true
 		end
 	end
 end
 
-function var_0_0.getCanGetList(arg_6_0)
-	local var_6_0 = {}
+function WeekWalkTaskListModel:getCanGetList()
+	local list = {}
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0:getList()) do
-		if iter_6_1.id and arg_6_0:_canGet(iter_6_1.id) then
-			table.insert(var_6_0, iter_6_1.id)
+	for i, v in ipairs(self:getList()) do
+		if v.id and self:_canGet(v.id) then
+			table.insert(list, v.id)
 		end
 	end
 
-	return var_6_0
+	return list
 end
 
-function var_0_0.checkPeriods(arg_7_0, arg_7_1)
-	if string.nilorempty(arg_7_1.periods) then
+function WeekWalkTaskListModel:checkPeriods(mo)
+	if string.nilorempty(mo.periods) then
 		return true
 	end
 
-	local var_7_0 = string.splitToNumber(arg_7_1.periods, "#")
-	local var_7_1 = var_7_0[1] or 0
-	local var_7_2 = var_7_0[2] or 0
-	local var_7_3 = WeekWalkModel.instance:getInfo()
+	local list = string.splitToNumber(mo.periods, "#")
+	local minId = list[1] or 0
+	local maxId = list[2] or 0
+	local info = WeekWalkModel.instance:getInfo()
 
-	return var_7_3 and var_7_1 <= var_7_3.issueId and var_7_2 >= var_7_3.issueId
+	return info and minId <= info.issueId and maxId >= info.issueId
 end
 
-function var_0_0.showLayerTaskList(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0._layerTaskMapId = arg_8_2
+function WeekWalkTaskListModel:showLayerTaskList(type, mapId)
+	self._layerTaskMapId = mapId
 
-	local var_8_0 = {}
+	local result = {}
 
-	arg_8_0._sortMap = {}
+	self._sortMap = {}
 
-	local var_8_1 = 1
-	local var_8_2 = 0
-	local var_8_3 = lua_weekwalk.configDict[arg_8_2]
-	local var_8_4 = tostring(var_8_3.layer)
-	local var_8_5 = TaskConfig.instance:getWeekWalkTaskList(arg_8_1)
+	local index = 1
+	local num = 0
+	local mapConfig = lua_weekwalk.configDict[mapId]
+	local layerStr = tostring(mapConfig.layer)
+	local list = TaskConfig.instance:getWeekWalkTaskList(type)
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_5) do
-		if (iter_8_1.listenerParam == var_8_4 or iter_8_1.listenerType == "WeekwalkBattle" and string.find(iter_8_1.listenerParam, var_8_4)) and arg_8_0:checkPeriods(iter_8_1) then
-			table.insert(var_8_0, iter_8_1)
+	for i, mo in ipairs(list) do
+		local check = mo.listenerParam == layerStr or mo.listenerType == "WeekwalkBattle" and string.find(mo.listenerParam, layerStr)
 
-			arg_8_0._sortMap[iter_8_1] = var_8_1
-			var_8_1 = var_8_1 + 1
+		if check and self:checkPeriods(mo) then
+			table.insert(result, mo)
 
-			if arg_8_0:_canGet(iter_8_1.id) then
-				var_8_2 = var_8_2 + 1
+			self._sortMap[mo] = index
+			index = index + 1
+
+			if self:_canGet(mo.id) then
+				num = num + 1
 			end
 		end
 	end
 
-	table.sort(var_8_0, arg_8_0._sort)
+	table.sort(result, self._sort)
 
-	if var_8_2 > 1 then
-		table.insert(var_8_0, 1, {
+	if num > 1 then
+		table.insert(result, 1, {
 			id = 0,
 			isGetAll = true,
-			minTypeId = arg_8_1
+			minTypeId = type
 		})
 	end
 
-	local var_8_6 = {
+	local fakeItem = {
 		isDirtyData = true
 	}
 
-	table.insert(var_8_0, var_8_6)
-	arg_8_0:setList(var_8_0)
+	table.insert(result, fakeItem)
+	self:setList(result)
 end
 
-function var_0_0.showTaskList(arg_9_0, arg_9_1, arg_9_2)
-	var_0_0._mapId = tostring(arg_9_2)
+function WeekWalkTaskListModel:showTaskList(type, mapId)
+	WeekWalkTaskListModel._mapId = tostring(mapId)
 
-	local var_9_0 = TaskConfig.instance:getWeekWalkTaskList(arg_9_1)
+	local list = TaskConfig.instance:getWeekWalkTaskList(type)
 
-	table.sort(var_9_0, arg_9_0._sort)
+	table.sort(list, self._sort)
 
-	local var_9_1 = {}
+	local result = {}
+	local num = self:canGetRewardNum(type)
 
-	if arg_9_0:canGetRewardNum(arg_9_1) > 1 then
-		table.insert(var_9_1, 1, {
+	if num > 1 then
+		table.insert(result, 1, {
 			id = 0,
 			isGetAll = true,
-			minTypeId = arg_9_1
+			minTypeId = type
 		})
 	end
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
-		table.insert(var_9_1, iter_9_1)
+	for i, v in ipairs(list) do
+		table.insert(result, v)
 	end
 
-	local var_9_2 = {
+	local fakeItem = {
 		isDirtyData = true
 	}
 
-	table.insert(var_9_1, var_9_2)
-	arg_9_0:setList(var_9_1)
+	table.insert(result, fakeItem)
+	self:setList(result)
 end
 
-function var_0_0.canGetRewardNum(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = TaskConfig.instance:getWeekWalkTaskList(arg_10_1)
-	local var_10_1 = 0
-	local var_10_2 = 0
-	local var_10_3
+function WeekWalkTaskListModel:canGetRewardNum(type, mapId)
+	local list = TaskConfig.instance:getWeekWalkTaskList(type)
+	local num = 0
+	local unFinishNum = 0
+	local layerIdStr
 
-	if arg_10_2 then
-		local var_10_4 = lua_weekwalk.configDict[arg_10_2]
+	if mapId then
+		local mapConfig = lua_weekwalk.configDict[mapId]
 
-		var_10_3 = tostring(var_10_4.layer)
+		layerIdStr = tostring(mapConfig.layer)
 	end
 
-	for iter_10_0, iter_10_1 in ipairs(var_10_0) do
-		local var_10_5 = var_0_0.instance:getTaskMo(iter_10_1.id)
+	for i, mo in ipairs(list) do
+		local taskMo = WeekWalkTaskListModel.instance:getTaskMo(mo.id)
 
-		if var_10_5 then
-			local var_10_6 = lua_task_weekwalk.configDict[iter_10_1.id]
-			local var_10_7 = var_10_5.finishCount >= var_10_6.maxFinishCount
-			local var_10_8 = var_10_5.hasFinished
+		if taskMo then
+			local config = lua_task_weekwalk.configDict[mo.id]
+			local isGet = taskMo.finishCount >= config.maxFinishCount
+			local isFinish = taskMo.hasFinished
+			local check = not layerIdStr or mo.listenerParam == layerIdStr or mo.listenerType == "WeekwalkBattle" and string.find(mo.listenerParam, layerIdStr)
 
-			if (not var_10_3 or iter_10_1.listenerParam == var_10_3 or iter_10_1.listenerType == "WeekwalkBattle" and string.find(iter_10_1.listenerParam, var_10_3)) and arg_10_0:checkPeriods(iter_10_1) then
-				if not var_10_7 then
-					var_10_2 = var_10_2 + 1
+			if check and self:checkPeriods(mo) then
+				if not isGet then
+					unFinishNum = unFinishNum + 1
 				end
 
-				if var_10_8 and not var_10_7 then
-					var_10_1 = var_10_1 + 1
+				if isFinish and not isGet then
+					num = num + 1
 				end
 			end
 		end
 	end
 
-	return var_10_1, var_10_2
+	return num, unFinishNum
 end
 
-function var_0_0.getAllDeepTaskInfo(arg_11_0)
-	local var_11_0 = 0
-	local var_11_1 = 0
-	local var_11_2 = {}
-	local var_11_3
-	local var_11_4
-	local var_11_5 = VersionValidator.instance:isInReviewing()
-	local var_11_6 = WeekWalkModel.instance:getInfo()
-	local var_11_7 = WeekWalkConfig.instance:getDeepLayer(var_11_6.issueId)
-	local var_11_8 = ResSplitConfig.instance:getMaxWeekWalkLayer()
+function WeekWalkTaskListModel:getAllDeepTaskInfo()
+	local cur = 0
+	local total = 0
+	local canGetList = {}
+	local firstLayer, firstFinishLayer
+	local isVerifing = VersionValidator.instance:isInReviewing()
+	local info = WeekWalkModel.instance:getInfo()
+	local deepLayerList = WeekWalkConfig.instance:getDeepLayer(info.issueId)
+	local maxLayer = ResSplitConfig.instance:getMaxWeekWalkLayer()
 
-	if not var_11_7 then
-		return var_11_0, var_11_1, var_11_2, var_11_4 or var_11_3
+	if not deepLayerList then
+		return cur, total, canGetList, firstFinishLayer or firstLayer
 	end
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_7) do
-		if not var_11_5 or not (var_11_8 < iter_11_1.layer) then
-			local var_11_9 = TaskConfig.instance:getWeekWalkRewardList(iter_11_1.layer)
+	for i, v in ipairs(deepLayerList) do
+		if not isVerifing or not (maxLayer < v.layer) then
+			local rewardList = TaskConfig.instance:getWeekWalkRewardList(v.layer)
 
-			if var_11_9 then
-				var_11_3 = var_11_3 or iter_11_1.id
+			if rewardList then
+				firstLayer = firstLayer or v.id
 
-				for iter_11_2, iter_11_3 in pairs(var_11_9) do
-					local var_11_10 = lua_task_weekwalk.configDict[iter_11_2]
+				for taskId, num in pairs(rewardList) do
+					local taskConfig = lua_task_weekwalk.configDict[taskId]
 
-					if var_11_10 and var_0_0.instance:checkPeriods(var_11_10) then
-						var_11_1 = var_11_1 + iter_11_3
+					if taskConfig and WeekWalkTaskListModel.instance:checkPeriods(taskConfig) then
+						total = total + num
 
-						local var_11_11 = var_0_0.instance:getTaskMo(iter_11_2)
-						local var_11_12 = lua_task_weekwalk.configDict[iter_11_2]
+						local taskMo = WeekWalkTaskListModel.instance:getTaskMo(taskId)
+						local config = lua_task_weekwalk.configDict[taskId]
+						local isGet = taskMo and taskMo.finishCount >= config.maxFinishCount
 
-						if var_11_11 and var_11_11.finishCount >= var_11_12.maxFinishCount then
-							var_11_0 = var_11_0 + iter_11_3
-						elseif var_11_11 and var_11_11.hasFinished then
-							table.insert(var_11_2, iter_11_2)
+						if isGet then
+							cur = cur + num
+						elseif taskMo and taskMo.hasFinished then
+							table.insert(canGetList, taskId)
 
-							var_11_4 = var_11_4 or iter_11_1.id
+							firstFinishLayer = firstFinishLayer or v.id
 						end
 					end
 				end
@@ -208,93 +215,96 @@ function var_0_0.getAllDeepTaskInfo(arg_11_0)
 		end
 	end
 
-	return var_11_0, var_11_1, var_11_2, var_11_4 or var_11_3
+	return cur, total, canGetList, firstFinishLayer or firstLayer
 end
 
-function var_0_0.canGetReward(arg_12_0, arg_12_1)
-	local var_12_0 = TaskConfig.instance:getWeekWalkTaskList(arg_12_1)
+function WeekWalkTaskListModel:canGetReward(type)
+	local list = TaskConfig.instance:getWeekWalkTaskList(type)
 
-	for iter_12_0, iter_12_1 in ipairs(var_12_0) do
-		local var_12_1 = var_0_0.instance:getTaskMo(iter_12_1.id)
+	for i, mo in ipairs(list) do
+		local taskMo = WeekWalkTaskListModel.instance:getTaskMo(mo.id)
 
-		if not var_12_1 then
+		if not taskMo then
 			return false
 		end
 
-		local var_12_2 = lua_task_weekwalk.configDict[iter_12_1.id]
-		local var_12_3 = var_12_1.finishCount >= var_12_2.maxFinishCount
+		local config = lua_task_weekwalk.configDict[mo.id]
+		local isGet = taskMo.finishCount >= config.maxFinishCount
+		local isFinish = taskMo.hasFinished
 
-		if var_12_1.hasFinished and not var_12_3 then
+		if isFinish and not isGet then
 			return true
 		end
 	end
 end
 
-function var_0_0._sort(arg_13_0, arg_13_1)
-	local var_13_0 = var_0_0.instance:_taskStatus(arg_13_0)
-	local var_13_1 = var_0_0.instance:_taskStatus(arg_13_1)
-	local var_13_2 = arg_13_0.listenerParam == var_0_0._mapId
-	local var_13_3 = arg_13_1.listenerParam == var_0_0._mapId
+function WeekWalkTaskListModel._sort(a, b)
+	local statusA = WeekWalkTaskListModel.instance:_taskStatus(a)
+	local statusB = WeekWalkTaskListModel.instance:_taskStatus(b)
+	local sameA = a.listenerParam == WeekWalkTaskListModel._mapId
+	local sameB = b.listenerParam == WeekWalkTaskListModel._mapId
 
-	if var_13_2 and not var_13_3 and var_13_0 ~= 3 then
+	if sameA and not sameB and statusA ~= 3 then
 		return true
 	end
 
-	if not var_13_2 and var_13_3 and var_13_1 ~= 3 then
+	if not sameA and sameB and statusB ~= 3 then
 		return false
 	end
 
-	if var_13_0 ~= var_13_1 then
-		return var_13_0 < var_13_1
+	if statusA ~= statusB then
+		return statusA < statusB
 	end
 
-	return arg_13_0.id < arg_13_1.id
+	return a.id < b.id
 end
 
-function var_0_0._taskStatus(arg_14_0, arg_14_1)
-	local var_14_0 = var_0_0.instance:getTaskMo(arg_14_1.id)
-	local var_14_1 = lua_task_weekwalk.configDict[arg_14_1.id]
+function WeekWalkTaskListModel:_taskStatus(mo)
+	local taskMo = WeekWalkTaskListModel.instance:getTaskMo(mo.id)
+	local config = lua_task_weekwalk.configDict[mo.id]
 
-	if not var_14_0 or not var_14_1 then
+	if not taskMo or not config then
 		return 2
 	end
 
-	local var_14_2 = var_14_0.finishCount >= var_14_1.maxFinishCount
-	local var_14_3 = var_14_0.hasFinished
+	local isGet = taskMo.finishCount >= config.maxFinishCount
+	local isFinish = taskMo.hasFinished
 
-	if var_14_2 then
+	if isGet then
 		return 3
-	elseif var_14_3 then
+	elseif isFinish then
 		return 1
 	end
 
 	return 2
 end
 
-function var_0_0.hasFinished(arg_15_0)
-	local var_15_0 = arg_15_0:getList()
+function WeekWalkTaskListModel:hasFinished()
+	local list = self:getList()
 
-	for iter_15_0, iter_15_1 in ipairs(var_15_0) do
-		local var_15_1 = var_0_0.instance:getTaskMo(iter_15_1.id)
+	for i, mo in ipairs(list) do
+		local taskMo = WeekWalkTaskListModel.instance:getTaskMo(mo.id)
 
-		if var_15_1 and var_15_1.hasFinished then
+		if taskMo and taskMo.hasFinished then
 			return true
 		end
 	end
 end
 
-function var_0_0.updateTaskList(arg_16_0)
-	arg_16_0._taskList = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.WeekWalk)
+function WeekWalkTaskListModel:updateTaskList()
+	local list = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.WeekWalk)
+
+	self._taskList = list
 end
 
-function var_0_0.hasTaskList(arg_17_0)
-	return arg_17_0._taskList
+function WeekWalkTaskListModel:hasTaskList()
+	return self._taskList
 end
 
-function var_0_0.getTaskMo(arg_18_0, arg_18_1)
-	return arg_18_0._taskList and arg_18_0._taskList[arg_18_1]
+function WeekWalkTaskListModel:getTaskMo(id)
+	return self._taskList and self._taskList[id]
 end
 
-var_0_0.instance = var_0_0.New()
+WeekWalkTaskListModel.instance = WeekWalkTaskListModel.New()
 
-return var_0_0
+return WeekWalkTaskListModel

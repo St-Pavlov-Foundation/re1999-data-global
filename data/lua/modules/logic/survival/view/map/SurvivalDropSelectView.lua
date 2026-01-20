@@ -1,116 +1,123 @@
-﻿module("modules.logic.survival.view.map.SurvivalDropSelectView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/SurvivalDropSelectView.lua
 
-local var_0_0 = class("SurvivalDropSelectView", BaseView)
+module("modules.logic.survival.view.map.SurvivalDropSelectView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtTitle = gohelper.findChildTextMesh(arg_1_0.viewGO, "titlebg/#txt_title")
-	arg_1_0._goreward = gohelper.findChild(arg_1_0.viewGO, "#go_View/Reward/Viewport/Content/go_rewarditem")
-	arg_1_0._txtnum = gohelper.findChildTextMesh(arg_1_0.viewGO, "titlebg/numbg/#txt_num")
-	arg_1_0._btnget = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Bottom/#btn_confirm")
+local SurvivalDropSelectView = class("SurvivalDropSelectView", BaseView)
+
+function SurvivalDropSelectView:onInitView()
+	self._txtTitle = gohelper.findChildTextMesh(self.viewGO, "titlebg/#txt_title")
+	self._goreward = gohelper.findChild(self.viewGO, "#go_View/Reward/Viewport/Content/go_rewarditem")
+	self._txtnum = gohelper.findChildTextMesh(self.viewGO, "titlebg/numbg/#txt_num")
+	self._btnget = gohelper.findChildButtonWithAudio(self.viewGO, "Bottom/#btn_confirm")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnget:AddClickListener(arg_2_0.onClickGetReward, arg_2_0)
+function SurvivalDropSelectView:addEvents()
+	self._btnget:AddClickListener(self.onClickGetReward, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnget:RemoveClickListener()
+function SurvivalDropSelectView:removeEvents()
+	self._btnget:RemoveClickListener()
 end
 
-function var_0_0.onOpen(arg_4_0)
+function SurvivalDropSelectView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_wangshi_argus_level_finish)
-	arg_4_0:_refreshView()
+	self:_refreshView()
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function SurvivalDropSelectView:onUpdateParam()
 	AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_wangshi_argus_level_finish)
-	arg_5_0:_refreshView()
+	self:_refreshView()
 end
 
-function var_0_0._refreshView(arg_6_0)
-	arg_6_0._selectIndex = {}
-	arg_6_0._panel = arg_6_0.viewParam.panel
-	arg_6_0._selectObjs = arg_6_0:getUserDataTb_()
-	arg_6_0._items = arg_6_0._panel.items
+function SurvivalDropSelectView:_refreshView()
+	self._selectIndex = {}
+	self._panel = self.viewParam.panel
+	self._selectObjs = self:getUserDataTb_()
 
-	gohelper.CreateObjList(arg_6_0, arg_6_0._createRewardItem, arg_6_0._items, nil, arg_6_0._goreward)
-	arg_6_0:_refreshNum()
+	local items = self._panel.items
 
-	arg_6_0._txtTitle.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survival_reward_select_title"), arg_6_0._panel.canSelectNum)
+	self._items = items
+
+	gohelper.CreateObjList(self, self._createRewardItem, self._items, nil, self._goreward)
+	self:_refreshNum()
+
+	self._txtTitle.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survival_reward_select_title"), self._panel.canSelectNum)
 end
 
-function var_0_0._createRewardItem(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	local var_7_0 = gohelper.findChild(arg_7_1, "go_select")
-	local var_7_1 = gohelper.findChildClickWithDefaultAudio(arg_7_1, "go_card")
+function SurvivalDropSelectView:_createRewardItem(obj, data, index)
+	local select = gohelper.findChild(obj, "go_select")
+	local btn = gohelper.findChildClickWithDefaultAudio(obj, "go_card")
 
-	gohelper.setActive(var_7_0, false)
+	gohelper.setActive(select, false)
 
-	arg_7_0._selectObjs[arg_7_3] = var_7_0
+	self._selectObjs[index] = select
 
-	arg_7_0:addClickCb(var_7_1, arg_7_0._onBtnClick, arg_7_0, arg_7_3)
+	self:addClickCb(btn, self._onBtnClick, self, index)
 
-	local var_7_2 = gohelper.findChild(arg_7_1, "go_card/inst")
+	local instGo = gohelper.findChild(obj, "go_card/inst")
 
-	if not var_7_2 then
-		local var_7_3 = arg_7_0.viewContainer._viewSetting.otherRes.infoView
+	if not instGo then
+		local infoViewRes = self.viewContainer._viewSetting.otherRes.infoView
 
-		var_7_2 = arg_7_0:getResInst(var_7_3, gohelper.findChild(arg_7_1, "go_card"), "inst")
+		instGo = self:getResInst(infoViewRes, gohelper.findChild(obj, "go_card"), "inst")
 	end
 
-	local var_7_4 = MonoHelper.addNoUpdateLuaComOnceToGo(var_7_2, SurvivalBagInfoPart)
+	local infoView = MonoHelper.addNoUpdateLuaComOnceToGo(instGo, SurvivalBagInfoPart)
 
-	var_7_4:updateMo(arg_7_2)
-	var_7_4:setClickDescCallback(arg_7_0._onBtnClick, arg_7_0, arg_7_3)
+	infoView:updateMo(data)
+	infoView:setClickDescCallback(self._onBtnClick, self, index)
 end
 
-function var_0_0._onBtnClick(arg_8_0, arg_8_1)
-	local var_8_0 = tabletool.indexOf(arg_8_0._selectIndex, arg_8_1 - 1)
+function SurvivalDropSelectView:_onBtnClick(index)
+	local key = tabletool.indexOf(self._selectIndex, index - 1)
 
-	if var_8_0 then
-		table.remove(arg_8_0._selectIndex, var_8_0)
-		gohelper.setActive(arg_8_0._selectObjs[arg_8_1], false)
+	if key then
+		table.remove(self._selectIndex, key)
+		gohelper.setActive(self._selectObjs[index], false)
 	else
-		if arg_8_0._panel.canSelectNum == tabletool.len(arg_8_0._selectIndex) then
-			if arg_8_0._panel.canSelectNum ~= 1 then
+		if self._panel.canSelectNum == tabletool.len(self._selectIndex) then
+			if self._panel.canSelectNum ~= 1 then
 				return
 			else
-				gohelper.setActive(arg_8_0._selectObjs[arg_8_0._selectIndex[1] + 1], false)
+				gohelper.setActive(self._selectObjs[self._selectIndex[1] + 1], false)
 
-				arg_8_0._selectIndex[1] = nil
+				self._selectIndex[1] = nil
 			end
 		end
 
-		table.insert(arg_8_0._selectIndex, arg_8_1 - 1)
-		gohelper.setActive(arg_8_0._selectObjs[arg_8_1], true)
+		table.insert(self._selectIndex, index - 1)
+		gohelper.setActive(self._selectObjs[index], true)
 	end
 
-	arg_8_0:_refreshNum()
+	self:_refreshNum()
 end
 
-function var_0_0._refreshNum(arg_9_0)
-	local var_9_0 = tabletool.len(arg_9_0._selectIndex)
+function SurvivalDropSelectView:_refreshNum()
+	local selectNum = tabletool.len(self._selectIndex)
 
-	if var_9_0 < arg_9_0._panel.canSelectNum then
-		arg_9_0._txtnum.text = string.format("<#D64241>%d</color>/%d", var_9_0, arg_9_0._panel.canSelectNum)
+	if selectNum < self._panel.canSelectNum then
+		self._txtnum.text = string.format("<#D64241>%d</color>/%d", selectNum, self._panel.canSelectNum)
 	else
-		arg_9_0._txtnum.text = string.format("%d/%d", var_9_0, arg_9_0._panel.canSelectNum)
+		self._txtnum.text = string.format("%d/%d", selectNum, self._panel.canSelectNum)
 	end
 end
 
-function var_0_0.onClickGetReward(arg_10_0)
-	if tabletool.len(arg_10_0._selectIndex) < arg_10_0._panel.canSelectNum then
-		GameFacade.showMessageBox(MessageBoxIdDefine.SurvivalDropSelect, MsgBoxEnum.BoxType.Yes_No, arg_10_0._realGetItems, nil, nil, arg_10_0, nil, nil)
+function SurvivalDropSelectView:onClickGetReward()
+	local selectNum = tabletool.len(self._selectIndex)
+
+	if selectNum < self._panel.canSelectNum then
+		GameFacade.showMessageBox(MessageBoxIdDefine.SurvivalDropSelect, MsgBoxEnum.BoxType.Yes_No, self._realGetItems, nil, nil, self, nil, nil)
 	else
-		arg_10_0:_realGetItems()
+		self:_realGetItems()
 	end
 end
 
-function var_0_0._realGetItems(arg_11_0)
-	SurvivalWeekRpc.instance:sendSurvivalPanelOperationRequest(arg_11_0._panel.uid, table.concat(arg_11_0._selectIndex, ","), arg_11_0._onRecvMsg, arg_11_0)
+function SurvivalDropSelectView:_realGetItems()
+	SurvivalWeekRpc.instance:sendSurvivalPanelOperationRequest(self._panel.uid, table.concat(self._selectIndex, ","), self._onRecvMsg, self)
 end
 
-function var_0_0._onRecvMsg(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	arg_12_0:closeThis()
+function SurvivalDropSelectView:_onRecvMsg(cmd, resultCode, msg)
+	self:closeThis()
 end
 
-return var_0_0
+return SurvivalDropSelectView

@@ -1,143 +1,148 @@
-﻿module("modules.logic.versionactivity2_3.enter.view.VersionActivity2_3EnterBgmView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/enter/view/VersionActivity2_3EnterBgmView.lua
 
-local var_0_0 = class("VersionActivity2_3EnterBgmView", BaseView)
+module("modules.logic.versionactivity2_3.enter.view.VersionActivity2_3EnterBgmView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local VersionActivity2_3EnterBgmView = class("VersionActivity2_3EnterBgmView", BaseView)
+
+function VersionActivity2_3EnterBgmView:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(VersionActivityBaseController.instance, VersionActivityEnterViewEvent.SelectActId, arg_2_0.onSelectActId, arg_2_0, LuaEventSystem.Low)
+function VersionActivity2_3EnterBgmView:addEvents()
+	self:addEventCb(VersionActivityBaseController.instance, VersionActivityEnterViewEvent.SelectActId, self.onSelectActId, self, LuaEventSystem.Low)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(VersionActivityBaseController.instance, VersionActivityEnterViewEvent.SelectActId, arg_3_0.onSelectActId, arg_3_0, LuaEventSystem.Low)
+function VersionActivity2_3EnterBgmView:removeEvents()
+	self:removeEventCb(VersionActivityBaseController.instance, VersionActivityEnterViewEvent.SelectActId, self.onSelectActId, self, LuaEventSystem.Low)
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0:initActHandle()
+function VersionActivity2_3EnterBgmView:_editableInitView()
+	self:initActHandle()
 end
 
-function var_0_0.initActHandle(arg_5_0)
-	if not arg_5_0.actHandleDict then
-		arg_5_0.actHandleDict = {
-			[BossRushConfig.instance:getActivityId()] = arg_5_0._bossrushBgmHandle,
-			[VersionActivity2_3Enum.ActivityId.ZhiXinQuanEr] = arg_5_0._zhixinquanerBgmHandle
+function VersionActivity2_3EnterBgmView:initActHandle()
+	if not self.actHandleDict then
+		self.actHandleDict = {
+			[BossRushConfig.instance:getActivityId()] = self._bossrushBgmHandle,
+			[VersionActivity2_3Enum.ActivityId.ZhiXinQuanEr] = self._zhixinquanerBgmHandle
 		}
 	end
 end
 
-function var_0_0.onOpen(arg_6_0)
-	local var_6_0 = arg_6_0.viewParam.activitySettingList or {}
-	local var_6_1 = var_6_0[VersionActivityEnterHelper.getTabIndex(var_6_0, arg_6_0.viewParam.jumpActId)]
-	local var_6_2 = VersionActivityEnterHelper.getActId(var_6_1)
+function VersionActivity2_3EnterBgmView:onOpen()
+	local activitySettingList = self.viewParam.activitySettingList or {}
+	local defaultIndex = VersionActivityEnterHelper.getTabIndex(activitySettingList, self.viewParam.jumpActId)
+	local actSetting = activitySettingList[defaultIndex]
+	local actId = VersionActivityEnterHelper.getActId(actSetting)
 
-	arg_6_0._isFirstOpenMainAct = var_6_2 == VersionActivity2_3Enum.ActivityId.Dungeon
+	self._isFirstOpenMainAct = actId == VersionActivity2_3Enum.ActivityId.Dungeon
 
-	arg_6_0:modifyBgm(var_6_2)
+	self:modifyBgm(actId)
 
-	arg_6_0._isFirstOpenMainAct = false
+	self._isFirstOpenMainAct = false
 end
 
-function var_0_0.onSelectActId(arg_7_0, arg_7_1)
-	arg_7_0:modifyBgm(arg_7_1)
+function VersionActivity2_3EnterBgmView:onSelectActId(actId)
+	self:modifyBgm(actId)
 end
 
-function var_0_0.modifyBgm(arg_8_0, arg_8_1)
-	arg_8_0._isMainAct = arg_8_1 == VersionActivity2_3Enum.ActivityId.Dungeon
+function VersionActivity2_3EnterBgmView:modifyBgm(actId)
+	self._isMainAct = actId == VersionActivity2_3Enum.ActivityId.Dungeon
 
-	local var_8_0 = 0
+	local delayTime = 0
 
-	if arg_8_0._isMainAct then
+	if self._isMainAct then
 		AudioBgmManager.instance:modifyAndPlay(AudioBgmEnum.Layer.VersionActivity2_3Main, 0, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 
-		arg_8_0.playingActId = nil
-		arg_8_0.bgmId = nil
+		self.playingActId = nil
+		self.bgmId = nil
 
-		if arg_8_0._isFirstOpenMainAct then
-			arg_8_0._isFirstOpenMainAct = false
-			var_8_0 = 3.5
+		if self._isFirstOpenMainAct then
+			self._isFirstOpenMainAct = false
+			delayTime = 3.5
 
 			AudioMgr.instance:trigger(AudioEnum.VersionActivity2_3Enter.play_ui_jinye_open)
 		else
-			var_8_0 = 1
+			delayTime = 1
 
 			AudioMgr.instance:trigger(AudioEnum.VersionActivity2_3Enter.play_ui_jinye_unfold)
 		end
 	end
 
-	arg_8_0._actId = arg_8_1
+	self._actId = actId
 
-	TaskDispatcher.cancelTask(arg_8_0._doModifyBgm, arg_8_0)
-	TaskDispatcher.runDelay(arg_8_0._doModifyBgm, arg_8_0, var_8_0)
+	TaskDispatcher.cancelTask(self._doModifyBgm, self)
+	TaskDispatcher.runDelay(self._doModifyBgm, self, delayTime)
 end
 
-function var_0_0._doModifyBgm(arg_9_0)
-	(arg_9_0.actHandleDict[arg_9_0._actId] or arg_9_0.defaultBgmHandle)(arg_9_0, arg_9_0._actId)
+function VersionActivity2_3EnterBgmView:_doModifyBgm()
+	local modifyFunc = self.actHandleDict[self._actId] or self.defaultBgmHandle
+
+	modifyFunc(self, self._actId)
 end
 
-function var_0_0.defaultBgmHandle(arg_10_0, arg_10_1)
-	if arg_10_0.playingActId == arg_10_1 then
+function VersionActivity2_3EnterBgmView:defaultBgmHandle(actId)
+	if self.playingActId == actId then
 		return
 	end
 
-	arg_10_0.playingActId = arg_10_1
+	self.playingActId = actId
 
-	local var_10_0 = ActivityConfig.instance:getActivityEnterViewBgm(arg_10_1)
+	local bgmId = ActivityConfig.instance:getActivityEnterViewBgm(actId)
 
-	if var_10_0 == 0 then
-		logError("actId : " .. tostring(arg_10_1) .. " 没有配置背景音乐")
+	if bgmId == 0 then
+		logError("actId : " .. tostring(actId) .. " 没有配置背景音乐")
 
-		var_10_0 = AudioEnum.Bgm.Act2_3DungeonBgm
+		bgmId = AudioEnum.Bgm.Act2_3DungeonBgm
 	end
 
-	if not arg_10_0._isMainAct and var_10_0 == arg_10_0.bgmId then
+	if not self._isMainAct and bgmId == self.bgmId then
 		return
 	end
 
-	arg_10_0.bgmId = var_10_0
+	self.bgmId = bgmId
 
 	AudioBgmManager.instance:setSwitchData(AudioBgmEnum.Layer.VersionActivity2_3Main)
-	AudioBgmManager.instance:modifyBgmAudioId(AudioBgmEnum.Layer.VersionActivity2_3Main, var_10_0)
+	AudioBgmManager.instance:modifyBgmAudioId(AudioBgmEnum.Layer.VersionActivity2_3Main, bgmId)
 end
 
-function var_0_0.onClose(arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0._doModifyBgm, arg_11_0)
+function VersionActivity2_3EnterBgmView:onClose()
+	TaskDispatcher.cancelTask(self._doModifyBgm, self)
 end
 
-function var_0_0._bossrushBgmHandle(arg_12_0, arg_12_1)
-	arg_12_0.playingActId = arg_12_1
+function VersionActivity2_3EnterBgmView:_bossrushBgmHandle(actId)
+	self.playingActId = actId
 
-	local var_12_0 = ActivityConfig.instance:getActivityEnterViewBgm(arg_12_1)
+	local bgmId = ActivityConfig.instance:getActivityEnterViewBgm(actId)
 
-	arg_12_0.bgmId = var_12_0
+	self.bgmId = bgmId
 
 	AudioBgmManager.instance:setSwitchData(AudioBgmEnum.Layer.VersionActivity2_3Main, FightEnum.AudioSwitchGroup, FightEnum.AudioSwitch.Comeshow)
-	AudioBgmManager.instance:modifyBgmAudioId(AudioBgmEnum.Layer.VersionActivity2_3Main, var_12_0)
+	AudioBgmManager.instance:modifyBgmAudioId(AudioBgmEnum.Layer.VersionActivity2_3Main, bgmId)
 end
 
-function var_0_0._zhixinquanerBgmHandle(arg_13_0, arg_13_1)
-	arg_13_0.playingActId = arg_13_1
+function VersionActivity2_3EnterBgmView:_zhixinquanerBgmHandle(actId)
+	self.playingActId = actId
 
-	local var_13_0 = ActivityConfig.instance:getActivityEnterViewBgm(arg_13_1)
+	local bgmId = ActivityConfig.instance:getActivityEnterViewBgm(actId)
 
-	arg_13_0.bgmId = var_13_0
+	self.bgmId = bgmId
 
 	AudioBgmManager.instance:setSwitchData(AudioBgmEnum.Layer.VersionActivity2_3Main, FightEnum.AudioSwitchGroup, FightEnum.AudioSwitch.Comeshow)
-	AudioBgmManager.instance:modifyBgmAudioId(AudioBgmEnum.Layer.VersionActivity2_3Main, var_13_0)
+	AudioBgmManager.instance:modifyBgmAudioId(AudioBgmEnum.Layer.VersionActivity2_3Main, bgmId)
 end
 
-function var_0_0._reactivityBgmHandle(arg_14_0, arg_14_1)
-	arg_14_0.playingActId = arg_14_1
+function VersionActivity2_3EnterBgmView:_reactivityBgmHandle(actId)
+	self.playingActId = actId
 
-	local var_14_0 = ActivityConfig.instance:getActivityEnterViewBgm(arg_14_1)
+	local bgmId = ActivityConfig.instance:getActivityEnterViewBgm(actId)
 
-	arg_14_0.bgmId = var_14_0
+	self.bgmId = bgmId
 
 	AudioBgmManager.instance:setSwitchData(AudioBgmEnum.Layer.VersionActivity2_3Main, "music_vocal_filter", "original")
-	AudioBgmManager.instance:modifyBgmAudioId(AudioBgmEnum.Layer.VersionActivity2_3Main, var_14_0)
+	AudioBgmManager.instance:modifyBgmAudioId(AudioBgmEnum.Layer.VersionActivity2_3Main, bgmId)
 end
 
-return var_0_0
+return VersionActivity2_3EnterBgmView

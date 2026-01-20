@@ -1,72 +1,74 @@
-﻿module("modules.logic.stat.rpc.StatRpc", package.seeall)
+﻿-- chunkname: @modules/logic/stat/rpc/StatRpc.lua
 
-local var_0_0 = class("StatRpc", BaseRpc)
+module("modules.logic.stat.rpc.StatRpc", package.seeall)
 
-function var_0_0.sendClientStatBaseInfoRequest(arg_1_0, arg_1_1)
-	local var_1_0 = StatModule_pb.ClientStatBaseInfoRequest()
+local StatRpc = class("StatRpc", BaseRpc)
 
-	var_1_0.info = arg_1_1
+function StatRpc:sendClientStatBaseInfoRequest(info)
+	local req = StatModule_pb.ClientStatBaseInfoRequest()
 
-	return arg_1_0:sendMsg(var_1_0)
+	req.info = info
+
+	return self:sendMsg(req)
 end
 
-function var_0_0.onReceiveClientStatBaseInfoReply(arg_2_0, arg_2_1, arg_2_2)
+function StatRpc:onReceiveClientStatBaseInfoReply(resultCode, msg)
 	return
 end
 
-function var_0_0.onReceiveStatInfoPush(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == 0 then
-		if arg_3_2.fristCharge == true then
+function StatRpc:onReceiveStatInfoPush(resultCode, msg)
+	if resultCode == 0 then
+		if msg.fristCharge == true then
 			SDKDataTrackMgr.instance:trackMediaEvent(SDKDataTrackMgr.MediaEvent.first_purchase)
 			SDKChannelEventModel.instance:firstPurchase()
 		end
 
-		if arg_3_2.isFirstLogin == true then
-			local var_3_0 = PayModel.instance:getGameRoleInfo()
-			local var_3_1 = arg_3_2.playerInfo
+		if msg.isFirstLogin == true then
+			local roleInfo = PayModel.instance:getGameRoleInfo()
+			local playerinfo = msg.playerInfo
 
-			var_3_0.roleId = var_3_1.userId
-			var_3_0.roleName = tostring(var_3_1.name)
-			var_3_0.currentLevel = tonumber(var_3_1.level)
-			var_3_0.roleCTime = tonumber(var_3_1.registerTime)
-			var_3_0.loginTime = tonumber(var_3_1.lastLoginTime)
-			var_3_0.logoutTime = tonumber(var_3_1.lastLogoutTime)
-			var_3_0.accountRegisterTime = tonumber(var_3_1.registerTime)
-			var_3_0.roleEstablishTime = tonumber(var_3_1.registerTime)
+			roleInfo.roleId = playerinfo.userId
+			roleInfo.roleName = tostring(playerinfo.name)
+			roleInfo.currentLevel = tonumber(playerinfo.level)
+			roleInfo.roleCTime = tonumber(playerinfo.registerTime)
+			roleInfo.loginTime = tonumber(playerinfo.lastLoginTime)
+			roleInfo.logoutTime = tonumber(playerinfo.lastLogoutTime)
+			roleInfo.accountRegisterTime = tonumber(playerinfo.registerTime)
+			roleInfo.roleEstablishTime = tonumber(playerinfo.registerTime)
 
-			local var_3_2 = cjson.encode(var_3_0)
+			local jsonRoleInfo = cjson.encode(roleInfo)
 
-			SDKMgr.instance:createRole(var_3_2)
+			SDKMgr.instance:createRole(jsonRoleInfo)
 		end
 
-		if string.nilorempty(arg_3_2.userTag) == false then
-			StatModel.instance:setRoleType(arg_3_2.userTag)
+		if string.nilorempty(msg.userTag) == false then
+			StatModel.instance:setRoleType(msg.userTag)
 
 			if LoginController.instance:isEnteredGame() then
 				SDKMgr.instance:updateRole(StatModel.instance:generateRoleInfo())
 			end
 		end
 
-		SDKChannelEventModel.instance:totalChargeAmount(arg_3_2.totalChargeAmount)
+		SDKChannelEventModel.instance:totalChargeAmount(msg.totalChargeAmount)
 	end
 end
 
-function var_0_0.sendUpdateClientStatBaseInfoRequest(arg_4_0, arg_4_1)
-	local var_4_0 = StatModule_pb.UpdateClientStatBaseInfoRequest()
+function StatRpc:sendUpdateClientStatBaseInfoRequest(info)
+	local req = StatModule_pb.UpdateClientStatBaseInfoRequest()
 
-	var_4_0.info = arg_4_1
+	req.info = info
 
-	return arg_4_0:sendMsg(var_4_0)
+	return self:sendMsg(req)
 end
 
-function var_0_0.onReceiveUpdateClientStatBaseInfoReply(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_1 ~= 0 then
+function StatRpc:onReceiveUpdateClientStatBaseInfoReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	SDKModel.instance:setAccountBindBonus(arg_5_2.accountBindBonus)
+	SDKModel.instance:setAccountBindBonus(msg.accountBindBonus)
 end
 
-var_0_0.instance = var_0_0.New()
+StatRpc.instance = StatRpc.New()
 
-return var_0_0
+return StatRpc

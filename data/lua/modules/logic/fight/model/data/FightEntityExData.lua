@@ -1,10 +1,12 @@
-﻿module("modules.logic.fight.model.data.FightEntityExData", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightEntityExData.lua
 
-local var_0_0 = FightDataClass("FightEntityExData")
+module("modules.logic.fight.model.data.FightEntityExData", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0.aiUseCardList = {}
-	arg_1_0.scaleOffsetDic = {}
+local FightEntityExData = FightDataClass("FightEntityExData")
+
+function FightEntityExData:onConstructor()
+	self.aiUseCardList = {}
+	self.scaleOffsetDic = {}
 end
 
-return var_0_0
+return FightEntityExData

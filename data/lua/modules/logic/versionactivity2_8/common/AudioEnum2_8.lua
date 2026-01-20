@@ -1,33 +1,35 @@
-﻿module("modules.logic.versionactivity2_8.common.AudioEnum2_8", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/common/AudioEnum2_8.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity2_8.common.AudioEnum2_8", package.seeall)
 
-var_0_0.VersionActivity2_8Store = {
+local AudioEnum2_8 = _M
+
+AudioEnum2_8.VersionActivity2_8Store = {
 	play_ui_jinye_chess_talk = 20170010,
 	play_ui_jinye_click_stage = 20170011,
 	stop_ui_jinye_chess_talk = 20170012,
 	play_ui_jinye_chess_enter = 20170009
 }
-var_0_0.VersionActivity2_8Enter = {
+AudioEnum2_8.VersionActivity2_8Enter = {
 	play_ui_jinye_open = 20260001,
 	play_ui_jinye_unfold = 20260002
 }
-var_0_0.DungeonBgm = {
+AudioEnum2_8.DungeonBgm = {
 	boss = 3280009,
 	dungeonMapView_2 = 3280005,
 	enterView = 3280005,
 	dungeonMapView_1 = 3280004
 }
-var_0_0.MainStory = {
+AudioEnum2_8.MainStory = {
 	play_ui_player_interface_close = 20280004,
 	play_ui_player_interface_open = 20280003,
 	play_ui_checkpoint_chain = 20280005
 }
-var_0_0.BossStory = {
+AudioEnum2_8.BossStory = {
 	play_ui_fuleyuan_boss_eye_open = 20280020,
 	play_ui_fuleyuan_boss_snow = 20280021
 }
-var_0_0.DungeonGame = {
+AudioEnum2_8.DungeonGame = {
 	stop_ui_fuleyuan_tiaoyitiao_xuli = 20280022,
 	stop_ui_fuleyuan_eyes = 20280023,
 	play_ui_fuleyuan_eyes = 20280014,
@@ -38,10 +40,10 @@ var_0_0.DungeonGame = {
 	play_ui_fuleyuan_tiaoyitiao_fall = 20280018,
 	play_ui_fuleyuan_click = 20280016
 }
-var_0_0.UI = {
+AudioEnum2_8.UI = {
 	play_ui_molu_sky_open = 20280801
 }
-var_0_0.ui_activity_2_8_fuleyuan = {
+AudioEnum2_8.ui_activity_2_8_fuleyuan = {
 	play_ui_fuleyuan_typewriter_unfold = 20280802,
 	play_ui_fuleyuan_yaoyu_make = 20280810,
 	play_ui_fuleyuan_typewriter_start = 20280805,
@@ -49,7 +51,7 @@ var_0_0.ui_activity_2_8_fuleyuan = {
 	play_ui_fuleyuan_typewriter_loop = 20280803,
 	stop_ui_fuleyuan_typewriter_loop = 20280804
 }
-var_0_0.Survival = {
+AudioEnum2_8.Survival = {
 	play_ui_fuleyuan_tansuo_general_1 = 20280603,
 	play_ui_fuleyuan_tansuo_move = 20280606,
 	play_ui_fuleyuan_tansuo_put_2 = 20280623,
@@ -100,7 +102,7 @@ var_0_0.Survival = {
 	play_ui_fuleyuan_tansuo_killed = 20280627,
 	play_ui_fuleyuan_tansuo_transmit = 20280629
 }
-var_0_0.MoLiDeEr = {
+AudioEnum2_8.MoLiDeEr = {
 	play_ui_pkls_endpoint_arrival = 20280210,
 	play_ui_fuleyuan_lines_extend = 20280207,
 	play_ui_pkls_challenge_fail = 20280211,
@@ -114,7 +116,7 @@ var_0_0.MoLiDeEr = {
 	play_ui_molu_exit_appear = 20280208,
 	play_ui_molu_jlbn_open = 20280205
 }
-var_0_0.NuoDiKa = {
+AudioEnum2_8.NuoDiKa = {
 	play_ui_game_success_tip = 20280515,
 	play_ui_mainrole_recover = 20280509,
 	play_ui_mainrole_hurt = 20280505,
@@ -134,17 +136,17 @@ var_0_0.NuoDiKa = {
 	play_ui_unit_tip = 20280518,
 	play_ui_level_unlock = 20280502
 }
-var_0_0.AutoChess = {
+AudioEnum2_8.AutoChess = {
 	play_ui_fuleyuan_box_open = 20280302,
 	play_ui_fuleyuan_comity_open = 20280301
 }
-var_0_0.TakePhotosActivity = {
+AudioEnum2_8.TakePhotosActivity = {
 	play_ui_diqiu_yure_success_20249043 = 20249043
 }
-var_0_0.WarmUp = {
+AudioEnum2_8.WarmUp = {
 	play_ui_fuleyuan_yure_paper = 20280752,
 	play_ui_fuleyuan_yure_open = 20280751,
 	play_ui_fuleyuan_yure_whoosh = 20280753
 }
 
-return var_0_0
+return AudioEnum2_8

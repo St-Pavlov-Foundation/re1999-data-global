@@ -1,83 +1,90 @@
-﻿module("modules.common.preload.ConstResLoader", package.seeall)
+﻿-- chunkname: @modules/common/preload/ConstResLoader.lua
 
-local var_0_0 = class("ConstResLoader")
+module("modules.common.preload.ConstResLoader", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._loadFuncList = {
-		arg_1_0._initLive2d,
-		arg_1_0._loadConstAb,
-		arg_1_0._loadIconPrefab,
-		arg_1_0._loadAvProPrefab,
-		arg_1_0._loadUIBlockAnim,
-		arg_1_0._loadLoadingUIBg
+local ConstResLoader = class("ConstResLoader")
+
+function ConstResLoader:ctor()
+	self._loadFuncList = {
+		self._initLive2d,
+		self._loadConstAb,
+		self._loadIconPrefab,
+		self._loadAvProPrefab,
+		self._loadVideoPlayerPrefab,
+		self._loadUIBlockAnim,
+		self._loadLoadingUIBg
 	}
-	arg_1_0._loadIndex = nil
-	arg_1_0._finishCb = nil
-	arg_1_0._finishCbObj = nil
+	self._loadIndex = nil
+	self._finishCb = nil
+	self._finishCbObj = nil
 end
 
-function var_0_0.startLoad(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._loadIndex = 0
-	arg_2_0._finishCb = arg_2_1
-	arg_2_0._finishCbObj = arg_2_2
+function ConstResLoader:startLoad(cb, cbObj)
+	self._loadIndex = 0
+	self._finishCb = cb
+	self._finishCbObj = cbObj
 
-	arg_2_0:_loadShader()
+	self:_loadShader()
 end
 
-function var_0_0._loadShader(arg_3_0)
-	ShaderCache.instance:init(arg_3_0._onShaderLoadFinish, arg_3_0)
+function ConstResLoader:_loadShader()
+	ShaderCache.instance:init(self._onShaderLoadFinish, self)
 end
 
-function var_0_0._onShaderLoadFinish(arg_4_0)
+function ConstResLoader:_onShaderLoadFinish()
 	BootLoadingView.instance:show(0.6, booterLang("loading_res"))
-	arg_4_0:_startLoadOthers()
+	self:_startLoadOthers()
 end
 
-function var_0_0._startLoadOthers(arg_5_0)
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0._loadFuncList) do
-		iter_5_1(arg_5_0)
+function ConstResLoader:_startLoadOthers()
+	for _, func in ipairs(self._loadFuncList) do
+		func(self)
 
-		arg_5_0._loadIndex = arg_5_0._loadIndex + 1
+		self._loadIndex = self._loadIndex + 1
 	end
 end
 
-function var_0_0._onLoadFinish(arg_6_0)
-	local var_6_0 = #arg_6_0._loadFuncList
-	local var_6_1 = 0.25 * (var_6_0 - arg_6_0._loadIndex) / var_6_0
+function ConstResLoader:_onLoadFinish()
+	local loadingCount = #self._loadFuncList
+	local percent = 0.25 * (loadingCount - self._loadIndex) / loadingCount
 
-	BootLoadingView.instance:show(0.6 + var_6_1, booterLang("loading_res"))
+	BootLoadingView.instance:show(0.6 + percent, booterLang("loading_res"))
 
-	arg_6_0._loadIndex = arg_6_0._loadIndex - 1
+	self._loadIndex = self._loadIndex - 1
 
-	if arg_6_0._loadIndex == 0 then
-		arg_6_0._finishCb(arg_6_0._finishCbObj)
+	if self._loadIndex == 0 then
+		self._finishCb(self._finishCbObj)
 	end
 end
 
-function var_0_0._initLive2d(arg_7_0)
+function ConstResLoader:_initLive2d()
 	if GameResMgr.IsFromEditorDir then
-		arg_7_0:_onLoadFinish()
+		self:_onLoadFinish()
 	else
-		ZProj.Live2dHelper.Init(arg_7_0._onLoadFinish, arg_7_0)
+		ZProj.Live2dHelper.Init(self._onLoadFinish, self)
 	end
 end
 
-function var_0_0._loadConstAb(arg_8_0)
-	ConstAbCache.instance:startLoad(arg_8_0._onLoadFinish, arg_8_0)
+function ConstResLoader:_loadConstAb()
+	ConstAbCache.instance:startLoad(self._onLoadFinish, self)
 end
 
-function var_0_0._loadIconPrefab(arg_9_0)
-	IconMgr.instance:preload(arg_9_0._onLoadFinish, arg_9_0)
+function ConstResLoader:_loadIconPrefab()
+	IconMgr.instance:preload(self._onLoadFinish, self)
 end
 
-function var_0_0._loadAvProPrefab(arg_10_0)
-	AvProMgr.instance:preload(arg_10_0._onLoadFinish, arg_10_0)
+function ConstResLoader:_loadAvProPrefab()
+	AvProMgr.instance:preload(self._onLoadFinish, self)
 end
 
-function var_0_0._loadUIBlockAnim(arg_11_0)
-	UIBlockMgrExtend.preload(arg_11_0._onLoadFinish, arg_11_0)
+function ConstResLoader:_loadVideoPlayerPrefab()
+	VideoPlayerMgr.instance:preload(self._onLoadFinish, self)
 end
 
-var_0_0.instance = var_0_0.New()
+function ConstResLoader:_loadUIBlockAnim()
+	UIBlockMgrExtend.preload(self._onLoadFinish, self)
+end
 
-return var_0_0
+ConstResLoader.instance = ConstResLoader.New()
+
+return ConstResLoader

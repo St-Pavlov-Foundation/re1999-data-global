@@ -1,263 +1,275 @@
-﻿module("modules.logic.player.view.IconTipView", package.seeall)
+﻿-- chunkname: @modules/logic/player/view/IconTipView.lua
 
-local var_0_0 = class("IconTipView", BaseView)
+module("modules.logic.player.view.IconTipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagetop = gohelper.findChildSingleImage(arg_1_0.viewGO, "window/bg/#simage_top")
-	arg_1_0._simagebottom = gohelper.findChildSingleImage(arg_1_0.viewGO, "window/bg/#simage_bottom")
-	arg_1_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "window/right/useState/#btn_change")
-	arg_1_0._txtnameCn = gohelper.findChildText(arg_1_0.viewGO, "window/right/#txt_nameCn")
-	arg_1_0._gousing = gohelper.findChild(arg_1_0.viewGO, "window/right/useState/#go_using")
-	arg_1_0._simageheadIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "window/right/#simage_headIcon")
-	arg_1_0._gomainsignature = gohelper.findChild(arg_1_0.viewGO, "window/right/signname")
-	arg_1_0._simagesignature = gohelper.findChildSingleImage(arg_1_0.viewGO, "window/right/signname2")
-	arg_1_0._goframenode = gohelper.findChild(arg_1_0.viewGO, "window/right/#simage_headIcon/#go_framenode")
-	arg_1_0._btncloseBtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "window/top/#btn_closeBtn")
-	arg_1_0._btnSwitchLeft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "window/right/Btn_SwitchLeft")
-	arg_1_0._btnSwitchRight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "window/right/Btn_SwitchRight")
-	arg_1_0._loader = MultiAbLoader.New()
+local IconTipView = class("IconTipView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function IconTipView:onInitView()
+	self._simagetop = gohelper.findChildSingleImage(self.viewGO, "window/bg/#simage_top")
+	self._simagebottom = gohelper.findChildSingleImage(self.viewGO, "window/bg/#simage_bottom")
+	self._btnconfirm = gohelper.findChildButtonWithAudio(self.viewGO, "window/right/useState/#btn_change")
+	self._txtnameCn = gohelper.findChildText(self.viewGO, "window/right/#txt_nameCn")
+	self._gousing = gohelper.findChild(self.viewGO, "window/right/useState/#go_using")
+	self._simageheadIcon = gohelper.findChildSingleImage(self.viewGO, "window/right/#simage_headIcon")
+	self._gomainsignature = gohelper.findChild(self.viewGO, "window/right/signname")
+	self._simagesignature = gohelper.findChildSingleImage(self.viewGO, "window/right/signname2")
+	self._goframenode = gohelper.findChild(self.viewGO, "window/right/#simage_headIcon/#go_framenode")
+	self._btncloseBtn = gohelper.findChildButtonWithAudio(self.viewGO, "window/top/#btn_closeBtn")
+	self._btnSwitchLeft = gohelper.findChildButtonWithAudio(self.viewGO, "window/right/Btn_SwitchLeft")
+	self._btnSwitchRight = gohelper.findChildButtonWithAudio(self.viewGO, "window/right/Btn_SwitchRight")
+	self._loader = MultiAbLoader.New()
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnconfirm:AddClickListener(arg_2_0._btnconfirmOnClick, arg_2_0)
-	arg_2_0._btncloseBtn:AddClickListener(arg_2_0._btncloseBtnOnClick, arg_2_0)
-	arg_2_0._btnSwitchLeft:AddClickListener(arg_2_0._btnSwitchBtnOnClick, arg_2_0, false)
-	arg_2_0._btnSwitchRight:AddClickListener(arg_2_0._btnSwitchBtnOnClick, arg_2_0, true)
+function IconTipView:addEvents()
+	self._btnconfirm:AddClickListener(self._btnconfirmOnClick, self)
+	self._btncloseBtn:AddClickListener(self._btncloseBtnOnClick, self)
+	self._btnSwitchLeft:AddClickListener(self._btnSwitchBtnOnClick, self, false)
+	self._btnSwitchRight:AddClickListener(self._btnSwitchBtnOnClick, self, true)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnconfirm:RemoveClickListener()
-	arg_3_0._btncloseBtn:RemoveClickListener()
-	arg_3_0._btnSwitchLeft:RemoveClickListener()
-	arg_3_0._btnSwitchRight:RemoveClickListener()
+function IconTipView:removeEvents()
+	self._btnconfirm:RemoveClickListener()
+	self._btncloseBtn:RemoveClickListener()
+	self._btnSwitchLeft:RemoveClickListener()
+	self._btnSwitchRight:RemoveClickListener()
 end
 
-function var_0_0._btnconfirmOnClick(arg_4_0)
-	local var_4_0
+function IconTipView:_btnconfirmOnClick()
+	local portrait
 
-	if arg_4_0._curSwitchIndex and arg_4_0._switchHeadIdList then
-		var_4_0 = arg_4_0._switchHeadIdList[arg_4_0._curSwitchIndex]
+	if self._curSwitchIndex and self._switchHeadIdList then
+		portrait = self._switchHeadIdList[self._curSwitchIndex]
 
-		if var_4_0 == nil then
+		if portrait == nil then
 			logError("不存在的镀层头像索引")
 
 			return
 		end
 	else
-		var_4_0 = IconTipModel.instance:getSelectIcon()
+		portrait = IconTipModel.instance:getSelectIcon()
 	end
 
-	PlayerRpc.instance:sendSetPortraitRequest(var_4_0)
+	PlayerRpc.instance:sendSetPortraitRequest(portrait)
 end
 
-function var_0_0._btncloseBtnOnClick(arg_5_0)
-	arg_5_0:closeThis()
+function IconTipView:_btncloseBtnOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnSwitchBtnOnClick(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0._curSwitchIndex
+function IconTipView:_btnSwitchBtnOnClick(add)
+	local index = self._curSwitchIndex
 
-	if arg_6_1 then
-		var_6_0 = math.min(var_6_0 + 1, arg_6_0._switchHeadIdCount)
+	if add then
+		index = math.min(index + 1, self._switchHeadIdCount)
 	else
-		var_6_0 = math.max(var_6_0 - 1, 1)
+		index = math.max(index - 1, 1)
 	end
 
-	local var_6_1 = arg_6_0._switchHeadIdList[var_6_0]
+	local portrait = self._switchHeadIdList[index]
 
-	if var_6_1 == nil then
+	if portrait == nil then
 		logError("index outof range")
 
 		return
 	end
 
-	IconTipModel.instance:setSelectIcon(var_6_1)
-	arg_6_0:_refreshSwitchBtnState(var_6_0)
+	IconTipModel.instance:setSelectIcon(portrait)
+	self:_refreshSwitchBtnState(index)
 
-	local var_6_2 = lua_item.configDict[var_6_1]
+	local config = lua_item.configDict[portrait]
 
-	arg_6_0:_setHeadIcon(var_6_2)
+	self:_setHeadIcon(config)
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	local var_7_0 = PlayerModel.instance:getPlayinfo()
+function IconTipView:_editableInitView()
+	local playerinfo = PlayerModel.instance:getPlayinfo()
 
-	IconTipModel.instance:setSelectIcon(var_7_0.portrait)
-	IconTipModel.instance:setIconList(var_7_0.portrait)
-	arg_7_0._simagetop:LoadImage(ResUrl.getCommonIcon("bg_2"))
-	arg_7_0._simagebottom:LoadImage(ResUrl.getCommonIcon("bg_1"))
+	IconTipModel.instance:setSelectIcon(playerinfo.portrait)
+	IconTipModel.instance:setIconList(playerinfo.portrait)
+	self._simagetop:LoadImage(ResUrl.getCommonIcon("bg_2"))
+	self._simagebottom:LoadImage(ResUrl.getCommonIcon("bg_1"))
 
-	arg_7_0._buttonbg = gohelper.findChildClick(arg_7_0.viewGO, "maskbg")
+	self._buttonbg = gohelper.findChildClick(self.viewGO, "maskbg")
 
-	arg_7_0._buttonbg:AddClickListener(arg_7_0._btncloseBtnOnClick, arg_7_0)
+	self._buttonbg:AddClickListener(self._btncloseBtnOnClick, self)
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
-	arg_8_0:_refreshUI()
+function IconTipView:onUpdateParam()
+	self:_refreshUI()
 end
 
-function var_0_0._refreshUI(arg_9_0)
-	local var_9_0 = IconTipModel.instance:getSelectIcon()
-	local var_9_1 = PlayerModel.instance:getPlayinfo().portrait
+function IconTipView:_refreshUI()
+	local selectIcon = IconTipModel.instance:getSelectIcon()
+	local playerinfo = PlayerModel.instance:getPlayinfo()
+	local usedIcon = playerinfo.portrait
 
-	arg_9_0._usedIcon = var_9_1
+	self._usedIcon = usedIcon
 
-	gohelper.setActive(arg_9_0._btnconfirm.gameObject, var_9_0 ~= var_9_1)
-	gohelper.setActive(arg_9_0._gousing, var_9_0 == var_9_1)
+	gohelper.setActive(self._btnconfirm.gameObject, selectIcon ~= usedIcon)
+	gohelper.setActive(self._gousing, selectIcon == usedIcon)
 
-	local var_9_2 = lua_item.configDict[var_9_0]
+	local config = lua_item.configDict[selectIcon]
 
-	arg_9_0._txtnameCn.text = var_9_2.name
+	self._txtnameCn.text = config.name
 
-	arg_9_0:_setHeadIcon(var_9_2)
-	gohelper.setActive(arg_9_0._btnSwitchLeft.gameObject, false)
-	gohelper.setActive(arg_9_0._btnSwitchRight.gameObject, false)
+	self:_setHeadIcon(config)
+	gohelper.setActive(self._btnSwitchLeft.gameObject, false)
+	gohelper.setActive(self._btnSwitchRight.gameObject, false)
 
-	arg_9_0._curSwitchIndex = nil
-	arg_9_0._switchHeadIdList = nil
-	arg_9_0._switchHeadIdCount = nil
+	self._curSwitchIndex = nil
+	self._switchHeadIdList = nil
+	self._switchHeadIdCount = nil
 
-	if string.nilorempty(var_9_2.effect) then
+	if string.nilorempty(config.effect) then
 		return
 	end
 
-	local var_9_3 = string.splitToNumber(var_9_2.effect, "#")
+	local switchParamData = string.splitToNumber(config.effect, "#")
 
-	if var_9_3 == nil then
+	if switchParamData == nil then
 		return
 	end
 
-	if #var_9_3 <= 0 then
+	local count = #switchParamData
+
+	if count <= 0 then
 		return
 	end
 
-	arg_9_0._switchHeadIdCount = 0
-	arg_9_0._switchHeadIdList = {}
+	self._switchHeadIdCount = 0
+	self._switchHeadIdList = {}
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_3) do
-		if ItemModel.instance:getById(iter_9_1) ~= nil then
-			table.insert(arg_9_0._switchHeadIdList, iter_9_1)
+	for index, id in ipairs(switchParamData) do
+		if ItemModel.instance:getById(id) ~= nil then
+			table.insert(self._switchHeadIdList, id)
 
-			arg_9_0._switchHeadIdCount = arg_9_0._switchHeadIdCount + 1
+			self._switchHeadIdCount = self._switchHeadIdCount + 1
 		end
 	end
 
-	if arg_9_0._switchHeadIdCount <= 0 then
+	if self._switchHeadIdCount <= 0 then
 		return
 	end
 
-	local var_9_4
+	local curIndex
 
-	for iter_9_2, iter_9_3 in ipairs(arg_9_0._switchHeadIdList) do
-		if iter_9_3 == var_9_0 then
-			var_9_4 = iter_9_2
+	for index, id in ipairs(self._switchHeadIdList) do
+		if id == selectIcon then
+			curIndex = index
 		end
 	end
 
-	if var_9_4 == nil then
-		logError("没有找到编号为 ：" .. var_9_0 .. "的镀层头像")
+	if curIndex == nil then
+		logError("没有找到编号为 ：" .. selectIcon .. "的镀层头像")
 
 		return
 	end
 
-	arg_9_0:_refreshSwitchBtnState(var_9_4)
+	self:_refreshSwitchBtnState(curIndex)
 end
 
-function var_0_0._setHeadIcon(arg_10_0, arg_10_1)
-	if arg_10_1 == nil then
+function IconTipView:_setHeadIcon(config)
+	if config == nil then
 		logError("头像为空")
 
 		return
 	end
 
-	if not arg_10_0._liveHeadIcon then
-		arg_10_0._liveHeadIcon = IconMgr.instance:getCommonLiveHeadIcon(arg_10_0._simageheadIcon)
+	if not self._liveHeadIcon then
+		local commonLiveIcon = IconMgr.instance:getCommonLiveHeadIcon(self._simageheadIcon)
+
+		self._liveHeadIcon = commonLiveIcon
 	end
 
-	arg_10_0._liveHeadIcon:setLiveHead(arg_10_1.id)
+	self._liveHeadIcon:setLiveHead(config.id)
 
-	local var_10_0 = "qianming"
+	local signature = "qianming"
 
-	if arg_10_1.headIconSign and not string.nilorempty(arg_10_1.headIconSign) then
-		local var_10_1 = arg_10_1.headIconSign
+	if config.headIconSign and not string.nilorempty(config.headIconSign) then
+		signature = config.headIconSign
 
-		gohelper.setActive(arg_10_0._gomainsignature, false)
-		gohelper.setActive(arg_10_0._simagesignature.gameObject, true)
-		arg_10_0._simagesignature:LoadImage(ResUrl.getSignature(var_10_1, "rolehead"), arg_10_0._onSignatureImageLoad, arg_10_0)
+		gohelper.setActive(self._gomainsignature, false)
+		gohelper.setActive(self._simagesignature.gameObject, true)
+		self._simagesignature:LoadImage(ResUrl.getSignature(signature, "rolehead"), self._onSignatureImageLoad, self)
 	else
-		gohelper.setActive(arg_10_0._gomainsignature, true)
-		gohelper.setActive(arg_10_0._simagesignature.gameObject, false)
+		gohelper.setActive(self._gomainsignature, true)
+		gohelper.setActive(self._simagesignature.gameObject, false)
 	end
 
-	local var_10_2 = string.split(arg_10_1.effect, "#")
+	local effectArr = string.split(config.effect, "#")
 
-	if #var_10_2 > 1 then
-		if arg_10_1.id == tonumber(var_10_2[#var_10_2]) then
-			gohelper.setActive(arg_10_0._goframenode, true)
+	if #effectArr > 1 then
+		if config.id == tonumber(effectArr[#effectArr]) then
+			gohelper.setActive(self._goframenode, true)
 
-			if not arg_10_0.frame then
-				local var_10_3 = "ui/viewres/common/effect/frame.prefab"
+			if not self.frame then
+				local framePath = "ui/viewres/common/effect/frame.prefab"
 
-				arg_10_0._loader:addPath(var_10_3)
-				arg_10_0._loader:startLoad(arg_10_0._onLoadCallback, arg_10_0)
+				self._loader:addPath(framePath)
+				self._loader:startLoad(self._onLoadCallback, self)
 			end
 		end
 	else
-		gohelper.setActive(arg_10_0._goframenode, false)
+		gohelper.setActive(self._goframenode, false)
 	end
 end
 
-function var_0_0._onSignatureImageLoad(arg_11_0)
-	ZProj.UGUIHelper.SetImageSize(arg_11_0._simagesignature.gameObject)
+function IconTipView:_onSignatureImageLoad()
+	ZProj.UGUIHelper.SetImageSize(self._simagesignature.gameObject)
 end
 
-function var_0_0._refreshSwitchBtnState(arg_12_0, arg_12_1)
-	arg_12_0._curSwitchIndex = arg_12_1
+function IconTipView:_refreshSwitchBtnState(curIndex)
+	self._curSwitchIndex = curIndex
 
-	local var_12_0 = arg_12_0._switchHeadIdList[arg_12_1]
+	local portrait = self._switchHeadIdList[curIndex]
 
-	gohelper.setActive(arg_12_0._btnSwitchLeft.gameObject, arg_12_1 > 1)
-	gohelper.setActive(arg_12_0._btnSwitchRight.gameObject, arg_12_1 < arg_12_0._switchHeadIdCount)
-	gohelper.setActive(arg_12_0._btnconfirm, var_12_0 ~= arg_12_0._usedIcon)
+	gohelper.setActive(self._btnSwitchLeft.gameObject, curIndex > 1)
+	gohelper.setActive(self._btnSwitchRight.gameObject, curIndex < self._switchHeadIdCount)
+	gohelper.setActive(self._btnconfirm, portrait ~= self._usedIcon)
 end
 
-function var_0_0._onLoadCallback(arg_13_0)
-	local var_13_0 = arg_13_0._loader:getFirstAssetItem():GetResource()
+function IconTipView:_onLoadCallback()
+	local framePrefab = self._loader:getFirstAssetItem():GetResource()
 
-	gohelper.clone(var_13_0, arg_13_0._goframenode, "frame")
+	gohelper.clone(framePrefab, self._goframenode, "frame")
 
-	arg_13_0.frame = gohelper.findChild(arg_13_0._goframenode, "frame")
-	arg_13_0.frame:GetComponent(gohelper.Type_Image).enabled = false
+	self.frame = gohelper.findChild(self._goframenode, "frame")
 
-	local var_13_1 = 1.41 * (recthelper.getWidth(arg_13_0._simageheadIcon.transform) / recthelper.getWidth(arg_13_0.frame.transform))
+	local img = self.frame:GetComponent(gohelper.Type_Image)
 
-	transformhelper.setLocalScale(arg_13_0.frame.transform, var_13_1, var_13_1, 1)
+	img.enabled = false
+
+	local iconwidth = recthelper.getWidth(self._simageheadIcon.transform)
+	local framenodewidth = recthelper.getWidth(self.frame.transform)
+	local scale = 1.41 * (iconwidth / framenodewidth)
+
+	transformhelper.setLocalScale(self.frame.transform, scale, scale, 1)
 end
 
-function var_0_0.onOpen(arg_14_0)
-	arg_14_0:addEventCb(PlayerController.instance, PlayerEvent.SelectPortrait, arg_14_0._refreshUI, arg_14_0)
-	arg_14_0:addEventCb(PlayerController.instance, PlayerEvent.SetPortrait, arg_14_0._refreshUI, arg_14_0)
-	arg_14_0:_refreshUI()
+function IconTipView:onOpen()
+	self:addEventCb(PlayerController.instance, PlayerEvent.SelectPortrait, self._refreshUI, self)
+	self:addEventCb(PlayerController.instance, PlayerEvent.SetPortrait, self._refreshUI, self)
+	self:_refreshUI()
 end
 
-function var_0_0.onClose(arg_15_0)
-	arg_15_0:removeEventCb(PlayerController.instance, PlayerEvent.SelectPortrait, arg_15_0._refreshUI, arg_15_0)
-	arg_15_0:removeEventCb(PlayerController.instance, PlayerEvent.SetPortrait, arg_15_0._refreshUI, arg_15_0)
+function IconTipView:onClose()
+	self:removeEventCb(PlayerController.instance, PlayerEvent.SelectPortrait, self._refreshUI, self)
+	self:removeEventCb(PlayerController.instance, PlayerEvent.SetPortrait, self._refreshUI, self)
 end
 
-function var_0_0.onDestroyView(arg_16_0)
-	arg_16_0._simageheadIcon:UnLoadImage()
-	arg_16_0._buttonbg:RemoveClickListener()
+function IconTipView:onDestroyView()
+	self._simageheadIcon:UnLoadImage()
+	self._buttonbg:RemoveClickListener()
 
-	if arg_16_0._loader then
-		arg_16_0._loader:dispose()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_16_0._loader = nil
+		self._loader = nil
 	end
 end
 
-return var_0_0
+return IconTipView

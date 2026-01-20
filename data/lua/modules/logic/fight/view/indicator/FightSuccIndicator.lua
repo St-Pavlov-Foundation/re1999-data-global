@@ -1,74 +1,78 @@
-﻿module("modules.logic.fight.view.indicator.FightSuccIndicator", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/indicator/FightSuccIndicator.lua
 
-local var_0_0 = class("FightSuccIndicator", FightIndicatorBaseView)
-local var_0_1 = "ui/viewres/versionactivity_1_2/versionactivity_1_2_successitem.prefab"
+module("modules.logic.fight.view.indicator.FightSuccIndicator", package.seeall)
 
-function var_0_0.initView(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	var_0_0.super.initView(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+local FightSuccIndicator = class("FightSuccIndicator", FightIndicatorBaseView)
+local prefabPath = "ui/viewres/versionactivity_1_2/versionactivity_1_2_successitem.prefab"
 
-	arg_1_0.goSuccContainer = gohelper.findChild(arg_1_0.goIndicatorRoot, "success_indicator")
+function FightSuccIndicator:initView(indicatorMgrView, indicatorId, totalIndicatorNum)
+	FightSuccIndicator.super.initView(self, indicatorMgrView, indicatorId, totalIndicatorNum)
+
+	self.goSuccContainer = gohelper.findChild(self.goIndicatorRoot, "success_indicator")
 end
 
-function var_0_0.startLoadPrefab(arg_2_0)
-	gohelper.setActive(arg_2_0.goSuccContainer, true)
+function FightSuccIndicator:startLoadPrefab()
+	gohelper.setActive(self.goSuccContainer, true)
 
-	arg_2_0.loader = PrefabInstantiate.Create(arg_2_0.goSuccContainer)
+	self.loader = PrefabInstantiate.Create(self.goSuccContainer)
 
-	arg_2_0.loader:startLoad(var_0_1, arg_2_0.onLoadCallback, arg_2_0)
+	self.loader:startLoad(prefabPath, self.onLoadCallback, self)
 end
 
-function var_0_0.onLoadCallback(arg_3_0)
-	arg_3_0.loadDone = true
-	arg_3_0.instanceGo = arg_3_0.loader:getInstGO()
-	arg_3_0.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_3_0.instanceGo)
-	arg_3_0.txtIndicatorProcess = gohelper.findChildText(arg_3_0.instanceGo, "txt_itemProcess")
+function FightSuccIndicator:onLoadCallback()
+	self.loadDone = true
+	self.instanceGo = self.loader:getInstGO()
+	self.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(self.instanceGo)
+	self.txtIndicatorProcess = gohelper.findChildText(self.instanceGo, "txt_itemProcess")
 
-	local var_3_0 = FightDataHelper.fieldMgr:getIndicatorNum(arg_3_0.indicatorId)
+	local num = FightDataHelper.fieldMgr:getIndicatorNum(self.indicatorId)
 
-	arg_3_0.txtIndicatorProcess.text = string.format("%d/%d", var_3_0, arg_3_0.totalIndicatorNum)
+	self.txtIndicatorProcess.text = string.format("%d/%d", num, self.totalIndicatorNum)
 end
 
-function var_0_0.onIndicatorChange(arg_4_0)
-	if not arg_4_0.loadDone then
+function FightSuccIndicator:onIndicatorChange()
+	if not self.loadDone then
 		return
 	end
 
-	arg_4_0:updateUI()
+	self:updateUI()
 end
 
-function var_0_0.updateUI(arg_5_0)
-	if not arg_5_0.loadDone then
+function FightSuccIndicator:updateUI()
+	if not self.loadDone then
 		return
 	end
 
-	local var_5_0 = FightDataHelper.fieldMgr:getIndicatorNum(arg_5_0.indicatorId)
+	local num = FightDataHelper.fieldMgr:getIndicatorNum(self.indicatorId)
 
-	arg_5_0.txtIndicatorProcess.text = string.format("%d/%d", var_5_0, arg_5_0.totalIndicatorNum)
+	self.txtIndicatorProcess.text = string.format("%d/%d", num, self.totalIndicatorNum)
 
 	FightModel.instance:setWaitIndicatorAnimation(true)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_triumph_dreamepilogue_collect)
-	arg_5_0.animatorPlayer:Play("add", arg_5_0.onAddAnimationDone, arg_5_0)
+	self.animatorPlayer:Play("add", self.onAddAnimationDone, self)
 end
 
-function var_0_0.onAddAnimationDone(arg_6_0)
-	if FightDataHelper.fieldMgr:getIndicatorNum(arg_6_0.indicatorId) == arg_6_0.totalIndicatorNum then
+function FightSuccIndicator:onAddAnimationDone()
+	local num = FightDataHelper.fieldMgr:getIndicatorNum(self.indicatorId)
+
+	if num == self.totalIndicatorNum then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_triumph_dreamepilogue_achieve)
-		arg_6_0.animatorPlayer:Play("finish", arg_6_0.onFinishAnimationDone, arg_6_0)
+		self.animatorPlayer:Play("finish", self.onFinishAnimationDone, self)
 	else
 		FightController.instance:dispatchEvent(FightEvent.OnIndicatorAnimationDone)
 	end
 end
 
-function var_0_0.onFinishAnimationDone(arg_7_0)
+function FightSuccIndicator:onFinishAnimationDone()
 	FightController.instance:dispatchEvent(FightEvent.OnIndicatorAnimationDone)
 end
 
-function var_0_0.onDestroy(arg_8_0)
-	if arg_8_0.loader then
-		arg_8_0.loader:dispose()
+function FightSuccIndicator:onDestroy()
+	if self.loader then
+		self.loader:dispose()
 	end
 
-	var_0_0.super.onDestroy(arg_8_0)
+	FightSuccIndicator.super.onDestroy(self)
 end
 
-return var_0_0
+return FightSuccIndicator

@@ -1,26 +1,28 @@
-﻿module("modules.logic.versionactivity1_5.common.AudioEnum1_5", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/common/AudioEnum1_5.lua
 
-local var_0_0 = AudioEnum
+module("modules.logic.versionactivity1_5.common.AudioEnum1_5", package.seeall)
 
-var_0_0.ui_v1a5_news = {
+local AudioEnum = AudioEnum
+
+AudioEnum.ui_v1a5_news = {
 	play_ui_wulu_complete_burn = 25005503
 }
-var_0_0.ui_activity_1_5_wulu = {
+AudioEnum.ui_activity_1_5_wulu = {
 	play_ui_wulu_arena_open = 25050216,
 	play_ui_wulu_seal_cutting_eft = 25005511,
 	play_ui_wulu_caiquan_decide = 25050220,
 	play_ui_wulu_caiquan_open = 25050219
 }
-var_0_0.ui_mail = {
+AudioEnum.ui_mail = {
 	play_ui_mail_open_1 = 25005513
 }
-var_0_0.ui_activity142 = {
+AudioEnum.ui_activity142 = {
 	UnlockChapter = 25050203,
 	CloseMapView = 25050229,
 	UnlockItem = 25050202,
 	OpenMapView = 25050201
 }
-var_0_0.chess_activity142 = {
+AudioEnum.chess_activity142 = {
 	CloseEye = 25050207,
 	FireBall = 25050208,
 	MonsterBeHit = 25050210,
@@ -34,7 +36,7 @@ var_0_0.chess_activity142 = {
 	LightBrazier = 25050205
 }
 
-local var_0_1 = {
+local bgm = {
 	play_activitymusic_seasonmain_1_5 = 3200085,
 	Activity142Bgm = 3200087,
 	ActivityMainBgm1_5_1 = 20150002,
@@ -42,7 +44,7 @@ local var_0_1 = {
 	ActivityMainBgm1_5_2 = 20150004,
 	ActivityMainBgm1_5 = 3200084
 }
-local var_0_2 = {
+local UI = {
 	play_ui_wulu_second_open = 20150003,
 	play_ui_wulu_atticletter_opening = 25005505,
 	play_ui_wulu_atticletter_write_loop = 25005507,
@@ -59,24 +61,24 @@ local var_0_2 = {
 	play_ui_wulu_atticletter_read_over = 25005506
 }
 
-for iter_0_0, iter_0_1 in pairs(var_0_1) do
-	if isDebugBuild and var_0_0.Bgm[iter_0_0] then
-		logError("AudioEnum.Bgm重复定义" .. iter_0_0)
+for key, value in pairs(bgm) do
+	if isDebugBuild and AudioEnum.Bgm[key] then
+		logError("AudioEnum.Bgm重复定义" .. key)
 	end
 
-	var_0_0.Bgm[iter_0_0] = iter_0_1
+	AudioEnum.Bgm[key] = value
 end
 
-for iter_0_2, iter_0_3 in pairs(var_0_2) do
-	if isDebugBuild and var_0_0.UI[iter_0_2] then
-		logError("AudioEnum.UI重复定义" .. iter_0_2)
+for key, value in pairs(UI) do
+	if isDebugBuild and AudioEnum.UI[key] then
+		logError("AudioEnum.UI重复定义" .. key)
 	end
 
-	var_0_0.UI[iter_0_2] = iter_0_3
+	AudioEnum.UI[key] = value
 end
 
-function var_0_0.activate()
+function AudioEnum.activate()
 	return
 end
 
-return var_0_0
+return AudioEnum

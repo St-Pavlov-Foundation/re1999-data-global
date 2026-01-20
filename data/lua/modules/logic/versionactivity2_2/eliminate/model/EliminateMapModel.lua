@@ -1,90 +1,101 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.model.EliminateMapModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/model/EliminateMapModel.lua
 
-local var_0_0 = class("EliminateMapModel", BaseModel)
+module("modules.logic.versionactivity2_2.eliminate.model.EliminateMapModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local EliminateMapModel = class("EliminateMapModel", BaseModel)
+
+function EliminateMapModel:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0.isPlayingClickAnimation = false
+function EliminateMapModel:reInit()
+	self.isPlayingClickAnimation = false
 end
 
-function var_0_0.getChapterStatus(arg_3_0, arg_3_1)
-	if not arg_3_0:checkChapterIsUnlock(arg_3_1) then
+function EliminateMapModel:getChapterStatus(chapterId)
+	if not self:checkChapterIsUnlock(chapterId) then
 		return EliminateMapEnum.ChapterStatus.Lock
 	end
 
 	return EliminateMapEnum.ChapterStatus.Normal
 end
 
-function var_0_0.isFirstEpisode(arg_4_0, arg_4_1)
-	local var_4_0 = lua_eliminate_episode.configDict[arg_4_1].chapterId
+function EliminateMapModel:isFirstEpisode(episodeId)
+	local targetConfig = lua_eliminate_episode.configDict[episodeId]
+	local chapterId = targetConfig.chapterId
+	local chapterList = EliminateOutsideModel.instance:getChapterList()
+	local list = chapterList[chapterId]
 
-	return EliminateOutsideModel.instance:getChapterList()[var_4_0][1].id == arg_4_1
+	return list[1].id == episodeId
 end
 
-function var_0_0.getEpisodeConfig(arg_5_0, arg_5_1)
-	return lua_eliminate_episode.configDict[arg_5_1]
+function EliminateMapModel:getEpisodeConfig(episodeId)
+	local targetConfig = lua_eliminate_episode.configDict[episodeId]
+
+	return targetConfig
 end
 
-function var_0_0.getLastCanFightEpisodeMo(arg_6_0, arg_6_1)
-	local var_6_0 = EliminateOutsideModel.instance:getChapterList()[arg_6_1]
+function EliminateMapModel:getLastCanFightEpisodeMo(chapterId)
+	local chapterList = EliminateOutsideModel.instance:getChapterList()
+	local list = chapterList[chapterId]
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
-		if iter_6_1.star == 0 then
-			return iter_6_1
+	for i, v in ipairs(list) do
+		if v.star == 0 then
+			return v
 		end
 	end
 
-	return var_6_0[#var_6_0]
+	return list[#list]
 end
 
-function var_0_0.getEpisodeList(arg_7_0, arg_7_1)
-	return EliminateOutsideModel.instance:getChapterList()[arg_7_1]
+function EliminateMapModel:getEpisodeList(chapterId)
+	local chapterList = EliminateOutsideModel.instance:getChapterList()
+
+	return chapterList[chapterId]
 end
 
-function var_0_0.checkChapterIsUnlock(arg_8_0, arg_8_1)
-	local var_8_0 = EliminateOutsideModel.instance:getChapterList()[arg_8_1]
+function EliminateMapModel:checkChapterIsUnlock(chapterId)
+	local chapterList = EliminateOutsideModel.instance:getChapterList()
+	local list = chapterList[chapterId]
 
-	if not var_8_0 or #var_8_0 == 0 then
+	if not list or #list == 0 then
 		return false
 	end
 
-	local var_8_1 = var_8_0[1].config
+	local firstEpisode = list[1].config
 
-	return var_8_1.preEpisode == 0 or EliminateOutsideModel.instance:hasPassedEpisode(var_8_1.preEpisode)
+	return firstEpisode.preEpisode == 0 or EliminateOutsideModel.instance:hasPassedEpisode(firstEpisode.preEpisode)
 end
 
-function var_0_0.getLastCanFightChapterId(arg_9_0)
-	local var_9_0
-	local var_9_1 = EliminateOutsideModel.instance:getChapterList()
+function EliminateMapModel:getLastCanFightChapterId()
+	local _lastChapterId
+	local chapterList = EliminateOutsideModel.instance:getChapterList()
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_1) do
-		if arg_9_0:checkChapterIsUnlock(iter_9_0) then
-			var_9_0 = iter_9_0
+	for chapterId, v in ipairs(chapterList) do
+		if self:checkChapterIsUnlock(chapterId) then
+			_lastChapterId = chapterId
 		end
 	end
 
-	return var_9_0
+	return _lastChapterId
 end
 
-function var_0_0.getChapterNum()
-	return #var_0_0.getChapterConfigList()
+function EliminateMapModel.getChapterNum()
+	return #EliminateMapModel.getChapterConfigList()
 end
 
-function var_0_0.getChapterConfigList()
+function EliminateMapModel.getChapterConfigList()
 	return EliminateConfig.instance:getNormalChapterList()
 end
 
-function var_0_0.setPlayingClickAnimation(arg_12_0, arg_12_1)
-	arg_12_0.isPlayingClickAnimation = arg_12_1
+function EliminateMapModel:setPlayingClickAnimation(isPlaying)
+	self.isPlayingClickAnimation = isPlaying
 end
 
-function var_0_0.checkIsPlayingClickAnimation(arg_13_0)
-	return arg_13_0.isPlayingClickAnimation
+function EliminateMapModel:checkIsPlayingClickAnimation()
+	return self.isPlayingClickAnimation
 end
 
-var_0_0.instance = var_0_0.New()
+EliminateMapModel.instance = EliminateMapModel.New()
 
-return var_0_0
+return EliminateMapModel

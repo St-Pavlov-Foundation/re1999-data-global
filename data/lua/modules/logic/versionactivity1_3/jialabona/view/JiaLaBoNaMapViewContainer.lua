@@ -1,116 +1,118 @@
-﻿module("modules.logic.versionactivity1_3.jialabona.view.JiaLaBoNaMapViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/jialabona/view/JiaLaBoNaMapViewContainer.lua
 
-local var_0_0 = class("JiaLaBoNaMapViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_3.jialabona.view.JiaLaBoNaMapViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local JiaLaBoNaMapViewContainer = class("JiaLaBoNaMapViewContainer", BaseViewContainer)
 
-	arg_1_0._mapViewScene = JiaLaBoNaMapScene.New()
-	arg_1_0._viewAnim = JiaLaBoNaMapViewAnim.New()
+function JiaLaBoNaMapViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, arg_1_0._mapViewScene)
-	table.insert(var_1_0, JiaLaBoNaMapView.New())
-	table.insert(var_1_0, arg_1_0._viewAnim)
-	table.insert(var_1_0, JiaLaBoNaMapViewAudio.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_BackBtns"))
+	self._mapViewScene = JiaLaBoNaMapScene.New()
+	self._viewAnim = JiaLaBoNaMapViewAnim.New()
 
-	return var_1_0
+	table.insert(views, self._mapViewScene)
+	table.insert(views, JiaLaBoNaMapView.New())
+	table.insert(views, self._viewAnim)
+	table.insert(views, JiaLaBoNaMapViewAudio.New())
+	table.insert(views, TabViewGroup.New(1, "#go_BackBtns"))
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
+function JiaLaBoNaMapViewContainer:onContainerClickModalMask()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	arg_2_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.buildTabViews(arg_3_0, arg_3_1)
-	if arg_3_1 == 1 then
-		arg_3_0._navigateButtonsView = NavigateButtonsView.New({
+function JiaLaBoNaMapViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonsView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
-		arg_3_0._navigateButtonsView:setOverrideClose(arg_3_0._overrideCloseFunc, arg_3_0)
+		self._navigateButtonsView:setOverrideClose(self._overrideCloseFunc, self)
 
 		return {
-			arg_3_0._navigateButtonsView
+			self._navigateButtonsView
 		}
 	end
 end
 
-var_0_0.UI_COLSE_BLOCK_KEY = "JiaLaBoNaMapViewContainer_COLSE_BLOCK_KEY"
+JiaLaBoNaMapViewContainer.UI_COLSE_BLOCK_KEY = "JiaLaBoNaMapViewContainer_COLSE_BLOCK_KEY"
 
-function var_0_0._overrideCloseFunc(arg_4_0)
-	UIBlockMgr.instance:startBlock(var_0_0.UI_COLSE_BLOCK_KEY)
-	arg_4_0._viewAnim:playViewAnimator(UIAnimationName.Close)
-	TaskDispatcher.runDelay(arg_4_0._onDelayCloseView, arg_4_0, JiaLaBoNaEnum.AnimatorTime.MapViewClose)
+function JiaLaBoNaMapViewContainer:_overrideCloseFunc()
+	UIBlockMgr.instance:startBlock(JiaLaBoNaMapViewContainer.UI_COLSE_BLOCK_KEY)
+	self._viewAnim:playViewAnimator(UIAnimationName.Close)
+	TaskDispatcher.runDelay(self._onDelayCloseView, self, JiaLaBoNaEnum.AnimatorTime.MapViewClose)
 end
 
-function var_0_0._onDelayCloseView(arg_5_0)
-	UIBlockMgr.instance:endBlock(var_0_0.UI_COLSE_BLOCK_KEY)
-	arg_5_0._viewAnim:closeThis()
+function JiaLaBoNaMapViewContainer:_onDelayCloseView()
+	UIBlockMgr.instance:endBlock(JiaLaBoNaMapViewContainer.UI_COLSE_BLOCK_KEY)
+	self._viewAnim:closeThis()
 end
 
-function var_0_0.switchPage(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_0._mapViewScene then
-		arg_6_0._mapViewScene:switchPage(arg_6_1)
+function JiaLaBoNaMapViewContainer:switchPage(page, playAnim)
+	if self._mapViewScene then
+		self._mapViewScene:switchPage(page)
 
-		if not string.nilorempty(arg_6_2) then
-			arg_6_0._mapViewScene:playSceneAnim(arg_6_2)
+		if not string.nilorempty(playAnim) then
+			self._mapViewScene:playSceneAnim(playAnim)
 		end
 	end
 end
 
-function var_0_0.refreshInteract(arg_7_0, arg_7_1)
-	if arg_7_0._mapViewScene then
-		arg_7_0._mapViewScene:refreshInteract(arg_7_1)
+function JiaLaBoNaMapViewContainer:refreshInteract(animEpisodeId)
+	if self._mapViewScene then
+		self._mapViewScene:refreshInteract(animEpisodeId)
 	end
 end
 
-function var_0_0._setVisible(arg_8_0, arg_8_1)
-	var_0_0.super._setVisible(arg_8_0, arg_8_1)
+function JiaLaBoNaMapViewContainer:_setVisible(isVisible)
+	JiaLaBoNaMapViewContainer.super._setVisible(self, isVisible)
 
-	if arg_8_0._mapViewScene then
-		local var_8_0 = ViewMgr.instance:isOpen(ViewName.JiaLaBoNaStoryView)
+	if self._mapViewScene then
+		local isHasStoryOpen = ViewMgr.instance:isOpen(ViewName.JiaLaBoNaStoryView)
 
-		if not var_8_0 or arg_8_1 then
-			arg_8_0._mapViewScene:setSceneActive(arg_8_1)
+		if not isHasStoryOpen or isVisible then
+			self._mapViewScene:setSceneActive(isVisible)
 		end
 
-		if arg_8_0._lastMapViewSceneVisible ~= arg_8_1 then
-			arg_8_0._lastMapViewSceneVisible = arg_8_1
+		if self._lastMapViewSceneVisible ~= isVisible then
+			self._lastMapViewSceneVisible = isVisible
 
-			if arg_8_1 and not var_8_0 then
-				arg_8_0._mapViewScene:playSceneAnim(UIAnimationName.Open)
-				arg_8_0._viewAnim:playViewAnimator(UIAnimationName.Open)
+			if isVisible and not isHasStoryOpen then
+				self._mapViewScene:playSceneAnim(UIAnimationName.Open)
+				self._viewAnim:playViewAnimator(UIAnimationName.Open)
 			end
 		end
 	end
 end
 
-function var_0_0.switchScene(arg_9_0, arg_9_1)
-	if arg_9_0._viewAnim then
-		arg_9_0._viewAnim:switchScene(arg_9_1)
+function JiaLaBoNaMapViewContainer:switchScene(isNext)
+	if self._viewAnim then
+		self._viewAnim:switchScene(isNext)
 	end
 end
 
-function var_0_0.playPathAnim(arg_10_0)
-	if arg_10_0._viewAnim then
-		arg_10_0._viewAnim:playPathAnim()
+function JiaLaBoNaMapViewContainer:playPathAnim()
+	if self._viewAnim then
+		self._viewAnim:playPathAnim()
 	end
 end
 
-function var_0_0.refreshPathPoin(arg_11_0)
-	if arg_11_0._viewAnim then
-		arg_11_0._viewAnim:refreshPathPoin()
+function JiaLaBoNaMapViewContainer:refreshPathPoin()
+	if self._viewAnim then
+		self._viewAnim:refreshPathPoin()
 	end
 end
 
-function var_0_0.onContainerInit(arg_12_0)
+function JiaLaBoNaMapViewContainer:onContainerInit()
 	ActivityEnterMgr.instance:enterActivity(VersionActivity1_3Enum.ActivityId.Act306)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
 		VersionActivity1_3Enum.ActivityId.Act306
 	})
 end
 
-return var_0_0
+return JiaLaBoNaMapViewContainer

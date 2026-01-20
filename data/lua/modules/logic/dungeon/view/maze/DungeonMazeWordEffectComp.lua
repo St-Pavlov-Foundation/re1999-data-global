@@ -1,236 +1,244 @@
-﻿module("modules.logic.dungeon.view.maze.DungeonMazeWordEffectComp", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/maze/DungeonMazeWordEffectComp.lua
 
-local var_0_0 = class("DungeonMazeWordEffectComp", LuaCompBase)
-local var_0_1 = SLFramework.UGUI.RectTrHelper
-local var_0_2 = "<size=40><alpha=#00>.<alpha=#ff></size>"
-local var_0_3 = table.insert
-local var_0_4 = string.gmatch
+module("modules.logic.dungeon.view.maze.DungeonMazeWordEffectComp", package.seeall)
 
-local function var_0_5(arg_1_0)
-	if not arg_1_0 then
+local DungeonMazeWordEffectComp = class("DungeonMazeWordEffectComp", LuaCompBase)
+local CSRectTrHelper = SLFramework.UGUI.RectTrHelper
+local kSpace = "<size=40><alpha=#00>.<alpha=#ff></size>"
+local ti = table.insert
+local sgmatch = string.gmatch
+
+local function _getUCharArr(str)
+	if not str then
 		return {}
 	end
 
-	local var_1_0 = {}
+	local wordList = {}
 
-	for iter_1_0 in var_0_4(arg_1_0, "[%z\x01-\x7F\xC2-\xF4][\x80-\xBF]*") do
-		if (LangSettings.instance:isEn() or LangSettings.instance:isKr()) and iter_1_0 == " " then
-			iter_1_0 = var_0_2
+	for ch in sgmatch(str, "[%z\x01-\x7F\xC2-\xF4][\x80-\xBF]*") do
+		if (LangSettings.instance:isEn() or LangSettings.instance:isKr()) and ch == " " then
+			ch = kSpace
 		end
 
-		var_0_3(var_1_0, iter_1_0)
+		ti(wordList, ch)
 	end
 
-	return var_1_0
+	return wordList
 end
 
-function var_0_0._warpInScreenX(arg_2_0)
-	FrameTimerController.onDestroyViewMember(arg_2_0, "_fTimer")
+function DungeonMazeWordEffectComp:_warpInScreenX()
+	FrameTimerController.onDestroyViewMember(self, "_fTimer")
 
-	arg_2_0._fTimer = FrameTimerController.instance:register(arg_2_0._onWarpInScreenX, arg_2_0, 2)
+	self._fTimer = FrameTimerController.instance:register(self._onWarpInScreenX, self, 2)
 
-	arg_2_0._fTimer:Start()
+	self._fTimer:Start()
 end
 
-function var_0_0._onWarpInScreenX(arg_3_0)
-	if gohelper.isNil(arg_3_0.go) then
+function DungeonMazeWordEffectComp:_onWarpInScreenX()
+	if gohelper.isNil(self.go) then
 		return
 	end
 
-	if not arg_3_0._parent then
+	if not self._parent then
 		return
 	end
 
-	local var_3_0 = arg_3_0._parent.viewGO
+	local parentViewGO = self._parent.viewGO
 
-	if gohelper.isNil(var_3_0) then
+	if gohelper.isNil(parentViewGO) then
 		return
 	end
 
-	local var_3_1 = var_3_0.transform
+	local viewRootTrans = parentViewGO.transform
 
-	if gohelper.isNil(var_3_1) then
+	if gohelper.isNil(viewRootTrans) then
 		return
 	end
 
-	local var_3_2 = UnityEngine.Screen.width * 0.5
-	local var_3_3 = recthelper.getWidth(arg_3_0._itemTran) * 0.5
-	local var_3_4 = Vector3(var_3_2, 0, 0)
-	local var_3_5 = CameraMgr.instance:getUICamera()
-	local var_3_6 = var_0_1.ScreenPosToAnchorPos(var_3_4, arg_3_0._itemTran.parent, var_3_5).x
-	local var_3_7 = 15
-	local var_3_8 = {
-		min = var_3_6 + (-var_3_2 + var_3_3 + var_3_7),
-		max = var_3_6 + (var_3_2 - var_3_3 - var_3_7)
+	local hSW = UnityEngine.Screen.width * 0.5
+	local curHW = recthelper.getWidth(self._itemTran) * 0.5
+	local screenCenterPos = Vector3(hSW, 0, 0)
+	local uiCamera = CameraMgr.instance:getUICamera()
+	local localPosV2 = CSRectTrHelper.ScreenPosToAnchorPos(screenCenterPos, self._itemTran.parent, uiCamera)
+	local APosXInScreenCenter = localPosV2.x
+	local kPadding = 15
+	local rangePosX = {
+		min = APosXInScreenCenter + (-hSW + curHW + kPadding),
+		max = APosXInScreenCenter + (hSW - curHW - kPadding)
 	}
-	local var_3_9 = arg_3_0._originalPosX
+	local posX = self._originalPosX
 
-	if var_3_9 <= var_3_8.min or var_3_9 >= var_3_8.max then
-		if arg_3_0._dir == DungeonMazeEnum.dir.right then
-			var_3_9 = UIDockingHelper.calcDockLocalPosV2(UIDockingHelper.Dock.MR_L, arg_3_0._itemTran, var_3_1).x - var_3_7
-		elseif arg_3_0._dir == DungeonMazeEnum.dir.left then
-			var_3_9 = UIDockingHelper.calcDockLocalPosV2(UIDockingHelper.Dock.ML_R, arg_3_0._itemTran, var_3_1).x + var_3_7
+	if posX <= rangePosX.min or posX >= rangePosX.max then
+		if self._dir == DungeonMazeEnum.dir.right then
+			local v2 = UIDockingHelper.calcDockLocalPosV2(UIDockingHelper.Dock.MR_L, self._itemTran, viewRootTrans)
+
+			posX = v2.x - kPadding
+		elseif self._dir == DungeonMazeEnum.dir.left then
+			local v2 = UIDockingHelper.calcDockLocalPosV2(UIDockingHelper.Dock.ML_R, self._itemTran, viewRootTrans)
+
+			posX = v2.x + kPadding
 		end
 
-		var_3_9 = GameUtil.clamp(var_3_9, var_3_8.min, var_3_8.max)
+		posX = GameUtil.clamp(posX, rangePosX.min, rangePosX.max)
 	end
 
-	recthelper.setAnchor(arg_3_0._itemTran, var_3_9, arg_3_0._originalPosY)
+	recthelper.setAnchor(self._itemTran, posX, self._originalPosY)
 end
 
-function var_0_0.ctor(arg_4_0, arg_4_1)
-	arg_4_0._parent = arg_4_1.parent
-	arg_4_0._dir = arg_4_1.dir
-	arg_4_0._co = arg_4_1.co
-	arg_4_0._res = arg_4_1.res
-	arg_4_0._done = arg_4_1.done
+function DungeonMazeWordEffectComp:ctor(params)
+	self._parent = params.parent
+	self._dir = params.dir
+	self._co = params.co
+	self._res = params.res
+	self._done = params.done
 end
 
-function var_0_0.init(arg_5_0, arg_5_1)
-	arg_5_0._item = gohelper.findChild(arg_5_1, "item")
-	arg_5_0._itemTran = arg_5_0._item.transform
-	arg_5_0._originalPosX = recthelper.getAnchorX(arg_5_0._itemTran)
-	arg_5_0._originalPosY = recthelper.getAnchorY(arg_5_0._itemTran)
-	arg_5_0._trans = arg_5_1.transform
-	arg_5_0.go = arg_5_1
-	arg_5_0._line1 = gohelper.findChild(arg_5_1, "item/line1")
-	arg_5_0._line2 = gohelper.findChild(arg_5_1, "item/line2")
-	arg_5_0._effect = gohelper.findChild(arg_5_1, "item/effect")
-	arg_5_0._animEffect = arg_5_0._effect:GetComponent(gohelper.Type_Animator)
+function DungeonMazeWordEffectComp:init(go)
+	self._item = gohelper.findChild(go, "item")
+	self._itemTran = self._item.transform
+	self._originalPosX = recthelper.getAnchorX(self._itemTran)
+	self._originalPosY = recthelper.getAnchorY(self._itemTran)
+	self._trans = go.transform
+	self.go = go
+	self._line1 = gohelper.findChild(go, "item/line1")
+	self._line2 = gohelper.findChild(go, "item/line2")
+	self._effect = gohelper.findChild(go, "item/effect")
+	self._animEffect = self._effect:GetComponent(gohelper.Type_Animator)
 
-	arg_5_0:createTxt()
-	arg_5_0:_warpInScreenX()
+	self:createTxt()
+	self:_warpInScreenX()
 end
 
-function var_0_0.createTxt(arg_6_0)
-	local var_6_0 = Season166Enum.WordTxtOpen + Season166Enum.WordTxtIdle + Season166Enum.WordTxtClose
+function DungeonMazeWordEffectComp:createTxt()
+	local oneWordTime = Season166Enum.WordTxtOpen + Season166Enum.WordTxtIdle + Season166Enum.WordTxtClose
 
-	arg_6_0._allAnimWork = {}
+	self._allAnimWork = {}
 
-	local var_6_1 = string.split(arg_6_0._co.desc, "\n")
-	local var_6_2 = var_0_5(var_6_1[1]) or {}
-	local var_6_3 = 0
+	local arr = string.split(self._co.desc, "\n")
+	local words1 = _getUCharArr(arr[1]) or {}
+	local offsetX = 0
 
-	for iter_6_0 = 1, #var_6_2 do
-		local var_6_4, var_6_5 = arg_6_0:getRes(arg_6_0._line1, false)
+	for i = 1, #words1 do
+		local txtAnim, txt = self:getRes(self._line1, false)
 
-		var_6_5.text = var_6_2[iter_6_0]
-		var_6_3 = var_6_3 + var_6_5.preferredWidth + Season166Enum.WordTxtPosXOffset
+		txt.text = words1[i]
+		offsetX = offsetX + txt.preferredWidth + Season166Enum.WordTxtPosXOffset
 
-		local var_6_6 = var_6_5.transform.parent
+		local p = txt.transform.parent
 
-		recthelper.setWidth(var_6_6, var_6_5.preferredWidth)
-		table.insert(arg_6_0._allAnimWork, {
+		recthelper.setWidth(p, txt.preferredWidth)
+		table.insert(self._allAnimWork, {
 			playAnim = "open",
-			anim = var_6_4,
-			time = (iter_6_0 - 1) * Season166Enum.WordTxtInterval
+			anim = txtAnim,
+			time = (i - 1) * Season166Enum.WordTxtInterval
 		})
-		table.insert(arg_6_0._allAnimWork, {
+		table.insert(self._allAnimWork, {
 			playAnim = "close",
-			anim = var_6_4,
-			time = (iter_6_0 - 1) * Season166Enum.WordTxtInterval + var_6_0 - Season166Enum.WordTxtClose
+			anim = txtAnim,
+			time = (i - 1) * Season166Enum.WordTxtInterval + oneWordTime - Season166Enum.WordTxtClose
 		})
 	end
 
-	local var_6_7 = 0
-	local var_6_8 = var_0_5(var_6_1[2]) or {}
+	offsetX = 0
 
-	for iter_6_1 = 1, #var_6_8 do
-		local var_6_9, var_6_10 = arg_6_0:getRes(arg_6_0._line2, false)
+	local words2 = _getUCharArr(arr[2]) or {}
 
-		var_6_10.text = var_6_8[iter_6_1]
-		var_6_7 = var_6_7 + var_6_10.preferredWidth + Season166Enum.WordTxtPosXOffset
+	for i = 1, #words2 do
+		local txtAnim, txt = self:getRes(self._line2, false)
 
-		local var_6_11 = var_6_10.transform.parent
+		txt.text = words2[i]
+		offsetX = offsetX + txt.preferredWidth + Season166Enum.WordTxtPosXOffset
 
-		recthelper.setWidth(var_6_11, var_6_10.preferredWidth)
-		table.insert(arg_6_0._allAnimWork, {
+		local p = txt.transform.parent
+
+		recthelper.setWidth(p, txt.preferredWidth)
+		table.insert(self._allAnimWork, {
 			playAnim = "open",
-			anim = var_6_9,
-			time = (iter_6_1 - 1) * Season166Enum.WordTxtInterval + Season166Enum.WordLine2Delay
+			anim = txtAnim,
+			time = (i - 1) * Season166Enum.WordTxtInterval + Season166Enum.WordLine2Delay
 		})
-		table.insert(arg_6_0._allAnimWork, {
+		table.insert(self._allAnimWork, {
 			playAnim = "close",
-			anim = var_6_9,
-			time = (iter_6_1 - 1) * Season166Enum.WordTxtInterval + Season166Enum.WordLine2Delay + var_6_0 - Season166Enum.WordTxtClose
+			anim = txtAnim,
+			time = (i - 1) * Season166Enum.WordTxtInterval + Season166Enum.WordLine2Delay + oneWordTime - Season166Enum.WordTxtClose
 		})
 	end
 
-	local var_6_12 = var_6_0 + Season166Enum.WordTxtInterval * (#var_6_2 - 1)
-	local var_6_13 = 0
+	local line1TotalTime = oneWordTime + Season166Enum.WordTxtInterval * (#words1 - 1)
+	local line2TotalTime = 0
 
-	if #var_6_8 > 0 then
-		var_6_13 = var_6_0 + Season166Enum.WordTxtInterval * (#var_6_8 - 1)
+	if #words2 > 0 then
+		line2TotalTime = oneWordTime + Season166Enum.WordTxtInterval * (#words2 - 1)
 	end
 
-	local var_6_14 = math.max(var_6_12, var_6_13)
+	local totalTime = math.max(line1TotalTime, line2TotalTime)
 
-	table.insert(arg_6_0._allAnimWork, {
+	table.insert(self._allAnimWork, {
 		showEndEffect = true,
-		time = var_6_14 - Season166Enum.WordTxtClose
+		time = totalTime - Season166Enum.WordTxtClose
 	})
-	table.insert(arg_6_0._allAnimWork, {
+	table.insert(self._allAnimWork, {
 		destroy = false,
-		time = var_6_14
+		time = totalTime
 	})
-	table.sort(arg_6_0._allAnimWork, Season166WordEffectComp.sortAnim)
-	arg_6_0:nextStep()
+	table.sort(self._allAnimWork, Season166WordEffectComp.sortAnim)
+	self:nextStep()
 end
 
-function var_0_0.nextStep(arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0.nextStep, arg_7_0)
+function DungeonMazeWordEffectComp:nextStep()
+	TaskDispatcher.cancelTask(self.nextStep, self)
 
-	local var_7_0 = table.remove(arg_7_0._allAnimWork, 1)
+	local work = table.remove(self._allAnimWork, 1)
 
-	if not var_7_0 then
+	if not work then
 		return
 	end
 
-	if var_7_0.destroy then
-		gohelper.destroy(arg_7_0.go)
+	if work.destroy then
+		gohelper.destroy(self.go)
 
 		return
-	elseif var_7_0.showEndEffect then
-		arg_7_0._animEffect:Play(UIAnimationName.Close, 0, 0)
-	elseif var_7_0.playAnim == "open" then
-		var_7_0.anim.enabled = true
+	elseif work.showEndEffect then
+		self._animEffect:Play(UIAnimationName.Close, 0, 0)
+	elseif work.playAnim == "open" then
+		work.anim.enabled = true
 	end
 
-	local var_7_1 = arg_7_0._allAnimWork[1]
+	local nextWork = self._allAnimWork[1]
 
-	if not var_7_1 then
+	if not nextWork then
 		return
 	end
 
-	TaskDispatcher.runDelay(arg_7_0.nextStep, arg_7_0, var_7_1.time - var_7_0.time)
+	TaskDispatcher.runDelay(self.nextStep, self, nextWork.time - work.time)
 end
 
-function var_0_0.sortAnim(arg_8_0, arg_8_1)
-	return arg_8_0.time < arg_8_1.time
+function DungeonMazeWordEffectComp.sortAnim(a, b)
+	return a.time < b.time
 end
 
-local var_0_6 = typeof(UnityEngine.Animator)
+local Type_Animtor = typeof(UnityEngine.Animator)
 
-function var_0_0.getRes(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = gohelper.clone(arg_9_0._res, arg_9_1)
-	local var_9_1 = gohelper.findChildSingleImage(var_9_0, "img")
-	local var_9_2 = gohelper.findChildTextMesh(var_9_0, "txt")
-	local var_9_3 = var_9_0:GetComponent(var_0_6)
+function DungeonMazeWordEffectComp:getRes(root, isImage)
+	local go = gohelper.clone(self._res, root)
+	local image = gohelper.findChildSingleImage(go, "img")
+	local txt = gohelper.findChildTextMesh(go, "txt")
+	local anim = go:GetComponent(Type_Animtor)
 
-	gohelper.setActive(var_9_1, arg_9_2)
-	gohelper.setActive(var_9_2, not arg_9_2)
-	gohelper.setActive(var_9_0, true)
-	var_9_3:Play("open", 0, 0)
-	var_9_3:Update(0)
+	gohelper.setActive(image, isImage)
+	gohelper.setActive(txt, not isImage)
+	gohelper.setActive(go, true)
+	anim:Play("open", 0, 0)
+	anim:Update(0)
 
-	var_9_3.enabled = false
+	anim.enabled = false
 
-	return var_9_3, arg_9_2 and var_9_1 or var_9_2
+	return anim, isImage and image or txt
 end
 
-function var_0_0.onDestroy(arg_10_0)
-	FrameTimerController.onDestroyViewMember(arg_10_0, "_fTimer")
-	TaskDispatcher.cancelTask(arg_10_0.nextStep, arg_10_0)
+function DungeonMazeWordEffectComp:onDestroy()
+	FrameTimerController.onDestroyViewMember(self, "_fTimer")
+	TaskDispatcher.cancelTask(self.nextStep, self)
 end
 
-return var_0_0
+return DungeonMazeWordEffectComp

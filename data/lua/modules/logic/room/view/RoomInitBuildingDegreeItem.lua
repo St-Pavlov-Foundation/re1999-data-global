@@ -1,61 +1,63 @@
-﻿module("modules.logic.room.view.RoomInitBuildingDegreeItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomInitBuildingDegreeItem.lua
 
-local var_0_0 = class("RoomInitBuildingDegreeItem", ListScrollCellExtend)
+module("modules.logic.room.view.RoomInitBuildingDegreeItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local RoomInitBuildingDegreeItem = class("RoomInitBuildingDegreeItem", ListScrollCellExtend)
+
+function RoomInitBuildingDegreeItem:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RoomInitBuildingDegreeItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RoomInitBuildingDegreeItem:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._go = arg_4_0.viewGO
-	arg_4_0._goline = gohelper.findChild(arg_4_0.viewGO, "line")
-	arg_4_0._txtdegree = gohelper.findChildText(arg_4_0.viewGO, "txt_degree")
-	arg_4_0._goicon = gohelper.findChild(arg_4_0.viewGO, "icon")
-	arg_4_0._goblockicon = gohelper.findChild(arg_4_0.viewGO, "block_icon")
-	arg_4_0._txtname = gohelper.findChildText(arg_4_0.viewGO, "txt_name")
-	arg_4_0._txtcount = gohelper.findChildText(arg_4_0.viewGO, "txt_count")
+function RoomInitBuildingDegreeItem:_editableInitView()
+	self._go = self.viewGO
+	self._goline = gohelper.findChild(self.viewGO, "line")
+	self._txtdegree = gohelper.findChildText(self.viewGO, "txt_degree")
+	self._goicon = gohelper.findChild(self.viewGO, "icon")
+	self._goblockicon = gohelper.findChild(self.viewGO, "block_icon")
+	self._txtname = gohelper.findChildText(self.viewGO, "txt_name")
+	self._txtcount = gohelper.findChildText(self.viewGO, "txt_count")
 end
 
-function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
-	arg_5_0._showDegreeMO = arg_5_1
+function RoomInitBuildingDegreeItem:onUpdateMO(mo)
+	self._showDegreeMO = mo
 
-	arg_5_0:_refreshUI()
+	self:_refreshUI()
 end
 
-function var_0_0._refreshUI(arg_6_0)
-	local var_6_0 = arg_6_0._showDegreeMO
+function RoomInitBuildingDegreeItem:_refreshUI()
+	local mo = self._showDegreeMO
 
-	if not var_6_0 then
+	if not mo then
 		return
 	end
 
-	local var_6_1 = var_6_0.degreeType == 1
+	local isBlock = mo.degreeType == 1
 
-	if arg_6_0._lastIsBlock ~= var_6_1 then
-		arg_6_0._lastIsBlock = var_6_1
+	if self._lastIsBlock ~= isBlock then
+		self._lastIsBlock = isBlock
 
-		gohelper.setActive(arg_6_0._goline, var_6_1)
-		gohelper.setActive(arg_6_0._goblockicon, var_6_1)
-		gohelper.setActive(arg_6_0._goicon, not var_6_1)
+		gohelper.setActive(self._goline, isBlock)
+		gohelper.setActive(self._goblockicon, isBlock)
+		gohelper.setActive(self._goicon, not isBlock)
 	end
 
-	arg_6_0._txtcount.text = luaLang("multiple") .. var_6_0.count
-	arg_6_0._txtname.text = var_6_1 and luaLang("p_roominitbuilding_plane") or var_6_0.name
-	arg_6_0._txtdegree.text = var_6_0.degree
+	self._txtcount.text = luaLang("multiple") .. mo.count
+	self._txtname.text = isBlock and luaLang("p_roominitbuilding_plane") or mo.name
+	self._txtdegree.text = mo.degree
 end
 
-function var_0_0.onDestroy(arg_7_0)
+function RoomInitBuildingDegreeItem:onDestroy()
 	return
 end
 
-return var_0_0
+return RoomInitBuildingDegreeItem

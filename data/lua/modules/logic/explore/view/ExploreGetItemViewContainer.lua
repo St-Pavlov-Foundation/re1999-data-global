@@ -1,15 +1,17 @@
-﻿module("modules.logic.explore.view.ExploreGetItemViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/explore/view/ExploreGetItemViewContainer.lua
 
-local var_0_0 = class("ExploreGetItemViewContainer", BaseViewContainer)
+module("modules.logic.explore.view.ExploreGetItemViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local ExploreGetItemViewContainer = class("ExploreGetItemViewContainer", BaseViewContainer)
+
+function ExploreGetItemViewContainer:buildViews()
 	return {
 		ExploreGetItemView.New()
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	arg_2_0:closeThis()
+function ExploreGetItemViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return ExploreGetItemViewContainer

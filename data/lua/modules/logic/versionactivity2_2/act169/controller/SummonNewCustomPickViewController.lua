@@ -1,27 +1,29 @@
-﻿module("modules.logic.versionactivity2_2.act169.controller.SummonNewCustomPickViewController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/act169/controller/SummonNewCustomPickViewController.lua
 
-local var_0_0 = class("SummonNewCustomPickViewController", BaseController)
+module("modules.logic.versionactivity2_2.act169.controller.SummonNewCustomPickViewController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local SummonNewCustomPickViewController = class("SummonNewCustomPickViewController", BaseController)
+
+function SummonNewCustomPickViewController:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function SummonNewCustomPickViewController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function SummonNewCustomPickViewController:addConstEvents()
 	return
 end
 
-function var_0_0.getSummonInfo(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	SummonNewCustomPickViewRpc.instance:sendGet169InfoRequest(arg_4_1, arg_4_2, arg_4_3)
+function SummonNewCustomPickViewController:getSummonInfo(activityId, callBack, callBackObj)
+	SummonNewCustomPickViewRpc.instance:sendGet169InfoRequest(activityId, callBack, callBackObj)
 end
 
-function var_0_0.reInit(arg_5_0)
+function SummonNewCustomPickViewController:reInit()
 	SummonNewCustomPickViewModel.instance:reInit()
 end
 
-var_0_0.instance = var_0_0.New()
+SummonNewCustomPickViewController.instance = SummonNewCustomPickViewController.New()
 
-return var_0_0
+return SummonNewCustomPickViewController

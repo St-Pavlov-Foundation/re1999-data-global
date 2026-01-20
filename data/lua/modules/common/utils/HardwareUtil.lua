@@ -1,47 +1,49 @@
-﻿module("modules.common.utils.HardwareUtil", package.seeall)
+﻿-- chunkname: @modules/common/utils/HardwareUtil.lua
 
-local var_0_0 = _M
-local var_0_1
-local var_0_2 = "none"
+module("modules.common.utils.HardwareUtil", package.seeall)
 
-function var_0_0.getPerformanceGrade()
-	if not var_0_1 then
-		local var_1_0 = UnityEngine.SystemInfo.deviceModel
-		local var_1_1 = BootNativeUtil.getCpuName()
-		local var_1_2 = UnityEngine.SystemInfo.graphicsDeviceName
-		local var_1_3 = UnityEngine.SystemInfo.systemMemorySize
+local HardwareUtil = _M
+local curLevel
+local by = "none"
 
-		logNormal("DeviceName: " .. (var_1_0 or "nil") .. "\nCPU: " .. (var_1_1 or "nil") .. "\n" .. "GPU: " .. (var_1_2 or "nil") .. "\n" .. "Memory: " .. (var_1_3 or "nil"))
+function HardwareUtil.getPerformanceGrade()
+	if not curLevel then
+		local deviceName = UnityEngine.SystemInfo.deviceModel
+		local cpuName = BootNativeUtil.getCpuName()
+		local gpuName = UnityEngine.SystemInfo.graphicsDeviceName
+		local memory = UnityEngine.SystemInfo.systemMemorySize
 
-		local var_1_4 = CommonConfig.instance:getCPULevel(var_1_1 or "")
-		local var_1_5 = CommonConfig.instance:getGPULevel(var_1_2 or "")
+		logNormal("DeviceName: " .. (deviceName or "nil") .. "\nCPU: " .. (cpuName or "nil") .. "\n" .. "GPU: " .. (gpuName or "nil") .. "\n" .. "Memory: " .. (memory or "nil"))
 
-		var_0_1 = ModuleEnum.Performance.High
+		local cpuLevel = CommonConfig.instance:getCPULevel(cpuName or "")
+		local gpuLevel = CommonConfig.instance:getGPULevel(gpuName or "")
 
-		if var_1_4 ~= ModuleEnum.Performance.Undefine then
-			var_0_1 = var_1_4
-			var_0_2 = "cpu"
-		elseif var_1_5 ~= ModuleEnum.Performance.Undefine then
-			var_0_1 = var_1_5
-			var_0_2 = "gpu"
-		elseif var_1_3 then
+		curLevel = ModuleEnum.Performance.High
+
+		if cpuLevel ~= ModuleEnum.Performance.Undefine then
+			curLevel = cpuLevel
+			by = "cpu"
+		elseif gpuLevel ~= ModuleEnum.Performance.Undefine then
+			curLevel = gpuLevel
+			by = "gpu"
+		elseif memory then
 			if BootNativeUtil.isIOS() then
-				if var_1_3 <= 2048 then
-					var_0_1 = ModuleEnum.Performance.Low
-				elseif var_1_3 <= 4096 then
-					var_0_1 = ModuleEnum.Performance.Middle
+				if memory <= 2048 then
+					curLevel = ModuleEnum.Performance.Low
+				elseif memory <= 4096 then
+					curLevel = ModuleEnum.Performance.Middle
 				end
-			elseif var_1_3 <= 3072 then
-				var_0_1 = ModuleEnum.Performance.Low
-			elseif var_1_3 <= 5120 then
-				var_0_1 = ModuleEnum.Performance.Middle
+			elseif memory <= 3072 then
+				curLevel = ModuleEnum.Performance.Low
+			elseif memory <= 5120 then
+				curLevel = ModuleEnum.Performance.Middle
 			end
 
-			var_0_2 = "memory"
+			by = "memory"
 		end
 	end
 
-	return var_0_1, var_0_2
+	return curLevel, by
 end
 
-return var_0_0
+return HardwareUtil

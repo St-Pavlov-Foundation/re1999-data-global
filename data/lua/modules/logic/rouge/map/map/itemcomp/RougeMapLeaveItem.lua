@@ -1,124 +1,132 @@
-﻿module("modules.logic.rouge.map.map.itemcomp.RougeMapLeaveItem", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/map/itemcomp/RougeMapLeaveItem.lua
 
-local var_0_0 = class("RougeMapLeaveItem", RougeMapBaseItem)
+module("modules.logic.rouge.map.map.itemcomp.RougeMapLeaveItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	var_0_0.super.init(arg_1_0)
+local RougeMapLeaveItem = class("RougeMapLeaveItem", RougeMapBaseItem)
 
-	arg_1_0.map = arg_1_1
+function RougeMapLeaveItem:init(map)
+	RougeMapLeaveItem.super.init(self)
 
-	arg_1_0:setId(RougeMapEnum.LeaveId)
-	arg_1_0:createGo()
-	arg_1_0:addEventCb(RougeMapController.instance, RougeMapEvent.onReceivePieceChoiceEvent, arg_1_0.refreshActive, arg_1_0)
-	arg_1_0:addEventCb(RougeMapController.instance, RougeMapEvent.onMiddleActorBeforeMove, arg_1_0.onMiddleActorBeforeMove, arg_1_0)
-	arg_1_0:addEventCb(RougeMapController.instance, RougeMapEvent.onExitPieceChoiceEvent, arg_1_0.onExitPieceChoiceEvent, arg_1_0)
+	self.map = map
+
+	self:setId(RougeMapEnum.LeaveId)
+	self:createGo()
+	self:addEventCb(RougeMapController.instance, RougeMapEvent.onReceivePieceChoiceEvent, self.refreshActive, self)
+	self:addEventCb(RougeMapController.instance, RougeMapEvent.onMiddleActorBeforeMove, self.onMiddleActorBeforeMove, self)
+	self:addEventCb(RougeMapController.instance, RougeMapEvent.onExitPieceChoiceEvent, self.onExitPieceChoiceEvent, self)
 end
 
-function var_0_0.createGo(arg_2_0)
-	arg_2_0.go = gohelper.clone(arg_2_0.map.middleLayerLeavePrefab, arg_2_0.map.goLayerPiecesContainer)
-	arg_2_0.transform = arg_2_0.go.transform
+function RougeMapLeaveItem:createGo()
+	self.go = gohelper.clone(self.map.middleLayerLeavePrefab, self.map.goLayerPiecesContainer)
+	self.transform = self.go.transform
 
-	local var_2_0, var_2_1 = RougeMapModel.instance:getMiddleLayerLeavePos()
+	local posX, posY = RougeMapModel.instance:getMiddleLayerLeavePos()
 
-	transformhelper.setLocalPos(arg_2_0.transform, var_2_0, var_2_1, RougeMapHelper.getOffsetZ(var_2_1))
+	transformhelper.setLocalPos(self.transform, posX, posY, RougeMapHelper.getOffsetZ(posY))
 
-	arg_2_0.scenePos = arg_2_0.transform.position
+	self.scenePos = self.transform.position
 
-	arg_2_0:refreshActive()
+	self:refreshActive()
 end
 
-function var_0_0.refreshActive(arg_3_0)
-	gohelper.setActive(arg_3_0.go, arg_3_0:isActive())
+function RougeMapLeaveItem:refreshActive()
+	gohelper.setActive(self.go, self:isActive())
 end
 
-function var_0_0.getScenePos(arg_4_0)
-	return arg_4_0.scenePos
+function RougeMapLeaveItem:getScenePos()
+	return self.scenePos
 end
 
-function var_0_0.getClickArea(arg_5_0)
+function RougeMapLeaveItem:getClickArea()
 	return RougeMapEnum.LeaveItemClickArea
 end
 
-function var_0_0.onClick(arg_6_0)
+function RougeMapLeaveItem:onClick()
 	logNormal("on click leave item")
-	RougeMapController.instance:moveToLeaveItem(arg_6_0.onMoveDone, arg_6_0)
+	RougeMapController.instance:moveToLeaveItem(self.onMoveDone, self)
 end
 
-function var_0_0.onMoveDone(arg_7_0)
-	if arg_7_0:_checkIsSelectEndingFourth() then
-		local var_7_0, var_7_1 = arg_7_0:_getNeedPlayEndingFourthStories()
+function RougeMapLeaveItem:onMoveDone()
+	local isSelectEndingFourth = self:_checkIsSelectEndingFourth()
 
-		if var_7_1 then
-			StoryController.instance:playStories(var_7_0, nil, arg_7_0._sendMoveRpc, arg_7_0)
+	if isSelectEndingFourth then
+		local needPlayStoryIds, isNeedPlayStory = self:_getNeedPlayEndingFourthStories()
+
+		if isNeedPlayStory then
+			StoryController.instance:playStories(needPlayStoryIds, nil, self._sendMoveRpc, self)
 
 			return
 		end
 	end
 
-	arg_7_0:_sendMoveRpc()
+	self:_sendMoveRpc()
 end
 
-function var_0_0._checkIsSelectEndingFourth(arg_8_0)
-	local var_8_0 = RougeMapModel.instance:getPieceList()
-	local var_8_1 = lua_rouge_const.configDict[RougeEnum.Const.FourthEndingChoiceIds].value
-	local var_8_2 = string.splitToNumber(var_8_1, "#")
+function RougeMapLeaveItem:_checkIsSelectEndingFourth()
+	local pieceMoList = RougeMapModel.instance:getPieceList()
+	local fourthEndingChoiceIdStr = lua_rouge_const.configDict[RougeEnum.Const.FourthEndingChoiceIds].value
+	local fourthEndingChoiceIds = string.splitToNumber(fourthEndingChoiceIdStr, "#")
 
-	if var_8_2 and var_8_0 then
-		for iter_8_0, iter_8_1 in ipairs(var_8_0) do
-			if iter_8_1.finish and iter_8_1.selectId and tabletool.indexOf(var_8_2, iter_8_1.selectId) then
+	if fourthEndingChoiceIds and pieceMoList then
+		for _, pieceMo in ipairs(pieceMoList) do
+			if pieceMo.finish and pieceMo.selectId and tabletool.indexOf(fourthEndingChoiceIds, pieceMo.selectId) then
 				return true
 			end
 		end
 	end
 end
 
-function var_0_0._getNeedPlayEndingFourthStories(arg_9_0)
-	local var_9_0 = string.splitToNumber(lua_rouge_const.configDict[RougeEnum.Const.FourthEndingStoryId].value2, "#")
-	local var_9_1 = {}
+function RougeMapLeaveItem:_getNeedPlayEndingFourthStories()
+	local storyIds = string.splitToNumber(lua_rouge_const.configDict[RougeEnum.Const.FourthEndingStoryId].value2, "#")
+	local needPlayStoryIds = {}
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
-		if not StoryModel.instance:isStoryFinished(iter_9_1) then
-			var_9_1 = var_9_0
+	for _, storyId in ipairs(storyIds) do
+		local isStoryFinished = StoryModel.instance:isStoryFinished(storyId)
+
+		if not isStoryFinished then
+			needPlayStoryIds = storyIds
 
 			break
 		end
 	end
 
-	local var_9_2 = var_9_1 and #var_9_1 > 0
+	local isNeedPlayStory = needPlayStoryIds and #needPlayStoryIds > 0
 
-	return var_9_1, var_9_2
+	return needPlayStoryIds, isNeedPlayStory
 end
 
-function var_0_0._sendMoveRpc(arg_10_0)
+function RougeMapLeaveItem:_sendMoveRpc()
 	RougeRpc.instance:sendRougePieceMoveRequest(RougeMapEnum.PathSelectIndex)
 end
 
-function var_0_0.isActive(arg_11_0)
-	if arg_11_0.onPieceView then
+function RougeMapLeaveItem:isActive()
+	if self.onPieceView then
 		return false
 	end
 
-	local var_11_0 = RougeMapModel.instance:getMiddleLayerCo()
-	local var_11_1 = var_11_0.leavePosUnlockType
-	local var_11_2 = var_11_0.leavePosUnlockParam
+	local middleLayerCo = RougeMapModel.instance:getMiddleLayerCo()
+	local type = middleLayerCo.leavePosUnlockType
+	local param = middleLayerCo.leavePosUnlockParam
 
-	return RougeMapUnlockHelper.checkIsUnlock(var_11_1, var_11_2)
+	return RougeMapUnlockHelper.checkIsUnlock(type, param)
 end
 
-function var_0_0.onMiddleActorBeforeMove(arg_12_0, arg_12_1)
-	if arg_12_1.pieceId == RougeMapEnum.LeaveId then
+function RougeMapLeaveItem:onMiddleActorBeforeMove(data)
+	local pieceId = data.pieceId
+
+	if pieceId == RougeMapEnum.LeaveId then
 		return
 	end
 
-	arg_12_0.onPieceView = true
+	self.onPieceView = true
 
-	arg_12_0:refreshActive()
+	self:refreshActive()
 end
 
-function var_0_0.onExitPieceChoiceEvent(arg_13_0)
-	arg_13_0.onPieceView = false
+function RougeMapLeaveItem:onExitPieceChoiceEvent()
+	self.onPieceView = false
 
-	arg_13_0:refreshActive()
+	self:refreshActive()
 end
 
-return var_0_0
+return RougeMapLeaveItem

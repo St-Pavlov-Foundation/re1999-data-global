@@ -1,65 +1,69 @@
-﻿module("modules.logic.versionactivity1_6.goldenmilletpresent.view.GoldenMilletPresentDisplayView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/goldenmilletpresent/view/GoldenMilletPresentDisplayView.lua
 
-local var_0_0 = class("GoldenMilletPresentDisplayView", BaseViewExtended)
+module("modules.logic.versionactivity1_6.goldenmilletpresent.view.GoldenMilletPresentDisplayView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	gohelper.setActive(arg_1_0.viewGO, true)
+local GoldenMilletPresentDisplayView = class("GoldenMilletPresentDisplayView", BaseViewExtended)
 
-	arg_1_0._btnPresentList = arg_1_0:getUserDataTb_()
+function GoldenMilletPresentDisplayView:onInitView()
+	gohelper.setActive(self.viewGO, true)
 
-	for iter_1_0 = 1, GoldenMilletEnum.DISPLAY_SKIN_COUNT do
-		local var_1_0 = string.format("present%s/#btn_Present", iter_1_0)
-		local var_1_1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, var_1_0)
+	self._btnPresentList = self:getUserDataTb_()
 
-		if var_1_1 then
-			arg_1_0._btnPresentList[#arg_1_0._btnPresentList + 1] = var_1_1
+	for i = 1, GoldenMilletEnum.DISPLAY_SKIN_COUNT do
+		local btnChildPath = string.format("present%s/#btn_Present", i)
+		local btnPresent = gohelper.findChildButtonWithAudio(self.viewGO, btnChildPath)
+
+		if btnPresent then
+			self._btnPresentList[#self._btnPresentList + 1] = btnPresent
 		end
 	end
 
-	arg_1_0._goHasReceiveTip = gohelper.findChild(arg_1_0.viewGO, "#go_ReceiveTip")
-	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Close")
+	self._goHasReceiveTip = gohelper.findChild(self.viewGO, "#go_ReceiveTip")
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Close")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0._btnPresentList) do
-		iter_2_1:AddClickListener(arg_2_0._btnPresentOnClick, arg_2_0, iter_2_0)
+function GoldenMilletPresentDisplayView:addEvents()
+	for i, btnPresent in ipairs(self._btnPresentList) do
+		btnPresent:AddClickListener(self._btnPresentOnClick, self, i)
 	end
 
-	arg_2_0._btnClose:AddClickListener(arg_2_0._btnCloseOnClick, arg_2_0)
+	self._btnClose:AddClickListener(self._btnCloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0._btnPresentList) do
-		iter_3_1:RemoveClickListener()
+function GoldenMilletPresentDisplayView:removeEvents()
+	for _, btnPresent in ipairs(self._btnPresentList) do
+		btnPresent:RemoveClickListener()
 	end
 
-	arg_3_0._btnClose:RemoveClickListener()
+	self._btnClose:RemoveClickListener()
 end
 
-function var_0_0._btnPresentOnClick(arg_4_0, arg_4_1)
-	if not GoldenMilletPresentModel.instance:isGoldenMilletPresentOpen(true) then
+function GoldenMilletPresentDisplayView:_btnPresentOnClick(index)
+	local isOpen = GoldenMilletPresentModel.instance:isGoldenMilletPresentOpen(true)
+
+	if not isOpen then
 		return
 	end
 
-	local var_4_0 = GoldenMilletEnum.Index2Skin[arg_4_1]
+	local skinId = GoldenMilletEnum.Index2Skin[index]
 
-	if var_4_0 then
+	if skinId then
 		CharacterController.instance:openCharacterSkinTipView({
 			isShowHomeBtn = false,
-			skinId = var_4_0
+			skinId = skinId
 		})
 	end
 end
 
-function var_0_0._btnCloseOnClick(arg_5_0)
-	arg_5_0:closeThis()
+function GoldenMilletPresentDisplayView:_btnCloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0.onOpen(arg_6_0)
-	local var_6_0 = GoldenMilletPresentModel.instance:haveReceivedSkin()
+function GoldenMilletPresentDisplayView:onOpen()
+	local haveReceived = GoldenMilletPresentModel.instance:haveReceivedSkin()
 
-	gohelper.setActive(arg_6_0._goHasReceiveTip, var_6_0)
+	gohelper.setActive(self._goHasReceiveTip, haveReceived)
 	AudioMgr.instance:trigger(AudioEnum.UI.GoldenMilletDisplayViewOpen)
 end
 
-return var_0_0
+return GoldenMilletPresentDisplayView

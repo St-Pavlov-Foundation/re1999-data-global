@@ -1,237 +1,250 @@
-﻿module("modules.logic.fight.view.FightViewTechnique", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightViewTechnique.lua
 
-local var_0_0 = class("FightViewTechnique", BaseView)
-local var_0_1
-local var_0_2
-local var_0_3
-local var_0_4
-local var_0_5
-local var_0_6
-local var_0_7
+module("modules.logic.fight.view.FightViewTechnique", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if not var_0_1 then
-		var_0_1 = {}
-		var_0_2 = {}
-		var_0_4 = {}
-		var_0_5 = {}
-		var_0_6 = {}
-		var_0_7 = {}
+local FightViewTechnique = class("FightViewTechnique", BaseView)
+local buffType2Id, battleId2Id, invalidBuff2Id, resistanceIdList, getCardEnergyList, getASFDSkillList, createBloodPoolList, heatScaleList
 
-		for iter_1_0, iter_1_1 in ipairs(lua_fight_technique.configList) do
-			local var_1_0 = string.split(iter_1_1.condition, "|")
+function FightViewTechnique:onInitView()
+	if not buffType2Id then
+		buffType2Id = {}
+		battleId2Id = {}
+		resistanceIdList = {}
+		getCardEnergyList = {}
+		getASFDSkillList = {}
+		createBloodPoolList = {}
+		heatScaleList = {}
 
-			for iter_1_2, iter_1_3 in ipairs(var_1_0) do
-				local var_1_1 = string.split(iter_1_3, "#")
+		for _, co in ipairs(lua_fight_technique.configList) do
+			local array = string.split(co.condition, "|")
 
-				if var_1_1[1] == "1" then
-					local var_1_2 = tonumber(var_1_1[2])
+			for i, v in ipairs(array) do
+				local temp = string.split(v, "#")
 
-					var_0_1[var_1_2] = iter_1_1.id
-				elseif var_1_1[1] == "2" then
-					local var_1_3 = tonumber(var_1_1[2])
+				if temp[1] == "1" then
+					local buffType = tonumber(temp[2])
 
-					var_0_2[var_1_3] = iter_1_1.id
-				elseif var_1_1[1] == "3" then
-					var_0_3 = iter_1_1.id
-				elseif var_1_1[1] == "4" then
-					table.insert(var_0_4, iter_1_1.id)
-				elseif var_1_1[1] == "5" then
-					table.insert(var_0_5, iter_1_1.id)
-				elseif var_1_1[1] == "6" then
-					table.insert(var_0_6, iter_1_1.id)
-				elseif var_1_1[1] == "7" then
-					table.insert(var_0_7, iter_1_1.id)
+					buffType2Id[buffType] = co.id
+				elseif temp[1] == "2" then
+					local battleId = tonumber(temp[2])
+
+					battleId2Id[battleId] = co.id
+				elseif temp[1] == "3" then
+					invalidBuff2Id = co.id
+				elseif temp[1] == "4" then
+					table.insert(resistanceIdList, co.id)
+				elseif temp[1] == "5" then
+					table.insert(getCardEnergyList, co.id)
+				elseif temp[1] == "6" then
+					table.insert(getASFDSkillList, co.id)
+				elseif temp[1] == "7" then
+					table.insert(createBloodPoolList, co.id)
+				elseif temp[1] == "8" then
+					table.insert(heatScaleList, co.id)
 				end
 			end
 		end
 	end
 
-	arg_1_0._scrollGO = gohelper.findChild(arg_1_0.viewGO, "root/#scroll_effecttips")
-	arg_1_0._originY = recthelper.getAnchorY(arg_1_0._scrollGO.transform)
+	self._scrollGO = gohelper.findChild(self.viewGO, "root/#scroll_effecttips")
+	self._originY = recthelper.getAnchorY(self._scrollGO.transform)
 end
 
-function var_0_0.addEvents(arg_2_0)
+function FightViewTechnique:addEvents()
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightTechnique) then
 		return
 	end
 
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, arg_2_0._onBuffUpdate, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnDistributeCards, arg_2_0._onDistributeCards, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.BeforePlaySkill, arg_2_0._beforePlaySkill, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, arg_2_0._onSkillPlayFinish, arg_2_0)
-	arg_2_0:addEventCb(PlayerController.instance, PlayerEvent.UpdateSimpleProperty, arg_2_0._updateSimpleProperty, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.SetStateForDialogBeforeStartFight, arg_2_0._onSetStateForDialogBeforeStartFight, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.TriggerCardShowResistanceTag, arg_2_0.onTriggerCardShowResistanceTag, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.ASFD_StartAllocateCardEnergy, arg_2_0.onStartAllocateCardEnergy, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.AddUseCard, arg_2_0.AddUseCard, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.BloodPool_OnCreate, arg_2_0.onBloodPoolCreate, arg_2_0)
+	self:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, self._onBuffUpdate, self)
+	self:addEventCb(FightController.instance, FightEvent.OnDistributeCards, self._onDistributeCards, self)
+	self:addEventCb(FightController.instance, FightEvent.BeforePlaySkill, self._beforePlaySkill, self)
+	self:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
+	self:addEventCb(PlayerController.instance, PlayerEvent.UpdateSimpleProperty, self._updateSimpleProperty, self)
+	self:addEventCb(FightController.instance, FightEvent.SetStateForDialogBeforeStartFight, self._onSetStateForDialogBeforeStartFight, self)
+	self:addEventCb(FightController.instance, FightEvent.TriggerCardShowResistanceTag, self.onTriggerCardShowResistanceTag, self)
+	self:addEventCb(FightController.instance, FightEvent.ASFD_StartAllocateCardEnergy, self.onStartAllocateCardEnergy, self)
+	self:addEventCb(FightController.instance, FightEvent.AddUseCard, self.AddUseCard, self)
+	self:addEventCb(FightController.instance, FightEvent.BloodPool_OnCreate, self.onBloodPoolCreate, self)
+	self:addEventCb(FightController.instance, FightEvent.HeatScale_OnCreate, self.onHeatScaleCreate, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnBuffUpdate, arg_3_0._onBuffUpdate, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnDistributeCards, arg_3_0._onDistributeCards, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.BeforePlaySkill, arg_3_0._beforePlaySkill, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, arg_3_0._onSkillPlayFinish, arg_3_0)
-	arg_3_0:removeEventCb(PlayerController.instance, PlayerEvent.UpdateSimpleProperty, arg_3_0._updateSimpleProperty, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.SetStateForDialogBeforeStartFight, arg_3_0._onSetStateForDialogBeforeStartFight, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.TriggerCardShowResistanceTag, arg_3_0.onTriggerCardShowResistanceTag, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.ASFD_StartAllocateCardEnergy, arg_3_0.onStartAllocateCardEnergy, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.AddUseCard, arg_3_0.AddUseCard, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.BloodPool_OnCreate, arg_3_0.onBloodPoolCreate, arg_3_0)
+function FightViewTechnique:removeEvents()
+	self:removeEventCb(FightController.instance, FightEvent.OnBuffUpdate, self._onBuffUpdate, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnDistributeCards, self._onDistributeCards, self)
+	self:removeEventCb(FightController.instance, FightEvent.BeforePlaySkill, self._beforePlaySkill, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
+	self:removeEventCb(PlayerController.instance, PlayerEvent.UpdateSimpleProperty, self._updateSimpleProperty, self)
+	self:removeEventCb(FightController.instance, FightEvent.SetStateForDialogBeforeStartFight, self._onSetStateForDialogBeforeStartFight, self)
+	self:removeEventCb(FightController.instance, FightEvent.TriggerCardShowResistanceTag, self.onTriggerCardShowResistanceTag, self)
+	self:removeEventCb(FightController.instance, FightEvent.ASFD_StartAllocateCardEnergy, self.onStartAllocateCardEnergy, self)
+	self:removeEventCb(FightController.instance, FightEvent.AddUseCard, self.AddUseCard, self)
+	self:removeEventCb(FightController.instance, FightEvent.BloodPool_OnCreate, self.onBloodPoolCreate, self)
+	self:removeEventCb(FightController.instance, FightEvent.HeatScale_OnCreate, self.onHeatScaleCreate, self)
 end
 
-function var_0_0.onOpen(arg_4_0)
+function FightViewTechnique:onOpen()
 	FightViewTechniqueModel.instance:initFromSimpleProperty()
-	arg_4_0:_udpateAnchorY()
+	self:_udpateAnchorY()
 end
 
-function var_0_0.onBloodPoolCreate(arg_5_0, arg_5_1)
-	if arg_5_1 ~= FightEnum.TeamType.MySide then
+function FightViewTechnique:onBloodPoolCreate(teamType)
+	if teamType ~= FightEnum.TeamType.MySide then
 		return
 	end
 
-	for iter_5_0, iter_5_1 in ipairs(var_0_7) do
-		arg_5_0:_checkAdd(iter_5_1)
+	for _, v in ipairs(createBloodPoolList) do
+		self:_checkAdd(v)
 	end
 end
 
-function var_0_0.onTriggerCardShowResistanceTag(arg_6_0)
-	for iter_6_0, iter_6_1 in ipairs(var_0_4) do
-		arg_6_0:_checkAdd(iter_6_1)
+function FightViewTechnique:onHeatScaleCreate(teamType)
+	if teamType ~= FightEnum.TeamType.MySide then
+		return
+	end
+
+	if heatScaleList then
+		for _, v in ipairs(heatScaleList) do
+			self:_checkAdd(v)
+		end
 	end
 end
 
-function var_0_0.onStartAllocateCardEnergy(arg_7_0)
-	for iter_7_0, iter_7_1 in ipairs(var_0_5) do
-		arg_7_0:_checkAdd(iter_7_1)
+function FightViewTechnique:onTriggerCardShowResistanceTag()
+	for _, v in ipairs(resistanceIdList) do
+		self:_checkAdd(v)
 	end
 end
 
-function var_0_0.AddUseCard(arg_8_0, arg_8_1)
-	local var_8_0 = FightPlayCardModel.instance:getUsedCards()
+function FightViewTechnique:onStartAllocateCardEnergy()
+	for _, v in ipairs(getCardEnergyList) do
+		self:_checkAdd(v)
+	end
+end
 
-	for iter_8_0, iter_8_1 in ipairs(arg_8_1) do
-		local var_8_1 = var_8_0[iter_8_1]
+function FightViewTechnique:AddUseCard(cardIndexList)
+	local usedCards = FightPlayCardModel.instance:getUsedCards()
 
-		if var_8_1 and FightHelper.isASFDSkill(var_8_1.skillId) then
-			for iter_8_2, iter_8_3 in ipairs(var_0_6) do
-				arg_8_0:_checkAdd(iter_8_3)
+	for _, cardIndex in ipairs(cardIndexList) do
+		local cardInfo = usedCards[cardIndex]
+
+		if cardInfo and FightHelper.isASFDSkill(cardInfo.skillId) then
+			for _, v in ipairs(getASFDSkillList) do
+				self:_checkAdd(v)
 			end
 		end
 	end
 end
 
-function var_0_0._onBuffUpdate(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	if arg_9_2 ~= FightEnum.EffectType.BUFFADD then
+function FightViewTechnique:_onBuffUpdate(targetId, effectType, buffId)
+	if effectType ~= FightEnum.EffectType.BUFFADD then
 		return
 	end
 
-	local var_9_0 = lua_skill_buff.configDict[arg_9_3]
+	local buffCO = lua_skill_buff.configDict[buffId]
 
-	if not var_9_0 then
+	if not buffCO then
 		return
 	end
 
-	local var_9_1 = var_0_1[var_9_0.typeId]
+	local id = buffType2Id[buffCO.typeId]
 
-	if not var_9_1 then
+	if not id then
 		return
 	end
 
-	arg_9_0:_checkAdd(var_9_1)
+	self:_checkAdd(id)
 end
 
-function var_0_0._onDistributeCards(arg_10_0)
-	arg_10_0:removeEventCb(FightController.instance, FightEvent.OnDistributeCards, arg_10_0._onDistributeCards, arg_10_0)
+function FightViewTechnique:_onDistributeCards()
+	self:removeEventCb(FightController.instance, FightEvent.OnDistributeCards, self._onDistributeCards, self)
 
-	local var_10_0 = FightModel.instance:getFightParam().battleId
-	local var_10_1 = var_10_0 and var_0_2[var_10_0]
+	local battleId = FightModel.instance:getFightParam().battleId
+	local id = battleId and battleId2Id[battleId]
 
-	if not var_10_1 then
+	if not id then
 		return
 	end
 
-	arg_10_0:_checkAdd(var_10_1)
+	self:_checkAdd(id)
 end
 
-function var_0_0._beforePlaySkill(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	if not arg_11_1:getMO() then
+function FightViewTechnique:_beforePlaySkill(entity, skillId, fightStepData)
+	if not entity:getMO() then
 		return
 	end
 
-	arg_11_0._rejectTypes = nil
-	arg_11_0._rejectIds = nil
+	self._rejectTypes = nil
+	self._rejectIds = nil
 
-	local var_11_0 = arg_11_1:getMO():getBuffDic()
+	local buffDic = entity:getMO():getBuffDic()
 
-	for iter_11_0, iter_11_1 in pairs(var_11_0) do
-		local var_11_1 = lua_skill_buff.configDict[iter_11_1.buffId]
-		local var_11_2 = lua_skill_bufftype.configDict[var_11_1.typeId]
+	for _, buffMO in pairs(buffDic) do
+		local buffCO = lua_skill_buff.configDict[buffMO.buffId]
+		local buffTypeCO = lua_skill_bufftype.configDict[buffCO.typeId]
 
-		if not string.nilorempty(var_11_2.rejectTypes) then
-			local var_11_3 = string.split(var_11_2.rejectTypes, "#")
-			local var_11_4 = string.split(var_11_3[2], ",")
-			local var_11_5
+		if not string.nilorempty(buffTypeCO.rejectTypes) then
+			local sp = string.split(buffTypeCO.rejectTypes, "#")
+			local param = string.split(sp[2], ",")
+			local dict
 
-			if var_11_3[1] == "1" then
-				arg_11_0._rejectTypes = arg_11_0._rejectTypes or {}
-				var_11_5 = arg_11_0._rejectTypes
-			elseif var_11_3[1] == "2" then
-				arg_11_0._rejectIds = arg_11_0._rejectIds or {}
-				var_11_5 = arg_11_0._rejectIds
+			if sp[1] == "1" then
+				self._rejectTypes = self._rejectTypes or {}
+				dict = self._rejectTypes
+			elseif sp[1] == "2" then
+				self._rejectIds = self._rejectIds or {}
+				dict = self._rejectIds
 			end
 
-			if var_11_5 then
-				for iter_11_2, iter_11_3 in ipairs(var_11_5) do
-					var_11_5[iter_11_3] = true
+			if dict then
+				for _, one in ipairs(dict) do
+					dict[one] = true
 				end
 			end
 		end
 	end
 end
 
-function var_0_0._onSkillPlayFinish(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	if not var_0_3 then
+function FightViewTechnique:_onSkillPlayFinish(entity, skillId, fightStepData)
+	if not invalidBuff2Id then
 		return
 	end
 
-	if not arg_12_1:isMySide() then
+	if not entity:isMySide() then
 		return
 	end
 
-	if arg_12_1.id == FightEntityScene.MySideId or arg_12_1.id == FightEntityScene.EnemySideId then
+	if entity.id == FightEntityScene.MySideId or entity.id == FightEntityScene.EnemySideId then
 		return
 	end
 
-	local var_12_0 = lua_skill.configDict[arg_12_2]
+	local skillCO = lua_skill.configDict[skillId]
 
-	if not var_12_0 then
+	if not skillCO then
 		return
 	end
 
-	local var_12_1 = {}
+	local serverUpdateBuffIdDict = {}
 
-	for iter_12_0, iter_12_1 in ipairs(arg_12_3.actEffect) do
-		if (iter_12_1.effectType == FightEnum.EffectType.BUFFADD or iter_12_1.effectType == FightEnum.EffectType.BUFFUPDATE) and iter_12_1.buff then
-			var_12_1[iter_12_1.buff.buffId] = true
+	for _, actEffectData in ipairs(fightStepData.actEffect) do
+		if (actEffectData.effectType == FightEnum.EffectType.BUFFADD or actEffectData.effectType == FightEnum.EffectType.BUFFUPDATE) and actEffectData.buff then
+			serverUpdateBuffIdDict[actEffectData.buff.buffId] = true
 		end
 	end
 
-	for iter_12_2 = 1, FightEnum.MaxBehavior do
-		local var_12_2 = var_12_0["behavior" .. iter_12_2]
+	for i = 1, FightEnum.MaxBehavior do
+		local behavior = skillCO["behavior" .. i]
 
-		if not string.nilorempty(var_12_2) then
-			local var_12_3 = FightStrUtil.instance:getSplitToNumberCache(var_12_2, "#")
-			local var_12_4 = var_12_3[1]
-			local var_12_5 = var_12_3[2]
-			local var_12_6 = lua_skill_buff.configDict[var_12_5]
-			local var_12_7 = var_12_4 == 1
-			local var_12_8 = not var_12_1[var_12_5]
-			local var_12_9 = arg_12_0._rejectTypes and arg_12_0._rejectTypes[var_12_6.typeId] or arg_12_0._rejectIds and arg_12_0._rejectIds[var_12_5]
+		if not string.nilorempty(behavior) then
+			local spRes = FightStrUtil.instance:getSplitToNumberCache(behavior, "#")
+			local behaviorType = spRes[1]
+			local buffId = spRes[2]
+			local buffCO = lua_skill_buff.configDict[buffId]
+			local isAddBuff = behaviorType == 1
+			local updateBuffFail = not serverUpdateBuffIdDict[buffId]
+			local rejectBuff = self._rejectTypes and self._rejectTypes[buffCO.typeId] or self._rejectIds and self._rejectIds[buffId]
 
-			if var_12_7 and var_12_8 and not var_12_9 then
-				arg_12_0:_checkAdd(var_0_3)
+			if isAddBuff and updateBuffFail and not rejectBuff then
+				self:_checkAdd(invalidBuff2Id)
 
 				break
 			end
@@ -239,59 +252,61 @@ function var_0_0._onSkillPlayFinish(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
 	end
 end
 
-function var_0_0._checkAdd(arg_13_0, arg_13_1)
-	if not FightViewTechniqueModel.instance:addUnread(arg_13_1) then
+function FightViewTechnique:_checkAdd(id)
+	local mo = FightViewTechniqueModel.instance:addUnread(id)
+
+	if not mo then
 		return
 	end
 
-	local var_13_0 = FightViewTechniqueModel.instance:getPropertyStr()
+	local propertyStr = FightViewTechniqueModel.instance:getPropertyStr()
 
-	PlayerRpc.instance:sendSetSimplePropertyRequest(PlayerEnum.SimpleProperty.FightTechnique, var_13_0)
-	arg_13_0:_udpateAnchorY()
+	PlayerRpc.instance:sendSetSimplePropertyRequest(PlayerEnum.SimpleProperty.FightTechnique, propertyStr)
+	self:_udpateAnchorY()
 end
 
-function var_0_0._updateSimpleProperty(arg_14_0, arg_14_1)
-	if arg_14_1 == PlayerEnum.SimpleProperty.FightTechnique then
-		arg_14_0:_udpateAnchorY()
+function FightViewTechnique:_updateSimpleProperty(simplePropertyId)
+	if simplePropertyId == PlayerEnum.SimpleProperty.FightTechnique then
+		self:_udpateAnchorY()
 	end
 end
 
-function var_0_0._udpateAnchorY(arg_15_0)
-	local var_15_0 = {}
+function FightViewTechnique:_udpateAnchorY()
+	local temp_data = {}
 
-	for iter_15_0, iter_15_1 in ipairs(FightViewTechniqueModel.instance:getList()) do
-		local var_15_1 = lua_fight_technique.configDict[iter_15_1.id]
+	for _, mo in ipairs(FightViewTechniqueModel.instance:getList()) do
+		local co = lua_fight_technique.configDict[mo.id]
 
-		if var_15_1 and var_15_1.iconShow == "1" then
-			table.insert(var_15_0, iter_15_1)
+		if co and co.iconShow == "1" then
+			table.insert(temp_data, mo)
 
-			if #var_15_0 >= 3 then
+			if #temp_data >= 3 then
 				break
 			end
 		end
 	end
 
-	FightViewTechniqueListModel.instance:showUnreadFightViewTechniqueList(var_15_0)
+	FightViewTechniqueListModel.instance:showUnreadFightViewTechniqueList(temp_data)
 
-	local var_15_2 = #var_15_0
+	local unreadCount = #temp_data
 
-	if var_15_2 >= 3 then
-		recthelper.setAnchorY(arg_15_0._scrollGO.transform, arg_15_0._originY)
-	elseif var_15_2 > 0 then
-		recthelper.setAnchorY(arg_15_0._scrollGO.transform, arg_15_0._originY - (3 - var_15_2) * 140 / 2)
+	if unreadCount >= 3 then
+		recthelper.setAnchorY(self._scrollGO.transform, self._originY)
+	elseif unreadCount > 0 then
+		recthelper.setAnchorY(self._scrollGO.transform, self._originY - (3 - unreadCount) * 140 / 2)
 	end
 
-	local var_15_3 = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.FightTechnique)
+	local isOpenShow = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.FightTechnique)
 
-	gohelper.setActive(arg_15_0._scrollGO, var_15_3 and var_15_2 > 0)
+	gohelper.setActive(self._scrollGO, isOpenShow and unreadCount > 0)
 end
 
-function var_0_0._onSetStateForDialogBeforeStartFight(arg_16_0, arg_16_1)
-	gohelper.setActive(arg_16_0._scrollGO, not arg_16_1)
+function FightViewTechnique:_onSetStateForDialogBeforeStartFight(state)
+	gohelper.setActive(self._scrollGO, not state)
 
-	if not arg_16_1 then
-		arg_16_0:_udpateAnchorY()
+	if not state then
+		self:_udpateAnchorY()
 	end
 end
 
-return var_0_0
+return FightViewTechnique

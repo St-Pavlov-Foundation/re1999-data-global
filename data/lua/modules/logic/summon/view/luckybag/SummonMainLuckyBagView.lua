@@ -1,145 +1,149 @@
-﻿module("modules.logic.summon.view.luckybag.SummonMainLuckyBagView", package.seeall)
+﻿-- chunkname: @modules/logic/summon/view/luckybag/SummonMainLuckyBagView.lua
 
-local var_0_0 = class("SummonMainLuckyBagView", BaseView)
+module("modules.logic.summon.view.luckybag.SummonMainLuckyBagView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goui = gohelper.findChild(arg_1_0.viewGO, "#go_ui")
-	arg_1_0._gocharacteritem1 = gohelper.findChild(arg_1_0.viewGO, "#go_ui/current/right/#go_characteritem1")
-	arg_1_0._gocharacteritem2 = gohelper.findChild(arg_1_0.viewGO, "#go_ui/current/right/#go_characteritem2")
-	arg_1_0._btnsummon1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_ui/summonbtns/summon1/#btn_summon1")
-	arg_1_0._simagecurrency1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/summonbtns/summon1/currency/#simage_currency1")
-	arg_1_0._txtcurrency11 = gohelper.findChildText(arg_1_0.viewGO, "#go_ui/summonbtns/summon1/currency/#txt_currency1_1")
-	arg_1_0._txtcurrency12 = gohelper.findChildText(arg_1_0.viewGO, "#go_ui/summonbtns/summon1/currency/#txt_currency1_2")
-	arg_1_0._gosummon10 = gohelper.findChild(arg_1_0.viewGO, "#go_ui/summonbtns/summon10")
-	arg_1_0._btnsummon10 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_ui/summonbtns/summon10/#btn_summon10")
-	arg_1_0._simagecurrency10 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/summonbtns/summon10/currency/#simage_currency10")
-	arg_1_0._txtcurrency101 = gohelper.findChildText(arg_1_0.viewGO, "#go_ui/summonbtns/summon10/currency/#txt_currency10_1")
-	arg_1_0._txtcurrency102 = gohelper.findChildText(arg_1_0.viewGO, "#go_ui/summonbtns/summon10/currency/#txt_currency10_2")
-	arg_1_0._gopageitem = gohelper.findChild(arg_1_0.viewGO, "#go_ui/pageicon/#go_pageitem")
-	arg_1_0._golefttop = gohelper.findChild(arg_1_0.viewGO, "#go_ui/#go_lefttop")
-	arg_1_0._gorighttop = gohelper.findChild(arg_1_0.viewGO, "#go_ui/#go_righttop")
-	arg_1_0._gosummonbtns = gohelper.findChild(arg_1_0.viewGO, "#go_ui/summonbtns")
-	arg_1_0._goluckybagbtns = gohelper.findChild(arg_1_0.viewGO, "#go_ui/#go_luckybagopen")
-	arg_1_0._goalreadyinvited = gohelper.findChild(arg_1_0.viewGO, "#go_ui/#go_luckybagopen/#go_alreadyinvited")
-	arg_1_0._goinvite = gohelper.findChild(arg_1_0.viewGO, "#go_ui/#go_luckybagopen/#go_invite")
-	arg_1_0._txtdeadline = gohelper.findChildText(arg_1_0.viewGO, "#go_ui/current/#txt_deadline")
-	arg_1_0._simageline = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/#txt_deadline/#simage_line")
-	arg_1_0._txttimes = gohelper.findChildText(arg_1_0.viewGO, "#go_ui/#go_remaintimes/bg/#txt_times")
-	arg_1_0._goremaintimes = gohelper.findChild(arg_1_0.viewGO, "#go_ui/#go_remaintimes")
+local SummonMainLuckyBagView = class("SummonMainLuckyBagView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SummonMainLuckyBagView:onInitView()
+	self._goui = gohelper.findChild(self.viewGO, "#go_ui")
+	self._gocharacteritem1 = gohelper.findChild(self.viewGO, "#go_ui/current/right/#go_characteritem1")
+	self._gocharacteritem2 = gohelper.findChild(self.viewGO, "#go_ui/current/right/#go_characteritem2")
+	self._btnsummon1 = gohelper.findChildButtonWithAudio(self.viewGO, "#go_ui/summonbtns/summon1/#btn_summon1")
+	self._simagecurrency1 = gohelper.findChildSingleImage(self.viewGO, "#go_ui/summonbtns/summon1/currency/#simage_currency1")
+	self._txtcurrency11 = gohelper.findChildText(self.viewGO, "#go_ui/summonbtns/summon1/currency/#txt_currency1_1")
+	self._txtcurrency12 = gohelper.findChildText(self.viewGO, "#go_ui/summonbtns/summon1/currency/#txt_currency1_2")
+	self._gosummon10 = gohelper.findChild(self.viewGO, "#go_ui/summonbtns/summon10")
+	self._btnsummon10 = gohelper.findChildButtonWithAudio(self.viewGO, "#go_ui/summonbtns/summon10/#btn_summon10")
+	self._simagecurrency10 = gohelper.findChildSingleImage(self.viewGO, "#go_ui/summonbtns/summon10/currency/#simage_currency10")
+	self._txtcurrency101 = gohelper.findChildText(self.viewGO, "#go_ui/summonbtns/summon10/currency/#txt_currency10_1")
+	self._txtcurrency102 = gohelper.findChildText(self.viewGO, "#go_ui/summonbtns/summon10/currency/#txt_currency10_2")
+	self._gopageitem = gohelper.findChild(self.viewGO, "#go_ui/pageicon/#go_pageitem")
+	self._golefttop = gohelper.findChild(self.viewGO, "#go_ui/#go_lefttop")
+	self._gorighttop = gohelper.findChild(self.viewGO, "#go_ui/#go_righttop")
+	self._gosummonbtns = gohelper.findChild(self.viewGO, "#go_ui/summonbtns")
+	self._goluckybagbtns = gohelper.findChild(self.viewGO, "#go_ui/#go_luckybagopen")
+	self._goalreadyinvited = gohelper.findChild(self.viewGO, "#go_ui/#go_luckybagopen/#go_alreadyinvited")
+	self._goinvite = gohelper.findChild(self.viewGO, "#go_ui/#go_luckybagopen/#go_invite")
+	self._txtdeadline = gohelper.findChildText(self.viewGO, "#go_ui/current/#txt_deadline")
+	self._simageline = gohelper.findChildSingleImage(self.viewGO, "#go_ui/current/#txt_deadline/#simage_line")
+	self._txttimes = gohelper.findChildText(self.viewGO, "#go_ui/#go_remaintimes/bg/#txt_times")
+	self._goremaintimes = gohelper.findChild(self.viewGO, "#go_ui/#go_remaintimes")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnsummon1:AddClickListener(arg_2_0._btnsummon1OnClick, arg_2_0)
-	arg_2_0._btnsummon10:AddClickListener(arg_2_0._btnsummon10OnClick, arg_2_0)
+function SummonMainLuckyBagView:addEvents()
+	self._btnsummon1:AddClickListener(self._btnsummon1OnClick, self)
+	self._btnsummon10:AddClickListener(self._btnsummon10OnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnsummon1:RemoveClickListener()
-	arg_3_0._btnsummon10:RemoveClickListener()
+function SummonMainLuckyBagView:removeEvents()
+	self._btnsummon1:RemoveClickListener()
+	self._btnsummon10:RemoveClickListener()
 end
 
-var_0_0.preloadList = {
+SummonMainLuckyBagView.preloadList = {
 	"singlebg/summon/heroversion_2_4/v2a4_fudai/v2a4_fudai_summon_fullbg1.png",
 	"singlebg/summon/heroversion_2_4/v2a4_fudai/v2a4_fudai_summon_role1.png",
 	"singlebg/summon/heroversion_2_4/v2a4_fudai/v2a4_fudai_summon_role2.png"
 }
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._pageitems = {}
-	arg_4_0._animRoot = arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function SummonMainLuckyBagView:_editableInitView()
+	self._pageitems = {}
+	self._animRoot = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	arg_4_0._simageline:LoadImage(ResUrl.getSummonHeroIcon("title_img_deco"))
+	self._simageline:LoadImage(ResUrl.getSummonHeroIcon("title_img_deco"))
 
-	arg_4_0._rectremaintimes = arg_4_0._goremaintimes.transform
+	self._rectremaintimes = self._goremaintimes.transform
 
-	arg_4_0:initData()
-	arg_4_0:initSingleBg()
-	arg_4_0:initLuckyBagComp()
+	self:initData()
+	self:initSingleBg()
+	self:initLuckyBagComp()
 end
 
-function var_0_0.onDestroyView(arg_5_0)
-	for iter_5_0 = 1, arg_5_0._luckyBagCount do
-		local var_5_0 = arg_5_0:getLuckyBagDetailBtn(iter_5_0)
+function SummonMainLuckyBagView:onDestroyView()
+	for i = 1, self._luckyBagCount do
+		local btn = self:getLuckyBagDetailBtn(i)
 
-		if var_5_0 then
-			var_5_0:RemoveClickListener()
+		if btn then
+			btn:RemoveClickListener()
 		end
 
-		local var_5_1 = arg_5_0:getLuckyBagUseBtn(iter_5_0)
+		local useBtn = self:getLuckyBagUseBtn(i)
 
-		if var_5_1 then
-			var_5_1:RemoveClickListener()
+		if useBtn then
+			useBtn:RemoveClickListener()
 		end
 
-		arg_5_0["_simagerole" .. tostring(iter_5_0)]:UnLoadImage()
-		arg_5_0["_simageshowicon" .. tostring(iter_5_0)]:UnLoadImage()
+		self["_simagerole" .. tostring(i)]:UnLoadImage()
+		self["_simageshowicon" .. tostring(i)]:UnLoadImage()
 	end
 
-	arg_5_0._simagecurrency1:UnLoadImage()
-	arg_5_0._simagecurrency10:UnLoadImage()
-	arg_5_0._simageline:UnLoadImage()
+	self._simagecurrency1:UnLoadImage()
+	self._simagecurrency10:UnLoadImage()
+	self._simageline:UnLoadImage()
 
-	if arg_5_0._compFreeButton then
-		arg_5_0._compFreeButton:dispose()
+	if self._compFreeButton then
+		self._compFreeButton:dispose()
 
-		arg_5_0._compFreeButton = nil
+		self._compFreeButton = nil
 	end
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function SummonMainLuckyBagView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
+function SummonMainLuckyBagView:onOpen()
 	logNormal("SummonMainLuckyBagView:onOpen()")
-	arg_7_0:addEventCb(SummonController.instance, SummonEvent.onSummonFailed, arg_7_0.onSummonFailed, arg_7_0)
-	arg_7_0:addEventCb(SummonController.instance, SummonEvent.onSummonReply, arg_7_0.onSummonReply, arg_7_0)
-	arg_7_0:addEventCb(SummonController.instance, SummonEvent.onViewCanPlayEnterAnim, arg_7_0.playerEnterAnimFromScene, arg_7_0)
-	arg_7_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_7_0.onItemChanged, arg_7_0)
-	arg_7_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_7_0.onItemChanged, arg_7_0)
-	arg_7_0:addEventCb(SummonController.instance, SummonEvent.onSummonInfoGot, arg_7_0.refreshView, arg_7_0)
-	arg_7_0:addEventCb(SummonController.instance, SummonEvent.onRemainTimeCountdown, arg_7_0._refreshOpenTime, arg_7_0)
-	arg_7_0:playEnterAnim()
-	arg_7_0:refreshView()
-	arg_7_0:checkAutoOpenLuckyBag()
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonFailed, self.onSummonFailed, self)
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonReply, self.onSummonReply, self)
+	self:addEventCb(SummonController.instance, SummonEvent.onViewCanPlayEnterAnim, self.playerEnterAnimFromScene, self)
+	self:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self.onItemChanged, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self.onItemChanged, self)
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonInfoGot, self.refreshView, self)
+	self:addEventCb(SummonController.instance, SummonEvent.onRemainTimeCountdown, self._refreshOpenTime, self)
+	self:playEnterAnim()
+	self:refreshView()
+	self:checkAutoOpenLuckyBag()
 	SummonController.instance:dispatchEvent(SummonEvent.LuckyBagViewOpen)
 end
 
-function var_0_0.playEnterAnim(arg_8_0)
+function SummonMainLuckyBagView:playEnterAnim()
 	if SummonMainModel.instance:getFirstTimeSwitch() then
 		SummonMainModel.instance:setFirstTimeSwitch(false)
-		arg_8_0._animRoot:Play(SummonEnum.SummonCharAnimationEnter, 0, 0)
+		self._animRoot:Play(SummonEnum.SummonCharAnimationEnter, 0, 0)
 	else
-		arg_8_0._animRoot:Play(SummonEnum.SummonCharAnimationSwitch, 0, 0)
+		self._animRoot:Play(SummonEnum.SummonCharAnimationSwitch, 0, 0)
 	end
 end
 
-function var_0_0.playerEnterAnimFromScene(arg_9_0)
-	arg_9_0._animRoot:Play(SummonEnum.SummonCharAnimationEnter, 0, 0)
+function SummonMainLuckyBagView:playerEnterAnimFromScene()
+	self._animRoot:Play(SummonEnum.SummonCharAnimationEnter, 0, 0)
 end
 
-function var_0_0.checkAutoOpenLuckyBag(arg_10_0)
-	local var_10_0 = SummonMainModel.instance:getCurPool()
+function SummonMainLuckyBagView:checkAutoOpenLuckyBag()
+	local curPool = SummonMainModel.instance:getCurPool()
 
-	if not var_10_0 then
+	if not curPool then
 		return
 	end
 
-	local var_10_1 = var_10_0.id
-	local var_10_2 = SummonConfig.instance:getSummonLuckyBag(var_10_1)
+	local poolId = curPool.id
+	local luckyBagIdList = SummonConfig.instance:getSummonLuckyBag(poolId)
 
-	if var_10_2 and next(var_10_2) then
-		for iter_10_0, iter_10_1 in ipairs(var_10_2) do
-			if SummonLuckyBagModel.instance:isLuckyBagGot(var_10_1, iter_10_1) and not SummonLuckyBagModel.instance:isLuckyBagOpened(var_10_1, iter_10_1) and SummonLuckyBagModel.instance:needAutoPopup(var_10_1, iter_10_1) then
+	if luckyBagIdList and next(luckyBagIdList) then
+		for _, luckyBagId in ipairs(luckyBagIdList) do
+			local isGot = SummonLuckyBagModel.instance:isLuckyBagGot(poolId, luckyBagId)
+
+			if isGot and not SummonLuckyBagModel.instance:isLuckyBagOpened(poolId, luckyBagId) and SummonLuckyBagModel.instance:needAutoPopup(poolId, luckyBagId) then
 				ViewMgr.instance:openView(ViewName.SummonLuckyBagChoice, {
-					poolId = var_10_1,
-					luckyBagId = iter_10_1
+					poolId = poolId,
+					luckyBagId = luckyBagId
 				})
-				SummonLuckyBagModel.instance:recordAutoPopup(var_10_1, iter_10_1)
+				SummonLuckyBagModel.instance:recordAutoPopup(poolId, luckyBagId)
 
 				break
 			end
@@ -147,229 +151,243 @@ function var_0_0.checkAutoOpenLuckyBag(arg_10_0)
 	end
 end
 
-function var_0_0.onClose(arg_11_0)
+function SummonMainLuckyBagView:onClose()
 	logNormal("SummonMainLuckyBagView:onClose()")
-	arg_11_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_11_0.onViewCloseFinish, arg_11_0)
-	arg_11_0:removeEventCb(SummonController.instance, SummonEvent.onSummonFailed, arg_11_0.onSummonFailed, arg_11_0)
-	arg_11_0:removeEventCb(SummonController.instance, SummonEvent.onSummonReply, arg_11_0.onSummonReply, arg_11_0)
-	arg_11_0:removeEventCb(SummonController.instance, SummonEvent.onViewCanPlayEnterAnim, arg_11_0.playerEnterAnimFromScene, arg_11_0)
-	arg_11_0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_11_0.onItemChanged, arg_11_0)
-	arg_11_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_11_0.onItemChanged, arg_11_0)
-	arg_11_0:removeEventCb(SummonController.instance, SummonEvent.onSummonInfoGot, arg_11_0.refreshView, arg_11_0)
-	arg_11_0:removeEventCb(SummonController.instance, SummonEvent.onRemainTimeCountdown, arg_11_0._refreshOpenTime, arg_11_0)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self.onViewCloseFinish, self)
+	self:removeEventCb(SummonController.instance, SummonEvent.onSummonFailed, self.onSummonFailed, self)
+	self:removeEventCb(SummonController.instance, SummonEvent.onSummonReply, self.onSummonReply, self)
+	self:removeEventCb(SummonController.instance, SummonEvent.onViewCanPlayEnterAnim, self.playerEnterAnimFromScene, self)
+	self:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self.onItemChanged, self)
+	self:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self.onItemChanged, self)
+	self:removeEventCb(SummonController.instance, SummonEvent.onSummonInfoGot, self.refreshView, self)
+	self:removeEventCb(SummonController.instance, SummonEvent.onRemainTimeCountdown, self._refreshOpenTime, self)
 end
 
-function var_0_0.initData(arg_12_0)
-	local var_12_0 = SummonMainModel.instance:getCurPool().id
+function SummonMainLuckyBagView:initData()
+	local curPool = SummonMainModel.instance:getCurPool()
+	local poolId = curPool.id
+	local luckyBagList = SummonConfig.instance:getSummonLuckyBag(poolId)
 
-	arg_12_0._luckyBagList = SummonConfig.instance:getSummonLuckyBag(var_12_0)
-	arg_12_0._luckyBagCount = 2
-	arg_12_0._luckyBagUseDic = {}
+	self._luckyBagList = luckyBagList
+	self._luckyBagCount = 2
+	self._luckyBagUseDic = {}
 end
 
-function var_0_0.initSingleBg(arg_13_0)
-	for iter_13_0 = 1, arg_13_0._luckyBagCount do
-		arg_13_0["_simagerole" .. tostring(iter_13_0)] = gohelper.findChildSingleImage(arg_13_0.viewGO, "#go_ui/current/#simage_role" .. tostring(iter_13_0))
-		arg_13_0["_simageshowicon" .. tostring(iter_13_0)] = gohelper.findChildSingleImage(arg_13_0.viewGO, string.format("#go_ui/current/right/#go_characteritem%s/bg/dec1", iter_13_0))
+function SummonMainLuckyBagView:initSingleBg()
+	for i = 1, self._luckyBagCount do
+		self["_simagerole" .. tostring(i)] = gohelper.findChildSingleImage(self.viewGO, "#go_ui/current/#simage_role" .. tostring(i))
+		self["_simageshowicon" .. tostring(i)] = gohelper.findChildSingleImage(self.viewGO, string.format("#go_ui/current/right/#go_characteritem%s/bg/dec1", i))
 	end
 end
 
-function var_0_0.initLuckyBagComp(arg_14_0)
-	for iter_14_0 = 1, arg_14_0._luckyBagCount do
-		local var_14_0 = "_btnluckybag" .. tostring(iter_14_0)
-		local var_14_1 = gohelper.findChildButtonWithAudio(arg_14_0.viewGO, string.format("#go_ui/current/right/#go_characteritem%s/btn_detail", iter_14_0))
+function SummonMainLuckyBagView:initLuckyBagComp()
+	for i = 1, self._luckyBagCount do
+		local name = "_btnluckybag" .. tostring(i)
+		local btn = gohelper.findChildButtonWithAudio(self.viewGO, string.format("#go_ui/current/right/#go_characteritem%s/btn_detail", i))
 
-		if var_14_1 then
-			arg_14_0[var_14_0] = var_14_1
+		if btn then
+			self[name] = btn
 
-			var_14_1:AddClickListener(var_0_0.onClickLuckyBagDetail, arg_14_0, iter_14_0)
+			btn:AddClickListener(SummonMainLuckyBagView.onClickLuckyBagDetail, self, i)
 		end
 
-		local var_14_2 = "_txtName" .. tostring(iter_14_0)
-		local var_14_3 = "_gogotvfx" .. tostring(iter_14_0)
-		local var_14_4 = "_gogotimage" .. tostring(iter_14_0)
-		local var_14_5 = "_animatorGet" .. tostring(iter_14_0)
-		local var_14_6 = "_reddot" .. tostring(iter_14_0)
+		local txtName = "_txtName" .. tostring(i)
+		local goGotVfxName = "_gogotvfx" .. tostring(i)
+		local goGotImageName = "_gogotimage" .. tostring(i)
+		local goUseAnimName = "_animatorGet" .. tostring(i)
+		local reddotName = "_reddot" .. tostring(i)
 
-		arg_14_0[var_14_2] = gohelper.findChildText(arg_14_0.viewGO, string.format("#go_ui/current/right/#go_characteritem%s/bg/txt_bg/txt1", iter_14_0))
-		arg_14_0[var_14_3] = gohelper.findChild(arg_14_0.viewGO, string.format("#go_ui/current/right/#go_characteritem%s/bg/vx_light", iter_14_0))
-		arg_14_0[var_14_4] = gohelper.findChild(arg_14_0.viewGO, string.format("#go_ui/current/right/#go_characteritem%s/bg/#simage_alreadyget", iter_14_0))
-		arg_14_0[var_14_5] = gohelper.findChildComponent(arg_14_0.viewGO, string.format("#go_ui/current/right/#go_characteritem%s/bg/#simage_alreadyget/go_hasget", iter_14_0), gohelper.Type_Animator)
+		self[txtName] = gohelper.findChildText(self.viewGO, string.format("#go_ui/current/right/#go_characteritem%s/bg/txt_bg/txt1", i))
+		self[goGotVfxName] = gohelper.findChild(self.viewGO, string.format("#go_ui/current/right/#go_characteritem%s/bg/vx_light", i))
+		self[goGotImageName] = gohelper.findChild(self.viewGO, string.format("#go_ui/current/right/#go_characteritem%s/bg/#simage_alreadyget", i))
+		self[goUseAnimName] = gohelper.findChildComponent(self.viewGO, string.format("#go_ui/current/right/#go_characteritem%s/bg/#simage_alreadyget/go_hasget", i), gohelper.Type_Animator)
 
-		local var_14_7 = gohelper.findChild(arg_14_0.viewGO, string.format("#go_ui/current/right/#go_characteritem%s/bg/#go_reddot", iter_14_0))
-		local var_14_8 = arg_14_0._luckyBagList[iter_14_0]
+		local redDotParent = gohelper.findChild(self.viewGO, string.format("#go_ui/current/right/#go_characteritem%s/bg/#go_reddot", i))
+		local uid = self._luckyBagList[i]
 
-		arg_14_0[var_14_6] = RedDotController.instance:addRedDot(var_14_7, RedDotEnum.DotNode.V3a3SkinDiscountCompensate, var_14_8)
+		self[reddotName] = RedDotController.instance:addRedDot(redDotParent, RedDotEnum.DotNode.V3a3SkinDiscountCompensate, uid)
 
-		local var_14_9 = gohelper.findChildButton(arg_14_0.viewGO, string.format("#go_ui/current/right/#go_characteritem%s/#btn_use", iter_14_0))
+		local btnUse = gohelper.findChildButton(self.viewGO, string.format("#go_ui/current/right/#go_characteritem%s/#btn_use", i))
 
-		if var_14_9 then
-			arg_14_0["#btn_use" .. tostring(iter_14_0)] = var_14_9
+		if btnUse then
+			local btnUseName = "#btn_use" .. tostring(i)
 
-			var_14_9:AddClickListener(var_0_0._btnopenluckbagOnClick, arg_14_0, iter_14_0)
+			self[btnUseName] = btnUse
+
+			btnUse:AddClickListener(SummonMainLuckyBagView._btnopenluckbagOnClick, self, i)
 		end
 
-		local var_14_10 = gohelper.findChild(arg_14_0.viewGO, string.format("#go_ui/current/right/#go_characteritem%s/bg/#simage_alreadyget/go_hasget", iter_14_0))
+		local goHasGet = gohelper.findChild(self.viewGO, string.format("#go_ui/current/right/#go_characteritem%s/bg/#simage_alreadyget/go_hasget", i))
 
-		if var_14_10 then
-			arg_14_0["_gohasget" .. tostring(iter_14_0)] = var_14_10
+		if goHasGet then
+			local goHasOpenName = "_gohasget" .. tostring(i)
+
+			self[goHasOpenName] = goHasGet
 		end
 
-		local var_14_11 = gohelper.findChild(arg_14_0.viewGO, string.format("#go_ui/current/right/#go_characteritem%s/bg/bg_opened", iter_14_0))
+		local goOpenBg = gohelper.findChild(self.viewGO, string.format("#go_ui/current/right/#go_characteritem%s/bg/bg_opened", i))
 
-		if var_14_11 then
-			arg_14_0["_goopenbg" .. tostring(iter_14_0)] = var_14_11
+		if goOpenBg then
+			local goOpenBgName = "_goopenbg" .. tostring(i)
+
+			self[goOpenBgName] = goOpenBg
 		end
 
-		local var_14_12 = gohelper.findChild(arg_14_0.viewGO, string.format("#go_ui/current/right/#go_characteritem%s/bg/bg_unopen", iter_14_0))
+		local goNoOpenBg = gohelper.findChild(self.viewGO, string.format("#go_ui/current/right/#go_characteritem%s/bg/bg_unopen", i))
 
-		if var_14_12 then
-			arg_14_0["_gonoopenbg" .. tostring(iter_14_0)] = var_14_12
+		if goNoOpenBg then
+			local goNoOpenBgName = "_gonoopenbg" .. tostring(i)
+
+			self[goNoOpenBgName] = goNoOpenBg
 		end
 
-		local var_14_13 = gohelper.findChildImage(arg_14_0.viewGO, string.format("#go_ui/current/right/#go_characteritem%s/bg/icon_star", iter_14_0))
+		local iconStar = gohelper.findChildImage(self.viewGO, string.format("#go_ui/current/right/#go_characteritem%s/bg/icon_star", i))
 
-		if var_14_13 then
-			arg_14_0["_iconstar" .. tostring(iter_14_0)] = var_14_13
+		if iconStar then
+			local iconStarName = "_iconstar" .. tostring(i)
+
+			self[iconStarName] = iconStar
 		end
 	end
 end
 
-function var_0_0._btnopenluckbagOnClick(arg_15_0, arg_15_1)
-	local var_15_0 = SummonMainModel.instance:getCurPool()
+function SummonMainLuckyBagView:_btnopenluckbagOnClick(index)
+	local curPool = SummonMainModel.instance:getCurPool()
 
-	if not var_15_0 or not arg_15_0._luckyBagList then
+	if not curPool or not self._luckyBagList then
 		return
 	end
 
-	local var_15_1 = arg_15_0._luckyBagList[arg_15_1]
+	local luckyBagId = self._luckyBagList[index]
 
-	if var_15_1 == nil then
+	if luckyBagId == nil then
 		return
 	end
 
-	local var_15_2 = var_15_0.id
+	local poolId = curPool.id
+	local isGot = SummonLuckyBagModel.instance:isLuckyBagGot(poolId, luckyBagId)
 
-	if SummonLuckyBagModel.instance:isLuckyBagGot(var_15_2, var_15_1) and not SummonLuckyBagModel.instance:isLuckyBagOpened(var_15_2, var_15_1) then
+	if isGot and not SummonLuckyBagModel.instance:isLuckyBagOpened(poolId, luckyBagId) then
 		ViewMgr.instance:openView(ViewName.SummonLuckyBagChoice, {
-			poolId = var_15_2,
-			luckyBagId = var_15_1
+			poolId = poolId,
+			luckyBagId = luckyBagId
 		})
 	end
 end
 
-function var_0_0._btnsummon1OnClick(arg_16_0)
+function SummonMainLuckyBagView:_btnsummon1OnClick()
 	if SummonController.instance:isInSummonGuide() then
 		return
 	end
 
-	local var_16_0 = SummonMainModel.instance:getCurPool()
+	local curPool = SummonMainModel.instance:getCurPool()
 
-	if not var_16_0 then
+	if not curPool then
 		return
 	end
 
-	local var_16_1, var_16_2, var_16_3 = SummonMainModel.getCostByConfig(var_16_0.cost1)
-	local var_16_4 = {
-		type = var_16_1,
-		id = var_16_2,
-		quantity = var_16_3,
-		callback = arg_16_0._summon1Confirm,
-		callbackObj = arg_16_0
-	}
+	local cost_type, cost_id, cost_num = SummonMainModel.getCostByConfig(curPool.cost1)
+	local param = {}
 
-	var_16_4.notEnough = false
+	param.type = cost_type
+	param.id = cost_id
+	param.quantity = cost_num
+	param.callback = self._summon1Confirm
+	param.callbackObj = self
+	param.notEnough = false
 
-	local var_16_5 = var_16_3 <= ItemModel.instance:getItemQuantity(var_16_1, var_16_2)
-	local var_16_6 = SummonMainModel.instance.everyCostCount
-	local var_16_7 = SummonMainModel.instance:getOwnCostCurrencyNum()
+	local num = ItemModel.instance:getItemQuantity(cost_type, cost_id)
+	local itemEnough = cost_num <= num
+	local everyCostCount = SummonMainModel.instance.everyCostCount
+	local currencyNum = SummonMainModel.instance:getOwnCostCurrencyNum()
 
-	if not var_16_5 and var_16_7 < var_16_6 then
-		var_16_4.notEnough = true
+	if not itemEnough and currencyNum < everyCostCount then
+		param.notEnough = true
 	end
 
-	if var_16_5 then
-		var_16_4.needTransform = false
+	if itemEnough then
+		param.needTransform = false
 
-		arg_16_0:_summon1Confirm()
-
-		return
-	else
-		var_16_4.needTransform = true
-		var_16_4.cost_type = SummonMainModel.instance.costCurrencyType
-		var_16_4.cost_id = SummonMainModel.instance.costCurrencyId
-		var_16_4.cost_quantity = var_16_6
-		var_16_4.miss_quantity = 1
-	end
-
-	SummonMainController.instance:openSummonConfirmView(var_16_4)
-end
-
-function var_0_0._btnsummon10OnClick(arg_17_0)
-	if not arg_17_0:checkRemainTimesEnough10() then
-		return
-	end
-
-	local var_17_0 = SummonMainModel.instance:getCurPool()
-
-	if not var_17_0 then
-		return
-	end
-
-	local var_17_1, var_17_2, var_17_3, var_17_4 = SummonMainModel.getCostByConfig(var_17_0.cost10)
-	local var_17_5 = {
-		type = var_17_1,
-		id = var_17_2,
-		quantity = var_17_3,
-		callback = arg_17_0._summon10Confirm,
-		callbackObj = arg_17_0
-	}
-
-	var_17_5.notEnough = false
-	var_17_4 = var_17_4 or ItemModel.instance:getItemQuantity(var_17_1, var_17_2)
-
-	local var_17_6 = var_17_3 <= var_17_4
-	local var_17_7 = SummonMainModel.instance.everyCostCount
-	local var_17_8 = SummonMainModel.instance:getOwnCostCurrencyNum()
-	local var_17_9 = 10 - var_17_4
-	local var_17_10 = var_17_7 * var_17_9
-
-	if not var_17_6 and var_17_8 < var_17_10 then
-		var_17_5.notEnough = true
-	end
-
-	if var_17_6 then
-		var_17_5.needTransform = false
-
-		arg_17_0:_summon10Confirm()
+		self:_summon1Confirm()
 
 		return
 	else
-		var_17_5.needTransform = true
-		var_17_5.cost_type = SummonMainModel.instance.costCurrencyType
-		var_17_5.cost_id = SummonMainModel.instance.costCurrencyId
-		var_17_5.cost_quantity = var_17_10
-		var_17_5.miss_quantity = var_17_9
+		param.needTransform = true
+		param.cost_type = SummonMainModel.instance.costCurrencyType
+		param.cost_id = SummonMainModel.instance.costCurrencyId
+		param.cost_quantity = everyCostCount
+		param.miss_quantity = 1
 	end
 
-	SummonMainController.instance:openSummonConfirmView(var_17_5)
+	SummonMainController.instance:openSummonConfirmView(param)
 end
 
-function var_0_0._summon10Confirm(arg_18_0)
-	local var_18_0 = SummonMainModel.instance:getCurPool()
-
-	if not var_18_0 then
+function SummonMainLuckyBagView:_btnsummon10OnClick()
+	if not self:checkRemainTimesEnough10() then
 		return
 	end
 
-	SummonMainController.instance:sendStartSummon(var_18_0.id, 10, false, true)
+	local curPool = SummonMainModel.instance:getCurPool()
+
+	if not curPool then
+		return
+	end
+
+	local cost_type, cost_id, cost_num, ownNum = SummonMainModel.getCostByConfig(curPool.cost10)
+	local param = {}
+
+	param.type = cost_type
+	param.id = cost_id
+	param.quantity = cost_num
+	param.callback = self._summon10Confirm
+	param.callbackObj = self
+	param.notEnough = false
+	ownNum = ownNum or ItemModel.instance:getItemQuantity(cost_type, cost_id)
+
+	local itemEnough = cost_num <= ownNum
+	local everyCostCount = SummonMainModel.instance.everyCostCount
+	local currencyNum = SummonMainModel.instance:getOwnCostCurrencyNum()
+	local remainCount = 10 - ownNum
+	local costRemain = everyCostCount * remainCount
+
+	if not itemEnough and currencyNum < costRemain then
+		param.notEnough = true
+	end
+
+	if itemEnough then
+		param.needTransform = false
+
+		self:_summon10Confirm()
+
+		return
+	else
+		param.needTransform = true
+		param.cost_type = SummonMainModel.instance.costCurrencyType
+		param.cost_id = SummonMainModel.instance.costCurrencyId
+		param.cost_quantity = costRemain
+		param.miss_quantity = remainCount
+	end
+
+	SummonMainController.instance:openSummonConfirmView(param)
 end
 
-function var_0_0.checkRemainTimesEnough10(arg_19_0)
-	local var_19_0 = SummonMainModel.instance:getCurPool()
+function SummonMainLuckyBagView:_summon10Confirm()
+	local curPool = SummonMainModel.instance:getCurPool()
 
-	if var_19_0 then
-		if SummonLuckyBagModel.instance:getGachaRemainTimes(var_19_0.id) >= 10 then
+	if not curPool then
+		return
+	end
+
+	SummonMainController.instance:sendStartSummon(curPool.id, 10, false, true)
+end
+
+function SummonMainLuckyBagView:checkRemainTimesEnough10()
+	local curPool = SummonMainModel.instance:getCurPool()
+
+	if curPool then
+		local gachaMaxTimes = SummonLuckyBagModel.instance:getGachaRemainTimes(curPool.id)
+
+		if gachaMaxTimes >= 10 then
 			return true
 		else
 			GameFacade.showToast(ToastEnum.SummonLuckyBagLessThanSummon10)
@@ -379,89 +397,91 @@ function var_0_0.checkRemainTimesEnough10(arg_19_0)
 	end
 end
 
-function var_0_0._summon1Confirm(arg_20_0)
-	local var_20_0 = SummonMainModel.instance:getCurPool()
+function SummonMainLuckyBagView:_summon1Confirm()
+	local curPool = SummonMainModel.instance:getCurPool()
 
-	if not var_20_0 then
+	if not curPool then
 		return
 	end
 
-	SummonMainController.instance:sendStartSummon(var_20_0.id, 1, false, true)
+	SummonMainController.instance:sendStartSummon(curPool.id, 1, false, true)
 end
 
-function var_0_0.onClickLuckyBagDetail(arg_21_0, arg_21_1)
-	local var_21_0 = SummonMainModel.instance:getCurPool()
+function SummonMainLuckyBagView:onClickLuckyBagDetail(index)
+	local pool = SummonMainModel.instance:getCurPool()
 
-	if not var_21_0 then
+	if not pool then
 		return
 	end
 
-	if not arg_21_0._luckyBagList then
+	if not self._luckyBagList then
 		return
 	end
 
-	local var_21_1 = arg_21_0._luckyBagList[arg_21_1]
+	local luckyBagId = self._luckyBagList[index]
 
-	if var_21_1 then
-		SummonMainController.instance:openSummonDetail(var_21_0, var_21_1)
+	if luckyBagId then
+		SummonMainController.instance:openSummonDetail(pool, luckyBagId)
 	end
 end
 
-function var_0_0.refreshView(arg_22_0)
-	arg_22_0.summonSuccess = false
+function SummonMainLuckyBagView:refreshView()
+	self.summonSuccess = false
 
-	local var_22_0 = SummonMainModel.instance:getList()
+	local list = SummonMainModel.instance:getList()
 
-	if not var_22_0 or #var_22_0 <= 0 then
-		gohelper.setActive(arg_22_0._goui, false)
+	if not list or #list <= 0 then
+		gohelper.setActive(self._goui, false)
 
 		return
 	end
 
-	arg_22_0:refreshPoolUI()
+	self:refreshPoolUI()
 end
 
-function var_0_0.refreshPoolUI(arg_23_0)
-	local var_23_0 = SummonMainModel.instance:getCurPool()
+function SummonMainLuckyBagView:refreshPoolUI()
+	local pool = SummonMainModel.instance:getCurPool()
 
-	if not var_23_0 then
+	if not pool then
 		return
 	end
 
-	arg_23_0:refreshLuckyBagStatus(var_23_0)
-	arg_23_0:refreshLuckyBagDetails(var_23_0)
-	arg_23_0:_refreshOpenTime()
+	self:refreshLuckyBagStatus(pool)
+	self:refreshLuckyBagDetails(pool)
+	self:_refreshOpenTime()
 end
 
-function var_0_0.refreshLuckyBagDetails(arg_24_0, arg_24_1)
-	local var_24_0 = arg_24_0._luckyBagList
+function SummonMainLuckyBagView:refreshLuckyBagDetails(poolCo)
+	local luckyBagList = self._luckyBagList
 
-	if var_24_0 and next(var_24_0) then
-		local var_24_1 = #var_24_0
+	if luckyBagList and next(luckyBagList) then
+		local len = #luckyBagList
 
-		for iter_24_0 = 1, arg_24_0._luckyBagCount do
-			local var_24_2 = arg_24_0:getLuckyBagDetailBtn(iter_24_0)
+		for i = 1, self._luckyBagCount do
+			local btn = self:getLuckyBagDetailBtn(i)
 
-			if var_24_2 ~= nil then
-				gohelper.setActive(var_24_2, iter_24_0 <= var_24_1)
+			if btn ~= nil then
+				gohelper.setActive(btn, i <= len)
 			end
 
-			local var_24_3 = arg_24_0["_txtName" .. tostring(iter_24_0)]
+			local txtName = "_txtName" .. tostring(i)
+			local txt = self[txtName]
 
-			if var_24_3 ~= nil then
-				gohelper.setActive(var_24_3, iter_24_0 <= var_24_1)
+			if txt ~= nil then
+				gohelper.setActive(txt, i <= len)
 
-				if iter_24_0 <= var_24_1 then
-					local var_24_4 = var_24_0[iter_24_0]
+				if i <= len then
+					local luckyBagId = luckyBagList[i]
+					local luckyBagCo = SummonConfig.instance:getLuckyBag(poolCo.id, luckyBagId)
 
-					var_24_3.text = SummonConfig.instance:getLuckyBag(arg_24_1.id, var_24_4).name
+					txt.text = luckyBagCo.name
 				end
 			end
 		end
 	end
 end
 
-var_0_0.RemainTimesPosition = {
+SummonMainLuckyBagView.RemainTimesPosition = {
 	NoLuckyBag = {
 		x = -232.5,
 		y = 113.9
@@ -472,163 +492,171 @@ var_0_0.RemainTimesPosition = {
 	}
 }
 
-function var_0_0.refreshLuckyBagStatus(arg_25_0, arg_25_1)
-	local var_25_0 = true
+function SummonMainLuckyBagView:refreshLuckyBagStatus(poolCo)
+	local isGot = true
 
-	for iter_25_0, iter_25_1 in ipairs(arg_25_0._luckyBagList) do
-		if not SummonLuckyBagModel.instance:isLuckyBagGot(arg_25_1.id, iter_25_1) then
-			var_25_0 = false
+	for _, luckyBagId in ipairs(self._luckyBagList) do
+		if not SummonLuckyBagModel.instance:isLuckyBagGot(poolCo.id, luckyBagId) then
+			isGot = false
 
 			break
 		end
 	end
 
-	gohelper.setActive(arg_25_0._goluckybagbtns, var_25_0)
-	gohelper.setActive(arg_25_0._gosummonbtns, not var_25_0)
-	arg_25_0:setLuckyBagIconVfx()
+	gohelper.setActive(self._goluckybagbtns, isGot)
+	gohelper.setActive(self._gosummonbtns, not isGot)
+	self:setLuckyBagIconVfx()
 
-	if var_25_0 then
-		arg_25_0:refreshGotStatus(arg_25_1)
+	if isGot then
+		self:refreshGotStatus(poolCo)
 	else
-		arg_25_0:refreshGachaStatus(arg_25_1)
+		self:refreshGachaStatus(poolCo)
 	end
 end
 
-function var_0_0.refreshGotStatus(arg_26_0, arg_26_1)
-	local var_26_0 = 0
+function SummonMainLuckyBagView:refreshGotStatus(poolCo)
+	local isOpenCount = 0
 
-	for iter_26_0, iter_26_1 in ipairs(arg_26_0._luckyBagList) do
-		if SummonLuckyBagModel.instance:isLuckyBagOpened(arg_26_1.id, iter_26_1) then
-			var_26_0 = var_26_0 + 1
+	for _, luckyBagId in ipairs(self._luckyBagList) do
+		if SummonLuckyBagModel.instance:isLuckyBagOpened(poolCo.id, luckyBagId) then
+			isOpenCount = isOpenCount + 1
 		end
 	end
 
-	local var_26_1 = SummonLuckyBagModel.instance:getLuckyGodCount(arg_26_1.id)
-	local var_26_2 = #arg_26_0._luckyBagList
-	local var_26_3 = var_26_2 <= var_26_1
-	local var_26_4 = var_26_2 <= var_26_0
+	local getCount = SummonLuckyBagModel.instance:getLuckyGodCount(poolCo.id)
+	local bagCount = #self._luckyBagList
+	local isAllGet = bagCount <= getCount
+	local isAllOpen = bagCount <= isOpenCount
 
-	gohelper.setActive(arg_26_0._goalreadyinvited, var_26_4)
-	gohelper.setActive(arg_26_0._goinvite, not var_26_4)
-	gohelper.setActive(arg_26_0._goremaintimes, not var_26_3)
+	gohelper.setActive(self._goalreadyinvited, isAllOpen)
+	gohelper.setActive(self._goinvite, not isAllOpen)
+	gohelper.setActive(self._goremaintimes, not isAllGet)
 
-	if not var_26_3 then
-		local var_26_5 = var_0_0.RemainTimesPosition.ExistLuckyBag
+	if not isAllGet then
+		local anchorPos = SummonMainLuckyBagView.RemainTimesPosition.ExistLuckyBag
 
-		recthelper.setAnchor(arg_26_0._rectremaintimes, var_26_5.x, var_26_5.y)
-		arg_26_0:refreshRemainTimes(arg_26_1)
+		recthelper.setAnchor(self._rectremaintimes, anchorPos.x, anchorPos.y)
+		self:refreshRemainTimes(poolCo)
 	end
 end
 
-function var_0_0.refreshGachaStatus(arg_27_0, arg_27_1)
-	arg_27_0:refreshCost()
-	arg_27_0:refreshFreeSummonButton(arg_27_1)
+function SummonMainLuckyBagView:refreshGachaStatus(poolCo)
+	self:refreshCost()
+	self:refreshFreeSummonButton(poolCo)
 
-	local var_27_0 = var_0_0.RemainTimesPosition.NoLuckyBag
+	local anchorPos = SummonMainLuckyBagView.RemainTimesPosition.NoLuckyBag
 
-	recthelper.setAnchor(arg_27_0._rectremaintimes, var_27_0.x, var_27_0.y)
-	arg_27_0:refreshRemainTimes(arg_27_1)
+	recthelper.setAnchor(self._rectremaintimes, anchorPos.x, anchorPos.y)
+	self:refreshRemainTimes(poolCo)
 end
 
-function var_0_0.setLuckyBagIconVfx(arg_28_0)
-	local var_28_0 = SummonMainModel.instance:getCurPool().id
-	local var_28_1 = {}
+function SummonMainLuckyBagView:setLuckyBagIconVfx()
+	local curPool = SummonMainModel.instance:getCurPool()
+	local poolId = curPool.id
+	local redDotList = {}
 
-	for iter_28_0, iter_28_1 in ipairs(arg_28_0._luckyBagList) do
-		local var_28_2 = "_gogotvfx" .. tostring(iter_28_0)
-		local var_28_3 = "_gogotimage" .. tostring(iter_28_0)
-		local var_28_4 = SummonLuckyBagModel.instance:isLuckyBagOpened(var_28_0, iter_28_1)
-		local var_28_5 = SummonLuckyBagModel.instance:isLuckyBagGot(var_28_0, iter_28_1)
-		local var_28_6 = arg_28_0[var_28_2]
+	for i, luckyBagId in ipairs(self._luckyBagList) do
+		local goGotVfxName = "_gogotvfx" .. tostring(i)
+		local goGotImageName = "_gogotimage" .. tostring(i)
+		local isOpen = SummonLuckyBagModel.instance:isLuckyBagOpened(poolId, luckyBagId)
+		local isGet = SummonLuckyBagModel.instance:isLuckyBagGot(poolId, luckyBagId)
+		local goVfx = self[goGotVfxName]
 
-		gohelper.setActive(var_28_6, var_28_5 and not var_28_4)
-		gohelper.setActive(arg_28_0[var_28_3], true)
+		gohelper.setActive(goVfx, isGet and not isOpen)
+		gohelper.setActive(self[goGotImageName], true)
 
-		local var_28_7 = arg_28_0:getLuckyBagHaveGetGo(iter_28_0)
-		local var_28_8 = arg_28_0:getLuckyBagUseBtn(iter_28_0)
+		local goHasGet = self:getLuckyBagHaveGetGo(i)
+		local btnUse = self:getLuckyBagUseBtn(i)
 
-		gohelper.setActive(var_28_7, var_28_5 and var_28_4)
-		gohelper.setActive(var_28_8, var_28_5 and not var_28_4)
+		gohelper.setActive(goHasGet, isGet and isOpen)
+		gohelper.setActive(btnUse, isGet and not isOpen)
 
-		local var_28_9 = arg_28_0["_goopenbg" .. tostring(iter_28_0)]
-		local var_28_10 = arg_28_0["_gonoopenbg" .. tostring(iter_28_0)]
-		local var_28_11 = arg_28_0["_iconstar" .. tostring(iter_28_0)]
+		local goOpenBgName = "_goopenbg" .. tostring(i)
+		local goOpenBg = self[goOpenBgName]
+		local goNoOpenBgName = "_gonoopenbg" .. tostring(i)
+		local goNoOpenBg = self[goNoOpenBgName]
+		local iconStarName = "_iconstar" .. tostring(i)
+		local iconStar = self[iconStarName]
 
-		gohelper.setActive(var_28_9, var_28_4)
-		gohelper.setActive(var_28_10, not var_28_4)
+		gohelper.setActive(goOpenBg, isOpen)
+		gohelper.setActive(goNoOpenBg, not isOpen)
 
-		local var_28_12
+		local alpha = not isOpen and 1 or 0.5
+		local color = iconStar.color
 
-		var_28_12.a, var_28_12 = not var_28_4 and 1 or 0.5, var_28_11.color
-		var_28_11.color = var_28_12
+		color.a = alpha
+		iconStar.color = color
 
-		local var_28_13 = {
+		local singleInfo = {
 			time = 0,
-			id = iter_28_1,
-			value = var_28_5 and not var_28_4 and 1 or 0
+			id = luckyBagId,
+			value = isGet and not isOpen and 1 or 0
 		}
 
-		table.insert(var_28_1, var_28_13)
+		table.insert(redDotList, singleInfo)
 
-		if not var_28_4 or not var_28_5 then
-			arg_28_0._luckyBagUseDic[iter_28_0] = 0
+		if not isOpen or not isGet then
+			self._luckyBagUseDic[i] = 0
 		end
 
-		if var_28_4 and var_28_5 then
-			local var_28_14 = arg_28_0["_animatorGet" .. tostring(iter_28_0)]
+		if isOpen and isGet then
+			local goUseAnimName = "_animatorGet" .. tostring(i)
+			local animator = self[goUseAnimName]
 
-			if var_28_14 then
-				if arg_28_0._luckyBagUseDic[iter_28_0] ~= nil and arg_28_0._luckyBagUseDic[iter_28_0] == 0 then
-					arg_28_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_28_0.onViewCloseFinish, arg_28_0)
-					arg_28_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_28_0.onViewCloseFinish, arg_28_0)
+			if animator then
+				if self._luckyBagUseDic[i] ~= nil and self._luckyBagUseDic[i] == 0 then
+					self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self.onViewCloseFinish, self)
+					self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self.onViewCloseFinish, self)
 				else
-					var_28_14:Play("go_hasget_idle", 0, 0)
+					animator:Play("go_hasget_idle", 0, 0)
 				end
 			end
 		end
 	end
 
-	local var_28_15 = {
+	local reddotItemInfo = {
 		replaceAll = true,
 		defineId = RedDotEnum.DotNode.V3a3SkinDiscountCompensate,
-		infos = var_28_1
+		infos = redDotList
 	}
-	local var_28_16 = {
-		var_28_15
+	local redDotInfos = {
+		reddotItemInfo
 	}
 
-	RedDotModel.instance:setRedDotInfo(var_28_16)
+	RedDotModel.instance:setRedDotInfo(redDotInfos)
 
-	local var_28_17 = {}
-	local var_28_18 = RedDotModel.instance:_getAssociateRedDots(RedDotEnum.DotNode.V3a3SkinDiscountCompensate)
+	local refreshlist = {}
+	local ids = RedDotModel.instance:_getAssociateRedDots(RedDotEnum.DotNode.V3a3SkinDiscountCompensate)
 
-	for iter_28_2, iter_28_3 in pairs(var_28_18) do
-		var_28_17[iter_28_3] = true
+	for _, id in pairs(ids) do
+		refreshlist[id] = true
 	end
 
-	RedDotController.instance:dispatchEvent(RedDotEvent.UpdateRelateDotInfo, var_28_17)
+	RedDotController.instance:dispatchEvent(RedDotEvent.UpdateRelateDotInfo, refreshlist)
 end
 
-function var_0_0.onViewCloseFinish(arg_29_0, arg_29_1)
-	if arg_29_1 == ViewName.CharacterGetView then
-		local var_29_0 = SummonMainModel.instance:getCurPool().id
+function SummonMainLuckyBagView:onViewCloseFinish(viewName)
+	if viewName == ViewName.CharacterGetView then
+		local curPool = SummonMainModel.instance:getCurPool()
+		local poolId = curPool.id
 
-		arg_29_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_29_0.onViewCloseFinish, arg_29_0)
+		self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, self.onViewCloseFinish, self)
 
-		for iter_29_0, iter_29_1 in ipairs(arg_29_0._luckyBagList) do
-			local var_29_1 = SummonLuckyBagModel.instance:isLuckyBagOpened(var_29_0, iter_29_1)
-			local var_29_2 = SummonLuckyBagModel.instance:isLuckyBagGot(var_29_0, iter_29_1)
+		for i, luckyBagId in ipairs(self._luckyBagList) do
+			local isOpen = SummonLuckyBagModel.instance:isLuckyBagOpened(poolId, luckyBagId)
+			local isGet = SummonLuckyBagModel.instance:isLuckyBagGot(poolId, luckyBagId)
 
-			if var_29_1 and var_29_2 then
-				local var_29_3 = arg_29_0["_animatorGet" .. tostring(iter_29_0)]
+			if isOpen and isGet then
+				local goUseAnimName = "_animatorGet" .. tostring(i)
+				local animator = self[goUseAnimName]
 
-				if var_29_3 then
-					if arg_29_0._luckyBagUseDic[iter_29_0] ~= nil and arg_29_0._luckyBagUseDic[iter_29_0] == 0 then
-						arg_29_0._luckyBagUseDic[iter_29_0] = 1
+				if animator then
+					if self._luckyBagUseDic[i] ~= nil and self._luckyBagUseDic[i] == 0 then
+						self._luckyBagUseDic[i] = 1
 
-						var_29_3:Play("go_hasget_in", 0, 0)
+						animator:Play("go_hasget_in", 0, 0)
 					else
-						var_29_3:Play("go_hasget_idle", 0, 0)
+						animator:Play("go_hasget_idle", 0, 0)
 					end
 				end
 			end
@@ -636,105 +664,105 @@ function var_0_0.onViewCloseFinish(arg_29_0, arg_29_1)
 	end
 end
 
-function var_0_0.refreshFreeSummonButton(arg_30_0, arg_30_1)
-	arg_30_0._compFreeButton = arg_30_0._compFreeButton or SummonFreeSingleGacha.New(arg_30_0._btnsummon1.gameObject, arg_30_1.id)
+function SummonMainLuckyBagView:refreshFreeSummonButton(poolCo)
+	self._compFreeButton = self._compFreeButton or SummonFreeSingleGacha.New(self._btnsummon1.gameObject, poolCo.id)
 
-	arg_30_0._compFreeButton:refreshUI()
+	self._compFreeButton:refreshUI()
 end
 
-function var_0_0.refreshRemainTimes(arg_31_0, arg_31_1)
-	local var_31_0 = SummonConfig.getSummonSSRTimes(arg_31_1)
-	local var_31_1 = SummonMainModel.instance:getPoolServerMO(arg_31_1.id)
+function SummonMainLuckyBagView:refreshRemainTimes(poolCo)
+	local times = SummonConfig.getSummonSSRTimes(poolCo)
+	local summonServerMO = SummonMainModel.instance:getPoolServerMO(poolCo.id)
 
-	if var_31_1 and var_31_1.luckyBagMO then
-		local var_31_2 = luaLang("summonluckybag_remain_count")
-		local var_31_3 = math.max(0, var_31_0 - var_31_1.luckyBagMO.notSSRCount)
+	if summonServerMO and summonServerMO.luckyBagMO then
+		local title = luaLang("summonluckybag_remain_count")
+		local remainCount = math.max(0, times - summonServerMO.luckyBagMO.notSSRCount)
 
-		arg_31_0._txttimes.text = GameUtil.getSubPlaceholderLuaLangOneParam(var_31_2, var_31_3)
+		self._txttimes.text = GameUtil.getSubPlaceholderLuaLangOneParam(title, remainCount)
 	else
-		arg_31_0._txttimes.text = "-"
+		self._txttimes.text = "-"
 	end
 end
 
-function var_0_0.refreshCost(arg_32_0)
-	local var_32_0 = SummonMainModel.instance:getCurPool()
+function SummonMainLuckyBagView:refreshCost()
+	local curPool = SummonMainModel.instance:getCurPool()
 
-	if var_32_0 then
-		arg_32_0:_refreshSingleCost(var_32_0.cost1, arg_32_0._simagecurrency1, "_txtcurrency1")
+	if curPool then
+		self:_refreshSingleCost(curPool.cost1, self._simagecurrency1, "_txtcurrency1")
 
-		local var_32_1 = SummonLuckyBagModel.instance:getGachaRemainTimes(var_32_0.id)
+		local gachaMaxTimes = SummonLuckyBagModel.instance:getGachaRemainTimes(curPool.id)
 
-		if var_32_1 and var_32_1 >= 10 then
-			ZProj.UGUIHelper.SetGrayscale(arg_32_0._btnsummon10.gameObject, false)
-			ZProj.UGUIHelper.SetGrayscale(arg_32_0._simagecurrency10.gameObject, false)
+		if gachaMaxTimes and gachaMaxTimes >= 10 then
+			ZProj.UGUIHelper.SetGrayscale(self._btnsummon10.gameObject, false)
+			ZProj.UGUIHelper.SetGrayscale(self._simagecurrency10.gameObject, false)
 		else
-			ZProj.UGUIHelper.SetGrayscale(arg_32_0._btnsummon10.gameObject, true)
-			ZProj.UGUIHelper.SetGrayscale(arg_32_0._simagecurrency10.gameObject, true)
+			ZProj.UGUIHelper.SetGrayscale(self._btnsummon10.gameObject, true)
+			ZProj.UGUIHelper.SetGrayscale(self._simagecurrency10.gameObject, true)
 		end
 
-		arg_32_0:_refreshSingleCost(var_32_0.cost10, arg_32_0._simagecurrency10, "_txtcurrency10")
+		self:_refreshSingleCost(curPool.cost10, self._simagecurrency10, "_txtcurrency10")
 	end
 end
 
-function var_0_0._refreshSingleCost(arg_33_0, arg_33_1, arg_33_2, arg_33_3)
-	local var_33_0, var_33_1, var_33_2 = SummonMainModel.getCostByConfig(arg_33_1, true)
-	local var_33_3 = SummonMainModel.getSummonItemIcon(var_33_0, var_33_1)
+function SummonMainLuckyBagView:_refreshSingleCost(costs, icon, numTxt)
+	local cost_type, cost_id, cost_num = SummonMainModel.getCostByConfig(costs, true)
+	local cost_icon = SummonMainModel.getSummonItemIcon(cost_type, cost_id)
 
-	arg_33_2:LoadImage(var_33_3)
+	icon:LoadImage(cost_icon)
 
-	local var_33_4
+	local num = ItemModel.instance:getItemQuantity(cost_type, cost_id)
+	local enough = cost_num <= num
 
-	var_33_4 = var_33_2 <= ItemModel.instance:getItemQuantity(var_33_0, var_33_1)
-	arg_33_0[arg_33_3 .. "1"].text = luaLang("multiple") .. var_33_2
-	arg_33_0[arg_33_3 .. "2"].text = ""
+	self[numTxt .. "1"].text = luaLang("multiple") .. cost_num
+	self[numTxt .. "2"].text = ""
 end
 
-function var_0_0._refreshOpenTime(arg_34_0)
-	local var_34_0 = SummonMainModel.instance:getCurPool()
+function SummonMainLuckyBagView:_refreshOpenTime()
+	local curPool = SummonMainModel.instance:getCurPool()
 
-	if not var_34_0 then
+	if not curPool then
 		return
 	end
 
-	local var_34_1 = SummonMainModel.instance:getPoolServerMO(var_34_0.id)
+	local poolMO = SummonMainModel.instance:getPoolServerMO(curPool.id)
 
-	if var_34_1 ~= nil and var_34_1.offlineTime ~= 0 and var_34_1.offlineTime < TimeUtil.maxDateTimeStamp then
-		local var_34_2 = var_34_1.offlineTime - ServerTime.now()
+	if poolMO ~= nil and poolMO.offlineTime ~= 0 and poolMO.offlineTime < TimeUtil.maxDateTimeStamp then
+		local time = poolMO.offlineTime - ServerTime.now()
 
-		arg_34_0._txtdeadline.text = string.format(luaLang("summonmainequipprobup_deadline"), SummonModel.formatRemainTime(var_34_2))
+		self._txtdeadline.text = string.format(luaLang("summonmainequipprobup_deadline"), SummonModel.formatRemainTime(time))
 	else
-		arg_34_0._txtdeadline.text = ""
+		self._txtdeadline.text = ""
 	end
 end
 
-function var_0_0.getLuckyBagDetailBtn(arg_35_0, arg_35_1)
-	return arg_35_0["_btnluckybag" .. tostring(arg_35_1)]
+function SummonMainLuckyBagView:getLuckyBagDetailBtn(i)
+	return self["_btnluckybag" .. tostring(i)]
 end
 
-function var_0_0.getLuckyBagUseBtn(arg_36_0, arg_36_1)
-	return arg_36_0["#btn_use" .. tostring(arg_36_1)]
+function SummonMainLuckyBagView:getLuckyBagUseBtn(i)
+	return self["#btn_use" .. tostring(i)]
 end
 
-function var_0_0.getLuckyBagHaveGetGo(arg_37_0, arg_37_1)
-	return arg_37_0["_gohasget" .. tostring(arg_37_1)]
+function SummonMainLuckyBagView:getLuckyBagHaveGetGo(i)
+	return self["_gohasget" .. tostring(i)]
 end
 
-function var_0_0.onSummonFailed(arg_38_0)
-	arg_38_0.summonSuccess = false
+function SummonMainLuckyBagView:onSummonFailed()
+	self.summonSuccess = false
 
-	arg_38_0:refreshCost()
+	self:refreshCost()
 end
 
-function var_0_0.onSummonReply(arg_39_0)
-	arg_39_0.summonSuccess = true
+function SummonMainLuckyBagView:onSummonReply()
+	self.summonSuccess = true
 end
 
-function var_0_0.onItemChanged(arg_40_0)
-	if SummonController.instance.isWaitingSummonResult or arg_40_0.summonSuccess then
+function SummonMainLuckyBagView:onItemChanged()
+	if SummonController.instance.isWaitingSummonResult or self.summonSuccess then
 		return
 	end
 
-	arg_40_0:refreshCost()
+	self:refreshCost()
 end
 
-return var_0_0
+return SummonMainLuckyBagView

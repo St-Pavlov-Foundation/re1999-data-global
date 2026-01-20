@@ -1,743 +1,757 @@
-﻿module("modules.logic.rouge.model.RougeHeroGroupModel", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/model/RougeHeroGroupModel.lua
 
-local var_0_0 = class("RougeHeroGroupModel", ListScrollModel)
+module("modules.logic.rouge.model.RougeHeroGroupModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0.heroGroupType = ModuleEnum.HeroGroupType.Default
-	arg_1_0._curGroupId = 1
-	arg_1_0._lastHeroGroupSnapshotList = {}
-	arg_1_0._lastHeroGroupList = {}
-	arg_1_0._herogroupItemPos = {}
-	arg_1_0._commonGroups = {}
-	arg_1_0._groupTypeSelect = {}
-	arg_1_0._groupTypeCustom = {}
+local RougeHeroGroupModel = class("RougeHeroGroupModel", ListScrollModel)
+
+function RougeHeroGroupModel:onInit()
+	self.heroGroupType = ModuleEnum.HeroGroupType.Default
+	self._curGroupId = 1
+	self._lastHeroGroupSnapshotList = {}
+	self._lastHeroGroupList = {}
+	self._herogroupItemPos = {}
+	self._commonGroups = {}
+	self._groupTypeSelect = {}
+	self._groupTypeCustom = {}
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0.heroGroupType = ModuleEnum.HeroGroupType.Default
-	arg_2_0._curGroupId = 1
-	arg_2_0._lastHeroGroupSnapshotList = {}
-	arg_2_0._lastHeroGroupList = {}
-	arg_2_0._herogroupItemPos = {}
-	arg_2_0._commonGroups = {}
-	arg_2_0._groupTypeSelect = {}
-	arg_2_0._groupTypeCustom = {}
+function RougeHeroGroupModel:reInit()
+	self.heroGroupType = ModuleEnum.HeroGroupType.Default
+	self._curGroupId = 1
+	self._lastHeroGroupSnapshotList = {}
+	self._lastHeroGroupList = {}
+	self._herogroupItemPos = {}
+	self._commonGroups = {}
+	self._groupTypeSelect = {}
+	self._groupTypeCustom = {}
 end
 
-function var_0_0.onGetHeroGroupList(arg_3_0, arg_3_1)
-	arg_3_0.curGroupSelectIndex = nil
+function RougeHeroGroupModel:onGetHeroGroupList(groupInfoList)
+	self.curGroupSelectIndex = nil
 
-	local var_3_0 = {}
-	local var_3_1
+	local moList = {}
+	local heroGroupMO
 
-	for iter_3_0 = 1, #arg_3_1 do
-		local var_3_2 = HeroGroupMO.New()
+	for i = 1, #groupInfoList do
+		heroGroupMO = HeroGroupMO.New()
 
-		var_3_2:init(arg_3_1[iter_3_0])
-		table.insert(var_3_0, var_3_2)
+		heroGroupMO:init(groupInfoList[i])
+		table.insert(moList, heroGroupMO)
 	end
 
-	arg_3_0:setList(var_3_0)
+	self:setList(moList)
 end
 
-function var_0_0.onGetCommonGroupList(arg_4_0, arg_4_1)
-	for iter_4_0, iter_4_1 in ipairs(arg_4_1.heroGroupCommons) do
-		arg_4_0._commonGroups[iter_4_1.groupId] = HeroGroupMO.New()
+function RougeHeroGroupModel:onGetCommonGroupList(heroGroupCommonList)
+	for _, heroGroup in ipairs(heroGroupCommonList.heroGroupCommons) do
+		self._commonGroups[heroGroup.groupId] = HeroGroupMO.New()
 
-		arg_4_0._commonGroups[iter_4_1.groupId]:init(iter_4_1)
+		self._commonGroups[heroGroup.groupId]:init(heroGroup)
 	end
 
-	for iter_4_2 = 1, 4 do
-		if not arg_4_0._commonGroups[iter_4_2] then
-			arg_4_0._commonGroups[iter_4_2] = HeroGroupMO.New()
+	for i = 1, 4 do
+		if not self._commonGroups[i] then
+			self._commonGroups[i] = HeroGroupMO.New()
 
-			arg_4_0._commonGroups[iter_4_2]:init(HeroGroupMO.New())
+			self._commonGroups[i]:init(HeroGroupMO.New())
 		end
 	end
 
-	for iter_4_3, iter_4_4 in ipairs(arg_4_1.heroGourpTypes) do
-		arg_4_0._groupTypeSelect[iter_4_4.id] = iter_4_4.currentSelect
+	for _, groupType in ipairs(heroGroupCommonList.heroGourpTypes) do
+		self._groupTypeSelect[groupType.id] = groupType.currentSelect
 
-		if iter_4_4.id ~= ModuleEnum.HeroGroupServerType.Main and iter_4_4:HasField("groupInfo") then
-			arg_4_0._groupTypeCustom[iter_4_4.id] = HeroGroupMO.New()
+		if groupType.id ~= ModuleEnum.HeroGroupServerType.Main and groupType:HasField("groupInfo") then
+			self._groupTypeCustom[groupType.id] = HeroGroupMO.New()
 
-			arg_4_0._groupTypeCustom[iter_4_4.id]:init(iter_4_4.groupInfo)
+			self._groupTypeCustom[groupType.id]:init(groupType.groupInfo)
 		end
 	end
 end
 
-function var_0_0.getCustomHeroGroupMo(arg_5_0, arg_5_1, arg_5_2)
-	if not arg_5_0._groupTypeCustom[arg_5_1] then
-		if arg_5_2 then
-			return arg_5_0:getMainGroupMo()
+function RougeHeroGroupModel:getCustomHeroGroupMo(groupType, noCreate)
+	if not self._groupTypeCustom[groupType] then
+		if noCreate then
+			return self:getMainGroupMo()
 		end
 
-		local var_5_0 = HeroGroupMO.New()
+		local heroGroupMO = HeroGroupMO.New()
 
-		var_5_0:init(arg_5_0:getMainGroupMo())
+		heroGroupMO:init(self:getMainGroupMo())
 
-		arg_5_0._groupTypeCustom[arg_5_1] = var_5_0
+		self._groupTypeCustom[groupType] = heroGroupMO
 	end
 
-	return arg_5_0._groupTypeCustom[arg_5_1]
+	return self._groupTypeCustom[groupType]
 end
 
-function var_0_0.onModifyHeroGroup(arg_6_0, arg_6_1)
-	local var_6_0 = {}
-	local var_6_1 = arg_6_0:getById(arg_6_1.groupId)
+function RougeHeroGroupModel:onModifyHeroGroup(groupInfo)
+	local heroGroupMO = {}
 
-	if var_6_1 then
-		var_6_1:init(arg_6_1)
+	heroGroupMO = self:getById(groupInfo.groupId)
+
+	if heroGroupMO then
+		heroGroupMO:init(groupInfo)
 	else
-		local var_6_2 = HeroGroupMO.New()
+		heroGroupMO = HeroGroupMO.New()
 
-		var_6_2:init(arg_6_1)
-		arg_6_0:addAtLast(var_6_2)
+		heroGroupMO:init(groupInfo)
+		self:addAtLast(heroGroupMO)
 	end
 
-	arg_6_0:_updateScroll()
+	self:_updateScroll()
 end
 
-function var_0_0._updateScroll(arg_7_0)
-	arg_7_0:onModelUpdate()
-	arg_7_0:_setSingleGroup()
+function RougeHeroGroupModel:_updateScroll()
+	self:onModelUpdate()
+	self:_setSingleGroup()
 end
 
-function var_0_0.isAdventureOrWeekWalk(arg_8_0)
-	return arg_8_0.adventure or arg_8_0.weekwalk
+function RougeHeroGroupModel:isAdventureOrWeekWalk()
+	return self.adventure or self.weekwalk
 end
 
-function var_0_0.setParam(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
-	arg_9_0.battleId = arg_9_1
-	arg_9_0.episodeId = arg_9_2
-	arg_9_0.adventure = arg_9_3
+function RougeHeroGroupModel:setParam(battleId, episodeId, adventure, isReConnect)
+	self.battleId = battleId
+	self.episodeId = episodeId
+	self.adventure = adventure
 
-	local var_9_0 = arg_9_1 and lua_battle.configDict[arg_9_1]
-	local var_9_1 = arg_9_2 and lua_episode.configDict[arg_9_2]
-	local var_9_2 = var_9_1 and lua_chapter.configDict[var_9_1.chapterId]
+	local battleCO = battleId and lua_battle.configDict[battleId]
+	local episodeCO = episodeId and lua_episode.configDict[episodeId]
+	local chapterCO = episodeCO and lua_chapter.configDict[episodeCO.chapterId]
 
-	arg_9_0.battleConfig = var_9_0
-	arg_9_0.heroGroupTypeCo = var_9_1 and HeroConfig.instance:getHeroGroupTypeCo(var_9_1.chapterId)
-	arg_9_0._episodeType = var_9_1 and var_9_1.type or 0
+	self.battleConfig = battleCO
+	self.heroGroupTypeCo = episodeCO and HeroConfig.instance:getHeroGroupTypeCo(episodeCO.chapterId)
+	self._episodeType = episodeCO and episodeCO.type or 0
 
-	local var_9_3 = arg_9_0:getAmountLimit(var_9_0)
+	local amountLimit = self:getAmountLimit(battleCO)
 
-	arg_9_0.weekwalk = var_9_2 and var_9_2.type == DungeonEnum.ChapterType.WeekWalk
+	self.weekwalk = chapterCO and chapterCO.type == DungeonEnum.ChapterType.WeekWalk
 
-	local var_9_4 = false
-	local var_9_5 = var_9_2 and (var_9_2.type == DungeonEnum.ChapterType.Normal or var_9_2.type == DungeonEnum.ChapterType.Hard)
+	local isSaveGroup = false
+	local isMainChapter = chapterCO and (chapterCO.type == DungeonEnum.ChapterType.Normal or chapterCO.type == DungeonEnum.ChapterType.Hard)
 
-	if var_9_5 then
-		arg_9_0.heroGroupTypeCo = lua_hero_group_type.configDict[ModuleEnum.HeroGroupServerType.Main]
+	if isMainChapter then
+		self.heroGroupTypeCo = lua_hero_group_type.configDict[ModuleEnum.HeroGroupServerType.Main]
 	end
 
-	if arg_9_0.heroGroupTypeCo then
-		local var_9_6 = arg_9_0.heroGroupTypeCo.id
+	if self.heroGroupTypeCo then
+		local id = self.heroGroupTypeCo.id
 
-		if arg_9_0._episodeType > 100 then
-			local var_9_7 = arg_9_0._episodeType
+		if self._episodeType > 100 then
+			id = self._episodeType
 		end
 
-		if not arg_9_0.curGroupSelectIndex then
-			arg_9_0.curGroupSelectIndex = arg_9_0.heroGroupTypeCo.saveGroup == 1 and 0 or 1
+		if not self.curGroupSelectIndex then
+			self.curGroupSelectIndex = self.heroGroupTypeCo.saveGroup == 1 and 0 or 1
 		end
 	else
-		arg_9_0.curGroupSelectIndex = 1
+		self.curGroupSelectIndex = 1
 	end
 
-	local var_9_8 = {}
+	local configAids = {}
 
-	if var_9_0 and not string.nilorempty(var_9_0.aid) then
-		var_9_8 = string.splitToNumber(var_9_0.aid, "#")
+	if battleCO and not string.nilorempty(battleCO.aid) then
+		configAids = string.splitToNumber(battleCO.aid, "#")
 	end
 
-	if var_9_0 and (var_9_0.trialLimit > 0 or not string.nilorempty(var_9_0.trialEquips)) then
-		local var_9_9 = Activity104Model.instance:isSeasonChapter()
-		local var_9_10
+	if battleCO and (battleCO.trialLimit > 0 or not string.nilorempty(battleCO.trialEquips)) then
+		local isSeasonChapter = Activity104Model.instance:isSeasonChapter()
+		local str
 
-		if var_9_9 then
-			var_9_10 = PlayerPrefsHelper.getString(Activity104Model.instance:getSeasonTrialPrefsKey(), "")
+		if isSeasonChapter then
+			str = PlayerPrefsHelper.getString(Activity104Model.instance:getSeasonTrialPrefsKey(), "")
 		else
-			var_9_10 = PlayerPrefsHelper.getString(PlayerPrefsKey.HeroGroupTrial .. tostring(PlayerModel.instance:getMyUserId()) .. var_9_0.id, "")
+			str = PlayerPrefsHelper.getString(PlayerPrefsKey.HeroGroupTrial .. tostring(PlayerModel.instance:getMyUserId()) .. battleCO.id, "")
 		end
 
-		arg_9_0.heroGroupType = ModuleEnum.HeroGroupType.Trial
-		arg_9_0._curGroupId = 1
+		self.heroGroupType = ModuleEnum.HeroGroupType.Trial
+		self._curGroupId = 1
 
-		local var_9_11
+		local tempGroupMO
 
-		if var_9_0.trialLimit > 0 and var_9_0.onlyTrial == 1 then
-			var_9_11 = arg_9_0:generateTempGroup(nil, nil, true)
-		elseif string.nilorempty(var_9_10) then
-			if arg_9_0.curGroupSelectIndex > 0 then
-				var_9_11 = arg_9_0:generateTempGroup(arg_9_0._commonGroups[arg_9_0.curGroupSelectIndex], var_9_3, var_9_0 and var_9_0.useTemp == 2)
+		if battleCO.trialLimit > 0 and battleCO.onlyTrial == 1 then
+			tempGroupMO = self:generateTempGroup(nil, nil, true)
+		elseif string.nilorempty(str) then
+			if self.curGroupSelectIndex > 0 then
+				tempGroupMO = self:generateTempGroup(self._commonGroups[self.curGroupSelectIndex], amountLimit, battleCO and battleCO.useTemp == 2)
 			else
-				var_9_11 = arg_9_0.heroGroupTypeCo and arg_9_0:getCustomHeroGroupMo(arg_9_0.heroGroupTypeCo.id, true) or arg_9_0:generateTempGroup(nil, var_9_3, var_9_0 and var_9_0.useTemp == 2)
+				tempGroupMO = self.heroGroupTypeCo and self:getCustomHeroGroupMo(self.heroGroupTypeCo.id, true) or self:generateTempGroup(nil, amountLimit, battleCO and battleCO.useTemp == 2)
 			end
 		else
-			local var_9_12 = cjson.decode(var_9_10)
+			local saveData = cjson.decode(str)
 
-			GameUtil.removeJsonNull(var_9_12)
+			GameUtil.removeJsonNull(saveData)
 
-			var_9_11 = arg_9_0:generateTempGroup(nil, nil, true)
+			tempGroupMO = self:generateTempGroup(nil, nil, true)
 
-			var_9_11:initByLocalData(var_9_12)
+			tempGroupMO:initByLocalData(saveData)
 		end
 
-		var_9_11:setTrials(arg_9_4)
+		tempGroupMO:setTrials(isReConnect)
 
-		arg_9_0._heroGroupList = {
-			var_9_11
+		self._heroGroupList = {
+			tempGroupMO
 		}
-	elseif var_9_2 and Activity104Model.instance:isSeasonChapter() then
-		arg_9_0.heroGroupType = ModuleEnum.HeroGroupType.Season
+	elseif chapterCO and Activity104Model.instance:isSeasonChapter() then
+		self.heroGroupType = ModuleEnum.HeroGroupType.Season
 
-		Activity104Model.instance:buildHeroGroup(arg_9_4)
-	elseif var_9_2 and arg_9_0._episodeType == DungeonEnum.EpisodeType.Season123 then
-		arg_9_0.heroGroupType = ModuleEnum.HeroGroupType.Season123
-
-		Season123HeroGroupModel.instance:buildAidHeroGroup()
-	elseif var_9_2 and arg_9_0._episodeType == DungeonEnum.EpisodeType.Season123Retail then
-		arg_9_0.heroGroupType = ModuleEnum.HeroGroupType.Season123Retail
+		Activity104Model.instance:buildHeroGroup(isReConnect)
+	elseif chapterCO and self._episodeType == DungeonEnum.EpisodeType.Season123 then
+		self.heroGroupType = ModuleEnum.HeroGroupType.Season123
 
 		Season123HeroGroupModel.instance:buildAidHeroGroup()
-	elseif var_9_2 and var_9_0 and var_9_0.useTemp ~= 0 or var_9_3 or #var_9_8 > 0 then
-		arg_9_0.heroGroupType = ModuleEnum.HeroGroupType.Temp
-		arg_9_0._heroGroupList = {}
+	elseif chapterCO and self._episodeType == DungeonEnum.EpisodeType.Season123Retail then
+		self.heroGroupType = ModuleEnum.HeroGroupType.Season123Retail
 
-		local var_9_13
+		Season123HeroGroupModel.instance:buildAidHeroGroup()
+	elseif chapterCO and battleCO and battleCO.useTemp ~= 0 or amountLimit or #configAids > 0 then
+		self.heroGroupType = ModuleEnum.HeroGroupType.Temp
+		self._heroGroupList = {}
 
-		if var_9_2 and var_9_2.saveHeroGroup and (not var_9_0 or var_9_0.useTemp ~= 2) then
-			if arg_9_0.curGroupSelectIndex > 0 then
-				var_9_13 = arg_9_0:generateTempGroup(arg_9_0._commonGroups[arg_9_0.curGroupSelectIndex], var_9_3, var_9_0 and var_9_0.useTemp == 2)
+		local savedHeroGroupMO
+
+		if chapterCO and chapterCO.saveHeroGroup and (not battleCO or battleCO.useTemp ~= 2) then
+			if self.curGroupSelectIndex > 0 then
+				savedHeroGroupMO = self:generateTempGroup(self._commonGroups[self.curGroupSelectIndex], amountLimit, battleCO and battleCO.useTemp == 2)
 			else
-				var_9_13 = arg_9_0.heroGroupTypeCo and arg_9_0:getCustomHeroGroupMo(arg_9_0.heroGroupTypeCo.id, true) or arg_9_0:generateTempGroup(nil, var_9_3, var_9_0 and var_9_0.useTemp == 2)
+				savedHeroGroupMO = self.heroGroupTypeCo and self:getCustomHeroGroupMo(self.heroGroupTypeCo.id, true) or self:generateTempGroup(nil, amountLimit, battleCO and battleCO.useTemp == 2)
 			end
 		end
 
-		local var_9_14 = arg_9_0:generateTempGroup(var_9_13, var_9_3, var_9_0 and var_9_0.useTemp == 2)
+		local tempGroupMO = self:generateTempGroup(savedHeroGroupMO, amountLimit, battleCO and battleCO.useTemp == 2)
 
-		table.insert(arg_9_0._heroGroupList, var_9_14)
+		table.insert(self._heroGroupList, tempGroupMO)
 
-		arg_9_0._curGroupId = 1
-	elseif not var_9_5 and var_9_2 then
-		arg_9_0.heroGroupType = ModuleEnum.HeroGroupType.Resources
-		arg_9_0._heroGroupList = {}
-		arg_9_0._curGroupId = 1
+		self._curGroupId = 1
+	elseif not isMainChapter and chapterCO then
+		self.heroGroupType = ModuleEnum.HeroGroupType.Resources
+		self._heroGroupList = {}
+		self._curGroupId = 1
 
-		if not arg_9_0._groupTypeCustom[arg_9_0.heroGroupTypeCo.id] then
-			var_9_4 = true
+		if not self._groupTypeCustom[self.heroGroupTypeCo.id] then
+			isSaveGroup = true
 		end
-	elseif var_9_5 then
-		arg_9_0.heroGroupType = ModuleEnum.HeroGroupType.NormalFb
-		arg_9_0._heroGroupList = {}
-		arg_9_0._curGroupId = 1
+	elseif isMainChapter then
+		self.heroGroupType = ModuleEnum.HeroGroupType.NormalFb
+		self._heroGroupList = {}
+		self._curGroupId = 1
 
-		local var_9_15 = arg_9_0:getCurGroupMO()
+		local groupMO = self:getCurGroupMO()
 
-		if var_9_15 and var_9_15.aidDict then
-			var_9_15.aidDict = nil
+		if groupMO and groupMO.aidDict then
+			groupMO.aidDict = nil
 		end
 	else
-		arg_9_0.heroGroupType = ModuleEnum.HeroGroupType.Default
-		arg_9_0._heroGroupList = {}
-		arg_9_0._curGroupId = 1
+		self.heroGroupType = ModuleEnum.HeroGroupType.Default
+		self._heroGroupList = {}
+		self._curGroupId = 1
 	end
 
-	arg_9_0:_setSingleGroup()
-	arg_9_0:initRestrictHeroData(var_9_0)
+	self:_setSingleGroup()
+	self:initRestrictHeroData(battleCO)
 
-	if var_9_4 then
-		arg_9_0:saveCurGroupData()
+	if isSaveGroup then
+		self:saveCurGroupData()
 	end
 end
 
-function var_0_0.setReplayParam(arg_10_0, arg_10_1)
-	arg_10_0._replayParam = arg_10_1
+function RougeHeroGroupModel:setReplayParam(heroGroupMO)
+	self._replayParam = heroGroupMO
 
-	if arg_10_1 then
-		if arg_10_1.replay_hero_data then
-			for iter_10_0, iter_10_1 in pairs(arg_10_1.replay_hero_data) do
-				local var_10_0 = HeroModel.instance:getById(iter_10_0)
+	if heroGroupMO then
+		if heroGroupMO.replay_hero_data then
+			for uid, data in pairs(heroGroupMO.replay_hero_data) do
+				local heroMo = HeroModel.instance:getById(uid)
 
-				if var_10_0 and var_10_0.skin > 0 then
-					iter_10_1.skin = var_10_0.skin
+				if heroMo and heroMo.skin > 0 then
+					data.skin = heroMo.skin
 				end
 			end
 		end
 
-		arg_10_0.heroGroupType = ModuleEnum.HeroGroupType.Temp
-		arg_10_0._heroGroupList = {}
-		arg_10_0._heroGroupList[arg_10_1.id] = arg_10_1
-		arg_10_0._curGroupId = arg_10_1.id
+		self.heroGroupType = ModuleEnum.HeroGroupType.Temp
+		self._heroGroupList = {}
+		self._heroGroupList[heroGroupMO.id] = heroGroupMO
+		self._curGroupId = heroGroupMO.id
 
-		arg_10_0:_setSingleGroup()
+		self:_setSingleGroup()
 	end
 end
 
-function var_0_0.getReplayParam(arg_11_0)
-	return arg_11_0._replayParam
+function RougeHeroGroupModel:getReplayParam()
+	return self._replayParam
 end
 
-function var_0_0.getAmountLimit(arg_12_0, arg_12_1)
-	if not arg_12_1 then
+function RougeHeroGroupModel:getAmountLimit(battleCO)
+	if not battleCO then
 		return
 	end
 
-	local var_12_0 = arg_12_0:_getAmountLimit(arg_12_1.additionRule)
+	local limit = self:_getAmountLimit(battleCO.additionRule)
 
-	if var_12_0 then
-		return var_12_0
+	if limit then
+		return limit
 	end
 
-	return (arg_12_0:_getAmountLimit(arg_12_1.hiddenRule))
+	limit = self:_getAmountLimit(battleCO.hiddenRule)
+
+	return limit
 end
 
-function var_0_0._getAmountLimit(arg_13_0, arg_13_1)
-	if LuaUtil.isEmptyStr(arg_13_1) == false then
-		local var_13_0 = GameUtil.splitString2(arg_13_1, true, "|", "#")
+function RougeHeroGroupModel:_getAmountLimit(ruleStr)
+	if LuaUtil.isEmptyStr(ruleStr) == false then
+		local ruleList = GameUtil.splitString2(ruleStr, true, "|", "#")
 
-		for iter_13_0, iter_13_1 in ipairs(var_13_0) do
-			if iter_13_1[1] == FightEnum.EntitySide.MySide then
-				local var_13_1 = iter_13_1[2]
-				local var_13_2 = lua_rule.configDict[var_13_1]
+		for i, v in ipairs(ruleList) do
+			local targetId = v[1]
 
-				if var_13_2 and var_13_2.type == DungeonEnum.AdditionRuleType.AmountLimit then
-					return tonumber(var_13_2.effect)
+			if targetId == FightEnum.EntitySide.MySide then
+				local ruleId = v[2]
+				local ruleCo = lua_rule.configDict[ruleId]
+
+				if ruleCo and ruleCo.type == DungeonEnum.AdditionRuleType.AmountLimit then
+					return tonumber(ruleCo.effect)
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.getBattleRoleNum(arg_14_0)
-	local var_14_0 = arg_14_0.episodeId
-	local var_14_1
+function RougeHeroGroupModel:getBattleRoleNum()
+	local episodeId = self.episodeId
+	local episodeCO = episodeId and lua_episode.configDict[episodeId]
+	local battleId = self.battleId
+	local battleCO = battleId and lua_battle.configDict[battleId]
+	local amountLimit = self:getAmountLimit(battleCO)
 
-	var_14_1 = var_14_0 and lua_episode.configDict[var_14_0]
-
-	local var_14_2 = arg_14_0.battleId
-	local var_14_3 = var_14_2 and lua_battle.configDict[var_14_2]
-
-	return arg_14_0:getAmountLimit(var_14_3) or var_14_3 and var_14_3.roleNum
+	return amountLimit or battleCO and battleCO.roleNum
 end
 
-function var_0_0.generateTempGroup(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	local var_15_0 = HeroGroupMO.New()
+function RougeHeroGroupModel:generateTempGroup(heroGroupMO, roleNum, initFromEmpty)
+	local tempgroupMO = HeroGroupMO.New()
 
-	if not arg_15_1 and not arg_15_3 then
-		arg_15_1 = arg_15_0:getById(arg_15_0._curGroupId)
+	if not heroGroupMO and not initFromEmpty then
+		heroGroupMO = self:getById(self._curGroupId)
 	end
 
-	if arg_15_1 then
-		var_15_0:setSeasonCardLimit(arg_15_1:getSeasonCardLimit())
+	if heroGroupMO then
+		tempgroupMO:setSeasonCardLimit(heroGroupMO:getSeasonCardLimit())
 	end
 
-	local var_15_1 = arg_15_0.battleId and lua_battle.configDict[arg_15_0.battleId]
+	local battleCO = self.battleId and lua_battle.configDict[self.battleId]
 
-	if var_15_1 then
-		local var_15_2 = {}
+	if battleCO then
+		local configAids = {}
 
-		if not string.nilorempty(var_15_1.aid) then
-			var_15_2 = string.splitToNumber(var_15_1.aid, "#")
+		if not string.nilorempty(battleCO.aid) then
+			configAids = string.splitToNumber(battleCO.aid, "#")
 		end
 
-		local var_15_3 = {}
+		local configTrial = {}
 
-		if not string.nilorempty(var_15_1.trialHeros) then
-			var_15_3 = GameUtil.splitString2(var_15_1.trialHeros, true)
+		if not string.nilorempty(battleCO.trialHeros) then
+			configTrial = GameUtil.splitString2(battleCO.trialHeros, true)
 		end
 
-		arg_15_2 = arg_15_2 or var_15_1.roleNum
+		roleNum = roleNum or battleCO.roleNum
 
-		local var_15_4 = var_15_1.playerMax
+		local playerMax = battleCO.playerMax
 
-		var_15_0:initWithBattle(arg_15_1 or HeroGroupMO.New(), var_15_2, arg_15_2, var_15_4, nil, var_15_3)
+		tempgroupMO:initWithBattle(heroGroupMO or HeroGroupMO.New(), configAids, roleNum, playerMax, nil, configTrial)
 
-		if arg_15_0.adventure then
-			local var_15_5 = arg_15_0.episodeId and lua_episode.configDict[arg_15_0.episodeId]
+		if self.adventure then
+			local episodeConfig = self.episodeId and lua_episode.configDict[self.episodeId]
 
-			if var_15_5 then
-				var_15_0:setTempName(string.format("%s%s", var_15_5.name, "hero_group"))
+			if episodeConfig then
+				tempgroupMO:setTempName(string.format("%s%s", episodeConfig.name, "hero_group"))
 			end
 		end
 	else
 		logError("临时编队没有战斗配置，永远不该发生")
-		var_15_0:init(arg_15_1)
+		tempgroupMO:init(heroGroupMO)
 	end
 
-	var_15_0:setTemp(true)
+	tempgroupMO:setTemp(true)
 
-	return var_15_0
+	return tempgroupMO
 end
 
-function var_0_0.setCurGroupId(arg_16_0, arg_16_1)
-	arg_16_0._curGroupId = arg_16_1
+function RougeHeroGroupModel:setCurGroupId(groupId)
+	self._curGroupId = groupId
 
-	arg_16_0:_setSingleGroup()
+	self:_setSingleGroup()
 end
 
-function var_0_0._setSingleGroup(arg_17_0)
-	local var_17_0 = arg_17_0:getCurGroupMO()
+function RougeHeroGroupModel:_setSingleGroup()
+	local groupMO = self:getCurGroupMO()
 
-	if not var_17_0 then
-		var_17_0 = HeroGroupMO.New()
+	if not groupMO then
+		groupMO = HeroGroupMO.New()
 
-		local var_17_1 = arg_17_0._curGroupId
+		local curGroupId = self._curGroupId
 
-		if arg_17_0.heroGroupType == ModuleEnum.HeroGroupType.Resources then
-			var_17_1 = var_17_1 - 1
+		if self.heroGroupType == ModuleEnum.HeroGroupType.Resources then
+			curGroupId = curGroupId - 1
 		end
 
-		var_17_0:init({
-			groupId = var_17_1,
-			name = string.format("%s%d", "hero_group", var_17_1)
+		groupMO:init({
+			groupId = curGroupId,
+			name = string.format("%s%d", "hero_group", curGroupId)
 		})
-		arg_17_0:addAtLast(var_17_0)
+		self:addAtLast(groupMO)
 	end
 
-	var_17_0:clearAidHero()
-	RougeHeroSingleGroupModel.instance:setSingleGroup(var_17_0, true)
+	groupMO:clearAidHero()
+	RougeHeroSingleGroupModel.instance:setSingleGroup(groupMO, true)
 end
 
-function var_0_0.getCommonGroupName(arg_18_0, arg_18_1)
-	arg_18_1 = arg_18_1 or arg_18_0.curGroupSelectIndex
+function RougeHeroGroupModel:getCommonGroupName(index)
+	index = index or self.curGroupSelectIndex
 
-	return formatLuaLang("herogroup_common_name", GameUtil.getNum2Chinese(arg_18_1))
+	return formatLuaLang("herogroup_common_name", GameUtil.getNum2Chinese(index))
 end
 
-function var_0_0.setCommonGroupName(arg_19_0, arg_19_1, arg_19_2)
-	arg_19_1 = arg_19_1 or arg_19_0.curGroupSelectIndex
+function RougeHeroGroupModel:setCommonGroupName(index, name)
+	index = index or self.curGroupSelectIndex
 
-	if arg_19_2 == arg_19_0:getCommonGroupName(arg_19_1) then
+	local nowName = self:getCommonGroupName(index)
+
+	if name == nowName then
 		return
 	end
 
-	arg_19_0._commonGroups[arg_19_1].name = arg_19_2
+	self._commonGroups[index].name = name
 
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyGroupName)
 end
 
-function var_0_0.getCurGroupMO(arg_20_0)
-	if arg_20_0.curGroupSelectIndex and arg_20_0.curGroupSelectIndex > 0 then
-		return arg_20_0:getById(arg_20_0.curGroupSelectIndex)
+function RougeHeroGroupModel:getCurGroupMO()
+	if self.curGroupSelectIndex and self.curGroupSelectIndex > 0 then
+		return self:getById(self.curGroupSelectIndex)
 	end
 
-	return arg_20_0:getById(arg_20_0._curGroupId)
+	return self:getById(self._curGroupId)
 end
 
-function var_0_0.setHeroGroupSelectIndex(arg_21_0, arg_21_1)
-	if not arg_21_0.heroGroupTypeCo then
+function RougeHeroGroupModel:setHeroGroupSelectIndex(index)
+	if not self.heroGroupTypeCo then
 		logError("没有配置。。")
 
 		return
 	end
 
-	if arg_21_1 == 0 and arg_21_0.heroGroupTypeCo.saveGroup == 0 then
+	if index == 0 and self.heroGroupTypeCo.saveGroup == 0 then
 		logError("无法切到玩法编队")
 
 		return
 	end
 
-	if arg_21_0.curGroupSelectIndex == arg_21_1 then
+	if self.curGroupSelectIndex == index then
 		return
 	end
 
-	arg_21_0.curGroupSelectIndex = arg_21_1
+	self.curGroupSelectIndex = index
 
-	local var_21_0 = arg_21_0.heroGroupTypeCo.id
+	local id = self.heroGroupTypeCo.id
 
-	if arg_21_0._episodeType > 100 then
-		var_21_0 = arg_21_0._episodeType
+	if self._episodeType > 100 then
+		id = self._episodeType
 	end
 
-	arg_21_0._groupTypeSelect[var_21_0] = arg_21_1
+	self._groupTypeSelect[id] = index
 
-	arg_21_0:_setSingleGroup()
+	self:_setSingleGroup()
 
 	return true
 end
 
-function var_0_0.getGroupTypeName(arg_22_0)
-	if not arg_22_0.heroGroupTypeCo or arg_22_0.heroGroupTypeCo.saveGroup == 0 then
+function RougeHeroGroupModel:getGroupTypeName()
+	if not self.heroGroupTypeCo or self.heroGroupTypeCo.saveGroup == 0 then
 		return
 	end
 
-	return arg_22_0.heroGroupTypeCo.name
+	return self.heroGroupTypeCo.name
 end
 
-function var_0_0.getMainGroupMo(arg_23_0)
-	return arg_23_0:getById(1)
+function RougeHeroGroupModel:getMainGroupMo()
+	return self:getById(1)
 end
 
-function var_0_0.rougeSaveCurGroup(arg_24_0, arg_24_1, arg_24_2)
-	local var_24_0 = {}
-	local var_24_1 = arg_24_0:getCurGroupMO()
+function RougeHeroGroupModel:rougeSaveCurGroup(callback, callbackObj)
+	local battleHeroList = {}
+	local curGroupMO = self:getCurGroupMO()
 
-	for iter_24_0 = 1, RougeEnum.FightTeamNormalHeroNum do
-		local var_24_2 = RougeHeroSingleGroupModel.instance:getById(iter_24_0)
-		local var_24_3 = var_24_1:getPosEquips(iter_24_0 - 1).equipUid[1]
-		local var_24_4 = EquipModel.instance:getEquip(var_24_3)
-		local var_24_5 = tonumber(var_24_3)
-		local var_24_6 = var_24_2 and HeroModel.instance:getById(var_24_2.heroUid)
-		local var_24_7 = var_24_6 and var_24_6.heroId or 0
+	for i = 1, RougeEnum.FightTeamNormalHeroNum do
+		local mo = RougeHeroSingleGroupModel.instance:getById(i)
+		local equipMo = curGroupMO:getPosEquips(i - 1)
+		local equipUid = equipMo.equipUid[1]
+		local _equipMO = EquipModel.instance:getEquip(equipUid)
+		local equipId = tonumber(equipUid)
+		local heroMO = mo and HeroModel.instance:getById(mo.heroUid)
+		local heroId = heroMO and heroMO.heroId or 0
 
-		if var_24_5 ~= 0 or var_24_7 ~= 0 then
-			local var_24_8 = RougeBattleHeroMO.New()
+		if equipId ~= 0 or heroId ~= 0 then
+			local battleHero = RougeBattleHeroMO.New()
 
-			table.insert(var_24_0, var_24_8)
+			table.insert(battleHeroList, battleHero)
 
-			var_24_8.index = iter_24_0
-			var_24_8.heroId = var_24_7
-			var_24_8.equipUid = var_24_4 and var_24_5 or 0
+			battleHero.index = i
+			battleHero.heroId = heroId
+			battleHero.equipUid = _equipMO and equipId or 0
 
-			if var_24_7 ~= 0 then
-				local var_24_9 = RougeHeroSingleGroupModel.instance:getById(iter_24_0 + RougeEnum.FightTeamNormalHeroNum)
-				local var_24_10 = var_24_9 and HeroModel.instance:getById(var_24_9.heroUid)
-				local var_24_11 = var_24_10 and var_24_10.heroId or 0
+			if heroId ~= 0 then
+				local supportMo = RougeHeroSingleGroupModel.instance:getById(i + RougeEnum.FightTeamNormalHeroNum)
+				local supportHeroMO = supportMo and HeroModel.instance:getById(supportMo.heroUid)
+				local supportHeroId = supportHeroMO and supportHeroMO.heroId or 0
 
-				var_24_8.supportHeroId = var_24_11
-				var_24_8.supportHeroSkill = RougeModel.instance:getTeamInfo():getSupportSkillIndex(var_24_11) or 0
+				battleHero.supportHeroId = supportHeroId
+				battleHero.supportHeroSkill = RougeModel.instance:getTeamInfo():getSupportSkillIndex(supportHeroId) or 0
 			else
-				var_24_8.supportHeroId = 0
-				var_24_8.supportHeroSkill = 0
+				battleHero.supportHeroId = 0
+				battleHero.supportHeroSkill = 0
 			end
 		end
 	end
 
-	local var_24_12 = RougeConfig1.instance:season()
+	local season = RougeConfig1.instance:season()
 
-	RougeRpc.instance:sendRougeGroupChangeRequest(var_24_12, var_24_0, arg_24_1, arg_24_2)
+	RougeRpc.instance:sendRougeGroupChangeRequest(season, battleHeroList, callback, callbackObj)
 end
 
-function var_0_0.saveCurGroupData(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
+function RougeHeroGroupModel:saveCurGroupData(callback, callbackObj, heroGroupMO)
 	return
 end
 
-function var_0_0.saveCurGroupData2(arg_26_0, arg_26_1, arg_26_2, arg_26_3)
-	local var_26_0 = lua_episode.configDict[arg_26_0.episodeId]
+function RougeHeroGroupModel:saveCurGroupData2(callback, callbackObj, heroGroupMO)
+	local episodeConfig = lua_episode.configDict[self.episodeId]
 
-	if not var_26_0 then
+	if not episodeConfig then
 		return
 	end
 
-	if var_26_0.type == DungeonEnum.EpisodeType.Cachot then
+	if episodeConfig.type == DungeonEnum.EpisodeType.Cachot then
 		return
 	end
 
-	arg_26_3 = arg_26_3 or arg_26_0:getCurGroupMO()
+	heroGroupMO = heroGroupMO or self:getCurGroupMO()
 
-	if not arg_26_3 then
+	if not heroGroupMO then
 		return
 	end
 
-	if arg_26_0.heroGroupType == ModuleEnum.HeroGroupType.Trial then
-		arg_26_3:saveData()
+	if self.heroGroupType == ModuleEnum.HeroGroupType.Trial then
+		heroGroupMO:saveData()
 
-		if arg_26_1 then
-			arg_26_1(arg_26_2)
+		if callback then
+			callback(callbackObj)
 		end
 
-		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnSnapshotSaveSucc, arg_26_0.heroGroupType, 1)
+		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnSnapshotSaveSucc, self.heroGroupType, 1)
 
 		return
 	end
 
-	if arg_26_0.heroGroupType == ModuleEnum.HeroGroupType.Temp or arg_26_0.heroGroupType == ModuleEnum.HeroGroupType.Default then
-		if arg_26_1 then
-			arg_26_1(arg_26_2)
+	if self.heroGroupType == ModuleEnum.HeroGroupType.Temp or self.heroGroupType == ModuleEnum.HeroGroupType.Default then
+		if callback then
+			callback(callbackObj)
 		end
 
 		return
 	end
 
-	if arg_26_0.heroGroupType == ModuleEnum.HeroGroupType.Season or arg_26_0.heroGroupType == ModuleEnum.HeroGroupType.Season123 then
-		local var_26_1 = {
-			groupIndex = arg_26_3.groupId,
-			heroGroup = arg_26_3
-		}
+	if self.heroGroupType == ModuleEnum.HeroGroupType.Season or self.heroGroupType == ModuleEnum.HeroGroupType.Season123 then
+		local extendData = {}
 
-		arg_26_0:setHeroGroupSnapshot(arg_26_0.heroGroupType, arg_26_0.episodeId, true, var_26_1, arg_26_1, arg_26_2)
+		extendData.groupIndex = heroGroupMO.groupId
+		extendData.heroGroup = heroGroupMO
+
+		self:setHeroGroupSnapshot(self.heroGroupType, self.episodeId, true, extendData, callback, callbackObj)
 
 		return
 	end
 
-	if arg_26_0.heroGroupType == ModuleEnum.HeroGroupType.Season123Retail then
-		arg_26_0:setHeroGroupSnapshot(arg_26_0.heroGroupType, arg_26_0.episodeId, true, nil, arg_26_1, arg_26_2)
+	if self.heroGroupType == ModuleEnum.HeroGroupType.Season123Retail then
+		self:setHeroGroupSnapshot(self.heroGroupType, self.episodeId, true, nil, callback, callbackObj)
 	end
 
-	local var_26_2 = arg_26_0.curGroupSelectIndex
+	local lastSelectGroupIndex = self.curGroupSelectIndex
 
-	if var_26_2 == 0 then
-		if arg_26_0.heroGroupType == ModuleEnum.HeroGroupType.NormalFb then
-			HeroGroupRpc.instance:sendUpdateHeroGroupRequest(arg_26_3.id, arg_26_3.heroList, arg_26_3.name, arg_26_3.clothId, arg_26_3.equips, nil, arg_26_1, arg_26_2)
-		elseif arg_26_0.heroGroupType == ModuleEnum.HeroGroupType.Resources then
-			local var_26_3 = HeroGroupModule_pb.SetHeroGroupSnapshotRequest()
+	if lastSelectGroupIndex == 0 then
+		if self.heroGroupType == ModuleEnum.HeroGroupType.NormalFb then
+			HeroGroupRpc.instance:sendUpdateHeroGroupRequest(heroGroupMO.id, heroGroupMO.heroList, heroGroupMO.name, heroGroupMO.clothId, heroGroupMO.equips, nil, callback, callbackObj)
+		elseif self.heroGroupType == ModuleEnum.HeroGroupType.Resources then
+			local req = HeroGroupModule_pb.SetHeroGroupSnapshotRequest()
 
-			FightParam.initFightGroup(var_26_3.fightGroup, arg_26_3.clothId, arg_26_3:getMainList(), arg_26_3:getSubList(), arg_26_3:getAllHeroEquips(), arg_26_3:getAllHeroActivity104Equips())
-			HeroGroupRpc.instance:sendSetHeroGroupSnapshotRequest(ModuleEnum.HeroGroupSnapshotType.Resources, arg_26_0.heroGroupTypeCo.id, var_26_3, arg_26_1, arg_26_2)
-		end
-	else
-		local var_26_4 = HeroGroupModule_pb.SetHeroGroupSnapshotRequest()
-
-		FightParam.initFightGroup(var_26_4.fightGroup, arg_26_3.clothId, arg_26_3:getMainList(), arg_26_3:getSubList(), arg_26_3:getAllHeroEquips(), arg_26_3:getAllHeroActivity104Equips())
-		HeroGroupRpc.instance:sendSetHeroGroupSnapshotRequest(ModuleEnum.HeroGroupSnapshotType.Common, var_26_2, var_26_4, arg_26_1, arg_26_2)
-	end
-end
-
-function var_0_0.setHeroGroupSnapshot(arg_27_0, arg_27_1, arg_27_2, arg_27_3, arg_27_4, arg_27_5, arg_27_6)
-	local var_27_0 = arg_27_2 and lua_episode.configDict[arg_27_2]
-
-	if not var_27_0 then
-		return
-	end
-
-	local var_27_1 = 0
-	local var_27_2 = 0
-	local var_27_3
-	local var_27_4
-
-	if arg_27_1 == ModuleEnum.HeroGroupType.Resources then
-		var_27_2, var_27_1 = var_27_0.chapterId, ModuleEnum.HeroGroupSnapshotType.Resources
-		var_27_3 = arg_27_0._heroGroupList[1]
-	elseif arg_27_1 == ModuleEnum.HeroGroupType.Season then
-		var_27_1 = ModuleEnum.HeroGroupSnapshotType.Season
-
-		if arg_27_4 then
-			var_27_2 = arg_27_4.groupIndex
-			var_27_3 = arg_27_4.heroGroup
-		end
-	elseif arg_27_1 == ModuleEnum.HeroGroupType.Season123 then
-		var_27_1 = ModuleEnum.HeroGroupSnapshotType.Season123
-
-		if arg_27_4 then
-			var_27_2 = arg_27_4.groupIndex
-			var_27_3 = arg_27_4.heroGroup
-		end
-
-		if var_27_3 then
-			var_27_4 = Season123HeroGroupUtils.getAllHeroActivity123Equips(var_27_3)
-		end
-	elseif arg_27_1 == ModuleEnum.HeroGroupType.Season123Retail then
-		var_27_1 = ModuleEnum.HeroGroupSnapshotType.Season123Retail
-		var_27_2 = 1
-
-		if arg_27_4 then
-			var_27_3 = arg_27_4.heroGroup
+			FightParam.initFightGroup(req.fightGroup, heroGroupMO.clothId, heroGroupMO:getMainList(), heroGroupMO:getSubList(), heroGroupMO:getAllHeroEquips(), heroGroupMO:getAllHeroActivity104Equips())
+			HeroGroupRpc.instance:sendSetHeroGroupSnapshotRequest(ModuleEnum.HeroGroupSnapshotType.Resources, self.heroGroupTypeCo.id, req, callback, callbackObj)
 		end
 	else
-		logError("暂不支持此类编队快照 : " .. tostring(arg_27_1))
+		local req = HeroGroupModule_pb.SetHeroGroupSnapshotRequest()
+
+		FightParam.initFightGroup(req.fightGroup, heroGroupMO.clothId, heroGroupMO:getMainList(), heroGroupMO:getSubList(), heroGroupMO:getAllHeroEquips(), heroGroupMO:getAllHeroActivity104Equips())
+		HeroGroupRpc.instance:sendSetHeroGroupSnapshotRequest(ModuleEnum.HeroGroupSnapshotType.Common, lastSelectGroupIndex, req, callback, callbackObj)
+	end
+end
+
+function RougeHeroGroupModel:setHeroGroupSnapshot(heroGroupType, episodeId, upload, extendData, callback, callbackObj)
+	local episodeConfig = episodeId and lua_episode.configDict[episodeId]
+
+	if not episodeConfig then
+		return
+	end
+
+	local heroGroupSnapshotType = 0
+	local snapshotSubId = 0
+	local heroGroupMO, seasonEquips
+
+	if heroGroupType == ModuleEnum.HeroGroupType.Resources then
+		local chapterId = episodeConfig.chapterId
+
+		heroGroupSnapshotType = ModuleEnum.HeroGroupSnapshotType.Resources
+		snapshotSubId = chapterId
+		heroGroupMO = self._heroGroupList[1]
+	elseif heroGroupType == ModuleEnum.HeroGroupType.Season then
+		heroGroupSnapshotType = ModuleEnum.HeroGroupSnapshotType.Season
+
+		if extendData then
+			snapshotSubId = extendData.groupIndex
+			heroGroupMO = extendData.heroGroup
+		end
+	elseif heroGroupType == ModuleEnum.HeroGroupType.Season123 then
+		heroGroupSnapshotType = ModuleEnum.HeroGroupSnapshotType.Season123
+
+		if extendData then
+			snapshotSubId = extendData.groupIndex
+			heroGroupMO = extendData.heroGroup
+		end
+
+		if heroGroupMO then
+			seasonEquips = Season123HeroGroupUtils.getAllHeroActivity123Equips(heroGroupMO)
+		end
+	elseif heroGroupType == ModuleEnum.HeroGroupType.Season123Retail then
+		heroGroupSnapshotType = ModuleEnum.HeroGroupSnapshotType.Season123Retail
+		snapshotSubId = 1
+
+		if extendData then
+			heroGroupMO = extendData.heroGroup
+		end
+	else
+		logError("暂不支持此类编队快照 : " .. tostring(heroGroupType))
 
 		return
 	end
 
-	if var_27_3 and arg_27_3 then
-		local var_27_5 = HeroGroupModule_pb.SetHeroGroupSnapshotRequest()
-		local var_27_6 = FightDef_pb.FightGroup()
+	if heroGroupMO and upload then
+		local req = HeroGroupModule_pb.SetHeroGroupSnapshotRequest()
+		local fightGroup = FightDef_pb.FightGroup()
 
-		FightParam.initFightGroup(var_27_5.fightGroup, var_27_3.clothId, var_27_3:getMainList(), var_27_3:getSubList(), var_27_3:getAllHeroEquips(), var_27_4 or var_27_3:getAllHeroActivity104Equips())
-		Season123HeroGroupUtils.processFightGroupAssistHero(arg_27_1, var_27_5.fightGroup)
-		HeroGroupRpc.instance:sendSetHeroGroupSnapshotRequest(var_27_1, var_27_2, var_27_5, arg_27_5, arg_27_6)
-	elseif arg_27_5 then
-		arg_27_5(arg_27_6)
+		FightParam.initFightGroup(req.fightGroup, heroGroupMO.clothId, heroGroupMO:getMainList(), heroGroupMO:getSubList(), heroGroupMO:getAllHeroEquips(), seasonEquips or heroGroupMO:getAllHeroActivity104Equips())
+		Season123HeroGroupUtils.processFightGroupAssistHero(heroGroupType, req.fightGroup)
+		HeroGroupRpc.instance:sendSetHeroGroupSnapshotRequest(heroGroupSnapshotType, snapshotSubId, req, callback, callbackObj)
+	elseif callback then
+		callback(callbackObj)
 	end
 end
 
-function var_0_0.replaceSingleGroup(arg_28_0)
-	local var_28_0 = arg_28_0:getCurGroupMO()
+function RougeHeroGroupModel:replaceSingleGroup()
+	local tempGroupMO = self:getCurGroupMO()
 
-	if var_28_0 then
-		local var_28_1 = RougeHeroSingleGroupModel.instance:getList()
+	if tempGroupMO then
+		local heroList = RougeHeroSingleGroupModel.instance:getList()
 
-		var_28_0:replaceHeroList(var_28_1)
+		tempGroupMO:replaceHeroList(heroList)
 	end
 end
 
-function var_0_0.replaceSingleGroupEquips(arg_29_0)
-	local var_29_0 = arg_29_0:getCurGroupMO()
-	local var_29_1 = RougeHeroSingleGroupModel.instance:getList()
-	local var_29_2
-	local var_29_3
+function RougeHeroGroupModel:replaceSingleGroupEquips()
+	local tempGroupMO = self:getCurGroupMO()
+	local heroList = RougeHeroSingleGroupModel.instance:getList()
+	local heroMo, info
 
-	for iter_29_0, iter_29_1 in ipairs(var_29_1) do
-		local var_29_4 = HeroModel.instance:getById(iter_29_1.heroUid)
+	for index, heroSingleGroupMO in ipairs(heroList) do
+		heroMo = HeroModel.instance:getById(heroSingleGroupMO.heroUid)
 
-		if var_29_4 and var_29_4:hasDefaultEquip() then
-			local var_29_5 = {
-				index = iter_29_0 - 1,
+		if heroMo and heroMo:hasDefaultEquip() then
+			info = {
+				index = index - 1,
 				equipUid = {
-					var_29_4.defaultEquipUid
+					heroMo.defaultEquipUid
 				}
 			}
 
-			var_29_0:updatePosEquips(var_29_5)
+			tempGroupMO:updatePosEquips(info)
 		end
 	end
 end
 
-function var_0_0.replaceCloth(arg_30_0, arg_30_1)
-	local var_30_0 = arg_30_0:getCurGroupMO()
+function RougeHeroGroupModel:replaceCloth(clothId)
+	local tempGroupMO = self:getCurGroupMO()
 
-	if var_30_0 then
-		var_30_0:replaceClothId(arg_30_1)
+	if tempGroupMO then
+		tempGroupMO:replaceClothId(clothId)
 	end
 end
 
-function var_0_0.replaceEquips(arg_31_0, arg_31_1, arg_31_2)
-	local var_31_0 = arg_31_2 or arg_31_0:getCurGroupMO()
+function RougeHeroGroupModel:replaceEquips(equips, groupMO)
+	local tempGroupMO = groupMO or self:getCurGroupMO()
 
-	if var_31_0 then
-		var_31_0:updatePosEquips(arg_31_1)
+	if tempGroupMO then
+		tempGroupMO:updatePosEquips(equips)
 	end
 end
 
-function var_0_0.getCurGroupId(arg_32_0)
-	return arg_32_0._curGroupId
+function RougeHeroGroupModel:getCurGroupId()
+	return self._curGroupId
 end
 
-function var_0_0.isPositionOpen(arg_33_0, arg_33_1)
-	local var_33_0 = lua_open_group.configDict[arg_33_1]
+function RougeHeroGroupModel:isPositionOpen(posId)
+	local openGroupCO = lua_open_group.configDict[posId]
 
-	if not var_33_0 then
+	if not openGroupCO then
 		return false
 	end
 
-	local var_33_1 = arg_33_0.episodeId and lua_episode.configDict[arg_33_0.episodeId]
-	local var_33_2 = var_33_1 and lua_battle.configDict[var_33_1.battleId]
-	local var_33_3 = var_33_2 and #string.splitToNumber(var_33_2.aid, "#") or 0
+	local episodeCO = self.episodeId and lua_episode.configDict[self.episodeId]
+	local battleCO = episodeCO and lua_battle.configDict[episodeCO.battleId]
+	local aidCount = battleCO and #string.splitToNumber(battleCO.aid, "#") or 0
 
-	if var_33_1 and var_33_1.type == DungeonEnum.EpisodeType.Sp and arg_33_1 <= var_33_3 then
+	if episodeCO and episodeCO.type == DungeonEnum.EpisodeType.Sp and posId <= aidCount then
 		return true
 	end
 
-	if var_33_0.need_level > 0 and PlayerModel.instance:getPlayinfo().level < var_33_0.need_level then
-		return false
-	end
+	if openGroupCO.need_level > 0 then
+		local playerInfo = PlayerModel.instance:getPlayinfo()
 
-	if var_33_0.need_episode > 0 then
-		local var_33_4 = DungeonModel.instance:getEpisodeInfo(var_33_0.need_episode)
-
-		if not var_33_4 or var_33_4.star <= 0 then
-			return false
-		end
-
-		local var_33_5 = lua_episode.configDict[var_33_0.need_episode].afterStory
-
-		if var_33_5 and var_33_5 > 0 and not StoryModel.instance:isStoryFinished(var_33_5) then
+		if playerInfo.level < openGroupCO.need_level then
 			return false
 		end
 	end
 
-	if var_33_0.need_enter_episode > 0 or var_33_0.need_finish_guide > 0 then
-		if var_33_0.need_enter_episode > 0 then
-			local var_33_6 = DungeonModel.instance:getEpisodeInfo(var_33_0.need_enter_episode)
+	if openGroupCO.need_episode > 0 then
+		local episodeMO = DungeonModel.instance:getEpisodeInfo(openGroupCO.need_episode)
 
-			if var_33_6 and var_33_6.star > 0 or arg_33_0.episodeId == var_33_0.need_enter_episode then
+		if not episodeMO or episodeMO.star <= 0 then
+			return false
+		end
+
+		local afterStory = lua_episode.configDict[openGroupCO.need_episode].afterStory
+
+		if afterStory and afterStory > 0 and not StoryModel.instance:isStoryFinished(afterStory) then
+			return false
+		end
+	end
+
+	if openGroupCO.need_enter_episode > 0 or openGroupCO.need_finish_guide > 0 then
+		if openGroupCO.need_enter_episode > 0 then
+			local episodeMO = DungeonModel.instance:getEpisodeInfo(openGroupCO.need_enter_episode)
+			local episodeFinish = episodeMO and episodeMO.star > 0
+
+			if episodeFinish or self.episodeId == openGroupCO.need_enter_episode then
 				return true
 			end
 		end
 
-		if var_33_0.need_finish_guide > 0 and GuideModel.instance:isGuideFinish(var_33_0.need_finish_guide) then
+		if openGroupCO.need_finish_guide > 0 and GuideModel.instance:isGuideFinish(openGroupCO.need_finish_guide) then
 			return true
 		end
 
@@ -747,65 +761,66 @@ function var_0_0.isPositionOpen(arg_33_0, arg_33_1)
 	return true
 end
 
-function var_0_0.positionOpenCount(arg_34_0)
-	local var_34_0 = 0
+function RougeHeroGroupModel:positionOpenCount()
+	local count = 0
 
-	for iter_34_0 = 1, 4 do
-		if arg_34_0:isPositionOpen(iter_34_0) then
-			var_34_0 = var_34_0 + 1
+	for i = 1, 4 do
+		if self:isPositionOpen(i) then
+			count = count + 1
 		end
 	end
 
-	return var_34_0
+	return count
 end
 
-function var_0_0.getPositionLockDesc(arg_35_0, arg_35_1)
-	local var_35_0 = lua_open_group.configDict[arg_35_1]
-	local var_35_1 = var_35_0 and var_35_0.need_episode
+function RougeHeroGroupModel:getPositionLockDesc(posId)
+	local openGroupCO = lua_open_group.configDict[posId]
+	local needEpisodeId = openGroupCO and openGroupCO.need_episode
 
-	if not var_35_1 or var_35_1 == 0 then
+	if not needEpisodeId or needEpisodeId == 0 then
 		return nil
 	end
 
-	local var_35_2 = DungeonConfig.instance:getEpisodeDisplay(var_35_1)
+	local episodeDisplay = DungeonConfig.instance:getEpisodeDisplay(needEpisodeId)
+	local lockDesc = openGroupCO.lock_desc
 
-	return var_35_0.lock_desc, var_35_2
+	return lockDesc, episodeDisplay
 end
 
-function var_0_0.getHighestLevel(arg_36_0)
-	local var_36_0 = RougeHeroSingleGroupModel.instance:getList()
+function RougeHeroGroupModel:getHighestLevel()
+	local moList = RougeHeroSingleGroupModel.instance:getList()
 
-	if not var_36_0 then
+	if not moList then
 		return 0
 	end
 
-	local var_36_1 = 0
+	local maxLevel = 0
 
-	for iter_36_0, iter_36_1 in ipairs(var_36_0) do
-		if iter_36_1.aid and iter_36_1.aid ~= -1 then
-			local var_36_2 = lua_monster.configDict[tonumber(iter_36_1.aid)]
+	for i, mo in ipairs(moList) do
+		if mo.aid and mo.aid ~= -1 then
+			local monsterConfig = lua_monster.configDict[tonumber(mo.aid)]
 
-			if var_36_2 and var_36_1 < var_36_2.level then
-				var_36_1 = var_36_2.level
+			if monsterConfig and maxLevel < monsterConfig.level then
+				maxLevel = monsterConfig.level
 			end
-		elseif iter_36_1.heroUid then
-			local var_36_3 = HeroModel.instance:getById(iter_36_1.heroUid)
+		elseif mo.heroUid then
+			local heroMO = HeroModel.instance:getById(mo.heroUid)
 
-			if var_36_3 and var_36_1 < var_36_3.level then
-				var_36_1 = var_36_3.level
+			if heroMO and maxLevel < heroMO.level then
+				maxLevel = heroMO.level
 			end
 		end
 	end
 
-	return var_36_1
+	return maxLevel
 end
 
-function var_0_0.setHeroGroupItemPos(arg_37_0, arg_37_1)
-	arg_37_0._herogroupItemPos = arg_37_1
+function RougeHeroGroupModel:setHeroGroupItemPos(HeroGroupList)
+	self._herogroupItemPos = HeroGroupList
 end
 
-function var_0_0.getHeroGroupItemPos(arg_38_0)
-	return arg_38_0._herogroupItemPos
+function RougeHeroGroupModel:getHeroGroupItemPos()
+	return self._herogroupItemPos
 end
 
 HeroGroupModel.RestrictType = {
@@ -814,51 +829,50 @@ HeroGroupModel.RestrictType = {
 	Career = 2
 }
 
-function var_0_0.initRestrictHeroData(arg_39_0, arg_39_1)
-	arg_39_0.restrictHeroIdList = nil
-	arg_39_0.restrictCareerList = nil
-	arg_39_0.restrictRareList = nil
+function RougeHeroGroupModel:initRestrictHeroData(battleConfig)
+	self.restrictHeroIdList = nil
+	self.restrictCareerList = nil
+	self.restrictRareList = nil
 
-	local var_39_0 = arg_39_1 and arg_39_1.restrictRoles
+	local restrictRoles = battleConfig and battleConfig.restrictRoles
 
-	if string.nilorempty(var_39_0) then
+	if string.nilorempty(restrictRoles) then
 		return
 	end
 
-	local var_39_1 = string.split(var_39_0, "|")
-	local var_39_2
-	local var_39_3
+	local typeStr = string.split(restrictRoles, "|")
+	local restrictList, type
 
-	for iter_39_0 = 1, #var_39_1 do
-		local var_39_4 = string.splitToNumber(var_39_1[iter_39_0], "#")
-		local var_39_5, var_39_6 = GameUtil.tabletool_fastRemoveValueByPos(var_39_4, 1)
+	for i = 1, #typeStr do
+		restrictList = string.splitToNumber(typeStr[i], "#")
+		restrictList, type = GameUtil.tabletool_fastRemoveValueByPos(restrictList, 1)
 
-		if var_39_6 == HeroGroupModel.RestrictType.HeroId then
-			arg_39_0.restrictHeroIdList = var_39_5
-		elseif var_39_6 == HeroGroupModel.RestrictType.Career then
-			arg_39_0.restrictCareerList = var_39_5
-		elseif var_39_6 == HeroGroupModel.RestrictType.Rare then
-			arg_39_0.restrictRareList = var_39_5
+		if type == HeroGroupModel.RestrictType.HeroId then
+			self.restrictHeroIdList = restrictList
+		elseif type == HeroGroupModel.RestrictType.Career then
+			self.restrictCareerList = restrictList
+		elseif type == HeroGroupModel.RestrictType.Rare then
+			self.restrictRareList = restrictList
 		else
-			logError("un support restrict type : " .. tostring(var_39_6))
+			logError("un support restrict type : " .. tostring(type))
 		end
 	end
 end
 
-function var_0_0.isRestrict(arg_40_0, arg_40_1)
-	local var_40_0 = arg_40_1 and HeroModel.instance:getById(arg_40_1)
+function RougeHeroGroupModel:isRestrict(heroUid)
+	local heroMo = heroUid and HeroModel.instance:getById(heroUid)
 
-	if not var_40_0 then
+	if not heroMo then
 		return false
 	end
 
-	return arg_40_0.restrictHeroIdList and tabletool.indexOf(arg_40_0.restrictHeroIdList, var_40_0.heroId) or arg_40_0.restrictCareerList and tabletool.indexOf(arg_40_0.restrictCareerList, var_40_0.config.career) or arg_40_0.restrictRareList and tabletool.indexOf(arg_40_0.restrictRareList, var_40_0.config.rare)
+	return self.restrictHeroIdList and tabletool.indexOf(self.restrictHeroIdList, heroMo.heroId) or self.restrictCareerList and tabletool.indexOf(self.restrictCareerList, heroMo.config.career) or self.restrictRareList and tabletool.indexOf(self.restrictRareList, heroMo.config.rare)
 end
 
-function var_0_0.getCurrentBattleConfig(arg_41_0)
-	return arg_41_0.battleConfig
+function RougeHeroGroupModel:getCurrentBattleConfig()
+	return self.battleConfig
 end
 
-var_0_0.instance = var_0_0.New()
+RougeHeroGroupModel.instance = RougeHeroGroupModel.New()
 
-return var_0_0
+return RougeHeroGroupModel

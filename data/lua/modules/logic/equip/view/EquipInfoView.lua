@@ -1,365 +1,369 @@
-﻿module("modules.logic.equip.view.EquipInfoView", package.seeall)
+﻿-- chunkname: @modules/logic/equip/view/EquipInfoView.lua
 
-local var_0_0 = class("EquipInfoView", BaseView)
+module("modules.logic.equip.view.EquipInfoView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goprogress = gohelper.findChild(arg_1_0.viewGO, "#go_progress")
-	arg_1_0._txtcurlevel = gohelper.findChildText(arg_1_0.viewGO, "#go_progress/#txt_curlevel")
-	arg_1_0._txttotallevel = gohelper.findChildText(arg_1_0.viewGO, "#go_progress/#txt_curlevel/#txt_totallevel")
-	arg_1_0._goinsigt = gohelper.findChild(arg_1_0.viewGO, "#go_progress/#txt_curlevel/go_insigt")
-	arg_1_0._image1 = gohelper.findChildImage(arg_1_0.viewGO, "#go_progress/#txt_curlevel/go_insigt/#image_1")
-	arg_1_0._image2 = gohelper.findChildImage(arg_1_0.viewGO, "#go_progress/#txt_curlevel/go_insigt/#image_2")
-	arg_1_0._image3 = gohelper.findChildImage(arg_1_0.viewGO, "#go_progress/#txt_curlevel/go_insigt/#image_3")
-	arg_1_0._image4 = gohelper.findChildImage(arg_1_0.viewGO, "#go_progress/#txt_curlevel/go_insigt/#image_4")
-	arg_1_0._image5 = gohelper.findChildImage(arg_1_0.viewGO, "#go_progress/#txt_curlevel/go_insigt/#image_5")
-	arg_1_0._imagelock = gohelper.findChildImage(arg_1_0.viewGO, "#go_progress/#image_lock")
-	arg_1_0._goType = gohelper.findChild(arg_1_0.viewGO, "layout/type")
-	arg_1_0._goTypeItem = gohelper.findChild(arg_1_0.viewGO, "layout/type/#go_typeItem")
-	arg_1_0._goattribute = gohelper.findChild(arg_1_0.viewGO, "layout/attribute")
-	arg_1_0._gostrengthenattr = gohelper.findChild(arg_1_0.viewGO, "layout/attribute/container/#go_strengthenattr")
-	arg_1_0._gobreakeffect = gohelper.findChild(arg_1_0.viewGO, "layout/attribute/container/#go_breakeffect")
-	arg_1_0._goSkill = gohelper.findChild(arg_1_0.viewGO, "layout/#go_skill")
-	arg_1_0._txtattributelv = gohelper.findChildText(arg_1_0.viewGO, "layout/#go_skill/attributename/#txt_attributelv")
-	arg_1_0._goSkillContainer = gohelper.findChild(arg_1_0.viewGO, "layout/#go_skill")
-	arg_1_0._goSkillItem = gohelper.findChild(arg_1_0.viewGO, "layout/#go_skill/#scroll_desccontainer/Viewport/#go_skillContainer/#go_SkillItem")
-	arg_1_0._gotip = gohelper.findChild(arg_1_0.viewGO, "#go_tip")
-	arg_1_0._btnmaxlevel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_maxlevel")
-	arg_1_0._imagemaxleveltip = gohelper.findChildImage(arg_1_0.viewGO, "#btn_maxlevel")
+local EquipInfoView = class("EquipInfoView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function EquipInfoView:onInitView()
+	self._goprogress = gohelper.findChild(self.viewGO, "#go_progress")
+	self._txtcurlevel = gohelper.findChildText(self.viewGO, "#go_progress/#txt_curlevel")
+	self._txttotallevel = gohelper.findChildText(self.viewGO, "#go_progress/#txt_curlevel/#txt_totallevel")
+	self._goinsigt = gohelper.findChild(self.viewGO, "#go_progress/#txt_curlevel/go_insigt")
+	self._image1 = gohelper.findChildImage(self.viewGO, "#go_progress/#txt_curlevel/go_insigt/#image_1")
+	self._image2 = gohelper.findChildImage(self.viewGO, "#go_progress/#txt_curlevel/go_insigt/#image_2")
+	self._image3 = gohelper.findChildImage(self.viewGO, "#go_progress/#txt_curlevel/go_insigt/#image_3")
+	self._image4 = gohelper.findChildImage(self.viewGO, "#go_progress/#txt_curlevel/go_insigt/#image_4")
+	self._image5 = gohelper.findChildImage(self.viewGO, "#go_progress/#txt_curlevel/go_insigt/#image_5")
+	self._imagelock = gohelper.findChildImage(self.viewGO, "#go_progress/#image_lock")
+	self._goType = gohelper.findChild(self.viewGO, "layout/type")
+	self._goTypeItem = gohelper.findChild(self.viewGO, "layout/type/#go_typeItem")
+	self._goattribute = gohelper.findChild(self.viewGO, "layout/attribute")
+	self._gostrengthenattr = gohelper.findChild(self.viewGO, "layout/attribute/container/#go_strengthenattr")
+	self._gobreakeffect = gohelper.findChild(self.viewGO, "layout/attribute/container/#go_breakeffect")
+	self._goSkill = gohelper.findChild(self.viewGO, "layout/#go_skill")
+	self._txtattributelv = gohelper.findChildText(self.viewGO, "layout/#go_skill/attributename/#txt_attributelv")
+	self._goSkillContainer = gohelper.findChild(self.viewGO, "layout/#go_skill")
+	self._goSkillItem = gohelper.findChild(self.viewGO, "layout/#go_skill/#scroll_desccontainer/Viewport/#go_skillContainer/#go_SkillItem")
+	self._gotip = gohelper.findChild(self.viewGO, "#go_tip")
+	self._btnmaxlevel = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_maxlevel")
+	self._imagemaxleveltip = gohelper.findChildImage(self.viewGO, "#btn_maxlevel")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnmaxlevel:AddClickListener(arg_2_0._onClickMaxLevelBtn, arg_2_0)
+function EquipInfoView:addEvents()
+	self._btnmaxlevel:AddClickListener(self._onClickMaxLevelBtn, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnmaxlevel:RemoveClickListener()
+function EquipInfoView:removeEvents()
+	self._btnmaxlevel:RemoveClickListener()
 end
 
-function var_0_0._onClickMaxLevelBtn(arg_4_0)
-	arg_4_0._showMax = not arg_4_0._showMax
+function EquipInfoView:_onClickMaxLevelBtn()
+	self._showMax = not self._showMax
 
-	arg_4_0._animator:Play("switch", 0, 0)
-	arg_4_0:refreshMaxLevelImage(0)
+	self._animator:Play("switch", 0, 0)
+	self:refreshMaxLevelImage(0)
 
-	if arg_4_0._hadEquip then
-		if arg_4_0._showMax then
-			arg_4_0._equipMO = EquipHelper.createMaxLevelEquipMo(arg_4_0._equipId, arg_4_0._equipMO.id)
+	if self._hadEquip then
+		if self._showMax then
+			self._equipMO = EquipHelper.createMaxLevelEquipMo(self._equipId, self._equipMO.id)
 		else
-			arg_4_0._equipMO = arg_4_0.viewContainer.viewParam.equipMO
+			self._equipMO = self.viewContainer.viewParam.equipMO
 		end
-	elseif arg_4_0._showMax then
-		arg_4_0._equipMO = EquipHelper.createMaxLevelEquipMo(arg_4_0._equipId)
+	elseif self._showMax then
+		self._equipMO = EquipHelper.createMaxLevelEquipMo(self._equipId)
 	else
-		arg_4_0._equipMO = EquipHelper.createMinLevelEquipMo(arg_4_0._equipId)
+		self._equipMO = EquipHelper.createMinLevelEquipMo(self._equipId)
 	end
 
-	arg_4_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0.strengthenAttrItemList = {}
-	arg_5_0.tagItemList = {}
-	arg_5_0.skillItemList = {}
+function EquipInfoView:_editableInitView()
+	self.strengthenAttrItemList = {}
+	self.tagItemList = {}
+	self.skillItemList = {}
 
-	gohelper.setActive(arg_5_0._gostrengthenattr, false)
-	gohelper.setActive(arg_5_0._goSkillItem, false)
-	gohelper.setActive(arg_5_0._goTypeItem, false)
+	gohelper.setActive(self._gostrengthenattr, false)
+	gohelper.setActive(self._goSkillItem, false)
+	gohelper.setActive(self._goTypeItem, false)
 
-	arg_5_0._click = gohelper.getClickWithAudio(arg_5_0._imagelock.gameObject)
+	self._click = gohelper.getClickWithAudio(self._imagelock.gameObject)
 
-	arg_5_0._click:AddClickListener(arg_5_0._onClick, arg_5_0)
-	gohelper.addUIClickAudio(arg_5_0._btnmaxlevel.gameObject, AudioEnum.UI.play_ui_admission_open)
+	self._click:AddClickListener(self._onClick, self)
+	gohelper.addUIClickAudio(self._btnmaxlevel.gameObject, AudioEnum.UI.play_ui_admission_open)
 
-	arg_5_0.imageBreakIcon = gohelper.findChildImage(arg_5_0._gobreakeffect, "image_icon")
-	arg_5_0.txtBreakAttrName = gohelper.findChildText(arg_5_0._gobreakeffect, "txt_name")
-	arg_5_0.txtBreakValue = gohelper.findChildText(arg_5_0._gobreakeffect, "txt_value")
-	arg_5_0._animator = gohelper.onceAddComponent(arg_5_0.viewGO, typeof(UnityEngine.Animator))
-	arg_5_0.txtTitle = gohelper.findChildText(arg_5_0.viewGO, "layout/#go_skill/attributename/txttitle")
-	arg_5_0._btnMaxLevelAnim = gohelper.onceAddComponent(arg_5_0._btnmaxlevel.gameObject, typeof(UnityEngine.Animator))
+	self.imageBreakIcon = gohelper.findChildImage(self._gobreakeffect, "image_icon")
+	self.txtBreakAttrName = gohelper.findChildText(self._gobreakeffect, "txt_name")
+	self.txtBreakValue = gohelper.findChildText(self._gobreakeffect, "txt_value")
+	self._animator = gohelper.onceAddComponent(self.viewGO, typeof(UnityEngine.Animator))
+	self.txtTitle = gohelper.findChildText(self.viewGO, "layout/#go_skill/attributename/txttitle")
+	self._btnMaxLevelAnim = gohelper.onceAddComponent(self._btnmaxlevel.gameObject, typeof(UnityEngine.Animator))
 end
 
-function var_0_0._onHyperLinkClick(arg_6_0)
+function EquipInfoView:_onHyperLinkClick()
 	EquipController.instance:openEquipSkillTipView({
-		arg_6_0._equipMO,
-		arg_6_0._equipId,
+		self._equipMO,
+		self._equipId,
 		true
 	})
 end
 
-function var_0_0._onClick(arg_7_0)
-	arg_7_0._lock = not arg_7_0._lock
+function EquipInfoView:_onClick()
+	self._lock = not self._lock
 
-	UISpriteSetMgr.instance:setEquipSprite(arg_7_0._imagelock, arg_7_0._lock and "xinxiang_suo" or "xinxiang_jiesuo", false)
-	EquipRpc.instance:sendEquipLockRequest(arg_7_0._equipMO.id, arg_7_0._lock)
+	UISpriteSetMgr.instance:setEquipSprite(self._imagelock, self._lock and "xinxiang_suo" or "xinxiang_jiesuo", false)
+	EquipRpc.instance:sendEquipLockRequest(self._equipMO.id, self._lock)
 
-	if arg_7_0._lock then
+	if self._lock then
 		AudioMgr.instance:trigger(AudioEnum.HeroGroupUI.Play_UI_Inking_Lock)
 	else
 		AudioMgr.instance:trigger(AudioEnum.HeroGroupUI.Play_UI_Inking_Unlock)
 	end
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
+function EquipInfoView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0._equipMO = arg_9_0.viewContainer.viewParam.equipMO
-	arg_9_0._equipId = arg_9_0._equipMO and arg_9_0._equipMO.config.id or arg_9_0.viewContainer.viewParam.equipId
-	arg_9_0._hadEquip = true
+function EquipInfoView:onOpen()
+	self._equipMO = self.viewContainer.viewParam.equipMO
+	self._equipId = self._equipMO and self._equipMO.config.id or self.viewContainer.viewParam.equipId
+	self._hadEquip = true
 
-	if not arg_9_0._equipMO and arg_9_0._equipId then
-		arg_9_0._hadEquip = false
-		arg_9_0._equipMO = EquipHelper.createMinLevelEquipMo(arg_9_0._equipId)
+	if not self._equipMO and self._equipId then
+		self._hadEquip = false
+		self._equipMO = EquipHelper.createMinLevelEquipMo(self._equipId)
 	end
 
-	arg_9_0._config = arg_9_0._equipMO.config
+	self._config = self._equipMO.config
 
-	local var_9_0 = EquipTeamListModel.instance:getHero()
+	local heroMO = EquipTeamListModel.instance:getHero()
 
-	arg_9_0._heroId = var_9_0 and var_9_0.heroId
-	arg_9_0._isNormalEquip = EquipHelper.isNormalEquip(arg_9_0._config)
+	self._heroId = heroMO and heroMO.heroId
+	self._isNormalEquip = EquipHelper.isNormalEquip(self._config)
 
-	gohelper.setActive(arg_9_0._btnmaxlevel.gameObject, arg_9_0._isNormalEquip)
+	gohelper.setActive(self._btnmaxlevel.gameObject, self._isNormalEquip)
 
-	arg_9_0._showMax = false
-	arg_9_0._lock = arg_9_0._equipMO.isLock
+	self._showMax = false
+	self._lock = self._equipMO.isLock
 
-	gohelper.setActive(arg_9_0._imagelock.gameObject, arg_9_0._hadEquip and arg_9_0._isNormalEquip)
+	gohelper.setActive(self._imagelock.gameObject, self._hadEquip and self._isNormalEquip)
 
-	if arg_9_0._hadEquip and arg_9_0._isNormalEquip then
-		UISpriteSetMgr.instance:setEquipSprite(arg_9_0._imagelock, arg_9_0._lock and "xinxiang_suo" or "xinxiang_jiesuo", false)
+	if self._hadEquip and self._isNormalEquip then
+		UISpriteSetMgr.instance:setEquipSprite(self._imagelock, self._lock and "xinxiang_suo" or "xinxiang_jiesuo", false)
 	end
 
-	gohelper.setActive(arg_9_0._goprogress, arg_9_0._isNormalEquip)
-	gohelper.setActive(arg_9_0._goattribute, arg_9_0._isNormalEquip)
-	gohelper.setActive(arg_9_0._txtattributelv.gameObject, arg_9_0._isNormalEquip)
-	arg_9_0:refreshMaxLevelImage(1)
-	arg_9_0:refreshTxtTitle()
-	arg_9_0:refreshUI()
+	gohelper.setActive(self._goprogress, self._isNormalEquip)
+	gohelper.setActive(self._goattribute, self._isNormalEquip)
+	gohelper.setActive(self._txtattributelv.gameObject, self._isNormalEquip)
+	self:refreshMaxLevelImage(1)
+	self:refreshTxtTitle()
+	self:refreshUI()
 
-	if arg_9_0.viewContainer:getIsOpenLeftBackpack() then
-		arg_9_0.viewContainer.equipView:showTitleAndCenter()
+	if self.viewContainer:getIsOpenLeftBackpack() then
+		self.viewContainer.equipView:showTitleAndCenter()
 	end
 
-	arg_9_0._animator:Play(UIAnimationName.Open)
+	self._animator:Play(UIAnimationName.Open)
 end
 
-function var_0_0.refreshMaxLevelImage(arg_10_0, arg_10_1)
-	arg_10_0._btnMaxLevelAnim:Play(arg_10_0._showMax and "open" or "close", 0, arg_10_1)
+function EquipInfoView:refreshMaxLevelImage(offset)
+	self._btnMaxLevelAnim:Play(self._showMax and "open" or "close", 0, offset)
 end
 
-function var_0_0.refreshTxtTitle(arg_11_0)
-	if EquipHelper.isExpEquip(arg_11_0._config) then
-		arg_11_0.txtTitle.text = luaLang("p_equipinfo_exp_title")
-	elseif EquipHelper.isRefineUniversalMaterials(arg_11_0._config.id) or EquipHelper.isSpRefineEquip(arg_11_0._config) then
-		arg_11_0.txtTitle.text = luaLang("p_equipinfo_refine_title")
+function EquipInfoView:refreshTxtTitle()
+	if EquipHelper.isExpEquip(self._config) then
+		self.txtTitle.text = luaLang("p_equipinfo_exp_title")
+	elseif EquipHelper.isRefineUniversalMaterials(self._config.id) or EquipHelper.isSpRefineEquip(self._config) then
+		self.txtTitle.text = luaLang("p_equipinfo_refine_title")
 	else
-		arg_11_0.txtTitle.text = luaLang("p_equipinfo_normal_title")
+		self.txtTitle.text = luaLang("p_equipinfo_normal_title")
 	end
 end
 
-function var_0_0.refreshUI(arg_12_0)
-	arg_12_0:refreshTag()
-	arg_12_0:refreshBaseAttr()
+function EquipInfoView:refreshUI()
+	self:refreshTag()
+	self:refreshBaseAttr()
 
-	if not arg_12_0._isNormalEquip or arg_12_0._isNormalEquip and arg_12_0._equipMO.config.rare > EquipConfig.instance:getNotShowRefineRare() then
-		gohelper.setActive(arg_12_0._goSkillContainer, true)
+	if not self._isNormalEquip or self._isNormalEquip and self._equipMO.config.rare > EquipConfig.instance:getNotShowRefineRare() then
+		gohelper.setActive(self._goSkillContainer, true)
 
-		arg_12_0._txtattributelv.text = arg_12_0._equipMO.refineLv
+		self._txtattributelv.text = self._equipMO.refineLv
 
-		arg_12_0:refreshSkillDesc()
+		self:refreshSkillDesc()
 	else
-		gohelper.setActive(arg_12_0._goSkillContainer, false)
+		gohelper.setActive(self._goSkillContainer, false)
 	end
 
-	arg_12_0:showProgress()
+	self:showProgress()
 end
 
-function var_0_0.refreshTag(arg_13_0)
-	local var_13_0 = arg_13_0._config.tag
+function EquipInfoView:refreshTag()
+	local tagStr = self._config.tag
 
-	if string.nilorempty(var_13_0) then
-		gohelper.setActive(arg_13_0._goType, false)
+	if string.nilorempty(tagStr) then
+		gohelper.setActive(self._goType, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_13_0._goType, true)
+	gohelper.setActive(self._goType, true)
 
-	local var_13_1 = EquipConfig.instance:getTagList(arg_13_0._config)
-	local var_13_2
+	local tagList = EquipConfig.instance:getTagList(self._config)
+	local tagItem
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_1) do
-		local var_13_3 = arg_13_0.tagItemList[iter_13_0]
+	for index, tagId in ipairs(tagList) do
+		tagItem = self.tagItemList[index]
 
-		if not var_13_3 then
-			var_13_3 = arg_13_0:getUserDataTb_()
-			var_13_3.go = gohelper.cloneInPlace(arg_13_0._goTypeItem)
-			var_13_3.txt = var_13_3.go:GetComponent(gohelper.Type_TextMesh)
+		if not tagItem then
+			tagItem = self:getUserDataTb_()
+			tagItem.go = gohelper.cloneInPlace(self._goTypeItem)
+			tagItem.txt = tagItem.go:GetComponent(gohelper.Type_TextMesh)
 
-			table.insert(arg_13_0.tagItemList, var_13_3)
+			table.insert(self.tagItemList, tagItem)
 		end
 
-		gohelper.setActive(var_13_3.go, true)
+		gohelper.setActive(tagItem.go, true)
 
-		var_13_3.txt.text = EquipConfig.instance:getTagName(iter_13_1)
+		tagItem.txt.text = EquipConfig.instance:getTagName(tagId)
 	end
 
-	for iter_13_2 = #var_13_1 + 1, #arg_13_0.tagItemList do
-		gohelper.setActive(arg_13_0.tagItemList[iter_13_2].go, false)
+	for i = #tagList + 1, #self.tagItemList do
+		gohelper.setActive(self.tagItemList[i].go, false)
 	end
 end
 
-function var_0_0.refreshBaseAttr(arg_14_0)
-	local var_14_0
-	local var_14_1
+function EquipInfoView:refreshBaseAttr()
+	local attr_dic, attr_list
 
-	if arg_14_0._equipMO then
-		local var_14_2
-
-		var_14_2, var_14_1 = EquipConfig.instance:getEquipNormalAttr(arg_14_0._equipId, arg_14_0._equipMO.level, HeroConfig.sortAttrForEquipView)
+	if self._equipMO then
+		attr_dic, attr_list = EquipConfig.instance:getEquipNormalAttr(self._equipId, self._equipMO.level, HeroConfig.sortAttrForEquipView)
 	else
-		local var_14_3
-
-		var_14_3, var_14_1 = EquipConfig.instance:getMaxEquipNormalAttr(arg_14_0._equipId, HeroConfig.sortAttrForEquipView)
+		attr_dic, attr_list = EquipConfig.instance:getMaxEquipNormalAttr(self._equipId, HeroConfig.sortAttrForEquipView)
 	end
 
-	local var_14_4
+	local attrItem
 
-	for iter_14_0, iter_14_1 in ipairs(var_14_1) do
-		local var_14_5 = arg_14_0.strengthenAttrItemList[iter_14_0]
+	for index, attr in ipairs(attr_list) do
+		attrItem = self.strengthenAttrItemList[index]
 
-		if not var_14_5 then
-			var_14_5 = arg_14_0:getUserDataTb_()
-			var_14_5.go = gohelper.cloneInPlace(arg_14_0._gostrengthenattr)
-			var_14_5.icon = gohelper.findChildImage(var_14_5.go, "image_icon")
-			var_14_5.name = gohelper.findChildText(var_14_5.go, "txt_name")
-			var_14_5.value = gohelper.findChildText(var_14_5.go, "txt_value")
-			var_14_5.goBg = gohelper.findChild(var_14_5.go, "go_bg")
+		if not attrItem then
+			attrItem = self:getUserDataTb_()
+			attrItem.go = gohelper.cloneInPlace(self._gostrengthenattr)
+			attrItem.icon = gohelper.findChildImage(attrItem.go, "image_icon")
+			attrItem.name = gohelper.findChildText(attrItem.go, "txt_name")
+			attrItem.value = gohelper.findChildText(attrItem.go, "txt_value")
+			attrItem.goBg = gohelper.findChild(attrItem.go, "go_bg")
 
-			table.insert(arg_14_0.strengthenAttrItemList, var_14_5)
+			table.insert(self.strengthenAttrItemList, attrItem)
 		end
 
-		gohelper.setActive(var_14_5.go, true)
-		gohelper.setActive(var_14_5.goBg, iter_14_0 % 2 == 0)
+		gohelper.setActive(attrItem.go, true)
+		gohelper.setActive(attrItem.goBg, index % 2 == 0)
 
-		local var_14_6 = HeroConfig.instance:getHeroAttributeCO(HeroConfig.instance:getIDByAttrType(iter_14_1.attrType))
+		local config = HeroConfig.instance:getHeroAttributeCO(HeroConfig.instance:getIDByAttrType(attr.attrType))
 
-		UISpriteSetMgr.instance:setCommonSprite(var_14_5.icon, "icon_att_" .. var_14_6.id)
+		UISpriteSetMgr.instance:setCommonSprite(attrItem.icon, "icon_att_" .. config.id)
 
-		var_14_5.name.text = var_14_6.name
-		var_14_5.value.text = iter_14_1.value
+		attrItem.name.text = config.name
+		attrItem.value.text = attr.value
 	end
 
-	for iter_14_2 = #var_14_1 + 1, #arg_14_0.strengthenAttrItemList do
-		gohelper.setActive(arg_14_0.strengthenAttrItemList[iter_14_2].go, false)
+	for i = #attr_list + 1, #self.strengthenAttrItemList do
+		gohelper.setActive(self.strengthenAttrItemList[i].go, false)
 	end
 
-	local var_14_7, var_14_8 = EquipConfig.instance:getEquipCurrentBreakLvAttrEffect(arg_14_0._config, arg_14_0._equipMO.breakLv)
+	local attrId, value = EquipConfig.instance:getEquipCurrentBreakLvAttrEffect(self._config, self._equipMO.breakLv)
 
-	if var_14_7 then
-		gohelper.setActive(arg_14_0._gobreakeffect, true)
-		UISpriteSetMgr.instance:setCommonSprite(arg_14_0.imageBreakIcon, "icon_att_" .. var_14_7)
+	if attrId then
+		gohelper.setActive(self._gobreakeffect, true)
+		UISpriteSetMgr.instance:setCommonSprite(self.imageBreakIcon, "icon_att_" .. attrId)
 
-		arg_14_0.txtBreakAttrName.text = EquipHelper.getAttrBreakText(var_14_7)
-		arg_14_0.txtBreakValue.text = EquipHelper.getAttrPercentValueStr(var_14_8)
+		self.txtBreakAttrName.text = EquipHelper.getAttrBreakText(attrId)
+		self.txtBreakValue.text = EquipHelper.getAttrPercentValueStr(value)
 
-		gohelper.setAsLastSibling(arg_14_0._gobreakeffect)
+		gohelper.setAsLastSibling(self._gobreakeffect)
 	else
-		gohelper.setActive(arg_14_0._gobreakeffect, false)
+		gohelper.setActive(self._gobreakeffect, false)
 	end
 end
 
-function var_0_0.refreshSkillDesc(arg_15_0)
-	local var_15_0 = EquipHelper.getEquipSkillDescList(arg_15_0._config.id, arg_15_0._equipMO.refineLv, "#D9A06F")
+function EquipInfoView:refreshSkillDesc()
+	local skillDescList = EquipHelper.getEquipSkillDescList(self._config.id, self._equipMO.refineLv, "#D9A06F")
 
-	if not next(var_15_0) then
-		gohelper.setActive(arg_15_0._goSkill, false)
+	if not next(skillDescList) then
+		gohelper.setActive(self._goSkill, false)
 	else
-		gohelper.setActive(arg_15_0._goSkill, true)
+		gohelper.setActive(self._goSkill, true)
 
-		local var_15_1
+		local skillItem
 
-		for iter_15_0, iter_15_1 in ipairs(var_15_0) do
-			local var_15_2 = arg_15_0.skillItemList[iter_15_0]
+		for index, desc in ipairs(skillDescList) do
+			skillItem = self.skillItemList[index]
 
-			if not var_15_2 then
-				var_15_2 = arg_15_0:getUserDataTb_()
-				var_15_2.itemGo = gohelper.cloneInPlace(arg_15_0._goSkillItem)
-				var_15_2.txt = gohelper.findChildText(var_15_2.itemGo, "skill_desc")
+			if not skillItem then
+				skillItem = self:getUserDataTb_()
+				skillItem.itemGo = gohelper.cloneInPlace(self._goSkillItem)
+				skillItem.txt = gohelper.findChildText(skillItem.itemGo, "skill_desc")
 
-				SkillHelper.addHyperLinkClick(var_15_2.txt)
+				SkillHelper.addHyperLinkClick(skillItem.txt, self.onClickSkillDescHyperLink, self)
 
-				var_15_2.fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(var_15_2.txt.gameObject, FixTmpBreakLine)
+				skillItem.fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(skillItem.txt.gameObject, FixTmpBreakLine)
 
-				table.insert(arg_15_0.skillItemList, var_15_2)
+				table.insert(self.skillItemList, skillItem)
 			end
 
-			var_15_2.txt.text = EquipHelper.getEquipSkillDesc(iter_15_1)
+			skillItem.txt.text = EquipHelper.getEquipSkillDesc(desc)
 
-			var_15_2.fixTmpBreakLine:refreshTmpContent(var_15_2.txt)
-			gohelper.setActive(var_15_2.itemGo, true)
+			skillItem.fixTmpBreakLine:refreshTmpContent(skillItem.txt)
+			gohelper.setActive(skillItem.itemGo, true)
 		end
 
-		for iter_15_2 = #var_15_0 + 1, #arg_15_0.skillItemList do
-			gohelper.setActive(arg_15_0.skillItemList[iter_15_2].itemGo, false)
+		for i = #skillDescList + 1, #self.skillItemList do
+			gohelper.setActive(self.skillItemList[i].itemGo, false)
 		end
 	end
 end
 
-function var_0_0.showProgress(arg_16_0)
-	if arg_16_0._showMax then
-		for iter_16_0 = 1, 5 do
-			UISpriteSetMgr.instance:setEquipSprite(arg_16_0["_image" .. iter_16_0], "bg_xinxiang_dengji")
+function EquipInfoView:onClickSkillDescHyperLink(effId, clickPosition)
+	CommonBuffTipController.instance:openCommonTipViewWithCustomPos(effId, {
+		x = -321,
+		y = -129.5
+	})
+end
+
+function EquipInfoView:showProgress()
+	if self._showMax then
+		for i = 1, 5 do
+			UISpriteSetMgr.instance:setEquipSprite(self["_image" .. i], "bg_xinxiang_dengji")
 		end
 
-		gohelper.setActive(arg_16_0._txttotallevel.gameObject, false)
-	elseif arg_16_0._isNormalEquip then
-		arg_16_0._txttotallevel.text = string.format("/%s", EquipConfig.instance:getCurrentBreakLevelMaxLevel(arg_16_0._equipMO))
+		gohelper.setActive(self._txttotallevel.gameObject, false)
+	elseif self._isNormalEquip then
+		self._txttotallevel.text = string.format("/%s", EquipConfig.instance:getCurrentBreakLevelMaxLevel(self._equipMO))
 
-		gohelper.setActive(arg_16_0._txttotallevel.gameObject, true)
+		gohelper.setActive(self._txttotallevel.gameObject, true)
 
-		for iter_16_1 = 1, 5 do
-			UISpriteSetMgr.instance:setEquipSprite(arg_16_0["_image" .. iter_16_1], iter_16_1 <= arg_16_0._equipMO.refineLv and "bg_xinxiang_dengji" or "bg_xinxiang_dengji_dis")
+		for i = 1, 5 do
+			UISpriteSetMgr.instance:setEquipSprite(self["_image" .. i], i <= self._equipMO.refineLv and "bg_xinxiang_dengji" or "bg_xinxiang_dengji_dis")
 		end
 	else
-		gohelper.setActive(arg_16_0._txttotallevel.gameObject, false)
+		gohelper.setActive(self._txttotallevel.gameObject, false)
 	end
 
-	arg_16_0._txtcurlevel.text = arg_16_0._equipMO.level
+	self._txtcurlevel.text = self._equipMO.level
 
-	gohelper.setActive(arg_16_0._gotip, arg_16_0._showMax and not EquipHelper.isConsumableEquip(arg_16_0._equipMO.equipId))
+	gohelper.setActive(self._gotip, self._showMax and not EquipHelper.isConsumableEquip(self._equipMO.equipId))
 end
 
-function var_0_0.onOpenFinish(arg_17_0)
+function EquipInfoView:onOpenFinish()
 	return
 end
 
-function var_0_0.onClose(arg_18_0)
-	arg_18_0:playCloseAnimation()
+function EquipInfoView:onClose()
+	self:playCloseAnimation()
 end
 
-function var_0_0.playCloseAnimation(arg_19_0)
-	arg_19_0._animator:Play(UIAnimationName.Close)
+function EquipInfoView:playCloseAnimation()
+	self._animator:Play(UIAnimationName.Close)
 end
 
-function var_0_0.onDestroyView(arg_20_0)
-	if arg_20_0._itemList then
-		for iter_20_0, iter_20_1 in ipairs(arg_20_0._itemList) do
-			iter_20_1:destroyView()
+function EquipInfoView:onDestroyView()
+	if self._itemList then
+		for i, v in ipairs(self._itemList) do
+			v:destroyView()
 		end
 	end
 
-	arg_20_0._click:RemoveClickListener()
+	self._click:RemoveClickListener()
 
-	arg_20_0.strengthenAttrItemList = nil
-	arg_20_0.tagItemList = nil
-	arg_20_0.skillItemList = nil
+	self.strengthenAttrItemList = nil
+	self.tagItemList = nil
+	self.skillItemList = nil
 end
 
-return var_0_0
+return EquipInfoView

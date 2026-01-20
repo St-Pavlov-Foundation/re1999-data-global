@@ -1,26 +1,28 @@
-﻿module("modules.logic.versionactivity1_5.aizila.controller.AiZiLaGameController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/aizila/controller/AiZiLaGameController.lua
 
-local var_0_0 = class("AiZiLaGameController", BaseController)
+module("modules.logic.versionactivity1_5.aizila.controller.AiZiLaGameController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local AiZiLaGameController = class("AiZiLaGameController", BaseController)
+
+function AiZiLaGameController:onInit()
+	self:reInit()
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function AiZiLaGameController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function AiZiLaGameController:addConstEvents()
 	return
 end
 
-function var_0_0.reInit(arg_4_0)
+function AiZiLaGameController:reInit()
 	return
 end
 
-function var_0_0.exitGame(arg_5_0)
+function AiZiLaGameController:exitGame()
 	if ViewMgr.instance:isOpen(ViewName.AiZiLaGameEventResult) then
-		var_0_0.instance:leaveEventResult()
+		AiZiLaGameController.instance:leaveEventResult()
 
 		return
 	end
@@ -31,137 +33,137 @@ function var_0_0.exitGame(arg_5_0)
 		return
 	end
 
-	local var_5_0 = AiZiLaGameModel.instance:getEpisodeMO()
-	local var_5_1 = 0
-	local var_5_2 = var_5_0:getRoundCfg()
+	local episodeMO = AiZiLaGameModel.instance:getEpisodeMO()
+	local lostRate = 0
+	local roundCfg = episodeMO:getRoundCfg()
 
-	if var_5_2 then
-		var_5_1 = 1000 - var_5_2.keepMaterialRate
+	if roundCfg then
+		lostRate = 1000 - roundCfg.keepMaterialRate
 	end
 
-	if var_5_0:isCanSafe() or var_5_1 == 0 then
-		GameFacade.showMessageBox(MessageBoxIdDefine.V1a5AiZiLaSafeExitGame, MsgBoxEnum.BoxType.Yes_No, var_0_0._onExitGameYes)
+	if episodeMO:isCanSafe() or lostRate == 0 then
+		GameFacade.showMessageBox(MessageBoxIdDefine.V1a5AiZiLaSafeExitGame, MsgBoxEnum.BoxType.Yes_No, AiZiLaGameController._onExitGameYes)
 	else
-		GameFacade.showMessageBox(MessageBoxIdDefine.V1a5AiZiLaNotSafeExitGame, MsgBoxEnum.BoxType.Yes_No, var_0_0._onExitGameYes, nil, nil, arg_5_0, nil, nil, var_5_1 * 0.1)
+		GameFacade.showMessageBox(MessageBoxIdDefine.V1a5AiZiLaNotSafeExitGame, MsgBoxEnum.BoxType.Yes_No, AiZiLaGameController._onExitGameYes, nil, nil, self, nil, nil, lostRate * 0.1)
 	end
 end
 
-function var_0_0._onExitGameYes()
-	var_0_0.instance:settleEpisode()
+function AiZiLaGameController._onExitGameYes()
+	AiZiLaGameController.instance:settleEpisode()
 end
 
-function var_0_0.enterGame(arg_7_0, arg_7_1)
+function AiZiLaGameController:enterGame(episodeId)
 	AiZiLaGameModel.instance:reInit()
-	AiZiLaGameModel.instance:setEpisodeId(arg_7_1)
+	AiZiLaGameModel.instance:setEpisodeId(episodeId)
 
-	local var_7_0 = AiZiLaGameModel.instance:getActivityID()
-	local var_7_1 = AiZiLaConfig.instance:getEpisodeCo(var_7_0, arg_7_1)
+	local actId = AiZiLaGameModel.instance:getActivityID()
+	local episodeCfg = AiZiLaConfig.instance:getEpisodeCo(actId, episodeId)
 
-	arg_7_0._enterStoryFinish = true
-	arg_7_0._enterRpcFinish = false
+	self._enterStoryFinish = true
+	self._enterRpcFinish = false
 
-	if arg_7_0:_checkCanPlayStory(var_7_1.storyBefore) then
-		arg_7_0._enterStoryFinish = false
+	if self:_checkCanPlayStory(episodeCfg.storyBefore) then
+		self._enterStoryFinish = false
 
-		arg_7_0:_playStory(var_7_1.storyBefore, arg_7_0._afterPlayEnterStory, arg_7_0)
+		self:_playStory(episodeCfg.storyBefore, self._afterPlayEnterStory, self)
 	end
 
-	Activity144Rpc.instance:sendAct144EnterEpisodeRequest(var_7_0, arg_7_1, arg_7_0._onEnterGameRequest, arg_7_0)
+	Activity144Rpc.instance:sendAct144EnterEpisodeRequest(actId, episodeId, self._onEnterGameRequest, self)
 end
 
-function var_0_0._checkCanPlayStory(arg_8_0, arg_8_1)
-	if arg_8_1 and arg_8_1 ~= 0 and not StoryModel.instance:isStoryHasPlayed(arg_8_1) then
+function AiZiLaGameController:_checkCanPlayStory(storyId)
+	if storyId and storyId ~= 0 and not StoryModel.instance:isStoryHasPlayed(storyId) then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.playStory(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	arg_9_0:_playStory(arg_9_1)
+function AiZiLaGameController:playStory(storyId, callback, callbackObj)
+	self:_playStory(storyId)
 end
 
-function var_0_0._playStory(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	local var_10_0 = {}
+function AiZiLaGameController:_playStory(storyId, callback, callbackObj)
+	local param = {}
 
-	var_10_0.blur = true
-	var_10_0.hideStartAndEndDark = true
-	var_10_0.mark = true
-	var_10_0.isReplay = false
+	param.blur = true
+	param.hideStartAndEndDark = true
+	param.mark = true
+	param.isReplay = false
 
-	StoryController.instance:playStory(arg_10_1, var_10_0, arg_10_2, arg_10_3)
+	StoryController.instance:playStory(storyId, param, callback, callbackObj)
 end
 
-function var_0_0._afterPlayEnterStory(arg_11_0)
-	arg_11_0._enterStoryFinish = true
+function AiZiLaGameController:_afterPlayEnterStory()
+	self._enterStoryFinish = true
 
-	arg_11_0:dispatchEvent(AiZiLaEvent.GameStoryPlayFinish)
-	arg_11_0:_checkEnterGame()
+	self:dispatchEvent(AiZiLaEvent.GameStoryPlayFinish)
+	self:_checkEnterGame()
 end
 
-function var_0_0._onEnterGameRequest(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	if arg_12_2 == 0 then
-		arg_12_0._enterRpcFinish = true
+function AiZiLaGameController:_onEnterGameRequest(cmd, resultCode, msg)
+	if resultCode == 0 then
+		self._enterRpcFinish = true
 
-		AiZiLaGameModel.instance:updateEpisode(arg_12_3.act144Episode)
-		arg_12_0:_checkEnterGame()
+		AiZiLaGameModel.instance:updateEpisode(msg.act144Episode)
+		self:_checkEnterGame()
 	end
 end
 
-function var_0_0._checkEnterGame(arg_13_0)
-	if arg_13_0._enterRpcFinish and arg_13_0._enterStoryFinish then
-		arg_13_0:_startGame()
+function AiZiLaGameController:_checkEnterGame()
+	if self._enterRpcFinish and self._enterStoryFinish then
+		self:_startGame()
 		ViewMgr.instance:openView(ViewName.AiZiLaGameOpenEffectView, {
-			callback = arg_13_0._afterOpenEffect,
-			callbackObj = arg_13_0
+			callback = self._afterOpenEffect,
+			callbackObj = self
 		})
 	end
 end
 
-function var_0_0._afterOpenEffect(arg_14_0)
+function AiZiLaGameController:_afterOpenEffect()
 	ViewMgr.instance:openView(ViewName.AiZiLaGameView)
 	ViewMgr.instance:closeView(ViewName.AiZiLaEpsiodeDetailView)
 	ViewMgr.instance:closeView(ViewName.AiZiLaTaskView)
 end
 
-function var_0_0.gameResult(arg_15_0)
-	arg_15_0:_delayGameResult(0.05)
+function AiZiLaGameController:gameResult()
+	self:_delayGameResult(0.05)
 end
 
-function var_0_0._delayGameResult(arg_16_0, arg_16_1)
-	TaskDispatcher.cancelTask(arg_16_0._onGameResult, arg_16_0)
-	TaskDispatcher.runDelay(arg_16_0._onGameResult, arg_16_0, arg_16_1)
+function AiZiLaGameController:_delayGameResult(delay)
+	TaskDispatcher.cancelTask(self._onGameResult, self)
+	TaskDispatcher.runDelay(self._onGameResult, self, delay)
 end
 
-function var_0_0._onGameResult(arg_17_0)
-	if arg_17_0._storyClearPlayIng then
+function AiZiLaGameController:_onGameResult()
+	if self._storyClearPlayIng then
 		return
 	end
 
-	if arg_17_0._isWaitingEventResult then
-		arg_17_0._isWaitingGameResult = true
+	if self._isWaitingEventResult then
+		self._isWaitingGameResult = true
 
 		return
 	end
 
-	arg_17_0._isWaitingGameResult = false
+	self._isWaitingGameResult = false
 
 	ViewMgr.instance:openView(ViewName.AiZiLaGameResultView)
-	arg_17_0:_endGame()
+	self:_endGame()
 end
 
-function var_0_0.gameResultOver(arg_18_0)
+function AiZiLaGameController:gameResultOver()
 	if ViewMgr.instance:isOpenFinish(ViewName.AiZiLaGameResultView) then
-		local var_18_0 = AiZiLaGameModel.instance:getActivityID()
-		local var_18_1 = AiZiLaGameModel.instance:getEpisodeId()
-		local var_18_2 = AiZiLaConfig.instance:getEpisodeCo(var_18_0, var_18_1)
+		local actId = AiZiLaGameModel.instance:getActivityID()
+		local episodeId = AiZiLaGameModel.instance:getEpisodeId()
+		local episodeCfg = AiZiLaConfig.instance:getEpisodeCo(actId, episodeId)
 
-		arg_18_0._storyClearPlayIng = false
+		self._storyClearPlayIng = false
 
-		if arg_18_0:_checkCanPlayStory(var_18_2.storyClear) and AiZiLaGameModel.instance:isPass() then
-			arg_18_0._storyClearPlayIng = true
+		if self:_checkCanPlayStory(episodeCfg.storyClear) and AiZiLaGameModel.instance:isPass() then
+			self._storyClearPlayIng = true
 
-			arg_18_0:_playStory(var_18_2.storyClear, arg_18_0._afterPlayStoryClear, arg_18_0)
+			self:_playStory(episodeCfg.storyClear, self._afterPlayStoryClear, self)
 			ViewMgr.instance:closeView(ViewName.AiZiLaGameResultView)
 		else
 			AiZiLaController.instance:dispatchEvent(AiZiLaEvent.ExitGame)
@@ -169,188 +171,188 @@ function var_0_0.gameResultOver(arg_18_0)
 	end
 end
 
-function var_0_0._startGame(arg_19_0)
-	if arg_19_0._statGameTime then
+function AiZiLaGameController:_startGame()
+	if self._statGameTime then
 		return
 	end
 
-	arg_19_0._statGameTime = ServerTime.now()
+	self._statGameTime = ServerTime.now()
 end
 
-function var_0_0._endGame(arg_20_0)
-	if not arg_20_0._statGameTime then
+function AiZiLaGameController:_endGame()
+	if not self._statGameTime then
 		return
 	end
 
-	local var_20_0 = ServerTime.now() - arg_20_0._statGameTime
-	local var_20_1 = AiZiLaGameModel.instance:getEpisodeMO()
+	local useTime = ServerTime.now() - self._statGameTime
+	local episodeMO = AiZiLaGameModel.instance:getEpisodeMO()
 
-	if not var_20_1 then
+	if not episodeMO then
 		return
 	end
 
-	local var_20_2 = var_20_1:getConfig()
-	local var_20_3 = AiZiLaGameModel.instance:getIsSafe()
-	local var_20_4 = {}
+	local episodeCfg = episodeMO:getConfig()
+	local isSafe = AiZiLaGameModel.instance:getIsSafe()
+	local rewardMOList = {}
 
-	if AiZiLaGameModel.instance:getIsFirstPass() and var_20_2 then
-		AiZiLaHelper.getItemMOListByBonusStr(var_20_2.bonus, var_20_4)
+	if AiZiLaGameModel.instance:getIsFirstPass() and episodeCfg then
+		AiZiLaHelper.getItemMOListByBonusStr(episodeCfg.bonus, rewardMOList)
 	end
 
-	tabletool.addValues(var_20_4, AiZiLaGameModel.instance:getResultItemList())
+	tabletool.addValues(rewardMOList, AiZiLaGameModel.instance:getResultItemList())
 
-	local var_20_5 = {}
+	local rewardList = {}
 
-	for iter_20_0, iter_20_1 in ipairs(var_20_4) do
-		local var_20_6 = iter_20_1:getConfig()
+	for i, rewardMO in ipairs(rewardMOList) do
+		local itemCfg = rewardMO:getConfig()
 
-		if var_20_6 then
-			table.insert(var_20_5, {
+		if itemCfg then
+			table.insert(rewardList, {
 				materialtype = 1,
-				materialname = var_20_6.name,
-				materialnum = iter_20_1:getQuantity()
+				materialname = itemCfg.name,
+				materialnum = rewardMO:getQuantity()
 			})
 		end
 	end
 
-	local var_20_7 = {}
-	local var_20_8 = AiZiLaModel.instance:getEquipMOList()
+	local equipList = {}
+	local equipMOList = AiZiLaModel.instance:getEquipMOList()
 
-	for iter_20_2, iter_20_3 in ipairs(var_20_8) do
-		local var_20_9 = iter_20_3:getConfig()
+	for i, equipMO in ipairs(equipMOList) do
+		local equipCfg = equipMO:getConfig()
 
-		if var_20_9 then
-			table.insert(var_20_7, {
-				Ezra_equipname = var_20_9.name,
-				Ezra_equip_level = var_20_9.level
+		if equipCfg then
+			table.insert(equipList, {
+				Ezra_equipname = equipCfg.name,
+				Ezra_equip_level = equipCfg.level
 			})
 		end
 	end
 
-	arg_20_0._statGameTime = nil
+	self._statGameTime = nil
 
 	StatController.instance:track(StatEnum.EventName.ExitEzraActivity, {
-		[StatEnum.EventProperties.UseTime] = var_20_0,
-		[StatEnum.EventProperties.EpisodeId] = string.format("%s", var_20_1.episodeId),
-		[StatEnum.EventProperties.ChallengesNum] = var_20_1.enterTimes,
-		[StatEnum.EventProperties.RoundNum] = var_20_1.round,
-		[StatEnum.EventProperties.RemainingMobility] = var_20_1.actionPoint,
-		[StatEnum.EventProperties.CurrentAltitude] = var_20_1.altitude,
-		[StatEnum.EventProperties.Result] = var_20_3 and "安全撤离" or "紧急撤离",
-		[StatEnum.EventProperties.EquipInformation] = var_20_7,
-		[StatEnum.EventProperties.Reward] = var_20_5
+		[StatEnum.EventProperties.UseTime] = useTime,
+		[StatEnum.EventProperties.EpisodeId] = string.format("%s", episodeMO.episodeId),
+		[StatEnum.EventProperties.ChallengesNum] = episodeMO.enterTimes,
+		[StatEnum.EventProperties.RoundNum] = episodeMO.round,
+		[StatEnum.EventProperties.RemainingMobility] = episodeMO.actionPoint,
+		[StatEnum.EventProperties.CurrentAltitude] = episodeMO.altitude,
+		[StatEnum.EventProperties.Result] = isSafe and "安全撤离" or "紧急撤离",
+		[StatEnum.EventProperties.EquipInformation] = equipList,
+		[StatEnum.EventProperties.Reward] = rewardList
 	})
 end
 
-function var_0_0._afterPlayStoryClear(arg_21_0)
-	arg_21_0._storyClearPlayIng = false
+function AiZiLaGameController:_afterPlayStoryClear()
+	self._storyClearPlayIng = false
 
-	arg_21_0:dispatchEvent(AiZiLaEvent.GameStoryPlayFinish)
+	self:dispatchEvent(AiZiLaEvent.GameStoryPlayFinish)
 	AiZiLaController.instance:dispatchEvent(AiZiLaEvent.ExitGame)
 end
 
-var_0_0.GAME_FORWARD_GAME_BLOCK_KEY = "AiZiLaGameController.GAME_FORWARD_GAME_BLOCK_KEY"
+AiZiLaGameController.GAME_FORWARD_GAME_BLOCK_KEY = "AiZiLaGameController.GAME_FORWARD_GAME_BLOCK_KEY"
 
-function var_0_0.forwardGame(arg_22_0)
-	AiZiLaHelper.startBlock(var_0_0.GAME_FORWARD_GAME_BLOCK_KEY)
+function AiZiLaGameController:forwardGame()
+	AiZiLaHelper.startBlock(AiZiLaGameController.GAME_FORWARD_GAME_BLOCK_KEY)
 
-	local var_22_0 = AiZiLaGameModel.instance:getActivityID()
+	local actId = AiZiLaGameModel.instance:getActivityID()
 
-	Activity144Rpc.instance:sendAct144NextDayRequest(var_22_0, arg_22_0._onForwardGameRequest, arg_22_0)
+	Activity144Rpc.instance:sendAct144NextDayRequest(actId, self._onForwardGameRequest, self)
 end
 
-function var_0_0._onForwardGameRequest(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
-	if arg_23_2 == 0 then
-		AiZiLaGameModel.instance:updateEpisode(arg_23_3.act144Episode)
+function AiZiLaGameController:_onForwardGameRequest(cmd, resultCode, msg)
+	if resultCode == 0 then
+		AiZiLaGameModel.instance:updateEpisode(msg.act144Episode)
 		ViewMgr.instance:openView(ViewName.AiZiLaGameEventView)
-		arg_23_0:dispatchEvent(AiZiLaEvent.RefreshGameEpsiode)
+		self:dispatchEvent(AiZiLaEvent.RefreshGameEpsiode)
 	end
 
-	AiZiLaHelper.endBlock(var_0_0.GAME_FORWARD_GAME_BLOCK_KEY)
+	AiZiLaHelper.endBlock(AiZiLaGameController.GAME_FORWARD_GAME_BLOCK_KEY)
 end
 
-var_0_0.GAME_SELECT_OPTION_BLOCK_KEY = "AiZiLaGameController.GAME_SELECT_OPTION_BLOCK_KEY"
+AiZiLaGameController.GAME_SELECT_OPTION_BLOCK_KEY = "AiZiLaGameController.GAME_SELECT_OPTION_BLOCK_KEY"
 
-function var_0_0.selectOption(arg_24_0, arg_24_1)
-	AiZiLaHelper.startBlock(var_0_0.GAME_SELECT_OPTION_BLOCK_KEY)
+function AiZiLaGameController:selectOption(option)
+	AiZiLaHelper.startBlock(AiZiLaGameController.GAME_SELECT_OPTION_BLOCK_KEY)
 
-	local var_24_0 = AiZiLaGameModel.instance:getActivityID()
+	local actId = AiZiLaGameModel.instance:getActivityID()
 
-	arg_24_0._isWaitingEventResult = true
+	self._isWaitingEventResult = true
 
-	Activity144Rpc.instance:sendAct144SelectOptionRequest(var_24_0, arg_24_1, arg_24_0._onSelectOptionRequest, arg_24_0)
+	Activity144Rpc.instance:sendAct144SelectOptionRequest(actId, option, self._onSelectOptionRequest, self)
 end
 
-function var_0_0._onSelectOptionRequest(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
-	if arg_25_2 == 0 then
-		local var_25_0 = arg_25_3.act144Episode
-		local var_25_1 = {
-			eventId = var_25_0.eventId,
-			actId = arg_25_3.activityId,
-			optionId = var_25_0.option,
-			optionResultId = var_25_0.optionResultId,
+function AiZiLaGameController:_onSelectOptionRequest(cmd, resultCode, msg)
+	if resultCode == 0 then
+		local act144Episode = msg.act144Episode
+		local viewParams = {
+			eventId = act144Episode.eventId,
+			actId = msg.activityId,
+			optionId = act144Episode.option,
+			optionResultId = act144Episode.optionResultId,
 			itemMOList = {}
 		}
 
-		arg_25_0._eventResultViewParams = var_25_1
+		self._eventResultViewParams = viewParams
 
-		local var_25_2 = AiZiLaGameModel.instance
-		local var_25_3 = var_25_0 and var_25_0.tempAct144Items or {}
+		local tAiZiLaGameModel = AiZiLaGameModel.instance
+		local tempAct144Items = act144Episode and act144Episode.tempAct144Items or {}
 
-		var_25_2:updateEpisode(var_25_0)
-		var_25_2:setAct144Items(var_25_3)
+		tAiZiLaGameModel:updateEpisode(act144Episode)
+		tAiZiLaGameModel:setAct144Items(tempAct144Items)
 
-		local var_25_4 = AiZiLaConfig.instance:getOptionResultCo(arg_25_3.activityId, var_25_0.optionResultId)
+		local optionResultCfg = AiZiLaConfig.instance:getOptionResultCo(msg.activityId, act144Episode.optionResultId)
 
-		if var_25_4 and not string.nilorempty(var_25_4.bonus) then
-			AiZiLaHelper.getItemMOListByBonusStr(var_25_4.bonus, var_25_1.itemMOList)
+		if optionResultCfg and not string.nilorempty(optionResultCfg.bonus) then
+			AiZiLaHelper.getItemMOListByBonusStr(optionResultCfg.bonus, viewParams.itemMOList)
 		end
 
 		AiZiLaHelper.playViewAnimator(ViewName.AiZiLaGameEventView, UIAnimationName.Switch)
-		TaskDispatcher.runDelay(arg_25_0._onOpenGameEventResult, arg_25_0, AiZiLaEnum.AnimatorTime.GameEventViewClose)
-		arg_25_0:dispatchEvent(AiZiLaEvent.RefreshGameEpsiode)
+		TaskDispatcher.runDelay(self._onOpenGameEventResult, self, AiZiLaEnum.AnimatorTime.GameEventViewClose)
+		self:dispatchEvent(AiZiLaEvent.RefreshGameEpsiode)
 	else
-		arg_25_0._eventResultViewParams = nil
-		arg_25_0._isWaitingEventResult = false
+		self._eventResultViewParams = nil
+		self._isWaitingEventResult = false
 
-		TaskDispatcher.cancelTask(arg_25_0._onOpenGameEventResult, arg_25_0)
-		AiZiLaHelper.endBlock(var_0_0.GAME_SELECT_OPTION_BLOCK_KEY)
+		TaskDispatcher.cancelTask(self._onOpenGameEventResult, self)
+		AiZiLaHelper.endBlock(AiZiLaGameController.GAME_SELECT_OPTION_BLOCK_KEY)
 	end
 end
 
-function var_0_0._onOpenGameEventResult(arg_26_0)
-	AiZiLaHelper.endBlock(var_0_0.GAME_SELECT_OPTION_BLOCK_KEY)
+function AiZiLaGameController:_onOpenGameEventResult()
+	AiZiLaHelper.endBlock(AiZiLaGameController.GAME_SELECT_OPTION_BLOCK_KEY)
 
-	arg_26_0._isWaitingEventResult = false
+	self._isWaitingEventResult = false
 
-	if arg_26_0._eventResultViewParams then
-		local var_26_0 = arg_26_0._eventResultViewParams
+	if self._eventResultViewParams then
+		local viewParams = self._eventResultViewParams
 
-		arg_26_0._eventResultViewParams = nil
+		self._eventResultViewParams = nil
 
-		ViewMgr.instance:openView(ViewName.AiZiLaGameEventResult, var_26_0)
+		ViewMgr.instance:openView(ViewName.AiZiLaGameEventResult, viewParams)
 		ViewMgr.instance:closeView(ViewName.AiZiLaGameEventView, true)
 	end
 end
 
-function var_0_0.settleEpisode(arg_27_0)
+function AiZiLaGameController:settleEpisode()
 	Activity144Rpc.instance:sendAct144SettleEpisodeRequest(VersionActivity1_5Enum.ActivityId.AiZiLa)
 end
 
-function var_0_0.leaveEventResult(arg_28_0)
-	if arg_28_0._isWaitingGameResult then
-		local var_28_0 = ViewMgr.instance:getContainer(ViewName.AiZiLaGameView)
+function AiZiLaGameController:leaveEventResult()
+	if self._isWaitingGameResult then
+		local viewContainer = ViewMgr.instance:getContainer(ViewName.AiZiLaGameView)
 
-		if var_28_0 and var_28_0:needPlayRiseAnim() then
-			arg_28_0:_delayGameResult(AiZiLaEnum.AnimatorTime.MapViewRise)
+		if viewContainer and viewContainer:needPlayRiseAnim() then
+			self:_delayGameResult(AiZiLaEnum.AnimatorTime.MapViewRise)
 		else
-			arg_28_0:gameResult()
+			self:gameResult()
 		end
 	end
 
 	ViewMgr.instance:closeView(ViewName.AiZiLaGameEventResult)
 end
 
-var_0_0.instance = var_0_0.New()
+AiZiLaGameController.instance = AiZiLaGameController.New()
 
-return var_0_0
+return AiZiLaGameController

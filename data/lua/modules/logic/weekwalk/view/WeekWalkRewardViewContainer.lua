@@ -1,28 +1,30 @@
-﻿module("modules.logic.weekwalk.view.WeekWalkRewardViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk/view/WeekWalkRewardViewContainer.lua
 
-local var_0_0 = class("WeekWalkRewardViewContainer", BaseViewContainer)
+module("modules.logic.weekwalk.view.WeekWalkRewardViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+local WeekWalkRewardViewContainer = class("WeekWalkRewardViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "right/#scroll_reward"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_1.cellClass = WeekWalkRewardItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 1
-	var_1_1.cellWidth = 1500
-	var_1_1.cellHeight = 160
-	var_1_1.cellSpaceH = 0
-	var_1_1.cellSpaceV = 0
-	var_1_1.startSpace = 0
+function WeekWalkRewardViewContainer:buildViews()
+	local views = {}
+	local scrollParam = ListScrollParam.New()
+
+	scrollParam.scrollGOPath = "right/#scroll_reward"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = WeekWalkRewardItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 1500
+	scrollParam.cellHeight = 160
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 0
+	scrollParam.startSpace = 0
 	WeekWalkTaskListModel.instance.openRewardTime = Time.time
 
-	table.insert(var_1_0, LuaListScrollView.New(WeekWalkTaskListModel.instance, var_1_1))
-	table.insert(var_1_0, WeekWalkRewardView.New())
+	table.insert(views, LuaListScrollView.New(WeekWalkTaskListModel.instance, scrollParam))
+	table.insert(views, WeekWalkRewardView.New())
 
-	return var_1_0
+	return views
 end
 
-return var_0_0
+return WeekWalkRewardViewContainer

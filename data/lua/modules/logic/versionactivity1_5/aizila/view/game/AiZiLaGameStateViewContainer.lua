@@ -1,29 +1,31 @@
-﻿module("modules.logic.versionactivity1_5.aizila.view.game.AiZiLaGameStateViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/aizila/view/game/AiZiLaGameStateViewContainer.lua
 
-local var_0_0 = class("AiZiLaGameStateViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_5.aizila.view.game.AiZiLaGameStateViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local AiZiLaGameStateViewContainer = class("AiZiLaGameStateViewContainer", BaseViewContainer)
 
-	arg_1_0._gameStateView = AiZiLaGameStateView.New()
+function AiZiLaGameStateViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, arg_1_0._gameStateView)
+	self._gameStateView = AiZiLaGameStateView.New()
 
-	return var_1_0
+	table.insert(views, self._gameStateView)
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._navigateButtonsView = NavigateButtonsView.New({
+function AiZiLaGameStateViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonsView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_2_0._navigateButtonsView
+			self._navigateButtonsView
 		}
 	end
 end
 
-return var_0_0
+return AiZiLaGameStateViewContainer

@@ -1,33 +1,35 @@
-﻿module("modules.logic.settings.view.SettingsVoicePackageViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/settings/view/SettingsVoicePackageViewContainer.lua
 
-local var_0_0 = class("SettingsVoicePackageViewContainer", BaseViewContainer)
+module("modules.logic.settings.view.SettingsVoicePackageViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+local SettingsVoicePackageViewContainer = class("SettingsVoicePackageViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "view/#scroll_content"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_1.cellClass = SettingsVoicePackageListItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 1
-	var_1_1.cellWidth = 1430
-	var_1_1.cellHeight = 90
-	var_1_1.cellSpaceH = 0
-	var_1_1.cellSpaceV = 2
-	var_1_1.startSpace = 0
-	var_1_1.sortMode = ScrollEnum.ScrollSortDown
+function SettingsVoicePackageViewContainer:buildViews()
+	local views = {}
+	local scrollParam = ListScrollParam.New()
 
-	table.insert(var_1_0, LuaListScrollView.New(SettingsVoicePackageListModel.instance, var_1_1))
-	table.insert(var_1_0, SettingsVoicePackageView.New())
+	scrollParam.scrollGOPath = "view/#scroll_content"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = SettingsVoicePackageListItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 1430
+	scrollParam.cellHeight = 90
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 2
+	scrollParam.startSpace = 0
+	scrollParam.sortMode = ScrollEnum.ScrollSortDown
 
-	return var_1_0
+	table.insert(views, LuaListScrollView.New(SettingsVoicePackageListModel.instance, scrollParam))
+	table.insert(views, SettingsVoicePackageView.New())
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
+function SettingsVoicePackageViewContainer:onContainerClickModalMask()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	arg_2_0:closeThis()
+	self:closeThis()
 end
 
-return var_0_0
+return SettingsVoicePackageViewContainer

@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity2_7.act191.view.Act191HeroTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/act191/view/Act191HeroTipViewContainer.lua
 
-local var_0_0 = class("Act191HeroTipViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_7.act191.view.Act191HeroTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Act191HeroTipViewContainer = class("Act191HeroTipViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Act191HeroTipView.New())
+function Act191HeroTipViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Act191HeroTipView.New())
+
+	return views
 end
 
-return var_0_0
+return Act191HeroTipViewContainer

@@ -1,59 +1,61 @@
-﻿module("modules.logic.activity.controller.chessmap.step.ActivityChessStepDeleteObject", package.seeall)
+﻿-- chunkname: @modules/logic/activity/controller/chessmap/step/ActivityChessStepDeleteObject.lua
 
-local var_0_0 = class("ActivityChessStepDeleteObject", ActivityChessStepBase)
+module("modules.logic.activity.controller.chessmap.step.ActivityChessStepDeleteObject", package.seeall)
 
-function var_0_0.start(arg_1_0)
-	local var_1_0 = arg_1_0.originData.id
-	local var_1_1 = arg_1_0.originData.x
-	local var_1_2 = arg_1_0.originData.y
-	local var_1_3 = ActivityChessGameModel.instance:getActId()
-	local var_1_4 = ActivityChessGameController.instance.interacts
+local ActivityChessStepDeleteObject = class("ActivityChessStepDeleteObject", ActivityChessStepBase)
 
-	if var_1_4 then
-		local var_1_5 = var_1_4:get(var_1_0)
+function ActivityChessStepDeleteObject:start()
+	local objId = self.originData.id
+	local tarX = self.originData.x
+	local tarY = self.originData.y
+	local actId = ActivityChessGameModel.instance:getActId()
+	local interactMgr = ActivityChessGameController.instance.interacts
 
-		if var_1_5 and var_1_5.config and var_1_5.config.interactType == ActivityChessEnum.InteractType.Player and arg_1_0:checkPlayDisappearAnim(var_1_5) then
+	if interactMgr then
+		local interactObj = interactMgr:get(objId)
+
+		if interactObj and interactObj.config and interactObj.config.interactType == ActivityChessEnum.InteractType.Player and self:checkPlayDisappearAnim(interactObj) then
 			return
 		end
 	end
 
-	arg_1_0:removeFinish()
+	self:removeFinish()
 end
 
-function var_0_0.checkPlayDisappearAnim(arg_2_0, arg_2_1)
-	if arg_2_1.avatar and arg_2_1.avatar.goSelected then
-		local var_2_0 = arg_2_1.avatar.goSelected:GetComponent(typeof(UnityEngine.Animator))
+function ActivityChessStepDeleteObject:checkPlayDisappearAnim(interactObj)
+	if interactObj.avatar and interactObj.avatar.goSelected then
+		local anim = interactObj.avatar.goSelected:GetComponent(typeof(UnityEngine.Animator))
 
-		if var_2_0 then
-			var_2_0:Play("close", 0, 0)
+		if anim then
+			anim:Play("close", 0, 0)
 		end
 	end
 
-	local var_2_1 = arg_2_1:tryGetGameObject()
+	local go = interactObj:tryGetGameObject()
 
-	if not gohelper.isNil(var_2_1) then
-		local var_2_2 = gohelper.findChild(var_2_1, "vx_disappear")
+	if not gohelper.isNil(go) then
+		local goVfx = gohelper.findChild(go, "vx_disappear")
 
-		gohelper.setActive(var_2_2, true)
+		gohelper.setActive(goVfx, true)
 
-		local var_2_3 = gohelper.findChild(var_2_1, "piecea/vx_tracked")
+		local goTracked = gohelper.findChild(go, "piecea/vx_tracked")
 
-		if not gohelper.isNil(var_2_3) then
-			local var_2_4 = var_2_3:GetComponent(typeof(UnityEngine.Animator))
+		if not gohelper.isNil(goTracked) then
+			local animTracked = goTracked:GetComponent(typeof(UnityEngine.Animator))
 
-			if var_2_4 then
-				var_2_4:Play("close", 0, 0)
+			if animTracked then
+				animTracked:Play("close", 0, 0)
 			end
 		end
 
-		local var_2_5 = var_2_1:GetComponent(typeof(UnityEngine.Animator))
+		local anim = go:GetComponent(typeof(UnityEngine.Animator))
 
-		if var_2_5 then
-			var_2_5:Play("close", 0, 0)
+		if anim then
+			anim:Play("close", 0, 0)
 		end
 
 		AudioMgr.instance:trigger(AudioEnum.ChessGame.PlayerDisappear)
-		TaskDispatcher.runDelay(arg_2_0.removeFinish, arg_2_0, 0.7)
+		TaskDispatcher.runDelay(self.removeFinish, self, 0.7)
 
 		return true
 	end
@@ -61,17 +63,17 @@ function var_0_0.checkPlayDisappearAnim(arg_2_0, arg_2_1)
 	return false
 end
 
-function var_0_0.removeFinish(arg_3_0)
-	local var_3_0 = arg_3_0.originData.id
+function ActivityChessStepDeleteObject:removeFinish()
+	local objId = self.originData.id
 
-	ActivityChessGameModel.instance:removeObjectById(var_3_0)
-	ActivityChessGameController.instance:deleteInteractObj(var_3_0)
-	arg_3_0:finish()
+	ActivityChessGameModel.instance:removeObjectById(objId)
+	ActivityChessGameController.instance:deleteInteractObj(objId)
+	self:finish()
 end
 
-function var_0_0.dispose(arg_4_0)
-	var_0_0.super.dispose(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0.removeFinish, arg_4_0)
+function ActivityChessStepDeleteObject:dispose()
+	ActivityChessStepDeleteObject.super.dispose(self)
+	TaskDispatcher.cancelTask(self.removeFinish, self)
 end
 
-return var_0_0
+return ActivityChessStepDeleteObject

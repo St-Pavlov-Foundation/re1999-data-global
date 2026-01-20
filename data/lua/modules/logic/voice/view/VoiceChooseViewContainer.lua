@@ -1,28 +1,30 @@
-﻿module("modules.logic.voice.view.VoiceChooseViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/voice/view/VoiceChooseViewContainer.lua
 
-local var_0_0 = class("VoiceChooseViewContainer", BaseViewContainer)
+module("modules.logic.voice.view.VoiceChooseViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = ListScrollParam.New()
+local VoiceChooseViewContainer = class("VoiceChooseViewContainer", BaseViewContainer)
 
-	var_1_0.scrollGOPath = "view/#scroll_content"
-	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_0.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_0.cellClass = VoiceChooseItem
-	var_1_0.scrollDir = ScrollEnum.ScrollDirV
-	var_1_0.lineCount = 1
-	var_1_0.cellWidth = 1400
-	var_1_0.cellHeight = 124
-	var_1_0.cellSpaceH = 0
-	var_1_0.cellSpaceV = 10
-	var_1_0.startSpace = 0
+function VoiceChooseViewContainer:buildViews()
+	local scrollParam = ListScrollParam.New()
 
-	local var_1_1 = {}
+	scrollParam.scrollGOPath = "view/#scroll_content"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = VoiceChooseItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 1400
+	scrollParam.cellHeight = 124
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 10
+	scrollParam.startSpace = 0
 
-	table.insert(var_1_1, LuaListScrollView.New(VoiceChooseModel.instance, var_1_0))
-	table.insert(var_1_1, VoiceChooseView.New())
+	local views = {}
 
-	return var_1_1
+	table.insert(views, LuaListScrollView.New(VoiceChooseModel.instance, scrollParam))
+	table.insert(views, VoiceChooseView.New())
+
+	return views
 end
 
-return var_0_0
+return VoiceChooseViewContainer

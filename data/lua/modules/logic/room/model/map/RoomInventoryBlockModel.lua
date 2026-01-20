@@ -1,330 +1,334 @@
-﻿module("modules.logic.room.model.map.RoomInventoryBlockModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/map/RoomInventoryBlockModel.lua
 
-local var_0_0 = class("RoomInventoryBlockModel", BaseModel)
+module("modules.logic.room.model.map.RoomInventoryBlockModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._selectPackageIds = {}
+local RoomInventoryBlockModel = class("RoomInventoryBlockModel", BaseModel)
 
-	arg_1_0:_clearData()
+function RoomInventoryBlockModel:onInit()
+	self._selectPackageIds = {}
+
+	self:_clearData()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._selectPackageIds = {}
-	arg_2_0._unUseBlockList = {}
+function RoomInventoryBlockModel:reInit()
+	self._selectPackageIds = {}
+	self._unUseBlockList = {}
 
-	arg_2_0:_clearData()
+	self:_clearData()
 end
 
-function var_0_0.clear(arg_3_0)
-	var_0_0.super.clear(arg_3_0)
-	arg_3_0:_clearData()
+function RoomInventoryBlockModel:clear()
+	RoomInventoryBlockModel.super.clear(self)
+	self:_clearData()
 end
 
-function var_0_0._clearData(arg_4_0)
-	if arg_4_0._blockPackageModel then
-		local var_4_0 = arg_4_0._blockPackageModel:getList()
+function RoomInventoryBlockModel:_clearData()
+	if self._blockPackageModel then
+		local packageMOList = self._blockPackageModel:getList()
 
-		for iter_4_0, iter_4_1 in ipairs(var_4_0) do
-			iter_4_1:clear()
+		for _, packageMO in ipairs(packageMOList) do
+			packageMO:clear()
 		end
 
-		arg_4_0._blockPackageModel:clear()
+		self._blockPackageModel:clear()
 	end
 
-	arg_4_0._blockPackageModel = BaseModel.New()
-	arg_4_0._unUseBlockList = arg_4_0._unUseBlockList or {}
+	self._blockPackageModel = BaseModel.New()
+	self._unUseBlockList = self._unUseBlockList or {}
 end
 
-function var_0_0.initInventory(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
-	arg_5_0:_clearData()
+function RoomInventoryBlockModel:initInventory(tPackageIds, blockPackages, useBlockInfos, spercialBlockIds)
+	self:_clearData()
 
-	local var_5_0 = {}
+	local blockPackageIds = {}
 
-	tabletool.addValues(var_5_0, arg_5_1)
+	tabletool.addValues(blockPackageIds, tPackageIds)
 
-	arg_5_2 = arg_5_2 or {}
+	blockPackages = blockPackages or {}
 
-	local var_5_1 = arg_5_0:_getSpercialMaps(arg_5_4)
+	local tAloneMap = self:_getSpercialMaps(spercialBlockIds)
 
-	for iter_5_0 = 1, #var_5_0 do
-		local var_5_2 = var_5_0[iter_5_0]
+	for i = 1, #blockPackageIds do
+		local packageId = blockPackageIds[i]
 
-		if not var_5_1[var_5_2] then
-			var_5_1[var_5_2] = {}
+		if not tAloneMap[packageId] then
+			tAloneMap[packageId] = {}
 		end
 	end
 
-	for iter_5_1, iter_5_2 in pairs(var_5_1) do
-		local var_5_3 = RoomBlockPackageMO.New()
+	for blockPackageId, tBlockIds in pairs(tAloneMap) do
+		local blockPackageMO = RoomBlockPackageMO.New()
 
-		var_5_3:init({
-			id = iter_5_1
-		}, iter_5_2)
-		arg_5_0._blockPackageModel:addAtLast(var_5_3)
+		blockPackageMO:init({
+			id = blockPackageId
+		}, tBlockIds)
+		self._blockPackageModel:addAtLast(blockPackageMO)
 	end
 
-	arg_5_0:addBlockPackageList(arg_5_2)
+	self:addBlockPackageList(blockPackages)
 
-	arg_5_3 = arg_5_3 or {}
+	useBlockInfos = useBlockInfos or {}
 
-	for iter_5_3 = 1, #arg_5_3 do
-		arg_5_0:placeBlock(arg_5_3[iter_5_3].blockId)
+	for i = 1, #useBlockInfos do
+		self:placeBlock(useBlockInfos[i].blockId)
 	end
 
-	if not arg_5_0:getCurPackageMO() and arg_5_0._blockPackageModel:getCount() > 0 then
-		local var_5_4 = arg_5_0:_findHasUnUsePackageMO() or arg_5_0._blockPackageModel:getByIndex(1)
+	if not self:getCurPackageMO() and self._blockPackageModel:getCount() > 0 then
+		local packageMO = self:_findHasUnUsePackageMO() or self._blockPackageModel:getByIndex(1)
 
-		arg_5_0:setSelectBlockPackageIds({
-			var_5_4.id
+		self:setSelectBlockPackageIds({
+			packageMO.id
 		})
-		RoomHelper.hideBlockPackageReddot(var_5_4.id)
+		RoomHelper.hideBlockPackageReddot(packageMO.id)
 	end
 end
 
-function var_0_0.addSpecialBlockIds(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0:_getSpercialMaps(arg_6_1)
+function RoomInventoryBlockModel:addSpecialBlockIds(spercialBlockIds)
+	local tAloneMap = self:_getSpercialMaps(spercialBlockIds)
 
-	for iter_6_0, iter_6_1 in pairs(var_6_0) do
-		local var_6_1 = arg_6_0._blockPackageModel:getById(iter_6_0)
+	for blockPackageId, tBlockIds in pairs(tAloneMap) do
+		local blockPackageMO = self._blockPackageModel:getById(blockPackageId)
 
-		if var_6_1 then
-			var_6_1:addBlockIdList(iter_6_1)
+		if blockPackageMO then
+			blockPackageMO:addBlockIdList(tBlockIds)
 		else
-			local var_6_2 = RoomBlockPackageMO.New()
+			blockPackageMO = RoomBlockPackageMO.New()
 
-			var_6_2:init({
-				id = iter_6_0
-			}, iter_6_1)
-			arg_6_0._blockPackageModel:addAtLast(var_6_2)
+			blockPackageMO:init({
+				id = blockPackageId
+			}, tBlockIds)
+			self._blockPackageModel:addAtLast(blockPackageMO)
 		end
 	end
 end
 
-function var_0_0._getSpercialMaps(arg_7_0, arg_7_1)
-	local var_7_0 = {}
+function RoomInventoryBlockModel:_getSpercialMaps(spercialBlockIds)
+	local tAloneMap = {}
 
-	arg_7_1 = arg_7_1 or {}
+	spercialBlockIds = spercialBlockIds or {}
 
-	local var_7_1 = RoomConfig.instance
+	local tRoomConfig = RoomConfig.instance
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_1) do
-		local var_7_2 = var_7_1:getBlock(iter_7_1)
+	for _, blockId in ipairs(spercialBlockIds) do
+		local blockCfg = tRoomConfig:getBlock(blockId)
 
-		if var_7_2 then
-			local var_7_3 = var_7_0[var_7_2.packageId]
+		if blockCfg then
+			local tIds = tAloneMap[blockCfg.packageId]
 
-			if not var_7_3 then
-				var_7_3 = {}
-				var_7_0[var_7_2.packageId] = var_7_3
+			if not tIds then
+				tIds = {}
+				tAloneMap[blockCfg.packageId] = tIds
 			end
 
-			table.insert(var_7_3, iter_7_1)
+			table.insert(tIds, blockId)
 		end
 	end
 
-	return var_7_0
+	return tAloneMap
 end
 
-function var_0_0._findHasUnUsePackageMO(arg_8_0)
-	local var_8_0 = arg_8_0._blockPackageModel:getList()
+function RoomInventoryBlockModel:_findHasUnUsePackageMO()
+	local list = self._blockPackageModel:getList()
 
-	for iter_8_0 = 1, #var_8_0 do
-		if var_8_0[iter_8_0]:getUnUseCount() > 0 then
-			return var_8_0[iter_8_0]
+	for i = 1, #list do
+		if list[i]:getUnUseCount() > 0 then
+			return list[i]
 		end
 	end
 end
 
-function var_0_0.addBlockPackageList(arg_9_0, arg_9_1)
-	if not arg_9_1 then
+function RoomInventoryBlockModel:addBlockPackageList(blockPackages)
+	if not blockPackages then
 		return
 	end
 
-	for iter_9_0 = 1, #arg_9_1 do
-		local var_9_0 = arg_9_1[iter_9_0]
-		local var_9_1 = var_9_0.blockPackageId
-		local var_9_2 = arg_9_0._blockPackageModel:getById(var_9_1)
+	for i = 1, #blockPackages do
+		local blockPackage = blockPackages[i]
+		local blockPackageId = blockPackage.blockPackageId
+		local blockPackageMO = self._blockPackageModel:getById(blockPackageId)
 
-		if not var_9_2 then
-			var_9_2 = RoomBlockPackageMO.New()
+		if not blockPackageMO then
+			blockPackageMO = RoomBlockPackageMO.New()
 
-			var_9_2:init({
-				id = var_9_1
+			blockPackageMO:init({
+				id = blockPackageId
 			})
-			arg_9_0._blockPackageModel:addAtLast(var_9_2)
+			self._blockPackageModel:addAtLast(blockPackageMO)
 		end
 
-		var_9_2:reset()
-		var_9_2:useBlockIds(var_9_0.useBlockIds)
+		blockPackageMO:reset()
+		blockPackageMO:useBlockIds(blockPackage.useBlockIds)
 	end
 end
 
-function var_0_0.setSelectBlockPackageIds(arg_10_0, arg_10_1)
-	arg_10_0._selectPackageIds = {}
+function RoomInventoryBlockModel:setSelectBlockPackageIds(packageIds)
+	self._selectPackageIds = {}
 
-	for iter_10_0, iter_10_1 in ipairs(arg_10_1) do
-		table.insert(arg_10_0._selectPackageIds, iter_10_1)
+	for _, packageId in ipairs(packageIds) do
+		table.insert(self._selectPackageIds, packageId)
 	end
 end
 
-function var_0_0.isSelectBlockPackageById(arg_11_0, arg_11_1)
-	return tabletool.indexOf(arg_11_0._selectPackageIds, arg_11_1) and true or false
+function RoomInventoryBlockModel:isSelectBlockPackageById(packageId)
+	local index = tabletool.indexOf(self._selectPackageIds, packageId)
+
+	return index and true or false
 end
 
-function var_0_0.rotateFirst(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0:getSelectInventoryBlockMO()
+function RoomInventoryBlockModel:rotateFirst(rotate)
+	local firstBlockMO = self:getSelectInventoryBlockMO()
 
-	if var_12_0 then
-		var_12_0.rotate = arg_12_1
+	if firstBlockMO then
+		firstBlockMO.rotate = rotate
 	end
 end
 
-function var_0_0.placeBlock(arg_13_0, arg_13_1)
-	if arg_13_0._selectInventoryBlockId == arg_13_1 then
-		arg_13_0._selectInventoryBlockId = nil
+function RoomInventoryBlockModel:placeBlock(blockId)
+	if self._selectInventoryBlockId == blockId then
+		self._selectInventoryBlockId = nil
 	end
 
-	local var_13_0 = RoomConfig.instance:getBlock(arg_13_1)
+	local blockCfg = RoomConfig.instance:getBlock(blockId)
 
-	if var_13_0 then
-		local var_13_1 = arg_13_0._blockPackageModel:getById(var_13_0.packageId)
+	if blockCfg then
+		local packageMO = self._blockPackageModel:getById(blockCfg.packageId)
 
-		if var_13_1 then
-			var_13_1:useBlockId(arg_13_1)
+		if packageMO then
+			packageMO:useBlockId(blockId)
 		end
 
-		tabletool.removeValue(arg_13_0._unUseBlockList, arg_13_1)
+		tabletool.removeValue(self._unUseBlockList, blockId)
 	else
-		logError(string.format("地块配置中找不到地块. can not find blockCfg for BlockConfig : [blockId:%s]", arg_13_1 or "nil"))
+		logError(string.format("地块配置中找不到地块. can not find blockCfg for BlockConfig : [blockId:%s]", blockId or "nil"))
 	end
 end
 
-function var_0_0.blackBlocksByIds(arg_14_0, arg_14_1)
-	for iter_14_0, iter_14_1 in ipairs(arg_14_1) do
-		arg_14_0:blackBlockById(iter_14_1)
+function RoomInventoryBlockModel:blackBlocksByIds(blockIds)
+	for _, blockId in ipairs(blockIds) do
+		self:blackBlockById(blockId)
 	end
 end
 
-function var_0_0.blackBlockById(arg_15_0, arg_15_1)
-	local var_15_0 = RoomConfig.instance:getBlock(arg_15_1)
+function RoomInventoryBlockModel:blackBlockById(blockId)
+	local blockCfg = RoomConfig.instance:getBlock(blockId)
 
-	if var_15_0 then
-		local var_15_1 = arg_15_0._blockPackageModel:getById(var_15_0.packageId)
+	if blockCfg then
+		local packageMO = self._blockPackageModel:getById(blockCfg.packageId)
 
-		if var_15_1 then
-			var_15_1:unUseBlockId(arg_15_1)
-			table.insert(arg_15_0._unUseBlockList, arg_15_1)
+		if packageMO then
+			packageMO:unUseBlockId(blockId)
+			table.insert(self._unUseBlockList, blockId)
 		else
-			logError("还没获得对应的资源包：" .. var_15_0.packageId)
+			logError("还没获得对应的资源包：" .. blockCfg.packageId)
 		end
 	end
 end
 
-function var_0_0.findFristUnUseBlockMO(arg_16_0, arg_16_1, arg_16_2)
-	local var_16_0 = arg_16_0._blockPackageModel:getById(arg_16_1)
+function RoomInventoryBlockModel:findFristUnUseBlockMO(packageId, resId)
+	local packageMO = self._blockPackageModel:getById(packageId)
 
-	if not var_16_0 then
+	if not packageMO then
 		return nil
 	end
 
-	local var_16_1 = arg_16_0._unUseBlockList or {}
+	local unUseBlockIds = self._unUseBlockList or {}
 
-	for iter_16_0, iter_16_1 in ipairs(var_16_1) do
-		local var_16_2 = var_16_0:getUnUseBlockMOById(iter_16_1)
+	for _, blockId in ipairs(unUseBlockIds) do
+		local blockMO = packageMO:getUnUseBlockMOById(blockId)
 
-		if var_16_2 and var_16_2:getMainRes() == arg_16_2 then
-			return var_16_2
+		if blockMO and blockMO:getMainRes() == resId then
+			return blockMO
 		end
 	end
 
-	return var_16_0:getUnUseBlockMOByResId(arg_16_2)
+	return packageMO:getUnUseBlockMOByResId(resId)
 end
 
-function var_0_0.getCurPackageMO(arg_17_0)
-	local var_17_0
-	local var_17_1 = arg_17_0._blockPackageModel:getList()
+function RoomInventoryBlockModel:getCurPackageMO()
+	local fristMO
+	local list = self._blockPackageModel:getList()
 
-	for iter_17_0, iter_17_1 in ipairs(arg_17_0._selectPackageIds) do
-		local var_17_2 = arg_17_0._blockPackageModel:getById(iter_17_1)
+	for _, packageId in ipairs(self._selectPackageIds) do
+		local packageMO = self._blockPackageModel:getById(packageId)
 
-		if var_17_2 and var_17_2:getUnUseCount() > 0 then
-			return var_17_2
-		elseif var_17_0 == nil then
-			var_17_0 = var_17_2
+		if packageMO and packageMO:getUnUseCount() > 0 then
+			return packageMO
+		elseif fristMO == nil then
+			fristMO = packageMO
 		end
 	end
 
-	return var_17_0
+	return fristMO
 end
 
-function var_0_0.getPackageMOById(arg_18_0, arg_18_1)
-	return arg_18_0._blockPackageModel:getById(arg_18_1)
+function RoomInventoryBlockModel:getPackageMOById(packageId)
+	return self._blockPackageModel:getById(packageId)
 end
 
-function var_0_0.openSelectOp(arg_19_0)
+function RoomInventoryBlockModel:openSelectOp()
 	return true
 end
 
-function var_0_0.setSelectInventoryBlockId(arg_20_0, arg_20_1)
-	arg_20_0._selectInventoryBlockId = arg_20_1
+function RoomInventoryBlockModel:setSelectInventoryBlockId(blockId)
+	self._selectInventoryBlockId = blockId
 end
 
-function var_0_0.getSelectInventoryBlockId(arg_21_0)
-	return arg_21_0._selectInventoryBlockId
+function RoomInventoryBlockModel:getSelectInventoryBlockId()
+	return self._selectInventoryBlockId
 end
 
-function var_0_0.setSelectResId(arg_22_0, arg_22_1)
-	arg_22_0._selectResId = arg_22_1
+function RoomInventoryBlockModel:setSelectResId(resId)
+	self._selectResId = resId
 end
 
-function var_0_0.getSelectResId(arg_23_0)
-	return arg_23_0._selectResId
+function RoomInventoryBlockModel:getSelectResId()
+	return self._selectResId
 end
 
-function var_0_0.getSelectInventoryBlockMO(arg_24_0)
-	return arg_24_0:getInventoryBlockMOById(arg_24_0._selectInventoryBlockId)
+function RoomInventoryBlockModel:getSelectInventoryBlockMO()
+	return self:getInventoryBlockMOById(self._selectInventoryBlockId)
 end
 
-function var_0_0.getInventoryBlockCount(arg_25_0)
+function RoomInventoryBlockModel:getInventoryBlockCount()
 	return 0
 end
 
-function var_0_0.getInventoryBlockMOById(arg_26_0, arg_26_1)
-	local var_26_0 = arg_26_0._blockPackageModel:getList()
-	local var_26_1
+function RoomInventoryBlockModel:getInventoryBlockMOById(id)
+	local packageList = self._blockPackageModel:getList()
+	local blockMO
 
-	for iter_26_0, iter_26_1 in ipairs(var_26_0) do
-		local var_26_2 = iter_26_1:getBlockMOById(arg_26_1)
+	for _, packageMO in ipairs(packageList) do
+		blockMO = packageMO:getBlockMOById(id)
 
-		if var_26_2 then
-			return var_26_2
+		if blockMO then
+			return blockMO
 		end
 	end
 
 	return nil
 end
 
-function var_0_0.getInventoryBlockPackageMOList(arg_27_0)
-	return arg_27_0._blockPackageModel:getList()
+function RoomInventoryBlockModel:getInventoryBlockPackageMOList()
+	return self._blockPackageModel:getList()
 end
 
-function var_0_0.isMaxNum(arg_28_0)
-	local var_28_0 = RoomMapBlockModel.instance
+function RoomInventoryBlockModel:isMaxNum()
+	local tRoomMapBlockModel = RoomMapBlockModel.instance
 
-	return var_28_0:getConfirmBlockCount() >= var_28_0:getMaxBlockCount()
+	return tRoomMapBlockModel:getConfirmBlockCount() >= tRoomMapBlockModel:getMaxBlockCount()
 end
 
-function var_0_0.getBlockSortIndex(arg_29_0, arg_29_1, arg_29_2)
-	local var_29_0 = #arg_29_0._unUseBlockList + 1
-	local var_29_1 = tabletool.indexOf(arg_29_0._unUseBlockList, arg_29_2)
+function RoomInventoryBlockModel:getBlockSortIndex(packageId, blockId)
+	local maxIndex = #self._unUseBlockList + 1
+	local index = tabletool.indexOf(self._unUseBlockList, blockId)
 
-	if var_29_1 then
-		return var_29_0 - var_29_1
+	if index then
+		return maxIndex - index
 	end
 
-	return var_29_0
+	return maxIndex
 end
 
-var_0_0.instance = var_0_0.New()
+RoomInventoryBlockModel.instance = RoomInventoryBlockModel.New()
 
-return var_0_0
+return RoomInventoryBlockModel

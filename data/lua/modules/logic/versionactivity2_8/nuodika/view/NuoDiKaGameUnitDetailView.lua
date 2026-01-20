@@ -1,86 +1,88 @@
-﻿module("modules.logic.versionactivity2_8.nuodika.view.NuoDiKaGameUnitDetailView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/nuodika/view/NuoDiKaGameUnitDetailView.lua
 
-local var_0_0 = class("NuoDiKaGameUnitDetailView", BaseView)
+module("modules.logic.versionactivity2_8.nuodika.view.NuoDiKaGameUnitDetailView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_enemyicon")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#txt_desc")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#txt_desc/#txt_name")
-	arg_1_0._goclose = gohelper.findChild(arg_1_0.viewGO, "image_Close")
-	arg_1_0._closeClick = gohelper.getClickWithAudio(arg_1_0._goclose)
+local NuoDiKaGameUnitDetailView = class("NuoDiKaGameUnitDetailView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function NuoDiKaGameUnitDetailView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "#simage_enemyicon")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "#txt_desc")
+	self._txtname = gohelper.findChildText(self.viewGO, "#txt_desc/#txt_name")
+	self._goclose = gohelper.findChild(self.viewGO, "image_Close")
+	self._closeClick = gohelper.getClickWithAudio(self._goclose)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._closeClick:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function NuoDiKaGameUnitDetailView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._closeClick:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._closeClick:RemoveClickListener()
+function NuoDiKaGameUnitDetailView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._closeClick:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function NuoDiKaGameUnitDetailView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0:_addEvents()
+function NuoDiKaGameUnitDetailView:_editableInitView()
+	self:_addEvents()
 end
 
-function var_0_0._addEvents(arg_6_0)
+function NuoDiKaGameUnitDetailView:_addEvents()
 	return
 end
 
-function var_0_0._removeEvents(arg_7_0)
+function NuoDiKaGameUnitDetailView:_removeEvents()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
+function NuoDiKaGameUnitDetailView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum2_8.NuoDiKa.play_ui_unit_tip)
 
-	if arg_8_0.viewParam.unitType == NuoDiKaEnum.EventType.Enemy then
-		arg_8_0:_refreshEnemy()
-	elseif arg_8_0.viewParam.unitType == NuoDiKaEnum.EventType.Item then
-		arg_8_0:_refreshItem()
+	if self.viewParam.unitType == NuoDiKaEnum.EventType.Enemy then
+		self:_refreshEnemy()
+	elseif self.viewParam.unitType == NuoDiKaEnum.EventType.Item then
+		self:_refreshItem()
 	end
 end
 
-function var_0_0._refreshEnemy(arg_9_0)
-	local var_9_0 = NuoDiKaConfig.instance:getEnemyCo(arg_9_0.viewParam.unitId)
+function NuoDiKaGameUnitDetailView:_refreshEnemy()
+	local enemyCo = NuoDiKaConfig.instance:getEnemyCo(self.viewParam.unitId)
 
-	arg_9_0._txtname.text = var_9_0.name
+	self._txtname.text = enemyCo.name
 
-	local var_9_1 = string.gsub(var_9_0.desc, "#FF7373", "#931E0E")
+	local desc = string.gsub(enemyCo.desc, "#FF7373", "#931E0E")
 
-	arg_9_0._txtdesc.text = var_9_1
+	self._txtdesc.text = desc
 
-	arg_9_0._simageicon:LoadImage(ResUrl.getNuoDiKaMonsterIcon(var_9_0.picture))
+	self._simageicon:LoadImage(ResUrl.getNuoDiKaMonsterIcon(enemyCo.picture))
 end
 
-function var_0_0._refreshItem(arg_10_0)
-	local var_10_0 = NuoDiKaConfig.instance:getItemCo(arg_10_0.viewParam.unitId)
+function NuoDiKaGameUnitDetailView:_refreshItem()
+	local itemCo = NuoDiKaConfig.instance:getItemCo(self.viewParam.unitId)
 
-	arg_10_0._txtname.text = var_10_0.name
+	self._txtname.text = itemCo.name
 
-	local var_10_1 = string.gsub(var_10_0.desc, "#FF7373", "#931E0E")
+	local desc = string.gsub(itemCo.desc, "#FF7373", "#931E0E")
 
-	arg_10_0._txtdesc.text = var_10_1
+	self._txtdesc.text = desc
 
-	arg_10_0._simageicon:LoadImage(ResUrl.getNuoDiKaItemIcon(var_10_0.picture))
+	self._simageicon:LoadImage(ResUrl.getNuoDiKaItemIcon(itemCo.picture))
 end
 
-function var_0_0.onClose(arg_11_0)
-	arg_11_0._simageicon:UnLoadImage()
+function NuoDiKaGameUnitDetailView:onClose()
+	self._simageicon:UnLoadImage()
 end
 
-function var_0_0.onDestroyView(arg_12_0)
-	arg_12_0:_removeEvents()
+function NuoDiKaGameUnitDetailView:onDestroyView()
+	self:_removeEvents()
 end
 
-return var_0_0
+return NuoDiKaGameUnitDetailView

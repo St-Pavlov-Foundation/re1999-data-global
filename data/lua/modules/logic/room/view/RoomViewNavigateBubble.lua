@@ -1,255 +1,260 @@
-﻿module("modules.logic.room.view.RoomViewNavigateBubble", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomViewNavigateBubble.lua
 
-local var_0_0 = class("RoomViewNavigateBubble", BaseView)
+module("modules.logic.room.view.RoomViewNavigateBubble", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gopanel = gohelper.findChild(arg_1_0.viewGO, "go_normalroot/go_navigatebubble")
-	arg_1_0._gocontainer = gohelper.findChild(arg_1_0.viewGO, "go_normalroot/go_navigatebubble/go_layout")
-	arg_1_0._gocategoryitem = gohelper.findChild(arg_1_0.viewGO, "go_normalroot/go_navigatebubble/go_layout/roomnavigatebubbleitem")
+local RoomViewNavigateBubble = class("RoomViewNavigateBubble", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomViewNavigateBubble:onInitView()
+	self._gopanel = gohelper.findChild(self.viewGO, "go_normalroot/go_navigatebubble")
+	self._gocontainer = gohelper.findChild(self.viewGO, "go_normalroot/go_navigatebubble/go_layout")
+	self._gocategoryitem = gohelper.findChild(self.viewGO, "go_normalroot/go_navigatebubble/go_layout/roomnavigatebubbleitem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RoomViewNavigateBubble:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RoomViewNavigateBubble:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._nodeUIs = {}
-	arg_4_0._processedNodes = {}
+function RoomViewNavigateBubble:_editableInitView()
+	self._nodeUIs = {}
+	self._processedNodes = {}
 end
 
-function var_0_0.onDestroyView(arg_5_0)
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0._nodeUIs) do
-		iter_5_1.btnself:RemoveClickListener()
+function RoomViewNavigateBubble:onDestroyView()
+	for index, categoryItem in ipairs(self._nodeUIs) do
+		categoryItem.btnself:RemoveClickListener()
 
-		for iter_5_2, iter_5_3 in pairs(iter_5_1.childrenNodes) do
-			iter_5_3.btnself:RemoveClickListener()
+		for _, bubbleItem in pairs(categoryItem.childrenNodes) do
+			bubbleItem.btnself:RemoveClickListener()
 		end
 	end
 
-	arg_5_0._processedNodes = nil
+	self._processedNodes = nil
 end
 
-function var_0_0.onOpen(arg_6_0)
+function RoomViewNavigateBubble:onOpen()
 	RoomNavigateBubbleController.instance:init()
-	arg_6_0:addEventCb(RoomNavigateBubbleController.instance, RoomEvent.NavigateBubbleUpdate, arg_6_0.refreshUI, arg_6_0)
-	arg_6_0:addEventCb(RoomCharacterController.instance, RoomEvent.UpdateCharacterInteractionUI, arg_6_0.refreshUI, arg_6_0)
-	arg_6_0:refreshUI()
+	self:addEventCb(RoomNavigateBubbleController.instance, RoomEvent.NavigateBubbleUpdate, self.refreshUI, self)
+	self:addEventCb(RoomCharacterController.instance, RoomEvent.UpdateCharacterInteractionUI, self.refreshUI, self)
+	self:refreshUI()
 end
 
-function var_0_0.onClose(arg_7_0)
-	arg_7_0:removeEventCb(RoomNavigateBubbleController.instance, RoomEvent.NavigateBubbleUpdate, arg_7_0.refreshUI, arg_7_0)
-	arg_7_0:removeEventCb(RoomCharacterController.instance, RoomEvent.UpdateCharacterInteractionUI, arg_7_0.refreshUI, arg_7_0)
+function RoomViewNavigateBubble:onClose()
+	self:removeEventCb(RoomNavigateBubbleController.instance, RoomEvent.NavigateBubbleUpdate, self.refreshUI, self)
+	self:removeEventCb(RoomCharacterController.instance, RoomEvent.UpdateCharacterInteractionUI, self.refreshUI, self)
 	RoomNavigateBubbleController.instance:clear()
 end
 
-function var_0_0.refreshUI(arg_8_0)
-	if RoomCharacterHelper.isInDialogInteraction() then
-		gohelper.setActive(arg_8_0._gopanel, false)
+function RoomViewNavigateBubble:refreshUI()
+	local isInDialogInteraction = RoomCharacterHelper.isInDialogInteraction()
+
+	if isInDialogInteraction then
+		gohelper.setActive(self._gopanel, false)
 
 		return
 	end
 
-	local var_8_0 = RoomNavigateBubbleModel.instance:getCategoryMap()
+	local map = RoomNavigateBubbleModel.instance:getCategoryMap()
 
-	if var_8_0 and tabletool.len(var_8_0) > 0 then
-		for iter_8_0, iter_8_1 in pairs(var_8_0) do
-			arg_8_0:refreshCategoryItem(iter_8_1, iter_8_0)
+	if map and tabletool.len(map) > 0 then
+		for index, categoryMO in pairs(map) do
+			self:refreshCategoryItem(categoryMO, index)
 		end
 
-		gohelper.setActive(arg_8_0._gopanel, true)
+		gohelper.setActive(self._gopanel, true)
 	else
-		gohelper.setActive(arg_8_0._gopanel, false)
+		gohelper.setActive(self._gopanel, false)
 	end
 
-	arg_8_0:hideNoProcessNodes()
+	self:hideNoProcessNodes()
 end
 
-function var_0_0.refreshCategoryItem(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = arg_9_0:getOrCreateCategoryItem(arg_9_2)
+function RoomViewNavigateBubble:refreshCategoryItem(categoryMO, index)
+	local itemObj = self:getOrCreateCategoryItem(index)
 
-	arg_9_0._processedNodes[var_9_0] = 1
+	self._processedNodes[itemObj] = 1
 
-	local var_9_1 = var_9_0.expand and "1" or "0"
+	local expandStr = itemObj.expand and "1" or "0"
 
-	UISpriteSetMgr.instance:setRoomSprite(var_9_0.imagebg, string.format("xw_bubblebg_%s", var_9_1))
-	SLFramework.UGUI.GuiHelper.SetColor(var_9_0.imageType, tonumber(var_9_1) == 1 and "#ffffff" or "#262a27")
-	SLFramework.UGUI.GuiHelper.SetColor(var_9_0.txtcategory, tonumber(var_9_1) == 1 and "#f8f8f8" or "#262a27")
+	UISpriteSetMgr.instance:setRoomSprite(itemObj.imagebg, string.format("xw_bubblebg_%s", expandStr))
+	SLFramework.UGUI.GuiHelper.SetColor(itemObj.imageType, tonumber(expandStr) == 1 and "#ffffff" or "#262a27")
+	SLFramework.UGUI.GuiHelper.SetColor(itemObj.txtcategory, tonumber(expandStr) == 1 and "#f8f8f8" or "#262a27")
 
-	local var_9_2 = arg_9_1:getBubblesCount()
+	local totalBubblesCount = categoryMO:getBubblesCount()
 
-	var_9_0.txtcategory.text = tostring(var_9_2)
+	itemObj.txtcategory.text = tostring(totalBubblesCount)
 
-	local var_9_3 = arg_9_1:getBubbles()
+	local bubbles = categoryMO:getBubbles()
 
-	if tabletool.len(var_9_3) > 0 and var_9_2 > 0 then
-		for iter_9_0, iter_9_1 in ipairs(var_9_3) do
-			local var_9_4 = iter_9_1:getShowType()
-			local var_9_5 = arg_9_0:getOrCreateBubbleItem(var_9_0, var_9_4)
-			local var_9_6 = iter_9_1:getBubbleCount()
+	if tabletool.len(bubbles) > 0 and totalBubblesCount > 0 then
+		for _, bubbleMO in ipairs(bubbles) do
+			local bubbleType = bubbleMO:getShowType()
+			local bubbleObj = self:getOrCreateBubbleItem(itemObj, bubbleType)
+			local count = bubbleMO:getBubbleCount()
 
-			if var_9_6 > 0 then
-				var_9_5.txtbubble.text = tostring(var_9_6)
+			if count > 0 then
+				bubbleObj.txtbubble.text = tostring(count)
 
-				gohelper.setActive(var_9_5.go, var_9_0.expand)
+				gohelper.setActive(bubbleObj.go, itemObj.expand)
 
-				arg_9_0._processedNodes[var_9_5] = 1
+				self._processedNodes[bubbleObj] = 1
 
-				gohelper.setActive(var_9_5.gobubbleeffect, var_9_0.expand and var_9_4 == RoomNavigateBubbleEnum.FactoryBubbleType.BuildingUpgrade)
+				gohelper.setActive(bubbleObj.gobubbleeffect, itemObj.expand and bubbleType == RoomNavigateBubbleEnum.FactoryBubbleType.BuildingUpgrade)
 			else
-				gohelper.setActive(var_9_5.go, false)
+				gohelper.setActive(bubbleObj.go, false)
 			end
 		end
 
-		gohelper.setActive(var_9_0.go, true)
+		gohelper.setActive(itemObj.go, true)
 	else
-		gohelper.setActive(var_9_0.go, false)
+		gohelper.setActive(itemObj.go, false)
 	end
 end
 
-function var_0_0.onClickCategory(arg_10_0)
-	local var_10_0 = arg_10_0.self
-	local var_10_1 = arg_10_0.index
-	local var_10_2 = var_10_0:getOrCreateCategoryItem(var_10_1)
-	local var_10_3 = RoomNavigateBubbleModel.instance:getCategoryMap()
+function RoomViewNavigateBubble.onClickCategory(args)
+	local self = args.self
+	local index = args.index
+	local categoryObj = self:getOrCreateCategoryItem(index)
+	local map = RoomNavigateBubbleModel.instance:getCategoryMap()
 
-	if not var_10_3 then
+	if not map then
 		return
 	end
 
-	local var_10_4 = var_10_3[var_10_1]
+	local categoryMO = map[index]
 
-	var_10_2.expand = not var_10_2.expand
+	categoryObj.expand = not categoryObj.expand
 
-	var_10_0:refreshCategoryItem(var_10_4, var_10_1)
-	ZProj.UGUIHelper.RebuildLayout(var_10_0._gocontainer.transform)
+	self:refreshCategoryItem(categoryMO, index)
+	ZProj.UGUIHelper.RebuildLayout(self._gocontainer.transform)
 end
 
-function var_0_0.onClickBubble(arg_11_0)
-	local var_11_0 = arg_11_0.self
-	local var_11_1 = arg_11_0.bubbleType
-	local var_11_2 = arg_11_0.categoryIndex
-	local var_11_3 = var_11_0:getOrCreateCategoryItem(var_11_2)
-	local var_11_4 = RoomNavigateBubbleModel.instance:getCategoryMap()
+function RoomViewNavigateBubble.onClickBubble(args)
+	local self = args.self
+	local bubbleType = args.bubbleType
+	local categoryIndex = args.categoryIndex
+	local categoryObj = self:getOrCreateCategoryItem(categoryIndex)
+	local map = RoomNavigateBubbleModel.instance:getCategoryMap()
 
-	if not var_11_4 then
+	if not map then
 		return
 	end
 
-	var_11_0:getOrCreateBubbleItem(var_11_3, var_11_1)
+	self:getOrCreateBubbleItem(categoryObj, bubbleType)
 
-	local var_11_5 = var_11_4[var_11_2]:getBubbleByType(var_11_1)
+	local categoryMO = map[categoryIndex]
+	local bubbleMO = categoryMO:getBubbleByType(bubbleType)
 
-	RoomNavigateBubbleController.instance:onClickCall(var_11_5)
+	RoomNavigateBubbleController.instance:onClickCall(bubbleMO)
 end
 
-function var_0_0.hideNoProcessNodes(arg_12_0)
-	for iter_12_0, iter_12_1 in pairs(arg_12_0._nodeUIs) do
-		if not arg_12_0._processedNodes[iter_12_1] then
-			gohelper.setActive(iter_12_1.go, false)
+function RoomViewNavigateBubble:hideNoProcessNodes()
+	for _, node in pairs(self._nodeUIs) do
+		if not self._processedNodes[node] then
+			gohelper.setActive(node.go, false)
 		else
-			for iter_12_2, iter_12_3 in pairs(iter_12_1.childrenNodes) do
-				if not arg_12_0._processedNodes[iter_12_3] then
-					gohelper.setActive(iter_12_3.go, false)
+			for _, child in pairs(node.childrenNodes) do
+				if not self._processedNodes[child] then
+					gohelper.setActive(child.go, false)
 				end
 			end
 		end
 	end
 
-	for iter_12_4, iter_12_5 in pairs(arg_12_0._processedNodes) do
-		arg_12_0._processedNodes[iter_12_4] = nil
+	for k, _ in pairs(self._processedNodes) do
+		self._processedNodes[k] = nil
 	end
 end
 
-function var_0_0.getOrCreateCategoryItem(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0._nodeUIs[arg_13_1]
+function RoomViewNavigateBubble:getOrCreateCategoryItem(index)
+	local item = self._nodeUIs[index]
 
-	if not var_13_0 then
-		var_13_0 = arg_13_0:getUserDataTb_()
+	if not item then
+		item = self:getUserDataTb_()
 
-		local var_13_1 = arg_13_0.viewContainer:getSetting().otherRes[5]
-		local var_13_2 = arg_13_0:getResInst(var_13_1, arg_13_0._gocontainer, "category_item_" .. tostring(arg_13_1))
+		local path = self.viewContainer:getSetting().otherRes[5]
+		local itemGo = self:getResInst(path, self._gocontainer, "category_item_" .. tostring(index))
 
-		var_13_0.go = var_13_2
-		var_13_0.imagebg = gohelper.findChildImage(var_13_2, "bubblecategory/image_bg")
-		var_13_0.imageType = gohelper.findChildImage(var_13_2, "bubblecategory/image_type")
-		var_13_0.txtcategory = gohelper.findChildText(var_13_2, "bubblecategory/txt_num")
-		var_13_0.gobubbleitem = gohelper.findChild(var_13_2, "childitemContent/roomnavigatebubblechilditem")
-		var_13_0.btnself = gohelper.findChildButtonWithAudio(var_13_2, "bubblecategory/btn_categoryclick")
+		item.go = itemGo
+		item.imagebg = gohelper.findChildImage(itemGo, "bubblecategory/image_bg")
+		item.imageType = gohelper.findChildImage(itemGo, "bubblecategory/image_type")
+		item.txtcategory = gohelper.findChildText(itemGo, "bubblecategory/txt_num")
+		item.gobubbleitem = gohelper.findChild(itemGo, "childitemContent/roomnavigatebubblechilditem")
+		item.btnself = gohelper.findChildButtonWithAudio(itemGo, "bubblecategory/btn_categoryclick")
 
-		var_13_0.btnself:AddClickListener(arg_13_0.onClickCategory, {
-			self = arg_13_0,
-			index = arg_13_1
+		item.btnself:AddClickListener(self.onClickCategory, {
+			self = self,
+			index = index
 		})
-		gohelper.addUIClickAudio(var_13_0.btnself.gameObject, AudioEnum.UI.play_ui_callfor_open)
+		gohelper.addUIClickAudio(item.btnself.gameObject, AudioEnum.UI.play_ui_callfor_open)
 
-		var_13_0.index = arg_13_1
-		var_13_0.expand = true
+		item.index = index
+		item.expand = true
 
-		gohelper.setActive(var_13_0.go, false)
+		gohelper.setActive(item.go, false)
 
-		var_13_0.childrenNodes = {}
-		arg_13_0._nodeUIs[arg_13_1] = var_13_0
+		item.childrenNodes = {}
+		self._nodeUIs[index] = item
 	end
 
-	return var_13_0
+	return item
 end
 
-function var_0_0.getOrCreateBubbleItem(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = arg_14_1.childrenNodes[arg_14_2]
+function RoomViewNavigateBubble:getOrCreateBubbleItem(categoryItem, bubbleType)
+	local item = categoryItem.childrenNodes[bubbleType]
 
-	if not var_14_0 then
-		var_14_0 = arg_14_0:getUserDataTb_()
+	if not item then
+		item = self:getUserDataTb_()
 
-		local var_14_1 = gohelper.clone(arg_14_1.gobubbleitem, arg_14_1.go, "bubble_item_" .. tostring(arg_14_2))
+		local itemGo = gohelper.clone(categoryItem.gobubbleitem, categoryItem.go, "bubble_item_" .. tostring(bubbleType))
 
-		var_14_0.go = var_14_1
-		var_14_0.imagebubblechild = gohelper.findChildImage(var_14_1, "imagebubblechild")
-		var_14_0.gobg = gohelper.findChild(var_14_1, "txtbg")
-		var_14_0.txtbubble = gohelper.findChildText(var_14_1, "txtbg/txt_bubblechildnum")
-		var_14_0.gobubbleeffect = gohelper.findChild(var_14_1, "#xw_bubbleicon_up")
-		var_14_0.btnself = gohelper.findChildButtonWithAudio(var_14_1, "btn_bubbleclick")
+		item.go = itemGo
+		item.imagebubblechild = gohelper.findChildImage(itemGo, "imagebubblechild")
+		item.gobg = gohelper.findChild(itemGo, "txtbg")
+		item.txtbubble = gohelper.findChildText(itemGo, "txtbg/txt_bubblechildnum")
+		item.gobubbleeffect = gohelper.findChild(itemGo, "#xw_bubbleicon_up")
+		item.btnself = gohelper.findChildButtonWithAudio(itemGo, "btn_bubbleclick")
 
-		var_14_0.btnself:AddClickListener(arg_14_0.onClickBubble, {
-			self = arg_14_0,
-			bubbleType = arg_14_2,
-			categoryIndex = arg_14_1.index
+		item.btnself:AddClickListener(self.onClickBubble, {
+			self = self,
+			bubbleType = bubbleType,
+			categoryIndex = categoryItem.index
 		})
-		gohelper.setActive(var_14_0.go, true)
+		gohelper.setActive(item.go, true)
 
-		arg_14_1.childrenNodes[arg_14_2] = var_14_0
+		categoryItem.childrenNodes[bubbleType] = item
 
-		local var_14_2 = not RoomNavigateBubbleEnum.BubbleHideNum[arg_14_2]
+		local showNum = not RoomNavigateBubbleEnum.BubbleHideNum[bubbleType]
 
-		gohelper.setActive(var_14_0.gobg, var_14_2)
+		gohelper.setActive(item.gobg, showNum)
 
-		local var_14_3 = RoomNavigateBubbleEnum.Bubble2ResPath[arg_14_2]
+		local resPath = RoomNavigateBubbleEnum.Bubble2ResPath[bubbleType]
 
-		if not string.nilorempty(var_14_3) then
-			UISpriteSetMgr.instance:setRoomSprite(var_14_0.imagebubblechild, var_14_3, true)
+		if not string.nilorempty(resPath) then
+			UISpriteSetMgr.instance:setRoomSprite(item.imagebubblechild, resPath, true)
 		end
 
-		arg_14_0:_addUIClickAudio(var_14_0.btnself.gameObject, arg_14_2)
+		self:_addUIClickAudio(item.btnself.gameObject, bubbleType)
 	end
 
-	return var_14_0
+	return item
 end
 
-function var_0_0._addUIClickAudio(arg_15_0, arg_15_1, arg_15_2)
-	if arg_15_2 == RoomNavigateBubbleEnum.FactoryBubbleType.BuildingUpgrade then
-		gohelper.addUIClickAudio(arg_15_1, AudioEnum.UI.play_ui_admission_open)
-	elseif arg_15_2 == RoomNavigateBubbleEnum.FactoryBubbleType.FaithReward then
-		gohelper.addUIClickAudio(arg_15_1, AudioEnum.Room.ui_home_board_upgrade)
-	elseif arg_15_2 == RoomNavigateBubbleEnum.FactoryBubbleType.FaithFull then
-		gohelper.addUIClickAudio(arg_15_1, AudioEnum.Room.ui_home_board_upgrade)
+function RoomViewNavigateBubble:_addUIClickAudio(go, bubbleType)
+	if bubbleType == RoomNavigateBubbleEnum.FactoryBubbleType.BuildingUpgrade then
+		gohelper.addUIClickAudio(go, AudioEnum.UI.play_ui_admission_open)
+	elseif bubbleType == RoomNavigateBubbleEnum.FactoryBubbleType.FaithReward then
+		gohelper.addUIClickAudio(go, AudioEnum.Room.ui_home_board_upgrade)
+	elseif bubbleType == RoomNavigateBubbleEnum.FactoryBubbleType.FaithFull then
+		gohelper.addUIClickAudio(go, AudioEnum.Room.ui_home_board_upgrade)
 	end
 end
 
-return var_0_0
+return RoomViewNavigateBubble

@@ -1,0 +1,101 @@
+[
+  {
+    "activityId": 13211,
+    "level": 1,
+    "exp": 0,
+    "bonus": "",
+    "unlockCardpackIds": "11001#11005",
+    "unlockBossIds": "32901",
+    "unlockCollectionIds": "11038",
+    "collectionIds": "11038",
+    "spMasterId": 0
+  },
+  {
+    "activityId": 13211,
+    "level": 2,
+    "exp": 30,
+    "bonus": "",
+    "unlockCardpackIds": "",
+    "unlockBossIds": "32902",
+    "unlockCollectionIds": "",
+    "collectionIds": "",
+    "spMasterId": 30046
+  },
+  {
+    "activityId": 13211,
+    "level": 3,
+    "exp": 100,
+    "bonus": "",
+    "unlockCardpackIds": "11002",
+    "unlockBossIds": "",
+    "unlockCollectionIds": "11027",
+    "collectionIds": "11027",
+    "spMasterId": 0
+  },
+  {
+    "activityId": 13211,
+    "level": 4,
+    "exp": 200,
+    "bonus": "",
+    "unlockCardpackIds": "11004",
+    "unlockBossIds": "32903",
+    "unlockCollectionIds": "",
+    "collectionIds": "",
+    "spMasterId": 30019
+  },
+  {
+    "activityId": 13211,
+    "level": 5,
+    "exp": 400,
+    "bonus": "",
+    "unlockCardpackIds": "",
+    "unlockBossIds": "",
+    "unlockCollectionIds": "11040",
+    "collectionIds": "11040",
+    "spMasterId": 0
+  },
+  {
+    "activityId": 13211,
+    "level": 6,
+    "exp": 600,
+    "bonus": "",
+    "unlockCardpackIds": "11003",
+    "unlockBossIds": "32904",
+    "unlockCollectionIds": "",
+    "collectionIds": "",
+    "spMasterId": 30045
+  },
+  {
+    "activityId": 13211,
+    "level": 7,
+    "exp": 800,
+    "bonus": "",
+    "unlockCardpackIds": "11006",
+    "unlockBossIds": "",
+    "unlockCollectionIds": "11031",
+    "collectionIds": "11031",
+    "spMasterId": 0
+  },
+  {
+    "activityId": 13211,
+    "level": 8,
+    "exp": 1000,
+    "bonus": "",
+    "unlockCardpackIds": "",
+    "unlockBossIds": "32905",
+    "unlockCollectionIds": "",
+    "collectionIds": "",
+    "spMasterId": 30038
+  },
+  {
+    "activityId": 13211,
+    "level": 9,
+    "exp": 1300,
+    "bonus": "",
+    "unlockCardpackIds": "11007",
+    "unlockBossIds": "32906",
+    "unlockCollectionIds": "11029",
+    "collectionIds": "11029",
+    "spMasterId": 0
+  }
+]

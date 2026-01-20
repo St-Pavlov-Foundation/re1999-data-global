@@ -1,158 +1,166 @@
-﻿module("modules.logic.versionactivity1_6.enter.view.Va1_6DungeonEnterView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/enter/view/Va1_6DungeonEnterView.lua
 
-local var_0_0 = class("Va1_6DungeonEnterView", VersionActivityEnterBaseSubView)
-local var_0_1 = "v1a6_srsj"
-local var_0_2 = "srsj"
+module("modules.logic.versionactivity1_6.enter.view.Va1_6DungeonEnterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnstore = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "entrance/#btn_store")
-	arg_1_0._txtStoreRemainTime = gohelper.findChildText(arg_1_0.viewGO, "entrance/#btn_store/#go_time/#txt_time")
-	arg_1_0._txtStoreNum = gohelper.findChildText(arg_1_0.viewGO, "entrance/#btn_store/normal/#txt_num")
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "logo/#txt_time")
-	arg_1_0._txtdec = gohelper.findChildText(arg_1_0.viewGO, "logo/#txt_dec")
-	arg_1_0._btnEnter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "entrance/#btn_enter")
-	arg_1_0._goEnterNormal = gohelper.findChild(arg_1_0.viewGO, "entrance/#btn_enter/normal")
-	arg_1_0._goEnterLocked = gohelper.findChild(arg_1_0.viewGO, "entrance/#btn_enter/locked")
-	arg_1_0._goEnterFinished = gohelper.findChild(arg_1_0.viewGO, "entrance/#btn_enter/finished")
-	arg_1_0._gospine = gohelper.findChild(arg_1_0.viewGO, "#go_spine")
+local Va1_6DungeonEnterView = class("Va1_6DungeonEnterView", VersionActivityEnterBaseSubView)
+local bgSpineFolderName = "v1a6_srsj"
+local bgSpineName = "srsj"
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Va1_6DungeonEnterView:onInitView()
+	self._btnstore = gohelper.findChildButtonWithAudio(self.viewGO, "entrance/#btn_store")
+	self._txtStoreRemainTime = gohelper.findChildText(self.viewGO, "entrance/#btn_store/#go_time/#txt_time")
+	self._txtStoreNum = gohelper.findChildText(self.viewGO, "entrance/#btn_store/normal/#txt_num")
+	self._txttime = gohelper.findChildText(self.viewGO, "logo/#txt_time")
+	self._txtdec = gohelper.findChildText(self.viewGO, "logo/#txt_dec")
+	self._btnEnter = gohelper.findChildButtonWithAudio(self.viewGO, "entrance/#btn_enter")
+	self._goEnterNormal = gohelper.findChild(self.viewGO, "entrance/#btn_enter/normal")
+	self._goEnterLocked = gohelper.findChild(self.viewGO, "entrance/#btn_enter/locked")
+	self._goEnterFinished = gohelper.findChild(self.viewGO, "entrance/#btn_enter/finished")
+	self._gospine = gohelper.findChild(self.viewGO, "#go_spine")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnstore:AddClickListener(arg_2_0._onClickStoreBtn, arg_2_0)
-	arg_2_0._btnEnter:AddClickListener(arg_2_0._onClickMainActivity, arg_2_0)
+function Va1_6DungeonEnterView:addEvents()
+	self._btnstore:AddClickListener(self._onClickStoreBtn, self)
+	self._btnEnter:AddClickListener(self._onClickMainActivity, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnstore:RemoveClickListener()
-	arg_3_0._btnEnter:RemoveClickListener()
+function Va1_6DungeonEnterView:removeEvents()
+	self._btnstore:RemoveClickListener()
+	self._btnEnter:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_4_0.refreshUI, arg_4_0)
-	arg_4_0:addEventCb(VersionActivity1_6EnterController.instance, VersionActivity1_6EnterEvent.OnEnterVideoFinished, arg_4_0.onEnterVideoFinished, arg_4_0)
+function Va1_6DungeonEnterView:_editableInitView()
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self.refreshUI, self)
+	self:addEventCb(VersionActivity1_6EnterController.instance, VersionActivity1_6EnterEvent.OnEnterVideoFinished, self.onEnterVideoFinished, self)
 
-	arg_4_0.goRedDot = gohelper.findChild(arg_4_0.viewGO, "entrance/#btn_enter/normal/#go_reddot")
+	self.goRedDot = gohelper.findChild(self.viewGO, "entrance/#btn_enter/normal/#go_reddot")
 
-	RedDotController.instance:addRedDot(arg_4_0.goRedDot, RedDotEnum.DotNode.V1a6DungeonEnterBtn)
+	RedDotController.instance:addRedDot(self.goRedDot, RedDotEnum.DotNode.V1a6DungeonEnterBtn)
 
-	arg_4_0._uiSpine = GuiSpine.Create(arg_4_0._gospine, true)
-	arg_4_0.actId = VersionActivity1_6Enum.ActivityId.Dungeon
+	self._uiSpine = GuiSpine.Create(self._gospine, true)
+	self.actId = VersionActivity1_6Enum.ActivityId.Dungeon
 
-	arg_4_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_4_0._refreshStoreCurrency, arg_4_0)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._refreshStoreCurrency, self)
 end
 
-function var_0_0.onOpen(arg_5_0)
-	var_0_0.super.onOpen(arg_5_0)
-	arg_5_0:refreshRemainTime()
-	arg_5_0:_refreshStoreCurrency()
-	arg_5_0:_initBgSpine()
-	arg_5_0:refreshDesc()
-	arg_5_0:refreshEnterState()
-	arg_5_0:refreshStoreRemainTime()
+function Va1_6DungeonEnterView:onOpen()
+	Va1_6DungeonEnterView.super.onOpen(self)
+	self:refreshRemainTime()
+	self:_refreshStoreCurrency()
+	self:_initBgSpine()
+	self:refreshDesc()
+	self:refreshEnterState()
+	self:refreshStoreRemainTime()
 end
 
-function var_0_0.onClose(arg_6_0)
-	var_0_0.super.onClose(arg_6_0)
+function Va1_6DungeonEnterView:onClose()
+	Va1_6DungeonEnterView.super.onClose(self)
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
-	arg_7_0:_refreshStoreCurrency()
-	arg_7_0:refreshRemainTime()
-	arg_7_0:refreshEnterState()
-	arg_7_0:refreshStoreRemainTime()
+function Va1_6DungeonEnterView:onUpdateParam()
+	self:_refreshStoreCurrency()
+	self:refreshRemainTime()
+	self:refreshEnterState()
+	self:refreshStoreRemainTime()
 end
 
-function var_0_0.onDestroyView(arg_8_0)
-	if arg_8_0._uiSpine then
-		arg_8_0._uiSpine = nil
+function Va1_6DungeonEnterView:onDestroyView()
+	if self._uiSpine then
+		self._uiSpine = nil
 	end
 end
 
-function var_0_0.refreshUI(arg_9_0)
-	arg_9_0:refreshRemainTime()
-	arg_9_0:refreshEnterState()
-	arg_9_0:refreshStoreRemainTime()
+function Va1_6DungeonEnterView:refreshUI()
+	self:refreshRemainTime()
+	self:refreshEnterState()
+	self:refreshStoreRemainTime()
 end
 
-function var_0_0.refreshDesc(arg_10_0)
-	local var_10_0 = ActivityModel.instance:getActivityInfo()[arg_10_0.actId].config.actDesc
+function Va1_6DungeonEnterView:refreshDesc()
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[self.actId]
+	local descStr = actInfoMo.config.actDesc
 
-	arg_10_0._txtdec.text = var_10_0
+	self._txtdec.text = descStr
 end
 
-function var_0_0.refreshEnterState(arg_11_0)
-	local var_11_0, var_11_1, var_11_2 = ActivityHelper.getActivityStatusAndToast(arg_11_0.actId)
-	local var_11_3 = ActivityHelper.getActivityStatusAndToast(VersionActivity1_6Enum.ActivityId.DungeonStore)
+function Va1_6DungeonEnterView:refreshEnterState()
+	local status, toastId, paramList = ActivityHelper.getActivityStatusAndToast(self.actId)
+	local storeStatus = ActivityHelper.getActivityStatusAndToast(VersionActivity1_6Enum.ActivityId.DungeonStore)
 
-	gohelper.setActive(arg_11_0._goEnterLocked, false)
-	gohelper.setActive(arg_11_0._goEnterNormal, var_11_0 == ActivityEnum.ActivityStatus.Normal)
-	gohelper.setActive(arg_11_0._goEnterFinished, var_11_0 == ActivityEnum.ActivityStatus.Expired)
-	gohelper.setActive(arg_11_0._btnstore.gameObject, var_11_3 == ActivityEnum.ActivityStatus.Normal)
+	gohelper.setActive(self._goEnterLocked, false)
+	gohelper.setActive(self._goEnterNormal, status == ActivityEnum.ActivityStatus.Normal)
+	gohelper.setActive(self._goEnterFinished, status == ActivityEnum.ActivityStatus.Expired)
+	gohelper.setActive(self._btnstore.gameObject, storeStatus == ActivityEnum.ActivityStatus.Normal)
 end
 
-function var_0_0.everySecondCall(arg_12_0)
-	arg_12_0:refreshUI()
+function Va1_6DungeonEnterView:everySecondCall()
+	self:refreshUI()
 end
 
-function var_0_0._initBgSpine(arg_13_0)
-	local var_13_0 = var_0_2
-	local var_13_1 = ResUrl.getRolesCgStory(var_13_0, var_0_1)
+function Va1_6DungeonEnterView:_initBgSpine()
+	local spineName = bgSpineName
+	local resPath = ResUrl.getRolesCgStory(spineName, bgSpineFolderName)
 
-	arg_13_0._uiSpine:setResPath(var_13_1, arg_13_0._onSpineLoaded, arg_13_0)
+	self._uiSpine:setResPath(resPath, self._onSpineLoaded, self)
 end
 
-function var_0_0._onSpineLoaded(arg_14_0)
+function Va1_6DungeonEnterView:_onSpineLoaded()
 	return
 end
 
-function var_0_0._refreshStoreCurrency(arg_15_0)
-	local var_15_0 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.V1a6Dungeon)
-	local var_15_1 = var_15_0 and var_15_0.quantity or 0
+function Va1_6DungeonEnterView:_refreshStoreCurrency()
+	local currencyMO = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.V1a6Dungeon)
+	local quantity = currencyMO and currencyMO.quantity or 0
 
-	arg_15_0._txtStoreNum.text = GameUtil.numberDisplay(var_15_1)
+	self._txtStoreNum.text = GameUtil.numberDisplay(quantity)
 end
 
-function var_0_0.refreshRemainTime(arg_16_0)
-	local var_16_0 = ActivityModel.instance:getActivityInfo()[arg_16_0.actId]:getRealEndTimeStamp() - ServerTime.now()
+function Va1_6DungeonEnterView:refreshRemainTime()
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[self.actId]
+	local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
 
-	gohelper.setActive(arg_16_0._txttime, var_16_0 > 0)
+	gohelper.setActive(self._txttime, offsetSecond > 0)
 
-	local var_16_1 = TimeUtil.SecondToActivityTimeFormat(var_16_0)
+	local dateStr = TimeUtil.SecondToActivityTimeFormat(offsetSecond)
 
-	arg_16_0._txttime.text = var_16_1
+	self._txttime.text = dateStr
 end
 
-function var_0_0.refreshStoreRemainTime(arg_17_0)
-	local var_17_0 = ActivityModel.instance:getActivityInfo()[VersionActivity1_6Enum.ActivityId.DungeonStore]:getRealEndTimeStamp() - ServerTime.now()
+function Va1_6DungeonEnterView:refreshStoreRemainTime()
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[VersionActivity1_6Enum.ActivityId.DungeonStore]
+	local endTime = actInfoMo:getRealEndTimeStamp()
+	local offsetSecond = endTime - ServerTime.now()
 
-	if var_17_0 > TimeUtil.OneDaySecond then
-		local var_17_1 = Mathf.Floor(var_17_0 / TimeUtil.OneDaySecond) .. "d"
+	if offsetSecond > TimeUtil.OneDaySecond then
+		local day = Mathf.Floor(offsetSecond / TimeUtil.OneDaySecond)
+		local timeStr = day .. "d"
 
-		arg_17_0._txtStoreRemainTime.text = var_17_1
+		self._txtStoreRemainTime.text = timeStr
 
 		return
 	end
 
-	if var_17_0 > TimeUtil.OneHourSecond then
-		local var_17_2 = Mathf.Floor(var_17_0 / TimeUtil.OneHourSecond) .. "h"
+	if offsetSecond > TimeUtil.OneHourSecond then
+		local hour = Mathf.Floor(offsetSecond / TimeUtil.OneHourSecond)
+		local timeStr = hour .. "h"
 
-		arg_17_0._txtStoreRemainTime.text = var_17_2
+		self._txtStoreRemainTime.text = timeStr
 
 		return
 	end
 
-	arg_17_0._txtStoreRemainTime.text = "1h"
+	self._txtStoreRemainTime.text = "1h"
 end
 
-function var_0_0._onClickMainActivity(arg_18_0)
-	local var_18_0, var_18_1, var_18_2 = ActivityHelper.getActivityStatusAndToast(arg_18_0.actId)
+function Va1_6DungeonEnterView:_onClickMainActivity()
+	local status, toastId, paramList = ActivityHelper.getActivityStatusAndToast(self.actId)
 
-	if var_18_0 ~= ActivityEnum.ActivityStatus.Normal and var_18_1 then
-		GameFacade.showToastWithTableParam(var_18_1, var_18_2)
+	if status ~= ActivityEnum.ActivityStatus.Normal and toastId then
+		GameFacade.showToastWithTableParam(toastId, paramList)
 
 		return
 	end
@@ -160,8 +168,8 @@ function var_0_0._onClickMainActivity(arg_18_0)
 	VersionActivity1_6DungeonController.instance:openVersionActivityDungeonMapView()
 end
 
-function var_0_0._onClickStoreBtn(arg_19_0)
+function Va1_6DungeonEnterView:_onClickStoreBtn()
 	VersionActivity1_6EnterController.instance:openStoreView()
 end
 
-return var_0_0
+return Va1_6DungeonEnterView

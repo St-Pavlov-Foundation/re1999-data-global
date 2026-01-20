@@ -1,13 +1,15 @@
-﻿module("modules.logic.sp01.act208.view.V2a9_Act208MainViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/act208/view/V2a9_Act208MainViewContainer.lua
 
-local var_0_0 = class("V2a9_Act208MainViewContainer", BaseViewContainer)
+module("modules.logic.sp01.act208.view.V2a9_Act208MainViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local V2a9_Act208MainViewContainer = class("V2a9_Act208MainViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, V2a9_Act208MainView.New())
+function V2a9_Act208MainViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, V2a9_Act208MainView.New())
+
+	return views
 end
 
-return var_0_0
+return V2a9_Act208MainViewContainer

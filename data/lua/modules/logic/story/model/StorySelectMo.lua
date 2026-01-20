@@ -1,19 +1,21 @@
-﻿module("modules.logic.story.model.StorySelectMo", package.seeall)
+﻿-- chunkname: @modules/logic/story/model/StorySelectMo.lua
 
-local var_0_0 = pureTable("StorySelectMo")
+module("modules.logic.story.model.StorySelectMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.id = 0
-	arg_1_0.name = ""
-	arg_1_0.index = 0
-	arg_1_0.stepId = 0
+local StorySelectMo = pureTable("StorySelectMo")
+
+function StorySelectMo:ctor()
+	self.id = 0
+	self.name = ""
+	self.index = 0
+	self.stepId = 0
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.id = arg_2_1.id
-	arg_2_0.name = arg_2_1.name
-	arg_2_0.index = arg_2_1.index
-	arg_2_0.stepId = arg_2_1.stepId
+function StorySelectMo:init(info)
+	self.id = info.id
+	self.name = info.name
+	self.index = info.index
+	self.stepId = info.stepId
 end
 
-return var_0_0
+return StorySelectMo

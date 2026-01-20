@@ -1,209 +1,211 @@
-﻿module("modules.logic.room.view.critter.summon.RoomCritterSummonView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/critter/summon/RoomCritterSummonView.lua
 
-local var_0_0 = class("RoomCritterSummonView", BaseView)
+module("modules.logic.room.view.critter.summon.RoomCritterSummonView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagetitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/top/#simage_title")
-	arg_1_0._gocritterSub = gohelper.findChild(arg_1_0.viewGO, "root/right/#go_critterSub")
-	arg_1_0._gocritteritem = gohelper.findChild(arg_1_0.viewGO, "root/right/#go_critterSub/#go_critteritem")
-	arg_1_0._scrollcritter = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/right/#go_critterSub/#scroll_critter")
-	arg_1_0._btnrefresh = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/right/#btn_refresh")
-	arg_1_0._btnsummon = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/bottom/#btn_summon")
-	arg_1_0._simagecurrency = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/bottom/#btn_summon/currency/#simage_currency")
-	arg_1_0._txtcurrency = gohelper.findChildText(arg_1_0.viewGO, "root/bottom/#btn_summon/currency/#txt_currency")
-	arg_1_0._btnsummonten = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/bottom/#btn_summonten")
-	arg_1_0._simagecurrencyten = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/bottom/#btn_summonten/currency/#simage_currencyten")
-	arg_1_0._txtcurrencyten = gohelper.findChildText(arg_1_0.viewGO, "root/bottom/#btn_summonten/currency/#txt_currencyten")
-	arg_1_0._goBackBtns = gohelper.findChild(arg_1_0.viewGO, "root/#go_BackBtns")
+local RoomCritterSummonView = class("RoomCritterSummonView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomCritterSummonView:onInitView()
+	self._simagetitle = gohelper.findChildSingleImage(self.viewGO, "root/top/#simage_title")
+	self._gocritterSub = gohelper.findChild(self.viewGO, "root/right/#go_critterSub")
+	self._gocritteritem = gohelper.findChild(self.viewGO, "root/right/#go_critterSub/#go_critteritem")
+	self._scrollcritter = gohelper.findChildScrollRect(self.viewGO, "root/right/#go_critterSub/#scroll_critter")
+	self._btnrefresh = gohelper.findChildButtonWithAudio(self.viewGO, "root/right/#btn_refresh")
+	self._btnsummon = gohelper.findChildButtonWithAudio(self.viewGO, "root/bottom/#btn_summon")
+	self._simagecurrency = gohelper.findChildSingleImage(self.viewGO, "root/bottom/#btn_summon/currency/#simage_currency")
+	self._txtcurrency = gohelper.findChildText(self.viewGO, "root/bottom/#btn_summon/currency/#txt_currency")
+	self._btnsummonten = gohelper.findChildButtonWithAudio(self.viewGO, "root/bottom/#btn_summonten")
+	self._simagecurrencyten = gohelper.findChildSingleImage(self.viewGO, "root/bottom/#btn_summonten/currency/#simage_currencyten")
+	self._txtcurrencyten = gohelper.findChildText(self.viewGO, "root/bottom/#btn_summonten/currency/#txt_currencyten")
+	self._goBackBtns = gohelper.findChild(self.viewGO, "root/#go_BackBtns")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnrefresh:AddClickListener(arg_2_0._btnrefreshOnClick, arg_2_0)
-	arg_2_0._btnsummon:AddClickListener(arg_2_0._btnsummonOnClick, arg_2_0)
-	arg_2_0._btnsummonten:AddClickListener(arg_2_0._btnsummontenOnClick, arg_2_0)
+function RoomCritterSummonView:addEvents()
+	self._btnrefresh:AddClickListener(self._btnrefreshOnClick, self)
+	self._btnsummon:AddClickListener(self._btnsummonOnClick, self)
+	self._btnsummonten:AddClickListener(self._btnsummontenOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnrefresh:RemoveClickListener()
-	arg_3_0._btnsummon:RemoveClickListener()
-	arg_3_0._btnsummonten:RemoveClickListener()
+function RoomCritterSummonView:removeEvents()
+	self._btnrefresh:RemoveClickListener()
+	self._btnsummon:RemoveClickListener()
+	self._btnsummonten:RemoveClickListener()
 end
 
-function var_0_0._addEvents(arg_4_0)
-	arg_4_0:addEventCb(CritterSummonController.instance, CritterSummonEvent.onStartSummon, arg_4_0._onStartSummon, arg_4_0)
-	arg_4_0:addEventCb(CritterSummonController.instance, CritterSummonEvent.onCloseGetCritter, arg_4_0._onCloseGetCritter, arg_4_0)
-	arg_4_0:addEventCb(CritterSummonController.instance, CritterSummonEvent.onResetSummon, arg_4_0._onResetSummon, arg_4_0)
-	arg_4_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_4_0._startRefreshSingleCostTask, arg_4_0)
-	arg_4_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_4_0._startRefreshSingleCostTask, arg_4_0)
+function RoomCritterSummonView:_addEvents()
+	self:addEventCb(CritterSummonController.instance, CritterSummonEvent.onStartSummon, self._onStartSummon, self)
+	self:addEventCb(CritterSummonController.instance, CritterSummonEvent.onCloseGetCritter, self._onCloseGetCritter, self)
+	self:addEventCb(CritterSummonController.instance, CritterSummonEvent.onResetSummon, self._onResetSummon, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._startRefreshSingleCostTask, self)
+	self:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._startRefreshSingleCostTask, self)
 end
 
-function var_0_0._removeEvents(arg_5_0)
-	arg_5_0:removeEventCb(CritterSummonController.instance, CritterSummonEvent.onStartSummon, arg_5_0._onStartSummon, arg_5_0)
-	arg_5_0:removeEventCb(CritterSummonController.instance, CritterSummonEvent.onCloseGetCritter, arg_5_0._onCloseGetCritter, arg_5_0)
-	arg_5_0:removeEventCb(CritterSummonController.instance, CritterSummonEvent.onResetSummon, arg_5_0._onResetSummon, arg_5_0)
-	arg_5_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_5_0._startRefreshSingleCostTask, arg_5_0)
-	arg_5_0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_5_0._startRefreshSingleCostTask, arg_5_0)
+function RoomCritterSummonView:_removeEvents()
+	self:removeEventCb(CritterSummonController.instance, CritterSummonEvent.onStartSummon, self._onStartSummon, self)
+	self:removeEventCb(CritterSummonController.instance, CritterSummonEvent.onCloseGetCritter, self._onCloseGetCritter, self)
+	self:removeEventCb(CritterSummonController.instance, CritterSummonEvent.onResetSummon, self._onResetSummon, self)
+	self:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._startRefreshSingleCostTask, self)
+	self:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._startRefreshSingleCostTask, self)
 end
 
-function var_0_0._btnrefreshOnClick(arg_6_0)
-	arg_6_0:_refreshPool()
+function RoomCritterSummonView:_btnrefreshOnClick()
+	self:_refreshPool()
 end
 
-function var_0_0._btnsummonOnClick(arg_7_0)
-	arg_7_0:_sendSummonCritter(CritterEnum.Summon.One)
+function RoomCritterSummonView:_btnsummonOnClick()
+	self:_sendSummonCritter(CritterEnum.Summon.One)
 end
 
-function var_0_0._btnsummontenOnClick(arg_8_0)
-	if arg_8_0._curTenCount then
-		arg_8_0:_sendSummonCritter(arg_8_0._curTenCount)
+function RoomCritterSummonView:_btnsummontenOnClick()
+	if self._curTenCount then
+		self:_sendSummonCritter(self._curTenCount)
 	end
 end
 
-function var_0_0._sendSummonCritter(arg_9_0, arg_9_1)
-	local var_9_0, var_9_1 = CritterSummonModel.instance:notSummonToast(arg_9_0._poolId, arg_9_1)
+function RoomCritterSummonView:_sendSummonCritter(count)
+	local toast, name = CritterSummonModel.instance:notSummonToast(self._poolId, count)
 
-	if string.nilorempty(var_9_0) then
-		CritterRpc.instance:sendSummonCritterRequest(arg_9_0._poolId, arg_9_1)
+	if string.nilorempty(toast) then
+		CritterRpc.instance:sendSummonCritterRequest(self._poolId, count)
 	else
-		GameFacade.showToast(var_9_0, var_9_1)
+		GameFacade.showToast(toast, name)
 	end
 end
 
-function var_0_0._editableInitView(arg_10_0)
-	arg_10_0._canvasGroup = arg_10_0.viewGO:GetComponent(typeof(UnityEngine.CanvasGroup))
-	arg_10_0._goroot = gohelper.findChild(arg_10_0.viewGO, "root")
-	arg_10_0._btnsummonGO = arg_10_0._btnsummon.gameObject
-	arg_10_0._btnsummontenGO = arg_10_0._btnsummonten.gameObject
+function RoomCritterSummonView:_editableInitView()
+	self._canvasGroup = self.viewGO:GetComponent(typeof(UnityEngine.CanvasGroup))
+	self._goroot = gohelper.findChild(self.viewGO, "root")
+	self._btnsummonGO = self._btnsummon.gameObject
+	self._btnsummontenGO = self._btnsummonten.gameObject
 end
 
-function var_0_0.onUpdateParam(arg_11_0)
+function RoomCritterSummonView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_12_0)
-	arg_12_0:_addEvents()
+function RoomCritterSummonView:onOpen()
+	self:_addEvents()
 
-	arg_12_0._poolId = CritterSummonModel.instance:getSummonPoolId()
-	arg_12_0._summonCount = CritterSummonModel.instance:getSummonCount()
+	self._poolId = CritterSummonModel.instance:getSummonPoolId()
+	self._summonCount = CritterSummonModel.instance:getSummonCount()
 
-	gohelper.setActive(arg_12_0._gocritteritem, false)
-	CritterRpc.instance:sendSummonCritterInfoRequest(arg_12_0.onRefresh, arg_12_0)
-	arg_12_0:_refreshSingleCost()
+	gohelper.setActive(self._gocritteritem, false)
+	CritterRpc.instance:sendSummonCritterInfoRequest(self.onRefresh, self)
+	self:_refreshSingleCost()
 end
 
-function var_0_0.onClose(arg_13_0)
-	arg_13_0:_removeEvents()
+function RoomCritterSummonView:onClose()
+	self:_removeEvents()
 end
 
-function var_0_0.onDestroyView(arg_14_0)
-	arg_14_0._simagecurrency:UnLoadImage()
-	arg_14_0._simagecurrencyten:UnLoadImage()
-	arg_14_0:_stopRefreshSingleCostTask()
+function RoomCritterSummonView:onDestroyView()
+	self._simagecurrency:UnLoadImage()
+	self._simagecurrencyten:UnLoadImage()
+	self:_stopRefreshSingleCostTask()
 end
 
-function var_0_0.onRefresh(arg_15_0)
-	arg_15_0:_onRefreshCritter()
-	arg_15_0:_startRefreshSingleCostTask()
+function RoomCritterSummonView:onRefresh()
+	self:_onRefreshCritter()
+	self:_startRefreshSingleCostTask()
 end
 
-function var_0_0._startRefreshSingleCostTask(arg_16_0)
-	if not arg_16_0._hasWaitRefreshSingleCostTask then
-		arg_16_0._hasWaitRefreshSingleCostTask = true
+function RoomCritterSummonView:_startRefreshSingleCostTask()
+	if not self._hasWaitRefreshSingleCostTask then
+		self._hasWaitRefreshSingleCostTask = true
 
-		TaskDispatcher.runDelay(arg_16_0._onRunRefreshSingleCostTask, arg_16_0, 0.1)
+		TaskDispatcher.runDelay(self._onRunRefreshSingleCostTask, self, 0.1)
 	end
 end
 
-function var_0_0._stopRefreshSingleCostTask(arg_17_0)
-	arg_17_0._hasWaitRefreshSingleCostTask = false
+function RoomCritterSummonView:_stopRefreshSingleCostTask()
+	self._hasWaitRefreshSingleCostTask = false
 
-	TaskDispatcher.cancelTask(arg_17_0._onRunRefreshSingleCostTask, arg_17_0)
+	TaskDispatcher.cancelTask(self._onRunRefreshSingleCostTask, self)
 end
 
-function var_0_0._onRunRefreshSingleCostTask(arg_18_0)
-	arg_18_0._hasWaitRefreshSingleCostTask = false
+function RoomCritterSummonView:_onRunRefreshSingleCostTask()
+	self._hasWaitRefreshSingleCostTask = false
 
-	arg_18_0:_refreshSingleCost()
+	self:_refreshSingleCost()
 end
 
-function var_0_0._onRefreshCritter(arg_19_0)
-	CritterSummonModel.instance:setSummonPoolList(arg_19_0._poolId)
+function RoomCritterSummonView:_onRefreshCritter()
+	CritterSummonModel.instance:setSummonPoolList(self._poolId)
 
-	if CritterSummonModel.instance:isNullPool(arg_19_0._poolId) then
-		arg_19_0:_refreshPool()
+	if CritterSummonModel.instance:isNullPool(self._poolId) then
+		self:_refreshPool()
 	end
 end
 
-function var_0_0._refreshPool(arg_20_0)
-	if CritterSummonModel.instance:isFullPool(arg_20_0._poolId) then
+function RoomCritterSummonView:_refreshPool()
+	if CritterSummonModel.instance:isFullPool(self._poolId) then
 		GameFacade.showToast(ToastEnum.RoomCritterPoolNeweast)
 
 		return
 	end
 
-	if CritterSummonModel.instance:isNullPool(arg_20_0._poolId) then
-		arg_20_0:_refreshPoolRequest()
+	if CritterSummonModel.instance:isNullPool(self._poolId) then
+		self:_refreshPoolRequest()
 	else
-		GameFacade.showMessageBox(MessageBoxIdDefine.RoomCritterPoolRefresh, MsgBoxEnum.BoxType.Yes_No, arg_20_0._refreshPoolRequest, nil, nil, arg_20_0)
+		GameFacade.showMessageBox(MessageBoxIdDefine.RoomCritterPoolRefresh, MsgBoxEnum.BoxType.Yes_No, self._refreshPoolRequest, nil, nil, self)
 	end
 end
 
-function var_0_0._refreshPoolRequest(arg_21_0)
-	CritterRpc.instance:sendResetSummonCritterPoolRequest(arg_21_0._poolId)
+function RoomCritterSummonView:_refreshPoolRequest()
+	CritterRpc.instance:sendResetSummonCritterPoolRequest(self._poolId)
 end
 
-function var_0_0._refreshSingleCost(arg_22_0)
-	local var_22_0, var_22_1, var_22_2 = CritterSummonModel.instance:getPoolCurrency(arg_22_0._poolId)
+function RoomCritterSummonView:_refreshSingleCost()
+	local cost_icon, str, oneEnough = CritterSummonModel.instance:getPoolCurrency(self._poolId)
 
-	arg_22_0._simagecurrency:LoadImage(var_22_0)
+	self._simagecurrency:LoadImage(cost_icon)
 
-	arg_22_0._txtcurrency.text = var_22_1
+	self._txtcurrency.text = str
 
-	local var_22_3 = CritterSummonModel.instance:getPoolCritterCount(arg_22_0._poolId)
+	local critterCount = CritterSummonModel.instance:getPoolCritterCount(self._poolId)
 
-	arg_22_0._curTenCount = math.min(var_22_3, CritterEnum.Summon.Ten)
+	self._curTenCount = math.min(critterCount, CritterEnum.Summon.Ten)
 
-	local var_22_4, var_22_5, var_22_6 = CritterSummonModel.instance:getPoolCurrency(arg_22_0._poolId, arg_22_0._curTenCount)
+	local tenIcon, tenstr, tenEnough = CritterSummonModel.instance:getPoolCurrency(self._poolId, self._curTenCount)
 
-	arg_22_0._simagecurrencyten:LoadImage(var_22_4)
+	self._simagecurrencyten:LoadImage(tenIcon)
 
-	arg_22_0._txtcurrencyten.text = var_22_5
-	var_22_6 = var_22_6 and var_22_3 >= arg_22_0._curTenCount
-	var_22_2 = var_22_2 and var_22_3 >= CritterEnum.Summon.One
+	self._txtcurrencyten.text = tenstr
+	tenEnough = tenEnough and critterCount >= self._curTenCount
+	oneEnough = oneEnough and critterCount >= CritterEnum.Summon.One
 
-	ZProj.UGUIHelper.SetGrayscale(arg_22_0._btnsummontenGO, not var_22_6)
-	ZProj.UGUIHelper.SetGrayscale(arg_22_0._btnsummonGO, not var_22_2)
+	ZProj.UGUIHelper.SetGrayscale(self._btnsummontenGO, not tenEnough)
+	ZProj.UGUIHelper.SetGrayscale(self._btnsummonGO, not oneEnough)
 end
 
-function var_0_0._onStartSummon(arg_23_0, arg_23_1)
+function RoomCritterSummonView:_onStartSummon(param)
 	CritterController.instance:dispatchEvent(CritterEvent.CritterBuildingHideView)
 
-	local var_23_0 = arg_23_0.viewContainer:getContainerViewBuilding()
+	local buildingUid = self.viewContainer:getContainerViewBuilding()
 
-	CritterSummonController.instance:openSummonView(var_23_0, arg_23_1)
+	CritterSummonController.instance:openSummonView(buildingUid, param)
 
-	if arg_23_0._goroot then
-		gohelper.setActive(arg_23_0._goroot, false)
+	if self._goroot then
+		gohelper.setActive(self._goroot, false)
 	end
 end
 
-function var_0_0._onCloseGetCritter(arg_24_0)
-	if arg_24_0._goroot then
-		gohelper.setActive(arg_24_0._goroot, true)
+function RoomCritterSummonView:_onCloseGetCritter()
+	if self._goroot then
+		gohelper.setActive(self._goroot, true)
 	end
 
-	arg_24_0:onRefresh()
+	self:onRefresh()
 end
 
-function var_0_0._onResetSummon(arg_25_0, arg_25_1)
-	arg_25_0._poolId = arg_25_1
+function RoomCritterSummonView:_onResetSummon(poolId)
+	self._poolId = poolId
 
 	GameFacade.showToast(ToastEnum.RoomCritterPoolRefresh)
-	CritterSummonController.instance:refreshSummon(arg_25_1, arg_25_0.onRefresh, arg_25_0)
+	CritterSummonController.instance:refreshSummon(poolId, self.onRefresh, self)
 end
 
-return var_0_0
+return RoomCritterSummonView

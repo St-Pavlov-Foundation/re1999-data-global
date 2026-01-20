@@ -1,93 +1,96 @@
-﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity_1_2_FacilityTipsView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/versionactivity1_2dungeon/view/VersionActivity_1_2_FacilityTipsView.lua
 
-local var_0_0 = class("VersionActivity_1_2_FacilityTipsView", BaseViewExtended)
+module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity_1_2_FacilityTipsView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._goroot = gohelper.findChild(arg_1_0.viewGO, "#go_root")
-	arg_1_0._scrollinfo = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_root/area/container/#scroll_info")
-	arg_1_0._goinfoitemcontent = gohelper.findChild(arg_1_0.viewGO, "#go_root/area/container/#scroll_info/Viewport/Content")
-	arg_1_0._goinfoitem = gohelper.findChild(arg_1_0.viewGO, "#go_root/area/container/#scroll_info/Viewport/Content/#go_infoitem")
+local VersionActivity_1_2_FacilityTipsView = class("VersionActivity_1_2_FacilityTipsView", BaseViewExtended)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity_1_2_FacilityTipsView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._goroot = gohelper.findChild(self.viewGO, "#go_root")
+	self._scrollinfo = gohelper.findChildScrollRect(self.viewGO, "#go_root/area/container/#scroll_info")
+	self._goinfoitemcontent = gohelper.findChild(self.viewGO, "#go_root/area/container/#scroll_info/Viewport/Content")
+	self._goinfoitem = gohelper.findChild(self.viewGO, "#go_root/area/container/#scroll_info/Viewport/Content/#go_infoitem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function VersionActivity_1_2_FacilityTipsView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function VersionActivity_1_2_FacilityTipsView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function VersionActivity_1_2_FacilityTipsView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function VersionActivity_1_2_FacilityTipsView:_editableInitView()
 	return
 end
 
-function var_0_0.onRefreshViewParam(arg_6_0)
+function VersionActivity_1_2_FacilityTipsView:onRefreshViewParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0._configList = VersionActivity1_2DungeonModel.instance:getBuildingGainList()
+function VersionActivity_1_2_FacilityTipsView:onOpen()
+	self._configList = VersionActivity1_2DungeonModel.instance:getBuildingGainList()
 
-	arg_7_0:com_createObjList(arg_7_0._onItemShow, arg_7_0._configList, arg_7_0._goinfoitemcontent, arg_7_0._goinfoitem)
+	self:com_createObjList(self._onItemShow, self._configList, self._goinfoitemcontent, self._goinfoitem)
 end
 
-function var_0_0._onItemShow(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	local var_8_0 = gohelper.findChildText(arg_8_1, "txt_title")
-	local var_8_1 = gohelper.findChild(arg_8_1, "tips")
-	local var_8_2 = gohelper.findChildText(arg_8_1, "tips/txt_info")
+function VersionActivity_1_2_FacilityTipsView:_onItemShow(obj, data, index)
+	local txt_title = gohelper.findChildText(obj, "txt_title")
+	local content = gohelper.findChild(obj, "tips")
+	local txt_info = gohelper.findChildText(obj, "tips/txt_info")
 
 	if LangSettings.instance:isEn() then
-		var_8_0.text = arg_8_2.name
+		txt_title.text = data.name
 	else
-		var_8_0.text = "【" .. arg_8_2.name .. "】"
+		txt_title.text = "【" .. data.name .. "】"
 	end
 
-	if arg_8_2.buildingType == 2 then
-		local var_8_3 = string.split(arg_8_2.configType, "|")
+	if data.buildingType == 2 then
+		local arr = string.split(data.configType, "|")
 
-		arg_8_0:com_createObjList(arg_8_0._showType2DesItem, var_8_3, var_8_1, var_8_2.gameObject)
+		self:com_createObjList(self._showType2DesItem, arr, content, txt_info.gameObject)
 	else
-		local var_8_4 = string.split(arg_8_2.configType, "|")
+		local arr = string.split(data.configType, "|")
 
-		arg_8_0:com_createObjList(arg_8_0._showType3DesItem, var_8_4, var_8_1, var_8_2.gameObject)
-	end
-end
-
-function var_0_0._showType2DesItem(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	local var_9_0 = gohelper.findChildText(arg_9_1, "")
-	local var_9_1 = string.splitToNumber(arg_9_2, "#")
-	local var_9_2 = var_9_1[2]
-	local var_9_3 = lua_character_attribute.configDict[var_9_1[1]]
-
-	if var_9_3.type ~= 1 then
-		var_9_0.text = var_9_3.name .. " <color=#d65f3c>+" .. tonumber(string.format("%.3f", var_9_2 / 10)) .. "%</color>"
-	else
-		var_9_0.text = var_9_3.name .. " <color=#d65f3c>+" .. math.floor(var_9_2) .. "</color>"
+		self:com_createObjList(self._showType3DesItem, arr, content, txt_info.gameObject)
 	end
 end
 
-function var_0_0._showType3DesItem(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	local var_10_0 = gohelper.findChildText(arg_10_1, "")
-	local var_10_1 = string.splitToNumber(arg_10_2, "#")
+function VersionActivity_1_2_FacilityTipsView:_showType2DesItem(obj, data, index)
+	local txt_info = gohelper.findChildText(obj, "")
+	local arr = string.splitToNumber(data, "#")
+	local addValue = arr[2]
+	local attrConfig = lua_character_attribute.configDict[arr[1]]
 
-	var_10_0.text = lua_rule.configDict[var_10_1[2]].desc
+	if attrConfig.type ~= 1 then
+		txt_info.text = attrConfig.name .. " <color=#d65f3c>+" .. tonumber(string.format("%.3f", addValue / 10)) .. "%</color>"
+	else
+		txt_info.text = attrConfig.name .. " <color=#d65f3c>+" .. math.floor(addValue) .. "</color>"
+	end
 end
 
-function var_0_0.onClose(arg_11_0)
+function VersionActivity_1_2_FacilityTipsView:_showType3DesItem(obj, data, index)
+	local txt_info = gohelper.findChildText(obj, "")
+	local arr = string.splitToNumber(data, "#")
+	local ruleConfig = lua_rule.configDict[arr[2]]
+
+	txt_info.text = ruleConfig.desc
+end
+
+function VersionActivity_1_2_FacilityTipsView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_12_0)
+function VersionActivity_1_2_FacilityTipsView:onDestroyView()
 	return
 end
 
-return var_0_0
+return VersionActivity_1_2_FacilityTipsView

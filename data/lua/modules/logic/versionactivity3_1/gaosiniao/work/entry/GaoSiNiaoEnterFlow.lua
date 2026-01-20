@@ -1,17 +1,19 @@
-﻿module("modules.logic.versionactivity3_1.gaosiniao.work.entry.GaoSiNiaoEnterFlow", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/gaosiniao/work/entry/GaoSiNiaoEnterFlow.lua
 
-local var_0_0 = class("GaoSiNiaoEnterFlow", GaoSiNiaoEntryFlowBase)
+module("modules.logic.versionactivity3_1.gaosiniao.work.entry.GaoSiNiaoEnterFlow", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0:episodeId()
+local GaoSiNiaoEnterFlow = class("GaoSiNiaoEnterFlow", GaoSiNiaoEntryFlowBase)
 
-	arg_1_0:addWork(GaoSiNiaoWork_PlayStory.s_create(arg_1_0:preStoryId()))
+function GaoSiNiaoEnterFlow:onStart()
+	local episodeId = self:episodeId()
 
-	if arg_1_0:gameId() == 0 then
-		arg_1_0:addWork(GaoSiNiaoWork_JustCompleteGame.s_create(var_1_0))
+	self:addWork(GaoSiNiaoWork_PlayStory.s_create(self:preStoryId()))
+
+	if self:gameId() == 0 then
+		self:addWork(GaoSiNiaoWork_JustCompleteGame.s_create(episodeId))
 	else
-		arg_1_0:addWork(GaoSiNiaoWork_EnterGameView.s_create(ViewName.V3a1_GaoSiNiao_GameView))
+		self:addWork(GaoSiNiaoWork_EnterGameView.s_create(ViewName.V3a1_GaoSiNiao_GameView))
 	end
 end
 
-return var_0_0
+return GaoSiNiaoEnterFlow

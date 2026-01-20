@@ -1,150 +1,151 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.config.V1a6_CachotRoomConfig", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/config/V1a6_CachotRoomConfig.lua
 
-local var_0_0 = class("V1a6_CachotRoomConfig")
+module("modules.logic.versionactivity1_6.v1a6_cachot.config.V1a6_CachotRoomConfig", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._roomConfigTable = arg_1_1
-	arg_1_0._roomConfigDict = arg_1_1.configDict
-	arg_1_0._roomConfigList = arg_1_1.configList
+local V1a6_CachotRoomConfig = class("V1a6_CachotRoomConfig")
+
+function V1a6_CachotRoomConfig:init(configTable)
+	self._roomConfigTable = configTable
+	self._roomConfigDict = configTable.configDict
+	self._roomConfigList = configTable.configList
 end
 
-function var_0_0.getRoomConfigList(arg_2_0)
-	return arg_2_0._roomConfigList
+function V1a6_CachotRoomConfig:getRoomConfigList()
+	return self._roomConfigList
 end
 
-function var_0_0.getRoomConfigDict(arg_3_0)
-	return arg_3_0._roomConfigDict
+function V1a6_CachotRoomConfig:getRoomConfigDict()
+	return self._roomConfigDict
 end
 
-function var_0_0.getCoByRoomId(arg_4_0, arg_4_1)
-	return arg_4_0:getRoomConfigDict()[arg_4_1]
+function V1a6_CachotRoomConfig:getCoByRoomId(id)
+	return self:getRoomConfigDict()[id]
 end
 
-function var_0_0._initRoomInfo(arg_5_0)
-	if not arg_5_0._layerRoomCount then
-		arg_5_0._layerRoomCount = {}
+function V1a6_CachotRoomConfig:_initRoomInfo()
+	if not self._layerRoomCount then
+		self._layerRoomCount = {}
 
-		for iter_5_0, iter_5_1 in pairs(lua_rogue_difficulty.configDict) do
-			local var_5_0 = iter_5_1.initRoom
+		for difficulty, co in pairs(lua_rogue_difficulty.configDict) do
+			local initRoom = co.initRoom
 
-			if not arg_5_0._layerRoomCount[iter_5_0] then
-				arg_5_0._layerRoomCount[iter_5_0] = {}
+			if not self._layerRoomCount[difficulty] then
+				self._layerRoomCount[difficulty] = {}
 			end
 
-			local var_5_1
-			local var_5_2 = 1
-			local var_5_3 = lua_rogue_room.configDict[var_5_0]
+			local layer
+			local index = 1
+			local roomCo = lua_rogue_room.configDict[initRoom]
 
-			if var_5_3 then
-				local var_5_4 = var_5_3.layer
-
-				arg_5_0._layerRoomCount[iter_5_0][var_5_4] = {
+			if roomCo then
+				layer = roomCo.layer
+				self._layerRoomCount[difficulty][layer] = {
 					count = 1
 				}
-				arg_5_0._layerRoomCount[iter_5_0][var_5_4][var_5_0] = var_5_2
+				self._layerRoomCount[difficulty][layer][initRoom] = index
 
-				local var_5_5 = lua_rogue_room.configDict[var_5_3.nextRoom]
-				local var_5_6
+				local nextRoomCo = lua_rogue_room.configDict[roomCo.nextRoom]
+				local roomSet
 
 				if isDebugBuild then
-					var_5_6 = {}
+					roomSet = {}
 				end
 
-				while var_5_5 do
-					if var_5_5.layer == var_5_4 then
-						var_5_2 = var_5_2 + 1
-						arg_5_0._layerRoomCount[iter_5_0][var_5_4][var_5_5.id] = var_5_2
-						arg_5_0._layerRoomCount[iter_5_0][var_5_4].count = arg_5_0._layerRoomCount[iter_5_0][var_5_4].count + 1
+				while nextRoomCo do
+					if nextRoomCo.layer == layer then
+						index = index + 1
+						self._layerRoomCount[difficulty][layer][nextRoomCo.id] = index
+						self._layerRoomCount[difficulty][layer].count = self._layerRoomCount[difficulty][layer].count + 1
 					else
-						var_5_2 = 1
-						var_5_4 = var_5_5.layer
-						arg_5_0._layerRoomCount[iter_5_0][var_5_4] = {
+						index = 1
+						layer = nextRoomCo.layer
+						self._layerRoomCount[difficulty][layer] = {
 							count = 1
 						}
-						arg_5_0._layerRoomCount[iter_5_0][var_5_4][var_5_5.id] = var_5_2
+						self._layerRoomCount[difficulty][layer][nextRoomCo.id] = index
 					end
 
-					if var_5_6 then
-						if var_5_6[var_5_5.nextRoom] then
+					if roomSet then
+						if roomSet[nextRoomCo.nextRoom] then
 							logError("房间配置死循环了！！！！！！请检查配置")
 
 							return
 						else
-							var_5_6[var_5_5.nextRoom] = true
+							roomSet[nextRoomCo.nextRoom] = true
 						end
 					end
 
-					var_5_5 = lua_rogue_room.configDict[var_5_5.nextRoom]
+					nextRoomCo = lua_rogue_room.configDict[nextRoomCo.nextRoom]
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.getRoomIndexAndTotal(arg_6_0, arg_6_1)
-	arg_6_0:_initRoomInfo()
+function V1a6_CachotRoomConfig:getRoomIndexAndTotal(roomId)
+	self:_initRoomInfo()
 
-	local var_6_0 = lua_rogue_room.configDict[arg_6_1]
+	local roomCo = lua_rogue_room.configDict[roomId]
 
-	if not var_6_0 then
+	if not roomCo then
 		return 0, 0
 	end
 
-	if var_6_0.type == 0 then
-		return arg_6_0:getRoomIndexAndTotal(lua_rogue_difficulty.configDict[var_6_0.difficulty].initRoom)
+	if roomCo.type == 0 then
+		return self:getRoomIndexAndTotal(lua_rogue_difficulty.configDict[roomCo.difficulty].initRoom)
 	end
 
-	local var_6_1 = arg_6_0._layerRoomCount[var_6_0.difficulty][var_6_0.layer]
+	local info = self._layerRoomCount[roomCo.difficulty][roomCo.layer]
 
-	if not var_6_1 then
+	if not info then
 		return 0, 0
 	end
 
-	return var_6_1[var_6_0.id], var_6_1.count
+	return info[roomCo.id], info.count
 end
 
-function var_0_0.getLayerIndexAndTotal(arg_7_0, arg_7_1)
-	arg_7_0:_initRoomInfo()
+function V1a6_CachotRoomConfig:getLayerIndexAndTotal(roomId)
+	self:_initRoomInfo()
 
-	local var_7_0 = lua_rogue_room.configDict[arg_7_1]
+	local roomCo = lua_rogue_room.configDict[roomId]
 
-	if not var_7_0 then
+	if not roomCo then
 		return 0, 0
 	end
 
-	if var_7_0.type == 0 then
-		return arg_7_0:getLayerIndexAndTotal(lua_rogue_difficulty.configDict[var_7_0.difficulty].initRoom)
+	if roomCo.type == 0 then
+		return self:getLayerIndexAndTotal(lua_rogue_difficulty.configDict[roomCo.difficulty].initRoom)
 	end
 
-	local var_7_1 = arg_7_0._layerRoomCount[var_7_0.difficulty]
+	local info = self._layerRoomCount[roomCo.difficulty]
 
-	if not var_7_1 then
+	if not info then
 		return 0, 0
 	end
 
-	return var_7_0.layer, #var_7_1
+	return roomCo.layer, #info
 end
 
-function var_0_0.getLayerName(arg_8_0, arg_8_1, arg_8_2)
-	for iter_8_0, iter_8_1 in pairs(arg_8_0._roomConfigDict) do
-		if iter_8_1.layer == arg_8_1 and iter_8_1.difficulty == arg_8_2 then
-			return iter_8_1.name
+function V1a6_CachotRoomConfig:getLayerName(layer, difficulty)
+	for _, v in pairs(self._roomConfigDict) do
+		if v.layer == layer and v.difficulty == difficulty then
+			return v.name
 		end
 	end
 end
 
-function var_0_0.checkNextRoomIsLastRoom(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0._roomConfigDict[arg_9_1]
+function V1a6_CachotRoomConfig:checkNextRoomIsLastRoom(roomId)
+	local co = self._roomConfigDict[roomId]
 
-	if var_9_0 then
-		local var_9_1 = var_9_0.nextRoom
+	if co then
+		local nextRoomId = co.nextRoom
 
-		if not var_9_1 then
+		if not nextRoomId then
 			return true
 		else
-			local var_9_2 = arg_9_0._roomConfigDict[var_9_1]
+			local nextRoomCo = self._roomConfigDict[nextRoomId]
 
-			if var_9_2 and var_9_2.layer ~= var_9_0.layer then
+			if nextRoomCo and nextRoomCo.layer ~= co.layer then
 				return true
 			end
 		end
@@ -153,6 +154,6 @@ function var_0_0.checkNextRoomIsLastRoom(arg_9_0, arg_9_1)
 	return false
 end
 
-var_0_0.instance = var_0_0.New()
+V1a6_CachotRoomConfig.instance = V1a6_CachotRoomConfig.New()
 
-return var_0_0
+return V1a6_CachotRoomConfig

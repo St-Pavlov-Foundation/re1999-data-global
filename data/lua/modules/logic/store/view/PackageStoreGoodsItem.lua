@@ -1,469 +1,474 @@
-﻿module("modules.logic.store.view.PackageStoreGoodsItem", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/PackageStoreGoodsItem.lua
 
-local var_0_0 = class("PackageStoreGoodsItem", ListScrollCellExtend)
+module("modules.logic.store.view.PackageStoreGoodsItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_icon")
-	arg_1_0._iconImage = arg_1_0._simageicon:GetComponent(gohelper.Type_Image)
-	arg_1_0._txtmaterialNum = gohelper.findChildText(arg_1_0.viewGO, "cost/txt_materialNum")
-	arg_1_0._imagematerial = gohelper.findChildImage(arg_1_0.viewGO, "cost/simage_material")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#txt_name")
-	arg_1_0._txteng = gohelper.findChildText(arg_1_0.viewGO, "#txt_name/#txt_eng")
-	arg_1_0._txtremain = gohelper.findChildText(arg_1_0.viewGO, "txt_remain")
-	arg_1_0._gosoldout = gohelper.findChild(arg_1_0.viewGO, "#go_soldout")
-	arg_1_0._gohas = gohelper.findChild(arg_1_0.viewGO, "go_has")
-	arg_1_0._goitemreddot = gohelper.findChild(arg_1_0.viewGO, "go_itemreddot")
-	arg_1_0._gotag = gohelper.findChild(arg_1_0.viewGO, "#go_tag")
-	arg_1_0._imagediscount = gohelper.findChild(arg_1_0.viewGO, "#go_tag/#image_discount")
-	arg_1_0._txtdiscount = gohelper.findChildText(arg_1_0.viewGO, "#go_tag/#txt_discount")
-	arg_1_0._gowenhao = gohelper.findChild(arg_1_0.viewGO, "#go_wenhao")
-	arg_1_0._gosoldoutbg = gohelper.findChild(arg_1_0._gosoldout, "bg")
-	arg_1_0._gosoldouttagbg = gohelper.findChild(arg_1_0._gosoldout, "bg_tag")
-	arg_1_0._gooptionalgift = gohelper.findChild(arg_1_0.viewGO, "#go_optionalgift")
-	arg_1_0._gooptionalvx = gohelper.findChild(arg_1_0.viewGO, "#packs_vx")
-	arg_1_0._gosummonSimulationPickFX = gohelper.findChild(arg_1_0.viewGO, "#go_summonSimulationPickFX")
-	arg_1_0._txtpickdesc = gohelper.findChildText(arg_1_0.viewGO, "#txt_pickdesc")
-	arg_1_0._goSkinTips = gohelper.findChild(arg_1_0.viewGO, "#go_SkinTips")
-	arg_1_0._imgProp = gohelper.findChildImage(arg_1_0.viewGO, "#go_SkinTips/image/#txt_Tips/#txt_Num/#image_Prop")
-	arg_1_0._txtPropNum = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_SkinTips/image/#txt_Tips/#txt_Num")
+local PackageStoreGoodsItem = class("PackageStoreGoodsItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function PackageStoreGoodsItem:onInitView()
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "#simage_icon")
+	self._iconImage = self._simageicon:GetComponent(gohelper.Type_Image)
+	self._txtmaterialNum = gohelper.findChildText(self.viewGO, "cost/txt_materialNum")
+	self._imagematerial = gohelper.findChildImage(self.viewGO, "cost/simage_material")
+	self._txtname = gohelper.findChildText(self.viewGO, "#txt_name")
+	self._txteng = gohelper.findChildText(self.viewGO, "#txt_name/#txt_eng")
+	self._txtremain = gohelper.findChildText(self.viewGO, "txt_remain")
+	self._gosoldout = gohelper.findChild(self.viewGO, "#go_soldout")
+	self._gohas = gohelper.findChild(self.viewGO, "go_has")
+	self._goitemreddot = gohelper.findChild(self.viewGO, "go_itemreddot")
+	self._gotag = gohelper.findChild(self.viewGO, "#go_tag")
+	self._imagediscount = gohelper.findChild(self.viewGO, "#go_tag/#image_discount")
+	self._txtdiscount = gohelper.findChildText(self.viewGO, "#go_tag/#txt_discount")
+	self._gowenhao = gohelper.findChild(self.viewGO, "#go_wenhao")
+	self._gosoldoutbg = gohelper.findChild(self._gosoldout, "bg")
+	self._gosoldouttagbg = gohelper.findChild(self._gosoldout, "bg_tag")
+	self._gooptionalgift = gohelper.findChild(self.viewGO, "#go_optionalgift")
+	self._gooptionalvx = gohelper.findChild(self.viewGO, "#packs_vx")
+	self._gosummonSimulationPickFX = gohelper.findChild(self.viewGO, "#go_summonSimulationPickFX")
+	self._txtpickdesc = gohelper.findChildText(self.viewGO, "#txt_pickdesc")
+	self._goSkinTips = gohelper.findChild(self.viewGO, "#go_SkinTips")
+	self._imgProp = gohelper.findChildImage(self.viewGO, "#go_SkinTips/image/#txt_Tips/#txt_Num/#image_Prop")
+	self._txtPropNum = gohelper.findChildTextMesh(self.viewGO, "#go_SkinTips/image/#txt_Tips/#txt_Num")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(PayController.instance, PayEvent.UpdateProductDetails, arg_2_0._onUpdateProductDetails, arg_2_0)
+function PackageStoreGoodsItem:addEvents()
+	self:addEventCb(PayController.instance, PayEvent.UpdateProductDetails, self._onUpdateProductDetails, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(PayController.instance, PayEvent.UpdateProductDetails, arg_3_0._onUpdateProductDetails, arg_3_0)
+function PackageStoreGoodsItem:removeEvents()
+	self:removeEventCb(PayController.instance, PayEvent.UpdateProductDetails, self._onUpdateProductDetails, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._btnGO = gohelper.findChild(arg_4_0.viewGO, "clickArea")
-	arg_4_0._btn = gohelper.getClickWithAudio(arg_4_0._btnGO, AudioEnum.UI.play_ui_common_pause)
+function PackageStoreGoodsItem:_editableInitView()
+	self._btnGO = gohelper.findChild(self.viewGO, "clickArea")
+	self._btn = gohelper.getClickWithAudio(self._btnGO, AudioEnum.UI.play_ui_common_pause)
 
-	arg_4_0._btn:AddClickListener(arg_4_0._onClick, arg_4_0)
+	self._btn:AddClickListener(self._onClick, self)
 
-	arg_4_0._gocost = gohelper.findChild(arg_4_0.viewGO, "cost")
-	arg_4_0._btnCost = gohelper.getClick(arg_4_0._gocost)
+	self._gocost = gohelper.findChild(self.viewGO, "cost")
+	self._btnCost = gohelper.getClick(self._gocost)
 
-	arg_4_0._btnCost:AddClickListener(arg_4_0._onClickCost, arg_4_0)
+	self._btnCost:AddClickListener(self._onClickCost, self)
 
-	arg_4_0._golevelLock = gohelper.findChild(arg_4_0.viewGO, "#go_levelLock")
-	arg_4_0._txtneedLevel = gohelper.findChildText(arg_4_0.viewGO, "#go_levelLock/levellock/#txt_needLevel")
-	arg_4_0._golevelLockbg = gohelper.findChild(arg_4_0.viewGO, "#go_levelLock/bg")
-	arg_4_0._golevelLockbgtag = gohelper.findChild(arg_4_0.viewGO, "#go_levelLock/bg_tag")
-	arg_4_0._soldout = false
-	arg_4_0._hascloth = false
-	arg_4_0._lastStartPayTime = 0
-	arg_4_0._animator = arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_4_0._goremaintime = gohelper.findChild(arg_4_0.viewGO, "go_remaintime")
-	arg_4_0._txtremiantime = gohelper.findChildText(arg_4_0.viewGO, "go_remaintime/bg/#txt_remiantime")
-	arg_4_0._gonewtag = gohelper.findChild(arg_4_0.viewGO, "go_newtag")
-	arg_4_0._nationalgifttag = gohelper.findChild(arg_4_0.viewGO, "go_nationalgift")
-	arg_4_0._gomooncardup = gohelper.findChild(arg_4_0.viewGO, "#go_mooncardup")
-	arg_4_0._gomaterialup = gohelper.findChild(arg_4_0.viewGO, "#go_materialup")
-	arg_4_0._gocobranded = gohelper.findChild(arg_4_0.viewGO, "#go_cobranded")
-	arg_4_0._golinkgift = gohelper.findChild(arg_4_0.viewGO, "#go_linkgift")
-	arg_4_0._gologoTab = gohelper.findChild(arg_4_0.viewGO, "#simage_logo")
-	arg_4_0._gotxtv2a8_09 = gohelper.findChild(arg_4_0.viewGO, "txt_v2a8_09")
+	self._golevelLock = gohelper.findChild(self.viewGO, "#go_levelLock")
+	self._txtneedLevel = gohelper.findChildText(self.viewGO, "#go_levelLock/levellock/#txt_needLevel")
+	self._golevelLockbg = gohelper.findChild(self.viewGO, "#go_levelLock/bg")
+	self._golevelLockbgtag = gohelper.findChild(self.viewGO, "#go_levelLock/bg_tag")
+	self._soldout = false
+	self._hascloth = false
+	self._lastStartPayTime = 0
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._goremaintime = gohelper.findChild(self.viewGO, "go_remaintime")
+	self._txtremiantime = gohelper.findChildText(self.viewGO, "go_remaintime/bg/#txt_remiantime")
+	self._gonewtag = gohelper.findChild(self.viewGO, "go_newtag")
+	self._nationalgifttag = gohelper.findChild(self.viewGO, "go_nationalgift")
+	self._gomooncardup = gohelper.findChild(self.viewGO, "#go_mooncardup")
+	self._gomaterialup = gohelper.findChild(self.viewGO, "#go_materialup")
+	self._gocobranded = gohelper.findChild(self.viewGO, "#go_cobranded")
+	self._golinkgift = gohelper.findChild(self.viewGO, "#go_linkgift")
+	self._gologoTab = gohelper.findChild(self.viewGO, "#simage_logo")
+	self._gotxtv2a8_09 = gohelper.findChild(self.viewGO, "txt_v2a8_09")
+	self._gojinfanglun = gohelper.findChild(self.viewGO, "#go_jinfanglun")
 end
 
-function var_0_0._onClick(arg_5_0)
-	if arg_5_0._clickCallback then
-		arg_5_0._clickCallback(arg_5_0._clickCallbackObj, arg_5_0._mo)
+function PackageStoreGoodsItem:_onClick()
+	if self._clickCallback then
+		self._clickCallback(self._clickCallbackObj, self._mo)
 	end
 
-	StoreController.instance:forceReadTab(arg_5_0._mo.belongStoreId)
+	StoreController.instance:forceReadTab(self._mo.belongStoreId)
 
-	local var_5_0 = {
-		arg_5_0._mo.goodsId
+	local goodsIds = {
+		self._mo.goodsId
 	}
 
-	ChargeRpc.instance:sendReadChargeNewRequest(var_5_0, arg_5_0._onRefreshNew, arg_5_0)
+	ChargeRpc.instance:sendReadChargeNewRequest(goodsIds, self._onRefreshNew, self)
 
-	if not arg_5_0:_isStoreItemUnlock() then
+	if not self:_isStoreItemUnlock() then
 		GameFacade.showToast(ToastEnum.PackageStoreGoodsUnlock)
 
 		return
 	end
 
-	if arg_5_0._cfgType == StoreEnum.StoreChargeType.LinkGiftGoods then
-		if arg_5_0._mo.buyCount > 0 and StoreCharageConditionalHelper.isHasCanFinishGoodsTask(arg_5_0._mo.goodsId) then
-			TaskRpc.instance:sendFinishTaskRequest(arg_5_0._mo.config.taskid)
+	if self._cfgType == StoreEnum.StoreChargeType.LinkGiftGoods then
+		if self._mo.buyCount > 0 and StoreCharageConditionalHelper.isHasCanFinishGoodsTask(self._mo.goodsId) then
+			TaskRpc.instance:sendFinishTaskRequest(self._mo.config.taskid)
 			StoreGoodsTaskController.instance:requestGoodsTaskList()
 		else
-			StoreController.instance:openPackageStoreGoodsView(arg_5_0._mo)
+			StoreController.instance:openPackageStoreGoodsView(self._mo)
 		end
-	elseif arg_5_0._hascloth then
+	elseif self._hascloth then
 		GameFacade.showToast(ToastEnum.PackageStoreGoodsHasCloth)
-	elseif arg_5_0._soldout then
+	elseif self._soldout then
 		GameFacade.showToast(ToastEnum.ActivityNoRemainBuyCount)
 	else
-		StoreController.instance:openPackageStoreGoodsView(arg_5_0._mo)
+		StoreController.instance:openPackageStoreGoodsView(self._mo)
 	end
 end
 
-function var_0_0._onRefreshNew(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	if arg_6_2 ~= 0 then
+function PackageStoreGoodsItem:_onRefreshNew(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	gohelper.setActive(arg_6_0._gonewtag, false)
+	gohelper.setActive(self._gonewtag, false)
 end
 
-function var_0_0._onClickCost(arg_7_0)
-	if arg_7_0.isLevelOpen == false then
+function PackageStoreGoodsItem:_onClickCost()
+	if self.isLevelOpen == false then
 		return
 	end
 
-	if not arg_7_0:_isStoreItemUnlock() then
+	if not self:_isStoreItemUnlock() then
 		GameFacade.showToast(ToastEnum.PackageStoreGoodsUnlock)
 
 		return
 	end
 
-	if arg_7_0._hascloth then
+	if self._hascloth then
 		GameFacade.showToast(ToastEnum.PackageStoreGoodsHasCloth)
-	elseif arg_7_0._soldout then
+	elseif self._soldout then
 		GameFacade.showToast(ToastEnum.ActivityNoRemainBuyCount)
-	elseif arg_7_0._mo.isChargeGoods then
-		if Time.time - arg_7_0._lastStartPayTime > 0.3 then
+	elseif self._mo.isChargeGoods then
+		if Time.time - self._lastStartPayTime > 0.3 then
 			AudioMgr.instance:trigger(AudioEnum.UI.play_ui_payment_click)
-			PayController.instance:startPay(arg_7_0._mo.goodsId)
+			PayController.instance:startPay(self._mo.goodsId)
 
-			arg_7_0._lastStartPayTime = Time.time
+			self._lastStartPayTime = Time.time
 		end
 	else
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_common_pause)
-		StoreController.instance:openPackageStoreGoodsView(arg_7_0._mo)
+		StoreController.instance:openPackageStoreGoodsView(self._mo)
 	end
 end
 
-function var_0_0._isStoreItemUnlock(arg_8_0)
-	local var_8_0 = arg_8_0._mo.config.needEpisodeId
+function PackageStoreGoodsItem:_isStoreItemUnlock()
+	local episodeId = self._mo.config.needEpisodeId
 
-	if not var_8_0 or var_8_0 == 0 then
+	if not episodeId or episodeId == 0 then
 		return true
 	end
 
-	return DungeonModel.instance:hasPassLevelAndStory(var_8_0)
+	return DungeonModel.instance:hasPassLevelAndStory(episodeId)
 end
 
-function var_0_0._onUpdateProductDetails(arg_9_0, arg_9_1)
-	if arg_9_0.mo then
-		arg_9_0:onUpdateMO(arg_9_0.mo)
+function PackageStoreGoodsItem:_onUpdateProductDetails(mo)
+	if self.mo then
+		self:onUpdateMO(self.mo)
 	end
 end
 
-function var_0_0.onUpdateMO(arg_10_0, arg_10_1)
-	arg_10_0._mo = arg_10_1
-	arg_10_0._cfgType = arg_10_1 and arg_10_1.config and arg_10_1.config.type
+function PackageStoreGoodsItem:onUpdateMO(mo)
+	self._mo = mo
+	self._cfgType = mo and mo.config and mo.config.type
 
-	gohelper.setActive(arg_10_0._goitemreddot, StoreModel.instance:isGoodsItemRedDotShow(arg_10_1.goodsId))
-	gohelper.setActive(arg_10_0._golevellimit, not arg_10_0:_isStoreItemUnlock())
-	gohelper.setActive(arg_10_0._gomooncardup, false)
-	gohelper.setActive(arg_10_0._nationalgifttag, arg_10_1.config.offTag == "1")
+	gohelper.setActive(self._goitemreddot, StoreModel.instance:isGoodsItemRedDotShow(mo.goodsId))
+	gohelper.setActive(self._golevellimit, not self:_isStoreItemUnlock())
+	gohelper.setActive(self._gomooncardup, false)
+	gohelper.setActive(self._nationalgifttag, mo.config.offTag == "1")
 
-	if not arg_10_0:_isStoreItemUnlock() then
-		local var_10_0 = arg_10_0._mo.config.needEpisodeId
-		local var_10_1 = DungeonConfig.instance:getEpisodeCO(var_10_0)
-		local var_10_2 = DungeonConfig.instance:getChapterCO(var_10_1.chapterId)
+	if not self:_isStoreItemUnlock() then
+		local episodeId = self._mo.config.needEpisodeId
+		local episodeConfig = DungeonConfig.instance:getEpisodeCO(episodeId)
+		local chapterConfig = DungeonConfig.instance:getChapterCO(episodeConfig.chapterId)
 
-		if var_10_2 and var_10_2.type == DungeonEnum.ChapterType.Hard then
-			var_10_1 = DungeonConfig.instance:getEpisodeCO(var_10_1.preEpisode)
-			var_10_2 = DungeonConfig.instance:getChapterCO(var_10_1.chapterId)
+		if chapterConfig and chapterConfig.type == DungeonEnum.ChapterType.Hard then
+			episodeConfig = DungeonConfig.instance:getEpisodeCO(episodeConfig.preEpisode)
+			chapterConfig = DungeonConfig.instance:getChapterCO(episodeConfig.chapterId)
 		end
 
-		local var_10_3
-		local var_10_4
-		local var_10_5
+		local chapterIndex, episodeIndex, episodeType
 
-		if var_10_1 and var_10_2 then
-			var_10_3 = var_10_2.chapterIndex
-
-			local var_10_6
-
-			var_10_4, var_10_6 = DungeonConfig.instance:getChapterEpisodeIndexWithSP(var_10_2.id, var_10_1.id)
+		if episodeConfig and chapterConfig then
+			chapterIndex = chapterConfig.chapterIndex
+			episodeIndex, episodeType = DungeonConfig.instance:getChapterEpisodeIndexWithSP(chapterConfig.id, episodeConfig.id)
 
 			if type == DungeonEnum.EpisodeType.Sp then
-				var_10_3 = "SP"
+				chapterIndex = "SP"
 			end
 		end
 
-		arg_10_0._txtlvlimit.text = string.format(luaLang("level_limit_unlock"), string.format("%s-%s", var_10_3, var_10_4))
+		self._txtlvlimit.text = string.format(luaLang("level_limit_unlock"), string.format("%s-%s", chapterIndex, episodeIndex))
 	end
 
-	arg_10_0._txtname.text = arg_10_0._mo.config.name
-	arg_10_0._txteng.text = arg_10_0._mo.config.nameEn
+	self._txtname.text = self._mo.config.name
+	self._txteng.text = self._mo.config.nameEn
 
-	arg_10_0._simageicon:LoadImage(ResUrl.getStorePackageIcon(arg_10_0._mo.config.bigImg))
+	self._simageicon:LoadImage(ResUrl.getStorePackageIcon(self._mo.config.bigImg))
 
-	local var_10_7 = arg_10_0._mo.cost
+	local cost = self._mo.cost
 
-	if string.nilorempty(var_10_7) or var_10_7 == 0 then
-		arg_10_0._txtmaterialNum.text = luaLang("store_free")
+	if string.nilorempty(cost) or cost == 0 then
+		self._txtmaterialNum.text = luaLang("store_free")
 
-		gohelper.setActive(arg_10_0._imagematerial.gameObject, false)
-	elseif arg_10_0._mo.isChargeGoods then
-		arg_10_0._txtmaterialNum.text = PayModel.instance:getProductPrice(arg_10_0._mo.id)
+		gohelper.setActive(self._imagematerial.gameObject, false)
+	elseif self._mo.isChargeGoods then
+		self._txtmaterialNum.text = PayModel.instance:getProductPrice(self._mo.id)
 
-		gohelper.setActive(arg_10_0._imagematerial.gameObject, false)
+		gohelper.setActive(self._imagematerial.gameObject, false)
 
-		arg_10_0._costQuantity = var_10_7
+		self._costQuantity = cost
 	else
-		local var_10_8 = string.split(var_10_7, "|")
-		local var_10_9 = var_10_8[arg_10_1.buyCount + 1] or var_10_8[#var_10_8]
-		local var_10_10 = string.splitToNumber(var_10_9, "#")
+		local costs = string.split(cost, "|")
+		local costParam = costs[mo.buyCount + 1] or costs[#costs]
+		local costInfo = string.splitToNumber(costParam, "#")
 
-		arg_10_0._costType = var_10_10[1]
-		arg_10_0._costId = var_10_10[2]
-		arg_10_0._costQuantity = var_10_10[3]
+		self._costType = costInfo[1]
+		self._costId = costInfo[2]
+		self._costQuantity = costInfo[3]
 
-		local var_10_11, var_10_12 = ItemModel.instance:getItemConfigAndIcon(arg_10_0._costType, arg_10_0._costId)
+		local costConfig, costIcon = ItemModel.instance:getItemConfigAndIcon(self._costType, self._costId)
 
-		arg_10_0._txtmaterialNum.text = arg_10_0._costQuantity
+		self._txtmaterialNum.text = self._costQuantity
 
-		gohelper.setActive(arg_10_0._imagematerial.gameObject, true)
+		gohelper.setActive(self._imagematerial.gameObject, true)
 
-		local var_10_13 = 0
+		local id = 0
 
-		if string.len(arg_10_0._costId) == 1 then
-			var_10_13 = arg_10_0._costType .. "0" .. arg_10_0._costId
+		if string.len(self._costId) == 1 then
+			id = self._costType .. "0" .. self._costId
 		else
-			var_10_13 = arg_10_0._costType .. arg_10_0._costId
+			id = self._costType .. self._costId
 		end
 
-		local var_10_14 = string.format("%s_1", var_10_13)
+		local str = string.format("%s_1", id)
 
-		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_10_0._imagematerial, var_10_14)
+		UISpriteSetMgr.instance:setCurrencyItemSprite(self._imagematerial, str)
 	end
 
-	local var_10_15 = arg_10_1.maxBuyCount
-	local var_10_16 = var_10_15 - arg_10_1.buyCount
+	local maxBuyCount = mo.maxBuyCount
+	local remain = maxBuyCount - mo.buyCount
 
-	arg_10_0._soldout = arg_10_1:isSoldOut()
+	self._soldout = mo:isSoldOut()
 
-	local var_10_17
+	local content
 
-	if arg_10_0._mo.isChargeGoods then
-		var_10_17 = StoreConfig.instance:getChargeRemainText(var_10_15, arg_10_1.refreshTime, var_10_16, arg_10_1.offlineTime)
+	if self._mo.isChargeGoods then
+		content = StoreConfig.instance:getChargeRemainText(maxBuyCount, mo.refreshTime, remain, mo.offlineTime)
 	else
-		var_10_17 = StoreConfig.instance:getRemainText(var_10_15, arg_10_1.refreshTime, var_10_16, arg_10_1.offlineTime)
+		content = StoreConfig.instance:getRemainText(maxBuyCount, mo.refreshTime, remain, mo.offlineTime)
 	end
 
-	if string.nilorempty(var_10_17) then
-		gohelper.setActive(arg_10_0._txtremain.gameObject, false)
+	if string.nilorempty(content) then
+		gohelper.setActive(self._txtremain.gameObject, false)
 	else
-		gohelper.setActive(arg_10_0._txtremain.gameObject, true)
+		gohelper.setActive(self._txtremain.gameObject, true)
 
-		arg_10_0._txtremain.text = var_10_17
+		self._txtremain.text = content
 	end
 
-	local var_10_18 = arg_10_1.offlineTime - ServerTime.now()
+	local offEndTime = mo.offlineTime - ServerTime.now()
 
-	gohelper.setActive(arg_10_0._goremaintime, arg_10_1.offlineTime > 0)
+	gohelper.setActive(self._goremaintime, mo.offlineTime > 0)
 
-	if var_10_18 > 3600 then
-		local var_10_19, var_10_20 = TimeUtil.secondToRoughTime(var_10_18)
+	if offEndTime > 3600 then
+		local time, str = TimeUtil.secondToRoughTime(offEndTime)
 
-		arg_10_0._txtremiantime.text = formatLuaLang("remain", var_10_19 .. var_10_20)
+		self._txtremiantime.text = formatLuaLang("remain", time .. str)
 	else
-		arg_10_0._txtremiantime.text = luaLang("not_enough_one_hour")
+		self._txtremiantime.text = luaLang("not_enough_one_hour")
 	end
 
-	local var_10_21 = tonumber(arg_10_1:getDiscount())
+	local offTag = tonumber(mo:getDiscount())
 
-	if var_10_21 and var_10_21 > 0 then
-		arg_10_0.hasTag = true
+	if offTag and offTag > 0 then
+		self.hasTag = true
 
-		gohelper.setActive(arg_10_0._gotag, true)
+		gohelper.setActive(self._gotag, true)
 
-		arg_10_0._txtdiscount.text = string.format("-%d%%", var_10_21)
+		self._txtdiscount.text = string.format("-%d%%", offTag)
 	else
-		arg_10_0.hasTag = false
+		self.hasTag = false
 
-		gohelper.setActive(arg_10_0._gotag, false)
+		gohelper.setActive(self._gotag, false)
 	end
 
-	gohelper.setActive(arg_10_0._gonewtag, arg_10_1:needShowNew())
+	gohelper.setActive(self._gonewtag, mo:needShowNew())
 
-	arg_10_0._hascloth = arg_10_0._mo:alreadyHas()
+	self._hascloth = self._mo:alreadyHas()
 
-	gohelper.setActive(arg_10_0._gohas, false)
-	gohelper.setActive(arg_10_0._gosoldout, false)
-	ZProj.UGUIHelper.SetColorAlpha(arg_10_0._iconImage, 1)
+	gohelper.setActive(self._gohas, false)
+	gohelper.setActive(self._gosoldout, false)
+	ZProj.UGUIHelper.SetColorAlpha(self._iconImage, 1)
 
-	if arg_10_0._hascloth then
-		gohelper.setActive(arg_10_0._gohas, true)
-	elseif arg_10_0._soldout then
-		gohelper.setActive(arg_10_0._gosoldout, not StoreCharageConditionalHelper.isCharageTaskNotFinish(arg_10_1.goodsId))
-		gohelper.setActive(arg_10_0._gosoldoutbg, not arg_10_0.hasTag)
-		gohelper.setActive(arg_10_0._gosoldouttagbg, arg_10_0.hasTag)
-		ZProj.UGUIHelper.SetColorAlpha(arg_10_0._iconImage, 0.8)
+	if self._hascloth then
+		gohelper.setActive(self._gohas, true)
+	elseif self._soldout then
+		gohelper.setActive(self._gosoldout, not StoreCharageConditionalHelper.isCharageTaskNotFinish(mo.goodsId))
+		gohelper.setActive(self._gosoldoutbg, not self.hasTag)
+		gohelper.setActive(self._gosoldouttagbg, self.hasTag)
+		ZProj.UGUIHelper.SetColorAlpha(self._iconImage, 0.8)
 	end
 
-	gohelper.setActive(arg_10_0._gowenhao, false)
+	gohelper.setActive(self._gowenhao, false)
 
-	if arg_10_0._mo.goodsId == StoreEnum.MonthCardGoodsId then
-		gohelper.setActive(arg_10_0._gowenhao, true)
+	if self._mo.goodsId == StoreEnum.MonthCardGoodsId then
+		gohelper.setActive(self._gowenhao, true)
 
-		arg_10_0._wenhaoClick = gohelper.getClick(arg_10_0._gowenhao)
+		self._wenhaoClick = gohelper.getClick(self._gowenhao)
 
-		arg_10_0._wenhaoClick:AddClickListener(arg_10_0.showMonthCardTips, arg_10_0)
+		self._wenhaoClick:AddClickListener(self.showMonthCardTips, self)
 
-		local var_10_22 = StoreHelper.checkMonthCardLevelUpTagOpen()
+		local showtag = StoreHelper.checkMonthCardLevelUpTagOpen()
 
-		gohelper.setActive(arg_10_0._gomooncardup, var_10_22)
-	elseif arg_10_0._mo.goodsId == StoreEnum.SeasonCardGoodsId then
-		gohelper.setActive(arg_10_0._gowenhao, true)
+		gohelper.setActive(self._gomooncardup, showtag)
+	elseif self._mo.goodsId == StoreEnum.SeasonCardGoodsId then
+		gohelper.setActive(self._gowenhao, true)
 
-		arg_10_0._wenhaoClick = gohelper.getClick(arg_10_0._gowenhao)
+		self._wenhaoClick = gohelper.getClick(self._gowenhao)
 
-		arg_10_0._wenhaoClick:AddClickListener(arg_10_0._showSeasonCardTips, arg_10_0)
+		self._wenhaoClick:AddClickListener(self._showSeasonCardTips, self)
 	else
-		GameUtil.onDestroyViewMember_ClickListener(arg_10_0, "_wenhaoClick")
+		GameUtil.onDestroyViewMember_ClickListener(self, "_wenhaoClick")
 	end
 
-	arg_10_0.isLevelOpen = arg_10_1:isLevelOpen()
+	self.isLevelOpen = mo:isLevelOpen()
 
-	gohelper.setActive(arg_10_0._golevelLock, arg_10_0.isLevelOpen == false)
-	gohelper.setActive(arg_10_0._golevelLockbg, not arg_10_0.hasTag)
-	gohelper.setActive(arg_10_0._golevelLockbgtag, arg_10_0.hasTag)
+	gohelper.setActive(self._golevelLock, self.isLevelOpen == false)
+	gohelper.setActive(self._golevelLockbg, not self.hasTag)
+	gohelper.setActive(self._golevelLockbgtag, self.hasTag)
 
-	arg_10_0._txtneedLevel.text = formatLuaLang("packagestoregoodsitem_level", arg_10_1.buyLevel)
+	self._txtneedLevel.text = formatLuaLang("packagestoregoodsitem_level", mo.buyLevel)
 
-	if arg_10_1.isChargeGoods then
-		arg_10_0.isPreGoodsSoldOut = arg_10_1:checkPreGoodsSoldOut()
+	if mo.isChargeGoods then
+		self.isPreGoodsSoldOut = mo:checkPreGoodsSoldOut()
 
-		gohelper.setActive(arg_10_0._golevelLock, arg_10_0.isLevelOpen == false or arg_10_0.isPreGoodsSoldOut == false)
+		gohelper.setActive(self._golevelLock, self.isLevelOpen == false or self.isPreGoodsSoldOut == false)
 
-		if arg_10_0.isLevelOpen and arg_10_0.isPreGoodsSoldOut == false then
-			local var_10_23 = StoreConfig.instance:getChargeGoodsConfig(arg_10_1.config.preGoodsId)
+		if self.isLevelOpen and self.isPreGoodsSoldOut == false then
+			local preGoodsCfg = StoreConfig.instance:getChargeGoodsConfig(mo.config.preGoodsId)
 
-			arg_10_0._txtneedLevel.text = formatLuaLang("packagestoregoods_pregoods_tips", var_10_23.name)
+			self._txtneedLevel.text = formatLuaLang("packagestoregoods_pregoods_tips", preGoodsCfg.name)
 		end
 	end
 
-	local var_10_24 = arg_10_1.isChargeGoods and arg_10_1.config.type == StoreEnum.StoreChargeType.Optional or arg_10_1.goodsId == StoreEnum.NewbiePackId
+	local isOptional = mo.isChargeGoods and mo.config.type == StoreEnum.StoreChargeType.Optional or mo.goodsId == StoreEnum.NewbiePackId
 
-	gohelper.setActive(arg_10_0._gooptionalgift, var_10_24)
-	gohelper.setActive(arg_10_0._gooptionalvx, var_10_24 and not arg_10_1.goodsId == StoreEnum.NewbiePackId)
-	gohelper.setActive(arg_10_0._txtpickdesc.gameObject, arg_10_1.goodsId == StoreEnum.NewbiePackId)
-	arg_10_0:_onUpdateMO_newMatUpTag(arg_10_1)
-	arg_10_0:_onUpdateMO_coBrandedTag(arg_10_1)
-	arg_10_0:_onUpdateMO_gosummonSimulationPickFX(arg_10_1)
-	arg_10_0:_onUpdateMO_linkPackage(arg_10_1)
-	arg_10_0:refreshSkinTips(arg_10_1)
-	gohelper.setActive(arg_10_0._gotxtv2a8_09, PackageStoreEnum.AnimHeadDict[arg_10_1.goodsId])
+	gohelper.setActive(self._gooptionalgift, isOptional)
+	gohelper.setActive(self._gooptionalvx, isOptional and not mo.goodsId == StoreEnum.NewbiePackId)
+	gohelper.setActive(self._txtpickdesc.gameObject, mo.goodsId == StoreEnum.NewbiePackId)
+	self:_onUpdateMO_newMatUpTag(mo)
+	self:_onUpdateMO_coBrandedTag(mo)
+	self:_onUpdateMO_gosummonSimulationPickFX(mo)
+	self:_onUpdateMO_linkPackage(mo)
+	self:_onUpdateMO_gosummonSimulationPickTag(mo)
+	self:refreshSkinTips(mo)
+	gohelper.setActive(self._gotxtv2a8_09, PackageStoreEnum.AnimHeadDict[mo.goodsId])
 end
 
-function var_0_0.showMonthCardTips(arg_11_0)
+function PackageStoreGoodsItem:showMonthCardTips()
 	HelpController.instance:openStoreTipView(CommonConfig.instance:getConstStr(ConstEnum.MouthTipsDesc))
 end
 
-function var_0_0.getAnimator(arg_12_0)
-	return arg_12_0._animator
+function PackageStoreGoodsItem:getAnimator()
+	return self._animator
 end
 
-function var_0_0.refreshSkinTips(arg_13_0, arg_13_1)
-	local var_13_0, var_13_1 = SkinConfig.instance:isSkinStoreGoods(arg_13_1.goodsId)
+function PackageStoreGoodsItem:refreshSkinTips(goodsMO)
+	local isSkinStoreGoods, skinId = SkinConfig.instance:isSkinStoreGoods(goodsMO.goodsId)
 
-	if not var_13_0 then
-		gohelper.setActive(arg_13_0._goSkinTips, false)
+	if not isSkinStoreGoods then
+		gohelper.setActive(self._goSkinTips, false)
 
 		return
 	end
 
-	if StoreModel.instance:isSkinGoodsCanRepeatBuy(arg_13_1, var_13_1) then
-		gohelper.setActive(arg_13_0._goSkinTips, true)
+	if StoreModel.instance:isSkinGoodsCanRepeatBuy(goodsMO, skinId) then
+		gohelper.setActive(self._goSkinTips, true)
 
-		local var_13_2 = SkinConfig.instance:getSkinCo(var_13_1)
-		local var_13_3 = string.splitToNumber(var_13_2.compensate, "#")
-		local var_13_4 = var_13_3[2]
-		local var_13_5 = var_13_3[3]
-		local var_13_6 = CurrencyConfig.instance:getCurrencyCo(var_13_4)
+		local skinConfig = SkinConfig.instance:getSkinCo(skinId)
+		local compensate = string.splitToNumber(skinConfig.compensate, "#")
+		local currencyId = compensate[2]
+		local currencyNum = compensate[3]
+		local currencyCo = CurrencyConfig.instance:getCurrencyCo(currencyId)
 
-		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_13_0._imgProp, string.format("%s_1", var_13_6.icon))
+		UISpriteSetMgr.instance:setCurrencyItemSprite(self._imgProp, string.format("%s_1", currencyCo.icon))
 
-		arg_13_0._txtPropNum.text = tostring(var_13_5)
+		self._txtPropNum.text = tostring(currencyNum)
 	else
-		gohelper.setActive(arg_13_0._goSkinTips, false)
+		gohelper.setActive(self._goSkinTips, false)
 	end
 end
 
-function var_0_0.onDestroy(arg_14_0)
-	arg_14_0._btn:RemoveClickListener()
-	arg_14_0._btnCost:RemoveClickListener()
-	GameUtil.onDestroyViewMember_ClickListener(arg_14_0, "_wenhaoClick")
+function PackageStoreGoodsItem:onDestroy()
+	self._btn:RemoveClickListener()
+	self._btnCost:RemoveClickListener()
+	GameUtil.onDestroyViewMember_ClickListener(self, "_wenhaoClick")
 
-	if arg_14_0._linkGiftItemComp then
-		arg_14_0._linkGiftItemComp:onDestroy()
+	if self._linkGiftItemComp then
+		self._linkGiftItemComp:onDestroy()
 
-		arg_14_0._linkGiftItemComp = nil
+		self._linkGiftItemComp = nil
 	end
 end
 
-function var_0_0._onUpdateMO_newMatUpTag(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_1.goodsId
-	local var_15_1 = StoreHelper.checkNewMatUpTagOpen(var_15_0)
+function PackageStoreGoodsItem:_onUpdateMO_newMatUpTag(mo)
+	local goodsId = mo.goodsId
+	local isActive = StoreHelper.checkNewMatUpTagOpen(goodsId)
 
-	gohelper.setActive(arg_15_0._gomaterialup, var_15_1)
+	gohelper.setActive(self._gomaterialup, isActive)
 end
 
-function var_0_0._onUpdateMO_coBrandedTag(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_1.config.showLinkageTag or false
+function PackageStoreGoodsItem:_onUpdateMO_coBrandedTag(mo)
+	local isActive = mo.config.showLinkageTag or false
 
-	gohelper.setActive(arg_16_0._gocobranded, var_16_0)
-	gohelper.setActive(arg_16_0._gologoTab, arg_16_1.config.showLogoTag)
+	gohelper.setActive(self._gocobranded, isActive)
+	gohelper.setActive(self._gologoTab, mo.config.showLogoTag)
 end
 
-function var_0_0._showSeasonCardTips(arg_17_0)
+function PackageStoreGoodsItem:_showSeasonCardTips()
 	HelpController.instance:openStoreTipView(CommonConfig.instance:getConstStr(ConstEnum.SeasonCardTipsDesc))
 end
 
-local var_0_1 = {
+local kActiveSummonSimulationPickFXGoodsId = {
 	811466,
 	StoreEnum.SeasonCardGoodsId
 }
 
-function var_0_0._onUpdateMO_gosummonSimulationPickFX(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_1.config.bigImg == StoreEnum.SummonSimulationPick
+function PackageStoreGoodsItem:_onUpdateMO_gosummonSimulationPickFX(mo)
+	local isActive = mo.config.bigImg == StoreEnum.SummonSimulationPick
 
-	if not var_18_0 then
-		for iter_18_0, iter_18_1 in ipairs(var_0_1) do
-			if arg_18_1.goodsId == iter_18_1 then
-				var_18_0 = true
+	if not isActive then
+		for _, goodsId in ipairs(kActiveSummonSimulationPickFXGoodsId) do
+			if mo.goodsId == goodsId then
+				isActive = true
 
 				break
 			end
 		end
 	end
 
-	gohelper.setActive(arg_18_0._gosummonSimulationPickFX, var_18_0)
+	gohelper.setActive(self._gosummonSimulationPickFX, isActive)
 end
 
-function var_0_0._onUpdateMO_linkPackage(arg_19_0, arg_19_1)
-	local var_19_0 = arg_19_0._cfgType == StoreEnum.StoreChargeType.LinkGiftGoods
+function PackageStoreGoodsItem:_onUpdateMO_linkPackage(mo)
+	local isLinkGift = self._cfgType == StoreEnum.StoreChargeType.LinkGiftGoods
 
-	gohelper.setActive(arg_19_0._golinkgift, var_19_0)
-	gohelper.setActive(arg_19_0._txtname, not var_19_0)
-	gohelper.setActive(arg_19_0._txteng, not var_19_0)
+	gohelper.setActive(self._golinkgift, isLinkGift)
+	gohelper.setActive(self._txtname, not isLinkGift)
+	gohelper.setActive(self._txteng, not isLinkGift)
 
-	if var_19_0 then
-		if arg_19_0._linkGiftItemComp == nil then
-			arg_19_0._linkGiftItemComp = MonoHelper.addNoUpdateLuaComOnceToGo(arg_19_0._golinkgift, StoreLinkGiftItemComp, arg_19_0)
+	if isLinkGift then
+		if self._linkGiftItemComp == nil then
+			self._linkGiftItemComp = MonoHelper.addNoUpdateLuaComOnceToGo(self._golinkgift, StoreLinkGiftItemComp, self)
 		end
 
-		arg_19_0._linkGiftItemComp:onUpdateMO(arg_19_1)
+		self._linkGiftItemComp:onUpdateMO(mo)
 	end
 end
 
-function var_0_0.setClickCallback(arg_20_0, arg_20_1, arg_20_2)
-	arg_20_0._clickCallback = arg_20_1
-	arg_20_0._clickCallbackObj = arg_20_2
+function PackageStoreGoodsItem:_onUpdateMO_gosummonSimulationPickTag(mo)
+	local isActive = mo.config.bigImg == StoreEnum.SummonSimulationPick2
+
+	gohelper.setActive(self._gojinfanglun, isActive)
 end
 
-return var_0_0
+function PackageStoreGoodsItem:setClickCallback(callback, callbackObj)
+	self._clickCallback = callback
+	self._clickCallbackObj = callbackObj
+end
+
+return PackageStoreGoodsItem

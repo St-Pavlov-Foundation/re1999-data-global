@@ -1,185 +1,185 @@
-﻿module("modules.logic.scene.fight.comp.FightSceneDirector", package.seeall)
+﻿-- chunkname: @modules/logic/scene/fight/comp/FightSceneDirector.lua
 
-local var_0_0 = class("FightSceneDirector", BaseSceneComp)
+module("modules.logic.scene.fight.comp.FightSceneDirector", package.seeall)
 
-var_0_0.MinTime = 2
+local FightSceneDirector = class("FightSceneDirector", BaseSceneComp)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._scene = arg_1_0:getCurScene()
+FightSceneDirector.MinTime = 2
+
+function FightSceneDirector:onInit()
+	self._scene = self:getCurScene()
 end
 
-function var_0_0.onSceneStart(arg_2_0, arg_2_1, arg_2_2)
+function FightSceneDirector:onSceneStart(sceneId, levelId)
 	FightGameHelper.initGameMgr()
 
-	arg_2_0._sceneId = arg_2_1
+	self._sceneId = sceneId
 
 	FightStrUtil.instance:init()
 	FightSkillBehaviorMgr.instance:init()
 	FightRenderOrderMgr.instance:init()
 	FightNameMgr.instance:init()
 	FightFloatMgr.instance:init()
-	FightAudioMgr.instance:init()
 	FightVideoMgr.instance:init()
 	FightSkillMgr.instance:init()
 	FightConfig.instance:_checkSkill()
 
-	if PlayerPrefsHelper.getNumber(PlayerPrefsKey.GMToolViewQuality, ModuleEnum.Performance.High) == ModuleEnum.Performance.High then
+	local grade = PlayerPrefsHelper.getNumber(PlayerPrefsKey.GMToolViewQuality, ModuleEnum.Performance.High)
+
+	if grade == ModuleEnum.Performance.High then
 		SpineFpsMgr.instance:set(SpineFpsMgr.FightScene)
 	end
 
-	arg_2_0._hasLoadScene = false
-	arg_2_0._hasPreload = false
-	arg_2_0._fightLoadingView = true
-	arg_2_0._startTime = Time.realtimeSinceStartup
+	self._hasLoadScene = false
+	self._hasPreload = false
+	self._fightLoadingView = true
+	self._startTime = Time.realtimeSinceStartup
 
-	arg_2_0._scene.level:registerCallback(CommonSceneLevelComp.OnLevelLoaded, arg_2_0._onLevelLoaded, arg_2_0)
-	arg_2_0._scene.preloader:registerCallback(FightSceneEvent.OnPreloadFinish, arg_2_0._onPreloadFinish, arg_2_0)
-	arg_2_0._scene.preloader:startPreload(false)
+	self._scene.level:registerCallback(CommonSceneLevelComp.OnLevelLoaded, self._onLevelLoaded, self)
+	self._scene.preloader:registerCallback(FightSceneEvent.OnPreloadFinish, self._onPreloadFinish, self)
+	self._scene.preloader:startPreload(false)
 
-	arg_2_0._sceneStartTime = Time.time
+	self._sceneStartTime = Time.time
 end
 
-function var_0_0.registRespBeginFight(arg_3_0)
-	FightController.instance:registerCallback(FightEvent.RespBeginFight, arg_3_0._respBeginFight, arg_3_0)
+function FightSceneDirector:registRespBeginFight()
+	FightController.instance:registerCallback(FightEvent.RespBeginFight, self._respBeginFight, self)
 end
 
-function var_0_0.onSceneClose(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._delayStart, arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._delayCloseFightLoadingView, arg_4_0)
+function FightSceneDirector:onSceneClose()
+	TaskDispatcher.cancelTask(self._delayStart, self)
+	TaskDispatcher.cancelTask(self._delayCloseFightLoadingView, self)
 	SpineFpsMgr.instance:remove(SpineFpsMgr.FightScene)
-	arg_4_0._scene.level:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, arg_4_0._onLevelLoaded, arg_4_0)
-	arg_4_0._scene.preloader:unregisterCallback(FightSceneEvent.OnPreloadFinish, arg_4_0._onPreloadFinish, arg_4_0)
-	FightController.instance:unregisterCallback(FightEvent.RespBeginFight, arg_4_0._respBeginFight, arg_4_0)
-	arg_4_0._scene.preloader:unregisterCallback(FightSceneEvent.OnPreloadFinish, arg_4_0._onPrepareFinish, arg_4_0)
+	self._scene.level:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, self._onLevelLoaded, self)
+	self._scene.preloader:unregisterCallback(FightSceneEvent.OnPreloadFinish, self._onPreloadFinish, self)
+	FightController.instance:unregisterCallback(FightEvent.RespBeginFight, self._respBeginFight, self)
+	self._scene.preloader:unregisterCallback(FightSceneEvent.OnPreloadFinish, self._onPrepareFinish, self)
 end
 
-function var_0_0._onLevelLoaded(arg_5_0, arg_5_1)
-	arg_5_0._scene.level:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, arg_5_0._onLevelLoaded, arg_5_0)
+function FightSceneDirector:_onLevelLoaded(levelId)
+	self._scene.level:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, self._onLevelLoaded, self)
 
-	arg_5_0._hasLoadScene = true
+	self._hasLoadScene = true
 
-	arg_5_0:_log("场景")
+	self:_log("场景")
 
 	if GuideController.instance:isForbidGuides() or GuideModel.instance:isGuideFinish(GuideController.FirstGuideId) then
 		module_views_preloader.FightLoadingView(function()
-			ViewMgr.instance:openView(ViewName.FightLoadingView, arg_5_0._sceneId, true)
+			ViewMgr.instance:openView(ViewName.FightLoadingView, self._sceneId, true)
 			GameSceneMgr.instance:hideLoading(SceneType.Fight)
 
-			arg_5_0._fightLoadingView = false
+			self._fightLoadingView = false
 
-			local var_6_0 = Time.time - arg_5_0._sceneStartTime + 0.6
-			local var_6_1 = var_0_0.MinTime - var_6_0
-			local var_6_2 = var_6_1 > 0 and var_6_1 or 0.1
+			local elapse = Time.time - self._sceneStartTime + 0.6
+			local minTime = FightSceneDirector.MinTime - elapse
+			local delay = minTime > 0 and minTime or 0.1
 
-			TaskDispatcher.runDelay(arg_5_0._delayCloseFightLoadingView, arg_5_0, var_6_2)
+			TaskDispatcher.runDelay(self._delayCloseFightLoadingView, self, delay)
 		end)
 	end
 
-	arg_5_0:_checkPrepared()
+	self:_checkPrepared()
 end
 
-function var_0_0._delayCloseFightLoadingView(arg_7_0)
-	arg_7_0._fightLoadingView = true
+function FightSceneDirector:_delayCloseFightLoadingView()
+	self._fightLoadingView = true
 
-	arg_7_0:_checkPrepared()
+	self:_checkPrepared()
 end
 
-function var_0_0._onPreloadFinish(arg_8_0)
-	arg_8_0._scene.preloader:unregisterCallback(FightSceneEvent.OnPreloadFinish, arg_8_0._onPreloadFinish, arg_8_0)
+function FightSceneDirector:_onPreloadFinish()
+	self._scene.preloader:unregisterCallback(FightSceneEvent.OnPreloadFinish, self._onPreloadFinish, self)
 
-	arg_8_0._hasPreload = true
+	self._hasPreload = true
 
-	arg_8_0:_log("资源")
-	arg_8_0:_checkPrepared()
+	self:_log("资源")
+	self:_checkPrepared()
 end
 
-function var_0_0._respBeginFight(arg_9_0)
-	FightController.instance:unregisterCallback(FightEvent.RespBeginFight, arg_9_0._respBeginFight, arg_9_0)
+function FightSceneDirector:_respBeginFight()
+	FightController.instance:unregisterCallback(FightEvent.RespBeginFight, self._respBeginFight, self)
 
 	if FightModel.instance:getFightParam().isReplay then
-		FightReplayController.instance:reqReplay(arg_9_0._continuePreload, arg_9_0)
+		FightReplayController.instance:reqReplay(self._continuePreload, self)
 	else
-		arg_9_0:_continuePreload()
+		self:_continuePreload()
 	end
 end
 
-function var_0_0._continuePreload(arg_10_0)
-	arg_10_0._scene.preloader:registerCallback(FightSceneEvent.OnPreloadFinish, arg_10_0._onPrepareFinish, arg_10_0)
+function FightSceneDirector:_continuePreload()
+	self._scene.preloader:registerCallback(FightSceneEvent.OnPreloadFinish, self._onPrepareFinish, self)
 
-	arg_10_0._startTime = Time.realtimeSinceStartup
+	self._startTime = Time.realtimeSinceStartup
 
-	arg_10_0._scene.preloader:startPreload(true)
+	self._scene.preloader:startPreload(true)
 end
 
-function var_0_0._checkPrepared(arg_11_0)
-	if arg_11_0._hasPreload and arg_11_0._hasLoadScene and arg_11_0._fightLoadingView then
-		local var_11_0 = FightModel.instance:getFightParam()
+function FightSceneDirector:_checkPrepared()
+	if self._hasPreload and self._hasLoadScene and self._fightLoadingView then
+		local fightParam = FightModel.instance:getFightParam()
 
-		if var_11_0.preload then
-			arg_11_0._scene.previewEntityMgr:spawnEntity()
+		if fightParam.preload then
+			local episodeCo = DungeonConfig.instance:getEpisodeCO(fightParam.episodeId)
 
-			local var_11_1 = DungeonConfig.instance:getEpisodeCO(var_11_0.episodeId)
-
-			if SeasonFightHandler.checkSeasonAndOpenGroupFightView(var_11_0, var_11_1) then
+			if SeasonFightHandler.checkSeasonAndOpenGroupFightView(fightParam, episodeCo) then
 				-- block empty
-			elseif var_11_1.type == DungeonEnum.EpisodeType.Cachot then
-				V1a6_CachotHeroGroupController.instance:openGroupFightView(var_11_0.battleId, var_11_0.episodeId)
-			elseif var_11_1.type == DungeonEnum.EpisodeType.Rouge then
-				RougeHeroGroupController.instance:openGroupFightView(var_11_0.battleId, var_11_0.episodeId)
+			elseif episodeCo.type == DungeonEnum.EpisodeType.Cachot then
+				V1a6_CachotHeroGroupController.instance:openGroupFightView(fightParam.battleId, fightParam.episodeId)
+			elseif episodeCo.type == DungeonEnum.EpisodeType.Rouge then
+				RougeHeroGroupController.instance:openGroupFightView(fightParam.battleId, fightParam.episodeId)
 			else
-				HeroGroupController.instance:openGroupFightView(var_11_0.battleId, var_11_0.episodeId, var_11_0.adventure)
+				HeroGroupController.instance:openGroupFightView(fightParam.battleId, fightParam.episodeId, fightParam.adventure)
 			end
 
-			arg_11_0:registRespBeginFight()
+			self:registRespBeginFight()
 		else
-			if var_11_0.fightActType == FightEnum.FightActType.Act174 then
-				arg_11_0:registRespBeginFight()
-				arg_11_0:dispatchEvent(FightSceneEvent.OnPrepareFinish)
+			if fightParam.fightActType == FightEnum.FightActType.Act174 then
+				self:registRespBeginFight()
+				self:dispatchEvent(FightSceneEvent.OnPrepareFinish)
 
-				local var_11_2 = FightMsgMgr.sendMsg(FightMsgId.PlayDouQuQu)
+				local reply = FightMsgMgr.sendMsg(FightMsgId.PlayDouQuQu)
 
 				return
 			end
 
-			if var_11_0.isReplay or FightDataHelper.stateMgr.isReplay then
+			if fightParam.isReplay or FightDataHelper.stateMgr.isReplay then
 				FightReplayController.instance:reqReplay(function()
-					arg_11_0._scene:onPrepared()
+					self._scene:onPrepared()
 				end)
 			else
-				arg_11_0._scene:onPrepared()
+				self._scene:onPrepared()
 			end
 		end
 
-		arg_11_0:dispatchEvent(FightSceneEvent.OnPrepareFinish)
+		self:dispatchEvent(FightSceneEvent.OnPrepareFinish)
 	end
 end
 
-function var_0_0._onPrepareFinish(arg_13_0)
-	arg_13_0._scene.preloader:unregisterCallback(FightSceneEvent.OnPreloadFinish, arg_13_0._onPrepareFinish, arg_13_0)
-	arg_13_0:_log("资源2")
+function FightSceneDirector:_onPrepareFinish()
+	self._scene.preloader:unregisterCallback(FightSceneEvent.OnPreloadFinish, self._onPrepareFinish, self)
+	self:_log("资源2")
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnHeroGroupExit)
-	arg_13_0._scene.previewEntityMgr:destroyEntity()
 
-	local var_13_0 = 0.4
-	local var_13_1 = {
-		time = var_13_0
+	local defaultTime = 0.4
+	local time = {
+		time = defaultTime
 	}
 
-	FightController.instance:dispatchEvent(FightEvent.ModifyDelayTime, var_13_1)
-	TaskDispatcher.runDelay(arg_13_0._delayStart, arg_13_0, var_13_1.time or var_13_0)
+	FightController.instance:dispatchEvent(FightEvent.ModifyDelayTime, time)
+	TaskDispatcher.runDelay(self._delayStart, self, time.time or defaultTime)
 end
 
-function var_0_0._delayStart(arg_14_0)
-	arg_14_0._scene:onPrepared()
+function FightSceneDirector:_delayStart()
+	self._scene:onPrepared()
 end
 
-function var_0_0._log(arg_15_0, arg_15_1)
-	local var_15_0 = FightModel.instance:getFightParam()
-	local var_15_1 = var_15_0 and var_15_0.episodeId
-	local var_15_2 = var_15_1 and lua_episode.configDict[var_15_1]
-	local var_15_3 = var_15_2 and var_15_2.name or ""
+function FightSceneDirector:_log(text)
+	local fightParam = FightModel.instance:getFightParam()
+	local episodeId = fightParam and fightParam.episodeId
+	local episodeCO = episodeId and lua_episode.configDict[episodeId]
+	local episodeName = episodeCO and episodeCO.name or ""
 
-	logNormal(string.format("%s 战斗%s加载完成了，耗时%.3fs", var_15_3, arg_15_1, Time.realtimeSinceStartup - arg_15_0._startTime))
+	logNormal(string.format("%s 战斗%s加载完成了，耗时%.3fs", episodeName, text, Time.realtimeSinceStartup - self._startTime))
 end
 
-return var_0_0
+return FightSceneDirector

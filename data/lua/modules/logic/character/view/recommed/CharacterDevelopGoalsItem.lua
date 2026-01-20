@@ -1,124 +1,128 @@
-﻿module("modules.logic.character.view.recommed.CharacterDevelopGoalsItem", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/recommed/CharacterDevelopGoalsItem.lua
 
-local var_0_0 = class("CharacterDevelopGoalsItem", ListScrollCell)
+module("modules.logic.character.view.recommed.CharacterDevelopGoalsItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "title/#image_icon")
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "title/#txt_title")
-	arg_1_0._gounselect = gohelper.findChild(arg_1_0.viewGO, "title/traced/#go_unselect")
-	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "title/traced/#go_select")
-	arg_1_0._btntraced = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "title/traced/#btn_traced")
-	arg_1_0._scrollgroup = gohelper.findChild(arg_1_0.viewGO, "#scroll_group")
-	arg_1_0._contentgroup = gohelper.findChild(arg_1_0.viewGO, "#scroll_group/Viewport/Content")
-	arg_1_0._btnjump = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#scroll_group/#btn_jump")
+local CharacterDevelopGoalsItem = class("CharacterDevelopGoalsItem", ListScrollCell)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CharacterDevelopGoalsItem:onInitView()
+	self._imageicon = gohelper.findChildImage(self.viewGO, "title/#image_icon")
+	self._txttitle = gohelper.findChildText(self.viewGO, "title/#txt_title")
+	self._gounselect = gohelper.findChild(self.viewGO, "title/traced/#go_unselect")
+	self._goselect = gohelper.findChild(self.viewGO, "title/traced/#go_select")
+	self._btntraced = gohelper.findChildButtonWithAudio(self.viewGO, "title/traced/#btn_traced")
+	self._scrollgroup = gohelper.findChild(self.viewGO, "#scroll_group")
+	self._contentgroup = gohelper.findChild(self.viewGO, "#scroll_group/Viewport/Content")
+	self._btnjump = gohelper.findChildButtonWithAudio(self.viewGO, "#scroll_group/#btn_jump")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._btntraced:AddClickListener(arg_2_0._btntracedOnClick, arg_2_0)
-	arg_2_0._btnjump:AddClickListener(arg_2_0._btnjumpOnClick, arg_2_0)
-	arg_2_0:addEventCb(CharacterRecommedController.instance, CharacterRecommedEvent.OnRefreshTraced, arg_2_0.refreshStatus, arg_2_0)
+function CharacterDevelopGoalsItem:addEventListeners()
+	self._btntraced:AddClickListener(self._btntracedOnClick, self)
+	self._btnjump:AddClickListener(self._btnjumpOnClick, self)
+	self:addEventCb(CharacterRecommedController.instance, CharacterRecommedEvent.OnRefreshTraced, self.refreshStatus, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btntraced:RemoveClickListener()
-	arg_3_0._btnjump:RemoveClickListener()
-	arg_3_0:removeEventCb(CharacterRecommedController.instance, CharacterRecommedEvent.OnRefreshTraced, arg_3_0.refreshStatus, arg_3_0)
+function CharacterDevelopGoalsItem:removeEventListeners()
+	self._btntraced:RemoveClickListener()
+	self._btnjump:RemoveClickListener()
+	self:removeEventCb(CharacterRecommedController.instance, CharacterRecommedEvent.OnRefreshTraced, self.refreshStatus, self)
 end
 
-function var_0_0.init(arg_4_0, arg_4_1)
-	arg_4_0.viewGO = arg_4_1
+function CharacterDevelopGoalsItem:init(go)
+	self.viewGO = go
 
-	arg_4_0:onInitView()
+	self:onInitView()
 end
 
-function var_0_0._btnjumpOnClick(arg_5_0)
-	if CharacterRecommedController.instance:jump(arg_5_0._mo) then
-		arg_5_0._view:closeThis()
+function CharacterDevelopGoalsItem:_btnjumpOnClick()
+	local isSuccess = CharacterRecommedController.instance:jump(self._mo)
+
+	if isSuccess then
+		self._view:closeThis()
 	end
 end
 
-function var_0_0._btntracedOnClick(arg_6_0)
-	local var_6_0 = arg_6_0._mo:isTraced()
+function CharacterDevelopGoalsItem:_btntracedOnClick()
+	local isTraced = self._mo:isTraced()
 
-	arg_6_0._mo:setTraced(not var_6_0)
-	CharacterRecommedModel.instance:setTracedHeroDevelopGoalsMO(not var_6_0 and arg_6_0._mo)
+	self._mo:setTraced(not isTraced)
+	CharacterRecommedModel.instance:setTracedHeroDevelopGoalsMO(not isTraced and self._mo)
 end
 
-function var_0_0._editableInitView(arg_7_0)
+function CharacterDevelopGoalsItem:_editableInitView()
 	return
 end
 
-function var_0_0._editableAddEvents(arg_8_0)
+function CharacterDevelopGoalsItem:_editableAddEvents()
 	return
 end
 
-function var_0_0._editableRemoveEvents(arg_9_0)
+function CharacterDevelopGoalsItem:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_10_0, arg_10_1)
-	arg_10_0._mo = arg_10_1
+function CharacterDevelopGoalsItem:onUpdateMO(mo)
+	self._mo = mo
 
-	local var_10_0 = arg_10_1:getItemList()
+	local data = mo:getItemList()
 
-	if var_10_0 then
-		IconMgr.instance:getCommonPropItemIconList(arg_10_0, arg_10_0._onRewardItemShow, var_10_0, arg_10_0._contentgroup.gameObject)
+	if data then
+		IconMgr.instance:getCommonPropItemIconList(self, self._onRewardItemShow, data, self._contentgroup.gameObject)
 	end
 
-	local var_10_1, var_10_2 = arg_10_0._mo:getTitleTxtAndIcon()
+	local txt, icon = self._mo:getTitleTxtAndIcon()
 
-	arg_10_0._txttitle.text = var_10_1
+	self._txttitle.text = txt
 
-	if var_10_2 then
-		UISpriteSetMgr.instance:setUiCharacterSprite(arg_10_0._imageicon, var_10_2)
-		gohelper.setActive(arg_10_0._imageicon.gameObject, true)
+	if icon then
+		UISpriteSetMgr.instance:setUiCharacterSprite(self._imageicon, icon)
+		gohelper.setActive(self._imageicon.gameObject, true)
 	else
-		gohelper.setActive(arg_10_0._imageicon.gameObject, false)
+		gohelper.setActive(self._imageicon.gameObject, false)
 	end
 
-	arg_10_0:refreshStatus()
-	arg_10_0:playViewAnim("goalsitem_open", 0, 0)
+	self:refreshStatus()
+	self:playViewAnim("goalsitem_open", 0, 0)
 end
 
-function var_0_0._onRewardItemShow(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	arg_11_1:onUpdateMO(arg_11_2)
-	arg_11_1:setScale(0.7)
-	arg_11_1:setConsume(true)
-	arg_11_1:setCountFontSize(38)
-	arg_11_1:setRecordFarmItem(arg_11_2)
-	arg_11_1:setOnBeforeClickCallback(JumpController.commonIconBeforeClickSetRecordItem, arg_11_0)
-	arg_11_1:setQuantityText("#cd5353")
+function CharacterDevelopGoalsItem:_onRewardItemShow(cell_component, data, index)
+	cell_component:onUpdateMO(data)
+	cell_component:setScale(0.7)
+	cell_component:setConsume(true)
+	cell_component:setCountFontSize(38)
+	cell_component:setRecordFarmItem(data)
+	cell_component:setOnBeforeClickCallback(JumpController.commonIconBeforeClickSetRecordItem, self)
+	cell_component:setQuantityText("#cd5353")
 end
 
-function var_0_0.refreshStatus(arg_12_0)
-	local var_12_0 = arg_12_0._mo:isOwnHero()
-	local var_12_1 = arg_12_0._mo:isTraced()
+function CharacterDevelopGoalsItem:refreshStatus()
+	local isOwnHero = self._mo:isOwnHero()
+	local isTraced = self._mo:isTraced()
 
-	gohelper.setActive(arg_12_0._btnjump.gameObject, var_12_0 and var_12_1)
-	gohelper.setActive(arg_12_0._gounselect.gameObject, var_12_0 and not var_12_1)
-	gohelper.setActive(arg_12_0._goselect.gameObject, var_12_0 and var_12_1)
+	gohelper.setActive(self._btnjump.gameObject, isOwnHero and isTraced)
+	gohelper.setActive(self._gounselect.gameObject, isOwnHero and not isTraced)
+	gohelper.setActive(self._goselect.gameObject, isOwnHero and isTraced)
 end
 
-function var_0_0.playViewAnim(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	if not arg_13_0._viewAnim then
-		arg_13_0._viewAnim = arg_13_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function CharacterDevelopGoalsItem:playViewAnim(animName, layer, normalizedTime)
+	if not self._viewAnim then
+		self._viewAnim = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 	end
 
-	if arg_13_0._viewAnim then
-		arg_13_0._viewAnim:Play(arg_13_1, arg_13_2, arg_13_3)
+	if self._viewAnim then
+		self._viewAnim:Play(animName, layer, normalizedTime)
 	end
 end
 
-function var_0_0.onSelect(arg_14_0, arg_14_1)
+function CharacterDevelopGoalsItem:onSelect(isSelect)
 	return
 end
 
-function var_0_0.onDestroy(arg_15_0)
+function CharacterDevelopGoalsItem:onDestroy()
 	return
 end
 
-return var_0_0
+return CharacterDevelopGoalsItem

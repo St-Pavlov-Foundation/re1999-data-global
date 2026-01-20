@@ -1,29 +1,31 @@
-﻿module("modules.logic.fight.view.FightBottomRightView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightBottomRightView.lua
 
-local var_0_0 = class("FightBottomRightView", FightBaseView)
+module("modules.logic.fight.view.FightBottomRightView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
+local FightBottomRightView = class("FightBottomRightView", FightBaseView)
+
+function FightBottomRightView:onInitView()
 	return
 end
 
-function var_0_0.addEvents(arg_2_0)
+function FightBottomRightView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function FightBottomRightView:removeEvents()
 	return
 end
 
-function var_0_0.onOpen(arg_4_0)
+function FightBottomRightView:onOpen()
 	return
 end
 
-function var_0_0.onClose(arg_5_0)
+function FightBottomRightView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_6_0)
+function FightBottomRightView:onDestroyView()
 	return
 end
 
-return var_0_0
+return FightBottomRightView

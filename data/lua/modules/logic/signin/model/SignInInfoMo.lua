@@ -1,94 +1,101 @@
-﻿module("modules.logic.signin.model.SignInInfoMo", package.seeall)
+﻿-- chunkname: @modules/logic/signin/model/SignInInfoMo.lua
 
-local var_0_0 = pureTable("SignInInfoMo")
+module("modules.logic.signin.model.SignInInfoMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.hasSignInDays = {}
-	arg_1_0.addupSignInDay = 0
-	arg_1_0.hasGetAddupBonus = {}
-	arg_1_0.openFunctionTime = 0
-	arg_1_0.hasMonthCardDays = {}
-	arg_1_0.monthCardHistory = {}
-	arg_1_0.birthdayHeroIds = {}
-	arg_1_0.rewardMark = 0
+local SignInInfoMo = pureTable("SignInInfoMo")
+
+function SignInInfoMo:ctor()
+	self.hasSignInDays = {}
+	self.addupSignInDay = 0
+	self.hasGetAddupBonus = {}
+	self.openFunctionTime = 0
+	self.hasMonthCardDays = {}
+	self.monthCardHistory = {}
+	self.birthdayHeroIds = {}
+	self.rewardMark = 0
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.hasSignInDays = arg_2_0:_getListInfo(arg_2_1.hasSignInDays)
-	arg_2_0.addupSignInDay = arg_2_1.addupSignInDay
-	arg_2_0.hasGetAddupBonus = arg_2_0:_getListInfo(arg_2_1.hasGetAddupBonus)
-	arg_2_0.openFunctionTime = arg_2_1.openFunctionTime
-	arg_2_0.hasMonthCardDays = arg_2_0:_getListInfo(arg_2_1.hasMonthCardDays)
-	arg_2_0.monthCardHistory = arg_2_0:_getListInfo(arg_2_1.monthCardHistory, SignInMonthCardHistoryMo)
-	arg_2_0.birthdayHeroIds = arg_2_0:_getListInfo(arg_2_1.birthdayHeroIds)
+function SignInInfoMo:init(info)
+	self.hasSignInDays = self:_getListInfo(info.hasSignInDays)
+	self.addupSignInDay = info.addupSignInDay
+	self.hasGetAddupBonus = self:_getListInfo(info.hasGetAddupBonus)
+	self.openFunctionTime = info.openFunctionTime
+	self.hasMonthCardDays = self:_getListInfo(info.hasMonthCardDays)
+	self.monthCardHistory = self:_getListInfo(info.monthCardHistory, SignInMonthCardHistoryMo)
+	self.birthdayHeroIds = self:_getListInfo(info.birthdayHeroIds)
+	self.supplementMonthCardDays = info.supplementMonthCardDays
 
-	arg_2_0:setRewardMark(arg_2_1.rewardMark)
+	self:setRewardMark(info.rewardMark)
 end
 
-function var_0_0._getListInfo(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = {}
-	local var_3_1 = arg_3_1 and #arg_3_1 or 0
+function SignInInfoMo:_getListInfo(originList, cls)
+	local list = {}
+	local count = originList and #originList or 0
 
-	for iter_3_0 = 1, var_3_1 do
-		local var_3_2 = arg_3_1[iter_3_0]
+	for i = 1, count do
+		local mo = originList[i]
 
-		if arg_3_2 then
-			var_3_2 = arg_3_2.New()
+		if cls then
+			mo = cls.New()
 
-			var_3_2:init(arg_3_1[iter_3_0])
+			mo:init(originList[i])
 		end
 
-		table.insert(var_3_0, var_3_2)
+		table.insert(list, mo)
 	end
 
-	return var_3_0
+	return list
 end
 
-function var_0_0.addSignInfo(arg_4_0, arg_4_1)
-	table.insert(arg_4_0.hasSignInDays, arg_4_1.day)
+function SignInInfoMo:addSignInfo(info)
+	table.insert(self.hasSignInDays, info.day)
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_1.birthdayHeroIds) do
-		table.insert(arg_4_0.birthdayHeroIds, iter_4_1)
+	for _, v in ipairs(info.birthdayHeroIds) do
+		table.insert(self.birthdayHeroIds, v)
 	end
 end
 
-function var_0_0.getSignDays(arg_5_0)
-	return arg_5_0.hasSignInDays
+function SignInInfoMo:getSignDays()
+	return self.hasSignInDays
 end
 
-function var_0_0.clearSignInDays(arg_6_0)
-	arg_6_0.hasSignInDays = {}
+function SignInInfoMo:clearSignInDays()
+	self.hasSignInDays = {}
 end
 
-function var_0_0.addSignTotalIds(arg_7_0, arg_7_1)
-	table.insert(arg_7_0.hasGetAddupBonus, arg_7_1)
+function SignInInfoMo:addSignTotalIds(id)
+	table.insert(self.hasGetAddupBonus, id)
 end
 
-function var_0_0.addBirthdayHero(arg_8_0, arg_8_1)
-	table.insert(arg_8_0.birthdayHeroIds, arg_8_1)
+function SignInInfoMo:addBirthdayHero(heroId)
+	table.insert(self.birthdayHeroIds, heroId)
 end
 
-function var_0_0.setRewardMark(arg_9_0, arg_9_1)
-	arg_9_0.rewardMark = arg_9_1
+function SignInInfoMo:setRewardMark(rewardMark)
+	self.rewardMark = rewardMark
 end
 
-function var_0_0.isClaimedAccumulateReward(arg_10_0, arg_10_1)
-	local var_10_0 = Bitwise["<<"](1, arg_10_1)
+function SignInInfoMo:isClaimedAccumulateReward(id)
+	local bits = Bitwise["<<"](1, id)
 
-	return Bitwise.has(arg_10_0.rewardMark, var_10_0)
+	return Bitwise.has(self.rewardMark, bits)
 end
 
-function var_0_0.isClaimableAccumulateReward(arg_11_0, arg_11_1)
-	local var_11_0 = PlayerModel.instance:getPlayinfo().totalLoginDays or 0
+function SignInInfoMo:isClaimableAccumulateReward(id)
+	local playinfo = PlayerModel.instance:getPlayinfo()
+	local totalLoginDays = playinfo.totalLoginDays or 0
 
-	if arg_11_1 then
-		return var_11_0 >= SignInConfig.instance:getSignInLifeTimeBonusCO(arg_11_1).logindaysid and not arg_11_0:isClaimedAccumulateReward(arg_11_1)
+	if id then
+		local CO = SignInConfig.instance:getSignInLifeTimeBonusCO(id)
+		local logindaysid = CO.logindaysid
+
+		return logindaysid <= totalLoginDays and not self:isClaimedAccumulateReward(id)
 	else
-		for iter_11_0, iter_11_1 in ipairs(lua_sign_in_lifetime_bonus.configList) do
-			local var_11_1 = iter_11_1.logindaysid
-			local var_11_2 = iter_11_1.stageid
+		for _, CO in ipairs(lua_sign_in_lifetime_bonus.configList) do
+			local logindaysid = CO.logindaysid
+			local stageid = CO.stageid
 
-			if var_11_1 <= var_11_0 and not arg_11_0:isClaimedAccumulateReward(var_11_2) then
+			if logindaysid <= totalLoginDays and not self:isClaimedAccumulateReward(stageid) then
 				return true
 			end
 		end
@@ -97,4 +104,12 @@ function var_0_0.isClaimableAccumulateReward(arg_11_0, arg_11_1)
 	end
 end
 
-return var_0_0
+function SignInInfoMo:getSupplementMonthCardDays()
+	return self.supplementMonthCardDays or 0
+end
+
+function SignInInfoMo:setSupplementMonthCardDays(day)
+	self.supplementMonthCardDays = day
+end
+
+return SignInInfoMo

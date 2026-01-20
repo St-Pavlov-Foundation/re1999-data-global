@@ -1,204 +1,211 @@
-﻿module("modules.logic.room.view.critter.detail.RoomCritterDetailMaturityView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/critter/detail/RoomCritterDetailMaturityView.lua
 
-local var_0_0 = class("RoomCritterDetailMaturityView", RoomCritterDetailView)
+module("modules.logic.room.view.critter.detail.RoomCritterDetailMaturityView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg")
-	arg_1_0._gomaturity = gohelper.findChild(arg_1_0.viewGO, "#go_maturity")
-	arg_1_0._txtbuilding = gohelper.findChildText(arg_1_0.viewGO, "#go_maturity/Left/building/bg/#txt_building")
-	arg_1_0._imagebuildingicon = gohelper.findChildImage(arg_1_0.viewGO, "#go_maturity/Left/building/#image_buildingicon")
-	arg_1_0._godetail = gohelper.findChild(arg_1_0.viewGO, "#go_maturity/Left/#go_detail")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#go_maturity/Left/#go_detail/#txt_name")
-	arg_1_0._imagelock = gohelper.findChildImage(arg_1_0.viewGO, "#go_maturity/Left/#go_detail/#txt_name/#image_lock")
-	arg_1_0._btnnameedit = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_maturity/Left/#go_detail/#txt_name/#btn_nameedit")
-	arg_1_0._txttag1 = gohelper.findChildText(arg_1_0.viewGO, "#go_maturity/Left/#go_detail/tag/#txt_tag1")
-	arg_1_0._txttag2 = gohelper.findChildText(arg_1_0.viewGO, "#go_maturity/Left/#go_detail/tag/#txt_tag2")
-	arg_1_0._imagesort = gohelper.findChildImage(arg_1_0.viewGO, "#go_maturity/Left/#go_detail/#image_sort")
-	arg_1_0._txtsort = gohelper.findChildText(arg_1_0.viewGO, "#go_maturity/Left/#go_detail/#image_sort/#txt_sort")
-	arg_1_0._scrolldes = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_maturity/Left/#go_detail/#scroll_des")
-	arg_1_0._txtDesc = gohelper.findChildText(arg_1_0.viewGO, "#go_maturity/Left/#go_detail/#scroll_des/viewport/content/#txt_Desc")
-	arg_1_0._btnreport = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_maturity/Left/#btn_report")
-	arg_1_0._gocritterlive2d = gohelper.findChild(arg_1_0.viewGO, "#go_maturity/Middle/#go_critterlive2d")
-	arg_1_0._scrollbase = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_maturity/Right/base/#scroll_base")
-	arg_1_0._gobaseitem = gohelper.findChild(arg_1_0.viewGO, "#go_maturity/Right/base/#scroll_base/viewport/content/#go_baseitem")
-	arg_1_0._scrolltipbase = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_maturity/Right/base/basetips/#scroll_base")
-	arg_1_0._gobasetipsitem = gohelper.findChild(arg_1_0.viewGO, "#go_maturity/Right/base/basetips/#scroll_base/viewport/content/#go_basetipsitem")
-	arg_1_0._scrollskill = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_maturity/Right/skill/#scroll_skill")
-	arg_1_0._goskillItem = gohelper.findChild(arg_1_0.viewGO, "#go_maturity/Right/skill/#scroll_skill/viewport/content/#go_skillItem")
-	arg_1_0._scrollnormalskill = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_maturity/Right/normalskill/#scroll_normalskill")
-	arg_1_0._gonormalskillitem = gohelper.findChild(arg_1_0.viewGO, "#go_maturity/Right/normalskill/#scroll_normalskill/viewport/content/#go_normalskillitem")
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
-	arg_1_0._gostar = gohelper.findChild(arg_1_0.viewGO, "#go_maturity/Left/#go_detail/starList")
-	arg_1_0._gotipbase = gohelper.findChild(arg_1_0.viewGO, "#go_maturity/Right/base/basetips")
-	arg_1_0._gobuilding = gohelper.findChild(arg_1_0.viewGO, "#go_maturity/Left/building")
-	arg_1_0._goLock = gohelper.findChild(arg_1_0.viewGO, "#go_maturity/Left/#go_detail/#txt_name/#image_lock")
-	arg_1_0._gonormalskill = gohelper.findChild(arg_1_0.viewGO, "#go_maturity/Right/normalskill")
+local RoomCritterDetailMaturityView = class("RoomCritterDetailMaturityView", RoomCritterDetailView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomCritterDetailMaturityView:onInitView()
+	self._simagefullbg = gohelper.findChildSingleImage(self.viewGO, "#simage_fullbg")
+	self._gomaturity = gohelper.findChild(self.viewGO, "#go_maturity")
+	self._txtbuilding = gohelper.findChildText(self.viewGO, "#go_maturity/Left/building/bg/#txt_building")
+	self._imagebuildingicon = gohelper.findChildImage(self.viewGO, "#go_maturity/Left/building/#image_buildingicon")
+	self._godetail = gohelper.findChild(self.viewGO, "#go_maturity/Left/#go_detail")
+	self._txtname = gohelper.findChildText(self.viewGO, "#go_maturity/Left/#go_detail/#txt_name")
+	self._imagelock = gohelper.findChildImage(self.viewGO, "#go_maturity/Left/#go_detail/#txt_name/#image_lock")
+	self._btnnameedit = gohelper.findChildButtonWithAudio(self.viewGO, "#go_maturity/Left/#go_detail/#txt_name/#btn_nameedit")
+	self._txttag1 = gohelper.findChildText(self.viewGO, "#go_maturity/Left/#go_detail/tag/#txt_tag1")
+	self._txttag2 = gohelper.findChildText(self.viewGO, "#go_maturity/Left/#go_detail/tag/#txt_tag2")
+	self._imagesort = gohelper.findChildImage(self.viewGO, "#go_maturity/Left/#go_detail/#image_sort")
+	self._txtsort = gohelper.findChildText(self.viewGO, "#go_maturity/Left/#go_detail/#image_sort/#txt_sort")
+	self._scrolldes = gohelper.findChildScrollRect(self.viewGO, "#go_maturity/Left/#go_detail/#scroll_des")
+	self._txtDesc = gohelper.findChildText(self.viewGO, "#go_maturity/Left/#go_detail/#scroll_des/viewport/content/#txt_Desc")
+	self._btnreport = gohelper.findChildButtonWithAudio(self.viewGO, "#go_maturity/Left/#btn_report")
+	self._gocritterlive2d = gohelper.findChild(self.viewGO, "#go_maturity/Middle/#go_critterlive2d")
+	self._scrollbase = gohelper.findChildScrollRect(self.viewGO, "#go_maturity/Right/base/#scroll_base")
+	self._gobaseitem = gohelper.findChild(self.viewGO, "#go_maturity/Right/base/#scroll_base/viewport/content/#go_baseitem")
+	self._scrolltipbase = gohelper.findChildScrollRect(self.viewGO, "#go_maturity/Right/base/basetips/#scroll_base")
+	self._gobasetipsitem = gohelper.findChild(self.viewGO, "#go_maturity/Right/base/basetips/#scroll_base/viewport/content/#go_basetipsitem")
+	self._scrollskill = gohelper.findChildScrollRect(self.viewGO, "#go_maturity/Right/skill/#scroll_skill")
+	self._goskillItem = gohelper.findChild(self.viewGO, "#go_maturity/Right/skill/#scroll_skill/viewport/content/#go_skillItem")
+	self._scrollnormalskill = gohelper.findChildScrollRect(self.viewGO, "#go_maturity/Right/normalskill/#scroll_normalskill")
+	self._gonormalskillitem = gohelper.findChild(self.viewGO, "#go_maturity/Right/normalskill/#scroll_normalskill/viewport/content/#go_normalskillitem")
+	self._gotopleft = gohelper.findChild(self.viewGO, "#go_topleft")
+	self._gostar = gohelper.findChild(self.viewGO, "#go_maturity/Left/#go_detail/starList")
+	self._gotipbase = gohelper.findChild(self.viewGO, "#go_maturity/Right/base/basetips")
+	self._gobuilding = gohelper.findChild(self.viewGO, "#go_maturity/Left/building")
+	self._goLock = gohelper.findChild(self.viewGO, "#go_maturity/Left/#go_detail/#txt_name/#image_lock")
+	self._gonormalskill = gohelper.findChild(self.viewGO, "#go_maturity/Right/normalskill")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	var_0_0.super.addEvents(arg_2_0)
-	arg_2_0._btnreport:AddClickListener(arg_2_0._btnreportOnClick, arg_2_0)
-	arg_2_0._btnnameedit:AddClickListener(arg_2_0._btnnameeditOnClick, arg_2_0)
+function RoomCritterDetailMaturityView:addEvents()
+	RoomCritterDetailMaturityView.super.addEvents(self)
+	self._btnreport:AddClickListener(self._btnreportOnClick, self)
+	self._btnnameedit:AddClickListener(self._btnnameeditOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	var_0_0.super.removeEvents(arg_3_0)
-	arg_3_0._btnreport:RemoveClickListener()
-	arg_3_0._btnnameedit:RemoveClickListener()
+function RoomCritterDetailMaturityView:removeEvents()
+	RoomCritterDetailMaturityView.super.removeEvents(self)
+	self._btnreport:RemoveClickListener()
+	self._btnnameedit:RemoveClickListener()
 end
 
-function var_0_0._btnreportOnClick(arg_4_0)
-	RoomCritterController.instance:openTrainReporView(arg_4_0._critterMo:getId(), arg_4_0._critterMo.trainHeroId, arg_4_0._critterMo.totalFinishCount)
+function RoomCritterDetailMaturityView:_btnreportOnClick()
+	RoomCritterController.instance:openTrainReporView(self._critterMo:getId(), self._critterMo.trainHeroId, self._critterMo.totalFinishCount)
 end
 
-function var_0_0._btnnameeditOnClick(arg_5_0)
-	if arg_5_0._critterMo then
-		RoomCritterController.instance:openRenameView(arg_5_0._critterMo:getId())
+function RoomCritterDetailMaturityView:_btnnameeditOnClick()
+	if self._critterMo then
+		RoomCritterController.instance:openRenameView(self._critterMo:getId())
 	end
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	var_0_0.super._editableInitView(arg_6_0)
+function RoomCritterDetailMaturityView:_editableInitView()
+	RoomCritterDetailMaturityView.super._editableInitView(self)
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0:addEventCb(CritterController.instance, CritterEvent.CritterRenameReply, arg_7_0._onCritterRenameReply, arg_7_0)
-	var_0_0.super.onOpen(arg_7_0)
+function RoomCritterDetailMaturityView:onOpen()
+	self:addEventCb(CritterController.instance, CritterEvent.CritterRenameReply, self._onCritterRenameReply, self)
+	RoomCritterDetailMaturityView.super.onOpen(self)
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_mj_open)
 end
 
-function var_0_0._onCritterRenameReply(arg_8_0, arg_8_1)
-	if arg_8_0._critterMo and arg_8_0._critterMo.id == arg_8_1 then
-		arg_8_0:showInfo()
+function RoomCritterDetailMaturityView:_onCritterRenameReply(critterUid)
+	if self._critterMo and self._critterMo.id == critterUid then
+		self:showInfo()
 	end
 end
 
-function var_0_0.onRefresh(arg_9_0)
-	arg_9_0._critterMo = arg_9_0.viewParam.critterMo
+function RoomCritterDetailMaturityView:onRefresh()
+	self._critterMo = self.viewParam.critterMo
 
-	var_0_0.super.onRefresh(arg_9_0)
-	arg_9_0:refreshWordInfo()
-	arg_9_0:refreshTrainInfo()
+	RoomCritterDetailMaturityView.super.onRefresh(self)
+	self:refreshWordInfo()
+	self:refreshTrainInfo()
 end
 
-function var_0_0.getAttrRatio(arg_10_0, arg_10_1, arg_10_2)
-	return arg_10_2:getValueNum()
+function RoomCritterDetailMaturityView:getAttrRatio(type, attrMo)
+	return attrMo:getValueNum()
 end
 
-function var_0_0.refreshWordInfo(arg_11_0)
-	if not arg_11_0._critterMo then
+function RoomCritterDetailMaturityView:refreshWordInfo()
+	if not self._critterMo then
 		return
 	end
 
-	local var_11_0
-	local var_11_1 = arg_11_0._critterMo:getId()
-	local var_11_2 = false
-	local var_11_3 = ManufactureModel.instance:getCritterWorkingBuilding(var_11_1) or ManufactureModel.instance:getCritterRestingBuilding(var_11_1)
-	local var_11_4
+	local buildingName
+	local critterUid = self._critterMo:getId()
+	local hasBuildingShow = false
+	local stayBuildingUid = ManufactureModel.instance:getCritterWorkingBuilding(critterUid)
 
-	if var_11_3 then
-		local var_11_5 = RoomMapBuildingModel.instance:getBuildingMOById(var_11_3)
+	stayBuildingUid = stayBuildingUid or ManufactureModel.instance:getCritterRestingBuilding(critterUid)
 
-		if var_11_5 then
-			var_11_4 = ManufactureConfig.instance:getManufactureBuildingIcon(var_11_5.buildingId)
-			var_11_0 = var_11_5.config.useDesc
-			var_11_2 = true
+	local buildingIcon
+
+	if stayBuildingUid then
+		local buildingMO = RoomMapBuildingModel.instance:getBuildingMOById(stayBuildingUid)
+
+		if buildingMO then
+			buildingIcon = ManufactureConfig.instance:getManufactureBuildingIcon(buildingMO.buildingId)
+			buildingName = buildingMO.config.useDesc
+			hasBuildingShow = true
 		end
 	else
-		local var_11_6 = RoomMapTransportPathModel.instance:getTransportPathMOByCritterUid(var_11_1)
+		local workingPathMO = RoomMapTransportPathModel.instance:getTransportPathMOByCritterUid(critterUid)
 
-		if var_11_6 then
-			local var_11_7 = var_11_6.buildingId
-			local var_11_8 = var_11_6.buildingSkinId
-			local var_11_9 = RoomTransportHelper.getVehicleCfgByBuildingId(var_11_7, var_11_8)
+		if workingPathMO then
+			local workingPathBuildingId = workingPathMO.buildingId
+			local skinId = workingPathMO.buildingSkinId
+			local vehicleCfg = RoomTransportHelper.getVehicleCfgByBuildingId(workingPathBuildingId, skinId)
 
-			var_11_4 = var_11_9 and var_11_9.buildIcon
+			buildingIcon = vehicleCfg and vehicleCfg.buildIcon
 
-			local var_11_10 = RoomTransportHelper.fromTo2SiteType(var_11_6.fromType, var_11_6.toType)
+			local siteType = RoomTransportHelper.fromTo2SiteType(workingPathMO.fromType, workingPathMO.toType)
 
-			var_11_0 = luaLang(RoomBuildingEnum.BuildingTypeSiteLangKey[var_11_10])
-			var_11_2 = true
+			buildingName = luaLang(RoomBuildingEnum.BuildingTypeSiteLangKey[siteType])
+			hasBuildingShow = true
 		end
 	end
 
-	if var_11_2 then
-		local var_11_11 = luaLang("room_critter_working_in")
+	if hasBuildingShow then
+		local lang = luaLang("room_critter_working_in")
 
-		arg_11_0._txtbuilding.text = GameUtil.getSubPlaceholderLuaLangOneParam(var_11_11, var_11_0)
+		self._txtbuilding.text = GameUtil.getSubPlaceholderLuaLangOneParam(lang, buildingName)
 
-		UISpriteSetMgr.instance:setRoomSprite(arg_11_0._imagebuildingicon, var_11_4)
+		UISpriteSetMgr.instance:setRoomSprite(self._imagebuildingicon, buildingIcon)
 	end
 
-	gohelper.setActive(arg_11_0._gobuilding, var_11_2)
+	gohelper.setActive(self._gobuilding, hasBuildingShow)
 end
 
-function var_0_0.showSkill(arg_12_0)
-	var_0_0.super.showSkill(arg_12_0)
+function RoomCritterDetailMaturityView:showSkill()
+	RoomCritterDetailMaturityView.super.showSkill(self)
 
-	if not arg_12_0._critterMo then
+	if not self._critterMo then
 		return
 	end
 
-	local var_12_0 = arg_12_0._critterMo:getSkillInfo()
+	local skillInfo = self._critterMo:getSkillInfo()
 
-	if var_12_0 then
-		gohelper.setActive(arg_12_0._gonormalskill.gameObject, true)
+	if skillInfo then
+		gohelper.setActive(self._gonormalskill.gameObject, true)
 
-		local var_12_1 = 1
+		local index = 1
 
-		for iter_12_0, iter_12_1 in pairs(var_12_0) do
-			local var_12_2 = CritterConfig.instance:getCritterTagCfg(iter_12_1)
+		for _, tag in pairs(skillInfo) do
+			local tagCo = CritterConfig.instance:getCritterTagCfg(tag)
 
-			if var_12_2 and var_12_2.type ~= RoomCritterDetailView._exclusiveSkill then
-				arg_12_0:getNormalSkillItem(var_12_1):onRefreshMo(var_12_2)
+			if tagCo and tagCo.type ~= RoomCritterDetailView._exclusiveSkill then
+				local item = self:getNormalSkillItem(index)
 
-				var_12_1 = var_12_1 + 1
+				item:onRefreshMo(tagCo)
+
+				index = index + 1
 			end
 		end
 
-		if arg_12_0._normalSkillItems then
-			for iter_12_2 = 1, #arg_12_0._normalSkillItems do
-				local var_12_3 = arg_12_0._normalSkillItems[iter_12_2]
+		if self._normalSkillItems then
+			for i = 1, #self._normalSkillItems do
+				local item = self._normalSkillItems[i]
 
-				gohelper.setActive(var_12_3.viewGO, iter_12_2 < var_12_1)
+				gohelper.setActive(item.viewGO, i < index)
 			end
 		end
 	else
-		gohelper.setActive(arg_12_0._gonormalskill.gameObject, false)
+		gohelper.setActive(self._gonormalskill.gameObject, false)
 	end
 end
 
-function var_0_0.refreshTrainInfo(arg_13_0)
-	gohelper.setActive(arg_13_0._btnreport.gameObject, arg_13_0:_isShowReport())
+function RoomCritterDetailMaturityView:refreshTrainInfo()
+	gohelper.setActive(self._btnreport.gameObject, self:_isShowReport())
 end
 
-function var_0_0._isShowReport(arg_14_0)
-	if arg_14_0._critterMo and arg_14_0._critterMo:isMaturity() and arg_14_0._critterMo.trainHeroId and tonumber(arg_14_0._critterMo.trainHeroId) ~= 0 then
+function RoomCritterDetailMaturityView:_isShowReport()
+	if self._critterMo and self._critterMo:isMaturity() and self._critterMo.trainHeroId and tonumber(self._critterMo.trainHeroId) ~= 0 then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.getNormalSkillItem(arg_15_0, arg_15_1)
-	if not arg_15_0._normalSkillItems then
-		arg_15_0._normalSkillItems = arg_15_0:getUserDataTb_()
+function RoomCritterDetailMaturityView:getNormalSkillItem(index)
+	if not self._normalSkillItems then
+		self._normalSkillItems = self:getUserDataTb_()
 	end
 
-	local var_15_0 = arg_15_0._normalSkillItems[arg_15_1]
+	local item = self._normalSkillItems[index]
 
-	if not var_15_0 then
-		local var_15_1 = gohelper.cloneInPlace(arg_15_0._gonormalskillitem)
+	if not item then
+		local go = gohelper.cloneInPlace(self._gonormalskillitem)
 
-		var_15_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_15_1, RoomCritterDetailSkillItem)
-		arg_15_0._normalSkillItems[arg_15_1] = var_15_0
+		item = MonoHelper.addNoUpdateLuaComOnceToGo(go, RoomCritterDetailSkillItem)
+		self._normalSkillItems[index] = item
 	end
 
-	return var_15_0
+	return item
 end
 
-return var_0_0
+return RoomCritterDetailMaturityView

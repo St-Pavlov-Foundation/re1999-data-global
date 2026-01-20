@@ -1,298 +1,308 @@
-﻿module("modules.logic.versionactivity2_7.coopergarland.view.Entity.CooperGarlandComponentEntity", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/coopergarland/view/Entity/CooperGarlandComponentEntity.lua
 
-local var_0_0 = class("CooperGarlandComponentEntity", LuaCompBase)
+module("modules.logic.versionactivity2_7.coopergarland.view.Entity.CooperGarlandComponentEntity", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.mapId = arg_1_1.mapId
-	arg_1_0.componentId = arg_1_1.componentId
-	arg_1_0.componentType = arg_1_1.componentType
+local CooperGarlandComponentEntity = class("CooperGarlandComponentEntity", LuaCompBase)
 
-	local var_1_0 = CooperGarlandConfig.instance:getMapComponentExtraParams(arg_1_0.mapId, arg_1_0.componentId)
+function CooperGarlandComponentEntity:ctor(param)
+	self.mapId = param.mapId
+	self.componentId = param.componentId
+	self.componentType = param.componentType
 
-	arg_1_0.extraParam = string.splitToNumber(var_1_0, "#")
-	arg_1_0.spikeMoveSpeed = CooperGarlandConfig.instance:getAct192Const(CooperGarlandEnum.ConstId.SpikeMoveSpeed, true)
+	local strParam = CooperGarlandConfig.instance:getMapComponentExtraParams(self.mapId, self.componentId)
+
+	self.extraParam = string.splitToNumber(strParam, "#")
+	self.spikeMoveSpeed = CooperGarlandConfig.instance:getAct192Const(CooperGarlandEnum.ConstId.SpikeMoveSpeed, true)
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
-	arg_2_0.trans = arg_2_1.transform
-	arg_2_0.animator = arg_2_0.go:GetComponent(typeof(UnityEngine.Animator))
+function CooperGarlandComponentEntity:init(go)
+	self.go = go
+	self.trans = go.transform
+	self.animator = self.go:GetComponent(typeof(UnityEngine.Animator))
 
-	if arg_2_0.animator then
-		arg_2_0.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_2_0.go)
+	if self.animator then
+		self.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(self.go)
 	end
 
-	arg_2_0:onInit()
+	self:onInit()
 end
 
-function var_0_0.onInit(arg_3_0)
-	local var_3_0 = arg_3_0.componentType == CooperGarlandEnum.ComponentType.Wall
-	local var_3_1, var_3_2 = CooperGarlandConfig.instance:getMapComponentPos(arg_3_0.mapId, arg_3_0.componentId)
-	local var_3_3 = CooperGarlandGameEntityMgr.instance:getCompPosZ(var_3_0)
+function CooperGarlandComponentEntity:onInit()
+	local isWall = self.componentType == CooperGarlandEnum.ComponentType.Wall
+	local posX, posY = CooperGarlandConfig.instance:getMapComponentPos(self.mapId, self.componentId)
+	local posZ = CooperGarlandGameEntityMgr.instance:getCompPosZ(isWall)
 
-	transformhelper.setLocalPos(arg_3_0.trans, var_3_1, var_3_2, var_3_3)
+	transformhelper.setLocalPos(self.trans, posX, posY, posZ)
 
-	arg_3_0.originalPos = {
-		x = var_3_1,
-		y = var_3_2,
-		z = var_3_3
+	self.originalPos = {
+		x = posX,
+		y = posY,
+		z = posZ
 	}
 
-	local var_3_4 = CooperGarlandConfig.instance:getMapComponentRotation(arg_3_0.mapId, arg_3_0.componentId)
+	local rotation = CooperGarlandConfig.instance:getMapComponentRotation(self.mapId, self.componentId)
 
-	transformhelper.setEulerAngles(arg_3_0.trans, 0, 0, var_3_4)
+	transformhelper.setEulerAngles(self.trans, 0, 0, rotation)
 
-	local var_3_5 = CooperGarlandConfig.instance:getMapComponentScale(arg_3_0.mapId, arg_3_0.componentId)
+	local scale = CooperGarlandConfig.instance:getMapComponentScale(self.mapId, self.componentId)
 
-	transformhelper.setLocalScale(arg_3_0.trans, var_3_5, var_3_5, 1)
+	transformhelper.setLocalScale(self.trans, scale, scale, 1)
 
-	local var_3_6, var_3_7 = CooperGarlandConfig.instance:getMapComponentSize(arg_3_0.mapId, arg_3_0.componentId)
+	local width, height = CooperGarlandConfig.instance:getMapComponentSize(self.mapId, self.componentId)
 
-	recthelper.setSize(arg_3_0.trans, var_3_6, var_3_7)
+	recthelper.setSize(self.trans, width, height)
 
-	arg_3_0._collider = gohelper.onceAddComponent(arg_3_0.go, typeof(UnityEngine.BoxCollider))
+	self._collider = gohelper.onceAddComponent(self.go, typeof(UnityEngine.BoxCollider))
 
-	local var_3_8, var_3_9 = CooperGarlandConfig.instance:getMapComponentColliderSize(arg_3_0.mapId, arg_3_0.componentId)
-	local var_3_10 = CooperGarlandGameEntityMgr.instance:getCompColliderSizeZ()
+	local w, h = CooperGarlandConfig.instance:getMapComponentColliderSize(self.mapId, self.componentId)
+	local sizeZ = CooperGarlandGameEntityMgr.instance:getCompColliderSizeZ()
 
-	arg_3_0._collider.size = Vector3(var_3_8, var_3_9, var_3_10)
+	self._collider.size = Vector3(w, h, sizeZ)
 
-	local var_3_11 = arg_3_0.componentType == CooperGarlandEnum.ComponentType.Door
-	local var_3_12, var_3_13 = CooperGarlandConfig.instance:getMapComponentColliderOffset(arg_3_0.mapId, arg_3_0.componentId)
-	local var_3_14 = CooperGarlandGameEntityMgr.instance:getCompColliderOffsetZ(var_3_0)
+	local isDoor = self.componentType == CooperGarlandEnum.ComponentType.Door
+	local offsetX, offsetY = CooperGarlandConfig.instance:getMapComponentColliderOffset(self.mapId, self.componentId)
+	local offsetZ = CooperGarlandGameEntityMgr.instance:getCompColliderOffsetZ(isWall)
 
-	arg_3_0._collider.center = Vector3(var_3_12, var_3_13, var_3_14)
-	arg_3_0._collider.isTrigger = not var_3_0 and not var_3_11
+	self._collider.center = Vector3(offsetX, offsetY, offsetZ)
+	self._collider.isTrigger = not isWall and not isDoor
 
-	if arg_3_0.componentType == CooperGarlandEnum.ComponentType.Hole or arg_3_0.componentType == CooperGarlandEnum.ComponentType.Spike then
-		arg_3_0._goRemoveModeVx = gohelper.findChild(arg_3_0.go, "image_vx")
+	if self.componentType == CooperGarlandEnum.ComponentType.Hole or self.componentType == CooperGarlandEnum.ComponentType.Spike then
+		self._goRemoveModeVx = gohelper.findChild(self.go, "image_vx")
 
-		local var_3_15 = gohelper.findChild(arg_3_0.go, "#go_click")
+		local goClick = gohelper.findChild(self.go, "#go_click")
 
-		arg_3_0._click = ZProj.BoxColliderClickListener.Get(var_3_15)
+		self._click = ZProj.BoxColliderClickListener.Get(goClick)
 
-		arg_3_0._click:SetIgnoreUI(true)
+		self._click:SetIgnoreUI(true)
 	end
 
-	arg_3_0:reset()
+	self:reset()
 end
 
-function var_0_0.addEventListeners(arg_4_0)
-	if arg_4_0._click then
-		arg_4_0._click:AddClickListener(arg_4_0._onClick, arg_4_0)
+function CooperGarlandComponentEntity:addEventListeners()
+	if self._click then
+		self._click:AddClickListener(self._onClick, self)
 	end
 
-	arg_4_0:addEventCb(CooperGarlandController.instance, CooperGarlandEvent.OnBallKeyChange, arg_4_0._onBallKeyChange, arg_4_0)
-	arg_4_0:addEventCb(CooperGarlandController.instance, CooperGarlandEvent.OnRemoveModeChange, arg_4_0._onRemoveModeChange, arg_4_0)
-	arg_4_0:addEventCb(CooperGarlandController.instance, CooperGarlandEvent.OnGameStopChange, arg_4_0._onGameStopChange, arg_4_0)
+	self:addEventCb(CooperGarlandController.instance, CooperGarlandEvent.OnBallKeyChange, self._onBallKeyChange, self)
+	self:addEventCb(CooperGarlandController.instance, CooperGarlandEvent.OnRemoveModeChange, self._onRemoveModeChange, self)
+	self:addEventCb(CooperGarlandController.instance, CooperGarlandEvent.OnGameStopChange, self._onGameStopChange, self)
 end
 
-function var_0_0.removeEventListeners(arg_5_0)
-	if arg_5_0._click then
-		arg_5_0._click:RemoveClickListener()
+function CooperGarlandComponentEntity:removeEventListeners()
+	if self._click then
+		self._click:RemoveClickListener()
 	end
 
-	arg_5_0:removeEventCb(CooperGarlandController.instance, CooperGarlandEvent.OnBallKeyChange, arg_5_0._onBallKeyChange, arg_5_0)
-	arg_5_0:removeEventCb(CooperGarlandController.instance, CooperGarlandEvent.OnRemoveModeChange, arg_5_0._onRemoveModeChange, arg_5_0)
-	arg_5_0:removeEventCb(CooperGarlandController.instance, CooperGarlandEvent.OnGameStopChange, arg_5_0._onGameStopChange, arg_5_0)
+	self:removeEventCb(CooperGarlandController.instance, CooperGarlandEvent.OnBallKeyChange, self._onBallKeyChange, self)
+	self:removeEventCb(CooperGarlandController.instance, CooperGarlandEvent.OnRemoveModeChange, self._onRemoveModeChange, self)
+	self:removeEventCb(CooperGarlandController.instance, CooperGarlandEvent.OnGameStopChange, self._onGameStopChange, self)
 end
 
-function var_0_0._onClick(arg_6_0)
-	if arg_6_0._isDead then
+function CooperGarlandComponentEntity:_onClick()
+	if self._isDead then
 		return
 	end
 
-	local var_6_0 = GuideModel.instance:getFlagValue(GuideModel.GuideFlag.CooperGarlandForceRemove)
+	local forceClickCompId = GuideModel.instance:getFlagValue(GuideModel.GuideFlag.CooperGarlandForceRemove)
 
-	if var_6_0 and arg_6_0.componentId ~= tonumber(var_6_0) then
+	if forceClickCompId and self.componentId ~= tonumber(forceClickCompId) then
 		return
 	end
 
-	CooperGarlandController.instance:removeComponent(arg_6_0.mapId, arg_6_0.componentId)
+	CooperGarlandController.instance:removeComponent(self.mapId, self.componentId)
 end
 
-function var_0_0.onTriggerEnter(arg_7_0, arg_7_1)
-	if arg_7_0._isDead then
+function CooperGarlandComponentEntity:onTriggerEnter(other)
+	if self._isDead then
 		return
 	end
 
-	CooperGarlandController.instance:triggerEnterComponent(arg_7_0.mapId, arg_7_0.componentId)
+	CooperGarlandController.instance:triggerEnterComponent(self.mapId, self.componentId)
 end
 
-function var_0_0.onTriggerExit(arg_8_0, arg_8_1)
-	if arg_8_0._isDead then
+function CooperGarlandComponentEntity:onTriggerExit(other)
+	if self._isDead then
 		return
 	end
 
-	CooperGarlandController.instance:triggerExitComponent(arg_8_0.mapId, arg_8_0.componentId)
+	CooperGarlandController.instance:triggerExitComponent(self.mapId, self.componentId)
 end
 
-function var_0_0._onBallKeyChange(arg_9_0)
-	if arg_9_0._isDead then
+function CooperGarlandComponentEntity:_onBallKeyChange()
+	if self._isDead then
 		return
 	end
 
-	arg_9_0:refreshDoorCollider()
+	self:refreshDoorCollider()
 end
 
-function var_0_0._onRemoveModeChange(arg_10_0)
-	if arg_10_0._isDead then
+function CooperGarlandComponentEntity:_onRemoveModeChange()
+	if self._isDead then
 		return
 	end
 
-	arg_10_0:refreshRemoveMode()
+	self:refreshRemoveMode()
 end
 
-function var_0_0._onGameStopChange(arg_11_0)
-	if arg_11_0.componentType ~= CooperGarlandEnum.ComponentType.Spike or #arg_11_0.extraParam <= 0 then
+function CooperGarlandComponentEntity:_onGameStopChange()
+	if self.componentType ~= CooperGarlandEnum.ComponentType.Spike or #self.extraParam <= 0 then
 		return
 	end
 
-	if CooperGarlandGameModel.instance:getIsStopGame() then
-		arg_11_0:killTween()
-	elseif not arg_11_0.moveTweenId then
-		local var_11_0 = arg_11_0.extraParam[1]
-		local var_11_1, var_11_2, var_11_3 = transformhelper.getLocalPos(arg_11_0.trans)
-		local var_11_4 = arg_11_0._moveParam and arg_11_0._moveParam.from
-		local var_11_5 = arg_11_0._moveParam and arg_11_0._moveParam.to
+	local isStopGame = CooperGarlandGameModel.instance:getIsStopGame()
 
-		arg_11_0:beginMove(var_11_0 == CooperGarlandEnum.Const.SpikeMoveDirX and var_11_1 or var_11_2, var_11_4, var_11_5)
+	if isStopGame then
+		self:killTween()
+	elseif not self.moveTweenId then
+		local dir = self.extraParam[1]
+		local x, y, _ = transformhelper.getLocalPos(self.trans)
+		local from = self._moveParam and self._moveParam.from
+		local to = self._moveParam and self._moveParam.to
+
+		self:beginMove(dir == CooperGarlandEnum.Const.SpikeMoveDirX and x or y, from, to)
 	end
 end
 
-function var_0_0.refresh(arg_12_0)
-	arg_12_0:refreshDoorCollider()
-	arg_12_0:refreshRemoveMode()
+function CooperGarlandComponentEntity:refresh()
+	self:refreshDoorCollider()
+	self:refreshRemoveMode()
 end
 
-function var_0_0.refreshDoorCollider(arg_13_0)
-	if not (arg_13_0.componentType == CooperGarlandEnum.ComponentType.Door) then
+function CooperGarlandComponentEntity:refreshDoorCollider()
+	local isDoor = self.componentType == CooperGarlandEnum.ComponentType.Door
+
+	if not isDoor then
 		return
 	end
 
-	if arg_13_0._collider then
-		local var_13_0 = CooperGarlandGameModel.instance:getBallHasKey()
+	if self._collider then
+		local isHasKey = CooperGarlandGameModel.instance:getBallHasKey()
 
-		arg_13_0._collider.isTrigger = var_13_0
+		self._collider.isTrigger = isHasKey
 	end
 end
 
-function var_0_0.refreshRemoveMode(arg_14_0)
-	local var_14_0 = CooperGarlandGameModel.instance:getIsRemoveMode()
+function CooperGarlandComponentEntity:refreshRemoveMode()
+	local isRemoveMode = CooperGarlandGameModel.instance:getIsRemoveMode()
 
-	gohelper.setActive(arg_14_0._goRemoveModeVx, var_14_0)
+	gohelper.setActive(self._goRemoveModeVx, isRemoveMode)
 end
 
-function var_0_0.beginMove(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	if CooperGarlandGameModel.instance:getIsStopGame() or arg_15_0.moveTweenId or arg_15_0.componentType ~= CooperGarlandEnum.ComponentType.Spike or #arg_15_0.extraParam <= 0 then
+function CooperGarlandComponentEntity:beginMove(argsBeginPos, argsFrom, argsTo)
+	local isStopGame = CooperGarlandGameModel.instance:getIsStopGame()
+
+	if isStopGame or self.moveTweenId or self.componentType ~= CooperGarlandEnum.ComponentType.Spike or #self.extraParam <= 0 then
 		return
 	end
 
-	local var_15_0 = arg_15_0.extraParam[1]
-	local var_15_1 = var_15_0 == CooperGarlandEnum.Const.SpikeMoveDirX
-	local var_15_2 = arg_15_3 or arg_15_0.extraParam[2]
-	local var_15_3 = arg_15_2 or var_15_1 and arg_15_0.originalPos.x or arg_15_0.originalPos.y
-	local var_15_4 = math.abs(var_15_2 - (arg_15_1 or var_15_3)) / arg_15_0.spikeMoveSpeed
+	local dir = self.extraParam[1]
+	local isMoveX = dir == CooperGarlandEnum.Const.SpikeMoveDirX
+	local to = argsTo or self.extraParam[2]
+	local from = argsFrom or isMoveX and self.originalPos.x or self.originalPos.y
+	local time = math.abs(to - (argsBeginPos or from)) / self.spikeMoveSpeed
 
-	arg_15_0._moveParam = {
-		dir = var_15_0,
-		from = var_15_3,
-		to = var_15_2
+	self._moveParam = {
+		dir = dir,
+		from = from,
+		to = to
 	}
 
-	if var_15_1 then
-		arg_15_0.moveTweenId = ZProj.TweenHelper.DOAnchorPosX(arg_15_0.trans, var_15_2, var_15_4, arg_15_0._movePingPong, arg_15_0, arg_15_0._moveParam, EaseType.Linear)
+	if isMoveX then
+		self.moveTweenId = ZProj.TweenHelper.DOAnchorPosX(self.trans, to, time, self._movePingPong, self, self._moveParam, EaseType.Linear)
 	else
-		arg_15_0.moveTweenId = ZProj.TweenHelper.DOAnchorPosY(arg_15_0.trans, var_15_2, var_15_4, arg_15_0._movePingPong, arg_15_0, arg_15_0._moveParam, EaseType.Linear)
+		self.moveTweenId = ZProj.TweenHelper.DOAnchorPosY(self.trans, to, time, self._movePingPong, self, self._moveParam, EaseType.Linear)
 	end
 end
 
-function var_0_0._movePingPong(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_1.dir
-	local var_16_1 = arg_16_1.from
-	local var_16_2 = arg_16_1.to
-	local var_16_3 = math.abs(var_16_1 - var_16_2) / arg_16_0.spikeMoveSpeed
+function CooperGarlandComponentEntity:_movePingPong(param)
+	local dir = param.dir
+	local from = param.from
+	local to = param.to
+	local time = math.abs(from - to) / self.spikeMoveSpeed
 
-	arg_16_0._moveParam = {
-		dir = var_16_0,
-		from = var_16_2,
-		to = var_16_1
+	self._moveParam = {
+		dir = dir,
+		from = to,
+		to = from
 	}
 
-	if var_16_0 == CooperGarlandEnum.Const.SpikeMoveDirX then
-		arg_16_0.moveTweenId = ZProj.TweenHelper.DOAnchorPosX(arg_16_0.trans, var_16_1, var_16_3, arg_16_0._movePingPong, arg_16_0, arg_16_0._moveParam, EaseType.Linear)
+	if dir == CooperGarlandEnum.Const.SpikeMoveDirX then
+		self.moveTweenId = ZProj.TweenHelper.DOAnchorPosX(self.trans, from, time, self._movePingPong, self, self._moveParam, EaseType.Linear)
 	else
-		arg_16_0.moveTweenId = ZProj.TweenHelper.DOAnchorPosY(arg_16_0.trans, var_16_1, var_16_3, arg_16_0._movePingPong, arg_16_0, arg_16_0._moveParam, EaseType.Linear)
+		self.moveTweenId = ZProj.TweenHelper.DOAnchorPosY(self.trans, from, time, self._movePingPong, self, self._moveParam, EaseType.Linear)
 	end
 end
 
-function var_0_0.setRemoved(arg_17_0)
-	arg_17_0._isDead = true
+function CooperGarlandComponentEntity:setRemoved()
+	self._isDead = true
 
-	arg_17_0:killTween()
+	self:killTween()
 
-	if arg_17_0.animatorPlayer then
-		arg_17_0.animator.speed = 1
+	if self.animatorPlayer then
+		self.animator.speed = 1
 
-		arg_17_0.animatorPlayer:Play("out", arg_17_0._playRemoveAnimFinish, arg_17_0)
+		self.animatorPlayer:Play("out", self._playRemoveAnimFinish, self)
 	else
-		arg_17_0:_playRemoveAnimFinish()
+		self:_playRemoveAnimFinish()
 	end
 end
 
-function var_0_0._playRemoveAnimFinish(arg_18_0)
-	gohelper.setActive(arg_18_0.go, false)
+function CooperGarlandComponentEntity:_playRemoveAnimFinish()
+	gohelper.setActive(self.go, false)
 end
 
-function var_0_0.getWorldPos(arg_19_0)
-	return arg_19_0.trans and arg_19_0.trans.position
+function CooperGarlandComponentEntity:getWorldPos()
+	return self.trans and self.trans.position
 end
 
-function var_0_0.reset(arg_20_0)
-	if CooperGarlandGameModel.instance:isFinishedStoryComponent(arg_20_0.mapId, arg_20_0.componentId) then
+function CooperGarlandComponentEntity:reset()
+	local isStoryCompFinished = CooperGarlandGameModel.instance:isFinishedStoryComponent(self.mapId, self.componentId)
+
+	if isStoryCompFinished then
 		return
 	end
 
-	arg_20_0._isDead = false
-	arg_20_0._moveParam = nil
+	self._isDead = false
+	self._moveParam = nil
 
-	arg_20_0:refresh()
-	arg_20_0:killTween()
-	transformhelper.setLocalPos(arg_20_0.trans, arg_20_0.originalPos.x, arg_20_0.originalPos.y, arg_20_0.originalPos.z)
-	arg_20_0:beginMove()
-	gohelper.setActive(arg_20_0.go, true)
+	self:refresh()
+	self:killTween()
+	transformhelper.setLocalPos(self.trans, self.originalPos.x, self.originalPos.y, self.originalPos.z)
+	self:beginMove()
+	gohelper.setActive(self.go, true)
 
-	if arg_20_0.animator then
-		arg_20_0.animator.enabled = true
-		arg_20_0.animator.speed = 0
+	if self.animator then
+		self.animator.enabled = true
+		self.animator.speed = 0
 
-		arg_20_0.animator:Play("out", 0, 0)
+		self.animator:Play("out", 0, 0)
 	end
 end
 
-function var_0_0.killTween(arg_21_0)
-	if arg_21_0.moveTweenId then
-		ZProj.TweenHelper.KillById(arg_21_0.moveTweenId)
+function CooperGarlandComponentEntity:killTween()
+	if self.moveTweenId then
+		ZProj.TweenHelper.KillById(self.moveTweenId)
 
-		arg_21_0.moveTweenId = nil
+		self.moveTweenId = nil
 	end
 end
 
-function var_0_0.getIsRemoved(arg_22_0)
-	return arg_22_0._isDead
+function CooperGarlandComponentEntity:getIsRemoved()
+	return self._isDead
 end
 
-function var_0_0.destroy(arg_23_0)
-	arg_23_0:killTween()
-	arg_23_0:removeEventListeners()
+function CooperGarlandComponentEntity:destroy()
+	self:killTween()
+	self:removeEventListeners()
 
-	arg_23_0._moveParam = nil
+	self._moveParam = nil
 
-	gohelper.destroy(arg_23_0.go)
+	gohelper.destroy(self.go)
 end
 
-function var_0_0.onDestroy(arg_24_0)
+function CooperGarlandComponentEntity:onDestroy()
 	return
 end
 
-return var_0_0
+return CooperGarlandComponentEntity

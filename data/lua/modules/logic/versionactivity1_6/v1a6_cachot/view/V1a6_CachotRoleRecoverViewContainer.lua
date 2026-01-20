@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotRoleRecoverViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/view/V1a6_CachotRoleRecoverViewContainer.lua
 
-local var_0_0 = class("V1a6_CachotRoleRecoverViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotRoleRecoverViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local V1a6_CachotRoleRecoverViewContainer = class("V1a6_CachotRoleRecoverViewContainer", BaseViewContainer)
+
+function V1a6_CachotRoleRecoverViewContainer:buildViews()
 	return {
 		V1a6_CachotRoleRecoverView.New()
 	}
 end
 
-return var_0_0
+return V1a6_CachotRoleRecoverViewContainer

@@ -1,205 +1,209 @@
-﻿module("modules.logic.commandstation.model.CommandStationTaskListModel", package.seeall)
+﻿-- chunkname: @modules/logic/commandstation/model/CommandStationTaskListModel.lua
 
-local var_0_0 = class("CommandStationTaskListModel", ListScrollModel)
+module("modules.logic.commandstation.model.CommandStationTaskListModel", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.allNormalTaskMos = {}
-	arg_1_0.allCatchTaskMos = {}
-	arg_1_0.curSelectType = 1
+local CommandStationTaskListModel = class("CommandStationTaskListModel", ListScrollModel)
 
-	var_0_0.super.ctor(arg_1_0)
+function CommandStationTaskListModel:ctor()
+	self.allNormalTaskMos = {}
+	self.allCatchTaskMos = {}
+	self.curSelectType = 1
+
+	CommandStationTaskListModel.super.ctor(self)
 end
 
-function var_0_0.isCatchTaskType(arg_2_0)
-	return arg_2_0.curSelectType == CommandStationEnum.TaskType.Catch
+function CommandStationTaskListModel:isCatchTaskType()
+	return self.curSelectType == CommandStationEnum.TaskType.Catch
 end
 
-function var_0_0.initServerData(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0.allNormalTaskMos = {}
-	arg_3_0.allCatchTaskMos = {}
+function CommandStationTaskListModel:initServerData(tasks, catchTasks)
+	self.allNormalTaskMos = {}
+	self.allCatchTaskMos = {}
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
-		local var_3_0 = lua_copost_version_task.configDict[iter_3_1.id]
+	for _, task in ipairs(tasks) do
+		local taskCo = lua_copost_version_task.configDict[task.id]
 
-		if var_3_0 then
-			local var_3_1 = TaskMo.New()
+		if taskCo then
+			local taskMo = TaskMo.New()
 
-			var_3_1:init(iter_3_1, var_3_0)
-			table.insert(arg_3_0.allNormalTaskMos, var_3_1)
+			taskMo:init(task, taskCo)
+			table.insert(self.allNormalTaskMos, taskMo)
 		else
-			logError("指挥部任务ID不存在" .. iter_3_1.id)
+			logError("指挥部任务ID不存在" .. task.id)
 		end
 	end
 
-	for iter_3_2, iter_3_3 in ipairs(arg_3_2) do
-		local var_3_2 = lua_copost_catch_task.configDict[iter_3_3.id]
+	for _, task in ipairs(catchTasks) do
+		local taskCo = lua_copost_catch_task.configDict[task.id]
 
-		if var_3_2 then
-			local var_3_3 = TaskMo.New()
+		if taskCo then
+			local taskMo = TaskMo.New()
 
-			var_3_3:init(iter_3_3, var_3_2)
-			table.insert(arg_3_0.allCatchTaskMos, var_3_3)
+			taskMo:init(task, taskCo)
+			table.insert(self.allCatchTaskMos, taskMo)
 		else
-			logError("指挥部任务ID不存在" .. iter_3_3.id)
+			logError("指挥部任务ID不存在" .. task.id)
 		end
 	end
 
 	CommandStationController.instance:dispatchEvent(CommandStationEvent.OnTaskUpdate)
 end
 
-function var_0_0.init(arg_4_0)
-	local var_4_0 = arg_4_0.curSelectType == 1
-	local var_4_1 = var_4_0 and arg_4_0.allNormalTaskMos or arg_4_0.allCatchTaskMos
-	local var_4_2 = {}
-	local var_4_3 = 0
+function CommandStationTaskListModel:init()
+	local isNormal = self.curSelectType == 1
+	local taskDict = isNormal and self.allNormalTaskMos or self.allCatchTaskMos
+	local dataList = {}
+	local rewardCount = 0
 
-	if var_4_1 ~= nil then
-		for iter_4_0, iter_4_1 in ipairs(var_4_1) do
-			local var_4_4 = var_4_0 and CommandStationTaskMo.New() or CommandStationCatchTaskMo.New()
+	if taskDict ~= nil then
+		for _, taskMo in ipairs(taskDict) do
+			local mo = isNormal and CommandStationTaskMo.New() or CommandStationCatchTaskMo.New()
 
-			var_4_4:init(iter_4_1.config, iter_4_1)
+			mo:init(taskMo.config, taskMo)
 
-			if var_4_4:alreadyGotReward() then
-				var_4_3 = var_4_3 + 1
+			if mo:alreadyGotReward() and not mo:isFinished() then
+				rewardCount = rewardCount + 1
 			end
 
-			table.insert(var_4_2, var_4_4)
+			table.insert(dataList, mo)
 		end
 	end
 
-	if var_4_3 > 1 then
-		local var_4_5 = var_4_0 and CommandStationTaskMo.New() or CommandStationCatchTaskMo.New()
+	if rewardCount > 1 then
+		local allMO = isNormal and CommandStationTaskMo.New() or CommandStationCatchTaskMo.New()
 
-		var_4_5.id = -99999
+		allMO.id = -99999
 
-		table.insert(var_4_2, var_4_5)
+		table.insert(dataList, allMO)
 	end
 
-	table.sort(var_4_2, var_0_0.sortMO)
+	table.sort(dataList, CommandStationTaskListModel.sortMO)
 
-	arg_4_0._hasRankDiff = false
+	self._hasRankDiff = false
 
-	arg_4_0:setList(var_4_2)
+	self:setList(dataList)
 end
 
-function var_0_0.sortMO(arg_5_0, arg_5_1)
-	local var_5_0 = var_0_0.getSortIndex(arg_5_0)
-	local var_5_1 = var_0_0.getSortIndex(arg_5_1)
+function CommandStationTaskListModel.sortMO(objA, objB)
+	local sidxA = CommandStationTaskListModel.getSortIndex(objA)
+	local sidxB = CommandStationTaskListModel.getSortIndex(objB)
 
-	if var_5_0 ~= var_5_1 then
-		return var_5_0 < var_5_1
-	elseif arg_5_0.id ~= arg_5_1.id then
-		return arg_5_0.id < arg_5_1.id
+	if sidxA ~= sidxB then
+		return sidxA < sidxB
+	elseif objA.id ~= objB.id then
+		return objA.id < objB.id
 	end
 end
 
-function var_0_0.getSortIndex(arg_6_0)
-	if arg_6_0.id == -99999 then
+function CommandStationTaskListModel.getSortIndex(objA)
+	if objA.id == -99999 then
 		return 1
-	elseif arg_6_0:isFinished() then
+	elseif objA:isFinished() then
 		return 100
-	elseif arg_6_0:alreadyGotReward() then
+	elseif objA:alreadyGotReward() then
 		return 2
 	end
 
-	local var_6_0 = arg_6_0:getActivityStatus()
+	local actStatus = objA:getActivityStatus()
 
-	if var_6_0 and var_6_0 ~= ActivityEnum.ActivityStatus.Normal then
+	if actStatus and actStatus ~= ActivityEnum.ActivityStatus.Normal then
 		return 80
 	end
 
 	return 50
 end
 
-function var_0_0.createMO(arg_7_0, arg_7_1, arg_7_2)
-	return {
-		config = arg_7_2.config,
-		originTaskMO = arg_7_2
-	}
+function CommandStationTaskListModel:createMO(co, taskMO)
+	local mo = {}
+
+	mo.config = taskMO.config
+	mo.originTaskMO = taskMO
+
+	return mo
 end
 
-function var_0_0.getRankDiff(arg_8_0, arg_8_1)
-	if arg_8_0._hasRankDiff and arg_8_1 then
-		local var_8_0 = tabletool.indexOf(arg_8_0._idIdxList, arg_8_1.id)
-		local var_8_1 = arg_8_0:getIndex(arg_8_1)
+function CommandStationTaskListModel:getRankDiff(mo)
+	if self._hasRankDiff and mo then
+		local oldIdx = tabletool.indexOf(self._idIdxList, mo.id)
+		local curIdx = self:getIndex(mo)
 
-		if var_8_0 and var_8_1 then
-			arg_8_0._idIdxList[var_8_0] = -2
+		if oldIdx and curIdx then
+			self._idIdxList[oldIdx] = -2
 
-			return var_8_1 - var_8_0
+			return curIdx - oldIdx
 		end
 	end
 
 	return 0
 end
 
-function var_0_0.refreshRankDiff(arg_9_0)
-	arg_9_0._idIdxList = {}
+function CommandStationTaskListModel:refreshRankDiff()
+	self._idIdxList = {}
 
-	local var_9_0 = arg_9_0:getList()
+	local dataList = self:getList()
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
-		table.insert(arg_9_0._idIdxList, iter_9_1.id)
+	for _, mo in ipairs(dataList) do
+		table.insert(self._idIdxList, mo.id)
 	end
 end
 
-function var_0_0.preFinish(arg_10_0, arg_10_1)
-	if not arg_10_1 then
+function CommandStationTaskListModel:preFinish(taskMO)
+	if not taskMO then
 		return
 	end
 
-	local var_10_0 = false
+	local isCanSort = false
 
-	arg_10_0._hasRankDiff = false
+	self._hasRankDiff = false
 
-	arg_10_0:refreshRankDiff()
+	self:refreshRankDiff()
 
-	local var_10_1 = 0
-	local var_10_2 = arg_10_0:getList()
+	local preCount = 0
+	local taskMOList = self:getList()
 
-	if arg_10_1.id == -99999 then
-		for iter_10_0, iter_10_1 in ipairs(var_10_2) do
-			if iter_10_1:alreadyGotReward() and iter_10_1.id ~= -99999 then
-				iter_10_1.preFinish = true
-				var_10_0 = true
-				var_10_1 = var_10_1 + 1
+	if taskMO.id == -99999 then
+		for _, tempMO in ipairs(taskMOList) do
+			if tempMO:alreadyGotReward() and tempMO.id ~= -99999 then
+				tempMO.preFinish = true
+				isCanSort = true
+				preCount = preCount + 1
 			end
 		end
-	elseif arg_10_1:alreadyGotReward() then
-		arg_10_1.preFinish = true
-		var_10_0 = true
-		var_10_1 = var_10_1 + 1
+	elseif taskMO:alreadyGotReward() then
+		taskMO.preFinish = true
+		isCanSort = true
+		preCount = preCount + 1
 	end
 
-	if var_10_0 then
-		local var_10_3 = arg_10_0:getById(-99999)
+	if isCanSort then
+		local allMO = self:getById(-99999)
 
-		if var_10_3 and arg_10_0:getGotRewardCount() < var_10_1 + 1 then
-			tabletool.removeValue(var_10_2, var_10_3)
+		if allMO and self:getGotRewardCount() < preCount + 1 then
+			tabletool.removeValue(taskMOList, allMO)
 		end
 
-		arg_10_0._hasRankDiff = true
+		self._hasRankDiff = true
 
-		table.sort(var_10_2, var_0_0.sortMO)
-		arg_10_0:setList(var_10_2)
+		table.sort(taskMOList, CommandStationTaskListModel.sortMO)
+		self:setList(taskMOList)
 
-		arg_10_0._hasRankDiff = false
+		self._hasRankDiff = false
 	end
 end
 
-function var_0_0.getGotRewardCount(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_1 or arg_11_0:getList()
-	local var_11_1 = 0
+function CommandStationTaskListModel:getGotRewardCount(moList)
+	local taskMOList = moList or self:getList()
+	local count = 0
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
-		if iter_11_1:alreadyGotReward() and not iter_11_1.preFinish and iter_11_1.id ~= -99999 then
-			var_11_1 = var_11_1 + 1
+	for _, tempMO in ipairs(taskMOList) do
+		if tempMO:alreadyGotReward() and not tempMO.preFinish and tempMO.id ~= -99999 then
+			count = count + 1
 		end
 	end
 
-	return var_11_1
+	return count
 end
 
-var_0_0.instance = var_0_0.New()
+CommandStationTaskListModel.instance = CommandStationTaskListModel.New()
 
-return var_0_0
+return CommandStationTaskListModel

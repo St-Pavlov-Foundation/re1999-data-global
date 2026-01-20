@@ -1,3 +1,7 @@
-﻿module("modules.logic.fight.system.work.FightWorkStepBuffSequence", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkStepBuffSequence.lua
 
-return (class("FightWorkStepBuffSequence", BaseWork))
+module("modules.logic.fight.system.work.FightWorkStepBuffSequence", package.seeall)
+
+local FightWorkStepBuffSequence = class("FightWorkStepBuffSequence", BaseWork)
+
+return FightWorkStepBuffSequence

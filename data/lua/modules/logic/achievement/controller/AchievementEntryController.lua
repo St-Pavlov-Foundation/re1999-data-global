@@ -1,19 +1,21 @@
-﻿module("modules.logic.achievement.controller.AchievementEntryController", package.seeall)
+﻿-- chunkname: @modules/logic/achievement/controller/AchievementEntryController.lua
 
-local var_0_0 = class("AchievementEntryController", BaseController)
+module("modules.logic.achievement.controller.AchievementEntryController", package.seeall)
 
-function var_0_0.onOpenView(arg_1_0)
+local AchievementEntryController = class("AchievementEntryController", BaseController)
+
+function AchievementEntryController:onOpenView()
 	AchievementEntryModel.instance:initData()
 end
 
-function var_0_0.onCloseView(arg_2_0)
+function AchievementEntryController:onCloseView()
 	return
 end
 
-function var_0_0.updateAchievementState(arg_3_0)
+function AchievementEntryController:updateAchievementState()
 	AchievementEntryModel.instance:initData()
 end
 
-var_0_0.instance = var_0_0.New()
+AchievementEntryController.instance = AchievementEntryController.New()
 
-return var_0_0
+return AchievementEntryController

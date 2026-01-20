@@ -1,81 +1,83 @@
-﻿module("modules.logic.survival.util.SurvivalEquipRedDotHelper", package.seeall)
+﻿-- chunkname: @modules/logic/survival/util/SurvivalEquipRedDotHelper.lua
 
-local var_0_0 = class("SurvivalEquipRedDotHelper")
+module("modules.logic.survival.util.SurvivalEquipRedDotHelper", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.reddotType = -1
+local SurvivalEquipRedDotHelper = class("SurvivalEquipRedDotHelper")
+
+function SurvivalEquipRedDotHelper:ctor()
+	self.reddotType = -1
 end
 
-function var_0_0.checkRed(arg_2_0)
-	local var_2_0 = arg_2_0.reddotType
+function SurvivalEquipRedDotHelper:checkRed()
+	local redDot = self.reddotType
 
-	arg_2_0:_checkRed()
+	self:_checkRed()
 
-	if var_2_0 ~= arg_2_0.reddotType then
+	if redDot ~= self.reddotType then
 		SurvivalController.instance:dispatchEvent(SurvivalEvent.OnEquipRedUpdate)
 	end
 end
 
-function var_0_0._checkRed(arg_3_0)
-	arg_3_0.reddotType = -1
+function SurvivalEquipRedDotHelper:_checkRed()
+	self.reddotType = -1
 
-	local var_3_0 = SurvivalShelterModel.instance:getWeekInfo()
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
 
-	if not var_3_0 then
+	if not weekInfo then
 		return
 	end
 
-	local var_3_1 = false
+	local hasEmpty = false
 
-	for iter_3_0, iter_3_1 in ipairs(var_3_0.equipBox.slots) do
-		if iter_3_1.item:isEmpty() and iter_3_1.unlock then
-			var_3_1 = true
+	for i, v in ipairs(weekInfo.equipBox.slots) do
+		if v.item:isEmpty() and v.unlock then
+			hasEmpty = true
 
 			break
 		end
 	end
 
-	local var_3_2 = false
+	local haveEquip = false
 
-	for iter_3_2, iter_3_3 in ipairs(var_3_0:getBag(SurvivalEnum.ItemSource.Shelter).items) do
-		if iter_3_3.equipCo then
-			var_3_2 = true
+	for i, itemMo in ipairs(weekInfo:getBag(SurvivalEnum.ItemSource.Shelter).items) do
+		if itemMo.equipCo then
+			haveEquip = true
 		end
 	end
 
-	local var_3_3 = SurvivalMapModel.instance:getSceneMo()
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
 
-	if var_3_0.inSurvival and var_3_3 then
-		for iter_3_4, iter_3_5 in ipairs(var_3_0:getBag(SurvivalEnum.ItemSource.Map).items) do
-			if iter_3_5.equipCo then
-				var_3_2 = true
+	if weekInfo.inSurvival and sceneMo then
+		for _, itemMo in ipairs(weekInfo:getBag(SurvivalEnum.ItemSource.Map).items) do
+			if itemMo.equipCo then
+				haveEquip = true
 			end
 		end
 	end
 
-	if not var_3_2 then
+	if not haveEquip then
 		return
 	end
 
-	if var_3_1 and var_3_2 then
-		arg_3_0.reddotType = 0
+	if hasEmpty and haveEquip then
+		self.reddotType = 0
 
 		return
 	end
 
-	local var_3_4 = {}
+	local list = {}
 
-	for iter_3_6, iter_3_7 in ipairs(var_3_0.equipBox.slots) do
-		if not iter_3_7.item:isEmpty() and arg_3_0:haveTag(iter_3_7.item.equipCo.tag, var_3_0.equipBox.maxTagId) then
-			table.insert(var_3_4, iter_3_7.item)
+	for i, v in ipairs(weekInfo.equipBox.slots) do
+		if not v.item:isEmpty() and self:haveTag(v.item.equipCo.tag, weekInfo.equipBox.maxTagId) then
+			table.insert(list, v.item)
 		end
 	end
 
-	for iter_3_8, iter_3_9 in ipairs(var_3_0:getBag(SurvivalEnum.ItemSource.Shelter).items) do
-		if iter_3_9.equipCo then
-			for iter_3_10, iter_3_11 in ipairs(var_3_4) do
-				if iter_3_11.equipCo.group == iter_3_9.equipCo.group and iter_3_11.equipCo.score < iter_3_9.equipCo.score then
-					arg_3_0.reddotType = var_3_0.equipBox.maxTagId
+	for i, itemMo in ipairs(weekInfo:getBag(SurvivalEnum.ItemSource.Shelter).items) do
+		if itemMo.equipCo then
+			for _, v in ipairs(list) do
+				if v.equipCo.group == itemMo.equipCo.group and v.equipCo.score < itemMo.equipCo.score then
+					self.reddotType = weekInfo.equipBox.maxTagId
 
 					return
 				end
@@ -83,12 +85,12 @@ function var_0_0._checkRed(arg_3_0)
 		end
 	end
 
-	if var_3_0.inSurvival and var_3_3 then
-		for iter_3_12, iter_3_13 in ipairs(var_3_0:getBag(SurvivalEnum.ItemSource.Map).items) do
-			if iter_3_13.equipCo then
-				for iter_3_14, iter_3_15 in ipairs(var_3_4) do
-					if iter_3_15.equipCo.group == iter_3_13.equipCo.group and iter_3_15.equipCo.score < iter_3_13.equipCo.score then
-						arg_3_0.reddotType = var_3_0.equipBox.maxTagId
+	if weekInfo.inSurvival and sceneMo then
+		for _, itemMo in ipairs(weekInfo:getBag(SurvivalEnum.ItemSource.Map).items) do
+			if itemMo.equipCo then
+				for _, v in ipairs(list) do
+					if v.equipCo.group == itemMo.equipCo.group and v.equipCo.score < itemMo.equipCo.score then
+						self.reddotType = weekInfo.equipBox.maxTagId
 
 						return
 					end
@@ -98,24 +100,24 @@ function var_0_0._checkRed(arg_3_0)
 	end
 end
 
-local var_0_1 = {}
+local arrCache = {}
 
-setmetatable(var_0_1, {
+setmetatable(arrCache, {
 	__mode = "v"
 })
 
-function var_0_0.haveTag(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_2 == 0 or string.nilorempty(arg_4_1) then
+function SurvivalEquipRedDotHelper:haveTag(tagStr, tagId)
+	if tagId == 0 or string.nilorempty(tagStr) then
 		return false
 	end
 
-	if not var_0_1[arg_4_1] then
-		var_0_1[arg_4_1] = string.splitToNumber(arg_4_1, "#")
+	if not arrCache[tagStr] then
+		arrCache[tagStr] = string.splitToNumber(tagStr, "#")
 	end
 
-	return tabletool.indexOf(var_0_1[arg_4_1], arg_4_2)
+	return tabletool.indexOf(arrCache[tagStr], tagId)
 end
 
-var_0_0.instance = var_0_0.New()
+SurvivalEquipRedDotHelper.instance = SurvivalEquipRedDotHelper.New()
 
-return var_0_0
+return SurvivalEquipRedDotHelper

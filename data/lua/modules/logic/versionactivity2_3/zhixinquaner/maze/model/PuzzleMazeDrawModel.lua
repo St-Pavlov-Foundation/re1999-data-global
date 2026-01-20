@@ -1,123 +1,129 @@
-﻿module("modules.logic.versionactivity2_3.zhixinquaner.maze.model.PuzzleMazeDrawModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/zhixinquaner/maze/model/PuzzleMazeDrawModel.lua
 
-local var_0_0 = class("PuzzleMazeDrawModel", PuzzleMazeDrawBaseModel)
+module("modules.logic.versionactivity2_3.zhixinquaner.maze.model.PuzzleMazeDrawModel", package.seeall)
 
-function var_0_0.release(arg_1_0)
-	var_0_0.super.release(arg_1_0)
+local PuzzleMazeDrawModel = class("PuzzleMazeDrawModel", PuzzleMazeDrawBaseModel)
 
-	arg_1_0._interactPosX = nil
-	arg_1_0._interactPosY = nil
-	arg_1_0._effectDoneMap = nil
-	arg_1_0._canFlyPlane = true
-	arg_1_0._planePosX = nil
-	arg_1_0._planePosY = nil
+function PuzzleMazeDrawModel:release()
+	PuzzleMazeDrawModel.super.release(self)
+
+	self._interactPosX = nil
+	self._interactPosY = nil
+	self._effectDoneMap = nil
+	self._canFlyPlane = true
+	self._planePosX = nil
+	self._planePosY = nil
 end
 
-function var_0_0.startGame(arg_2_0, arg_2_1)
-	var_0_0.super.startGame(arg_2_0, arg_2_1)
-	arg_2_0:setCanFlyPane(true)
+function PuzzleMazeDrawModel:startGame(elementCo)
+	PuzzleMazeDrawModel.super.startGame(self, elementCo)
+	self:setCanFlyPane(true)
 end
 
-function var_0_0.switchLine(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	local var_3_0 = arg_3_0:getInteractLines(arg_3_2, arg_3_3)
+function PuzzleMazeDrawModel:switchLine(lineState, interactPosX, interactPosY)
+	local interactLines = self:getInteractLines(interactPosX, interactPosY)
 
-	if not var_3_0 then
+	if not interactLines then
 		return
 	end
 
-	for iter_3_0, iter_3_1 in pairs(var_3_0) do
-		local var_3_1 = iter_3_1.x1
-		local var_3_2 = iter_3_1.y1
-		local var_3_3 = iter_3_1.x2
-		local var_3_4 = iter_3_1.y2
-		local var_3_5 = PuzzleMazeHelper.getLineKey(var_3_1, var_3_2, var_3_3, var_3_4)
+	for _, interactLine in pairs(interactLines) do
+		local startPosX = interactLine.x1
+		local startPosY = interactLine.y1
+		local endPosX = interactLine.x2
+		local endPosY = interactLine.y2
+		local key = PuzzleMazeHelper.getLineKey(startPosX, startPosY, endPosX, endPosY)
 
-		arg_3_0._lineMap[var_3_5] = arg_3_1
+		self._lineMap[key] = lineState
 
-		PuzzleMazeDrawController.instance:dispatchEvent(PuzzleEvent.SwitchLineState, var_3_1, var_3_2, var_3_3, var_3_4)
+		PuzzleMazeDrawController.instance:dispatchEvent(PuzzleEvent.SwitchLineState, startPosX, startPosY, endPosX, endPosY)
 	end
 
-	if arg_3_1 == PuzzleEnum.LineState.Connect then
-		arg_3_0._interactPosX = arg_3_2
-		arg_3_0._interactPosY = arg_3_3
+	if lineState == PuzzleEnum.LineState.Connect then
+		self._interactPosX = interactPosX
+		self._interactPosY = interactPosY
 	else
-		arg_3_0._interactPosX = nil
-		arg_3_0._interactPosY = nil
+		self._interactPosX = nil
+		self._interactPosY = nil
 	end
 end
 
-function var_0_0.getInteractLines(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = arg_4_0:getObjAtPos(arg_4_1, arg_4_2)
+function PuzzleMazeDrawModel:getInteractLines(interactPosX, interactPosY)
+	local interactObj = self:getObjAtPos(interactPosX, interactPosY)
 
-	if var_4_0 then
-		return var_4_0.interactLines
+	if interactObj then
+		return interactObj.interactLines
 	end
 end
 
-function var_0_0.getInteractPos(arg_5_0)
-	return arg_5_0._interactPosX, arg_5_0._interactPosY
+function PuzzleMazeDrawModel:getInteractPos()
+	return self._interactPosX, self._interactPosY
 end
 
-function var_0_0.isCanFlyPlane(arg_6_0)
-	return arg_6_0._canFlyPlane
+function PuzzleMazeDrawModel:isCanFlyPlane()
+	return self._canFlyPlane
 end
 
-function var_0_0.setCanFlyPane(arg_7_0, arg_7_1)
-	arg_7_0._canFlyPlane = arg_7_1
+function PuzzleMazeDrawModel:setCanFlyPane(isEnabled)
+	self._canFlyPlane = isEnabled
 end
 
-function var_0_0.setPlanePlacePos(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0._planePosX = arg_8_1
-	arg_8_0._planePosY = arg_8_2
+function PuzzleMazeDrawModel:setPlanePlacePos(posX, posY)
+	self._planePosX = posX
+	self._planePosY = posY
 end
 
-function var_0_0.getCurPlanePos(arg_9_0)
-	if arg_9_0:isCanFlyPlane() then
+function PuzzleMazeDrawModel:getCurPlanePos()
+	local canFly = self:isCanFlyPlane()
+
+	if canFly then
 		return PuzzleMazeDrawController.instance:getLastPos()
 	else
-		return arg_9_0._planePosX, arg_9_0._planePosY
+		return self._planePosX, self._planePosY
 	end
 end
 
-function var_0_0.setTriggerEffectDone(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_0._effectDoneMap = arg_10_0._effectDoneMap or {}
+function PuzzleMazeDrawModel:setTriggerEffectDone(posX, posY)
+	self._effectDoneMap = self._effectDoneMap or {}
 
-	local var_10_0 = PuzzleMazeHelper.getPosKey(arg_10_1, arg_10_2)
+	local key = PuzzleMazeHelper.getPosKey(posX, posY)
 
-	arg_10_0._effectDoneMap[var_10_0] = true
+	self._effectDoneMap[key] = true
 end
 
-function var_0_0.hasTriggerEffect(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = PuzzleMazeHelper.getPosKey(arg_11_1, arg_11_2)
+function PuzzleMazeDrawModel:hasTriggerEffect(posX, posY)
+	local key = PuzzleMazeHelper.getPosKey(posX, posY)
 
-	return arg_11_0._effectDoneMap and arg_11_0._effectDoneMap[var_11_0]
+	return self._effectDoneMap and self._effectDoneMap[key]
 end
 
-function var_0_0.canTriggerEffect(arg_12_0, arg_12_1, arg_12_2)
-	if arg_12_0:hasTriggerEffect(arg_12_1, arg_12_2) then
+function PuzzleMazeDrawModel:canTriggerEffect(posX, posY)
+	local hasTrigger = self:hasTriggerEffect(posX, posY)
+
+	if hasTrigger then
 		return false
 	end
 
-	local var_12_0 = arg_12_0:getObjAtPos(arg_12_1, arg_12_2)
+	local mo = self:getObjAtPos(posX, posY)
 
-	if not var_12_0 then
+	if not mo then
 		return false
 	end
 
-	local var_12_1 = arg_12_0._effectDoneMap and tabletool.len(arg_12_0._effectDoneMap) or 0
-	local var_12_2 = var_12_0.priority
+	local hasTriggerPriority = self._effectDoneMap and tabletool.len(self._effectDoneMap) or 0
+	local priority = mo.priority
 
-	return var_12_1 + 1 == var_12_2
+	return hasTriggerPriority + 1 == priority
 end
 
-function var_0_0.getTriggerEffectDoneMap(arg_13_0)
-	return arg_13_0._effectDoneMap
+function PuzzleMazeDrawModel:getTriggerEffectDoneMap()
+	return self._effectDoneMap
 end
 
-function var_0_0.setTriggerEffectDoneMap(arg_14_0, arg_14_1)
-	arg_14_0._effectDoneMap = arg_14_1
+function PuzzleMazeDrawModel:setTriggerEffectDoneMap(effectDoneMap)
+	self._effectDoneMap = effectDoneMap
 end
 
-var_0_0.instance = var_0_0.New()
+PuzzleMazeDrawModel.instance = PuzzleMazeDrawModel.New()
 
-return var_0_0
+return PuzzleMazeDrawModel

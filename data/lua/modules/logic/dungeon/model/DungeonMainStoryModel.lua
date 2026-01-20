@@ -1,22 +1,24 @@
-﻿module("modules.logic.dungeon.model.DungeonMainStoryModel", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/model/DungeonMainStoryModel.lua
 
-local var_0_0 = class("DungeonMainStoryModel", BaseModel)
+module("modules.logic.dungeon.model.DungeonMainStoryModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local DungeonMainStoryModel = class("DungeonMainStoryModel", BaseModel)
+
+function DungeonMainStoryModel:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._selectedSectionId = nil
-	arg_2_0._clickChapterId = nil
-	arg_2_0._chapterList = nil
-	arg_2_0._jumpFocusChapterId = nil
-	arg_2_0._guides = nil
+function DungeonMainStoryModel:reInit()
+	self._selectedSectionId = nil
+	self._clickChapterId = nil
+	self._chapterList = nil
+	self._jumpFocusChapterId = nil
+	self._guides = nil
 end
 
-function var_0_0.getConflictGuides(arg_3_0)
-	if not arg_3_0._guides then
-		arg_3_0._guides = {
+function DungeonMainStoryModel:getConflictGuides()
+	if not self._guides then
+		self._guides = {
 			102,
 			116,
 			122,
@@ -31,138 +33,141 @@ function var_0_0.getConflictGuides(arg_3_0)
 		}
 	end
 
-	return arg_3_0._guides
+	return self._guides
 end
 
-function var_0_0.setChapterList(arg_4_0, arg_4_1)
-	arg_4_0._chapterList = {}
+function DungeonMainStoryModel:setChapterList(list)
+	self._chapterList = {}
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
-		local var_4_0 = DungeonConfig.instance:getChapterDivideSectionId(iter_4_1.id)
-		local var_4_1 = arg_4_0._chapterList[var_4_0] or {}
+	for i, v in ipairs(list) do
+		local sectionId = DungeonConfig.instance:getChapterDivideSectionId(v.id)
+		local sectionList = self._chapterList[sectionId] or {}
 
-		table.insert(var_4_1, iter_4_1)
+		table.insert(sectionList, v)
 
-		if var_4_0 then
-			arg_4_0._chapterList[var_4_0] = var_4_1
+		if sectionId then
+			self._chapterList[sectionId] = sectionList
 		else
-			logError(string.format("chapterId:%s 未加入主线分节配置,获取不到大章节id", iter_4_1.id))
+			logError(string.format("chapterId:%s 未加入主线分节配置,获取不到大章节id", v.id))
 		end
 	end
 end
 
-function var_0_0.getChapterList(arg_5_0, arg_5_1)
-	if not arg_5_0._chapterList then
-		arg_5_0:forceUpdateChapterList()
+function DungeonMainStoryModel:getChapterList(sectionId)
+	if not self._chapterList then
+		self:forceUpdateChapterList()
 	end
 
-	return arg_5_1 and arg_5_0._chapterList[arg_5_1]
+	return sectionId and self._chapterList[sectionId]
 end
 
-function var_0_0.forceUpdateChapterList(arg_6_0)
+function DungeonMainStoryModel:forceUpdateChapterList()
 	DungeonModel.instance:changeCategory(DungeonEnum.ChapterType.Normal, true)
 end
 
-function var_0_0.setSectionSelected(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_0._selectedSectionId = arg_7_1
+function DungeonMainStoryModel:setSectionSelected(sectionId, clearChapterId)
+	self._selectedSectionId = sectionId
 
-	local var_7_0 = var_0_0.getKey(PlayerPrefsKey.SelectDungeonSection)
+	local key = DungeonMainStoryModel.getKey(PlayerPrefsKey.SelectDungeonSection)
 
-	PlayerPrefsHelper.setNumber(var_7_0, arg_7_1 or 0)
+	PlayerPrefsHelper.setNumber(key, sectionId or 0)
 
-	if not arg_7_1 or arg_7_2 then
-		arg_7_0:saveClickChapterId()
+	if not sectionId or clearChapterId then
+		self:saveClickChapterId()
 	end
 end
 
-function var_0_0.clearSectionSelected(arg_8_0)
-	arg_8_0._selectedSectionId = nil
+function DungeonMainStoryModel:clearSectionSelected()
+	self._selectedSectionId = nil
 end
 
-function var_0_0.getSelectedSectionId(arg_9_0)
-	return arg_9_0._selectedSectionId
+function DungeonMainStoryModel:getSelectedSectionId()
+	return self._selectedSectionId
 end
 
-function var_0_0.initSelectedSectionId(arg_10_0)
-	local var_10_0 = var_0_0.getKey(PlayerPrefsKey.SelectDungeonSection)
+function DungeonMainStoryModel:initSelectedSectionId()
+	local key = DungeonMainStoryModel.getKey(PlayerPrefsKey.SelectDungeonSection)
+	local sectionId = PlayerPrefsHelper.getNumber(key)
 
-	arg_10_0._selectedSectionId = PlayerPrefsHelper.getNumber(var_10_0)
+	self._selectedSectionId = sectionId
 end
 
-function var_0_0.saveClickChapterId(arg_11_0, arg_11_1)
-	arg_11_0._clickChapterId = arg_11_1
+function DungeonMainStoryModel:saveClickChapterId(chapterId)
+	self._clickChapterId = chapterId
 
-	local var_11_0 = var_0_0.getKey(PlayerPrefsKey.SelectDungeonChapter)
+	local key = DungeonMainStoryModel.getKey(PlayerPrefsKey.SelectDungeonChapter)
 
-	PlayerPrefsHelper.setNumber(var_11_0, arg_11_1 or 0)
+	PlayerPrefsHelper.setNumber(key, chapterId or 0)
 end
 
-function var_0_0.saveBattleChapterId(arg_12_0, arg_12_1)
-	if not arg_12_1 then
+function DungeonMainStoryModel:saveBattleChapterId(episodeId)
+	if not episodeId then
 		return
 	end
 
-	local var_12_0 = DungeonConfig.instance:getEpisodeCO(arg_12_1)
+	local episode_config = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-	if not var_12_0 then
+	if not episode_config then
 		return
 	end
 
-	local var_12_1 = var_12_0.chapterId
-	local var_12_2 = DungeonConfig.instance:getChapterCO(var_12_1)
+	local chapterId = episode_config.chapterId
+	local chapter_config = DungeonConfig.instance:getChapterCO(chapterId)
 
-	if not var_12_2 then
+	if not chapter_config then
 		return
 	end
 
-	if var_12_2.type == DungeonEnum.ChapterType.Normal then
-		if not DungeonConfig.instance:getChapterDivideSectionId(var_12_1) then
+	if chapter_config.type == DungeonEnum.ChapterType.Normal then
+		local sectionId = DungeonConfig.instance:getChapterDivideSectionId(chapterId)
+
+		if not sectionId then
 			return
 		end
 
-		arg_12_0:saveClickChapterId(var_12_1)
+		self:saveClickChapterId(chapterId)
 	end
 end
 
-function var_0_0.getClickChapterId(arg_13_0)
-	if not arg_13_0._clickChapterId then
-		local var_13_0 = var_0_0.getKey(PlayerPrefsKey.SelectDungeonChapter)
-		local var_13_1 = PlayerPrefsHelper.getNumber(var_13_0, 0)
+function DungeonMainStoryModel:getClickChapterId()
+	if not self._clickChapterId then
+		local key = DungeonMainStoryModel.getKey(PlayerPrefsKey.SelectDungeonChapter)
+		local chapterId = PlayerPrefsHelper.getNumber(key, 0)
 
-		if var_13_1 ~= 0 then
-			arg_13_0._clickChapterId = var_13_1
+		if chapterId ~= 0 then
+			self._clickChapterId = chapterId
 		end
 	end
 
-	return arg_13_0._clickChapterId
+	return self._clickChapterId
 end
 
-function var_0_0.sectionIsSelected(arg_14_0, arg_14_1)
-	return arg_14_0._selectedSectionId == arg_14_1
+function DungeonMainStoryModel:sectionIsSelected(sectionId)
+	return self._selectedSectionId == sectionId
 end
 
-function var_0_0.setJumpFocusChapterId(arg_15_0, arg_15_1)
-	arg_15_0._jumpFocusChapterId = arg_15_1
+function DungeonMainStoryModel:setJumpFocusChapterId(chapterId)
+	self._jumpFocusChapterId = chapterId
 end
 
-function var_0_0.getJumpFocusChapterIdOnce(arg_16_0)
-	local var_16_0 = arg_16_0._jumpFocusChapterId
+function DungeonMainStoryModel:getJumpFocusChapterIdOnce()
+	local chapterId = self._jumpFocusChapterId
 
-	arg_16_0._jumpFocusChapterId = nil
+	self._jumpFocusChapterId = nil
 
-	return var_16_0
+	return chapterId
 end
 
-function var_0_0.sectionChapterAllPassed(arg_17_0, arg_17_1)
-	local var_17_0 = lua_chapter_divide.configDict[arg_17_1]
-	local var_17_1 = var_17_0 and var_17_0.chapterId
+function DungeonMainStoryModel:sectionChapterAllPassed(sectionId)
+	local config = lua_chapter_divide.configDict[sectionId]
+	local list = config and config.chapterId
 
-	if not var_17_1 then
+	if not list then
 		return false
 	end
 
-	for iter_17_0, iter_17_1 in ipairs(var_17_1) do
-		if not DungeonModel.instance:chapterIsPass(iter_17_1) then
+	for _, v in ipairs(list) do
+		if not DungeonModel.instance:chapterIsPass(v) then
 			return false
 		end
 	end
@@ -170,91 +175,96 @@ function var_0_0.sectionChapterAllPassed(arg_17_0, arg_17_1)
 	return true
 end
 
-function var_0_0.isUnlockInPreviewChapter(arg_18_0)
-	local var_18_0 = DungeonConfig.instance:getEpisodeCO(arg_18_0)
+function DungeonMainStoryModel.isUnlockInPreviewChapter(episodeId)
+	local episodeConfig = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-	if not var_18_0 then
+	if not episodeConfig then
 		return false
 	end
 
-	local var_18_1 = DungeonConfig.instance:getChapterCO(var_18_0.chapterId)
+	local chapterConfig = DungeonConfig.instance:getChapterCO(episodeConfig.chapterId)
 
-	if not var_18_1 then
+	if not chapterConfig then
 		return false
 	end
 
-	local var_18_2 = var_18_1.eaActivityId
+	local actId = chapterConfig.eaActivityId
 
-	if var_18_2 == 0 then
+	if actId == 0 then
 		return false
 	end
 
-	local var_18_3 = DungeonConfig.instance:getPreviewChapterList(var_18_1.id)
-	local var_18_4 = false
-	local var_18_5 = false
+	local chapterList = DungeonConfig.instance:getPreviewChapterList(chapterConfig.id)
+	local episodeIdIsFirst = false
+	local episodeFirstPass = false
 
-	for iter_18_0, iter_18_1 in ipairs(var_18_3) do
-		local var_18_6 = DungeonConfig.instance:getChapterEpisodeCOList(iter_18_1.id)
+	for i, config in ipairs(chapterList) do
+		local episodeList = DungeonConfig.instance:getChapterEpisodeCOList(config.id)
 
-		if var_18_6 and var_18_6[1] then
-			local var_18_7 = var_18_6[1].id
+		if episodeList and episodeList[1] then
+			local id = episodeList[1].id
 
-			if arg_18_0 == var_18_7 then
-				var_18_4 = true
+			if episodeId == id then
+				episodeIdIsFirst = true
 			end
 
-			if DungeonModel.instance:onlyCheckPassLevel(var_18_7) then
-				var_18_5 = true
+			if DungeonModel.instance:onlyCheckPassLevel(id) then
+				episodeFirstPass = true
 			end
 		end
 	end
 
-	if not var_18_4 then
+	if not episodeIdIsFirst then
 		return false
 	end
 
-	return ActivityHelper.getActivityStatus(var_18_2) == ActivityEnum.ActivityStatus.Normal or var_18_5
+	local status = ActivityHelper.getActivityStatus(actId)
+	local isNormal = status == ActivityEnum.ActivityStatus.Normal
+
+	return isNormal or episodeFirstPass
 end
 
-function var_0_0.showPreviewChapterFlag(arg_19_0, arg_19_1)
+function DungeonMainStoryModel:showPreviewChapterFlag(chapterId)
 	if not DungeonModel.instance:chapterIsPass(DungeonEnum.ChapterId.Main1_1) then
 		return false
 	end
 
-	local var_19_0 = DungeonConfig.instance:getChapterCO(arg_19_1)
+	local chapterConfig = DungeonConfig.instance:getChapterCO(chapterId)
 
-	if not var_19_0 then
+	if not chapterConfig then
 		return false
 	end
 
-	local var_19_1 = var_19_0.eaActivityId
+	local actId = chapterConfig.eaActivityId
 
-	if var_19_1 == 0 then
+	if actId == 0 then
 		return false
 	end
 
-	if ActivityHelper.getActivityStatus(var_19_1) ~= ActivityEnum.ActivityStatus.Normal then
+	local status = ActivityHelper.getActivityStatus(actId)
+
+	if status ~= ActivityEnum.ActivityStatus.Normal then
 		return false
 	end
 
-	if var_19_0.preChapter > 0 and arg_19_0:_bothPreChaptersFinished(var_19_0.preChapter) then
+	if chapterConfig.preChapter > 0 and self:_bothPreChaptersFinished(chapterConfig.preChapter) then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0._bothPreChaptersFinished(arg_20_0, arg_20_1)
-	if arg_20_1 <= 0 then
+function DungeonMainStoryModel:_bothPreChaptersFinished(chapterId)
+	if chapterId <= 0 then
 		return true
 	end
 
-	local var_20_0 = DungeonConfig.instance:getChapterEpisodeCOList(arg_20_1)
+	local episodeList = DungeonConfig.instance:getChapterEpisodeCOList(chapterId)
 
-	if var_20_0 then
-		local var_20_1 = var_20_0[#var_20_0]
+	if episodeList then
+		local lastConfig = episodeList[#episodeList]
 
-		if var_20_1 and (DungeonModel.instance:hasPassLevelAndStory(var_20_1.id) or DungeonModel.instance:hasPassLevelAndStory(var_20_1.chainEpisode)) then
+		if lastConfig and (DungeonModel.instance:hasPassLevelAndStory(lastConfig.id) or DungeonModel.instance:hasPassLevelAndStory(lastConfig.chainEpisode)) then
 			return true
 		end
 	end
@@ -262,24 +272,25 @@ function var_0_0._bothPreChaptersFinished(arg_20_0, arg_20_1)
 	return false
 end
 
-function var_0_0.hasPreviewChapterHistory(arg_21_0, arg_21_1)
+function DungeonMainStoryModel:hasPreviewChapterHistory(chapterId)
 	if not DungeonModel.instance:chapterIsPass(DungeonEnum.ChapterId.Main1_1) then
 		return false
 	end
 
-	local var_21_0 = DungeonConfig.instance:getChapterCO(arg_21_1)
+	local chapterConfig = DungeonConfig.instance:getChapterCO(chapterId)
+	local isPreview = chapterConfig and chapterConfig.eaActivityId ~= 0
 
-	if var_21_0 and var_21_0.eaActivityId ~= 0 then
-		if arg_21_0:_bothPreChaptersFinished(var_21_0.preChapter) then
+	if isPreview then
+		if self:_bothPreChaptersFinished(chapterConfig.preChapter) then
 			return true
 		end
 
-		local var_21_1 = DungeonConfig.instance:getPreviewChapterList(var_21_0.id)
+		local chapterList = DungeonConfig.instance:getPreviewChapterList(chapterConfig.id)
 
-		for iter_21_0, iter_21_1 in ipairs(var_21_1) do
-			local var_21_2 = DungeonConfig.instance:getChapterEpisodeCOList(iter_21_1.id)
+		for i, config in ipairs(chapterList) do
+			local episodeList = DungeonConfig.instance:getChapterEpisodeCOList(config.id)
 
-			if var_21_2 and var_21_2[1] and DungeonModel.instance:hasPassLevel(var_21_2[1].id) then
+			if episodeList and episodeList[1] and DungeonModel.instance:hasPassLevel(episodeList[1].id) then
 				return true
 			end
 		end
@@ -288,20 +299,22 @@ function var_0_0.hasPreviewChapterHistory(arg_21_0, arg_21_1)
 	return false
 end
 
-function var_0_0.isPreviewChapter(arg_22_0, arg_22_1)
-	return arg_22_0:showPreviewChapterFlag(arg_22_1) or arg_22_0:hasPreviewChapterHistory(arg_22_1)
+function DungeonMainStoryModel:isPreviewChapter(chapterId)
+	return self:showPreviewChapterFlag(chapterId) or self:hasPreviewChapterHistory(chapterId)
 end
 
-function var_0_0.hasKey(arg_23_0, arg_23_1)
-	local var_23_0 = var_0_0.getKey(arg_23_0, arg_23_1)
+function DungeonMainStoryModel.hasKey(type, id)
+	local key = DungeonMainStoryModel.getKey(type, id)
 
-	return PlayerPrefsHelper.hasKey(var_23_0)
+	return PlayerPrefsHelper.hasKey(key)
 end
 
-function var_0_0.getKey(arg_24_0, arg_24_1)
-	return (string.format("%s%s_%s", arg_24_0, PlayerModel.instance:getPlayinfo().userId, arg_24_1))
+function DungeonMainStoryModel.getKey(type, id)
+	local key = string.format("%s%s_%s", type, PlayerModel.instance:getPlayinfo().userId, id)
+
+	return key
 end
 
-var_0_0.instance = var_0_0.New()
+DungeonMainStoryModel.instance = DungeonMainStoryModel.New()
 
-return var_0_0
+return DungeonMainStoryModel

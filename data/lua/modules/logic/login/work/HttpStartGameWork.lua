@@ -1,80 +1,81 @@
-﻿module("modules.logic.login.work.HttpStartGameWork", package.seeall)
+﻿-- chunkname: @modules/logic/login/work/HttpStartGameWork.lua
 
-local var_0_0 = class("HttpStartGameWork", BaseWork)
-local var_0_1 = 5
-local var_0_2
-local var_0_3
-local var_0_4
+module("modules.logic.login.work.HttpStartGameWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	if var_0_2 and Time.time - var_0_2 < var_0_1 then
-		TaskDispatcher.runDelay(arg_1_0._delayRespondInCd, arg_1_0, 0.1)
+local HttpStartGameWork = class("HttpStartGameWork", BaseWork)
+local Interval = 5
+local lastRequestTime, lastRespondStatus, lastRespondMsg
+
+function HttpStartGameWork:onStart(context)
+	if lastRequestTime and Time.time - lastRequestTime < Interval then
+		TaskDispatcher.runDelay(self._delayRespondInCd, self, 0.1)
 	else
-		var_0_2 = Time.time
+		lastRequestTime = Time.time
 
-		local var_1_0 = LoginController.instance:get_startGameUrl(arg_1_0.context.useBackupUrl)
-		local var_1_1 = {}
+		local url = LoginController.instance:get_startGameUrl(self.context.useBackupUrl)
+		local data = {}
 
-		table.insert(var_1_1, string.format("sessionId=%s", LoginModel.instance.sessionId))
-		table.insert(var_1_1, string.format("zoneId=%s", arg_1_0.context.lastServerMO.id))
+		table.insert(data, string.format("sessionId=%s", LoginModel.instance.sessionId))
+		table.insert(data, string.format("zoneId=%s", self.context.lastServerMO.id))
 
-		local var_1_2 = var_1_0 .. "?" .. table.concat(var_1_1, "&")
+		url = url .. "?" .. table.concat(data, "&")
+		self._url = url
+		self._httpStartGameRequestId = SLFramework.SLWebRequestClient.Instance:Get(url, self._onHttpStartGameResponse, self)
 
-		arg_1_0._url = var_1_2
-		arg_1_0._httpStartGameRequestId = SLFramework.SLWebRequest.Instance:Get(var_1_2, arg_1_0._onHttpStartGameResponse, arg_1_0)
-
-		logNormal(var_1_2)
+		logNormal(url)
 	end
 end
 
-function var_0_0._delayRespondInCd(arg_2_0)
-	arg_2_0:_onHttpStartGameResponse(var_0_3, var_0_4)
+function HttpStartGameWork:_delayRespondInCd()
+	self:_onHttpStartGameResponse(lastRespondStatus, lastRespondMsg)
 end
 
-function var_0_0._onHttpStartGameResponse(arg_3_0, arg_3_1, arg_3_2)
-	var_0_3 = arg_3_1
-	var_0_4 = arg_3_2
-	arg_3_0._httpStartGameRequestId = nil
+function HttpStartGameWork:_onHttpStartGameResponse(isSuccess, msg)
+	lastRespondStatus = isSuccess
+	lastRespondMsg = msg
+	self._httpStartGameRequestId = nil
 
-	local var_3_0 = arg_3_0._url
+	local url = self._url
 
-	logNormal("http start game response: " .. (arg_3_2 or "nil"))
+	logNormal("http start game response: " .. (msg or "nil"))
 
-	if arg_3_1 and arg_3_2 and arg_3_2 ~= "" then
-		local var_3_1 = cjson.decode(arg_3_2)
+	if isSuccess and msg and msg ~= "" then
+		local data = cjson.decode(msg)
 
-		if var_3_1 and var_3_1.resultCode and var_3_1.resultCode == 0 then
-			if var_3_1.state == 1 then
-				LoginModel.instance.serverIp = var_3_1.ip
-				LoginModel.instance.serverPort = var_3_1.port
+		if data and data.resultCode and data.resultCode == 0 then
+			if data.state == 1 then
+				LoginModel.instance.serverIp = data.ip
+				LoginModel.instance.serverPort = data.port
 
-				if not string.nilorempty(var_3_1.bakIp) then
-					LoginModel.instance.serverBakIp = var_3_1.bakIp
-					LoginModel.instance.serverBakPort = var_3_1.bakPort
+				if not string.nilorempty(data.bakIp) then
+					LoginModel.instance.serverBakIp = data.bakIp
+					LoginModel.instance.serverBakPort = data.bakPort
 				end
 
-				LoginModel.instance.serverName = arg_3_0.context.lastServerMO.name
-				LoginModel.instance.serverId = arg_3_0.context.lastServerMO.id
+				LoginModel.instance.serverName = self.context.lastServerMO.name
+				LoginModel.instance.serverId = self.context.lastServerMO.id
 
 				logNormal("<color=#00FF00>http 登录成功</color>")
-				arg_3_0:onDone(true)
+				self:onDone(true)
 
 				if not LoginModel.instance.serverIp or not LoginModel.instance.serverPort then
-					logError(string.format("HttpStartGameWork response error serverIp:%s, serverPort:%s msg:%s url:%s", var_3_1.ip, var_3_1.port, arg_3_2, var_3_0))
+					logError(string.format("HttpStartGameWork response error serverIp:%s, serverPort:%s msg:%s url:%s", data.ip, data.port, msg, url))
 				end
 			else
-				if var_3_1.state == 0 then
-					arg_3_0.context.dontReconnect = true
+				if data.state == 0 then
+					self.context.dontReconnect = true
 
-					local var_3_2 = GameChannelConfig.isLongCheng() or GameChannelConfig.isEfun()
-					local var_3_3 = false
+					local noStopServiceBaffleFunc = GameChannelConfig.isLongCheng() or GameChannelConfig.isEfun()
+					local isShowStopServiceBaffle = false
 
-					if (not var_3_2 or false) and SDKMgr.instance:isShowStopServiceBaffle() then
+					isShowStopServiceBaffle = (not noStopServiceBaffleFunc or false) and SDKMgr.instance:isShowStopServiceBaffle()
+
+					if isShowStopServiceBaffle then
 						SDKMgr.instance:stopService()
-					elseif string.nilorempty(var_3_1.tips) then
+					elseif string.nilorempty(data.tips) then
 						GameFacade.showMessageBox(MessageBoxIdDefine.ServerNotConnect, MsgBoxEnum.BoxType.Yes)
 					else
-						MessageBoxController.instance:showMsgBoxByStr(var_3_1.tips, MsgBoxEnum.BoxType.Yes)
+						MessageBoxController.instance:showMsgBoxByStr(data.tips, MsgBoxEnum.BoxType.Yes)
 					end
 
 					logWarn("服务器未开启")
@@ -82,30 +83,30 @@ function var_0_0._onHttpStartGameResponse(arg_3_0, arg_3_1, arg_3_2)
 					logWarn("服务器爆满")
 				end
 
-				arg_3_0:onDone(false)
+				self:onDone(false)
 			end
 		else
-			arg_3_0.context.resultCode = var_3_1 and var_3_1.resultCode
+			self.context.resultCode = data and data.resultCode
 
-			logNormal(string.format("http start game 出错了 resultCode = %d", var_3_1.resultCode or "nil"))
-			arg_3_0:onDone(false)
+			logNormal(string.format("http start game 出错了 resultCode = %d", data.resultCode or "nil"))
+			self:onDone(false)
 		end
 	else
 		logNormal("http start game 失败")
-		arg_3_0:onDone(false)
+		self:onDone(false)
 	end
 end
 
-function var_0_0.clearWork(arg_4_0)
-	arg_4_0._url = nil
+function HttpStartGameWork:clearWork()
+	self._url = nil
 
-	TaskDispatcher.cancelTask(arg_4_0._delayRespondInCd, arg_4_0)
+	TaskDispatcher.cancelTask(self._delayRespondInCd, self)
 
-	if arg_4_0._httpStartGameRequestId then
-		SLFramework.SLWebRequest.Instance:Stop(arg_4_0._httpStartGameRequestId)
+	if self._httpStartGameRequestId then
+		SLFramework.SLWebRequestClient.Instance:Stop(self._httpStartGameRequestId)
 
-		arg_4_0._httpStartGameRequestId = nil
+		self._httpStartGameRequestId = nil
 	end
 end
 
-return var_0_0
+return HttpStartGameWork

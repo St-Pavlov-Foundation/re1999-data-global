@@ -1,24 +1,26 @@
-﻿module("modules.logic.fight.model.restart.FightRestartAbandonType.FightRestartAbandonType131", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/restart/FightRestartAbandonType/FightRestartAbandonType131.lua
 
-local var_0_0 = class("FightRestartAbandonType131", FightRestartAbandonType1)
+module("modules.logic.fight.model.restart.FightRestartAbandonType.FightRestartAbandonType131", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	arg_1_0:__onInit()
+local FightRestartAbandonType131 = class("FightRestartAbandonType131", FightRestartAbandonType1)
 
-	arg_1_0._fight_work = arg_1_1
-	arg_1_0._fightParam = arg_1_2
-	arg_1_0._episode_config = arg_1_3
-	arg_1_0._chapter_config = arg_1_4
+function FightRestartAbandonType131:ctor(fight_work, fightParam, episode_config, chapter_config)
+	self:__onInit()
+
+	self._fight_work = fight_work
+	self._fightParam = fightParam
+	self._episode_config = episode_config
+	self._chapter_config = chapter_config
 end
 
-function var_0_0.canRestart(arg_2_0)
-	local var_2_0 = ActivityModel.instance:getActivityInfo()[VersionActivity1_3Enum.ActivityId.Dungeon]
+function FightRestartAbandonType131:canRestart()
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[VersionActivity1_3Enum.ActivityId.Dungeon]
 
-	if not var_2_0:isOnline() or not var_2_0:isOpen() or var_2_0:isExpired() then
+	if not actInfoMo:isOnline() or not actInfoMo:isOpen() or actInfoMo:isExpired() then
 		return false
 	end
 
-	return var_0_0.super.canRestart(arg_2_0)
+	return FightRestartAbandonType131.super.canRestart(self)
 end
 
-return var_0_0
+return FightRestartAbandonType131

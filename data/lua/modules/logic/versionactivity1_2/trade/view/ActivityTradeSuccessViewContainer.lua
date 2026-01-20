@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity1_2.trade.view.ActivityTradeSuccessViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/trade/view/ActivityTradeSuccessViewContainer.lua
 
-local var_0_0 = class("ActivityTradeSuccessViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_2.trade.view.ActivityTradeSuccessViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local ActivityTradeSuccessViewContainer = class("ActivityTradeSuccessViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, ActivityTradeSuccessView.New())
+function ActivityTradeSuccessViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, ActivityTradeSuccessView.New())
+
+	return views
 end
 
-return var_0_0
+return ActivityTradeSuccessViewContainer

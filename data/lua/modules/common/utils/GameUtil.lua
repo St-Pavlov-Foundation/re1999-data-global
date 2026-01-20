@@ -1,226 +1,260 @@
-﻿module("modules.common.utils.GameUtil", package.seeall)
+﻿-- chunkname: @modules/common/utils/GameUtil.lua
 
-local var_0_0 = {
-	getBriefName = function(arg_1_0, arg_1_1, arg_1_2)
-		if LuaUtil.isEmptyStr(arg_1_0) then
-			return ""
-		end
+module("modules.common.utils.GameUtil", package.seeall)
 
-		if arg_1_1 >= LuaUtil.getStrLen(arg_1_0) then
-			return arg_1_0
-		end
+local GameUtil = {}
 
-		local var_1_0 = LuaUtil.getUCharArr(arg_1_0)
-
-		if var_1_0 == nil or #var_1_0 <= 0 then
-			return LuaUtil.emptyStr
-		end
-
-		arg_1_2 = arg_1_2 or "..."
-
-		local var_1_1 = LuaUtil.emptyStr
-		local var_1_2 = 0
-
-		for iter_1_0 = 1, #var_1_0 do
-			local var_1_3 = string.byte(var_1_0[iter_1_0])
-
-			if var_1_3 > 0 and var_1_3 <= 127 then
-				var_1_2 = var_1_2 + 1
-			elseif var_1_3 >= 192 and var_1_3 <= 239 then
-				var_1_2 = var_1_2 + 2
-			end
-
-			if var_1_2 <= arg_1_1 then
-				var_1_1 = var_1_1 .. var_1_0[iter_1_0]
-			end
-		end
-
-		return var_1_1 .. arg_1_2
-	end,
-	getUCharArrWithoutRichTxt = function(arg_2_0)
-		local var_2_0 = {}
-
-		arg_2_0 = string.gsub(arg_2_0, "(<[^>]+>)", function(arg_3_0)
-			table.insert(var_2_0, arg_3_0)
-
-			return "▩"
-		end)
-
-		local var_2_1 = LuaUtil.getUCharArr(arg_2_0) or {}
-
-		for iter_2_0 = #var_2_1, 1, -1 do
-			if string.find(var_2_1[iter_2_0], "▩") then
-				local var_2_2 = table.remove(var_2_0) or ""
-				local var_2_3 = string.gsub(var_2_1[iter_2_0], "▩", var_2_2)
-
-				if var_2_1[iter_2_0 + 1] then
-					var_2_1[iter_2_0 + 1] = var_2_3 .. var_2_1[iter_2_0 + 1]
-
-					table.remove(var_2_1, iter_2_0)
-				else
-					var_2_1[iter_2_0] = var_2_3
-				end
-			end
-		end
-
-		return var_2_1
-	end,
-	getUCharArrWithLineFeedWithoutRichTxt = function(arg_4_0)
-		local var_4_0 = {}
-
-		arg_4_0 = string.gsub(arg_4_0, "(<[^>]+>)", function(arg_5_0)
-			table.insert(var_4_0, arg_5_0)
-
-			return "▩"
-		end)
-
-		local var_4_1 = LuaUtil.getUCharArrWithLineFeed(arg_4_0) or {}
-
-		for iter_4_0 = #var_4_1, 1, -1 do
-			if var_4_1[iter_4_0] == "▩" then
-				local var_4_2 = table.remove(var_4_0) or ""
-
-				if var_4_1[iter_4_0 + 1] then
-					var_4_1[iter_4_0 + 1] = var_4_2 .. var_4_1[iter_4_0 + 1]
-
-					table.remove(var_4_1, iter_4_0)
-				else
-					var_4_1[iter_4_0] = var_4_2
-				end
-			end
-		end
-
-		return var_4_1
-	end
-}
-
-function var_0_0.removeJsonNull(arg_6_0)
-	for iter_6_0, iter_6_1 in pairs(arg_6_0) do
-		if iter_6_1 == cjson.null then
-			arg_6_0[iter_6_0] = nil
-		elseif type(iter_6_1) == "table" then
-			var_0_0.removeJsonNull(iter_6_1)
-		end
-	end
-end
-
-function var_0_0.getBriefNameByWidth(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	if LuaUtil.isEmptyStr(arg_7_0) then
+function GameUtil.getBriefName(str, charCount, suffix)
+	if LuaUtil.isEmptyStr(str) then
 		return ""
 	end
 
-	local var_7_0 = LuaUtil.getStrLen(arg_7_0)
+	local charLen = LuaUtil.getStrLen(str)
 
-	if var_7_0 <= 0 then
-		return arg_7_0
+	if charLen <= charCount then
+		return str
 	end
 
-	local var_7_1 = arg_7_1.transform.sizeDelta.x - (arg_7_2 or 15)
+	local ucharArr = LuaUtil.getUCharArr(str)
 
-	if var_7_1 > SLFramework.UGUI.GuiHelper.GetPreferredWidth(arg_7_1, arg_7_0) then
-		return arg_7_0
+	if ucharArr == nil or #ucharArr <= 0 then
+		return LuaUtil.emptyStr
 	end
 
-	arg_7_3 = arg_7_3 or "..."
+	suffix = suffix or "..."
 
-	for iter_7_0 = var_7_0 - 1, 1, -1 do
-		local var_7_2 = var_0_0.getBriefName(arg_7_0, iter_7_0, "")
+	local newStr = LuaUtil.emptyStr
+	local counter = 0
 
-		if var_7_1 > SLFramework.UGUI.GuiHelper.GetPreferredWidth(arg_7_1, var_7_2) then
-			return var_7_2 .. arg_7_3
+	for i = 1, #ucharArr do
+		local byte = string.byte(ucharArr[i])
+
+		if byte > 0 and byte <= 127 then
+			counter = counter + 1
+		elseif byte >= 192 and byte <= 239 then
+			counter = counter + 2
+		end
+
+		if counter <= charCount then
+			newStr = newStr .. ucharArr[i]
 		end
 	end
 
-	return arg_7_0 .. arg_7_3
+	return newStr .. suffix
 end
 
-function var_0_0.trimInput(arg_8_0)
-	arg_8_0 = string.gsub(arg_8_0, "　", "")
+function GameUtil.getUCharArrWithoutRichTxt(str)
+	local richTags = {}
 
-	return string.gsub(arg_8_0, "[ \t\n\r]+", "")
+	str = string.gsub(str, "(<[^>]+>)", function(s)
+		table.insert(richTags, s)
+
+		return "▩"
+	end)
+
+	local ucharArr = LuaUtil.getUCharArr(str) or {}
+
+	for i = #ucharArr, 1, -1 do
+		if string.find(ucharArr[i], "▩") then
+			local tag = table.remove(richTags) or ""
+
+			tag = string.gsub(ucharArr[i], "▩", tag)
+
+			if ucharArr[i + 1] then
+				ucharArr[i + 1] = tag .. ucharArr[i + 1]
+
+				table.remove(ucharArr, i)
+			else
+				ucharArr[i] = tag
+			end
+		end
+	end
+
+	return ucharArr
 end
 
-function var_0_0.trimInput1(arg_9_0)
-	arg_9_0 = string.gsub(arg_9_0, "　", "")
+function GameUtil.getUCharArrWithLineFeedWithoutRichTxt(str)
+	local richTags = {}
 
-	return string.gsub(arg_9_0, "[ \t\r]+", "")
+	str = string.gsub(str, "(<[^>]+>)", function(s)
+		table.insert(richTags, s)
+
+		return "▩"
+	end)
+
+	local ucharArr = LuaUtil.getUCharArrWithLineFeed(str) or {}
+
+	for i = #ucharArr, 1, -1 do
+		if ucharArr[i] == "▩" then
+			local tag = table.remove(richTags) or ""
+
+			if ucharArr[i + 1] then
+				ucharArr[i + 1] = tag .. ucharArr[i + 1]
+
+				table.remove(ucharArr, i)
+			else
+				ucharArr[i] = tag
+			end
+		end
+	end
+
+	return ucharArr
 end
 
-function var_0_0.filterSpecChars(arg_10_0)
-	local var_10_0 = {}
-	local var_10_1 = 1
+function GameUtil.getUCharArrWithLineFeedWithoutRichTxt(str)
+	local richTags = {}
+
+	str = string.gsub(str, "(<[^>]+>)", function(s)
+		table.insert(richTags, s)
+
+		return "▩"
+	end)
+
+	local ucharArr = LuaUtil.getUCharArrWithLineFeed(str) or {}
+
+	for i = #ucharArr, 1, -1 do
+		if ucharArr[i] == "▩" then
+			local tag = table.remove(richTags) or ""
+
+			if ucharArr[i + 1] then
+				ucharArr[i + 1] = tag .. ucharArr[i + 1]
+
+				table.remove(ucharArr, i)
+			else
+				ucharArr[i] = tag
+			end
+		end
+	end
+
+	return ucharArr
+end
+
+function GameUtil.removeJsonNull(jsonTb)
+	for k, v in pairs(jsonTb) do
+		if v == cjson.null then
+			jsonTb[k] = nil
+		elseif type(v) == "table" then
+			GameUtil.removeJsonNull(v)
+		end
+	end
+end
+
+function GameUtil.getBriefNameByWidth(str, txtComponent, offsetWidth, suffix)
+	if LuaUtil.isEmptyStr(str) then
+		return ""
+	end
+
+	local charLen = LuaUtil.getStrLen(str)
+
+	if charLen <= 0 then
+		return str
+	end
+
+	local destWidth = txtComponent.transform.sizeDelta.x - (offsetWidth or 15)
+	local preferredWidth = SLFramework.UGUI.GuiHelper.GetPreferredWidth(txtComponent, str)
+
+	if preferredWidth < destWidth then
+		return str
+	end
+
+	suffix = suffix or "..."
+
+	for i = charLen - 1, 1, -1 do
+		local newStr = GameUtil.getBriefName(str, i, "")
+		local newWidth = SLFramework.UGUI.GuiHelper.GetPreferredWidth(txtComponent, newStr)
+
+		if newWidth < destWidth then
+			return newStr .. suffix
+		end
+	end
+
+	return str .. suffix
+end
+
+function GameUtil.trimInput(inputStr)
+	inputStr = string.gsub(inputStr, "　", "")
+
+	return string.gsub(inputStr, "[ \t\n\r]+", "")
+end
+
+function GameUtil.trimInput1(inputStr)
+	inputStr = string.gsub(inputStr, "　", "")
+
+	return string.gsub(inputStr, "[ \t\r]+", "")
+end
+
+function GameUtil.filterSpecChars(s)
+	local ss = {}
+	local k = 1
 
 	while true do
-		if var_10_1 > #arg_10_0 then
+		if k > #s then
 			break
 		end
 
-		local var_10_2 = string.byte(arg_10_0, var_10_1)
+		local c = string.byte(s, k)
 
-		if not var_10_2 then
+		if not c then
 			break
 		end
 
-		if var_10_2 < 192 then
-			if var_10_2 >= 48 and var_10_2 <= 57 or var_10_2 >= 65 and var_10_2 <= 90 or var_10_2 >= 97 and var_10_2 <= 122 then
-				table.insert(var_10_0, string.char(var_10_2))
+		if c < 192 then
+			if c >= 48 and c <= 57 or c >= 65 and c <= 90 or c >= 97 and c <= 122 then
+				table.insert(ss, string.char(c))
 			end
 
-			var_10_1 = var_10_1 + 1
-		elseif var_10_2 < 224 then
-			var_10_1 = var_10_1 + 2
-		elseif var_10_2 < 240 then
-			if var_10_2 >= 228 and var_10_2 <= 233 then
-				local var_10_3 = string.byte(arg_10_0, var_10_1 + 1)
-				local var_10_4 = string.byte(arg_10_0, var_10_1 + 2)
+			k = k + 1
+		elseif c < 224 then
+			k = k + 2
+		elseif c < 240 then
+			if c >= 228 and c <= 233 then
+				local c1 = string.byte(s, k + 1)
+				local c2 = string.byte(s, k + 2)
 
-				if var_10_3 and var_10_4 then
-					local var_10_5 = 128
-					local var_10_6 = 191
-					local var_10_7 = 128
-					local var_10_8 = 191
+				if c1 and c2 then
+					local a1, a2, a3, a4 = 128, 191, 128, 191
 
-					if var_10_2 == 228 then
-						var_10_5 = 184
-					elseif var_10_2 == 233 then
-						var_10_6, var_10_8 = 190, var_10_3 ~= 190 and 191 or 165
+					if c == 228 then
+						a1 = 184
+					elseif c == 233 then
+						a2, a4 = 190, c1 ~= 190 and 191 or 165
 					end
 
-					if var_10_5 <= var_10_3 and var_10_3 <= var_10_6 and var_10_7 <= var_10_4 and var_10_4 <= var_10_8 then
-						table.insert(var_10_0, string.char(var_10_2, var_10_3, var_10_4))
+					if a1 <= c1 and c1 <= a2 and a3 <= c2 and c2 <= a4 then
+						table.insert(ss, string.char(c, c1, c2))
 					end
 				end
 			end
 
-			var_10_1 = var_10_1 + 3
-		elseif var_10_2 < 248 then
-			var_10_1 = var_10_1 + 4
-		elseif var_10_2 < 252 then
-			var_10_1 = var_10_1 + 5
-		elseif var_10_2 < 254 then
-			var_10_1 = var_10_1 + 6
+			k = k + 3
+		elseif c < 248 then
+			k = k + 4
+		elseif c < 252 then
+			k = k + 5
+		elseif c < 254 then
+			k = k + 6
 		end
 	end
 
-	return table.concat(var_10_0)
+	return table.concat(ss)
 end
 
-function var_0_0.containsPunctuation(arg_11_0)
-	if LuaUtil.isEmptyStr(arg_11_0) then
+function GameUtil.containsPunctuation(str)
+	if LuaUtil.isEmptyStr(str) then
 		return false
 	end
 
-	local var_11_0 = #arg_11_0
-	local var_11_1 = 1
+	local count = #str
+	local k = 1
 
-	for iter_11_0 = 1, var_11_0 do
-		local var_11_2 = string.byte(arg_11_0, var_11_1)
+	for i = 1, count do
+		local byte = string.byte(str, k)
 
-		if var_11_2 then
-			if var_11_2 >= 48 and var_11_2 <= 57 or var_11_2 >= 65 and var_11_2 <= 90 or var_11_2 >= 97 and var_11_2 <= 122 then
-				var_11_1 = var_11_1 + 1
-			elseif var_11_2 >= 228 and var_11_2 <= 233 then
-				var_11_1 = var_11_1 + 3
+		if byte then
+			if byte >= 48 and byte <= 57 or byte >= 65 and byte <= 90 or byte >= 97 and byte <= 122 then
+				k = k + 1
+			elseif byte >= 228 and byte <= 233 then
+				k = k + 3
 			else
 				return true
 			end
@@ -230,57 +264,57 @@ function var_0_0.containsPunctuation(arg_11_0)
 	return false
 end
 
-function var_0_0.test()
-	local var_12_0 = "233不顺利的！"
+function GameUtil.test()
+	local a = "233不顺利的！"
 
-	logNormal("a length = " .. LuaUtil.getStrLen(var_12_0) .. " a ch = " .. LuaUtil.getChineseLen(var_12_0))
-	logNormal("LuaUtil.getBriefName = " .. var_0_0.getBriefName(var_12_0, 6, ".prefab"))
+	logNormal("a length = " .. LuaUtil.getStrLen(a) .. " a ch = " .. LuaUtil.getChineseLen(a))
+	logNormal("LuaUtil.getBriefName = " .. GameUtil.getBriefName(a, 6, ".prefab"))
 
-	local var_12_1 = "地饭 大发      大\ndd哈哈\t哈哈\b"
+	local input = "地饭 大发      大\ndd哈哈\t哈哈\b"
 
-	logNormal("trimInput = " .. var_0_0.trimInput(var_12_1))
-	logNormal("trimInput1 = " .. var_0_0.trimInput1(var_12_1))
+	logNormal("trimInput = " .. GameUtil.trimInput(input))
+	logNormal("trimInput1 = " .. GameUtil.trimInput1(input))
 
-	local var_12_2 = "地饭大 发大\ndd哈哈\t哈哈\b"
+	input = "地饭大 发大\ndd哈哈\t哈哈\b"
 
-	logNormal("trimInput1 = " .. var_0_0.trimInput1(var_12_2))
-	logNormal("GameUtil.containsPunctuation = " .. tostring(var_0_0.containsPunctuation(var_12_2)))
+	logNormal("trimInput1 = " .. GameUtil.trimInput1(input))
+	logNormal("GameUtil.containsPunctuation = " .. tostring(GameUtil.containsPunctuation(input)))
 end
 
-function var_0_0.parseColor(arg_13_0)
-	return SLFramework.UGUI.GuiHelper.ParseColor(arg_13_0)
+function GameUtil.parseColor(colorStr)
+	return SLFramework.UGUI.GuiHelper.ParseColor(colorStr)
 end
 
-function var_0_0.colorToHex(arg_14_0)
-	return SLFramework.UGUI.GuiHelper.ColorToHex(arg_14_0)
+function GameUtil.colorToHex(color)
+	return SLFramework.UGUI.GuiHelper.ColorToHex(color)
 end
 
-function var_0_0.splitString2(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	if var_0_0.needLogInFightSceneUseStringFunc() then
+function GameUtil.splitString2(str, isNumber, separation1, separation2)
+	if GameUtil.needLogInFightSceneUseStringFunc() then
 		logError("战斗中不要用`GameUtil.splitString2`, 用`FightStrUtil.getSplitString2Cache`代替")
 	end
 
-	if string.nilorempty(arg_15_0) then
+	if string.nilorempty(str) then
 		return
 	end
 
-	arg_15_2 = arg_15_2 or "|"
-	arg_15_3 = arg_15_3 or "#"
+	separation1 = separation1 or "|"
+	separation2 = separation2 or "#"
 
-	local var_15_0 = string.split(arg_15_0, arg_15_2)
+	local ans = string.split(str, separation1)
 
-	for iter_15_0, iter_15_1 in ipairs(var_15_0) do
-		if arg_15_1 then
-			var_15_0[iter_15_0] = string.splitToNumber(iter_15_1, arg_15_3)
+	for i, each in ipairs(ans) do
+		if isNumber then
+			ans[i] = string.splitToNumber(each, separation2)
 		else
-			var_15_0[iter_15_0] = string.split(iter_15_1, arg_15_3)
+			ans[i] = string.split(each, separation2)
 		end
 	end
 
-	return var_15_0
+	return ans
 end
 
-var_0_0.RichTextTags = {
+GameUtil.RichTextTags = {
 	"<b>",
 	"</b>",
 	"<i>",
@@ -296,29 +330,29 @@ var_0_0.RichTextTags = {
 	"<align=.->"
 }
 
-function var_0_0.filterRichText(arg_16_0)
-	local var_16_0 = arg_16_0
+function GameUtil.filterRichText(inputStr)
+	local result = inputStr
 
-	for iter_16_0, iter_16_1 in ipairs(var_0_0.RichTextTags) do
-		var_16_0 = string.gsub(var_16_0, iter_16_1, "")
+	for i, v in ipairs(GameUtil.RichTextTags) do
+		result = string.gsub(result, v, "")
 	end
 
-	return var_16_0
+	return result
 end
 
-function var_0_0.numberDisplay(arg_17_0)
-	local var_17_0 = tonumber(arg_17_0)
+function GameUtil.numberDisplay(number)
+	local num = tonumber(number)
 
-	if var_17_0 <= 99999 then
-		return var_17_0
-	elseif var_17_0 <= 99999999 and var_17_0 > 99999 then
-		return math.floor(var_17_0 / 1000) .. "K"
+	if num <= 99999 then
+		return num
+	elseif num <= 99999999 and num > 99999 then
+		return math.floor(num / 1000) .. "K"
 	else
-		return math.floor(var_17_0 / 1000000) .. "M"
+		return math.floor(num / 1000000) .. "M"
 	end
 end
 
-local var_0_1 = {
+local romanNums = {
 	"I",
 	"II",
 	"III",
@@ -341,11 +375,11 @@ local var_0_1 = {
 	"XX"
 }
 
-function var_0_0.getRomanNums(arg_18_0)
-	return var_0_1[arg_18_0]
+function GameUtil.getRomanNums(index)
+	return romanNums[index]
 end
 
-local var_0_2 = {
+local num2Chinese = {
 	[0] = "零",
 	"一",
 	"二",
@@ -357,7 +391,7 @@ local var_0_2 = {
 	"八",
 	"九"
 }
-local var_0_3 = {
+local unitName = {
 	"十",
 	"百",
 	"千",
@@ -372,69 +406,69 @@ local var_0_3 = {
 	"兆"
 }
 
-function var_0_0.getNum2Chinese(arg_19_0)
+function GameUtil.getNum2Chinese(index)
 	if not LangSettings.instance:isZh() then
-		return arg_19_0
+		return index
 	end
 
-	if arg_19_0 < 10 then
-		return var_0_2[arg_19_0] or arg_19_0
+	if index < 10 then
+		return num2Chinese[index] or index
 	else
-		local var_19_0 = var_0_2
-		local var_19_1 = var_0_3
-		local var_19_2 = tostring(arg_19_0)
-		local var_19_3 = string.len(var_19_2)
-		local var_19_4 = {}
-		local var_19_5 = false
+		local zhChar = num2Chinese
+		local places = unitName
+		local numStr = tostring(index)
+		local len = string.len(numStr)
+		local str = {}
+		local has0 = false
 
-		for iter_19_0 = 1, var_19_3 do
-			local var_19_6 = tonumber(string.sub(var_19_2, iter_19_0, iter_19_0))
-			local var_19_7 = var_19_3 - iter_19_0 + 1
+		for i = 1, len do
+			local n = tonumber(string.sub(numStr, i, i))
+			local p = len - i + 1
 
-			if var_19_6 > 0 and var_19_5 == true then
-				var_19_4[#var_19_4 + 1] = var_0_2[0]
-				var_19_5 = false
+			if n > 0 and has0 == true then
+				str[#str + 1] = num2Chinese[0]
+				has0 = false
 			end
 
-			if var_19_7 % 4 == 2 and var_19_6 == 1 then
-				if var_19_7 < var_19_3 then
-					var_19_4[#var_19_4 + 1] = var_19_0[var_19_6]
+			if p % 4 == 2 and n == 1 then
+				if p < len then
+					str[#str + 1] = zhChar[n]
 				end
 
-				var_19_4[#var_19_4 + 1] = var_19_1[var_19_7 - 1] or ""
-			elseif var_19_6 > 0 then
-				var_19_4[#var_19_4 + 1] = var_19_0[var_19_6]
-				var_19_4[#var_19_4 + 1] = var_19_1[var_19_7 - 1] or ""
-			elseif var_19_6 == 0 then
-				if var_19_7 % 4 == 1 then
-					var_19_4[#var_19_4 + 1] = var_19_1[var_19_7 - 1] or ""
+				str[#str + 1] = places[p - 1] or ""
+			elseif n > 0 then
+				str[#str + 1] = zhChar[n]
+				str[#str + 1] = places[p - 1] or ""
+			elseif n == 0 then
+				if p % 4 == 1 then
+					str[#str + 1] = places[p - 1] or ""
 				else
-					var_19_5 = true
+					has0 = true
 				end
 			end
 		end
 
-		return table.concat(var_19_4, "")
+		return table.concat(str, "")
 	end
 end
 
-var_0_0.englishOrderNumber = {}
-var_0_0.englishOrderNumber[1] = "FIRST"
-var_0_0.englishOrderNumber[2] = "SECOND"
-var_0_0.englishOrderNumber[3] = "THIRD"
-var_0_0.englishOrderNumber[4] = "FOURTH"
-var_0_0.englishOrderNumber[5] = "FIFTH"
-var_0_0.englishOrderNumber[6] = "SIXTH"
-var_0_0.englishOrderNumber[7] = "SEVENTH"
-var_0_0.englishOrderNumber[8] = "EIGHTH"
-var_0_0.englishOrderNumber[9] = "NINTH"
-var_0_0.englishOrderNumber[10] = "TENTH"
+GameUtil.englishOrderNumber = {}
+GameUtil.englishOrderNumber[1] = "FIRST"
+GameUtil.englishOrderNumber[2] = "SECOND"
+GameUtil.englishOrderNumber[3] = "THIRD"
+GameUtil.englishOrderNumber[4] = "FOURTH"
+GameUtil.englishOrderNumber[5] = "FIFTH"
+GameUtil.englishOrderNumber[6] = "SIXTH"
+GameUtil.englishOrderNumber[7] = "SEVENTH"
+GameUtil.englishOrderNumber[8] = "EIGHTH"
+GameUtil.englishOrderNumber[9] = "NINTH"
+GameUtil.englishOrderNumber[10] = "TENTH"
 
-function var_0_0.getEnglishOrderNumber(arg_20_0)
-	return var_0_0.englishOrderNumber[arg_20_0] or string.format("%dth", arg_20_0)
+function GameUtil.getEnglishOrderNumber(number)
+	return GameUtil.englishOrderNumber[number] or string.format("%dth", number)
 end
 
-local var_0_4 = {
+local englishNumber = {
 	"ONE",
 	"TWO",
 	"THREE",
@@ -457,90 +491,90 @@ local var_0_4 = {
 	"TWENTY"
 }
 
-function var_0_0.getEnglishNumber(arg_21_0)
-	return var_0_4[arg_21_0]
+function GameUtil.getEnglishNumber(number)
+	return englishNumber[number]
 end
 
-function var_0_0.charsize(arg_22_0)
-	if not arg_22_0 then
+function GameUtil.charsize(ch)
+	if not ch then
 		return 0
-	elseif arg_22_0 >= 252 then
+	elseif ch >= 252 then
 		return 6
-	elseif arg_22_0 >= 248 and arg_22_0 < 252 then
+	elseif ch >= 248 and ch < 252 then
 		return 5
-	elseif arg_22_0 >= 240 and arg_22_0 < 248 then
+	elseif ch >= 240 and ch < 248 then
 		return 4
-	elseif arg_22_0 >= 224 and arg_22_0 < 240 then
+	elseif ch >= 224 and ch < 240 then
 		return 3
-	elseif arg_22_0 >= 192 and arg_22_0 < 224 then
+	elseif ch >= 192 and ch < 224 then
 		return 2
-	elseif arg_22_0 < 192 then
+	elseif ch < 192 then
 		return 1
 	end
 end
 
-function var_0_0.utf8len(arg_23_0)
-	if string.nilorempty(arg_23_0) then
+function GameUtil.utf8len(str)
+	if string.nilorempty(str) then
 		return 0
 	end
 
-	local var_23_0 = 0
-	local var_23_1 = 0
-	local var_23_2 = 0
-	local var_23_3 = 1
+	local len = 0
+	local aNum = 0
+	local hNum = 0
+	local currentIndex = 1
 
-	while var_23_3 <= #arg_23_0 do
-		local var_23_4 = string.byte(arg_23_0, var_23_3)
-		local var_23_5 = var_0_0.charsize(var_23_4)
+	while currentIndex <= #str do
+		local char = string.byte(str, currentIndex)
+		local cs = GameUtil.charsize(char)
 
-		var_23_3 = var_23_3 + var_23_5
-		var_23_0 = var_23_0 + 1
+		currentIndex = currentIndex + cs
+		len = len + 1
 
-		if var_23_5 == 1 then
-			var_23_1 = var_23_1 + 1
-		elseif var_23_5 >= 2 then
-			var_23_2 = var_23_2 + 1
+		if cs == 1 then
+			aNum = aNum + 1
+		elseif cs >= 2 then
+			hNum = hNum + 1
 		end
 	end
 
-	return var_23_0, var_23_1, var_23_2
+	return len, aNum, hNum
 end
 
-function var_0_0.utf8sub(arg_24_0, arg_24_1, arg_24_2)
-	local var_24_0 = 1
+function GameUtil.utf8sub(str, startChar, numChars)
+	local startIndex = 1
 
-	while arg_24_1 > 1 do
-		local var_24_1 = string.byte(arg_24_0, var_24_0)
+	while startChar > 1 do
+		local char = string.byte(str, startIndex)
 
-		var_24_0 = var_24_0 + var_0_0.charsize(var_24_1)
-		arg_24_1 = arg_24_1 - 1
+		startIndex = startIndex + GameUtil.charsize(char)
+		startChar = startChar - 1
 	end
 
-	local var_24_2 = var_24_0
+	local currentIndex = startIndex
 
-	while arg_24_2 > 0 and var_24_2 <= #arg_24_0 do
-		local var_24_3 = string.byte(arg_24_0, var_24_2)
+	while numChars > 0 and currentIndex <= #str do
+		local char = string.byte(str, currentIndex)
 
-		var_24_2 = var_24_2 + var_0_0.charsize(var_24_3)
-		arg_24_2 = arg_24_2 - 1
+		currentIndex = currentIndex + GameUtil.charsize(char)
+		numChars = numChars - 1
 	end
 
-	return string.sub(arg_24_0, var_24_0, var_24_2 - 1)
+	return string.sub(str, startIndex, currentIndex - 1)
 end
 
-function var_0_0.utf8isnum(arg_25_0)
-	if string.nilorempty(arg_25_0) then
+function GameUtil.utf8isnum(str)
+	if string.nilorempty(str) then
 		return false
 	end
 
-	for iter_25_0 = 1, string.len(arg_25_0) do
-		local var_25_0 = string.byte(arg_25_0, iter_25_0)
+	for i = 1, string.len(str) do
+		local char = string.byte(str, i)
 
-		if not var_25_0 then
+		if not char then
 			return false
 		end
 
-		if var_25_0 < 48 or var_25_0 > 57 then
+		if char < 48 or char > 57 then
 			return false
 		end
 	end
@@ -548,385 +582,396 @@ function var_0_0.utf8isnum(arg_25_0)
 	return true
 end
 
-function var_0_0.getPreferredWidth(arg_26_0, arg_26_1)
-	return SLFramework.UGUI.GuiHelper.GetPreferredWidth(arg_26_0, arg_26_1)
+function GameUtil.getPreferredWidth(text, content)
+	return SLFramework.UGUI.GuiHelper.GetPreferredWidth(text, content)
 end
 
-function var_0_0.getPreferredHeight(arg_27_0, arg_27_1)
-	return SLFramework.UGUI.GuiHelper.GetPreferredHeight(arg_27_0, arg_27_1)
+function GameUtil.getPreferredHeight(text, content)
+	return SLFramework.UGUI.GuiHelper.GetPreferredHeight(text, content)
 end
 
-function var_0_0.getTextHeightByLine(arg_28_0, arg_28_1, arg_28_2, arg_28_3)
-	local var_28_0 = SLFramework.UGUI.GuiHelper.GetPreferredHeight(arg_28_0, " ")
-	local var_28_1 = SLFramework.UGUI.GuiHelper.GetPreferredHeight(arg_28_0, arg_28_1)
-	local var_28_2 = arg_28_3 or 0
+function GameUtil.getTextHeightByLine(text, content, lineHeight, linespace)
+	local singleLineHeight = SLFramework.UGUI.GuiHelper.GetPreferredHeight(text, " ")
+	local textHeight = SLFramework.UGUI.GuiHelper.GetPreferredHeight(text, content)
+	local space = linespace or 0
 
-	return var_28_0 > 0 and var_28_1 / var_28_0 * arg_28_2 + (var_28_1 / var_28_0 - 1) * var_28_2 or 0
+	return singleLineHeight > 0 and textHeight / singleLineHeight * lineHeight + (textHeight / singleLineHeight - 1) * space or 0
 end
 
-function var_0_0.getTextWidthByLine(arg_29_0, arg_29_1, arg_29_2)
-	local var_29_0 = SLFramework.UGUI.GuiHelper.GetPreferredWidth(arg_29_0, "啊")
-	local var_29_1 = SLFramework.UGUI.GuiHelper.GetPreferredWidth(arg_29_0, arg_29_1)
+function GameUtil.getTextWidthByLine(text, content, wordWidth)
+	local singleWordWidth = SLFramework.UGUI.GuiHelper.GetPreferredWidth(text, "啊")
+	local txtWidth = SLFramework.UGUI.GuiHelper.GetPreferredWidth(text, content)
 
-	return var_29_0 > 0 and var_29_1 / var_29_0 * arg_29_2 or 0
+	return singleWordWidth > 0 and txtWidth / singleWordWidth * wordWidth or 0
 end
 
-function var_0_0.getSubPlaceholderLuaLang(arg_30_0, arg_30_1)
-	if arg_30_1 and #arg_30_1 > 0 then
-		arg_30_0 = string.gsub(arg_30_0, "▩([0-9]+)%%([sd])", function(arg_31_0, arg_31_1)
-			arg_31_0 = tonumber(arg_31_0)
+function GameUtil.getSubPlaceholderLuaLang(text, fillParams)
+	if fillParams and #fillParams > 0 then
+		text = string.gsub(text, "▩([0-9]+)%%([sd])", function(index, format)
+			index = tonumber(index)
 
-			if not arg_30_1[arg_31_0] then
+			if not fillParams[index] then
 				if isDebugBuild then
-					local var_31_0 = {
+					local tbl = {
 						"[getSubPlaceholderLuaLang] =========== begin",
-						"text: " .. arg_30_0,
-						"index: " .. arg_31_0,
-						"format: " .. arg_31_1,
+						"text: " .. text,
+						"index: " .. index,
+						"format: " .. format,
 						"fillParams[index]: 不存在",
 						"[getSubPlaceholderLuaLang] =========== end"
 					}
 
-					logError(table.concat(var_31_0, "\n"))
+					logError(table.concat(tbl, "\n"))
 				end
 
 				return ""
 			end
 
-			if type(arg_30_1[arg_31_0]) == "number" and arg_31_1 == "d" then
-				return string.format("%d", arg_30_1[arg_31_0])
+			if type(fillParams[index]) == "number" and format == "d" then
+				return string.format("%d", fillParams[index])
 			end
 
-			if isDebugBuild and string.find(arg_30_1[arg_31_0], "%%", 1, true) then
-				local var_31_1 = {
+			if isDebugBuild and string.find(fillParams[index], "%%", 1, true) then
+				local tbl = {
 					[1] = "[getSubPlaceholderLuaLang] =========== begin",
 					[6] = "[getSubPlaceholderLuaLang] =========== end",
-					[2] = "text: " .. arg_30_0,
-					[3] = "index: " .. arg_31_0,
-					[4] = "format: " .. arg_31_1,
-					[5] = "fillParams[index]:" .. arg_30_1[arg_31_0]
+					[2] = "text: " .. text,
+					[3] = "index: " .. index,
+					[4] = "format: " .. format,
+					[5] = "fillParams[index]:" .. fillParams[index]
 				}
 
-				logError(table.concat(var_31_1, "\n"))
+				logError(table.concat(tbl, "\n"))
 			end
 
-			return arg_30_1[arg_31_0]
+			return fillParams[index]
 		end)
 	end
 
-	return arg_30_0
+	return text
 end
 
-function var_0_0.getSubPlaceholderLuaLangOneParam(arg_32_0, arg_32_1)
-	arg_32_0 = string.gsub(arg_32_0, "▩1%%s", arg_32_1)
+function GameUtil.getSubPlaceholderLuaLangOneParam(text, param)
+	text = string.gsub(text, "▩1%%s", param)
 
-	return arg_32_0
+	return text
 end
 
-function var_0_0.getSubPlaceholderLuaLangTwoParam(arg_33_0, arg_33_1, arg_33_2)
-	arg_33_0 = string.gsub(arg_33_0, "▩1%%s", arg_33_1)
-	arg_33_0 = string.gsub(arg_33_0, "▩2%%s", arg_33_2)
+function GameUtil.getSubPlaceholderLuaLangTwoParam(text, param1, param2)
+	text = string.gsub(text, "▩1%%s", param1)
+	text = string.gsub(text, "▩2%%s", param2)
 
-	return arg_33_0
+	return text
 end
 
-function var_0_0.getSubPlaceholderLuaLangThreeParam(arg_34_0, arg_34_1, arg_34_2, arg_34_3)
-	arg_34_0 = string.gsub(arg_34_0, "▩1%%s", arg_34_1)
-	arg_34_0 = string.gsub(arg_34_0, "▩2%%s", arg_34_2)
-	arg_34_0 = string.gsub(arg_34_0, "▩3%%s", arg_34_3)
+function GameUtil.getSubPlaceholderLuaLangThreeParam(text, param1, param2, param3)
+	text = string.gsub(text, "▩1%%s", param1)
+	text = string.gsub(text, "▩2%%s", param2)
+	text = string.gsub(text, "▩3%%s", param3)
 
-	return arg_34_0
+	return text
 end
 
-function var_0_0.getMarkIndexList(arg_35_0)
-	local var_35_0 = "<em>"
-	local var_35_1 = "</em>"
+function GameUtil.getMarkIndexList(text)
+	local startParser = "<em>"
+	local endParser = "</em>"
 
-	arg_35_0 = string.gsub(arg_35_0, var_35_0, "▩1")
-	arg_35_0 = string.gsub(arg_35_0, var_35_1, "▩2")
-	arg_35_0 = string.gsub(arg_35_0, "<[^<>][^<>]->", "")
-	arg_35_0 = string.gsub(arg_35_0, "▩1", var_35_0)
-	arg_35_0 = string.gsub(arg_35_0, "▩2", var_35_1)
+	text = string.gsub(text, startParser, "▩1")
+	text = string.gsub(text, endParser, "▩2")
+	text = string.gsub(text, "<[^<>][^<>]->", "")
+	text = string.gsub(text, "▩1", startParser)
+	text = string.gsub(text, "▩2", endParser)
 
-	local var_35_2 = {}
+	local indexList = {}
 
-	if string.nilorempty(arg_35_0) or string.nilorempty(var_35_0) or string.nilorempty(var_35_1) then
-		return var_35_2
+	if string.nilorempty(text) or string.nilorempty(startParser) or string.nilorempty(endParser) then
+		return indexList
 	end
 
-	local var_35_3 = {}
-	local var_35_4 = string.split(arg_35_0, var_35_0)
-	local var_35_5 = 1
+	local startIndexList = {}
+	local startSplits = string.split(text, startParser)
+	local startIndex = 1
 
-	for iter_35_0, iter_35_1 in ipairs(var_35_4) do
-		if iter_35_0 == #var_35_4 then
+	for i, startSplit in ipairs(startSplits) do
+		if i == #startSplits then
 			break
 		end
 
-		var_35_5 = var_35_5 + var_0_0.utf8len(iter_35_1) + (iter_35_0 == 1 and 0 or 1) * var_0_0.utf8len(var_35_0)
+		startIndex = startIndex + GameUtil.utf8len(startSplit) + (i == 1 and 0 or 1) * GameUtil.utf8len(startParser)
 
-		table.insert(var_35_3, var_35_5)
+		table.insert(startIndexList, startIndex)
 	end
 
-	local var_35_6 = {}
-	local var_35_7 = string.split(arg_35_0, var_35_1)
-	local var_35_8 = 1
+	local endIndexList = {}
+	local endSplits = string.split(text, endParser)
+	local endIndex = 1
 
-	for iter_35_2, iter_35_3 in ipairs(var_35_7) do
-		if iter_35_2 == #var_35_7 then
+	for i, endSplit in ipairs(endSplits) do
+		if i == #endSplits then
 			break
 		end
 
-		var_35_8 = var_35_8 + var_0_0.utf8len(iter_35_3) + (iter_35_2 == 1 and 0 or 1) * var_0_0.utf8len(var_35_1)
+		endIndex = endIndex + GameUtil.utf8len(endSplit) + (i == 1 and 0 or 1) * GameUtil.utf8len(endParser)
 
-		table.insert(var_35_6, var_35_8)
+		table.insert(endIndexList, endIndex)
 	end
 
-	local var_35_9 = false
-	local var_35_10 = 0
-	local var_35_11 = 0
+	local flag = false
+	local index = 0
+	local offset = 0
 
-	while var_35_10 <= var_0_0.utf8len(arg_35_0) do
-		if LuaUtil.tableContains(var_35_3, var_35_10) then
-			var_35_9 = true
-			var_35_10 = var_35_10 + var_0_0.utf8len(var_35_0)
-			var_35_11 = var_35_11 + var_0_0.utf8len(var_35_0)
-		elseif LuaUtil.tableContains(var_35_6, var_35_10) then
-			var_35_9 = false
-			var_35_10 = var_35_10 + var_0_0.utf8len(var_35_1)
-			var_35_11 = var_35_11 + var_0_0.utf8len(var_35_1)
+	while index <= GameUtil.utf8len(text) do
+		if LuaUtil.tableContains(startIndexList, index) then
+			flag = true
+			index = index + GameUtil.utf8len(startParser)
+			offset = offset + GameUtil.utf8len(startParser)
+		elseif LuaUtil.tableContains(endIndexList, index) then
+			flag = false
+			index = index + GameUtil.utf8len(endParser)
+			offset = offset + GameUtil.utf8len(endParser)
 		else
-			if var_35_9 then
-				table.insert(var_35_2, var_35_10 - var_35_11 - 1)
+			if flag then
+				table.insert(indexList, index - offset - 1)
 			end
 
-			var_35_10 = var_35_10 + 1
+			index = index + 1
 		end
 	end
 
-	return var_35_2
+	return indexList
 end
 
-function var_0_0.getMarkText(arg_36_0)
-	if string.nilorempty(arg_36_0) then
+function GameUtil.getMarkText(text)
+	if string.nilorempty(text) then
 		return ""
 	end
 
-	arg_36_0 = string.gsub(arg_36_0, "<em>", "")
-	arg_36_0 = string.gsub(arg_36_0, "</em>", "")
+	text = string.gsub(text, "<em>", "")
+	text = string.gsub(text, "</em>", "")
 
-	return arg_36_0
+	return text
 end
 
-function var_0_0.getTimeFromString(arg_37_0)
-	if string.nilorempty(arg_37_0) then
+function GameUtil.getTimeFromString(timeStr)
+	if string.nilorempty(timeStr) then
 		return 9999999999
 	end
 
-	local var_37_0, var_37_1, var_37_2, var_37_3, var_37_4, var_37_5, var_37_6, var_37_7 = string.find(arg_37_0, "(%d-)%-(%d-)%-(%d-)%s-(%d-):(%d-):(%d+)")
+	local _, _, year, month, day, hour, minute, second = string.find(timeStr, "(%d-)%-(%d-)%-(%d-)%s-(%d-):(%d-):(%d+)")
 
 	return os.time({
-		year = tonumber(var_37_2),
-		month = tonumber(var_37_3),
-		day = tonumber(var_37_4),
-		hour = tonumber(var_37_5),
-		min = tonumber(var_37_6),
-		sec = tonumber(var_37_7)
+		year = tonumber(year),
+		month = tonumber(month),
+		day = tonumber(day),
+		hour = tonumber(hour),
+		min = tonumber(minute),
+		sec = tonumber(second)
 	})
 end
 
-function var_0_0.getTabLen(arg_38_0)
-	local var_38_0 = 0
+function GameUtil.getTabLen(array)
+	local count = 0
 
-	if arg_38_0 then
-		for iter_38_0, iter_38_1 in pairs(arg_38_0) do
-			if arg_38_0[iter_38_0] ~= nil then
-				var_38_0 = var_38_0 + 1
+	if array then
+		for k, v in pairs(array) do
+			if array[k] ~= nil then
+				count = count + 1
 			end
 		end
 	end
 
-	return var_38_0
+	return count
 end
 
-function var_0_0.getAdapterScale()
-	local var_39_0 = Time.time
+function GameUtil.getAdapterScale()
+	local now = Time.time
 
-	if var_0_0._adapterScale and var_0_0._scaleCalcTime and var_39_0 - var_0_0._scaleCalcTime < 0.01 then
-		return var_0_0._adapterScale
+	if GameUtil._adapterScale and GameUtil._scaleCalcTime and now - GameUtil._scaleCalcTime < 0.01 then
+		return GameUtil._adapterScale
 	end
 
-	var_0_0._scaleCalcTime = var_39_0
+	GameUtil._scaleCalcTime = now
 
-	local var_39_1 = UnityEngine.Screen.width
-	local var_39_2 = UnityEngine.Screen.height
+	local width = UnityEngine.Screen.width
+	local height = UnityEngine.Screen.height
 
 	if BootNativeUtil.isWindows() and not SLFramework.FrameworkSettings.IsEditor then
-		var_39_1, var_39_2 = SettingsModel.instance:getCurrentScreenSize()
+		width, height = SettingsModel.instance:getCurrentScreenSize()
 	end
 
-	local var_39_3 = var_39_1 / var_39_2
-	local var_39_4 = 1.7777777777777777
+	local screenRatio = width / height
+	local targetRatio = 1.7777777777777777
 
-	if var_39_4 - var_39_3 > 0.01 then
-		local var_39_5 = var_39_4 / var_39_3
+	if targetRatio - screenRatio > 0.01 then
+		local scale = targetRatio / screenRatio
 
-		var_0_0._adapterScale = var_39_5
+		GameUtil._adapterScale = scale
 	else
-		var_0_0._adapterScale = 1
+		GameUtil._adapterScale = 1
 	end
 
-	return var_0_0._adapterScale
+	return GameUtil._adapterScale
 end
 
-function var_0_0.fillZeroInLeft(arg_40_0, arg_40_1)
-	local var_40_0 = tostring(arg_40_0)
+function GameUtil.fillZeroInLeft(num, len)
+	local str = tostring(num)
 
-	return string.rep("0", arg_40_1 - #var_40_0) .. var_40_0
+	return string.rep("0", len - #str) .. str
 end
 
-function var_0_0.randomTable(arg_41_0)
-	local var_41_0 = #arg_41_0
+function GameUtil.randomTable(t)
+	local n = #t
 
-	for iter_41_0 = 1, var_41_0 do
-		local var_41_1 = math.random(iter_41_0, var_41_0)
+	for i = 1, n do
+		local j = math.random(i, n)
 
-		arg_41_0[iter_41_0], arg_41_0[var_41_1] = arg_41_0[var_41_1], arg_41_0[iter_41_0]
+		t[i], t[j] = t[j], t[i]
 	end
 
-	return arg_41_0
+	return t
 end
 
-function var_0_0.artTextNumReplace(arg_42_0)
-	if string.nilorempty(arg_42_0) then
-		return arg_42_0
+function GameUtil.artTextNumReplace(text)
+	if string.nilorempty(text) then
+		return text
 	end
 
-	local var_42_0 = arg_42_0
-	local var_42_1 = string.len(var_42_0)
-	local var_42_2 = {}
+	local num = text
+	local numCount = string.len(num)
+	local numTab = {}
 
-	while var_42_0 > 0 do
-		local var_42_3 = var_42_0 % 10
+	while num > 0 do
+		local lastNum = num % 10
 
-		table.insert(var_42_2, 1, var_42_3)
+		table.insert(numTab, 1, lastNum)
 
-		var_42_0 = math.floor(var_42_0 / 10)
+		num = math.floor(num / 10)
 	end
 
-	local var_42_4 = ""
+	local formatStr = ""
 
-	for iter_42_0 = 1, var_42_1 do
-		var_42_4 = var_42_4 .. string.format("<sprite=%s>", var_42_2[iter_42_0])
+	for i = 1, numCount do
+		formatStr = formatStr .. string.format("<sprite=%s>", numTab[i])
 	end
 
-	return var_42_4
+	return formatStr
 end
 
-function var_0_0.tabletool_fastRemoveValueByValue(arg_43_0, arg_43_1)
-	for iter_43_0, iter_43_1 in ipairs(arg_43_0) do
-		if iter_43_1 == arg_43_1 then
-			return var_0_0.tabletool_fastRemoveValueByPos(arg_43_0, iter_43_0)
+function GameUtil.tabletool_fastRemoveValueByValue(array, value)
+	for i, v in ipairs(array) do
+		if v == value then
+			return GameUtil.tabletool_fastRemoveValueByPos(array, i)
 		end
 	end
 end
 
-function var_0_0.tabletool_fastRemoveValueByPos(arg_44_0, arg_44_1)
-	local var_44_0 = arg_44_0[arg_44_1]
+function GameUtil.tabletool_fastRemoveValueByPos(array, pos)
+	local removeValue = array[pos]
 
-	arg_44_0[arg_44_1] = arg_44_0[#arg_44_0]
+	array[pos] = array[#array]
 
-	table.remove(arg_44_0)
+	table.remove(array)
 
-	return arg_44_0, var_44_0
+	return array, removeValue
 end
 
-function var_0_0.tabletool_dictIsEmpty(arg_45_0)
-	if not arg_45_0 then
+function GameUtil.tabletool_dictIsEmpty(dict)
+	if not dict then
 		return true
 	end
 
-	for iter_45_0, iter_45_1 in pairs(arg_45_0) do
+	for _, _ in pairs(dict) do
 		return false
 	end
 
 	return true
 end
 
-function var_0_0.checkPointInRectangle(arg_46_0, arg_46_1, arg_46_2, arg_46_3, arg_46_4)
-	local var_46_0 = arg_46_2 - arg_46_1
-	local var_46_1 = arg_46_0 - arg_46_1
-	local var_46_2 = arg_46_3 - arg_46_2
-	local var_46_3 = arg_46_0 - arg_46_2
-	local var_46_4 = Vector2.Dot(var_46_0, var_46_1)
-	local var_46_5 = Vector2.Dot(var_46_2, var_46_3)
+function GameUtil.tabletool_checkDictTable(refDict, key)
+	local table = refDict[key]
 
-	return var_46_4 >= 0 and var_46_4 <= Vector2.Dot(var_46_0, var_46_0) and var_46_5 >= 0 and var_46_5 <= Vector2.Dot(var_46_2, var_46_2)
+	if not table then
+		table = {}
+		refDict[key] = table
+	end
+
+	return table
 end
 
-function var_0_0.noMoreThanOneDecimalPlace(arg_47_0)
-	return math.fmod(arg_47_0, 1) > 0 and string.format("%.1f", arg_47_0) or string.format("%d", arg_47_0)
+function GameUtil.checkPointInRectangle(point, a, b, c, d)
+	local ab = b - a
+	local ap = point - a
+	local bc = c - b
+	local bp = point - b
+	local abapDot = Vector2.Dot(ab, ap)
+	local bcbpDot = Vector2.Dot(bc, bp)
+
+	return abapDot >= 0 and abapDot <= Vector2.Dot(ab, ab) and bcbpDot >= 0 and bcbpDot <= Vector2.Dot(bc, bc)
 end
 
-function var_0_0.isMobilePlayerAndNotEmulator()
+function GameUtil.noMoreThanOneDecimalPlace(value)
+	return math.fmod(value, 1) > 0 and string.format("%.1f", value) or string.format("%d", value)
+end
+
+function GameUtil.isMobilePlayerAndNotEmulator()
 	return BootNativeUtil.isMobilePlayer() and not SDKMgr.instance:isEmulator()
 end
 
-function var_0_0.openDeepLink(arg_49_0, arg_49_1)
-	if string.nilorempty(arg_49_1) or string.nilorempty(arg_49_0) then
+function GameUtil.openDeepLink(url, deepLinkUrl)
+	if string.nilorempty(deepLinkUrl) or string.nilorempty(url) then
 		return
 	end
 
 	if SLFramework.FrameworkSettings.IsEditor or BootNativeUtil.isWindows() then
-		UnityEngine.Application.OpenURL(arg_49_0)
+		UnityEngine.Application.OpenURL(url)
 
 		return true
 	end
 
-	local var_49_0 = {
-		deepLink = arg_49_1,
-		url = arg_49_0
+	local jsonObj = {
+		deepLink = deepLinkUrl,
+		url = url
 	}
-	local var_49_1 = cjson.encode(var_49_0)
+	local jsonStr = cjson.encode(jsonObj)
 
-	logNormal("openDeepLink:" .. tostring(var_49_1))
-	ZProj.SDKManager.Instance:CallVoidFuncWithParams("openDeepLink", var_49_1)
+	logNormal("openDeepLink:" .. tostring(jsonStr))
+	ZProj.SDKMgr.Instance:CallVoidFuncWithParams("openDeepLink", jsonStr)
 
 	return true
 end
 
-function var_0_0.openURL(arg_50_0)
-	if string.nilorempty(arg_50_0) then
+function GameUtil.openURL(url)
+	if string.nilorempty(url) then
 		return
 	end
 
 	if not BootNativeUtil.isIOS() then
-		UnityEngine.Application.OpenURL(arg_50_0)
+		UnityEngine.Application.OpenURL(url)
 
 		return true
 	end
 
-	local var_50_0 = {
+	local jsonObj = {
 		deepLink = "",
-		url = arg_50_0
+		url = url
 	}
-	local var_50_1 = cjson.encode(var_50_0)
+	local jsonStr = cjson.encode(jsonObj)
 
-	logNormal("openDeepLink:" .. tostring(var_50_1))
-	ZProj.SDKManager.Instance:CallVoidFuncWithParams("openDeepLink", var_50_1)
+	logNormal("openDeepLink:" .. tostring(jsonStr))
+	ZProj.SDKMgr.Instance:CallVoidFuncWithParams("openDeepLink", jsonStr)
 
 	return true
 end
 
-function var_0_0.getMotionDuration(arg_51_0, arg_51_1)
-	if arg_51_0 then
-		local var_51_0 = arg_51_0.runtimeAnimatorController.animationClips
+function GameUtil.getMotionDuration(animator, name)
+	if animator then
+		local clips = animator.runtimeAnimatorController.animationClips
 
-		for iter_51_0 = 0, var_51_0.Length - 1 do
-			local var_51_1 = var_51_0[iter_51_0]
+		for i = 0, clips.Length - 1 do
+			local clip = clips[i]
 
-			if var_51_1.name == arg_51_1 then
-				return var_51_1.length
+			if clip.name == name then
+				return clip.length
 			end
 		end
 	end
@@ -934,472 +979,489 @@ function var_0_0.getMotionDuration(arg_51_0, arg_51_1)
 	return 0
 end
 
-function var_0_0.onDestroyViewMemberList(arg_52_0, arg_52_1)
-	if arg_52_0[arg_52_1] then
-		local var_52_0 = arg_52_0[arg_52_1]
+function GameUtil.onDestroyViewMemberList(Self, memberName)
+	if Self[memberName] then
+		local list = Self[memberName]
 
-		for iter_52_0, iter_52_1 in ipairs(var_52_0) do
-			iter_52_1:onDestroyView()
+		for _, item in ipairs(list) do
+			item:onDestroyView()
 		end
 
-		arg_52_0[arg_52_1] = nil
+		Self[memberName] = nil
 	end
 end
 
-function var_0_0.onDestroyViewMember(arg_53_0, arg_53_1)
-	if arg_53_0[arg_53_1] then
-		arg_53_0[arg_53_1]:onDestroyView()
+function GameUtil.onDestroyViewMember(Self, memberName)
+	if Self[memberName] then
+		local item = Self[memberName]
 
-		arg_53_0[arg_53_1] = nil
+		item:onDestroyView()
+
+		Self[memberName] = nil
 	end
 end
 
-local var_0_5 = ZProj.TweenHelper
+local csTweenHelper = ZProj.TweenHelper
 
-function var_0_0.onDestroyViewMember_TweenId(arg_54_0, arg_54_1)
-	if arg_54_0[arg_54_1] then
-		local var_54_0 = arg_54_0[arg_54_1]
+function GameUtil.onDestroyViewMember_TweenId(Self, memberName)
+	if Self[memberName] then
+		local item = Self[memberName]
 
-		var_0_5.KillById(var_54_0)
+		csTweenHelper.KillById(item)
 
-		arg_54_0[arg_54_1] = nil
+		Self[memberName] = nil
 	end
 end
 
-function var_0_0.onDestroyViewMemberList_SImage(arg_55_0, arg_55_1)
-	if arg_55_0[arg_55_1] then
-		local var_55_0 = arg_55_0[arg_55_1]
+function GameUtil.onDestroyViewMemberList_SImage(Self, memberName)
+	if Self[memberName] then
+		local list = Self[memberName]
 
-		for iter_55_0, iter_55_1 in ipairs(var_55_0) do
-			iter_55_1:UnLoadImage()
+		for _, item in ipairs(list) do
+			item:UnLoadImage()
 		end
 
-		arg_55_0[arg_55_1] = nil
+		Self[memberName] = nil
 	end
 end
 
-function var_0_0.onDestroyViewMember_SImage(arg_56_0, arg_56_1)
-	if arg_56_0[arg_56_1] then
-		arg_56_0[arg_56_1]:UnLoadImage()
+function GameUtil.onDestroyViewMember_SImage(Self, memberName)
+	if Self[memberName] then
+		local item = Self[memberName]
 
-		arg_56_0[arg_56_1] = nil
+		item:UnLoadImage()
+
+		Self[memberName] = nil
 	end
 end
 
-function var_0_0.onDestroyViewMember_ClickListener(arg_57_0, arg_57_1)
-	if arg_57_0[arg_57_1] then
-		arg_57_0[arg_57_1]:RemoveClickListener()
+function GameUtil.onDestroyViewMember_ClickListener(Self, memberName)
+	if Self[memberName] then
+		local item = Self[memberName]
 
-		arg_57_0[arg_57_1] = nil
+		item:RemoveClickListener()
+
+		Self[memberName] = nil
 	end
 end
 
-function var_0_0.onDestroyViewMember_ClickDownListener(arg_58_0, arg_58_1)
-	if arg_58_0[arg_58_1] then
-		arg_58_0[arg_58_1]:RemoveClickDownListener()
+function GameUtil.onDestroyViewMember_ClickDownListener(Self, memberName)
+	if Self[memberName] then
+		local item = Self[memberName]
 
-		arg_58_0[arg_58_1] = nil
+		item:RemoveClickDownListener()
+
+		Self[memberName] = nil
 	end
 end
 
-function var_0_0.setActive01(arg_59_0, arg_59_1)
-	if arg_59_1 then
-		transformhelper.setLocalScale(arg_59_0, 1, 1, 1)
+function GameUtil.setActive01(transform, isActive)
+	if isActive then
+		transformhelper.setLocalScale(transform, 1, 1, 1)
 	else
-		transformhelper.setLocalScale(arg_59_0, 0, 0, 0)
+		transformhelper.setLocalScale(transform, 0, 0, 0)
 	end
 end
 
-function var_0_0.clamp(arg_60_0, arg_60_1, arg_60_2)
-	return math.min(arg_60_2, math.max(arg_60_0, arg_60_1))
+function GameUtil.clamp(value, min, max)
+	return math.min(max, math.max(value, min))
 end
 
-function var_0_0.saturate(arg_61_0)
-	return var_0_0.clamp(arg_61_0, 0, 1)
+function GameUtil.saturate(value)
+	return GameUtil.clamp(value, 0, 1)
 end
 
-function var_0_0.remap(arg_62_0, arg_62_1, arg_62_2, arg_62_3, arg_62_4)
-	arg_62_0 = var_0_0.clamp(arg_62_0, arg_62_1, arg_62_2)
+function GameUtil.remap(value, fromMin, fromMax, toMin, toMax)
+	value = GameUtil.clamp(value, fromMin, fromMax)
 
-	return arg_62_3 + (arg_62_0 - arg_62_1) * (arg_62_4 - arg_62_3) / (arg_62_2 - arg_62_1)
+	return toMin + (value - fromMin) * (toMax - toMin) / (fromMax - fromMin)
 end
 
-function var_0_0.remap01(arg_63_0, arg_63_1, arg_63_2)
-	return var_0_0.remap(arg_63_0, arg_63_1, arg_63_2, 0, 1)
+function GameUtil.remap01(value, fromMin, fromMax)
+	return GameUtil.remap(value, fromMin, fromMax, 0, 1)
 end
 
-function var_0_0.setFirstStrSize(arg_64_0, arg_64_1)
-	if string.nilorempty(arg_64_0) then
+function GameUtil.setFirstStrSize(str, size)
+	if string.nilorempty(str) then
 		return
 	end
 
-	local var_64_0 = var_0_0.utf8sub(arg_64_0, 1, 1)
-	local var_64_1 = ""
-	local var_64_2 = var_0_0.utf8len(arg_64_0)
+	local first = GameUtil.utf8sub(str, 1, 1)
+	local remain = ""
+	local strLen = GameUtil.utf8len(str)
 
-	if var_64_2 >= 2 then
-		var_64_1 = var_0_0.utf8sub(arg_64_0, 2, var_64_2 - 1)
+	if strLen >= 2 then
+		remain = GameUtil.utf8sub(str, 2, strLen - 1)
 	end
 
-	return string.format("<size=%s>%s</size>%s", arg_64_1, var_64_0, var_64_1)
+	return string.format("<size=%s>%s</size>%s", size, first, remain)
 end
 
-function var_0_0.playerPrefsGetNumberByUserId(arg_65_0, arg_65_1)
-	local var_65_0 = PlayerModel.instance:getMyUserId()
+function GameUtil.playerPrefsGetNumberByUserId(playerPrefsKey, defaultValue)
+	local userId = PlayerModel.instance:getMyUserId()
 
-	if not var_65_0 or var_65_0 == 0 then
-		return arg_65_1
+	if not userId or userId == 0 then
+		return defaultValue
 	end
 
-	local var_65_1 = arg_65_0 .. "#" .. tostring(var_65_0)
+	local key = playerPrefsKey .. "#" .. tostring(userId)
 
-	return PlayerPrefsHelper.getNumber(var_65_1, arg_65_1)
+	return PlayerPrefsHelper.getNumber(key, defaultValue)
 end
 
-function var_0_0.playerPrefsSetNumberByUserId(arg_66_0, arg_66_1)
-	local var_66_0 = PlayerModel.instance:getMyUserId()
+function GameUtil.playerPrefsSetNumberByUserId(playerPrefsKey, value)
+	local userId = PlayerModel.instance:getMyUserId()
 
-	if not var_66_0 or var_66_0 == 0 then
+	if not userId or userId == 0 then
 		return
 	end
 
-	local var_66_1 = arg_66_0 .. "#" .. tostring(var_66_0)
+	local key = playerPrefsKey .. "#" .. tostring(userId)
 
-	PlayerPrefsHelper.setNumber(var_66_1, arg_66_1)
+	PlayerPrefsHelper.setNumber(key, value)
 end
 
-function var_0_0.playerPrefsGetStringByUserId(arg_67_0, arg_67_1)
-	local var_67_0 = PlayerModel.instance:getMyUserId()
+function GameUtil.playerPrefsGetStringByUserId(playerPrefsKey, defaultValue)
+	local userId = PlayerModel.instance:getMyUserId()
 
-	if not var_67_0 or var_67_0 == 0 then
-		return arg_67_1
+	if not userId or userId == 0 then
+		return defaultValue
 	end
 
-	local var_67_1 = arg_67_0 .. "#" .. tostring(var_67_0)
+	local key = playerPrefsKey .. "#" .. tostring(userId)
 
-	return PlayerPrefsHelper.getString(var_67_1, arg_67_1)
+	return PlayerPrefsHelper.getString(key, defaultValue)
 end
 
-function var_0_0.playerPrefsSetStringByUserId(arg_68_0, arg_68_1)
-	local var_68_0 = PlayerModel.instance:getMyUserId()
+function GameUtil.playerPrefsSetStringByUserId(playerPrefsKey, value)
+	local userId = PlayerModel.instance:getMyUserId()
 
-	if not var_68_0 or var_68_0 == 0 then
+	if not userId or userId == 0 then
 		return
 	end
 
-	local var_68_1 = arg_68_0 .. "#" .. tostring(var_68_0)
+	local key = playerPrefsKey .. "#" .. tostring(userId)
 
-	PlayerPrefsHelper.setString(var_68_1, arg_68_1)
+	PlayerPrefsHelper.setString(key, value)
 end
 
-local var_0_6 = {
-	__call = function(arg_69_0)
-		local var_69_0 = arg_69_0.count
+local _uniqueMt = {
+	__call = function(t)
+		local nowIndex = t.count
 
-		arg_69_0.count = arg_69_0.count + 1
+		t.count = t.count + 1
 
-		return var_69_0
+		return nowIndex
 	end
 }
 
-function var_0_0.getUniqueTb(arg_70_0)
-	local var_70_0 = {
-		count = arg_70_0 or 1
-	}
+function GameUtil.getUniqueTb(beginIndex)
+	local t = {}
 
-	setmetatable(var_70_0, var_0_6)
+	t.count = beginIndex or 1
 
-	return var_70_0
+	setmetatable(t, _uniqueMt)
+
+	return t
 end
 
-local var_0_7 = var_0_0.getUniqueTb()
+local tb = GameUtil.getUniqueTb()
 
-function var_0_0.getEventId()
-	return var_0_7()
+function GameUtil.getEventId()
+	return tb()
 end
 
-function var_0_0.setDefaultValue(arg_72_0, arg_72_1)
-	setmetatable(arg_72_0, {
+function GameUtil.setDefaultValue(t, defaultValue)
+	setmetatable(t, {
 		__index = function()
-			return arg_72_1
+			return defaultValue
 		end
 	})
 end
 
-function var_0_0.rpcInfoToMo(arg_74_0, arg_74_1, arg_74_2)
-	local var_74_0 = arg_74_2 or arg_74_1.New()
+function GameUtil.rpcInfoToMo(info, cls, oldMo)
+	local mo = oldMo or cls.New()
 
-	var_74_0:init(arg_74_0)
+	mo:init(info)
 
-	return var_74_0
+	return mo
 end
 
-function var_0_0.rpcInfosToList(arg_75_0, arg_75_1)
-	local var_75_0 = {}
+function GameUtil.rpcInfosToList(infos, cls)
+	local list = {}
 
-	for iter_75_0, iter_75_1 in ipairs(arg_75_0) do
-		local var_75_1 = var_0_0.rpcInfoToMo(iter_75_1, arg_75_1)
+	for i, v in ipairs(infos) do
+		local mo = GameUtil.rpcInfoToMo(v, cls)
 
-		table.insert(var_75_0, var_75_1)
+		table.insert(list, mo)
 	end
 
-	return var_75_0
+	return list
 end
 
-function var_0_0.rpcInfosToMap(arg_76_0, arg_76_1, arg_76_2)
-	local var_76_0 = {}
+function GameUtil.rpcInfosToMap(infos, cls, key)
+	local map = {}
 
-	arg_76_2 = arg_76_2 or "id"
+	key = key or "id"
 
-	for iter_76_0, iter_76_1 in ipairs(arg_76_0) do
-		local var_76_1 = var_0_0.rpcInfoToMo(iter_76_1, arg_76_1)
+	for i, v in ipairs(infos) do
+		local mo = GameUtil.rpcInfoToMo(v, cls)
 
-		var_76_0[var_76_1[arg_76_2]] = var_76_1
+		map[mo[key]] = mo
 	end
 
-	return var_76_0
+	return map
 end
 
-function var_0_0.rpcInfosToListAndMap(arg_77_0, arg_77_1, arg_77_2)
-	local var_77_0 = {}
+function GameUtil.rpcInfosToListAndMap(infos, cls, key)
+	local map = {}
 
-	arg_77_2 = arg_77_2 or "id"
+	key = key or "id"
 
-	local var_77_1 = {}
+	local list = {}
 
-	for iter_77_0, iter_77_1 in ipairs(arg_77_0) do
-		local var_77_2 = var_0_0.rpcInfoToMo(iter_77_1, arg_77_1)
+	for i, v in ipairs(infos) do
+		local mo = GameUtil.rpcInfoToMo(v, cls)
 
-		table.insert(var_77_1, var_77_2)
+		table.insert(list, mo)
 
-		var_77_0[var_77_2[arg_77_2]] = var_77_2
+		map[mo[key]] = mo
 	end
 
-	return var_77_1, var_77_0
+	return list, map
 end
 
-function var_0_0.setActiveUIBlock(arg_78_0, arg_78_1, arg_78_2)
-	if type(arg_78_0) ~= "string" then
-		logError("blockKey can't be " .. type(arg_78_0))
+function GameUtil.setActiveUIBlock(blockKey, isActiveBlock, isNeedCircleMv)
+	if type(blockKey) ~= "string" then
+		logError("blockKey can't be " .. type(blockKey))
 	end
 
-	arg_78_2 = arg_78_2 ~= false and true or false
+	isNeedCircleMv = isNeedCircleMv ~= false and true or false
 
-	UIBlockMgrExtend.setNeedCircleMv(arg_78_2)
+	UIBlockMgrExtend.setNeedCircleMv(isNeedCircleMv)
 
-	if arg_78_1 then
-		UIBlockMgr.instance:startBlock(arg_78_0)
+	if isActiveBlock then
+		UIBlockMgr.instance:startBlock(blockKey)
 	else
-		UIBlockMgr.instance:endBlock(arg_78_0)
+		UIBlockMgr.instance:endBlock(blockKey)
 	end
 end
 
-function var_0_0.loadSImage(arg_79_0, arg_79_1, arg_79_2, arg_79_3)
-	if string.nilorempty(arg_79_1) then
-		arg_79_0:UnLoadImage()
+function GameUtil.loadSImage(simage, resUrl, loadedCb, cbObj)
+	if string.nilorempty(resUrl) then
+		simage:UnLoadImage()
 	else
-		arg_79_0:LoadImage(arg_79_1, arg_79_2, arg_79_3)
+		simage:LoadImage(resUrl, loadedCb, cbObj)
 	end
 end
 
-function var_0_0.logTab(arg_80_0, arg_80_1)
-	if not arg_80_0 or type(arg_80_0) ~= "table" then
-		return tostring(arg_80_0)
+function GameUtil.logTab(tab, level)
+	if not tab or type(tab) ~= "table" then
+		return tostring(tab)
 	end
 
-	arg_80_1 = arg_80_1 or 0
+	level = level or 0
 
-	if arg_80_1 > 100 then
+	if level > 100 then
 		logError("stack overflow ...")
 
-		return tostring(arg_80_0)
+		return tostring(tab)
 	end
 
-	local var_80_0 = {}
-	local var_80_1 = string.rep("\t", arg_80_1)
+	local logTab = {}
+	local initPre = string.rep("\t", level)
 
-	table.insert(var_80_0, string.format(" {"))
+	table.insert(logTab, string.format(" {"))
 
-	local var_80_2 = string.rep("\t", arg_80_1 + 1)
+	local pre = string.rep("\t", level + 1)
 
-	for iter_80_0, iter_80_1 in pairs(arg_80_0) do
-		if type(iter_80_1) == "table" then
-			table.insert(var_80_0, string.format("%s %s = %s,", var_80_2, iter_80_0, var_0_0.logTab(iter_80_1, arg_80_1 + 1)))
+	for key, value in pairs(tab) do
+		if type(value) == "table" then
+			table.insert(logTab, string.format("%s %s = %s,", pre, key, GameUtil.logTab(value, level + 1)))
 		else
-			table.insert(var_80_0, string.format("%s %s = %s,", var_80_2, iter_80_0, iter_80_1))
+			table.insert(logTab, string.format("%s %s = %s,", pre, key, value))
 		end
 	end
 
-	table.insert(var_80_0, string.format("%s }", var_80_1))
+	table.insert(logTab, string.format("%s }", initPre))
 
-	return table.concat(var_80_0, "\n")
+	return table.concat(logTab, "\n")
 end
 
-function var_0_0.getViewSize()
-	local var_81_0 = ViewMgr.instance:getUILayer("HUD").transform
+function GameUtil.getViewSize()
+	local hudGo = ViewMgr.instance:getUILayer("HUD")
+	local tr = hudGo.transform
 
-	return recthelper.getWidth(var_81_0), recthelper.getHeight(var_81_0)
+	return recthelper.getWidth(tr), recthelper.getHeight(tr)
 end
 
-function var_0_0.checkClickPositionInRight(arg_82_0)
-	local var_82_0 = ViewMgr.instance:getUILayer("HUD"):GetComponent(gohelper.Type_RectTransform)
-	local var_82_1, var_82_2 = recthelper.screenPosToAnchorPos2(arg_82_0, var_82_0)
+function GameUtil.checkClickPositionInRight(clickPosition)
+	local hudGo = ViewMgr.instance:getUILayer("HUD")
+	local rectTr = hudGo:GetComponent(gohelper.Type_RectTransform)
+	local anchorX, _ = recthelper.screenPosToAnchorPos2(clickPosition, rectTr)
 
-	return var_82_1 >= 0
+	return anchorX >= 0
 end
 
-function var_0_0.needLogInFightSceneUseStringFunc()
+function GameUtil.needLogInFightSceneUseStringFunc()
 	return false and GameSceneMgr.instance:isFightScene()
 end
 
-function var_0_0.needLogInOtherSceneUseFightStrUtilFunc()
+function GameUtil.needLogInOtherSceneUseFightStrUtilFunc()
 	return false
 end
 
-var_0_0.enumId = 0
+GameUtil.enumId = 0
 
-function var_0_0.getEnumId()
-	var_0_0.enumId = var_0_0.enumId + 1
+function GameUtil.getEnumId()
+	GameUtil.enumId = GameUtil.enumId + 1
 
-	return var_0_0.enumId
+	return GameUtil.enumId
 end
 
-var_0_0.instanceId = 0
+GameUtil.instanceId = 0
 
-function var_0_0.getInstanceId()
-	var_0_0.instanceId = var_0_0.instanceId + 1
+function GameUtil.getInstanceId()
+	GameUtil.instanceId = GameUtil.instanceId + 1
 
-	return var_0_0.instanceId
+	return GameUtil.instanceId
 end
 
-var_0_0.msgId = 0
+GameUtil.msgId = 0
 
-function var_0_0.getMsgId()
-	var_0_0.msgId = var_0_0.msgId + 1
+function GameUtil.getMsgId()
+	GameUtil.msgId = GameUtil.msgId + 1
 
-	return var_0_0.msgId
+	return GameUtil.msgId
 end
 
-function var_0_0.endsWith(arg_88_0, arg_88_1)
-	if string.nilorempty(arg_88_0) or string.nilorempty(arg_88_1) then
+function GameUtil.endsWith(str, ending)
+	if string.nilorempty(str) or string.nilorempty(ending) then
 		return false
 	end
 
-	return string.sub(arg_88_0, -string.len(arg_88_1)) == arg_88_1
+	return string.sub(str, -string.len(ending)) == ending
 end
 
-function var_0_0.isBaseOf(arg_89_0, arg_89_1)
-	if type(arg_89_0) ~= type(arg_89_1) then
+function GameUtil.isBaseOf(Base, T)
+	if type(Base) ~= type(T) then
 		return false
 	end
 
-	if type(arg_89_0) ~= "table" or type(arg_89_1) ~= "table" then
+	if type(Base) ~= "table" or type(T) ~= "table" then
 		return false
 	end
 
-	local var_89_0 = arg_89_1
+	local p = T
 
-	while var_89_0 ~= nil do
-		if var_89_0 == arg_89_0 then
+	while p ~= nil do
+		if p == Base then
 			return true
 		end
 
-		var_89_0 = var_89_0.super
+		p = p.super
 	end
 
 	return false
 end
 
-function var_0_0.getRandomPosInCircle(arg_90_0, arg_90_1, arg_90_2)
-	local var_90_0 = arg_90_2 * arg_90_2
-	local var_90_1 = math.random(1, 1000) / 1000
-	local var_90_2 = math.sqrt(LuaTween.linear(var_90_1, 0, var_90_0, 1))
-	local var_90_3 = math.random(1, 1000) / 1000
-	local var_90_4 = LuaTween.linear(var_90_3, 0, 2 * math.pi, 1)
-	local var_90_5 = var_90_2 * math.cos(var_90_4)
-	local var_90_6 = var_90_2 * math.sin(var_90_4)
+function GameUtil.getRandomPosInCircle(centerPosX, centerPosY, radius)
+	local r2 = radius * radius
+	local rate = math.random(1, 1000) / 1000
+	local r = math.sqrt(LuaTween.linear(rate, 0, r2, 1))
 
-	return var_90_5 + arg_90_0, var_90_6 + arg_90_1
+	rate = math.random(1, 1000) / 1000
+
+	local angle = LuaTween.linear(rate, 0, 2 * math.pi, 1)
+	local x = r * math.cos(angle)
+	local y = r * math.sin(angle)
+
+	return x + centerPosX, y + centerPosY
 end
 
-function var_0_0.doClearMember(arg_91_0, arg_91_1)
-	if arg_91_0[arg_91_1] then
-		arg_91_0[arg_91_1]:doClear()
+function GameUtil.doClearMember(Self, memberName)
+	if Self[memberName] then
+		local item = Self[memberName]
 
-		arg_91_0[arg_91_1] = nil
+		item:doClear()
+
+		Self[memberName] = nil
 	end
 end
 
-local var_0_8 = require("protobuf.descriptor").FieldDescriptor
+local descriptor = require("protobuf.descriptor")
+local FieldDescriptor = descriptor.FieldDescriptor
 
-function var_0_0.copyPbData(arg_92_0, arg_92_1)
-	if not arg_92_0 then
+function GameUtil.copyPbData(serverData, decopy)
+	if not serverData then
 		return
 	end
 
-	local var_92_0 = arg_92_0._fields
+	local fields = serverData._fields
 
-	if next(var_92_0) then
-		local var_92_1 = {}
+	if next(fields) then
+		local fieldTbl = {}
 
-		for iter_92_0, iter_92_1 in pairs(var_92_0) do
-			local var_92_2 = iter_92_0.name
+		for keyTbl, value in pairs(fields) do
+			local keyName = keyTbl.name
 
-			if iter_92_0.label == var_0_8.LABEL_REPEATED then
-				if #iter_92_1 ~= 0 then
-					local var_92_3 = {}
+			if keyTbl.label == FieldDescriptor.LABEL_REPEATED then
+				if #value ~= 0 then
+					local arrayTbl = {}
 
-					for iter_92_2, iter_92_3 in ipairs(iter_92_1) do
-						if iter_92_0.cpp_type == var_0_8.CPPTYPE_MESSAGE and arg_92_1 then
-							var_92_3[#var_92_3 + 1] = var_0_0.copyPbData(iter_92_3, arg_92_1)
-						elseif iter_92_0.cpp_type == var_0_8.CPPTYPE_INT64 or iter_92_0.cpp_type == var_0_8.CPPTYPE_UINT64 then
-							var_92_3[#var_92_3 + 1] = tonumber(iter_92_3)
+					for _, arrayValue in ipairs(value) do
+						if keyTbl.cpp_type == FieldDescriptor.CPPTYPE_MESSAGE and decopy then
+							arrayTbl[#arrayTbl + 1] = GameUtil.copyPbData(arrayValue, decopy)
+						elseif keyTbl.cpp_type == FieldDescriptor.CPPTYPE_INT64 or keyTbl.cpp_type == FieldDescriptor.CPPTYPE_UINT64 then
+							arrayTbl[#arrayTbl + 1] = tonumber(arrayValue)
 						else
-							var_92_3[#var_92_3 + 1] = iter_92_3
+							arrayTbl[#arrayTbl + 1] = arrayValue
 						end
 					end
 
-					var_92_1[var_92_2] = var_92_3
+					fieldTbl[keyName] = arrayTbl
 				end
-			elseif iter_92_0.cpp_type == var_0_8.CPPTYPE_MESSAGE and arg_92_1 then
-				var_92_1[var_92_2] = var_0_0.copyPbData(iter_92_1, true)
-			elseif iter_92_0.cpp_type == var_0_8.CPPTYPE_INT64 or iter_92_0.cpp_type == var_0_8.CPPTYPE_UINT64 then
-				var_92_1[var_92_2] = tonumber(iter_92_1)
+			elseif keyTbl.cpp_type == FieldDescriptor.CPPTYPE_MESSAGE and decopy then
+				fieldTbl[keyName] = GameUtil.copyPbData(value, true)
+			elseif keyTbl.cpp_type == FieldDescriptor.CPPTYPE_INT64 or keyTbl.cpp_type == FieldDescriptor.CPPTYPE_UINT64 then
+				fieldTbl[keyName] = tonumber(value)
 			else
-				var_92_1[var_92_2] = iter_92_1
+				fieldTbl[keyName] = value
 			end
 		end
 
-		return var_92_1
+		return fieldTbl
 	end
 end
 
-function var_0_0.convertToPercentStr(arg_93_0)
-	arg_93_0 = arg_93_0 or 0
+function GameUtil.convertToPercentStr(rate1000)
+	rate1000 = rate1000 or 0
 
-	return tostring(math.floor(arg_93_0 / 10)) .. "%"
+	return tostring(math.floor(rate1000 / 10)) .. "%"
 end
 
-function var_0_0.calcByDeltaRate1000(arg_94_0, arg_94_1)
-	arg_94_0 = arg_94_0 or 0
+function GameUtil.calcByDeltaRate1000(num, dtRate1000)
+	num = num or 0
 
-	return arg_94_0 * (1000 + (arg_94_1 or 0)) / 1000
+	local rate1000 = 1000 + (dtRate1000 or 0)
+
+	return num * rate1000 / 1000
 end
 
-function var_0_0.calcByDeltaRate1000AsInt(arg_95_0, arg_95_1)
-	return math.floor(var_0_0.calcByDeltaRate1000(arg_95_0, arg_95_1))
+function GameUtil.calcByDeltaRate1000AsInt(num, dtRate1000)
+	return math.floor(GameUtil.calcByDeltaRate1000(num, dtRate1000))
 end
 
-function var_0_0.getTextRenderSize(arg_96_0)
-	if not arg_96_0 then
+function GameUtil.getTextRenderSize(text)
+	if not text then
 		return 0, 0
 	end
 
-	arg_96_0:ForceMeshUpdate(true, true)
+	text:ForceMeshUpdate(true, true)
 
-	local var_96_0 = arg_96_0:GetRenderedValues()
+	local renderValue = text:GetRenderedValues()
 
-	return var_96_0.x, var_96_0.y
+	return renderValue.x, renderValue.y
 end
 
-return var_0_0
+return GameUtil

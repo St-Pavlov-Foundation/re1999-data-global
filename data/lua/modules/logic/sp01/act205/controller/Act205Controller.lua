@@ -1,112 +1,126 @@
-﻿module("modules.logic.sp01.act205.controller.Act205Controller", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/act205/controller/Act205Controller.lua
 
-local var_0_0 = class("Act205Controller", BaseController)
+module("modules.logic.sp01.act205.controller.Act205Controller", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local Act205Controller = class("Act205Controller", BaseController)
+
+function Act205Controller:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function Act205Controller:reInit()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_3_0.onDailyRefresh, arg_3_0)
+function Act205Controller:addConstEvents()
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self.onDailyRefresh, self)
 end
 
-function var_0_0.onDailyRefresh(arg_4_0)
-	if not ActivityHelper.isOpen(Act205Enum.ActId) then
+function Act205Controller:onDailyRefresh()
+	local isOpen = ActivityHelper.isOpen(Act205Enum.ActId)
+
+	if not isOpen then
 		return
 	end
 
 	Activity205Rpc.instance:sendAct205GetInfoRequest(Act205Enum.ActId, function()
-		arg_4_0:dispatchEvent(Act205Event.OnDailyRefresh)
-	end, arg_4_0)
+		self:dispatchEvent(Act205Event.OnDailyRefresh)
+	end, self)
 end
 
-function var_0_0.openGameStartView(arg_6_0, arg_6_1)
-	if not Act205Model.instance:isAct205Open(true) then
+function Act205Controller:openGameStartView(activityId)
+	local isActOpen = Act205Model.instance:isAct205Open(true)
+
+	if not isActOpen then
 		return
 	end
 
-	arg_6_0.activityId = arg_6_1
+	self.activityId = activityId
 
-	Activity205Rpc.instance:sendAct205GetInfoRequest(arg_6_1, arg_6_0.realOpenGameStartView, arg_6_0)
+	Activity205Rpc.instance:sendAct205GetInfoRequest(activityId, self.realOpenGameStartView, self)
 end
 
-function var_0_0.realOpenGameStartView(arg_7_0)
-	local var_7_0 = Act205Model.instance:getCurOpenGameStageId()
+function Act205Controller:realOpenGameStartView()
+	local curOpenStageId = Act205Model.instance:getCurOpenGameStageId()
 
-	if not var_7_0 then
+	if not curOpenStageId then
 		GameFacade.showToast(ToastEnum.ActivityNotOpen)
 
 		return
 	end
 
-	local var_7_1 = {
-		activityId = arg_7_0.activityId,
-		gameStageId = var_7_0
-	}
+	local viewParam = {}
 
-	Activity205Rpc.instance:sendAct205GetGameInfoRequest(arg_7_0.activityId)
-	ViewMgr.instance:openView(ViewName.Act205GameStartView, var_7_1)
+	viewParam.activityId = self.activityId
+	viewParam.gameStageId = curOpenStageId
+
+	Activity205Rpc.instance:sendAct205GetGameInfoRequest(self.activityId)
+	ViewMgr.instance:openView(ViewName.Act205GameStartView, viewParam)
 end
 
-function var_0_0.openRuleTipsView(arg_8_0)
+function Act205Controller:openRuleTipsView()
 	ViewMgr.instance:openView(ViewName.Act205RuleTipsView)
 end
 
-function var_0_0.openOceanSelectView(arg_9_0, arg_9_1)
-	if not Act205Model.instance:isGameStageOpen(Act205Enum.GameStageId.Ocean, true) then
+function Act205Controller:openOceanSelectView(param)
+	local isGameOpen = Act205Model.instance:isGameStageOpen(Act205Enum.GameStageId.Ocean, true)
+
+	if not isGameOpen then
 		return
 	end
 
 	Activity205Rpc.instance:sendAct205GetGameInfoRequest(Act205Enum.ActId, function()
-		ViewMgr.instance:openView(ViewName.Act205OceanSelectView, arg_9_1)
-	end, arg_9_0)
+		ViewMgr.instance:openView(ViewName.Act205OceanSelectView, param)
+	end, self)
 end
 
-function var_0_0.openOceanShowView(arg_11_0, arg_11_1)
-	if not Act205Model.instance:isGameStageOpen(Act205Enum.GameStageId.Ocean, true) then
+function Act205Controller:openOceanShowView(param)
+	local isGameOpen = Act205Model.instance:isGameStageOpen(Act205Enum.GameStageId.Ocean, true)
+
+	if not isGameOpen then
 		return
 	end
 
-	ViewMgr.instance:openView(ViewName.Act205OceanShowView, arg_11_1)
+	ViewMgr.instance:openView(ViewName.Act205OceanShowView, param)
 	ViewMgr.instance:closeView(ViewName.Act205GameStartView)
 end
 
-function var_0_0.openOceanResultView(arg_12_0, arg_12_1)
-	ViewMgr.instance:openView(ViewName.Act205OceanResultView, arg_12_1)
+function Act205Controller:openOceanResultView(param)
+	ViewMgr.instance:openView(ViewName.Act205OceanResultView, param)
 end
 
-function var_0_0.setPlayerPrefs(arg_13_0, arg_13_1, arg_13_2)
-	if string.nilorempty(arg_13_1) or not arg_13_2 then
+function Act205Controller:setPlayerPrefs(key, value)
+	if string.nilorempty(key) or not value then
 		return
 	end
 
-	if type(arg_13_2) == "number" then
-		GameUtil.playerPrefsSetNumberByUserId(arg_13_1, arg_13_2)
+	local isNumber = type(value) == "number"
+
+	if isNumber then
+		GameUtil.playerPrefsSetNumberByUserId(key, value)
 	else
-		GameUtil.playerPrefsSetStringByUserId(arg_13_1, arg_13_2)
+		GameUtil.playerPrefsSetStringByUserId(key, value)
 	end
 end
 
-function var_0_0.getPlayerPrefs(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = arg_14_2 or ""
+function Act205Controller:getPlayerPrefs(key, defaultValue)
+	local value = defaultValue or ""
 
-	if string.nilorempty(arg_14_1) then
-		return var_14_0
+	if string.nilorempty(key) then
+		return value
 	end
 
-	if type(var_14_0) == "number" then
-		var_14_0 = GameUtil.playerPrefsGetNumberByUserId(arg_14_1, var_14_0)
+	local isNumber = type(value) == "number"
+
+	if isNumber then
+		value = GameUtil.playerPrefsGetNumberByUserId(key, value)
 	else
-		var_14_0 = GameUtil.playerPrefsGetStringByUserId(arg_14_1, var_14_0)
+		value = GameUtil.playerPrefsGetStringByUserId(key, value)
 	end
 
-	return var_14_0
+	return value
 end
 
-var_0_0.instance = var_0_0.New()
+Act205Controller.instance = Act205Controller.New()
 
-return var_0_0
+return Act205Controller

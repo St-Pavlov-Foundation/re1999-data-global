@@ -1,15 +1,43 @@
-﻿module("modules.logic.fight.system.work.FightWorkBloodPoolValueChange335", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkBloodPoolValueChange335.lua
 
-local var_0_0 = class("FightWorkBloodPoolValueChange335", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkBloodPoolValueChange335", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0.actEffectData.effectNum
-	local var_1_1 = FightDataHelper.teamDataMgr
+local FightWorkBloodPoolValueChange335 = class("FightWorkBloodPoolValueChange335", FightEffectBase)
 
-	var_1_1:checkBloodPoolExist(var_1_0)
-	var_1_1[var_1_0].bloodPool:changeValue(arg_1_0.actEffectData.effectNum1)
-	FightController.instance:dispatchEvent(FightEvent.BloodPool_ValueChange, var_1_0)
-	arg_1_0:onDone(true)
+function FightWorkBloodPoolValueChange335:onStart()
+	local configEffect = self.actEffectData.configEffect
+
+	if configEffect == FightEnum.BloodPoolConfigEffect.BloodPool then
+		self:handleBloodPool()
+	elseif configEffect == FightEnum.BloodPoolConfigEffect.HeatScale then
+		self:handleHeatScale()
+	end
 end
 
-return var_0_0
+function FightWorkBloodPoolValueChange335:handleBloodPool()
+	local teamType = self.actEffectData.effectNum
+	local teamDataMgr = FightDataHelper.teamDataMgr
+
+	teamDataMgr:checkBloodPoolExist(teamType)
+
+	local pool = teamDataMgr[teamType].bloodPool
+
+	pool:changeValue(self.actEffectData.effectNum1)
+	FightController.instance:dispatchEvent(FightEvent.BloodPool_ValueChange, teamType)
+	self:onDone(true)
+end
+
+function FightWorkBloodPoolValueChange335:handleHeatScale()
+	local teamType = self.actEffectData.effectNum
+	local teamDataMgr = FightDataHelper.teamDataMgr
+
+	teamDataMgr:checkHeatScaleExist(teamType)
+
+	local heatScale = teamDataMgr[teamType].heatScale
+
+	heatScale:changeValue(self.actEffectData.effectNum1)
+	FightController.instance:dispatchEvent(FightEvent.HeatScale_ValueChange, teamType)
+	self:onDone(true)
+end
+
+return FightWorkBloodPoolValueChange335

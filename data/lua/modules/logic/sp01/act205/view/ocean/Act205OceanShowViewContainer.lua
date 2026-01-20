@@ -1,13 +1,15 @@
-﻿module("modules.logic.sp01.act205.view.ocean.Act205OceanShowViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/act205/view/ocean/Act205OceanShowViewContainer.lua
 
-local var_0_0 = class("Act205OceanShowViewContainer", BaseViewContainer)
+module("modules.logic.sp01.act205.view.ocean.Act205OceanShowViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Act205OceanShowViewContainer = class("Act205OceanShowViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Act205OceanShowView.New())
+function Act205OceanShowViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Act205OceanShowView.New())
+
+	return views
 end
 
-return var_0_0
+return Act205OceanShowViewContainer

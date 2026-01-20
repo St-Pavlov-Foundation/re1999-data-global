@@ -1,197 +1,202 @@
-﻿module("modules.logic.main.view.MainThumbnailView", package.seeall)
+﻿-- chunkname: @modules/logic/main/view/MainThumbnailView.lua
 
-local var_0_0 = class("MainThumbnailView", BaseView)
+module("modules.logic.main.view.MainThumbnailView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageleftbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_leftbg")
-	arg_1_0._goplayerinfo = gohelper.findChild(arg_1_0.viewGO, "#go_playerinfo")
-	arg_1_0._simagesignature = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_signature")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#go_playerinfo/#txt_name")
-	arg_1_0._txtlevel = gohelper.findChildText(arg_1_0.viewGO, "#go_playerinfo/#txt_level")
-	arg_1_0._txtid = gohelper.findChildText(arg_1_0.viewGO, "#go_playerinfo/#txt_id")
-	arg_1_0._gobanner = gohelper.findChild(arg_1_0.viewGO, "#go_banner")
-	arg_1_0._goslider = gohelper.findChild(arg_1_0.viewGO, "#go_banner/#go_slider")
-	arg_1_0._gobannerscroll = gohelper.findChild(arg_1_0.viewGO, "#go_banner/#go_bannerscroll")
-	arg_1_0._gobannercontent = gohelper.findChild(arg_1_0.viewGO, "#go_banner/#go_bannercontent")
-	arg_1_0._gospinescale = gohelper.findChild(arg_1_0.viewGO, "#go_spine_scale")
-	arg_1_0._golightspine = gohelper.findChild(arg_1_0.viewGO, "#go_spine_scale/lightspine/#go_lightspine")
-	arg_1_0._golightspinecontrol = gohelper.findChild(arg_1_0.viewGO, "#go_lightspinecontrol")
-	arg_1_0._gocontentbg = gohelper.findChild(arg_1_0.viewGO, "bottom/#go_contentbg")
-	arg_1_0._txtanacn = gohelper.findChildText(arg_1_0.viewGO, "bottom/#txt_ana_cn")
-	arg_1_0._txtanaen = gohelper.findChildText(arg_1_0.viewGO, "bottom/#txt_ana_en")
-	arg_1_0._btnswitch = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_switch")
-	arg_1_0._btndetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_playerinfo/#btn_detail")
-	arg_1_0._goplayinforeddotparent = gohelper.findChild(arg_1_0.viewGO, "#go_playerinfo/#btn_detail/#go_playinforeddot")
-	arg_1_0._goscroll = gohelper.findChild(arg_1_0.viewGO, "btns/#go_scroll")
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "btns/#go_content")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._btnblank = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_blank")
+local MainThumbnailView = class("MainThumbnailView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function MainThumbnailView:onInitView()
+	self._simageleftbg = gohelper.findChildSingleImage(self.viewGO, "#simage_leftbg")
+	self._goplayerinfo = gohelper.findChild(self.viewGO, "#go_playerinfo")
+	self._simagesignature = gohelper.findChildSingleImage(self.viewGO, "#simage_signature")
+	self._txtname = gohelper.findChildText(self.viewGO, "#go_playerinfo/#txt_name")
+	self._txtlevel = gohelper.findChildText(self.viewGO, "#go_playerinfo/#txt_level")
+	self._txtid = gohelper.findChildText(self.viewGO, "#go_playerinfo/#txt_id")
+	self._gobanner = gohelper.findChild(self.viewGO, "#go_banner")
+	self._goslider = gohelper.findChild(self.viewGO, "#go_banner/#go_slider")
+	self._gobannerscroll = gohelper.findChild(self.viewGO, "#go_banner/#go_bannerscroll")
+	self._gobannercontent = gohelper.findChild(self.viewGO, "#go_banner/#go_bannercontent")
+	self._gospinescale = gohelper.findChild(self.viewGO, "#go_spine_scale")
+	self._golightspine = gohelper.findChild(self.viewGO, "#go_spine_scale/lightspine/#go_lightspine")
+	self._golightspinecontrol = gohelper.findChild(self.viewGO, "#go_lightspinecontrol")
+	self._gocontentbg = gohelper.findChild(self.viewGO, "bottom/#go_contentbg")
+	self._txtanacn = gohelper.findChildText(self.viewGO, "bottom/#txt_ana_cn")
+	self._txtanaen = gohelper.findChildText(self.viewGO, "bottom/#txt_ana_en")
+	self._btnswitch = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_switch")
+	self._btndetail = gohelper.findChildButtonWithAudio(self.viewGO, "#go_playerinfo/#btn_detail")
+	self._goplayinforeddotparent = gohelper.findChild(self.viewGO, "#go_playerinfo/#btn_detail/#go_playinforeddot")
+	self._goscroll = gohelper.findChild(self.viewGO, "btns/#go_scroll")
+	self._gocontent = gohelper.findChild(self.viewGO, "btns/#go_content")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._btnblank = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_blank")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnswitch:AddClickListener(arg_2_0._btnswitchOnClick, arg_2_0)
-	arg_2_0._btndetail:AddClickListener(arg_2_0._btndetailOnClick, arg_2_0)
-	arg_2_0._btnblank:AddClickListener(arg_2_0._btnblankOnClick, arg_2_0)
+function MainThumbnailView:addEvents()
+	self._btnswitch:AddClickListener(self._btnswitchOnClick, self)
+	self._btndetail:AddClickListener(self._btndetailOnClick, self)
+	self._btnblank:AddClickListener(self._btnblankOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnswitch:RemoveClickListener()
-	arg_3_0._btndetail:RemoveClickListener()
-	arg_3_0._btnblank:RemoveClickListener()
+function MainThumbnailView:removeEvents()
+	self._btnswitch:RemoveClickListener()
+	self._btndetail:RemoveClickListener()
+	self._btnblank:RemoveClickListener()
 end
 
-function var_0_0._btnblankOnClick(arg_4_0)
-	if arg_4_0._animator.enabled or arg_4_0._cameraAnimator.enabled then
-		if not arg_4_0._checkCloseTime then
-			arg_4_0._checkCloseTime = Time.realtimeSinceStartup
+function MainThumbnailView:_btnblankOnClick()
+	if self._animator.enabled or self._cameraAnimator.enabled then
+		if not self._checkCloseTime then
+			self._checkCloseTime = Time.realtimeSinceStartup
 
 			return
 		end
 
-		if Time.realtimeSinceStartup - arg_4_0._checkCloseTime <= 2 then
+		if Time.realtimeSinceStartup - self._checkCloseTime <= 2 then
 			return
 		end
 	end
 
-	arg_4_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._btndetailOnClick(arg_5_0)
-	local var_5_0 = PlayerModel.instance:getPlayinfo()
+function MainThumbnailView:_btndetailOnClick()
+	local playerInfo = PlayerModel.instance:getPlayinfo()
 
-	PlayerController.instance:openPlayerView(var_5_0, true)
+	PlayerController.instance:openPlayerView(playerInfo, true)
 end
 
-function var_0_0._btnswitchOnClick(arg_6_0)
+function MainThumbnailView:_btnswitchOnClick()
 	UIBlockMgr.instance:startBlock("MainThumbnailView_CloseAnim")
-	SLFramework.AnimatorPlayer.Get(arg_6_0.viewGO):Play(UIAnimationName.Close, arg_6_0.onPlayCloseTransitionFinish, arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0.onPlayCloseTransitionFinish, arg_6_0)
-	TaskDispatcher.runDelay(arg_6_0.onPlayCloseTransitionFinish, arg_6_0, 0.3)
+
+	local player = SLFramework.AnimatorPlayer.Get(self.viewGO)
+
+	player:Play(UIAnimationName.Close, self.onPlayCloseTransitionFinish, self)
+	TaskDispatcher.cancelTask(self.onPlayCloseTransitionFinish, self)
+	TaskDispatcher.runDelay(self.onPlayCloseTransitionFinish, self, 0.3)
 end
 
-function var_0_0.onPlayCloseTransitionFinish(arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0.onPlayCloseTransitionFinish, arg_7_0)
+function MainThumbnailView:onPlayCloseTransitionFinish()
+	TaskDispatcher.cancelTask(self.onPlayCloseTransitionFinish, self)
 	UIBlockMgr.instance:endBlock("MainThumbnailView_CloseAnim")
 	ViewMgr.instance:openTabView(ViewName.MainSwitchView, nil, nil, 1)
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0:_onChangePlayerName()
+function MainThumbnailView:_editableInitView()
+	self:_onChangePlayerName()
 
-	arg_8_0._txtlevel.text = string.format("<size=19>Lv</size>.%s", PlayerModel.instance:getPlayinfo().level)
-	arg_8_0._txtid.text = string.format("ID:%s", PlayerModel.instance:getPlayinfo().userId)
+	self._txtlevel.text = string.format("<size=19>Lv</size>.%s", PlayerModel.instance:getPlayinfo().level)
+	self._txtid.text = string.format("ID:%s", PlayerModel.instance:getPlayinfo().userId)
 
-	arg_8_0._simageleftbg:LoadImage(ResUrl.getMainImage("bg_hd"))
+	self._simageleftbg:LoadImage(ResUrl.getMainImage("bg_hd"))
 
-	arg_8_0._animator = arg_8_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_8_0._cameraAnimator = CameraMgr.instance:getCameraRootAnimator()
-	arg_8_0._simagelogoGo = gohelper.findChild(arg_8_0.viewGO, "#simage_logo")
-	arg_8_0._simageactbgGo = gohelper.findChild(arg_8_0.viewGO, "#simage_actbg")
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._cameraAnimator = CameraMgr.instance:getCameraRootAnimator()
+	self._simagelogoGo = gohelper.findChild(self.viewGO, "#simage_logo")
+	self._simageactbgGo = gohelper.findChild(self.viewGO, "#simage_actbg")
 
-	arg_8_0:RefreshSignature()
-	gohelper.addUIClickAudio(arg_8_0._btndetail.gameObject, AudioEnum.UI.Play_UI_Magazines)
+	self:RefreshSignature()
+	gohelper.addUIClickAudio(self._btndetail.gameObject, AudioEnum.UI.Play_UI_Magazines)
 end
 
-function var_0_0._getFormatStr(arg_9_0, arg_9_1)
-	if string.nilorempty(arg_9_1) then
+function MainThumbnailView:_getFormatStr(content)
+	if string.nilorempty(content) then
 		return ""
 	end
 
-	local var_9_0 = GameUtil.utf8sub(arg_9_1, 1, 1)
-	local var_9_1 = ""
+	local first = GameUtil.utf8sub(content, 1, 1)
+	local remain = ""
 
-	if GameUtil.utf8len(arg_9_1) >= 2 then
-		var_9_1 = GameUtil.utf8sub(arg_9_1, 2, GameUtil.utf8len(arg_9_1) - 1)
+	if GameUtil.utf8len(content) >= 2 then
+		remain = GameUtil.utf8sub(content, 2, GameUtil.utf8len(content) - 1)
 	end
 
-	return string.format("<size=62>%s</size>%s", var_9_0, var_9_1)
+	return string.format("<size=62>%s</size>%s", first, remain)
 end
 
-function var_0_0.onUpdate(arg_10_0)
+function MainThumbnailView:onUpdate()
 	return
 end
 
-function var_0_0.RefreshSignature(arg_11_0)
-	local var_11_0 = CharacterSwitchListModel.instance:getMainHero()
-	local var_11_1 = HeroModel.instance:getByHeroId(var_11_0)
+function MainThumbnailView:RefreshSignature()
+	local heroId = CharacterSwitchListModel.instance:getMainHero()
+	local heroMo = HeroModel.instance:getByHeroId(heroId)
 
-	if not var_11_1 then
+	if not heroMo then
 		return
 	end
 
-	arg_11_0._simagesignature:LoadImage(ResUrl.getSignature(var_11_1.config.signature))
+	self._simagesignature:LoadImage(ResUrl.getSignature(heroMo.config.signature))
 end
 
-function var_0_0.onOpen(arg_12_0)
-	arg_12_0:addEventCb(CharacterController.instance, CharacterEvent.MainThumbnailSignature, arg_12_0.RefreshSignature, arg_12_0)
-	arg_12_0:addEventCb(PlayerController.instance, PlayerEvent.ChangePlayerName, arg_12_0._onChangePlayerName, arg_12_0)
-	arg_12_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_12_0._freshBtns, arg_12_0)
+function MainThumbnailView:onOpen()
+	self:addEventCb(CharacterController.instance, CharacterEvent.MainThumbnailSignature, self.RefreshSignature, self)
+	self:addEventCb(PlayerController.instance, PlayerEvent.ChangePlayerName, self._onChangePlayerName, self)
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self._freshBtns, self)
 
-	arg_12_0.playerInfoRedDot = RedDotController.instance:addNotEventRedDot(arg_12_0._goplayinforeddotparent, PlayerModel.isHasAssistReward, PlayerModel.instance)
+	self.playerInfoRedDot = RedDotController.instance:addNotEventRedDot(self._goplayinforeddotparent, PlayerModel.isHasAssistReward, PlayerModel.instance)
 
-	arg_12_0:addEventCb(PlayerController.instance, PlayerEvent.UpdateAssistRewardCount, arg_12_0.refreshRedDot, arg_12_0)
-	arg_12_0:_freshBtns()
+	self:addEventCb(PlayerController.instance, PlayerEvent.UpdateAssistRewardCount, self.refreshRedDot, self)
+	self:_freshBtns()
 
-	local var_12_0 = VersionValidator.instance:isInReviewing()
+	local isReview = VersionValidator.instance:isInReviewing()
 
-	gohelper.setActive(arg_12_0._gobanner, not var_12_0)
+	gohelper.setActive(self._gobanner, not isReview)
 end
 
-function var_0_0._freshBtns(arg_13_0)
-	arg_13_0:_checkActivityImgVisible()
+function MainThumbnailView:_freshBtns()
+	self:_checkActivityImgVisible()
 end
 
-function var_0_0._checkActivityImgVisible(arg_14_0)
-	local var_14_0 = ActivityModel.showActivityEffect()
-	local var_14_1 = ActivityConfig.instance:getMainActAtmosphereConfig()
-	local var_14_2 = true
+function MainThumbnailView:_checkActivityImgVisible()
+	local isShow = ActivityModel.showActivityEffect()
+	local config = ActivityConfig.instance:getMainActAtmosphereConfig()
+	local isShowDefaultBg = true
 
-	if var_14_1 then
-		for iter_14_0, iter_14_1 in ipairs(var_14_1.mainThumbnailView) do
-			local var_14_3 = gohelper.findChild(arg_14_0.viewGO, iter_14_1)
+	if config then
+		for i, path in ipairs(config.mainThumbnailView) do
+			local image = gohelper.findChild(self.viewGO, path)
 
-			if var_14_3 then
-				gohelper.setActive(var_14_3, var_14_0)
+			if image then
+				gohelper.setActive(image, isShow)
 
-				var_14_2 = var_14_0
+				isShowDefaultBg = isShow
 			end
 		end
 	end
 
-	local var_14_4 = var_14_0 and var_14_1.isShowLogo or false
-	local var_14_5 = var_14_0 and var_14_1.mainThumbnailViewActBg or false
+	local isShowLogo = isShow and config.isShowLogo or false
+	local mainThumbnailViewActBg = isShow and config.mainThumbnailViewActBg or false
 
-	gohelper.setActive(arg_14_0._simageleftbg, var_14_2)
-	gohelper.setActive(arg_14_0._simagelogoGo, var_14_4)
-	gohelper.setActive(arg_14_0._simageactbgGo, var_14_5)
+	gohelper.setActive(self._simageleftbg, isShowDefaultBg)
+	gohelper.setActive(self._simagelogoGo, isShowLogo)
+	gohelper.setActive(self._simageactbgGo, mainThumbnailViewActBg)
 end
 
-function var_0_0.refreshRedDot(arg_15_0)
-	if not arg_15_0.playerInfoRedDot then
+function MainThumbnailView:refreshRedDot()
+	if not self.playerInfoRedDot then
 		return
 	end
 
-	arg_15_0.playerInfoRedDot:refreshRedDot()
+	self.playerInfoRedDot:refreshRedDot()
 end
 
-function var_0_0._onChangePlayerName(arg_16_0)
-	local var_16_0 = PlayerModel.instance:getPlayinfo().name
+function MainThumbnailView:_onChangePlayerName()
+	local name = PlayerModel.instance:getPlayinfo().name
 
-	arg_16_0._txtname.text = arg_16_0:_getFormatStr(var_16_0)
+	self._txtname.text = self:_getFormatStr(name)
 end
 
-function var_0_0.onClose(arg_17_0)
+function MainThumbnailView:onClose()
 	UIBlockMgr.instance:endBlock("MainThumbnailView_CloseAnim")
-	arg_17_0:removeEventCb(CharacterController.instance, CharacterEvent.MainThumbnailSignature, arg_17_0.RefreshSignature, arg_17_0)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.MainThumbnailSignature, self.RefreshSignature, self)
 end
 
-function var_0_0.onDestroyView(arg_18_0)
-	arg_18_0._simagesignature:UnLoadImage()
-	arg_18_0._simageleftbg:UnLoadImage()
+function MainThumbnailView:onDestroyView()
+	self._simagesignature:UnLoadImage()
+	self._simageleftbg:UnLoadImage()
 end
 
-return var_0_0
+return MainThumbnailView

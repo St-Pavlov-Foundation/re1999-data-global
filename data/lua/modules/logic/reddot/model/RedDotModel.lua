@@ -1,168 +1,174 @@
-﻿module("modules.logic.reddot.model.RedDotModel", package.seeall)
+﻿-- chunkname: @modules/logic/reddot/model/RedDotModel.lua
 
-local var_0_0 = class("RedDotModel", BaseModel)
+module("modules.logic.reddot.model.RedDotModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._dotInfos = {}
-	arg_1_0._dotTree = {}
-	arg_1_0._latestExpireTime = 0
+local RedDotModel = class("RedDotModel", BaseModel)
+
+function RedDotModel:onInit()
+	self._dotInfos = {}
+	self._dotTree = {}
+	self._latestExpireTime = 0
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._dotInfos = {}
-	arg_2_0._dotTree = {}
+function RedDotModel:reInit()
+	self._dotInfos = {}
+	self._dotTree = {}
 end
 
-function var_0_0._setDotTree(arg_3_0)
-	local var_3_0 = RedDotConfig.instance:getRedDotsCO()
+function RedDotModel:_setDotTree()
+	local co = RedDotConfig.instance:getRedDotsCO()
 
-	for iter_3_0, iter_3_1 in pairs(var_3_0) do
-		local var_3_1 = string.splitToNumber(iter_3_1.parent, "#")
+	for _, v in pairs(co) do
+		local parentIds = string.splitToNumber(v.parent, "#")
 
-		for iter_3_2, iter_3_3 in pairs(var_3_1) do
-			if not arg_3_0._dotTree[iter_3_3] then
-				arg_3_0._dotTree[iter_3_3] = {}
+		for _, p in pairs(parentIds) do
+			if not self._dotTree[p] then
+				self._dotTree[p] = {}
 			end
 
-			if not tabletool.indexOf(arg_3_0._dotTree[iter_3_3], iter_3_1.id) then
-				table.insert(arg_3_0._dotTree[iter_3_3], iter_3_1.id)
+			if not tabletool.indexOf(self._dotTree[p], v.id) then
+				table.insert(self._dotTree[p], v.id)
 			end
 		end
 	end
 end
 
-function var_0_0.setRedDotInfo(arg_4_0, arg_4_1)
-	arg_4_0:_setDotTree()
+function RedDotModel:setRedDotInfo(info)
+	self:_setDotTree()
 
-	local var_4_0 = SocialMessageModel.instance:getMessageUnreadRedDotGroup()
+	local socialDotInfo = SocialMessageModel.instance:getMessageUnreadRedDotGroup()
 
-	table.insert(arg_4_1, var_4_0)
+	table.insert(info, socialDotInfo)
 
-	arg_4_0._latestExpireTime = 0
+	self._latestExpireTime = 0
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
-		local var_4_1 = RedDotGroupMo.New()
+	for _, v in ipairs(info) do
+		local groupMo = RedDotGroupMo.New()
 
-		var_4_1:init(iter_4_1)
+		groupMo:init(v)
 
-		arg_4_0._dotInfos[tonumber(iter_4_1.defineId)] = var_4_1
+		self._dotInfos[tonumber(v.defineId)] = groupMo
 	end
 
-	RedDotController.instance:dispatchEvent(RedDotEvent.PreSetRedDot, arg_4_0._dotInfos)
-	arg_4_0:_recountLastestExpireTime()
+	RedDotController.instance:dispatchEvent(RedDotEvent.PreSetRedDot, self._dotInfos)
+	self:_recountLastestExpireTime()
 end
 
-function var_0_0.updateRedDotInfo(arg_5_0, arg_5_1)
-	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
-		if not arg_5_0._dotInfos[tonumber(iter_5_1.defineId)] then
-			local var_5_0 = RedDotGroupMo.New()
+function RedDotModel:updateRedDotInfo(info)
+	for _, v in ipairs(info) do
+		if not self._dotInfos[tonumber(v.defineId)] then
+			local groupMo = RedDotGroupMo.New()
 
-			var_5_0:init(iter_5_1)
+			groupMo:init(v)
 
-			arg_5_0._dotInfos[tonumber(iter_5_1.defineId)] = var_5_0
+			self._dotInfos[tonumber(v.defineId)] = groupMo
 		else
-			arg_5_0._dotInfos[tonumber(iter_5_1.defineId)]:_resetDotInfo(iter_5_1)
+			self._dotInfos[tonumber(v.defineId)]:_resetDotInfo(v)
 		end
 	end
 
-	arg_5_0:_recountLastestExpireTime()
+	self:_recountLastestExpireTime()
 end
 
-function var_0_0._recountLastestExpireTime(arg_6_0)
-	arg_6_0._latestExpireTime = 0
+function RedDotModel:_recountLastestExpireTime()
+	self._latestExpireTime = 0
 
-	for iter_6_0, iter_6_1 in pairs(arg_6_0._dotInfos) do
-		for iter_6_2, iter_6_3 in pairs(iter_6_1.infos) do
-			if iter_6_3.time > 0 and iter_6_3.time > ServerTime.now() then
-				if arg_6_0._latestExpireTime > 0 then
-					arg_6_0._latestExpireTime = arg_6_0._latestExpireTime > iter_6_3.time and iter_6_3.time or arg_6_0._latestExpireTime
+	for _, v in pairs(self._dotInfos) do
+		for _, y in pairs(v.infos) do
+			if y.time > 0 and y.time > ServerTime.now() then
+				if self._latestExpireTime > 0 then
+					self._latestExpireTime = self._latestExpireTime > y.time and y.time or self._latestExpireTime
 				else
-					arg_6_0._latestExpireTime = iter_6_3.time
+					self._latestExpireTime = y.time
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.getLatestExpireTime(arg_7_0)
-	return arg_7_0._latestExpireTime
+function RedDotModel:getLatestExpireTime()
+	return self._latestExpireTime
 end
 
-function var_0_0.getRedDotInfo(arg_8_0, arg_8_1)
-	return arg_8_0._dotInfos[arg_8_1]
+function RedDotModel:getRedDotInfo(id)
+	return self._dotInfos[id]
 end
 
-function var_0_0._getAssociateRedDots(arg_9_0, arg_9_1)
-	local var_9_0 = {}
+function RedDotModel:_getAssociateRedDots(id)
+	local dots = {}
 
-	table.insert(var_9_0, arg_9_1)
+	table.insert(dots, id)
 
-	local function var_9_1(arg_10_0)
-		local var_10_0 = arg_9_0:getDotParents(arg_10_0)
+	local function getAssociateDots(dotid)
+		local parentIds = self:getDotParents(dotid)
 
-		for iter_10_0, iter_10_1 in pairs(var_10_0) do
-			table.insert(var_9_0, iter_10_1)
-			var_9_1(iter_10_1)
+		for _, v in pairs(parentIds) do
+			table.insert(dots, v)
+			getAssociateDots(v)
 		end
 	end
 
-	if #arg_9_0:getDotParents(arg_9_1) > 0 then
-		var_9_1(arg_9_1)
+	local parentIds = self:getDotParents(id)
+
+	if #parentIds > 0 then
+		getAssociateDots(id)
 	end
 
-	return var_9_0
+	return dots
 end
 
-function var_0_0.getDotParents(arg_11_0, arg_11_1)
-	local var_11_0 = RedDotConfig.instance:getRedDotCO(arg_11_1)
+function RedDotModel:getDotParents(id)
+	local co = RedDotConfig.instance:getRedDotCO(id)
 
-	if not var_11_0 or var_11_0.parent == "" then
+	if not co or co.parent == "" then
 		return {}
 	end
 
-	return (string.splitToNumber(var_11_0.parent, "#"))
+	local parentIds = string.splitToNumber(co.parent, "#")
+
+	return parentIds
 end
 
-function var_0_0.getDotChilds(arg_12_0, arg_12_1)
-	local var_12_0 = {}
+function RedDotModel:getDotChilds(id)
+	local childs = {}
 
-	local function var_12_1(arg_13_0)
-		if not arg_12_0._dotTree[arg_13_0] or #arg_12_0._dotTree[arg_13_0] == 0 then
-			if not tabletool.indexOf(var_12_0, arg_13_0) then
-				table.insert(var_12_0, arg_13_0)
+	local function getchild(id)
+		if not self._dotTree[id] or #self._dotTree[id] == 0 then
+			if not tabletool.indexOf(childs, id) then
+				table.insert(childs, id)
 			end
 		else
-			for iter_13_0, iter_13_1 in pairs(arg_12_0._dotTree[arg_13_0]) do
-				if not arg_12_0._dotTree[iter_13_1] or #arg_12_0._dotTree[iter_13_1] == 0 then
-					if not tabletool.indexOf(var_12_0, iter_13_1) then
-						table.insert(var_12_0, iter_13_1)
+			for _, v in pairs(self._dotTree[id]) do
+				if not self._dotTree[v] or #self._dotTree[v] == 0 then
+					if not tabletool.indexOf(childs, v) then
+						table.insert(childs, v)
 					end
 				else
-					var_12_1(iter_13_1)
+					getchild(v)
 				end
 			end
 		end
 	end
 
-	var_12_1(arg_12_1)
+	getchild(id)
 
-	return var_12_0
+	return childs
 end
 
-function var_0_0.isDotShow(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0, var_14_1 = RedDotCustomFunc.isCustomShow(arg_14_1, arg_14_2)
+function RedDotModel:isDotShow(id, uid)
+	local isCustomShow, isShow = RedDotCustomFunc.isCustomShow(id, uid)
 
-	if var_14_0 then
-		return var_14_1
+	if isCustomShow then
+		return isShow
 	end
 
-	if not arg_14_0._dotInfos[arg_14_1] then
-		local var_14_2 = arg_14_0:getDotChilds(arg_14_1)
+	if not self._dotInfos[id] then
+		local childs = self:getDotChilds(id)
 
-		for iter_14_0, iter_14_1 in pairs(var_14_2) do
-			if arg_14_0._dotInfos[iter_14_1] then
-				for iter_14_2, iter_14_3 in pairs(arg_14_0._dotInfos[iter_14_1].infos) do
-					if iter_14_3.value > 0 then
+		for _, v in pairs(childs) do
+			if self._dotInfos[v] then
+				for _, info in pairs(self._dotInfos[v].infos) do
+					if info.value > 0 then
 						return true
 					end
 				end
@@ -170,45 +176,45 @@ function var_0_0.isDotShow(arg_14_0, arg_14_1, arg_14_2)
 		end
 
 		return false
-	elseif arg_14_0._dotInfos[arg_14_1].infos[arg_14_2] then
-		for iter_14_4, iter_14_5 in pairs(arg_14_0._dotInfos[arg_14_1].infos) do
-			if iter_14_5.uid == arg_14_2 then
-				return iter_14_5.value > 0
+	elseif self._dotInfos[id].infos[uid] then
+		for _, v in pairs(self._dotInfos[id].infos) do
+			if v.uid == uid then
+				return v.value > 0
 			end
 		end
 
 		return false
 	else
-		if not arg_14_0._dotInfos[arg_14_1].infos[arg_14_2] then
+		if not self._dotInfos[id].infos[uid] then
 			return false
 		end
 
-		return arg_14_0._dotInfos[arg_14_1].infos[arg_14_2].value > 0
+		return self._dotInfos[id].infos[uid].value > 0
 	end
 
 	return false
 end
 
-function var_0_0.getDotInfo(arg_15_0, arg_15_1, arg_15_2)
-	if arg_15_0._dotInfos[arg_15_1] then
-		if arg_15_0._dotInfos[arg_15_1][arg_15_2] then
-			return arg_15_0._dotInfos[arg_15_1][arg_15_2]
+function RedDotModel:getDotInfo(id, uid)
+	if self._dotInfos[id] then
+		if self._dotInfos[id][uid] then
+			return self._dotInfos[id][uid]
 		else
-			return arg_15_0._dotInfos[arg_15_1]
+			return self._dotInfos[id]
 		end
 	end
 
 	return nil
 end
 
-function var_0_0.getDotInfoCount(arg_16_0, arg_16_1, arg_16_2)
-	if not arg_16_2 or not arg_16_0._dotInfos[arg_16_1] or not arg_16_0._dotInfos[arg_16_1].infos[arg_16_2] then
+function RedDotModel:getDotInfoCount(id, uid)
+	if not uid or not self._dotInfos[id] or not self._dotInfos[id].infos[uid] then
 		return 0
 	end
 
-	return arg_16_0._dotInfos[arg_16_1].infos[arg_16_2].value
+	return self._dotInfos[id].infos[uid].value
 end
 
-var_0_0.instance = var_0_0.New()
+RedDotModel.instance = RedDotModel.New()
 
-return var_0_0
+return RedDotModel

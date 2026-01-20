@@ -1,122 +1,128 @@
-﻿module("modules.logic.sp01.odyssey.model.OdysseyEquipListModel", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/model/OdysseyEquipListModel.lua
 
-local var_0_0 = class("OdysseyEquipListModel", ListScrollModel)
+module("modules.logic.sp01.odyssey.model.OdysseyEquipListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local OdysseyEquipListModel = class("OdysseyEquipListModel", ListScrollModel)
+
+function OdysseyEquipListModel:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._filterTag = nil
-	arg_2_0._itemType = nil
+function OdysseyEquipListModel:reInit()
+	self._filterTag = nil
+	self._itemType = nil
 end
 
-function var_0_0.copyListFromEquipModel(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	arg_3_1 = arg_3_1 or OdysseyEnum.ItemType.Equip
+function OdysseyEquipListModel:copyListFromEquipModel(itemType, filterType, bagType, keepOrder)
+	itemType = itemType or OdysseyEnum.ItemType.Equip
 
-	local var_3_0 = OdysseyItemModel.instance:getItemMoList()
-	local var_3_1 = arg_3_0:getCount()
-	local var_3_2 = OdysseyHeroGroupModel.instance:getCurHeroGroup()
-	local var_3_3 = arg_3_1 == OdysseyEnum.ItemType.Equip
-	local var_3_4 = {}
-	local var_3_5 = 0
+	local equipMoList = OdysseyItemModel.instance:getItemMoList()
+	local curEquipMoListCount = self:getCount()
+	local curInfoMo = OdysseyHeroGroupModel.instance:getCurHeroGroup()
+	local isEquip = itemType == OdysseyEnum.ItemType.Equip
+	local filterMoList = {}
+	local itemMoCount = 0
 
-	if var_3_0 and next(var_3_0) then
-		for iter_3_0, iter_3_1 in ipairs(var_3_0) do
-			if iter_3_1.config.type == arg_3_1 and (arg_3_2 == nil or arg_3_2 == iter_3_1.config.suitId) then
-				table.insert(var_3_4, iter_3_1)
+	if equipMoList and next(equipMoList) then
+		for _, mo in ipairs(equipMoList) do
+			if mo.config.type == itemType and (filterType == nil or filterType == mo.config.suitId) then
+				table.insert(filterMoList, mo)
 
-				var_3_5 = var_3_5 + 1
+				itemMoCount = itemMoCount + 1
 			end
 		end
 	end
 
-	if var_3_1 > 0 and arg_3_1 == arg_3_0._itemType and arg_3_2 == arg_3_0._filterType and arg_3_4 and var_3_5 == var_3_1 then
-		local var_3_6 = arg_3_0:getList()
+	if curEquipMoListCount > 0 and itemType == self._itemType and filterType == self._filterType and keepOrder and itemMoCount == curEquipMoListCount then
+		local curItemMoList = self:getList()
 
 		logNormal("奥德赛下半活动 道具列表延时排序")
 
-		for iter_3_2, iter_3_3 in ipairs(var_3_6) do
-			iter_3_3.isEquip = arg_3_3 == OdysseyEnum.BagType.FightPrepare and var_3_3 and var_3_2:isEquipUse(iter_3_3.uid)
+		for _, mo in ipairs(curItemMoList) do
+			local isUse = bagType == OdysseyEnum.BagType.FightPrepare and isEquip and curInfoMo:isEquipUse(mo.uid)
+
+			mo.isEquip = isUse
 		end
 
-		arg_3_0:onModelUpdate()
+		self:onModelUpdate()
 	else
 		logNormal("奥德赛下半活动 道具列表立刻排序")
 
-		local var_3_7 = {}
+		local tempMoList = {}
 
-		if var_3_4 and next(var_3_4) then
-			for iter_3_4, iter_3_5 in ipairs(var_3_4) do
-				local var_3_8 = OdysseyItemListMo.New()
-				local var_3_9 = arg_3_3 == OdysseyEnum.BagType.FightPrepare and var_3_3 and var_3_2:isEquipUse(iter_3_5.uid)
+		if filterMoList and next(filterMoList) then
+			for _, mo in ipairs(filterMoList) do
+				local listMo = OdysseyItemListMo.New()
+				local isUse = bagType == OdysseyEnum.BagType.FightPrepare and isEquip and curInfoMo:isEquipUse(mo.uid)
 
-				var_3_8:init(iter_3_5, arg_3_3, var_3_9)
-				table.insert(var_3_7, var_3_8)
+				listMo:init(mo, bagType, isUse)
+				table.insert(tempMoList, listMo)
 			end
 		end
 
-		table.sort(var_3_7, arg_3_0.sortMoList)
-		arg_3_0:clear()
-		arg_3_0:addList(var_3_7)
+		table.sort(tempMoList, self.sortMoList)
+		self:clear()
+		self:addList(tempMoList)
 	end
 
-	arg_3_0._itemType = arg_3_1
-	arg_3_0._filterType = arg_3_2
+	self._itemType = itemType
+	self._filterType = filterType
 end
 
-function var_0_0.sortMoList(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0.itemMo
-	local var_4_1 = arg_4_1.itemMo
+function OdysseyEquipListModel.sortMoList(listMoA, listMoB)
+	local moA = listMoA.itemMo
+	local moB = listMoB.itemMo
 
-	if arg_4_0.isEquip ~= arg_4_1.isEquip then
-		return arg_4_0.isEquip == true
+	if listMoA.isEquip ~= listMoB.isEquip then
+		return listMoA.isEquip == true
 	end
 
-	if var_4_0.id == var_4_1.id then
-		return var_4_0.uid > var_4_1.uid
+	if moA.id == moB.id then
+		return moA.uid > moB.uid
 	end
 
-	local var_4_2 = var_4_0.config
-	local var_4_3 = var_4_1.config
+	local configA = moA.config
+	local configB = moB.config
 
-	if var_4_0.config.rare == var_4_1.config.rare then
-		return var_4_0.id > var_4_1.id
+	if moA.config.rare == moB.config.rare then
+		return moA.id > moB.id
 	end
 
-	return var_4_2.rare > var_4_3.rare
+	return configA.rare > configB.rare
 end
 
-function var_0_0.clearSelect(arg_5_0)
-	local var_5_0 = arg_5_0._scrollViews[1]
+function OdysseyEquipListModel:clearSelect()
+	local view = self._scrollViews[1]
 
-	if var_5_0 then
-		local var_5_1 = var_5_0:getFirstSelect()
+	if view then
+		local mo = view:getFirstSelect()
 
-		if var_5_1 then
-			var_5_0:selectCell(var_5_1.id, false)
+		if mo then
+			view:selectCell(mo.id, false)
 		end
 	end
 end
 
-function var_0_0.getSelectMo(arg_6_0)
-	local var_6_0 = arg_6_0._scrollViews[1]
+function OdysseyEquipListModel:getSelectMo()
+	local view = self._scrollViews[1]
 
-	if var_6_0 then
-		return (var_6_0:getFirstSelect())
+	if view then
+		local mo = view:getFirstSelect()
+
+		return mo
 	end
 
 	return nil
 end
 
-function var_0_0.setSelect(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0._scrollViews[1]
+function OdysseyEquipListModel:setSelect(equipUid)
+	local view = self._scrollViews[1]
 
-	if var_7_0 then
-		for iter_7_0, iter_7_1 in ipairs(arg_7_0._list) do
-			if iter_7_1.itemMo.uid == arg_7_1 then
-				var_7_0:selectCell(iter_7_1.id, true)
-				OdysseyController.instance:dispatchEvent(OdysseyEvent.OnEquipItemSelect, iter_7_1)
+	if view then
+		for _, mo in ipairs(self._list) do
+			if mo.itemMo.uid == equipUid then
+				view:selectCell(mo.id, true)
+				OdysseyController.instance:dispatchEvent(OdysseyEvent.OnEquipItemSelect, mo)
 
 				break
 			end
@@ -124,10 +130,10 @@ function var_0_0.setSelect(arg_7_0, arg_7_1)
 	end
 end
 
-function var_0_0.getFirstMo(arg_8_0)
-	return arg_8_0:getByIndex(1)
+function OdysseyEquipListModel:getFirstMo()
+	return self:getByIndex(1)
 end
 
-var_0_0.instance = var_0_0.New()
+OdysseyEquipListModel.instance = OdysseyEquipListModel.New()
 
-return var_0_0
+return OdysseyEquipListModel

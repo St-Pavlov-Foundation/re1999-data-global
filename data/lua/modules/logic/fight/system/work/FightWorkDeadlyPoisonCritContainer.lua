@@ -1,13 +1,15 @@
-﻿module("modules.logic.fight.system.work.FightWorkDeadlyPoisonCritContainer", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkDeadlyPoisonCritContainer.lua
 
-local var_0_0 = class("FightWorkDeadlyPoisonCritContainer", FightWorkDeadlyPoisonContainer)
+module("modules.logic.fight.system.work.FightWorkDeadlyPoisonCritContainer", package.seeall)
 
-function var_0_0.getEffectType(arg_1_0)
+local FightWorkDeadlyPoisonCritContainer = class("FightWorkDeadlyPoisonCritContainer", FightWorkDeadlyPoisonContainer)
+
+function FightWorkDeadlyPoisonCritContainer:getEffectType()
 	return FightEnum.EffectType.DEADLYPOISONORIGINCRIT
 end
 
-function var_0_0.getFloatType(arg_2_0)
+function FightWorkDeadlyPoisonCritContainer:getFloatType()
 	return FightEnum.FloatType.crit_damage_origin
 end
 
-return var_0_0
+return FightWorkDeadlyPoisonCritContainer

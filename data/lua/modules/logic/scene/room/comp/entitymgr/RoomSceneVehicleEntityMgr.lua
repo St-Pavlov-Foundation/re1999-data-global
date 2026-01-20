@@ -1,135 +1,138 @@
-﻿module("modules.logic.scene.room.comp.entitymgr.RoomSceneVehicleEntityMgr", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/comp/entitymgr/RoomSceneVehicleEntityMgr.lua
 
-local var_0_0 = class("RoomSceneVehicleEntityMgr", BaseSceneUnitMgr)
+module("modules.logic.scene.room.comp.entitymgr.RoomSceneVehicleEntityMgr", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local RoomSceneVehicleEntityMgr = class("RoomSceneVehicleEntityMgr", BaseSceneUnitMgr)
+
+function RoomSceneVehicleEntityMgr:onInit()
 	return
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._scene = arg_2_0:getCurScene()
+function RoomSceneVehicleEntityMgr:init(sceneId, levelId)
+	self._scene = self:getCurScene()
 
-	arg_2_0:_startSpawnVehicle()
+	self:_startSpawnVehicle()
 end
 
-function var_0_0.onStopMode(arg_3_0)
-	arg_3_0:_onSwitchMode(true)
+function RoomSceneVehicleEntityMgr:onStopMode()
+	self:_onSwitchMode(true)
 end
 
-function var_0_0.onSwitchMode(arg_4_0)
-	arg_4_0:_onSwitchMode(RoomController.instance:isEditMode())
+function RoomSceneVehicleEntityMgr:onSwitchMode()
+	self:_onSwitchMode(RoomController.instance:isEditMode())
 end
 
-function var_0_0._onSwitchMode(arg_5_0, arg_5_1)
-	local var_5_0 = RoomMapVehicleEntity:getTag()
-	local var_5_1 = arg_5_0:getTagUnitDict(var_5_0)
+function RoomSceneVehicleEntityMgr:_onSwitchMode(isEditMode)
+	local vehicleTag = RoomMapVehicleEntity:getTag()
+	local entityDic = self:getTagUnitDict(vehicleTag)
 
-	if arg_5_1 then
-		arg_5_0:_stopSpawnVehicle()
+	if isEditMode then
+		self:_stopSpawnVehicle()
 
-		if var_5_1 then
-			for iter_5_0, iter_5_1 in pairs(var_5_1) do
-				iter_5_1:setShow(false)
+		if entityDic then
+			for unitId, vehicleEntity in pairs(entityDic) do
+				vehicleEntity:setShow(false)
 			end
 		end
 	else
-		if var_5_1 then
-			local var_5_2 = RoomMapVehicleModel.instance
+		if entityDic then
+			local tRoomMapVehicleModel = RoomMapVehicleModel.instance
 
-			for iter_5_2, iter_5_3 in pairs(var_5_1) do
-				local var_5_3 = var_5_2:getById(iter_5_2)
+			for unitId, vehicleEntity in pairs(entityDic) do
+				local mo = tRoomMapVehicleModel:getById(unitId)
 
-				if var_5_3 then
-					arg_5_0:setVehiclePosByMO(iter_5_3, var_5_3)
-					iter_5_3:setShow(true)
+				if mo then
+					self:setVehiclePosByMO(vehicleEntity, mo)
+					vehicleEntity:setShow(true)
 				else
-					arg_5_0:removeUnit(var_5_0, iter_5_2)
+					self:removeUnit(vehicleTag, unitId)
 				end
 			end
 		end
 
-		arg_5_0:_startSpawnVehicle()
+		self:_startSpawnVehicle()
 	end
 end
 
-function var_0_0._stopSpawnVehicle(arg_6_0)
-	if arg_6_0._isRuningSpawnVehicle then
-		arg_6_0._isRuningSpawnVehicle = false
+function RoomSceneVehicleEntityMgr:_stopSpawnVehicle()
+	if self._isRuningSpawnVehicle then
+		self._isRuningSpawnVehicle = false
 
-		TaskDispatcher.cancelTask(arg_6_0._onRepeatSpawnVehicle, arg_6_0)
+		TaskDispatcher.cancelTask(self._onRepeatSpawnVehicle, self)
 	end
 end
 
-function var_0_0._startSpawnVehicle(arg_7_0)
-	local var_7_0 = RoomMapVehicleEntity:getTag()
-	local var_7_1 = RoomMapVehicleModel.instance:getList()
+function RoomSceneVehicleEntityMgr:_startSpawnVehicle()
+	local vehicleTag = RoomMapVehicleEntity:getTag()
+	local mapVehicleMOList = RoomMapVehicleModel.instance:getList()
 
-	arg_7_0._waitVehicleMOList = nil
+	self._waitVehicleMOList = nil
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_1) do
-		if not arg_7_0:getUnit(var_7_0, iter_7_1.id) then
-			arg_7_0._waitVehicleMOList = arg_7_0._waitVehicleMOList or {}
+	for i, mo in ipairs(mapVehicleMOList) do
+		if not self:getUnit(vehicleTag, mo.id) then
+			self._waitVehicleMOList = self._waitVehicleMOList or {}
 
-			table.insert(arg_7_0._waitVehicleMOList, iter_7_1)
+			table.insert(self._waitVehicleMOList, mo)
 		end
 	end
 
-	if arg_7_0._waitVehicleMOList and not arg_7_0._isRuningSpawnVehicle then
-		arg_7_0._isRuningSpawnVehicle = true
+	if self._waitVehicleMOList and not self._isRuningSpawnVehicle then
+		self._isRuningSpawnVehicle = true
 
-		TaskDispatcher.runRepeat(arg_7_0._onRepeatSpawnVehicle, arg_7_0, 0)
+		TaskDispatcher.runRepeat(self._onRepeatSpawnVehicle, self, 0)
 	end
 end
 
-function var_0_0._onRepeatSpawnVehicle(arg_8_0)
-	if arg_8_0._waitVehicleMOList and #arg_8_0._waitVehicleMOList > 0 then
-		local var_8_0 = arg_8_0._waitVehicleMOList[1]
+function RoomSceneVehicleEntityMgr:_onRepeatSpawnVehicle()
+	if self._waitVehicleMOList and #self._waitVehicleMOList > 0 then
+		local mapVehicleMO = self._waitVehicleMOList[1]
 
-		table.remove(arg_8_0._waitVehicleMOList, 1)
-		arg_8_0:spawnMapVehicle(var_8_0)
+		table.remove(self._waitVehicleMOList, 1)
+		self:spawnMapVehicle(mapVehicleMO)
 	else
-		arg_8_0:_stopSpawnVehicle()
+		self:_stopSpawnVehicle()
 	end
 end
 
-function var_0_0.spawnMapVehicle(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0._scene.go.vehicleRoot
-	local var_9_1 = gohelper.create3d(var_9_0, arg_9_1.id)
-	local var_9_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_9_1, RoomMapVehicleEntity, arg_9_1.id)
+function RoomSceneVehicleEntityMgr:spawnMapVehicle(mapVehicleMO)
+	local vehicleRoot = self._scene.go.vehicleRoot
+	local vehicleGO = gohelper.create3d(vehicleRoot, mapVehicleMO.id)
+	local vehicleEntity = MonoHelper.addNoUpdateLuaComOnceToGo(vehicleGO, RoomMapVehicleEntity, mapVehicleMO.id)
 
-	arg_9_0:addUnit(var_9_2)
-	gohelper.addChild(var_9_0, var_9_1)
-	arg_9_0:setVehiclePosByMO(var_9_2, arg_9_1)
+	self:addUnit(vehicleEntity)
+	gohelper.addChild(vehicleRoot, vehicleGO)
+	self:setVehiclePosByMO(vehicleEntity, mapVehicleMO)
 
-	return var_9_2
+	return vehicleEntity
 end
 
-function var_0_0.setVehiclePosByMO(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = (arg_10_2 or arg_10_1:getMO()):getCurNode()
-	local var_10_1 = var_10_0 and var_10_0.hexPoint
+function RoomSceneVehicleEntityMgr:setVehiclePosByMO(vehicleEntity, vehicleMO)
+	local mapVehicleMO = vehicleMO or vehicleEntity:getMO()
+	local node = mapVehicleMO:getCurNode()
+	local hexPoint = node and node.hexPoint
 
-	if not var_10_1 then
+	if not hexPoint then
 		logError("RoomSceneVehicleEntityMgr: 没有位置信息")
 
 		return
 	end
 
-	local var_10_2 = HexMath.hexToPosition(var_10_1, RoomBlockEnum.BlockSize)
+	local position = HexMath.hexToPosition(hexPoint, RoomBlockEnum.BlockSize)
 
-	arg_10_1:setLocalPos(var_10_2.x, RoomBuildingEnum.VehicleInitOffestY, var_10_2.y)
+	vehicleEntity:setLocalPos(position.x, RoomBuildingEnum.VehicleInitOffestY, position.y)
 end
 
-function var_0_0.getVehicleEntity(arg_11_0, arg_11_1)
-	return arg_11_0:getUnit(RoomMapVehicleEntity:getTag(), arg_11_1)
+function RoomSceneVehicleEntityMgr:getVehicleEntity(id)
+	return self:getUnit(RoomMapVehicleEntity:getTag(), id)
 end
 
-function var_0_0.destroyVehicle(arg_12_0, arg_12_1)
-	arg_12_0:removeUnit(arg_12_1:getTag(), arg_12_1.id)
+function RoomSceneVehicleEntityMgr:destroyVehicle(entity)
+	self:removeUnit(entity:getTag(), entity.id)
 end
 
-function var_0_0.onSceneClose(arg_13_0)
-	var_0_0.super.onSceneClose(arg_13_0)
-	arg_13_0:_stopSpawnVehicle()
+function RoomSceneVehicleEntityMgr:onSceneClose()
+	RoomSceneVehicleEntityMgr.super.onSceneClose(self)
+	self:_stopSpawnVehicle()
 end
 
-return var_0_0
+return RoomSceneVehicleEntityMgr

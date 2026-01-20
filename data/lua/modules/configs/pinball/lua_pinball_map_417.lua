@@ -1,4 +1,6 @@
-﻿return {
+﻿-- chunkname: @modules/configs/pinball/lua_pinball_map_417.lua
+
+return {
 	{
 		105,
 		-635,

@@ -1,33 +1,35 @@
-﻿module("modules.logic.room.view.RoomBlockPackagePageItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomBlockPackagePageItem.lua
 
-local var_0_0 = class("RoomBlockPackagePageItem", LuaCompBase)
+module("modules.logic.room.view.RoomBlockPackagePageItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._go = arg_1_1
-	arg_1_0._goselect = gohelper.findChild(arg_1_0._go, "go_select")
-	arg_1_0._goitem = gohelper.findChild(arg_1_0._go, "image")
+local RoomBlockPackagePageItem = class("RoomBlockPackagePageItem", LuaCompBase)
+
+function RoomBlockPackagePageItem:init(go)
+	self._go = go
+	self._goselect = gohelper.findChild(self._go, "go_select")
+	self._goitem = gohelper.findChild(self._go, "image")
 end
 
-function var_0_0.getGO(arg_2_0)
-	return arg_2_0._go
+function RoomBlockPackagePageItem:getGO()
+	return self._go
 end
 
-function var_0_0.setShowIcon(arg_3_0, arg_3_1)
-	arg_3_0._isShowIcon = arg_3_1
+function RoomBlockPackagePageItem:setShowIcon(isShowIcon)
+	self._isShowIcon = isShowIcon
 
-	gohelper.setActive(arg_3_0._imageIcon.gameObject, arg_3_1 and true or false)
+	gohelper.setActive(self._imageIcon.gameObject, isShowIcon and true or false)
 end
 
-function var_0_0.setSelect(arg_4_0, arg_4_1)
-	arg_4_0._isSelect = arg_4_1
+function RoomBlockPackagePageItem:setSelect(isSelect)
+	self._isSelect = isSelect
 
-	gohelper.setActive(arg_4_0._goselect, arg_4_1 and true or false)
+	gohelper.setActive(self._goselect, isSelect and true or false)
 end
 
-function var_0_0.beforeDestroy(arg_5_0)
-	gohelper.setActive(arg_5_0._goitem, false)
-	gohelper.setActive(arg_5_0._goselect, false)
-	gohelper.setActive(arg_5_0._go, true)
+function RoomBlockPackagePageItem:beforeDestroy()
+	gohelper.setActive(self._goitem, false)
+	gohelper.setActive(self._goselect, false)
+	gohelper.setActive(self._go, true)
 end
 
-return var_0_0
+return RoomBlockPackagePageItem

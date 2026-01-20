@@ -1,45 +1,48 @@
-﻿module("modules.logic.versionactivity2_8.wuerlixigift.view.V2a8_WuErLiXiGiftView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/wuerlixigift/view/V2a8_WuErLiXiGiftView.lua
 
-local var_0_0 = class("V2a8_WuErLiXiGiftView", DecalogPresentView)
+module("modules.logic.versionactivity2_8.wuerlixigift.view.V2a8_WuErLiXiGiftView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtremainTime = gohelper.findChildText(arg_1_0.viewGO, "Root/image_TimeBG/#txt_remainTime")
-	arg_1_0._btnClaim = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/#btn_Claim")
-	arg_1_0._goNormal = gohelper.findChild(arg_1_0.viewGO, "Root/#btn_Claim/#go_Normal")
-	arg_1_0._goHasReceived = gohelper.findChild(arg_1_0.viewGO, "Root/#btn_Claim/#go_Received")
-	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/#btn_Close")
+local V2a8_WuErLiXiGiftView = class("V2a8_WuErLiXiGiftView", DecalogPresentView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V2a8_WuErLiXiGiftView:onInitView()
+	self._txtremainTime = gohelper.findChildText(self.viewGO, "Root/image_TimeBG/#txt_remainTime")
+	self._btnClaim = gohelper.findChildButtonWithAudio(self.viewGO, "Root/#btn_Claim")
+	self._goNormal = gohelper.findChild(self.viewGO, "Root/#btn_Claim/#go_Normal")
+	self._goHasReceived = gohelper.findChild(self.viewGO, "Root/#btn_Claim/#go_Received")
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "Root/#btn_Close")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0._btnClaimOnClick(arg_2_0)
+function V2a8_WuErLiXiGiftView:_btnClaimOnClick()
 	V2a8_WuErLiXiGiftController.instance:receiveV2a8_WuErLiXiGift()
 end
 
-function var_0_0.refreshReceiveStatus(arg_3_0)
-	local var_3_0 = V2a8_WuErLiXiGiftModel.instance:getV2a8_WuErLiXiGiftActId()
-	local var_3_1 = V2a8_WuErLiXiGiftModel.REWARD_INDEX
-	local var_3_2 = ActivityType101Model.instance:isType101RewardCouldGet(var_3_0, var_3_1)
+function V2a8_WuErLiXiGiftView:refreshReceiveStatus()
+	local actId = V2a8_WuErLiXiGiftModel.instance:getV2a8_WuErLiXiGiftActId()
+	local index = V2a8_WuErLiXiGiftModel.REWARD_INDEX
+	local canReceive = ActivityType101Model.instance:isType101RewardCouldGet(actId, index)
 
-	gohelper.setActive(arg_3_0._goNormal, var_3_2)
-	gohelper.setActive(arg_3_0._goHasReceived, not var_3_2)
+	gohelper.setActive(self._goNormal, canReceive)
+	gohelper.setActive(self._goHasReceived, not canReceive)
 end
 
-function var_0_0.refreshRemainTime(arg_4_0)
-	local var_4_0 = V2a8_WuErLiXiGiftModel.instance:getV2a8_WuErLiXiGiftActId()
-	local var_4_1 = ActivityModel.instance:getActMO(var_4_0):getRemainTimeStr3(false, true)
+function V2a8_WuErLiXiGiftView:refreshRemainTime()
+	local actId = V2a8_WuErLiXiGiftModel.instance:getV2a8_WuErLiXiGiftActId()
+	local actInfoMo = ActivityModel.instance:getActMO(actId)
+	local timeStr = actInfoMo:getRemainTimeStr3(false, true)
 
-	arg_4_0._txtremainTime.text = string.format(luaLang("remain"), var_4_1)
+	self._txtremainTime.text = string.format(luaLang("remain"), timeStr)
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0:refreshReceiveStatus()
-	arg_5_0:refreshRemainTime()
-	TaskDispatcher.cancelTask(arg_5_0.refreshRemainTime, arg_5_0)
-	TaskDispatcher.runRepeat(arg_5_0.refreshRemainTime, arg_5_0, TimeUtil.OneMinuteSecond)
+function V2a8_WuErLiXiGiftView:onOpen()
+	self:refreshReceiveStatus()
+	self:refreshRemainTime()
+	TaskDispatcher.cancelTask(self.refreshRemainTime, self)
+	TaskDispatcher.runRepeat(self.refreshRemainTime, self, TimeUtil.OneMinuteSecond)
 	AudioMgr.instance:trigger(AudioEnum.Va3Armpipe.play_ui_molu_button_display)
 end
 
-return var_0_0
+return V2a8_WuErLiXiGiftView

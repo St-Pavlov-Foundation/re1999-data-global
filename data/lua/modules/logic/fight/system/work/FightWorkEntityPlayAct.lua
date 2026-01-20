@@ -1,50 +1,52 @@
-﻿module("modules.logic.fight.system.work.FightWorkEntityPlayAct", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkEntityPlayAct.lua
 
-local var_0_0 = class("FightWorkEntityPlayAct", BaseWork)
+module("modules.logic.fight.system.work.FightWorkEntityPlayAct", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._entity = arg_1_1
-	arg_1_0._actName = arg_1_2
+local FightWorkEntityPlayAct = class("FightWorkEntityPlayAct", BaseWork)
+
+function FightWorkEntityPlayAct:ctor(entity, actName)
+	self._entity = entity
+	self._actName = actName
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	arg_2_0:_playAnim()
+function FightWorkEntityPlayAct:onStart(context)
+	self:_playAnim()
 end
 
-function var_0_0._playAnim(arg_3_0)
-	if arg_3_0._entity.spine and arg_3_0._entity.spine:hasAnimation(arg_3_0._actName) then
-		TaskDispatcher.runDelay(arg_3_0._delayDone, arg_3_0, 30)
-		arg_3_0._entity.spine:addAnimEventCallback(arg_3_0._onAnimEvent, arg_3_0)
-		arg_3_0._entity.spine:play(arg_3_0._actName, false, true)
+function FightWorkEntityPlayAct:_playAnim()
+	if self._entity.spine and self._entity.spine:hasAnimation(self._actName) then
+		TaskDispatcher.runDelay(self._delayDone, self, 30)
+		self._entity.spine:addAnimEventCallback(self._onAnimEvent, self)
+		self._entity.spine:play(self._actName, false, true)
 
-		arg_3_0._entity.spine.lockAct = true
+		self._entity.spine.lockAct = true
 	else
-		arg_3_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._delayDone(arg_4_0)
-	arg_4_0:onDone(true)
+function FightWorkEntityPlayAct:_delayDone()
+	self:onDone(true)
 end
 
-function var_0_0._onAnimEvent(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	if arg_5_2 == SpineAnimEvent.ActionComplete then
-		arg_5_0._entity.spine.lockAct = false
+function FightWorkEntityPlayAct:_onAnimEvent(actionName, eventName, eventArgs)
+	if eventName == SpineAnimEvent.ActionComplete then
+		self._entity.spine.lockAct = false
 
-		arg_5_0._entity.spine:removeAnimEventCallback(arg_5_0._onAnimEvent, arg_5_0)
-		arg_5_0._entity:resetAnimState()
-		arg_5_0:onDone(true)
+		self._entity.spine:removeAnimEventCallback(self._onAnimEvent, self)
+		self._entity:resetAnimState()
+		self:onDone(true)
 	end
 end
 
-function var_0_0.clearWork(arg_6_0)
-	if arg_6_0._entity.spine then
-		arg_6_0._entity.spine.lockAct = false
+function FightWorkEntityPlayAct:clearWork()
+	if self._entity.spine then
+		self._entity.spine.lockAct = false
 
-		arg_6_0._entity.spine:removeAnimEventCallback(arg_6_0._onAnimEvent, arg_6_0)
+		self._entity.spine:removeAnimEventCallback(self._onAnimEvent, self)
 	end
 
-	TaskDispatcher.cancelTask(arg_6_0._delayDone, arg_6_0)
+	TaskDispatcher.cancelTask(self._delayDone, self)
 end
 
-return var_0_0
+return FightWorkEntityPlayAct

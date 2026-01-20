@@ -1,20 +1,22 @@
-﻿module("modules.logic.turnback.model.TurnbackBeginnerCategoryListModel", package.seeall)
+﻿-- chunkname: @modules/logic/turnback/model/TurnbackBeginnerCategoryListModel.lua
 
-local var_0_0 = class("TurnbackBeginnerCategoryListModel", ListScrollModel)
+module("modules.logic.turnback.model.TurnbackBeginnerCategoryListModel", package.seeall)
 
-function var_0_0.setCategoryList(arg_1_0, arg_1_1)
-	arg_1_0._moList = arg_1_1 and arg_1_1 or {}
+local TurnbackBeginnerCategoryListModel = class("TurnbackBeginnerCategoryListModel", ListScrollModel)
 
-	table.sort(arg_1_0._moList, function(arg_2_0, arg_2_1)
-		return arg_2_0.order < arg_2_1.order
+function TurnbackBeginnerCategoryListModel:setCategoryList(Infos)
+	self._moList = Infos and Infos or {}
+
+	table.sort(self._moList, function(a, b)
+		return a.order < b.order
 	end)
-	arg_1_0:setList(arg_1_0._moList)
+	self:setList(self._moList)
 end
 
-function var_0_0.setOpenViewTime(arg_3_0)
-	arg_3_0.openViewTime = Time.realtimeSinceStartup
+function TurnbackBeginnerCategoryListModel:setOpenViewTime()
+	self.openViewTime = Time.realtimeSinceStartup
 end
 
-var_0_0.instance = var_0_0.New()
+TurnbackBeginnerCategoryListModel.instance = TurnbackBeginnerCategoryListModel.New()
 
-return var_0_0
+return TurnbackBeginnerCategoryListModel

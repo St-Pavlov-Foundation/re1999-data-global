@@ -1,373 +1,376 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.view.Activity114EventSelectView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/view/Activity114EventSelectView.lua
 
-local var_0_0 = class("Activity114EventSelectView", BaseView)
+module("modules.logic.versionactivity1_2.jiexika.view.Activity114EventSelectView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gotips = gohelper.findChild(arg_1_0.viewGO, "right/#go_tips")
-	arg_1_0._txtbasevalue = gohelper.findChildTextMesh(arg_1_0.viewGO, "right/#go_tips/base/#txt_basevalue")
-	arg_1_0._txtrealvalue = gohelper.findChildTextMesh(arg_1_0.viewGO, "right/#go_tips/need/#txt_realvalue")
-	arg_1_0._goattrcontent = gohelper.findChild(arg_1_0.viewGO, "right/#go_tips/#scroll_content/Viewport/content/quality/#go_contentattr")
-	arg_1_0._goattritem = gohelper.findChild(arg_1_0.viewGO, "right/#go_tips/#scroll_content/Viewport/content/quality/#go_contentattr/#go_attritem")
-	arg_1_0._goattrempty = gohelper.findChild(arg_1_0.viewGO, "right/#go_tips/#scroll_content/Viewport/content/quality/#go_attrEmpty")
-	arg_1_0._goattrtotal = gohelper.findChild(arg_1_0.viewGO, "right/#go_tips/#scroll_content/Viewport/content/quality/#go_total")
-	arg_1_0._txtattrtotalnum = gohelper.findChildTextMesh(arg_1_0.viewGO, "right/#go_tips/#scroll_content/Viewport/content/quality/#go_total/#txt_attrtotalnum")
-	arg_1_0._gofeaturecontent = gohelper.findChild(arg_1_0.viewGO, "right/#go_tips/#scroll_content/Viewport/content/feature/#go_featurecontent")
-	arg_1_0._gofeatureitem = gohelper.findChild(arg_1_0.viewGO, "right/#go_tips/#scroll_content/Viewport/content/feature/#go_featurecontent/#go_featureitem")
-	arg_1_0._gofeatureempty = gohelper.findChild(arg_1_0.viewGO, "right/#go_tips/#scroll_content/Viewport/content/feature/#go_featureEmpty")
-	arg_1_0._gofeaturetotal = gohelper.findChild(arg_1_0.viewGO, "right/#go_tips/#scroll_content/Viewport/content/feature/#go_total")
-	arg_1_0._txtfeaturetotalnum = gohelper.findChildTextMesh(arg_1_0.viewGO, "right/#go_tips/#scroll_content/Viewport/content/feature/#go_total/#txt_featuretotalnum")
-	arg_1_0._goanswercontent = gohelper.findChild(arg_1_0.viewGO, "right/#go_tips/#scroll_content/Viewport/content/answer/#go_answercontent")
-	arg_1_0._goansweritem = gohelper.findChild(arg_1_0.viewGO, "right/#go_tips/#scroll_content/Viewport/content/answer/#go_answercontent/#go_answeritem")
-	arg_1_0._goanswerempty = gohelper.findChild(arg_1_0.viewGO, "right/#go_tips/#scroll_content/Viewport/content/answer/#go_answerEmpty")
-	arg_1_0._goanswertotal = gohelper.findChild(arg_1_0.viewGO, "right/#go_tips/#scroll_content/Viewport/content/answer/#go_total")
-	arg_1_0._txtanswertotalnum = gohelper.findChildTextMesh(arg_1_0.viewGO, "right/#go_tips/#scroll_content/Viewport/content/answer/#go_total/#txt_answertotalnum")
-	arg_1_0._gooption = gohelper.findChild(arg_1_0.viewGO, "right/#go_options")
-	arg_1_0._gooptionitem = gohelper.findChild(arg_1_0.viewGO, "right/#go_options/#go_optionitem")
-	arg_1_0._btnskipDialog = gohelper.findChildButton(arg_1_0.viewGO, "#btn_skipDialog")
-	arg_1_0._btncloseTip = gohelper.findChildButton(arg_1_0.viewGO, "#btn_closeTip")
-	arg_1_0._gocontentroot = gohelper.findChild(arg_1_0.viewGO, "#go_contentroot")
+local Activity114EventSelectView = class("Activity114EventSelectView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Activity114EventSelectView:onInitView()
+	self._gotips = gohelper.findChild(self.viewGO, "right/#go_tips")
+	self._txtbasevalue = gohelper.findChildTextMesh(self.viewGO, "right/#go_tips/base/#txt_basevalue")
+	self._txtrealvalue = gohelper.findChildTextMesh(self.viewGO, "right/#go_tips/need/#txt_realvalue")
+	self._goattrcontent = gohelper.findChild(self.viewGO, "right/#go_tips/#scroll_content/Viewport/content/quality/#go_contentattr")
+	self._goattritem = gohelper.findChild(self.viewGO, "right/#go_tips/#scroll_content/Viewport/content/quality/#go_contentattr/#go_attritem")
+	self._goattrempty = gohelper.findChild(self.viewGO, "right/#go_tips/#scroll_content/Viewport/content/quality/#go_attrEmpty")
+	self._goattrtotal = gohelper.findChild(self.viewGO, "right/#go_tips/#scroll_content/Viewport/content/quality/#go_total")
+	self._txtattrtotalnum = gohelper.findChildTextMesh(self.viewGO, "right/#go_tips/#scroll_content/Viewport/content/quality/#go_total/#txt_attrtotalnum")
+	self._gofeaturecontent = gohelper.findChild(self.viewGO, "right/#go_tips/#scroll_content/Viewport/content/feature/#go_featurecontent")
+	self._gofeatureitem = gohelper.findChild(self.viewGO, "right/#go_tips/#scroll_content/Viewport/content/feature/#go_featurecontent/#go_featureitem")
+	self._gofeatureempty = gohelper.findChild(self.viewGO, "right/#go_tips/#scroll_content/Viewport/content/feature/#go_featureEmpty")
+	self._gofeaturetotal = gohelper.findChild(self.viewGO, "right/#go_tips/#scroll_content/Viewport/content/feature/#go_total")
+	self._txtfeaturetotalnum = gohelper.findChildTextMesh(self.viewGO, "right/#go_tips/#scroll_content/Viewport/content/feature/#go_total/#txt_featuretotalnum")
+	self._goanswercontent = gohelper.findChild(self.viewGO, "right/#go_tips/#scroll_content/Viewport/content/answer/#go_answercontent")
+	self._goansweritem = gohelper.findChild(self.viewGO, "right/#go_tips/#scroll_content/Viewport/content/answer/#go_answercontent/#go_answeritem")
+	self._goanswerempty = gohelper.findChild(self.viewGO, "right/#go_tips/#scroll_content/Viewport/content/answer/#go_answerEmpty")
+	self._goanswertotal = gohelper.findChild(self.viewGO, "right/#go_tips/#scroll_content/Viewport/content/answer/#go_total")
+	self._txtanswertotalnum = gohelper.findChildTextMesh(self.viewGO, "right/#go_tips/#scroll_content/Viewport/content/answer/#go_total/#txt_answertotalnum")
+	self._gooption = gohelper.findChild(self.viewGO, "right/#go_options")
+	self._gooptionitem = gohelper.findChild(self.viewGO, "right/#go_options/#go_optionitem")
+	self._btnskipDialog = gohelper.findChildButton(self.viewGO, "#btn_skipDialog")
+	self._btncloseTip = gohelper.findChildButton(self.viewGO, "#btn_closeTip")
+	self._gocontentroot = gohelper.findChild(self.viewGO, "#go_contentroot")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnskipDialog:AddClickListener(arg_2_0.skipDialog, arg_2_0)
-	arg_2_0._btncloseTip:AddClickListener(arg_2_0.closeOptionTip, arg_2_0)
+function Activity114EventSelectView:addEvents()
+	self._btnskipDialog:AddClickListener(self.skipDialog, self)
+	self._btncloseTip:AddClickListener(self.closeOptionTip, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnskipDialog:RemoveClickListener()
-	arg_3_0._btncloseTip:RemoveClickListener()
+function Activity114EventSelectView:removeEvents()
+	self._btnskipDialog:RemoveClickListener()
+	self._btncloseTip:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	gohelper.setActive(arg_4_0._gofeatureitem, false)
-	gohelper.setActive(arg_4_0._gotips, false)
-	gohelper.setActive(arg_4_0._btncloseTip.gameObject, false)
-	gohelper.setActive(arg_4_0._gooptionitem, false)
+function Activity114EventSelectView:_editableInitView()
+	gohelper.setActive(self._gofeatureitem, false)
+	gohelper.setActive(self._gotips, false)
+	gohelper.setActive(self._btncloseTip.gameObject, false)
+	gohelper.setActive(self._gooptionitem, false)
 
-	arg_4_0.attrtotalnum = 0
-	arg_4_0.featuretotalnum = 0
-	arg_4_0.answertotalnum = 0
+	self.attrtotalnum = 0
+	self.featuretotalnum = 0
+	self.answertotalnum = 0
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
-	for iter_5_0, iter_5_1 in pairs(arg_5_0.items) do
-		iter_5_1:destory()
+function Activity114EventSelectView:onUpdateParam()
+	for _, v in pairs(self.items) do
+		v:destory()
 	end
 
-	arg_5_0:_refreshView()
+	self:_refreshView()
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:_refreshView()
+function Activity114EventSelectView:onOpen()
+	self:_refreshView()
 end
 
-function var_0_0._refreshView(arg_7_0)
-	gohelper.setActive(arg_7_0._gooption, true)
-	arg_7_0:_initDialog()
+function Activity114EventSelectView:_refreshView()
+	gohelper.setActive(self._gooption, true)
+	self:_initDialog()
 
-	arg_7_0.items = {}
+	self.items = {}
 
-	local var_7_0 = arg_7_0.viewParam.eventCo
+	local eventCo = self.viewParam.eventCo
 
 	if Activity114Model.instance.serverData.testEventId > 0 then
-		for iter_7_0 = 1, 3 do
-			arg_7_0.items[iter_7_0] = arg_7_0:_createItem(iter_7_0)
+		for i = 1, 3 do
+			self.items[i] = self:_createItem(i)
 		end
 
-		arg_7_0:updateAnswerItems()
-	elseif Activity114Model.instance.serverData.checkEventId > 0 or var_7_0.config.eventType == Activity114Enum.EventType.KeyDay then
-		if var_7_0.config.isCheckEvent == 1 or var_7_0.config.testId > 0 then
-			local var_7_1 = Activity114Config.instance:getConstValue(Activity114Model.instance.id, Activity114Enum.ConstId.FirstCheckEventGuideId)
+		self:updateAnswerItems()
+	elseif Activity114Model.instance.serverData.checkEventId > 0 or eventCo.config.eventType == Activity114Enum.EventType.KeyDay then
+		if eventCo.config.isCheckEvent == 1 or eventCo.config.testId > 0 then
+			local guideId = Activity114Config.instance:getConstValue(Activity114Model.instance.id, Activity114Enum.ConstId.FirstCheckEventGuideId)
 
-			Activity114Controller.instance:dispatchEvent(Activity114Event.GuideBegin, tostring(var_7_1))
+			Activity114Controller.instance:dispatchEvent(Activity114Event.GuideBegin, tostring(guideId))
 
-			arg_7_0.items[1] = arg_7_0:_createItem(1)
+			self.items[1] = self:_createItem(1)
 
-			arg_7_0:updateCheckItems()
+			self:updateCheckItems()
 		else
 			logError("????!")
-			arg_7_0:closeThis()
+			self:closeThis()
 		end
 	else
 		logError("????")
-		arg_7_0:closeThis()
+		self:closeThis()
 	end
 end
 
-function var_0_0._initDialog(arg_8_0)
-	if not arg_8_0._dialogItem then
-		arg_8_0._dialogItem = Activity114DialogItem.New()
+function Activity114EventSelectView:_initDialog()
+	if not self._dialogItem then
+		self._dialogItem = Activity114DialogItem.New()
 
-		arg_8_0._dialogItem:init(arg_8_0._gocontentroot)
-		arg_8_0._dialogItem:hideDialog()
+		self._dialogItem:init(self._gocontentroot)
+		self._dialogItem:hideDialog()
 	end
 
-	gohelper.setActive(arg_8_0._gocontentroot, false)
+	gohelper.setActive(self._gocontentroot, false)
 end
 
-function var_0_0.updateAnswerItems(arg_9_0)
-	local var_9_0 = Activity114Model.instance.serverData
-	local var_9_1 = var_9_0.testIds
-	local var_9_2 = var_9_0.currentTest
-	local var_9_3 = Activity114Config.instance:getAnswerCo(Activity114Model.instance.id, var_9_1[var_9_2])
+function Activity114EventSelectView:updateAnswerItems()
+	local info = Activity114Model.instance.serverData
+	local ids = info.testIds
+	local index = info.currentTest
+	local co = Activity114Config.instance:getAnswerCo(Activity114Model.instance.id, ids[index])
 
-	if not var_9_3 then
-		logError("答题选项配置不存在" .. tostring(var_9_1[var_9_2]))
-		arg_9_0:closeThis()
+	if not co then
+		logError("答题选项配置不存在" .. tostring(ids[index]))
+		self:closeThis()
 
 		return
 	end
 
 	StoryController.instance:dispatchEvent(StoryEvent.HideDialog)
-	gohelper.setActive(arg_9_0._gocontentroot, true)
-	gohelper.setActive(arg_9_0._gooption, false)
-	arg_9_0._dialogItem:showTxt(var_9_3.topic, arg_9_0.showOptions, arg_9_0)
+	gohelper.setActive(self._gocontentroot, true)
+	gohelper.setActive(self._gooption, false)
+	self._dialogItem:showTxt(co.topic, self.showOptions, self)
 
-	for iter_9_0 = 1, 3 do
-		local var_9_4 = var_9_3["choice" .. iter_9_0]
+	for i = 1, 3 do
+		local str = co["choice" .. i]
 
-		arg_9_0.items[iter_9_0]:updateData(Activity114Enum.EventContentType.Normal, var_9_4, arg_9_0.onAnswer, arg_9_0)
+		self.items[i]:updateData(Activity114Enum.EventContentType.Normal, str, self.onAnswer, self)
 	end
 end
 
-function var_0_0.skipDialog(arg_10_0)
-	arg_10_0:onSelectIndex(-1)
+function Activity114EventSelectView:skipDialog()
+	self:onSelectIndex(-1)
 
-	if arg_10_0._gooption.activeSelf then
+	if self._gooption.activeSelf then
 		return
 	end
 
-	arg_10_0._dialogItem:skipDialog()
+	self._dialogItem:skipDialog()
 end
 
-function var_0_0.closeOptionTip(arg_11_0)
-	gohelper.setActive(arg_11_0._gotips, false)
-	gohelper.setActive(arg_11_0._btncloseTip.gameObject, false)
+function Activity114EventSelectView:closeOptionTip()
+	gohelper.setActive(self._gotips, false)
+	gohelper.setActive(self._btncloseTip.gameObject, false)
 end
 
-function var_0_0.showOptions(arg_12_0)
-	gohelper.setActive(arg_12_0._gooption, true)
+function Activity114EventSelectView:showOptions()
+	gohelper.setActive(self._gooption, true)
 end
 
-function var_0_0.updateCheckItems(arg_13_0)
-	local var_13_0 = arg_13_0.viewParam.eventCo
+function Activity114EventSelectView:updateCheckItems()
+	local eventCo = self.viewParam.eventCo
 
-	if var_13_0.config.isCheckEvent ~= 1 then
-		arg_13_0.items[1]:updateData(Activity114Enum.EventContentType.Normal, var_13_0.config.checkOptionText, arg_13_0.checkEvent, arg_13_0)
+	if eventCo.config.isCheckEvent ~= 1 then
+		self.items[1]:updateData(Activity114Enum.EventContentType.Normal, eventCo.config.checkOptionText, self.checkEvent, self)
 	else
-		local var_13_1 = var_13_0.config.disposable == 1 and Activity114Enum.EventContentType.Check_Once or Activity114Enum.EventContentType.Check
-		local var_13_2 = arg_13_0:getCheckData(var_13_0)
+		local type = eventCo.config.disposable == 1 and Activity114Enum.EventContentType.Check_Once or Activity114Enum.EventContentType.Check
+		local data = self:getCheckData(eventCo)
 
-		arg_13_0.items[1]:updateData(var_13_1, var_13_2, arg_13_0.checkEvent, arg_13_0)
+		self.items[1]:updateData(type, data, self.checkEvent, self)
 	end
 
-	if not string.nilorempty(var_13_0.config.nonOptionText) then
-		arg_13_0.items[2] = arg_13_0:_createItem(2)
+	if not string.nilorempty(eventCo.config.nonOptionText) then
+		self.items[2] = self:_createItem(2)
 
-		arg_13_0.items[2]:updateData(Activity114Enum.EventContentType.Normal, var_13_0.config.nonOptionText, arg_13_0.noCheckEvent, arg_13_0)
+		self.items[2]:updateData(Activity114Enum.EventContentType.Normal, eventCo.config.nonOptionText, self.noCheckEvent, self)
 	end
 end
 
-function var_0_0._createItem(arg_14_0, arg_14_1)
-	local var_14_0 = gohelper.cloneInPlace(arg_14_0._gooptionitem, "Option")
+function Activity114EventSelectView:_createItem(index)
+	local go = gohelper.cloneInPlace(self._gooptionitem, "Option")
 
-	gohelper.setActive(var_14_0, true)
+	gohelper.setActive(go, true)
 
-	return MonoHelper.addNoUpdateLuaComOnceToGo(var_14_0, Activity114EventSelectItem, {
-		parent = arg_14_0,
-		index = arg_14_1
+	return MonoHelper.addNoUpdateLuaComOnceToGo(go, Activity114EventSelectItem, {
+		parent = self,
+		index = index
 	})
 end
 
-function var_0_0.getCheckData(arg_15_0, arg_15_1)
-	local var_15_0 = {
-		desc = arg_15_1.config.checkOptionText
-	}
-	local var_15_1 = {}
+function Activity114EventSelectView:getCheckData(eventCo)
+	local data = {}
 
-	var_15_0.featureSubs = var_15_1
+	data.desc = eventCo.config.checkOptionText
 
-	local var_15_2 = {}
+	local featureSubs = {}
 
-	var_15_0.attrSubs = var_15_2
+	data.featureSubs = featureSubs
 
-	local var_15_3 = 0
-	local var_15_4 = string.splitToNumber(arg_15_1.config.checkAttribute, "#")
+	local attrSubs = {}
 
-	if #var_15_4 > 0 then
-		for iter_15_0 = 1, #var_15_4 do
-			local var_15_5 = var_15_4[iter_15_0]
-			local var_15_6 = 0
+	data.attrSubs = attrSubs
 
-			if var_15_5 >= Activity114Enum.Attr.End then
-				local var_15_7 = lua_activity114_attribute.configDict[Activity114Model.instance.id][var_15_5].attribute
+	local totalSub = 0
+	local checkAttributes = string.splitToNumber(eventCo.config.checkAttribute, "#")
 
-				var_15_6 = Activity114Model.instance.attrDict[var_15_7]
+	if #checkAttributes > 0 then
+		for i = 1, #checkAttributes do
+			local checkAttribute = checkAttributes[i]
+			local nowAttr = 0
+
+			if checkAttribute >= Activity114Enum.Attr.End then
+				local rawAttr = lua_activity114_attribute.configDict[Activity114Model.instance.id][checkAttribute].attribute
+
+				nowAttr = Activity114Model.instance.attrDict[rawAttr]
 			else
-				var_15_6 = Activity114Model.instance.attrDict[var_15_5]
+				nowAttr = Activity114Model.instance.attrDict[checkAttribute]
 			end
 
-			local var_15_8 = Activity114Config.instance:getAttrVerify(Activity114Model.instance.id, var_15_5, var_15_6)
-			local var_15_9 = Activity114Config.instance:getAttrName(Activity114Model.instance.id, var_15_5)
-			local var_15_10 = Activity114Config.instance:getAttrCo(Activity114Model.instance.id, var_15_5).attribute
+			local attrSub = Activity114Config.instance:getAttrVerify(Activity114Model.instance.id, checkAttribute, nowAttr)
+			local name = Activity114Config.instance:getAttrName(Activity114Model.instance.id, checkAttribute)
+			local attrId = Activity114Config.instance:getAttrCo(Activity114Model.instance.id, checkAttribute).attribute
 
-			table.insert(var_15_2, {
-				name = var_15_9,
-				value = var_15_8,
-				attrId = var_15_10
+			table.insert(attrSubs, {
+				name = name,
+				value = attrSub,
+				attrId = attrId
 			})
 
-			var_15_3 = var_15_3 + var_15_8
+			totalSub = totalSub + attrSub
 		end
 	end
 
-	arg_15_0.attrtotalnum = var_15_3
+	self.attrtotalnum = totalSub
 
-	local var_15_11 = string.splitToNumber(arg_15_1.config.checkfeatures, "#")
+	local checkFeatures = string.splitToNumber(eventCo.config.checkfeatures, "#")
 
-	for iter_15_1, iter_15_2 in pairs(var_15_11) do
-		if Activity114Model.instance.featuresDict[iter_15_2] then
-			local var_15_12 = Activity114Config.instance:getFeatureCo(Activity114Model.instance.id, iter_15_2)
+	for _, v in pairs(checkFeatures) do
+		if Activity114Model.instance.featuresDict[v] then
+			local featureCo = Activity114Config.instance:getFeatureCo(Activity114Model.instance.id, v)
 
-			var_15_3 = var_15_3 + var_15_12.verifyNum
+			totalSub = totalSub + featureCo.verifyNum
 
-			table.insert(var_15_1, {
-				name = var_15_12.features,
-				value = var_15_12.verifyNum,
-				inheritable = var_15_12.inheritable
+			table.insert(featureSubs, {
+				name = featureCo.features,
+				value = featureCo.verifyNum,
+				inheritable = featureCo.inheritable
 			})
 		end
 	end
 
-	arg_15_0.featuretotalnum = var_15_3 - arg_15_0.attrtotalnum
+	self.featuretotalnum = totalSub - self.attrtotalnum
 
-	if arg_15_0.viewParam.type == Activity114Enum.EventType.KeyDay and arg_15_0.viewParam.eventCo.config.testId > 0 then
-		local var_15_13 = Activity114Model.instance.serverData.testScores
+	if self.viewParam.type == Activity114Enum.EventType.KeyDay and self.viewParam.eventCo.config.testId > 0 then
+		local scores = Activity114Model.instance.serverData.testScores
 
-		for iter_15_3 = 1, #var_15_13 do
-			var_15_3 = var_15_3 + var_15_13[iter_15_3]
+		for i = 1, #scores do
+			totalSub = totalSub + scores[i]
 		end
 
-		var_15_0.testScore = var_15_13
+		data.testScore = scores
 	end
 
-	arg_15_0.answertotalnum = var_15_3 - arg_15_0.featuretotalnum - arg_15_0.attrtotalnum
+	self.answertotalnum = totalSub - self.featuretotalnum - self.attrtotalnum
 
-	local var_15_14 = math.max(0, arg_15_1.config.threshold - var_15_3)
-	local var_15_15 = Activity114Config.instance:getDiceRate(var_15_14)
-	local var_15_16, var_15_17 = Activity114Config.instance:getRateDes(var_15_15)
-	local var_15_18 = Activity114Enum.RateColor[var_15_17]
+	local realVerify = math.max(0, eventCo.config.threshold - totalSub)
+	local rate = Activity114Config.instance:getDiceRate(realVerify)
+	local rateDes, level = Activity114Config.instance:getRateDes(rate)
+	local rateColor = Activity114Enum.RateColor[level]
 
-	var_15_0.rateDes = string.format("<%s>%s(%d%%)</color>", var_15_18, var_15_16, var_15_15)
-	var_15_0.level = var_15_17
-	var_15_0.realVerify = var_15_14
-	var_15_0.threshold = arg_15_1.config.threshold
+	data.rateDes = string.format("<%s>%s(%d%%)</color>", rateColor, rateDes, rate)
+	data.level = level
+	data.realVerify = realVerify
+	data.threshold = eventCo.config.threshold
 
-	Activity114Model.instance:setEventParams("realVerify", var_15_14)
+	Activity114Model.instance:setEventParams("realVerify", realVerify)
 
-	return var_15_0
+	return data
 end
 
-function var_0_0.onSelectIndex(arg_16_0, arg_16_1)
+function Activity114EventSelectView:onSelectIndex(index)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuemesh)
 
-	for iter_16_0 = 1, #arg_16_0.items do
-		if iter_16_0 ~= arg_16_1 then
-			arg_16_0.items[iter_16_0]:setSelect(false)
+	for i = 1, #self.items do
+		if i ~= index then
+			self.items[i]:setSelect(false)
 		end
 	end
 
-	gohelper.setActive(arg_16_0._gotips, false)
-	gohelper.setActive(arg_16_0._btncloseTip.gameObject, false)
+	gohelper.setActive(self._gotips, false)
+	gohelper.setActive(self._btncloseTip.gameObject, false)
 end
 
-function var_0_0.showTips(arg_17_0, arg_17_1, arg_17_2)
-	if arg_17_0._gotips.activeSelf then
-		gohelper.setActive(arg_17_0._gotips, false)
-		gohelper.setActive(arg_17_0._btncloseTip.gameObject, false)
+function Activity114EventSelectView:showTips(data, pos)
+	if self._gotips.activeSelf then
+		gohelper.setActive(self._gotips, false)
+		gohelper.setActive(self._btncloseTip.gameObject, false)
 	else
-		gohelper.setActive(arg_17_0._gotips, true)
-		gohelper.setActive(arg_17_0._btncloseTip.gameObject, true)
+		gohelper.setActive(self._gotips, true)
+		gohelper.setActive(self._btncloseTip.gameObject, true)
 
-		arg_17_0._gotips.transform.position = arg_17_2
-		arg_17_0._txtbasevalue.text = arg_17_1.threshold
+		self._gotips.transform.position = pos
+		self._txtbasevalue.text = data.threshold
 
-		local var_17_0 = arg_17_0.attrtotalnum > 0 and arg_17_0:_getNumShowTxt(arg_17_0.attrtotalnum) or ""
-		local var_17_1 = arg_17_0.featuretotalnum > 0 and arg_17_0:_getNumShowTxt(arg_17_0.featuretotalnum) or ""
-		local var_17_2 = arg_17_0.answertotalnum > 0 and arg_17_0:_getNumShowTxt(arg_17_0.answertotalnum) or ""
-		local var_17_3 = arg_17_1.threshold ~= arg_17_1.realVerify and string.format(" = <color=#E19C60>%s</color>", arg_17_1.realVerify) or ""
+		local attrtotalstr = self.attrtotalnum > 0 and self:_getNumShowTxt(self.attrtotalnum) or ""
+		local featuretotalstr = self.featuretotalnum > 0 and self:_getNumShowTxt(self.featuretotalnum) or ""
+		local answertotalstr = self.answertotalnum > 0 and self:_getNumShowTxt(self.answertotalnum) or ""
+		local finaltotalstr = data.threshold ~= data.realVerify and string.format(" = <color=#E19C60>%s</color>", data.realVerify) or ""
 
-		arg_17_0._txtrealvalue.text = string.format("%s%s%s%s%s", arg_17_1.threshold, var_17_0, var_17_1, var_17_2, var_17_3)
-		arg_17_0._txtattrtotalnum.text = arg_17_0:_getNumShowTxt(arg_17_0.attrtotalnum)
-		arg_17_0._txtfeaturetotalnum.text = arg_17_0:_getNumShowTxt(arg_17_0.featuretotalnum)
-		arg_17_0._txtanswertotalnum.text = arg_17_0:_getNumShowTxt(arg_17_0.answertotalnum)
+		self._txtrealvalue.text = string.format("%s%s%s%s%s", data.threshold, attrtotalstr, featuretotalstr, answertotalstr, finaltotalstr)
+		self._txtattrtotalnum.text = self:_getNumShowTxt(self.attrtotalnum)
+		self._txtfeaturetotalnum.text = self:_getNumShowTxt(self.featuretotalnum)
+		self._txtanswertotalnum.text = self:_getNumShowTxt(self.answertotalnum)
 
-		gohelper.setActive(arg_17_0._goattrempty, GameUtil.getTabLen(arg_17_1.attrSubs) == 0)
-		gohelper.setActive(arg_17_0._goattrtotal, GameUtil.getTabLen(arg_17_1.attrSubs) > 0)
-		gohelper.setActive(arg_17_0._goattrcontent, GameUtil.getTabLen(arg_17_1.attrSubs) > 0)
-		gohelper.setActive(arg_17_0._gofeatureempty, GameUtil.getTabLen(arg_17_1.featureSubs) == 0)
-		gohelper.setActive(arg_17_0._gofeaturetotal, GameUtil.getTabLen(arg_17_1.featureSubs) > 0)
-		gohelper.setActive(arg_17_0._gofeaturecontent, GameUtil.getTabLen(arg_17_1.featureSubs) > 0)
-		gohelper.setActive(arg_17_0._goanswerempty, GameUtil.getTabLen(arg_17_1.testScore) == 0)
-		gohelper.setActive(arg_17_0._goanswertotal, GameUtil.getTabLen(arg_17_1.testScore) > 0)
-		gohelper.CreateObjList(arg_17_0, arg_17_0.setAttrItem, arg_17_1.attrSubs, arg_17_0._goattrcontent, arg_17_0._goattritem)
-		gohelper.CreateObjList(arg_17_0, arg_17_0.setFeatureItem, arg_17_1.featureSubs, arg_17_0._gofeaturecontent, arg_17_0._gofeatureitem)
-		gohelper.setActive(arg_17_0._goanswercontent, arg_17_1.testScore)
+		gohelper.setActive(self._goattrempty, GameUtil.getTabLen(data.attrSubs) == 0)
+		gohelper.setActive(self._goattrtotal, GameUtil.getTabLen(data.attrSubs) > 0)
+		gohelper.setActive(self._goattrcontent, GameUtil.getTabLen(data.attrSubs) > 0)
+		gohelper.setActive(self._gofeatureempty, GameUtil.getTabLen(data.featureSubs) == 0)
+		gohelper.setActive(self._gofeaturetotal, GameUtil.getTabLen(data.featureSubs) > 0)
+		gohelper.setActive(self._gofeaturecontent, GameUtil.getTabLen(data.featureSubs) > 0)
+		gohelper.setActive(self._goanswerempty, GameUtil.getTabLen(data.testScore) == 0)
+		gohelper.setActive(self._goanswertotal, GameUtil.getTabLen(data.testScore) > 0)
+		gohelper.CreateObjList(self, self.setAttrItem, data.attrSubs, self._goattrcontent, self._goattritem)
+		gohelper.CreateObjList(self, self.setFeatureItem, data.featureSubs, self._gofeaturecontent, self._gofeatureitem)
+		gohelper.setActive(self._goanswercontent, data.testScore)
 
-		if arg_17_1.testScore then
-			gohelper.CreateObjList(arg_17_0, arg_17_0.setAnswerItem, arg_17_1.testScore, arg_17_0._goanswercontent, arg_17_0._goansweritem)
+		if data.testScore then
+			gohelper.CreateObjList(self, self.setAnswerItem, data.testScore, self._goanswercontent, self._goansweritem)
 		end
 	end
 end
 
-function var_0_0.setAttrItem(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	UISpriteSetMgr.instance:setVersionActivitywhitehouseSprite(gohelper.findChildImage(arg_18_1, "#image_icon"), "icons_" .. arg_18_2.attrId)
+function Activity114EventSelectView:setAttrItem(obj, data, index)
+	UISpriteSetMgr.instance:setVersionActivitywhitehouseSprite(gohelper.findChildImage(obj, "#image_icon"), "icons_" .. data.attrId)
 
-	gohelper.findChildTextMesh(arg_18_1, "#txt_name").text = arg_18_2.name
-	gohelper.findChildTextMesh(arg_18_1, "#txt_value").text = arg_18_0:_getNumShowTxt(arg_18_2.value)
+	gohelper.findChildTextMesh(obj, "#txt_name").text = data.name
+	gohelper.findChildTextMesh(obj, "#txt_value").text = self:_getNumShowTxt(data.value)
 end
 
-function var_0_0.setFeatureItem(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
-	UISpriteSetMgr.instance:setVersionActivitywhitehouseSprite(gohelper.findChildImage(arg_19_1, "#image_bg"), arg_19_2.inheritable == 1 and "img_shuxing1" or "img_shuxing2")
+function Activity114EventSelectView:setFeatureItem(obj, data, index)
+	UISpriteSetMgr.instance:setVersionActivitywhitehouseSprite(gohelper.findChildImage(obj, "#image_bg"), data.inheritable == 1 and "img_shuxing1" or "img_shuxing2")
 
-	gohelper.findChildTextMesh(arg_19_1, "#txt_name").text = arg_19_2.name
-	gohelper.findChildTextMesh(arg_19_1, "#txt_value").text = arg_19_0:_getNumShowTxt(arg_19_2.value)
+	gohelper.findChildTextMesh(obj, "#txt_name").text = data.name
+	gohelper.findChildTextMesh(obj, "#txt_value").text = self:_getNumShowTxt(data.value)
 end
 
-function var_0_0.setAnswerItem(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
-	gohelper.findChildTextMesh(arg_20_1, "#txt_name").text = string.format(luaLang("v1a2_114eventselectview_question"), GameUtil.getNum2Chinese(arg_20_3))
-	gohelper.findChildTextMesh(arg_20_1, "#txt_value").text = arg_20_0:_getNumShowTxt(arg_20_2)
+function Activity114EventSelectView:setAnswerItem(obj, data, index)
+	gohelper.findChildTextMesh(obj, "#txt_name").text = string.format(luaLang("v1a2_114eventselectview_question"), GameUtil.getNum2Chinese(index))
+	gohelper.findChildTextMesh(obj, "#txt_value").text = self:_getNumShowTxt(data)
 end
 
-function var_0_0._getNumShowTxt(arg_21_0, arg_21_1)
-	if arg_21_1 == 0 then
+function Activity114EventSelectView:_getNumShowTxt(value)
+	if value == 0 then
 		return "-0"
 	end
 
-	return string.format("%+d", -arg_21_1)
+	return string.format("%+d", -value)
 end
 
-function var_0_0.onAnswer(arg_22_0, arg_22_1)
-	Activity114Rpc.instance:answerRequest(Activity114Model.instance.id, arg_22_1, arg_22_0.onAnswerReply, arg_22_0)
+function Activity114EventSelectView:onAnswer(index)
+	Activity114Rpc.instance:answerRequest(Activity114Model.instance.id, index, self.onAnswerReply, self)
 end
 
-function var_0_0.onAnswerReply(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
-	if arg_23_2 == 0 and arg_23_3.successStatus == Activity114Enum.Result.NoFinish then
-		arg_23_0:onSelectIndex(-1)
-		arg_23_0:updateAnswerItems()
+function Activity114EventSelectView:onAnswerReply(cmd, resultCode, msg)
+	if resultCode == 0 and msg.successStatus == Activity114Enum.Result.NoFinish then
+		self:onSelectIndex(-1)
+		self:updateAnswerItems()
 	end
 end
 
-function var_0_0.checkEvent(arg_24_0)
+function Activity114EventSelectView:checkEvent()
 	Activity114Rpc.instance:checkRequest(Activity114Model.instance.id, true)
 end
 
-function var_0_0.noCheckEvent(arg_25_0)
-	if arg_25_0.viewParam.type == Activity114Enum.EventType.KeyDay then
+function Activity114EventSelectView:noCheckEvent()
+	if self.viewParam.type == Activity114Enum.EventType.KeyDay then
 		logError("关键天还能不检定？？？？？")
 
 		return
@@ -376,23 +379,23 @@ function var_0_0.noCheckEvent(arg_25_0)
 	Activity114Rpc.instance:checkRequest(Activity114Model.instance.id, false)
 end
 
-function var_0_0.showHideDiceTips(arg_26_0)
-	gohelper.setActive(arg_26_0._gotips, not arg_26_0._gotips.activeSelf)
-	gohelper.setActive(arg_26_0._btncloseTip.gameObject, not arg_26_0._gotips.activeSelf)
+function Activity114EventSelectView:showHideDiceTips()
+	gohelper.setActive(self._gotips, not self._gotips.activeSelf)
+	gohelper.setActive(self._btncloseTip.gameObject, not self._gotips.activeSelf)
 end
 
-function var_0_0.onClose(arg_27_0)
-	if arg_27_0.items then
-		for iter_27_0, iter_27_1 in pairs(arg_27_0.items) do
-			iter_27_1:destory()
+function Activity114EventSelectView:onClose()
+	if self.items then
+		for _, v in pairs(self.items) do
+			v:destory()
 		end
 	end
 
-	if arg_27_0._dialogItem then
-		arg_27_0._dialogItem:destroy()
+	if self._dialogItem then
+		self._dialogItem:destroy()
 
-		arg_27_0._dialogItem = nil
+		self._dialogItem = nil
 	end
 end
 
-return var_0_0
+return Activity114EventSelectView

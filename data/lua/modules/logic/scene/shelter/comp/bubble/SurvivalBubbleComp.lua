@@ -1,104 +1,106 @@
-﻿module("modules.logic.scene.shelter.comp.bubble.SurvivalBubbleComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/shelter/comp/bubble/SurvivalBubbleComp.lua
 
-local var_0_0 = class("SurvivalBubbleComp", BaseSceneComp)
+module("modules.logic.scene.shelter.comp.bubble.SurvivalBubbleComp", package.seeall)
 
-function var_0_0.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.id = 0
-	arg_1_0.bubbleDic = {}
+local SurvivalBubbleComp = class("SurvivalBubbleComp", BaseSceneComp)
+
+function SurvivalBubbleComp:onSceneStart(sceneId, levelId)
+	self.id = 0
+	self.bubbleDic = {}
 end
 
-function var_0_0.onScenePrepared(arg_2_0)
+function SurvivalBubbleComp:onScenePrepared()
 	return
 end
 
-function var_0_0.onSceneClose(arg_3_0)
-	for iter_3_0, iter_3_1 in pairs(arg_3_0.bubbleDic) do
-		iter_3_1:disable()
-		iter_3_1:__onDispose()
+function SurvivalBubbleComp:onSceneClose()
+	for i, v in pairs(self.bubbleDic) do
+		v:disable()
+		v:__onDispose()
 	end
 
-	tabletool.clear(arg_3_0.bubbleDic)
+	tabletool.clear(self.bubbleDic)
 
-	arg_3_0.playerBubbleId = nil
+	self.playerBubbleId = nil
 end
 
-function var_0_0.showBubble(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = arg_4_0:getId()
-	local var_4_1 = SurvivalBubble.New(var_4_0, arg_4_0)
+function SurvivalBubbleComp:showBubble(transform, survivalBubbleParam)
+	local id = self:getId()
+	local survivalBubble = SurvivalBubble.New(id, self)
 
-	var_4_1:__onInit()
-	var_4_1:setData(arg_4_2, arg_4_1)
+	survivalBubble:__onInit()
+	survivalBubble:setData(survivalBubbleParam, transform)
 
-	arg_4_0.bubbleDic[var_4_0] = var_4_1
+	self.bubbleDic[id] = survivalBubble
 
-	var_4_1:enable()
-	arg_4_0:dispatchEvent(SurvivalEvent.OnShowBubble, {
-		id = var_4_0,
-		survivalBubble = var_4_1
+	survivalBubble:enable()
+	self:dispatchEvent(SurvivalEvent.OnShowBubble, {
+		id = id,
+		survivalBubble = survivalBubble
 	})
 
-	return var_4_0
+	return id
 end
 
-function var_0_0.removeBubble(arg_5_0, arg_5_1)
-	if not arg_5_0.bubbleDic[arg_5_1] then
+function SurvivalBubbleComp:removeBubble(id)
+	if not self.bubbleDic[id] then
 		return
 	end
 
-	arg_5_0.bubbleDic[arg_5_1]:disable()
-	arg_5_0.bubbleDic[arg_5_1]:__onDispose()
+	self.bubbleDic[id]:disable()
+	self.bubbleDic[id]:__onDispose()
 
-	arg_5_0.bubbleDic[arg_5_1] = nil
+	self.bubbleDic[id] = nil
 
-	arg_5_0:dispatchEvent(SurvivalEvent.OnRemoveBubble, {
-		id = arg_5_1
+	self:dispatchEvent(SurvivalEvent.OnRemoveBubble, {
+		id = id
 	})
 end
 
-function var_0_0.isBubbleShow(arg_6_0, arg_6_1)
-	return arg_6_0.bubbleDic[arg_6_1]
+function SurvivalBubbleComp:isBubbleShow(id)
+	return self.bubbleDic[id]
 end
 
-function var_0_0.getBubble(arg_7_0, arg_7_1)
-	return arg_7_0.bubbleDic[arg_7_1]
+function SurvivalBubbleComp:getBubble(id)
+	return self.bubbleDic[id]
 end
 
-function var_0_0.showPlayerBubble(arg_8_0, arg_8_1)
-	if not arg_8_0:isPlayerBubbleShow() then
-		local var_8_0 = SurvivalMapHelper.instance:getShelterEntity(SurvivalEnum.ShelterUnitType.Player, 0)
+function SurvivalBubbleComp:showPlayerBubble(param)
+	if not self:isPlayerBubbleShow() then
+		local playerEntity = SurvivalMapHelper.instance:getShelterEntity(SurvivalEnum.ShelterUnitType.Player, 0)
 
-		arg_8_0.playerBubbleId = arg_8_0:showBubble(var_8_0.trans, arg_8_1)
+		self.playerBubbleId = self:showBubble(playerEntity.trans, param)
 
-		var_8_0:stopMove()
+		playerEntity:stopMove()
 	end
 end
 
-function var_0_0.isPlayerBubbleShow(arg_9_0)
-	return arg_9_0.playerBubbleId and arg_9_0:isBubbleShow(arg_9_0.playerBubbleId)
+function SurvivalBubbleComp:isPlayerBubbleShow()
+	return self.playerBubbleId and self:isBubbleShow(self.playerBubbleId)
 end
 
-function var_0_0.removePlayerBubble(arg_10_0)
-	if arg_10_0:isPlayerBubbleShow() then
-		arg_10_0:removeBubble(arg_10_0.playerBubbleId)
+function SurvivalBubbleComp:removePlayerBubble()
+	if self:isPlayerBubbleShow() then
+		self:removeBubble(self.playerBubbleId)
 
-		arg_10_0.playerBubbleId = nil
+		self.playerBubbleId = nil
 	end
 end
 
-function var_0_0.isPlayerBubbleIntercept(arg_11_0)
-	local var_11_0 = SurvivalMapHelper.instance:getSurvivalBubbleComp()
+function SurvivalBubbleComp:isPlayerBubbleIntercept()
+	local survivalBubbleComp = SurvivalMapHelper.instance:getSurvivalBubbleComp()
 
-	if var_11_0:isPlayerBubbleShow() then
-		var_11_0:removePlayerBubble()
+	if survivalBubbleComp:isPlayerBubbleShow() then
+		survivalBubbleComp:removePlayerBubble()
 
 		return true
 	end
 end
 
-function var_0_0.getId(arg_12_0)
-	arg_12_0.id = arg_12_0.id + 1
+function SurvivalBubbleComp:getId()
+	self.id = self.id + 1
 
-	return arg_12_0.id
+	return self.id
 end
 
-return var_0_0
+return SurvivalBubbleComp

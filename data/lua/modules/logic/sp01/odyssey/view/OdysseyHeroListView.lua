@@ -1,307 +1,311 @@
-﻿module("modules.logic.sp01.odyssey.view.OdysseyHeroListView", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/view/OdysseyHeroListView.lua
 
-local var_0_0 = class("OdysseyHeroListView", BaseView)
-local var_0_1 = 5
+module("modules.logic.sp01.odyssey.view.OdysseyHeroListView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goheroarea = gohelper.findChild(arg_1_0.viewGO, "herogroupcontain/area")
-	arg_1_0._gohero = gohelper.findChild(arg_1_0.viewGO, "herogroupcontain/hero")
-	arg_1_0._goheroitem = gohelper.findChild(arg_1_0.viewGO, "herogroupcontain/hero/heroitem")
-	arg_1_0._heroGroupContainer = gohelper.findChild(arg_1_0.viewGO, "herogroupcontain")
+local OdysseyHeroListView = class("OdysseyHeroListView", BaseView)
+local maxHeroCount = 5
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function OdysseyHeroListView:onInitView()
+	self._goheroarea = gohelper.findChild(self.viewGO, "herogroupcontain/area")
+	self._gohero = gohelper.findChild(self.viewGO, "herogroupcontain/hero")
+	self._goheroitem = gohelper.findChild(self.viewGO, "herogroupcontain/hero/heroitem")
+	self._heroGroupContainer = gohelper.findChild(self.viewGO, "herogroupcontain")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0._editableInitView(arg_2_0)
-	arg_2_0.heroGroupWidth = recthelper.getWidth(arg_2_0._heroGroupContainer.transform)
+function OdysseyHeroListView:_editableInitView()
+	self.heroGroupWidth = recthelper.getWidth(self._heroGroupContainer.transform)
 
-	arg_2_0:initItemPos()
-	arg_2_0:refreshHeroGroupWidth()
+	self:initItemPos()
+	self:refreshHeroGroupWidth()
 end
 
-function var_0_0.addEvents(arg_3_0)
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0._heroItemDrag) do
-		iter_3_1:AddDragBeginListener(arg_3_0._onBeginDrag, arg_3_0, iter_3_0)
-		iter_3_1:AddDragListener(arg_3_0._onDrag, arg_3_0, iter_3_0)
-		iter_3_1:AddDragEndListener(arg_3_0._onEndDrag, arg_3_0, iter_3_0)
+function OdysseyHeroListView:addEvents()
+	for i, drag in ipairs(self._heroItemDrag) do
+		drag:AddDragBeginListener(self._onBeginDrag, self, i)
+		drag:AddDragListener(self._onDrag, self, i)
+		drag:AddDragEndListener(self._onEndDrag, self, i)
 	end
 
-	arg_3_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnHeroGroupExit, arg_3_0._onHeroGroupExit, arg_3_0)
-	arg_3_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, arg_3_0._updateHeroList, arg_3_0)
-	arg_3_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroTalentUp, arg_3_0._updateHeroList, arg_3_0)
-	arg_3_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_3_0._updateHeroList, arg_3_0)
-	arg_3_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, arg_3_0._updateHeroList, arg_3_0)
-	arg_3_0:addEventCb(CharacterController.instance, CharacterEvent.successDressUpSkin, arg_3_0._updateHeroList, arg_3_0)
-	arg_3_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.SelectHeroGroup, arg_3_0._updateHeroList, arg_3_0)
-	arg_3_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, arg_3_0._updateHeroList, arg_3_0)
-	arg_3_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, arg_3_0._updateHeroList, arg_3_0)
-	arg_3_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyGroupSelectIndex, arg_3_0._checkRestrictHero, arg_3_0)
-	arg_3_0:addEventCb(Activity104Controller.instance, Activity104Event.SwitchSnapshotSubId, arg_3_0._onSnapshotSaveSucc, arg_3_0)
-	arg_3_0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_3_0._onScreenSizeChange, arg_3_0)
-	arg_3_0:addEventCb(OdysseyHeroGroupController.instance, OdysseyEvent.OnHeroGroupUpdate, arg_3_0._updateHeroList, arg_3_0)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnHeroGroupExit, self._onHeroGroupExit, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, self._updateHeroList, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroTalentUp, self._updateHeroList, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, self._updateHeroList, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, self._updateHeroList, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successDressUpSkin, self._updateHeroList, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.SelectHeroGroup, self._updateHeroList, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, self._updateHeroList, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, self._updateHeroList, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyGroupSelectIndex, self._checkRestrictHero, self)
+	self:addEventCb(Activity104Controller.instance, Activity104Event.SwitchSnapshotSubId, self._onSnapshotSaveSucc, self)
+	self:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, self._onScreenSizeChange, self)
+	self:addEventCb(OdysseyHeroGroupController.instance, OdysseyEvent.OnHeroGroupUpdate, self._updateHeroList, self)
 end
 
-function var_0_0.removeEvents(arg_4_0)
-	for iter_4_0, iter_4_1 in ipairs(arg_4_0._heroItemDrag) do
-		iter_4_1:RemoveDragBeginListener()
-		iter_4_1:RemoveDragListener()
-		iter_4_1:RemoveDragEndListener()
+function OdysseyHeroListView:removeEvents()
+	for _, drag in ipairs(self._heroItemDrag) do
+		drag:RemoveDragBeginListener()
+		drag:RemoveDragListener()
+		drag:RemoveDragEndListener()
 	end
 
-	arg_4_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, arg_4_0._updateHeroList, arg_4_0)
-	arg_4_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroTalentUp, arg_4_0._updateHeroList, arg_4_0)
-	arg_4_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_4_0._updateHeroList, arg_4_0)
-	arg_4_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, arg_4_0._updateHeroList, arg_4_0)
-	arg_4_0:removeEventCb(CharacterController.instance, CharacterEvent.successDressUpSkin, arg_4_0._updateHeroList, arg_4_0)
-	arg_4_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.SelectHeroGroup, arg_4_0._updateHeroList, arg_4_0)
-	arg_4_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, arg_4_0._updateHeroList, arg_4_0)
-	arg_4_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, arg_4_0._updateHeroList, arg_4_0)
-	arg_4_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyGroupSelectIndex, arg_4_0._checkRestrictHero, arg_4_0)
-	arg_4_0:removeEventCb(Activity104Controller.instance, Activity104Event.SwitchSnapshotSubId, arg_4_0._onSnapshotSaveSucc, arg_4_0)
-	arg_4_0:removeEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_4_0._onScreenSizeChange, arg_4_0)
-	arg_4_0:removeEventCb(OdysseyHeroGroupController.instance, OdysseyEvent.OnHeroGroupUpdate, arg_4_0._updateHeroList, arg_4_0)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, self._updateHeroList, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.successHeroTalentUp, self._updateHeroList, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, self._updateHeroList, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, self._updateHeroList, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.successDressUpSkin, self._updateHeroList, self)
+	self:removeEventCb(HeroGroupController.instance, HeroGroupEvent.SelectHeroGroup, self._updateHeroList, self)
+	self:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, self._updateHeroList, self)
+	self:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, self._updateHeroList, self)
+	self:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyGroupSelectIndex, self._checkRestrictHero, self)
+	self:removeEventCb(Activity104Controller.instance, Activity104Event.SwitchSnapshotSubId, self._onSnapshotSaveSucc, self)
+	self:removeEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, self._onScreenSizeChange, self)
+	self:removeEventCb(OdysseyHeroGroupController.instance, OdysseyEvent.OnHeroGroupUpdate, self._updateHeroList, self)
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0._isOpen = true
+function OdysseyHeroListView:onOpen()
+	self._isOpen = true
 
-	arg_5_0:_updateHeroList()
-	arg_5_0:_playOpenAnimation()
+	self:_updateHeroList()
+	self:_playOpenAnimation()
 	CommonDragHelper.instance:setGlobalEnabled(true)
 end
 
-function var_0_0.initItemPos(arg_6_0)
-	arg_6_0._heroItemList = {}
-	arg_6_0._heroItemDrag = arg_6_0:getUserDataTb_()
+function OdysseyHeroListView:initItemPos()
+	self._heroItemList = {}
+	self._heroItemDrag = self:getUserDataTb_()
 
-	gohelper.setActive(arg_6_0._goheroitem, false)
-	gohelper.setActive(arg_6_0._goaidheroitem, false)
+	gohelper.setActive(self._goheroitem, false)
+	gohelper.setActive(self._goaidheroitem, false)
 
-	arg_6_0.heroPosTrList = arg_6_0:getUserDataTb_()
-	arg_6_0._heroItemPosList = arg_6_0:getUserDataTb_()
+	self.heroPosTrList = self:getUserDataTb_()
+	self._heroItemPosList = self:getUserDataTb_()
 
-	for iter_6_0 = 1, var_0_1 do
-		local var_6_0 = gohelper.findChild(arg_6_0._goheroarea, "pos" .. iter_6_0 .. "/container").transform
-		local var_6_1 = gohelper.cloneInPlace(arg_6_0._goheroitem, "item" .. iter_6_0)
-		local var_6_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_6_1, OdysseyHeroGroupItem, arg_6_0)
+	for i = 1, maxHeroCount do
+		local go = gohelper.findChild(self._goheroarea, "pos" .. i .. "/container")
+		local tr = go.transform
+		local cloneGO = gohelper.cloneInPlace(self._goheroitem, "item" .. i)
+		local item = MonoHelper.addNoUpdateLuaComOnceToGo(cloneGO, OdysseyHeroGroupItem, self)
 
-		table.insert(arg_6_0.heroPosTrList, var_6_0)
-		table.insert(arg_6_0._heroItemList, var_6_2)
-		var_6_2:initEquipItem(arg_6_0.getEquipPrefab, arg_6_0)
-		gohelper.setActive(var_6_1, true)
+		table.insert(self.heroPosTrList, tr)
+		table.insert(self._heroItemList, item)
+		item:initEquipItem(self.getEquipPrefab, self)
+		gohelper.setActive(cloneGO, true)
 	end
 
-	for iter_6_1 = 1, var_0_1 do
-		local var_6_3 = arg_6_0._heroItemList[iter_6_1]
+	for i = 1, maxHeroCount do
+		local heroItem = self._heroItemList[i]
 
-		arg_6_0:_setHeroItemPos(var_6_3, iter_6_1)
-		table.insert(arg_6_0._heroItemPosList, var_6_3.go.transform)
-		var_6_3:setParent(arg_6_0.heroPosTrList[iter_6_1])
+		self:_setHeroItemPos(heroItem, i)
+		table.insert(self._heroItemPosList, heroItem.go.transform)
+		heroItem:setParent(self.heroPosTrList[i])
 
-		local var_6_4 = SLFramework.UGUI.UIDragListener.Get(var_6_3.go)
+		local drag = SLFramework.UGUI.UIDragListener.Get(heroItem.go)
 
-		table.insert(arg_6_0._heroItemDrag, var_6_4)
+		table.insert(self._heroItemDrag, drag)
 	end
 
-	arg_6_0._bgList = {}
+	self._bgList = {}
 
-	for iter_6_2 = 1, var_0_1 do
-		local var_6_5 = gohelper.findChild(arg_6_0.viewGO, "herogroupcontain/hero/bg" .. iter_6_2 .. "/bg")
+	for i = 1, maxHeroCount do
+		local bg = gohelper.findChild(self.viewGO, "herogroupcontain/hero/bg" .. i .. "/bg")
 
-		table.insert(arg_6_0._bgList, var_6_5)
+		table.insert(self._bgList, bg)
 	end
 
-	HeroGroupModel.instance:setHeroGroupItemPos(arg_6_0._heroItemPosList)
+	HeroGroupModel.instance:setHeroGroupItemPos(self._heroItemPosList)
 
-	arg_6_0.odysseyEquipPosList = {}
-	arg_6_0.odysseyEquipItemList = {}
+	self.odysseyEquipPosList = {}
+	self.odysseyEquipItemList = {}
 
-	for iter_6_3 = 1, var_0_1 do
-		local var_6_6 = arg_6_0._heroItemList[iter_6_3]:getOdysseyEquipItem()
+	for i = 1, maxHeroCount do
+		local heroItem = self._heroItemList[i]
+		local equipItemList = heroItem:getOdysseyEquipItem()
 
-		for iter_6_4, iter_6_5 in ipairs(var_6_6) do
-			table.insert(arg_6_0.odysseyEquipPosList, iter_6_5.go.transform)
-			table.insert(arg_6_0.odysseyEquipItemList, iter_6_5)
+		for _, equipItem in ipairs(equipItemList) do
+			table.insert(self.odysseyEquipPosList, equipItem.go.transform)
+			table.insert(self.odysseyEquipItemList, equipItem)
 		end
 	end
 
-	arg_6_0._orderList = {}
-	arg_6_0._bgList = {}
+	self._orderList = {}
+	self._bgList = {}
 
-	for iter_6_6 = 1, var_0_1 do
-		local var_6_7 = gohelper.findChild(arg_6_0.viewGO, "herogroupcontain/hero/bg" .. iter_6_6 .. "/bg")
+	for i = 1, maxHeroCount do
+		local bg = gohelper.findChild(self.viewGO, "herogroupcontain/hero/bg" .. i .. "/bg")
 
-		table.insert(arg_6_0._bgList, var_6_7)
+		table.insert(self._bgList, bg)
 
-		local var_6_8 = gohelper.findChildTextMesh(arg_6_0.viewGO, "herogroupcontain/hero/bg" .. iter_6_6 .. "/bg/#txt_order")
+		local order = gohelper.findChildTextMesh(self.viewGO, "herogroupcontain/hero/bg" .. i .. "/bg/#txt_order")
 
-		var_6_8.text = tostring(iter_6_6) or ""
+		order.text = tostring(i) or ""
 
-		table.insert(arg_6_0._orderList, var_6_8)
+		table.insert(self._orderList, order)
 	end
 end
 
-function var_0_0.refreshHeroGroupWidth(arg_7_0)
-	local var_7_0 = OdysseyHeroGroupModel.instance:getCurHeroGroup()
+function OdysseyHeroListView:refreshHeroGroupWidth()
+	local curGroupMO = OdysseyHeroGroupModel.instance:getCurHeroGroup()
 
-	if arg_7_0.haveSuit == nil or arg_7_0.haveSuit ~= var_7_0.haveSuit then
-		local var_7_1 = var_7_0.haveSuit and arg_7_0.heroGroupWidth or 2321
+	if self.haveSuit == nil or self.haveSuit ~= curGroupMO.haveSuit then
+		local width = curGroupMO.haveSuit and self.heroGroupWidth or 2321
 
-		recthelper.setWidth(arg_7_0._heroGroupContainer.transform, var_7_1)
-		recthelper.setWidth(arg_7_0._gohero.transform, var_7_1)
-		recthelper.setWidth(arg_7_0._goheroarea.transform, var_7_1)
+		recthelper.setWidth(self._heroGroupContainer.transform, width)
+		recthelper.setWidth(self._gohero.transform, width)
+		recthelper.setWidth(self._goheroarea.transform, width)
 		logNormal("refreshHeroGroupWidth")
 
-		for iter_7_0 = 1, var_0_1 do
-			local var_7_2 = arg_7_0._heroItemList[iter_7_0]
+		for i = 1, maxHeroCount do
+			local heroItem = self._heroItemList[i]
 
-			arg_7_0:_setHeroItemPos(var_7_2, iter_7_0)
+			self:_setHeroItemPos(heroItem, i)
 		end
 
-		arg_7_0.haveSuit = var_7_0.haveSuit
+		self.haveSuit = curGroupMO.haveSuit
 	end
 end
 
-function var_0_0._playOpenAnimation(arg_8_0)
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0.heroPosTrList) do
-		if iter_8_1 then
-			local var_8_0 = iter_8_1.gameObject:GetComponent(typeof(UnityEngine.Animator))
+function OdysseyHeroListView:_playOpenAnimation()
+	for i, posTr in ipairs(self.heroPosTrList) do
+		if posTr then
+			local anim = posTr.gameObject:GetComponent(typeof(UnityEngine.Animator))
 
-			var_8_0:Play("open")
-			var_8_0:Update(0)
+			anim:Play("open")
+			anim:Update(0)
 
-			var_8_0.speed = 1
+			anim.speed = 1
 		end
 	end
 
-	for iter_8_2, iter_8_3 in ipairs(arg_8_0._heroItemList) do
-		if iter_8_3 then
-			local var_8_1 = iter_8_3.anim
+	for i, heroItem in ipairs(self._heroItemList) do
+		if heroItem then
+			local anim = heroItem.anim
 
-			var_8_1:Play("open")
-			var_8_1:Update(0)
+			anim:Play("open")
+			anim:Update(0)
 
-			var_8_1.speed = 1
+			anim.speed = 1
 		end
 	end
 
-	for iter_8_4, iter_8_5 in ipairs(arg_8_0._bgList) do
-		if iter_8_5 then
-			local var_8_2 = iter_8_5:GetComponent(typeof(UnityEngine.Animator))
+	for i, bg in ipairs(self._bgList) do
+		if bg then
+			local anim = bg:GetComponent(typeof(UnityEngine.Animator))
 
-			var_8_2:Play("open")
-			var_8_2:Update(0)
+			anim:Play("open")
+			anim:Update(0)
 
-			var_8_2.speed = 1
+			anim.speed = 1
 		end
 	end
 
-	arg_8_0:_checkRestrictHero()
+	self:_checkRestrictHero()
 end
 
-function var_0_0._checkRestrictHero(arg_9_0)
-	local var_9_0 = {}
+function OdysseyHeroListView:_checkRestrictHero()
+	local needRemoveHeroUidDict = {}
 
-	for iter_9_0 = 1, var_0_1 do
-		local var_9_1 = HeroSingleGroupModel.instance:getById(iter_9_0)
+	for i = 1, maxHeroCount do
+		local heroSingleGroupMO = HeroSingleGroupModel.instance:getById(i)
 
-		if var_9_1 and HeroGroupModel.instance:isRestrict(var_9_1.heroUid) then
-			var_9_0[var_9_1.heroUid] = true
+		if heroSingleGroupMO and HeroGroupModel.instance:isRestrict(heroSingleGroupMO.heroUid) then
+			needRemoveHeroUidDict[heroSingleGroupMO.heroUid] = true
 		end
 	end
 
-	if tabletool.len(var_9_0) <= 0 then
+	if tabletool.len(needRemoveHeroUidDict) <= 0 then
 		return
 	end
 
-	local var_9_2 = HeroGroupModel.instance:getCurrentBattleConfig()
-	local var_9_3 = var_9_2 and var_9_2.restrictReason
+	local battleCo = HeroGroupModel.instance:getCurrentBattleConfig()
+	local restrictReason = battleCo and battleCo.restrictReason
 
-	if not string.nilorempty(var_9_3) then
-		ToastController.instance:showToastWithString(var_9_3)
+	if not string.nilorempty(restrictReason) then
+		ToastController.instance:showToastWithString(restrictReason)
 	end
 
-	for iter_9_1, iter_9_2 in ipairs(arg_9_0._heroItemList) do
-		iter_9_2:playRestrictAnimation(var_9_0)
+	for _, heroItem in ipairs(self._heroItemList) do
+		heroItem:playRestrictAnimation(needRemoveHeroUidDict)
 	end
 
-	arg_9_0.needRemoveHeroUidDict = var_9_0
+	self.needRemoveHeroUidDict = needRemoveHeroUidDict
 
 	UIBlockMgr.instance:startBlock("removeRestrictHero")
-	TaskDispatcher.runDelay(arg_9_0._removeRestrictHero, arg_9_0, 1.5)
+	TaskDispatcher.runDelay(self._removeRestrictHero, self, 1.5)
 end
 
-function var_0_0._removeRestrictHero(arg_10_0)
+function OdysseyHeroListView:_removeRestrictHero()
 	UIBlockMgr.instance:endBlock("removeRestrictHero")
 
-	if not arg_10_0.needRemoveHeroUidDict then
+	if not self.needRemoveHeroUidDict then
 		return
 	end
 
-	for iter_10_0, iter_10_1 in pairs(arg_10_0.needRemoveHeroUidDict) do
-		HeroSingleGroupModel.instance:remove(iter_10_0)
+	for heroUid, _ in pairs(self.needRemoveHeroUidDict) do
+		HeroSingleGroupModel.instance:remove(heroUid)
 	end
 
 	HeroGroupModel.instance:replaceSingleGroup()
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
 end
 
-function var_0_0._onHeroGroupExit(arg_11_0)
+function OdysseyHeroListView:_onHeroGroupExit()
 	AudioMgr.instance:trigger(AudioEnum.HeroGroupUI.Play_UI_Formation_Cardsdisappear)
 
-	if arg_11_0._openTweenIdList then
-		for iter_11_0, iter_11_1 in ipairs(arg_11_0._openTweenIdList) do
-			ZProj.TweenHelper.KillById(iter_11_1)
+	if self._openTweenIdList then
+		for i, openTweenId in ipairs(self._openTweenIdList) do
+			ZProj.TweenHelper.KillById(openTweenId)
 		end
 	end
 
-	arg_11_0._closeTweenIdList = {}
+	self._closeTweenIdList = {}
 
-	for iter_11_2 = 1, var_0_1 do
-		local var_11_0 = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.03 * (var_0_1 - iter_11_2), nil, arg_11_0._closeTweenFinish, arg_11_0, iter_11_2, EaseType.Linear)
+	for i = 1, maxHeroCount do
+		local closeTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.03 * (maxHeroCount - i), nil, self._closeTweenFinish, self, i, EaseType.Linear)
 
-		table.insert(arg_11_0._closeTweenIdList, var_11_0)
+		table.insert(self._closeTweenIdList, closeTweenId)
 	end
 
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.PlayHeroGroupExitEffect)
 	ViewMgr.instance:closeView(ViewName.OdysseyHeroGroupView, false, false)
 end
 
-function var_0_0._closeTweenFinish(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0.heroPosTrList[arg_12_1]
+function OdysseyHeroListView:_closeTweenFinish(index)
+	local posTr = self.heroPosTrList[index]
 
-	if var_12_0 then
-		local var_12_1 = var_12_0.gameObject:GetComponent(typeof(UnityEngine.Animator))
+	if posTr then
+		local anim = posTr.gameObject:GetComponent(typeof(UnityEngine.Animator))
 
-		var_12_1:Play("close")
+		anim:Play("close")
 
-		var_12_1.speed = 1
+		anim.speed = 1
 	end
 
-	local var_12_2 = arg_12_0._heroItemList[arg_12_1]
+	local heroItem = self._heroItemList[index]
 
-	if var_12_2 then
-		local var_12_3 = var_12_2.anim
+	if heroItem then
+		local anim = heroItem.anim
 
-		var_12_3:Play("close")
+		anim:Play("close")
 
-		var_12_3.speed = 1
+		anim.speed = 1
 	end
 
-	local var_12_4 = arg_12_0._bgList[arg_12_1]
+	local bg = self._bgList[index]
 
-	if var_12_4 then
-		local var_12_5 = var_12_4:GetComponent(typeof(UnityEngine.Animator))
+	if bg then
+		local anim = bg:GetComponent(typeof(UnityEngine.Animator))
 
-		var_12_5:Play("close")
+		anim:Play("close")
 
-		var_12_5.speed = 1
+		anim.speed = 1
 	end
 end
 
-function var_0_0.canDrag(arg_13_0, arg_13_1, arg_13_2)
+function OdysseyHeroListView:canDrag(param, isWrap)
 	if UnityEngine.Input.touchCount > 1 then
 		return false
 	end
@@ -310,179 +314,181 @@ function var_0_0.canDrag(arg_13_0, arg_13_1, arg_13_2)
 		return false
 	end
 
-	local var_13_0 = arg_13_1
-	local var_13_1 = arg_13_0._heroItemList[var_13_0]
+	local index = param
+	local heroItem = self._heroItemList[index]
 
-	if var_13_1.isAid then
+	if heroItem.isAid then
 		return false
 	end
 
-	if var_13_1.isTrialLock then
+	if heroItem.isTrialLock then
 		return false
 	end
 
-	if not arg_13_2 and (var_13_1.mo:isEmpty() or var_13_1.mo.aid == -1 or var_13_0 > OdysseyEnum.MaxHeroGroupCount) then
+	if not isWrap and (heroItem.mo:isEmpty() or heroItem.mo.aid == -1 or index > OdysseyEnum.MaxHeroGroupCount) then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0._onBeginDrag(arg_14_0, arg_14_1, arg_14_2)
-	if arg_14_0._tweening then
+function OdysseyHeroListView:_onBeginDrag(param, pointerEventData)
+	if self._tweening then
 		return
 	end
 
-	if not arg_14_0:canDrag(arg_14_1) then
+	if not self:canDrag(param) then
 		return
 	end
 
-	local var_14_0 = arg_14_1
-	local var_14_1 = arg_14_0._heroItemList[var_14_0]
+	local index = param
+	local heroItem = self._heroItemList[index]
 
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0._heroItemList) do
-		iter_14_1:onItemBeginDrag(var_14_0)
+	for _, one in ipairs(self._heroItemList) do
+		one:onItemBeginDrag(index)
 	end
 
-	for iter_14_2, iter_14_3 in ipairs(arg_14_0._heroItemList) do
-		iter_14_3:flowOriginParent()
+	for _, heroItem in ipairs(self._heroItemList) do
+		heroItem:flowOriginParent()
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Team_raise)
-	gohelper.setAsLastSibling(var_14_1.go)
+	gohelper.setAsLastSibling(heroItem.go)
 
-	local var_14_2 = recthelper.screenPosToAnchorPos(arg_14_2.position, arg_14_0._goheroarea.transform)
+	local anchorPos = recthelper.screenPosToAnchorPos(pointerEventData.position, self._goheroarea.transform)
 
-	arg_14_0:_tweenToPos(var_14_1, var_14_2)
+	self:_tweenToPos(heroItem, anchorPos)
 end
 
-function var_0_0._onDrag(arg_15_0, arg_15_1, arg_15_2)
-	if not arg_15_0:canDrag(arg_15_1) then
-		if arg_15_0._heroItemList[arg_15_1].isTrialLock then
+function OdysseyHeroListView:_onDrag(param, pointerEventData)
+	if not self:canDrag(param) then
+		local heroItem = self._heroItemList[param]
+
+		if heroItem.isTrialLock then
 			GameFacade.showToast(ToastEnum.TrialCantChangePos)
 		end
 
 		return
 	end
 
-	local var_15_0 = arg_15_1
-	local var_15_1 = arg_15_0._heroItemList[var_15_0]
-	local var_15_2 = recthelper.screenPosToAnchorPos(arg_15_2.position, arg_15_0._goheroarea.transform)
+	local index = param
+	local heroItem = self._heroItemList[index]
+	local anchorPos = recthelper.screenPosToAnchorPos(pointerEventData.position, self._goheroarea.transform)
 
-	arg_15_0:_tweenToPos(var_15_1, var_15_2)
+	self:_tweenToPos(heroItem, anchorPos)
 end
 
-function var_0_0._onEndDrag(arg_16_0, arg_16_1, arg_16_2)
-	if not arg_16_0:canDrag(arg_16_1) then
+function OdysseyHeroListView:_onEndDrag(param, pointerEventData)
+	if not self:canDrag(param) then
 		return
 	end
 
-	local var_16_0 = arg_16_1
-	local var_16_1 = arg_16_0._heroItemList[var_16_0]
-	local var_16_2 = arg_16_0:_calcIndex(arg_16_2.position)
+	local index = param
+	local heroItem = self._heroItemList[index]
+	local dragToIndex = self:_calcIndex(pointerEventData.position)
 
-	for iter_16_0, iter_16_1 in ipairs(arg_16_0._heroItemList) do
-		iter_16_1:onItemEndDrag(var_16_0, var_16_2)
+	for _, one in ipairs(self._heroItemList) do
+		one:onItemEndDrag(index, dragToIndex)
 	end
 
-	arg_16_0:_setDragEnabled(false)
+	self:_setDragEnabled(false)
 
-	local function var_16_3(arg_17_0, arg_17_1)
-		for iter_17_0, iter_17_1 in ipairs(arg_17_0._heroItemList) do
-			iter_17_1:onItemCompleteDrag(var_16_0, var_16_2, arg_17_1)
+	local function completeDragFunc(self, complete)
+		for _, one in ipairs(self._heroItemList) do
+			one:onItemCompleteDrag(index, dragToIndex, complete)
 		end
 
-		arg_17_0:_setDragEnabled(true)
+		self:_setDragEnabled(true)
 
-		for iter_17_2, iter_17_3 in ipairs(arg_17_0._heroItemList) do
-			iter_17_3:flowCurrentParent()
+		for _, heroItem in ipairs(self._heroItemList) do
+			heroItem:flowCurrentParent()
 		end
 	end
 
-	if var_16_2 <= 0 or not arg_16_0:canDrag(var_16_2, true) then
-		arg_16_0:_setHeroItemPos(var_16_1, var_16_0, true, var_16_3, arg_16_0)
+	if dragToIndex <= 0 or not self:canDrag(dragToIndex, true) then
+		self:_setHeroItemPos(heroItem, index, true, completeDragFunc, self)
 
 		return
 	end
 
-	local var_16_4 = HeroGroupModel.instance.battleId
-	local var_16_5 = var_16_4 and lua_battle.configDict[var_16_4]
-	local var_16_6 = HeroGroupModel.instance:getBattleRoleNum()
+	local battleId = HeroGroupModel.instance.battleId
+	local battleCO = battleId and lua_battle.configDict[battleId]
+	local roleNum = HeroGroupModel.instance:getBattleRoleNum()
 
-	if var_16_6 and var_16_6 < var_16_2 then
-		arg_16_0:_setHeroItemPos(var_16_1, var_16_0, true, var_16_3, arg_16_0)
+	if roleNum and roleNum < dragToIndex then
+		self:_setHeroItemPos(heroItem, index, true, completeDragFunc, self)
 		GameFacade.showToast(ToastEnum.HeroGroupRoleNum)
 
 		return
 	end
 
-	if var_16_5 and var_16_1.mo.aid and var_16_2 > var_16_5.playerMax then
-		arg_16_0:_setHeroItemPos(var_16_1, var_16_0, true, var_16_3, arg_16_0)
+	if battleCO and heroItem.mo.aid and dragToIndex > battleCO.playerMax then
+		self:_setHeroItemPos(heroItem, index, true, completeDragFunc, self)
 		GameFacade.showToast(ToastEnum.HeroGroupPlayerMax)
 
 		return
 	end
 
-	local var_16_7 = arg_16_0._heroItemList[var_16_2]
+	local otherHeroItem = self._heroItemList[dragToIndex]
 
-	if var_16_7.mo.aid and var_16_7.mo.aid ~= -1 and var_16_5 and var_16_0 > var_16_5.playerMax then
-		arg_16_0:_setHeroItemPos(var_16_1, var_16_0, true, var_16_3, arg_16_0)
+	if otherHeroItem.mo.aid and otherHeroItem.mo.aid ~= -1 and battleCO and index > battleCO.playerMax then
+		self:_setHeroItemPos(heroItem, index, true, completeDragFunc, self)
 		GameFacade.showToast(ToastEnum.HeroGroupPlayerMax)
 
 		return
 	end
 
-	if var_16_0 ~= var_16_2 then
+	if index ~= dragToIndex then
 		AudioMgr.instance:trigger(AudioEnum.UI.UI_Team_release)
 	end
 
-	gohelper.setAsLastSibling(var_16_7.go)
-	gohelper.setAsLastSibling(var_16_1.go)
-	var_16_7:flowOriginParent()
+	gohelper.setAsLastSibling(otherHeroItem.go)
+	gohelper.setAsLastSibling(heroItem.go)
+	otherHeroItem:flowOriginParent()
 
-	arg_16_0._tweenId = arg_16_0:_setHeroItemPos(var_16_7, var_16_0, true)
+	self._tweenId = self:_setHeroItemPos(otherHeroItem, index, true)
 
-	arg_16_0:_setHeroItemPos(var_16_1, var_16_2, true, function()
-		if arg_16_0._tweenId then
-			ZProj.TweenHelper.KillById(arg_16_0._tweenId)
+	self:_setHeroItemPos(heroItem, dragToIndex, true, function()
+		if self._tweenId then
+			ZProj.TweenHelper.KillById(self._tweenId)
 		end
 
-		for iter_18_0, iter_18_1 in ipairs(arg_16_0._heroItemList) do
-			arg_16_0:_setHeroItemPos(iter_18_1, iter_18_0)
+		for i, heroItem in ipairs(self._heroItemList) do
+			self:_setHeroItemPos(heroItem, i)
 		end
 
-		var_16_3(arg_16_0, true)
+		completeDragFunc(self, true)
 
-		local var_18_0 = HeroGroupModel.instance:getCurGroupMO()
-		local var_18_1 = var_16_1.mo.id - 1
-		local var_18_2 = var_16_7.mo.id - 1
-		local var_18_3 = var_18_0:getPosEquips(var_18_1).equipUid[1]
-		local var_18_4 = var_18_0:getPosEquips(var_18_2).equipUid[1]
+		local heroGroupMO = HeroGroupModel.instance:getCurGroupMO()
+		local srcPos = heroItem.mo.id - 1
+		local targetPos = otherHeroItem.mo.id - 1
+		local srcEquipId = heroGroupMO:getPosEquips(srcPos).equipUid[1]
+		local targetEquipId = heroGroupMO:getPosEquips(targetPos).equipUid[1]
 
-		var_18_0.equips[var_18_1].equipUid = {
-			var_18_4
+		heroGroupMO.equips[srcPos].equipUid = {
+			targetEquipId
 		}
-		var_18_0.equips[var_18_2].equipUid = {
-			var_18_3
+		heroGroupMO.equips[targetPos].equipUid = {
+			srcEquipId
 		}
 
-		local var_18_5 = var_18_0:getAct104PosEquips(var_18_1).equipUid
-		local var_18_6 = var_18_0:getAct104PosEquips(var_18_2).equipUid
+		local srcAct104Equips = heroGroupMO:getAct104PosEquips(srcPos).equipUid
+		local targetAct104Equips = heroGroupMO:getAct104PosEquips(targetPos).equipUid
 
-		var_18_0.activity104Equips[var_18_1].equipUid = var_18_6
-		var_18_0.activity104Equips[var_18_2].equipUid = var_18_5
+		heroGroupMO.activity104Equips[srcPos].equipUid = targetAct104Equips
+		heroGroupMO.activity104Equips[targetPos].equipUid = srcAct104Equips
 
-		var_18_0:swapOdysseyEquips(var_18_1, var_18_2)
-		HeroSingleGroupModel.instance:swap(var_16_0, var_16_2)
+		heroGroupMO:swapOdysseyEquips(srcPos, targetPos)
+		HeroSingleGroupModel.instance:swap(index, dragToIndex)
 
-		local var_18_7 = HeroSingleGroupModel.instance:getHeroUids()
+		local newHeroUids = HeroSingleGroupModel.instance:getHeroUids()
 
-		for iter_18_2, iter_18_3 in ipairs(var_18_0.heroList) do
-			if var_18_7[iter_18_2] ~= iter_18_3 then
+		for i, heroUid in ipairs(heroGroupMO.heroList) do
+			if newHeroUids[i] ~= heroUid then
 				HeroGroupModel.instance:replaceSingleGroup()
 				HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
 				HeroGroupModel.instance:saveCurGroupData()
-				arg_16_0:_updateHeroList()
+				self:_updateHeroList()
 
 				break
 			end
@@ -490,100 +496,100 @@ function var_0_0._onEndDrag(arg_16_0, arg_16_1, arg_16_2)
 	end)
 end
 
-function var_0_0._setHeroItemPos(arg_19_0, arg_19_1, arg_19_2, arg_19_3, arg_19_4, arg_19_5)
-	local var_19_0 = arg_19_0.heroPosTrList[arg_19_2]
-	local var_19_1 = recthelper.rectToRelativeAnchorPos(var_19_0.position, arg_19_0._goheroarea.transform)
+function OdysseyHeroListView:_setHeroItemPos(heroItem, index, tween, callback, callbackObj)
+	local posTr = self.heroPosTrList[index]
+	local anchorPos = recthelper.rectToRelativeAnchorPos(posTr.position, self._goheroarea.transform)
 
-	if arg_19_3 then
-		return ZProj.TweenHelper.DOAnchorPos(arg_19_1.go.transform, var_19_1.x, var_19_1.y, 0.2, arg_19_4, arg_19_5)
+	if tween then
+		return ZProj.TweenHelper.DOAnchorPos(heroItem.go.transform, anchorPos.x, anchorPos.y, 0.2, callback, callbackObj)
 	else
-		recthelper.setAnchor(arg_19_1.go.transform, var_19_1.x, var_19_1.y)
+		recthelper.setAnchor(heroItem.go.transform, anchorPos.x, anchorPos.y)
 
-		if arg_19_4 then
-			arg_19_4(arg_19_5)
+		if callback then
+			callback(callbackObj)
 		end
 	end
 end
 
-function var_0_0._tweenToPos(arg_20_0, arg_20_1, arg_20_2)
-	local var_20_0, var_20_1 = recthelper.getAnchor(arg_20_1.go.transform)
+function OdysseyHeroListView:_tweenToPos(heroItem, anchorPos)
+	local curAnchorX, curAnchorY = recthelper.getAnchor(heroItem.go.transform)
 
-	if math.abs(var_20_0 - arg_20_2.x) > 10 or math.abs(var_20_1 - arg_20_2.y) > 10 then
-		ZProj.TweenHelper.DOAnchorPos(arg_20_1.go.transform, arg_20_2.x, arg_20_2.y, 0.2)
+	if math.abs(curAnchorX - anchorPos.x) > 10 or math.abs(curAnchorY - anchorPos.y) > 10 then
+		ZProj.TweenHelper.DOAnchorPos(heroItem.go.transform, anchorPos.x, anchorPos.y, 0.2)
 	else
-		recthelper.setAnchor(arg_20_1.go.transform, arg_20_2.x, arg_20_2.y)
+		recthelper.setAnchor(heroItem.go.transform, anchorPos.x, anchorPos.y)
 	end
 end
 
-function var_0_0._setDragEnabled(arg_21_0, arg_21_1)
-	for iter_21_0, iter_21_1 in ipairs(arg_21_0._heroItemDrag) do
-		iter_21_1.enabled = arg_21_1
+function OdysseyHeroListView:_setDragEnabled(isEnabled)
+	for i, drag in ipairs(self._heroItemDrag) do
+		drag.enabled = isEnabled
 	end
 end
 
-function var_0_0._updateHeroList(arg_22_0)
-	arg_22_0:refreshHeroGroupWidth()
+function OdysseyHeroListView:_updateHeroList()
+	self:refreshHeroGroupWidth()
 
-	for iter_22_0, iter_22_1 in ipairs(arg_22_0._heroItemList) do
-		local var_22_0 = HeroSingleGroupModel.instance:getById(iter_22_0)
+	for i, heroItem in ipairs(self._heroItemList) do
+		local mo = HeroSingleGroupModel.instance:getById(i)
 
-		iter_22_1:onUpdateMO(var_22_0)
+		heroItem:onUpdateMO(mo)
 	end
 end
 
-function var_0_0._onSnapshotSaveSucc(arg_23_0)
-	arg_23_0:_updateHeroList()
-	gohelper.setActive(arg_23_0._goheroarea, false)
-	gohelper.setActive(arg_23_0._goheroarea, true)
-	gohelper.setActive(arg_23_0._gohero, false)
-	gohelper.setActive(arg_23_0._gohero, true)
+function OdysseyHeroListView:_onSnapshotSaveSucc()
+	self:_updateHeroList()
+	gohelper.setActive(self._goheroarea, false)
+	gohelper.setActive(self._goheroarea, true)
+	gohelper.setActive(self._gohero, false)
+	gohelper.setActive(self._gohero, true)
 end
 
-function var_0_0._calcIndex(arg_24_0, arg_24_1)
-	for iter_24_0 = 1, OdysseyEnum.MaxHeroGroupCount do
-		local var_24_0 = arg_24_0.heroPosTrList[iter_24_0].parent
-		local var_24_1 = recthelper.screenPosToAnchorPos(arg_24_1, var_24_0)
+function OdysseyHeroListView:_calcIndex(position)
+	for i = 1, OdysseyEnum.MaxHeroGroupCount do
+		local posTr = self.heroPosTrList[i].parent
+		local anchorPos = recthelper.screenPosToAnchorPos(position, posTr)
 
-		if math.abs(var_24_1.x) * 2 < recthelper.getWidth(var_24_0) and math.abs(var_24_1.y) * 2 < recthelper.getHeight(var_24_0) then
-			return iter_24_0
+		if math.abs(anchorPos.x) * 2 < recthelper.getWidth(posTr) and math.abs(anchorPos.y) * 2 < recthelper.getHeight(posTr) then
+			return i
 		end
 	end
 
 	return 0
 end
 
-function var_0_0.onDestroyView(arg_25_0)
-	TaskDispatcher.cancelTask(arg_25_0.closeThis, arg_25_0)
+function OdysseyHeroListView:onDestroyView()
+	TaskDispatcher.cancelTask(self.closeThis, self)
 
-	if arg_25_0._openTweenIdList then
-		for iter_25_0, iter_25_1 in ipairs(arg_25_0._openTweenIdList) do
-			ZProj.TweenHelper.KillById(iter_25_1)
+	if self._openTweenIdList then
+		for i, openTweenId in ipairs(self._openTweenIdList) do
+			ZProj.TweenHelper.KillById(openTweenId)
 		end
 	end
 
-	if arg_25_0._closeTweenIdList then
-		for iter_25_2, iter_25_3 in ipairs(arg_25_0._closeTweenIdList) do
-			ZProj.TweenHelper.KillById(iter_25_3)
+	if self._closeTweenIdList then
+		for i, closeTweenId in ipairs(self._closeTweenIdList) do
+			ZProj.TweenHelper.KillById(closeTweenId)
 		end
 	end
 
 	CommonDragHelper.instance:setGlobalEnabled(true)
 end
 
-function var_0_0._onScreenSizeChange(arg_26_0)
-	for iter_26_0 = 1, var_0_1 do
-		local var_26_0 = arg_26_0._heroItemList[iter_26_0]
+function OdysseyHeroListView:_onScreenSizeChange()
+	for i = 1, maxHeroCount do
+		local heroItem = self._heroItemList[i]
 
-		arg_26_0:_setHeroItemPos(var_26_0, iter_26_0)
+		self:_setHeroItemPos(heroItem, i)
 	end
 end
 
-function var_0_0.getHeroItemList(arg_27_0)
-	return arg_27_0._heroItemList
+function OdysseyHeroListView:getHeroItemList()
+	return self._heroItemList
 end
 
-function var_0_0.getEquipPrefab(arg_28_0, arg_28_1)
-	return arg_28_0:getResInst(arg_28_0.viewContainer:getSetting().otherRes[2], arg_28_1)
+function OdysseyHeroListView:getEquipPrefab(parent)
+	return self:getResInst(self.viewContainer:getSetting().otherRes[2], parent)
 end
 
-return var_0_0
+return OdysseyHeroListView

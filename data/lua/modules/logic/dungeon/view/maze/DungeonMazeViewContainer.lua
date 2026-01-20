@@ -1,8 +1,10 @@
-﻿module("modules.logic.dungeon.view.maze.DungeonMazeViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/maze/DungeonMazeViewContainer.lua
 
-local var_0_0 = class("DungeonMazeViewContainer", BaseViewContainer)
+module("modules.logic.dungeon.view.maze.DungeonMazeViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local DungeonMazeViewContainer = class("DungeonMazeViewContainer", BaseViewContainer)
+
+function DungeonMazeViewContainer:buildViews()
 	return {
 		TabViewGroup.New(1, "#go_topleft"),
 		DungeonMazeWordEffectView.New(),
@@ -10,42 +12,42 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._navigateButtonView = NavigateButtonsView.New({
+function DungeonMazeViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
-		arg_2_0._navigateButtonView:setOverrideClose(arg_2_0.overrideCloseFunc, arg_2_0)
-		arg_2_0._navigateButtonView:setOverrideHome(arg_2_0.onClickHome, arg_2_0)
+		self._navigateButtonView:setOverrideClose(self.overrideCloseFunc, self)
+		self._navigateButtonView:setOverrideHome(self.onClickHome, self)
 
 		return {
-			arg_2_0._navigateButtonView
+			self._navigateButtonView
 		}
 	end
 end
 
-function var_0_0.overrideCloseFunc(arg_3_0)
-	GameFacade.showMessageBox(MessageBoxIdDefine.Activity130PuzzleExit, MsgBoxEnum.BoxType.Yes_No, arg_3_0.closeFunc, nil, nil, arg_3_0)
+function DungeonMazeViewContainer:overrideCloseFunc()
+	GameFacade.showMessageBox(MessageBoxIdDefine.Activity130PuzzleExit, MsgBoxEnum.BoxType.Yes_No, self.closeFunc, nil, nil, self)
 end
 
-function var_0_0.closeFunc(arg_4_0)
-	local var_4_0 = DungeonMazeModel.instance:getCurCellData()
-	local var_4_1 = DungeonMazeModel.instance:getChaosValue()
+function DungeonMazeViewContainer:closeFunc()
+	local curCell = DungeonMazeModel.instance:getCurCellData()
+	local chaosValue = DungeonMazeModel.instance:getChaosValue()
 
-	DungeonMazeController.instance:sandStatData(DungeonMazeEnum.resultStat[3], var_4_0.cellId, var_4_1)
+	DungeonMazeController.instance:sandStatData(DungeonMazeEnum.resultStat[3], curCell.cellId, chaosValue)
 	DungeonMazeModel.instance:ClearProgress()
-	arg_4_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.onClickHome(arg_5_0)
-	local var_5_0 = DungeonMazeModel.instance:getCurCellData()
-	local var_5_1 = DungeonMazeModel.instance:getChaosValue()
+function DungeonMazeViewContainer:onClickHome()
+	local curCell = DungeonMazeModel.instance:getCurCellData()
+	local chaosValue = DungeonMazeModel.instance:getChaosValue()
 
-	DungeonMazeController.instance:sandStatData(DungeonMazeEnum.resultStat[3], var_5_0.cellId, var_5_1)
+	DungeonMazeController.instance:sandStatData(DungeonMazeEnum.resultStat[3], curCell.cellId, chaosValue)
 	NavigateButtonsView.homeClick()
 end
 
-return var_0_0
+return DungeonMazeViewContainer

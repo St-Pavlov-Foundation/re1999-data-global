@@ -1,17 +1,19 @@
-﻿module("modules.logic.guide.controller.action.impl.GuideActionExitEpisode", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/GuideActionExitEpisode.lua
 
-local var_0_0 = class("GuideActionExitEpisode", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.GuideActionExitEpisode", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+local GuideActionExitEpisode = class("GuideActionExitEpisode", BaseGuideAction)
+
+function GuideActionExitEpisode:onStart(context)
+	GuideActionExitEpisode.super.onStart(self, context)
 
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Fight then
 		FightSystem.instance:dispose()
 		FightController.instance:exitFightScene()
 	else
-		logError("not in episode, guide_" .. arg_1_0.guideId .. "_" .. arg_1_0.stepId)
-		arg_1_0:onDone(true)
+		logError("not in episode, guide_" .. self.guideId .. "_" .. self.stepId)
+		self:onDone(true)
 	end
 end
 
-return var_0_0
+return GuideActionExitEpisode

@@ -1,280 +1,287 @@
-﻿module("modules.logic.rouge.view.RougeResultView", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeResultView.lua
 
-local var_0_0 = class("RougeResultView", BaseView)
+module("modules.logic.rouge.view.RougeResultView", package.seeall)
 
-var_0_0.BeginType = 1
-var_0_0.MinMiddleType = 2
-var_0_0.MaxMiddleType = 5
-var_0_0.EndType = 6
-var_0_0.StartResultIndex = 1
-var_0_0.OnePageShowResultCount = 2
+local RougeResultView = class("RougeResultView", BaseView)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg")
-	arg_1_0._txtdec = gohelper.findChildText(arg_1_0.viewGO, "Content/#txt_dec")
-	arg_1_0._goevent = gohelper.findChild(arg_1_0.viewGO, "Content/#go_event")
-	arg_1_0._goitem1 = gohelper.findChild(arg_1_0.viewGO, "Content/#go_event/#go_item1")
-	arg_1_0._txtevent = gohelper.findChildText(arg_1_0.viewGO, "Content/#go_event/#go_item1/scroll_desc/viewport/#txt_event")
-	arg_1_0._goitem2 = gohelper.findChild(arg_1_0.viewGO, "Content/#go_event/#go_item2")
-	arg_1_0._goitem3 = gohelper.findChild(arg_1_0.viewGO, "Content/#go_event/#go_item3")
-	arg_1_0._goitem4 = gohelper.findChild(arg_1_0.viewGO, "Content/#go_event/#go_item4")
-	arg_1_0._gofail = gohelper.findChild(arg_1_0.viewGO, "Content/#go_fail")
-	arg_1_0._simagemask = gohelper.findChildSingleImage(arg_1_0.viewGO, "Content/#go_fail/#simage_mask")
-	arg_1_0._simagemask2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "Content/#go_fail/#simage_mask2")
-	arg_1_0._gosuccess = gohelper.findChild(arg_1_0.viewGO, "Content/#go_success")
-	arg_1_0._goarrow = gohelper.findChild(arg_1_0.viewGO, "Content/#go_arrow")
-	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "Content/Title/#txt_Title")
-	arg_1_0._simagerightmask = gohelper.findChildSingleImage(arg_1_0.viewGO, "Content/img_dec/#simage_rightmask")
-	arg_1_0._simageleftmask = gohelper.findChildSingleImage(arg_1_0.viewGO, "Content/img_dec/#simage_leftmask")
-	arg_1_0._simagerightmask2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "Content/img_dec/#simage_rightmask2")
-	arg_1_0._simageleftmask2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "Content/img_dec/#simage_leftmask2")
-	arg_1_0._simagepoint = gohelper.findChildSingleImage(arg_1_0.viewGO, "Content/img_dec/#simage_point")
-	arg_1_0._simagepoint2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "Content/img_dec/#simage_point2")
-	arg_1_0._btnskip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Content/#btn_skip")
-	arg_1_0._imageskip = gohelper.findChildImage(arg_1_0.viewGO, "Content/#btn_skip/#image_skip")
-	arg_1_0._btnnext = gohelper.findChildButton(arg_1_0.viewGO, "Content/#btn_next")
+RougeResultView.BeginType = 1
+RougeResultView.MinMiddleType = 2
+RougeResultView.MaxMiddleType = 5
+RougeResultView.EndType = 6
+RougeResultView.StartResultIndex = 1
+RougeResultView.OnePageShowResultCount = 2
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeResultView:onInitView()
+	self._simagefullbg = gohelper.findChildSingleImage(self.viewGO, "#simage_fullbg")
+	self._txtdec = gohelper.findChildText(self.viewGO, "Content/#txt_dec")
+	self._goevent = gohelper.findChild(self.viewGO, "Content/#go_event")
+	self._goitem1 = gohelper.findChild(self.viewGO, "Content/#go_event/#go_item1")
+	self._txtevent = gohelper.findChildText(self.viewGO, "Content/#go_event/#go_item1/scroll_desc/viewport/#txt_event")
+	self._goitem2 = gohelper.findChild(self.viewGO, "Content/#go_event/#go_item2")
+	self._goitem3 = gohelper.findChild(self.viewGO, "Content/#go_event/#go_item3")
+	self._goitem4 = gohelper.findChild(self.viewGO, "Content/#go_event/#go_item4")
+	self._gofail = gohelper.findChild(self.viewGO, "Content/#go_fail")
+	self._simagemask = gohelper.findChildSingleImage(self.viewGO, "Content/#go_fail/#simage_mask")
+	self._simagemask2 = gohelper.findChildSingleImage(self.viewGO, "Content/#go_fail/#simage_mask2")
+	self._gosuccess = gohelper.findChild(self.viewGO, "Content/#go_success")
+	self._goarrow = gohelper.findChild(self.viewGO, "Content/#go_arrow")
+	self._txtTitle = gohelper.findChildText(self.viewGO, "Content/Title/#txt_Title")
+	self._simagerightmask = gohelper.findChildSingleImage(self.viewGO, "Content/img_dec/#simage_rightmask")
+	self._simageleftmask = gohelper.findChildSingleImage(self.viewGO, "Content/img_dec/#simage_leftmask")
+	self._simagerightmask2 = gohelper.findChildSingleImage(self.viewGO, "Content/img_dec/#simage_rightmask2")
+	self._simageleftmask2 = gohelper.findChildSingleImage(self.viewGO, "Content/img_dec/#simage_leftmask2")
+	self._simagepoint = gohelper.findChildSingleImage(self.viewGO, "Content/img_dec/#simage_point")
+	self._simagepoint2 = gohelper.findChildSingleImage(self.viewGO, "Content/img_dec/#simage_point2")
+	self._btnskip = gohelper.findChildButtonWithAudio(self.viewGO, "Content/#btn_skip")
+	self._imageskip = gohelper.findChildImage(self.viewGO, "Content/#btn_skip/#image_skip")
+	self._btnnext = gohelper.findChildButton(self.viewGO, "Content/#btn_next")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnskip:AddClickListener(arg_2_0._btnskipOnClick, arg_2_0)
-	arg_2_0._btnnext:AddClickListener(arg_2_0._btnnextOnClick, arg_2_0)
+function RougeResultView:addEvents()
+	self._btnskip:AddClickListener(self._btnskipOnClick, self)
+	self._btnnext:AddClickListener(self._btnnextOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnskip:RemoveClickListener()
-	arg_3_0._btnnext:RemoveClickListener()
+function RougeResultView:removeEvents()
+	self._btnskip:RemoveClickListener()
+	self._btnnext:RemoveClickListener()
 end
 
-function var_0_0._btnskipOnClick(arg_4_0)
+function RougeResultView:_btnskipOnClick()
 	RougeController.instance:openRougeSettlementView()
 end
 
-function var_0_0._btnnextOnClick(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0.playStartSettlementTxtAudio, arg_5_0)
+function RougeResultView:_btnnextOnClick()
+	TaskDispatcher.cancelTask(self.playStartSettlementTxtAudio, self)
 
-	if arg_5_0._isSwitch2EndingView then
+	if self._isSwitch2EndingView then
 		RougeController.instance:openRougeSettlementView()
 	else
-		local var_5_0 = arg_5_0._curEventEndIndex + 1
+		local startIndex = self._curEventEndIndex + 1
+		local hasNeedShowResult = self:isHasNeedShowResultItem(startIndex)
 
-		if arg_5_0:isHasNeedShowResultItem(var_5_0) then
-			arg_5_0:try2ShowResult(var_5_0)
+		if hasNeedShowResult then
+			self:try2ShowResult(startIndex)
 			AudioMgr.instance:trigger(AudioEnum.UI.NextShowSettlementTxt)
 		else
-			arg_5_0:switch2Ending()
+			self:switch2Ending()
 			AudioMgr.instance:trigger(AudioEnum.UI.ShowEndingTxt)
 		end
 	end
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._isSwitch2EndingView = false
-	arg_6_0._curEventEndIndex = 0
-	arg_6_0._configMap = arg_6_0:buildConfigMap()
-	arg_6_0._descList = arg_6_0:getTriggerConfigs()
+function RougeResultView:_editableInitView()
+	self._isSwitch2EndingView = false
+	self._curEventEndIndex = 0
+	self._configMap = self:buildConfigMap()
+	self._descList = self:getTriggerConfigs()
 end
 
-function var_0_0.onOpen(arg_7_0)
+function RougeResultView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.SettlementCloseWindow)
 end
 
-local var_0_1 = 2
+local delayTime2PlayStartAudio = 2
 
-function var_0_0.onOpenFinish(arg_8_0)
-	arg_8_0:onBeforeShowResultContent()
-	TaskDispatcher.cancelTask(arg_8_0.playStartSettlementTxtAudio, arg_8_0)
-	TaskDispatcher.runDelay(arg_8_0.playStartSettlementTxtAudio, arg_8_0, var_0_1)
+function RougeResultView:onOpenFinish()
+	self:onBeforeShowResultContent()
+	TaskDispatcher.cancelTask(self.playStartSettlementTxtAudio, self)
+	TaskDispatcher.runDelay(self.playStartSettlementTxtAudio, self, delayTime2PlayStartAudio)
 end
 
-function var_0_0.playStartSettlementTxtAudio(arg_9_0)
+function RougeResultView:playStartSettlementTxtAudio()
 	AudioMgr.instance:trigger(AudioEnum.UI.StartShowSettlementTxt)
 end
 
-function var_0_0.onUpdateParam(arg_10_0)
-	arg_10_0:onBeforeShowResultContent()
+function RougeResultView:onUpdateParam()
+	self:onBeforeShowResultContent()
 
-	arg_10_0._isSwitch2EndingView = false
-	arg_10_0._curEventEndIndex = 0
+	self._isSwitch2EndingView = false
+	self._curEventEndIndex = 0
 end
 
-function var_0_0.onBeforeShowResultContent(arg_11_0)
-	local var_11_0 = arg_11_0:filterTypeGroupCfgs(var_0_0.BeginType)
+function RougeResultView:onBeforeShowResultContent()
+	local descs = self:filterTypeGroupCfgs(RougeResultView.BeginType)
 
-	if var_11_0 then
-		arg_11_0._txtdec.text = var_11_0 and var_11_0[1]
+	if descs then
+		self._txtdec.text = descs and descs[1]
 
-		gohelper.setActive(arg_11_0._txtdec.gameObject, true)
+		gohelper.setActive(self._txtdec.gameObject, true)
 	end
 
-	gohelper.setActive(arg_11_0._gofail, false)
-	gohelper.setActive(arg_11_0._gosuccess, false)
-	gohelper.setActive(arg_11_0._goarrow, false)
-	gohelper.setActive(arg_11_0._goevent, false)
+	gohelper.setActive(self._gofail, false)
+	gohelper.setActive(self._gosuccess, false)
+	gohelper.setActive(self._goarrow, false)
+	gohelper.setActive(self._goevent, false)
 end
 
-function var_0_0.showRougeResultList(arg_12_0)
-	arg_12_0:try2ShowResult(var_0_0.StartResultIndex)
-	gohelper.setActive(arg_12_0._goarrow, true)
-	gohelper.setActive(arg_12_0._txtdec.gameObject, false)
+function RougeResultView:showRougeResultList()
+	self:try2ShowResult(RougeResultView.StartResultIndex)
+	gohelper.setActive(self._goarrow, true)
+	gohelper.setActive(self._txtdec.gameObject, false)
 end
 
-function var_0_0.buildConfigMap(arg_13_0)
-	local var_13_0 = RougeModel.instance:getRougeResult()
-	local var_13_1 = var_13_0 and var_13_0.season
-	local var_13_2 = lua_rouge_result.configDict[var_13_1]
-	local var_13_3 = {}
+function RougeResultView:buildConfigMap()
+	local resultInfo = RougeModel.instance:getRougeResult()
+	local season = resultInfo and resultInfo.season
+	local resultCfgs = lua_rouge_result.configDict[season]
+	local configMap = {}
 
-	if var_13_2 then
-		for iter_13_0, iter_13_1 in pairs(var_13_2) do
-			local var_13_4 = iter_13_1.type
+	if resultCfgs then
+		for _, resultCfg in pairs(resultCfgs) do
+			local cfgType = resultCfg.type
 
-			var_13_3[var_13_4] = var_13_3[var_13_4] or {}
+			configMap[cfgType] = configMap[cfgType] or {}
 
-			table.insert(var_13_3[var_13_4], iter_13_1)
+			table.insert(configMap[cfgType], resultCfg)
 		end
 	end
 
-	for iter_13_2, iter_13_3 in pairs(var_13_3) do
-		table.sort(iter_13_3, arg_13_0.configSortFunction)
+	for _, cfgs in pairs(configMap) do
+		table.sort(cfgs, self.configSortFunction)
 	end
 
-	return var_13_3
+	return configMap
 end
 
-function var_0_0.configSortFunction(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_0.priority
-	local var_14_1 = arg_14_1.priority
+function RougeResultView.configSortFunction(a, b)
+	local aPriority = a.priority
+	local bPriority = b.priority
 
-	if var_14_0 ~= var_14_1 then
-		return var_14_0 < var_14_1
+	if aPriority ~= bPriority then
+		return aPriority < bPriority
 	end
 
-	return arg_14_0.id < arg_14_1.id
+	return a.id < b.id
 end
 
-local var_0_2 = 3
+local TypeShowTriggerMaxNum = 3
 
-function var_0_0.getTriggerConfigs(arg_15_0)
-	local var_15_0 = {}
+function RougeResultView:getTriggerConfigs()
+	local descList = {}
 
-	for iter_15_0 = var_0_0.MinMiddleType, var_0_0.MaxMiddleType do
-		local var_15_1 = arg_15_0:filterTypeGroupCfgs(iter_15_0)
+	for i = RougeResultView.MinMiddleType, RougeResultView.MaxMiddleType do
+		local descs = self:filterTypeGroupCfgs(i)
 
-		if var_15_1 and #var_15_1 > 0 then
-			local var_15_2 = {
-				eventType = iter_15_0,
-				contents = var_15_1
+		if descs and #descs > 0 then
+			local result = {
+				eventType = i,
+				contents = descs
 			}
 
-			table.insert(var_15_0, var_15_2)
+			table.insert(descList, result)
 		end
 	end
 
-	return var_15_0
+	return descList
 end
 
-function var_0_0.filterTypeGroupCfgs(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_0._configMap and arg_16_0._configMap[arg_16_1]
+function RougeResultView:filterTypeGroupCfgs(resultType)
+	local cfgs = self._configMap and self._configMap[resultType]
 
-	if not var_16_0 then
+	if not cfgs then
 		return
 	end
 
-	local var_16_1 = {}
-	local var_16_2 = 0
+	local descList = {}
+	local count = 0
 
-	for iter_16_0, iter_16_1 in ipairs(var_16_0) do
-		local var_16_3 = arg_16_0:tryFilterTrigger(iter_16_1)
+	for _, cfg in ipairs(cfgs) do
+		local desc = self:tryFilterTrigger(cfg)
 
-		if not string.nilorempty(var_16_3) then
-			table.insert(var_16_1, var_16_3)
+		if not string.nilorempty(desc) then
+			table.insert(descList, desc)
 
-			var_16_2 = var_16_2 + 1
+			count = count + 1
 
-			if var_16_2 >= var_0_2 then
+			if count >= TypeShowTriggerMaxNum then
 				break
 			end
 		end
 	end
 
-	return var_16_1
+	return descList
 end
 
-function var_0_0.tryFilterTrigger(arg_17_0, arg_17_1)
-	if not arg_17_1 then
+function RougeResultView:tryFilterTrigger(resultCfg)
+	if not resultCfg then
 		return
 	end
 
-	local var_17_0 = {
+	local triggerParam = {
 		0
 	}
 
-	if not string.nilorempty(arg_17_1.triggerParam) then
-		var_17_0 = string.splitToNumber(arg_17_1.triggerParam, "#")
+	if not string.nilorempty(resultCfg.triggerParam) then
+		triggerParam = string.splitToNumber(resultCfg.triggerParam, "#")
 	end
 
-	local var_17_1 = {
-		RougeSettlementTriggerHelper.isResultTrigger(arg_17_1.trigger, unpack(var_17_0))
+	local values = {
+		RougeSettlementTriggerHelper.isResultTrigger(resultCfg.trigger, unpack(triggerParam))
 	}
-	local var_17_2 = var_17_1 and var_17_1[1] ~= nil
-	local var_17_3 = arg_17_0:checkIsTriggerDefaultVisible(arg_17_1)
+	local isTrigger = values and values[1] ~= nil
+	local isDefaultVisible = self:checkIsTriggerDefaultVisible(resultCfg)
 
-	if var_17_2 or var_17_3 then
-		return (GameUtil.getSubPlaceholderLuaLang(arg_17_1.desc, var_17_1))
+	if isTrigger or isDefaultVisible then
+		local desc = GameUtil.getSubPlaceholderLuaLang(resultCfg.desc, values)
+
+		return desc
 	end
 end
 
-function var_0_0.checkIsTriggerDefaultVisible(arg_18_0, arg_18_1)
-	return arg_18_1 and arg_18_1.priority == 0
+function RougeResultView:checkIsTriggerDefaultVisible(triggerCfg)
+	return triggerCfg and triggerCfg.priority == 0
 end
 
-function var_0_0.try2ShowResult(arg_19_0, arg_19_1)
-	if not arg_19_0._descList then
+function RougeResultView:try2ShowResult(startIndex)
+	if not self._descList then
 		return
 	end
 
-	local var_19_0 = #arg_19_0._descList
+	local descCount = #self._descList
 
-	if var_19_0 < arg_19_1 then
+	if descCount < startIndex then
 		return
 	end
 
-	local var_19_1 = arg_19_1 + var_0_0.OnePageShowResultCount - 1
+	local endIndex = startIndex + RougeResultView.OnePageShowResultCount - 1
 
-	var_19_1 = var_19_0 < var_19_1 and var_19_0 or var_19_1
+	endIndex = descCount < endIndex and descCount or endIndex
 
-	arg_19_0:setAllResultItemVisible(false)
+	self:setAllResultItemVisible(false)
 
-	for iter_19_0 = arg_19_1, var_19_1 do
-		local var_19_2 = arg_19_0._descList[iter_19_0]
-		local var_19_3 = arg_19_0:getOrCreateResultItem(iter_19_0)
+	for i = startIndex, endIndex do
+		local descs = self._descList[i]
+		local resultItem = self:getOrCreateResultItem(i)
 
-		arg_19_0:refreshResultContent(var_19_3, var_19_2)
+		self:refreshResultContent(resultItem, descs)
 	end
 
-	arg_19_0._curEventEndIndex = var_19_1
+	self._curEventEndIndex = endIndex
 
-	gohelper.setActive(arg_19_0._goevent, true)
-	gohelper.setActive(arg_19_0._txtdec.gameObject, false)
+	gohelper.setActive(self._goevent, true)
+	gohelper.setActive(self._txtdec.gameObject, false)
 end
 
-function var_0_0.getOrCreateResultItem(arg_20_0, arg_20_1)
-	return arg_20_0["_goitem" .. arg_20_1]
+function RougeResultView:getOrCreateResultItem(index)
+	local resultItem = self["_goitem" .. index]
+
+	return resultItem
 end
 
-function var_0_0.setAllResultItemVisible(arg_21_0, arg_21_1)
-	local var_21_0 = arg_21_0._goevent.transform.childCount
+function RougeResultView:setAllResultItemVisible(isVisible)
+	local eventCount = self._goevent.transform.childCount
 
-	for iter_21_0 = 1, var_21_0 do
-		gohelper.setActive(arg_21_0._goevent.transform:GetChild(iter_21_0 - 1), arg_21_1)
+	for i = 1, eventCount do
+		gohelper.setActive(self._goevent.transform:GetChild(i - 1), isVisible)
 	end
 end
 
-local var_0_3 = {
+local eventIconNameMap = {
 	nil,
 	"rouge_result_icon_box",
 	"rouge_result_icon_beasts",
@@ -282,70 +289,77 @@ local var_0_3 = {
 	"rouge_result_icon_location"
 }
 
-function var_0_0.refreshResultContent(arg_22_0, arg_22_1, arg_22_2)
-	if not arg_22_1 or not arg_22_2 then
+function RougeResultView:refreshResultContent(resultItem, descs)
+	if not resultItem or not descs then
 		return
 	end
 
-	local var_22_0 = arg_22_2.contents
-	local var_22_1 = table.concat(var_22_0, "\n")
+	local contents = descs.contents
+	local descStr = table.concat(contents, "\n")
+	local txtEvent = gohelper.findChildText(resultItem, "scroll_desc/viewport/#txt_event")
 
-	gohelper.findChildText(arg_22_1, "scroll_desc/viewport/#txt_event").text = var_22_1
+	txtEvent.text = descStr
 
-	local var_22_2 = var_0_3[arg_22_2.eventType]
+	local iconName = eventIconNameMap[descs.eventType]
 
-	if var_22_2 then
-		local var_22_3 = gohelper.findChildImage(arg_22_1, "#imgae_icon")
+	if iconName then
+		local imageicon = gohelper.findChildImage(resultItem, "#imgae_icon")
 
-		UISpriteSetMgr.instance:setRouge2Sprite(var_22_3, var_22_2)
+		UISpriteSetMgr.instance:setRouge2Sprite(imageicon, iconName)
 	end
 
-	gohelper.setActive(arg_22_1, true)
+	gohelper.setActive(resultItem, true)
 end
 
-function var_0_0.isHasNeedShowResultItem(arg_23_0, arg_23_1)
-	return arg_23_1 <= (arg_23_0._descList and #arg_23_0._descList or 0)
+function RougeResultView:isHasNeedShowResultItem(resultIndex)
+	local resultCount = self._descList and #self._descList or 0
+
+	return resultIndex <= resultCount
 end
 
-function var_0_0.switch2Ending(arg_24_0)
-	local var_24_0 = RougeModel.instance:getRougeResult()
-	local var_24_1 = var_24_0 and var_24_0:isSucceed()
+function RougeResultView:switch2Ending()
+	local resultInfo = RougeModel.instance:getRougeResult()
+	local isSucc = resultInfo and resultInfo:isSucceed()
 
-	gohelper.setActive(arg_24_0._gofail, not var_24_1)
-	gohelper.setActive(arg_24_0._gosuccess, var_24_1)
-	gohelper.setActive(arg_24_0._goarrow, false)
-	arg_24_0:setAllResultItemVisible(false)
+	gohelper.setActive(self._gofail, not isSucc)
+	gohelper.setActive(self._gosuccess, isSucc)
+	gohelper.setActive(self._goarrow, false)
+	self:setAllResultItemVisible(false)
 
-	arg_24_0._isSwitch2EndingView = true
+	self._isSwitch2EndingView = true
 
-	local var_24_2 = arg_24_0:filterTypeGroupCfgs(var_0_0.EndType)
-	local var_24_3 = var_24_2 and var_24_2[1] or ""
+	local descList = self:filterTypeGroupCfgs(RougeResultView.EndType)
+	local desc = descList and descList[1] or ""
 
-	if var_24_1 then
-		gohelper.findChildText(arg_24_0._gosuccess, "txt_success").text = var_24_3
+	if isSucc then
+		local txtsuccess = gohelper.findChildText(self._gosuccess, "txt_success")
+
+		txtsuccess.text = desc
 	else
-		gohelper.findChildText(arg_24_0._gofail, "txt_fail").text = var_24_3
+		local txtfail = gohelper.findChildText(self._gofail, "txt_fail")
+
+		txtfail.text = desc
 	end
 end
 
-function var_0_0.getRougeResultCfg(arg_25_0, arg_25_1, arg_25_2)
-	local var_25_0 = arg_25_0._configMap[arg_25_1]
+function RougeResultView:getRougeResultCfg(cfgType, season)
+	local cfgs = self._configMap[cfgType]
 
-	if var_25_0 then
-		for iter_25_0, iter_25_1 in ipairs(var_25_0) do
-			if iter_25_1.season == arg_25_2 then
-				return iter_25_1
+	if cfgs then
+		for _, cfg in ipairs(cfgs) do
+			if cfg.season == season then
+				return cfg
 			end
 		end
 	end
 end
 
-function var_0_0.onClose(arg_26_0)
-	TaskDispatcher.cancelTask(arg_26_0.playStartSettlementTxtAudio, arg_26_0)
+function RougeResultView:onClose()
+	TaskDispatcher.cancelTask(self.playStartSettlementTxtAudio, self)
 end
 
-function var_0_0.onDestroyView(arg_27_0)
+function RougeResultView:onDestroyView()
 	return
 end
 
-return var_0_0
+return RougeResultView

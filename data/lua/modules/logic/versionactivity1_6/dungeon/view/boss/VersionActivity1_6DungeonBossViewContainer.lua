@@ -1,35 +1,37 @@
-﻿module("modules.logic.versionactivity1_6.dungeon.view.boss.VersionActivity1_6DungeonBossViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/dungeon/view/boss/VersionActivity1_6DungeonBossViewContainer.lua
 
-local var_0_0 = class("VersionActivity1_6DungeonBossViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_6.dungeon.view.boss.VersionActivity1_6DungeonBossViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	arg_1_0._bossRuleView = VersionActivity1_6_BossRuleView.New()
+local VersionActivity1_6DungeonBossViewContainer = class("VersionActivity1_6DungeonBossViewContainer", BaseViewContainer)
+
+function VersionActivity1_6DungeonBossViewContainer:buildViews()
+	self._bossRuleView = VersionActivity1_6_BossRuleView.New()
 
 	return {
 		VersionActivity1_6DungeonBossView.New(),
 		TabViewGroup.New(1, "#go_BackBtns"),
-		arg_1_0._bossRuleView
+		self._bossRuleView
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	arg_2_0.navigateView = NavigateButtonsView.New({
+function VersionActivity1_6DungeonBossViewContainer:buildTabViews(tabContainerId)
+	self.navigateView = NavigateButtonsView.New({
 		true,
 		true,
 		false
 	})
 
 	return {
-		arg_2_0.navigateView
+		self.navigateView
 	}
 end
 
-function var_0_0.onContainerInit(arg_3_0)
+function VersionActivity1_6DungeonBossViewContainer:onContainerInit()
 	return
 end
 
-function var_0_0.getBossRuleView(arg_4_0)
-	return arg_4_0._bossRuleView
+function VersionActivity1_6DungeonBossViewContainer:getBossRuleView()
+	return self._bossRuleView
 end
 
-return var_0_0
+return VersionActivity1_6DungeonBossViewContainer

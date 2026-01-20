@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_rouge_risk", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_rouge_risk.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_rouge_risk", package.seeall)
+
+local lua_rouge_risk = {}
+local fields = {
 	buffNum = 7,
 	range = 4,
 	scoreReward = 8,
@@ -13,18 +15,18 @@ local var_0_1 = {
 	viewDown = 10,
 	attr = 9
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	title_en = 2,
 	title = 1,
 	content = 4,
 	desc = 3
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_rouge_risk.onLoad(json)
+	lua_rouge_risk.configList, lua_rouge_risk.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_rouge_risk

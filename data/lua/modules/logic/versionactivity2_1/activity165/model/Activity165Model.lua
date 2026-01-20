@@ -1,175 +1,184 @@
-﻿module("modules.logic.versionactivity2_1.activity165.model.Activity165Model", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_1/activity165/model/Activity165Model.lua
 
-local var_0_0 = class("Activity165Model", BaseModel)
+module("modules.logic.versionactivity2_1.activity165.model.Activity165Model", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local Activity165Model = class("Activity165Model", BaseModel)
+
+function Activity165Model:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._storyMoDict = nil
+function Activity165Model:reInit()
+	self._storyMoDict = nil
 end
 
-function var_0_0.onInitInfo(arg_3_0)
-	arg_3_0._actId = VersionActivity2_1Enum.ActivityId.StoryDeduction
+function Activity165Model:onInitInfo()
+	self._actId = VersionActivity2_1Enum.ActivityId.StoryDeduction
 
-	if ActivityModel.instance:isActOnLine(arg_3_0._actId) then
-		Activity165Rpc.instance:sendAct165GetInfoRequest(arg_3_0._actId)
+	if ActivityModel.instance:isActOnLine(self._actId) then
+		Activity165Rpc.instance:sendAct165GetInfoRequest(self._actId)
 	end
 end
 
-function var_0_0.onGetInfo(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0._actId = arg_4_1
+function Activity165Model:onGetInfo(actId, storyInfos)
+	self._actId = actId
 
-	for iter_4_0, iter_4_1 in pairs(arg_4_2) do
-		if iter_4_1.storyId then
-			arg_4_0:onGetStoryInfo(iter_4_1)
+	for _, info in pairs(storyInfos) do
+		if info.storyId then
+			self:onGetStoryInfo(info)
 		end
 	end
 
-	arg_4_0:_initAllElements()
+	self:_initAllElements()
 end
 
-function var_0_0.getStoryCount(arg_5_0)
+function Activity165Model:getStoryCount()
 	return 3
 end
 
-function var_0_0.onGetStoryInfo(arg_6_0, arg_6_1)
-	arg_6_0:setStoryMo(arg_6_0._actId, arg_6_1)
+function Activity165Model:onGetStoryInfo(storyInfo)
+	self:setStoryMo(self._actId, storyInfo)
 end
 
-function var_0_0.onModifyKeywordCallback(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = arg_7_2.storyId
+function Activity165Model:onModifyKeywordCallback(activityId, storyInfo)
+	local storyId = storyInfo.storyId
+	local mo = self:getStoryMo(activityId, storyId)
 
-	arg_7_0:getStoryMo(arg_7_1, var_7_0):onModifyKeywordCallback(arg_7_2)
+	mo:onModifyKeywordCallback(storyInfo)
 end
 
-function var_0_0.onGenerateEnding(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+function Activity165Model:onGenerateEnding(activityId, storyId, endingInfo)
 	return
 end
 
-function var_0_0.setEndingRedDot(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0:getStoryMo(arg_9_0._actId, arg_9_1)
+function Activity165Model:setEndingRedDot(storyId)
+	local storyMo = self:getStoryMo(self._actId, storyId)
 
-	for iter_9_0, iter_9_1 in pairs(var_9_0.unlockEndings) do
-		GameUtil.playerPrefsSetNumberByUserId(arg_9_0:getEndingRedDotKey(iter_9_0), 1)
+	for endingId, _ in pairs(storyMo.unlockEndings) do
+		GameUtil.playerPrefsSetNumberByUserId(self:getEndingRedDotKey(endingId), 1)
 	end
 end
 
-function var_0_0.isShowEndingRedDot(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0:getStoryMo(arg_10_0._actId, arg_10_1)
+function Activity165Model:isShowEndingRedDot(storyId)
+	local storyMo = self:getStoryMo(self._actId, storyId)
 
-	for iter_10_0, iter_10_1 in pairs(var_10_0.unlockEndings) do
-		if GameUtil.playerPrefsGetNumberByUserId(arg_10_0:getEndingRedDotKey(iter_10_0), 0) == 0 then
+	for endingId, _ in pairs(storyMo.unlockEndings) do
+		if GameUtil.playerPrefsGetNumberByUserId(self:getEndingRedDotKey(endingId), 0) == 0 then
 			return true
 		end
 	end
 end
 
-function var_0_0.getEndingRedDotIndex(arg_11_0)
-	for iter_11_0 = 1, arg_11_0:getStoryCount() do
-		if arg_11_0:isShowEndingRedDot(iter_11_0) then
-			return iter_11_0
+function Activity165Model:getEndingRedDotIndex()
+	for i = 1, self:getStoryCount() do
+		if self:isShowEndingRedDot(i) then
+			return i
 		end
 	end
 end
 
-function var_0_0.getEndingRedDotKey(arg_12_0, arg_12_1)
-	return arg_12_0:_getStoryPrefsKey("Ending", arg_12_1)
+function Activity165Model:getEndingRedDotKey(endingId)
+	return self:_getStoryPrefsKey("Ending", endingId)
 end
 
-function var_0_0._getStoryPrefsKey(arg_13_0, arg_13_1, arg_13_2)
-	return (PlayerModel.instance:getPlayerPrefsKey(string.format("Activity165_%s_%s_%s", arg_13_1, arg_13_0._actId, arg_13_2)))
+function Activity165Model:_getStoryPrefsKey(key, storyId)
+	local prefsKey = PlayerModel.instance:getPlayerPrefsKey(string.format("Activity165_%s_%s_%s", key, self._actId, storyId))
+
+	return prefsKey
 end
 
-function var_0_0.onRestart(arg_14_0, arg_14_1, arg_14_2)
-	arg_14_0:setStoryMo(arg_14_1, arg_14_2)
+function Activity165Model:onRestart(actId, storyInfo)
+	self:setStoryMo(actId, storyInfo)
 end
 
-function var_0_0.onGetReward(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	arg_15_0:getStoryMo(arg_15_1, arg_15_2):setclaimRewardCount(arg_15_3)
+function Activity165Model:onGetReward(activityId, storyId, rewardIds)
+	local mo = self:getStoryMo(activityId, storyId)
+
+	mo:setclaimRewardCount(rewardIds)
 end
 
-function var_0_0.getActivityId(arg_16_0)
-	return arg_16_0._actId or VersionActivity2_1Enum.ActivityId.StoryDeduction
+function Activity165Model:getActivityId()
+	return self._actId or VersionActivity2_1Enum.ActivityId.StoryDeduction
 end
 
-function var_0_0.setStoryMo(arg_17_0, arg_17_1, arg_17_2)
-	arg_17_0:getStoryMo(arg_17_1, arg_17_2.storyId):setMo(arg_17_2)
+function Activity165Model:setStoryMo(actId, storyInfo)
+	local mo = self:getStoryMo(actId, storyInfo.storyId)
+
+	mo:setMo(storyInfo)
 end
 
-function var_0_0.getStoryMo(arg_18_0, arg_18_1, arg_18_2)
-	if not arg_18_0._storyMoDict then
-		arg_18_0._storyMoDict = {}
+function Activity165Model:getStoryMo(actId, storyId)
+	if not self._storyMoDict then
+		self._storyMoDict = {}
 	end
 
-	if not arg_18_0._storyMoDict[arg_18_1] then
-		arg_18_0._storyMoDict[arg_18_1] = {}
+	if not self._storyMoDict[actId] then
+		self._storyMoDict[actId] = {}
 	end
 
-	local var_18_0 = arg_18_0._storyMoDict[arg_18_1][arg_18_2]
+	local storyMo = self._storyMoDict[actId][storyId]
 
-	if not var_18_0 then
-		var_18_0 = Activity165StoryMo.New()
+	if not storyMo then
+		storyMo = Activity165StoryMo.New()
 
-		var_18_0:onInit(arg_18_1, arg_18_2)
+		storyMo:onInit(actId, storyId)
 
-		arg_18_0._storyMoDict[arg_18_1][arg_18_2] = var_18_0
+		self._storyMoDict[actId][storyId] = storyMo
 	end
 
-	return var_18_0
+	return storyMo
 end
 
-function var_0_0.getAllActStory(arg_19_0)
-	return arg_19_0._storyMoDict and arg_19_0._storyMoDict[arg_19_0._actId] or {}
+function Activity165Model:getAllActStory()
+	return self._storyMoDict and self._storyMoDict[self._actId] or {}
 end
 
-function var_0_0.hasUnlockStory(arg_20_0)
-	local var_20_0 = arg_20_0:getAllActStory()
+function Activity165Model:hasUnlockStory()
+	local storys = self:getAllActStory()
 
-	if LuaUtil.tableNotEmpty(var_20_0) then
-		for iter_20_0, iter_20_1 in pairs(var_20_0) do
-			if iter_20_1.isUnlock then
+	if LuaUtil.tableNotEmpty(storys) then
+		for _, story in pairs(storys) do
+			if story.isUnlock then
 				return true
 			end
 		end
 	end
 end
 
-function var_0_0.isHasUnlockEnding(arg_21_0)
-	local var_21_0 = arg_21_0:getAllActStory()
+function Activity165Model:isHasUnlockEnding()
+	local storys = self:getAllActStory()
 
-	if LuaUtil.tableNotEmpty(var_21_0) then
-		for iter_21_0, iter_21_1 in pairs(var_21_0) do
-			if iter_21_1:getUnlockEndingCount() > 0 then
+	if LuaUtil.tableNotEmpty(storys) then
+		for _, story in pairs(storys) do
+			if story:getUnlockEndingCount() > 0 then
 				return true
 			end
 		end
 	end
 end
 
-function var_0_0._initAllElements(arg_22_0)
-	local var_22_0 = arg_22_0:getAllActStory()
+function Activity165Model:_initAllElements()
+	local storys = self:getAllActStory()
 
-	arg_22_0._elements = {}
+	self._elements = {}
 
-	if LuaUtil.tableNotEmpty(var_22_0) then
-		for iter_22_0, iter_22_1 in pairs(var_22_0) do
-			tabletool.addValues(arg_22_0._elements, iter_22_1:getElements())
+	if LuaUtil.tableNotEmpty(storys) then
+		for _, story in pairs(storys) do
+			tabletool.addValues(self._elements, story:getElements())
 		end
 	end
 end
 
-function var_0_0.getAllElements(arg_23_0)
-	return arg_23_0._elements
+function Activity165Model:getAllElements()
+	return self._elements
 end
 
-function var_0_0.isShowAct165Reddot(arg_24_0)
-	local var_24_0 = arg_24_0:getAllActStory()
+function Activity165Model:isShowAct165Reddot()
+	local storys = self:getAllActStory()
 
-	if var_24_0 then
-		for iter_24_0, iter_24_1 in pairs(var_24_0) do
-			if iter_24_1:isShowReddot() then
+	if storys then
+		for i, mo in pairs(storys) do
+			if mo:isShowReddot() then
 				return true
 			end
 		end
@@ -178,100 +187,100 @@ function var_0_0.isShowAct165Reddot(arg_24_0)
 	return false
 end
 
-function var_0_0.setSeparateChars(arg_25_0, arg_25_1)
-	local var_25_0 = {}
+function Activity165Model:setSeparateChars(txt)
+	local charList = {}
 
-	if not string.nilorempty(arg_25_1) then
-		local var_25_1 = string.split(arg_25_1, "\n")
-		local var_25_2 = ""
+	if not string.nilorempty(txt) then
+		local tempList = string.split(txt, "\n")
+		local str = ""
 
-		for iter_25_0 = 1, #var_25_1 do
-			if not string.nilorempty(var_25_1[iter_25_0]) then
-				local var_25_3 = LuaUtil.getUCharArr(var_25_1[iter_25_0])
+		for j = 1, #tempList do
+			if not string.nilorempty(tempList[j]) then
+				local chars = LuaUtil.getUCharArr(tempList[j])
 
-				for iter_25_1 = 1, #var_25_3 do
-					var_25_2 = var_25_2 .. var_25_3[iter_25_1]
+				for i = 1, #chars do
+					str = str .. chars[i]
 
-					table.insert(var_25_0, var_25_2)
+					table.insert(charList, str)
 				end
 
-				var_25_2 = var_25_2 .. "\n"
+				str = str .. "\n"
 
-				table.insert(var_25_0, var_25_2)
+				table.insert(charList, str)
 			end
 		end
 	end
 
-	return var_25_0
+	return charList
 end
 
-function var_0_0.GMCheckConfig(arg_26_0)
-	local var_26_0 = {}
+function Activity165Model:GMCheckConfig()
+	local endingStep = {}
 
-	for iter_26_0, iter_26_1 in pairs(lua_activity165_step.configDict) do
-		if iter_26_1.answersKeywordIds == "-1" then
-			table.insert(var_26_0, iter_26_1.stepId)
+	for id, co in pairs(lua_activity165_step.configDict) do
+		if co.answersKeywordIds == "-1" then
+			table.insert(endingStep, co.stepId)
 		end
 	end
 
-	arg_26_0.allRounds = {}
+	self.allRounds = {}
 
-	local var_26_1 = {}
+	local firstIds = {}
 
-	for iter_26_2, iter_26_3 in pairs(lua_activity165_step.configDict) do
-		if not string.nilorempty(iter_26_3.nextStepConditionIds) then
-			local var_26_2 = GameUtil.splitString2(iter_26_3.nextStepConditionIds, true)
+	for id, co in pairs(lua_activity165_step.configDict) do
+		if not string.nilorempty(co.nextStepConditionIds) then
+			local nextRounds = GameUtil.splitString2(co.nextStepConditionIds, true)
 
-			for iter_26_4, iter_26_5 in pairs(var_26_2) do
-				if not arg_26_0.allRounds[iter_26_2] then
-					arg_26_0.allRounds[iter_26_2] = {}
+			for _, round in pairs(nextRounds) do
+				if not self.allRounds[id] then
+					self.allRounds[id] = {}
 				end
 
-				table.insert(arg_26_0.allRounds[iter_26_2], iter_26_5)
+				table.insert(self.allRounds[id], round)
 
-				if not LuaUtil.tableContains(var_26_1, iter_26_5[2]) then
-					table.insert(var_26_1, iter_26_5[2])
+				if not LuaUtil.tableContains(firstIds, round[2]) then
+					table.insert(firstIds, round[2])
 				end
 			end
 		end
 	end
 
-	arg_26_0:GMCheckAllRounds()
+	self:GMCheckAllRounds()
 end
 
-function var_0_0.GMCheckAllRounds(arg_27_0)
-	for iter_27_0, iter_27_1 in pairs(arg_27_0.allRounds) do
-		arg_27_0:GMCheckisSameRound1(iter_27_0, iter_27_1)
+function Activity165Model:GMCheckAllRounds()
+	for id, rounds in pairs(self.allRounds) do
+		self:GMCheckisSameRound1(id, rounds)
 	end
 end
 
-function var_0_0.GMCheckisSameRound1(arg_28_0, arg_28_1, arg_28_2)
-	for iter_28_0, iter_28_1 in pairs(arg_28_2) do
-		if LuaUtil.tableNotEmpty(iter_28_1) then
-			local var_28_0 = iter_28_1[1]
+function Activity165Model:GMCheckisSameRound1(id, rounds)
+	for i, round in pairs(rounds) do
+		if LuaUtil.tableNotEmpty(round) then
+			local finalId = round[1]
 
-			if not arg_28_0:GMCheckisSameRound2(arg_28_1, iter_28_1, var_28_0) then
-				local var_28_1 = arg_28_0:GMNextRoundByLast(var_28_0, arg_28_1)
-				local var_28_2 = string.format("跳转步骤错误: 当前检查：%s步骤%s,\n%s中通过%s的步骤有：\n%s", arg_28_1, arg_28_0:logRound(iter_28_1), var_28_0, arg_28_1, arg_28_0:logRounds(var_28_1))
+			if not self:GMCheckisSameRound2(id, round, finalId) then
+				local _rounds = self:GMNextRoundByLast(finalId, id)
+				local log = string.format("跳转步骤错误: 当前检查：%s步骤%s,\n%s中通过%s的步骤有：\n%s", id, self:logRound(round), finalId, id, self:logRounds(_rounds))
 
-				SLFramework.SLLogger.LogError(var_28_2)
-			elseif not arg_28_0:GMCheckisSameRound4(arg_28_1, iter_28_1) then
-				local var_28_3 = string.format("跳转步骤错误: 当前检查：%s步骤%s,请检查%s是否缺少这条路径", arg_28_1, arg_28_0:logRound(iter_28_1), iter_28_1[#iter_28_1])
+				SLFramework.SLLogger.LogError(log)
+			elseif not self:GMCheckisSameRound4(id, round) then
+				local log = string.format("跳转步骤错误: 当前检查：%s步骤%s,请检查%s是否缺少这条路径", id, self:logRound(round), round[#round])
 
-				SLFramework.SLLogger.LogError(var_28_3)
+				SLFramework.SLLogger.LogError(log)
 			end
 		end
 	end
 end
 
-function var_0_0.GMCheckisSameRound2(arg_29_0, arg_29_1, arg_29_2, arg_29_3)
-	local var_29_0 = arg_29_0.allRounds[arg_29_3]
+function Activity165Model:GMCheckisSameRound2(id, round, finalId)
+	local finalRound = self.allRounds[finalId]
 
-	if not var_29_0 then
-		local var_29_1 = Activity165Config.instance:getStepCo(arg_29_0._actId, arg_29_3)
+	if not finalRound then
+		local co = Activity165Config.instance:getStepCo(self._actId, finalId)
 
-		if not var_29_1 or var_29_1.answersKeywordIds ~= "-1" then
-			SLFramework.SLLogger.LogError("跳转步骤错误 " .. arg_29_1 .. "    " .. arg_29_3)
+		if not co or co.answersKeywordIds ~= "-1" then
+			SLFramework.SLLogger.LogError("跳转步骤错误 " .. id .. "    " .. finalId)
 
 			return false
 		else
@@ -279,8 +288,8 @@ function var_0_0.GMCheckisSameRound2(arg_29_0, arg_29_1, arg_29_2, arg_29_3)
 		end
 	end
 
-	for iter_29_0, iter_29_1 in pairs(var_29_0) do
-		if arg_29_0:GMCheckisSameRound3(2, arg_29_2, iter_29_1) then
+	for _, _round in pairs(finalRound) do
+		if self:GMCheckisSameRound3(2, round, _round) then
 			return true
 		end
 	end
@@ -288,22 +297,22 @@ function var_0_0.GMCheckisSameRound2(arg_29_0, arg_29_1, arg_29_2, arg_29_3)
 	return false
 end
 
-function var_0_0.GMCheckisSameRound4(arg_30_0, arg_30_1, arg_30_2)
-	local var_30_0 = {}
+function Activity165Model:GMCheckisSameRound4(id, round)
+	local _round = {}
 
-	table.insert(var_30_0, arg_30_1)
+	table.insert(_round, id)
 
-	local var_30_1 = arg_30_2[#arg_30_2]
+	local finalId = round[#round]
 
-	for iter_30_0 = 2, #arg_30_2 - 1 do
-		table.insert(var_30_0, arg_30_2[iter_30_0])
+	for i = 2, #round - 1 do
+		table.insert(_round, round[i])
 	end
 
-	local var_30_2 = arg_30_0.allRounds[var_30_1]
+	local finalRound = self.allRounds[finalId]
 
-	if var_30_2 then
-		for iter_30_1, iter_30_2 in pairs(var_30_2) do
-			if arg_30_0:GMCheckisSameRound3(1, var_30_0, iter_30_2) then
+	if finalRound then
+		for _, __round in pairs(finalRound) do
+			if self:GMCheckisSameRound3(1, _round, __round) then
 				return true
 			end
 		end
@@ -314,46 +323,46 @@ function var_0_0.GMCheckisSameRound4(arg_30_0, arg_30_1, arg_30_2)
 	return false
 end
 
-function var_0_0.GMNextRoundByLast(arg_31_0, arg_31_1, arg_31_2)
-	local var_31_0 = arg_31_0.allRounds[arg_31_1]
-	local var_31_1 = {}
+function Activity165Model:GMNextRoundByLast(id, lastId)
+	local rounds = self.allRounds[id]
+	local list = {}
 
-	if var_31_0 then
-		for iter_31_0, iter_31_1 in pairs(var_31_0) do
-			if iter_31_1[#iter_31_1] == arg_31_2 then
-				table.insert(var_31_1, iter_31_1)
+	if rounds then
+		for _, round in pairs(rounds) do
+			if round[#round] == lastId then
+				table.insert(list, round)
 			end
 		end
 	end
 
-	return var_31_1
+	return list
 end
 
-function var_0_0.logRounds(arg_32_0, arg_32_1)
-	local var_32_0 = ""
+function Activity165Model:logRounds(rounds)
+	local log = ""
 
-	for iter_32_0, iter_32_1 in pairs(arg_32_1) do
-		local var_32_1 = arg_32_0:logRound(iter_32_1)
+	for _, round in pairs(rounds) do
+		local _log = self:logRound(round)
 
-		var_32_0 = var_32_0 .. "         " .. var_32_1
+		log = log .. "         " .. _log
 	end
 
-	return var_32_0
+	return log
 end
 
-function var_0_0.logRound(arg_33_0, arg_33_1)
-	local var_33_0 = ""
+function Activity165Model:logRound(round)
+	local log = ""
 
-	for iter_33_0, iter_33_1 in pairs(arg_33_1) do
-		var_33_0 = var_33_0 .. "#" .. iter_33_1
+	for _, step in pairs(round) do
+		log = log .. "#" .. step
 	end
 
-	return var_33_0
+	return log
 end
 
-function var_0_0.GMCheckisSameRound3(arg_34_0, arg_34_1, arg_34_2, arg_34_3)
-	for iter_34_0 = arg_34_1, #arg_34_2 do
-		if arg_34_2[iter_34_0] ~= arg_34_3[iter_34_0] then
+function Activity165Model:GMCheckisSameRound3(index, round1, round2)
+	for i = index, #round1 do
+		if round1[i] ~= round2[i] then
 			return false
 		end
 	end
@@ -361,18 +370,18 @@ function var_0_0.GMCheckisSameRound3(arg_34_0, arg_34_1, arg_34_2, arg_34_3)
 	return true
 end
 
-function var_0_0.isPrintLog(arg_35_0)
-	return arg_35_0._isPrintLog
+function Activity165Model:isPrintLog()
+	return self._isPrintLog
 end
 
-function var_0_0.setPrintLog(arg_36_0, arg_36_1)
-	arg_36_0._isPrintLog = arg_36_1
+function Activity165Model:setPrintLog(isPrintLog)
+	self._isPrintLog = isPrintLog
 end
 
-function var_0_0.closeEditView(arg_37_0)
+function Activity165Model:closeEditView()
 	return
 end
 
-var_0_0.instance = var_0_0.New()
+Activity165Model.instance = Activity165Model.New()
 
-return var_0_0
+return Activity165Model

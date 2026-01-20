@@ -1,76 +1,80 @@
-﻿module("modules.logic.roomfishing.view.RoomViewUIFishingStoreItem", package.seeall)
+﻿-- chunkname: @modules/logic/roomfishing/view/RoomViewUIFishingStoreItem.lua
 
-local var_0_0 = class("RoomViewUIFishingStoreItem", RoomViewUIBaseItem)
+module("modules.logic.roomfishing.view.RoomViewUIFishingStoreItem", package.seeall)
 
-function var_0_0._customOnInit(arg_1_0)
-	arg_1_0._gomain = gohelper.findChild(arg_1_0._gocontainer, "bubblebg/#go_main")
-	arg_1_0._imagebuildingicon = gohelper.findChildImage(arg_1_0._gocontainer, "#image_buildingicon")
-	arg_1_0._txtnamecn = gohelper.findChildText(arg_1_0._gocontainer, "bottom/txt_buildingName")
-	arg_1_0._txtnamecn.text = luaLang("RoomFishing_StoreItem")
+local RoomViewUIFishingStoreItem = class("RoomViewUIFishingStoreItem", RoomViewUIBaseItem)
 
-	UISpriteSetMgr.instance:setCritterSprite(arg_1_0._imagebuildingicon, "critter_buildingicon_6")
-	gohelper.setActive(arg_1_0._gomain, true)
+function RoomViewUIFishingStoreItem:_customOnInit()
+	self._gomain = gohelper.findChild(self._gocontainer, "bubblebg/#go_main")
+	self._imagebuildingicon = gohelper.findChildImage(self._gocontainer, "#image_buildingicon")
+	self._txtnamecn = gohelper.findChildText(self._gocontainer, "bottom/txt_buildingName")
+	self._txtnamecn.text = luaLang("RoomFishing_StoreItem")
+
+	UISpriteSetMgr.instance:setCritterSprite(self._imagebuildingicon, "critter_buildingicon_6")
+	gohelper.setActive(self._gomain, true)
 end
 
-function var_0_0._customAddEventListeners(arg_2_0)
-	arg_2_0:addEventCb(FishingController.instance, FishingEvent.GuideTouchFishingStore, arg_2_0._onClick, arg_2_0)
-	arg_2_0:refreshUI(true)
+function RoomViewUIFishingStoreItem:_customAddEventListeners()
+	self:addEventCb(FishingController.instance, FishingEvent.GuideTouchFishingStore, self._onClick, self)
+	self:refreshUI(true)
 end
 
-function var_0_0._customRemoveEventListeners(arg_3_0)
-	arg_3_0:removeEventCb(FishingController.instance, FishingEvent.GuideTouchFishingStore, arg_3_0._onClick, arg_3_0)
+function RoomViewUIFishingStoreItem:_customRemoveEventListeners()
+	self:removeEventCb(FishingController.instance, FishingEvent.GuideTouchFishingStore, self._onClick, self)
 end
 
-function var_0_0._onClick(arg_4_0, arg_4_1, arg_4_2)
+function RoomViewUIFishingStoreItem:_onClick(go, param)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 	FishingController.instance:openFishingStoreView()
 end
 
-function var_0_0.refreshUI(arg_5_0, arg_5_1)
-	arg_5_0:_refreshShow(arg_5_1)
-	arg_5_0:_refreshPosition()
+function RoomViewUIFishingStoreItem:refreshUI(isInit)
+	self:_refreshShow(isInit)
+	self:_refreshPosition()
 end
 
-function var_0_0._refreshShow(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0._scene.camera:getCameraState()
+function RoomViewUIFishingStoreItem:_refreshShow(isInit)
+	local cameraState = self._scene.camera:getCameraState()
 
-	if var_6_0 ~= RoomEnum.CameraState.Overlook and var_6_0 ~= RoomEnum.CameraState.OverlookAll then
-		arg_6_0:_setShow(false, arg_6_1)
+	if cameraState ~= RoomEnum.CameraState.Overlook and cameraState ~= RoomEnum.CameraState.OverlookAll then
+		self:_setShow(false, isInit)
 
 		return
 	end
 
-	local var_6_1 = arg_6_0:getBuildingEntity() ~= nil
+	local hasBuilding = self:getBuildingEntity() ~= nil
 
-	arg_6_0:_setShow(var_6_1, arg_6_1)
+	self:_setShow(hasBuilding, isInit)
 end
 
-function var_0_0.getUI3DPos(arg_7_0)
-	local var_7_0 = arg_7_0:getBuildingEntity()
+function RoomViewUIFishingStoreItem:getUI3DPos()
+	local buildingEntity = self:getBuildingEntity()
 
-	if not var_7_0 then
-		arg_7_0:_setShow(false, true)
+	if not buildingEntity then
+		self:_setShow(false, true)
 
 		return Vector3.zero
 	end
 
-	local var_7_1 = var_7_0.containerGO
-	local var_7_2 = var_7_0:getHeadGO()
-	local var_7_3 = var_7_2 and var_7_2.transform.position or var_7_1.transform.position
-	local var_7_4 = Vector3(var_7_3.x, var_7_3.y, var_7_3.z)
+	local containerGo = buildingEntity.containerGO
+	local headGO = buildingEntity:getHeadGO()
+	local position = headGO and headGO.transform.position or containerGo.transform.position
+	local worldPos = Vector3(position.x, position.y, position.z)
+	local bendingPos = RoomBendingHelper.worldToBendingSimple(worldPos)
 
-	return (RoomBendingHelper.worldToBendingSimple(var_7_4))
+	return bendingPos
 end
 
-function var_0_0.getBuildingEntity(arg_8_0)
-	local var_8_0 = RoomMapBuildingModel.instance:getBuildingListByType(RoomBuildingEnum.BuildingType.FishingStore)
-	local var_8_1 = var_8_0 and var_8_0[1].buildingUid
+function RoomViewUIFishingStoreItem:getBuildingEntity()
+	local buildingList = RoomMapBuildingModel.instance:getBuildingListByType(RoomBuildingEnum.BuildingType.FishingStore)
+	local buildingUid = buildingList and buildingList[1].buildingUid
+	local buildingEntity = self._scene.buildingmgr:getBuildingEntity(buildingUid, SceneTag.RoomBuilding)
 
-	return (arg_8_0._scene.buildingmgr:getBuildingEntity(var_8_1, SceneTag.RoomBuilding))
+	return buildingEntity
 end
 
-function var_0_0._customOnDestory(arg_9_0)
+function RoomViewUIFishingStoreItem:_customOnDestory()
 	return
 end
 
-return var_0_0
+return RoomViewUIFishingStoreItem

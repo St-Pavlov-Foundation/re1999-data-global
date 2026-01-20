@@ -1,42 +1,44 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.view.map.EliminateSelectChessMenViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/view/map/EliminateSelectChessMenViewContainer.lua
 
-local var_0_0 = class("EliminateSelectChessMenViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_2.eliminate.view.map.EliminateSelectChessMenViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local EliminateSelectChessMenViewContainer = class("EliminateSelectChessMenViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, EliminateSelectChessMenView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_lefttop"))
+function EliminateSelectChessMenViewContainer:buildViews()
+	local views = {}
 
-	local var_1_1 = ListScrollParam.New()
+	table.insert(views, EliminateSelectChessMenView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_lefttop"))
 
-	var_1_1.scrollGOPath = "Left/#scroll_ChessList"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_1.cellClass = EliminateSelectChessMenItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 5
-	var_1_1.cellWidth = 220
-	var_1_1.cellHeight = 272
-	var_1_1.startSpace = 20
+	local scrollParam = ListScrollParam.New()
 
-	table.insert(var_1_0, LuaListScrollView.New(EliminateSelectChessMenListModel.instance, var_1_1))
+	scrollParam.scrollGOPath = "Left/#scroll_ChessList"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = EliminateSelectChessMenItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 5
+	scrollParam.cellWidth = 220
+	scrollParam.cellHeight = 272
+	scrollParam.startSpace = 20
 
-	return var_1_0
+	table.insert(views, LuaListScrollView.New(EliminateSelectChessMenListModel.instance, scrollParam))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function EliminateSelectChessMenViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-return var_0_0
+return EliminateSelectChessMenViewContainer

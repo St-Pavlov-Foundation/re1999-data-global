@@ -4,5 +4,11 @@
     "path": "v2a4_kkny/kkny_innate3",
     "hangPoint": "mountbody",
     "audio": 430800303
+  },
+  {
+    "id": 308004,
+    "path": "v3a2_kkny/kkny_innate3_04",
+    "hangPoint": "mountbody",
+    "audio": 430800103
   }
 ]

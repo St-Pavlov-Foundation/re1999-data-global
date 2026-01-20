@@ -1,44 +1,46 @@
-﻿module("modules.logic.fight.system.work.FightWorkSpecialDelay", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkSpecialDelay.lua
 
-local var_0_0 = class("FightWorkSpecialDelay", BaseWork)
+module("modules.logic.fight.system.work.FightWorkSpecialDelay", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.fightStepData = arg_1_1
+local FightWorkSpecialDelay = class("FightWorkSpecialDelay", BaseWork)
+
+function FightWorkSpecialDelay:ctor(fightStepData)
+	self.fightStepData = fightStepData
 end
 
-function var_0_0.onStart(arg_2_0)
-	TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 0.5)
+function FightWorkSpecialDelay:onStart()
+	TaskDispatcher.runDelay(self._delayDone, self, 0.5)
 
-	local var_2_0 = FightHelper.getEntity(arg_2_0.fightStepData.fromId)
-	local var_2_1 = var_2_0 and var_2_0:getMO()
+	local entity = FightHelper.getEntity(self.fightStepData.fromId)
+	local entityMO = entity and entity:getMO()
 
-	if var_2_1 then
-		local var_2_2 = _G["FightWorkSpecialDelayModelId" .. var_2_1.modelId]
+	if entityMO then
+		local tarClass = _G["FightWorkSpecialDelayModelId" .. entityMO.modelId]
 
-		if var_2_2 then
-			TaskDispatcher.cancelTask(arg_2_0._delayDone, arg_2_0)
+		if tarClass then
+			TaskDispatcher.cancelTask(self._delayDone, self)
 
-			arg_2_0._delayClass = var_2_2.New(arg_2_0, arg_2_0.fightStepData)
+			self._delayClass = tarClass.New(self, self.fightStepData)
 
 			return
 		end
 	end
 
-	arg_2_0:_delayDone()
+	self:_delayDone()
 end
 
-function var_0_0._delayDone(arg_3_0)
-	arg_3_0:onDone(true)
+function FightWorkSpecialDelay:_delayDone()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._delayDone, arg_4_0)
+function FightWorkSpecialDelay:clearWork()
+	TaskDispatcher.cancelTask(self._delayDone, self)
 
-	if arg_4_0._delayClass then
-		arg_4_0._delayClass:releaseSelf()
+	if self._delayClass then
+		self._delayClass:releaseSelf()
 
-		arg_4_0._delayClass = nil
+		self._delayClass = nil
 	end
 end
 
-return var_0_0
+return FightWorkSpecialDelay

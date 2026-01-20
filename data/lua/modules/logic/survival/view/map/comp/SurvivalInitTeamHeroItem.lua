@@ -1,113 +1,115 @@
-﻿module("modules.logic.survival.view.map.comp.SurvivalInitTeamHeroItem", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/comp/SurvivalInitTeamHeroItem.lua
 
-local var_0_0 = class("SurvivalInitTeamHeroItem", LuaCompBase)
+module("modules.logic.survival.view.map.comp.SurvivalInitTeamHeroItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._heroAnim = gohelper.findChildAnim(arg_1_1, "#go_HaveHero")
-	arg_1_0._goHeroRoot = gohelper.findChild(arg_1_1, "#go_HaveHero")
-	arg_1_0._goEmpty = gohelper.findChild(arg_1_1, "#go_Empty")
-	arg_1_0._goLock = gohelper.findChild(arg_1_1, "#go_Locked")
-	arg_1_0._goNew = gohelper.findChild(arg_1_1, "#go_New")
-	arg_1_0._goAssit = gohelper.findChild(arg_1_0._goHeroRoot, "assit")
+local SurvivalInitTeamHeroItem = class("SurvivalInitTeamHeroItem", LuaCompBase)
 
-	local var_1_0 = gohelper.findChild(arg_1_0._goHeroRoot, "hero")
+function SurvivalInitTeamHeroItem:init(go)
+	self.go = go
+	self._heroAnim = gohelper.findChildAnim(go, "#go_HaveHero")
+	self._goHeroRoot = gohelper.findChild(go, "#go_HaveHero")
+	self._goEmpty = gohelper.findChild(go, "#go_Empty")
+	self._goLock = gohelper.findChild(go, "#go_Locked")
+	self._goNew = gohelper.findChild(go, "#go_New")
+	self._goAssit = gohelper.findChild(self._goHeroRoot, "assit")
 
-	arg_1_0._heroItem = IconMgr.instance:getCommonHeroItem(var_1_0)
+	local heroGo = gohelper.findChild(self._goHeroRoot, "hero")
 
-	arg_1_0._heroItem:setStyle_CharacterBackpack()
-	arg_1_0._heroItem:hideFavor(true)
+	self._heroItem = IconMgr.instance:getCommonHeroItem(heroGo)
 
-	arg_1_0._clickThis = gohelper.getClick(arg_1_0.go)
+	self._heroItem:setStyle_CharacterBackpack()
+	self._heroItem:hideFavor(true)
 
-	gohelper.setActive(arg_1_0._goLock, false)
+	self._clickThis = gohelper.getClick(self.go)
 
-	arg_1_0._healthPart = MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0._goHeroRoot, SurvivalHeroHealthPart)
+	gohelper.setActive(self._goLock, false)
+
+	self._healthPart = MonoHelper.addNoUpdateLuaComOnceToGo(self._goHeroRoot, SurvivalHeroHealthPart)
 end
 
-function var_0_0.setIndex(arg_2_0, arg_2_1)
-	arg_2_0._index = arg_2_1
+function SurvivalInitTeamHeroItem:setIndex(index)
+	self._index = index
 end
 
-function var_0_0.setParentView(arg_3_0, arg_3_1)
-	arg_3_0._teamView = arg_3_1
+function SurvivalInitTeamHeroItem:setParentView(view)
+	self._teamView = view
 end
 
-function var_0_0.addEventListeners(arg_4_0)
-	arg_4_0._clickThis:AddClickListener(arg_4_0._onClickThis, arg_4_0)
+function SurvivalInitTeamHeroItem:addEventListeners()
+	self._clickThis:AddClickListener(self._onClickThis, self)
 end
 
-function var_0_0.removeEventListeners(arg_5_0)
-	arg_5_0._clickThis:RemoveClickListener()
+function SurvivalInitTeamHeroItem:removeEventListeners()
+	self._clickThis:RemoveClickListener()
 end
 
-function var_0_0.getHeroMo(arg_6_0)
-	return arg_6_0._heroMO
+function SurvivalInitTeamHeroItem:getHeroMo()
+	return self._heroMO
 end
 
-function var_0_0.onUpdateMO(arg_7_0, arg_7_1)
-	arg_7_0._heroMO = arg_7_1
+function SurvivalInitTeamHeroItem:onUpdateMO(mo)
+	self._heroMO = mo
 
-	local var_7_0 = arg_7_0._heroMO ~= nil
+	local hasHero = self._heroMO ~= nil
 
-	gohelper.setActive(arg_7_0._goEmpty, not var_7_0)
-	gohelper.setActive(arg_7_0._goHeroRoot, var_7_0)
+	gohelper.setActive(self._goEmpty, not hasHero)
+	gohelper.setActive(self._goHeroRoot, hasHero)
 
-	if var_7_0 then
-		arg_7_0._heroItem:onUpdateMO(arg_7_0._heroMO)
-		arg_7_0._heroItem:setNewShow(false)
+	if hasHero then
+		self._heroItem:onUpdateMO(self._heroMO)
+		self._heroItem:setNewShow(false)
 
-		local var_7_1 = SurvivalBalanceHelper.getHeroBalanceLv(arg_7_0._heroMO.heroId)
+		local lv = SurvivalBalanceHelper.getHeroBalanceLv(self._heroMO.heroId)
 
-		if var_7_1 > arg_7_0._heroMO.level then
-			arg_7_0._heroItem:setBalanceLv(var_7_1)
+		if lv > self._heroMO.level then
+			self._heroItem:setBalanceLv(lv)
 		end
 
-		arg_7_0._healthPart:setHeroId(arg_7_1.heroId)
-		arg_7_0._heroItem.rootAnim:Play("idle", 0, 0)
+		self._healthPart:setHeroId(mo.heroId)
+		self._heroItem.rootAnim:Play("idle", 0, 0)
 	end
 end
 
-function var_0_0.setTrialValue(arg_8_0, arg_8_1)
-	arg_8_0._isTrial = arg_8_1
+function SurvivalInitTeamHeroItem:setTrialValue(value)
+	self._isTrial = value
 
-	gohelper.setActive(arg_8_0._goAssit, arg_8_1)
+	gohelper.setActive(self._goAssit, value)
 end
 
-function var_0_0.setIsLock(arg_9_0, arg_9_1)
-	arg_9_0._isLock = arg_9_1
+function SurvivalInitTeamHeroItem:setIsLock(value)
+	self._isLock = value
 
-	if arg_9_1 then
-		gohelper.setActive(arg_9_0._goLock, true)
-		gohelper.setActive(arg_9_0._goHeroRoot, false)
-		gohelper.setActive(arg_9_0._goEmpty, false)
+	if value then
+		gohelper.setActive(self._goLock, true)
+		gohelper.setActive(self._goHeroRoot, false)
+		gohelper.setActive(self._goEmpty, false)
 	end
 end
 
-function var_0_0.setNew(arg_10_0, arg_10_1)
-	gohelper.setActive(arg_10_0._goNew, arg_10_1)
+function SurvivalInitTeamHeroItem:setNew(isShow)
+	gohelper.setActive(self._goNew, isShow)
 end
 
-function var_0_0.showSelectEffect(arg_11_0)
-	arg_11_0._heroAnim:Play("open", 0, 0)
+function SurvivalInitTeamHeroItem:showSelectEffect()
+	self._heroAnim:Play("open", 0, 0)
 end
 
-function var_0_0._onClickThis(arg_12_0)
-	if arg_12_0._isTrial or arg_12_0._isLock then
+function SurvivalInitTeamHeroItem:_onClickThis()
+	if self._isTrial or self._isLock then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.HeroGroupUI.Play_UI_Team_Open)
 
-	SurvivalMapModel.instance:getInitGroup().curClickHeroIndex = arg_12_0._index
+	SurvivalMapModel.instance:getInitGroup().curClickHeroIndex = self._index
 
 	CharacterModel.instance:setCharacterList(false, CharacterEnum.FilterType.Survival)
 	SurvivalMapModel.instance:getInitGroup():initHeroList()
 	ViewMgr.instance:openView(ViewName.SurvivalInitHeroSelectView)
 end
 
-function var_0_0.onDestroy(arg_13_0)
-	arg_13_0._teamView = nil
+function SurvivalInitTeamHeroItem:onDestroy()
+	self._teamView = nil
 end
 
-return var_0_0
+return SurvivalInitTeamHeroItem

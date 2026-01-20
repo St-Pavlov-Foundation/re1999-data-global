@@ -1,15 +1,17 @@
-﻿module("modules.logic.character.view.CharacterTalentLevelUpPreviewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterTalentLevelUpPreviewContainer.lua
 
-local var_0_0 = class("CharacterTalentLevelUpPreviewContainer", BaseViewContainer)
+module("modules.logic.character.view.CharacterTalentLevelUpPreviewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local CharacterTalentLevelUpPreviewContainer = class("CharacterTalentLevelUpPreviewContainer", BaseViewContainer)
+
+function CharacterTalentLevelUpPreviewContainer:buildViews()
 	return {
 		CharacterTalentLevelUpPreview.New()
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function CharacterTalentLevelUpPreviewContainer:buildTabViews(tabContainerId)
 	return
 end
 
-return var_0_0
+return CharacterTalentLevelUpPreviewContainer

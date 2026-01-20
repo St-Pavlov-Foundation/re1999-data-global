@@ -1,20 +1,22 @@
-﻿module("modules.logic.voyage.config.Activity1001Config", package.seeall)
+﻿-- chunkname: @modules/logic/voyage/config/Activity1001Config.lua
 
-local var_0_0 = class("Activity1001Config", BaseConfig)
+module("modules.logic.voyage.config.Activity1001Config", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.__activityId = arg_1_1
+local Activity1001Config = class("Activity1001Config", BaseConfig)
+
+function Activity1001Config:ctor(activityId)
+	self.__activityId = activityId
 end
 
-function var_0_0.checkActivityId(arg_2_0, arg_2_1)
-	return arg_2_0.__activityId == arg_2_1
+function Activity1001Config:checkActivityId(activityId)
+	return self.__activityId == activityId
 end
 
-function var_0_0.getActivityId(arg_3_0)
-	return arg_3_0.__activityId
+function Activity1001Config:getActivityId()
+	return self.__activityId
 end
 
-function var_0_0.reqConfigNames(arg_4_0)
+function Activity1001Config:reqConfigNames()
 	return {
 		"activity1001",
 		"activity1001_ext",
@@ -22,76 +24,78 @@ function var_0_0.reqConfigNames(arg_4_0)
 	}
 end
 
-local function var_0_1(arg_5_0, arg_5_1, arg_5_2)
-	if not arg_5_2 then
-		return lua_activity1001_ext.configDict[arg_5_0][arg_5_1]
+local function getCOFromExt(activityId, id, isTry)
+	if not isTry then
+		return lua_activity1001_ext.configDict[activityId][id]
 	end
 
-	local var_5_0 = lua_activity1001_ext.configDict[arg_5_0]
+	local dict = lua_activity1001_ext.configDict[activityId]
 
-	return var_5_0 and var_5_0[arg_5_1] or nil
+	return dict and dict[id] or nil
 end
 
-local function var_0_2(arg_6_0, arg_6_1)
-	return lua_activity1001.configDict[arg_6_0][arg_6_1]
+local function getCO(activityId, id)
+	return lua_activity1001.configDict[activityId][id]
 end
 
-function var_0_0.getCO(arg_7_0, arg_7_1)
-	return var_0_1(arg_7_0.__activityId, arg_7_1, true) or var_0_2(arg_7_0.__activityId, arg_7_1)
+function Activity1001Config:getCO(id)
+	return getCOFromExt(self.__activityId, id, true) or getCO(self.__activityId, id)
 end
 
-function var_0_0.getRewardStr(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0:getCO(arg_8_1)
+function Activity1001Config:getRewardStr(id)
+	local co = self:getCO(id)
 
-	if var_8_0.mailId then
-		return lua_mail.configDict[var_8_0.mailId].attachment
+	if co.mailId then
+		local mailco = lua_mail.configDict[co.mailId]
+
+		return mailco.attachment
 	else
-		return var_8_0.rewards
+		return co.rewards
 	end
 end
 
-function var_0_0.getTitle(arg_9_0)
-	local var_9_0 = lua_activity1001_ext.configDict[arg_9_0.__activityId]
+function Activity1001Config:getTitle()
+	local dict = lua_activity1001_ext.configDict[self.__activityId]
 
-	for iter_9_0, iter_9_1 in pairs(var_9_0) do
-		if not string.nilorempty(iter_9_1.title) then
-			return iter_9_1.title
+	for _, v in pairs(dict) do
+		if not string.nilorempty(v.title) then
+			return v.title
 		end
 	end
 
 	return ""
 end
 
-function var_0_0._createOrGetShowTaskList(arg_10_0)
-	if arg_10_0.__taskList then
-		return arg_10_0.__taskList
+function Activity1001Config:_createOrGetShowTaskList()
+	if self.__taskList then
+		return self.__taskList
 	end
 
-	local var_10_0 = {}
+	local res = {}
 
-	for iter_10_0, iter_10_1 in ipairs(lua_activity1001.configList) do
-		if iter_10_1.activityId == arg_10_0.__activityId then
-			table.insert(var_10_0, iter_10_1)
+	for _, v in ipairs(lua_activity1001.configList) do
+		if v.activityId == self.__activityId then
+			table.insert(res, v)
 		end
 	end
 
-	for iter_10_2, iter_10_3 in ipairs(lua_activity1001_ext.configList) do
-		if iter_10_3.activityId == arg_10_0.__activityId then
-			table.insert(var_10_0, iter_10_3)
+	for _, v in ipairs(lua_activity1001_ext.configList) do
+		if v.activityId == self.__activityId then
+			table.insert(res, v)
 		end
 	end
 
-	table.sort(var_10_0, function(arg_11_0, arg_11_1)
-		if arg_11_0.sort ~= arg_11_1.sort then
-			return arg_11_0.sort < arg_11_1.sort
+	table.sort(res, function(a, b)
+		if a.sort ~= b.sort then
+			return a.sort < b.sort
 		end
 
-		return arg_11_0.id < arg_11_1.id
+		return a.id < b.id
 	end)
 
-	arg_10_0.__taskList = var_10_0
+	self.__taskList = res
 
-	return var_10_0
+	return res
 end
 
-return var_0_0
+return Activity1001Config

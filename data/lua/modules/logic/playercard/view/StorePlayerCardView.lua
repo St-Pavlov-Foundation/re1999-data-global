@@ -1,148 +1,151 @@
-﻿module("modules.logic.playercard.view.StorePlayerCardView", package.seeall)
+﻿-- chunkname: @modules/logic/playercard/view/StorePlayerCardView.lua
 
-local var_0_0 = class("StorePlayerCardView", NewPlayerCardView)
+module("modules.logic.playercard.view.StorePlayerCardView", package.seeall)
 
-function var_0_0.onOpen(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._achievementCls = arg_1_0._achievementCls or MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0.viewGO, PlayerCardAchievement)
-	arg_1_0._achievementCls.viewParam = arg_1_0.viewParam
-	arg_1_0._achievementCls.viewContainer = arg_1_0.viewContainer
+local StorePlayerCardView = class("StorePlayerCardView", NewPlayerCardView)
 
-	arg_1_0._achievementCls:onOpen()
+function StorePlayerCardView:onOpen(tempSkinId, tempItemSkinId)
+	self._achievementCls = self._achievementCls or MonoHelper.addNoUpdateLuaComOnceToGo(self.viewGO, PlayerCardAchievement)
+	self._achievementCls.viewParam = self.viewParam
+	self._achievementCls.viewContainer = self.viewContainer
 
-	arg_1_0._infoCls = arg_1_0._infoCls or MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0.viewGO, PlayerCardPlayerInfo)
-	arg_1_0._infoCls.viewParam = arg_1_0.viewParam
+	self._achievementCls:onOpen()
 
-	arg_1_0._infoCls:onOpen()
+	self._infoCls = self._infoCls or MonoHelper.addNoUpdateLuaComOnceToGo(self.viewGO, PlayerCardPlayerInfo)
+	self._infoCls.viewParam = self.viewParam
 
-	arg_1_0._loader = arg_1_0._loader or MultiAbLoader.New()
-	arg_1_0._socialitemPath = "ui/viewres/social/socialfrienditem.prefab"
-	arg_1_0._skinId = arg_1_2
+	self._infoCls:onOpen()
 
-	if not arg_1_0._socialitem then
-		arg_1_0._loader:addPath(arg_1_0._socialitemPath)
-		arg_1_0._loader:startLoad(arg_1_0._onLoadFinish, arg_1_0)
+	self._loader = self._loader or MultiAbLoader.New()
+	self._socialitemPath = "ui/viewres/social/socialfrienditem.prefab"
+	self._skinId = tempItemSkinId
+
+	if not self._socialitem then
+		self._loader:addPath(self._socialitemPath)
+		self._loader:startLoad(self._onLoadFinish, self)
 	else
-		arg_1_0:_showSocialItem()
+		self:_showSocialItem()
 	end
 
-	arg_1_0.viewAnim = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self.viewAnim = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	arg_1_0:_onOpen(arg_1_1, arg_1_2)
+	self:_onOpen(tempSkinId, tempItemSkinId)
 end
 
-function var_0_0._onOpen(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._animator.enabled = true
+function StorePlayerCardView:_onOpen(tempSkinId, tempItemSkinId)
+	self._animator.enabled = true
 
-	if arg_2_0.viewParam and arg_2_0.viewParam.userId then
-		arg_2_0.userId = arg_2_0.viewParam.userId
+	if self.viewParam and self.viewParam.userId then
+		self.userId = self.viewParam.userId
 	end
 
-	arg_2_0.playercardinfo = PlayerCardModel.instance:getCardInfo(arg_2_0.userId)
+	self.playercardinfo = PlayerCardModel.instance:getCardInfo(self.userId)
 
-	local var_2_0 = arg_2_2 or arg_2_0.playercardinfo:getThemeId()
+	local themeId = tempItemSkinId or self.playercardinfo:getThemeId()
 
-	if var_2_0 == 0 or string.nilorempty(var_2_0) then
-		var_2_0 = nil
+	if themeId == 0 or string.nilorempty(themeId) then
+		themeId = nil
 	end
 
-	arg_2_0.themeId = var_2_0
+	self.themeId = themeId
 
-	local var_2_1, var_2_2, var_2_3, var_2_4 = arg_2_0.playercardinfo:getMainHero()
+	local _, skinId, _, _ = self.playercardinfo:getMainHero()
 
-	if arg_2_1 and arg_2_1 > 0 then
-		var_2_2 = arg_2_1
+	if tempSkinId and tempSkinId > 0 then
+		skinId = tempSkinId
 	end
 
-	arg_2_0:_creatBgEffect()
+	self:_creatBgEffect()
 
-	local var_2_5 = SkinConfig.instance:getSkinCo(var_2_2).characterId
+	local heroId = SkinConfig.instance:getSkinCo(skinId).characterId
 
-	arg_2_0:_updateHero(var_2_5, var_2_2)
-	arg_2_0:_refreshProgress()
-	arg_2_0:_refreshBaseInfo()
-	arg_2_0:_initCritter()
+	self:_updateHero(heroId, skinId)
+	self:_refreshProgress()
+	self:_refreshBaseInfo()
+	self:_initCritter()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_theft_open)
 
-	arg_2_0.progressopen = false
-	arg_2_0.baseinfoopen = false
+	self.progressopen = false
+	self.baseinfoopen = false
 end
 
-function var_0_0._editableInitView(arg_3_0)
-	var_0_0.super._editableInitView(arg_3_0)
-	transformhelper.setLocalScale(arg_3_0._root.transform, 0.7, 0.7, 1)
-	transformhelper.setLocalPosXY(arg_3_0._root.transform, 0, 40)
+function StorePlayerCardView:_editableInitView()
+	StorePlayerCardView.super._editableInitView(self)
+	transformhelper.setLocalScale(self._root.transform, 0.7, 0.7, 1)
+	transformhelper.setLocalPosXY(self._root.transform, 0, 40)
 end
 
-function var_0_0._onLoadFinish(arg_4_0)
-	local var_4_0 = arg_4_0._loader:getAssetItem(arg_4_0._socialitemPath):GetResource(arg_4_0._socialitemPath)
+function StorePlayerCardView:_onLoadFinish()
+	local assetItem = self._loader:getAssetItem(self._socialitemPath)
+	local viewPrefab = assetItem:GetResource(self._socialitemPath)
 
-	arg_4_0._socialitem = gohelper.clone(var_4_0, arg_4_0.viewGO)
-	arg_4_0._socialfrienditemcls = MonoHelper.addNoUpdateLuaComOnceToGo(arg_4_0._socialitem, StorePlayerCardInfoItem)
+	self._socialitem = gohelper.clone(viewPrefab, self.viewGO)
+	self._socialfrienditemcls = MonoHelper.addNoUpdateLuaComOnceToGo(self._socialitem, StorePlayerCardInfoItem)
 
-	arg_4_0:_showSocialItem()
+	self:_showSocialItem()
 end
 
-function var_0_0._showSocialItem(arg_5_0)
-	if not arg_5_0._socialitem or not arg_5_0._socialfrienditemcls then
+function StorePlayerCardView:_showSocialItem()
+	if not self._socialitem or not self._socialfrienditemcls then
 		return
 	end
 
-	local var_5_0 = PlayerModel.instance:getPlayinfo()
-	local var_5_1 = {
+	local selfInfo = PlayerModel.instance:getPlayinfo()
+	local mo = {
 		time = 0,
-		userId = var_5_0.userId,
-		name = var_5_0.name,
-		level = var_5_0.level,
-		portrait = var_5_0.portrait
+		userId = selfInfo.userId,
+		name = selfInfo.name,
+		level = selfInfo.level,
+		portrait = selfInfo.portrait
 	}
 
-	arg_5_0._socialfrienditemcls:onUpdateMO(var_5_1)
-	arg_5_0._socialfrienditemcls:selectSkin(arg_5_0._skinId)
-	transformhelper.setLocalScale(arg_5_0._socialitem.transform, 0.75, 0.75, 1)
-	transformhelper.setLocalPosXY(arg_5_0._socialitem.transform, 730, 150)
+	self._socialfrienditemcls:onUpdateMO(mo)
+	self._socialfrienditemcls:selectSkin(self._skinId)
+	transformhelper.setLocalScale(self._socialitem.transform, 0.75, 0.75, 1)
+	transformhelper.setLocalPosXY(self._socialitem.transform, 730, 150)
 end
 
-function var_0_0._disposeLoader(arg_6_0)
-	if arg_6_0._loader then
-		arg_6_0._loader:dispose()
+function StorePlayerCardView:_disposeLoader()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_6_0._loader = nil
+		self._loader = nil
 	end
 end
 
-function var_0_0.onShowDecorateStoreDefault(arg_7_0)
-	arg_7_0:playAnim("open", 1)
+function StorePlayerCardView:onShowDecorateStoreDefault()
+	self:playAnim("open", 1)
 
-	if arg_7_0._socialfrienditemcls then
-		arg_7_0._socialfrienditemcls:onShowDecorateStoreDefault()
+	if self._socialfrienditemcls then
+		self._socialfrienditemcls:onShowDecorateStoreDefault()
 	end
 end
 
-function var_0_0.playAnim(arg_8_0, arg_8_1, arg_8_2)
-	if arg_8_0.viewAnim then
-		arg_8_0.viewAnim:Play(arg_8_1, 0, arg_8_2)
+function StorePlayerCardView:playAnim(animName, progtress)
+	if self.viewAnim then
+		self.viewAnim:Play(animName, 0, progtress)
 	end
 end
 
-function var_0_0.onDestroy(arg_9_0)
-	var_0_0.super.onDestroy(arg_9_0)
-	arg_9_0:_disposeLoader()
+function StorePlayerCardView:onDestroy()
+	StorePlayerCardView.super.onDestroy(self)
+	self:_disposeLoader()
 end
 
-function var_0_0.onClose(arg_10_0)
-	arg_10_0:resetSpine()
-	arg_10_0:removeEvents()
+function StorePlayerCardView:onClose()
+	self:resetSpine()
+	self:removeEvents()
 
-	arg_10_0._has_onInitView = false
+	self._has_onInitView = false
 
-	if arg_10_0._scrollView then
-		arg_10_0._scrollView:onDestroyViewInternal()
-		arg_10_0._scrollView:__onDispose()
+	if self._scrollView then
+		self._scrollView:onDestroyViewInternal()
+		self._scrollView:__onDispose()
 	end
 
-	gohelper.destroy(arg_10_0.goskinpreview)
+	gohelper.destroy(self.goskinpreview)
 
-	arg_10_0._scrollView = nil
+	self._scrollView = nil
 end
 
-return var_0_0
+return StorePlayerCardView

@@ -1,12 +1,14 @@
-﻿module("modules.logic.versionactivity3_1.gaosiniao.config.Activity210Config", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/gaosiniao/config/Activity210Config.lua
 
-local var_0_0 = class("Activity210Config", BaseConfig)
+module("modules.logic.versionactivity3_1.gaosiniao.config.Activity210Config", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.__activityId = false
+local Activity210Config = class("Activity210Config", BaseConfig)
+
+function Activity210Config:ctor()
+	self.__activityId = false
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function Activity210Config:reqConfigNames()
 	return {
 		"activity210_const",
 		"activity210_episode",
@@ -14,139 +16,141 @@ function var_0_0.reqConfigNames(arg_2_0)
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity210_const" then
-		arg_3_0.__activityId = false
+function Activity210Config:onConfigLoaded(configName, configTable)
+	if configName == "activity210_const" then
+		self.__activityId = false
 	end
 end
 
-local function var_0_1(arg_4_0, arg_4_1)
-	return lua_activity210_episode.configDict[arg_4_0][arg_4_1]
+local function _getEpisodeCO(activityId, episodeId)
+	return lua_activity210_episode.configDict[activityId][episodeId]
 end
 
-local function var_0_2(arg_5_0, arg_5_1)
-	return lua_activity210_const.configDict[arg_5_0][arg_5_1]
+local function _getConstCO(activityId, id)
+	return lua_activity210_const.configDict[activityId][id]
 end
 
-function var_0_0.getConstWithActId(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = var_0_2(arg_6_1, arg_6_2)
+function Activity210Config:getConstWithActId(activityId, id)
+	local CO = _getConstCO(activityId, id)
 
-	if not var_6_0 then
+	if not CO then
 		return nil, nil
 	end
 
-	return var_6_0.value, var_6_0.value2
+	return CO.value, CO.value2
 end
 
-function var_0_0.actId(arg_7_0)
-	if arg_7_0.__activityId then
-		return arg_7_0.__activityId
+function Activity210Config:actId()
+	if self.__activityId then
+		return self.__activityId
 	end
 
-	arg_7_0.__activityId = ActivityConfig.instance:getConstAsNum(2, 13118)
+	self.__activityId = ActivityConfig.instance:getConstAsNum(2, 13118)
 
-	return arg_7_0.__activityId
+	return self.__activityId
 end
 
-function var_0_0.getEpisodeCO(arg_8_0, arg_8_1)
-	return var_0_1(arg_8_0:actId(), arg_8_1)
+function Activity210Config:getEpisodeCO(episodeId)
+	return _getEpisodeCO(self:actId(), episodeId)
 end
 
-function var_0_0.getPreEpisodeId(arg_9_0, arg_9_1)
-	if not arg_9_1 then
+function Activity210Config:getPreEpisodeId(episodeId)
+	if not episodeId then
 		return 0
 	end
 
-	local var_9_0 = arg_9_0:getEpisodeCO(arg_9_1)
+	local CO = self:getEpisodeCO(episodeId)
 
-	if not var_9_0 then
+	if not CO then
 		return 0
 	end
 
-	return var_9_0.preEpisodeId
+	return CO.preEpisodeId
 end
 
-function var_0_0.getPreEpisodeCO(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0:getPreEpisodeId(arg_10_1)
+function Activity210Config:getPreEpisodeCO(episodeId)
+	local preEpisodeId = self:getPreEpisodeId(episodeId)
 
-	if var_10_0 <= 0 then
+	if preEpisodeId <= 0 then
 		return nil
 	end
 
-	return arg_10_0:getEpisodeCO(var_10_0)
+	return self:getEpisodeCO(preEpisodeId)
 end
 
-function var_0_0.getStoryIdPrePost(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0:getEpisodeCO(arg_11_1)
+function Activity210Config:getStoryIdPrePost(episodeId)
+	local CO = self:getEpisodeCO(episodeId)
 
-	if not var_11_0 then
+	if not CO then
 		return 0, 0
 	end
 
-	return var_11_0.storyBefore, var_11_0.storyClear
+	return CO.storyBefore, CO.storyClear
 end
 
-function var_0_0.getPreStoryId(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0:getEpisodeCO(arg_12_1)
+function Activity210Config:getPreStoryId(episodeId)
+	local CO = self:getEpisodeCO(episodeId)
 
-	return var_12_0 and var_12_0.storyBefore or 0
+	return CO and CO.storyBefore or 0
 end
 
-function var_0_0.getPostStoryId(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0:getEpisodeCO(arg_13_1)
+function Activity210Config:getPostStoryId(episodeId)
+	local CO = self:getEpisodeCO(episodeId)
 
-	return var_13_0 and var_13_0.storyClear or 0
+	return CO and CO.storyClear or 0
 end
 
-function var_0_0.getPreEpisodeBranchId(arg_14_0, arg_14_1)
-	return arg_14_0:getEpisodeCO(arg_14_1).preEpisodeBranchId or 0
+function Activity210Config:getPreEpisodeBranchId(episodeId)
+	local CO = self:getEpisodeCO(episodeId)
+
+	return CO.preEpisodeBranchId or 0
 end
 
-function var_0_0.getEpisodeCO_gameId(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_0:getEpisodeCO(arg_15_1)
+function Activity210Config:getEpisodeCO_gameId(episodeId)
+	local CO = self:getEpisodeCO(episodeId)
 
-	return var_15_0 and var_15_0.gameId or 0
+	return CO and CO.gameId or 0
 end
 
-function var_0_0.getEpisodeCO_disactiveEpisodeInfoList(arg_16_0, arg_16_1)
-	if not arg_16_1 or arg_16_1 <= 0 then
+function Activity210Config:getEpisodeCO_disactiveEpisodeInfoList(episodeId)
+	if not episodeId or episodeId <= 0 then
 		return {}
 	end
 
-	local var_16_0 = arg_16_0:getEpisodeCO(arg_16_1)
-	local var_16_1 = var_16_0 and var_16_0.disactiveEpisodeIds or nil
+	local CO = self:getEpisodeCO(episodeId)
+	local str = CO and CO.disactiveEpisodeIds or nil
 
-	if string.nilorempty(var_16_1) then
+	if string.nilorempty(str) then
 		return {}
 	end
 
-	return GameUtil.splitString2(var_16_1, true)
+	return GameUtil.splitString2(str, true)
 end
 
-function var_0_0.getEpisodeCOs(arg_17_0)
-	local var_17_0 = arg_17_0:actId()
+function Activity210Config:getEpisodeCOs()
+	local actId = self:actId()
 
-	if not var_17_0 then
+	if not actId then
 		return {}
 	end
 
-	return lua_activity210_episode.configDict[var_17_0]
+	return lua_activity210_episode.configDict[actId]
 end
 
-function var_0_0.isSP(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_0:getEpisodeCO(arg_18_1)
+function Activity210Config:isSP(episodeId)
+	local CO = self:getEpisodeCO(episodeId)
 
-	if not var_18_0 then
+	if not CO then
 		return false
 	end
 
-	return var_18_0.type == GaoSiNiaoEnum.EpisodeType.SP
+	return CO.type == GaoSiNiaoEnum.EpisodeType.SP
 end
 
-function var_0_0.getEpisodeCO_guideId(arg_19_0, arg_19_1)
-	local var_19_0 = arg_19_0:getEpisodeCO(arg_19_1)
+function Activity210Config:getEpisodeCO_guideId(episodeId)
+	local CO = self:getEpisodeCO(episodeId)
 
-	return var_19_0 and var_19_0.guideId or 0
+	return CO and CO.guideId or 0
 end
 
-return var_0_0
+return Activity210Config

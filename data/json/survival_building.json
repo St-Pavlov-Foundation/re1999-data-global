@@ -541,7 +541,7 @@
     "repairCost": "",
     "effect": "reputation#10001|createShop#50001",
     "sort": 0,
-    "desc": "language_10095536"
+    "desc": "language_10103646"
   },
   {
     "id": 31011202,
@@ -557,7 +557,7 @@
     "repairCost": "",
     "effect": "reputation#20001|createShop#50002",
     "sort": 0,
-    "desc": "language_10095538"
+    "desc": "language_10103647"
   },
   {
     "id": 31011203,
@@ -573,7 +573,7 @@
     "repairCost": "",
     "effect": "reputation#30001|createShop#50003",
     "sort": 0,
-    "desc": "language_10095540"
+    "desc": "language_10103648"
   },
   {
     "id": 31011204,
@@ -589,6 +589,6 @@
     "repairCost": "",
     "effect": "reputation#40001|createShop#50004",
     "sort": 0,
-    "desc": "language_10095542"
+    "desc": "language_10103649"
   }
 ]

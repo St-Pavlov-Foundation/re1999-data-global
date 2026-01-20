@@ -1,66 +1,68 @@
-﻿module("modules.logic.commandstation.view.CommandStationBonusItem", package.seeall)
+﻿-- chunkname: @modules/logic/commandstation/view/CommandStationBonusItem.lua
 
-local var_0_0 = class("CommandStationBonusItem", MixScrollCell)
+module("modules.logic.commandstation.view.CommandStationBonusItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._goGrey = gohelper.findChild(arg_1_1, "point/grey")
-	arg_1_0._txtPoint = gohelper.findChildTextMesh(arg_1_1, "point/#txt_point")
+local CommandStationBonusItem = class("CommandStationBonusItem", MixScrollCell)
+
+function CommandStationBonusItem:init(go)
+	self.go = go
+	self._goGrey = gohelper.findChild(go, "point/grey")
+	self._txtPoint = gohelper.findChildTextMesh(go, "point/#txt_point")
 end
 
-function var_0_0.onUpdateMO(arg_2_0, arg_2_1)
-	local var_2_0 = CommandStationConfig.instance:getCurPaperCount()
-	local var_2_1 = tabletool.indexOf(CommandStationModel.instance.gainBonus, arg_2_1.id)
-	local var_2_2 = not var_2_1 and var_2_0 >= arg_2_1.pointNum
-	local var_2_3 = ItemModel.instance:getItemDataListByConfigStr(arg_2_1.bonus)
+function CommandStationBonusItem:onUpdateMO(mo)
+	local totalItemNum = CommandStationConfig.instance:getCurPaperCount()
+	local isGet = tabletool.indexOf(CommandStationModel.instance.gainBonus, mo.id)
+	local canGet = not isGet and totalItemNum >= mo.pointNum
+	local item_list = ItemModel.instance:getItemDataListByConfigStr(mo.bonus)
 
-	gohelper.setActive(arg_2_0._goGrey, var_2_0 < arg_2_1.pointNum)
+	gohelper.setActive(self._goGrey, totalItemNum < mo.pointNum)
 
-	arg_2_0._txtPoint.text = arg_2_1.pointNum
+	self._txtPoint.text = mo.pointNum
 
-	for iter_2_0 = 1, 2 do
-		local var_2_4 = gohelper.findChild(arg_2_0.go, tostring(iter_2_0))
+	for i = 1, 2 do
+		local go = gohelper.findChild(self.go, tostring(i))
 
-		arg_2_0:_refreshItem(var_2_4, var_2_3[iter_2_0], var_2_1, var_2_2)
+		self:_refreshItem(go, item_list[i], isGet, canGet)
 	end
 end
 
-function var_0_0._refreshItem(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	if not arg_3_2 then
-		gohelper.setActive(arg_3_1, false)
+function CommandStationBonusItem:_refreshItem(go, data, isGet, isCanGet)
+	if not data then
+		gohelper.setActive(go, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_3_1, true)
+	gohelper.setActive(go, true)
 
-	local var_3_0 = gohelper.findChild(arg_3_1, "go_canget")
-	local var_3_1 = gohelper.findChildButtonWithAudio(arg_3_1, "go_canget/btn_click")
-	local var_3_2 = gohelper.findChild(arg_3_1, "go_receive")
-	local var_3_3 = gohelper.findChild(arg_3_1, "go_icon")
+	local go_canget = gohelper.findChild(go, "go_canget")
+	local btn_click = gohelper.findChildButtonWithAudio(go, "go_canget/btn_click")
+	local go_receive = gohelper.findChild(go, "go_receive")
+	local go_icon = gohelper.findChild(go, "go_icon")
 
-	gohelper.setActive(var_3_0, arg_3_4)
-	gohelper.setActive(var_3_2, arg_3_3)
+	gohelper.setActive(go_canget, isCanGet)
+	gohelper.setActive(go_receive, isGet)
 
-	local var_3_4
+	local item
 
-	if var_3_3.transform.childCount > 0 then
-		var_3_4 = MonoHelper.getLuaComFromGo(var_3_3.transform:GetChild(var_3_3.transform.childCount - 1).gameObject, CommonPropItemIcon)
+	if go_icon.transform.childCount > 0 then
+		item = MonoHelper.getLuaComFromGo(go_icon.transform:GetChild(go_icon.transform.childCount - 1).gameObject, CommonPropItemIcon)
 	end
 
-	var_3_4 = var_3_4 or IconMgr.instance:getCommonPropItemIcon(var_3_3)
+	item = item or IconMgr.instance:getCommonPropItemIcon(go_icon)
 
-	var_3_4:onUpdateMO(arg_3_2)
-	var_3_4:setConsume(true)
-	var_3_4:showStackableNum2()
-	var_3_4:isShowEffect(true)
-	var_3_4:setAutoPlay(true)
-	var_3_4:setCountFontSize(48)
-	arg_3_0:addClickCb(var_3_1, arg_3_0._sendGetAllBonus, arg_3_0)
+	item:onUpdateMO(data)
+	item:setConsume(true)
+	item:showStackableNum2()
+	item:isShowEffect(true)
+	item:setAutoPlay(true)
+	item:setCountFontSize(48)
+	self:addClickCb(btn_click, self._sendGetAllBonus, self)
 end
 
-function var_0_0._sendGetAllBonus(arg_4_0)
+function CommandStationBonusItem:_sendGetAllBonus()
 	CommandStationRpc.instance:sendCommandPostBonusAllRequest()
 end
 
-return var_0_0
+return CommandStationBonusItem

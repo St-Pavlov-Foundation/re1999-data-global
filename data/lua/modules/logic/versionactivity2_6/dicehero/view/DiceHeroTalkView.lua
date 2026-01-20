@@ -1,273 +1,276 @@
-﻿module("modules.logic.versionactivity2_6.dicehero.view.DiceHeroTalkView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/dicehero/view/DiceHeroTalkView.lua
 
-local var_0_0 = class("DiceHeroTalkView", BaseView)
+module("modules.logic.versionactivity2_6.dicehero.view.DiceHeroTalkView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtTitle = gohelper.findChildTextMesh(arg_1_0.viewGO, "#txt_title")
-	arg_1_0._goNarration = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_narration")
-	arg_1_0._gotalk = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_talk")
-	arg_1_0._goreward = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_reward")
-	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_reward/#go_item")
-	arg_1_0._goarrow = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/arrow")
-	arg_1_0._btnSkip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_skip")
-	arg_1_0._scrollRoot = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist")
-	arg_1_0._rewardFullBg = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_reward/#go_fullbg")
-	arg_1_0._transcontent = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/viewport/content").transform
-	arg_1_0.scrollContent = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_contentlist")
-	arg_1_0._transscroll = arg_1_0.scrollContent.transform
+local DiceHeroTalkView = class("DiceHeroTalkView", BaseView)
+
+function DiceHeroTalkView:onInitView()
+	self._txtTitle = gohelper.findChildTextMesh(self.viewGO, "#txt_title")
+	self._goNarration = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_narration")
+	self._gotalk = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_talk")
+	self._goreward = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_reward")
+	self._gorewarditem = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_reward/#go_item")
+	self._goarrow = gohelper.findChild(self.viewGO, "#scroll_contentlist/arrow")
+	self._btnSkip = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_skip")
+	self._scrollRoot = gohelper.findChild(self.viewGO, "#scroll_contentlist")
+	self._rewardFullBg = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_reward/#go_fullbg")
+	self._transcontent = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content").transform
+	self.scrollContent = gohelper.findChildScrollRect(self.viewGO, "#scroll_contentlist")
+	self._transscroll = self.scrollContent.transform
 end
 
-function var_0_0.addEvents(arg_2_0)
-	NavigateMgr.instance:addSpace(ViewName.DiceHeroTalkView, arg_2_0._clickSpace, arg_2_0)
-	arg_2_0:addEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreen, arg_2_0.onTouchDown, arg_2_0)
-	arg_2_0:addEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreenUp, arg_2_0.onTouchUp, arg_2_0)
-	arg_2_0.scrollContent:AddOnValueChanged(arg_2_0.onScrollValueChanged, arg_2_0)
-	arg_2_0._btnSkip:AddClickListener(arg_2_0._skipStory, arg_2_0)
+function DiceHeroTalkView:addEvents()
+	NavigateMgr.instance:addSpace(ViewName.DiceHeroTalkView, self._clickSpace, self)
+	self:addEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreen, self.onTouchDown, self)
+	self:addEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreenUp, self.onTouchUp, self)
+	self.scrollContent:AddOnValueChanged(self.onScrollValueChanged, self)
+	self._btnSkip:AddClickListener(self._skipStory, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0.scrollContent:RemoveOnValueChanged()
-	arg_3_0._btnSkip:RemoveClickListener()
+function DiceHeroTalkView:removeEvents()
+	self.scrollContent:RemoveOnValueChanged()
+	self._btnSkip:RemoveClickListener()
 end
 
-function var_0_0.onOpen(arg_4_0)
-	local var_4_0 = arg_4_0.viewParam and arg_4_0.viewParam.co
-	local var_4_1 = DiceHeroModel.instance:getGameInfo(var_4_0.chapter)
+function DiceHeroTalkView:onOpen()
+	local co = self.viewParam and self.viewParam.co
+	local gameInfo = DiceHeroModel.instance:getGameInfo(co.chapter)
 
-	if not var_4_0 then
-		logError("配置不存在？？" .. tostring(var_4_1.currLevel))
+	if not co then
+		logError("配置不存在？？" .. tostring(gameInfo.currLevel))
 
 		return
 	end
 
-	arg_4_0._co = var_4_0
-	DiceHeroModel.instance.talkId = var_4_0.dialog
+	self._co = co
+	DiceHeroModel.instance.talkId = co.dialog
 	DiceHeroModel.instance.stepId = 0
 
-	local var_4_2 = lua_dice_dialogue.configDict[var_4_0.dialog]
+	local dialogSteps = lua_dice_dialogue.configDict[co.dialog]
 
-	if not var_4_2 then
-		logError("对话配置不存在" .. tostring(var_4_0.dialog))
+	if not dialogSteps then
+		logError("对话配置不存在" .. tostring(co.dialog))
 
 		return
 	end
 
-	gohelper.setActive(arg_4_0._goNarration, false)
-	gohelper.setActive(arg_4_0._gotalk, false)
-	gohelper.setActive(arg_4_0._rewardFullBg, false)
+	gohelper.setActive(self._goNarration, false)
+	gohelper.setActive(self._gotalk, false)
+	gohelper.setActive(self._rewardFullBg, false)
 
-	local var_4_3 = {}
-	local var_4_4 = {}
+	local contentGos = {}
+	local contentTxts = {}
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_2) do
-		if iter_4_1.type == DiceHeroEnum.DialogContentType.Title then
-			arg_4_0._txtTitle.text = iter_4_1.desc
-		elseif iter_4_1.type == DiceHeroEnum.DialogContentType.Narration then
-			local var_4_5 = gohelper.cloneInPlace(arg_4_0._goNarration)
+	for _, dialogStepCo in ipairs(dialogSteps) do
+		if dialogStepCo.type == DiceHeroEnum.DialogContentType.Title then
+			self._txtTitle.text = dialogStepCo.desc
+		elseif dialogStepCo.type == DiceHeroEnum.DialogContentType.Narration then
+			local go = gohelper.cloneInPlace(self._goNarration)
 
-			if iter_4_1.line ~= 1 then
-				local var_4_6 = gohelper.findChild(var_4_5, "line")
+			if dialogStepCo.line ~= 1 then
+				local line = gohelper.findChild(go, "line")
 
-				gohelper.setActive(var_4_6, false)
+				gohelper.setActive(line, false)
 			end
 
-			local var_4_7 = gohelper.findChildTextMesh(var_4_5, "txt")
+			local txt = gohelper.findChildTextMesh(go, "txt")
 
-			var_4_7.text = ""
+			txt.text = ""
 
-			local var_4_8 = IconMgr.instance:getCommonTextMarkTop(var_4_7.gameObject):GetComponent(gohelper.Type_TextMesh)
-			local var_4_9 = gohelper.onceAddComponent(var_4_7.gameObject, typeof(ZProj.TMPMark))
+			local txtmarktop = IconMgr.instance:getCommonTextMarkTop(txt.gameObject):GetComponent(gohelper.Type_TextMesh)
+			local conMark = gohelper.onceAddComponent(txt.gameObject, typeof(ZProj.TMPMark))
 
-			var_4_9:SetMarkTopGo(var_4_8.gameObject)
-			var_4_9:SetTopOffset(0, -2)
+			conMark:SetMarkTopGo(txtmarktop.gameObject)
+			conMark:SetTopOffset(0, -2)
 
-			local var_4_10 = StoryTool.filterMarkTop(iter_4_1.desc)
-			local var_4_11 = GameUtil.getUCharArrWithoutRichTxt(var_4_10)
-			local var_4_12 = StoryTool.getMarkTopTextList(iter_4_1.desc)
+			local filterResult = StoryTool.filterMarkTop(dialogStepCo.desc)
+			local chars = GameUtil.getUCharArrWithoutRichTxt(filterResult)
+			local markTopList = StoryTool.getMarkTopTextList(dialogStepCo.desc)
 
-			table.insert(var_4_3, var_4_5)
-			table.insert(var_4_4, {
+			table.insert(contentGos, go)
+			table.insert(contentTxts, {
 				isEnd = false,
-				markTopList = var_4_12,
-				conMark = var_4_9,
-				txt = var_4_7,
-				chars = var_4_11,
-				stepId = iter_4_1.step
+				markTopList = markTopList,
+				conMark = conMark,
+				txt = txt,
+				chars = chars,
+				stepId = dialogStepCo.step
 			})
 		else
-			local var_4_13 = gohelper.cloneInPlace(arg_4_0._gotalk)
-			local var_4_14 = gohelper.findChildTextMesh(var_4_13, "txt")
+			local go = gohelper.cloneInPlace(self._gotalk)
+			local txt = gohelper.findChildTextMesh(go, "txt")
 
-			var_4_14.text = ""
+			txt.text = ""
 
-			local var_4_15 = IconMgr.instance:getCommonTextMarkTop(var_4_14.gameObject):GetComponent(gohelper.Type_TextMesh)
-			local var_4_16 = gohelper.onceAddComponent(var_4_14.gameObject, typeof(ZProj.TMPMark))
+			local txtmarktop = IconMgr.instance:getCommonTextMarkTop(txt.gameObject):GetComponent(gohelper.Type_TextMesh)
+			local conMark = gohelper.onceAddComponent(txt.gameObject, typeof(ZProj.TMPMark))
 
-			var_4_16:SetMarkTopGo(var_4_15.gameObject)
-			var_4_16:SetTopOffset(0, -2)
+			conMark:SetMarkTopGo(txtmarktop.gameObject)
+			conMark:SetTopOffset(0, -2)
 
-			local var_4_17 = iter_4_1.speaker .. iter_4_1.desc
-			local var_4_18 = StoryTool.filterMarkTop(var_4_17)
-			local var_4_19 = GameUtil.getUCharArrWithoutRichTxt(var_4_18)
-			local var_4_20 = StoryTool.getMarkTopTextList(var_4_17)
+			local str = dialogStepCo.speaker .. dialogStepCo.desc
+			local filterResult = StoryTool.filterMarkTop(str)
+			local chars = GameUtil.getUCharArrWithoutRichTxt(filterResult)
+			local markTopList = StoryTool.getMarkTopTextList(str)
 
-			table.insert(var_4_3, var_4_13)
-			table.insert(var_4_4, {
+			table.insert(contentGos, go)
+			table.insert(contentTxts, {
 				isEnd = false,
-				markTopList = var_4_20,
-				conMark = var_4_16,
-				txt = var_4_14,
-				chars = var_4_19,
-				stepId = iter_4_1.step
+				markTopList = markTopList,
+				conMark = conMark,
+				txt = txt,
+				chars = chars,
+				stepId = dialogStepCo.step
 			})
 		end
 	end
 
-	if var_4_1:hasReward() and var_4_1.currLevel == arg_4_0._co.id and not var_4_1.allPass then
-		local var_4_21 = var_4_1.rewardItems
+	if gameInfo:hasReward() and gameInfo.currLevel == self._co.id and not gameInfo.allPass then
+		local rewardItem = gameInfo.rewardItems
 
-		if arg_4_0._co.mode == 1 then
-			var_4_21 = {}
+		if self._co.mode == 1 then
+			rewardItem = {}
 
-			for iter_4_2, iter_4_3 in ipairs(var_4_1.rewardItems) do
-				if iter_4_3.type == DiceHeroEnum.RewardType.Hero then
-					arg_4_0._noShowBg = true
+			for k, v in ipairs(gameInfo.rewardItems) do
+				if v.type == DiceHeroEnum.RewardType.Hero then
+					self._noShowBg = true
 
-					gohelper.setActive(arg_4_0._rewardFullBg, true)
+					gohelper.setActive(self._rewardFullBg, true)
 
-					iter_4_3.index = iter_4_2
+					v.index = k
 
-					table.insert(var_4_21, iter_4_3)
+					table.insert(rewardItem, v)
 
-					local var_4_22 = lua_dice_character.configDict[iter_4_3.id]
+					local characterCo = lua_dice_character.configDict[v.id]
 
-					if not string.nilorempty(var_4_22.relicIds) then
-						for iter_4_4, iter_4_5 in ipairs(string.splitToNumber(var_4_22.relicIds, "#")) do
-							local var_4_23 = DiceHeroRewardMo.New()
+					if not string.nilorempty(characterCo.relicIds) then
+						for _, relicId in ipairs(string.splitToNumber(characterCo.relicIds, "#")) do
+							local rewardMo = DiceHeroRewardMo.New()
 
-							var_4_23.id = iter_4_5
-							var_4_23.type = DiceHeroEnum.RewardType.Relic
-							var_4_23.index = iter_4_2
+							rewardMo.id = relicId
+							rewardMo.type = DiceHeroEnum.RewardType.Relic
+							rewardMo.index = k
 
-							table.insert(var_4_21, var_4_23)
+							table.insert(rewardItem, rewardMo)
 						end
 					end
 
-					if not string.nilorempty(var_4_22.skilllist) then
-						for iter_4_6, iter_4_7 in ipairs(string.splitToNumber(var_4_22.skilllist, "#")) do
-							local var_4_24 = DiceHeroRewardMo.New()
+					if not string.nilorempty(characterCo.skilllist) then
+						for _, skillId in ipairs(string.splitToNumber(characterCo.skilllist, "#")) do
+							local rewardMo = DiceHeroRewardMo.New()
 
-							var_4_24.id = iter_4_7
-							var_4_24.type = DiceHeroEnum.RewardType.SkillCard
-							var_4_24.index = iter_4_2
+							rewardMo.id = skillId
+							rewardMo.type = DiceHeroEnum.RewardType.SkillCard
+							rewardMo.index = k
 
-							table.insert(var_4_21, var_4_24)
+							table.insert(rewardItem, rewardMo)
 						end
 					end
 				else
-					iter_4_3.index = iter_4_2
+					v.index = k
 
-					table.insert(var_4_21, iter_4_3)
+					table.insert(rewardItem, v)
 				end
 			end
 		else
-			for iter_4_8, iter_4_9 in ipairs(var_4_1.rewardItems) do
-				iter_4_9.isShowAll = nil
+			for k, v in ipairs(gameInfo.rewardItems) do
+				v.isShowAll = nil
 			end
 		end
 
-		arg_4_0._rewardItem = var_4_21
+		self._rewardItem = rewardItem
 
-		gohelper.CreateObjList(arg_4_0, arg_4_0._createRewardItem, var_4_21, arg_4_0._goreward, arg_4_0._gorewarditem, nil, nil, nil, 1)
-		gohelper.setAsLastSibling(arg_4_0._goreward)
-		table.insert(var_4_3, arg_4_0._goreward)
+		gohelper.CreateObjList(self, self._createRewardItem, rewardItem, self._goreward, self._gorewarditem, nil, nil, nil, 1)
+		gohelper.setAsLastSibling(self._goreward)
+		table.insert(contentGos, self._goreward)
 	end
 
-	gohelper.setActive(arg_4_0._goreward, false)
+	gohelper.setActive(self._goreward, false)
 
-	arg_4_0._contentGos = var_4_3
-	arg_4_0._contentTxts = var_4_4
+	self._contentGos = contentGos
+	self._contentTxts = contentTxts
 
-	gohelper.setActive(arg_4_0._goarrow, true)
-	arg_4_0:nextStep()
-	TaskDispatcher.runRepeat(arg_4_0._autoSpeak, arg_4_0, 0.02)
+	gohelper.setActive(self._goarrow, true)
+	self:nextStep()
+	TaskDispatcher.runRepeat(self._autoSpeak, self, 0.02)
 
-	if arg_4_0._rewardItem and var_4_0.isSkip == 1 then
-		arg_4_0:_realSkipStory()
+	if self._rewardItem and co.isSkip == 1 then
+		self:_realSkipStory()
 	end
 end
 
-function var_0_0.onTouchDown(arg_5_0)
+function DiceHeroTalkView:onTouchDown()
 	if not ViewHelper.instance:checkViewOnTheTop(ViewName.DiceHeroTalkView) then
-		arg_5_0._isKeyDown = false
+		self._isKeyDown = false
 
 		return
 	end
 
-	if not arg_5_0._tweenId then
-		arg_5_0._isKeyDown = true
+	if not self._tweenId then
+		self._isKeyDown = true
 	end
 end
 
-function var_0_0._clickSpace(arg_6_0)
-	if not arg_6_0._tweenId then
-		arg_6_0:nextStep()
+function DiceHeroTalkView:_clickSpace()
+	if not self._tweenId then
+		self:nextStep()
 	end
 end
 
-function var_0_0.onTouchUp(arg_7_0)
+function DiceHeroTalkView:onTouchUp()
 	if not ViewHelper.instance:checkViewOnTheTop(ViewName.DiceHeroTalkView) then
 		return
 	end
 
-	if arg_7_0._isKeyDown then
-		if arg_7_0._contentGos[1] then
-			arg_7_0:nextStep()
+	if self._isKeyDown then
+		if self._contentGos[1] then
+			self:nextStep()
 		else
-			local var_7_0 = DiceHeroModel.instance:getGameInfo(arg_7_0._co.chapter)
+			local gameInfo = DiceHeroModel.instance:getGameInfo(self._co.chapter)
 
-			if not var_7_0:hasReward() and var_7_0.currLevel == arg_7_0._co.id or var_7_0.currLevel ~= arg_7_0._co.id then
-				if not arg_7_0._isSendStat then
+			if not gameInfo:hasReward() and gameInfo.currLevel == self._co.id or gameInfo.currLevel ~= self._co.id then
+				if not self._isSendStat then
 					DiceHeroStatHelper.instance:sendStoryEnd(true, false)
 				end
 
-				arg_7_0._isSendStat = true
+				self._isSendStat = true
 
-				arg_7_0:closeThis()
+				self:closeThis()
 			end
 		end
 	end
 end
 
-function var_0_0.onScrollValueChanged(arg_8_0, arg_8_1, arg_8_2)
-	if math.abs(arg_8_2) > 0.05 then
-		arg_8_0._isKeyDown = false
+function DiceHeroTalkView:onScrollValueChanged(scrollX, scrollY)
+	if math.abs(scrollY) > 0.05 then
+		self._isKeyDown = false
 	end
 end
 
-function var_0_0._autoSpeak(arg_9_0)
-	if not arg_9_0._curTxtData or arg_9_0._curTxtData.isEnd then
-		if arg_9_0._curTxtData and not arg_9_0._curTxtData.isScrollEnd then
-			arg_9_0._curTxtData.isScrollEnd = true
-			arg_9_0.scrollContent.verticalNormalizedPosition = 0
+function DiceHeroTalkView:_autoSpeak()
+	if not self._curTxtData or self._curTxtData.isEnd then
+		if self._curTxtData and not self._curTxtData.isScrollEnd then
+			self._curTxtData.isScrollEnd = true
+			self.scrollContent.verticalNormalizedPosition = 0
 		end
 
 		return
 	end
 
-	local var_9_0 = (arg_9_0._curTxtData.index or 0) + 1
+	local curIndex = self._curTxtData.index or 0
 
-	arg_9_0._curTxtData.index = var_9_0
-	arg_9_0._curTxtData.txt.text = table.concat(arg_9_0._curTxtData.chars, "", 1, var_9_0)
-	arg_9_0._curTxtData.isEnd = var_9_0 >= #arg_9_0._curTxtData.chars
-	arg_9_0.scrollContent.verticalNormalizedPosition = 0
+	curIndex = curIndex + 1
+	self._curTxtData.index = curIndex
+	self._curTxtData.txt.text = table.concat(self._curTxtData.chars, "", 1, curIndex)
+	self._curTxtData.isEnd = curIndex >= #self._curTxtData.chars
+	self.scrollContent.verticalNormalizedPosition = 0
 
-	if arg_9_0._curTxtData.isEnd then
-		if arg_9_0._curTxtData then
-			local var_9_1 = arg_9_0._curTxtData
+	if self._curTxtData.isEnd then
+		if self._curTxtData then
+			local txtData = self._curTxtData
 
 			TaskDispatcher.runDelay(function()
-				var_9_1.conMark:SetMarksTop(var_9_1.markTopList)
+				txtData.conMark:SetMarksTop(txtData.markTopList)
 			end, nil, 0.01)
 		end
 
@@ -275,317 +278,317 @@ function var_0_0._autoSpeak(arg_9_0)
 	end
 end
 
-function var_0_0.nextStep(arg_11_0)
-	if arg_11_0._curTxtData and not arg_11_0._curTxtData.isEnd then
-		arg_11_0._curTxtData.index = #arg_11_0._curTxtData.chars - 1
+function DiceHeroTalkView:nextStep()
+	if self._curTxtData and not self._curTxtData.isEnd then
+		self._curTxtData.index = #self._curTxtData.chars - 1
 
 		return
 	end
 
-	if arg_11_0._curTxtData then
-		local var_11_0 = arg_11_0._curTxtData
+	if self._curTxtData then
+		local txtData = self._curTxtData
 
 		TaskDispatcher.runDelay(function()
-			var_11_0.conMark:SetMarksTop(var_11_0.markTopList)
+			txtData.conMark:SetMarksTop(txtData.markTopList)
 		end, nil, 0.01)
 	end
 
-	local var_11_1 = table.remove(arg_11_0._contentGos, 1)
+	local go = table.remove(self._contentGos, 1)
 
-	arg_11_0._curTxtData = table.remove(arg_11_0._contentTxts, 1)
+	self._curTxtData = table.remove(self._contentTxts, 1)
 
-	if arg_11_0._curTxtData then
-		DiceHeroModel.instance.stepId = arg_11_0._curTxtData.stepId or DiceHeroModel.instance.stepId
+	if self._curTxtData then
+		DiceHeroModel.instance.stepId = self._curTxtData.stepId or DiceHeroModel.instance.stepId
 
 		AudioMgr.instance:trigger(AudioEnum2_6.DiceHero.play_ui_feichi_yure_caption)
 	else
-		gohelper.setActive(arg_11_0._btnSkip, false)
+		gohelper.setActive(self._btnSkip, false)
 	end
 
-	if not var_11_1 then
-		gohelper.setActive(arg_11_0._goarrow, false)
-		arg_11_0:checkSendLevelReq()
+	if not go then
+		gohelper.setActive(self._goarrow, false)
+		self:checkSendLevelReq()
 
 		return
 	end
 
-	if not arg_11_0._contentGos[1] then
-		gohelper.setActive(arg_11_0._goarrow, false)
-		arg_11_0:checkSendLevelReq()
+	if not self._contentGos[1] then
+		gohelper.setActive(self._goarrow, false)
+		self:checkSendLevelReq()
 	end
 
-	gohelper.setActive(var_11_1, true)
-	ZProj.UGUIHelper.RebuildLayout(arg_11_0._transcontent)
+	gohelper.setActive(go, true)
+	ZProj.UGUIHelper.RebuildLayout(self._transcontent)
 
-	local var_11_2 = recthelper.getHeight(arg_11_0._transcontent)
-	local var_11_3 = recthelper.getHeight(arg_11_0._transscroll)
+	local height1 = recthelper.getHeight(self._transcontent)
+	local height2 = recthelper.getHeight(self._transscroll)
 
-	arg_11_0:killTween()
+	self:killTween()
 
-	if var_11_3 < var_11_2 and not arg_11_0._curTxtData then
-		local var_11_4 = recthelper.getHeight(arg_11_0._goreward.transform)
-		local var_11_5 = Mathf.Clamp(1 - (var_11_2 - var_11_4) / (var_11_2 - var_11_3), 0, 1)
+	if height2 < height1 and not self._curTxtData then
+		local height3 = recthelper.getHeight(self._goreward.transform)
+		local toPos = Mathf.Clamp(1 - (height1 - height3) / (height1 - height2), 0, 1)
 
-		arg_11_0._tweenId = ZProj.TweenHelper.DOTweenFloat(arg_11_0.scrollContent.verticalNormalizedPosition, var_11_5, 0.3, arg_11_0.tweenFrameCallback, arg_11_0.tweenFinishCallback, arg_11_0)
+		self._tweenId = ZProj.TweenHelper.DOTweenFloat(self.scrollContent.verticalNormalizedPosition, toPos, 0.3, self.tweenFrameCallback, self.tweenFinishCallback, self)
 	end
 end
 
-function var_0_0._skipStory(arg_13_0)
-	GameFacade.showMessageBox(MessageBoxIdDefine.StorySkipConfirm, MsgBoxEnum.BoxType.Yes_No, arg_13_0._realSkipStory, nil, nil, arg_13_0)
+function DiceHeroTalkView:_skipStory()
+	GameFacade.showMessageBox(MessageBoxIdDefine.StorySkipConfirm, MsgBoxEnum.BoxType.Yes_No, self._realSkipStory, nil, nil, self)
 end
 
-function var_0_0._realSkipStory(arg_14_0)
-	if not arg_14_0._rewardItem then
-		if not arg_14_0:checkSendLevelReq(true) then
-			arg_14_0:closeThis()
+function DiceHeroTalkView:_realSkipStory()
+	if not self._rewardItem then
+		if not self:checkSendLevelReq(true) then
+			self:closeThis()
 		end
 
 		return
 	end
 
-	if arg_14_0._curTxtData then
-		arg_14_0._curTxtData.txt.text = table.concat(arg_14_0._curTxtData.chars, "")
-		arg_14_0._curTxtData = nil
+	if self._curTxtData then
+		self._curTxtData.txt.text = table.concat(self._curTxtData.chars, "")
+		self._curTxtData = nil
 	end
 
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0._contentTxts) do
-		iter_14_1.txt.text = table.concat(iter_14_1.chars, "")
+	for i, v in ipairs(self._contentTxts) do
+		v.txt.text = table.concat(v.chars, "")
 	end
 
-	tabletool.clear(arg_14_0._contentTxts)
+	tabletool.clear(self._contentTxts)
 
-	for iter_14_2, iter_14_3 in ipairs(arg_14_0._contentGos) do
-		gohelper.setActive(iter_14_3, true)
+	for i, v in ipairs(self._contentGos) do
+		gohelper.setActive(v, true)
 	end
 
-	tabletool.clear(arg_14_0._contentGos)
-	ZProj.UGUIHelper.RebuildLayout(arg_14_0._transcontent)
+	tabletool.clear(self._contentGos)
+	ZProj.UGUIHelper.RebuildLayout(self._transcontent)
 
-	local var_14_0 = recthelper.getHeight(arg_14_0._transcontent)
-	local var_14_1 = recthelper.getHeight(arg_14_0._transscroll)
-	local var_14_2 = recthelper.getHeight(arg_14_0._goreward.transform)
+	local height1 = recthelper.getHeight(self._transcontent)
+	local height2 = recthelper.getHeight(self._transscroll)
+	local height3 = recthelper.getHeight(self._goreward.transform)
 
-	arg_14_0.scrollContent.verticalNormalizedPosition = Mathf.Clamp(1 - (var_14_0 - var_14_2) / (var_14_0 - var_14_1), 0, 1)
+	self.scrollContent.verticalNormalizedPosition = Mathf.Clamp(1 - (height1 - height3) / (height1 - height2), 0, 1)
 
-	gohelper.setActive(arg_14_0._btnSkip, false)
-	gohelper.setActive(arg_14_0._goarrow, false)
+	gohelper.setActive(self._btnSkip, false)
+	gohelper.setActive(self._goarrow, false)
 end
 
-function var_0_0.checkSendLevelReq(arg_15_0, arg_15_1)
-	local var_15_0 = DiceHeroModel.instance:getGameInfo(arg_15_0._co.chapter)
+function DiceHeroTalkView:checkSendLevelReq(isSkip)
+	local gameInfo = DiceHeroModel.instance:getGameInfo(self._co.chapter)
 
-	if var_15_0.currLevel == arg_15_0._co.id and not var_15_0.allPass and arg_15_0._co.rewardSelectType == DiceHeroEnum.GetRewardType.None then
-		if arg_15_1 then
-			DiceHeroRpc.instance:sendDiceHeroEnterStory(arg_15_0._co.id, arg_15_0._co.chapter, arg_15_0.closeThis, arg_15_0)
+	if gameInfo.currLevel == self._co.id and not gameInfo.allPass and self._co.rewardSelectType == DiceHeroEnum.GetRewardType.None then
+		if isSkip then
+			DiceHeroRpc.instance:sendDiceHeroEnterStory(self._co.id, self._co.chapter, self.closeThis, self)
 		else
-			DiceHeroRpc.instance:sendDiceHeroEnterStory(arg_15_0._co.id, arg_15_0._co.chapter)
+			DiceHeroRpc.instance:sendDiceHeroEnterStory(self._co.id, self._co.chapter)
 		end
 
 		DiceHeroStatHelper.instance:sendStoryEnd(true, true)
 
-		arg_15_0._isSendStat = true
+		self._isSendStat = true
 
 		return true
 	end
 end
 
-function var_0_0.tweenFrameCallback(arg_16_0, arg_16_1)
-	arg_16_0.scrollContent.verticalNormalizedPosition = arg_16_1
+function DiceHeroTalkView:tweenFrameCallback(value)
+	self.scrollContent.verticalNormalizedPosition = value
 end
 
-function var_0_0.tweenFinishCallback(arg_17_0)
-	arg_17_0._tweenId = nil
+function DiceHeroTalkView:tweenFinishCallback()
+	self._tweenId = nil
 end
 
-function var_0_0.killTween(arg_18_0)
-	if arg_18_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_18_0._tweenId)
+function DiceHeroTalkView:killTween()
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_18_0._tweenId = nil
+		self._tweenId = nil
 	end
 end
 
-function var_0_0._createRewardItem(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
-	local var_19_0 = gohelper.findChildTextMesh(arg_19_1, "#txt_title")
-	local var_19_1 = gohelper.findChildTextMesh(arg_19_1, "scroll_desc/viewport/#txt_desc")
-	local var_19_2 = gohelper.findChild(arg_19_1, "scroll_desc"):GetComponent(typeof(ZProj.LimitedScrollRect))
-	local var_19_3 = gohelper.findChildButtonWithAudio(arg_19_1, "#btn_choose")
-	local var_19_4 = gohelper.findChild(arg_19_1, "#btn_choose/line")
-	local var_19_5 = gohelper.findChildSingleImage(arg_19_1, "headbg/#simage_icon")
-	local var_19_6 = gohelper.findChildImage(arg_19_1, "headbg/#go_cardicon")
-	local var_19_7 = gohelper.findChild(arg_19_1, "bg")
-	local var_19_8 = gohelper.findChildAnim(arg_19_1, "")
+function DiceHeroTalkView:_createRewardItem(obj, data, index)
+	local title = gohelper.findChildTextMesh(obj, "#txt_title")
+	local desc = gohelper.findChildTextMesh(obj, "scroll_desc/viewport/#txt_desc")
+	local scrollview = gohelper.findChild(obj, "scroll_desc"):GetComponent(typeof(ZProj.LimitedScrollRect))
+	local btn = gohelper.findChildButtonWithAudio(obj, "#btn_choose")
+	local btnLine = gohelper.findChild(obj, "#btn_choose/line")
+	local image = gohelper.findChildSingleImage(obj, "headbg/#simage_icon")
+	local card = gohelper.findChildImage(obj, "headbg/#go_cardicon")
+	local bg = gohelper.findChild(obj, "bg")
+	local anim = gohelper.findChildAnim(obj, "")
 
-	var_19_2.parentGameObject = arg_19_0._scrollRoot
+	scrollview.parentGameObject = self._scrollRoot
 
-	if arg_19_0._noShowBg then
-		gohelper.setActive(var_19_7, false)
-		gohelper.setActive(var_19_4, false)
+	if self._noShowBg then
+		gohelper.setActive(bg, false)
+		gohelper.setActive(btnLine, false)
 
-		if arg_19_2.type ~= DiceHeroEnum.RewardType.Hero then
-			gohelper.setActive(var_19_3, false)
+		if data.type ~= DiceHeroEnum.RewardType.Hero then
+			gohelper.setActive(btn, false)
 		end
 	end
 
-	arg_19_2.anim = var_19_8
+	data.anim = anim
 
-	arg_19_0:removeClickCb(var_19_3)
-	arg_19_0:addClickCb(var_19_3, arg_19_0._onClickSelect, arg_19_0, {
-		index = arg_19_2.index or arg_19_3,
-		data = arg_19_2
+	self:removeClickCb(btn)
+	self:addClickCb(btn, self._onClickSelect, self, {
+		index = data.index or index,
+		data = data
 	})
-	gohelper.setActive(var_19_6, false)
-	gohelper.setActive(var_19_5, true)
+	gohelper.setActive(card, false)
+	gohelper.setActive(image, true)
 
-	if arg_19_2.type == DiceHeroEnum.RewardType.Hero then
-		local var_19_9 = lua_dice_character.configDict[arg_19_2.id]
+	if data.type == DiceHeroEnum.RewardType.Hero then
+		local co = lua_dice_character.configDict[data.id]
 
-		var_19_0.text = var_19_9 and var_19_9.name or ""
-		var_19_1.text = var_19_9 and var_19_9.desc or ""
+		title.text = co and co.name or ""
+		desc.text = co and co.desc or ""
 
-		var_19_5:LoadImage(ResUrl.getHeadIconSmall(var_19_9.icon))
-	elseif arg_19_2.type == DiceHeroEnum.RewardType.SkillCard then
-		local var_19_10 = lua_dice_card.configDict[arg_19_2.id]
+		image:LoadImage(ResUrl.getHeadIconSmall(co.icon))
+	elseif data.type == DiceHeroEnum.RewardType.SkillCard then
+		local co = lua_dice_card.configDict[data.id]
 
-		var_19_0.text = var_19_10 and var_19_10.name or ""
-		var_19_1.text = var_19_10 and var_19_10.desc or ""
+		title.text = co and co.name or ""
+		desc.text = co and co.desc or ""
 
-		UISpriteSetMgr.instance:setDiceHeroSprite(var_19_6, "dicehero_cardicon_" .. var_19_10.quality)
-		gohelper.setActive(var_19_6, true)
-		gohelper.setActive(var_19_5, false)
-	elseif arg_19_2.type == DiceHeroEnum.RewardType.Relic then
-		local var_19_11 = lua_dice_relic.configDict[arg_19_2.id]
+		UISpriteSetMgr.instance:setDiceHeroSprite(card, "dicehero_cardicon_" .. co.quality)
+		gohelper.setActive(card, true)
+		gohelper.setActive(image, false)
+	elseif data.type == DiceHeroEnum.RewardType.Relic then
+		local co = lua_dice_relic.configDict[data.id]
 
-		var_19_0.text = var_19_11 and var_19_11.name or ""
-		var_19_1.text = var_19_11 and var_19_11.desc or ""
+		title.text = co and co.name or ""
+		desc.text = co and co.desc or ""
 
-		var_19_5:LoadImage("singlebg/v2a6_dicehero_singlebg/collection/" .. var_19_11.icon .. ".png")
+		image:LoadImage("singlebg/v2a6_dicehero_singlebg/collection/" .. co.icon .. ".png")
 	end
 
-	var_19_8:Play("open", 0, 0)
+	anim:Play("open", 0, 0)
 end
 
-function var_0_0._onClickSelect(arg_20_0, arg_20_1)
-	local var_20_0 = arg_20_1.data
+function DiceHeroTalkView:_onClickSelect(data)
+	local rewardData = data.data
 
-	if var_20_0.type == DiceHeroEnum.RewardType.Hero and arg_20_0._co.mode == 2 and not var_20_0.isShowAll then
-		var_20_0.isShowAll = true
+	if rewardData.type == DiceHeroEnum.RewardType.Hero and self._co.mode == 2 and not rewardData.isShowAll then
+		rewardData.isShowAll = true
 
 		AudioMgr.instance:trigger(AudioEnum2_6.DiceHero.play_ui_rewards)
 
-		local var_20_1 = {}
+		local rewardItem = {}
 
-		var_20_0.index = arg_20_1.index
+		rewardData.index = data.index
 
-		table.insert(var_20_1, var_20_0)
+		table.insert(rewardItem, rewardData)
 
-		local var_20_2 = lua_dice_character.configDict[var_20_0.id]
+		local characterCo = lua_dice_character.configDict[rewardData.id]
 
-		if not string.nilorempty(var_20_2.relicIds) then
-			for iter_20_0, iter_20_1 in ipairs(string.splitToNumber(var_20_2.relicIds, "#")) do
-				local var_20_3 = DiceHeroRewardMo.New()
+		if not string.nilorempty(characterCo.relicIds) then
+			for _, relicId in ipairs(string.splitToNumber(characterCo.relicIds, "#")) do
+				local rewardMo = DiceHeroRewardMo.New()
 
-				var_20_3.id = iter_20_1
-				var_20_3.type = DiceHeroEnum.RewardType.Relic
-				var_20_3.index = arg_20_1.index
+				rewardMo.id = relicId
+				rewardMo.type = DiceHeroEnum.RewardType.Relic
+				rewardMo.index = data.index
 
-				table.insert(var_20_1, var_20_3)
+				table.insert(rewardItem, rewardMo)
 			end
 		end
 
-		if not string.nilorempty(var_20_2.skilllist) then
-			for iter_20_2, iter_20_3 in ipairs(string.splitToNumber(var_20_2.skilllist, "#")) do
-				local var_20_4 = DiceHeroRewardMo.New()
+		if not string.nilorempty(characterCo.skilllist) then
+			for _, skillId in ipairs(string.splitToNumber(characterCo.skilllist, "#")) do
+				local rewardMo = DiceHeroRewardMo.New()
 
-				var_20_4.id = iter_20_3
-				var_20_4.type = DiceHeroEnum.RewardType.SkillCard
-				var_20_4.index = arg_20_1.index
+				rewardMo.id = skillId
+				rewardMo.type = DiceHeroEnum.RewardType.SkillCard
+				rewardMo.index = data.index
 
-				table.insert(var_20_1, var_20_4)
+				table.insert(rewardItem, rewardMo)
 			end
 		end
 
-		arg_20_0._rewardItem = var_20_1
+		self._rewardItem = rewardItem
 
-		var_20_0.anim:Play("finish", 0, 0)
+		rewardData.anim:Play("finish", 0, 0)
 		UIBlockHelper.instance:startBlock("DiceHeroTalkView_GetReward", 0.5)
-		TaskDispatcher.runDelay(arg_20_0._delayRefrshReward, arg_20_0, 0.5)
+		TaskDispatcher.runDelay(self._delayRefrshReward, self, 0.5)
 
 		return
 	end
 
-	local var_20_5 = DiceHeroModel.instance:getGameInfo(arg_20_0._co.chapter)
-	local var_20_6 = {}
+	local gameInfo = DiceHeroModel.instance:getGameInfo(self._co.chapter)
+	local indexes = {}
 
-	arg_20_0._allGetIndexes = {}
+	self._allGetIndexes = {}
 
-	if arg_20_0._co.rewardSelectType == DiceHeroEnum.GetRewardType.One then
-		table.insert(var_20_6, arg_20_1.index - 1)
+	if self._co.rewardSelectType == DiceHeroEnum.GetRewardType.One then
+		table.insert(indexes, data.index - 1)
 
-		arg_20_0._allGetIndexes[arg_20_1.index] = true
+		self._allGetIndexes[data.index] = true
 
 		AudioMgr.instance:trigger(AudioEnum2_6.DiceHero.play_ui_rewards)
 	else
-		for iter_20_4, iter_20_5 in ipairs(var_20_5.rewardItems) do
-			table.insert(var_20_6, iter_20_4 - 1)
+		for i, v in ipairs(gameInfo.rewardItems) do
+			table.insert(indexes, i - 1)
 
-			arg_20_0._allGetIndexes[iter_20_4] = true
+			self._allGetIndexes[i] = true
 		end
 
-		if #var_20_6 > 1 then
+		if #indexes > 1 then
 			AudioMgr.instance:trigger(AudioEnum2_6.DiceHero.play_ui_rewards_rare)
 		else
 			AudioMgr.instance:trigger(AudioEnum2_6.DiceHero.play_ui_rewards)
 		end
 	end
 
-	DiceHeroRpc.instance:sendDiceHeroGetReward(var_20_6, arg_20_0._co.chapter, arg_20_0._getReward, arg_20_0)
+	DiceHeroRpc.instance:sendDiceHeroGetReward(indexes, self._co.chapter, self._getReward, self)
 end
 
-function var_0_0._delayRefrshReward(arg_21_0)
-	gohelper.setActive(arg_21_0._rewardFullBg, true)
+function DiceHeroTalkView:_delayRefrshReward()
+	gohelper.setActive(self._rewardFullBg, true)
 
-	arg_21_0._noShowBg = true
+	self._noShowBg = true
 
-	gohelper.CreateObjList(arg_21_0, arg_21_0._createRewardItem, arg_21_0._rewardItem, arg_21_0._goreward, arg_21_0._gorewarditem, nil, nil, nil, 1)
+	gohelper.CreateObjList(self, self._createRewardItem, self._rewardItem, self._goreward, self._gorewarditem, nil, nil, nil, 1)
 end
 
-function var_0_0._getReward(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
-	if arg_22_2 == 0 then
-		for iter_22_0, iter_22_1 in ipairs(arg_22_0._rewardItem) do
-			local var_22_0 = iter_22_1.index or iter_22_0
+function DiceHeroTalkView:_getReward(cmd, resultCode, msg)
+	if resultCode == 0 then
+		for i, v in ipairs(self._rewardItem) do
+			local index = v.index or i
 
-			if arg_22_0._allGetIndexes[var_22_0] then
-				iter_22_1.anim:Play("finish", 0, 0)
+			if self._allGetIndexes[index] then
+				v.anim:Play("finish", 0, 0)
 			end
 		end
 
 		UIBlockHelper.instance:startBlock("DiceHeroTalkView_GetReward", 0.5)
-		TaskDispatcher.runDelay(arg_22_0.closeThis, arg_22_0, 0.5)
+		TaskDispatcher.runDelay(self.closeThis, self, 0.5)
 
-		if arg_22_0._co.type == 1 then
+		if self._co.type == 1 then
 			DiceHeroStatHelper.instance:sendStoryEnd(true, true)
 
-			arg_22_0._isSendStat = true
+			self._isSendStat = true
 		end
 	end
 end
 
-function var_0_0.onDestroyView(arg_23_0)
-	TaskDispatcher.cancelTask(arg_23_0._delayRefrshReward, arg_23_0)
-	TaskDispatcher.cancelTask(arg_23_0._autoSpeak, arg_23_0)
-	TaskDispatcher.cancelTask(arg_23_0.closeThis, arg_23_0)
-	arg_23_0:killTween()
+function DiceHeroTalkView:onDestroyView()
+	TaskDispatcher.cancelTask(self._delayRefrshReward, self)
+	TaskDispatcher.cancelTask(self._autoSpeak, self)
+	TaskDispatcher.cancelTask(self.closeThis, self)
+	self:killTween()
 
-	arg_23_0._contentGos = {}
+	self._contentGos = {}
 
 	AudioMgr.instance:trigger(AudioEnum2_6.DiceHero.stop_ui_feichi_yure_caption)
 end
 
-function var_0_0.onClose(arg_24_0)
+function DiceHeroTalkView:onClose()
 	if DiceHeroModel.instance.isUnlockNewChapter then
 		ViewMgr.instance:closeView(ViewName.DiceHeroLevelView)
 	end
 end
 
-return var_0_0
+return DiceHeroTalkView

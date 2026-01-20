@@ -1,241 +1,230 @@
-﻿module("modules.common.utils.GameLuaMD5", package.seeall)
+﻿-- chunkname: @modules/common/utils/GameLuaMD5.lua
 
-local var_0_0 = {}
-local var_0_1 = string.char
-local var_0_2 = string.byte
-local var_0_3 = string.format
-local var_0_4 = string.rep
-local var_0_5 = string.sub
-local var_0_6
-local var_0_7
-local var_0_8
-local var_0_9
-local var_0_10
-local var_0_11
-local var_0_12, var_0_13 = pcall(require, "bit")
+module("modules.common.utils.GameLuaMD5", package.seeall)
 
-if var_0_12 then
-	var_0_6, var_0_7, var_0_8, var_0_9, var_0_10, var_0_11 = var_0_13.bor, var_0_13.band, var_0_13.bnot, var_0_13.bxor, var_0_13.rshift, var_0_13.lshift
+local GameLuaMD5 = {}
+local char, byte, format, rep, sub = string.char, string.byte, string.format, string.rep, string.sub
+local bit_or, bit_and, bit_not, bit_xor, bit_rshift, bit_lshift
+local ok, bit = pcall(require, "bit")
+
+if ok then
+	bit_or, bit_and, bit_not, bit_xor, bit_rshift, bit_lshift = bit.bor, bit.band, bit.bnot, bit.bxor, bit.rshift, bit.lshift
 else
-	local var_0_14, var_0_15 = pcall(require, "bit32")
-	local var_0_16 = var_0_15
+	ok, bit = pcall(require, "bit32")
 
-	if var_0_14 then
-		var_0_8 = var_0_16.bnot
+	if ok then
+		bit_not = bit.bnot
 
-		local function var_0_17(arg_1_0)
-			return arg_1_0 <= 2147483647 and arg_1_0 or -(var_0_8(arg_1_0) + 1)
+		local function tobit(n)
+			return n <= 2147483647 and n or -(bit_not(n) + 1)
 		end
 
-		local function var_0_18(arg_2_0)
-			return function(arg_3_0, arg_3_1)
-				return var_0_17(arg_2_0(var_0_17(arg_3_0), var_0_17(arg_3_1)))
+		local function normalize(f)
+			return function(a, b)
+				return tobit(f(tobit(a), tobit(b)))
 			end
 		end
 
-		var_0_6, var_0_7, var_0_9 = var_0_18(var_0_16.bor), var_0_18(var_0_16.band), var_0_18(var_0_16.bxor)
-		var_0_10, var_0_11 = var_0_18(var_0_16.rshift), var_0_18(var_0_16.lshift)
+		bit_or, bit_and, bit_xor = normalize(bit.bor), normalize(bit.band), normalize(bit.bxor)
+		bit_rshift, bit_lshift = normalize(bit.rshift), normalize(bit.lshift)
 	else
-		local function var_0_19(arg_4_0)
-			local var_4_0 = 0
-			local var_4_1 = 1
+		local function tbl2number(tbl)
+			local result = 0
+			local power = 1
 
-			for iter_4_0 = 1, #arg_4_0 do
-				var_4_0 = var_4_0 + arg_4_0[iter_4_0] * var_4_1
-				var_4_1 = var_4_1 * 2
+			for i = 1, #tbl do
+				result = result + tbl[i] * power
+				power = power * 2
 			end
 
-			return var_4_0
+			return result
 		end
 
-		local function var_0_20(arg_5_0, arg_5_1)
-			local var_5_0 = arg_5_0
-			local var_5_1 = arg_5_1
+		local function expand(t1, t2)
+			local big, small = t1, t2
 
-			if #var_5_0 < #var_5_1 then
-				var_5_0, var_5_1 = var_5_1, var_5_0
+			if #big < #small then
+				big, small = small, big
 			end
 
-			for iter_5_0 = #var_5_1 + 1, #var_5_0 do
-				var_5_1[iter_5_0] = 0
+			for i = #small + 1, #big do
+				small[i] = 0
 			end
 		end
 
-		local var_0_21
+		local to_bits
 
-		function var_0_8(arg_6_0)
-			local var_6_0 = var_0_21(arg_6_0)
-			local var_6_1 = math.max(#var_6_0, 32)
+		function bit_not(n)
+			local tbl = to_bits(n)
+			local size = math.max(#tbl, 32)
 
-			for iter_6_0 = 1, var_6_1 do
-				if var_6_0[iter_6_0] == 1 then
-					var_6_0[iter_6_0] = 0
+			for i = 1, size do
+				if tbl[i] == 1 then
+					tbl[i] = 0
 				else
-					var_6_0[iter_6_0] = 1
+					tbl[i] = 1
 				end
 			end
 
-			return var_0_19(var_6_0)
+			return tbl2number(tbl)
 		end
 
-		function var_0_21(arg_7_0)
-			if arg_7_0 < 0 then
-				return var_0_21(var_0_8(math.abs(arg_7_0)) + 1)
+		function to_bits(n)
+			if n < 0 then
+				return to_bits(bit_not(math.abs(n)) + 1)
 			end
 
-			local var_7_0 = {}
-			local var_7_1 = 1
-			local var_7_2
+			local tbl = {}
+			local cnt = 1
+			local last
 
-			while arg_7_0 > 0 do
-				local var_7_3 = arg_7_0 % 2
-
-				var_7_0[var_7_1] = var_7_3
-				arg_7_0 = (arg_7_0 - var_7_3) / 2
-				var_7_1 = var_7_1 + 1
+			while n > 0 do
+				last = n % 2
+				tbl[cnt] = last
+				n = (n - last) / 2
+				cnt = cnt + 1
 			end
 
-			return var_7_0
+			return tbl
 		end
 
-		function var_0_6(arg_8_0, arg_8_1)
-			local var_8_0 = var_0_21(arg_8_0)
-			local var_8_1 = var_0_21(arg_8_1)
+		function bit_or(m, n)
+			local tbl_m = to_bits(m)
+			local tbl_n = to_bits(n)
 
-			var_0_20(var_8_0, var_8_1)
+			expand(tbl_m, tbl_n)
 
-			local var_8_2 = {}
+			local tbl = {}
 
-			for iter_8_0 = 1, #var_8_0 do
-				if var_8_0[iter_8_0] == 0 and var_8_1[iter_8_0] == 0 then
-					var_8_2[iter_8_0] = 0
+			for i = 1, #tbl_m do
+				if tbl_m[i] == 0 and tbl_n[i] == 0 then
+					tbl[i] = 0
 				else
-					var_8_2[iter_8_0] = 1
+					tbl[i] = 1
 				end
 			end
 
-			return var_0_19(var_8_2)
+			return tbl2number(tbl)
 		end
 
-		function var_0_7(arg_9_0, arg_9_1)
-			local var_9_0 = var_0_21(arg_9_0)
-			local var_9_1 = var_0_21(arg_9_1)
+		function bit_and(m, n)
+			local tbl_m = to_bits(m)
+			local tbl_n = to_bits(n)
 
-			var_0_20(var_9_0, var_9_1)
+			expand(tbl_m, tbl_n)
 
-			local var_9_2 = {}
+			local tbl = {}
 
-			for iter_9_0 = 1, #var_9_0 do
-				if var_9_0[iter_9_0] == 0 or var_9_1[iter_9_0] == 0 then
-					var_9_2[iter_9_0] = 0
+			for i = 1, #tbl_m do
+				if tbl_m[i] == 0 or tbl_n[i] == 0 then
+					tbl[i] = 0
 				else
-					var_9_2[iter_9_0] = 1
+					tbl[i] = 1
 				end
 			end
 
-			return var_0_19(var_9_2)
+			return tbl2number(tbl)
 		end
 
-		function var_0_9(arg_10_0, arg_10_1)
-			local var_10_0 = var_0_21(arg_10_0)
-			local var_10_1 = var_0_21(arg_10_1)
+		function bit_xor(m, n)
+			local tbl_m = to_bits(m)
+			local tbl_n = to_bits(n)
 
-			var_0_20(var_10_0, var_10_1)
+			expand(tbl_m, tbl_n)
 
-			local var_10_2 = {}
+			local tbl = {}
 
-			for iter_10_0 = 1, #var_10_0 do
-				if var_10_0[iter_10_0] ~= var_10_1[iter_10_0] then
-					var_10_2[iter_10_0] = 1
+			for i = 1, #tbl_m do
+				if tbl_m[i] ~= tbl_n[i] then
+					tbl[i] = 1
 				else
-					var_10_2[iter_10_0] = 0
+					tbl[i] = 0
 				end
 			end
 
-			return var_0_19(var_10_2)
+			return tbl2number(tbl)
 		end
 
-		function var_0_10(arg_11_0, arg_11_1)
-			local var_11_0 = 0
+		function bit_rshift(n, bits)
+			local high_bit = 0
 
-			if arg_11_0 < 0 then
-				arg_11_0 = var_0_8(math.abs(arg_11_0)) + 1
-				var_11_0 = 2147483648
+			if n < 0 then
+				n = bit_not(math.abs(n)) + 1
+				high_bit = 2147483648
 			end
 
-			local var_11_1 = math.floor
+			local floor = math.floor
 
-			for iter_11_0 = 1, arg_11_1 do
-				arg_11_0 = arg_11_0 / 2
-				arg_11_0 = var_0_6(var_11_1(arg_11_0), var_11_0)
+			for i = 1, bits do
+				n = n / 2
+				n = bit_or(floor(n), high_bit)
 			end
 
-			return var_11_1(arg_11_0)
+			return floor(n)
 		end
 
-		function var_0_11(arg_12_0, arg_12_1)
-			if arg_12_0 < 0 then
-				arg_12_0 = var_0_8(math.abs(arg_12_0)) + 1
+		function bit_lshift(n, bits)
+			if n < 0 then
+				n = bit_not(math.abs(n)) + 1
 			end
 
-			for iter_12_0 = 1, arg_12_1 do
-				arg_12_0 = arg_12_0 * 2
+			for i = 1, bits do
+				n = n * 2
 			end
 
-			return var_0_7(arg_12_0, 4294967295)
+			return bit_and(n, 4294967295)
 		end
 	end
 end
 
-local function var_0_22(arg_13_0)
-	local function var_13_0(arg_14_0)
-		return var_0_1(var_0_7(var_0_10(arg_13_0, arg_14_0), 255))
+local function lei2str(i)
+	local function f(s)
+		return char(bit_and(bit_rshift(i, s), 255))
 	end
 
-	return var_13_0(0) .. var_13_0(8) .. var_13_0(16) .. var_13_0(24)
+	return f(0) .. f(8) .. f(16) .. f(24)
 end
 
-local function var_0_23(arg_15_0)
-	local var_15_0 = 0
+local function str2bei(s)
+	local v = 0
 
-	for iter_15_0 = 1, #arg_15_0 do
-		var_15_0 = var_15_0 * 256 + var_0_2(arg_15_0, iter_15_0)
+	for i = 1, #s do
+		v = v * 256 + byte(s, i)
 	end
 
-	return var_15_0
+	return v
 end
 
-local function var_0_24(arg_16_0)
-	local var_16_0 = 0
+local function str2lei(s)
+	local v = 0
 
-	for iter_16_0 = #arg_16_0, 1, -1 do
-		var_16_0 = var_16_0 * 256 + var_0_2(arg_16_0, iter_16_0)
+	for i = #s, 1, -1 do
+		v = v * 256 + byte(s, i)
 	end
 
-	return var_16_0
+	return v
 end
 
-local function var_0_25(arg_17_0, ...)
-	local var_17_0 = 1
-	local var_17_1 = {}
-	local var_17_2 = {
+local function cut_le_str(s, ...)
+	local o, r = 1, {}
+	local args = {
 		...
 	}
 
-	for iter_17_0 = 1, #var_17_2 do
-		table.insert(var_17_1, var_0_24(var_0_5(arg_17_0, var_17_0, var_17_0 + var_17_2[iter_17_0] - 1)))
+	for i = 1, #args do
+		table.insert(r, str2lei(sub(s, o, o + args[i] - 1)))
 
-		var_17_0 = var_17_0 + var_17_2[iter_17_0]
+		o = o + args[i]
 	end
 
-	return var_17_1
+	return r
 end
 
-local function var_0_26(arg_18_0)
-	return var_0_23(var_0_22(arg_18_0))
+local function swap(w)
+	return str2bei(lei2str(w))
 end
 
-local var_0_27 = {
+local CONSTS = {
 	3614090360,
 	3905402710,
 	606105819,
@@ -306,163 +295,161 @@ local var_0_27 = {
 	271733878
 }
 
-local function var_0_28(arg_19_0, arg_19_1, arg_19_2)
-	return var_0_6(var_0_7(arg_19_0, arg_19_1), var_0_7(-arg_19_0 - 1, arg_19_2))
+local function f(x, y, z)
+	return bit_or(bit_and(x, y), bit_and(-x - 1, z))
 end
 
-local function var_0_29(arg_20_0, arg_20_1, arg_20_2)
-	return var_0_6(var_0_7(arg_20_0, arg_20_2), var_0_7(arg_20_1, -arg_20_2 - 1))
+local function g(x, y, z)
+	return bit_or(bit_and(x, z), bit_and(y, -z - 1))
 end
 
-local function var_0_30(arg_21_0, arg_21_1, arg_21_2)
-	return var_0_9(arg_21_0, var_0_9(arg_21_1, arg_21_2))
+local function h(x, y, z)
+	return bit_xor(x, bit_xor(y, z))
 end
 
-local function var_0_31(arg_22_0, arg_22_1, arg_22_2)
-	return var_0_9(arg_22_1, var_0_6(arg_22_0, -arg_22_2 - 1))
+local function i(x, y, z)
+	return bit_xor(y, bit_or(x, -z - 1))
 end
 
-local function var_0_32(arg_23_0, arg_23_1, arg_23_2, arg_23_3, arg_23_4, arg_23_5, arg_23_6, arg_23_7)
-	arg_23_1 = var_0_7(arg_23_1 + arg_23_0(arg_23_2, arg_23_3, arg_23_4) + arg_23_5 + arg_23_7, 4294967295)
+local function z(ff, a, b, c, d, x, s, ac)
+	a = bit_and(a + ff(b, c, d) + x + ac, 4294967295)
 
-	return var_0_6(var_0_11(var_0_7(arg_23_1, var_0_10(4294967295, arg_23_6)), arg_23_6), var_0_10(arg_23_1, 32 - arg_23_6)) + arg_23_2
+	return bit_or(bit_lshift(bit_and(a, bit_rshift(4294967295, s)), s), bit_rshift(a, 32 - s)) + b
 end
 
-local function var_0_33(arg_24_0, arg_24_1, arg_24_2, arg_24_3, arg_24_4)
-	local var_24_0 = arg_24_0
-	local var_24_1 = arg_24_1
-	local var_24_2 = arg_24_2
-	local var_24_3 = arg_24_3
-	local var_24_4 = var_0_27
-	local var_24_5 = var_0_32(var_0_28, var_24_0, var_24_1, var_24_2, var_24_3, arg_24_4[0], 7, var_24_4[1])
-	local var_24_6 = var_0_32(var_0_28, var_24_3, var_24_5, var_24_1, var_24_2, arg_24_4[1], 12, var_24_4[2])
-	local var_24_7 = var_0_32(var_0_28, var_24_2, var_24_6, var_24_5, var_24_1, arg_24_4[2], 17, var_24_4[3])
-	local var_24_8 = var_0_32(var_0_28, var_24_1, var_24_7, var_24_6, var_24_5, arg_24_4[3], 22, var_24_4[4])
-	local var_24_9 = var_0_32(var_0_28, var_24_5, var_24_8, var_24_7, var_24_6, arg_24_4[4], 7, var_24_4[5])
-	local var_24_10 = var_0_32(var_0_28, var_24_6, var_24_9, var_24_8, var_24_7, arg_24_4[5], 12, var_24_4[6])
-	local var_24_11 = var_0_32(var_0_28, var_24_7, var_24_10, var_24_9, var_24_8, arg_24_4[6], 17, var_24_4[7])
-	local var_24_12 = var_0_32(var_0_28, var_24_8, var_24_11, var_24_10, var_24_9, arg_24_4[7], 22, var_24_4[8])
-	local var_24_13 = var_0_32(var_0_28, var_24_9, var_24_12, var_24_11, var_24_10, arg_24_4[8], 7, var_24_4[9])
-	local var_24_14 = var_0_32(var_0_28, var_24_10, var_24_13, var_24_12, var_24_11, arg_24_4[9], 12, var_24_4[10])
-	local var_24_15 = var_0_32(var_0_28, var_24_11, var_24_14, var_24_13, var_24_12, arg_24_4[10], 17, var_24_4[11])
-	local var_24_16 = var_0_32(var_0_28, var_24_12, var_24_15, var_24_14, var_24_13, arg_24_4[11], 22, var_24_4[12])
-	local var_24_17 = var_0_32(var_0_28, var_24_13, var_24_16, var_24_15, var_24_14, arg_24_4[12], 7, var_24_4[13])
-	local var_24_18 = var_0_32(var_0_28, var_24_14, var_24_17, var_24_16, var_24_15, arg_24_4[13], 12, var_24_4[14])
-	local var_24_19 = var_0_32(var_0_28, var_24_15, var_24_18, var_24_17, var_24_16, arg_24_4[14], 17, var_24_4[15])
-	local var_24_20 = var_0_32(var_0_28, var_24_16, var_24_19, var_24_18, var_24_17, arg_24_4[15], 22, var_24_4[16])
-	local var_24_21 = var_0_32(var_0_29, var_24_17, var_24_20, var_24_19, var_24_18, arg_24_4[1], 5, var_24_4[17])
-	local var_24_22 = var_0_32(var_0_29, var_24_18, var_24_21, var_24_20, var_24_19, arg_24_4[6], 9, var_24_4[18])
-	local var_24_23 = var_0_32(var_0_29, var_24_19, var_24_22, var_24_21, var_24_20, arg_24_4[11], 14, var_24_4[19])
-	local var_24_24 = var_0_32(var_0_29, var_24_20, var_24_23, var_24_22, var_24_21, arg_24_4[0], 20, var_24_4[20])
-	local var_24_25 = var_0_32(var_0_29, var_24_21, var_24_24, var_24_23, var_24_22, arg_24_4[5], 5, var_24_4[21])
-	local var_24_26 = var_0_32(var_0_29, var_24_22, var_24_25, var_24_24, var_24_23, arg_24_4[10], 9, var_24_4[22])
-	local var_24_27 = var_0_32(var_0_29, var_24_23, var_24_26, var_24_25, var_24_24, arg_24_4[15], 14, var_24_4[23])
-	local var_24_28 = var_0_32(var_0_29, var_24_24, var_24_27, var_24_26, var_24_25, arg_24_4[4], 20, var_24_4[24])
-	local var_24_29 = var_0_32(var_0_29, var_24_25, var_24_28, var_24_27, var_24_26, arg_24_4[9], 5, var_24_4[25])
-	local var_24_30 = var_0_32(var_0_29, var_24_26, var_24_29, var_24_28, var_24_27, arg_24_4[14], 9, var_24_4[26])
-	local var_24_31 = var_0_32(var_0_29, var_24_27, var_24_30, var_24_29, var_24_28, arg_24_4[3], 14, var_24_4[27])
-	local var_24_32 = var_0_32(var_0_29, var_24_28, var_24_31, var_24_30, var_24_29, arg_24_4[8], 20, var_24_4[28])
-	local var_24_33 = var_0_32(var_0_29, var_24_29, var_24_32, var_24_31, var_24_30, arg_24_4[13], 5, var_24_4[29])
-	local var_24_34 = var_0_32(var_0_29, var_24_30, var_24_33, var_24_32, var_24_31, arg_24_4[2], 9, var_24_4[30])
-	local var_24_35 = var_0_32(var_0_29, var_24_31, var_24_34, var_24_33, var_24_32, arg_24_4[7], 14, var_24_4[31])
-	local var_24_36 = var_0_32(var_0_29, var_24_32, var_24_35, var_24_34, var_24_33, arg_24_4[12], 20, var_24_4[32])
-	local var_24_37 = var_0_32(var_0_30, var_24_33, var_24_36, var_24_35, var_24_34, arg_24_4[5], 4, var_24_4[33])
-	local var_24_38 = var_0_32(var_0_30, var_24_34, var_24_37, var_24_36, var_24_35, arg_24_4[8], 11, var_24_4[34])
-	local var_24_39 = var_0_32(var_0_30, var_24_35, var_24_38, var_24_37, var_24_36, arg_24_4[11], 16, var_24_4[35])
-	local var_24_40 = var_0_32(var_0_30, var_24_36, var_24_39, var_24_38, var_24_37, arg_24_4[14], 23, var_24_4[36])
-	local var_24_41 = var_0_32(var_0_30, var_24_37, var_24_40, var_24_39, var_24_38, arg_24_4[1], 4, var_24_4[37])
-	local var_24_42 = var_0_32(var_0_30, var_24_38, var_24_41, var_24_40, var_24_39, arg_24_4[4], 11, var_24_4[38])
-	local var_24_43 = var_0_32(var_0_30, var_24_39, var_24_42, var_24_41, var_24_40, arg_24_4[7], 16, var_24_4[39])
-	local var_24_44 = var_0_32(var_0_30, var_24_40, var_24_43, var_24_42, var_24_41, arg_24_4[10], 23, var_24_4[40])
-	local var_24_45 = var_0_32(var_0_30, var_24_41, var_24_44, var_24_43, var_24_42, arg_24_4[13], 4, var_24_4[41])
-	local var_24_46 = var_0_32(var_0_30, var_24_42, var_24_45, var_24_44, var_24_43, arg_24_4[0], 11, var_24_4[42])
-	local var_24_47 = var_0_32(var_0_30, var_24_43, var_24_46, var_24_45, var_24_44, arg_24_4[3], 16, var_24_4[43])
-	local var_24_48 = var_0_32(var_0_30, var_24_44, var_24_47, var_24_46, var_24_45, arg_24_4[6], 23, var_24_4[44])
-	local var_24_49 = var_0_32(var_0_30, var_24_45, var_24_48, var_24_47, var_24_46, arg_24_4[9], 4, var_24_4[45])
-	local var_24_50 = var_0_32(var_0_30, var_24_46, var_24_49, var_24_48, var_24_47, arg_24_4[12], 11, var_24_4[46])
-	local var_24_51 = var_0_32(var_0_30, var_24_47, var_24_50, var_24_49, var_24_48, arg_24_4[15], 16, var_24_4[47])
-	local var_24_52 = var_0_32(var_0_30, var_24_48, var_24_51, var_24_50, var_24_49, arg_24_4[2], 23, var_24_4[48])
-	local var_24_53 = var_0_32(var_0_31, var_24_49, var_24_52, var_24_51, var_24_50, arg_24_4[0], 6, var_24_4[49])
-	local var_24_54 = var_0_32(var_0_31, var_24_50, var_24_53, var_24_52, var_24_51, arg_24_4[7], 10, var_24_4[50])
-	local var_24_55 = var_0_32(var_0_31, var_24_51, var_24_54, var_24_53, var_24_52, arg_24_4[14], 15, var_24_4[51])
-	local var_24_56 = var_0_32(var_0_31, var_24_52, var_24_55, var_24_54, var_24_53, arg_24_4[5], 21, var_24_4[52])
-	local var_24_57 = var_0_32(var_0_31, var_24_53, var_24_56, var_24_55, var_24_54, arg_24_4[12], 6, var_24_4[53])
-	local var_24_58 = var_0_32(var_0_31, var_24_54, var_24_57, var_24_56, var_24_55, arg_24_4[3], 10, var_24_4[54])
-	local var_24_59 = var_0_32(var_0_31, var_24_55, var_24_58, var_24_57, var_24_56, arg_24_4[10], 15, var_24_4[55])
-	local var_24_60 = var_0_32(var_0_31, var_24_56, var_24_59, var_24_58, var_24_57, arg_24_4[1], 21, var_24_4[56])
-	local var_24_61 = var_0_32(var_0_31, var_24_57, var_24_60, var_24_59, var_24_58, arg_24_4[8], 6, var_24_4[57])
-	local var_24_62 = var_0_32(var_0_31, var_24_58, var_24_61, var_24_60, var_24_59, arg_24_4[15], 10, var_24_4[58])
-	local var_24_63 = var_0_32(var_0_31, var_24_59, var_24_62, var_24_61, var_24_60, arg_24_4[6], 15, var_24_4[59])
-	local var_24_64 = var_0_32(var_0_31, var_24_60, var_24_63, var_24_62, var_24_61, arg_24_4[13], 21, var_24_4[60])
-	local var_24_65 = var_0_32(var_0_31, var_24_61, var_24_64, var_24_63, var_24_62, arg_24_4[4], 6, var_24_4[61])
-	local var_24_66 = var_0_32(var_0_31, var_24_62, var_24_65, var_24_64, var_24_63, arg_24_4[11], 10, var_24_4[62])
-	local var_24_67 = var_0_32(var_0_31, var_24_63, var_24_66, var_24_65, var_24_64, arg_24_4[2], 15, var_24_4[63])
-	local var_24_68 = var_0_32(var_0_31, var_24_64, var_24_67, var_24_66, var_24_65, arg_24_4[9], 21, var_24_4[64])
+local function transform(A, B, C, D, X)
+	local a, b, c, d = A, B, C, D
+	local t = CONSTS
 
-	return var_0_7(arg_24_0 + var_24_65, 4294967295), var_0_7(arg_24_1 + var_24_68, 4294967295), var_0_7(arg_24_2 + var_24_67, 4294967295), var_0_7(arg_24_3 + var_24_66, 4294967295)
+	a = z(f, a, b, c, d, X[0], 7, t[1])
+	d = z(f, d, a, b, c, X[1], 12, t[2])
+	c = z(f, c, d, a, b, X[2], 17, t[3])
+	b = z(f, b, c, d, a, X[3], 22, t[4])
+	a = z(f, a, b, c, d, X[4], 7, t[5])
+	d = z(f, d, a, b, c, X[5], 12, t[6])
+	c = z(f, c, d, a, b, X[6], 17, t[7])
+	b = z(f, b, c, d, a, X[7], 22, t[8])
+	a = z(f, a, b, c, d, X[8], 7, t[9])
+	d = z(f, d, a, b, c, X[9], 12, t[10])
+	c = z(f, c, d, a, b, X[10], 17, t[11])
+	b = z(f, b, c, d, a, X[11], 22, t[12])
+	a = z(f, a, b, c, d, X[12], 7, t[13])
+	d = z(f, d, a, b, c, X[13], 12, t[14])
+	c = z(f, c, d, a, b, X[14], 17, t[15])
+	b = z(f, b, c, d, a, X[15], 22, t[16])
+	a = z(g, a, b, c, d, X[1], 5, t[17])
+	d = z(g, d, a, b, c, X[6], 9, t[18])
+	c = z(g, c, d, a, b, X[11], 14, t[19])
+	b = z(g, b, c, d, a, X[0], 20, t[20])
+	a = z(g, a, b, c, d, X[5], 5, t[21])
+	d = z(g, d, a, b, c, X[10], 9, t[22])
+	c = z(g, c, d, a, b, X[15], 14, t[23])
+	b = z(g, b, c, d, a, X[4], 20, t[24])
+	a = z(g, a, b, c, d, X[9], 5, t[25])
+	d = z(g, d, a, b, c, X[14], 9, t[26])
+	c = z(g, c, d, a, b, X[3], 14, t[27])
+	b = z(g, b, c, d, a, X[8], 20, t[28])
+	a = z(g, a, b, c, d, X[13], 5, t[29])
+	d = z(g, d, a, b, c, X[2], 9, t[30])
+	c = z(g, c, d, a, b, X[7], 14, t[31])
+	b = z(g, b, c, d, a, X[12], 20, t[32])
+	a = z(h, a, b, c, d, X[5], 4, t[33])
+	d = z(h, d, a, b, c, X[8], 11, t[34])
+	c = z(h, c, d, a, b, X[11], 16, t[35])
+	b = z(h, b, c, d, a, X[14], 23, t[36])
+	a = z(h, a, b, c, d, X[1], 4, t[37])
+	d = z(h, d, a, b, c, X[4], 11, t[38])
+	c = z(h, c, d, a, b, X[7], 16, t[39])
+	b = z(h, b, c, d, a, X[10], 23, t[40])
+	a = z(h, a, b, c, d, X[13], 4, t[41])
+	d = z(h, d, a, b, c, X[0], 11, t[42])
+	c = z(h, c, d, a, b, X[3], 16, t[43])
+	b = z(h, b, c, d, a, X[6], 23, t[44])
+	a = z(h, a, b, c, d, X[9], 4, t[45])
+	d = z(h, d, a, b, c, X[12], 11, t[46])
+	c = z(h, c, d, a, b, X[15], 16, t[47])
+	b = z(h, b, c, d, a, X[2], 23, t[48])
+	a = z(i, a, b, c, d, X[0], 6, t[49])
+	d = z(i, d, a, b, c, X[7], 10, t[50])
+	c = z(i, c, d, a, b, X[14], 15, t[51])
+	b = z(i, b, c, d, a, X[5], 21, t[52])
+	a = z(i, a, b, c, d, X[12], 6, t[53])
+	d = z(i, d, a, b, c, X[3], 10, t[54])
+	c = z(i, c, d, a, b, X[10], 15, t[55])
+	b = z(i, b, c, d, a, X[1], 21, t[56])
+	a = z(i, a, b, c, d, X[8], 6, t[57])
+	d = z(i, d, a, b, c, X[15], 10, t[58])
+	c = z(i, c, d, a, b, X[6], 15, t[59])
+	b = z(i, b, c, d, a, X[13], 21, t[60])
+	a = z(i, a, b, c, d, X[4], 6, t[61])
+	d = z(i, d, a, b, c, X[11], 10, t[62])
+	c = z(i, c, d, a, b, X[2], 15, t[63])
+	b = z(i, b, c, d, a, X[9], 21, t[64])
+
+	return bit_and(A + a, 4294967295), bit_and(B + b, 4294967295), bit_and(C + c, 4294967295), bit_and(D + d, 4294967295)
 end
 
-local function var_0_34(arg_25_0, arg_25_1)
-	arg_25_0.pos = arg_25_0.pos + #arg_25_1
-	arg_25_1 = arg_25_0.buf .. arg_25_1
+local function md5_update(self, s)
+	self.pos = self.pos + #s
+	s = self.buf .. s
 
-	for iter_25_0 = 1, #arg_25_1 - 63, 64 do
-		local var_25_0 = var_0_25(var_0_5(arg_25_1, iter_25_0, iter_25_0 + 63), 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4)
+	for ii = 1, #s - 63, 64 do
+		local X = cut_le_str(sub(s, ii, ii + 63), 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4)
 
-		assert(#var_25_0 == 16)
+		assert(#X == 16)
 
-		var_25_0[0] = table.remove(var_25_0, 1)
-		arg_25_0.a, arg_25_0.b, arg_25_0.c, arg_25_0.d = var_0_33(arg_25_0.a, arg_25_0.b, arg_25_0.c, arg_25_0.d, var_25_0)
+		X[0] = table.remove(X, 1)
+		self.a, self.b, self.c, self.d = transform(self.a, self.b, self.c, self.d, X)
 	end
 
-	arg_25_0.buf = var_0_5(arg_25_1, math.floor(#arg_25_1 / 64) * 64 + 1, #arg_25_1)
+	self.buf = sub(s, math.floor(#s / 64) * 64 + 1, #s)
 
-	return arg_25_0
+	return self
 end
 
-local function var_0_35(arg_26_0)
-	local var_26_0 = arg_26_0.pos
-	local var_26_1 = 56 - var_26_0 % 64
+local function md5_finish(self)
+	local msgLen = self.pos
+	local padLen = 56 - msgLen % 64
 
-	if var_26_0 % 64 > 56 then
-		var_26_1 = var_26_1 + 64
+	if msgLen % 64 > 56 then
+		padLen = padLen + 64
 	end
 
-	if var_26_1 == 0 then
-		var_26_1 = 64
+	if padLen == 0 then
+		padLen = 64
 	end
 
-	local var_26_2 = var_0_1(128) .. var_0_4(var_0_1(0), var_26_1 - 1) .. var_0_22(var_0_7(8 * var_26_0, 4294967295)) .. var_0_22(math.floor(var_26_0 / 536870912))
+	local s = char(128) .. rep(char(0), padLen - 1) .. lei2str(bit_and(8 * msgLen, 4294967295)) .. lei2str(math.floor(msgLen / 536870912))
 
-	var_0_34(arg_26_0, var_26_2)
-	assert(arg_26_0.pos % 64 == 0)
+	md5_update(self, s)
+	assert(self.pos % 64 == 0)
 
-	return var_0_22(arg_26_0.a) .. var_0_22(arg_26_0.b) .. var_0_22(arg_26_0.c) .. var_0_22(arg_26_0.d)
+	return lei2str(self.a) .. lei2str(self.b) .. lei2str(self.c) .. lei2str(self.d)
 end
 
-function var_0_0.new()
+function GameLuaMD5.new()
 	return {
 		buf = "",
 		pos = 0,
-		a = var_0_27[65],
-		b = var_0_27[66],
-		c = var_0_27[67],
-		d = var_0_27[68],
-		update = var_0_34,
-		finish = var_0_35
+		a = CONSTS[65],
+		b = CONSTS[66],
+		c = CONSTS[67],
+		d = CONSTS[68],
+		update = md5_update,
+		finish = md5_finish
 	}
 end
 
-function var_0_0.tohex(arg_28_0)
-	return var_0_3("%08x%08x%08x%08x", var_0_23(var_0_5(arg_28_0, 1, 4)), var_0_23(var_0_5(arg_28_0, 5, 8)), var_0_23(var_0_5(arg_28_0, 9, 12)), var_0_23(var_0_5(arg_28_0, 13, 16)))
+function GameLuaMD5.tohex(s)
+	return format("%08x%08x%08x%08x", str2bei(sub(s, 1, 4)), str2bei(sub(s, 5, 8)), str2bei(sub(s, 9, 12)), str2bei(sub(s, 13, 16)))
 end
 
-function var_0_0.sum(arg_29_0)
-	return var_0_0.new():update(arg_29_0):finish()
+function GameLuaMD5.sum(s)
+	return GameLuaMD5.new():update(s):finish()
 end
 
-function var_0_0.sumhexa(arg_30_0)
-	return var_0_0.tohex(var_0_0.sum(arg_30_0))
+function GameLuaMD5.sumhexa(s)
+	return GameLuaMD5.tohex(GameLuaMD5.sum(s))
 end
 
-return var_0_0
+return GameLuaMD5

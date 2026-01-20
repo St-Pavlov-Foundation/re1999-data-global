@@ -1,343 +1,348 @@
-﻿module("modules.logic.mainuiswitch.view.MainEagleAnimView", package.seeall)
+﻿-- chunkname: @modules/logic/mainuiswitch/view/MainEagleAnimView.lua
 
-local var_0_0 = class("MainEagleAnimView", BaseView)
+module("modules.logic.mainuiswitch.view.MainEagleAnimView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gospine = gohelper.findChild(arg_1_0.viewGO, "right/#go_eaglespine")
-	arg_1_0._goPointA = gohelper.findChild(arg_1_0.viewGO, "right/#btn_role/#go_eagleA")
-	arg_1_0._goPointB = gohelper.findChild(arg_1_0.viewGO, "right/#btn_room/#go_eagleB")
-	arg_1_0._goPointC = gohelper.findChild(arg_1_0.viewGO, "right/go_fight/#go_eagleC")
-	arg_1_0._gospinebottom = gohelper.findChild(arg_1_0.viewGO, "right/#go_eaglespine/bottom")
-	arg_1_0._gospinetop = gohelper.findChild(arg_1_0.viewGO, "right/#go_eaglespine/top")
-	arg_1_0._goeagleani = gohelper.findChild(arg_1_0.viewGO, "right/#go_eagleani")
-	arg_1_0._goClick = gohelper.findChild(arg_1_0._gospine, "#go_eagleclick")
-	arg_1_0._click = SLFramework.UGUI.UIClickListener.Get(arg_1_0._goClick)
+local MainEagleAnimView = class("MainEagleAnimView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function MainEagleAnimView:onInitView()
+	self._gospine = gohelper.findChild(self.viewGO, "right/#go_eaglespine")
+	self._goPointA = gohelper.findChild(self.viewGO, "right/#btn_role/#go_eagleA")
+	self._goPointB = gohelper.findChild(self.viewGO, "right/#btn_room/#go_eagleB")
+	self._goPointC = gohelper.findChild(self.viewGO, "right/go_fight/#go_eagleC")
+	self._gospinebottom = gohelper.findChild(self.viewGO, "right/#go_eaglespine/bottom")
+	self._gospinetop = gohelper.findChild(self.viewGO, "right/#go_eaglespine/top")
+	self._goeagleani = gohelper.findChild(self.viewGO, "right/#go_eagleani")
+	self._goClick = gohelper.findChild(self._gospine, "#go_eagleclick")
+	self._click = SLFramework.UGUI.UIClickListener.Get(self._goClick)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._click:AddClickListener(arg_2_0._onclick, arg_2_0)
-	arg_2_0:addEventCb(MainUISwitchController.instance, MainUISwitchEvent.UseMainUI, arg_2_0.refreshUI, arg_2_0)
+function MainEagleAnimView:addEvents()
+	self._click:AddClickListener(self._onclick, self)
+	self:addEventCb(MainUISwitchController.instance, MainUISwitchEvent.UseMainUI, self.refreshUI, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._click:RemoveClickListener()
-	arg_3_0:removeEventCb(MainUISwitchController.instance, MainUISwitchEvent.UseMainUI, arg_3_0.refreshUI, arg_3_0)
+function MainEagleAnimView:removeEvents()
+	self._click:RemoveClickListener()
+	self:removeEventCb(MainUISwitchController.instance, MainUISwitchEvent.UseMainUI, self.refreshUI, self)
 end
 
-function var_0_0._onclick(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._normalAnimFinish, arg_4_0)
+function MainEagleAnimView:_onclick()
+	TaskDispatcher.cancelTask(self._normalAnimFinish, self)
 
-	local var_4_0 = MainUISwitchConfig.instance:getEagleAnim(arg_4_0._curAnimStep)
+	local stepCo = MainUISwitchConfig.instance:getEagleAnim(self._curAnimStep)
 
-	if not var_4_0 or var_4_0.option_nextstep == 0 then
+	if not stepCo or stepCo.option_nextstep == 0 then
 		return
 	end
 
-	arg_4_0._curAnimStep = var_4_0.option_nextstep
+	self._curAnimStep = stepCo.option_nextstep
 
-	arg_4_0:_beginAnim()
+	self:_beginAnim()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._uiSpine = GuiSpine.Create(arg_5_0._gospinetop, true)
-	arg_5_0._uiBottomSpine = GuiSpine.Create(arg_5_0._gospinebottom, true)
-	arg_5_0._locationParant = {
-		[MainUISwitchEnum.EagleLocationType.A] = arg_5_0._goPointA,
-		[MainUISwitchEnum.EagleLocationType.B] = arg_5_0._goPointB,
-		[MainUISwitchEnum.EagleLocationType.C] = arg_5_0._goPointC
+function MainEagleAnimView:_editableInitView()
+	self._uiSpine = GuiSpine.Create(self._gospinetop, true)
+	self._uiBottomSpine = GuiSpine.Create(self._gospinebottom, true)
+	self._locationParant = {
+		[MainUISwitchEnum.EagleLocationType.A] = self._goPointA,
+		[MainUISwitchEnum.EagleLocationType.B] = self._goPointB,
+		[MainUISwitchEnum.EagleLocationType.C] = self._goPointC
 	}
-	arg_5_0._animator = arg_5_0._gospine:GetComponent(typeof(UnityEngine.Animator))
-	arg_5_0._anieagle = arg_5_0._goeagleani:GetComponent(typeof(UnityEngine.Animator))
+	self._animator = self._gospine:GetComponent(typeof(UnityEngine.Animator))
+	self._anieagle = self._goeagleani:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0._loadSpine = false
-	arg_6_0._loadBottomSpine = false
+function MainEagleAnimView:onOpen()
+	self._loadSpine = false
+	self._loadBottomSpine = false
 
-	local var_6_0 = arg_6_0.viewParam and arg_6_0.viewParam.SkinId
+	local skinId = self.viewParam and self.viewParam.SkinId
 
-	arg_6_0._animName = nil
+	self._animName = nil
 
-	arg_6_0:refreshUI(var_6_0)
+	self:refreshUI(skinId)
 end
 
-function var_0_0.refreshUI(arg_7_0, arg_7_1)
-	TaskDispatcher.cancelTask(arg_7_0._normalAnimFinish, arg_7_0)
+function MainEagleAnimView:refreshUI(id)
+	TaskDispatcher.cancelTask(self._normalAnimFinish, self)
 
-	arg_7_1 = arg_7_1 or MainUISwitchModel.instance:getCurUseUI()
+	id = id or MainUISwitchModel.instance:getCurUseUI()
 
-	if arg_7_0._showSkinId == arg_7_1 then
+	if self._showSkinId == id then
 		return
 	end
 
-	arg_7_0._showSkinId = arg_7_1
+	self._showSkinId = id
 
-	local var_7_0 = arg_7_1 and arg_7_1 == MainUISwitchEnum.Skin.Sp01
+	local isAnim = id and id == MainUISwitchEnum.Skin.Sp01
 
-	gohelper.setActive(arg_7_0._gospine, var_7_0)
+	gohelper.setActive(self._gospine, isAnim)
 
-	if var_7_0 then
-		gohelper.setActive(arg_7_0._goeagleani, arg_7_0._animName == MainUISwitchEnum.EagleAnim.Hover)
-		arg_7_0:_initBgSpine()
+	if isAnim then
+		gohelper.setActive(self._goeagleani, self._animName == MainUISwitchEnum.EagleAnim.Hover)
+		self:_initBgSpine()
 	else
-		gohelper.setActive(arg_7_0._goeagleani, false)
+		gohelper.setActive(self._goeagleani, false)
 	end
 end
 
-function var_0_0._initBgSpine(arg_8_0)
-	if arg_8_0._loadSpine then
-		arg_8_0:_startAnim()
+function MainEagleAnimView:_initBgSpine()
+	if self._loadSpine then
+		self:_startAnim()
 
 		return
 	end
 
-	local var_8_0 = ResUrl.getRolesCgStory("scene_eagle_idle1", "s01_scene_eagle_idle1")
+	local resPath = ResUrl.getRolesCgStory("scene_eagle_idle1", "s01_scene_eagle_idle1")
 
-	arg_8_0._uiSpine:setResPath(var_8_0, arg_8_0._onSpineLoaded, arg_8_0)
-	arg_8_0._uiBottomSpine:setResPath(var_8_0, arg_8_0._onSpineBpttomLoaded, arg_8_0)
+	self._uiSpine:setResPath(resPath, self._onSpineLoaded, self)
+	self._uiBottomSpine:setResPath(resPath, self._onSpineBpttomLoaded, self)
 end
 
-function var_0_0._onSpineLoaded(arg_9_0)
-	local var_9_0 = arg_9_0._uiSpine:getSpineTr()
+function MainEagleAnimView:_onSpineLoaded()
+	local transform = self._uiSpine:getSpineTr()
 
-	transformhelper.setLocalPos(var_9_0, 0, 0, 0)
-	transformhelper.setLocalScale(var_9_0, 1, 1, 1)
+	transformhelper.setLocalPos(transform, 0, 0, 0)
+	transformhelper.setLocalScale(transform, 1, 1, 1)
 
-	arg_9_0._spineSkeleton = arg_9_0._uiSpine:getSpineGo():GetComponent(GuiSpine.TypeSkeletonGraphic)
+	self._spineSkeleton = self._uiSpine:getSpineGo():GetComponent(GuiSpine.TypeSkeletonGraphic)
 
-	arg_9_0._uiSpine:setActionEventCb(arg_9_0._onAnimEvent, arg_9_0)
+	self._uiSpine:setActionEventCb(self._onAnimEvent, self)
 
-	arg_9_0._loadSpine = true
+	self._loadSpine = true
 
-	if arg_9_0._loadBottomSpine then
-		arg_9_0:_startAnim()
+	if self._loadBottomSpine then
+		self:_startAnim()
 	end
 end
 
-function var_0_0._onSpineBpttomLoaded(arg_10_0)
-	transformhelper.setLocalPos(arg_10_0._uiBottomSpine:getSpineTr(), 0, 0, 0)
-	transformhelper.setLocalScale(arg_10_0._uiBottomSpine:getSpineTr(), 1, 1, 1)
+function MainEagleAnimView:_onSpineBpttomLoaded()
+	transformhelper.setLocalPos(self._uiBottomSpine:getSpineTr(), 0, 0, 0)
+	transformhelper.setLocalScale(self._uiBottomSpine:getSpineTr(), 1, 1, 1)
 
-	arg_10_0._bottomSpineSkeleton = arg_10_0._uiBottomSpine:getSpineGo():GetComponent(GuiSpine.TypeSkeletonGraphic)
+	self._bottomSpineSkeleton = self._uiBottomSpine:getSpineGo():GetComponent(GuiSpine.TypeSkeletonGraphic)
 
-	if arg_10_0._bottomSpineSkeleton then
-		arg_10_0._bottomSpineSkeleton.color = Color.black
+	if self._bottomSpineSkeleton then
+		self._bottomSpineSkeleton.color = Color.black
 	end
 
-	arg_10_0._loadBottomSpine = true
+	self._loadBottomSpine = true
 
-	if arg_10_0._loadSpine then
-		arg_10_0:_startAnim()
-	end
-end
-
-function var_0_0._startAnim(arg_11_0)
-	arg_11_0._curAnimStep = 1
-
-	arg_11_0:_beginAnim()
-end
-
-function var_0_0._beginAnim(arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0._normalAnimFinish, arg_12_0)
-
-	local var_12_0 = arg_12_0:_getOddNextStepId(arg_12_0._curAnimStep)
-
-	if var_12_0 then
-		arg_12_0:_beginStep(var_12_0)
+	if self._loadSpine then
+		self:_startAnim()
 	end
 end
 
-function var_0_0._getRandomStep(arg_13_0, arg_13_1, arg_13_2)
-	for iter_13_0, iter_13_1 in ipairs(arg_13_1) do
-		local var_13_0 = iter_13_1[2] or 100
+function MainEagleAnimView:_startAnim()
+	self._curAnimStep = 1
 
-		if arg_13_2 <= var_13_0 then
-			return iter_13_1[1]
+	self:_beginAnim()
+end
+
+function MainEagleAnimView:_beginAnim()
+	TaskDispatcher.cancelTask(self._normalAnimFinish, self)
+
+	local nextStepId = self:_getOddNextStepId(self._curAnimStep)
+
+	if nextStepId then
+		self:_beginStep(nextStepId)
+	end
+end
+
+function MainEagleAnimView:_getRandomStep(oddsList, ramdom)
+	for _, stepOdds in ipairs(oddsList) do
+		local _odds = stepOdds[2] or 100
+
+		if ramdom <= _odds then
+			return stepOdds[1]
 		end
 
-		arg_13_2 = arg_13_2 - var_13_0
+		ramdom = ramdom - _odds
 	end
 end
 
-function var_0_0._beginStep(arg_14_0, arg_14_1)
-	if not arg_14_1 then
+function MainEagleAnimView:_beginStep(step)
+	if not step then
 		return
 	end
 
-	SLFramework.SLLogger.Log(string.format("MainEagleAnimView 当前步骤：%s", arg_14_1))
+	SLFramework.SLLogger.Log(string.format("MainEagleAnimView 当前步骤：%s", step))
 
-	local var_14_0 = MainUISwitchConfig.instance:getEagleAnim(arg_14_1)
+	local stepCo = MainUISwitchConfig.instance:getEagleAnim(step)
 
-	if not var_14_0 then
-		logError("没有这个步骤" .. arg_14_1)
+	if not stepCo then
+		logError("没有这个步骤" .. step)
 
 		return
 	end
 
-	arg_14_0._curAnimStep = arg_14_1
+	self._curAnimStep = step
 
-	local var_14_1 = 1
+	local times = 1
 
-	if not string.nilorempty(var_14_0.times) then
-		local var_14_2 = string.splitToNumber(var_14_0.times, "#")
+	if not string.nilorempty(stepCo.times) then
+		local _times = string.splitToNumber(stepCo.times, "#")
 
-		var_14_1 = math.random(var_14_2[1], var_14_2[2])
+		times = math.random(_times[1], _times[2])
 	end
 
-	arg_14_0._neeedPlayAnimTimes = var_14_1
-	arg_14_0._playedAnimTimes = 1
+	self._neeedPlayAnimTimes = times
+	self._playedAnimTimes = 1
 
-	if not string.nilorempty(var_14_0.location) then
-		local var_14_3 = string.splitToNumber(var_14_0.location, "#")
-		local var_14_4 = MainUISwitchEnum.EagleLocationType.A
-		local var_14_5 = #var_14_3
+	if not string.nilorempty(stepCo.location) then
+		local locations = string.splitToNumber(stepCo.location, "#")
+		local location = MainUISwitchEnum.EagleLocationType.A
+		local count = #locations
 
-		if var_14_5 == 1 then
-			var_14_4 = var_14_3
-		elseif var_14_5 > 1 then
-			var_14_4 = var_14_3[math.random(1, var_14_5)]
+		if count == 1 then
+			location = locations
+		elseif count > 1 then
+			local random = math.random(1, count)
+
+			location = locations[random]
 		end
 
-		local var_14_6 = arg_14_0._locationParant[var_14_4]
+		local parent = self._locationParant[location]
 
-		if var_14_6 then
-			gohelper.addChildPosStay(var_14_6, arg_14_0._gospine)
-			transformhelper.setLocalPos(arg_14_0._gospine.transform, 0, 0, 0)
-			transformhelper.setLocalScale(arg_14_0._gospine.transform, 1, 1, 1)
-			gohelper.setActive(arg_14_0._gospine, true)
+		if parent then
+			gohelper.addChildPosStay(parent, self._gospine)
+			transformhelper.setLocalPos(self._gospine.transform, 0, 0, 0)
+			transformhelper.setLocalScale(self._gospine.transform, 1, 1, 1)
+			gohelper.setActive(self._gospine, true)
 		else
-			gohelper.setActive(arg_14_0._gospine, false)
+			gohelper.setActive(self._gospine, false)
 		end
 	end
 
-	local var_14_7 = MainUISwitchEnum.EagleAnim.Hover
+	local hover = MainUISwitchEnum.EagleAnim.Hover
 
-	if arg_14_0._animName then
-		if arg_14_0._animName == var_14_7 and var_14_0.animName ~= var_14_7 then
-			gohelper.setActive(arg_14_0._goeagleani, true)
-			arg_14_0._anieagle:Play(MainUISwitchEnum.AnimName.Out, 0, 0)
-		elseif arg_14_0._animName ~= var_14_7 and var_14_0.animName == var_14_7 then
-			gohelper.setActive(arg_14_0._goeagleani, true)
-			arg_14_0._anieagle:Play(MainUISwitchEnum.AnimName.In, 0, 0)
+	if self._animName then
+		if self._animName == hover and stepCo.animName ~= hover then
+			gohelper.setActive(self._goeagleani, true)
+			self._anieagle:Play(MainUISwitchEnum.AnimName.Out, 0, 0)
+		elseif self._animName ~= hover and stepCo.animName == hover then
+			gohelper.setActive(self._goeagleani, true)
+			self._anieagle:Play(MainUISwitchEnum.AnimName.In, 0, 0)
 		end
-	elseif var_14_0.animName == var_14_7 then
-		gohelper.setActive(arg_14_0._goeagleani, true)
-		arg_14_0._anieagle:Play(MainUISwitchEnum.AnimName.In, 0, 0)
+	elseif stepCo.animName == hover then
+		gohelper.setActive(self._goeagleani, true)
+		self._anieagle:Play(MainUISwitchEnum.AnimName.In, 0, 0)
 	end
 
-	if var_14_0.isSpineAnim == 1 then
-		if arg_14_0._uiSpine then
-			arg_14_0._animName = var_14_0.animName
+	if stepCo.isSpineAnim == 1 then
+		if self._uiSpine then
+			self._animName = stepCo.animName
 
-			arg_14_0:_playSpineAnim(arg_14_0._animName)
+			self:_playSpineAnim(self._animName)
 
-			if arg_14_0._bottomSpineSkeleton then
-				if var_14_0.isoutline == 1 then
-					arg_14_0._bottomFadeTweenId = ZProj.TweenHelper.DoFade(arg_14_0._bottomSpineSkeleton, arg_14_0._bottomSpineSkeleton.color.a, 1, 0.5)
+			if self._bottomSpineSkeleton then
+				if stepCo.isoutline == 1 then
+					self._bottomFadeTweenId = ZProj.TweenHelper.DoFade(self._bottomSpineSkeleton, self._bottomSpineSkeleton.color.a, 1, 0.5)
 				else
-					arg_14_0._bottomFadeTweenId = ZProj.TweenHelper.DoFade(arg_14_0._bottomSpineSkeleton, arg_14_0._bottomSpineSkeleton.color.a, 0, 0.5)
+					self._bottomFadeTweenId = ZProj.TweenHelper.DoFade(self._bottomSpineSkeleton, self._bottomSpineSkeleton.color.a, 0, 0.5)
 				end
 
-				SLFramework.SLLogger.Log(string.format("MainEagleAnimView 播放动作：%s", arg_14_0._animName))
+				SLFramework.SLLogger.Log(string.format("MainEagleAnimView 播放动作：%s", self._animName))
 			end
 		end
-	elseif var_14_0.animName == var_14_7 then
-		arg_14_0._animName = var_14_0.animName
+	elseif stepCo.animName == hover then
+		self._animName = stepCo.animName
 
-		TaskDispatcher.runDelay(arg_14_0._normalAnimFinish, arg_14_0, 4 * arg_14_0._neeedPlayAnimTimes)
+		TaskDispatcher.runDelay(self._normalAnimFinish, self, 4 * self._neeedPlayAnimTimes)
 	end
 
-	if arg_14_0._animator then
-		if string.nilorempty(var_14_0.playfadeAnim) then
-			arg_14_0._animator:Play(MainUISwitchEnum.AnimName.Idle, 0, 0)
+	if self._animator then
+		if string.nilorempty(stepCo.playfadeAnim) then
+			self._animator:Play(MainUISwitchEnum.AnimName.Idle, 0, 0)
 		else
-			arg_14_0._animator:Play(var_14_0.playfadeAnim, 0, 0)
+			self._animator:Play(stepCo.playfadeAnim, 0, 0)
 		end
 	end
 end
 
-function var_0_0._playSpineAnim(arg_15_0, arg_15_1)
-	if arg_15_0._spineSkeleton then
-		arg_15_0._spineSkeleton:PlayAnim(arg_15_1, false, true)
+function MainEagleAnimView:_playSpineAnim(spineAnimName)
+	if self._spineSkeleton then
+		self._spineSkeleton:PlayAnim(spineAnimName, false, true)
 	end
 
-	if arg_15_0._bottomSpineSkeleton then
-		arg_15_0._bottomSpineSkeleton:PlayAnim(arg_15_1, false, true)
+	if self._bottomSpineSkeleton then
+		self._bottomSpineSkeleton:PlayAnim(spineAnimName, false, true)
 	end
 end
 
-function var_0_0._normalAnimFinish(arg_16_0)
-	if not arg_16_0._curAnimStep then
+function MainEagleAnimView:_normalAnimFinish()
+	if not self._curAnimStep then
 		return
 	end
 
-	local var_16_0 = arg_16_0:_getOddNextStepId(arg_16_0._curAnimStep)
+	local stepId = self:_getOddNextStepId(self._curAnimStep)
 
-	if not var_16_0 then
+	if not stepId then
 		return
 	end
 
-	arg_16_0:_beginStep(var_16_0)
+	self:_beginStep(stepId)
 end
 
-function var_0_0._getOddNextStepId(arg_17_0, arg_17_1)
-	local var_17_0 = MainUISwitchConfig.instance:getEagleAnim(arg_17_1)
+function MainEagleAnimView:_getOddNextStepId(stepId)
+	local stepCo = MainUISwitchConfig.instance:getEagleAnim(stepId)
 
-	if not var_17_0 or string.nilorempty(var_17_0.odds_nextstep) then
+	if not stepCo or string.nilorempty(stepCo.odds_nextstep) then
 		return
 	end
 
-	local var_17_1 = GameUtil.splitString2(var_17_0.odds_nextstep, true)
+	local stepIds = GameUtil.splitString2(stepCo.odds_nextstep, true)
 
-	if not var_17_1 then
+	if not stepIds then
 		return
 	end
 
-	local var_17_2 = math.random(1, 100)
+	local random = math.random(1, 100)
+	local step = self:_getRandomStep(stepIds, random)
 
-	return (arg_17_0:_getRandomStep(var_17_1, var_17_2))
+	return step
 end
 
-function var_0_0._onAnimEvent(arg_18_0, arg_18_1, arg_18_2)
-	if arg_18_0._showSkinId == 1 or not arg_18_0._animator then
+function MainEagleAnimView:_onAnimEvent(actionName, eventName)
+	if self._showSkinId == 1 or not self._animator then
 		return
 	end
 
-	if arg_18_2 == SpineAnimEvent.ActionComplete then
-		if arg_18_0._playedAnimTimes >= arg_18_0._neeedPlayAnimTimes then
-			arg_18_0:_beginAnim()
+	if eventName == SpineAnimEvent.ActionComplete then
+		if self._playedAnimTimes >= self._neeedPlayAnimTimes then
+			self:_beginAnim()
 		else
-			arg_18_0._playedAnimTimes = arg_18_0._playedAnimTimes + 1
+			self._playedAnimTimes = self._playedAnimTimes + 1
 
-			arg_18_0:_playSpineAnim(arg_18_0._animName)
+			self:_playSpineAnim(self._animName)
 		end
 	end
 end
 
-function var_0_0.onDestroyView(arg_19_0)
-	if arg_19_0._uiSpine then
-		arg_19_0._uiSpine:onDestroy()
+function MainEagleAnimView:onDestroyView()
+	if self._uiSpine then
+		self._uiSpine:onDestroy()
 
-		arg_19_0._uiSpine = nil
+		self._uiSpine = nil
 	end
 
-	if arg_19_0._uiBottomSpine then
-		arg_19_0._uiBottomSpine:onDestroy()
+	if self._uiBottomSpine then
+		self._uiBottomSpine:onDestroy()
 
-		arg_19_0._uiBottomSpine = nil
+		self._uiBottomSpine = nil
 	end
 
-	if arg_19_0._bottomFadeTweenId then
-		ZProj.TweenHelper.KillById(arg_19_0._bottomFadeTweenId)
+	if self._bottomFadeTweenId then
+		ZProj.TweenHelper.KillById(self._bottomFadeTweenId)
 
-		arg_19_0._bottomFadeTweenId = nil
+		self._bottomFadeTweenId = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_19_0._normalAnimFinish, arg_19_0)
+	TaskDispatcher.cancelTask(self._normalAnimFinish, self)
 end
 
-return var_0_0
+return MainEagleAnimView

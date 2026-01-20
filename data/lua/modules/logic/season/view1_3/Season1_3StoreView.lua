@@ -1,141 +1,147 @@
-﻿module("modules.logic.season.view1_3.Season1_3StoreView", package.seeall)
+﻿-- chunkname: @modules/logic/season/view1_3/Season1_3StoreView.lua
 
-local var_0_0 = class("Season1_3StoreView", BaseView)
+module("modules.logic.season.view1_3.Season1_3StoreView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "title/#txt_time")
-	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "mask/#scroll_store/Viewport/#go_Content")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._gorighttop = gohelper.findChild(arg_1_0.viewGO, "#go_righttop")
+local Season1_3StoreView = class("Season1_3StoreView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Season1_3StoreView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._txttime = gohelper.findChildText(self.viewGO, "title/#txt_time")
+	self._goContent = gohelper.findChild(self.viewGO, "mask/#scroll_store/Viewport/#go_Content")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._gorighttop = gohelper.findChild(self.viewGO, "#go_righttop")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function Season1_3StoreView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Season1_3StoreView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._simagebg:LoadImage(SeasonViewHelper.getSeasonIcon("full/shangcheng_bj.png"))
-	gohelper.setActive(arg_4_0._gostoreItem, false)
+function Season1_3StoreView:_editableInitView()
+	self._simagebg:LoadImage(SeasonViewHelper.getSeasonIcon("full/shangcheng_bj.png"))
+	gohelper.setActive(self._gostoreItem, false)
 
-	arg_4_0.storeItemList = arg_4_0:getUserDataTb_()
+	self.storeItemList = self:getUserDataTb_()
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function Season1_3StoreView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:addEventCb(VersionActivityController.instance, VersionActivityEvent.OnGet107GoodsInfo, arg_6_0._onGet107GoodsInfo, arg_6_0)
-	arg_6_0:addEventCb(VersionActivityController.instance, VersionActivityEvent.OnBuy107GoodsSuccess, arg_6_0._onBuyGoodsSuccess, arg_6_0)
+function Season1_3StoreView:onOpen()
+	self:addEventCb(VersionActivityController.instance, VersionActivityEvent.OnGet107GoodsInfo, self._onGet107GoodsInfo, self)
+	self:addEventCb(VersionActivityController.instance, VersionActivityEvent.OnBuy107GoodsSuccess, self._onBuyGoodsSuccess, self)
 
-	arg_6_0.actId = arg_6_0.viewParam.actId
+	self.actId = self.viewParam.actId
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_souvenir_open)
-	TaskDispatcher.runRepeat(arg_6_0.refreshTime, arg_6_0, TimeUtil.OneMinuteSecond)
-	arg_6_0:refreshTime()
-	arg_6_0:updateView()
+	TaskDispatcher.runRepeat(self.refreshTime, self, TimeUtil.OneMinuteSecond)
+	self:refreshTime()
+	self:updateView()
 end
 
-function var_0_0._onGet107GoodsInfo(arg_7_0, arg_7_1)
-	if arg_7_1 ~= arg_7_0.actId then
+function Season1_3StoreView:_onGet107GoodsInfo(actId)
+	if actId ~= self.actId then
 		return
 	end
 
-	arg_7_0:updateView()
+	self:updateView()
 end
 
-function var_0_0._onBuyGoodsSuccess(arg_8_0, arg_8_1)
-	if arg_8_1 ~= arg_8_0.actId then
+function Season1_3StoreView:_onBuyGoodsSuccess(actId)
+	if actId ~= self.actId then
 		return
 	end
 
-	arg_8_0:updateView()
+	self:updateView()
 end
 
-function var_0_0.updateView(arg_9_0)
-	arg_9_0:refreshStoreContent()
+function Season1_3StoreView:updateView()
+	self:refreshStoreContent()
 end
 
-function var_0_0.refreshStoreContent(arg_10_0)
-	local var_10_0 = ActivityStoreConfig.instance:getActivityStoreGroupDict(arg_10_0.actId)
-	local var_10_1 = {}
+function Season1_3StoreView:refreshStoreContent()
+	local storeGroupDict = ActivityStoreConfig.instance:getActivityStoreGroupDict(self.actId)
+	local list = {}
 
-	if var_10_0 then
-		for iter_10_0, iter_10_1 in pairs(var_10_0) do
-			for iter_10_2, iter_10_3 in pairs(iter_10_1) do
-				table.insert(var_10_1, iter_10_3)
+	if storeGroupDict then
+		for _, storelist in pairs(storeGroupDict) do
+			for _, v in pairs(storelist) do
+				table.insert(list, v)
 			end
 		end
 	end
 
-	table.sort(var_10_1, var_0_0.sortGoods)
+	table.sort(list, Season1_3StoreView.sortGoods)
 
-	for iter_10_4 = 1, math.max(#var_10_1, #arg_10_0.storeItemList) do
-		local var_10_2 = arg_10_0.storeItemList[iter_10_4]
+	for i = 1, math.max(#list, #self.storeItemList) do
+		local storeItem = self.storeItemList[i]
 
-		if not var_10_2 then
-			var_10_2 = Season1_3StoreItem.New(arg_10_0:getItemGo(iter_10_4))
-			arg_10_0.storeItemList[iter_10_4] = var_10_2
+		if not storeItem then
+			storeItem = Season1_3StoreItem.New(self:getItemGo(i))
+			self.storeItemList[i] = storeItem
 		end
 
-		var_10_2:setData(var_10_1[iter_10_4])
+		storeItem:setData(list[i])
 	end
 end
 
-function var_0_0.sortGoods(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0.maxBuyCount ~= 0 and arg_11_0.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(arg_11_0.activityId, arg_11_0.id) <= 0
+function Season1_3StoreView.sortGoods(goodCo1, goodCo2)
+	local goods1SellOut = goodCo1.maxBuyCount ~= 0 and goodCo1.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(goodCo1.activityId, goodCo1.id) <= 0
+	local goods2SellOut = goodCo2.maxBuyCount ~= 0 and goodCo2.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(goodCo2.activityId, goodCo2.id) <= 0
 
-	if var_11_0 ~= (arg_11_1.maxBuyCount ~= 0 and arg_11_1.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(arg_11_1.activityId, arg_11_1.id) <= 0) then
-		if var_11_0 then
+	if goods1SellOut ~= goods2SellOut then
+		if goods1SellOut then
 			return false
 		end
 
 		return true
 	end
 
-	return arg_11_0.id < arg_11_1.id
+	return goodCo1.id < goodCo2.id
 end
 
-function var_0_0.getItemGo(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0.viewContainer:getSetting().otherRes.itemPath
+function Season1_3StoreView:getItemGo(index)
+	local setting = self.viewContainer:getSetting()
+	local resPath = setting.otherRes.itemPath
+	local go = self.viewContainer:getResInst(resPath, self._goContent, string.format("item%s", index))
 
-	return (arg_12_0.viewContainer:getResInst(var_12_0, arg_12_0._goContent, string.format("item%s", arg_12_1)))
+	return go
 end
 
-function var_0_0.refreshTime(arg_13_0)
-	local var_13_0 = ActivityModel.instance:getActMO(arg_13_0.actId):getRealEndTimeStamp() - ServerTime.now()
-	local var_13_1 = Mathf.Floor(var_13_0 / TimeUtil.OneDaySecond)
-	local var_13_2 = var_13_0 % TimeUtil.OneDaySecond
-	local var_13_3 = Mathf.Floor(var_13_2 / TimeUtil.OneHourSecond)
-	local var_13_4 = var_13_2 % TimeUtil.OneHourSecond
-	local var_13_5 = Mathf.Ceil(var_13_4 / TimeUtil.OneMinuteSecond)
+function Season1_3StoreView:refreshTime()
+	local actInfoMo = ActivityModel.instance:getActMO(self.actId)
+	local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
+	local day = Mathf.Floor(offsetSecond / TimeUtil.OneDaySecond)
+	local hourSecond = offsetSecond % TimeUtil.OneDaySecond
+	local hour = Mathf.Floor(hourSecond / TimeUtil.OneHourSecond)
+	local minuteSecond = hourSecond % TimeUtil.OneHourSecond
+	local minute = Mathf.Ceil(minuteSecond / TimeUtil.OneMinuteSecond)
 
-	arg_13_0._txttime.text = string.format(luaLang("versionactivitystoreview_remaintime"), var_13_1, var_13_3, var_13_5)
+	self._txttime.text = string.format(luaLang("versionactivitystoreview_remaintime"), day, hour, minute)
 end
 
-function var_0_0.onClose(arg_14_0)
-	TaskDispatcher.cancelTask(arg_14_0.refreshTime, arg_14_0)
-	arg_14_0:removeEventCb(VersionActivityController.instance, VersionActivityEvent.OnGet107GoodsInfo, arg_14_0._onGet107GoodsInfo, arg_14_0)
-	arg_14_0:removeEventCb(VersionActivityController.instance, VersionActivityEvent.OnBuy107GoodsSuccess, arg_14_0._onBuyGoodsSuccess, arg_14_0)
+function Season1_3StoreView:onClose()
+	TaskDispatcher.cancelTask(self.refreshTime, self)
+	self:removeEventCb(VersionActivityController.instance, VersionActivityEvent.OnGet107GoodsInfo, self._onGet107GoodsInfo, self)
+	self:removeEventCb(VersionActivityController.instance, VersionActivityEvent.OnBuy107GoodsSuccess, self._onBuyGoodsSuccess, self)
 end
 
-function var_0_0.onDestroyView(arg_15_0)
-	arg_15_0._simagebg:UnLoadImage()
+function Season1_3StoreView:onDestroyView()
+	self._simagebg:UnLoadImage()
 
-	for iter_15_0, iter_15_1 in ipairs(arg_15_0.storeItemList) do
-		iter_15_1:destory()
+	for _, storeItem in ipairs(self.storeItemList) do
+		storeItem:destory()
 	end
 
-	arg_15_0.storeItemList = nil
+	self.storeItemList = nil
 end
 
-return var_0_0
+return Season1_3StoreView

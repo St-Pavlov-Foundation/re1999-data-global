@@ -1,27 +1,31 @@
-﻿module("modules.logic.fight.entity.comp.skill.FightTLEventRemoveSummoned", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skill/FightTLEventRemoveSummoned.lua
 
-local var_0_0 = class("FightTLEventRemoveSummoned", FightTimelineTrackItem)
+module("modules.logic.fight.entity.comp.skill.FightTLEventRemoveSummoned", package.seeall)
 
-function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	if arg_1_3[1] == "1" then
-		for iter_1_0, iter_1_1 in ipairs(arg_1_1.actEffect) do
-			if iter_1_1.effectType == FightEnum.EffectType.SUMMONEDDELETE then
-				FightWork2Work.New(FightWorkSummonedDelete, arg_1_1, iter_1_1):onStart()
+local FightTLEventRemoveSummoned = class("FightTLEventRemoveSummoned", FightTimelineTrackItem)
+
+function FightTLEventRemoveSummoned:onTrackStart(fightStepData, duration, paramsArr)
+	if paramsArr[1] == "1" then
+		for i, v in ipairs(fightStepData.actEffect) do
+			if v.effectType == FightEnum.EffectType.SUMMONEDDELETE then
+				local class = FightWork2Work.New(FightWorkSummonedDelete, fightStepData, v)
+
+				class:onStart()
 			end
 		end
 	end
 end
 
-function var_0_0.onTrackEnd(arg_2_0)
+function FightTLEventRemoveSummoned:onTrackEnd()
 	return
 end
 
-function var_0_0.reset(arg_3_0)
+function FightTLEventRemoveSummoned:reset()
 	return
 end
 
-function var_0_0.dispose(arg_4_0)
+function FightTLEventRemoveSummoned:dispose()
 	return
 end
 
-return var_0_0
+return FightTLEventRemoveSummoned

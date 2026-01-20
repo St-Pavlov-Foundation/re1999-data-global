@@ -1,254 +1,254 @@
-﻿module("modules.logic.versionactivity2_4.pinball.view.PinballDayEndView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/pinball/view/PinballDayEndView.lua
 
-local var_0_0 = class("PinballDayEndView", BaseView)
+module("modules.logic.versionactivity2_4.pinball.view.PinballDayEndView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtday = gohelper.findChildTextMesh(arg_1_0.viewGO, "bg/#txt_day")
-	arg_1_0._gotips = gohelper.findChild(arg_1_0.viewGO, "#go_tips")
-	arg_1_0._txtmainlv = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_main/#txt_lv")
-	arg_1_0._slider1 = gohelper.findChildImage(arg_1_0.viewGO, "#go_main/#go_slider/#go_slider1")
-	arg_1_0._slider2 = gohelper.findChildImage(arg_1_0.viewGO, "#go_main/#go_slider/#go_slider2")
-	arg_1_0._slider3 = gohelper.findChildImage(arg_1_0.viewGO, "#go_main/#go_slider/#go_slider3")
-	arg_1_0._txtnum = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_main/#txt_num")
-	arg_1_0._imagemoodicon = gohelper.findChildImage(arg_1_0.viewGO, "#go_mood/#simage_icon")
-	arg_1_0._imagemood1 = gohelper.findChildImage(arg_1_0.viewGO, "#go_mood/#simage_progress1")
-	arg_1_0._imagemood2 = gohelper.findChildImage(arg_1_0.viewGO, "#go_mood/#simage_progress2")
-	arg_1_0._txtmoodnum = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_mood/mask/#txt_mood")
-	arg_1_0._goarrow1 = gohelper.findChild(arg_1_0.viewGO, "txt_dec/#go_arrow")
-	arg_1_0._goarrow2 = gohelper.findChild(arg_1_0.viewGO, "txt_dec2/#go_arrow")
-	arg_1_0._txtdescmood = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_mood/mask2/#txt_desc")
-	arg_1_0._godescmainitem = gohelper.findChild(arg_1_0.viewGO, "#go_main/layout/tag1")
-	arg_1_0._godescmood = gohelper.findChild(arg_1_0.viewGO, "#go_mood/mask2")
-	arg_1_0._effectday = gohelper.findChild(arg_1_0.viewGO, "bg/vx_nextday")
-	arg_1_0._effectnextlv = gohelper.findChild(arg_1_0.viewGO, "#go_main/vx_nextlevel")
+local PinballDayEndView = class("PinballDayEndView", BaseView)
+
+function PinballDayEndView:onInitView()
+	self._txtday = gohelper.findChildTextMesh(self.viewGO, "bg/#txt_day")
+	self._gotips = gohelper.findChild(self.viewGO, "#go_tips")
+	self._txtmainlv = gohelper.findChildTextMesh(self.viewGO, "#go_main/#txt_lv")
+	self._slider1 = gohelper.findChildImage(self.viewGO, "#go_main/#go_slider/#go_slider1")
+	self._slider2 = gohelper.findChildImage(self.viewGO, "#go_main/#go_slider/#go_slider2")
+	self._slider3 = gohelper.findChildImage(self.viewGO, "#go_main/#go_slider/#go_slider3")
+	self._txtnum = gohelper.findChildTextMesh(self.viewGO, "#go_main/#txt_num")
+	self._imagemoodicon = gohelper.findChildImage(self.viewGO, "#go_mood/#simage_icon")
+	self._imagemood1 = gohelper.findChildImage(self.viewGO, "#go_mood/#simage_progress1")
+	self._imagemood2 = gohelper.findChildImage(self.viewGO, "#go_mood/#simage_progress2")
+	self._txtmoodnum = gohelper.findChildTextMesh(self.viewGO, "#go_mood/mask/#txt_mood")
+	self._goarrow1 = gohelper.findChild(self.viewGO, "txt_dec/#go_arrow")
+	self._goarrow2 = gohelper.findChild(self.viewGO, "txt_dec2/#go_arrow")
+	self._txtdescmood = gohelper.findChildTextMesh(self.viewGO, "#go_mood/mask2/#txt_desc")
+	self._godescmainitem = gohelper.findChild(self.viewGO, "#go_main/layout/tag1")
+	self._godescmood = gohelper.findChild(self.viewGO, "#go_mood/mask2")
+	self._effectday = gohelper.findChild(self.viewGO, "bg/vx_nextday")
+	self._effectnextlv = gohelper.findChild(self.viewGO, "#go_main/vx_nextlevel")
 end
 
-function var_0_0.onOpen(arg_2_0)
+function PinballDayEndView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.Act178.act178_audio9)
-	gohelper.setActive(arg_2_0._gotips, false)
+	gohelper.setActive(self._gotips, false)
 
-	arg_2_0._txtday.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("pinball_day"), arg_2_0.viewParam.day)
-	arg_2_0._canClose = false
-	arg_2_0._beforeScore, arg_2_0._nextScore = arg_2_0.viewParam.preScore, arg_2_0.viewParam.nextScore
-	arg_2_0._beforeComplaint, arg_2_0._nextComplaint = arg_2_0.viewParam.preComplaint, arg_2_0.viewParam.nextComplaint
+	self._txtday.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("pinball_day"), self.viewParam.day)
+	self._canClose = false
+	self._beforeScore, self._nextScore = self.viewParam.preScore, self.viewParam.nextScore
+	self._beforeComplaint, self._nextComplaint = self.viewParam.preComplaint, self.viewParam.nextComplaint
 
-	gohelper.setActive(arg_2_0._goarrow1, arg_2_0._nextScore > arg_2_0._beforeScore)
-	gohelper.setActive(arg_2_0._goarrow2, arg_2_0._nextComplaint > arg_2_0._beforeComplaint)
-	arg_2_0:updateTxt()
-	TaskDispatcher.runDelay(arg_2_0._delayTween, arg_2_0, 1)
+	gohelper.setActive(self._goarrow1, self._nextScore > self._beforeScore)
+	gohelper.setActive(self._goarrow2, self._nextComplaint > self._beforeComplaint)
+	self:updateTxt()
+	TaskDispatcher.runDelay(self._delayTween, self, 1)
 
-	if arg_2_0._beforeScore == arg_2_0._nextScore and arg_2_0._beforeComplaint == arg_2_0._nextComplaint then
-		arg_2_0:_onTween(1)
-
-		return
-	end
-
-	arg_2_0:_onTween(0)
-end
-
-function var_0_0._delayTween(arg_3_0)
-	if arg_3_0._beforeScore == arg_3_0._nextScore and arg_3_0._beforeComplaint == arg_3_0._nextComplaint then
-		arg_3_0:onTweenEnd()
+	if self._beforeScore == self._nextScore and self._beforeComplaint == self._nextComplaint then
+		self:_onTween(1)
 
 		return
 	end
 
-	arg_3_0._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 1, arg_3_0._onTween, arg_3_0.onTweenEnd, arg_3_0)
+	self:_onTween(0)
 end
 
-function var_0_0._onTween(arg_4_0, arg_4_1)
-	arg_4_0:updateScore(math.floor(arg_4_1 * (arg_4_0._nextScore - arg_4_0._beforeScore) + arg_4_0._beforeScore))
-	arg_4_0:updateComplaint(math.floor(arg_4_1 * (arg_4_0._nextComplaint - arg_4_0._beforeComplaint) + arg_4_0._beforeComplaint))
+function PinballDayEndView:_delayTween()
+	if self._beforeScore == self._nextScore and self._beforeComplaint == self._nextComplaint then
+		self:onTweenEnd()
+
+		return
+	end
+
+	self._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 1, self._onTween, self.onTweenEnd, self)
 end
 
-function var_0_0.updateTxt(arg_5_0)
-	local var_5_0 = PinballConfig.instance:getScoreLevel(VersionActivity2_4Enum.ActivityId.Pinball, arg_5_0.viewParam.preMaxProsperity)
-	local var_5_1 = PinballConfig.instance:getScoreLevel(VersionActivity2_4Enum.ActivityId.Pinball, arg_5_0.viewParam.nextMaxProsperity)
-	local var_5_2 = {}
+function PinballDayEndView:_onTween(value)
+	self:updateScore(math.floor(value * (self._nextScore - self._beforeScore) + self._beforeScore))
+	self:updateComplaint(math.floor(value * (self._nextComplaint - self._beforeComplaint) + self._beforeComplaint))
+end
 
-	for iter_5_0 = var_5_0 + 1, var_5_1 do
-		local var_5_3 = lua_activity178_score.configDict[VersionActivity2_4Enum.ActivityId.Pinball][iter_5_0]
+function PinballDayEndView:updateTxt()
+	local preLv = PinballConfig.instance:getScoreLevel(VersionActivity2_4Enum.ActivityId.Pinball, self.viewParam.preMaxProsperity)
+	local nowLv = PinballConfig.instance:getScoreLevel(VersionActivity2_4Enum.ActivityId.Pinball, self.viewParam.nextMaxProsperity)
+	local dict = {}
 
-		if not string.nilorempty(var_5_3.showTxt) then
-			local var_5_4 = string.splitToNumber(var_5_3.showTxt, "#")
+	for i = preLv + 1, nowLv do
+		local co = lua_activity178_score.configDict[VersionActivity2_4Enum.ActivityId.Pinball][i]
 
-			for iter_5_1, iter_5_2 in pairs(var_5_4) do
-				var_5_2[iter_5_2] = true
+		if not string.nilorempty(co.showTxt) then
+			local arrs = string.splitToNumber(co.showTxt, "#")
+
+			for _, id in pairs(arrs) do
+				dict[id] = true
 			end
 		end
 	end
 
-	local var_5_5 = {}
+	local list = {}
 
-	for iter_5_3 in pairs(var_5_2) do
-		table.insert(var_5_5, iter_5_3)
+	for id in pairs(dict) do
+		table.insert(list, id)
 	end
 
-	table.sort(var_5_5)
+	table.sort(list)
 
-	local var_5_6 = {}
+	local descs = {}
 
-	for iter_5_4, iter_5_5 in ipairs(var_5_5) do
-		local var_5_7 = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("pinball_score_desc_" .. iter_5_5), iter_5_4)
+	for index, id in ipairs(list) do
+		local txt = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("pinball_score_desc_" .. id), index)
 
-		table.insert(var_5_6, var_5_7)
+		table.insert(descs, txt)
 	end
 
-	gohelper.CreateObjList(arg_5_0, arg_5_0._createMainDescItem, var_5_6, nil, arg_5_0._godescmainitem)
+	gohelper.CreateObjList(self, self._createMainDescItem, descs, nil, self._godescmainitem)
 
-	local var_5_8 = arg_5_0:getStage(arg_5_0.viewParam.preComplaint)
-	local var_5_9 = arg_5_0:getStage(arg_5_0.viewParam.nextComplaint)
-	local var_5_10 = PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.DefaultMarblesHoleNum)
+	local preStage = self:getStage(self.viewParam.preComplaint)
+	local nextStage = self:getStage(self.viewParam.nextComplaint)
+	local nowBallNum = PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.DefaultMarblesHoleNum)
 
-	if var_5_9 == 3 then
-		var_5_10 = var_5_10 - PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.ComplaintMaxSubHoleNum)
-	elseif var_5_9 == 2 then
-		var_5_10 = var_5_10 - PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.ComplaintThresholdSubHoleNum)
+	if nextStage == 3 then
+		nowBallNum = nowBallNum - PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.ComplaintMaxSubHoleNum)
+	elseif nextStage == 2 then
+		nowBallNum = nowBallNum - PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.ComplaintThresholdSubHoleNum)
 	end
 
-	if var_5_9 < var_5_8 then
-		gohelper.setActive(arg_5_0._godescmood, true)
+	if nextStage < preStage then
+		gohelper.setActive(self._godescmood, true)
 
-		arg_5_0._txtdescmood.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("pinball_holenum_desc_2"), var_5_10)
-	elseif var_5_8 < var_5_9 then
-		gohelper.setActive(arg_5_0._godescmood, true)
+		self._txtdescmood.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("pinball_holenum_desc_2"), nowBallNum)
+	elseif preStage < nextStage then
+		gohelper.setActive(self._godescmood, true)
 
-		arg_5_0._txtdescmood.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("pinball_holenum_desc_1"), var_5_10)
+		self._txtdescmood.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("pinball_holenum_desc_1"), nowBallNum)
 	else
-		gohelper.setActive(arg_5_0._godescmood, false)
+		gohelper.setActive(self._godescmood, false)
 
-		arg_5_0._txtdescmood.text = ""
+		self._txtdescmood.text = ""
 	end
 end
 
-function var_0_0._createMainDescItem(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	gohelper.findChildTextMesh(arg_6_1, "#txt_desc").text = arg_6_2
+function PinballDayEndView:_createMainDescItem(obj, data, index)
+	local txt = gohelper.findChildTextMesh(obj, "#txt_desc")
+
+	txt.text = data
 end
 
-function var_0_0.updateScore(arg_7_0, arg_7_1)
-	local var_7_0, var_7_1, var_7_2 = PinballConfig.instance:getScoreLevel(VersionActivity2_4Enum.ActivityId.Pinball, arg_7_1)
-	local var_7_3 = arg_7_1
-	local var_7_4 = arg_7_0._nextScore
+function PinballDayEndView:updateScore(value)
+	local level, curScore, nextScore = PinballConfig.instance:getScoreLevel(VersionActivity2_4Enum.ActivityId.Pinball, value)
+	local score, changeNum = value, self._nextScore
 
-	arg_7_0._txtmainlv.text = var_7_0
+	self._txtmainlv.text = level
 
-	if arg_7_0._cacheLv and var_7_0 > arg_7_0._cacheLv then
-		gohelper.setActive(arg_7_0._effectnextlv, false)
-		gohelper.setActive(arg_7_0._effectnextlv, true)
+	if self._cacheLv and level > self._cacheLv then
+		gohelper.setActive(self._effectnextlv, false)
+		gohelper.setActive(self._effectnextlv, true)
 	end
 
-	arg_7_0._cacheLv = var_7_0
+	self._cacheLv = level
 
-	local var_7_5 = 0
-	local var_7_6 = 0
-	local var_7_7 = 0
+	local value1, value2, value3 = 0, 0, 0
 
-	if var_7_4 == var_7_3 then
-		arg_7_0._txtnum.text = string.format("%d/%d", var_7_3, var_7_2)
+	if changeNum == score then
+		self._txtnum.text = string.format("%d/%d", score, nextScore)
 
-		if var_7_2 == var_7_1 then
-			var_7_6 = 1
+		if nextScore == curScore then
+			value2 = 1
 		else
-			var_7_6 = (var_7_3 - var_7_1) / (var_7_2 - var_7_1)
+			value2 = (score - curScore) / (nextScore - curScore)
 		end
 	else
-		arg_7_0._txtnum.text = string.format("%d(%+d)/%d", var_7_3, var_7_4 - var_7_3, var_7_2)
+		self._txtnum.text = string.format("%d(%+d)/%d", score, changeNum - score, nextScore)
 
-		if var_7_3 < var_7_4 then
-			if var_7_2 == var_7_1 then
-				var_7_6 = 1
+		if score < changeNum then
+			if nextScore == curScore then
+				value2 = 1
 			else
-				var_7_5 = (var_7_4 - var_7_1) / (var_7_2 - var_7_1)
-				var_7_6 = (var_7_3 - var_7_1) / (var_7_2 - var_7_1)
+				value1 = (changeNum - curScore) / (nextScore - curScore)
+				value2 = (score - curScore) / (nextScore - curScore)
 
-				if var_7_2 < var_7_4 then
-					local var_7_8, var_7_9, var_7_10 = PinballConfig.instance:getScoreLevel(VersionActivity2_4Enum.ActivityId.Pinball, var_7_4)
+				if nextScore < changeNum then
+					local _, changeBaseScore, changeNextScore = PinballConfig.instance:getScoreLevel(VersionActivity2_4Enum.ActivityId.Pinball, changeNum)
 
-					var_7_7 = (var_7_4 - var_7_9) / (var_7_10 - var_7_9)
+					value3 = (changeNum - changeBaseScore) / (changeNextScore - changeBaseScore)
 				end
 			end
-		elseif var_7_1 <= var_7_4 then
-			var_7_5 = (var_7_3 - var_7_1) / (var_7_2 - var_7_1)
-			var_7_6 = (var_7_4 - var_7_1) / (var_7_2 - var_7_1)
+		elseif curScore <= changeNum then
+			value1 = (score - curScore) / (nextScore - curScore)
+			value2 = (changeNum - curScore) / (nextScore - curScore)
 		else
-			local var_7_11, var_7_12, var_7_13 = PinballConfig.instance:getScoreLevel(VersionActivity2_4Enum.ActivityId.Pinball, var_7_4)
+			local _, changeBaseScore, changeNextScore = PinballConfig.instance:getScoreLevel(VersionActivity2_4Enum.ActivityId.Pinball, changeNum)
 
-			var_7_5 = 1
-			var_7_6 = (var_7_4 - var_7_12) / (var_7_13 - var_7_12)
-			var_7_7 = (var_7_3 - var_7_1) / (var_7_2 - var_7_1)
+			value1 = 1
+			value2 = (changeNum - changeBaseScore) / (changeNextScore - changeBaseScore)
+			value3 = (score - curScore) / (nextScore - curScore)
 		end
 	end
 
-	arg_7_0._slider1.fillAmount = var_7_5
-	arg_7_0._slider2.fillAmount = var_7_6
-	arg_7_0._slider3.fillAmount = var_7_7
+	self._slider1.fillAmount = value1
+	self._slider2.fillAmount = value2
+	self._slider3.fillAmount = value3
 end
 
-function var_0_0.getStage(arg_8_0, arg_8_1)
-	local var_8_0 = PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.ComplaintLimit)
-	local var_8_1 = PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.ComplaintThreshold)
-	local var_8_2 = 1
+function PinballDayEndView:getStage(num)
+	local max = PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.ComplaintLimit)
+	local threshold = PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.ComplaintThreshold)
+	local curStage = 1
 
-	if var_8_0 <= arg_8_1 then
-		var_8_2 = 3
-	elseif var_8_1 <= arg_8_1 then
-		var_8_2 = 2
+	if max <= num then
+		curStage = 3
+	elseif threshold <= num then
+		curStage = 2
 	end
 
-	return var_8_2
+	return curStage
 end
 
-function var_0_0.updateComplaint(arg_9_0, arg_9_1)
-	local var_9_0 = PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.ComplaintLimit)
-	local var_9_1 = arg_9_1
-	local var_9_2 = arg_9_0._nextComplaint
-	local var_9_3 = arg_9_0:getStage(var_9_1)
+function PinballDayEndView:updateComplaint(value)
+	local max = PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.ComplaintLimit)
+	local cur, next = value, self._nextComplaint
+	local curStage = self:getStage(cur)
 
-	UISpriteSetMgr.instance:setAct178Sprite(arg_9_0._imagemoodicon, "v2a4_tutushizi_heart_" .. var_9_3)
-	UISpriteSetMgr.instance:setAct178Sprite(arg_9_0._imagemood2, "v2a4_tutushizi_heartprogress_" .. var_9_3)
+	UISpriteSetMgr.instance:setAct178Sprite(self._imagemoodicon, "v2a4_tutushizi_heart_" .. curStage)
+	UISpriteSetMgr.instance:setAct178Sprite(self._imagemood2, "v2a4_tutushizi_heartprogress_" .. curStage)
 
-	local var_9_4 = var_9_1 / var_9_0
-	local var_9_5 = var_9_2 / var_9_0
+	local value1 = cur / max
+	local value2 = next / max
 
-	if var_9_5 < var_9_4 then
-		var_9_4, var_9_5 = var_9_5, var_9_4
+	if value2 < value1 then
+		value1, value2 = value2, value1
 	end
 
-	arg_9_0._imagemood1.fillAmount = var_9_5
-	arg_9_0._imagemood2.fillAmount = var_9_4
-	arg_9_0._txtmoodnum.text = string.format("%s/%s", var_9_1, var_9_0)
+	self._imagemood1.fillAmount = value2
+	self._imagemood2.fillAmount = value1
+	self._txtmoodnum.text = string.format("%s/%s", cur, max)
 end
 
-function var_0_0.onTweenEnd(arg_10_0)
-	gohelper.setActive(arg_10_0._effectday, false)
-	gohelper.setActive(arg_10_0._effectday, true)
+function PinballDayEndView:onTweenEnd()
+	gohelper.setActive(self._effectday, false)
+	gohelper.setActive(self._effectday, true)
 
-	arg_10_0._txtday.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("pinball_day"), PinballModel.instance.day)
-	arg_10_0._canClose = true
-	arg_10_0._tweenId = nil
+	self._txtday.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("pinball_day"), PinballModel.instance.day)
+	self._canClose = true
+	self._tweenId = nil
 
-	gohelper.setActive(arg_10_0._gotips, true)
+	gohelper.setActive(self._gotips, true)
 end
 
-function var_0_0.onClose(arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0._delayTween, arg_11_0)
+function PinballDayEndView:onClose()
+	TaskDispatcher.cancelTask(self._delayTween, self)
 
-	if arg_11_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_11_0._tweenId)
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_11_0._tweenId = nil
+		self._tweenId = nil
 	end
 
 	PinballController.instance:dispatchEvent(PinballEvent.EndRound)
 	PinballController.instance:sendGuideMainLv()
 end
 
-function var_0_0.onClickModalMask(arg_12_0)
-	if not arg_12_0._canClose then
+function PinballDayEndView:onClickModalMask()
+	if not self._canClose then
 		return
 	end
 
-	arg_12_0:closeThis()
+	self:closeThis()
 end
 
-return var_0_0
+return PinballDayEndView

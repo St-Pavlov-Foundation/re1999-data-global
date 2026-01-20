@@ -1,13 +1,15 @@
-﻿module("modules.logic.custompickchoice.view.CustomPickChoiceViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/custompickchoice/view/CustomPickChoiceViewContainer.lua
 
-local var_0_0 = class("CustomPickChoiceViewContainer", BaseViewContainer)
+module("modules.logic.custompickchoice.view.CustomPickChoiceViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local CustomPickChoiceViewContainer = class("CustomPickChoiceViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, CustomPickChoiceView.New())
+function CustomPickChoiceViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, CustomPickChoiceView.New())
+
+	return views
 end
 
-return var_0_0
+return CustomPickChoiceViewContainer

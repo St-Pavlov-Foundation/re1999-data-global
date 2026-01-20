@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_activity128_rewards", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_activity128_rewards.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_activity128_rewards", package.seeall)
+
+local lua_activity128_rewards = {}
+local fields = {
 	reward = 5,
 	display = 6,
 	rewardPointNum = 4,
@@ -9,14 +11,14 @@ local var_0_1 = {
 	stage = 3,
 	activityId = 1
 }
-local var_0_2 = {
+local primaryKey = {
 	"activityId",
 	"id"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_activity128_rewards.onLoad(json)
+	lua_activity128_rewards.configList, lua_activity128_rewards.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_activity128_rewards

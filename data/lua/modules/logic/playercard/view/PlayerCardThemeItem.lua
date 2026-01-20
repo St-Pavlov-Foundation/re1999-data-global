@@ -1,96 +1,98 @@
-﻿module("modules.logic.playercard.view.PlayerCardThemeItem", package.seeall)
+﻿-- chunkname: @modules/logic/playercard/view/PlayerCardThemeItem.lua
 
-local var_0_0 = class("PlayerCardThemeItem", ListScrollCellExtend)
+module("modules.logic.playercard.view.PlayerCardThemeItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0.simageBg = gohelper.findChildSingleImage(arg_1_0.viewGO, "themeBg")
-	arg_1_0.txtName = gohelper.findChildTextMesh(arg_1_0.viewGO, "#txt_name")
-	arg_1_0.goLocked = gohelper.findChild(arg_1_0.viewGO, "#go_locked")
-	arg_1_0.goSelect = gohelper.findChild(arg_1_0.viewGO, "#go_select")
-	arg_1_0.goUsing = gohelper.findChild(arg_1_0.viewGO, "#go_using")
-	arg_1_0.btnClick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "click")
-	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "#go_reddot")
+local PlayerCardThemeItem = class("PlayerCardThemeItem", ListScrollCellExtend)
+
+function PlayerCardThemeItem:init(go)
+	self.viewGO = go
+	self.simageBg = gohelper.findChildSingleImage(self.viewGO, "themeBg")
+	self.txtName = gohelper.findChildTextMesh(self.viewGO, "#txt_name")
+	self.goLocked = gohelper.findChild(self.viewGO, "#go_locked")
+	self.goSelect = gohelper.findChild(self.viewGO, "#go_select")
+	self.goUsing = gohelper.findChild(self.viewGO, "#go_using")
+	self.btnClick = gohelper.findChildButtonWithAudio(self.viewGO, "click")
+	self._goreddot = gohelper.findChild(self.viewGO, "#go_reddot")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0.btnClick:AddClickListener(arg_2_0._onClick, arg_2_0)
-	PlayerCardController.instance:registerCallback(PlayerCardEvent.SwitchTheme, arg_2_0.refreshUI, arg_2_0)
-	PlayerCardController.instance:registerCallback(PlayerCardEvent.ChangeSkin, arg_2_0.refreshUI, arg_2_0)
+function PlayerCardThemeItem:addEvents()
+	self.btnClick:AddClickListener(self._onClick, self)
+	PlayerCardController.instance:registerCallback(PlayerCardEvent.SwitchTheme, self.refreshUI, self)
+	PlayerCardController.instance:registerCallback(PlayerCardEvent.ChangeSkin, self.refreshUI, self)
 
-	arg_2_0._bgreddot = RedDotController.instance:addNotEventRedDot(arg_2_0._goreddot, arg_2_0._isShowRedDot, arg_2_0)
+	self._bgreddot = RedDotController.instance:addNotEventRedDot(self._goreddot, self._isShowRedDot, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	PlayerCardController.instance:unregisterCallback(PlayerCardEvent.SwitchTheme, arg_3_0.refreshUI, arg_3_0)
-	PlayerCardController.instance:unregisterCallback(PlayerCardEvent.ChangeSkin, arg_3_0.refreshUI, arg_3_0)
-	arg_3_0.btnClick:RemoveClickListener()
+function PlayerCardThemeItem:removeEvents()
+	PlayerCardController.instance:unregisterCallback(PlayerCardEvent.SwitchTheme, self.refreshUI, self)
+	PlayerCardController.instance:unregisterCallback(PlayerCardEvent.ChangeSkin, self.refreshUI, self)
+	self.btnClick:RemoveClickListener()
 end
 
-function var_0_0._isShowRedDot(arg_4_0)
-	local var_4_0 = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.PlayerCardNewBgSkinRed) .. arg_4_0._mo.id
+function PlayerCardThemeItem:_isShowRedDot()
+	local key = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.PlayerCardNewBgSkinRed) .. self._mo.id
 
-	return PlayerPrefsHelper.getNumber(var_4_0, 0) == 1
+	return PlayerPrefsHelper.getNumber(key, 0) == 1
 end
 
-function var_0_0._onClick(arg_5_0)
-	PlayerCardModel.instance:setSelectSkinMO(arg_5_0._mo)
+function PlayerCardThemeItem:_onClick()
+	PlayerCardModel.instance:setSelectSkinMO(self._mo)
 
-	if arg_5_0:_isShowRedDot() then
-		PlayerCardController.instance:setBgSkinRed(arg_5_0._mo.id, false)
+	if self:_isShowRedDot() then
+		PlayerCardController.instance:setBgSkinRed(self._mo.id, false)
 		PlayerCardModel.instance:setShowRed()
-		gohelper.setActive(arg_5_0._goreddot, false)
+		gohelper.setActive(self._goreddot, false)
 	end
 
-	PlayerCardController.instance:dispatchEvent(PlayerCardEvent.SwitchTheme, arg_5_0._mo.id)
+	PlayerCardController.instance:dispatchEvent(PlayerCardEvent.SwitchTheme, self._mo.id)
 end
 
-function var_0_0.refreshUI(arg_6_0)
-	local var_6_0 = arg_6_0._skinId == PlayerCardModel.instance:getSelectSkinMO().id
+function PlayerCardThemeItem:refreshUI()
+	local isSelect = self._skinId == PlayerCardModel.instance:getSelectSkinMO().id
 
-	gohelper.setActive(arg_6_0.goSelect, var_6_0)
+	gohelper.setActive(self.goSelect, isSelect)
 
-	local var_6_1 = arg_6_0._mo:checkIsUse()
+	local isUsing = self._mo:checkIsUse()
 
-	gohelper.setActive(arg_6_0.goUsing, var_6_1)
+	gohelper.setActive(self.goUsing, isUsing)
 end
 
-function var_0_0.onUpdateMO(arg_7_0, arg_7_1)
-	arg_7_0._mo = arg_7_1
-	arg_7_0._skinId = arg_7_0._mo:isEmpty() and 0 or arg_7_0._mo.id
-	arg_7_0._config = arg_7_0._mo:getConfig()
+function PlayerCardThemeItem:onUpdateMO(mo)
+	self._mo = mo
+	self._skinId = self._mo:isEmpty() and 0 or self._mo.id
+	self._config = self._mo:getConfig()
 
-	if arg_7_0._mo:isEmpty() then
-		arg_7_0:refreshEmpty()
+	if self._mo:isEmpty() then
+		self:refreshEmpty()
 	else
-		arg_7_0:refreshItem()
+		self:refreshItem()
 	end
 
-	local var_7_0 = arg_7_0._skinId == PlayerCardModel.instance:getSelectSkinMO().id
+	local isSelect = self._skinId == PlayerCardModel.instance:getSelectSkinMO().id
 
-	gohelper.setActive(arg_7_0.goSelect, var_7_0)
+	gohelper.setActive(self.goSelect, isSelect)
 
-	local var_7_1 = arg_7_0._mo:checkIsUse()
+	local isUsing = self._mo:checkIsUse()
 
-	gohelper.setActive(arg_7_0.goUsing, var_7_1)
+	gohelper.setActive(self.goUsing, isUsing)
 end
 
-function var_0_0.refreshEmpty(arg_8_0)
-	arg_8_0.txtName.text = luaLang("talent_style_special_tag_998")
+function PlayerCardThemeItem:refreshEmpty()
+	self.txtName.text = luaLang("talent_style_special_tag_998")
 
-	arg_8_0.simageBg:LoadImage(ResUrl.getPlayerCardIcon("banner/" .. arg_8_0._skinId))
-	gohelper.setActive(arg_8_0.goLocked, false)
+	self.simageBg:LoadImage(ResUrl.getPlayerCardIcon("banner/" .. self._skinId))
+	gohelper.setActive(self.goLocked, false)
 end
 
-function var_0_0.refreshItem(arg_9_0)
-	arg_9_0.txtName.text = arg_9_0._config.name
+function PlayerCardThemeItem:refreshItem()
+	self.txtName.text = self._config.name
 
-	arg_9_0.simageBg:LoadImage(ResUrl.getPlayerCardIcon("banner/" .. arg_9_0._skinId))
-	gohelper.setActive(arg_9_0.goLocked, not arg_9_0._mo:isUnLock())
+	self.simageBg:LoadImage(ResUrl.getPlayerCardIcon("banner/" .. self._skinId))
+	gohelper.setActive(self.goLocked, not self._mo:isUnLock())
 end
 
-function var_0_0.onDestroy(arg_10_0)
-	arg_10_0.simageBg:UnLoadImage()
+function PlayerCardThemeItem:onDestroy()
+	self.simageBg:UnLoadImage()
 end
 
-return var_0_0
+return PlayerCardThemeItem

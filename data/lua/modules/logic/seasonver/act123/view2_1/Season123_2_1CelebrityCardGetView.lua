@@ -1,84 +1,86 @@
-﻿module("modules.logic.seasonver.act123.view2_1.Season123_2_1CelebrityCardGetView", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view2_1/Season123_2_1CelebrityCardGetView.lua
 
-local var_0_0 = class("Season123_2_1CelebrityCardGetView", BaseViewExtended)
+module("modules.logic.seasonver.act123.view2_1.Season123_2_1CelebrityCardGetView", package.seeall)
 
-var_0_0.OpenType = {
+local Season123_2_1CelebrityCardGetView = class("Season123_2_1CelebrityCardGetView", BaseViewExtended)
+
+Season123_2_1CelebrityCardGetView.OpenType = {
 	Get = 1
 }
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goselfSelect = gohelper.findChild(arg_1_0.viewGO, "#go_selfSelect")
-	arg_1_0._gocardget = gohelper.findChild(arg_1_0.viewGO, "#go_cardget")
-	arg_1_0._scrollcardget = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_cardget/mask/#scroll_cardget")
-	arg_1_0._gocardContent = gohelper.findChild(arg_1_0.viewGO, "#go_cardget/mask/#scroll_cardget/Viewport/#go_cardContent")
-	arg_1_0._gocarditem = gohelper.findChild(arg_1_0.viewGO, "#go_cardget/mask/#scroll_cardget/Viewport/#go_cardContent/#go_carditem")
-	arg_1_0._btnclose = gohelper.getClick(arg_1_0.viewGO)
-	arg_1_0._contentGrid = arg_1_0._gocardContent:GetComponent(typeof(UnityEngine.UI.GridLayoutGroup))
-	arg_1_0._contentSizeFitter = arg_1_0._gocardContent:GetComponent(typeof(UnityEngine.UI.ContentSizeFitter))
+function Season123_2_1CelebrityCardGetView:onInitView()
+	self._goselfSelect = gohelper.findChild(self.viewGO, "#go_selfSelect")
+	self._gocardget = gohelper.findChild(self.viewGO, "#go_cardget")
+	self._scrollcardget = gohelper.findChildScrollRect(self.viewGO, "#go_cardget/mask/#scroll_cardget")
+	self._gocardContent = gohelper.findChild(self.viewGO, "#go_cardget/mask/#scroll_cardget/Viewport/#go_cardContent")
+	self._gocarditem = gohelper.findChild(self.viewGO, "#go_cardget/mask/#scroll_cardget/Viewport/#go_cardContent/#go_carditem")
+	self._btnclose = gohelper.getClick(self.viewGO)
+	self._contentGrid = self._gocardContent:GetComponent(typeof(UnityEngine.UI.GridLayoutGroup))
+	self._contentSizeFitter = self._gocardContent:GetComponent(typeof(UnityEngine.UI.ContentSizeFitter))
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function Season123_2_1CelebrityCardGetView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function Season123_2_1CelebrityCardGetView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function Season123_2_1CelebrityCardGetView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0.onOpen(arg_5_0)
+function Season123_2_1CelebrityCardGetView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_celebrity_get)
-	gohelper.setActive(arg_5_0._goselfSelect, false)
-	gohelper.setActive(arg_5_0._gocardget, true)
-	arg_5_0:_showGetCard()
+	gohelper.setActive(self._goselfSelect, false)
+	gohelper.setActive(self._gocardget, true)
+	self:_showGetCard()
 	Activity123Rpc.instance:sendGetUnlockAct123EquipIdsRequest(Season123Model.instance:getCurSeasonId())
 end
 
-function var_0_0._showGetCard(arg_6_0)
-	arg_6_0:com_loadAsset(Season123_2_1CelebrityCardItem.AssetPath, arg_6_0._onCardItemLoaded)
+function Season123_2_1CelebrityCardGetView:_showGetCard()
+	self:com_loadAsset(Season123_2_1CelebrityCardItem.AssetPath, self._onCardItemLoaded)
 end
 
-function var_0_0._onCardItemLoaded(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_1:GetResource()
-	local var_7_1 = gohelper.clone(var_7_0, gohelper.findChild(arg_7_0._gocarditem, "go_itempos"), "root")
+function Season123_2_1CelebrityCardGetView:_onCardItemLoaded(loader)
+	local tarPrefab = loader:GetResource()
+	local obj = gohelper.clone(tarPrefab, gohelper.findChild(self._gocarditem, "go_itempos"), "root")
 
-	transformhelper.setLocalScale(var_7_1.transform, 0.65, 0.65, 0.65)
+	transformhelper.setLocalScale(obj.transform, 0.65, 0.65, 0.65)
 
-	arg_7_0._scroll_view = arg_7_0:com_registSimpleScrollView(arg_7_0._scrollcardget.gameObject, ScrollEnum.ScrollDirV, 4)
+	self._scroll_view = self:com_registSimpleScrollView(self._scrollcardget.gameObject, ScrollEnum.ScrollDirV, 4)
 
-	arg_7_0._scroll_view:setClass(Season123_2_1CelebrityCardGetScrollItem)
-	arg_7_0._scroll_view:setObjItem(var_7_1)
+	self._scroll_view:setClass(Season123_2_1CelebrityCardGetScrollItem)
+	self._scroll_view:setObjItem(obj)
 
-	local var_7_2 = arg_7_0.viewParam.data
+	local data = self.viewParam.data
 
-	if #var_7_2 > 4 then
-		recthelper.setAnchor(arg_7_0._scrollcardget.transform, 0, -473)
+	if #data > 4 then
+		recthelper.setAnchor(self._scrollcardget.transform, 0, -473)
 
-		arg_7_0._contentGrid.enabled = false
-		arg_7_0._contentSizeFitter.enabled = false
+		self._contentGrid.enabled = false
+		self._contentSizeFitter.enabled = false
 	else
-		recthelper.setAnchor(arg_7_0._scrollcardget.transform, 0, -618)
+		recthelper.setAnchor(self._scrollcardget.transform, 0, -618)
 
-		arg_7_0._contentGrid.enabled = true
-		arg_7_0._contentSizeFitter.enabled = true
+		self._contentGrid.enabled = true
+		self._contentSizeFitter.enabled = true
 	end
 
-	arg_7_0._scroll_view:setData(var_7_2)
+	self._scroll_view:setData(data)
 end
 
-function var_0_0.isItemID(arg_8_0)
-	return arg_8_0.viewParam.is_item_id
+function Season123_2_1CelebrityCardGetView:isItemID()
+	return self.viewParam.is_item_id
 end
 
-function var_0_0.onClose(arg_9_0)
+function Season123_2_1CelebrityCardGetView:onClose()
 	return
 end
 
-return var_0_0
+return Season123_2_1CelebrityCardGetView

@@ -1,76 +1,81 @@
-﻿module("modules.logic.gm.controller.GMFightController", package.seeall)
+﻿-- chunkname: @modules/logic/gm/controller/GMFightController.lua
 
-local var_0_0 = class("GMFightController", BaseController)
+module("modules.logic.gm.controller.GMFightController", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	GameSceneMgr.instance:registerCallback(SceneEventName.ExitScene, arg_1_0._onExitScene, arg_1_0)
+local GMFightController = class("GMFightController", BaseController)
+
+function GMFightController:ctor()
+	GameSceneMgr.instance:registerCallback(SceneEventName.ExitScene, self._onExitScene, self)
 end
 
-function var_0_0._onExitScene(arg_2_0)
-	arg_2_0.buffTypeId = nil
+function GMFightController:_onExitScene()
+	self.buffTypeId = nil
 end
 
-function var_0_0.startStatBuffType(arg_3_0, arg_3_1)
-	arg_3_0.buffTypeId = arg_3_1
+function GMFightController:startStatBuffType(buffTypeId)
+	self.buffTypeId = buffTypeId
 
-	local var_3_0 = GameSceneMgr.instance:getCurScene().entityMgr
-	local var_3_1 = var_3_0:getTagUnitDict(SceneTag.UnitMonster)
+	local fightScene = GameSceneMgr.instance:getCurScene()
+	local entityMgr = fightScene.entityMgr
+	local enemyDict = entityMgr:getTagUnitDict(SceneTag.UnitMonster)
 
-	for iter_3_0, iter_3_1 in pairs(var_3_1) do
-		arg_3_0:addStatBuffTypeByEntity(iter_3_1)
+	for _, entity in pairs(enemyDict) do
+		self:addStatBuffTypeByEntity(entity)
 	end
 
-	local var_3_2 = var_3_0:getTagUnitDict(SceneTag.UnitPlayer)
+	local playerDict = entityMgr:getTagUnitDict(SceneTag.UnitPlayer)
 
-	for iter_3_2, iter_3_3 in pairs(var_3_2) do
-		arg_3_0:addStatBuffTypeByEntity(iter_3_3)
-	end
-end
-
-function var_0_0.addStatBuffTypeByEntity(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_1.nameUI
-
-	if var_4_0 then
-		local var_4_1 = var_4_0:getGO()
-
-		MonoHelper.addLuaComOnceToGo(var_4_1, FightGmNameUIComp, arg_4_1):startStatBuffType(arg_4_0.buffTypeId)
+	for _, entity in pairs(playerDict) do
+		self:addStatBuffTypeByEntity(entity)
 	end
 end
 
-function var_0_0.stopStatBuffType(arg_5_0)
-	arg_5_0.buffTypeId = nil
+function GMFightController:addStatBuffTypeByEntity(entity)
+	local nameUi = entity.nameUI
 
-	local var_5_0 = GameSceneMgr.instance:getCurScene().entityMgr
-	local var_5_1 = var_5_0:getTagUnitDict(SceneTag.UnitMonster)
+	if nameUi then
+		local containerGo = nameUi:getGO()
+		local comp = MonoHelper.addLuaComOnceToGo(containerGo, FightGmNameUIComp, entity)
 
-	for iter_5_0, iter_5_1 in pairs(var_5_1) do
-		arg_5_0:stopStatBuffTypeByEntity(iter_5_1)
-	end
-
-	local var_5_2 = var_5_0:getTagUnitDict(SceneTag.UnitPlayer)
-
-	for iter_5_2, iter_5_3 in pairs(var_5_2) do
-		arg_5_0:stopStatBuffTypeByEntity(iter_5_3)
+		comp:startStatBuffType(self.buffTypeId)
 	end
 end
 
-function var_0_0.stopStatBuffTypeByEntity(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_1.nameUI
+function GMFightController:stopStatBuffType()
+	self.buffTypeId = nil
 
-	if var_6_0 then
-		local var_6_1 = var_6_0:getGO()
-		local var_6_2 = MonoHelper.getLuaComFromGo(var_6_1, FightGmNameUIComp)
+	local fightScene = GameSceneMgr.instance:getCurScene()
+	local entityMgr = fightScene.entityMgr
+	local enemyDict = entityMgr:getTagUnitDict(SceneTag.UnitMonster)
 
-		if var_6_2 then
-			var_6_2:stopStatBuffType()
+	for _, entity in pairs(enemyDict) do
+		self:stopStatBuffTypeByEntity(entity)
+	end
+
+	local playerDict = entityMgr:getTagUnitDict(SceneTag.UnitPlayer)
+
+	for _, entity in pairs(playerDict) do
+		self:stopStatBuffTypeByEntity(entity)
+	end
+end
+
+function GMFightController:stopStatBuffTypeByEntity(entity)
+	local nameUi = entity.nameUI
+
+	if nameUi then
+		local containerGo = nameUi:getGO()
+		local comp = MonoHelper.getLuaComFromGo(containerGo, FightGmNameUIComp)
+
+		if comp then
+			comp:stopStatBuffType()
 		end
 	end
 end
 
-function var_0_0.statingBuffType(arg_7_0)
-	return arg_7_0.buffTypeId ~= nil
+function GMFightController:statingBuffType()
+	return self.buffTypeId ~= nil
 end
 
-var_0_0.instance = var_0_0.New()
+GMFightController.instance = GMFightController.New()
 
-return var_0_0
+return GMFightController

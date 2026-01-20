@@ -1,63 +1,65 @@
-﻿module("modules.logic.scene.room.work.RoomSceneWaitAStarWork", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/work/RoomSceneWaitAStarWork.lua
 
-local var_0_0 = class("RoomSceneWaitAStarWork", BaseWork)
+module("modules.logic.scene.room.work.RoomSceneWaitAStarWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._scene = arg_1_1
+local RoomSceneWaitAStarWork = class("RoomSceneWaitAStarWork", BaseWork)
+
+function RoomSceneWaitAStarWork:ctor(scene)
+	self._scene = scene
 end
 
-function var_0_0.onStart(arg_2_0)
-	arg_2_0._isLoadingFinish = false
+function RoomSceneWaitAStarWork:onStart()
+	self._isLoadingFinish = false
 
-	TaskDispatcher.runDelay(arg_2_0._overtime, arg_2_0, 30)
-	TaskDispatcher.runRepeat(arg_2_0._onUpdate, arg_2_0, 0)
-	arg_2_0:_logState()
+	TaskDispatcher.runDelay(self._overtime, self, 30)
+	TaskDispatcher.runRepeat(self._onUpdate, self, 0)
+	self:_logState()
 end
 
-function var_0_0._onUpdate(arg_3_0)
-	arg_3_0:_logState()
+function RoomSceneWaitAStarWork:_onUpdate()
+	self:_logState()
 
-	if not arg_3_0._scene.loader:isLoaderInProgress() and (not RoomEnum.UseAStarPath or not ZProj.AStarPathBridge.IsAStarInProgress()) then
-		arg_3_0:_finish()
+	if not self._scene.loader:isLoaderInProgress() and (not RoomEnum.UseAStarPath or not ZProj.AStarPathBridge.IsAStarInProgress()) then
+		self:_finish()
 	else
 		logNormal("RoomSceneWaitAStarWork: waiting")
 	end
 end
 
-function var_0_0._logState(arg_4_0)
-	local var_4_0 = arg_4_0._scene.loader:isLoaderInProgress() and "true" or "false"
-	local var_4_1 = ZProj.AStarPathBridge.IsAStarInProgress() and "true" or "false"
+function RoomSceneWaitAStarWork:_logState()
+	local a = self._scene.loader:isLoaderInProgress() and "true" or "false"
+	local b = ZProj.AStarPathBridge.IsAStarInProgress() and "true" or "false"
 
-	RoomHelper.logElapse(string.format("loading = %s, scaning = %s", var_4_0, var_4_1))
+	RoomHelper.logElapse(string.format("loading = %s, scaning = %s", a, b))
 end
 
-function var_0_0._overtime(arg_5_0)
+function RoomSceneWaitAStarWork:_overtime()
 	logError("RoomSceneWaitAStarWork: 超时, 直接进场景")
 	GameFacade.showMessageBox(MessageBoxIdDefine.RoomEnterLoadingTimeOut, MsgBoxEnum.BoxType.Yes, function()
-		if not arg_5_0._isLoadingFinish then
-			TaskDispatcher.runDelay(arg_5_0._overtime, arg_5_0, 30)
+		if not self._isLoadingFinish then
+			TaskDispatcher.runDelay(self._overtime, self, 30)
 		end
 	end)
 end
 
-function var_0_0._finish(arg_7_0)
+function RoomSceneWaitAStarWork:_finish()
 	logNormal("RoomSceneWaitAStarWork: finish")
 
-	arg_7_0._isLoadingFinish = true
+	self._isLoadingFinish = true
 
-	TaskDispatcher.cancelTask(arg_7_0._overtime, arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0._onUpdate, arg_7_0)
+	TaskDispatcher.cancelTask(self._overtime, self)
+	TaskDispatcher.cancelTask(self._onUpdate, self)
 
-	arg_7_0._scene = nil
+	self._scene = nil
 
-	arg_7_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0._overtime, arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0._onUpdate, arg_8_0)
+function RoomSceneWaitAStarWork:clearWork()
+	TaskDispatcher.cancelTask(self._overtime, self)
+	TaskDispatcher.cancelTask(self._onUpdate, self)
 
-	arg_8_0._scene = nil
+	self._scene = nil
 end
 
-return var_0_0
+return RoomSceneWaitAStarWork

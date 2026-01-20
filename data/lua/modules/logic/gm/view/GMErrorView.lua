@@ -1,124 +1,126 @@
-﻿module("modules.logic.gm.view.GMErrorView", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GMErrorView.lua
 
-local var_0_0 = class("GMErrorView", BaseView)
+module("modules.logic.gm.view.GMErrorView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "panel/detail/btns/btnClose")
-	arg_1_0._btnClear = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "panel/detail/btns/btnClear")
-	arg_1_0._btnDel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "panel/detail/btns/btnDel")
-	arg_1_0._btnSend = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "panel/detail/btns/btnSend")
-	arg_1_0._btnHide = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "panel/detail/btns/btnHide")
-	arg_1_0._btnCopy = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "panel/detail/btns/btnCopy")
-	arg_1_0._btnBlock = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "panel/detail/btns/btnBlock")
-	arg_1_0._txtContent = gohelper.findChildText(arg_1_0.viewGO, "panel/detail/scroll/Viewport/content")
+local GMErrorView = class("GMErrorView", BaseView)
+
+function GMErrorView:onInitView()
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "panel/detail/btns/btnClose")
+	self._btnClear = gohelper.findChildButtonWithAudio(self.viewGO, "panel/detail/btns/btnClear")
+	self._btnDel = gohelper.findChildButtonWithAudio(self.viewGO, "panel/detail/btns/btnDel")
+	self._btnSend = gohelper.findChildButtonWithAudio(self.viewGO, "panel/detail/btns/btnSend")
+	self._btnHide = gohelper.findChildButtonWithAudio(self.viewGO, "panel/detail/btns/btnHide")
+	self._btnCopy = gohelper.findChildButtonWithAudio(self.viewGO, "panel/detail/btns/btnCopy")
+	self._btnBlock = gohelper.findChildButtonWithAudio(self.viewGO, "panel/detail/btns/btnBlock")
+	self._txtContent = gohelper.findChildText(self.viewGO, "panel/detail/scroll/Viewport/content")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnClose:AddClickListener(arg_2_0._onClickClose, arg_2_0)
-	arg_2_0._btnClear:AddClickListener(arg_2_0._onClickClear, arg_2_0)
-	arg_2_0._btnDel:AddClickListener(arg_2_0._onClitkDel, arg_2_0)
-	arg_2_0._btnSend:AddClickListener(arg_2_0._onClickSend, arg_2_0)
-	arg_2_0._btnHide:AddClickListener(arg_2_0._onClickHide, arg_2_0)
-	arg_2_0._btnCopy:AddClickListener(arg_2_0._onClickCopy, arg_2_0)
-	arg_2_0._btnBlock:AddClickListener(arg_2_0._onClickBlock, arg_2_0)
-	arg_2_0:addEventCb(GMController.instance, GMEvent.GMLogView_Select, arg_2_0._onSelectMO, arg_2_0)
+function GMErrorView:addEvents()
+	self._btnClose:AddClickListener(self._onClickClose, self)
+	self._btnClear:AddClickListener(self._onClickClear, self)
+	self._btnDel:AddClickListener(self._onClitkDel, self)
+	self._btnSend:AddClickListener(self._onClickSend, self)
+	self._btnHide:AddClickListener(self._onClickHide, self)
+	self._btnCopy:AddClickListener(self._onClickCopy, self)
+	self._btnBlock:AddClickListener(self._onClickBlock, self)
+	self:addEventCb(GMController.instance, GMEvent.GMLogView_Select, self._onSelectMO, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnClose:RemoveClickListener()
-	arg_3_0._btnClear:RemoveClickListener()
-	arg_3_0._btnDel:RemoveClickListener()
-	arg_3_0._btnSend:RemoveClickListener()
-	arg_3_0._btnHide:RemoveClickListener()
-	arg_3_0._btnCopy:RemoveClickListener()
-	arg_3_0._btnBlock:RemoveClickListener()
-	arg_3_0:removeEventCb(GMController.instance, GMEvent.GMLogView_Select, arg_3_0._onSelectMO, arg_3_0)
+function GMErrorView:removeEvents()
+	self._btnClose:RemoveClickListener()
+	self._btnClear:RemoveClickListener()
+	self._btnDel:RemoveClickListener()
+	self._btnSend:RemoveClickListener()
+	self._btnHide:RemoveClickListener()
+	self._btnCopy:RemoveClickListener()
+	self._btnBlock:RemoveClickListener()
+	self:removeEventCb(GMController.instance, GMEvent.GMLogView_Select, self._onSelectMO, self)
 end
 
-function var_0_0.onOpen(arg_4_0)
+function GMErrorView:onOpen()
 	if GMLogModel.instance.errorModel:getCount() > 0 then
 		GMLogModel.instance.errorModel:selectCell(1, true)
 	end
 
-	arg_4_0:_updateBtns()
+	self:_updateBtns()
 end
 
-function var_0_0._onSelectMO(arg_5_0, arg_5_1)
-	if arg_5_1 then
-		arg_5_0._selectMO = arg_5_1
-		arg_5_0._txtContent.text = string.format("%s %s", os.date("%H:%M:%S", arg_5_1.time), arg_5_1.msg)
+function GMErrorView:_onSelectMO(mo)
+	if mo then
+		self._selectMO = mo
+		self._txtContent.text = string.format("%s %s", os.date("%H:%M:%S", mo.time), mo.msg)
 	else
-		arg_5_0._txtContent.text = ""
+		self._txtContent.text = ""
 	end
 
-	arg_5_0:_updateBtns()
+	self:_updateBtns()
 end
 
-function var_0_0._onClickClose(arg_6_0)
-	arg_6_0:closeThis()
+function GMErrorView:_onClickClose()
+	self:closeThis()
 	GMLogController.instance:hideAlert()
 end
 
-function var_0_0._onClickClear(arg_7_0)
-	arg_7_0._selectMO = nil
-	arg_7_0._txtContent.text = ""
+function GMErrorView:_onClickClear()
+	self._selectMO = nil
+	self._txtContent.text = ""
 
 	GMLogModel.instance.errorModel:clear()
-	arg_7_0:_updateBtns()
-	arg_7_0:_updateCount()
+	self:_updateBtns()
+	self:_updateCount()
 end
 
-function var_0_0._onClitkDel(arg_8_0)
-	if arg_8_0._selectMO then
-		GMLogModel.instance.errorModel:remove(arg_8_0._selectMO)
+function GMErrorView:_onClitkDel()
+	if self._selectMO then
+		GMLogModel.instance.errorModel:remove(self._selectMO)
 
-		arg_8_0._selectMO = nil
-		arg_8_0._txtContent.text = ""
+		self._selectMO = nil
+		self._txtContent.text = ""
 	end
 
-	arg_8_0:_updateBtns()
-	arg_8_0:_updateCount()
+	self:_updateBtns()
+	self:_updateCount()
 end
 
-function var_0_0._onClickSend(arg_9_0)
-	if arg_9_0._selectMO then
-		if not arg_9_0._selectMO.hasSend then
-			arg_9_0._selectMO.hasSend = true
+function GMErrorView:_onClickSend()
+	if self._selectMO then
+		if not self._selectMO.hasSend then
+			self._selectMO.hasSend = true
 
-			GMLogController.instance:sendRobotMsg(arg_9_0._selectMO.msg, arg_9_0._selectMO.stackTrace)
+			GMLogController.instance:sendRobotMsg(self._selectMO.msg, self._selectMO.stackTrace)
 		else
 			GameFacade.showToast(ToastEnum.IconId, "had send")
 		end
 	end
 
-	arg_9_0:_updateBtns()
+	self:_updateBtns()
 end
 
-function var_0_0._onClickHide(arg_10_0)
-	arg_10_0:closeThis()
+function GMErrorView:_onClickHide()
+	self:closeThis()
 	GMLogController.instance:showAlert()
 end
 
-function var_0_0._onClickCopy(arg_11_0)
-	if arg_11_0._selectMO then
-		ZProj.GameHelper.SetSystemBuffer(arg_11_0._selectMO.msg)
+function GMErrorView:_onClickCopy()
+	if self._selectMO then
+		ZProj.GameHelper.SetSystemBuffer(self._selectMO.msg)
 		GameFacade.showToast(ToastEnum.IconId, "copy success")
 	end
 end
 
-function var_0_0._onClickBlock(arg_12_0)
+function GMErrorView:_onClickBlock()
 	GMLogController.instance:block()
-	arg_12_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._updateBtns(arg_13_0)
-	gohelper.setActive(arg_13_0._btnDel.gameObject, arg_13_0._selectMO)
-	gohelper.setActive(arg_13_0._btnSend.gameObject, arg_13_0._selectMO and not arg_13_0._selectMO.hasSend and not SLFramework.FrameworkSettings.IsEditor)
-	gohelper.setActive(arg_13_0._btnCopy.gameObject, arg_13_0._selectMO)
+function GMErrorView:_updateBtns()
+	gohelper.setActive(self._btnDel.gameObject, self._selectMO)
+	gohelper.setActive(self._btnSend.gameObject, self._selectMO and not self._selectMO.hasSend and not SLFramework.FrameworkSettings.IsEditor)
+	gohelper.setActive(self._btnCopy.gameObject, self._selectMO)
 end
 
-function var_0_0._updateCount(arg_14_0)
+function GMErrorView:_updateCount()
 	GMController.instance:dispatchEvent(GMEvent.GMLog_UpdateCount)
 end
 
-return var_0_0
+return GMErrorView

@@ -1,69 +1,73 @@
-﻿module("modules.logic.character.view.CharacterTalentStyleViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterTalentStyleViewContainer.lua
 
-local var_0_0 = class("CharacterTalentStyleViewContainer", BaseViewContainer)
+module("modules.logic.character.view.CharacterTalentStyleViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = ListScrollParam.New()
+local CharacterTalentStyleViewContainer = class("CharacterTalentStyleViewContainer", BaseViewContainer)
 
-	var_1_0.scrollGOPath = "go_style/#scroll_style"
-	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_0.prefabUrl = "go_style/#item_style"
-	var_1_0.cellClass = CharacterTalentStyleItem
-	var_1_0.scrollDir = ScrollEnum.ScrollDirV
-	var_1_0.lineCount = 1
-	var_1_0.cellWidth = 212
-	var_1_0.cellHeight = 212
-	var_1_0.cellSpaceV = -45
+function CharacterTalentStyleViewContainer:buildViews()
+	local scrollParam = ListScrollParam.New()
 
-	local var_1_1 = LuaListScrollView.New(TalentStyleListModel.instance, var_1_0)
+	scrollParam.scrollGOPath = "go_style/#scroll_style"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "go_style/#item_style"
+	scrollParam.cellClass = CharacterTalentStyleItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 212
+	scrollParam.cellHeight = 212
+	scrollParam.cellSpaceV = -45
 
-	arg_1_0._view = CharacterTalentStyleView.New()
+	local scrollView = LuaListScrollView.New(TalentStyleListModel.instance, scrollParam)
 
-	return {
-		var_1_1,
-		arg_1_0._view,
+	self._view = CharacterTalentStyleView.New()
+
+	local views = {
+		scrollView,
+		self._view,
 		TabViewGroup.New(1, "#go_leftbtns"),
 		TabViewGroup.New(2, "#go_rightbtns")
 	}
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = CharacterTalentStyleNavigateButtonsView.New({
+function CharacterTalentStyleViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = CharacterTalentStyleNavigateButtonsView.New({
 			true,
 			true,
 			true
 		}, HelpEnum.HelpId.TalentStyleViewHelp)
 
-		arg_2_0.navigateView:setOverrideClose(arg_2_0.overrideCloseFunc, arg_2_0)
+		self.navigateView:setOverrideClose(self.overrideCloseFunc, self)
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
-	elseif arg_2_1 == 2 then
-		local var_2_0 = CurrencyEnum.CurrencyType.Gold
-		local var_2_1 = CurrencyView.New({
-			var_2_0
+	elseif tabContainerId == 2 then
+		local currencyParam = CurrencyEnum.CurrencyType.Gold
+		local _currencyView = CurrencyView.New({
+			currencyParam
 		})
 
-		var_2_1.foreHideBtn = true
+		_currencyView.foreHideBtn = true
 
 		return {
-			var_2_1
+			_currencyView
 		}
 	end
 end
 
-function var_0_0.overrideCloseFunc(arg_3_0)
-	if arg_3_0._view then
-		arg_3_0._view:playCloseAnim()
+function CharacterTalentStyleViewContainer:overrideCloseFunc()
+	if self._view then
+		self._view:playCloseAnim()
 	else
-		arg_3_0:closeThis()
+		self:closeThis()
 	end
 end
 
-function var_0_0.getNavigateView(arg_4_0)
-	return arg_4_0.navigateView
+function CharacterTalentStyleViewContainer:getNavigateView()
+	return self.navigateView
 end
 
-return var_0_0
+return CharacterTalentStyleViewContainer

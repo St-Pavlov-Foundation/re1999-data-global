@@ -1,19 +1,21 @@
-﻿module("modules.logic.activity.view.V1a7_Role_SignItem_SignViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/V1a7_Role_SignItem_SignViewContainer.lua
 
-local var_0_0 = class("V1a7_Role_SignItem_SignViewContainer", Activity101SignViewBaseContainer)
+module("modules.logic.activity.view.V1a7_Role_SignItem_SignViewContainer", package.seeall)
 
-function var_0_0.onModifyListScrollParam(arg_1_0, arg_1_1)
-	arg_1_1.cellClass = V1a7_Role_SignItem
-	arg_1_1.scrollGOPath = "Root/#scroll_ItemList"
-	arg_1_1.cellWidth = 220
-	arg_1_1.cellHeight = 600
-	arg_1_1.cellSpaceH = -16
+local V1a7_Role_SignItem_SignViewContainer = class("V1a7_Role_SignItem_SignViewContainer", Activity101SignViewBaseContainer)
+
+function V1a7_Role_SignItem_SignViewContainer:onModifyListScrollParam(refListScrollParam)
+	refListScrollParam.cellClass = V1a7_Role_SignItem
+	refListScrollParam.scrollGOPath = "Root/#scroll_ItemList"
+	refListScrollParam.cellWidth = 220
+	refListScrollParam.cellHeight = 600
+	refListScrollParam.cellSpaceH = -16
 end
 
-function var_0_0.onBuildViews(arg_2_0)
+function V1a7_Role_SignItem_SignViewContainer:onBuildViews()
 	return {
-		(arg_2_0:getMainView())
+		(self:getMainView())
 	}
 end
 
-return var_0_0
+return V1a7_Role_SignItem_SignViewContainer

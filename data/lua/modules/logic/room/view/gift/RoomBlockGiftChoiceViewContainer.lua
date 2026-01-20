@@ -1,48 +1,50 @@
-﻿module("modules.logic.room.view.gift.RoomBlockGiftChoiceViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/gift/RoomBlockGiftChoiceViewContainer.lua
 
-local var_0_0 = class("RoomBlockGiftChoiceViewContainer", BaseViewContainer)
+module("modules.logic.room.view.gift.RoomBlockGiftChoiceViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+local RoomBlockGiftChoiceViewContainer = class("RoomBlockGiftChoiceViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "#scroll_block"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_1.prefabUrl = "#go_blockItem"
-	var_1_1.cellClass = RoomBlockGiftPackageItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 5
+function RoomBlockGiftChoiceViewContainer:buildViews()
+	local views = {}
+	local blockScrollParam = ListScrollParam.New()
 
-	local var_1_2 = RoomBlockGiftEnum.SubTypeInfo[MaterialEnum.MaterialType.BlockPackage]
+	blockScrollParam.scrollGOPath = "#scroll_block"
+	blockScrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	blockScrollParam.prefabUrl = "#go_blockItem"
+	blockScrollParam.cellClass = RoomBlockGiftPackageItem
+	blockScrollParam.scrollDir = ScrollEnum.ScrollDirV
+	blockScrollParam.lineCount = 5
 
-	var_1_1.cellWidth = var_1_2.CellSize[1]
-	var_1_1.cellHeight = var_1_2.CellSize[2]
-	var_1_1.cellSpaceH = var_1_2.CellSpacing[1]
-	var_1_1.cellSpaceV = var_1_2.CellSpacing[2]
+	local blockSubTypeInfo = RoomBlockGiftEnum.SubTypeInfo[MaterialEnum.MaterialType.BlockPackage]
 
-	table.insert(var_1_0, LuaListScrollView.New(RoomBlockGiftListModel.instance, var_1_1))
+	blockScrollParam.cellWidth = blockSubTypeInfo.CellSize[1]
+	blockScrollParam.cellHeight = blockSubTypeInfo.CellSize[2]
+	blockScrollParam.cellSpaceH = blockSubTypeInfo.CellSpacing[1]
+	blockScrollParam.cellSpaceV = blockSubTypeInfo.CellSpacing[2]
 
-	local var_1_3 = ListScrollParam.New()
+	table.insert(views, LuaListScrollView.New(RoomBlockGiftListModel.instance, blockScrollParam))
 
-	var_1_3.scrollGOPath = "#scroll_building"
-	var_1_3.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_3.prefabUrl = "#go_buildingItem"
-	var_1_3.cellClass = RoomBlockGiftBuildingItem
-	var_1_3.scrollDir = ScrollEnum.ScrollDirV
-	var_1_3.startSpace = 20
-	var_1_3.lineCount = 4
+	local buildingScrollParam = ListScrollParam.New()
 
-	local var_1_4 = RoomBlockGiftEnum.SubTypeInfo[MaterialEnum.MaterialType.Building]
+	buildingScrollParam.scrollGOPath = "#scroll_building"
+	buildingScrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	buildingScrollParam.prefabUrl = "#go_buildingItem"
+	buildingScrollParam.cellClass = RoomBlockGiftBuildingItem
+	buildingScrollParam.scrollDir = ScrollEnum.ScrollDirV
+	buildingScrollParam.startSpace = 20
+	buildingScrollParam.lineCount = 4
 
-	var_1_3.cellWidth = var_1_4.CellSize[1]
-	var_1_3.cellHeight = var_1_4.CellSize[2]
-	var_1_3.cellSpaceH = var_1_4.CellSpacing[1]
-	var_1_3.cellSpaceV = var_1_4.CellSpacing[2]
+	local buildingSubTypeInfo = RoomBlockGiftEnum.SubTypeInfo[MaterialEnum.MaterialType.Building]
 
-	table.insert(var_1_0, LuaListScrollView.New(RoomBuildingGiftListModel.instance, var_1_3))
-	table.insert(var_1_0, RoomBlockGiftChoiceView.New())
+	buildingScrollParam.cellWidth = buildingSubTypeInfo.CellSize[1]
+	buildingScrollParam.cellHeight = buildingSubTypeInfo.CellSize[2]
+	buildingScrollParam.cellSpaceH = buildingSubTypeInfo.CellSpacing[1]
+	buildingScrollParam.cellSpaceV = buildingSubTypeInfo.CellSpacing[2]
 
-	return var_1_0
+	table.insert(views, LuaListScrollView.New(RoomBuildingGiftListModel.instance, buildingScrollParam))
+	table.insert(views, RoomBlockGiftChoiceView.New())
+
+	return views
 end
 
-return var_0_0
+return RoomBlockGiftChoiceViewContainer

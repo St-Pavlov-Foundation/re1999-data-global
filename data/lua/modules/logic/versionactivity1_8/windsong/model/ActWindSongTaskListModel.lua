@@ -1,142 +1,144 @@
-﻿module("modules.logic.versionactivity1_8.windsong.model.ActWindSongTaskListModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_8/windsong/model/ActWindSongTaskListModel.lua
 
-local var_0_0 = class("ActWindSongTaskListModel", ListScrollModel)
+module("modules.logic.versionactivity1_8.windsong.model.ActWindSongTaskListModel", package.seeall)
 
-function var_0_0.init(arg_1_0)
+local ActWindSongTaskListModel = class("ActWindSongTaskListModel", ListScrollModel)
+
+function ActWindSongTaskListModel:init()
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.RoleActivity
-	}, arg_1_0.refreshData, arg_1_0)
+	}, self.refreshData, self)
 end
 
-function var_0_0.refreshData(arg_2_0)
-	local var_2_0 = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.RoleActivity, VersionActivity1_8Enum.ActivityId.WindSong)
-	local var_2_1 = {}
-	local var_2_2 = 0
+function ActWindSongTaskListModel:refreshData()
+	local taskList = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.RoleActivity, VersionActivity1_8Enum.ActivityId.WindSong)
+	local dataList = {}
+	local rewardCount = 0
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_0) do
-		if iter_2_1.hasFinished then
-			var_2_2 = var_2_2 + 1
+	for _, mo in ipairs(taskList) do
+		if mo.hasFinished then
+			rewardCount = rewardCount + 1
 		end
 
-		table.insert(var_2_1, iter_2_1)
+		table.insert(dataList, mo)
 	end
 
-	if var_2_2 > 1 then
-		table.insert(var_2_1, TaskMo.New())
+	if rewardCount > 1 then
+		table.insert(dataList, TaskMo.New())
 	end
 
-	table.sort(var_2_1, var_0_0.sortMO)
+	table.sort(dataList, ActWindSongTaskListModel.sortMO)
 
-	arg_2_0._hasRankDiff = false
+	self._hasRankDiff = false
 
-	arg_2_0:setList(var_2_1)
+	self:setList(dataList)
 end
 
-function var_0_0.sortMO(arg_3_0, arg_3_1)
-	local var_3_0 = var_0_0.getSortIndex(arg_3_0)
-	local var_3_1 = var_0_0.getSortIndex(arg_3_1)
+function ActWindSongTaskListModel.sortMO(objA, objB)
+	local sidxA = ActWindSongTaskListModel.getSortIndex(objA)
+	local sidxB = ActWindSongTaskListModel.getSortIndex(objB)
 
-	if var_3_0 ~= var_3_1 then
-		return var_3_0 < var_3_1
-	elseif arg_3_0.id ~= arg_3_1.id then
-		return arg_3_0.id < arg_3_1.id
+	if sidxA ~= sidxB then
+		return sidxA < sidxB
+	elseif objA.id ~= objB.id then
+		return objA.id < objB.id
 	end
 end
 
-function var_0_0.getSortIndex(arg_4_0)
-	if arg_4_0.id == 0 then
+function ActWindSongTaskListModel.getSortIndex(mo)
+	if mo.id == 0 then
 		return 1
-	elseif arg_4_0.finishCount > 0 or arg_4_0.preFinish then
+	elseif mo.finishCount > 0 or mo.preFinish then
 		return 100
-	elseif arg_4_0.hasFinished then
+	elseif mo.hasFinished then
 		return 2
 	end
 
 	return 50
 end
 
-function var_0_0.getRankDiff(arg_5_0, arg_5_1)
-	if arg_5_0._hasRankDiff and arg_5_1 then
-		local var_5_0 = tabletool.indexOf(arg_5_0._idIdxList, arg_5_1.id)
-		local var_5_1 = arg_5_0:getIndex(arg_5_1)
+function ActWindSongTaskListModel:getRankDiff(mo)
+	if self._hasRankDiff and mo then
+		local oldIdx = tabletool.indexOf(self._idIdxList, mo.id)
+		local curIdx = self:getIndex(mo)
 
-		if var_5_0 and var_5_1 then
-			arg_5_0._idIdxList[var_5_0] = -2
+		if oldIdx and curIdx then
+			self._idIdxList[oldIdx] = -2
 
-			return var_5_1 - var_5_0
+			return curIdx - oldIdx
 		end
 	end
 
 	return 0
 end
 
-function var_0_0.refreshRankDiff(arg_6_0)
-	arg_6_0._idIdxList = {}
+function ActWindSongTaskListModel:refreshRankDiff()
+	self._idIdxList = {}
 
-	local var_6_0 = arg_6_0:getList()
+	local dataList = self:getList()
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
-		table.insert(arg_6_0._idIdxList, iter_6_1.id)
+	for _, mo in ipairs(dataList) do
+		table.insert(self._idIdxList, mo.id)
 	end
 end
 
-function var_0_0.preFinish(arg_7_0, arg_7_1)
-	if not arg_7_1 then
+function ActWindSongTaskListModel:preFinish(mo)
+	if not mo then
 		return
 	end
 
-	local var_7_0 = false
+	local isCanSort = false
 
-	arg_7_0._hasRankDiff = false
+	self._hasRankDiff = false
 
-	arg_7_0:refreshRankDiff()
+	self:refreshRankDiff()
 
-	local var_7_1 = 0
-	local var_7_2 = arg_7_0:getList()
+	local preCount = 0
+	local taskMOList = self:getList()
 
-	if arg_7_1.id == 0 then
-		for iter_7_0, iter_7_1 in ipairs(var_7_2) do
-			if iter_7_1.hasFinished and iter_7_1.id ~= 0 then
-				iter_7_1.preFinish = true
-				var_7_0 = true
-				var_7_1 = var_7_1 + 1
+	if mo.id == 0 then
+		for _, tempMO in ipairs(taskMOList) do
+			if tempMO.hasFinished and tempMO.id ~= 0 then
+				tempMO.preFinish = true
+				isCanSort = true
+				preCount = preCount + 1
 			end
 		end
-	elseif arg_7_1.hasFinished then
-		arg_7_1.preFinish = true
-		var_7_0 = true
-		var_7_1 = var_7_1 + 1
+	elseif mo.hasFinished then
+		mo.preFinish = true
+		isCanSort = true
+		preCount = preCount + 1
 	end
 
-	if var_7_0 then
-		local var_7_3 = arg_7_0:getById(0)
+	if isCanSort then
+		local allMO = self:getById(0)
 
-		if var_7_3 and arg_7_0:getGotRewardCount() < var_7_1 + 1 then
-			tabletool.removeValue(var_7_2, var_7_3)
+		if allMO and self:getGotRewardCount() < preCount + 1 then
+			tabletool.removeValue(taskMOList, allMO)
 		end
 
-		arg_7_0._hasRankDiff = true
+		self._hasRankDiff = true
 
-		table.sort(var_7_2, var_0_0.sortMO)
-		arg_7_0:setList(var_7_2)
+		table.sort(taskMOList, ActWindSongTaskListModel.sortMO)
+		self:setList(taskMOList)
 
-		arg_7_0._hasRankDiff = false
+		self._hasRankDiff = false
 	end
 end
 
-function var_0_0.getGotRewardCount(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_1 or arg_8_0:getList()
-	local var_8_1 = 0
+function ActWindSongTaskListModel:getGotRewardCount(moList)
+	local taskMOList = moList or self:getList()
+	local count = 0
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_0) do
-		if iter_8_1.hasFinished then
-			var_8_1 = var_8_1 + 1
+	for _, tempMO in ipairs(taskMOList) do
+		if tempMO.hasFinished then
+			count = count + 1
 		end
 	end
 
-	return var_8_1
+	return count
 end
 
-var_0_0.instance = var_0_0.New()
+ActWindSongTaskListModel.instance = ActWindSongTaskListModel.New()
 
-return var_0_0
+return ActWindSongTaskListModel

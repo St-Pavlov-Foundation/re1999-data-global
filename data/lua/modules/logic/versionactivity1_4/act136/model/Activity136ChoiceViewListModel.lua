@@ -1,52 +1,54 @@
-﻿module("modules.logic.versionactivity1_4.act136.model.Activity136ChoiceViewListModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act136/model/Activity136ChoiceViewListModel.lua
 
-local var_0_0 = class("Activity136ChoiceViewListModel", ListScrollModel)
+module("modules.logic.versionactivity1_4.act136.model.Activity136ChoiceViewListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:clear()
+local Activity136ChoiceViewListModel = class("Activity136ChoiceViewListModel", ListScrollModel)
+
+function Activity136ChoiceViewListModel:onInit()
+	self:clear()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clear()
+function Activity136ChoiceViewListModel:reInit()
+	self:clear()
 end
 
-local function var_0_1(arg_3_0, arg_3_1)
-	local var_3_0 = HeroModel.instance:getByHeroId(arg_3_0.id)
-	local var_3_1 = HeroModel.instance:getByHeroId(arg_3_1.id)
-	local var_3_2 = var_3_0 and true or false
-	local var_3_3 = var_3_1 and true or false
+local function _sortFunc(a, b)
+	local aHeroMo = HeroModel.instance:getByHeroId(a.id)
+	local bHeroMo = HeroModel.instance:getByHeroId(b.id)
+	local aHasHero = aHeroMo and true or false
+	local bHasHero = bHeroMo and true or false
 
-	if var_3_2 ~= var_3_3 then
-		return var_3_3
+	if aHasHero ~= bHasHero then
+		return bHasHero
 	end
 
-	local var_3_4 = var_3_0 and var_3_0.exSkillLevel or -1
-	local var_3_5 = var_3_1 and var_3_1.exSkillLevel or -1
+	local aSkillLevel = aHeroMo and aHeroMo.exSkillLevel or -1
+	local bSkillLevel = bHeroMo and bHeroMo.exSkillLevel or -1
 
-	if var_3_4 ~= var_3_5 then
-		return var_3_4 < var_3_5
+	if aSkillLevel ~= bSkillLevel then
+		return aSkillLevel < bSkillLevel
 	end
 
-	return arg_3_0.id < arg_3_1.id
+	return a.id < b.id
 end
 
-function var_0_0.setSelfSelectedCharacterList(arg_4_0)
-	local var_4_0 = Activity136Model.instance:getCurActivity136Id()
-	local var_4_1 = Activity136Config.instance:getSelfSelectCharacterIdList(var_4_0)
-	local var_4_2 = {}
+function Activity136ChoiceViewListModel:setSelfSelectedCharacterList()
+	local actId = Activity136Controller.instance:actId()
+	local selfSelectedCharacterList = Activity136Config.instance:getSelfSelectCharacterIdList(actId)
+	local list = {}
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_1) do
-		local var_4_3 = {
-			id = iter_4_1
-		}
+	for _, characterId in ipairs(selfSelectedCharacterList) do
+		local mo = {}
 
-		table.insert(var_4_2, var_4_3)
+		mo.id = characterId
+
+		table.insert(list, mo)
 	end
 
-	table.sort(var_4_2, var_0_1)
-	arg_4_0:setList(var_4_2)
+	table.sort(list, _sortFunc)
+	self:setList(list)
 end
 
-var_0_0.instance = var_0_0.New()
+Activity136ChoiceViewListModel.instance = Activity136ChoiceViewListModel.New()
 
-return var_0_0
+return Activity136ChoiceViewListModel

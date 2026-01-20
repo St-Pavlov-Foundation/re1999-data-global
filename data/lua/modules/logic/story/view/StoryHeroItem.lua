@@ -1,667 +1,752 @@
-﻿module("modules.logic.story.view.StoryHeroItem", package.seeall)
+﻿-- chunkname: @modules/logic/story/view/StoryHeroItem.lua
 
-local var_0_0 = class("StoryHeroItem")
+module("modules.logic.story.view.StoryHeroItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0._heroCo = nil
-	arg_1_0._heroGo = nil
-	arg_1_0._heroSpine = {}
-	arg_1_0._isLightSpine = false
-	arg_1_0._heroEffects = {}
-	arg_1_0._heroSkeletonGraphic = nil
+local StoryHeroItem = class("StoryHeroItem")
+
+function StoryHeroItem:init(go)
+	self.viewGO = go
+	self._heroCo = nil
+	self._heroGo = nil
+	self._heroSpine = {}
+	self._isLightSpine = false
+	self._heroEffects = {}
+	self._heroSkeletonGraphic = nil
+
+	StoryController.instance:registerCallback(StoryEvent.OnFollowPicture, self._playFollowPicture, self)
 end
 
-function var_0_0.hideHero(arg_2_0)
-	arg_2_0:_fadeOut()
+function StoryHeroItem:_playFollowPicture(picGo, heroId)
+	if self._heroCo.heroIndex ~= heroId then
+		return
+	end
+
+	self._picGo = picGo
+	self._picInitPosX, self._picInitPosY = transformhelper.getPos(self._picGo.transform)
+
+	TaskDispatcher.runRepeat(self._followPicture, self, 0.02)
 end
 
-function var_0_0.resetHero(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	if StoryModel.instance:getReplaceHeroPath(arg_3_1.heroIndex) then
-		StoryController.instance:dispatchEvent(StoryEvent.OnReplaceHero, arg_3_1)
-		gohelper.setActive(arg_3_0._heroSpineGo, false)
+function StoryHeroItem:_followPicture()
+	if not self._picGo then
+		TaskDispatcher.cancelTask(self._followPicture, self)
 
 		return
 	end
 
-	arg_3_0._noChangeBody = false
+	local posX, posY = transformhelper.getLocalPos(self._picGo.transform)
 
-	TaskDispatcher.cancelTask(arg_3_0._waitHeroSpineLoaded, arg_3_0)
+	transformhelper.setLocalPosXY(self._heroGo.transform, posX - self._picInitPosX, posY - self._picInitPosY)
 
-	if arg_3_2.name == "spine_ui_default" and arg_3_0._initMat then
-		arg_3_2 = arg_3_0._initMat
+	self._heroGo.transform.localScale = self._picGo.transform.localScale
+end
+
+function StoryHeroItem:hideHero()
+	self:_fadeOut()
+end
+
+function StoryHeroItem:resetHero(v, mat, hasBottomEffect, conAudioId)
+	local replacePath = StoryModel.instance:getReplaceHeroPath(v.heroIndex)
+
+	if replacePath then
+		StoryController.instance:dispatchEvent(StoryEvent.OnReplaceHero, v)
+		gohelper.setActive(self._heroSpineGo, false)
+
+		return
 	end
 
-	arg_3_0._conAudioId = arg_3_4
+	self._noChangeBody = false
 
-	if arg_3_0._heroGo.activeSelf then
-		local var_3_0 = GameLanguageMgr.instance:getVoiceTypeStoryIndex()
-		local var_3_1 = arg_3_1.effs[var_3_0]
+	TaskDispatcher.cancelTask(self._waitHeroSpineLoaded, self)
 
-		arg_3_0._noChangeBody = arg_3_0._heroSpineGo and var_3_1 and string.split(var_3_1, "#")[1] and string.split(var_3_1, "#")[1] == StoryEnum.HeroEffect.KeepAction
+	self._conAudioId = conAudioId
 
-		if (arg_3_1.anims[var_3_0] ~= "" or arg_3_1.expressions[var_3_0] ~= "" or arg_3_1.mouses[var_3_0] ~= "") and not string.find(arg_3_1.mouses[var_3_0], "_auto") and arg_3_1.anims[var_3_0] == arg_3_0._heroCo.anims[var_3_0] and arg_3_1.expressions[var_3_0] == arg_3_0._heroCo.expressions[var_3_0] and arg_3_1.mouses[var_3_0] == arg_3_0._heroCo.mouses[var_3_0] then
-			if not arg_3_0._isLightSpine then
-				arg_3_0:_setHeroMat(arg_3_2)
+	if self._heroGo.activeSelf then
+		local typeIndex = GameLanguageMgr.instance:getVoiceTypeStoryIndex()
+		local effCo = v.effs[typeIndex]
+
+		self._noChangeBody = self._heroSpineGo and effCo and string.split(effCo, "#")[1] and string.split(effCo, "#")[1] == StoryEnum.HeroEffect.KeepAction
+
+		if v.anims[typeIndex] ~= "" or v.expressions[typeIndex] ~= "" or v.mouses[typeIndex] ~= "" then
+			local isAuto = string.find(v.mouses[typeIndex], "_auto")
+
+			if not isAuto and v.anims[typeIndex] == self._heroCo.anims[typeIndex] and v.expressions[typeIndex] == self._heroCo.expressions[typeIndex] and v.mouses[typeIndex] == self._heroCo.mouses[typeIndex] then
+				if not self._isLightSpine then
+					self:_setHeroMat(mat)
+				end
+
+				return
 			end
-
-			return
 		end
 	end
 
-	arg_3_0._hasBottomEffect = arg_3_3
+	self._hasBottomEffect = hasBottomEffect
 
-	ZProj.TweenHelper.KillByObj(arg_3_0._heroGo.transform)
+	ZProj.TweenHelper.KillByObj(self._heroGo.transform)
 
-	if not arg_3_0._isLightSpine then
-		arg_3_0._heroCo = arg_3_1
+	if not self._isLightSpine then
+		self._heroCo = v
 
-		arg_3_0:_setHeroMat(arg_3_2)
+		self:_setHeroMat(mat)
 
-		if arg_3_0._heroGo.activeSelf then
-			if arg_3_0._heroSpineGo then
-				ZProj.TweenHelper.DOLocalMove(arg_3_0._heroSpineGo.transform, arg_3_0._heroCo.heroPos[1], arg_3_0._heroCo.heroPos[2], 0, 0.4)
-				ZProj.TweenHelper.DOScale(arg_3_0._heroSpineGo.transform, arg_3_0._heroCo.heroScale, arg_3_0._heroCo.heroScale, 1, 0.1)
+		if self._heroGo.activeSelf then
+			if self._heroSpineGo then
+				ZProj.TweenHelper.DOLocalMove(self._heroSpineGo.transform, self._heroCo.heroPos[1], self._heroCo.heroPos[2], 0, 0.4)
+				ZProj.TweenHelper.DOScale(self._heroSpineGo.transform, self._heroCo.heroScale, self._heroCo.heroScale, 1, 0.1)
 			end
 
-			arg_3_0:_playHeroVoice()
+			self:_playHeroVoice()
 		else
-			if arg_3_0._heroSpineGo then
-				transformhelper.setLocalPosXY(arg_3_0._heroSpineGo.transform, arg_3_0._heroCo.heroPos[1], arg_3_0._heroCo.heroPos[2])
-				transformhelper.setLocalScale(arg_3_0._heroSpineGo.transform, arg_3_0._heroCo.heroScale, arg_3_0._heroCo.heroScale, 1)
+			if self._heroSpineGo then
+				transformhelper.setLocalPosXY(self._heroSpineGo.transform, self._heroCo.heroPos[1], self._heroCo.heroPos[2])
+				transformhelper.setLocalScale(self._heroSpineGo.transform, self._heroCo.heroScale, self._heroCo.heroScale, 1)
 			end
 
-			arg_3_0:_fadeIn()
-			arg_3_0:_playHeroVoice()
+			self:_fadeIn()
+			self:_playHeroVoice()
 		end
 	end
 
-	gohelper.setActive(arg_3_0._heroGo, true)
+	gohelper.setActive(self._heroGo, true)
 end
 
-function var_0_0._fadeIn(arg_4_0)
-	if arg_4_0._isLightSpine or not arg_4_0._isLive2D and not arg_4_0._heroSkeletonGraphic then
-		gohelper.setActive(arg_4_0._heroSpineGo, true)
+function StoryHeroItem:_fadeIn()
+	if self._isLightSpine or not self._isLive2D and not self._heroSkeletonGraphic then
+		gohelper.setActive(self._heroSpineGo, true)
 
 		return
 	end
 
-	arg_4_0:_checkMatKeyWord()
+	self:_checkMatKeyWord()
 
-	if arg_4_0._fadeInTweenId then
-		ZProj.TweenHelper.KillById(arg_4_0._fadeInTweenId)
+	if self._fadeInTweenId then
+		ZProj.TweenHelper.KillById(self._fadeInTweenId)
 
-		arg_4_0._fadeInTweenId = nil
+		self._fadeInTweenId = nil
 	end
 
-	arg_4_0:_fadeInUpdate(0)
+	self:_fadeInUpdate(0)
 
-	arg_4_0._fadeInTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.5, arg_4_0._fadeInUpdate, arg_4_0._fadeInFinished, arg_4_0, nil, EaseType.Linear)
+	self._fadeInTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.5, self._fadeInUpdate, self._fadeInFinished, self, nil, EaseType.Linear)
 end
 
-function var_0_0._fadeInUpdate(arg_5_0, arg_5_1)
-	if not arg_5_0._heroSpine then
+function StoryHeroItem:_fadeInUpdate(value)
+	if not self._heroSpine then
 		return
 	end
 
-	if not arg_5_0._heroSpineGo then
+	if not self._heroSpineGo then
 		return
 	end
 
-	if arg_5_0._isLive2D then
-		arg_5_0._heroSpine:setAlpha(arg_5_1)
+	if self._isLive2D then
+		self._heroSpine:setAlpha(value)
 	else
-		local var_5_0, var_5_1, var_5_2 = transformhelper.getLocalPos(arg_5_0._heroSpineGo.transform)
+		local x, y, z = transformhelper.getLocalPos(self._heroSpineGo.transform)
 
-		transformhelper.setLocalPos(arg_5_0._heroSpineGo.transform, var_5_0, var_5_1, 1 - arg_5_1)
+		transformhelper.setLocalPos(self._heroSpineGo.transform, x, y, 1 - value)
 	end
 
-	arg_5_0:_setHeroFadeMat()
+	self:_setHeroFadeMat()
 end
 
-function var_0_0._setHeroFadeMat(arg_6_0)
-	local var_6_0, var_6_1 = transformhelper.getLocalPos(arg_6_0._bgGo.transform)
-	local var_6_2, var_6_3 = transformhelper.getLocalScale(arg_6_0._bgGo.transform)
-	local var_6_4 = Vector4.New(var_6_2, var_6_3, var_6_0, var_6_1)
-	local var_6_5 = arg_6_0._blitEff.capturedTexture
+function StoryHeroItem:_setHeroFadeMat()
+	local posx, posy = transformhelper.getLocalPos(self._bgGo.transform)
+	local scalex, scaley = transformhelper.getLocalScale(self._bgGo.transform)
+	local vec4 = Vector4.New(scalex, scaley, posx, posy)
+	local texture = self._blitEff.capturedTexture
 
-	if arg_6_0._heroSpine and arg_6_0._isLive2D then
-		arg_6_0._heroSpine:setSceneTexture(var_6_5)
-	elseif arg_6_0._heroSkeletonGraphic then
-		arg_6_0._heroSkeletonGraphic.materialForRendering:SetTexture("_SceneMask", var_6_5)
-		arg_6_0._heroSkeletonGraphic.materialForRendering:SetVector("_SceneMask_ST", var_6_4)
-	end
-end
-
-function var_0_0._fadeInFinished(arg_7_0)
-	if arg_7_0._heroSkeletonGraphic then
-		arg_7_0._heroSkeletonGraphic.material:DisableKeyword("_SCENEMASKALPHA_ON")
-		arg_7_0._heroSkeletonGraphic.material:DisableKeyword("_SCENEMASKALPHA2_ON")
-	end
-
-	if arg_7_0._heroSpine and arg_7_0._isLive2D then
-		arg_7_0._heroSpine:disableSceneAlpha()
-	end
-
-	if arg_7_0._fadeInTweenId then
-		ZProj.TweenHelper.KillById(arg_7_0._fadeInTweenId)
-
-		arg_7_0._fadeInTweenId = nil
+	if self._heroSpine and self._isLive2D then
+		self._heroSpine:setSceneTexture(texture)
+	elseif self._heroSkeletonGraphic then
+		self._heroSkeletonGraphic.materialForRendering:SetTexture("_SceneMask", texture)
+		self._heroSkeletonGraphic.materialForRendering:SetVector("_SceneMask_ST", vec4)
 	end
 end
 
-function var_0_0._setHeroMat(arg_8_0, arg_8_1)
-	if arg_8_0._isLightSpine then
+function StoryHeroItem:_fadeInFinished()
+	if self._heroSkeletonGraphic then
+		self._heroSkeletonGraphic.material:DisableKeyword("_SCENEMASKALPHA_ON")
+		self._heroSkeletonGraphic.material:DisableKeyword("_SCENEMASKALPHA2_ON")
+	end
+
+	if self._heroSpine and self._isLive2D then
+		self._heroSpine:disableSceneAlpha()
+	end
+
+	if self._fadeInTweenId then
+		ZProj.TweenHelper.KillById(self._fadeInTweenId)
+
+		self._fadeInTweenId = nil
+	end
+end
+
+function StoryHeroItem:_setHeroMat(mat)
+	if self._isLightSpine then
 		return
 	end
 
-	if not arg_8_0._isLive2D and not arg_8_0._heroSkeletonGraphic then
+	if not self._isLive2D and not self._heroSkeletonGraphic then
 		return
 	end
 
-	if not arg_8_0._heroSpine then
+	if not self._heroSpine then
 		return
 	end
 
-	if arg_8_0._isLive2D then
-		if arg_8_1.name == "spine_ui_dark" then
-			arg_8_0._heroSpine:SetDark()
-		else
-			arg_8_0._heroSpine:SetBright()
+	if self._isLive2D then
+		if mat.name == "spine_ui_default" and self._initMat then
+			mat = self._initMat
 		end
+
+		if mat.name == "spine_ui_dark" then
+			self._heroSpine:SetDark()
+		else
+			self._heroSpine:SetBright()
+		end
+
+		return
 	end
 
-	if arg_8_0._heroSkeletonGraphic then
-		if arg_8_0._heroSkeletonGraphic.material and arg_8_0._heroSkeletonGraphic.material == arg_8_1 then
+	if self._heroSkeletonGraphic then
+		if self._heroSkeletonGraphic.material and self._heroSkeletonGraphic.material == mat then
 			return
 		end
 
-		if arg_8_0._initMat then
-			if arg_8_1.name == "spine_ui_default" then
-				arg_8_1 = arg_8_0._initMat
+		if self._initMat then
+			if mat.name == "spine_ui_default" then
+				mat = self._initMat
 
-				local var_8_0 = Color.New(1, 1, 1, 1)
+				local color = Color.New(1, 1, 1, 1)
 
-				arg_8_1:SetColor("_Color", var_8_0)
+				mat:SetColor("_Color", color)
 			else
-				arg_8_1 = arg_8_0._initMat
+				mat = self._initMat
 
-				local var_8_1 = Color.New(0.6, 0.6, 0.6, 1)
+				local color = Color.New(0.6, 0.6, 0.6, 1)
 
-				arg_8_1:SetColor("_Color", var_8_1)
+				mat:SetColor("_Color", color)
 			end
 		end
 
-		arg_8_0._heroSkeletonGraphic.material = arg_8_1
+		self._heroSkeletonGraphic.material = mat
 	end
 end
 
-function var_0_0._checkMatKeyWord(arg_9_0)
-	if arg_9_0._heroSpine and arg_9_0._isLive2D then
-		arg_9_0._heroSpine:enableSceneAlpha()
+function StoryHeroItem:_checkMatKeyWord()
+	if self._heroSpine and self._isLive2D then
+		self._heroSpine:enableSceneAlpha()
 	end
 
-	if not arg_9_0._heroSkeletonGraphic then
-		gohelper.setActive(arg_9_0._heroSpineGo, true)
+	if not self._heroSkeletonGraphic then
+		gohelper.setActive(self._heroSpineGo, true)
 
 		return
 	end
 
-	if arg_9_0._hasBottomEffect then
-		arg_9_0._heroSkeletonGraphic.material:DisableKeyword("_SCENEMASKALPHA_ON")
-		arg_9_0._heroSkeletonGraphic.material:EnableKeyword("_SCENEMASKALPHA2_ON")
+	if self._hasBottomEffect then
+		self._heroSkeletonGraphic.material:DisableKeyword("_SCENEMASKALPHA_ON")
+		self._heroSkeletonGraphic.material:EnableKeyword("_SCENEMASKALPHA2_ON")
 	else
-		arg_9_0._heroSkeletonGraphic.material:EnableKeyword("_SCENEMASKALPHA_ON")
-		arg_9_0._heroSkeletonGraphic.material:DisableKeyword("_SCENEMASKALPHA2_ON")
+		self._heroSkeletonGraphic.material:EnableKeyword("_SCENEMASKALPHA_ON")
+		self._heroSkeletonGraphic.material:DisableKeyword("_SCENEMASKALPHA2_ON")
 	end
 
-	TaskDispatcher.runDelay(arg_9_0._onDelay, arg_9_0, 0.05)
+	TaskDispatcher.runDelay(self._onDelay, self, 0.05)
 end
 
-function var_0_0._onDelay(arg_10_0)
-	if StoryModel.instance:getReplaceHeroPath(arg_10_0._heroCo.heroIndex) then
-		StoryController.instance:dispatchEvent(StoryEvent.OnReplaceHero, arg_10_0._heroCo)
-		gohelper.setActive(arg_10_0._heroSpineGo, false)
+function StoryHeroItem:_onDelay()
+	local replacePath = StoryModel.instance:getReplaceHeroPath(self._heroCo.heroIndex)
+
+	if replacePath then
+		StoryController.instance:dispatchEvent(StoryEvent.OnReplaceHero, self._heroCo)
+		gohelper.setActive(self._heroSpineGo, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_10_0._heroSpineGo, true)
+	gohelper.setActive(self._heroSpineGo, true)
 end
 
-function var_0_0._fadeOut(arg_11_0)
-	if not arg_11_0._heroSpine then
+function StoryHeroItem:_fadeOut()
+	if not self._heroSpine then
 		return
 	end
 
-	if arg_11_0._fadeInTweenId then
-		ZProj.TweenHelper.KillById(arg_11_0._fadeInTweenId)
+	if self._fadeInTweenId then
+		ZProj.TweenHelper.KillById(self._fadeInTweenId)
 
-		arg_11_0._fadeInTweenId = nil
+		self._fadeInTweenId = nil
 	end
 
-	if arg_11_0._isLightSpine or not arg_11_0._isLive2D and not arg_11_0._heroSkeletonGraphic then
-		arg_11_0._heroSpine:stopVoice()
-		gohelper.setActive(arg_11_0._heroGo, false)
+	if self._isLightSpine or not self._isLive2D and not self._heroSkeletonGraphic then
+		self._heroSpine:stopVoice()
+		gohelper.setActive(self._heroGo, false)
 
 		return
 	end
 
-	arg_11_0:_checkMatKeyWord()
+	self:_checkMatKeyWord()
 
-	if arg_11_0._fadeOutTweenId then
-		ZProj.TweenHelper.KillById(arg_11_0._fadeOutTweenId)
+	if self._fadeOutTweenId then
+		ZProj.TweenHelper.KillById(self._fadeOutTweenId)
 
-		arg_11_0._fadeOutTweenId = nil
+		self._fadeOutTweenId = nil
 	end
 
-	arg_11_0._fadeOutTweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, 0.35, arg_11_0._fadeOutUpdate, arg_11_0._fadeOutFinished, arg_11_0, nil, EaseType.Linear)
+	self._fadeOutTweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, 0.35, self._fadeOutUpdate, self._fadeOutFinished, self, nil, EaseType.Linear)
 end
 
-function var_0_0._fadeOutUpdate(arg_12_0, arg_12_1)
-	if not arg_12_0._heroSpine then
+function StoryHeroItem:_fadeOutUpdate(value)
+	if not self._heroSpine then
 		return
 	end
 
-	if not arg_12_0._heroSpineGo then
+	if not self._heroSpineGo then
 		return
 	end
 
-	if arg_12_0._isLive2D then
-		arg_12_0._heroSpine:setAlpha(arg_12_1)
+	if self._isLive2D then
+		self._heroSpine:setAlpha(value)
 	else
-		local var_12_0, var_12_1, var_12_2 = transformhelper.getLocalPos(arg_12_0._heroSpineGo.transform)
+		local x, y, z = transformhelper.getLocalPos(self._heroSpineGo.transform)
 
-		transformhelper.setLocalPos(arg_12_0._heroSpineGo.transform, var_12_0, var_12_1, 1 - arg_12_1)
+		transformhelper.setLocalPos(self._heroSpineGo.transform, x, y, 1 - value)
 	end
 
-	arg_12_0:_setHeroFadeMat()
+	self:_setHeroFadeMat()
 end
 
-function var_0_0._fadeOutFinished(arg_13_0)
-	if not arg_13_0._heroSpine then
+function StoryHeroItem:_fadeOutFinished()
+	if not self._heroSpine then
 		return
 	end
 
-	gohelper.setActive(arg_13_0._heroGo, false)
-	arg_13_0:_fadeOutUpdate(1)
+	gohelper.setActive(self._heroGo, false)
+	self:_fadeOutUpdate(1)
 
-	if arg_13_0._heroSkeletonGraphic then
-		arg_13_0._heroSkeletonGraphic.material:DisableKeyword("_SCENEMASKALPHA_ON")
-		arg_13_0._heroSkeletonGraphic.material:DisableKeyword("_SCENEMASKALPHA2_ON")
+	if self._heroSkeletonGraphic then
+		self._heroSkeletonGraphic.material:DisableKeyword("_SCENEMASKALPHA_ON")
+		self._heroSkeletonGraphic.material:DisableKeyword("_SCENEMASKALPHA2_ON")
 	end
 
-	if arg_13_0._heroSpine and arg_13_0._isLive2D then
-		arg_13_0._heroSpine:disableSceneAlpha()
+	if self._heroSpine and self._isLive2D then
+		self._heroSpine:disableSceneAlpha()
 	end
 
-	arg_13_0:onDestroy()
+	self:onDestroy()
 end
 
-function var_0_0.buildHero(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4, arg_14_5, arg_14_6)
-	arg_14_0._noChangeBody = false
-	arg_14_0._conAudioId = arg_14_6
-	arg_14_0._heroCo = arg_14_1
-	arg_14_0._heroGo = gohelper.create2d(arg_14_0.viewGO, "rolespine")
+function StoryHeroItem:buildHero(v, mat, hasBottomEffect, callback, callbackObj, conAudioId)
+	self._noChangeBody = false
+	self._conAudioId = conAudioId
+	self._heroCo = v
+	self._heroGo = gohelper.create2d(self.viewGO, "rolespine")
 
-	local var_14_0 = gohelper.onceAddComponent(arg_14_0._heroGo, typeof(UnityEngine.Canvas))
+	local canvas = gohelper.onceAddComponent(self._heroGo, typeof(UnityEngine.Canvas))
 
-	var_14_0.overrideSorting = true
+	canvas.overrideSorting = true
 
-	local var_14_1 = gohelper.getSibling(arg_14_0._heroGo)
+	local siblingIndex = gohelper.getSibling(self._heroGo)
+	local parentGo = gohelper.findChild(self.viewGO.transform.parent.gameObject, "#go_rolebg")
 
-	arg_14_0._blitEff = gohelper.findChild(arg_14_0.viewGO.transform.parent.gameObject, "#go_rolebg"):GetComponent(typeof(UrpCustom.UIBlitEffect))
+	self._blitEff = parentGo:GetComponent(typeof(UrpCustom.UIBlitEffect))
 
-	local var_14_2 = ViewMgr.instance:getContainer(ViewName.StoryBackgroundView).viewGO
+	local bgRootGo = ViewMgr.instance:getContainer(ViewName.StoryBackgroundView).viewGO
 
-	arg_14_0._bgGo = gohelper.findChild(var_14_2, "#go_upbg/#simage_bgimg")
+	self._bgGo = gohelper.findChild(bgRootGo, "#go_upbg/#simage_bgimg")
 
-	gohelper.setLayer(arg_14_0._heroGo, UnityLayer.UISecond, true)
+	gohelper.setLayer(self._heroGo, UnityLayer.UISecond, true)
 
-	local var_14_3 = StoryHeroLibraryModel.instance:getStoryLibraryHeroByIndex(arg_14_0._heroCo.heroIndex)
+	local heroCo = StoryHeroLibraryModel.instance:getStoryLibraryHeroByIndex(self._heroCo.heroIndex)
 
-	if not var_14_3 then
+	if not heroCo then
 		return
 	end
 
-	local var_14_4 = var_14_3.type == 0 and string.format("rolesstory/%s", var_14_3.prefab) or string.format("live2d/roles/%s", var_14_3.live2dPrefab)
-	local var_14_5 = string.split(var_14_4, "_")
+	local path = heroCo.type == 0 and string.format("rolesstory/%s", heroCo.prefab) or string.format("live2d/roles/%s", heroCo.live2dPrefab)
+	local tags = string.split(path, "_")
 
-	arg_14_0._isLive2D = false
-	arg_14_0._isLightSpine = string.split(var_14_5[#var_14_5], ".")[1] == "light"
+	self._isLive2D = false
+	self._isLightSpine = string.split(tags[#tags], ".")[1] == "light"
 
-	if arg_14_0._isLightSpine then
-		arg_14_0._heroSpine = LightSpine.Create(arg_14_0._heroGo, true)
+	if self._isLightSpine then
+		self._heroSpine = LightSpine.Create(self._heroGo, true)
 
-		arg_14_0._heroSpine:setResPath(var_14_4, function()
-			arg_14_0._heroSpineGo = arg_14_0._heroSpine:getSpineGo()
+		self._heroSpine:setResPath(path, function()
+			self._heroSpineGo = self._heroSpine:getSpineGo()
 
-			arg_14_0:_playHeroVoice()
-			arg_14_0:_setHeroMat(arg_14_2)
+			self:_playHeroVoice()
+			self:_setHeroMat(mat)
 
-			if arg_14_4 then
-				arg_14_4(arg_14_5)
+			if callback then
+				callback(callbackObj)
 			end
 
-			transformhelper.setLocalPos(arg_14_0._heroSpineGo.transform, arg_14_0._heroCo.heroPos[1], arg_14_0._heroCo.heroPos[2], 0)
-			transformhelper.setLocalScale(arg_14_0._heroSpineGo.transform, arg_14_0._heroCo.heroScale, arg_14_0._heroCo.heroScale, 1)
+			transformhelper.setLocalPos(self._heroSpineGo.transform, self._heroCo.heroPos[1], self._heroCo.heroPos[2], 0)
+			transformhelper.setLocalScale(self._heroSpineGo.transform, self._heroCo.heroScale, self._heroCo.heroScale, 1)
 		end)
-	elseif var_14_3.type == 0 then
-		arg_14_0._heroSpine = GuiSpine.Create(arg_14_0._heroGo, true)
+	elseif heroCo.type == 0 then
+		self._heroSpine = GuiSpine.Create(self._heroGo, true)
 
-		arg_14_0._heroSpine:setResPath(var_14_4, function()
-			arg_14_0._heroSkeletonGraphic = arg_14_0._heroSpine:getSkeletonGraphic()
-			arg_14_0._heroSpineGo = arg_14_0._heroSpine:getSpineGo()
+		self._heroSpine:setResPath(path, function()
+			self._heroSkeletonGraphic = self._heroSpine:getSkeletonGraphic()
+			self._heroSpineGo = self._heroSpine:getSpineGo()
 
-			gohelper.setActive(arg_14_0._heroSpineGo, false)
+			gohelper.setActive(self._heroSpineGo, false)
 
-			var_14_0.sortingOrder = (var_14_1 + 1) * 10
+			canvas.sortingOrder = (siblingIndex + 1) * 10
 
-			if arg_14_0._heroSkeletonGraphic and arg_14_0._heroSkeletonGraphic.material.name ~= "spine_ui_default" then
-				arg_14_0._initMat = arg_14_0._heroSkeletonGraphic.material
+			if self._heroSkeletonGraphic and self._heroSkeletonGraphic.material.name ~= "spine_ui_default" then
+				self._initMat = self._heroSkeletonGraphic.material
 			end
 
-			arg_14_0:_setHeroMat(arg_14_2)
-			arg_14_0:_fadeIn()
-			arg_14_0:_playHeroVoice()
+			self:_setHeroMat(mat)
+			self:_fadeIn()
+			self:_playHeroVoice()
 
-			if arg_14_4 then
-				arg_14_4(arg_14_5)
+			if callback then
+				callback(callbackObj)
 			end
 
-			transformhelper.setLocalPos(arg_14_0._heroSpineGo.transform, arg_14_0._heroCo.heroPos[1], arg_14_0._heroCo.heroPos[2], 0)
-			transformhelper.setLocalScale(arg_14_0._heroSpineGo.transform, arg_14_0._heroCo.heroScale, arg_14_0._heroCo.heroScale, 1)
+			transformhelper.setLocalPos(self._heroSpineGo.transform, self._heroCo.heroPos[1], self._heroCo.heroPos[2], 0)
+			transformhelper.setLocalScale(self._heroSpineGo.transform, self._heroCo.heroScale, self._heroCo.heroScale, 1)
 		end)
 	else
-		arg_14_0._isLive2D = true
-		arg_14_0._heroSpine = GuiLive2d.Create(arg_14_0._heroGo, true)
+		self._isLive2D = true
+		self._heroSpine = GuiLive2d.Create(self._heroGo, true)
 
-		arg_14_0._heroSpine:cancelCamera()
-		arg_14_0._heroSpine:setResPath(var_14_4, function()
-			if not arg_14_0._heroSpine then
+		self._heroSpine:cancelCamera()
+		self._heroSpine:setResPath(path, function()
+			if not self._heroSpine then
 				return
 			end
 
-			arg_14_0._heroSpineGo = arg_14_0._heroSpine:getSpineGo()
+			self._heroSpineGo = self._heroSpine:getSpineGo()
 
-			if string.match(arg_14_0._heroSpineGo.name, "306301_pikelesi") then
-				local var_17_0 = gohelper.findChild(arg_14_0._heroSpineGo, "Drawables/ArtMesh188")
+			if string.match(self._heroSpineGo.name, "306301_pikelesi") then
+				local dianzi = gohelper.findChild(self._heroSpineGo, "Drawables/ArtMesh188")
 
-				gohelper.setActive(var_17_0, false)
+				gohelper.setActive(dianzi, false)
 			end
 
-			gohelper.setActive(arg_14_0._heroSpineGo, false)
-			arg_14_0._heroSpine:setSortingOrder(var_14_1 * 10)
+			gohelper.setActive(self._heroSpineGo, false)
+			self._heroSpine:setSortingOrder(siblingIndex * 10)
 
-			var_14_0.sortingOrder = (var_14_1 + 1) * 10
+			canvas.sortingOrder = (siblingIndex + 1) * 10
 
-			gohelper.setLayer(arg_14_0._heroSpineGo, UnityLayer.UISecond, true)
-			arg_14_0:_setHeroMat(arg_14_2)
-			arg_14_0:_fadeIn()
-			arg_14_0:_playHeroVoice()
+			gohelper.setLayer(self._heroSpineGo, UnityLayer.UISecond, true)
+			self:_setHeroMat(mat)
+			self:_fadeIn()
+			self:_playHeroVoice()
 
-			if arg_14_4 then
-				arg_14_4(arg_14_5)
+			if callback then
+				callback(callbackObj)
 			end
 
-			transformhelper.setLocalPos(arg_14_0._heroSpineGo.transform, arg_14_0._heroCo.heroPos[1], arg_14_0._heroCo.heroPos[2], 0)
-			arg_14_0._heroSpine:setLocalScale(arg_14_0._heroCo.heroScale)
+			transformhelper.setLocalPos(self._heroSpineGo.transform, self._heroCo.heroPos[1], self._heroCo.heroPos[2], 0)
+			self._heroSpine:setLocalScale(self._heroCo.heroScale)
 		end)
 	end
 end
 
-function var_0_0._grayUpdate(arg_18_0, arg_18_1)
-	if arg_18_0._isLive2D then
-		if not arg_18_0._heroSpineGo then
+function StoryHeroItem:_grayUpdate(value)
+	if self._isLive2D then
+		if not self._heroSpineGo then
 			return
 		end
 
-		local var_18_0 = arg_18_0._heroSpineGo:GetComponent(typeof(ZProj.CubismController))
+		local cubctrl = self._heroSpineGo:GetComponent(typeof(ZProj.CubismController))
 
-		if var_18_0 then
-			for iter_18_0 = 0, var_18_0.InstancedMaterials.Length - 1 do
-				var_18_0.InstancedMaterials[iter_18_0]:SetFloat("_LumFactor", arg_18_1)
+		if cubctrl then
+			for i = 0, cubctrl.InstancedMaterials.Length - 1 do
+				cubctrl.InstancedMaterials[i]:SetFloat("_LumFactor", value)
 			end
 		end
-	elseif arg_18_0._heroSkeletonGraphic then
-		local var_18_1 = arg_18_0._heroSkeletonGraphic.material
+	elseif self._heroSkeletonGraphic then
+		local mat = self._heroSkeletonGraphic.material
 
-		if var_18_1 then
-			var_18_1:SetFloat("_LumFactor", arg_18_1)
+		if mat then
+			mat:SetFloat("_LumFactor", value)
 		end
 	end
 end
 
-function var_0_0._grayFinished(arg_19_0)
-	arg_19_0:_grayUpdate(1)
+function StoryHeroItem:_grayFinished()
+	self:_grayUpdate(1)
 
-	if arg_19_0._grayTweenId then
-		ZProj.TweenHelper.KillById(arg_19_0._grayTweenId)
+	if self._grayTweenId then
+		ZProj.TweenHelper.KillById(self._grayTweenId)
 
-		arg_19_0._grayTweenId = nil
+		self._grayTweenId = nil
 	end
 end
 
-function var_0_0._playHeroVoice(arg_20_0)
-	TaskDispatcher.cancelTask(arg_20_0._waitHeroSpineLoaded, arg_20_0)
+function StoryHeroItem:_playHeroVoice()
+	TaskDispatcher.cancelTask(self._waitHeroSpineLoaded, self)
 
-	if not arg_20_0._heroSpineGo then
-		TaskDispatcher.runRepeat(arg_20_0._waitHeroSpineLoaded, arg_20_0, 0.01)
+	if not self._heroSpineGo then
+		TaskDispatcher.runRepeat(self._waitHeroSpineLoaded, self, 0.01)
 
 		return
 	end
 
-	arg_20_0:_waitHeroSpineLoaded()
+	self:_waitHeroSpineLoaded()
 end
 
-function var_0_0._waitHeroSpineLoaded(arg_21_0)
-	if not arg_21_0._heroSpine then
+function StoryHeroItem:_waitHeroSpineLoaded()
+	if not self._heroSpine then
 		return
 	end
 
-	if not arg_21_0._heroSpineGo then
+	if not self._heroSpineGo then
 		return
 	end
 
-	local var_21_0 = StoryHeroLibraryModel.instance:getStoryLibraryHeroByIndex(arg_21_0._heroCo.heroIndex)
+	local heroCo = StoryHeroLibraryModel.instance:getStoryLibraryHeroByIndex(self._heroCo.heroIndex)
 
-	if var_21_0.hideNodes ~= "" then
-		if string.find(var_21_0.hideNodes, StoryEnum.HeroEffect.SetSkin) then
-			local var_21_1 = string.split(var_21_0.hideNodes, "#")
-			local var_21_2 = arg_21_0._heroSpine:getSkeletonGraphic()
+	if heroCo.hideNodes ~= "" then
+		if string.find(heroCo.hideNodes, StoryEnum.HeroEffect.SetSkin) then
+			local skinParams = string.split(heroCo.hideNodes, "#")
+			local sg = self._heroSpine:getSkeletonGraphic()
 
-			var_21_2.initialSkinName = var_21_1[2]
-
-			var_21_2:Initialize(true)
+			sg.Skeleton:SetSkin(skinParams[2])
+			sg.Skeleton:SetSlotsToSetupPose()
 		else
-			local var_21_3 = string.split(var_21_0.hideNodes, "|")
+			local hideNodePaths = string.split(heroCo.hideNodes, "|")
 
-			for iter_21_0, iter_21_1 in pairs(var_21_3) do
-				local var_21_4 = gohelper.findChild(arg_21_0._heroSpineGo, iter_21_1)
+			for _, path in pairs(hideNodePaths) do
+				local go = gohelper.findChild(self._heroSpineGo, path)
 
-				gohelper.setActive(var_21_4, false)
+				gohelper.setActive(go, false)
 			end
 		end
 	end
 
-	arg_21_0:_grayUpdate(0)
-	TaskDispatcher.cancelTask(arg_21_0._waitHeroSpineLoaded, arg_21_0)
+	self:_grayUpdate(0)
+	TaskDispatcher.cancelTask(self._waitHeroSpineLoaded, self)
 
-	local var_21_5 = arg_21_0._heroCo.anims[GameLanguageMgr.instance:getVoiceTypeStoryIndex()]
-	local var_21_6 = true
-	local var_21_7 = "flag_skipvoicestop|"
+	local motion = self._heroCo.anims[GameLanguageMgr.instance:getVoiceTypeStoryIndex()]
+	local needStopVoice = true
+	local skipStopVoiceFlag = "flag_skipvoicestop|"
 
-	if string.find(var_21_5, var_21_7) then
-		var_21_6 = false
-		var_21_5 = string.gsub(var_21_5, var_21_7, "")
+	if string.find(motion, skipStopVoiceFlag) then
+		needStopVoice = false
+		motion = string.gsub(motion, skipStopVoiceFlag, "")
 	end
 
-	if var_21_6 and not arg_21_0._noChangeBody then
-		arg_21_0._heroSpine:stopVoice()
+	if needStopVoice and not self._noChangeBody then
+		self._heroSpine:stopVoice()
 	end
 
-	local var_21_8 = {
-		motion = var_21_5,
-		face = arg_21_0._heroCo.expressions[GameLanguageMgr.instance:getVoiceTypeStoryIndex()],
-		mouth = arg_21_0._heroCo.mouses[GameLanguageMgr.instance:getVoiceTypeStoryIndex()],
-		storyAudioId = arg_21_0._conAudioId,
-		storyHeroIndex = arg_21_0._heroCo.heroIndex,
-		noChangeBody = arg_21_0._noChangeBody
-	}
-	local var_21_9 = arg_21_0._heroSpine:getSpineVoice()
+	local co = {}
 
-	var_21_9:setDiffFaceBiYan(true)
-	var_21_9:setInStory()
-	arg_21_0._heroSpine:playVoice(var_21_8)
+	co.motion = motion
+	co.face = self._heroCo.expressions[GameLanguageMgr.instance:getVoiceTypeStoryIndex()]
+	co.mouth = self._heroCo.mouses[GameLanguageMgr.instance:getVoiceTypeStoryIndex()]
+	co.storyAudioId = self._conAudioId
+	co.storyHeroIndex = self._heroCo.heroIndex
+	co.noChangeBody = self._noChangeBody
 
-	if arg_21_0._heroCo.effs[GameLanguageMgr.instance:getLanguageTypeStoryIndex()] ~= "" then
-		arg_21_0:_playHeroEffect()
-	end
+	local spineVoice = self._heroSpine:getSpineVoice()
+
+	spineVoice:setDiffFaceBiYan(true)
+	spineVoice:setInStory()
+	self._heroSpine:playVoice(co)
+	self:_checkAndPlayHeroEffect()
 end
 
-function var_0_0._playHeroEffect(arg_22_0)
-	if arg_22_0._grayTweenId then
-		ZProj.TweenHelper.KillById(arg_22_0._grayTweenId)
+function StoryHeroItem:_checkAndPlayHeroEffect()
+	if self._grayTweenId then
+		ZProj.TweenHelper.KillById(self._grayTweenId)
 
-		arg_22_0._grayTweenId = nil
+		self._grayTweenId = nil
 	end
 
-	local var_22_0 = arg_22_0._heroCo.effs[GameLanguageMgr.instance:getVoiceTypeStoryIndex()]
+	local effCo = self._heroCo.effs[GameLanguageMgr.instance:getVoiceTypeStoryIndex()]
 
-	if not var_22_0 or var_22_0 == "" then
+	if not effCo or effCo == "" then
+		self:_clearHeroFlash()
+		self:_clearHeroDissolve()
+
 		return
 	end
 
-	local var_22_1 = string.split(var_22_0, "#")
+	local effs = string.split(effCo, "#")
 
-	if not var_22_1[1] then
-		return
+	if not effs[1] or effs[1] ~= StoryEnum.HeroEffect.SetFlash then
+		self:_clearHeroFlash()
 	end
 
-	if var_22_1[1] == StoryEnum.HeroEffect.Gray then
-		if tonumber(var_22_1[2]) and tonumber(var_22_1[2]) > 0.1 then
-			arg_22_0._grayTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, tonumber(var_22_1[2]), arg_22_0._grayUpdate, arg_22_0._grayFinished, arg_22_0, nil, EaseType.Linear)
+	if not effs[1] or effs[1] ~= StoryEnum.HeroEffect.SetDissolve then
+		self:_clearHeroDissolve()
+	end
+
+	if effs[1] == StoryEnum.HeroEffect.Gray then
+		if tonumber(effs[2]) and tonumber(effs[2]) > 0.1 then
+			self._grayTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, tonumber(effs[2]), self._grayUpdate, self._grayFinished, self, nil, EaseType.Linear)
 		else
-			arg_22_0:_grayUpdate(1)
+			self:_grayUpdate(1)
 		end
-	elseif var_22_1[1] == StoryEnum.HeroEffect.StyDissolve then
-		arg_22_0._heroLoader = MultiAbLoader.New()
+	elseif effs[1] == StoryEnum.HeroEffect.StyDissolve then
+		self._heroLoader = MultiAbLoader.New()
 
-		local var_22_2 = "ui/materials/dynamic/spine_ui_stydissolve.mat"
-		local var_22_3 = "ui/viewres/story/v1a9_role_stydissolve.prefab"
+		local styMatPath = "ui/materials/dynamic/spine_ui_stydissolve.mat"
+		local styPrefabPath = "ui/viewres/story/v1a9_role_stydissolve.prefab"
 
-		arg_22_0._heroLoader:addPath(var_22_2)
-		arg_22_0._heroLoader:addPath(var_22_3)
-		arg_22_0._heroLoader:startLoad(function()
-			arg_22_0._styDissolveMat = arg_22_0._heroLoader:getAssetItem(var_22_2):GetResource(var_22_2)
-			arg_22_0._styDissolvePrefab = arg_22_0._heroLoader:getAssetItem(var_22_3):GetResource(var_22_3)
+		self._heroLoader:addPath(styMatPath)
+		self._heroLoader:addPath(styPrefabPath)
+		self._heroLoader:startLoad(function()
+			self._styDissolveMat = self._heroLoader:getAssetItem(styMatPath):GetResource(styMatPath)
+			self._styDissolvePrefab = self._heroLoader:getAssetItem(styPrefabPath):GetResource(styPrefabPath)
 
-			if tonumber(var_22_1[2]) and tonumber(var_22_1[2]) > 0.1 then
-				TaskDispatcher.runDelay(arg_22_0._startStyDissolve, arg_22_0, tonumber(var_22_1[2]))
+			if tonumber(effs[2]) and tonumber(effs[2]) > 0.1 then
+				TaskDispatcher.runDelay(self._setStyDissolve, self, tonumber(effs[2]))
 			else
-				arg_22_0:_startStyDissolve()
+				self:_setStyDissolve()
 			end
 		end)
-	elseif var_22_1[1] == StoryEnum.HeroEffect.KeepAction then
+	elseif effs[1] == StoryEnum.HeroEffect.KeepAction then
 		-- block empty
+	elseif effs[1] == StoryEnum.HeroEffect.SetFlash then
+		self:_setHeroFlash(effs[2])
+	elseif effs[1] == StoryEnum.HeroEffect.SetDissolve then
+		self:_setHeroDissolve(effs[2])
 	else
-		if not arg_22_0._heroSpineGo then
+		if not self._heroSpineGo then
 			return
 		end
 
-		local var_22_4 = GameUtil.splitString2(var_22_0, false, "|", "#")
+		local effectCos = GameUtil.splitString2(effCo, false, "|", "#")
 
-		if arg_22_0._heroLoader then
-			arg_22_0._heroLoader:dispose()
+		if self._heroLoader then
+			self._heroLoader:dispose()
 		end
 
-		arg_22_0._heroLoader = MultiAbLoader.New()
+		self._heroLoader = MultiAbLoader.New()
 
-		for iter_22_0, iter_22_1 in ipairs(var_22_4) do
-			if string.find(iter_22_1[2], "roomcritteremoji") then
+		for _, v in ipairs(effectCos) do
+			if string.find(v[2], "roomcritteremoji") then
 				return
 			end
 
-			arg_22_0._heroLoader:addPath(string.format("effects/prefabs/story/%s.prefab", iter_22_1[2]))
+			self._heroLoader:addPath(string.format("effects/prefabs/story/%s.prefab", v[2]))
 		end
 
-		arg_22_0._heroLoader:startLoad(function()
-			for iter_24_0, iter_24_1 in ipairs(var_22_4) do
-				local var_24_0 = string.format("effects/prefabs/story/%s.prefab", iter_24_1[2])
-				local var_24_1 = arg_22_0._heroLoader:getAssetItem(var_24_0):GetResource(var_24_0)
-				local var_24_2 = gohelper.findChild(arg_22_0._heroSpineGo, string.format("root/%s", iter_24_1[1]))
-				local var_24_3 = gohelper.clone(var_24_1, var_24_2)
-				local var_24_4 = transformhelper.getLocalScale(var_24_3.transform)
+		self._heroLoader:startLoad(function()
+			for _, v in ipairs(effectCos) do
+				local path = string.format("effects/prefabs/story/%s.prefab", v[2])
+				local prefab = self._heroLoader:getAssetItem(path):GetResource(path)
+				local go = gohelper.findChild(self._heroSpineGo, string.format("root/%s", v[1]))
+				local effGo = gohelper.clone(prefab, go)
+				local scale = transformhelper.getLocalScale(effGo.transform)
 
-				transformhelper.setLocalPos(var_24_3.transform, tonumber(iter_24_1[3]), tonumber(iter_24_1[4]), 0)
-				transformhelper.setLocalScale(var_24_3.transform, var_24_4 * tonumber(iter_24_1[5]), var_24_4 * tonumber(iter_24_1[5]), 1)
+				transformhelper.setLocalPos(effGo.transform, tonumber(v[3]), tonumber(v[4]), 0)
+				transformhelper.setLocalScale(effGo.transform, scale * tonumber(v[5]), scale * tonumber(v[5]), 1)
 			end
 		end)
 	end
 end
 
-function var_0_0._startStyDissolve(arg_25_0)
-	arg_25_0._heroSkeletonGraphic.material = arg_25_0._styDissolveMat
+function StoryHeroItem:_setHeroFlash(prefname)
+	if not self._heroFlashCls then
+		self._heroFlashCls = StoryHeroEffsFlash.New()
+	end
 
-	gohelper.clone(arg_25_0._styDissolvePrefab, arg_25_0._heroSpineGo)
+	self._heroFlashCls:init(self._heroSpineGo, prefname)
+	self._heroFlashCls:start()
 end
 
-function var_0_0.stopVoice(arg_26_0)
-	if arg_26_0._heroSpine then
-		arg_26_0._heroSpine:stopVoice()
-	end
-end
+function StoryHeroItem:_clearHeroFlash()
+	if self._heroFlashCls then
+		self._heroFlashCls:destroy()
 
-function var_0_0.onDestroy(arg_27_0)
-	TaskDispatcher.cancelTask(arg_27_0._onDelay, arg_27_0)
-	arg_27_0:_grayUpdate(0)
-
-	if arg_27_0._fadeInTweenId then
-		ZProj.TweenHelper.KillById(arg_27_0._fadeInTweenId)
-
-		arg_27_0._fadeInTweenId = nil
-	end
-
-	if arg_27_0._fadeOutTweenId then
-		ZProj.TweenHelper.KillById(arg_27_0._fadeOutTweenId)
-
-		arg_27_0._fadeOutTweenId = nil
-	end
-
-	if arg_27_0._grayTweenId then
-		ZProj.TweenHelper.KillById(arg_27_0._grayTweenId)
-
-		arg_27_0._grayTweenId = nil
-	end
-
-	if arg_27_0._heroSpineGo then
-		gohelper.destroy(arg_27_0._heroSpineGo)
-
-		arg_27_0._heroSpineGo = nil
-	end
-
-	if arg_27_0._heroGo then
-		ZProj.TweenHelper.KillByObj(arg_27_0._heroGo.transform)
-		gohelper.destroy(arg_27_0._heroGo)
-	end
-
-	if arg_27_0._heroSkeletonGraphic then
-		ZProj.TweenHelper.KillByObj(arg_27_0._heroSkeletonGraphic)
-		arg_27_0._heroSkeletonGraphic.material:DisableKeyword("_SCENEMASKALPHA_ON")
-		arg_27_0._heroSkeletonGraphic.material:DisableKeyword("_SCENEMASKALPHA2_ON")
-	end
-
-	if arg_27_0._heroLoader then
-		arg_27_0._heroLoader:dispose()
-
-		arg_27_0._heroLoader = nil
-	end
-
-	if arg_27_0._heroSpine then
-		arg_27_0._heroSpine:onDestroy()
-
-		arg_27_0._heroSpine = nil
+		self._heroFlashCls = nil
 	end
 end
 
-return var_0_0
+function StoryHeroItem:_setHeroDissolve(inTime)
+	if not self._heroDissolveCls then
+		self._heroDissolveCls = StoryHeroEffsDissolve.New()
+	end
+
+	self._heroDissolveCls:init(self._heroSpineGo)
+	self._heroDissolveCls:start(inTime)
+end
+
+function StoryHeroItem:_clearHeroDissolve()
+	if self._heroDissolveCls then
+		self._heroDissolveCls:destroy()
+
+		self._heroDissolveCls = nil
+	end
+end
+
+function StoryHeroItem:_setStyDissolve()
+	self._heroSkeletonGraphic.material = self._styDissolveMat
+
+	gohelper.clone(self._styDissolvePrefab, self._heroSpineGo)
+end
+
+function StoryHeroItem:stopVoice()
+	if self._heroSpine then
+		self._heroSpine:stopVoice()
+	end
+end
+
+function StoryHeroItem:onDestroy()
+	StoryController.instance:unregisterCallback(StoryEvent.OnFollowPicture, self._playFollowPicture, self)
+	TaskDispatcher.cancelTask(self._followPicture, self)
+	self:_clearHeroFlash()
+	TaskDispatcher.cancelTask(self._onDelay, self)
+	self:_grayUpdate(0)
+
+	if self._fadeInTweenId then
+		ZProj.TweenHelper.KillById(self._fadeInTweenId)
+
+		self._fadeInTweenId = nil
+	end
+
+	if self._fadeOutTweenId then
+		ZProj.TweenHelper.KillById(self._fadeOutTweenId)
+
+		self._fadeOutTweenId = nil
+	end
+
+	if self._grayTweenId then
+		ZProj.TweenHelper.KillById(self._grayTweenId)
+
+		self._grayTweenId = nil
+	end
+
+	if self._heroSpineGo then
+		gohelper.destroy(self._heroSpineGo)
+
+		self._heroSpineGo = nil
+	end
+
+	if self._heroGo then
+		ZProj.TweenHelper.KillByObj(self._heroGo.transform)
+		gohelper.destroy(self._heroGo)
+	end
+
+	if self._heroSkeletonGraphic then
+		ZProj.TweenHelper.KillByObj(self._heroSkeletonGraphic)
+		self._heroSkeletonGraphic.material:DisableKeyword("_SCENEMASKALPHA_ON")
+		self._heroSkeletonGraphic.material:DisableKeyword("_SCENEMASKALPHA2_ON")
+	end
+
+	if self._heroLoader then
+		self._heroLoader:dispose()
+
+		self._heroLoader = nil
+	end
+
+	if self._heroSpine then
+		self._heroSpine:onDestroy()
+
+		self._heroSpine = nil
+	end
+end
+
+return StoryHeroItem

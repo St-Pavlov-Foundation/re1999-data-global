@@ -1,25 +1,27 @@
-﻿module("modules.logic.scene.room.fsm.RoomObStateIdle", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/fsm/RoomObStateIdle.lua
 
-local var_0_0 = class("RoomObStateIdle", SimpleFSMBaseState)
+module("modules.logic.scene.room.fsm.RoomObStateIdle", package.seeall)
 
-function var_0_0.start(arg_1_0)
-	arg_1_0._scene = GameSceneMgr.instance:getCurScene()
+local RoomObStateIdle = class("RoomObStateIdle", SimpleFSMBaseState)
+
+function RoomObStateIdle:start()
+	self._scene = GameSceneMgr.instance:getCurScene()
 end
 
-function var_0_0.onEnter(arg_2_0)
-	var_0_0.super.onEnter(arg_2_0)
+function RoomObStateIdle:onEnter()
+	RoomObStateIdle.super.onEnter(self)
 end
 
-function var_0_0.onLeave(arg_3_0)
-	var_0_0.super.onLeave(arg_3_0)
+function RoomObStateIdle:onLeave()
+	RoomObStateIdle.super.onLeave(self)
 end
 
-function var_0_0.stop(arg_4_0)
+function RoomObStateIdle:stop()
 	return
 end
 
-function var_0_0.clear(arg_5_0)
+function RoomObStateIdle:clear()
 	return
 end
 
-return var_0_0
+return RoomObStateIdle

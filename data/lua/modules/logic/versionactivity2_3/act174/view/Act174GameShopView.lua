@@ -1,111 +1,113 @@
-﻿module("modules.logic.versionactivity2_3.act174.view.Act174GameShopView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/act174/view/Act174GameShopView.lua
 
-local var_0_0 = class("Act174GameShopView", BaseView)
+module("modules.logic.versionactivity2_3.act174.view.Act174GameShopView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtShopLevel = gohelper.findChildText(arg_1_0.viewGO, "#go_Shop/ShopLevel/txt_ShopLevel")
-	arg_1_0._btnFreshShop = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_Shop/btn_FreshShop")
-	arg_1_0._txtFreshCost = gohelper.findChildText(arg_1_0.viewGO, "#go_Shop/btn_FreshShop/txt_FreshCost")
-	arg_1_0._btnDetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_Shop/ShopLevel/btn_detail")
-	arg_1_0._goDetail = gohelper.findChild(arg_1_0.viewGO, "#go_Shop/ShopLevel/go_detail")
-	arg_1_0._btnCloseTip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_Shop/ShopLevel/go_detail/btn_closetip")
+local Act174GameShopView = class("Act174GameShopView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Act174GameShopView:onInitView()
+	self._txtShopLevel = gohelper.findChildText(self.viewGO, "#go_Shop/ShopLevel/txt_ShopLevel")
+	self._btnFreshShop = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Shop/btn_FreshShop")
+	self._txtFreshCost = gohelper.findChildText(self.viewGO, "#go_Shop/btn_FreshShop/txt_FreshCost")
+	self._btnDetail = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Shop/ShopLevel/btn_detail")
+	self._goDetail = gohelper.findChild(self.viewGO, "#go_Shop/ShopLevel/go_detail")
+	self._btnCloseTip = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Shop/ShopLevel/go_detail/btn_closetip")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._btnFreshShop, arg_2_0._btnFreshShopOnClick, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._btnDetail, arg_2_0._btnDetailOnClick, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._btnCloseTip, arg_2_0._btnCloseTipOnClick, arg_2_0)
+function Act174GameShopView:addEvents()
+	self:addClickCb(self._btnFreshShop, self._btnFreshShopOnClick, self)
+	self:addClickCb(self._btnDetail, self._btnDetailOnClick, self)
+	self:addClickCb(self._btnCloseTip, self._btnCloseTipOnClick, self)
 end
 
-function var_0_0._btnFreshShopOnClick(arg_3_0)
-	if arg_3_0.gameInfo.coin < arg_3_0.shopInfo.freshCost then
+function Act174GameShopView:_btnFreshShopOnClick()
+	if self.gameInfo.coin < self.shopInfo.freshCost then
 		GameFacade.showToast(ToastEnum.Act174CoinNotEnough)
 
 		return
 	end
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0.shopItemList) do
-		iter_3_1.anim:Play("flushed", 0, 0)
+	for _, shopItem in ipairs(self.shopItemList) do
+		shopItem.anim:Play("flushed", 0, 0)
 	end
 
-	TaskDispatcher.runDelay(arg_3_0.delayFresh, arg_3_0, 0.16)
+	TaskDispatcher.runDelay(self.delayFresh, self, 0.16)
 end
 
-function var_0_0._btnDetailOnClick(arg_4_0)
-	gohelper.setActive(arg_4_0._goDetail, true)
+function Act174GameShopView:_btnDetailOnClick()
+	gohelper.setActive(self._goDetail, true)
 end
 
-function var_0_0._btnCloseTipOnClick(arg_5_0)
-	gohelper.setActive(arg_5_0._goDetail, false)
+function Act174GameShopView:_btnCloseTipOnClick()
+	gohelper.setActive(self._goDetail, false)
 end
 
-function var_0_0.delayFresh(arg_6_0)
-	Activity174Rpc.instance:sendFresh174ShopRequest(arg_6_0.actId)
+function Act174GameShopView:delayFresh()
+	Activity174Rpc.instance:sendFresh174ShopRequest(self.actId)
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0.animBtnFresh = arg_7_0._btnFreshShop.gameObject:GetComponent(gohelper.Type_Animator)
+function Act174GameShopView:_editableInitView()
+	self.animBtnFresh = self._btnFreshShop.gameObject:GetComponent(gohelper.Type_Animator)
 
-	arg_7_0:initShopItem()
+	self:initShopItem()
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
+function Act174GameShopView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0.actId = Activity174Model.instance:getCurActId()
+function Act174GameShopView:onOpen()
+	self.actId = Activity174Model.instance:getCurActId()
 
-	arg_9_0:refreshShop()
-	arg_9_0:addEventCb(Activity174Controller.instance, Activity174Event.FreshShopReply, arg_9_0.refreshShop, arg_9_0)
-	arg_9_0:addEventCb(Activity174Controller.instance, Activity174Event.BuyInShopReply, arg_9_0.refreshShop, arg_9_0)
+	self:refreshShop()
+	self:addEventCb(Activity174Controller.instance, Activity174Event.FreshShopReply, self.refreshShop, self)
+	self:addEventCb(Activity174Controller.instance, Activity174Event.BuyInShopReply, self.refreshShop, self)
 end
 
-function var_0_0.onClose(arg_10_0)
+function Act174GameShopView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0.delayFresh, arg_11_0)
+function Act174GameShopView:onDestroyView()
+	TaskDispatcher.cancelTask(self.delayFresh, self)
 end
 
-function var_0_0.initShopItem(arg_12_0)
-	arg_12_0.shopItemList = {}
+function Act174GameShopView:initShopItem()
+	self.shopItemList = {}
 
-	for iter_12_0 = 1, 8 do
-		local var_12_0 = gohelper.findChild(arg_12_0.viewGO, "#go_Shop/bagRoot/bag" .. iter_12_0)
-		local var_12_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_12_0, Act174GameShopItem)
+	for i = 1, 8 do
+		local go = gohelper.findChild(self.viewGO, "#go_Shop/bagRoot/bag" .. i)
+		local shopItem = MonoHelper.addNoUpdateLuaComOnceToGo(go, Act174GameShopItem)
 
-		arg_12_0.shopItemList[iter_12_0] = var_12_1
+		self.shopItemList[i] = shopItem
 	end
 end
 
-function var_0_0.refreshShop(arg_13_0)
-	arg_13_0.gameInfo = Activity174Model.instance:getActInfo():getGameInfo()
-	arg_13_0.shopInfo = arg_13_0.gameInfo:getShopInfo()
-	arg_13_0.goodInfos = arg_13_0.shopInfo.goodInfo
+function Act174GameShopView:refreshShop()
+	self.gameInfo = Activity174Model.instance:getActInfo():getGameInfo()
+	self.shopInfo = self.gameInfo:getShopInfo()
+	self.goodInfos = self.shopInfo.goodInfo
 
-	local var_13_0 = Activity174Config.instance:getShopCo(arg_13_0.actId, arg_13_0.shopInfo.level)
+	local shopConfig = Activity174Config.instance:getShopCo(self.actId, self.shopInfo.level)
 
-	arg_13_0._txtShopLevel.text = var_13_0 and var_13_0.name or ""
+	self._txtShopLevel.text = shopConfig and shopConfig.name or ""
 
-	local var_13_1 = arg_13_0.shopInfo.freshCost
+	local cost = self.shopInfo.freshCost
 
-	arg_13_0._txtFreshCost.text = var_13_1
+	self._txtFreshCost.text = cost
 
-	local var_13_2 = var_13_1 == 0 and "first" or "idle"
+	local animName = cost == 0 and "first" or "idle"
 
-	arg_13_0.animBtnFresh:Play(var_13_2)
+	self.animBtnFresh:Play(animName)
 
-	for iter_13_0 = 1, 8 do
-		local var_13_3 = arg_13_0.goodInfos[iter_13_0]
+	for i = 1, 8 do
+		local goodInfo = self.goodInfos[i]
 
-		arg_13_0.shopItemList[iter_13_0]:setData(var_13_3)
+		self.shopItemList[i]:setData(goodInfo)
 	end
 end
 
-return var_0_0
+return Act174GameShopView

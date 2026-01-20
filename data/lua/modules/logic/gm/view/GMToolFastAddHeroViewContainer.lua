@@ -1,43 +1,45 @@
-﻿module("modules.logic.gm.view.GMToolFastAddHeroViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GMToolFastAddHeroViewContainer.lua
 
-local var_0_0 = class("GMToolFastAddHeroViewContainer", BaseViewContainer)
+module("modules.logic.gm.view.GMToolFastAddHeroViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = ListScrollParam.New()
+local GMToolFastAddHeroViewContainer = class("GMToolFastAddHeroViewContainer", BaseViewContainer)
 
-	var_1_0.scrollGOPath = "container/#go_addItem/scroll"
-	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_0.prefabUrl = "container/#go_addItem/scroll/#go_item"
-	var_1_0.cellClass = GMFastAddHeroAddItem
-	var_1_0.scrollDir = ScrollEnum.ScrollDirV
-	var_1_0.lineCount = 1
-	var_1_0.cellWidth = 794
-	var_1_0.cellHeight = 100
-	var_1_0.cellSpaceH = 0
-	var_1_0.cellSpaceV = 0
+function GMToolFastAddHeroViewContainer:buildViews()
+	local gmAddItemListParam = ListScrollParam.New()
 
-	local var_1_1 = ListScrollParam.New()
+	gmAddItemListParam.scrollGOPath = "container/#go_addItem/scroll"
+	gmAddItemListParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	gmAddItemListParam.prefabUrl = "container/#go_addItem/scroll/#go_item"
+	gmAddItemListParam.cellClass = GMFastAddHeroAddItem
+	gmAddItemListParam.scrollDir = ScrollEnum.ScrollDirV
+	gmAddItemListParam.lineCount = 1
+	gmAddItemListParam.cellWidth = 794
+	gmAddItemListParam.cellHeight = 100
+	gmAddItemListParam.cellSpaceH = 0
+	gmAddItemListParam.cellSpaceV = 0
 
-	var_1_1.scrollGOPath = "container/#go_herolistcontainer/scroll"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_1.prefabUrl = "container/#go_herolistcontainer/scroll/Viewport/Content/#go_heroitem"
-	var_1_1.cellClass = GMFastAddHeroHadHeroItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 1
-	var_1_1.cellWidth = 1500
-	var_1_1.cellHeight = 80
-	var_1_1.cellSpaceH = 0
-	var_1_1.cellSpaceV = 10
+	local hadHeroItemListParam = ListScrollParam.New()
+
+	hadHeroItemListParam.scrollGOPath = "container/#go_herolistcontainer/scroll"
+	hadHeroItemListParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	hadHeroItemListParam.prefabUrl = "container/#go_herolistcontainer/scroll/Viewport/Content/#go_heroitem"
+	hadHeroItemListParam.cellClass = GMFastAddHeroHadHeroItem
+	hadHeroItemListParam.scrollDir = ScrollEnum.ScrollDirV
+	hadHeroItemListParam.lineCount = 1
+	hadHeroItemListParam.cellWidth = 1500
+	hadHeroItemListParam.cellHeight = 80
+	hadHeroItemListParam.cellSpaceH = 0
+	hadHeroItemListParam.cellSpaceV = 10
 
 	return {
-		LuaListScrollView.New(GMAddItemModel.instance, var_1_0),
-		LuaListScrollView.New(GMFastAddHeroHadHeroItemModel.instance, var_1_1),
+		LuaListScrollView.New(GMAddItemModel.instance, gmAddItemListParam),
+		LuaListScrollView.New(GMFastAddHeroHadHeroItemModel.instance, hadHeroItemListParam),
 		GMToolFastAddHeroView.New()
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	ViewMgr.instance:closeView(arg_2_0.viewName)
+function GMToolFastAddHeroViewContainer:onContainerClickModalMask()
+	ViewMgr.instance:closeView(self.viewName)
 end
 
-return var_0_0
+return GMToolFastAddHeroViewContainer

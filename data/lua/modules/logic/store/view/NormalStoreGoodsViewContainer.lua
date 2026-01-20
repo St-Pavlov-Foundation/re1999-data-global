@@ -1,50 +1,52 @@
-﻿module("modules.logic.store.view.NormalStoreGoodsViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/NormalStoreGoodsViewContainer.lua
 
-local var_0_0 = class("NormalStoreGoodsViewContainer", BaseViewContainer)
+module("modules.logic.store.view.NormalStoreGoodsViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local NormalStoreGoodsViewContainer = class("NormalStoreGoodsViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topright"))
-	table.insert(var_1_0, NormalStoreGoodsView.New())
+function NormalStoreGoodsViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, TabViewGroup.New(1, "#go_topright"))
+	table.insert(views, NormalStoreGoodsView.New())
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	arg_2_0._currencyView = CurrencyView.New({})
+function NormalStoreGoodsViewContainer:buildTabViews(tabContainerId)
+	self._currencyView = CurrencyView.New({})
 
 	return {
-		arg_2_0._currencyView
+		self._currencyView
 	}
 end
 
-function var_0_0.setCurrencyType(arg_3_0, arg_3_1)
-	local var_3_0 = {
-		arg_3_1
+function NormalStoreGoodsViewContainer:setCurrencyType(currencyId)
+	local currencyTypeParam = {
+		currencyId
 	}
 
-	if CurrencyEnum.CurrencyType.FreeDiamondCoupon == arg_3_1 then
-		var_3_0 = {
+	if CurrencyEnum.CurrencyType.FreeDiamondCoupon == currencyId then
+		currencyTypeParam = {
 			CurrencyEnum.CurrencyType.Diamond,
 			CurrencyEnum.CurrencyType.FreeDiamondCoupon
 		}
 	end
 
-	if arg_3_0._currencyView then
-		arg_3_0._currencyView:setCurrencyType(var_3_0)
+	if self._currencyView then
+		self._currencyView:setCurrencyType(currencyTypeParam)
 	end
 end
 
-function var_0_0.setCurrencyTypes(arg_4_0, arg_4_1)
-	if arg_4_0._currencyView then
-		arg_4_0._currencyView:setCurrencyType(arg_4_1)
+function NormalStoreGoodsViewContainer:setCurrencyTypes(currencyIds)
+	if self._currencyView then
+		self._currencyView:setCurrencyType(currencyIds)
 	end
 end
 
-function var_0_0.onContainerClickModalMask(arg_5_0)
+function NormalStoreGoodsViewContainer:onContainerClickModalMask()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	arg_5_0:closeThis()
+	self:closeThis()
 end
 
-return var_0_0
+return NormalStoreGoodsViewContainer

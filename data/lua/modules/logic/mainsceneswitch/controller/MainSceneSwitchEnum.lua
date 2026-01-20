@@ -1,24 +1,26 @@
-﻿module("modules.logic.mainsceneswitch.controller.MainSceneSwitchEnum", package.seeall)
+﻿-- chunkname: @modules/logic/mainsceneswitch/controller/MainSceneSwitchEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.mainsceneswitch.controller.MainSceneSwitchEnum", package.seeall)
 
-var_0_0.ItemTypeSelected = 1
-var_0_0.ItemTypeUnSelected = 2
-var_0_0.ItemHeight = 190
-var_0_0.ItemUnSelectedScale = 0.78
-var_0_0.ItemUnSelectedHeight = var_0_0.ItemHeight * var_0_0.ItemUnSelectedScale
-var_0_0.PageWidth = 2592
-var_0_0.PageSwitchTime = 2
-var_0_0.SceneStutas = {
+local MainSceneSwitchEnum = _M
+
+MainSceneSwitchEnum.ItemTypeSelected = 1
+MainSceneSwitchEnum.ItemTypeUnSelected = 2
+MainSceneSwitchEnum.ItemHeight = 190
+MainSceneSwitchEnum.ItemUnSelectedScale = 0.78
+MainSceneSwitchEnum.ItemUnSelectedHeight = MainSceneSwitchEnum.ItemHeight * MainSceneSwitchEnum.ItemUnSelectedScale
+MainSceneSwitchEnum.PageWidth = 2592
+MainSceneSwitchEnum.PageSwitchTime = 2
+MainSceneSwitchEnum.SceneStutas = {
 	Unlock = 1,
 	Lock = 2,
 	LockCanGet = 3
 }
-var_0_0.ReddotStatus = {
+MainSceneSwitchEnum.ReddotStatus = {
 	Close = 1,
 	Open = 2
 }
-var_0_0.DefaultScene = 1
-var_0_0.SpSceneId = 4
+MainSceneSwitchEnum.DefaultScene = 1
+MainSceneSwitchEnum.SpSceneId = 4
 
-return var_0_0
+return MainSceneSwitchEnum

@@ -1,33 +1,35 @@
-﻿module("modules.logic.unlockvoucher.rpc.UnlockVoucherRpc", package.seeall)
+﻿-- chunkname: @modules/logic/unlockvoucher/rpc/UnlockVoucherRpc.lua
 
-local var_0_0 = class("UnlockVoucherRpc", BaseRpc)
+module("modules.logic.unlockvoucher.rpc.UnlockVoucherRpc", package.seeall)
 
-function var_0_0.sendGetUnlockVoucherInfoRequest(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = UnlockVoucherModule_pb.GetUnlockVoucherInfoRequest()
+local UnlockVoucherRpc = class("UnlockVoucherRpc", BaseRpc)
 
-	return arg_1_0:sendMsg(var_1_0, arg_1_1, arg_1_2)
+function UnlockVoucherRpc:sendGetUnlockVoucherInfoRequest(callback, callbackObj)
+	local req = UnlockVoucherModule_pb.GetUnlockVoucherInfoRequest()
+
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveGetUnlockVoucherInfoReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 ~= 0 then
+function UnlockVoucherRpc:onReceiveGetUnlockVoucherInfoReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_2_0 = arg_2_2.vouchers
+	local vouchers = msg.vouchers
 
-	UnlockVoucherController.instance:onGetVoucherInfos(var_2_0)
+	UnlockVoucherController.instance:onGetVoucherInfos(vouchers)
 end
 
-function var_0_0.onReceiveUnlockVoucherInfoUpdatePush(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 ~= 0 then
+function UnlockVoucherRpc:onReceiveUnlockVoucherInfoUpdatePush(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_3_0 = arg_3_2.vouchers
+	local vouchers = msg.vouchers
 
-	UnlockVoucherController.instance:onGetVoucherInfosPush(var_3_0)
+	UnlockVoucherController.instance:onGetVoucherInfosPush(vouchers)
 end
 
-var_0_0.instance = var_0_0.New()
+UnlockVoucherRpc.instance = UnlockVoucherRpc.New()
 
-return var_0_0
+return UnlockVoucherRpc

@@ -1,182 +1,192 @@
-﻿module("modules.common.global.screen.GameScreenState", package.seeall)
+﻿-- chunkname: @modules/common/global/screen/GameScreenState.lua
 
-local var_0_0 = class("GameScreenState")
+module("modules.common.global.screen.GameScreenState", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local GameScreenState = class("GameScreenState")
+
+function GameScreenState:ctor()
 	if SDKMgr.instance:isEmulator() then
 		UnityEngine.QualitySettings.resolutionScalingFixedDPIFactor = 10
 	end
 
 	if SLFramework.FrameworkSettings.IsEditor then
-		local var_1_0 = PlayerPrefsHelper.getNumber(PlayerPrefsKey.GMToolViewQuality, ModuleEnum.Performance.High)
-		local var_1_1 = PlayerPrefsHelper.getNumber(PlayerPrefsKey.GMToolViewTargetFrameRate, ModuleEnum.TargetFrameRate.High)
+		local grade = PlayerPrefsHelper.getNumber(PlayerPrefsKey.GMToolViewQuality, ModuleEnum.Performance.High)
+		local targetFrameRate = PlayerPrefsHelper.getNumber(PlayerPrefsKey.GMToolViewTargetFrameRate, ModuleEnum.TargetFrameRate.High)
 
-		arg_1_0:setLocalQuality(var_1_0)
-		arg_1_0:setTargetFrameRate(var_1_1)
+		self:setLocalQuality(grade)
+		self:setTargetFrameRate(targetFrameRate)
 	else
-		local var_1_2 = HardwareUtil.getPerformanceGrade()
-		local var_1_3 = PlayerPrefsHelper.getNumber(PlayerPrefsKey.GMToolViewQuality, nil) or var_1_2
-		local var_1_4 = PlayerPrefsHelper.getNumber(PlayerPrefsKey.GMToolViewTargetFrameRate, nil)
+		local performanceGrade = HardwareUtil.getPerformanceGrade()
+		local grade = PlayerPrefsHelper.getNumber(PlayerPrefsKey.GMToolViewQuality, nil)
 
-		if not var_1_4 then
-			if var_1_2 == ModuleEnum.Performance.High then
-				var_1_4 = ModuleEnum.TargetFrameRate.High
+		grade = grade or performanceGrade
+
+		local targetFrameRate = PlayerPrefsHelper.getNumber(PlayerPrefsKey.GMToolViewTargetFrameRate, nil)
+
+		if not targetFrameRate then
+			if performanceGrade == ModuleEnum.Performance.High then
+				targetFrameRate = ModuleEnum.TargetFrameRate.High
 			else
-				var_1_4 = ModuleEnum.TargetFrameRate.Low
+				targetFrameRate = ModuleEnum.TargetFrameRate.Low
 			end
 		end
 
-		arg_1_0:setLocalQuality(var_1_3)
-		arg_1_0:setTargetFrameRate(var_1_4)
-		MainController.instance:registerCallback(MainEvent.OnFirstEnterMain, arg_1_0._onFirstEnterMain, arg_1_0)
+		self:setLocalQuality(grade)
+		self:setTargetFrameRate(targetFrameRate)
+		MainController.instance:registerCallback(MainEvent.OnFirstEnterMain, self._onFirstEnterMain, self)
 	end
 
-	arg_1_0._width, arg_1_0._height = SettingsModel.instance:getCurrentScreenSize()
+	self._width, self._height = SettingsModel.instance:getCurrentScreenSize()
 
-	ZProj.ScreenSizeMgr.Instance:SetLuaCallback(arg_1_0._onResolutionChange, arg_1_0)
+	ZProj.ScreenSizeMgr.Instance:SetLuaCallback(self._onResolutionChange, self)
 end
 
-function var_0_0._onFirstEnterMain(arg_2_0)
+function GameScreenState:_onFirstEnterMain()
 	if SLFramework.FrameworkSettings.IsEditor then
 		return
 	end
 
-	MainController.instance:unregisterCallback(MainEvent.OnFirstEnterMain, arg_2_0._onFirstEnterMain, arg_2_0)
+	MainController.instance:unregisterCallback(MainEvent.OnFirstEnterMain, self._onFirstEnterMain, self)
 
-	if not PlayerPrefsHelper.getNumber(PlayerPrefsKey.GMCollectCPUGPU, nil) then
+	local hasCheck = PlayerPrefsHelper.getNumber(PlayerPrefsKey.GMCollectCPUGPU, nil)
+
+	if not hasCheck then
 		PlayerPrefsHelper.setNumber(PlayerPrefsKey.GMCollectCPUGPU, 1)
 
-		local var_2_0 = BootNativeUtil.getCpuName()
-		local var_2_1 = UnityEngine.SystemInfo.graphicsDeviceName
-		local var_2_2 = CommonConfig.instance:getCPULevel(var_2_0 or "")
-		local var_2_3 = CommonConfig.instance:getGPULevel(var_2_1 or "")
+		local cpuName = BootNativeUtil.getCpuName()
+		local gpuName = UnityEngine.SystemInfo.graphicsDeviceName
+		local cpuLevel = CommonConfig.instance:getCPULevel(cpuName or "")
+		local gpuLevel = CommonConfig.instance:getGPULevel(gpuName or "")
 
-		if var_2_2 == ModuleEnum.Performance.Undefine or var_2_3 == ModuleEnum.Performance.Undefine then
-			GMRpc.instance:sendGpuCpuLogRequest(var_2_0, var_2_1)
+		if cpuLevel == ModuleEnum.Performance.Undefine or gpuLevel == ModuleEnum.Performance.Undefine then
+			GMRpc.instance:sendGpuCpuLogRequest(cpuName, gpuName)
 		end
 	end
 end
 
-function var_0_0.getLocalQuality(arg_3_0)
-	return arg_3_0.grade
+function GameScreenState:getLocalQuality()
+	return self.grade
 end
 
-function var_0_0.getTargetFrameRate(arg_4_0)
-	return arg_4_0.targetFrameRate
+function GameScreenState:getTargetFrameRate()
+	return self.targetFrameRate
 end
 
-function var_0_0.setLocalQuality(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0.grade = arg_5_1
+function GameScreenState:setLocalQuality(grade, dontSave)
+	self.grade = grade
 
-	if not arg_5_2 then
-		PlayerPrefsHelper.setNumber(PlayerPrefsKey.GMToolViewQuality, arg_5_1)
+	if not dontSave then
+		PlayerPrefsHelper.setNumber(PlayerPrefsKey.GMToolViewQuality, grade)
 	end
 
-	local var_5_0 = 2
-	local var_5_1 = 7
-	local var_5_2 = 1
-	local var_5_3 = 1
-	local var_5_4 = 0
-	local var_5_5 = 1
-	local var_5_6 = 1
-	local var_5_7 = 300
+	local qualityLevel = 2
+	local bloomDiffusion = 7
+	local bloomRTDownTimes = 1
+	local postLocalMaskTexDownTimes = 1
+	local preLocalMaskTexDownTimes = 0
+	local renderScale = 1
+	local renderFrameInterval = 1
+	local maxLod = 300
 
 	if BootNativeUtil.isWindows() then
-		local var_5_8 = PlayerPrefsHelper.getNumber(PlayerPrefsKey.SettingsVSyncCount, 1)
+		local vSyncCount = PlayerPrefsHelper.getNumber(PlayerPrefsKey.SettingsVSyncCount, 1)
 
-		arg_5_0:setVSyncCount(var_5_8, true)
+		self:setVSyncCount(vSyncCount, true)
 	else
 		UnityEngine.QualitySettings.vSyncCount = 0
 
-		local var_5_9 = UnityEngine.SystemInfo.deviceModel
+		local deviceName = UnityEngine.SystemInfo.deviceModel
 
-		if var_5_9:find("Huawei Tablet M5") or var_5_9:find("bah2-w09") then
+		if deviceName:find("Huawei Tablet M5") or deviceName:find("bah2-w09") then
 			UnityEngine.QualitySettings.vSyncCount = 1
 		end
 	end
 
-	local var_5_10 = 8
-	local var_5_11
+	local fileReadMaxCount = 8
 
-	if arg_5_1 == ModuleEnum.Performance.Low then
+	if grade == ModuleEnum.Performance.Low then
 		UnityEngine.Graphics.activeTier = UnityEngine.Rendering.GraphicsTier.Tier1
-		var_5_7 = 100
-		var_5_11 = 8
-	elseif arg_5_1 == ModuleEnum.Performance.Middle then
+		maxLod = 100
+		fileReadMaxCount = 8
+	elseif grade == ModuleEnum.Performance.Middle then
 		UnityEngine.Graphics.activeTier = UnityEngine.Rendering.GraphicsTier.Tier2
-		var_5_7 = 150
-		var_5_11 = 10
+		maxLod = 150
+		fileReadMaxCount = 10
 	else
 		UnityEngine.Graphics.activeTier = UnityEngine.Rendering.GraphicsTier.Tier3
-		var_5_7 = 300
-		var_5_11 = 12
+		maxLod = 300
+		fileReadMaxCount = 12
 	end
 
-	UnityEngine.QualitySettings.SetQualityLevel(var_5_0, true)
-	PostProcessingMgr.instance:setMainPPLevel(arg_5_1)
-	CameraMgr.instance:setRenderScale(var_5_5)
+	UnityEngine.QualitySettings.SetQualityLevel(qualityLevel, true)
+	PostProcessingMgr.instance:setMainPPLevel(grade)
+	CameraMgr.instance:setRenderScale(renderScale)
 
-	UnityEngine.Shader.globalMaximumLOD = var_5_7
+	UnityEngine.Shader.globalMaximumLOD = maxLod
 
-	GameResMgr:SetMaxFileLoadingCount(var_5_11)
+	GameResMgr:SetMaxFileLoadingCount(fileReadMaxCount)
 	GameGlobalMgr.instance:dispatchEvent(GameStateEvent.OnQualityChange)
 end
 
-function var_0_0.resetMaxFileLoadingCount(arg_6_0)
-	local var_6_0 = 8
-	local var_6_1 = arg_6_0.grade == ModuleEnum.Performance.Low and 8 or arg_6_0.grade == ModuleEnum.Performance.Middle and 10 or 12
+function GameScreenState:resetMaxFileLoadingCount()
+	local fileReadMaxCount = 8
 
-	GameResMgr:SetMaxFileLoadingCount(var_6_1)
+	fileReadMaxCount = self.grade == ModuleEnum.Performance.Low and 8 or self.grade == ModuleEnum.Performance.Middle and 10 or 12
+
+	GameResMgr:SetMaxFileLoadingCount(fileReadMaxCount)
 end
 
-function var_0_0.getVSyncCount(arg_7_0)
-	return arg_7_0.vSyncCount
+function GameScreenState:getVSyncCount()
+	return self.vSyncCount
 end
 
-function var_0_0.setVSyncCount(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0.vSyncCount = arg_8_1
+function GameScreenState:setVSyncCount(v, dontSave)
+	self.vSyncCount = v
 
-	if not arg_8_2 then
-		PlayerPrefsHelper.setNumber(PlayerPrefsKey.SettingsVSyncCount, arg_8_0.vSyncCount)
+	if not dontSave then
+		PlayerPrefsHelper.setNumber(PlayerPrefsKey.SettingsVSyncCount, self.vSyncCount)
 	end
 
-	UnityEngine.QualitySettings.vSyncCount = arg_8_0.vSyncCount
+	UnityEngine.QualitySettings.vSyncCount = self.vSyncCount
 end
 
-function var_0_0.setTargetFrameRate(arg_9_0, arg_9_1, arg_9_2)
-	arg_9_0.targetFrameRate = arg_9_1
+function GameScreenState:setTargetFrameRate(targetFrameRate, dontSave)
+	self.targetFrameRate = targetFrameRate
 
-	if not arg_9_2 then
-		PlayerPrefsHelper.setNumber(PlayerPrefsKey.GMToolViewTargetFrameRate, arg_9_1)
+	if not dontSave then
+		PlayerPrefsHelper.setNumber(PlayerPrefsKey.GMToolViewTargetFrameRate, targetFrameRate)
 	end
 
-	UnityEngine.Application.targetFrameRate = arg_9_1
+	UnityEngine.Application.targetFrameRate = targetFrameRate
 end
 
-function var_0_0._onResolutionChange(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_0._width = arg_10_1
-	arg_10_0._height = arg_10_2
+function GameScreenState:_onResolutionChange(width, height)
+	self._width = width
+	self._height = height
 
-	TaskDispatcher.cancelTask(arg_10_0._delayDispatchResizeEvent, arg_10_0)
-	TaskDispatcher.runDelay(arg_10_0._delayDispatchResizeEvent, arg_10_0, 0.01)
-	arg_10_0:_setSoftMaskEnable(false)
+	TaskDispatcher.cancelTask(self._delayDispatchResizeEvent, self)
+	TaskDispatcher.runDelay(self._delayDispatchResizeEvent, self, 0.01)
+	self:_setSoftMaskEnable(false)
 end
 
-function var_0_0._delayDispatchResizeEvent(arg_11_0)
-	arg_11_0:_setSoftMaskEnable(true)
-	GameGlobalMgr.instance:dispatchEvent(GameStateEvent.OnScreenResize, arg_11_0._width, arg_11_0._height)
+function GameScreenState:_delayDispatchResizeEvent()
+	self:_setSoftMaskEnable(true)
+	GameGlobalMgr.instance:dispatchEvent(GameStateEvent.OnScreenResize, self._width, self._height)
 end
 
-function var_0_0._setSoftMaskEnable(arg_12_0, arg_12_1)
-	local var_12_0 = ViewMgr.instance:getUIRoot():GetComponentsInChildren(typeof(Coffee.UISoftMask.SoftMask), false)
+function GameScreenState:_setSoftMaskEnable(enable)
+	local uiRoot = ViewMgr.instance:getUIRoot()
+	local softMaskList = uiRoot:GetComponentsInChildren(typeof(Coffee.UISoftMask.SoftMask), false)
 
-	for iter_12_0 = 0, var_12_0.Length - 1 do
-		var_12_0[iter_12_0].enabled = arg_12_1
+	for i = 0, softMaskList.Length - 1 do
+		local softMask = softMaskList[i]
+
+		softMask.enabled = enable
 	end
 end
 
-function var_0_0.getScreenSize(arg_13_0)
-	return arg_13_0._width, arg_13_0._height
+function GameScreenState:getScreenSize()
+	return self._width, self._height
 end
 
-return var_0_0
+return GameScreenState

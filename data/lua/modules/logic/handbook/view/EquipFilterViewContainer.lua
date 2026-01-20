@@ -1,13 +1,15 @@
-﻿module("modules.logic.handbook.view.EquipFilterViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/handbook/view/EquipFilterViewContainer.lua
 
-local var_0_0 = class("EquipFilterViewContainer", BaseViewContainer)
+module("modules.logic.handbook.view.EquipFilterViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local EquipFilterViewContainer = class("EquipFilterViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, EquipFilterView.New())
+function EquipFilterViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, EquipFilterView.New())
+
+	return views
 end
 
-return var_0_0
+return EquipFilterViewContainer

@@ -1,22 +1,25 @@
-﻿module("modules.logic.fight.system.work.FightWorkKill110", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkKill110.lua
 
-local var_0_0 = class("FightWorkKill110", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkKill110", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0.actEffectData.hurtInfo
-	local var_1_1 = arg_1_0.actEffectData.targetId
-	local var_1_2 = FightDataHelper.entityMgr:getById(var_1_1)
+local FightWorkKill110 = class("FightWorkKill110", FightEffectBase)
 
-	if var_1_2 then
-		local var_1_3 = var_1_2.currentHp
-		local var_1_4 = var_1_3 + var_1_0.reduceHp
+function FightWorkKill110:onStart()
+	local hurtInfo = self.actEffectData.hurtInfo
+	local entityId = self.actEffectData.targetId
+	local entityData = FightDataHelper.entityMgr:getById(entityId)
 
-		FightController.instance:dispatchEvent(FightEvent.OnCurrentHpChange, var_1_1, var_1_4, var_1_3)
+	if entityData then
+		local currentHp = entityData.currentHp
+		local reduceHp = hurtInfo.reduceHp
+		local oldValue = currentHp + reduceHp
+
+		FightController.instance:dispatchEvent(FightEvent.OnCurrentHpChange, entityId, oldValue, currentHp)
 	end
 
-	FightMsgMgr.sendMsg(FightMsgId.EntityHurt, var_1_1, var_1_0)
+	FightMsgMgr.sendMsg(FightMsgId.EntityHurt, entityId, hurtInfo)
 
-	return arg_1_0:onDone(true)
+	return self:onDone(true)
 end
 
-return var_0_0
+return FightWorkKill110

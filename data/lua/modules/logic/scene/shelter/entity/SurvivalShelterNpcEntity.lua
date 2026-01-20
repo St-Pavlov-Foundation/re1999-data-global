@@ -1,90 +1,92 @@
-﻿module("modules.logic.scene.shelter.entity.SurvivalShelterNpcEntity", package.seeall)
+﻿-- chunkname: @modules/logic/scene/shelter/entity/SurvivalShelterNpcEntity.lua
 
-local var_0_0 = class("SurvivalShelterNpcEntity", SurvivalShelterUnitEntity)
+module("modules.logic.scene.shelter.entity.SurvivalShelterNpcEntity", package.seeall)
 
-function var_0_0.Create(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0, var_1_1 = SurvivalMapHelper.instance:getRandomWalkPosAndDir(arg_1_1)
+local SurvivalShelterNpcEntity = class("SurvivalShelterNpcEntity", SurvivalShelterUnitEntity)
 
-	if not var_1_0 then
-		logError(string.format("not find npc random pos, npcId:%s", arg_1_1))
+function SurvivalShelterNpcEntity.Create(unitType, unitId, root)
+	local pos, dir = SurvivalMapHelper.instance:getRandomWalkPosAndDir(unitId)
+
+	if not pos then
+		logError(string.format("not find npc random pos, npcId:%s", unitId))
 
 		return
 	end
 
-	local var_1_2 = gohelper.create3d(arg_1_2, tostring(var_1_0))
-	local var_1_3, var_1_4, var_1_5 = SurvivalHelper.instance:hexPointToWorldPoint(var_1_0.q, var_1_0.r)
-	local var_1_6 = var_1_2.transform
+	local go = gohelper.create3d(root, tostring(pos))
+	local x, y, z = SurvivalHelper.instance:hexPointToWorldPoint(pos.q, pos.r)
+	local rootTrans = go.transform
 
-	transformhelper.setLocalPos(var_1_6, var_1_3, var_1_4, var_1_5)
-	transformhelper.setLocalRotation(var_1_6, 0, var_1_1 * 60, 0)
+	transformhelper.setLocalPos(rootTrans, x, y, z)
+	transformhelper.setLocalRotation(rootTrans, 0, dir * 60, 0)
 
-	local var_1_7 = {
-		unitType = arg_1_0,
-		unitId = arg_1_1,
-		pos = var_1_0,
-		dir = var_1_1
+	local param = {
+		unitType = unitType,
+		unitId = unitId,
+		pos = pos,
+		dir = dir
 	}
 
-	return MonoHelper.addNoUpdateLuaComOnceToGo(var_1_2, var_0_0, var_1_7)
+	return MonoHelper.addNoUpdateLuaComOnceToGo(go, SurvivalShelterNpcEntity, param)
 end
 
-function var_0_0.onCtor(arg_2_0, arg_2_1)
-	arg_2_0.pos = arg_2_1.pos
-	arg_2_0.dir = arg_2_1.dir
+function SurvivalShelterNpcEntity:onCtor(param)
+	self.pos = param.pos
+	self.dir = param.dir
 end
 
-function var_0_0.onStart(arg_3_0)
-	arg_3_0.go:GetComponent(typeof(SLFramework.LuaMonobehavier)).enabled = false
+function SurvivalShelterNpcEntity:onStart()
+	self.go:GetComponent(typeof(SLFramework.LuaMonobehavier)).enabled = false
 end
 
-function var_0_0.onInit(arg_4_0)
-	arg_4_0:showModel()
+function SurvivalShelterNpcEntity:onInit()
+	self:showModel()
 end
 
-function var_0_0.showModel(arg_5_0)
-	if not gohelper.isNil(arg_5_0.goModel) then
+function SurvivalShelterNpcEntity:showModel()
+	if not gohelper.isNil(self.goModel) then
 		return
 	end
 
-	if arg_5_0._loader then
+	if self._loader then
 		return
 	end
 
-	arg_5_0._loader = PrefabInstantiate.Create(arg_5_0.go)
+	self._loader = PrefabInstantiate.Create(self.go)
 
-	local var_5_0 = arg_5_0:getResPath()
+	local path = self:getResPath()
 
-	if string.nilorempty(var_5_0) then
+	if string.nilorempty(path) then
 		return
 	end
 
-	arg_5_0._loader:startLoad(var_5_0, arg_5_0._onResLoadEnd, arg_5_0)
+	self._loader:startLoad(path, self._onResLoadEnd, self)
 end
 
-function var_0_0.getResPath(arg_6_0)
-	local var_6_0 = SurvivalConfig.instance:getNpcConfig(arg_6_0.unitId)
+function SurvivalShelterNpcEntity:getResPath()
+	local npcConfig = SurvivalConfig.instance:getNpcConfig(self.unitId)
 
-	if not var_6_0 then
+	if not npcConfig then
 		return nil
 	end
 
-	return var_6_0.resource
+	return npcConfig.resource
 end
 
-function var_0_0._onResLoadEnd(arg_7_0)
-	local var_7_0 = arg_7_0._loader:getInstGO()
-	local var_7_1 = var_7_0.transform
+function SurvivalShelterNpcEntity:_onResLoadEnd()
+	local go = self._loader:getInstGO()
+	local trans = go.transform
 
-	arg_7_0.goModel = var_7_0
+	self.goModel = go
 
-	transformhelper.setLocalPos(var_7_1, 0, 0, 0)
-	transformhelper.setLocalRotation(var_7_1, 0, 0, 0)
-	transformhelper.setLocalScale(var_7_1, 1, 1, 1)
-	arg_7_0:onLoadedEnd()
+	transformhelper.setLocalPos(trans, 0, 0, 0)
+	transformhelper.setLocalRotation(trans, 0, 0, 0)
+	transformhelper.setLocalScale(trans, 1, 1, 1)
+	self:onLoadedEnd()
 end
 
-function var_0_0.needUI(arg_8_0)
+function SurvivalShelterNpcEntity:needUI()
 	return true
 end
 
-return var_0_0
+return SurvivalShelterNpcEntity

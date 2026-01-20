@@ -1,48 +1,50 @@
-﻿module("modules.logic.sp01.act204.view.Activity204ChaseEntranceItem", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/act204/view/Activity204ChaseEntranceItem.lua
 
-local var_0_0 = class("Activity204ChaseEntranceItem", Activity204EntranceItemBase)
+module("modules.logic.sp01.act204.view.Activity204ChaseEntranceItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	var_0_0.super.init(arg_1_0, arg_1_1)
+local Activity204ChaseEntranceItem = class("Activity204ChaseEntranceItem", Activity204EntranceItemBase)
+
+function Activity204ChaseEntranceItem:init(go)
+	Activity204ChaseEntranceItem.super.init(self, go)
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	var_0_0.super.addEventListeners(arg_2_0)
+function Activity204ChaseEntranceItem:addEventListeners()
+	Activity204ChaseEntranceItem.super.addEventListeners(self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	var_0_0.super.removeEventListeners(arg_3_0)
+function Activity204ChaseEntranceItem:removeEventListeners()
+	Activity204ChaseEntranceItem.super.removeEventListeners(self)
 end
 
-function var_0_0.initActInfo(arg_4_0, arg_4_1)
-	var_0_0.super.initActInfo(arg_4_0, arg_4_1)
+function Activity204ChaseEntranceItem:initActInfo(actId)
+	Activity204ChaseEntranceItem.super.initActInfo(self, actId)
 
-	arg_4_0._fakeEndTimeStamp = AssassinChaseHelper.getActivityEndTimeStamp(arg_4_0._endTime)
+	self._fakeEndTimeStamp = AssassinChaseHelper.getActivityEndTimeStamp(self._endTime)
 end
 
-function var_0_0._getTimeStr(arg_5_0)
-	if not arg_5_0._actMo then
+function Activity204ChaseEntranceItem:_getTimeStr()
+	if not self._actMo then
 		return
 	end
 
-	local var_5_0 = arg_5_0:_getActivityStatus()
+	local status = self:_getActivityStatus()
 
-	return arg_5_0:_decorateTimeStr(var_5_0, arg_5_0._startTime, arg_5_0._fakeEndTimeStamp)
+	return self:_decorateTimeStr(status, self._startTime, self._fakeEndTimeStamp)
 end
 
-function var_0_0._getActivityStatus(arg_6_0)
-	local var_6_0, var_6_1 = var_0_0.super._getActivityStatus(arg_6_0)
+function Activity204ChaseEntranceItem:_getActivityStatus()
+	local status, toastId = Activity204ChaseEntranceItem.super._getActivityStatus(self)
 
-	if var_6_0 == ActivityEnum.ActivityStatus.Normal then
-		local var_6_2 = AssassinChaseModel.instance:isActOpen(arg_6_0._actId, false, false)
-		local var_6_3 = AssassinChaseModel.instance:isActHaveReward(arg_6_0._actId)
-		local var_6_4 = var_6_2 or var_6_3
+	if status == ActivityEnum.ActivityStatus.Normal then
+		local isActOpen = AssassinChaseModel.instance:isActOpen(self._actId, false, false)
+		local hasReward = AssassinChaseModel.instance:isActHaveReward(self._actId)
+		local isCanEnter = isActOpen or hasReward
 
-		var_6_0 = var_6_4 and ActivityEnum.ActivityStatus.Normal or ActivityEnum.ActivityStatus.Expired
-		var_6_1 = var_6_4 and var_6_1 or ToastEnum.ActivityEnd
+		status = isCanEnter and ActivityEnum.ActivityStatus.Normal or ActivityEnum.ActivityStatus.Expired
+		toastId = isCanEnter and toastId or ToastEnum.ActivityEnd
 	end
 
-	return var_6_0, var_6_1
+	return status, toastId
 end
 
-return var_0_0
+return Activity204ChaseEntranceItem

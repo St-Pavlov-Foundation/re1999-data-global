@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity3_1.enter.define.VersionActivity3_1Enum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/enter/define/VersionActivity3_1Enum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity3_1.enter.define.VersionActivity3_1Enum", package.seeall)
 
-var_0_0.ActivityId = {
+local VersionActivity3_1Enum = _M
+
+VersionActivity3_1Enum.ActivityId = {
 	YeShuMei = 13117,
 	TowerDeep = 13112,
 	DouQuQu3Store = 13115,
@@ -20,46 +22,46 @@ var_0_0.ActivityId = {
 	SurvivalOperAct = 13111,
 	Reactivity = VersionActivity2_4Enum.ActivityId.Dungeon
 }
-var_0_0.EnterViewActSetting = {
+VersionActivity3_1Enum.EnterViewActSetting = {
 	{
-		actId = var_0_0.ActivityId.Dungeon,
+		actId = VersionActivity3_1Enum.ActivityId.Dungeon,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.First,
 		actType = VersionActivityEnterViewEnum.ActType.Single,
-		storeId = var_0_0.ActivityId.DungeonStore
+		storeId = VersionActivity3_1Enum.ActivityId.DungeonStore
 	},
 	{
-		actId = var_0_0.ActivityId.DouQuQu3,
+		actId = VersionActivity3_1Enum.ActivityId.DouQuQu3,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Single
 	},
 	{
-		actId = var_0_0.ActivityId.Survival,
+		actId = VersionActivity3_1Enum.ActivityId.Survival,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Single
 	},
 	{
-		actId = var_0_0.ActivityId.RoleStory,
+		actId = VersionActivity3_1Enum.ActivityId.RoleStory,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Single
 	},
 	{
-		actId = var_0_0.ActivityId.YeShuMei,
+		actId = VersionActivity3_1Enum.ActivityId.YeShuMei,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Single
 	},
 	{
-		actId = var_0_0.ActivityId.BossRush,
+		actId = VersionActivity3_1Enum.ActivityId.BossRush,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Single
 	},
 	{
-		actId = var_0_0.ActivityId.Reactivity,
+		actId = VersionActivity3_1Enum.ActivityId.Reactivity,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Single,
-		storeId = var_0_0.ActivityId.ReactivityStore
+		storeId = VersionActivity3_1Enum.ActivityId.ReactivityStore
 	},
 	{
-		actId = var_0_0.ActivityId.GaoSiNiao,
+		actId = VersionActivity3_1Enum.ActivityId.GaoSiNiao,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Single
 	},
@@ -81,10 +83,10 @@ var_0_0.EnterViewActSetting = {
 		redDotUid = ActivityEnum.Activity.WeekWalkHeartShow
 	}
 }
-var_0_0.EnterViewActIdListWithRedDot = {
-	var_0_0.ActivityId.Dungeon
+VersionActivity3_1Enum.EnterViewActIdListWithRedDot = {
+	VersionActivity3_1Enum.ActivityId.Dungeon
 }
-var_0_0.TabSetting = {
+VersionActivity3_1Enum.TabSetting = {
 	select = {
 		fontSize = 28,
 		cnColor = "#F4FDF8",
@@ -93,7 +95,7 @@ var_0_0.TabSetting = {
 		enColor = "#C90F0D",
 		enAlpha = 1,
 		act2TabImg = {
-			[var_0_0.ActivityId.Dungeon] = "singlebg_lang/txt_v3a1_mainactivity_singlebg/v3a1_enterview_itemtitleselected.png"
+			[VersionActivity3_1Enum.ActivityId.Dungeon] = "singlebg_lang/txt_v3a1_mainactivity_singlebg/v3a1_enterview_itemtitleselected.png"
 		}
 	},
 	unselect = {
@@ -104,14 +106,14 @@ var_0_0.TabSetting = {
 		enColor = "#FFFFFF",
 		enAlpha = 0.3,
 		act2TabImg = {
-			[var_0_0.ActivityId.Dungeon] = "singlebg_lang/txt_v3a1_mainactivity_singlebg/v3a1_enterview_itemtitleunselected.png"
+			[VersionActivity3_1Enum.ActivityId.Dungeon] = "singlebg_lang/txt_v3a1_mainactivity_singlebg/v3a1_enterview_itemtitleunselected.png"
 		}
 	}
 }
-var_0_0.MaxShowTimeOffset = 3 * TimeUtil.OneDaySecond
-var_0_0.RedDotOffsetY = 56
-var_0_0.EnterLoopVideoName = "v3a1_kv_loop"
-var_0_0.EnterAnimVideoName = "v3a1_kv_open"
-var_0_0.EnterVideoDayKey = "v3a1_EnterVideoDayKey"
+VersionActivity3_1Enum.MaxShowTimeOffset = 3 * TimeUtil.OneDaySecond
+VersionActivity3_1Enum.RedDotOffsetY = 56
+VersionActivity3_1Enum.EnterLoopVideoName = "v3a1_kv_loop"
+VersionActivity3_1Enum.EnterAnimVideoName = "v3a1_kv_open"
+VersionActivity3_1Enum.EnterVideoDayKey = "v3a1_EnterVideoDayKey"
 
-return var_0_0
+return VersionActivity3_1Enum

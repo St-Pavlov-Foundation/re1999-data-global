@@ -1,25 +1,27 @@
-﻿module("modules.logic.versionactivity1_5.dungeon.view.map.VersionActivity1_5DungeonMapAudioView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/dungeon/view/map/VersionActivity1_5DungeonMapAudioView.lua
 
-local var_0_0 = class("VersionActivity1_5DungeonMapAudioView", BaseView)
+module("modules.logic.versionactivity1_5.dungeon.view.map.VersionActivity1_5DungeonMapAudioView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
+local VersionActivity1_5DungeonMapAudioView = class("VersionActivity1_5DungeonMapAudioView", BaseView)
+
+function VersionActivity1_5DungeonMapAudioView:onInitView()
 	return
 end
 
-function var_0_0.addEvents(arg_2_0)
+function VersionActivity1_5DungeonMapAudioView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function VersionActivity1_5DungeonMapAudioView:removeEvents()
 	return
 end
 
-function var_0_0.onOpen(arg_4_0)
+function VersionActivity1_5DungeonMapAudioView:onOpen()
 	return
 end
 
-function var_0_0.onClose(arg_5_0)
+function VersionActivity1_5DungeonMapAudioView:onClose()
 	return
 end
 
-return var_0_0
+return VersionActivity1_5DungeonMapAudioView

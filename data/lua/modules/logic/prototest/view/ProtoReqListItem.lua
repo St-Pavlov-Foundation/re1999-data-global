@@ -1,36 +1,38 @@
-﻿module("modules.logic.prototest.view.ProtoReqListItem", package.seeall)
+﻿-- chunkname: @modules/logic/prototest/view/ProtoReqListItem.lua
 
-local var_0_0 = class("ProtoReqListItem", ListScrollCell)
+module("modules.logic.prototest.view.ProtoReqListItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._imgGO1 = gohelper.findChild(arg_1_1, "img1")
-	arg_1_0._imgGO2 = gohelper.findChild(arg_1_1, "img2")
-	arg_1_0._txtModule = gohelper.findChildText(arg_1_1, "txtModule")
-	arg_1_0._txtCmd = gohelper.findChildText(arg_1_1, "txtCmd")
-	arg_1_0._txtReq = gohelper.findChildText(arg_1_1, "txtReq")
-	arg_1_0._click = gohelper.findChildClick(arg_1_1, "")
+local ProtoReqListItem = class("ProtoReqListItem", ListScrollCell)
+
+function ProtoReqListItem:init(go)
+	self._imgGO1 = gohelper.findChild(go, "img1")
+	self._imgGO2 = gohelper.findChild(go, "img2")
+	self._txtModule = gohelper.findChildText(go, "txtModule")
+	self._txtCmd = gohelper.findChildText(go, "txtCmd")
+	self._txtReq = gohelper.findChildText(go, "txtReq")
+	self._click = gohelper.findChildClick(go, "")
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._click:AddClickListener(arg_2_0._onClickThis, arg_2_0)
+function ProtoReqListItem:addEventListeners()
+	self._click:AddClickListener(self._onClickThis, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._click:RemoveClickListener()
+function ProtoReqListItem:removeEventListeners()
+	self._click:RemoveClickListener()
 end
 
-function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
-	arg_4_0._mo = arg_4_1
-	arg_4_0._txtModule.text = arg_4_1.module
-	arg_4_0._txtCmd.text = arg_4_1.cmd
-	arg_4_0._txtReq.text = arg_4_1.req
+function ProtoReqListItem:onUpdateMO(mo)
+	self._mo = mo
+	self._txtModule.text = mo.module
+	self._txtCmd.text = mo.cmd
+	self._txtReq.text = mo.req
 
-	gohelper.setActive(arg_4_0._imgGO1, arg_4_0._index % 2 == 0)
-	gohelper.setActive(arg_4_0._imgGO2, arg_4_0._index % 2 == 1)
+	gohelper.setActive(self._imgGO1, self._index % 2 == 0)
+	gohelper.setActive(self._imgGO2, self._index % 2 == 1)
 end
 
-function var_0_0._onClickThis(arg_5_0)
-	ProtoTestMgr.instance:dispatchEvent(ProtoEnum.OnClickReqListItem, arg_5_0._mo)
+function ProtoReqListItem:_onClickThis()
+	ProtoTestMgr.instance:dispatchEvent(ProtoEnum.OnClickReqListItem, self._mo)
 end
 
-return var_0_0
+return ProtoReqListItem

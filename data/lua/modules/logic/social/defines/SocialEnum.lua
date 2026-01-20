@@ -1,29 +1,31 @@
-﻿module("modules.logic.social.defines.SocialEnum", package.seeall)
+﻿-- chunkname: @modules/logic/social/defines/SocialEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.social.defines.SocialEnum", package.seeall)
 
-var_0_0.MaxSaveMessageCount = 200
-var_0_0.ChannelType = {
+local SocialEnum = _M
+
+SocialEnum.MaxSaveMessageCount = 200
+SocialEnum.ChannelType = {
 	Friend = 1
 }
-var_0_0.SelectEnum = {
+SocialEnum.SelectEnum = {
 	Friend = 2,
 	Self = 1
 }
-var_0_0.Type = {
+SocialEnum.Type = {
 	Search = 2,
 	Recommend = 5,
 	Request = 4,
 	Black = 3,
 	Friend = 1
 }
-var_0_0.TabIndex = {
+SocialEnum.TabIndex = {
 	Search = 2,
 	Friend = 1,
 	Black = 4,
 	Request = 3
 }
-var_0_0.SearchFriendCD = 2
-var_0_0.FriendChatCD = 2
+SocialEnum.SearchFriendCD = 2
+SocialEnum.FriendChatCD = 2
 
-return var_0_0
+return SocialEnum

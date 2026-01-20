@@ -1,18 +1,20 @@
-﻿module("modules.logic.fight.system.work.FightWorkDeadContainer", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkDeadContainer.lua
 
-local var_0_0 = class("FightWorkDeadContainer", FightStepEffectFlow)
-local var_0_1 = {
+module("modules.logic.fight.system.work.FightWorkDeadContainer", package.seeall)
+
+local FightWorkDeadContainer = class("FightWorkDeadContainer", FightStepEffectFlow)
+local parallelEffectType = {
 	[FightEnum.EffectType.DEAD] = true,
 	[FightEnum.EffectType.KILL] = true,
 	[FightEnum.EffectType.REMOVEENTITYCARDS] = true
 }
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0:playAdjacentParallelEffect(var_0_1, true)
+function FightWorkDeadContainer:onStart()
+	self:playAdjacentParallelEffect(parallelEffectType, true)
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkDeadContainer:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkDeadContainer

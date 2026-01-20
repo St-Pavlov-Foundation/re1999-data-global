@@ -1,132 +1,134 @@
-﻿module("modules.logic.rouge.view.RougeFactionIllustrationDetailView", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeFactionIllustrationDetailView.lua
 
-local var_0_0 = class("RougeFactionIllustrationDetailView", BaseView)
+module("modules.logic.rouge.view.RougeFactionIllustrationDetailView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._goprogress = gohelper.findChild(arg_1_0.viewGO, "#go_progress")
-	arg_1_0._goprogressitem = gohelper.findChild(arg_1_0.viewGO, "#go_progress/#go_progressitem")
-	arg_1_0._scrollview = gohelper.findChildScrollRect(arg_1_0.viewGO, "Middle/#scroll_view")
-	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "Middle/#scroll_view/Viewport/#go_Content")
-	arg_1_0._btnRight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Middle/#btn_Right")
-	arg_1_0._btnLeft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Middle/#btn_Left")
-	arg_1_0._golefttop = gohelper.findChild(arg_1_0.viewGO, "#go_lefttop")
+local RougeFactionIllustrationDetailView = class("RougeFactionIllustrationDetailView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeFactionIllustrationDetailView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._goprogress = gohelper.findChild(self.viewGO, "#go_progress")
+	self._goprogressitem = gohelper.findChild(self.viewGO, "#go_progress/#go_progressitem")
+	self._scrollview = gohelper.findChildScrollRect(self.viewGO, "Middle/#scroll_view")
+	self._goContent = gohelper.findChild(self.viewGO, "Middle/#scroll_view/Viewport/#go_Content")
+	self._btnRight = gohelper.findChildButtonWithAudio(self.viewGO, "Middle/#btn_Right")
+	self._btnLeft = gohelper.findChildButtonWithAudio(self.viewGO, "Middle/#btn_Left")
+	self._golefttop = gohelper.findChild(self.viewGO, "#go_lefttop")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnRight:AddClickListener(arg_2_0._btnRightOnClick, arg_2_0)
-	arg_2_0._btnLeft:AddClickListener(arg_2_0._btnLeftOnClick, arg_2_0)
+function RougeFactionIllustrationDetailView:addEvents()
+	self._btnRight:AddClickListener(self._btnRightOnClick, self)
+	self._btnLeft:AddClickListener(self._btnLeftOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnRight:RemoveClickListener()
-	arg_3_0._btnLeft:RemoveClickListener()
+function RougeFactionIllustrationDetailView:removeEvents()
+	self._btnRight:RemoveClickListener()
+	self._btnLeft:RemoveClickListener()
 end
 
-local var_0_1 = 0.3
+local delayTime = 0.3
 
-function var_0_0._btnRightOnClick(arg_4_0)
-	arg_4_0._index = arg_4_0._index + 1
+function RougeFactionIllustrationDetailView:_btnRightOnClick()
+	self._index = self._index + 1
 
-	if arg_4_0._index > arg_4_0._num then
-		arg_4_0._index = 1
+	if self._index > self._num then
+		self._index = 1
 	end
 
-	TaskDispatcher.cancelTask(arg_4_0._delayUpdateInfo, arg_4_0)
-	TaskDispatcher.runDelay(arg_4_0._delayUpdateInfo, arg_4_0, var_0_1)
-	arg_4_0._aniamtor:Play("switch_l", 0, 0)
+	TaskDispatcher.cancelTask(self._delayUpdateInfo, self)
+	TaskDispatcher.runDelay(self._delayUpdateInfo, self, delayTime)
+	self._aniamtor:Play("switch_l", 0, 0)
 end
 
-function var_0_0._btnLeftOnClick(arg_5_0)
-	arg_5_0._index = arg_5_0._index - 1
+function RougeFactionIllustrationDetailView:_btnLeftOnClick()
+	self._index = self._index - 1
 
-	if arg_5_0._index < 1 then
-		arg_5_0._index = arg_5_0._num
+	if self._index < 1 then
+		self._index = self._num
 	end
 
-	TaskDispatcher.cancelTask(arg_5_0._delayUpdateInfo, arg_5_0)
-	TaskDispatcher.runDelay(arg_5_0._delayUpdateInfo, arg_5_0, var_0_1)
-	arg_5_0._aniamtor:Play("switch_r", 0, 0)
+	TaskDispatcher.cancelTask(self._delayUpdateInfo, self)
+	TaskDispatcher.runDelay(self._delayUpdateInfo, self, delayTime)
+	self._aniamtor:Play("switch_r", 0, 0)
 end
 
-function var_0_0._delayUpdateInfo(arg_6_0)
-	arg_6_0:_updateInfo(arg_6_0._list[arg_6_0._index])
+function RougeFactionIllustrationDetailView:_delayUpdateInfo()
+	self:_updateInfo(self._list[self._index])
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	local var_7_0 = arg_7_0.viewContainer:getSetting().otherRes[1]
-	local var_7_1 = arg_7_0:getResInst(var_7_0, arg_7_0._goContent)
+function RougeFactionIllustrationDetailView:_editableInitView()
+	local path = self.viewContainer:getSetting().otherRes[1]
+	local itemGo = self:getResInst(path, self._goContent)
 
-	arg_7_0._item = MonoHelper.addNoUpdateLuaComOnceToGo(var_7_1, RougeFactionIllustrationDetailItem)
+	self._item = MonoHelper.addNoUpdateLuaComOnceToGo(itemGo, RougeFactionIllustrationDetailItem)
 
-	local var_7_2 = RougeOutsideModel.instance:getSeasonStyleInfoList()
+	local list = RougeOutsideModel.instance:getSeasonStyleInfoList()
 
-	arg_7_0._list = {}
+	self._list = {}
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_2) do
-		if iter_7_1.isUnLocked then
-			table.insert(arg_7_0._list, iter_7_1.styleCO)
+	for i, v in ipairs(list) do
+		if v.isUnLocked then
+			table.insert(self._list, v.styleCO)
 		end
 	end
 
-	arg_7_0._num = #arg_7_0._list
-	arg_7_0._aniamtor = gohelper.onceAddComponent(arg_7_0.viewGO, gohelper.Type_Animator)
+	self._num = #self._list
+	self._aniamtor = gohelper.onceAddComponent(self.viewGO, gohelper.Type_Animator)
 
-	arg_7_0:_initProgressItems()
+	self:_initProgressItems()
 end
 
-function var_0_0._initProgressItems(arg_8_0)
-	arg_8_0._itemList = arg_8_0:getUserDataTb_()
+function RougeFactionIllustrationDetailView:_initProgressItems()
+	self._itemList = self:getUserDataTb_()
 
-	for iter_8_0 = 1, arg_8_0._num do
-		local var_8_0 = gohelper.cloneInPlace(arg_8_0._goprogressitem)
-		local var_8_1 = arg_8_0:getUserDataTb_()
+	for i = 1, self._num do
+		local itemGo = gohelper.cloneInPlace(self._goprogressitem)
+		local t = self:getUserDataTb_()
 
-		var_8_1.empty = gohelper.findChild(var_8_0, "empty")
-		var_8_1.light = gohelper.findChild(var_8_0, "light")
+		t.empty = gohelper.findChild(itemGo, "empty")
+		t.light = gohelper.findChild(itemGo, "light")
 
-		gohelper.setActive(var_8_0, true)
+		gohelper.setActive(itemGo, true)
 
-		arg_8_0._itemList[iter_8_0] = var_8_1
+		self._itemList[i] = t
 	end
 end
 
-function var_0_0._showProgressItem(arg_9_0, arg_9_1)
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0._itemList) do
-		gohelper.setActive(iter_9_1.empty, iter_9_0 ~= arg_9_1)
-		gohelper.setActive(iter_9_1.light, iter_9_0 == arg_9_1)
+function RougeFactionIllustrationDetailView:_showProgressItem(index)
+	for i, v in ipairs(self._itemList) do
+		gohelper.setActive(v.empty, i ~= index)
+		gohelper.setActive(v.light, i == index)
 	end
 end
 
-function var_0_0.onUpdateParam(arg_10_0)
+function RougeFactionIllustrationDetailView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_11_0)
-	local var_11_0 = arg_11_0.viewParam
+function RougeFactionIllustrationDetailView:onOpen()
+	local mo = self.viewParam
 
-	arg_11_0._index = tabletool.indexOf(arg_11_0._list, var_11_0) or 1
+	self._index = tabletool.indexOf(self._list, mo) or 1
 
-	arg_11_0:_updateInfo(var_11_0)
+	self:_updateInfo(mo)
 end
 
-function var_0_0._updateInfo(arg_12_0, arg_12_1)
-	arg_12_0._mo = arg_12_1
+function RougeFactionIllustrationDetailView:_updateInfo(mo)
+	self._mo = mo
 
-	arg_12_0._item:onUpdateMO(arg_12_1)
-	arg_12_0:_showProgressItem(arg_12_0._index)
+	self._item:onUpdateMO(mo)
+	self:_showProgressItem(self._index)
 end
 
-function var_0_0.onClose(arg_13_0)
+function RougeFactionIllustrationDetailView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_14_0)
-	TaskDispatcher.cancelTask(arg_14_0._delayUpdateInfo, arg_14_0)
+function RougeFactionIllustrationDetailView:onDestroyView()
+	TaskDispatcher.cancelTask(self._delayUpdateInfo, self)
 end
 
-return var_0_0
+return RougeFactionIllustrationDetailView

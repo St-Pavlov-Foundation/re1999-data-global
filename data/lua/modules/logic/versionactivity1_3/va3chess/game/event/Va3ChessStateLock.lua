@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity1_3.va3chess.game.event.Va3ChessStateLock", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/va3chess/game/event/Va3ChessStateLock.lua
 
-local var_0_0 = class("Va3ChessStateLock", Va3ChessStateBase)
+module("modules.logic.versionactivity1_3.va3chess.game.event.Va3ChessStateLock", package.seeall)
 
-function var_0_0.start(arg_1_0)
+local Va3ChessStateLock = class("Va3ChessStateLock", Va3ChessStateBase)
+
+function Va3ChessStateLock:start()
 	logNormal("Va3ChessStateLock start")
 end
 
-function var_0_0.onClickPos(arg_2_0, arg_2_1, arg_2_2)
+function Va3ChessStateLock:onClickPos(x, y)
 	return
 end
 
-return var_0_0
+return Va3ChessStateLock

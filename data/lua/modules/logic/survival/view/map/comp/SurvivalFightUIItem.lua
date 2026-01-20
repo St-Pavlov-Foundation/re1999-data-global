@@ -1,41 +1,44 @@
-﻿module("modules.logic.survival.view.map.comp.SurvivalFightUIItem", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/comp/SurvivalFightUIItem.lua
 
-local var_0_0 = class("SurvivalFightUIItem", SurvivalUnitUIItem)
+module("modules.logic.survival.view.map.comp.SurvivalFightUIItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._fightArrow = gohelper.findChild(arg_1_1, "#go_canSkip")
+local SurvivalFightUIItem = class("SurvivalFightUIItem", SurvivalUnitUIItem)
 
-	var_0_0.super.init(arg_1_0, arg_1_1)
+function SurvivalFightUIItem:init(go)
+	self._fightArrow = gohelper.findChild(go, "#go_canSkip")
+
+	SurvivalFightUIItem.super.init(self, go)
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	var_0_0.super.addEventListeners(arg_2_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnAttrUpdate, arg_2_0.refreshInfo, arg_2_0)
+function SurvivalFightUIItem:addEventListeners()
+	SurvivalFightUIItem.super.addEventListeners(self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnAttrUpdate, self.refreshInfo, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	var_0_0.super.removeEventListeners(arg_3_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnAttrUpdate, arg_3_0.refreshInfo, arg_3_0)
+function SurvivalFightUIItem:removeEventListeners()
+	SurvivalFightUIItem.super.removeEventListeners(self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnAttrUpdate, self.refreshInfo, self)
 end
 
-function var_0_0.refreshInfo(arg_4_0)
-	var_0_0.super.refreshInfo(arg_4_0)
+function SurvivalFightUIItem:refreshInfo()
+	SurvivalFightUIItem.super.refreshInfo(self)
 
-	if arg_4_0._unitMo.visionVal == 8 then
-		gohelper.setActive(arg_4_0._fightArrow, false)
+	if self._unitMo.visionVal == 8 then
+		gohelper.setActive(self._fightArrow, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_4_0._golevel, true)
+	gohelper.setActive(self._golevel, true)
 
-	arg_4_0._txtlevel.text = "LV." .. arg_4_0._unitMo.co.fightLevel
+	self._txtlevel.text = "LV." .. self._unitMo.co.fightLevel
 
-	local var_4_0 = SurvivalShelterModel.instance:getWeekInfo():getAttr(SurvivalEnum.AttrType.HeroFightLevel)
-	local var_4_1 = arg_4_0._unitMo.co.fightLevel
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local teamLv = weekInfo:getAttr(SurvivalEnum.AttrType.HeroFightLevel)
+	local fightLv = self._unitMo.co.fightLevel
 
-	gohelper.setActive(arg_4_0._fightArrow, var_4_1 <= var_4_0 and arg_4_0._unitMo.co.skip == 1)
-	arg_4_0:updateIconAndBg()
+	gohelper.setActive(self._fightArrow, fightLv <= teamLv and self._unitMo.co.skip == 1)
+	self:updateIconAndBg()
 end
 
-return var_0_0
+return SurvivalFightUIItem

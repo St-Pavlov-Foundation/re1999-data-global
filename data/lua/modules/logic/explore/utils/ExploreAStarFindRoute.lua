@@ -1,7 +1,9 @@
-﻿module("modules.logic.explore.utils.ExploreAStarFindRoute", package.seeall)
+﻿-- chunkname: @modules/logic/explore/utils/ExploreAStarFindRoute.lua
 
-local var_0_0 = class("ExploreAStarFindRoute")
-local var_0_1 = {
+module("modules.logic.explore.utils.ExploreAStarFindRoute", package.seeall)
+
+local ExploreAStarFindRoute = class("ExploreAStarFindRoute")
+local DIRECTIONS = {
 	{
 		-1,
 		0
@@ -19,187 +21,178 @@ local var_0_1 = {
 		0
 	}
 }
-local var_0_2
-local var_0_3
-local var_0_4
-local var_0_5
-local var_0_6
-local var_0_7
-local var_0_8
-local var_0_9
-local var_0_10
-local var_0_11
-local var_0_12
-local var_0_13
+local START_POS, END_POS, CURRENT_POS, NEAREST_POS, NEXT_POS, BARRIER_LIST, WALKABLE_LIST, OPEN_LIST, OPEN_MAP, CLOSEED_LIST, CLOSED_MAP, PATH_LIST
 
-local function var_0_14(arg_1_0)
-	return string.format("%d_%d", arg_1_0.x, arg_1_0.y)
+local function GET_KEY(p)
+	return string.format("%d_%d", p.x, p.y)
 end
 
-local function var_0_15(arg_2_0, arg_2_1)
-	local var_2_0 = {
-		x = arg_2_0,
-		y = arg_2_1
-	}
+local function getPoint(x, y)
+	local point = {}
 
-	var_2_0.last = nil
-	var_2_0.g = 0
-	var_2_0.h = 0
-	var_2_0.f = 0
-	var_2_0.key = var_0_14(var_2_0)
-	var_2_0.fromDir = nil
+	point.x = x
+	point.y = y
+	point.last = nil
+	point.g = 0
+	point.h = 0
+	point.f = 0
+	point.key = GET_KEY(point)
+	point.fromDir = nil
 
-	return var_2_0
+	return point
 end
 
-local function var_0_16(arg_3_0, arg_3_1)
-	return math.abs(arg_3_1.x - arg_3_0.x) + math.abs(arg_3_1.y - arg_3_0.y)
+local function MANHTATAN_DIS(currPos, targetPos)
+	return math.abs(targetPos.x - currPos.x) + math.abs(targetPos.y - currPos.y)
 end
 
-local function var_0_17(arg_4_0, arg_4_1)
-	return arg_4_0.x == arg_4_1.x and arg_4_0.y == arg_4_1.y
+local function IS_SAME_P(p1, p2)
+	return p1.x == p2.x and p1.y == p2.y
 end
 
-local function var_0_18(arg_5_0, arg_5_1)
-	return arg_5_1[arg_5_0.key]
+local function IS_WALKABLE(p, walkableList)
+	return walkableList[p.key]
 end
 
-local function var_0_19(arg_6_0)
-	return arg_6_0.g + 1
+local function GET_VALUE_G(p)
+	return p.g + 1
 end
 
-local function var_0_20(arg_7_0, arg_7_1)
-	return var_0_16(arg_7_0, arg_7_1)
+local function GET_VALUE_H(p1, p2)
+	return MANHTATAN_DIS(p1, p2)
 end
 
-local function var_0_21(arg_8_0)
-	return arg_8_0.g + arg_8_0.h
+local function GET_VALUE_F(p)
+	return p.g + p.h
 end
 
-local function var_0_22(arg_9_0, arg_9_1, arg_9_2)
-	assert(arg_9_1 >= arg_9_0.x and arg_9_2 >= arg_9_0.y, string.format("point error, (%d, %d) limit(%d, %d)", arg_9_0.x, arg_9_0.y, arg_9_1, arg_9_2))
+local function CHECK_P_RANGE(p, xMax, yMax)
+	assert(xMax >= p.x and yMax >= p.y, string.format("point error, (%d, %d) limit(%d, %d)", p.x, p.y, xMax, yMax))
 end
 
-local function var_0_23(arg_10_0, arg_10_1, arg_10_2)
-	for iter_10_0, iter_10_1 in pairs(arg_10_0 or {}) do
-		var_0_22(iter_10_1, arg_10_1, arg_10_2)
+local function CHECK_P_LIST_RANGE(pList, xMax, yMax)
+	for k, p in pairs(pList or {}) do
+		CHECK_P_RANGE(p, xMax, yMax)
 	end
 end
 
-local function var_0_24(arg_11_0, arg_11_1)
-	if arg_11_0.f == arg_11_1.f and arg_11_0.last == arg_11_1.last then
-		if var_0_6 then
-			if ExploreHelper.isPosEqual(arg_11_0, var_0_6) then
+local function COMPARE_FUNC(p1, p2)
+	if p1.f == p2.f and p1.last == p2.last then
+		if NEXT_POS then
+			if ExploreHelper.isPosEqual(p1, NEXT_POS) then
 				return true
-			elseif ExploreHelper.isPosEqual(arg_11_1, var_0_6) then
+			elseif ExploreHelper.isPosEqual(p2, NEXT_POS) then
 				return false
 			end
 		end
 
-		return (arg_11_0.last and arg_11_0.fromDir == arg_11_0.last.fromDir and -1 or 1) < (arg_11_1.last and arg_11_1.fromDir == arg_11_1.last.fromDir and -1 or 1)
+		local p1DirValue = p1.last and p1.fromDir == p1.last.fromDir and -1 or 1
+		local p2DirValue = p2.last and p2.fromDir == p2.last.fromDir and -1 or 1
+
+		return p1DirValue < p2DirValue
 	end
 
-	return arg_11_0.f < arg_11_1.f
+	return p1.f < p2.f
 end
 
-function var_0_0.ctor(arg_12_0)
+function ExploreAStarFindRoute:ctor()
 	return
 end
 
-function var_0_0.startFindPath(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4)
-	var_0_8 = arg_13_1
-	var_0_2 = var_0_15(arg_13_2.x, arg_13_2.y)
-	var_0_3 = var_0_15(arg_13_3.x, arg_13_3.y)
-	var_0_6 = arg_13_4
-	var_0_5 = var_0_15(arg_13_2.x, arg_13_2.y)
-	var_0_10 = {}
-	var_0_9 = {}
-	var_0_11 = {}
-	var_0_12 = {}
-	var_0_10[var_0_2.key] = var_0_2
+function ExploreAStarFindRoute:startFindPath(walkableList, startPos, endPos, nextPos)
+	WALKABLE_LIST = walkableList
+	START_POS = getPoint(startPos.x, startPos.y)
+	END_POS = getPoint(endPos.x, endPos.y)
+	NEXT_POS = nextPos
+	NEAREST_POS = getPoint(startPos.x, startPos.y)
+	OPEN_MAP = {}
+	OPEN_LIST = {}
+	CLOSEED_LIST = {}
+	CLOSED_MAP = {}
+	OPEN_MAP[START_POS.key] = START_POS
 
-	table.insert(var_0_9, var_0_2)
+	table.insert(OPEN_LIST, START_POS)
 
-	var_0_13 = arg_13_0:findPath() or {}
+	PATH_LIST = self:findPath() or {}
 
-	return var_0_13, var_0_5
+	return PATH_LIST, NEAREST_POS
 end
 
-function var_0_0.getNextPoints(arg_14_0, arg_14_1)
-	local var_14_0 = {}
+function ExploreAStarFindRoute:getNextPoints(point)
+	local nextPoints = {}
 
-	for iter_14_0 = 1, #var_0_1 do
-		local var_14_1 = var_0_1[iter_14_0]
-		local var_14_2 = var_0_15(arg_14_1.x + var_14_1[1], arg_14_1.y + var_14_1[2])
+	for i = 1, #DIRECTIONS do
+		local offset = DIRECTIONS[i]
+		local nextPoint = getPoint(point.x + offset[1], point.y + offset[2])
 
-		var_14_2.fromDir = var_14_1
-		var_14_2.last = arg_14_1
+		nextPoint.fromDir = offset
+		nextPoint.last = point
 
-		if var_0_18(var_14_2, var_0_8) then
-			var_14_2.g = var_0_19(arg_14_1)
-			var_14_2.h = var_0_20(arg_14_1, var_0_3)
-			var_14_2.f = var_0_21(var_14_2)
+		if IS_WALKABLE(nextPoint, WALKABLE_LIST) then
+			nextPoint.g = GET_VALUE_G(point)
+			nextPoint.h = GET_VALUE_H(point, END_POS)
+			nextPoint.f = GET_VALUE_F(nextPoint)
 
-			table.insert(var_14_0, var_14_2)
+			table.insert(nextPoints, nextPoint)
 		end
 	end
 
-	return var_14_0
+	return nextPoints
 end
 
-function var_0_0.findPath(arg_15_0)
-	while #var_0_9 > 0 do
-		var_0_4 = var_0_9[1]
+function ExploreAStarFindRoute:findPath()
+	while #OPEN_LIST > 0 do
+		CURRENT_POS = OPEN_LIST[1]
 
-		if arg_15_0:getDistance(var_0_4, var_0_3) < arg_15_0:getDistance(var_0_5, var_0_3) then
-			var_0_5 = var_0_15(var_0_4.x, var_0_4.y)
+		if self:getDistance(CURRENT_POS, END_POS) < self:getDistance(NEAREST_POS, END_POS) then
+			NEAREST_POS = getPoint(CURRENT_POS.x, CURRENT_POS.y)
 		end
 
-		table.remove(var_0_9, 1)
+		table.remove(OPEN_LIST, 1)
 
-		var_0_10[var_0_4.key] = nil
+		OPEN_MAP[CURRENT_POS.key] = nil
 
-		if var_0_17(var_0_4, var_0_3) then
-			return arg_15_0:makePath(var_0_4)
+		if IS_SAME_P(CURRENT_POS, END_POS) then
+			return self:makePath(CURRENT_POS)
 		else
-			var_0_12[var_0_4.key] = var_0_4
+			CLOSED_MAP[CURRENT_POS.key] = CURRENT_POS
 
-			local var_15_0 = arg_15_0:getNextPoints(var_0_4)
+			local nextPoints = self:getNextPoints(CURRENT_POS)
 
-			for iter_15_0 = 1, #var_15_0 do
-				local var_15_1 = var_15_0[iter_15_0]
+			for i = 1, #nextPoints do
+				local nextPoint = nextPoints[i]
 
-				if var_0_10[var_15_1.key] == nil and var_0_12[var_15_1.key] == nil and var_0_18(var_15_1, var_0_8) then
-					var_0_10[var_15_1.key] = var_15_1
+				if OPEN_MAP[nextPoint.key] == nil and CLOSED_MAP[nextPoint.key] == nil and IS_WALKABLE(nextPoint, WALKABLE_LIST) then
+					OPEN_MAP[nextPoint.key] = nextPoint
 
-					table.insert(var_0_9, var_15_1)
+					table.insert(OPEN_LIST, nextPoint)
 				end
 			end
 
-			table.sort(var_0_9, var_0_24)
+			table.sort(OPEN_LIST, COMPARE_FUNC)
 		end
 	end
 
 	return nil
 end
 
-function var_0_0.makePath(arg_16_0, arg_16_1)
-	local var_16_0 = {}
-	local var_16_1 = arg_16_1
+function ExploreAStarFindRoute:makePath(endPos)
+	local path = {}
+	local point = endPos
 
-	while var_16_1.last ~= nil do
-		table.insert(var_16_0, var_16_1)
+	while point.last ~= nil do
+		table.insert(path, point)
 
-		var_16_1 = var_16_1.last
+		point = point.last
 	end
 
-	local var_16_2 = var_16_1
+	local startPoint = point
 
-	return var_16_0
+	return path
 end
 
-function var_0_0.getDistance(arg_17_0, arg_17_1, arg_17_2)
-	return math.abs(arg_17_1.x - arg_17_2.x) + math.abs(arg_17_1.y - arg_17_2.y)
+function ExploreAStarFindRoute:getDistance(posA, posB)
+	return math.abs(posA.x - posB.x) + math.abs(posA.y - posB.y)
 end
 
-return var_0_0
+return ExploreAStarFindRoute

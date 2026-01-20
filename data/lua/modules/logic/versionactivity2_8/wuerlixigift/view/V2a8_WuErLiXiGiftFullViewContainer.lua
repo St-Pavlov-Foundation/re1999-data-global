@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity2_8.wuerlixigift.view.V2a8_WuErLiXiGiftFullViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/wuerlixigift/view/V2a8_WuErLiXiGiftFullViewContainer.lua
 
-local var_0_0 = class("V2a8_WuErLiXiGiftFullViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_8.wuerlixigift.view.V2a8_WuErLiXiGiftFullViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local V2a8_WuErLiXiGiftFullViewContainer = class("V2a8_WuErLiXiGiftFullViewContainer", BaseViewContainer)
+
+function V2a8_WuErLiXiGiftFullViewContainer:buildViews()
 	return {
 		V2a8_WuErLiXiGiftFullView.New()
 	}
 end
 
-return var_0_0
+return V2a8_WuErLiXiGiftFullViewContainer

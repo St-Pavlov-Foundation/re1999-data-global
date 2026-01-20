@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity2_2.act173.view.Activity173PanelViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/act173/view/Activity173PanelViewContainer.lua
 
-local var_0_0 = class("Activity173PanelViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_2.act173.view.Activity173PanelViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Activity173PanelViewContainer = class("Activity173PanelViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Activity173PanelView.New())
+function Activity173PanelViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Activity173PanelView.New())
+
+	return views
 end
 
-return var_0_0
+return Activity173PanelViewContainer

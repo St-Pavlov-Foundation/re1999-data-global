@@ -1,13 +1,15 @@
-﻿module("modules.logic.tower.view.TowerMainEntryViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/tower/view/TowerMainEntryViewContainer.lua
 
-local var_0_0 = class("TowerMainEntryViewContainer", BaseViewContainer)
+module("modules.logic.tower.view.TowerMainEntryViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local TowerMainEntryViewContainer = class("TowerMainEntryViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, TowerMainEntryView.New())
+function TowerMainEntryViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, TowerMainEntryView.New())
+
+	return views
 end
 
-return var_0_0
+return TowerMainEntryViewContainer

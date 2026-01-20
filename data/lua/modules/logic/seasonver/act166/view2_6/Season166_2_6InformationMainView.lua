@@ -1,72 +1,74 @@
-﻿module("modules.logic.seasonver.act166.view2_6.Season166_2_6InformationMainView", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act166/view2_6/Season166_2_6InformationMainView.lua
 
-local var_0_0 = class("Season166_2_6InformationMainView", BaseView)
+module("modules.logic.seasonver.act166.view2_6.Season166_2_6InformationMainView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.reportItems = {}
-	arg_1_0.btnReward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Reward/#btn_Reward")
-	arg_1_0.txtRewardNum = gohelper.findChildTextMesh(arg_1_0.viewGO, "Reward/#txt_RewardNum")
-	arg_1_0.slider = gohelper.findChildImage(arg_1_0.viewGO, "Reward/#go_Slider")
-	arg_1_0.gorewardReddot = gohelper.findChild(arg_1_0.viewGO, "Reward/#go_rewardReddot")
+local Season166_2_6InformationMainView = class("Season166_2_6InformationMainView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Season166_2_6InformationMainView:onInitView()
+	self.reportItems = {}
+	self.btnReward = gohelper.findChildButtonWithAudio(self.viewGO, "Reward/#btn_Reward")
+	self.txtRewardNum = gohelper.findChildTextMesh(self.viewGO, "Reward/#txt_RewardNum")
+	self.slider = gohelper.findChildImage(self.viewGO, "Reward/#go_Slider")
+	self.gorewardReddot = gohelper.findChild(self.viewGO, "Reward/#go_rewardReddot")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnReward, arg_2_0.onClickReward, arg_2_0)
-	arg_2_0:addEventCb(Season166Controller.instance, Season166Event.OnInformationUpdate, arg_2_0.onInformationUpdate, arg_2_0)
-	arg_2_0:addEventCb(Season166Controller.instance, Season166Event.OnAnalyInfoSuccess, arg_2_0.onAnalyInfoSuccess, arg_2_0)
-	arg_2_0:addEventCb(Season166Controller.instance, Season166Event.OnGetInfoBonus, arg_2_0.onGetInfoBonus, arg_2_0)
-	arg_2_0:addEventCb(Season166Controller.instance, Season166Event.OnGetInformationBonus, arg_2_0.onGetInformationBonus, arg_2_0)
-	arg_2_0:addEventCb(Season166Controller.instance, Season166Event.ClickInfoReportItem, arg_2_0.setLocalUnlockState, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_2_0._onViewClose, arg_2_0)
+function Season166_2_6InformationMainView:addEvents()
+	self:addClickCb(self.btnReward, self.onClickReward, self)
+	self:addEventCb(Season166Controller.instance, Season166Event.OnInformationUpdate, self.onInformationUpdate, self)
+	self:addEventCb(Season166Controller.instance, Season166Event.OnAnalyInfoSuccess, self.onAnalyInfoSuccess, self)
+	self:addEventCb(Season166Controller.instance, Season166Event.OnGetInfoBonus, self.onGetInfoBonus, self)
+	self:addEventCb(Season166Controller.instance, Season166Event.OnGetInformationBonus, self.onGetInformationBonus, self)
+	self:addEventCb(Season166Controller.instance, Season166Event.ClickInfoReportItem, self.setLocalUnlockState, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onViewClose, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Season166_2_6InformationMainView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0.localUnlockStateTab = arg_4_0:getUserDataTb_()
+function Season166_2_6InformationMainView:_editableInitView()
+	self.localUnlockStateTab = self:getUserDataTb_()
 end
 
-function var_0_0.onClickReward(arg_5_0)
+function Season166_2_6InformationMainView:onClickReward()
 	ViewMgr.instance:openView(ViewName.Season166InformationRewardView, {
-		actId = arg_5_0.actId
+		actId = self.actId
 	})
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function Season166_2_6InformationMainView:onUpdateParam()
 	return
 end
 
-function var_0_0.onAnalyInfoSuccess(arg_7_0)
-	arg_7_0:refreshUI()
+function Season166_2_6InformationMainView:onAnalyInfoSuccess()
+	self:refreshUI()
 end
 
-function var_0_0.onGetInfoBonus(arg_8_0)
-	arg_8_0:refreshUI()
+function Season166_2_6InformationMainView:onGetInfoBonus()
+	self:refreshUI()
 end
 
-function var_0_0.onInformationUpdate(arg_9_0)
-	arg_9_0:refreshUI()
+function Season166_2_6InformationMainView:onInformationUpdate()
+	self:refreshUI()
 end
 
-function var_0_0.onGetInformationBonus(arg_10_0)
-	arg_10_0:refreshUI()
+function Season166_2_6InformationMainView:onGetInformationBonus()
+	self:refreshUI()
 end
 
-function var_0_0.onOpen(arg_11_0)
-	arg_11_0.actId = arg_11_0.viewParam.actId
+function Season166_2_6InformationMainView:onOpen()
+	self.actId = self.viewParam.actId
 
-	arg_11_0:refreshUI()
-	RedDotController.instance:addRedDot(arg_11_0.gorewardReddot, RedDotEnum.DotNode.Season166InfoBigReward)
+	self:refreshUI()
+	RedDotController.instance:addRedDot(self.gorewardReddot, RedDotEnum.DotNode.Season166InfoBigReward)
 end
 
-function var_0_0.refreshUI(arg_12_0)
-	if not arg_12_0.actId then
+function Season166_2_6InformationMainView:refreshUI()
+	if not self.actId then
 		return
 	end
 
@@ -74,97 +76,98 @@ function var_0_0.refreshUI(arg_12_0)
 		return
 	end
 
-	arg_12_0:refreshReport()
+	self:refreshReport()
 
-	local var_12_0, var_12_1 = Season166Model.instance:getActInfo(arg_12_0.actId):getBonusNum()
+	local actInfo = Season166Model.instance:getActInfo(self.actId)
+	local hasGetBonusCount, bonusCount = actInfo:getBonusNum()
 
-	arg_12_0.txtRewardNum.text = string.format("<color=#de9754>%s</color>/%s", var_12_0, var_12_1)
-	arg_12_0.slider.fillAmount = var_12_0 / var_12_1
+	self.txtRewardNum.text = string.format("<color=#de9754>%s</color>/%s", hasGetBonusCount, bonusCount)
+	self.slider.fillAmount = hasGetBonusCount / bonusCount
 
-	arg_12_0:refreshItemUnlockState()
+	self:refreshItemUnlockState()
 end
 
-function var_0_0.refreshReport(arg_13_0)
-	local var_13_0 = Season166Config.instance:getSeasonInfos(arg_13_0.actId) or {}
+function Season166_2_6InformationMainView:refreshReport()
+	local list = Season166Config.instance:getSeasonInfos(self.actId) or {}
 
-	for iter_13_0 = 1, math.max(#var_13_0, #arg_13_0.reportItems) do
-		local var_13_1 = arg_13_0.reportItems[iter_13_0]
+	for i = 1, math.max(#list, #self.reportItems) do
+		local item = self.reportItems[i]
 
-		if not var_13_1 then
-			local var_13_2 = gohelper.findChild(arg_13_0.viewGO, string.format("Report%s", iter_13_0))
+		if not item then
+			local itemGO = gohelper.findChild(self.viewGO, string.format("Report%s", i))
 
-			if var_13_2 then
-				var_13_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_13_2, Season166_2_6InformationReportItem)
-				arg_13_0.reportItems[iter_13_0] = var_13_1
+			if itemGO then
+				item = MonoHelper.addNoUpdateLuaComOnceToGo(itemGO, Season166_2_6InformationReportItem)
+				self.reportItems[i] = item
 			end
 		end
 
-		if var_13_1 then
-			var_13_1:refreshUI(var_13_0[iter_13_0])
+		if item then
+			item:refreshUI(list[i])
 		end
 	end
 end
 
-function var_0_0.refreshItemUnlockState(arg_14_0)
-	local var_14_0 = Season166Model.instance:getLocalUnlockState(Season166Enum.InforMainLocalSaveKey)
-	local var_14_1 = Season166Model.instance:getLocalPrefsTab(Season166Enum.ReportUnlockAnimLocalSaveKey)
-	local var_14_2 = Season166Model.instance:getLocalPrefsTab(Season166Enum.ReportFinishAnimLocalSaveKey)
+function Season166_2_6InformationMainView:refreshItemUnlockState()
+	local saveUnlockStateTab = Season166Model.instance:getLocalUnlockState(Season166Enum.InforMainLocalSaveKey)
+	local unlockTab = Season166Model.instance:getLocalPrefsTab(Season166Enum.ReportUnlockAnimLocalSaveKey)
+	local finishTab = Season166Model.instance:getLocalPrefsTab(Season166Enum.ReportFinishAnimLocalSaveKey)
 
-	for iter_14_0, iter_14_1 in pairs(arg_14_0.reportItems) do
-		if GameUtil.getTabLen(var_14_0) == 0 then
-			iter_14_1:refreshUnlockState(Season166Enum.LockState)
+	for index, reportItem in pairs(self.reportItems) do
+		if GameUtil.getTabLen(saveUnlockStateTab) == 0 then
+			reportItem:refreshUnlockState(Season166Enum.LockState)
 
-			arg_14_0.localUnlockStateTab[iter_14_0] = Season166Enum.LockState
+			self.localUnlockStateTab[index] = Season166Enum.LockState
 		else
-			local var_14_3 = var_14_0[iter_14_0]
+			local saveUnlockState = saveUnlockStateTab[index]
 
-			iter_14_1:refreshUnlockState(var_14_3)
+			reportItem:refreshUnlockState(saveUnlockState)
 
-			arg_14_0.localUnlockStateTab[iter_14_0] = var_14_3
+			self.localUnlockStateTab[index] = saveUnlockState
 		end
 
-		iter_14_1:refreshUnlockAnimState(var_14_1)
-		iter_14_1:refreshFinishAnimState(var_14_2)
+		reportItem:refreshUnlockAnimState(unlockTab)
+		reportItem:refreshFinishAnimState(finishTab)
 	end
 
-	arg_14_0:saveUnlockState()
+	self:saveUnlockState()
 end
 
-function var_0_0.saveUnlockState(arg_15_0)
-	local var_15_0 = {}
+function Season166_2_6InformationMainView:saveUnlockState()
+	local saveStrTab = {}
 
-	for iter_15_0, iter_15_1 in ipairs(arg_15_0.localUnlockStateTab) do
-		local var_15_1 = string.format("%s|%s", iter_15_0, iter_15_1)
+	for index, unlockState in ipairs(self.localUnlockStateTab) do
+		local saveStr = string.format("%s|%s", index, unlockState)
 
-		table.insert(var_15_0, var_15_1)
+		table.insert(saveStrTab, saveStr)
 	end
 
-	local var_15_2 = cjson.encode(var_15_0)
+	local saveDataStr = cjson.encode(saveStrTab)
 
-	Season166Controller.instance:savePlayerPrefs(Season166Enum.InforMainLocalSaveKey, var_15_2)
+	Season166Controller.instance:savePlayerPrefs(Season166Enum.InforMainLocalSaveKey, saveDataStr)
 end
 
-function var_0_0.setLocalUnlockState(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_1.infoId
-	local var_16_1 = arg_16_1.unlockState
+function Season166_2_6InformationMainView:setLocalUnlockState(param)
+	local infoId = param.infoId
+	local unlockState = param.unlockState
 
-	arg_16_0.localUnlockStateTab[var_16_0] = var_16_1
+	self.localUnlockStateTab[infoId] = unlockState
 
-	arg_16_0:saveUnlockState()
+	self:saveUnlockState()
 end
 
-function var_0_0._onViewClose(arg_17_0, arg_17_1)
-	if arg_17_1 == ViewName.Season166InformationAnalyView then
-		arg_17_0:refreshUI()
+function Season166_2_6InformationMainView:_onViewClose(viewName)
+	if viewName == ViewName.Season166InformationAnalyView then
+		self:refreshUI()
 	end
 end
 
-function var_0_0.onClose(arg_18_0)
-	arg_18_0:saveUnlockState()
+function Season166_2_6InformationMainView:onClose()
+	self:saveUnlockState()
 end
 
-function var_0_0.onDestroyView(arg_19_0)
+function Season166_2_6InformationMainView:onDestroyView()
 	return
 end
 
-return var_0_0
+return Season166_2_6InformationMainView

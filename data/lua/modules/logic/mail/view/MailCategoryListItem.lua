@@ -1,171 +1,176 @@
-﻿module("modules.logic.mail.view.MailCategoryListItem", package.seeall)
+﻿-- chunkname: @modules/logic/mail/view/MailCategoryListItem.lua
 
-local var_0_0 = class("MailCategoryListItem", ListScrollCell)
+module("modules.logic.mail.view.MailCategoryListItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._goselectedBg = gohelper.findChild(arg_1_1, "#go_cg/bg/#go_selectedBg")
-	arg_1_0._gounselectedBg = gohelper.findChild(arg_1_1, "#go_cg/bg/#go_unselectedBg")
-	arg_1_0._gohasReadBg = gohelper.findChild(arg_1_1, "#go_cg/bg/#go_hasReadBg")
-	arg_1_0._gomailSelectIcon = gohelper.findChild(arg_1_1, "#go_cg/icon/#go_mailSelectIcon")
-	arg_1_0._gomailUnselectIcon = gohelper.findChild(arg_1_1, "#go_cg/icon/#go_mailUnselectIcon")
-	arg_1_0._gogiftSelectIcon = gohelper.findChild(arg_1_1, "#go_cg/icon/#go_giftSelectIcon")
-	arg_1_0._gogiftUnselectIcon = gohelper.findChild(arg_1_1, "#go_cg/icon/#go_giftUnselectIcon")
-	arg_1_0._gogiftHasReceiveIcon = gohelper.findChild(arg_1_1, "#go_cg/icon/#go_giftHasReceiveIcon")
-	arg_1_0._gomailHasReceiveIcon = gohelper.findChild(arg_1_1, "#go_cg/icon/#go_mailHasReceiveIcon")
-	arg_1_0._txtmailTitleSelect = gohelper.findChildText(arg_1_1, "#go_cg/#txt_mailTitleSelect")
-	arg_1_0._txtmailTitleUnSelect = gohelper.findChildText(arg_1_1, "#go_cg/#txt_mailTitleUnSelect")
-	arg_1_0._txtmailTimeSelect = gohelper.findChildText(arg_1_1, "#go_cg/#txt_mailTimeSelect")
-	arg_1_0._txtmailTimeUnSelect = gohelper.findChildText(arg_1_1, "#go_cg/#txt_mailTimeUnSelect")
-	arg_1_0._goreceivedIcon = gohelper.findChild(arg_1_1, "#go_cg/#go_receivedIcon")
-	arg_1_0._goredTip = gohelper.findChild(arg_1_1, "#go_cg/#go_redTip")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_1, "#btn_click")
-	arg_1_0._gocg = gohelper.findChildComponent(arg_1_1, "#go_cg", typeof(UnityEngine.CanvasGroup))
-	arg_1_0._goAnim = arg_1_1:GetComponent(typeof(UnityEngine.Animator))
+local MailCategoryListItem = class("MailCategoryListItem", ListScrollCell)
 
-	gohelper.addUIClickAudio(arg_1_0._btnclick.gameObject, AudioEnum.UI.UI_Mail_switch)
+function MailCategoryListItem:init(go)
+	self._goselectedBg = gohelper.findChild(go, "#go_cg/bg/#go_selectedBg")
+	self._gounselectedBg = gohelper.findChild(go, "#go_cg/bg/#go_unselectedBg")
+	self._gohasReadBg = gohelper.findChild(go, "#go_cg/bg/#go_hasReadBg")
+	self._gomailSelectIcon = gohelper.findChild(go, "#go_cg/icon/#go_mailSelectIcon")
+	self._gomailUnselectIcon = gohelper.findChild(go, "#go_cg/icon/#go_mailUnselectIcon")
+	self._gogiftSelectIcon = gohelper.findChild(go, "#go_cg/icon/#go_giftSelectIcon")
+	self._gogiftUnselectIcon = gohelper.findChild(go, "#go_cg/icon/#go_giftUnselectIcon")
+	self._gogiftHasReceiveIcon = gohelper.findChild(go, "#go_cg/icon/#go_giftHasReceiveIcon")
+	self._gomailHasReceiveIcon = gohelper.findChild(go, "#go_cg/icon/#go_mailHasReceiveIcon")
+	self._txtmailTitleSelect = gohelper.findChildText(go, "#go_cg/#txt_mailTitleSelect")
+	self._txtmailTitleUnSelect = gohelper.findChildText(go, "#go_cg/#txt_mailTitleUnSelect")
+	self._txtmailTimeSelect = gohelper.findChildText(go, "#go_cg/#txt_mailTimeSelect")
+	self._txtmailTimeUnSelect = gohelper.findChildText(go, "#go_cg/#txt_mailTimeUnSelect")
+	self._goreceivedIcon = gohelper.findChild(go, "#go_cg/#go_receivedIcon")
+	self._goredTip = gohelper.findChild(go, "#go_cg/#go_redTip")
+	self._btnclick = gohelper.findChildButtonWithAudio(go, "#btn_click")
+	self._goLock = gohelper.findChild(go, "#go_cg/#go_Lock")
+	self._gocg = gohelper.findChildComponent(go, "#go_cg", typeof(UnityEngine.CanvasGroup))
+	self._goAnim = go:GetComponent(typeof(UnityEngine.Animator))
+
+	gohelper.addUIClickAudio(self._btnclick.gameObject, AudioEnum.UI.UI_Mail_switch)
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnclick, arg_2_0)
+function MailCategoryListItem:addEventListeners()
+	self._btnclick:AddClickListener(self._btnclickOnclick, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
+function MailCategoryListItem:removeEventListeners()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0._btnclickOnclick(arg_4_0)
-	if arg_4_0._select then
+function MailCategoryListItem:_btnclickOnclick()
+	if self._select then
 		return
 	end
 
-	arg_4_0._view:selectCell(arg_4_0._index, true)
+	self._view:selectCell(self._index, true)
 end
 
-function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
-	arg_5_0._mo = arg_5_1
+function MailCategoryListItem:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_5_0:_refreshInfo()
-	arg_5_0:_refreshTips()
-	arg_5_0:_refreshBg()
-	arg_5_0:_refreshIcon()
+	self:_refreshInfo()
+	self:_refreshTips()
+	self:_refreshBg()
+	self:_refreshIcon()
 end
 
-function var_0_0._refreshInfo(arg_6_0)
-	gohelper.setActive(arg_6_0._txtmailTitleSelect.gameObject, arg_6_0._select)
-	gohelper.setActive(arg_6_0._txtmailTitleUnSelect.gameObject, not arg_6_0._select)
+function MailCategoryListItem:_refreshInfo()
+	gohelper.setActive(self._txtmailTitleSelect.gameObject, self._select)
+	gohelper.setActive(self._txtmailTitleUnSelect.gameObject, not self._select)
 
-	if arg_6_0._select then
-		arg_6_0._txtmailTitleSelect.text = GameUtil.getBriefNameByWidth(arg_6_0._mo:getLangTitle(), arg_6_0._txtmailTitleSelect)
+	if self._select then
+		self._txtmailTitleSelect.text = GameUtil.getBriefNameByWidth(self._mo:getLangTitle(), self._txtmailTitleSelect)
 	else
-		arg_6_0._txtmailTitleUnSelect.text = GameUtil.getBriefNameByWidth(arg_6_0._mo:getLangTitle(), arg_6_0._txtmailTitleUnSelect)
+		self._txtmailTitleUnSelect.text = GameUtil.getBriefNameByWidth(self._mo:getLangTitle(), self._txtmailTitleUnSelect)
 	end
 
-	gohelper.setActive(arg_6_0._txtmailTimeSelect.gameObject, arg_6_0._select)
-	gohelper.setActive(arg_6_0._txtmailTimeUnSelect.gameObject, not arg_6_0._select)
+	gohelper.setActive(self._txtmailTimeSelect.gameObject, self._select)
+	gohelper.setActive(self._txtmailTimeUnSelect.gameObject, not self._select)
 
-	local var_6_0 = TimeUtil.langTimestampToString3(arg_6_0._mo.createTime / 1000)
+	local createTime = TimeUtil.langTimestampToString3(self._mo.createTime / 1000)
 
-	if arg_6_0._select then
-		arg_6_0._txtmailTimeSelect.text = var_6_0
+	if self._select then
+		self._txtmailTimeSelect.text = createTime
 	else
-		arg_6_0._txtmailTimeUnSelect.text = var_6_0
+		self._txtmailTimeUnSelect.text = createTime
 	end
+
+	gohelper.setActive(self._goLock, self._mo and self._mo.isLock == true)
 end
 
-function var_0_0._refreshTips(arg_7_0)
-	if arg_7_0._mo:haveBonus() then
-		if arg_7_0._mo.state == MailEnum.ReadStatus.Read then
-			gohelper.setActive(arg_7_0._goredTip, false)
-			gohelper.setActive(arg_7_0._goreceivedIcon, true)
+function MailCategoryListItem:_refreshTips()
+	if self._mo:haveBonus() then
+		if self._mo.state == MailEnum.ReadStatus.Read then
+			gohelper.setActive(self._goredTip, false)
+			gohelper.setActive(self._goreceivedIcon, true)
 		else
-			gohelper.setActive(arg_7_0._goredTip, true)
-			gohelper.setActive(arg_7_0._goreceivedIcon, false)
+			gohelper.setActive(self._goredTip, true)
+			gohelper.setActive(self._goreceivedIcon, false)
 		end
-	elseif arg_7_0._mo.state == MailEnum.ReadStatus.Read then
-		gohelper.setActive(arg_7_0._goredTip, false)
-		gohelper.setActive(arg_7_0._goreceivedIcon, true)
+	elseif self._mo.state == MailEnum.ReadStatus.Read then
+		gohelper.setActive(self._goredTip, false)
+		gohelper.setActive(self._goreceivedIcon, true)
 	else
-		gohelper.setActive(arg_7_0._goredTip, true)
-		gohelper.setActive(arg_7_0._goreceivedIcon, false)
+		gohelper.setActive(self._goredTip, true)
+		gohelper.setActive(self._goreceivedIcon, false)
 	end
 
-	arg_7_0:setRead(arg_7_0._mo.state == MailEnum.ReadStatus.Read)
+	self:setRead(self._mo.state == MailEnum.ReadStatus.Read)
 end
 
-function var_0_0._refreshBg(arg_8_0)
-	gohelper.setActive(arg_8_0._goselectedBg, false)
-	gohelper.setActive(arg_8_0._gounselectedBg, false)
-	gohelper.setActive(arg_8_0._gohasReadBg, false)
+function MailCategoryListItem:_refreshBg()
+	gohelper.setActive(self._goselectedBg, false)
+	gohelper.setActive(self._gounselectedBg, false)
+	gohelper.setActive(self._gohasReadBg, false)
 
-	if arg_8_0._select then
-		gohelper.setActive(arg_8_0._goselectedBg, true)
-		gohelper.setActive(arg_8_0._goreceivedIcon, false)
-	elseif arg_8_0._mo.state == MailEnum.ReadStatus.Read then
-		gohelper.setActive(arg_8_0._gohasReadBg, true)
-		gohelper.setActive(arg_8_0._gounselectedBg, true)
+	if self._select then
+		gohelper.setActive(self._goselectedBg, true)
+		gohelper.setActive(self._goreceivedIcon, false)
+	elseif self._mo.state == MailEnum.ReadStatus.Read then
+		gohelper.setActive(self._gohasReadBg, true)
+		gohelper.setActive(self._gounselectedBg, true)
 	else
-		gohelper.setActive(arg_8_0._gounselectedBg, true)
+		gohelper.setActive(self._gounselectedBg, true)
 
-		if arg_8_0._mo.state == MailEnum.ReadStatus.Read then
-			gohelper.setActive(arg_8_0._goreceivedIcon, true)
+		if self._mo.state == MailEnum.ReadStatus.Read then
+			gohelper.setActive(self._goreceivedIcon, true)
 		end
 	end
 end
 
-function var_0_0._refreshIcon(arg_9_0)
-	gohelper.setActive(arg_9_0._gomailSelectIcon, false)
-	gohelper.setActive(arg_9_0._gomailUnselectIcon, false)
-	gohelper.setActive(arg_9_0._gogiftSelectIcon, false)
-	gohelper.setActive(arg_9_0._gogiftUnselectIcon, false)
-	gohelper.setActive(arg_9_0._gogiftHasReceiveIcon, false)
-	gohelper.setActive(arg_9_0._gomailHasReceiveIcon, false)
+function MailCategoryListItem:_refreshIcon()
+	gohelper.setActive(self._gomailSelectIcon, false)
+	gohelper.setActive(self._gomailUnselectIcon, false)
+	gohelper.setActive(self._gogiftSelectIcon, false)
+	gohelper.setActive(self._gogiftUnselectIcon, false)
+	gohelper.setActive(self._gogiftHasReceiveIcon, false)
+	gohelper.setActive(self._gomailHasReceiveIcon, false)
 
-	if arg_9_0._mo:haveBonus() then
-		if arg_9_0._select then
-			gohelper.setActive(arg_9_0._gogiftSelectIcon, true)
-		elseif arg_9_0._mo.state == MailEnum.ReadStatus.Read then
-			gohelper.setActive(arg_9_0._gogiftHasReceiveIcon, true)
+	if self._mo:haveBonus() then
+		if self._select then
+			gohelper.setActive(self._gogiftSelectIcon, true)
+		elseif self._mo.state == MailEnum.ReadStatus.Read then
+			gohelper.setActive(self._gogiftHasReceiveIcon, true)
 		else
-			gohelper.setActive(arg_9_0._gogiftUnselectIcon, true)
+			gohelper.setActive(self._gogiftUnselectIcon, true)
 		end
-	elseif arg_9_0._select then
-		gohelper.setActive(arg_9_0._gomailSelectIcon, true)
-	elseif arg_9_0._mo.state == MailEnum.ReadStatus.Read then
-		gohelper.setActive(arg_9_0._gomailHasReceiveIcon, true)
+	elseif self._select then
+		gohelper.setActive(self._gomailSelectIcon, true)
+	elseif self._mo.state == MailEnum.ReadStatus.Read then
+		gohelper.setActive(self._gomailHasReceiveIcon, true)
 	else
-		gohelper.setActive(arg_9_0._gomailUnselectIcon, true)
+		gohelper.setActive(self._gomailUnselectIcon, true)
 	end
 end
 
-function var_0_0.getAnimator(arg_10_0)
-	return arg_10_0._goAnim
+function MailCategoryListItem:getAnimator()
+	return self._goAnim
 end
 
-function var_0_0.onSelect(arg_11_0, arg_11_1)
-	if not arg_11_0._select and arg_11_1 then
-		MailController.instance:dispatchEvent(MailEvent.UpdateSelectMail, arg_11_0._mo)
+function MailCategoryListItem:onSelect(isSelect)
+	if not self._select and isSelect then
+		MailController.instance:dispatchEvent(MailEvent.UpdateSelectMail, self._mo)
 	end
 
-	arg_11_0._select = arg_11_1
+	self._select = isSelect
 
-	arg_11_0:_refreshInfo()
-	arg_11_0:_refreshTips()
-	arg_11_0:_refreshBg()
-	arg_11_0:_refreshIcon()
+	self:_refreshInfo()
+	self:_refreshTips()
+	self:_refreshBg()
+	self:_refreshIcon()
 end
 
-function var_0_0.setRead(arg_12_0, arg_12_1)
-	local var_12_0 = 1
+function MailCategoryListItem:setRead(isRead)
+	local targetAlpha = 1
 
-	if arg_12_1 and not arg_12_0._select then
-		var_12_0 = 0.7
+	if isRead and not self._select then
+		targetAlpha = 0.7
 	end
 
-	arg_12_0._gocg.alpha = var_12_0
+	self._gocg.alpha = targetAlpha
 end
 
-function var_0_0.onDestroy(arg_13_0)
+function MailCategoryListItem:onDestroy()
 	return
 end
 
-return var_0_0
+return MailCategoryListItem

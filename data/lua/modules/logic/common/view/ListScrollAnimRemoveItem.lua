@@ -1,228 +1,230 @@
-﻿module("modules.logic.common.view.ListScrollAnimRemoveItem", package.seeall)
+﻿-- chunkname: @modules/logic/common/view/ListScrollAnimRemoveItem.lua
 
-local var_0_0 = class("ListScrollAnimRemoveItem", LuaCompBase)
+module("modules.logic.common.view.ListScrollAnimRemoveItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.goScroll = arg_1_1
-	arg_1_0.rectScroll = arg_1_0.goScroll.transform
-	arg_1_0.rectViewPort = gohelper.findChild(arg_1_0.goScroll, "Viewport").transform
+local ListScrollAnimRemoveItem = class("ListScrollAnimRemoveItem", LuaCompBase)
+
+function ListScrollAnimRemoveItem:init(go)
+	self.goScroll = go
+	self.rectScroll = self.goScroll.transform
+	self.rectViewPort = gohelper.findChild(self.goScroll, "Viewport").transform
 end
 
-function var_0_0.Get(arg_2_0)
-	local var_2_0 = arg_2_0._csListScroll
+function ListScrollAnimRemoveItem.Get(luaListScrollView)
+	local csListScroll = luaListScrollView._csListScroll
 
-	if gohelper.isNil(var_2_0) then
+	if gohelper.isNil(csListScroll) then
 		logError("ListScrollView 还没初始化")
 
 		return
 	end
 
-	local var_2_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_2_0.gameObject, var_0_0)
+	local comp = MonoHelper.addNoUpdateLuaComOnceToGo(csListScroll.gameObject, ListScrollAnimRemoveItem)
 
-	var_2_1:setListModel(arg_2_0)
+	comp:setListModel(luaListScrollView)
 
-	return var_2_1
+	return comp
 end
 
-function var_0_0.setListModel(arg_3_0, arg_3_1)
-	arg_3_0._luaListScrollView = arg_3_1
-	arg_3_0._listModel = arg_3_1._model
-	arg_3_0._csListScroll = arg_3_1._csListScroll
-	arg_3_0._listParam = arg_3_1._param
-	arg_3_0._scrollDir = arg_3_0._listParam.scrollDir
-	arg_3_0._cellSizeAndSpace = 0
+function ListScrollAnimRemoveItem:setListModel(luaListScrollView)
+	self._luaListScrollView = luaListScrollView
+	self._listModel = luaListScrollView._model
+	self._csListScroll = luaListScrollView._csListScroll
+	self._listParam = luaListScrollView._param
+	self._scrollDir = self._listParam.scrollDir
+	self._cellSizeAndSpace = 0
 
-	if arg_3_0._scrollDir == ScrollEnum.ScrollDirH then
-		arg_3_0._cellSizeAndSpace = arg_3_0._listParam.cellWidth + arg_3_0._listParam.cellSpaceH
-	elseif arg_3_0._scrollDir == ScrollEnum.ScrollDirV then
-		arg_3_0._cellSizeAndSpace = arg_3_0._listParam.cellHeight + arg_3_0._listParam.cellSpaceV
+	if self._scrollDir == ScrollEnum.ScrollDirH then
+		self._cellSizeAndSpace = self._listParam.cellWidth + self._listParam.cellSpaceH
+	elseif self._scrollDir == ScrollEnum.ScrollDirV then
+		self._cellSizeAndSpace = self._listParam.cellHeight + self._listParam.cellSpaceV
 	end
 
-	arg_3_0:changeGameObjectNode()
+	self:changeGameObjectNode()
 end
 
-function var_0_0.changeGameObjectNode(arg_4_0, arg_4_1)
-	arg_4_1 = arg_4_1 or 1
+function ListScrollAnimRemoveItem:changeGameObjectNode(changeNum)
+	changeNum = changeNum or 1
 
-	if arg_4_0._scrollDir == ScrollEnum.ScrollDirH then
-		local var_4_0 = recthelper.getWidth(arg_4_0.rectScroll)
-		local var_4_1 = arg_4_0._listParam.cellWidth + arg_4_0._listParam.cellSpaceH
+	if self._scrollDir == ScrollEnum.ScrollDirH then
+		local width = recthelper.getWidth(self.rectScroll)
+		local addWidth = self._listParam.cellWidth + self._listParam.cellSpaceH
 
-		recthelper.setWidth(arg_4_0.rectScroll, var_4_0 + var_4_1)
+		recthelper.setWidth(self.rectScroll, width + addWidth)
 
-		arg_4_0.rectViewPort.offsetMax = Vector2(var_4_1 * arg_4_1, 0)
-	elseif arg_4_0._scrollDir == ScrollEnum.ScrollDirV then
-		local var_4_2 = recthelper.getHeight(arg_4_0.rectScroll)
-		local var_4_3 = arg_4_0._listParam.cellHeight + arg_4_0._listParam.cellSpaceV
+		self.rectViewPort.offsetMax = Vector2(addWidth * changeNum, 0)
+	elseif self._scrollDir == ScrollEnum.ScrollDirV then
+		local height = recthelper.getHeight(self.rectScroll)
+		local addHeight = self._listParam.cellHeight + self._listParam.cellSpaceV
 
-		recthelper.setHeight(arg_4_0.rectScroll, var_4_2 + var_4_3)
+		recthelper.setHeight(self.rectScroll, height + addHeight)
 
-		arg_4_0.rectViewPort.offsetMin = Vector2(0, var_4_3 * arg_4_1)
+		self.rectViewPort.offsetMin = Vector2(0, addHeight * changeNum)
 	end
 end
 
-function var_0_0._getListModel(arg_5_0)
-	return arg_5_0._listModel
+function ListScrollAnimRemoveItem:_getListModel()
+	return self._listModel
 end
 
-function var_0_0.setMoveInterval(arg_6_0, arg_6_1)
-	arg_6_0.moveInterval = arg_6_1
+function ListScrollAnimRemoveItem:setMoveInterval(interval)
+	self.moveInterval = interval
 end
 
-function var_0_0.getMoveInterval(arg_7_0)
-	return arg_7_0.moveInterval or 0.05
+function ListScrollAnimRemoveItem:getMoveInterval()
+	return self.moveInterval or 0.05
 end
 
-function var_0_0.setMoveAnimationTime(arg_8_0, arg_8_1)
-	arg_8_0.moveAnimationTime = arg_8_1
+function ListScrollAnimRemoveItem:setMoveAnimationTime(time)
+	self.moveAnimationTime = time
 end
 
-function var_0_0.getMoveAnimationTime(arg_9_0)
-	return arg_9_0.moveAnimationTime or 0.15
+function ListScrollAnimRemoveItem:getMoveAnimationTime()
+	return self.moveAnimationTime or 0.15
 end
 
-function var_0_0.removeById(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	local var_10_0 = arg_10_0._listModel:getById(arg_10_1)
-	local var_10_1 = arg_10_0._listModel:getIndex(var_10_0)
+function ListScrollAnimRemoveItem:removeById(id, callback, callbackObj)
+	local mo = self._listModel:getById(id)
+	local index = self._listModel:getIndex(mo)
 
-	arg_10_0:removeByIndexs({
-		var_10_1
-	}, arg_10_2, arg_10_3)
+	self:removeByIndexs({
+		index
+	}, callback, callbackObj)
 end
 
-function var_0_0.removeByIds(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	local var_11_0 = {}
+function ListScrollAnimRemoveItem:removeByIds(ids, callback, callbackObj)
+	local tb = {}
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_1) do
-		local var_11_1 = arg_11_0._listModel:getById(iter_11_1)
-		local var_11_2 = arg_11_0._listModel:getIndex(var_11_1)
+	for _, id in ipairs(ids) do
+		local mo = self._listModel:getById(id)
+		local index = self._listModel:getIndex(mo)
 
-		table.insert(var_11_0, var_11_2)
+		table.insert(tb, index)
 	end
 
-	table.sort(var_11_0, function(arg_12_0, arg_12_1)
-		return arg_12_0 < arg_12_1
+	table.sort(tb, function(a, b)
+		return a < b
 	end)
-	arg_11_0:removeByIndexs(var_11_0, arg_11_2, arg_11_3)
+	self:removeByIndexs(tb, callback, callbackObj)
 end
 
-function var_0_0.removeByIndex(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	arg_13_0:removeByIndexs({
-		arg_13_1
-	}, arg_13_2, arg_13_3)
+function ListScrollAnimRemoveItem:removeByIndex(index, callback, callbackObj)
+	self:removeByIndexs({
+		index
+	}, callback, callbackObj)
 end
 
-function var_0_0.removeByIndexs(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	arg_14_0._callback = arg_14_2
-	arg_14_0._callbackObj = arg_14_3
+function ListScrollAnimRemoveItem:removeByIndexs(indexs, callback, callbackObj)
+	self._callback = callback
+	self._callbackObj = callbackObj
 
-	local var_14_0 = arg_14_0._listModel:getList()
+	local oldMoList = self._listModel:getList()
 
-	arg_14_0.newMoList = tabletool.copy(var_14_0)
+	self.newMoList = tabletool.copy(oldMoList)
 
-	local var_14_1 = {}
+	local new2old = {}
 
-	for iter_14_0, iter_14_1 in ipairs(var_14_0) do
-		var_14_1[iter_14_0] = iter_14_0
+	for i, _ in ipairs(oldMoList) do
+		new2old[i] = i
 	end
 
-	for iter_14_2 = #arg_14_1, 1, -1 do
-		local var_14_2 = arg_14_1[iter_14_2]
+	for i = #indexs, 1, -1 do
+		local index = indexs[i]
 
-		for iter_14_3 = var_14_2, #var_14_1 do
-			var_14_1[iter_14_3] = var_14_1[iter_14_3 + 1]
+		for j = index, #new2old do
+			new2old[j] = new2old[j + 1]
 		end
 
-		table.remove(arg_14_0.newMoList, var_14_2)
+		table.remove(self.newMoList, index)
 	end
 
-	arg_14_0._flow = FlowParallel.New()
+	self._flow = FlowParallel.New()
 
-	local var_14_3 = 0
+	local delayCounter = 0
 
-	for iter_14_4 = 1, #arg_14_0.newMoList do
-		local var_14_4 = iter_14_4
-		local var_14_5 = var_14_1[iter_14_4]
-		local var_14_6 = arg_14_0._csListScroll:IsVisual(var_14_4 - 1)
+	for i = 1, #self.newMoList do
+		local newIndex = i
+		local oldIndex = new2old[i]
+		local isVisible = self._csListScroll:IsVisual(newIndex - 1)
 
-		if var_14_4 ~= var_14_5 and var_14_6 then
-			local var_14_7 = arg_14_0._csListScroll:GetRenderCellRect(var_14_5 - 1)
+		if newIndex ~= oldIndex and isVisible then
+			local rect = self._csListScroll:GetRenderCellRect(oldIndex - 1)
 
-			if gohelper.isNil(var_14_7) then
+			if gohelper.isNil(rect) then
 				break
 			end
 
-			local var_14_8, var_14_9 = recthelper.getAnchor(arg_14_0._csListScroll:GetRenderCellRect(var_14_4 - 1))
-			local var_14_10, var_14_11 = recthelper.getAnchor(var_14_7)
+			local newPosX, newPosY = recthelper.getAnchor(self._csListScroll:GetRenderCellRect(newIndex - 1))
+			local oldPosX, oldPosY = recthelper.getAnchor(rect)
 
-			recthelper.setAnchor(var_14_7, var_14_10, var_14_11)
+			recthelper.setAnchor(rect, oldPosX, oldPosY)
 
-			local var_14_12 = TweenWork.New({
+			local work = TweenWork.New({
 				type = "DOAnchorPos",
-				tr = var_14_7,
-				tox = var_14_8,
-				toy = var_14_9,
-				t = arg_14_0:getMoveAnimationTime(),
+				tr = rect,
+				tox = newPosX,
+				toy = newPosY,
+				t = self:getMoveAnimationTime(),
 				ease = EaseType.Linear
 			})
-			local var_14_13 = FlowSequence.New()
+			local sequence = FlowSequence.New()
 
-			arg_14_0._flow:addWork(var_14_13)
+			self._flow:addWork(sequence)
 
-			if arg_14_0:getMoveInterval() > 0 then
-				var_14_13:addWork(WorkWaitSeconds.New(arg_14_0:getMoveInterval() * var_14_3))
+			if self:getMoveInterval() > 0 then
+				sequence:addWork(WorkWaitSeconds.New(self:getMoveInterval() * delayCounter))
 			end
 
-			var_14_13:addWork(var_14_12)
+			sequence:addWork(work)
 
-			var_14_3 = var_14_3 + 1
+			delayCounter = delayCounter + 1
 		end
 	end
 
 	UIBlockMgr.instance:startBlock(UIBlockKey.ListScrollAnimRemoveItem)
-	arg_14_0._flow:registerDoneListener(arg_14_0._onDone, arg_14_0)
-	arg_14_0._flow:start()
-	TaskDispatcher.runDelay(arg_14_0._delayRemoveBlock, arg_14_0, 2)
+	self._flow:registerDoneListener(self._onDone, self)
+	self._flow:start()
+	TaskDispatcher.runDelay(self._delayRemoveBlock, self, 2)
 end
 
-function var_0_0._delayRemoveBlock(arg_15_0)
+function ListScrollAnimRemoveItem:_delayRemoveBlock()
 	UIBlockMgr.instance:endBlock(UIBlockKey.ListScrollAnimRemoveItem)
 end
 
-function var_0_0._onDone(arg_16_0)
-	TaskDispatcher.cancelTask(arg_16_0._delayRemoveBlock, arg_16_0)
+function ListScrollAnimRemoveItem:_onDone()
+	TaskDispatcher.cancelTask(self._delayRemoveBlock, self)
 	UIBlockMgr.instance:endBlock(UIBlockKey.ListScrollAnimRemoveItem)
 
-	arg_16_0._flow = nil
-	arg_16_0.newMoList = nil
+	self._flow = nil
+	self.newMoList = nil
 
-	if arg_16_0._callback then
-		if arg_16_0._callbackObj then
-			arg_16_0._callback(arg_16_0._callbackObj)
+	if self._callback then
+		if self._callbackObj then
+			self._callback(self._callbackObj)
 		else
-			arg_16_0._callback()
+			self._callback()
 		end
 
-		arg_16_0._callback = nil
-		arg_16_0._callbackObj = nil
+		self._callback = nil
+		self._callbackObj = nil
 	end
 end
 
-function var_0_0.onDestroy(arg_17_0)
-	TaskDispatcher.cancelTask(arg_17_0._delayRemoveBlock, arg_17_0)
+function ListScrollAnimRemoveItem:onDestroy()
+	TaskDispatcher.cancelTask(self._delayRemoveBlock, self)
 	UIBlockMgr.instance:endBlock(UIBlockKey.ListScrollAnimRemoveItem)
 
-	arg_17_0._csListScroll = nil
-	arg_17_0.newMoList = nil
+	self._csListScroll = nil
+	self.newMoList = nil
 
-	if arg_17_0._flow then
-		arg_17_0._flow:destroy()
+	if self._flow then
+		self._flow:destroy()
 
-		arg_17_0._flow = nil
+		self._flow = nil
 	end
 
-	arg_17_0._callback = nil
-	arg_17_0._callbackObj = nil
+	self._callback = nil
+	self._callbackObj = nil
 end
 
-return var_0_0
+return ListScrollAnimRemoveItem

@@ -1,14 +1,16 @@
-﻿module("modules.logic.mail.defines.MailEnum", package.seeall)
+﻿-- chunkname: @modules/logic/mail/defines/MailEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.mail.defines.MailEnum", package.seeall)
 
-var_0_0.SpecialTag = {
+local MailEnum = _M
+
+MailEnum.SpecialTag = {
 	MonthExpired = 1,
 	ModifyName = 2
 }
-var_0_0.ReadStatus = {
+MailEnum.ReadStatus = {
 	Read = 1,
 	Unread = 0
 }
 
-return var_0_0
+return MailEnum

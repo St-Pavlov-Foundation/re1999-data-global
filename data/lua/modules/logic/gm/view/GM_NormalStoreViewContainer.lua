@@ -1,25 +1,27 @@
-﻿module("modules.logic.gm.view.GM_NormalStoreViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GM_NormalStoreViewContainer.lua
 
-local var_0_0 = class("GM_NormalStoreViewContainer", BaseViewContainer)
+module("modules.logic.gm.view.GM_NormalStoreViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local GM_NormalStoreViewContainer = class("GM_NormalStoreViewContainer", BaseViewContainer)
+
+function GM_NormalStoreViewContainer:buildViews()
 	return {
 		GM_NormalStoreView.New()
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	ViewMgr.instance:closeView(arg_2_0.viewName)
+function GM_NormalStoreViewContainer:onContainerClickModalMask()
+	ViewMgr.instance:closeView(self.viewName)
 end
 
-function var_0_0.addEvents(arg_3_0)
-	GMController.instance:registerCallback(GMEvent.NormalStoreView_ShowAllTabIdUpdate, arg_3_0._gm_showAllTabIdUpdate, arg_3_0)
-	GMController.instance:registerCallback(GMEvent.NormalStoreView_ShowAllGoodsIdUpdate, arg_3_0._gm_showAllGoodsIdUpdate, arg_3_0)
+function GM_NormalStoreViewContainer.addEvents(viewObj)
+	GMController.instance:registerCallback(GMEvent.NormalStoreView_ShowAllTabIdUpdate, viewObj._gm_showAllTabIdUpdate, viewObj)
+	GMController.instance:registerCallback(GMEvent.NormalStoreView_ShowAllGoodsIdUpdate, viewObj._gm_showAllGoodsIdUpdate, viewObj)
 end
 
-function var_0_0.removeEvents(arg_4_0)
-	GMController.instance:unregisterCallback(GMEvent.NormalStoreView_ShowAllTabIdUpdate, arg_4_0._gm_showAllTabIdUpdate, arg_4_0)
-	GMController.instance:unregisterCallback(GMEvent.NormalStoreView_ShowAllGoodsIdUpdate, arg_4_0._gm_showAllGoodsIdUpdate, arg_4_0)
+function GM_NormalStoreViewContainer.removeEvents(viewObj)
+	GMController.instance:unregisterCallback(GMEvent.NormalStoreView_ShowAllTabIdUpdate, viewObj._gm_showAllTabIdUpdate, viewObj)
+	GMController.instance:unregisterCallback(GMEvent.NormalStoreView_ShowAllGoodsIdUpdate, viewObj._gm_showAllGoodsIdUpdate, viewObj)
 end
 
-return var_0_0
+return GM_NormalStoreViewContainer

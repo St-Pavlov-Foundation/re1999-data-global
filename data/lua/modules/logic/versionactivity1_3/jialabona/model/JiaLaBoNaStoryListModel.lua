@@ -1,24 +1,26 @@
-﻿module("modules.logic.versionactivity1_3.jialabona.model.JiaLaBoNaStoryListModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/jialabona/model/JiaLaBoNaStoryListModel.lua
 
-local var_0_0 = class("JiaLaBoNaStoryListModel", ListScrollModel)
+module("modules.logic.versionactivity1_3.jialabona.model.JiaLaBoNaStoryListModel", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = Activity120Config.instance:getEpisodeStoryList(arg_1_1, arg_1_2)
-	local var_1_1 = {}
-	local var_1_2 = 0
+local JiaLaBoNaStoryListModel = class("JiaLaBoNaStoryListModel", ListScrollModel)
 
-	if var_1_0 then
-		for iter_1_0, iter_1_1 in ipairs(var_1_0) do
-			local var_1_3 = JiaLaBoNaStoryMO.New()
+function JiaLaBoNaStoryListModel:init(actId, episodeId)
+	local storyCos = Activity120Config.instance:getEpisodeStoryList(actId, episodeId)
+	local dataList = {}
+	local rewardCount = 0
 
-			var_1_3:init(iter_1_0, iter_1_1)
-			table.insert(var_1_1, var_1_3)
+	if storyCos then
+		for index, storyCo in ipairs(storyCos) do
+			local stroyMO = JiaLaBoNaStoryMO.New()
+
+			stroyMO:init(index, storyCo)
+			table.insert(dataList, stroyMO)
 		end
 	end
 
-	arg_1_0:setList(var_1_1)
+	self:setList(dataList)
 end
 
-var_0_0.instance = var_0_0.New()
+JiaLaBoNaStoryListModel.instance = JiaLaBoNaStoryListModel.New()
 
-return var_0_0
+return JiaLaBoNaStoryListModel

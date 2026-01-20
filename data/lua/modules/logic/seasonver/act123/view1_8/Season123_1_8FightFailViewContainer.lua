@@ -1,17 +1,19 @@
-﻿module("modules.logic.seasonver.act123.view1_8.Season123_1_8FightFailViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view1_8/Season123_1_8FightFailViewContainer.lua
 
-local var_0_0 = class("Season123_1_8FightFailViewContainer", BaseViewContainer)
+module("modules.logic.seasonver.act123.view1_8.Season123_1_8FightFailViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local Season123_1_8FightFailViewContainer = class("Season123_1_8FightFailViewContainer", BaseViewContainer)
+
+function Season123_1_8FightFailViewContainer:buildViews()
 	return {
 		Season123_1_8FightFailView.New()
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
+function Season123_1_8FightFailViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
 		-- block empty
 	end
 end
 
-return var_0_0
+return Season123_1_8FightFailViewContainer

@@ -1,85 +1,87 @@
-﻿module("modules.versionactivitybase.enterview.controller.VersionActivityBaseController", package.seeall)
+﻿-- chunkname: @modules/versionactivitybase/enterview/controller/VersionActivityBaseController.lua
 
-local var_0_0 = class("VersionActivityBaseController", BaseController)
+module("modules.versionactivitybase.enterview.controller.VersionActivityBaseController", package.seeall)
 
-function var_0_0.isPlayedActivityVideo(arg_1_0, arg_1_1)
-	local var_1_0 = ActivityConfig.instance:getActivityCo(arg_1_1)
+local VersionActivityBaseController = class("VersionActivityBaseController", BaseController)
 
-	if not var_1_0 then
+function VersionActivityBaseController:isPlayedActivityVideo(actId)
+	local actCo = ActivityConfig.instance:getActivityCo(actId)
+
+	if not actCo then
 		return true
 	end
 
-	if string.nilorempty(var_1_0.storyId) or var_1_0.storyId == 0 then
+	if string.nilorempty(actCo.storyId) or actCo.storyId == 0 then
 		return true
 	end
 
-	return StoryModel.instance:isStoryFinished(var_1_0.storyId)
+	return StoryModel.instance:isStoryFinished(actCo.storyId)
 end
 
-function var_0_0._initPlayedActUnlockAnimationList(arg_2_0)
-	local var_2_0 = PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.PlayedActUnlockAnimationKey))
+function VersionActivityBaseController:_initPlayedActUnlockAnimationList()
+	local unlockStr = PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.PlayedActUnlockAnimationKey))
 
-	if string.nilorempty(var_2_0) then
-		arg_2_0.playedActUnlockAnimationList = {}
+	if string.nilorempty(unlockStr) then
+		self.playedActUnlockAnimationList = {}
 
 		return
 	end
 
-	arg_2_0.playedActUnlockAnimationList = string.splitToNumber(var_2_0, "#")
+	self.playedActUnlockAnimationList = string.splitToNumber(unlockStr, "#")
 end
 
-function var_0_0.playedActivityUnlockAnimation(arg_3_0, arg_3_1)
-	if not arg_3_1 then
+function VersionActivityBaseController:playedActivityUnlockAnimation(actId)
+	if not actId then
 		return
 	end
 
-	if not arg_3_0.playedActUnlockAnimationList then
-		arg_3_0:_initPlayedActUnlockAnimationList()
+	if not self.playedActUnlockAnimationList then
+		self:_initPlayedActUnlockAnimationList()
 	end
 
-	if tabletool.indexOf(arg_3_0.playedActUnlockAnimationList, arg_3_1) then
+	if tabletool.indexOf(self.playedActUnlockAnimationList, actId) then
 		return
 	end
 
-	table.insert(arg_3_0.playedActUnlockAnimationList, arg_3_1)
-	PlayerPrefsHelper.setString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.PlayedActUnlockAnimationKey), table.concat(arg_3_0.playedActUnlockAnimationList, "#"))
+	table.insert(self.playedActUnlockAnimationList, actId)
+	PlayerPrefsHelper.setString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.PlayedActUnlockAnimationKey), table.concat(self.playedActUnlockAnimationList, "#"))
 end
 
-function var_0_0.isPlayedUnlockAnimation(arg_4_0, arg_4_1)
-	if not arg_4_0.playedActUnlockAnimationList then
-		arg_4_0:_initPlayedActUnlockAnimationList()
+function VersionActivityBaseController:isPlayedUnlockAnimation(actId)
+	if not self.playedActUnlockAnimationList then
+		self:_initPlayedActUnlockAnimationList()
 	end
 
-	return tabletool.indexOf(arg_4_0.playedActUnlockAnimationList, arg_4_1)
+	return tabletool.indexOf(self.playedActUnlockAnimationList, actId)
 end
 
-function var_0_0.clear(arg_5_0)
-	arg_5_0.playedActUnlockAnimationList = nil
-	arg_5_0.playedVideosActivityIdList = nil
+function VersionActivityBaseController:clear()
+	self.playedActUnlockAnimationList = nil
+	self.playedVideosActivityIdList = nil
 end
 
-function var_0_0.enterVersionActivityView(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
-	local var_6_0, var_6_1, var_6_2 = ActivityHelper.getActivityStatusAndToast(arg_6_2)
+function VersionActivityBaseController:enterVersionActivityView(viewName, actId, callback, callbackObj)
+	local status, toastId, toastParam = ActivityHelper.getActivityStatusAndToast(actId)
 
-	if var_6_0 ~= ActivityEnum.ActivityStatus.Normal then
-		if var_6_1 then
-			GameFacade.showToast(var_6_1, var_6_2)
+	if status ~= ActivityEnum.ActivityStatus.Normal then
+		if toastId then
+			GameFacade.showToast(toastId, toastParam)
 		end
 
 		return
 	end
 
-	if arg_6_3 then
-		arg_6_3(arg_6_4, arg_6_1, arg_6_2)
+	if callback then
+		callback(callbackObj, viewName, actId)
 
 		return
 	end
 
-	ViewMgr.instance:openView(arg_6_1)
+	ViewMgr.instance:openView(viewName)
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivityBaseController.instance = VersionActivityBaseController.New()
 
-LuaEventSystem.addEventMechanism(var_0_0.instance)
+LuaEventSystem.addEventMechanism(VersionActivityBaseController.instance)
 
-return var_0_0
+return VersionActivityBaseController

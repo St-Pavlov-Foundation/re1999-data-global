@@ -1,4 +1,6 @@
-﻿return {
+﻿-- chunkname: @modules/configs/story/lua_story_bgefftranstype.lua
+
+return {
 	{
 		0,
 		"保持",
@@ -274,6 +276,69 @@
 		"甩镜头",
 		"",
 		"v3a0_dynamicblur_controller.prefab",
+		"",
+		0,
+		""
+	},
+	{
+		31,
+		"曝光0.5",
+		"",
+		"",
+		"",
+		0.25,
+		""
+	},
+	{
+		32,
+		"曝光1.5",
+		"",
+		"",
+		"",
+		0.75,
+		""
+	},
+	{
+		33,
+		"提亮进",
+		"v3a1_curvelight",
+		"v3a1_curvelight.prefab",
+		"",
+		0,
+		""
+	},
+	{
+		34,
+		"提亮出",
+		"v3a1_curvelight",
+		"v3a1_curvelight_latter.prefab",
+		"",
+		0,
+		""
+	},
+	{
+		35,
+		"压暗进",
+		"v3a2_curvelight_dark",
+		"v3a2_curvelight_dark.prefab",
+		"",
+		0,
+		""
+	},
+	{
+		36,
+		"压暗出",
+		"v3a2_curvelight_dark",
+		"v3a1_curvelight.prefab",
+		"",
+		0,
+		""
+	},
+	{
+		37,
+		"压暗瞬切",
+		"v3a2_curvelight_dark",
+		"v3a2_curvelight_dark_02.prefab",
 		"",
 		0,
 		""

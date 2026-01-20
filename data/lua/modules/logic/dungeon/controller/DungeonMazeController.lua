@@ -1,132 +1,134 @@
-﻿module("modules.logic.dungeon.controller.DungeonMazeController", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/controller/DungeonMazeController.lua
 
-local var_0_0 = class("DungeonMazeController", BaseController)
+module("modules.logic.dungeon.controller.DungeonMazeController", package.seeall)
 
-function var_0_0.onInitFinish(arg_1_0)
+local DungeonMazeController = class("DungeonMazeController", BaseController)
+
+function DungeonMazeController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_2_0)
+function DungeonMazeController:addConstEvents()
 	return
 end
 
-function var_0_0.reInit(arg_3_0)
+function DungeonMazeController:reInit()
 	return
 end
 
-function var_0_0.release(arg_4_0)
+function DungeonMazeController:release()
 	return
 end
 
-function var_0_0.MoveTo(arg_5_0, arg_5_1)
-	local var_5_0 = DungeonMazeModel.instance:getCurCellData().connectSet[arg_5_1]
-	local var_5_1 = false
+function DungeonMazeController:MoveTo(dir)
+	local curCellData = DungeonMazeModel.instance:getCurCellData()
+	local targetCell = curCellData.connectSet[dir]
+	local gameOver = false
 
-	if var_5_0 then
-		DungeonMazeModel.instance:setCurCellData(var_5_0)
+	if targetCell then
+		DungeonMazeModel.instance:setCurCellData(targetCell)
 		DungeonMazeModel.instance:addChaosValue()
 
-		local var_5_2 = DungeonMazeModel.instance:getChaosValue()
-		local var_5_3 = {
-			episodeId = arg_5_0._mazeEpisodeId
-		}
+		local curChaos = DungeonMazeModel.instance:getChaosValue()
+		local resultViewParams = {}
 
-		if var_5_0.value == 2 then
-			arg_5_0:sandStatData(DungeonMazeEnum.resultStat[1], var_5_0.cellId, var_5_2)
+		resultViewParams.episodeId = self._mazeEpisodeId
 
-			local var_5_4 = DungeonConfig.instance:getEpisodeCO(arg_5_0._mazeEpisodeId)
-			local var_5_5 = tonumber(var_5_4.story)
+		if targetCell.value == 2 then
+			self:sandStatData(DungeonMazeEnum.resultStat[1], targetCell.cellId, curChaos)
 
-			if var_5_5 ~= 0 then
-				arg_5_0:playMazeAfterStory(var_5_5)
+			local episodeCfg = DungeonConfig.instance:getEpisodeCO(self._mazeEpisodeId)
+			local afterStory = tonumber(episodeCfg.story)
+
+			if afterStory ~= 0 then
+				self:playMazeAfterStory(afterStory)
 
 				return
 			else
 				DungeonRpc.instance:sendEndDungeonRequest(false)
 
-				var_5_3.isWin = true
+				resultViewParams.isWin = true
 
-				arg_5_0:openMazeResultView(var_5_3)
+				self:openMazeResultView(resultViewParams)
 
-				var_5_1 = true
+				gameOver = true
 			end
-		elseif var_5_2 == DungeonMazeEnum.MaxChaosValue then
-			arg_5_0:sandStatData(DungeonMazeEnum.resultStat[2], var_5_0.cellId, var_5_2)
+		elseif curChaos == DungeonMazeEnum.MaxChaosValue then
+			self:sandStatData(DungeonMazeEnum.resultStat[2], targetCell.cellId, curChaos)
 
-			var_5_3.isWin = false
+			resultViewParams.isWin = false
 
-			arg_5_0:openMazeResultView(var_5_3)
+			self:openMazeResultView(resultViewParams)
 
-			var_5_1 = true
+			gameOver = true
 		end
 	end
 
 	DungeonMazeModel.instance:UnpateSkillState(true)
 
-	if not var_5_1 then
+	if not gameOver then
 		DungeonMazeModel.instance:SaveCurProgress()
 	end
 end
 
-function var_0_0.playMazeAfterStory(arg_6_0, arg_6_1)
-	local var_6_0 = {}
+function DungeonMazeController:playMazeAfterStory(storyId)
+	local param = {}
 
-	var_6_0.mark = true
+	param.mark = true
 
-	local var_6_1 = {
-		episodeId = arg_6_0._mazeEpisodeId
-	}
+	local resultViewParams = {}
 
-	var_6_1.isWin = true
+	resultViewParams.episodeId = self._mazeEpisodeId
+	resultViewParams.isWin = true
 
-	StoryController.instance:playStory(arg_6_1, var_6_0, function()
+	StoryController.instance:playStory(storyId, param, function()
 		DungeonController.instance:dispatchEvent(DungeonEvent.OnUpdateDungeonInfo, nil)
 
 		DungeonMapModel.instance.playAfterStory = true
 
 		DungeonRpc.instance:sendEndDungeonRequest(false)
-		var_0_0.instance:openMazeResultView(var_6_1)
+		DungeonMazeController.instance:openMazeResultView(resultViewParams)
 		ViewMgr.instance:closeView(ViewName.DungeonMapLevelView)
 	end)
 end
 
-function var_0_0.UseEyeSkill(arg_8_0)
-	local var_8_0 = DungeonMazeModel.instance:GetSkillState()
+function DungeonMazeController:UseEyeSkill()
+	local curSkillState = DungeonMazeModel.instance:GetSkillState()
 
-	if var_8_0 == DungeonMazeEnum.skillState.using then
+	if curSkillState == DungeonMazeEnum.skillState.using then
 		return
 	end
 
-	if var_8_0 == DungeonMazeEnum.skillState.cooling then
+	if curSkillState == DungeonMazeEnum.skillState.cooling then
 		return
 	end
 
 	DungeonMazeModel.instance:UnpateSkillState()
 end
 
-function var_0_0.openMazeGameView(arg_9_0, arg_9_1)
-	arg_9_0:initStatData()
+function DungeonMazeController:openMazeGameView(viewParams)
+	self:initStatData()
 
-	arg_9_0._mazeEpisodeId = arg_9_1.episodeCfg.id
+	self._mazeEpisodeId = viewParams.episodeCfg.id
 
 	DungeonMazeModel.instance:initData()
 	DungeonMazeModel.instance:LoadProgress()
-	ViewMgr.instance:openView(ViewName.DungeonMazeView, arg_9_1)
+	ViewMgr.instance:openView(ViewName.DungeonMazeView, viewParams)
 end
 
-function var_0_0.openMazeResultView(arg_10_0, arg_10_1)
+function DungeonMazeController:openMazeResultView(viewParams)
 	DungeonMazeModel.instance:ClearProgress()
-	ViewMgr.instance:openView(ViewName.DungeonMazeResultView, arg_10_1)
+	ViewMgr.instance:openView(ViewName.DungeonMazeResultView, viewParams)
 end
 
-function var_0_0.initStatData(arg_11_0)
-	arg_11_0.statMo = DungeonGameMo.New()
+function DungeonMazeController:initStatData()
+	self.statMo = DungeonGameMo.New()
 end
 
-function var_0_0.sandStatData(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	arg_12_0.statMo:sendMazeGameStatData(arg_12_1, arg_12_2, arg_12_3)
+function DungeonMazeController:sandStatData(result, cellId, chaoValue)
+	self.statMo:sendMazeGameStatData(result, cellId, chaoValue)
 end
 
-var_0_0.instance = var_0_0.New()
+DungeonMazeController.instance = DungeonMazeController.New()
 
-return var_0_0
+return DungeonMazeController

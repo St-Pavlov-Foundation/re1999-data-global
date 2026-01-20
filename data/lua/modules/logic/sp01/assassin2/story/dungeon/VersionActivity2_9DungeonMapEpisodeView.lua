@@ -1,178 +1,180 @@
-﻿module("modules.logic.sp01.assassin2.story.dungeon.VersionActivity2_9DungeonMapEpisodeView", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/story/dungeon/VersionActivity2_9DungeonMapEpisodeView.lua
 
-local var_0_0 = class("VersionActivity2_9DungeonMapEpisodeView", VersionActivityFixedDungeonMapEpisodeView)
-local var_0_1 = "VersionActivity2_9DungeonMapEpisodeView_FocusEpisode"
+module("modules.logic.sp01.assassin2.story.dungeon.VersionActivity2_9DungeonMapEpisodeView", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	var_0_0.super._editableInitView(arg_1_0)
+local VersionActivity2_9DungeonMapEpisodeView = class("VersionActivity2_9DungeonMapEpisodeView", VersionActivityFixedDungeonMapEpisodeView)
+local FocusEpisodeBlockKey = "VersionActivity2_9DungeonMapEpisodeView_FocusEpisode"
 
-	arg_1_0.mapView = arg_1_0.viewContainer.mapView
-	arg_1_0.mapSceneElements = arg_1_0.viewContainer.mapSceneElements
-	arg_1_0._scrollcontent = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_content")
+function VersionActivity2_9DungeonMapEpisodeView:_editableInitView()
+	VersionActivity2_9DungeonMapEpisodeView.super._editableInitView(self)
+
+	self.mapView = self.viewContainer.mapView
+	self.mapSceneElements = self.viewContainer.mapSceneElements
+	self._scrollcontent = gohelper.findChildScrollRect(self.viewGO, "#scroll_content")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	var_0_0.super.addEvents(arg_2_0)
-	arg_2_0._touch:AddClickUpListener(arg_2_0._onClickUpHandler, arg_2_0)
-	arg_2_0._drag:AddDragListener(arg_2_0._onDragHandler, arg_2_0)
-	arg_2_0:addEventCb(DungeonController.instance, DungeonEvent.BeginShowRewardView, arg_2_0._onBeginShowRewardView, arg_2_0)
-	arg_2_0:addEventCb(DungeonController.instance, DungeonEvent.EndShowRewardView, arg_2_0._onEndShowRewardView, arg_2_0)
+function VersionActivity2_9DungeonMapEpisodeView:addEvents()
+	VersionActivity2_9DungeonMapEpisodeView.super.addEvents(self)
+	self._touch:AddClickUpListener(self._onClickUpHandler, self)
+	self._drag:AddDragListener(self._onDragHandler, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.BeginShowRewardView, self._onBeginShowRewardView, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.EndShowRewardView, self._onEndShowRewardView, self)
 	VersionActivity2_9DungeonController.instance:dispatchEvent(VersionActivity2_9Event.OnNewElementsFocusDone)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	var_0_0.super.removeEvents(arg_3_0)
-	arg_3_0._touch:RemoveClickUpListener()
-	arg_3_0._drag:RemoveDragListener()
+function VersionActivity2_9DungeonMapEpisodeView:removeEvents()
+	VersionActivity2_9DungeonMapEpisodeView.super.removeEvents(self)
+	self._touch:RemoveClickUpListener()
+	self._drag:RemoveDragListener()
 end
 
-function var_0_0.refreshModeLockText(arg_4_0)
-	gohelper.setActive(arg_4_0._hardModeLockTip, false)
-	gohelper.setActive(arg_4_0._gohardmodelock, false)
+function VersionActivity2_9DungeonMapEpisodeView:refreshModeLockText()
+	gohelper.setActive(self._hardModeLockTip, false)
+	gohelper.setActive(self._gohardmodelock, false)
 end
 
-function var_0_0.onLoadLayoutFinish(arg_5_0)
-	var_0_0.super.onLoadLayoutFinish(arg_5_0)
+function VersionActivity2_9DungeonMapEpisodeView:onLoadLayoutFinish()
+	VersionActivity2_9DungeonMapEpisodeView.super.onLoadLayoutFinish(self)
 
-	arg_5_0._contentTran = arg_5_0.scrollRect.content
-	arg_5_0._originLocalPosX, arg_5_0._originLocalPosY = transformhelper.getPos(arg_5_0._contentTran)
-	arg_5_0._originScreenPosX, arg_5_0._originScreenPosY = recthelper.uiPosToScreenPos2(arg_5_0._contentTran)
+	self._contentTran = self.scrollRect.content
+	self._originLocalPosX, self._originLocalPosY = transformhelper.getPos(self._contentTran)
+	self._originScreenPosX, self._originScreenPosY = recthelper.uiPosToScreenPos2(self._contentTran)
 
 	VersionActivity2_9DungeonController.instance:dispatchEvent(VersionActivity2_9Event.OnOneWorkLoadDone, VersionActivity2_9DungeonEnum.LoadWorkType.Layout)
-	arg_5_0:tryFindNextEpisodeId()
-	arg_5_0:tryFocusNextEpisode()
+	self:tryFindNextEpisodeId()
+	self:tryFocusNextEpisode()
 end
 
-function var_0_0._onClickUpHandler(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_0._isDragging then
+function VersionActivity2_9DungeonMapEpisodeView:_onClickUpHandler(params, eventPosition)
+	if self._isDragging then
 		return
 	end
 
-	if arg_6_0.mapSceneElements:isMouseDownElement() then
-		arg_6_0.mapView:_btncloseviewOnClick()
-		arg_6_0.mapSceneElements:onClickDown()
-		arg_6_0.mapSceneElements:onClickUp()
-	elseif arg_6_0.chapterLayout:tryClickDNA(arg_6_2) then
+	if self.mapSceneElements:isMouseDownElement() then
+		self.mapView:_btncloseviewOnClick()
+		self.mapSceneElements:onClickDown()
+		self.mapSceneElements:onClickUp()
+	elseif self.chapterLayout:tryClickDNA(eventPosition) then
 		-- block empty
 	else
-		arg_6_0.mapView:_btncloseviewOnClick()
+		self.mapView:_btncloseviewOnClick()
 	end
 end
 
-function var_0_0._onClickDownHandler(arg_7_0, arg_7_1, arg_7_2)
+function VersionActivity2_9DungeonMapEpisodeView:_onClickDownHandler(params, eventPosition)
 	return
 end
 
-function var_0_0.setLayoutVisible(arg_8_0, arg_8_1)
-	var_0_0.super.setLayoutVisible(arg_8_0, arg_8_1)
+function VersionActivity2_9DungeonMapEpisodeView:setLayoutVisible(isShow)
+	VersionActivity2_9DungeonMapEpisodeView.super.setLayoutVisible(self, isShow)
 
-	if not arg_8_0.chapterLayout then
+	if not self.chapterLayout then
 		return
 	end
 
-	VersionActivity2_9DungeonController.instance:dispatchEvent(VersionActivity2_9Event.OnEpisodeListVisible, arg_8_1)
+	VersionActivity2_9DungeonController.instance:dispatchEvent(VersionActivity2_9Event.OnEpisodeListVisible, isShow)
 end
 
-function var_0_0._onDragBeginHandler(arg_9_0)
-	arg_9_0._isDragging = true
+function VersionActivity2_9DungeonMapEpisodeView:_onDragBeginHandler()
+	self._isDragging = true
 end
 
-function var_0_0._onDragEndHandler(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_0._isDragging = false
+function VersionActivity2_9DungeonMapEpisodeView:_onDragEndHandler(param, pointerEventData)
+	self._isDragging = false
 
-	VersionActivity2_9DungeonController.instance:dispatchEvent(VersionActivity2_9Event.OnScrollEpisodeList, arg_10_2.delta.x, true)
+	VersionActivity2_9DungeonController.instance:dispatchEvent(VersionActivity2_9Event.OnScrollEpisodeList, pointerEventData.delta.x, true)
 end
 
-function var_0_0._onDragHandler(arg_11_0, arg_11_1, arg_11_2)
-	VersionActivity2_9DungeonController.instance:dispatchEvent(VersionActivity2_9Event.OnScrollEpisodeList, arg_11_2.delta.x, false)
+function VersionActivity2_9DungeonMapEpisodeView:_onDragHandler(param, pointerEventData)
+	VersionActivity2_9DungeonController.instance:dispatchEvent(VersionActivity2_9Event.OnScrollEpisodeList, pointerEventData.delta.x, false)
 end
 
-function var_0_0._onUpdateDungeonInfo(arg_12_0)
-	arg_12_0:tryFindNextEpisodeId()
-	arg_12_0:tryFocusNextEpisode()
-	var_0_0.super._onUpdateDungeonInfo(arg_12_0)
+function VersionActivity2_9DungeonMapEpisodeView:_onUpdateDungeonInfo()
+	self:tryFindNextEpisodeId()
+	self:tryFocusNextEpisode()
+	VersionActivity2_9DungeonMapEpisodeView.super._onUpdateDungeonInfo(self)
 end
 
-function var_0_0.tryFindNextEpisodeId(arg_13_0)
-	local var_13_0 = DungeonModel.instance.lastSendEpisodeId
+function VersionActivity2_9DungeonMapEpisodeView:tryFindNextEpisodeId()
+	local lastSendEpisodeId = DungeonModel.instance.lastSendEpisodeId
 
-	arg_13_0._nextFocusEpisodeId = nil
+	self._nextFocusEpisodeId = nil
 
-	if arg_13_0.activityDungeonMo.episodeId ~= var_13_0 then
+	if self.activityDungeonMo.episodeId ~= lastSendEpisodeId then
 		return
 	end
 
-	local var_13_1 = DungeonConfig.instance:getChapterEpisodeCOList(arg_13_0.activityDungeonMo.chapterId)
+	local episodeList = DungeonConfig.instance:getChapterEpisodeCOList(self.activityDungeonMo.chapterId)
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_1) do
-		local var_13_2 = iter_13_1 and DungeonModel.instance:getEpisodeInfo(iter_13_1.id) or nil
+	for _, config in ipairs(episodeList) do
+		local episodeMo = config and DungeonModel.instance:getEpisodeInfo(config.id) or nil
 
-		if not var_13_2 then
+		if not episodeMo then
 			break
 		end
 
-		if var_13_2.isNew and iter_13_1.preEpisode == var_13_0 then
-			var_13_2.isNew = false
-			arg_13_0._nextFocusEpisodeId = iter_13_1.id
+		if episodeMo.isNew and config.preEpisode == lastSendEpisodeId then
+			episodeMo.isNew = false
+			self._nextFocusEpisodeId = config.id
 
 			break
 		end
 	end
 end
 
-function var_0_0.tryFocusNextEpisode(arg_14_0)
-	if not arg_14_0._nextFocusEpisodeId or not arg_14_0.chapterLayout then
+function VersionActivity2_9DungeonMapEpisodeView:tryFocusNextEpisode()
+	if not self._nextFocusEpisodeId or not self.chapterLayout then
 		return
 	end
 
-	arg_14_0:destroyFocusFlow()
+	self:destroyFocusFlow()
 
-	arg_14_0._focusFlow = FlowSequence.New()
+	self._focusFlow = FlowSequence.New()
 
-	arg_14_0._focusFlow:addWork(WaitEventWork.New("VersionActivity2_9DungeonController;VersionActivity2_9Event;OnNewElementsFocusDone"))
-	arg_14_0._focusFlow:addWork(FunctionWork.New(arg_14_0._lockScreen, true))
-	arg_14_0._focusFlow:addWork(DelayDoFuncWork.New(arg_14_0._delay2ChangeEpisode, arg_14_0, VersionActivity2_9DungeonEnum.Time_FocuysNewEpisode))
-	arg_14_0._focusFlow:addWork(FunctionWork.New(arg_14_0._lockScreen, false))
-	arg_14_0._focusFlow:start()
+	self._focusFlow:addWork(WaitEventWork.New("VersionActivity2_9DungeonController;VersionActivity2_9Event;OnNewElementsFocusDone"))
+	self._focusFlow:addWork(FunctionWork.New(self._lockScreen, true))
+	self._focusFlow:addWork(DelayDoFuncWork.New(self._delay2ChangeEpisode, self, VersionActivity2_9DungeonEnum.Time_FocuysNewEpisode))
+	self._focusFlow:addWork(FunctionWork.New(self._lockScreen, false))
+	self._focusFlow:start()
 end
 
-function var_0_0._lockScreen(arg_15_0, arg_15_1)
-	AssassinHelper.lockScreen(var_0_1, arg_15_1)
+function VersionActivity2_9DungeonMapEpisodeView:_lockScreen(lock)
+	AssassinHelper.lockScreen(FocusEpisodeBlockKey, lock)
 end
 
-function var_0_0.destroyFocusFlow(arg_16_0)
-	if arg_16_0._focusFlow then
-		arg_16_0._focusFlow:destroy()
+function VersionActivity2_9DungeonMapEpisodeView:destroyFocusFlow()
+	if self._focusFlow then
+		self._focusFlow:destroy()
 
-		arg_16_0._focusFlow = nil
+		self._focusFlow = nil
 	end
 end
 
-function var_0_0._delay2ChangeEpisode(arg_17_0)
-	if not arg_17_0.activityDungeonMo or not arg_17_0._nextFocusEpisodeId then
+function VersionActivity2_9DungeonMapEpisodeView:_delay2ChangeEpisode()
+	if not self.activityDungeonMo or not self._nextFocusEpisodeId then
 		return
 	end
 
-	if arg_17_0.chapterLayout then
-		arg_17_0.chapterLayout:setFocusEpisodeId(arg_17_0._nextFocusEpisodeId, true)
+	if self.chapterLayout then
+		self.chapterLayout:setFocusEpisodeId(self._nextFocusEpisodeId, true)
 		AudioMgr.instance:trigger(AudioEnum2_9.Dungeon.play_ui_unlockNewEpisode)
 	end
 
-	arg_17_0._nextFocusEpisodeId = nil
+	self._nextFocusEpisodeId = nil
 end
 
-function var_0_0._onBeginShowRewardView(arg_18_0)
-	arg_18_0:hideUI()
+function VersionActivity2_9DungeonMapEpisodeView:_onBeginShowRewardView()
+	self:hideUI()
 end
 
-function var_0_0._onEndShowRewardView(arg_19_0)
-	arg_19_0:showUI()
+function VersionActivity2_9DungeonMapEpisodeView:_onEndShowRewardView()
+	self:showUI()
 end
 
-function var_0_0.onDestroyView(arg_20_0)
-	arg_20_0:_lockScreen(false)
-	arg_20_0:destroyFocusFlow()
-	var_0_0.super.onDestroyView(arg_20_0)
+function VersionActivity2_9DungeonMapEpisodeView:onDestroyView()
+	self:_lockScreen(false)
+	self:destroyFocusFlow()
+	VersionActivity2_9DungeonMapEpisodeView.super.onDestroyView(self)
 end
 
-return var_0_0
+return VersionActivity2_9DungeonMapEpisodeView

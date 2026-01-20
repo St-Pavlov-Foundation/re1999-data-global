@@ -1,28 +1,30 @@
-﻿module("modules.logic.character.view.CharacterGuideTalentView", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterGuideTalentView.lua
 
-local var_0_0 = class("CharacterGuideTalentView", BaseView)
+module("modules.logic.character.view.CharacterGuideTalentView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "commen/#simage_bg")
-	arg_1_0._simagehead = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_head")
-	arg_1_0._btnlook = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_look")
-	arg_1_0._simagedecorate1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "commen/#simage_decorate1")
-	arg_1_0._simagedecorate3 = gohelper.findChildSingleImage(arg_1_0.viewGO, "commen/#simage_decorate3")
+local CharacterGuideTalentView = class("CharacterGuideTalentView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CharacterGuideTalentView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "commen/#simage_bg")
+	self._simagehead = gohelper.findChildSingleImage(self.viewGO, "#simage_head")
+	self._btnlook = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_look")
+	self._simagedecorate1 = gohelper.findChildSingleImage(self.viewGO, "commen/#simage_decorate1")
+	self._simagedecorate3 = gohelper.findChildSingleImage(self.viewGO, "commen/#simage_decorate3")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnlook:AddClickListener(arg_2_0._btnlookOnClick, arg_2_0)
+function CharacterGuideTalentView:addEvents()
+	self._btnlook:AddClickListener(self._btnlookOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnlook:RemoveClickListener()
+function CharacterGuideTalentView:removeEvents()
+	self._btnlook:RemoveClickListener()
 end
 
-function var_0_0._btnlookOnClick(arg_4_0)
+function CharacterGuideTalentView:_btnlookOnClick()
 	CharacterModel.instance:setSortByRankDescOnce()
 
 	if ViewMgr.instance:hasOpenFullView() then
@@ -32,25 +34,25 @@ function var_0_0._btnlookOnClick(arg_4_0)
 	end
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._simagebg:LoadImage(ResUrl.getCommonIcon("yd_yindaodi_2"))
-	arg_5_0._simagehead:LoadImage(ResUrl.getCharacterTalentUpIcon("yd_sixugongming"))
-	arg_5_0._simagedecorate1:LoadImage(ResUrl.getCommonIcon("yd_biaoti_di"))
-	arg_5_0._simagedecorate3:LoadImage(ResUrl.getCommonIcon("yd_blxian"))
+function CharacterGuideTalentView:_editableInitView()
+	self._simagebg:LoadImage(ResUrl.getCommonIcon("yd_yindaodi_2"))
+	self._simagehead:LoadImage(ResUrl.getCharacterTalentUpIcon("yd_sixugongming"))
+	self._simagedecorate1:LoadImage(ResUrl.getCommonIcon("yd_biaoti_di"))
+	self._simagedecorate3:LoadImage(ResUrl.getCommonIcon("yd_blxian"))
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function CharacterGuideTalentView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_7_0._onOpenViewFinish, arg_7_0)
-	arg_7_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_7_0._onCloseViewFinish, arg_7_0, LuaEventSystem.Low)
+function CharacterGuideTalentView:onOpen()
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self, LuaEventSystem.Low)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_artificial_ui_openfunction)
 end
 
-function var_0_0._onOpenViewFinish(arg_8_0, arg_8_1)
-	if arg_8_1 == ViewName.GuideTransitionBlackView then
+function CharacterGuideTalentView:_onOpenViewFinish(viewName)
+	if viewName == ViewName.GuideTransitionBlackView then
 		if not ViewMgr.instance:isOpen(ViewName.MainView) then
 			ViewMgr.instance:openView(ViewName.MainView)
 		end
@@ -61,21 +63,21 @@ function var_0_0._onOpenViewFinish(arg_8_0, arg_8_1)
 	end
 end
 
-function var_0_0._onCloseViewFinish(arg_9_0, arg_9_1)
-	if arg_9_1 == ViewName.CharacterGuideTalentView then
+function CharacterGuideTalentView:_onCloseViewFinish(viewName)
+	if viewName == ViewName.CharacterGuideTalentView then
 		ViewMgr.instance:closeView(ViewName.GuideTransitionBlackView)
 	end
 end
 
-function var_0_0.onClose(arg_10_0)
+function CharacterGuideTalentView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	arg_11_0._simagebg:UnLoadImage()
-	arg_11_0._simagehead:UnLoadImage()
-	arg_11_0._simagedecorate1:UnLoadImage()
-	arg_11_0._simagedecorate3:UnLoadImage()
+function CharacterGuideTalentView:onDestroyView()
+	self._simagebg:UnLoadImage()
+	self._simagehead:UnLoadImage()
+	self._simagedecorate1:UnLoadImage()
+	self._simagedecorate3:UnLoadImage()
 end
 
-return var_0_0
+return CharacterGuideTalentView

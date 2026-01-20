@@ -1,31 +1,33 @@
-﻿module("modules.logic.social.view.InformPlayerTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/social/view/InformPlayerTipViewContainer.lua
 
-local var_0_0 = class("InformPlayerTipViewContainer", BaseViewContainer)
+module("modules.logic.social.view.InformPlayerTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = ListScrollParam.New()
+local InformPlayerTipViewContainer = class("InformPlayerTipViewContainer", BaseViewContainer)
 
-	var_1_0.scrollGOPath = "scroll_inform"
-	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_0.prefabUrl = "scroll_inform/Viewport/#go_informContent/#go_informItem"
-	var_1_0.cellClass = ReportTypeItem
-	var_1_0.scrollDir = ScrollEnum.ScrollDirV
-	var_1_0.lineCount = 4
-	var_1_0.cellWidth = 280
-	var_1_0.cellHeight = 40
-	var_1_0.cellSpaceH = 37
-	var_1_0.cellSpaceV = 33
-	var_1_0.startSpace = 0
+function InformPlayerTipViewContainer:buildViews()
+	local scrollParam = ListScrollParam.New()
+
+	scrollParam.scrollGOPath = "scroll_inform"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "scroll_inform/Viewport/#go_informContent/#go_informItem"
+	scrollParam.cellClass = ReportTypeItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 4
+	scrollParam.cellWidth = 280
+	scrollParam.cellHeight = 40
+	scrollParam.cellSpaceH = 37
+	scrollParam.cellSpaceV = 33
+	scrollParam.startSpace = 0
 
 	return {
 		InformPlayerTipView.New(),
-		LuaListScrollView.New(ReportTypeListModel.instance, var_1_0)
+		LuaListScrollView.New(ReportTypeListModel.instance, scrollParam)
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
+function InformPlayerTipViewContainer:onContainerClickModalMask()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	arg_2_0:closeThis()
+	self:closeThis()
 end
 
-return var_0_0
+return InformPlayerTipViewContainer

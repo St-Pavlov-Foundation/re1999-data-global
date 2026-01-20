@@ -1,28 +1,30 @@
-﻿module("modules.logic.necrologiststory.game.v3a1.V3A1_RoleStoryGameViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/necrologiststory/game/v3a1/V3A1_RoleStoryGameViewContainer.lua
 
-local var_0_0 = class("V3A1_RoleStoryGameViewContainer", BaseViewContainer)
+module("modules.logic.necrologiststory.game.v3a1.V3A1_RoleStoryGameViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local V3A1_RoleStoryGameViewContainer = class("V3A1_RoleStoryGameViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, V3A1_RoleStoryGameView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
+function V3A1_RoleStoryGameViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, V3A1_RoleStoryGameView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_topleft"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		local var_2_0 = NavigateButtonsView.New({
+function V3A1_RoleStoryGameViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		local navView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			var_2_0
+			navView
 		}
 	end
 end
 
-return var_0_0
+return V3A1_RoleStoryGameViewContainer

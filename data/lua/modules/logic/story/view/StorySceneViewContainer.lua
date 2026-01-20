@@ -1,20 +1,22 @@
-﻿module("modules.logic.story.view.StorySceneViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/story/view/StorySceneViewContainer.lua
 
-local var_0_0 = class("StorySceneViewContainer", BaseViewContainer)
+module("modules.logic.story.view.StorySceneViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local StorySceneViewContainer = class("StorySceneViewContainer", BaseViewContainer)
 
-	arg_1_0._storyMainSceneView = StoryMainSceneView.New()
+function StorySceneViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, arg_1_0._storyMainSceneView)
-	table.insert(var_1_0, StorySceneView.New())
+	self._storyMainSceneView = StoryMainSceneView.New()
 
-	return var_1_0
+	table.insert(views, self._storyMainSceneView)
+	table.insert(views, StorySceneView.New())
+
+	return views
 end
 
-function var_0_0.getStoryMainSceneView(arg_2_0)
-	return arg_2_0._storyMainSceneView
+function StorySceneViewContainer:getStoryMainSceneView()
+	return self._storyMainSceneView
 end
 
-return var_0_0
+return StorySceneViewContainer

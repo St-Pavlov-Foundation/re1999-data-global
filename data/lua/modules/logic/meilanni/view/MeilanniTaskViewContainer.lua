@@ -1,57 +1,59 @@
-﻿module("modules.logic.meilanni.view.MeilanniTaskViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/meilanni/view/MeilanniTaskViewContainer.lua
 
-local var_0_0 = class("MeilanniTaskViewContainer", BaseViewContainer)
+module("modules.logic.meilanni.view.MeilanniTaskViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+local MeilanniTaskViewContainer = class("MeilanniTaskViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "right/#scroll_reward"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_1.cellClass = MeilanniTaskItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 1
-	var_1_1.cellWidth = 1300
-	var_1_1.cellHeight = 160
-	var_1_1.cellSpaceH = 0
-	var_1_1.cellSpaceV = 6.19
-	var_1_1.startSpace = 0
+function MeilanniTaskViewContainer:buildViews()
+	local views = {}
+	local scrollParam = ListScrollParam.New()
 
-	local var_1_2 = {}
+	scrollParam.scrollGOPath = "right/#scroll_reward"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = MeilanniTaskItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 1300
+	scrollParam.cellHeight = 160
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 6.19
+	scrollParam.startSpace = 0
 
-	for iter_1_0 = 1, 6 do
-		var_1_2[iter_1_0] = (iter_1_0 - 1) * 0.07
+	local times = {}
+
+	for i = 1, 6 do
+		times[i] = (i - 1) * 0.07
 	end
 
-	local var_1_3 = LuaListScrollViewWithAnimator.New(MeilanniTaskListModel.instance, var_1_1, var_1_2)
+	local scrollView = LuaListScrollViewWithAnimator.New(MeilanniTaskListModel.instance, scrollParam, times)
 
-	var_1_3.dontPlayCloseAnimation = true
-	arg_1_0._taskScrollView = var_1_3
+	scrollView.dontPlayCloseAnimation = true
+	self._taskScrollView = scrollView
 
-	table.insert(var_1_0, arg_1_0._taskScrollView)
-	table.insert(var_1_0, MeilanniTaskView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
+	table.insert(views, self._taskScrollView)
+	table.insert(views, MeilanniTaskView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_btns"))
 
-	return var_1_0
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	arg_2_0._navigateButtonView = NavigateButtonsView.New({
+function MeilanniTaskViewContainer:buildTabViews(tabContainerId)
+	self._navigateButtonView = NavigateButtonsView.New({
 		true,
 		true,
 		false
-	}, nil, nil, nil, nil, arg_2_0)
+	}, nil, nil, nil, nil, self)
 
 	return {
-		arg_2_0._navigateButtonView
+		self._navigateButtonView
 	}
 end
 
-function var_0_0.onContainerInit(arg_3_0)
-	arg_3_0.taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(arg_3_0._taskScrollView)
+function MeilanniTaskViewContainer:onContainerInit()
+	self.taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(self._taskScrollView)
 
-	arg_3_0.taskAnimRemoveItem:setMoveInterval(0)
+	self.taskAnimRemoveItem:setMoveInterval(0)
 end
 
-return var_0_0
+return MeilanniTaskViewContainer

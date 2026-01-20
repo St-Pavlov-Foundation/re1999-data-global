@@ -1,11 +1,13 @@
-﻿module("modules.logic.room.controller.RoomBlockGiftEvent", package.seeall)
+﻿-- chunkname: @modules/logic/room/controller/RoomBlockGiftEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.room.controller.RoomBlockGiftEvent", package.seeall)
 
-var_0_0.OnSelect = 1
-var_0_0.OnSortTheme = 2
-var_0_0.OnStartDragItem = 3
-var_0_0.OnDragingItem = 4
-var_0_0.OnEndDragItem = 5
+local RoomBlockGiftEvent = _M
 
-return var_0_0
+RoomBlockGiftEvent.OnSelect = 1
+RoomBlockGiftEvent.OnSortTheme = 2
+RoomBlockGiftEvent.OnStartDragItem = 3
+RoomBlockGiftEvent.OnDragingItem = 4
+RoomBlockGiftEvent.OnEndDragItem = 5
+
+return RoomBlockGiftEvent

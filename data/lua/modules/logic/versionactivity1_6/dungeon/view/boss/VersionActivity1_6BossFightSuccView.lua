@@ -1,422 +1,425 @@
-﻿module("modules.logic.versionactivity1_6.dungeon.view.boss.VersionActivity1_6BossFightSuccView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/dungeon/view/boss/VersionActivity1_6BossFightSuccView.lua
 
-local var_0_0 = class("VersionActivity1_6BossFightSuccView", BaseView)
+module("modules.logic.versionactivity1_6.dungeon.view.boss.VersionActivity1_6BossFightSuccView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._click = gohelper.getClick(arg_1_0.viewGO)
-	arg_1_0._btnData = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btnData")
-	arg_1_0._simagecharacterbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_characterbg")
-	arg_1_0._simagemaskImage = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_maskImage")
-	arg_1_0._gospine = gohelper.findChild(arg_1_0.viewGO, "spineContainer/spine")
-	arg_1_0._uiSpine = GuiModelAgent.Create(arg_1_0._gospine, true)
-	arg_1_0._txtFbNameEn = gohelper.findChildText(arg_1_0.viewGO, "txtFbNameen")
+local VersionActivity1_6BossFightSuccView = class("VersionActivity1_6BossFightSuccView", BaseView)
 
-	arg_1_0._uiSpine:useRT()
+function VersionActivity1_6BossFightSuccView:onInitView()
+	self._click = gohelper.getClick(self.viewGO)
+	self._btnData = gohelper.findChildButtonWithAudio(self.viewGO, "btnData")
+	self._simagecharacterbg = gohelper.findChildSingleImage(self.viewGO, "#simage_characterbg")
+	self._simagemaskImage = gohelper.findChildSingleImage(self.viewGO, "#simage_maskImage")
+	self._gospine = gohelper.findChild(self.viewGO, "spineContainer/spine")
+	self._uiSpine = GuiModelAgent.Create(self._gospine, true)
+	self._txtFbNameEn = gohelper.findChildText(self.viewGO, "txtFbNameen")
 
-	arg_1_0._txtFbName = gohelper.findChildText(arg_1_0.viewGO, "txtFbName")
-	arg_1_0._txtChapterIndex = gohelper.findChildText(arg_1_0.viewGO, "txtFbName/#go_normaltag/section")
-	arg_1_0._txtEpisodeIndex = gohelper.findChildText(arg_1_0.viewGO, "txtFbName/#go_normaltag/unit")
-	arg_1_0._gonormaltag = gohelper.findChild(arg_1_0.viewGO, "txtFbName/#go_normaltag")
-	arg_1_0._goroletag = gohelper.findChild(arg_1_0.viewGO, "txtFbName/#go_roletag")
-	arg_1_0._txtSayCn = gohelper.findChildText(arg_1_0.viewGO, "txtSayCn")
-	arg_1_0._txtSayEn = gohelper.findChildText(arg_1_0.viewGO, "SayEn/txtSayEn")
-	arg_1_0._gocoverrecordpart = gohelper.findChild(arg_1_0.viewGO, "#go_cover_record_part")
-	arg_1_0._txtcurroundcount = gohelper.findChildText(arg_1_0.viewGO, "#go_cover_record_part/tipbg/container/current/#txt_curroundcount")
-	arg_1_0._txtmaxroundcount = gohelper.findChildText(arg_1_0.viewGO, "#go_cover_record_part/tipbg/container/memory/#txt_maxroundcount")
-	arg_1_0._goCoverLessThan = gohelper.findChild(arg_1_0.viewGO, "#go_cover_record_part/tipbg/container/middle/#go_lessthan")
-	arg_1_0._goCoverMuchThan = gohelper.findChild(arg_1_0.viewGO, "#go_cover_record_part/tipbg/container/middle/#go_muchthan")
-	arg_1_0._goCoverEqual = gohelper.findChild(arg_1_0.viewGO, "#go_cover_record_part/tipbg/container/middle/#go_equal")
-	arg_1_0.txtScore = gohelper.findChildText(arg_1_0.viewGO, "goRoleStorytips/#txt_num")
-	arg_1_0._goscoreTips = gohelper.findChild(arg_1_0.viewGO, "Tips")
-	arg_1_0._btnTips = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "goRoleStorytips/txt_tips/icon")
-	arg_1_0.gofirstPass = gohelper.findChild(arg_1_0.viewGO, "firstpass")
-	arg_1_0.txtFirstPassScore = gohelper.findChildText(arg_1_0.gofirstPass, "count")
-	arg_1_0.txtHurtScore = gohelper.findChildText(arg_1_0.gofirstPass, "Tips/image_TipsBG/layout/txt_tips/value")
-	arg_1_0.txtmultiple = gohelper.findChildText(arg_1_0.gofirstPass, "Tips/image_TipsBG/layout/txt_tips1/value")
-	arg_1_0.totoalScore = gohelper.findChildText(arg_1_0.gofirstPass, "Tips/image_TipsBG/layout/txt_tips2/value")
-	arg_1_0.gofightgoal = gohelper.findChild(arg_1_0.viewGO, "fightgoal")
-	arg_1_0.txtCondition = gohelper.findChildText(arg_1_0.gofightgoal, "condition")
-	arg_1_0.txtWave = gohelper.findChildText(arg_1_0.gofightgoal, "count")
+	self._uiSpine:useRT()
+
+	self._txtFbName = gohelper.findChildText(self.viewGO, "txtFbName")
+	self._txtChapterIndex = gohelper.findChildText(self.viewGO, "txtFbName/#go_normaltag/section")
+	self._txtEpisodeIndex = gohelper.findChildText(self.viewGO, "txtFbName/#go_normaltag/unit")
+	self._gonormaltag = gohelper.findChild(self.viewGO, "txtFbName/#go_normaltag")
+	self._goroletag = gohelper.findChild(self.viewGO, "txtFbName/#go_roletag")
+	self._txtSayCn = gohelper.findChildText(self.viewGO, "txtSayCn")
+	self._txtSayEn = gohelper.findChildText(self.viewGO, "SayEn/txtSayEn")
+	self._gocoverrecordpart = gohelper.findChild(self.viewGO, "#go_cover_record_part")
+	self._txtcurroundcount = gohelper.findChildText(self.viewGO, "#go_cover_record_part/tipbg/container/current/#txt_curroundcount")
+	self._txtmaxroundcount = gohelper.findChildText(self.viewGO, "#go_cover_record_part/tipbg/container/memory/#txt_maxroundcount")
+	self._goCoverLessThan = gohelper.findChild(self.viewGO, "#go_cover_record_part/tipbg/container/middle/#go_lessthan")
+	self._goCoverMuchThan = gohelper.findChild(self.viewGO, "#go_cover_record_part/tipbg/container/middle/#go_muchthan")
+	self._goCoverEqual = gohelper.findChild(self.viewGO, "#go_cover_record_part/tipbg/container/middle/#go_equal")
+	self.txtScore = gohelper.findChildText(self.viewGO, "goRoleStorytips/#txt_num")
+	self._goscoreTips = gohelper.findChild(self.viewGO, "Tips")
+	self._btnTips = gohelper.findChildButtonWithAudio(self.viewGO, "goRoleStorytips/txt_tips/icon")
+	self.gofirstPass = gohelper.findChild(self.viewGO, "firstpass")
+	self.txtFirstPassScore = gohelper.findChildText(self.gofirstPass, "count")
+	self.txtHurtScore = gohelper.findChildText(self.gofirstPass, "Tips/image_TipsBG/layout/txt_tips/value")
+	self.txtmultiple = gohelper.findChildText(self.gofirstPass, "Tips/image_TipsBG/layout/txt_tips1/value")
+	self.totoalScore = gohelper.findChildText(self.gofirstPass, "Tips/image_TipsBG/layout/txt_tips2/value")
+	self.gofightgoal = gohelper.findChild(self.viewGO, "fightgoal")
+	self.txtCondition = gohelper.findChildText(self.gofightgoal, "condition")
+	self.txtWave = gohelper.findChildText(self.gofightgoal, "count")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._click:AddClickListener(arg_2_0._onClickClose, arg_2_0)
-	arg_2_0._btnData:AddClickListener(arg_2_0._onClickData, arg_2_0)
-	arg_2_0._btnTips:AddClickListener(arg_2_0._onClickTips, arg_2_0)
+function VersionActivity1_6BossFightSuccView:addEvents()
+	self._click:AddClickListener(self._onClickClose, self)
+	self._btnData:AddClickListener(self._onClickData, self)
+	self._btnTips:AddClickListener(self._onClickTips, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._click:RemoveClickListener()
-	arg_3_0._btnData:RemoveClickListener()
-	arg_3_0._btnTips:RemoveClickListener()
+function VersionActivity1_6BossFightSuccView:removeEvents()
+	self._click:RemoveClickListener()
+	self._btnData:RemoveClickListener()
+	self._btnTips:RemoveClickListener()
 end
 
-function var_0_0.onOpen(arg_4_0)
-	arg_4_0._canClick = false
-	arg_4_0._animation = arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animation))
+function VersionActivity1_6BossFightSuccView:onOpen()
+	self._canClick = false
+	self._animation = self.viewGO:GetComponent(typeof(UnityEngine.Animation))
 
-	arg_4_0._animation:Play("fightsucc_in", UnityEngine.PlayMode.StopAll)
-	arg_4_0._animation:PlayQueued("fightsucc_loop", UnityEngine.QueueMode.CompleteOthers, UnityEngine.PlayMode.StopAll)
+	self._animation:Play("fightsucc_in", UnityEngine.PlayMode.StopAll)
+	self._animation:PlayQueued("fightsucc_loop", UnityEngine.QueueMode.CompleteOthers, UnityEngine.PlayMode.StopAll)
 
-	arg_4_0._animEventWrap = arg_4_0.viewGO:GetComponent(typeof(ZProj.AnimationEventWrap))
+	self._animEventWrap = self.viewGO:GetComponent(typeof(ZProj.AnimationEventWrap))
 
 	FightController.instance:checkFightQuitTipViewClose()
-	gohelper.setActive(arg_4_0._bonusItemGo, false)
-	gohelper.setActive(arg_4_0._goscoreTips, false)
-	gohelper.setActive(arg_4_0.gofirstPass, false)
-	gohelper.setActive(arg_4_0._btnTips.gameObject, false)
+	gohelper.setActive(self._bonusItemGo, false)
+	gohelper.setActive(self._goscoreTips, false)
+	gohelper.setActive(self.gofirstPass, false)
+	gohelper.setActive(self._btnTips.gameObject, false)
 
-	arg_4_0._curEpisodeId = DungeonModel.instance.curSendEpisodeId
-	arg_4_0._curChapterId = DungeonModel.instance.curSendChapterId
+	self._curEpisodeId = DungeonModel.instance.curSendEpisodeId
+	self._curChapterId = DungeonModel.instance.curSendChapterId
 
-	local var_4_0 = FightResultModel.instance
-	local var_4_1 = lua_episode.configDict[arg_4_0._curEpisodeId]
-	local var_4_2 = DungeonConfig.instance:getChapterCO(arg_4_0._curChapterId)
+	local fightResultModel = FightResultModel.instance
+	local curEpisodeConfig = lua_episode.configDict[self._curEpisodeId]
+	local curChapterConfig = DungeonConfig.instance:getChapterCO(self._curChapterId)
+	local episodeType = curEpisodeConfig and curEpisodeConfig.type or DungeonEnum.EpisodeType.Normal
 
-	if not var_4_1 or not var_4_1.type then
-		local var_4_3 = DungeonEnum.EpisodeType.Normal
+	self._curEpisodeId = FightResultModel.instance.episodeId
+	self._randomEntityMO = self:_getRandomEntityMO()
+
+	self._simagecharacterbg:LoadImage(ResUrl.getFightQuitResultIcon("bg_renwubeiguang"))
+	self._simagemaskImage:LoadImage(ResUrl.getFightResultcIcon("bg_zhezhao"))
+
+	local chapterCO = lua_chapter.configDict[fightResultModel:getChapterId()]
+	local episodeCO = lua_episode.configDict[fightResultModel:getEpisodeId()]
+	local needShowFbName = chapterCO ~= nil and episodeCO ~= nil
+
+	gohelper.setActive(self._txtFbName.gameObject, needShowFbName)
+	gohelper.setActive(self._txtFbNameEn.gameObject, needShowFbName)
+
+	if needShowFbName then
+		self:_setFbName(episodeCO)
 	end
 
-	arg_4_0._curEpisodeId = FightResultModel.instance.episodeId
-	arg_4_0._randomEntityMO = arg_4_0:_getRandomEntityMO()
+	self:_setSpineVoice()
+	NavigateMgr.instance:addEscape(ViewName.VersionActivity1_6BossFightSuccView, self._onClickClose, self)
 
-	arg_4_0._simagecharacterbg:LoadImage(ResUrl.getFightQuitResultIcon("bg_renwubeiguang"))
-	arg_4_0._simagemaskImage:LoadImage(ResUrl.getFightResultcIcon("bg_zhezhao"))
+	self._canPlayVoice = false
 
-	local var_4_4 = lua_chapter.configDict[var_4_0:getChapterId()]
-	local var_4_5 = lua_episode.configDict[var_4_0:getEpisodeId()]
-	local var_4_6 = var_4_4 ~= nil and var_4_5 ~= nil
-
-	gohelper.setActive(arg_4_0._txtFbName.gameObject, var_4_6)
-	gohelper.setActive(arg_4_0._txtFbNameEn.gameObject, var_4_6)
-
-	if var_4_6 then
-		arg_4_0:_setFbName(var_4_5)
-	end
-
-	arg_4_0:_setSpineVoice()
-	NavigateMgr.instance:addEscape(ViewName.VersionActivity1_6BossFightSuccView, arg_4_0._onClickClose, arg_4_0)
-
-	arg_4_0._canPlayVoice = false
-
-	TaskDispatcher.runDelay(arg_4_0._setCanPlayVoice, arg_4_0, 0.9)
-	TaskDispatcher.runDelay(arg_4_0._playScoreSound, arg_4_0, 1)
+	TaskDispatcher.runDelay(self._setCanPlayVoice, self, 0.9)
+	TaskDispatcher.runDelay(self._playScoreSound, self, 1)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_settleaccounts_win)
-	arg_4_0:showWave()
-	arg_4_0:showScore()
-	arg_4_0:_refreshFirstPassTxt()
+	self:showWave()
+	self:showScore()
+	self:_refreshFirstPassTxt()
 end
 
-function var_0_0.onClose(arg_5_0)
-	arg_5_0._canPlayVoice = false
+function VersionActivity1_6BossFightSuccView:onClose()
+	self._canPlayVoice = false
 
-	TaskDispatcher.cancelTask(arg_5_0._setCanPlayVoice, arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0._playScoreSound, arg_5_0)
-	gohelper.setActive(arg_5_0._gospine, false)
+	TaskDispatcher.cancelTask(self._setCanPlayVoice, self)
+	TaskDispatcher.cancelTask(self._playScoreSound, self)
+	gohelper.setActive(self._gospine, false)
 
-	if FightResultModel.instance.canUpdateDungeonRecord and not arg_5_0._hasSendCoverRecord then
+	if FightResultModel.instance.canUpdateDungeonRecord and not self._hasSendCoverRecord then
 		DungeonRpc.instance:sendCoverDungeonRecordRequest(false)
 	end
 
-	if arg_5_0._popupFlow then
-		arg_5_0._popupFlow:destroy()
+	if self._popupFlow then
+		self._popupFlow:destroy()
 
-		arg_5_0._popupFlow = nil
+		self._popupFlow = nil
 	end
 end
 
-function var_0_0.onCloseFinish(arg_6_0)
-	arg_6_0._simagecharacterbg:UnLoadImage()
-	arg_6_0._simagemaskImage:UnLoadImage()
+function VersionActivity1_6BossFightSuccView:onCloseFinish()
+	self._simagecharacterbg:UnLoadImage()
+	self._simagemaskImage:UnLoadImage()
 	FightStatModel.instance:clear()
-	arg_6_0._animEventWrap:RemoveAllEventListener()
+	self._animEventWrap:RemoveAllEventListener()
 
-	if arg_6_0._farmTweenId then
-		ZProj.TweenHelper.KillById(arg_6_0._farmTweenId)
+	if self._farmTweenId then
+		ZProj.TweenHelper.KillById(self._farmTweenId)
 	end
 end
 
-function var_0_0._setFbName(arg_7_0, arg_7_1)
-	local var_7_0 = DungeonConfig.instance:getNormalEpisodeId(arg_7_1.id)
-	local var_7_1 = DungeonConfig.instance:getEpisodeCO(var_7_0)
-	local var_7_2 = DungeonConfig.instance:getChapterCO(var_7_1.chapterId)
-	local var_7_3, var_7_4 = DungeonConfig.instance:getChapterIndex(var_7_2.type, var_7_1.chapterId)
-	local var_7_5, var_7_6 = DungeonConfig.instance:getChapterEpisodeIndexWithSP(var_7_1.chapterId, var_7_0)
+function VersionActivity1_6BossFightSuccView:_setFbName(episodeCO)
+	local normalEpisodeId = DungeonConfig.instance:getNormalEpisodeId(episodeCO.id)
+	local normalEpisodeCO = DungeonConfig.instance:getEpisodeCO(normalEpisodeId)
+	local chapterCO = DungeonConfig.instance:getChapterCO(normalEpisodeCO.chapterId)
+	local chapterIndex, _ = DungeonConfig.instance:getChapterIndex(chapterCO.type, normalEpisodeCO.chapterId)
+	local episodeIndex, _ = DungeonConfig.instance:getChapterEpisodeIndexWithSP(normalEpisodeCO.chapterId, normalEpisodeId)
 
-	arg_7_0._txtChapterIndex.text = var_7_2.chapterIndex
-	arg_7_0._txtFbNameEn.text = arg_7_1.name_En
+	self._txtChapterIndex.text = chapterCO.chapterIndex
+	self._txtFbNameEn.text = episodeCO.name_En
 
-	arg_7_0:_setEpisodeName(arg_7_1, var_7_5)
-	arg_7_0:_setTag(arg_7_1)
+	self:_setEpisodeName(episodeCO, episodeIndex)
+	self:_setTag(episodeCO)
 end
 
-function var_0_0._setTag(arg_8_0, arg_8_1)
-	local var_8_0 = lua_const.configDict[ConstEnum.DungeonSuccessType].value
-	local var_8_1 = string.splitToNumber(var_8_0, "#")
-	local var_8_2 = tabletool.indexOf(var_8_1, arg_8_1.type)
+function VersionActivity1_6BossFightSuccView:_setTag(episodeCO)
+	local typeList = lua_const.configDict[ConstEnum.DungeonSuccessType].value
+	local list = string.splitToNumber(typeList, "#")
+	local visible = tabletool.indexOf(list, episodeCO.type)
 
-	gohelper.setActive(arg_8_0._gonormaltag, var_8_2)
-	gohelper.setActive(arg_8_0._goroletag, not var_8_2)
+	gohelper.setActive(self._gonormaltag, visible)
+	gohelper.setActive(self._goroletag, not visible)
 end
 
-function var_0_0._setEpisodeName(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = FightModel.instance:getFightParam().battleId
-	local var_9_1 = Activity149Config.instance:getAct149EpisodeCfgByEpisodeId(arg_9_1.id)
+function VersionActivity1_6BossFightSuccView:_setEpisodeName(episodeCO, episodeIndex)
+	local fightParam = FightModel.instance:getFightParam()
+	local battleId = fightParam.battleId
+	local bossEpisodeCfg = Activity149Config.instance:getAct149EpisodeCfgByEpisodeId(episodeCO.id)
 
-	arg_9_0._txtFbName.text = arg_9_1.name
-	arg_9_0._txtEpisodeIndex.text = var_9_1.order
+	self._txtFbName.text = episodeCO.name
+	self._txtEpisodeIndex.text = bossEpisodeCfg.order
 end
 
-function var_0_0._refreshFirstPassTxt(arg_10_0)
-	local var_10_0 = FightResultModel.instance.firstPass
+function VersionActivity1_6BossFightSuccView:_refreshFirstPassTxt()
+	local isFirstPass = FightResultModel.instance.firstPass
 
-	gohelper.setActive(arg_10_0.gofirstPass, var_10_0)
+	gohelper.setActive(self.gofirstPass, isFirstPass)
 
-	if not var_10_0 then
+	if not isFirstPass then
 		return
 	end
 
-	local var_10_1 = arg_10_0._curEpisodeId
-	local var_10_2 = Activity149Config.instance:getAct149EpisodeCfgByEpisodeId(var_10_1).firstPassScore
+	local episodeId = self._curEpisodeId
+	local bossEpisodeCfg = Activity149Config.instance:getAct149EpisodeCfgByEpisodeId(episodeId)
+	local firstPassScore = bossEpisodeCfg.firstPassScore
 
-	arg_10_0.txtFirstPassScore.text = var_10_2
+	self.txtFirstPassScore.text = firstPassScore
 end
 
-function var_0_0._getRandomEntityMO(arg_11_0)
-	local var_11_0 = FightDataHelper.entityMgr:getMyNormalList()
-	local var_11_1 = FightDataHelper.entityMgr:getMySubList()
-	local var_11_2 = FightDataHelper.entityMgr:getMyDeadList()
-	local var_11_3 = {}
+function VersionActivity1_6BossFightSuccView:_getRandomEntityMO()
+	local mySide1 = FightDataHelper.entityMgr:getMyNormalList()
+	local mySide2 = FightDataHelper.entityMgr:getMySubList()
+	local mySide3 = FightDataHelper.entityMgr:getMyDeadList()
+	local mySideMOList = {}
 
-	tabletool.addValues(var_11_3, var_11_0)
-	tabletool.addValues(var_11_3, var_11_1)
-	tabletool.addValues(var_11_3, var_11_2)
+	tabletool.addValues(mySideMOList, mySide1)
+	tabletool.addValues(mySideMOList, mySide2)
+	tabletool.addValues(mySideMOList, mySide3)
 
-	for iter_11_0 = #var_11_3, 1, -1 do
-		local var_11_4 = var_11_3[iter_11_0]
+	for i = #mySideMOList, 1, -1 do
+		local entityMO = mySideMOList[i]
 
-		if not arg_11_0:_getSkin(var_11_4) then
-			table.remove(var_11_3, iter_11_0)
+		if not self:_getSkin(entityMO) then
+			table.remove(mySideMOList, i)
 		end
 	end
 
-	local var_11_5 = {}
+	local noMonsterMOList = {}
 
-	tabletool.addValues(var_11_5, var_11_3)
+	tabletool.addValues(noMonsterMOList, mySideMOList)
 
-	for iter_11_1 = #var_11_5, 1, -1 do
-		local var_11_6 = var_11_3[iter_11_1]
-		local var_11_7 = FightAudioMgr.instance:_getHeroVoiceCOs(var_11_6.modelId, CharacterEnum.VoiceType.FightResult)
+	for i = #noMonsterMOList, 1, -1 do
+		local entityMO = mySideMOList[i]
+		local voice_list = FightAudioMgr.instance:_getHeroVoiceCOs(entityMO.modelId, CharacterEnum.VoiceType.FightResult)
 
-		if var_11_7 and #var_11_7 > 0 then
-			if var_11_6:isMonster() then
-				table.remove(var_11_5, iter_11_1)
+		if voice_list and #voice_list > 0 then
+			if entityMO:isMonster() then
+				table.remove(noMonsterMOList, i)
 			end
 		else
-			table.remove(var_11_5, iter_11_1)
+			table.remove(noMonsterMOList, i)
 		end
 	end
 
-	if #var_11_5 > 0 then
-		return var_11_5[math.random(#var_11_5)]
-	elseif #var_11_3 > 0 then
-		return var_11_3[math.random(#var_11_3)]
+	if #noMonsterMOList > 0 then
+		return noMonsterMOList[math.random(#noMonsterMOList)]
+	elseif #mySideMOList > 0 then
+		return mySideMOList[math.random(#mySideMOList)]
 	else
 		logError("没有角色")
 	end
 end
 
-function var_0_0._getSkin(arg_12_0, arg_12_1)
-	local var_12_0 = FightConfig.instance:getSkinCO(arg_12_1.skin)
-	local var_12_1 = var_12_0 and not string.nilorempty(var_12_0.verticalDrawing)
-	local var_12_2 = var_12_0 and not string.nilorempty(var_12_0.live2d)
+function VersionActivity1_6BossFightSuccView:_getSkin(mo)
+	local skinCO = FightConfig.instance:getSkinCO(mo.skin)
+	local hasVerticalDrawing = skinCO and not string.nilorempty(skinCO.verticalDrawing)
+	local hasLive2d = skinCO and not string.nilorempty(skinCO.live2d)
 
-	if var_12_1 or var_12_2 then
-		return var_12_0
+	if hasVerticalDrawing or hasLive2d then
+		return skinCO
 	end
 end
 
-function var_0_0._setSpineVoice(arg_13_0)
-	if not arg_13_0._randomEntityMO then
+function VersionActivity1_6BossFightSuccView:_setSpineVoice()
+	if not self._randomEntityMO then
 		return
 	end
 
-	local var_13_0 = arg_13_0:_getSkin(arg_13_0._randomEntityMO)
+	local skinCO = self:_getSkin(self._randomEntityMO)
 
-	if var_13_0 then
-		arg_13_0._spineLoaded = false
+	if skinCO then
+		self._spineLoaded = false
 
-		arg_13_0._uiSpine:setImgPos(0)
-		arg_13_0._uiSpine:setResPath(var_13_0, function()
-			arg_13_0._spineLoaded = true
+		self._uiSpine:setImgPos(0)
+		self._uiSpine:setResPath(skinCO, function()
+			self._spineLoaded = true
 
-			arg_13_0._uiSpine:setUIMask(true)
-			arg_13_0:_playSpineVoice()
-		end, arg_13_0)
+			self._uiSpine:setUIMask(true)
+			self:_playSpineVoice()
+		end, self)
 
-		local var_13_1, var_13_2 = SkinConfig.instance:getSkinOffset(var_13_0.fightSuccViewOffset)
+		local offsets, isNil = SkinConfig.instance:getSkinOffset(skinCO.fightSuccViewOffset)
 
-		if var_13_2 then
-			var_13_1, _ = SkinConfig.instance:getSkinOffset(var_13_0.characterViewOffset)
-			var_13_1 = SkinConfig.instance:getAfterRelativeOffset(504, var_13_1)
+		if isNil then
+			offsets, _ = SkinConfig.instance:getSkinOffset(skinCO.characterViewOffset)
+			offsets = SkinConfig.instance:getAfterRelativeOffset(504, offsets)
 		end
 
-		local var_13_3 = tonumber(var_13_1[3])
-		local var_13_4 = tonumber(var_13_1[1])
-		local var_13_5 = tonumber(var_13_1[2])
+		local scale = tonumber(offsets[3])
+		local offsetX = tonumber(offsets[1])
+		local offsetY = tonumber(offsets[2])
 
-		recthelper.setAnchor(arg_13_0._gospine.transform, var_13_4, var_13_5)
-		transformhelper.setLocalScale(arg_13_0._gospine.transform, var_13_3, var_13_3, var_13_3)
+		recthelper.setAnchor(self._gospine.transform, offsetX, offsetY)
+		transformhelper.setLocalScale(self._gospine.transform, scale, scale, scale)
 	else
-		gohelper.setActive(arg_13_0._gospine, false)
+		gohelper.setActive(self._gospine, false)
 	end
 end
 
-function var_0_0._playSpineVoice(arg_15_0)
-	if not arg_15_0._canPlayVoice then
+function VersionActivity1_6BossFightSuccView:_playSpineVoice()
+	if not self._canPlayVoice then
 		return
 	end
 
-	if not arg_15_0._spineLoaded then
+	if not self._spineLoaded then
 		return
 	end
 
-	local var_15_0 = HeroModel.instance:getVoiceConfig(arg_15_0._randomEntityMO.modelId, CharacterEnum.VoiceType.FightResult, nil, arg_15_0._randomEntityMO.skin) or FightAudioMgr.instance:_getHeroVoiceCOs(arg_15_0._randomEntityMO.modelId, CharacterEnum.VoiceType.FightResult, arg_15_0._randomEntityMO.skin)
+	local voiceCOList = HeroModel.instance:getVoiceConfig(self._randomEntityMO.modelId, CharacterEnum.VoiceType.FightResult, nil, self._randomEntityMO.skin)
 
-	if var_15_0 and #var_15_0 > 0 then
-		local var_15_1 = var_15_0[1]
+	voiceCOList = voiceCOList or FightAudioMgr.instance:_getHeroVoiceCOs(self._randomEntityMO.modelId, CharacterEnum.VoiceType.FightResult, self._randomEntityMO.skin)
 
-		arg_15_0._uiSpine:playVoice(var_15_1, nil, arg_15_0._txtSayCn, arg_15_0._txtSayEn)
+	if voiceCOList and #voiceCOList > 0 then
+		local firstVoiceCO = voiceCOList[1]
+
+		self._uiSpine:playVoice(firstVoiceCO, nil, self._txtSayCn, self._txtSayEn)
 	end
 end
 
-function var_0_0._getSayContent(arg_16_0, arg_16_1)
-	local var_16_0 = GameUtil.splitString2(arg_16_1, false, "|", "#")
-	local var_16_1 = ""
+function VersionActivity1_6BossFightSuccView:_getSayContent(contentStr)
+	local temp = GameUtil.splitString2(contentStr, false, "|", "#")
+	local ans = ""
 
-	for iter_16_0, iter_16_1 in ipairs(var_16_0) do
-		var_16_1 = var_16_1 .. iter_16_1[1]
+	for _, temp2 in ipairs(temp) do
+		ans = ans .. temp2[1]
 	end
 
-	return var_16_1
+	return ans
 end
 
-function var_0_0._setCanPlayVoice(arg_17_0)
-	arg_17_0._canPlayVoice = true
+function VersionActivity1_6BossFightSuccView:_setCanPlayVoice()
+	self._canPlayVoice = true
 
-	arg_17_0:_playSpineVoice()
+	self:_playSpineVoice()
 end
 
-function var_0_0._finishStoryFromServer(arg_18_0)
-	if var_0_0._storyId == arg_18_0 then
-		var_0_0._serverFinish = true
+function VersionActivity1_6BossFightSuccView._finishStoryFromServer(storyId)
+	if VersionActivity1_6BossFightSuccView._storyId == storyId then
+		VersionActivity1_6BossFightSuccView._serverFinish = true
 
-		var_0_0.checkStoryEnd()
-	end
-end
-
-function var_0_0.checkStoryEnd()
-	if var_0_0._clientFinish and var_0_0._serverFinish then
-		var_0_0.onStoryEnd()
+		VersionActivity1_6BossFightSuccView.checkStoryEnd()
 	end
 end
 
-function var_0_0.onStoryEnd()
-	var_0_0._storyId = nil
-	var_0_0._clientFinish = false
-	var_0_0._serverFinish = false
+function VersionActivity1_6BossFightSuccView.checkStoryEnd()
+	if VersionActivity1_6BossFightSuccView._clientFinish and VersionActivity1_6BossFightSuccView._serverFinish then
+		VersionActivity1_6BossFightSuccView.onStoryEnd()
+	end
+end
 
-	TaskDispatcher.cancelTask(var_0_0.onStoryEnd, nil)
-	StoryController.instance:unregisterCallback(StoryEvent.FinishFromServer, var_0_0._finishStoryFromServer)
+function VersionActivity1_6BossFightSuccView.onStoryEnd()
+	VersionActivity1_6BossFightSuccView._storyId = nil
+	VersionActivity1_6BossFightSuccView._clientFinish = false
+	VersionActivity1_6BossFightSuccView._serverFinish = false
+
+	TaskDispatcher.cancelTask(VersionActivity1_6BossFightSuccView.onStoryEnd, nil)
+	StoryController.instance:unregisterCallback(StoryEvent.FinishFromServer, VersionActivity1_6BossFightSuccView._finishStoryFromServer)
 	FightController.onResultViewClose()
 end
 
-function var_0_0._showCharacterGetView(arg_21_0)
+function VersionActivity1_6BossFightSuccView:_showCharacterGetView()
 	PopupController.instance:setPause("fightsuccess", false)
 
-	arg_21_0._canClick = true
+	self._canClick = true
 end
 
-function var_0_0.showWave(arg_22_0)
-	local var_22_0 = FightModel.instance:getCurWaveId()
-	local var_22_1 = FightModel.instance.maxWave
+function VersionActivity1_6BossFightSuccView:showWave()
+	local wave = FightModel.instance:getCurWaveId()
+	local maxwave = FightModel.instance.maxWave
 
-	arg_22_0.txtCondition.text = luaLang("dungeon_beat_all")
+	self.txtCondition.text = luaLang("dungeon_beat_all")
 
-	local var_22_2 = FightDataHelper.entityMgr:getEnemyNormalList()
+	local list = FightDataHelper.entityMgr:getEnemyNormalList()
 
-	if var_22_2 and #var_22_2 > 0 then
-		var_22_0 = var_22_0 - 1
+	if list and #list > 0 then
+		wave = wave - 1
 	end
 
-	arg_22_0.txtWave.text = string.format("<color=#E57937>%s</color>/%s", var_22_0, var_22_1)
+	self.txtWave.text = string.format("<color=#E57937>%s</color>/%s", wave, maxwave)
 end
 
-function var_0_0.showScore(arg_23_0)
-	local var_23_0 = VersionActivity1_6DungeonBossModel.instance:getFightScore()
+function VersionActivity1_6BossFightSuccView:showScore()
+	local score = VersionActivity1_6DungeonBossModel.instance:getFightScore()
 
-	arg_23_0.txtScore.text = var_23_0
+	self.txtScore.text = score
 
-	arg_23_0:_onAllTweenFinish()
+	self:_onAllTweenFinish()
 end
 
-function var_0_0._onAllTweenFinish(arg_24_0)
-	arg_24_0:_showCharacterGetView()
+function VersionActivity1_6BossFightSuccView:_onAllTweenFinish()
+	self:_showCharacterGetView()
 end
 
-function var_0_0._onClickClose(arg_25_0)
-	if not arg_25_0._canClick then
+function VersionActivity1_6BossFightSuccView:_onClickClose()
+	if not self._canClick then
 		return
 	end
 
-	if arg_25_0._uiSpine then
-		arg_25_0._uiSpine:stopVoice()
+	if self._uiSpine then
+		self._uiSpine:stopVoice()
 	end
 
-	arg_25_0:closeThis()
+	self:closeThis()
 
-	local var_25_0 = FightModel.instance:getAfterStory()
+	local storyId = FightModel.instance:getAfterStory()
 
-	if var_25_0 > 0 and not StoryModel.instance:isStoryFinished(var_25_0) then
-		var_0_0._storyId = var_25_0
-		var_0_0._clientFinish = false
-		var_0_0._serverFinish = false
+	if storyId > 0 and not StoryModel.instance:isStoryFinished(storyId) then
+		VersionActivity1_6BossFightSuccView._storyId = storyId
+		VersionActivity1_6BossFightSuccView._clientFinish = false
+		VersionActivity1_6BossFightSuccView._serverFinish = false
 
-		StoryController.instance:registerCallback(StoryEvent.FinishFromServer, var_0_0._finishStoryFromServer)
+		StoryController.instance:registerCallback(StoryEvent.FinishFromServer, VersionActivity1_6BossFightSuccView._finishStoryFromServer)
 
-		local var_25_1 = {}
+		local param = {}
 
-		var_25_1.mark = true
-		var_25_1.episodeId = DungeonModel.instance.curSendEpisodeId
+		param.mark = true
+		param.episodeId = DungeonModel.instance.curSendEpisodeId
 
-		StoryController.instance:playStory(var_25_0, var_25_1, function()
-			TaskDispatcher.runDelay(var_0_0.onStoryEnd, nil, 3)
+		StoryController.instance:playStory(storyId, param, function()
+			TaskDispatcher.runDelay(VersionActivity1_6BossFightSuccView.onStoryEnd, nil, 3)
 
-			var_0_0._clientFinish = true
+			VersionActivity1_6BossFightSuccView._clientFinish = true
 
-			var_0_0.checkStoryEnd()
+			VersionActivity1_6BossFightSuccView.checkStoryEnd()
 		end)
 
 		return
 	end
 
-	var_0_0.onStoryEnd()
+	VersionActivity1_6BossFightSuccView.onStoryEnd()
 end
 
-function var_0_0._onClickData(arg_27_0)
+function VersionActivity1_6BossFightSuccView:_onClickData()
 	ViewMgr.instance:openView(ViewName.FightStatView)
 end
 
-function var_0_0._onClickTips(arg_28_0)
-	gohelper.setActive(arg_28_0._goscoreTips, true)
+function VersionActivity1_6BossFightSuccView:_onClickTips()
+	gohelper.setActive(self._goscoreTips, true)
 end
 
-function var_0_0._onClickTipsClose(arg_29_0)
-	gohelper.setActive(arg_29_0._goscoreTips, false)
+function VersionActivity1_6BossFightSuccView:_onClickTipsClose()
+	gohelper.setActive(self._goscoreTips, false)
 end
 
-function var_0_0._playScoreSound(arg_30_0)
+function VersionActivity1_6BossFightSuccView:_playScoreSound()
 	AudioMgr.instance:trigger(AudioEnum.UI.Act1_6DungeonBossFightResultScore)
 end
 
-return var_0_0
+return VersionActivity1_6BossFightSuccView

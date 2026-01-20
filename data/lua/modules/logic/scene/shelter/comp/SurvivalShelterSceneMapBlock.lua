@@ -1,45 +1,47 @@
-﻿module("modules.logic.scene.shelter.comp.SurvivalShelterSceneMapBlock", package.seeall)
+﻿-- chunkname: @modules/logic/scene/shelter/comp/SurvivalShelterSceneMapBlock.lua
 
-local var_0_0 = class("SurvivalShelterSceneMapBlock", BaseSceneComp)
+module("modules.logic.scene.shelter.comp.SurvivalShelterSceneMapBlock", package.seeall)
 
-function var_0_0.init(arg_1_0)
-	arg_1_0:getCurScene().preloader:registerCallback(SurvivalEvent.OnSurvivalPreloadFinish, arg_1_0._onPreloadFinish, arg_1_0)
+local SurvivalShelterSceneMapBlock = class("SurvivalShelterSceneMapBlock", BaseSceneComp)
+
+function SurvivalShelterSceneMapBlock:init()
+	self:getCurScene().preloader:registerCallback(SurvivalEvent.OnSurvivalPreloadFinish, self._onPreloadFinish, self)
 end
 
-function var_0_0._onPreloadFinish(arg_2_0)
-	arg_2_0:getCurScene().preloader:unregisterCallback(SurvivalEvent.OnSurvivalPreloadFinish, arg_2_0._onPreloadFinish, arg_2_0)
+function SurvivalShelterSceneMapBlock:_onPreloadFinish()
+	self:getCurScene().preloader:unregisterCallback(SurvivalEvent.OnSurvivalPreloadFinish, self._onPreloadFinish, self)
 
-	arg_2_0._sceneGo = arg_2_0:getCurScene():getSceneContainerGO()
-	arg_2_0._blockRoot = gohelper.create3d(arg_2_0._sceneGo, "BlockRoot")
+	self._sceneGo = self:getCurScene():getSceneContainerGO()
+	self._blockRoot = gohelper.create3d(self._sceneGo, "BlockRoot")
 
-	local var_2_0 = SurvivalConfig.instance:getShelterMapCo()
+	local mapCo = SurvivalConfig.instance:getShelterMapCo()
 
-	arg_2_0._allBlocks = {}
-	arg_2_0.blockDict = {}
+	self._allBlocks = {}
+	self.blockDict = {}
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_0.allBlocks) do
-		SurvivalHelper.instance:addNodeToDict(arg_2_0.blockDict, iter_2_1.pos)
+	for i, v in ipairs(mapCo.allBlocks) do
+		SurvivalHelper.instance:addNodeToDict(self.blockDict, v.pos)
 
-		local var_2_1 = SurvivalShelterBlockEntity.Create(iter_2_1, arg_2_0._blockRoot)
+		local block = SurvivalShelterBlockEntity.Create(v, self._blockRoot)
 
-		table.insert(arg_2_0._allBlocks, var_2_1)
+		table.insert(self._allBlocks, block)
 	end
 
-	arg_2_0:dispatchEvent(SurvivalEvent.OnSurvivalBlockLoadFinish)
+	self:dispatchEvent(SurvivalEvent.OnSurvivalBlockLoadFinish)
 end
 
-function var_0_0.isClickBlock(arg_3_0, arg_3_1)
-	return SurvivalHelper.instance:getValueFromDict(arg_3_0.blockDict, arg_3_1)
+function SurvivalShelterSceneMapBlock:isClickBlock(hexPoint)
+	return SurvivalHelper.instance:getValueFromDict(self.blockDict, hexPoint)
 end
 
-function var_0_0.onSceneClose(arg_4_0)
-	arg_4_0:getCurScene().preloader:unregisterCallback(SurvivalEvent.OnSurvivalPreloadFinish, arg_4_0._onPreloadFinish, arg_4_0)
-	gohelper.destroy(arg_4_0._blockRoot)
+function SurvivalShelterSceneMapBlock:onSceneClose()
+	self:getCurScene().preloader:unregisterCallback(SurvivalEvent.OnSurvivalPreloadFinish, self._onPreloadFinish, self)
+	gohelper.destroy(self._blockRoot)
 
-	arg_4_0._blockRoot = nil
-	arg_4_0._sceneGo = nil
-	arg_4_0.blockDict = {}
-	arg_4_0._allBlocks = {}
+	self._blockRoot = nil
+	self._sceneGo = nil
+	self.blockDict = {}
+	self._allBlocks = {}
 end
 
-return var_0_0
+return SurvivalShelterSceneMapBlock

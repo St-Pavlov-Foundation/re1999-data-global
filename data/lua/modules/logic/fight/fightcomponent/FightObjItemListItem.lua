@@ -1,55 +1,59 @@
-﻿module("modules.logic.fight.fightcomponent.FightObjItemListItem", package.seeall)
+﻿-- chunkname: @modules/logic/fight/fightcomponent/FightObjItemListItem.lua
 
-local var_0_0 = class("FightObjItemListItem", FightBaseClass)
+module("modules.logic.fight.fightcomponent.FightObjItemListItem", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.dataList = {}
-	arg_1_0.modelGameObject = arg_1_1
-	arg_1_0.objClass = arg_1_2
-	arg_1_0.parentObject = arg_1_3 or arg_1_0.modelGameObject.transform.parent.gameObject
+local FightObjItemListItem = class("FightObjItemListItem", FightBaseClass)
 
-	gohelper.setActive(arg_1_0.modelGameObject, false)
+function FightObjItemListItem:onConstructor(gameObject, class, parentObject)
+	self.dataList = {}
+	self.modelGameObject = gameObject
+	self.objClass = class
+	self.parentObject = parentObject or self.modelGameObject.transform.parent.gameObject
+
+	gohelper.setActive(self.modelGameObject, false)
 end
 
-function var_0_0.setDataList(arg_2_0, arg_2_1)
-	for iter_2_0 = #arg_2_0.dataList, 1, -1 do
-		arg_2_0:removeIndex(iter_2_0)
+function FightObjItemListItem:setDataList(dataList)
+	local oldCount = #self.dataList
+
+	for i = oldCount, 1, -1 do
+		self:removeIndex(i)
 	end
 
-	local var_2_0 = #arg_2_1
+	local newCount = #dataList
 
-	for iter_2_1 = 1, var_2_0 do
-		arg_2_0:addIndex(iter_2_1, arg_2_1[iter_2_1])
-	end
-end
-
-function var_0_0.addIndex(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = arg_3_0:newItem()
-
-	table.insert(arg_3_0.dataList, arg_3_1, arg_3_2)
-	table.insert(arg_3_0, arg_3_1, var_3_0)
-
-	if var_3_0.onRefreshItemData then
-		var_3_0:onRefreshItemData(arg_3_2)
-	end
-
-	return var_3_0
-end
-
-function var_0_0.removeIndex(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0[arg_4_1]
-
-	if var_4_0 then
-		table.remove(arg_4_0.dataList, arg_4_1)
-		table.remove(arg_4_0, arg_4_1)
-		var_4_0:disposeSelf()
+	for i = 1, newCount do
+		self:addIndex(i, dataList[i])
 	end
 end
 
-function var_0_0.getIndex(arg_5_0, arg_5_1)
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0) do
-		if iter_5_1 == arg_5_1 then
-			return iter_5_0
+function FightObjItemListItem:addIndex(index, data)
+	local item = self:newItem()
+
+	table.insert(self.dataList, index, data)
+	table.insert(self, index, item)
+
+	if item.onRefreshItemData then
+		item:onRefreshItemData(data)
+	end
+
+	return item
+end
+
+function FightObjItemListItem:removeIndex(index)
+	local item = self[index]
+
+	if item then
+		table.remove(self.dataList, index)
+		table.remove(self, index)
+		item:disposeSelf()
+	end
+end
+
+function FightObjItemListItem:getIndex(item)
+	for i, v in ipairs(self) do
+		if v == item then
+			return i
 		end
 	end
 
@@ -58,88 +62,96 @@ function var_0_0.getIndex(arg_5_0, arg_5_1)
 	return 0
 end
 
-function var_0_0.addHead(arg_6_0, arg_6_1)
-	return arg_6_0:addIndex(1, arg_6_1)
+function FightObjItemListItem:addHead(data)
+	return self:addIndex(1, data)
 end
 
-function var_0_0.addLast(arg_7_0, arg_7_1)
-	return arg_7_0:addIndex(#arg_7_0 + 1, arg_7_1)
+function FightObjItemListItem:addLast(data)
+	return self:addIndex(#self + 1, data)
 end
 
-function var_0_0.getHead(arg_8_0)
-	return arg_8_0[1]
+function FightObjItemListItem:getHead()
+	return self[1]
 end
 
-function var_0_0.getLast(arg_9_0)
-	return arg_9_0[#arg_9_0]
+function FightObjItemListItem:getLast()
+	return self[#self]
 end
 
-function var_0_0.removeHead(arg_10_0)
-	return arg_10_0:removeIndex(1)
+function FightObjItemListItem:removeHead()
+	return self:removeIndex(1)
 end
 
-function var_0_0.removeLast(arg_11_0)
-	return arg_11_0:removeIndex(#arg_11_0)
+function FightObjItemListItem:removeLast()
+	return self:removeIndex(#self)
 end
 
-function var_0_0.removeItem(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0:getIndex(arg_12_1)
+function FightObjItemListItem:removeItem(item)
+	local index = self:getIndex(item)
 
-	if var_12_0 == 0 then
+	if index == 0 then
 		logError("删除失败，未找到该item")
 
 		return
 	end
 
-	return arg_12_0:removeIndex(var_12_0)
+	return self:removeIndex(index)
 end
 
-function var_0_0.swap(arg_13_0, arg_13_1, arg_13_2)
-	arg_13_0[arg_13_2], arg_13_0[arg_13_1] = arg_13_0[arg_13_1], arg_13_0[arg_13_2]
+function FightObjItemListItem:swap(index1, index2)
+	local item1 = self[index1]
+	local item2 = self[index2]
 
-	local var_13_0 = arg_13_0.dataList[arg_13_1]
-	local var_13_1 = arg_13_0.dataList[arg_13_2]
+	self[index1] = item2
+	self[index2] = item1
 
-	arg_13_0.dataList[arg_13_1] = var_13_1
-	arg_13_0.dataList[arg_13_2] = var_13_0
+	local data1 = self.dataList[index1]
+	local data2 = self.dataList[index2]
+
+	self.dataList[index1] = data2
+	self.dataList[index2] = data1
 end
 
-function var_0_0.newItem(arg_14_0)
-	local var_14_0 = gohelper.clone(arg_14_0.modelGameObject, arg_14_0.parentObject)
-	local var_14_1 = arg_14_0:newClass(arg_14_0.objClass, var_14_0)
+function FightObjItemListItem:newItem()
+	local gameObject = gohelper.clone(self.modelGameObject, self.parentObject)
+	local item = self:newClass(self.objClass, gameObject)
 
-	var_14_1.GAMEOBJECT = var_14_0
-	var_14_1.ITEM_LIST_MGR = arg_14_0
-	var_14_1.getSelfIndex = var_0_0.getSelfIndex
-	var_14_1.getPreItem = var_0_0.getPreItem
-	var_14_1.getNextItem = var_0_0.getNextItem
-	var_14_1.removeSelf = var_0_0.removeSelf
+	item.GAMEOBJECT = gameObject
+	item.ITEM_LIST_MGR = self
+	item.getSelfIndex = FightObjItemListItem.getSelfIndex
+	item.getPreItem = FightObjItemListItem.getPreItem
+	item.getNextItem = FightObjItemListItem.getNextItem
+	item.removeSelf = FightObjItemListItem.removeSelf
 
-	return var_14_1
+	return item
 end
 
-function var_0_0.getSelfIndex(arg_15_0)
-	return arg_15_0.PARENT_ROOT_OBJECT:getIndex(arg_15_0)
+function FightObjItemListItem.getSelfIndex(item)
+	local parentRoot = item.PARENT_ROOT_OBJECT
+
+	return parentRoot:getIndex(item)
 end
 
-function var_0_0.getPreItem(arg_16_0)
-	local var_16_0 = arg_16_0:getSelfIndex()
+function FightObjItemListItem.getPreItem(item)
+	local index = item:getSelfIndex()
 
-	return arg_16_0.ITEM_LIST_MGR[var_16_0 - 1]
+	return item.ITEM_LIST_MGR[index - 1]
 end
 
-function var_0_0.getNextItem(arg_17_0)
-	local var_17_0 = arg_17_0:getSelfIndex()
+function FightObjItemListItem.getNextItem(item)
+	local index = item:getSelfIndex()
 
-	return arg_17_0.ITEM_LIST_MGR[var_17_0 + 1]
+	return item.ITEM_LIST_MGR[index + 1]
 end
 
-function var_0_0.removeSelf(arg_18_0)
-	return arg_18_0.PARENT_ROOT_OBJECT:removeItem(arg_18_0)
+function FightObjItemListItem.removeSelf(item)
+	local parentRoot = item.PARENT_ROOT_OBJECT
+
+	return parentRoot:removeItem(item)
 end
 
-function var_0_0.onDestructor(arg_19_0)
+function FightObjItemListItem:onDestructor()
 	return
 end
 
-return var_0_0
+return FightObjItemListItem

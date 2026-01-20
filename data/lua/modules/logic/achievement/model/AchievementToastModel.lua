@@ -1,120 +1,127 @@
-﻿module("modules.logic.achievement.model.AchievementToastModel", package.seeall)
+﻿-- chunkname: @modules/logic/achievement/model/AchievementToastModel.lua
 
-local var_0_0 = class("AchievementToastModel", BaseModel)
+module("modules.logic.achievement.model.AchievementToastModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._waitToastList = {}
-	arg_1_0._waitNamePlateToastList = {}
-	arg_1_0._groupUnlockToastMap = {}
-	arg_1_0._groupFinishedToastMap = {}
+local AchievementToastModel = class("AchievementToastModel", BaseModel)
+
+function AchievementToastModel:onInit()
+	self._waitToastList = {}
+	self._waitNamePlateToastList = {}
+	self._groupUnlockToastMap = {}
+	self._groupFinishedToastMap = {}
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:release()
+function AchievementToastModel:reInit()
+	self:release()
 end
 
-function var_0_0.release(arg_3_0)
-	arg_3_0._waitToastList = nil
-	arg_3_0._waitNamePlateToastList = nil
-	arg_3_0._groupUnlockToastMap = nil
-	arg_3_0._groupFinishedToastMap = nil
+function AchievementToastModel:release()
+	self._waitToastList = nil
+	self._waitNamePlateToastList = nil
+	self._groupUnlockToastMap = nil
+	self._groupFinishedToastMap = nil
 end
 
-function var_0_0.updateNeedPushToast(arg_4_0, arg_4_1)
-	arg_4_0._waitToastList = arg_4_0._waitToastList or {}
-	arg_4_0._waitToastMap = arg_4_0._waitToastMap or {}
-	arg_4_0._waitNamePlateToastList = arg_4_0._waitNamePlateToastList or {}
-	arg_4_0._groupUnlockToastMap = arg_4_0._groupUnlockToastMap or {}
-	arg_4_0._groupFinishedToastMap = arg_4_0._groupFinishedToastMap or {}
+function AchievementToastModel:updateNeedPushToast(taskInfos)
+	self._waitToastList = self._waitToastList or {}
+	self._waitToastMap = self._waitToastMap or {}
+	self._waitNamePlateToastList = self._waitNamePlateToastList or {}
+	self._groupUnlockToastMap = self._groupUnlockToastMap or {}
+	self._groupFinishedToastMap = self._groupFinishedToastMap or {}
 
-	if arg_4_1 then
-		local var_4_0 = {}
+	if taskInfos then
+		local nameplatelist = {}
 
-		for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
-			local var_4_1 = iter_4_1.id
-			local var_4_2 = iter_4_1 and iter_4_1.new
-			local var_4_3 = AchievementConfig.instance:getTask(var_4_1).achievementId
-			local var_4_4 = AchievementConfig.instance:getAchievement(var_4_3)
+		for _, taskInfo in ipairs(taskInfos) do
+			local taskId = taskInfo.id
+			local isNew = taskInfo and taskInfo.new
+			local taskCo = AchievementConfig.instance:getTask(taskId)
+			local achievementId = taskCo.achievementId
+			local achievementCO = AchievementConfig.instance:getAchievement(achievementId)
 
-			if var_4_4 and var_4_4.category == AchievementEnum.Type.NamePlate then
-				if var_4_2 then
-					var_4_0[var_4_3] = var_4_0[var_4_3] or {}
+			if achievementCO and achievementCO.category == AchievementEnum.Type.NamePlate then
+				if isNew then
+					nameplatelist[achievementId] = nameplatelist[achievementId] or {}
 
-					table.insert(var_4_0[var_4_3], {
-						taskId = var_4_1,
-						achievementId = var_4_3
+					table.insert(nameplatelist[achievementId], {
+						taskId = taskId,
+						achievementId = achievementId
 					})
 				end
-			elseif var_4_2 then
-				arg_4_0:checkTaskSatify(var_4_1)
+			elseif isNew then
+				self:checkTaskSatify(taskId)
 			end
 		end
 
-		for iter_4_2, iter_4_3 in pairs(var_4_0) do
-			local var_4_5
-			local var_4_6
+		for _, achievementtasklist in pairs(nameplatelist) do
+			local maxLevelTaskId, lastTaskId
 
-			for iter_4_4, iter_4_5 in ipairs(iter_4_3) do
-				local var_4_7 = AchievementConfig.instance:getTask(iter_4_5.taskId)
+			for _, taskInfo in ipairs(achievementtasklist) do
+				local taskCfg = AchievementConfig.instance:getTask(taskInfo.taskId)
 
-				if not var_4_6 then
-					var_4_6 = iter_4_5.taskId
-					var_4_5 = iter_4_5.taskId
+				if not lastTaskId then
+					lastTaskId = taskInfo.taskId
+					maxLevelTaskId = taskInfo.taskId
 				else
-					local var_4_8 = AchievementConfig.instance:getTask(var_4_6)
+					local lasttaskCfg = AchievementConfig.instance:getTask(lastTaskId)
 
-					if var_4_7.level > var_4_8.level then
-						var_4_5 = iter_4_5.taskId
+					if taskCfg.level > lasttaskCfg.level then
+						maxLevelTaskId = taskInfo.taskId
 					end
 
-					var_4_6 = iter_4_5.taskId
+					lastTaskId = taskInfo.taskId
 				end
 			end
 
-			local var_4_9 = AchievementConfig.instance:getTask(var_4_5)
-			local var_4_10 = var_4_9.achievementId
+			local taskCo = AchievementConfig.instance:getTask(maxLevelTaskId)
+			local achievementId = taskCo.achievementId
+			local hasNew = AchievementModel.instance:achievementHasNewWithTaskId(achievementId, maxLevelTaskId)
 
-			if AchievementModel.instance:achievementHasNewWithTaskId(var_4_10, var_4_5) then
-				table.insert(arg_4_0._waitNamePlateToastList, var_4_9)
+			if hasNew then
+				table.insert(self._waitNamePlateToastList, taskCo)
 			end
 		end
 	end
 end
 
-function var_0_0.checkTaskSatify(arg_5_0, arg_5_1)
-	local var_5_0 = AchievementConfig.instance:getTask(arg_5_1)
-	local var_5_1 = arg_5_0:getToastTypeList()
+function AchievementToastModel:checkTaskSatify(taskId)
+	local taskCfg = AchievementConfig.instance:getTask(taskId)
+	local toastTypeList = self:getToastTypeList()
 
-	if var_5_0 and var_5_1 then
-		for iter_5_0, iter_5_1 in ipairs(var_5_1) do
-			local var_5_2 = arg_5_0:getToastCheckFunction(iter_5_1)
+	if taskCfg and toastTypeList then
+		for toastType, value in ipairs(toastTypeList) do
+			local toastCheckFunction = self:getToastCheckFunction(value)
 
-			if var_5_2 and var_5_2(arg_5_0, var_5_0) then
-				table.insert(arg_5_0._waitToastList, {
-					taskId = arg_5_1,
-					toastType = iter_5_0
-				})
+			if toastCheckFunction then
+				local isPass = toastCheckFunction(self, taskCfg)
+
+				if isPass then
+					table.insert(self._waitToastList, {
+						taskId = taskId,
+						toastType = toastType
+					})
+				end
 			end
 		end
 	end
 end
 
-function var_0_0.getToastCheckFunction(arg_6_0, arg_6_1)
-	if not arg_6_0._toastCheckFuncTab then
-		arg_6_0._toastCheckFuncTab = {
-			[AchievementEnum.ToastType.TaskFinished] = arg_6_0.checkIsTaskFinished,
-			[AchievementEnum.ToastType.GroupUnlocked] = arg_6_0.checkGroupUnlocked,
-			[AchievementEnum.ToastType.GroupUpgrade] = arg_6_0.checkGroupUpgrade,
-			[AchievementEnum.ToastType.GroupFinished] = arg_6_0.checkIsGroupFinished
+function AchievementToastModel:getToastCheckFunction(toastType)
+	if not self._toastCheckFuncTab then
+		self._toastCheckFuncTab = {
+			[AchievementEnum.ToastType.TaskFinished] = self.checkIsTaskFinished,
+			[AchievementEnum.ToastType.GroupUnlocked] = self.checkGroupUnlocked,
+			[AchievementEnum.ToastType.GroupUpgrade] = self.checkGroupUpgrade,
+			[AchievementEnum.ToastType.GroupFinished] = self.checkIsGroupFinished
 		}
 	end
 
-	return arg_6_0._toastCheckFuncTab[arg_6_1]
+	return self._toastCheckFuncTab[toastType]
 end
 
-function var_0_0.getToastTypeList(arg_7_0)
-	if not arg_7_0._toastTypeList then
-		arg_7_0._toastTypeList = {
+function AchievementToastModel:getToastTypeList()
+	if not self._toastTypeList then
+		self._toastTypeList = {
 			AchievementEnum.ToastType.TaskFinished,
 			AchievementEnum.ToastType.GroupUnlocked,
 			AchievementEnum.ToastType.GroupUpgrade,
@@ -122,73 +129,74 @@ function var_0_0.getToastTypeList(arg_7_0)
 		}
 	end
 
-	return arg_7_0._toastTypeList
+	return self._toastTypeList
 end
 
-function var_0_0.checkIsTaskFinished(arg_8_0, arg_8_1)
-	return AchievementModel.instance:isAchievementTaskFinished(arg_8_1.id)
+function AchievementToastModel:checkIsTaskFinished(taskCfg)
+	return AchievementModel.instance:isAchievementTaskFinished(taskCfg.id)
 end
 
-function var_0_0.checkGroupUnlocked(arg_9_0, arg_9_1)
-	local var_9_0 = false
-	local var_9_1 = AchievementModel.instance:isAchievementTaskFinished(arg_9_1.id)
-	local var_9_2 = AchievementConfig.instance:getAchievement(arg_9_1.achievementId)
-	local var_9_3 = var_9_2 and var_9_2.groupId
+function AchievementToastModel:checkGroupUnlocked(taskCfg)
+	local isGroupUnlocked = false
+	local isTaskFinished = AchievementModel.instance:isAchievementTaskFinished(taskCfg.id)
+	local achievementCfg = AchievementConfig.instance:getAchievement(taskCfg.achievementId)
+	local groupId = achievementCfg and achievementCfg.groupId
 
-	if var_9_1 and AchievementUtils.isActivityGroup(arg_9_1.achievementId) and not arg_9_0._groupUnlockToastMap[var_9_3] then
-		local var_9_4 = AchievementModel.instance:getGroupFinishTaskList(var_9_3)
+	if isTaskFinished and AchievementUtils.isActivityGroup(taskCfg.achievementId) and not self._groupUnlockToastMap[groupId] then
+		local finishTaskList = AchievementModel.instance:getGroupFinishTaskList(groupId)
+		local finishTaskCount = finishTaskList and #finishTaskList or 0
 
-		if (var_9_4 and #var_9_4 or 0) <= 1 then
-			var_9_0 = true
-			arg_9_0._groupUnlockToastMap[var_9_3] = true
+		if finishTaskCount <= 1 then
+			isGroupUnlocked = true
+			self._groupUnlockToastMap[groupId] = true
 		end
 	end
 
-	return var_9_0
+	return isGroupUnlocked
 end
 
-function var_0_0.checkGroupUpgrade(arg_10_0, arg_10_1)
-	local var_10_0 = AchievementConfig.instance:getAchievement(arg_10_1.achievementId)
-	local var_10_1 = false
+function AchievementToastModel:checkGroupUpgrade(taskCfg)
+	local achievementCfg = AchievementConfig.instance:getAchievement(taskCfg.achievementId)
+	local isGroupUpgrade = false
 
-	if var_10_0 and AchievementUtils.isActivityGroup(arg_10_1.achievementId) then
-		local var_10_2 = AchievementConfig.instance:getGroup(var_10_0.groupId)
+	if achievementCfg and AchievementUtils.isActivityGroup(taskCfg.achievementId) then
+		local groupCfg = AchievementConfig.instance:getGroup(achievementCfg.groupId)
 
-		var_10_1 = var_10_2 and var_10_2.unLockAchievement == arg_10_1.id
+		isGroupUpgrade = groupCfg and groupCfg.unLockAchievement == taskCfg.id
 	end
 
-	return var_10_1
+	return isGroupUpgrade
 end
 
-function var_0_0.checkIsGroupFinished(arg_11_0, arg_11_1)
-	local var_11_0 = AchievementConfig.instance:getAchievement(arg_11_1.achievementId)
-	local var_11_1 = false
-	local var_11_2 = var_11_0 and var_11_0.groupId
+function AchievementToastModel:checkIsGroupFinished(taskCfg)
+	local achievementCfg = AchievementConfig.instance:getAchievement(taskCfg.achievementId)
+	local isGroupFinished = false
+	local groupId = achievementCfg and achievementCfg.groupId
 
-	if AchievementUtils.isActivityGroup(arg_11_1.achievementId) and not arg_11_0._groupFinishedToastMap[var_11_2] then
-		var_11_1 = AchievementModel.instance:isGroupFinished(var_11_0.groupId)
+	if AchievementUtils.isActivityGroup(taskCfg.achievementId) and not self._groupFinishedToastMap[groupId] then
+		isGroupFinished = AchievementModel.instance:isGroupFinished(achievementCfg.groupId)
 
-		if var_11_1 then
-			arg_11_0._groupFinishedToastMap[var_11_2] = true
+		if isGroupFinished then
+			self._groupFinishedToastMap[groupId] = true
 		end
 	end
 
-	return var_11_1
+	return isGroupFinished
 end
 
-function var_0_0.getWaitToastList(arg_12_0)
-	return arg_12_0._waitToastList
+function AchievementToastModel:getWaitToastList()
+	return self._waitToastList
 end
 
-function var_0_0.onToastFinished(arg_13_0)
-	arg_13_0._waitToastList = nil
-	arg_13_0._waitNamePlateToastList = nil
+function AchievementToastModel:onToastFinished()
+	self._waitToastList = nil
+	self._waitNamePlateToastList = nil
 end
 
-function var_0_0.getWaitNamePlateToastList(arg_14_0)
-	return arg_14_0._waitNamePlateToastList
+function AchievementToastModel:getWaitNamePlateToastList()
+	return self._waitNamePlateToastList
 end
 
-var_0_0.instance = var_0_0.New()
+AchievementToastModel.instance = AchievementToastModel.New()
 
-return var_0_0
+return AchievementToastModel

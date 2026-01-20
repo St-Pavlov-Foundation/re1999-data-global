@@ -1,14 +1,16 @@
-﻿module("modules.logic.explore.controller.steps.ExploreResetEndStep", package.seeall)
+﻿-- chunkname: @modules/logic/explore/controller/steps/ExploreResetEndStep.lua
 
-local var_0_0 = class("ExploreResetEndStep", ExploreStepBase)
+module("modules.logic.explore.controller.steps.ExploreResetEndStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	TaskDispatcher.runDelay(arg_1_0.onDone, arg_1_0, 1)
+local ExploreResetEndStep = class("ExploreResetEndStep", ExploreStepBase)
+
+function ExploreResetEndStep:onStart()
+	TaskDispatcher.runDelay(self.onDone, self, 1)
 end
 
-function var_0_0.onDestory(arg_2_0)
-	var_0_0.super.onDestory(arg_2_0)
-	TaskDispatcher.cancelTask(arg_2_0.onDone, arg_2_0)
+function ExploreResetEndStep:onDestory()
+	ExploreResetEndStep.super.onDestory(self)
+	TaskDispatcher.cancelTask(self.onDone, self)
 
 	ExploreModel.instance.isReseting = false
 
@@ -16,4 +18,4 @@ function var_0_0.onDestory(arg_2_0)
 	ExploreModel.instance:setHeroControl(true, ExploreEnum.HeroLock.Reset)
 end
 
-return var_0_0
+return ExploreResetEndStep

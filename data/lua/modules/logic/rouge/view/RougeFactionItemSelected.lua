@@ -1,357 +1,371 @@
-﻿module("modules.logic.rouge.view.RougeFactionItemSelected", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeFactionItemSelected.lua
 
-local var_0_0 = class("RougeFactionItemSelected", RougeFactionItem_Base)
+module("modules.logic.rouge.view.RougeFactionItemSelected", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtcoin = gohelper.findChildText(arg_1_0.viewGO, "detail/coin/#txt_coin")
-	arg_1_0._txtbag = gohelper.findChildText(arg_1_0.viewGO, "detail/bag/#txt_bag")
-	arg_1_0._txtgroup = gohelper.findChildText(arg_1_0.viewGO, "detail/group/#txt_group")
-	arg_1_0._gobag = gohelper.findChild(arg_1_0.viewGO, "detail/baglayout/#go_bag")
-	arg_1_0._btncheck = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "detail/baglayout/#btn_check")
-	arg_1_0._scrolldesc2 = gohelper.findChildScrollRect(arg_1_0.viewGO, "detail/beidong/#scroll_desc2")
-	arg_1_0._godescitem = gohelper.findChild(arg_1_0.viewGO, "detail/beidong/#scroll_desc2/Viewport/Content/#go_descitem")
-	arg_1_0._gobtnitem = gohelper.findChild(arg_1_0.viewGO, "detail/zhouyu/content/#go_btnitem")
-	arg_1_0._godetail = gohelper.findChild(arg_1_0.viewGO, "detail/zhouyu/#go_detail")
-	arg_1_0._txtdec = gohelper.findChildText(arg_1_0.viewGO, "detail/zhouyu/#go_detail/#txt_dec")
-	arg_1_0._detailimageicon = gohelper.findChildImage(arg_1_0.viewGO, "detail/zhouyu/#go_detail/icon")
-	arg_1_0._goBg = gohelper.findChild(arg_1_0.viewGO, "#go_Bg")
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "#image_icon")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#txt_name")
-	arg_1_0._txten = gohelper.findChildText(arg_1_0.viewGO, "#txt_name/#txt_en")
-	arg_1_0._scrolldesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_desc")
-	arg_1_0._txtscrollDesc = gohelper.findChildText(arg_1_0.viewGO, "#scroll_desc/viewport/content/#txt_scrollDesc")
+local RougeFactionItemSelected = class("RougeFactionItemSelected", RougeFactionItem_Base)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeFactionItemSelected:onInitView()
+	self._txtcoin = gohelper.findChildText(self.viewGO, "detail/coin/#txt_coin")
+	self._txtbag = gohelper.findChildText(self.viewGO, "detail/bag/#txt_bag")
+	self._txtgroup = gohelper.findChildText(self.viewGO, "detail/group/#txt_group")
+	self._gobag = gohelper.findChild(self.viewGO, "detail/baglayout/#go_bag")
+	self._btncheck = gohelper.findChildButtonWithAudio(self.viewGO, "detail/baglayout/#btn_check")
+	self._scrolldesc2 = gohelper.findChildScrollRect(self.viewGO, "detail/beidong/#scroll_desc2")
+	self._godescitem = gohelper.findChild(self.viewGO, "detail/beidong/#scroll_desc2/Viewport/Content/#go_descitem")
+	self._gobtnitem = gohelper.findChild(self.viewGO, "detail/zhouyu/content/#go_btnitem")
+	self._godetail = gohelper.findChild(self.viewGO, "detail/zhouyu/#go_detail")
+	self._txtdec = gohelper.findChildText(self.viewGO, "detail/zhouyu/#go_detail/#txt_dec")
+	self._detailimageicon = gohelper.findChildImage(self.viewGO, "detail/zhouyu/#go_detail/icon")
+	self._goBg = gohelper.findChild(self.viewGO, "#go_Bg")
+	self._imageicon = gohelper.findChildImage(self.viewGO, "#image_icon")
+	self._txtname = gohelper.findChildText(self.viewGO, "#txt_name")
+	self._txten = gohelper.findChildText(self.viewGO, "#txt_name/#txt_en")
+	self._scrolldesc = gohelper.findChildScrollRect(self.viewGO, "#scroll_desc")
+	self._txtscrollDesc = gohelper.findChildText(self.viewGO, "#scroll_desc/viewport/content/#txt_scrollDesc")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btncheck:AddClickListener(arg_2_0._btncheckOnClick, arg_2_0)
+function RougeFactionItemSelected:addEvents()
+	self._btncheck:AddClickListener(self._btncheckOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btncheck:RemoveClickListener()
+function RougeFactionItemSelected:removeEvents()
+	self._btncheck:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._txtdec.text = ""
-	arg_4_0._detailTrans = arg_4_0._godetail.transform
+function RougeFactionItemSelected:_editableInitView()
+	self._txtdec.text = ""
+	self._detailTrans = self._godetail.transform
 
-	RougeFactionItem_Base._editableInitView(arg_4_0)
-	gohelper.setActive(arg_4_0._godescitem, false)
-	gohelper.setActive(arg_4_0._gobtnitem, false)
+	RougeFactionItem_Base._editableInitView(self)
+	gohelper.setActive(self._godescitem, false)
+	gohelper.setActive(self._gobtnitem, false)
 
-	local var_4_0 = arg_4_0._scrolldesc.gameObject:GetComponent(gohelper.Type_LimitedScrollRect)
-	local var_4_1 = arg_4_0._scrolldesc2.gameObject:GetComponent(gohelper.Type_LimitedScrollRect)
+	local limitScrollRectCmp1 = self._scrolldesc.gameObject:GetComponent(gohelper.Type_LimitedScrollRect)
+	local limitScrollRectCmp2 = self._scrolldesc2.gameObject:GetComponent(gohelper.Type_LimitedScrollRect)
 
-	arg_4_0:_onSetScrollParentGameObject(var_4_0)
-	arg_4_0:_onSetScrollParentGameObject(var_4_1)
+	self:_onSetScrollParentGameObject(limitScrollRectCmp1)
+	self:_onSetScrollParentGameObject(limitScrollRectCmp2)
 
-	arg_4_0._descItemList = {
-		arg_4_0:_create_RougeFactionItemSelected_DescItem(1),
-		(arg_4_0:_create_RougeFactionItemSelected_DescItem(2))
+	self._descItemList = {
+		self:_create_RougeFactionItemSelected_DescItem(1),
+		(self:_create_RougeFactionItemSelected_DescItem(2))
 	}
-	arg_4_0._btnItemList = {
-		arg_4_0:_create_RougeFactionItemSelected_BtnItem(1),
-		(arg_4_0:_create_RougeFactionItemSelected_BtnItem(2))
+	self._btnItemList = {
+		self:_create_RougeFactionItemSelected_BtnItem(1),
+		(self:_create_RougeFactionItemSelected_BtnItem(2))
 	}
 
-	gohelper.setActive(arg_4_0._godetail, true)
-	arg_4_0:_deselectAllBtnItems()
-	arg_4_0:addEventCb(RougeController.instance, RougeEvent.UpdateUnlockSkill, arg_4_0._onUpdateUnlockSkill, arg_4_0)
+	gohelper.setActive(self._godetail, true)
+	self:_deselectAllBtnItems()
+	self:addEventCb(RougeController.instance, RougeEvent.UpdateUnlockSkill, self._onUpdateUnlockSkill, self)
 end
 
-function var_0_0.onDestroyView(arg_5_0)
-	RougeFactionItem_Base.onDestroyView(arg_5_0)
-	GameUtil.onDestroyViewMemberList(arg_5_0, "_descItemList")
-	GameUtil.onDestroyViewMemberList(arg_5_0, "_btnItemList")
-	arg_5_0:removeEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreen, arg_5_0._onTouchScreen, arg_5_0)
+function RougeFactionItemSelected:onDestroyView()
+	RougeFactionItem_Base.onDestroyView(self)
+	GameUtil.onDestroyViewMemberList(self, "_descItemList")
+	GameUtil.onDestroyViewMemberList(self, "_btnItemList")
+	self:removeEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreen, self._onTouchScreen, self)
 
-	if arg_5_0._collectionSlotComp then
-		arg_5_0._collectionSlotComp:destroy()
+	if self._collectionSlotComp then
+		self._collectionSlotComp:destroy()
 
-		arg_5_0._collectionSlotComp = nil
+		self._collectionSlotComp = nil
 	end
 end
 
-function var_0_0.setData(arg_6_0, arg_6_1)
-	RougeFactionItem_Base.setData(arg_6_0, arg_6_1)
+function RougeFactionItemSelected:setData(mo)
+	RougeFactionItem_Base.setData(self, mo)
 
-	local var_6_0 = arg_6_0:staticData().startViewAllInfo
-	local var_6_1 = arg_6_1.styleCO
-	local var_6_2 = var_6_0[RougeEnum.StartViewEnum.coin] or 0
-	local var_6_3 = var_6_0[RougeEnum.StartViewEnum.power] or 0
-	local var_6_4 = var_6_0[RougeEnum.StartViewEnum.powerLimit] or 0
-	local var_6_5 = var_6_0[RougeEnum.StartViewEnum.capacity] or 0
+	local staticData = self:staticData()
+	local startViewAllInfo = staticData.startViewAllInfo
+	local styleCO = mo.styleCO
+	local dtCoin = startViewAllInfo[RougeEnum.StartViewEnum.coin] or 0
+	local dtPower = startViewAllInfo[RougeEnum.StartViewEnum.power] or 0
+	local dtPowerLimit = startViewAllInfo[RougeEnum.StartViewEnum.powerLimit] or 0
+	local dtCapacity = startViewAllInfo[RougeEnum.StartViewEnum.capacity] or 0
 
-	arg_6_0._txtcoin.text = var_6_1.coin + var_6_2
-	arg_6_0._txtbag.text = tostring(var_6_1.power + var_6_3) .. "/" .. tostring(var_6_1.powerLimit + var_6_4)
-	arg_6_0._txtgroup.text = var_6_1.capacity + var_6_5
+	self._txtcoin.text = styleCO.coin + dtCoin
+	self._txtbag.text = tostring(styleCO.power + dtPower) .. "/" .. tostring(styleCO.powerLimit + dtPowerLimit)
+	self._txtgroup.text = styleCO.capacity + dtCapacity
 
-	arg_6_0:_initOrRefreshDescItemList(arg_6_1)
-	arg_6_0:_initOrRefreshBtnItemList(arg_6_1)
-	arg_6_0:_initOrRefreshCollectonSlot(arg_6_1)
+	self:_initOrRefreshDescItemList(mo)
+	self:_initOrRefreshBtnItemList(mo)
+	self:_initOrRefreshCollectonSlot(mo)
 end
 
-function var_0_0._create_RougeFactionItemSelected_DescItem(arg_7_0, arg_7_1)
-	arg_7_1 = arg_7_1 or #arg_7_0._descItemList
+function RougeFactionItemSelected:_create_RougeFactionItemSelected_DescItem(index)
+	index = index or #self._descItemList
 
-	local var_7_0 = arg_7_0:_createItem(arg_7_0._godescitem, RougeFactionItemSelected_DescItem)
+	local newItem = self:_createItem(self._godescitem, RougeFactionItemSelected_DescItem)
 
-	var_7_0:setIndex(arg_7_1)
+	newItem:setIndex(index)
 
-	return var_7_0
+	return newItem
 end
 
-function var_0_0._initOrRefreshDescItemList(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_1.styleCO
-	local var_8_1 = RougeConfig1.instance:calcStyleCOPassiveSkillDescsList(var_8_0)
+function RougeFactionItemSelected:_initOrRefreshDescItemList(mo)
+	local styleCO = mo.styleCO
+	local descList = RougeConfig1.instance:calcStyleCOPassiveSkillDescsList(styleCO)
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_1) do
-		local var_8_2 = arg_8_0._descItemList[iter_8_0]
+	for i, desc in ipairs(descList) do
+		local item = self._descItemList[i]
 
-		if not var_8_2 then
-			var_8_2 = arg_8_0:_create_RougeFactionItemSelected_DescItem(iter_8_0)
-			arg_8_0._descItemList[iter_8_0] = var_8_2
+		if not item then
+			item = self:_create_RougeFactionItemSelected_DescItem(i)
+			self._descItemList[i] = item
 		end
 
-		var_8_2:setData(iter_8_1)
+		item:setData(desc)
 	end
 
-	for iter_8_2 = #var_8_1 + 1, #arg_8_0._descItemList do
-		arg_8_0._descItemList[iter_8_2]:setData(nil)
-	end
-end
+	for i = #descList + 1, #self._descItemList do
+		local item = self._descItemList[i]
 
-function var_0_0._create_RougeFactionItemSelected_BtnItem(arg_9_0, arg_9_1)
-	arg_9_1 = arg_9_1 or #arg_9_0._btnItemList
-
-	local var_9_0 = arg_9_0:_createItem(arg_9_0._gobtnitem, RougeFactionItemSelected_BtnItem)
-
-	var_9_0:setIndex(arg_9_1)
-
-	return var_9_0
-end
-
-function var_0_0._initOrRefreshBtnItemList(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_1.styleCO
-
-	arg_10_0._skillIds = {}
-
-	arg_10_0:_initOrRefreshActiveSkillItemList(var_10_0)
-	arg_10_0:_initOrRefreshMapSkillItemList(var_10_0)
-	arg_10_0:_initOrRefreshUnlockSkillItemList(var_10_0)
-
-	for iter_10_0 = (arg_10_0._skillIds and #arg_10_0._skillIds or 0) + 1, #arg_10_0._btnItemList do
-		arg_10_0._btnItemList[iter_10_0]:setData(nil)
+		item:setData(nil)
 	end
 end
 
-function var_0_0._initOrRefreshActiveSkillItemList(arg_11_0, arg_11_1)
-	local var_11_0 = string.splitToNumber(arg_11_1.activeSkills, "#")
+function RougeFactionItemSelected:_create_RougeFactionItemSelected_BtnItem(index)
+	index = index or #self._btnItemList
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
-		local var_11_1 = arg_11_0:_getCanUseItemIndex()
-		local var_11_2 = arg_11_0._btnItemList[var_11_1]
+	local newItem = self:_createItem(self._gobtnitem, RougeFactionItemSelected_BtnItem)
 
-		if not var_11_2 then
-			var_11_2 = arg_11_0:_create_RougeFactionItemSelected_BtnItem(var_11_1)
-			arg_11_0._btnItemList[var_11_1] = var_11_2
+	newItem:setIndex(index)
+
+	return newItem
+end
+
+function RougeFactionItemSelected:_initOrRefreshBtnItemList(mo)
+	local styleCO = mo.styleCO
+
+	self._skillIds = {}
+
+	self:_initOrRefreshActiveSkillItemList(styleCO)
+	self:_initOrRefreshMapSkillItemList(styleCO)
+	self:_initOrRefreshUnlockSkillItemList(styleCO)
+
+	local totalSkillCount = self._skillIds and #self._skillIds or 0
+
+	for i = totalSkillCount + 1, #self._btnItemList do
+		local item = self._btnItemList[i]
+
+		item:setData(nil)
+	end
+end
+
+function RougeFactionItemSelected:_initOrRefreshActiveSkillItemList(styleCO)
+	local activeSkillList = string.splitToNumber(styleCO.activeSkills, "#")
+
+	for _, skillId in ipairs(activeSkillList) do
+		local itemIndex = self:_getCanUseItemIndex()
+		local item = self._btnItemList[itemIndex]
+
+		if not item then
+			item = self:_create_RougeFactionItemSelected_BtnItem(itemIndex)
+			self._btnItemList[itemIndex] = item
 		end
 
-		var_11_2:setData(RougeEnum.SkillType.Style, iter_11_1, true)
-		table.insert(arg_11_0._skillIds, iter_11_1)
+		item:setData(RougeEnum.SkillType.Style, skillId, true)
+		table.insert(self._skillIds, skillId)
 	end
 end
 
-function var_0_0._initOrRefreshMapSkillItemList(arg_12_0, arg_12_1)
-	local var_12_0 = string.splitToNumber(arg_12_1.mapSkills, "#")
+function RougeFactionItemSelected:_initOrRefreshMapSkillItemList(styleCO)
+	local mapSkillList = string.splitToNumber(styleCO.mapSkills, "#")
 
-	for iter_12_0, iter_12_1 in ipairs(var_12_0) do
-		local var_12_1 = arg_12_0:_getCanUseItemIndex()
-		local var_12_2 = arg_12_0._btnItemList[var_12_1]
+	for _, skillId in ipairs(mapSkillList) do
+		local itemIndex = self:_getCanUseItemIndex()
+		local item = self._btnItemList[itemIndex]
 
-		if not var_12_2 then
-			var_12_2 = arg_12_0:_create_RougeFactionItemSelected_BtnItem(var_12_1)
-			arg_12_0._btnItemList[var_12_1] = var_12_2
+		if not item then
+			item = self:_create_RougeFactionItemSelected_BtnItem(itemIndex)
+			self._btnItemList[itemIndex] = item
 		end
 
-		var_12_2:setData(RougeEnum.SkillType.Map, iter_12_1, true)
-		table.insert(arg_12_0._skillIds, iter_12_1)
+		item:setData(RougeEnum.SkillType.Map, skillId, true)
+		table.insert(self._skillIds, skillId)
 	end
 end
 
-function var_0_0._initOrRefreshUnlockSkillItemList(arg_13_0, arg_13_1)
-	local var_13_0 = RougeOutsideModel.instance:getRougeGameRecord()
-	local var_13_1 = RougeDLCConfig101.instance:getStyleUnlockSkills(arg_13_1.id)
+function RougeFactionItemSelected:_initOrRefreshUnlockSkillItemList(styleCO)
+	local gameRecordInfo = RougeOutsideModel.instance:getRougeGameRecord()
+	local skillCos = RougeDLCConfig101.instance:getStyleUnlockSkills(styleCO.id)
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_1 or {}) do
-		if RougeDLCHelper.isCurrentUsingContent(iter_13_1.version) then
-			local var_13_2 = arg_13_0:_getCanUseItemIndex()
-			local var_13_3 = arg_13_0._btnItemList[var_13_2]
+	for _, skillCo in ipairs(skillCos or {}) do
+		local isUsing = RougeDLCHelper.isCurrentUsingContent(skillCo.version)
 
-			if not var_13_3 then
-				var_13_3 = arg_13_0:_create_RougeFactionItemSelected_BtnItem(var_13_2)
-				arg_13_0._btnItemList[var_13_2] = var_13_3
+		if isUsing then
+			local itemIndex = self:_getCanUseItemIndex()
+			local item = self._btnItemList[itemIndex]
+
+			if not item then
+				item = self:_create_RougeFactionItemSelected_BtnItem(itemIndex)
+				self._btnItemList[itemIndex] = item
 			end
 
-			local var_13_4 = iter_13_1.type
-			local var_13_5 = var_13_0:isSkillUnlock(iter_13_1.type, iter_13_1.skillId)
+			local skillType = skillCo.type
+			local isUnlock = gameRecordInfo:isSkillUnlock(skillCo.type, skillCo.skillId)
 
-			var_13_3:setData(var_13_4, iter_13_1.skillId, var_13_5)
-			table.insert(arg_13_0._skillIds, iter_13_1.skillId)
+			item:setData(skillType, skillCo.skillId, isUnlock)
+			table.insert(self._skillIds, skillCo.skillId)
 		end
 	end
 end
 
-function var_0_0._getCanUseItemIndex(arg_14_0)
-	return arg_14_0._skillIds and #arg_14_0._skillIds + 1 or 0
+function RougeFactionItemSelected:_getCanUseItemIndex()
+	return self._skillIds and #self._skillIds + 1 or 0
 end
 
-function var_0_0._initOrRefreshCollectonSlot(arg_15_0, arg_15_1)
-	if not arg_15_0._collectionSlotComp then
-		arg_15_0._collectionSlotComp = RougeCollectionSlotComp.Get(arg_15_0._gobag, RougeCollectionHelper.StyleCollectionSlotParam)
+function RougeFactionItemSelected:_initOrRefreshCollectonSlot(mo)
+	if not self._collectionSlotComp then
+		self._collectionSlotComp = RougeCollectionSlotComp.Get(self._gobag, RougeCollectionHelper.StyleCollectionSlotParam)
 
-		local var_15_0 = arg_15_1.styleCO.layoutId
-		local var_15_1 = RougeCollectionConfig.instance:getCollectionInitialBagSize(var_15_0)
-		local var_15_2 = arg_15_0:_createInitialCollections(var_15_0)
+		local styleCO = mo.styleCO
+		local layoutId = styleCO.layoutId
+		local bagSize = RougeCollectionConfig.instance:getCollectionInitialBagSize(layoutId)
+		local slotMOList = self:_createInitialCollections(layoutId)
 
-		arg_15_0._collectionSlotComp:onUpdateMO(var_15_1.col, var_15_1.row, var_15_2)
+		self._collectionSlotComp:onUpdateMO(bagSize.col, bagSize.row, slotMOList)
 	end
 end
 
-function var_0_0._createInitialCollections(arg_16_0, arg_16_1)
-	local var_16_0 = RougeCollectionConfig.instance:getStyleInitialCollections(arg_16_1)
+function RougeFactionItemSelected:_createInitialCollections(layoutId)
+	local collectionInfos = RougeCollectionConfig.instance:getStyleInitialCollections(layoutId)
 
-	if not var_16_0 then
+	if not collectionInfos then
 		return
 	end
 
-	local var_16_1 = {}
+	local slotMOList = {}
 
-	arg_16_0._collectionCfgIds = {}
+	self._collectionCfgIds = {}
 
-	for iter_16_0, iter_16_1 in ipairs(var_16_0) do
-		local var_16_2 = RougeCollectionSlotMO.New()
-		local var_16_3 = {
+	for index, info in ipairs(collectionInfos) do
+		local slotMO = RougeCollectionSlotMO.New()
+		local serverInfo = {
 			item = {
-				id = iter_16_0,
-				itemId = iter_16_1.cfgId
+				id = index,
+				itemId = info.cfgId
 			},
-			rotation = iter_16_1.rotation,
-			pos = iter_16_1.pos
+			rotation = info.rotation,
+			pos = info.pos
 		}
 
-		var_16_2:init(var_16_3)
-		table.insert(var_16_1, var_16_2)
-		table.insert(arg_16_0._collectionCfgIds, iter_16_1.cfgId)
+		slotMO:init(serverInfo)
+		table.insert(slotMOList, slotMO)
+		table.insert(self._collectionCfgIds, info.cfgId)
 	end
 
-	return var_16_1
+	return slotMOList
 end
 
-function var_0_0._createItem(arg_17_0, arg_17_1, arg_17_2)
-	local var_17_0 = gohelper.cloneInPlace(arg_17_1, arg_17_2.__cname)
-	local var_17_1 = arg_17_2.New(arg_17_0)
+function RougeFactionItemSelected:_createItem(srcGo, luaClass)
+	local newGo = gohelper.cloneInPlace(srcGo, luaClass.__cname)
+	local newItem = luaClass.New(self)
 
-	var_17_1:init(var_17_0)
+	newItem:init(newGo)
 
-	return var_17_1
+	return newItem
 end
 
-function var_0_0._btnItemOnSelectIndex(arg_18_0, arg_18_1, arg_18_2)
-	arg_18_0._btnItemList[arg_18_1]:setSelected(true)
+function RougeFactionItemSelected:_btnItemOnSelectIndex(index, isUnLocked)
+	local item = self._btnItemList[index]
+
+	item:setSelected(true)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_common_click_20190324)
 
-	arg_18_0._btnItemLastSelectIndex = arg_18_1
+	self._btnItemLastSelectIndex = index
 
-	if not arg_18_2 then
-		local var_18_0 = arg_18_0._skillIds[arg_18_1]
+	if not isUnLocked then
+		local skillId = self._skillIds[index]
 
 		RougeDLCController101.instance:openRougeFactionLockedTips({
-			skillId = var_18_0
+			skillId = skillId
 		})
 
 		return
 	end
 
-	arg_18_0:addEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreen, arg_18_0._onTouchScreen, arg_18_0)
-	arg_18_0:_setActiveDetail(true)
+	self:addEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreen, self._onTouchScreen, self)
+	self:_setActiveDetail(true)
 end
 
-function var_0_0._onTouchScreen(arg_19_0)
-	arg_19_0:_deselectAllBtnItems()
+function RougeFactionItemSelected:_onTouchScreen()
+	self:_deselectAllBtnItems()
 end
 
-function var_0_0._setActiveDetail(arg_20_0, arg_20_1)
-	GameUtil.setActive01(arg_20_0._detailTrans, arg_20_1)
+function RougeFactionItemSelected:_setActiveDetail(isActive)
+	GameUtil.setActive01(self._detailTrans, isActive)
 
-	if arg_20_1 then
-		arg_20_0:_resetDetailPos()
+	if isActive then
+		self:_resetDetailPos()
 	end
 end
 
-function var_0_0._deselectAllBtnItems(arg_21_0)
-	arg_21_0:_setActiveDetail(false)
+function RougeFactionItemSelected:_deselectAllBtnItems()
+	self:_setActiveDetail(false)
 
-	if arg_21_0._btnItemLastSelectIndex then
-		local var_21_0 = arg_21_0._btnItemList[arg_21_0._btnItemLastSelectIndex]
+	if self._btnItemLastSelectIndex then
+		local item = self._btnItemList[self._btnItemLastSelectIndex]
 
-		if var_21_0 then
-			var_21_0:setSelected(false)
+		if item then
+			item:setSelected(false)
 		end
 
-		arg_21_0._btnItemLastSelectIndex = nil
+		self._btnItemLastSelectIndex = nil
 
 		return
 	end
 
-	for iter_21_0, iter_21_1 in ipairs(arg_21_0._btnItemList) do
-		iter_21_1:setSelected(false)
+	for _, item in ipairs(self._btnItemList) do
+		item:setSelected(false)
 	end
 end
 
-function var_0_0._btncheckOnClick(arg_22_0)
-	local var_22_0 = {
-		collectionCfgIds = arg_22_0._collectionCfgIds
+function RougeFactionItemSelected:_btncheckOnClick()
+	local params = {
+		collectionCfgIds = self._collectionCfgIds
 	}
 
-	RougeController.instance:openRougeCollectionInitialView(var_22_0)
+	RougeController.instance:openRougeCollectionInitialView(params)
 end
 
-local var_0_1 = 303
+local kDetailOffsetX = 303
 
-function var_0_0._resetDetailPos(arg_23_0)
-	local var_23_0 = arg_23_0._btnItemList[#arg_23_0._btnItemList]
+function RougeFactionItemSelected:_resetDetailPos()
+	local item = self._btnItemList[#self._btnItemList]
 
-	if not var_23_0 then
+	if not item then
 		return
 	end
 
-	local var_23_1 = var_23_0:transform()
+	local targetTrans = item:transform()
 
-	if not var_23_1 then
+	if not targetTrans then
 		return
 	end
 
-	local var_23_2 = recthelper.rectToRelativeAnchorPos(var_23_1.position, arg_23_0._detailTrans.parent)
+	local localPosV2 = recthelper.rectToRelativeAnchorPos(targetTrans.position, self._detailTrans.parent)
 
-	arg_23_0._detailTrans.localPosition = Vector3.New(var_23_2.x + var_0_1, var_23_2.y - 57, 0)
+	self._detailTrans.localPosition = Vector3.New(localPosV2.x + kDetailOffsetX, localPosV2.y - 57, 0)
 end
 
-function var_0_0._onUpdateUnlockSkill(arg_24_0, arg_24_1, arg_24_2)
-	local var_24_0 = tabletool.indexOf(arg_24_0._skillIds, arg_24_2)
+function RougeFactionItemSelected:_onUpdateUnlockSkill(skillType, skillId)
+	local index = tabletool.indexOf(self._skillIds, skillId)
 
-	if not var_24_0 then
+	if not index then
 		return
 	end
 
-	local var_24_1 = arg_24_0._btnItemList[var_24_0]
+	local item = self._btnItemList[index]
 
-	if var_24_1 then
-		var_24_1:onUnlocked()
+	if item then
+		item:onUnlocked()
 	end
 end
 
-return var_0_0
+return RougeFactionItemSelected

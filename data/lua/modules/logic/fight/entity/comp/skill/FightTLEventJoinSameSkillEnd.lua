@@ -1,17 +1,19 @@
-﻿module("modules.logic.fight.entity.comp.skill.FightTLEventJoinSameSkillEnd", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skill/FightTLEventJoinSameSkillEnd.lua
 
-local var_0_0 = class("FightTLEventJoinSameSkillEnd", FightTimelineTrackItem)
+module("modules.logic.fight.entity.comp.skill.FightTLEventJoinSameSkillEnd", package.seeall)
 
-function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+local FightTLEventJoinSameSkillEnd = class("FightTLEventJoinSameSkillEnd", FightTimelineTrackItem)
+
+function FightTLEventJoinSameSkillEnd:onTrackStart(fightStepData, duration, paramsArr)
 	return
 end
 
-function var_0_0.reset(arg_2_0)
+function FightTLEventJoinSameSkillEnd:reset()
 	return
 end
 
-function var_0_0.dispose(arg_3_0)
+function FightTLEventJoinSameSkillEnd:dispose()
 	return
 end
 
-return var_0_0
+return FightTLEventJoinSameSkillEnd

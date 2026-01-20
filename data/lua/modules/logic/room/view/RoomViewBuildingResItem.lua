@@ -1,81 +1,83 @@
-﻿module("modules.logic.room.view.RoomViewBuildingResItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomViewBuildingResItem.lua
 
-local var_0_0 = class("RoomViewBuildingResItem", LuaCompBase)
+module("modules.logic.room.view.RoomViewBuildingResItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._go = arg_1_1
-	arg_1_0._goselect = gohelper.findChild(arg_1_0._go, "go_select")
-	arg_1_0._gounselect = gohelper.findChild(arg_1_0._go, "go_unselect")
-	arg_1_0._goline = gohelper.findChild(arg_1_0._go, "go_line")
-	arg_1_0._txt1 = gohelper.findChildText(arg_1_0._go, "go_select/txt")
-	arg_1_0._txt2 = gohelper.findChildText(arg_1_0._go, "go_unselect/txt")
-	arg_1_0._btnItem = SLFramework.UGUI.ButtonWrap.Get(arg_1_0._go)
+local RoomViewBuildingResItem = class("RoomViewBuildingResItem", LuaCompBase)
 
-	arg_1_0._btnItem:AddClickListener(arg_1_0._btnitemOnClick, arg_1_0)
+function RoomViewBuildingResItem:init(go)
+	self._go = go
+	self._goselect = gohelper.findChild(self._go, "go_select")
+	self._gounselect = gohelper.findChild(self._go, "go_unselect")
+	self._goline = gohelper.findChild(self._go, "go_line")
+	self._txt1 = gohelper.findChildText(self._go, "go_select/txt")
+	self._txt2 = gohelper.findChildText(self._go, "go_unselect/txt")
+	self._btnItem = SLFramework.UGUI.ButtonWrap.Get(self._go)
+
+	self._btnItem:AddClickListener(self._btnitemOnClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_2_0)
-	arg_2_0._btnItem:RemoveClickListener()
+function RoomViewBuildingResItem:removeEventListeners()
+	self._btnItem:RemoveClickListener()
 
-	arg_2_0._callback = nil
-	arg_2_0._callbackObj = nil
+	self._callback = nil
+	self._callbackObj = nil
 end
 
-function var_0_0._btnitemOnClick(arg_3_0)
-	if arg_3_0._callback then
-		if arg_3_0._callbackObj ~= nil then
-			arg_3_0._callback(arg_3_0._callbackObj, arg_3_0._data)
+function RoomViewBuildingResItem:_btnitemOnClick()
+	if self._callback then
+		if self._callbackObj ~= nil then
+			self._callback(self._callbackObj, self._data)
 		else
-			arg_3_0._callback(arg_3_0._data)
+			self._callback(self._data)
 		end
 	end
 end
 
-function var_0_0.getGO(arg_4_0)
-	return arg_4_0._go
+function RoomViewBuildingResItem:getGO()
+	return self._go
 end
 
-function var_0_0.setCallback(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0._callback = arg_5_1
-	arg_5_0._callbackObj = arg_5_2
+function RoomViewBuildingResItem:setCallback(callback, callbackObj)
+	self._callback = callback
+	self._callbackObj = callbackObj
 end
 
-function var_0_0.setSelect(arg_6_0, arg_6_1)
-	if arg_6_0._isSelect == arg_6_1 then
+function RoomViewBuildingResItem:setSelect(isSelect)
+	if self._isSelect == isSelect then
 		return
 	end
 
-	arg_6_0._isSelect = arg_6_1 and true or false
+	self._isSelect = isSelect and true or false
 
-	gohelper.setActive(arg_6_0._goselect, arg_6_1)
-	gohelper.setActive(arg_6_0._gounselect, not arg_6_1)
+	gohelper.setActive(self._goselect, isSelect)
+	gohelper.setActive(self._gounselect, not isSelect)
 end
 
-function var_0_0.getData(arg_7_0)
-	return arg_7_0._data
+function RoomViewBuildingResItem:getData()
+	return self._data
 end
 
-function var_0_0.setData(arg_8_0, arg_8_1)
-	if arg_8_0._data ~= arg_8_1 then
-		arg_8_0._data = arg_8_1
+function RoomViewBuildingResItem:setData(data)
+	if self._data ~= data then
+		self._data = data
 
-		arg_8_0:_refreshUI()
+		self:_refreshUI()
 	end
 end
 
-function var_0_0.setLineActive(arg_9_0, arg_9_1)
-	if arg_9_1 ~= null then
-		gohelper.setActive(arg_9_0._goline, arg_9_1)
+function RoomViewBuildingResItem:setLineActive(state)
+	if state ~= null then
+		gohelper.setActive(self._goline, state)
 	end
 end
 
-function var_0_0._refreshUI(arg_10_0)
-	if arg_10_0._data and arg_10_0._txt1 then
-		local var_10_0 = luaLang(arg_10_0._data.nameLanguage)
+function RoomViewBuildingResItem:_refreshUI()
+	if self._data and self._txt1 then
+		local nameStr = luaLang(self._data.nameLanguage)
 
-		arg_10_0._txt1.text = var_10_0
-		arg_10_0._txt2.text = var_10_0
+		self._txt1.text = nameStr
+		self._txt2.text = nameStr
 	end
 end
 
-return var_0_0
+return RoomViewBuildingResItem

@@ -1,361 +1,377 @@
-﻿module("modules.logic.dungeon.view.DungeonCumulativeRewardsView", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/DungeonCumulativeRewardsView.lua
 
-local var_0_0 = class("DungeonCumulativeRewardsView", BaseView)
+module("modules.logic.dungeon.view.DungeonCumulativeRewardsView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._btncloseview = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_closeview")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._simageleftbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_leftbg")
-	arg_1_0._simagerightbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_rightbg")
-	arg_1_0._gotips = gohelper.findChild(arg_1_0.viewGO, "#go_tips")
-	arg_1_0._txttipsinfo = gohelper.findChildText(arg_1_0.viewGO, "#go_tips/#txt_tipsinfo")
-	arg_1_0._scrollreward = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_reward")
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#scroll_reward/Viewport/#go_content")
-	arg_1_0._gograyline = gohelper.findChild(arg_1_0.viewGO, "#scroll_reward/Viewport/#go_content/#go_grayline")
-	arg_1_0._gonormalline = gohelper.findChild(arg_1_0.viewGO, "#scroll_reward/Viewport/#go_content/#go_normalline")
-	arg_1_0._gotarget = gohelper.findChild(arg_1_0.viewGO, "#go_target")
-	arg_1_0._txtprogress = gohelper.findChildText(arg_1_0.viewGO, "progresstip/#txt_progress")
-	arg_1_0._simagetargetbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_target/#simage_targetbg")
-	arg_1_0._simagerightfademask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_rightfademask")
-	arg_1_0._simageleftfademask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_leftfademask")
+local DungeonCumulativeRewardsView = class("DungeonCumulativeRewardsView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function DungeonCumulativeRewardsView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._btncloseview = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_closeview")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._simageleftbg = gohelper.findChildSingleImage(self.viewGO, "#simage_leftbg")
+	self._simagerightbg = gohelper.findChildSingleImage(self.viewGO, "#simage_rightbg")
+	self._gotips = gohelper.findChild(self.viewGO, "#go_tips")
+	self._txttipsinfo = gohelper.findChildText(self.viewGO, "#go_tips/#txt_tipsinfo")
+	self._scrollreward = gohelper.findChildScrollRect(self.viewGO, "#scroll_reward")
+	self._gocontent = gohelper.findChild(self.viewGO, "#scroll_reward/Viewport/#go_content")
+	self._gograyline = gohelper.findChild(self.viewGO, "#scroll_reward/Viewport/#go_content/#go_grayline")
+	self._gonormalline = gohelper.findChild(self.viewGO, "#scroll_reward/Viewport/#go_content/#go_normalline")
+	self._gotarget = gohelper.findChild(self.viewGO, "#go_target")
+	self._txtprogress = gohelper.findChildText(self.viewGO, "progresstip/#txt_progress")
+	self._simagetargetbg = gohelper.findChildSingleImage(self.viewGO, "#go_target/#simage_targetbg")
+	self._simagerightfademask = gohelper.findChildSingleImage(self.viewGO, "#simage_rightfademask")
+	self._simageleftfademask = gohelper.findChildSingleImage(self.viewGO, "#simage_leftfademask")
+	self._btntips = gohelper.findChildButtonWithAudio(self.viewGO, "progresstip/#txt_progress/#btn_tips")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btncloseview:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function DungeonCumulativeRewardsView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btncloseview:AddClickListener(self._btncloseOnClick, self)
+	self._btntips:AddClickListener(self._btntipsOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btncloseview:RemoveClickListener()
+function DungeonCumulativeRewardsView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btncloseview:RemoveClickListener()
+	self._btntips:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function DungeonCumulativeRewardsView:_btntipsOnClick()
+	DungeonController.instance:openDungeonCumulativeRewardsTipsView()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._simagebg:LoadImage(ResUrl.getDungeonIcon("full/guankajianlibiejing_038"))
-	arg_5_0._simageleftbg:LoadImage(ResUrl.getCommonIcon("bg_1"))
-	arg_5_0._simagerightbg:LoadImage(ResUrl.getCommonIcon("bg_2"))
-	arg_5_0._simagetargetbg:LoadImage(ResUrl.getDungeonIcon("bg_zhezhao"))
-	arg_5_0._simagerightfademask:LoadImage(ResUrl.getDungeonIcon("bg_zhezhao2"))
-	arg_5_0._simageleftfademask:LoadImage(ResUrl.getDungeonIcon("bg_zhezhao1"))
+function DungeonCumulativeRewardsView:_btncloseOnClick()
+	self:closeThis()
+end
+
+function DungeonCumulativeRewardsView:_editableInitView()
+	self._simagebg:LoadImage(ResUrl.getDungeonIcon("full/guankajianlibiejing_038"))
+	self._simageleftbg:LoadImage(ResUrl.getCommonIcon("bg_1"))
+	self._simagerightbg:LoadImage(ResUrl.getCommonIcon("bg_2"))
+	self._simagetargetbg:LoadImage(ResUrl.getDungeonIcon("bg_zhezhao"))
+	self._simagerightfademask:LoadImage(ResUrl.getDungeonIcon("bg_zhezhao2"))
+	self._simageleftfademask:LoadImage(ResUrl.getDungeonIcon("bg_zhezhao1"))
 	AudioMgr.instance:trigger(AudioEnum.RewardPoint.play_ui_track_main_eject)
 
-	arg_5_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_5_0._scrollreward.gameObject)
+	self._drag = SLFramework.UGUI.UIDragListener.Get(self._scrollreward.gameObject)
 
-	arg_5_0._drag:AddDragBeginListener(arg_5_0._onDragBeginHandler, arg_5_0)
-	arg_5_0._drag:AddDragEndListener(arg_5_0._onDragEndHandler, arg_5_0)
+	self._drag:AddDragBeginListener(self._onDragBeginHandler, self)
+	self._drag:AddDragEndListener(self._onDragEndHandler, self)
 
-	arg_5_0._audioScroll = MonoHelper.addLuaComOnceToGo(arg_5_0._scrollreward.gameObject, DungeonMapEpisodeAudio, arg_5_0._scrollreward)
-	arg_5_0._touch = SLFramework.UGUI.UIClickListener.Get(arg_5_0._scrollreward.gameObject)
+	self._audioScroll = MonoHelper.addLuaComOnceToGo(self._scrollreward.gameObject, DungeonMapEpisodeAudio, self._scrollreward)
+	self._touch = SLFramework.UGUI.UIClickListener.Get(self._scrollreward.gameObject)
 
-	arg_5_0._touch:AddClickDownListener(arg_5_0._onClickDownHandler, arg_5_0)
+	self._touch:AddClickDownListener(self._onClickDownHandler, self)
 end
 
-function var_0_0._onDragBeginHandler(arg_6_0)
-	arg_6_0._audioScroll:onDragBegin()
+function DungeonCumulativeRewardsView:_onDragBeginHandler()
+	self._audioScroll:onDragBegin()
 end
 
-function var_0_0._onDragEndHandler(arg_7_0)
-	arg_7_0._audioScroll:onDragEnd()
+function DungeonCumulativeRewardsView:_onDragEndHandler()
+	self._audioScroll:onDragEnd()
 end
 
-function var_0_0._onClickDownHandler(arg_8_0)
-	arg_8_0._audioScroll:onClickDown()
+function DungeonCumulativeRewardsView:_onClickDownHandler()
+	self._audioScroll:onClickDown()
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
+function DungeonCumulativeRewardsView:onUpdateParam()
 	return
 end
 
-function var_0_0._getPointRewardRequest(arg_10_0)
-	local var_10_0 = DungeonMapModel.instance:canGetRewardsList(arg_10_0._maxChapterId)
+function DungeonCumulativeRewardsView:_getPointRewardRequest()
+	local rewardList = DungeonMapModel.instance:canGetRewardsList(self._maxChapterId)
 
-	if var_10_0 and #var_10_0 > 0 then
-		arg_10_0._getRewardLen = #var_10_0
+	if rewardList and #rewardList > 0 then
+		self._getRewardLen = #rewardList
 
-		DungeonRpc.instance:sendGetPointRewardRequest(var_10_0)
+		DungeonRpc.instance:sendGetPointRewardRequest(rewardList)
 	end
 end
 
-function var_0_0._onScrollChange(arg_11_0, arg_11_1)
-	arg_11_0:_showTarget()
-	gohelper.setActive(arg_11_0._simagerightfademask.gameObject, arg_11_0._isNormalMode and arg_11_0._scrollreward.horizontalNormalizedPosition < 1)
+function DungeonCumulativeRewardsView:_onScrollChange(value)
+	self:_showTarget()
+	gohelper.setActive(self._simagerightfademask.gameObject, self._isNormalMode and self._scrollreward.horizontalNormalizedPosition < 1)
 end
 
-function var_0_0.onOpen(arg_12_0)
-	arg_12_0._maxChapterId = lua_chapter_point_reward.configList[#lua_chapter_point_reward.configList].chapterId
+function DungeonCumulativeRewardsView:onOpen()
+	local lastConfig = lua_chapter_point_reward.configList[#lua_chapter_point_reward.configList]
 
-	arg_12_0:addEventCb(DungeonController.instance, DungeonEvent.OnGetPointReward, arg_12_0._onGetPointReward, arg_12_0)
-	arg_12_0:addEventCb(DungeonController.instance, DungeonEvent.OnGetPointRewardMaterials, arg_12_0._onGetPointRewardMaterials, arg_12_0)
-	arg_12_0:addEventCb(DungeonController.instance, DungeonEvent.GuideGetPointReward, arg_12_0._getPointRewardRequest, arg_12_0)
-	arg_12_0._scrollreward:AddOnValueChanged(arg_12_0._onScrollChange, arg_12_0)
+	self._maxChapterId = lastConfig.chapterId
+
+	self:addEventCb(DungeonController.instance, DungeonEvent.OnGetPointReward, self._onGetPointReward, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.OnGetPointRewardMaterials, self._onGetPointRewardMaterials, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.GuideGetPointReward, self._getPointRewardRequest, self)
+	self._scrollreward:AddOnValueChanged(self._onScrollChange, self)
 
 	if not GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.DelayGetPointReward) then
-		TaskDispatcher.runDelay(arg_12_0._getPointRewardRequest, arg_12_0, 0.6)
+		TaskDispatcher.runDelay(self._getPointRewardRequest, self, 0.6)
 	end
 
-	arg_12_0:_showChapters()
-	arg_12_0:_showProgress()
-	arg_12_0:_moveCenter()
-	arg_12_0:_showTarget()
-	NavigateMgr.instance:addEscape(ViewName.DungeonCumulativeRewardsView, arg_12_0._btncloseOnClick, arg_12_0)
+	self:_showChapters()
+	self:_showProgress()
+	self:_moveCenter()
+	self:_showTarget()
+	NavigateMgr.instance:addEscape(ViewName.DungeonCumulativeRewardsView, self._btncloseOnClick, self)
 end
 
-function var_0_0._onGetPointRewardMaterials(arg_13_0, arg_13_1)
-	arg_13_0._rewardsMaterials = arg_13_1
+function DungeonCumulativeRewardsView:_onGetPointRewardMaterials(materials)
+	self._rewardsMaterials = materials
 end
 
-function var_0_0._showMaterials(arg_14_0)
-	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, arg_14_0._rewardsMaterials)
+function DungeonCumulativeRewardsView:_showMaterials()
+	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, self._rewardsMaterials)
 end
 
-function var_0_0._onGetPointReward(arg_15_0)
-	if arg_15_0._getRewardLen == 1 then
+function DungeonCumulativeRewardsView:_onGetPointReward()
+	if self._getRewardLen == 1 then
 		AudioMgr.instance:trigger(AudioEnum.RewardPoint.play_ui_track_achievement_single)
 	else
 		AudioMgr.instance:trigger(AudioEnum.RewardPoint.play_ui_track_achievement_multiple)
 	end
 
-	arg_15_0:_refreshItems()
-	arg_15_0:_showProgress()
-	arg_15_0:_showTarget()
+	self:_refreshItems()
+	self:_showProgress()
+	self:_showTarget()
 
-	if arg_15_0._rewardsMaterials then
-		TaskDispatcher.cancelTask(arg_15_0._showMaterials, arg_15_0)
-		TaskDispatcher.runDelay(arg_15_0._showMaterials, arg_15_0, 0.8)
+	if self._rewardsMaterials then
+		TaskDispatcher.cancelTask(self._showMaterials, self)
+		TaskDispatcher.runDelay(self._showMaterials, self, 0.8)
 	end
 end
 
-function var_0_0._refreshItems(arg_16_0)
-	for iter_16_0, iter_16_1 in ipairs(arg_16_0._itemList) do
-		iter_16_1:refreshRewardItems(true)
+function DungeonCumulativeRewardsView:_refreshItems()
+	for i, v in ipairs(self._itemList) do
+		v:refreshRewardItems(true)
 	end
 end
 
-function var_0_0._showChapters(arg_17_0)
-	arg_17_0._firstPosX = 145
-	arg_17_0._sliderBasePosx = 59.5
-	arg_17_0._posX = 0
-	arg_17_0._posY = -506.8
-	arg_17_0._deltaPosX = 335
-	arg_17_0._endNormalGap = 165
-	arg_17_0._endTargetGap = 280
-	arg_17_0._targetModeWidth = 1266
-	arg_17_0._normalModeWidth = 1630
-	arg_17_0._itemList = arg_17_0:getUserDataTb_()
-	arg_17_0._itemMap = arg_17_0:getUserDataTb_()
+function DungeonCumulativeRewardsView:_showChapters()
+	self._firstPosX = 145
+	self._sliderBasePosx = 59.5
+	self._posX = 0
+	self._posY = -506.8
+	self._deltaPosX = 335
+	self._endNormalGap = 165
+	self._endTargetGap = 280
+	self._targetModeWidth = 1266
+	self._normalModeWidth = 1630
+	self._itemList = self:getUserDataTb_()
+	self._itemMap = self:getUserDataTb_()
 
-	recthelper.setAnchor(arg_17_0._gograyline.transform, arg_17_0._sliderBasePosx, arg_17_0._posY)
-	recthelper.setAnchor(arg_17_0._gonormalline.transform, arg_17_0._sliderBasePosx, arg_17_0._posY)
+	recthelper.setAnchor(self._gograyline.transform, self._sliderBasePosx, self._posY)
+	recthelper.setAnchor(self._gonormalline.transform, self._sliderBasePosx, self._posY)
 
-	arg_17_0._prevPointValue = 0
+	self._prevPointValue = 0
 
-	for iter_17_0 = 101, arg_17_0._maxChapterId do
-		arg_17_0:_showChapter(iter_17_0)
+	for i = 101, self._maxChapterId do
+		self:_showChapter(i)
 	end
 end
 
-function var_0_0._showChapter(arg_18_0, arg_18_1)
-	local var_18_0 = DungeonConfig.instance:getChapterPointReward(arg_18_1)
-	local var_18_1 = DungeonMapModel.instance:getRewardPointInfo()
+function DungeonCumulativeRewardsView:_showChapter(chapterId)
+	local pointRewardCfg = DungeonConfig.instance:getChapterPointReward(chapterId)
+	local pointRewardInfo = DungeonMapModel.instance:getRewardPointInfo()
 
-	for iter_18_0, iter_18_1 in ipairs(var_18_0) do
-		local var_18_2 = arg_18_0.viewContainer:getSetting().otherRes[1]
-		local var_18_3 = arg_18_0:getResInst(var_18_2, arg_18_0._gocontent, "item" .. iter_18_1.id)
-		local var_18_4 = arg_18_0._posX
-		local var_18_5 = arg_18_0._posX + (arg_18_0._posX == 0 and arg_18_0._firstPosX or arg_18_0._deltaPosX)
+	for i, v in ipairs(pointRewardCfg) do
+		local path = self.viewContainer:getSetting().otherRes[1]
+		local child = self:getResInst(path, self._gocontent, "item" .. v.id)
+		local prevPosX = self._posX
+		local curPosX = self._posX + (self._posX == 0 and self._firstPosX or self._deltaPosX)
 
-		arg_18_0._posX = var_18_5
+		self._posX = curPosX
 
-		recthelper.setAnchor(var_18_3.transform, var_18_5, arg_18_0._posY)
-		recthelper.setWidth(arg_18_0._gocontent.transform, arg_18_0._posX)
+		recthelper.setAnchor(child.transform, curPosX, self._posY)
+		recthelper.setWidth(self._gocontent.transform, self._posX)
 
-		local var_18_6 = arg_18_0._posX + arg_18_0._sliderBasePosx
+		local graySliderLen = self._posX + self._sliderBasePosx
 
-		recthelper.setWidth(arg_18_0._gograyline.transform, var_18_6)
+		recthelper.setWidth(self._gograyline.transform, graySliderLen)
 
-		local var_18_7 = MonoHelper.addLuaComOnceToGo(var_18_3, DungeonCumulativeRewardsItem, {
-			arg_18_1,
-			iter_18_1,
+		local item = MonoHelper.addLuaComOnceToGo(child, DungeonCumulativeRewardsItem, {
+			chapterId,
+			v,
 			false,
-			var_18_4,
-			var_18_5,
-			arg_18_0._prevPointValue
+			prevPosX,
+			curPosX,
+			self._prevPointValue
 		})
 
-		table.insert(arg_18_0._itemList, var_18_7)
+		table.insert(self._itemList, item)
 
-		arg_18_0._itemMap[iter_18_1.id] = var_18_7
-		arg_18_0._prevPointValue = iter_18_1.rewardPointNum
+		self._itemMap[v.id] = item
+		self._prevPointValue = v.rewardPointNum
 	end
 end
 
-function var_0_0._showTarget(arg_19_0)
-	local var_19_0 = recthelper.getAnchorX(arg_19_0._gocontent.transform)
-	local var_19_1 = recthelper.getWidth(arg_19_0._scrollreward.transform)
-	local var_19_2
-	local var_19_3
-	local var_19_4 = DungeonMapModel.instance:getRewardPointInfo()
+function DungeonCumulativeRewardsView:_showTarget()
+	local contentPosX = recthelper.getAnchorX(self._gocontent.transform)
+	local viewWidth = recthelper.getWidth(self._scrollreward.transform)
+	local targetReward, lastTargetReward
+	local pointRewardInfo = DungeonMapModel.instance:getRewardPointInfo()
 
-	for iter_19_0 = 101, arg_19_0._maxChapterId do
-		local var_19_5 = DungeonConfig.instance:getChapterPointReward(iter_19_0)
+	for chapterId = 101, self._maxChapterId do
+		local pointRewardCfg = DungeonConfig.instance:getChapterPointReward(chapterId)
 
-		for iter_19_1, iter_19_2 in ipairs(var_19_5) do
-			if iter_19_2.display > 0 and var_19_4.rewardPoint < iter_19_2.rewardPointNum then
-				var_19_3 = iter_19_2
+		for i, v in ipairs(pointRewardCfg) do
+			if v.display > 0 and pointRewardInfo.rewardPoint < v.rewardPointNum then
+				lastTargetReward = v
 
-				if var_19_1 < arg_19_0._itemMap[iter_19_2.id].curPosX + var_19_0 then
-					var_19_2 = iter_19_2
+				local item = self._itemMap[v.id]
+				local posX = item.curPosX + contentPosX
+
+				if viewWidth < posX then
+					targetReward = v
 
 					break
 				end
 			end
 		end
 
-		if var_19_2 then
+		if targetReward then
 			break
 		end
 	end
 
-	var_19_2 = var_19_2 or var_19_3
-	arg_19_0._isNormalMode = true
+	targetReward = targetReward or lastTargetReward
+	self._isNormalMode = true
 
-	if var_19_2 then
-		arg_19_0._isNormalMode = false
+	if targetReward then
+		self._isNormalMode = false
 
-		if arg_19_0._targetItem then
-			if arg_19_0._targetItem.rewardId == var_19_2.id then
+		if self._targetItem then
+			if self._targetItem.rewardId == targetReward.id then
 				return
 			end
 
-			arg_19_0:_playTargetItemQuitAmim()
+			self:_playTargetItemQuitAmim()
 
-			arg_19_0._targetItem = nil
+			self._targetItem = nil
 		end
 
-		recthelper.setWidth(arg_19_0._scrollreward.transform, arg_19_0._targetModeWidth)
+		recthelper.setWidth(self._scrollreward.transform, self._targetModeWidth)
 
-		local var_19_6 = arg_19_0.viewContainer:getSetting().otherRes[1]
-		local var_19_7 = arg_19_0:getResInst(var_19_6, arg_19_0._gotarget, "item" .. var_19_2.id)
+		local path = self.viewContainer:getSetting().otherRes[1]
+		local child = self:getResInst(path, self._gotarget, "item" .. targetReward.id)
 
-		gohelper.setActive(var_19_7, not arg_19_0._unUseTargetItemGo)
+		gohelper.setActive(child, not self._unUseTargetItemGo)
 
-		arg_19_0._targetItem = MonoHelper.addLuaComOnceToGo(var_19_7, DungeonCumulativeRewardsItem, {
+		self._targetItem = MonoHelper.addLuaComOnceToGo(child, DungeonCumulativeRewardsItem, {
 			nil,
-			var_19_2,
+			targetReward,
 			true
 		})
 
-		TaskDispatcher.cancelTask(arg_19_0._showTargetItem, arg_19_0)
-		TaskDispatcher.runDelay(arg_19_0._showTargetItem, arg_19_0, 0.1)
-		gohelper.setActive(arg_19_0._gotarget, true)
-		gohelper.setActive(arg_19_0._simagerightfademask.gameObject, false)
+		TaskDispatcher.cancelTask(self._showTargetItem, self)
+		TaskDispatcher.runDelay(self._showTargetItem, self, 0.1)
+		gohelper.setActive(self._gotarget, true)
+		gohelper.setActive(self._simagerightfademask.gameObject, false)
 	else
-		gohelper.setActive(arg_19_0._gotarget, false)
-		recthelper.setWidth(arg_19_0._scrollreward.transform, arg_19_0._normalModeWidth)
+		gohelper.setActive(self._gotarget, false)
+		recthelper.setWidth(self._scrollreward.transform, self._normalModeWidth)
 	end
 
-	local var_19_8 = arg_19_0._isNormalMode and arg_19_0._endNormalGap or arg_19_0._endTargetGap
+	local endGap = self._isNormalMode and self._endNormalGap or self._endTargetGap
 
-	recthelper.setWidth(arg_19_0._gocontent.transform, arg_19_0._posX + var_19_8)
-	gohelper.setActive(arg_19_0._simagerightfademask.gameObject, arg_19_0._isNormalMode and arg_19_0._scrollreward.horizontalNormalizedPosition < 1)
+	recthelper.setWidth(self._gocontent.transform, self._posX + endGap)
+	gohelper.setActive(self._simagerightfademask.gameObject, self._isNormalMode and self._scrollreward.horizontalNormalizedPosition < 1)
 end
 
-function var_0_0._playTargetItemQuitAmim(arg_20_0)
-	if not arg_20_0._targetItem or not arg_20_0._targetItem.viewGO then
+function DungeonCumulativeRewardsView:_playTargetItemQuitAmim()
+	if not self._targetItem or not self._targetItem.viewGO then
 		return
 	end
 
-	arg_20_0._unUseTargetItemGo = arg_20_0._targetItem.viewGO
+	self._unUseTargetItemGo = self._targetItem.viewGO
 
-	arg_20_0._unUseTargetItemGo:GetComponent(typeof(UnityEngine.Animator)):Play("dungeoncumulativerewardsitem_switch_out")
-	TaskDispatcher.cancelTask(arg_20_0._destroyUnUseTargetItem, arg_20_0)
-	TaskDispatcher.runDelay(arg_20_0._destroyUnUseTargetItem, arg_20_0, 0.1)
+	local anim = self._unUseTargetItemGo:GetComponent(typeof(UnityEngine.Animator))
+
+	anim:Play("dungeoncumulativerewardsitem_switch_out")
+	TaskDispatcher.cancelTask(self._destroyUnUseTargetItem, self)
+	TaskDispatcher.runDelay(self._destroyUnUseTargetItem, self, 0.1)
 end
 
-function var_0_0._destroyUnUseTargetItem(arg_21_0)
-	if not arg_21_0._unUseTargetItemGo then
+function DungeonCumulativeRewardsView:_destroyUnUseTargetItem()
+	if not self._unUseTargetItemGo then
 		return
 	end
 
-	gohelper.destroy(arg_21_0._unUseTargetItemGo)
+	gohelper.destroy(self._unUseTargetItemGo)
 
-	arg_21_0._unUseTargetItemGo = nil
+	self._unUseTargetItemGo = nil
 end
 
-function var_0_0._showTargetItem(arg_22_0)
-	if not arg_22_0._targetItem or not arg_22_0._targetItem.viewGO then
+function DungeonCumulativeRewardsView:_showTargetItem()
+	if not self._targetItem or not self._targetItem.viewGO then
 		return
 	end
 
-	gohelper.setActive(arg_22_0._targetItem.viewGO, true)
+	gohelper.setActive(self._targetItem.viewGO, true)
 	AudioMgr.instance:trigger(AudioEnum.RewardPoint.play_ui_track_achievement_flip)
 end
 
-function var_0_0._showProgress(arg_23_0)
-	local var_23_0 = DungeonMapModel.instance:getRewardPointInfo()
+function DungeonCumulativeRewardsView:_showProgress()
+	local pointRewardInfo = DungeonMapModel.instance:getRewardPointInfo()
 
-	for iter_23_0, iter_23_1 in ipairs(arg_23_0._itemList) do
-		if iter_23_1.curPointValue <= var_23_0.rewardPoint then
-			local var_23_1 = iter_23_1.curPosX - arg_23_0._sliderBasePosx
+	for i, v in ipairs(self._itemList) do
+		if v.curPointValue <= pointRewardInfo.rewardPoint then
+			local silderWidth = v.curPosX - self._sliderBasePosx
 
-			recthelper.setWidth(arg_23_0._gonormalline.transform, var_23_1)
-		elseif var_23_0.rewardPoint >= iter_23_1.prevPointValue then
-			local var_23_2 = iter_23_1.curPointValue - iter_23_1.prevPointValue
-			local var_23_3 = iter_23_0 == 1 and arg_23_0._sliderBasePosx or iter_23_1.prevPosX
-			local var_23_4 = iter_23_1.curPosX - var_23_3
-			local var_23_5 = var_23_3 + (var_23_0.rewardPoint - iter_23_1.prevPointValue) / var_23_2 * var_23_4 - arg_23_0._sliderBasePosx
+			recthelper.setWidth(self._gonormalline.transform, silderWidth)
+		elseif pointRewardInfo.rewardPoint >= v.prevPointValue then
+			local deltaValue = v.curPointValue - v.prevPointValue
+			local prePosX = i == 1 and self._sliderBasePosx or v.prevPosX
+			local deltaPosX = v.curPosX - prePosX
+			local value = pointRewardInfo.rewardPoint - v.prevPointValue
+			local posX = prePosX + value / deltaValue * deltaPosX - self._sliderBasePosx
 
-			recthelper.setWidth(arg_23_0._gonormalline.transform, var_23_5)
-
-			break
-		end
-	end
-
-	local var_23_6 = arg_23_0._itemList and #arg_23_0._itemList or 0
-
-	if var_23_6 > 0 and arg_23_0._itemList[var_23_6].curPointValue <= var_23_0.rewardPoint then
-		local var_23_7 = recthelper.getWidth(arg_23_0._gograyline.transform)
-
-		recthelper.setWidth(arg_23_0._gonormalline.transform, var_23_7)
-	end
-
-	arg_23_0._txtprogress.text = var_23_0.rewardPoint
-end
-
-function var_0_0._moveCenter(arg_24_0)
-	local var_24_0 = DungeonMapModel.instance:getRewardPointInfo()
-	local var_24_1
-
-	for iter_24_0, iter_24_1 in ipairs(arg_24_0._itemList) do
-		if iter_24_1.curPointValue > var_24_0.rewardPoint then
-			var_24_1 = iter_24_1
+			recthelper.setWidth(self._gonormalline.transform, posX)
 
 			break
 		end
 	end
 
-	var_24_1 = var_24_1 or arg_24_0._itemList[#arg_24_0._itemList]
+	local itemLen = self._itemList and #self._itemList or 0
 
-	local var_24_2 = recthelper.getWidth(arg_24_0._scrollreward.transform)
+	if itemLen > 0 and self._itemList[itemLen].curPointValue <= pointRewardInfo.rewardPoint then
+		local graySliderWidth = recthelper.getWidth(self._gograyline.transform)
 
-	recthelper.setAnchorX(arg_24_0._gocontent.transform, -var_24_1.curPosX + var_24_2 / 2)
+		recthelper.setWidth(self._gonormalline.transform, graySliderWidth)
+	end
+
+	self._txtprogress.text = pointRewardInfo.rewardPoint
 end
 
-function var_0_0.onClose(arg_25_0)
-	TaskDispatcher.cancelTask(arg_25_0._getPointRewardRequest, arg_25_0)
-	TaskDispatcher.cancelTask(arg_25_0._destroyUnUseTargetItem, arg_25_0)
-	TaskDispatcher.cancelTask(arg_25_0._showTargetItem, arg_25_0)
-	arg_25_0._scrollreward:RemoveOnValueChanged()
-	TaskDispatcher.cancelTask(arg_25_0._showMaterials, arg_25_0)
+function DungeonCumulativeRewardsView:_moveCenter()
+	local pointRewardInfo = DungeonMapModel.instance:getRewardPointInfo()
+	local moveItem
+
+	for i, v in ipairs(self._itemList) do
+		if v.curPointValue > pointRewardInfo.rewardPoint then
+			moveItem = v
+
+			break
+		end
+	end
+
+	moveItem = moveItem or self._itemList[#self._itemList]
+
+	local viewWidth = recthelper.getWidth(self._scrollreward.transform)
+
+	recthelper.setAnchorX(self._gocontent.transform, -moveItem.curPosX + viewWidth / 2)
+end
+
+function DungeonCumulativeRewardsView:onClose()
+	TaskDispatcher.cancelTask(self._getPointRewardRequest, self)
+	TaskDispatcher.cancelTask(self._destroyUnUseTargetItem, self)
+	TaskDispatcher.cancelTask(self._showTargetItem, self)
+	self._scrollreward:RemoveOnValueChanged()
+	TaskDispatcher.cancelTask(self._showMaterials, self)
 
 	if GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.DelayGetPointReward) then
 		GuideModel.instance:setFlag(GuideModel.GuideFlag.DelayGetPointReward, nil)
@@ -363,26 +379,26 @@ function var_0_0.onClose(arg_25_0)
 	end
 end
 
-function var_0_0.onDestroyView(arg_26_0)
-	arg_26_0._simagebg:UnLoadImage()
-	arg_26_0._simageleftbg:UnLoadImage()
-	arg_26_0._simagerightbg:UnLoadImage()
-	arg_26_0._simagetargetbg:UnLoadImage()
-	arg_26_0._simageleftfademask:UnLoadImage()
-	arg_26_0._simagerightfademask:UnLoadImage()
+function DungeonCumulativeRewardsView:onDestroyView()
+	self._simagebg:UnLoadImage()
+	self._simageleftbg:UnLoadImage()
+	self._simagerightbg:UnLoadImage()
+	self._simagetargetbg:UnLoadImage()
+	self._simageleftfademask:UnLoadImage()
+	self._simagerightfademask:UnLoadImage()
 
-	if arg_26_0._drag then
-		arg_26_0._drag:RemoveDragBeginListener()
-		arg_26_0._drag:RemoveDragEndListener()
+	if self._drag then
+		self._drag:RemoveDragBeginListener()
+		self._drag:RemoveDragEndListener()
 
-		arg_26_0._drag = nil
+		self._drag = nil
 	end
 
-	if arg_26_0._touch then
-		arg_26_0._touch:RemoveClickDownListener()
+	if self._touch then
+		self._touch:RemoveClickDownListener()
 
-		arg_26_0._touch = nil
+		self._touch = nil
 	end
 end
 
-return var_0_0
+return DungeonCumulativeRewardsView

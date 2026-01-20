@@ -1,29 +1,31 @@
-﻿module("modules.logic.versionactivity2_5.liangyue.define.LiangYueEnum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/liangyue/define/LiangYueEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity2_5.liangyue.define.LiangYueEnum", package.seeall)
 
-var_0_0.MeshItemColor = {
+local LiangYueEnum = _M
+
+LiangYueEnum.MeshItemColor = {
 	Common = "#FFFFFF",
 	Disable = "#FF1800",
 	Enable = "#65B96F"
 }
-var_0_0.ScrollItemColor = {
+LiangYueEnum.ScrollItemColor = {
 	Enough = "FFFFFF",
 	NotEnought = "C8C8C8"
 }
-var_0_0.CalculateType = {
+LiangYueEnum.CalculateType = {
 	Minus = 2,
 	Divide = 4,
 	Add = 1,
 	Multiply = 3
 }
-var_0_0.CalculateSymbol = {
+LiangYueEnum.CalculateSymbol = {
 	"+",
 	"-",
 	"×",
 	"÷"
 }
-var_0_0.MonthEn = {
+LiangYueEnum.MonthEn = {
 	"January",
 	"February",
 	"March",
@@ -37,56 +39,56 @@ var_0_0.MonthEn = {
 	"November",
 	"December"
 }
-var_0_0.TweenDuration = 0.2
-var_0_0.DragAlpha = 0.5
-var_0_0.NormalAlpha = 1
-var_0_0.MeshAlpha = 0.5
-var_0_0.AttributeType = {
+LiangYueEnum.TweenDuration = 0.2
+LiangYueEnum.DragAlpha = 0.5
+LiangYueEnum.NormalAlpha = 1
+LiangYueEnum.MeshAlpha = 0.5
+LiangYueEnum.AttributeType = {
 	TwoColumn = 2,
 	OneRow = 3,
 	OneColumn = 1
 }
-var_0_0.StatGameState = {
+LiangYueEnum.StatGameState = {
 	Finish = "成功",
 	Restart = "重新开始",
 	Exit = "中断"
 }
-var_0_0.UnlimitedSign = "∞"
-var_0_0.AttributeOffset = 35
-var_0_0.EpisodeAnim = {
+LiangYueEnum.UnlimitedSign = "∞"
+LiangYueEnum.AttributeOffset = 35
+LiangYueEnum.EpisodeAnim = {
 	Finish = "finish",
 	FinishIdle = "finish_idle",
 	Unlock = "unlock",
 	Empty = "empty"
 }
-var_0_0.EpisodeGameAnim = {
+LiangYueEnum.EpisodeGameAnim = {
 	FinishIdle = "finish_idle",
 	Idle = "idle",
 	Open = "open"
 }
-var_0_0.EpisodeGameFinishAnim = {
+LiangYueEnum.EpisodeGameFinishAnim = {
 	Idle = "idle",
 	Open = "open"
 }
-var_0_0.AttributeAnim = {
+LiangYueEnum.AttributeAnim = {
 	Down = "down",
 	Up = "up",
 	Empty = "empty"
 }
-var_0_0.AttributeColor = {
+LiangYueEnum.AttributeColor = {
 	"#4B8964",
 	"#508FB3",
 	"#BF6639"
 }
-var_0_0.AttributeNotEnoughColor = "#B2B2B2"
-var_0_0.AttributeDownColor = "#B7493C"
-var_0_0.AttributeAnimRevertTime = 0.5
-var_0_0.FinishStoryAnimDelayTime = 1.5
-var_0_0.FinishGameAnimDelayTime = 1.5
-var_0_0.PathAnimDelayTime = 0.5
-var_0_0.UnlockAnimDelayTime = 1.7
-var_0_0.FocusItemMoveDuration = 0.26
-var_0_0.FinishAnimDelayTime = 0.6
-var_0_0.FinishAnimDelayTimeEnd = 1.2
+LiangYueEnum.AttributeNotEnoughColor = "#B2B2B2"
+LiangYueEnum.AttributeDownColor = "#B7493C"
+LiangYueEnum.AttributeAnimRevertTime = 0.5
+LiangYueEnum.FinishStoryAnimDelayTime = 1.5
+LiangYueEnum.FinishGameAnimDelayTime = 1.5
+LiangYueEnum.PathAnimDelayTime = 0.5
+LiangYueEnum.UnlockAnimDelayTime = 1.7
+LiangYueEnum.FocusItemMoveDuration = 0.26
+LiangYueEnum.FinishAnimDelayTime = 0.6
+LiangYueEnum.FinishAnimDelayTimeEnd = 1.2
 
-return var_0_0
+return LiangYueEnum

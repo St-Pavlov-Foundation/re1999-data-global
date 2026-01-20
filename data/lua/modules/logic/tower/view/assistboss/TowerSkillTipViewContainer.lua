@@ -1,16 +1,18 @@
-﻿module("modules.logic.tower.view.assistboss.TowerSkillTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/tower/view/assistboss/TowerSkillTipViewContainer.lua
 
-local var_0_0 = class("TowerSkillTipViewContainer", BaseViewContainer)
+module("modules.logic.tower.view.assistboss.TowerSkillTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local TowerSkillTipViewContainer = class("TowerSkillTipViewContainer", BaseViewContainer)
+
+function TowerSkillTipViewContainer:buildViews()
 	return {
 		TowerSkillTipView.New()
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
+function TowerSkillTipViewContainer:onContainerClickModalMask()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	arg_2_0:closeThis()
+	self:closeThis()
 end
 
-return var_0_0
+return TowerSkillTipViewContainer

@@ -1,36 +1,38 @@
-﻿module("modules.logic.fight.view.cardeffect.FightCardCombineEndEffect", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/cardeffect/FightCardCombineEndEffect.lua
 
-local var_0_0 = class("FightCardCombineEndEffect", BaseWork)
+module("modules.logic.fight.view.cardeffect.FightCardCombineEndEffect", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	if arg_1_1.preCombineIndex and arg_1_1.newCardCount > 0 then
-		local var_1_0 = arg_1_1.preCombineIndex
-		local var_1_1 = arg_1_1.preCardCount
-		local var_1_2 = arg_1_1.handCardItemList
-		local var_1_3 = arg_1_1.oldPosXList
+local FightCardCombineEndEffect = class("FightCardCombineEndEffect", BaseWork)
 
-		for iter_1_0 = 1, var_1_1 do
-			recthelper.setAnchorX(var_1_2[iter_1_0].tr, var_1_3[iter_1_0])
+function FightCardCombineEndEffect:onStart(context)
+	if context.preCombineIndex and context.newCardCount > 0 then
+		local preCombineIndex = context.preCombineIndex
+		local preCardCount = context.preCardCount
+		local handCardItemList = context.handCardItemList
+		local oldPosXList = context.oldPosXList
+
+		for i = 1, preCardCount do
+			recthelper.setAnchorX(handCardItemList[i].tr, oldPosXList[i])
 		end
 
-		arg_1_0._flow = FightCardCombineEffect.buildCombineEndFlow(var_1_0, var_1_1, var_1_1, var_1_2)
+		self._flow = FightCardCombineEffect.buildCombineEndFlow(preCombineIndex, preCardCount, preCardCount, handCardItemList)
 
-		arg_1_0._flow:registerDoneListener(arg_1_0._onMoveEnd, arg_1_0)
-		arg_1_0._flow:start()
+		self._flow:registerDoneListener(self._onMoveEnd, self)
+		self._flow:start()
 	else
-		arg_1_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._onMoveEnd(arg_2_0)
-	arg_2_0:onDone(true)
+function FightCardCombineEndEffect:_onMoveEnd()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
-	if arg_3_0._flow then
-		arg_3_0._flow:stop()
-		arg_3_0._flow:unregisterDoneListener(arg_3_0._onBornEnd, arg_3_0)
+function FightCardCombineEndEffect:clearWork()
+	if self._flow then
+		self._flow:stop()
+		self._flow:unregisterDoneListener(self._onBornEnd, self)
 	end
 end
 
-return var_0_0
+return FightCardCombineEndEffect

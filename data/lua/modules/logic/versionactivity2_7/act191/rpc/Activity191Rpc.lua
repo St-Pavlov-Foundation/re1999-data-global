@@ -1,367 +1,387 @@
-﻿module("modules.logic.versionactivity2_7.act191.rpc.Activity191Rpc", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/act191/rpc/Activity191Rpc.lua
 
-local var_0_0 = class("Activity191Rpc", BaseRpc)
+module("modules.logic.versionactivity2_7.act191.rpc.Activity191Rpc", package.seeall)
 
-function var_0_0.sendGetAct191InfoRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = Activity191Module_pb.GetAct191InfoRequest()
+local Activity191Rpc = class("Activity191Rpc", BaseRpc)
 
-	var_1_0.activityId = arg_1_1
+function Activity191Rpc:sendGetAct191InfoRequest(activityId, callback, callbackObj)
+	local req = Activity191Module_pb.GetAct191InfoRequest()
 
-	arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
+	req.activityId = activityId
+
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveGetAct191InfoReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 ~= 0 then
+function Activity191Rpc:onReceiveGetAct191InfoReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_2_0 = arg_2_2.activityId
-	local var_2_1 = arg_2_2.info
+	local activityId = msg.activityId
+	local info = msg.info
 
-	Activity191Model.instance:setActInfo(var_2_0, var_2_1)
+	Activity191Model.instance:setActInfo(activityId, info)
 end
 
-function var_0_0.sendStart191GameRequest(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	local var_3_0 = Activity191Module_pb.Start191GameRequest()
+function Activity191Rpc:sendStart191GameRequest(activityId, callback, callbackObj)
+	local req = Activity191Module_pb.Start191GameRequest()
 
-	var_3_0.activityId = arg_3_1
+	req.activityId = activityId
 
-	arg_3_0:sendMsg(var_3_0, arg_3_2, arg_3_3)
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveStart191GameReply(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 ~= 0 then
+function Activity191Rpc:onReceiveStart191GameReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_4_0 = arg_4_2.activityId
-	local var_4_1 = arg_4_2.gameInfo
+	local activityId = msg.activityId
+	local gameInfo = msg.gameInfo
+	local actInfo = Activity191Model.instance:getActInfo(activityId)
 
-	Activity191Model.instance:getActInfo(var_4_0):updateGameInfo(var_4_1)
+	actInfo:updateGameInfo(gameInfo)
 end
 
-function var_0_0.sendSelect191InitBuildRequest(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
-	local var_5_0 = Activity191Module_pb.Select191InitBuildRequest()
+function Activity191Rpc:sendSelect191InitBuildRequest(activityId, initBuildId, callback, callbackObj)
+	local req = Activity191Module_pb.Select191InitBuildRequest()
 
-	var_5_0.activityId = arg_5_1
-	var_5_0.initBuildId = arg_5_2
+	req.activityId = activityId
+	req.initBuildId = initBuildId
 
-	arg_5_0:sendMsg(var_5_0, arg_5_3, arg_5_4)
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveSelect191InitBuildReply(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_1 ~= 0 then
+function Activity191Rpc:onReceiveSelect191InitBuildReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_6_0 = arg_6_2.activityId
-	local var_6_1 = arg_6_2.gameInfo
-	local var_6_2 = Activity191Model.instance:getActInfo(var_6_0)
+	local activityId = msg.activityId
+	local gameInfo = msg.gameInfo
+	local actInfo = Activity191Model.instance:getActInfo(activityId)
 
-	var_6_2:updateGameInfo(var_6_1)
-	var_6_2:getGameInfo():autoFill()
+	actInfo:updateGameInfo(gameInfo)
+	actInfo:getGameInfo():autoFill()
 end
 
-function var_0_0.sendSelect191NodeRequest(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4)
-	local var_7_0 = Activity191Module_pb.Select191NodeRequest()
+function Activity191Rpc:sendSelect191NodeRequest(activityId, index, callback, callbackObj)
+	local req = Activity191Module_pb.Select191NodeRequest()
 
-	var_7_0.activityId = arg_7_1
-	var_7_0.index = arg_7_2
+	req.activityId = activityId
+	req.index = index
 
-	arg_7_0:sendMsg(var_7_0, arg_7_3, arg_7_4)
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveSelect191NodeReply(arg_8_0, arg_8_1, arg_8_2)
-	if arg_8_1 ~= 0 then
+function Activity191Rpc:onReceiveSelect191NodeReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_8_0 = arg_8_2.activityId
-	local var_8_1 = arg_8_2.gameInfo
+	local activityId = msg.activityId
+	local gameInfo = msg.gameInfo
+	local actInfo = Activity191Model.instance:getActInfo(activityId)
 
-	Activity191Model.instance:getActInfo(var_8_0):updateGameInfo(var_8_1)
+	actInfo:updateGameInfo(gameInfo)
 end
 
-function var_0_0.sendFresh191ShopRequest(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	local var_9_0 = Activity191Module_pb.Fresh191ShopRequest()
+function Activity191Rpc:sendFresh191ShopRequest(activityId, callback, callbackObj)
+	local req = Activity191Module_pb.Fresh191ShopRequest()
 
-	var_9_0.activityId = arg_9_1
+	req.activityId = activityId
 
-	arg_9_0:sendMsg(var_9_0, arg_9_2, arg_9_3)
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveFresh191ShopReply(arg_10_0, arg_10_1, arg_10_2)
-	if arg_10_1 ~= 0 then
+function Activity191Rpc:onReceiveFresh191ShopReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_10_0 = arg_10_2.activityId
-	local var_10_1 = arg_10_2.nodeInfo
-	local var_10_2
+	local activityId = msg.activityId
+	local nodeInfo = msg.nodeInfo
+	local coin = msg.coin
+	local gameMo = Activity191Model.instance:getActInfo(activityId):getGameInfo()
 
-	var_10_2.coin, var_10_2 = arg_10_2.coin, Activity191Model.instance:getActInfo(var_10_0):getGameInfo()
+	gameMo.coin = coin
 
-	var_10_2:updateCurNodeInfo(var_10_1)
+	gameMo:updateCurNodeInfo(nodeInfo)
 end
 
-function var_0_0.sendBuyIn191ShopRequest(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4)
-	local var_11_0 = Activity191Module_pb.BuyIn191ShopRequest()
+function Activity191Rpc:sendBuyIn191ShopRequest(activityId, index, callback, callbackObj)
+	local req = Activity191Module_pb.BuyIn191ShopRequest()
 
-	var_11_0.activityId = arg_11_1
-	var_11_0.index = arg_11_2
+	req.activityId = activityId
+	req.index = index
 
-	arg_11_0:sendMsg(var_11_0, arg_11_3, arg_11_4)
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveBuyIn191ShopReply(arg_12_0, arg_12_1, arg_12_2)
-	if arg_12_1 ~= 0 then
+function Activity191Rpc:onReceiveBuyIn191ShopReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_12_0 = arg_12_2.activityId
-	local var_12_1 = arg_12_2.gameInfo
+	local activityId = msg.activityId
+	local gameInfo = msg.gameInfo
+	local actInfo = Activity191Model.instance:getActInfo(activityId)
 
-	Activity191Model.instance:getActInfo(var_12_0):updateGameInfo(var_12_1)
+	actInfo:updateGameInfo(gameInfo)
 end
 
-function var_0_0.sendLeave191ShopRequest(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	local var_13_0 = Activity191Module_pb.Leave191ShopRequest()
+function Activity191Rpc:sendLeave191ShopRequest(activityId, callback, callbackObj)
+	local req = Activity191Module_pb.Leave191ShopRequest()
 
-	var_13_0.activityId = arg_13_1
+	req.activityId = activityId
 
-	arg_13_0:sendMsg(var_13_0, arg_13_2, arg_13_3)
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveLeave191ShopReply(arg_14_0, arg_14_1, arg_14_2)
-	if arg_14_1 ~= 0 then
+function Activity191Rpc:onReceiveLeave191ShopReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_14_0 = arg_14_2.activityId
-	local var_14_1 = arg_14_2.gameInfo
+	local activityId = msg.activityId
+	local gameInfo = msg.gameInfo
+	local actInfo = Activity191Model.instance:getActInfo(activityId)
 
-	Activity191Model.instance:getActInfo(var_14_0):updateGameInfo(var_14_1)
+	actInfo:updateGameInfo(gameInfo)
 end
 
-function var_0_0.sendSelect191EnhanceRequest(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4)
-	local var_15_0 = Activity191Module_pb.Select191EnhanceRequest()
+function Activity191Rpc:sendSelect191EnhanceRequest(activityId, index, callback, callbackObj)
+	local req = Activity191Module_pb.Select191EnhanceRequest()
 
-	var_15_0.activityId = arg_15_1
-	var_15_0.index = arg_15_2
+	req.activityId = activityId
+	req.index = index
 
-	arg_15_0:sendMsg(var_15_0, arg_15_3, arg_15_4)
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveSelect191EnhanceReply(arg_16_0, arg_16_1, arg_16_2)
-	if arg_16_1 ~= 0 then
+function Activity191Rpc:onReceiveSelect191EnhanceReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_16_0 = arg_16_2.activityId
-	local var_16_1 = arg_16_2.gameInfo
+	local activityId = msg.activityId
+	local gameInfo = msg.gameInfo
+	local actInfo = Activity191Model.instance:getActInfo(activityId)
 
-	Activity191Model.instance:getActInfo(var_16_0):updateGameInfo(var_16_1)
+	actInfo:updateGameInfo(gameInfo)
 end
 
-function var_0_0.sendFresh191EnhanceRequest(arg_17_0, arg_17_1, arg_17_2, arg_17_3, arg_17_4)
-	local var_17_0 = Activity191Module_pb.Fresh191EnhanceRequest()
+function Activity191Rpc:sendFresh191EnhanceRequest(activityId, index, callback, callbackObj)
+	local req = Activity191Module_pb.Fresh191EnhanceRequest()
 
-	var_17_0.activityId = arg_17_1
-	var_17_0.index = arg_17_2
+	req.activityId = activityId
+	req.index = index
 
-	arg_17_0:sendMsg(var_17_0, arg_17_3, arg_17_4)
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveFresh191EnhanceReply(arg_18_0, arg_18_1, arg_18_2)
-	if arg_18_1 ~= 0 then
+function Activity191Rpc:onReceiveFresh191EnhanceReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_18_0 = arg_18_2.activityId
-	local var_18_1 = arg_18_2.nodeInfo
+	local activityId = msg.activityId
+	local nodeInfo = msg.nodeInfo
+	local gameMo = Activity191Model.instance:getActInfo(activityId):getGameInfo()
 
-	Activity191Model.instance:getActInfo(var_18_0):getGameInfo():updateCurNodeInfo(var_18_1)
+	gameMo:updateCurNodeInfo(nodeInfo)
 end
 
-function var_0_0.sendGain191RewardEventRequest(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
-	local var_19_0 = Activity191Module_pb.Gain191RewardEventRequest()
+function Activity191Rpc:sendGain191RewardEventRequest(activityId, callback, callbackObj)
+	local req = Activity191Module_pb.Gain191RewardEventRequest()
 
-	var_19_0.activityId = arg_19_1
+	req.activityId = activityId
 
-	arg_19_0:sendMsg(var_19_0, arg_19_2, arg_19_3)
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveGain191RewardEventReply(arg_20_0, arg_20_1, arg_20_2)
-	if arg_20_1 ~= 0 then
+function Activity191Rpc:onReceiveGain191RewardEventReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_20_0 = arg_20_2.activityId
-	local var_20_1 = arg_20_2.gameInfo
+	local activityId = msg.activityId
+	local gameInfo = msg.gameInfo
+	local actInfo = Activity191Model.instance:getActInfo(activityId)
 
-	Activity191Model.instance:getActInfo(var_20_0):updateGameInfo(var_20_1)
+	actInfo:updateGameInfo(gameInfo)
 end
 
-function var_0_0.sendChangeAct191TeamRequest(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
-	local var_21_0 = Activity191Module_pb.ChangeAct191TeamRequest()
+function Activity191Rpc:sendChangeAct191TeamRequest(activityId, curTeamIndex, teamInfo)
+	local req = Activity191Module_pb.ChangeAct191TeamRequest()
 
-	var_21_0.activityId = arg_21_1
-	var_21_0.curTeamIndex = arg_21_2
-	var_21_0.teamInfo.index = arg_21_3.index
-	var_21_0.teamInfo.name = arg_21_3.name
+	req.activityId = activityId
+	req.curTeamIndex = curTeamIndex
+	req.teamInfo.index = teamInfo.index
+	req.teamInfo.name = teamInfo.name
 
-	for iter_21_0, iter_21_1 in ipairs(arg_21_3.battleHeroInfo) do
-		if iter_21_1.heroId ~= 0 or iter_21_1.itemUid1 ~= 0 then
-			table.insert(var_21_0.teamInfo.battleHeroInfo, iter_21_1)
+	for _, heroInfo in ipairs(teamInfo.battleHeroInfo) do
+		if heroInfo.heroId ~= 0 or heroInfo.itemUid1 ~= 0 then
+			table.insert(req.teamInfo.battleHeroInfo, heroInfo)
 		end
 	end
 
-	for iter_21_2, iter_21_3 in ipairs(arg_21_3.subHeroInfo) do
-		if iter_21_3.heroId ~= 0 then
-			table.insert(var_21_0.teamInfo.subHeroInfo, iter_21_3)
+	for _, subHeroInfo in ipairs(teamInfo.subHeroInfo) do
+		if subHeroInfo.heroId ~= 0 then
+			table.insert(req.teamInfo.subHeroInfo, subHeroInfo)
 		end
 	end
 
-	var_21_0.teamInfo.auto = arg_21_3.auto
+	req.teamInfo.auto = teamInfo.auto
 
-	arg_21_0:sendMsg(var_21_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveChangeAct191TeamReply(arg_22_0, arg_22_1, arg_22_2)
-	if arg_22_1 ~= 0 then
+function Activity191Rpc:onReceiveChangeAct191TeamReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_22_0 = arg_22_2.activityId
-	local var_22_1 = arg_22_2.curTeamIndex
-	local var_22_2 = arg_22_2.teamInfo
-	local var_22_3 = arg_22_2.rank
-	local var_22_4 = Activity191Model.instance:getActInfo(var_22_0):getGameInfo()
+	local activityId = msg.activityId
+	local curTeamIndex = msg.curTeamIndex
+	local teamInfo = msg.teamInfo
+	local rank = msg.rank
+	local gameInfo = Activity191Model.instance:getActInfo(activityId):getGameInfo()
 
-	var_22_4:updateRank(var_22_3)
-	var_22_4:updateTeamInfo(var_22_1, var_22_2)
+	gameInfo:updateRank(rank)
+	gameInfo:updateTeamInfo(curTeamIndex, teamInfo)
 	Activity191Controller.instance:dispatchEvent(Activity191Event.UpdateTeamInfo)
 end
 
-function var_0_0.sendEndAct191GameRequest(arg_23_0, arg_23_1)
-	local var_23_0 = Activity191Module_pb.EndAct191GameRequest()
+function Activity191Rpc:sendEndAct191GameRequest(activityId)
+	local req = Activity191Module_pb.EndAct191GameRequest()
 
-	var_23_0.activityId = arg_23_1
+	req.activityId = activityId
 
-	arg_23_0:sendMsg(var_23_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveEndAct191GameReply(arg_24_0, arg_24_1, arg_24_2)
-	if arg_24_1 ~= 0 then
+function Activity191Rpc:onReceiveEndAct191GameReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_24_0 = arg_24_2.activityId
-	local var_24_1 = arg_24_2.gameEndInfo
-	local var_24_2 = Activity191Model.instance:getActInfo(var_24_0)
+	local activityId = msg.activityId
+	local gameEndInfo = msg.gameEndInfo
+	local actInfo = Activity191Model.instance:getActInfo(activityId)
 
-	var_24_2:getGameInfo().state = Activity191Enum.GameState.None
+	actInfo:getGameInfo().state = Activity191Enum.GameState.None
 
-	var_24_2:setEnfInfo(var_24_1)
+	actInfo:setEnfInfo(gameEndInfo)
 	Activity191Controller.instance:dispatchEvent(Activity191Event.EndGame)
 end
 
-function var_0_0.onReceiveAct191GameInfoUpdatePush(arg_25_0, arg_25_1, arg_25_2)
-	if arg_25_1 ~= 0 then
+function Activity191Rpc:onReceiveAct191GameInfoUpdatePush(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_25_0 = arg_25_2.activityId
-	local var_25_1 = arg_25_2.gameInfo
+	local activityId = msg.activityId
+	local gameInfo = msg.gameInfo
+	local actInfo = Activity191Model.instance:getActInfo(activityId)
 
-	Activity191Model.instance:getActInfo(var_25_0):updateGameInfo(var_25_1)
+	actInfo:updateGameInfo(gameInfo)
 end
 
-function var_0_0.onReceiveAct191TriggerEffectPush(arg_26_0, arg_26_1, arg_26_2)
-	if arg_26_1 ~= 0 then
+function Activity191Rpc:onReceiveAct191TriggerEffectPush(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_26_0 = arg_26_2.activityId
+	local activityId = msg.activityId
+	local actInfo = Activity191Model.instance:getActInfo(activityId)
 
-	Activity191Model.instance:getActInfo(var_26_0):triggerEffectPush(arg_26_2)
+	actInfo:triggerEffectPush(msg)
 end
 
-function var_0_0.sendSelect191ReplaceEventRequest(arg_27_0, arg_27_1, arg_27_2, arg_27_3, arg_27_4)
-	local var_27_0 = Activity191Module_pb.Select191ReplaceEventRequest()
+function Activity191Rpc:sendSelect191ReplaceEventRequest(activityId, itemUIds, callback, callbackObj)
+	local req = Activity191Module_pb.Select191ReplaceEventRequest()
 
-	var_27_0.activityId = arg_27_1
+	req.activityId = activityId
 
-	for iter_27_0, iter_27_1 in ipairs(arg_27_2) do
-		table.insert(var_27_0.itemUid, iter_27_1)
+	for _, id in ipairs(itemUIds) do
+		table.insert(req.itemUid, id)
 	end
 
-	arg_27_0:sendMsg(var_27_0, arg_27_3, arg_27_4)
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveSelect191ReplaceEventReply(arg_28_0, arg_28_1, arg_28_2)
-	if arg_28_1 ~= 0 then
+function Activity191Rpc:onReceiveSelect191ReplaceEventReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	Activity191Model.instance:getActInfo(arg_28_2.activityId):updateGameInfo(arg_28_2.gameInfo)
+	local actInfo = Activity191Model.instance:getActInfo(msg.activityId)
+
+	actInfo:updateGameInfo(msg.gameInfo)
 end
 
-function var_0_0.sendEnd191ReplaceEventRequest(arg_29_0, arg_29_1)
-	local var_29_0 = Activity191Module_pb.End191ReplaceEventRequest()
+function Activity191Rpc:sendEnd191ReplaceEventRequest(activityId)
+	local req = Activity191Module_pb.End191ReplaceEventRequest()
 
-	var_29_0.activityId = arg_29_1
+	req.activityId = activityId
 
-	arg_29_0:sendMsg(var_29_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveEnd191ReplaceEventReply(arg_30_0, arg_30_1, arg_30_2)
-	if arg_30_1 ~= 0 then
+function Activity191Rpc:onReceiveEnd191ReplaceEventReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	Activity191Model.instance:getActInfo(arg_30_2.activityId):updateGameInfo(arg_30_2.gameInfo)
+	local actInfo = Activity191Model.instance:getActInfo(msg.activityId)
+
+	actInfo:updateGameInfo(msg.gameInfo)
 	Activity191Controller.instance:nextStep()
 end
 
-function var_0_0.sendSelect191UpgradeEventRequest(arg_31_0, arg_31_1, arg_31_2, arg_31_3, arg_31_4)
-	local var_31_0 = Activity191Module_pb.Select191UpgradeEventRequest()
+function Activity191Rpc:sendSelect191UpgradeEventRequest(activityId, itemUIds, callback, callbackObj)
+	local req = Activity191Module_pb.Select191UpgradeEventRequest()
 
-	var_31_0.activityId = arg_31_1
+	req.activityId = activityId
 
-	for iter_31_0, iter_31_1 in ipairs(arg_31_2) do
-		table.insert(var_31_0.itemUid, iter_31_1)
+	for _, id in ipairs(itemUIds) do
+		table.insert(req.itemUid, id)
 	end
 
-	arg_31_0:sendMsg(var_31_0, arg_31_3, arg_31_4)
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveSelect191UpgradeEventReply(arg_32_0, arg_32_1, arg_32_2)
-	if arg_32_1 ~= 0 then
+function Activity191Rpc:onReceiveSelect191UpgradeEventReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	Activity191Model.instance:getActInfo(arg_32_2.activityId):updateGameInfo(arg_32_2.gameInfo)
+	local actInfo = Activity191Model.instance:getActInfo(msg.activityId)
+
+	actInfo:updateGameInfo(msg.gameInfo)
 end
 
-function var_0_0.sendSelect191UseHeroFacetsIdRequest(arg_33_0, arg_33_1, arg_33_2, arg_33_3, arg_33_4, arg_33_5)
-	local var_33_0 = Activity191Module_pb.Select191UseHeroFacetsIdRequest()
+function Activity191Rpc:sendSelect191UseHeroFacetsIdRequest(activityId, roleId, facetsId, callback, callbackObj)
+	local req = Activity191Module_pb.Select191UseHeroFacetsIdRequest()
 
-	var_33_0.activityId = arg_33_1
-	var_33_0.roleId = arg_33_2
-	var_33_0.facetsId = arg_33_3
+	req.activityId = activityId
+	req.roleId = roleId
+	req.facetsId = facetsId
 
-	arg_33_0:sendMsg(var_33_0, arg_33_4, arg_33_5)
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveSelect191UseHeroFacetsIdReply(arg_34_0, arg_34_1, arg_34_2)
-	if arg_34_1 ~= 0 then
+function Activity191Rpc:onReceiveSelect191UseHeroFacetsIdReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	Activity191Model.instance:getActInfo(arg_34_2.activityId):getGameInfo():updateStoneId(arg_34_2.roleId, arg_34_2.facetsId)
+	local gameInfo = Activity191Model.instance:getActInfo(msg.activityId):getGameInfo()
+
+	gameInfo:updateStoneId(msg.roleId, msg.facetsId)
 end
 
-var_0_0.instance = var_0_0.New()
+Activity191Rpc.instance = Activity191Rpc.New()
 
-return var_0_0
+return Activity191Rpc

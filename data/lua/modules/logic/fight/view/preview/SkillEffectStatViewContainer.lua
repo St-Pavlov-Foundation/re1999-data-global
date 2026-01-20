@@ -1,39 +1,41 @@
-﻿module("modules.logic.fight.view.preview.SkillEffectStatViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/preview/SkillEffectStatViewContainer.lua
 
-local var_0_0 = class("SkillEffectStatViewContainer", BaseViewContainer)
+module("modules.logic.fight.view.preview.SkillEffectStatViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+local SkillEffectStatViewContainer = class("SkillEffectStatViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "view/scroll"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_1.prefabUrl = "view/scroll/item"
-	var_1_1.cellClass = SkillEffectStatItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 1
-	var_1_1.cellWidth = 744
-	var_1_1.cellHeight = 45
-	var_1_1.cellSpaceH = 0
-	var_1_1.cellSpaceV = 0
+function SkillEffectStatViewContainer:buildViews()
+	local views = {}
+	local scrollParam = ListScrollParam.New()
 
-	table.insert(var_1_0, LuaListScrollView.New(SkillEffectStatModel.instance, var_1_1))
-	table.insert(var_1_0, SkillEffectStatView.New())
-	table.insert(var_1_0, ToggleListView.New(1, "view/toggles"))
+	scrollParam.scrollGOPath = "view/scroll"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "view/scroll/item"
+	scrollParam.cellClass = SkillEffectStatItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 744
+	scrollParam.cellHeight = 45
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 0
 
-	return var_1_0
+	table.insert(views, LuaListScrollView.New(SkillEffectStatModel.instance, scrollParam))
+	table.insert(views, SkillEffectStatView.New())
+	table.insert(views, ToggleListView.New(1, "view/toggles"))
+
+	return views
 end
 
-function var_0_0.onContainerInit(arg_2_0)
-	arg_2_0:registerCallback(ViewEvent.ToSwitchTab, arg_2_0._toSwitchTab, arg_2_0)
+function SkillEffectStatViewContainer:onContainerInit()
+	self:registerCallback(ViewEvent.ToSwitchTab, self._toSwitchTab, self)
 end
 
-function var_0_0.onContainerDestroy(arg_3_0)
-	arg_3_0:unregisterCallback(ViewEvent.ToSwitchTab, arg_3_0._toSwitchTab, arg_3_0)
+function SkillEffectStatViewContainer:onContainerDestroy()
+	self:unregisterCallback(ViewEvent.ToSwitchTab, self._toSwitchTab, self)
 end
 
-function var_0_0._toSwitchTab(arg_4_0, arg_4_1, arg_4_2)
-	SkillEffectStatModel.instance:switchTab(arg_4_2)
+function SkillEffectStatViewContainer:_toSwitchTab(tabContainerId, toggleId)
+	SkillEffectStatModel.instance:switchTab(toggleId)
 end
 
-return var_0_0
+return SkillEffectStatViewContainer

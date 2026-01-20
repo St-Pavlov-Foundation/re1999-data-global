@@ -1,47 +1,51 @@
-﻿module("modules.logic.reactivity.config.ReactivityConfig", package.seeall)
+﻿-- chunkname: @modules/logic/reactivity/config/ReactivityConfig.lua
 
-local var_0_0 = class("ReactivityConfig", BaseConfig)
+module("modules.logic.reactivity.config.ReactivityConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._retroItemConvertConfig = nil
+local ReactivityConfig = class("ReactivityConfig", BaseConfig)
+
+function ReactivityConfig:ctor()
+	self._retroItemConvertConfig = nil
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function ReactivityConfig:reqConfigNames()
 	return {
 		"retro_item_convert"
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "retro_item_convert" then
-		arg_3_0._retroItemConvertConfig = arg_3_2
+function ReactivityConfig:onConfigLoaded(configName, configTable)
+	if configName == "retro_item_convert" then
+		self._retroItemConvertConfig = configTable
 	end
 end
 
-function var_0_0.getItemConvertList(arg_4_0)
-	return arg_4_0._retroItemConvertConfig.configList
+function ReactivityConfig:getItemConvertList()
+	return self._retroItemConvertConfig.configList
 end
 
-function var_0_0.getItemConvertCO(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = arg_5_0._retroItemConvertConfig.configDict[arg_5_1]
+function ReactivityConfig:getItemConvertCO(typeId, itemId)
+	local co = self._retroItemConvertConfig.configDict[typeId]
 
-	if not var_5_0 then
+	if not co then
 		return
 	end
 
-	return var_5_0[arg_5_2]
+	return co[itemId]
 end
 
-function var_0_0.checkItemNeedConvert(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = arg_6_0:getItemConvertCO(arg_6_1, arg_6_2)
+function ReactivityConfig:checkItemNeedConvert(typeId, itemId)
+	local convertCo = self:getItemConvertCO(typeId, itemId)
 
-	if not var_6_0 then
+	if not convertCo then
 		return false
 	end
 
-	return ItemModel.instance:getItemQuantity(arg_6_1, arg_6_2) >= var_6_0.limit, var_6_0.price
+	local productItemOwnQuantity = ItemModel.instance:getItemQuantity(typeId, itemId)
+
+	return productItemOwnQuantity >= convertCo.limit, convertCo.price
 end
 
-var_0_0.instance = var_0_0.New()
+ReactivityConfig.instance = ReactivityConfig.New()
 
-return var_0_0
+return ReactivityConfig

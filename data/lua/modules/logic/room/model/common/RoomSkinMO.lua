@@ -1,40 +1,45 @@
-﻿module("modules.logic.room.model.common.RoomSkinMO", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/common/RoomSkinMO.lua
 
-local var_0_0 = pureTable("RoomSkinMO")
+module("modules.logic.room.model.common.RoomSkinMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1
+local RoomSkinMO = pureTable("RoomSkinMO")
+
+function RoomSkinMO:init(skinId)
+	self.id = skinId
 end
 
-function var_0_0.setIsEquipped(arg_2_0, arg_2_1)
-	arg_2_0._isEquipped = arg_2_1
+function RoomSkinMO:setIsEquipped(isEquipped)
+	self._isEquipped = isEquipped
 end
 
-function var_0_0.getId(arg_3_0)
-	return arg_3_0.id
+function RoomSkinMO:getId()
+	return self.id
 end
 
-function var_0_0.getBelongPartId(arg_4_0)
-	local var_4_0 = arg_4_0.id
+function RoomSkinMO:getBelongPartId()
+	local skinId = self.id
+	local result = RoomConfig.instance:getBelongPart(skinId)
 
-	return (RoomConfig.instance:getBelongPart(var_4_0))
+	return result
 end
 
-function var_0_0.isUnlock(arg_5_0)
-	local var_5_0 = false
-	local var_5_1 = RoomConfig.instance:getRoomSkinUnlockItemId(arg_5_0.id)
+function RoomSkinMO:isUnlock()
+	local result = false
+	local unlockItemId = RoomConfig.instance:getRoomSkinUnlockItemId(self.id)
 
-	if var_5_1 and var_5_1 ~= 0 then
-		var_5_0 = ItemModel.instance:getItemCount(var_5_1) > 0
+	if unlockItemId and unlockItemId ~= 0 then
+		local itemCount = ItemModel.instance:getItemCount(unlockItemId)
+
+		result = itemCount > 0
 	else
-		var_5_0 = true
+		result = true
 	end
 
-	return var_5_0
+	return result
 end
 
-function var_0_0.isEquipped(arg_6_0)
-	return arg_6_0._isEquipped
+function RoomSkinMO:isEquipped()
+	return self._isEquipped
 end
 
-return var_0_0
+return RoomSkinMO

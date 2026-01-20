@@ -1,46 +1,48 @@
-﻿module("modules.logic.fight.system.work.FightWorkChangeWaveView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkChangeWaveView.lua
 
-local var_0_0 = class("FightWorkChangeWaveView", BaseWork)
+module("modules.logic.fight.system.work.FightWorkChangeWaveView", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
+local FightWorkChangeWaveView = class("FightWorkChangeWaveView", BaseWork)
+
+function FightWorkChangeWaveView:onStart()
 	if FightDataHelper.stateMgr.isReplay then
-		arg_1_0:onDone(true)
+		self:onDone(true)
 	else
-		local var_1_0 = FightModel.instance:getFightParam()
+		local fightParam = FightModel.instance:getFightParam()
 
-		if var_1_0 then
-			local var_1_1 = false
-			local var_1_2 = var_1_0.episodeId
+		if fightParam then
+			local showView = false
+			local episodeId = fightParam.episodeId
 
-			if var_1_2 == 1310102 or var_1_2 == 1310111 then
-				var_1_1 = true
+			if episodeId == 1310102 or episodeId == 1310111 then
+				showView = true
 			end
 
-			local var_1_3 = var_1_0.battleId
+			local battleId = fightParam.battleId
 
-			if var_1_3 == 9130101 or var_1_3 == 9130107 then
-				var_1_1 = true
+			if battleId == 9130101 or battleId == 9130107 then
+				showView = true
 			end
 
-			if var_1_1 then
+			if showView then
 				ViewMgr.instance:openView(ViewName.FightWaveChangeView)
-				TaskDispatcher.runDelay(arg_1_0._done, arg_1_0, 1)
+				TaskDispatcher.runDelay(self._done, self, 1)
 
 				return
 			end
 		end
 
-		arg_1_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._done(arg_2_0)
-	arg_2_0:onDone(true)
+function FightWorkChangeWaveView:_done()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
+function FightWorkChangeWaveView:clearWork()
 	ViewMgr.instance:closeView(ViewName.FightWaveChangeView)
-	TaskDispatcher.cancelTask(arg_3_0._done, arg_3_0)
+	TaskDispatcher.cancelTask(self._done, self)
 end
 
-return var_0_0
+return FightWorkChangeWaveView

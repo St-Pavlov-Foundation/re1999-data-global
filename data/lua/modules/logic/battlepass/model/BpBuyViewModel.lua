@@ -1,7 +1,9 @@
-﻿module("modules.logic.battlepass.model.BpBuyViewModel", package.seeall)
+﻿-- chunkname: @modules/logic/battlepass/model/BpBuyViewModel.lua
 
-local var_0_0 = class("BpBuyViewModel", ListScrollModel)
+module("modules.logic.battlepass.model.BpBuyViewModel", package.seeall)
 
-var_0_0.instance = var_0_0.New()
+local BpBuyViewModel = class("BpBuyViewModel", ListScrollModel)
 
-return var_0_0
+BpBuyViewModel.instance = BpBuyViewModel.New()
+
+return BpBuyViewModel

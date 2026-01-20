@@ -1,125 +1,127 @@
-﻿module("modules.logic.room.model.critter.RoomTrainCritterListModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/critter/RoomTrainCritterListModel.lua
 
-local var_0_0 = class("RoomTrainCritterListModel", ListScrollModel)
+module("modules.logic.room.model.critter.RoomTrainCritterListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:_clearData()
+local RoomTrainCritterListModel = class("RoomTrainCritterListModel", ListScrollModel)
+
+function RoomTrainCritterListModel:onInit()
+	self:_clearData()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:_clearData()
+function RoomTrainCritterListModel:reInit()
+	self:_clearData()
 end
 
-function var_0_0.clear(arg_3_0)
-	var_0_0.super.clear(arg_3_0)
-	arg_3_0:_clearData()
+function RoomTrainCritterListModel:clear()
+	RoomTrainCritterListModel.super.clear(self)
+	self:_clearData()
 end
 
-function var_0_0._clearData(arg_4_0)
+function RoomTrainCritterListModel:_clearData()
 	return
 end
 
-function var_0_0.setCritterList(arg_5_0, arg_5_1)
-	arg_5_0._filterMO = arg_5_1
+function RoomTrainCritterListModel:setCritterList(filterMO)
+	self._filterMO = filterMO
 
-	if arg_5_0._sortAttrId == nil then
-		arg_5_0._sortAttrId = CritterEnum.AttributeType.Efficiency
+	if self._sortAttrId == nil then
+		self._sortAttrId = CritterEnum.AttributeType.Efficiency
 	end
 
-	if arg_5_0._isSortHightToLow == nil then
-		arg_5_0._isSortHightToLow = true
+	if self._isSortHightToLow == nil then
+		self._isSortHightToLow = true
 	end
 
-	arg_5_0:updateCritterList()
+	self:updateCritterList()
 end
 
-function var_0_0.updateCritterList(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0._filterMO
-	local var_6_1 = {}
-	local var_6_2 = {}
-	local var_6_3 = CritterModel.instance:getList()
+function RoomTrainCritterListModel:updateCritterList(needShowUid)
+	local filterMO = self._filterMO
+	local moList = {}
+	local trainCritterMODict = {}
+	local critterMOList = CritterModel.instance:getList()
 
-	for iter_6_0 = 1, #var_6_3 do
-		local var_6_4 = var_6_3[iter_6_0]
+	for i = 1, #critterMOList do
+		local critterMO = critterMOList[i]
 
-		if var_6_4 and not var_6_4:isMaturity() then
-			if var_6_4:isCultivating() and arg_6_1 ~= var_6_4.id or var_6_0 and not var_6_0:isPassedFilter(var_6_4) then
-				var_6_2[var_6_4.id] = var_6_4
+		if critterMO and not critterMO:isMaturity() then
+			if critterMO:isCultivating() and needShowUid ~= critterMO.id or filterMO and not filterMO:isPassedFilter(critterMO) then
+				trainCritterMODict[critterMO.id] = critterMO
 			else
-				table.insert(var_6_1, var_6_4)
+				table.insert(moList, critterMO)
 			end
 		end
 	end
 
-	arg_6_0._trainCritterMODict = var_6_2
+	self._trainCritterMODict = trainCritterMODict
 
-	table.sort(var_6_1, arg_6_0:_getSortFunction())
-	arg_6_0:setList(var_6_1)
+	table.sort(moList, self:_getSortFunction())
+	self:setList(moList)
 end
 
-function var_0_0.sortByAttrId(arg_7_0, arg_7_1, arg_7_2)
-	if arg_7_1 ~= nil then
-		arg_7_0._sortAttrId = arg_7_1
+function RoomTrainCritterListModel:sortByAttrId(attrId, isHightToLow)
+	if attrId ~= nil then
+		self._sortAttrId = attrId
 	end
 
-	if arg_7_2 ~= nil then
-		arg_7_0._isSortHightToLow = arg_7_2
+	if isHightToLow ~= nil then
+		self._isSortHightToLow = isHightToLow
 	end
 
-	arg_7_0:sort(arg_7_0:_getSortFunction())
+	self:sort(self:_getSortFunction())
 end
 
-function var_0_0._getSortFunction(arg_8_0)
-	arg_8_0._trainHeroMO = RoomTrainHeroListModel.instance:getById(RoomTrainHeroListModel.instance:getSelectId())
+function RoomTrainCritterListModel:_getSortFunction()
+	self._trainHeroMO = RoomTrainHeroListModel.instance:getById(RoomTrainHeroListModel.instance:getSelectId())
 
-	if arg_8_0._sortFunc then
-		return arg_8_0._sortFunc
+	if self._sortFunc then
+		return self._sortFunc
 	end
 
-	function arg_8_0._sortFunc(arg_9_0, arg_9_1)
-		if arg_8_0._trainHeroMO then
-			local var_9_0 = arg_8_0:_getCritterValue(arg_8_0._trainHeroMO, arg_9_0)
-			local var_9_1 = arg_8_0:_getCritterValue(arg_8_0._trainHeroMO, arg_9_1)
+	function self._sortFunc(a, b)
+		if self._trainHeroMO then
+			local aCt = self:_getCritterValue(self._trainHeroMO, a)
+			local bCt = self:_getCritterValue(self._trainHeroMO, b)
 
-			if var_9_0 ~= var_9_1 then
-				return var_9_1 < var_9_0
+			if aCt ~= bCt then
+				return bCt < aCt
 			end
 		end
 
-		local var_9_2, var_9_3 = arg_8_0:_getAttrValue(arg_9_0, arg_8_0._sortAttrId)
-		local var_9_4, var_9_5 = arg_8_0:_getAttrValue(arg_9_1, arg_8_0._sortAttrId)
+		local aValue, aIncrRate = self:_getAttrValue(a, self._sortAttrId)
+		local bValue, bIncrRate = self:_getAttrValue(b, self._sortAttrId)
 
-		if var_9_3 ~= var_9_5 then
-			if arg_8_0._isSortHightToLow then
-				return var_9_5 < var_9_3
+		if aIncrRate ~= bIncrRate then
+			if self._isSortHightToLow then
+				return bIncrRate < aIncrRate
 			end
 
-			return var_9_3 < var_9_5
+			return aIncrRate < bIncrRate
 		end
 
-		if var_9_2 ~= var_9_4 then
-			if arg_8_0._isSortHightToLow then
-				return var_9_4 < var_9_2
+		if aValue ~= bValue then
+			if self._isSortHightToLow then
+				return bValue < aValue
 			end
 
-			return var_9_2 < var_9_4
+			return aValue < bValue
 		end
 
-		return CritterHelper.sortByTotalAttrValue(arg_9_0, arg_9_1)
+		return CritterHelper.sortByTotalAttrValue(a, b)
 	end
 
-	return arg_8_0._sortFunc
+	return self._sortFunc
 end
 
-function var_0_0._getCritterValue(arg_10_0, arg_10_1, arg_10_2)
-	if arg_10_1:chcekPrefernectCritterId(arg_10_2:getDefineId()) then
-		local var_10_0 = arg_10_1:getPrefernectType()
+function RoomTrainCritterListModel:_getCritterValue(trainHeroMO, critterMO)
+	if trainHeroMO:chcekPrefernectCritterId(critterMO:getDefineId()) then
+		local pfType = trainHeroMO:getPrefernectType()
 
-		if var_10_0 == CritterEnum.PreferenceType.All then
+		if pfType == CritterEnum.PreferenceType.All then
 			return 110
-		elseif var_10_0 == CritterEnum.PreferenceType.Catalogue then
+		elseif pfType == CritterEnum.PreferenceType.Catalogue then
 			return 120
-		elseif var_10_0 == CritterEnum.PreferenceType.Critter then
+		elseif pfType == CritterEnum.PreferenceType.Critter then
 			return 130
 		end
 
@@ -129,105 +131,107 @@ function var_0_0._getCritterValue(arg_10_0, arg_10_1, arg_10_2)
 	return 0
 end
 
-function var_0_0._getAttrValue(arg_11_0, arg_11_1, arg_11_2)
-	if arg_11_2 == CritterEnum.AttributeType.Efficiency then
-		return arg_11_1.efficiency, arg_11_1.efficiencyIncrRate
-	elseif arg_11_2 == CritterEnum.AttributeType.Patience then
-		return arg_11_1.patience, arg_11_1.patienceIncrRate
-	elseif arg_11_2 == CritterEnum.AttributeType.Lucky then
-		return arg_11_1.lucky, arg_11_1.luckyIncrRate
+function RoomTrainCritterListModel:_getAttrValue(a, arrId)
+	if arrId == CritterEnum.AttributeType.Efficiency then
+		return a.efficiency, a.efficiencyIncrRate
+	elseif arrId == CritterEnum.AttributeType.Patience then
+		return a.patience, a.patienceIncrRate
+	elseif arrId == CritterEnum.AttributeType.Lucky then
+		return a.lucky, a.luckyIncrRate
 	end
 
 	return 0
 end
 
-function var_0_0.getSortAttrId(arg_12_0)
-	return arg_12_0._sortAttrId
+function RoomTrainCritterListModel:getSortAttrId()
+	return self._sortAttrId
 end
 
-function var_0_0.getSortIsHightToLow(arg_13_0)
-	return arg_13_0._isSortHightToLow
+function RoomTrainCritterListModel:getSortIsHightToLow()
+	return self._isSortHightToLow
 end
 
-function var_0_0.clearSelect(arg_14_0)
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0._scrollViews) do
-		iter_14_1:setSelect(nil)
+function RoomTrainCritterListModel:clearSelect()
+	for i, view in ipairs(self._scrollViews) do
+		view:setSelect(nil)
 	end
 
-	arg_14_0._selectUid = nil
+	self._selectUid = nil
 end
 
-function var_0_0._refreshSelect(arg_15_0)
-	local var_15_0 = arg_15_0:getById(arg_15_0._selectUid)
+function RoomTrainCritterListModel:_refreshSelect()
+	local selectMO = self:getById(self._selectUid)
 
-	for iter_15_0, iter_15_1 in ipairs(arg_15_0._scrollViews) do
-		iter_15_1:setSelect(var_15_0)
+	for i, view in ipairs(self._scrollViews) do
+		view:setSelect(selectMO)
 	end
 end
 
-function var_0_0.setSelect(arg_16_0, arg_16_1)
-	arg_16_0._selectUid = arg_16_1
+function RoomTrainCritterListModel:setSelect(critterUid)
+	self._selectUid = critterUid
 
-	arg_16_0:_refreshSelect()
+	self:_refreshSelect()
 end
 
-function var_0_0.getSelectId(arg_17_0)
-	return arg_17_0._selectUid
+function RoomTrainCritterListModel:getSelectId()
+	return self._selectUid
 end
 
-function var_0_0.getById(arg_18_0, arg_18_1)
-	return var_0_0.super.getById(arg_18_0, arg_18_1) or arg_18_0._trainCritterMODict and arg_18_0._trainCritterMODict[arg_18_1]
+function RoomTrainCritterListModel:getById(id)
+	local mo = RoomTrainCritterListModel.super.getById(self, id)
+
+	return mo or self._trainCritterMODict and self._trainCritterMODict[id]
 end
 
-function var_0_0.setFilterResType(arg_19_0, arg_19_1, arg_19_2)
-	arg_19_0._filterIncludeList = {}
-	arg_19_0._filterExcludeList = {}
+function RoomTrainCritterListModel:setFilterResType(includeList, excludeList)
+	self._filterIncludeList = {}
+	self._filterExcludeList = {}
 
-	arg_19_0:_setList(arg_19_0._filterIncludeList, arg_19_1)
-	arg_19_0:_setList(arg_19_0._filterExcludeList, arg_19_2)
+	self:_setList(self._filterIncludeList, includeList)
+	self:_setList(self._filterExcludeList, excludeList)
 end
 
-function var_0_0.isFilterType(arg_20_0, arg_20_1, arg_20_2)
-	if arg_20_0:_isSameValue(arg_20_0._filterIncludeList, arg_20_1) and arg_20_0:_isSameValue(arg_20_0._filterExcludeList, arg_20_2) then
+function RoomTrainCritterListModel:isFilterType(includeList, excludeList)
+	if self:_isSameValue(self._filterIncludeList, includeList) and self:_isSameValue(self._filterExcludeList, excludeList) then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.isFilterTypeEmpty(arg_21_0)
-	return arg_21_0:_isEmptyList(arg_21_0._filterTypeList)
+function RoomTrainCritterListModel:isFilterTypeEmpty()
+	return self:_isEmptyList(self._filterTypeList)
 end
 
-function var_0_0._setList(arg_22_0, arg_22_1, arg_22_2)
-	tabletool.addValues(arg_22_1, arg_22_2)
+function RoomTrainCritterListModel:_setList(targetArray, addArray)
+	tabletool.addValues(targetArray, addArray)
 end
 
-function var_0_0._isListValue(arg_23_0, arg_23_1, arg_23_2)
-	if arg_23_2 and tabletool.indexOf(arg_23_1, arg_23_2) then
+function RoomTrainCritterListModel:_isListValue(targetArray, value)
+	if value and tabletool.indexOf(targetArray, value) then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0._isSameValue(arg_24_0, arg_24_1, arg_24_2)
-	if arg_24_0:_isEmptyList(arg_24_1) and arg_24_0:_isEmptyList(arg_24_2) then
+function RoomTrainCritterListModel:_isSameValue(targetArray, array)
+	if self:_isEmptyList(targetArray) and self:_isEmptyList(array) then
 		return true
 	end
 
-	if #arg_24_1 ~= #arg_24_2 then
+	if #targetArray ~= #array then
 		return false
 	end
 
-	for iter_24_0, iter_24_1 in ipairs(arg_24_2) do
-		if not tabletool.indexOf(arg_24_1, iter_24_1) then
+	for _, value in ipairs(array) do
+		if not tabletool.indexOf(targetArray, value) then
 			return false
 		end
 	end
 
-	for iter_24_2, iter_24_3 in ipairs(arg_24_1) do
-		if not tabletool.indexOf(arg_24_2, iter_24_3) then
+	for _, value in ipairs(targetArray) do
+		if not tabletool.indexOf(array, value) then
 			return false
 		end
 	end
@@ -235,10 +239,10 @@ function var_0_0._isSameValue(arg_24_0, arg_24_1, arg_24_2)
 	return true
 end
 
-function var_0_0._isEmptyList(arg_25_0, arg_25_1)
-	return arg_25_1 == nil or #arg_25_1 < 1
+function RoomTrainCritterListModel:_isEmptyList(targetArray)
+	return targetArray == nil or #targetArray < 1
 end
 
-var_0_0.instance = var_0_0.New()
+RoomTrainCritterListModel.instance = RoomTrainCritterListModel.New()
 
-return var_0_0
+return RoomTrainCritterListModel

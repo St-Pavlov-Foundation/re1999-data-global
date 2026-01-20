@@ -1,8 +1,10 @@
-﻿module("modules.logic.sp01.act205.config.Act205Config", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/act205/config/Act205Config.lua
 
-local var_0_0 = class("Act205Config", BaseConfig)
+module("modules.logic.sp01.act205.config.Act205Config", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local Act205Config = class("Act205Config", BaseConfig)
+
+function Act205Config:reqConfigNames()
 	return {
 		"activity205_const",
 		"actvity205_stage",
@@ -14,277 +16,283 @@ function var_0_0.reqConfigNames(arg_1_0)
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 == "activity205_const" then
-		arg_2_0._constConfig = arg_2_2
-	elseif arg_2_1 == "actvity205_stage" then
-		arg_2_0._stageConfig = arg_2_2
-	elseif arg_2_1 == "activity205_dicegoal" then
-		arg_2_0._oceanDiceGoalConfig = arg_2_2
-	elseif arg_2_1 == "activity205_dicepool" then
-		arg_2_0._oceanDicePoolConfig = arg_2_2
-	elseif arg_2_1 == "actvity205_mini_game_reward" then
-		arg_2_0.miniGameRewardConfig = arg_2_2
-	elseif arg_2_1 == "activity205_card" then
-		arg_2_0:_onCardConfigLoaded(arg_2_2)
+function Act205Config:onConfigLoaded(configName, configTable)
+	if configName == "activity205_const" then
+		self._constConfig = configTable
+	elseif configName == "actvity205_stage" then
+		self._stageConfig = configTable
+	elseif configName == "activity205_dicegoal" then
+		self._oceanDiceGoalConfig = configTable
+	elseif configName == "activity205_dicepool" then
+		self._oceanDicePoolConfig = configTable
+	elseif configName == "actvity205_mini_game_reward" then
+		self.miniGameRewardConfig = configTable
+	elseif configName == "activity205_card" then
+		self:_onCardConfigLoaded(configTable)
 	end
 end
 
-function var_0_0._onCardConfigLoaded(arg_3_0, arg_3_1)
-	arg_3_0._type2CardsDict = {}
-	arg_3_0._restrainedDict = {}
-	arg_3_0._beRestrainedDict = {}
+function Act205Config:_onCardConfigLoaded(configTable)
+	self._type2CardsDict = {}
+	self._restrainedDict = {}
+	self._beRestrainedDict = {}
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1.configList) do
-		local var_3_0 = iter_3_1.type
-		local var_3_1 = arg_3_0._type2CardsDict[var_3_0]
+	for _, cfg in ipairs(configTable.configList) do
+		local type = cfg.type
+		local cardList = self._type2CardsDict[type]
 
-		if not var_3_1 then
-			var_3_1 = {}
-			arg_3_0._type2CardsDict[var_3_0] = var_3_1
+		if not cardList then
+			cardList = {}
+			self._type2CardsDict[type] = cardList
 		end
 
-		var_3_1[#var_3_1 + 1] = iter_3_1.id
+		cardList[#cardList + 1] = cfg.id
 
-		if not string.nilorempty(iter_3_1.restrain) then
-			local var_3_2 = string.splitToNumber(iter_3_1.restrain, "#")
+		if not string.nilorempty(cfg.restrain) then
+			local arr = string.splitToNumber(cfg.restrain, "#")
 
-			arg_3_0._restrainedDict[iter_3_1.id] = {}
+			self._restrainedDict[cfg.id] = {}
 
-			for iter_3_2, iter_3_3 in ipairs(var_3_2) do
-				arg_3_0._restrainedDict[iter_3_1.id][iter_3_3] = true
+			for _, restrainedCardId in ipairs(arr) do
+				self._restrainedDict[cfg.id][restrainedCardId] = true
 
-				if not arg_3_0._beRestrainedDict[iter_3_3] then
-					arg_3_0._beRestrainedDict[iter_3_3] = {}
+				if not self._beRestrainedDict[restrainedCardId] then
+					self._beRestrainedDict[restrainedCardId] = {}
 				end
 
-				arg_3_0._beRestrainedDict[iter_3_3][iter_3_1.id] = true
+				self._beRestrainedDict[restrainedCardId][cfg.id] = true
 			end
 		end
 	end
 end
 
-function var_0_0.getConstConfig(arg_4_0, arg_4_1)
-	return arg_4_0._constConfig.configDict[arg_4_1]
+function Act205Config:getConstConfig(id)
+	return self._constConfig.configDict[id]
 end
 
-function var_0_0.getAct205Const(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0
-	local var_5_1 = arg_5_0:getConstConfig(arg_5_1)
+function Act205Config:getAct205Const(constId, isToNumber)
+	local result
+	local cfg = self:getConstConfig(constId)
 
-	if var_5_1 then
-		var_5_0 = var_5_1.value
+	if cfg then
+		result = cfg.value
 
-		if arg_5_2 then
-			var_5_0 = tonumber(var_5_0)
+		if isToNumber then
+			result = tonumber(result)
 		end
 	end
 
-	return var_5_0
+	return result
 end
 
-function var_0_0.getStageConfig(arg_6_0, arg_6_1, arg_6_2)
-	return arg_6_0._stageConfig.configDict[arg_6_1] and arg_6_0._stageConfig.configDict[arg_6_1][arg_6_2]
+function Act205Config:getStageConfig(actId, stageId)
+	return self._stageConfig.configDict[actId] and self._stageConfig.configDict[actId][stageId]
 end
 
-function var_0_0.getGameStageOpenTimeStamp(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = 0
-	local var_7_1 = arg_7_0:getStageConfig(arg_7_1, arg_7_2)
+function Act205Config:getGameStageOpenTimeStamp(actId, stageId)
+	local result = 0
+	local cfg = self:getStageConfig(actId, stageId)
 
-	if var_7_1 then
-		local var_7_2 = var_7_1.startTime
+	if cfg then
+		local strDateTime = cfg.startTime
 
-		var_7_0 = TimeUtil.stringToTimestamp(var_7_2)
+		result = TimeUtil.stringToTimestamp(strDateTime)
 	end
 
-	return var_7_0
+	return result
 end
 
-function var_0_0.getGameStageEndTimeStamp(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = 0
-	local var_8_1 = arg_8_0:getStageConfig(arg_8_1, arg_8_2)
+function Act205Config:getGameStageEndTimeStamp(actId, stageId)
+	local result = 0
+	local cfg = self:getStageConfig(actId, stageId)
 
-	if var_8_1 then
-		local var_8_2 = var_8_1.endTime
+	if cfg then
+		local strDateTime = cfg.endTime
 
-		var_8_0 = TimeUtil.stringToTimestamp(var_8_2)
+		result = TimeUtil.stringToTimestamp(strDateTime)
 	end
 
-	return var_8_0
+	return result
 end
 
-function var_0_0.getDiceGoalConfig(arg_9_0, arg_9_1)
-	return arg_9_0._oceanDiceGoalConfig.configDict[arg_9_1]
+function Act205Config:getDiceGoalConfig(id)
+	return self._oceanDiceGoalConfig.configDict[id]
 end
 
-function var_0_0.getDiceGoalConfigList(arg_10_0)
-	return arg_10_0._oceanDiceGoalConfig.configList
+function Act205Config:getDiceGoalConfigList()
+	return self._oceanDiceGoalConfig.configList
 end
 
-function var_0_0.getDicePoolConfig(arg_11_0, arg_11_1)
-	return arg_11_0._oceanDicePoolConfig.configDict[arg_11_1]
+function Act205Config:getDicePoolConfig(id)
+	return self._oceanDicePoolConfig.configDict[id]
 end
 
-function var_0_0.getDicePoolConfigList(arg_12_0)
-	return arg_12_0._oceanDicePoolConfig.configList
+function Act205Config:getDicePoolConfigList()
+	return self._oceanDicePoolConfig.configList
 end
 
-function var_0_0.getGameRewardConfig(arg_13_0, arg_13_1, arg_13_2)
-	return arg_13_0.miniGameRewardConfig.configDict[arg_13_1] and arg_13_0.miniGameRewardConfig.configDict[arg_13_1][arg_13_2]
+function Act205Config:getGameRewardConfig(stageId, rewardId)
+	return self.miniGameRewardConfig.configDict[stageId] and self.miniGameRewardConfig.configDict[stageId][rewardId]
 end
 
-function var_0_0.getWinDiceConfig(arg_14_0)
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0:getDicePoolConfigList()) do
-		if iter_14_1.winDice == 1 then
-			return iter_14_1
-		end
-	end
-end
-
-function var_0_0.getAct205CardCfg(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0 = lua_activity205_card.configDict[arg_15_1]
-
-	if not var_15_0 and arg_15_2 then
-		logError(string.format("Act205Config:getAct205CardCfg error, cfg is nil, cardId:%s", arg_15_1))
-	end
-
-	return var_15_0
-end
-
-function var_0_0.getCardType(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_0:getAct205CardCfg(arg_16_1, true)
-
-	return var_16_0 and var_16_0.type
-end
-
-function var_0_0.getCardName(arg_17_0, arg_17_1)
-	local var_17_0 = arg_17_0:getAct205CardCfg(arg_17_1, true)
-
-	return var_17_0 and var_17_0.name
-end
-
-function var_0_0.getCardDesc(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_0:getAct205CardCfg(arg_18_1, true)
-
-	return var_18_0 and var_18_0.desc
-end
-
-function var_0_0.getCardImg(arg_19_0, arg_19_1)
-	local var_19_0 = arg_19_0:getAct205CardCfg(arg_19_1, true)
-
-	return var_19_0 and var_19_0.img
-end
-
-function var_0_0.getCardWeight(arg_20_0, arg_20_1, arg_20_2)
-	local var_20_0 = 0
-	local var_20_1 = arg_20_0:getAct205CardCfg(arg_20_1, true)
-
-	if var_20_1 then
-		var_20_0 = var_20_1.weight
-
-		if arg_20_2 then
-			var_20_0 = var_20_0 - var_20_1.subWeight
-			var_20_0 = math.max(0, var_20_0)
-		end
-	end
-
-	return var_20_0
-end
-
-function var_0_0.getSpEff(arg_21_0, arg_21_1)
-	local var_21_0 = arg_21_0:getAct205CardCfg(arg_21_1, true)
-
-	return var_21_0 and var_21_0.spEff
-end
-
-function var_0_0.isSpCard(arg_22_0, arg_22_1)
-	local var_22_0 = arg_22_0:getSpEff(arg_22_1)
-
-	return var_22_0 and var_22_0 ~= 0
-end
-
-function var_0_0.getCardTypeDict(arg_23_0)
-	return arg_23_0._type2CardsDict
-end
-
-function var_0_0.getAct205CardSettleCfg(arg_24_0, arg_24_1, arg_24_2)
-	local var_24_0 = lua_activity205_card_settle.configDict[arg_24_1]
-
-	if not var_24_0 and arg_24_2 then
-		logError(string.format("Act205Config:getAct205CardSettleCfg error, cfg is nil, point:%s", arg_24_1))
-	end
-
-	return var_24_0
-end
-
-function var_0_0.getPointList(arg_25_0)
-	local var_25_0 = {}
-
-	for iter_25_0, iter_25_1 in ipairs(lua_activity205_card_settle.configList) do
-		var_25_0[iter_25_0] = iter_25_1.point
-	end
-
-	return var_25_0
-end
-
-function var_0_0.getMaxPoint(arg_26_0)
-	if not arg_26_0._cardGameMaxPoint then
-		arg_26_0._cardGameMaxPoint = 0
-
-		for iter_26_0, iter_26_1 in ipairs(lua_activity205_card_settle.configList) do
-			arg_26_0._cardGameMaxPoint = math.max(arg_26_0._cardGameMaxPoint, iter_26_1.point)
-		end
-	end
-
-	return arg_26_0._cardGameMaxPoint
-end
-
-function var_0_0.getPointByReward(arg_27_0, arg_27_1)
-	for iter_27_0, iter_27_1 in ipairs(lua_activity205_card_settle.configList) do
-		if iter_27_1.rewardId == arg_27_1 then
-			return iter_27_1.point
+function Act205Config:getWinDiceConfig()
+	for _, diceCo in ipairs(self:getDicePoolConfigList()) do
+		if diceCo.winDice == 1 then
+			return diceCo
 		end
 	end
 end
 
-function var_0_0.getRewardId(arg_28_0, arg_28_1)
-	local var_28_0 = arg_28_0:getAct205CardSettleCfg(arg_28_1, true)
+function Act205Config:getAct205CardCfg(cardId, nilError)
+	local cfg = lua_activity205_card.configDict[cardId]
 
-	return var_28_0 and var_28_0.rewardId
+	if not cfg and nilError then
+		logError(string.format("Act205Config:getAct205CardCfg error, cfg is nil, cardId:%s", cardId))
+	end
+
+	return cfg
 end
 
-function var_0_0.getIsCardRestrain(arg_29_0, arg_29_1, arg_29_2)
-	if arg_29_0:isSpCard(arg_29_1) then
+function Act205Config:getCardType(cardId)
+	local cfg = self:getAct205CardCfg(cardId, true)
+
+	return cfg and cfg.type
+end
+
+function Act205Config:getCardName(cardId)
+	local cfg = self:getAct205CardCfg(cardId, true)
+
+	return cfg and cfg.name
+end
+
+function Act205Config:getCardDesc(cardId)
+	local cfg = self:getAct205CardCfg(cardId, true)
+
+	return cfg and cfg.desc
+end
+
+function Act205Config:getCardImg(cardId)
+	local cfg = self:getAct205CardCfg(cardId, true)
+
+	return cfg and cfg.img
+end
+
+function Act205Config:getCardWeight(cardId, needSub)
+	local result = 0
+	local cfg = self:getAct205CardCfg(cardId, true)
+
+	if cfg then
+		result = cfg.weight
+
+		if needSub then
+			result = result - cfg.subWeight
+			result = math.max(0, result)
+		end
+	end
+
+	return result
+end
+
+function Act205Config:getSpEff(cardId)
+	local cfg = self:getAct205CardCfg(cardId, true)
+
+	return cfg and cfg.spEff
+end
+
+function Act205Config:isSpCard(cardId)
+	local spEff = self:getSpEff(cardId)
+
+	return spEff and spEff ~= 0
+end
+
+function Act205Config:getCardTypeDict()
+	return self._type2CardsDict
+end
+
+function Act205Config:getAct205CardSettleCfg(point, nilError)
+	local cfg = lua_activity205_card_settle.configDict[point]
+
+	if not cfg and nilError then
+		logError(string.format("Act205Config:getAct205CardSettleCfg error, cfg is nil, point:%s", point))
+	end
+
+	return cfg
+end
+
+function Act205Config:getPointList()
+	local result = {}
+
+	for i, cfg in ipairs(lua_activity205_card_settle.configList) do
+		result[i] = cfg.point
+	end
+
+	return result
+end
+
+function Act205Config:getMaxPoint()
+	if not self._cardGameMaxPoint then
+		self._cardGameMaxPoint = 0
+
+		for _, cfg in ipairs(lua_activity205_card_settle.configList) do
+			self._cardGameMaxPoint = math.max(self._cardGameMaxPoint, cfg.point)
+		end
+	end
+
+	return self._cardGameMaxPoint
+end
+
+function Act205Config:getPointByReward(rewardId)
+	for _, cfg in ipairs(lua_activity205_card_settle.configList) do
+		if cfg.rewardId == rewardId then
+			return cfg.point
+		end
+	end
+end
+
+function Act205Config:getRewardId(point)
+	local cfg = self:getAct205CardSettleCfg(point, true)
+
+	return cfg and cfg.rewardId
+end
+
+function Act205Config:getIsCardRestrain(cardId, targetCardId)
+	local isSP = self:isSpCard(cardId)
+
+	if isSP then
 		return
 	end
 
-	return arg_29_0._restrainedDict[arg_29_1] and arg_29_0._restrainedDict[arg_29_1][arg_29_2]
+	return self._restrainedDict[cardId] and self._restrainedDict[cardId][targetCardId]
 end
 
-function var_0_0.getIsCardBeRestrained(arg_30_0, arg_30_1, arg_30_2)
-	if arg_30_0:isSpCard(arg_30_1) then
+function Act205Config:getIsCardBeRestrained(cardId, targetCardId)
+	local isSP = self:isSpCard(cardId)
+
+	if isSP then
 		return
 	end
 
-	return arg_30_0._beRestrainedDict[arg_30_1] and arg_30_0._beRestrainedDict[arg_30_1][arg_30_2]
+	return self._beRestrainedDict[cardId] and self._beRestrainedDict[cardId][targetCardId]
 end
 
-function var_0_0.getBeRestrainedCard(arg_31_0, arg_31_1)
-	local var_31_0
+function Act205Config:getBeRestrainedCard(cardId)
+	local result
 
-	if arg_31_0._beRestrainedDict[arg_31_1] then
-		local var_31_1 = {}
+	if self._beRestrainedDict[cardId] then
+		local list = {}
 
-		for iter_31_0, iter_31_1 in pairs(arg_31_0._beRestrainedDict[arg_31_1]) do
-			var_31_1[#var_31_1 + 1] = iter_31_0
+		for beRestrainedCardId, _ in pairs(self._beRestrainedDict[cardId]) do
+			list[#list + 1] = beRestrainedCardId
 		end
 
-		var_31_0 = var_31_1[math.random(1, #var_31_1)]
+		local index = math.random(1, #list)
+
+		result = list[index]
 	end
 
-	return var_31_0
+	return result
 end
 
-var_0_0.instance = var_0_0.New()
+Act205Config.instance = Act205Config.New()
 
-return var_0_0
+return Act205Config

@@ -1,25 +1,27 @@
-﻿module("modules.logic.versionactivity3_1.nationalgift.controller.NationalGiftController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/nationalgift/controller/NationalGiftController.lua
 
-local var_0_0 = class("NationalGiftController", BaseController)
+module("modules.logic.versionactivity3_1.nationalgift.controller.NationalGiftController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local NationalGiftController = class("NationalGiftController", BaseController)
+
+function NationalGiftController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function NationalGiftController:reInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_3_0)
+function NationalGiftController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_4_0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_4_0.checkActivity, arg_4_0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, arg_4_0.checkActivity, arg_4_0)
+function NationalGiftController:addConstEvents()
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self.checkActivity, self)
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, self.checkActivity, self)
 end
 
-function var_0_0.checkActivity(arg_5_0)
+function NationalGiftController:checkActivity()
 	if not ActivityModel.instance:isActOnLine(VersionActivity3_1Enum.ActivityId.NationalGift) then
 		return
 	end
@@ -27,10 +29,10 @@ function var_0_0.checkActivity(arg_5_0)
 	Activity212Rpc.instance:sendGetAct212InfoRequest(VersionActivity3_1Enum.ActivityId.NationalGift)
 end
 
-function var_0_0.openNationalGiftBuyTipView(arg_6_0, arg_6_1)
-	ViewMgr.instance:openView(ViewName.NationalGiftBuyTipView, arg_6_1)
+function NationalGiftController:openNationalGiftBuyTipView(param)
+	ViewMgr.instance:openView(ViewName.NationalGiftBuyTipView, param)
 end
 
-var_0_0.instance = var_0_0.New()
+NationalGiftController.instance = NationalGiftController.New()
 
-return var_0_0
+return NationalGiftController

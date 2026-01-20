@@ -1,191 +1,197 @@
-﻿module("modules.logic.dungeon.view.map.DungeonMapTaskInfo", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/map/DungeonMapTaskInfo.lua
 
-local var_0_0 = class("DungeonMapTaskInfo", BaseView)
+module("modules.logic.dungeon.view.map.DungeonMapTaskInfo", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gotasklist = gohelper.findChild(arg_1_0.viewGO, "#go_tasklist")
-	arg_1_0._gotaskitem = gohelper.findChild(arg_1_0.viewGO, "#go_tasklist/#go_taskitem")
-	arg_1_0._gounlocktip = gohelper.findChild(arg_1_0.viewGO, "#go_unlocktip")
-	arg_1_0._txtunlocktitle = gohelper.findChildText(arg_1_0.viewGO, "#go_unlocktip/#txt_unlocktitle")
-	arg_1_0._txtunlockprogress = gohelper.findChildText(arg_1_0.viewGO, "#go_unlocktip/#txt_unlockprogress")
+local DungeonMapTaskInfo = class("DungeonMapTaskInfo", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function DungeonMapTaskInfo:onInitView()
+	self._gotasklist = gohelper.findChild(self.viewGO, "#go_tasklist")
+	self._gotaskitem = gohelper.findChild(self.viewGO, "#go_tasklist/#go_taskitem")
+	self._gounlocktip = gohelper.findChild(self.viewGO, "#go_unlocktip")
+	self._txtunlocktitle = gohelper.findChildText(self.viewGO, "#go_unlocktip/#txt_unlocktitle")
+	self._txtunlockprogress = gohelper.findChildText(self.viewGO, "#go_unlocktip/#txt_unlockprogress")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function DungeonMapTaskInfo:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function DungeonMapTaskInfo:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._itemList = arg_4_0:getUserDataTb_()
+function DungeonMapTaskInfo:_editableInitView()
+	self._itemList = self:getUserDataTb_()
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function DungeonMapTaskInfo:onUpdateParam()
 	return
 end
 
-function var_0_0._onChangeFocusEpisodeItem(arg_6_0, arg_6_1)
-	if arg_6_1 == arg_6_0._episodeItem then
+function DungeonMapTaskInfo:_onChangeFocusEpisodeItem(episodeItem)
+	if episodeItem == self._episodeItem then
 		return
 	end
 
-	arg_6_0._episodeItem = arg_6_1
-	arg_6_0._episodeId = arg_6_0._episodeItem:getEpisodeId()
+	self._episodeItem = episodeItem
+	self._episodeId = self._episodeItem:getEpisodeId()
 
-	arg_6_0:_showTaskList(arg_6_0._episodeId)
+	self:_showTaskList(self._episodeId)
 end
 
-function var_0_0._showTaskList(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = DungeonConfig.instance:getEpisodeCO(arg_7_1).chapterId
-	local var_7_1 = DungeonConfig.instance:getUnlockChapterConfig(var_7_0)
-	local var_7_2 = false
-	local var_7_3 = not not var_7_1 and var_7_1.chapterIndex ~= "4TH" and var_7_1 and DungeonModel.instance:chapterIsLock(var_7_1.id) and DungeonModel.instance:chapterIsPass(var_7_0)
+function DungeonMapTaskInfo:_showTaskList(episodeId, skipShowTaskList)
+	local config = DungeonConfig.instance:getEpisodeCO(episodeId)
+	local chapterId = config.chapterId
+	local nextChapterCfg = DungeonConfig.instance:getUnlockChapterConfig(chapterId)
+	local isOpen = false
 
-	gohelper.setActive(arg_7_0._gotasklist, not var_7_3)
-	gohelper.setActive(arg_7_0._gounlocktip, var_7_3)
+	isOpen = not not nextChapterCfg and nextChapterCfg.chapterIndex ~= "4TH"
 
-	if var_7_3 then
-		arg_7_0._txtunlocktitle.text = formatLuaLang("dungeonmapview_unlocktitle", var_7_1.name)
+	local showUnlockTip = isOpen and nextChapterCfg and DungeonModel.instance:chapterIsLock(nextChapterCfg.id) and DungeonModel.instance:chapterIsPass(chapterId)
 
-		local var_7_4, var_7_5 = DungeonMapModel.instance:getTotalRewardPointProgress(var_7_0)
-		local var_7_6 = {
-			var_7_4,
-			var_7_5
+	gohelper.setActive(self._gotasklist, not showUnlockTip)
+	gohelper.setActive(self._gounlocktip, showUnlockTip)
+
+	if showUnlockTip then
+		self._txtunlocktitle.text = formatLuaLang("dungeonmapview_unlocktitle", nextChapterCfg.name)
+
+		local cur, max = DungeonMapModel.instance:getTotalRewardPointProgress(chapterId)
+		local tag = {
+			cur,
+			max
 		}
 
-		arg_7_0._txtunlockprogress.text = GameUtil.getSubPlaceholderLuaLang(luaLang("dungeonmapview_unlockprogress"), var_7_6)
+		self._txtunlockprogress.text = GameUtil.getSubPlaceholderLuaLang(luaLang("dungeonmapview_unlockprogress"), tag)
 
 		return
 	end
 
-	if arg_7_2 then
+	if skipShowTaskList then
 		return
 	end
 
-	arg_7_0:_doShowTaskList(arg_7_1)
+	self:_doShowTaskList(episodeId)
 end
 
-function var_0_0._doShowTaskList(arg_8_0, arg_8_1)
-	local var_8_0 = DungeonConfig.instance:getElementList(arg_8_1)
-	local var_8_1 = string.splitToNumber(var_8_0, "#")
-	local var_8_2 = DungeonConfig.instance:getEpisodeCO(arg_8_1)
-	local var_8_3 = DungeonMapEpisodeItem.getMap(var_8_2)
+function DungeonMapTaskInfo:_doShowTaskList(episodeId)
+	local listStr = DungeonConfig.instance:getElementList(episodeId)
+	local list = string.splitToNumber(listStr, "#")
+	local config = DungeonConfig.instance:getEpisodeCO(episodeId)
+	local map = DungeonMapEpisodeItem.getMap(config)
 
-	for iter_8_0 = #var_8_1, 1, -1 do
-		local var_8_4 = lua_chapter_map_element.configDict[var_8_1[iter_8_0]]
+	for i = #list, 1, -1 do
+		local elementCo = lua_chapter_map_element.configDict[list[i]]
 
-		if var_8_4 and var_8_4.mapId ~= var_8_3.Id then
-			table.remove(var_8_1, iter_8_0)
+		if elementCo and elementCo.mapId ~= map.Id then
+			table.remove(list, i)
 		end
 	end
 
-	if var_8_3 and OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.DungeonHideElementTip) then
-		local var_8_5 = DungeonConfig.instance:getMapElements(var_8_3.id)
+	if map and OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.DungeonHideElementTip) then
+		local mapAllElementList = DungeonConfig.instance:getMapElements(map.id)
 
-		if var_8_5 then
-			for iter_8_1, iter_8_2 in ipairs(var_8_5) do
-				if not tabletool.indexOf(var_8_1, iter_8_2.id) then
-					table.insert(var_8_1, iter_8_2.id)
+		if mapAllElementList then
+			for i, v in ipairs(mapAllElementList) do
+				if not tabletool.indexOf(list, v.id) then
+					table.insert(list, v.id)
 				end
 			end
 		end
 	end
 
-	local var_8_6 = DungeonModel.instance:hasPassLevelAndStory(arg_8_1)
-	local var_8_7 = 0
+	local pass = DungeonModel.instance:hasPassLevelAndStory(episodeId)
+	local index = 0
 
-	for iter_8_3, iter_8_4 in ipairs(var_8_1) do
-		local var_8_8 = var_8_6 and not DungeonMapModel.instance:elementIsFinished(iter_8_4)
-		local var_8_9 = lua_chapter_map_element.configDict[iter_8_4]
+	for i, id in ipairs(list) do
+		local unfinished = pass and not DungeonMapModel.instance:elementIsFinished(id)
+		local elementConfig = lua_chapter_map_element.configDict[id]
 
-		if var_8_8 and var_8_9 and var_8_9.type ~= DungeonEnum.ElementType.UnLockExplore and var_8_9.type ~= DungeonEnum.ElementType.Investigate and not ToughBattleConfig.instance:isActEleCo(var_8_9) then
-			var_8_7 = var_8_7 + 1
+		if unfinished and elementConfig and elementConfig.type ~= DungeonEnum.ElementType.UnLockExplore and elementConfig.type ~= DungeonEnum.ElementType.Investigate and not ToughBattleConfig.instance:isActEleCo(elementConfig) then
+			index = index + 1
 
-			local var_8_10 = arg_8_0:_getItem(var_8_7)
+			local item = self:_getItem(index)
 
-			var_8_10:setParam({
-				var_8_7,
-				iter_8_4
+			item:setParam({
+				index,
+				id
 			})
-			gohelper.setActive(var_8_10.viewGO, true)
+			gohelper.setActive(item.viewGO, true)
 		end
 	end
 
-	for iter_8_5 = var_8_7 + 1, #arg_8_0._itemList do
-		arg_8_0._itemList[iter_8_5]:playTaskOutAnim()
+	for i = index + 1, #self._itemList do
+		self._itemList[i]:playTaskOutAnim()
 	end
 end
 
-function var_0_0._getItem(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0._itemList[arg_9_1]
+function DungeonMapTaskInfo:_getItem(index)
+	local item = self._itemList[index]
 
-	if not var_9_0 then
-		local var_9_1 = gohelper.cloneInPlace(arg_9_0._gotaskitem)
+	if not item then
+		local go = gohelper.cloneInPlace(self._gotaskitem)
 
-		var_9_0 = MonoHelper.addLuaComOnceToGo(var_9_1, DungeonMapTaskInfoItem)
-		arg_9_0._itemList[arg_9_1] = var_9_0
+		item = MonoHelper.addLuaComOnceToGo(go, DungeonMapTaskInfoItem)
+		self._itemList[index] = item
 	end
 
-	return var_9_0
+	return item
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0:addEventCb(DungeonController.instance, DungeonEvent.OnChangeFocusEpisodeItem, arg_10_0._onChangeFocusEpisodeItem, arg_10_0)
-	arg_10_0:addEventCb(DungeonController.instance, DungeonEvent.OnRemoveElement, arg_10_0._OnRemoveElement, arg_10_0)
-	arg_10_0:addEventCb(DungeonController.instance, DungeonEvent.BeginShowRewardView, arg_10_0._beginShowRewardView, arg_10_0)
-	arg_10_0:addEventCb(DungeonController.instance, DungeonEvent.EndShowRewardView, arg_10_0._endShowRewardView, arg_10_0)
-	arg_10_0:addEventCb(DungeonController.instance, DungeonEvent.GuideShowElementAnimFinish, arg_10_0._guideShowElementAnimFinish, arg_10_0)
-	arg_10_0:addEventCb(DungeonController.instance, DungeonEvent.OnUpdateDungeonInfo, arg_10_0._onUpdateDungeonInfo, arg_10_0)
+function DungeonMapTaskInfo:onOpen()
+	self:addEventCb(DungeonController.instance, DungeonEvent.OnChangeFocusEpisodeItem, self._onChangeFocusEpisodeItem, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.OnRemoveElement, self._OnRemoveElement, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.BeginShowRewardView, self._beginShowRewardView, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.EndShowRewardView, self._endShowRewardView, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.GuideShowElementAnimFinish, self._guideShowElementAnimFinish, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.OnUpdateDungeonInfo, self._onUpdateDungeonInfo, self)
 end
 
-function var_0_0._onUpdateDungeonInfo(arg_11_0)
-	arg_11_0:_showTaskList(arg_11_0._episodeId, true)
+function DungeonMapTaskInfo:_onUpdateDungeonInfo()
+	self:_showTaskList(self._episodeId, true)
 end
 
-function var_0_0._guideShowElementAnimFinish(arg_12_0)
-	arg_12_0:_updateTaskList()
+function DungeonMapTaskInfo:_guideShowElementAnimFinish()
+	self:_updateTaskList()
 end
 
-function var_0_0._beginShowRewardView(arg_13_0)
-	arg_13_0._showRewardView = true
+function DungeonMapTaskInfo:_beginShowRewardView()
+	self._showRewardView = true
 end
 
-function var_0_0._endShowRewardView(arg_14_0)
-	arg_14_0._showRewardView = false
+function DungeonMapTaskInfo:_endShowRewardView()
+	self._showRewardView = false
 
-	TaskDispatcher.runDelay(arg_14_0._updateTaskList, arg_14_0, DungeonEnum.RefreshTimeAfterShowReward)
+	TaskDispatcher.runDelay(self._updateTaskList, self, DungeonEnum.RefreshTimeAfterShowReward)
 end
 
-function var_0_0._updateTaskList(arg_15_0)
-	arg_15_0:_showTaskList(arg_15_0._episodeId)
+function DungeonMapTaskInfo:_updateTaskList()
+	self:_showTaskList(self._episodeId)
 end
 
-function var_0_0._OnRemoveElement(arg_16_0, arg_16_1)
-	if arg_16_0._showRewardView then
+function DungeonMapTaskInfo:_OnRemoveElement(id)
+	if self._showRewardView then
 		return
 	end
 
-	arg_16_0:_updateTaskList()
+	self:_updateTaskList()
 end
 
-function var_0_0.onClose(arg_17_0)
-	TaskDispatcher.cancelTask(arg_17_0._updateTaskList, arg_17_0)
-	arg_17_0:removeEventCb(DungeonController.instance, DungeonEvent.OnChangeFocusEpisodeItem, arg_17_0._onChangeFocusEpisodeItem, arg_17_0)
-	arg_17_0:removeEventCb(DungeonController.instance, DungeonEvent.OnRemoveElement, arg_17_0._OnRemoveElement, arg_17_0)
-	arg_17_0:removeEventCb(DungeonController.instance, DungeonEvent.BeginShowRewardView, arg_17_0._beginShowRewardView, arg_17_0)
-	arg_17_0:removeEventCb(DungeonController.instance, DungeonEvent.EndShowRewardView, arg_17_0._endShowRewardView, arg_17_0)
-	arg_17_0:removeEventCb(DungeonController.instance, DungeonEvent.GuideShowElementAnimFinish, arg_17_0._guideShowElementAnimFinish, arg_17_0)
-	arg_17_0:removeEventCb(DungeonController.instance, DungeonEvent.OnUpdateDungeonInfo, arg_17_0._onUpdateDungeonInfo, arg_17_0)
+function DungeonMapTaskInfo:onClose()
+	TaskDispatcher.cancelTask(self._updateTaskList, self)
+	self:removeEventCb(DungeonController.instance, DungeonEvent.OnChangeFocusEpisodeItem, self._onChangeFocusEpisodeItem, self)
+	self:removeEventCb(DungeonController.instance, DungeonEvent.OnRemoveElement, self._OnRemoveElement, self)
+	self:removeEventCb(DungeonController.instance, DungeonEvent.BeginShowRewardView, self._beginShowRewardView, self)
+	self:removeEventCb(DungeonController.instance, DungeonEvent.EndShowRewardView, self._endShowRewardView, self)
+	self:removeEventCb(DungeonController.instance, DungeonEvent.GuideShowElementAnimFinish, self._guideShowElementAnimFinish, self)
+	self:removeEventCb(DungeonController.instance, DungeonEvent.OnUpdateDungeonInfo, self._onUpdateDungeonInfo, self)
 end
 
-function var_0_0.onDestroyView(arg_18_0)
+function DungeonMapTaskInfo:onDestroyView()
 	return
 end
 
-return var_0_0
+return DungeonMapTaskInfo

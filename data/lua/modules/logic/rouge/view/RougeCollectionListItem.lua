@@ -1,126 +1,129 @@
-﻿module("modules.logic.rouge.view.RougeCollectionListItem", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeCollectionListItem.lua
 
-local var_0_0 = class("RougeCollectionListItem", ListScrollCellExtend)
+module("modules.logic.rouge.view.RougeCollectionListItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "#go_normal")
-	arg_1_0._gonew = gohelper.findChild(arg_1_0.viewGO, "#go_normal/go_new")
-	arg_1_0._imagebg = gohelper.findChildImage(arg_1_0.viewGO, "#go_normal/#image_bg")
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "#txt_num")
-	arg_1_0._simagecollection = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_normal/#simage_collection")
-	arg_1_0._imagecollection = gohelper.findChildImage(arg_1_0.viewGO, "#go_normal/#simage_collection")
-	arg_1_0._golocked = gohelper.findChild(arg_1_0.viewGO, "#go_locked")
-	arg_1_0._goselected = gohelper.findChild(arg_1_0.viewGO, "#go_selected")
-	arg_1_0._godlctag = gohelper.findChild(arg_1_0.viewGO, "#go_dlctag")
+local RougeCollectionListItem = class("RougeCollectionListItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeCollectionListItem:onInitView()
+	self._gonormal = gohelper.findChild(self.viewGO, "#go_normal")
+	self._gonew = gohelper.findChild(self.viewGO, "#go_normal/go_new")
+	self._imagebg = gohelper.findChildImage(self.viewGO, "#go_normal/#image_bg")
+	self._txtnum = gohelper.findChildText(self.viewGO, "#txt_num")
+	self._simagecollection = gohelper.findChildSingleImage(self.viewGO, "#go_normal/#simage_collection")
+	self._imagecollection = gohelper.findChildImage(self.viewGO, "#go_normal/#simage_collection")
+	self._golocked = gohelper.findChild(self.viewGO, "#go_locked")
+	self._goselected = gohelper.findChild(self.viewGO, "#go_selected")
+	self._godlctag = gohelper.findChild(self.viewGO, "#go_dlctag")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RougeCollectionListItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RougeCollectionListItem:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._click = gohelper.getClickWithAudio(arg_4_0.viewGO, AudioEnum.UI.UI_Common_Click)
-	arg_4_0._color = arg_4_0._imagecollection.color
-	arg_4_0._orderColor = arg_4_0._txtnum.color
+function RougeCollectionListItem:_editableInitView()
+	self._click = gohelper.getClickWithAudio(self.viewGO, AudioEnum.UI.UI_Common_Click)
+	self._color = self._imagecollection.color
+	self._orderColor = self._txtnum.color
 end
 
-function var_0_0._editableAddEvents(arg_5_0)
-	arg_5_0._click:AddClickListener(arg_5_0._onClickItem, arg_5_0)
-	arg_5_0:addEventCb(RougeController.instance, RougeEvent.OnClickCollectionListItem, arg_5_0._onClickCollectionListItem, arg_5_0)
+function RougeCollectionListItem:_editableAddEvents()
+	self._click:AddClickListener(self._onClickItem, self)
+	self:addEventCb(RougeController.instance, RougeEvent.OnClickCollectionListItem, self._onClickCollectionListItem, self)
 end
 
-function var_0_0._editableRemoveEvents(arg_6_0)
-	arg_6_0._click:RemoveClickListener()
+function RougeCollectionListItem:_editableRemoveEvents()
+	self._click:RemoveClickListener()
 end
 
-function var_0_0._onClickItem(arg_7_0)
-	RougeCollectionListModel.instance:setSelectedConfig(arg_7_0._mo)
+function RougeCollectionListItem:_onClickItem()
+	RougeCollectionListModel.instance:setSelectedConfig(self._mo)
 
-	if arg_7_0._showNewFlag then
-		local var_7_0 = RougeOutsideModel.instance:season()
+	if self._showNewFlag then
+		local season = RougeOutsideModel.instance:season()
 
-		RougeOutsideRpc.instance:sendRougeMarkNewReddotRequest(var_7_0, RougeEnum.FavoriteType.Collection, arg_7_0._mo.id, arg_7_0._updateNewFlag, arg_7_0)
+		RougeOutsideRpc.instance:sendRougeMarkNewReddotRequest(season, RougeEnum.FavoriteType.Collection, self._mo.id, self._updateNewFlag, self)
 	end
 end
 
-function var_0_0._onClickCollectionListItem(arg_8_0)
-	arg_8_0:_updateSelected()
+function RougeCollectionListItem:_onClickCollectionListItem()
+	self:_updateSelected()
 end
 
-function var_0_0._updateSelected(arg_9_0)
-	local var_9_0 = RougeCollectionListModel.instance:getSelectedConfig()
+function RougeCollectionListItem:_updateSelected()
+	local selectedConfig = RougeCollectionListModel.instance:getSelectedConfig()
 
-	gohelper.setActive(arg_9_0._goselected, var_9_0 and var_9_0 == arg_9_0._mo)
+	gohelper.setActive(self._goselected, selectedConfig and selectedConfig == self._mo)
 end
 
-function var_0_0.onUpdateMO(arg_10_0, arg_10_1)
-	arg_10_0._mo = arg_10_1
+function RougeCollectionListItem:onUpdateMO(mo)
+	self._mo = mo
 
-	local var_10_0 = arg_10_1 ~= nil
+	local isShow = mo ~= nil
 
-	gohelper.setActive(arg_10_0.viewGO, var_10_0)
+	gohelper.setActive(self.viewGO, isShow)
 
-	if not var_10_0 then
+	if not isShow then
 		return
 	end
 
-	local var_10_1 = RougeFavoriteModel.instance:collectionIsUnlock(arg_10_1.id)
-	local var_10_2
+	local isUnlock = RougeFavoriteModel.instance:collectionIsUnlock(mo.id)
+	local isPass
 
-	if var_10_1 then
-		var_10_2 = RougeOutsideModel.instance:collectionIsPass(arg_10_1.id)
-		arg_10_0._color.a = var_10_2 and 1 or 0.3
-		arg_10_0._imagecollection.color = arg_10_0._color
+	if isUnlock then
+		isPass = RougeOutsideModel.instance:collectionIsPass(mo.id)
+		self._color.a = isPass and 1 or 0.3
+		self._imagecollection.color = self._color
 	end
 
-	arg_10_0._orderColor.a = var_10_2 and 0.7 or 0.3
-	arg_10_0._txtnum.color = arg_10_0._orderColor
-	arg_10_0._txtnum.text = RougeCollectionListModel.instance:getPos(arg_10_1.id)
+	self._orderColor.a = isPass and 0.7 or 0.3
+	self._txtnum.color = self._orderColor
+	self._txtnum.text = RougeCollectionListModel.instance:getPos(mo.id)
 
-	local var_10_3 = RougeCollectionConfig.instance:getCollectionCfg(arg_10_1.id)
-	local var_10_4 = "rouge_episode_collectionbg_" .. var_10_3.showRare
+	local config = RougeCollectionConfig.instance:getCollectionCfg(mo.id)
+	local icon = "rouge_episode_collectionbg_" .. config.showRare
 
-	UISpriteSetMgr.instance:setRougeSprite(arg_10_0._imagebg, var_10_4, true)
-	gohelper.setActive(arg_10_0._gonormal, var_10_1)
-	gohelper.setActive(arg_10_0._golocked, not var_10_1)
-	arg_10_0:_updateSelected()
-	arg_10_0._simagecollection:LoadImage(RougeCollectionHelper.getCollectionIconUrl(arg_10_0._mo.id))
-	arg_10_0:_updateNewFlag()
-	arg_10_0:_refreshDLCTag(var_10_3.versions, var_10_1)
+	UISpriteSetMgr.instance:setRougeSprite(self._imagebg, icon, true)
+	gohelper.setActive(self._gonormal, isUnlock)
+	gohelper.setActive(self._golocked, not isUnlock)
+	self:_updateSelected()
+	self._simagecollection:LoadImage(RougeCollectionHelper.getCollectionIconUrl(self._mo.id))
+	self:_updateNewFlag()
+	self:_refreshDLCTag(config.versions, isUnlock)
 end
 
-function var_0_0._updateNewFlag(arg_11_0)
-	arg_11_0._showNewFlag = RougeFavoriteModel.instance:getReddot(RougeEnum.FavoriteType.Collection, arg_11_0._mo.id) ~= nil
+function RougeCollectionListItem:_updateNewFlag()
+	self._showNewFlag = RougeFavoriteModel.instance:getReddot(RougeEnum.FavoriteType.Collection, self._mo.id) ~= nil
 
-	gohelper.setActive(arg_11_0._gonew, arg_11_0._showNewFlag)
+	gohelper.setActive(self._gonew, self._showNewFlag)
 end
 
-function var_0_0._refreshDLCTag(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = (arg_12_1 and arg_12_1[1]) ~= nil and arg_12_2
+function RougeCollectionListItem:_refreshDLCTag(versions, isUnlock)
+	local version = versions and versions[1]
+	local isShowTag = version ~= nil and isUnlock
 
-	gohelper.setActive(arg_12_0._godlctag, var_12_0)
+	gohelper.setActive(self._godlctag, isShowTag)
 
-	if var_12_0 then
-		local var_12_1 = arg_12_0._godlctag:GetComponent(gohelper.Type_Image)
+	if isShowTag then
+		local dlcImage = self._godlctag:GetComponent(gohelper.Type_Image)
 
-		UISpriteSetMgr.instance:setRougeSprite(var_12_1, "rouge_episode_tagdlc_101")
+		UISpriteSetMgr.instance:setRougeSprite(dlcImage, "rouge_episode_tagdlc_101")
 	end
 end
 
-function var_0_0.onSelect(arg_13_0, arg_13_1)
+function RougeCollectionListItem:onSelect(isSelect)
 	return
 end
 
-function var_0_0.onDestroyView(arg_14_0)
+function RougeCollectionListItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return RougeCollectionListItem

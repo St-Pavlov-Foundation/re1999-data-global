@@ -1,21 +1,23 @@
-﻿module("modules.logic.fight.entity.comp.skill.FightTLEventInvokeEntityDead", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skill/FightTLEventInvokeEntityDead.lua
 
-local var_0_0 = class("FightTLEventInvokeEntityDead", FightTimelineTrackItem)
+module("modules.logic.fight.entity.comp.skill.FightTLEventInvokeEntityDead", package.seeall)
 
-function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1.actEffect) do
-		if iter_1_1.effectType == FightEnum.EffectType.DEAD then
-			FightController.instance:dispatchEvent(FightEvent.InvokeEntityDeadImmediately, iter_1_1.targetId, arg_1_1)
+local FightTLEventInvokeEntityDead = class("FightTLEventInvokeEntityDead", FightTimelineTrackItem)
+
+function FightTLEventInvokeEntityDead:onTrackStart(fightStepData, duration, paramsArr)
+	for _, actEffectData in ipairs(fightStepData.actEffect) do
+		if actEffectData.effectType == FightEnum.EffectType.DEAD then
+			FightController.instance:dispatchEvent(FightEvent.InvokeEntityDeadImmediately, actEffectData.targetId, fightStepData)
 		end
 	end
 end
 
-function var_0_0.onTrackEnd(arg_2_0)
+function FightTLEventInvokeEntityDead:onTrackEnd()
 	return
 end
 
-function var_0_0.onDestructor(arg_3_0)
+function FightTLEventInvokeEntityDead:onDestructor()
 	return
 end
 
-return var_0_0
+return FightTLEventInvokeEntityDead

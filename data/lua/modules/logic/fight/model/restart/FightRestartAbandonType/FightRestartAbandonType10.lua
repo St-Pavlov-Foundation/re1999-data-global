@@ -1,3 +1,7 @@
-﻿module("modules.logic.fight.model.restart.FightRestartAbandonType.FightRestartAbandonType10", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/restart/FightRestartAbandonType/FightRestartAbandonType10.lua
 
-return (class("FightRestartAbandonType10", FightRestartAbandonType1))
+module("modules.logic.fight.model.restart.FightRestartAbandonType.FightRestartAbandonType10", package.seeall)
+
+local FightRestartAbandonType10 = class("FightRestartAbandonType10", FightRestartAbandonType1)
+
+return FightRestartAbandonType10

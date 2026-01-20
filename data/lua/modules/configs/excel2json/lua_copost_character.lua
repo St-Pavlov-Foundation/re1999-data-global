@@ -1,20 +1,22 @@
-﻿module("modules.configs.excel2json.lua_copost_character", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_copost_character.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_copost_character", package.seeall)
+
+local lua_copost_character = {}
+local fields = {
 	chaName = 3,
 	chaPicture = 2,
 	chaId = 1
 }
-local var_0_2 = {
+local primaryKey = {
 	"chaId"
 }
-local var_0_3 = {
+local mlStringKey = {
 	chaName = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_copost_character.onLoad(json)
+	lua_copost_character.configList, lua_copost_character.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_copost_character

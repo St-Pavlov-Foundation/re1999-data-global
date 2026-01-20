@@ -1,15 +1,17 @@
-﻿module("modules.logic.sdk.view.SdkFitAgeTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/sdk/view/SdkFitAgeTipViewContainer.lua
 
-local var_0_0 = class("SdkFitAgeTipViewContainer", BaseViewContainer)
+module("modules.logic.sdk.view.SdkFitAgeTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local SdkFitAgeTipViewContainer = class("SdkFitAgeTipViewContainer", BaseViewContainer)
+
+function SdkFitAgeTipViewContainer:buildViews()
 	return {
 		SdkFitAgeTipView.New()
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	arg_2_0:closeThis()
+function SdkFitAgeTipViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return SdkFitAgeTipViewContainer

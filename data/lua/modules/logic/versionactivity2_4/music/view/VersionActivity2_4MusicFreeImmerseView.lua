@@ -1,45 +1,47 @@
-﻿module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicFreeImmerseView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/music/view/VersionActivity2_4MusicFreeImmerseView.lua
 
-local var_0_0 = class("VersionActivity2_4MusicFreeImmerseView", BaseView)
+module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicFreeImmerseView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_click")
+local VersionActivity2_4MusicFreeImmerseView = class("VersionActivity2_4MusicFreeImmerseView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity2_4MusicFreeImmerseView:onInitView()
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_click")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+function VersionActivity2_4MusicFreeImmerseView:addEvents()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
+function VersionActivity2_4MusicFreeImmerseView:removeEvents()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0._btnclickOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function VersionActivity2_4MusicFreeImmerseView:_btnclickOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function VersionActivity2_4MusicFreeImmerseView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function VersionActivity2_4MusicFreeImmerseView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
+function VersionActivity2_4MusicFreeImmerseView:onOpen()
 	return
 end
 
-function var_0_0.onClose(arg_8_0)
+function VersionActivity2_4MusicFreeImmerseView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
+function VersionActivity2_4MusicFreeImmerseView:onDestroyView()
 	return
 end
 
-return var_0_0
+return VersionActivity2_4MusicFreeImmerseView

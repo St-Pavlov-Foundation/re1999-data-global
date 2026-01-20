@@ -1,8 +1,10 @@
-﻿module("modules.logic.guide.model.GuideModel", package.seeall)
+﻿-- chunkname: @modules/logic/guide/model/GuideModel.lua
 
-local var_0_0 = class("GuideModel", BaseModel)
+module("modules.logic.guide.model.GuideModel", package.seeall)
 
-var_0_0.GuideFlag = {
+local GuideModel = class("GuideModel", BaseModel)
+
+GuideModel.GuideFlag = {
 	FightForbidRoundView = 3,
 	SeasonDiscount = 28,
 	FightForbidCloseSkilltip = 25,
@@ -33,6 +35,7 @@ var_0_0.GuideFlag = {
 	MainViewGuideId = 32,
 	SurvivalGuideLock = 48,
 	SkipShowElementAnim = 19,
+	BeiLiErPuzzleGame = 50,
 	FightForbidSpeed = 8,
 	MoveFightBtn2MapView = 21,
 	FightMoveCard = 1,
@@ -49,203 +52,210 @@ var_0_0.GuideFlag = {
 	SkipClickElement = 13,
 	RoomForbidBtn = 16,
 	FightSetSpecificCardIndex = 30,
-	FightLeadRoleSkillGuide = 11
+	FightLeadRoleSkillGuide = 11,
+	HuiDiaoLanCombineLock = 49
 }
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._stepExecList = {}
-	arg_1_0._guideHasSetFlag = {}
-	arg_1_0._guideFlagDict = {}
-	arg_1_0._firstOpenMainViewTime = nil
-	arg_1_0._gmStartGuideId = nil
-	arg_1_0._fixNextStepGOPathDict = {}
-	arg_1_0._lockGuideId = nil
-	arg_1_0._guideParam = {
+function GuideModel:onInit()
+	self._stepExecList = {}
+	self._guideHasSetFlag = {}
+	self._guideFlagDict = {}
+	self._firstOpenMainViewTime = nil
+	self._gmStartGuideId = nil
+	self._fixNextStepGOPathDict = {}
+	self._lockGuideId = nil
+	self._guideParam = {
 		OnPushBoxWinPause = false
 	}
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:onInit()
+function GuideModel:reInit()
+	self:onInit()
 end
 
-function var_0_0.execStep(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0:addStepLog(string.format("%d_%d", arg_3_1, arg_3_2))
+function GuideModel:execStep(guideId, stepId)
+	self:addStepLog(string.format("%d_%d", guideId, stepId))
 end
 
-function var_0_0.onClickJumpGuides(arg_4_0)
-	arg_4_0:addStepLog("click jump all guides")
+function GuideModel:onClickJumpGuides()
+	self:addStepLog("click jump all guides")
 end
 
-function var_0_0.addStepLog(arg_5_0, arg_5_1)
-	if #arg_5_0._stepExecList >= 10 then
-		table.remove(arg_5_0._stepExecList, 1)
+function GuideModel:addStepLog(logStr)
+	if #self._stepExecList >= 10 then
+		table.remove(self._stepExecList, 1)
 	end
 
-	table.insert(arg_5_0._stepExecList, arg_5_1)
+	table.insert(self._stepExecList, logStr)
 end
 
-function var_0_0.getStepExecStr(arg_6_0)
-	return table.concat(arg_6_0._stepExecList, ",")
+function GuideModel:getStepExecStr()
+	return table.concat(self._stepExecList, ",")
 end
 
-function var_0_0.onOpenMainView(arg_7_0)
-	if arg_7_0._firstOpenMainViewTime == nil then
-		arg_7_0._firstOpenMainViewTime = Time.time
+function GuideModel:onOpenMainView()
+	if self._firstOpenMainViewTime == nil then
+		self._firstOpenMainViewTime = Time.time
 	end
 end
 
-function var_0_0.setFlag(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	if arg_8_3 then
-		arg_8_0._guideHasSetFlag[arg_8_3] = arg_8_0._guideHasSetFlag[arg_8_3] or {}
-		arg_8_0._guideHasSetFlag[arg_8_3][arg_8_1] = arg_8_2
+function GuideModel:setFlag(guideFlag, flagValue, guideId)
+	if guideId then
+		self._guideHasSetFlag[guideId] = self._guideHasSetFlag[guideId] or {}
+		self._guideHasSetFlag[guideId][guideFlag] = flagValue
 	end
 
-	arg_8_0._guideFlagDict[arg_8_1] = arg_8_2
+	self._guideFlagDict[guideFlag] = flagValue
 end
 
-function var_0_0.isFlagEnable(arg_9_0, arg_9_1)
-	if arg_9_0._guideFlagDict[arg_9_1] ~= nil then
+function GuideModel:isFlagEnable(guideFlag)
+	if self._guideFlagDict[guideFlag] ~= nil then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.getFlagValue(arg_10_0, arg_10_1)
-	return arg_10_0._guideFlagDict[arg_10_1]
+function GuideModel:getFlagValue(guideFlag)
+	return self._guideFlagDict[guideFlag]
 end
 
-function var_0_0.clearFlagByGuideId(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0._guideHasSetFlag[arg_11_1]
+function GuideModel:clearFlagByGuideId(guideId)
+	local dict = self._guideHasSetFlag[guideId]
 
-	arg_11_0._guideHasSetFlag[arg_11_1] = nil
+	self._guideHasSetFlag[guideId] = nil
 
-	if var_11_0 then
-		for iter_11_0, iter_11_1 in pairs(var_11_0) do
-			if iter_11_1 then
-				arg_11_0._guideFlagDict[iter_11_0] = nil
+	if dict then
+		for guideFlag, flagValue in pairs(dict) do
+			if flagValue then
+				self._guideFlagDict[guideFlag] = nil
 			end
 		end
 	end
 end
 
-function var_0_0.setGuideList(arg_12_0, arg_12_1)
-	local var_12_0 = {}
+function GuideModel:setGuideList(guideInfos)
+	local list = {}
 
-	for iter_12_0 = 1, #arg_12_1 do
-		local var_12_1 = arg_12_1[iter_12_0]
+	for i = 1, #guideInfos do
+		local guideInfo = guideInfos[i]
+		local guideCO = GuideConfig.instance:getGuideCO(guideInfo.guideId)
 
-		if GuideConfig.instance:getGuideCO(var_12_1.guideId) then
-			if GuideConfig.instance:getStepList(var_12_1.guideId) then
-				local var_12_2 = GuideMO.New()
+		if guideCO then
+			local guideStepCOList = GuideConfig.instance:getStepList(guideInfo.guideId)
 
-				var_12_2:init(var_12_1)
-				table.insert(var_12_0, var_12_2)
+			if guideStepCOList then
+				local guideMO = GuideMO.New()
+
+				guideMO:init(guideInfo)
+				table.insert(list, guideMO)
 			else
-				logError("guide step config not exist: " .. var_12_1.guideId)
+				logError("guide step config not exist: " .. guideInfo.guideId)
 			end
 		else
-			logError("guide config not exist: " .. var_12_1.guideId)
+			logError("guide config not exist: " .. guideInfo.guideId)
 		end
 	end
 
-	arg_12_0:addList(var_12_0)
+	self:addList(list)
 end
 
-function var_0_0.updateGuideList(arg_13_0, arg_13_1)
-	for iter_13_0 = 1, #arg_13_1 do
-		local var_13_0 = arg_13_1[iter_13_0]
+function GuideModel:updateGuideList(guideInfos)
+	for i = 1, #guideInfos do
+		local guideInfo = guideInfos[i]
 
-		arg_13_0:setGMGuideStep(var_13_0)
+		self:setGMGuideStep(guideInfo)
 
-		local var_13_1 = arg_13_0:getById(var_13_0.guideId)
+		local guideMO = self:getById(guideInfo.guideId)
 
-		if var_13_1 == nil then
-			var_13_1 = GuideMO.New()
+		if guideMO == nil then
+			guideMO = GuideMO.New()
 
-			if arg_13_0._firstOpenMainViewTime and Time.time - arg_13_0._firstOpenMainViewTime < 6 then
-				logNormal(string.format("<color=#FFA500>login trigger guide_%d</color>", var_13_0.guideId))
-				var_13_1:init(var_13_0)
+			if self._firstOpenMainViewTime and Time.time - self._firstOpenMainViewTime < 6 then
+				logNormal(string.format("<color=#FFA500>login trigger guide_%d</color>", guideInfo.guideId))
+				guideMO:init(guideInfo)
 			else
-				var_13_1:updateGuide(var_13_0)
+				guideMO:updateGuide(guideInfo)
 			end
 
-			arg_13_0:addAtLast(var_13_1)
-		elseif var_13_1.isFinish then
-			logNormal(string.format("<color=#FFA500>restart guide_%d</color>", var_13_0.guideId))
-			var_13_1:init(var_13_0)
+			self:addAtLast(guideMO)
+		elseif guideMO.isFinish then
+			logNormal(string.format("<color=#FFA500>restart guide_%d</color>", guideInfo.guideId))
+			guideMO:init(guideInfo)
 		else
-			var_13_1:updateGuide(var_13_0)
+			guideMO:updateGuide(guideInfo)
 		end
 	end
 end
 
-function var_0_0.addEmptyGuide(arg_14_0, arg_14_1)
-	if arg_14_0:getById(arg_14_1) == nil then
-		local var_14_0 = GuideMO.New()
+function GuideModel:addEmptyGuide(guideId)
+	local guideMO = self:getById(guideId)
 
-		var_14_0.id = arg_14_1
+	if guideMO == nil then
+		guideMO = GuideMO.New()
+		guideMO.id = guideId
 
-		arg_14_0:addAtLast(var_14_0)
+		self:addAtLast(guideMO)
 	end
 end
 
-function var_0_0.clientFinishStep(arg_15_0, arg_15_1, arg_15_2)
-	arg_15_0:getById(arg_15_1):setClientStep(arg_15_2)
+function GuideModel:clientFinishStep(guideId, stepId)
+	local guideMO = self:getById(guideId)
+
+	guideMO:setClientStep(stepId)
 end
 
-function var_0_0.isDoingFirstGuide(arg_16_0)
-	return arg_16_0:getDoingGuideId() == 101
+function GuideModel:isDoingFirstGuide()
+	return self:getDoingGuideId() == 101
 end
 
-function var_0_0.lastForceGuideId(arg_17_0)
+function GuideModel:lastForceGuideId()
 	return 108
 end
 
-function var_0_0.getDoingGuideId(arg_18_0)
-	local var_18_0 = arg_18_0:getDoingGuideIdList()
+function GuideModel:getDoingGuideId()
+	local list = self:getDoingGuideIdList()
 
-	if var_18_0 then
-		for iter_18_0 = #var_18_0, 1, -1 do
-			local var_18_1 = GuideConfig.instance:getGuideCO(var_18_0[iter_18_0])
+	if list then
+		for i = #list, 1, -1 do
+			local guideCO = GuideConfig.instance:getGuideCO(list[i])
 
-			if var_18_1.parallel == 1 or GuideInvalidController.instance:isInvalid(var_18_1.id) then
-				table.remove(var_18_0, iter_18_0)
+			if guideCO.parallel == 1 or GuideInvalidController.instance:isInvalid(guideCO.id) then
+				table.remove(list, i)
 			end
 		end
 
-		return GuideConfig.instance:getHighestPriorityGuideId(var_18_0)
+		return GuideConfig.instance:getHighestPriorityGuideId(list)
 	end
 end
 
-function var_0_0.getDoingGuideIdList(arg_19_0)
-	local var_19_0
-	local var_19_1 = arg_19_0:getList()
+function GuideModel:getDoingGuideIdList()
+	local list
+	local guideMOList = self:getList()
 
-	for iter_19_0 = 1, #var_19_1 do
-		local var_19_2 = var_19_1[iter_19_0]
+	for i = 1, #guideMOList do
+		local guideMO = guideMOList[i]
 
-		if not var_19_2.isFinish or var_19_2.currStepId > 0 then
-			var_19_0 = var_19_0 or {}
+		if not guideMO.isFinish or guideMO.currStepId > 0 then
+			list = list or {}
 
-			table.insert(var_19_0, var_19_1[iter_19_0].id)
+			table.insert(list, guideMOList[i].id)
 		end
 	end
 
-	return var_19_0
+	return list
 end
 
-function var_0_0.isDoingClickGuide(arg_20_0)
-	local var_20_0 = arg_20_0:getList()
+function GuideModel:isDoingClickGuide()
+	local guideMOList = self:getList()
 
-	for iter_20_0 = 1, #var_20_0 do
-		local var_20_1 = var_20_0[iter_20_0]
+	for i = 1, #guideMOList do
+		local guideMO = guideMOList[i]
 
-		if not var_20_1.isFinish or var_20_1.currStepId > 0 then
-			local var_20_2 = var_0_0.instance:getStepGOPath(var_20_1.id, var_20_1.currStepId)
+		if not guideMO.isFinish or guideMO.currStepId > 0 then
+			local goPath = GuideModel.instance:getStepGOPath(guideMO.id, guideMO.currStepId)
 
-			if not string.nilorempty(var_20_2) then
+			if not string.nilorempty(goPath) then
 				return true
 			end
 		end
@@ -254,13 +264,13 @@ function var_0_0.isDoingClickGuide(arg_20_0)
 	return false
 end
 
-function var_0_0.isAnyGuideRunning(arg_21_0)
-	local var_21_0 = arg_21_0:getList()
+function GuideModel:isAnyGuideRunning()
+	local guideMOList = self:getList()
 
-	for iter_21_0 = 1, #var_21_0 do
-		local var_21_1 = var_21_0[iter_21_0]
+	for i = 1, #guideMOList do
+		local guideMO = guideMOList[i]
 
-		if not var_21_1.isFinish or var_21_1.currStepId > 0 then
+		if not guideMO.isFinish or guideMO.currStepId > 0 then
 			return true
 		end
 	end
@@ -268,107 +278,107 @@ function var_0_0.isAnyGuideRunning(arg_21_0)
 	return false
 end
 
-function var_0_0.isGuideRunning(arg_22_0, arg_22_1)
-	local var_22_0 = arg_22_0:getById(arg_22_1)
+function GuideModel:isGuideRunning(guideId)
+	local guideMO = self:getById(guideId)
 
-	if var_22_0 and not var_22_0.isFinish then
+	if guideMO and not guideMO.isFinish then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.isGuideFinish(arg_23_0, arg_23_1)
-	local var_23_0 = arg_23_0:getById(arg_23_1)
+function GuideModel:isGuideFinish(guideId)
+	local guideMO = self:getById(guideId)
 
-	if var_23_0 and var_23_0.isFinish then
+	if guideMO and guideMO.isFinish then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.isStepFinish(arg_24_0, arg_24_1, arg_24_2)
-	if arg_24_0:isGuideFinish(arg_24_1) then
+function GuideModel:isStepFinish(guideId, stepId)
+	if self:isGuideFinish(guideId) then
 		return true
 	end
 
-	local var_24_0 = arg_24_0:getById(arg_24_1)
+	local guideMO = self:getById(guideId)
 
-	if var_24_0 and arg_24_2 < var_24_0.currStepId then
+	if guideMO and stepId < guideMO.currStepId then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.setLockGuide(arg_25_0, arg_25_1, arg_25_2)
-	if arg_25_0._lockGuideId and not arg_25_0:isGuideFinish(arg_25_0._lockGuideId) and not arg_25_2 then
-		logNormal(string.format("<color=#FFA500>setLockGuide old:%s new:%s</color>", arg_25_0._lockGuideId, arg_25_1))
+function GuideModel:setLockGuide(guideId, force)
+	if self._lockGuideId and not self:isGuideFinish(self._lockGuideId) and not force then
+		logNormal(string.format("<color=#FFA500>setLockGuide old:%s new:%s</color>", self._lockGuideId, guideId))
 
 		return
 	end
 
-	arg_25_0._lockGuideId = arg_25_1
+	self._lockGuideId = guideId
 
-	logNormal(string.format("<color=#FFA500>setLockGuide guideId:%s</color>", arg_25_0._lockGuideId))
+	logNormal(string.format("<color=#FFA500>setLockGuide guideId:%s</color>", self._lockGuideId))
 end
 
-function var_0_0.getLockGuideId(arg_26_0)
-	if arg_26_0._lockGuideId and arg_26_0:isGuideFinish(arg_26_0._lockGuideId) then
-		arg_26_0._lockGuideId = nil
+function GuideModel:getLockGuideId()
+	if self._lockGuideId and self:isGuideFinish(self._lockGuideId) then
+		self._lockGuideId = nil
 	end
 
-	return arg_26_0._lockGuideId
+	return self._lockGuideId
 end
 
-function var_0_0.gmStartGuide(arg_27_0, arg_27_1, arg_27_2)
-	arg_27_0._gmStartGuideId = arg_27_1
-	arg_27_0._gmStartGuideStep = arg_27_2
+function GuideModel:gmStartGuide(guideId, guideStep)
+	self._gmStartGuideId = guideId
+	self._gmStartGuideStep = guideStep
 end
 
-function var_0_0.setGMGuideStep(arg_28_0, arg_28_1)
-	if not arg_28_1 or arg_28_1.guideId ~= arg_28_0._gmStartGuideId or not arg_28_0._gmStartGuideStep then
+function GuideModel:setGMGuideStep(guideInfo)
+	if not guideInfo or guideInfo.guideId ~= self._gmStartGuideId or not self._gmStartGuideStep then
 		return
 	end
 
-	arg_28_1.stepId = arg_28_0._gmStartGuideStep
-	arg_28_0._gmStartGuideStep = nil
+	guideInfo.stepId = self._gmStartGuideStep
+	self._gmStartGuideStep = nil
 
-	logNormal(string.format("<color=#FF0000>setGMGuideStep guideId:%d step:%d</color>", arg_28_1.guideId, arg_28_1.stepId))
+	logNormal(string.format("<color=#FF0000>setGMGuideStep guideId:%d step:%d</color>", guideInfo.guideId, guideInfo.stepId))
 end
 
-function var_0_0.isGMStartGuide(arg_29_0, arg_29_1)
-	return arg_29_1 == arg_29_0._gmStartGuideId
+function GuideModel:isGMStartGuide(guideId)
+	return guideId == self._gmStartGuideId
 end
 
-function var_0_0.setNextStepGOPath(arg_30_0, arg_30_1, arg_30_2, arg_30_3)
-	local var_30_0 = GuideConfig.instance:getNextStepId(arg_30_1, arg_30_2)
+function GuideModel:setNextStepGOPath(guideId, curStepId, goPath)
+	local nextStepId = GuideConfig.instance:getNextStepId(guideId, curStepId)
 
-	if var_30_0 then
-		arg_30_0._fixNextStepGOPathDict[arg_30_1] = arg_30_0._fixNextStepGOPathDict[arg_30_1] or {}
-		arg_30_0._fixNextStepGOPathDict[arg_30_1][var_30_0] = arg_30_3
+	if nextStepId then
+		self._fixNextStepGOPathDict[guideId] = self._fixNextStepGOPathDict[guideId] or {}
+		self._fixNextStepGOPathDict[guideId][nextStepId] = goPath
 	end
 end
 
-function var_0_0.getStepGOPath(arg_31_0, arg_31_1, arg_31_2)
-	if arg_31_0._fixNextStepGOPathDict[arg_31_1] then
-		local var_31_0 = arg_31_0._fixNextStepGOPathDict[arg_31_1][arg_31_2]
+function GuideModel:getStepGOPath(guideId, stepId)
+	if self._fixNextStepGOPathDict[guideId] then
+		local goPath = self._fixNextStepGOPathDict[guideId][stepId]
 
-		if var_31_0 then
-			return var_31_0
+		if goPath then
+			return goPath
 		end
 	end
 
-	local var_31_1 = GuideConfig.instance:getStepCO(arg_31_1, arg_31_2)
+	local stepCO = GuideConfig.instance:getStepCO(guideId, stepId)
 
-	return var_31_1 and var_31_1.goPath
+	return stepCO and stepCO.goPath
 end
 
-function var_0_0.getGuideParam(arg_32_0)
-	return arg_32_0._guideParam
+function GuideModel:getGuideParam()
+	return self._guideParam
 end
 
-var_0_0.instance = var_0_0.New()
+GuideModel.instance = GuideModel.New()
 
-return var_0_0
+return GuideModel

@@ -1,84 +1,85 @@
-﻿module("modules.logic.rouge.view.RougeStoryListItem", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeStoryListItem.lua
 
-local var_0_0 = class("RougeStoryListItem", ListScrollCellExtend)
+module("modules.logic.rouge.view.RougeStoryListItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._golayout = gohelper.findChild(arg_1_0.viewGO, "#go_layout")
-	arg_1_0._simagestoryicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_layout/basic/mask/#simage_storyicon")
-	arg_1_0._txtid = gohelper.findChildText(arg_1_0.viewGO, "#go_layout/basic/#txt_id")
-	arg_1_0._txtstorynameen = gohelper.findChildText(arg_1_0.viewGO, "#go_layout/basic/#txt_storynameen")
-	arg_1_0._txtstorynamecn = gohelper.findChildText(arg_1_0.viewGO, "#go_layout/basic/#txt_storynamecn")
+local RougeStoryListItem = class("RougeStoryListItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeStoryListItem:onInitView()
+	self._golayout = gohelper.findChild(self.viewGO, "#go_layout")
+	self._simagestoryicon = gohelper.findChildSingleImage(self.viewGO, "#go_layout/basic/mask/#simage_storyicon")
+	self._txtid = gohelper.findChildText(self.viewGO, "#go_layout/basic/#txt_id")
+	self._txtstorynameen = gohelper.findChildText(self.viewGO, "#go_layout/basic/#txt_storynameen")
+	self._txtstorynamecn = gohelper.findChildText(self.viewGO, "#go_layout/basic/#txt_storynamecn")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnplay:AddClickListener(arg_2_0._btnplayOnClick, arg_2_0)
+function RougeStoryListItem:addEvents()
+	self._btnplay:AddClickListener(self._btnplayOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnplay:RemoveClickListener()
+function RougeStoryListItem:removeEvents()
+	self._btnplay:RemoveClickListener()
 end
 
-function var_0_0._btnplayOnClick(arg_4_0)
-	if not string.nilorempty(arg_4_0._config.storyIdList) then
-		local var_4_0 = string.splitToNumber(arg_4_0._config.storyIdList, "#")
-		local var_4_1 = {}
+function RougeStoryListItem:_btnplayOnClick()
+	if not string.nilorempty(self._config.storyIdList) then
+		local storyList = string.splitToNumber(self._config.storyIdList, "#")
+		local levelIdDict = {}
 
-		if not string.nilorempty(arg_4_0._config.levelIdDict) then
-			local var_4_2 = string.split(arg_4_0._config.levelIdDict, "|")
+		if not string.nilorempty(self._config.levelIdDict) then
+			local levelIdPairs = string.split(self._config.levelIdDict, "|")
 
-			for iter_4_0, iter_4_1 in ipairs(var_4_2) do
-				local var_4_3 = string.splitToNumber(iter_4_1, "#")
+			for _, levelIdPair in ipairs(levelIdPairs) do
+				local levelIdParam = string.splitToNumber(levelIdPair, "#")
 
-				var_4_1[var_4_3[1]] = var_4_3[2]
+				levelIdDict[levelIdParam[1]] = levelIdParam[2]
 			end
 		end
 
-		local var_4_4 = {
-			levelIdDict = var_4_1
-		}
+		local data = {}
 
-		var_4_4.isReplay = true
+		data.levelIdDict = levelIdDict
+		data.isReplay = true
 
-		StoryController.instance:playStories(var_4_0, var_4_4)
+		StoryController.instance:playStories(storyList, data)
 	end
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._btnplay = gohelper.findChildButtonWithAudio(arg_5_0.viewGO, "")
+function RougeStoryListItem:_editableInitView()
+	self._btnplay = gohelper.findChildButtonWithAudio(self.viewGO, "")
 
-	gohelper.addUIClickAudio(arg_5_0._btnplay.gameObject, AudioEnum.UI.play_ui_screenplay_plot_playback)
+	gohelper.addUIClickAudio(self._btnplay.gameObject, AudioEnum.UI.play_ui_screenplay_plot_playback)
 end
 
-function var_0_0._refreshUI(arg_6_0)
-	arg_6_0._txtstorynamecn.text = arg_6_0._config.name
-	arg_6_0._txtstorynameen.text = arg_6_0._config.nameEn
+function RougeStoryListItem:_refreshUI()
+	self._txtstorynamecn.text = self._config.name
+	self._txtstorynameen.text = self._config.nameEn
 
-	arg_6_0._simagestoryicon:LoadImage(ResUrl.getStorySmallBg(arg_6_0._config.image))
+	self._simagestoryicon:LoadImage(ResUrl.getStorySmallBg(self._config.image))
 
-	if arg_6_0._mo.index > 9 then
-		arg_6_0._txtid.text = tostring(arg_6_0._mo.index)
+	if self._mo.index > 9 then
+		self._txtid.text = tostring(self._mo.index)
 	else
-		arg_6_0._txtid.text = "0" .. tostring(arg_6_0._mo.index)
+		self._txtid.text = "0" .. tostring(self._mo.index)
 	end
 end
 
-function var_0_0.onUpdateMO(arg_7_0, arg_7_1)
-	arg_7_0._mo = arg_7_1
-	arg_7_0._config = arg_7_1.config
+function RougeStoryListItem:onUpdateMO(mo)
+	self._mo = mo
+	self._config = mo.config
 
-	arg_7_0:_refreshUI()
+	self:_refreshUI()
 end
 
-function var_0_0.getAnimator(arg_8_0)
-	return arg_8_0._anim
+function RougeStoryListItem:getAnimator()
+	return self._anim
 end
 
-function var_0_0.onDestroy(arg_9_0)
-	arg_9_0._simagestoryicon:UnLoadImage()
+function RougeStoryListItem:onDestroy()
+	self._simagestoryicon:UnLoadImage()
 end
 
-return var_0_0
+return RougeStoryListItem

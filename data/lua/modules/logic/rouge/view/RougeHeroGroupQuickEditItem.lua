@@ -1,179 +1,187 @@
-﻿module("modules.logic.rouge.view.RougeHeroGroupQuickEditItem", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeHeroGroupQuickEditItem.lua
 
-local var_0_0 = class("RougeHeroGroupQuickEditItem", RougeHeroGroupEditItem)
+module("modules.logic.rouge.view.RougeHeroGroupQuickEditItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	var_0_0.super.init(arg_1_0, arg_1_1)
+local RougeHeroGroupQuickEditItem = class("RougeHeroGroupQuickEditItem", RougeHeroGroupEditItem)
 
-	arg_1_0._goframe = gohelper.findChild(arg_1_1, "frame")
-	arg_1_0._goframehp = gohelper.findChild(arg_1_1, "frame_hp")
-	arg_1_0._imageorder = gohelper.findChildImage(arg_1_1, "#go_orderbg/#image_order")
-	arg_1_0._goorderbg = gohelper.findChild(arg_1_1, "#go_orderbg")
+function RougeHeroGroupQuickEditItem:init(go)
+	RougeHeroGroupQuickEditItem.super.init(self, go)
 
-	arg_1_0:enableDeselect(false)
-	arg_1_0._heroItem:setNewShow(false)
-	gohelper.setActive(arg_1_0._goorderbg, false)
-	gohelper.setActive(arg_1_0._goframe, false)
+	self._goframe = gohelper.findChild(go, "frame")
+	self._goframehp = gohelper.findChild(go, "frame_hp")
+	self._imageorder = gohelper.findChildImage(go, "#go_orderbg/#image_order")
+	self._goorderbg = gohelper.findChild(go, "#go_orderbg")
+
+	self:enableDeselect(false)
+	self._heroItem:setNewShow(false)
+	gohelper.setActive(self._goorderbg, false)
+	gohelper.setActive(self._goframe, false)
 end
 
-function var_0_0.onUpdateMO(arg_2_0, arg_2_1)
-	arg_2_0._edityType = RougeHeroGroupEditListModel.instance:getHeroGroupEditType()
-	arg_2_0._isSelectHeroType = arg_2_0._edityType == RougeEnum.HeroGroupEditType.SelectHero
-	arg_2_0._isInitType = arg_2_0._edityType == RougeEnum.HeroGroupEditType.Init
-	arg_2_0._mo = arg_2_1
+function RougeHeroGroupQuickEditItem:onUpdateMO(mo)
+	self._edityType = RougeHeroGroupEditListModel.instance:getHeroGroupEditType()
+	self._isSelectHeroType = self._edityType == RougeEnum.HeroGroupEditType.SelectHero
+	self._isInitType = self._edityType == RougeEnum.HeroGroupEditType.Init
+	self._mo = mo
 
-	arg_2_0._heroItem:onUpdateMO(arg_2_1)
-	arg_2_0._heroItem:setNewShow(false)
-	arg_2_0:_updateCapacity(arg_2_1)
-	arg_2_0:_updateHp()
+	self._heroItem:onUpdateMO(mo)
+	self._heroItem:setNewShow(false)
+	self:_updateCapacity(mo)
+	self:_updateHp()
 
-	if not arg_2_1:isTrial() then
-		local var_2_0 = RougeHeroGroupBalanceHelper.getHeroBalanceLv(arg_2_1.heroId)
+	if not mo:isTrial() then
+		local lv = RougeHeroGroupBalanceHelper.getHeroBalanceLv(mo.heroId)
 
-		if var_2_0 > arg_2_1.level then
-			arg_2_0._heroItem:setBalanceLv(var_2_0)
+		if lv > mo.level then
+			self._heroItem:setBalanceLv(lv)
 		end
 	end
 
-	arg_2_0:updateTrialTag()
-	arg_2_0:updateTrialRepeat()
-	arg_2_0._heroItem:setRepeatAnimFinish()
+	self:updateTrialTag()
+	self:updateTrialRepeat()
+	self._heroItem:setRepeatAnimFinish()
 
-	local var_2_1 = RougeHeroGroupQuickEditListModel.instance:getHeroTeamPos(arg_2_0._mo.uid)
+	local index = RougeHeroGroupQuickEditListModel.instance:getHeroTeamPos(self._mo.uid)
 
-	if arg_2_0._edityType == RougeEnum.HeroGroupEditType.FightAssit then
-		local var_2_2 = RougeHeroGroupQuickEditListModel.instance:getAssitPosIndex(arg_2_0._mo.uid)
-		local var_2_3 = var_2_1 == 0 and var_2_2
+	if self._edityType == RougeEnum.HeroGroupEditType.FightAssit then
+		local assitPosIndex = RougeHeroGroupQuickEditListModel.instance:getAssitPosIndex(self._mo.uid)
+		local inAssit = index == 0 and assitPosIndex
 
-		if var_2_3 then
-			local var_2_4 = var_2_2 - RougeEnum.FightTeamNormalHeroNum
+		if inAssit then
+			local mainPosIndex = assitPosIndex - RougeEnum.FightTeamNormalHeroNum
+			local mainHeroUid = RougeHeroGroupQuickEditListModel.instance:getHeroUidByPos(mainPosIndex)
 
-			var_2_3 = RougeHeroGroupQuickEditListModel.instance:getHeroUidByPos(var_2_4) ~= "0"
+			inAssit = mainHeroUid ~= "0"
 		end
 
-		gohelper.setActive(arg_2_0._goassit, var_2_3)
+		gohelper.setActive(self._goassit, inAssit)
 	else
-		gohelper.setActive(arg_2_0._goassit, false)
+		gohelper.setActive(self._goassit, false)
 	end
 
-	arg_2_0._team_pos_index = var_2_1
+	self._team_pos_index = index
 
-	if var_2_1 ~= 0 then
-		if not arg_2_0._open_ani_finish then
-			TaskDispatcher.runDelay(arg_2_0._show_goorderbg, arg_2_0, 0.3)
+	if index ~= 0 then
+		if not self._open_ani_finish then
+			TaskDispatcher.runDelay(self._show_goorderbg, self, 0.3)
 		else
-			arg_2_0:_show_goorderbg()
+			self:_show_goorderbg()
 		end
 	else
-		gohelper.setActive(arg_2_0._goorderbg, false)
-		gohelper.setActive(arg_2_0._goframehp, false)
-		gohelper.setActive(arg_2_0._goframe, false)
+		gohelper.setActive(self._goorderbg, false)
+		gohelper.setActive(self._goframehp, false)
+		gohelper.setActive(self._goframe, false)
 	end
 
-	arg_2_0._open_ani_finish = true
+	self._open_ani_finish = true
 
-	arg_2_0:tickUpdateDLCs(arg_2_1)
+	self:tickUpdateDLCs(mo)
 end
 
-function var_0_0.updateTrialRepeat(arg_3_0, arg_3_1)
-	if arg_3_1 and (arg_3_1.heroId ~= arg_3_0._mo.heroId or arg_3_1 == arg_3_0._mo) then
+function RougeHeroGroupQuickEditItem:updateTrialRepeat(mo)
+	if mo and (mo.heroId ~= self._mo.heroId or mo == self._mo) then
 		return
 	end
 
-	local var_3_0 = RougeHeroGroupQuickEditListModel.instance:isRepeatHero(arg_3_0._mo.heroId, arg_3_0._mo.uid)
+	local isRepeat = RougeHeroGroupQuickEditListModel.instance:isRepeatHero(self._mo.heroId, self._mo.uid)
 
-	arg_3_0._heroItem:setTrialRepeat(var_3_0)
+	self._heroItem:setTrialRepeat(isRepeat)
 end
 
-function var_0_0._show_goorderbg(arg_4_0)
-	local var_4_0 = arg_4_0:_isHideHp()
+function RougeHeroGroupQuickEditItem:_show_goorderbg()
+	local isHideHp = self:_isHideHp()
 
-	gohelper.setActive(arg_4_0._goorderbg, true)
-	gohelper.setActive(arg_4_0._goframehp, not var_4_0)
-	gohelper.setActive(arg_4_0._goframe, var_4_0)
+	gohelper.setActive(self._goorderbg, true)
+	gohelper.setActive(self._goframehp, not isHideHp)
+	gohelper.setActive(self._goframe, isHideHp)
 
-	local var_4_1 = not arg_4_0._isSelectHeroType and not arg_4_0._isInitType
+	local showOrder = not self._isSelectHeroType and not self._isInitType
 
-	gohelper.setActive(arg_4_0._goorderbg, var_4_1)
+	gohelper.setActive(self._goorderbg, showOrder)
 
-	if not var_4_1 then
+	if not showOrder then
 		return
 	end
 
-	UISpriteSetMgr.instance:setHeroGroupSprite(arg_4_0._imageorder, "biandui_shuzi_" .. arg_4_0._team_pos_index)
+	UISpriteSetMgr.instance:setHeroGroupSprite(self._imageorder, "biandui_shuzi_" .. self._team_pos_index)
 end
 
-function var_0_0._onItemClick(arg_5_0)
+function RougeHeroGroupQuickEditItem:_onItemClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
 
-	if arg_5_0._heroItem:getIsRepeat() then
+	if self._heroItem:getIsRepeat() then
 		GameFacade.showToast(ToastEnum.TrialIsJoin)
 
 		return
 	end
 
-	if arg_5_0._mo and arg_5_0._mo.isPosLock then
+	if self._mo and self._mo.isPosLock then
 		GameFacade.showToast(ToastEnum.TrialCantTakeOff)
 
 		return
 	end
 
-	if arg_5_0._mo and RougeHeroSingleGroupModel.instance:isAidConflict(arg_5_0._mo.heroId) then
+	if self._mo and RougeHeroSingleGroupModel.instance:isAidConflict(self._mo.heroId) then
 		GameFacade.showToast(ToastEnum.HeroIsAidConflict)
 
 		return
 	end
 
-	local var_5_0 = RougeModel.instance:getTeamInfo():getHeroHp(arg_5_0._mo.heroId)
+	local teamInfo = RougeModel.instance:getTeamInfo()
+	local hpInfo = teamInfo:getHeroHp(self._mo.heroId)
 
-	if var_5_0 and var_5_0.life <= 0 then
+	if hpInfo and hpInfo.life <= 0 then
 		GameFacade.showToast(ToastEnum.V1a6CachotToast04)
 
 		return
 	end
 
-	if HeroGroupModel.instance:isRestrict(arg_5_0._mo.uid) then
-		local var_5_1 = HeroGroupModel.instance:getCurrentBattleConfig()
-		local var_5_2 = var_5_1 and var_5_1.restrictReason
+	if HeroGroupModel.instance:isRestrict(self._mo.uid) then
+		local battleCo = HeroGroupModel.instance:getCurrentBattleConfig()
+		local restrictReason = battleCo and battleCo.restrictReason
 
-		if not string.nilorempty(var_5_2) then
-			ToastController.instance:showToastWithString(var_5_2)
+		if not string.nilorempty(restrictReason) then
+			ToastController.instance:showToastWithString(restrictReason)
 		end
 
 		return
 	end
 
-	if arg_5_0._mo:isTrial() and not RougeHeroGroupQuickEditListModel.instance:inInTeam(arg_5_0._mo.uid) and RougeHeroGroupQuickEditListModel.instance:isTrialLimit() then
+	if self._mo:isTrial() and not RougeHeroGroupQuickEditListModel.instance:inInTeam(self._mo.uid) and RougeHeroGroupQuickEditListModel.instance:isTrialLimit() then
 		GameFacade.showToast(ToastEnum.TrialJoinLimit, HeroGroupTrialModel.instance:getLimitNum())
 
 		return
 	end
 
-	if arg_5_0._mo and not arg_5_0._mo.isPosLock and not RougeHeroGroupQuickEditListModel.instance:selectHero(arg_5_0._mo.uid) then
-		return
+	if self._mo and not self._mo.isPosLock then
+		local result = RougeHeroGroupQuickEditListModel.instance:selectHero(self._mo.uid)
+
+		if not result then
+			return
+		end
 	end
 
-	if arg_5_0._isSelect and arg_5_0._enableDeselect and not arg_5_0._mo.isPosLock then
-		arg_5_0._view:selectCell(arg_5_0._index, false)
+	if self._isSelect and self._enableDeselect and not self._mo.isPosLock then
+		self._view:selectCell(self._index, false)
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickHeroEditItem)
 	else
-		arg_5_0._view:selectCell(arg_5_0._index, true)
+		self._view:selectCell(self._index, true)
 	end
 
-	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnHeroEditItemSelectChange, arg_5_0._mo)
+	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnHeroEditItemSelectChange, self._mo)
 end
 
-function var_0_0.onSelect(arg_6_0, arg_6_1)
-	arg_6_0._isSelect = arg_6_1
+function RougeHeroGroupQuickEditItem:onSelect(select)
+	self._isSelect = select
 
-	if arg_6_1 then
-		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickHeroEditItem, arg_6_0._mo)
+	if select then
+		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickHeroEditItem, self._mo)
 	end
 end
 
-function var_0_0.onDestroy(arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0._show_goorderbg, arg_7_0)
-	var_0_0.super.onDestroy(arg_7_0)
+function RougeHeroGroupQuickEditItem:onDestroy()
+	TaskDispatcher.cancelTask(self._show_goorderbg, self)
+	RougeHeroGroupQuickEditItem.super.onDestroy(self)
 end
 
-return var_0_0
+return RougeHeroGroupQuickEditItem

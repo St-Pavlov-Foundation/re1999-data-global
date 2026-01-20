@@ -1,34 +1,36 @@
-﻿module("modules.logic.help.view.HelpViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/help/view/HelpViewContainer.lua
 
-local var_0_0 = class("HelpViewContainer", BaseViewContainer)
+module("modules.logic.help.view.HelpViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local HelpViewContainer = class("HelpViewContainer", BaseViewContainer)
+
+function HelpViewContainer:buildViews()
 	return {
 		HelpView.New(),
 		TabViewGroup.New(1, "#go_btns")
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	arg_2_0._navigateButtonsView = NavigateButtonsView.New({
+function HelpViewContainer:buildTabViews(tabContainerId)
+	self._navigateButtonsView = NavigateButtonsView.New({
 		false,
 		false,
 		false
 	})
 
 	return {
-		arg_2_0._navigateButtonsView
+		self._navigateButtonsView
 	}
 end
 
-function var_0_0.setBtnShow(arg_3_0, arg_3_1)
-	if arg_3_0._navigateButtonsView then
-		arg_3_0._navigateButtonsView:setParam({
-			arg_3_1,
+function HelpViewContainer:setBtnShow(isShow)
+	if self._navigateButtonsView then
+		self._navigateButtonsView:setParam({
+			isShow,
 			false,
 			false
 		})
 	end
 end
 
-return var_0_0
+return HelpViewContainer

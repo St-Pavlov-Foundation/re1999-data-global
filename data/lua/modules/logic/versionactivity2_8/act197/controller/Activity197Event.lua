@@ -1,9 +1,11 @@
-﻿module("modules.logic.versionactivity2_8.act197.controller.Activity197Event", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/act197/controller/Activity197Event.lua
 
-local var_0_0 = _M
-local var_0_1 = GameUtil.getUniqueTb()
+module("modules.logic.versionactivity2_8.act197.controller.Activity197Event", package.seeall)
 
-var_0_0.UpdateSingleItem = var_0_1()
-var_0_0.onReceiveAct197Explore = var_0_1()
+local Activity197Event = _M
+local _get = GameUtil.getUniqueTb()
 
-return var_0_0
+Activity197Event.UpdateSingleItem = _get()
+Activity197Event.onReceiveAct197Explore = _get()
+
+return Activity197Event

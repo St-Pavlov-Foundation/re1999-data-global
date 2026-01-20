@@ -1,40 +1,42 @@
-﻿module("modules.logic.versionactivity2_4.music.model.VersionActivity2_4MusicFreeModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/music/model/VersionActivity2_4MusicFreeModel.lua
 
-local var_0_0 = class("VersionActivity2_4MusicFreeModel", BaseModel)
+module("modules.logic.versionactivity2_4.music.model.VersionActivity2_4MusicFreeModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local VersionActivity2_4MusicFreeModel = class("VersionActivity2_4MusicFreeModel", BaseModel)
+
+function VersionActivity2_4MusicFreeModel:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._trackList = {}
-	arg_2_0._recordIndex = nil
-	arg_2_0._selectedTrackIndex = nil
+function VersionActivity2_4MusicFreeModel:reInit()
+	self._trackList = {}
+	self._recordIndex = nil
+	self._selectedTrackIndex = nil
 end
 
-function var_0_0.getMaxTrackCount(arg_3_0)
-	return arg_3_0._maxTrackCount
+function VersionActivity2_4MusicFreeModel:getMaxTrackCount()
+	return self._maxTrackCount
 end
 
-function var_0_0.getTrackLength(arg_4_0)
-	return arg_4_0._trackLength
+function VersionActivity2_4MusicFreeModel:getTrackLength()
+	return self._trackLength
 end
 
-function var_0_0.timeout(arg_5_0, arg_5_1)
-	return arg_5_1 >= arg_5_0._trackLength
+function VersionActivity2_4MusicFreeModel:timeout(time)
+	return time >= self._trackLength
 end
 
-function var_0_0.getTrackList(arg_6_0)
-	return arg_6_0._trackList
+function VersionActivity2_4MusicFreeModel:getTrackList()
+	return self._trackList
 end
 
-function var_0_0.getTrackMo(arg_7_0)
-	return arg_7_0._trackList[arg_7_0._selectedTrackIndex]
+function VersionActivity2_4MusicFreeModel:getTrackMo()
+	return self._trackList[self._selectedTrackIndex]
 end
 
-function var_0_0.anyOneHasRecorded(arg_8_0)
-	for iter_8_0, iter_8_1 in pairs(arg_8_0._trackList) do
-		if iter_8_1.recordTotalTime > 0 then
+function VersionActivity2_4MusicFreeModel:anyOneHasRecorded()
+	for _, track in pairs(self._trackList) do
+		if track.recordTotalTime > 0 then
 			return true
 		end
 	end
@@ -42,88 +44,88 @@ function var_0_0.anyOneHasRecorded(arg_8_0)
 	return false
 end
 
-function var_0_0.getActionStatus(arg_9_0)
-	return arg_9_0._actionStatus
+function VersionActivity2_4MusicFreeModel:getActionStatus()
+	return self._actionStatus
 end
 
-function var_0_0.getAccompanyStatus(arg_10_0)
-	return arg_10_0._accompanyStatus
+function VersionActivity2_4MusicFreeModel:getAccompanyStatus()
+	return self._accompanyStatus
 end
 
-function var_0_0.setActionStatus(arg_11_0, arg_11_1)
-	arg_11_0._actionStatus = arg_11_1
+function VersionActivity2_4MusicFreeModel:setActionStatus(actionStatus)
+	self._actionStatus = actionStatus
 
-	arg_11_0:updateTrackListStatus()
+	self:updateTrackListStatus()
 	VersionActivity2_4MusicController.instance:dispatchEvent(VersionActivity2_4MusicEvent.ActionStatusChange)
 end
 
-function var_0_0.onEnd(arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0._playBgm, arg_12_0)
+function VersionActivity2_4MusicFreeModel:onEnd()
+	TaskDispatcher.cancelTask(self._playBgm, self)
 end
 
-function var_0_0.onStart(arg_13_0)
+function VersionActivity2_4MusicFreeModel:onStart()
 	VersionActivity2_4MusicController.instance:initBgm()
 
-	arg_13_0._maxTrackCount = Activity179Model.instance:getConstValue(VersionActivity2_4MusicEnum.Const.MaxTrackCount)
-	arg_13_0._trackLength = Activity179Model.instance:getConstValue(VersionActivity2_4MusicEnum.Const.TrackLength)
-	arg_13_0._actionStatus = VersionActivity2_4MusicEnum.ActionStatus.Record
-	arg_13_0._trackList = {}
-	arg_13_0._trackCount = 1
+	self._maxTrackCount = Activity179Model.instance:getConstValue(VersionActivity2_4MusicEnum.Const.MaxTrackCount)
+	self._trackLength = Activity179Model.instance:getConstValue(VersionActivity2_4MusicEnum.Const.TrackLength)
+	self._actionStatus = VersionActivity2_4MusicEnum.ActionStatus.Record
+	self._trackList = {}
+	self._trackCount = 1
 
-	arg_13_0:_initTrackList()
-	arg_13_0:updateTrackListStatus()
-	arg_13_0:setInstrumentIndexList({
+	self:_initTrackList()
+	self:updateTrackListStatus()
+	self:setInstrumentIndexList({
 		1,
 		2
 	})
 
-	local var_13_0 = VersionActivity2_4MusicEnum.AccompanyStatus.Close
+	local openValue = VersionActivity2_4MusicEnum.AccompanyStatus.Close
 
-	arg_13_0._accompanyStatus = arg_13_0._accompanyStatus or {
-		var_13_0,
-		var_13_0,
-		var_13_0
+	self._accompanyStatus = self._accompanyStatus or {
+		openValue,
+		openValue,
+		openValue
 	}
-	arg_13_0._accompanyIcon = {
+	self._accompanyIcon = {
 		"v2a4_bakaluoer_freeinstrument_icon_t_gu",
 		"v2a4_bakaluoer_freeinstrument_icon_t_zhongyin",
 		"v2a4_bakaluoer_freeinstrument_icon_t_gaoyin"
 	}
 
-	local var_13_1 = false
+	local hasOpen = false
 
-	for iter_13_0, iter_13_1 in ipairs(arg_13_0._accompanyStatus) do
-		AudioMgr.instance:setRTPCValue(VersionActivity2_4MusicEnum.AccompanyTypeName[iter_13_0], iter_13_1)
+	for i, v in ipairs(self._accompanyStatus) do
+		AudioMgr.instance:setRTPCValue(VersionActivity2_4MusicEnum.AccompanyTypeName[i], v)
 
-		if iter_13_1 == VersionActivity2_4MusicEnum.AccompanyStatus.Open then
-			var_13_1 = true
+		if v == VersionActivity2_4MusicEnum.AccompanyStatus.Open then
+			hasOpen = true
 		end
 	end
 
-	if var_13_1 then
-		TaskDispatcher.cancelTask(arg_13_0._playBgm, arg_13_0)
-		TaskDispatcher.runDelay(arg_13_0._playBgm, arg_13_0, 0.5)
+	if hasOpen then
+		TaskDispatcher.cancelTask(self._playBgm, self)
+		TaskDispatcher.runDelay(self._playBgm, self, 0.5)
 	end
 end
 
-function var_0_0._playBgm(arg_14_0)
+function VersionActivity2_4MusicFreeModel:_playBgm()
 	VersionActivity2_4MusicController.instance:playBgm(VersionActivity2_4MusicEnum.BgmPlay)
 end
 
-function var_0_0.onAccompanyStatusChange(arg_15_0)
-	if arg_15_0:isRecordingOrPlaying() then
+function VersionActivity2_4MusicFreeModel:onAccompanyStatusChange()
+	if self:isRecordingOrPlaying() then
 		return
 	end
 
-	local var_15_0 = false
+	local hasOpen = false
 
-	for iter_15_0, iter_15_1 in ipairs(arg_15_0._accompanyStatus) do
-		if iter_15_1 == VersionActivity2_4MusicEnum.AccompanyStatus.Open then
-			var_15_0 = true
+	for i, v in ipairs(self._accompanyStatus) do
+		if v == VersionActivity2_4MusicEnum.AccompanyStatus.Open then
+			hasOpen = true
 		end
 	end
 
-	if var_15_0 then
+	if hasOpen then
 		if VersionActivity2_4MusicController.instance:bgmIsStop() then
 			VersionActivity2_4MusicController.instance:playBgm(VersionActivity2_4MusicEnum.BgmPlay)
 		end
@@ -132,254 +134,256 @@ function var_0_0.onAccompanyStatusChange(arg_15_0)
 	end
 end
 
-function var_0_0._initTrackList(arg_16_0)
-	for iter_16_0 = 1, arg_16_0._maxTrackCount do
-		arg_16_0:_initTrack(iter_16_0)
+function VersionActivity2_4MusicFreeModel:_initTrackList()
+	for i = 1, self._maxTrackCount do
+		self:_initTrack(i)
 	end
 end
 
-function var_0_0._initTrack(arg_17_0, arg_17_1)
-	local var_17_0, var_17_1 = pcall(arg_17_0._safeInitTrack, arg_17_0, arg_17_1)
+function VersionActivity2_4MusicFreeModel:_initTrack(index)
+	local ok, errmsg = pcall(self._safeInitTrack, self, index)
 
-	if not var_17_0 then
-		logError(string.format("VersionActivity2_4MusicFreeModel:_initTrack index:%s error:%s", arg_17_1, var_17_1))
+	if not ok then
+		logError(string.format("VersionActivity2_4MusicFreeModel:_initTrack index:%s error:%s", index, errmsg))
 	end
 end
 
-function var_0_0._safeInitTrack(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_0:_getTrackKey(arg_18_1)
-	local var_18_1 = PlayerPrefsHelper.getString(var_18_0)
+function VersionActivity2_4MusicFreeModel:_safeInitTrack(i)
+	local key = self:_getTrackKey(i)
+	local trackStr = PlayerPrefsHelper.getString(key)
 
-	if string.nilorempty(var_18_1) then
+	if string.nilorempty(trackStr) then
 		return
 	end
 
-	local var_18_2 = cjson.decode(var_18_1)
+	local t = cjson.decode(trackStr)
 
-	if not var_18_2 or not var_18_2.recordTotalTime or not var_18_2.mute or not var_18_2.timeline then
+	if not t or not t.recordTotalTime or not t.mute or not t.timeline then
 		return
 	end
 
-	local var_18_3 = VersionActivity2_4MusicTrackMo.New()
+	local mo = VersionActivity2_4MusicTrackMo.New()
 
-	var_18_3.recordTotalTime = var_18_2.recordTotalTime
-	var_18_3.mute = var_18_2.mute
-	var_18_3.timeline = var_18_2.timeline
-	var_18_3.index = arg_18_1
-	arg_18_0._trackList[arg_18_1] = var_18_3
-	arg_18_0._trackCount = arg_18_1
+	mo.recordTotalTime = t.recordTotalTime
+	mo.mute = t.mute
+	mo.timeline = t.timeline
+	mo.index = i
+	self._trackList[i] = mo
+	self._trackCount = i
 end
 
-function var_0_0.setAccompany(arg_19_0, arg_19_1, arg_19_2)
-	arg_19_0._accompanyStatus[arg_19_1] = arg_19_2
+function VersionActivity2_4MusicFreeModel:setAccompany(id, value)
+	self._accompanyStatus[id] = value
 
-	arg_19_0:onAccompanyStatusChange()
+	self:onAccompanyStatusChange()
 end
 
-function var_0_0.getAccompany(arg_20_0, arg_20_1)
-	return arg_20_0._accompanyStatus[arg_20_1]
+function VersionActivity2_4MusicFreeModel:getAccompany(id)
+	return self._accompanyStatus[id]
 end
 
-function var_0_0.getAccompanyIcon(arg_21_0, arg_21_1)
-	return arg_21_0._accompanyIcon[arg_21_1]
+function VersionActivity2_4MusicFreeModel:getAccompanyIcon(id)
+	return self._accompanyIcon[id]
 end
 
-function var_0_0.setInstrumentIndexList(arg_22_0, arg_22_1)
-	arg_22_0._instrumentIndexList = arg_22_1
+function VersionActivity2_4MusicFreeModel:setInstrumentIndexList(list)
+	self._instrumentIndexList = list
 end
 
-function var_0_0.getInstrumentIndexList(arg_23_0)
-	return arg_23_0._instrumentIndexList
+function VersionActivity2_4MusicFreeModel:getInstrumentIndexList()
+	return self._instrumentIndexList
 end
 
-function var_0_0.addTrack(arg_24_0)
-	if arg_24_0._trackCount >= arg_24_0._maxTrackCount then
+function VersionActivity2_4MusicFreeModel:addTrack()
+	if self._trackCount >= self._maxTrackCount then
 		return
 	end
 
-	arg_24_0._trackCount = arg_24_0._trackCount + 1
+	self._trackCount = self._trackCount + 1
 
-	arg_24_0:setSelectedTrackIndex(arg_24_0._trackCount)
-	arg_24_0:updateTrackListStatus()
+	self:setSelectedTrackIndex(self._trackCount)
+	self:updateTrackListStatus()
 end
 
-function var_0_0.updateTrackListStatus(arg_25_0)
-	for iter_25_0 = 1, arg_25_0._maxTrackCount do
-		local var_25_0 = arg_25_0._trackList[iter_25_0] or VersionActivity2_4MusicTrackMo.New()
+function VersionActivity2_4MusicFreeModel:updateTrackListStatus()
+	for i = 1, self._maxTrackCount do
+		local mo = self._trackList[i] or VersionActivity2_4MusicTrackMo.New()
 
-		var_25_0.index = iter_25_0
+		mo.index = i
 
-		if iter_25_0 <= arg_25_0._trackCount then
-			var_25_0.status = VersionActivity2_4MusicEnum.TrackStatus.UnRecorded
-		elseif iter_25_0 == arg_25_0._trackCount + 1 then
-			var_25_0.status = VersionActivity2_4MusicEnum.TrackStatus.Add
+		if i <= self._trackCount then
+			mo.status = VersionActivity2_4MusicEnum.TrackStatus.UnRecorded
+		elseif i == self._trackCount + 1 then
+			mo.status = VersionActivity2_4MusicEnum.TrackStatus.Add
 		else
-			var_25_0.status = VersionActivity2_4MusicEnum.TrackStatus.Inactive
+			mo.status = VersionActivity2_4MusicEnum.TrackStatus.Inactive
 		end
 
-		if arg_25_0._actionStatus == VersionActivity2_4MusicEnum.ActionStatus.Del then
-			if var_25_0.status == VersionActivity2_4MusicEnum.TrackStatus.Add then
-				var_25_0.status = VersionActivity2_4MusicEnum.TrackStatus.Inactive
-			elseif var_25_0.status == VersionActivity2_4MusicEnum.TrackStatus.UnRecorded then
-				var_25_0.status = VersionActivity2_4MusicEnum.TrackStatus.Del
+		if self._actionStatus == VersionActivity2_4MusicEnum.ActionStatus.Del then
+			if mo.status == VersionActivity2_4MusicEnum.TrackStatus.Add then
+				mo.status = VersionActivity2_4MusicEnum.TrackStatus.Inactive
+			elseif mo.status == VersionActivity2_4MusicEnum.TrackStatus.UnRecorded then
+				mo.status = VersionActivity2_4MusicEnum.TrackStatus.Del
 			end
 		end
 
-		arg_25_0._trackList[iter_25_0] = var_25_0
+		self._trackList[i] = mo
 	end
 end
 
-function var_0_0.delTrackSelected(arg_26_0)
-	local var_26_0
+function VersionActivity2_4MusicFreeModel:delTrackSelected()
+	local removeIndex
 
-	for iter_26_0 = #arg_26_0._trackList, 1, -1 do
-		if arg_26_0._trackList[iter_26_0].isDelSelected then
-			var_26_0 = iter_26_0
+	for i = #self._trackList, 1, -1 do
+		local mo = self._trackList[i]
 
-			table.remove(arg_26_0._trackList, iter_26_0)
+		if mo.isDelSelected then
+			removeIndex = i
 
-			arg_26_0._trackCount = arg_26_0._trackCount - 1
+			table.remove(self._trackList, i)
+
+			self._trackCount = self._trackCount - 1
 		end
 	end
 
-	if arg_26_0._trackCount <= 0 then
-		arg_26_0._trackCount = 1
+	if self._trackCount <= 0 then
+		self._trackCount = 1
 	end
 
-	if var_26_0 then
-		if var_26_0 <= arg_26_0._selectedTrackIndex then
-			arg_26_0:setSelectedTrackIndex(1)
+	if removeIndex then
+		if removeIndex <= self._selectedTrackIndex then
+			self:setSelectedTrackIndex(1)
 		end
 
-		for iter_26_1 = 1, arg_26_0._maxTrackCount do
-			if var_26_0 <= iter_26_1 then
-				local var_26_1 = arg_26_0._trackList[iter_26_1]
+		for i = 1, self._maxTrackCount do
+			if removeIndex <= i then
+				local mo = self._trackList[i]
 
-				if var_26_1 then
-					var_26_1.index = iter_26_1
+				if mo then
+					mo.index = i
 				end
 
-				arg_26_0:_saveTrack(iter_26_1)
+				self:_saveTrack(i)
 			end
 		end
 	end
 
-	arg_26_0:setActionStatus(VersionActivity2_4MusicEnum.ActionStatus.Record)
+	self:setActionStatus(VersionActivity2_4MusicEnum.ActionStatus.Record)
 	VersionActivity2_4MusicController.instance:dispatchEvent(VersionActivity2_4MusicEvent.UpdateTrackList)
 end
 
-function var_0_0.getTrackSelectedNum(arg_27_0)
-	local var_27_0 = 0
+function VersionActivity2_4MusicFreeModel:getTrackSelectedNum()
+	local num = 0
 
-	for iter_27_0, iter_27_1 in ipairs(arg_27_0._trackList) do
-		if iter_27_1.isDelSelected then
-			var_27_0 = var_27_0 + 1
+	for i, v in ipairs(self._trackList) do
+		if v.isDelSelected then
+			num = num + 1
 		end
 	end
 
-	return var_27_0
+	return num
 end
 
-function var_0_0.setSelectedTrackIndex(arg_28_0, arg_28_1)
-	arg_28_0._selectedTrackIndex = arg_28_1
+function VersionActivity2_4MusicFreeModel:setSelectedTrackIndex(index)
+	self._selectedTrackIndex = index
 
 	VersionActivity2_4MusicController.instance:dispatchEvent(VersionActivity2_4MusicEvent.UpdateSelectedTrackIndex)
 end
 
-function var_0_0.getSelectedTrackIndex(arg_29_0)
-	return arg_29_0._selectedTrackIndex
+function VersionActivity2_4MusicFreeModel:getSelectedTrackIndex()
+	return self._selectedTrackIndex
 end
 
-function var_0_0.startRecord(arg_30_0)
-	arg_30_0._recordIndex = arg_30_0._selectedTrackIndex
-	arg_30_0._recordTimeline = {}
-	arg_30_0._recordProgressTime = 0
-	arg_30_0._playProgressIndex = {}
+function VersionActivity2_4MusicFreeModel:startRecord()
+	self._recordIndex = self._selectedTrackIndex
+	self._recordTimeline = {}
+	self._recordProgressTime = 0
+	self._playProgressIndex = {}
 end
 
-function var_0_0.endRecord(arg_31_0)
-	local var_31_0 = arg_31_0._trackList[arg_31_0._recordIndex]
+function VersionActivity2_4MusicFreeModel:endRecord()
+	local mo = self._trackList[self._recordIndex]
 
-	var_31_0.recordTotalTime = arg_31_0._recordProgressTime
-	var_31_0.timeline = arg_31_0._recordTimeline
+	mo.recordTotalTime = self._recordProgressTime
+	mo.timeline = self._recordTimeline
 
-	arg_31_0:_saveTrack(arg_31_0._recordIndex)
-	VersionActivity2_4MusicController.instance:trackFreeView(arg_31_0._recordProgressTime)
+	self:_saveTrack(self._recordIndex)
+	VersionActivity2_4MusicController.instance:trackFreeView(self._recordProgressTime)
 
-	arg_31_0._recordProgressTime = 0
-	arg_31_0._recordIndex = nil
-	arg_31_0._recordTimeline = nil
+	self._recordProgressTime = 0
+	self._recordIndex = nil
+	self._recordTimeline = nil
 end
 
-function var_0_0._saveTrack(arg_32_0, arg_32_1)
-	local var_32_0, var_32_1 = pcall(arg_32_0._safeSaveTrack, arg_32_0, arg_32_1)
+function VersionActivity2_4MusicFreeModel:_saveTrack(index)
+	local ok, errmsg = pcall(self._safeSaveTrack, self, index)
 
-	if not var_32_0 then
-		logError(string.format("VersionActivity2_4MusicFreeModel:_saveTrack index:%s error:%s", arg_32_1, var_32_1))
+	if not ok then
+		logError(string.format("VersionActivity2_4MusicFreeModel:_saveTrack index:%s error:%s", index, errmsg))
 	end
 end
 
-function var_0_0._safeSaveTrack(arg_33_0, arg_33_1)
-	local var_33_0 = arg_33_0:_getTrackKey(arg_33_1)
-	local var_33_1 = arg_33_0._trackList[arg_33_1]
+function VersionActivity2_4MusicFreeModel:_safeSaveTrack(index)
+	local key = self:_getTrackKey(index)
+	local mo = self._trackList[index]
 
-	if not var_33_1 then
-		PlayerPrefsHelper.deleteKey(var_33_0)
+	if not mo then
+		PlayerPrefsHelper.deleteKey(key)
 
 		return
 	end
 
-	if not var_33_1:canSave() then
-		PlayerPrefsHelper.deleteKey(var_33_0)
+	if not mo:canSave() then
+		PlayerPrefsHelper.deleteKey(key)
 	else
-		local var_33_2 = var_33_1:encode()
+		local str = mo:encode()
 
-		PlayerPrefsHelper.setString(var_33_0, var_33_2)
+		PlayerPrefsHelper.setString(key, str)
 
 		if SLFramework.FrameworkSettings.IsEditor then
-			logNormal(string.format("VersionActivity2_4MusicFreeModel:_saveTrack index:%s str:%s", arg_33_1, var_33_2))
+			logNormal(string.format("VersionActivity2_4MusicFreeModel:_saveTrack index:%s str:%s", index, str))
 		end
 	end
 end
 
-function var_0_0._getTrackKey(arg_34_0, arg_34_1)
-	local var_34_0 = string.format("%s_track_%d#", PlayerPrefsKey.Activity179FreeView, arg_34_1)
+function VersionActivity2_4MusicFreeModel:_getTrackKey(index)
+	local key = string.format("%s_track_%d#", PlayerPrefsKey.Activity179FreeView, index)
 
-	return PlayerModel.instance:getPlayerPrefsKey(var_34_0)
+	return PlayerModel.instance:getPlayerPrefsKey(key)
 end
 
-function var_0_0.startPlay(arg_35_0)
-	arg_35_0._recordProgressTime = 0
-	arg_35_0._playProgressIndex = {}
+function VersionActivity2_4MusicFreeModel:startPlay()
+	self._recordProgressTime = 0
+	self._playProgressIndex = {}
 end
 
-function var_0_0.endPlay(arg_36_0)
-	arg_36_0._recordProgressTime = 0
+function VersionActivity2_4MusicFreeModel:endPlay()
+	self._recordProgressTime = 0
 end
 
-function var_0_0.playTrackList(arg_37_0, arg_37_1)
-	local var_37_0 = arg_37_0._recordProgressTime
-	local var_37_1 = true
+function VersionActivity2_4MusicFreeModel:playTrackList(skipTrackMap)
+	local deltaTime = self._recordProgressTime
+	local playAllFinished = true
 
-	for iter_37_0, iter_37_1 in pairs(arg_37_0._trackList) do
-		if not arg_37_1 or not arg_37_1[iter_37_0] then
-			local var_37_2 = arg_37_0._playProgressIndex[iter_37_0] or 1
-			local var_37_3 = iter_37_1.timeline
-			local var_37_4 = #var_37_3
+	for k, mo in pairs(self._trackList) do
+		if not skipTrackMap or not skipTrackMap[k] then
+			local index = self._playProgressIndex[k] or 1
+			local list = mo.timeline
+			local maxIndex = #list
 
-			if var_37_0 <= iter_37_1.recordTotalTime then
-				var_37_1 = false
+			if deltaTime <= mo.recordTotalTime then
+				playAllFinished = false
 			end
 
-			if var_37_2 <= var_37_4 then
-				for iter_37_2 = var_37_2, var_37_4 do
-					local var_37_5 = var_37_3[iter_37_2]
+			if index <= maxIndex then
+				for i = index, maxIndex do
+					local item = list[i]
 
-					if var_37_0 >= var_37_5[1] then
-						arg_37_0._playProgressIndex[iter_37_0] = var_37_2 + 1
+					if deltaTime >= item[1] then
+						self._playProgressIndex[k] = index + 1
 
-						if iter_37_1.mute == VersionActivity2_4MusicEnum.MuteStatus.Close then
-							AudioMgr.instance:trigger(var_37_5[2])
+						if mo.mute == VersionActivity2_4MusicEnum.MuteStatus.Close then
+							AudioMgr.instance:trigger(item[2])
 						end
 					else
 						break
@@ -389,49 +393,49 @@ function var_0_0.playTrackList(arg_37_0, arg_37_1)
 		end
 	end
 
-	return var_37_1
+	return playAllFinished
 end
 
-function var_0_0.setStatus(arg_38_0, arg_38_1)
-	arg_38_0._status = arg_38_1
+function VersionActivity2_4MusicFreeModel:setStatus(status)
+	self._status = status
 end
 
-function var_0_0.getStatus(arg_39_0)
-	return arg_39_0._status
+function VersionActivity2_4MusicFreeModel:getStatus()
+	return self._status
 end
 
-function var_0_0.isRecordingOrPlaying(arg_40_0)
-	return arg_40_0._status == VersionActivity2_4MusicEnum.RecordStatus.Recording or arg_40_0._status == VersionActivity2_4MusicEnum.RecordStatus.RecordReady or arg_40_0._status == VersionActivity2_4MusicEnum.RecordStatus.RecordPause or arg_40_0._status == VersionActivity2_4MusicEnum.RecordStatus.PlayPause or arg_40_0._status == VersionActivity2_4MusicEnum.RecordStatus.Playing
+function VersionActivity2_4MusicFreeModel:isRecordingOrPlaying()
+	return self._status == VersionActivity2_4MusicEnum.RecordStatus.Recording or self._status == VersionActivity2_4MusicEnum.RecordStatus.RecordReady or self._status == VersionActivity2_4MusicEnum.RecordStatus.RecordPause or self._status == VersionActivity2_4MusicEnum.RecordStatus.PlayPause or self._status == VersionActivity2_4MusicEnum.RecordStatus.Playing
 end
 
-function var_0_0.isRecordStatus(arg_41_0)
-	return arg_41_0._status == VersionActivity2_4MusicEnum.RecordStatus.Recording or arg_41_0._status == VersionActivity2_4MusicEnum.RecordStatus.RecordReady or arg_41_0._status == VersionActivity2_4MusicEnum.RecordStatus.RecordPause
+function VersionActivity2_4MusicFreeModel:isRecordStatus()
+	return self._status == VersionActivity2_4MusicEnum.RecordStatus.Recording or self._status == VersionActivity2_4MusicEnum.RecordStatus.RecordReady or self._status == VersionActivity2_4MusicEnum.RecordStatus.RecordPause
 end
 
-function var_0_0.isRecording(arg_42_0)
-	return arg_42_0._status == VersionActivity2_4MusicEnum.RecordStatus.Recording
+function VersionActivity2_4MusicFreeModel:isRecording()
+	return self._status == VersionActivity2_4MusicEnum.RecordStatus.Recording
 end
 
-function var_0_0.isNormalStatus(arg_43_0)
-	return arg_43_0._status == VersionActivity2_4MusicEnum.RecordStatus.Normal or arg_43_0._status == VersionActivity2_4MusicEnum.RecordStatus.NormalAfterRecord
+function VersionActivity2_4MusicFreeModel:isNormalStatus()
+	return self._status == VersionActivity2_4MusicEnum.RecordStatus.Normal or self._status == VersionActivity2_4MusicEnum.RecordStatus.NormalAfterRecord
 end
 
-function var_0_0.setRecordProgressTime(arg_44_0, arg_44_1)
-	arg_44_1 = math.floor(arg_44_1 * 100) / 100
-	arg_44_0._recordProgressTime = math.min(arg_44_1, arg_44_0._trackLength)
+function VersionActivity2_4MusicFreeModel:setRecordProgressTime(time)
+	time = math.floor(time * 100) / 100
+	self._recordProgressTime = math.min(time, self._trackLength)
 end
 
-function var_0_0.addNote(arg_45_0, arg_45_1)
-	if not arg_45_0._recordTimeline then
+function VersionActivity2_4MusicFreeModel:addNote(audioId)
+	if not self._recordTimeline then
 		return
 	end
 
-	table.insert(arg_45_0._recordTimeline, {
-		arg_45_0._recordProgressTime,
-		arg_45_1
+	table.insert(self._recordTimeline, {
+		self._recordProgressTime,
+		audioId
 	})
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity2_4MusicFreeModel.instance = VersionActivity2_4MusicFreeModel.New()
 
-return var_0_0
+return VersionActivity2_4MusicFreeModel

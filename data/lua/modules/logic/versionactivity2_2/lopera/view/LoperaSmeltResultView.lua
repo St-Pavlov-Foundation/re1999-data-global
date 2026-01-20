@@ -1,110 +1,112 @@
-﻿module("modules.logic.versionactivity2_2.lopera.view.LoperaSmeltResultView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/lopera/view/LoperaSmeltResultView.lua
 
-local var_0_0 = class("LoperaSmeltResultView", BaseView)
-local var_0_1 = LoperaEnum.MapCfgIdx
-local var_0_2 = VersionActivity2_2Enum.ActivityId.Lopera
-local var_0_3 = "<color=#21631a>%s</color>"
-local var_0_4 = {
+module("modules.logic.versionactivity2_2.lopera.view.LoperaSmeltResultView", package.seeall)
+
+local LoperaSmeltResultView = class("LoperaSmeltResultView", BaseView)
+local mapCfgIdx = LoperaEnum.MapCfgIdx
+local actId = VersionActivity2_2Enum.ActivityId.Lopera
+local materialNumColorFormat = "<color=#21631a>%s</color>"
+local viewStage = {
 	Done = 2,
 	Smelting = 1
 }
-local var_0_5 = 2
+local smeltTime = 2
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goStage1 = gohelper.findChild(arg_1_0.viewGO, "#go_Stage1")
-	arg_1_0._goStage2 = gohelper.findChild(arg_1_0.viewGO, "#go_Stage2")
-	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_Stage2/#btn_Close")
-	arg_1_0._goItem = gohelper.findChild(arg_1_0.viewGO, "#go_Stage2/#scroll_List/Viewport/Content/#go_Item")
-	arg_1_0._goItemRoot = gohelper.findChild(arg_1_0.viewGO, "#go_Stage2/#scroll_List/Viewport/Content")
+function LoperaSmeltResultView:onInitView()
+	self._goStage1 = gohelper.findChild(self.viewGO, "#go_Stage1")
+	self._goStage2 = gohelper.findChild(self.viewGO, "#go_Stage2")
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Stage2/#btn_Close")
+	self._goItem = gohelper.findChild(self.viewGO, "#go_Stage2/#scroll_List/Viewport/Content/#go_Item")
+	self._goItemRoot = gohelper.findChild(self.viewGO, "#go_Stage2/#scroll_List/Viewport/Content")
 
-	gohelper.setActive(arg_1_0._goItem, false)
+	gohelper.setActive(self._goItem, false)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnClose:AddClickListener(arg_2_0.closeThis, arg_2_0)
-	arg_2_0:addEventCb(LoperaController.instance, LoperaEvent.GoodItemClick, arg_2_0._onClickItem, arg_2_0)
+function LoperaSmeltResultView:addEvents()
+	self._btnClose:AddClickListener(self.closeThis, self)
+	self:addEventCb(LoperaController.instance, LoperaEvent.GoodItemClick, self._onClickItem, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnClose:RemoveClickListener()
+function LoperaSmeltResultView:removeEvents()
+	self._btnClose:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function LoperaSmeltResultView:_editableInitView()
 	return
 end
 
-function var_0_0.onOpen(arg_5_0)
-	local var_5_0 = arg_5_0.viewParam
+function LoperaSmeltResultView:onOpen()
+	local viewParams = self.viewParam
 
-	arg_5_0:changeViewStage(var_0_4.Smelting)
-	TaskDispatcher.runDelay(arg_5_0.changeViewDoneStage, arg_5_0, var_0_5)
+	self:changeViewStage(viewStage.Smelting)
+	TaskDispatcher.runDelay(self.changeViewDoneStage, self, smeltTime)
 end
 
-function var_0_0.refreshStageView(arg_6_0)
-	gohelper.setActive(arg_6_0._goStage1, arg_6_0._curStage == var_0_4.Smelting)
-	gohelper.setActive(arg_6_0._goStage2, arg_6_0._curStage == var_0_4.Done)
+function LoperaSmeltResultView:refreshStageView()
+	gohelper.setActive(self._goStage1, self._curStage == viewStage.Smelting)
+	gohelper.setActive(self._goStage2, self._curStage == viewStage.Done)
 
-	if arg_6_0._curStage == var_0_4.Done then
-		arg_6_0:refreshProductItems()
+	if self._curStage == viewStage.Done then
+		self:refreshProductItems()
 	end
 end
 
-function var_0_0.changeViewDoneStage(arg_7_0)
-	arg_7_0:changeViewStage(var_0_4.Done)
+function LoperaSmeltResultView:changeViewDoneStage()
+	self:changeViewStage(viewStage.Done)
 end
 
-function var_0_0.changeViewStage(arg_8_0, arg_8_1)
-	arg_8_0._curStage = arg_8_1
+function LoperaSmeltResultView:changeViewStage(stage)
+	self._curStage = stage
 
-	arg_8_0:refreshStageView()
+	self:refreshStageView()
 end
 
-function var_0_0.refreshProductItems(arg_9_0)
-	local var_9_0 = {}
-	local var_9_1 = Activity168Model.instance:getItemChangeDict()
+function LoperaSmeltResultView:refreshProductItems()
+	local productList = {}
+	local getItems = Activity168Model.instance:getItemChangeDict()
 
-	if not var_9_1 then
+	if not getItems then
 		return
 	end
 
-	for iter_9_0, iter_9_1 in pairs(var_9_1) do
-		if iter_9_1 > 0 then
-			var_9_0[#var_9_0 + 1] = {
-				id = iter_9_0,
-				num = iter_9_1
+	for itemId, count in pairs(getItems) do
+		if count > 0 then
+			productList[#productList + 1] = {
+				id = itemId,
+				num = count
 			}
 		end
 	end
 
-	gohelper.CreateObjList(arg_9_0, arg_9_0._createItem, var_9_0, arg_9_0._goItemRoot, arg_9_0._goItem, LoperaGoodsItem)
+	gohelper.CreateObjList(self, self._createItem, productList, self._goItemRoot, self._goItem, LoperaGoodsItem)
 end
 
-function var_0_0._createItem(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	local var_10_0 = arg_10_2.id
-	local var_10_1 = Activity168Config.instance:getGameItemCfg(var_0_2, var_10_0)
+function LoperaSmeltResultView:_createItem(itemComp, itemCfg, index)
+	local itemId = itemCfg.id
+	local cfg = Activity168Config.instance:getGameItemCfg(actId, itemId)
 
-	arg_10_1:onUpdateData(var_10_1, arg_10_2.num, arg_10_3)
+	itemComp:onUpdateData(cfg, itemCfg.num, index)
 end
 
-function var_0_0._onClickItem(arg_11_0, arg_11_1)
-	gohelper.setActive(arg_11_0._tipsGo, true)
+function LoperaSmeltResultView:_onClickItem(index)
+	gohelper.setActive(self._tipsGo, true)
 
-	local var_11_0 = gohelper.findChild(arg_11_0._goItemRoot, arg_11_1)
-	local var_11_1 = arg_11_0._tipsGo.transform
+	local goodItemGo = gohelper.findChild(self._goItemRoot, index)
+	local tipsTrans = self._tipsGo.transform
 
-	var_11_1:SetParent(var_11_0.transform, true)
-	recthelper.setAnchorX(var_11_1, 320)
-	recthelper.setAnchorY(var_11_1, -30)
-	var_11_1:SetParent(arg_11_0.viewGO.transform, true)
-	arg_11_0:_refreshGoodItemTips(arg_11_1)
+	tipsTrans:SetParent(goodItemGo.transform, true)
+	recthelper.setAnchorX(tipsTrans, 320)
+	recthelper.setAnchorY(tipsTrans, -30)
+	tipsTrans:SetParent(self.viewGO.transform, true)
+	self:_refreshGoodItemTips(index)
 end
 
-function var_0_0.onDestroyView(arg_12_0)
+function LoperaSmeltResultView:onDestroyView()
 	return
 end
 
-return var_0_0
+return LoperaSmeltResultView

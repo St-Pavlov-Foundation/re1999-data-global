@@ -1,175 +1,181 @@
-﻿module("modules.logic.survival.controller.work.SurvivalSettleWeekPushWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/SurvivalSettleWeekPushWork.lua
 
-local var_0_0 = class("SurvivalSettleWeekPushWork", BaseWork)
+module("modules.logic.survival.controller.work.SurvivalSettleWeekPushWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._msg = arg_1_1
+local SurvivalSettleWeekPushWork = class("SurvivalSettleWeekPushWork", BaseWork)
+
+function SurvivalSettleWeekPushWork:ctor(msg)
+	self._msg = msg
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	SurvivalModel.instance:setSurvivalSettleInfo(arg_2_0._msg)
+function SurvivalSettleWeekPushWork:onStart(context)
+	SurvivalModel.instance:setSurvivalSettleInfo(self._msg)
 
-	local var_2_0 = SurvivalShelterModel.instance:getWeekInfo()
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
 
-	if var_2_0 and var_2_0.intrudeBox and var_2_0.intrudeBox.fight and arg_2_0._msg.win then
-		local var_2_1 = var_2_0.intrudeBox.fight
-		local var_2_2 = var_2_1:isFighting()
+	if weekInfo and weekInfo.intrudeBox and weekInfo.intrudeBox.fight and self._msg.win then
+		local fight = weekInfo.intrudeBox.fight
+		local isFight = fight:isFighting()
 
-		var_2_1:setWin()
+		fight:setWin()
 
-		if var_2_2 then
-			SurvivalShelterModel.instance:setNeedShowFightSuccess(true, var_2_1.fightId)
+		if isFight then
+			SurvivalShelterModel.instance:setNeedShowFightSuccess(true, fight.fightId)
 		end
 	end
 
 	UIBlockHelper.instance:endBlock(SurvivalEnum.SurvivalIntrudeAbandonBlock)
 
-	local var_2_3 = GameSceneMgr.instance:getCurSceneType()
-	local var_2_4 = GameSceneMgr.instance:getCurScene()
+	local curSceneType = GameSceneMgr.instance:getCurSceneType()
+	local curScene = GameSceneMgr.instance:getCurScene()
 
-	if var_2_3 == SceneType.Fight then
-		GameSceneMgr.instance:registerCallback(SceneEventName.EnterSceneFinish, arg_2_0._onEnterOneSceneFinish, arg_2_0)
-	elseif var_2_3 == SceneType.SurvivalShelter then
+	if curSceneType == SceneType.Fight then
+		GameSceneMgr.instance:registerCallback(SceneEventName.EnterSceneFinish, self._onEnterOneSceneFinish, self)
+	elseif curSceneType == SceneType.SurvivalShelter then
 		if GameSceneMgr.instance:isLoading() then
-			GameSceneMgr.instance:registerCallback(SceneEventName.EnterSceneFinish, arg_2_0._onEnterOneSceneFinish, arg_2_0)
+			GameSceneMgr.instance:registerCallback(SceneEventName.EnterSceneFinish, self._onEnterOneSceneFinish, self)
 		else
-			arg_2_0:_onEnterOneSceneFinish(var_2_3)
+			self:_onEnterOneSceneFinish(curSceneType)
 		end
 	else
-		arg_2_0:showSettle(true)
+		self:showSettle(true)
 	end
 end
 
-function var_0_0._onEnterOneSceneFinish(arg_3_0, arg_3_1)
-	if arg_3_1 ~= SceneType.SurvivalShelter then
-		arg_3_0:showResultPanel(false)
+function SurvivalSettleWeekPushWork:_onEnterOneSceneFinish(sceneType)
+	if sceneType ~= SceneType.SurvivalShelter then
+		self:showResultPanel(false)
 
 		return
 	end
 
 	GameUtil.setActiveUIBlock("SurvivalSettleWeekPushWork", true, false)
 
-	local var_3_0, var_3_1 = SurvivalShelterModel.instance:getNeedShowFightSuccess()
+	local needShowDestroy, _ = SurvivalShelterModel.instance:getNeedShowFightSuccess()
 
-	if var_3_0 then
-		SurvivalController.instance:registerCallback(SurvivalEvent.BossPerformFinish, arg_3_0._bossPerformFinish, arg_3_0)
+	if needShowDestroy then
+		SurvivalController.instance:registerCallback(SurvivalEvent.BossPerformFinish, self._bossPerformFinish, self)
 	else
-		arg_3_0:_bossPerformFinish()
+		self:_bossPerformFinish()
 	end
 end
 
-function var_0_0._bossPerformFinish(arg_4_0)
+function SurvivalSettleWeekPushWork:_bossPerformFinish()
 	SurvivalMapHelper.instance:hideUnitVisible(SurvivalEnum.ShelterUnitType.Npc, false)
 	SurvivalMapHelper.instance:hideUnitVisible(SurvivalEnum.ShelterUnitType.Monster, false)
 	SurvivalMapHelper.instance:refreshPlayerEntity()
 	SurvivalMapHelper.instance:stopShelterPlayerMove()
-	TaskDispatcher.runDelay(arg_4_0._tweenToPlayerPos, arg_4_0, 0.5)
+	TaskDispatcher.runDelay(self._tweenToPlayerPos, self, 0.5)
 end
 
-function var_0_0._tweenToPlayerPos(arg_5_0)
-	local var_5_0 = GameSceneMgr.instance:getCurScene()
-	local var_5_1 = var_5_0 and var_5_0.unit and var_5_0.unit:getPlayer()
+function SurvivalSettleWeekPushWork:_tweenToPlayerPos()
+	local curScene = GameSceneMgr.instance:getCurScene()
+	local player = curScene and curScene.unit and curScene.unit:getPlayer()
 
-	if not var_5_1 then
-		arg_5_0:showResultPanel(false)
+	if not player then
+		self:showResultPanel(false)
 
 		return
 	end
 
 	SurvivalController.instance:dispatchEvent(SurvivalEvent.ChangeCameraScale, 1, true)
-	var_5_1:focusEntity(1, arg_5_0.playEntityAnim, arg_5_0)
+	player:focusEntity(1, self.playEntityAnim, self)
 end
 
-function var_0_0.playEntityAnim(arg_6_0)
-	local var_6_0 = GameSceneMgr.instance:getCurScene()
-	local var_6_1 = var_6_0 and var_6_0.unit and var_6_0.unit:getPlayer()
+function SurvivalSettleWeekPushWork:playEntityAnim()
+	local curScene = GameSceneMgr.instance:getCurScene()
+	local player = curScene and curScene.unit and curScene.unit:getPlayer()
 
-	if not var_6_1 then
-		arg_6_0:showResultPanel(false)
+	if not player then
+		self:showResultPanel(false)
 
 		return
 	end
 
-	local var_6_2 = SurvivalModel.instance:getSurvivalSettleInfo()
+	local info = SurvivalModel.instance:getSurvivalSettleInfo()
+	local isWin = info and info.win or false
 
-	if var_6_2 and var_6_2.win or false then
-		var_6_1:playAnim("jump2")
-		TaskDispatcher.runDelay(arg_6_0.onPlayerAnimFinish, arg_6_0, 1)
+	if isWin then
+		player:playAnim("jump2")
+		TaskDispatcher.runDelay(self.onPlayerAnimFinish, self, 1)
 	else
-		var_6_1:playAnim("die")
-		TaskDispatcher.runDelay(arg_6_0.onPlayerAnimFinish, arg_6_0, 2)
+		player:playAnim("die")
+		TaskDispatcher.runDelay(self.onPlayerAnimFinish, self, 2)
 	end
 end
 
-function var_0_0.onPlayerAnimFinish(arg_7_0)
-	local var_7_0 = GameSceneMgr.instance:getCurScene()
-	local var_7_1 = var_7_0 and var_7_0.unit and var_7_0.unit:getPlayer()
-	local var_7_2 = SurvivalModel.instance:getSurvivalSettleInfo()
+function SurvivalSettleWeekPushWork:onPlayerAnimFinish()
+	local curScene = GameSceneMgr.instance:getCurScene()
+	local player = curScene and curScene.unit and curScene.unit:getPlayer()
+	local info = SurvivalModel.instance:getSurvivalSettleInfo()
 
-	if var_7_1 and (var_7_2 and var_7_2.win or false) then
-		var_7_1:playAnim("idle")
+	if player then
+		local isWin = info and info.win or false
+
+		if isWin then
+			player:playAnim("idle")
+		end
 	end
 
-	if arg_7_0:isHideEnding() then
-		local var_7_3 = SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.StoryHiddenEnding)
-		local var_7_4
+	if self:isHideEnding() then
+		local storyId = SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.StoryHiddenEnding)
 
-		var_7_4 = tonumber(var_7_3) or 0
+		storyId = tonumber(storyId) or 0
 
-		if var_7_4 > 0 and not StoryModel.instance:isStoryFinished(var_7_4) then
+		if storyId > 0 and not StoryModel.instance:isStoryFinished(storyId) then
 			GameUtil.setActiveUIBlock("SurvivalSettleWeekPushWork", false, true)
-			StoryController.instance:playStory(var_7_4, nil, arg_7_0._onStoryEnd, arg_7_0)
+			StoryController.instance:playStory(storyId, nil, self._onStoryEnd, self)
 		else
-			arg_7_0:showResultPanel(true)
+			self:showResultPanel(true)
 		end
 
 		return
 	end
 
-	arg_7_0:showResultPanel(true)
+	self:showResultPanel(true)
 end
 
-function var_0_0._onStoryEnd(arg_8_0)
-	arg_8_0:showResultPanel(true)
+function SurvivalSettleWeekPushWork:_onStoryEnd()
+	self:showResultPanel(true)
 end
 
-function var_0_0.isHideEnding(arg_9_0)
-	local var_9_0 = arg_9_0._msg.report
+function SurvivalSettleWeekPushWork:isHideEnding()
+	local report = self._msg.report
 
-	if string.nilorempty(var_9_0) then
+	if string.nilorempty(report) then
 		return false
 	end
 
-	local var_9_1 = cjson.decode(var_9_0).endId
-	local var_9_2 = lua_survival_end.configDict[var_9_1]
+	local endId = cjson.decode(report).endId
+	local endConfig = lua_survival_end.configDict[endId]
 
-	return var_9_2 and var_9_2.type == 3
+	return endConfig and endConfig.type == 3
 end
 
-function var_0_0.showSettle(arg_10_0, arg_10_1)
+function SurvivalSettleWeekPushWork:showSettle(isSuccess)
 	GameUtil.setActiveUIBlock("SurvivalSettleWeekPushWork", false, true)
 	SurvivalController.instance:enterSurvivalSettle()
-	arg_10_0:onDone(arg_10_1)
+	self:onDone(isSuccess)
 end
 
-function var_0_0.showResultPanel(arg_11_0, arg_11_1)
+function SurvivalSettleWeekPushWork:showResultPanel(isSuccess)
 	GameUtil.setActiveUIBlock("SurvivalSettleWeekPushWork", false, true)
 
-	local var_11_0 = SurvivalModel.instance:getSurvivalSettleInfo()
-	local var_11_1 = var_11_0 and var_11_0.win
+	local info = SurvivalModel.instance:getSurvivalSettleInfo()
+	local isWin = info and info.win
 
 	ViewMgr.instance:openView(ViewName.SurvivalShelterResultPanelView, {
-		isWin = var_11_1
+		isWin = isWin
 	})
-	arg_11_0:onDone(arg_11_1)
+	self:onDone(isSuccess)
 end
 
-function var_0_0.clearWork(arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0._tweenToPlayerPos, arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0.onPlayerAnimFinish, arg_12_0)
-	GameSceneMgr.instance:unregisterCallback(SceneEventName.EnterSceneFinish, arg_12_0._onEnterOneSceneFinish, arg_12_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.BossPerformFinish, arg_12_0._bossPerformFinish, arg_12_0)
+function SurvivalSettleWeekPushWork:clearWork()
+	TaskDispatcher.cancelTask(self._tweenToPlayerPos, self)
+	TaskDispatcher.cancelTask(self.onPlayerAnimFinish, self)
+	GameSceneMgr.instance:unregisterCallback(SceneEventName.EnterSceneFinish, self._onEnterOneSceneFinish, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.BossPerformFinish, self._bossPerformFinish, self)
 	SurvivalShelterModel.instance:setNeedShowFightSuccess(nil, nil)
 end
 
-return var_0_0
+return SurvivalSettleWeekPushWork

@@ -1,4 +1,6 @@
-﻿return {
+﻿-- chunkname: @modules/configs/match3/T_lua_eliminate_level.lua
+
+return {
 	{
 		id = 2220001,
 		chess = {

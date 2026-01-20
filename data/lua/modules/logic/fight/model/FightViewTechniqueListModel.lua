@@ -1,11 +1,13 @@
-﻿module("modules.logic.fight.model.FightViewTechniqueListModel", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/FightViewTechniqueListModel.lua
 
-local var_0_0 = class("FightViewTechniqueListModel", ListScrollModel)
+module("modules.logic.fight.model.FightViewTechniqueListModel", package.seeall)
 
-function var_0_0.showUnreadFightViewTechniqueList(arg_1_0, arg_1_1)
-	arg_1_0:setList(arg_1_1)
+local FightViewTechniqueListModel = class("FightViewTechniqueListModel", ListScrollModel)
+
+function FightViewTechniqueListModel:showUnreadFightViewTechniqueList(list)
+	self:setList(list)
 end
 
-var_0_0.instance = var_0_0.New()
+FightViewTechniqueListModel.instance = FightViewTechniqueListModel.New()
 
-return var_0_0
+return FightViewTechniqueListModel

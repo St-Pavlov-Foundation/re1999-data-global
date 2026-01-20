@@ -1,226 +1,228 @@
-﻿module("modules.logic.notice.controller.NoticeController", package.seeall)
+﻿-- chunkname: @modules/logic/notice/controller/NoticeController.lua
 
-local var_0_0 = class("NoticeController", BaseController)
+module("modules.logic.notice.controller.NoticeController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local NoticeController = class("NoticeController", BaseController)
+
+function NoticeController:onInit()
 	return
 end
 
-function var_0_0.addConstEvents(arg_2_0)
-	arg_2_0:addEventCb(arg_2_0, NoticeEvent.OnSelectNoticeItem, arg_2_0.onSelectNoticeMo, arg_2_0)
+function NoticeController:addConstEvents()
+	self:addEventCb(self, NoticeEvent.OnSelectNoticeItem, self.onSelectNoticeMo, self)
 
 	if SLFramework.FrameworkSettings.IsEditor then
 		NoticeGmController.active()
 	end
 end
 
-function var_0_0.onSelectNoticeMo(arg_3_0, arg_3_1)
+function NoticeController:onSelectNoticeMo(noticeMo)
 	StatController.instance:track(StatEnum.EventName.NoticeShow, {
-		[StatEnum.EventProperties.NoticeShowType] = arg_3_0.autoOpen and StatEnum.NoticeShowType.Auto or StatEnum.NoticeShowType.Click,
-		[StatEnum.EventProperties.NoticeType] = arg_3_0:getNoticeTypeStr(arg_3_1),
-		[StatEnum.EventProperties.NoticeTitle] = arg_3_1:getTitle()
+		[StatEnum.EventProperties.NoticeShowType] = self.autoOpen and StatEnum.NoticeShowType.Auto or StatEnum.NoticeShowType.Click,
+		[StatEnum.EventProperties.NoticeType] = self:getNoticeTypeStr(noticeMo),
+		[StatEnum.EventProperties.NoticeTitle] = noticeMo:getTitle()
 	})
-	arg_3_0:setAutoOpenNoticeView(false)
+	self:setAutoOpenNoticeView(false)
 end
 
-function var_0_0.setAutoOpenNoticeView(arg_4_0, arg_4_1)
-	arg_4_0.autoOpen = arg_4_1
+function NoticeController:setAutoOpenNoticeView(auto)
+	self.autoOpen = auto
 end
 
-function var_0_0.getNoticeTypeStr(arg_5_0, arg_5_1)
-	if not arg_5_1 or not arg_5_1.noticeTypes then
+function NoticeController:getNoticeTypeStr(noticeMo)
+	if not noticeMo or not noticeMo.noticeTypes then
 		return ""
 	end
 
-	local var_5_0 = ""
+	local typeStr = ""
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_1.noticeTypes) do
-		local var_5_1 = StatEnum.NoticeType[iter_5_1] or ""
+	for _, type in ipairs(noticeMo.noticeTypes) do
+		local typename = StatEnum.NoticeType[type] or ""
 
-		if string.nilorempty(var_5_0) then
-			var_5_0 = var_5_1
+		if string.nilorempty(typeStr) then
+			typeStr = typename
 		else
-			var_5_0 = var_5_0 .. "-" .. var_5_1
+			typeStr = typeStr .. "-" .. typename
 		end
 	end
 
-	return var_5_0
+	return typeStr
 end
 
-function var_0_0.openNoticeView(arg_6_0)
-	local var_6_0 = Time.time
+function NoticeController:openNoticeView()
+	local now = Time.time
 
-	if not arg_6_0._lastGetNoticeTime or var_6_0 - arg_6_0._lastGetNoticeTime > 10 then
-		arg_6_0:startRequest(arg_6_0._openNoticeView, arg_6_0)
+	if not self._lastGetNoticeTime or now - self._lastGetNoticeTime > 10 then
+		self:startRequest(self._openNoticeView, self)
 
-		arg_6_0._lastGetNoticeTime = var_6_0
+		self._lastGetNoticeTime = now
 
 		return
 	end
 
-	arg_6_0:_openNoticeView()
+	self:_openNoticeView()
 end
 
-function var_0_0._openNoticeView(arg_7_0)
+function NoticeController:_openNoticeView()
 	ViewMgr.instance:openView(ViewName.NoticeView)
 end
 
-function var_0_0.startRequest(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+function NoticeController:startRequest(callback, callbackObj, beforeLogin)
 	if GameFacade.isExternalTest() then
-		if arg_8_1 then
-			arg_8_1(arg_8_2, true, "")
+		if callback then
+			callback(callbackObj, true, "")
 		end
 	else
-		arg_8_0._callback = arg_8_1
-		arg_8_0._callbackObj = arg_8_2
-		arg_8_0._beforeLogin = arg_8_3
+		self._callback = callback
+		self._callbackObj = callbackObj
+		self._beforeLogin = beforeLogin
 
-		arg_8_0:stopRequest()
+		self:stopRequest()
 
-		local var_8_0 = tostring(SDKMgr.instance:getGameId())
-		local var_8_1 = tostring(SDKMgr.instance:getChannelId())
-		local var_8_2 = tostring(SDKMgr.instance:getSubChannelId())
-		local var_8_3 = tostring(GameChannelConfig.getServerType())
-		local var_8_4 = GameUrlConfig.getNoticeUrl() .. "/noticecp/client/query"
-		local var_8_5 = string.format("%s?gameId=%s&channelId=%s&subChannelId=%s&serverType=%s", var_8_4, var_8_0, var_8_1, var_8_2, var_8_3)
+		local gameId = tostring(SDKMgr.instance:getGameId())
+		local channelId = tostring(SDKMgr.instance:getChannelId())
+		local subChannelId = tostring(SDKMgr.instance:getSubChannelId())
+		local serverType = tostring(GameChannelConfig.getServerType())
+		local url = GameUrlConfig.getNoticeUrl() .. "/noticecp/client/query"
+		local reqUrl = string.format("%s?gameId=%s&channelId=%s&subChannelId=%s&serverType=%s", url, gameId, channelId, subChannelId, serverType)
 
-		logNormal(string.format("发起公告请求 url : %s", var_8_5))
+		logNormal(string.format("发起公告请求 url : %s", reqUrl))
 
-		arg_8_0._reqId = SLFramework.SLWebRequest.Instance:Get(var_8_5, arg_8_0._reqCallback, arg_8_0)
+		self._reqId = SLFramework.SLWebRequestClient.Instance:Get(reqUrl, self._reqCallback, self)
 	end
 end
 
-function var_0_0.stopRequest(arg_9_0)
-	if arg_9_0._reqId then
-		SLFramework.SLWebRequest.Instance:Stop(arg_9_0._reqId)
+function NoticeController:stopRequest()
+	if self._reqId then
+		SLFramework.SLWebRequestClient.Instance:Stop(self._reqId)
 
-		arg_9_0._reqId = nil
-		arg_9_0._callback = nil
-		arg_9_0._callbackObj = nil
+		self._reqId = nil
+		self._callback = nil
+		self._callbackObj = nil
 	end
 end
 
-function var_0_0._reqCallback(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_0._reqId = nil
+function NoticeController:_reqCallback(isSuccess, msg)
+	self._reqId = nil
 
-	if arg_10_1 and not string.nilorempty(arg_10_2) then
-		local var_10_0 = cjson.decode(arg_10_2)
+	if isSuccess and not string.nilorempty(msg) then
+		local data = cjson.decode(msg)
 
-		if var_10_0 and var_10_0.code and var_10_0.code == 200 then
-			arg_10_0._lastGetNoticeTime = Time.time
+		if data and data.code and data.code == 200 then
+			self._lastGetNoticeTime = Time.time
 
-			logNormal(string.format("获取公告：%s", cjson.encode(var_10_0.data)))
-			NoticeModel.instance:onGetInfo(var_10_0.data)
-			var_0_0.instance:dispatchEvent(NoticeEvent.OnGetNoticeInfo)
-		elseif var_10_0 then
-			logNormal(string.format("获取公告出错了 code = %d", var_10_0.code))
-			var_0_0.instance:dispatchEvent(NoticeEvent.OnGetNoticeInfoFail)
+			logNormal(string.format("获取公告：%s", cjson.encode(data.data)))
+			NoticeModel.instance:onGetInfo(data.data)
+			NoticeController.instance:dispatchEvent(NoticeEvent.OnGetNoticeInfo)
+		elseif data then
+			logNormal(string.format("获取公告出错了 code = %d", data.code))
+			NoticeController.instance:dispatchEvent(NoticeEvent.OnGetNoticeInfoFail)
 		else
 			logNormal(string.format("获取公告出错了"))
-			var_0_0.instance:dispatchEvent(NoticeEvent.OnGetNoticeInfoFail)
+			NoticeController.instance:dispatchEvent(NoticeEvent.OnGetNoticeInfoFail)
 		end
 	else
 		logNormal(string.format("获取公告失败了"))
-		var_0_0.instance:dispatchEvent(NoticeEvent.OnGetNoticeInfoFail)
+		NoticeController.instance:dispatchEvent(NoticeEvent.OnGetNoticeInfoFail)
 	end
 
-	if arg_10_0._beforeLogin and NoticeModel.instance:hasBeforeLoginNotice() then
-		BootNoticeView.instance:init(arg_10_0._beforeLoginNoticeFinished, arg_10_0, arg_10_1, arg_10_2)
+	if self._beforeLogin and NoticeModel.instance:hasBeforeLoginNotice() then
+		BootNoticeView.instance:init(self._beforeLoginNoticeFinished, self, isSuccess, msg)
 	else
-		arg_10_0:_beforeLoginNoticeFinished(arg_10_1, arg_10_2)
+		self:_beforeLoginNoticeFinished(isSuccess, msg)
 	end
 end
 
-function var_0_0._beforeLoginNoticeFinished(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = arg_11_0._callback
-	local var_11_1 = arg_11_0._callbackObj
+function NoticeController:_beforeLoginNoticeFinished(isSuccess, msg)
+	local callback = self._callback
+	local callbackObj = self._callbackObj
 
-	arg_11_0._callback = nil
-	arg_11_0._callbackObj = nil
-	arg_11_0._beforeLogin = nil
+	self._callback = nil
+	self._callbackObj = nil
+	self._beforeLogin = nil
 
-	if var_11_0 then
-		if var_11_1 then
-			var_11_0(var_11_1, arg_11_1, arg_11_2)
+	if callback then
+		if callbackObj then
+			callback(callbackObj, isSuccess, msg)
 		else
-			var_11_0(arg_11_1, arg_11_2)
+			callback(isSuccess, msg)
 		end
 	end
 end
 
-function var_0_0.getNoticeConfig(arg_12_0, arg_12_1, arg_12_2)
+function NoticeController:getNoticeConfig(callback, callbackObj)
 	if GameFacade.isExternalTest() then
-		if arg_12_1 then
-			arg_12_1(arg_12_2, true, "")
+		if callback then
+			callback(callbackObj, true, "")
 		end
 	else
-		arg_12_0._getCoCallback = arg_12_1
-		arg_12_0._getCoCallbackObj = arg_12_2
+		self._getCoCallback = callback
+		self._getCoCallbackObj = callbackObj
 
-		arg_12_0:stopGetConfigRequest()
+		self:stopGetConfigRequest()
 
-		local var_12_0 = tostring(SDKMgr.instance:getGameId())
-		local var_12_1 = tostring(SDKMgr.instance:getChannelId())
-		local var_12_2 = tostring(SDKMgr.instance:getSubChannelId())
-		local var_12_3 = tostring(GameChannelConfig.getServerType())
-		local var_12_4 = GameUrlConfig.getNoticeUrl() .. "/noticecp/config"
-		local var_12_5 = string.format("%s?gameId=%s&channelId=%s&subChannelId=%s&serverType=%s", var_12_4, var_12_0, var_12_1, var_12_2, var_12_3)
+		local gameId = tostring(SDKMgr.instance:getGameId())
+		local channelId = tostring(SDKMgr.instance:getChannelId())
+		local subChannelId = tostring(SDKMgr.instance:getSubChannelId())
+		local serverType = tostring(GameChannelConfig.getServerType())
+		local url = GameUrlConfig.getNoticeUrl() .. "/noticecp/config"
+		local reqUrl = string.format("%s?gameId=%s&channelId=%s&subChannelId=%s&serverType=%s", url, gameId, channelId, subChannelId, serverType)
 
-		logNormal(string.format("拿公告配置url : %s", var_12_5))
+		logNormal(string.format("拿公告配置url : %s", reqUrl))
 
-		arg_12_0._getCoReqId = SLFramework.SLWebRequest.Instance:Get(var_12_5, arg_12_0._getCoReqCallback, arg_12_0)
+		self._getCoReqId = SLFramework.SLWebRequestClient.Instance:Get(reqUrl, self._getCoReqCallback, self)
 	end
 end
 
-function var_0_0._isNil(arg_13_0)
-	return not arg_13_0 or tostring(arg_13_0) == "userdata: NULL"
+function NoticeController._isNil(obj)
+	return not obj or tostring(obj) == "userdata: NULL"
 end
 
-function var_0_0._getCoReqCallback(arg_14_0, arg_14_1, arg_14_2)
-	arg_14_0._getCoReqId = nil
+function NoticeController:_getCoReqCallback(isSuccess, msg)
+	self._getCoReqId = nil
 
-	if arg_14_1 and not string.nilorempty(arg_14_2) then
-		logNormal(string.format("获取公告配置：%s", arg_14_2))
+	if isSuccess and not string.nilorempty(msg) then
+		logNormal(string.format("获取公告配置：%s", msg))
 
-		local var_14_0 = cjson.decode(arg_14_2)
+		local data = cjson.decode(msg)
 
-		if var_14_0 and var_14_0.code and var_14_0.code == 200 then
-			local var_14_1 = var_14_0.data
-			local var_14_2
+		if data and data.code and data.code == 200 then
+			local co = data.data
+			local cgfType
 
-			if not arg_14_0._isNil(var_14_1.shootFaceConfig) then
-				var_14_2 = var_14_1.shootFaceConfig.type
+			if not self._isNil(co.shootFaceConfig) then
+				cgfType = co.shootFaceConfig.type
 			end
 
-			NoticeModel.instance:setAutoSelectType(var_14_2 and tonumber(var_14_2) or nil)
+			NoticeModel.instance:setAutoSelectType(cgfType and tonumber(cgfType) or nil)
 		end
 	end
 
-	local var_14_3 = arg_14_0._getCoCallback
-	local var_14_4 = arg_14_0._getCoCallbackObj
+	local callback = self._getCoCallback
+	local callbackObj = self._getCoCallbackObj
 
-	arg_14_0._getCoCallback = nil
-	arg_14_0._getCoCallbackObj = nil
+	self._getCoCallback = nil
+	self._getCoCallbackObj = nil
 
-	if var_14_3 then
-		if var_14_4 then
-			var_14_3(var_14_4, arg_14_1, arg_14_2)
+	if callback then
+		if callbackObj then
+			callback(callbackObj, isSuccess, msg)
 		else
-			var_14_3(arg_14_1, arg_14_2)
+			callback(isSuccess, msg)
 		end
 	end
 end
 
-function var_0_0.stopGetConfigRequest(arg_15_0)
-	if arg_15_0._getCoReqId then
-		SLFramework.SLWebRequest.Instance:Stop(arg_15_0._getCoReqId)
+function NoticeController:stopGetConfigRequest()
+	if self._getCoReqId then
+		SLFramework.SLWebRequestClient.Instance:Stop(self._getCoReqId)
 
-		arg_15_0._getCoReqId = nil
-		arg_15_0._getCoCallback = nil
-		arg_15_0._getCoCallbackObj = nil
+		self._getCoReqId = nil
+		self._getCoCallback = nil
+		self._getCoCallbackObj = nil
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+NoticeController.instance = NoticeController.New()
 
-return var_0_0
+return NoticeController

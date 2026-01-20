@@ -1,13 +1,15 @@
-﻿module("modules.logic.tower.view.fight.TowerDeepResultViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/tower/view/fight/TowerDeepResultViewContainer.lua
 
-local var_0_0 = class("TowerDeepResultViewContainer", BaseViewContainer)
+module("modules.logic.tower.view.fight.TowerDeepResultViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local TowerDeepResultViewContainer = class("TowerDeepResultViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, TowerDeepResultView.New())
+function TowerDeepResultViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, TowerDeepResultView.New())
+
+	return views
 end
 
-return var_0_0
+return TowerDeepResultViewContainer

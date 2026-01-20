@@ -1,43 +1,45 @@
-﻿module("modules.logic.versionactivity1_4.act129.rpc.Activity129Rpc", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act129/rpc/Activity129Rpc.lua
 
-local var_0_0 = class("Activity129Rpc", BaseRpc)
+module("modules.logic.versionactivity1_4.act129.rpc.Activity129Rpc", package.seeall)
 
-function var_0_0.sendGet129InfosRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = Activity129Module_pb.Get129InfosRequest()
+local Activity129Rpc = class("Activity129Rpc", BaseRpc)
 
-	var_1_0.activityId = arg_1_1
+function Activity129Rpc:sendGet129InfosRequest(activityId, callback, callbackObj)
+	local req = Activity129Module_pb.Get129InfosRequest()
 
-	return arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
+	req.activityId = activityId
+
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveGet129InfosReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 ~= 0 then
+function Activity129Rpc:onReceiveGet129InfosReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	Activity129Model.instance:setInfo(arg_2_2)
+	Activity129Model.instance:setInfo(msg)
 	Activity129Controller.instance:dispatchEvent(Activity129Event.OnGetInfoSuccess)
 end
 
-function var_0_0.sendAct129LotteryRequest(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	local var_3_0 = Activity129Module_pb.Act129LotteryRequest()
+function Activity129Rpc:sendAct129LotteryRequest(activityId, poolId, num)
+	local req = Activity129Module_pb.Act129LotteryRequest()
 
-	var_3_0.activityId = arg_3_1
-	var_3_0.poolId = arg_3_2
-	var_3_0.num = arg_3_3
+	req.activityId = activityId
+	req.poolId = poolId
+	req.num = num
 
-	return arg_3_0:sendMsg(var_3_0)
+	return self:sendMsg(req)
 end
 
-function var_0_0.onReceiveAct129LotteryReply(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 ~= 0 then
+function Activity129Rpc:onReceiveAct129LotteryReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	Activity129Model.instance:onLotterySuccess(arg_4_2)
-	Activity129Controller.instance:dispatchEvent(Activity129Event.OnLotterySuccess, arg_4_2)
+	Activity129Model.instance:onLotterySuccess(msg)
+	Activity129Controller.instance:dispatchEvent(Activity129Event.OnLotterySuccess, msg)
 end
 
-var_0_0.instance = var_0_0.New()
+Activity129Rpc.instance = Activity129Rpc.New()
 
-return var_0_0
+return Activity129Rpc

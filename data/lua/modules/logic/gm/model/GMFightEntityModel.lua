@@ -1,201 +1,203 @@
-﻿module("modules.logic.gm.model.GMFightEntityModel", package.seeall)
+﻿-- chunkname: @modules/logic/gm/model/GMFightEntityModel.lua
 
-local var_0_0 = class("GMFightEntityModel", ListScrollModel)
+module("modules.logic.gm.model.GMFightEntityModel", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	var_0_0.super.ctor(arg_1_0)
+local GMFightEntityModel = class("GMFightEntityModel", ListScrollModel)
 
-	arg_1_0.entityMO = nil
-	arg_1_0.buffModel = ListScrollModel.New()
-	arg_1_0.skillModel = ListScrollModel.New()
-	arg_1_0.attrModel = ListScrollModel.New()
+function GMFightEntityModel:ctor()
+	GMFightEntityModel.super.ctor(self)
+
+	self.entityMO = nil
+	self.buffModel = ListScrollModel.New()
+	self.skillModel = ListScrollModel.New()
+	self.attrModel = ListScrollModel.New()
 end
 
-function var_0_0.onOpen(arg_2_0)
-	local var_2_0 = {}
+function GMFightEntityModel:onOpen()
+	local list = {}
 
-	FightDataHelper.entityMgr:getNormalList(FightEnum.EntitySide.MySide, var_2_0, true)
-	FightDataHelper.entityMgr:getSubList(FightEnum.EntitySide.MySide, var_2_0, true)
-	FightDataHelper.entityMgr:getSpList(FightEnum.EntitySide.MySide, var_2_0, true)
-	FightDataHelper.entityMgr:getMyPlayerList(var_2_0, true)
+	FightDataHelper.entityMgr:getNormalList(FightEnum.EntitySide.MySide, list, true)
+	FightDataHelper.entityMgr:getSubList(FightEnum.EntitySide.MySide, list, true)
+	FightDataHelper.entityMgr:getSpList(FightEnum.EntitySide.MySide, list, true)
+	FightDataHelper.entityMgr:getMyPlayerList(list, true)
 
-	local var_2_1 = FightDataHelper.entityMgr:getAssistBoss()
+	local assistBoss = FightDataHelper.entityMgr:getAssistBoss()
 
-	if var_2_1 then
-		table.insert(var_2_0, var_2_1)
+	if assistBoss then
+		table.insert(list, assistBoss)
 	end
 
-	local var_2_2 = FightDataHelper.entityMgr:getASFDEntityMo(FightEnum.EntitySide.MySide)
+	local asfdEmitter = FightDataHelper.entityMgr:getASFDEntityMo(FightEnum.EntitySide.MySide)
 
-	if var_2_2 then
-		table.insert(var_2_0, var_2_2)
+	if asfdEmitter then
+		table.insert(list, asfdEmitter)
 	end
 
-	local var_2_3 = FightDataHelper.entityMgr:getVorpalith()
+	local vorpalith = FightDataHelper.entityMgr:getVorpalith()
 
-	if var_2_3 then
-		table.insert(var_2_0, var_2_3)
+	if vorpalith then
+		table.insert(list, vorpalith)
 	end
 
-	FightDataHelper.entityMgr:getMySpFightEntities(var_2_0, true)
-	FightDataHelper.entityMgr:getNormalList(FightEnum.EntitySide.EnemySide, var_2_0, true)
-	FightDataHelper.entityMgr:getSubList(FightEnum.EntitySide.EnemySide, var_2_0, true)
-	FightDataHelper.entityMgr:getSpList(FightEnum.EntitySide.EnemySide, var_2_0, true)
-	FightDataHelper.entityMgr:getEnemyPlayerList(var_2_0, true)
+	FightDataHelper.entityMgr:getMySpFightEntities(list, true)
+	FightDataHelper.entityMgr:getNormalList(FightEnum.EntitySide.EnemySide, list, true)
+	FightDataHelper.entityMgr:getSubList(FightEnum.EntitySide.EnemySide, list, true)
+	FightDataHelper.entityMgr:getSpList(FightEnum.EntitySide.EnemySide, list, true)
+	FightDataHelper.entityMgr:getEnemyPlayerList(list, true)
 
-	local var_2_4 = FightDataHelper.entityMgr:getASFDEntityMo(FightEnum.EntitySide.EnemySide)
+	asfdEmitter = FightDataHelper.entityMgr:getASFDEntityMo(FightEnum.EntitySide.EnemySide)
 
-	if var_2_4 then
-		table.insert(var_2_0, var_2_4)
+	if asfdEmitter then
+		table.insert(list, asfdEmitter)
 	end
 
-	arg_2_0:setList(var_2_0)
+	self:setList(list)
 end
 
-function var_0_0._addList(arg_3_0, arg_3_1, arg_3_2)
-	for iter_3_0, iter_3_1 in ipairs(arg_3_2:getList()) do
-		table.insert(arg_3_1, iter_3_1)
+function GMFightEntityModel:_addList(list, entityModel)
+	for _, entityMO in ipairs(entityModel:getList()) do
+		table.insert(list, entityMO)
 	end
 end
 
-function var_0_0.setEntityMO(arg_4_0, arg_4_1)
-	arg_4_0.entityMO = arg_4_1
+function GMFightEntityModel:setEntityMO(entityMO)
+	self.entityMO = entityMO
 
-	arg_4_0.buffModel:setList(arg_4_1:getBuffList())
+	self.buffModel:setList(entityMO:getBuffList())
 
-	local var_4_0 = {}
+	local skillCOList = {}
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_1.skillList) do
-		local var_4_1 = lua_skill.configDict[iter_4_1]
+	for _, skillId in ipairs(entityMO.skillList) do
+		local skillCO = lua_skill.configDict[skillId]
 
-		if var_4_1 then
-			table.insert(var_4_0, var_4_1)
+		if skillCO then
+			table.insert(skillCOList, skillCO)
 		end
 	end
 
-	arg_4_0.skillModel:setList(var_4_0)
-	arg_4_0:setEntityDetailInfo(arg_4_1)
+	self.skillModel:setList(skillCOList)
+	self:setEntityDetailInfo(entityMO)
 end
 
-function var_0_0.onGetSingleEntityInfo(arg_5_0, arg_5_1)
-	arg_5_0:setEntityMO(arg_5_0.entityMO)
+function GMFightEntityModel:onGetSingleEntityInfo(msg)
+	self:setEntityMO(self.entityMO)
 end
 
-function var_0_0.onGetEntityDetailInfos(arg_6_0, arg_6_1)
-	arg_6_0._attrEntityList = {}
-	arg_6_0._attrEntityDict = {}
+function GMFightEntityModel:onGetEntityDetailInfos(msg)
+	self._attrEntityList = {}
+	self._attrEntityDict = {}
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_1.teamAInfos) do
-		table.insert(arg_6_0._attrEntityList, iter_6_1)
+	for _, one in ipairs(msg.teamAInfos) do
+		table.insert(self._attrEntityList, one)
 
-		arg_6_0._attrEntityDict[iter_6_1.info.uid] = iter_6_1
+		self._attrEntityDict[one.info.uid] = one
 	end
 
-	for iter_6_2, iter_6_3 in ipairs(arg_6_1.teamBInfos) do
-		table.insert(arg_6_0._attrEntityList, iter_6_3)
+	for _, one in ipairs(msg.teamBInfos) do
+		table.insert(self._attrEntityList, one)
 
-		arg_6_0._attrEntityDict[iter_6_3.info.uid] = iter_6_3
+		self._attrEntityDict[one.info.uid] = one
 	end
 
-	arg_6_0:setEntityDetailInfo(arg_6_0.entityMO)
+	self:setEntityDetailInfo(self.entityMO)
 end
 
-function var_0_0.setEntityDetailInfo(arg_7_0, arg_7_1)
-	if not arg_7_1 then
+function GMFightEntityModel:setEntityDetailInfo(entityMO)
+	if not entityMO then
 		return
 	end
 
-	local var_7_0 = arg_7_0._attrEntityDict and arg_7_0._attrEntityDict[arg_7_1.id]
+	local detailInfo = self._attrEntityDict and self._attrEntityDict[entityMO.id]
 
-	if not var_7_0 then
+	if not detailInfo then
 		return
 	end
 
-	local var_7_1 = var_7_0.info.attr
-	local var_7_2 = var_7_0.exAttr
-	local var_7_3 = var_7_0.spAttr
-	local var_7_4 = var_7_0.addAttrPer
-	local var_7_5 = var_7_0.addExAttr
-	local var_7_6 = var_7_0.addSpAttr
-	local var_7_7 = var_7_0.testAddAttrPer
-	local var_7_8 = var_7_0.testAddExAttr
-	local var_7_9 = var_7_0.testAddSpAttr
-	local var_7_10 = var_7_0.partAttrBase
-	local var_7_11 = var_7_0.partExAttr
-	local var_7_12 = var_7_0.partSpAttr
-	local var_7_13 = var_7_0.testPartAttrBase
-	local var_7_14 = var_7_0.testPartExAttr
-	local var_7_15 = var_7_0.testPartSpAttr
-	local var_7_16 = var_7_0.finalAttrBase
-	local var_7_17 = var_7_0.finalExAttr
-	local var_7_18 = var_7_0.finalSpAttr
-	local var_7_19 = {}
+	local info = detailInfo.info.attr
+	local exAttr = detailInfo.exAttr
+	local spAttr = detailInfo.spAttr
+	local addAttrPer = detailInfo.addAttrPer
+	local addExAttr = detailInfo.addExAttr
+	local addSpAttr = detailInfo.addSpAttr
+	local testAddAttrPer = detailInfo.testAddAttrPer
+	local testAddExAttr = detailInfo.testAddExAttr
+	local testAddSpAttr = detailInfo.testAddSpAttr
+	local partAttrBase = detailInfo.partAttrBase
+	local partExAttr = detailInfo.partExAttr
+	local partSpAttr = detailInfo.partSpAttr
+	local testPartAttrBase = detailInfo.testPartAttrBase
+	local testPartExAttr = detailInfo.testPartExAttr
+	local testPartSpAttr = detailInfo.testPartSpAttr
+	local finalAttrBase = detailInfo.finalAttrBase
+	local finalExAttr = detailInfo.finalExAttr
+	local finalSpAttr = detailInfo.finalSpAttr
+	local list = {}
 
-	table.insert(var_7_19, arg_7_0:getAttrMo(101, var_7_1.hp, var_7_4.hp, var_7_7.hp, var_7_10.hp, var_7_13.hp, var_7_16.hp))
-	table.insert(var_7_19, arg_7_0:getAttrMo(102, var_7_1.attack, var_7_4.attack, var_7_7.attack, var_7_10.attack, var_7_13.attack, var_7_16.attack))
-	table.insert(var_7_19, arg_7_0:getAttrMo(103, var_7_1.defense, var_7_4.defense, var_7_7.defense, var_7_10.defense, var_7_13.defense, var_7_16.defense))
-	table.insert(var_7_19, arg_7_0:getAttrMo(104, var_7_1.mdefense, var_7_4.mdefense, var_7_7.mdefense, var_7_10.mdefense, var_7_13.mdefense, var_7_16.mdefense))
-	table.insert(var_7_19, arg_7_0:getAttrMo(105, var_7_1.technic, var_7_4.technic, var_7_7.technic, var_7_10.technic, var_7_13.technic, var_7_16.technic))
-	table.insert(var_7_19, arg_7_0:getAttrMo(201, var_7_2.cri, var_7_5.cri, var_7_8.cri, var_7_11.cri, var_7_14.cri, var_7_17.cri))
-	table.insert(var_7_19, arg_7_0:getAttrMo(202, var_7_2.recri, var_7_5.recri, var_7_8.recri, var_7_11.recri, var_7_14.recri, var_7_17.recri))
-	table.insert(var_7_19, arg_7_0:getAttrMo(203, var_7_2.criDmg, var_7_5.criDmg, var_7_8.criDmg, var_7_11.criDmg, var_7_14.criDmg, var_7_17.criDmg))
-	table.insert(var_7_19, arg_7_0:getAttrMo(204, var_7_2.criDef, var_7_5.criDef, var_7_8.criDef, var_7_11.criDef, var_7_14.criDef, var_7_17.criDef))
-	table.insert(var_7_19, arg_7_0:getAttrMo(205, var_7_2.addDmg, var_7_5.addDmg, var_7_8.addDmg, var_7_11.addDmg, var_7_14.addDmg, var_7_17.addDmg))
-	table.insert(var_7_19, arg_7_0:getAttrMo(206, var_7_2.dropDmg, var_7_5.dropDmg, var_7_8.dropDmg, var_7_11.dropDmg, var_7_14.dropDmg, var_7_17.dropDmg))
-	table.insert(var_7_19, arg_7_0:getAttrMo(207, var_7_3.finalAddDmg, var_7_6.finalAddDmg, var_7_9.finalAddDmg, var_7_12.finalAddDmg, var_7_15.finalAddDmg, var_7_18.finalAddDmg))
-	table.insert(var_7_19, arg_7_0:getAttrMo(208, var_7_3.finalDropDmg, var_7_6.finalDropDmg, var_7_9.finalDropDmg, var_7_12.finalDropDmg, var_7_15.finalDropDmg, var_7_18.dropDmg))
-	table.insert(var_7_19, arg_7_0:getAttrMo(209, var_7_3.revive, var_7_6.revive, var_7_9.revive, var_7_12.revive, var_7_15.revive, var_7_18.revive))
-	table.insert(var_7_19, arg_7_0:getAttrMo(210, var_7_3.absorb, var_7_6.absorb, var_7_9.absorb, var_7_12.absorb, var_7_15.absorb, var_7_18.absorb))
-	table.insert(var_7_19, arg_7_0:getAttrMo(211, var_7_3.clutch, var_7_6.clutch, var_7_9.clutch, var_7_12.clutch, var_7_15.clutch, var_7_18.clutch))
-	table.insert(var_7_19, arg_7_0:getAttrMo(212, var_7_3.heal, var_7_6.heal, var_7_9.heal, var_7_12.heal, var_7_15.heal, var_7_18.heal))
-	table.insert(var_7_19, arg_7_0:getAttrMo(213, var_7_3.defenseIgnore, var_7_6.defenseIgnore, var_7_9.defenseIgnore, var_7_12.defenseIgnore, var_7_15.defenseIgnore, var_7_18.defenseIgnore))
-	table.insert(var_7_19, arg_7_0:getAttrMo(214, var_7_3.normalSkillRate, var_7_6.normalSkillRate, var_7_9.normalSkillRate, var_7_12.normalSkillRate, var_7_15.normalSkillRate, var_7_18.normalSkillRate))
-	table.insert(var_7_19, arg_7_0:getAttrMo(215, var_7_3.playAddRate, var_7_6.playAddRate, var_7_9.playAddRate, var_7_12.playAddRate, var_7_15.playAddRate, var_7_18.playAddRate))
-	table.insert(var_7_19, arg_7_0:getAttrMo(216, var_7_3.playDropRate, var_7_6.playDropRate, var_7_9.playDropRate, var_7_12.playDropRate, var_7_15.playDropRate, var_7_18.playDropRate))
-	table.insert(var_7_19, arg_7_0:getAttrMo(218, var_7_3.reboundDmg, var_7_6.reboundDmg, var_7_9.reboundDmg, var_7_12.reboundDmg, var_7_15.reboundDmg, var_7_18.reboundDmg))
-	table.insert(var_7_19, arg_7_0:getAttrMo(219, var_7_3.extraDmg, var_7_6.extraDmg, var_7_9.extraDmg, var_7_12.extraDmg, var_7_15.extraDmg, var_7_18.extraDmg))
-	table.insert(var_7_19, arg_7_0:getAttrMo(220, var_7_3.reuseDmg, var_7_6.reuseDmg, var_7_9.reuseDmg, var_7_12.reuseDmg, var_7_15.reuseDmg, var_7_18.reuseDmg))
-	table.insert(var_7_19, arg_7_0:getAttrMo(221, var_7_3.bigSkillRate, var_7_6.bigSkillRate, var_7_9.bigSkillRate, var_7_12.bigSkillRate, var_7_15.bigSkillRate, var_7_18.bigSkillRate))
-	table.insert(var_7_19, arg_7_0:getAttrMo(222, var_7_3.clutchDmg, var_7_6.clutchDmg, var_7_9.clutchDmg, var_7_12.clutchDmg, var_7_15.clutchDmg, var_7_18.clutchDmg))
-	table.insert(var_7_19, arg_7_0:getAttrMo(401, var_7_3.dizzyResistances, var_7_6.dizzyResistances, var_7_9.dizzyResistances, var_7_12.dizzyResistances, var_7_15.dizzyResistances, var_7_18.dizzyResistances))
-	table.insert(var_7_19, arg_7_0:getAttrMo(402, var_7_3.sleepResistances, var_7_6.sleepResistances, var_7_9.sleepResistances, var_7_12.sleepResistances, var_7_15.sleepResistances, var_7_18.sleepResistances))
-	table.insert(var_7_19, arg_7_0:getAttrMo(403, var_7_3.petrifiedResistances, var_7_6.petrifiedResistances, var_7_9.petrifiedResistances, var_7_12.petrifiedResistances, var_7_15.petrifiedResistances, var_7_18.petrifiedResistances))
-	table.insert(var_7_19, arg_7_0:getAttrMo(404, var_7_3.frozenResistances, var_7_6.frozenResistances, var_7_9.frozenResistances, var_7_12.frozenResistances, var_7_15.frozenResistances, var_7_18.frozenResistances))
-	table.insert(var_7_19, arg_7_0:getAttrMo(405, var_7_3.disarmResistances, var_7_6.disarmResistances, var_7_9.disarmResistances, var_7_12.disarmResistances, var_7_15.disarmResistances, var_7_18.disarmResistances))
-	table.insert(var_7_19, arg_7_0:getAttrMo(406, var_7_3.forbidResistances, var_7_6.forbidResistances, var_7_9.forbidResistances, var_7_12.forbidResistances, var_7_15.forbidResistances, var_7_18.forbidResistances))
-	table.insert(var_7_19, arg_7_0:getAttrMo(407, var_7_3.sealResistances, var_7_6.sealResistances, var_7_9.sealResistances, var_7_12.sealResistances, var_7_15.sealResistances, var_7_18.sealResistances))
-	table.insert(var_7_19, arg_7_0:getAttrMo(408, var_7_3.cantGetExskillResistances, var_7_6.cantGetExskillResistances, var_7_9.cantGetExskillResistances, var_7_12.cantGetExskillResistances, var_7_15.cantGetExskillResistances, var_7_18.cantGetExskillResistances))
-	table.insert(var_7_19, arg_7_0:getAttrMo(409, var_7_3.delExPointResistances, var_7_6.delExPointResistances, var_7_9.delExPointResistances, var_7_12.delExPointResistances, var_7_15.delExPointResistances, var_7_18.delExPointResistances))
-	table.insert(var_7_19, arg_7_0:getAttrMo(410, var_7_3.stressUpResistances, var_7_6.stressUpResistances, var_7_9.stressUpResistances, var_7_12.stressUpResistances, var_7_15.stressUpResistances, var_7_18.stressUpResistances))
-	table.insert(var_7_19, arg_7_0:getAttrMo(411, var_7_3.charmResistances, var_7_6.charmResistances, var_7_9.charmResistances, var_7_12.charmResistances, var_7_15.charmResistances, var_7_18.charmResistances))
-	table.insert(var_7_19, arg_7_0:getAttrMo(501, var_7_3.controlResilience, var_7_6.controlResilience, var_7_9.controlResilience, var_7_12.controlResilience, var_7_15.controlResilience, var_7_18.controlResilience))
-	table.insert(var_7_19, arg_7_0:getAttrMo(502, var_7_3.delExPointResilience, var_7_6.delExPointResilience, var_7_9.delExPointResilience, var_7_12.delExPointResilience, var_7_15.delExPointResilience, var_7_18.delExPointResilience))
-	table.insert(var_7_19, arg_7_0:getAttrMo(503, var_7_3.stressUpResilience, var_7_6.stressUpResilience, var_7_9.stressUpResilience, var_7_12.stressUpResilience, var_7_15.stressUpResilience, var_7_18.stressUpResilience))
-	arg_7_0.attrModel:setList(var_7_19)
+	table.insert(list, self:getAttrMo(101, info.hp, addAttrPer.hp, testAddAttrPer.hp, partAttrBase.hp, testPartAttrBase.hp, finalAttrBase.hp))
+	table.insert(list, self:getAttrMo(102, info.attack, addAttrPer.attack, testAddAttrPer.attack, partAttrBase.attack, testPartAttrBase.attack, finalAttrBase.attack))
+	table.insert(list, self:getAttrMo(103, info.defense, addAttrPer.defense, testAddAttrPer.defense, partAttrBase.defense, testPartAttrBase.defense, finalAttrBase.defense))
+	table.insert(list, self:getAttrMo(104, info.mdefense, addAttrPer.mdefense, testAddAttrPer.mdefense, partAttrBase.mdefense, testPartAttrBase.mdefense, finalAttrBase.mdefense))
+	table.insert(list, self:getAttrMo(105, info.technic, addAttrPer.technic, testAddAttrPer.technic, partAttrBase.technic, testPartAttrBase.technic, finalAttrBase.technic))
+	table.insert(list, self:getAttrMo(201, exAttr.cri, addExAttr.cri, testAddExAttr.cri, partExAttr.cri, testPartExAttr.cri, finalExAttr.cri))
+	table.insert(list, self:getAttrMo(202, exAttr.recri, addExAttr.recri, testAddExAttr.recri, partExAttr.recri, testPartExAttr.recri, finalExAttr.recri))
+	table.insert(list, self:getAttrMo(203, exAttr.criDmg, addExAttr.criDmg, testAddExAttr.criDmg, partExAttr.criDmg, testPartExAttr.criDmg, finalExAttr.criDmg))
+	table.insert(list, self:getAttrMo(204, exAttr.criDef, addExAttr.criDef, testAddExAttr.criDef, partExAttr.criDef, testPartExAttr.criDef, finalExAttr.criDef))
+	table.insert(list, self:getAttrMo(205, exAttr.addDmg, addExAttr.addDmg, testAddExAttr.addDmg, partExAttr.addDmg, testPartExAttr.addDmg, finalExAttr.addDmg))
+	table.insert(list, self:getAttrMo(206, exAttr.dropDmg, addExAttr.dropDmg, testAddExAttr.dropDmg, partExAttr.dropDmg, testPartExAttr.dropDmg, finalExAttr.dropDmg))
+	table.insert(list, self:getAttrMo(207, spAttr.finalAddDmg, addSpAttr.finalAddDmg, testAddSpAttr.finalAddDmg, partSpAttr.finalAddDmg, testPartSpAttr.finalAddDmg, finalSpAttr.finalAddDmg))
+	table.insert(list, self:getAttrMo(208, spAttr.finalDropDmg, addSpAttr.finalDropDmg, testAddSpAttr.finalDropDmg, partSpAttr.finalDropDmg, testPartSpAttr.finalDropDmg, finalSpAttr.dropDmg))
+	table.insert(list, self:getAttrMo(209, spAttr.revive, addSpAttr.revive, testAddSpAttr.revive, partSpAttr.revive, testPartSpAttr.revive, finalSpAttr.revive))
+	table.insert(list, self:getAttrMo(210, spAttr.absorb, addSpAttr.absorb, testAddSpAttr.absorb, partSpAttr.absorb, testPartSpAttr.absorb, finalSpAttr.absorb))
+	table.insert(list, self:getAttrMo(211, spAttr.clutch, addSpAttr.clutch, testAddSpAttr.clutch, partSpAttr.clutch, testPartSpAttr.clutch, finalSpAttr.clutch))
+	table.insert(list, self:getAttrMo(212, spAttr.heal, addSpAttr.heal, testAddSpAttr.heal, partSpAttr.heal, testPartSpAttr.heal, finalSpAttr.heal))
+	table.insert(list, self:getAttrMo(213, spAttr.defenseIgnore, addSpAttr.defenseIgnore, testAddSpAttr.defenseIgnore, partSpAttr.defenseIgnore, testPartSpAttr.defenseIgnore, finalSpAttr.defenseIgnore))
+	table.insert(list, self:getAttrMo(214, spAttr.normalSkillRate, addSpAttr.normalSkillRate, testAddSpAttr.normalSkillRate, partSpAttr.normalSkillRate, testPartSpAttr.normalSkillRate, finalSpAttr.normalSkillRate))
+	table.insert(list, self:getAttrMo(215, spAttr.playAddRate, addSpAttr.playAddRate, testAddSpAttr.playAddRate, partSpAttr.playAddRate, testPartSpAttr.playAddRate, finalSpAttr.playAddRate))
+	table.insert(list, self:getAttrMo(216, spAttr.playDropRate, addSpAttr.playDropRate, testAddSpAttr.playDropRate, partSpAttr.playDropRate, testPartSpAttr.playDropRate, finalSpAttr.playDropRate))
+	table.insert(list, self:getAttrMo(218, spAttr.reboundDmg, addSpAttr.reboundDmg, testAddSpAttr.reboundDmg, partSpAttr.reboundDmg, testPartSpAttr.reboundDmg, finalSpAttr.reboundDmg))
+	table.insert(list, self:getAttrMo(219, spAttr.extraDmg, addSpAttr.extraDmg, testAddSpAttr.extraDmg, partSpAttr.extraDmg, testPartSpAttr.extraDmg, finalSpAttr.extraDmg))
+	table.insert(list, self:getAttrMo(220, spAttr.reuseDmg, addSpAttr.reuseDmg, testAddSpAttr.reuseDmg, partSpAttr.reuseDmg, testPartSpAttr.reuseDmg, finalSpAttr.reuseDmg))
+	table.insert(list, self:getAttrMo(221, spAttr.bigSkillRate, addSpAttr.bigSkillRate, testAddSpAttr.bigSkillRate, partSpAttr.bigSkillRate, testPartSpAttr.bigSkillRate, finalSpAttr.bigSkillRate))
+	table.insert(list, self:getAttrMo(222, spAttr.clutchDmg, addSpAttr.clutchDmg, testAddSpAttr.clutchDmg, partSpAttr.clutchDmg, testPartSpAttr.clutchDmg, finalSpAttr.clutchDmg))
+	table.insert(list, self:getAttrMo(401, spAttr.dizzyResistances, addSpAttr.dizzyResistances, testAddSpAttr.dizzyResistances, partSpAttr.dizzyResistances, testPartSpAttr.dizzyResistances, finalSpAttr.dizzyResistances))
+	table.insert(list, self:getAttrMo(402, spAttr.sleepResistances, addSpAttr.sleepResistances, testAddSpAttr.sleepResistances, partSpAttr.sleepResistances, testPartSpAttr.sleepResistances, finalSpAttr.sleepResistances))
+	table.insert(list, self:getAttrMo(403, spAttr.petrifiedResistances, addSpAttr.petrifiedResistances, testAddSpAttr.petrifiedResistances, partSpAttr.petrifiedResistances, testPartSpAttr.petrifiedResistances, finalSpAttr.petrifiedResistances))
+	table.insert(list, self:getAttrMo(404, spAttr.frozenResistances, addSpAttr.frozenResistances, testAddSpAttr.frozenResistances, partSpAttr.frozenResistances, testPartSpAttr.frozenResistances, finalSpAttr.frozenResistances))
+	table.insert(list, self:getAttrMo(405, spAttr.disarmResistances, addSpAttr.disarmResistances, testAddSpAttr.disarmResistances, partSpAttr.disarmResistances, testPartSpAttr.disarmResistances, finalSpAttr.disarmResistances))
+	table.insert(list, self:getAttrMo(406, spAttr.forbidResistances, addSpAttr.forbidResistances, testAddSpAttr.forbidResistances, partSpAttr.forbidResistances, testPartSpAttr.forbidResistances, finalSpAttr.forbidResistances))
+	table.insert(list, self:getAttrMo(407, spAttr.sealResistances, addSpAttr.sealResistances, testAddSpAttr.sealResistances, partSpAttr.sealResistances, testPartSpAttr.sealResistances, finalSpAttr.sealResistances))
+	table.insert(list, self:getAttrMo(408, spAttr.cantGetExskillResistances, addSpAttr.cantGetExskillResistances, testAddSpAttr.cantGetExskillResistances, partSpAttr.cantGetExskillResistances, testPartSpAttr.cantGetExskillResistances, finalSpAttr.cantGetExskillResistances))
+	table.insert(list, self:getAttrMo(409, spAttr.delExPointResistances, addSpAttr.delExPointResistances, testAddSpAttr.delExPointResistances, partSpAttr.delExPointResistances, testPartSpAttr.delExPointResistances, finalSpAttr.delExPointResistances))
+	table.insert(list, self:getAttrMo(410, spAttr.stressUpResistances, addSpAttr.stressUpResistances, testAddSpAttr.stressUpResistances, partSpAttr.stressUpResistances, testPartSpAttr.stressUpResistances, finalSpAttr.stressUpResistances))
+	table.insert(list, self:getAttrMo(411, spAttr.charmResistances, addSpAttr.charmResistances, testAddSpAttr.charmResistances, partSpAttr.charmResistances, testPartSpAttr.charmResistances, finalSpAttr.charmResistances))
+	table.insert(list, self:getAttrMo(501, spAttr.controlResilience, addSpAttr.controlResilience, testAddSpAttr.controlResilience, partSpAttr.controlResilience, testPartSpAttr.controlResilience, finalSpAttr.controlResilience))
+	table.insert(list, self:getAttrMo(502, spAttr.delExPointResilience, addSpAttr.delExPointResilience, testAddSpAttr.delExPointResilience, partSpAttr.delExPointResilience, testPartSpAttr.delExPointResilience, finalSpAttr.delExPointResilience))
+	table.insert(list, self:getAttrMo(503, spAttr.stressUpResilience, addSpAttr.stressUpResilience, testAddSpAttr.stressUpResilience, partSpAttr.stressUpResilience, testPartSpAttr.stressUpResilience, finalSpAttr.stressUpResilience))
+	self.attrModel:setList(list)
 end
 
-function var_0_0.getAttrMo(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4, arg_8_5, arg_8_6, arg_8_7)
-	arg_8_0.attrPool = arg_8_0.attrPool or {}
+function GMFightEntityModel:getAttrMo(id, base, add, test, partAdd, partTest, final)
+	self.attrPool = self.attrPool or {}
 
-	local var_8_0 = arg_8_0.attrPool[arg_8_1]
+	local attrMo = self.attrPool[id]
 
-	if not var_8_0 then
-		var_8_0 = {
-			id = arg_8_1
+	if not attrMo then
+		attrMo = {
+			id = id
 		}
-		arg_8_0.attrPool[arg_8_1] = var_8_0
+		self.attrPool[id] = attrMo
 	end
 
-	var_8_0.base = arg_8_2
-	var_8_0.add = arg_8_3
-	var_8_0.test = arg_8_4
-	var_8_0.partAdd = arg_8_5
-	var_8_0.partTest = arg_8_6
-	var_8_0.final = arg_8_7
+	attrMo.base = base
+	attrMo.add = add
+	attrMo.test = test
+	attrMo.partAdd = partAdd
+	attrMo.partTest = partTest
+	attrMo.final = final
 
-	return var_8_0
+	return attrMo
 end
 
-var_0_0.instance = var_0_0.New()
+GMFightEntityModel.instance = GMFightEntityModel.New()
 
-return var_0_0
+return GMFightEntityModel

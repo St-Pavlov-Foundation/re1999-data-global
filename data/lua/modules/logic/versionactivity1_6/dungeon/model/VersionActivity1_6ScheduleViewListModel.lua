@@ -1,15 +1,17 @@
-﻿module("modules.logic.versionactivity1_6.dungeon.model.VersionActivity1_6ScheduleViewListModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/dungeon/model/VersionActivity1_6ScheduleViewListModel.lua
 
-local var_0_0 = class("VersionActivity1_6ScheduleViewListModel", ListScrollModel)
+module("modules.logic.versionactivity1_6.dungeon.model.VersionActivity1_6ScheduleViewListModel", package.seeall)
 
-function var_0_0.setStaticData(arg_1_0, arg_1_1)
-	arg_1_0._staticData = arg_1_1
+local VersionActivity1_6ScheduleViewListModel = class("VersionActivity1_6ScheduleViewListModel", ListScrollModel)
+
+function VersionActivity1_6ScheduleViewListModel:setStaticData(staticData)
+	self._staticData = staticData
 end
 
-function var_0_0.getStaticData(arg_2_0)
-	return arg_2_0._staticData
+function VersionActivity1_6ScheduleViewListModel:getStaticData()
+	return self._staticData
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity1_6ScheduleViewListModel.instance = VersionActivity1_6ScheduleViewListModel.New()
 
-return var_0_0
+return VersionActivity1_6ScheduleViewListModel

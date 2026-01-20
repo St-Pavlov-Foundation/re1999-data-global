@@ -1,47 +1,49 @@
-﻿module("modules.logic.fight.system.work.FightWorkWaitForSkillsDone", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkWaitForSkillsDone.lua
 
-local var_0_0 = class("FightWorkWaitForSkillsDone", BaseWork)
+module("modules.logic.fight.system.work.FightWorkWaitForSkillsDone", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._skillFlowList = arg_1_1
+local FightWorkWaitForSkillsDone = class("FightWorkWaitForSkillsDone", BaseWork)
+
+function FightWorkWaitForSkillsDone:ctor(skillFlowList)
+	self._skillFlowList = skillFlowList
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	if arg_2_0:_checkDone() then
-		arg_2_0:onDone(true)
+function FightWorkWaitForSkillsDone:onStart(context)
+	if self:_checkDone() then
+		self:onDone(true)
 	else
-		local var_2_0 = FightModel.instance:getSpeed()
-		local var_2_1 = FightModel.instance:getUISpeed()
-		local var_2_2 = math.min(var_2_0, var_2_1)
-		local var_2_3 = 5 / Mathf.Clamp(var_2_2, 0.01, 1)
+		local speed = FightModel.instance:getSpeed()
+		local uiSpeed = FightModel.instance:getUISpeed()
+		local minSpeed = math.min(speed, uiSpeed)
+		local timeoutDelay = 5 / Mathf.Clamp(minSpeed, 0.01, 1)
 
-		TaskDispatcher.runRepeat(arg_2_0._onTick, arg_2_0, 0.1)
-		TaskDispatcher.runDelay(arg_2_0._timeOut, arg_2_0, var_2_3)
+		TaskDispatcher.runRepeat(self._onTick, self, 0.1)
+		TaskDispatcher.runDelay(self._timeOut, self, timeoutDelay)
 	end
 end
 
-function var_0_0._onTick(arg_3_0)
-	if arg_3_0:_checkDone() then
-		arg_3_0:onDone(true)
+function FightWorkWaitForSkillsDone:_onTick()
+	if self:_checkDone() then
+		self:onDone(true)
 	end
 end
 
-function var_0_0._timeOut(arg_4_0)
-	if arg_4_0._skillFlowList then
-		for iter_4_0, iter_4_1 in ipairs(arg_4_0._skillFlowList) do
-			if not iter_4_1:hasDone() then
-				logError("检测回合技能完成超时，技能id = " .. iter_4_1.fightStepData.actId)
+function FightWorkWaitForSkillsDone:_timeOut()
+	if self._skillFlowList then
+		for _, skillFlow in ipairs(self._skillFlowList) do
+			if not skillFlow:hasDone() then
+				logError("检测回合技能完成超时，技能id = " .. skillFlow.fightStepData.actId)
 			end
 		end
 	end
 
-	arg_4_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0._checkDone(arg_5_0)
-	if arg_5_0._skillFlowList then
-		for iter_5_0, iter_5_1 in ipairs(arg_5_0._skillFlowList) do
-			if not iter_5_1:hasDone() then
+function FightWorkWaitForSkillsDone:_checkDone()
+	if self._skillFlowList then
+		for _, skillFlow in ipairs(self._skillFlowList) do
+			if not skillFlow:hasDone() then
 				return false
 			end
 		end
@@ -50,12 +52,12 @@ function var_0_0._checkDone(arg_5_0)
 	return true
 end
 
-function var_0_0.clearWork(arg_6_0)
-	arg_6_0._skillFlowList = nil
+function FightWorkWaitForSkillsDone:clearWork()
+	self._skillFlowList = nil
 
-	TaskDispatcher.cancelTask(arg_6_0._onTick, arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0._timeOut, arg_6_0)
-	FightController.instance:unregisterCallback(FightEvent.OnCombineCardEnd, arg_6_0._onCombineDone, arg_6_0)
+	TaskDispatcher.cancelTask(self._onTick, self)
+	TaskDispatcher.cancelTask(self._timeOut, self)
+	FightController.instance:unregisterCallback(FightEvent.OnCombineCardEnd, self._onCombineDone, self)
 end
 
-return var_0_0
+return FightWorkWaitForSkillsDone

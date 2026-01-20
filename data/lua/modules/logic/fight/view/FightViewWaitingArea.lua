@@ -1,519 +1,530 @@
-﻿module("modules.logic.fight.view.FightViewWaitingArea", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightViewWaitingArea.lua
 
-local var_0_0 = class("FightViewWaitingArea", BaseView)
-local var_0_1 = 0
+module("modules.logic.fight.view.FightViewWaitingArea", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._waitingAreaTran = gohelper.findChild(arg_1_0.viewGO, "root/waitingArea").transform
-	arg_1_0._waitingAreaGO = gohelper.findChild(arg_1_0.viewGO, "root/waitingArea/inner")
-	arg_1_0._skillTipsGO = gohelper.findChild(arg_1_0.viewGO, "root/waitingArea/inner/skill")
-	arg_1_0._txtCardTitle = gohelper.findChildText(arg_1_0._skillTipsGO, "txtTips/txtTitle")
-	arg_1_0._txtCardDesc = gohelper.findChildText(arg_1_0._skillTipsGO, "txtTips")
-	arg_1_0._rectTrCardDesc = arg_1_0._txtCardDesc:GetComponent(gohelper.Type_RectTransform)
-	arg_1_0._cardItemList = {}
-	arg_1_0._cardItemGOList = arg_1_0:getUserDataTb_()
-	arg_1_0._cardObjModel = gohelper.findChild(arg_1_0._waitingAreaGO, "cardItemModel")
+local FightViewWaitingArea = class("FightViewWaitingArea", BaseView)
+local ItemWidth = 0
 
-	local var_1_0 = gohelper.cloneInPlace(arg_1_0._cardObjModel, "cardItem1")
+function FightViewWaitingArea:onInitView()
+	self._waitingAreaTran = gohelper.findChild(self.viewGO, "root/waitingArea").transform
+	self._waitingAreaGO = gohelper.findChild(self.viewGO, "root/waitingArea/inner")
+	self._skillTipsGO = gohelper.findChild(self.viewGO, "root/waitingArea/inner/skill")
+	self._txtCardTitle = gohelper.findChildText(self._skillTipsGO, "txtTips/txtTitle")
+	self._txtCardDesc = gohelper.findChildText(self._skillTipsGO, "txtTips")
+	self._rectTrCardDesc = self._txtCardDesc:GetComponent(gohelper.Type_RectTransform)
+	self._cardItemList = {}
+	self._cardItemGOList = self:getUserDataTb_()
+	self._cardObjModel = gohelper.findChild(self._waitingAreaGO, "cardItemModel")
 
-	table.insert(arg_1_0._cardItemGOList, var_1_0)
+	local cardItemGO1 = gohelper.cloneInPlace(self._cardObjModel, "cardItem1")
 
-	var_0_1 = recthelper.getWidth(var_1_0.transform)
+	table.insert(self._cardItemGOList, cardItemGO1)
 
-	local var_1_1 = recthelper.getAnchorX(var_1_0.transform)
+	ItemWidth = recthelper.getWidth(cardItemGO1.transform)
 
-	for iter_1_0 = 2, 5 do
-		local var_1_2 = gohelper.findChild(arg_1_0._waitingAreaGO, "cardItem" .. iter_1_0) or gohelper.cloneInPlace(arg_1_0._cardObjModel, "cardItem" .. iter_1_0)
+	local item1AnchorX = recthelper.getAnchorX(cardItemGO1.transform)
 
-		table.insert(arg_1_0._cardItemGOList, var_1_2)
-		recthelper.setAnchorX(var_1_2.transform, var_1_1 - 192 * (iter_1_0 - 1))
+	for i = 2, 5 do
+		local cardItemGO = gohelper.findChild(self._waitingAreaGO, "cardItem" .. i)
+
+		cardItemGO = cardItemGO or gohelper.cloneInPlace(self._cardObjModel, "cardItem" .. i)
+
+		table.insert(self._cardItemGOList, cardItemGO)
+		recthelper.setAnchorX(cardItemGO.transform, item1AnchorX - 192 * (i - 1))
 	end
 
-	arg_1_0._cardDisplayFlow = FlowSequence.New()
+	self._cardDisplayFlow = FlowSequence.New()
 
-	arg_1_0._cardDisplayFlow:addWork(FightCardDisplayEffect.New())
+	self._cardDisplayFlow:addWork(FightCardDisplayEffect.New())
 
-	arg_1_0._cardDisplayEndFlow = FlowSequence.New()
+	self._cardDisplayEndFlow = FlowSequence.New()
 
-	arg_1_0._cardDisplayEndFlow:addWork(FightCardDisplayEndEffect.New())
+	self._cardDisplayEndFlow:addWork(FightCardDisplayEndEffect.New())
 
-	arg_1_0._cardDissolveFlow = FlowSequence.New()
+	self._cardDissolveFlow = FlowSequence.New()
 
-	arg_1_0._cardDissolveFlow:addWork(FightCardDissolveEffect.New())
+	self._cardDissolveFlow:addWork(FightCardDissolveEffect.New())
 
-	arg_1_0._cardDisappearFlow = FlowParallel.New()
+	self._cardDisappearFlow = FlowParallel.New()
 
-	arg_1_0._cardDisappearFlow:addWork(FightCardDisplayHideAllEffect.New())
-	arg_1_0._cardDisappearFlow:addWork(FightCardDissolveEffect.New())
+	self._cardDisappearFlow:addWork(FightCardDisplayHideAllEffect.New())
+	self._cardDisappearFlow:addWork(FightCardDissolveEffect.New())
 
-	arg_1_0._changeCardFlow = FlowSequence.New()
+	self._changeCardFlow = FlowSequence.New()
 
-	arg_1_0._changeCardFlow:addWork(FightCardChangeEffectInWaitingArea.New())
-	arg_1_0:_refreshTipsVisibleState()
+	self._changeCardFlow:addWork(FightCardChangeEffectInWaitingArea.New())
+	self:_refreshTipsVisibleState()
 end
 
-function var_0_0._refreshTipsVisibleState(arg_2_0)
-	gohelper.onceAddComponent(arg_2_0._skillTipsGO, gohelper.Type_CanvasGroup).alpha = GMFightShowState.playSkillDes and 1 or 0
+function FightViewWaitingArea:_refreshTipsVisibleState()
+	gohelper.onceAddComponent(self._skillTipsGO, gohelper.Type_CanvasGroup).alpha = GMFightShowState.playSkillDes and 1 or 0
 end
 
-function var_0_0.onOpen(arg_3_0)
-	arg_3_0:_makeTipsOutofSight()
-	arg_3_0:addEventCb(FightController.instance, FightEvent.UpdateWaitingArea, arg_3_0._updateWaitingArea, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.RespBeginRound, arg_3_0._beginRoundSaveCardCantUse, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, arg_3_0._onEndRound, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.BeforePlaySkill, arg_3_0._beforePlaySkill, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, arg_3_0._onSkillPlayFinish, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, arg_3_0._skillFinishSaveCardCantUse, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, arg_3_0._onBuffUpdate, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.PlayChangeCardEffectInWaitingArea, arg_3_0._playChangeCardEffect, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.CardDisappear, arg_3_0._onCardDisappear, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.FixWaitingAreaItemCount, arg_3_0._fixWaitingAreaItemCount, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.GMHideFightView, arg_3_0._refreshTipsVisibleState, arg_3_0)
+function FightViewWaitingArea:onOpen()
+	self:_makeTipsOutofSight()
+	self:addEventCb(FightController.instance, FightEvent.UpdateWaitingArea, self._updateWaitingArea, self)
+	self:addEventCb(FightController.instance, FightEvent.RespBeginRound, self._beginRoundSaveCardCantUse, self)
+	self:addEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, self._onEndRound, self)
+	self:addEventCb(FightController.instance, FightEvent.BeforePlaySkill, self._beforePlaySkill, self)
+	self:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
+	self:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, self._skillFinishSaveCardCantUse, self)
+	self:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, self._onBuffUpdate, self)
+	self:addEventCb(FightController.instance, FightEvent.PlayChangeCardEffectInWaitingArea, self._playChangeCardEffect, self)
+	self:addEventCb(FightController.instance, FightEvent.CardDisappear, self._onCardDisappear, self)
+	self:addEventCb(FightController.instance, FightEvent.FixWaitingAreaItemCount, self._fixWaitingAreaItemCount, self)
+	self:addEventCb(FightController.instance, FightEvent.GMHideFightView, self._refreshTipsVisibleState, self)
 end
 
-function var_0_0.onClose(arg_4_0)
-	arg_4_0:_releaseScalseTween()
-	arg_4_0:removeEventCb(FightController.instance, FightEvent.UpdateWaitingArea, arg_4_0._updateWaitingArea, arg_4_0)
-	arg_4_0:removeEventCb(FightController.instance, FightEvent.RespBeginRound, arg_4_0._beginRoundSaveCardCantUse, arg_4_0)
-	arg_4_0:removeEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, arg_4_0._onEndRound, arg_4_0)
-	arg_4_0:removeEventCb(FightController.instance, FightEvent.BeforePlaySkill, arg_4_0._beforePlaySkill, arg_4_0)
-	arg_4_0:removeEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, arg_4_0._onSkillPlayFinish, arg_4_0)
-	arg_4_0:removeEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, arg_4_0._skillFinishSaveCardCantUse, arg_4_0)
-	arg_4_0:removeEventCb(FightController.instance, FightEvent.OnBuffUpdate, arg_4_0._onBuffUpdate, arg_4_0)
-	arg_4_0:removeEventCb(FightController.instance, FightEvent.PlayChangeCardEffectInWaitingArea, arg_4_0._playChangeCardEffect, arg_4_0)
-	arg_4_0:removeEventCb(FightController.instance, FightEvent.CardDisappear, arg_4_0._onCardDisappear, arg_4_0)
-	arg_4_0:removeEventCb(FightController.instance, FightEvent.FixWaitingAreaItemCount, arg_4_0._fixWaitingAreaItemCount, arg_4_0)
-	arg_4_0:removeEventCb(FightController.instance, FightEvent.GMHideFightView, arg_4_0._refreshTipsVisibleState, arg_4_0)
-	arg_4_0._cardDisplayFlow:stop()
-	arg_4_0._cardDisplayEndFlow:stop()
-	arg_4_0._cardDissolveFlow:stop()
-	arg_4_0._cardDisappearFlow:stop()
-	arg_4_0._changeCardFlow:stop()
-	TaskDispatcher.cancelTask(arg_4_0._delayPlayCardsChangeEffect, arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._delayPlayCardDisappear, arg_4_0)
+function FightViewWaitingArea:onClose()
+	self:_releaseScalseTween()
+	self:removeEventCb(FightController.instance, FightEvent.UpdateWaitingArea, self._updateWaitingArea, self)
+	self:removeEventCb(FightController.instance, FightEvent.RespBeginRound, self._beginRoundSaveCardCantUse, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, self._onEndRound, self)
+	self:removeEventCb(FightController.instance, FightEvent.BeforePlaySkill, self._beforePlaySkill, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, self._skillFinishSaveCardCantUse, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnBuffUpdate, self._onBuffUpdate, self)
+	self:removeEventCb(FightController.instance, FightEvent.PlayChangeCardEffectInWaitingArea, self._playChangeCardEffect, self)
+	self:removeEventCb(FightController.instance, FightEvent.CardDisappear, self._onCardDisappear, self)
+	self:removeEventCb(FightController.instance, FightEvent.FixWaitingAreaItemCount, self._fixWaitingAreaItemCount, self)
+	self:removeEventCb(FightController.instance, FightEvent.GMHideFightView, self._refreshTipsVisibleState, self)
+	self._cardDisplayFlow:stop()
+	self._cardDisplayEndFlow:stop()
+	self._cardDissolveFlow:stop()
+	self._cardDisappearFlow:stop()
+	self._changeCardFlow:stop()
+	TaskDispatcher.cancelTask(self._delayPlayCardsChangeEffect, self)
+	TaskDispatcher.cancelTask(self._delayPlayCardDisappear, self)
 end
 
-function var_0_0._fixWaitingAreaItemCount(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0._cardItemGOList and #arg_5_0._cardItemGOList
+function FightViewWaitingArea:_fixWaitingAreaItemCount(count)
+	local nowCount = self._cardItemGOList and #self._cardItemGOList
 
-	if arg_5_1 <= var_5_0 then
+	if count <= nowCount then
 		return
 	end
 
-	local var_5_1 = arg_5_0._cardItemGOList[1]
-	local var_5_2 = recthelper.getAnchorX(var_5_1.transform)
+	local cardItemGO1 = self._cardItemGOList[1]
+	local item1AnchorX = recthelper.getAnchorX(cardItemGO1.transform)
 
-	for iter_5_0 = var_5_0 + 1, arg_5_1 do
-		local var_5_3 = gohelper.findChild(arg_5_0._waitingAreaGO, "cardItem" .. iter_5_0) or gohelper.cloneInPlace(arg_5_0._cardObjModel, "cardItem" .. iter_5_0)
+	for i = nowCount + 1, count do
+		local cardItemGO = gohelper.findChild(self._waitingAreaGO, "cardItem" .. i)
 
-		table.insert(arg_5_0._cardItemGOList, var_5_3)
-		recthelper.setAnchorX(var_5_3.transform, var_5_2 - 192 * (iter_5_0 - 1))
+		cardItemGO = cardItemGO or gohelper.cloneInPlace(self._cardObjModel, "cardItem" .. i)
+
+		table.insert(self._cardItemGOList, cardItemGO)
+		recthelper.setAnchorX(cardItemGO.transform, item1AnchorX - 192 * (i - 1))
 	end
 end
 
-function var_0_0._updateWaitingArea(arg_6_0)
-	arg_6_0:_updateView()
+function FightViewWaitingArea:_updateWaitingArea()
+	self:_updateView()
 end
 
-function var_0_0._onEndRound(arg_7_0)
-	arg_7_0:_makeTipsOutofSight()
+function FightViewWaitingArea:_onEndRound()
+	self:_makeTipsOutofSight()
 end
 
-function var_0_0._beginRoundSaveCardCantUse(arg_8_0)
-	arg_8_0:_saveCantUseStatus()
+function FightViewWaitingArea:_beginRoundSaveCardCantUse()
+	self:_saveCantUseStatus()
 end
 
-function var_0_0._skillFinishSaveCardCantUse(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	if not arg_9_1:isMySide() then
+function FightViewWaitingArea:_skillFinishSaveCardCantUse(entity, skillId, fightStepData)
+	if not entity:isMySide() then
 		return
 	end
 
-	arg_9_0:_saveCantUseStatus()
+	self:_saveCantUseStatus()
 end
 
-function var_0_0._saveCantUseStatus(arg_10_0)
-	arg_10_0._cardCantUseDict = {}
+function FightViewWaitingArea:_saveCantUseStatus()
+	self._cardCantUseDict = {}
 
-	local var_10_0 = FightPlayCardModel.instance:getClientLeftSkillOpList()
+	local clientLeft = FightPlayCardModel.instance:getClientLeftSkillOpList()
 
-	if #var_10_0 == 0 then
+	if #clientLeft == 0 then
 		-- block empty
 	end
 
-	for iter_10_0, iter_10_1 in ipairs(var_10_0) do
-		local var_10_1 = FightDataHelper.entityMgr:getById(iter_10_1.entityId)
-		local var_10_2 = var_10_1 and var_10_1:isStatusDead()
-		local var_10_3 = var_10_1 and var_10_1.exPoint or 0
-		local var_10_4 = var_10_1 and var_10_1:getUniqueSkillPoint() or 5
-		local var_10_5 = var_10_1 and FightCardDataHelper.isBigSkill(iter_10_1.skillId) and var_10_3 < var_10_4
-		local var_10_6 = FightViewHandCardItemLock.canUseCardSkill(iter_10_1.entityId, iter_10_1.skillId)
+	for i, displayMO in ipairs(clientLeft) do
+		local entityMO = FightDataHelper.entityMgr:getById(displayMO.entityId)
+		local isDead = entityMO and entityMO:isStatusDead()
+		local exPoint = entityMO and entityMO.exPoint or 0
+		local maxExPoint = entityMO and entityMO:getUniqueSkillPoint() or 5
+		local isBigSkill = entityMO and FightCardDataHelper.isBigSkill(displayMO.skillId)
+		local isBigSkillInvalid = isBigSkill and exPoint < maxExPoint
+		local canUseCard = FightViewHandCardItemLock.canUseCardSkill(displayMO.entityId, displayMO.skillId)
 
-		if var_10_2 or var_10_5 or not var_10_6 then
-			arg_10_0._cardCantUseDict[iter_10_1] = true
+		if isDead or isBigSkillInvalid or not canUseCard then
+			self._cardCantUseDict[displayMO] = true
 		end
 	end
 end
 
-function var_0_0._onCardDisappear(arg_11_0)
-	arg_11_0._dissapearCount = arg_11_0._dissapearCount and arg_11_0._dissapearCount + 1 or 1
+function FightViewWaitingArea:_onCardDisappear()
+	self._dissapearCount = self._dissapearCount and self._dissapearCount + 1 or 1
 
-	TaskDispatcher.runDelay(arg_11_0._delayPlayCardDisappear, arg_11_0, 0.01)
+	TaskDispatcher.runDelay(self._delayPlayCardDisappear, self, 0.01)
 end
 
-function var_0_0._delayPlayCardDisappear(arg_12_0)
-	local var_12_0 = {
-		dissolveSkillItemGOs = arg_12_0:getUserDataTb_(),
-		hideSkillItemGOs = arg_12_0:getUserDataTb_()
-	}
-	local var_12_1 = math.min(arg_12_0._dissapearCount, #FightPlayCardModel.instance:getClientLeftSkillOpList())
+function FightViewWaitingArea:_delayPlayCardDisappear()
+	local context = {}
 
-	if var_12_1 == 0 then
-		arg_12_0:_onDisappearCallback()
+	context.dissolveSkillItemGOs = self:getUserDataTb_()
+	context.hideSkillItemGOs = self:getUserDataTb_()
+
+	local count = math.min(self._dissapearCount, #FightPlayCardModel.instance:getClientLeftSkillOpList())
+
+	if count == 0 then
+		self:_onDisappearCallback()
 
 		return
 	end
 
-	for iter_12_0 = 1, var_12_1 do
-		local var_12_2 = FightPlayCardModel.instance:getClientLeftSkillOpList()
-		local var_12_3 = #var_12_2
-		local var_12_4 = var_12_2[var_12_3]
-		local var_12_5 = var_12_4.entityId
-		local var_12_6 = var_12_4.skillId
-		local var_12_7 = FightDataHelper.entityMgr:getById(var_12_5)
+	for i = 1, count do
+		local skillOps = FightPlayCardModel.instance:getClientLeftSkillOpList()
+		local clientCount = #skillOps
+		local displayMO = skillOps[clientCount]
+		local entityId = displayMO.entityId
+		local skillId = displayMO.skillId
+		local entityMO = FightDataHelper.entityMgr:getById(entityId)
 
-		if arg_12_0._cardCantUseDict and arg_12_0._cardCantUseDict[var_12_4] then
-			local var_12_8 = arg_12_0._cardItemList[var_12_3].go
+		if self._cardCantUseDict and self._cardCantUseDict[displayMO] then
+			local cardGO = self._cardItemList[clientCount].go
 
-			table.insert(var_12_0.dissolveSkillItemGOs, var_12_8)
+			table.insert(context.dissolveSkillItemGOs, cardGO)
 
-			local var_12_9 = gohelper.findChild(var_12_8.transform.parent.gameObject, "lock")
+			local lockGO = gohelper.findChild(cardGO.transform.parent.gameObject, "lock")
 
-			gohelper.setActive(var_12_9, false)
+			gohelper.setActive(lockGO, false)
 		else
-			table.insert(var_12_0.hideSkillItemGOs, arg_12_0._cardItemList[var_12_3].go)
+			table.insert(context.hideSkillItemGOs, self._cardItemList[clientCount].go)
 		end
 
 		FightPlayCardModel.instance:removeClientSkillOnce()
 	end
 
-	arg_12_0._dissapearCount = nil
+	self._dissapearCount = nil
 
-	arg_12_0._cardDisappearFlow:registerDoneListener(arg_12_0._onDisappearCallback, arg_12_0)
-	arg_12_0._cardDisappearFlow:start(var_12_0)
+	self._cardDisappearFlow:registerDoneListener(self._onDisappearCallback, self)
+	self._cardDisappearFlow:start(context)
 end
 
-function var_0_0._onDisappearCallback(arg_13_0)
+function FightViewWaitingArea:_onDisappearCallback()
 	FightController.instance:dispatchEvent(FightEvent.CardDisappearFinish)
 end
 
-function var_0_0._beforePlaySkill(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	local var_14_0 = FightPlayCardModel.instance:getClientLeftSkillOpList()
-	local var_14_1 = #var_14_0
+function FightViewWaitingArea:_beforePlaySkill(entity, skillId, fightStepData)
+	local leftSkillOpList = FightPlayCardModel.instance:getClientLeftSkillOpList()
+	local count = #leftSkillOpList
 
-	if var_14_1 == 0 then
-		FightController.instance:dispatchEvent(FightEvent.ToPlaySkill, arg_14_2)
+	if count == 0 then
+		FightController.instance:dispatchEvent(FightEvent.ToPlaySkill, skillId)
 
 		return
 	end
 
-	arg_14_0._playingEntityId = arg_14_1.id
-	arg_14_0._playingSkillId = arg_14_2
-	arg_14_0._displayingEntityId = nil
-	arg_14_0._displayingSkillId = nil
+	self._playingEntityId = entity.id
+	self._playingSkillId = skillId
+	self._displayingEntityId = nil
+	self._displayingSkillId = nil
 
-	arg_14_0:_updateView()
+	self:_updateView()
 
 	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Play then
-		if arg_14_2 == var_14_0[var_14_1].skillId then
-			arg_14_0:_displayFlow(arg_14_0._playingEntityId, arg_14_0._playingSkillId)
-			FightController.instance:dispatchEvent(FightEvent.ToPlaySkill, arg_14_2)
-		elseif #var_14_0 > 0 then
-			arg_14_0:_dissolveFlow(arg_14_0._onSkillPlayDissolveDone)
+		if skillId == leftSkillOpList[count].skillId then
+			self:_displayFlow(self._playingEntityId, self._playingSkillId)
+			FightController.instance:dispatchEvent(FightEvent.ToPlaySkill, skillId)
+		elseif #leftSkillOpList > 0 then
+			self:_dissolveFlow(self._onSkillPlayDissolveDone)
 		else
-			FightController.instance:dispatchEvent(FightEvent.ToPlaySkill, arg_14_2)
+			FightController.instance:dispatchEvent(FightEvent.ToPlaySkill, skillId)
 		end
 	else
-		FightController.instance:dispatchEvent(FightEvent.ToPlaySkill, arg_14_2)
+		FightController.instance:dispatchEvent(FightEvent.ToPlaySkill, skillId)
 	end
 end
 
-function var_0_0._onSkillPlayDissolveDone(arg_15_0)
-	local var_15_0 = FightPlayCardModel.instance:getClientLeftSkillOpList()
-	local var_15_1 = #var_15_0
+function FightViewWaitingArea:_onSkillPlayDissolveDone()
+	local leftSkillOpList = FightPlayCardModel.instance:getClientLeftSkillOpList()
+	local count = #leftSkillOpList
 
-	if var_15_1 > 0 then
-		local var_15_2 = var_15_0[var_15_1]
+	if count > 0 then
+		local first = leftSkillOpList[count]
 
-		arg_15_0:_displayFlow(var_15_2.entityId, var_15_2.skillId)
+		self:_displayFlow(first.entityId, first.skillId)
 	end
 
-	FightController.instance:dispatchEvent(FightEvent.ToPlaySkill, arg_15_0._playingSkillId)
+	FightController.instance:dispatchEvent(FightEvent.ToPlaySkill, self._playingSkillId)
 end
 
-function var_0_0._displayFlow(arg_16_0, arg_16_1, arg_16_2)
-	arg_16_0._displayingEntityId = arg_16_1
-	arg_16_0._displayingSkillId = arg_16_2
+function FightViewWaitingArea:_displayFlow(entityId, skillId)
+	self._displayingEntityId = entityId
+	self._displayingSkillId = skillId
 
-	if arg_16_0._cardDisplayEndFlow.status == WorkStatus.Running then
-		arg_16_0._cardDisplayEndFlow:stop()
-		arg_16_0._cardDisplayFlow:reset()
+	if self._cardDisplayEndFlow.status == WorkStatus.Running then
+		self._cardDisplayEndFlow:stop()
+		self._cardDisplayFlow:reset()
 	end
 
-	if arg_16_0._cardDisplayFlow.status == WorkStatus.Running then
-		arg_16_0._cardDisplayFlow:stop()
-		arg_16_0._cardDisplayFlow:reset()
+	if self._cardDisplayFlow.status == WorkStatus.Running then
+		self._cardDisplayFlow:stop()
+		self._cardDisplayFlow:reset()
 	end
 
-	local var_16_0 = #FightPlayCardModel.instance:getClientLeftSkillOpList()
-	local var_16_1 = arg_16_0:getUserDataTb_()
+	local count = #FightPlayCardModel.instance:getClientLeftSkillOpList()
+	local context = self:getUserDataTb_()
 
-	var_16_1.skillTipsGO = arg_16_0._skillTipsGO
-	var_16_1.skillItemGO = arg_16_0._cardItemList[var_16_0].go
-	var_16_1.waitingAreaGO = arg_16_0._waitingAreaGO
+	context.skillTipsGO = self._skillTipsGO
+	context.skillItemGO = self._cardItemList[count].go
+	context.waitingAreaGO = self._waitingAreaGO
 
-	arg_16_0._cardDisplayFlow:start(var_16_1)
-	FightPlayCardModel.instance:onPlayOneSkillId(arg_16_0._displayingEntityId, arg_16_0._displayingSkillId)
+	self._cardDisplayFlow:start(context)
+	FightPlayCardModel.instance:onPlayOneSkillId(self._displayingEntityId, self._displayingSkillId)
 end
 
-function var_0_0._dissolveFlow(arg_17_0, arg_17_1)
-	arg_17_0._dissolveEndCallback = arg_17_1
+function FightViewWaitingArea:_dissolveFlow(callback)
+	self._dissolveEndCallback = callback
 
-	local var_17_0 = {
-		dissolveSkillItemGOs = arg_17_0:getUserDataTb_()
-	}
-	local var_17_1 = false
-	local var_17_2 = #FightPlayCardModel.instance:getClientLeftSkillOpList()
-	local var_17_3 = #FightPlayCardModel.instance:getServerLeftSkillOpList()
+	local context = {}
 
-	while not var_17_1 and var_17_2 > 0 and var_17_3 <= var_17_2 do
-		var_17_1 = FightPlayCardModel.instance:checkClientSkillMatch(arg_17_0._playingEntityId, arg_17_0._playingSkillId)
+	context.dissolveSkillItemGOs = self:getUserDataTb_()
 
-		if not var_17_1 then
+	local isMatch = false
+	local clientCount = #FightPlayCardModel.instance:getClientLeftSkillOpList()
+	local serverCount = #FightPlayCardModel.instance:getServerLeftSkillOpList()
+
+	while not isMatch and clientCount > 0 and serverCount <= clientCount do
+		isMatch = FightPlayCardModel.instance:checkClientSkillMatch(self._playingEntityId, self._playingSkillId)
+
+		if not isMatch then
 			FightPlayCardModel.instance:removeClientSkillOnce()
 
-			local var_17_4 = arg_17_0._cardItemList[var_17_2].go
+			local cardGO = self._cardItemList[clientCount].go
 
-			table.insert(var_17_0.dissolveSkillItemGOs, var_17_4)
+			table.insert(context.dissolveSkillItemGOs, cardGO)
 
-			local var_17_5 = gohelper.findChild(var_17_4.transform.parent.gameObject, "lock")
+			local lockGO = gohelper.findChild(cardGO.transform.parent.gameObject, "lock")
 
-			gohelper.setActive(var_17_5, false)
+			gohelper.setActive(lockGO, false)
 		end
 
-		var_17_2 = #FightPlayCardModel.instance:getClientLeftSkillOpList()
+		clientCount = #FightPlayCardModel.instance:getClientLeftSkillOpList()
 	end
 
-	arg_17_0._cardDissolveFlow:registerDoneListener(arg_17_0._onDissolveFlowDone, arg_17_0)
-	arg_17_0._cardDissolveFlow:start(var_17_0)
+	self._cardDissolveFlow:registerDoneListener(self._onDissolveFlowDone, self)
+	self._cardDissolveFlow:start(context)
 end
 
-function var_0_0._onDissolveFlowDone(arg_18_0)
-	arg_18_0:_updateView()
+function FightViewWaitingArea:_onDissolveFlowDone()
+	self:_updateView()
 
-	local var_18_0 = arg_18_0._dissolveEndCallback
+	local callback = self._dissolveEndCallback
 
-	arg_18_0._dissolveEndCallback = nil
+	self._dissolveEndCallback = nil
 
-	if var_18_0 then
-		var_18_0(arg_18_0)
+	if callback then
+		callback(self)
 	end
 end
 
-function var_0_0._onSkillPlayFinish(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
-	if not arg_19_0._displayingEntityId then
+function FightViewWaitingArea:_onSkillPlayFinish(entity, skillId, fightStepData)
+	if not self._displayingEntityId then
 		return
 	end
 
-	if arg_19_1.id ~= arg_19_0._displayingEntityId or arg_19_2 ~= arg_19_0._displayingSkillId then
+	if entity.id ~= self._displayingEntityId or skillId ~= self._displayingSkillId then
 		return
 	end
 
-	local var_19_0
+	local skillItemGO
 
-	for iter_19_0 = #arg_19_0._cardItemList, 1, -1 do
-		local var_19_1 = arg_19_0._cardItemList[iter_19_0]
+	for i = #self._cardItemList, 1, -1 do
+		local item = self._cardItemList[i]
 
-		if var_19_1.go.activeSelf then
-			var_19_0 = var_19_1.go
+		if item.go.activeSelf then
+			skillItemGO = item.go
 
 			break
 		end
 	end
 
-	arg_19_0._displayingEntityId = nil
-	arg_19_0._displayingSkillId = nil
+	self._displayingEntityId = nil
+	self._displayingSkillId = nil
 
-	local var_19_2 = arg_19_0:getUserDataTb_()
+	local context = self:getUserDataTb_()
 
-	var_19_2.skillTipsGO = arg_19_0._skillTipsGO
-	var_19_2.skillItemGO = var_19_0
-	var_19_2.waitingAreaGO = arg_19_0._waitingAreaGO
+	context.skillTipsGO = self._skillTipsGO
+	context.skillItemGO = skillItemGO
+	context.waitingAreaGO = self._waitingAreaGO
 
-	arg_19_0._cardDisplayEndFlow:start(var_19_2)
+	self._cardDisplayEndFlow:start(context)
 end
 
-function var_0_0._onBuffUpdate(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
-	local var_20_0 = FightDataHelper.entityMgr:getById(arg_20_1)
+function FightViewWaitingArea:_onBuffUpdate(entityId, effectType, buffId)
+	local entityMO = FightDataHelper.entityMgr:getById(entityId)
 
-	if not var_20_0 or var_20_0.side ~= FightEnum.EntitySide.MySide then
+	if not entityMO or entityMO.side ~= FightEnum.EntitySide.MySide then
 		return
 	end
 
-	local var_20_1 = FightPlayCardModel.instance:getClientLeftSkillOpList()
+	local leftSkillOpList = FightPlayCardModel.instance:getClientLeftSkillOpList()
 
-	for iter_20_0 = 1, #var_20_1 do
-		local var_20_2 = arg_20_0._cardItemList[iter_20_0]
+	for i = 1, #leftSkillOpList do
+		local cardItem = self._cardItemList[i]
 
-		if var_20_2 then
-			arg_20_0:_setCardLockEffect(var_20_2, var_20_1[iter_20_0], iter_20_0)
+		if cardItem then
+			self:_setCardLockEffect(cardItem, leftSkillOpList[i], i)
 		end
 	end
 end
 
-function var_0_0._makeTipsOutofSight(arg_21_0)
-	local var_21_0 = arg_21_0._skillTipsGO.transform
+function FightViewWaitingArea:_makeTipsOutofSight()
+	local skillTipsTr = self._skillTipsGO.transform
 
-	recthelper.setAnchorX(var_21_0, 960 + recthelper.getWidth(var_21_0))
+	recthelper.setAnchorX(skillTipsTr, 960 + recthelper.getWidth(skillTipsTr))
 end
 
-function var_0_0._updateView(arg_22_0)
-	local var_22_0 = FightPlayCardModel.instance:getClientLeftSkillOpList()
-	local var_22_1 = #var_22_0
+function FightViewWaitingArea:_updateView()
+	local leftSkillOpList = FightPlayCardModel.instance:getClientLeftSkillOpList()
+	local count = #leftSkillOpList
 
-	gohelper.setActive(arg_22_0._waitingAreaGO, var_22_1 > 0)
+	gohelper.setActive(self._waitingAreaGO, count > 0)
 
-	for iter_22_0 = 1, var_22_1 do
-		local var_22_2 = arg_22_0._cardItemGOList[iter_22_0]
-		local var_22_3 = var_22_0[iter_22_0].entityId
-		local var_22_4 = var_22_0[iter_22_0].skillId
-		local var_22_5 = arg_22_0._cardItemList[iter_22_0]
+	for i = 1, count do
+		local cardItemGOParent = self._cardItemGOList[i]
+		local entityId = leftSkillOpList[i].entityId
+		local skillId = leftSkillOpList[i].skillId
+		local cardItem = self._cardItemList[i]
 
-		if not var_22_5 then
-			local var_22_6 = arg_22_0.viewContainer:getSetting().otherRes[1]
-			local var_22_7 = arg_22_0:getResInst(var_22_6, var_22_2, "card")
+		if not cardItem then
+			local path = self.viewContainer:getSetting().otherRes[1]
+			local cardItemGO = self:getResInst(path, cardItemGOParent, "card")
 
-			gohelper.setAsFirstSibling(var_22_7)
+			gohelper.setAsFirstSibling(cardItemGO)
 
-			var_22_5 = MonoHelper.addNoUpdateLuaComOnceToGo(var_22_7, FightViewCardItem, FightEnum.CardShowType.PlayCard)
+			cardItem = MonoHelper.addNoUpdateLuaComOnceToGo(cardItemGO, FightViewCardItem, FightEnum.CardShowType.PlayCard)
 
-			table.insert(arg_22_0._cardItemList, var_22_5)
+			table.insert(self._cardItemList, cardItem)
 		end
 
-		transformhelper.setLocalScale(var_22_5.tr, 1, 1, 1)
-		recthelper.setAnchor(var_22_5.tr, 0, 0)
+		transformhelper.setLocalScale(cardItem.tr, 1, 1, 1)
+		recthelper.setAnchor(cardItem.tr, 0, 0)
 
-		gohelper.onceAddComponent(var_22_5.go, typeof(UnityEngine.CanvasGroup)).alpha = 1
+		gohelper.onceAddComponent(cardItem.go, typeof(UnityEngine.CanvasGroup)).alpha = 1
 
-		gohelper.setActive(var_22_5.go, true)
-		var_22_5:updateItem(var_22_3, var_22_4)
+		gohelper.setActive(cardItem.go, true)
+		cardItem:updateItem(entityId, skillId)
 
-		var_22_5.op = var_22_0[iter_22_0]
+		cardItem.op = leftSkillOpList[i]
 
-		arg_22_0:_setCardLockEffect(var_22_5, var_22_0[iter_22_0], iter_22_0)
+		self:_setCardLockEffect(cardItem, leftSkillOpList[i], i)
 	end
 
-	for iter_22_1 = var_22_1 + 1, #arg_22_0._cardItemList do
-		local var_22_8 = arg_22_0._cardItemList[iter_22_1]
-		local var_22_9 = gohelper.findChild(var_22_8.tr.parent.gameObject, "lock")
+	for i = count + 1, #self._cardItemList do
+		local cardItem = self._cardItemList[i]
+		local lockGO = gohelper.findChild(cardItem.tr.parent.gameObject, "lock")
 
-		gohelper.setActive(var_22_9, false)
-		gohelper.setActive(var_22_8.go, false)
+		gohelper.setActive(lockGO, false)
+		gohelper.setActive(cardItem.go, false)
 	end
 
-	local var_22_10 = var_22_0[var_22_1] and var_22_0[var_22_1].skillId
-	local var_22_11 = var_22_0[var_22_1] and var_22_0[var_22_1].entityId
-	local var_22_12 = var_22_10 and lua_skill.configDict[var_22_10]
-	local var_22_13 = FightConfig.instance:getEntitySkillDesc(var_22_11, var_22_12, var_22_10)
+	local firstSkillId = leftSkillOpList[count] and leftSkillOpList[count].skillId
+	local entityId = leftSkillOpList[count] and leftSkillOpList[count].entityId
+	local skillCO = firstSkillId and lua_skill.configDict[firstSkillId]
+	local desc = FightConfig.instance:getEntitySkillDesc(entityId, skillCO, firstSkillId)
 
-	arg_22_0._txtCardTitle.text = var_22_12 and var_22_12.name or ""
-	arg_22_0._txtCardDesc.text = var_22_12 and HeroSkillModel.instance:skillDesToSpot(var_22_13) or ""
+	self._txtCardTitle.text = skillCO and skillCO.name or ""
+	self._txtCardDesc.text = skillCO and HeroSkillModel.instance:skillDesToSpot(desc) or ""
 
-	arg_22_0._txtCardDesc:ForceMeshUpdate(true, true)
+	self._txtCardDesc:ForceMeshUpdate(true, true)
 
-	local var_22_14 = arg_22_0._txtCardDesc:GetRenderedValues().y
-	local var_22_15 = var_22_14 + 83
+	local renderValue = self._txtCardDesc:GetRenderedValues()
+	local descHeight = renderValue.y
+	local height = descHeight + 83
 
-	recthelper.setHeight(arg_22_0._rectTrCardDesc, var_22_14)
-	recthelper.setHeight(arg_22_0._skillTipsGO.transform, var_22_15)
-	arg_22_0:_releaseScalseTween()
+	recthelper.setHeight(self._rectTrCardDesc, descHeight)
+	recthelper.setHeight(self._skillTipsGO.transform, height)
+	self:_releaseScalseTween()
 
-	local var_22_16 = var_22_1 > 7 and 1 - (var_22_1 - 7) * 0.12 or 1
+	local toScale = count > 7 and 1 - (count - 7) * 0.12 or 1
 
-	if var_22_16 < 0 then
-		var_22_16 = 0.5
+	if toScale < 0 then
+		toScale = 0.5
 	end
 
-	local var_22_17 = 1 / var_22_16
+	local skillScale = 1 / toScale
 
-	transformhelper.setLocalScale(arg_22_0._skillTipsGO.transform, var_22_17, var_22_17, var_22_17)
+	transformhelper.setLocalScale(self._skillTipsGO.transform, skillScale, skillScale, skillScale)
 
-	arg_22_0._tweenScale = ZProj.TweenHelper.DOScale(arg_22_0._waitingAreaTran, var_22_16, var_22_16, var_22_16, 0.1)
+	self._tweenScale = ZProj.TweenHelper.DOScale(self._waitingAreaTran, toScale, toScale, toScale, 0.1)
 end
 
-function var_0_0._releaseScalseTween(arg_23_0)
-	if arg_23_0._tweenScale then
-		ZProj.TweenHelper.KillById(arg_23_0._tweenScale)
+function FightViewWaitingArea:_releaseScalseTween()
+	if self._tweenScale then
+		ZProj.TweenHelper.KillById(self._tweenScale)
 
-		arg_23_0._tweenScale = nil
+		self._tweenScale = nil
 	end
 end
 
-function var_0_0._setCardLockEffect(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
-	local var_24_0 = Time.time
-	local var_24_1 = arg_24_0._unlockStartTime and arg_24_0._unlockStartTime[arg_24_2.skillId]
+function FightViewWaitingArea:_setCardLockEffect(cardItem, skillOp, index)
+	local now = Time.time
+	local unlockStartTime = self._unlockStartTime and self._unlockStartTime[skillOp.skillId]
 
-	if var_24_1 and var_24_0 - var_24_1 < 1 then
+	if unlockStartTime and now - unlockStartTime < 1 then
 		return
 	end
 
-	local var_24_2 = gohelper.findChild(arg_24_1.tr.parent.gameObject, "lock")
+	local lockGO = gohelper.findChild(cardItem.tr.parent.gameObject, "lock")
 
-	FightViewHandCardItemLock.setCardLock(arg_24_2.entityId, arg_24_2.skillId, var_24_2, false)
+	FightViewHandCardItemLock.setCardLock(skillOp.entityId, skillOp.skillId, lockGO, false)
 
-	local var_24_3 = FightViewHandCardItemLock.canUseCardSkill(arg_24_2.entityId, arg_24_2.skillId)
-	local var_24_4 = FightPlayCardModel.instance:getServerLeftSkillOpList()[arg_24_3]
+	local canUse = FightViewHandCardItemLock.canUseCardSkill(skillOp.entityId, skillOp.skillId)
+	local serverOp = FightPlayCardModel.instance:getServerLeftSkillOpList()[index]
+	local isPreRemove = not canUse and serverOp and serverOp.entityId == skillOp.entityId and serverOp.skillId == skillOp.skillId
 
-	if not var_24_3 and var_24_4 and var_24_4.entityId == arg_24_2.entityId and var_24_4.skillId == arg_24_2.skillId then
-		arg_24_0._preRemoveState = arg_24_0._preRemoveState or {}
-		arg_24_0._preRemoveState[arg_24_2] = true
+	if isPreRemove then
+		self._preRemoveState = self._preRemoveState or {}
+		self._preRemoveState[skillOp] = true
 
-		FightViewHandCardItemLock.setCardPreRemove(arg_24_2.entityId, arg_24_2.skillId, var_24_2, false)
+		FightViewHandCardItemLock.setCardPreRemove(skillOp.entityId, skillOp.skillId, lockGO, false)
 	end
 
-	if var_24_3 and arg_24_0._preRemoveState and arg_24_0._preRemoveState[arg_24_2] then
-		gohelper.setActive(var_24_2, true)
-		FightViewHandCardItemLock.setCardUnLock(arg_24_2.entityId, arg_24_2.skillId, var_24_2)
+	if canUse and self._preRemoveState and self._preRemoveState[skillOp] then
+		gohelper.setActive(lockGO, true)
+		FightViewHandCardItemLock.setCardUnLock(skillOp.entityId, skillOp.skillId, lockGO)
 
-		arg_24_0._preRemoveState[arg_24_2] = nil
-		arg_24_0._unlockStartTime = arg_24_0._unlockStartTime or {}
-		arg_24_0._unlockStartTime[arg_24_2] = var_24_0
+		self._preRemoveState[skillOp] = nil
+		self._unlockStartTime = self._unlockStartTime or {}
+		self._unlockStartTime[skillOp] = now
 	end
 end
 
-function var_0_0._playChangeCardEffect(arg_25_0, arg_25_1)
-	arg_25_0._changeInfos = arg_25_0._changeInfos or {}
+function FightViewWaitingArea:_playChangeCardEffect(changeInfos)
+	self._changeInfos = self._changeInfos or {}
 
-	tabletool.addValues(arg_25_0._changeInfos, arg_25_1)
-	TaskDispatcher.cancelTask(arg_25_0._delayPlayCardsChangeEffect, arg_25_0)
-	TaskDispatcher.runDelay(arg_25_0._delayPlayCardsChangeEffect, arg_25_0, 0.03)
+	tabletool.addValues(self._changeInfos, changeInfos)
+	TaskDispatcher.cancelTask(self._delayPlayCardsChangeEffect, self)
+	TaskDispatcher.runDelay(self._delayPlayCardsChangeEffect, self, 0.03)
 end
 
-function var_0_0._delayPlayCardsChangeEffect(arg_26_0)
-	local var_26_0 = arg_26_0:getUserDataTb_()
+function FightViewWaitingArea:_delayPlayCardsChangeEffect()
+	local context = self:getUserDataTb_()
 
-	var_26_0.changeInfos = arg_26_0._changeInfos
-	var_26_0.cardItemList = arg_26_0._cardItemList
+	context.changeInfos = self._changeInfos
+	context.cardItemList = self._cardItemList
 
-	arg_26_0._changeCardFlow:registerDoneListener(arg_26_0._onChangeCardDone, arg_26_0)
-	arg_26_0._changeCardFlow:start(var_26_0)
+	self._changeCardFlow:registerDoneListener(self._onChangeCardDone, self)
+	self._changeCardFlow:start(context)
 
-	arg_26_0._changeInfos = nil
+	self._changeInfos = nil
 end
 
-function var_0_0._onChangeCardDone(arg_27_0)
-	arg_27_0._changeCardFlow:unregisterDoneListener(arg_27_0._onChangeCardDone, arg_27_0)
-	arg_27_0:_updateView()
+function FightViewWaitingArea:_onChangeCardDone()
+	self._changeCardFlow:unregisterDoneListener(self._onChangeCardDone, self)
+	self:_updateView()
 	FightController.instance:dispatchEvent(FightEvent.OnChangeCardEffectDone)
 end
 
-return var_0_0
+return FightViewWaitingArea

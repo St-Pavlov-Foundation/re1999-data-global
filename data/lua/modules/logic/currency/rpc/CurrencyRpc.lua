@@ -1,106 +1,108 @@
-﻿module("modules.logic.currency.rpc.CurrencyRpc", package.seeall)
+﻿-- chunkname: @modules/logic/currency/rpc/CurrencyRpc.lua
 
-local var_0_0 = class("CurrencyRpc", BaseRpc)
+module("modules.logic.currency.rpc.CurrencyRpc", package.seeall)
 
-function var_0_0.sendGetAllCurrency(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = CurrencyConfig.instance:getAllCurrency()
+local CurrencyRpc = class("CurrencyRpc", BaseRpc)
 
-	return arg_1_0:sendGetCurrencyListRequest(var_1_0, arg_1_1, arg_1_2)
+function CurrencyRpc:sendGetAllCurrency(callback, callbackObj)
+	local allCurrency = CurrencyConfig.instance:getAllCurrency()
+
+	return self:sendGetCurrencyListRequest(allCurrency, callback, callbackObj)
 end
 
-function var_0_0.sendGetCurrencyListRequest(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	local var_2_0 = CurrencyModule_pb.GetCurrencyListRequest()
+function CurrencyRpc:sendGetCurrencyListRequest(currencyId, callback, callbackObj)
+	local req = CurrencyModule_pb.GetCurrencyListRequest()
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_1) do
-		table.insert(var_2_0.currencyIds, iter_2_1)
+	for i, v in ipairs(currencyId) do
+		table.insert(req.currencyIds, v)
 	end
 
-	return arg_2_0:sendMsg(var_2_0, arg_2_2, arg_2_3)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveGetCurrencyListReply(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 ~= 0 then
+function CurrencyRpc:onReceiveGetCurrencyListReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	CurrencyModel.instance:setCurrencyList(arg_3_2.currencyList)
+	CurrencyModel.instance:setCurrencyList(msg.currencyList)
 	CurrencyController.instance:dispatchEvent(CurrencyEvent.GetCurrencyInfoSuccess)
 end
 
-function var_0_0.onReceiveCurrencyChangePush(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 ~= 0 then
+function CurrencyRpc:onReceiveCurrencyChangePush(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	CurrencyModel.instance:changeCurrencyList(arg_4_2.changeCurrency)
+	CurrencyModel.instance:changeCurrencyList(msg.changeCurrency)
 end
 
-function var_0_0.sendGetBuyPowerInfoRequest(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = CurrencyModule_pb.GetBuyPowerInfoRequest()
+function CurrencyRpc:sendGetBuyPowerInfoRequest(callback, callbackObj)
+	local req = CurrencyModule_pb.GetBuyPowerInfoRequest()
 
-	return arg_5_0:sendMsg(var_5_0, arg_5_1, arg_5_2)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveGetBuyPowerInfoReply(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_1 ~= 0 then
+function CurrencyRpc:onReceiveGetBuyPowerInfoReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_6_0 = arg_6_2.canBuyCount
+	local canBuyCount = msg.canBuyCount
 
-	CurrencyModel.instance.powerCanBuyCount = var_6_0
+	CurrencyModel.instance.powerCanBuyCount = canBuyCount
 
 	CurrencyController.instance:dispatchEvent(CurrencyEvent.PowerBuyCountChange, false)
 end
 
-function var_0_0.sendBuyPowerRequest(arg_7_0)
-	local var_7_0 = CurrencyModule_pb.BuyPowerRequest()
+function CurrencyRpc:sendBuyPowerRequest()
+	local req = CurrencyModule_pb.BuyPowerRequest()
 
-	arg_7_0:sendMsg(var_7_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveBuyPowerReply(arg_8_0, arg_8_1, arg_8_2)
-	if arg_8_1 ~= 0 then
+function CurrencyRpc:onReceiveBuyPowerReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_8_0 = arg_8_2.canBuyCount
+	local canBuyCount = msg.canBuyCount
 
-	CurrencyModel.instance.powerCanBuyCount = var_8_0
+	CurrencyModel.instance.powerCanBuyCount = canBuyCount
 
 	SDKChannelEventModel.instance:firstBuyPower()
 	CurrencyController.instance:dispatchEvent(CurrencyEvent.PowerBuyCountChange, true)
 end
 
-function var_0_0.sendExchangeDiamondRequest(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
-	local var_9_0 = CurrencyModule_pb.ExchangeDiamondRequest()
+function CurrencyRpc:sendExchangeDiamondRequest(quantity, sourceType, callback, callbackObj)
+	local req = CurrencyModule_pb.ExchangeDiamondRequest()
 
-	var_9_0.exchangeDiamond = arg_9_1
-	var_9_0.opType = arg_9_2
+	req.exchangeDiamond = quantity
+	req.opType = sourceType
 
-	arg_9_0:sendMsg(var_9_0, arg_9_3, arg_9_4)
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveExchangeDiamondReply(arg_10_0, arg_10_1, arg_10_2)
-	if arg_10_1 ~= 0 then
+function CurrencyRpc:onReceiveExchangeDiamondReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
 	SDKChannelEventModel.instance:firstExchangeDiamond()
 
-	local var_10_0 = arg_10_2.opType
+	local sourceType = msg.opType
 
-	if var_10_0 == CurrencyEnum.PayDiamondExchangeSource.Summon then
+	if sourceType == CurrencyEnum.PayDiamondExchangeSource.Summon then
 		return
 	end
 
 	GameFacade.showToast(ToastEnum.ExchangeDiamond)
 
-	if var_10_0 == CurrencyEnum.PayDiamondExchangeSource.SkinStore then
-		StoreController.instance:recordExchangeSkinDiamond(arg_10_2.exchangeDiamond)
+	if sourceType == CurrencyEnum.PayDiamondExchangeSource.SkinStore then
+		StoreController.instance:recordExchangeSkinDiamond(msg.exchangeDiamond)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+CurrencyRpc.instance = CurrencyRpc.New()
 
-return var_0_0
+return CurrencyRpc

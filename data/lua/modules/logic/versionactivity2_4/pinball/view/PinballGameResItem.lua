@@ -1,63 +1,65 @@
-﻿module("modules.logic.versionactivity2_4.pinball.view.PinballGameResItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/pinball/view/PinballGameResItem.lua
 
-local var_0_0 = class("PinballGameResItem", LuaCompBase)
+module("modules.logic.versionactivity2_4.pinball.view.PinballGameResItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._txtNum = gohelper.findChildTextMesh(arg_1_1, "#txt_num")
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_1, "#image_icon")
-	arg_1_0._imageiconbg = gohelper.findChildImage(arg_1_1, "#image_iconbg")
-	arg_1_0._imageball = gohelper.findChildImage(arg_1_1, "#image_ball")
-	arg_1_0._anim = gohelper.findChildAnim(arg_1_1, "")
+local PinballGameResItem = class("PinballGameResItem", LuaCompBase)
+
+function PinballGameResItem:init(go)
+	self._txtNum = gohelper.findChildTextMesh(go, "#txt_num")
+	self._imageicon = gohelper.findChildImage(go, "#image_icon")
+	self._imageiconbg = gohelper.findChildImage(go, "#image_iconbg")
+	self._imageball = gohelper.findChildImage(go, "#image_ball")
+	self._anim = gohelper.findChildAnim(go, "")
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	PinballController.instance:registerCallback(PinballEvent.GameResChange, arg_2_0._refreshUI, arg_2_0)
+function PinballGameResItem:addEventListeners()
+	PinballController.instance:registerCallback(PinballEvent.GameResChange, self._refreshUI, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	PinballController.instance:unregisterCallback(PinballEvent.GameResChange, arg_3_0._refreshUI, arg_3_0)
+function PinballGameResItem:removeEventListeners()
+	PinballController.instance:unregisterCallback(PinballEvent.GameResChange, self._refreshUI, self)
 end
 
-local var_0_1 = {
+local dict = {
 	[PinballEnum.ResType.Wood] = "v2a4_tutushizi_resourcebg_1",
 	[PinballEnum.ResType.Mine] = "v2a4_tutushizi_resourcebg_3",
 	[PinballEnum.ResType.Stone] = "v2a4_tutushizi_resourcebg_2",
 	[PinballEnum.ResType.Food] = "v2a4_tutushizi_resourcebg_4"
 }
-local var_0_2 = {
+local dict2 = {
 	[PinballEnum.ResType.Wood] = "v2a4_tutushizi_smallball_3",
 	[PinballEnum.ResType.Mine] = "v2a4_tutushizi_smallball_1",
 	[PinballEnum.ResType.Stone] = "v2a4_tutushizi_smallball_4",
 	[PinballEnum.ResType.Food] = "v2a4_tutushizi_smallball_2"
 }
 
-function var_0_0.setData(arg_4_0, arg_4_1)
-	arg_4_0._resType = arg_4_1
+function PinballGameResItem:setData(data)
+	self._resType = data
 
-	arg_4_0:_refreshUI()
+	self:_refreshUI()
 
-	local var_4_0 = lua_activity178_resource.configDict[VersionActivity2_4Enum.ActivityId.Pinball][arg_4_0._resType]
+	local resCo = lua_activity178_resource.configDict[VersionActivity2_4Enum.ActivityId.Pinball][self._resType]
 
-	if not var_4_0 then
+	if not resCo then
 		return
 	end
 
-	UISpriteSetMgr.instance:setAct178Sprite(arg_4_0._imageicon, var_4_0.icon)
-	UISpriteSetMgr.instance:setAct178Sprite(arg_4_0._imageiconbg, var_0_1[arg_4_0._resType])
-	UISpriteSetMgr.instance:setAct178Sprite(arg_4_0._imageball, var_0_2[arg_4_0._resType])
+	UISpriteSetMgr.instance:setAct178Sprite(self._imageicon, resCo.icon)
+	UISpriteSetMgr.instance:setAct178Sprite(self._imageiconbg, dict[self._resType])
+	UISpriteSetMgr.instance:setAct178Sprite(self._imageball, dict2[self._resType])
 end
 
-function var_0_0._refreshUI(arg_5_0)
-	local var_5_0 = PinballModel.instance:getGameRes(arg_5_0._resType)
+function PinballGameResItem:_refreshUI()
+	local num = PinballModel.instance:getGameRes(self._resType)
 
-	if arg_5_0._cacheNum and var_5_0 > arg_5_0._cacheNum and (not arg_5_0._playAnimDt or UnityEngine.Time.realtimeSinceStartup - arg_5_0._playAnimDt > 2) then
-		arg_5_0._anim:Play("refresh", 0, 0)
+	if self._cacheNum and num > self._cacheNum and (not self._playAnimDt or UnityEngine.Time.realtimeSinceStartup - self._playAnimDt > 2) then
+		self._anim:Play("refresh", 0, 0)
 
-		arg_5_0._playAnimDt = UnityEngine.Time.realtimeSinceStartup
+		self._playAnimDt = UnityEngine.Time.realtimeSinceStartup
 	end
 
-	arg_5_0._cacheNum = var_5_0
-	arg_5_0._txtNum.text = var_5_0
+	self._cacheNum = num
+	self._txtNum.text = num
 end
 
-return var_0_0
+return PinballGameResItem

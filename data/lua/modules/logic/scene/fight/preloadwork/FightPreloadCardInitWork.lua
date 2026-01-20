@@ -1,48 +1,50 @@
-﻿module("modules.logic.scene.fight.preloadwork.FightPreloadCardInitWork", package.seeall)
+﻿-- chunkname: @modules/logic/scene/fight/preloadwork/FightPreloadCardInitWork.lua
 
-local var_0_0 = class("FightPreloadCardInitWork", BaseWork)
+module("modules.logic.scene.fight.preloadwork.FightPreloadCardInitWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
+local FightPreloadCardInitWork = class("FightPreloadCardInitWork", BaseWork)
+
+function FightPreloadCardInitWork:onStart(context)
 	if ViewMgr.instance:isOpenFinish(ViewName.FightView) then
-		arg_1_0:_updateCards()
+		self:_updateCards()
 	else
-		ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_1_0._onOpenViewFinish, arg_1_0)
+		ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
 	end
 end
 
-function var_0_0._onOpenViewFinish(arg_2_0, arg_2_1)
-	if arg_2_1 == ViewName.FightView then
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_2_0._onOpenViewFinish, arg_2_0)
-		arg_2_0:_updateCards()
+function FightPreloadCardInitWork:_onOpenViewFinish(viewName)
+	if viewName == ViewName.FightView then
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
+		self:_updateCards()
 	end
 end
 
-function var_0_0._updateCards(arg_3_0)
-	local var_3_0 = FightDataHelper.handCardMgr.handCard
+function FightPreloadCardInitWork:_updateCards()
+	local handCards = FightDataHelper.handCardMgr.handCard
 
-	FightController.instance:dispatchEvent(FightEvent.UpdateHandCards, var_3_0)
+	FightController.instance:dispatchEvent(FightEvent.UpdateHandCards, handCards)
 
-	local var_3_1 = ViewMgr.instance:getContainer(ViewName.FightView)
-	local var_3_2 = gohelper.findChild(var_3_1.viewGO, "root/handcards/handcards")
+	local fightView = ViewMgr.instance:getContainer(ViewName.FightView)
+	local handCardsGO = gohelper.findChild(fightView.viewGO, "root/handcards/handcards")
 
-	gohelper.setActive(var_3_2, true)
+	gohelper.setActive(handCardsGO, true)
 
-	local var_3_3 = gohelper.onceAddComponent(var_3_2, gohelper.Type_CanvasGroup)
+	local canvasGroup = gohelper.onceAddComponent(handCardsGO, gohelper.Type_CanvasGroup)
 
-	if var_3_3 then
-		var_3_3.alpha = 0
+	if canvasGroup then
+		canvasGroup.alpha = 0
 	end
 
-	TaskDispatcher.runDelay(arg_3_0._delayDone, arg_3_0, 0.01)
+	TaskDispatcher.runDelay(self._delayDone, self, 0.01)
 end
 
-function var_0_0._delayDone(arg_4_0)
-	arg_4_0:onDone(true)
+function FightPreloadCardInitWork:_delayDone()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0._delayDone, arg_5_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_5_0._onOpenViewFinish, arg_5_0)
+function FightPreloadCardInitWork:clearWork()
+	TaskDispatcher.cancelTask(self._delayDone, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
 end
 
-return var_0_0
+return FightPreloadCardInitWork

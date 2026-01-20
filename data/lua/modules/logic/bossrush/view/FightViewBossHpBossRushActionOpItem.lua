@@ -1,77 +1,79 @@
-﻿module("modules.logic.bossrush.view.FightViewBossHpBossRushActionOpItem", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/view/FightViewBossHpBossRushActionOpItem.lua
 
-local var_0_0 = class("FightViewBossHpBossRushActionOpItem", FightBaseView)
+module("modules.logic.bossrush.view.FightViewBossHpBossRushActionOpItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local FightViewBossHpBossRushActionOpItem = class("FightViewBossHpBossRushActionOpItem", FightBaseView)
+
+function FightViewBossHpBossRushActionOpItem:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:com_registFightEvent(FightEvent.ForbidBossRushHpChannelSkillOpItem, arg_2_0._onForbidBossRushHpChannelSkillOpItem)
+function FightViewBossHpBossRushActionOpItem:addEvents()
+	self:com_registFightEvent(FightEvent.ForbidBossRushHpChannelSkillOpItem, self._onForbidBossRushHpChannelSkillOpItem)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function FightViewBossHpBossRushActionOpItem:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function FightViewBossHpBossRushActionOpItem:_editableInitView()
 	return
 end
 
-function var_0_0.onOpen(arg_5_0)
+function FightViewBossHpBossRushActionOpItem:onOpen()
 	return
 end
 
-function var_0_0._onForbidBossRushHpChannelSkillOpItem(arg_6_0, arg_6_1)
-	if arg_6_1 == arg_6_0._data then
-		arg_6_0:refreshUI(arg_6_0.viewGO, arg_6_1)
+function FightViewBossHpBossRushActionOpItem:_onForbidBossRushHpChannelSkillOpItem(data)
+	if data == self._data then
+		self:refreshUI(self.viewGO, data)
 	end
 end
 
-function var_0_0.refreshUI(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_0.viewGO = arg_7_1
-	arg_7_0._data = arg_7_2
+function FightViewBossHpBossRushActionOpItem:refreshUI(obj, data)
+	self.viewGO = obj
+	self._data = data
 
-	local var_7_0 = gohelper.findChild(arg_7_0.viewGO, "root/noAct")
-	local var_7_1 = gohelper.findChild(arg_7_0.viewGO, "root/act")
-	local var_7_2 = arg_7_2.skillId
+	local noAct = gohelper.findChild(self.viewGO, "root/noAct")
+	local act = gohelper.findChild(self.viewGO, "root/act")
+	local skillId = data.skillId
 
-	gohelper.setActive(var_7_1, var_7_2 ~= 0)
-	gohelper.setActive(var_7_0, var_7_2 == 0)
+	gohelper.setActive(act, skillId ~= 0)
+	gohelper.setActive(noAct, skillId == 0)
 
-	if var_7_2 == 0 then
+	if skillId == 0 then
 		return
 	end
 
-	local var_7_3 = gohelper.findChild(arg_7_0.viewGO, "root/act/round")
-	local var_7_4 = gohelper.findChildText(arg_7_0.viewGO, "root/act/round/num")
-	local var_7_5 = gohelper.findChild(arg_7_0.viewGO, "root/act/forbid")
+	local round = gohelper.findChild(self.viewGO, "root/act/round")
+	local num = gohelper.findChildText(self.viewGO, "root/act/round/num")
+	local forbid = gohelper.findChild(self.viewGO, "root/act/forbid")
 
-	gohelper.setActive(var_7_5, arg_7_2.isChannelPosedSkill and arg_7_2.forbidden)
-	gohelper.setActive(var_7_3, arg_7_2.isChannelSkill)
+	gohelper.setActive(forbid, data.isChannelPosedSkill and data.forbidden)
+	gohelper.setActive(round, data.isChannelSkill)
 
-	var_7_4.text = arg_7_2.round or 0
+	num.text = data.round or 0
 
-	if not arg_7_0.opItemView then
-		arg_7_0.opItemView = arg_7_0:com_openSubView(FightBossRushHpTrackAIUseCardsItem, var_7_1)
+	if not self.opItemView then
+		self.opItemView = self:com_openSubView(FightBossRushHpTrackAIUseCardsItem, act)
 	end
 
-	local var_7_6 = FightCardInfoData.New(FightDef_pb.CardInfo())
+	local cardData = FightCardInfoData.New(FightDef_pb.CardInfo())
 
-	var_7_6.uid = arg_7_0.PARENT_VIEW._bossEntityMO.uid
-	var_7_6.skillId = var_7_2
+	cardData.uid = self.PARENT_VIEW._bossEntityMO.uid
+	cardData.skillId = skillId
 
-	arg_7_0.opItemView:onRefreshItemData(var_7_6)
+	self.opItemView:onRefreshItemData(cardData)
 end
 
-function var_0_0.onClose(arg_8_0)
+function FightViewBossHpBossRushActionOpItem:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
+function FightViewBossHpBossRushActionOpItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return FightViewBossHpBossRushActionOpItem

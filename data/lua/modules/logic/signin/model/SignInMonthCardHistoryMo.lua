@@ -1,17 +1,19 @@
-﻿module("modules.logic.signin.model.SignInMonthCardHistoryMo", package.seeall)
+﻿-- chunkname: @modules/logic/signin/model/SignInMonthCardHistoryMo.lua
 
-local var_0_0 = pureTable("SignInMonthCardHistoryMo")
+module("modules.logic.signin.model.SignInMonthCardHistoryMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.id = 0
-	arg_1_0.startTime = 0
-	arg_1_0.endTime = 0
+local SignInMonthCardHistoryMo = pureTable("SignInMonthCardHistoryMo")
+
+function SignInMonthCardHistoryMo:ctor()
+	self.id = 0
+	self.startTime = 0
+	self.endTime = 0
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.id = arg_2_1.id
-	arg_2_0.startTime = arg_2_1.startTime
-	arg_2_0.endTime = arg_2_1.endTime
+function SignInMonthCardHistoryMo:init(info)
+	self.id = info.id
+	self.startTime = info.startTime
+	self.endTime = info.endTime
 end
 
-return var_0_0
+return SignInMonthCardHistoryMo

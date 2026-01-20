@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_assassin_hero_trial", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_assassin_hero_trial.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_assassin_hero_trial", package.seeall)
+
+local lua_assassin_hero_trial = {}
+local fields = {
 	heroImg = 5,
 	heroIcon = 4,
 	secondCareer = 3,
@@ -11,13 +13,13 @@ local var_0_1 = {
 	career = 2,
 	unlock = 7
 }
-local var_0_2 = {
+local primaryKey = {
 	"assassinHeroId"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_assassin_hero_trial.onLoad(json)
+	lua_assassin_hero_trial.configList, lua_assassin_hero_trial.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_assassin_hero_trial

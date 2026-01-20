@@ -1,112 +1,114 @@
-﻿module("modules.logic.survival.view.map.comp.SurvivalFilterPart", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/comp/SurvivalFilterPart.lua
 
-local var_0_0 = class("SurvivalFilterPart", LuaCompBase)
+module("modules.logic.survival.view.map.comp.SurvivalFilterPart", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._btnfilter = gohelper.findChildButtonWithAudio(arg_1_1, "")
-	arg_1_0._filterTips = gohelper.findChild(arg_1_1, "#go_tips")
-	arg_1_0._filterItem = gohelper.findChild(arg_1_1, "#go_tips/#go_item")
-	arg_1_0._gofilterselect = gohelper.findChild(arg_1_1, "#go_select")
+local SurvivalFilterPart = class("SurvivalFilterPart", LuaCompBase)
 
-	gohelper.setActive(arg_1_0._filterTips, false)
+function SurvivalFilterPart:init(go)
+	self._btnfilter = gohelper.findChildButtonWithAudio(go, "")
+	self._filterTips = gohelper.findChild(go, "#go_tips")
+	self._filterItem = gohelper.findChild(go, "#go_tips/#go_item")
+	self._gofilterselect = gohelper.findChild(go, "#go_select")
+
+	gohelper.setActive(self._filterTips, false)
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._btnfilter:AddClickListener(arg_2_0._openCloseFilterTips, arg_2_0)
-	arg_2_0:addEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreen, arg_2_0.onTouchScreen, arg_2_0)
+function SurvivalFilterPart:addEventListeners()
+	self._btnfilter:AddClickListener(self._openCloseFilterTips, self)
+	self:addEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreen, self.onTouchScreen, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btnfilter:RemoveClickListener()
+function SurvivalFilterPart:removeEventListeners()
+	self._btnfilter:RemoveClickListener()
 end
 
-function var_0_0.setOptions(arg_4_0, arg_4_1)
-	arg_4_0._filterList = {}
-	arg_4_0._filterItems = {}
+function SurvivalFilterPart:setOptions(filterOptions)
+	self._filterList = {}
+	self._filterItems = {}
 
-	gohelper.CreateObjList(arg_4_0, arg_4_0._createFilterItem, arg_4_1, nil, arg_4_0._filterItem, nil, nil, nil, 1)
-	arg_4_0:onChange()
+	gohelper.CreateObjList(self, self._createFilterItem, filterOptions, nil, self._filterItem, nil, nil, nil, 1)
+	self:onChange()
 end
 
-function var_0_0._createFilterItem(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	arg_5_0._filterItems[arg_5_3] = arg_5_0:getUserDataTb_()
-	arg_5_0._filterItems[arg_5_3].selectbg = gohelper.findChild(arg_5_1, "selectbg")
+function SurvivalFilterPart:_createFilterItem(obj, data, index)
+	self._filterItems[index] = self:getUserDataTb_()
+	self._filterItems[index].selectbg = gohelper.findChild(obj, "selectbg")
 
-	local var_5_0 = gohelper.findChildTextMesh(arg_5_1, "#txt_desc")
+	local txtdesc = gohelper.findChildTextMesh(obj, "#txt_desc")
 
-	var_5_0.text = arg_5_2.desc
-	arg_5_0._filterItems[arg_5_3].txtdesc = var_5_0
-	arg_5_0._filterItems[arg_5_3].data = arg_5_2
+	txtdesc.text = data.desc
+	self._filterItems[index].txtdesc = txtdesc
+	self._filterItems[index].data = data
 
-	local var_5_1 = gohelper.getClick(arg_5_1)
+	local click = gohelper.getClick(obj)
 
-	arg_5_0:addClickCb(var_5_1, arg_5_0._onClickFilterItem, arg_5_0, arg_5_2)
+	self:addClickCb(click, self._onClickFilterItem, self, data)
 end
 
-function var_0_0._onClickFilterItem(arg_6_0, arg_6_1)
-	local var_6_0 = tabletool.indexOf(arg_6_0._filterList, arg_6_1)
+function SurvivalFilterPart:_onClickFilterItem(data)
+	local index = tabletool.indexOf(self._filterList, data)
 
-	if var_6_0 then
-		table.remove(arg_6_0._filterList, var_6_0)
+	if index then
+		table.remove(self._filterList, index)
 	else
-		table.insert(arg_6_0._filterList, arg_6_1)
+		table.insert(self._filterList, data)
 	end
 
-	arg_6_0:onChange()
+	self:onChange()
 end
 
-function var_0_0.setOptionChangeCallback(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_0._changeCallback = arg_7_1
-	arg_7_0._changeCallobj = arg_7_2
+function SurvivalFilterPart:setOptionChangeCallback(callback, callobj)
+	self._changeCallback = callback
+	self._changeCallobj = callobj
 end
 
-function var_0_0._openCloseFilterTips(arg_8_0)
-	gohelper.setActive(arg_8_0._filterTips, not arg_8_0._filterTips.activeSelf)
+function SurvivalFilterPart:_openCloseFilterTips()
+	gohelper.setActive(self._filterTips, not self._filterTips.activeSelf)
 
-	if arg_8_0._clickCb and arg_8_0._callobj then
-		arg_8_0._clickCb(arg_8_0._callobj, arg_8_0._filterTips.activeSelf)
+	if self._clickCb and self._callobj then
+		self._clickCb(self._callobj, self._filterTips.activeSelf)
 	end
 end
 
-function var_0_0.onTouchScreen(arg_9_0)
-	if arg_9_0._filterTips.activeSelf then
-		if gohelper.isMouseOverGo(arg_9_0._filterTips) or gohelper.isMouseOverGo(arg_9_0._btnfilter) then
+function SurvivalFilterPart:onTouchScreen()
+	if self._filterTips.activeSelf then
+		if gohelper.isMouseOverGo(self._filterTips) or gohelper.isMouseOverGo(self._btnfilter) then
 			return
 		end
 
-		gohelper.setActive(arg_9_0._filterTips, false)
+		gohelper.setActive(self._filterTips, false)
 
-		if arg_9_0._clickCb and arg_9_0._callobj then
-			arg_9_0._clickCb(arg_9_0._callobj, arg_9_0._filterTips.activeSelf)
+		if self._clickCb and self._callobj then
+			self._clickCb(self._callobj, self._filterTips.activeSelf)
 		end
 	end
 end
 
-function var_0_0.onChange(arg_10_0)
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0._filterItems) do
-		local var_10_0 = tabletool.indexOf(arg_10_0._filterList, iter_10_1.data)
+function SurvivalFilterPart:onChange()
+	for index, item in ipairs(self._filterItems) do
+		local isSelect = tabletool.indexOf(self._filterList, item.data)
 
-		gohelper.setActive(iter_10_1.selectbg, var_10_0)
-		SLFramework.UGUI.GuiHelper.SetColor(iter_10_1.txtdesc, var_10_0 and "#000000" or "#FFFFFF")
+		gohelper.setActive(item.selectbg, isSelect)
+		SLFramework.UGUI.GuiHelper.SetColor(item.txtdesc, isSelect and "#000000" or "#FFFFFF")
 	end
 
-	gohelper.setActive(arg_10_0._gofilterselect, (next(arg_10_0._filterList)))
+	gohelper.setActive(self._gofilterselect, (next(self._filterList)))
 
-	if arg_10_0._changeCallback then
-		arg_10_0._changeCallback(arg_10_0._changeCallobj, arg_10_0._filterList)
+	if self._changeCallback then
+		self._changeCallback(self._changeCallobj, self._filterList)
 	end
 end
 
-function var_0_0.setClickCb(arg_11_0, arg_11_1, arg_11_2)
-	arg_11_0._clickCb = arg_11_1
-	arg_11_0._callobj = arg_11_2
+function SurvivalFilterPart:setClickCb(cb, callobj)
+	self._clickCb = cb
+	self._callobj = callobj
 end
 
-function var_0_0.onDestroy(arg_12_0)
-	arg_12_0._clickCb = nil
-	arg_12_0._callobj = nil
-	arg_12_0._changeCallback = nil
-	arg_12_0._changeCallobj = nil
+function SurvivalFilterPart:onDestroy()
+	self._clickCb = nil
+	self._callobj = nil
+	self._changeCallback = nil
+	self._changeCallobj = nil
 end
 
-return var_0_0
+return SurvivalFilterPart

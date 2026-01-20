@@ -1,48 +1,50 @@
-﻿module("modules.logic.pcInput.activityAdapter.RoomActivityAdapter", package.seeall)
+﻿-- chunkname: @modules/logic/pcInput/activityAdapter/RoomActivityAdapter.lua
 
-local var_0_0 = class("RoomActivityAdapter", BaseActivityAdapter)
+module("modules.logic.pcInput.activityAdapter.RoomActivityAdapter", package.seeall)
 
-var_0_0.keytoFunction = {
+local RoomActivityAdapter = class("RoomActivityAdapter", BaseActivityAdapter)
+
+RoomActivityAdapter.keytoFunction = {
 	function()
-		local var_1_0 = RoomController.instance:isObMode()
+		local isInOb = RoomController.instance:isObMode()
 
-		if ViewMgr.instance:IsPopUpViewOpen() and not ViewMgr.instance:isOpen(ViewName.RoomCharacterPlaceView) or not var_1_0 then
+		if ViewMgr.instance:IsPopUpViewOpen() and not ViewMgr.instance:isOpen(ViewName.RoomCharacterPlaceView) or not isInOb then
 			return
 		end
 
 		HelpController.instance:showHelp(HelpEnum.HelpId.RoomOb, true)
 	end,
 	function()
-		local var_2_0 = RoomController.instance:isObMode()
+		local isInOb = RoomController.instance:isObMode()
 
-		if ViewMgr.instance:IsPopUpViewOpen() or not var_2_0 then
+		if ViewMgr.instance:IsPopUpViewOpen() or not isInOb then
 			return
 		end
 
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyRoomMarket)
 	end,
 	function()
-		local var_3_0 = RoomController.instance:isObMode()
+		local isInOb = RoomController.instance:isObMode()
 
-		if ViewMgr.instance:IsPopUpViewOpen() or not var_3_0 then
+		if ViewMgr.instance:IsPopUpViewOpen() or not isInOb then
 			return
 		end
 
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyRoomBellTower)
 	end,
 	function()
-		local var_4_0 = RoomController.instance:isObMode()
+		local isInOb = RoomController.instance:isObMode()
 
-		if ViewMgr.instance:IsPopUpViewOpen() or not var_4_0 then
+		if ViewMgr.instance:IsPopUpViewOpen() or not isInOb then
 			return
 		end
 
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyRoomCharactorFaith)
 	end,
 	function()
-		local var_5_0 = RoomController.instance:isObMode()
+		local isInOb = RoomController.instance:isObMode()
 
-		if ViewMgr.instance:IsPopUpViewOpen() or not var_5_0 then
+		if ViewMgr.instance:IsPopUpViewOpen() or not isInOb then
 			return
 		end
 
@@ -63,36 +65,36 @@ var_0_0.keytoFunction = {
 		PCInputController.instance:dispatchEvent(PCInputEvent.Notifylocate)
 	end,
 	[9] = function()
-		local var_8_0 = RoomController.instance:isObMode()
+		local isInOb = RoomController.instance:isObMode()
 
-		if ViewMgr.instance:IsPopUpViewOpen() or not var_8_0 then
+		if ViewMgr.instance:IsPopUpViewOpen() or not isInOb then
 			return
 		end
 
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyBuy)
 	end,
 	[10] = function()
-		local var_9_0 = RoomController.instance:isObMode()
+		local isInOb = RoomController.instance:isObMode()
 
-		if ViewMgr.instance:IsPopUpViewOpen() or not var_9_0 then
+		if ViewMgr.instance:IsPopUpViewOpen() or not isInOb then
 			return
 		end
 
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyLayout)
 	end,
 	[11] = function()
-		local var_10_0 = RoomController.instance:isObMode()
+		local isInOb = RoomController.instance:isObMode()
 
-		if ViewMgr.instance:IsPopUpViewOpen() or not var_10_0 then
+		if ViewMgr.instance:IsPopUpViewOpen() or not isInOb then
 			return
 		end
 
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyPlace)
 	end,
 	[12] = function()
-		local var_11_0 = RoomController.instance:isObMode()
+		local isInOb = RoomController.instance:isObMode()
 
-		if ViewMgr.instance:IsPopUpViewOpen() or not var_11_0 then
+		if ViewMgr.instance:IsPopUpViewOpen() or not isInOb then
 			return
 		end
 
@@ -100,7 +102,7 @@ var_0_0.keytoFunction = {
 	end
 }
 
-function var_0_0.checkCanOpen(arg_12_0)
+function RoomActivityAdapter:checkCanOpen()
 	if ViewMgr.instance:IsPopUpViewOpen() then
 		return false
 	end
@@ -108,29 +110,29 @@ function var_0_0.checkCanOpen(arg_12_0)
 	return true
 end
 
-function var_0_0.ctor(arg_13_0)
-	BaseActivityAdapter.ctor(arg_13_0)
+function RoomActivityAdapter:ctor()
+	BaseActivityAdapter.ctor(self)
 
-	arg_13_0.keytoFunction = var_0_0.keytoFunction
-	arg_13_0.activitid = PCInputModel.Activity.room
+	self.keytoFunction = RoomActivityAdapter.keytoFunction
+	self.activitid = PCInputModel.Activity.room
 
-	arg_13_0:registerFunction()
+	self:registerFunction()
 end
 
-function var_0_0.OnkeyUp(arg_14_0, arg_14_1)
+function RoomActivityAdapter:OnkeyUp(keyName)
 	if GuideModel.instance:isDoingClickGuide() or not GuideModel.instance:isGuideFinish(406) then
 		return
 	end
 
-	BaseActivityAdapter.OnkeyUp(arg_14_0, arg_14_1)
+	BaseActivityAdapter.OnkeyUp(self, keyName)
 end
 
-function var_0_0.OnkeyDown(arg_15_0, arg_15_1)
+function RoomActivityAdapter:OnkeyDown(keyName)
 	if GuideModel.instance:isDoingClickGuide() or not GuideModel.instance:isGuideFinish(406) then
 		return
 	end
 
-	BaseActivityAdapter.OnkeyUp(arg_15_0, arg_15_1)
+	BaseActivityAdapter.OnkeyUp(self, keyName)
 end
 
-return var_0_0
+return RoomActivityAdapter

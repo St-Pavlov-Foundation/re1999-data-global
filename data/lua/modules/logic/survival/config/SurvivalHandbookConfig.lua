@@ -1,28 +1,32 @@
-﻿module("modules.logic.survival.config.SurvivalHandbookConfig", package.seeall)
+﻿-- chunkname: @modules/logic/survival/config/SurvivalHandbookConfig.lua
 
-local var_0_0 = class("SurvivalHandbookConfig", BaseConfig)
+module("modules.logic.survival.config.SurvivalHandbookConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local SurvivalHandbookConfig = class("SurvivalHandbookConfig", BaseConfig)
+
+function SurvivalHandbookConfig:ctor()
 	return
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function SurvivalHandbookConfig:reqConfigNames()
 	return {
 		"survival_handbook",
 		"survival_equip"
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "survival_handbook" then
+function SurvivalHandbookConfig:onConfigLoaded(configName, configTable)
+	if configName == "survival_handbook" then
 		-- block empty
 	end
 end
 
-function var_0_0.getConfigList(arg_4_0)
-	return lua_survival_handbook.configList
+function SurvivalHandbookConfig:getConfigList()
+	local list = lua_survival_handbook.configList
+
+	return list
 end
 
-var_0_0.instance = var_0_0.New()
+SurvivalHandbookConfig.instance = SurvivalHandbookConfig.New()
 
-return var_0_0
+return SurvivalHandbookConfig

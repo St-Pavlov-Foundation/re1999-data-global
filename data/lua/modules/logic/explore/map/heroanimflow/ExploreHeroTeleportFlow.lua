@@ -1,66 +1,75 @@
-﻿module("modules.logic.explore.map.heroanimflow.ExploreHeroTeleportFlow", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/heroanimflow/ExploreHeroTeleportFlow.lua
 
-local var_0_0 = class("ExploreHeroTeleportFlow")
+module("modules.logic.explore.map.heroanimflow.ExploreHeroTeleportFlow", package.seeall)
 
-function var_0_0.begin(arg_1_0, arg_1_1)
+local ExploreHeroTeleportFlow = class("ExploreHeroTeleportFlow")
+
+function ExploreHeroTeleportFlow:begin(pos)
 	UIBlockMgrExtend.instance.setNeedCircleMv(false)
 	UIBlockMgr.instance:startBlock("ExploreHeroTeleportFlow")
 
-	arg_1_0.toPos = arg_1_1
+	self.toPos = pos
 
 	ViewMgr.instance:openView(ViewName.ExploreBlackView)
-	ExploreController.instance:getMap():getHero():stopMoving(true)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_1_0.onOpenViewFinish, arg_1_0)
+
+	local hero = ExploreController.instance:getMap():getHero()
+
+	hero:stopMoving(true)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, self.onOpenViewFinish, self)
 end
 
-function var_0_0.onOpenViewFinish(arg_2_0, arg_2_1)
-	if arg_2_1 ~= ViewName.ExploreBlackView then
+function ExploreHeroTeleportFlow:onOpenViewFinish(viewName)
+	if viewName ~= ViewName.ExploreBlackView then
 		return
 	end
 
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_2_0.onOpenViewFinish, arg_2_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, self.onOpenViewFinish, self)
 
-	local var_2_0 = ExploreController.instance:getMap():getHero()
+	local hero = ExploreController.instance:getMap():getHero()
 
-	var_2_0:stopMoving(true)
-	var_2_0:setTilemapPos(arg_2_0.toPos)
-	TaskDispatcher.runDelay(arg_2_0._delayLoadObj, arg_2_0, 0.1)
+	hero:stopMoving(true)
+	hero:setTilemapPos(self.toPos)
+	TaskDispatcher.runDelay(self._delayLoadObj, self, 0.1)
 end
 
-function var_0_0._delayLoadObj(arg_3_0)
-	ExploreController.instance:registerCallback(ExploreEvent.SceneObjAllLoadedDone, arg_3_0.onBlackEnd, arg_3_0)
+function ExploreHeroTeleportFlow:_delayLoadObj()
+	ExploreController.instance:registerCallback(ExploreEvent.SceneObjAllLoadedDone, self.onBlackEnd, self)
 	ExploreController.instance:getMap():markWaitAllSceneObj()
 	ExploreController.instance:getMap():clearUnUseObj()
 end
 
-function var_0_0.onBlackEnd(arg_4_0)
+function ExploreHeroTeleportFlow:onBlackEnd()
 	ExploreModel.instance:setHeroControl(true, ExploreEnum.HeroLock.Teleport)
 	ViewMgr.instance:closeView(ViewName.ExploreBlackView)
-	ExploreController.instance:getMap():getHero():setHeroStatus(ExploreAnimEnum.RoleAnimStatus.Entry, true, true)
+
+	local map = ExploreController.instance:getMap()
+	local hero = map:getHero()
+
+	hero:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.Entry, true, true)
 	UIBlockMgrExtend.instance.setNeedCircleMv(true)
 	UIBlockMgr.instance:endBlock("ExploreHeroTeleportFlow")
-	ExploreController.instance:unregisterCallback(ExploreEvent.SceneObjAllLoadedDone, arg_4_0.onBlackEnd, arg_4_0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.SceneObjAllLoadedDone, self.onBlackEnd, self)
 
-	arg_4_0.toPos = nil
+	self.toPos = nil
 end
 
-function var_0_0.clear(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0._delayLoadObj, arg_5_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_5_0.onOpenViewFinish, arg_5_0)
+function ExploreHeroTeleportFlow:clear()
+	TaskDispatcher.cancelTask(self._delayLoadObj, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, self.onOpenViewFinish, self)
 	ExploreModel.instance:setHeroControl(true, ExploreEnum.HeroLock.Teleport)
 	UIBlockMgrExtend.instance.setNeedCircleMv(true)
 	ViewMgr.instance:closeView(ViewName.ExploreBlackView)
 	UIBlockMgr.instance:endBlock("ExploreHeroTeleportFlow")
 
-	arg_5_0.toPos = nil
+	self.toPos = nil
 
-	ExploreController.instance:unregisterCallback(ExploreEvent.SceneObjAllLoadedDone, arg_5_0.onBlackEnd, arg_5_0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.SceneObjAllLoadedDone, self.onBlackEnd, self)
 end
 
-function var_0_0.isInFlow(arg_6_0)
-	return arg_6_0.toPos and true or false
+function ExploreHeroTeleportFlow:isInFlow()
+	return self.toPos and true or false
 end
 
-var_0_0.instance = var_0_0.New()
+ExploreHeroTeleportFlow.instance = ExploreHeroTeleportFlow.New()
 
-return var_0_0
+return ExploreHeroTeleportFlow

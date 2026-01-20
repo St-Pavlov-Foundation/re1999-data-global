@@ -1,340 +1,342 @@
-﻿module("modules.logic.seasonver.act123.view.Season123ResetView", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view/Season123ResetView.lua
 
-local var_0_0 = class("Season123ResetView", BaseView)
+module("modules.logic.seasonver.act123.view.Season123ResetView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goheroitem = gohelper.findChild(arg_1_0.viewGO, "Bottom/#scroll_herolist/Viewport/Content/#go_heroitem")
-	arg_1_0._goepisodeitem = gohelper.findChild(arg_1_0.viewGO, "Top/#go_story/chapterlist/#scroll_chapter/Viewport/Content/#go_stageitem")
-	arg_1_0._goareaitem = gohelper.findChild(arg_1_0.viewGO, "Top/#go_story/chapterlist/#scroll_chapter/Viewport/Content/#go_areaitem")
-	arg_1_0._btnreset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Bottom/#btn_reset")
-	arg_1_0._txtlevel = gohelper.findChildText(arg_1_0.viewGO, "Bottom/#txt_level")
-	arg_1_0._goempty3 = gohelper.findChild(arg_1_0.viewGO, "Top/#go_story/chapterlist/#scroll_chapter/Viewport/Content/empty3")
-	arg_1_0._goempty4 = gohelper.findChild(arg_1_0.viewGO, "Top/#go_story/chapterlist/#scroll_chapter/Viewport/Content/empty4")
-	arg_1_0._txtreset = gohelper.findChildText(arg_1_0.viewGO, "Bottom/#btn_reset/Text")
-	arg_1_0._imagereset = gohelper.findChildImage(arg_1_0.viewGO, "Bottom/#btn_reset")
-	arg_1_0._goheroexist = gohelper.findChild(arg_1_0.viewGO, "Bottom/#scroll_herolist")
-	arg_1_0._goheroempty = gohelper.findChild(arg_1_0.viewGO, "Bottom/#go_heroempty")
-	arg_1_0._goscrollchapter = gohelper.findChild(arg_1_0.viewGO, "Top/#go_story/chapterlist/#scroll_chapter")
+local Season123ResetView = class("Season123ResetView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Season123ResetView:onInitView()
+	self._goheroitem = gohelper.findChild(self.viewGO, "Bottom/#scroll_herolist/Viewport/Content/#go_heroitem")
+	self._goepisodeitem = gohelper.findChild(self.viewGO, "Top/#go_story/chapterlist/#scroll_chapter/Viewport/Content/#go_stageitem")
+	self._goareaitem = gohelper.findChild(self.viewGO, "Top/#go_story/chapterlist/#scroll_chapter/Viewport/Content/#go_areaitem")
+	self._btnreset = gohelper.findChildButtonWithAudio(self.viewGO, "Bottom/#btn_reset")
+	self._txtlevel = gohelper.findChildText(self.viewGO, "Bottom/#txt_level")
+	self._goempty3 = gohelper.findChild(self.viewGO, "Top/#go_story/chapterlist/#scroll_chapter/Viewport/Content/empty3")
+	self._goempty4 = gohelper.findChild(self.viewGO, "Top/#go_story/chapterlist/#scroll_chapter/Viewport/Content/empty4")
+	self._txtreset = gohelper.findChildText(self.viewGO, "Bottom/#btn_reset/Text")
+	self._imagereset = gohelper.findChildImage(self.viewGO, "Bottom/#btn_reset")
+	self._goheroexist = gohelper.findChild(self.viewGO, "Bottom/#scroll_herolist")
+	self._goheroempty = gohelper.findChild(self.viewGO, "Bottom/#go_heroempty")
+	self._goscrollchapter = gohelper.findChild(self.viewGO, "Top/#go_story/chapterlist/#scroll_chapter")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnreset:AddClickListener(arg_2_0._btnresetOnClick, arg_2_0)
+function Season123ResetView:addEvents()
+	self._btnreset:AddClickListener(self._btnresetOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnreset:RemoveClickListener()
+function Season123ResetView:removeEvents()
+	self._btnreset:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._heroItems = {}
-	arg_4_0._episodeItems = {}
-	arg_4_0._scrollchapter = gohelper.findChildScrollRect(arg_4_0._goscrollchapter, "")
+function Season123ResetView:_editableInitView()
+	self._heroItems = {}
+	self._episodeItems = {}
+	self._scrollchapter = gohelper.findChildScrollRect(self._goscrollchapter, "")
 
-	arg_4_0:createStageItem()
+	self:createStageItem()
 	AudioMgr.instance:trigger(AudioEnum.Season123.play_ui_mln_day_night)
 end
 
-function var_0_0.onDestroyView(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0.delayInitScrollAudio, arg_5_0)
+function Season123ResetView:onDestroyView()
+	TaskDispatcher.cancelTask(self.delayInitScrollAudio, self)
 
-	for iter_5_0, iter_5_1 in pairs(arg_5_0._heroItems) do
-		if iter_5_1.icon then
-			iter_5_1.icon:removeClickListener()
-			iter_5_1.icon:onDestroy()
+	for _, heroItem in pairs(self._heroItems) do
+		if heroItem.icon then
+			heroItem.icon:removeClickListener()
+			heroItem.icon:onDestroy()
 		end
 	end
 
-	if arg_5_0._episodeItems then
-		for iter_5_2, iter_5_3 in pairs(arg_5_0._episodeItems) do
-			iter_5_3.btnself:RemoveClickListener()
-			iter_5_3.simagechaptericon:UnLoadImage()
+	if self._episodeItems then
+		for _, episodeItem in pairs(self._episodeItems) do
+			episodeItem.btnself:RemoveClickListener()
+			episodeItem.simagechaptericon:UnLoadImage()
 		end
 
-		arg_5_0._episodeItems = nil
+		self._episodeItems = nil
 	end
 
-	if arg_5_0._stageItem then
-		arg_5_0._stageItem.btnself:RemoveClickListener()
-		arg_5_0._stageItem.simageicon:UnLoadImage()
+	if self._stageItem then
+		self._stageItem.btnself:RemoveClickListener()
+		self._stageItem.simageicon:UnLoadImage()
 
-		arg_5_0._stageItem = nil
+		self._stageItem = nil
 	end
 
-	if arg_5_0._drag then
-		arg_5_0._drag:RemoveDragBeginListener()
-		arg_5_0._drag:RemoveDragEndListener()
+	if self._drag then
+		self._drag:RemoveDragBeginListener()
+		self._drag:RemoveDragEndListener()
 
-		arg_5_0._drag = nil
+		self._drag = nil
 	end
 
-	if arg_5_0._touch then
-		arg_5_0._touch:RemoveClickDownListener()
+	if self._touch then
+		self._touch:RemoveClickDownListener()
 
-		arg_5_0._touch = nil
+		self._touch = nil
 	end
 
 	Season123ResetController.instance:onCloseView()
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:addEventCb(Season123Controller.instance, Season123Event.RefreshResetView, arg_6_0.refreshUI, arg_6_0)
-	arg_6_0:addEventCb(Season123Controller.instance, Season123Event.OnResetSucc, arg_6_0.closeThis, arg_6_0)
-	Season123ResetController.instance:onOpenView(arg_6_0.viewParam.actId, arg_6_0.viewParam.stage, arg_6_0.viewParam.layer)
+function Season123ResetView:onOpen()
+	self:addEventCb(Season123Controller.instance, Season123Event.RefreshResetView, self.refreshUI, self)
+	self:addEventCb(Season123Controller.instance, Season123Event.OnResetSucc, self.closeThis, self)
+	Season123ResetController.instance:onOpenView(self.viewParam.actId, self.viewParam.stage, self.viewParam.layer)
 
-	local var_6_0 = ActivityModel.instance:getActMO(arg_6_0.viewParam.actId)
+	local actMO = ActivityModel.instance:getActMO(self.viewParam.actId)
 
-	if not var_6_0 or not var_6_0:isOpen() or var_6_0:isExpired() then
+	if not actMO or not actMO:isOpen() or actMO:isExpired() then
 		return
 	end
 
-	arg_6_0:refreshUI()
-	TaskDispatcher.runDelay(arg_6_0.delayInitScrollAudio, arg_6_0, 0.1)
+	self:refreshUI()
+	TaskDispatcher.runDelay(self.delayInitScrollAudio, self, 0.1)
 end
 
-function var_0_0.onClose(arg_7_0)
+function Season123ResetView:onClose()
 	return
 end
 
-function var_0_0.refreshUI(arg_8_0)
-	arg_8_0:refreshStatus()
-	arg_8_0:refreshStage()
-	arg_8_0:refreshEpisodeItems()
-	arg_8_0:refreshHeroItems()
+function Season123ResetView:refreshUI()
+	self:refreshStatus()
+	self:refreshStage()
+	self:refreshEpisodeItems()
+	self:refreshHeroItems()
 end
 
-function var_0_0.refreshStatus(arg_9_0)
-	local var_9_0 = Season123ResetModel.instance.layer
-	local var_9_1 = "#ffffff"
-	local var_9_2 = "#b1b1b1"
+function Season123ResetView:refreshStatus()
+	local layer = Season123ResetModel.instance.layer
+	local colorStr = "#ffffff"
+	local txtColorStr = "#b1b1b1"
 
-	if not var_9_0 then
-		arg_9_0._txtlevel.text = luaLang("season123_reset_stage_level")
-	elseif Season123ResetModel.EmptySelect ~= var_9_0 then
-		local var_9_3 = Season123ResetModel.instance:getSelectLayerCO()
+	if not layer then
+		self._txtlevel.text = luaLang("season123_reset_stage_level")
+	elseif Season123ResetModel.EmptySelect ~= layer then
+		local episodeCO = Season123ResetModel.instance:getSelectLayerCO()
 
-		arg_9_0._txtlevel.text = string.format("EP.%02d", var_9_3.layer)
+		self._txtlevel.text = string.format("EP.%02d", episodeCO.layer)
 	else
-		arg_9_0._txtlevel.text = "---"
-		var_9_1 = "#808080"
-		var_9_2 = "#808080"
+		self._txtlevel.text = "---"
+		colorStr = "#808080"
+		txtColorStr = "#808080"
 	end
 
-	SLFramework.UGUI.GuiHelper.SetColor(arg_9_0._imagereset, var_9_1)
-	SLFramework.UGUI.GuiHelper.SetColor(arg_9_0._txtreset, var_9_2)
+	SLFramework.UGUI.GuiHelper.SetColor(self._imagereset, colorStr)
+	SLFramework.UGUI.GuiHelper.SetColor(self._txtreset, txtColorStr)
 end
 
-function var_0_0.refreshStage(arg_10_0)
-	local var_10_0 = arg_10_0._stageItem
-	local var_10_1 = Season123ResetModel.instance:getStageCO()
+function Season123ResetView:refreshStage()
+	local item = self._stageItem
+	local stageCO = Season123ResetModel.instance:getStageCO()
 
-	if var_10_1 then
-		var_10_0.txtname.text = var_10_1.name
+	if stageCO then
+		item.txtname.text = stageCO.name
 	end
 
-	local var_10_2 = Season123Model.instance:getActInfo(Season123ResetModel.instance.activityId)
+	local seasonMO = Season123Model.instance:getActInfo(Season123ResetModel.instance.activityId)
 
-	if var_10_2 then
-		local var_10_3 = var_10_2:getTotalRound(Season123ResetModel.instance.stage)
+	if seasonMO then
+		local round = seasonMO:getTotalRound(Season123ResetModel.instance.stage)
 
-		var_10_0.txtnum.text = tostring(var_10_3)
+		item.txtnum.text = tostring(round)
 	else
-		var_10_0.txtnum.text = "--"
+		item.txtnum.text = "--"
 	end
 
-	local var_10_4 = Season123Model.instance:getSingleBgFolder()
+	local folder = Season123Model.instance:getSingleBgFolder()
 
-	var_10_0.simageicon:LoadImage(ResUrl.getSeason123ResetStageIcon(var_10_4, Season123ResetModel.instance.stage))
-	gohelper.setActive(var_10_0.goselected, Season123ResetModel.instance.layer == nil)
+	item.simageicon:LoadImage(ResUrl.getSeason123ResetStageIcon(folder, Season123ResetModel.instance.stage))
+	gohelper.setActive(item.goselected, Season123ResetModel.instance.layer == nil)
 end
 
-function var_0_0.refreshEpisodeItems(arg_11_0)
-	local var_11_0 = Season123ResetModel.instance:getList()
+function Season123ResetView:refreshEpisodeItems()
+	local moList = Season123ResetModel.instance:getList()
 
-	for iter_11_0 = 1, #var_11_0 do
-		arg_11_0:refreshEpisodeItem(iter_11_0, var_11_0[iter_11_0])
+	for i = 1, #moList do
+		self:refreshEpisodeItem(i, moList[i])
 	end
 
-	for iter_11_1 = #var_11_0 + 1, #arg_11_0._episodeItems do
-		gohelper.setActive(arg_11_0._episodeItems[iter_11_1].go, false)
+	for i = #moList + 1, #self._episodeItems do
+		gohelper.setActive(self._episodeItems[i].go, false)
 	end
 
-	gohelper.setAsLastSibling(arg_11_0._goempty3)
-	gohelper.setAsLastSibling(arg_11_0._goempty4)
+	gohelper.setAsLastSibling(self._goempty3)
+	gohelper.setAsLastSibling(self._goempty4)
 end
 
-function var_0_0.refreshEpisodeItem(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = arg_12_0:getOrCreateEpisodeItem(arg_12_1)
+function Season123ResetView:refreshEpisodeItem(index, data)
+	local item = self:getOrCreateEpisodeItem(index)
 
-	gohelper.setActive(var_12_0.go, true)
+	gohelper.setActive(item.go, true)
 
-	var_12_0.txtchapter.text = string.format("%02d", arg_12_2.cfg.layer)
+	item.txtchapter.text = string.format("%02d", data.cfg.layer)
 
-	local var_12_1 = Season123Model.instance:getSingleBgFolder()
+	local folder = Season123Model.instance:getSingleBgFolder()
 
-	var_12_0.simagechaptericon:LoadImage(ResUrl.getSeason123EpisodeIcon(var_12_1, arg_12_2.cfg.stagePicture))
-	gohelper.setActive(var_12_0.goselected, arg_12_2.cfg.layer == Season123ResetModel.instance.layer)
-	arg_12_0:refreshSingleItemFinished(arg_12_1, var_12_0, arg_12_2)
+	item.simagechaptericon:LoadImage(ResUrl.getSeason123EpisodeIcon(folder, data.cfg.stagePicture))
+	gohelper.setActive(item.goselected, data.cfg.layer == Season123ResetModel.instance.layer)
+	self:refreshSingleItemFinished(index, item, data)
 end
 
-function var_0_0.refreshSingleItemFinished(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	local var_13_0 = Season123ResetModel.instance:isEpisodeUnlock(arg_13_3.cfg.layer)
-	local var_13_1 = arg_13_3.isFinished
-	local var_13_2 = not var_13_0 or not var_13_1
+function Season123ResetView:refreshSingleItemFinished(index, item, data)
+	local isUnlock = Season123ResetModel.instance:isEpisodeUnlock(data.cfg.layer)
+	local isFinished = data.isFinished
+	local isLock = not isUnlock or not isFinished
 
-	gohelper.setActive(arg_13_2.godone, var_13_1)
-	gohelper.setActive(arg_13_2.txttime, var_13_1)
-	gohelper.setActive(arg_13_2.gounfinish, not var_13_2)
+	gohelper.setActive(item.godone, isFinished)
+	gohelper.setActive(item.txttime, isFinished)
+	gohelper.setActive(item.gounfinish, not isLock)
 
-	if var_13_1 then
-		arg_13_2.txttime.text = tostring(arg_13_3.round)
+	if isFinished then
+		item.txttime.text = tostring(data.round)
 	end
 
-	ZProj.UGUIHelper.SetGrayscale(arg_13_2.simagechaptericon.gameObject, var_13_2)
-	SLFramework.UGUI.GuiHelper.SetColor(arg_13_2.imagechaptericon, var_13_2 and "#808080" or "#ffffff")
+	ZProj.UGUIHelper.SetGrayscale(item.simagechaptericon.gameObject, isLock)
+	SLFramework.UGUI.GuiHelper.SetColor(item.imagechaptericon, isLock and "#808080" or "#ffffff")
 end
 
-function var_0_0.refreshHeroItems(arg_14_0)
+function Season123ResetView:refreshHeroItems()
 	if Season123ResetModel.instance.layer == Season123ResetModel.EmptySelect or Season123ResetModel.instance.layer == nil then
-		gohelper.setActive(arg_14_0._goheroexist, false)
-		gohelper.setActive(arg_14_0._goheroempty, true)
+		gohelper.setActive(self._goheroexist, false)
+		gohelper.setActive(self._goheroempty, true)
 	else
-		gohelper.setActive(arg_14_0._goheroexist, true)
-		gohelper.setActive(arg_14_0._goheroempty, false)
+		gohelper.setActive(self._goheroexist, true)
+		gohelper.setActive(self._goheroempty, false)
 
-		local var_14_0 = Season123ResetModel.instance:getHeroList()
+		local moList = Season123ResetModel.instance:getHeroList()
 
-		for iter_14_0 = 1, Activity123Enum.PickHeroCount do
-			local var_14_1 = arg_14_0:getOrCreateHeroItem(iter_14_0)
-			local var_14_2 = var_14_0[iter_14_0]
+		for i = 1, Activity123Enum.PickHeroCount do
+			local item = self:getOrCreateHeroItem(i)
+			local data = moList[i]
 
-			arg_14_0:refreshHero(var_14_1, var_14_2)
-			arg_14_0:refreshHeroHp(var_14_1, var_14_2)
+			self:refreshHero(item, data)
+			self:refreshHeroHp(item, data)
 		end
 	end
 end
 
-function var_0_0.refreshHero(arg_15_0, arg_15_1, arg_15_2)
-	if not arg_15_2 then
-		gohelper.setActive(arg_15_1.goempty, true)
-		gohelper.setActive(arg_15_1.gohero, false)
+function Season123ResetView:refreshHero(item, data)
+	if not data then
+		gohelper.setActive(item.goempty, true)
+		gohelper.setActive(item.gohero, false)
 	else
-		gohelper.setActive(arg_15_1.goempty, false)
-		gohelper.setActive(arg_15_1.gohero, true)
-		arg_15_1.icon:onUpdateMO(arg_15_2.heroMO)
+		gohelper.setActive(item.goempty, false)
+		gohelper.setActive(item.gohero, true)
+		item.icon:onUpdateMO(data.heroMO)
 	end
 end
 
-function var_0_0.refreshHeroHp(arg_16_0, arg_16_1, arg_16_2)
-	if not arg_16_2 then
-		gohelper.setActive(arg_16_1.godead, false)
-		gohelper.setActive(arg_16_1.sliderhp, false)
+function Season123ResetView:refreshHeroHp(item, data)
+	if not data then
+		gohelper.setActive(item.godead, false)
+		gohelper.setActive(item.sliderhp, false)
 	else
-		gohelper.setActive(arg_16_1.sliderhp, true)
+		gohelper.setActive(item.sliderhp, true)
 
-		local var_16_0 = math.floor(arg_16_2.hpRate / 10)
-		local var_16_1 = Mathf.Clamp(var_16_0 / 100, 0, 1)
+		local hp100Per = math.floor(data.hpRate / 10)
+		local rate = Mathf.Clamp(hp100Per / 100, 0, 1)
 
-		arg_16_1.sliderhp:SetValue(var_16_1)
+		item.sliderhp:SetValue(rate)
 
-		if arg_16_2.hpRate <= 0 then
-			gohelper.setActive(arg_16_1.godead, true)
+		if data.hpRate <= 0 then
+			gohelper.setActive(item.godead, true)
 		else
-			gohelper.setActive(arg_16_1.godead, false)
+			gohelper.setActive(item.godead, false)
 		end
 
-		Season123HeroGroupUtils.setHpBar(arg_16_1.imagehp, var_16_1)
+		Season123HeroGroupUtils.setHpBar(item.imagehp, rate)
 	end
 end
 
-function var_0_0.createStageItem(arg_17_0)
-	local var_17_0 = arg_17_0:getUserDataTb_()
+function Season123ResetView:createStageItem()
+	local item = self:getUserDataTb_()
 
-	var_17_0.godone = gohelper.findChild(arg_17_0._goareaitem, "#go_done")
-	var_17_0.goselected = gohelper.findChild(arg_17_0._goareaitem, "selectframe")
-	var_17_0.txtname = gohelper.findChildText(arg_17_0._goareaitem, "#txt_areaname")
-	var_17_0.simageicon = gohelper.findChildSingleImage(arg_17_0._goareaitem, "#simage_areaIcon")
-	var_17_0.btnself = gohelper.findChildButtonWithAudio(arg_17_0._goareaitem, "#btn_self")
-	var_17_0.txtnum = gohelper.findChildText(arg_17_0._goareaitem, "#txt_num")
+	item.godone = gohelper.findChild(self._goareaitem, "#go_done")
+	item.goselected = gohelper.findChild(self._goareaitem, "selectframe")
+	item.txtname = gohelper.findChildText(self._goareaitem, "#txt_areaname")
+	item.simageicon = gohelper.findChildSingleImage(self._goareaitem, "#simage_areaIcon")
+	item.btnself = gohelper.findChildButtonWithAudio(self._goareaitem, "#btn_self")
+	item.txtnum = gohelper.findChildText(self._goareaitem, "#txt_num")
 
-	var_17_0.btnself:AddClickListener(arg_17_0.onClickStageItem, arg_17_0)
+	item.btnself:AddClickListener(self.onClickStageItem, self)
 
-	arg_17_0._stageItem = var_17_0
+	self._stageItem = item
 end
 
-function var_0_0.getOrCreateEpisodeItem(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_0._episodeItems[arg_18_1]
+function Season123ResetView:getOrCreateEpisodeItem(index)
+	local item = self._episodeItems[index]
 
-	if not var_18_0 then
-		var_18_0 = arg_18_0:getUserDataTb_()
-		var_18_0.go = gohelper.cloneInPlace(arg_18_0._goepisodeitem, "episode" .. tostring(arg_18_1))
-		var_18_0.simagechaptericon = gohelper.findChildSingleImage(var_18_0.go, "#simage_chapterIcon")
-		var_18_0.imagechaptericon = gohelper.findChildImage(var_18_0.go, "#simage_chapterIcon")
-		var_18_0.gounfinish = gohelper.findChild(var_18_0.go, "#go_unfinished")
-		var_18_0.godone = gohelper.findChild(var_18_0.go, "#go_done")
-		var_18_0.txttime = gohelper.findChildText(var_18_0.go, "#go_done/#txt_num")
-		var_18_0.txtchapter = gohelper.findChildText(var_18_0.go, "#go_chpt/#txt_chpt")
-		var_18_0.goselected = gohelper.findChild(var_18_0.go, "selectframe")
-		var_18_0.btnself = gohelper.findChildButtonWithAudio(var_18_0.go, "#btn_self")
+	if not item then
+		item = self:getUserDataTb_()
+		item.go = gohelper.cloneInPlace(self._goepisodeitem, "episode" .. tostring(index))
+		item.simagechaptericon = gohelper.findChildSingleImage(item.go, "#simage_chapterIcon")
+		item.imagechaptericon = gohelper.findChildImage(item.go, "#simage_chapterIcon")
+		item.gounfinish = gohelper.findChild(item.go, "#go_unfinished")
+		item.godone = gohelper.findChild(item.go, "#go_done")
+		item.txttime = gohelper.findChildText(item.go, "#go_done/#txt_num")
+		item.txtchapter = gohelper.findChildText(item.go, "#go_chpt/#txt_chpt")
+		item.goselected = gohelper.findChild(item.go, "selectframe")
+		item.btnself = gohelper.findChildButtonWithAudio(item.go, "#btn_self")
 
-		var_18_0.btnself:AddClickListener(arg_18_0.onClickEpisodeItem, arg_18_0, arg_18_1)
+		item.btnself:AddClickListener(self.onClickEpisodeItem, self, index)
 
-		arg_18_0._episodeItems[arg_18_1] = var_18_0
+		self._episodeItems[index] = item
 	end
 
-	return var_18_0
+	return item
 end
 
-function var_0_0.getOrCreateHeroItem(arg_19_0, arg_19_1)
-	local var_19_0 = arg_19_0._heroItems[arg_19_1]
+function Season123ResetView:getOrCreateHeroItem(index)
+	local item = self._heroItems[index]
 
-	if not var_19_0 then
-		var_19_0 = arg_19_0:getUserDataTb_()
-		var_19_0.go = gohelper.cloneInPlace(arg_19_0._goheroitem, "hero" .. tostring(arg_19_1))
-		var_19_0.goempty = gohelper.findChild(var_19_0.go, "empty")
-		var_19_0.gohero = gohelper.findChild(var_19_0.go, "hero")
-		var_19_0.godead = gohelper.findChild(var_19_0.go, "#dead")
-		var_19_0.sliderhp = gohelper.findChildSlider(var_19_0.go, "#slider_hp")
-		var_19_0.imagehp = gohelper.findChildImage(var_19_0.go, "#slider_hp/Fill Area/Fill")
-		var_19_0.icon = IconMgr.instance:getCommonHeroIconNew(var_19_0.gohero)
+	if not item then
+		item = self:getUserDataTb_()
+		item.go = gohelper.cloneInPlace(self._goheroitem, "hero" .. tostring(index))
+		item.goempty = gohelper.findChild(item.go, "empty")
+		item.gohero = gohelper.findChild(item.go, "hero")
+		item.godead = gohelper.findChild(item.go, "#dead")
+		item.sliderhp = gohelper.findChildSlider(item.go, "#slider_hp")
+		item.imagehp = gohelper.findChildImage(item.go, "#slider_hp/Fill Area/Fill")
+		item.icon = IconMgr.instance:getCommonHeroIconNew(item.gohero)
 
-		var_19_0.icon:isShowRare(false)
-		gohelper.setActive(var_19_0.go, true)
+		item.icon:isShowRare(false)
+		gohelper.setActive(item.go, true)
 
-		arg_19_0._heroItems[arg_19_1] = var_19_0
+		self._heroItems[index] = item
 	end
 
-	return var_19_0
+	return item
 end
 
-function var_0_0.delayInitScrollAudio(arg_20_0)
-	arg_20_0._audioScroll = MonoHelper.addLuaComOnceToGo(arg_20_0._goscrollchapter, Season123ResetViewAudio, arg_20_0._scrollchapter)
-	arg_20_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_20_0._goscrollchapter)
+function Season123ResetView:delayInitScrollAudio()
+	self._audioScroll = MonoHelper.addLuaComOnceToGo(self._goscrollchapter, Season123ResetViewAudio, self._scrollchapter)
+	self._drag = SLFramework.UGUI.UIDragListener.Get(self._goscrollchapter)
 
-	arg_20_0._drag:AddDragBeginListener(arg_20_0.onDragAudioBegin, arg_20_0)
-	arg_20_0._drag:AddDragEndListener(arg_20_0.onDragAudioEnd, arg_20_0)
+	self._drag:AddDragBeginListener(self.onDragAudioBegin, self)
+	self._drag:AddDragEndListener(self.onDragAudioEnd, self)
 
-	arg_20_0._touch = SLFramework.UGUI.UIClickListener.Get(arg_20_0._goscrollchapter)
+	self._touch = SLFramework.UGUI.UIClickListener.Get(self._goscrollchapter)
 
-	arg_20_0._touch:AddClickDownListener(arg_20_0.onClickAudioDown, arg_20_0)
+	self._touch:AddClickDownListener(self.onClickAudioDown, self)
 end
 
-function var_0_0.onDragAudioBegin(arg_21_0)
-	arg_21_0._audioScroll:onDragBegin()
+function Season123ResetView:onDragAudioBegin()
+	self._audioScroll:onDragBegin()
 end
 
-function var_0_0.onDragAudioEnd(arg_22_0)
-	arg_22_0._audioScroll:onDragEnd()
+function Season123ResetView:onDragAudioEnd()
+	self._audioScroll:onDragEnd()
 end
 
-function var_0_0.onClickAudioDown(arg_23_0)
-	arg_23_0._audioScroll:onClickDown()
+function Season123ResetView:onClickAudioDown()
+	self._audioScroll:onClickDown()
 end
 
-function var_0_0.onClickStageItem(arg_24_0)
+function Season123ResetView:onClickStageItem()
 	logNormal("onClickStageItem")
 
 	if Season123ResetController.instance:selectLayer(nil) then
@@ -342,16 +344,16 @@ function var_0_0.onClickStageItem(arg_24_0)
 	end
 end
 
-function var_0_0.onClickEpisodeItem(arg_25_0, arg_25_1)
-	logNormal("onClickEpisodeItem : " .. tostring(arg_25_1))
+function Season123ResetView:onClickEpisodeItem(index)
+	logNormal("onClickEpisodeItem : " .. tostring(index))
 
-	if Season123ResetController.instance:selectLayer(arg_25_1) then
+	if Season123ResetController.instance:selectLayer(index) then
 		AudioMgr.instance:trigger(AudioEnum.Season123.play_ui_activity_reward_ending)
 	end
 end
 
-function var_0_0._btnresetOnClick(arg_26_0)
+function Season123ResetView:_btnresetOnClick()
 	Season123ResetController.instance:tryReset()
 end
 
-return var_0_0
+return Season123ResetView

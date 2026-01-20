@@ -1,10 +1,12 @@
-﻿module("modules.logic.story.model.StoryStepMourningBorderMo", package.seeall)
+﻿-- chunkname: @modules/logic/story/model/StoryStepMourningBorderMo.lua
 
-local var_0_0 = pureTable("StoryStepMourningBorderMo")
+module("modules.logic.story.model.StoryStepMourningBorderMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.borderType = 0
-	arg_1_0.borderTimes = {
+local StoryStepMourningBorderMo = pureTable("StoryStepMourningBorderMo")
+
+function StoryStepMourningBorderMo:ctor()
+	self.borderType = 0
+	self.borderTimes = {
 		0,
 		0,
 		0,
@@ -16,9 +18,9 @@ function var_0_0.ctor(arg_1_0)
 	}
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.borderType = arg_2_1[1]
-	arg_2_0.borderTimes = arg_2_1[2]
+function StoryStepMourningBorderMo:init(info)
+	self.borderType = info[1]
+	self.borderTimes = info[2]
 end
 
-return var_0_0
+return StoryStepMourningBorderMo

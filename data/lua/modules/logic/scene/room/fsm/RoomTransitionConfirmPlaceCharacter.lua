@@ -1,45 +1,47 @@
-﻿module("modules.logic.scene.room.fsm.RoomTransitionConfirmPlaceCharacter", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/fsm/RoomTransitionConfirmPlaceCharacter.lua
 
-local var_0_0 = class("RoomTransitionConfirmPlaceCharacter", SimpleFSMBaseTransition)
+module("modules.logic.scene.room.fsm.RoomTransitionConfirmPlaceCharacter", package.seeall)
 
-function var_0_0.start(arg_1_0)
-	arg_1_0._scene = GameSceneMgr.instance:getCurScene()
+local RoomTransitionConfirmPlaceCharacter = class("RoomTransitionConfirmPlaceCharacter", SimpleFSMBaseTransition)
+
+function RoomTransitionConfirmPlaceCharacter:start()
+	self._scene = GameSceneMgr.instance:getCurScene()
 end
 
-function var_0_0.check(arg_2_0)
+function RoomTransitionConfirmPlaceCharacter:check()
 	return true
 end
 
-function var_0_0.onStart(arg_3_0, arg_3_1)
-	arg_3_0._param = arg_3_1
+function RoomTransitionConfirmPlaceCharacter:onStart(param)
+	self._param = param
 
-	local var_3_0 = arg_3_0._param.tempCharacterMO
+	local tempCharacterMO = self._param.tempCharacterMO
 
-	RoomCharacterController.instance:interruptInteraction(var_3_0:getCurrentInteractionId())
+	RoomCharacterController.instance:interruptInteraction(tempCharacterMO:getCurrentInteractionId())
 
-	local var_3_1 = arg_3_0._scene.charactermgr:getCharacterEntity(var_3_0.id, SceneTag.RoomCharacter)
+	local curEntity = self._scene.charactermgr:getCharacterEntity(tempCharacterMO.id, SceneTag.RoomCharacter)
 
-	if var_3_1 then
-		arg_3_0._scene.charactermgr:moveTo(var_3_1, var_3_0.currentPosition)
-		var_3_1:playConfirmEffect()
+	if curEntity then
+		self._scene.charactermgr:moveTo(curEntity, tempCharacterMO.currentPosition)
+		curEntity:playConfirmEffect()
 	end
 
-	if not var_3_0:isPlaceSourceState() and RoomModel.instance:getCharacterById(var_3_0.id) then
-		var_3_0.sourceState = RoomCharacterEnum.SourceState.Place
+	if not tempCharacterMO:isPlaceSourceState() and RoomModel.instance:getCharacterById(tempCharacterMO.id) then
+		tempCharacterMO.sourceState = RoomCharacterEnum.SourceState.Place
 	end
 
 	RoomCharacterPlaceListModel.instance:clearSelect()
 	RoomCharacterController.instance:dispatchEvent(RoomEvent.CharacterCanConfirm)
 	RoomMapController.instance:dispatchEvent(RoomEvent.ConfirmCharacter)
-	arg_3_0:onDone()
+	self:onDone()
 end
 
-function var_0_0.stop(arg_4_0)
+function RoomTransitionConfirmPlaceCharacter:stop()
 	return
 end
 
-function var_0_0.clear(arg_5_0)
+function RoomTransitionConfirmPlaceCharacter:clear()
 	return
 end
 
-return var_0_0
+return RoomTransitionConfirmPlaceCharacter

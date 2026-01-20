@@ -1,42 +1,46 @@
-﻿module("modules.logic.fight.entity.comp.FightEntitySummonedComp", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/FightEntitySummonedComp.lua
 
-local var_0_0 = class("FightEntitySummonedComp", FightBaseClass)
+module("modules.logic.fight.entity.comp.FightEntitySummonedComp", package.seeall)
 
-function var_0_0.onLogicEnter(arg_1_0, arg_1_1)
-	arg_1_0._entity = arg_1_1
+local FightEntitySummonedComp = class("FightEntitySummonedComp", FightBaseClass)
 
-	arg_1_0:com_registFightEvent(FightEvent.SummonedAdd, arg_1_0._onSummonedAdd)
-	arg_1_0:_refreshSummoned()
+function FightEntitySummonedComp:onLogicEnter(entity)
+	self._entity = entity
+
+	self:com_registFightEvent(FightEvent.SummonedAdd, self._onSummonedAdd)
+	self:_refreshSummoned()
 end
 
-function var_0_0._refreshSummoned(arg_2_0)
-	local var_2_0 = arg_2_0._entity:getMO():getSummonedInfo():getDataDic()
+function FightEntitySummonedComp:_refreshSummoned()
+	local entityMO = self._entity:getMO()
+	local summonedInfo = entityMO:getSummonedInfo()
+	local dataDic = summonedInfo:getDataDic()
 
-	for iter_2_0, iter_2_1 in pairs(var_2_0) do
-		arg_2_0:_instantiateSummoned(iter_2_1)
+	for k, data in pairs(dataDic) do
+		self:_instantiateSummoned(data)
 	end
 end
 
-function var_0_0._instantiateSummoned(arg_3_0, arg_3_1)
-	local var_3_0 = "FightEntitySummonedItem" .. arg_3_1.summonedId
+function FightEntitySummonedComp:_instantiateSummoned(data)
+	local classname = "FightEntitySummonedItem" .. data.summonedId
 
-	if _G[var_3_0] then
-		arg_3_0:newClass(_G[var_3_0], arg_3_0._entity, arg_3_1)
+	if _G[classname] then
+		self:newClass(_G[classname], self._entity, data)
 	else
-		arg_3_0:newClass(FightEntitySummonedItem, arg_3_0._entity, arg_3_1)
+		self:newClass(FightEntitySummonedItem, self._entity, data)
 	end
 end
 
-function var_0_0._onSummonedAdd(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 ~= arg_4_0._entity.id then
+function FightEntitySummonedComp:_onSummonedAdd(entityId, data)
+	if entityId ~= self._entity.id then
 		return
 	end
 
-	arg_4_0:_instantiateSummoned(arg_4_2)
+	self:_instantiateSummoned(data)
 end
 
-function var_0_0.onLogicExit(arg_5_0)
+function FightEntitySummonedComp:onLogicExit()
 	return
 end
 
-return var_0_0
+return FightEntitySummonedComp

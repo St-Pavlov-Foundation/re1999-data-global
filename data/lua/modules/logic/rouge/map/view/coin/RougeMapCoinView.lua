@@ -1,96 +1,100 @@
-﻿module("modules.logic.rouge.map.view.coin.RougeMapCoinView", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/view/coin/RougeMapCoinView.lua
 
-local var_0_0 = class("RougeMapCoinView", BaseView)
+module("modules.logic.rouge.map.view.coin.RougeMapCoinView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.goCoinContainer = gohelper.findChild(arg_1_0.viewGO, "#go_coincontainer")
+local RougeMapCoinView = class("RougeMapCoinView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeMapCoinView:onInitView()
+	self.goCoinContainer = gohelper.findChild(self.viewGO, "#go_coincontainer")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RougeMapCoinView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RougeMapCoinView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0.goCoin = arg_4_0.viewContainer:getResInst(RougeEnum.ResPath.CoinView, arg_4_0.goCoinContainer)
-	arg_4_0._txtcoinnum = gohelper.findChildText(arg_4_0.goCoin, "#txt_coinnum")
-	arg_4_0.coinVx = gohelper.findChild(arg_4_0.goCoin, "#go_vx_vitality")
+function RougeMapCoinView:_editableInitView()
+	self.goCoin = self.viewContainer:getResInst(RougeEnum.ResPath.CoinView, self.goCoinContainer)
+	self._txtcoinnum = gohelper.findChildText(self.goCoin, "#txt_coinnum")
+	self.coinVx = gohelper.findChild(self.goCoin, "#go_vx_vitality")
 
-	arg_4_0:addEventCb(RougeController.instance, RougeEvent.OnUpdateRougeInfoCoin, arg_4_0.refreshUI, arg_4_0)
+	self:addEventCb(RougeController.instance, RougeEvent.OnUpdateRougeInfoCoin, self.refreshUI, self)
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0:refreshUI()
+function RougeMapCoinView:onOpen()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_6_0)
-	arg_6_0:refreshCoin()
+function RougeMapCoinView:refreshUI()
+	self:refreshCoin()
 end
 
-function var_0_0.refreshCoin(arg_7_0)
-	local var_7_0 = RougeModel.instance:getRougeInfo()
+function RougeMapCoinView:refreshCoin()
+	local rougeInfo = RougeModel.instance:getRougeInfo()
 
-	if var_7_0 then
-		if not arg_7_0.preCoin then
-			arg_7_0._txtcoinnum.text = var_7_0.coin
-			arg_7_0.preCoin = var_7_0.coin
+	if rougeInfo then
+		if not self.preCoin then
+			self._txtcoinnum.text = rougeInfo.coin
+			self.preCoin = rougeInfo.coin
 		else
-			if var_7_0.coin == arg_7_0.preCoin then
-				arg_7_0._txtcoinnum.text = var_7_0.coin
-				arg_7_0.preCoin = var_7_0.coin
+			local coin = rougeInfo.coin
+
+			if coin == self.preCoin then
+				self._txtcoinnum.text = rougeInfo.coin
+				self.preCoin = rougeInfo.coin
 
 				return
 			end
 
-			arg_7_0:killTween()
+			self:killTween()
 
-			arg_7_0.tweenId = ZProj.TweenHelper.DOTweenFloat(arg_7_0.preCoin, var_7_0.coin, RougeMapEnum.CoinChangeDuration, arg_7_0.frameCallback, arg_7_0.doneCallback, arg_7_0)
+			self.tweenId = ZProj.TweenHelper.DOTweenFloat(self.preCoin, rougeInfo.coin, RougeMapEnum.CoinChangeDuration, self.frameCallback, self.doneCallback, self)
 
-			gohelper.setActive(arg_7_0.coinVx, true)
+			gohelper.setActive(self.coinVx, true)
 			AudioMgr.instance:trigger(AudioEnum.UI.CoinChange)
 		end
 	end
 end
 
-function var_0_0.frameCallback(arg_8_0, arg_8_1)
-	arg_8_1 = math.ceil(arg_8_1)
-	arg_8_0._txtcoinnum.text = arg_8_1
-	arg_8_0.preCoin = arg_8_1
+function RougeMapCoinView:frameCallback(value)
+	value = math.ceil(value)
+	self._txtcoinnum.text = value
+	self.preCoin = value
 end
 
-function var_0_0.doneCallback(arg_9_0)
-	gohelper.setActive(arg_9_0.coinVx, false)
+function RougeMapCoinView:doneCallback()
+	gohelper.setActive(self.coinVx, false)
 
-	arg_9_0.tweenId = nil
+	self.tweenId = nil
 end
 
-function var_0_0.killTween(arg_10_0)
-	if arg_10_0.tweenId then
-		ZProj.TweenHelper.KillById(arg_10_0.tweenId)
+function RougeMapCoinView:killTween()
+	if self.tweenId then
+		ZProj.TweenHelper.KillById(self.tweenId)
 
-		arg_10_0.tweenId = nil
+		self.tweenId = nil
 	end
 end
 
-function var_0_0.onClose(arg_11_0)
-	arg_11_0:killTween()
+function RougeMapCoinView:onClose()
+	self:killTween()
 
-	local var_11_0 = RougeModel.instance:getRougeInfo()
+	local rougeInfo = RougeModel.instance:getRougeInfo()
 
-	if var_11_0 then
-		arg_11_0.preCoin = var_11_0.coin
+	if rougeInfo then
+		self.preCoin = rougeInfo.coin
 	end
 end
 
-function var_0_0.onDestroyView(arg_12_0)
-	arg_12_0:killTween()
+function RougeMapCoinView:onDestroyView()
+	self:killTween()
 end
 
-return var_0_0
+return RougeMapCoinView

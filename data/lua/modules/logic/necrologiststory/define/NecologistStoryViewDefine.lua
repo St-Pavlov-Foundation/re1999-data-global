@@ -1,9 +1,11 @@
-﻿module("modules.logic.necrologiststory.define.NecologistStoryViewDefine", package.seeall)
+﻿-- chunkname: @modules/logic/necrologiststory/define/NecologistStoryViewDefine.lua
 
-local var_0_0 = class("NecologistStoryViewDefine")
+module("modules.logic.necrologiststory.define.NecologistStoryViewDefine", package.seeall)
 
-function var_0_0.init(arg_1_0)
-	arg_1_0.NecrologistStoryView = {
+local NecologistStoryViewDefine = class("NecologistStoryViewDefine")
+
+function NecologistStoryViewDefine.init(module_views)
+	module_views.NecrologistStoryView = {
 		destroy = 0,
 		container = "NecrologistStoryViewContainer",
 		mainRes = "ui/viewres/dungeon/rolestory/necrologiststoryview.prefab",
@@ -25,10 +27,12 @@ function var_0_0.init(arg_1_0)
 			NecrologistStoryErasePictureItem.getResPath(),
 			NecrologistStoryDragPictureItem.getResPath(),
 			NecrologistStorySystemItem.getResPath(),
-			weatherRes = "ui/viewres/dungeon/rolestory/necrologiststoryweather.prefab"
+			NecrologistStoryClickPictureItem.getResPath(),
+			weatherRes = "ui/viewres/dungeon/rolestory/necrologiststoryweather.prefab",
+			NecrologistStorySliderPictureItem.getResPath()
 		}
 	}
-	arg_1_0.NecrologistStoryReviewView = {
+	module_views.NecrologistStoryReviewView = {
 		destroy = 0,
 		container = "NecrologistStoryReviewViewContainer",
 		mainRes = "ui/viewres/dungeon/rolestory/necrologistreviewview.prefab",
@@ -42,7 +46,7 @@ function var_0_0.init(arg_1_0)
 			}
 		}
 	}
-	arg_1_0.NecrologistStoryTaskView = {
+	module_views.NecrologistStoryTaskView = {
 		destroy = 0,
 		container = "NecrologistStoryTaskViewContainer",
 		mainRes = "ui/viewres/dungeon/rolestory/necrologiststorytaskview.prefab",
@@ -60,7 +64,7 @@ function var_0_0.init(arg_1_0)
 			itemRes = "ui/viewres/dungeon/rolestory/necrologiststorytaskitem.prefab"
 		}
 	}
-	arg_1_0.NecrologistStoryTipView = {
+	module_views.NecrologistStoryTipView = {
 		destroy = 0,
 		container = "NecrologistStoryTipViewContainer",
 		bgBlur = 1,
@@ -69,7 +73,7 @@ function var_0_0.init(arg_1_0)
 		viewType = ViewType.Modal,
 		anim = ViewAnim.Default
 	}
-	arg_1_0.V3A1_RoleStoryGameView = {
+	module_views.V3A1_RoleStoryGameView = {
 		destroy = 0,
 		container = "V3A1_RoleStoryGameViewContainer",
 		mainRes = "ui/viewres/dungeon/rolestory/v3a1/v3a1_rolestorygameview.prefab",
@@ -83,7 +87,7 @@ function var_0_0.init(arg_1_0)
 			}
 		}
 	}
-	arg_1_0.V3A1_RoleStoryTicketView = {
+	module_views.V3A1_RoleStoryTicketView = {
 		destroy = 0,
 		container = "V3A1_RoleStoryTicketViewContainer",
 		bgBlur = 1,
@@ -91,7 +95,7 @@ function var_0_0.init(arg_1_0)
 		layer = "POPUP_TOP",
 		viewType = ViewType.Modal
 	}
-	arg_1_0.V3A1_RoleStoryFailView = {
+	module_views.V3A1_RoleStoryFailView = {
 		destroy = 0,
 		container = "V3A1_RoleStoryFailViewContainer",
 		bgBlur = 1,
@@ -99,7 +103,7 @@ function var_0_0.init(arg_1_0)
 		layer = "POPUP_TOP",
 		viewType = ViewType.Modal
 	}
-	arg_1_0.V3A1_RoleStorySuccessView = {
+	module_views.V3A1_RoleStorySuccessView = {
 		destroy = 0,
 		container = "V3A1_RoleStorySuccessViewContainer",
 		bgBlur = 1,
@@ -107,6 +111,36 @@ function var_0_0.init(arg_1_0)
 		layer = "POPUP_TOP",
 		viewType = ViewType.Modal
 	}
+	module_views.V3A2_RoleStoryGameView = {
+		destroy = 0,
+		container = "V3A2_RoleStoryGameViewContainer",
+		mainRes = "ui/viewres/dungeon/rolestory/v3a2/rolestory_madierda_gameview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Full,
+		tabRes = {
+			{
+				{
+					NavigateButtonsView.prefabPath
+				}
+			}
+		}
+	}
+	module_views.V3A2_RoleStoryItemTipsView = {
+		destroy = 0,
+		container = "V3A2_RoleStoryItemTipsViewContainer",
+		bgBlur = 1,
+		mainRes = "ui/viewres/dungeon/rolestory/v3a2/rolestory_madierda_itemtipsview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Modal
+	}
+	module_views.V3A2_RoleStoryItemGetView = {
+		destroy = 0,
+		container = "V3A2_RoleStoryItemGetViewContainer",
+		bgBlur = 1,
+		mainRes = "ui/viewres/dungeon/rolestory/v3a2/rolestory_madierda_itemgetview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Modal
+	}
 end
 
-return var_0_0
+return NecologistStoryViewDefine

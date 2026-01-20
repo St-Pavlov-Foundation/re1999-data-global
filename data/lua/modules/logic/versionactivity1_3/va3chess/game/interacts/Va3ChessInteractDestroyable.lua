@@ -1,49 +1,51 @@
-﻿module("modules.logic.versionactivity1_3.va3chess.game.interacts.Va3ChessInteractDestroyable", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/va3chess/game/interacts/Va3ChessInteractDestroyable.lua
 
-local var_0_0 = class("Va3ChessInteractDestroyable", Va3ChessInteractBase)
+module("modules.logic.versionactivity1_3.va3chess.game.interacts.Va3ChessInteractDestroyable", package.seeall)
 
-function var_0_0.onAvatarLoaded(arg_1_0)
-	var_0_0.super.onAvatarLoaded(arg_1_0)
+local Va3ChessInteractDestroyable = class("Va3ChessInteractDestroyable", Va3ChessInteractBase)
 
-	local var_1_0 = arg_1_0._target.avatar.loader
+function Va3ChessInteractDestroyable:onAvatarLoaded()
+	Va3ChessInteractDestroyable.super.onAvatarLoaded(self)
 
-	if not var_1_0 then
+	local loader = self._target.avatar.loader
+
+	if not loader then
 		return
 	end
 
-	local var_1_1 = var_1_0:getInstGO()
+	local go = loader:getInstGO()
 
-	if not gohelper.isNil(var_1_1) then
-		arg_1_0._animSelf = var_1_1:GetComponent(typeof(UnityEngine.Animator))
+	if not gohelper.isNil(go) then
+		self._animSelf = go:GetComponent(typeof(UnityEngine.Animator))
 	end
 
-	arg_1_0._target.interoperableFlag = gohelper.findChild(var_1_1, "icon")
+	self._target.interoperableFlag = gohelper.findChild(go, "icon")
 end
 
-local var_0_1 = "switch"
+local disappearAniName = "switch"
 
-function var_0_0.playDeleteObjView(arg_2_0)
+function Va3ChessInteractDestroyable:playDeleteObjView()
 	AudioMgr.instance:trigger(AudioEnum.Role2ChessGame1_3.BreakBoughs)
 
-	if arg_2_0._animSelf then
-		arg_2_0._animSelf:Play(var_0_1)
+	if self._animSelf then
+		self._animSelf:Play(disappearAniName)
 	end
 end
 
-function var_0_0.showStateView(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == Va3ChessEnum.ObjState.Idle then
-		arg_3_0:showIdleStateView()
-	elseif arg_3_1 == Va3ChessEnum.ObjState.Interoperable then
-		arg_3_0:showInteroperableStateView(arg_3_2)
+function Va3ChessInteractDestroyable:showStateView(objState, params)
+	if objState == Va3ChessEnum.ObjState.Idle then
+		self:showIdleStateView()
+	elseif objState == Va3ChessEnum.ObjState.Interoperable then
+		self:showInteroperableStateView(params)
 	end
 end
 
-function var_0_0.showIdleStateView(arg_4_0)
-	gohelper.setActive(arg_4_0._target.interoperableFlag, false)
+function Va3ChessInteractDestroyable:showIdleStateView()
+	gohelper.setActive(self._target.interoperableFlag, false)
 end
 
-function var_0_0.showInteroperableStateView(arg_5_0, arg_5_1)
-	gohelper.setActive(arg_5_0._target.interoperableFlag, true)
+function Va3ChessInteractDestroyable:showInteroperableStateView(params)
+	gohelper.setActive(self._target.interoperableFlag, true)
 end
 
-return var_0_0
+return Va3ChessInteractDestroyable

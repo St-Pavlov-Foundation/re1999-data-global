@@ -1,17 +1,21 @@
-﻿module("modules.logic.explore.map.unit.ExploreCurrencyUnit", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/unit/ExploreCurrencyUnit.lua
 
-local var_0_0 = class("ExploreCurrencyUnit", ExploreBaseDisplayUnit)
+module("modules.logic.explore.map.unit.ExploreCurrencyUnit", package.seeall)
 
-function var_0_0.onRoleEnter(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	if arg_1_3:isRole() then
-		arg_1_0:tryTrigger()
+local ExploreCurrencyUnit = class("ExploreCurrencyUnit", ExploreBaseDisplayUnit)
+
+function ExploreCurrencyUnit:onRoleEnter(_, _, unit)
+	if unit:isRole() then
+		self:tryTrigger()
 	end
 end
 
-function var_0_0.processMapIcon(arg_2_0, arg_2_1)
-	arg_2_1 = string.split(arg_2_1, "#")[tonumber(arg_2_0.mo.specialDatas[1])]
+function ExploreCurrencyUnit:processMapIcon(icon)
+	local iconArr = string.split(icon, "#")
 
-	return arg_2_1
+	icon = iconArr[tonumber(self.mo.specialDatas[1])]
+
+	return icon
 end
 
-return var_0_0
+return ExploreCurrencyUnit

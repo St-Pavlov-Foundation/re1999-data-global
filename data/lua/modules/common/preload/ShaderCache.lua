@@ -1,60 +1,62 @@
-﻿module("modules.common.preload.ShaderCache", package.seeall)
+﻿-- chunkname: @modules/common/preload/ShaderCache.lua
 
-local var_0_0 = class("ShaderCache")
+module("modules.common.preload.ShaderCache", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._resPath = "shaders"
-	arg_1_0._shaderVCs = {}
-	arg_1_0._hasWarmup = false
-	arg_1_0._curIdx = 1
+local ShaderCache = class("ShaderCache")
+
+function ShaderCache:ctor()
+	self._resPath = "shaders"
+	self._shaderVCs = {}
+	self._hasWarmup = false
+	self._curIdx = 1
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._initCb = arg_2_1
-	arg_2_0._initCbObj = arg_2_2
+function ShaderCache:init(initCb, initCbObj)
+	self._initCb = initCb
+	self._initCbObj = initCbObj
 
 	if GameResMgr.IsFromEditorDir then
-		arg_2_0:_triggerFinishCb()
+		self:_triggerFinishCb()
 
 		return
 	end
 
-	loadAbAsset(arg_2_0._resPath, false, arg_2_0._onLoadOne, arg_2_0)
+	loadAbAsset(self._resPath, false, self._onLoadOne, self)
 
 	if isDebugBuild then
 		SLFramework.TimeWatch.Instance:Start()
 	end
 end
 
-function var_0_0._onLoadOne(arg_3_0, arg_3_1)
+function ShaderCache:_onLoadOne(assetItem)
 	if isDebugBuild then
 		logNormal("ShaderCache 加载AB耗时:" .. SLFramework.TimeWatch.Instance:Watch() .. " s!")
 		SLFramework.TimeWatch.Instance:Start()
 	end
 
-	if arg_3_1.IsLoadSuccess then
-		arg_3_1:Retain()
+	if assetItem.IsLoadSuccess then
+		assetItem:Retain()
 
-		local var_3_0 = arg_3_1:GetAllResources()
+		local shaders = assetItem:GetAllResources()
 
 		if isDebugBuild then
 			logNormal("ShaderCache 加载shader及变体耗时:" .. SLFramework.TimeWatch.Instance:Watch() .. " s!")
 		end
 
-		for iter_3_0 = 0, var_3_0.Length - 1 do
-			local var_3_1 = var_3_0[iter_3_0]
+		for idx = 0, shaders.Length - 1 do
+			local shaderObj = shaders[idx]
 
-			if typeof(UnityEngine.ShaderVariantCollection) == var_3_1:GetType() then
-				table.insert(arg_3_0._shaderVCs, var_3_1)
+			if typeof(UnityEngine.ShaderVariantCollection) == shaderObj:GetType() then
+				table.insert(self._shaderVCs, shaderObj)
 			else
-				ZProj.ShaderLib.Add(var_3_1)
+				ZProj.ShaderLib.Add(shaderObj)
 			end
 		end
 
 		if HotUpdateMgr.instance.shouldHotUpdate then
-			arg_3_0:_warmupShaders()
+			self:_warmupShaders()
 		else
-			arg_3_0:_triggerFinishCb()
+			self:_triggerFinishCb()
 
 			if isDebugBuild then
 				logNormal("ShaderCache 无热更新，跳过shader变体预热")
@@ -67,48 +69,48 @@ function var_0_0._onLoadOne(arg_3_0, arg_3_1)
 	logError("ShaderCache shader加载失败！")
 end
 
-function var_0_0._warmupShaders(arg_4_0)
-	if arg_4_0._hasWarmup then
+function ShaderCache:_warmupShaders()
+	if self._hasWarmup then
 		return
 	end
 
-	arg_4_0:_warmupOneShader()
+	self:_warmupOneShader()
 end
 
-function var_0_0._warmupOneShader(arg_5_0)
+function ShaderCache:_warmupOneShader()
 	if isDebugBuild then
 		SLFramework.TimeWatch.Instance:Start()
 	end
 
-	local var_5_0 = arg_5_0._shaderVCs[arg_5_0._curIdx]
+	local shaderVC = self._shaderVCs[self._curIdx]
 
-	var_5_0:WarmUp()
-	BootLoadingView.instance:show(0.2 + arg_5_0._curIdx / #arg_5_0._shaderVCs * 0.4, booterLang("loading_res"))
+	shaderVC:WarmUp()
+	BootLoadingView.instance:show(0.2 + self._curIdx / #self._shaderVCs * 0.4, booterLang("loading_res"))
 
 	if isDebugBuild then
-		logNormal("ShaderCache shader变体: " .. var_5_0.name .. " 预热耗时:" .. SLFramework.TimeWatch.Instance:Watch() .. " s!")
+		logNormal("ShaderCache shader变体: " .. shaderVC.name .. " 预热耗时:" .. SLFramework.TimeWatch.Instance:Watch() .. " s!")
 	end
 
-	arg_5_0._curIdx = arg_5_0._curIdx + 1
+	self._curIdx = self._curIdx + 1
 
-	if arg_5_0._curIdx <= #arg_5_0._shaderVCs then
-		TaskDispatcher.runDelay(arg_5_0._warmupOneShader, arg_5_0, 0.01)
+	if self._curIdx <= #self._shaderVCs then
+		TaskDispatcher.runDelay(self._warmupOneShader, self, 0.01)
 	else
-		arg_5_0._hasWarmup = true
+		self._hasWarmup = true
 
-		arg_5_0:_triggerFinishCb()
+		self:_triggerFinishCb()
 	end
 end
 
-function var_0_0._triggerFinishCb(arg_6_0)
-	if arg_6_0._initCb then
-		arg_6_0._initCb(arg_6_0._initCbObj)
+function ShaderCache:_triggerFinishCb()
+	if self._initCb then
+		self._initCb(self._initCbObj)
 
-		arg_6_0._initCb = nil
-		arg_6_0._initCbObj = nil
+		self._initCb = nil
+		self._initCbObj = nil
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+ShaderCache.instance = ShaderCache.New()
 
-return var_0_0
+return ShaderCache

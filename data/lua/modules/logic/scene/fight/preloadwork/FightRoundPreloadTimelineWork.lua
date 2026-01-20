@@ -1,156 +1,158 @@
-﻿module("modules.logic.scene.fight.preloadwork.FightRoundPreloadTimelineWork", package.seeall)
+﻿-- chunkname: @modules/logic/scene/fight/preloadwork/FightRoundPreloadTimelineWork.lua
 
-local var_0_0 = class("FightRoundPreloadTimelineWork", BaseWork)
+module("modules.logic.scene.fight.preloadwork.FightRoundPreloadTimelineWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_0:_getTimelineUrlList()
+local FightRoundPreloadTimelineWork = class("FightRoundPreloadTimelineWork", BaseWork)
+
+function FightRoundPreloadTimelineWork:onStart(context)
+	local timelineUrlList = self:_getTimelineUrlList()
 
 	if not GameResMgr.IsFromEditorDir then
-		arg_1_0.context.timelineDict = arg_1_0.context.timelineDict or {}
+		self.context.timelineDict = self.context.timelineDict or {}
 
-		for iter_1_0, iter_1_1 in ipairs(var_1_0) do
-			local var_1_1 = FightPreloadController.instance:getFightAssetItem(ResUrl.getRolesTimeline())
+		for _, resPath in ipairs(timelineUrlList) do
+			local tar_timeline = FightPreloadController.instance:getFightAssetItem(ResUrl.getRolesTimeline())
 
-			arg_1_0.context.timelineDict[iter_1_1] = var_1_1
+			self.context.timelineDict[resPath] = tar_timeline
 		end
 
-		arg_1_0:onDone(true)
+		self:onDone(true)
 
 		return
 	end
 
-	arg_1_0._loader = SequenceAbLoader.New()
+	self._loader = SequenceAbLoader.New()
 
-	for iter_1_2, iter_1_3 in ipairs(var_1_0) do
-		arg_1_0._loader:addPath(iter_1_3)
+	for _, resPath in ipairs(timelineUrlList) do
+		self._loader:addPath(resPath)
 	end
 
-	local var_1_2 = 10
+	local conCurrentCount = 10
 
-	arg_1_0._loader:setConcurrentCount(var_1_2)
-	arg_1_0._loader:setLoadFailCallback(arg_1_0._onPreloadOneFail)
-	arg_1_0._loader:startLoad(arg_1_0._onPreloadFinish, arg_1_0)
+	self._loader:setConcurrentCount(conCurrentCount)
+	self._loader:setLoadFailCallback(self._onPreloadOneFail)
+	self._loader:startLoad(self._onPreloadFinish, self)
 end
 
-function var_0_0._onPreloadFinish(arg_2_0)
-	local var_2_0 = arg_2_0._loader:getAssetItemDict()
+function FightRoundPreloadTimelineWork:_onPreloadFinish()
+	local assetItemDict = self._loader:getAssetItemDict()
 
-	arg_2_0.context.timelineDict = arg_2_0.context.timelineDict or {}
+	self.context.timelineDict = self.context.timelineDict or {}
 
-	for iter_2_0, iter_2_1 in pairs(var_2_0) do
-		arg_2_0.context.timelineDict[iter_2_0] = iter_2_1
+	for url, assetItem in pairs(assetItemDict) do
+		self.context.timelineDict[url] = assetItem
 
-		arg_2_0.context.callback(arg_2_0.context.callbackObj, iter_2_1)
+		self.context.callback(self.context.callbackObj, assetItem)
 	end
 
-	arg_2_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0._onPreloadOneFail(arg_3_0, arg_3_1, arg_3_2)
-	logError("Timeline加载失败：" .. arg_3_2.ResPath)
+function FightRoundPreloadTimelineWork:_onPreloadOneFail(loader, assetItem)
+	logError("Timeline加载失败：" .. assetItem.ResPath)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	if arg_4_0._loader then
-		arg_4_0._loader:dispose()
+function FightRoundPreloadTimelineWork:clearWork()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_4_0._loader = nil
+		self._loader = nil
 	end
 end
 
-function var_0_0._getTimelineUrlList(arg_5_0)
-	local var_5_0 = arg_5_0.context.timelineDict or {}
+function FightRoundPreloadTimelineWork:_getTimelineUrlList()
+	local lastTimelineDict = self.context.timelineDict or {}
 
-	arg_5_0.context.timelineUrlDict = {}
-	arg_5_0.context.timelineSkinDict = {}
+	self.context.timelineUrlDict = {}
+	self.context.timelineSkinDict = {}
 
 	if SkillEditorMgr.instance.inEditMode then
-		arg_5_0:_clacEditor()
+		self:_clacEditor()
 	else
-		arg_5_0:_calcFightCards()
+		self:_calcFightCards()
 	end
 
-	local var_5_1 = {}
+	local newTimelineUrlDict = {}
 
-	for iter_5_0, iter_5_1 in pairs(arg_5_0.context.timelineUrlDict) do
-		if var_5_0[iter_5_0] == nil then
-			table.insert(var_5_1, iter_5_0)
+	for url, _ in pairs(self.context.timelineUrlDict) do
+		if lastTimelineDict[url] == nil then
+			table.insert(newTimelineUrlDict, url)
 		end
 	end
 
-	return var_5_1
+	return newTimelineUrlDict
 end
 
-function var_0_0._clacEditor(arg_6_0)
-	arg_6_0.context.timelineUrlDict = {}
-	arg_6_0.context.timelineSkinDict = {}
+function FightRoundPreloadTimelineWork:_clacEditor()
+	self.context.timelineUrlDict = {}
+	self.context.timelineSkinDict = {}
 
-	local var_6_0 = FightDataHelper.entityMgr:getMyNormalList()
+	local mySideList = FightDataHelper.entityMgr:getMyNormalList()
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
-		local var_6_1 = iter_6_1.modelId
-		local var_6_2 = iter_6_1.skin
+	for _, one in ipairs(mySideList) do
+		local modelId = one.modelId
+		local skinId = one.skin
 
-		arg_6_0:_gatherModelSkillIds(FightEnum.EntitySide.MySide, var_6_1, var_6_2)
+		self:_gatherModelSkillIds(FightEnum.EntitySide.MySide, modelId, skinId)
 	end
 
-	local var_6_3 = FightDataHelper.entityMgr:getEnemyNormalList()
+	local enemySideList = FightDataHelper.entityMgr:getEnemyNormalList()
 
-	for iter_6_2, iter_6_3 in ipairs(var_6_3) do
-		local var_6_4 = iter_6_3.modelId
-		local var_6_5 = iter_6_3.skin
+	for _, one in ipairs(enemySideList) do
+		local modelId = one.modelId
+		local skinId = one.skin
 
-		arg_6_0:_gatherModelSkillIds(FightEnum.EntitySide.EnemySide, var_6_4, var_6_5)
+		self:_gatherModelSkillIds(FightEnum.EntitySide.EnemySide, modelId, skinId)
 	end
 end
 
-function var_0_0._calcFightCards(arg_7_0)
-	local var_7_0 = FightDataHelper.roundMgr:getRoundData()
-	local var_7_1 = var_7_0 and var_7_0:getAIUseCardMOList()
-	local var_7_2 = FightDataHelper.handCardMgr.handCard
+function FightRoundPreloadTimelineWork:_calcFightCards()
+	local roundData = FightDataHelper.roundMgr:getRoundData()
+	local aiUseCardMOList = roundData and roundData:getAIUseCardMOList()
+	local handCards = FightDataHelper.handCardMgr.handCard
 
-	if var_7_1 then
-		for iter_7_0, iter_7_1 in ipairs(var_7_1) do
-			local var_7_3 = FightDataHelper.entityMgr:getById(iter_7_1.uid)
+	if aiUseCardMOList then
+		for i, cardInfoMO in ipairs(aiUseCardMOList) do
+			local entityMO = FightDataHelper.entityMgr:getById(cardInfoMO.uid)
 
-			if var_7_3 then
-				arg_7_0:_gatherSkill(FightEnum.EntitySide.EnemySide, var_7_3.skin, iter_7_1.skillId)
+			if entityMO then
+				self:_gatherSkill(FightEnum.EntitySide.EnemySide, entityMO.skin, cardInfoMO.skillId)
 			end
 		end
 	end
 
-	for iter_7_2, iter_7_3 in ipairs(var_7_2) do
-		local var_7_4 = FightDataHelper.entityMgr:getById(iter_7_3.uid)
+	for i, cardInfoMO in ipairs(handCards) do
+		local entityMO = FightDataHelper.entityMgr:getById(cardInfoMO.uid)
 
-		if var_7_4 then
-			local var_7_5 = FightHelper.processSkinId(var_7_4, iter_7_3)
+		if entityMO then
+			local skinId = FightHelper.processSkinId(entityMO, cardInfoMO)
 
-			arg_7_0:_gatherSkill(FightEnum.EntitySide.MySide, var_7_5, iter_7_3.skillId)
+			self:_gatherSkill(FightEnum.EntitySide.MySide, skinId, cardInfoMO.skillId)
 		end
 	end
 
-	local var_7_6 = FightModel.instance:getFightParam().battleId
-	local var_7_7 = lua_battle.configDict[var_7_6]
-	local var_7_8 = var_7_7 and var_7_7.additionRule
-	local var_7_9 = var_7_7 and var_7_7.hiddenRule
+	local battleId = FightModel.instance:getFightParam().battleId
+	local battleCO = lua_battle.configDict[battleId]
+	local additionRule = battleCO and battleCO.additionRule
+	local hiddenRule = battleCO and battleCO.hiddenRule
 
-	arg_7_0:_checkBattleRuleSkill(var_7_8)
-	arg_7_0:_checkBattleRuleSkill(var_7_9)
+	self:_checkBattleRuleSkill(additionRule)
+	self:_checkBattleRuleSkill(hiddenRule)
 end
 
-function var_0_0._checkBattleRuleSkill(arg_8_0, arg_8_1)
-	if not string.nilorempty(arg_8_1) then
-		local var_8_0 = FightStrUtil.instance:getSplitString2Cache(arg_8_1, true, "|", "#")
+function FightRoundPreloadTimelineWork:_checkBattleRuleSkill(rule)
+	if not string.nilorempty(rule) then
+		local ruleList = FightStrUtil.instance:getSplitString2Cache(rule, true, "|", "#")
 
-		for iter_8_0, iter_8_1 in ipairs(var_8_0) do
-			local var_8_1 = iter_8_1[1]
-			local var_8_2 = iter_8_1[2]
-			local var_8_3 = lua_rule.configDict[var_8_2]
+		for _, v in ipairs(ruleList) do
+			local targetId = v[1]
+			local ruleId = v[2]
+			local ruleCO = lua_rule.configDict[ruleId]
 
-			if var_8_3 and var_8_3.type == DungeonEnum.AdditionRuleType.FightSkill then
-				local var_8_4 = tonumber(var_8_3.effect)
+			if ruleCO and ruleCO.type == DungeonEnum.AdditionRuleType.FightSkill then
+				local skillId = tonumber(ruleCO.effect)
 
-				arg_8_0:_gatherSkill(FightEnum.EntitySide.BothSide, nil, var_8_4)
+				self:_gatherSkill(FightEnum.EntitySide.BothSide, nil, skillId)
 
 				break
 			end
@@ -158,48 +160,52 @@ function var_0_0._checkBattleRuleSkill(arg_8_0, arg_8_1)
 	end
 end
 
-function var_0_0._gatherModelSkillIds(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	local var_9_0 = FightHelper.buildSkills(arg_9_2)
+function FightRoundPreloadTimelineWork:_gatherModelSkillIds(side, modelId, skinId)
+	local skillIds = FightHelper.buildSkills(modelId)
 
-	if not var_9_0 then
-		logError(arg_9_2 .. " no skill")
+	if not skillIds then
+		logError(modelId .. " no skill")
 	end
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
-		if not lua_skill.configDict[iter_9_1] then
-			local var_9_1 = lua_character.configDict[arg_9_2] and "角色：" or "怪物："
+	for _, skillId in ipairs(skillIds) do
+		local skillCO = lua_skill.configDict[skillId]
 
-			logError(var_9_1 .. arg_9_2 .. "，技能id不存在：" .. iter_9_1)
+		if not skillCO then
+			local heroCO = lua_character.configDict[modelId]
+			local monsterOrHero = heroCO and "角色：" or "怪物："
+
+			logError(monsterOrHero .. modelId .. "，技能id不存在：" .. skillId)
 		end
 
-		arg_9_0:_gatherSkill(arg_9_1, arg_9_3, iter_9_1)
+		self:_gatherSkill(side, skinId, skillId)
 	end
 end
 
-function var_0_0._gatherSkill(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	local var_10_0 = FightConfig.instance:getSkinSkillTimeline(arg_10_2, arg_10_3)
+function FightRoundPreloadTimelineWork:_gatherSkill(side, skinId, skillId)
+	local timeline = FightConfig.instance:getSkinSkillTimeline(skinId, skillId)
 
-	if not string.nilorempty(var_10_0) then
-		local var_10_1 = FightHelper.getTimelineListByName(var_10_0, arg_10_2)
+	if not string.nilorempty(timeline) then
+		local timelineList = FightHelper.getTimelineListByName(timeline, skinId)
 
-		for iter_10_0, iter_10_1 in ipairs(var_10_1) do
-			local var_10_2 = iter_10_1
-			local var_10_3 = ResUrl.getSkillTimeline(var_10_2)
-			local var_10_4 = arg_10_0.context.timelineUrlDict[var_10_3]
+		for i, v in ipairs(timelineList) do
+			timeline = v
 
-			if not var_10_4 then
-				arg_10_0.context.timelineUrlDict[var_10_3] = arg_10_1
-			elseif var_10_4 == FightEnum.EntitySide.MySide and arg_10_1 == FightEnum.EntitySide.EnemySide then
-				arg_10_0.context.timelineUrlDict[var_10_3] = FightEnum.EntitySide.BothSide
-			elseif var_10_4 == FightEnum.EntitySide.EnemySide and arg_10_1 == FightEnum.EntitySide.MySide then
-				arg_10_0.context.timelineUrlDict[var_10_3] = FightEnum.EntitySide.BothSide
+			local tlUrl = ResUrl.getSkillTimeline(timeline)
+			local prevSide = self.context.timelineUrlDict[tlUrl]
+
+			if not prevSide then
+				self.context.timelineUrlDict[tlUrl] = side
+			elseif prevSide == FightEnum.EntitySide.MySide and side == FightEnum.EntitySide.EnemySide then
+				self.context.timelineUrlDict[tlUrl] = FightEnum.EntitySide.BothSide
+			elseif prevSide == FightEnum.EntitySide.EnemySide and side == FightEnum.EntitySide.MySide then
+				self.context.timelineUrlDict[tlUrl] = FightEnum.EntitySide.BothSide
 			end
 
-			arg_10_2 = arg_10_2 or 0
-			arg_10_0.context.timelineSkinDict[var_10_3] = arg_10_0.context.timelineSkinDict[var_10_3] or {}
-			arg_10_0.context.timelineSkinDict[var_10_3][arg_10_2] = true
+			skinId = skinId or 0
+			self.context.timelineSkinDict[tlUrl] = self.context.timelineSkinDict[tlUrl] or {}
+			self.context.timelineSkinDict[tlUrl][skinId] = true
 		end
 	end
 end
 
-return var_0_0
+return FightRoundPreloadTimelineWork

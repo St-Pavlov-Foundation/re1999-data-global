@@ -1,38 +1,40 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.view.eliminateChess.EliminateLevelViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/view/eliminateChess/EliminateLevelViewContainer.lua
 
-local var_0_0 = class("EliminateLevelViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_2.eliminate.view.eliminateChess.EliminateLevelViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	arg_1_0._sceneView = EliminateSceneView.New()
-	arg_1_0._teamChessView = EliminateTeamChessView.New()
-	arg_1_0._eliminateView = EliminateView.New()
-	arg_1_0._eliminateLevelView = EliminateLevelView.New()
+local EliminateLevelViewContainer = class("EliminateLevelViewContainer", BaseViewContainer)
+
+function EliminateLevelViewContainer:buildViews()
+	self._sceneView = EliminateSceneView.New()
+	self._teamChessView = EliminateTeamChessView.New()
+	self._eliminateView = EliminateView.New()
+	self._eliminateLevelView = EliminateLevelView.New()
 
 	return {
-		arg_1_0._sceneView,
-		arg_1_0._teamChessView,
-		arg_1_0._eliminateView,
-		arg_1_0._eliminateLevelView
+		self._sceneView,
+		self._teamChessView,
+		self._eliminateView,
+		self._eliminateLevelView
 	}
 end
 
-function var_0_0.setTeamChessViewParent(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._eliminateLevelView:setParent(arg_2_1, arg_2_2)
+function EliminateLevelViewContainer:setTeamChessViewParent(parent, canvas)
+	self._eliminateLevelView:setParent(parent, canvas)
 end
 
-function var_0_0.setTeamChessTipViewParent(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0._teamChessView:setTipViewParent(arg_3_1, arg_3_2)
+function EliminateLevelViewContainer:setTeamChessTipViewParent(parent, canvas)
+	self._teamChessView:setTipViewParent(parent, canvas)
 end
 
-function var_0_0.setVisibleInternal(arg_4_0, arg_4_1)
-	if arg_4_0._sceneView ~= nil then
-		arg_4_0._sceneView:setSceneVisible(arg_4_1)
-		var_0_0.super.setVisibleInternal(arg_4_0, arg_4_1)
+function EliminateLevelViewContainer:setVisibleInternal(isVisible)
+	if self._sceneView ~= nil then
+		self._sceneView:setSceneVisible(isVisible)
+		EliminateLevelViewContainer.super.setVisibleInternal(self, isVisible)
 	end
 end
 
-function var_0_0.onContainerOpenFinish(arg_5_0)
+function EliminateLevelViewContainer:onContainerOpenFinish()
 	return
 end
 
-return var_0_0
+return EliminateLevelViewContainer

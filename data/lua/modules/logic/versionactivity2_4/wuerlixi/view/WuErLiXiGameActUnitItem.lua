@@ -1,164 +1,172 @@
-﻿module("modules.logic.versionactivity2_4.wuerlixi.view.WuErLiXiGameActUnitItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/wuerlixi/view/WuErLiXiGameActUnitItem.lua
 
-local var_0_0 = class("WuErLiXiGameActUnitItem", LuaCompBase)
+module("modules.logic.versionactivity2_4.wuerlixi.view.WuErLiXiGameActUnitItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.go = arg_1_1
-	arg_1_0._goDrag = arg_1_2
-	arg_1_0._itemWidth = recthelper.getWidth(arg_1_0.go.transform)
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_1, "icon")
-	arg_1_0._gowall = gohelper.findChild(arg_1_1, "icon_wall")
-	arg_1_0._imageiconbg = gohelper.findChildImage(arg_1_1, "image_BG")
-	arg_1_0._txtcount = gohelper.findChildText(arg_1_1, "txt_count")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_1, "#txt_Num")
-	arg_1_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_1_0._imageicon.gameObject)
+local WuErLiXiGameActUnitItem = class("WuErLiXiGameActUnitItem", LuaCompBase)
 
-	arg_1_0._drag:AddDragBeginListener(arg_1_0._onBeginDrag, arg_1_0, arg_1_1.transform)
-	arg_1_0._drag:AddDragListener(arg_1_0._onDrag, arg_1_0)
-	arg_1_0._drag:AddDragEndListener(arg_1_0._onEndDrag, arg_1_0, arg_1_1.transform)
+function WuErLiXiGameActUnitItem:init(go, dragGo)
+	self.go = go
+	self._goDrag = dragGo
+	self._itemWidth = recthelper.getWidth(self.go.transform)
+	self._imageicon = gohelper.findChildImage(go, "icon")
+	self._gowall = gohelper.findChild(go, "icon_wall")
+	self._imageiconbg = gohelper.findChildImage(go, "image_BG")
+	self._txtcount = gohelper.findChildText(go, "txt_count")
+	self._txtname = gohelper.findChildText(go, "#txt_Num")
+	self._drag = SLFramework.UGUI.UIDragListener.Get(self._imageicon.gameObject)
 
-	arg_1_0._bgiconwidthoffset = recthelper.getWidth(arg_1_0._imageiconbg.gameObject.transform) - recthelper.getWidth(arg_1_0._imageicon.gameObject.transform)
+	self._drag:AddDragBeginListener(self._onBeginDrag, self, go.transform)
+	self._drag:AddDragListener(self._onDrag, self)
+	self._drag:AddDragEndListener(self._onEndDrag, self, go.transform)
+
+	self._bgiconwidthoffset = recthelper.getWidth(self._imageiconbg.gameObject.transform) - recthelper.getWidth(self._imageicon.gameObject.transform)
 end
 
-function var_0_0._onBeginDrag(arg_2_0, arg_2_1, arg_2_2)
-	if WuErLiXiMapModel.instance:getLimitSelectUnitCount(arg_2_0._mo) < 1 then
+function WuErLiXiGameActUnitItem:_onBeginDrag(unitTransform, pointerEventData)
+	local count = WuErLiXiMapModel.instance:getLimitSelectUnitCount(self._mo)
+
+	if count < 1 then
 		return
 	end
 
-	gohelper.setActive(arg_2_0._goDrag, false)
-	arg_2_0:_setDragItem()
+	gohelper.setActive(self._goDrag, false)
+	self:_setDragItem()
 	AudioMgr.instance:trigger(AudioEnum.WuErLiXi.play_ui_diqiu_choose)
-	arg_2_0._goDrag.transform:SetParent(arg_2_0.go.transform.parent.parent)
+	self._goDrag.transform:SetParent(self.go.transform.parent.parent)
 
-	local var_2_0 = arg_2_2.position
-	local var_2_1 = recthelper.screenPosToAnchorPos(var_2_0, arg_2_0._goDrag.transform.parent)
+	local pos = pointerEventData.position
+	local anchorPos = recthelper.screenPosToAnchorPos(pos, self._goDrag.transform.parent)
 
-	recthelper.setAnchor(arg_2_0._goDrag.transform, var_2_1.x, var_2_1.y)
-	transformhelper.setLocalScale(arg_2_0._goDrag.transform, 1, 1, 1)
+	recthelper.setAnchor(self._goDrag.transform, anchorPos.x, anchorPos.y)
+	transformhelper.setLocalScale(self._goDrag.transform, 1, 1, 1)
 end
 
-function var_0_0._setDragItem(arg_3_0)
-	arg_3_0._imagedragicon = gohelper.findChildImage(arg_3_0._goDrag, "icon")
-	arg_3_0._imagedragiconbg = gohelper.findChildImage(arg_3_0._goDrag, "image_BG")
-	arg_3_0._txtdragname = gohelper.findChildText(arg_3_0._goDrag, "#txt_Num")
+function WuErLiXiGameActUnitItem:_setDragItem()
+	self._imagedragicon = gohelper.findChildImage(self._goDrag, "icon")
+	self._imagedragiconbg = gohelper.findChildImage(self._goDrag, "image_BG")
+	self._txtdragname = gohelper.findChildText(self._goDrag, "#txt_Num")
 
-	local var_3_0 = WuErLiXiHelper.getUnitSpriteName(arg_3_0._mo.type, false)
+	local spriteName = WuErLiXiHelper.getUnitSpriteName(self._mo.type, false)
 
-	UISpriteSetMgr.instance:setV2a4WuErLiXiSprite(arg_3_0._imagedragicon, var_3_0)
-	UISpriteSetMgr.instance:setV2a4WuErLiXiSprite(arg_3_0._imagedragiconbg, "v2a4_wuerlixi_node_icon2")
+	UISpriteSetMgr.instance:setV2a4WuErLiXiSprite(self._imagedragicon, spriteName)
+	UISpriteSetMgr.instance:setV2a4WuErLiXiSprite(self._imagedragiconbg, "v2a4_wuerlixi_node_icon2")
 
-	arg_3_0._txtdragname.text = WuErLiXiMapModel.instance:getKeyAndSwitchTagById(arg_3_0._mo.id)
+	self._txtdragname.text = WuErLiXiMapModel.instance:getKeyAndSwitchTagById(self._mo.id)
 
-	TaskDispatcher.runDelay(arg_3_0._setDragPos, arg_3_0, 0.05)
+	TaskDispatcher.runDelay(self._setDragPos, self, 0.05)
 end
 
-function var_0_0._setDragPos(arg_4_0)
-	gohelper.setActive(arg_4_0._goDrag, true)
-	arg_4_0._imagedragicon:SetNativeSize()
-	arg_4_0._imagedragiconbg:SetNativeSize()
+function WuErLiXiGameActUnitItem:_setDragPos()
+	gohelper.setActive(self._goDrag, true)
+	self._imagedragicon:SetNativeSize()
+	self._imagedragiconbg:SetNativeSize()
 
-	local var_4_0 = recthelper.getWidth(arg_4_0._imagedragicon.gameObject.transform)
+	local actUnitIconWidth = recthelper.getWidth(self._imagedragicon.gameObject.transform)
 
-	if arg_4_0._mo.type == WuErLiXiEnum.UnitType.SignalMulti then
-		if arg_4_0._mo.dir == WuErLiXiEnum.Dir.Up or arg_4_0._mo.dir == WuErLiXiEnum.Dir.Down then
-			recthelper.setWidth(arg_4_0._imagedragiconbg.gameObject.transform, var_4_0 + arg_4_0._bgiconwidthoffset)
-			recthelper.setWidth(arg_4_0._goDrag.transform, var_4_0 + arg_4_0._bgiconwidthoffset)
+	if self._mo.type == WuErLiXiEnum.UnitType.SignalMulti then
+		if self._mo.dir == WuErLiXiEnum.Dir.Up or self._mo.dir == WuErLiXiEnum.Dir.Down then
+			recthelper.setWidth(self._imagedragiconbg.gameObject.transform, actUnitIconWidth + self._bgiconwidthoffset)
+			recthelper.setWidth(self._goDrag.transform, actUnitIconWidth + self._bgiconwidthoffset)
 		else
-			recthelper.setHeight(arg_4_0._imagedragiconbg.gameObject.transform, var_4_0 + arg_4_0._bgiconwidthoffset)
-			recthelper.setHeight(arg_4_0._goDrag.transform, var_4_0 + arg_4_0._bgiconwidthoffset)
+			recthelper.setHeight(self._imagedragiconbg.gameObject.transform, actUnitIconWidth + self._bgiconwidthoffset)
+			recthelper.setHeight(self._goDrag.transform, actUnitIconWidth + self._bgiconwidthoffset)
 		end
 	else
-		recthelper.setWidth(arg_4_0._goDrag.transform, arg_4_0._itemWidth)
-		recthelper.setHeight(arg_4_0._goDrag.transform, arg_4_0._itemWidth)
+		recthelper.setWidth(self._goDrag.transform, self._itemWidth)
+		recthelper.setHeight(self._goDrag.transform, self._itemWidth)
 	end
 
-	transformhelper.setLocalRotation(arg_4_0._imagedragicon.gameObject.transform, 0, 0, -90 * arg_4_0._mo.dir)
+	transformhelper.setLocalRotation(self._imagedragicon.gameObject.transform, 0, 0, -90 * self._mo.dir)
 end
 
-function var_0_0._onDrag(arg_5_0, arg_5_1, arg_5_2)
-	if WuErLiXiMapModel.instance:getLimitSelectUnitCount(arg_5_0._mo) < 1 then
+function WuErLiXiGameActUnitItem:_onDrag(param, pointerEventData)
+	local count = WuErLiXiMapModel.instance:getLimitSelectUnitCount(self._mo)
+
+	if count < 1 then
 		return
 	end
 
-	local var_5_0 = arg_5_2.position
-	local var_5_1 = recthelper.screenPosToAnchorPos(var_5_0, arg_5_0._goDrag.transform.parent)
+	local pos = pointerEventData.position
+	local anchorPos = recthelper.screenPosToAnchorPos(pos, self._goDrag.transform.parent)
 
-	recthelper.setAnchor(arg_5_0._goDrag.transform, var_5_1.x, var_5_1.y)
+	recthelper.setAnchor(self._goDrag.transform, anchorPos.x, anchorPos.y)
 	WuErLiXiMapModel.instance:clearSelectUnit()
-	WuErLiXiController.instance:dispatchEvent(WuErLiXiEvent.UnitDraging, var_5_0, arg_5_0._mo, arg_5_0._mo.type)
+	WuErLiXiController.instance:dispatchEvent(WuErLiXiEvent.UnitDraging, pos, self._mo, self._mo.type)
 end
 
-function var_0_0._onEndDrag(arg_6_0, arg_6_1, arg_6_2)
-	if WuErLiXiMapModel.instance:getLimitSelectUnitCount(arg_6_0._mo) < 1 then
+function WuErLiXiGameActUnitItem:_onEndDrag(equipTransform, pointerEventData)
+	local count = WuErLiXiMapModel.instance:getLimitSelectUnitCount(self._mo)
+
+	if count < 1 then
 		return
 	end
 
-	local var_6_0 = arg_6_2.position
-	local var_6_1 = recthelper.screenPosToAnchorPos(var_6_0, arg_6_0._goDrag.transform.parent)
+	local pos = pointerEventData.position
+	local anchorPos = recthelper.screenPosToAnchorPos(pos, self._goDrag.transform.parent)
 
-	recthelper.setAnchor(arg_6_0._goDrag.transform, var_6_1.x, var_6_1.y)
-	gohelper.setActive(arg_6_0._goDrag, false)
-	WuErLiXiController.instance:dispatchEvent(WuErLiXiEvent.ActUnitDragEnd, var_6_0, arg_6_0._mo)
+	recthelper.setAnchor(self._goDrag.transform, anchorPos.x, anchorPos.y)
+	gohelper.setActive(self._goDrag, false)
+	WuErLiXiController.instance:dispatchEvent(WuErLiXiEvent.ActUnitDragEnd, pos, self._mo)
 end
 
-function var_0_0.setItem(arg_7_0, arg_7_1)
-	arg_7_0._mo = arg_7_1
+function WuErLiXiGameActUnitItem:setItem(mo)
+	self._mo = mo
 
-	gohelper.setActive(arg_7_0.go, false)
+	gohelper.setActive(self.go, false)
 
-	local var_7_0 = WuErLiXiHelper.getUnitSpriteName(arg_7_0._mo.type, false)
+	local spriteName = WuErLiXiHelper.getUnitSpriteName(self._mo.type, false)
 
-	UISpriteSetMgr.instance:setV2a4WuErLiXiSprite(arg_7_0._imageicon, var_7_0)
-	gohelper.setActive(arg_7_0._gowall, arg_7_0._mo.type == WuErLiXiEnum.UnitType.Obstacle)
-	TaskDispatcher.runDelay(arg_7_0.setPos, arg_7_0, 0.05)
+	UISpriteSetMgr.instance:setV2a4WuErLiXiSprite(self._imageicon, spriteName)
+	gohelper.setActive(self._gowall, self._mo.type == WuErLiXiEnum.UnitType.Obstacle)
+	TaskDispatcher.runDelay(self.setPos, self, 0.05)
 
-	local var_7_1 = WuErLiXiMapModel.instance:getLimitSelectUnitCount(arg_7_0._mo)
+	local count = WuErLiXiMapModel.instance:getLimitSelectUnitCount(self._mo)
 
-	arg_7_0._txtcount.text = luaLang("multiple") .. tostring(var_7_1)
-	arg_7_0._txtname.text = WuErLiXiMapModel.instance:getKeyAndSwitchTagById(arg_7_0._mo.id)
+	self._txtcount.text = luaLang("multiple") .. tostring(count)
+	self._txtname.text = WuErLiXiMapModel.instance:getKeyAndSwitchTagById(self._mo.id)
 end
 
-function var_0_0.setPos(arg_8_0)
-	gohelper.setActive(arg_8_0.go, true)
-	arg_8_0._imageicon:SetNativeSize()
-	arg_8_0._imageiconbg:SetNativeSize()
+function WuErLiXiGameActUnitItem:setPos()
+	gohelper.setActive(self.go, true)
+	self._imageicon:SetNativeSize()
+	self._imageiconbg:SetNativeSize()
 
-	local var_8_0 = recthelper.getWidth(arg_8_0._imageicon.gameObject.transform)
+	local actUnitIconWidth = recthelper.getWidth(self._imageicon.gameObject.transform)
 
-	if arg_8_0._mo.type == WuErLiXiEnum.UnitType.SignalMulti then
-		if arg_8_0._mo.dir == WuErLiXiEnum.Dir.Up or arg_8_0._mo.dir == WuErLiXiEnum.Dir.Down then
-			recthelper.setWidth(arg_8_0._imageiconbg.gameObject.transform, var_8_0 + arg_8_0._bgiconwidthoffset)
-			recthelper.setWidth(arg_8_0.go.transform, var_8_0 + arg_8_0._bgiconwidthoffset)
+	if self._mo.type == WuErLiXiEnum.UnitType.SignalMulti then
+		if self._mo.dir == WuErLiXiEnum.Dir.Up or self._mo.dir == WuErLiXiEnum.Dir.Down then
+			recthelper.setWidth(self._imageiconbg.gameObject.transform, actUnitIconWidth + self._bgiconwidthoffset)
+			recthelper.setWidth(self.go.transform, actUnitIconWidth + self._bgiconwidthoffset)
 		else
-			recthelper.setHeight(arg_8_0._imageiconbg.gameObject.transform, var_8_0 + arg_8_0._bgiconwidthoffset)
-			recthelper.setHeight(arg_8_0.go.transform, var_8_0 + arg_8_0._bgiconwidthoffset)
+			recthelper.setHeight(self._imageiconbg.gameObject.transform, actUnitIconWidth + self._bgiconwidthoffset)
+			recthelper.setHeight(self.go.transform, actUnitIconWidth + self._bgiconwidthoffset)
 		end
 	else
-		recthelper.setWidth(arg_8_0.go.transform, arg_8_0._itemWidth)
-		recthelper.setHeight(arg_8_0.go.transform, arg_8_0._itemWidth)
+		recthelper.setWidth(self.go.transform, self._itemWidth)
+		recthelper.setHeight(self.go.transform, self._itemWidth)
 	end
 
-	transformhelper.setLocalRotation(arg_8_0._imageicon.gameObject.transform, 0, 0, -90 * arg_8_0._mo.dir)
+	transformhelper.setLocalRotation(self._imageicon.gameObject.transform, 0, 0, -90 * self._mo.dir)
 end
 
-function var_0_0.resetItem(arg_9_0)
-	local var_9_0 = WuErLiXiMapModel.instance:getLimitSelectUnitCount(arg_9_0._mo)
+function WuErLiXiGameActUnitItem:resetItem()
+	local count = WuErLiXiMapModel.instance:getLimitSelectUnitCount(self._mo)
 
-	arg_9_0._txtcount.text = luaLang("multiple") .. tostring(var_9_0)
+	self._txtcount.text = luaLang("multiple") .. tostring(count)
 end
 
-function var_0_0.hide(arg_10_0)
-	gohelper.setActive(arg_10_0.go, false)
+function WuErLiXiGameActUnitItem:hide()
+	gohelper.setActive(self.go, false)
 end
 
-function var_0_0.refreshCount(arg_11_0)
+function WuErLiXiGameActUnitItem:refreshCount()
 	return
 end
 
-function var_0_0.destroy(arg_12_0)
-	arg_12_0._drag:RemoveDragListener()
-	arg_12_0._drag:RemoveDragBeginListener()
-	arg_12_0._drag:RemoveDragEndListener()
+function WuErLiXiGameActUnitItem:destroy()
+	self._drag:RemoveDragListener()
+	self._drag:RemoveDragBeginListener()
+	self._drag:RemoveDragEndListener()
 end
 
-return var_0_0
+return WuErLiXiGameActUnitItem

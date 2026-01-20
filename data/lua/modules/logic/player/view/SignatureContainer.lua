@@ -1,13 +1,15 @@
-﻿module("modules.logic.player.view.SignatureContainer", package.seeall)
+﻿-- chunkname: @modules/logic/player/view/SignatureContainer.lua
 
-local var_0_0 = class("SignatureContainer", BaseViewContainer)
+module("modules.logic.player.view.SignatureContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local SignatureContainer = class("SignatureContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Signature.New())
+function SignatureContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Signature.New())
+
+	return views
 end
 
-return var_0_0
+return SignatureContainer

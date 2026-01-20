@@ -1,126 +1,135 @@
-﻿module("modules.logic.main.view.MainThumbnailHeroView", package.seeall)
+﻿-- chunkname: @modules/logic/main/view/MainThumbnailHeroView.lua
 
-local var_0_0 = class("MainThumbnailHeroView", BaseView)
+module("modules.logic.main.view.MainThumbnailHeroView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._golightspinecontrol = gohelper.findChild(arg_1_0.viewGO, "#go_lightspinecontrol")
-	arg_1_0._gospinescale = gohelper.findChild(arg_1_0.viewGO, "#go_spine_scale")
-	arg_1_0._golightspine = gohelper.findChild(arg_1_0.viewGO, "#go_spine_scale/lightspine/#go_lightspine")
-	arg_1_0._txtanacn = gohelper.findChildText(arg_1_0.viewGO, "bottom/#txt_ana_cn")
-	arg_1_0._txtanaen = gohelper.findChildText(arg_1_0.viewGO, "bottom/#txt_ana_en")
-	arg_1_0._gocontentbg = gohelper.findChild(arg_1_0.viewGO, "bottom/#go_contentbg")
-	arg_1_0._btnblock = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_block")
-	arg_1_0._goswitch = gohelper.findChild(arg_1_0.viewGO, "#btn_switch")
-	arg_1_0._goswitchreddot = gohelper.findChild(arg_1_0.viewGO, "#btn_switch/switchreddot")
+local MainThumbnailHeroView = class("MainThumbnailHeroView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function MainThumbnailHeroView:onInitView()
+	self._golightspinecontrol = gohelper.findChild(self.viewGO, "#go_lightspinecontrol")
+	self._gospinescale = gohelper.findChild(self.viewGO, "#go_spine_scale")
+	self._golightspine = gohelper.findChild(self.viewGO, "#go_spine_scale/lightspine/#go_lightspine")
+	self._txtanacn = gohelper.findChildText(self.viewGO, "bottom/#txt_ana_cn")
+	self._txtanaen = gohelper.findChildText(self.viewGO, "bottom/#txt_ana_en")
+	self._gocontentbg = gohelper.findChild(self.viewGO, "bottom/#go_contentbg")
+	self._btnblock = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_block")
+	self._goswitch = gohelper.findChild(self.viewGO, "#btn_switch")
+	self._goswitchreddot = gohelper.findChild(self.viewGO, "#btn_switch/switchreddot")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnblock:AddClickListener(arg_2_0._btnblockOnClick, arg_2_0)
+function MainThumbnailHeroView:addEvents()
+	self._btnblock:AddClickListener(self._btnblockOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnblock:RemoveClickListener()
+function MainThumbnailHeroView:removeEvents()
+	self._btnblock:RemoveClickListener()
 end
 
-local var_0_1 = ZProj.TweenHelper
+local csTweenHelper = ZProj.TweenHelper
 
-function var_0_0._btnblockOnClick(arg_4_0)
-	if arg_4_0._lightSpine then
-		arg_4_0._lightSpine:stopVoice()
+function MainThumbnailHeroView:_btnblockOnClick()
+	if self._lightSpine then
+		self._lightSpine:stopVoice()
 	end
 
-	arg_4_0:_greetingFinish()
+	self:_greetingFinish()
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenFullViewFinish, arg_5_0._onOpenFullView, arg_5_0)
-	arg_5_0:addEventCb(ViewMgr.instance, ViewEvent.ReOpenWhileOpen, arg_5_0._reOpenWhileOpen, arg_5_0)
-	arg_5_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_5_0._onOpenView, arg_5_0)
-	arg_5_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_5_0._onCloseViewFinish, arg_5_0)
-	arg_5_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, arg_5_0._onCloseFullView, arg_5_0)
-	arg_5_0:addEventCb(MainController.instance, MainEvent.OnSceneClose, arg_5_0._onSceneClose, arg_5_0)
-	arg_5_0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_5_0._onScreenResize, arg_5_0)
-	NavigateMgr.instance:addEscape(ViewName.MainThumbnailView, arg_5_0._onEscBtnClick, arg_5_0)
-	arg_5_0.viewContainer:getThumbnailNav():setCloseCheck(arg_5_0._navCloseCheck, arg_5_0)
-	arg_5_0:_initGreeting()
-	arg_5_0:_initCamera()
-	arg_5_0:_initCapture()
-	gohelper.setActive(arg_5_0._goswitchreddot, false)
+function MainThumbnailHeroView:onOpen()
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenFullViewFinish, self._onOpenFullView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.ReOpenWhileOpen, self._reOpenWhileOpen, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, self._onCloseFullView, self)
+	self:addEventCb(MainController.instance, MainEvent.OnSceneClose, self._onSceneClose, self)
+	self:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, self._onScreenResize, self)
+	NavigateMgr.instance:addEscape(ViewName.MainThumbnailView, self._onEscBtnClick, self)
 
-	if arg_5_0:_checkShowRedDot() then
-		gohelper.setActive(arg_5_0._goswitch, false)
+	local navView = self.viewContainer:getThumbnailNav()
+
+	navView:setCloseCheck(self._navCloseCheck, self)
+	self:_initGreeting()
+	self:_initCamera()
+	self:_initCapture()
+	gohelper.setActive(self._goswitchreddot, false)
+
+	if self:_checkShowRedDot() then
+		gohelper.setActive(self._goswitch, false)
 	end
 
-	arg_5_0._animator = arg_5_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_5_0._viewPlayer = SLFramework.AnimatorPlayer.Get(arg_5_0.viewGO)
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._viewPlayer = SLFramework.AnimatorPlayer.Get(self.viewGO)
 
-	arg_5_0._viewPlayer:Play(arg_5_0._needPlayGreeting and "open1" or "open2", arg_5_0._onViewAnimDone, arg_5_0)
+	self._viewPlayer:Play(self._needPlayGreeting and "open1" or "open2", self._onViewAnimDone, self)
 
-	arg_5_0._curHeroId, arg_5_0._curSkinId = CharacterSwitchListModel.instance:getMainHero()
+	self._curHeroId, self._curSkinId = CharacterSwitchListModel.instance:getMainHero()
 
-	if arg_5_0._curHeroId and arg_5_0._curSkinId then
-		arg_5_0:_updateHero(arg_5_0._curHeroId, arg_5_0._curSkinId)
+	if self._curHeroId and self._curSkinId then
+		self:_updateHero(self._curHeroId, self._curSkinId)
 	end
 
-	arg_5_0:_startForceUpdateCameraPos()
-	arg_5_0._cameraPlayer:Play(arg_5_0._needPlayGreeting and "ani01" or "ani03", arg_5_0._cameraInitAnimDone, arg_5_0)
+	self:_startForceUpdateCameraPos()
+	self._cameraPlayer:Play(self._needPlayGreeting and "ani01" or "ani03", self._cameraInitAnimDone, self)
 
 	if not PlayerModel.instance:getMainThumbnail() then
 		PlayerRpc.instance:sendMarkMainThumbnailRequest()
 	end
 end
 
-function var_0_0._onScreenResize(arg_6_0)
-	var_0_0.setSpineScale(arg_6_0._gospinescale)
+function MainThumbnailHeroView:_onScreenResize()
+	MainThumbnailHeroView.setSpineScale(self._gospinescale)
 end
 
-function var_0_0._cameraInitAnimDone(arg_7_0)
-	arg_7_0:_removeForceUpdateCameraPos()
+function MainThumbnailHeroView:_cameraInitAnimDone()
+	self:_removeForceUpdateCameraPos()
 
-	if arg_7_0._needPlayGreeting then
-		arg_7_0._needPlayGreeting = false
+	if self._needPlayGreeting then
+		self._needPlayGreeting = false
 
-		arg_7_0:_playGreetingVoices()
+		self:_playGreetingVoices()
 	else
-		arg_7_0:_showRedDot()
+		self:_showRedDot()
 	end
 end
 
-function var_0_0._initGreeting(arg_8_0)
-	arg_8_0._needPlayGreeting = arg_8_0.viewParam and arg_8_0.viewParam.needPlayGreeting
+function MainThumbnailHeroView:_initGreeting()
+	self._needPlayGreeting = self.viewParam and self.viewParam.needPlayGreeting
 
-	gohelper.setActive(arg_8_0._btnblock.gameObject, arg_8_0._needPlayGreeting)
+	gohelper.setActive(self._btnblock.gameObject, self._needPlayGreeting)
 
-	if arg_8_0._needPlayGreeting then
-		gohelper.setActive(arg_8_0._goswitch, false)
-		TaskDispatcher.runDelay(arg_8_0._greetingFinish, arg_8_0, 20)
+	if self._needPlayGreeting then
+		gohelper.setActive(self._goswitch, false)
+		TaskDispatcher.runDelay(self._greetingFinish, self, 20)
 	end
 end
 
-function var_0_0._initCamera(arg_9_0)
-	if arg_9_0._cameraPlayer then
+function MainThumbnailHeroView:_initCamera()
+	if self._cameraPlayer then
 		return
 	end
 
-	local var_9_0 = CameraMgr.instance:getCameraRootAnimator()
-	local var_9_1 = arg_9_0.viewContainer:getSetting().otherRes[3]
+	local animator = CameraMgr.instance:getCameraRootAnimator()
+	local path = self.viewContainer:getSetting().otherRes[3]
+	local animatorInst = self.viewContainer._abLoader:getAssetItem(path):GetResource()
 
-	var_9_0.runtimeAnimatorController = arg_9_0.viewContainer._abLoader:getAssetItem(var_9_1):GetResource()
-	arg_9_0._cameraRootTrans = CameraMgr.instance:getCameraRootGO().transform
-	arg_9_0._cameraAnimator = CameraMgr.instance:getCameraRootAnimator()
-	arg_9_0._cameraPlayer = CameraMgr.instance:getCameraRootAnimatorPlayer()
+	animator.runtimeAnimatorController = animatorInst
+
+	local targetGo = CameraMgr.instance:getCameraRootGO()
+
+	self._cameraRootTrans = targetGo.transform
+	self._cameraAnimator = CameraMgr.instance:getCameraRootAnimator()
+	self._cameraPlayer = CameraMgr.instance:getCameraRootAnimatorPlayer()
 end
 
-function var_0_0._onViewAnimDone(arg_10_0)
+function MainThumbnailHeroView:_onViewAnimDone()
 	return
 end
 
-function var_0_0._onCameraAnimDone(arg_11_0)
-	arg_11_0:_removeForceUpdateCameraPos()
+function MainThumbnailHeroView:_onCameraAnimDone()
+	self:_removeForceUpdateCameraPos()
 
 	if VirtualSummonScene.instance:isOpen() then
 		return
@@ -130,351 +139,359 @@ function var_0_0._onCameraAnimDone(arg_11_0)
 	CameraMgr.instance:getCameraTrace().EnableTrace = false
 end
 
-function var_0_0._initCapture(arg_12_0)
-	if not arg_12_0._needPlayGreeting then
+function MainThumbnailHeroView:_initCapture()
+	if not self._needPlayGreeting then
 		return
 	end
 
-	local var_12_0 = PostProcessingMgr.instance:getCaptureView()
-	local var_12_1 = gohelper.onceAddComponent(var_12_0, typeof(UnityEngine.Animator))
-	local var_12_2 = arg_12_0.viewContainer:getSetting().otherRes[4]
+	local targetGo = PostProcessingMgr.instance:getCaptureView()
+	local animator = gohelper.onceAddComponent(targetGo, typeof(UnityEngine.Animator))
+	local path = self.viewContainer:getSetting().otherRes[4]
+	local animatorInst = self.viewContainer._abLoader:getAssetItem(path):GetResource()
 
-	var_12_1.runtimeAnimatorController = arg_12_0.viewContainer._abLoader:getAssetItem(var_12_2):GetResource()
+	animator.runtimeAnimatorController = animatorInst
 
-	SLFramework.AnimatorPlayer.Get(var_12_0):Play("captureview", arg_12_0._onCaptureAnimDone, arg_12_0)
+	local player = SLFramework.AnimatorPlayer.Get(targetGo)
+
+	player:Play("captureview", self._onCaptureAnimDone, self)
 end
 
-function var_0_0._onCaptureAnimDone(arg_13_0)
+function MainThumbnailHeroView:_onCaptureAnimDone()
 	return
 end
 
-function var_0_0._checkClose(arg_14_0)
-	if arg_14_0._btnblock.gameObject.activeInHierarchy then
+function MainThumbnailHeroView:_checkClose()
+	if self._btnblock.gameObject.activeInHierarchy then
 		return
 	end
 
-	if arg_14_0._animator.enabled or arg_14_0._cameraAnimator.enabled then
+	if self._animator.enabled or self._cameraAnimator.enabled then
 		return
 	end
 
 	return true
 end
 
-function var_0_0._navCloseCheck(arg_15_0)
-	return arg_15_0:_checkClose()
+function MainThumbnailHeroView:_navCloseCheck()
+	return self:_checkClose()
 end
 
-function var_0_0._onEscBtnClick(arg_16_0)
-	if not arg_16_0:_checkClose() then
+function MainThumbnailHeroView:_onEscBtnClick()
+	if not self:_checkClose() then
 		return
 	end
 
-	arg_16_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._onSceneClose(arg_17_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseFullView, arg_17_0._onCloseFullView, arg_17_0)
+function MainThumbnailHeroView:_onSceneClose()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseFullView, self._onCloseFullView, self)
 end
 
-local var_0_2 = WeatherController.instance
+local weatherController = WeatherController.instance
 
-function var_0_0._editableInitView(arg_18_0)
-	arg_18_0:_enableKeyword()
+function MainThumbnailHeroView:_editableInitView()
+	self:_enableKeyword()
 
-	local var_18_0 = gohelper.findChild(arg_18_0._gospinescale, "lightspine")
+	local lightspineGo = gohelper.findChild(self._gospinescale, "lightspine")
 
-	arg_18_0._spineInitPosX = recthelper.getAnchorX(var_18_0.transform)
-	arg_18_0._offsetXWithMainView = arg_18_0._spineInitPosX - 42
-	arg_18_0._click = SLFramework.UGUI.UIClickListener.Get(arg_18_0._golightspinecontrol)
+	self._spineInitPosX = recthelper.getAnchorX(lightspineGo.transform)
+	self._offsetXWithMainView = self._spineInitPosX - 42
+	self._click = SLFramework.UGUI.UIClickListener.Get(self._golightspinecontrol)
 
-	arg_18_0._click:AddClickDownListener(arg_18_0._clickDown, arg_18_0)
+	self._click:AddClickDownListener(self._clickDown, self)
 
-	arg_18_0._showInScene = true
+	self._showInScene = true
 
-	var_0_0.setSpineScale(arg_18_0._gospinescale)
+	MainThumbnailHeroView.setSpineScale(self._gospinescale)
 end
 
-function var_0_0.setSpineScale(arg_19_0)
-	local var_19_0 = GameUtil.getAdapterScale()
+function MainThumbnailHeroView.setSpineScale(go)
+	local scale = GameUtil.getAdapterScale()
 
-	transformhelper.setLocalScale(arg_19_0.transform, var_19_0, var_19_0, var_19_0)
+	transformhelper.setLocalScale(go.transform, scale, scale, scale)
 end
 
-function var_0_0._updateHero(arg_20_0, arg_20_1, arg_20_2)
-	arg_20_0._anchorMinPos = nil
-	arg_20_0._anchorMaxPos = nil
-	arg_20_0._closeEffectList = nil
-	arg_20_0._tvOff = false
-	arg_20_0._heroId = arg_20_1
-	arg_20_0._skinId = arg_20_2
+function MainThumbnailHeroView:_updateHero(heroId, skinId)
+	self._anchorMinPos = nil
+	self._anchorMaxPos = nil
+	self._closeEffectList = nil
+	self._tvOff = false
+	self._heroId = heroId
+	self._skinId = skinId
 
-	local var_20_0 = HeroModel.instance:getByHeroId(arg_20_0._heroId)
+	local hero = HeroModel.instance:getByHeroId(self._heroId)
 
-	if not var_20_0 then
-		logError("_updateHero no hero:" .. tostring(arg_20_1))
+	if not hero then
+		logError("_updateHero no hero:" .. tostring(heroId))
 
 		return
 	end
 
-	local var_20_1 = SkinConfig.instance:getSkinCo(arg_20_0._skinId or var_20_0 and var_20_0.skin)
+	local skinCo = SkinConfig.instance:getSkinCo(self._skinId or hero and hero.skin)
 
-	if not var_20_1 then
+	if not skinCo then
 		return
 	end
 
-	arg_20_0._heroPhotoFrameBg = var_20_0.config.photoFrameBg
-	arg_20_0._heroSkinConfig = var_20_1
-	arg_20_0._heroSkinTriggerArea = {}
+	self._heroPhotoFrameBg = hero.config.photoFrameBg
+	self._heroSkinConfig = skinCo
+	self._heroSkinTriggerArea = {}
 
-	if not arg_20_0._lightSpine then
-		local var_20_2 = UnityEngine.GameObject.Find("UIRoot/HUD/MainView/#go_spine_scale/lightspine/#go_lightspine")
+	if not self._lightSpine then
+		local mainLightSpineGo = UnityEngine.GameObject.Find("UIRoot/HUD/MainView/#go_spine_scale/lightspine/#go_lightspine")
 
-		if not gohelper.isNil(var_20_2) then
-			gohelper.addChildPosStay(arg_20_0._golightspine.transform.parent.gameObject, var_20_2)
-			gohelper.destroy(arg_20_0._golightspine)
+		if not gohelper.isNil(mainLightSpineGo) then
+			gohelper.addChildPosStay(self._golightspine.transform.parent.gameObject, mainLightSpineGo)
+			gohelper.destroy(self._golightspine)
 
-			arg_20_0._golightspine = var_20_2
+			self._golightspine = mainLightSpineGo
 		end
 
-		arg_20_0._lightSpine = LightModelAgent.Create(arg_20_0._golightspine, true)
+		self._lightSpine = LightModelAgent.Create(self._golightspine, true)
 	end
 
-	arg_20_0:setSpineAnchorTween()
+	self:setSpineAnchorTween()
 
-	if not string.nilorempty(var_20_1.defaultStencilValue) then
-		arg_20_0._defaultStencilValue = string.splitToNumber(var_20_1.defaultStencilValue, "#")
+	if not string.nilorempty(skinCo.defaultStencilValue) then
+		self._defaultStencilValue = string.splitToNumber(skinCo.defaultStencilValue, "#")
 	else
-		arg_20_0._defaultStencilValue = nil
+		self._defaultStencilValue = nil
 	end
 
-	arg_20_0._lightSpine:setResPath(var_20_1, arg_20_0._onLightSpineLoaded, arg_20_0)
-	arg_20_0._lightSpine:setInMainView()
+	self._lightSpine:setResPath(skinCo, self._onLightSpineLoaded, self)
+	self._lightSpine:setInMainView()
 end
 
-function var_0_0.setSpineAnchorTween(arg_21_0)
-	if arg_21_0.tweenId then
-		var_0_1.KillById(arg_21_0.tweenId)
+function MainThumbnailHeroView:setSpineAnchorTween()
+	if self.tweenId then
+		csTweenHelper.KillById(self.tweenId)
 	end
 
-	local var_21_0 = arg_21_0._heroSkinConfig.mainThumbnailViewOffset
+	local mainThumbnailViewOffset = self._heroSkinConfig.mainThumbnailViewOffset
 
-	if string.nilorempty(var_21_0) then
+	if string.nilorempty(mainThumbnailViewOffset) then
 		return
 	end
 
-	local var_21_1 = SkinConfig.instance:getSkinOffset(var_21_0)
+	local offset = SkinConfig.instance:getSkinOffset(mainThumbnailViewOffset)
 
-	arg_21_0.tweenId = var_0_1.DOAnchorPos(arg_21_0._golightspine.transform, var_21_1[1], var_21_1[2], 0.4)
+	self.tweenId = csTweenHelper.DOAnchorPos(self._golightspine.transform, offset[1], offset[2], 0.4)
 end
 
-function var_0_0.resetSpineAnchorTween(arg_22_0, arg_22_1)
-	if arg_22_0.tweenId then
-		var_0_1.KillById(arg_22_0.tweenId)
+function MainThumbnailHeroView:resetSpineAnchorTween(force)
+	if self.tweenId then
+		csTweenHelper.KillById(self.tweenId)
 	end
 
-	if gohelper.isNil(arg_22_0._golightspine) then
+	if gohelper.isNil(self._golightspine) then
 		return
 	end
 
-	local var_22_0, var_22_1 = CharacterSwitchListModel.instance:getMainHero()
-	local var_22_2 = SkinConfig.instance:getSkinCo(var_22_1)
+	local curHeroId, curSkinId = CharacterSwitchListModel.instance:getMainHero()
+	local skinCo = SkinConfig.instance:getSkinCo(curSkinId)
 
-	if not var_22_2 then
+	if not skinCo then
 		return
 	end
 
-	local var_22_3 = SkinConfig.instance:getSkinOffset(var_22_2.mainViewOffset)
+	local offsetParam = SkinConfig.instance:getSkinOffset(skinCo.mainViewOffset)
 
-	if arg_22_1 then
-		recthelper.setAnchor(arg_22_0._golightspine.transform, var_22_3[1], var_22_3[2])
+	if force then
+		recthelper.setAnchor(self._golightspine.transform, offsetParam[1], offsetParam[2])
 
-		local var_22_4 = tonumber(var_22_3[3])
+		local scale = tonumber(offsetParam[3])
 
-		transformhelper.setLocalScale(arg_22_0._golightspine.transform, var_22_4, var_22_4, var_22_4)
+		transformhelper.setLocalScale(self._golightspine.transform, scale, scale, scale)
 
 		return
 	end
 
-	arg_22_0.tweenId = var_0_1.DOAnchorPos(arg_22_0._golightspine.transform, var_22_3[1], var_22_3[2], 0.4)
+	self.tweenId = csTweenHelper.DOAnchorPos(self._golightspine.transform, offsetParam[1], offsetParam[2], 0.4)
 end
 
-function var_0_0._onLightSpineLoaded(arg_23_0)
-	if gohelper.isNil(arg_23_0.viewGO) then
+function MainThumbnailHeroView:_onLightSpineLoaded()
+	if gohelper.isNil(self.viewGO) then
 		return
 	end
 
-	arg_23_0._spineGo = arg_23_0._lightSpine:getSpineGo()
-	arg_23_0._spineTransform = arg_23_0._spineGo.transform
+	self._spineGo = self._lightSpine:getSpineGo()
+	self._spineTransform = self._spineGo.transform
 
-	local var_23_0 = arg_23_0._lightSpine:getRenderer().sharedMaterial
+	local renderer = self._lightSpine:getRenderer()
+	local spineMaterial = renderer.sharedMaterial
 
-	if arg_23_0._defaultStencilValue then
-		arg_23_0._lightSpine:setStencilValues(arg_23_0._defaultStencilValue[1], arg_23_0._defaultStencilValue[2], arg_23_0._defaultStencilValue[3])
+	if self._defaultStencilValue then
+		self._lightSpine:setStencilValues(self._defaultStencilValue[1], self._defaultStencilValue[2], self._defaultStencilValue[3])
 	else
-		arg_23_0._lightSpine:setStencilRef(0)
+		self._lightSpine:setStencilRef(0)
 	end
 
-	WeatherController.instance:setLightModel(arg_23_0._lightSpine)
+	WeatherController.instance:setLightModel(self._lightSpine)
 
-	if not arg_23_0._firstLoadSpine then
-		arg_23_0._firstLoadSpine = true
+	if not self._firstLoadSpine then
+		self._firstLoadSpine = true
 
-		var_0_2:initRoleGo(arg_23_0._spineGo, arg_23_0._heroId, var_23_0, false, arg_23_0._skinId)
+		weatherController:initRoleGo(self._spineGo, self._heroId, spineMaterial, false, self._skinId)
 	else
-		local var_23_1 = {
+		local param = {
 			heroPlayWeatherVoice = true,
-			roleGo = arg_23_0._lightSpine:getSpineGo(),
-			heroId = arg_23_0._heroId,
-			sharedMaterial = var_23_0,
-			skinId = arg_23_0._skinId
+			roleGo = self._lightSpine:getSpineGo(),
+			heroId = self._heroId,
+			sharedMaterial = spineMaterial,
+			skinId = self._skinId
 		}
 
-		var_0_2:changeRoleGo(var_23_1)
+		weatherController:changeRoleGo(param)
 	end
 end
 
-function var_0_0._playGreetingVoices(arg_24_0)
-	local var_24_0 = MainHeroView.getWelcomeLikeVoice(CharacterEnum.VoiceType.GreetingInThumbnail, arg_24_0._heroId, arg_24_0._skinId) or MainHeroView.getWelcomeLikeVoice(CharacterEnum.VoiceType.MainViewWelcome, arg_24_0._heroId, arg_24_0._skinId)
+function MainThumbnailHeroView:_playGreetingVoices()
+	local config = MainHeroView.getWelcomeLikeVoice(CharacterEnum.VoiceType.GreetingInThumbnail, self._heroId, self._skinId)
 
-	if not var_24_0 then
-		local var_24_1 = HeroModel.instance:getVoiceConfig(arg_24_0._heroId, CharacterEnum.VoiceType.Greeting, nil, arg_24_0._skinId)
+	config = config or MainHeroView.getWelcomeLikeVoice(CharacterEnum.VoiceType.MainViewWelcome, self._heroId, self._skinId)
 
-		if var_24_1 and #var_24_1 > 0 then
-			var_24_0 = var_24_1[1]
+	if not config then
+		local greetingVoices = HeroModel.instance:getVoiceConfig(self._heroId, CharacterEnum.VoiceType.Greeting, nil, self._skinId)
+
+		if greetingVoices and #greetingVoices > 0 then
+			config = greetingVoices[1]
 		end
 	end
 
-	if not var_24_0 then
+	if not config then
 		logError("no greeting voice")
 
 		return
 	end
 
-	if not arg_24_0._lightSpine then
+	if not self._lightSpine then
 		logError("playGreetingVoices no lightSpine")
 
 		return
 	end
 
-	arg_24_0._lightSpine:playVoice(var_24_0, function()
-		arg_24_0:_greetingFinish()
-	end, arg_24_0._txtanacn, arg_24_0._txtanaen, arg_24_0._gocontentbg)
+	self._lightSpine:playVoice(config, function()
+		self:_greetingFinish()
+	end, self._txtanacn, self._txtanaen, self._gocontentbg)
 end
 
-function var_0_0._greetingFinish(arg_26_0)
-	if not arg_26_0._btnblock.gameObject.activeInHierarchy then
+function MainThumbnailHeroView:_greetingFinish()
+	if not self._btnblock.gameObject.activeInHierarchy then
 		return
 	end
 
-	gohelper.setActive(arg_26_0._btnblock.gameObject, false)
-	TaskDispatcher.cancelTask(arg_26_0._greetingFinish, arg_26_0)
+	gohelper.setActive(self._btnblock.gameObject, false)
+	TaskDispatcher.cancelTask(self._greetingFinish, self)
 	MainController.instance:dispatchEvent(MainEvent.OnMainThumbnailGreetingFinish)
-	arg_26_0:_showRedDot()
+	self:_showRedDot()
 end
 
-function var_0_0._showRedDot(arg_27_0)
-	gohelper.setActive(arg_27_0._goswitch, true)
+function MainThumbnailHeroView:_showRedDot()
+	gohelper.setActive(self._goswitch, true)
 
-	if arg_27_0._isShowRedDot then
+	if self._isShowRedDot then
 		return
 	end
 
-	arg_27_0._isShowRedDot = arg_27_0:_checkShowRedDot()
+	self._isShowRedDot = self:_checkShowRedDot()
 
-	gohelper.setActive(arg_27_0._goswitchreddot, arg_27_0._isShowRedDot)
+	gohelper.setActive(self._goswitchreddot, self._isShowRedDot)
 
-	if arg_27_0._isShowRedDot then
-		arg_27_0._goswitch:GetComponent(typeof(UnityEngine.Animator)):Play("open", 0, 0)
+	if self._isShowRedDot then
+		local animator = self._goswitch:GetComponent(typeof(UnityEngine.Animator))
 
-		arg_27_0._audioId = AudioMgr.instance:trigger(AudioEnum.UI.play_ui_main_banniang_icon)
+		animator:Play("open", 0, 0)
+
+		self._audioId = AudioMgr.instance:trigger(AudioEnum.UI.play_ui_main_banniang_icon)
 	end
 end
 
-function var_0_0._checkShowRedDot(arg_28_0)
-	arg_28_0._characterShowRedDot = arg_28_0:_checkCharacterShowRedDot() or arg_28_0:_checkFightUiShowRedDot() or arg_28_0:_isShowSceneUIReddot()
+function MainThumbnailHeroView:_checkShowRedDot()
+	self._characterShowRedDot = self:_checkCharacterShowRedDot() or self:_checkFightUiShowRedDot() or self:_isShowSceneUIReddot()
 
-	return arg_28_0._characterShowRedDot or RedDotModel.instance:isDotShow(RedDotEnum.DotNode.MainSceneSwitch, 0)
+	return self._characterShowRedDot or RedDotModel.instance:isDotShow(RedDotEnum.DotNode.MainSceneSwitch, 0)
 end
 
-function var_0_0._checkCharacterShowRedDot(arg_29_0)
-	local var_29_0 = HeroModel.instance:getList()
-	local var_29_1 = PlayerModel.instance:getSimpleProperty(PlayerEnum.SimpleProperty.MainThumbnailViewSwitch)
+function MainThumbnailHeroView:_checkCharacterShowRedDot()
+	local heroList = HeroModel.instance:getList()
+	local value = PlayerModel.instance:getSimpleProperty(PlayerEnum.SimpleProperty.MainThumbnailViewSwitch)
 
-	return #var_29_0 >= 2 and var_29_1 ~= "1"
+	return #heroList >= 2 and value ~= "1"
 end
 
-function var_0_0._checkFightUiShowRedDot(arg_30_0)
+function MainThumbnailHeroView:_checkFightUiShowRedDot()
 	return FightUISwitchModel.instance:isNewUnlockStyle()
 end
 
-function var_0_0._isShowSceneUIReddot(arg_31_0)
+function MainThumbnailHeroView:_isShowSceneUIReddot()
 	return ClickUISwitchModel.instance:hasReddot()
 end
 
-function var_0_0._hideRedDot(arg_32_0)
-	if arg_32_0._characterShowRedDot then
-		arg_32_0._characterShowRedDot = false
+function MainThumbnailHeroView:_hideRedDot()
+	if self._characterShowRedDot then
+		self._characterShowRedDot = false
 
-		local var_32_0 = PlayerEnum.SimpleProperty.MainThumbnailViewSwitch
-		local var_32_1 = "1"
+		local id = PlayerEnum.SimpleProperty.MainThumbnailViewSwitch
+		local value = "1"
 
-		PlayerModel.instance:forceSetSimpleProperty(var_32_0, var_32_1)
-		PlayerRpc.instance:sendSetSimplePropertyRequest(var_32_0, var_32_1)
+		PlayerModel.instance:forceSetSimpleProperty(id, value)
+		PlayerRpc.instance:sendSetSimplePropertyRequest(id, value)
 	end
 
-	arg_32_0._isShowRedDot = arg_32_0:_checkShowRedDot()
+	self._isShowRedDot = self:_checkShowRedDot()
 
-	gohelper.setActive(arg_32_0._goswitchreddot, arg_32_0._isShowRedDot)
+	gohelper.setActive(self._goswitchreddot, self._isShowRedDot)
 end
 
-function var_0_0.isPlayingVoice(arg_33_0)
-	return arg_33_0._lightSpine:isPlayingVoice() or arg_33_0._tvOff
+function MainThumbnailHeroView:isPlayingVoice()
+	return self._lightSpine:isPlayingVoice() or self._tvOff
 end
 
-function var_0_0.isShowInScene(arg_34_0)
-	return arg_34_0._showInScene
+function MainThumbnailHeroView:isShowInScene()
+	return self._showInScene
 end
 
-function var_0_0._checkSpecialTouch(arg_35_0, arg_35_1, arg_35_2)
-	local var_35_0 = "triggerArea" .. arg_35_1.param
-	local var_35_1 = arg_35_0._heroSkinTriggerArea[var_35_0]
+function MainThumbnailHeroView:_checkSpecialTouch(config, pos)
+	local key = "triggerArea" .. config.param
+	local areaList = self._heroSkinTriggerArea[key]
 
-	if not var_35_1 then
-		var_35_1 = {}
-		arg_35_0._heroSkinTriggerArea[var_35_0] = var_35_1
+	if not areaList then
+		areaList = {}
+		self._heroSkinTriggerArea[key] = areaList
 
-		local var_35_2 = arg_35_0._heroSkinConfig[var_35_0]
-		local var_35_3 = string.split(var_35_2, "_")
+		local triggerAreaStr = self._heroSkinConfig[key]
+		local triggerAreaList = string.split(triggerAreaStr, "_")
 
-		for iter_35_0, iter_35_1 in ipairs(var_35_3) do
-			local var_35_4 = string.split(iter_35_1, "|")
+		for i, v in ipairs(triggerAreaList) do
+			local paramList = string.split(v, "|")
 
-			if #var_35_4 == 2 then
-				local var_35_5 = string.split(var_35_4[1], "#")
-				local var_35_6 = string.split(var_35_4[2], "#")
-				local var_35_7 = tonumber(var_35_5[1])
-				local var_35_8 = tonumber(var_35_5[2])
-				local var_35_9 = tonumber(var_35_6[1])
-				local var_35_10 = tonumber(var_35_6[2])
-				local var_35_11 = {
-					var_35_7,
-					var_35_8,
-					var_35_9,
-					var_35_10
+			if #paramList == 2 then
+				local startPos = string.split(paramList[1], "#")
+				local endPos = string.split(paramList[2], "#")
+				local startX = tonumber(startPos[1])
+				local startY = tonumber(startPos[2])
+				local endX = tonumber(endPos[1])
+				local endY = tonumber(endPos[2])
+				local area = {
+					startX,
+					startY,
+					endX,
+					endY
 				}
 
-				table.insert(var_35_1, var_35_11)
+				table.insert(areaList, area)
 			end
 		end
 	end
 
-	for iter_35_2, iter_35_3 in ipairs(var_35_1) do
-		local var_35_12 = tonumber(iter_35_3[1])
-		local var_35_13 = tonumber(iter_35_3[2])
-		local var_35_14 = tonumber(iter_35_3[3])
-		local var_35_15 = tonumber(iter_35_3[4])
+	for i, v in ipairs(areaList) do
+		local startX = tonumber(v[1])
+		local startY = tonumber(v[2])
+		local endX = tonumber(v[3])
+		local endY = tonumber(v[4])
 
-		if var_35_12 <= arg_35_2.x and var_35_14 >= arg_35_2.x and var_35_13 >= arg_35_2.y and var_35_15 <= arg_35_2.y then
+		if startX <= pos.x and endX >= pos.x and startY >= pos.y and endY <= pos.y then
 			return true
 		end
 	end
@@ -482,101 +499,103 @@ function var_0_0._checkSpecialTouch(arg_35_0, arg_35_1, arg_35_2)
 	return false
 end
 
-function var_0_0._clickDown(arg_36_0)
+function MainThumbnailHeroView:_clickDown()
 	return
 end
 
-function var_0_0._doClickDown(arg_37_0)
-	if not arg_37_0._showInScene then
+function MainThumbnailHeroView:_doClickDown()
+	if not self._showInScene then
 		return
 	end
 
-	if gohelper.isNil(arg_37_0._spineGo) then
+	if gohelper.isNil(self._spineGo) then
 		return
 	end
 
-	local var_37_0 = recthelper.screenPosToAnchorPos(GamepadController.instance:getMousePosition(), arg_37_0._golightspinecontrol.transform)
+	local pos = recthelper.screenPosToAnchorPos(GamepadController.instance:getMousePosition(), self._golightspinecontrol.transform)
 
-	var_37_0.x = var_37_0.x - arg_37_0._offsetXWithMainView
+	pos.x = pos.x - self._offsetXWithMainView
 
-	if arg_37_0._skinId == 303301 or arg_37_0._skinId == 303302 then
-		arg_37_0:_clickTTT(var_37_0)
+	if self._skinId == 303301 or self._skinId == 303302 then
+		self:_clickTTT(pos)
 
 		return
 	end
 
-	arg_37_0:_clickDefault(var_37_0)
+	self:_clickDefault(pos)
 end
 
-function var_0_0._clickTTT(arg_38_0, arg_38_1)
-	if not arg_38_0:_checkPosInBound(arg_38_1) then
+function MainThumbnailHeroView:_clickTTT(pos)
+	if not self:_checkPosInBound(pos) then
 		return
 	end
 
-	local var_38_0 = CommonConfig.instance:getConstNum(ConstEnum.TTTCloseTv) / 100
+	local closeProb = CommonConfig.instance:getConstNum(ConstEnum.TTTCloseTv) / 100
 
-	if not arg_38_0._tvOff and var_38_0 > math.random() then
-		local var_38_1 = arg_38_0._lightSpine:getSpineGo()
+	if not self._tvOff and closeProb > math.random() then
+		local go = self._lightSpine:getSpineGo()
 
-		arg_38_0._tvOff = true
+		self._tvOff = true
 
-		TaskDispatcher.cancelTask(arg_38_0._hideCloseEffects, arg_38_0)
+		TaskDispatcher.cancelTask(self._hideCloseEffects, self)
 
-		arg_38_0._closeEffectList = arg_38_0._closeEffectList or arg_38_0:getUserDataTb_()
+		self._closeEffectList = self._closeEffectList or self:getUserDataTb_()
 
-		local var_38_2 = gohelper.findChild(var_38_1, "mountroot").transform
-		local var_38_3 = var_38_2.childCount
+		local mountroot = gohelper.findChild(go, "mountroot")
+		local transform = mountroot.transform
+		local childCount = transform.childCount
 
-		for iter_38_0 = 1, var_38_3 do
-			local var_38_4 = var_38_2:GetChild(iter_38_0 - 1)
+		for i = 1, childCount do
+			local child = transform:GetChild(i - 1)
 
-			for iter_38_1 = 1, var_38_4.childCount do
-				local var_38_5 = var_38_4:GetChild(iter_38_1 - 1)
+			for j = 1, child.childCount do
+				local effectGo = child:GetChild(j - 1)
 
-				if string.find(var_38_5.name, "close") then
-					gohelper.setActive(var_38_5.gameObject, true)
+				if string.find(effectGo.name, "close") then
+					gohelper.setActive(effectGo.gameObject, true)
 
-					arg_38_0._closeEffectList[iter_38_0] = var_38_5.gameObject
+					self._closeEffectList[i] = effectGo.gameObject
 				else
-					gohelper.setActive(var_38_5.gameObject, false)
+					gohelper.setActive(effectGo.gameObject, false)
 				end
 			end
 		end
 
-		if arg_38_0._lightSpine then
-			arg_38_0._lightSpine:stopVoice()
+		if self._lightSpine then
+			self._lightSpine:stopVoice()
 		end
 
 		return
 	end
 
-	if arg_38_0:_openTv() then
+	if self:_openTv() then
 		return
 	end
 
-	arg_38_0:_clickDefault(arg_38_1)
+	self:_clickDefault(pos)
 end
 
-function var_0_0._openTv(arg_39_0)
-	if arg_39_0._tvOff then
-		arg_39_0._tvOff = false
+function MainThumbnailHeroView:_openTv()
+	if self._tvOff then
+		self._tvOff = false
 
-		local var_39_0 = arg_39_0._lightSpine:getSpineGo()
+		local go = self._lightSpine:getSpineGo()
 
-		TaskDispatcher.cancelTask(arg_39_0._hideCloseEffects, arg_39_0)
-		TaskDispatcher.runDelay(arg_39_0._hideCloseEffects, arg_39_0, 0.2)
+		TaskDispatcher.cancelTask(self._hideCloseEffects, self)
+		TaskDispatcher.runDelay(self._hideCloseEffects, self, 0.2)
 
-		local var_39_1 = gohelper.findChild(var_39_0, "mountroot").transform
-		local var_39_2 = var_39_1.childCount
+		local mountroot = gohelper.findChild(go, "mountroot")
+		local transform = mountroot.transform
+		local childCount = transform.childCount
 
-		for iter_39_0 = 1, var_39_2 do
-			local var_39_3 = var_39_1:GetChild(iter_39_0 - 1)
+		for i = 1, childCount do
+			local child = transform:GetChild(i - 1)
 
-			for iter_39_1 = 1, var_39_3.childCount do
-				local var_39_4 = var_39_3:GetChild(iter_39_1 - 1)
+			for j = 1, child.childCount do
+				local effectGo = child:GetChild(j - 1)
 
-				if not string.find(var_39_4.name, "close") then
-					gohelper.setActive(var_39_4.gameObject, true)
+				if not string.find(effectGo.name, "close") then
+					gohelper.setActive(effectGo.gameObject, true)
 				end
 			end
 		end
@@ -585,80 +604,80 @@ function var_0_0._openTv(arg_39_0)
 	end
 end
 
-function var_0_0._hideCloseEffects(arg_40_0)
-	for iter_40_0, iter_40_1 in pairs(arg_40_0._closeEffectList) do
-		gohelper.setActive(iter_40_1, false)
+function MainThumbnailHeroView:_hideCloseEffects()
+	for i, v in pairs(self._closeEffectList) do
+		gohelper.setActive(v, false)
 	end
 end
 
-function var_0_0._clickDefault(arg_41_0, arg_41_1)
-	local var_41_0 = arg_41_0:_getSpecialTouch(arg_41_1)
+function MainThumbnailHeroView:_clickDefault(pos)
+	local specialConfig = self:_getSpecialTouch(pos)
 
-	if var_41_0 and math.random() > 0.5 then
-		arg_41_0:clickPlayVoice(var_41_0)
+	if specialConfig and math.random() > 0.5 then
+		self:clickPlayVoice(specialConfig)
 
 		return
 	end
 
-	local var_41_1 = arg_41_0:_getNormalTouch(arg_41_1)
+	local normalConfig = self:_getNormalTouch(pos)
 
-	if var_41_1 then
-		arg_41_0:clickPlayVoice(var_41_1)
+	if normalConfig then
+		self:clickPlayVoice(normalConfig)
 	end
 end
 
-function var_0_0._getSpecialTouch(arg_42_0, arg_42_1)
-	local var_42_0 = HeroModel.instance:getVoiceConfig(arg_42_0._heroId, CharacterEnum.VoiceType.MainViewSpecialTouch, function(arg_43_0)
-		return arg_42_0._clickPlayConfig ~= arg_43_0 and arg_42_0:_checkSpecialTouch(arg_43_0, arg_42_1)
+function MainThumbnailHeroView:_getSpecialTouch(pos)
+	local specialVoices = HeroModel.instance:getVoiceConfig(self._heroId, CharacterEnum.VoiceType.MainViewSpecialTouch, function(config)
+		return self._clickPlayConfig ~= config and self:_checkSpecialTouch(config, pos)
 	end)
 
-	if var_42_0 and #var_42_0 > 0 then
-		return var_42_0[1]
+	if specialVoices and #specialVoices > 0 then
+		return specialVoices[1]
 	end
 end
 
-function var_0_0._getNormalTouch(arg_44_0, arg_44_1)
-	if arg_44_0:_checkPosInBound(arg_44_1) then
-		local var_44_0 = HeroModel.instance:getVoiceConfig(arg_44_0._heroId, CharacterEnum.VoiceType.MainViewNormalTouch, function(arg_45_0)
-			return arg_44_0._clickPlayConfig ~= arg_45_0
+function MainThumbnailHeroView:_getNormalTouch(pos)
+	if self:_checkPosInBound(pos) then
+		local normalVoices = HeroModel.instance:getVoiceConfig(self._heroId, CharacterEnum.VoiceType.MainViewNormalTouch, function(config)
+			return self._clickPlayConfig ~= config
 		end)
 
-		return arg_44_0:getHeightWeight(var_44_0)
+		return self:getHeightWeight(normalVoices)
 	end
 end
 
-function var_0_0._checkPosInBound(arg_46_0, arg_46_1)
-	if not arg_46_0._anchorMinPos or not arg_46_0._anchorMaxPos then
-		local var_46_0, var_46_1 = arg_46_0._lightSpine:getBoundsMinMaxPos()
+function MainThumbnailHeroView:_checkPosInBound(pos)
+	if not self._anchorMinPos or not self._anchorMaxPos then
+		local minPos, maxPos = self._lightSpine:getBoundsMinMaxPos()
 
-		arg_46_0._anchorMinPos = recthelper.worldPosToAnchorPos(Vector3(var_46_0.x, var_46_1.y, var_46_0.z), arg_46_0._golightspinecontrol.transform, CameraMgr.instance:getUICamera(), CameraMgr.instance:getUnitCamera())
-		arg_46_0._anchorMaxPos = recthelper.worldPosToAnchorPos(Vector3(var_46_1.x, var_46_0.y, var_46_1.z), arg_46_0._golightspinecontrol.transform, CameraMgr.instance:getUICamera(), CameraMgr.instance:getUnitCamera())
+		self._anchorMinPos = recthelper.worldPosToAnchorPos(Vector3(minPos.x, maxPos.y, minPos.z), self._golightspinecontrol.transform, CameraMgr.instance:getUICamera(), CameraMgr.instance:getUnitCamera())
+		self._anchorMaxPos = recthelper.worldPosToAnchorPos(Vector3(maxPos.x, minPos.y, maxPos.z), self._golightspinecontrol.transform, CameraMgr.instance:getUICamera(), CameraMgr.instance:getUnitCamera())
 	end
 
-	local var_46_2 = arg_46_0._anchorMinPos
-	local var_46_3 = arg_46_0._anchorMaxPos
+	local anchorMinPos = self._anchorMinPos
+	local anchorMaxPos = self._anchorMaxPos
 
-	if arg_46_1.x >= var_46_2.x and arg_46_1.x <= var_46_3.x and arg_46_1.y <= var_46_2.y and arg_46_1.y >= var_46_3.y then
+	if pos.x >= anchorMinPos.x and pos.x <= anchorMaxPos.x and pos.y <= anchorMinPos.y and pos.y >= anchorMaxPos.y then
 		return true
 	end
 end
 
-function var_0_0.getHeightWeight(arg_47_0, arg_47_1)
-	if arg_47_1 and #arg_47_1 > 0 then
-		local var_47_0 = 0
+function MainThumbnailHeroView:getHeightWeight(configList)
+	if configList and #configList > 0 then
+		local weight = 0
 
-		for iter_47_0, iter_47_1 in ipairs(arg_47_1) do
-			var_47_0 = var_47_0 + iter_47_1.param
+		for i, v in ipairs(configList) do
+			weight = weight + v.param
 		end
 
-		local var_47_1 = math.random()
-		local var_47_2 = 0
+		local propValue = math.random()
+		local calcValue = 0
 
-		for iter_47_2, iter_47_3 in ipairs(arg_47_1) do
-			var_47_2 = var_47_2 + iter_47_3.param
+		for i, v in ipairs(configList) do
+			calcValue = calcValue + v.param
 
-			if var_47_1 <= var_47_2 / var_47_0 then
-				return iter_47_3
+			if propValue <= calcValue / weight then
+				return v
 			end
 		end
 	end
@@ -666,230 +685,231 @@ function var_0_0.getHeightWeight(arg_47_0, arg_47_1)
 	return nil
 end
 
-function var_0_0.clickPlayVoice(arg_48_0, arg_48_1)
-	arg_48_0._clickPlayConfig = arg_48_1
+function MainThumbnailHeroView:clickPlayVoice(config)
+	self._clickPlayConfig = config
 
-	arg_48_0:playVoice(arg_48_1)
+	self:playVoice(config)
 end
 
-function var_0_0.playVoice(arg_49_0, arg_49_1)
-	if not arg_49_0._lightSpine then
+function MainThumbnailHeroView:playVoice(config)
+	if not self._lightSpine then
 		return
 	end
 
-	arg_49_0._lightSpine:playVoice(arg_49_1, function()
-		arg_49_0._interactionStartTime = Time.time
-	end, arg_49_0._txtanacn, arg_49_0._txtanaen, arg_49_0._gocontentbg)
+	self._lightSpine:playVoice(config, function()
+		self._interactionStartTime = Time.time
+	end, self._txtanacn, self._txtanaen, self._gocontentbg)
 end
 
-function var_0_0._enableKeyword(arg_51_0)
+function MainThumbnailHeroView:_enableKeyword()
 	return
 end
 
-function var_0_0._disableKeyword(arg_52_0)
+function MainThumbnailHeroView:_disableKeyword()
 	return
 end
 
-function var_0_0._onOpenFullView(arg_53_0, arg_53_1)
-	if arg_53_1 ~= arg_53_0:_getSwitchViewName() then
-		arg_53_0:_disableKeyword()
+function MainThumbnailHeroView:_onOpenFullView(viewName)
+	if viewName ~= self:_getSwitchViewName() then
+		self:_disableKeyword()
 	end
 
-	if arg_53_0._lightSpine then
-		arg_53_0._lightSpine:stopVoice()
+	if self._lightSpine then
+		self._lightSpine:stopVoice()
 	end
 
-	var_0_0.setCameraIdle()
+	MainThumbnailHeroView.setCameraIdle()
 end
 
-function var_0_0.setCameraIdle()
-	local var_54_0 = CameraMgr.instance:getCameraRootAnimator()
+function MainThumbnailHeroView.setCameraIdle()
+	local animator = CameraMgr.instance:getCameraRootAnimator()
 
-	if var_54_0 then
-		var_54_0.enabled = false
+	if animator then
+		animator.enabled = false
 	end
 
-	local var_54_1 = CameraMgr.instance:getCameraRootGO()
+	local targetGo = CameraMgr.instance:getCameraRootGO()
 
-	transformhelper.setLocalPos(var_54_1.transform, 0, 0, 0)
+	transformhelper.setLocalPos(targetGo.transform, 0, 0, 0)
 
 	CameraMgr.instance:getCameraTrace().EnableTrace = true
 	CameraMgr.instance:getCameraTrace().EnableTrace = false
 
-	local var_54_2 = ViewMgr.instance:getUICanvas()
+	local canvas = ViewMgr.instance:getUICanvas()
 
-	var_54_2.enabled = false
-	var_54_2.enabled = true
+	canvas.enabled = false
+	canvas.enabled = true
 end
 
-function var_0_0._hideLightSpineVisible(arg_55_0)
+function MainThumbnailHeroView:_hideLightSpineVisible()
 	return
 end
 
-function var_0_0._onCloseFullView(arg_56_0, arg_56_1)
+function MainThumbnailHeroView:_onCloseFullView(viewName)
 	if not ViewMgr.instance:hasOpenFullView() then
-		arg_56_0:_startForceUpdateCameraPos()
+		self:_startForceUpdateCameraPos()
 
-		if ViewMgr.instance:isOpen(arg_56_0:_getSwitchViewName()) then
-			arg_56_0._cameraPlayer:Play("clip2", arg_56_0._onCameraAnimDone, arg_56_0)
+		if ViewMgr.instance:isOpen(self:_getSwitchViewName()) then
+			self._cameraPlayer:Play("clip2", self._onCameraAnimDone, self)
 		else
-			arg_56_0._cameraPlayer:Play("clip", arg_56_0._onCameraAnimDone, arg_56_0)
+			self._cameraPlayer:Play("clip", self._onCameraAnimDone, self)
 		end
 
-		arg_56_0:_enableKeyword()
-		arg_56_0:_openTv()
+		self:_enableKeyword()
+		self:_openTv()
 	end
 end
 
-function var_0_0._reOpenWhileOpen(arg_57_0, arg_57_1)
-	if ViewMgr.instance:isFull(arg_57_1) then
-		arg_57_0:_onOpenFullView(arg_57_1)
+function MainThumbnailHeroView:_reOpenWhileOpen(viewName)
+	if ViewMgr.instance:isFull(viewName) then
+		self:_onOpenFullView(viewName)
 	end
 end
 
-function var_0_0._setViewVisible(arg_58_0, arg_58_1)
-	recthelper.setAnchorY(arg_58_0.viewGO.transform, arg_58_1 and 0 or 10000)
-	arg_58_0.viewContainer:_setVisible(arg_58_1)
+function MainThumbnailHeroView:_setViewVisible(visible)
+	recthelper.setAnchorY(self.viewGO.transform, visible and 0 or 10000)
+	self.viewContainer:_setVisible(visible)
 end
 
-function var_0_0._onOpenView(arg_59_0, arg_59_1)
-	if arg_59_1 == arg_59_0:_getSwitchViewName() then
-		arg_59_0:_setViewVisible(false)
-		arg_59_0:_startForceUpdateCameraPos()
-		arg_59_0._cameraPlayer:Play("ani02", arg_59_0._onCameraAnimDone, arg_59_0)
-		arg_59_0:resetSpineAnchorTween()
+function MainThumbnailHeroView:_onOpenView(viewName)
+	if viewName == self:_getSwitchViewName() then
+		self:_setViewVisible(false)
+		self:_startForceUpdateCameraPos()
+		self._cameraPlayer:Play("ani02", self._onCameraAnimDone, self)
+		self:resetSpineAnchorTween()
 
-		if arg_59_0._lightSpine then
-			arg_59_0._lightSpine:stopVoice()
+		if self._lightSpine then
+			self._lightSpine:stopVoice()
 		end
-	elseif (arg_59_1 == ViewName.CharacterGetView or arg_59_1 == ViewName.CharacterSkinGetDetailView) and arg_59_0._lightSpine then
-		gohelper.setActive(arg_59_0._lightSpine:getSpineGo(), false)
+	elseif (viewName == ViewName.CharacterGetView or viewName == ViewName.CharacterSkinGetDetailView) and self._lightSpine then
+		gohelper.setActive(self._lightSpine:getSpineGo(), false)
 	end
 end
 
-function var_0_0._startForceUpdateCameraPos(arg_60_0)
-	arg_60_0:_removeForceUpdateCameraPos()
-	LateUpdateBeat:Add(arg_60_0._forceUpdateCameraPos, arg_60_0)
+function MainThumbnailHeroView:_startForceUpdateCameraPos()
+	self:_removeForceUpdateCameraPos()
+	LateUpdateBeat:Add(self._forceUpdateCameraPos, self)
 end
 
-function var_0_0._removeForceUpdateCameraPos(arg_61_0)
-	LateUpdateBeat:Remove(arg_61_0._forceUpdateCameraPos, arg_61_0)
+function MainThumbnailHeroView:_removeForceUpdateCameraPos()
+	LateUpdateBeat:Remove(self._forceUpdateCameraPos, self)
 end
 
-function var_0_0._forceUpdateCameraPos(arg_62_0)
-	local var_62_0 = CameraMgr.instance:getCameraTrace()
+function MainThumbnailHeroView:_forceUpdateCameraPos()
+	local trace = CameraMgr.instance:getCameraTrace()
 
-	var_62_0.EnableTrace = true
-	var_62_0.EnableTrace = false
-	var_62_0.enabled = false
+	trace.EnableTrace = true
+	trace.EnableTrace = false
+	trace.enabled = false
 end
 
-function var_0_0._getSwitchViewName(arg_63_0)
+function MainThumbnailHeroView:_getSwitchViewName()
 	return ViewName.MainSwitchView
 end
 
-function var_0_0._onCloseViewFinish(arg_64_0, arg_64_1)
-	if arg_64_0:_isLogout() then
+function MainThumbnailHeroView:_onCloseViewFinish(viewName)
+	if self:_isLogout() then
 		return
 	end
 
-	arg_64_0:_showRedDot()
+	self:_showRedDot()
 
-	if arg_64_1 == arg_64_0:_getSwitchViewName() then
-		arg_64_0:_hideRedDot()
-		arg_64_0:_setViewVisible(true)
-		arg_64_0._viewPlayer:Play("open3", arg_64_0._onViewAnimDone, arg_64_0)
-		arg_64_0:_startForceUpdateCameraPos()
-		arg_64_0._cameraPlayer:Play("ani03", arg_64_0._onCameraAnimDone, arg_64_0)
-		arg_64_0:resetSpineAnchorTween(true)
-		arg_64_0:setSpineAnchorTween()
+	if viewName == self:_getSwitchViewName() then
+		self:_hideRedDot()
+		self:_setViewVisible(true)
+		self._viewPlayer:Play("open3", self._onViewAnimDone, self)
+		self:_startForceUpdateCameraPos()
+		self._cameraPlayer:Play("ani03", self._onCameraAnimDone, self)
+		self:resetSpineAnchorTween(true)
+		self:setSpineAnchorTween()
 
-		local var_64_0, var_64_1 = CharacterSwitchListModel.instance:getMainHero()
+		local heroId, skinId = CharacterSwitchListModel.instance:getMainHero()
 
-		if arg_64_0._curHeroId ~= var_64_0 and var_64_0 or arg_64_0._curSkinId ~= var_64_1 and var_64_1 or gohelper.isNil(arg_64_0._lightSpine:getSpineGo()) then
-			arg_64_0._curHeroId = var_64_0
-			arg_64_0._curSkinId = var_64_1
+		if self._curHeroId ~= heroId and heroId or self._curSkinId ~= skinId and skinId or gohelper.isNil(self._lightSpine:getSpineGo()) then
+			self._curHeroId = heroId
+			self._curSkinId = skinId
 
-			arg_64_0:_updateHero(arg_64_0._curHeroId, arg_64_0._curSkinId)
-		elseif arg_64_0._lightSpine then
-			local var_64_2 = arg_64_0._lightSpine:getRenderer().sharedMaterial
-			local var_64_3 = {
+			self:_updateHero(self._curHeroId, self._curSkinId)
+		elseif self._lightSpine then
+			local renderer = self._lightSpine:getRenderer()
+			local spineMaterial = renderer.sharedMaterial
+			local param = {
 				heroPlayWeatherVoice = true,
-				roleGo = arg_64_0._lightSpine:getSpineGo(),
-				heroId = arg_64_0._heroId,
-				sharedMaterial = var_64_2,
-				skinId = var_64_1
+				roleGo = self._lightSpine:getSpineGo(),
+				heroId = self._heroId,
+				sharedMaterial = spineMaterial,
+				skinId = skinId
 			}
 
-			var_0_2:changeRoleGo(var_64_3)
-			WeatherController.instance:setLightModel(arg_64_0._lightSpine)
+			weatherController:changeRoleGo(param)
+			WeatherController.instance:setLightModel(self._lightSpine)
 		end
-	elseif (arg_64_1 == ViewName.CharacterGetView or arg_64_1 == ViewName.CharacterSkinGetDetailView) and arg_64_0._lightSpine then
-		gohelper.setActive(arg_64_0._lightSpine:getSpineGo(), true)
+	elseif (viewName == ViewName.CharacterGetView or viewName == ViewName.CharacterSkinGetDetailView) and self._lightSpine then
+		gohelper.setActive(self._lightSpine:getSpineGo(), true)
 	end
 end
 
-function var_0_0.onCloseFinish(arg_65_0)
-	local var_65_0 = UnityEngine.GameObject.Find("UIRoot/HUD/MainView/#go_spine_scale/lightspine")
+function MainThumbnailHeroView:onCloseFinish()
+	local go = UnityEngine.GameObject.Find("UIRoot/HUD/MainView/#go_spine_scale/lightspine")
 
-	if gohelper.isNil(var_65_0) or gohelper.isNil(arg_65_0._golightspine) then
+	if gohelper.isNil(go) or gohelper.isNil(self._golightspine) then
 		return
 	end
 
-	if var_65_0.transform.childCount > 0 then
+	if go.transform.childCount > 0 then
 		return
 	end
 
-	gohelper.addChildPosStay(var_65_0, arg_65_0._golightspine)
+	gohelper.addChildPosStay(go, self._golightspine)
 end
 
-function var_0_0.onClose(arg_66_0)
-	if arg_66_0._lightSpine and not LimitedRoleController.instance:isPlayingAction() then
-		arg_66_0._lightSpine:stopVoice()
+function MainThumbnailHeroView:onClose()
+	if self._lightSpine and not LimitedRoleController.instance:isPlayingAction() then
+		self._lightSpine:stopVoice()
 	end
 
-	arg_66_0._click:RemoveClickDownListener()
+	self._click:RemoveClickDownListener()
 
-	if arg_66_0._touchEventMgr then
-		arg_66_0._touchEventMgr:ClearAllCallback()
+	if self._touchEventMgr then
+		self._touchEventMgr:ClearAllCallback()
 
-		arg_66_0._touchEventMgr = nil
+		self._touchEventMgr = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_66_0._hideCloseEffects, arg_66_0)
-	TaskDispatcher.cancelTask(arg_66_0._greetingFinish, arg_66_0)
-	arg_66_0:_removeForceUpdateCameraPos()
-	arg_66_0:resetSpineAnchorTween()
+	TaskDispatcher.cancelTask(self._hideCloseEffects, self)
+	TaskDispatcher.cancelTask(self._greetingFinish, self)
+	self:_removeForceUpdateCameraPos()
+	self:resetSpineAnchorTween()
 
-	if arg_66_0:_isLogout() or ViewMgr.instance:isOpen(ViewName.SettingsView) then
-		var_0_0.setCameraIdle()
+	if self:_isLogout() or ViewMgr.instance:isOpen(ViewName.SettingsView) then
+		MainThumbnailHeroView.setCameraIdle()
 	else
 		GameGCMgr.instance:dispatchEvent(GameGCEvent.CancelDelayFullGC)
-		arg_66_0._cameraPlayer:Play("ani02", arg_66_0._onCameraAnimDone, arg_66_0)
+		self._cameraPlayer:Play("ani02", self._onCameraAnimDone, self)
 	end
 
-	arg_66_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, arg_66_0._onCloseFullView, arg_66_0)
-	arg_66_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_66_0._onCloseViewFinish, arg_66_0)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, self._onCloseFullView, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 
-	if arg_66_0._audioId then
-		AudioMgr.instance:stopPlayingID(arg_66_0._audioId)
+	if self._audioId then
+		AudioMgr.instance:stopPlayingID(self._audioId)
 
-		arg_66_0._audioId = nil
+		self._audioId = nil
 	end
 end
 
-function var_0_0._isLogout(arg_67_0)
-	local var_67_0 = GameGlobalMgr.instance:getLoadingState()
+function MainThumbnailHeroView:_isLogout()
+	local loadingState = GameGlobalMgr.instance:getLoadingState()
 
-	return var_67_0 and var_67_0:getLoadingViewName()
+	return loadingState and loadingState:getLoadingViewName()
 end
 
-function var_0_0.onDestroyView(arg_68_0)
-	arg_68_0:_disableKeyword()
+function MainThumbnailHeroView:onDestroyView()
+	self:_disableKeyword()
 end
 
-function var_0_0.getLightSpineGo(arg_69_0)
-	return arg_69_0._golightspine
+function MainThumbnailHeroView:getLightSpineGo()
+	return self._golightspine
 end
 
-return var_0_0
+return MainThumbnailHeroView

@@ -1,170 +1,198 @@
-﻿module("modules.logic.bossrush.config.BossRushConfig", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/config/BossRushConfig.lua
 
-local var_0_0 = class("BossRushConfig", Activity128Config)
+module("modules.logic.bossrush.config.BossRushConfig", package.seeall)
 
-function var_0_0.InfiniteDoubleMaxTimes(arg_1_0)
-	return arg_1_0:getConst(2) or 0
+local BossRushConfig = class("BossRushConfig", Activity128Config)
+
+function BossRushConfig:InfiniteDoubleMaxTimes()
+	local res = self:getConst(2)
+
+	return res or 0
 end
 
-function var_0_0.getActivityRewardStr(arg_2_0)
-	local var_2_0, var_2_1 = arg_2_0:getConst(3)
+function BossRushConfig:getActivityRewardStr()
+	local _, str = self:getConst(3)
 
-	return var_2_1
+	return str
 end
 
-function var_0_0.getIssxIconName(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_2 = arg_3_0:getDefaultLayer(arg_3_1) or 1
+function BossRushConfig:getIssxIconName(stage, layer)
+	layer = self:getDefaultLayer(stage) or 1
 
-	local var_3_0 = arg_3_0:getFinalMonsterId(arg_3_1, arg_3_2)
-	local var_3_1 = lua_monster.configDict[var_3_0].career
+	local monsterId = self:getFinalMonsterId(stage, layer)
+	local monsterCO = lua_monster.configDict[monsterId]
+	local career = monsterCO.career
 
-	return "lssx_" .. var_3_1
+	return "lssx_" .. career
 end
 
-function var_0_0.getDefaultLayer(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0:getEpisodeStages(arg_4_1)
+function BossRushConfig:getDefaultLayer(stage)
+	local stageEpisode = self:getEpisodeStages(stage)
 
-	if var_4_0 then
-		for iter_4_0, iter_4_1 in pairs(var_4_0) do
-			return iter_4_1.layer
+	if stageEpisode then
+		for _, info in pairs(stageEpisode) do
+			return info.layer
 		end
 	end
 end
 
-function var_0_0.getAssessCo(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	local var_5_0 = "needPointBoss" .. tostring(arg_5_1)
-	local var_5_1 = lua_activity128_assess.configList
-	local var_5_2 = arg_5_3 and 1 or 0
+function BossRushConfig:getAssessCo(stage, point, type)
+	type = type or BossRushEnum.AssessType.V3a2
 
-	for iter_5_0 = #var_5_1, 1, -1 do
-		local var_5_3 = var_5_1[iter_5_0]
+	return self:_getAssessCoByType(stage, point, type)
+end
 
-		if var_5_3.layer4Assess == var_5_2 and arg_5_2 >= var_5_3[var_5_0] then
-			return var_5_3
+function BossRushConfig:_getAssessCoByType(stage, point, type)
+	local memberName = "needPointBoss" .. tostring(stage)
+	local list = lua_activity128_assess.configList
+
+	for i = #list, 1, -1 do
+		local v = list[i]
+
+		if v.layer4Assess == type then
+			local needPoint = v[memberName]
+
+			if needPoint <= point then
+				return v
+			end
 		end
 	end
 end
 
-function var_0_0.getAssessSpriteName(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	local var_6_0 = arg_6_0:getAssessCo(arg_6_1, arg_6_2, arg_6_3)
+function BossRushConfig:getAssessSpriteName(stage, point, type)
+	local assessCo = self:getAssessCo(stage, point, type)
 
-	if var_6_0 then
-		return var_6_0.spriteName, var_6_0.level, var_6_0.strLevel
+	if assessCo then
+		return assessCo.spriteName, assessCo.level, assessCo.strLevel
 	end
 
 	return "", -1, ""
 end
 
-function var_0_0.getAssessBattleIconBgName(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	local var_7_0 = arg_7_0:getAssessCo(arg_7_1, arg_7_2, arg_7_3)
+function BossRushConfig:getAssessBattleIconBgName(stage, point, type)
+	local assessCo = self:getAssessCo(stage, point, type)
 
-	if var_7_0 then
-		return var_7_0.battleIconBg, var_7_0.level
+	if assessCo then
+		return assessCo.battleIconBg, assessCo.level
 	end
 
-	return "v1a4_bossrush_ig_tipsbgempty", -1
+	return "v3a2_bossrush_ig_tipsbgempty", -1
 end
 
-function var_0_0.getAssessMainBossBgName(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	local var_8_0 = arg_8_0:getAssessCo(arg_8_1, arg_8_2, arg_8_3)
+function BossRushConfig:getAssessMainBossBgName(stage, point, type)
+	local assessCo = self:getAssessCo(stage, point, type)
 
-	if var_8_0 then
-		return var_8_0.mainBg, var_8_0.level
+	if assessCo then
+		return assessCo.mainBg, assessCo.level
 	end
 
 	return "v1a6_bossrush_taskitembg1", -1
 end
 
-function var_0_0.getAssessPointByStrLevel(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = "needPointBoss" .. tostring(arg_9_1)
-	local var_9_1 = lua_activity128_assess.configList
+function BossRushConfig:getAssessPointByStrLevel(stage, assessStrLevel)
+	local memberName = "needPointBoss" .. tostring(stage)
+	local list = lua_activity128_assess.configList
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_1) do
-		if iter_9_1.strLevel == arg_9_2 then
-			return iter_9_1[var_9_0]
+	for _, v in ipairs(list) do
+		if v.strLevel == assessStrLevel then
+			local needPoint = v[memberName]
+
+			return needPoint
 		end
 	end
 
 	return 0
 end
 
-function var_0_0.getScoreStr(arg_10_0, arg_10_1, arg_10_2)
-	assert(arg_10_1 >= 0)
+function BossRushConfig:getScoreStr(num, symbol)
+	assert(num >= 0)
 
-	local var_10_0 = math.modf(arg_10_1 / 10)
-	local var_10_1 = math.fmod(arg_10_1, 10)
-	local var_10_2 = 1
-	local var_10_3 = tostring(var_10_1)
+	local a = math.modf(num / 10)
+	local b = math.fmod(num, 10)
+	local c = 1
+	local str = tostring(b)
 
-	arg_10_2 = arg_10_2 or ","
+	symbol = symbol or ","
 
-	while var_10_0 > 0 do
-		local var_10_4 = math.fmod(var_10_0, 10)
+	while a > 0 do
+		b = math.fmod(a, 10)
 
-		if var_10_2 >= 3 then
-			var_10_3 = arg_10_2 .. var_10_3
-			var_10_2 = 0
+		if c >= 3 then
+			str = symbol .. str
+			c = 0
 		end
 
-		var_10_3 = tostring(var_10_4) .. var_10_3
-		var_10_0 = math.modf(var_10_0 / 10)
-		var_10_2 = var_10_2 + 1
+		str = tostring(b) .. str
+		a = math.modf(a / 10)
+		c = c + 1
 	end
 
-	return var_10_3
+	return str
 end
 
-function var_0_0.getBossRushMainItemBossSprite(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0:getStageCO(arg_11_1).bossRushMainItemBossSprite
+function BossRushConfig:getBossRushMainItemBossSprite(stage)
+	local resName = self:getStageCO(stage).bossRushMainItemBossSprite
 
-	return ResUrl.getV1a4BossRushIcon(var_11_0)
+	return ResUrl.getV1a4BossRushIcon(resName)
 end
 
-function var_0_0.getResultViewFullBgSImage(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0:getStageCO(arg_12_1).resultViewFullBgSImage
+function BossRushConfig:getResultViewFullBgSImage(stage)
+	local resName = self:getStageCO(stage).resultViewFullBgSImage
 
-	return ResUrl.getV1a4BossRushSinglebg(var_12_0)
+	return ResUrl.getV1a4BossRushSinglebg(resName)
 end
 
-function var_0_0.getResultViewNameSImage(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0:getStageCO(arg_13_1).resultViewNameSImage
+function BossRushConfig:getResultViewNameSImage(stage)
+	local resName = self:getStageCO(stage).resultViewNameSImage
 
-	return ResUrl.getV1a4BossRushLangPath(var_13_0)
+	return ResUrl.getV1a4BossRushLangPath(resName)
 end
 
-function var_0_0.getBossRushLevelDetailFullBgSimage(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_0:getStageCO(arg_14_1).bossRushLevelDetailFullBgSimage
+function BossRushConfig:getBossDetailTitlePath(stage)
+	local resName = self:getStageCO(stage).resultViewNameSImage
 
-	return ResUrl.getV1a4BossRushSinglebg(var_14_0)
+	return ResUrl.getBossRushDetailPath(resName)
 end
 
-function var_0_0.getMonsterSkinIdList(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_0:getStageCO(arg_15_1).skinIds
+function BossRushConfig:getBossDetailFullPath(stage)
+	local resName = self:getStageCO(stage).bossRushLevelDetailFullBgSimage
 
-	return string.splitToNumber(var_15_0, "#")
+	return ResUrl.getBossRushDetailPath(resName)
 end
 
-function var_0_0.getMonsterSkinScaleList(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_0:getStageCO(arg_16_1).skinScales
+function BossRushConfig:getBossRushLevelDetailFullBgSimage(stage)
+	local resName = self:getStageCO(stage).bossRushLevelDetailFullBgSimage
 
-	return string.splitToNumber(var_16_0, "#")
+	return ResUrl.getV1a4BossRushSinglebg(resName)
 end
 
-function var_0_0.getMonsterSkinOffsetXYs(arg_17_0, arg_17_1)
-	local var_17_0 = arg_17_0:getStageCO(arg_17_1).skinOffsetXYs
+function BossRushConfig:getMonsterSkinIdList(stage)
+	local str = self:getStageCO(stage).skinIds
 
-	return GameUtil.splitString2(var_17_0, true)
+	return string.splitToNumber(str, "#")
 end
 
-function var_0_0.getQualityBgSpriteName(arg_18_0, arg_18_1)
-	return "bg_pinjidi_" .. arg_18_1
+function BossRushConfig:getMonsterSkinScaleList(stage)
+	local str = self:getStageCO(stage).skinScales
+
+	return string.splitToNumber(str, "#")
 end
 
-function var_0_0.getQualityFrameSpriteName(arg_19_0, arg_19_1)
-	return "bg_pinjidi_lanse_" .. arg_19_1
+function BossRushConfig:getMonsterSkinOffsetXYs(stage)
+	local str = self:getStageCO(stage).skinOffsetXYs
+
+	return GameUtil.splitString2(str, true)
 end
 
-local var_0_1 = {
+function BossRushConfig:getQualityBgSpriteName(quality)
+	return "bg_pinjidi_" .. quality
+end
+
+function BossRushConfig:getQualityFrameSpriteName(quality)
+	return "bg_pinjidi_lanse_" .. quality
+end
+
+local _rewardStatusSpriteName = {
 	[0] = "bg_xingjidian",
 	"bg_xingjidian_1",
 	"bg_xingjidian_dis",
@@ -172,98 +200,104 @@ local var_0_1 = {
 	"bg_xingjidian_layer4"
 }
 
-function var_0_0.getRewardStatusSpriteName(arg_20_0, arg_20_1, arg_20_2)
-	local var_20_0 = 0
+function BossRushConfig:getRewardStatusSpriteName(isDisplay, isGot)
+	local id = 0
 
-	if arg_20_1 then
-		var_20_0 = var_20_0 + 1
+	if isDisplay then
+		id = id + 1
 	end
 
-	if not arg_20_2 then
-		var_20_0 = var_20_0 + 2
+	if not isGot then
+		id = id + 2
 	end
 
-	return var_0_1[var_20_0]
+	return _rewardStatusSpriteName[id]
 end
 
-function var_0_0.getSpriteRewardStatusSpriteName(arg_21_0, arg_21_1)
-	local var_21_0 = arg_21_1 and 4 or 2
+function BossRushConfig:getSpriteRewardStatusSpriteName(isGot)
+	local id = isGot and 4 or 2
 
-	return var_0_1[var_21_0]
+	return _rewardStatusSpriteName[id]
 end
 
-function var_0_0.getStageRewardDisplayIndexesList(arg_22_0, arg_22_1)
-	return arg_22_0:__getOrCreateStageRewardDisplayIndexesList(arg_22_1)
+function BossRushConfig:getStageRewardDisplayIndexesList(stage)
+	return self:__getOrCreateStageRewardDisplayIndexesList(stage)
 end
 
-function var_0_0.__getOrCreateStageRewardDisplayIndexesList(arg_23_0, arg_23_1)
-	arg_23_0.__cumulativeDisplayRewards = arg_23_0.__cumulativeDisplayRewards or {}
+function BossRushConfig:__getOrCreateStageRewardDisplayIndexesList(stage)
+	self.__cumulativeDisplayRewards = self.__cumulativeDisplayRewards or {}
 
-	if arg_23_0.__cumulativeDisplayRewards[arg_23_1] then
-		return arg_23_0.__cumulativeDisplayRewards[arg_23_1]
+	if self.__cumulativeDisplayRewards[stage] then
+		return self.__cumulativeDisplayRewards[stage]
 	end
 
-	local var_23_0 = {}
-	local var_23_1 = arg_23_0:getStageRewardList(arg_23_1)
+	local res = {}
+	local stageRewardList = self:getStageRewardList(stage)
 
-	for iter_23_0, iter_23_1 in ipairs(var_23_1) do
-		if iter_23_1.display > 0 then
-			var_23_0[#var_23_0 + 1] = iter_23_0
+	for i, stageRewardCO in ipairs(stageRewardList) do
+		local isDisplay = stageRewardCO.display > 0
+
+		if isDisplay then
+			res[#res + 1] = i
 		end
 	end
 
-	arg_23_0.__cumulativeDisplayRewards[arg_23_1] = var_23_0
+	self.__cumulativeDisplayRewards[stage] = res
 
-	return var_23_0
+	return res
 end
 
-function var_0_0.calcStageRewardProgWidthByListScrollParam(arg_24_0, arg_24_1, arg_24_2, arg_24_3, arg_24_4, arg_24_5, arg_24_6)
-	local var_24_0 = arg_24_3.cellWidth
-	local var_24_1 = arg_24_3.cellSpaceH
-	local var_24_2 = var_24_0 + var_24_1
+function BossRushConfig:calcStageRewardProgWidthByListScrollParam(stage, value, listScrollParam, firstStep, startPosX, endSpace)
+	local cellWidth = listScrollParam.cellWidth
+	local cellSpaceH = listScrollParam.cellSpaceH
+	local normalStep = cellWidth + cellSpaceH
 
-	arg_24_6 = arg_24_6 or arg_24_3.endSpace or 0
+	endSpace = endSpace or listScrollParam.endSpace or 0
 
-	return arg_24_0:calcStageRewardProgWidth(arg_24_1, arg_24_2, var_24_1, var_24_0, arg_24_4, var_24_2, arg_24_5, arg_24_6)
+	return self:calcStageRewardProgWidth(stage, value, cellSpaceH, cellWidth, firstStep, normalStep, startPosX, endSpace)
 end
 
-function var_0_0.calcStageRewardProgWidth(arg_25_0, arg_25_1, arg_25_2, arg_25_3, arg_25_4, arg_25_5, arg_25_6, arg_25_7, arg_25_8)
-	local var_25_0 = arg_25_0:getStageRewardList(arg_25_1)
-	local var_25_1 = #var_25_0
+function BossRushConfig:calcStageRewardProgWidth(stage, value, cellSpaceH, cellWidth, firstStep, normalStep, startPosX, endSpace)
+	local stageRewardList = self:getStageRewardList(stage)
+	local rewardCount = #stageRewardList
 
-	if var_25_1 == 0 then
+	if rewardCount == 0 then
 		return 0, 0
 	end
 
-	arg_25_7 = arg_25_7 or 0
-	arg_25_8 = arg_25_8 or 0
-	arg_25_5 = arg_25_5 or arg_25_4 / 2
-	arg_25_6 = arg_25_6 or arg_25_4 + arg_25_3
+	startPosX = startPosX or 0
+	endSpace = endSpace or 0
+	firstStep = firstStep or cellWidth / 2
+	normalStep = normalStep or cellWidth + cellSpaceH
 
-	local var_25_2 = arg_25_5 + (var_25_1 - 1) * arg_25_6 + arg_25_8
-	local var_25_3 = 0
-	local var_25_4 = 0
+	local maxWidth = firstStep + (rewardCount - 1) * normalStep + endSpace
+	local curWidth = 0
+	local last = 0
 
-	for iter_25_0, iter_25_1 in ipairs(var_25_0) do
-		local var_25_5 = iter_25_1.rewardPointNum
-		local var_25_6 = iter_25_0 == 1 and arg_25_5 or arg_25_6
+	for i, stageRewardCO in ipairs(stageRewardList) do
+		local num = stageRewardCO.rewardPointNum
+		local step = i == 1 and firstStep or normalStep
 
-		if var_25_5 <= arg_25_2 then
-			var_25_3 = var_25_3 + var_25_6
-			var_25_4 = var_25_5
+		if num <= value then
+			curWidth = curWidth + step
+			last = num
 		else
-			var_25_3 = var_25_3 + GameUtil.remap(arg_25_2, var_25_4, var_25_5, 0, var_25_6)
+			local offset = GameUtil.remap(value, last, num, 0, step)
+
+			curWidth = curWidth + offset
 
 			break
 		end
 	end
 
-	return math.max(0, var_25_3 - arg_25_7), var_25_2
+	local width = math.max(0, curWidth - startPosX)
+
+	return width, maxWidth
 end
 
-function var_0_0.getBgmViewNames(arg_26_0)
-	if not arg_26_0._bgmViews then
-		arg_26_0._bgmViews = {
+function BossRushConfig:getBgmViewNames()
+	if not self._bgmViews then
+		self._bgmViews = {
 			ViewName.V1a4_BossRushMainView,
 			ViewName.V1a4_BossRushLevelDetail,
 			ViewName.V1a4_BossRush_ScoreTaskAchievement,
@@ -271,58 +305,69 @@ function var_0_0.getBgmViewNames(arg_26_0)
 		}
 	end
 
-	return arg_26_0._bgmViews
+	return self._bgmViews
 end
 
-function var_0_0.getMonsterResPathList(arg_27_0, arg_27_1)
-	local var_27_0 = {}
-	local var_27_1 = var_0_0.instance:getMonsterSkinIdList(arg_27_1)
+function BossRushConfig:getMonsterResPathList(stage)
+	local res = {}
+	local skinIdList = BossRushConfig.instance:getMonsterSkinIdList(stage)
 
-	for iter_27_0, iter_27_1 in ipairs(var_27_1) do
-		local var_27_2 = FightConfig.instance:getSkinCO(iter_27_1)
+	for _, skinId in ipairs(skinIdList) do
+		local skinCO = FightConfig.instance:getSkinCO(skinId)
 
-		if var_27_2 then
-			local var_27_3 = ResUrl.getSpineUIPrefab(var_27_2.spine)
+		if skinCO then
+			local resPath = ResUrl.getSpineUIPrefab(skinCO.spine)
 
-			table.insert(var_27_0, var_27_3)
+			table.insert(res, resPath)
 		end
 	end
 
-	return var_27_0
+	return res
 end
 
-function var_0_0.initEvaluateCo(arg_28_0)
+function BossRushConfig:initEvaluateCo()
 	return
 end
 
-function var_0_0.getEvaluateInfo(arg_29_0, arg_29_1)
-	local var_29_0 = arg_29_0:getEvaluateConfig(arg_29_1)
+function BossRushConfig:getEvaluateInfo(id)
+	local co = self:getEvaluateConfig(id)
 
-	return var_29_0.name, var_29_0.desc
+	return co.name, co.desc
 end
 
-function var_0_0.getActRoleEnhanceCoById(arg_30_0, arg_30_1)
-	return arg_30_0:getActRoleEnhance()[arg_30_1]
+function BossRushConfig:getActRoleEnhanceCoById(roleId)
+	local cos = self:getActRoleEnhance()
+	local co = cos[roleId]
+
+	return co
 end
 
-function var_0_0.getEpisodeCoByEpisodeId(arg_31_0, arg_31_1)
-	local var_31_0 = lua_activity128_episode.configDict[arg_31_0.__activityId]
+function BossRushConfig:getEpisodeCoByEpisodeId(episodeId)
+	local episode12Dict = lua_activity128_episode.configDict[self.__activityId]
 
-	if var_31_0 then
-		for iter_31_0, iter_31_1 in pairs(var_31_0) do
-			for iter_31_2, iter_31_3 in pairs(iter_31_1) do
-				if iter_31_3.episodeId == arg_31_1 then
-					return iter_31_3
+	if episode12Dict then
+		for _, stageDict in pairs(episode12Dict) do
+			for _, co in pairs(stageDict) do
+				if co.episodeId == episodeId then
+					return co
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.getAssassinStyleZongmaoCo(arg_32_0, arg_32_1)
-	return lua_assassin_style_zongmao.configDict[arg_32_1]
+function BossRushConfig:getAssassinStyleZongmaoCo(id)
+	return lua_assassin_style_zongmao.configDict[id]
 end
 
-var_0_0.instance = var_0_0.New(VersionActivity3_1Enum.ActivityId.BossRush)
+function BossRushConfig:getV3a2BossTypeByStage(stage)
+	local co = self:getStageCO(stage)
 
-return var_0_0
+	if co then
+		return co.type
+	end
+end
+
+BossRushConfig.instance = BossRushConfig.New(VersionActivity3_2Enum.ActivityId.BossRush)
+
+return BossRushConfig

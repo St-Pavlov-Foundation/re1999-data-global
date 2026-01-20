@@ -1,31 +1,33 @@
-﻿module("modules.logic.dungeon.model.RoleStoryDispatchHeroMo", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/model/RoleStoryDispatchHeroMo.lua
 
-local var_0_0 = pureTable("RoleStoryDispatchHeroMo")
+module("modules.logic.dungeon.model.RoleStoryDispatchHeroMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.id = 0
-	arg_1_0.heroId = 0
-	arg_1_0.config = nil
-	arg_1_0.storyId = 0
-	arg_1_0.isEffect = false
+local RoleStoryDispatchHeroMo = pureTable("RoleStoryDispatchHeroMo")
+
+function RoleStoryDispatchHeroMo:ctor()
+	self.id = 0
+	self.heroId = 0
+	self.config = nil
+	self.storyId = 0
+	self.isEffect = false
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	arg_2_0.id = arg_2_1.id
-	arg_2_0.heroId = arg_2_1.heroId
-	arg_2_0.config = arg_2_1.config
-	arg_2_0.level = arg_2_1.level
-	arg_2_0.rare = arg_2_0.config.rare
-	arg_2_0.storyId = arg_2_2
-	arg_2_0.isEffect = arg_2_3
+function RoleStoryDispatchHeroMo:init(heroMo, storyId, isEffect)
+	self.id = heroMo.id
+	self.heroId = heroMo.heroId
+	self.config = heroMo.config
+	self.level = heroMo.level
+	self.rare = self.config.rare
+	self.storyId = storyId
+	self.isEffect = isEffect
 end
 
-function var_0_0.isDispatched(arg_3_0)
-	return RoleStoryModel.instance:isHeroDispatching(arg_3_0.heroId, arg_3_0.storyId)
+function RoleStoryDispatchHeroMo:isDispatched()
+	return RoleStoryModel.instance:isHeroDispatching(self.heroId, self.storyId)
 end
 
-function var_0_0.isEffectHero(arg_4_0)
-	return arg_4_0.isEffect
+function RoleStoryDispatchHeroMo:isEffectHero()
+	return self.isEffect
 end
 
-return var_0_0
+return RoleStoryDispatchHeroMo

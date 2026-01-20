@@ -1,11 +1,13 @@
-﻿module("modules.logic.dungeon.defines.DungeonPuzzleEvent", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/defines/DungeonPuzzleEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.dungeon.defines.DungeonPuzzleEvent", package.seeall)
 
-var_0_0.PipeGameClear = 20
-var_0_0.MazeDrawGameClear = 30
-var_0_0.ChangeColorGameClear = 4000
-var_0_0.InteractClick = 4001
-var_0_0.CircuitClick = 5000
-var_0_0.GuideClickGrid = 6000
-var_0_0.GuideEntryConnectClear = 6001
+local DungeonPuzzleEvent = _M
+
+DungeonPuzzleEvent.PipeGameClear = 20
+DungeonPuzzleEvent.MazeDrawGameClear = 30
+DungeonPuzzleEvent.ChangeColorGameClear = 4000
+DungeonPuzzleEvent.InteractClick = 4001
+DungeonPuzzleEvent.CircuitClick = 5000
+DungeonPuzzleEvent.GuideClickGrid = 6000
+DungeonPuzzleEvent.GuideEntryConnectClear = 6001

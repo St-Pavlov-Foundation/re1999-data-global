@@ -1,187 +1,193 @@
-﻿module("modules.logic.player.view.PlayerChangeBgView", package.seeall)
+﻿-- chunkname: @modules/logic/player/view/PlayerChangeBgView.lua
 
-local var_0_0 = class("PlayerChangeBgView", BaseView)
+module("modules.logic.player.view.PlayerChangeBgView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gobg = gohelper.findChild(arg_1_0.viewGO, "#go_bgroot")
-	arg_1_0._goRoot = gohelper.findChild(arg_1_0.viewGO, "root")
-	arg_1_0._goFriend = gohelper.findChild(arg_1_0.viewGO, "root/#go_topright/#go_friend")
-	arg_1_0._btnFriend = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#go_topright/btn_friend")
-	arg_1_0._txtname = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/#go_topright/#go_friend/#go_item1/#txt_name")
-	arg_1_0._txtname2 = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/#go_topright/#go_friend/#go_item2/#txt_name")
-	arg_1_0._txtonline = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/#go_topright/#go_friend/#go_item1/#txt_online")
-	arg_1_0._txtLv = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/#go_topright/#go_friend/#go_item1/headframe/bg/#txt_lv")
-	arg_1_0._txtLv2 = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/#go_topright/#go_friend/#go_item2/#txt_lv")
-	arg_1_0._simagehead = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/#go_topright/#go_friend/#go_item1/headframe/#simage_headicon")
-	arg_1_0._simagehead2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/#go_topright/#go_friend/#go_item2/headframe/#simage_headicon")
-	arg_1_0._godefaultbg = gohelper.findChild(arg_1_0.viewGO, "root/#go_topright/#go_friend/#go_item1/#go_bgdefault")
-	arg_1_0._godefaultbg2 = gohelper.findChild(arg_1_0.viewGO, "root/#go_topright/#go_friend/#go_item2/#go_bgdefault")
-	arg_1_0._bg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/#go_topright/#go_friend/bg2")
-	arg_1_0._bg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/#go_topright/#go_friend/#go_item1/bg2")
-	arg_1_0._anim = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+local PlayerChangeBgView = class("PlayerChangeBgView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function PlayerChangeBgView:onInitView()
+	self._gobg = gohelper.findChild(self.viewGO, "#go_bgroot")
+	self._goRoot = gohelper.findChild(self.viewGO, "root")
+	self._goFriend = gohelper.findChild(self.viewGO, "root/#go_topright/#go_friend")
+	self._btnFriend = gohelper.findChildButtonWithAudio(self.viewGO, "root/#go_topright/btn_friend")
+	self._txtname = gohelper.findChildTextMesh(self.viewGO, "root/#go_topright/#go_friend/#go_item1/#txt_name")
+	self._txtname2 = gohelper.findChildTextMesh(self.viewGO, "root/#go_topright/#go_friend/#go_item2/#txt_name")
+	self._txtonline = gohelper.findChildTextMesh(self.viewGO, "root/#go_topright/#go_friend/#go_item1/#txt_online")
+	self._txtLv = gohelper.findChildTextMesh(self.viewGO, "root/#go_topright/#go_friend/#go_item1/headframe/bg/#txt_lv")
+	self._txtLv2 = gohelper.findChildTextMesh(self.viewGO, "root/#go_topright/#go_friend/#go_item2/#txt_lv")
+	self._simagehead = gohelper.findChildSingleImage(self.viewGO, "root/#go_topright/#go_friend/#go_item1/headframe/#simage_headicon")
+	self._simagehead2 = gohelper.findChildSingleImage(self.viewGO, "root/#go_topright/#go_friend/#go_item2/headframe/#simage_headicon")
+	self._godefaultbg = gohelper.findChild(self.viewGO, "root/#go_topright/#go_friend/#go_item1/#go_bgdefault")
+	self._godefaultbg2 = gohelper.findChild(self.viewGO, "root/#go_topright/#go_friend/#go_item2/#go_bgdefault")
+	self._bg1 = gohelper.findChildSingleImage(self.viewGO, "root/#go_topright/#go_friend/bg2")
+	self._bg2 = gohelper.findChildSingleImage(self.viewGO, "root/#go_topright/#go_friend/#go_item1/bg2")
+	self._anim = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnFriend:AddClickListener(arg_2_0._showHideFriend, arg_2_0)
-	GameStateMgr.instance:registerCallback(GameStateEvent.OnTouchScreen, arg_2_0._onTouchScreen, arg_2_0)
-	PlayerController.instance:registerCallback(PlayerEvent.ChangeBgTab, arg_2_0.onBgTabIndexChange, arg_2_0)
-	PlayerController.instance:registerCallback(PlayerEvent.ShowHideRoot, arg_2_0.showHideRoot, arg_2_0)
+function PlayerChangeBgView:addEvents()
+	self._btnFriend:AddClickListener(self._showHideFriend, self)
+	GameStateMgr.instance:registerCallback(GameStateEvent.OnTouchScreen, self._onTouchScreen, self)
+	PlayerController.instance:registerCallback(PlayerEvent.ChangeBgTab, self.onBgTabIndexChange, self)
+	PlayerController.instance:registerCallback(PlayerEvent.ShowHideRoot, self.showHideRoot, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnFriend:RemoveClickListener()
-	GameStateMgr.instance:unregisterCallback(GameStateEvent.OnTouchScreen, arg_3_0._onTouchScreen, arg_3_0)
-	PlayerController.instance:unregisterCallback(PlayerEvent.ChangeBgTab, arg_3_0.onBgTabIndexChange, arg_3_0)
-	PlayerController.instance:unregisterCallback(PlayerEvent.ShowHideRoot, arg_3_0.showHideRoot, arg_3_0)
+function PlayerChangeBgView:removeEvents()
+	self._btnFriend:RemoveClickListener()
+	GameStateMgr.instance:unregisterCallback(GameStateEvent.OnTouchScreen, self._onTouchScreen, self)
+	PlayerController.instance:unregisterCallback(PlayerEvent.ChangeBgTab, self.onBgTabIndexChange, self)
+	PlayerController.instance:unregisterCallback(PlayerEvent.ShowHideRoot, self.showHideRoot, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._bgComp = MonoHelper.addLuaComOnceToGo(arg_4_0._gobg, PlayerBgComp)
+function PlayerChangeBgView:_editableInitView()
+	self._bgComp = MonoHelper.addLuaComOnceToGo(self._gobg, PlayerBgComp)
 end
 
-function var_0_0.onOpen(arg_5_0)
-	local var_5_0 = arg_5_0.viewParam or {}
+function PlayerChangeBgView:onOpen()
+	local viewParam = self.viewParam or {}
 
-	if var_5_0.bgComp then
-		gohelper.destroy(arg_5_0._gobg)
+	if viewParam.bgComp then
+		gohelper.destroy(self._gobg)
 
-		arg_5_0._bgComp = var_5_0.bgComp
+		self._bgComp = viewParam.bgComp
 
-		arg_5_0._bgComp.go.transform:SetParent(arg_5_0.viewGO.transform, false)
-		arg_5_0._bgComp.go.transform:SetSiblingIndex(0)
+		self._bgComp.go.transform:SetParent(self.viewGO.transform, false)
+		self._bgComp.go.transform:SetSiblingIndex(0)
 	end
 
-	local var_5_1 = PlayerModel.instance:getPlayinfo()
+	local info = PlayerModel.instance:getPlayinfo()
 
-	gohelper.setActive(arg_5_0._goFriend, false)
+	gohelper.setActive(self._goFriend, false)
 
-	if arg_5_0.viewParam and arg_5_0.viewParam.itemMo then
-		local var_5_2 = PlayerConfig.instance:getBgCo(arg_5_0.viewParam.itemMo.id)
+	if self.viewParam and self.viewParam.itemMo then
+		local bgCo = PlayerConfig.instance:getBgCo(self.viewParam.itemMo.id)
 
-		var_5_0.bgCo = var_5_2
+		viewParam.bgCo = bgCo
 
-		arg_5_0:onSelectBg(var_5_2)
+		self:onSelectBg(bgCo)
 	else
-		local var_5_3 = lua_player_bg.configList
-		local var_5_4 = 1
+		local data = lua_player_bg.configList
+		local selectIndex = 1
 
-		for iter_5_0 = 1, #var_5_3 do
-			if var_5_3[iter_5_0].item == var_5_1.bg then
-				var_5_4 = iter_5_0
+		for i = 1, #data do
+			if data[i].item == info.bg then
+				selectIndex = i
 
 				break
 			end
 		end
 
-		var_5_0.bgCo = var_5_3[var_5_4]
-		var_5_0.selectIndex = var_5_4
-		arg_5_0._selectIndex = var_5_4
+		viewParam.bgCo = data[selectIndex]
+		viewParam.selectIndex = selectIndex
+		self._selectIndex = selectIndex
 
-		arg_5_0:onSelectBg(var_5_3[var_5_4])
+		self:onSelectBg(data[selectIndex])
 	end
 
-	ViewMgr.instance:openView(ViewName.PlayerChangeBgListView, var_5_0)
+	ViewMgr.instance:openView(ViewName.PlayerChangeBgListView, viewParam)
 
-	arg_5_0._txtname.text = var_5_1.name
-	arg_5_0._txtname2.text = var_5_1.name
-	arg_5_0._txtonline.text = luaLang("social_online")
-	arg_5_0._txtLv.text = "Lv." .. var_5_1.level
-	arg_5_0._txtLv2.text = formatLuaLang("playerchangebgview_namelv", var_5_1.level)
+	self._txtname.text = info.name
+	self._txtname2.text = info.name
+	self._txtonline.text = luaLang("social_online")
+	self._txtLv.text = "Lv." .. info.level
+	self._txtLv2.text = formatLuaLang("playerchangebgview_namelv", info.level)
 
-	local var_5_5 = var_5_1.portrait
+	local portrait = info.portrait
 
-	if not arg_5_0._liveHeadIcon then
-		arg_5_0._liveHeadIcon = IconMgr.instance:getCommonLiveHeadIcon(arg_5_0._simagehead)
+	if not self._liveHeadIcon then
+		local commonLiveIcon = IconMgr.instance:getCommonLiveHeadIcon(self._simagehead)
+
+		self._liveHeadIcon = commonLiveIcon
 	end
 
-	arg_5_0._liveHeadIcon:setLiveHead(var_5_5)
+	self._liveHeadIcon:setLiveHead(portrait)
 
-	if not arg_5_0._liveHeadIcon2 then
-		arg_5_0._liveHeadIcon2 = IconMgr.instance:getCommonLiveHeadIcon(arg_5_0._simagehead2)
+	if not self._liveHeadIcon2 then
+		local commonLiveIcon = IconMgr.instance:getCommonLiveHeadIcon(self._simagehead2)
+
+		self._liveHeadIcon2 = commonLiveIcon
 	end
 
-	arg_5_0._liveHeadIcon2:setLiveHead(var_5_5)
-	arg_5_0._anim:Play("open")
+	self._liveHeadIcon2:setLiveHead(portrait)
+	self._anim:Play("open")
 end
 
-function var_0_0.onBgTabIndexChange(arg_6_0, arg_6_1)
-	if arg_6_1 ~= arg_6_0._selectIndex then
-		gohelper.setActive(arg_6_0.viewGO, false)
-		gohelper.setActive(arg_6_0.viewGO, true)
-		arg_6_0._anim:Play("switch", 0, 0)
+function PlayerChangeBgView:onBgTabIndexChange(index)
+	if index ~= self._selectIndex then
+		gohelper.setActive(self.viewGO, false)
+		gohelper.setActive(self.viewGO, true)
+		self._anim:Play("switch", 0, 0)
 	end
 
-	arg_6_0._selectIndex = arg_6_1
+	self._selectIndex = index
 
 	UIBlockMgr.instance:startBlock("PlayerChangeBgView_switch")
-	TaskDispatcher.runDelay(arg_6_0._delayShowBg, arg_6_0, 0.16)
+	TaskDispatcher.runDelay(self._delayShowBg, self, 0.16)
 end
 
-function var_0_0._delayShowBg(arg_7_0)
+function PlayerChangeBgView:_delayShowBg()
 	UIBlockMgr.instance:endBlock("PlayerChangeBgView_switch")
-	arg_7_0:onSelectBg(lua_player_bg.configList[arg_7_0._selectIndex])
+	self:onSelectBg(lua_player_bg.configList[self._selectIndex])
 end
 
-function var_0_0.onSelectBg(arg_8_0, arg_8_1)
-	arg_8_0._bgComp:showBg(arg_8_1)
+function PlayerChangeBgView:onSelectBg(bgCo)
+	self._bgComp:showBg(bgCo)
 
-	local var_8_0 = true
+	local isUnlock = true
 
-	if arg_8_1.item ~= 0 then
-		local var_8_1
+	if bgCo.item ~= 0 then
+		local quantity = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, bgCo.item)
 
-		var_8_1 = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, arg_8_1.item) > 0
+		isUnlock = quantity > 0
 	end
 
-	gohelper.setActive(arg_8_0._godefaultbg, arg_8_1.item == 0)
-	gohelper.setActive(arg_8_0._godefaultbg2, arg_8_1.item == 0)
+	gohelper.setActive(self._godefaultbg, bgCo.item == 0)
+	gohelper.setActive(self._godefaultbg2, bgCo.item == 0)
 
-	if arg_8_1.item ~= 0 then
-		arg_8_0._bg1:LoadImage(string.format("singlebg/playerinfo/%s.png", arg_8_1.infobg))
-		arg_8_0._bg2:LoadImage(string.format("singlebg/playerinfo/%s.png", arg_8_1.chatbg))
+	if bgCo.item ~= 0 then
+		self._bg1:LoadImage(string.format("singlebg/playerinfo/%s.png", bgCo.infobg))
+		self._bg2:LoadImage(string.format("singlebg/playerinfo/%s.png", bgCo.chatbg))
 	end
 end
 
-function var_0_0._showHideFriend(arg_9_0)
-	gohelper.setActive(arg_9_0._goFriend, not arg_9_0._goFriend.activeSelf)
+function PlayerChangeBgView:_showHideFriend()
+	gohelper.setActive(self._goFriend, not self._goFriend.activeSelf)
 end
 
-function var_0_0.showHideRoot(arg_10_0, arg_10_1)
-	if arg_10_1 then
-		arg_10_0._anim:Play("open")
+function PlayerChangeBgView:showHideRoot(isShow)
+	if isShow then
+		self._anim:Play("open")
 	else
-		arg_10_0._anim:Play("close")
+		self._anim:Play("close")
 	end
 end
 
-function var_0_0._onTouchScreen(arg_11_0)
-	if arg_11_0._goFriend.activeSelf then
-		local var_11_0 = arg_11_0._btnFriend.transform
-		local var_11_1 = GamepadController.instance:getMousePosition()
-		local var_11_2 = recthelper.getWidth(var_11_0)
-		local var_11_3 = recthelper.getHeight(var_11_0)
-		local var_11_4 = recthelper.screenPosToAnchorPos(var_11_1, var_11_0)
+function PlayerChangeBgView:_onTouchScreen()
+	if self._goFriend.activeSelf then
+		local trans = self._btnFriend.transform
+		local mousePosition = GamepadController.instance:getMousePosition()
+		local width = recthelper.getWidth(trans)
+		local height = recthelper.getHeight(trans)
+		local touchPos = recthelper.screenPosToAnchorPos(mousePosition, trans)
 
-		if var_11_4.x >= -var_11_2 / 2 and var_11_4.x <= var_11_2 / 2 and var_11_4.y <= var_11_3 / 2 and var_11_4.y >= -var_11_3 / 2 then
+		if touchPos.x >= -width / 2 and touchPos.x <= width / 2 and touchPos.y <= height / 2 and touchPos.y >= -height / 2 then
 			return
 		end
 
-		gohelper.setActive(arg_11_0._goFriend, false)
+		gohelper.setActive(self._goFriend, false)
 	end
 end
 
-function var_0_0.onClose(arg_12_0)
+function PlayerChangeBgView:onClose()
 	UIBlockMgr.instance:endBlock("PlayerChangeBgView_switch")
-	arg_12_0._anim:Play("close")
+	self._anim:Play("close")
 	ViewMgr.instance:closeView(ViewName.PlayerChangeBgListView)
-	arg_12_0._simagehead:UnLoadImage()
-	arg_12_0._simagehead2:UnLoadImage()
-	arg_12_0._bg1:UnLoadImage()
-	arg_12_0._bg2:UnLoadImage()
+	self._simagehead:UnLoadImage()
+	self._simagehead2:UnLoadImage()
+	self._bg1:UnLoadImage()
+	self._bg2:UnLoadImage()
 end
 
-return var_0_0
+return PlayerChangeBgView

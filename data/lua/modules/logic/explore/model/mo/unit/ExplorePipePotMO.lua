@@ -1,21 +1,25 @@
-﻿module("modules.logic.explore.model.mo.unit.ExplorePipePotMO", package.seeall)
+﻿-- chunkname: @modules/logic/explore/model/mo/unit/ExplorePipePotMO.lua
 
-local var_0_0 = class("ExplorePipePotMO", ExploreBaseUnitMO)
+module("modules.logic.explore.model.mo.unit.ExplorePipePotMO", package.seeall)
 
-function var_0_0.initTypeData(arg_1_0)
-	arg_1_0.pipeColor = tonumber(arg_1_0.specialDatas[1])
+local ExplorePipePotMO = class("ExplorePipePotMO", ExploreBaseUnitMO)
+
+function ExplorePipePotMO:initTypeData()
+	self.pipeColor = tonumber(self.specialDatas[1])
 end
 
-function var_0_0.getBindPotId(arg_2_0)
-	return arg_2_0:getInteractInfoMO().statusInfo.bindInteractId or 0
+function ExplorePipePotMO:getBindPotId()
+	local statusInfo = self:getInteractInfoMO().statusInfo
+
+	return statusInfo.bindInteractId or 0
 end
 
-function var_0_0.getColor(arg_3_0)
-	return arg_3_0.pipeColor
+function ExplorePipePotMO:getColor()
+	return self.pipeColor
 end
 
-function var_0_0.getUnitClass(arg_4_0)
+function ExplorePipePotMO:getUnitClass()
 	return ExplorePipePotUnit
 end
 
-return var_0_0
+return ExplorePipePotMO

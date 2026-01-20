@@ -1,292 +1,298 @@
-﻿module("modules.logic.rouge.dlc.101.view.RougeMapView_1_101", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/dlc/101/view/RougeMapView_1_101.lua
 
-local var_0_0 = class("RougeMapView_1_101", BaseViewExtended)
+module("modules.logic.rouge.dlc.101.view.RougeMapView_1_101", package.seeall)
 
-var_0_0.AssetUrl = "ui/viewres/rouge/dlc/101/rougemapskillview.prefab"
-var_0_0.ParentObjPath = "Left/#go_rougezhouyu"
+local RougeMapView_1_101 = class("RougeMapView_1_101", BaseViewExtended)
 
-local var_0_1 = {
+RougeMapView_1_101.AssetUrl = "ui/viewres/rouge/dlc/101/rougemapskillview.prefab"
+RougeMapView_1_101.ParentObjPath = "Left/#go_rougezhouyu"
+
+local State = {
 	Expanding = 3,
 	Simple = 1,
 	Shrinking = 4,
 	Detail = 2
 }
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._heroSkillGO = gohelper.findChild(arg_1_0.viewGO, "heroSkill")
-	arg_1_0._goSkillDescContent = gohelper.findChild(arg_1_0.viewGO, "heroSkill/#go_detail/skillDescContent")
-	arg_1_0._goSkillDescItem = gohelper.findChild(arg_1_0.viewGO, "heroSkill/#go_detail/skillDescContent/#go_skillDescItem")
-	arg_1_0._goSkillContent = gohelper.findChild(arg_1_0.viewGO, "heroSkill/#go_simple/skillContent")
-	arg_1_0._goSkillItem = gohelper.findChild(arg_1_0.viewGO, "heroSkill/#go_simple/skillContent/#go_skillitem")
-	arg_1_0._btnlimiter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_limiter")
-	arg_1_0._txtrisk = gohelper.findChildText(arg_1_0.viewGO, "#btn_limiter/#txt_risk")
+function RougeMapView_1_101:onInitView()
+	self._heroSkillGO = gohelper.findChild(self.viewGO, "heroSkill")
+	self._goSkillDescContent = gohelper.findChild(self.viewGO, "heroSkill/#go_detail/skillDescContent")
+	self._goSkillDescItem = gohelper.findChild(self.viewGO, "heroSkill/#go_detail/skillDescContent/#go_skillDescItem")
+	self._goSkillContent = gohelper.findChild(self.viewGO, "heroSkill/#go_simple/skillContent")
+	self._goSkillItem = gohelper.findChild(self.viewGO, "heroSkill/#go_simple/skillContent/#go_skillitem")
+	self._btnlimiter = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_limiter")
+	self._txtrisk = gohelper.findChildText(self.viewGO, "#btn_limiter/#txt_risk")
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	GameStateMgr.instance:registerCallback(GameStateEvent.OnTouchScreenUp, arg_2_0._onTouch, arg_2_0)
-	RougeController.instance:registerCallback(RougeEvent.OnUpdateRougeInfoPower, arg_2_0._onUpdateRougeInfoPower, arg_2_0)
-	RougeController.instance:registerCallback(RougeEvent.OnUpdateRougeInfo, arg_2_0._onUpdateRougeInfo, arg_2_0)
-	RougeMapController.instance:registerCallback(RougeMapEvent.onUpdateMapInfo, arg_2_0._onUpdateMapInfo, arg_2_0)
-	RougeMapController.instance:registerCallback(RougeMapEvent.onChangeMapInfo, arg_2_0._onChangeMapInfo, arg_2_0)
-	arg_2_0._btnlimiter:AddClickListener(arg_2_0._btnlimiterOnClick, arg_2_0)
+function RougeMapView_1_101:addEvents()
+	GameStateMgr.instance:registerCallback(GameStateEvent.OnTouchScreenUp, self._onTouch, self)
+	RougeController.instance:registerCallback(RougeEvent.OnUpdateRougeInfoPower, self._onUpdateRougeInfoPower, self)
+	RougeController.instance:registerCallback(RougeEvent.OnUpdateRougeInfo, self._onUpdateRougeInfo, self)
+	RougeMapController.instance:registerCallback(RougeMapEvent.onUpdateMapInfo, self._onUpdateMapInfo, self)
+	RougeMapController.instance:registerCallback(RougeMapEvent.onChangeMapInfo, self._onChangeMapInfo, self)
+	self._btnlimiter:AddClickListener(self._btnlimiterOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnlimiter:RemoveClickListener()
+function RougeMapView_1_101:removeEvents()
+	self._btnlimiter:RemoveClickListener()
 end
 
-function var_0_0._btnlimiterOnClick(arg_4_0)
-	local var_4_0 = RougeModel.instance:getRougeInfo()
-	local var_4_1 = var_4_0 and var_4_0:getGameLimiterMo()
-	local var_4_2 = var_4_1 and var_4_1:getRiskValue() or 0
-	local var_4_3 = var_4_1 and var_4_1:getLimiterIds()
-	local var_4_4 = var_4_1 and var_4_1:getLimiterBuffIds()
-	local var_4_5 = {
-		limiterIds = var_4_3,
-		buffIds = var_4_4,
-		totalRiskValue = var_4_2
+function RougeMapView_1_101:_btnlimiterOnClick()
+	local rougeInfo = RougeModel.instance:getRougeInfo()
+	local gameLimiterMo = rougeInfo and rougeInfo:getGameLimiterMo()
+	local totalRiskValue = gameLimiterMo and gameLimiterMo:getRiskValue() or 0
+	local limiterIds = gameLimiterMo and gameLimiterMo:getLimiterIds()
+	local limiterBuffIds = gameLimiterMo and gameLimiterMo:getLimiterBuffIds()
+	local params = {
+		limiterIds = limiterIds,
+		buffIds = limiterBuffIds,
+		totalRiskValue = totalRiskValue
 	}
 
-	RougeDLCController101.instance:openRougeLimiterOverView(var_4_5)
+	RougeDLCController101.instance:openRougeLimiterOverView(params)
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._state = var_0_1.Simple
-	arg_5_0._detailClick = arg_5_0:getUserDataTb_()
-	arg_5_0._entryBtnClick = arg_5_0:getUserDataTb_()
-	arg_5_0._animator = gohelper.onceAddComponent(arg_5_0._heroSkillGO, gohelper.Type_Animator)
+function RougeMapView_1_101:_editableInitView()
+	self._state = State.Simple
+	self._detailClick = self:getUserDataTb_()
+	self._entryBtnClick = self:getUserDataTb_()
+	self._animator = gohelper.onceAddComponent(self._heroSkillGO, gohelper.Type_Animator)
 
-	arg_5_0:checkAndShowLimiterEntry()
+	self:checkAndShowLimiterEntry()
 end
 
-function var_0_0.checkAndShowLimiterEntry(arg_6_0)
-	local var_6_0 = RougeModel.instance:getRougeInfo()
-	local var_6_1 = var_6_0 and var_6_0:getGameLimiterMo()
-	local var_6_2 = var_6_1 and var_6_1:getRiskValue() or 0
-	local var_6_3 = var_6_1 ~= nil and var_6_2 > 0
+function RougeMapView_1_101:checkAndShowLimiterEntry()
+	local rougeInfo = RougeModel.instance:getRougeInfo()
+	local gameLimiterMo = rougeInfo and rougeInfo:getGameLimiterMo()
+	local riskValue = gameLimiterMo and gameLimiterMo:getRiskValue() or 0
+	local isShowEntry = gameLimiterMo ~= nil and riskValue > 0
 
-	gohelper.setActive(arg_6_0._btnlimiter.gameObject, var_6_3)
+	gohelper.setActive(self._btnlimiter.gameObject, isShowEntry)
 
-	if not var_6_3 then
+	if not isShowEntry then
 		return
 	end
 
-	arg_6_0._txtrisk.text = var_6_2
+	self._txtrisk.text = riskValue
 end
 
-function var_0_0._onUpdateRougeInfo(arg_7_0)
-	arg_7_0:_updateUI()
+function RougeMapView_1_101:_onUpdateRougeInfo()
+	self:_updateUI()
 end
 
-function var_0_0._onUpdateRougeInfoPower(arg_8_0)
-	arg_8_0:_updateUI()
+function RougeMapView_1_101:_onUpdateRougeInfoPower()
+	self:_updateUI()
 end
 
-function var_0_0._onUpdateMapInfo(arg_9_0)
-	arg_9_0:_updateUI()
+function RougeMapView_1_101:_onUpdateMapInfo()
+	self:_updateUI()
 end
 
-function var_0_0._onChangeMapInfo(arg_10_0)
-	arg_10_0:_updateUI()
+function RougeMapView_1_101:_onChangeMapInfo()
+	self:_updateUI()
 end
 
-function var_0_0._setState(arg_11_0)
-	if arg_11_0._state == var_0_1.Expanding then
-		arg_11_0._state = var_0_1.Detail
-	elseif arg_11_0._state == var_0_1.Shrinking then
-		arg_11_0._state = var_0_1.Simple
+function RougeMapView_1_101:_setState()
+	if self._state == State.Expanding then
+		self._state = State.Detail
+	elseif self._state == State.Shrinking then
+		self._state = State.Simple
 	end
 end
 
-function var_0_0._onTouch(arg_12_0)
-	if arg_12_0._state == var_0_1.Detail then
-		TaskDispatcher.runDelay(arg_12_0._delayDealTouch, arg_12_0, 0.01)
+function RougeMapView_1_101:_onTouch()
+	if self._state == State.Detail then
+		TaskDispatcher.runDelay(self._delayDealTouch, self, 0.01)
 	end
 end
 
-function var_0_0._delayDealTouch(arg_13_0)
-	if not arg_13_0._hasClickDetailIcon then
-		arg_13_0:_shrinkDetailUI()
+function RougeMapView_1_101:_delayDealTouch()
+	if not self._hasClickDetailIcon then
+		self:_shrinkDetailUI()
 	end
 
-	arg_13_0._hasClickDetailIcon = nil
+	self._hasClickDetailIcon = nil
 end
 
-function var_0_0._shrinkDetailUI(arg_14_0)
-	arg_14_0._animator:Play("fight_heroskill_out", 0, 0)
-	arg_14_0._animator:Update(0)
+function RougeMapView_1_101:_shrinkDetailUI()
+	self._animator:Play("fight_heroskill_out", 0, 0)
+	self._animator:Update(0)
 
-	arg_14_0._state = var_0_1.Shrinking
+	self._state = State.Shrinking
 
-	TaskDispatcher.runDelay(arg_14_0._setState, arg_14_0, 0.533)
+	TaskDispatcher.runDelay(self._setState, self, 0.533)
 end
 
-function var_0_0.onOpen(arg_15_0)
-	arg_15_0:_updateUI()
+function RougeMapView_1_101:onOpen()
+	self:_updateUI()
 end
 
-function var_0_0._getPower(arg_16_0)
-	local var_16_0 = RougeModel.instance:getRougeInfo()
+function RougeMapView_1_101:_getPower()
+	local rougeInfo = RougeModel.instance:getRougeInfo()
 
-	return var_16_0 and var_16_0.power or 0
+	return rougeInfo and rougeInfo.power or 0
 end
 
-function var_0_0._getCoint(arg_17_0)
-	local var_17_0 = RougeModel.instance:getRougeInfo()
+function RougeMapView_1_101:_getCoint()
+	local rougeInfo = RougeModel.instance:getRougeInfo()
 
-	return var_17_0 and var_17_0.coin or 0
+	return rougeInfo and rougeInfo.coin or 0
 end
 
-function var_0_0._updateUI(arg_18_0)
-	arg_18_0._mapSkills = RougeMapModel.instance:getMapSkillList()
-	arg_18_0._visible = (arg_18_0._mapSkills and #arg_18_0._mapSkills or 0) > 0
+function RougeMapView_1_101:_updateUI()
+	self._mapSkills = RougeMapModel.instance:getMapSkillList()
 
-	gohelper.setActive(arg_18_0._heroSkillGO, arg_18_0._visible)
+	local mapSkillCount = self._mapSkills and #self._mapSkills or 0
 
-	if not arg_18_0._visible then
+	self._visible = mapSkillCount > 0
+
+	gohelper.setActive(self._heroSkillGO, self._visible)
+
+	if not self._visible then
 		return
 	end
 
-	gohelper.CreateObjList(arg_18_0, arg_18_0._refreshMapSkillDetail, arg_18_0._mapSkills, arg_18_0._goSkillDescContent, arg_18_0._goSkillDescItem)
-	gohelper.CreateObjList(arg_18_0, arg_18_0._refreshMapSkillEntry, arg_18_0._mapSkills, arg_18_0._goSkillContent, arg_18_0._goSkillItem)
+	gohelper.CreateObjList(self, self._refreshMapSkillDetail, self._mapSkills, self._goSkillDescContent, self._goSkillDescItem)
+	gohelper.CreateObjList(self, self._refreshMapSkillEntry, self._mapSkills, self._goSkillContent, self._goSkillItem)
 end
 
-function var_0_0._refreshMapSkillDetail(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
-	local var_19_0 = lua_rouge_map_skill.configDict[arg_19_2.id]
+function RougeMapView_1_101:_refreshMapSkillDetail(obj, skillMo, index)
+	local mapSkillCo = lua_rouge_map_skill.configDict[skillMo.id]
 
-	if var_19_0 then
-		local var_19_1 = RougeMapSkillCheckHelper.canUseMapSkill(arg_19_2)
-		local var_19_2 = gohelper.findChild(arg_19_1, "skill1/notcost1")
-		local var_19_3 = gohelper.findChild(arg_19_1, "skill1/cancost1")
+	if mapSkillCo then
+		local canUse = RougeMapSkillCheckHelper.canUseMapSkill(skillMo)
+		local goNotCost = gohelper.findChild(obj, "skill1/notcost1")
+		local goCanCost = gohelper.findChild(obj, "skill1/cancost1")
 
-		gohelper.setActive(var_19_2, not var_19_1)
-		gohelper.setActive(var_19_3, var_19_1)
+		gohelper.setActive(goNotCost, not canUse)
+		gohelper.setActive(goCanCost, canUse)
 
-		local var_19_4 = var_19_0.icon
-		local var_19_5 = gohelper.findChildImage(arg_19_1, "skill1/notcost1")
-		local var_19_6 = gohelper.findChildImage(arg_19_1, "skill1/cancost1")
+		local iconName = mapSkillCo.icon
+		local imageNotCost = gohelper.findChildImage(obj, "skill1/notcost1")
+		local imageCost = gohelper.findChildImage(obj, "skill1/cancost1")
 
-		UISpriteSetMgr.instance:setRouge2Sprite(var_19_5, var_19_4)
-		UISpriteSetMgr.instance:setRouge2Sprite(var_19_6, var_19_4 .. "_light")
+		UISpriteSetMgr.instance:setRouge2Sprite(imageNotCost, iconName)
+		UISpriteSetMgr.instance:setRouge2Sprite(imageCost, iconName .. "_light")
 
-		local var_19_7 = var_19_0.desc
+		local desc = mapSkillCo.desc
+		local txtDesc = gohelper.findChildText(obj, "desc1")
 
-		gohelper.findChildText(arg_19_1, "desc1").text = var_19_7 .. "\nCOST<color=#FFA500>-" .. var_19_0.powerCost .. "</color>"
+		txtDesc.text = desc .. "\nCOST<color=#FFA500>-" .. mapSkillCo.powerCost .. "</color>"
 
-		if not arg_19_0._detailClick[arg_19_3] then
-			local var_19_8 = gohelper.getClick(arg_19_1)
+		if not self._detailClick[index] then
+			local detailIconClick = gohelper.getClick(obj)
 
-			var_19_8:AddClickListener(arg_19_0._onClickSkillIcon, arg_19_0, arg_19_3)
+			detailIconClick:AddClickListener(self._onClickSkillIcon, self, index)
 
-			arg_19_0._detailClick[arg_19_3] = var_19_8
+			self._detailClick[index] = detailIconClick
 		end
 	else
-		logError("肉鸽地图技能配置不存在:" .. tostring(arg_19_2.id))
+		logError("肉鸽地图技能配置不存在:" .. tostring(skillMo.id))
 	end
 end
 
-function var_0_0._refreshMapSkillEntry(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
-	local var_20_0 = lua_rouge_map_skill.configDict[arg_20_2.id]
+function RougeMapView_1_101:_refreshMapSkillEntry(obj, skillMo, index)
+	local mapSkillCo = lua_rouge_map_skill.configDict[skillMo.id]
 
-	if var_20_0 then
-		local var_20_1 = RougeMapSkillCheckHelper.canUseMapSkill(arg_20_2)
-		local var_20_2 = gohelper.findChild(arg_20_1, "notcost")
-		local var_20_3 = gohelper.findChild(arg_20_1, "cancost")
+	if mapSkillCo then
+		local canUse = RougeMapSkillCheckHelper.canUseMapSkill(skillMo)
+		local goNotCost = gohelper.findChild(obj, "notcost")
+		local goCanCost = gohelper.findChild(obj, "cancost")
 
-		gohelper.setActive(var_20_2, not var_20_1)
-		gohelper.setActive(var_20_3, var_20_1)
+		gohelper.setActive(goNotCost, not canUse)
+		gohelper.setActive(goCanCost, canUse)
 
-		local var_20_4 = var_20_0.icon
-		local var_20_5 = gohelper.findChildImage(arg_20_1, "notcost/#image_skill_normal")
-		local var_20_6 = gohelper.findChildImage(arg_20_1, "cancost/#image_skill_light")
+		local iconName = mapSkillCo.icon
+		local imageNotCost = gohelper.findChildImage(obj, "notcost/#image_skill_normal")
+		local imageCost = gohelper.findChildImage(obj, "cancost/#image_skill_light")
 
-		UISpriteSetMgr.instance:setRouge2Sprite(var_20_5, var_20_4)
-		UISpriteSetMgr.instance:setRouge2Sprite(var_20_6, var_20_4 .. "_light")
+		UISpriteSetMgr.instance:setRouge2Sprite(imageNotCost, iconName)
+		UISpriteSetMgr.instance:setRouge2Sprite(imageCost, iconName .. "_light")
 
-		if not arg_20_0._entryBtnClick[arg_20_3] then
-			local var_20_7 = gohelper.findChildButtonWithAudio(arg_20_1, "btn_click")
+		if not self._entryBtnClick[index] then
+			local btnclick = gohelper.findChildButtonWithAudio(obj, "btn_click")
 
-			var_20_7:AddClickListener(arg_20_0._onClickEntrySkillIcon, arg_20_0, arg_20_3)
+			btnclick:AddClickListener(self._onClickEntrySkillIcon, self, index)
 
-			arg_20_0._entryBtnClick[arg_20_3] = var_20_7
+			self._entryBtnClick[index] = btnclick
 		end
 	else
-		logError("肉鸽地图技能配置不存在:" .. tostring(arg_20_2.id))
+		logError("肉鸽地图技能配置不存在:" .. tostring(skillMo.id))
 	end
 end
 
-function var_0_0._onClickEntrySkillIcon(arg_21_0, arg_21_1)
-	local var_21_0 = arg_21_0._mapSkills and arg_21_0._mapSkills[arg_21_1]
-	local var_21_1, var_21_2 = RougeMapSkillCheckHelper.canUseMapSkill(var_21_0)
+function RougeMapView_1_101:_onClickEntrySkillIcon(index)
+	local skillMo = self._mapSkills and self._mapSkills[index]
+	local canUse, reason = RougeMapSkillCheckHelper.canUseMapSkill(skillMo)
 
-	if not var_21_1 and var_21_2 == RougeMapSkillCheckHelper.CantUseMapSkillReason.DoingEvent then
-		RougeMapSkillCheckHelper.showCantUseMapSkillToast(var_21_2)
+	if not canUse and reason == RougeMapSkillCheckHelper.CantUseMapSkillReason.DoingEvent then
+		RougeMapSkillCheckHelper.showCantUseMapSkillToast(reason)
 
 		return
 	end
 
-	if arg_21_0._state == var_0_1.Simple then
-		arg_21_0._animator:Play("fight_heroskill_tips", 0, 0)
-		arg_21_0._animator:Update(0)
+	if self._state == State.Simple then
+		self._animator:Play("fight_heroskill_tips", 0, 0)
+		self._animator:Update(0)
 
-		arg_21_0._state = var_0_1.Expanding
+		self._state = State.Expanding
 
-		TaskDispatcher.runDelay(arg_21_0._setState, arg_21_0, 0.533)
+		TaskDispatcher.runDelay(self._setState, self, 0.533)
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_ui_shuffle_unfold)
 	end
 end
 
-function var_0_0._onClickSkillIcon(arg_22_0, arg_22_1)
+function RougeMapView_1_101:_onClickSkillIcon(index)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
 
-	local var_22_0 = arg_22_0._mapSkills and arg_22_0._mapSkills[arg_22_1]
+	local skillMo = self._mapSkills and self._mapSkills[index]
 
-	if not var_22_0 then
+	if not skillMo then
 		return
 	end
 
-	arg_22_0._hasClickDetailIcon = true
+	self._hasClickDetailIcon = true
 
-	local var_22_1, var_22_2 = RougeMapSkillCheckHelper.canUseMapSkill(var_22_0)
+	local canUse, reason = RougeMapSkillCheckHelper.canUseMapSkill(skillMo)
 
-	if var_22_1 then
-		local var_22_3 = RougeModel.instance:getSeason()
+	if canUse then
+		local season = RougeModel.instance:getSeason()
 
-		RougeRpc.instance:sendRougeUseMapSkillRequest(var_22_3, var_22_0.id, function(arg_23_0, arg_23_1)
-			if arg_23_1 ~= 0 then
+		RougeRpc.instance:sendRougeUseMapSkillRequest(season, skillMo.id, function(_, resultCode)
+			if resultCode ~= 0 then
 				return
 			end
 
-			arg_22_0:_updateUI()
-			arg_22_0:_shrinkDetailUI()
-			RougeMapSkillCheckHelper.executeUseMapSkillCallBack(var_22_0)
+			self:_updateUI()
+			self:_shrinkDetailUI()
+			RougeMapSkillCheckHelper.executeUseMapSkillCallBack(skillMo)
 		end)
 	else
-		RougeMapSkillCheckHelper.showCantUseMapSkillToast(var_22_2)
+		RougeMapSkillCheckHelper.showCantUseMapSkillToast(reason)
 	end
 end
 
-function var_0_0.onClose(arg_24_0)
-	TaskDispatcher.cancelTask(arg_24_0._delayDealTouch, arg_24_0)
-	TaskDispatcher.cancelTask(arg_24_0._setState, arg_24_0)
+function RougeMapView_1_101:onClose()
+	TaskDispatcher.cancelTask(self._delayDealTouch, self)
+	TaskDispatcher.cancelTask(self._setState, self)
 
-	for iter_24_0, iter_24_1 in ipairs(arg_24_0._detailClick) do
-		iter_24_1:RemoveClickListener()
+	for _, detailIconClick in ipairs(self._detailClick) do
+		detailIconClick:RemoveClickListener()
 	end
 
-	for iter_24_2, iter_24_3 in ipairs(arg_24_0._entryBtnClick) do
-		iter_24_3:RemoveClickListener()
+	for _, entryIconClick in ipairs(self._entryBtnClick) do
+		entryIconClick:RemoveClickListener()
 	end
 
-	GameStateMgr.instance:unregisterCallback(GameStateEvent.OnTouchScreenUp, arg_24_0._onTouch, arg_24_0)
-	RougeController.instance:unregisterCallback(RougeEvent.OnUpdateRougeInfoPower, arg_24_0._onUpdateRougeInfoPower, arg_24_0)
-	RougeController.instance:unregisterCallback(RougeEvent.OnUpdateRougeInfo, arg_24_0._onUpdateRougeInfo, arg_24_0)
-	RougeMapController.instance:unregisterCallback(RougeMapEvent.onUpdateMapInfo, arg_24_0._onUpdateMapInfo, arg_24_0)
-	RougeMapController.instance:unregisterCallback(RougeMapEvent.onChangeMapInfo, arg_24_0._onChangeMapInfo, arg_24_0)
+	GameStateMgr.instance:unregisterCallback(GameStateEvent.OnTouchScreenUp, self._onTouch, self)
+	RougeController.instance:unregisterCallback(RougeEvent.OnUpdateRougeInfoPower, self._onUpdateRougeInfoPower, self)
+	RougeController.instance:unregisterCallback(RougeEvent.OnUpdateRougeInfo, self._onUpdateRougeInfo, self)
+	RougeMapController.instance:unregisterCallback(RougeMapEvent.onUpdateMapInfo, self._onUpdateMapInfo, self)
+	RougeMapController.instance:unregisterCallback(RougeMapEvent.onChangeMapInfo, self._onChangeMapInfo, self)
 end
 
-return var_0_0
+return RougeMapView_1_101

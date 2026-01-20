@@ -1,83 +1,86 @@
-﻿module("modules.logic.sp01.odyssey.model.OdysseyTalentModel", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/model/OdysseyTalentModel.lua
 
-local var_0_0 = class("OdysseyTalentModel", BaseModel)
+module("modules.logic.sp01.odyssey.model.OdysseyTalentModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local OdysseyTalentModel = class("OdysseyTalentModel", BaseModel)
+
+function OdysseyTalentModel:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0.curTalentPoint = 0
-	arg_2_0.levelAddTalentPoint = 0
-	arg_2_0.rewardAddTalentPoint = 0
-	arg_2_0.talentNodeMap = {}
-	arg_2_0.talentTypeNodeMap = {}
-	arg_2_0.curSelectNodeId = 0
+function OdysseyTalentModel:reInit()
+	self.curTalentPoint = 0
+	self.levelAddTalentPoint = 0
+	self.rewardAddTalentPoint = 0
+	self.talentNodeMap = {}
+	self.talentTypeNodeMap = {}
+	self.curSelectNodeId = 0
 end
 
-function var_0_0.resetTalentData(arg_3_0)
-	arg_3_0.levelAddTalentPoint = 0
-	arg_3_0.rewardAddTalentPoint = 0
-	arg_3_0.talentNodeMap = {}
-	arg_3_0.talentTypeNodeMap = {}
-	arg_3_0.curSelectNodeId = 0
+function OdysseyTalentModel:resetTalentData()
+	self.levelAddTalentPoint = 0
+	self.rewardAddTalentPoint = 0
+	self.talentNodeMap = {}
+	self.talentTypeNodeMap = {}
+	self.curSelectNodeId = 0
 end
 
-function var_0_0.updateTalentInfo(arg_4_0, arg_4_1)
-	arg_4_0.curTalentPoint = arg_4_1.point
+function OdysseyTalentModel:updateTalentInfo(talentInfo)
+	self.curTalentPoint = talentInfo.point
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_1.nodes) do
-		arg_4_0:updateTalentNode(iter_4_1)
+	for _, nodeInfo in ipairs(talentInfo.nodes) do
+		self:updateTalentNode(nodeInfo)
 	end
 
-	arg_4_0:buildTalentTypeNodeMap()
-	arg_4_0:setCassandraTreeInfoStr(arg_4_1.cassandraTree)
-	arg_4_0:setNodeChild()
+	self:buildTalentTypeNodeMap()
+	self:setCassandraTreeInfoStr(talentInfo.cassandraTree)
+	self:setNodeChild()
 end
 
-function var_0_0.updateTalentNode(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0.talentNodeMap[arg_5_1.id]
+function OdysseyTalentModel:updateTalentNode(nodeInfo)
+	local talentNodeMo = self.talentNodeMap[nodeInfo.id]
 
-	if not var_5_0 then
-		var_5_0 = OdysseyTalentNodeMo.New()
+	if not talentNodeMo then
+		talentNodeMo = OdysseyTalentNodeMo.New()
 
-		var_5_0:init(arg_5_1.id)
+		talentNodeMo:init(nodeInfo.id)
 
-		arg_5_0.talentNodeMap[arg_5_1.id] = var_5_0
+		self.talentNodeMap[nodeInfo.id] = talentNodeMo
 	end
 
-	var_5_0:updateInfo(arg_5_1)
+	talentNodeMo:updateInfo(nodeInfo)
 end
 
-function var_0_0.buildTalentTypeNodeMap(arg_6_0)
-	arg_6_0.talentTypeNodeMap = {}
+function OdysseyTalentModel:buildTalentTypeNodeMap()
+	self.talentTypeNodeMap = {}
 
-	for iter_6_0, iter_6_1 in pairs(arg_6_0.talentNodeMap) do
-		if iter_6_1.level > 0 and iter_6_1.config then
-			local var_6_0 = iter_6_1.config.type
+	for _, talentNodeMo in pairs(self.talentNodeMap) do
+		if talentNodeMo.level > 0 and talentNodeMo.config then
+			local talentType = talentNodeMo.config.type
 
-			arg_6_0.talentTypeNodeMap[var_6_0] = arg_6_0.talentTypeNodeMap[var_6_0] or {}
-			arg_6_0.talentTypeNodeMap[var_6_0][iter_6_1.id] = iter_6_1
+			self.talentTypeNodeMap[talentType] = self.talentTypeNodeMap[talentType] or {}
+			self.talentTypeNodeMap[talentType][talentNodeMo.id] = talentNodeMo
 		end
 	end
 end
 
-function var_0_0.setNodeChild(arg_7_0)
-	arg_7_0:cleanNotLevelUpTalentNode()
+function OdysseyTalentModel:setNodeChild()
+	self:cleanNotLevelUpTalentNode()
 
-	for iter_7_0, iter_7_1 in pairs(arg_7_0.talentNodeMap) do
-		local var_7_0 = OdysseyConfig.instance:getAllTalentEffectConfigByNodeId(iter_7_1.id)[1].unlockCondition
+	for _, talentNodeMo in pairs(self.talentNodeMap) do
+		local talentEffectList = OdysseyConfig.instance:getAllTalentEffectConfigByNodeId(talentNodeMo.id)
+		local unlockConditionStr = talentEffectList[1].unlockCondition
 
-		if not string.nilorempty(var_7_0) then
-			local var_7_1 = GameUtil.splitString2(var_7_0)
+		if not string.nilorempty(unlockConditionStr) then
+			local unlockConditionList = GameUtil.splitString2(unlockConditionStr)
 
-			for iter_7_2, iter_7_3 in ipairs(var_7_1) do
-				if iter_7_3[1] == OdysseyEnum.TalentUnlockCondition.TalentNode then
-					local var_7_2 = tonumber(iter_7_3[2])
-					local var_7_3 = arg_7_0.talentNodeMap[var_7_2]
+			for _, unlockConditionData in ipairs(unlockConditionList) do
+				if unlockConditionData[1] == OdysseyEnum.TalentUnlockCondition.TalentNode then
+					local talentNodeId = tonumber(unlockConditionData[2])
+					local preTalentNodeMo = self.talentNodeMap[talentNodeId]
 
-					if var_7_3 then
-						var_7_3:setChildNode(iter_7_1)
+					if preTalentNodeMo then
+						preTalentNodeMo:setChildNode(talentNodeMo)
 					end
 				end
 			end
@@ -85,37 +88,39 @@ function var_0_0.setNodeChild(arg_7_0)
 	end
 end
 
-function var_0_0.cleanNotLevelUpTalentNode(arg_8_0)
-	for iter_8_0, iter_8_1 in pairs(arg_8_0.talentNodeMap) do
-		iter_8_1:cleanChildNodes()
+function OdysseyTalentModel:cleanNotLevelUpTalentNode()
+	for _, talentNodeMo in pairs(self.talentNodeMap) do
+		talentNodeMo:cleanChildNodes()
 
-		if iter_8_1.level == 0 and iter_8_1.consume == 0 then
-			arg_8_0.talentNodeMap[iter_8_1.id] = nil
+		if talentNodeMo.level == 0 and talentNodeMo.consume == 0 then
+			self.talentNodeMap[talentNodeMo.id] = nil
 		end
 	end
 end
 
-function var_0_0.checkTalentCanUnlock(arg_9_0, arg_9_1)
-	local var_9_0 = OdysseyConfig.instance:getAllTalentEffectConfigByNodeId(arg_9_1)[1].unlockCondition
+function OdysseyTalentModel:checkTalentCanUnlock(nodeId)
+	local talentEffectList = OdysseyConfig.instance:getAllTalentEffectConfigByNodeId(nodeId)
+	local unlockConditionStr = talentEffectList[1].unlockCondition
 
-	if string.nilorempty(var_9_0) then
+	if string.nilorempty(unlockConditionStr) then
 		return true
 	end
 
-	local var_9_1 = GameUtil.splitString2(var_9_0)
+	local unlockConditionList = GameUtil.splitString2(unlockConditionStr)
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_1) do
-		if iter_9_1[1] == OdysseyEnum.TalentUnlockCondition.TalentType then
-			local var_9_2 = tonumber(iter_9_1[2])
+	for index, unlockConditionData in ipairs(unlockConditionList) do
+		if unlockConditionData[1] == OdysseyEnum.TalentUnlockCondition.TalentType then
+			local talentType, needConsumeCount = tonumber(unlockConditionData[2]), tonumber(unlockConditionData[3])
+			local consumeCount = self:getTalentConsumeCount(talentType)
 
-			if tonumber(iter_9_1[3]) > arg_9_0:getTalentConsumeCount(var_9_2) then
-				return false, iter_9_1
+			if consumeCount < needConsumeCount then
+				return false, unlockConditionData
 			end
-		elseif iter_9_1[1] == OdysseyEnum.TalentUnlockCondition.TalentNode then
-			local var_9_3 = tonumber(iter_9_1[2])
+		elseif unlockConditionData[1] == OdysseyEnum.TalentUnlockCondition.TalentNode then
+			local talentNodeId = tonumber(unlockConditionData[2])
 
-			if not arg_9_0.talentNodeMap[var_9_3] then
-				return false, iter_9_1
+			if not self.talentNodeMap[talentNodeId] then
+				return false, unlockConditionData
 			end
 		end
 	end
@@ -123,109 +128,110 @@ function var_0_0.checkTalentCanUnlock(arg_9_0, arg_9_1)
 	return true
 end
 
-function var_0_0.getTalentConsumeCount(arg_10_0, arg_10_1)
-	local var_10_0 = 0
-	local var_10_1 = arg_10_0.talentTypeNodeMap[arg_10_1] or {}
+function OdysseyTalentModel:getTalentConsumeCount(typeId)
+	local count = 0
+	local talentNodeTab = self.talentTypeNodeMap[typeId] or {}
 
-	for iter_10_0, iter_10_1 in pairs(var_10_1) do
-		if iter_10_1 and iter_10_1.consume > 0 then
-			var_10_0 = var_10_0 + iter_10_1.consume
+	for _, talentNodeMo in pairs(talentNodeTab) do
+		if talentNodeMo and talentNodeMo.consume > 0 then
+			count = count + talentNodeMo.consume
 		end
 	end
 
-	return var_10_0
+	return count
 end
 
-function var_0_0.getTalentMo(arg_11_0, arg_11_1)
-	return arg_11_0.talentNodeMap[arg_11_1]
+function OdysseyTalentModel:getTalentMo(nodeId)
+	return self.talentNodeMap[nodeId]
 end
 
-function var_0_0.setCurTalentPoint(arg_12_0, arg_12_1, arg_12_2)
-	if arg_12_2 == OdysseyEnum.Reason.LevelUp then
-		arg_12_0.levelAddTalentPoint = arg_12_0.levelAddTalentPoint + (arg_12_1 - arg_12_0.curTalentPoint)
-	elseif OdysseyEnum.GetItemPushReason[arg_12_2] then
-		arg_12_0.rewardAddTalentPoint = arg_12_0.rewardAddTalentPoint + (arg_12_1 - arg_12_0.curTalentPoint)
+function OdysseyTalentModel:setCurTalentPoint(curPoint, reason)
+	if reason == OdysseyEnum.Reason.LevelUp then
+		self.levelAddTalentPoint = self.levelAddTalentPoint + (curPoint - self.curTalentPoint)
+	elseif OdysseyEnum.GetItemPushReason[reason] then
+		self.rewardAddTalentPoint = self.rewardAddTalentPoint + (curPoint - self.curTalentPoint)
 	end
 
-	arg_12_0.curTalentPoint = arg_12_1
+	self.curTalentPoint = curPoint
 end
 
-function var_0_0.getRewardAddTalentPoint(arg_13_0)
-	return arg_13_0.rewardAddTalentPoint
+function OdysseyTalentModel:getRewardAddTalentPoint()
+	return self.rewardAddTalentPoint
 end
 
-function var_0_0.getLevelAddTalentPoint(arg_14_0)
-	return arg_14_0.levelAddTalentPoint
+function OdysseyTalentModel:getLevelAddTalentPoint()
+	return self.levelAddTalentPoint
 end
 
-function var_0_0.getCurTalentPoint(arg_15_0)
-	return arg_15_0.curTalentPoint
+function OdysseyTalentModel:getCurTalentPoint()
+	return self.curTalentPoint
 end
 
-function var_0_0.cleanChangeTalentPoint(arg_16_0)
-	arg_16_0.levelAddTalentPoint = 0
-	arg_16_0.rewardAddTalentPoint = 0
+function OdysseyTalentModel:cleanChangeTalentPoint()
+	self.levelAddTalentPoint = 0
+	self.rewardAddTalentPoint = 0
 end
 
-function var_0_0.setCurselectNodeId(arg_17_0, arg_17_1)
-	arg_17_0.curSelectNodeId = arg_17_1
+function OdysseyTalentModel:setCurselectNodeId(nodeId)
+	self.curSelectNodeId = nodeId
 end
 
-function var_0_0.getCurSelectNodeId(arg_18_0)
-	return arg_18_0.curSelectNodeId
+function OdysseyTalentModel:getCurSelectNodeId()
+	return self.curSelectNodeId
 end
 
-function var_0_0.setCassandraTreeInfoStr(arg_19_0, arg_19_1)
-	arg_19_0.cassandraTreeInfoStr = arg_19_1
+function OdysseyTalentModel:setCassandraTreeInfoStr(treeStr)
+	self.cassandraTreeInfoStr = treeStr
 end
 
-function var_0_0.setTrialCassandraTreeInfo(arg_20_0)
-	arg_20_0.skillTalentMo = arg_20_0.skillTalentMo or CharacterExtraSkillTalentMO.New()
+function OdysseyTalentModel:setTrialCassandraTreeInfo()
+	self.skillTalentMo = self.skillTalentMo or CharacterExtraSkillTalentMO.New()
 
-	local var_20_0 = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.TrialHeroId)
-	local var_20_1 = tonumber(var_20_0.value)
-	local var_20_2 = lua_hero_trial.configDict[var_20_1][0]
-	local var_20_3 = HeroGroupTrialModel.instance:getHeroMo(var_20_2)
+	local trialHeroConstCo = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.TrialHeroId)
+	local trialHeroId = tonumber(trialHeroConstCo.value)
+	local trialHeroCo = lua_hero_trial.configDict[trialHeroId][0]
+	local heroMo = HeroGroupTrialModel.instance:getHeroMo(trialHeroCo)
 
-	if var_20_3 then
-		arg_20_0.skillTalentMo:refreshMo(arg_20_0.cassandraTreeInfoStr, var_20_3)
+	if heroMo then
+		self.skillTalentMo:refreshMo(self.cassandraTreeInfoStr, heroMo)
 	end
 end
 
-function var_0_0.getTrialCassandraTreeInfo(arg_21_0)
-	return arg_21_0.skillTalentMo
+function OdysseyTalentModel:getTrialCassandraTreeInfo()
+	return self.skillTalentMo
 end
 
-function var_0_0.isHasTalentNode(arg_22_0)
-	return tabletool.len(arg_22_0.talentNodeMap) > 0
+function OdysseyTalentModel:isHasTalentNode()
+	return tabletool.len(self.talentNodeMap) > 0
 end
 
-function var_0_0.checkLvDownHasNotAccordLightNumNode(arg_23_0, arg_23_1)
-	local var_23_0 = arg_23_0:getTalentMo(arg_23_1)
+function OdysseyTalentModel:checkLvDownHasNotAccordLightNumNode(curSelectNodeId)
+	local curTalentMo = self:getTalentMo(curSelectNodeId)
 
-	if not var_23_0 or var_23_0.level == 0 or not var_23_0.config then
+	if not curTalentMo or curTalentMo.level == 0 or not curTalentMo.config then
 		return false
 	end
 
-	local var_23_1 = var_23_0.config.type
-	local var_23_2 = arg_23_0.talentTypeNodeMap[var_23_1] or {}
-	local var_23_3 = math.ceil(var_23_0.config.position / 2)
+	local typeId = curTalentMo.config.type
+	local talentNodeTab = self.talentTypeNodeMap[typeId] or {}
+	local curTalentNodeLayer = math.ceil(curTalentMo.config.position / 2)
 
-	for iter_23_0, iter_23_1 in pairs(var_23_2) do
-		if iter_23_1.level > 0 and iter_23_1.config then
-			local var_23_4 = math.ceil(iter_23_1.config.position / 2)
+	for _, talentNodeMo in pairs(talentNodeTab) do
+		if talentNodeMo.level > 0 and talentNodeMo.config then
+			local nodeLayer = math.ceil(talentNodeMo.config.position / 2)
 
-			if var_23_3 < var_23_4 and var_23_4 > 1 then
-				local var_23_5 = arg_23_0:getCurTalentAllLowLayerTalentConsume(iter_23_1) - var_23_0.config.consume
+			if curTalentNodeLayer < nodeLayer and nodeLayer > 1 then
+				local lowLayerConsume = self:getCurTalentAllLowLayerTalentConsume(talentNodeMo)
+				local tempCosumeNum = lowLayerConsume - curTalentMo.config.consume
 
-				if not string.nilorempty(iter_23_1.config.unlockCondition) then
-					local var_23_6 = GameUtil.splitString2(iter_23_1.config.unlockCondition)
+				if not string.nilorempty(talentNodeMo.config.unlockCondition) then
+					local unlockConditionList = GameUtil.splitString2(talentNodeMo.config.unlockCondition)
 
-					for iter_23_2, iter_23_3 in ipairs(var_23_6) do
-						if iter_23_3[1] == OdysseyEnum.TalentUnlockCondition.TalentType then
-							local var_23_7 = tonumber(iter_23_3[2])
+					for index, unlockConditionData in ipairs(unlockConditionList) do
+						if unlockConditionData[1] == OdysseyEnum.TalentUnlockCondition.TalentType then
+							local talentType, needConsumeCount = tonumber(unlockConditionData[2]), tonumber(unlockConditionData[3])
 
-							if var_23_5 < tonumber(iter_23_3[3]) then
+							if tempCosumeNum < needConsumeCount then
 								return true
 							end
 						end
@@ -238,38 +244,42 @@ function var_0_0.checkLvDownHasNotAccordLightNumNode(arg_23_0, arg_23_1)
 	return false
 end
 
-function var_0_0.getCurTalentAllLowLayerTalentConsume(arg_24_0, arg_24_1)
-	local var_24_0 = math.ceil(arg_24_1.config.position / 2)
-	local var_24_1 = arg_24_0.talentTypeNodeMap[arg_24_1.config.type] or {}
-	local var_24_2 = 0
+function OdysseyTalentModel:getCurTalentAllLowLayerTalentConsume(curTalentMo)
+	local curLayer = math.ceil(curTalentMo.config.position / 2)
+	local talentNodeTab = self.talentTypeNodeMap[curTalentMo.config.type] or {}
+	local consumeNum = 0
 
-	for iter_24_0, iter_24_1 in pairs(var_24_1) do
-		if iter_24_1.level > 0 and iter_24_1.config and var_24_0 > math.ceil(iter_24_1.config.position / 2) and iter_24_1.id ~= arg_24_1.id then
-			var_24_2 = var_24_2 + iter_24_1.consume
+	for _, talentNodeMo in pairs(talentNodeTab) do
+		if talentNodeMo.level > 0 and talentNodeMo.config then
+			local nodeLayer = math.ceil(talentNodeMo.config.position / 2)
+
+			if nodeLayer < curLayer and talentNodeMo.id ~= curTalentMo.id then
+				consumeNum = consumeNum + talentNodeMo.consume
+			end
 		end
 	end
 
-	return var_24_2
+	return consumeNum
 end
 
-function var_0_0.isTalentUnlock(arg_25_0)
-	local var_25_0 = OdysseyModel.instance:getHeroCurLevelAndExp()
+function OdysseyTalentModel:isTalentUnlock()
+	local level = OdysseyModel.instance:getHeroCurLevelAndExp()
 
-	if var_25_0 == nil then
+	if level == nil then
 		return false
 	end
 
-	local var_25_1 = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.TalentUnlockLevel)
-	local var_25_2 = string.split(var_25_1.value, "#")
-	local var_25_3 = tonumber(var_25_2[2])
+	local constConfig = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.TalentUnlockLevel)
+	local data = string.split(constConfig.value, "#")
+	local unlockLevel = tonumber(data[2])
 
-	return var_25_3 ~= nil and var_25_3 <= var_25_0
+	return unlockLevel ~= nil and unlockLevel <= level
 end
 
-function var_0_0.checkHasNotUsedTalentPoint(arg_26_0)
-	return arg_26_0.curTalentPoint > 0
+function OdysseyTalentModel:checkHasNotUsedTalentPoint()
+	return self.curTalentPoint > 0
 end
 
-var_0_0.instance = var_0_0.New()
+OdysseyTalentModel.instance = OdysseyTalentModel.New()
 
-return var_0_0
+return OdysseyTalentModel

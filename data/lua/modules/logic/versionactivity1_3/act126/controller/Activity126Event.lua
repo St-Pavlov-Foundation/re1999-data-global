@@ -1,14 +1,16 @@
-﻿module("modules.logic.versionactivity1_3.act126.controller.Activity126Event", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/act126/controller/Activity126Event.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_3.act126.controller.Activity126Event", package.seeall)
 
-var_0_0.onUnlockBuffReply = 1
-var_0_0.onUpdateProgressReply = 2
-var_0_0.onResetProgressReply = 3
-var_0_0.onGetHoroscopeReply = 4
-var_0_0.onHoroscopeReply = 5
-var_0_0.selectDreamLandCard = 6
-var_0_0.onBeforeResetProgressReply = 7
-var_0_0.onGet126InfosReply = 8
+local Activity126Event = _M
 
-return var_0_0
+Activity126Event.onUnlockBuffReply = 1
+Activity126Event.onUpdateProgressReply = 2
+Activity126Event.onResetProgressReply = 3
+Activity126Event.onGetHoroscopeReply = 4
+Activity126Event.onHoroscopeReply = 5
+Activity126Event.selectDreamLandCard = 6
+Activity126Event.onBeforeResetProgressReply = 7
+Activity126Event.onGet126InfosReply = 8
+
+return Activity126Event

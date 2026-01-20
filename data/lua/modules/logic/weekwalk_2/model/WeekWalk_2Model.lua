@@ -1,150 +1,153 @@
-﻿module("modules.logic.weekwalk_2.model.WeekWalk_2Model", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk_2/model/WeekWalk_2Model.lua
 
-local var_0_0 = class("WeekWalk_2Model", BaseModel)
+module("modules.logic.weekwalk_2.model.WeekWalk_2Model", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local WeekWalk_2Model = class("WeekWalk_2Model", BaseModel)
+
+function WeekWalk_2Model:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._weekWalkInfo = nil
-	arg_2_0._weekWalkSettleInfo = nil
-	arg_2_0._isWin = nil
+function WeekWalk_2Model:reInit()
+	self._weekWalkInfo = nil
+	self._weekWalkSettleInfo = nil
+	self._isWin = nil
 end
 
-function var_0_0.initFightSettleInfo(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0._isWin = arg_3_1 == 1
-	arg_3_0._resultCupInfos = GameUtil.rpcInfosToMap(arg_3_2, WeekwalkVer2CupInfoMO, "index")
+function WeekWalk_2Model:initFightSettleInfo(result, cupInfos)
+	self._isWin = result == 1
+	self._resultCupInfos = GameUtil.rpcInfosToMap(cupInfos, WeekwalkVer2CupInfoMO, "index")
 end
 
-function var_0_0.isWin(arg_4_0)
-	return arg_4_0._isWin
+function WeekWalk_2Model:isWin()
+	return self._isWin
 end
 
-function var_0_0.getResultCupInfos(arg_5_0)
-	return arg_5_0._resultCupInfos
+function WeekWalk_2Model:getResultCupInfos()
+	return self._resultCupInfos
 end
 
-function var_0_0.initSettleInfo(arg_6_0, arg_6_1)
-	local var_6_0 = WeekwalkVer2SettleInfoMO.New()
+function WeekWalk_2Model:initSettleInfo(info)
+	local infoMo = WeekwalkVer2SettleInfoMO.New()
 
-	var_6_0:init(arg_6_1)
+	infoMo:init(info)
 
-	arg_6_0._weekWalkSettleInfo = var_6_0
+	self._weekWalkSettleInfo = infoMo
 end
 
-function var_0_0.getSettleInfo(arg_7_0)
-	return arg_7_0._weekWalkSettleInfo
+function WeekWalk_2Model:getSettleInfo()
+	return self._weekWalkSettleInfo
 end
 
-function var_0_0.clearSettleInfo(arg_8_0)
-	arg_8_0._weekWalkSettleInfo = nil
+function WeekWalk_2Model:clearSettleInfo()
+	self._weekWalkSettleInfo = nil
 end
 
-function var_0_0.updateInfo(arg_9_0, arg_9_1)
-	arg_9_0:initInfo(arg_9_1)
+function WeekWalk_2Model:updateInfo(info)
+	self:initInfo(info)
 end
 
-function var_0_0.initInfo(arg_10_0, arg_10_1)
-	local var_10_0 = WeekwalkVer2InfoMO.New()
+function WeekWalk_2Model:initInfo(info)
+	local infoMo = WeekwalkVer2InfoMO.New()
 
 	callWithCatch(function()
-		var_10_0:init(arg_10_1)
+		infoMo:init(info)
 	end)
 
-	arg_10_0._weekWalkInfo = var_10_0
+	self._weekWalkInfo = infoMo
 end
 
-function var_0_0.getInfo(arg_12_0)
-	return arg_12_0._weekWalkInfo
+function WeekWalk_2Model:getInfo()
+	return self._weekWalkInfo
 end
 
-function var_0_0.getTimeId(arg_13_0)
-	return arg_13_0._weekWalkInfo and arg_13_0._weekWalkInfo.timeId
+function WeekWalk_2Model:getTimeId()
+	return self._weekWalkInfo and self._weekWalkInfo.timeId
 end
 
-function var_0_0.getLayerInfo(arg_14_0, arg_14_1)
-	return arg_14_0._weekWalkInfo and arg_14_0._weekWalkInfo:getLayerInfo(arg_14_1)
+function WeekWalk_2Model:getLayerInfo(id)
+	return self._weekWalkInfo and self._weekWalkInfo:getLayerInfo(id)
 end
 
-function var_0_0.getLayerInfoByLayerIndex(arg_15_0, arg_15_1)
-	return arg_15_0._weekWalkInfo and arg_15_0._weekWalkInfo:getLayerInfoByLayerIndex(arg_15_1)
+function WeekWalk_2Model:getLayerInfoByLayerIndex(id)
+	return self._weekWalkInfo and self._weekWalkInfo:getLayerInfoByLayerIndex(id)
 end
 
-function var_0_0.setBattleElementId(arg_16_0, arg_16_1)
-	arg_16_0._battleElementId = arg_16_1
+function WeekWalk_2Model:setBattleElementId(id)
+	self._battleElementId = id
 end
 
-function var_0_0.getBattleElementId(arg_17_0)
-	return arg_17_0._battleElementId
+function WeekWalk_2Model:getBattleElementId()
+	return self._battleElementId
 end
 
-function var_0_0.setCurMapId(arg_18_0, arg_18_1)
-	arg_18_0._curMapId = arg_18_1
+function WeekWalk_2Model:setCurMapId(id)
+	self._curMapId = id
 end
 
-function var_0_0.getCurMapId(arg_19_0)
-	return arg_19_0._curMapId
+function WeekWalk_2Model:getCurMapId()
+	return self._curMapId
 end
 
-function var_0_0.getCurMapInfo(arg_20_0)
-	return arg_20_0:getLayerInfo(arg_20_0._curMapId)
+function WeekWalk_2Model:getCurMapInfo()
+	return self:getLayerInfo(self._curMapId)
 end
 
-function var_0_0.getBattleInfo(arg_21_0, arg_21_1, arg_21_2)
-	local var_21_0 = arg_21_0:getLayerInfo(arg_21_1)
+function WeekWalk_2Model:getBattleInfo(mapId, id)
+	local mapInfo = self:getLayerInfo(mapId)
 
-	return var_21_0 and var_21_0:getBattleInfoByBattleId(arg_21_2)
+	return mapInfo and mapInfo:getBattleInfoByBattleId(id)
 end
 
-function var_0_0.getBattleInfoByLayerAndIndex(arg_22_0, arg_22_1, arg_22_2)
-	local var_22_0 = arg_22_0._weekWalkInfo and arg_22_0._weekWalkInfo:getLayerInfoByLayerIndex(arg_22_1)
+function WeekWalk_2Model:getBattleInfoByLayerAndIndex(layer, index)
+	local mapInfo = self._weekWalkInfo and self._weekWalkInfo:getLayerInfoByLayerIndex(layer)
 
-	return var_22_0 and var_22_0:getBattleInfoByIndex(arg_22_2)
+	return mapInfo and mapInfo:getBattleInfoByIndex(index)
 end
 
-function var_0_0.getBattleInfoByIdAndIndex(arg_23_0, arg_23_1, arg_23_2)
-	local var_23_0 = arg_23_0._weekWalkInfo and arg_23_0._weekWalkInfo:getLayerInfo(arg_23_1)
+function WeekWalk_2Model:getBattleInfoByIdAndIndex(mapId, index)
+	local mapInfo = self._weekWalkInfo and self._weekWalkInfo:getLayerInfo(mapId)
 
-	return var_23_0 and var_23_0:getBattleInfoByIndex(arg_23_2)
+	return mapInfo and mapInfo:getBattleInfoByIndex(index)
 end
 
-function var_0_0.getCurMapHeroCd(arg_24_0, arg_24_1)
-	return arg_24_0:getHeroCd(arg_24_0._curMapId, arg_24_1)
+function WeekWalk_2Model:getCurMapHeroCd(heroId)
+	return self:getHeroCd(self._curMapId, heroId)
 end
 
-function var_0_0.getHeroCd(arg_25_0, arg_25_1, arg_25_2)
-	local var_25_0 = arg_25_0:getLayerInfo(arg_25_1)
+function WeekWalk_2Model:getHeroCd(mapId, heroId)
+	local mapInfo = self:getLayerInfo(mapId)
+	local inCD = mapInfo and mapInfo:heroInCD(heroId)
 
-	return var_25_0 and var_25_0:heroInCD(arg_25_2) and 1 or 0
+	return inCD and 1 or 0
 end
 
-function var_0_0.getFightParam(arg_26_0)
-	local var_26_0 = arg_26_0:getBattleElementId()
-	local var_26_1 = arg_26_0:getCurMapId()
-	local var_26_2 = {
-		elementId = var_26_0,
-		layerId = var_26_1
+function WeekWalk_2Model:getFightParam()
+	local elementId = self:getBattleElementId()
+	local layerId = self:getCurMapId()
+	local obj = {
+		elementId = elementId,
+		layerId = layerId
 	}
-	local var_26_3 = WeekWalk_2BuffListModel.getCurHeroGroupSkillId()
+	local skillId = WeekWalk_2BuffListModel.getCurHeroGroupSkillId()
 
-	if var_26_3 then
-		var_26_2.chooseSkillIds = {
-			var_26_3
+	if skillId then
+		obj.chooseSkillIds = {
+			skillId
 		}
 	end
 
-	return cjson.encode(var_26_2)
+	return cjson.encode(obj)
 end
 
-function var_0_0.setFinishMapId(arg_27_0, arg_27_1)
-	arg_27_0._curFinishMapId = arg_27_1
+function WeekWalk_2Model:setFinishMapId(mapId)
+	self._curFinishMapId = mapId
 end
 
-function var_0_0.getFinishMapId(arg_28_0)
-	return arg_28_0._curFinishMapId
+function WeekWalk_2Model:getFinishMapId()
+	return self._curFinishMapId
 end
 
-var_0_0.instance = var_0_0.New()
+WeekWalk_2Model.instance = WeekWalk_2Model.New()
 
-return var_0_0
+return WeekWalk_2Model

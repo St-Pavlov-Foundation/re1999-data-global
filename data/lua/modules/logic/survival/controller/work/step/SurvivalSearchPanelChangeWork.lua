@@ -1,14 +1,16 @@
-﻿module("modules.logic.survival.controller.work.step.SurvivalSearchPanelChangeWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/step/SurvivalSearchPanelChangeWork.lua
 
-local var_0_0 = class("SurvivalSearchPanelChangeWork", SurvivalStepBaseWork)
+module("modules.logic.survival.controller.work.step.SurvivalSearchPanelChangeWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
+local SurvivalSearchPanelChangeWork = class("SurvivalSearchPanelChangeWork", SurvivalStepBaseWork)
+
+function SurvivalSearchPanelChangeWork:onStart(context)
 	SurvivalMapModel.instance.searchChangeItems = {
-		items = arg_1_0._stepMo.items,
-		panelUid = arg_1_0._stepMo.paramLong[1]
+		items = self._stepMo.items,
+		panelUid = self._stepMo.paramLong[1]
 	}
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return SurvivalSearchPanelChangeWork

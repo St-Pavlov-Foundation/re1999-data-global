@@ -1,8 +1,10 @@
-﻿module("modules.logic.fight.entity.comp.FightNameUIExPointBaseItem", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/FightNameUIExPointBaseItem.lua
 
-local var_0_0 = class("FightNameUIExPointBaseItem", UserDataDispose)
+module("modules.logic.fight.entity.comp.FightNameUIExPointBaseItem", package.seeall)
 
-var_0_0.AnimName = {
+local FightNameUIExPointBaseItem = class("FightNameUIExPointBaseItem", UserDataDispose)
+
+FightNameUIExPointBaseItem.AnimName = {
 	LockClose = "lock_close",
 	Lost = "fightname_expoint_out",
 	Add = "fightname_expoint_in",
@@ -14,354 +16,361 @@ var_0_0.AnimName = {
 	Client = "fightname_expoint_flash",
 	UsingSkillExplosion = "withholding_open"
 }
-var_0_0.AnimNameDuration = {
-	[var_0_0.AnimName.Add] = 0.5
+FightNameUIExPointBaseItem.AnimNameDuration = {
+	[FightNameUIExPointBaseItem.AnimName.Add] = 0.5
 }
-var_0_0.ExPointType = {
+FightNameUIExPointBaseItem.ExPointType = {
 	Extra = 2,
 	Normal = 1
 }
 
-function var_0_0.getType(arg_1_0)
-	return var_0_0.ExPointType.Normal
+function FightNameUIExPointBaseItem:getType()
+	return FightNameUIExPointBaseItem.ExPointType.Normal
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0:__onInit()
+function FightNameUIExPointBaseItem:init(exPointGo)
+	self:__onInit()
 
-	arg_2_0.exPointGo = arg_2_1
+	self.exPointGo = exPointGo
 
-	gohelper.setActive(arg_2_0.exPointGo, true)
+	gohelper.setActive(self.exPointGo, true)
 
-	arg_2_0.goFull = gohelper.findChild(arg_2_0.exPointGo, "full")
-	arg_2_0.imageFull = arg_2_0.goFull:GetComponent(gohelper.Type_Image)
+	self.goFull = gohelper.findChild(self.exPointGo, "full")
+	self.imageFull = self.goFull:GetComponent(gohelper.Type_Image)
 
-	arg_2_0:_initEffectNode()
+	self:_initEffectNode()
 
-	arg_2_0.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_2_0.exPointGo)
-	arg_2_0.animator = arg_2_0.exPointGo:GetComponent(gohelper.Type_Animator)
-	arg_2_0.state = FightEnum.ExPointState.Empty
+	self.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(self.exPointGo)
+	self.animator = self.exPointGo:GetComponent(gohelper.Type_Animator)
+	self.state = FightEnum.ExPointState.Empty
 
-	arg_2_0:initHandle()
+	self:initHandle()
 end
 
-function var_0_0._initEffectNode(arg_3_0)
-	arg_3_0.goEffectExPoint = gohelper.findChild(arg_3_0.exPointGo, "effectexpoint")
-	arg_3_0.goEffectIn = gohelper.findChild(arg_3_0.goEffectExPoint, "in")
-	arg_3_0.goEffectLoop = gohelper.findChild(arg_3_0.goEffectExPoint, "loop")
-	arg_3_0.goEffectOut = gohelper.findChild(arg_3_0.goEffectExPoint, "out")
-	arg_3_0.goEffectAll = gohelper.findChild(arg_3_0.goEffectExPoint, "all")
-	arg_3_0.goEffectWithHolding = gohelper.findChild(arg_3_0.goEffectExPoint, "withholding")
-	arg_3_0.goEffectLock = gohelper.findChild(arg_3_0.goEffectExPoint, "lock")
+function FightNameUIExPointBaseItem:_initEffectNode()
+	self.goEffectExPoint = gohelper.findChild(self.exPointGo, "effectexpoint")
+	self.goEffectIn = gohelper.findChild(self.goEffectExPoint, "in")
+	self.goEffectLoop = gohelper.findChild(self.goEffectExPoint, "loop")
+	self.goEffectOut = gohelper.findChild(self.goEffectExPoint, "out")
+	self.goEffectAll = gohelper.findChild(self.goEffectExPoint, "all")
+	self.goEffectWithHolding = gohelper.findChild(self.goEffectExPoint, "withholding")
+	self.goEffectLock = gohelper.findChild(self.goEffectExPoint, "lock")
 end
 
-function var_0_0.resetToEmpty(arg_4_0)
-	arg_4_0.animatorPlayer:Stop()
+function FightNameUIExPointBaseItem:resetToEmpty()
+	self.animatorPlayer:Stop()
 
-	arg_4_0.animator.enabled = false
-	arg_4_0.imageFull.color = Color.white
+	self.animator.enabled = false
+	self.imageFull.color = Color.white
 
-	gohelper.setActive(arg_4_0.goFull, false)
-	gohelper.setActive(arg_4_0.goEffectIn, false)
-	gohelper.setActive(arg_4_0.goEffectLoop, false)
-	gohelper.setActive(arg_4_0.goEffectOut, false)
-	gohelper.setActive(arg_4_0.goEffectAll, false)
-	gohelper.setActive(arg_4_0.goEffectWithHolding, false)
-	gohelper.setActive(arg_4_0.goEffectLock, false)
+	gohelper.setActive(self.goFull, false)
+	gohelper.setActive(self.goEffectIn, false)
+	gohelper.setActive(self.goEffectLoop, false)
+	gohelper.setActive(self.goEffectOut, false)
+	gohelper.setActive(self.goEffectAll, false)
+	gohelper.setActive(self.goEffectWithHolding, false)
+	gohelper.setActive(self.goEffectLock, false)
 end
 
-function var_0_0.setIndex(arg_5_0, arg_5_1)
-	arg_5_0.index = arg_5_1
+function FightNameUIExPointBaseItem:setIndex(index)
+	self.index = index
 end
 
-function var_0_0.setMgr(arg_6_0, arg_6_1)
-	arg_6_0.mgr = arg_6_1
+function FightNameUIExPointBaseItem:setMgr(mgr)
+	self.mgr = mgr
 end
 
-function var_0_0.playAnimToLastFrame(arg_7_0, arg_7_1)
-	arg_7_0.animator.enabled = true
+function FightNameUIExPointBaseItem:playAnimToLastFrame(animName)
+	self.animator.enabled = true
 
-	arg_7_0.animatorPlayer:Stop()
-	arg_7_0.animator:Play(arg_7_1, 0, 1)
+	self.animatorPlayer:Stop()
+	self.animator:Play(animName, 0, 1)
 end
 
-function var_0_0.initHandle(arg_8_0)
-	arg_8_0.directSetStateHandleDict = {
-		[FightEnum.ExPointState.Empty] = arg_8_0.directSetEmptyState,
-		[FightEnum.ExPointState.Server] = arg_8_0.directSetServerState,
-		[FightEnum.ExPointState.Client] = arg_8_0.directSetClientState,
-		[FightEnum.ExPointState.ServerFull] = arg_8_0.directSetServerFullState,
-		[FightEnum.ExPointState.UsingUnique] = arg_8_0.directSetUsingUniqueState,
-		[FightEnum.ExPointState.Lock] = arg_8_0.directSetLockState,
-		[FightEnum.ExPointState.Stored] = arg_8_0.directSetStoredState
+function FightNameUIExPointBaseItem:initHandle()
+	self.directSetStateHandleDict = {
+		[FightEnum.ExPointState.Empty] = self.directSetEmptyState,
+		[FightEnum.ExPointState.Server] = self.directSetServerState,
+		[FightEnum.ExPointState.Client] = self.directSetClientState,
+		[FightEnum.ExPointState.ServerFull] = self.directSetServerFullState,
+		[FightEnum.ExPointState.UsingUnique] = self.directSetUsingUniqueState,
+		[FightEnum.ExPointState.Lock] = self.directSetLockState,
+		[FightEnum.ExPointState.Stored] = self.directSetStoredState
 	}
-	arg_8_0.switchToStateHandleDict = {
-		[FightEnum.ExPointState.Empty] = arg_8_0.switchToEmptyState,
-		[FightEnum.ExPointState.Server] = arg_8_0.switchToServerState,
-		[FightEnum.ExPointState.Client] = arg_8_0.switchToClientState,
-		[FightEnum.ExPointState.ServerFull] = arg_8_0.switchToServerFullState,
-		[FightEnum.ExPointState.UsingUnique] = arg_8_0.switchToUsingUniqueState,
-		[FightEnum.ExPointState.Lock] = arg_8_0.switchToLockState,
-		[FightEnum.ExPointState.Stored] = arg_8_0.switchToStoredState
+	self.switchToStateHandleDict = {
+		[FightEnum.ExPointState.Empty] = self.switchToEmptyState,
+		[FightEnum.ExPointState.Server] = self.switchToServerState,
+		[FightEnum.ExPointState.Client] = self.switchToClientState,
+		[FightEnum.ExPointState.ServerFull] = self.switchToServerFullState,
+		[FightEnum.ExPointState.UsingUnique] = self.switchToUsingUniqueState,
+		[FightEnum.ExPointState.Lock] = self.switchToLockState,
+		[FightEnum.ExPointState.Stored] = self.switchToStoredState
 	}
 end
 
-function var_0_0.updateExPoint(arg_9_0)
-	local var_9_0 = arg_9_0.mgr:getPointCurState(arg_9_0.index)
+function FightNameUIExPointBaseItem:updateExPoint()
+	local state = self.mgr:getPointCurState(self.index)
 
-	arg_9_0:directSetState(var_9_0)
+	self:directSetState(state)
 end
 
-function var_0_0.switchToNextState(arg_10_0)
-	if not arg_10_0.nextState then
+function FightNameUIExPointBaseItem:switchToNextState()
+	if not self.nextState then
 		return
 	end
 
-	arg_10_0:stopSwitchToNextState()
+	self:stopSwitchToNextState()
 
-	local var_10_0 = arg_10_0.nextState
+	local nextState = self.nextState
 
-	arg_10_0.nextState = nil
+	self.nextState = nil
 
-	arg_10_0:directSetState(var_10_0)
+	self:directSetState(nextState)
 end
 
-function var_0_0.setNextState(arg_11_0, arg_11_1)
-	arg_11_0.nextState = arg_11_1
+function FightNameUIExPointBaseItem:setNextState(state)
+	self.nextState = state
 
-	arg_11_0:log("set next state : " .. arg_11_1)
+	self:log("set next state : " .. state)
 end
 
-function var_0_0.delaySwitchToNextState(arg_12_0, arg_12_1, arg_12_2)
-	arg_12_0:stopSwitchToNextState()
-	arg_12_0:setNextState(arg_12_1)
-	TaskDispatcher.runDelay(arg_12_0.switchToNextState, arg_12_0, arg_12_2)
+function FightNameUIExPointBaseItem:delaySwitchToNextState(state, delay)
+	self:stopSwitchToNextState()
+	self:setNextState(state)
+	TaskDispatcher.runDelay(self.switchToNextState, self, delay)
 end
 
-function var_0_0.stopSwitchToNextState(arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0.switchToNextState, arg_13_0)
+function FightNameUIExPointBaseItem:stopSwitchToNextState()
+	TaskDispatcher.cancelTask(self.switchToNextState, self)
 end
 
-function var_0_0.log(arg_14_0, arg_14_1)
+function FightNameUIExPointBaseItem:log(text)
 	return
 end
 
-function var_0_0.directSetState(arg_15_0, arg_15_1)
-	arg_15_0:switchToNextState()
-	arg_15_0:log("direct set state : " .. arg_15_1)
+function FightNameUIExPointBaseItem:directSetState(state)
+	self:switchToNextState()
+	self:log("direct set state : " .. state)
 
-	local var_15_0 = arg_15_0.state
+	local preState = self.state
 
-	arg_15_0.state = arg_15_1
+	self.state = state
 
-	arg_15_0.directSetStateHandleDict[arg_15_0.state](arg_15_0, var_15_0)
+	local handle = self.directSetStateHandleDict[self.state]
+
+	handle(self, preState)
 end
 
-function var_0_0.switchToState(arg_16_0, arg_16_1)
-	arg_16_0:switchToNextState()
-	arg_16_0:log("switch to state : " .. arg_16_1)
+function FightNameUIExPointBaseItem:switchToState(state)
+	self:switchToNextState()
+	self:log("switch to state : " .. state)
 
-	local var_16_0 = arg_16_0.state
+	local preState = self.state
 
-	arg_16_0.state = arg_16_1
+	self.state = state
 
-	arg_16_0.switchToStateHandleDict[arg_16_0.state](arg_16_0, var_16_0)
+	local handle = self.switchToStateHandleDict[self.state]
+
+	handle(self, preState)
 end
 
-function var_0_0.getCurState(arg_17_0)
-	return arg_17_0.state
+function FightNameUIExPointBaseItem:getCurState()
+	return self.state
 end
 
-function var_0_0.playAnim(arg_18_0, arg_18_1, arg_18_2, arg_18_3, arg_18_4)
-	arg_18_0:setNextState(arg_18_4 or arg_18_0.mgr:getPointCurState(arg_18_0.index))
+function FightNameUIExPointBaseItem:playAnim(animName, callback, callbackObj, nextState)
+	self:setNextState(nextState or self.mgr:getPointCurState(self.index))
 
-	arg_18_2 = arg_18_2 or arg_18_0.switchToNextState
-	arg_18_3 = arg_18_3 or arg_18_0
+	callback = callback or self.switchToNextState
+	callbackObj = callbackObj or self
 
-	if arg_18_0.exPointGo.activeInHierarchy then
-		arg_18_0.animator.enabled = true
+	if self.exPointGo.activeInHierarchy then
+		self.animator.enabled = true
 
-		arg_18_0.animatorPlayer:Play(arg_18_1, arg_18_2, arg_18_3)
+		self.animatorPlayer:Play(animName, callback, callbackObj)
 	else
-		arg_18_0:switchToNextState()
+		self:switchToNextState()
 	end
 end
 
-function var_0_0.playAnimNoCallback(arg_19_0, arg_19_1)
-	if arg_19_0.exPointGo.activeInHierarchy then
-		arg_19_0.animator.enabled = true
+function FightNameUIExPointBaseItem:playAnimNoCallback(animName)
+	if self.exPointGo.activeInHierarchy then
+		self.animator.enabled = true
 
-		arg_19_0.animatorPlayer:Play(arg_19_1)
+		self.animatorPlayer:Play(animName)
 	end
 end
 
-function var_0_0.playAddPointEffect(arg_20_0, arg_20_1, arg_20_2)
-	arg_20_1 = arg_20_1 or FightEnum.ExPointState.Server
+function FightNameUIExPointBaseItem:playAddPointEffect(nextState, delay)
+	nextState = nextState or FightEnum.ExPointState.Server
 
-	gohelper.setActive(arg_20_0.goFull, true)
+	gohelper.setActive(self.goFull, true)
 
-	if arg_20_2 then
-		arg_20_0:setNextState(arg_20_1)
-		arg_20_0:playAnimNoCallback(var_0_0.AnimName.Add)
-		TaskDispatcher.runDelay(arg_20_0.switchToNextState, arg_20_0, arg_20_2)
+	if delay then
+		self:setNextState(nextState)
+		self:playAnimNoCallback(FightNameUIExPointBaseItem.AnimName.Add)
+		TaskDispatcher.runDelay(self.switchToNextState, self, delay)
 	else
-		arg_20_0:playAnim(var_0_0.AnimName.Add, arg_20_0.switchToNextState, arg_20_0, arg_20_1)
+		self:playAnim(FightNameUIExPointBaseItem.AnimName.Add, self.switchToNextState, self, nextState)
 	end
 
-	local var_20_0 = arg_20_0.mgr.entity
+	local entity = self.mgr.entity
 
-	if FightBuffHelper.checkPlayDuDuGuAddExPointEffect(var_20_0) then
-		local var_20_1 = var_20_0:getMO().skin
-		local var_20_2 = lua_fight_sp_effect_ddg.configDict[var_20_1]
-		local var_20_3 = "v2a3_ddg/ddg_innate_03"
-		local var_20_4 = ModuleEnum.SpineHangPointRoot
+	if FightBuffHelper.checkPlayDuDuGuAddExPointEffect(entity) then
+		local entityMo = entity:getMO()
+		local skin = entityMo.skin
+		local co = lua_fight_sp_effect_ddg.configDict[skin]
+		local effectRes = "v2a3_ddg/ddg_innate_03"
+		local hangPoint = ModuleEnum.SpineHangPointRoot
 
-		if var_20_2 then
-			var_20_3 = var_20_2.addExPointEffect
-			var_20_4 = var_20_2.addExPointHang
+		if co then
+			effectRes = co.addExPointEffect
+			hangPoint = co.addExPointHang
 		end
 
-		var_20_0.uniqueEffect:addHangEffect(var_20_3, var_20_4, nil, 1):setLocalPos(0, 0, 0)
+		local effectWrap = entity.uniqueEffect:addHangEffect(effectRes, hangPoint, nil, 1)
+
+		effectWrap:setLocalPos(0, 0, 0)
 	end
 end
 
-function var_0_0.playRemoveStoredEffect(arg_21_0)
-	gohelper.setActive(arg_21_0.goFull, true)
-	arg_21_0:playAnim(var_0_0.AnimName.StoredLost)
+function FightNameUIExPointBaseItem:playRemoveStoredEffect()
+	gohelper.setActive(self.goFull, true)
+	self:playAnim(FightNameUIExPointBaseItem.AnimName.StoredLost)
 end
 
-function var_0_0.directSetEmptyState(arg_22_0, arg_22_1)
-	arg_22_0:resetToEmpty()
+function FightNameUIExPointBaseItem:directSetEmptyState(preState)
+	self:resetToEmpty()
 end
 
-function var_0_0.directSetServerState(arg_23_0, arg_23_1)
-	arg_23_0:resetToEmpty()
-	gohelper.setActive(arg_23_0.goFull, true)
+function FightNameUIExPointBaseItem:directSetServerState(preState)
+	self:resetToEmpty()
+	gohelper.setActive(self.goFull, true)
 end
 
-function var_0_0.directSetClientState(arg_24_0, arg_24_1)
-	arg_24_0:resetToEmpty()
-	gohelper.setActive(arg_24_0.goFull, true)
+function FightNameUIExPointBaseItem:directSetClientState(preState)
+	self:resetToEmpty()
+	gohelper.setActive(self.goFull, true)
 
-	arg_24_0.animator.enabled = true
+	self.animator.enabled = true
 
-	arg_24_0.animatorPlayer:Play(var_0_0.AnimName.Client)
+	self.animatorPlayer:Play(FightNameUIExPointBaseItem.AnimName.Client)
 end
 
-function var_0_0.directSetServerFullState(arg_25_0, arg_25_1)
-	arg_25_0:resetToEmpty()
-	gohelper.setActive(arg_25_0.goFull, true)
-	arg_25_0:playAnimToLastFrame(var_0_0.AnimName.Loop)
+function FightNameUIExPointBaseItem:directSetServerFullState(preState)
+	self:resetToEmpty()
+	gohelper.setActive(self.goFull, true)
+	self:playAnimToLastFrame(FightNameUIExPointBaseItem.AnimName.Loop)
 end
 
-function var_0_0.directSetUsingUniqueState(arg_26_0, arg_26_1)
-	if arg_26_1 == arg_26_0.state then
+function FightNameUIExPointBaseItem:directSetUsingUniqueState(preState)
+	if preState == self.state then
 		return
 	end
 
-	arg_26_0:resetToEmpty()
+	self:resetToEmpty()
 
-	arg_26_0.animator.enabled = true
+	self.animator.enabled = true
 
-	arg_26_0.animatorPlayer:Play(var_0_0.AnimName.UsingSkillExplosion)
+	self.animatorPlayer:Play(FightNameUIExPointBaseItem.AnimName.UsingSkillExplosion)
 end
 
-function var_0_0.directSetLockState(arg_27_0, arg_27_1)
-	arg_27_0:resetToEmpty()
-	gohelper.setActive(arg_27_0.goFull, false)
-	arg_27_0:playAnimToLastFrame(var_0_0.AnimName.LockOpen)
+function FightNameUIExPointBaseItem:directSetLockState(preState)
+	self:resetToEmpty()
+	gohelper.setActive(self.goFull, false)
+	self:playAnimToLastFrame(FightNameUIExPointBaseItem.AnimName.LockOpen)
 end
 
-function var_0_0.directSetStoredState(arg_28_0, arg_28_1)
-	arg_28_0:resetToEmpty()
-	gohelper.setActive(arg_28_0.goFull, false)
-	arg_28_0:playAnimToLastFrame(var_0_0.AnimName.StoredAdd)
+function FightNameUIExPointBaseItem:directSetStoredState(preState)
+	self:resetToEmpty()
+	gohelper.setActive(self.goFull, false)
+	self:playAnimToLastFrame(FightNameUIExPointBaseItem.AnimName.StoredAdd)
 end
 
-function var_0_0.switchToEmptyState(arg_29_0, arg_29_1)
-	arg_29_0:resetToEmpty()
+function FightNameUIExPointBaseItem:switchToEmptyState(preState)
+	self:resetToEmpty()
 
-	if arg_29_1 == FightEnum.ExPointState.Lock then
-		arg_29_0.animator.enabled = true
+	if preState == FightEnum.ExPointState.Lock then
+		self.animator.enabled = true
 
-		arg_29_0.animatorPlayer:Play(var_0_0.AnimName.LockClose)
-	elseif arg_29_1 == FightEnum.ExPointState.Lock then
-		arg_29_0.animator.enabled = true
+		self.animatorPlayer:Play(FightNameUIExPointBaseItem.AnimName.LockClose)
+	elseif preState == FightEnum.ExPointState.Lock then
+		self.animator.enabled = true
 
-		arg_29_0.animatorPlayer:Play(var_0_0.AnimName.Lost)
+		self.animatorPlayer:Play(FightNameUIExPointBaseItem.AnimName.Lost)
 	end
 end
 
-function var_0_0.switchToServerState(arg_30_0, arg_30_1)
-	arg_30_0:resetToEmpty()
-	gohelper.setActive(arg_30_0.goFull, true)
+function FightNameUIExPointBaseItem:switchToServerState(preState)
+	self:resetToEmpty()
+	gohelper.setActive(self.goFull, true)
 end
 
-function var_0_0.switchToClientState(arg_31_0, arg_31_1)
-	arg_31_0:resetToEmpty()
-	gohelper.setActive(arg_31_0.goFull, true)
+function FightNameUIExPointBaseItem:switchToClientState(preState)
+	self:resetToEmpty()
+	gohelper.setActive(self.goFull, true)
 
-	arg_31_0.animator.enabled = true
+	self.animator.enabled = true
 
-	arg_31_0.animatorPlayer:Play(var_0_0.AnimName.Client)
+	self.animatorPlayer:Play(FightNameUIExPointBaseItem.AnimName.Client)
 end
 
-function var_0_0.switchToServerFullState(arg_32_0, arg_32_1)
-	arg_32_0:resetToEmpty()
-	gohelper.setActive(arg_32_0.goFull, true)
+function FightNameUIExPointBaseItem:switchToServerFullState(preState)
+	self:resetToEmpty()
+	gohelper.setActive(self.goFull, true)
 
-	arg_32_0.animator.enabled = true
+	self.animator.enabled = true
 
-	arg_32_0.animatorPlayer:Play(var_0_0.AnimName.Loop)
+	self.animatorPlayer:Play(FightNameUIExPointBaseItem.AnimName.Loop)
 end
 
-function var_0_0.switchToUsingUniqueState(arg_33_0, arg_33_1)
-	if arg_33_1 == arg_33_0.state then
+function FightNameUIExPointBaseItem:switchToUsingUniqueState(preState)
+	if preState == self.state then
 		return
 	end
 
-	arg_33_0:resetToEmpty()
+	self:resetToEmpty()
 
-	arg_33_0.animator.enabled = true
+	self.animator.enabled = true
 
-	arg_33_0.animatorPlayer:Play(var_0_0.AnimName.UsingSkillExplosion)
+	self.animatorPlayer:Play(FightNameUIExPointBaseItem.AnimName.UsingSkillExplosion)
 end
 
-function var_0_0.switchToLockState(arg_34_0, arg_34_1)
-	arg_34_0:resetToEmpty()
-	gohelper.setActive(arg_34_0.goFull, false)
+function FightNameUIExPointBaseItem:switchToLockState(preState)
+	self:resetToEmpty()
+	gohelper.setActive(self.goFull, false)
 
-	arg_34_0.animator.enabled = true
+	self.animator.enabled = true
 
-	arg_34_0.animatorPlayer:Play(var_0_0.AnimName.LockOpen)
+	self.animatorPlayer:Play(FightNameUIExPointBaseItem.AnimName.LockOpen)
 end
 
-function var_0_0.switchToStoredState(arg_35_0, arg_35_1)
-	if arg_35_1 == arg_35_0.state then
+function FightNameUIExPointBaseItem:switchToStoredState(preState)
+	if preState == self.state then
 		return
 	end
 
-	arg_35_0:resetToEmpty()
-	gohelper.setActive(arg_35_0.goFull, false)
+	self:resetToEmpty()
+	gohelper.setActive(self.goFull, false)
 
-	arg_35_0.animator.enabled = true
+	self.animator.enabled = true
 
-	arg_35_0.animatorPlayer:Play(var_0_0.AnimName.StoredAdd)
+	self.animatorPlayer:Play(FightNameUIExPointBaseItem.AnimName.StoredAdd)
 end
 
-function var_0_0.recycle(arg_36_0, arg_36_1)
-	gohelper.addChild(arg_36_1, arg_36_0.exPointGo)
+function FightNameUIExPointBaseItem:recycle(goPoolContainer)
+	gohelper.addChild(goPoolContainer, self.exPointGo)
 end
 
-function var_0_0.getPointGo(arg_37_0)
-	return arg_37_0.exPointGo
+function FightNameUIExPointBaseItem:getPointGo()
+	return self.exPointGo
 end
 
-function var_0_0.destroy(arg_38_0)
-	arg_38_0:stopSwitchToNextState()
-	arg_38_0.animatorPlayer:Stop()
-	gohelper.destroy(arg_38_0.exPointGo)
-	arg_38_0:__onDispose()
+function FightNameUIExPointBaseItem:destroy()
+	self:stopSwitchToNextState()
+	self.animatorPlayer:Stop()
+	gohelper.destroy(self.exPointGo)
+	self:__onDispose()
 end
 
-return var_0_0
+return FightNameUIExPointBaseItem

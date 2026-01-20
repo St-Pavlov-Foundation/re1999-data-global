@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity2_3.act174.view.Act174BetSuccessViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/act174/view/Act174BetSuccessViewContainer.lua
 
-local var_0_0 = class("Act174BetSuccessViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_3.act174.view.Act174BetSuccessViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Act174BetSuccessViewContainer = class("Act174BetSuccessViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Act174BetSuccessView.New())
+function Act174BetSuccessViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Act174BetSuccessView.New())
+
+	return views
 end
 
-return var_0_0
+return Act174BetSuccessViewContainer

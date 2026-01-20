@@ -1,48 +1,51 @@
-﻿module("modules.logic.gm.model.GMCommandHistoryModel", package.seeall)
+﻿-- chunkname: @modules/logic/gm/model/GMCommandHistoryModel.lua
 
-local var_0_0 = class("GMCommandHistoryModel")
-local var_0_1 = "|@|"
-local var_0_2 = 30
+module("modules.logic.gm.model.GMCommandHistoryModel", package.seeall)
 
-function var_0_0._initCommandList(arg_1_0)
-	if arg_1_0._commandList then
+local GMCommandHistoryModel = class("GMCommandHistoryModel")
+local delimiter = "|@|"
+local maxNum = 30
+
+function GMCommandHistoryModel:_initCommandList()
+	if self._commandList then
 		return
 	end
 
-	local var_1_0 = PlayerPrefsHelper.getString(PlayerPrefsKey.GMToolViewHistory, "")
+	local str = PlayerPrefsHelper.getString(PlayerPrefsKey.GMToolViewHistory, "")
+	local list = string.split(str, delimiter)
 
-	arg_1_0._commandList = string.split(var_1_0, var_0_1) or {}
+	self._commandList = list or {}
 end
 
-function var_0_0.getCommandHistory(arg_2_0)
-	arg_2_0:_initCommandList()
+function GMCommandHistoryModel:getCommandHistory()
+	self:_initCommandList()
 
-	return arg_2_0._commandList
+	return self._commandList
 end
 
-function var_0_0.addCommandHistory(arg_3_0, arg_3_1)
-	arg_3_0:_initCommandList()
-	tabletool.removeValue(arg_3_0._commandList, arg_3_1)
-	table.insert(arg_3_0._commandList, 1, arg_3_1)
-	arg_3_0:_saveCommandList()
+function GMCommandHistoryModel:addCommandHistory(command)
+	self:_initCommandList()
+	tabletool.removeValue(self._commandList, command)
+	table.insert(self._commandList, 1, command)
+	self:_saveCommandList()
 end
 
-function var_0_0.removeCommandHistory(arg_4_0, arg_4_1)
-	arg_4_0:_initCommandList()
-	tabletool.removeValue(arg_4_0._commandList, arg_4_1)
-	arg_4_0:_saveCommandList()
+function GMCommandHistoryModel:removeCommandHistory(command)
+	self:_initCommandList()
+	tabletool.removeValue(self._commandList, command)
+	self:_saveCommandList()
 end
 
-function var_0_0._saveCommandList(arg_5_0)
-	while #arg_5_0._commandList > var_0_2 do
-		table.remove(arg_5_0._commandList, #arg_5_0._commandList)
+function GMCommandHistoryModel:_saveCommandList()
+	while #self._commandList > maxNum do
+		table.remove(self._commandList, #self._commandList)
 	end
 
-	local var_5_0 = table.concat(arg_5_0._commandList, var_0_1)
+	local str = table.concat(self._commandList, delimiter)
 
-	PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewHistory, var_5_0)
+	PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewHistory, str)
 end
 
-var_0_0.instance = var_0_0.New()
+GMCommandHistoryModel.instance = GMCommandHistoryModel.New()
 
-return var_0_0
+return GMCommandHistoryModel

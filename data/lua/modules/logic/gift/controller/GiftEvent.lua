@@ -1,8 +1,10 @@
-﻿module("modules.logic.gift.controller.GiftEvent", package.seeall)
+﻿-- chunkname: @modules/logic/gift/controller/GiftEvent.lua
 
-local var_0_0 = {}
+module("modules.logic.gift.controller.GiftEvent", package.seeall)
 
-var_0_0.MultipleChoice = 1
-var_0_0.InsightHeroChoose = 20001
+local GiftEvent = {}
 
-return var_0_0
+GiftEvent.MultipleChoice = 1
+GiftEvent.InsightHeroChoose = 20001
+
+return GiftEvent

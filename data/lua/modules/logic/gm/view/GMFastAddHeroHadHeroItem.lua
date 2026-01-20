@@ -1,91 +1,95 @@
-﻿module("modules.logic.gm.view.GMFastAddHeroHadHeroItem", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GMFastAddHeroHadHeroItem.lua
 
-local var_0_0 = class("GMFastAddHeroHadHeroItem", ListScrollCell)
+module("modules.logic.gm.view.GMFastAddHeroHadHeroItem", package.seeall)
 
-var_0_0.SelectBgColor = GameUtil.parseColor("#EA4F4F")
-var_0_0.NotSelectBgColor = GameUtil.parseColor("#B0B0B0")
+local GMFastAddHeroHadHeroItem = class("GMFastAddHeroHadHeroItem", ListScrollCell)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.goClick = gohelper.getClick(arg_1_1)
+GMFastAddHeroHadHeroItem.SelectBgColor = GameUtil.parseColor("#EA4F4F")
+GMFastAddHeroHadHeroItem.NotSelectBgColor = GameUtil.parseColor("#B0B0B0")
 
-	arg_1_0.goClick:AddClickListener(arg_1_0.onClickItem, arg_1_0)
+function GMFastAddHeroHadHeroItem:init(go)
+	self.goClick = gohelper.getClick(go)
 
-	arg_1_0.bgImg = arg_1_1:GetComponent(gohelper.Type_Image)
-	arg_1_0._txtName = gohelper.findChildText(arg_1_1, "#txt_heroname")
-	arg_1_0._txtherolv = gohelper.findChildText(arg_1_1, "#txt_herolv")
-	arg_1_0._txtherolabel = gohelper.findChildText(arg_1_1, "#txt_herolv/label")
-	arg_1_0._txtranklv = gohelper.findChildText(arg_1_1, "#txt_ranklv")
-	arg_1_0._txtranklabel = gohelper.findChildText(arg_1_1, "#txt_ranklv/label")
-	arg_1_0._txttalentlv = gohelper.findChildText(arg_1_1, "#txt_talentlv")
-	arg_1_0._txttalentlabel = gohelper.findChildText(arg_1_1, "#txt_talentlv/label")
-	arg_1_0._txtexskilllv = gohelper.findChildText(arg_1_1, "#txt_exskilllv")
-	arg_1_0._txtexskilllabel = gohelper.findChildText(arg_1_1, "#txt_exskilllv/label")
-	arg_1_0.isSelect = false
+	self.goClick:AddClickListener(self.onClickItem, self)
 
-	GMController.instance:registerCallback(GMController.Event.ChangeSelectHeroItem, arg_1_0.refreshSelect, arg_1_0)
+	self.bgImg = go:GetComponent(gohelper.Type_Image)
+	self._txtName = gohelper.findChildText(go, "#txt_heroname")
+	self._txtherolv = gohelper.findChildText(go, "#txt_herolv")
+	self._txtherolabel = gohelper.findChildText(go, "#txt_herolv/label")
+	self._txtranklv = gohelper.findChildText(go, "#txt_ranklv")
+	self._txtranklabel = gohelper.findChildText(go, "#txt_ranklv/label")
+	self._txttalentlv = gohelper.findChildText(go, "#txt_talentlv")
+	self._txttalentlabel = gohelper.findChildText(go, "#txt_talentlv/label")
+	self._txtexskilllv = gohelper.findChildText(go, "#txt_exskilllv")
+	self._txtexskilllabel = gohelper.findChildText(go, "#txt_exskilllv/label")
+	self.isSelect = false
+
+	GMController.instance:registerCallback(GMController.Event.ChangeSelectHeroItem, self.refreshSelect, self)
 end
 
-function var_0_0.onUpdateMO(arg_2_0, arg_2_1)
-	arg_2_0.mo = arg_2_1
+function GMFastAddHeroHadHeroItem:onUpdateMO(mo)
+	self.mo = mo
 
-	if GMFastAddHeroHadHeroItemModel.instance:getShowType() == GMFastAddHeroHadHeroItemModel.ShowType.Hero then
-		local var_2_0 = arg_2_1
+	local showType = GMFastAddHeroHadHeroItemModel.instance:getShowType()
 
-		arg_2_0._txtName.text = var_2_0.config.name .. "#" .. tostring(var_2_0.config.id)
-		arg_2_0._txtherolv.text = var_2_0.level
-		arg_2_0._txtranklabel.text = "洞悉:"
-		arg_2_0._txtranklv.text = var_2_0.rank - 1
-		arg_2_0._txttalentlabel.text = "共鸣:"
-		arg_2_0._txttalentlv.text = var_2_0.talent
-		arg_2_0._txtexskilllabel.text = "塑造:"
-		arg_2_0._txtexskilllv.text = var_2_0.exSkillLevel
+	if showType == GMFastAddHeroHadHeroItemModel.ShowType.Hero then
+		local heroMo = mo
+
+		self._txtName.text = heroMo.config.name .. "#" .. tostring(heroMo.config.id)
+		self._txtherolv.text = heroMo.level
+		self._txtranklabel.text = "洞悉:"
+		self._txtranklv.text = heroMo.rank - 1
+		self._txttalentlabel.text = "共鸣:"
+		self._txttalentlv.text = heroMo.talent
+		self._txtexskilllabel.text = "塑造:"
+		self._txtexskilllv.text = heroMo.exSkillLevel
 	else
-		local var_2_1 = arg_2_1
+		local equipMo = mo
 
-		arg_2_0._txtName.text = var_2_1.config.name .. "#" .. tostring(var_2_1.config.id)
-		arg_2_0._txtherolv.text = var_2_1.level
-		arg_2_0._txtranklabel.text = "精炼:"
-		arg_2_0._txtranklv.text = var_2_1.refineLv
-		arg_2_0._txttalentlabel.text = "突破:"
-		arg_2_0._txttalentlv.text = var_2_1.breakLv
-		arg_2_0._txtexskilllabel.text = "uid:"
-		arg_2_0._txtexskilllv.text = var_2_1.uid
+		self._txtName.text = equipMo.config.name .. "#" .. tostring(equipMo.config.id)
+		self._txtherolv.text = equipMo.level
+		self._txtranklabel.text = "精炼:"
+		self._txtranklv.text = equipMo.refineLv
+		self._txttalentlabel.text = "突破:"
+		self._txttalentlv.text = equipMo.breakLv
+		self._txtexskilllabel.text = "uid:"
+		self._txtexskilllv.text = equipMo.uid
 	end
 
-	arg_2_0:refreshSelect()
+	self:refreshSelect()
 end
 
-function var_0_0.onClickItem(arg_3_0)
-	arg_3_0.isSelect = not arg_3_0.isSelect
+function GMFastAddHeroHadHeroItem:onClickItem()
+	self.isSelect = not self.isSelect
 
-	if arg_3_0.isSelect then
-		GMFastAddHeroHadHeroItemModel.instance:changeSelectHeroItem(arg_3_0.mo)
-		GMFastAddHeroHadHeroItemModel.instance:setSelectMo(arg_3_0.mo)
+	if self.isSelect then
+		GMFastAddHeroHadHeroItemModel.instance:changeSelectHeroItem(self.mo)
+		GMFastAddHeroHadHeroItemModel.instance:setSelectMo(self.mo)
 	else
 		GMFastAddHeroHadHeroItemModel.instance:changeSelectHeroItem(nil)
 		GMFastAddHeroHadHeroItemModel.instance:setSelectMo(nil)
 	end
 end
 
-function var_0_0.refreshSelect(arg_4_0)
-	local var_4_0 = GMFastAddHeroHadHeroItemModel.instance:getSelectMo()
+function GMFastAddHeroHadHeroItem:refreshSelect()
+	local selectMo = GMFastAddHeroHadHeroItemModel.instance:getSelectMo()
 
-	if var_4_0 then
-		arg_4_0.isSelect = arg_4_0.mo.uid == var_4_0.uid
+	if selectMo then
+		self.isSelect = self.mo.uid == selectMo.uid
 	else
-		arg_4_0.isSelect = false
+		self.isSelect = false
 	end
 
-	if arg_4_0.isSelect then
-		arg_4_0.bgImg.color = var_0_0.SelectBgColor
+	if self.isSelect then
+		self.bgImg.color = GMFastAddHeroHadHeroItem.SelectBgColor
 	else
-		arg_4_0.bgImg.color = var_0_0.NotSelectBgColor
+		self.bgImg.color = GMFastAddHeroHadHeroItem.NotSelectBgColor
 	end
 end
 
-function var_0_0.onDestroy(arg_5_0)
-	arg_5_0.goClick:RemoveClickListener()
-	GMController.instance:unregisterCallback(GMController.Event.ChangeSelectHeroItem, arg_5_0.refreshSelect, arg_5_0)
+function GMFastAddHeroHadHeroItem:onDestroy()
+	self.goClick:RemoveClickListener()
+	GMController.instance:unregisterCallback(GMController.Event.ChangeSelectHeroItem, self.refreshSelect, self)
 end
 
-return var_0_0
+return GMFastAddHeroHadHeroItem

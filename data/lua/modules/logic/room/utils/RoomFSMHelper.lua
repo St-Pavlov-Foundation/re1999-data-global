@@ -1,19 +1,25 @@
-﻿module("modules.logic.room.utils.RoomFSMHelper", package.seeall)
+﻿-- chunkname: @modules/logic/room/utils/RoomFSMHelper.lua
 
-return {
-	isCanJompTo = function(arg_1_0)
-		if arg_1_0 == RoomEnum.FSMEditState.PlaceConfirm then
-			if RoomMapBlockModel.instance:getTempBlockMO() then
-				return true
-			end
-		elseif arg_1_0 == RoomEnum.FSMEditState.BackConfirm then
-			local var_1_0 = RoomMapBlockModel.instance:getBackBlockModel()
+module("modules.logic.room.utils.RoomFSMHelper", package.seeall)
 
-			if var_1_0 and var_1_0:getCount() > 0 then
-				return true
-			end
+local RoomFSMHelper = {}
+
+function RoomFSMHelper.isCanJompTo(state)
+	if state == RoomEnum.FSMEditState.PlaceConfirm then
+		local blockMO = RoomMapBlockModel.instance:getTempBlockMO()
+
+		if blockMO then
+			return true
 		end
+	elseif state == RoomEnum.FSMEditState.BackConfirm then
+		local backBlockModel = RoomMapBlockModel.instance:getBackBlockModel()
 
-		return false
+		if backBlockModel and backBlockModel:getCount() > 0 then
+			return true
+		end
 	end
-}
+
+	return false
+end
+
+return RoomFSMHelper

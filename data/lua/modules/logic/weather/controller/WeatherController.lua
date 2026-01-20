@@ -1,172 +1,174 @@
-﻿module("modules.logic.weather.controller.WeatherController", package.seeall)
+﻿-- chunkname: @modules/logic/weather/controller/WeatherController.lua
 
-local var_0_0 = class("WeatherController", BaseController)
+module("modules.logic.weather.controller.WeatherController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local WeatherController = class("WeatherController", BaseController)
+
+function WeatherController:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_2_0)
-	arg_2_0._weatherComp = WeatherComp.New(arg_2_0, true)
+function WeatherController:onInitFinish()
+	self._weatherComp = WeatherComp.New(self, true)
 
-	arg_2_0._weatherComp:onInit()
-	arg_2_0:registerCallback(WeatherEvent.OnRoleBlend, arg_2_0._onWeatherOnRoleBlend, arg_2_0)
+	self._weatherComp:onInit()
+	self:registerCallback(WeatherEvent.OnRoleBlend, self._onWeatherOnRoleBlend, self)
 end
 
-function var_0_0.resetWeatherChangeVoiceFlag(arg_3_0)
-	arg_3_0._weatherComp:resetWeatherChangeVoiceFlag()
+function WeatherController:resetWeatherChangeVoiceFlag()
+	self._weatherComp:resetWeatherChangeVoiceFlag()
 end
 
-function var_0_0.setLightModel(arg_4_0, arg_4_1)
-	arg_4_0._weatherComp:setLightModel(arg_4_1)
+function WeatherController:setLightModel(lightModel)
+	self._weatherComp:setLightModel(lightModel)
 end
 
-function var_0_0.initRoleGo(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4, arg_5_5)
-	arg_5_0._weatherComp:initRoleGo(arg_5_1, arg_5_2, arg_5_3, arg_5_4, arg_5_5)
+function WeatherController:initRoleGo(roleGo, heroId, sharedMaterial, playVoice, skinId)
+	self._weatherComp:initRoleGo(roleGo, heroId, sharedMaterial, playVoice, skinId)
 end
 
-function var_0_0.changeRoleGo(arg_6_0, arg_6_1)
-	arg_6_0._weatherComp:changeRoleGo(arg_6_1)
+function WeatherController:changeRoleGo(param)
+	self._weatherComp:changeRoleGo(param)
 end
 
-function var_0_0.clearMat(arg_7_0)
-	arg_7_0._weatherComp:clearMat()
+function WeatherController:clearMat()
+	self._weatherComp:clearMat()
 end
 
-function var_0_0.setRoleMaskEnabled(arg_8_0, arg_8_1)
-	arg_8_0._weatherComp:setRoleMaskEnabled(arg_8_1)
+function WeatherController:setRoleMaskEnabled(value)
+	self._weatherComp:setRoleMaskEnabled(value)
 end
 
-function var_0_0.getSceneNode(arg_9_0, arg_9_1)
-	return arg_9_0._weatherComp:getSceneNode(arg_9_1)
+function WeatherController:getSceneNode(nodePath)
+	return self._weatherComp:getSceneNode(nodePath)
 end
 
-function var_0_0.playAnim(arg_10_0, arg_10_1)
-	arg_10_0._weatherComp:playAnim(arg_10_1)
+function WeatherController:playAnim(name)
+	self._weatherComp:playAnim(name)
 end
 
-function var_0_0.initSceneGo(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	local var_11_0 = MainSceneSwitchModel.instance:getCurSceneId()
+function WeatherController:initSceneGo(sceneGo, callback, callbackTarget)
+	local sceneId = MainSceneSwitchModel.instance:getCurSceneId()
 
-	arg_11_0._weatherComp:setSceneId(var_11_0)
-	arg_11_0._weatherComp:initSceneGo(arg_11_1, arg_11_2, arg_11_3)
+	self._weatherComp:setSceneId(sceneId)
+	self._weatherComp:initSceneGo(sceneGo, callback, callbackTarget)
 end
 
-function var_0_0.updateOtherComps(arg_12_0, arg_12_1)
-	local var_12_0 = MainSceneSwitchModel.instance:getCurSceneId()
+function WeatherController:updateOtherComps(sceneGo)
+	local sceneId = MainSceneSwitchModel.instance:getCurSceneId()
 
-	if arg_12_0._eggContainer then
-		arg_12_0._eggContainer:onSceneClose()
+	if self._eggContainer then
+		self._eggContainer:onSceneClose()
 
-		arg_12_0._eggContainer = nil
+		self._eggContainer = nil
 	end
 
-	arg_12_0._eggContainer = WeatherEggContainerComp.New()
+	self._eggContainer = WeatherEggContainerComp.New()
 
-	arg_12_0._eggContainer:onInit(var_12_0, true)
-	arg_12_0._eggContainer:initSceneGo(arg_12_1)
-	arg_12_0._weatherComp:addChangeReportCallback(arg_12_0._eggContainer.onReportChange, arg_12_0._eggContainer, true)
+	self._eggContainer:onInit(sceneId, true)
+	self._eggContainer:initSceneGo(sceneGo)
+	self._weatherComp:addChangeReportCallback(self._eggContainer.onReportChange, self._eggContainer, true)
 
-	if arg_12_0._weatherSceneEffectComp then
-		arg_12_0._weatherSceneEffectComp:onSceneClose()
+	if self._weatherSceneEffectComp then
+		self._weatherSceneEffectComp:onSceneClose()
 
-		arg_12_0._weatherSceneEffectComp = nil
+		self._weatherSceneEffectComp = nil
 	end
 
-	arg_12_0._weatherSceneEffectComp = WeatherSceneEffectComp.New()
+	self._weatherSceneEffectComp = WeatherSceneEffectComp.New()
 
-	arg_12_0._weatherSceneEffectComp:onInit(var_12_0, true)
-	arg_12_0._weatherSceneEffectComp:initSceneGo(arg_12_1)
+	self._weatherSceneEffectComp:onInit(sceneId, true)
+	self._weatherSceneEffectComp:initSceneGo(sceneGo)
 end
 
-function var_0_0._onWeatherOnRoleBlend(arg_13_0, arg_13_1)
-	if arg_13_0._weatherSceneEffectComp then
-		arg_13_0._weatherSceneEffectComp:onRoleBlend(arg_13_0._weatherComp, arg_13_1[1], arg_13_1[2])
-	end
-end
-
-function var_0_0.setReportId(arg_14_0, arg_14_1)
-	arg_14_0._weatherComp:setReportId(arg_14_1)
-end
-
-function var_0_0.getPrevLightMode(arg_15_0)
-	return arg_15_0._weatherComp:getPrevLightMode()
-end
-
-function var_0_0.getCurLightMode(arg_16_0)
-	return arg_16_0._weatherComp:getCurLightMode()
-end
-
-function var_0_0.getCurrReport(arg_17_0)
-	return arg_17_0._weatherComp:getCurrReport()
-end
-
-function var_0_0.getMainColor(arg_18_0)
-	return arg_18_0._weatherComp:getMainColor()
-end
-
-function var_0_0.playWeatherAudio(arg_19_0)
-	arg_19_0._weatherComp:playWeatherAudio()
-end
-
-function var_0_0.stopWeatherAudio(arg_20_0)
-	arg_20_0._weatherComp:stopWeatherAudio()
-end
-
-function var_0_0.setStateByString(arg_21_0, arg_21_1, arg_21_2)
-	arg_21_0._weatherComp:setStateByString(arg_21_1, arg_21_2)
-end
-
-function var_0_0.lerpColorRGBA(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
-	return arg_22_0._weatherComp:lerpColorRGBA(arg_22_1, arg_22_2, arg_22_3)
-end
-
-function var_0_0.onSceneHide(arg_23_0, arg_23_1)
-	if arg_23_0._weatherComp then
-		gohelper.setActive(arg_23_0._weatherComp:getSceneGo(), arg_23_1 and true or false)
-		arg_23_0._weatherComp:onSceneHide()
-	end
-
-	if arg_23_0._eggContainer then
-		arg_23_0._eggContainer:onSceneHide()
-	end
-
-	if arg_23_0._weatherSceneEffectComp then
-		arg_23_0._weatherSceneEffectComp:onSceneHide()
+function WeatherController:_onWeatherOnRoleBlend(param)
+	if self._weatherSceneEffectComp then
+		self._weatherSceneEffectComp:onRoleBlend(self._weatherComp, param[1], param[2])
 	end
 end
 
-function var_0_0.FakeShowScene(arg_24_0, arg_24_1)
-	if arg_24_0._weatherComp then
-		gohelper.setActive(arg_24_0._weatherComp:getSceneGo(), arg_24_1)
+function WeatherController:setReportId(id)
+	self._weatherComp:setReportId(id)
+end
+
+function WeatherController:getPrevLightMode()
+	return self._weatherComp:getPrevLightMode()
+end
+
+function WeatherController:getCurLightMode()
+	return self._weatherComp:getCurLightMode()
+end
+
+function WeatherController:getCurrReport()
+	return self._weatherComp:getCurrReport()
+end
+
+function WeatherController:getMainColor()
+	return self._weatherComp:getMainColor()
+end
+
+function WeatherController:playWeatherAudio()
+	self._weatherComp:playWeatherAudio()
+end
+
+function WeatherController:stopWeatherAudio()
+	self._weatherComp:stopWeatherAudio()
+end
+
+function WeatherController:setStateByString(stateGroup, stateState)
+	self._weatherComp:setStateByString(stateGroup, stateState)
+end
+
+function WeatherController:lerpColorRGBA(a, b, t)
+	return self._weatherComp:lerpColorRGBA(a, b, t)
+end
+
+function WeatherController:onSceneHide(isFakeShow)
+	if self._weatherComp then
+		gohelper.setActive(self._weatherComp:getSceneGo(), isFakeShow and true or false)
+		self._weatherComp:onSceneHide()
+	end
+
+	if self._eggContainer then
+		self._eggContainer:onSceneHide()
+	end
+
+	if self._weatherSceneEffectComp then
+		self._weatherSceneEffectComp:onSceneHide()
 	end
 end
 
-function var_0_0.onSceneShow(arg_25_0)
-	if arg_25_0._weatherComp then
-		gohelper.setActive(arg_25_0._weatherComp:getSceneGo(), true)
-		arg_25_0._weatherComp:onSceneShow()
-	end
-
-	if arg_25_0._eggContainer then
-		arg_25_0._eggContainer:onSceneShow()
-	end
-
-	if arg_25_0._weatherSceneEffectComp then
-		arg_25_0._weatherSceneEffectComp:onSceneShow()
+function WeatherController:FakeShowScene(visible)
+	if self._weatherComp then
+		gohelper.setActive(self._weatherComp:getSceneGo(), visible)
 	end
 end
 
-function var_0_0.onSceneClose(arg_26_0)
-	arg_26_0._weatherComp:onSceneClose()
+function WeatherController:onSceneShow()
+	if self._weatherComp then
+		gohelper.setActive(self._weatherComp:getSceneGo(), true)
+		self._weatherComp:onSceneShow()
+	end
 
-	if arg_26_0._eggContainer then
-		arg_26_0._eggContainer:onSceneClose()
+	if self._eggContainer then
+		self._eggContainer:onSceneShow()
+	end
 
-		arg_26_0._eggContainer = nil
+	if self._weatherSceneEffectComp then
+		self._weatherSceneEffectComp:onSceneShow()
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+function WeatherController:onSceneClose()
+	self._weatherComp:onSceneClose()
 
-return var_0_0
+	if self._eggContainer then
+		self._eggContainer:onSceneClose()
+
+		self._eggContainer = nil
+	end
+end
+
+WeatherController.instance = WeatherController.New()
+
+return WeatherController

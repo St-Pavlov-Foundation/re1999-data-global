@@ -1,41 +1,45 @@
-﻿module("modules.logic.roomfishing.model.FishingStoreModel", package.seeall)
+﻿-- chunkname: @modules/logic/roomfishing/model/FishingStoreModel.lua
 
-local var_0_0 = class("FishingStoreModel", BaseModel)
+module("modules.logic.roomfishing.model.FishingStoreModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local FishingStoreModel = class("FishingStoreModel", BaseModel)
+
+function FishingStoreModel:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:onInit()
+function FishingStoreModel:reInit()
+	self:onInit()
 end
 
-function var_0_0.getStoreGroupMO(arg_3_0)
-	return (StoreModel.instance:getStoreMO(StoreEnum.StoreId.RoomFishingStore))
+function FishingStoreModel:getStoreGroupMO()
+	local storeMO = StoreModel.instance:getStoreMO(StoreEnum.StoreId.RoomFishingStore)
+
+	return storeMO
 end
 
-function var_0_0.checkUpdateStoreActivity(arg_4_0)
-	local var_4_0
-	local var_4_1 = arg_4_0:getStoreGroupMO()
-	local var_4_2 = var_4_1 and var_4_1:getGoodsList() or {}
+function FishingStoreModel:checkUpdateStoreActivity()
+	local actId
+	local updateStoreMo = self:getStoreGroupMO()
+	local goodsList = updateStoreMo and updateStoreMo:getGoodsList() or {}
 
-	for iter_4_0, iter_4_1 in pairs(var_4_2) do
-		local var_4_3 = iter_4_1.config.activityId
+	for _, mo in pairs(goodsList) do
+		local goodsActId = mo.config.activityId
 
-		if not var_4_0 then
-			if var_4_3 ~= 0 then
-				var_4_0 = var_4_3
+		if not actId then
+			if goodsActId ~= 0 then
+				actId = goodsActId
 			end
-		elseif var_4_0 ~= var_4_3 then
-			logError(string.format("FishingStoreModel.checkUpdateStoreActivity error, actId inconsistent：%s", var_4_3))
+		elseif actId ~= goodsActId then
+			logError(string.format("FishingStoreModel.checkUpdateStoreActivity error, actId inconsistent：%s", goodsActId))
 
-			return var_4_3
+			return goodsActId
 		end
 	end
 
-	return var_4_0
+	return actId
 end
 
-var_0_0.instance = var_0_0.New()
+FishingStoreModel.instance = FishingStoreModel.New()
 
-return var_0_0
+return FishingStoreModel

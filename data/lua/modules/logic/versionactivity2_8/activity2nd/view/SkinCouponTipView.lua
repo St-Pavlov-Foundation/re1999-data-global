@@ -1,55 +1,57 @@
-﻿module("modules.logic.versionactivity2_8.activity2nd.view.SkinCouponTipView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/activity2nd/view/SkinCouponTipView.lua
 
-local var_0_0 = class("SkinCouponTipView", BaseView)
+module("modules.logic.versionactivity2_8.activity2nd.view.SkinCouponTipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goreward = gohelper.findChild(arg_1_0.viewGO, "root/#go_reward")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_close")
+local SkinCouponTipView = class("SkinCouponTipView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SkinCouponTipView:onInitView()
+	self._goreward = gohelper.findChild(self.viewGO, "root/#go_reward")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_close")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0.closeThis, arg_2_0)
+function SkinCouponTipView:addEvents()
+	self._btnclose:AddClickListener(self.closeThis, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function SkinCouponTipView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
+function SkinCouponTipView:_btncloseOnClick()
 	return
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function SkinCouponTipView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function SkinCouponTipView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0._itemMo = arg_7_0.viewParam and arg_7_0.viewParam[1]
-	arg_7_0._item = arg_7_0:getUserDataTb_()
-	arg_7_0._itemcomp = IconMgr.instance:getCommonPropItemIcon(arg_7_0._goreward)
+function SkinCouponTipView:onOpen()
+	self._itemMo = self.viewParam and self.viewParam[1]
+	self._item = self:getUserDataTb_()
+	self._itemcomp = IconMgr.instance:getCommonPropItemIcon(self._goreward)
 
-	if arg_7_0._itemMo then
-		arg_7_0._itemcomp:setMOValue(arg_7_0._itemMo.materilType, arg_7_0._itemMo.materilId, arg_7_0._itemMo.quantity, nil, true)
-		arg_7_0._itemcomp:isShowCount(false)
+	if self._itemMo then
+		self._itemcomp:setMOValue(self._itemMo.materilType, self._itemMo.materilId, self._itemMo.quantity, nil, true)
+		self._itemcomp:isShowCount(false)
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Rewards)
 end
 
-function var_0_0.onClose(arg_8_0)
+function SkinCouponTipView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
+function SkinCouponTipView:onDestroyView()
 	return
 end
 
-return var_0_0
+return SkinCouponTipView

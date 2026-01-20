@@ -1,39 +1,41 @@
-﻿module("modules.logic.survival.controller.work.SurvivalDecreeVoteShowWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/SurvivalDecreeVoteShowWork.lua
 
-local var_0_0 = class("SurvivalDecreeVoteShowWork", BaseWork)
+module("modules.logic.survival.controller.work.SurvivalDecreeVoteShowWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0:initParam(arg_1_1)
+local SurvivalDecreeVoteShowWork = class("SurvivalDecreeVoteShowWork", BaseWork)
+
+function SurvivalDecreeVoteShowWork:ctor(param)
+	self:initParam(param)
 end
 
-function var_0_0.initParam(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1.go
-	arg_2_0.callback = arg_2_1.callback
-	arg_2_0.callbackObj = arg_2_1.callbackObj
-	arg_2_0.time = arg_2_1.time or 0
-	arg_2_0.audioId = arg_2_1.audioId
+function SurvivalDecreeVoteShowWork:initParam(param)
+	self.go = param.go
+	self.callback = param.callback
+	self.callbackObj = param.callbackObj
+	self.time = param.time or 0
+	self.audioId = param.audioId
 end
 
-function var_0_0.onStart(arg_3_0)
-	gohelper.setActive(arg_3_0.go, true)
+function SurvivalDecreeVoteShowWork:onStart()
+	gohelper.setActive(self.go, true)
 
-	if arg_3_0.callback then
-		arg_3_0.callback(arg_3_0.callbackObj)
+	if self.callback then
+		self.callback(self.callbackObj)
 	end
 
-	if arg_3_0.audioId then
-		AudioMgr.instance:trigger(arg_3_0.audioId)
+	if self.audioId then
+		AudioMgr.instance:trigger(self.audioId)
 	end
 
-	TaskDispatcher.runDelay(arg_3_0.onBuildFinish, arg_3_0, arg_3_0.time)
+	TaskDispatcher.runDelay(self.onBuildFinish, self, self.time)
 end
 
-function var_0_0.onBuildFinish(arg_4_0)
-	arg_4_0:onDone(true)
+function SurvivalDecreeVoteShowWork:onBuildFinish()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0.onBuildFinish, arg_5_0)
+function SurvivalDecreeVoteShowWork:clearWork()
+	TaskDispatcher.cancelTask(self.onBuildFinish, self)
 end
 
-return var_0_0
+return SurvivalDecreeVoteShowWork

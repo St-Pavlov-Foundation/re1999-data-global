@@ -1,153 +1,160 @@
-﻿module("modules.logic.survival.view.shelter.SurvivalShelterRewardView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/SurvivalShelterRewardView.lua
 
-local var_0_0 = class("SurvivalShelterRewardView", BaseView)
+module("modules.logic.survival.view.shelter.SurvivalShelterRewardView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.btnReward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_click")
-	arg_1_0._txtScore = gohelper.findChildTextMesh(arg_1_0.viewGO, "Left/title/#txt_score")
-	arg_1_0._gonormalline = gohelper.findChild(arg_1_0.viewGO, "Left/progress/#scroll_view/Viewport/Content/#go_fillbg/#go_fill")
-	arg_1_0._rectnormalline = arg_1_0._gonormalline.transform
-	arg_1_0.startSpace = 2
-	arg_1_0.cellWidth = 268
-	arg_1_0.space = 0
-	arg_1_0.rewardIndex = 30
+local SurvivalShelterRewardView = class("SurvivalShelterRewardView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SurvivalShelterRewardView:onInitView()
+	self.btnReward = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_click")
+	self._txtScore = gohelper.findChildTextMesh(self.viewGO, "Left/title/#txt_score")
+	self._gonormalline = gohelper.findChild(self.viewGO, "Left/progress/#scroll_view/Viewport/Content/#go_fillbg/#go_fill")
+	self._rectnormalline = self._gonormalline.transform
+	self.startSpace = 2
+	self.cellWidth = 268
+	self.space = 0
+	self.rewardIndex = 30
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnReward, arg_2_0.onClickReward, arg_2_0)
-	arg_2_0:addEventCb(SurvivalController.instance, SurvivalEvent.OnGainReward, arg_2_0.onGainReward, arg_2_0)
+function SurvivalShelterRewardView:addEvents()
+	self:addClickCb(self.btnReward, self.onClickReward, self)
+	self:addEventCb(SurvivalController.instance, SurvivalEvent.OnGainReward, self.onGainReward, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeClickCb(arg_3_0.btnReward)
-	arg_3_0:removeEventCb(SurvivalController.instance, SurvivalEvent.OnGainReward, arg_3_0.onGainReward, arg_3_0)
+function SurvivalShelterRewardView:removeEvents()
+	self:removeClickCb(self.btnReward)
+	self:removeEventCb(SurvivalController.instance, SurvivalEvent.OnGainReward, self.onGainReward, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function SurvivalShelterRewardView:_editableInitView()
 	return
 end
 
-function var_0_0.onClickReward(arg_5_0)
-	arg_5_0.viewContainer:getScrollView():moveToByIndex(arg_5_0.rewardIndex - 3, 1, arg_5_0.openRewardView, arg_5_0)
+function SurvivalShelterRewardView:onClickReward()
+	local scrollView = self.viewContainer:getScrollView()
+
+	scrollView:moveToByIndex(self.rewardIndex - 3, 1, self.openRewardView, self)
 end
 
-function var_0_0.openRewardView(arg_6_0)
-	local var_6_0 = SurvivalShelterRewardListModel.instance:getList()[arg_6_0.rewardIndex]
+function SurvivalShelterRewardView:openRewardView()
+	local list = SurvivalShelterRewardListModel.instance:getList()
+	local config = list[self.rewardIndex]
 
-	if not var_6_0 then
+	if not config then
 		return
 	end
 
-	local var_6_1 = DungeonConfig.instance:getRewardItems(tonumber(var_6_0.reward))
-	local var_6_2 = var_6_1 and var_6_1[1]
+	local rewardList = DungeonConfig.instance:getRewardItems(tonumber(config.reward))
+	local rewardData = rewardList and rewardList[1]
 
-	if not var_6_2 then
+	if not rewardData then
 		return
 	end
 
-	MaterialTipController.instance:showMaterialInfo(var_6_2[1], var_6_2[2])
+	MaterialTipController.instance:showMaterialInfo(rewardData[1], rewardData[2])
 end
 
-function var_0_0.onGainReward(arg_7_0)
-	arg_7_0:refreshView()
+function SurvivalShelterRewardView:onGainReward()
+	self:refreshView()
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0:refreshView()
+function SurvivalShelterRewardView:onOpen()
+	self:refreshView()
 end
 
-function var_0_0.refreshView(arg_9_0)
-	arg_9_0:refreshReward()
-	arg_9_0:refreshProgress()
+function SurvivalShelterRewardView:refreshView()
+	self:refreshReward()
+	self:refreshProgress()
 end
 
-function var_0_0.refreshProgress(arg_10_0)
-	local var_10_0 = SurvivalModel.instance:getOutSideInfo()
-	local var_10_1 = var_10_0:getScore()
+function SurvivalShelterRewardView:refreshProgress()
+	local outsideInfo = SurvivalModel.instance:getOutSideInfo()
+	local score = outsideInfo:getScore()
 
-	arg_10_0._txtScore.text = var_10_1
+	self._txtScore.text = score
 
-	local var_10_2 = SurvivalShelterRewardListModel.instance:getList()
-	local var_10_3 = #var_10_2
-	local var_10_4
+	local list = SurvivalShelterRewardListModel.instance:getList()
+	local curIndex = #list
+	local curShowIndex
 
-	for iter_10_0, iter_10_1 in ipairs(var_10_2) do
-		if var_10_4 == nil and not var_10_0:isGainReward(iter_10_1.id) then
-			var_10_4 = iter_10_0
+	for i, v in ipairs(list) do
+		if curShowIndex == nil and not outsideInfo:isGainReward(v.id) then
+			curShowIndex = i
 		end
 
-		if var_10_1 < iter_10_1.score then
-			var_10_3 = iter_10_0 - 1
+		if score < v.score then
+			curIndex = i - 1
 
 			break
 		end
 	end
 
-	local var_10_5 = var_10_2[var_10_3] and var_10_2[var_10_3].score or 0
-	local var_10_6 = var_10_2[var_10_3 + 1] and var_10_2[var_10_3 + 1].score or var_10_5
-	local var_10_7 = 0
-	local var_10_8 = arg_10_0:getNodeWidth(var_10_3, var_10_7)
-	local var_10_9 = arg_10_0:getNodeWidth(var_10_3 + 1, var_10_7) - var_10_8
-	local var_10_10 = 0
+	local curScore = list[curIndex] and list[curIndex].score or 0
+	local nextScore = list[curIndex + 1] and list[curIndex + 1].score or curScore
+	local beginPos = 0
+	local nodeWidth = self:getNodeWidth(curIndex, beginPos)
+	local offsetWidth = self:getNodeWidth(curIndex + 1, beginPos) - nodeWidth
+	local perWidth = 0
 
-	if var_10_5 < var_10_6 then
-		var_10_10 = (var_10_1 - var_10_5) / (var_10_6 - var_10_5) * var_10_9
+	if curScore < nextScore then
+		perWidth = (score - curScore) / (nextScore - curScore) * offsetWidth
 	end
 
-	recthelper.setWidth(arg_10_0._rectnormalline, var_10_8 + var_10_10)
+	recthelper.setWidth(self._rectnormalline, nodeWidth + perWidth)
 
-	if not arg_10_0.isPlayMove then
-		arg_10_0.isPlayMove = true
+	if not self.isPlayMove then
+		self.isPlayMove = true
 
-		if var_10_4 ~= nil then
-			arg_10_0.viewContainer:getScrollView():moveToByIndex(var_10_4, 0.2)
+		if curShowIndex ~= nil then
+			local scrollView = self.viewContainer:getScrollView()
+
+			scrollView:moveToByIndex(curShowIndex, 0.2)
 		end
 	end
 end
 
-function var_0_0.getNodeWidth(arg_11_0, arg_11_1, arg_11_2)
-	arg_11_2 = arg_11_2 or 0
+function SurvivalShelterRewardView:getNodeWidth(index, beginPos)
+	beginPos = beginPos or 0
 
-	local var_11_0 = arg_11_2
+	local nodeWidth = beginPos
 
-	if arg_11_1 > 0 then
-		var_11_0 = (arg_11_1 - 1) * (arg_11_0.cellWidth + arg_11_0.space) + (arg_11_0.startSpace + arg_11_0.cellWidth * 0.5) + arg_11_2
+	if index > 0 then
+		nodeWidth = (index - 1) * (self.cellWidth + self.space) + (self.startSpace + self.cellWidth * 0.5) + beginPos
 	end
 
-	return var_11_0
+	return nodeWidth
 end
 
-function var_0_0.refreshReward(arg_12_0)
+function SurvivalShelterRewardView:refreshReward()
 	SurvivalShelterRewardListModel.instance:refreshList()
 end
 
-function var_0_0.checkGetReward(arg_13_0)
-	local var_13_0 = {}
-	local var_13_1 = RoleStoryConfig.instance:getRewardList(arg_13_0.storyId)
+function SurvivalShelterRewardView:checkGetReward()
+	local list = {}
+	local rewardList = RoleStoryConfig.instance:getRewardList(self.storyId)
 
-	if var_13_1 then
-		for iter_13_0, iter_13_1 in ipairs(var_13_1) do
-			if RoleStoryModel.instance:getRewardState(iter_13_1.storyId, iter_13_1.id, iter_13_1.score) == 1 then
-				table.insert(var_13_0, iter_13_1.id)
+	if rewardList then
+		for i, v in ipairs(rewardList) do
+			if RoleStoryModel.instance:getRewardState(v.storyId, v.id, v.score) == 1 then
+				table.insert(list, v.id)
 			end
 		end
 	end
 
-	if #var_13_0 > 0 then
-		HeroStoryRpc.instance:sendGetScoreBonusRequest(var_13_0)
+	if #list > 0 then
+		HeroStoryRpc.instance:sendGetScoreBonusRequest(list)
 	end
 end
 
-function var_0_0.onClose(arg_14_0)
-	TaskDispatcher.cancelTask(arg_14_0.checkGetReward, arg_14_0)
+function SurvivalShelterRewardView:onClose()
+	TaskDispatcher.cancelTask(self.checkGetReward, self)
 end
 
-function var_0_0.onDestroyView(arg_15_0)
+function SurvivalShelterRewardView:onDestroyView()
 	return
 end
 
-return var_0_0
+return SurvivalShelterRewardView

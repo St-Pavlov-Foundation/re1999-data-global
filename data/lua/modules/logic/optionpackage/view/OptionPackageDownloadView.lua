@@ -1,144 +1,146 @@
-﻿local var_0_0 = require("framework.helper.gohelper")
+﻿-- chunkname: @modules/logic/optionpackage/view/OptionPackageDownloadView.lua
+
+local gohelper = require("framework.helper.gohelper")
 
 module("modules.logic.optionpackage.view.OptionPackageDownloadView", package.seeall)
 
-local var_0_1 = class("OptionPackageDownloadView", BaseView)
+local OptionPackageDownloadView = class("OptionPackageDownloadView", BaseView)
 
-function var_0_1.onInitView(arg_1_0)
-	arg_1_0._txtpercent = var_0_0.findChildText(arg_1_0.viewGO, "view/progress/#txt_percent")
-	arg_1_0._imageprogress = var_0_0.findChildImage(arg_1_0.viewGO, "view/progress/loadingline/#img_progress")
-	arg_1_0._goprogress = var_0_0.findChild(arg_1_0.viewGO, "view/progress")
-	arg_1_0._gomessgeBox = var_0_0.findChild(arg_1_0.viewGO, "view/#go_messgeBox")
-	arg_1_0._txtdesc = var_0_0.findChildText(arg_1_0.viewGO, "view/#go_messgeBox/#txt_desc")
-	arg_1_0._btnyes = var_0_0.findChildButtonWithAudio(arg_1_0.viewGO, "view/#go_messgeBox/#btn_yes")
-	arg_1_0._btnno = var_0_0.findChildButtonWithAudio(arg_1_0.viewGO, "view/#go_messgeBox/#btn_no")
+function OptionPackageDownloadView:onInitView()
+	self._txtpercent = gohelper.findChildText(self.viewGO, "view/progress/#txt_percent")
+	self._imageprogress = gohelper.findChildImage(self.viewGO, "view/progress/loadingline/#img_progress")
+	self._goprogress = gohelper.findChild(self.viewGO, "view/progress")
+	self._gomessgeBox = gohelper.findChild(self.viewGO, "view/#go_messgeBox")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "view/#go_messgeBox/#txt_desc")
+	self._btnyes = gohelper.findChildButtonWithAudio(self.viewGO, "view/#go_messgeBox/#btn_yes")
+	self._btnno = gohelper.findChildButtonWithAudio(self.viewGO, "view/#go_messgeBox/#btn_no")
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_1.addEvents(arg_2_0)
-	arg_2_0._btnyes:AddClickListener(arg_2_0._btnyesOnClick, arg_2_0)
-	arg_2_0._btnno:AddClickListener(arg_2_0._btnnoOnClick, arg_2_0)
+function OptionPackageDownloadView:addEvents()
+	self._btnyes:AddClickListener(self._btnyesOnClick, self)
+	self._btnno:AddClickListener(self._btnnoOnClick, self)
 end
 
-function var_0_1.removeEvents(arg_3_0)
-	arg_3_0._btnyes:RemoveClickListener()
-	arg_3_0._btnno:RemoveClickListener()
+function OptionPackageDownloadView:removeEvents()
+	self._btnyes:RemoveClickListener()
+	self._btnno:RemoveClickListener()
 end
 
-function var_0_1._btnyesOnClick(arg_4_0)
-	arg_4_0:_closeInvokeCallback(true)
+function OptionPackageDownloadView:_btnyesOnClick()
+	self:_closeInvokeCallback(true)
 end
 
-function var_0_1._btnnoOnClick(arg_5_0)
-	arg_5_0:_closeInvokeCallback(false)
+function OptionPackageDownloadView:_btnnoOnClick()
+	self:_closeInvokeCallback(false)
 end
 
-function var_0_1._editableInitView(arg_6_0)
-	arg_6_0._goNo = arg_6_0._btnno.gameObject
-	arg_6_0._goYes = arg_6_0._btnyes.gameObject
-	arg_6_0._txtYes = var_0_0.findChildText(arg_6_0._goYes, "#txt_confirm")
-	arg_6_0._txtNo = var_0_0.findChildText(arg_6_0._goNo, "#txt_cancel")
-	arg_6_0._txtYesen = var_0_0.findChildText(arg_6_0._goYes, "#txt_seitchen")
-	arg_6_0._txtNoen = var_0_0.findChildText(arg_6_0._goNo, "#txt_cancelen")
+function OptionPackageDownloadView:_editableInitView()
+	self._goNo = self._btnno.gameObject
+	self._goYes = self._btnyes.gameObject
+	self._txtYes = gohelper.findChildText(self._goYes, "#txt_confirm")
+	self._txtNo = gohelper.findChildText(self._goNo, "#txt_cancel")
+	self._txtYesen = gohelper.findChildText(self._goYes, "#txt_seitchen")
+	self._txtNoen = gohelper.findChildText(self._goNo, "#txt_cancelen")
 
-	arg_6_0:_showMessgeBoxGo(false)
+	self:_showMessgeBoxGo(false)
 end
 
-function var_0_1.onOpen(arg_7_0)
-	arg_7_0:addEventCb(OptionPackageController.instance, OptionPackageEvent.DownloadProgressRefresh, arg_7_0._onDownloadProgress, arg_7_0)
-	arg_7_0:addEventCb(OptionPackageController.instance, OptionPackageEvent.UnZipProgressRefresh, arg_7_0._onUnZipProgress, arg_7_0)
-	arg_7_0:addEventCb(OptionPackageController.instance, OptionPackageEvent.DownladErrorMsg, arg_7_0._onDownladErrorMsg, arg_7_0)
+function OptionPackageDownloadView:onOpen()
+	self:addEventCb(OptionPackageController.instance, OptionPackageEvent.DownloadProgressRefresh, self._onDownloadProgress, self)
+	self:addEventCb(OptionPackageController.instance, OptionPackageEvent.UnZipProgressRefresh, self._onUnZipProgress, self)
+	self:addEventCb(OptionPackageController.instance, OptionPackageEvent.DownladErrorMsg, self._onDownladErrorMsg, self)
 end
 
-function var_0_1._show(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0._imageprogress.fillAmount = arg_8_1
-	arg_8_0._txtpercent.text = arg_8_2
+function OptionPackageDownloadView:_show(percent, progressMsg)
+	self._imageprogress.fillAmount = percent
+	self._txtpercent.text = progressMsg
 end
 
-function var_0_1._onDownloadProgress(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	local var_9_0 = arg_9_2 / arg_9_3
-	local var_9_1 = HotUpdateMgr.fixSizeStr(arg_9_2)
-	local var_9_2 = HotUpdateMgr.fixSizeStr(arg_9_3)
+function OptionPackageDownloadView:_onDownloadProgress(packName, downloadSize, totalSize)
+	local percent = downloadSize / totalSize
+	local s1 = HotUpdateMgr.fixSizeStr(downloadSize)
+	local s2 = HotUpdateMgr.fixSizeStr(totalSize)
 
-	arg_9_0._downProgressS1 = var_9_1
-	arg_9_0._downProgressS2 = var_9_2
+	self._downProgressS1 = s1
+	self._downProgressS2 = s2
 
-	local var_9_3
+	local progressMsg
 
 	if UnityEngine.Application.internetReachability == UnityEngine.NetworkReachability.ReachableViaLocalAreaNetwork then
-		var_9_3 = string.format(booterLang("download_info_wifi"), var_9_1, var_9_2)
+		progressMsg = string.format(booterLang("download_info_wifi"), s1, s2)
 	else
-		var_9_3 = string.format(booterLang("download_info"), var_9_1, var_9_2)
+		progressMsg = string.format(booterLang("download_info"), s1, s2)
 	end
 
-	arg_9_0:_show(var_9_0, var_9_3)
+	self:_show(percent, progressMsg)
 end
 
-function var_0_1._onUnZipProgress(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0._downProgressS1 or ""
-	local var_10_1 = arg_10_0._downProgressS2 or ""
-	local var_10_2 = math.floor(100 * arg_10_1 + 0.5)
-	local var_10_3
+function OptionPackageDownloadView:_onUnZipProgress(progress)
+	local s1 = self._downProgressS1 or ""
+	local s2 = self._downProgressS2 or ""
+	local progressInt = math.floor(100 * progress + 0.5)
+	local progressMsg
 
 	if UnityEngine.Application.internetReachability == UnityEngine.NetworkReachability.ReachableViaLocalAreaNetwork then
-		var_10_3 = string.format(booterLang("unziping_progress_wifi"), tostring(var_10_2), var_10_0, var_10_1)
+		progressMsg = string.format(booterLang("unziping_progress_wifi"), tostring(progressInt), s1, s2)
 	else
-		var_10_3 = string.format(booterLang("unziping_progress"), tostring(var_10_2), var_10_0, var_10_1)
+		progressMsg = string.format(booterLang("unziping_progress"), tostring(progressInt), s1, s2)
 	end
 
-	arg_10_0._txtpercent.text = var_10_3
+	self._txtpercent.text = progressMsg
 end
 
-function var_0_1._closeInvokeCallback(arg_11_0, arg_11_1)
-	arg_11_0:_showMessgeBoxGo(false)
+function OptionPackageDownloadView:_closeInvokeCallback(isYes)
+	self:_showMessgeBoxGo(false)
 
-	local var_11_0 = arg_11_0._errorMsgInfo
+	local msgInfo = self._errorMsgInfo
 
-	arg_11_0._errorMsgInfo = nil
+	self._errorMsgInfo = nil
 
-	if var_11_0 then
-		if arg_11_1 == true then
-			if var_11_0.yesCallback then
-				var_11_0.yesCallback(var_11_0.yesCallbackObj)
+	if msgInfo then
+		if isYes == true then
+			if msgInfo.yesCallback then
+				msgInfo.yesCallback(msgInfo.yesCallbackObj)
 			end
-		elseif var_11_0.noCallback then
-			var_11_0.noCallback(var_11_0.noCallbackObj)
+		elseif msgInfo.noCallback then
+			msgInfo.noCallback(msgInfo.noCallbackObj)
 		end
 	end
 end
 
-function var_0_1._showMessgeBoxGo(arg_12_0, arg_12_1)
-	var_0_0.setActive(arg_12_0._gomessgeBox, arg_12_1)
-	var_0_0.setActive(arg_12_0._goprogress, arg_12_1 == false)
+function OptionPackageDownloadView:_showMessgeBoxGo(v)
+	gohelper.setActive(self._gomessgeBox, v)
+	gohelper.setActive(self._goprogress, v == false)
 end
 
-function var_0_1._showErrorUI(arg_13_0)
-	arg_13_0:_showMessgeBoxGo(arg_13_0._errorMsgInfo ~= nil)
+function OptionPackageDownloadView:_showErrorUI()
+	self:_showMessgeBoxGo(self._errorMsgInfo ~= nil)
 
-	if arg_13_0._errorMsgInfo then
-		local var_13_0 = arg_13_0._errorMsgInfo.msg
+	if self._errorMsgInfo then
+		local tip = self._errorMsgInfo.msg
 
-		arg_13_0._txtdesc.text = var_13_0
+		self._txtdesc.text = tip
 
-		local var_13_1 = arg_13_0._errorMsgInfo.yesStr or luaLang("confirm")
-		local var_13_2 = arg_13_0._errorMsgInfo.noStr or luaLang("cancel")
-		local var_13_3 = arg_13_0._errorMsgInfo.yesStrEn or "CONFIRM"
-		local var_13_4 = arg_13_0._errorMsgInfo.noStrEn or "CANCEL"
+		local yesStr = self._errorMsgInfo.yesStr or luaLang("confirm")
+		local noStr = self._errorMsgInfo.noStr or luaLang("cancel")
+		local yesStrEn = self._errorMsgInfo.yesStrEn or "CONFIRM"
+		local noStrEn = self._errorMsgInfo.noStrEn or "CANCEL"
 
-		arg_13_0._txtYes.text = var_13_1
-		arg_13_0._txtNo.text = var_13_2
-		arg_13_0._txtYesen.text = var_13_3
-		arg_13_0._txtNoen.text = var_13_4
+		self._txtYes.text = yesStr
+		self._txtNo.text = noStr
+		self._txtYesen.text = yesStrEn
+		self._txtNoen.text = noStrEn
 	end
 end
 
-function var_0_1._onDownladErrorMsg(arg_14_0, arg_14_1)
-	arg_14_0._errorMsgInfo = arg_14_1
+function OptionPackageDownloadView:_onDownladErrorMsg(msgInfo)
+	self._errorMsgInfo = msgInfo
 
-	arg_14_0:_showErrorUI()
+	self:_showErrorUI()
 end
 
-return var_0_1
+return OptionPackageDownloadView

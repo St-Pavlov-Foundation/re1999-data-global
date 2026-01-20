@@ -1,122 +1,127 @@
-﻿module("modules.logic.room.view.topright.RoomViewTopRight", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/topright/RoomViewTopRight.lua
 
-local var_0_0 = class("RoomViewTopRight", BaseView)
+module("modules.logic.room.view.topright.RoomViewTopRight", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	var_0_0.super.ctor(arg_1_0)
+local RoomViewTopRight = class("RoomViewTopRight", BaseView)
 
-	arg_1_0._path = arg_1_1
-	arg_1_0._resPath = arg_1_2
-	arg_1_0._param = arg_1_3
+function RoomViewTopRight:ctor(path, resPath, param)
+	RoomViewTopRight.super.ctor(self)
+
+	self._path = path
+	self._resPath = resPath
+	self._param = param
 end
 
-function var_0_0.onInitView(arg_2_0)
-	if arg_2_0._editableInitView then
-		arg_2_0:_editableInitView()
+function RoomViewTopRight:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0._editableInitView(arg_3_0)
-	arg_3_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_3_0._onOpenView, arg_3_0)
-	arg_3_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0._onCloseView, arg_3_0)
-	arg_3_0:addEventCb(RoomCharacterController.instance, RoomEvent.UpdateCharacterInteractionUI, arg_3_0._refreshShow, arg_3_0)
-	arg_3_0:addEventCb(RoomWaterReformController.instance, RoomEvent.WaterReformShowChanged, arg_3_0._refreshShow, arg_3_0)
-	arg_3_0:addEventCb(RoomSkinController.instance, RoomSkinEvent.SkinListViewShowChange, arg_3_0._refreshShow, arg_3_0)
+function RoomViewTopRight:_editableInitView()
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
+	self:addEventCb(RoomCharacterController.instance, RoomEvent.UpdateCharacterInteractionUI, self._refreshShow, self)
+	self:addEventCb(RoomWaterReformController.instance, RoomEvent.WaterReformShowChanged, self._refreshShow, self)
+	self:addEventCb(RoomSkinController.instance, RoomSkinEvent.SkinListViewShowChange, self._refreshShow, self)
 
-	arg_3_0._resourceItemList = {}
+	self._resourceItemList = {}
 
-	if string.nilorempty(arg_3_0._path) or string.nilorempty(arg_3_0._resPath) or not LuaUtil.tableNotEmpty(arg_3_0._param) then
+	if string.nilorempty(self._path) or string.nilorempty(self._resPath) or not LuaUtil.tableNotEmpty(self._param) then
 		return
 	end
 
-	local var_3_0 = gohelper.findChild(arg_3_0.viewGO, arg_3_0._path)
+	local containerGO = gohelper.findChild(self.viewGO, self._path)
 
-	arg_3_0._topRight = arg_3_0.viewContainer:getResInst(arg_3_0._resPath, var_3_0, "topright")
-	arg_3_0._goflyitem = gohelper.findChild(arg_3_0._topRight, "go_flyitem")
-	arg_3_0._goresource = gohelper.findChild(arg_3_0._topRight, "container/resource")
+	self._topRight = self.viewContainer:getResInst(self._resPath, containerGO, "topright")
+	self._goflyitem = gohelper.findChild(self._topRight, "go_flyitem")
+	self._goresource = gohelper.findChild(self._topRight, "container/resource")
 
-	gohelper.setActive(arg_3_0._goflyitem, false)
+	gohelper.setActive(self._goflyitem, false)
 
-	for iter_3_0 = 1, 6 do
-		local var_3_1 = gohelper.cloneInPlace(arg_3_0._goresource, "resource" .. iter_3_0)
+	for i = 1, 6 do
+		local resourceGO = gohelper.cloneInPlace(self._goresource, "resource" .. i)
 
-		gohelper.setActive(var_3_1, false)
+		gohelper.setActive(resourceGO, false)
 
-		local var_3_2 = arg_3_0._param[iter_3_0]
+		local param = self._param[i]
 
-		if var_3_2 then
-			var_3_2.parent = arg_3_0
-			var_3_2.index = iter_3_0
+		if param then
+			param.parent = self
+			param.index = i
 
-			local var_3_3 = gohelper.findChild(arg_3_0._topRight, "container/resource" .. iter_3_0)
-			local var_3_4 = var_3_2.classDefine
-			local var_3_5 = MonoHelper.addNoUpdateLuaComOnceToGo(var_3_3, var_3_4, var_3_2)
+			local resourceGO = gohelper.findChild(self._topRight, "container/resource" .. i)
+			local classDefine = param.classDefine
+			local resourceItem = MonoHelper.addNoUpdateLuaComOnceToGo(resourceGO, classDefine, param)
 		end
 	end
 
-	gohelper.setActive(arg_3_0._goresource, false)
+	gohelper.setActive(self._goresource, false)
 
-	arg_3_0._flyItemPoolList = arg_3_0:getUserDataTb_()
+	self._flyItemPoolList = self:getUserDataTb_()
 end
 
-function var_0_0.onDestroyView(arg_4_0)
+function RoomViewTopRight:onDestroyView()
 	return
 end
 
-function var_0_0._onOpenView(arg_5_0, arg_5_1)
-	arg_5_0:_refreshShow()
+function RoomViewTopRight:_onOpenView(viewName)
+	self:_refreshShow()
 end
 
-function var_0_0._onCloseView(arg_6_0, arg_6_1)
-	arg_6_0:_refreshShow()
+function RoomViewTopRight:_onCloseView(viewName)
+	self:_refreshShow()
 end
 
-function var_0_0._refreshShow(arg_7_0)
-	local var_7_0 = arg_7_0:_getTopView()
-	local var_7_1 = RoomWaterReformModel.instance:isWaterReform()
-	local var_7_2 = RoomCharacterHelper.isInDialogInteraction()
-	local var_7_3 = RoomSkinModel.instance:getIsShowRoomSkinList()
-	local var_7_4 = RoomTransportController.instance:isTransportPathShow()
+function RoomViewTopRight:_refreshShow()
+	local topViewName = self:_getTopView()
+	local isWaterReform = RoomWaterReformModel.instance:isWaterReform()
+	local isInDialogInteraction = RoomCharacterHelper.isInDialogInteraction()
+	local isShowSkinList = RoomSkinModel.instance:getIsShowRoomSkinList()
+	local isTransportPath = RoomTransportController.instance:isTransportPathShow()
 
-	gohelper.setActive(arg_7_0._topRight, var_7_0 == arg_7_0.viewName and not var_7_2 and not var_7_1 and not var_7_3 and not var_7_4)
+	gohelper.setActive(self._topRight, topViewName == self.viewName and not isInDialogInteraction and not isWaterReform and not isShowSkinList and not isTransportPath)
 end
 
-function var_0_0._getTopView(arg_8_0)
-	local var_8_0 = ViewMgr.instance:getOpenViewNameList()
-	local var_8_1 = NavigateMgr.sortOpenViewNameList(var_8_0)
+function RoomViewTopRight:_getTopView()
+	local openViewNameList = ViewMgr.instance:getOpenViewNameList()
 
-	for iter_8_0 = #var_8_1, 1, -1 do
-		local var_8_2 = var_8_1[iter_8_0]
-		local var_8_3 = ViewMgr.instance:getContainer(var_8_2)
+	openViewNameList = NavigateMgr.sortOpenViewNameList(openViewNameList)
 
-		if var_8_3 and var_8_3._views then
-			for iter_8_1 = #var_8_3._views, 1, -1 do
-				if var_8_3._views[iter_8_1].__cname == arg_8_0.__cname then
-					return var_8_2
+	for i = #openViewNameList, 1, -1 do
+		local viewName = openViewNameList[i]
+		local viewContainer = ViewMgr.instance:getContainer(viewName)
+
+		if viewContainer and viewContainer._views then
+			for j = #viewContainer._views, 1, -1 do
+				local view = viewContainer._views[j]
+
+				if view.__cname == self.__cname then
+					return viewName
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.getFlyGO(arg_9_0)
-	local var_9_0 = arg_9_0._flyItemPoolList[#arg_9_0._flyItemPoolList]
+function RoomViewTopRight:getFlyGO()
+	local flyGO = self._flyItemPoolList[#self._flyItemPoolList]
 
-	if var_9_0 then
-		table.remove(arg_9_0._flyItemPoolList, #arg_9_0._flyItemPoolList)
+	if flyGO then
+		table.remove(self._flyItemPoolList, #self._flyItemPoolList)
 	else
-		var_9_0 = gohelper.cloneInPlace(arg_9_0._goflyitem, "flyEffect")
+		flyGO = gohelper.cloneInPlace(self._goflyitem, "flyEffect")
 	end
 
-	gohelper.setActive(var_9_0, false)
-	gohelper.setActive(var_9_0, true)
+	gohelper.setActive(flyGO, false)
+	gohelper.setActive(flyGO, true)
 
-	return var_9_0
+	return flyGO
 end
 
-function var_0_0.returnFlyGO(arg_10_0, arg_10_1)
-	gohelper.setActive(arg_10_1, false)
-	table.insert(arg_10_0._flyItemPoolList, arg_10_1)
+function RoomViewTopRight:returnFlyGO(flyGO)
+	gohelper.setActive(flyGO, false)
+	table.insert(self._flyItemPoolList, flyGO)
 end
 
-return var_0_0
+return RoomViewTopRight

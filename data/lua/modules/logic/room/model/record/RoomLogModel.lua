@@ -1,143 +1,150 @@
-﻿module("modules.logic.room.model.record.RoomLogModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/record/RoomLogModel.lua
 
-local var_0_0 = class("RoomLogModel", BaseModel)
+module("modules.logic.room.model.record.RoomLogModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._currentPage = 1
+local RoomLogModel = class("RoomLogModel", BaseModel)
+
+function RoomLogModel:onInit()
+	self._currentPage = 1
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._currentPage = 1
+function RoomLogModel:reInit()
+	self._currentPage = 1
 end
 
-function var_0_0.getInfos(arg_3_0)
-	return arg_3_0._list
+function RoomLogModel:getInfos()
+	return self._list
 end
 
-function var_0_0.setInfos(arg_4_0, arg_4_1)
-	arg_4_0._currentTime = nil
-	arg_4_0._list = {}
-	arg_4_0._newLog = nil
+function RoomLogModel:setInfos(infos)
+	self._currentTime = nil
+	self._list = {}
+	self._newLog = nil
 
-	local function var_4_0(arg_5_0, arg_5_1)
-		return arg_5_0.time > arg_5_1.time
+	local function sortfunc(a, b)
+		return a.time > b.time
 	end
 
-	table.sort(arg_4_1, var_4_0)
+	table.sort(infos, sortfunc)
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
-		local var_4_1 = {
-			type = iter_4_1.type,
-			time = iter_4_1.time,
-			timestr = TimeUtil.timestampToString4(iter_4_1.time)
-		}
+	for index, info in ipairs(infos) do
+		local tab = {}
 
-		arg_4_0:setConfigByType(iter_4_1, var_4_1)
+		tab.type = info.type
+		tab.time = info.time
+		tab.timestr = TimeUtil.timestampToString4(info.time)
 
-		if arg_4_0:checkIsNewDay(iter_4_1.time) and #arg_4_1 > 0 then
-			local var_4_2 = os.date("*t", iter_4_1.time - TimeUtil.OneDaySecond).wday
-			local var_4_3 = {
-				type = RoomRecordEnum.LogType.Time,
-				day = var_4_2
-			}
+		self:setConfigByType(info, tab)
 
-			table.insert(arg_4_0._list, var_4_3)
+		local isNewDay = self:checkIsNewDay(info.time)
+
+		if isNewDay and #infos > 0 then
+			local dt = os.date("*t", info.time - TimeUtil.OneDaySecond)
+			local day = dt.wday
+			local temp = {}
+
+			temp.type = RoomRecordEnum.LogType.Time
+			temp.day = day
+
+			table.insert(self._list, temp)
 		end
 
-		table.insert(arg_4_0._list, var_4_1)
+		table.insert(self._list, tab)
 	end
 
-	if arg_4_0._newLog then
-		RoomController.instance:dispatchEvent(RoomEvent.NewLog, arg_4_0._newLog)
+	if self._newLog then
+		RoomController.instance:dispatchEvent(RoomEvent.NewLog, self._newLog)
 	end
 end
 
-function var_0_0.setConfigByType(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_1.type == RoomRecordEnum.LogType.Speical then
-		local var_6_0 = arg_6_1.id
-		local var_6_1 = RoomConfig.instance:getCharacterInteractionConfig(var_6_0)
-		local var_6_2 = HeroConfig.instance:getHeroCO(var_6_1.heroId).name
+function RoomLogModel:setConfigByType(info, tab)
+	if info.type == RoomRecordEnum.LogType.Speical then
+		local interactionId = info.id
+		local interactionConfig = RoomConfig.instance:getCharacterInteractionConfig(interactionId)
+		local heroname = HeroConfig.instance:getHeroCO(interactionConfig.heroId).name
 
-		if var_6_2 then
-			arg_6_2.heroname = var_6_2
+		if heroname then
+			tab.heroname = heroname
 		end
 
-		local var_6_3 = 0
+		local stepId = 0
 
-		arg_6_2.config = var_6_1
+		tab.config = interactionConfig
 
 		while true do
-			arg_6_2.logConfigList = arg_6_2.logConfigList or {}
-			var_6_3 = var_6_3 + 1
+			tab.logConfigList = tab.logConfigList or {}
+			stepId = stepId + 1
 
-			local var_6_4 = RoomConfig.instance:getCharacterDialogConfig(var_6_1.dialogId, var_6_3)
+			local dialogConfig = RoomConfig.instance:getCharacterDialogConfig(interactionConfig.dialogId, stepId)
 
-			if not var_6_4 then
+			if not dialogConfig then
 				break
 			end
 
-			table.insert(arg_6_2.logConfigList, var_6_4)
+			table.insert(tab.logConfigList, dialogConfig)
 		end
-	elseif arg_6_1.type == RoomRecordEnum.LogType.Normal then
-		local var_6_5 = RoomLogConfig.instance:getLogConfigById(arg_6_1.id)
+	elseif info.type == RoomRecordEnum.LogType.Normal then
+		local config = RoomLogConfig.instance:getLogConfigById(info.id)
 
-		if var_6_5 then
-			arg_6_2.content = var_6_5.content
+		if config then
+			tab.content = config.content
 		end
-	elseif arg_6_1.type == RoomRecordEnum.LogType.Custom then
-		local var_6_6 = RoomTradeConfig.instance:getTaskCoById(arg_6_1.id)
+	elseif info.type == RoomRecordEnum.LogType.Custom then
+		local config = RoomTradeConfig.instance:getTaskCoById(info.id)
 
-		if var_6_6 then
-			arg_6_2.config = var_6_6
-			arg_6_2.name = HeroConfig.instance:getHeroCO(tonumber(var_6_6.speaker)).name
+		if config then
+			tab.config = config
+			tab.name = HeroConfig.instance:getHeroCO(tonumber(config.speaker)).name
 
-			local var_6_7 = {}
+			local temp = {}
 
-			if not string.nilorempty(var_6_6.logtext) then
-				var_6_7 = string.splitToNumber(var_6_6.logtext, "#")
+			if not string.nilorempty(config.logtext) then
+				temp = string.splitToNumber(config.logtext, "#")
 			end
 
-			if #var_6_7 > 0 then
-				arg_6_2.logConfigList = arg_6_2.logConfigList or {}
+			if #temp > 0 then
+				tab.logConfigList = tab.logConfigList or {}
 
-				local var_6_8, var_6_9 = var_6_7[1], var_6_7[2]
+				local startId = temp[1]
+				local endId = temp[2]
+				local id = startId
 
-				while var_6_8 <= var_6_9 do
-					local var_6_10 = RoomLogConfig.instance:getLogConfigById(var_6_8)
+				while id <= endId do
+					local logconfig = RoomLogConfig.instance:getLogConfigById(id)
 
-					table.insert(arg_6_2.logConfigList, var_6_10)
+					table.insert(tab.logConfigList, logconfig)
 
-					var_6_8 = var_6_8 + 1
+					id = id + 1
 				end
 			end
 		end
 
-		if arg_6_1.isNew and not arg_6_0._newLog then
-			arg_6_0._newLog = arg_6_2
+		if info.isNew and not self._newLog then
+			self._newLog = tab
 		end
 	end
 end
 
-function var_0_0.checkIsNewDay(arg_7_0, arg_7_1)
-	if not arg_7_0._currentTime then
-		arg_7_0._currentTime = arg_7_1
+function RoomLogModel:checkIsNewDay(time)
+	if not self._currentTime then
+		self._currentTime = time
 
 		return false
-	elseif arg_7_1 < arg_7_0._currentTime and not TimeUtil.isSameDay(arg_7_1, arg_7_0._currentTime) then
-		arg_7_0._currentTime = arg_7_1
+	elseif time < self._currentTime and not TimeUtil.isSameDay(time, self._currentTime) then
+		self._currentTime = time
 
 		return true
 	end
 end
 
-function var_0_0.setPage(arg_8_0, arg_8_1)
-	arg_8_0._currentPage = arg_8_1
+function RoomLogModel:setPage(page)
+	self._currentPage = page
 end
 
-function var_0_0.getPage(arg_9_0)
-	return arg_9_0._currentPage or 1
+function RoomLogModel:getPage()
+	return self._currentPage or 1
 end
 
-var_0_0.instance = var_0_0.New()
+RoomLogModel.instance = RoomLogModel.New()
 
-return var_0_0
+return RoomLogModel

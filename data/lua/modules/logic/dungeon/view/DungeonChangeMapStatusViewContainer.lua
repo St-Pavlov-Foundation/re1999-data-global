@@ -1,13 +1,15 @@
-﻿module("modules.logic.dungeon.view.DungeonChangeMapStatusViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/DungeonChangeMapStatusViewContainer.lua
 
-local var_0_0 = class("DungeonChangeMapStatusViewContainer", BaseViewContainer)
+module("modules.logic.dungeon.view.DungeonChangeMapStatusViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local DungeonChangeMapStatusViewContainer = class("DungeonChangeMapStatusViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, DungeonChangeMapStatusView.New())
+function DungeonChangeMapStatusViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, DungeonChangeMapStatusView.New())
+
+	return views
 end
 
-return var_0_0
+return DungeonChangeMapStatusViewContainer

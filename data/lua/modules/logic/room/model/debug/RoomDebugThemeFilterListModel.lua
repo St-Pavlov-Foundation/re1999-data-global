@@ -1,135 +1,138 @@
-﻿module("modules.logic.room.model.debug.RoomDebugThemeFilterListModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/debug/RoomDebugThemeFilterListModel.lua
 
-local var_0_0 = class("RoomDebugThemeFilterListModel", ListScrollModel)
+module("modules.logic.room.model.debug.RoomDebugThemeFilterListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:_clearData()
+local RoomDebugThemeFilterListModel = class("RoomDebugThemeFilterListModel", ListScrollModel)
+
+function RoomDebugThemeFilterListModel:onInit()
+	self:_clearData()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:_clearData()
+function RoomDebugThemeFilterListModel:reInit()
+	self:_clearData()
 end
 
-function var_0_0.clear(arg_3_0)
-	var_0_0.super.clear(arg_3_0)
-	arg_3_0:_clearData()
+function RoomDebugThemeFilterListModel:clear()
+	RoomDebugThemeFilterListModel.super.clear(self)
+	self:_clearData()
 end
 
-function var_0_0._clearData(arg_4_0)
-	arg_4_0:_clearSelectData()
+function RoomDebugThemeFilterListModel:_clearData()
+	self:_clearSelectData()
 end
 
-function var_0_0._clearSelectData(arg_5_0)
-	arg_5_0._selectIdList = {}
-	arg_5_0._isAll = false
+function RoomDebugThemeFilterListModel:_clearSelectData()
+	self._selectIdList = {}
+	self._isAll = false
 end
 
-function var_0_0.init(arg_6_0)
-	arg_6_0:_clearData()
+function RoomDebugThemeFilterListModel:init()
+	self:_clearData()
 
-	local var_6_0 = RoomConfig.instance:getThemeConfigList()
-	local var_6_1 = {}
+	local themeCfgList = RoomConfig.instance:getThemeConfigList()
+	local moList = {}
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
-		local var_6_2 = RoomThemeMO.New()
+	for i, themeCfg in ipairs(themeCfgList) do
+		local mo = RoomThemeMO.New()
 
-		var_6_2:init(iter_6_1.id, iter_6_1)
-		table.insert(var_6_1, var_6_2)
+		mo:init(themeCfg.id, themeCfg)
+		table.insert(moList, mo)
 	end
 
-	table.sort(var_6_1, var_0_0.sortMOFunc)
-	arg_6_0:setList(var_6_1)
+	table.sort(moList, RoomDebugThemeFilterListModel.sortMOFunc)
+	self:setList(moList)
 end
 
-function var_0_0.sortMOFunc(arg_7_0, arg_7_1)
-	if arg_7_0.id ~= arg_7_1.id then
-		return arg_7_0.id > arg_7_1.id
+function RoomDebugThemeFilterListModel.sortMOFunc(a, b)
+	if a.id ~= b.id then
+		return a.id > b.id
 	end
 end
 
-function var_0_0.clearFilterData(arg_8_0)
-	arg_8_0:_clearSelectData()
-	arg_8_0:onModelUpdate()
+function RoomDebugThemeFilterListModel:clearFilterData()
+	self:_clearSelectData()
+	self:onModelUpdate()
 end
 
-function var_0_0.getIsAll(arg_9_0)
-	return arg_9_0._isAll
+function RoomDebugThemeFilterListModel:getIsAll()
+	return self._isAll
 end
 
-function var_0_0.getSelectCount(arg_10_0)
-	if arg_10_0._selectIdList then
-		return #arg_10_0._selectIdList
+function RoomDebugThemeFilterListModel:getSelectCount()
+	if self._selectIdList then
+		return #self._selectIdList
 	end
 
 	return 0
 end
 
-function var_0_0.isSelectById(arg_11_0, arg_11_1)
-	if arg_11_0._isAll then
+function RoomDebugThemeFilterListModel:isSelectById(themeId)
+	if self._isAll then
 		return true
 	end
 
-	if tabletool.indexOf(arg_11_0._selectIdList, arg_11_1) then
+	if tabletool.indexOf(self._selectIdList, themeId) then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.selectAll(arg_12_0)
-	if arg_12_0._isAll == true then
+function RoomDebugThemeFilterListModel:selectAll()
+	if self._isAll == true then
 		return
 	end
 
-	arg_12_0._selectIdList = {}
+	self._selectIdList = {}
 
-	local var_12_0 = arg_12_0:getList()
+	local moList = self:getList()
 
-	for iter_12_0, iter_12_1 in ipairs(var_12_0) do
-		table.insert(arg_12_0._selectIdList, iter_12_1.id)
+	for i, mo in ipairs(moList) do
+		table.insert(self._selectIdList, mo.id)
 	end
 
-	arg_12_0:_checkAll()
-	arg_12_0:onModelUpdate()
+	self:_checkAll()
+	self:onModelUpdate()
 end
 
-function var_0_0.setSelectById(arg_13_0, arg_13_1, arg_13_2)
-	if not arg_13_0:getById(arg_13_1) then
+function RoomDebugThemeFilterListModel:setSelectById(id, isSelect)
+	if not self:getById(id) then
 		return
 	end
 
-	if arg_13_2 == true then
-		if not tabletool.indexOf(arg_13_0._selectIdList, arg_13_1) then
-			table.insert(arg_13_0._selectIdList, arg_13_1)
-			arg_13_0:_checkAll()
-			arg_13_0:onModelUpdate()
+	if isSelect == true then
+		if not tabletool.indexOf(self._selectIdList, id) then
+			table.insert(self._selectIdList, id)
+			self:_checkAll()
+			self:onModelUpdate()
 		end
-	elseif arg_13_2 == false then
-		local var_13_0 = tabletool.indexOf(arg_13_0._selectIdList, arg_13_1)
+	elseif isSelect == false then
+		local index = tabletool.indexOf(self._selectIdList, id)
 
-		if var_13_0 then
-			table.remove(arg_13_0._selectIdList, var_13_0)
-			arg_13_0:_checkAll()
-			arg_13_0:onModelUpdate()
+		if index then
+			table.remove(self._selectIdList, index)
+			self:_checkAll()
+			self:onModelUpdate()
 		end
 	end
 end
 
-function var_0_0._checkAll(arg_14_0)
-	local var_14_0 = true
+function RoomDebugThemeFilterListModel:_checkAll()
+	local tempAll = true
+	local moList = self:getList()
 
-	if #arg_14_0:getList() > #arg_14_0._selectIdList then
-		var_14_0 = false
+	if #moList > #self._selectIdList then
+		tempAll = false
 	end
 
-	arg_14_0._isAll = var_14_0
+	self._isAll = tempAll
 end
 
-function var_0_0.checkSelectByItem(arg_15_0, arg_15_1, arg_15_2)
-	if not arg_15_0:getIsAll() and arg_15_0:getSelectCount() > 0 then
-		local var_15_0 = RoomConfig.instance:getThemeIdByItem(arg_15_1, arg_15_2)
+function RoomDebugThemeFilterListModel:checkSelectByItem(itemId, materialType)
+	if not self:getIsAll() and self:getSelectCount() > 0 then
+		local themeId = RoomConfig.instance:getThemeIdByItem(itemId, materialType)
 
-		if not arg_15_0:isSelectById(var_15_0) then
+		if not self:isSelectById(themeId) then
 			return false
 		end
 	end
@@ -137,6 +140,6 @@ function var_0_0.checkSelectByItem(arg_15_0, arg_15_1, arg_15_2)
 	return true
 end
 
-var_0_0.instance = var_0_0.New()
+RoomDebugThemeFilterListModel.instance = RoomDebugThemeFilterListModel.New()
 
-return var_0_0
+return RoomDebugThemeFilterListModel

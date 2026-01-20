@@ -1,137 +1,139 @@
-﻿module("modules.logic.explore.model.ExploreBackpackModel", package.seeall)
+﻿-- chunkname: @modules/logic/explore/model/ExploreBackpackModel.lua
 
-local var_0_0 = class("ExploreBackpackModel", ListScrollModel)
+module("modules.logic.explore.model.ExploreBackpackModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:clearData()
+local ExploreBackpackModel = class("ExploreBackpackModel", ListScrollModel)
+
+function ExploreBackpackModel:onInit()
+	self:clearData()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clearData()
+function ExploreBackpackModel:reInit()
+	self:clearData()
 end
 
-function var_0_0.clearData(arg_3_0)
-	arg_3_0.stackableDic = {}
+function ExploreBackpackModel:clearData()
+	self.stackableDic = {}
 
-	arg_3_0:clear()
+	self:clear()
 end
 
-function var_0_0.refresh(arg_4_0)
-	arg_4_0:clear()
+function ExploreBackpackModel:refresh()
+	self:clear()
 
-	local var_4_0 = BackpackModel.instance:getBackpackList()
+	local itemList = BackpackModel.instance:getBackpackList()
 
-	BackpackModel.instance:setBackpackItemList(var_4_0)
+	BackpackModel.instance:setBackpackItemList(itemList)
 
-	local var_4_1 = {}
+	local items = {}
 
-	for iter_4_0, iter_4_1 in pairs(BackpackModel.instance:getBackpackItemList()) do
-		if iter_4_1.subType == 15 then
-			table.insert(var_4_1, iter_4_1)
+	for _, v in pairs(BackpackModel.instance:getBackpackItemList()) do
+		if v.subType == 15 then
+			table.insert(items, v)
 		end
 	end
 
-	arg_4_0:setList(var_4_1)
+	self:setList(items)
 
-	return var_4_1
+	return items
 end
 
-function var_0_0.updateItems(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_2 or not arg_5_0.stackableDic then
-		arg_5_0:clear()
+function ExploreBackpackModel:updateItems(exploreItems, clearAll)
+	if clearAll or not self.stackableDic then
+		self:clear()
 
-		arg_5_0.stackableDic = {}
+		self.stackableDic = {}
 	end
 
-	local var_5_0 = false
-	local var_5_1 = arg_5_0:getList()
+	local haveRune = false
+	local itemList = self:getList()
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
-		local var_5_2 = arg_5_0:getById(iter_5_1.uid)
-		local var_5_3 = ExploreConfig.instance:isStackableItem(iter_5_1.itemId)
+	for i, v in ipairs(exploreItems) do
+		local mo = self:getById(v.uid)
+		local isStackable = ExploreConfig.instance:isStackableItem(v.itemId)
 
-		if var_5_3 then
-			var_5_2 = arg_5_0.stackableDic[iter_5_1.itemId]
+		if isStackable then
+			mo = self.stackableDic[v.itemId]
 		end
 
-		if not var_5_2 then
-			if iter_5_1.quantity > 0 then
-				local var_5_4 = ExploreBackpackItemMO.New()
+		if not mo then
+			if v.quantity > 0 then
+				local itemMo = ExploreBackpackItemMO.New()
 
-				var_5_4:init(iter_5_1)
+				itemMo:init(v)
 
-				var_5_4.quantity = iter_5_1.quantity
+				itemMo.quantity = v.quantity
 
-				table.insert(var_5_1, var_5_4)
+				table.insert(itemList, itemMo)
 
-				arg_5_0.stackableDic[var_5_4.itemId] = var_5_4
+				self.stackableDic[itemMo.itemId] = itemMo
 			end
 		else
-			if var_5_3 then
-				var_5_2:updateStackable(iter_5_1)
+			if isStackable then
+				mo:updateStackable(v)
 			else
-				var_5_2.quantity = iter_5_1.quantity
-				var_5_2.status = iter_5_1.status
+				mo.quantity = v.quantity
+				mo.status = v.status
 			end
 
-			if var_5_2.quantity == 0 then
-				arg_5_0:removeItem(var_5_2)
+			if mo.quantity == 0 then
+				self:removeItem(mo)
 			end
 
-			if var_5_2.itemEffect == ExploreEnum.ItemEffect.Active then
-				var_5_0 = true
+			if mo.itemEffect == ExploreEnum.ItemEffect.Active then
+				haveRune = true
 			end
 		end
 
 		ExploreSimpleModel.instance:setShowBag()
 	end
 
-	local var_5_5 = ExploreController.instance:getMap()
+	local map = ExploreController.instance:getMap()
 
-	if var_5_0 and var_5_5 then
-		var_5_5:checkAllRuneTrigger()
+	if haveRune and map then
+		map:checkAllRuneTrigger()
 	end
 
-	arg_5_0:setList(var_5_1)
-	ExploreController.instance:dispatchEvent(ExploreEvent.OnItemChange, arg_5_0._mo)
+	self:setList(itemList)
+	ExploreController.instance:dispatchEvent(ExploreEvent.OnItemChange, self._mo)
 end
 
-function var_0_0.getItemMoByEffect(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0:getList()
+function ExploreBackpackModel:getItemMoByEffect(effect)
+	local itemList = self:getList()
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
-		if iter_6_1.itemEffect == arg_6_1 then
-			return iter_6_1
+	for i, v in ipairs(itemList) do
+		if v.itemEffect == effect then
+			return v
 		end
 	end
 end
 
-function var_0_0.addItem(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	arg_7_0:addAtLast({
-		type = arg_7_1,
-		id = arg_7_2,
-		num = arg_7_3
+function ExploreBackpackModel:addItem(type, id, num)
+	self:addAtLast({
+		type = type,
+		id = id,
+		num = num
 	})
-	ExploreController.instance:dispatchEvent(ExploreEvent.OnItemChange, arg_7_0._mo)
+	ExploreController.instance:dispatchEvent(ExploreEvent.OnItemChange, self._mo)
 end
 
-function var_0_0.removeItem(arg_8_0, arg_8_1)
-	arg_8_0.stackableDic[arg_8_1.itemId] = nil
+function ExploreBackpackModel:removeItem(mo)
+	self.stackableDic[mo.itemId] = nil
 
-	arg_8_0:remove(arg_8_1)
-	ExploreController.instance:dispatchEvent(ExploreEvent.OnItemChange, arg_8_0._mo)
+	self:remove(mo)
+	ExploreController.instance:dispatchEvent(ExploreEvent.OnItemChange, self._mo)
 end
 
-function var_0_0.getItem(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0:getList()
+function ExploreBackpackModel:getItem(itemId)
+	local itemList = self:getList()
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
-		if iter_9_1.itemId == arg_9_1 then
-			return iter_9_1
+	for i, v in ipairs(itemList) do
+		if v.itemId == itemId then
+			return v
 		end
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+ExploreBackpackModel.instance = ExploreBackpackModel.New()
 
-return var_0_0
+return ExploreBackpackModel

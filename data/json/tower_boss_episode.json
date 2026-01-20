@@ -682,5 +682,14 @@
     "episodeId": 90100513,
     "bossLevel": 10,
     "firstReward": "1#620103#1|1#620102#20|1#620101#250|1#110403#2"
+  },
+  {
+    "towerId": 6,
+    "layerId": 12,
+    "preLayerId": 11,
+    "openRound": 3,
+    "episodeId": 90100612,
+    "bossLevel": 10,
+    "firstReward": "1#620103#1|1#620102#20|1#620101#250|1#110503#2"
   }
 ]

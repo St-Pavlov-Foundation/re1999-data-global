@@ -1,27 +1,30 @@
-﻿module("modules.logic.guide.controller.trigger.GuideTriggerFinishGuide", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/trigger/GuideTriggerFinishGuide.lua
 
-local var_0_0 = class("GuideTriggerFinishGuide", BaseGuideTrigger)
+module("modules.logic.guide.controller.trigger.GuideTriggerFinishGuide", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0, arg_1_1)
-	GuideController.instance:registerCallback(GuideEvent.FinishGuideLastStep, arg_1_0._checkStartGuide, arg_1_0)
-	GameSceneMgr.instance:registerCallback(SceneType.Main, arg_1_0._onMainScene, arg_1_0)
+local GuideTriggerFinishGuide = class("GuideTriggerFinishGuide", BaseGuideTrigger)
+
+function GuideTriggerFinishGuide:ctor(triggerKey)
+	GuideTriggerFinishGuide.super.ctor(self, triggerKey)
+	GuideController.instance:registerCallback(GuideEvent.FinishGuideLastStep, self._checkStartGuide, self)
+	GameSceneMgr.instance:registerCallback(SceneType.Main, self._onMainScene, self)
 end
 
-function var_0_0.assertGuideSatisfy(arg_2_0, arg_2_1, arg_2_2)
-	local var_2_0 = tonumber(arg_2_2)
+function GuideTriggerFinishGuide:assertGuideSatisfy(param, configParam)
+	local guideId = tonumber(configParam)
+	local finish = GuideModel.instance:isGuideFinish(guideId)
 
-	return (GuideModel.instance:isGuideFinish(var_2_0))
+	return finish
 end
 
-function var_0_0._onMainScene(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_2 == 1 then
-		arg_3_0:checkStartGuide()
+function GuideTriggerFinishGuide:_onMainScene(sceneLevelId, Exit0Enter1)
+	if Exit0Enter1 == 1 then
+		self:checkStartGuide()
 	end
 end
 
-function var_0_0._checkStartGuide(arg_4_0)
-	arg_4_0:checkStartGuide()
+function GuideTriggerFinishGuide:_checkStartGuide()
+	self:checkStartGuide()
 end
 
-return var_0_0
+return GuideTriggerFinishGuide

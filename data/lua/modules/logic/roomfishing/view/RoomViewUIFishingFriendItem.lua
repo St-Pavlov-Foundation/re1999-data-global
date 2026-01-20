@@ -1,93 +1,98 @@
-﻿module("modules.logic.roomfishing.view.RoomViewUIFishingFriendItem", package.seeall)
+﻿-- chunkname: @modules/logic/roomfishing/view/RoomViewUIFishingFriendItem.lua
 
-local var_0_0 = class("RoomViewUIFishingFriendItem", RoomViewUIBaseItem)
+module("modules.logic.roomfishing.view.RoomViewUIFishingFriendItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0)
+local RoomViewUIFishingFriendItem = class("RoomViewUIFishingFriendItem", RoomViewUIBaseItem)
 
-	arg_1_0._userId = arg_1_1
+function RoomViewUIFishingFriendItem:ctor(friendUserId)
+	RoomViewUIFishingFriendItem.super.ctor(self)
+
+	self._userId = friendUserId
 end
 
-function var_0_0._customOnInit(arg_2_0)
-	arg_2_0._goheadicon = gohelper.findChild(arg_2_0._gocontainer, "#go_headicon")
-	arg_2_0._playericon = IconMgr.instance:getCommonPlayerIcon(arg_2_0._goheadicon)
-	arg_2_0._txtPlayerName = gohelper.findChildText(arg_2_0._gocontainer, "#txt_PlayerName")
+function RoomViewUIFishingFriendItem:_customOnInit()
+	self._goheadicon = gohelper.findChild(self._gocontainer, "#go_headicon")
+	self._playericon = IconMgr.instance:getCommonPlayerIcon(self._goheadicon)
+	self._txtPlayerName = gohelper.findChildText(self._gocontainer, "#txt_PlayerName")
 
-	local var_2_0, var_2_1 = FishingModel.instance:getFishingFriendInfo(arg_2_0._userId)
+	local name, portrait = FishingModel.instance:getFishingFriendInfo(self._userId)
 
-	arg_2_0._playericon:setMOValue(arg_2_0._userId, "", 0, var_2_1)
-	arg_2_0._playericon:setShowLevel(false)
-	arg_2_0._playericon:setEnableClick(false)
+	self._playericon:setMOValue(self._userId, "", 0, portrait)
+	self._playericon:setShowLevel(false)
+	self._playericon:setEnableClick(false)
 
-	arg_2_0._txtPlayerName.text = var_2_0
+	self._txtPlayerName.text = name
 end
 
-function var_0_0._customAddEventListeners(arg_3_0)
-	arg_3_0:refreshUI(true)
+function RoomViewUIFishingFriendItem:_customAddEventListeners()
+	self:refreshUI(true)
 end
 
-function var_0_0._customRemoveEventListeners(arg_4_0)
+function RoomViewUIFishingFriendItem:_customRemoveEventListeners()
 	return
 end
 
-function var_0_0.getUI3DPos(arg_5_0)
-	local var_5_0 = arg_5_0:getBuildingEntity()
+function RoomViewUIFishingFriendItem:getUI3DPos()
+	local buildingEntity = self:getBuildingEntity()
 
-	if not var_5_0 then
-		arg_5_0:_setShow(false, true)
+	if not buildingEntity then
+		self:_setShow(false, true)
 
 		return Vector3.zero
 	end
 
-	local var_5_1 = var_5_0.containerGO
-	local var_5_2 = var_5_0:getHeadGO()
-	local var_5_3 = var_5_2 and var_5_2.transform.position or var_5_1.transform.position
-	local var_5_4 = Vector3(var_5_3.x, var_5_3.y, var_5_3.z)
+	local containerGo = buildingEntity.containerGO
+	local headGO = buildingEntity:getHeadGO()
+	local position = headGO and headGO.transform.position or containerGo.transform.position
+	local worldPos = Vector3(position.x, position.y, position.z)
+	local bendingPos = RoomBendingHelper.worldToBendingSimple(worldPos)
 
-	return (RoomBendingHelper.worldToBendingSimple(var_5_4))
+	return bendingPos
 end
 
-function var_0_0._onClick(arg_6_0, arg_6_1, arg_6_2)
+function RoomViewUIFishingFriendItem:_onClick(go, param)
 	return
 end
 
-function var_0_0.refreshUI(arg_7_0, arg_7_1)
-	arg_7_0:_refreshShow(arg_7_1)
-	arg_7_0:_refreshPosition()
+function RoomViewUIFishingFriendItem:refreshUI(isInit)
+	self:_refreshShow(isInit)
+	self:_refreshPosition()
 end
 
-function var_0_0._refreshShow(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0._scene.camera:getCameraState()
+function RoomViewUIFishingFriendItem:_refreshShow(isInit)
+	local cameraState = self._scene.camera:getCameraState()
 
-	if var_8_0 ~= RoomEnum.CameraState.Overlook and var_8_0 ~= RoomEnum.CameraState.OverlookAll then
-		arg_8_0:_setShow(false, arg_8_1)
+	if cameraState ~= RoomEnum.CameraState.Overlook and cameraState ~= RoomEnum.CameraState.OverlookAll then
+		self:_setShow(false, isInit)
 
 		return
 	end
 
-	local var_8_1 = arg_8_0:getBuildingEntity() ~= nil
+	local hasBuilding = self:getBuildingEntity() ~= nil
 
-	arg_8_0:_setShow(var_8_1, arg_8_1)
+	self:_setShow(hasBuilding, isInit)
 end
 
-function var_0_0.getBuildingEntity(arg_9_0)
-	local var_9_0 = RoomMapBuildingModel.instance:getBuildingListByType(RoomBuildingEnum.BuildingType.Fishing)
+function RoomViewUIFishingFriendItem:getBuildingEntity()
+	local buildingList = RoomMapBuildingModel.instance:getBuildingListByType(RoomBuildingEnum.BuildingType.Fishing)
 
-	if var_9_0 then
-		for iter_9_0, iter_9_1 in ipairs(var_9_0) do
-			local var_9_1 = iter_9_1:getBelongUserId()
+	if buildingList then
+		for _, buildingMO in ipairs(buildingList) do
+			local belongUserId = buildingMO:getBelongUserId()
 
-			if var_9_1 and var_9_1 == arg_9_0._userId then
-				return (arg_9_0._scene.buildingmgr:getBuildingEntity(iter_9_1.buildingUid, SceneTag.RoomBuilding))
+			if belongUserId and belongUserId == self._userId then
+				local buildingEntity = self._scene.buildingmgr:getBuildingEntity(buildingMO.buildingUid, SceneTag.RoomBuilding)
+
+				return buildingEntity
 			end
 		end
 	end
 end
 
-function var_0_0._customOnDestory(arg_10_0)
+function RoomViewUIFishingFriendItem:_customOnDestory()
 	return
 end
 
-var_0_0.prefabPath = "ui/viewres/room/fish/roomfishfriendui.prefab"
+RoomViewUIFishingFriendItem.prefabPath = "ui/viewres/room/fish/roomfishfriendui.prefab"
 
-return var_0_0
+return RoomViewUIFishingFriendItem

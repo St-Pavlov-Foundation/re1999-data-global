@@ -1,116 +1,118 @@
-﻿module("modules.logic.versionactivity3_1.yeshumei.view.YeShuMeiPointItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/yeshumei/view/YeShuMeiPointItem.lua
 
-local var_0_0 = class("YeShuMeiPointItem", ListScrollCellExtend)
+module("modules.logic.versionactivity3_1.yeshumei.view.YeShuMeiPointItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._tr = arg_1_1.transform
+local YeShuMeiPointItem = class("YeShuMeiPointItem", ListScrollCellExtend)
 
-	arg_1_0:initPos(0, 0)
-	gohelper.setActive(arg_1_0.go, true)
+function YeShuMeiPointItem:init(go)
+	self.go = go
+	self._tr = go.transform
 
-	arg_1_0._gonormal = gohelper.findChild(arg_1_1, "#go_normal")
-	arg_1_0._godisturb = gohelper.findChild(arg_1_1, "#go_disturb")
-	arg_1_0._goconnected = gohelper.findChild(arg_1_1, "#go_connected")
-	arg_1_0._gofirst = gohelper.findChild(arg_1_1, "#go_fristpoint")
-	arg_1_0._click = gohelper.getClickWithDefaultAudio(arg_1_0.go)
+	self:initPos(0, 0)
+	gohelper.setActive(self.go, true)
+
+	self._gonormal = gohelper.findChild(go, "#go_normal")
+	self._godisturb = gohelper.findChild(go, "#go_disturb")
+	self._goconnected = gohelper.findChild(go, "#go_connected")
+	self._gofirst = gohelper.findChild(go, "#go_fristpoint")
+	self._click = gohelper.getClickWithDefaultAudio(self.go)
 end
 
-function var_0_0.addEventListeners(arg_2_0)
+function YeShuMeiPointItem:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
+function YeShuMeiPointItem:removeEventListeners()
 	return
 end
 
-function var_0_0.initPos(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0._localPosX = arg_4_1
-	arg_4_0._localPosY = arg_4_2
+function YeShuMeiPointItem:initPos(posX, posY)
+	self._localPosX = posX
+	self._localPosY = posY
 
-	transformhelper.setLocalPosXY(arg_4_0._tr, arg_4_1, arg_4_2)
+	transformhelper.setLocalPosXY(self._tr, posX, posY)
 end
 
-function var_0_0.getLocalPos(arg_5_0)
-	return arg_5_0._localPosX, arg_5_0._localPosY
+function YeShuMeiPointItem:getLocalPos()
+	return self._localPosX, self._localPosY
 end
 
-function var_0_0.updateInfo(arg_6_0, arg_6_1)
-	if not arg_6_1 then
+function YeShuMeiPointItem:updateInfo(mo)
+	if not mo then
 		return
 	end
 
-	arg_6_0._mo = arg_6_1
-	arg_6_0.id = arg_6_1.id
-	arg_6_0.typeId = arg_6_1.typeId
-	arg_6_0.posX = arg_6_1.posX
-	arg_6_0.posY = arg_6_1.posY
+	self._mo = mo
+	self.id = mo.id
+	self.typeId = mo.typeId
+	self.posX = mo.posX
+	self.posY = mo.posY
 
-	arg_6_0:initPos(arg_6_0.posX, arg_6_0.posY)
-	arg_6_0:updateUI()
+	self:initPos(self.posX, self.posY)
+	self:updateUI()
 end
 
-function var_0_0.updateUI(arg_7_0)
-	local var_7_0 = YeShuMeiGameModel.instance:getStartPointIds()
+function YeShuMeiPointItem:updateUI()
+	local startIds = YeShuMeiGameModel.instance:getStartPointIds()
 
-	if var_7_0 then
-		for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-			if arg_7_0.id == iter_7_1 then
-				arg_7_0._isStart = true
+	if startIds then
+		for _, pointId in ipairs(startIds) do
+			if self.id == pointId then
+				self._isStart = true
 
 				break
 			else
-				arg_7_0._isStart = false
+				self._isStart = false
 			end
 		end
 	end
 
-	if arg_7_0._mo.state == YeShuMeiEnum.StateType.Normal then
-		gohelper.setActive(arg_7_0._gonormal, not arg_7_0._isStart)
-		gohelper.setActive(arg_7_0._gofirst, arg_7_0._isStart)
-		gohelper.setActive(arg_7_0._goconnected, false)
-		gohelper.setActive(arg_7_0._godisturb, false)
-	elseif arg_7_0._mo.state == YeShuMeiEnum.StateType.Connect then
-		gohelper.setActive(arg_7_0._gonormal, not arg_7_0._isStart)
-		gohelper.setActive(arg_7_0._gofirst, arg_7_0._isStart)
-		gohelper.setActive(arg_7_0._goconnected, true)
-		gohelper.setActive(arg_7_0._godisturb, false)
+	if self._mo.state == YeShuMeiEnum.StateType.Normal then
+		gohelper.setActive(self._gonormal, not self._isStart)
+		gohelper.setActive(self._gofirst, self._isStart)
+		gohelper.setActive(self._goconnected, false)
+		gohelper.setActive(self._godisturb, false)
+	elseif self._mo.state == YeShuMeiEnum.StateType.Connect then
+		gohelper.setActive(self._gonormal, not self._isStart)
+		gohelper.setActive(self._gofirst, self._isStart)
+		gohelper.setActive(self._goconnected, true)
+		gohelper.setActive(self._godisturb, false)
 	else
-		gohelper.setActive(arg_7_0._gofirst, false)
-		gohelper.setActive(arg_7_0._gonormal, false)
-		gohelper.setActive(arg_7_0._goconnected, false)
-		gohelper.setActive(arg_7_0._godisturb, true)
+		gohelper.setActive(self._gofirst, false)
+		gohelper.setActive(self._gonormal, false)
+		gohelper.setActive(self._goconnected, false)
+		gohelper.setActive(self._godisturb, true)
 	end
 end
 
-function var_0_0.checkIsStartPoint(arg_8_0)
-	return arg_8_0.isStart
+function YeShuMeiPointItem:checkIsStartPoint()
+	return self.isStart
 end
 
-function var_0_0.clearPoint(arg_9_0)
-	arg_9_0.id = 0
-	arg_9_0.typeId = 1
-	arg_9_0.posX = 0
-	arg_9_0.posY = 0
+function YeShuMeiPointItem:clearPoint()
+	self.id = 0
+	self.typeId = 1
+	self.posX = 0
+	self.posY = 0
 
-	arg_9_0:initPos(arg_9_0.posX, arg_9_0.posY)
-	gohelper.setActive(arg_9_0.go, false)
+	self:initPos(self.posX, self.posY)
+	gohelper.setActive(self.go, false)
 end
 
-function var_0_0.onClick(arg_10_0)
-	if arg_10_0._mo == nil then
+function YeShuMeiPointItem:onClick()
+	if self._mo == nil then
 		return
 	end
 
-	YeShuMeiGameController.instance:dispatchEvent(YeShuMeiEvent.OnClickPoint, arg_10_0._mo:getId())
+	YeShuMeiGameController.instance:dispatchEvent(YeShuMeiEvent.OnClickPoint, self._mo:getId())
 end
 
-function var_0_0.checkPointId(arg_11_0, arg_11_1)
-	return arg_11_1 == arg_11_0.id
+function YeShuMeiPointItem:checkPointId(id)
+	return id == self.id
 end
 
-function var_0_0.onDestroy(arg_12_0)
-	arg_12_0:clearPoint()
+function YeShuMeiPointItem:onDestroy()
+	self:clearPoint()
 end
 
-return var_0_0
+return YeShuMeiPointItem

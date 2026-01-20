@@ -1,40 +1,43 @@
-﻿module("modules.logic.versionactivity2_6.xugouji.controller.gamestep.XugoujiGameStepCardEffectStatue", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/xugouji/controller/gamestep/XugoujiGameStepCardEffectStatue.lua
 
-local var_0_0 = VersionActivity2_6Enum.ActivityId.Xugouji
-local var_0_1 = class("XugoujiGameStepCardEffectStatue", XugoujiGameStepBase)
+module("modules.logic.versionactivity2_6.xugouji.controller.gamestep.XugoujiGameStepCardEffectStatue", package.seeall)
 
-function var_0_1.start(arg_1_0)
-	local var_1_0 = arg_1_0._stepData.uid
-	local var_1_1 = arg_1_0._stepData.status
-	local var_1_2 = arg_1_0._stepData.isAdd
+local actId = VersionActivity2_6Enum.ActivityId.Xugouji
+local XugoujiGameStepCardEffectStatue = class("XugoujiGameStepCardEffectStatue", XugoujiGameStepBase)
 
-	Activity188Model.instance:updateCardEffectStatus(var_1_0, var_1_2, var_1_1)
-	TaskDispatcher.runDelay(arg_1_0._doCardEffect, arg_1_0, 0.35)
+function XugoujiGameStepCardEffectStatue:start()
+	local cardUid = self._stepData.uid
+	local effectStatus = self._stepData.status
+	local isAddEffect = self._stepData.isAdd
+
+	Activity188Model.instance:updateCardEffectStatus(cardUid, isAddEffect, effectStatus)
+	TaskDispatcher.runDelay(self._doCardEffect, self, 0.35)
 end
 
-function var_0_1._doCardEffect(arg_2_0)
-	local var_2_0 = arg_2_0._stepData.uid
+function XugoujiGameStepCardEffectStatue:_doCardEffect()
+	local cardUid = self._stepData.uid
+	local cardInfo = Activity188Model.instance:getCardInfo(cardUid)
 
-	if not Activity188Model.instance:getCardInfo(var_2_0) then
-		arg_2_0.finish()
+	if not cardInfo then
+		self.finish()
 	end
 
-	XugoujiController.instance:dispatchEvent(XugoujiEvent.CardEffectStatusUpdated, var_2_0)
-	arg_2_0:_onCardEffectActionDone()
+	XugoujiController.instance:dispatchEvent(XugoujiEvent.CardEffectStatusUpdated, cardUid)
+	self:_onCardEffectActionDone()
 end
 
-function var_0_1._onCardEffectActionDone(arg_3_0)
-	TaskDispatcher.runDelay(arg_3_0.finish, arg_3_0, 0.5)
+function XugoujiGameStepCardEffectStatue:_onCardEffectActionDone()
+	TaskDispatcher.runDelay(self.finish, self, 0.5)
 end
 
-function var_0_1.finish(arg_4_0)
-	var_0_1.super.finish(arg_4_0)
+function XugoujiGameStepCardEffectStatue:finish()
+	XugoujiGameStepCardEffectStatue.super.finish(self)
 end
 
-function var_0_1.dispose(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0._doCardEffect, arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0.finish, arg_5_0)
-	XugoujiGameStepBase.dispose(arg_5_0)
+function XugoujiGameStepCardEffectStatue:dispose()
+	TaskDispatcher.cancelTask(self._doCardEffect, self)
+	TaskDispatcher.cancelTask(self.finish, self)
+	XugoujiGameStepBase.dispose(self)
 end
 
-return var_0_1
+return XugoujiGameStepCardEffectStatue

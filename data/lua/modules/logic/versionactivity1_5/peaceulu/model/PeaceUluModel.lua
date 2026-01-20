@@ -1,201 +1,209 @@
-﻿module("modules.logic.versionactivity1_5.peaceulu.model.PeaceUluModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/peaceulu/model/PeaceUluModel.lua
 
-local var_0_0 = class("PeaceUluModel", BaseModel)
+module("modules.logic.versionactivity1_5.peaceulu.model.PeaceUluModel", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.super:ctor()
+local PeaceUluModel = class("PeaceUluModel", BaseModel)
 
-	arg_1_0.serverTaskModel = BaseModel.New()
+function PeaceUluModel:ctor()
+	self.super:ctor()
+
+	self.serverTaskModel = BaseModel.New()
 end
 
-function var_0_0.setActivityInfo(arg_2_0, arg_2_1)
-	arg_2_0.removeNum = arg_2_1.removeNum
-	arg_2_0.gameNum = arg_2_1.gameNum
-	arg_2_0.hasGetBonusIds = arg_2_1.hasGetBonusIds
-	arg_2_0.lastGameRecord = arg_2_1.lastGameRecord
+function PeaceUluModel:setActivityInfo(info)
+	self.removeNum = info.removeNum
+	self.gameNum = info.gameNum
+	self.hasGetBonusIds = info.hasGetBonusIds
+	self.lastGameRecord = info.lastGameRecord
 
-	arg_2_0.serverTaskModel:clear()
-	arg_2_0:setTasksInfo(arg_2_1.tasks)
+	self.serverTaskModel:clear()
+	self:setTasksInfo(info.tasks)
 end
 
-function var_0_0.onGetRemoveTask(arg_3_0, arg_3_1)
-	arg_3_0.taskId = arg_3_1.taskId
-	arg_3_0.removeNum = arg_3_1.removeNum
+function PeaceUluModel:onGetRemoveTask(msg)
+	self.taskId = msg.taskId
+	self.removeNum = msg.removeNum
 
-	arg_3_0:setTasksInfo(arg_3_1.tasks)
+	self:setTasksInfo(msg.tasks)
 	PeaceUluController.instance:dispatchEvent(PeaceUluEvent.OnUpdateInfo)
 end
 
-function var_0_0.checkTaskId(arg_4_0)
-	if arg_4_0.taskId then
+function PeaceUluModel:checkTaskId()
+	if self.taskId then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.cleanTaskId(arg_5_0)
-	if arg_5_0.taskId then
-		arg_5_0.taskId = nil
+function PeaceUluModel:cleanTaskId()
+	if self.taskId then
+		self.taskId = nil
 	end
 end
 
-function var_0_0.getLastGameRecord(arg_6_0)
-	return arg_6_0.lastGameRecord
+function PeaceUluModel:getLastGameRecord()
+	return self.lastGameRecord
 end
 
-function var_0_0.onGetGameResult(arg_7_0, arg_7_1)
-	arg_7_0.gameRes = arg_7_1.gameRes
-	arg_7_0.removeNum = arg_7_1.removeNum
-	arg_7_0.gameNum = arg_7_1.gameNum
-	arg_7_0.lastSelect = arg_7_1.content
+function PeaceUluModel:onGetGameResult(info)
+	self.gameRes = info.gameRes
+	self.removeNum = info.removeNum
+	self.gameNum = info.gameNum
+	self.lastSelect = info.content
 
-	arg_7_0:setOtherChoice()
+	self:setOtherChoice()
 	PeaceUluController.instance:dispatchEvent(PeaceUluEvent.onGetGameResult)
 end
 
-function var_0_0.onUpdateReward(arg_8_0, arg_8_1)
-	arg_8_0.hasGetBonusIds = arg_8_1.hasGetBonusIds
-	arg_8_0.bonusIds = arg_8_1.bonusIds
+function PeaceUluModel:onUpdateReward(info)
+	self.hasGetBonusIds = info.hasGetBonusIds
+	self.bonusIds = info.bonusIds
 end
 
-function var_0_0.checkBonusIds(arg_9_0)
-	if arg_9_0.bonusIds then
+function PeaceUluModel:checkBonusIds()
+	if self.bonusIds then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.cleanBonusIds(arg_10_0)
-	if arg_10_0.bonusIds then
-		arg_10_0.bonusIds = nil
+function PeaceUluModel:cleanBonusIds()
+	if self.bonusIds then
+		self.bonusIds = nil
 	end
 end
 
-function var_0_0.checkCanRemove(arg_11_0)
-	if not arg_11_0.removeNum or arg_11_0.removeNum == 0 then
+function PeaceUluModel:checkCanRemove()
+	if not self.removeNum or self.removeNum == 0 then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0.checkCanPlay(arg_12_0)
-	if not arg_12_0.gameNum then
+function PeaceUluModel:checkCanPlay()
+	if not self.gameNum then
 		return
 	end
 
-	if PeaceUluConfig.instance:getGameTimes() > arg_12_0.gameNum then
+	local configNum = PeaceUluConfig.instance:getGameTimes()
+
+	if configNum > self.gameNum then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.getRemoveNum(arg_13_0)
-	if not arg_13_0.removeNum or arg_13_0.removeNum == 0 then
+function PeaceUluModel:getRemoveNum()
+	if not self.removeNum or self.removeNum == 0 then
 		return false
 	end
 
-	return arg_13_0.removeNum
+	return self.removeNum
 end
 
-function var_0_0.getGameHaveTimes(arg_14_0)
-	if not arg_14_0.gameNum then
+function PeaceUluModel:getGameHaveTimes()
+	if not self.gameNum then
 		return
 	end
 
-	return PeaceUluConfig.instance:getGameTimes() - arg_14_0.gameNum
+	local num = PeaceUluConfig.instance:getGameTimes()
+
+	return num - self.gameNum
 end
 
-function var_0_0.setOtherChoice(arg_15_0)
-	if arg_15_0.gameRes == PeaceUluEnum.GameResult.Draw then
-		arg_15_0.otherChoice = arg_15_0.lastSelect
-	elseif arg_15_0.gameRes == PeaceUluEnum.GameResult.Win then
-		arg_15_0.otherChoice = arg_15_0:_gameRule(arg_15_0.lastSelect, true)
+function PeaceUluModel:setOtherChoice()
+	if self.gameRes == PeaceUluEnum.GameResult.Draw then
+		self.otherChoice = self.lastSelect
+	elseif self.gameRes == PeaceUluEnum.GameResult.Win then
+		self.otherChoice = self:_gameRule(self.lastSelect, true)
 	else
-		arg_15_0.otherChoice = arg_15_0:_gameRule(arg_15_0.lastSelect, false)
+		self.otherChoice = self:_gameRule(self.lastSelect, false)
 	end
 end
 
-function var_0_0._gameRule(arg_16_0, arg_16_1, arg_16_2)
-	if arg_16_1 == PeaceUluEnum.Game.Scissors then
-		if arg_16_2 then
+function PeaceUluModel:_gameRule(select, isWin)
+	if select == PeaceUluEnum.Game.Scissors then
+		if isWin then
 			return PeaceUluEnum.Game.Paper
 		else
 			return PeaceUluEnum.Game.Rock
 		end
-	elseif arg_16_1 == PeaceUluEnum.Game.Rock then
-		if arg_16_2 then
+	elseif select == PeaceUluEnum.Game.Rock then
+		if isWin then
 			return PeaceUluEnum.Game.Scissors
 		else
 			return PeaceUluEnum.Game.Paper
 		end
-	elseif arg_16_2 then
+	elseif isWin then
 		return PeaceUluEnum.Game.Rock
 	else
 		return PeaceUluEnum.Game.Scissors
 	end
 end
 
-function var_0_0.getGameRes(arg_17_0)
-	return arg_17_0.gameRes
+function PeaceUluModel:getGameRes()
+	return self.gameRes
 end
 
-function var_0_0.setPlaying(arg_18_0, arg_18_1)
-	arg_18_0._isPlaying = arg_18_1
+function PeaceUluModel:setPlaying(state)
+	self._isPlaying = state
 end
 
-function var_0_0.isPlaying(arg_19_0)
-	if arg_19_0._isPlaying == true then
+function PeaceUluModel:isPlaying()
+	if self._isPlaying == true then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.getSchedule(arg_20_0)
-	local var_20_0 = 0
-	local var_20_1 = 0.1
-	local var_20_2 = 0.955
-	local var_20_3 = PeaceUluConfig.instance:getBonusCoList()
-	local var_20_4 = #var_20_3
-	local var_20_5 = PeaceUluConfig.instance:getProgressByIndex(1)
-	local var_20_6 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.Act145).quantity
-	local var_20_7 = 0
-	local var_20_8 = 0
-	local var_20_9 = 0
+function PeaceUluModel:getSchedule()
+	local fillAmount = 0
+	local firstFillAmount = 0.1
+	local maxFillAmount = 0.955
+	local rewardColist = PeaceUluConfig.instance:getBonusCoList()
+	local rewardCount = #rewardColist
+	local firstNum = PeaceUluConfig.instance:getProgressByIndex(1)
+	local havenum = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.Act145).quantity
+	local currentIndex = 0
+	local currentIndexNum = 0
+	local nextIndexNum = 0
 
-	for iter_20_0, iter_20_1 in ipairs(var_20_3) do
-		if var_20_6 >= PeaceUluConfig.instance:getProgressByIndex(iter_20_0) then
-			var_20_7 = iter_20_0
-			var_20_8 = PeaceUluConfig.instance:getProgressByIndex(iter_20_0)
+	for index, rewardco in ipairs(rewardColist) do
+		local indexNum = PeaceUluConfig.instance:getProgressByIndex(index)
+
+		if indexNum <= havenum then
+			currentIndex = index
+			currentIndexNum = PeaceUluConfig.instance:getProgressByIndex(index)
 		else
-			var_20_9 = PeaceUluConfig.instance:getProgressByIndex(iter_20_0)
+			nextIndexNum = PeaceUluConfig.instance:getProgressByIndex(index)
 
 			break
 		end
 	end
 
-	local var_20_10 = (var_20_2 - var_20_1) / (var_20_4 - 1)
-	local var_20_11 = (var_20_6 - var_20_8) / (var_20_9 - var_20_8)
+	local per = (maxFillAmount - firstFillAmount) / (rewardCount - 1)
+	local progress = (havenum - currentIndexNum) / (nextIndexNum - currentIndexNum)
 
-	if var_20_7 == var_20_4 then
-		var_20_0 = 1
-	elseif var_20_7 - 1 + var_20_11 <= 0 then
-		var_20_0 = var_20_6 / var_20_5 * var_20_1
+	if currentIndex == rewardCount then
+		fillAmount = 1
+	elseif currentIndex - 1 + progress <= 0 then
+		fillAmount = havenum / firstNum * firstFillAmount
 	else
-		var_20_0 = var_20_1 + var_20_10 * (var_20_7 - 1 + var_20_11)
+		fillAmount = firstFillAmount + per * (currentIndex - 1 + progress)
 	end
 
-	return var_20_0
+	return fillAmount
 end
 
-function var_0_0.checkGetReward(arg_21_0, arg_21_1)
-	if arg_21_0.hasGetBonusIds then
-		for iter_21_0, iter_21_1 in pairs(arg_21_0.hasGetBonusIds) do
-			if iter_21_1 == arg_21_1 then
+function PeaceUluModel:checkGetReward(bonusId)
+	if self.hasGetBonusIds then
+		for i, id in pairs(self.hasGetBonusIds) do
+			if id == bonusId then
 				return true
 			end
 		end
@@ -204,64 +212,68 @@ function var_0_0.checkGetReward(arg_21_0, arg_21_1)
 	return false
 end
 
-function var_0_0.checkGetAllReward(arg_22_0)
-	if arg_22_0.hasGetBonusIds and #PeaceUluConfig.instance:getBonusCoList() == #arg_22_0.hasGetBonusIds then
-		return true
+function PeaceUluModel:checkGetAllReward()
+	if self.hasGetBonusIds then
+		local bonusCoList = PeaceUluConfig.instance:getBonusCoList()
+
+		if #bonusCoList == #self.hasGetBonusIds then
+			return true
+		end
 	end
 
 	return false
 end
 
-function var_0_0.getOtherChoice(arg_23_0)
-	return arg_23_0.otherChoice
+function PeaceUluModel:getOtherChoice()
+	return self.otherChoice
 end
 
-function var_0_0.getTasksInfo(arg_24_0)
-	return arg_24_0.serverTaskModel:getList()
+function PeaceUluModel:getTasksInfo()
+	return self.serverTaskModel:getList()
 end
 
-function var_0_0.setTasksInfo(arg_25_0, arg_25_1)
-	local var_25_0
+function PeaceUluModel:setTasksInfo(taskInfoList)
+	local hasChange
 
-	for iter_25_0, iter_25_1 in ipairs(arg_25_1) do
-		local var_25_1 = arg_25_0.serverTaskModel:getById(iter_25_1.id)
+	for i, info in ipairs(taskInfoList) do
+		local mo = self.serverTaskModel:getById(info.id)
 
-		if var_25_1 then
-			var_25_1:update(iter_25_1)
+		if mo then
+			mo:update(info)
 		else
-			local var_25_2 = PeaceUluConfig.instance:getTaskCo(iter_25_1.id)
+			local co = PeaceUluConfig.instance:getTaskCo(info.id)
 
-			if var_25_2 then
-				local var_25_3 = TaskMo.New()
+			if co then
+				mo = TaskMo.New()
 
-				var_25_3:init(iter_25_1, var_25_2)
-				arg_25_0.serverTaskModel:addAtLast(var_25_3)
+				mo:init(info, co)
+				self.serverTaskModel:addAtLast(mo)
 			end
 		end
 
-		var_25_0 = true
+		hasChange = true
 	end
 
-	if var_25_0 then
-		arg_25_0:sortList()
+	if hasChange then
+		self:sortList()
 	end
 
-	return var_25_0
+	return hasChange
 end
 
-function var_0_0.sortList(arg_26_0)
-	arg_26_0.serverTaskModel:sort(function(arg_27_0, arg_27_1)
-		local var_27_0 = arg_27_0.finishCount > 0 and 3 or arg_27_0.progress >= arg_27_0.config.maxProgress and 1 or 2
-		local var_27_1 = arg_27_1.finishCount > 0 and 3 or arg_27_1.progress >= arg_27_1.config.maxProgress and 1 or 2
+function PeaceUluModel:sortList()
+	self.serverTaskModel:sort(function(a, b)
+		local aValue = a.finishCount > 0 and 3 or a.progress >= a.config.maxProgress and 1 or 2
+		local bValue = b.finishCount > 0 and 3 or b.progress >= b.config.maxProgress and 1 or 2
 
-		if var_27_0 ~= var_27_1 then
-			return var_27_0 < var_27_1
+		if aValue ~= bValue then
+			return aValue < bValue
 		else
-			return arg_27_0.config.id < arg_27_1.config.id
+			return a.config.id < b.config.id
 		end
 	end)
 end
 
-var_0_0.instance = var_0_0.New()
+PeaceUluModel.instance = PeaceUluModel.New()
 
-return var_0_0
+return PeaceUluModel

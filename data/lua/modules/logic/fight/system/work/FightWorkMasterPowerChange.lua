@@ -1,17 +1,19 @@
-﻿module("modules.logic.fight.system.work.FightWorkMasterPowerChange", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkMasterPowerChange.lua
 
-local var_0_0 = class("FightWorkMasterPowerChange", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkMasterPowerChange", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0:_delayDone()
+local FightWorkMasterPowerChange = class("FightWorkMasterPowerChange", FightEffectBase)
+
+function FightWorkMasterPowerChange:onStart()
+	self:_delayDone()
 end
 
-function var_0_0._delayDone(arg_2_0)
-	arg_2_0:onDone(true)
+function FightWorkMasterPowerChange:_delayDone()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
+function FightWorkMasterPowerChange:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkMasterPowerChange

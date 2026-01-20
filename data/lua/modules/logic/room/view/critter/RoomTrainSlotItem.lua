@@ -1,141 +1,143 @@
-﻿module("modules.logic.room.view.critter.RoomTrainSlotItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/critter/RoomTrainSlotItem.lua
 
-local var_0_0 = class("RoomTrainSlotItem", ListScrollCellExtend)
+module("modules.logic.room.view.critter.RoomTrainSlotItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goadd = gohelper.findChild(arg_1_0.viewGO, "#go_add")
-	arg_1_0._golock = gohelper.findChild(arg_1_0.viewGO, "#go_lock")
-	arg_1_0._gounlock = gohelper.findChild(arg_1_0.viewGO, "#go_unlock")
-	arg_1_0._gocrittenIcon = gohelper.findChild(arg_1_0.viewGO, "#go_unlock/#go_crittenIcon")
-	arg_1_0._simageheroIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_unlock/#simage_heroIcon")
-	arg_1_0._simagetotalBarValue = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_unlock/ProgressBg/#simage_totalBarValue")
-	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "#go_unlock/#go_select")
-	arg_1_0._gofinish = gohelper.findChild(arg_1_0.viewGO, "#go_unlock/#go_finish")
-	arg_1_0._gobubble = gohelper.findChild(arg_1_0.viewGO, "#go_unlock/#go_bubble")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_click")
-	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "#go_reddot")
+local RoomTrainSlotItem = class("RoomTrainSlotItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomTrainSlotItem:onInitView()
+	self._goadd = gohelper.findChild(self.viewGO, "#go_add")
+	self._golock = gohelper.findChild(self.viewGO, "#go_lock")
+	self._gounlock = gohelper.findChild(self.viewGO, "#go_unlock")
+	self._gocrittenIcon = gohelper.findChild(self.viewGO, "#go_unlock/#go_crittenIcon")
+	self._simageheroIcon = gohelper.findChildSingleImage(self.viewGO, "#go_unlock/#simage_heroIcon")
+	self._simagetotalBarValue = gohelper.findChildSingleImage(self.viewGO, "#go_unlock/ProgressBg/#simage_totalBarValue")
+	self._goselect = gohelper.findChild(self.viewGO, "#go_unlock/#go_select")
+	self._gofinish = gohelper.findChild(self.viewGO, "#go_unlock/#go_finish")
+	self._gobubble = gohelper.findChild(self.viewGO, "#go_unlock/#go_bubble")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_click")
+	self._goreddot = gohelper.findChild(self.viewGO, "#go_reddot")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickitemOnClick, arg_2_0)
+function RoomTrainSlotItem:addEvents()
+	self._btnclick:AddClickListener(self._btnclickitemOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
+function RoomTrainSlotItem:removeEvents()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0._btnclickitemOnClick(arg_4_0)
-	if arg_4_0._view and arg_4_0._view.viewContainer then
-		if not arg_4_0._slotMO or arg_4_0._slotMO.isLock then
+function RoomTrainSlotItem:_btnclickitemOnClick()
+	if self._view and self._view.viewContainer then
+		if not self._slotMO or self._slotMO.isLock then
 			GameFacade.showToast(ToastEnum.SeasonEquipUnlock)
 
 			return
 		end
 
-		arg_4_0._view.viewContainer:dispatchEvent(CritterEvent.UITrainSelectSlot, arg_4_0:getDataMO())
+		self._view.viewContainer:dispatchEvent(CritterEvent.UITrainSelectSlot, self:getDataMO())
 	end
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._imageTrainBarValue = gohelper.findChildImage(arg_5_0.viewGO, "#go_unlock/ProgressBg/#simage_totalBarValue")
+function RoomTrainSlotItem:_editableInitView()
+	self._imageTrainBarValue = gohelper.findChildImage(self.viewGO, "#go_unlock/ProgressBg/#simage_totalBarValue")
 end
 
-function var_0_0._editableAddEvents(arg_6_0)
-	if arg_6_0._view and arg_6_0._view.viewContainer then
-		arg_6_0._view.viewContainer:registerCallback(CritterEvent.UITrainCdTime, arg_6_0._opTranCdTimeUpdate, arg_6_0)
+function RoomTrainSlotItem:_editableAddEvents()
+	if self._view and self._view.viewContainer then
+		self._view.viewContainer:registerCallback(CritterEvent.UITrainCdTime, self._opTranCdTimeUpdate, self)
 	end
 end
 
-function var_0_0._editableRemoveEvents(arg_7_0)
-	if arg_7_0._view and arg_7_0._view.viewContainer then
-		arg_7_0._view.viewContainer:unregisterCallback(CritterEvent.UITrainCdTime, arg_7_0._opTranCdTimeUpdate, arg_7_0)
+function RoomTrainSlotItem:_editableRemoveEvents()
+	if self._view and self._view.viewContainer then
+		self._view.viewContainer:unregisterCallback(CritterEvent.UITrainCdTime, self._opTranCdTimeUpdate, self)
 	end
 end
 
-function var_0_0.getDataMO(arg_8_0)
-	return arg_8_0._slotMO
+function RoomTrainSlotItem:getDataMO()
+	return self._slotMO
 end
 
-function var_0_0.onUpdateMO(arg_9_0, arg_9_1)
-	arg_9_0._slotMO = arg_9_1
+function RoomTrainSlotItem:onUpdateMO(mo)
+	self._slotMO = mo
 
-	arg_9_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0._opTranCdTimeUpdate(arg_10_0)
-	arg_10_0:_refreshTrainProgressUI()
+function RoomTrainSlotItem:_opTranCdTimeUpdate()
+	self:_refreshTrainProgressUI()
 end
 
-function var_0_0.onSelect(arg_11_0, arg_11_1)
-	gohelper.setActive(arg_11_0._goselect, arg_11_1)
+function RoomTrainSlotItem:onSelect(isSelect)
+	gohelper.setActive(self._goselect, isSelect)
 end
 
-function var_0_0.onDestroyView(arg_12_0)
+function RoomTrainSlotItem:onDestroyView()
 	return
 end
 
-function var_0_0.refreshUI(arg_13_0)
-	local var_13_0 = arg_13_0._slotMO.isLock
-	local var_13_1 = arg_13_0._slotMO.critterMO ~= nil
+function RoomTrainSlotItem:refreshUI()
+	local isLock = self._slotMO.isLock
+	local isHasCritter = self._slotMO.critterMO ~= nil
 
-	gohelper.setActive(arg_13_0._golock, var_13_0)
-	gohelper.setActive(arg_13_0._goadd, not var_13_1)
-	gohelper.setActive(arg_13_0._gounlock, not var_13_0 and var_13_1)
+	gohelper.setActive(self._golock, isLock)
+	gohelper.setActive(self._goadd, not isHasCritter)
+	gohelper.setActive(self._gounlock, not isLock and isHasCritter)
 
-	if not var_13_0 and var_13_1 then
-		arg_13_0:_refreshCritterUI()
-		arg_13_0:_refreshTrainProgressUI()
+	if not isLock and isHasCritter then
+		self:_refreshCritterUI()
+		self:_refreshTrainProgressUI()
 	end
 
-	local var_13_2 = not var_13_0 and arg_13_0._slotMO.id == 1
+	local redDot = not isLock and self._slotMO.id == 1
 
-	gohelper.setActive(arg_13_0._goreddot, var_13_2)
+	gohelper.setActive(self._goreddot, redDot)
 
-	if var_13_2 then
-		RedDotController.instance:addRedDot(arg_13_0._goreddot, RedDotEnum.DotNode.RoomCritterTrainOcne)
+	if redDot then
+		RedDotController.instance:addRedDot(self._goreddot, RedDotEnum.DotNode.RoomCritterTrainOcne)
 	end
 end
 
-function var_0_0._refreshCritterUI(arg_14_0)
-	local var_14_0 = arg_14_0._slotMO.critterMO
+function RoomTrainSlotItem:_refreshCritterUI()
+	local critterMO = self._slotMO.critterMO
 
-	if var_14_0 then
-		if not arg_14_0.critterIcon then
-			arg_14_0.critterIcon = IconMgr.instance:getCommonCritterIcon(arg_14_0._gocrittenIcon)
+	if critterMO then
+		if not self.critterIcon then
+			self.critterIcon = IconMgr.instance:getCommonCritterIcon(self._gocrittenIcon)
 		end
 
-		arg_14_0.critterIcon:setMOValue(var_14_0:getId(), var_14_0:getDefineId())
+		self.critterIcon:setMOValue(critterMO:getId(), critterMO:getDefineId())
 
-		local var_14_1 = HeroModel.instance:getByHeroId(var_14_0.trainInfo.heroId)
-		local var_14_2 = var_14_1 and SkinConfig.instance:getSkinCo(var_14_1.skin)
+		local heroMO = HeroModel.instance:getByHeroId(critterMO.trainInfo.heroId)
+		local skinConfig = heroMO and SkinConfig.instance:getSkinCo(heroMO.skin)
 
-		if var_14_2 then
-			arg_14_0._simageheroIcon:LoadImage(ResUrl.getRoomHeadIcon(var_14_2.headIcon))
+		if skinConfig then
+			self._simageheroIcon:LoadImage(ResUrl.getRoomHeadIcon(skinConfig.headIcon))
 		end
 	end
 end
 
-function var_0_0._refreshTrainProgressUI(arg_15_0)
-	local var_15_0 = arg_15_0._slotMO and arg_15_0._slotMO.critterMO
+function RoomTrainSlotItem:_refreshTrainProgressUI()
+	local critterMO = self._slotMO and self._slotMO.critterMO
 
-	if var_15_0 and var_15_0.trainInfo then
-		local var_15_1 = var_15_0.trainInfo
+	if critterMO and critterMO.trainInfo then
+		local trainInfo = critterMO.trainInfo
 
-		gohelper.setActive(arg_15_0._gofinish, var_15_0.trainInfo:isTrainFinish())
-		gohelper.setActive(arg_15_0._gobubble, var_15_0.trainInfo:isHasEventTrigger())
+		gohelper.setActive(self._gofinish, critterMO.trainInfo:isTrainFinish())
+		gohelper.setActive(self._gobubble, critterMO.trainInfo:isHasEventTrigger())
 
-		local var_15_2 = var_15_1:getProcess()
-		local var_15_3 = 0.05
-		local var_15_4 = 0.638
+		local process = trainInfo:getProcess()
+		local min = 0.05
+		local max = 0.638
 
-		arg_15_0._imageTrainBarValue.fillAmount = var_15_3 + var_15_2 * (var_15_4 - var_15_3)
+		self._imageTrainBarValue.fillAmount = min + process * (max - min)
 	end
 end
 
-var_0_0.prefabPath = "ui/viewres/room/critter/roomtrainslotitem.prefab"
+RoomTrainSlotItem.prefabPath = "ui/viewres/room/critter/roomtrainslotitem.prefab"
 
-return var_0_0
+return RoomTrainSlotItem

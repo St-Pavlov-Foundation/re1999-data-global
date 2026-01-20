@@ -1,31 +1,33 @@
-﻿module("modules.logic.voyage.rpc.Activity1001Rpc", package.seeall)
+﻿-- chunkname: @modules/logic/voyage/rpc/Activity1001Rpc.lua
 
-local var_0_0 = class("Activity1001Rpc", BaseRpc)
+module("modules.logic.voyage.rpc.Activity1001Rpc", package.seeall)
 
-function var_0_0.sendAct1001GetInfoRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	local var_1_0 = Activity1001Module_pb.Act1001GetInfoRequest()
+local Activity1001Rpc = class("Activity1001Rpc", BaseRpc)
 
-	var_1_0.activityId = arg_1_1
+function Activity1001Rpc:sendAct1001GetInfoRequest(activityId, callback, callbackObj, socketId)
+	local req = Activity1001Module_pb.Act1001GetInfoRequest()
 
-	arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3, arg_1_4)
+	req.activityId = activityId
+
+	self:sendMsg(req, callback, callbackObj, socketId)
 end
 
-function var_0_0.onReceiveAct1001GetInfoReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 ~= 0 then
+function Activity1001Rpc:onReceiveAct1001GetInfoReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	VoyageController.instance:_onReceiveAct1001GetInfoReply(arg_2_2)
+	VoyageController.instance:_onReceiveAct1001GetInfoReply(msg)
 end
 
-function var_0_0.onReceiveAct1001UpdatePush(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 ~= 0 then
+function Activity1001Rpc:onReceiveAct1001UpdatePush(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	VoyageController.instance:_onReceiveAct1001UpdatePush(arg_3_2)
+	VoyageController.instance:_onReceiveAct1001UpdatePush(msg)
 end
 
-var_0_0.instance = var_0_0.New()
+Activity1001Rpc.instance = Activity1001Rpc.New()
 
-return var_0_0
+return Activity1001Rpc

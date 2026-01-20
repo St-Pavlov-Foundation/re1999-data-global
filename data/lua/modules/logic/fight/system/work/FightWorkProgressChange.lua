@@ -1,37 +1,39 @@
-﻿module("modules.logic.fight.system.work.FightWorkProgressChange", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkProgressChange.lua
 
-local var_0_0 = class("FightWorkProgressChange", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkProgressChange", package.seeall)
 
-function var_0_0.beforePlayEffectData(arg_1_0)
-	arg_1_0._oldValue = FightDataHelper.fieldMgr.progress
+local FightWorkProgressChange = class("FightWorkProgressChange", FightEffectBase)
+
+function FightWorkProgressChange:beforePlayEffectData()
+	self._oldValue = FightDataHelper.fieldMgr.progress
 end
 
-function var_0_0.onStart(arg_2_0)
-	arg_2_0:com_sendMsg(FightMsgId.FightProgressValueChange)
+function FightWorkProgressChange:onStart()
+	self:com_sendMsg(FightMsgId.FightProgressValueChange)
 
-	local var_2_0 = arg_2_0.actEffectData.buffActId
+	local pregressId = self.actEffectData.buffActId
 
-	if var_2_0 == 0 then
-		arg_2_0._maxValue = FightDataHelper.fieldMgr.progressMax
+	if pregressId == 0 then
+		self._maxValue = FightDataHelper.fieldMgr.progressMax
 
-		if arg_2_0._oldValue < arg_2_0._maxValue and FightDataHelper.fieldMgr.progress >= arg_2_0._maxValue then
-			arg_2_0:com_registTimer(arg_2_0._delayAfterPerformance, 0.25 / FightModel.instance:getUISpeed())
+		if self._oldValue < self._maxValue and FightDataHelper.fieldMgr.progress >= self._maxValue then
+			self:com_registTimer(self._delayAfterPerformance, 0.25 / FightModel.instance:getUISpeed())
 		else
-			arg_2_0:onDone(true)
+			self:onDone(true)
 		end
 	else
-		local var_2_1 = FightMsgMgr.sendMsg(FightMsgId.NewProgressValueChange, var_2_0)
+		local work = FightMsgMgr.sendMsg(FightMsgId.NewProgressValueChange, pregressId)
 
-		if var_2_1 then
-			arg_2_0:playWorkAndDone(var_2_1)
+		if work then
+			self:playWorkAndDone(work)
 		else
-			arg_2_0:onDone(true)
+			self:onDone(true)
 		end
 	end
 end
 
-function var_0_0.clearWork(arg_3_0)
+function FightWorkProgressChange:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkProgressChange

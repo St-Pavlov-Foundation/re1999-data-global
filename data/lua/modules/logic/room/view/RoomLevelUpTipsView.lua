@@ -1,252 +1,252 @@
-﻿module("modules.logic.room.view.RoomLevelUpTipsView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomLevelUpTipsView.lua
 
-local var_0_0 = class("RoomLevelUpTipsView", BaseView)
-local var_0_1 = 43
+module("modules.logic.room.view.RoomLevelUpTipsView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagemaskbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_maskbg")
-	arg_1_0._txttype = gohelper.findChildText(arg_1_0.viewGO, "title/#txt_type")
-	arg_1_0._gopreviouslevel = gohelper.findChild(arg_1_0.viewGO, "levelup/previous/node/#go_previouslevel")
-	arg_1_0._txtpreviouslv = gohelper.findChildText(arg_1_0.viewGO, "levelup/previous/#txt_previouslv")
-	arg_1_0._gocurrentlevel = gohelper.findChild(arg_1_0.viewGO, "levelup/current/node/#go_currentlevel")
-	arg_1_0._txtcurrentlv = gohelper.findChildText(arg_1_0.viewGO, "levelup/current/#txt_currentlv")
-	arg_1_0._goinfo = gohelper.findChild(arg_1_0.viewGO, "levelupInfo/#go_info")
+local RoomLevelUpTipsView = class("RoomLevelUpTipsView", BaseView)
+local COST_FONT_SIZE = 43
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomLevelUpTipsView:onInitView()
+	self._simagemaskbg = gohelper.findChildSingleImage(self.viewGO, "#simage_maskbg")
+	self._txttype = gohelper.findChildText(self.viewGO, "title/#txt_type")
+	self._gopreviouslevel = gohelper.findChild(self.viewGO, "levelup/previous/node/#go_previouslevel")
+	self._txtpreviouslv = gohelper.findChildText(self.viewGO, "levelup/previous/#txt_previouslv")
+	self._gocurrentlevel = gohelper.findChild(self.viewGO, "levelup/current/node/#go_currentlevel")
+	self._txtcurrentlv = gohelper.findChildText(self.viewGO, "levelup/current/#txt_currentlv")
+	self._goinfo = gohelper.findChild(self.viewGO, "levelupInfo/#go_info")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function RoomLevelUpTipsView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function RoomLevelUpTipsView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function RoomLevelUpTipsView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._scene = GameSceneMgr.instance:getCurScene()
+function RoomLevelUpTipsView:_editableInitView()
+	self._scene = GameSceneMgr.instance:getCurScene()
 
-	gohelper.setActive(arg_5_0._gopreviouslevel, false)
-	gohelper.setActive(arg_5_0._gocurrentlevel, false)
-	gohelper.setActive(arg_5_0._goinfo, false)
+	gohelper.setActive(self._gopreviouslevel, false)
+	gohelper.setActive(self._gocurrentlevel, false)
+	gohelper.setActive(self._goinfo, false)
 
-	arg_5_0._previousLevelItemList = {}
-	arg_5_0._currentLevelItemList = {}
-	arg_5_0._infoItemList = {}
-	arg_5_0._btnclose = gohelper.findChildClickWithAudio(arg_5_0.viewGO, "bg")
+	self._previousLevelItemList = {}
+	self._currentLevelItemList = {}
+	self._infoItemList = {}
+	self._btnclose = gohelper.findChildClickWithAudio(self.viewGO, "bg")
 end
 
-function var_0_0._refreshLevel(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
-	for iter_6_0 = 1, arg_6_4 do
-		local var_6_0 = arg_6_1[iter_6_0]
+function RoomLevelUpTipsView:_refreshLevel(itemList, go, currentLevel, maxLevel)
+	for level = 1, maxLevel do
+		local item = itemList[level]
 
-		if not var_6_0 then
-			var_6_0 = arg_6_0:getUserDataTb_()
-			var_6_0.go = gohelper.cloneInPlace(arg_6_2, "item" .. iter_6_0)
-			var_6_0.golight = gohelper.findChild(var_6_0.go, "active")
+		if not item then
+			item = self:getUserDataTb_()
+			item.go = gohelper.cloneInPlace(go, "item" .. level)
+			item.golight = gohelper.findChild(item.go, "active")
 
-			table.insert(arg_6_1, var_6_0)
+			table.insert(itemList, item)
 		end
 
-		gohelper.setActive(var_6_0.golight, iter_6_0 <= arg_6_3)
-		gohelper.setActive(var_6_0.go, true)
+		gohelper.setActive(item.golight, level <= currentLevel)
+		gohelper.setActive(item.go, true)
 	end
 
-	for iter_6_1 = arg_6_4 + 1, #arg_6_1 do
-		local var_6_1 = arg_6_1[iter_6_1]
+	for i = maxLevel + 1, #itemList do
+		local item = itemList[i]
 
-		gohelper.setActive(var_6_1.go, false)
+		gohelper.setActive(item.go, false)
 	end
 end
 
-function var_0_0._playLevelAnimation(arg_7_0, arg_7_1, arg_7_2)
-	if not arg_7_1 or #arg_7_1 <= 0 then
+function RoomLevelUpTipsView:_playLevelAnimation(itemList, level)
+	if not itemList or #itemList <= 0 then
 		return
 	end
 
-	for iter_7_0 = 1, arg_7_2 do
-		local var_7_0 = arg_7_1[iter_7_0]
+	for i = 1, level do
+		local item = itemList[i]
 
-		gohelper.setActive(var_7_0.golight, false)
+		gohelper.setActive(item.golight, false)
 	end
 
-	local var_7_1 = 0.6
-	local var_7_2 = 0.06
-	local var_7_3 = var_7_1 + (arg_7_2 - 1) * var_7_2
+	local delay = 0.6
+	local interval = 0.06
+	local duration = delay + (level - 1) * interval
 
-	if arg_7_0._scene and arg_7_0._scene.tween then
-		arg_7_0._levelTweenId = arg_7_0._scene.tween:tweenFloat(0, var_7_3, var_7_3, arg_7_0._levelAnimationFrame, arg_7_0._levelAnimationFinish, arg_7_0, {
-			delay = var_7_1,
-			interval = var_7_2,
-			level = arg_7_2,
-			duration = var_7_3,
-			itemList = arg_7_1
+	if self._scene and self._scene.tween then
+		self._levelTweenId = self._scene.tween:tweenFloat(0, duration, duration, self._levelAnimationFrame, self._levelAnimationFinish, self, {
+			delay = delay,
+			interval = interval,
+			level = level,
+			duration = duration,
+			itemList = itemList
 		})
 	else
-		arg_7_0._levelTweenId = ZProj.TweenHelper.DOTweenFloat(0, var_7_3, var_7_3, arg_7_0._levelAnimationFrame, arg_7_0._levelAnimationFinish, arg_7_0, {
-			delay = var_7_1,
-			interval = var_7_2,
-			level = arg_7_2,
-			duration = var_7_3,
-			itemList = arg_7_1
+		self._levelTweenId = ZProj.TweenHelper.DOTweenFloat(0, duration, duration, self._levelAnimationFrame, self._levelAnimationFinish, self, {
+			delay = delay,
+			interval = interval,
+			level = level,
+			duration = duration,
+			itemList = itemList
 		})
 	end
 end
 
-function var_0_0._levelAnimationFrame(arg_8_0, arg_8_1, arg_8_2)
-	for iter_8_0 = 1, arg_8_2.level do
-		local var_8_0 = arg_8_2.itemList[iter_8_0]
+function RoomLevelUpTipsView:_levelAnimationFrame(value, param)
+	for i = 1, param.level do
+		local item = param.itemList[i]
 
-		gohelper.setActive(var_8_0.golight, arg_8_1 >= arg_8_2.delay + (iter_8_0 - 1) * arg_8_2.interval)
+		gohelper.setActive(item.golight, value >= param.delay + (i - 1) * param.interval)
 	end
 end
 
-function var_0_0._levelAnimationFinish(arg_9_0, arg_9_1)
-	arg_9_0:_levelAnimationFrame(arg_9_1.duration + 0.001, arg_9_1)
+function RoomLevelUpTipsView:_levelAnimationFinish(param)
+	self:_levelAnimationFrame(param.duration + 0.001, param)
 end
 
-function var_0_0.onOpen(arg_10_0)
-	if arg_10_0.viewParam.level then
-		arg_10_0:_updateLevelInfo(arg_10_0.viewParam.level)
-	elseif arg_10_0.viewParam.buildingUid then
-		arg_10_0:_updateBuildingLevelInfo(arg_10_0.viewParam.buildingUid)
+function RoomLevelUpTipsView:onOpen()
+	if self.viewParam.level then
+		self:_updateLevelInfo(self.viewParam.level)
+	elseif self.viewParam.buildingUid then
+		self:_updateBuildingLevelInfo(self.viewParam.buildingUid)
 	else
-		arg_10_0:_updateProductLineLevelInfo(arg_10_0.viewParam.productLineMO)
+		self:_updateProductLineLevelInfo(self.viewParam.productLineMO)
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_firmup_upgrade)
 end
 
-function var_0_0._updateLevelInfo(arg_11_0, arg_11_1)
-	arg_11_0._txttype.text = luaLang("room_level_up")
-	arg_11_0._txtpreviouslv.text = string.format("Lv.<size=56>%d</size>", arg_11_1 - 1)
-	arg_11_0._txtcurrentlv.text = string.format("Lv.<size=56>%d</size>", arg_11_1)
+function RoomLevelUpTipsView:_updateLevelInfo(level)
+	self._txttype.text = luaLang("room_level_up")
+	self._txtpreviouslv.text = string.format("Lv.<size=56>%d</size>", level - 1)
+	self._txtcurrentlv.text = string.format("Lv.<size=56>%d</size>", level)
 
-	local var_11_0 = RoomConfig.instance:getMaxRoomLevel()
+	local maxLevel = RoomConfig.instance:getMaxRoomLevel()
 
-	arg_11_0:_refreshLevel(arg_11_0._previousLevelItemList, arg_11_0._gopreviouslevel, arg_11_1 - 1, var_11_0)
-	arg_11_0:_refreshLevel(arg_11_0._currentLevelItemList, arg_11_0._gocurrentlevel, arg_11_1, var_11_0)
-	arg_11_0:_playLevelAnimation(arg_11_0._currentLevelItemList, arg_11_1)
+	self:_refreshLevel(self._previousLevelItemList, self._gopreviouslevel, level - 1, maxLevel)
+	self:_refreshLevel(self._currentLevelItemList, self._gocurrentlevel, level, maxLevel)
+	self:_playLevelAnimation(self._currentLevelItemList, level)
 
-	local var_11_1 = RoomProductionHelper.getRoomLevelUpParams(arg_11_1 - 1, arg_11_1, true)
+	local params = RoomProductionHelper.getRoomLevelUpParams(level - 1, level, true)
 
-	arg_11_0:_refreshDescTips(var_11_1)
+	self:_refreshDescTips(params)
 end
 
-function var_0_0._updateBuildingLevelInfo(arg_12_0, arg_12_1)
-	local var_12_0 = RoomMapBuildingModel.instance:getBuildingMOById(arg_12_1)
+function RoomLevelUpTipsView:_updateBuildingLevelInfo(buildingUid)
+	local buildingMO = RoomMapBuildingModel.instance:getBuildingMOById(buildingUid)
 
-	arg_12_0._txttype.text = luaLang("room_building_level_up")
+	self._txttype.text = luaLang("room_building_level_up")
 
-	local var_12_1 = 0
-	local var_12_2 = 0
-	local var_12_3 = 0
+	local maxLevel, preLevel, level = 0, 0, 0
 
-	if var_12_0 then
-		var_12_3 = var_12_0:getLevel()
-		var_12_2 = Mathf.Max(0, var_12_3 - 1)
+	if buildingMO then
+		level = buildingMO:getLevel()
+		preLevel = Mathf.Max(0, level - 1)
 	end
 
-	arg_12_0._txtpreviouslv.text = string.format("Lv.<size=56>%d</size>", var_12_2)
-	arg_12_0._txtcurrentlv.text = string.format("Lv.<size=56>%d</size>", var_12_3)
+	self._txtpreviouslv.text = string.format("Lv.<size=56>%d</size>", preLevel)
+	self._txtcurrentlv.text = string.format("Lv.<size=56>%d</size>", level)
 
-	arg_12_0:_refreshLevel(arg_12_0._previousLevelItemList, arg_12_0._gopreviouslevel, var_12_2, var_12_1)
-	arg_12_0:_refreshLevel(arg_12_0._currentLevelItemList, arg_12_0._gocurrentlevel, var_12_3, var_12_1)
-	arg_12_0:_playLevelAnimation(arg_12_0._currentLevelItemList, var_12_3)
+	self:_refreshLevel(self._previousLevelItemList, self._gopreviouslevel, preLevel, maxLevel)
+	self:_refreshLevel(self._currentLevelItemList, self._gocurrentlevel, level, maxLevel)
+	self:_playLevelAnimation(self._currentLevelItemList, level)
 
-	local var_12_4 = RoomHelper.getBuildingLevelUpTipsParam(arg_12_1)
+	local params = RoomHelper.getBuildingLevelUpTipsParam(buildingUid)
 
-	arg_12_0:_refreshDescTips(var_12_4)
+	self:_refreshDescTips(params)
 end
 
-function var_0_0._updateProductLineLevelInfo(arg_13_0, arg_13_1)
-	arg_13_0._txttype.text = luaLang("room_production_line_level_up")
-	arg_13_0._txtpreviouslv.text = string.format("Lv.<size=56>%d</size>", arg_13_1.level - 1)
-	arg_13_0._txtcurrentlv.text = string.format("Lv.<size=56>%d</size>", arg_13_1.level)
+function RoomLevelUpTipsView:_updateProductLineLevelInfo(productLineMO)
+	self._txttype.text = luaLang("room_production_line_level_up")
+	self._txtpreviouslv.text = string.format("Lv.<size=56>%d</size>", productLineMO.level - 1)
+	self._txtcurrentlv.text = string.format("Lv.<size=56>%d</size>", productLineMO.level)
 
-	arg_13_0:_refreshLevel(arg_13_0._previousLevelItemList, arg_13_0._gopreviouslevel, arg_13_1.level - 1, arg_13_1.maxLevel)
-	arg_13_0:_refreshLevel(arg_13_0._currentLevelItemList, arg_13_0._gocurrentlevel, arg_13_1.level, arg_13_1.maxLevel)
-	arg_13_0:_playLevelAnimation(arg_13_0._currentLevelItemList, arg_13_1.level)
+	self:_refreshLevel(self._previousLevelItemList, self._gopreviouslevel, productLineMO.level - 1, productLineMO.maxLevel)
+	self:_refreshLevel(self._currentLevelItemList, self._gocurrentlevel, productLineMO.level, productLineMO.maxLevel)
+	self:_playLevelAnimation(self._currentLevelItemList, productLineMO.level)
 
-	local var_13_0 = RoomProductionHelper.getProductLineLevelUpParams(arg_13_1.id, arg_13_1.level - 1, arg_13_1.level, true)
+	local params = RoomProductionHelper.getProductLineLevelUpParams(productLineMO.id, productLineMO.level - 1, productLineMO.level, true)
 
-	arg_13_0:_refreshDescTips(var_13_0)
+	self:_refreshDescTips(params)
 end
 
-function var_0_0._refreshDescTips(arg_14_0, arg_14_1)
-	for iter_14_0, iter_14_1 in ipairs(arg_14_1) do
-		local var_14_0 = arg_14_0._infoItemList[iter_14_0]
+function RoomLevelUpTipsView:_refreshDescTips(params)
+	for i, param in ipairs(params) do
+		local item = self._infoItemList[i]
 
-		if not var_14_0 then
-			var_14_0 = arg_14_0:getUserDataTb_()
-			var_14_0.go = gohelper.cloneInPlace(arg_14_0._goinfo, "item" .. iter_14_0)
-			var_14_0.trans = var_14_0.go.transform
-			var_14_0.gonormal = gohelper.findChild(var_14_0.go, "#go_normal")
-			var_14_0.txtinfo = gohelper.findChildText(var_14_0.go, "#go_normal/txt_info")
-			var_14_0.gohasNewItem = gohelper.findChild(var_14_0.go, "#go_hasNewItem")
-			var_14_0.txtnewItemInfo = gohelper.findChildText(var_14_0.go, "#go_hasNewItem/txt_newItemInfo")
-			var_14_0.goNewItemLayout = gohelper.findChild(var_14_0.go, "#go_hasNewItem/#go_newItemLayout")
-			var_14_0.goNewItem = gohelper.findChild(var_14_0.go, "#go_hasNewItem/#go_newItemLayout/#go_newItem")
+		if not item then
+			item = self:getUserDataTb_()
+			item.go = gohelper.cloneInPlace(self._goinfo, "item" .. i)
+			item.trans = item.go.transform
+			item.gonormal = gohelper.findChild(item.go, "#go_normal")
+			item.txtinfo = gohelper.findChildText(item.go, "#go_normal/txt_info")
+			item.gohasNewItem = gohelper.findChild(item.go, "#go_hasNewItem")
+			item.txtnewItemInfo = gohelper.findChildText(item.go, "#go_hasNewItem/txt_newItemInfo")
+			item.goNewItemLayout = gohelper.findChild(item.go, "#go_hasNewItem/#go_newItemLayout")
+			item.goNewItem = gohelper.findChild(item.go, "#go_hasNewItem/#go_newItemLayout/#go_newItem")
 
-			table.insert(arg_14_0._infoItemList, var_14_0)
+			table.insert(self._infoItemList, item)
 		end
 
-		local var_14_1 = iter_14_1.newItemInfoList and true or false
-		local var_14_2 = recthelper.getHeight(var_14_0.trans)
+		local isShowNewItem = param.newItemInfoList and true or false
+		local infoItemHeight = recthelper.getHeight(item.trans)
 
-		if var_14_1 then
-			var_14_2 = recthelper.getHeight(var_14_0.goNewItemLayout.transform)
-			var_14_0.txtnewItemInfo.text = iter_14_1.desc
+		if isShowNewItem then
+			infoItemHeight = recthelper.getHeight(item.goNewItemLayout.transform)
+			item.txtnewItemInfo.text = param.desc
 
-			gohelper.CreateObjList(arg_14_0, arg_14_0._onSetNewItem, iter_14_1.newItemInfoList, var_14_0.goNewItemLayout, var_14_0.goNewItem)
+			gohelper.CreateObjList(self, self._onSetNewItem, param.newItemInfoList, item.goNewItemLayout, item.goNewItem)
 		else
-			var_14_0.txtinfo.text = iter_14_1.desc
+			item.txtinfo.text = param.desc
 		end
 
-		recthelper.setHeight(var_14_0.trans, var_14_2)
-		gohelper.setActive(var_14_0.gonormal, not var_14_1)
-		gohelper.setActive(var_14_0.gohasNewItem, var_14_1)
-		gohelper.setActive(var_14_0.go, true)
+		recthelper.setHeight(item.trans, infoItemHeight)
+		gohelper.setActive(item.gonormal, not isShowNewItem)
+		gohelper.setActive(item.gohasNewItem, isShowNewItem)
+		gohelper.setActive(item.go, true)
 	end
 
-	for iter_14_2 = #arg_14_1 + 1, #arg_14_0._infoItemList do
-		local var_14_3 = arg_14_0._infoItemList[iter_14_2]
+	for i = #params + 1, #self._infoItemList do
+		local item = self._infoItemList[i]
 
-		gohelper.setActive(var_14_3.go, false)
+		gohelper.setActive(item.go, false)
 	end
 end
 
-function var_0_0._onSetNewItem(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	local var_15_0 = arg_15_2.type
-	local var_15_1 = arg_15_2.id
-	local var_15_2 = arg_15_2.quantity or 0
-	local var_15_3 = IconMgr.instance:getCommonItemIcon(arg_15_1)
+function RoomLevelUpTipsView:_onSetNewItem(obj, data, index)
+	local newItemType = data.type
+	local newItemId = data.id
+	local newItemQuantity = data.quantity or 0
+	local itemIcon = IconMgr.instance:getCommonItemIcon(obj)
 
-	var_15_3:setCountFontSize(var_0_1)
-	var_15_3:setMOValue(var_15_0, var_15_1, var_15_2)
-	var_15_3:isShowCount(var_15_2 ~= 0)
+	itemIcon:setCountFontSize(COST_FONT_SIZE)
+	itemIcon:setMOValue(newItemType, newItemId, newItemQuantity)
+	itemIcon:isShowCount(newItemQuantity ~= 0)
 end
 
-function var_0_0.onClose(arg_16_0)
+function RoomLevelUpTipsView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_17_0)
-	if arg_17_0._levelTweenId then
-		if arg_17_0._scene and arg_17_0._scene.tween then
-			arg_17_0._scene.tween:killById(arg_17_0._levelTweenId)
+function RoomLevelUpTipsView:onDestroyView()
+	if self._levelTweenId then
+		if self._scene and self._scene.tween then
+			self._scene.tween:killById(self._levelTweenId)
 		else
-			ZProj.TweenHelper.KillById(arg_17_0._levelTweenId)
+			ZProj.TweenHelper.KillById(self._levelTweenId)
 		end
 
-		arg_17_0._levelTweenId = nil
+		self._levelTweenId = nil
 	end
 end
 
-return var_0_0
+return RoomLevelUpTipsView

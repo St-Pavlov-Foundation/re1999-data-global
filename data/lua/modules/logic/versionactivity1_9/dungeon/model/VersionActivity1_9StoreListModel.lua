@@ -1,49 +1,52 @@
-﻿module("modules.logic.versionactivity1_9.dungeon.model.VersionActivity1_9StoreListModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/dungeon/model/VersionActivity1_9StoreListModel.lua
 
-local var_0_0 = class("VersionActivity1_9StoreListModel", ListScrollModel)
+module("modules.logic.versionactivity1_9.dungeon.model.VersionActivity1_9StoreListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local VersionActivity1_9StoreListModel = class("VersionActivity1_9StoreListModel", ListScrollModel)
+
+function VersionActivity1_9StoreListModel:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function VersionActivity1_9StoreListModel:reInit()
 	return
 end
 
-function var_0_0.initStoreGoodsConfig(arg_3_0)
-	if arg_3_0.goodsConfigList then
+function VersionActivity1_9StoreListModel:initStoreGoodsConfig()
+	if self.goodsConfigList then
 		return
 	end
 
-	arg_3_0.goodsConfigList = {}
+	self.goodsConfigList = {}
 
-	local var_3_0 = ActivityStoreConfig.instance:getActivityStoreGroupDict(VersionActivity1_9Enum.ActivityId.DungeonStore) or {}
+	local storeGroupDict = ActivityStoreConfig.instance:getActivityStoreGroupDict(VersionActivity1_9Enum.ActivityId.DungeonStore) or {}
 
-	for iter_3_0, iter_3_1 in pairs(var_3_0) do
-		tabletool.addValues(arg_3_0.goodsConfigList, iter_3_1)
+	for _, coList in pairs(storeGroupDict) do
+		tabletool.addValues(self.goodsConfigList, coList)
 	end
 end
 
-function var_0_0._sortGoods(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0.maxBuyCount ~= 0 and arg_4_0.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(VersionActivity1_9Enum.ActivityId.DungeonStore, arg_4_0.id) <= 0
+function VersionActivity1_9StoreListModel._sortGoods(goodsCo1, goodsCo2)
+	local goods1SellOut = goodsCo1.maxBuyCount ~= 0 and goodsCo1.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(VersionActivity1_9Enum.ActivityId.DungeonStore, goodsCo1.id) <= 0
+	local goods2SellOut = goodsCo2.maxBuyCount ~= 0 and goodsCo2.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(VersionActivity1_9Enum.ActivityId.DungeonStore, goodsCo2.id) <= 0
 
-	if var_4_0 ~= (arg_4_1.maxBuyCount ~= 0 and arg_4_1.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(VersionActivity1_9Enum.ActivityId.DungeonStore, arg_4_1.id) <= 0) then
-		if var_4_0 then
+	if goods1SellOut ~= goods2SellOut then
+		if goods1SellOut then
 			return false
 		end
 
 		return true
 	end
 
-	return arg_4_0.id < arg_4_1.id
+	return goodsCo1.id < goodsCo2.id
 end
 
-function var_0_0.refreshStore(arg_5_0)
-	arg_5_0:initStoreGoodsConfig()
-	table.sort(arg_5_0.goodsConfigList, var_0_0._sortGoods)
-	arg_5_0:setList(arg_5_0.goodsConfigList)
+function VersionActivity1_9StoreListModel:refreshStore()
+	self:initStoreGoodsConfig()
+	table.sort(self.goodsConfigList, VersionActivity1_9StoreListModel._sortGoods)
+	self:setList(self.goodsConfigList)
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity1_9StoreListModel.instance = VersionActivity1_9StoreListModel.New()
 
-return var_0_0
+return VersionActivity1_9StoreListModel

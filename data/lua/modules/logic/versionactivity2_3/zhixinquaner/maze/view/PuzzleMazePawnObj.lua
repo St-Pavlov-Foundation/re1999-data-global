@@ -1,63 +1,65 @@
-﻿module("modules.logic.versionactivity2_3.zhixinquaner.maze.view.PuzzleMazePawnObj", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/zhixinquaner/maze/view/PuzzleMazePawnObj.lua
 
-local var_0_0 = class("PuzzleMazePawnObj", PuzzleMazeBasePawnObj)
+module("modules.logic.versionactivity2_3.zhixinquaner.maze.view.PuzzleMazePawnObj", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0, arg_1_1)
+local PuzzleMazePawnObj = class("PuzzleMazePawnObj", PuzzleMazeBasePawnObj)
 
-	arg_1_0.image = gohelper.findChildImage(arg_1_0.go, "#go_ctrl/#image_content")
-	arg_1_0.imageTf = arg_1_0.image.transform
-	arg_1_0.goCtrl = gohelper.findChild(arg_1_0.go, "#go_ctrl")
-	arg_1_0.tf = arg_1_0.go.transform
-	arg_1_0.dir = PuzzleEnum.dir.left
-	arg_1_0.anim = arg_1_0.image.gameObject:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0.animEvent = arg_1_0.image.gameObject:GetComponent(typeof(ZProj.AnimationEventWrap))
+function PuzzleMazePawnObj:ctor(go)
+	PuzzleMazePawnObj.super.ctor(self, go)
 
-	arg_1_0.animEvent:AddEventListener(PuzzleEnum.AnimEvent_OnJump, arg_1_0.onPawnJump, arg_1_0)
+	self.image = gohelper.findChildImage(self.go, "#go_ctrl/#image_content")
+	self.imageTf = self.image.transform
+	self.goCtrl = gohelper.findChild(self.go, "#go_ctrl")
+	self.tf = self.go.transform
+	self.dir = PuzzleEnum.dir.left
+	self.anim = self.image.gameObject:GetComponent(typeof(UnityEngine.Animator))
+	self.animEvent = self.image.gameObject:GetComponent(typeof(ZProj.AnimationEventWrap))
+
+	self.animEvent:AddEventListener(PuzzleEnum.AnimEvent_OnJump, self.onPawnJump, self)
 end
 
-function var_0_0.onInit(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0.anim:Play("open")
+function PuzzleMazePawnObj:onInit(x, y)
+	self.anim:Play("open")
 
-	local var_2_0 = PuzzleMazeDrawModel.instance:pawnIconUrl()
+	local iconUrl = PuzzleMazeDrawModel.instance:pawnIconUrl()
 
-	UISpriteSetMgr.instance:setV2a3ZhiXinQuanErSprite(arg_2_0.image, var_2_0, true)
-	recthelper.setAnchor(arg_2_0.goCtrl.transform, PuzzleEnum.MazeMonsterIconOffset.x, PuzzleEnum.MazeMonsterIconOffset.y)
-	arg_2_0:setPos(arg_2_1, arg_2_2)
-	gohelper.setAsLastSibling(arg_2_0.go)
+	UISpriteSetMgr.instance:setV2a3ZhiXinQuanErSprite(self.image, iconUrl, true)
+	recthelper.setAnchor(self.goCtrl.transform, PuzzleEnum.MazeMonsterIconOffset.x, PuzzleEnum.MazeMonsterIconOffset.y)
+	self:setPos(x, y)
+	gohelper.setAsLastSibling(self.go)
 end
 
-function var_0_0.onBeginDrag(arg_3_0)
-	arg_3_0.anim:Play("image_content_drag")
+function PuzzleMazePawnObj:onBeginDrag()
+	self.anim:Play("image_content_drag")
 end
 
-function var_0_0.onDraging(arg_4_0, arg_4_1, arg_4_2)
-	var_0_0.super.onDraging(arg_4_0, arg_4_1, arg_4_2)
+function PuzzleMazePawnObj:onDraging(x, y)
+	PuzzleMazePawnObj.super.onDraging(self, x, y)
 end
 
-function var_0_0.onEndDrag(arg_5_0, arg_5_1, arg_5_2)
-	var_0_0.super.onEndDrag(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0.anim:Play("open")
+function PuzzleMazePawnObj:onEndDrag(x, y)
+	PuzzleMazePawnObj.super.onEndDrag(self, x, y)
+	self.anim:Play("open")
 end
 
-function var_0_0.setPos(arg_6_0, arg_6_1, arg_6_2)
-	var_0_0.super.setPos(arg_6_0, arg_6_1, arg_6_2)
-	recthelper.setAnchor(arg_6_0.tf, arg_6_1, arg_6_2)
+function PuzzleMazePawnObj:setPos(x, y)
+	PuzzleMazePawnObj.super.setPos(self, x, y)
+	recthelper.setAnchor(self.tf, x, y)
 end
 
-function var_0_0.setDir(arg_7_0, arg_7_1)
-	arg_7_0.dir = arg_7_1
+function PuzzleMazePawnObj:setDir(dir)
+	self.dir = dir
 
-	transformhelper.setLocalRotation(arg_7_0.tf, 0, arg_7_1 == PuzzleEnum.dir.right and 180 or 0, 0)
+	transformhelper.setLocalRotation(self.tf, 0, dir == PuzzleEnum.dir.right and 180 or 0, 0)
 end
 
-function var_0_0.onPawnJump(arg_8_0)
+function PuzzleMazePawnObj:onPawnJump()
 	AudioMgr.instance:trigger(AudioEnum.Puzzle.play_ui_main_puzzles_move)
 end
 
-function var_0_0.destroy(arg_9_0)
-	arg_9_0.animEvent:RemoveEventListener(PuzzleEnum.AnimEvent_OnJump)
-	var_0_0.super.destroy(arg_9_0)
+function PuzzleMazePawnObj:destroy()
+	self.animEvent:RemoveEventListener(PuzzleEnum.AnimEvent_OnJump)
+	PuzzleMazePawnObj.super.destroy(self)
 end
 
-return var_0_0
+return PuzzleMazePawnObj

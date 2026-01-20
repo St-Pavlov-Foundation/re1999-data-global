@@ -1,40 +1,42 @@
-﻿module("modules.logic.versionactivity3_1.gaosiniao.work.GaoSiNiaoWork_DelaySecond", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/gaosiniao/work/GaoSiNiaoWork_DelaySecond.lua
 
-local var_0_0 = class("GaoSiNiaoWork_DelaySecond", GaoSiNiaoWorkBase)
+module("modules.logic.versionactivity3_1.gaosiniao.work.GaoSiNiaoWork_DelaySecond", package.seeall)
 
-function var_0_0.s_create(arg_1_0)
-	local var_1_0 = var_0_0.New()
+local GaoSiNiaoWork_DelaySecond = class("GaoSiNiaoWork_DelaySecond", GaoSiNiaoWorkBase)
 
-	var_1_0._durationSec = arg_1_0
+function GaoSiNiaoWork_DelaySecond.s_create(durationSec)
+	local work = GaoSiNiaoWork_DelaySecond.New()
 
-	return var_1_0
+	work._durationSec = durationSec
+
+	return work
 end
 
-function var_0_0.onStart(arg_2_0)
-	arg_2_0:clearWork()
+function GaoSiNiaoWork_DelaySecond:onStart()
+	self:clearWork()
 
-	if not arg_2_0._durationSec then
+	if not self._durationSec then
 		logWarn("durationSec is null")
-		arg_2_0:onSucc()
+		self:onSucc()
 
 		return
 	end
 
-	if arg_2_0._durationSec <= 0 then
-		arg_2_0:onSucc()
+	if self._durationSec <= 0 then
+		self:onSucc()
 	else
-		TaskDispatcher.cancelTask(arg_2_0._delaySucc, arg_2_0)
-		TaskDispatcher.runDelay(arg_2_0._delaySucc, arg_2_0, arg_2_0._durationSec)
+		TaskDispatcher.cancelTask(self._delaySucc, self)
+		TaskDispatcher.runDelay(self._delaySucc, self, self._durationSec)
 	end
 end
 
-function var_0_0._delaySucc(arg_3_0)
-	arg_3_0:onSucc()
+function GaoSiNiaoWork_DelaySecond:_delaySucc()
+	self:onSucc()
 end
 
-function var_0_0.clearWork(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._delaySucc, arg_4_0)
-	V3a1_GaoSiNiao_LevelViewWork_UnlockPathAnim.super.clearWork(arg_4_0)
+function GaoSiNiaoWork_DelaySecond:clearWork()
+	TaskDispatcher.cancelTask(self._delaySucc, self)
+	V3a1_GaoSiNiao_LevelViewWork_UnlockPathAnim.super.clearWork(self)
 end
 
-return var_0_0
+return GaoSiNiaoWork_DelaySecond

@@ -1,44 +1,46 @@
-﻿module("modules.logic.versionactivity1_3.jialabona.define.JiaLaBoNaEnum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/jialabona/define/JiaLaBoNaEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_3.jialabona.define.JiaLaBoNaEnum", package.seeall)
 
-var_0_0.StageType = {
+local JiaLaBoNaEnum = _M
+
+JiaLaBoNaEnum.StageType = {
 	Branch = 2,
 	Main = 1
 }
-var_0_0.Stage = {
+JiaLaBoNaEnum.Stage = {
 	StarIcon = {
-		[var_0_0.StageType.Main] = "v1a3_role1_og_stagestar1",
-		[var_0_0.StageType.Branch] = "v1a3_role1_og_stagestar2"
+		[JiaLaBoNaEnum.StageType.Main] = "v1a3_role1_og_stagestar1",
+		[JiaLaBoNaEnum.StageType.Branch] = "v1a3_role1_og_stagestar2"
 	},
 	FrameBg = {
-		[var_0_0.StageType.Main] = "v1a3_role1_og_stagemainclearbg",
-		[var_0_0.StageType.Branch] = "v1a3_role1_og_stagebranchclearbg"
+		[JiaLaBoNaEnum.StageType.Main] = "v1a3_role1_og_stagemainclearbg",
+		[JiaLaBoNaEnum.StageType.Branch] = "v1a3_role1_og_stagebranchclearbg"
 	},
 	StageColor = {
-		[var_0_0.StageType.Main] = "#AFD3FF",
-		[var_0_0.StageType.Branch] = "#D5CAB0"
+		[JiaLaBoNaEnum.StageType.Main] = "#AFD3FF",
+		[JiaLaBoNaEnum.StageType.Branch] = "#D5CAB0"
 	},
 	StageNameColor = {
-		[var_0_0.StageType.Main] = "#C2E4FF",
-		[var_0_0.StageType.Branch] = "#D5CAB0"
+		[JiaLaBoNaEnum.StageType.Main] = "#C2E4FF",
+		[JiaLaBoNaEnum.StageType.Branch] = "#D5CAB0"
 	}
 }
-var_0_0.StatgePiontSpriteName = {
+JiaLaBoNaEnum.StatgePiontSpriteName = {
 	Finished = "v1a3_role1_og_stagepointfinished",
 	Current = "v1a3_role1_og_stagepointcurrent",
 	UnFinished = "v1a3_role1_og_stagepointunfinished"
 }
-var_0_0.Chapter = {
+JiaLaBoNaEnum.Chapter = {
 	Two = 2,
 	One = 1
 }
-var_0_0.MapSceneRes = {
-	[var_0_0.Chapter.One] = "scenes/v1a3_m_s12_dfw_jlbn/prefab/m_s12_jlbn_zjm_01_p.prefab",
-	[var_0_0.Chapter.Two] = "scenes/v1a3_m_s12_dfw_jlbn/prefab/m_s12_jlbn_zjm_02_p.prefab"
+JiaLaBoNaEnum.MapSceneRes = {
+	[JiaLaBoNaEnum.Chapter.One] = "scenes/v1a3_m_s12_dfw_jlbn/prefab/m_s12_jlbn_zjm_01_p.prefab",
+	[JiaLaBoNaEnum.Chapter.Two] = "scenes/v1a3_m_s12_dfw_jlbn/prefab/m_s12_jlbn_zjm_02_p.prefab"
 }
-var_0_0.ChapterPathAnimParam = {
-	[var_0_0.Chapter.One] = {
+JiaLaBoNaEnum.ChapterPathAnimParam = {
+	[JiaLaBoNaEnum.Chapter.One] = {
 		{
 			1,
 			0.89
@@ -60,7 +62,7 @@ var_0_0.ChapterPathAnimParam = {
 			0
 		}
 	},
-	[var_0_0.Chapter.Two] = {
+	[JiaLaBoNaEnum.Chapter.Two] = {
 		{
 			1,
 			0.89
@@ -83,7 +85,7 @@ var_0_0.ChapterPathAnimParam = {
 		}
 	}
 }
-var_0_0.AnimatorTime = {
+JiaLaBoNaEnum.AnimatorTime = {
 	MapViewOpen = 1,
 	TaskRewardMoveUp = 0.15,
 	ChapterPath = 1,
@@ -91,32 +93,32 @@ var_0_0.AnimatorTime = {
 	SwithSceneOpen = 0.5,
 	MapViewClose = 0.3
 }
-var_0_0.StoryType = {
+JiaLaBoNaEnum.StoryType = {
 	Episode = 1,
 	Interact = 2
 }
-var_0_0.SceneResPath = {
+JiaLaBoNaEnum.SceneResPath = {
 	GroundPoSui = "scenes/v1a3_m_s12_dfw_jlbn/prefab/m_s12_dimian_b.prefab"
 }
-var_0_0.ComponentType = {
+JiaLaBoNaEnum.ComponentType = {
 	Animator = typeof(UnityEngine.Animator),
 	UIMesh = typeof(UIMesh)
 }
-var_0_0.ResultLangResPath = {
+JiaLaBoNaEnum.ResultLangResPath = {
 	[0] = "Assets/ZResourcesLib/singlebg_lang/txt_v1a3_role1_singlebg/v1a3_role1_resulttitlefailed.png",
 	"Assets/ZResourcesLib/singlebg_lang/txt_v1a3_role1_singlebg/v1a3_role1_resulttitlefailed_2.png",
 	nil,
 	"Assets/ZResourcesLib/singlebg_lang/txt_v1a3_role1_singlebg/v1a3_role1_resulttitlefailed_3.png"
 }
-var_0_0.FailResultLangTxtId = {
+JiaLaBoNaEnum.FailResultLangTxtId = {
 	[ActivityChessEnum.FailReason.None] = "p_v1a3_role2_resulttitle_3",
 	[ActivityChessEnum.FailReason.Battle] = "p_v1a3_role2_resulttitle_4",
 	[ActivityChessEnum.FailReason.CanNotMove] = "p_v1a3_role2_resulttitle_3",
 	[ActivityChessEnum.FailReason.MaxRound] = "p_v1a3_role2_resulttitle_5",
 	[ActivityChessEnum.FailReason.FailInteract] = "p_v1a3_role2_resulttitle_3"
 }
-var_0_0.TaskMOAllFinishId = -100
-var_0_0.episodeId = 1380101
-var_0_0.chapterId = 13801
+JiaLaBoNaEnum.TaskMOAllFinishId = -100
+JiaLaBoNaEnum.episodeId = 1380101
+JiaLaBoNaEnum.chapterId = 13801
 
-return var_0_0
+return JiaLaBoNaEnum

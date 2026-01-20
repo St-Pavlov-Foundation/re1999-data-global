@@ -1,7 +1,9 @@
-﻿module("modules.logic.fight.system.work.FightWorkChangeCareer", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkChangeCareer.lua
 
-local var_0_0 = class("FightWorkChangeCareer", FightEffectBase)
-local var_0_1 = {
+module("modules.logic.fight.system.work.FightWorkChangeCareer", package.seeall)
+
+local FightWorkChangeCareer = class("FightWorkChangeCareer", FightEffectBase)
+local career2EffectPath = {
 	"buff/buff_lg_yan",
 	"buff/buff_lg_xing",
 	"buff/buff_lg_mu",
@@ -10,48 +12,49 @@ local var_0_1 = {
 	"buff/buff_lg_zhi"
 }
 
-function var_0_0.beforePlayEffectData(arg_1_0)
-	local var_1_0 = FightDataHelper.entityMgr:getById(arg_1_0.actEffectData.targetId)
+function FightWorkChangeCareer:beforePlayEffectData()
+	local entityMO = FightDataHelper.entityMgr:getById(self.actEffectData.targetId)
 
-	if var_1_0 then
-		arg_1_0.oldCareer = var_1_0.career
+	if entityMO then
+		self.oldCareer = entityMO.career
 	end
 end
 
-function var_0_0.onStart(arg_2_0)
-	local var_2_0 = arg_2_0:com_registWorkDoneFlowSequence()
+function FightWorkChangeCareer:onStart()
+	local flow = self:com_registWorkDoneFlowSequence()
+	local entityMO = FightDataHelper.entityMgr:getById(self.actEffectData.targetId)
 
-	if FightDataHelper.entityMgr:getById(arg_2_0.actEffectData.targetId) and arg_2_0.oldCareer ~= arg_2_0.actEffectData.effectNum then
-		var_2_0:registWork(FightWorkFunction, arg_2_0._playCareerChange, arg_2_0)
-		var_2_0:addWork(Work2FightWork.New(FightWorkNormalDialog, FightViewDialog.Type.ChangeCareer))
+	if entityMO and self.oldCareer ~= self.actEffectData.effectNum then
+		flow:registWork(FightWorkFunction, self._playCareerChange, self)
+		flow:addWork(Work2FightWork.New(FightWorkNormalDialog, FightViewDialog.Type.ChangeCareer))
 	end
 
-	var_2_0:start()
+	flow:start()
 end
 
-function var_0_0._playCareerChange(arg_3_0)
-	local var_3_0 = FightDataHelper.entityMgr:getById(arg_3_0.actEffectData.targetId)
+function FightWorkChangeCareer:_playCareerChange()
+	local entityMO = FightDataHelper.entityMgr:getById(self.actEffectData.targetId)
 
-	if var_3_0 then
-		FightController.instance:dispatchEvent(FightEvent.ChangeCareer, var_3_0.id)
+	if entityMO then
+		FightController.instance:dispatchEvent(FightEvent.ChangeCareer, entityMO.id)
 
-		local var_3_1 = FightHelper.getEntity(var_3_0.id)
+		local entity = FightHelper.getEntity(entityMO.id)
 
-		if var_3_1 and var_3_1.effect then
-			local var_3_2 = var_3_1.effect:addHangEffect(var_0_1[var_3_0.career], "mounttop", nil, 2)
+		if entity and entity.effect then
+			local effectWrap = entity.effect:addHangEffect(career2EffectPath[entityMO.career], "mounttop", nil, 2)
 
-			FightRenderOrderMgr.instance:onAddEffectWrap(var_3_1.id, var_3_2)
-			var_3_2:setLocalPos(0, 0, 0)
+			FightRenderOrderMgr.instance:onAddEffectWrap(entity.id, effectWrap)
+			effectWrap:setLocalPos(0, 0, 0)
 		end
 	end
 end
 
-function var_0_0._onFlowDone(arg_4_0)
-	arg_4_0:onDone(true)
+function FightWorkChangeCareer:_onFlowDone()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_5_0)
+function FightWorkChangeCareer:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkChangeCareer

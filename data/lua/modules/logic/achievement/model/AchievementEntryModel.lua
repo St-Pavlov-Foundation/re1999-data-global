@@ -1,80 +1,84 @@
-﻿module("modules.logic.achievement.model.AchievementEntryModel", package.seeall)
+﻿-- chunkname: @modules/logic/achievement/model/AchievementEntryModel.lua
 
-local var_0_0 = class("AchievementEntryModel", BaseModel)
+module("modules.logic.achievement.model.AchievementEntryModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local AchievementEntryModel = class("AchievementEntryModel", BaseModel)
+
+function AchievementEntryModel:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function AchievementEntryModel:reInit()
 	return
 end
 
-function var_0_0.initData(arg_3_0)
-	arg_3_0.infoDict = AchievementConfig.instance:getCategoryAchievementMap()
+function AchievementEntryModel:initData()
+	self.infoDict = AchievementConfig.instance:getCategoryAchievementMap()
 
-	arg_3_0:initCategory()
+	self:initCategory()
 end
 
-function var_0_0.initCategory(arg_4_0)
-	local var_4_0 = AchievementConfig.instance:getOnlineAchievements()
+function AchievementEntryModel:initCategory()
+	local achievements = AchievementConfig.instance:getOnlineAchievements()
 
-	arg_4_0._category2TotalDict = {}
-	arg_4_0._category2FinishedDict = {}
-	arg_4_0._totalAchievementGotCount = 0
-	arg_4_0._level2AchievementDict = {}
+	self._category2TotalDict = {}
+	self._category2FinishedDict = {}
+	self._totalAchievementGotCount = 0
+	self._level2AchievementDict = {}
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_0) do
-		local var_4_1 = AchievementModel.instance:getAchievementLevel(iter_4_1.id)
-		local var_4_2 = iter_4_1.category
+	for i, achievementCO in ipairs(achievements) do
+		if AchievementUtils.isShowByAchievementCfg(achievementCO) then
+			local level = AchievementModel.instance:getAchievementLevel(achievementCO.id)
+			local category = achievementCO.category
 
-		if var_4_1 > 0 then
-			if arg_4_0._category2FinishedDict[var_4_2] == nil then
-				arg_4_0._category2FinishedDict[var_4_2] = 1
-			else
-				arg_4_0._category2FinishedDict[var_4_2] = arg_4_0._category2FinishedDict[var_4_2] + 1
+			if level > 0 then
+				if self._category2FinishedDict[category] == nil then
+					self._category2FinishedDict[category] = 1
+				else
+					self._category2FinishedDict[category] = self._category2FinishedDict[category] + 1
+				end
+
+				self._totalAchievementGotCount = self._totalAchievementGotCount + 1
 			end
 
-			arg_4_0._totalAchievementGotCount = arg_4_0._totalAchievementGotCount + 1
-		end
+			self._level2AchievementDict[level] = self._level2AchievementDict[level] or 0
+			self._level2AchievementDict[level] = self._level2AchievementDict[level] + 1
 
-		arg_4_0._level2AchievementDict[var_4_1] = arg_4_0._level2AchievementDict[var_4_1] or 0
-		arg_4_0._level2AchievementDict[var_4_1] = arg_4_0._level2AchievementDict[var_4_1] + 1
-
-		if arg_4_0._category2TotalDict[var_4_2] == nil then
-			arg_4_0._category2TotalDict[var_4_2] = 1
-		else
-			arg_4_0._category2TotalDict[var_4_2] = arg_4_0._category2TotalDict[var_4_2] + 1
+			if self._category2TotalDict[category] == nil then
+				self._category2TotalDict[category] = 1
+			else
+				self._category2TotalDict[category] = self._category2TotalDict[category] + 1
+			end
 		end
 	end
 end
 
-function var_0_0.getFinishCount(arg_5_0, arg_5_1)
-	return arg_5_0._category2FinishedDict[arg_5_1] or 0, arg_5_0._category2TotalDict[arg_5_1] or 0
+function AchievementEntryModel:getFinishCount(achieveType)
+	return self._category2FinishedDict[achieveType] or 0, self._category2TotalDict[achieveType] or 0
 end
 
-function var_0_0.getLevelCount(arg_6_0, arg_6_1)
-	if arg_6_0._level2AchievementDict then
-		return arg_6_0._level2AchievementDict[arg_6_1] or 0
+function AchievementEntryModel:getLevelCount(level)
+	if self._level2AchievementDict then
+		return self._level2AchievementDict[level] or 0
 	end
 end
 
-function var_0_0.getTotalFinishedCount(arg_7_0)
-	return arg_7_0._totalAchievementGotCount or 0
+function AchievementEntryModel:getTotalFinishedCount()
+	return self._totalAchievementGotCount or 0
 end
 
-function var_0_0.categoryHasNew(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0.infoDict[arg_8_1]
+function AchievementEntryModel:categoryHasNew(category)
+	local cfgList = self.infoDict[category]
 
-	if var_8_0 then
-		for iter_8_0, iter_8_1 in ipairs(var_8_0) do
-			if AchievementModel.instance:achievementHasNew(iter_8_1.id) then
+	if cfgList then
+		for i, achievementCo in ipairs(cfgList) do
+			if AchievementModel.instance:achievementHasNew(achievementCo.id) then
 				return true
 			end
 		end
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+AchievementEntryModel.instance = AchievementEntryModel.New()
 
-return var_0_0
+return AchievementEntryModel

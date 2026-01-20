@@ -1,10 +1,12 @@
-﻿module("modules.logic.scene.shelter.comp.bubble.SurvivalBubbleParam", package.seeall)
+﻿-- chunkname: @modules/logic/scene/shelter/comp/bubble/SurvivalBubbleParam.lua
 
-local var_0_0 = pureTable("SurvivalBubbleParam")
+module("modules.logic.scene.shelter.comp.bubble.SurvivalBubbleParam", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.content = nil
-	arg_1_0.duration = -1
+local SurvivalBubbleParam = pureTable("SurvivalBubbleParam")
+
+function SurvivalBubbleParam:ctor()
+	self.content = nil
+	self.duration = -1
 end
 
-return var_0_0
+return SurvivalBubbleParam

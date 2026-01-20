@@ -7250,7 +7250,7 @@
   {
     "id": 220039,
     "tips": "language_10056335",
-    "icon": 11,
+    "icon": 121,
     "audioId": 1,
     "notMerge": 0,
     "notShow": 0
@@ -10148,6 +10148,350 @@
     "tips": "language_10093934",
     "icon": 0,
     "audioId": 0,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 321001,
+    "tips": "language_10100796",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 321002,
+    "tips": "language_10090101",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 321003,
+    "tips": "language_10100797",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 321004,
+    "tips": "language_10100798",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 321005,
+    "tips": "language_10100799",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 321006,
+    "tips": "language_10100800",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 321007,
+    "tips": "language_10100801",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 321008,
+    "tips": "language_10100802",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 321009,
+    "tips": "language_10100803",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 321010,
+    "tips": "language_10100804",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 321011,
+    "tips": "language_10100805",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 321012,
+    "tips": "language_10100806",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 321013,
+    "tips": "language_10100807",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 321101,
+    "tips": "language_10100808",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 321102,
+    "tips": "language_10100809",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 321103,
+    "tips": "language_10100810",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 321104,
+    "tips": "language_10100811",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 321105,
+    "tips": "language_10100812",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 321106,
+    "tips": "language_10100813",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 321201,
+    "tips": "language_10100814",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 321202,
+    "tips": "language_10100815",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 321301,
+    "tips": "language_10100816",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 321302,
+    "tips": "language_10100817",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 321303,
+    "tips": "language_10100818",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 321304,
+    "tips": "language_10100819",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 321401,
+    "tips": "language_10100820",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 321501,
+    "tips": "language_10100821",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 321502,
+    "tips": "language_10100822",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": -146,
+    "tips": "language_10100823",
+    "icon": 41,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 322001,
+    "tips": "language_10100824",
+    "icon": 41,
+    "audioId": 0,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 322002,
+    "tips": "language_10100825",
+    "icon": 41,
+    "audioId": 0,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 322003,
+    "tips": "language_10100826",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 322004,
+    "tips": "language_10100827",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 322005,
+    "tips": "language_10100828",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 322006,
+    "tips": "language_10100829",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 322007,
+    "tips": "language_10100830",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 322901,
+    "tips": "language_10097904",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 321014,
+    "tips": "language_10100831",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 321015,
+    "tips": "language_10019823",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 321016,
+    "tips": "language_10090101",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 321017,
+    "tips": "language_10100832",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 321018,
+    "tips": "language_10100833",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 321019,
+    "tips": "language_10100834",
+    "icon": 11,
+    "audioId": 1,
     "notMerge": 0,
     "notShow": 0
   },

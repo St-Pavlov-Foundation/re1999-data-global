@@ -1,155 +1,156 @@
-﻿module("modules.logic.fight.FightMsgMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/FightMsgMgr.lua
 
-local var_0_0 = class("FightMsgMgr")
-local var_0_1 = xpcall
-local var_0_2 = __G__TRACKBACK__
-local var_0_3 = FightMsgItem
-local var_0_4 = pairs
-local var_0_5 = {}
-local var_0_6 = {}
-local var_0_7 = false
-local var_0_8 = {}
-local var_0_9 = {}
-local var_0_10 = {}
+module("modules.logic.fight.FightMsgMgr", package.seeall)
 
-function var_0_0.registMsg(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = var_0_5[arg_1_0]
+local FightMsgMgr = class("FightMsgMgr")
+local xpcall = xpcall
+local __G__TRACKBACK__ = __G__TRACKBACK__
+local FightMsgItem = FightMsgItem
+local pairs = pairs
+local msgItems = {}
+local msgItemCount = {}
+local needRemove = false
+local replyIndex = {}
+local replyDic = {}
+local checkRemoveId = {}
 
-	if not var_1_0 then
-		var_1_0 = {}
-		var_0_5[arg_1_0] = var_1_0
+function FightMsgMgr.registMsg(msgId, callback, handle)
+	local list = msgItems[msgId]
+
+	if not list then
+		list = {}
+		msgItems[msgId] = list
 	end
 
-	local var_1_1 = var_0_3.New(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_2 = (var_0_6[arg_1_0] or 0) + 1
+	local msgItem = FightMsgItem.New(msgId, callback, handle)
+	local count = (msgItemCount[msgId] or 0) + 1
 
-	var_0_6[arg_1_0] = var_1_2
-	var_1_0[var_1_2] = var_1_1
+	msgItemCount[msgId] = count
+	list[count] = msgItem
 
-	return var_1_1
+	return msgItem
 end
 
-function var_0_0.sendMsg(arg_2_0, ...)
-	local var_2_0 = var_0_5[arg_2_0]
+function FightMsgMgr.sendMsg(msgId, ...)
+	local list = msgItems[msgId]
 
-	if not var_2_0 then
+	if not list then
 		return
 	end
 
-	local var_2_1 = (var_0_8[arg_2_0] or 0) + 1
+	local curIndex = replyIndex[msgId] or 0
 
-	var_0_8[arg_2_0] = var_2_1
+	curIndex = curIndex + 1
+	replyIndex[msgId] = curIndex
 
-	local var_2_2 = var_0_6[arg_2_0]
+	local count = msgItemCount[msgId]
 
-	for iter_2_0 = 1, var_2_2 do
-		local var_2_3 = var_2_0[iter_2_0]
+	for i = 1, count do
+		local item = list[i]
 
-		if not var_2_3.isDone then
-			var_0_1(var_2_3.callback, var_0_2, var_2_3.handle, ...)
+		if not item.isDone then
+			xpcall(item.callback, __G__TRACKBACK__, item.handle, ...)
 		end
 	end
 
-	var_0_8[arg_2_0] = var_2_1 - 1
+	replyIndex[msgId] = curIndex - 1
 
-	local var_2_4 = var_0_9[arg_2_0]
+	local replyData = replyDic[msgId]
 
-	if var_2_4 then
-		local var_2_5 = var_2_4.list[var_2_1]
+	if replyData then
+		local replyList = replyData.list[curIndex]
 
-		if var_2_5 then
-			var_2_4.list[var_2_1] = nil
-			var_2_4.listCount[var_2_1] = nil
+		if replyList then
+			replyData.list[curIndex] = nil
+			replyData.listCount[curIndex] = nil
 
-			return var_2_5[1], var_2_5
+			return replyList[1], replyList
 		end
 	end
 end
 
-function var_0_0.replyMsg(arg_3_0, arg_3_1)
-	local var_3_0 = var_0_8[arg_3_0] or 0
+function FightMsgMgr.replyMsg(msgId, reply)
+	local curIndex = replyIndex[msgId] or 0
 
-	if var_3_0 == 0 then
+	if curIndex == 0 then
 		return
 	end
 
-	local var_3_1 = var_0_9[arg_3_0]
+	local replyData = replyDic[msgId]
 
-	if not var_3_1 then
-		var_3_1 = {
+	if not replyData then
+		replyData = {
 			list = {},
 			listCount = {}
 		}
-		var_0_9[arg_3_0] = var_3_1
+		replyDic[msgId] = replyData
 	end
 
-	local var_3_2 = var_3_1.list[var_3_0]
-	local var_3_3 = var_3_1.listCount[var_3_0] or 0
+	local replyList = replyData.list[curIndex]
+	local count = replyData.listCount[curIndex] or 0
 
-	if not var_3_2 then
-		var_3_2 = {}
-		var_3_1.list[var_3_0] = var_3_2
+	if not replyList then
+		replyList = {}
+		replyData.list[curIndex] = replyList
 	end
 
-	local var_3_4 = var_3_3 + 1
-
-	var_3_1.listCount[var_3_0] = var_3_4
-	var_3_2[var_3_4] = arg_3_1
+	count = count + 1
+	replyData.listCount[curIndex] = count
+	replyList[count] = reply
 end
 
-function var_0_0.removeMsg(arg_4_0)
-	if not arg_4_0 then
+function FightMsgMgr.removeMsg(msgItem)
+	if not msgItem then
 		return
 	end
 
-	arg_4_0.isDone = true
-	var_0_10[arg_4_0.msgId] = true
-	var_0_7 = true
+	msgItem.isDone = true
+	checkRemoveId[msgItem.msgId] = true
+	needRemove = true
 end
 
-function var_0_0.clearMsg()
-	if not var_0_7 then
+function FightMsgMgr.clearMsg()
+	if not needRemove then
 		return
 	end
 
-	for iter_5_0, iter_5_1 in var_0_4(var_0_10) do
-		local var_5_0 = var_0_5[iter_5_0]
+	for msgId, v in pairs(checkRemoveId) do
+		local list = msgItems[msgId]
 
-		if var_5_0 then
-			local var_5_1 = var_0_6[iter_5_0]
-			local var_5_2 = 1
+		if list then
+			local listCount = msgItemCount[msgId]
+			local j = 1
 
-			for iter_5_2 = 1, var_5_1 do
-				local var_5_3 = var_5_0[iter_5_2]
+			for i = 1, listCount do
+				local item = list[i]
 
-				if not var_5_3.isDone then
-					if iter_5_2 ~= var_5_2 then
-						var_5_0[var_5_2] = var_5_3
-						var_5_0[iter_5_2] = nil
+				if not item.isDone then
+					if i ~= j then
+						list[j] = item
+						list[i] = nil
 					end
 
-					var_5_2 = var_5_2 + 1
+					j = j + 1
 				else
-					var_5_0[iter_5_2] = nil
+					list[i] = nil
 				end
 			end
 
-			local var_5_4 = var_5_2 - 1
+			listCount = j - 1
+			msgItemCount[msgId] = listCount
 
-			var_0_6[iter_5_0] = var_5_4
-
-			if var_5_4 == 0 then
-				var_0_5[iter_5_0] = nil
-				var_0_9[iter_5_0] = nil
+			if listCount == 0 then
+				msgItems[msgId] = nil
+				replyDic[msgId] = nil
 			end
 		end
 
-		var_0_10[iter_5_0] = nil
+		checkRemoveId[msgId] = nil
 	end
 
-	var_0_7 = false
+	needRemove = false
 end
 
-FightTimer.registRepeatTimer(var_0_0.clearMsg, var_0_0, 10, -1)
+FightTimer.registRepeatTimer(FightMsgMgr.clearMsg, FightMsgMgr, 10, -1)
 
-return var_0_0
+return FightMsgMgr

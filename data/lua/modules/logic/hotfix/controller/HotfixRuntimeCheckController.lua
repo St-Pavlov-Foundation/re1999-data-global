@@ -1,11 +1,13 @@
-﻿module("modules.logic.hotfix.controller.HotfixRuntimeCheckController", package.seeall)
+﻿-- chunkname: @modules/logic/hotfix/controller/HotfixRuntimeCheckController.lua
 
-local var_0_0 = class("HotfixRuntimeCheckController", BaseController)
+module("modules.logic.hotfix.controller.HotfixRuntimeCheckController", package.seeall)
 
-var_0_0.NoInteractInterval = 600
-var_0_0.HotfixCheckInterval = 600
+local HotfixRuntimeCheckController = class("HotfixRuntimeCheckController", BaseController)
 
-local var_0_1 = {
+HotfixRuntimeCheckController.NoInteractInterval = 600
+HotfixRuntimeCheckController.HotfixCheckInterval = 600
+
+local StoreCheckTabIds = {
 	[610] = true,
 	[100] = true,
 	[110] = true,
@@ -13,112 +15,112 @@ local var_0_1 = {
 	[410] = true
 }
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0.enableCheck = true
+function HotfixRuntimeCheckController:onInit()
+	self.enableCheck = true
 end
 
-function var_0_0.addConstEvents(arg_2_0)
+function HotfixRuntimeCheckController:addConstEvents()
 	logNormal("HotfixRuntimeCheckController addConstEvents")
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_2_0.handleOnOpenView, arg_2_0)
-	arg_2_0:addEventCb(SummonController.instance, SummonEvent.onSummonTabSet, arg_2_0._handleSummonTabChange, arg_2_0)
-	arg_2_0:addEventCb(StoreController.instance, StoreEvent.OnSwitchTab, arg_2_0._handleStoreTabChange, arg_2_0)
-	arg_2_0:addEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreenUp, arg_2_0._onTouchScreen, arg_2_0)
-	TaskDispatcher.runRepeat(arg_2_0._onTick, arg_2_0, 10)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self.handleOnOpenView, self)
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonTabSet, self._handleSummonTabChange, self)
+	self:addEventCb(StoreController.instance, StoreEvent.OnSwitchTab, self._handleStoreTabChange, self)
+	self:addEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreenUp, self._onTouchScreen, self)
+	TaskDispatcher.runRepeat(self._onTick, self, 10)
 end
 
-function var_0_0.reInit(arg_3_0)
-	arg_3_0._lastCheckTime = nil
+function HotfixRuntimeCheckController:reInit()
+	self._lastCheckTime = nil
 
-	arg_3_0:cleanFlow()
+	self:cleanFlow()
 end
 
-function var_0_0.checkInitViewNames(arg_4_0)
-	if ViewName and not arg_4_0._focusViewNames then
-		arg_4_0._focusViewNames = {
+function HotfixRuntimeCheckController:checkInitViewNames()
+	if ViewName and not self._focusViewNames then
+		self._focusViewNames = {
 			[ViewName.SummonADView] = true,
 			[ViewName.StoreView] = true
 		}
 	end
 end
 
-function var_0_0.isViewNeedCheckVersion(arg_5_0, arg_5_1)
-	arg_5_0:checkInitViewNames()
+function HotfixRuntimeCheckController:isViewNeedCheckVersion(viewName)
+	self:checkInitViewNames()
 
-	if arg_5_1 and arg_5_0._focusViewNames and arg_5_0._focusViewNames[arg_5_1] then
+	if viewName and self._focusViewNames and self._focusViewNames[viewName] then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.isTimeToCheckVersion(arg_6_0)
-	return not arg_6_0._lastCheckTime or Time.time - arg_6_0._lastCheckTime > var_0_0.HotfixCheckInterval
+function HotfixRuntimeCheckController:isTimeToCheckVersion()
+	return not self._lastCheckTime or Time.time - self._lastCheckTime > HotfixRuntimeCheckController.HotfixCheckInterval
 end
 
-function var_0_0._onTouchScreen(arg_7_0)
-	arg_7_0._lastInteractTime = Time.realtimeSinceStartup
+function HotfixRuntimeCheckController:_onTouchScreen()
+	self._lastInteractTime = Time.realtimeSinceStartup
 end
 
-function var_0_0._onTick(arg_8_0)
+function HotfixRuntimeCheckController:_onTick()
 	if not ViewMgr.instance:isOpen(ViewName.MainView) then
-		arg_8_0._lastInteractTime = Time.realtimeSinceStartup
+		self._lastInteractTime = Time.realtimeSinceStartup
 
 		return
 	end
 
-	local var_8_0 = Time.realtimeSinceStartup
+	local now = Time.realtimeSinceStartup
 
-	if arg_8_0._lastInteractTime and var_8_0 - arg_8_0._lastInteractTime > var_0_0.NoInteractInterval and arg_8_0:isTimeToCheckVersion() then
-		arg_8_0:checkNewVersion()
+	if self._lastInteractTime and now - self._lastInteractTime > HotfixRuntimeCheckController.NoInteractInterval and self:isTimeToCheckVersion() then
+		self:checkNewVersion()
 
-		arg_8_0._lastInteractTime = var_8_0
+		self._lastInteractTime = now
 	end
 end
 
-function var_0_0.checkNewVersion(arg_9_0)
-	if arg_9_0.enableCheck and arg_9_0:isTimeToCheckVersion() then
-		arg_9_0._lastCheckTime = Time.time
+function HotfixRuntimeCheckController:checkNewVersion()
+	if self.enableCheck and self:isTimeToCheckVersion() then
+		self._lastCheckTime = Time.time
 
-		if not arg_9_0._flowCheckVer then
-			arg_9_0._flowCheckVer = FlowSequence.New()
+		if not self._flowCheckVer then
+			self._flowCheckVer = FlowSequence.New()
 
-			arg_9_0._flowCheckVer:addWork(RuntimeCheckVersionWork.New())
-			arg_9_0._flowCheckVer:registerDoneListener(arg_9_0.handleCheckVersionFlowDone, arg_9_0)
-			arg_9_0._flowCheckVer:start()
+			self._flowCheckVer:addWork(RuntimeCheckVersionWork.New())
+			self._flowCheckVer:registerDoneListener(self.handleCheckVersionFlowDone, self)
+			self._flowCheckVer:start()
 		end
 	end
 end
 
-function var_0_0.cleanFlow(arg_10_0)
-	if arg_10_0._flowCheckVer then
-		arg_10_0._flowCheckVer:stop()
-		arg_10_0._flowCheckVer:unregisterDoneListener(arg_10_0.handleCheckVersionFlowDone, arg_10_0)
+function HotfixRuntimeCheckController:cleanFlow()
+	if self._flowCheckVer then
+		self._flowCheckVer:stop()
+		self._flowCheckVer:unregisterDoneListener(self.handleCheckVersionFlowDone, self)
 
-		arg_10_0._flowCheckVer = nil
+		self._flowCheckVer = nil
 	end
 end
 
-function var_0_0.handleCheckVersionFlowDone(arg_11_0, arg_11_1)
-	logNormal("HotfixRuntimeCheckController CheckVersionFlowDone : " .. tostring(arg_11_1))
-	arg_11_0:cleanFlow()
+function HotfixRuntimeCheckController:handleCheckVersionFlowDone(success)
+	logNormal("HotfixRuntimeCheckController CheckVersionFlowDone : " .. tostring(success))
+	self:cleanFlow()
 end
 
-function var_0_0.handleOnOpenView(arg_12_0, arg_12_1)
-	if arg_12_0:isViewNeedCheckVersion(arg_12_1) then
-		arg_12_0:checkNewVersion()
+function HotfixRuntimeCheckController:handleOnOpenView(viewName)
+	if self:isViewNeedCheckVersion(viewName) then
+		self:checkNewVersion()
 	end
 end
 
-function var_0_0._handleSummonTabChange(arg_13_0)
-	arg_13_0:checkNewVersion()
+function HotfixRuntimeCheckController:_handleSummonTabChange()
+	self:checkNewVersion()
 end
 
-function var_0_0._handleStoreTabChange(arg_14_0, arg_14_1)
-	if arg_14_1 and var_0_1[arg_14_1.id] then
-		arg_14_0:checkNewVersion()
+function HotfixRuntimeCheckController:_handleStoreTabChange(storeEntranceCfg)
+	if storeEntranceCfg and StoreCheckTabIds[storeEntranceCfg.id] then
+		self:checkNewVersion()
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+HotfixRuntimeCheckController.instance = HotfixRuntimeCheckController.New()
 
-return var_0_0
+return HotfixRuntimeCheckController

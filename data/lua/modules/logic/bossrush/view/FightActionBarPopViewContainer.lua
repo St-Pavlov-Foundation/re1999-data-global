@@ -1,11 +1,13 @@
-﻿module("modules.logic.bossrush.view.FightActionBarPopViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/view/FightActionBarPopViewContainer.lua
 
-local var_0_0 = class("FightActionBarPopViewContainer", BaseViewContainer)
+module("modules.logic.bossrush.view.FightActionBarPopViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local FightActionBarPopViewContainer = class("FightActionBarPopViewContainer", BaseViewContainer)
+
+function FightActionBarPopViewContainer:buildViews()
 	return {
 		FightActionBarPopView.New()
 	}
 end
 
-return var_0_0
+return FightActionBarPopViewContainer

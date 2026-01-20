@@ -1,48 +1,50 @@
-﻿module("modules.logic.versionactivity1_5.aizila.model.AiZiLaStoryListModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/aizila/model/AiZiLaStoryListModel.lua
 
-local var_0_0 = class("AiZiLaStoryListModel", ListScrollModel)
+module("modules.logic.versionactivity1_5.aizila.model.AiZiLaStoryListModel", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = AiZiLaConfig.instance:getStoryList(arg_1_1)
-	local var_1_1 = {}
+local AiZiLaStoryListModel = class("AiZiLaStoryListModel", ListScrollModel)
 
-	arg_1_0._episodeId = arg_1_2
+function AiZiLaStoryListModel:init(actId, episodeId)
+	local storyCos = AiZiLaConfig.instance:getStoryList(actId)
+	local dataList = {}
 
-	if var_1_0 then
-		for iter_1_0, iter_1_1 in ipairs(var_1_0) do
-			if AiZiLaEnum.AllStoryEpisodeId == arg_1_2 or iter_1_1.episodeId == arg_1_2 then
-				local var_1_2 = AiZiLaStoryMO.New()
+	self._episodeId = episodeId
 
-				var_1_2:init(iter_1_0, iter_1_1)
-				table.insert(var_1_1, var_1_2)
+	if storyCos then
+		for index, storyCo in ipairs(storyCos) do
+			if AiZiLaEnum.AllStoryEpisodeId == episodeId or storyCo.episodeId == episodeId then
+				local stroyMO = AiZiLaStoryMO.New()
+
+				stroyMO:init(index, storyCo)
+				table.insert(dataList, stroyMO)
 			end
 		end
 	end
 
-	if #var_1_1 > 1 then
-		table.sort(var_1_1, var_0_0.sortMO)
+	if #dataList > 1 then
+		table.sort(dataList, AiZiLaStoryListModel.sortMO)
 	end
 
-	for iter_1_2, iter_1_3 in ipairs(var_1_1) do
-		iter_1_3.index = iter_1_2
+	for i, stroyMO in ipairs(dataList) do
+		stroyMO.index = i
 	end
 
-	arg_1_0:setList(var_1_1)
+	self:setList(dataList)
 end
 
-function var_0_0.sortMO(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_0.config.order
-	local var_2_1 = arg_2_1.config.order
+function AiZiLaStoryListModel.sortMO(objA, objB)
+	local orderA = objA.config.order
+	local orderB = objB.config.order
 
-	if var_2_0 ~= var_2_1 then
-		return var_2_0 < var_2_1
+	if orderA ~= orderB then
+		return orderA < orderB
 	end
 end
 
-function var_0_0.getEpisodeId(arg_3_0)
-	return arg_3_0._episodeId
+function AiZiLaStoryListModel:getEpisodeId()
+	return self._episodeId
 end
 
-var_0_0.instance = var_0_0.New()
+AiZiLaStoryListModel.instance = AiZiLaStoryListModel.New()
 
-return var_0_0
+return AiZiLaStoryListModel

@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.result.Act183SettlementBossEpisodeHeroComp", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/result/Act183SettlementBossEpisodeHeroComp.lua
 
-local var_0_0 = class("Act183SettlementBossEpisodeHeroComp", Act183SettlementSubEpisodeHeroComp)
+module("modules.logic.versionactivity2_5.challenge.view.result.Act183SettlementBossEpisodeHeroComp", package.seeall)
 
-var_0_0.TeamLeaderPosition = {
+local Act183SettlementBossEpisodeHeroComp = class("Act183SettlementBossEpisodeHeroComp", Act183SettlementSubEpisodeHeroComp)
+
+Act183SettlementBossEpisodeHeroComp.TeamLeaderPosition = {
 	1,
 	1,
 	1,
@@ -10,10 +12,10 @@ var_0_0.TeamLeaderPosition = {
 	1
 }
 
-local var_0_1 = 1
+local HeroItemScale = 1
 
-function var_0_0.refreshHeroPosition(arg_1_0, arg_1_1, arg_1_2)
-	transformhelper.setLocalScale(arg_1_1.transform, var_0_1, var_0_1, var_0_1)
+function Act183SettlementBossEpisodeHeroComp:refreshHeroPosition(heroItem, positionParams)
+	transformhelper.setLocalScale(heroItem.transform, HeroItemScale, HeroItemScale, HeroItemScale)
 end
 
-return var_0_0
+return Act183SettlementBossEpisodeHeroComp

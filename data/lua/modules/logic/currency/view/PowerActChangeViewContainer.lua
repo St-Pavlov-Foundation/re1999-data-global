@@ -1,30 +1,32 @@
-﻿module("modules.logic.currency.view.PowerActChangeViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/currency/view/PowerActChangeViewContainer.lua
 
-local var_0_0 = class("PowerActChangeViewContainer", BaseViewContainer)
+module("modules.logic.currency.view.PowerActChangeViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local PowerActChangeViewContainer = class("PowerActChangeViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, PowerActChangeView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_righttop"))
+function PowerActChangeViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, PowerActChangeView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_righttop"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_0.viewParam and arg_2_0.viewParam.PowerId or MaterialEnum.PowerId.ActPowerId
-	local var_2_1 = {
+function PowerActChangeViewContainer:buildTabViews(tabContainerId)
+	local powerId = self.viewParam and self.viewParam.PowerId or MaterialEnum.PowerId.ActPowerId
+	local currencyParam = {
 		CurrencyEnum.CurrencyType.Power,
 		{
 			isCurrencySprite = true,
 			type = MaterialEnum.MaterialType.PowerPotion,
-			id = var_2_0
+			id = powerId
 		}
 	}
 
 	return {
-		CurrencyView.New(var_2_1)
+		CurrencyView.New(currencyParam)
 	}
 end
 
-return var_0_0
+return PowerActChangeViewContainer

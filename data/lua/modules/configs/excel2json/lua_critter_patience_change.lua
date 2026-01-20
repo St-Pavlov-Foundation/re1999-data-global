@@ -1,18 +1,20 @@
-﻿module("modules.configs.excel2json.lua_critter_patience_change", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_critter_patience_change.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_critter_patience_change", package.seeall)
+
+local lua_critter_patience_change = {}
+local fields = {
 	stepValue = 3,
 	stepTime = 2,
 	buildingType = 1
 }
-local var_0_2 = {
+local primaryKey = {
 	"buildingType"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_critter_patience_change.onLoad(json)
+	lua_critter_patience_change.configList, lua_critter_patience_change.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_critter_patience_change

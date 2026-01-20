@@ -1,455 +1,460 @@
-﻿module("modules.logic.rouge.view.RougeCollectionChessSlotComp", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeCollectionChessSlotComp.lua
 
-local var_0_0 = class("RougeCollectionChessSlotComp", BaseView)
+module("modules.logic.rouge.view.RougeCollectionChessSlotComp", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclosetipArea = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bg/#btn_closetipArea")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._gochessContainer = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_chessContainer")
-	arg_1_0._gomeshContainer = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_meshContainer")
-	arg_1_0._gomeshItem = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_meshContainer/#go_meshItem")
-	arg_1_0._godragContainer = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_dragContainer")
-	arg_1_0._gocellModel = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_cellModel")
-	arg_1_0._gochessitem = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_dragContainer/#go_chessitem")
-	arg_1_0._goraychessitem = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_raychessitem")
-	arg_1_0._goblock = gohelper.findChild(arg_1_0.viewGO, "#go_block")
-	arg_1_0._scrollbag = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_bag")
-	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "#scroll_bag/Viewport/#go_Content")
-	arg_1_0._gocollectionItem = gohelper.findChild(arg_1_0.viewGO, "#scroll_bag/Viewport/#go_Content/#go_collectionItem")
-	arg_1_0._gotip = gohelper.findChild(arg_1_0.viewGO, "#go_tip")
-	arg_1_0._gosingleTipsContent = gohelper.findChild(arg_1_0.viewGO, "#go_tip/attributetip/#go_singleTipsContent")
-	arg_1_0._gosingleAttributeItem = gohelper.findChild(arg_1_0.viewGO, "#go_tip/attributetip/#go_singleTipsContent/#go_singleAttributeItem")
+local RougeCollectionChessSlotComp = class("RougeCollectionChessSlotComp", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeCollectionChessSlotComp:onInitView()
+	self._btnclosetipArea = gohelper.findChildButtonWithAudio(self.viewGO, "bg/#btn_closetipArea")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._gochessContainer = gohelper.findChild(self.viewGO, "chessboard/#go_chessContainer")
+	self._gomeshContainer = gohelper.findChild(self.viewGO, "chessboard/#go_meshContainer")
+	self._gomeshItem = gohelper.findChild(self.viewGO, "chessboard/#go_meshContainer/#go_meshItem")
+	self._godragContainer = gohelper.findChild(self.viewGO, "chessboard/#go_dragContainer")
+	self._gocellModel = gohelper.findChild(self.viewGO, "chessboard/#go_cellModel")
+	self._gochessitem = gohelper.findChild(self.viewGO, "chessboard/#go_dragContainer/#go_chessitem")
+	self._goraychessitem = gohelper.findChild(self.viewGO, "chessboard/#go_raychessitem")
+	self._goblock = gohelper.findChild(self.viewGO, "#go_block")
+	self._scrollbag = gohelper.findChildScrollRect(self.viewGO, "#scroll_bag")
+	self._goContent = gohelper.findChild(self.viewGO, "#scroll_bag/Viewport/#go_Content")
+	self._gocollectionItem = gohelper.findChild(self.viewGO, "#scroll_bag/Viewport/#go_Content/#go_collectionItem")
+	self._gotip = gohelper.findChild(self.viewGO, "#go_tip")
+	self._gosingleTipsContent = gohelper.findChild(self.viewGO, "#go_tip/attributetip/#go_singleTipsContent")
+	self._gosingleAttributeItem = gohelper.findChild(self.viewGO, "#go_tip/attributetip/#go_singleTipsContent/#go_singleAttributeItem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RougeCollectionChessSlotComp:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RougeCollectionChessSlotComp:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0:addEventCb(RougeCollectionChessController.instance, RougeEvent.UpdateSlotCellState, arg_4_0.updateSlotCellState, arg_4_0)
-	arg_4_0:addEventCb(RougeCollectionChessController.instance, RougeEvent.PlaceCollection2SlotArea, arg_4_0.placeCollection2SlotAreaSucc, arg_4_0)
-	arg_4_0:addEventCb(RougeCollectionChessController.instance, RougeEvent.NullSpace2PlaceCollection, arg_4_0.onNullSpace2PlaceCollection, arg_4_0)
-	arg_4_0:addEventCb(RougeCollectionChessController.instance, RougeEvent.Failed2PlaceSlotCollection, arg_4_0.placeCollection2SlotAreaFailed, arg_4_0)
-	arg_4_0:addEventCb(RougeCollectionChessController.instance, RougeEvent.DeleteSlotCollection, arg_4_0.deleteSlotCollection, arg_4_0)
-	arg_4_0:addEventCb(RougeCollectionEnchantController.instance, RougeEvent.UpdateCollectionEnchant, arg_4_0.updateCollectionEnchant, arg_4_0)
+function RougeCollectionChessSlotComp:_editableInitView()
+	self:addEventCb(RougeCollectionChessController.instance, RougeEvent.UpdateSlotCellState, self.updateSlotCellState, self)
+	self:addEventCb(RougeCollectionChessController.instance, RougeEvent.PlaceCollection2SlotArea, self.placeCollection2SlotAreaSucc, self)
+	self:addEventCb(RougeCollectionChessController.instance, RougeEvent.NullSpace2PlaceCollection, self.onNullSpace2PlaceCollection, self)
+	self:addEventCb(RougeCollectionChessController.instance, RougeEvent.Failed2PlaceSlotCollection, self.placeCollection2SlotAreaFailed, self)
+	self:addEventCb(RougeCollectionChessController.instance, RougeEvent.DeleteSlotCollection, self.deleteSlotCollection, self)
+	self:addEventCb(RougeCollectionEnchantController.instance, RougeEvent.UpdateCollectionEnchant, self.updateCollectionEnchant, self)
 
-	arg_4_0._coverCells = arg_4_0:getUserDataTb_()
-	arg_4_0._conflictIds = arg_4_0:getUserDataTb_()
-	arg_4_0._placeCollectionMap = {}
+	self._coverCells = self:getUserDataTb_()
+	self._conflictIds = self:getUserDataTb_()
+	self._placeCollectionMap = {}
 end
 
-function var_0_0.onOpen(arg_5_0)
-	local var_5_0 = RougeCollectionModel.instance:getCurSlotAreaSize()
+function RougeCollectionChessSlotComp:onOpen()
+	local slotAreaSize = RougeCollectionModel.instance:getCurSlotAreaSize()
 
-	arg_5_0:initCollectionSlot(var_5_0.col, var_5_0.row)
-	arg_5_0:updateAllFilledCellState()
+	self:initCollectionSlot(slotAreaSize.col, slotAreaSize.row)
+	self:updateAllFilledCellState()
 end
 
-function var_0_0.initCollectionSlot(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_1 = arg_6_1 or 0
-	arg_6_2 = arg_6_2 or 0
+function RougeCollectionChessSlotComp:initCollectionSlot(col, row)
+	col = col or 0
+	row = row or 0
 
-	local var_6_0 = RougeCollectionHelper.CollectionSlotCellSize.x
-	local var_6_1 = RougeCollectionHelper.CollectionSlotCellSize.y
-	local var_6_2 = gohelper.findChild(arg_6_0.viewGO, "chessboard")
+	local cellWidth = RougeCollectionHelper.CollectionSlotCellSize.x
+	local cellHeight = RougeCollectionHelper.CollectionSlotCellSize.y
+	local slotArea = gohelper.findChild(self.viewGO, "chessboard")
 
-	recthelper.setWidth(var_6_2.transform, arg_6_1 * var_6_0)
-	recthelper.setHeight(var_6_2.transform, arg_6_2 * var_6_1)
-	recthelper.setAnchor(arg_6_0._gomeshContainer.transform, var_6_0 / 2, -var_6_1 / 2)
-	recthelper.setAnchor(arg_6_0._godragContainer.transform, var_6_0 / 2, -var_6_1 / 2)
-	recthelper.setAnchor(arg_6_0._gocellModel.transform, var_6_0 / 2, -var_6_1 / 2)
+	recthelper.setWidth(slotArea.transform, col * cellWidth)
+	recthelper.setHeight(slotArea.transform, row * cellHeight)
+	recthelper.setAnchor(self._gomeshContainer.transform, cellWidth / 2, -cellHeight / 2)
+	recthelper.setAnchor(self._godragContainer.transform, cellWidth / 2, -cellHeight / 2)
+	recthelper.setAnchor(self._gocellModel.transform, cellWidth / 2, -cellHeight / 2)
 
-	for iter_6_0 = 0, arg_6_2 - 1 do
-		for iter_6_1 = 0, arg_6_1 - 1 do
-			arg_6_0:createCollectionSlotCell(iter_6_1, iter_6_0)
+	for j = 0, row - 1 do
+		for i = 0, col - 1 do
+			self:createCollectionSlotCell(i, j)
 		end
 	end
 end
 
-function var_0_0.updateAllFilledCellState(arg_7_0)
-	local var_7_0 = RougeCollectionModel.instance:getSlotAreaCollection()
+function RougeCollectionChessSlotComp:updateAllFilledCellState()
+	local collections = RougeCollectionModel.instance:getSlotAreaCollection()
 
-	if var_7_0 then
-		for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-			arg_7_0:placeCollection2SlotAreaSucc(iter_7_1)
+	if collections then
+		for _, collectionMO in ipairs(collections) do
+			self:placeCollection2SlotAreaSucc(collectionMO)
 		end
 	end
 end
 
-function var_0_0.getCollectionSlotCell(arg_8_0, arg_8_1, arg_8_2)
-	return arg_8_0._slotCellTab and arg_8_0._slotCellTab[arg_8_1] and arg_8_0._slotCellTab[arg_8_1][arg_8_2]
+function RougeCollectionChessSlotComp:getCollectionSlotCell(slotPosX, slotPosY)
+	return self._slotCellTab and self._slotCellTab[slotPosX] and self._slotCellTab[slotPosX][slotPosY]
 end
 
-function var_0_0.createCollectionSlotCell(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = gohelper.cloneInPlace(arg_9_0._gomeshItem, string.format("%s_%s", arg_9_1, arg_9_2))
-	local var_9_1, var_9_2 = RougeCollectionHelper.slotPos2AnchorPos(Vector2(arg_9_1, arg_9_2))
+function RougeCollectionChessSlotComp:createCollectionSlotCell(slotPosX, slotPosY)
+	local slotCell = gohelper.cloneInPlace(self._gomeshItem, string.format("%s_%s", slotPosX, slotPosY))
+	local cellAnchorPosX, cellAnchorPosY = RougeCollectionHelper.slotPos2AnchorPos(Vector2(slotPosX, slotPosY))
 
-	recthelper.setAnchor(var_9_0.transform, var_9_1, var_9_2)
-	gohelper.setActive(var_9_0, true)
+	recthelper.setAnchor(slotCell.transform, cellAnchorPosX, cellAnchorPosY)
+	gohelper.setActive(slotCell, true)
 
-	local var_9_3 = RougeCollectionSlotCellItem.New()
+	local slotCellItem = RougeCollectionSlotCellItem.New()
 
-	var_9_3:onInit(var_9_0, arg_9_1, arg_9_2, RougeCollectionHelper.ResultReViewCollectionSlotParam)
+	slotCellItem:onInit(slotCell, slotPosX, slotPosY, RougeCollectionHelper.ResultReViewCollectionSlotParam)
 
-	arg_9_0._slotCellTab = arg_9_0._slotCellTab or arg_9_0:getUserDataTb_()
-	arg_9_0._slotCellTab[arg_9_1] = arg_9_0._slotCellTab[arg_9_1] or arg_9_0:getUserDataTb_()
-	arg_9_0._slotCellTab[arg_9_1][arg_9_2] = var_9_3
+	self._slotCellTab = self._slotCellTab or self:getUserDataTb_()
+	self._slotCellTab[slotPosX] = self._slotCellTab[slotPosX] or self:getUserDataTb_()
+	self._slotCellTab[slotPosX][slotPosY] = slotCellItem
 end
 
-function var_0_0.updateSlotCellState(arg_10_0, arg_10_1)
-	if not arg_10_1 then
+function RougeCollectionChessSlotComp:updateSlotCellState(collectionMO)
+	if not collectionMO then
 		return
 	end
 
-	local var_10_0 = arg_10_1.id
+	local collectionId = collectionMO.id
 
-	arg_10_0:revertCoverCells(var_10_0)
-	arg_10_0:revertConflictCells()
-	arg_10_0:updateSlotCells(arg_10_1)
+	self:revertCoverCells(collectionId)
+	self:revertConflictCells()
+	self:updateSlotCells(collectionMO)
 end
 
-function var_0_0.updateSlotCells(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_1.id
-	local var_11_1 = arg_11_1.cfgId
-	local var_11_2 = arg_11_1:getRotation()
-	local var_11_3 = arg_11_1:getCenterSlotPos()
-	local var_11_4 = RougeCollectionConfig.instance:getRotateEditorParam(var_11_1, var_11_2, RougeEnum.CollectionEditorParamType.Shape)
-	local var_11_5 = RougeCollectionConfig.instance:getRotateEditorParam(var_11_1, var_11_2, RougeEnum.CollectionEditorParamType.Effect)
-	local var_11_6 = RougeCollectionConfig.instance:getOrBuildCollectionShapeMap(var_11_1, var_11_2)
+function RougeCollectionChessSlotComp:updateSlotCells(collectionMO)
+	local collectionId = collectionMO.id
+	local collectionCfgId = collectionMO.cfgId
+	local rotation = collectionMO:getRotation()
+	local centerSlotPos = collectionMO:getCenterSlotPos()
+	local shapeCfg = RougeCollectionConfig.instance:getRotateEditorParam(collectionCfgId, rotation, RougeEnum.CollectionEditorParamType.Shape)
+	local effectCfg = RougeCollectionConfig.instance:getRotateEditorParam(collectionCfgId, rotation, RougeEnum.CollectionEditorParamType.Effect)
+	local shapeCfgMap = RougeCollectionConfig.instance:getOrBuildCollectionShapeMap(collectionCfgId, rotation)
 
-	if not var_11_4 then
+	if not shapeCfg then
 		return
 	end
 
-	local var_11_7 = false
+	local isConflict = false
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_4) do
-		local var_11_8 = RougeCollectionHelper.getCollectionCellSlotPos(var_11_3, iter_11_1)
-		local var_11_9 = arg_11_0:getCollectionSlotCell(var_11_8.x, var_11_8.y)
-		local var_11_10 = RougeCollectionModel.instance:getSlotFilledCollectionId(var_11_8.x, var_11_8.y)
+	for _, cellOffset in ipairs(shapeCfg) do
+		local cellSlotPos = RougeCollectionHelper.getCollectionCellSlotPos(centerSlotPos, cellOffset)
+		local slotCell = self:getCollectionSlotCell(cellSlotPos.x, cellSlotPos.y)
+		local conflictId = RougeCollectionModel.instance:getSlotFilledCollectionId(cellSlotPos.x, cellSlotPos.y)
 
-		if var_11_9 and var_11_10 > 0 and var_11_10 ~= var_11_0 then
-			arg_11_0._conflictIds[var_11_10] = true
-			var_11_7 = true
+		if slotCell and conflictId > 0 and conflictId ~= collectionId then
+			self._conflictIds[conflictId] = true
+			isConflict = true
 		end
 	end
 
-	if var_11_7 then
-		arg_11_0:refreshConflictCells(var_11_1)
+	if isConflict then
+		self:refreshConflictCells(collectionCfgId)
 
 		return
 	end
 
-	local var_11_11 = arg_11_1:getLeftTopPos()
-	local var_11_12 = RougeCollectionHelper.checkIsCollectionSlotArea(var_11_1, var_11_11, var_11_2, true)
+	local leftTopPos = collectionMO:getLeftTopPos()
+	local isOutSlotArea = RougeCollectionHelper.checkIsCollectionSlotArea(collectionCfgId, leftTopPos, rotation, true)
 
-	for iter_11_2, iter_11_3 in ipairs(var_11_4) do
-		local var_11_13 = RougeCollectionHelper.getCollectionCellSlotPos(var_11_3, iter_11_3)
-		local var_11_14 = arg_11_0:getCollectionSlotCell(var_11_13.x, var_11_13.y)
+	for _, cellOffset in ipairs(shapeCfg) do
+		local cellSlotPos = RougeCollectionHelper.getCollectionCellSlotPos(centerSlotPos, cellOffset)
+		local slotCell = self:getCollectionSlotCell(cellSlotPos.x, cellSlotPos.y)
 
-		if var_11_14 then
-			local var_11_15 = RougeCollectionHelper.getSlotCellInsideLine(var_11_6, iter_11_3)
+		if slotCell then
+			local insideLines = RougeCollectionHelper.getSlotCellInsideLine(shapeCfgMap, cellOffset)
 
-			if var_11_12 then
-				var_11_14:updateCellState(RougeEnum.LineState.Red)
-				var_11_14:hideInsideLines(var_11_15)
+			if isOutSlotArea then
+				slotCell:updateCellState(RougeEnum.LineState.Red)
+				slotCell:hideInsideLines(insideLines)
 			else
-				var_11_14:onCoverCollection(var_11_0, var_11_15)
+				slotCell:onCoverCollection(collectionId, insideLines)
 			end
 
-			arg_11_0._coverCells[var_11_0] = arg_11_0._coverCells[var_11_0] or {}
+			self._coverCells[collectionId] = self._coverCells[collectionId] or {}
 
-			table.insert(arg_11_0._coverCells[var_11_0], var_11_14)
+			table.insert(self._coverCells[collectionId], slotCell)
 		end
 	end
 
-	for iter_11_4, iter_11_5 in ipairs(var_11_5) do
-		local var_11_16 = RougeCollectionHelper.getCollectionCellSlotPos(var_11_3, iter_11_5)
-		local var_11_17 = arg_11_0:getCollectionSlotCell(var_11_16.x, var_11_16.y)
+	for _, cellOffset in ipairs(effectCfg) do
+		local cellSlotPos = RougeCollectionHelper.getCollectionCellSlotPos(centerSlotPos, cellOffset)
+		local slotCell = self:getCollectionSlotCell(cellSlotPos.x, cellSlotPos.y)
 
-		if var_11_17 then
-			var_11_17:updateCellState(RougeEnum.LineState.Blue)
+		if slotCell then
+			slotCell:updateCellState(RougeEnum.LineState.Blue)
 
-			arg_11_0._coverCells[var_11_0] = arg_11_0._coverCells[var_11_0] or {}
+			self._coverCells[collectionId] = self._coverCells[collectionId] or {}
 
-			table.insert(arg_11_0._coverCells[var_11_0], var_11_17)
+			table.insert(self._coverCells[collectionId], slotCell)
 		end
 	end
 end
 
-function var_0_0.foreachCollectionCells(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	if not arg_12_1 or not arg_12_2 or not arg_12_3 then
+function RougeCollectionChessSlotComp:foreachCollectionCells(collectionMO, callBack, callbackObj)
+	if not collectionMO or not callBack or not callbackObj then
 		return
 	end
 
-	local var_12_0 = arg_12_1.cfgId
-	local var_12_1 = arg_12_1:getRotation()
-	local var_12_2 = RougeCollectionConfig.instance:getShapeMatrix(var_12_0, var_12_1)
+	local collectionCfgId = collectionMO.cfgId
+	local rotation = collectionMO:getRotation()
+	local rotationMatrix = RougeCollectionConfig.instance:getShapeMatrix(collectionCfgId, rotation)
 
-	if var_12_2 then
-		for iter_12_0, iter_12_1 in ipairs(var_12_2) do
-			for iter_12_2, iter_12_3 in ipairs(iter_12_1) do
-				if iter_12_3 and iter_12_3 > 0 then
-					arg_12_2(arg_12_3, arg_12_1, var_12_2, iter_12_0, iter_12_2)
+	if rotationMatrix then
+		for posX, rows in ipairs(rotationMatrix) do
+			for posY, value in ipairs(rows) do
+				if value and value > 0 then
+					callBack(callbackObj, collectionMO, rotationMatrix, posX, posY)
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.onCoverCellCallBack(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4)
-	local var_13_0 = arg_13_1:getLeftTopPos()
-	local var_13_1 = var_13_0.y + arg_13_4 - 1
-	local var_13_2 = var_13_0.x + arg_13_3 - 1
-	local var_13_3 = arg_13_0:getCollectionSlotCell(var_13_1, var_13_2)
+function RougeCollectionChessSlotComp:onCoverCellCallBack(collectionMO, rotationMatrix, posX, posY)
+	local leftTopPos = collectionMO:getLeftTopPos()
+	local targetPosX = leftTopPos.y + posY - 1
+	local targetPosY = leftTopPos.x + posX - 1
+	local slotCell = self:getCollectionSlotCell(targetPosX, targetPosY)
 
-	if var_13_3 then
-		local var_13_4 = arg_13_0:getSlotCellInsideLine(arg_13_2, arg_13_4, arg_13_3)
-		local var_13_5 = arg_13_1.id
+	if slotCell then
+		local insideLines = self:getSlotCellInsideLine(rotationMatrix, posY, posX)
+		local collectionId = collectionMO.id
 
-		var_13_3:onCoverCollection(var_13_5, var_13_4)
+		slotCell:onCoverCollection(collectionId, insideLines)
 
-		arg_13_0._coverCells[var_13_5] = arg_13_0._coverCells[var_13_5] or {}
+		self._coverCells[collectionId] = self._coverCells[collectionId] or {}
 
-		table.insert(arg_13_0._coverCells[var_13_5], var_13_3)
+		table.insert(self._coverCells[collectionId], slotCell)
 	end
 end
 
-function var_0_0.getSlotCellInsideLine(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	local var_14_0 = {}
+function RougeCollectionChessSlotComp:getSlotCellInsideLine(shapeMatrix, posX, posY)
+	local result = {}
 
-	if arg_14_0:isCellExist(arg_14_1, arg_14_2, arg_14_3 - 1) then
-		table.insert(var_14_0, RougeEnum.SlotCellDirection.Top)
+	if self:isCellExist(shapeMatrix, posX, posY - 1) then
+		table.insert(result, RougeEnum.SlotCellDirection.Top)
 	end
 
-	if arg_14_0:isCellExist(arg_14_1, arg_14_2, arg_14_3 + 1) then
-		table.insert(var_14_0, RougeEnum.SlotCellDirection.Bottom)
+	if self:isCellExist(shapeMatrix, posX, posY + 1) then
+		table.insert(result, RougeEnum.SlotCellDirection.Bottom)
 	end
 
-	if arg_14_0:isCellExist(arg_14_1, arg_14_2 - 1, arg_14_3) then
-		table.insert(var_14_0, RougeEnum.SlotCellDirection.Left)
+	if self:isCellExist(shapeMatrix, posX - 1, posY) then
+		table.insert(result, RougeEnum.SlotCellDirection.Left)
 	end
 
-	if arg_14_0:isCellExist(arg_14_1, arg_14_2 + 1, arg_14_3) then
-		table.insert(var_14_0, RougeEnum.SlotCellDirection.Right)
+	if self:isCellExist(shapeMatrix, posX + 1, posY) then
+		table.insert(result, RougeEnum.SlotCellDirection.Right)
 	end
 
-	return var_14_0
+	return result
 end
 
-function var_0_0.isCellExist(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	return arg_15_1[arg_15_2] and arg_15_1[arg_15_2][arg_15_3] and arg_15_1[arg_15_2][arg_15_3] > 0
+function RougeCollectionChessSlotComp:isCellExist(shapeMatrix, posX, posY)
+	return shapeMatrix[posX] and shapeMatrix[posX][posY] and shapeMatrix[posX][posY] > 0
 end
 
-function var_0_0.refreshConflictCells(arg_16_0, arg_16_1)
-	local var_16_0 = RougeCollectionConfig.instance:getCollectionCfg(arg_16_1)
-	local var_16_1 = var_16_0 and var_16_0.type == RougeEnum.CollectionType.Enchant
-	local var_16_2 = var_16_1 and RougeEnum.LineState.Green or RougeEnum.LineState.Red
+function RougeCollectionChessSlotComp:refreshConflictCells(collectionCfgId)
+	local collectionCfg = RougeCollectionConfig.instance:getCollectionCfg(collectionCfgId)
+	local isEnchant = collectionCfg and collectionCfg.type == RougeEnum.CollectionType.Enchant
+	local lineState = isEnchant and RougeEnum.LineState.Green or RougeEnum.LineState.Red
 
-	for iter_16_0, iter_16_1 in pairs(arg_16_0._conflictIds) do
-		if arg_16_0._coverCells and arg_16_0._coverCells[iter_16_0] then
-			local var_16_3 = false
+	for conflictId, _ in pairs(self._conflictIds) do
+		if self._coverCells and self._coverCells[conflictId] then
+			local findEnchantCollection = false
 
-			if var_16_1 then
-				local var_16_4 = RougeCollectionModel.instance:getCollectionByUid(iter_16_0)
-				local var_16_5 = var_16_4 and var_16_4.cfgId
-				local var_16_6 = RougeCollectionConfig.instance:getCollectionCfg(var_16_5)
+			if isEnchant then
+				local conflictMO = RougeCollectionModel.instance:getCollectionByUid(conflictId)
+				local conflictCfgId = conflictMO and conflictMO.cfgId
+				local conflictCfg = RougeCollectionConfig.instance:getCollectionCfg(conflictCfgId)
+				local holeNum = conflictCfg and conflictCfg.holeNum or 0
 
-				var_16_3 = (var_16_6 and var_16_6.holeNum or 0) > 0
-				var_16_2 = var_16_3 and RougeEnum.LineState.Green or RougeEnum.LineState.Red
+				findEnchantCollection = holeNum > 0
+				lineState = findEnchantCollection and RougeEnum.LineState.Green or RougeEnum.LineState.Red
 			else
-				var_16_2 = RougeEnum.LineState.Red
+				lineState = RougeEnum.LineState.Red
 			end
 
-			for iter_16_2, iter_16_3 in ipairs(arg_16_0._coverCells[iter_16_0]) do
-				local var_16_7, var_16_8 = iter_16_3:getSlotCellPosition()
-				local var_16_9 = arg_16_0:getInsideLines(var_16_7, var_16_8, iter_16_0)
+			for _, coverCell in ipairs(self._coverCells[conflictId]) do
+				local slotPosX, slotPosY = coverCell:getSlotCellPosition()
+				local insideLines = self:getInsideLines(slotPosX, slotPosY, conflictId)
 
-				iter_16_3:updateCellState(var_16_2)
-				iter_16_3:hideInsideLines(var_16_9)
+				coverCell:updateCellState(lineState)
+				coverCell:hideInsideLines(insideLines)
 			end
 
-			if var_16_3 then
+			if findEnchantCollection then
 				break
 			end
 		end
 	end
 end
 
-function var_0_0.getInsideLines(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	local var_17_0 = Vector2(arg_17_1, arg_17_2)
-	local var_17_1 = var_17_0 - Vector2(0, 1)
-	local var_17_2 = var_17_0 + Vector2(0, 1)
-	local var_17_3 = var_17_0 - Vector2(1, 0)
-	local var_17_4 = var_17_0 + Vector2(1, 0)
-	local var_17_5 = {}
+function RougeCollectionChessSlotComp:getInsideLines(slotPosX, slotPosY, collectionId)
+	local slotCellPos = Vector2(slotPosX, slotPosY)
+	local topPos = slotCellPos - Vector2(0, 1)
+	local bottomPos = slotCellPos + Vector2(0, 1)
+	local leftPos = slotCellPos - Vector2(1, 0)
+	local rightPos = slotCellPos + Vector2(1, 0)
+	local result = {}
 
-	if RougeCollectionModel.instance:getSlotFilledCollectionId(var_17_1.x, var_17_1.y) == arg_17_3 then
-		table.insert(var_17_5, RougeEnum.SlotCellDirection.Top)
+	if RougeCollectionModel.instance:getSlotFilledCollectionId(topPos.x, topPos.y) == collectionId then
+		table.insert(result, RougeEnum.SlotCellDirection.Top)
 	end
 
-	if RougeCollectionModel.instance:getSlotFilledCollectionId(var_17_2.x, var_17_2.y) == arg_17_3 then
-		table.insert(var_17_5, RougeEnum.SlotCellDirection.Bottom)
+	if RougeCollectionModel.instance:getSlotFilledCollectionId(bottomPos.x, bottomPos.y) == collectionId then
+		table.insert(result, RougeEnum.SlotCellDirection.Bottom)
 	end
 
-	if RougeCollectionModel.instance:getSlotFilledCollectionId(var_17_3.x, var_17_3.y) == arg_17_3 then
-		table.insert(var_17_5, RougeEnum.SlotCellDirection.Left)
+	if RougeCollectionModel.instance:getSlotFilledCollectionId(leftPos.x, leftPos.y) == collectionId then
+		table.insert(result, RougeEnum.SlotCellDirection.Left)
 	end
 
-	if RougeCollectionModel.instance:getSlotFilledCollectionId(var_17_4.x, var_17_4.y) == arg_17_3 then
-		table.insert(var_17_5, RougeEnum.SlotCellDirection.Right)
+	if RougeCollectionModel.instance:getSlotFilledCollectionId(rightPos.x, rightPos.y) == collectionId then
+		table.insert(result, RougeEnum.SlotCellDirection.Right)
 	end
 
-	return var_17_5
+	return result
 end
 
-function var_0_0.placeCollection2SlotAreaSucc(arg_18_0, arg_18_1)
-	if not arg_18_1 then
+function RougeCollectionChessSlotComp:placeCollection2SlotAreaSucc(collectionMO)
+	if not collectionMO then
 		return
 	end
 
-	local var_18_0 = arg_18_1 and arg_18_1.id
+	local collectionId = collectionMO and collectionMO.id
 
-	if arg_18_0._placeCollectionMap[var_18_0] then
-		arg_18_0._placeCollectionMap[var_18_0] = nil
+	if self._placeCollectionMap[collectionId] then
+		self._placeCollectionMap[collectionId] = nil
 	end
 
-	local var_18_1 = arg_18_1:getRotation()
-	local var_18_2 = RougeCollectionConfig.instance:getOrBuildCollectionShapeMap(arg_18_1.cfgId, var_18_1)
-	local var_18_3 = arg_18_1:getCenterSlotPos()
-	local var_18_4 = RougeCollectionConfig.instance:getRotateEditorParam(arg_18_1.cfgId, var_18_1, RougeEnum.CollectionEditorParamType.Shape)
+	local rotation = collectionMO:getRotation()
+	local shapeCfgMap = RougeCollectionConfig.instance:getOrBuildCollectionShapeMap(collectionMO.cfgId, rotation)
+	local centerSlotPos = collectionMO:getCenterSlotPos()
+	local shapeCfg = RougeCollectionConfig.instance:getRotateEditorParam(collectionMO.cfgId, rotation, RougeEnum.CollectionEditorParamType.Shape)
 
-	arg_18_0:revertCoverCells(arg_18_1.id)
+	self:revertCoverCells(collectionMO.id)
 
-	for iter_18_0, iter_18_1 in ipairs(var_18_4) do
-		local var_18_5 = RougeCollectionHelper.getCollectionCellSlotPos(var_18_3, iter_18_1)
-		local var_18_6 = arg_18_0:getCollectionSlotCell(var_18_5.x, var_18_5.y)
+	for _, cellOffset in ipairs(shapeCfg) do
+		local cellSlotPos = RougeCollectionHelper.getCollectionCellSlotPos(centerSlotPos, cellOffset)
+		local slotCell = self:getCollectionSlotCell(cellSlotPos.x, cellSlotPos.y)
 
-		if var_18_6 then
-			local var_18_7 = RougeCollectionHelper.getSlotCellInsideLine(var_18_2, iter_18_1)
+		if slotCell then
+			local insideLines = RougeCollectionHelper.getSlotCellInsideLine(shapeCfgMap, cellOffset)
 
-			var_18_6:onPlaceCollection(var_18_7)
+			slotCell:onPlaceCollection(insideLines)
 
-			arg_18_0._placeCollectionMap[var_18_0] = arg_18_0._placeCollectionMap[var_18_0] or {}
-			arg_18_0._coverCells[var_18_0] = arg_18_0._coverCells[var_18_0] or {}
+			self._placeCollectionMap[collectionId] = self._placeCollectionMap[collectionId] or {}
+			self._coverCells[collectionId] = self._coverCells[collectionId] or {}
 
-			table.insert(arg_18_0._placeCollectionMap[var_18_0], var_18_5)
-			table.insert(arg_18_0._coverCells[var_18_0], var_18_6)
+			table.insert(self._placeCollectionMap[collectionId], cellSlotPos)
+			table.insert(self._coverCells[collectionId], slotCell)
 		end
 	end
 end
 
-function var_0_0.placeCollection2SlotAreaFailed(arg_19_0, arg_19_1, arg_19_2)
-	arg_19_0:revertCoverCells(arg_19_1)
-	arg_19_0:revertConflictCells()
+function RougeCollectionChessSlotComp:placeCollection2SlotAreaFailed(collectionId, isDelete)
+	self:revertCoverCells(collectionId)
+	self:revertConflictCells()
 
-	if RougeCollectionModel.instance:isCollectionPlaceInSlotArea(arg_19_1) and not arg_19_2 then
-		local var_19_0 = RougeCollectionModel.instance:getCollectionByUid(arg_19_1)
+	local isInSlotArea = RougeCollectionModel.instance:isCollectionPlaceInSlotArea(collectionId)
 
-		arg_19_0:placeCollection2SlotAreaSucc(var_19_0)
+	if isInSlotArea and not isDelete then
+		local collectionMO = RougeCollectionModel.instance:getCollectionByUid(collectionId)
+
+		self:placeCollection2SlotAreaSucc(collectionMO)
 	end
 end
 
-function var_0_0.revertCoverCells(arg_20_0, arg_20_1)
-	local var_20_0 = arg_20_0._coverCells and arg_20_0._coverCells[arg_20_1]
+function RougeCollectionChessSlotComp:revertCoverCells(collectionId)
+	local coverCells = self._coverCells and self._coverCells[collectionId]
 
-	if var_20_0 then
-		for iter_20_0, iter_20_1 in pairs(var_20_0) do
-			iter_20_1:revertCellState(arg_20_1)
+	if coverCells then
+		for _, slotCell in pairs(coverCells) do
+			slotCell:revertCellState(collectionId)
 		end
 
-		arg_20_0._coverCells[arg_20_1] = {}
+		self._coverCells[collectionId] = {}
 	end
 end
 
-function var_0_0.revertConflictCells(arg_21_0)
-	if arg_21_0._conflictIds then
-		for iter_21_0, iter_21_1 in pairs(arg_21_0._conflictIds) do
-			local var_21_0 = arg_21_0._coverCells and arg_21_0._coverCells[iter_21_0]
+function RougeCollectionChessSlotComp:revertConflictCells()
+	if self._conflictIds then
+		for conflictId, _ in pairs(self._conflictIds) do
+			local coverCells = self._coverCells and self._coverCells[conflictId]
 
-			if var_21_0 then
-				for iter_21_2, iter_21_3 in pairs(var_21_0) do
-					iter_21_3:revertCellState()
+			if coverCells then
+				for _, slotCell in pairs(coverCells) do
+					slotCell:revertCellState()
 				end
 			end
 		end
 
-		arg_21_0._conflictIds = {}
+		self._conflictIds = {}
 	end
 end
 
-function var_0_0.deleteSlotCollection(arg_22_0, arg_22_1)
-	local var_22_0 = arg_22_0._coverCells and arg_22_0._coverCells[arg_22_1]
+function RougeCollectionChessSlotComp:deleteSlotCollection(collectionId)
+	local coverCells = self._coverCells and self._coverCells[collectionId]
 
-	if var_22_0 then
-		for iter_22_0, iter_22_1 in ipairs(var_22_0) do
-			iter_22_1:revertCellState()
+	if coverCells then
+		for _, cell in ipairs(coverCells) do
+			cell:revertCellState()
 		end
 
-		var_22_0[arg_22_1] = nil
+		coverCells[collectionId] = nil
 	end
 
-	arg_22_0:revertConflictCells()
+	self:revertConflictCells()
 end
 
-function var_0_0.updateCollectionEnchant(arg_23_0, arg_23_1)
-	local var_23_0 = RougeCollectionModel.instance:getCollectionByUid(arg_23_1)
+function RougeCollectionChessSlotComp:updateCollectionEnchant(collectionId)
+	local collectionMO = RougeCollectionModel.instance:getCollectionByUid(collectionId)
 
-	if not var_23_0 then
+	if not collectionMO then
 		return
 	end
 
-	local var_23_1 = var_23_0:getAllEnchantId()
+	local enchantIds = collectionMO:getAllEnchantId()
 
-	if not var_23_1 then
+	if not enchantIds then
 		return
 	end
 
-	for iter_23_0, iter_23_1 in pairs(var_23_1) do
-		local var_23_2 = arg_23_0._coverCells and arg_23_0._coverCells[iter_23_1]
+	for _, enchantId in pairs(enchantIds) do
+		local enchantCoverCells = self._coverCells and self._coverCells[enchantId]
 
-		if var_23_2 then
-			for iter_23_2, iter_23_3 in pairs(var_23_2) do
-				iter_23_3:updateCellState(RougeEnum.LineState.Grey)
+		if enchantCoverCells then
+			for _, cell in pairs(enchantCoverCells) do
+				cell:updateCellState(RougeEnum.LineState.Grey)
 			end
 
-			arg_23_0._coverCells[iter_23_1] = nil
+			self._coverCells[enchantId] = nil
 		end
 	end
 end
 
-function var_0_0.onNullSpace2PlaceCollection(arg_24_0, arg_24_1)
-	arg_24_0:updateSlotCellState(arg_24_1)
+function RougeCollectionChessSlotComp:onNullSpace2PlaceCollection(collectionMO)
+	self:updateSlotCellState(collectionMO)
 end
 
-function var_0_0.disposeAllSlotCells(arg_25_0)
-	if arg_25_0._slotCellTab then
-		for iter_25_0, iter_25_1 in pairs(arg_25_0._slotCellTab) do
-			for iter_25_2, iter_25_3 in pairs(iter_25_1) do
-				iter_25_3:destroy()
+function RougeCollectionChessSlotComp:disposeAllSlotCells()
+	if self._slotCellTab then
+		for _, lineCells in pairs(self._slotCellTab) do
+			for _, slotCell in pairs(lineCells) do
+				slotCell:destroy()
 			end
 		end
 
-		arg_25_0._slotCellTab = nil
+		self._slotCellTab = nil
 	end
 
-	arg_25_0._coverCells = nil
+	self._coverCells = nil
 end
 
-function var_0_0.onClose(arg_26_0)
-	arg_26_0:disposeAllSlotCells()
+function RougeCollectionChessSlotComp:onClose()
+	self:disposeAllSlotCells()
 end
 
-function var_0_0.onDestroyView(arg_27_0)
+function RougeCollectionChessSlotComp:onDestroyView()
 	return
 end
 
-return var_0_0
+return RougeCollectionChessSlotComp

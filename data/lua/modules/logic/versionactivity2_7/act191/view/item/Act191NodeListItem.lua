@@ -1,151 +1,156 @@
-﻿module("modules.logic.versionactivity2_7.act191.view.item.Act191NodeListItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/act191/view/item/Act191NodeListItem.lua
 
-local var_0_0 = class("Act191NodeListItem", LuaCompBase)
+module("modules.logic.versionactivity2_7.act191.view.item.Act191NodeListItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.handleView = arg_1_1
+local Act191NodeListItem = class("Act191NodeListItem", LuaCompBase)
+
+function Act191NodeListItem:ctor(view)
+	self.handleView = view
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
-	arg_2_0.txtStage = gohelper.findChildText(arg_2_1, "bg/stage/#txt_Stage")
-	arg_2_0.goNodeItem = gohelper.findChild(arg_2_1, "bg/#go_NodeItem")
-	arg_2_0.goSalary = gohelper.findChild(arg_2_1, "#go_Salary")
-	arg_2_0.txtCoin1 = gohelper.findChildText(arg_2_1, "#go_Salary/Coin1/#txt_Coin1")
-	arg_2_0.txtCoin2 = gohelper.findChildText(arg_2_1, "#go_Salary/Coin2/#txt_Coin2")
-	arg_2_0.btnClick = gohelper.findChildButtonWithAudio(arg_2_1, "#btn_Click")
-	arg_2_0.nodeItemList = {}
-	arg_2_0.goFly1 = gohelper.findChild(arg_2_1, "#go_Salary/Coin1/#fly")
-	arg_2_0.goFly2 = gohelper.findChild(arg_2_1, "#go_Salary/Coin2/#fly")
+function Act191NodeListItem:init(go)
+	self.go = go
+	self.txtStage = gohelper.findChildText(go, "bg/stage/#txt_Stage")
+	self.goNodeItem = gohelper.findChild(go, "bg/#go_NodeItem")
+	self.goSalary = gohelper.findChild(go, "#go_Salary")
+	self.txtCoin1 = gohelper.findChildText(go, "#go_Salary/Coin1/#txt_Coin1")
+	self.txtCoin2 = gohelper.findChildText(go, "#go_Salary/Coin2/#txt_Coin2")
+	self.btnClick = gohelper.findChildButtonWithAudio(go, "#btn_Click")
+	self.nodeItemList = {}
+	self.goFly1 = gohelper.findChild(go, "#go_Salary/Coin1/#fly")
+	self.goFly2 = gohelper.findChild(go, "#go_Salary/Coin2/#fly")
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	arg_3_0:addClickCb(arg_3_0.btnClick, arg_3_0.onClick, arg_3_0)
-	arg_3_0:addEventCb(Activity191Controller.instance, Activity191Event.UpdateGameInfo, arg_3_0.refreshUI, arg_3_0)
+function Act191NodeListItem:addEventListeners()
+	self:addClickCb(self.btnClick, self.onClick, self)
+	self:addEventCb(Activity191Controller.instance, Activity191Event.UpdateGameInfo, self.refreshUI, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
+function Act191NodeListItem:removeEventListeners()
 	return
 end
 
-function var_0_0.onClick(arg_5_0)
-	local var_5_0 = arg_5_0.goSalary.activeInHierarchy and "false" or "true"
+function Act191NodeListItem:onClick()
+	local param = self.goSalary.activeInHierarchy and "false" or "true"
 
-	Act191StatController.instance:statButtonClick(arg_5_0.handleView.viewName, string.format("showSalary_%s", var_5_0))
-	arg_5_0:showSalary()
+	Act191StatController.instance:statButtonClick(self.handleView.viewName, string.format("showSalary_%s", param))
+	self:showSalary()
 end
 
-function var_0_0.onStart(arg_6_0)
-	arg_6_0.actId = Activity191Model.instance:getCurActId()
+function Act191NodeListItem:onStart()
+	self.actId = Activity191Model.instance:getCurActId()
 
-	arg_6_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.onDestroy(arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0.playSalaryAnim, arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0.hideSalary, arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0.hideFly, arg_7_0)
+function Act191NodeListItem:onDestroy()
+	TaskDispatcher.cancelTask(self.playSalaryAnim, self)
+	TaskDispatcher.cancelTask(self.hideSalary, self)
+	TaskDispatcher.cancelTask(self.hideFly, self)
 end
 
-function var_0_0.refreshUI(arg_8_0)
-	arg_8_0.gameInfo = Activity191Model.instance:getActInfo():getGameInfo()
-	arg_8_0.nodeInfoList = arg_8_0.gameInfo:getStageNodeInfoList()
+function Act191NodeListItem:refreshUI()
+	self.gameInfo = Activity191Model.instance:getActInfo():getGameInfo()
+	self.nodeInfoList = self.gameInfo:getStageNodeInfoList()
 
-	local var_8_0 = lua_activity191_stage.configDict[arg_8_0.actId][arg_8_0.gameInfo.curStage]
+	local stageCo = lua_activity191_stage.configDict[self.actId][self.gameInfo.curStage]
 
-	arg_8_0.txtCoin1.text = var_8_0.coin
-	arg_8_0.txtCoin2.text = var_8_0.score
+	self.txtCoin1.text = stageCo.coin
+	self.txtCoin2.text = stageCo.score
 
-	local var_8_1 = lua_activity191_node.configDict[tonumber(var_8_0.rule)]
+	local nodeCoDic = lua_activity191_node.configDict[tonumber(stageCo.rule)]
 
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0.nodeInfoList) do
-		local var_8_2 = arg_8_0.nodeItemList[iter_8_0] or arg_8_0:creatNodeItem(iter_8_0)
-		local var_8_3 = var_8_1[iter_8_0]
-		local var_8_4
+	for k, v in ipairs(self.nodeInfoList) do
+		local nodeItem = self.nodeItemList[k]
 
-		if var_8_3.random == 1 then
-			var_8_4 = Activity191Helper.getNodeIcon(iter_8_1.nodeType)
-		elseif #iter_8_1.selectNodeStr == 0 then
-			var_8_4 = Activity191Helper.getNodeIcon(iter_8_1.nodeType)
+		nodeItem = nodeItem or self:creatNodeItem(k)
+
+		local nodeCo = nodeCoDic[k]
+		local nodeIcon
+
+		if nodeCo.random == 1 then
+			nodeIcon = Activity191Helper.getNodeIcon(v.nodeType)
+		elseif #v.selectNodeStr == 0 then
+			nodeIcon = Activity191Helper.getNodeIcon(v.nodeType)
 		else
-			local var_8_5 = Act191NodeDetailMO.New()
+			local mo = Act191NodeDetailMO.New()
 
-			var_8_5:init(iter_8_1.selectNodeStr[1])
+			mo:init(v.selectNodeStr[1])
 
-			var_8_4 = Activity191Helper.getNodeIcon(var_8_5.type)
+			nodeIcon = Activity191Helper.getNodeIcon(mo.type)
 		end
 
-		if var_8_4 then
-			UISpriteSetMgr.instance:setAct174Sprite(var_8_2.imageNode, var_8_4)
-			UISpriteSetMgr.instance:setAct174Sprite(var_8_2.imageNodeS, var_8_4 .. "_light")
+		if nodeIcon then
+			UISpriteSetMgr.instance:setAct174Sprite(nodeItem.imageNode, nodeIcon)
+			UISpriteSetMgr.instance:setAct174Sprite(nodeItem.imageNodeS, nodeIcon .. "_light")
 		end
 
-		if iter_8_1.nodeId == arg_8_0.gameInfo.curNode then
-			if iter_8_0 == 1 and arg_8_0.gameInfo.curNode ~= 1 then
-				arg_8_0.firstNode = true
+		if v.nodeId == self.gameInfo.curNode then
+			if k == 1 and self.gameInfo.curNode ~= 1 then
+				self.firstNode = true
 			end
 
-			arg_8_0.txtStage.text = string.format("<#FAB459>%s</color>-%d", var_8_0.name, iter_8_0)
+			self.txtStage.text = string.format("<#FAB459>%s</color>-%d", stageCo.name, k)
 
-			gohelper.setActive(var_8_2.goSelect, true)
+			gohelper.setActive(nodeItem.goSelect, true)
 		else
-			gohelper.setActive(var_8_2.goSelect, false)
+			gohelper.setActive(nodeItem.goSelect, false)
 		end
 	end
 
-	gohelper.setActive(arg_8_0.goNodeItem, false)
+	gohelper.setActive(self.goNodeItem, false)
 end
 
-function var_0_0.creatNodeItem(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0:getUserDataTb_()
-	local var_9_1 = gohelper.cloneInPlace(arg_9_0.goNodeItem)
+function Act191NodeListItem:creatNodeItem(index)
+	local nodeItem = self:getUserDataTb_()
+	local goNode = gohelper.cloneInPlace(self.goNodeItem)
 
-	var_9_0.imageNode = gohelper.findChildImage(var_9_1, "image_Node")
-	var_9_0.goSelect = gohelper.findChildImage(var_9_1, "go_Select")
-	var_9_0.imageNodeS = gohelper.findChildImage(var_9_1, "go_Select/image_NodeS")
-	arg_9_0.nodeItemList[arg_9_1] = var_9_0
+	nodeItem.imageNode = gohelper.findChildImage(goNode, "image_Node")
+	nodeItem.goSelect = gohelper.findChildImage(goNode, "go_Select")
+	nodeItem.imageNodeS = gohelper.findChildImage(goNode, "go_Select/image_NodeS")
+	self.nodeItemList[index] = nodeItem
 
-	return var_9_0
+	return nodeItem
 end
 
-function var_0_0.showSalary(arg_10_0)
-	if arg_10_0.goSalary.activeInHierarchy then
-		TaskDispatcher.cancelTask(arg_10_0.hideSalary, arg_10_0)
-		arg_10_0:hideSalary()
+function Act191NodeListItem:showSalary()
+	if self.goSalary.activeInHierarchy then
+		TaskDispatcher.cancelTask(self.hideSalary, self)
+		self:hideSalary()
 
 		return
 	end
 
-	gohelper.setActive(arg_10_0.goSalary, true)
-	TaskDispatcher.runDelay(arg_10_0.hideSalary, arg_10_0, 2)
+	gohelper.setActive(self.goSalary, true)
+	TaskDispatcher.runDelay(self.hideSalary, self, 2)
 end
 
-function var_0_0.hideSalary(arg_11_0)
-	gohelper.setActive(arg_11_0.goSalary, false)
+function Act191NodeListItem:hideSalary()
+	gohelper.setActive(self.goSalary, false)
 end
 
-function var_0_0.setClickEnable(arg_12_0, arg_12_1)
-	gohelper.setActive(arg_12_0.btnClick, arg_12_1)
+function Act191NodeListItem:setClickEnable(bool)
+	gohelper.setActive(self.btnClick, bool)
 end
 
-function var_0_0.playSalaryAnim(arg_13_0, arg_13_1, arg_13_2)
-	gohelper.setActive(arg_13_0.goFly1, true)
-	gohelper.setActive(arg_13_0.goFly2, true)
+function Act191NodeListItem:playSalaryAnim(go1, go2)
+	gohelper.setActive(self.goFly1, true)
+	gohelper.setActive(self.goFly2, true)
 
-	local var_13_0 = recthelper.rectToRelativeAnchorPos(arg_13_1.transform.position, arg_13_0.goFly1.transform.parent)
+	local pos = recthelper.rectToRelativeAnchorPos(go1.transform.position, self.goFly1.transform.parent)
 
-	ZProj.TweenHelper.DOAnchorPos(arg_13_0.goFly1.transform, var_13_0.x, var_13_0.y, 1)
+	ZProj.TweenHelper.DOAnchorPos(self.goFly1.transform, pos.x, pos.y, 1)
 
-	local var_13_1 = recthelper.rectToRelativeAnchorPos(arg_13_2.transform.position, arg_13_0.goFly2.transform.parent)
+	pos = recthelper.rectToRelativeAnchorPos(go2.transform.position, self.goFly2.transform.parent)
 
-	ZProj.TweenHelper.DOAnchorPos(arg_13_0.goFly2.transform, var_13_1.x, var_13_1.y, 1)
-	TaskDispatcher.runDelay(arg_13_0.hideFly, arg_13_0, 1)
+	ZProj.TweenHelper.DOAnchorPos(self.goFly2.transform, pos.x, pos.y, 1)
+	TaskDispatcher.runDelay(self.hideFly, self, 1)
 end
 
-function var_0_0.hideFly(arg_14_0)
+function Act191NodeListItem:hideFly()
 	AudioMgr.instance:trigger(AudioEnum2_7.Act191.play_ui_yuzhou_dqq_earn_gold)
-	gohelper.setActive(arg_14_0.goFly1, false)
-	gohelper.setActive(arg_14_0.goFly2, false)
+	gohelper.setActive(self.goFly1, false)
+	gohelper.setActive(self.goFly2, false)
 end
 
-return var_0_0
+return Act191NodeListItem

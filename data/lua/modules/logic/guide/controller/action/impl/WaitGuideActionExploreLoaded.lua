@@ -1,35 +1,37 @@
-﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionExploreLoaded", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/WaitGuideActionExploreLoaded.lua
 
-local var_0_0 = class("WaitGuideActionExploreLoaded", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.WaitGuideActionExploreLoaded", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	if ExploreModel.instance.isRoleInitDone and not arg_1_0:_checkIsNoDone() then
+local WaitGuideActionExploreLoaded = class("WaitGuideActionExploreLoaded", BaseGuideAction)
+
+function WaitGuideActionExploreLoaded:onStart(context)
+	if ExploreModel.instance.isRoleInitDone and not self:_checkIsNoDone() then
 		return
 	end
 
-	ExploreController.instance:registerCallback(ExploreEvent.HeroResInitDone, arg_1_0.onHeroInitDone, arg_1_0)
+	ExploreController.instance:registerCallback(ExploreEvent.HeroResInitDone, self.onHeroInitDone, self)
 end
 
-function var_0_0.onHeroInitDone(arg_2_0)
-	if not arg_2_0:_checkIsNoDone() then
+function WaitGuideActionExploreLoaded:onHeroInitDone()
+	if not self:_checkIsNoDone() then
 		return
 	end
 
-	ExploreController.instance:unregisterCallback(ExploreEvent.HeroResInitDone, arg_2_0.onHeroInitDone, arg_2_0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.HeroResInitDone, self.onHeroInitDone, self)
 end
 
-function var_0_0._checkIsNoDone(arg_3_0)
-	local var_3_0 = ExploreModel.instance:getMapId()
+function WaitGuideActionExploreLoaded:_checkIsNoDone()
+	local mapId = ExploreModel.instance:getMapId()
 
-	if not string.nilorempty(arg_3_0.actionParam) and var_3_0 ~= tonumber(arg_3_0.actionParam) then
+	if not string.nilorempty(self.actionParam) and mapId ~= tonumber(self.actionParam) then
 		return true
 	end
 
-	arg_3_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.HeroResInitDone, arg_4_0.onHeroInitDone, arg_4_0)
+function WaitGuideActionExploreLoaded:clearWork()
+	ExploreController.instance:unregisterCallback(ExploreEvent.HeroResInitDone, self.onHeroInitDone, self)
 end
 
-return var_0_0
+return WaitGuideActionExploreLoaded

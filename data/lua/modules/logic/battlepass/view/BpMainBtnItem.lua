@@ -1,30 +1,32 @@
-﻿module("modules.logic.battlepass.view.BpMainBtnItem", package.seeall)
+﻿-- chunkname: @modules/logic/battlepass/view/BpMainBtnItem.lua
 
-local var_0_0 = class("BpMainBtnItem", ActCenterItemBase)
+module("modules.logic.battlepass.view.BpMainBtnItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	var_0_0.super.init(arg_1_0, gohelper.cloneInPlace(arg_1_1))
+local BpMainBtnItem = class("BpMainBtnItem", ActCenterItemBase)
+
+function BpMainBtnItem:init(go)
+	BpMainBtnItem.super.init(self, gohelper.cloneInPlace(go))
 end
 
-function var_0_0.onInit(arg_2_0, arg_2_1)
-	arg_2_0._btnitem = gohelper.getClickWithAudio(arg_2_0._imgGo, AudioEnum2_6.BP.MainBtn)
+function BpMainBtnItem:onInit(go)
+	self._btnitem = gohelper.getClickWithAudio(self._imgGo, AudioEnum2_6.BP.MainBtn)
 
-	local var_2_0 = BpConfig.instance:getBpCO(BpModel.instance.id)
+	local bpCo = BpConfig.instance:getBpCO(BpModel.instance.id)
 
-	gohelper.setActive(arg_2_0._goexpup, BpModel.instance:isShowExpUp())
+	gohelper.setActive(self._goexpup, BpModel.instance:isShowExpUp())
 
-	if var_2_0 and var_2_0.isSp then
-		local var_2_1 = gohelper.findChild(arg_2_0.go, "link")
+	if bpCo and bpCo.isSp then
+		local link = gohelper.findChild(self.go, "link")
 
-		gohelper.setActive(var_2_1, true)
+		gohelper.setActive(link, true)
 	end
 
-	gohelper.setActive(gohelper.findChild(arg_2_0.go, "bg_tarot"), true)
-	arg_2_0:_initReddotitem()
-	arg_2_0:_refreshItem()
+	gohelper.setActive(gohelper.findChild(self.go, "bg_tarot"), true)
+	self:_initReddotitem()
+	self:_refreshItem()
 end
 
-function var_0_0.onClick(arg_3_0)
+function BpMainBtnItem:onClick()
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.BP) then
 		GameFacade.showToast(OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.BP))
 
@@ -34,89 +36,94 @@ function var_0_0.onClick(arg_3_0)
 	BpController.instance:openBattlePassView()
 end
 
-function var_0_0._refreshItem(arg_4_0)
-	local var_4_0 = ActivityModel.showActivityEffect()
-	local var_4_1 = ActivityConfig.instance:getMainActAtmosphereConfig()
-	local var_4_2 = var_4_0 and var_4_1.mainViewActBtnPrefix .. "icon_3" or "icon_3"
+function BpMainBtnItem:_refreshItem()
+	local isShow = ActivityModel.showActivityEffect()
+	local atmoConfig = ActivityConfig.instance:getMainActAtmosphereConfig()
+	local spriteName = isShow and atmoConfig.mainViewActBtnPrefix .. "icon_3" or "icon_3"
 
-	UISpriteSetMgr.instance:setMainSprite(arg_4_0._imgitem, var_4_2, true)
+	UISpriteSetMgr.instance:setMainSprite(self._imgitem, spriteName, true)
 
-	if not var_4_0 then
-		local var_4_3 = ActivityConfig.instance:getMainActAtmosphereConfig()
+	if not isShow then
+		local config = ActivityConfig.instance:getMainActAtmosphereConfig()
 
-		if var_4_3 then
-			for iter_4_0, iter_4_1 in ipairs(var_4_3.mainViewActBtn) do
-				local var_4_4 = gohelper.findChild(arg_4_0.go, iter_4_1)
+		if config then
+			for _, path in ipairs(config.mainViewActBtn) do
+				local go = gohelper.findChild(self.go, path)
 
-				if var_4_4 then
-					gohelper.setActive(var_4_4, var_4_0)
+				if go then
+					gohelper.setActive(go, isShow)
 				end
 			end
 		end
 	end
 
-	arg_4_0:_refreshDeadline()
-	TaskDispatcher.runRepeat(arg_4_0._refreshDeadline, arg_4_0, 1)
-	arg_4_0._redDot:refreshDot()
+	self:_refreshDeadline()
+	TaskDispatcher.runRepeat(self._refreshDeadline, self, 1)
+	self._redDot:refreshDot()
 end
 
-function var_0_0._refreshDeadline(arg_5_0)
-	local var_5_0 = BpConfig.instance:getBpCO(BpModel.instance.id).promptDays or 0
-	local var_5_1 = BpModel.instance:getBpEndTime() - ServerTime.now()
+function BpMainBtnItem:_refreshDeadline()
+	local bpCo = BpConfig.instance:getBpCO(BpModel.instance.id)
+	local showDay = bpCo.promptDays or 0
+	local endTime = BpModel.instance:getBpEndTime()
+	local limitSec = endTime - ServerTime.now()
 
-	if var_5_1 > var_5_0 * TimeUtil.OneDaySecond then
-		gohelper.setActive(arg_5_0._godeadline, false)
+	if limitSec > showDay * TimeUtil.OneDaySecond then
+		gohelper.setActive(self._godeadline, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_5_0._godeadline, true)
+	gohelper.setActive(self._godeadline, true)
 
-	local var_5_2, var_5_3 = TimeUtil.secondToRoughTime(math.floor(var_5_1), true)
+	local date, dateFormat = TimeUtil.secondToRoughTime(math.floor(limitSec), true)
 
-	arg_5_0._txttime.text = var_5_2 .. var_5_3
+	self._txttime.text = date .. dateFormat
 end
 
-function var_0_0.isShowRedDot(arg_6_0)
-	return arg_6_0._redDot.show
+function BpMainBtnItem:isShowRedDot()
+	return self._redDot.show
 end
 
-function var_0_0._initReddotitem(arg_7_0)
-	local var_7_0 = arg_7_0.go
-	local var_7_1 = gohelper.findChild(var_7_0, "go_activityreddot")
+function BpMainBtnItem:_initReddotitem()
+	local go = self.go
 
-	arg_7_0._redDot = RedDotController.instance:addRedDot(var_7_1, RedDotEnum.DotNode.BattlePass)
+	do
+		local rGo = gohelper.findChild(go, "go_activityreddot")
 
-	do return end
+		self._redDot = RedDotController.instance:addRedDot(rGo, RedDotEnum.DotNode.BattlePass)
 
-	local var_7_2 = gohelper.findChild(var_7_0, "go_activityreddot/#go_special_reds")
-	local var_7_3 = var_7_2.transform
-	local var_7_4 = var_7_3.childCount
-
-	for iter_7_0 = 1, var_7_4 do
-		local var_7_5 = var_7_3:GetChild(iter_7_0 - 1)
-
-		gohelper.setActive(var_7_5.gameObject, false)
+		return
 	end
 
-	local var_7_6 = gohelper.findChild(var_7_2, "#go_bp_red")
+	local redGos = gohelper.findChild(go, "go_activityreddot/#go_special_reds")
+	local t = redGos.transform
+	local n = t.childCount
 
-	arg_7_0._redDot = RedDotController.instance:addRedDotTag(var_7_6, RedDotEnum.DotNode.BattlePass, false, arg_7_0._onRefreshDot, arg_7_0)
-	arg_7_0._btnitem2 = gohelper.getClickWithAudio(var_7_6, AudioEnum2_6.BP.MainBtn)
+	for i = 1, n do
+		local child = t:GetChild(i - 1)
+
+		gohelper.setActive(child.gameObject, false)
+	end
+
+	local redGo = gohelper.findChild(redGos, "#go_bp_red")
+
+	self._redDot = RedDotController.instance:addRedDotTag(redGo, RedDotEnum.DotNode.BattlePass, false, self._onRefreshDot, self)
+	self._btnitem2 = gohelper.getClickWithAudio(redGo, AudioEnum2_6.BP.MainBtn)
 end
 
-function var_0_0._onRefreshDot(arg_8_0, arg_8_1)
-	local var_8_0 = RedDotModel.instance:isDotShow(arg_8_1.dotId, 0)
+function BpMainBtnItem:_onRefreshDot(commonRedDotTag)
+	local isShow = RedDotModel.instance:isDotShow(commonRedDotTag.dotId, 0)
 
-	arg_8_1.show = var_8_0
+	commonRedDotTag.show = isShow
 
-	gohelper.setActive(arg_8_1.go, var_8_0)
-	gohelper.setActive(arg_8_0._imgGo, not var_8_0)
+	gohelper.setActive(commonRedDotTag.go, isShow)
+	gohelper.setActive(self._imgGo, not isShow)
 end
 
-function var_0_0.onDestroyView(arg_9_0)
-	var_0_0.super.onDestroyView(arg_9_0)
-	TaskDispatcher.cancelTask(arg_9_0._refreshDeadline, arg_9_0)
+function BpMainBtnItem:onDestroyView()
+	BpMainBtnItem.super.onDestroyView(self)
+	TaskDispatcher.cancelTask(self._refreshDeadline, self)
 end
 
-return var_0_0
+return BpMainBtnItem

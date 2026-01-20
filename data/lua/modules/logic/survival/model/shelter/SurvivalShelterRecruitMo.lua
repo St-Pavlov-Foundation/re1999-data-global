@@ -1,46 +1,48 @@
-﻿module("modules.logic.survival.model.shelter.SurvivalShelterRecruitMo", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/shelter/SurvivalShelterRecruitMo.lua
 
-local var_0_0 = pureTable("SurvivalShelterRecruitMo")
+module("modules.logic.survival.model.shelter.SurvivalShelterRecruitMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1.id
-	arg_1_0.config = lua_survival_recruit.configDict[arg_1_1.id]
-	arg_1_0.tags = {}
+local SurvivalShelterRecruitMo = pureTable("SurvivalShelterRecruitMo")
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1.tags) do
-		table.insert(arg_1_0.tags, iter_1_1)
+function SurvivalShelterRecruitMo:init(info)
+	self.id = info.id
+	self.config = lua_survival_recruit.configDict[info.id]
+	self.tags = {}
+
+	for i, v in ipairs(info.tags) do
+		table.insert(self.tags, v)
 	end
 
-	arg_1_0.selectCount = arg_1_0.config and arg_1_0.config.chooseNum or 0
-	arg_1_0.selectedTags = {}
+	self.selectCount = self.config and self.config.chooseNum or 0
+	self.selectedTags = {}
 
-	for iter_1_2, iter_1_3 in ipairs(arg_1_1.selectedTags) do
-		table.insert(arg_1_0.selectedTags, iter_1_3)
+	for i, v in ipairs(info.selectedTags) do
+		table.insert(self.selectedTags, v)
 	end
 
-	arg_1_0.canRefreshTimes = arg_1_1.canRefreshTimes
-	arg_1_0.goodList = {}
+	self.canRefreshTimes = info.canRefreshTimes
+	self.goodList = {}
 
-	for iter_1_4, iter_1_5 in ipairs(arg_1_1.good) do
-		local var_1_0 = {
-			id = iter_1_5.id,
-			npcId = iter_1_5.npcId
-		}
+	for i, v in ipairs(info.good) do
+		local good = {}
 
-		table.insert(arg_1_0.goodList, var_1_0)
+		good.id = v.id
+		good.npcId = v.npcId
+
+		table.insert(self.goodList, good)
 	end
 end
 
-function var_0_0.isInRecruit(arg_2_0)
-	return next(arg_2_0.selectedTags) ~= nil and next(arg_2_0.goodList) == nil
+function SurvivalShelterRecruitMo:isInRecruit()
+	return next(self.selectedTags) ~= nil and next(self.goodList) == nil
 end
 
-function var_0_0.isCanRecruit(arg_3_0)
-	return next(arg_3_0.selectedTags) == nil and next(arg_3_0.goodList) == nil
+function SurvivalShelterRecruitMo:isCanRecruit()
+	return next(self.selectedTags) == nil and next(self.goodList) == nil
 end
 
-function var_0_0.isCanSelectNpc(arg_4_0)
-	return next(arg_4_0.goodList) ~= nil
+function SurvivalShelterRecruitMo:isCanSelectNpc()
+	return next(self.goodList) ~= nil
 end
 
-return var_0_0
+return SurvivalShelterRecruitMo

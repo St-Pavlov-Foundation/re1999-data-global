@@ -1,33 +1,35 @@
-﻿module("modules.logic.scene.view.LoadingBlackView", package.seeall)
+﻿-- chunkname: @modules/logic/scene/view/LoadingBlackView.lua
 
-local var_0_0 = class("LoadingBlackView", BaseView)
-local var_0_1 = 60
+module("modules.logic.scene.view.LoadingBlackView", package.seeall)
 
-function var_0_0.addEvents(arg_1_0)
-	arg_1_0:addEventCb(GameSceneMgr.instance, SceneEventName.AgainOpenLoading, arg_1_0._againOpenLoading, arg_1_0)
-	arg_1_0:addEventCb(GameSceneMgr.instance, SceneEventName.DelayCloseLoading, arg_1_0.closeThis, arg_1_0)
-	TaskDispatcher.runDelay(arg_1_0._errorCloseLoading, arg_1_0, var_0_1)
+local LoadingBlackView = class("LoadingBlackView", BaseView)
+local ForceCloseLoadingDelay = 60
+
+function LoadingBlackView:addEvents()
+	self:addEventCb(GameSceneMgr.instance, SceneEventName.AgainOpenLoading, self._againOpenLoading, self)
+	self:addEventCb(GameSceneMgr.instance, SceneEventName.DelayCloseLoading, self.closeThis, self)
+	TaskDispatcher.runDelay(self._errorCloseLoading, self, ForceCloseLoadingDelay)
 end
 
-function var_0_0.removeEvents(arg_2_0)
-	arg_2_0:removeEventCb(GameSceneMgr.instance, SceneEventName.AgainOpenLoading, arg_2_0._againOpenLoading, arg_2_0)
-	arg_2_0:removeEventCb(GameSceneMgr.instance, SceneEventName.DelayCloseLoading, arg_2_0.closeThis, arg_2_0)
-	TaskDispatcher.cancelTask(arg_2_0._errorCloseLoading, arg_2_0)
+function LoadingBlackView:removeEvents()
+	self:removeEventCb(GameSceneMgr.instance, SceneEventName.AgainOpenLoading, self._againOpenLoading, self)
+	self:removeEventCb(GameSceneMgr.instance, SceneEventName.DelayCloseLoading, self.closeThis, self)
+	TaskDispatcher.cancelTask(self._errorCloseLoading, self)
 end
 
-function var_0_0._againOpenLoading(arg_3_0)
+function LoadingBlackView:_againOpenLoading()
 	logNormal("loading打开状态下，又调用了打开loading，取消计时，继续走")
-	TaskDispatcher.cancelTask(arg_3_0._errorCloseLoading, arg_3_0)
-	TaskDispatcher.runDelay(arg_3_0._errorCloseLoading, arg_3_0, var_0_1)
+	TaskDispatcher.cancelTask(self._errorCloseLoading, self)
+	TaskDispatcher.runDelay(self._errorCloseLoading, self, ForceCloseLoadingDelay)
 end
 
-function var_0_0._errorCloseLoading(arg_4_0)
-	local var_4_0 = GameSceneMgr.instance:getCurSceneType()
-	local var_4_1 = GameSceneMgr.instance:getCurSceneId()
-	local var_4_2 = GameSceneMgr.instance:isLoading()
+function LoadingBlackView:_errorCloseLoading()
+	local sceneType = GameSceneMgr.instance:getCurSceneType()
+	local sceneId = GameSceneMgr.instance:getCurSceneId()
+	local isLoading = GameSceneMgr.instance:isLoading()
 
-	logError(string.format("loading超时，关闭loading看看 sceneType_%d sceneId_%d isLoading_%s", var_4_0 or -1, var_4_1 or -1, var_4_2 and "true" or "false"))
-	arg_4_0:closeThis()
+	logError(string.format("loading超时，关闭loading看看 sceneType_%d sceneId_%d isLoading_%s", sceneType or -1, sceneId or -1, isLoading and "true" or "false"))
+	self:closeThis()
 end
 
-return var_0_0
+return LoadingBlackView

@@ -1,31 +1,33 @@
-﻿module("modules.logic.gm.view.GMLangTxtViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GMLangTxtViewContainer.lua
 
-local var_0_0 = class("GMLangTxtViewContainer", BaseViewContainer)
+module("modules.logic.gm.view.GMLangTxtViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+local GMLangTxtViewContainer = class("GMLangTxtViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "view/scroll"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_1.prefabUrl = "view/scroll/item"
-	var_1_1.cellClass = GMLangTxtItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 1
-	var_1_1.cellWidth = 800
-	var_1_1.cellHeight = 60
-	var_1_1.cellSpaceH = 0
-	var_1_1.cellSpaceV = 0
-	arg_1_0._langTxtView = GMLangTxtView.New()
+function GMLangTxtViewContainer:buildViews()
+	local views = {}
+	local listScrollParam = ListScrollParam.New()
 
-	table.insert(var_1_0, arg_1_0._langTxtView)
-	table.insert(var_1_0, LuaListScrollView.New(GMLangTxtModel.instance, var_1_1))
+	listScrollParam.scrollGOPath = "view/scroll"
+	listScrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	listScrollParam.prefabUrl = "view/scroll/item"
+	listScrollParam.cellClass = GMLangTxtItem
+	listScrollParam.scrollDir = ScrollEnum.ScrollDirV
+	listScrollParam.lineCount = 1
+	listScrollParam.cellWidth = 800
+	listScrollParam.cellHeight = 60
+	listScrollParam.cellSpaceH = 0
+	listScrollParam.cellSpaceV = 0
+	self._langTxtView = GMLangTxtView.New()
 
-	return var_1_0
+	table.insert(views, self._langTxtView)
+	table.insert(views, LuaListScrollView.New(GMLangTxtModel.instance, listScrollParam))
+
+	return views
 end
 
-function var_0_0.onLangTxtClick(arg_2_0, arg_2_1)
-	arg_2_0._langTxtView:onLangTxtClick(arg_2_1)
+function GMLangTxtViewContainer:onLangTxtClick(v)
+	self._langTxtView:onLangTxtClick(v)
 end
 
-return var_0_0
+return GMLangTxtViewContainer

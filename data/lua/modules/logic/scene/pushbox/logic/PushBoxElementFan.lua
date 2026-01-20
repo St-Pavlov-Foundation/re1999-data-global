@@ -1,153 +1,157 @@
-﻿module("modules.logic.scene.pushbox.logic.PushBoxElementFan", package.seeall)
+﻿-- chunkname: @modules/logic/scene/pushbox/logic/PushBoxElementFan.lua
 
-local var_0_0 = class("PushBoxElementFan", UserDataDispose)
+module("modules.logic.scene.pushbox.logic.PushBoxElementFan", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0:__onInit()
+local PushBoxElementFan = class("PushBoxElementFan", UserDataDispose)
 
-	arg_1_0._game_mgr = GameSceneMgr.instance:getCurScene().gameMgr
-	arg_1_0._gameObject = arg_1_1
-	arg_1_0._transform = arg_1_1.transform
-	arg_1_0._cell = arg_1_2
-	arg_1_0._ani = gohelper.findChildComponent(arg_1_1, "fengshan", typeof(UnityEngine.Animator))
+function PushBoxElementFan:ctor(gameObject, cell)
+	self:__onInit()
 
-	arg_1_0:addEventCb(PushBoxController.instance, PushBoxEvent.RefreshElement, arg_1_0._onRefreshElement, arg_1_0)
-	arg_1_0:addEventCb(PushBoxController.instance, PushBoxEvent.StepFinished, arg_1_0._onStepFinished, arg_1_0)
-	arg_1_0:addEventCb(PushBoxController.instance, PushBoxEvent.RevertStep, arg_1_0._onRevertStep, arg_1_0)
-	arg_1_0:addEventCb(PushBoxController.instance, PushBoxEvent.StartElement, arg_1_0._onStartElement, arg_1_0)
-	arg_1_0:addEventCb(PushBoxController.instance, PushBoxEvent.RefreshFanElement, arg_1_0._onRefreshElement, arg_1_0)
+	self._game_mgr = GameSceneMgr.instance:getCurScene().gameMgr
+	self._gameObject = gameObject
+	self._transform = gameObject.transform
+	self._cell = cell
+	self._ani = gohelper.findChildComponent(gameObject, "fengshan", typeof(UnityEngine.Animator))
+
+	self:addEventCb(PushBoxController.instance, PushBoxEvent.RefreshElement, self._onRefreshElement, self)
+	self:addEventCb(PushBoxController.instance, PushBoxEvent.StepFinished, self._onStepFinished, self)
+	self:addEventCb(PushBoxController.instance, PushBoxEvent.RevertStep, self._onRevertStep, self)
+	self:addEventCb(PushBoxController.instance, PushBoxEvent.StartElement, self._onStartElement, self)
+	self:addEventCb(PushBoxController.instance, PushBoxEvent.RefreshFanElement, self._onRefreshElement, self)
 end
 
-function var_0_0.setRendererIndex(arg_2_0)
-	local var_2_0 = arg_2_0._cell:getRendererIndex()
-	local var_2_1 = arg_2_0._transform:GetComponentsInChildren(typeof(UnityEngine.MeshRenderer))
+function PushBoxElementFan:setRendererIndex()
+	local final_renderer_index = self._cell:getRendererIndex()
+	local meshRenderer = self._transform:GetComponentsInChildren(typeof(UnityEngine.MeshRenderer))
 
-	for iter_2_0 = 0, var_2_1.Length - 1 do
-		var_2_1[iter_2_0].sortingOrder = var_2_0
+	for i = 0, meshRenderer.Length - 1 do
+		meshRenderer[i].sortingOrder = final_renderer_index
 	end
 
-	arg_2_0._smoke = gohelper.findChild(arg_2_0._gameObject, "vx_smoke")
+	self._smoke = gohelper.findChild(self._gameObject, "vx_smoke")
 
-	local var_2_2 = arg_2_0._smoke.transform:GetComponentsInChildren(typeof(UnityEngine.ParticleSystem))
+	local particle = self._smoke.transform:GetComponentsInChildren(typeof(UnityEngine.ParticleSystem))
 
-	for iter_2_1 = 0, var_2_2.Length - 1 do
-		ZProj.ParticleSystemHelper.SetSortingOrder(var_2_2[iter_2_1], 30000)
+	for i = 0, particle.Length - 1 do
+		ZProj.ParticleSystemHelper.SetSortingOrder(particle[i], 30000)
 	end
 
-	gohelper.setActive(arg_2_0._smoke, false)
+	gohelper.setActive(self._smoke, false)
 end
 
-function var_0_0._onStartElement(arg_3_0)
-	arg_3_0._duration_time = arg_3_0._game_mgr:getConfig().fan_duration
-	arg_3_0._active = false
+function PushBoxElementFan:_onStartElement()
+	local episode_config = self._game_mgr:getConfig()
+
+	self._duration_time = episode_config.fan_duration
+	self._active = false
 end
 
-function var_0_0._onRevertStep(arg_4_0, arg_4_1)
-	if arg_4_1.fan_time then
-		for iter_4_0, iter_4_1 in ipairs(arg_4_1.fan_time) do
-			if iter_4_1.pos_x == arg_4_0._cell:getPosX() and iter_4_1.pos_y == arg_4_0._cell:getPosY() then
-				arg_4_0._active = iter_4_1.active
+function PushBoxElementFan:_onRevertStep(step_data)
+	if step_data.fan_time then
+		for i, v in ipairs(step_data.fan_time) do
+			if v.pos_x == self._cell:getPosX() and v.pos_y == self._cell:getPosY() then
+				self._active = v.active
 
-				arg_4_0:_releaseTimer()
+				self:_releaseTimer()
 
-				if iter_4_1.left_time and iter_4_1.left_time > 0 then
-					arg_4_0._timer = true
-					arg_4_0._start_time = Time.realtimeSinceStartup - (arg_4_0._duration_time - iter_4_1.left_time)
+				if v.left_time and v.left_time > 0 then
+					self._timer = true
+					self._start_time = Time.realtimeSinceStartup - (self._duration_time - v.left_time)
 
-					TaskDispatcher.runDelay(arg_4_0._onEffectDone, arg_4_0, iter_4_1.left_time)
+					TaskDispatcher.runDelay(self._onEffectDone, self, v.left_time)
 
-					if arg_4_0._active then
-						gohelper.setActive(arg_4_0._smoke, true)
-						arg_4_0._ani:Play("click")
+					if self._active then
+						gohelper.setActive(self._smoke, true)
+						self._ani:Play("click")
 					end
 				end
 
-				if not arg_4_0._active then
-					arg_4_0:_onEffectDone()
+				if not self._active then
+					self:_onEffectDone()
 				end
 
-				arg_4_0._game_mgr:setCellInvincible(arg_4_0._active, arg_4_0._cell:getPosX(), arg_4_0._cell:getPosY())
+				self._game_mgr:setCellInvincible(self._active, self._cell:getPosX(), self._cell:getPosY())
 			end
 		end
 	end
 end
 
-function var_0_0._onRefreshElement(arg_5_0)
-	if arg_5_0:_characterInArea() then
-		if not arg_5_0._active then
+function PushBoxElementFan:_onRefreshElement()
+	if self:_characterInArea() then
+		if not self._active then
 			AudioMgr.instance:trigger(AudioEnum.UI.play_ui_activity_exhaust)
 		end
 
-		TaskDispatcher.cancelTask(arg_5_0._onEffectDone, arg_5_0)
+		TaskDispatcher.cancelTask(self._onEffectDone, self)
 
-		arg_5_0._active = true
+		self._active = true
 
-		gohelper.setActive(arg_5_0._smoke, true)
-		arg_5_0._ani:Play("click")
+		gohelper.setActive(self._smoke, true)
+		self._ani:Play("click")
 
-		arg_5_0._timer = nil
+		self._timer = nil
 
-		arg_5_0._game_mgr:setCellInvincible(true, arg_5_0._cell:getPosX(), arg_5_0._cell:getPosY())
-	elseif arg_5_0._active and not arg_5_0._timer then
-		arg_5_0._start_time = Time.realtimeSinceStartup
-		arg_5_0._timer = true
+		self._game_mgr:setCellInvincible(true, self._cell:getPosX(), self._cell:getPosY())
+	elseif self._active and not self._timer then
+		self._start_time = Time.realtimeSinceStartup
+		self._timer = true
 
-		TaskDispatcher.runDelay(arg_5_0._onEffectDone, arg_5_0, arg_5_0._duration_time)
+		TaskDispatcher.runDelay(self._onEffectDone, self, self._duration_time)
 	end
 end
 
-function var_0_0._onStepFinished(arg_6_0)
+function PushBoxElementFan:_onStepFinished()
 	return
 end
 
-function var_0_0.getState(arg_7_0)
-	return arg_7_0._active
+function PushBoxElementFan:getState()
+	return self._active
 end
 
-function var_0_0._onEffectDone(arg_8_0)
-	arg_8_0._start_time = nil
-	arg_8_0._active = false
+function PushBoxElementFan:_onEffectDone()
+	self._start_time = nil
+	self._active = false
 
-	gohelper.setActive(arg_8_0._smoke, false)
-	arg_8_0._ani:Play("loop")
-	arg_8_0._game_mgr:setCellInvincible(false, arg_8_0._cell:getPosX(), arg_8_0._cell:getPosY())
+	gohelper.setActive(self._smoke, false)
+	self._ani:Play("loop")
+	self._game_mgr:setCellInvincible(false, self._cell:getPosX(), self._cell:getPosY())
 end
 
-function var_0_0._characterInArea(arg_9_0)
-	return arg_9_0._game_mgr:characterInArea(arg_9_0._cell:getPosX(), arg_9_0._cell:getPosY())
+function PushBoxElementFan:_characterInArea()
+	return self._game_mgr:characterInArea(self._cell:getPosX(), self._cell:getPosY())
 end
 
-function var_0_0.getIndex(arg_10_0)
-	return arg_10_0._index
+function PushBoxElementFan:getIndex()
+	return self._index
 end
 
-function var_0_0.getPosX(arg_11_0)
-	return arg_11_0._cell:getPosX()
+function PushBoxElementFan:getPosX()
+	return self._cell:getPosX()
 end
 
-function var_0_0.getPosY(arg_12_0)
-	return arg_12_0._cell:getPosY()
+function PushBoxElementFan:getPosY()
+	return self._cell:getPosY()
 end
 
-function var_0_0.getObj(arg_13_0)
-	return arg_13_0._gameObject
+function PushBoxElementFan:getObj()
+	return self._gameObject
 end
 
-function var_0_0.getCell(arg_14_0)
-	return arg_14_0._cell
+function PushBoxElementFan:getCell()
+	return self._cell
 end
 
-function var_0_0._releaseTimer(arg_15_0)
-	arg_15_0._start_time = nil
+function PushBoxElementFan:_releaseTimer()
+	self._start_time = nil
 
-	TaskDispatcher.cancelTask(arg_15_0._onEffectDone, arg_15_0)
+	TaskDispatcher.cancelTask(self._onEffectDone, self)
 
-	arg_15_0._timer = nil
+	self._timer = nil
 end
 
-function var_0_0.releaseSelf(arg_16_0)
-	arg_16_0:_releaseTimer()
-	arg_16_0:__onDispose()
+function PushBoxElementFan:releaseSelf()
+	self:_releaseTimer()
+	self:__onDispose()
 end
 
-return var_0_0
+return PushBoxElementFan

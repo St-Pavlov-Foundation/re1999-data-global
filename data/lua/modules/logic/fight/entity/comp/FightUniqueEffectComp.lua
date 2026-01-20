@@ -1,91 +1,93 @@
-﻿module("modules.logic.fight.entity.comp.FightUniqueEffectComp", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/FightUniqueEffectComp.lua
 
-local var_0_0 = class("FightUniqueEffectComp", LuaCompBase)
+module("modules.logic.fight.entity.comp.FightUniqueEffectComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.entity = arg_1_1
-	arg_1_0.entityId = arg_1_0.entity.id
-	arg_1_0.existEffectWrapDict = {}
-	arg_1_0.releaseEffectDict = {}
-	arg_1_0.updateHandle = UpdateBeat:CreateListener(arg_1_0.update, arg_1_0)
+local FightUniqueEffectComp = class("FightUniqueEffectComp", LuaCompBase)
 
-	UpdateBeat:AddListener(arg_1_0.updateHandle)
+function FightUniqueEffectComp:ctor(entity)
+	self.entity = entity
+	self.entityId = self.entity.id
+	self.existEffectWrapDict = {}
+	self.releaseEffectDict = {}
+	self.updateHandle = UpdateBeat:CreateListener(self.update, self)
+
+	UpdateBeat:AddListener(self.updateHandle)
 end
 
-function var_0_0.onDestroy(arg_2_0)
-	for iter_2_0, iter_2_1 in pairs(arg_2_0.releaseEffectDict) do
-		arg_2_0:removeEffect(iter_2_0)
+function FightUniqueEffectComp:onDestroy()
+	for effectName, _ in pairs(self.releaseEffectDict) do
+		self:removeEffect(effectName)
 	end
 
-	if arg_2_0.updateHandle then
-		UpdateBeat:RemoveListener(arg_2_0.updateHandle)
+	if self.updateHandle then
+		UpdateBeat:RemoveListener(self.updateHandle)
 	end
 end
 
-function var_0_0.addHangEffect(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	local var_3_0 = arg_3_0.existEffectWrapDict[arg_3_1]
+function FightUniqueEffectComp:addHangEffect(effectName, hangPoint, side, releaseTime)
+	local effectWrap = self.existEffectWrapDict[effectName]
 
-	if var_3_0 then
-		return var_3_0
+	if effectWrap then
+		return effectWrap
 	end
 
-	local var_3_1 = arg_3_0.entity.effect:addHangEffect(arg_3_1, arg_3_2, arg_3_3)
+	effectWrap = self.entity.effect:addHangEffect(effectName, hangPoint, side)
 
-	FightRenderOrderMgr.instance:onAddEffectWrap(arg_3_0.entityId, var_3_1)
+	FightRenderOrderMgr.instance:onAddEffectWrap(self.entityId, effectWrap)
 
-	arg_3_0.existEffectWrapDict[arg_3_1] = var_3_1
+	self.existEffectWrapDict[effectName] = effectWrap
 
-	if arg_3_4 then
-		arg_3_0:releaseEffectAfterTime(arg_3_1, arg_3_4)
+	if releaseTime then
+		self:releaseEffectAfterTime(effectName, releaseTime)
 	end
 
-	return var_3_1
+	return effectWrap
 end
 
-function var_0_0.addGlobalEffect(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	if arg_4_0.existEffectWrapDict[arg_4_1] then
+function FightUniqueEffectComp:addGlobalEffect(effectName, side, releaseTime)
+	if self.existEffectWrapDict[effectName] then
 		return
 	end
 
-	local var_4_0 = arg_4_0.entity.effect:addGlobalEffect(arg_4_1, arg_4_2)
+	local effectWrap = self.entity.effect:addGlobalEffect(effectName, side)
 
-	FightRenderOrderMgr.instance:onAddEffectWrap(arg_4_0.entityId, var_4_0)
+	FightRenderOrderMgr.instance:onAddEffectWrap(self.entityId, effectWrap)
 
-	arg_4_0.existEffectWrapDict[arg_4_1] = var_4_0
+	self.existEffectWrapDict[effectName] = effectWrap
 
-	if arg_4_3 then
-		arg_4_0:releaseEffectAfterTime(arg_4_1, arg_4_3)
+	if releaseTime then
+		self:releaseEffectAfterTime(effectName, releaseTime)
 	end
 
-	return var_4_0
+	return effectWrap
 end
 
-function var_0_0.releaseEffectAfterTime(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0.releaseEffectDict[arg_5_1] = Time.realtimeSinceStartup + arg_5_2
+function FightUniqueEffectComp:releaseEffectAfterTime(effectName, releaseTime)
+	self.releaseEffectDict[effectName] = Time.realtimeSinceStartup + releaseTime
 end
 
-function var_0_0.update(arg_6_0)
-	local var_6_0 = Time.realtimeSinceStartup
+function FightUniqueEffectComp:update()
+	local curTime = Time.realtimeSinceStartup
 
-	for iter_6_0, iter_6_1 in pairs(arg_6_0.releaseEffectDict) do
-		if iter_6_1 <= var_6_0 then
-			arg_6_0:removeEffect(iter_6_0)
+	for effectName, time in pairs(self.releaseEffectDict) do
+		if time <= curTime then
+			self:removeEffect(effectName)
 		end
 	end
 end
 
-function var_0_0.removeEffect(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0.existEffectWrapDict[arg_7_1]
+function FightUniqueEffectComp:removeEffect(effectName)
+	local effectWrap = self.existEffectWrapDict[effectName]
 
-	if not var_7_0 then
+	if not effectWrap then
 		return
 	end
 
-	arg_7_0.existEffectWrapDict[arg_7_1] = nil
-	arg_7_0.releaseEffectDict[arg_7_1] = nil
+	self.existEffectWrapDict[effectName] = nil
+	self.releaseEffectDict[effectName] = nil
 
-	FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_7_0.entityId, var_7_0)
-	arg_7_0.entity.effect:removeEffect(var_7_0)
+	FightRenderOrderMgr.instance:onRemoveEffectWrap(self.entityId, effectWrap)
+	self.entity.effect:removeEffect(effectWrap)
 end
 
-return var_0_0
+return FightUniqueEffectComp

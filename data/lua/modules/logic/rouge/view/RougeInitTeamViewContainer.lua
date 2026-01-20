@@ -1,30 +1,32 @@
-﻿module("modules.logic.rouge.view.RougeInitTeamViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeInitTeamViewContainer.lua
 
-local var_0_0 = class("RougeInitTeamViewContainer", BaseViewContainer)
+module("modules.logic.rouge.view.RougeInitTeamViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RougeInitTeamViewContainer = class("RougeInitTeamViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RougeInitTeamView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_lefttop"))
+function RougeInitTeamViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RougeInitTeamView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_lefttop"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function RougeInitTeamViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
-		arg_2_0.navigateView:setHelpId(HelpEnum.HelpId.RougeInitTeamViewHelp)
+		self.navigateView:setHelpId(HelpEnum.HelpId.RougeInitTeamViewHelp)
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-return var_0_0
+return RougeInitTeamViewContainer

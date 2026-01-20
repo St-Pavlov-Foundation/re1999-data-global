@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_scene_settings", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_scene_settings.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_scene_settings", package.seeall)
+
+local lua_scene_settings = {}
+local fields = {
 	spineOffset = 2,
 	lightColor2 = 4,
 	prefabLightStartRotation = 7,
@@ -11,13 +13,13 @@ local var_0_1 = {
 	effectLightStartRotation = 8,
 	lightColor1 = 3
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_scene_settings.onLoad(json)
+	lua_scene_settings.configList, lua_scene_settings.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_scene_settings

@@ -1,17 +1,19 @@
-﻿module("modules.logic.versionactivity1_2.yaxian.model.game.YaXianGameSkillMo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/yaxian/model/game/YaXianGameSkillMo.lua
 
-local var_0_0 = pureTable("YaXianGameSkillMo")
+module("modules.logic.versionactivity1_2.yaxian.model.game.YaXianGameSkillMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.actId = arg_1_1
+local YaXianGameSkillMo = pureTable("YaXianGameSkillMo")
 
-	arg_1_0:updateMO(arg_1_2)
+function YaXianGameSkillMo:init(actId, serverData)
+	self.actId = actId
+
+	self:updateMO(serverData)
 end
 
-function var_0_0.updateMO(arg_2_0, arg_2_1)
-	arg_2_0.id = arg_2_1.skillId
-	arg_2_0.canUseCount = arg_2_1.canUseCount
-	arg_2_0.config = YaXianConfig.instance:getSkillConfig(arg_2_0.actId, arg_2_0.id)
+function YaXianGameSkillMo:updateMO(serverData)
+	self.id = serverData.skillId
+	self.canUseCount = serverData.canUseCount
+	self.config = YaXianConfig.instance:getSkillConfig(self.actId, self.id)
 end
 
-return var_0_0
+return YaXianGameSkillMo

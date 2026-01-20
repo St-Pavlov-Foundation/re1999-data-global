@@ -1,45 +1,47 @@
-﻿module("modules.logic.pay.model.PayModel_NativesImpl", package.seeall)
+﻿-- chunkname: @modules/logic/pay/model/PayModel_NativesImpl.lua
 
-local var_0_0 = LuaUtil.class("PayModel_NativesImpl", PayModelBase)
+module("modules.logic.pay.model.PayModel_NativesImpl", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local PayModel_NativesImpl = LuaUtil.class("PayModel_NativesImpl", PayModelBase)
+
+function PayModel_NativesImpl:ctor()
 	assert(false, "PayModel_NativesImpl is an abstract class, please use PayModel instead.")
 end
 
-function var_0_0.getProductPrice(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_0:getProductOriginPriceSymbol(arg_2_1)
-	local var_2_1 = arg_2_0:getProductOriginPriceNum(arg_2_1)
+function PayModel_NativesImpl:getProductPrice(lua_store_charge_goods_id)
+	local symbol = self:getProductOriginPriceSymbol(lua_store_charge_goods_id)
+	local price = self:getProductOriginPriceNum(lua_store_charge_goods_id)
 
-	return string.format("%s%s", var_2_0, var_2_1)
+	return string.format("%s%s", symbol, price)
 end
 
-function var_0_0.getProductOriginPriceNum(arg_3_0, arg_3_1)
-	local var_3_0 = 0
-	local var_3_1 = StoreConfig.instance:getChargeGoodsConfig(arg_3_1)
+function PayModel_NativesImpl:getProductOriginPriceNum(lua_store_charge_goods_id)
+	local price = 0
+	local chargeConfig = StoreConfig.instance:getChargeGoodsConfig(lua_store_charge_goods_id)
 
-	if var_3_1 then
-		var_3_0 = var_3_1.price
+	if chargeConfig then
+		price = chargeConfig.price
 	end
 
-	local var_3_2 = arg_3_0:getProductOriginCurrency(arg_3_1)
-	local var_3_3 = arg_3_0:isNoDecimalsCurrency(var_3_2)
-	local var_3_4
+	local code = self:getProductOriginCurrency(lua_store_charge_goods_id)
+	local isNoDecimalsCurrency = self:isNoDecimalsCurrency(code)
+	local priceStr
 
-	if var_3_3 then
-		var_3_4 = math.floor(var_3_0)
+	if isNoDecimalsCurrency then
+		priceStr = math.floor(price)
 	else
-		var_3_4 = tostring(var_3_0)
+		priceStr = tostring(price)
 	end
 
-	return var_3_0, var_3_4, var_3_3
+	return price, priceStr, isNoDecimalsCurrency
 end
 
-function var_0_0.getProductOriginCurrency(arg_4_0, arg_4_1)
+function PayModel_NativesImpl:getProductOriginCurrency(lua_store_charge_goods_id)
 	return PayEnum.CurrencyCode.CNY
 end
 
-function var_0_0.getProductOriginPriceSymbol(arg_5_0, arg_5_1)
+function PayModel_NativesImpl:getProductOriginPriceSymbol(lua_store_charge_goods_id)
 	return "¥"
 end
 
-return var_0_0
+return PayModel_NativesImpl

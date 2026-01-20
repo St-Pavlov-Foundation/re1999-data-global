@@ -1,231 +1,262 @@
-﻿module("modules.logic.store.model.DecorateStoreModel", package.seeall)
+﻿-- chunkname: @modules/logic/store/model/DecorateStoreModel.lua
 
-local var_0_0 = class("DecorateStoreModel", BaseModel)
+module("modules.logic.store.model.DecorateStoreModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._curGoodId = 0
-	arg_1_0._curViewType = 0
-	arg_1_0._curDecorateType = 0
-	arg_1_0._curCostIndex = 1
-	arg_1_0._readGoodList = {}
+local DecorateStoreModel = class("DecorateStoreModel", BaseModel)
+
+function DecorateStoreModel:onInit()
+	self._curGoodId = 0
+	self._curViewType = 0
+	self._curDecorateType = 0
+	self._curCostIndex = 1
+	self._readGoodList = {}
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:onInit()
+function DecorateStoreModel:reInit()
+	self:onInit()
 end
 
-function var_0_0.setCurGood(arg_3_0, arg_3_1)
-	arg_3_0._curGoodId = arg_3_1
+function DecorateStoreModel:setCurGood(goodId)
+	self._curGoodId = goodId
 end
 
-function var_0_0.getCurGood(arg_4_0, arg_4_1)
-	if arg_4_0._curGoodId == 0 then
-		arg_4_0._curGoodId = arg_4_0:getDecorateGoodList(arg_4_1)[1].goodsId
-	elseif tonumber(StoreConfig.instance:getGoodsConfig(arg_4_0._curGoodId).storeId) ~= arg_4_1 then
-		arg_4_0._curGoodId = arg_4_0:getDecorateGoodList(arg_4_1)[1].goodsId
-	end
+function DecorateStoreModel:getCurGood(storeId)
+	if self._curGoodId == 0 then
+		self._curGoodId = self:getDecorateGoodList(storeId)[1].goodsId
+	else
+		local curStoreId = tonumber(StoreConfig.instance:getGoodsConfig(self._curGoodId).storeId)
 
-	return arg_4_0._curGoodId
-end
-
-function var_0_0.getDecorateGoodList(arg_5_0, arg_5_1)
-	local var_5_0 = {}
-	local var_5_1 = StoreModel.instance:getStoreMO(arg_5_1)
-
-	if var_5_1 then
-		local var_5_2 = var_5_1:getGoodsList()
-
-		for iter_5_0, iter_5_1 in pairs(var_5_2) do
-			table.insert(var_5_0, iter_5_1)
+		if curStoreId ~= storeId then
+			self._curGoodId = self:getDecorateGoodList(storeId)[1].goodsId
 		end
 	end
 
-	table.sort(var_5_0, function(arg_6_0, arg_6_1)
-		local var_6_0 = arg_5_0:isDecorateGoodItemHas(arg_6_0.goodsId)
-		local var_6_1 = arg_5_0:isDecorateGoodItemHas(arg_6_1.goodsId)
-		local var_6_2 = arg_6_0.config.maxBuyCount > 0 and arg_6_0.buyCount >= arg_6_0.config.maxBuyCount and 1 or 0
+	return self._curGoodId
+end
 
-		if var_6_0 then
-			var_6_2 = 1
+function DecorateStoreModel:getDecorateGoodList(storeId)
+	local allGoods = {}
+	local storeMO = StoreModel.instance:getStoreMO(storeId)
+
+	if storeMO then
+		local goodsList = storeMO:getGoodsList()
+
+		for _, mo in pairs(goodsList) do
+			table.insert(allGoods, mo)
+		end
+	end
+
+	table.sort(allGoods, function(a, b)
+		local isAItemHas = self:isDecorateGoodItemHas(a.goodsId)
+		local isBItemHas = self:isDecorateGoodItemHas(b.goodsId)
+		local aSoldOut = a.config.maxBuyCount > 0 and a.buyCount >= a.config.maxBuyCount and 1 or 0
+
+		if isAItemHas then
+			aSoldOut = 1
 		end
 
-		local var_6_3 = arg_6_1.config.maxBuyCount > 0 and arg_6_1.buyCount >= arg_6_1.config.maxBuyCount and 1 or 0
+		local bSoldOut = b.config.maxBuyCount > 0 and b.buyCount >= b.config.maxBuyCount and 1 or 0
 
-		if var_6_1 then
-			var_6_3 = 1
+		if isBItemHas then
+			bSoldOut = 1
 		end
 
-		if var_6_2 ~= var_6_3 then
-			return var_6_2 < var_6_3
+		if aSoldOut ~= bSoldOut then
+			return aSoldOut < bSoldOut
 		else
-			return arg_6_0.config.order < arg_6_1.config.order
+			return a.config.order < b.config.order
 		end
 	end)
 
-	return var_5_0
+	return allGoods
 end
 
-function var_0_0.getDecorateGoodIndex(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = arg_7_0:getDecorateGoodList(arg_7_1)
+function DecorateStoreModel:getDecorateGoodIndex(storeId, goodId)
+	local goodList = self:getDecorateGoodList(storeId)
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-		if iter_7_1.goodsId == arg_7_2 then
-			return iter_7_0
+	for index, goodMo in ipairs(goodList) do
+		if goodMo.goodsId == goodId then
+			return index
 		end
 	end
 
 	return 0
 end
 
-function var_0_0.setCurViewType(arg_8_0, arg_8_1)
-	arg_8_0._curViewType = arg_8_1
+function DecorateStoreModel:setCurViewType(viewType)
+	self._curViewType = viewType
 end
 
-function var_0_0.getCurViewType(arg_9_0)
-	if arg_9_0._curViewType == 0 then
-		arg_9_0._curViewType = DecorateStoreEnum.DecorateViewType.Fold
+function DecorateStoreModel:getCurViewType()
+	if self._curViewType == 0 then
+		self._curViewType = DecorateStoreEnum.DecorateViewType.Fold
 	end
 
-	return arg_9_0._curViewType
+	return self._curViewType
 end
 
-function var_0_0.setCurDecorateType(arg_10_0, arg_10_1)
-	arg_10_0._curDecorateType = arg_10_1
+function DecorateStoreModel:setCurDecorateType(type)
+	self._curDecorateType = type
 end
 
-function var_0_0.getCurDecorateType(arg_11_0)
-	if arg_11_0._curDecorateType == 0 then
-		arg_11_0._curDecorateType = DecorateStoreEnum.DecorateType.New
+function DecorateStoreModel:getCurDecorateType()
+	if self._curDecorateType == 0 then
+		self._curDecorateType = DecorateStoreEnum.DecorateType.New
 	end
 
-	return arg_11_0._curDecorateType
+	return self._curDecorateType
 end
 
-function var_0_0.isGoodRead(arg_12_0, arg_12_1)
-	return arg_12_0._readGoodList[arg_12_1]
+function DecorateStoreModel:isGoodRead(goodId)
+	return self._readGoodList[goodId]
 end
 
-function var_0_0.initDecorateReadState(arg_13_0)
-	local var_13_0 = PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.DecorateStoreReadGoods), "")
-	local var_13_1 = string.splitToNumber(var_13_0, "#")
+function DecorateStoreModel:initDecorateReadState()
+	local str = PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.DecorateStoreReadGoods), "")
+	local readGoods = string.splitToNumber(str, "#")
 
-	for iter_13_0, iter_13_1 in pairs(var_13_1) do
-		arg_13_0._readGoodList[iter_13_1] = true
+	for _, good in pairs(readGoods) do
+		self._readGoodList[good] = true
 	end
 end
 
-function var_0_0.setGoodRead(arg_14_0, arg_14_1)
-	arg_14_0._readGoodList[arg_14_1] = true
+function DecorateStoreModel:setGoodRead(goodId)
+	self._readGoodList[goodId] = true
 
-	local var_14_0 = ""
+	local str = ""
 
-	for iter_14_0, iter_14_1 in pairs(arg_14_0._readGoodList) do
-		var_14_0 = var_14_0 == "" and iter_14_0 or string.format("%s#%s", var_14_0, iter_14_0)
+	for good, _ in pairs(self._readGoodList) do
+		str = str == "" and good or string.format("%s#%s", str, good)
 	end
 
-	PlayerPrefsHelper.setString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.DecorateStoreReadGoods), var_14_0)
+	PlayerPrefsHelper.setString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.DecorateStoreReadGoods), str)
 end
 
-function var_0_0.getItemType(arg_15_0)
-	local var_15_0 = var_0_0.instance:getCurGood(arg_15_0)
-	local var_15_1 = DecorateStoreConfig.instance:getDecorateConfig(var_15_0)
+function DecorateStoreModel.getItemType(storeId)
+	local goodId = DecorateStoreModel.instance:getCurGood(storeId)
+	local decorateConfig = DecorateStoreConfig.instance:getDecorateConfig(goodId)
 
-	if var_15_1.productType == MaterialEnum.MaterialType.Item then
-		if var_15_1.subType == MaterialEnum.ItemSubType.Icon then
+	if decorateConfig.productType == MaterialEnum.MaterialType.Item then
+		if decorateConfig.subType == MaterialEnum.ItemSubType.Icon then
 			return DecorateStoreEnum.DecorateItemType.Icon
-		elseif var_15_1.subType == MaterialEnum.ItemSubType.SelfCard then
+		elseif decorateConfig.subType == MaterialEnum.ItemSubType.SelfCard then
 			return DecorateStoreEnum.DecorateItemType.SelfCard
-		elseif var_15_1.subType == MaterialEnum.ItemSubType.MainScene then
+		elseif decorateConfig.subType == MaterialEnum.ItemSubType.MainScene then
 			return DecorateStoreEnum.DecorateItemType.MainScene
+		elseif decorateConfig.subType == ItemEnum.SubType.SkinSelelctGift then
+			return DecorateStoreEnum.DecorateItemType.SkinGift
 		end
-	elseif var_15_1.productType == MaterialEnum.MaterialType.HeroSkin then
+	elseif decorateConfig.productType == MaterialEnum.MaterialType.HeroSkin then
 		return DecorateStoreEnum.DecorateItemType.Skin
-	elseif var_15_1.productType == MaterialEnum.MaterialType.Building and var_15_1.subType == 7 then
+	elseif decorateConfig.productType == MaterialEnum.MaterialType.Building and decorateConfig.subType == 7 then
 		return DecorateStoreEnum.DecorateItemType.BuildingVideo
 	end
 
 	return DecorateStoreEnum.DecorateItemType.Default
 end
 
-function var_0_0.setCurCostIndex(arg_16_0, arg_16_1)
-	arg_16_0._curCostIndex = arg_16_1
+function DecorateStoreModel:setCurCostIndex(index)
+	self._curCostIndex = index
 end
 
-function var_0_0.getCurCostIndex(arg_17_0)
-	return arg_17_0._curCostIndex
+function DecorateStoreModel:getCurCostIndex()
+	return self._curCostIndex
 end
 
-function var_0_0.getGoodDiscount(arg_18_0, arg_18_1)
-	local var_18_0 = StoreConfig.instance:getGoodsConfig(arg_18_1)
+function DecorateStoreModel:getGoodDiscount(goodsId)
+	local goodsConfig = StoreConfig.instance:getGoodsConfig(goodsId)
 
-	if var_18_0.discountItem == "" then
+	if goodsConfig.discountItem == "" then
 		return 0
 	end
 
-	local var_18_1 = string.split(var_18_0.discountItem, "|")
+	local discounts = string.split(goodsConfig.discountItem, "|")
 
-	if #var_18_1 ~= 2 then
+	if #discounts ~= 2 then
 		return 0
 	end
 
-	local var_18_2 = string.splitToNumber(var_18_1[1], "#")
+	local items = string.splitToNumber(discounts[1], "#")
+	local itemCount = ItemModel.instance:getItemCount(items[2])
 
-	if ItemModel.instance:getItemCount(var_18_2[2]) < var_18_2[3] then
+	if itemCount < items[3] then
 		return 0
 	end
 
-	local var_18_3 = ItemModel.instance:getItemConfig(var_18_2[1], var_18_2[2])
-	local var_18_4 = TimeUtil.stringToTimestamp(var_18_3.expireTime)
+	local itemCo = ItemModel.instance:getItemConfig(items[1], items[2])
+	local ts = TimeUtil.stringToTimestamp(itemCo.expireTime)
+	local offsetSecond = math.floor(ts - ServerTime.now())
 
-	if math.floor(var_18_4 - ServerTime.now()) <= 0 then
+	if offsetSecond <= 0 then
 		return 0
 	end
 
-	return math.floor(tonumber(var_18_1[2]) / 10)
+	return math.floor(tonumber(discounts[2]) / 10)
 end
 
-function var_0_0.getGoodItemLimitTime(arg_19_0, arg_19_1)
-	local var_19_0 = arg_19_0:getGoodDiscount(arg_19_1)
+function DecorateStoreModel:getGoodItemLimitTime(goodsId)
+	local discount = self:getGoodDiscount(goodsId)
 
-	if var_19_0 > 0 and var_19_0 < 100 then
-		local var_19_1 = StoreConfig.instance:getGoodsConfig(arg_19_1)
+	if discount > 0 and discount < 100 then
+		local goodsConfig = StoreConfig.instance:getGoodsConfig(goodsId)
 
-		if var_19_1.discountItem == "" then
+		if goodsConfig.discountItem == "" then
 			return 0
 		end
 
-		local var_19_2 = string.split(var_19_1.discountItem, "|")
+		local discounts = string.split(goodsConfig.discountItem, "|")
 
-		if #var_19_2 ~= 2 then
+		if #discounts ~= 2 then
 			return 0
 		end
 
-		local var_19_3 = string.splitToNumber(var_19_2[1], "#")
+		local items = string.splitToNumber(discounts[1], "#")
+		local itemCount = ItemModel.instance:getItemCount(items[2])
 
-		if ItemModel.instance:getItemCount(var_19_3[2]) < var_19_3[3] then
+		if itemCount < items[3] then
 			return 0
 		end
 
-		local var_19_4 = ItemModel.instance:getItemConfig(var_19_3[1], var_19_3[2])
-		local var_19_5 = TimeUtil.stringToTimestamp(var_19_4.expireTime)
+		local itemCo = ItemModel.instance:getItemConfig(items[1], items[2])
+		local ts = TimeUtil.stringToTimestamp(itemCo.expireTime)
+		local offsetSecond = math.floor(ts - ServerTime.now())
 
-		return (math.floor(var_19_5 - ServerTime.now()))
+		return offsetSecond
 	end
 
 	return 0
 end
 
-function var_0_0.isDecorateGoodItemHas(arg_20_0, arg_20_1)
-	if DecorateStoreConfig.instance:getDecorateConfig(arg_20_1).maxbuycountType ~= DecorateStoreEnum.MaxBuyTipType.Owned then
+function DecorateStoreModel:isDecorateGoodItemHas(goodId)
+	local decorateCo = DecorateStoreConfig.instance:getDecorateConfig(goodId)
+
+	if decorateCo.maxbuycountType ~= DecorateStoreEnum.MaxBuyTipType.Owned then
 		return false
 	end
 
-	local var_20_0 = StoreConfig.instance:getGoodsConfig(arg_20_1)
-	local var_20_1 = string.splitToNumber(var_20_0.product, "#")
+	local goodsConfig = StoreConfig.instance:getGoodsConfig(goodId)
+	local items = string.splitToNumber(goodsConfig.product, "#")
 
-	return ItemModel.instance:getItemQuantity(var_20_1[1], var_20_1[2]) > 0
+	if decorateCo.productType == MaterialEnum.MaterialType.Item and decorateCo.subType == ItemEnum.SubType.SkinSelelctGift then
+		local config = ItemConfig.instance:getItemCo(items[2])
+		local effect = config and config.effect or ""
+		local param = GameUtil.splitString2(effect, true)
+		local skinList = param[1]
+
+		for i, v in ipairs(skinList) do
+			if not HeroModel.instance:checkHasSkin(v) then
+				return false
+			end
+		end
+
+		return true
+	end
+
+	local itemCount = ItemModel.instance:getItemQuantity(items[1], items[2])
+
+	return itemCount > 0
 end
 
-var_0_0.instance = var_0_0.New()
+DecorateStoreModel.instance = DecorateStoreModel.New()
 
-return var_0_0
+return DecorateStoreModel

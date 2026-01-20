@@ -1,151 +1,155 @@
-﻿module("modules.logic.seasonver.act123.view2_0.Season123_2_0RecordWindowItem", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view2_0/Season123_2_0RecordWindowItem.lua
 
-local var_0_0 = class("Season123_2_0RecordWindowItem", LuaCompBase)
-local var_0_1 = 6
+module("modules.logic.seasonver.act123.view2_0.Season123_2_0RecordWindowItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._gobestrecord = gohelper.findChild(arg_1_0.go, "#go_bestrecord")
-	arg_1_0._gonormalrecord = gohelper.findChild(arg_1_0.go, "#go_normalrecord")
-	arg_1_0._txtTotalEn = gohelper.findChildText(arg_1_0.go, "#go_normalrecord/en1")
-	arg_1_0._goBestBg = gohelper.findChild(arg_1_0.go, "#go_normalrecord/totaltime/#img_bestBg")
-	arg_1_0._goBestCircle = gohelper.findChild(arg_1_0.go, "#go_normalrecord/totaltime/#go_bestcircle")
-	arg_1_0._txtBlueTxtTime = gohelper.findChildText(arg_1_0.go, "#go_normalrecord/totaltime/#go_bestcircle/#txt_timeblue")
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.go, "#go_normalrecord/totaltime/#txt_time")
-	arg_1_0._btndetails = gohelper.findChildButtonWithAudio(arg_1_0.go, "#go_normalrecord/#btn_details")
-	arg_1_0._transHeroList = gohelper.findChild(arg_1_0.go, "#go_normalrecord/#scroll_herolist").transform
-	arg_1_0._originalHeroListY = recthelper.getAnchorY(arg_1_0._transHeroList)
-	arg_1_0._goContent = gohelper.findChild(arg_1_0.go, "#go_normalrecord/#scroll_herolist/Viewport/Content")
-	arg_1_0._goheroitem = gohelper.findChild(arg_1_0.go, "#go_normalrecord/#scroll_herolist/Viewport/Content/#go_heroitem")
-	arg_1_0._itemAni = arg_1_0.go:GetComponent(typeof(UnityEngine.Animator))
+local Season123_2_0RecordWindowItem = class("Season123_2_0RecordWindowItem", LuaCompBase)
+local NotBestRecordMoveY = 6
+
+function Season123_2_0RecordWindowItem:init(go)
+	self.go = go
+	self._gobestrecord = gohelper.findChild(self.go, "#go_bestrecord")
+	self._gonormalrecord = gohelper.findChild(self.go, "#go_normalrecord")
+	self._txtTotalEn = gohelper.findChildText(self.go, "#go_normalrecord/en1")
+	self._goBestBg = gohelper.findChild(self.go, "#go_normalrecord/totaltime/#img_bestBg")
+	self._goBestCircle = gohelper.findChild(self.go, "#go_normalrecord/totaltime/#go_bestcircle")
+	self._txtBlueTxtTime = gohelper.findChildText(self.go, "#go_normalrecord/totaltime/#go_bestcircle/#txt_timeblue")
+	self._txttime = gohelper.findChildText(self.go, "#go_normalrecord/totaltime/#txt_time")
+	self._btndetails = gohelper.findChildButtonWithAudio(self.go, "#go_normalrecord/#btn_details")
+
+	local goHeroList = gohelper.findChild(self.go, "#go_normalrecord/#scroll_herolist")
+
+	self._transHeroList = goHeroList.transform
+	self._originalHeroListY = recthelper.getAnchorY(self._transHeroList)
+	self._goContent = gohelper.findChild(self.go, "#go_normalrecord/#scroll_herolist/Viewport/Content")
+	self._goheroitem = gohelper.findChild(self.go, "#go_normalrecord/#scroll_herolist/Viewport/Content/#go_heroitem")
+	self._itemAni = self.go:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._btndetails:AddClickListener(arg_2_0._btndetailsOnClick, arg_2_0)
+function Season123_2_0RecordWindowItem:addEventListeners()
+	self._btndetails:AddClickListener(self._btndetailsOnClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btndetails:RemoveClickListener()
+function Season123_2_0RecordWindowItem:removeEventListeners()
+	self._btndetails:RemoveClickListener()
 end
 
-function var_0_0._btndetailsOnClick(arg_4_0)
-	if not arg_4_0.mo or not arg_4_0.mo.attackStatistics then
+function Season123_2_0RecordWindowItem:_btndetailsOnClick()
+	if not self.mo or not self.mo.attackStatistics then
 		return
 	end
 
-	FightStatModel.instance:setAtkStatInfo(arg_4_0.mo.attackStatistics)
+	FightStatModel.instance:setAtkStatInfo(self.mo.attackStatistics)
 	ViewMgr.instance:openView(ViewName.FightStatView)
 end
 
-function var_0_0.onLoad(arg_5_0, arg_5_1, arg_5_2)
-	gohelper.setActive(arg_5_0.go, false)
+function Season123_2_0RecordWindowItem:onLoad(delayOpenAnimTime, isPlayOpen)
+	gohelper.setActive(self.go, false)
 
-	arg_5_0._isPlayOpen = arg_5_2
+	self._isPlayOpen = isPlayOpen
 
-	TaskDispatcher.runDelay(arg_5_0._delayActive, arg_5_0, arg_5_1)
+	TaskDispatcher.runDelay(self._delayActive, self, delayOpenAnimTime)
 end
 
-function var_0_0._delayActive(arg_6_0)
-	gohelper.setActive(arg_6_0.go, true)
-	arg_6_0:playAnimation(arg_6_0._isPlayOpen and UIAnimationName.Open or UIAnimationName.Idle)
+function Season123_2_0RecordWindowItem:_delayActive()
+	gohelper.setActive(self.go, true)
+	self:playAnimation(self._isPlayOpen and UIAnimationName.Open or UIAnimationName.Idle)
 
-	arg_6_0._isPlayOpen = false
+	self._isPlayOpen = false
 end
 
-function var_0_0.onUpdateMO(arg_7_0, arg_7_1)
-	arg_7_0.mo = arg_7_1
+function Season123_2_0RecordWindowItem:onUpdateMO(mo)
+	self.mo = mo
 
-	if not arg_7_0.mo or arg_7_0.mo.isEmpty then
-		gohelper.setActive(arg_7_0._gobestrecord, false)
-		gohelper.setActive(arg_7_0._gonormalrecord, false)
+	if not self.mo or self.mo.isEmpty then
+		gohelper.setActive(self._gobestrecord, false)
+		gohelper.setActive(self._gonormalrecord, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_7_0._gonormalrecord, true)
+	gohelper.setActive(self._gonormalrecord, true)
 
-	local var_7_0 = arg_7_0.mo.round or 0
-	local var_7_1 = arg_7_0.mo.isBest
-	local var_7_2 = arg_7_0.mo.heroList or {}
+	local round = self.mo.round or 0
+	local isBest = self.mo.isBest
+	local heroList = self.mo.heroList or {}
 
-	arg_7_0._txttime.text = var_7_0
-	arg_7_0._txtBlueTxtTime.text = var_7_0
+	self._txttime.text = round
+	self._txtBlueTxtTime.text = round
 
-	gohelper.setActive(arg_7_0._gobestrecord, var_7_1)
-	gohelper.setActive(arg_7_0._goBestBg, var_7_1)
-	gohelper.setActive(arg_7_0._goBestCircle, var_7_1)
+	gohelper.setActive(self._gobestrecord, isBest)
+	gohelper.setActive(self._goBestBg, isBest)
+	gohelper.setActive(self._goBestCircle, isBest)
 
-	local var_7_3 = var_7_1 and "#7D4A29" or "#393939"
+	local color = isBest and "#7D4A29" or "#393939"
 
-	SLFramework.UGUI.GuiHelper.SetColor(arg_7_0._txtTotalEn, var_7_3)
+	SLFramework.UGUI.GuiHelper.SetColor(self._txtTotalEn, color)
 
-	local var_7_4 = var_7_1 and arg_7_0._originalHeroListY or arg_7_0._originalHeroListY + var_0_1
+	local heroListY = isBest and self._originalHeroListY or self._originalHeroListY + NotBestRecordMoveY
 
-	recthelper.setAnchorY(arg_7_0._transHeroList, var_7_4)
-	gohelper.CreateObjList(arg_7_0, arg_7_0._onHeroItemLoad, var_7_2, arg_7_0._goContent, arg_7_0._goheroitem)
+	recthelper.setAnchorY(self._transHeroList, heroListY)
+	gohelper.CreateObjList(self, self._onHeroItemLoad, heroList, self._goContent, self._goheroitem)
 end
 
-function var_0_0.playAnimation(arg_8_0, arg_8_1)
-	if not arg_8_0._itemAni then
+function Season123_2_0RecordWindowItem:playAnimation(animName)
+	if not self._itemAni then
 		return
 	end
 
-	arg_8_0._itemAni:Play(arg_8_1 or UIAnimationName.Idle)
+	self._itemAni:Play(animName or UIAnimationName.Idle)
 end
 
-function var_0_0._onHeroItemLoad(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	if gohelper.isNil(arg_9_1) then
+function Season123_2_0RecordWindowItem:_onHeroItemLoad(obj, heroData, index)
+	if gohelper.isNil(obj) then
 		return
 	end
 
-	local var_9_0 = gohelper.findChild(arg_9_1, "empty")
-	local var_9_1 = gohelper.findChild(arg_9_1, "assist")
-	local var_9_2 = gohelper.findChild(arg_9_1, "hero")
-	local var_9_3
-	local var_9_4
-	local var_9_5 = arg_9_2.heroId
+	local goEmpty = gohelper.findChild(obj, "empty")
+	local goAssist = gohelper.findChild(obj, "assist")
+	local goHero = gohelper.findChild(obj, "hero")
+	local heroCfg, heroIcon
+	local heroId = heroData.heroId
 
-	if var_9_5 and var_9_5 ~= 0 then
-		var_9_3 = HeroConfig.instance:getHeroCO(var_9_5)
+	if heroId and heroId ~= 0 then
+		heroCfg = HeroConfig.instance:getHeroCO(heroId)
 	end
 
-	if not gohelper.isNil(var_9_2) then
-		var_9_4 = IconMgr.instance:getCommonHeroIconNew(var_9_2)
+	if not gohelper.isNil(goHero) then
+		heroIcon = IconMgr.instance:getCommonHeroIconNew(goHero)
 	end
 
-	if var_9_3 and var_9_4 then
-		local var_9_6 = arg_9_2.level or 1
-		local var_9_7 = arg_9_2.skinId or var_9_3.skinId
-		local var_9_8 = arg_9_2.isBalance
-		local var_9_9 = arg_9_2.isAssist
-		local var_9_10 = HeroMo.New()
+	if heroCfg and heroIcon then
+		local level = heroData.level or 1
+		local skinId = heroData.skinId or heroCfg.skinId
+		local isBalance = heroData.isBalance
+		local isAssist = heroData.isAssist
+		local heroMo = HeroMo.New()
 
-		var_9_10:initFromConfig(var_9_3)
+		heroMo:initFromConfig(heroCfg)
 
-		local var_9_11, var_9_12 = HeroConfig.instance:getShowLevel(var_9_6)
+		local _, rank = HeroConfig.instance:getShowLevel(level)
 
-		var_9_10.rank = var_9_12
-		var_9_10.level = var_9_6
-		var_9_10.skin = var_9_7
+		heroMo.rank = rank
+		heroMo.level = level
+		heroMo.skin = skinId
 
-		var_9_4:onUpdateMO(var_9_10)
-		var_9_4:isShowRare(false)
-		var_9_4:isShowEmptyWhenNoneHero(false)
-		var_9_4:setIsBalance(var_9_8)
-		gohelper.setActive(var_9_2, true)
-		gohelper.setActive(var_9_1, var_9_9)
-		gohelper.setActive(var_9_0, false)
+		heroIcon:onUpdateMO(heroMo)
+		heroIcon:isShowRare(false)
+		heroIcon:isShowEmptyWhenNoneHero(false)
+		heroIcon:setIsBalance(isBalance)
+		gohelper.setActive(goHero, true)
+		gohelper.setActive(goAssist, isAssist)
+		gohelper.setActive(goEmpty, false)
 	else
-		gohelper.setActive(var_9_2, false)
-		gohelper.setActive(var_9_1, false)
-		gohelper.setActive(var_9_0, true)
+		gohelper.setActive(goHero, false)
+		gohelper.setActive(goAssist, false)
+		gohelper.setActive(goEmpty, true)
 	end
 end
 
-function var_0_0.onDestroy(arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._delayActive, arg_10_0)
+function Season123_2_0RecordWindowItem:onDestroy()
+	TaskDispatcher.cancelTask(self._delayActive, self)
 
-	arg_10_0._isPlayOpen = false
+	self._isPlayOpen = false
 end
 
-return var_0_0
+return Season123_2_0RecordWindowItem

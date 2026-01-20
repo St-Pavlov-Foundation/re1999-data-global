@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_rouge_monster_rule", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_rouge_monster_rule.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_rouge_monster_rule", package.seeall)
+
+local lua_rouge_monster_rule = {}
+local fields = {
 	id = 1,
 	unlockType = 5,
 	unlockParam = 6,
@@ -9,15 +11,15 @@ local var_0_1 = {
 	rare = 2,
 	desc = 4
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	desc = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_rouge_monster_rule.onLoad(json)
+	lua_rouge_monster_rule.configList, lua_rouge_monster_rule.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_rouge_monster_rule

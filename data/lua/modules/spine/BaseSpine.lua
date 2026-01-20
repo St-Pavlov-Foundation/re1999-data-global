@@ -1,396 +1,405 @@
-﻿module("modules.spine.BaseSpine", package.seeall)
+﻿-- chunkname: @modules/spine/BaseSpine.lua
 
-local var_0_0 = class("BaseSpine", LuaCompBase)
+module("modules.spine.BaseSpine", package.seeall)
 
-var_0_0.BodyTrackIndex = 0
-var_0_0.FaceTrackIndex = 1
-var_0_0.MouthTrackIndex = 2
-var_0_0.TransitionTrackIndex = 3
+local BaseSpine = class("BaseSpine", LuaCompBase)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._gameObj = arg_1_1
-	arg_1_0._gameTr = arg_1_1.transform
-	arg_1_0._resLoader = SpinePrefabInstantiate.Create(arg_1_0._gameObj)
-	arg_1_0._resPath = nil
-	arg_1_0._skeletonComponent = nil
-	arg_1_0._spineGo = nil
-	arg_1_0._spineTr = nil
-	arg_1_0._isLoop = false
-	arg_1_0._lookDir = SpineLookDir.Left
-	arg_1_0._bFreeze = false
-	arg_1_0._actionCb = nil
-	arg_1_0._actionCbObj = nil
-	arg_1_0._resLoadedCb = nil
-	arg_1_0._resLoadedCbObj = nil
-	arg_1_0._videoList = {}
+BaseSpine.BodyTrackIndex = 0
+BaseSpine.FaceTrackIndex = 1
+BaseSpine.MouthTrackIndex = 2
+BaseSpine.TransitionTrackIndex = 3
+
+function BaseSpine:init(gameObj)
+	self._gameObj = gameObj
+	self._gameTr = gameObj.transform
+	self._resLoader = SpinePrefabInstantiate.Create(self._gameObj)
+	self._resPath = nil
+	self._skeletonComponent = nil
+	self._spineGo = nil
+	self._spineTr = nil
+	self._isLoop = false
+	self._lookDir = SpineLookDir.Left
+	self._bFreeze = false
+	self._actionCb = nil
+	self._actionCbObj = nil
+	self._resLoadedCb = nil
+	self._resLoadedCbObj = nil
+	self._videoList = {}
 end
 
-function var_0_0.setResPath(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
-	if not arg_2_1 then
+function BaseSpine:setResPath(resPath, loadedCb, loadedCbObj)
+	if not resPath then
 		return
 	end
 
-	if arg_2_0._resPath == arg_2_1 and not gohelper.isNil(arg_2_0._spineGo) then
-		if arg_2_2 then
-			arg_2_2(arg_2_3)
+	if self._resPath == resPath and not gohelper.isNil(self._spineGo) then
+		if loadedCb then
+			loadedCb(loadedCbObj)
 		end
 
 		return
 	end
 
-	arg_2_0:_clear()
+	self:_clear()
 
-	arg_2_0._resPath = arg_2_1
-	arg_2_0._resLoadedCb = arg_2_2
-	arg_2_0._resLoadedCbObj = arg_2_3
+	self._resPath = resPath
+	self._resLoadedCb = loadedCb
+	self._resLoadedCbObj = loadedCbObj
 
-	if GameResMgr.IsFromEditorDir or arg_2_4 then
-		arg_2_0._resLoader:startLoad(arg_2_0._resPath, arg_2_0._resPath, arg_2_0._onResLoaded, arg_2_0)
-	else
-		local var_2_0 = SLFramework.FileHelper.GetUnityPath(System.IO.Path.GetDirectoryName(arg_2_0._resPath))
+	self._resLoader:startLoad(self._resPath, self._resPath, self._onResLoaded, self)
+end
 
-		arg_2_0._resLoader:startLoad(var_2_0, arg_2_0._resPath, arg_2_0._onResLoaded, arg_2_0)
+function BaseSpine:setHeroId(id)
+	self._heroId = id
+end
+
+function BaseSpine:setSkinId(id)
+	self._skinId = id
+end
+
+function BaseSpine:getResPath()
+	return self._resPath
+end
+
+function BaseSpine:doClear()
+	self:_clear()
+end
+
+function BaseSpine:_clear()
+	if self._resLoader then
+		self._resLoader:dispose()
+	end
+
+	if self._roleEffectComp then
+		self._roleEffectComp:onDestroy()
+
+		self._roleEffectComp = nil
+	end
+
+	self._skeletonComponent = nil
+	self._resPath = nil
+	self._spineGo = nil
+	self._spineTr = nil
+	self._bFreeze = false
+	self._effectGo = nil
+	self._renderer = nil
+	self._curBodyName = nil
+end
+
+function BaseSpine:setInMainView()
+	self._isInMainView = true
+end
+
+function BaseSpine:isInMainView()
+	return self._isInMainView
+end
+
+function BaseSpine:setBodyChangeCallback(callback, callbackObj)
+	self._bodyChangeCallback = callback
+	self._bodyChangeCallbackObj = callbackObj
+end
+
+function BaseSpine:isPlayingVoice()
+	return self._spineVoice and self._spineVoice:playing()
+end
+
+function BaseSpine:getPlayVoiceStartTime()
+	return self._spineVoice and self._spineVoice:getPlayVoiceStartTime()
+end
+
+function BaseSpine:playVoice(config, callback, txtContent, txtEnContent, bgGo, showBg)
+	self._spineVoice = self._spineVoice or SpineVoice.New()
+
+	self._spineVoice:playVoice(self, config, callback, txtContent, txtEnContent, bgGo, showBg)
+end
+
+function BaseSpine:stopVoice()
+	if self._spineVoice then
+		self._spineVoice:stopVoice()
 	end
 end
 
-function var_0_0.setHeroId(arg_3_0, arg_3_1)
-	arg_3_0._heroId = arg_3_1
+function BaseSpine:setSwitch(switchGroup, switchState)
+	self._spineVoice = self._spineVoice or SpineVoice.New()
+
+	self._spineVoice:setSwitch(self, switchGroup, switchState)
 end
 
-function var_0_0.setSkinId(arg_4_0, arg_4_1)
-	arg_4_0._skinId = arg_4_1
+function BaseSpine:getSpineVoice()
+	self._spineVoice = self._spineVoice or SpineVoice.New()
+
+	return self._spineVoice
 end
 
-function var_0_0.getResPath(arg_5_0)
-	return arg_5_0._resPath
-end
-
-function var_0_0.doClear(arg_6_0)
-	arg_6_0:_clear()
-end
-
-function var_0_0._clear(arg_7_0)
-	if arg_7_0._resLoader then
-		arg_7_0._resLoader:dispose()
-	end
-
-	if arg_7_0._roleEffectComp then
-		arg_7_0._roleEffectComp:onDestroy()
-
-		arg_7_0._roleEffectComp = nil
-	end
-
-	arg_7_0._skeletonComponent = nil
-	arg_7_0._resPath = nil
-	arg_7_0._spineGo = nil
-	arg_7_0._spineTr = nil
-	arg_7_0._bFreeze = false
-	arg_7_0._effectGo = nil
-	arg_7_0._renderer = nil
-	arg_7_0._curBodyName = nil
-end
-
-function var_0_0.setInMainView(arg_8_0)
-	arg_8_0._isInMainView = true
-end
-
-function var_0_0.isInMainView(arg_9_0)
-	return arg_9_0._isInMainView
-end
-
-function var_0_0.isPlayingVoice(arg_10_0)
-	return arg_10_0._spineVoice and arg_10_0._spineVoice:playing()
-end
-
-function var_0_0.getPlayVoiceStartTime(arg_11_0)
-	return arg_11_0._spineVoice and arg_11_0._spineVoice:getPlayVoiceStartTime()
-end
-
-function var_0_0.playVoice(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4, arg_12_5, arg_12_6)
-	arg_12_0._spineVoice = arg_12_0._spineVoice or SpineVoice.New()
-
-	arg_12_0._spineVoice:playVoice(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4, arg_12_5, arg_12_6)
-end
-
-function var_0_0.stopVoice(arg_13_0)
-	if arg_13_0._spineVoice then
-		arg_13_0._spineVoice:stopVoice()
-	end
-end
-
-function var_0_0.setSwitch(arg_14_0, arg_14_1, arg_14_2)
-	arg_14_0._spineVoice = arg_14_0._spineVoice or SpineVoice.New()
-
-	arg_14_0._spineVoice:setSwitch(arg_14_0, arg_14_1, arg_14_2)
-end
-
-function var_0_0.getSpineVoice(arg_15_0)
-	arg_15_0._spineVoice = arg_15_0._spineVoice or SpineVoice.New()
-
-	return arg_15_0._spineVoice
-end
-
-function var_0_0.initSkeletonComponent(arg_16_0)
+function BaseSpine:initSkeletonComponent()
 	return
 end
 
-function var_0_0.onAnimEventCallback(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	if arg_17_0._actionCb then
-		arg_17_0._actionCb(arg_17_0._actionCbObj, arg_17_1, arg_17_2, arg_17_3)
+function BaseSpine:onAnimEventCallback(actName, evtName, args)
+	if self._actionCb then
+		self._actionCb(self._actionCbObj, actName, evtName, args)
 	end
 
-	if arg_17_0._spineVoice then
-		arg_17_0._spineVoice:onAnimationEvent(arg_17_1, arg_17_2, arg_17_3)
+	if self._spineVoice then
+		self._spineVoice:onAnimationEvent(actName, evtName, args)
 	end
 end
 
-function var_0_0.getSpineGo(arg_18_0)
-	return arg_18_0._spineGo
+function BaseSpine:getSpineGo()
+	return self._spineGo
 end
 
-function var_0_0.getRenderer(arg_19_0)
-	if gohelper.isNil(arg_19_0._spineGo) then
+function BaseSpine:getRenderer()
+	if gohelper.isNil(self._spineGo) then
 		return nil
 	end
 
-	arg_19_0._renderer = arg_19_0._renderer or arg_19_0._spineGo:GetComponent(typeof(UnityEngine.Renderer))
+	self._renderer = self._renderer or self._spineGo:GetComponent(typeof(UnityEngine.Renderer))
 
-	return arg_19_0._renderer
+	return self._renderer
 end
 
-function var_0_0.getSpineTr(arg_20_0)
-	return arg_20_0._spineTr
+function BaseSpine:getSpineTr()
+	return self._spineTr
 end
 
-function var_0_0._onResLoaded(arg_21_0)
-	arg_21_0._spineGo = arg_21_0._resLoader:getInstGO()
-	arg_21_0._spineTr = arg_21_0._spineGo.transform
-	arg_21_0._renderer = nil
+function BaseSpine:_onResLoaded()
+	self._spineGo = self._resLoader:getInstGO()
+	self._spineTr = self._spineGo.transform
+	self._renderer = nil
 
-	arg_21_0:_initRoleEffect()
-	arg_21_0:_initFaceEffect()
-	arg_21_0:initSkeletonComponent()
-	arg_21_0:_changeLookDir()
+	self:_initRoleEffect()
+	self:_initFaceEffect()
+	self:initSkeletonComponent()
+	self:_changeLookDir()
 
-	if arg_21_0._isStory then
-		arg_21_0._spineGo:GetComponent(arg_21_0._animationEvent):SetAnimEventCallback(arg_21_0.onAnimEventCallback, arg_21_0)
+	if self._isStory then
+		local csUISpineEvt = self._spineGo:GetComponent(self._animationEvent)
 
-		arg_21_0._curBodyName = arg_21_0._curBodyName or CharacterVoiceController.instance:getIdle(arg_21_0._heroId)
-		arg_21_0._curFaceName = arg_21_0._curFaceName or StoryAnimName.E_ZhengChang
+		csUISpineEvt:SetAnimEventCallback(self.onAnimEventCallback, self)
 
-		arg_21_0:playStory(arg_21_0._curBodyName, arg_21_0._curFaceName)
+		self._curBodyName = self._curBodyName or CharacterVoiceController.instance:getIdle(self._heroId)
+		self._curFaceName = self._curFaceName or StoryAnimName.E_ZhengChang
+
+		self:playStory(self._curBodyName, self._curFaceName)
 	else
-		arg_21_0._curBodyName = arg_21_0._curBodyName or SpineAnimState.idle1
+		self._curBodyName = self._curBodyName or SpineAnimState.idle1
 
-		arg_21_0:setBodyAnimation(arg_21_0._curBodyName, true, 0.5)
+		self:setBodyAnimation(self._curBodyName, true, 0.5)
 	end
 
-	if arg_21_0._resLoadedCb then
-		arg_21_0._resLoadedCb(arg_21_0._resLoadedCbObj)
+	if self._resLoadedCb then
+		self._resLoadedCb(self._resLoadedCbObj)
 	end
 
-	arg_21_0._resLoadedCb = nil
-	arg_21_0._resLoadedCbObj = nil
+	self._resLoadedCb = nil
+	self._resLoadedCbObj = nil
 end
 
-function var_0_0._initRoleEffect(arg_22_0)
-	local var_22_0
-	local var_22_1
+function BaseSpine:_initRoleEffect()
+	local roleEffectConfig
 
-	arg_22_0._roleEffectComp, var_22_1 = arg_22_0:_getRoleEffectComp(arg_22_0._resPath)
+	self._roleEffectComp, roleEffectConfig = self:_getRoleEffectComp(self._resPath)
 
-	if arg_22_0._roleEffectComp then
-		arg_22_0._roleEffectComp:setSpine(arg_22_0)
-		arg_22_0._roleEffectComp:init(var_22_1)
+	if self._roleEffectComp then
+		self._roleEffectComp:setSpine(self)
+		self._roleEffectComp:init(roleEffectConfig)
 	end
 end
 
-function var_0_0._getRoleEffectComp(arg_23_0, arg_23_1)
-	for iter_23_0, iter_23_1 in ipairs(lua_character_motion_effect.configList) do
-		if string.find(arg_23_1, iter_23_1.heroResName) then
-			local var_23_0 = iter_23_1.effectCompName
+function BaseSpine:_getRoleEffectComp(resPath)
+	for i, v in ipairs(lua_character_motion_effect.configList) do
+		if string.find(resPath, v.heroResName) then
+			local effectCompName = v.effectCompName
+			local cls = _G[effectCompName]
 
-			return _G[var_23_0].New(), iter_23_1
+			return cls.New(), v
 		end
 	end
 end
 
-function var_0_0._showBodyEffect(arg_24_0, arg_24_1)
-	if arg_24_0._roleEffectComp then
-		arg_24_0._roleEffectComp:showBodyEffect(arg_24_1)
+function BaseSpine:_showBodyEffect(bodyName)
+	if self._roleEffectComp then
+		self._roleEffectComp:showBodyEffect(bodyName)
 	end
 end
 
-function var_0_0.play(arg_25_0, arg_25_1, arg_25_2)
-	arg_25_0._curBodyName = arg_25_1
+function BaseSpine:play(bodyName, loop)
+	self._curBodyName = bodyName
 
-	arg_25_0:setBodyAnimation(arg_25_1, arg_25_2, 0.5)
+	self:setBodyAnimation(bodyName, loop, 0.5)
 end
 
-function var_0_0.playStory(arg_26_0, arg_26_1, arg_26_2)
-	arg_26_0._curBodyName = arg_26_1
-	arg_26_0._curFaceName = arg_26_2
+function BaseSpine:playStory(bodyName, faceName)
+	self._curBodyName = bodyName
+	self._curFaceName = faceName
 
-	if arg_26_1 ~= StoryAnimName.B_IDLE or arg_26_0:hasAnimation(arg_26_1) then
-		arg_26_0:setBodyAnimation(arg_26_1, true, 0.5)
+	if bodyName ~= StoryAnimName.B_IDLE or self:hasAnimation(bodyName) then
+		self:setBodyAnimation(bodyName, true, 0.5)
 	end
 
-	if arg_26_2 ~= StoryAnimName.E_ZhengChang or arg_26_0:hasAnimation(arg_26_2) then
-		arg_26_0:setFaceAnimation(arg_26_2, true, 0.5)
-	end
-end
-
-function var_0_0.setBodyAnimation(arg_27_0, arg_27_1, arg_27_2, arg_27_3)
-	arg_27_0._curBodyName = arg_27_1
-
-	arg_27_0:SetAnimation(var_0_0.BodyTrackIndex, arg_27_1, arg_27_2, arg_27_3)
-	arg_27_0:_showBodyEffect(arg_27_1)
-end
-
-function var_0_0.getCurBody(arg_28_0)
-	return arg_28_0._curBodyName
-end
-
-function var_0_0.setFaceAnimation(arg_29_0, arg_29_1, arg_29_2, arg_29_3)
-	arg_29_0._curFaceName = arg_29_1
-
-	arg_29_0:SetAnimation(var_0_0.FaceTrackIndex, arg_29_1, arg_29_2, arg_29_3)
-	arg_29_0:_showFaceEffect(arg_29_1)
-end
-
-function var_0_0._initFaceEffect(arg_30_0)
-	local var_30_0
-	local var_30_1
-
-	arg_30_0._faceEffectComp, var_30_1 = arg_30_0:_getRoleFaceEffectComp(arg_30_0._resPath)
-
-	if arg_30_0._faceEffectComp then
-		arg_30_0._faceEffectComp:setSpine(arg_30_0)
-		arg_30_0._faceEffectComp:init(var_30_1)
+	if faceName ~= StoryAnimName.E_ZhengChang or self:hasAnimation(faceName) then
+		self:setFaceAnimation(faceName, true, 0.5)
 	end
 end
 
-function var_0_0._getRoleFaceEffectComp(arg_31_0, arg_31_1)
-	for iter_31_0, iter_31_1 in ipairs(lua_character_face_effect.configList) do
-		if string.find(arg_31_1, iter_31_1.heroResName) then
-			local var_31_0 = iter_31_1.effectCompName
+function BaseSpine:setBodyAnimation(bodyName, loop, mixTime)
+	local oldBodyName = self._curBodyName
 
-			return _G[var_31_0].New(), iter_31_1
+	self._curBodyName = bodyName
+
+	self:SetAnimation(BaseSpine.BodyTrackIndex, bodyName, loop, mixTime)
+	self:_showBodyEffect(bodyName)
+
+	if self._bodyChangeCallback then
+		self._bodyChangeCallback(self._bodyChangeCallbackObj, oldBodyName, bodyName)
+	end
+end
+
+function BaseSpine:getCurBody()
+	return self._curBodyName
+end
+
+function BaseSpine:setFaceAnimation(faceName, loop, mixTime)
+	self._curFaceName = faceName
+
+	self:SetAnimation(BaseSpine.FaceTrackIndex, faceName, loop, mixTime)
+	self:_showFaceEffect(faceName)
+end
+
+function BaseSpine:_initFaceEffect()
+	local faceEffectConfig
+
+	self._faceEffectComp, faceEffectConfig = self:_getRoleFaceEffectComp(self._resPath)
+
+	if self._faceEffectComp then
+		self._faceEffectComp:setSpine(self)
+		self._faceEffectComp:init(faceEffectConfig)
+	end
+end
+
+function BaseSpine:_getRoleFaceEffectComp(resPath)
+	for i, v in ipairs(lua_character_face_effect.configList) do
+		if string.find(resPath, v.heroResName) then
+			local effectCompName = v.effectCompName
+			local cls = _G[effectCompName]
+
+			return cls.New(), v
 		end
 	end
 end
 
-function var_0_0._showFaceEffect(arg_32_0, arg_32_1)
-	if arg_32_0._faceEffectComp then
-		arg_32_0._faceEffectComp:showFaceEffect(arg_32_1)
+function BaseSpine:_showFaceEffect(faceName)
+	if self._faceEffectComp then
+		self._faceEffectComp:showFaceEffect(faceName)
 	end
 end
 
-function var_0_0.getCurFace(arg_33_0)
-	return arg_33_0._curFaceName
+function BaseSpine:getCurFace()
+	return self._curFaceName
 end
 
-function var_0_0.getCurMouth(arg_34_0)
-	return arg_34_0._curMouthName
+function BaseSpine:getCurMouth()
+	return self._curMouthName
 end
 
-function var_0_0.setMouthAnimation(arg_35_0, arg_35_1, arg_35_2, arg_35_3)
-	arg_35_0._curMouthName = arg_35_1
+function BaseSpine:setMouthAnimation(mouthName, loop, mixTime)
+	self._curMouthName = mouthName
 
-	arg_35_0:SetAnimation(var_0_0.MouthTrackIndex, arg_35_1, arg_35_2, arg_35_3)
+	self:SetAnimation(BaseSpine.MouthTrackIndex, mouthName, loop, mixTime)
 end
 
-function var_0_0.setTransition(arg_36_0, arg_36_1, arg_36_2, arg_36_3)
-	arg_36_0:SetAnimation(var_0_0.TransitionTrackIndex, arg_36_1, arg_36_2, arg_36_3)
+function BaseSpine:setTransition(transitionName, loop, mixTime)
+	self:SetAnimation(BaseSpine.TransitionTrackIndex, transitionName, loop, mixTime)
 end
 
-function var_0_0.SetAnimation(arg_37_0, arg_37_1, arg_37_2, arg_37_3, arg_37_4)
-	if not arg_37_0._skeletonComponent then
+function BaseSpine:SetAnimation(trackIndex, animationName, loop, mixTime)
+	if not self._skeletonComponent then
 		return
 	end
 
-	if arg_37_0:hasAnimation(arg_37_2) == false then
+	if self:hasAnimation(animationName) == false then
 		return
 	end
 
-	arg_37_0._skeletonComponent:SetAnimation(arg_37_1, arg_37_2, arg_37_3, arg_37_4)
+	self._skeletonComponent:SetAnimation(trackIndex, animationName, loop, mixTime)
 end
 
-function var_0_0.hasAnimation(arg_38_0, arg_38_1)
-	return arg_38_0._skeletonComponent and arg_38_0._skeletonComponent:HasAnimation(arg_38_1)
+function BaseSpine:hasAnimation(animationName)
+	return self._skeletonComponent and self._skeletonComponent:HasAnimation(animationName)
 end
 
-function var_0_0.stopMouthAnimation(arg_39_0)
-	if not arg_39_0._skeletonComponent then
+function BaseSpine:stopMouthAnimation()
+	if not self._skeletonComponent then
 		return
 	end
 
-	arg_39_0._skeletonComponent:SetEmptyAnimation(var_0_0.MouthTrackIndex, 0)
+	self._skeletonComponent:SetEmptyAnimation(BaseSpine.MouthTrackIndex, 0)
 end
 
-function var_0_0.stopTransition(arg_40_0)
-	if not arg_40_0._skeletonComponent or gohelper.isNil(arg_40_0._spineGo) then
+function BaseSpine:stopTransition()
+	if not self._skeletonComponent or gohelper.isNil(self._spineGo) then
 		return
 	end
 
-	arg_40_0._skeletonComponent:SetEmptyAnimation(var_0_0.TransitionTrackIndex, 0)
+	self._skeletonComponent:SetEmptyAnimation(BaseSpine.TransitionTrackIndex, 0)
 end
 
-function var_0_0.setActionEventCb(arg_41_0, arg_41_1, arg_41_2)
-	if arg_41_0._isStory then
-		arg_41_0._actionCb = arg_41_1
-		arg_41_0._actionCbObj = arg_41_2
+function BaseSpine:setActionEventCb(animEvtCb, animEvtCbObj)
+	if self._isStory then
+		self._actionCb = animEvtCb
+		self._actionCbObj = animEvtCbObj
 	end
 end
 
-function var_0_0.changeLookDir(arg_42_0, arg_42_1)
-	if arg_42_1 == arg_42_0._lookDir then
+function BaseSpine:changeLookDir(dir)
+	if dir == self._lookDir then
 		return
 	end
 
-	arg_42_0._lookDir = arg_42_1
+	self._lookDir = dir
 
-	arg_42_0:_changeLookDir()
+	self:_changeLookDir()
 end
 
-function var_0_0._changeLookDir(arg_43_0)
-	if not gohelper.isNil(arg_43_0._gameTr) and arg_43_0._skeletonComponent then
-		arg_43_0._skeletonComponent:SetScaleX(arg_43_0._lookDir)
+function BaseSpine:_changeLookDir()
+	if not gohelper.isNil(self._gameTr) and self._skeletonComponent then
+		self._skeletonComponent:SetScaleX(self._lookDir)
 	end
 end
 
-function var_0_0.getLookDir(arg_44_0)
-	return arg_44_0._lookDir
+function BaseSpine:getLookDir()
+	return self._lookDir
 end
 
-function var_0_0.onDestroy(arg_45_0)
-	if arg_45_0._resLoader then
-		arg_45_0._resLoader:onDestroy()
+function BaseSpine:onDestroy()
+	if self._resLoader then
+		self._resLoader:onDestroy()
 
-		arg_45_0._resLoader = nil
+		self._resLoader = nil
 	end
 
-	if arg_45_0._spineVoice then
-		arg_45_0._spineVoice:onDestroy()
+	if self._spineVoice then
+		self._spineVoice:onDestroy()
 
-		arg_45_0._spineVoice = nil
+		self._spineVoice = nil
 	end
 
-	if arg_45_0._roleEffectComp then
-		arg_45_0._roleEffectComp:onDestroy()
+	if self._roleEffectComp then
+		self._roleEffectComp:onDestroy()
 
-		arg_45_0._roleEffectComp = nil
+		self._roleEffectComp = nil
 	end
 
-	arg_45_0._gameObj = nil
-	arg_45_0._resPath = nil
-	arg_45_0._skeletonComponent = nil
-	arg_45_0._spineGo = nil
-	arg_45_0._renderer = nil
-	arg_45_0._actionCb = nil
-	arg_45_0._actionCbObj = nil
-	arg_45_0._resLoadedCb = nil
-	arg_45_0._resLoadedCbObj = nil
+	self._gameObj = nil
+	self._resPath = nil
+	self._skeletonComponent = nil
+	self._spineGo = nil
+	self._renderer = nil
+	self._actionCb = nil
+	self._actionCbObj = nil
+	self._resLoadedCb = nil
+	self._resLoadedCbObj = nil
 end
 
-return var_0_0
+return BaseSpine

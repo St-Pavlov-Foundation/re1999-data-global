@@ -1,344 +1,356 @@
-﻿module("modules.logic.versionactivity2_1.aergusi.view.AergusiDialogNormalLeftItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_1/aergusi/view/AergusiDialogNormalLeftItem.lua
 
-local var_0_0 = class("AergusiDialogNormalLeftItem", AergusiDialogItem)
+module("modules.logic.versionactivity2_1.aergusi.view.AergusiDialogNormalLeftItem", package.seeall)
 
-function var_0_0.initView(arg_1_0)
-	arg_1_0._gorolebg = gohelper.findChild(arg_1_0.go, "rolebg")
-	arg_1_0._simageAvatar = gohelper.findChildSingleImage(arg_1_0.go, "rolebg/image_avatar")
-	arg_1_0._gorolebggrey = gohelper.findChild(arg_1_0.go, "rolebg_grey")
-	arg_1_0._simageAvatarGrey = gohelper.findChildSingleImage(arg_1_0.go, "rolebg_grey/image_avatar")
-	arg_1_0._txtName = gohelper.findChildText(arg_1_0.go, "name")
-	arg_1_0._txtNameGrey = gohelper.findChildText(arg_1_0.go, "name_grey")
-	arg_1_0._goselectframe = gohelper.findChild(arg_1_0.go, "content_bg/selectframe")
-	arg_1_0._txtContent = gohelper.findChildText(arg_1_0.go, "content_bg/txt_content")
-	arg_1_0._contentRt = arg_1_0._txtContent:GetComponent(gohelper.Type_RectTransform)
-	arg_1_0._btndoubted = gohelper.findChildButtonWithAudio(arg_1_0.go, "content_bg/#btn_doubted")
-	arg_1_0._godoubted = gohelper.findChild(arg_1_0.go, "content_bg/#go_doubted")
-	arg_1_0._btnobjection = gohelper.findChildButtonWithAudio(arg_1_0.go, "content_bg/#go_doubted/#btn_objection")
-	arg_1_0._goobjectionmask = gohelper.findChild(arg_1_0.go, "content_bg/#go_doubted/#btn_objection/mask")
-	arg_1_0._goobjectionselectframe = gohelper.findChild(arg_1_0.go, "content_bg/#go_doubted/#btn_objection/selectframe")
+local AergusiDialogNormalLeftItem = class("AergusiDialogNormalLeftItem", AergusiDialogItem)
 
-	gohelper.setActive(arg_1_0._goobjectionselectframe, false)
+function AergusiDialogNormalLeftItem:initView()
+	self._gorolebg = gohelper.findChild(self.go, "rolebg")
+	self._simageAvatar = gohelper.findChildSingleImage(self.go, "rolebg/image_avatar")
+	self._gorolebggrey = gohelper.findChild(self.go, "rolebg_grey")
+	self._simageAvatarGrey = gohelper.findChildSingleImage(self.go, "rolebg_grey/image_avatar")
+	self._txtName = gohelper.findChildText(self.go, "name")
+	self._txtNameGrey = gohelper.findChildText(self.go, "name_grey")
+	self._goselectframe = gohelper.findChild(self.go, "content_bg/selectframe")
+	self._txtContent = gohelper.findChildText(self.go, "content_bg/txt_content")
+	self._contentRt = self._txtContent:GetComponent(gohelper.Type_RectTransform)
+	self._btndoubted = gohelper.findChildButtonWithAudio(self.go, "content_bg/#btn_doubted")
+	self._godoubted = gohelper.findChild(self.go, "content_bg/#go_doubted")
+	self._btnobjection = gohelper.findChildButtonWithAudio(self.go, "content_bg/#go_doubted/#btn_objection")
+	self._goobjectionmask = gohelper.findChild(self.go, "content_bg/#go_doubted/#btn_objection/mask")
+	self._goobjectionselectframe = gohelper.findChild(self.go, "content_bg/#go_doubted/#btn_objection/selectframe")
 
-	arg_1_0._btnask = gohelper.findChildButtonWithAudio(arg_1_0.go, "content_bg/#go_doubted/#btn_ask")
-	arg_1_0._goaskmask = gohelper.findChild(arg_1_0.go, "content_bg/#go_doubted/#btn_ask/mask")
-	arg_1_0._goaskselectframe = gohelper.findChild(arg_1_0.go, "content_bg/#go_doubted/#btn_ask/selectframe")
+	gohelper.setActive(self._goobjectionselectframe, false)
 
-	gohelper.setActive(arg_1_0._goaskselectframe, false)
+	self._btnask = gohelper.findChildButtonWithAudio(self.go, "content_bg/#go_doubted/#btn_ask")
+	self._goaskmask = gohelper.findChild(self.go, "content_bg/#go_doubted/#btn_ask/mask")
+	self._goaskselectframe = gohelper.findChild(self.go, "content_bg/#go_doubted/#btn_ask/selectframe")
 
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.go, "content_bg/#go_doubted/#btn_close")
-	arg_1_0._gomaskgrey = gohelper.findChild(arg_1_0.go, "content_bg/mask_grey")
-	arg_1_0._contentBgRt = gohelper.findChildComponent(arg_1_0.go, "content_bg", gohelper.Type_RectTransform)
-	arg_1_0._doubting = false
-	arg_1_0.go.name = string.format("normalleftitem_%s_%s", arg_1_0.stepCo.id, arg_1_0.stepCo.stepId)
+	gohelper.setActive(self._goaskselectframe, false)
+
+	self._btnclose = gohelper.findChildButtonWithAudio(self.go, "content_bg/#go_doubted/#btn_close")
+	self._gomaskgrey = gohelper.findChild(self.go, "content_bg/mask_grey")
+	self._contentBgRt = gohelper.findChildComponent(self.go, "content_bg", gohelper.Type_RectTransform)
+	self._doubting = false
+	self.go.name = string.format("normalleftitem_%s_%s", self.stepCo.id, self.stepCo.stepId)
 
 	AudioMgr.instance:trigger(AudioEnum.Dialogue.play_ui_wulu_duihua)
-	arg_1_0:_addEvents()
+	self:_addEvents()
 
-	arg_1_0._txtContentMarkTopIndex = arg_1_0:createMarktopCmp(arg_1_0._txtContent)
+	self._txtContentMarkTopIndex = self:createMarktopCmp(self._txtContent)
 
-	arg_1_0:setTopOffset(arg_1_0._txtContentMarkTopIndex, 0, -6.151)
+	self:setTopOffset(self._txtContentMarkTopIndex, 0, -6.151)
 end
 
-function var_0_0.refresh(arg_2_0)
-	local var_2_0 = AergusiDialogModel.instance:getCurDialogGroup()
+function AergusiDialogNormalLeftItem:refresh()
+	local curGroupId = AergusiDialogModel.instance:getCurDialogGroup()
 
-	gohelper.setActive(arg_2_0._gorolebg, var_2_0 == arg_2_0.stepCo.id)
-	gohelper.setActive(arg_2_0._gorolebggrey, var_2_0 ~= arg_2_0.stepCo.id)
-	gohelper.setActive(arg_2_0._txtName.gameObject, var_2_0 == arg_2_0.stepCo.id)
-	gohelper.setActive(arg_2_0._txtNameGrey.gameObject, var_2_0 ~= arg_2_0.stepCo.id)
-	gohelper.setActive(arg_2_0._gomaskgrey, var_2_0 ~= arg_2_0.stepCo.id)
+	gohelper.setActive(self._gorolebg, curGroupId == self.stepCo.id)
+	gohelper.setActive(self._gorolebggrey, curGroupId ~= self.stepCo.id)
+	gohelper.setActive(self._txtName.gameObject, curGroupId == self.stepCo.id)
+	gohelper.setActive(self._txtNameGrey.gameObject, curGroupId ~= self.stepCo.id)
+	gohelper.setActive(self._gomaskgrey, curGroupId ~= self.stepCo.id)
 
-	local var_2_1 = AergusiDialogModel.instance:getShowingGroupState()
-	local var_2_2 = AergusiConfig.instance:getEvidenceConfig(arg_2_0.stepCo.id).dialogGroupType == AergusiEnum.DialogGroupType.Interact
+	local isGroupShowing = AergusiDialogModel.instance:getShowingGroupState()
+	local isInteractDialog = AergusiConfig.instance:getEvidenceConfig(self.stepCo.id).dialogGroupType == AergusiEnum.DialogGroupType.Interact
 
-	gohelper.setActive(arg_2_0._btndoubted.gameObject, var_2_2 and not arg_2_0._doubting and not var_2_1 and var_2_0 == arg_2_0.stepCo.id)
-	gohelper.setActive(arg_2_0._godoubted, var_2_2 and arg_2_0._doubting and not var_2_1 and var_2_0 == arg_2_0.stepCo.id)
+	gohelper.setActive(self._btndoubted.gameObject, isInteractDialog and not self._doubting and not isGroupShowing and curGroupId == self.stepCo.id)
+	gohelper.setActive(self._godoubted, isInteractDialog and self._doubting and not isGroupShowing and curGroupId == self.stepCo.id)
 
-	if var_2_0 ~= arg_2_0.stepCo.id then
-		gohelper.setActive(arg_2_0._goselectframe, false)
+	if curGroupId ~= self.stepCo.id then
+		gohelper.setActive(self._goselectframe, false)
 	end
 
-	arg_2_0._simageAvatar:LoadImage(ResUrl.getHeadIconSmall(arg_2_0.stepCo.speakerIcon))
-	arg_2_0._simageAvatarGrey:LoadImage(ResUrl.getHeadIconSmall(arg_2_0.stepCo.speakerIcon))
+	self._simageAvatar:LoadImage(ResUrl.getHeadIconSmall(self.stepCo.speakerIcon))
+	self._simageAvatarGrey:LoadImage(ResUrl.getHeadIconSmall(self.stepCo.speakerIcon))
 
-	arg_2_0._txtName.text = arg_2_0.stepCo.speaker
-	arg_2_0._txtNameGrey.text = arg_2_0.stepCo.speaker
+	self._txtName.text = self.stepCo.speaker
+	self._txtNameGrey.text = self.stepCo.speaker
 
-	arg_2_0:setTextWithMarktopByIndex(arg_2_0._txtContentMarkTopIndex, arg_2_0.stepCo.content)
+	self:setTextWithMarktopByIndex(self._txtContentMarkTopIndex, self.stepCo.content)
 
-	local var_2_3 = {
-		groupId = arg_2_0.stepCo.id,
-		stepId = arg_2_0.stepCo.stepId,
-		type = AergusiEnum.OperationType.Probe
-	}
-	local var_2_4 = AergusiDialogModel.instance:isOperateHasError(var_2_3)
+	local askdata = {}
 
-	gohelper.setActive(arg_2_0._goaskmask, var_2_4)
+	askdata.groupId = self.stepCo.id
+	askdata.stepId = self.stepCo.stepId
+	askdata.type = AergusiEnum.OperationType.Probe
 
-	local var_2_5 = {
-		groupId = arg_2_0.stepCo.id,
-		stepId = arg_2_0.stepCo.stepId,
-		type = AergusiEnum.OperationType.Refutation
-	}
-	local var_2_6 = AergusiDialogModel.instance:isOperateHasError(var_2_5)
-	local var_2_7 = false
+	local isAskError = AergusiDialogModel.instance:isOperateHasError(askdata)
 
-	if arg_2_0.stepCo.condition ~= "" and string.splitToNumber(arg_2_0.stepCo.condition, "#")[1] == AergusiEnum.OperationType.Refutation then
-		var_2_7 = true
+	gohelper.setActive(self._goaskmask, isAskError)
+
+	local objectiondata = {}
+
+	objectiondata.groupId = self.stepCo.id
+	objectiondata.stepId = self.stepCo.stepId
+	objectiondata.type = AergusiEnum.OperationType.Refutation
+
+	local isObjectionError = AergusiDialogModel.instance:isOperateHasError(objectiondata)
+	local isTargetStep = false
+
+	if self.stepCo.condition ~= "" then
+		local conditions = string.splitToNumber(self.stepCo.condition, "#")
+
+		if conditions[1] == AergusiEnum.OperationType.Refutation then
+			isTargetStep = true
+		end
 	end
 
-	gohelper.setActive(arg_2_0._goobjectionmask, var_2_6 and not var_2_7)
+	gohelper.setActive(self._goobjectionmask, isObjectionError and not isTargetStep)
 end
 
-function var_0_0.calculateHeight(arg_3_0)
-	local var_3_0 = arg_3_0._txtContent.preferredWidth
+function AergusiDialogNormalLeftItem:calculateHeight()
+	local width = self._txtContent.preferredWidth
 
-	if var_3_0 <= AergusiEnum.MessageTxtMaxWidth then
-		local var_3_1 = AergusiEnum.MessageTxtOneLineHeight + AergusiEnum.MessageBgOffsetHeight
+	if width <= AergusiEnum.MessageTxtMaxWidth then
+		local contentBgHeight = AergusiEnum.MessageTxtOneLineHeight + AergusiEnum.MessageBgOffsetHeight
 
-		recthelper.setSize(arg_3_0._contentBgRt, var_3_0 + AergusiEnum.MessageBgOffsetWidth, var_3_1)
-		recthelper.setSize(arg_3_0._contentRt, var_3_0, AergusiEnum.MessageTxtOneLineHeight)
+		recthelper.setSize(self._contentBgRt, width + AergusiEnum.MessageBgOffsetWidth, contentBgHeight)
+		recthelper.setSize(self._contentRt, width, AergusiEnum.MessageTxtOneLineHeight)
 
 		return
 	end
 
-	local var_3_2 = AergusiEnum.MessageTxtMaxWidth
-	local var_3_3 = arg_3_0._txtContent.preferredHeight
-	local var_3_4 = var_3_3 + AergusiEnum.MessageBgOffsetHeight
+	width = AergusiEnum.MessageTxtMaxWidth
 
-	recthelper.setSize(arg_3_0._contentBgRt, AergusiEnum.MessageTxtMaxWidth + AergusiEnum.MessageBgOffsetWidth, var_3_4)
-	recthelper.setSize(arg_3_0._contentRt, var_3_2, var_3_3)
+	local height = self._txtContent.preferredHeight
+	local contentBgHeight = height + AergusiEnum.MessageBgOffsetHeight
+
+	recthelper.setSize(self._contentBgRt, AergusiEnum.MessageTxtMaxWidth + AergusiEnum.MessageBgOffsetWidth, contentBgHeight)
+	recthelper.setSize(self._contentRt, width, height)
 end
 
-function var_0_0.getHeight(arg_4_0)
-	if arg_4_0._txtContent.preferredWidth <= AergusiEnum.MessageTxtMaxWidth then
-		local var_4_0 = AergusiEnum.MessageTxtOneLineHeight + AergusiEnum.MessageBgOffsetHeight
+function AergusiDialogNormalLeftItem:getHeight()
+	local width = self._txtContent.preferredWidth
 
-		arg_4_0.height = Mathf.Max(AergusiEnum.MinHeight[arg_4_0.type] + AergusiEnum.DialogDoubtOffsetHeight, var_4_0 + AergusiEnum.MessageNameHeight + AergusiEnum.DialogDoubtOffsetHeight)
+	if width <= AergusiEnum.MessageTxtMaxWidth then
+		local contentBgHeight = AergusiEnum.MessageTxtOneLineHeight + AergusiEnum.MessageBgOffsetHeight
 
-		return arg_4_0.height
+		self.height = Mathf.Max(AergusiEnum.MinHeight[self.type] + AergusiEnum.DialogDoubtOffsetHeight, contentBgHeight + AergusiEnum.MessageNameHeight + AergusiEnum.DialogDoubtOffsetHeight)
+
+		return self.height
 	end
 
-	local var_4_1 = AergusiEnum.MessageTxtMaxWidth
-	local var_4_2 = AergusiEnum.MessageTxtOneLineHeight * arg_4_0._txtContent:GetTextInfo(arg_4_0._txtContent.text).lineCount + AergusiEnum.MessageBgOffsetHeight
+	width = AergusiEnum.MessageTxtMaxWidth
 
-	arg_4_0.height = Mathf.Max(AergusiEnum.MinHeight[arg_4_0.type] + AergusiEnum.DialogDoubtOffsetHeight, var_4_2 + AergusiEnum.MessageNameHeight + AergusiEnum.DialogDoubtOffsetHeight)
+	local height = AergusiEnum.MessageTxtOneLineHeight * self._txtContent:GetTextInfo(self._txtContent.text).lineCount
+	local contentBgHeight = height + AergusiEnum.MessageBgOffsetHeight
 
-	return arg_4_0.height
+	self.height = Mathf.Max(AergusiEnum.MinHeight[self.type] + AergusiEnum.DialogDoubtOffsetHeight, contentBgHeight + AergusiEnum.MessageNameHeight + AergusiEnum.DialogDoubtOffsetHeight)
+
+	return self.height
 end
 
-function var_0_0._addEvents(arg_5_0)
-	arg_5_0._btndoubted:AddClickListener(arg_5_0._btndoubtedOnClick, arg_5_0)
-	arg_5_0._btnobjection:AddClickListener(arg_5_0._btnobjectionOnClick, arg_5_0)
-	arg_5_0._btnask:AddClickListener(arg_5_0._btnaskOnClick, arg_5_0)
-	arg_5_0._btnclose:AddClickListener(arg_5_0._btncloseOnClick, arg_5_0)
-	arg_5_0:addEventCb(AergusiController.instance, AergusiEvent.OnShowDialogGroupFinished, arg_5_0._onShowDialogGroupFinished, arg_5_0)
-	arg_5_0:addEventCb(AergusiController.instance, AergusiEvent.OnClickShowResultTip, arg_5_0._onShowTips, arg_5_0)
-	arg_5_0:addEventCb(AergusiController.instance, AergusiEvent.OnDialogDoubtClick, arg_5_0._onDialogDoubtClick, arg_5_0)
+function AergusiDialogNormalLeftItem:_addEvents()
+	self._btndoubted:AddClickListener(self._btndoubtedOnClick, self)
+	self._btnobjection:AddClickListener(self._btnobjectionOnClick, self)
+	self._btnask:AddClickListener(self._btnaskOnClick, self)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self:addEventCb(AergusiController.instance, AergusiEvent.OnShowDialogGroupFinished, self._onShowDialogGroupFinished, self)
+	self:addEventCb(AergusiController.instance, AergusiEvent.OnClickShowResultTip, self._onShowTips, self)
+	self:addEventCb(AergusiController.instance, AergusiEvent.OnDialogDoubtClick, self._onDialogDoubtClick, self)
 end
 
-function var_0_0._removeEvents(arg_6_0)
-	arg_6_0._btndoubted:RemoveClickListener()
-	arg_6_0._btnobjection:RemoveClickListener()
-	arg_6_0._btnask:RemoveClickListener()
-	arg_6_0._btnclose:RemoveClickListener()
-	arg_6_0:removeEventCb(AergusiController.instance, AergusiEvent.OnShowDialogGroupFinished, arg_6_0._onShowDialogGroupFinished, arg_6_0)
-	arg_6_0:removeEventCb(AergusiController.instance, AergusiEvent.OnClickShowResultTip, arg_6_0._onShowTips, arg_6_0)
-	arg_6_0:removeEventCb(AergusiController.instance, AergusiEvent.OnDialogDoubtClick, arg_6_0._onDialogDoubtClick, arg_6_0)
+function AergusiDialogNormalLeftItem:_removeEvents()
+	self._btndoubted:RemoveClickListener()
+	self._btnobjection:RemoveClickListener()
+	self._btnask:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
+	self:removeEventCb(AergusiController.instance, AergusiEvent.OnShowDialogGroupFinished, self._onShowDialogGroupFinished, self)
+	self:removeEventCb(AergusiController.instance, AergusiEvent.OnClickShowResultTip, self._onShowTips, self)
+	self:removeEventCb(AergusiController.instance, AergusiEvent.OnDialogDoubtClick, self._onDialogDoubtClick, self)
 end
 
-function var_0_0._onShowDialogGroupFinished(arg_7_0)
-	arg_7_0:refresh()
+function AergusiDialogNormalLeftItem:_onShowDialogGroupFinished()
+	self:refresh()
 
 	if AergusiDialogModel.instance:getUnlockAutoShow() then
-		local var_7_0 = AergusiDialogModel.instance:getNextPromptOperate(false)
+		local data = AergusiDialogModel.instance:getNextPromptOperate(false)
 
-		arg_7_0:_onShowTips(var_7_0)
+		self:_onShowTips(data)
 	end
 end
 
-function var_0_0._onShowTips(arg_8_0, arg_8_1)
-	if arg_8_0.stepCo.id == arg_8_1.groupId and arg_8_0.stepCo.stepId == arg_8_1.stepId then
-		if arg_8_1.type == AergusiEnum.OperationType.Refutation then
+function AergusiDialogNormalLeftItem:_onShowTips(data)
+	if self.stepCo.id == data.groupId and self.stepCo.stepId == data.stepId then
+		if data.type == AergusiEnum.OperationType.Refutation then
 			AudioMgr.instance:trigger(AudioEnum.Activity163.play_ui_wangshi_argus_level_pop)
-			gohelper.setActive(arg_8_0._btndoubted.gameObject, false)
-			gohelper.setActive(arg_8_0._godoubted, true)
-			gohelper.setActive(arg_8_0._goselectframe, true)
-			gohelper.setActive(arg_8_0._goobjectionselectframe, true)
-			gohelper.setActive(arg_8_0._goaskselectframe, false)
-		elseif arg_8_1.type == AergusiEnum.OperationType.Probe then
+			gohelper.setActive(self._btndoubted.gameObject, false)
+			gohelper.setActive(self._godoubted, true)
+			gohelper.setActive(self._goselectframe, true)
+			gohelper.setActive(self._goobjectionselectframe, true)
+			gohelper.setActive(self._goaskselectframe, false)
+		elseif data.type == AergusiEnum.OperationType.Probe then
 			AudioMgr.instance:trigger(AudioEnum.Activity163.play_ui_wangshi_argus_level_pop)
-			gohelper.setActive(arg_8_0._btndoubted.gameObject, false)
-			gohelper.setActive(arg_8_0._godoubted, true)
-			gohelper.setActive(arg_8_0._goselectframe, true)
-			gohelper.setActive(arg_8_0._goobjectionselectframe, false)
-			gohelper.setActive(arg_8_0._goaskselectframe, true)
+			gohelper.setActive(self._btndoubted.gameObject, false)
+			gohelper.setActive(self._godoubted, true)
+			gohelper.setActive(self._goselectframe, true)
+			gohelper.setActive(self._goobjectionselectframe, false)
+			gohelper.setActive(self._goaskselectframe, true)
 		end
 	else
-		gohelper.setActive(arg_8_0._goselectframe, false)
-		gohelper.setActive(arg_8_0._godoubted, false)
+		gohelper.setActive(self._goselectframe, false)
+		gohelper.setActive(self._godoubted, false)
 
-		local var_8_0 = AergusiConfig.instance:getEvidenceConfig(arg_8_0.stepCo.id).dialogGroupType == AergusiEnum.DialogGroupType.Interact
+		local isInteractDialog = AergusiConfig.instance:getEvidenceConfig(self.stepCo.id).dialogGroupType == AergusiEnum.DialogGroupType.Interact
 
-		gohelper.setActive(arg_8_0._btndoubted.gameObject, var_8_0)
+		gohelper.setActive(self._btndoubted.gameObject, isInteractDialog)
 	end
 end
 
-function var_0_0._onDialogDoubtClick(arg_9_0, arg_9_1)
-	if arg_9_1.id == arg_9_0.stepCo.id and arg_9_1.stepId == arg_9_0.stepCo.stepId then
-		arg_9_0._doubting = true
+function AergusiDialogNormalLeftItem:_onDialogDoubtClick(stepCo)
+	if stepCo.id == self.stepCo.id and stepCo.stepId == self.stepCo.stepId then
+		self._doubting = true
 	else
-		gohelper.setActive(arg_9_0._goselectframe, false)
+		gohelper.setActive(self._goselectframe, false)
 
-		arg_9_0._doubting = false
+		self._doubting = false
 	end
 
-	arg_9_0:refresh()
+	self:refresh()
 end
 
-function var_0_0._btndoubtedOnClick(arg_10_0)
-	AergusiController.instance:dispatchEvent(AergusiEvent.OnDialogDoubtClick, arg_10_0.stepCo)
+function AergusiDialogNormalLeftItem:_btndoubtedOnClick()
+	AergusiController.instance:dispatchEvent(AergusiEvent.OnDialogDoubtClick, self.stepCo)
 end
 
-function var_0_0._btnobjectionOnClick(arg_11_0)
-	local var_11_0 = 0
+function AergusiDialogNormalLeftItem:_btnobjectionOnClick()
+	local groupId = 0
 
-	if arg_11_0.stepCo.condition ~= "" then
-		local var_11_1 = string.splitToNumber(arg_11_0.stepCo.condition, "#")
+	if self.stepCo.condition ~= "" then
+		local conditions = string.splitToNumber(self.stepCo.condition, "#")
 
-		if var_11_1[1] == AergusiEnum.OperationType.Refutation then
-			var_11_0 = var_11_1[3]
+		if conditions[1] == AergusiEnum.OperationType.Refutation then
+			groupId = conditions[3]
 		end
 	end
 
-	local var_11_2 = {
-		episodeId = AergusiModel.instance:getCurEpisode(),
-		type = AergusiEnum.OperationType.Refutation,
-		groupId = var_11_0,
-		stepId = arg_11_0.stepCo.stepId
-	}
+	local data = {}
 
-	var_11_2.couldPrompt = true
-	var_11_2.callback = arg_11_0._onRefuteEvidenceFinished
-	var_11_2.callbackObj = arg_11_0
+	data.episodeId = AergusiModel.instance:getCurEpisode()
+	data.type = AergusiEnum.OperationType.Refutation
+	data.groupId = groupId
+	data.stepId = self.stepCo.stepId
+	data.couldPrompt = true
+	data.callback = self._onRefuteEvidenceFinished
+	data.callbackObj = self
 
-	AergusiController.instance:openAergusiClueView(var_11_2)
+	AergusiController.instance:openAergusiClueView(data)
 end
 
-function var_0_0._onRefuteEvidenceFinished(arg_12_0, arg_12_1)
-	if arg_12_1 < 0 then
+function AergusiDialogNormalLeftItem:_onRefuteEvidenceFinished(groupId)
+	if groupId < 0 then
 		return
 	end
 
-	if arg_12_1 > 0 then
-		AergusiController.instance:dispatchEvent(AergusiEvent.OnRefuteStartGroup, arg_12_1)
+	if groupId > 0 then
+		AergusiController.instance:dispatchEvent(AergusiEvent.OnRefuteStartGroup, groupId)
 	else
-		arg_12_0:refresh()
+		self:refresh()
 
-		local var_12_0 = AergusiEnum.OperationType.Refutation
+		local type = AergusiEnum.OperationType.Refutation
 
-		AergusiController.instance:dispatchEvent(AergusiEvent.EvidenceError, arg_12_0.stepCo, var_12_0)
+		AergusiController.instance:dispatchEvent(AergusiEvent.EvidenceError, self.stepCo, type)
 	end
 end
 
-function var_0_0._btnaskOnClick(arg_13_0)
-	if arg_13_0.stepCo.condition ~= "" then
-		local var_13_0 = string.splitToNumber(arg_13_0.stepCo.condition, "#")
+function AergusiDialogNormalLeftItem:_btnaskOnClick()
+	if self.stepCo.condition ~= "" then
+		local conditions = string.splitToNumber(self.stepCo.condition, "#")
 
-		if var_13_0[1] == AergusiEnum.OperationType.NotKeyProbe then
-			local var_13_1 = {}
-			local var_13_2 = AergusiModel.instance:getCurEpisode()
-			local var_13_3 = AergusiModel.instance.instance:getEpisodeClueConfigs(var_13_2, true)
+		if conditions[1] == AergusiEnum.OperationType.NotKeyProbe then
+			local clueList = {}
+			local episodeId = AergusiModel.instance:getCurEpisode()
+			local clueConfigs = AergusiModel.instance.instance:getEpisodeClueConfigs(episodeId, true)
 
-			for iter_13_0, iter_13_1 in pairs(var_13_3) do
-				table.insert(var_13_1, iter_13_1.clueName)
+			for _, v in pairs(clueConfigs) do
+				table.insert(clueList, v.clueName)
 			end
 
 			StatController.instance:track(StatEnum.EventName.AergusiProbe, {
-				[StatEnum.EventProperties.EpisodeId] = tostring(var_13_2),
-				[StatEnum.EventProperties.TargetTip] = AergusiConfig.instance:getEvidenceConfig(arg_13_0.stepCo.id).conditionStr,
-				[StatEnum.EventProperties.ProbeDialogId] = tostring(arg_13_0.stepCo.id),
-				[StatEnum.EventProperties.ProbeStepId] = tostring(arg_13_0.stepCo.stepId),
+				[StatEnum.EventProperties.EpisodeId] = tostring(episodeId),
+				[StatEnum.EventProperties.TargetTip] = AergusiConfig.instance:getEvidenceConfig(self.stepCo.id).conditionStr,
+				[StatEnum.EventProperties.ProbeDialogId] = tostring(self.stepCo.id),
+				[StatEnum.EventProperties.ProbeStepId] = tostring(self.stepCo.stepId),
 				[StatEnum.EventProperties.ProbeResult] = "NotKey Probe",
 				[StatEnum.EventProperties.PatienceNum] = AergusiDialogModel.instance:getLeftErrorTimes(),
-				[StatEnum.EventProperties.HoldClueName] = var_13_1
+				[StatEnum.EventProperties.HoldClueName] = clueList
 			})
 
-			local var_13_4 = var_13_0[2]
+			local bubbleGroupId = conditions[2]
 
-			AergusiController.instance:dispatchEvent(AergusiEvent.OnDialogNotKeyAsk, var_13_4)
+			AergusiController.instance:dispatchEvent(AergusiEvent.OnDialogNotKeyAsk, bubbleGroupId)
 
 			return
 		end
 	end
 
-	local var_13_5 = VersionActivity2_1Enum.ActivityId.Aergusi
-	local var_13_6 = AergusiModel.instance:getCurEpisode()
-	local var_13_7 = AergusiEnum.OperationType.Probe
-	local var_13_8 = arg_13_0.stepCo.stepId
-	local var_13_9 = string.format("%s", var_13_8)
+	local actId = VersionActivity2_1Enum.ActivityId.Aergusi
+	local episodeId = AergusiModel.instance:getCurEpisode()
+	local operationType = AergusiEnum.OperationType.Probe
+	local curStep = self.stepCo.stepId
+	local params = string.format("%s", curStep)
 
-	Activity163Rpc.instance:sendAct163EvidenceOperationRequest(var_13_5, var_13_6, var_13_7, var_13_9, arg_13_0._onAskFinished, arg_13_0)
+	Activity163Rpc.instance:sendAct163EvidenceOperationRequest(actId, episodeId, operationType, params, self._onAskFinished, self)
 end
 
-function var_0_0._onAskFinished(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	if arg_14_2 ~= 0 then
+function AergusiDialogNormalLeftItem:_onAskFinished(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_14_0 = {}
-	local var_14_1 = AergusiModel.instance:getCurEpisode()
-	local var_14_2 = AergusiModel.instance.instance:getEpisodeClueConfigs(var_14_1, true)
+	local clueList = {}
+	local episodeId = AergusiModel.instance:getCurEpisode()
+	local clueConfigs = AergusiModel.instance.instance:getEpisodeClueConfigs(episodeId, true)
 
-	for iter_14_0, iter_14_1 in pairs(var_14_2) do
-		table.insert(var_14_0, iter_14_1.clueName)
+	for _, v in pairs(clueConfigs) do
+		table.insert(clueList, v.clueName)
 	end
 
-	if arg_14_3.operationResult == "0" then
+	if msg.operationResult == "0" then
 		StatController.instance:track(StatEnum.EventName.AergusiProbe, {
-			[StatEnum.EventProperties.EpisodeId] = tostring(var_14_1),
-			[StatEnum.EventProperties.TargetTip] = AergusiConfig.instance:getEvidenceConfig(arg_14_0.stepCo.id).conditionStr,
-			[StatEnum.EventProperties.ProbeDialogId] = tostring(arg_14_0.stepCo.id),
-			[StatEnum.EventProperties.ProbeStepId] = tostring(arg_14_0.stepCo.stepId),
+			[StatEnum.EventProperties.EpisodeId] = tostring(episodeId),
+			[StatEnum.EventProperties.TargetTip] = AergusiConfig.instance:getEvidenceConfig(self.stepCo.id).conditionStr,
+			[StatEnum.EventProperties.ProbeDialogId] = tostring(self.stepCo.id),
+			[StatEnum.EventProperties.ProbeStepId] = tostring(self.stepCo.stepId),
 			[StatEnum.EventProperties.ProbeResult] = "Key Probe",
 			[StatEnum.EventProperties.PatienceNum] = AergusiDialogModel.instance:getLeftErrorTimes(),
-			[StatEnum.EventProperties.HoldClueName] = var_14_0
+			[StatEnum.EventProperties.HoldClueName] = clueList
 		})
-		AergusiController.instance:dispatchEvent(AergusiEvent.OnDialogAskSuccess, arg_14_0.stepCo)
+		AergusiController.instance:dispatchEvent(AergusiEvent.OnDialogAskSuccess, self.stepCo)
 	else
 		StatController.instance:track(StatEnum.EventName.AergusiProbe, {
-			[StatEnum.EventProperties.EpisodeId] = tostring(var_14_1),
-			[StatEnum.EventProperties.TargetTip] = AergusiConfig.instance:getEvidenceConfig(arg_14_0.stepCo.id).conditionStr,
-			[StatEnum.EventProperties.ProbeDialogId] = tostring(arg_14_0.stepCo.id),
-			[StatEnum.EventProperties.ProbeStepId] = tostring(arg_14_0.stepCo.stepId),
+			[StatEnum.EventProperties.EpisodeId] = tostring(episodeId),
+			[StatEnum.EventProperties.TargetTip] = AergusiConfig.instance:getEvidenceConfig(self.stepCo.id).conditionStr,
+			[StatEnum.EventProperties.ProbeDialogId] = tostring(self.stepCo.id),
+			[StatEnum.EventProperties.ProbeStepId] = tostring(self.stepCo.stepId),
 			[StatEnum.EventProperties.ProbeResult] = "Invalid Probe",
 			[StatEnum.EventProperties.PatienceNum] = AergusiDialogModel.instance:getLeftErrorTimes(),
-			[StatEnum.EventProperties.HoldClueName] = var_14_0
+			[StatEnum.EventProperties.HoldClueName] = clueList
 		})
 
-		local var_14_3 = {
-			groupId = arg_14_0.stepCo.id,
-			stepId = arg_14_0.stepCo.stepId,
-			type = AergusiEnum.OperationType.Probe
-		}
+		local data = {}
 
-		AergusiDialogModel.instance:addErrorOperate(var_14_3)
-		arg_14_0:refresh()
-		AergusiController.instance:dispatchEvent(AergusiEvent.OnDialogAskFail, arg_14_0.stepCo)
+		data.groupId = self.stepCo.id
+		data.stepId = self.stepCo.stepId
+		data.type = AergusiEnum.OperationType.Probe
+
+		AergusiDialogModel.instance:addErrorOperate(data)
+		self:refresh()
+		AergusiController.instance:dispatchEvent(AergusiEvent.OnDialogAskFail, self.stepCo)
 	end
 end
 
-function var_0_0._btncloseOnClick(arg_15_0)
-	arg_15_0._doubting = false
+function AergusiDialogNormalLeftItem:_btncloseOnClick()
+	self._doubting = false
 
-	arg_15_0:refresh()
+	self:refresh()
 end
 
-function var_0_0.onDestroy(arg_16_0)
-	arg_16_0:_removeEvents()
-	arg_16_0._simageAvatar:UnLoadImage()
-	arg_16_0._simageAvatarGrey:UnLoadImage()
+function AergusiDialogNormalLeftItem:onDestroy()
+	self:_removeEvents()
+	self._simageAvatar:UnLoadImage()
+	self._simageAvatarGrey:UnLoadImage()
 end
 
-return var_0_0
+return AergusiDialogNormalLeftItem

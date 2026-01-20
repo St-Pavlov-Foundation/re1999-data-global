@@ -1,107 +1,114 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.dungeon.detail.Act183DungeonEscapeRuleComp", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/dungeon/detail/Act183DungeonEscapeRuleComp.lua
 
-local var_0_0 = class("Act183DungeonEscapeRuleComp", Act183DungeonBaseComp)
+module("modules.logic.versionactivity2_5.challenge.view.dungeon.detail.Act183DungeonEscapeRuleComp", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	var_0_0.super.init(arg_1_0, arg_1_1)
+local Act183DungeonEscapeRuleComp = class("Act183DungeonEscapeRuleComp", Act183DungeonBaseComp)
 
-	arg_1_0._goescaperuleitem = gohelper.findChild(arg_1_0.go, "#go_escaperules/#go_escaperuleitem")
-	arg_1_0._escapeRuleItemTab = arg_1_0:getUserDataTb_()
+function Act183DungeonEscapeRuleComp:init(go)
+	Act183DungeonEscapeRuleComp.super.init(self, go)
+
+	self._goescaperuleitem = gohelper.findChild(self.go, "#go_escaperules/#go_escaperuleitem")
+	self._escapeRuleItemTab = self:getUserDataTb_()
 end
 
-function var_0_0.addEventListeners(arg_2_0)
+function Act183DungeonEscapeRuleComp:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
+function Act183DungeonEscapeRuleComp:removeEventListeners()
 	return
 end
 
-function var_0_0.updateInfo(arg_4_0, arg_4_1)
-	var_0_0.super.updateInfo(arg_4_0, arg_4_1)
+function Act183DungeonEscapeRuleComp:updateInfo(episodeMo)
+	Act183DungeonEscapeRuleComp.super.updateInfo(self, episodeMo)
 
-	arg_4_0._escapeRules = arg_4_0._groupEpisodeMo:getEscapeRules(arg_4_0._episodeId)
-	arg_4_0._maxPassOrder = arg_4_0._groupEpisodeMo:findMaxPassOrder()
+	self._escapeRules = self._groupEpisodeMo:getEscapeRules(self._episodeId)
+	self._maxPassOrder = self._groupEpisodeMo:findMaxPassOrder()
 end
 
-function var_0_0.checkIsVisible(arg_5_0)
-	return arg_5_0._escapeRules and #arg_5_0._escapeRules > 0
+function Act183DungeonEscapeRuleComp:checkIsVisible()
+	local hasEscapeRules = self._escapeRules and #self._escapeRules > 0
+
+	return hasEscapeRules
 end
 
-function var_0_0.show(arg_6_0)
-	var_0_0.super.show(arg_6_0)
+function Act183DungeonEscapeRuleComp:show()
+	Act183DungeonEscapeRuleComp.super.show(self)
 
-	arg_6_0._hasPlayRefreshAnimRuleIds = Act183Helper.getHasPlayRefreshAnimRuleIdsInLocal(arg_6_0._episodeId)
-	arg_6_0._hasPlayRefreshAnimRuleIdMap = Act183Helper.listToMap(arg_6_0._hasPlayRefreshAnimRuleIds)
-	arg_6_0._needFocusEscapeRule = false
-	arg_6_0._needFocusMinRuleIndex = 100
+	self._hasPlayRefreshAnimRuleIds = Act183Helper.getHasPlayRefreshAnimRuleIdsInLocal(self._episodeId)
+	self._hasPlayRefreshAnimRuleIdMap = Act183Helper.listToMap(self._hasPlayRefreshAnimRuleIds)
+	self._needFocusEscapeRule = false
+	self._needFocusMinRuleIndex = 100
 
-	arg_6_0:createObjList(arg_6_0._escapeRules, arg_6_0._escapeRuleItemTab, arg_6_0._goescaperuleitem, arg_6_0._initEscapeRuleItemFunc, arg_6_0._refreshEscapeRuleItemFunc, arg_6_0._defaultItemFreeFunc)
+	self:createObjList(self._escapeRules, self._escapeRuleItemTab, self._goescaperuleitem, self._initEscapeRuleItemFunc, self._refreshEscapeRuleItemFunc, self._defaultItemFreeFunc)
 
-	if arg_6_0._needFocusEscapeRule then
-		arg_6_0.mgr:focus(var_0_0, arg_6_0._needFocusMinRuleIndex)
+	if self._needFocusEscapeRule then
+		self.mgr:focus(Act183DungeonEscapeRuleComp, self._needFocusMinRuleIndex)
 	end
 
-	Act183Helper.saveHasPlayRefreshAnimRuleIdsInLocal(arg_6_0._episodeId, arg_6_0._hasPlayRefreshAnimRuleIds)
+	Act183Helper.saveHasPlayRefreshAnimRuleIdsInLocal(self._episodeId, self._hasPlayRefreshAnimRuleIds)
 end
 
-function var_0_0._initEscapeRuleItemFunc(arg_7_0, arg_7_1)
-	arg_7_1.txtdesc = gohelper.findChildText(arg_7_1.go, "txt_desc")
-	arg_7_1.imageicon = gohelper.findChildImage(arg_7_1.go, "image_icon")
-	arg_7_1.anim = gohelper.onceAddComponent(arg_7_1.go, gohelper.Type_Animator)
+function Act183DungeonEscapeRuleComp:_initEscapeRuleItemFunc(goItem)
+	goItem.txtdesc = gohelper.findChildText(goItem.go, "txt_desc")
+	goItem.imageicon = gohelper.findChildImage(goItem.go, "image_icon")
+	goItem.anim = gohelper.onceAddComponent(goItem.go, gohelper.Type_Animator)
 
-	SkillHelper.addHyperLinkClick(arg_7_1.txtdesc)
+	SkillHelper.addHyperLinkClick(goItem.txtdesc)
 end
 
-function var_0_0._refreshEscapeRuleItemFunc(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	local var_8_0 = arg_8_2.episodeId
-	local var_8_1 = arg_8_2.ruleIndex
+function Act183DungeonEscapeRuleComp:_refreshEscapeRuleItemFunc(goItem, escapeInfo, index)
+	local episodeId = escapeInfo.episodeId
+	local ruleIndex = escapeInfo.ruleIndex
 
-	arg_8_1.txtdesc.text = SkillHelper.buildDesc(arg_8_2.ruleDesc)
+	goItem.txtdesc.text = SkillHelper.buildDesc(escapeInfo.ruleDesc)
 
-	Act183Helper.setRuleIcon(var_8_0, var_8_1, arg_8_1.imageicon)
+	Act183Helper.setRuleIcon(episodeId, ruleIndex, goItem.imageicon)
 
-	local var_8_2 = arg_8_0._maxPassOrder and arg_8_2.passOrder == arg_8_0._maxPassOrder
-	local var_8_3 = string.format("%s_%s", var_8_0, var_8_1)
-	local var_8_4 = arg_8_0._hasPlayRefreshAnimRuleIdMap[var_8_3] ~= nil
-	local var_8_5 = var_8_2 and not var_8_4
+	local isLastEscapeRule = self._maxPassOrder and escapeInfo.passOrder == self._maxPassOrder
+	local key = string.format("%s_%s", episodeId, ruleIndex)
+	local hasPlayRefreshAnim = self._hasPlayRefreshAnimRuleIdMap[key] ~= nil
+	local isNeedPlayRefreshAnim = isLastEscapeRule and not hasPlayRefreshAnim
 
-	arg_8_1.anim:Play(var_8_5 and "in" or "idle", 0, 0)
+	goItem.anim:Play(isNeedPlayRefreshAnim and "in" or "idle", 0, 0)
 
-	if var_8_5 then
-		arg_8_0._hasPlayRefreshAnimRuleIdMap[var_8_3] = true
+	if isNeedPlayRefreshAnim then
+		self._hasPlayRefreshAnimRuleIdMap[key] = true
 
-		table.insert(arg_8_0._hasPlayRefreshAnimRuleIds, var_8_3)
+		table.insert(self._hasPlayRefreshAnimRuleIds, key)
 
-		arg_8_0._needFocusEscapeRule = true
-		arg_8_0._needFocusMinRuleIndex = arg_8_3 < arg_8_0._needFocusMinRuleIndex and arg_8_3 or arg_8_0._needFocusMinRuleIndex
+		self._needFocusEscapeRule = true
+		self._needFocusMinRuleIndex = index < self._needFocusMinRuleIndex and index or self._needFocusMinRuleIndex
 	end
 end
 
-function var_0_0.focus(arg_9_0, arg_9_1)
-	local var_9_0 = 0
+function Act183DungeonEscapeRuleComp:focus(minFocusIndex)
+	local offset = 0
 
-	arg_9_1 = arg_9_1 or 1
+	minFocusIndex = minFocusIndex or 1
 
-	if not arg_9_0._escapeRuleItemTab[arg_9_1] then
-		return var_9_0
+	local goEscapeRuleItem = self._escapeRuleItemTab[minFocusIndex]
+
+	if not goEscapeRuleItem then
+		return offset
 	end
 
-	for iter_9_0 = 1, #arg_9_0._escapeRuleItemTab do
-		if arg_9_1 <= iter_9_0 then
+	for i = 1, #self._escapeRuleItemTab do
+		if minFocusIndex <= i then
 			break
 		end
 
-		local var_9_1 = arg_9_0._escapeRuleItemTab[iter_9_0].go
+		local escapeRuleItemGo = self._escapeRuleItemTab[i].go
+		local itemHeight = recthelper.getHeight(escapeRuleItemGo.transform)
 
-		var_9_0 = var_9_0 + recthelper.getHeight(var_9_1.transform)
+		offset = offset + itemHeight
 	end
 
-	return var_9_0
+	return offset
 end
 
-function var_0_0.onDestroy(arg_10_0)
-	var_0_0.super.onDestroy(arg_10_0)
+function Act183DungeonEscapeRuleComp:onDestroy()
+	Act183DungeonEscapeRuleComp.super.onDestroy(self)
 end
 
-return var_0_0
+return Act183DungeonEscapeRuleComp

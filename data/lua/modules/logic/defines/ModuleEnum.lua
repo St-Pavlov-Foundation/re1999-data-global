@@ -1,13 +1,15 @@
-﻿module("modules.logic.defines.ModuleEnum", package.seeall)
+﻿-- chunkname: @modules/logic/defines/ModuleEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.defines.ModuleEnum", package.seeall)
 
-var_0_0.HeroCountInGroup = 3
-var_0_0.SubHeroCountInGroup = 1
-var_0_0.MaxHeroCountInGroup = var_0_0.HeroCountInGroup + var_0_0.SubHeroCountInGroup
-var_0_0.ServerUtcOffset = 28800
-var_0_0.SpineHangPointRoot = "mountroot"
-var_0_0.SpineHangPoint = {
+local ModuleEnum = _M
+
+ModuleEnum.HeroCountInGroup = 3
+ModuleEnum.SubHeroCountInGroup = 1
+ModuleEnum.MaxHeroCountInGroup = ModuleEnum.HeroCountInGroup + ModuleEnum.SubHeroCountInGroup
+ModuleEnum.ServerUtcOffset = 28800
+ModuleEnum.SpineHangPointRoot = "mountroot"
+ModuleEnum.SpineHangPoint = {
 	mounthead = "mounthead",
 	mountbody = "mountbody",
 	HeadStatic = "HeadStatic",
@@ -20,26 +22,26 @@ var_0_0.SpineHangPoint = {
 	bone = "bone",
 	mountweapon = "mountweapon"
 }
-var_0_0.Gender = {
+ModuleEnum.Gender = {
 	Female = 2,
 	Male = 1,
 	None = 0
 }
-var_0_0.Performance = {
+ModuleEnum.Performance = {
 	High = 1,
 	Undefine = 0,
 	Low = 3,
 	Middle = 2
 }
-var_0_0.TargetFrameRate = {
+ModuleEnum.TargetFrameRate = {
 	Low = 30,
 	High = 60
 }
-var_0_0.FullScreenState = {
+ModuleEnum.FullScreenState = {
 	On = 1,
 	Off = 0
 }
-var_0_0.HeroGroupType = {
+ModuleEnum.HeroGroupType = {
 	Default = 0,
 	Trial = 6,
 	Season166Base = 9,
@@ -54,7 +56,7 @@ var_0_0.HeroGroupType = {
 	Season166Teach = 11,
 	Temp = 3
 }
-var_0_0.HeroGroupSnapshotType = {
+ModuleEnum.HeroGroupSnapshotType = {
 	Season166Base = 8,
 	Resources = 3,
 	Act183Normal = 12,
@@ -70,14 +72,14 @@ var_0_0.HeroGroupSnapshotType = {
 	FiveHero = 16,
 	Shelter = 14
 }
-var_0_0.FiveHeroEnum = {
+ModuleEnum.FiveHeroEnum = {
 	MaxHeroNum = 5,
 	FifthIndex = 5
 }
-var_0_0.HeroGroupServerType = {
+ModuleEnum.HeroGroupServerType = {
 	Activity = 100,
 	Equip = 2,
 	Main = 1
 }
 
-return var_0_0
+return ModuleEnum

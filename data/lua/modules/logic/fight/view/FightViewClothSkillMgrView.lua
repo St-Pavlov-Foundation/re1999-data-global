@@ -1,116 +1,128 @@
-﻿module("modules.logic.fight.view.FightViewClothSkillMgrView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightViewClothSkillMgrView.lua
 
-local var_0_0 = class("FightViewClothSkillMgrView", BaseViewExtended)
+module("modules.logic.fight.view.FightViewClothSkillMgrView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._heroSkillGO = gohelper.findChild(arg_1_0.viewGO, "root/heroSkill")
-	arg_1_0._goSimple = gohelper.findChild(arg_1_0._heroSkillGO, "#go_simple")
-	arg_1_0._rogueSkillRoot = gohelper.findChild(arg_1_0.viewGO, "root/rogueSkillRoot")
+local FightViewClothSkillMgrView = class("FightViewClothSkillMgrView", BaseViewExtended)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function FightViewClothSkillMgrView:onInitView()
+	self._heroSkillGO = gohelper.findChild(self.viewGO, "root/heroSkill")
+	self._goSimple = gohelper.findChild(self._heroSkillGO, "#go_simple")
+	self._rogueSkillRoot = gohelper.findChild(self.viewGO, "root/rogueSkillRoot")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.BeforeEnterStepBehaviour, arg_2_0._onBeforeEnterStepBehaviour, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnRestartStageBefore, arg_2_0._onRestartStage, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_2_0.onOpenView, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0.onCloseView, arg_2_0)
+function FightViewClothSkillMgrView:addEvents()
+	self:addEventCb(FightController.instance, FightEvent.BeforeEnterStepBehaviour, self._onBeforeEnterStepBehaviour, self)
+	self:addEventCb(FightController.instance, FightEvent.OnRestartStageBefore, self._onRestartStage, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self.onOpenView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self.onCloseView, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function FightViewClothSkillMgrView:removeEvents()
 	return
 end
 
-function var_0_0.onOpenView(arg_4_0, arg_4_1)
-	if arg_4_1 == ViewName.FightEnemyActionView then
-		gohelper.setActive(arg_4_0._heroSkillGO, false)
-	end
-end
-
-function var_0_0.onCloseView(arg_5_0, arg_5_1)
-	if arg_5_1 == ViewName.FightEnemyActionView then
-		gohelper.setActive(arg_5_0._heroSkillGO, true)
-	end
-end
-
-function var_0_0._editableInitView(arg_6_0)
+function FightViewClothSkillMgrView:onOpenView(viewName)
 	return
 end
 
-function var_0_0._onRestartStage(arg_7_0)
-	arg_7_0:killAllChildView()
+function FightViewClothSkillMgrView:onCloseView(viewName)
+	return
 end
 
-function var_0_0._onBeforeEnterStepBehaviour(arg_8_0)
-	local var_8_0 = arg_8_0:getCurChapterType()
+function FightViewClothSkillMgrView:_editableInitView()
+	return
+end
 
-	if var_8_0 == DungeonEnum.ChapterType.Rouge then
-		gohelper.setActive(arg_8_0._goSimple, false)
-		arg_8_0:openSubView(FightViewRougeSkill, "ui/viewres/rouge/fight/rougeheroskillview.prefab", arg_8_0._rogueSkillRoot)
+function FightViewClothSkillMgrView:_onRestartStage()
+	self:killAllChildView()
+end
+
+function FightViewClothSkillMgrView:_onBeforeEnterStepBehaviour()
+	local curChapterType = self:getCurChapterType()
+
+	if curChapterType == DungeonEnum.ChapterType.Rouge then
+		gohelper.setActive(self._goSimple, false)
+		self:openSubView(FightViewRougeSkill, "ui/viewres/rouge/fight/rougeheroskillview.prefab", self._rogueSkillRoot)
 
 		return
 	end
 
-	if var_8_0 == DungeonEnum.ChapterType.ToughBattle then
-		local var_8_1 = arg_8_0.viewContainer.rightElementLayoutView:getElementContainer(FightRightElementEnum.Elements.CharSupport)
+	if curChapterType == DungeonEnum.ChapterType.Rouge2 then
+		gohelper.setActive(self._goSimple, false)
 
-		arg_8_0:openSubView(FightToughBattleSkillView, "ui/viewres/fight/charsupportlist.prefab", var_8_1)
-		arg_8_0.viewContainer.rightElementLayoutView:showElement(FightRightElementEnum.Elements.CharSupport)
-	end
+		local career = FightHelper.getRouge2Career()
 
-	if FightDataHelper.teamDataMgr.myData.itemSkillInfos then
-		gohelper.setActive(arg_8_0._goSimple, false)
+		if career == FightEnum.Rouge2Career.TubularBell then
+			self:openSubView(FightViewRougeSkill2, "ui/viewres/fight/fight_rouge2/fight_rouge2_skillview.prefab", self._rogueSkillRoot)
+		end
 
 		return
 	end
 
-	arg_8_0:openSubView(FightViewClothSkill, arg_8_0.viewGO)
-end
+	if curChapterType == DungeonEnum.ChapterType.ToughBattle then
+		local goRoot = self.viewContainer.rightElementLayoutView:getElementContainer(FightRightElementEnum.Elements.CharSupport)
 
-function var_0_0.getCurChapterType(arg_9_0)
-	local var_9_0 = FightModel.instance:getFightParam()
+		self:openSubView(FightToughBattleSkillView, "ui/viewres/fight/charsupportlist.prefab", goRoot)
+		self.viewContainer.rightElementLayoutView:showElement(FightRightElementEnum.Elements.CharSupport)
+	end
 
-	if not var_9_0 then
+	local myTeamData = FightDataHelper.teamDataMgr.myData
+
+	if myTeamData.itemSkillInfos then
+		gohelper.setActive(self._goSimple, false)
+
 		return
 	end
 
-	local var_9_1 = var_9_0.chapterId
-	local var_9_2 = DungeonConfig.instance:getChapterCO(var_9_1)
-
-	return var_9_2 and var_9_2.type
+	self:openSubView(FightViewClothSkill, self.viewGO)
 end
 
-function var_0_0.checkIsToughBattle(arg_10_0)
-	local var_10_0 = FightModel.instance:getFightParam()
+function FightViewClothSkillMgrView:getCurChapterType()
+	local fightParam = FightModel.instance:getFightParam()
 
-	if not var_10_0 then
+	if not fightParam then
 		return
 	end
 
-	local var_10_1 = var_10_0.chapterId
-	local var_10_2 = DungeonConfig.instance:getChapterCO(var_10_1)
+	local chapterId = fightParam.chapterId
+	local chapterCo = DungeonConfig.instance:getChapterCO(chapterId)
 
-	if not var_10_2 or var_10_2.type ~= DungeonEnum.ChapterType.ToughBattle then
+	return chapterCo and chapterCo.type
+end
+
+function FightViewClothSkillMgrView:checkIsToughBattle()
+	local fightParam = FightModel.instance:getFightParam()
+
+	if not fightParam then
+		return
+	end
+
+	local chapterId = fightParam.chapterId
+	local chapterCo = DungeonConfig.instance:getChapterCO(chapterId)
+
+	if not chapterCo or chapterCo.type ~= DungeonEnum.ChapterType.ToughBattle then
 		return
 	end
 end
 
-function var_0_0.onRefreshViewParam(arg_11_0)
+function FightViewClothSkillMgrView:onRefreshViewParam()
 	return
 end
 
-function var_0_0.onOpen(arg_12_0)
+function FightViewClothSkillMgrView:onOpen()
 	return
 end
 
-function var_0_0.onClose(arg_13_0)
+function FightViewClothSkillMgrView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_14_0)
+function FightViewClothSkillMgrView:onDestroyView()
 	return
 end
 
-return var_0_0
+return FightViewClothSkillMgrView

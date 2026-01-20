@@ -1,51 +1,53 @@
-﻿module("modules.logic.fight.entity.specialIdle.EntitySpecialIdle2", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/specialIdle/EntitySpecialIdle2.lua
 
-local var_0_0 = class("EntitySpecialIdle2", UserDataDispose)
+module("modules.logic.fight.entity.specialIdle.EntitySpecialIdle2", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
-	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, arg_1_0._onSkillPlayFinish, arg_1_0)
-	FightController.instance:registerCallback(FightEvent.OnBeginWave, arg_1_0._onBeginWave, arg_1_0)
+local EntitySpecialIdle2 = class("EntitySpecialIdle2", UserDataDispose)
 
-	arg_1_0._act_count = 0
-	arg_1_0._entity = arg_1_1
+function EntitySpecialIdle2:ctor(entity)
+	self:__onInit()
+	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
+	FightController.instance:registerCallback(FightEvent.OnBeginWave, self._onBeginWave, self)
+
+	self._act_count = 0
+	self._entity = entity
 end
 
-function var_0_0._onSkillPlayFinish(arg_2_0, arg_2_1)
-	if arg_2_1.id ~= arg_2_0._entity.id then
+function EntitySpecialIdle2:_onSkillPlayFinish(entity)
+	if entity.id ~= self._entity.id then
 		return
 	end
 
-	if not arg_2_0._last_round_id then
-		arg_2_0._last_round_id = FightModel.instance:getCurRoundId()
+	if not self._last_round_id then
+		self._last_round_id = FightModel.instance:getCurRoundId()
 	end
 
-	if FightModel.instance:getCurRoundId() - arg_2_0._last_round_id > 1 then
-		arg_2_0._act_count = 0
+	if FightModel.instance:getCurRoundId() - self._last_round_id > 1 then
+		self._act_count = 0
 	else
-		arg_2_0._act_count = arg_2_0._act_count + 1
+		self._act_count = self._act_count + 1
 	end
 
-	arg_2_0._last_round_id = FightModel.instance:getCurRoundId()
+	self._last_round_id = FightModel.instance:getCurRoundId()
 
-	if arg_2_0._act_count >= 3 then
-		FightController.instance:dispatchEvent(FightEvent.PlaySpecialIdle, arg_2_1.id)
+	if self._act_count >= 3 then
+		FightController.instance:dispatchEvent(FightEvent.PlaySpecialIdle, entity.id)
 
-		arg_2_0._act_count = 0
+		self._act_count = 0
 	end
 end
 
-function var_0_0._onBeginWave(arg_3_0)
-	arg_3_0._act_count = 0
+function EntitySpecialIdle2:_onBeginWave()
+	self._act_count = 0
 end
 
-function var_0_0.releaseSelf(arg_4_0)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, arg_4_0._onSkillPlayFinish, arg_4_0)
-	FightController.instance:unregisterCallback(FightEvent.OnBeginWave, arg_4_0._onBeginWave, arg_4_0)
+function EntitySpecialIdle2:releaseSelf()
+	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
+	FightController.instance:unregisterCallback(FightEvent.OnBeginWave, self._onBeginWave, self)
 
-	arg_4_0._entity = nil
+	self._entity = nil
 
-	arg_4_0:__onDispose()
+	self:__onDispose()
 end
 
-return var_0_0
+return EntitySpecialIdle2

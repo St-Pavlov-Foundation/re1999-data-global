@@ -1,101 +1,103 @@
-﻿module("modules.logic.teach.view.TeachNoteRewardListItem", package.seeall)
+﻿-- chunkname: @modules/logic/teach/view/TeachNoteRewardListItem.lua
 
-local var_0_0 = class("TeachNoteRewardListItem", ListScrollCellExtend)
+module("modules.logic.teach.view.TeachNoteRewardListItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._txtDesc = gohelper.findChildText(arg_1_1, "right/#txt_des")
-	arg_1_0._gopoint = gohelper.findChild(arg_1_1, "right/#go_process/#go_point")
-	arg_1_0._gorewarditem = gohelper.findChild(arg_1_1, "right/#go_reward/#go_rewarditem")
-	arg_1_0._gofinish = gohelper.findChild(arg_1_1, "#go_finish")
-	arg_1_0._golock = gohelper.findChild(arg_1_1, "#go_lock")
-	arg_1_0._goreceive = gohelper.findChild(arg_1_1, "#go_receive")
-	arg_1_0._goreceivebg = gohelper.findChild(arg_1_1, "#go_receive/receivebg")
-	arg_1_0._goreward = gohelper.findChild(arg_1_1, "right/#go_reward")
-	arg_1_0._txtrewardcount = gohelper.findChildText(arg_1_1, "right/#go_reward/rewardcountbg/#txt_rewardcount")
-	arg_1_0._txtindex = gohelper.findChildText(arg_1_1, "right/#txt_index")
-	arg_1_0._rewardClick = gohelper.getClick(arg_1_0._goreceive.gameObject)
-	arg_1_0._rewardCanvasGroup = arg_1_0._goreward:GetComponent(typeof(UnityEngine.CanvasGroup))
-	arg_1_0._processItems = arg_1_0:getUserDataTb_()
+local TeachNoteRewardListItem = class("TeachNoteRewardListItem", ListScrollCellExtend)
+
+function TeachNoteRewardListItem:init(go)
+	self._txtDesc = gohelper.findChildText(go, "right/#txt_des")
+	self._gopoint = gohelper.findChild(go, "right/#go_process/#go_point")
+	self._gorewarditem = gohelper.findChild(go, "right/#go_reward/#go_rewarditem")
+	self._gofinish = gohelper.findChild(go, "#go_finish")
+	self._golock = gohelper.findChild(go, "#go_lock")
+	self._goreceive = gohelper.findChild(go, "#go_receive")
+	self._goreceivebg = gohelper.findChild(go, "#go_receive/receivebg")
+	self._goreward = gohelper.findChild(go, "right/#go_reward")
+	self._txtrewardcount = gohelper.findChildText(go, "right/#go_reward/rewardcountbg/#txt_rewardcount")
+	self._txtindex = gohelper.findChildText(go, "right/#txt_index")
+	self._rewardClick = gohelper.getClick(self._goreceive.gameObject)
+	self._rewardCanvasGroup = self._goreward:GetComponent(typeof(UnityEngine.CanvasGroup))
+	self._processItems = self:getUserDataTb_()
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._rewardClick:AddClickListener(arg_2_0._onRewardClick, arg_2_0)
+function TeachNoteRewardListItem:addEventListeners()
+	self._rewardClick:AddClickListener(self._onRewardClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._rewardClick:RemoveClickListener()
+function TeachNoteRewardListItem:removeEventListeners()
+	self._rewardClick:RemoveClickListener()
 end
 
-function var_0_0._onRewardClick(arg_4_0)
-	if TeachNoteModel.instance:isRewardCouldGet(arg_4_0._mo.id) then
+function TeachNoteRewardListItem:_onRewardClick()
+	if TeachNoteModel.instance:isRewardCouldGet(self._mo.id) then
 		AudioMgr.instance:trigger(AudioEnum.TeachNote.play_ui_activity_act)
-		DungeonRpc.instance:sendInstructionDungeonRewardRequest(arg_4_0._mo.id)
+		DungeonRpc.instance:sendInstructionDungeonRewardRequest(self._mo.id)
 	end
 end
 
-function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
-	arg_5_0._mo = arg_5_1
+function TeachNoteRewardListItem:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_5_0:_refreshItem()
+	self:_refreshItem()
 end
 
-function var_0_0._refreshItem(arg_6_0)
-	if arg_6_0._processItems then
-		for iter_6_0, iter_6_1 in pairs(arg_6_0._processItems) do
-			gohelper.setActive(iter_6_1.go, false)
+function TeachNoteRewardListItem:_refreshItem()
+	if self._processItems then
+		for _, v in pairs(self._processItems) do
+			gohelper.setActive(v.go, false)
 		end
 	end
 
-	local var_6_0 = DungeonConfig.instance:getChapterCO(arg_6_0._mo.chapterId).name
+	local name = DungeonConfig.instance:getChapterCO(self._mo.chapterId).name
 
-	arg_6_0._txtDesc.text = var_6_0
-	arg_6_0._txtindex.text = "NO." .. arg_6_0._index
+	self._txtDesc.text = name
+	self._txtindex.text = "NO." .. self._index
 
-	local var_6_1 = TeachNoteModel.instance:getTeachNoteTopicFinishedLevelCount(arg_6_0._mo.id)
-	local var_6_2 = TeachNoteModel.instance:getTeachNoteTopicLevelCount(arg_6_0._mo.id)
+	local finishCount = TeachNoteModel.instance:getTeachNoteTopicFinishedLevelCount(self._mo.id)
+	local total = TeachNoteModel.instance:getTeachNoteTopicLevelCount(self._mo.id)
 
-	for iter_6_2 = 1, var_6_2 do
-		if not arg_6_0._processItems[iter_6_2] then
-			arg_6_0._processItems[iter_6_2] = {}
-			arg_6_0._processItems[iter_6_2].go = gohelper.cloneInPlace(arg_6_0._gopoint, "point" .. iter_6_2)
-			arg_6_0._processItems[iter_6_2].gofinish = gohelper.findChild(arg_6_0._processItems[iter_6_2].go, "finish")
-			arg_6_0._processItems[iter_6_2].gounfinish = gohelper.findChild(arg_6_0._processItems[iter_6_2].go, "unfinish")
+	for i = 1, total do
+		if not self._processItems[i] then
+			self._processItems[i] = {}
+			self._processItems[i].go = gohelper.cloneInPlace(self._gopoint, "point" .. i)
+			self._processItems[i].gofinish = gohelper.findChild(self._processItems[i].go, "finish")
+			self._processItems[i].gounfinish = gohelper.findChild(self._processItems[i].go, "unfinish")
 		end
 
-		gohelper.setActive(arg_6_0._processItems[iter_6_2].go, true)
-		gohelper.setActive(arg_6_0._processItems[iter_6_2].gofinish, iter_6_2 <= var_6_1)
-		gohelper.setActive(arg_6_0._processItems[iter_6_2].gounfinish, var_6_1 < iter_6_2)
+		gohelper.setActive(self._processItems[i].go, true)
+		gohelper.setActive(self._processItems[i].gofinish, i <= finishCount)
+		gohelper.setActive(self._processItems[i].gounfinish, finishCount < i)
 	end
 
-	gohelper.setActive(arg_6_0._goreceive, TeachNoteModel.instance:isRewardCouldGet(arg_6_0._mo.id))
-	gohelper.setActive(arg_6_0._gofinish, TeachNoteModel.instance:isTopicRewardGet(arg_6_0._mo.id))
-	gohelper.setActive(arg_6_0._golock, not TeachNoteModel.instance:isTopicUnlock(arg_6_0._mo.id))
-	gohelper.setActive(arg_6_0._txtDesc.gameObject, TeachNoteModel.instance:isTopicUnlock(arg_6_0._mo.id))
+	gohelper.setActive(self._goreceive, TeachNoteModel.instance:isRewardCouldGet(self._mo.id))
+	gohelper.setActive(self._gofinish, TeachNoteModel.instance:isTopicRewardGet(self._mo.id))
+	gohelper.setActive(self._golock, not TeachNoteModel.instance:isTopicUnlock(self._mo.id))
+	gohelper.setActive(self._txtDesc.gameObject, TeachNoteModel.instance:isTopicUnlock(self._mo.id))
 
-	arg_6_0._rewardCanvasGroup.alpha = TeachNoteModel.instance:isTopicUnlock(arg_6_0._mo.id) and 1 or 0.5
+	self._rewardCanvasGroup.alpha = TeachNoteModel.instance:isTopicUnlock(self._mo.id) and 1 or 0.5
 
-	local var_6_3 = string.splitToNumber(TeachNoteConfig.instance:getInstructionTopicCO(arg_6_0._mo.id).bonus, "#")
+	local bonus = string.splitToNumber(TeachNoteConfig.instance:getInstructionTopicCO(self._mo.id).bonus, "#")
 
-	if not arg_6_0._itemIcon then
-		arg_6_0._itemIcon = IconMgr.instance:getCommonItemIcon(arg_6_0._gorewarditem)
+	if not self._itemIcon then
+		self._itemIcon = IconMgr.instance:getCommonItemIcon(self._gorewarditem)
 	end
 
-	arg_6_0._itemIcon:setMOValue(var_6_3[1], var_6_3[2], var_6_3[3])
-	arg_6_0._itemIcon:isShowEffect(false)
-	arg_6_0._itemIcon:isShowCount(false)
-	arg_6_0._itemIcon:isShowQuality(false)
+	self._itemIcon:setMOValue(bonus[1], bonus[2], bonus[3])
+	self._itemIcon:isShowEffect(false)
+	self._itemIcon:isShowCount(false)
+	self._itemIcon:isShowQuality(false)
 
-	arg_6_0._txtrewardcount.text = var_6_3[3]
+	self._txtrewardcount.text = bonus[3]
 end
 
-function var_0_0.onDestroyView(arg_7_0)
-	if arg_7_0._processItems then
-		arg_7_0._processItems = {}
+function TeachNoteRewardListItem:onDestroyView()
+	if self._processItems then
+		self._processItems = {}
 	end
 
-	if arg_7_0._itemIcon then
-		arg_7_0._itemIcon:onDestroy()
+	if self._itemIcon then
+		self._itemIcon:onDestroy()
 	end
 end
 
-return var_0_0
+return TeachNoteRewardListItem

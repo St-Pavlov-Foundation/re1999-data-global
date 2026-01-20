@@ -1,27 +1,31 @@
-﻿module("modules.logic.fight.system.work.FightWorkEnterFightDeal", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkEnterFightDeal.lua
 
-local var_0_0 = class("FightWorkEnterFightDeal", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkEnterFightDeal", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	if FightModel.instance:getVersion() < 4 then
-		arg_1_0:onDone(true)
+local FightWorkEnterFightDeal = class("FightWorkEnterFightDeal", FightEffectBase)
+
+function FightWorkEnterFightDeal:onStart()
+	local version = FightModel.instance:getVersion()
+
+	if version < 4 then
+		self:onDone(true)
 
 		return
 	end
 
-	local var_1_0 = arg_1_0:com_registWorkDoneFlowSequence()
+	local flow = self:com_registWorkDoneFlowSequence()
 
-	var_1_0:registWork(FightWorkDistributeCard, true)
-	var_1_0:registWork(FightWorkFunction, arg_1_0._afterDistribute, arg_1_0)
-	var_1_0:start()
+	flow:registWork(FightWorkDistributeCard, true)
+	flow:registWork(FightWorkFunction, self._afterDistribute, self)
+	flow:start()
 end
 
-function var_0_0._afterDistribute(arg_2_0)
+function FightWorkEnterFightDeal:_afterDistribute()
 	return
 end
 
-function var_0_0.clearWork(arg_3_0)
+function FightWorkEnterFightDeal:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkEnterFightDeal

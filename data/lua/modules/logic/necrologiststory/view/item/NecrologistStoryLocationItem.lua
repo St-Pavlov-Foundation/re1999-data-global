@@ -1,47 +1,49 @@
-﻿module("modules.logic.necrologiststory.view.item.NecrologistStoryLocationItem", package.seeall)
+﻿-- chunkname: @modules/logic/necrologiststory/view/item/NecrologistStoryLocationItem.lua
 
-local var_0_0 = class("NecrologistStoryLocationItem", NecrologistStoryBaseItem)
+module("modules.logic.necrologiststory.view.item.NecrologistStoryLocationItem", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0.txtContent = gohelper.findChildTextMesh(arg_1_0.viewGO, "content/txtContent")
+local NecrologistStoryLocationItem = class("NecrologistStoryLocationItem", NecrologistStoryBaseItem)
+
+function NecrologistStoryLocationItem:onInit()
+	self.txtContent = gohelper.findChildTextMesh(self.viewGO, "content/txtContent")
 end
 
-function var_0_0.onPlayStory(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_0:getStoryConfig()
-	local var_2_1, var_2_2 = NecrologistStoryHelper.getDescByConfig(var_2_0)
+function NecrologistStoryLocationItem:onPlayStory(isSkip)
+	local storyConfig = self:getStoryConfig()
+	local desc, hasLink = NecrologistStoryHelper.getDescByConfig(storyConfig)
 
-	arg_2_0.txtContent.raycastTarget = var_2_2
-	arg_2_0.txtContent.text = var_2_1
+	self.txtContent.raycastTarget = hasLink
+	self.txtContent.text = desc
 
-	arg_2_0:onTextFinish()
+	self:onTextFinish()
 
-	if not arg_2_1 then
+	if not isSkip then
 		AudioMgr.instance:trigger(AudioEnum.NecrologistStory.play_ui_poltsfx_landmark)
 	end
 end
 
-function var_0_0.onTextFinish(arg_3_0)
-	arg_3_0:onPlayFinish()
+function NecrologistStoryLocationItem:onTextFinish()
+	self:onPlayFinish()
 end
 
-function var_0_0.isDone(arg_4_0)
+function NecrologistStoryLocationItem:isDone()
 	return true
 end
 
-function var_0_0.justDone(arg_5_0)
+function NecrologistStoryLocationItem:justDone()
 	return
 end
 
-function var_0_0.caleHeight(arg_6_0)
+function NecrologistStoryLocationItem:caleHeight()
 	return 60
 end
 
-function var_0_0.getTextStr(arg_7_0)
-	return arg_7_0.txtContent.text
+function NecrologistStoryLocationItem:getTextStr()
+	return self.txtContent.text
 end
 
-function var_0_0.getResPath()
-	return "ui/viewres/dungeon/rolestory/necrologiststorylocationitem.prefab"
+function NecrologistStoryLocationItem.getResPath()
+	return "ui/viewres/dungeon/rolestory/item/necrologiststorylocationitem.prefab"
 end
 
-return var_0_0
+return NecrologistStoryLocationItem

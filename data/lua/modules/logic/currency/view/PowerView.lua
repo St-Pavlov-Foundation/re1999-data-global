@@ -1,108 +1,113 @@
-﻿module("modules.logic.currency.view.PowerView", package.seeall)
+﻿-- chunkname: @modules/logic/currency/view/PowerView.lua
 
-local var_0_0 = class("PowerView", BaseView)
+module("modules.logic.currency.view.PowerView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg")
-	arg_1_0._txtpower = gohelper.findChildText(arg_1_0.viewGO, "powerGo/#txt_power")
-	arg_1_0._txtpowerlimit = gohelper.findChildText(arg_1_0.viewGO, "powerGo/#txt_powerlimit")
-	arg_1_0._txtnexttime = gohelper.findChildText(arg_1_0.viewGO, "#txt_nexttime")
-	arg_1_0._txttotaltime = gohelper.findChildText(arg_1_0.viewGO, "#txt_totaltime")
-	arg_1_0._txtcount1 = gohelper.findChildText(arg_1_0.viewGO, "item1/#txt_count1")
-	arg_1_0._txteffectname1 = gohelper.findChildText(arg_1_0.viewGO, "item1/#txt_effectname1")
-	arg_1_0._btnuseitem1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "item1/#btn_useitem1")
-	arg_1_0._godeadline1 = gohelper.findChild(arg_1_0.viewGO, "item1/#go_deadline1")
-	arg_1_0._txtdeadline1 = gohelper.findChildText(arg_1_0.viewGO, "item1/#go_deadline1/#txt_deadline1")
-	arg_1_0._imagetimeicon1 = gohelper.findChildImage(arg_1_0.viewGO, "item1/#go_deadline1/#image_timeicon1")
-	arg_1_0._btnadd1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "item1/#btn_add")
-	arg_1_0._txtcount2 = gohelper.findChildText(arg_1_0.viewGO, "item2/#txt_count2")
-	arg_1_0._txteffectname2 = gohelper.findChildText(arg_1_0.viewGO, "item2/#txt_effectname2")
-	arg_1_0._btnuseitem2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "item2/#btn_useitem2")
-	arg_1_0._godeadline2 = gohelper.findChild(arg_1_0.viewGO, "item2/#go_deadline2")
-	arg_1_0._txtdeadline2 = gohelper.findChildText(arg_1_0.viewGO, "item2/#go_deadline2/#txt_deadline2")
-	arg_1_0._imagetimeicon2 = gohelper.findChildImage(arg_1_0.viewGO, "item2/#go_deadline2/#image_timeicon2")
-	arg_1_0._btnadd2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "item2/#btn_add")
-	arg_1_0._actItem = gohelper.findChild(arg_1_0.viewGO, "act_item")
-	arg_1_0._txtactcount = gohelper.findChildText(arg_1_0.viewGO, "act_item/#txt_actcount")
-	arg_1_0._txtacteffect = gohelper.findChildText(arg_1_0.viewGO, "act_item/#txt_acteffect")
-	arg_1_0._btnactitem = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "act_item/#btn_actitem")
-	arg_1_0._goactdeatline = gohelper.findChild(arg_1_0.viewGO, "act_item/#go_actdeadline")
-	arg_1_0._txtacttime = gohelper.findChildText(arg_1_0.viewGO, "act_item/#go_actdeadline/#txt_acttime")
-	arg_1_0._txtacticon = gohelper.findChildImage(arg_1_0.viewGO, "act_item/#go_actdeadline/#txt_acttime/acttimeicon")
-	arg_1_0._txtbuycount = gohelper.findChildText(arg_1_0.viewGO, "buyitem/#txt_buycount")
-	arg_1_0._txtbuypower = gohelper.findChildText(arg_1_0.viewGO, "buyitem/#txt_buypower")
-	arg_1_0._btnbuyitem = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "buyitem/#btn_buyitem")
-	arg_1_0._txtcost = gohelper.findChildText(arg_1_0.viewGO, "buyitem/#txt_cost")
-	arg_1_0._goaddPowerTip = gohelper.findChild(arg_1_0.viewGO, "#go_addPowerTip")
-	arg_1_0._goinventoryLackTip = gohelper.findChild(arg_1_0.viewGO, "#go_inventoryLackTip")
-	arg_1_0._simageCostIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "buyitem/#simage_costicon")
-	arg_1_0._buySuccessAnim = gohelper.findChild(arg_1_0.viewGO, "bg/vxeffect/anim"):GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._txtpowervx = gohelper.findChildText(arg_1_0.viewGO, "bg/vxeffect/anim/#txt_powervx")
-	arg_1_0._txtpowerlimitvx = gohelper.findChildText(arg_1_0.viewGO, "bg/vxeffect/anim/#txt_powerlimitvx")
-	arg_1_0._overflowItem = gohelper.findChild(arg_1_0.viewGO, "overflowitem")
-	arg_1_0._txtoverflowcount = gohelper.findChildText(arg_1_0.viewGO, "overflowitem/#txt_overflowcount")
-	arg_1_0._txtoverfloweffect = gohelper.findChildText(arg_1_0.viewGO, "overflowitem/#txt_overfloweffect")
-	arg_1_0._btnoverflowitem = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "overflowitem/#btn_overflowitem")
-	arg_1_0._gooverflowdeatline = gohelper.findChild(arg_1_0.viewGO, "overflowitem/#go_overflowdeadline")
-	arg_1_0._txtoverflowtime = gohelper.findChildText(arg_1_0.viewGO, "overflowitem/#go_overflowdeadline/#txt_overflowtime")
-	arg_1_0._txtoverflowicon = gohelper.findChildImage(arg_1_0.viewGO, "overflowitem/#go_overflowdeadline/#txt_overflowtime/overflowtimeicon")
-	arg_1_0._btnoverflowadd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "overflowitem/#btn_add")
-	arg_1_0._gooverflowmaker = gohelper.findChild(arg_1_0.viewGO, "#go_overflowmaker")
-	arg_1_0._btnoverflowmakerInfo = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_overflowmaker/#btn_Info")
-	arg_1_0._gomaking = gohelper.findChild(arg_1_0.viewGO, "#go_overflowmaker/#go_making")
-	arg_1_0._txtmaketime = gohelper.findChildText(arg_1_0.viewGO, "#go_overflowmaker/#go_making/#txt_maketime")
-	arg_1_0._gopause = gohelper.findChild(arg_1_0.viewGO, "#go_overflowmaker/#go_pause")
-	arg_1_0._txtpausemaketime = gohelper.findChildText(arg_1_0.viewGO, "#go_overflowmaker/#go_pause/#txt_maketime")
-	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "#go_overflowmaker/#go_empty")
+local PowerView = class("PowerView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function PowerView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_bg")
+	self._txtpower = gohelper.findChildText(self.viewGO, "powerGo/#txt_power")
+	self._txtpowerlimit = gohelper.findChildText(self.viewGO, "powerGo/#txt_powerlimit")
+	self._txtnexttime = gohelper.findChildText(self.viewGO, "#txt_nexttime")
+	self._txttotaltime = gohelper.findChildText(self.viewGO, "#txt_totaltime")
+	self._txtcount1 = gohelper.findChildText(self.viewGO, "item1/#txt_count1")
+	self._txteffectname1 = gohelper.findChildText(self.viewGO, "item1/#txt_effectname1")
+	self._btnuseitem1 = gohelper.findChildButtonWithAudio(self.viewGO, "item1/#btn_useitem1")
+	self._godeadline1 = gohelper.findChild(self.viewGO, "item1/#go_deadline1")
+	self._txtdeadline1 = gohelper.findChildText(self.viewGO, "item1/#go_deadline1/#txt_deadline1")
+	self._imagetimeicon1 = gohelper.findChildImage(self.viewGO, "item1/#go_deadline1/#image_timeicon1")
+	self._btnadd1 = gohelper.findChildButtonWithAudio(self.viewGO, "item1/#btn_add")
+	self._txtcount2 = gohelper.findChildText(self.viewGO, "item2/#txt_count2")
+	self._txteffectname2 = gohelper.findChildText(self.viewGO, "item2/#txt_effectname2")
+	self._btnuseitem2 = gohelper.findChildButtonWithAudio(self.viewGO, "item2/#btn_useitem2")
+	self._godeadline2 = gohelper.findChild(self.viewGO, "item2/#go_deadline2")
+	self._txtdeadline2 = gohelper.findChildText(self.viewGO, "item2/#go_deadline2/#txt_deadline2")
+	self._imagetimeicon2 = gohelper.findChildImage(self.viewGO, "item2/#go_deadline2/#image_timeicon2")
+	self._btnadd2 = gohelper.findChildButtonWithAudio(self.viewGO, "item2/#btn_add")
+	self._actItem = gohelper.findChild(self.viewGO, "act_item")
+	self._txtactcount = gohelper.findChildText(self.viewGO, "act_item/#txt_actcount")
+	self._txtacteffect = gohelper.findChildText(self.viewGO, "act_item/#txt_acteffect")
+	self._btnactitem = gohelper.findChildButtonWithAudio(self.viewGO, "act_item/#btn_actitem")
+	self._goactdeatline = gohelper.findChild(self.viewGO, "act_item/#go_actdeadline")
+	self._txtacttime = gohelper.findChildText(self.viewGO, "act_item/#go_actdeadline/#txt_acttime")
+	self._txtacticon = gohelper.findChildImage(self.viewGO, "act_item/#go_actdeadline/#txt_acttime/acttimeicon")
+	self._txtbuycount = gohelper.findChildText(self.viewGO, "buyitem/#txt_buycount")
+	self._txtbuypower = gohelper.findChildText(self.viewGO, "buyitem/#txt_buypower")
+	self._btnbuyitem = gohelper.findChildButtonWithAudio(self.viewGO, "buyitem/#btn_buyitem")
+	self._txtcost = gohelper.findChildText(self.viewGO, "buyitem/#txt_cost")
+	self._goaddPowerTip = gohelper.findChild(self.viewGO, "#go_addPowerTip")
+	self._goinventoryLackTip = gohelper.findChild(self.viewGO, "#go_inventoryLackTip")
+	self._simageCostIcon = gohelper.findChildSingleImage(self.viewGO, "buyitem/#simage_costicon")
+	self._buySuccessAnim = gohelper.findChild(self.viewGO, "bg/vxeffect/anim"):GetComponent(typeof(UnityEngine.Animator))
+	self._txtpowervx = gohelper.findChildText(self.viewGO, "bg/vxeffect/anim/#txt_powervx")
+	self._txtpowerlimitvx = gohelper.findChildText(self.viewGO, "bg/vxeffect/anim/#txt_powerlimitvx")
+	self._overflowItem = gohelper.findChild(self.viewGO, "overflowitem")
+	self._txtoverflowcount = gohelper.findChildText(self.viewGO, "overflowitem/#txt_overflowcount")
+	self._txtoverfloweffect = gohelper.findChildText(self.viewGO, "overflowitem/#txt_overfloweffect")
+	self._btnoverflowitem = gohelper.findChildButtonWithAudio(self.viewGO, "overflowitem/#btn_overflowitem")
+	self._gooverflowdeatline = gohelper.findChild(self.viewGO, "overflowitem/#go_overflowdeadline")
+	self._txtoverflowtime = gohelper.findChildText(self.viewGO, "overflowitem/#go_overflowdeadline/#txt_overflowtime")
+	self._txtoverflowicon = gohelper.findChildImage(self.viewGO, "overflowitem/#go_overflowdeadline/#txt_overflowtime/overflowtimeicon")
+	self._btnoverflowadd = gohelper.findChildButtonWithAudio(self.viewGO, "overflowitem/#btn_add")
+	self._gooverflowmaker = gohelper.findChild(self.viewGO, "#go_overflowmaker")
+	self._btnoverflowmakerInfo = gohelper.findChildButtonWithAudio(self.viewGO, "#go_overflowmaker/#btn_Info")
+	self._gomaking = gohelper.findChild(self.viewGO, "#go_overflowmaker/#go_making")
+	self._txtmaketime = gohelper.findChildText(self.viewGO, "#go_overflowmaker/#go_making/#txt_maketime")
+	self._gopause = gohelper.findChild(self.viewGO, "#go_overflowmaker/#go_pause")
+	self._txtpausemaketime = gohelper.findChildText(self.viewGO, "#go_overflowmaker/#go_pause/#txt_maketime")
+	self._goempty = gohelper.findChild(self.viewGO, "#go_overflowmaker/#go_empty")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnuseitem1:AddClickListener(arg_2_0._btnuseitem1OnClick, arg_2_0)
-	arg_2_0._btnuseitem2:AddClickListener(arg_2_0._btnuseitem2OnClick, arg_2_0)
-	arg_2_0._btnbuyitem:AddClickListener(arg_2_0._btnbuyitemOnClick, arg_2_0)
-	arg_2_0._btnactitem:AddClickListener(arg_2_0._btnactitemOnClick, arg_2_0)
-	arg_2_0._btnoverflowitem:AddClickListener(arg_2_0._btnoverflowitemOnClick, arg_2_0)
-	arg_2_0._btnadd1:AddClickListener(arg_2_0._btnadd1OnClick, arg_2_0)
-	arg_2_0._btnadd2:AddClickListener(arg_2_0._btnadd2OnClick, arg_2_0)
-	arg_2_0._btnoverflowadd:AddClickListener(arg_2_0._btnoverflowAddOnClick, arg_2_0)
-	arg_2_0._btnoverflowmakerInfo:AddClickListener(arg_2_0._btnoverflowmakerOnClick, arg_2_0)
+function PowerView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnuseitem1:AddClickListener(self._btnuseitem1OnClick, self)
+	self._btnuseitem2:AddClickListener(self._btnuseitem2OnClick, self)
+	self._btnbuyitem:AddClickListener(self._btnbuyitemOnClick, self)
+	self._btnactitem:AddClickListener(self._btnactitemOnClick, self)
+	self._btnoverflowitem:AddClickListener(self._btnoverflowitemOnClick, self)
+	self._btnadd1:AddClickListener(self._btnadd1OnClick, self)
+	self._btnadd2:AddClickListener(self._btnadd2OnClick, self)
+	self._btnoverflowadd:AddClickListener(self._btnoverflowAddOnClick, self)
+	self._btnoverflowmakerInfo:AddClickListener(self._btnoverflowmakerOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnuseitem1:RemoveClickListener()
-	arg_3_0._btnuseitem2:RemoveClickListener()
-	arg_3_0._btnbuyitem:RemoveClickListener()
-	arg_3_0._btnactitem:RemoveClickListener()
-	arg_3_0._btnoverflowitem:RemoveClickListener()
-	arg_3_0._btnadd1:RemoveClickListener()
-	arg_3_0._btnadd2:RemoveClickListener()
-	arg_3_0._btnoverflowadd:RemoveClickListener()
-	arg_3_0._btnoverflowmakerInfo:RemoveClickListener()
+function PowerView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btnuseitem1:RemoveClickListener()
+	self._btnuseitem2:RemoveClickListener()
+	self._btnbuyitem:RemoveClickListener()
+	self._btnactitem:RemoveClickListener()
+	self._btnoverflowitem:RemoveClickListener()
+	self._btnadd1:RemoveClickListener()
+	self._btnadd2:RemoveClickListener()
+	self._btnoverflowadd:RemoveClickListener()
+	self._btnoverflowmakerInfo:RemoveClickListener()
 end
 
-function var_0_0._btnactitemOnClick(arg_4_0)
-	if arg_4_0._sendingUsePower or arg_4_0._playingBuySuccessEffect or arg_4_0._viewInEffect then
+function PowerView:_btnactitemOnClick()
+	if self._sendingUsePower or self._playingBuySuccessEffect or self._viewInEffect then
 		return
 	end
 
 	if ItemPowerModel.instance:getPowerCount(MaterialEnum.PowerId.ActPowerId) <= 0 then
-		local var_4_0 = ResUrl.getPropItemIcon(arg_4_0.actPowerConfig.icon)
+		local icon = ResUrl.getPropItemIcon(self.actPowerConfig.icon)
 
-		GameFacade.showToastWithIcon(ToastEnum.NotEnoughId, var_4_0, arg_4_0.actPowerConfig.name)
+		GameFacade.showToastWithIcon(ToastEnum.NotEnoughId, icon, self.actPowerConfig.name)
 
 		return
 	end
 
-	local var_4_1 = CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.Power).maxLimit - arg_4_0._currencyMO.quantity
+	local maxPower = CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.Power).maxLimit
+	local currentPower = self._currencyMO.quantity
+	local offsetPower = maxPower - currentPower
+	local maxUseCount = math.floor(offsetPower / self.actPowerEffect)
 
-	if math.floor(var_4_1 / arg_4_0.actPowerEffect) < 1 then
+	if maxUseCount < 1 then
 		GameFacade.showToast(ToastEnum.MaxPowerLimitId, 4)
 
 		return
@@ -113,14 +118,14 @@ function var_0_0._btnactitemOnClick(arg_4_0)
 	})
 end
 
-function var_0_0._btnoverflowitemOnClick(arg_5_0)
-	arg_5_0:_showPowerBuyTipView(MaterialEnum.PowerType.Overflow, MaterialEnum.PowerId.OverflowPowerId)
+function PowerView:_btnoverflowitemOnClick()
+	self:_showPowerBuyTipView(MaterialEnum.PowerType.Overflow, MaterialEnum.PowerId.OverflowPowerId)
 end
 
-function var_0_0._btnbuyitemOnClick(arg_6_0)
+function PowerView:_btnbuyitemOnClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_viability_click_2)
 
-	if arg_6_0._playingBuySuccessEffect or arg_6_0._viewInEffect then
+	if self._playingBuySuccessEffect or self._viewInEffect then
 		return
 	end
 
@@ -130,714 +135,722 @@ function var_0_0._btnbuyitemOnClick(arg_6_0)
 		return
 	end
 
-	if arg_6_0._currencyMO.quantity + arg_6_0._addBuyRecoverPower > arg_6_0._maxPowerValue then
+	if self._currencyMO.quantity + self._addBuyRecoverPower > self._maxPowerValue then
 		GameFacade.showToast(ToastEnum.MaxPowerLimitId, 3)
 
 		return
 	end
 
-	local var_6_0 = {}
+	local sendParam = {}
 
-	var_6_0.index = nil
-	var_6_0.isPowerPotion = false
-	var_6_0.item = nil
+	sendParam.index = nil
+	sendParam.isPowerPotion = false
+	sendParam.item = nil
 
-	ViewMgr.instance:openView(ViewName.PowerBuyTipView, var_6_0)
+	ViewMgr.instance:openView(ViewName.PowerBuyTipView, sendParam)
 end
 
-function var_0_0._btnuseitem1OnClick(arg_7_0)
-	arg_7_0:_usePowerPotion(MaterialEnum.PowerType.Small)
+function PowerView:_btnuseitem1OnClick()
+	self:_usePowerPotion(MaterialEnum.PowerType.Small)
 end
 
-function var_0_0._btnuseitem2OnClick(arg_8_0)
-	arg_8_0:_usePowerPotion(MaterialEnum.PowerType.Big)
+function PowerView:_btnuseitem2OnClick()
+	self:_usePowerPotion(MaterialEnum.PowerType.Big)
 end
 
-function var_0_0._btnadd1OnClick(arg_9_0)
+function PowerView:_btnadd1OnClick()
 	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.PowerPotion, MaterialEnum.PowerId.SmallPower_Expire)
 	StoreController.instance:statOnClickPowerPotion(StatEnum.PowerType.Small)
 end
 
-function var_0_0._btnadd2OnClick(arg_10_0)
+function PowerView:_btnadd2OnClick()
 	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.PowerPotion, MaterialEnum.PowerId.BigPower_Expire)
 	StoreController.instance:statOnClickPowerPotion(StatEnum.PowerType.Big)
 end
 
-function var_0_0._btnoverflowAddOnClick(arg_11_0)
+function PowerView:_btnoverflowAddOnClick()
 	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.PowerPotion, MaterialEnum.PowerId.OverflowPowerId)
 	StoreController.instance:statOnClickPowerPotion(StatEnum.PowerType.Overflow)
 end
 
-function var_0_0._usePowerPotion(arg_12_0, arg_12_1)
-	if arg_12_1 == MaterialEnum.PowerType.Small then
+function PowerView:_usePowerPotion(type)
+	if type == MaterialEnum.PowerType.Small then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_viability_click_1)
 	else
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_viability_click_2)
 	end
 
-	if arg_12_0._sendingUsePower or arg_12_0._playingBuySuccessEffect or arg_12_0._viewInEffect then
+	if self._sendingUsePower or self._playingBuySuccessEffect or self._viewInEffect then
 		return
 	end
 
-	local var_12_0 = ItemPowerModel.instance:getPowerByType(arg_12_1)
-	local var_12_1
+	local powerMo = ItemPowerModel.instance:getPowerByType(type)
+	local icon
 
-	if not var_12_0 or var_12_0.quantity <= 0 then
-		if arg_12_1 == MaterialEnum.PowerType.Small then
-			local var_12_2 = ResUrl.getPropItemIcon("100101")
+	if not powerMo or powerMo.quantity <= 0 then
+		if type == MaterialEnum.PowerType.Small then
+			icon = ResUrl.getPropItemIcon("100101")
 
-			GameFacade.showToastWithIcon(ToastEnum.NotEnoughId, var_12_2, luaLang("power_item1_name"))
-		elseif arg_12_1 == MaterialEnum.PowerType.Big then
-			local var_12_3 = ResUrl.getPropItemIcon("100201")
+			GameFacade.showToastWithIcon(ToastEnum.NotEnoughId, icon, luaLang("power_item1_name"))
+		elseif type == MaterialEnum.PowerType.Big then
+			icon = ResUrl.getPropItemIcon("100201")
 
-			GameFacade.showToastWithIcon(ToastEnum.NotEnoughId, var_12_3, luaLang("power_item2_name"))
+			GameFacade.showToastWithIcon(ToastEnum.NotEnoughId, icon, luaLang("power_item2_name"))
 		end
 
 		return
 	end
 
-	local var_12_4 = arg_12_1 == MaterialEnum.PowerType.Small and arg_12_0.smallPowerConfig or arg_12_0.bigPowerConfig
+	local config = type == MaterialEnum.PowerType.Small and self.smallPowerConfig or self.bigPowerConfig
 
-	if arg_12_0._currencyMO.quantity + var_12_4.effect > arg_12_0._maxPowerValue then
-		GameFacade.showToast(ToastEnum.MaxPowerLimitId, arg_12_1)
-
-		return
-	end
-
-	if arg_12_0.isNeedOpenTip then
-		local var_12_5 = {
-			type = arg_12_1
-		}
-
-		var_12_5.isPowerPotion = true
-		var_12_5.uid = var_12_0.uid
-
-		ViewMgr.instance:openView(ViewName.PowerBuyTipView, var_12_5)
+	if self._currencyMO.quantity + config.effect > self._maxPowerValue then
+		GameFacade.showToast(ToastEnum.MaxPowerLimitId, type)
 
 		return
 	end
 
-	arg_12_0._sendingUsePower = true
+	if self.isNeedOpenTip then
+		local sendParam = {}
 
-	ItemRpc.instance:sendUsePowerItemRequest(var_12_0.uid)
-	arg_12_0:_playBuyPowerSuccessEffect()
+		sendParam.type = type
+		sendParam.isPowerPotion = true
+		sendParam.uid = powerMo.uid
+
+		ViewMgr.instance:openView(ViewName.PowerBuyTipView, sendParam)
+
+		return
+	end
+
+	self._sendingUsePower = true
+
+	ItemRpc.instance:sendUsePowerItemRequest(powerMo.uid)
+	self:_playBuyPowerSuccessEffect()
 end
 
-function var_0_0._showPowerBuyTipView(arg_13_0, arg_13_1, arg_13_2)
+function PowerView:_showPowerBuyTipView(type, powerId)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_viability_click_2)
 
-	local var_13_0 = ItemPowerModel.instance:getPowerByType(arg_13_1)
-	local var_13_1 = ItemConfig.instance:getPowerItemCo(arg_13_2)
+	local powerMo = ItemPowerModel.instance:getPowerByType(type)
+	local powerConfig = ItemConfig.instance:getPowerItemCo(powerId)
 
-	if not var_13_0 or var_13_0.quantity <= 0 then
-		local var_13_2 = ResUrl.getPropItemIcon(var_13_1.icon)
+	if not powerMo or powerMo.quantity <= 0 then
+		local icon = ResUrl.getPropItemIcon(powerConfig.icon)
 
-		GameFacade.showToastWithIcon(ToastEnum.NotEnoughId, var_13_2, var_13_1.name)
+		GameFacade.showToastWithIcon(ToastEnum.NotEnoughId, icon, powerConfig.name)
 
 		return
 	end
 
-	if arg_13_0._currencyMO.quantity + var_13_1.effect > arg_13_0._maxPowerValue then
+	if self._currencyMO.quantity + powerConfig.effect > self._maxPowerValue then
 		GameFacade.showToast(ToastEnum.MaxPowerLimitId, 3)
 
 		return
 	end
 
-	if arg_13_0.isNeedOpenTip then
-		local var_13_3 = {
-			type = arg_13_1
-		}
+	if self.isNeedOpenTip then
+		local sendParam = {}
 
-		var_13_3.isPowerPotion = true
-		var_13_3.uid = var_13_0.uid
+		sendParam.type = type
+		sendParam.isPowerPotion = true
+		sendParam.uid = powerMo.uid
 
-		ViewMgr.instance:openView(ViewName.PowerBuyTipView, var_13_3)
+		ViewMgr.instance:openView(ViewName.PowerBuyTipView, sendParam)
 
 		return
 	end
 
-	arg_13_0._sendingUsePower = true
+	self._sendingUsePower = true
 
-	ItemRpc.instance:sendUsePowerItemRequest(var_13_0.uid)
-	arg_13_0:_playBuyPowerSuccessEffect()
+	ItemRpc.instance:sendUsePowerItemRequest(powerMo.uid)
+	self:_playBuyPowerSuccessEffect()
 end
 
-function var_0_0._btncloseOnClick(arg_14_0)
-	if not arg_14_0._playingBuySuccessEffect and not arg_14_0._viewInEffect then
-		arg_14_0:closeThis()
+function PowerView:_btncloseOnClick()
+	if not self._playingBuySuccessEffect and not self._viewInEffect then
+		self:closeThis()
 	end
 end
 
-function var_0_0._btnoverflowmakerOnClick(arg_15_0)
+function PowerView:_btnoverflowmakerOnClick()
 	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.Item, MaterialEnum.PowerMakerItemId)
 end
 
-function var_0_0._editableInitView(arg_16_0)
-	arg_16_0.smallPowerConfig = ItemConfig.instance:getPowerItemCo(MaterialEnum.PowerId.SmallPower)
-	arg_16_0.smallPowerEffect = arg_16_0.smallPowerConfig.effect
-	arg_16_0.bigPowerConfig = ItemConfig.instance:getPowerItemCo(MaterialEnum.PowerId.BigPower)
-	arg_16_0.bigPowerEffect = arg_16_0.bigPowerConfig.effect
-	arg_16_0.actPowerConfig = ItemConfig.instance:getPowerItemCo(MaterialEnum.PowerId.ActPowerId)
-	arg_16_0.actPowerEffect = arg_16_0.actPowerConfig.effect
-	arg_16_0.showToastId = 0
+function PowerView:_editableInitView()
+	self.smallPowerConfig = ItemConfig.instance:getPowerItemCo(MaterialEnum.PowerId.SmallPower)
+	self.smallPowerEffect = self.smallPowerConfig.effect
+	self.bigPowerConfig = ItemConfig.instance:getPowerItemCo(MaterialEnum.PowerId.BigPower)
+	self.bigPowerEffect = self.bigPowerConfig.effect
+	self.actPowerConfig = ItemConfig.instance:getPowerItemCo(MaterialEnum.PowerId.ActPowerId)
+	self.actPowerEffect = self.actPowerConfig.effect
+	self.showToastId = 0
 
-	arg_16_0._simagebg:LoadImage(ResUrl.getPowerBuyBg("full/tlyuan_tl_001"))
+	self._simagebg:LoadImage(ResUrl.getPowerBuyBg("full/tlyuan_tl_001"))
 
-	arg_16_0._currencyCo = CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.Power)
-	arg_16_0._maxPowerValue = arg_16_0._currencyCo.maxLimit
-	arg_16_0._powerMaxBuyCount = CommonConfig.instance:getConstNum(ConstEnum.PowerMaxBuyCountId)
+	self._currencyCo = CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.Power)
+	self._maxPowerValue = self._currencyCo.maxLimit
+	self._powerMaxBuyCount = CommonConfig.instance:getConstNum(ConstEnum.PowerMaxBuyCountId)
 
-	local var_16_0 = CommonConfig.instance:getConstStr(ConstEnum.PowerBuyCostId)
-	local var_16_1 = CommonConfig.instance:getConstStr(ConstEnum.PowerPresentId)
+	local buyCostStr = CommonConfig.instance:getConstStr(ConstEnum.PowerBuyCostId)
+	local buyPresentStr = CommonConfig.instance:getConstStr(ConstEnum.PowerPresentId)
 
-	arg_16_0._costParamList = GameUtil.splitString2(var_16_0, true)
-	arg_16_0._costParam = arg_16_0._costParamList[1]
-	arg_16_0._presentParam = string.splitToNumber(var_16_1, "#")
-	arg_16_0._sendingUsePower = false
+	self._costParamList = GameUtil.splitString2(buyCostStr, true)
+	self._costParam = self._costParamList[1]
+	self._presentParam = string.splitToNumber(buyPresentStr, "#")
+	self._sendingUsePower = false
 
-	arg_16_0:_initEffectList()
-	arg_16_0:refreshPowerItem()
-	arg_16_0:_refreshPower()
-	arg_16_0:_refreshBuyPower()
-	arg_16_0:_refreshOfMaker()
+	self:_initEffectList()
+	self:refreshPowerItem()
+	self:_refreshPower()
+	self:_refreshBuyPower()
+	self:_refreshOfMaker()
 
-	arg_16_0._playingBuySuccessEffect = false
-	arg_16_0._changePowerTextEffect = false
+	self._playingBuySuccessEffect = false
+	self._changePowerTextEffect = false
 
-	gohelper.removeUIClickAudio(arg_16_0._btnuseitem1.gameObject)
-	gohelper.removeUIClickAudio(arg_16_0._btnuseitem2.gameObject)
-	gohelper.removeUIClickAudio(arg_16_0._btnbuyitem.gameObject)
-	TaskDispatcher.runRepeat(arg_16_0._refreshDeadlineTime, arg_16_0, 1)
+	gohelper.removeUIClickAudio(self._btnuseitem1.gameObject)
+	gohelper.removeUIClickAudio(self._btnuseitem2.gameObject)
+	gohelper.removeUIClickAudio(self._btnbuyitem.gameObject)
+	TaskDispatcher.runRepeat(self._refreshDeadlineTime, self, 1)
 end
 
-function var_0_0._refreshDeadlineTime(arg_17_0)
-	arg_17_0:refreshPowerItem()
+function PowerView:_refreshDeadlineTime()
+	self:refreshPowerItem()
 end
 
-function var_0_0._initEffectList(arg_18_0)
-	local var_18_0 = {}
+function PowerView:_initEffectList()
+	local effectList = {}
 
-	for iter_18_0, iter_18_1 in ipairs(lua_power_item.configList) do
-		if not var_18_0[iter_18_1.effect] then
-			var_18_0[iter_18_1.effect] = true
+	for i, v in ipairs(lua_power_item.configList) do
+		if not effectList[v.effect] then
+			effectList[v.effect] = true
 		end
 	end
 
-	arg_18_0._powerEffectList = {}
+	self._powerEffectList = {}
 
-	for iter_18_2, iter_18_3 in pairs(var_18_0) do
-		table.insert(arg_18_0._powerEffectList, iter_18_2)
+	for k, v in pairs(effectList) do
+		table.insert(self._powerEffectList, k)
 	end
 
-	table.sort(arg_18_0._powerEffectList, function(arg_19_0, arg_19_1)
-		return arg_19_0 < arg_19_1
+	table.sort(self._powerEffectList, function(a, b)
+		return a < b
 	end)
 end
 
-function var_0_0.refreshPowerItem(arg_20_0)
-	arg_20_0:refreshOnePowerItem(MaterialEnum.PowerType.Small)
-	arg_20_0:refreshOnePowerItem(MaterialEnum.PowerType.Big)
-	arg_20_0:refreshOnePowerItem(MaterialEnum.PowerType.Act)
-	arg_20_0:refreshOnePowerItem(MaterialEnum.PowerType.Overflow)
+function PowerView:refreshPowerItem()
+	self:refreshOnePowerItem(MaterialEnum.PowerType.Small)
+	self:refreshOnePowerItem(MaterialEnum.PowerType.Big)
+	self:refreshOnePowerItem(MaterialEnum.PowerType.Act)
+	self:refreshOnePowerItem(MaterialEnum.PowerType.Overflow)
 end
 
-function var_0_0.refreshOnePowerItem(arg_21_0, arg_21_1)
-	local var_21_0 = 0
-	local var_21_1 = 0
-	local var_21_2 = 0
+function PowerView:refreshOnePowerItem(powerType)
+	local count = 0
+	local effect = 0
+	local limitSec = 0
 
-	if arg_21_1 == MaterialEnum.PowerType.Small then
-		var_21_0 = var_21_0 + ItemPowerModel.instance:getPowerCount(MaterialEnum.PowerId.SmallPower_Expire)
-		var_21_0 = var_21_0 + ItemPowerModel.instance:getPowerCount(MaterialEnum.PowerId.SmallPower)
+	if powerType == MaterialEnum.PowerType.Small then
+		count = count + ItemPowerModel.instance:getPowerCount(MaterialEnum.PowerId.SmallPower_Expire)
+		count = count + ItemPowerModel.instance:getPowerCount(MaterialEnum.PowerId.SmallPower)
+		effect = self.smallPowerEffect
+		limitSec = ItemPowerModel.instance:getPowerMinExpireTimeOffset(MaterialEnum.PowerId.SmallPower_Expire)
 
-		local var_21_3 = arg_21_0.smallPowerEffect
-		local var_21_4 = ItemPowerModel.instance:getPowerMinExpireTimeOffset(MaterialEnum.PowerId.SmallPower_Expire)
+		self:refreshTxtCount(self._txtcount1, count)
+		self:refreshTxtEffect(self._txteffectname1, effect)
+		self:refreshDeadLine(self._godeadline1, self._txtdeadline1, self._imagetimeicon1, limitSec, count)
+	elseif powerType == MaterialEnum.PowerType.Big then
+		count = count + ItemPowerModel.instance:getPowerCount(MaterialEnum.PowerId.BigPower_Expire)
+		count = count + ItemPowerModel.instance:getPowerCount(MaterialEnum.PowerId.BigPower)
+		effect = self.bigPowerEffect
+		limitSec = ItemPowerModel.instance:getPowerMinExpireTimeOffset(MaterialEnum.PowerId.BigPower_Expire)
 
-		arg_21_0:refreshTxtCount(arg_21_0._txtcount1, var_21_0)
-		arg_21_0:refreshTxtEffect(arg_21_0._txteffectname1, var_21_3)
-		arg_21_0:refreshDeadLine(arg_21_0._godeadline1, arg_21_0._txtdeadline1, arg_21_0._imagetimeicon1, var_21_4, var_21_0)
-	elseif arg_21_1 == MaterialEnum.PowerType.Big then
-		local var_21_5 = var_21_0 + ItemPowerModel.instance:getPowerCount(MaterialEnum.PowerId.BigPower_Expire) + ItemPowerModel.instance:getPowerCount(MaterialEnum.PowerId.BigPower)
-		local var_21_6 = arg_21_0.bigPowerEffect
-		local var_21_7 = ItemPowerModel.instance:getPowerMinExpireTimeOffset(MaterialEnum.PowerId.BigPower_Expire)
-
-		arg_21_0:refreshTxtCount(arg_21_0._txtcount2, var_21_5)
-		arg_21_0:refreshTxtEffect(arg_21_0._txteffectname2, var_21_6)
-		arg_21_0:refreshDeadLine(arg_21_0._godeadline2, arg_21_0._txtdeadline2, arg_21_0._imagetimeicon2, var_21_7, var_21_5)
-	elseif arg_21_1 == MaterialEnum.PowerType.Act then
-		arg_21_0:_refreshActPower()
-	elseif arg_21_1 == MaterialEnum.PowerType.Overflow then
-		arg_21_0:_refreshOverflow()
+		self:refreshTxtCount(self._txtcount2, count)
+		self:refreshTxtEffect(self._txteffectname2, effect)
+		self:refreshDeadLine(self._godeadline2, self._txtdeadline2, self._imagetimeicon2, limitSec, count)
+	elseif powerType == MaterialEnum.PowerType.Act then
+		self:_refreshActPower()
+	elseif powerType == MaterialEnum.PowerType.Overflow then
+		self:_refreshOverflow()
 	end
 end
 
-function var_0_0.refreshTxtCount(arg_22_0, arg_22_1, arg_22_2)
-	arg_22_1.text = GameUtil.numberDisplay(arg_22_2)
+function PowerView:refreshTxtCount(textComp, count)
+	textComp.text = GameUtil.numberDisplay(count)
 end
 
-function var_0_0.refreshTxtEffect(arg_23_0, arg_23_1, arg_23_2)
-	arg_23_1.text = GameUtil.getSubPlaceholderLuaLang(luaLang("powerview_addpower"), {
-		arg_23_2
+function PowerView:refreshTxtEffect(textComp, effect)
+	textComp.text = GameUtil.getSubPlaceholderLuaLang(luaLang("powerview_addpower"), {
+		effect
 	})
 end
 
-function var_0_0.refreshDeadLine(arg_24_0, arg_24_1, arg_24_2, arg_24_3, arg_24_4, arg_24_5)
-	if not arg_24_4 or arg_24_4 <= 0 then
-		gohelper.setActive(arg_24_1, false)
+function PowerView:refreshDeadLine(goDeadline, textComp, icon, limitSec, count)
+	if not limitSec or limitSec <= 0 then
+		gohelper.setActive(goDeadline, false)
 
 		return
 	end
 
-	if arg_24_5 and arg_24_5 <= 0 then
-		gohelper.setActive(arg_24_1, false)
+	if count and count <= 0 then
+		gohelper.setActive(goDeadline, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_24_1, true)
+	gohelper.setActive(goDeadline, true)
 
-	if arg_24_4 <= TimeUtil.OneDaySecond then
-		SLFramework.UGUI.GuiHelper.SetColor(arg_24_3, "#EA6868")
+	if limitSec <= TimeUtil.OneDaySecond then
+		SLFramework.UGUI.GuiHelper.SetColor(icon, "#EA6868")
 
-		arg_24_2.text = string.format("<color=#EA6868>%s%s</color>", TimeUtil.secondToRoughTime(arg_24_4))
+		textComp.text = string.format("<color=#EA6868>%s%s</color>", TimeUtil.secondToRoughTime(limitSec))
 	else
-		SLFramework.UGUI.GuiHelper.SetColor(arg_24_3, "#FFFFFF")
+		SLFramework.UGUI.GuiHelper.SetColor(icon, "#FFFFFF")
 
-		arg_24_2.text = string.format("<color=#FFFFFF>%s%s</color>", TimeUtil.secondToRoughTime(arg_24_4))
+		textComp.text = string.format("<color=#FFFFFF>%s%s</color>", TimeUtil.secondToRoughTime(limitSec))
 	end
 end
 
-function var_0_0._refreshActPower(arg_25_0)
-	local var_25_0 = MaterialEnum.ActPowerBindActId
-	local var_25_1 = ItemPowerModel.instance:getPowerCount(MaterialEnum.PowerId.ActPowerId)
+function PowerView:_refreshActPower()
+	local actId = MaterialEnum.ActPowerBindActId
+	local count = ItemPowerModel.instance:getPowerCount(MaterialEnum.PowerId.ActPowerId)
 
-	if ActivityHelper.getActivityStatus(var_25_0) ~= ActivityEnum.ActivityStatus.Normal and var_25_1 < 1 then
-		gohelper.setActive(arg_25_0._actItem, false)
+	if ActivityHelper.getActivityStatus(actId) ~= ActivityEnum.ActivityStatus.Normal and count < 1 then
+		gohelper.setActive(self._actItem, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_25_0._actItem, true)
+	gohelper.setActive(self._actItem, true)
 
-	local var_25_2 = ItemPowerModel.instance:getPowerMinExpireTimeOffset(MaterialEnum.PowerId.ActPowerId)
+	local limitSec = ItemPowerModel.instance:getPowerMinExpireTimeOffset(MaterialEnum.PowerId.ActPowerId)
 
-	arg_25_0:refreshTxtCount(arg_25_0._txtactcount, var_25_1)
-	arg_25_0:refreshTxtEffect(arg_25_0._txtacteffect, arg_25_0.actPowerEffect)
-	arg_25_0:refreshDeadLine(arg_25_0._goactdeatline, arg_25_0._txtacttime, arg_25_0._txtacticon, var_25_2, var_25_1)
+	self:refreshTxtCount(self._txtactcount, count)
+	self:refreshTxtEffect(self._txtacteffect, self.actPowerEffect)
+	self:refreshDeadLine(self._goactdeatline, self._txtacttime, self._txtacticon, limitSec, count)
 end
 
-function var_0_0._getPowerPotionByIndex(arg_26_0, arg_26_1)
-	local var_26_0 = arg_26_0._powerEffectList[arg_26_1]
-	local var_26_1 = arg_26_0._powerPotionList[var_26_0]
+function PowerView:_getPowerPotionByIndex(index)
+	local effect = self._powerEffectList[index]
+	local list = self._powerPotionList[effect]
 
-	return var_26_1 and var_26_1[1]
+	return list and list[1]
 end
 
-function var_0_0._refreshPower(arg_27_0)
-	local var_27_0 = PlayerModel.instance:getPlayinfo().level
+function PowerView:_refreshPower()
+	local level = PlayerModel.instance:getPlayinfo().level
 
-	arg_27_0._recoverLimit = PlayerConfig.instance:getPlayerLevelCO(var_27_0).maxAutoRecoverPower
-	arg_27_0._currencyMO = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.Power)
-	arg_27_0.presentConfig = ItemModel.instance:getItemConfig(arg_27_0._presentParam[1], arg_27_0._presentParam[2])
+	self._recoverLimit = PlayerConfig.instance:getPlayerLevelCO(level).maxAutoRecoverPower
+	self._currencyMO = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.Power)
+	self.presentConfig = ItemModel.instance:getItemConfig(self._presentParam[1], self._presentParam[2])
 
-	TaskDispatcher.runRepeat(arg_27_0._checkPowerRecover, arg_27_0, 1)
-	arg_27_0:_checkPowerRecover()
+	TaskDispatcher.runRepeat(self._checkPowerRecover, self, 1)
+	self:_checkPowerRecover()
 end
 
-function var_0_0._checkPowerRecover2(arg_28_0)
-	arg_28_0:_checkPowerRecover()
-	TaskDispatcher.runRepeat(arg_28_0._checkPowerRecover, arg_28_0, 1)
+function PowerView:_checkPowerRecover2()
+	self:_checkPowerRecover()
+	TaskDispatcher.runRepeat(self._checkPowerRecover, self, 1)
 end
 
-function var_0_0._checkPowerRecover(arg_29_0)
-	if arg_29_0._changePowerTextEffect then
-		TaskDispatcher.cancelTask(arg_29_0._checkPowerRecover, arg_29_0)
+function PowerView:_checkPowerRecover()
+	if self._changePowerTextEffect then
+		TaskDispatcher.cancelTask(self._checkPowerRecover, self)
 
-		arg_29_0._changePowerTextEffect = false
+		self._changePowerTextEffect = false
 
-		TaskDispatcher.runDelay(arg_29_0._checkPowerRecover2, arg_29_0, 0.85)
+		TaskDispatcher.runDelay(self._checkPowerRecover2, self, 0.85)
 
 		return
 	end
 
-	local var_29_0 = arg_29_0._currencyMO.quantity
+	local power = self._currencyMO.quantity
 
-	arg_29_0._txtpowerlimit.text = string.format("<size=40>/</size>%s", arg_29_0._recoverLimit)
-	arg_29_0._txtpowerlimitvx.text = arg_29_0._txtpowerlimit.text
+	self._txtpowerlimit.text = string.format("<size=40>/</size>%s", self._recoverLimit)
+	self._txtpowerlimitvx.text = self._txtpowerlimit.text
 
-	if var_29_0 >= arg_29_0._recoverLimit then
-		TaskDispatcher.cancelTask(arg_29_0._checkPowerRecover, arg_29_0)
+	if power >= self._recoverLimit then
+		TaskDispatcher.cancelTask(self._checkPowerRecover, self)
 
-		arg_29_0._txtpower.text = string.format("<color=#EA6868>%s</color>", var_29_0)
-		arg_29_0._txtpowervx.text = arg_29_0._txtpower.text
-		arg_29_0._txtnexttime.text = "--:--:--"
-		arg_29_0._txttotaltime.text = "--:--:--"
+		self._txtpower.text = string.format("<color=#EA6868>%s</color>", power)
+		self._txtpowervx.text = self._txtpower.text
+		self._txtnexttime.text = "--:--:--"
+		self._txttotaltime.text = "--:--:--"
 
 		return
 	else
-		arg_29_0._txtpower.text = string.format("<color=#FFFFFF>%s</color>", var_29_0)
-		arg_29_0._txtpowervx.text = arg_29_0._txtpower.text
+		self._txtpower.text = string.format("<color=#FFFFFF>%s</color>", power)
+		self._txtpowervx.text = self._txtpower.text
 	end
 
-	local var_29_1 = arg_29_0._currencyMO.lastRecoverTime / 1000 + arg_29_0._currencyCo.recoverTime
-	local var_29_2 = math.max(var_29_1 - ServerTime.now(), 0)
-	local var_29_3 = math.max(0, arg_29_0._recoverLimit - var_29_0 - arg_29_0._currencyCo.recoverNum)
-	local var_29_4 = var_29_2 + arg_29_0._currencyCo.recoverTime * math.ceil(var_29_3 / arg_29_0._currencyCo.recoverNum)
+	local lastRecoverTime = self._currencyMO.lastRecoverTime / 1000
+	local curRecoverEndTime = lastRecoverTime + self._currencyCo.recoverTime
+	local curRecoverSec = math.max(curRecoverEndTime - ServerTime.now(), 0)
+	local remainPower = math.max(0, self._recoverLimit - power - self._currencyCo.recoverNum)
+	local allRecoverSec = curRecoverSec + self._currencyCo.recoverTime * math.ceil(remainPower / self._currencyCo.recoverNum)
 
-	arg_29_0._txtnexttime.text = TimeUtil.second2TimeString(var_29_2, true)
-	arg_29_0._txttotaltime.text = TimeUtil.second2TimeString(var_29_4, true)
+	self._txtnexttime.text = TimeUtil.second2TimeString(curRecoverSec, true)
+	self._txttotaltime.text = TimeUtil.second2TimeString(allRecoverSec, true)
 end
 
-function var_0_0._refreshBuyPower(arg_30_0)
-	arg_30_0._txtbuycount.text = string.format("%s/%s", CurrencyModel.instance.powerCanBuyCount, arg_30_0._powerMaxBuyCount)
-	arg_30_0._costParam = arg_30_0._costParamList[arg_30_0._powerMaxBuyCount - CurrencyModel.instance.powerCanBuyCount + 1]
+function PowerView:_refreshBuyPower()
+	self._txtbuycount.text = string.format("%s/%s", CurrencyModel.instance.powerCanBuyCount, self._powerMaxBuyCount)
+	self._costParam = self._costParamList[self._powerMaxBuyCount - CurrencyModel.instance.powerCanBuyCount + 1]
 
-	if arg_30_0._costParam == nil then
-		arg_30_0._costParam = arg_30_0._costParamList[#arg_30_0._costParamList]
+	if self._costParam == nil then
+		self._costParam = self._costParamList[#self._costParamList]
 	end
 
-	arg_30_0._txtcost.text = luaLang("multiple") .. arg_30_0._costParam[3]
+	self._txtcost.text = luaLang("multiple") .. self._costParam[3]
 
-	local var_30_0, var_30_1 = ItemModel.instance:getItemConfigAndIcon(arg_30_0._costParam[1], arg_30_0._costParam[2])
+	local config, icon = ItemModel.instance:getItemConfigAndIcon(self._costParam[1], self._costParam[2])
 
-	arg_30_0._simageCostIcon:LoadImage(var_30_1)
+	self._simageCostIcon:LoadImage(icon)
 
-	local var_30_2 = PlayerModel.instance:getPlayinfo().level
-	local var_30_3 = PlayerConfig.instance:getPlayerLevelCO(var_30_2).addBuyRecoverPower
+	local level = PlayerModel.instance:getPlayinfo().level
+	local addBuyRecoverPower = PlayerConfig.instance:getPlayerLevelCO(level).addBuyRecoverPower
 
-	arg_30_0._addBuyRecoverPower = var_30_3
+	self._addBuyRecoverPower = addBuyRecoverPower
 
-	if LangSettings.instance:getCurLangShortcut() == "en" then
-		arg_30_0._txtbuypower.text = string.format("+ %s %s", var_30_3, luaLang("p_mainview_power"))
+	local lang = LangSettings.instance:getCurLangShortcut()
+
+	if lang == "en" then
+		self._txtbuypower.text = string.format("+ %s %s", addBuyRecoverPower, luaLang("p_mainview_power"))
 	else
-		arg_30_0._txtbuypower.text = string.format("+%s%s", var_30_3, luaLang("p_mainview_power"))
+		self._txtbuypower.text = string.format("+%s%s", addBuyRecoverPower, luaLang("p_mainview_power"))
 	end
 end
 
-function var_0_0.onUpdateParam(arg_31_0)
-	arg_31_0.isNeedOpenTip = false
+function PowerView:onUpdateParam()
+	self.isNeedOpenTip = false
 
-	arg_31_0:updateNeedOpenTipValue()
+	self:updateNeedOpenTipValue()
 end
 
-function var_0_0.onOpen(arg_32_0)
-	arg_32_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_32_0._onCurrencyChange, arg_32_0)
-	arg_32_0:addEventCb(CurrencyController.instance, CurrencyEvent.PowerBuyCountChange, arg_32_0._onPowerBuyCountChange, arg_32_0)
-	arg_32_0:addEventCb(BackpackController.instance, BackpackEvent.UsePowerPotionFinish, arg_32_0._onUsePowerPotionFinish, arg_32_0)
-	arg_32_0:addEventCb(BackpackController.instance, BackpackEvent.UsePowerPotionListFinish, arg_32_0._onUsePowerPotionListFinish, arg_32_0)
-	arg_32_0:addEventCb(BackpackController.instance, BackpackEvent.BeforeUsePowerPotionList, arg_32_0._onUsePowerPotionListBefore, arg_32_0)
-	arg_32_0:addEventCb(CurrencyController.instance, CurrencyEvent.PowerBuyTipToggleOn, arg_32_0._onSwitchBuyTip, arg_32_0)
-	arg_32_0:addEventCb(CurrencyController.instance, CurrencyEvent.PowerBuySuccess, arg_32_0._playBuyPowerSuccessEffect, arg_32_0)
-	arg_32_0:addEventCb(CurrencyController.instance, CurrencyEvent.RefreshPowerMakerInfo, arg_32_0._refreshPowerMakerInfo, arg_32_0)
-	arg_32_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_32_0.onRefreshActivity, arg_32_0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_32_0.updateNeedOpenTipValue, arg_32_0)
-	arg_32_0:updateNeedOpenTipValue()
+function PowerView:onOpen()
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._onCurrencyChange, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.PowerBuyCountChange, self._onPowerBuyCountChange, self)
+	self:addEventCb(BackpackController.instance, BackpackEvent.UsePowerPotionFinish, self._onUsePowerPotionFinish, self)
+	self:addEventCb(BackpackController.instance, BackpackEvent.UsePowerPotionListFinish, self._onUsePowerPotionListFinish, self)
+	self:addEventCb(BackpackController.instance, BackpackEvent.BeforeUsePowerPotionList, self._onUsePowerPotionListBefore, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.PowerBuyTipToggleOn, self._onSwitchBuyTip, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.PowerBuySuccess, self._playBuyPowerSuccessEffect, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.RefreshPowerMakerInfo, self._refreshPowerMakerInfo, self)
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self.onRefreshActivity, self)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self.updateNeedOpenTipValue, self)
+	self:updateNeedOpenTipValue()
 
-	arg_32_0._viewInEffect = true
+	self._viewInEffect = true
 
-	TaskDispatcher.runDelay(arg_32_0._viewInEffectEnd, arg_32_0, 0.6)
-	NavigateMgr.instance:addEscape(ViewName.PowerView, arg_32_0._btncloseOnClick, arg_32_0)
-	arg_32_0:_initPowerMakerInfo()
+	TaskDispatcher.runDelay(self._viewInEffectEnd, self, 0.6)
+	NavigateMgr.instance:addEscape(ViewName.PowerView, self._btncloseOnClick, self)
+	self:_initPowerMakerInfo()
 end
 
-function var_0_0._viewInEffectEnd(arg_33_0)
-	arg_33_0._viewInEffect = false
+function PowerView:_viewInEffectEnd()
+	self._viewInEffect = false
 end
 
-function var_0_0.updateNeedOpenTipValue(arg_34_0)
-	local var_34_0 = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.PowerTipsCurrentDayKey)
+function PowerView:updateNeedOpenTipValue()
+	local key = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.PowerTipsCurrentDayKey)
+	local today = ServerTime.getServerTimeToday(true)
+	local saveToday = PlayerPrefsHelper.getNumber(key, 0)
 
-	arg_34_0.isNeedOpenTip = ServerTime.getServerTimeToday(true) ~= PlayerPrefsHelper.getNumber(var_34_0, 0)
+	self.isNeedOpenTip = today ~= saveToday
 end
 
-function var_0_0._onCurrencyChange(arg_35_0, arg_35_1)
-	if not arg_35_1[CurrencyEnum.CurrencyType.Power] then
+function PowerView:_onCurrencyChange(changeIds)
+	if not changeIds[CurrencyEnum.CurrencyType.Power] then
 		return
 	end
 
-	arg_35_0:_refreshPower()
-	arg_35_0:_checkOfMaking()
+	self:_refreshPower()
+	self:_checkOfMaking()
 end
 
-function var_0_0._onSwitchBuyTip(arg_36_0, arg_36_1)
-	if arg_36_1 then
-		arg_36_0.isNeedOpenTip = false
+function PowerView:_onSwitchBuyTip(isToggleOn)
+	if isToggleOn then
+		self.isNeedOpenTip = false
 
-		arg_36_0:_updateCurrentDayPlayerPrefs()
+		self:_updateCurrentDayPlayerPrefs()
 	end
 end
 
-function var_0_0._updateCurrentDayPlayerPrefs(arg_37_0)
-	local var_37_0 = ServerTime.getServerTimeToday(true)
-	local var_37_1 = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.PowerTipsCurrentDayKey)
+function PowerView:_updateCurrentDayPlayerPrefs()
+	local today = ServerTime.getServerTimeToday(true)
+	local key = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.PowerTipsCurrentDayKey)
 
-	PlayerPrefsHelper.setNumber(var_37_1, var_37_0)
+	PlayerPrefsHelper.setNumber(key, today)
 end
 
-function var_0_0._playBuyPowerSuccessEffect(arg_38_0)
+function PowerView:_playBuyPowerSuccessEffect()
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Addhuoxing)
-	arg_38_0._buySuccessAnim:SetTrigger("buySuccess")
+	self._buySuccessAnim:SetTrigger("buySuccess")
 
-	arg_38_0._changePowerTextEffect = true
+	self._changePowerTextEffect = true
 end
 
-function var_0_0._onPowerBuyCountChange(arg_39_0, arg_39_1)
-	arg_39_0.showToastId = arg_39_0.showToastId + 1
+function PowerView:_onPowerBuyCountChange(isShowPowerAddIdToast)
+	self.showToastId = self.showToastId + 1
 
-	arg_39_0:_refreshBuyPower()
+	self:_refreshBuyPower()
 
-	if arg_39_1 then
-		GameFacade.showToast(ToastEnum.PowerAddId, arg_39_0._addBuyRecoverPower, arg_39_0.showToastId)
+	if isShowPowerAddIdToast then
+		GameFacade.showToast(ToastEnum.PowerAddId, self._addBuyRecoverPower, self.showToastId)
 	end
 
-	if arg_39_0.presentConfig then
-		GameFacade.showToast(ToastEnum.GetGiftId, arg_39_0.presentConfig.name, arg_39_0._presentParam[3], arg_39_0.showToastId)
+	if self.presentConfig then
+		GameFacade.showToast(ToastEnum.GetGiftId, self.presentConfig.name, self._presentParam[3], self.showToastId)
 	end
 end
 
-function var_0_0._onUsePowerPotionFinish(arg_40_0, arg_40_1)
-	local var_40_0 = ItemPowerModel.instance:getPowerItem(arg_40_1)
-	local var_40_1 = ItemConfig.instance:getPowerItemCo(var_40_0.id)
+function PowerView:_onUsePowerPotionFinish(uid)
+	local powerMo = ItemPowerModel.instance:getPowerItem(uid)
+	local config = ItemConfig.instance:getPowerItemCo(powerMo.id)
 
-	arg_40_0.showToastId = arg_40_0.showToastId + 1
+	self.showToastId = self.showToastId + 1
 
-	GameFacade.showToast(ToastEnum.PowerAddId, var_40_1.effect, arg_40_0.showToastId)
-	arg_40_0:refreshPowerItem()
+	GameFacade.showToast(ToastEnum.PowerAddId, config.effect, self.showToastId)
+	self:refreshPowerItem()
 
-	arg_40_0._sendingUsePower = false
+	self._sendingUsePower = false
 
-	if var_40_0.id == MaterialEnum.PowerId.OverflowPowerId then
+	if powerMo.id == MaterialEnum.PowerId.OverflowPowerId then
 		ItemRpc.instance:sendGetPowerMakerInfoRequest()
 	end
 end
 
-function var_0_0._onUsePowerPotionListBefore(arg_41_0)
-	arg_41_0._sendingUsePower = true
+function PowerView:_onUsePowerPotionListBefore()
+	self._sendingUsePower = true
 
-	arg_41_0:_playBuyPowerSuccessEffect()
+	self:_playBuyPowerSuccessEffect()
 end
 
-function var_0_0._onUsePowerPotionListFinish(arg_42_0, arg_42_1)
-	local var_42_0 = 0
+function PowerView:_onUsePowerPotionListFinish(userItemList)
+	local effect = 0
 
-	for iter_42_0, iter_42_1 in ipairs(arg_42_1) do
-		local var_42_1 = ItemPowerModel.instance:getPowerItem(iter_42_1.uid)
+	for _, useItem in ipairs(userItemList) do
+		local powerMo = ItemPowerModel.instance:getPowerItem(useItem.uid)
+		local config = ItemConfig.instance:getPowerItemCo(powerMo.id)
 
-		var_42_0 = var_42_0 + ItemConfig.instance:getPowerItemCo(var_42_1.id).effect * iter_42_1.num
+		effect = effect + config.effect * useItem.num
 	end
 
-	arg_42_0.showToastId = arg_42_0.showToastId + 1
+	self.showToastId = self.showToastId + 1
 
-	GameFacade.showToast(ToastEnum.PowerAddId, var_42_0, arg_42_0.showToastId)
-	arg_42_0:refreshPowerItem()
+	GameFacade.showToast(ToastEnum.PowerAddId, effect, self.showToastId)
+	self:refreshPowerItem()
 
-	arg_42_0._sendingUsePower = false
+	self._sendingUsePower = false
 end
 
-function var_0_0._onPowerAddTip(arg_43_0, arg_43_1)
-	transformhelper.setLocalPosXY(arg_43_0._goaddPowerTip.transform, 782.5, -134)
-	gohelper.setActive(arg_43_0._goaddPowerTip, true)
+function PowerView:_onPowerAddTip(addPowerCount)
+	transformhelper.setLocalPosXY(self._goaddPowerTip.transform, 782.5, -134)
+	gohelper.setActive(self._goaddPowerTip, true)
 
-	if arg_43_0.addMoveId then
-		ZProj.TweenHelper.KillById(arg_43_0.addMoveId)
+	if self.addMoveId then
+		ZProj.TweenHelper.KillById(self.addMoveId)
 	end
 
-	if arg_43_0.addFadeId then
-		ZProj.TweenHelper.KillById(arg_43_0.addFadeId)
+	if self.addFadeId then
+		ZProj.TweenHelper.KillById(self.addFadeId)
 	end
 
-	GameFacade.showToast(ToastEnum.PowerAddId, arg_43_1)
+	GameFacade.showToast(ToastEnum.PowerAddId, addPowerCount)
 
-	arg_43_0.addMoveId = ZProj.TweenHelper.DOAnchorPosY(arg_43_0._goaddPowerTip.transform, -12, 1)
-	arg_43_0.addFadeId = ZProj.TweenHelper.DOFadeCanvasGroup(arg_43_0._goaddPowerTip, 1, 0, 1.5)
+	self.addMoveId = ZProj.TweenHelper.DOAnchorPosY(self._goaddPowerTip.transform, -12, 1)
+	self.addFadeId = ZProj.TweenHelper.DOFadeCanvasGroup(self._goaddPowerTip, 1, 0, 1.5)
 end
 
-function var_0_0._onPowerLackTip(arg_44_0)
-	transformhelper.setLocalPosXY(arg_44_0._goinventoryLackTip.transform, 782.5, -134)
-	gohelper.setActive(arg_44_0._goinventoryLackTip, true)
+function PowerView:_onPowerLackTip()
+	transformhelper.setLocalPosXY(self._goinventoryLackTip.transform, 782.5, -134)
+	gohelper.setActive(self._goinventoryLackTip, true)
 
-	if arg_44_0.lackMoveId then
-		ZProj.TweenHelper.KillById(arg_44_0.lackMoveId)
+	if self.lackMoveId then
+		ZProj.TweenHelper.KillById(self.lackMoveId)
 	end
 
-	if arg_44_0.lackFadeId then
-		ZProj.TweenHelper.KillById(arg_44_0.lackFadeId)
+	if self.lackFadeId then
+		ZProj.TweenHelper.KillById(self.lackFadeId)
 	end
 
-	gohelper.findChildText(arg_44_0._goinventoryLackTip, "tiptxt").text = string.format("%s", luaLang("power_lack"))
-	arg_44_0.lackMoveId = ZProj.TweenHelper.DOAnchorPosY(arg_44_0._goinventoryLackTip.transform, -12, 1)
-	arg_44_0.lackFadeId = ZProj.TweenHelper.DOFadeCanvasGroup(arg_44_0._goinventoryLackTip, 1, 0, 1.5)
+	local tiptxt = gohelper.findChildText(self._goinventoryLackTip, "tiptxt")
+
+	tiptxt.text = string.format("%s", luaLang("power_lack"))
+	self.lackMoveId = ZProj.TweenHelper.DOAnchorPosY(self._goinventoryLackTip.transform, -12, 1)
+	self.lackFadeId = ZProj.TweenHelper.DOFadeCanvasGroup(self._goinventoryLackTip, 1, 0, 1.5)
 end
 
-function var_0_0.onRefreshActivity(arg_45_0, arg_45_1)
-	if arg_45_1 ~= MaterialEnum.ActPowerBindActId then
+function PowerView:onRefreshActivity(actId)
+	if actId ~= MaterialEnum.ActPowerBindActId then
 		return
 	end
 
-	arg_45_0:_refreshActPower()
+	self:_refreshActPower()
 end
 
-function var_0_0._initPowerMakerInfo(arg_46_0)
-	arg_46_0._lessTimeMaker = 0
+function PowerView:_initPowerMakerInfo()
+	self._lessTimeMaker = 0
 
-	arg_46_0:_powerMakerInfoRequest(true)
+	self:_powerMakerInfoRequest(true)
 end
 
-function var_0_0._powerMakerInfoRequest(arg_47_0, arg_47_1)
-	arg_47_0._isShowMakerTime = false
+function PowerView:_powerMakerInfoRequest(isAutoUse)
+	self._isShowMakerTime = false
 
-	gohelper.setActive(arg_47_0._gomaking, false)
+	gohelper.setActive(self._gomaking, false)
 
-	if arg_47_0._lessTimeMaker > 1 then
+	if self._lessTimeMaker > 1 then
 		return
 	end
 
-	ItemRpc.instance:sendGetPowerMakerInfoRequest(arg_47_1)
+	ItemRpc.instance:sendGetPowerMakerInfoRequest(isAutoUse)
 end
 
-function var_0_0._refreshPowerMakerInfo(arg_48_0)
-	arg_48_0._isShowMakerTime = true
-	arg_48_0._ofMakerInfo = ItemPowerModel.instance:getPowerMakerInfo()
+function PowerView:_refreshPowerMakerInfo()
+	self._isShowMakerTime = true
+	self._ofMakerInfo = ItemPowerModel.instance:getPowerMakerInfo()
 
-	if not arg_48_0._ofMakerInfo then
-		arg_48_0:_powerMakerInfoRequest()
+	if not self._ofMakerInfo then
+		self:_powerMakerInfoRequest()
 
 		return
 	end
 
-	local var_48_0 = arg_48_0._ofMakerInfo.status == MaterialEnum.PowerMakerStatus.Pause
+	local isPause = self._ofMakerInfo.status == MaterialEnum.PowerMakerStatus.Pause
 
-	if arg_48_0._ofMakerInfo.nextRemainSecond <= 0 or var_48_0 then
-		arg_48_0._lessTimeMaker = arg_48_0._lessTimeMaker + 1
+	if self._ofMakerInfo.nextRemainSecond <= 0 or isPause then
+		self._lessTimeMaker = self._lessTimeMaker + 1
 	else
-		arg_48_0._lessTimeMaker = 0
+		self._lessTimeMaker = 0
 	end
 
-	arg_48_0:_ofMakerFlyPower()
-	gohelper.setActive(arg_48_0._gopause, var_48_0)
-	gohelper.setActive(arg_48_0._goempty, false)
-	gohelper.setActive(arg_48_0._gomaking, not var_48_0)
+	self:_ofMakerFlyPower()
+	gohelper.setActive(self._gopause, isPause)
+	gohelper.setActive(self._goempty, false)
+	gohelper.setActive(self._gomaking, not isPause)
 
-	local var_48_1 = var_48_0 and "pause" or "click"
+	local OfMakerAnimName = isPause and "pause" or "click"
 
-	arg_48_0:_playOfMakerAnim(var_48_1)
-	arg_48_0:_runRepeatOfMaker()
+	self:_playOfMakerAnim(OfMakerAnimName)
+	self:_runRepeatOfMaker()
 end
 
-function var_0_0._refreshOverflow(arg_49_0)
-	local var_49_0 = MaterialEnum.PowerId.OverflowPowerId
+function PowerView:_refreshOverflow()
+	local powerId = MaterialEnum.PowerId.OverflowPowerId
 
-	arg_49_0._ofMakerInfo = ItemPowerModel.instance:getPowerMakerInfo()
+	self._ofMakerInfo = ItemPowerModel.instance:getPowerMakerInfo()
 
-	local var_49_1 = arg_49_0._ofMakerInfo and arg_49_0._ofMakerInfo.itemTotalCount or ItemPowerModel.instance:getPowerCount(var_49_0)
-	local var_49_2 = ItemConfig.instance:getPowerItemCo(var_49_0)
-	local var_49_3 = ItemPowerModel.instance:getPowerMinExpireTimeOffset(var_49_0)
+	local count = self._ofMakerInfo and self._ofMakerInfo.itemTotalCount or ItemPowerModel.instance:getPowerCount(powerId)
+	local powerConfig = ItemConfig.instance:getPowerItemCo(powerId)
+	local limitSec = ItemPowerModel.instance:getPowerMinExpireTimeOffset(powerId)
 
-	arg_49_0:refreshTxtCount(arg_49_0._txtoverflowcount, var_49_1)
-	arg_49_0:refreshTxtEffect(arg_49_0._txtoverfloweffect, var_49_2.effect)
-	arg_49_0:refreshDeadLine(arg_49_0._gooverflowdeatline, arg_49_0._txtoverflowtime, arg_49_0._txtoverflowicon, var_49_3, var_49_1)
+	self:refreshTxtCount(self._txtoverflowcount, count)
+	self:refreshTxtEffect(self._txtoverfloweffect, powerConfig.effect)
+	self:refreshDeadLine(self._gooverflowdeatline, self._txtoverflowtime, self._txtoverflowicon, limitSec, count)
 end
 
-function var_0_0._refreshOfMaker(arg_50_0)
-	TaskDispatcher.runRepeat(arg_50_0._runRepeatOfMaker, arg_50_0, 1)
+function PowerView:_refreshOfMaker()
+	TaskDispatcher.runRepeat(self._runRepeatOfMaker, self, 1)
 end
 
-function var_0_0._runRepeatOfMaker(arg_51_0)
-	if not arg_51_0._isShowMakerTime then
+function PowerView:_runRepeatOfMaker()
+	if not self._isShowMakerTime then
 		return
 	end
 
-	if not arg_51_0._ofMakerInfo then
-		arg_51_0:_powerMakerInfoRequest()
-
-		return
-	end
-
-	if arg_51_0._ofMakerInfo.status == MaterialEnum.PowerMakerStatus.Pause then
-		arg_51_0:_showOFPowerPauseStatus()
+	if not self._ofMakerInfo then
+		self:_powerMakerInfoRequest()
 
 		return
 	end
 
-	local var_51_0 = arg_51_0._ofMakerInfo.nextRemainSecond - (ServerTime.now() - arg_51_0._ofMakerInfo.nowTime)
+	local isPause = self._ofMakerInfo.status == MaterialEnum.PowerMakerStatus.Pause
 
-	arg_51_0._txtmaketime.text = arg_51_0:_showMakerTime(var_51_0)
+	if isPause then
+		self:_showOFPowerPauseStatus()
 
-	if var_51_0 <= 0 then
-		arg_51_0:_powerMakerInfoRequest()
-	end
-end
-
-function var_0_0._checkOfMaking(arg_52_0)
-	if arg_52_0._ofMakerInfo and arg_52_0._ofMakerInfo.status == MaterialEnum.PowerMakerStatus.Making then
 		return
 	end
 
-	if arg_52_0._currencyMO.quantity >= arg_52_0._recoverLimit then
-		arg_52_0:_powerMakerInfoRequest()
+	local _remainTime = self._ofMakerInfo.nextRemainSecond - (ServerTime.now() - self._ofMakerInfo.nowTime)
+
+	self._txtmaketime.text = self:_showMakerTime(_remainTime)
+
+	if _remainTime <= 0 then
+		self:_powerMakerInfoRequest()
 	end
 end
 
-function var_0_0._showOFPowerPauseStatus(arg_53_0)
-	local var_53_0 = arg_53_0._ofMakerInfo.nextRemainSecond
-
-	var_53_0 = var_53_0 <= 0 and MaterialEnum.PowerMakerFixedPauseTime or var_53_0
-	arg_53_0._txtpausemaketime.text = arg_53_0:_showMakerTime(var_53_0)
-end
-
-function var_0_0._ofMakerFlyPower(arg_54_0)
-	local var_54_0 = arg_54_0._ofMakerInfo.makeCount
-
-	if var_54_0 <= 0 then
+function PowerView:_checkOfMaking()
+	if self._ofMakerInfo and self._ofMakerInfo.status == MaterialEnum.PowerMakerStatus.Making then
 		return
 	end
 
-	if not arg_54_0._ofMakerFlyGroup then
-		local var_54_1 = gohelper.findChild(arg_54_0.viewGO, "#go_overflowmaker/flygroup")
-
-		arg_54_0._ofMakerFlyGroup = MonoHelper.addNoUpdateLuaComOnceToGo(var_54_1, PowerItemFlyGroup)
-	end
-
-	arg_54_0._ofMakerFlyGroup:flyItems(var_54_0)
-
-	arg_54_0._ofMakerInfo.makeCount = 0
-end
-
-function var_0_0._showMakerTime(arg_55_0, arg_55_1)
-	return arg_55_1 > 0 and TimeUtil.second2TimeString(arg_55_1, true) or ""
-end
-
-function var_0_0._playOfMakerAnim(arg_56_0, arg_56_1)
-	if not arg_56_0._anioverflowmaker then
-		arg_56_0._anioverflowmaker = arg_56_0._gooverflowmaker:GetComponent(typeof(UnityEngine.Animator))
-	end
-
-	arg_56_0._anioverflowmaker:Play(arg_56_1, 0, 0)
-end
-
-function var_0_0.onClose(arg_57_0)
-	arg_57_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_57_0._onCurrencyChange, arg_57_0)
-	arg_57_0:removeEventCb(CurrencyController.instance, CurrencyEvent.PowerBuyCountChange, arg_57_0._onPowerBuyCountChange, arg_57_0)
-	TaskDispatcher.cancelTask(arg_57_0._checkPowerRecover, arg_57_0)
-	TaskDispatcher.cancelTask(arg_57_0._checkPowerRecover2, arg_57_0)
-	TaskDispatcher.cancelTask(arg_57_0._refreshDeadlineTime, arg_57_0)
-	TaskDispatcher.cancelTask(arg_57_0._runRepeatOfMaker, arg_57_0)
-	TaskDispatcher.cancelTask(arg_57_0._viewInEffectEnd, arg_57_0)
-	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, arg_57_0.updateNeedOpenTipValue, arg_57_0)
-
-	if arg_57_0._ofMakerFlyGroup then
-		arg_57_0._ofMakerFlyGroup:cancelTask()
+	if self._currencyMO.quantity >= self._recoverLimit then
+		self:_powerMakerInfoRequest()
 	end
 end
 
-function var_0_0.onDestroyView(arg_58_0)
-	arg_58_0._simagebg:UnLoadImage()
+function PowerView:_showOFPowerPauseStatus()
+	local _time = self._ofMakerInfo.nextRemainSecond
 
-	if arg_58_0.clonepowerview then
-		gohelper.destroy(arg_58_0.clonepowerview)
+	_time = _time <= 0 and MaterialEnum.PowerMakerFixedPauseTime or _time
+	self._txtpausemaketime.text = self:_showMakerTime(_time)
+end
 
-		arg_58_0.clonepowerview = nil
+function PowerView:_ofMakerFlyPower()
+	local makeCount = self._ofMakerInfo.makeCount
+
+	if makeCount <= 0 then
+		return
+	end
+
+	if not self._ofMakerFlyGroup then
+		local go = gohelper.findChild(self.viewGO, "#go_overflowmaker/flygroup")
+
+		self._ofMakerFlyGroup = MonoHelper.addNoUpdateLuaComOnceToGo(go, PowerItemFlyGroup)
+	end
+
+	self._ofMakerFlyGroup:flyItems(makeCount)
+
+	self._ofMakerInfo.makeCount = 0
+end
+
+function PowerView:_showMakerTime(time)
+	return time > 0 and TimeUtil.second2TimeString(time, true) or ""
+end
+
+function PowerView:_playOfMakerAnim(animName)
+	if not self._anioverflowmaker then
+		self._anioverflowmaker = self._gooverflowmaker:GetComponent(typeof(UnityEngine.Animator))
+	end
+
+	self._anioverflowmaker:Play(animName, 0, 0)
+end
+
+function PowerView:onClose()
+	self:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._onCurrencyChange, self)
+	self:removeEventCb(CurrencyController.instance, CurrencyEvent.PowerBuyCountChange, self._onPowerBuyCountChange, self)
+	TaskDispatcher.cancelTask(self._checkPowerRecover, self)
+	TaskDispatcher.cancelTask(self._checkPowerRecover2, self)
+	TaskDispatcher.cancelTask(self._refreshDeadlineTime, self)
+	TaskDispatcher.cancelTask(self._runRepeatOfMaker, self)
+	TaskDispatcher.cancelTask(self._viewInEffectEnd, self)
+	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, self.updateNeedOpenTipValue, self)
+
+	if self._ofMakerFlyGroup then
+		self._ofMakerFlyGroup:cancelTask()
 	end
 end
 
-return var_0_0
+function PowerView:onDestroyView()
+	self._simagebg:UnLoadImage()
+
+	if self.clonepowerview then
+		gohelper.destroy(self.clonepowerview)
+
+		self.clonepowerview = nil
+	end
+end
+
+return PowerView

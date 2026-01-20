@@ -1,118 +1,120 @@
-﻿module("modules.logic.fight.entity.buff.FightGaoSiNiaoBuffEffectWithElectricLevel", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/buff/FightGaoSiNiaoBuffEffectWithElectricLevel.lua
 
-local var_0_0 = class("FightGaoSiNiaoBuffEffectWithElectricLevel", FightBaseClass)
+module("modules.logic.fight.entity.buff.FightGaoSiNiaoBuffEffectWithElectricLevel", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1)
-	arg_1_0.buffData = arg_1_1
-	arg_1_0.uid = arg_1_1.uid
-	arg_1_0.entityId = arg_1_1.entityId
-	arg_1_0.buffId = arg_1_1.buffId
-	arg_1_0.entityData = FightDataHelper.entityMgr:getById(arg_1_0.entityId)
-	arg_1_0.entity = FightHelper.getEntity(arg_1_0.entityId)
-	arg_1_0.bigSkillCounter = 0
+local FightGaoSiNiaoBuffEffectWithElectricLevel = class("FightGaoSiNiaoBuffEffectWithElectricLevel", FightBaseClass)
 
-	arg_1_0:com_registMsg(FightMsgId.OnUpdateBuff, arg_1_0.refreshEffect)
-	arg_1_0:com_registFightEvent(FightEvent.OnSkillPlayStart, arg_1_0.onSkillPlayStart)
-	arg_1_0:com_registFightEvent(FightEvent.OnSkillPlayFinish, arg_1_0.onSkillPlayFinish)
-	arg_1_0:com_registFightEvent(FightEvent.UpdateMagicCircile, arg_1_0.onUpdateMagicCircile)
-	arg_1_0:com_registFightEvent(FightEvent.DeleteMagicCircile, arg_1_0.onDeleteMagicCircile)
-	arg_1_0:com_registFightEvent(FightEvent.AddMagicCircile, arg_1_0.onAddMagicCircile)
-	arg_1_0:com_registFightEvent(FightEvent.UpgradeMagicCircile, arg_1_0.onUpgradeMagicCircile)
+function FightGaoSiNiaoBuffEffectWithElectricLevel:onConstructor(buffData)
+	self.buffData = buffData
+	self.uid = buffData.uid
+	self.entityId = buffData.entityId
+	self.buffId = buffData.buffId
+	self.entityData = FightDataHelper.entityMgr:getById(self.entityId)
+	self.entity = FightHelper.getEntity(self.entityId)
+	self.bigSkillCounter = 0
+
+	self:com_registMsg(FightMsgId.OnUpdateBuff, self.refreshEffect)
+	self:com_registFightEvent(FightEvent.OnSkillPlayStart, self.onSkillPlayStart)
+	self:com_registFightEvent(FightEvent.OnSkillPlayFinish, self.onSkillPlayFinish)
+	self:com_registFightEvent(FightEvent.UpdateMagicCircile, self.onUpdateMagicCircile)
+	self:com_registFightEvent(FightEvent.DeleteMagicCircile, self.onDeleteMagicCircile)
+	self:com_registFightEvent(FightEvent.AddMagicCircile, self.onAddMagicCircile)
+	self:com_registFightEvent(FightEvent.UpgradeMagicCircile, self.onUpgradeMagicCircile)
 end
 
-function var_0_0.onLogicEnter(arg_2_0)
-	arg_2_0:refreshEffect(arg_2_0.uid)
+function FightGaoSiNiaoBuffEffectWithElectricLevel:onLogicEnter()
+	self:refreshEffect(self.uid)
 end
 
-function var_0_0.onUpdateMagicCircile(arg_3_0)
-	arg_3_0:refreshEffect(arg_3_0.uid)
+function FightGaoSiNiaoBuffEffectWithElectricLevel:onUpdateMagicCircile()
+	self:refreshEffect(self.uid)
 end
 
-function var_0_0.onUpgradeMagicCircile(arg_4_0)
-	arg_4_0:refreshEffect(arg_4_0.uid)
+function FightGaoSiNiaoBuffEffectWithElectricLevel:onUpgradeMagicCircile()
+	self:refreshEffect(self.uid)
 end
 
-function var_0_0.onDeleteMagicCircile(arg_5_0)
-	arg_5_0:refreshEffect(arg_5_0.uid)
+function FightGaoSiNiaoBuffEffectWithElectricLevel:onDeleteMagicCircile()
+	self:refreshEffect(self.uid)
 end
 
-function var_0_0.onAddMagicCircile(arg_6_0)
-	arg_6_0:refreshEffect(arg_6_0.uid)
+function FightGaoSiNiaoBuffEffectWithElectricLevel:onAddMagicCircile()
+	self:refreshEffect(self.uid)
 end
 
-function var_0_0.refreshEffect(arg_7_0, arg_7_1)
-	if arg_7_1 ~= arg_7_0.uid then
+function FightGaoSiNiaoBuffEffectWithElectricLevel:refreshEffect(uid)
+	if uid ~= self.uid then
 		return
 	end
 
-	if arg_7_0.effectWrap then
-		arg_7_0.entity.effect:removeEffect(arg_7_0.effectWrap)
-		arg_7_0.entity.buff:removeLoopBuff(arg_7_0.effectWrap)
+	if self.effectWrap then
+		self.entity.effect:removeEffect(self.effectWrap)
+		self.entity.buff:removeLoopBuff(self.effectWrap)
 
-		arg_7_0.effectWrap = nil
+		self.effectWrap = nil
 	end
 
-	local var_7_0 = lua_fight_gao_si_niao_buffeffect_electric_level.configDict[arg_7_0.buffId]
+	local config = lua_fight_gao_si_niao_buffeffect_electric_level.configDict[self.buffId]
 
-	if not var_7_0 then
+	if not config then
 		return
 	end
 
-	var_7_0 = var_7_0[arg_7_0.entityData.skin] or var_7_0[0]
+	config = config[self.entityData.skin] or config[0]
 
-	if not var_7_0 then
+	if not config then
 		return
 	end
 
-	local var_7_1 = FightModel.instance:getMagicCircleInfo()
+	local magicCircleData = FightModel.instance:getMagicCircleInfo()
 
-	var_7_0 = var_7_1 and var_7_0[var_7_1.electricLevel] or var_7_0[1]
+	config = magicCircleData and config[magicCircleData.electricLevel] or config[1]
 
-	if not var_7_0 then
+	if not config then
 		return
 	end
 
-	arg_7_0.effectWrap = arg_7_0.entity.effect:addHangEffect(var_7_0.effect, var_7_0.effectHangPoint)
+	self.effectWrap = self.entity.effect:addHangEffect(config.effect, config.effectHangPoint)
 
-	FightRenderOrderMgr.instance:onAddEffectWrap(arg_7_0.entityId, arg_7_0.effectWrap)
-	arg_7_0.effectWrap:setLocalPos(0, 0, 0)
-	arg_7_0.entity.buff:addLoopBuff(arg_7_0.effectWrap)
+	FightRenderOrderMgr.instance:onAddEffectWrap(self.entityId, self.effectWrap)
+	self.effectWrap:setLocalPos(0, 0, 0)
+	self.entity.buff:addLoopBuff(self.effectWrap)
 
-	local var_7_2 = var_7_0.audio
+	local audioId = config.audio
 
-	if var_7_2 and var_7_2 ~= 0 then
-		AudioMgr.instance:trigger(var_7_2)
+	if audioId and audioId ~= 0 then
+		AudioMgr.instance:trigger(audioId)
 	end
 end
 
-function var_0_0.onSkillPlayStart(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	local var_8_0 = arg_8_1:getMO()
+function FightGaoSiNiaoBuffEffectWithElectricLevel:onSkillPlayStart(entity, curSkillId, fightStepData)
+	local entityMO = entity:getMO()
 
-	if var_8_0 and var_8_0.id == arg_8_0.entityId and FightCardDataHelper.isBigSkill(arg_8_2) then
-		arg_8_0.bigSkillCounter = arg_8_0.bigSkillCounter + 1
+	if entityMO and entityMO.id == self.entityId and FightCardDataHelper.isBigSkill(curSkillId) then
+		self.bigSkillCounter = self.bigSkillCounter + 1
 
-		arg_8_0.effectWrap:setActive(arg_8_0.bigSkillCounter <= 0, "FightGaoSiNiaoBuffEffectWithElectricLevel")
+		self.effectWrap:setActive(self.bigSkillCounter <= 0, "FightGaoSiNiaoBuffEffectWithElectricLevel")
 	end
 end
 
-function var_0_0.onSkillPlayFinish(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	local var_9_0 = arg_9_1:getMO()
+function FightGaoSiNiaoBuffEffectWithElectricLevel:onSkillPlayFinish(entity, curSkillId, fightStepData)
+	local entityMO = entity:getMO()
 
-	if var_9_0 and var_9_0.id == arg_9_0.entityId and FightCardDataHelper.isBigSkill(arg_9_2) then
-		arg_9_0.bigSkillCounter = arg_9_0.bigSkillCounter - 1
+	if entityMO and entityMO.id == self.entityId and FightCardDataHelper.isBigSkill(curSkillId) then
+		self.bigSkillCounter = self.bigSkillCounter - 1
 
-		arg_9_0.effectWrap:setActive(arg_9_0.bigSkillCounter <= 0, "FightGaoSiNiaoBuffEffectWithElectricLevel")
+		self.effectWrap:setActive(self.bigSkillCounter <= 0, "FightGaoSiNiaoBuffEffectWithElectricLevel")
 	end
 end
 
-function var_0_0.onDestructor(arg_10_0)
-	if arg_10_0.effectWrap then
-		FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_10_0.entityId, arg_10_0.effectWrap)
-		arg_10_0.entity.effect:removeEffect(arg_10_0.effectWrap)
-		arg_10_0.entity.buff:removeLoopBuff(arg_10_0.effectWrap)
+function FightGaoSiNiaoBuffEffectWithElectricLevel:onDestructor()
+	if self.effectWrap then
+		FightRenderOrderMgr.instance:onRemoveEffectWrap(self.entityId, self.effectWrap)
+		self.entity.effect:removeEffect(self.effectWrap)
+		self.entity.buff:removeLoopBuff(self.effectWrap)
 
-		arg_10_0.effectWrap = nil
+		self.effectWrap = nil
 	end
 end
 
-return var_0_0
+return FightGaoSiNiaoBuffEffectWithElectricLevel

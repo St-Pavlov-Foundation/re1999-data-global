@@ -1,199 +1,205 @@
-﻿module("modules.logic.versionactivity1_9.fairyland.view.comp.FairyLandFullScreenNumber", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/fairyland/view/comp/FairyLandFullScreenNumber.lua
 
-local var_0_0 = class("FairyLandFullScreenNumber", UserDataDispose)
-local var_0_1 = UnityEngine.Time
+module("modules.logic.versionactivity1_9.fairyland.view.comp.FairyLandFullScreenNumber", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+local FairyLandFullScreenNumber = class("FairyLandFullScreenNumber", UserDataDispose)
+local Time = UnityEngine.Time
 
-	arg_1_0.viewGO = arg_1_1.viewGO
-	arg_1_0.goNum = gohelper.findChild(arg_1_0.viewGO, "numbg")
-	arg_1_0.textContent = gohelper.findChild(arg_1_0.viewGO, "numbg/content")
-	arg_1_0.text = gohelper.findChildText(arg_1_0.viewGO, "numbg/content/Text")
-	arg_1_0.content = "1.4142135623730950488016887242096980785696718753769480731766797379907324784621070388503875343276415727350138462309122970249248360558507372126441214970999358314132226659275055927557999505011527820605714701095599716059702745345968620147285174186408891986095523292304843087143214508397626036279952514079896872533965463318088296406206152583523950547457502877599617298355752203375318570113543746034084988471603868999706990048150305440277903164542478230684929369186215805784631115966687130130156185689872372352885092648612494977154218334204285686060146824720771435854874155657069677653720226485447015858801620758474922657226002085584466521458398893944370926591800311388246468157082630100594858704003186480342194897278290641045072636881313739855256117322040245091227700226941127573627280495738108967504018369868368450725799364729060762996941380475654823728997180326802474420629269124859052181004459842150591120249441341728531478105803603371077309182869314710171111683916581726889419758716582152128229518488472"
-	arg_1_0.numTab = {}
+function FairyLandFullScreenNumber:init(param)
+	self:__onInit()
 
-	local var_1_0 = 1
+	self.viewGO = param.viewGO
+	self.goNum = gohelper.findChild(self.viewGO, "numbg")
+	self.textContent = gohelper.findChild(self.viewGO, "numbg/content")
+	self.text = gohelper.findChildText(self.viewGO, "numbg/content/Text")
+	self.content = "1.4142135623730950488016887242096980785696718753769480731766797379907324784621070388503875343276415727350138462309122970249248360558507372126441214970999358314132226659275055927557999505011527820605714701095599716059702745345968620147285174186408891986095523292304843087143214508397626036279952514079896872533965463318088296406206152583523950547457502877599617298355752203375318570113543746034084988471603868999706990048150305440277903164542478230684929369186215805784631115966687130130156185689872372352885092648612494977154218334204285686060146824720771435854874155657069677653720226485447015858801620758474922657226002085584466521458398893944370926591800311388246468157082630100594858704003186480342194897278290641045072636881313739855256117322040245091227700226941127573627280495738108967504018369868368450725799364729060762996941380475654823728997180326802474420629269124859052181004459842150591120249441341728531478105803603371077309182869314710171111683916581726889419758716582152128229518488472"
+	self.numTab = {}
 
-	for iter_1_0 in string.gmatch(arg_1_0.content, ".") do
-		arg_1_0.numTab[var_1_0] = iter_1_0
-		var_1_0 = var_1_0 + 1
+	local index = 1
+
+	for c in string.gmatch(self.content, ".") do
+		self.numTab[index] = c
+		index = index + 1
 	end
 
-	arg_1_0.numCount = var_1_0 - 1
-	arg_1_0._showCheckStamp = 0
+	self.numCount = index - 1
+	self._showCheckStamp = 0
 end
 
-function var_0_0.addUpdate(arg_2_0)
-	if arg_2_0.hasAddUpdate then
+function FairyLandFullScreenNumber:addUpdate()
+	if self.hasAddUpdate then
 		return
 	end
 
-	arg_2_0.hasAddUpdate = true
+	self.hasAddUpdate = true
 
-	LateUpdateBeat:Add(arg_2_0._updateText, arg_2_0)
+	LateUpdateBeat:Add(self._updateText, self)
 end
 
-function var_0_0._updateText(arg_3_0)
-	if arg_3_0.showTextTween then
-		arg_3_0._showCheckStamp = arg_3_0._showCheckStamp + var_0_1.deltaTime
+function FairyLandFullScreenNumber:_updateText()
+	if self.showTextTween then
+		self._showCheckStamp = self._showCheckStamp + Time.deltaTime
 
-		if arg_3_0._showCheckStamp > arg_3_0.showTweenStamp then
-			arg_3_0._showCheckStamp = 0
+		if self._showCheckStamp > self.showTweenStamp then
+			self._showCheckStamp = 0
 
-			arg_3_0:_playShowText()
+			self:_playShowText()
 		end
 	end
 
-	if arg_3_0.showZeroTween then
-		arg_3_0._showCheckStamp = arg_3_0._showCheckStamp + var_0_1.deltaTime
+	if self.showZeroTween then
+		self._showCheckStamp = self._showCheckStamp + Time.deltaTime
 
-		if arg_3_0._showCheckStamp > arg_3_0.showTweenStamp then
-			arg_3_0._showCheckStamp = 0
+		if self._showCheckStamp > self.showTweenStamp then
+			self._showCheckStamp = 0
 
-			arg_3_0:_playZeroTween()
+			self:_playZeroTween()
 		end
 	end
 end
 
-function var_0_0.playShowTween(arg_4_0)
-	if arg_4_0.showTextTween then
+function FairyLandFullScreenNumber:playShowTween()
+	if self.showTextTween then
 		return
 	end
 
-	gohelper.setActive(arg_4_0.goNum, true)
+	gohelper.setActive(self.goNum, true)
 
-	local var_4_0 = #arg_4_0.content * 0.1
+	local duration = #self.content * 0.1
 
-	arg_4_0.text.text = ""
-	arg_4_0.showStartIndex = 1
-	arg_4_0.showStartCount = 1
-	arg_4_0.showTextIsFull = false
-	arg_4_0.textWidth = recthelper.getWidth(arg_4_0.text.transform)
-	arg_4_0.textHeight = recthelper.getHeight(arg_4_0.text.transform)
-	arg_4_0.lineCount = math.floor(arg_4_0.textWidth / 50)
-	arg_4_0.showAddCount = math.ceil(arg_4_0.lineCount / 10)
-	arg_4_0.showTextTween = true
-	arg_4_0.showZeroTween = false
-	arg_4_0.showTweenStamp = 0.01
+	self.text.text = ""
+	self.showStartIndex = 1
+	self.showStartCount = 1
+	self.showTextIsFull = false
+	self.textWidth = recthelper.getWidth(self.text.transform)
+	self.textHeight = recthelper.getHeight(self.text.transform)
+	self.lineCount = math.floor(self.textWidth / 50)
+	self.showAddCount = math.ceil(self.lineCount / 10)
+	self.showTextTween = true
+	self.showZeroTween = false
+	self.showTweenStamp = 0.01
 
-	arg_4_0:addUpdate()
+	self:addUpdate()
 end
 
-function var_0_0._playShowText(arg_5_0)
-	if not arg_5_0.showTextIsFull and arg_5_0.text.preferredHeight > arg_5_0.textHeight then
-		arg_5_0.showTextIsFull = true
-		arg_5_0.showTweenStamp = 0.1
+function FairyLandFullScreenNumber:_playShowText()
+	if not self.showTextIsFull then
+		local textHeight = self.text.preferredHeight
+
+		if textHeight > self.textHeight then
+			self.showTextIsFull = true
+			self.showTweenStamp = 0.1
+		end
 	end
 
-	if arg_5_0.showTextIsFull then
-		arg_5_0.showStartIndex = arg_5_0.showStartIndex + 1
+	if self.showTextIsFull then
+		self.showStartIndex = self.showStartIndex + 1
 	else
-		arg_5_0.showStartCount = arg_5_0.showStartCount + 20
+		self.showStartCount = self.showStartCount + 20
 	end
 
-	local var_5_0 = arg_5_0:getShowText(arg_5_0.showStartIndex, arg_5_0.showStartCount)
+	local text = self:getShowText(self.showStartIndex, self.showStartCount)
 
-	arg_5_0.text.text = var_5_0
+	self.text.text = text
 end
 
-function var_0_0.getShowText(arg_6_0, arg_6_1, arg_6_2)
-	if not arg_6_0.showTextTab then
-		arg_6_0.showTextTab = {}
+function FairyLandFullScreenNumber:getShowText(startIndex, showCount)
+	if not self.showTextTab then
+		self.showTextTab = {}
 	end
 
-	local var_6_0
+	local index
 
-	for iter_6_0 = 1, arg_6_2 do
-		local var_6_1 = iter_6_0 + arg_6_1
+	for i = 1, showCount do
+		index = i + startIndex
 
-		if var_6_1 > arg_6_0.numCount then
-			var_6_1 = var_6_1 % arg_6_0.numCount
+		if index > self.numCount then
+			index = index % self.numCount
 		end
 
-		arg_6_0.showTextTab[iter_6_0] = arg_6_0.numTab[var_6_1] or ""
+		self.showTextTab[i] = self.numTab[index] or ""
 	end
 
-	return table.concat(arg_6_0.showTextTab, "")
+	return table.concat(self.showTextTab, "")
 end
 
-function var_0_0.playZeroTween(arg_7_0, arg_7_1, arg_7_2)
-	if arg_7_0.showZeroTween then
+function FairyLandFullScreenNumber:playZeroTween(callback, callbackObj)
+	if self.showZeroTween then
 		return
 	end
 
-	gohelper.setActive(arg_7_0.goNum, true)
+	gohelper.setActive(self.goNum, true)
 
-	arg_7_0.showTextTween = false
-	arg_7_0.showZeroTween = true
-	arg_7_0.showTweenStamp = 0.1
-	arg_7_0.zeroCallback = arg_7_1
-	arg_7_0.zeroCallbackObj = arg_7_2
+	self.showTextTween = false
+	self.showZeroTween = true
+	self.showTweenStamp = 0.1
+	self.zeroCallback = callback
+	self.zeroCallbackObj = callbackObj
 
-	arg_7_0:addUpdate()
+	self:addUpdate()
 end
 
-function var_0_0._playZeroTween(arg_8_0)
-	local var_8_0, var_8_1 = arg_8_0:getZeroText()
+function FairyLandFullScreenNumber:_playZeroTween()
+	local text, allZero = self:getZeroText()
 
-	arg_8_0.text.text = var_8_0
+	self.text.text = text
 
-	if var_8_1 then
-		arg_8_0.showZeroTween = false
+	if allZero then
+		self.showZeroTween = false
 
-		TaskDispatcher.runDelay(arg_8_0._onFinishZeroTween, arg_8_0, 0.5)
+		TaskDispatcher.runDelay(self._onFinishZeroTween, self, 0.5)
 	end
 end
 
-function var_0_0._onFinishZeroTween(arg_9_0)
-	if arg_9_0.zeroCallback then
-		arg_9_0.zeroCallback(arg_9_0.zeroCallbackObj)
+function FairyLandFullScreenNumber:_onFinishZeroTween()
+	if self.zeroCallback then
+		self.zeroCallback(self.zeroCallbackObj)
 	end
 end
 
-function var_0_0.getZeroText(arg_10_0)
-	if not arg_10_0.showTextTab then
-		arg_10_0.showTextTab = {}
+function FairyLandFullScreenNumber:getZeroText()
+	if not self.showTextTab then
+		self.showTextTab = {}
 	end
 
-	local var_10_0 = true
-	local var_10_1
+	local allZero = true
+	local num
 
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0.showTextTab) do
-		local var_10_2 = tonumber(iter_10_1)
+	for i, v in ipairs(self.showTextTab) do
+		num = tonumber(v)
 
-		if var_10_2 then
-			if var_10_2 ~= 0 then
-				var_10_2 = var_10_2 - 1
-				var_10_0 = false
+		if num then
+			if num ~= 0 then
+				num = num - 1
+				allZero = false
 			end
 		else
-			var_10_2 = iter_10_1
+			num = v
 		end
 
-		arg_10_0.showTextTab[iter_10_0] = var_10_2
+		self.showTextTab[i] = num
 	end
 
-	return table.concat(arg_10_0.showTextTab, ""), var_10_0
+	return table.concat(self.showTextTab, ""), allZero
 end
 
-function var_0_0.clear(arg_11_0)
-	gohelper.setActive(arg_11_0.goNum, false)
-	TaskDispatcher.cancelTask(arg_11_0._onFinishZeroTween, arg_11_0)
+function FairyLandFullScreenNumber:clear()
+	gohelper.setActive(self.goNum, false)
+	TaskDispatcher.cancelTask(self._onFinishZeroTween, self)
 
-	arg_11_0.showTextTween = false
-	arg_11_0.showZeroTween = false
+	self.showTextTween = false
+	self.showZeroTween = false
 
-	if arg_11_0.hasAddUpdate then
-		LateUpdateBeat:Remove(arg_11_0._updateText, arg_11_0)
+	if self.hasAddUpdate then
+		LateUpdateBeat:Remove(self._updateText, self)
 
-		arg_11_0.hasAddUpdate = false
+		self.hasAddUpdate = false
 	end
 end
 
-function var_0_0.destory(arg_12_0)
-	arg_12_0:clear()
-	arg_12_0:__onDispose()
+function FairyLandFullScreenNumber:destory()
+	self:clear()
+	self:__onDispose()
 end
 
-return var_0_0
+return FairyLandFullScreenNumber

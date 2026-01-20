@@ -1,48 +1,50 @@
-﻿module("modules.logic.versionactivity2_3.zhixinquaner.maze.base.view.PuzzleMazeBasePawnObj", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/zhixinquaner/maze/base/view/PuzzleMazeBasePawnObj.lua
 
-local var_0_0 = class("PuzzleMazeBasePawnObj", UserDataDispose)
+module("modules.logic.versionactivity2_3.zhixinquaner.maze.base.view.PuzzleMazeBasePawnObj", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+local PuzzleMazeBasePawnObj = class("PuzzleMazeBasePawnObj", UserDataDispose)
 
-	arg_1_0.go = arg_1_1
+function PuzzleMazeBasePawnObj:ctor(go)
+	self:__onInit()
+
+	self.go = go
 end
 
-function var_0_0.onInit(arg_2_0, arg_2_1)
-	arg_2_0._mo = arg_2_1
+function PuzzleMazeBasePawnObj:onInit(mo)
+	self._mo = mo
 end
 
-function var_0_0.onBeginDrag(arg_3_0)
+function PuzzleMazeBasePawnObj:onBeginDrag()
 	return
 end
 
-function var_0_0.onDraging(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0:setPos(arg_4_1, arg_4_2)
+function PuzzleMazeBasePawnObj:onDraging(x, y)
+	self:setPos(x, y)
 end
 
-function var_0_0.onEndDrag(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0:setPos(arg_5_1, arg_5_2)
+function PuzzleMazeBasePawnObj:onEndDrag(x, y)
+	self:setPos(x, y)
 end
 
-function var_0_0.setDir(arg_6_0, arg_6_1)
-	arg_6_0.dir = arg_6_1
+function PuzzleMazeBasePawnObj:setDir(dir)
+	self.dir = dir
 end
 
-function var_0_0.getDir(arg_7_0)
-	return arg_7_0.dir
+function PuzzleMazeBasePawnObj:getDir()
+	return self.dir
 end
 
-function var_0_0.setPos(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0.x = arg_8_1 or 0
-	arg_8_0.y = arg_8_2 or 0
+function PuzzleMazeBasePawnObj:setPos(x, y)
+	self.x = x or 0
+	self.y = y or 0
 end
 
-function var_0_0.getPos(arg_9_0)
-	return arg_9_0.x or 0, arg_9_0.y or 0
+function PuzzleMazeBasePawnObj:getPos()
+	return self.x or 0, self.y or 0
 end
 
-function var_0_0.destroy(arg_10_0)
-	arg_10_0:__onDispose()
+function PuzzleMazeBasePawnObj:destroy()
+	self:__onDispose()
 end
 
-return var_0_0
+return PuzzleMazeBasePawnObj

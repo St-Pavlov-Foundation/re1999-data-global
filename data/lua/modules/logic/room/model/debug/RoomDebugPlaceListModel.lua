@@ -1,148 +1,150 @@
-﻿module("modules.logic.room.model.debug.RoomDebugPlaceListModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/debug/RoomDebugPlaceListModel.lua
 
-local var_0_0 = class("RoomDebugPlaceListModel", ListScrollModel)
+module("modules.logic.room.model.debug.RoomDebugPlaceListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:_clearData()
+local RoomDebugPlaceListModel = class("RoomDebugPlaceListModel", ListScrollModel)
+
+function RoomDebugPlaceListModel:onInit()
+	self:_clearData()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:_clearData()
+function RoomDebugPlaceListModel:reInit()
+	self:_clearData()
 end
 
-function var_0_0.clear(arg_3_0)
-	var_0_0.super.clear(arg_3_0)
-	arg_3_0:_clearData()
+function RoomDebugPlaceListModel:clear()
+	RoomDebugPlaceListModel.super.clear(self)
+	self:_clearData()
 end
 
-function var_0_0._clearData(arg_4_0)
-	arg_4_0._selectDefineId = nil
-	arg_4_0._filterCategory = nil
-	arg_4_0._filterPackageId = nil
-	arg_4_0._defineIdToBlockId = nil
+function RoomDebugPlaceListModel:_clearData()
+	self._selectDefineId = nil
+	self._filterCategory = nil
+	self._filterPackageId = nil
+	self._defineIdToBlockId = nil
 end
 
-function var_0_0.setFilterPackageId(arg_5_0, arg_5_1)
-	if arg_5_0._filterPackageId == arg_5_1 then
-		arg_5_0._filterPackageId = nil
+function RoomDebugPlaceListModel:setFilterPackageId(packageId)
+	if self._filterPackageId == packageId then
+		self._filterPackageId = nil
 	else
-		arg_5_0._filterPackageId = arg_5_1
+		self._filterPackageId = packageId
 	end
 end
 
-function var_0_0.isFilterPackageId(arg_6_0, arg_6_1)
-	return arg_6_0._filterPackageId == arg_6_1
+function RoomDebugPlaceListModel:isFilterPackageId(packageId)
+	return self._filterPackageId == packageId
 end
 
-function var_0_0.setDebugPlaceList(arg_7_0)
-	local var_7_0 = {}
-	local var_7_1
+function RoomDebugPlaceListModel:setDebugPlaceList()
+	local moList = {}
+	local filterDefindIds
 
-	if arg_7_0._filterPackageId then
-		var_7_1 = {}
+	if self._filterPackageId then
+		filterDefindIds = {}
 
-		local var_7_2 = lua_block_package_data.packageDict[arg_7_0._filterPackageId]
+		local dict = lua_block_package_data.packageDict[self._filterPackageId]
 
-		if var_7_2 then
-			for iter_7_0, iter_7_1 in pairs(var_7_2) do
-				var_7_1[iter_7_1.defineId] = true
+		if dict then
+			for _, v in pairs(dict) do
+				filterDefindIds[v.defineId] = true
 			end
 		end
 	end
 
-	if not arg_7_0._defineIdToBlockId then
-		arg_7_0._defineIdToBlockId = {}
+	if not self._defineIdToBlockId then
+		self._defineIdToBlockId = {}
 
-		local var_7_3 = {}
+		local blockIds = {}
 
-		for iter_7_2, iter_7_3 in pairs(lua_block_package_data.packageDict) do
-			for iter_7_4, iter_7_5 in pairs(iter_7_3) do
-				arg_7_0._defineIdToBlockId[iter_7_5.defineId] = iter_7_5.blockId
+		for packageId, dict in pairs(lua_block_package_data.packageDict) do
+			for _, cfg in pairs(dict) do
+				self._defineIdToBlockId[cfg.defineId] = cfg.blockId
 
-				table.insert(var_7_3, iter_7_5.blockId)
+				table.insert(blockIds, cfg.blockId)
 			end
 		end
 
-		RoomInventoryBlockModel.instance:addSpecialBlockIds(var_7_3)
+		RoomInventoryBlockModel.instance:addSpecialBlockIds(blockIds)
 	end
 
-	local var_7_4 = RoomConfig.instance:getBlockDefineConfigDict()
+	local blockDefineConfigDict = RoomConfig.instance:getBlockDefineConfigDict()
 
-	for iter_7_6, iter_7_7 in pairs(var_7_4) do
-		if arg_7_0:isFilterCategory(iter_7_7.category) and (not var_7_1 or var_7_1[iter_7_6]) then
-			local var_7_5 = RoomDebugPlaceMO.New()
+	for defineId, blockDefineConfig in pairs(blockDefineConfigDict) do
+		if self:isFilterCategory(blockDefineConfig.category) and (not filterDefindIds or filterDefindIds[defineId]) then
+			local roomDebugPlaceMO = RoomDebugPlaceMO.New()
 
-			var_7_5:init({
-				id = iter_7_6,
-				blockId = arg_7_0._defineIdToBlockId[iter_7_6]
+			roomDebugPlaceMO:init({
+				id = defineId,
+				blockId = self._defineIdToBlockId[defineId]
 			})
-			table.insert(var_7_0, var_7_5)
+			table.insert(moList, roomDebugPlaceMO)
 		end
 	end
 
-	table.sort(var_7_0, arg_7_0._sortFunction)
-	arg_7_0:setList(var_7_0)
-	arg_7_0:_refreshSelect()
+	table.sort(moList, self._sortFunction)
+	self:setList(moList)
+	self:_refreshSelect()
 end
 
-function var_0_0._sortFunction(arg_8_0, arg_8_1)
-	return arg_8_0.config.defineId < arg_8_1.config.defineId
+function RoomDebugPlaceListModel._sortFunction(x, y)
+	return x.config.defineId < y.config.defineId
 end
 
-function var_0_0.setFilterCategory(arg_9_0, arg_9_1)
-	arg_9_0._filterCategory = arg_9_1
+function RoomDebugPlaceListModel:setFilterCategory(category)
+	self._filterCategory = category
 end
 
-function var_0_0.isFilterCategory(arg_10_0, arg_10_1)
-	if string.nilorempty(arg_10_1) and string.nilorempty(arg_10_0._filterCategory) then
+function RoomDebugPlaceListModel:isFilterCategory(category)
+	if string.nilorempty(category) and string.nilorempty(self._filterCategory) then
 		return true
 	end
 
-	return arg_10_0._filterCategory == arg_10_1
+	return self._filterCategory == category
 end
 
-function var_0_0.getFilterCategory(arg_11_0)
-	return arg_11_0._filterCategory
+function RoomDebugPlaceListModel:getFilterCategory()
+	return self._filterCategory
 end
 
-function var_0_0.clearSelect(arg_12_0)
-	for iter_12_0, iter_12_1 in ipairs(arg_12_0._scrollViews) do
-		iter_12_1:setSelect(nil)
+function RoomDebugPlaceListModel:clearSelect()
+	for i, view in ipairs(self._scrollViews) do
+		view:setSelect(nil)
 	end
 
-	arg_12_0._selectDefineId = nil
+	self._selectDefineId = nil
 end
 
-function var_0_0._refreshSelect(arg_13_0)
-	local var_13_0
-	local var_13_1 = arg_13_0:getList()
+function RoomDebugPlaceListModel:_refreshSelect()
+	local selectMO
+	local moList = self:getList()
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_1) do
-		if iter_13_1.id == arg_13_0._selectDefineId then
-			var_13_0 = iter_13_1
+	for i, mo in ipairs(moList) do
+		if mo.id == self._selectDefineId then
+			selectMO = mo
 		end
 	end
 
-	for iter_13_2, iter_13_3 in ipairs(arg_13_0._scrollViews) do
-		iter_13_3:setSelect(var_13_0)
+	for i, view in ipairs(self._scrollViews) do
+		view:setSelect(selectMO)
 	end
 end
 
-function var_0_0.setSelect(arg_14_0, arg_14_1)
-	arg_14_0._selectDefineId = arg_14_1
+function RoomDebugPlaceListModel:setSelect(defineId)
+	self._selectDefineId = defineId
 
-	arg_14_0:_refreshSelect()
+	self:_refreshSelect()
 end
 
-function var_0_0.getSelect(arg_15_0)
-	return arg_15_0._selectDefineId
+function RoomDebugPlaceListModel:getSelect()
+	return self._selectDefineId
 end
 
-function var_0_0.initDebugPlace(arg_16_0)
-	arg_16_0:setDebugPlaceList()
-	arg_16_0:setFilterCategory(nil)
+function RoomDebugPlaceListModel:initDebugPlace()
+	self:setDebugPlaceList()
+	self:setFilterCategory(nil)
 end
 
-var_0_0.instance = var_0_0.New()
+RoomDebugPlaceListModel.instance = RoomDebugPlaceListModel.New()
 
-return var_0_0
+return RoomDebugPlaceListModel

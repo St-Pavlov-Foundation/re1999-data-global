@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity2_7.act191.view.Act191SwitchViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/act191/view/Act191SwitchViewContainer.lua
 
-local var_0_0 = class("Act191SwitchViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_7.act191.view.Act191SwitchViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Act191SwitchViewContainer = class("Act191SwitchViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Act191SwitchView.New())
+function Act191SwitchViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Act191SwitchView.New())
+
+	return views
 end
 
-return var_0_0
+return Act191SwitchViewContainer

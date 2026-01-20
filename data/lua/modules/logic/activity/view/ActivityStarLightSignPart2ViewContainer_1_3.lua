@@ -1,9 +1,11 @@
-﻿module("modules.logic.activity.view.ActivityStarLightSignPart2ViewContainer_1_3", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/ActivityStarLightSignPart2ViewContainer_1_3.lua
 
-local var_0_0 = class("ActivityStarLightSignPart2ViewContainer_1_3", ActivityStarLightSignViewBaseContainer_1_3)
+module("modules.logic.activity.view.ActivityStarLightSignPart2ViewContainer_1_3", package.seeall)
 
-function var_0_0.onGetMainViewClassType(arg_1_0)
+local ActivityStarLightSignPart2ViewContainer_1_3 = class("ActivityStarLightSignPart2ViewContainer_1_3", ActivityStarLightSignViewBaseContainer_1_3)
+
+function ActivityStarLightSignPart2ViewContainer_1_3:onGetMainViewClassType()
 	return ActivityStarLightSignPart2View_1_3
 end
 
-return var_0_0
+return ActivityStarLightSignPart2ViewContainer_1_3

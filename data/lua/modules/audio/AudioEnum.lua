@@ -1,12 +1,14 @@
-﻿module("modules.audio.AudioEnum", package.seeall)
+﻿-- chunkname: @modules/audio/AudioEnum.lua
 
-local var_0_0 = _M
+module("modules.audio.AudioEnum", package.seeall)
 
-var_0_0.Default_UI_Bgm = 3000001
-var_0_0.Default_UI_Bgm_Stop = 3100203
-var_0_0.Default_Fight_Bgm = 3200039
-var_0_0.Default_Fight_Bgm_Stop = 3000022
-var_0_0.Bgm = {
+local AudioEnum = _M
+
+AudioEnum.Default_UI_Bgm = 3000001
+AudioEnum.Default_UI_Bgm_Stop = 3100203
+AudioEnum.Default_Fight_Bgm = 3200039
+AudioEnum.Default_Fight_Bgm_Stop = 3000022
+AudioEnum.Bgm = {
 	SelectSeasonBgm = 3300002,
 	LeiMiTeBeiBgm = 3300003,
 	Season1_2Bgm = 3300008,
@@ -27,6 +29,7 @@ var_0_0.Bgm = {
 	stop_login_interface_music_3_0 = 3309055,
 	play_activitymusic_humorousburglary_74bpm4_4 = 3300004,
 	ActivityMainBgm1_3 = 3300038,
+	Rouge2Main = 3320005,
 	PlayPassPortMusic = 3300006,
 	VersionActivity1_3DungeonAmbientSound1 = 3300039,
 	LeiMiTeBeiDungeonBgm = 3300001,
@@ -50,7 +53,7 @@ var_0_0.Bgm = {
 	Activity130LevelViewBgm = 3200062,
 	play_plot_music_comfortable = 3200066
 }
-var_0_0.Story = {
+AudioEnum.Story = {
 	Activity1_2_Part_Start = 520045,
 	Play_Lowpass = 1111111,
 	play_activitysfx_wulu_chapter_open = 520066,
@@ -67,7 +70,7 @@ var_0_0.Story = {
 	play_ui_feichi_closing = 520107,
 	play_activitysfx_diqiu_chapter_open = 24520001,
 	Activity1_3_Chapter_End = 520053,
-	play_activitysfx_diqiu_subsection_open = 24520002,
+	play_activitysfx_shengyan_chapter_continue = 32520003,
 	play_activitysfx_tangren_chapter_small_close = 25520007,
 	Activity1_3_Part_Start = 520052,
 	play_activitysfx_cikeshang_chapter_open = 29520005,
@@ -101,16 +104,19 @@ var_0_0.Story = {
 	play_activitysfx_mingdi_continue = 31520003,
 	Play_Storm_Deadline = 501360,
 	play_activitysfx_wangshi_chapter_close = 520117,
-	pause_cg_bus = 3309053,
+	play_activitysfx_shengyan_chapter_open = 32520001,
 	Activity1_3_Chapter_Start = 520051,
 	play_activitysfx_diqiu_chapter_continue = 24520003,
-	resume_cg_bus = 3309054,
+	play_activitysfx_shengyan_subsection_open = 32520002,
+	play_activitysfx_diqiu_subsection_open = 24520002,
 	play_activitysfx_shiji_chapter_open = 520094,
+	pause_cg_bus = 3309053,
+	resume_cg_bus = 3309054,
 	Activity_Chapter_End = 500522,
 	play_activitysfx_wangshi_subsection_open = 520114,
 	play_ui_feichi_open_plot = 520105
 }
-var_0_0.Summon = {
+AudioEnum.Summon = {
 	play_ui_callfor_inscription_draw_card = 20001524,
 	play_ui_callfor_spray = 20001528,
 	CallFor_Spin_Speed = "callfor_spin_speed",
@@ -138,11 +144,11 @@ var_0_0.Summon = {
 	play_ui_callfor_begin = 20001525,
 	Play_UI_CallFor_Close = 20001509
 }
-var_0_0.CriWare = {
+AudioEnum.CriWare = {
 	Play_Name_Start = 20001602,
 	Play_Name_Complete = 20001601
 }
-var_0_0.UI = {
+AudioEnum.UI = {
 	Play_UI_Mainback = 2000033,
 	play_ui_role_culture_open = 20002024,
 	Play_UI_Rolesgo = 2000029,
@@ -297,7 +303,7 @@ var_0_0.UI = {
 	play_ui_lvhu_clue_get = 25001322,
 	play_ui_settleaccounts_resources = 20005003,
 	UI_Team_switch = 20001906,
-	play_ui_lvhu_clue_write_2 = 25001326,
+	hero3134_interaction_begin = 1313445,
 	play_ui_viability_click_1 = 2000063,
 	play_ui_lvhu_trap_replace = 25001343,
 	play_ui_checkpoint_pagesopen = 20001046,
@@ -390,7 +396,9 @@ var_0_0.UI = {
 	play_ui_leimi_symbol_upgrade = 25001052,
 	hero3100_mainsfx_mic_drag = 1310042,
 	Play_UI_Mistakes = 2000027,
+	hero3134_mainsfx_mic_drag = 1313443,
 	play_ui_checkpoin_chapter_unlock = 20001074,
+	play_ui_lvhu_clue_write_2 = 25001326,
 	play_ui_checkpoint_chap5_switch = 25003121,
 	Pause_MainMusic = 2000041,
 	play_ui_molu_exit_appear = 25002512,
@@ -486,6 +494,7 @@ var_0_0.UI = {
 	play_activity_seasonmainamb_1_2 = 25001501,
 	play_ui_activity_door_open = 20001116,
 	UI_Mission_switch = 20001903,
+	hero3134_interaction_end = 1313446,
 	Task_UI_TaskItem_fadeout = 20001909,
 	Play_ui_add_universalcard = 2000053,
 	stop_voice_bus = 25007114,
@@ -539,7 +548,7 @@ var_0_0.UI = {
 	Play_UI_Tipsclose = 2000015,
 	Play_ui_mould_open = 20004011
 }
-var_0_0.HeroGroupUI = {
+AudioEnum.HeroGroupUI = {
 	Play_UI_Inking_Lock = 20002401,
 	Play_UI_Inking_Addall = 20002406,
 	Play_UI_Inking_Remember = 20002403,
@@ -562,7 +571,7 @@ var_0_0.HeroGroupUI = {
 	Play_UI_Inking_Finish = 20002407,
 	stop_artificial_ui_slipmap = 20002538
 }
-var_0_0.Meilanni = {
+AudioEnum.Meilanni = {
 	play_ui_mln_receive = 25001015,
 	play_ui_mln_stamp = 25001028,
 	play_ui_mln_day_night = 25001019,
@@ -575,7 +584,7 @@ var_0_0.Meilanni = {
 	play_ui_mln_progress_grow = 25001029,
 	play_ui_mln_page_turn = 25001027
 }
-var_0_0.WeekWalk = {
+AudioEnum.WeekWalk = {
 	play_artificial_ui_unlockdream = 20002536,
 	play_ui_home_music_master = 20002506,
 	play_artificial_ui_checkpointswitch = 20002533,
@@ -611,7 +620,7 @@ var_0_0.WeekWalk = {
 	play_artificial_layer_type_2 = 20002530,
 	stop_artificial_ui_slipmap = 20002538
 }
-var_0_0.TeachNote = {
+AudioEnum.TeachNote = {
 	play_ui_no_requirement = 20010006,
 	play_ui_mail_open = 20010001,
 	play_ui_activity_act = 20010005,
@@ -622,40 +631,40 @@ var_0_0.TeachNote = {
 	play_ui_activity_switch = 20010002,
 	play_ui_level_unlock = 20010009
 }
-var_0_0.Volume = {
+AudioEnum.Volume = {
 	Music_Volume = "Music_Volume",
 	Global_Volume = "Global_Volume",
 	SFX_Volume = "SFX_Volume",
 	Voc_Volume = "Voc_Volume"
 }
-var_0_0.AkCallbackType = {
+AudioEnum.AkCallbackType = {
 	AK_Duration = 8,
 	AK_EndOfEvent = 1
 }
-var_0_0.AkCurveInterpolation = {
+AudioEnum.AkCurveInterpolation = {
 	AkCurveInterpolation_Linear = 4
 }
-var_0_0.Rolesopen_Group_Ui_Rolesrank = nil
-var_0_0.Rolesopen_State_Roleslist = nil
-var_0_0.Rolesopen_State_Rolesdetails = nil
-var_0_0.SwitchGroup = {
+AudioEnum.Rolesopen_Group_Ui_Rolesrank = nil
+AudioEnum.Rolesopen_State_Roleslist = nil
+AudioEnum.Rolesopen_State_Rolesdetails = nil
+AudioEnum.SwitchGroup = {
 	SummonResult = "callfor_chestsopen",
 	Summon = "Callingsystem",
 	SummonTab = "ui_callfor_type"
 }
-var_0_0.SwitchState = {
+AudioEnum.SwitchState = {
 	SummonAward = "Award",
 	SummonChar = "lake",
 	SummonEquip = "laboratory",
 	SummonNormal = "normal"
 }
-var_0_0.SummonSwitchState = {
+AudioEnum.SummonSwitchState = {
 	"chestsopen01",
 	"chestsopen02",
 	"chestsopen03",
 	"chestsopen04"
 }
-var_0_0.Talent = {
+AudioEnum.Talent = {
 	play_ui_resonate_level_open = 20007004,
 	play_ui_resonate_open = 20007001,
 	play_ui_resonate_success_close = 20007006,
@@ -667,7 +676,7 @@ var_0_0.Talent = {
 	play_ui_resonate_close = 20007010,
 	play_ui_resonate_property_open = 20007002
 }
-var_0_0.Room = {
+AudioEnum.Room = {
 	stop_home_activity_firework = 20009068,
 	play_ui_home_shouhuo_2_2 = 20220108,
 	play_ui_home_state_lower = 20220137,
@@ -735,32 +744,32 @@ var_0_0.Room = {
 	play_ui_home_board_recovery = 20009020,
 	play_ui_home_board_remove = 20009001
 }
-var_0_0.Puzzle = {
+AudioEnum.Puzzle = {
 	play_ui_main_puzzles_achievement = 20001081,
 	play_ui_main_puzzles_unlock = 20001083,
 	play_ui_main_puzzles_warn = 20001084,
 	play_ui_main_puzzles_character = 20001080,
 	play_ui_main_puzzles_move = 20001082
 }
-var_0_0.PuzzleCircuit = {
+AudioEnum.PuzzleCircuit = {
 	play_ui_circuit_shortcircuit = 20001091,
 	play_ui_capacitors_connection = 20001092,
 	play_ui_circuit_click = 20001090,
 	play_ui_powersupply_connection = 20001093
 }
-var_0_0.RewardPoint = {
+AudioEnum.RewardPoint = {
 	play_ui_track_achievement_single = 20001088,
 	play_ui_track_achievement_flip = 20001089,
 	play_ui_track_achievement_multiple = 20001087,
 	play_ui_track_main_eject = 20001086
 }
-var_0_0.PuzzleOuija = {
+AudioEnum.PuzzleOuija = {
 	play_ui_checkpoint_boat_click = 20001105,
 	play_ui_checkpoint_boat_open = 20001103,
 	play_ui_checkpoint_boat_connection = 20001102,
 	play_ui_checkpoint_boat_tips = 20001104
 }
-var_0_0.WarmUpGame = {
+AudioEnum.WarmUpGame = {
 	start_pot_boiling = 25000002,
 	trigger_click_nice = 25000004,
 	game_count_down = 25000001,
@@ -768,12 +777,12 @@ var_0_0.WarmUpGame = {
 	play_game_victory = 25000005,
 	play_game_fail = 25000006
 }
-var_0_0.RoomRTPC = {
+AudioEnum.RoomRTPC = {
 	MainCamera = "home_camera_distance",
 	HomePivotRank = "home_pivot_rank"
 }
-var_0_0.EarRTPC = "Speaker_Headphone"
-var_0_0.ChessGame = {
+AudioEnum.EarRTPC = "Speaker_Headphone"
+AudioEnum.ChessGame = {
 	PickUpItem = 25001206,
 	PlayerDisappear = 25001211,
 	PlayerMove = 25001207,
@@ -792,7 +801,7 @@ var_0_0.ChessGame = {
 	ChallengeFailed = 25001205,
 	StarLight = 25001203
 }
-var_0_0.YaXian = {
+AudioEnum.YaXian = {
 	Fight = 25001308,
 	InVisible = 25001307,
 	Assassinate = 25001305,
@@ -802,12 +811,12 @@ var_0_0.YaXian = {
 	EnterYaXianMap = 25001301,
 	Die = 700003
 }
-var_0_0.VersionActivity1_2 = {
+AudioEnum.VersionActivity1_2 = {
 	play_ui_lvhu_goldcup_open = 25001312,
 	play_ui_lvhu_open = 25001311,
 	play_ui_lvhu_level_unlock = 25001313
 }
-var_0_0.VersionActivity1_3 = {
+AudioEnum.VersionActivity1_3 = {
 	play_ui_molu_sky_unlock_special = 25002107,
 	play_ui_molu_sky_open = 25002104,
 	play_ui_molu_astrology_success = 25002111,
@@ -820,7 +829,7 @@ var_0_0.VersionActivity1_3 = {
 	play_ui_molu_daytime_switch = 25002103,
 	play_ui_molu_seek_open = 25002105
 }
-var_0_0.Va3Armpipe = {
+AudioEnum.Va3Armpipe = {
 	play_ui_molu_repair_complete = 25002403,
 	play_ui_molu_arm_repair = 25002406,
 	play_ui_activity_lyrics_wrongs = 25002407,
@@ -830,7 +839,7 @@ var_0_0.Va3Armpipe = {
 	play_ui_activity_mark_finish = 25002408,
 	play_ui_molu_lefthand_open = 25002401
 }
-var_0_0.Va3Aact120 = {
+AudioEnum.Va3Aact120 = {
 	play_amb_activity_molu1_3_ganapona = 3300045,
 	play_ui_molu_level_title_appear = 25002516,
 	play_ui_molu_target_flushed = 25002514,
@@ -842,7 +851,7 @@ var_0_0.Va3Aact120 = {
 	play_ui_molu_role_move = 25002519,
 	play_ui_molu_ilbn_open = 25002518
 }
-var_0_0.RoleChessGame1_3Common = {
+AudioEnum.RoleChessGame1_3Common = {
 	MainTargetRefresh = 25002514,
 	NewEpisodeUnlock = 25002515,
 	EnterChessMap = 25002518,
@@ -850,7 +859,7 @@ var_0_0.RoleChessGame1_3Common = {
 	GameTitleAppear = 25002516,
 	NextStage = 25002517
 }
-var_0_0.Role2ChessGame1_3 = {
+AudioEnum.Role2ChessGame1_3 = {
 	BreakBoughs = 25002503,
 	PushStone = 25002501,
 	FireSpread = 25002505,
@@ -860,7 +869,7 @@ var_0_0.Role2ChessGame1_3 = {
 	VatPushDown = 25002506,
 	DrumHit = 25002508
 }
-var_0_0.Explore = {
+AudioEnum.Explore = {
 	BubbleHide = 20165015,
 	HeroGlideStop = 25004122,
 	ExploreGuideUnlock4 = 20002535,
@@ -882,10 +891,10 @@ var_0_0.Explore = {
 	TrapStart = 25004101,
 	HeroWalkStop = 25004127
 }
-var_0_0.main_ui = {
+AudioEnum.main_ui = {
 	play_ui_task_page = 25006104
 }
-var_0_0.ui_activity = {
+AudioEnum.ui_activity = {
 	play_ui_pkls_endpoint_arrival = 25050221,
 	play_ui_feedback_open = 25005512,
 	play_ui_pkls_challenge_fail = 25050224,
@@ -896,35 +905,35 @@ var_0_0.ui_activity = {
 	play_ui_activity_open = 25006101,
 	play_ui_activity_switch = 25006102
 }
-var_0_0.ui_task = {
+AudioEnum.ui_task = {
 	play_ui_task_slide = 25006106,
 	play_ui_task_page = 25006105
 }
-var_0_0.ui_action = {
+AudioEnum.ui_action = {
 	play_ui_action_mainstart = 25006107
 }
-var_0_0.ui_formation = {
+AudioEnum.ui_formation = {
 	play_ui_formation_action = 25006108
 }
-var_0_0.ui_settleaccounts = {
+AudioEnum.ui_settleaccounts = {
 	play_ui_settleaccounts_resources = 25006111,
 	ui_settleaccounts_win = 25050225,
 	play_ui_settleaccounts_resources_rare = 25006111,
 	ui_settleaccounts_lose = 25050226,
 	play_ui_settleaccounts_win = 25006110
 }
-var_0_0.ui_role = {
+AudioEnum.ui_role = {
 	play_ui_role_cover_open_1 = 25006112
 }
-var_0_0.ui_activity_1_4_qiutu = {
+AudioEnum.ui_activity_1_4_qiutu = {
 	play_ui_qiutu_progress_loop = 25006113,
 	play_ui_qiutu_list_maintain = 25006115,
 	stop_ui_qiutu_progress_loop = 25006114
 }
-var_0_0.ui_checkpoint = {
+AudioEnum.ui_checkpoint = {
 	play_ui_checkpoint_light_up = 25006116
 }
-var_0_0.V1a5AiZiLa = {
+AudioEnum.V1a5AiZiLa = {
 	play_ui_wulu_aizila_open = 20151001,
 	play_ui_wulu_aizila_forward_paper4 = 20151009,
 	ui_wulu_aizila_level_open = 20151003,
@@ -940,7 +949,7 @@ var_0_0.V1a5AiZiLa = {
 	play_ui_wulu_aizila_level_transition = 20151004,
 	play_ui_mission_open = 20151014
 }
-var_0_0.ui_andamtte1_6_music = {
+AudioEnum.ui_andamtte1_6_music = {
 	play_ui_andamtte1_6_musicday3_42bpm4_4 = 20161008,
 	play_ui_andamtte1_6_musicday5_103bpm2_4 = 20161009,
 	play_ui_andamtte1_6_musicday2_50bpm4_4 = 20161006,
@@ -948,7 +957,7 @@ var_0_0.ui_andamtte1_6_music = {
 	stop_ui_andamtte1_6_music = 20161010,
 	play_ui_andamtte1_6_musicday4_135bpm3_4 = 20161007
 }
-var_0_0.LanternFestival = {
+AudioEnum.LanternFestival = {
 	play_ui_common_click = 20170007,
 	play_ui_task_page = 20170002,
 	play_ui_checkpoint_continueappear = 20170006,
@@ -956,25 +965,25 @@ var_0_0.LanternFestival = {
 	play_ui_taskinterface = 20170004,
 	play_ui_jinye_answer_correct = 20170005
 }
-var_0_0.NewYearEve = {
+AudioEnum.NewYearEve = {
 	play_ui_shuori_evegift_open = 20161065,
 	play_ui_shuori_evegift_popup = 20161067,
 	play_ui_shuori_evegift_click = 20161066
 }
-var_0_0.DragonBoatFestival = {
+AudioEnum.DragonBoatFestival = {
 	play_ui_jinye_spools_open = 20190002,
 	play_ui_mln_details_open = 20190001
 }
-var_0_0.MainSceneSkin = {
+AudioEnum.MainSceneSkin = {
 	play_ui_main_fit_scene = 20220001,
 	play_ui_main_switch_scene = 20220003,
 	play_ui_main_get_scene = 20220004,
 	play_ui_main_glitter = 20220002
 }
-var_0_0.SummonNewCustomSkin = {
+AudioEnum.SummonNewCustomSkin = {
 	play_ui_youyu_liuxing_give = 20220101
 }
-var_0_0.Tower = {
+AudioEnum.Tower = {
 	play_ui_leimi_theft_open = 20247001,
 	play_ui_fight_ripple = 20232006,
 	play_ui_fight_talent_light = 20232017,
@@ -1002,14 +1011,27 @@ var_0_0.Tower = {
 	play_ui_fight_ui_appear = 20232014,
 	play_ui_mingdi_boss_clearing = 312004
 }
-var_0_0.TowerBgm = {
+AudioEnum.TowerBgm = {
 	play_replay_music_towermain_2_3 = 20230009
 }
-var_0_0.None = -1
-var_0_0.Dialogue = {
+AudioEnum.Udimo = {
+	play_ui_utim_open = 20320101,
+	play_ui_utim_xinxi = 20320102,
+	play_ui_utim_daiji = 20320110,
+	play_ui_utim_ruzhu = 20320104,
+	play_ui_utim_songkai = 20320109,
+	play_ui_utim_zhuanban = 20320106,
+	play_ui_utim_daiji3 = 20320111,
+	play_ui_utim_tiqi = 20320108,
+	play_ui_utim_beijing = 20320105,
+	play_ui_utim_dianan = 20320107,
+	play_ui_utim_shua = 20320103
+}
+AudioEnum.None = -1
+AudioEnum.Dialogue = {
 	play_ui_wulu_duihua = 20150007
 }
-var_0_0.Season123 = {
+AudioEnum.Season123 = {
 	play_ui_activity_reward_ending = 20170046,
 	play_ui_leimi_map_upgrade = 20170024,
 	play_ui_mln_day_night = 20170044,
@@ -1026,7 +1048,7 @@ var_0_0.Season123 = {
 	play_ui_leimi_unlock = 20170032,
 	play_ui_checkpoint_light_up = 20170030
 }
-var_0_0.Handbook = {
+AudioEnum.Handbook = {
 	play_ui_tujianskin_floor_switch = 20280853,
 	play_ui_tujianskin_group_open = 20280854,
 	play_ui_tujianskin_amb_loop = 20280850,
@@ -1034,23 +1056,116 @@ var_0_0.Handbook = {
 	play_ui_tujianskin_group_special = 20301050,
 	play_ui_tujianskin_group_switch_2 = 20280852
 }
-var_0_0.NecrologistStory = {
-	play_ui_artificial_ui_entrance = 20002502,
-	play_ui_shuori_start_1 = 310031,
-	play_ui_qiutu_award_all = 310024,
-	play_ui_poltsfx_landmark = 310023,
-	play_ui_wulu_build = 310030,
-	play_ui_qiutu_revelation_open = 310029,
-	play_ui_tangren_win1 = 310032,
+AudioEnum.NecrologistStory = {
 	play_ui_qiutu_list_maintain = 310027,
-	play_ui_leimi_celebrity_get = 310021,
-	play_ui_feichi_spray_loop = 310025,
-	play_ui_activity_meeting_book_open = 310033,
-	stop_ui_feichi_spray_loop = 310026,
-	play_ui_gudu_bubble_click = 20249006,
+	play_ui_shuori_start_1 = 310031,
 	play_ui_mln_day_night = 310022,
+	play_ui_poltsfx_landmark = 310023,
+	play_ui_tangren_win1 = 310032,
+	play_ui_qiutu_revelation_open = 310029,
+	play_ui_shengyan_yishi_unlock = 320017,
+	play_ui_activity_meeting_book_open = 310033,
+	play_ui_leimi_celebrity_get = 310021,
+	play_ui_shengyan_yishi_rewards = 320018,
+	play_ui_shengyan_yishi_click = 320019,
 	play_ui_wulu_paiqian_open = 310028,
+	play_ui_artificial_ui_entrance = 20002502,
+	play_ui_qiutu_award_all = 310024,
+	play_ui_wulu_build = 310030,
+	play_ui_gudu_bubble_click = 20249006,
+	play_ui_feichi_spray_loop = 310025,
+	stop_ui_feichi_spray_loop = 310026,
+	play_ui_shengyan_yishi_result = 320020,
 	play_ui_note_course_finish = 20010008
 }
+AudioEnum.Rouge2 = {
+	play_ui_dungeon3_2_alchemy = 20320611,
+	play_ui_dungeon3_2_start_1 = 20320608,
+	DropRelics = 20001708,
+	EliteFightEvent = 25001205,
+	play_ui_dungeon3_2_alchemyidea = 20320612,
+	ClickChoice = 20001703,
+	HasRecruitNewBand = 20320647,
+	StrengthenRelics = 20320647,
+	FeatureUp = 20320647,
+	HasBXSPoint = 20234002,
+	DropBuff = 20234002,
+	EnterDifficulty = 20320631,
+	DiceFail = 20320643,
+	SelectWeather = 20320655,
+	StealFail = 20305112,
+	StealSucc = 20305414,
+	play_ui_qiutu_progress_loop = 25006113,
+	StartDice = 20320639,
+	FireBandMember = 20320637,
+	play_ui_dungeon3_2_guideorch = 20320620,
+	play_ui_dungeon3_2_lose = 20320622,
+	play_ui_dungeon3_2_featurette_2 = 20320624,
+	EnterRouge = 20320630,
+	EnterStealType = 20320627,
+	DropActiveSkill = 20220168,
+	stop_ui_qiutu_progress_loop = 25006114,
+	play_ui_dungeon3_2_over = 20320628,
+	play_ui_shenghuo_open_2 = 20230012,
+	play_ui_dungeon3_2_choose_4 = 20320613,
+	TalentSelect = 20320616,
+	play_ui_dungeon3_2_featurette_1 = 20320623,
+	StartMoveActor = 20190336,
+	play_ui_dungeon3_2_win = 20320661,
+	TalentActive = 20320629,
+	play_ui_cikeshang_yueka_unfold = 20305020,
+	TalentCancelChoice = 20320615,
+	play_ui_dungeon3_2_cancel = 20320615,
+	OpenSkillEditView = 20320650,
+	play_ui_dungeon3_2_orchfirst = 20320633,
+	play_ui_main_fit_scane_2_2 = 20220001,
+	SwitchCareer = 20320634,
+	play_ui_wenming_unclockchapter = 20260114,
+	play_ui_main_switch_scene_2_2 = 20220003,
+	StartLoading = 20320635,
+	play_ui_dungeon3_2_ideadetails = 20320618,
+	OpenNextLayerView = 20320656,
+	AttrUp = 20320644,
+	Compose = 20320654,
+	NextStep = 20320632,
+	ClickEvent = 20220030,
+	ClickBXSPoint = 20280613,
+	play_ui_dungeon3_2_guide = 20320619,
+	SelectDropItem = 20320637,
+	EquipActiveSkill = 20320652,
+	RemoveActiveSkill = 20320653,
+	CloseSkillEditView = 20320651,
+	EnterCareerView = 20320633,
+	play_ui_dungeon3_2_add = 20320614,
+	UnlockNewEvent = 20320607,
+	AddAttr = 20320646,
+	RecruitBand = 20320637,
+	play_ui_dungeon3_2_featurette_3 = 20320625,
+	play_ui_dungeon3_2_collectible = 20320662,
+	EndMoveActor = 20190337,
+	play_ui_dungeon3_2_start_2_2 = 20320610,
+	ConfirmSelectBuff = 20320641,
+	play_ui_dungeon3_2_start_2_1 = 20320609,
+	play_ui_dungeon3_2_click = 20320616,
+	StopDice = 20320664,
+	StealGoods = 20305407,
+	OpenBag = 20320649,
+	play_ui_dungeon3_2_alchemyideasuc = 20320617,
+	DiceValue = 20320641,
+	EndLoading = 20320636,
+	OpenAttrDetail = 20001703,
+	play_ui_dungeon3_2_rating = 20320626,
+	SelectChoice = 20320638,
+	ClickBagTab = 20320634,
+	AddFixValue = 20320640,
+	SelectActiveSkill = 20320645,
+	LevelUpRelics = 20305411,
+	play_ui_dungeon3_2_report = 20320627,
+	play_ui_dungeon3_2_orchclick = 20320621,
+	EndPlayDialogue = 20200115,
+	TalentChoice = 20320614,
+	StartPlayDialogue = 20200114,
+	DiceSucc = 20320642
+}
 
-return var_0_0
+return AudioEnum

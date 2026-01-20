@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity2_7.v2a7_selfselectsix_1.view.V2a7_SelfSelectSix_PanelViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/v2a7_selfselectsix_1/view/V2a7_SelfSelectSix_PanelViewContainer.lua
 
-local var_0_0 = class("V2a7_SelfSelectSix_PanelViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_7.v2a7_selfselectsix_1.view.V2a7_SelfSelectSix_PanelViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local V2a7_SelfSelectSix_PanelViewContainer = class("V2a7_SelfSelectSix_PanelViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, V2a7_SelfSelectSix_PanelView.New())
+function V2a7_SelfSelectSix_PanelViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, V2a7_SelfSelectSix_PanelView.New())
+
+	return views
 end
 
-return var_0_0
+return V2a7_SelfSelectSix_PanelViewContainer

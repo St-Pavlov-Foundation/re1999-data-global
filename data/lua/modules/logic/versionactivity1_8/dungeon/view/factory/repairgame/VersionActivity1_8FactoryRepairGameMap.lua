@@ -1,239 +1,244 @@
-﻿module("modules.logic.versionactivity1_8.dungeon.view.factory.repairgame.VersionActivity1_8FactoryRepairGameMap", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_8/dungeon/view/factory/repairgame/VersionActivity1_8FactoryRepairGameMap.lua
 
-local var_0_0 = class("VersionActivity1_8FactoryRepairGameMap", BaseView)
-local var_0_1 = 123
-local var_0_2 = 123
+module("modules.logic.versionactivity1_8.dungeon.view.factory.repairgame.VersionActivity1_8FactoryRepairGameMap", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gomap = gohelper.findChild(arg_1_0.viewGO, "#go_map")
-	arg_1_0._gomapTrs = arg_1_0._gomap.transform
-	arg_1_0._btnMapClick = SLFramework.UGUI.UIClickListener.Get(arg_1_0._gomap)
-	arg_1_0._btnreset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_reset")
+local VersionActivity1_8FactoryRepairGameMap = class("VersionActivity1_8FactoryRepairGameMap", BaseView)
+local ITEM_SIZE_X = 123
+local ITEM_SIZE_Y = 123
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity1_8FactoryRepairGameMap:onInitView()
+	self._gomap = gohelper.findChild(self.viewGO, "#go_map")
+	self._gomapTrs = self._gomap.transform
+	self._btnMapClick = SLFramework.UGUI.UIClickListener.Get(self._gomap)
+	self._btnreset = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_reset")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(Activity157Controller.instance, ArmPuzzlePipeEvent.GuideClickGrid, arg_2_0._onGuideClickGrid, arg_2_0)
-	arg_2_0:addEventCb(Activity157Controller.instance, ArmPuzzlePipeEvent.PlaceRefreshPipesGrid, arg_2_0._onPlaceRefreshPipesGrid, arg_2_0)
-	arg_2_0:addEventCb(Activity157Controller.instance, ArmPuzzlePipeEvent.PipeGameClear, arg_2_0._onGameClear, arg_2_0)
-	arg_2_0._btnMapClick:AddClickListener(arg_2_0._btnMapOnClick, arg_2_0)
-	arg_2_0._btnreset:AddClickListener(arg_2_0._btnresetOnClick, arg_2_0)
+function VersionActivity1_8FactoryRepairGameMap:addEvents()
+	self:addEventCb(Activity157Controller.instance, ArmPuzzlePipeEvent.GuideClickGrid, self._onGuideClickGrid, self)
+	self:addEventCb(Activity157Controller.instance, ArmPuzzlePipeEvent.PlaceRefreshPipesGrid, self._onPlaceRefreshPipesGrid, self)
+	self:addEventCb(Activity157Controller.instance, ArmPuzzlePipeEvent.PipeGameClear, self._onGameClear, self)
+	self._btnMapClick:AddClickListener(self._btnMapOnClick, self)
+	self._btnreset:AddClickListener(self._btnresetOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(Activity157Controller.instance, ArmPuzzlePipeEvent.GuideClickGrid, arg_3_0._onGuideClickGrid, arg_3_0)
-	arg_3_0:removeEventCb(Activity157Controller.instance, ArmPuzzlePipeEvent.PlaceRefreshPipesGrid, arg_3_0._onPlaceRefreshPipesGrid, arg_3_0)
-	arg_3_0:removeEventCb(Activity157Controller.instance, ArmPuzzlePipeEvent.PipeGameClear, arg_3_0._onGameClear, arg_3_0)
-	arg_3_0._btnMapClick:RemoveClickListener()
-	arg_3_0._btnreset:RemoveClickListener()
+function VersionActivity1_8FactoryRepairGameMap:removeEvents()
+	self:removeEventCb(Activity157Controller.instance, ArmPuzzlePipeEvent.GuideClickGrid, self._onGuideClickGrid, self)
+	self:removeEventCb(Activity157Controller.instance, ArmPuzzlePipeEvent.PlaceRefreshPipesGrid, self._onPlaceRefreshPipesGrid, self)
+	self:removeEventCb(Activity157Controller.instance, ArmPuzzlePipeEvent.PipeGameClear, self._onGameClear, self)
+	self._btnMapClick:RemoveClickListener()
+	self._btnreset:RemoveClickListener()
 end
 
-function var_0_0._onGuideClickGrid(arg_4_0, arg_4_1)
-	local var_4_0 = string.splitToNumber(arg_4_1, "_")
-	local var_4_1 = var_4_0[1]
-	local var_4_2 = var_4_0[2]
+function VersionActivity1_8FactoryRepairGameMap:_onGuideClickGrid(param)
+	local paramList = string.splitToNumber(param, "_")
+	local x = paramList[1]
+	local y = paramList[2]
 
-	arg_4_0:_onClickGridItem(var_4_1, var_4_2)
+	self:_onClickGridItem(x, y)
 end
 
-function var_0_0._onPlaceRefreshPipesGrid(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = Activity157RepairGameModel.instance:getData(arg_5_1, arg_5_2)
+function VersionActivity1_8FactoryRepairGameMap:_onPlaceRefreshPipesGrid(x, y)
+	local mo = Activity157RepairGameModel.instance:getData(x, y)
 
-	if not var_5_0 then
+	if not mo then
 		return
 	end
 
-	Activity157Controller.instance:refreshConnection(var_5_0)
+	Activity157Controller.instance:refreshConnection(mo)
 	Activity157Controller.instance:updateConnection()
-	arg_5_0:initItem(arg_5_1, arg_5_2)
-	arg_5_0:_refreshConnection()
-	arg_5_0:_refreshEntryItem()
+	self:initItem(x, y)
+	self:_refreshConnection()
+	self:_refreshEntryItem()
 
-	arg_5_0._canTouch = not Activity157RepairGameModel.instance:getGameClear()
+	self._canTouch = not Activity157RepairGameModel.instance:getGameClear()
 
 	Activity157Controller.instance:checkDispatchClear()
 end
 
-function var_0_0._onGameClear(arg_6_0)
+function VersionActivity1_8FactoryRepairGameMap:_onGameClear()
 	VersionActivity1_8StatController.instance:statSuccess()
 end
 
-function var_0_0._btnMapOnClick(arg_7_0)
-	local var_7_0 = GamepadController.instance:getMousePosition()
+function VersionActivity1_8FactoryRepairGameMap:_btnMapOnClick()
+	local pos = GamepadController.instance:getMousePosition()
 
-	arg_7_0:_onClickContainer(var_7_0)
+	self:_onClickContainer(pos)
 end
 
-function var_0_0._onClickContainer(arg_8_0, arg_8_1)
-	local var_8_0 = recthelper.screenPosToAnchorPos(arg_8_1, arg_8_0._gomapTrs)
-	local var_8_1, var_8_2 = Activity157RepairGameModel.instance:getIndexByTouchPos(var_8_0.x, var_8_0.y, var_0_1, var_0_2)
+function VersionActivity1_8FactoryRepairGameMap:_onClickContainer(position)
+	local tempPos = recthelper.screenPosToAnchorPos(position, self._gomapTrs)
+	local x, y = Activity157RepairGameModel.instance:getIndexByTouchPos(tempPos.x, tempPos.y, ITEM_SIZE_X, ITEM_SIZE_Y)
 
-	if var_8_1 ~= -1 then
-		arg_8_0:_onClickGridItem(var_8_1, var_8_2)
+	if x ~= -1 then
+		self:_onClickGridItem(x, y)
 	end
 end
 
-function var_0_0._onClickGridItem(arg_9_0, arg_9_1, arg_9_2)
-	if not arg_9_0._canTouch then
+function VersionActivity1_8FactoryRepairGameMap:_onClickGridItem(x, y)
+	if not self._canTouch then
 		GameFacade.showToast(ToastEnum.V1a8Activity157RepairComplete)
 
 		return
 	end
 
-	local var_9_0 = Activity157RepairGameModel.instance:getData(arg_9_1, arg_9_2)
+	local mo = Activity157RepairGameModel.instance:getData(x, y)
 
-	if var_9_0:isEntry() then
+	if mo:isEntry() then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
-	Activity157Controller.instance:changeDirection(arg_9_1, arg_9_2, true)
+	Activity157Controller.instance:changeDirection(x, y, true)
 	Activity157Controller.instance:updateConnection()
-	arg_9_0:_syncRotation(arg_9_1, arg_9_2, var_9_0)
-	arg_9_0:_refreshConnection()
-	arg_9_0:_refreshEntryItem()
+	self:_syncRotation(x, y, mo)
+	self:_refreshConnection()
+	self:_refreshEntryItem()
 
-	arg_9_0._canTouch = not Activity157RepairGameModel.instance:getGameClear()
+	self._canTouch = not Activity157RepairGameModel.instance:getGameClear()
 
 	Activity157Controller.instance:checkDispatchClear()
 end
 
-function var_0_0._syncRotation(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	if arg_10_3:isEntry() then
+function VersionActivity1_8FactoryRepairGameMap:_syncRotation(x, y, mo)
+	if mo:isEntry() then
 		return
 	end
 
-	arg_10_0._gridItemDict[arg_10_1][arg_10_2]:syncRotation(arg_10_3)
+	local itemObj = self._gridItemDict[x][y]
+
+	itemObj:syncRotation(mo)
 end
 
-function var_0_0._btnresetOnClick(arg_11_0)
-	if not arg_11_0._canTouch then
+function VersionActivity1_8FactoryRepairGameMap:_btnresetOnClick()
+	if not self._canTouch then
 		GameFacade.showToast(ToastEnum.V1a8Activity157RepairComplete)
 
 		return
 	end
 
 	GameFacade.showMessageBox(MessageBoxIdDefine.v1a8Activity157RestTip, MsgBoxEnum.BoxType.Yes_No, function()
-		arg_11_0:_resetGame()
+		self:_resetGame()
 	end)
 end
 
-function var_0_0._resetGame(arg_13_0)
+function VersionActivity1_8FactoryRepairGameMap:_resetGame()
 	VersionActivity1_8StatController.instance:statReset()
 	Activity157Controller.instance:resetGame()
 
-	for iter_13_0 = 1, arg_13_0._gameWidth do
-		for iter_13_1 = 1, arg_13_0._gameHeight do
-			arg_13_0:initItem(iter_13_0, iter_13_1)
-			arg_13_0:_refreshConnectItem(iter_13_0, iter_13_1)
+	for x = 1, self._gameWidth do
+		for y = 1, self._gameHeight do
+			self:initItem(x, y)
+			self:_refreshConnectItem(x, y)
 		end
 	end
 
-	arg_13_0:_refreshEntryItem()
+	self:_refreshEntryItem()
 
-	arg_13_0._canTouch = not Activity157RepairGameModel.instance:getGameClear()
+	self._canTouch = not Activity157RepairGameModel.instance:getGameClear()
 end
 
-function var_0_0._editableInitView(arg_14_0)
-	arg_14_0._canTouch = true
-	arg_14_0._gameWidth, arg_14_0._gameHeight = Activity157RepairGameModel.instance:getGameSize()
+function VersionActivity1_8FactoryRepairGameMap:_editableInitView()
+	self._canTouch = true
+	self._gameWidth, self._gameHeight = Activity157RepairGameModel.instance:getGameSize()
 end
 
-function var_0_0.onUpdateParam(arg_15_0)
+function VersionActivity1_8FactoryRepairGameMap:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_16_0)
+function VersionActivity1_8FactoryRepairGameMap:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.Meilanni.play_ui_mln_unlock)
 
-	arg_16_0._gridItemDict = {}
-	arg_16_0._gridItemList = {}
+	self._gridItemDict = {}
+	self._gridItemList = {}
 
-	for iter_16_0 = 1, arg_16_0._gameWidth do
-		arg_16_0._gridItemDict[iter_16_0] = arg_16_0._gridItemDict[iter_16_0] or {}
+	for x = 1, self._gameWidth do
+		self._gridItemDict[x] = self._gridItemDict[x] or {}
 
-		for iter_16_1 = 1, arg_16_0._gameHeight do
-			arg_16_0:addNewItem(iter_16_0, iter_16_1)
+		for y = 1, self._gameHeight do
+			self:addNewItem(x, y)
 		end
 	end
 
-	arg_16_0:_refreshEntryItem()
+	self:_refreshEntryItem()
 end
 
-function var_0_0.addNewItem(arg_17_0, arg_17_1, arg_17_2)
-	arg_17_0:_newPipeItem(arg_17_1, arg_17_2)
-	arg_17_0:initItem(arg_17_1, arg_17_2)
-	arg_17_0:_refreshConnectItem(arg_17_1, arg_17_2)
+function VersionActivity1_8FactoryRepairGameMap:addNewItem(x, y)
+	self:_newPipeItem(x, y)
+	self:initItem(x, y)
+	self:_refreshConnectItem(x, y)
 end
 
-function var_0_0._newPipeItem(arg_18_0, arg_18_1, arg_18_2)
-	local var_18_0 = arg_18_0.viewContainer._viewSetting.otherRes[1]
-	local var_18_1 = arg_18_0:getResInst(var_18_0, arg_18_0._gomap, arg_18_1 .. "_" .. arg_18_2)
-	local var_18_2 = var_18_1.transform
-	local var_18_3, var_18_4 = Activity157RepairGameModel.instance:getRelativePosition(arg_18_1, arg_18_2, var_0_1, var_0_2)
+function VersionActivity1_8FactoryRepairGameMap:_newPipeItem(x, y)
+	local itemPath = self.viewContainer._viewSetting.otherRes[1]
+	local itemGo = self:getResInst(itemPath, self._gomap, x .. "_" .. y)
+	local rectTf = itemGo.transform
+	local anchorX, anchorY = Activity157RepairGameModel.instance:getRelativePosition(x, y, ITEM_SIZE_X, ITEM_SIZE_Y)
 
-	recthelper.setAnchor(var_18_2, var_18_3, var_18_4)
+	recthelper.setAnchor(rectTf, anchorX, anchorY)
 
-	local var_18_5 = MonoHelper.addNoUpdateLuaComOnceToGo(var_18_1, VersionActivity1_8FactoryRepairGameMapItem)
+	local comp = MonoHelper.addNoUpdateLuaComOnceToGo(itemGo, VersionActivity1_8FactoryRepairGameMapItem)
 
-	table.insert(arg_18_0._gridItemList, var_18_5)
+	table.insert(self._gridItemList, comp)
 
-	arg_18_0._gridItemDict[arg_18_1][arg_18_2] = var_18_5
+	self._gridItemDict[x][y] = comp
 end
 
-function var_0_0.initItem(arg_19_0, arg_19_1, arg_19_2)
-	local var_19_0 = Activity157RepairGameModel.instance:getData(arg_19_1, arg_19_2)
+function VersionActivity1_8FactoryRepairGameMap:initItem(x, y)
+	local mo = Activity157RepairGameModel.instance:getData(x, y)
+	local itemObj = self._gridItemDict[x][y]
 
-	arg_19_0._gridItemDict[arg_19_1][arg_19_2]:initItem(var_19_0)
+	itemObj:initItem(mo)
 end
 
-function var_0_0._refreshConnection(arg_20_0)
-	for iter_20_0 = 1, arg_20_0._gameWidth do
-		for iter_20_1 = 1, arg_20_0._gameHeight do
-			arg_20_0:_refreshConnectItem(iter_20_0, iter_20_1)
+function VersionActivity1_8FactoryRepairGameMap:_refreshConnection()
+	for x = 1, self._gameWidth do
+		for y = 1, self._gameHeight do
+			self:_refreshConnectItem(x, y)
 		end
 	end
 end
 
-function var_0_0._refreshConnectItem(arg_21_0, arg_21_1, arg_21_2)
-	if arg_21_1 > 0 and arg_21_1 <= arg_21_0._gameWidth and arg_21_2 > 0 and arg_21_2 <= arg_21_0._gameHeight then
-		local var_21_0 = Activity157RepairGameModel.instance:getData(arg_21_1, arg_21_2)
+function VersionActivity1_8FactoryRepairGameMap:_refreshConnectItem(x, y)
+	if x > 0 and x <= self._gameWidth and y > 0 and y <= self._gameHeight then
+		local mo = Activity157RepairGameModel.instance:getData(x, y)
+		local itemObj = self._gridItemDict[x][y]
 
-		arg_21_0._gridItemDict[arg_21_1][arg_21_2]:initConnectObj(var_21_0)
+		itemObj:initConnectObj(mo)
 	end
 end
 
-function var_0_0._refreshEntryItem(arg_22_0)
-	local var_22_0 = Activity157RepairGameModel.instance:getEntryList()
+function VersionActivity1_8FactoryRepairGameMap:_refreshEntryItem()
+	local entryList = Activity157RepairGameModel.instance:getEntryList()
 
-	for iter_22_0, iter_22_1 in pairs(var_22_0) do
-		local var_22_1 = iter_22_1.x
-		local var_22_2 = iter_22_1.y
-		local var_22_3 = arg_22_0._gridItemDict[var_22_1][var_22_2]
+	for _, mo in pairs(entryList) do
+		local x, y = mo.x, mo.y
+		local itemObj = self._gridItemDict[x][y]
 
-		var_22_3:initItem(iter_22_1)
-		var_22_3:initConnectObj(iter_22_1)
+		itemObj:initItem(mo)
+		itemObj:initConnectObj(mo)
 	end
 end
 
-function var_0_0.getXYByPosition(arg_23_0, arg_23_1)
-	local var_23_0 = recthelper.screenPosToAnchorPos(arg_23_1, arg_23_0._gomapTrs)
-	local var_23_1, var_23_2 = Activity157RepairGameModel.instance:getIndexByTouchPos(var_23_0.x, var_23_0.y, var_0_1, var_0_2)
+function VersionActivity1_8FactoryRepairGameMap:getXYByPosition(position)
+	local tempPos = recthelper.screenPosToAnchorPos(position, self._gomapTrs)
+	local x, y = Activity157RepairGameModel.instance:getIndexByTouchPos(tempPos.x, tempPos.y, ITEM_SIZE_X, ITEM_SIZE_Y)
 
-	if var_23_1 ~= -1 then
-		return var_23_1, var_23_2
+	if x ~= -1 then
+		return x, y
 	end
 end
 
-function var_0_0.onClose(arg_24_0)
+function VersionActivity1_8FactoryRepairGameMap:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_25_0)
+function VersionActivity1_8FactoryRepairGameMap:onDestroyView()
 	return
 end
 
-return var_0_0
+return VersionActivity1_8FactoryRepairGameMap

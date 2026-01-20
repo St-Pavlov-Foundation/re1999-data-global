@@ -1,16 +1,18 @@
-﻿module("modules.logic.versionactivity1_7.marcus.define.ActMarcusEnum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_7/marcus/define/ActMarcusEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_7.marcus.define.ActMarcusEnum", package.seeall)
 
-var_0_0.TaskMOAllFinishId = -100
-var_0_0.AnimatorTime = {
+local ActMarcusEnum = _M
+
+ActMarcusEnum.TaskMOAllFinishId = -100
+ActMarcusEnum.AnimatorTime = {
 	TaskReward = 0.5,
 	TaskRewardMoveUp = 0.15
 }
-var_0_0.AnimEvt = {
+ActMarcusEnum.AnimEvt = {
 	OnGoStoryEnd = "goStoryEnd",
 	OnStoryOpenEnd = "storyOpenEnd",
 	OnFightOpenEnd = "fightOpenEnd"
 }
 
-return var_0_0
+return ActMarcusEnum

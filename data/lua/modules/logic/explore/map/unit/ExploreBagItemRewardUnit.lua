@@ -1,35 +1,37 @@
-﻿module("modules.logic.explore.map.unit.ExploreBagItemRewardUnit", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/unit/ExploreBagItemRewardUnit.lua
 
-local var_0_0 = class("ExploreBagItemRewardUnit", ExploreBaseDisplayUnit)
+module("modules.logic.explore.map.unit.ExploreBagItemRewardUnit", package.seeall)
 
-function var_0_0.needInteractAnim(arg_1_0)
+local ExploreBagItemRewardUnit = class("ExploreBagItemRewardUnit", ExploreBaseDisplayUnit)
+
+function ExploreBagItemRewardUnit:needInteractAnim()
 	return true
 end
 
-function var_0_0.playAnim(arg_2_0, arg_2_1)
-	if arg_2_1 == ExploreAnimEnum.AnimName.exit then
-		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_2_0.checkHavePopup, arg_2_0)
+function ExploreBagItemRewardUnit:playAnim(animName)
+	if animName == ExploreAnimEnum.AnimName.exit then
+		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self.checkHavePopup, self)
 	else
-		var_0_0.super.playAnim(arg_2_0, arg_2_1)
+		ExploreBagItemRewardUnit.super.playAnim(self, animName)
 	end
 end
 
-function var_0_0.checkHavePopup(arg_3_0)
+function ExploreBagItemRewardUnit:checkHavePopup()
 	if PopupController.instance:getPopupCount() > 0 or ViewMgr.instance:isOpen(ViewName.ExploreGetItemView) or ViewMgr.instance:isOpen(ViewName.CommonPropView) then
 		return true
 	else
-		arg_3_0:onPopupEnd()
+		self:onPopupEnd()
 	end
 end
 
-function var_0_0.onPopupEnd(arg_4_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_4_0.checkHavePopup, arg_4_0)
-	arg_4_0.animComp:playAnim(ExploreAnimEnum.AnimName.exit)
+function ExploreBagItemRewardUnit:onPopupEnd()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self.checkHavePopup, self)
+	self.animComp:playAnim(ExploreAnimEnum.AnimName.exit)
 end
 
-function var_0_0.onDestroy(arg_5_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_5_0.checkHavePopup, arg_5_0)
-	var_0_0.super.onDestroy(arg_5_0)
+function ExploreBagItemRewardUnit:onDestroy()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self.checkHavePopup, self)
+	ExploreBagItemRewardUnit.super.onDestroy(self)
 end
 
-return var_0_0
+return ExploreBagItemRewardUnit

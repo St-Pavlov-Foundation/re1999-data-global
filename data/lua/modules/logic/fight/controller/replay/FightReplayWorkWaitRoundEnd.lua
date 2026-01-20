@@ -1,21 +1,23 @@
-﻿module("modules.logic.fight.controller.replay.FightReplayWorkWaitRoundEnd", package.seeall)
+﻿-- chunkname: @modules/logic/fight/controller/replay/FightReplayWorkWaitRoundEnd.lua
 
-local var_0_0 = class("FightReplayWorkWaitRoundEnd", BaseWork)
+module("modules.logic.fight.controller.replay.FightReplayWorkWaitRoundEnd", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local FightReplayWorkWaitRoundEnd = class("FightReplayWorkWaitRoundEnd", BaseWork)
+
+function FightReplayWorkWaitRoundEnd:ctor()
 	return
 end
 
-function var_0_0.onStart(arg_2_0)
-	FightController.instance:registerCallback(FightEvent.OnRoundSequenceFinish, arg_2_0._onRoundEnd, arg_2_0)
+function FightReplayWorkWaitRoundEnd:onStart()
+	FightController.instance:registerCallback(FightEvent.OnRoundSequenceFinish, self._onRoundEnd, self)
 end
 
-function var_0_0._onRoundEnd(arg_3_0)
-	arg_3_0:onDone(true)
+function FightReplayWorkWaitRoundEnd:_onRoundEnd()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	FightController.instance:unregisterCallback(FightEvent.OnRoundSequenceFinish, arg_4_0._onRoundEnd, arg_4_0)
+function FightReplayWorkWaitRoundEnd:clearWork()
+	FightController.instance:unregisterCallback(FightEvent.OnRoundSequenceFinish, self._onRoundEnd, self)
 end
 
-return var_0_0
+return FightReplayWorkWaitRoundEnd

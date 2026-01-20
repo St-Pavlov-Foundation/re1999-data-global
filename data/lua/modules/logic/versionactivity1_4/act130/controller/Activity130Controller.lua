@@ -1,93 +1,95 @@
-﻿module("modules.logic.versionactivity1_4.act130.controller.Activity130Controller", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act130/controller/Activity130Controller.lua
 
-local var_0_0 = class("Activity130Controller", BaseController)
+module("modules.logic.versionactivity1_4.act130.controller.Activity130Controller", package.seeall)
 
-function var_0_0.openActivity130GameView(arg_1_0, arg_1_1)
-	if arg_1_1 and arg_1_1.episodeId then
-		if not Activity130Model.instance:isEpisodeUnlock(arg_1_1.episodeId) then
+local Activity130Controller = class("Activity130Controller", BaseController)
+
+function Activity130Controller:openActivity130GameView(param)
+	if param and param.episodeId then
+		if not Activity130Model.instance:isEpisodeUnlock(param.episodeId) then
 			GameFacade.showToast(ToastEnum.V1a4_act130EpisodeNotUnlock)
 
 			return
 		else
-			Activity130Model.instance:setCurEpisodeId(arg_1_1.episodeId)
+			Activity130Model.instance:setCurEpisodeId(param.episodeId)
 		end
 	end
 
-	var_0_0.instance:dispatchEvent(Activity130Event.ShowLevelScene, false)
-	ViewMgr.instance:openView(ViewName.Activity130GameView, arg_1_1, true)
+	Activity130Controller.instance:dispatchEvent(Activity130Event.ShowLevelScene, false)
+	ViewMgr.instance:openView(ViewName.Activity130GameView, param, true)
 end
 
-function var_0_0.openPuzzleView(arg_2_0, arg_2_1)
+function Activity130Controller:openPuzzleView(param)
 	Role37PuzzleModel.instance:setErrorCnt(0)
-	ViewMgr.instance:openView(ViewName.Role37PuzzleView, arg_2_1)
+	ViewMgr.instance:openView(ViewName.Role37PuzzleView, param)
 end
 
-function var_0_0.enterActivity130(arg_3_0)
-	local var_3_0 = PlayerPrefsKey.Version1_4_Act130Tips .. "#" .. tostring(VersionActivity1_4Enum.ActivityId.Role37) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
-	local var_3_1 = PlayerPrefsHelper.getNumber(var_3_0, 0) == 1
+function Activity130Controller:enterActivity130()
+	local key = PlayerPrefsKey.Version1_4_Act130Tips .. "#" .. tostring(VersionActivity1_4Enum.ActivityId.Role37) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
+	local hasTiped = PlayerPrefsHelper.getNumber(key, 0) == 1
 
-	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Act130OpenTips) or var_3_1 then
-		arg_3_0:_getActInfoBeforeEnter()
+	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Act130OpenTips) or hasTiped then
+		self:_getActInfoBeforeEnter()
 
 		return
 	end
 
-	local var_3_2 = OpenConfig.instance:getOpenCo(OpenEnum.UnlockFunc.Act130OpenTips).episodeId
-	local var_3_3 = DungeonConfig.instance:getEpisodeCO(var_3_2)
-	local var_3_4 = DungeonController.getEpisodeName(var_3_3)
+	local episodeId = OpenConfig.instance:getOpenCo(OpenEnum.UnlockFunc.Act130OpenTips).episodeId
+	local episodeCo = DungeonConfig.instance:getEpisodeCO(episodeId)
+	local dungeonName = DungeonController.getEpisodeName(episodeCo)
 
 	GameFacade.showMessageBox(MessageBoxIdDefine.Activity130OpenTips, MsgBoxEnum.BoxType.Yes_No, function()
-		PlayerPrefsHelper.setNumber(var_3_0, 1)
-		arg_3_0:_getActInfoBeforeEnter()
-	end, nil, nil, nil, nil, nil, var_3_4)
+		PlayerPrefsHelper.setNumber(key, 1)
+		self:_getActInfoBeforeEnter()
+	end, nil, nil, nil, nil, nil, dungeonName)
 end
 
-function var_0_0._getActInfoBeforeEnter(arg_5_0)
-	Activity130Rpc.instance:sendGet130InfosRequest(VersionActivity1_4Enum.ActivityId.Role37, arg_5_0.openActivity130LevelView, arg_5_0)
+function Activity130Controller:_getActInfoBeforeEnter()
+	Activity130Rpc.instance:sendGet130InfosRequest(VersionActivity1_4Enum.ActivityId.Role37, self.openActivity130LevelView, self)
 end
 
-function var_0_0.openActivity130LevelView(arg_6_0)
-	local var_6_0 = ActivityConfig.instance:getActivityCo(VersionActivity1_4Enum.ActivityId.Role37).storyId
+function Activity130Controller:openActivity130LevelView()
+	local pvStory = ActivityConfig.instance:getActivityCo(VersionActivity1_4Enum.ActivityId.Role37).storyId
 
-	if var_6_0 > 0 and not StoryModel.instance:isStoryFinished(var_6_0) then
-		StoryController.instance:playStory(var_6_0, nil, function()
+	if pvStory > 0 and not StoryModel.instance:isStoryFinished(pvStory) then
+		StoryController.instance:playStory(pvStory, nil, function()
 			Activity130Model.instance:setNewFinishEpisode(0)
 			Activity130Model.instance:setNewUnlockEpisode(1)
 
-			local var_7_0 = {}
+			local data = {}
 
-			var_7_0.episodeId = 0
+			data.episodeId = 0
 
-			arg_6_0:_realOpenLevelView(var_7_0)
+			self:_realOpenLevelView(data)
 		end, nil)
 
 		return
 	end
 
-	arg_6_0:_realOpenLevelView()
+	self:_realOpenLevelView()
 end
 
-function var_0_0._realOpenLevelView(arg_8_0, arg_8_1)
-	ViewMgr.instance:openView(ViewName.Activity130LevelView, arg_8_1)
+function Activity130Controller:_realOpenLevelView(param)
+	ViewMgr.instance:openView(ViewName.Activity130LevelView, param)
 end
 
-function var_0_0.openActivity130DialogView(arg_9_0, arg_9_1)
-	ViewMgr.instance:openView(ViewName.Activity130DialogView, arg_9_1)
+function Activity130Controller:openActivity130DialogView(param)
+	ViewMgr.instance:openView(ViewName.Activity130DialogView, param)
 end
 
-function var_0_0.openActivity130CollectView(arg_10_0)
+function Activity130Controller:openActivity130CollectView()
 	ViewMgr.instance:openView(ViewName.Activity130CollectView)
 end
 
-function var_0_0.openActivity130TaskView(arg_11_0)
+function Activity130Controller:openActivity130TaskView()
 	ViewMgr.instance:openView(ViewName.Activity130TaskView)
 end
 
-function var_0_0.delayReward(arg_12_0, arg_12_1, arg_12_2)
-	if arg_12_0._act130TaskMO == nil and arg_12_2 then
-		arg_12_0._act130TaskMO = arg_12_2
+function Activity130Controller:delayReward(delayTime, taskMO)
+	if self._act130TaskMO == nil and taskMO then
+		self._act130TaskMO = taskMO
 
-		TaskDispatcher.runDelay(arg_12_0._onPreFinish, arg_12_0, arg_12_1)
+		TaskDispatcher.runDelay(self._onPreFinish, self, delayTime)
 
 		return true
 	end
@@ -95,44 +97,44 @@ function var_0_0.delayReward(arg_12_0, arg_12_1, arg_12_2)
 	return false
 end
 
-function var_0_0._onPreFinish(arg_13_0)
-	local var_13_0 = arg_13_0._act130TaskMO
+function Activity130Controller:_onPreFinish()
+	local act130TaskMO = self._act130TaskMO
 
-	arg_13_0._act130TaskMO = nil
+	self._act130TaskMO = nil
 
-	if var_13_0 and (var_13_0.id == Activity130Enum.TaskMOAllFinishId or var_13_0:alreadyGotReward()) then
-		Activity130TaskListModel.instance:preFinish(var_13_0)
+	if act130TaskMO and (act130TaskMO.id == Activity130Enum.TaskMOAllFinishId or act130TaskMO:alreadyGotReward()) then
+		Activity130TaskListModel.instance:preFinish(act130TaskMO)
 
-		arg_13_0._act130TaskId = var_13_0.id
+		self._act130TaskId = act130TaskMO.id
 
-		TaskDispatcher.runDelay(arg_13_0._onRewardTask, arg_13_0, Activity130Enum.AnimatorTime.TaskRewardMoveUp)
+		TaskDispatcher.runDelay(self._onRewardTask, self, Activity130Enum.AnimatorTime.TaskRewardMoveUp)
 	end
 end
 
-function var_0_0._onRewardTask(arg_14_0)
-	local var_14_0 = arg_14_0._act130TaskId
+function Activity130Controller:_onRewardTask()
+	local act130TaskId = self._act130TaskId
 
-	arg_14_0._act130TaskId = nil
+	self._act130TaskId = nil
 
-	if var_14_0 then
-		if var_14_0 == Activity130Enum.TaskMOAllFinishId then
+	if act130TaskId then
+		if act130TaskId == Activity130Enum.TaskMOAllFinishId then
 			TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.Activity130)
 		else
-			TaskRpc.instance:sendFinishTaskRequest(var_14_0)
+			TaskRpc.instance:sendFinishTaskRequest(act130TaskId)
 		end
 	end
 end
 
-function var_0_0.oneClaimReward(arg_15_0, arg_15_1)
-	local var_15_0 = Activity130TaskListModel.instance:getList()
+function Activity130Controller:oneClaimReward(actId)
+	local list = Activity130TaskListModel.instance:getList()
 
-	for iter_15_0, iter_15_1 in pairs(var_15_0) do
-		if iter_15_1:alreadyGotReward() and iter_15_1.id ~= Activity130Enum.TaskMOAllFinishId then
-			TaskRpc.instance:sendFinishTaskRequest(iter_15_1.id)
+	for _, act130TaskMO in pairs(list) do
+		if act130TaskMO:alreadyGotReward() and act130TaskMO.id ~= Activity130Enum.TaskMOAllFinishId then
+			TaskRpc.instance:sendFinishTaskRequest(act130TaskMO.id)
 		end
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+Activity130Controller.instance = Activity130Controller.New()
 
-return var_0_0
+return Activity130Controller

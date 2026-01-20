@@ -1,39 +1,42 @@
-﻿module("modules.logic.rouge.define.RougeBaseDLCViewComp", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/define/RougeBaseDLCViewComp.lua
 
-local var_0_0 = class("RougeBaseDLCViewComp", BaseViewExtended)
+module("modules.logic.rouge.define.RougeBaseDLCViewComp", package.seeall)
 
-function var_0_0._updateVersion(arg_1_0)
-	local var_1_0 = arg_1_0:getSeason()
-	local var_1_1 = arg_1_0:getVersions()
+local RougeBaseDLCViewComp = class("RougeBaseDLCViewComp", BaseViewExtended)
 
-	arg_1_0:killAllChildView()
+function RougeBaseDLCViewComp:_updateVersion()
+	local season = self:getSeason()
+	local versions = self:getVersions()
 
-	for iter_1_0, iter_1_1 in pairs(var_1_1 or {}) do
-		local var_1_2 = string.format("%s_%s_%s", arg_1_0.viewName, var_1_0, iter_1_1)
-		local var_1_3 = _G[var_1_2]
+	self:killAllChildView()
 
-		if var_1_3 then
-			local var_1_4 = var_1_3.AssetUrl or arg_1_0.viewGO
-			local var_1_5 = gohelper.findChild(arg_1_0.viewGO, var_1_3.ParentObjPath or "") or arg_1_0.viewGO
+	for _, version in pairs(versions or {}) do
+		local clsName = string.format("%s_%s_%s", self.viewName, season, version)
+		local cls = _G[clsName]
 
-			arg_1_0:openSubView(var_1_3, var_1_4, var_1_5, arg_1_0.viewParam)
+		if cls then
+			local subViewGO = cls.AssetUrl or self.viewGO
+			local goParent = gohelper.findChild(self.viewGO, cls.ParentObjPath or "") or self.viewGO
+
+			self:openSubView(cls, subViewGO, goParent, self.viewParam)
 		end
 	end
 end
 
-function var_0_0.onOpen(arg_2_0)
-	arg_2_0:addEventCb(RougeDLCController.instance, RougeEvent.UpdateRougeVersion, arg_2_0._updateVersion, arg_2_0)
-	arg_2_0:_updateVersion()
+function RougeBaseDLCViewComp:onOpen()
+	self:addEventCb(RougeDLCController.instance, RougeEvent.UpdateRougeVersion, self._updateVersion, self)
+	self:_updateVersion()
 end
 
-function var_0_0.getSeason(arg_3_0)
+function RougeBaseDLCViewComp:getSeason()
 	return RougeOutsideModel.instance:season()
 end
 
-function var_0_0.getVersions(arg_4_0)
-	local var_4_0 = RougeOutsideModel.instance:getRougeGameRecord()
+function RougeBaseDLCViewComp:getVersions()
+	local gameRecordInfo = RougeOutsideModel.instance:getRougeGameRecord()
+	local versions = gameRecordInfo and gameRecordInfo:getVersionIds()
 
-	return var_4_0 and var_4_0:getVersionIds()
+	return versions
 end
 
-return var_0_0
+return RougeBaseDLCViewComp

@@ -1,341 +1,347 @@
-﻿module("modules.logic.meilanni.view.MeilanniEventView", package.seeall)
+﻿-- chunkname: @modules/logic/meilanni/view/MeilanniEventView.lua
 
-local var_0_0 = class("MeilanniEventView", BaseView)
+module("modules.logic.meilanni.view.MeilanniEventView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goeventlist = gohelper.findChild(arg_1_0.viewGO, "#go_eventlist")
+local MeilanniEventView = class("MeilanniEventView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function MeilanniEventView:onInitView()
+	self._goeventlist = gohelper.findChild(self.viewGO, "#go_eventlist")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function MeilanniEventView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function MeilanniEventView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function MeilanniEventView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function MeilanniEventView:onUpdateParam()
 	return
 end
 
-function var_0_0._episodeInfoUpdate(arg_6_0)
-	if arg_6_0._mapInfo:getCurEpisodeInfo() ~= arg_6_0._episodeInfo then
-		MeilanniAnimationController.instance:addDelayCall(arg_6_0._updateElements, arg_6_0, nil, MeilanniEnum.showElementTime, MeilanniAnimationController.showElementsLayer)
+function MeilanniEventView:_episodeInfoUpdate()
+	local episodeInfo = self._mapInfo:getCurEpisodeInfo()
+	local updateEpisode = episodeInfo ~= self._episodeInfo
+
+	if updateEpisode then
+		MeilanniAnimationController.instance:addDelayCall(self._updateElements, self, nil, MeilanniEnum.showElementTime, MeilanniAnimationController.showElementsLayer)
 	else
-		arg_6_0:_updateElements()
+		self:_updateElements()
 	end
 end
 
-function var_0_0._updateElements(arg_7_0)
-	local var_7_0 = arg_7_0._mapInfo:getCurEpisodeInfo()
-	local var_7_1 = var_7_0 ~= arg_7_0._episodeInfo
+function MeilanniEventView:_updateElements()
+	local episodeInfo = self._mapInfo:getCurEpisodeInfo()
+	local updateEpisode = episodeInfo ~= self._episodeInfo
 
-	if var_7_0.isFinish then
-		arg_7_0:_removeAllElements()
+	if episodeInfo.isFinish then
+		self:_removeAllElements()
 
 		return
 	end
 
-	if var_7_1 then
-		arg_7_0:_removeAllElements()
+	if updateEpisode then
+		self:_removeAllElements()
 	end
 
-	if not var_7_1 then
-		arg_7_0:_showElements(false)
+	if not updateEpisode then
+		self:_showElements(false)
 
 		return
 	end
 
-	TaskDispatcher.cancelTask(arg_7_0._delayShowElements, arg_7_0)
-	TaskDispatcher.runDelay(arg_7_0._delayShowElements, arg_7_0, 0.5)
+	TaskDispatcher.cancelTask(self._delayShowElements, self)
+	TaskDispatcher.runDelay(self._delayShowElements, self, 0.5)
 end
 
-function var_0_0._delayShowElements(arg_8_0)
-	arg_8_0:_showElements(true)
+function MeilanniEventView:_delayShowElements()
+	self:_showElements(true)
 end
 
-function var_0_0._resetMap(arg_9_0)
-	arg_9_0:_updateElements()
+function MeilanniEventView:_resetMap()
+	self:_updateElements()
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0:addEventCb(MeilanniController.instance, MeilanniEvent.episodeInfoUpdate, arg_10_0._episodeInfoUpdate, arg_10_0)
-	arg_10_0:addEventCb(MeilanniController.instance, MeilanniEvent.setElementsVisible, arg_10_0._setElementsVisible, arg_10_0)
-	arg_10_0:addEventCb(MeilanniController.instance, MeilanniEvent.resetMap, arg_10_0._resetMap, arg_10_0)
-	arg_10_0:addEventCb(MeilanniController.instance, MeilanniEvent.getInfo, arg_10_0._getInfo, arg_10_0)
+function MeilanniEventView:onOpen()
+	self:addEventCb(MeilanniController.instance, MeilanniEvent.episodeInfoUpdate, self._episodeInfoUpdate, self)
+	self:addEventCb(MeilanniController.instance, MeilanniEvent.setElementsVisible, self._setElementsVisible, self)
+	self:addEventCb(MeilanniController.instance, MeilanniEvent.resetMap, self._resetMap, self)
+	self:addEventCb(MeilanniController.instance, MeilanniEvent.getInfo, self._getInfo, self)
 
-	arg_10_0._mapId = arg_10_0.viewParam.mapId
-	arg_10_0._mapInfo = MeilanniModel.instance:getMapInfo(arg_10_0._mapId)
-	arg_10_0._eventList = arg_10_0:getUserDataTb_()
+	self._mapId = self.viewParam.mapId
+	self._mapInfo = MeilanniModel.instance:getMapInfo(self._mapId)
+	self._eventList = self:getUserDataTb_()
 
-	arg_10_0:_showElements(true)
+	self:_showElements(true)
 end
 
-function var_0_0._getInfo(arg_11_0)
-	if arg_11_0._mapInfo.isFinish then
-		arg_11_0:_removeAllElements()
+function MeilanniEventView:_getInfo()
+	if self._mapInfo.isFinish then
+		self:_removeAllElements()
 	end
 end
 
-function var_0_0.mapIsFinish(arg_12_0)
-	if arg_12_0._mapInfo.isFinish or arg_12_0._mapInfo.score <= 0 then
+function MeilanniEventView:mapIsFinish()
+	if self._mapInfo.isFinish or self._mapInfo.score <= 0 then
 		return true
 	end
 end
 
-function var_0_0.onOpenFinish(arg_13_0)
+function MeilanniEventView:onOpenFinish()
 	return
 end
 
-function var_0_0._openBattleElement(arg_14_0)
-	local var_14_0 = MeilanniModel.instance:getBattleElementId()
+function MeilanniEventView:_openBattleElement()
+	local id = MeilanniModel.instance:getBattleElementId()
 
-	if not var_14_0 then
+	if not id then
 		return
 	end
 
 	MeilanniModel.instance:setBattleElementId(nil)
 
-	local var_14_1 = arg_14_0._eventList[var_14_0]
+	local eventItem = self._eventList[id]
 
-	if not var_14_1 then
+	if not eventItem then
 		return
 	end
 
-	local var_14_2 = var_14_1._info
-	local var_14_3 = var_14_2.eventId
+	local elementInfo = eventItem._info
+	local id = elementInfo.eventId
+	local type = elementInfo:getType()
 
-	if var_14_2:getType() == MeilanniEnum.ElementType.Battle then
+	if type == MeilanniEnum.ElementType.Battle then
 		return
 	end
 
-	var_14_1:_onClick()
+	eventItem:_onClick()
 end
 
-function var_0_0._removeAllElements(arg_15_0)
-	if not arg_15_0._episodeInfo then
+function MeilanniEventView:_removeAllElements()
+	if not self._episodeInfo then
 		return
 	end
 
-	for iter_15_0, iter_15_1 in ipairs(arg_15_0._episodeInfo.events) do
-		arg_15_0:_removeElement(iter_15_1)
+	for i, v in ipairs(self._episodeInfo.events) do
+		self:_removeElement(v)
 	end
 end
 
-function var_0_0._showElements(arg_16_0, arg_16_1)
-	if arg_16_0:mapIsFinish() then
+function MeilanniEventView:_showElements(showAnim)
+	if self:mapIsFinish() then
 		return
 	end
 
-	local var_16_0
+	local elementInProgress
 
-	arg_16_0._episodeInfo = arg_16_0._mapInfo:getCurEpisodeInfo()
+	self._episodeInfo = self._mapInfo:getCurEpisodeInfo()
 
-	for iter_16_0, iter_16_1 in ipairs(arg_16_0._episodeInfo.events) do
-		if iter_16_1.isFinish then
-			arg_16_0:_removeElement(iter_16_1)
+	for i, v in ipairs(self._episodeInfo.events) do
+		if v.isFinish then
+			self:_removeElement(v)
 		else
-			local var_16_1 = arg_16_0:_addElement(iter_16_1)
+			local eventItem = self:_addElement(v)
 
-			if iter_16_1.index > 0 then
-				var_16_0 = var_16_1
+			if v.index > 0 then
+				elementInProgress = eventItem
 			end
 		end
 	end
 
-	for iter_16_2, iter_16_3 in pairs(arg_16_0._eventList) do
-		if not arg_16_0._episodeInfo:getEventInfo(iter_16_2) then
-			arg_16_0:_removeElementById(iter_16_2)
+	for eventId, v in pairs(self._eventList) do
+		if not self._episodeInfo:getEventInfo(eventId) then
+			self:_removeElementById(eventId)
 		end
 	end
 
-	if var_16_0 then
-		for iter_16_4, iter_16_5 in pairs(arg_16_0._eventList) do
-			if iter_16_5 ~= var_16_0 then
-				gohelper.setActive(iter_16_5.viewGO, false)
+	if elementInProgress then
+		for k, v in pairs(self._eventList) do
+			if v ~= elementInProgress then
+				gohelper.setActive(v.viewGO, false)
 			end
 		end
 	end
 
-	if arg_16_1 then
-		arg_16_0:_elementFadeIn()
+	if showAnim then
+		self:_elementFadeIn()
 	end
 
-	arg_16_0:_checkActPointStatus()
+	self:_checkActPointStatus()
 end
 
-function var_0_0._oneElementFadeIn(arg_17_0)
-	local var_17_0 = arg_17_0[1]
-	local var_17_1 = arg_17_0[2]
+function MeilanniEventView._oneElementFadeIn(params)
+	local self, eventItem = params[1], params[2]
 
-	if var_17_0._episodeInfo.isFinish and not var_17_0._episodeInfo.confirm then
+	if self._episodeInfo.isFinish and not self._episodeInfo.confirm then
 		return
 	end
 
-	gohelper.setActive(var_17_1.viewGO, true)
-	var_17_1:playAnim("appear")
-	var_17_1:setClickEnabled(false)
+	gohelper.setActive(eventItem.viewGO, true)
+	eventItem:playAnim("appear")
+	eventItem:setClickEnabled(false)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_checkpoint_story_open)
 end
 
-function var_0_0._oneElementFadeInFinish(arg_18_0)
-	local var_18_0 = arg_18_0[1]
+function MeilanniEventView._oneElementFadeInFinish(params)
+	local self = params[1]
 
-	for iter_18_0, iter_18_1 in ipairs(var_18_0._fadeList) do
-		iter_18_1:setClickEnabled(true)
+	for i, eventItem in ipairs(self._fadeList) do
+		eventItem:setClickEnabled(true)
 	end
 
-	var_18_0:_openBattleElement()
+	self:_openBattleElement()
 end
 
-function var_0_0._elementFadeIn(arg_19_0)
-	local var_19_0 = arg_19_0:getUserDataTb_()
+function MeilanniEventView:_elementFadeIn()
+	local list = self:getUserDataTb_()
 
-	for iter_19_0, iter_19_1 in pairs(arg_19_0._eventList) do
-		if iter_19_1.viewGO.activeSelf then
-			gohelper.setActive(iter_19_1.viewGO, false)
-			table.insert(var_19_0, iter_19_1)
+	for k, v in pairs(self._eventList) do
+		if v.viewGO.activeSelf then
+			gohelper.setActive(v.viewGO, false)
+			table.insert(list, v)
 		end
 	end
 
-	table.sort(var_19_0, var_0_0._sort)
-	arg_19_0:_stopShowSequence()
+	table.sort(list, MeilanniEventView._sort)
+	self:_stopShowSequence()
 
-	arg_19_0._showSequence = FlowSequence.New()
+	self._showSequence = FlowSequence.New()
 
-	arg_19_0._showSequence:addWork(TimerWork.New(0.5))
+	self._showSequence:addWork(TimerWork.New(0.5))
 
-	for iter_19_2, iter_19_3 in ipairs(var_19_0) do
-		arg_19_0._showSequence:addWork(FunctionWork.New(var_0_0._oneElementFadeIn, {
-			arg_19_0,
-			iter_19_3
+	for i, v in ipairs(list) do
+		self._showSequence:addWork(FunctionWork.New(MeilanniEventView._oneElementFadeIn, {
+			self,
+			v
 		}))
 
-		if iter_19_2 ~= #var_19_0 then
-			arg_19_0._showSequence:addWork(TimerWork.New(0.5))
+		if i ~= #list then
+			self._showSequence:addWork(TimerWork.New(0.5))
 		end
 	end
 
-	arg_19_0._showSequence:addWork(TimerWork.New(0.8))
-	arg_19_0._showSequence:addWork(FunctionWork.New(var_0_0._oneElementFadeInFinish, {
-		arg_19_0
+	self._showSequence:addWork(TimerWork.New(0.8))
+	self._showSequence:addWork(FunctionWork.New(MeilanniEventView._oneElementFadeInFinish, {
+		self
 	}))
 
-	arg_19_0._fadeList = var_19_0
+	self._fadeList = list
 
-	arg_19_0._showSequence:registerDoneListener(arg_19_0._stopShowSequence, arg_19_0)
-	arg_19_0._showSequence:start()
+	self._showSequence:registerDoneListener(self._stopShowSequence, self)
+	self._showSequence:start()
 end
 
-function var_0_0._stopShowSequence(arg_20_0)
-	if arg_20_0._showSequence then
-		arg_20_0._showSequence:destroy()
+function MeilanniEventView:_stopShowSequence()
+	if self._showSequence then
+		self._showSequence:destroy()
 
-		arg_20_0._showSequence = nil
+		self._showSequence = nil
 	end
 end
 
-function var_0_0._sort(arg_21_0, arg_21_1)
-	return arg_21_0._eventId < arg_21_1._eventId
+function MeilanniEventView._sort(a, b)
+	return a._eventId < b._eventId
 end
 
-function var_0_0._addElement(arg_22_0, arg_22_1)
-	local var_22_0 = arg_22_1.eventId
-	local var_22_1 = arg_22_0._eventList[var_22_0]
+function MeilanniEventView:_addElement(eventInfo)
+	local eventId = eventInfo.eventId
+	local eventItem = self._eventList[eventId]
 
-	if var_22_1 then
-		var_22_1:updateInfo(arg_22_1)
+	if eventItem then
+		eventItem:updateInfo(eventInfo)
 
-		return var_22_1
+		return eventItem
 	end
 
-	local var_22_2 = arg_22_0.viewContainer:getSetting().otherRes[1]
-	local var_22_3 = arg_22_0:getResInst(var_22_2, arg_22_0._goeventlist, var_22_0)
-	local var_22_4 = MonoHelper.addNoUpdateLuaComOnceToGo(var_22_3, MeilanniEventItem)
+	local itemPath = self.viewContainer:getSetting().otherRes[1]
+	local itemGo = self:getResInst(itemPath, self._goeventlist, eventId)
 
-	arg_22_0._eventList[var_22_0] = var_22_4
+	eventItem = MonoHelper.addNoUpdateLuaComOnceToGo(itemGo, MeilanniEventItem)
+	self._eventList[eventId] = eventItem
 
-	var_22_4:updateInfo(arg_22_1)
+	eventItem:updateInfo(eventInfo)
 
-	return var_22_4
+	return eventItem
 end
 
-function var_0_0._removeElement(arg_23_0, arg_23_1)
-	local var_23_0 = arg_23_1.eventId
+function MeilanniEventView:_removeElement(eventInfo)
+	local eventId = eventInfo.eventId
 
-	arg_23_0:_removeElementById(var_23_0)
+	self:_removeElementById(eventId)
 end
 
-function var_0_0._removeElementById(arg_24_0, arg_24_1)
-	local var_24_0 = arg_24_0._eventList[arg_24_1]
+function MeilanniEventView:_removeElementById(eventId)
+	local eventItem = self._eventList[eventId]
 
-	if not var_24_0 then
+	if not eventItem then
 		return
 	end
 
-	arg_24_0._eventList[arg_24_1] = nil
+	self._eventList[eventId] = nil
 
-	var_24_0:dispose()
+	eventItem:dispose()
 end
 
-function var_0_0._setElementsVisible(arg_25_0, arg_25_1, arg_25_2)
-	for iter_25_0, iter_25_1 in pairs(arg_25_0._eventList) do
-		if iter_25_1 ~= arg_25_2 then
-			if not iter_25_1.viewGO.activeSelf and arg_25_1 then
-				gohelper.setActive(iter_25_1.viewGO, true)
-				iter_25_1:playAnim("appear")
-				iter_25_1:setPhotoVisible(true)
+function MeilanniEventView:_setElementsVisible(show, eventItem)
+	for k, v in pairs(self._eventList) do
+		if v ~= eventItem then
+			if not v.viewGO.activeSelf and show then
+				gohelper.setActive(v.viewGO, true)
+				v:playAnim("appear")
+				v:setPhotoVisible(true)
 			end
 
-			if iter_25_1:isSelected() then
-				iter_25_1:setSelected(false)
+			if v:isSelected() then
+				v:setSelected(false)
 			else
-				iter_25_1:playAnim(arg_25_1 and "appear" or "disappear")
-				iter_25_1:setPhotoVisible(arg_25_1)
+				v:playAnim(show and "appear" or "disappear")
+				v:setPhotoVisible(show)
 			end
 		end
 
-		iter_25_1:setClickEnabled(arg_25_1)
+		v:setClickEnabled(show)
 	end
 end
 
-function var_0_0._checkActPointStatus(arg_26_0)
-	local var_26_0 = arg_26_0._mapInfo:getCurEpisodeInfo().leftActPoint
-	local var_26_1 = 0
-	local var_26_2 = 0
+function MeilanniEventView:_checkActPointStatus()
+	local episodeInfo = self._mapInfo:getCurEpisodeInfo()
+	local leftActPoint = episodeInfo.leftActPoint
+	local normalNum = 0
+	local specialNum = 0
 
-	for iter_26_0, iter_26_1 in pairs(arg_26_0._eventList) do
-		if iter_26_1:isSpecialType() then
-			var_26_2 = var_26_2 + 1
+	for k, v in pairs(self._eventList) do
+		if v:isSpecialType() then
+			specialNum = specialNum + 1
 		else
-			var_26_1 = var_26_1 + 1
+			normalNum = normalNum + 1
 		end
 	end
 
-	local var_26_3 = var_26_0 - var_26_2
+	leftActPoint = leftActPoint - specialNum
 
-	for iter_26_2, iter_26_3 in pairs(arg_26_0._eventList) do
-		if not iter_26_3:isSpecialType() then
-			iter_26_3:setGray(var_26_3 > 0)
+	for k, v in pairs(self._eventList) do
+		if not v:isSpecialType() then
+			v:setGray(leftActPoint > 0)
 		end
 	end
 end
 
-function var_0_0.onClose(arg_27_0)
-	arg_27_0:_stopShowSequence()
-	TaskDispatcher.cancelTask(arg_27_0._delayShowElements, arg_27_0)
+function MeilanniEventView:onClose()
+	self:_stopShowSequence()
+	TaskDispatcher.cancelTask(self._delayShowElements, self)
 end
 
-function var_0_0.onDestroyView(arg_28_0)
+function MeilanniEventView:onDestroyView()
 	return
 end
 
-return var_0_0
+return MeilanniEventView

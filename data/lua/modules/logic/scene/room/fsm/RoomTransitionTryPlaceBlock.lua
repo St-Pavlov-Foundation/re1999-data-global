@@ -1,181 +1,183 @@
-﻿module("modules.logic.scene.room.fsm.RoomTransitionTryPlaceBlock", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/fsm/RoomTransitionTryPlaceBlock.lua
 
-local var_0_0 = class("RoomTransitionTryPlaceBlock", SimpleFSMBaseTransition)
+module("modules.logic.scene.room.fsm.RoomTransitionTryPlaceBlock", package.seeall)
 
-function var_0_0.start(arg_1_0)
-	arg_1_0._scene = GameSceneMgr.instance:getCurScene()
+local RoomTransitionTryPlaceBlock = class("RoomTransitionTryPlaceBlock", SimpleFSMBaseTransition)
+
+function RoomTransitionTryPlaceBlock:start()
+	self._scene = GameSceneMgr.instance:getCurScene()
 end
 
-function var_0_0.check(arg_2_0)
+function RoomTransitionTryPlaceBlock:check()
 	return true
 end
 
-function var_0_0.onStart(arg_3_0, arg_3_1)
-	arg_3_0._param = arg_3_1
+function RoomTransitionTryPlaceBlock:onStart(param)
+	self._param = param
 
-	local var_3_0 = arg_3_0._param.hexPoint
-	local var_3_1 = arg_3_0._param.rotate
-	local var_3_2 = RoomMapBlockModel.instance:getTempBlockMO()
+	local hexPoint = self._param.hexPoint
+	local rotate = self._param.rotate
+	local tempBlockMO = RoomMapBlockModel.instance:getTempBlockMO()
 
-	if var_3_2 then
-		local var_3_3 = RoomInventoryBlockModel.instance:getSelectInventoryBlockMO()
+	if tempBlockMO then
+		local inventoryBlockMO = RoomInventoryBlockModel.instance:getSelectInventoryBlockMO()
 
-		if var_3_3 and var_3_3.id ~= var_3_2.id then
-			arg_3_0:_replaceBlock()
+		if inventoryBlockMO and inventoryBlockMO.id ~= tempBlockMO.id then
+			self:_replaceBlock()
 		else
-			arg_3_0:_changeBlock()
+			self:_changeBlock()
 		end
 	else
-		arg_3_0:_placeBlock()
+		self:_placeBlock()
 	end
 
 	RoomBlockController.instance:refreshResourceLight()
 	RoomMapController.instance:dispatchEvent(RoomEvent.ClientPlaceBlock)
 
-	if var_3_0 then
-		local var_3_4 = HexMath.hexToPosition(var_3_0, RoomBlockEnum.BlockSize)
-		local var_3_5 = {}
+	if hexPoint then
+		local pos = HexMath.hexToPosition(hexPoint, RoomBlockEnum.BlockSize)
+		local cameraParam = {}
 
-		if arg_3_0:_isOutScreen(var_3_4) then
-			var_3_5.focusX = var_3_4.x
-			var_3_5.focusY = var_3_4.y
+		if self:_isOutScreen(pos) then
+			cameraParam.focusX = pos.x
+			cameraParam.focusY = pos.y
 		end
 
-		if not var_3_2 then
-			local var_3_6 = arg_3_0._scene.camera:getCameraParam()
+		if not tempBlockMO then
+			local revertCameraParam = self._scene.camera:getCameraParam()
 
-			RoomMapModel.instance:saveCameraParam(var_3_6)
+			RoomMapModel.instance:saveCameraParam(revertCameraParam)
 		end
 
-		arg_3_0._scene.camera:tweenCamera(var_3_5, nil, arg_3_0.onDone, arg_3_0)
+		self._scene.camera:tweenCamera(cameraParam, nil, self.onDone, self)
 	else
-		arg_3_0:onDone()
+		self:onDone()
 	end
 end
 
-function var_0_0._isOutScreen(arg_4_0, arg_4_1)
-	return RoomHelper.isOutCameraFocus(arg_4_1)
+function RoomTransitionTryPlaceBlock:_isOutScreen(pos)
+	return RoomHelper.isOutCameraFocus(pos)
 end
 
-function var_0_0._replaceBlock(arg_5_0)
-	local var_5_0 = RoomMapBlockModel.instance:getTempBlockMO()
-	local var_5_1 = var_5_0:getRiverCount()
-	local var_5_2 = RoomInventoryBlockModel.instance:getSelectInventoryBlockMO()
-	local var_5_3 = arg_5_0._scene.mapmgr:getBlockEntity(var_5_0.id, SceneTag.RoomMapBlock)
+function RoomTransitionTryPlaceBlock:_replaceBlock()
+	local tempBlockMO = RoomMapBlockModel.instance:getTempBlockMO()
+	local riveCount = tempBlockMO:getRiverCount()
+	local inventoryBlockMO = RoomInventoryBlockModel.instance:getSelectInventoryBlockMO()
+	local mapEntity = self._scene.mapmgr:getBlockEntity(tempBlockMO.id, SceneTag.RoomMapBlock)
 
-	if var_5_3 then
-		arg_5_0._scene.mapmgr:destroyBlock(var_5_3)
+	if mapEntity then
+		self._scene.mapmgr:destroyBlock(mapEntity)
 	end
 
-	arg_5_0._param.hexPoint = arg_5_0._param.hexPoint or var_5_0.hexPoint
+	self._param.hexPoint = self._param.hexPoint or tempBlockMO.hexPoint
 
 	RoomMapBlockModel.instance:removeTempBlockMO()
-	arg_5_0:_placeBlock()
+	self:_placeBlock()
 end
 
-function var_0_0._placeBlock(arg_6_0)
-	local var_6_0 = arg_6_0._param.hexPoint
-	local var_6_1 = RoomMapBlockModel.instance:getBlockMO(var_6_0.x, var_6_0.y)
-	local var_6_2 = RoomInventoryBlockModel.instance:getSelectInventoryBlockMO()
-	local var_6_3 = RoomMapBlockModel.instance:addTempBlockMO(var_6_2, var_6_0)
+function RoomTransitionTryPlaceBlock:_placeBlock()
+	local hexPoint = self._param.hexPoint
+	local curEmptyMO = RoomMapBlockModel.instance:getBlockMO(hexPoint.x, hexPoint.y)
+	local inventoryBlockMO = RoomInventoryBlockModel.instance:getSelectInventoryBlockMO()
+	local tempBlockMO = RoomMapBlockModel.instance:addTempBlockMO(inventoryBlockMO, hexPoint)
 
 	RoomResourceModel.instance:clearLightResourcePoint()
-	RoomMapBlockModel.instance:refreshNearRiver(var_6_0, 1)
+	RoomMapBlockModel.instance:refreshNearRiver(hexPoint, 1)
 
-	local var_6_4 = var_6_1 and arg_6_0._scene.mapmgr:getBlockEntity(var_6_1.id, SceneTag.RoomEmptyBlock)
+	local curEntity = curEmptyMO and self._scene.mapmgr:getBlockEntity(curEmptyMO.id, SceneTag.RoomEmptyBlock)
 
-	if var_6_4 then
-		arg_6_0._scene.mapmgr:destroyBlock(var_6_4)
+	if curEntity then
+		self._scene.mapmgr:destroyBlock(curEntity)
 	end
 
-	local var_6_5 = arg_6_0._scene.mapmgr:spawnMapBlock(var_6_3)
+	local entity = self._scene.mapmgr:spawnMapBlock(tempBlockMO)
 
-	var_6_5:playAnim(RoomScenePreloader.ResAnim.ContainerPlay, "container_play")
-	var_6_5:playVxWaterEffect()
+	entity:playAnim(RoomScenePreloader.ResAnim.ContainerPlay, "container_play")
+	entity:playVxWaterEffect()
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_board_put)
-	arg_6_0:_refreshNearBlockEntity(false, var_6_0, true)
+	self:_refreshNearBlockEntity(false, hexPoint, true)
 end
 
-function var_0_0._changeBlock(arg_7_0)
-	local var_7_0 = arg_7_0._param.hexPoint
-	local var_7_1 = arg_7_0._param.rotate
-	local var_7_2 = RoomMapBlockModel.instance:getTempBlockMO()
+function RoomTransitionTryPlaceBlock:_changeBlock()
+	local hexPoint = self._param.hexPoint
+	local rotate = self._param.rotate
+	local tempBlockMO = RoomMapBlockModel.instance:getTempBlockMO()
 
-	var_7_0 = var_7_0 or var_7_2.hexPoint
-	var_7_1 = var_7_1 or var_7_2.rotate
+	hexPoint = hexPoint or tempBlockMO.hexPoint
+	rotate = rotate or tempBlockMO.rotate
 
-	local var_7_3 = HexPoint(var_7_2.hexPoint.x, var_7_2.hexPoint.y)
-	local var_7_4 = var_7_2.rotate
-	local var_7_5 = RoomMapBlockModel.instance:getBlockMO(var_7_0.x, var_7_0.y)
-	local var_7_6 = RoomInventoryBlockModel.instance:getSelectInventoryBlockMO()
+	local previousHexPoint = HexPoint(tempBlockMO.hexPoint.x, tempBlockMO.hexPoint.y)
+	local previousRotate = tempBlockMO.rotate
+	local curEmptyMO = RoomMapBlockModel.instance:getBlockMO(hexPoint.x, hexPoint.y)
+	local inventoryBlockMO = RoomInventoryBlockModel.instance:getSelectInventoryBlockMO()
 
-	RoomMapBlockModel.instance:changeTempBlockMO(var_7_0, var_7_1)
-	RoomInventoryBlockModel.instance:rotateFirst(var_7_1)
+	RoomMapBlockModel.instance:changeTempBlockMO(hexPoint, rotate)
+	RoomInventoryBlockModel.instance:rotateFirst(rotate)
 	RoomResourceModel.instance:clearLightResourcePoint()
-	RoomMapBlockModel.instance:refreshNearRiver(var_7_0, 1)
+	RoomMapBlockModel.instance:refreshNearRiver(hexPoint, 1)
 
-	if var_7_3 ~= var_7_0 then
-		RoomMapBlockModel.instance:refreshNearRiver(var_7_3, 1)
+	if previousHexPoint ~= hexPoint then
+		RoomMapBlockModel.instance:refreshNearRiver(previousHexPoint, 1)
 	end
 
-	if var_7_3 ~= var_7_0 then
-		local var_7_7 = var_7_5 and arg_7_0._scene.mapmgr:getBlockEntity(var_7_5.id, SceneTag.RoomEmptyBlock)
+	if previousHexPoint ~= hexPoint then
+		local curEntity = curEmptyMO and self._scene.mapmgr:getBlockEntity(curEmptyMO.id, SceneTag.RoomEmptyBlock)
 
-		if var_7_7 then
-			arg_7_0._scene.mapmgr:destroyBlock(var_7_7)
+		if curEntity then
+			self._scene.mapmgr:destroyBlock(curEntity)
 		end
 
-		local var_7_8 = arg_7_0._scene.mapmgr:getBlockEntity(var_7_2.id, SceneTag.RoomMapBlock)
+		local mapEntity = self._scene.mapmgr:getBlockEntity(tempBlockMO.id, SceneTag.RoomMapBlock)
 
-		if var_7_8 then
-			arg_7_0._scene.mapmgr:moveTo(var_7_8, var_7_0)
-			var_7_8:playAnim(RoomScenePreloader.ResAnim.ContainerPlay, "container_play")
-			var_7_8:playVxWaterEffect()
+		if mapEntity then
+			self._scene.mapmgr:moveTo(mapEntity, hexPoint)
+			mapEntity:playAnim(RoomScenePreloader.ResAnim.ContainerPlay, "container_play")
+			mapEntity:playVxWaterEffect()
 			AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_board_put)
 		end
 
-		local var_7_9 = RoomMapBlockModel.instance:getBlockMO(var_7_3.x, var_7_3.y)
+		local emptyMO = RoomMapBlockModel.instance:getBlockMO(previousHexPoint.x, previousHexPoint.y)
 
-		arg_7_0._scene.mapmgr:spawnMapBlock(var_7_9)
+		self._scene.mapmgr:spawnMapBlock(emptyMO)
 	end
 
-	if var_7_4 ~= var_7_1 then
-		local var_7_10 = arg_7_0._scene.mapmgr:getBlockEntity(var_7_2.id, SceneTag.RoomMapBlock)
+	if previousRotate ~= rotate then
+		local mapEntity = self._scene.mapmgr:getBlockEntity(tempBlockMO.id, SceneTag.RoomMapBlock)
 
-		if var_7_10 then
-			var_7_10:refreshRotation(true)
+		if mapEntity then
+			mapEntity:refreshRotation(true)
 		end
 
-		local var_7_11 = arg_7_0._scene.inventorymgr:getBlockEntity(var_7_6.id, SceneTag.RoomInventoryBlock)
+		local inventoryEntity = self._scene.inventorymgr:getBlockEntity(inventoryBlockMO.id, SceneTag.RoomInventoryBlock)
 
-		if var_7_11 then
-			var_7_11:refreshRotation(true)
+		if inventoryEntity then
+			inventoryEntity:refreshRotation(true)
 		end
 	end
 
-	local var_7_12 = arg_7_0._scene.mapmgr:getBlockEntity(var_7_2.id, SceneTag.RoomMapBlock)
+	local mapEntity = self._scene.mapmgr:getBlockEntity(tempBlockMO.id, SceneTag.RoomMapBlock)
 
-	if var_7_12 then
-		var_7_12:refreshBlock()
+	if mapEntity then
+		mapEntity:refreshBlock()
 	end
 
-	if var_7_3 ~= var_7_0 then
-		arg_7_0:_refreshNearBlockEntity(false, var_7_3, false)
+	if previousHexPoint ~= hexPoint then
+		self:_refreshNearBlockEntity(false, previousHexPoint, false)
 	end
 
-	arg_7_0:_refreshNearBlockEntity(false, var_7_0, true)
+	self:_refreshNearBlockEntity(false, hexPoint, true)
 end
 
-function var_0_0._refreshNearBlockEntity(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	RoomBlockController.instance:refreshNearLand(arg_8_2, arg_8_3)
+function RoomTransitionTryPlaceBlock:_refreshNearBlockEntity(isEmpty, hexPoint, withoutSelf)
+	RoomBlockController.instance:refreshNearLand(hexPoint, withoutSelf)
 end
 
-function var_0_0.stop(arg_9_0)
+function RoomTransitionTryPlaceBlock:stop()
 	return
 end
 
-function var_0_0.clear(arg_10_0)
+function RoomTransitionTryPlaceBlock:clear()
 	return
 end
 
-return var_0_0
+return RoomTransitionTryPlaceBlock

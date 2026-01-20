@@ -1,286 +1,286 @@
-﻿module("modules.logic.fight.view.work.FightTweenWork", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/work/FightTweenWork.lua
 
-local var_0_0 = class("FightTweenWork", FightWorkItem)
-local var_0_1 = ZProj.TweenHelper
+module("modules.logic.fight.view.work.FightTweenWork", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1)
-	arg_1_0:setParam(arg_1_1)
+local FightTweenWork = class("FightTweenWork", FightWorkItem)
+local csTweenHelper = ZProj.TweenHelper
+
+function FightTweenWork:onConstructor(param)
+	self:setParam(param)
 end
 
-function var_0_0.setParam(arg_2_0, arg_2_1)
-	arg_2_0.param = arg_2_1
+function FightTweenWork:setParam(param)
+	self.param = param
 
-	arg_2_0:_ctorCheckParam()
+	self:_ctorCheckParam()
 end
 
-function var_0_0.onStart(arg_3_0)
-	local var_3_0 = var_0_0.FuncDict[arg_3_0.param.type]
+function FightTweenWork:onStart()
+	local tweenFunc = FightTweenWork.FuncDict[self.param.type]
 
-	if var_3_0 then
-		arg_3_0._tweenId = var_3_0(arg_3_0, arg_3_0.param)
+	if tweenFunc then
+		self._tweenId = tweenFunc(self, self.param)
 
-		arg_3_0:cancelFightWorkSafeTimer()
+		self:cancelFightWorkSafeTimer()
 	else
-		logError("声明了一个不存在的动画类型" .. arg_3_0.param.type)
-		arg_3_0:onDone(true)
+		logError("声明了一个不存在的动画类型" .. self.param.type)
+		self:onDone(true)
 	end
 end
 
-function var_0_0.clearWork(arg_4_0)
-	if arg_4_0._tweenId then
-		var_0_1.KillById(arg_4_0._tweenId)
+function FightTweenWork:clearWork()
+	if self._tweenId then
+		csTweenHelper.KillById(self._tweenId)
 
-		arg_4_0._tweenId = nil
+		self._tweenId = nil
 	end
 end
 
-function var_0_0._onTweenEnd(arg_5_0)
-	arg_5_0:onDone(true)
+function FightTweenWork:_onTweenEnd()
+	self:onDone(true)
 end
 
-function var_0_0.DOTweenFloat(arg_6_0, arg_6_1)
-	local var_6_0 = EaseType.Str2Type(arg_6_1.ease)
+function FightTweenWork:DOTweenFloat(param)
+	local ease = EaseType.Str2Type(param.ease)
 
-	return var_0_1.DOTweenFloat(arg_6_1.from, arg_6_1.to, arg_6_1.t, arg_6_0._tweenFloatFrameCb, arg_6_0._onTweenEnd, arg_6_0, nil, var_6_0)
+	return csTweenHelper.DOTweenFloat(param.from, param.to, param.t, self._tweenFloatFrameCb, self._onTweenEnd, self, nil, ease)
 end
 
-function var_0_0._tweenFloatFrameCb(arg_7_0, arg_7_1)
-	if arg_7_0.param and arg_7_0.param.frameCb then
-		if arg_7_0.param.cbObj then
-			arg_7_0.param.frameCb(arg_7_0.param.cbObj, arg_7_1, arg_7_0.param.param)
+function FightTweenWork:_tweenFloatFrameCb(value)
+	if self.param and self.param.frameCb then
+		if self.param.cbObj then
+			self.param.frameCb(self.param.cbObj, value, self.param.param)
 		else
-			arg_7_0.param.frameCb(arg_7_1, arg_7_0.param.param)
+			self.param.frameCb(value, self.param.param)
 		end
 	end
 end
 
-function var_0_0.DOAnchorPos(arg_8_0, arg_8_1)
-	if arg_8_0:_checkObjNil(arg_8_1.tr) then
+function FightTweenWork:DOAnchorPos(param)
+	if self:_checkObjNil(param.tr) then
 		return
 	end
 
-	local var_8_0 = EaseType.Str2Type(arg_8_1.ease)
+	local ease = EaseType.Str2Type(param.ease)
 
-	return var_0_1.DOAnchorPos(arg_8_1.tr, arg_8_1.tox, arg_8_1.toy, arg_8_1.t, arg_8_0._onTweenEnd, arg_8_0, nil, var_8_0)
+	return csTweenHelper.DOAnchorPos(param.tr, param.tox, param.toy, param.t, self._onTweenEnd, self, nil, ease)
 end
 
-function var_0_0.DOAnchorPosX(arg_9_0, arg_9_1)
-	if arg_9_0:_checkObjNil(arg_9_1.tr) then
+function FightTweenWork:DOAnchorPosX(param)
+	if self:_checkObjNil(param.tr) then
 		return
 	end
 
-	local var_9_0 = EaseType.Str2Type(arg_9_1.ease)
+	local ease = EaseType.Str2Type(param.ease)
 
-	return var_0_1.DOAnchorPosX(arg_9_1.tr, arg_9_1.to, arg_9_1.t, arg_9_0._onTweenEnd, arg_9_0, nil, var_9_0)
+	return csTweenHelper.DOAnchorPosX(param.tr, param.to, param.t, self._onTweenEnd, self, nil, ease)
 end
 
-function var_0_0.DOAnchorPosY(arg_10_0, arg_10_1)
-	if arg_10_0:_checkObjNil(arg_10_1.tr) then
+function FightTweenWork:DOAnchorPosY(param)
+	if self:_checkObjNil(param.tr) then
 		return
 	end
 
-	local var_10_0 = EaseType.Str2Type(arg_10_1.ease)
+	local ease = EaseType.Str2Type(param.ease)
 
-	return var_0_1.DOAnchorPosY(arg_10_1.tr, arg_10_1.to, arg_10_1.t, arg_10_0._onTweenEnd, arg_10_0, nil, var_10_0)
+	return csTweenHelper.DOAnchorPosY(param.tr, param.to, param.t, self._onTweenEnd, self, nil, ease)
 end
 
-function var_0_0.DOWidth(arg_11_0, arg_11_1)
-	if arg_11_0:_checkObjNil(arg_11_1.tr) then
+function FightTweenWork:DOWidth(param)
+	if self:_checkObjNil(param.tr) then
 		return
 	end
 
-	local var_11_0 = EaseType.Str2Type(arg_11_1.ease)
+	local ease = EaseType.Str2Type(param.ease)
 
-	return var_0_1.DOWidth(arg_11_1.tr, arg_11_1.to, arg_11_1.t, arg_11_0._onTweenEnd, arg_11_0, nil, var_11_0)
+	return csTweenHelper.DOWidth(param.tr, param.to, param.t, self._onTweenEnd, self, nil, ease)
 end
 
-function var_0_0.DOHeight(arg_12_0, arg_12_1)
-	if arg_12_0:_checkObjNil(arg_12_1.tr) then
+function FightTweenWork:DOHeight(param)
+	if self:_checkObjNil(param.tr) then
 		return
 	end
 
-	local var_12_0 = EaseType.Str2Type(arg_12_1.ease)
+	local ease = EaseType.Str2Type(param.ease)
 
-	return var_0_1.DOHeight(arg_12_1.tr, arg_12_1.to, arg_12_1.t, arg_12_0._onTweenEnd, arg_12_0, nil, var_12_0)
+	return csTweenHelper.DOHeight(param.tr, param.to, param.t, self._onTweenEnd, self, nil, ease)
 end
 
-function var_0_0.DOSizeDelta(arg_13_0, arg_13_1)
-	if arg_13_0:_checkObjNil(arg_13_1.tr) then
+function FightTweenWork:DOSizeDelta(param)
+	if self:_checkObjNil(param.tr) then
 		return
 	end
 
-	local var_13_0 = EaseType.Str2Type(arg_13_1.ease)
+	local ease = EaseType.Str2Type(param.ease)
 
-	return var_0_1.DOSizeDelta(arg_13_1.tr, arg_13_1.tox, arg_13_1.toy, arg_13_1.t, arg_13_0._onTweenEnd, arg_13_0, nil, var_13_0)
+	return csTweenHelper.DOSizeDelta(param.tr, param.tox, param.toy, param.t, self._onTweenEnd, self, nil, ease)
 end
 
-function var_0_0.DOMove(arg_14_0, arg_14_1)
-	if arg_14_0:_checkObjNil(arg_14_1.tr) then
+function FightTweenWork:DOMove(param)
+	if self:_checkObjNil(param.tr) then
 		return
 	end
 
-	local var_14_0 = EaseType.Str2Type(arg_14_1.ease)
+	local ease = EaseType.Str2Type(param.ease)
 
-	return var_0_1.DOMove(arg_14_1.tr, arg_14_1.tox, arg_14_1.toy, arg_14_1.toz, arg_14_1.t, arg_14_0._onTweenEnd, arg_14_0, nil, var_14_0)
+	return csTweenHelper.DOMove(param.tr, param.tox, param.toy, param.toz, param.t, self._onTweenEnd, self, nil, ease)
 end
 
-function var_0_0.DOMoveX(arg_15_0, arg_15_1)
-	if arg_15_0:_checkObjNil(arg_15_1.tr) then
+function FightTweenWork:DOMoveX(param)
+	if self:_checkObjNil(param.tr) then
 		return
 	end
 
-	local var_15_0 = EaseType.Str2Type(arg_15_1.ease)
+	local ease = EaseType.Str2Type(param.ease)
 
-	return var_0_1.DOMoveX(arg_15_1.tr, arg_15_1.to, arg_15_1.t, arg_15_0._onTweenEnd, arg_15_0, nil, var_15_0)
+	return csTweenHelper.DOMoveX(param.tr, param.to, param.t, self._onTweenEnd, self, nil, ease)
 end
 
-function var_0_0.DOMoveY(arg_16_0, arg_16_1)
-	if arg_16_0:_checkObjNil(arg_16_1.tr) then
+function FightTweenWork:DOMoveY(param)
+	if self:_checkObjNil(param.tr) then
 		return
 	end
 
-	local var_16_0 = EaseType.Str2Type(arg_16_1.ease)
+	local ease = EaseType.Str2Type(param.ease)
 
-	return var_0_1.DOMoveY(arg_16_1.tr, arg_16_1.to, arg_16_1.t, arg_16_0._onTweenEnd, arg_16_0, nil, var_16_0)
+	return csTweenHelper.DOMoveY(param.tr, param.to, param.t, self._onTweenEnd, self, nil, ease)
 end
 
-function var_0_0.DOLocalMove(arg_17_0, arg_17_1)
-	if arg_17_0:_checkObjNil(arg_17_1.tr) then
+function FightTweenWork:DOLocalMove(param)
+	if self:_checkObjNil(param.tr) then
 		return
 	end
 
-	local var_17_0 = EaseType.Str2Type(arg_17_1.ease)
+	local ease = EaseType.Str2Type(param.ease)
 
-	return var_0_1.DOLocalMove(arg_17_1.tr, arg_17_1.tox, arg_17_1.toy, arg_17_1.toz, arg_17_1.t, arg_17_0._onTweenEnd, arg_17_0, nil, var_17_0)
+	return csTweenHelper.DOLocalMove(param.tr, param.tox, param.toy, param.toz, param.t, self._onTweenEnd, self, nil, ease)
 end
 
-function var_0_0.DOLocalMoveX(arg_18_0, arg_18_1)
-	if arg_18_0:_checkObjNil(arg_18_1.tr) then
+function FightTweenWork:DOLocalMoveX(param)
+	if self:_checkObjNil(param.tr) then
 		return
 	end
 
-	local var_18_0 = EaseType.Str2Type(arg_18_1.ease)
+	local ease = EaseType.Str2Type(param.ease)
 
-	return var_0_1.DOLocalMoveX(arg_18_1.tr, arg_18_1.to, arg_18_1.t, arg_18_0._onTweenEnd, arg_18_0, nil, var_18_0)
+	return csTweenHelper.DOLocalMoveX(param.tr, param.to, param.t, self._onTweenEnd, self, nil, ease)
 end
 
-function var_0_0.DOLocalMoveY(arg_19_0, arg_19_1)
-	if arg_19_0:_checkObjNil(arg_19_1.tr) then
+function FightTweenWork:DOLocalMoveY(param)
+	if self:_checkObjNil(param.tr) then
 		return
 	end
 
-	local var_19_0 = EaseType.Str2Type(arg_19_1.ease)
+	local ease = EaseType.Str2Type(param.ease)
 
-	return var_0_1.DOLocalMoveY(arg_19_1.tr, arg_19_1.to, arg_19_1.t, arg_19_0._onTweenEnd, arg_19_0, nil, var_19_0)
+	return csTweenHelper.DOLocalMoveY(param.tr, param.to, param.t, self._onTweenEnd, self, nil, ease)
 end
 
-function var_0_0.DOScale(arg_20_0, arg_20_1)
-	if arg_20_0:_checkObjNil(arg_20_1.tr) then
+function FightTweenWork:DOScale(param)
+	if self:_checkObjNil(param.tr) then
 		return
 	end
 
-	local var_20_0 = EaseType.Str2Type(arg_20_1.ease)
-	local var_20_1 = arg_20_1.tox
-	local var_20_2 = arg_20_1.toy
-	local var_20_3 = arg_20_1.toz
+	local ease = EaseType.Str2Type(param.ease)
+	local scalex, scaley, scalez = param.tox, param.toy, param.toz
 
-	if arg_20_1.to then
-		var_20_1, var_20_2, var_20_3 = arg_20_1.to, arg_20_1.to, arg_20_1.to
+	if param.to then
+		scalex, scaley, scalez = param.to, param.to, param.to
 	end
 
-	return var_0_1.DOScale(arg_20_1.tr, var_20_1, var_20_2, var_20_3, arg_20_1.t, arg_20_0._onTweenEnd, arg_20_0, nil, var_20_0)
+	return csTweenHelper.DOScale(param.tr, scalex, scaley, scalez, param.t, self._onTweenEnd, self, nil, ease)
 end
 
-function var_0_0.DORotate(arg_21_0, arg_21_1)
-	if arg_21_0:_checkObjNil(arg_21_1.tr) then
+function FightTweenWork:DORotate(param)
+	if self:_checkObjNil(param.tr) then
 		return
 	end
 
-	local var_21_0 = EaseType.Str2Type(arg_21_1.ease)
+	local ease = EaseType.Str2Type(param.ease)
 
-	return var_0_1.DORotate(arg_21_1.tr, arg_21_1.tox, arg_21_1.toy, arg_21_1.toz, arg_21_1.t, arg_21_0._onTweenEnd, arg_21_0, nil, var_21_0)
+	return csTweenHelper.DORotate(param.tr, param.tox, param.toy, param.toz, param.t, self._onTweenEnd, self, nil, ease)
 end
 
-function var_0_0.DOLocalRotate(arg_22_0, arg_22_1)
-	if arg_22_0:_checkObjNil(arg_22_1.tr) then
+function FightTweenWork:DOLocalRotate(param)
+	if self:_checkObjNil(param.tr) then
 		return
 	end
 
-	local var_22_0 = EaseType.Str2Type(arg_22_1.ease)
+	local ease = EaseType.Str2Type(param.ease)
 
-	return var_0_1.DOLocalRotate(arg_22_1.tr, arg_22_1.tox, arg_22_1.toy, arg_22_1.toz, arg_22_1.t, arg_22_0._onTweenEnd, arg_22_0, nil, var_22_0)
+	return csTweenHelper.DOLocalRotate(param.tr, param.tox, param.toy, param.toz, param.t, self._onTweenEnd, self, nil, ease)
 end
 
-function var_0_0.DOFadeCanvasGroup(arg_23_0, arg_23_1)
-	if arg_23_0:_checkObjNil(arg_23_1.go) then
+function FightTweenWork:DOFadeCanvasGroup(param)
+	if self:_checkObjNil(param.go) then
 		return
 	end
 
-	local var_23_0 = EaseType.Str2Type(arg_23_1.ease)
+	local ease = EaseType.Str2Type(param.ease)
 
-	return var_0_1.DOFadeCanvasGroup(arg_23_1.go, arg_23_1.from or -1, arg_23_1.to, arg_23_1.t, arg_23_0._onTweenEnd, arg_23_0, nil, var_23_0)
+	return csTweenHelper.DOFadeCanvasGroup(param.go, param.from or -1, param.to, param.t, self._onTweenEnd, self, nil, ease)
 end
 
-function var_0_0.DOFillAmount(arg_24_0, arg_24_1)
-	if arg_24_0:_checkObjNil(arg_24_1.img) then
+function FightTweenWork:DOFillAmount(param)
+	if self:_checkObjNil(param.img) then
 		return
 	end
 
-	local var_24_0 = EaseType.Str2Type(arg_24_1.ease)
+	local ease = EaseType.Str2Type(param.ease)
 
-	return var_0_1.DOFillAmount(arg_24_1.img, arg_24_1.to, arg_24_1.t, arg_24_0._onTweenEnd, arg_24_0, nil, var_24_0)
+	return csTweenHelper.DOFillAmount(param.img, param.to, param.t, self._onTweenEnd, self, nil, ease)
 end
 
-function var_0_0._checkObjNil(arg_25_0, arg_25_1)
-	return gohelper.isNil(arg_25_1)
+function FightTweenWork:_checkObjNil(obj)
+	return gohelper.isNil(obj)
 end
 
-var_0_0.FuncDict = {
-	DOTweenFloat = var_0_0.DOTweenFloat,
-	DOAnchorPos = var_0_0.DOAnchorPos,
-	DOAnchorPosX = var_0_0.DOAnchorPosX,
-	DOAnchorPosY = var_0_0.DOAnchorPosY,
-	DOWidth = var_0_0.DOWidth,
-	DOHeight = var_0_0.DOHeight,
-	DOSizeDelta = var_0_0.DOSizeDelta,
-	DOMove = var_0_0.DOMove,
-	DOMoveX = var_0_0.DOMoveX,
-	DOMoveY = var_0_0.DOMoveY,
-	DOLocalMove = var_0_0.DOLocalMove,
-	DOLocalMoveX = var_0_0.DOLocalMoveX,
-	DOLocalMoveY = var_0_0.DOLocalMoveY,
-	DOScale = var_0_0.DOScale,
-	DORotate = var_0_0.DORotate,
-	DOLocalRotate = var_0_0.DOLocalRotate,
-	DOFadeCanvasGroup = var_0_0.DOFadeCanvasGroup,
-	DOFillAmount = var_0_0.DOFillAmount
+FightTweenWork.FuncDict = {
+	DOTweenFloat = FightTweenWork.DOTweenFloat,
+	DOAnchorPos = FightTweenWork.DOAnchorPos,
+	DOAnchorPosX = FightTweenWork.DOAnchorPosX,
+	DOAnchorPosY = FightTweenWork.DOAnchorPosY,
+	DOWidth = FightTweenWork.DOWidth,
+	DOHeight = FightTweenWork.DOHeight,
+	DOSizeDelta = FightTweenWork.DOSizeDelta,
+	DOMove = FightTweenWork.DOMove,
+	DOMoveX = FightTweenWork.DOMoveX,
+	DOMoveY = FightTweenWork.DOMoveY,
+	DOLocalMove = FightTweenWork.DOLocalMove,
+	DOLocalMoveX = FightTweenWork.DOLocalMoveX,
+	DOLocalMoveY = FightTweenWork.DOLocalMoveY,
+	DOScale = FightTweenWork.DOScale,
+	DORotate = FightTweenWork.DORotate,
+	DOLocalRotate = FightTweenWork.DOLocalRotate,
+	DOFadeCanvasGroup = FightTweenWork.DOFadeCanvasGroup,
+	DOFillAmount = FightTweenWork.DOFillAmount
 }
 
-local var_0_2 = "number"
-local var_0_3 = "function"
-local var_0_4 = "userdata"
-local var_0_5 = "UnityEngine.GameObject"
-local var_0_6 = "UnityEngine.(.-)Transform"
-local var_0_7 = "UnityEngine.UI.Image"
+local TypeNumber = "number"
+local TypeFunction = "function"
+local TypeUserData = "userdata"
+local TypeGO = "UnityEngine.GameObject"
+local TypeTr = "UnityEngine.(.-)Transform"
+local TypeImg = "UnityEngine.UI.Image"
 
-var_0_0.CheckParamList = {
+FightTweenWork.CheckParamList = {
 	DOTweenFloat = {
 		{
 			{
 				"from",
-				var_0_2
+				TypeNumber
 			},
 			{
 				"to",
-				var_0_2
+				TypeNumber
 			},
 			{
 				"t",
-				var_0_2
+				TypeNumber
 			},
 			{
 				"frameCb",
-				var_0_3
+				TypeFunction
 			}
 		}
 	},
@@ -288,20 +288,20 @@ var_0_0.CheckParamList = {
 		{
 			{
 				"tr",
-				var_0_4,
-				var_0_6
+				TypeUserData,
+				TypeTr
 			},
 			{
 				"tox",
-				var_0_2
+				TypeNumber
 			},
 			{
 				"toy",
-				var_0_2
+				TypeNumber
 			},
 			{
 				"t",
-				var_0_2
+				TypeNumber
 			}
 		}
 	},
@@ -309,16 +309,16 @@ var_0_0.CheckParamList = {
 		{
 			{
 				"tr",
-				var_0_4,
-				var_0_6
+				TypeUserData,
+				TypeTr
 			},
 			{
 				"to",
-				var_0_2
+				TypeNumber
 			},
 			{
 				"t",
-				var_0_2
+				TypeNumber
 			}
 		}
 	},
@@ -326,16 +326,16 @@ var_0_0.CheckParamList = {
 		{
 			{
 				"tr",
-				var_0_4,
-				var_0_6
+				TypeUserData,
+				TypeTr
 			},
 			{
 				"to",
-				var_0_2
+				TypeNumber
 			},
 			{
 				"t",
-				var_0_2
+				TypeNumber
 			}
 		}
 	},
@@ -343,16 +343,16 @@ var_0_0.CheckParamList = {
 		{
 			{
 				"tr",
-				var_0_4,
-				var_0_6
+				TypeUserData,
+				TypeTr
 			},
 			{
 				"to",
-				var_0_2
+				TypeNumber
 			},
 			{
 				"t",
-				var_0_2
+				TypeNumber
 			}
 		}
 	},
@@ -360,16 +360,16 @@ var_0_0.CheckParamList = {
 		{
 			{
 				"tr",
-				var_0_4,
-				var_0_6
+				TypeUserData,
+				TypeTr
 			},
 			{
 				"to",
-				var_0_2
+				TypeNumber
 			},
 			{
 				"t",
-				var_0_2
+				TypeNumber
 			}
 		}
 	},
@@ -377,20 +377,20 @@ var_0_0.CheckParamList = {
 		{
 			{
 				"tr",
-				var_0_4,
-				var_0_6
+				TypeUserData,
+				TypeTr
 			},
 			{
 				"tox",
-				var_0_2
+				TypeNumber
 			},
 			{
 				"toy",
-				var_0_2
+				TypeNumber
 			},
 			{
 				"t",
-				var_0_2
+				TypeNumber
 			}
 		}
 	},
@@ -398,24 +398,24 @@ var_0_0.CheckParamList = {
 		{
 			{
 				"tr",
-				var_0_4,
-				var_0_6
+				TypeUserData,
+				TypeTr
 			},
 			{
 				"tox",
-				var_0_2
+				TypeNumber
 			},
 			{
 				"toy",
-				var_0_2
+				TypeNumber
 			},
 			{
 				"toz",
-				var_0_2
+				TypeNumber
 			},
 			{
 				"t",
-				var_0_2
+				TypeNumber
 			}
 		}
 	},
@@ -423,16 +423,16 @@ var_0_0.CheckParamList = {
 		{
 			{
 				"tr",
-				var_0_4,
-				var_0_6
+				TypeUserData,
+				TypeTr
 			},
 			{
 				"to",
-				var_0_2
+				TypeNumber
 			},
 			{
 				"t",
-				var_0_2
+				TypeNumber
 			}
 		}
 	},
@@ -440,16 +440,16 @@ var_0_0.CheckParamList = {
 		{
 			{
 				"tr",
-				var_0_4,
-				var_0_6
+				TypeUserData,
+				TypeTr
 			},
 			{
 				"to",
-				var_0_2
+				TypeNumber
 			},
 			{
 				"t",
-				var_0_2
+				TypeNumber
 			}
 		}
 	},
@@ -457,24 +457,24 @@ var_0_0.CheckParamList = {
 		{
 			{
 				"tr",
-				var_0_4,
-				var_0_6
+				TypeUserData,
+				TypeTr
 			},
 			{
 				"tox",
-				var_0_2
+				TypeNumber
 			},
 			{
 				"toy",
-				var_0_2
+				TypeNumber
 			},
 			{
 				"toz",
-				var_0_2
+				TypeNumber
 			},
 			{
 				"t",
-				var_0_2
+				TypeNumber
 			}
 		}
 	},
@@ -482,16 +482,16 @@ var_0_0.CheckParamList = {
 		{
 			{
 				"tr",
-				var_0_4,
-				var_0_6
+				TypeUserData,
+				TypeTr
 			},
 			{
 				"to",
-				var_0_2
+				TypeNumber
 			},
 			{
 				"t",
-				var_0_2
+				TypeNumber
 			}
 		}
 	},
@@ -499,16 +499,16 @@ var_0_0.CheckParamList = {
 		{
 			{
 				"tr",
-				var_0_4,
-				var_0_6
+				TypeUserData,
+				TypeTr
 			},
 			{
 				"to",
-				var_0_2
+				TypeNumber
 			},
 			{
 				"t",
-				var_0_2
+				TypeNumber
 			}
 		}
 	},
@@ -516,24 +516,24 @@ var_0_0.CheckParamList = {
 		{
 			{
 				"tr",
-				var_0_4,
-				var_0_6
+				TypeUserData,
+				TypeTr
 			},
 			{
 				"tox",
-				var_0_2
+				TypeNumber
 			},
 			{
 				"toy",
-				var_0_2
+				TypeNumber
 			},
 			{
 				"toz",
-				var_0_2
+				TypeNumber
 			},
 			{
 				"t",
-				var_0_2
+				TypeNumber
 			}
 		}
 	},
@@ -541,24 +541,24 @@ var_0_0.CheckParamList = {
 		{
 			{
 				"tr",
-				var_0_4,
-				var_0_6
+				TypeUserData,
+				TypeTr
 			},
 			{
 				"tox",
-				var_0_2
+				TypeNumber
 			},
 			{
 				"toy",
-				var_0_2
+				TypeNumber
 			},
 			{
 				"toz",
-				var_0_2
+				TypeNumber
 			},
 			{
 				"t",
-				var_0_2
+				TypeNumber
 			}
 		}
 	},
@@ -566,16 +566,16 @@ var_0_0.CheckParamList = {
 		{
 			{
 				"go",
-				var_0_4,
-				var_0_5
+				TypeUserData,
+				TypeGO
 			},
 			{
 				"to",
-				var_0_2
+				TypeNumber
 			},
 			{
 				"t",
-				var_0_2
+				TypeNumber
 			}
 		}
 	},
@@ -583,16 +583,16 @@ var_0_0.CheckParamList = {
 		{
 			{
 				"img",
-				var_0_4,
-				var_0_7
+				TypeUserData,
+				TypeImg
 			},
 			{
 				"to",
-				var_0_2
+				TypeNumber
 			},
 			{
 				"t",
-				var_0_2
+				TypeNumber
 			}
 		}
 	},
@@ -600,100 +600,99 @@ var_0_0.CheckParamList = {
 		{
 			{
 				"tr",
-				var_0_4,
-				var_0_6
+				TypeUserData,
+				TypeTr
 			},
 			{
 				"tox",
-				var_0_2
+				TypeNumber
 			},
 			{
 				"toy",
-				var_0_2
+				TypeNumber
 			},
 			{
 				"toz",
-				var_0_2
+				TypeNumber
 			},
 			{
 				"t",
-				var_0_2
+				TypeNumber
 			}
 		},
 		{
 			{
 				"tr",
-				var_0_4,
-				var_0_6
+				TypeUserData,
+				TypeTr
 			},
 			{
 				"to",
-				var_0_2
+				TypeNumber
 			},
 			{
 				"t",
-				var_0_2
+				TypeNumber
 			}
 		}
 	}
 }
 
-function var_0_0._ctorCheckParam(arg_26_0)
-	local var_26_0 = var_0_0.CheckParamList[arg_26_0.param.type]
+function FightTweenWork:_ctorCheckParam()
+	local checkParamsList = FightTweenWork.CheckParamList[self.param.type]
 
-	if not var_26_0 then
-		logError("FightTweenWork check param not implement: " .. arg_26_0.param.type)
+	if not checkParamsList then
+		logError("FightTweenWork check param not implement: " .. self.param.type)
 
 		return
 	end
 
-	local var_26_1
+	local errorDesc
 
-	for iter_26_0, iter_26_1 in ipairs(var_26_0) do
-		local var_26_2 = false
-		local var_26_3, var_26_4 = arg_26_0:_checkOneParam(iter_26_1)
+	for _, params in ipairs(checkParamsList) do
+		local ok = false
 
-		var_26_1 = var_26_4
+		ok, errorDesc = self:_checkOneParam(params)
 
-		if var_26_3 then
+		if ok then
 			return
 		end
 	end
 
-	logError(var_26_1)
+	logError(errorDesc)
 end
 
-function var_0_0._checkOneParam(arg_27_0, arg_27_1)
-	local var_27_0 = true
-	local var_27_1
+function FightTweenWork:_checkOneParam(params)
+	local ok = true
+	local errorDesc
 
-	for iter_27_0, iter_27_1 in ipairs(arg_27_1) do
-		local var_27_2 = iter_27_1[1]
-		local var_27_3 = iter_27_1[2]
-		local var_27_4 = iter_27_1[3]
-		local var_27_5 = arg_27_0.param[var_27_2]
-		local var_27_6 = type(var_27_5)
+	for _, paramNameType in ipairs(params) do
+		local paramName = paramNameType[1]
+		local paramType = paramNameType[2]
+		local csType = paramNameType[3]
+		local oneParam = self.param[paramName]
+		local typeStr = type(oneParam)
 
-		if var_27_5 == nil then
-			var_27_0 = false
-			var_27_1 = string.format("FightTweenWork param is nil: %s.%s", arg_27_0.param.type, var_27_2)
-		elseif var_27_6 == "userdata" then
-			if gohelper.isNil(var_27_5) then
-				var_27_0 = false
-				var_27_1 = string.format("FightTweenWork userdata isNil: %s.%s", arg_27_0.param.type, var_27_2)
-			elseif not string.find(tostring(var_27_5), var_27_4) then
-				var_27_0 = false
-				var_27_1 = string.format("FightTweenWork userdata type not match: %s.%s, expect %s but %s", arg_27_0.param.type, var_27_2, var_27_4, tostring(var_27_5))
+		if oneParam == nil then
+			ok = false
+			errorDesc = string.format("FightTweenWork param is nil: %s.%s", self.param.type, paramName)
+		elseif typeStr == "userdata" then
+			if gohelper.isNil(oneParam) then
+				ok = false
+				errorDesc = string.format("FightTweenWork userdata isNil: %s.%s", self.param.type, paramName)
+			elseif not string.find(tostring(oneParam), csType) then
+				ok = false
+				errorDesc = string.format("FightTweenWork userdata type not match: %s.%s, expect %s but %s", self.param.type, paramName, csType, tostring(oneParam))
 
-				logError(var_27_1)
+				logError(errorDesc)
 			end
-		elseif var_27_6 ~= var_27_3 then
-			var_27_0 = false
-			var_27_1 = string.format("FightTweenWork type not match: %s.%s, expect %s but %s", arg_27_0.param.type, var_27_2, var_27_3, var_27_6)
+		elseif typeStr ~= paramType then
+			ok = false
+			errorDesc = string.format("FightTweenWork type not match: %s.%s, expect %s but %s", self.param.type, paramName, paramType, typeStr)
 		end
 	end
 
-	return var_27_0, var_27_1
+	return ok, errorDesc
 end
 
-return var_0_0
+return FightTweenWork

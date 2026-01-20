@@ -1,35 +1,37 @@
-﻿module("modules.logic.versionactivity1_4.puzzle.view.PuzzleRecordItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/puzzle/view/PuzzleRecordItem.lua
 
-local var_0_0 = class("PuzzleRecordItem", MixScrollCell)
+module("modules.logic.versionactivity1_4.puzzle.view.PuzzleRecordItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._txtRecord = gohelper.findChildText(arg_1_1, "")
-	arg_1_0._txtRecordNum = gohelper.findChildTextMesh(arg_1_1, "txt_RecordNum")
+local PuzzleRecordItem = class("PuzzleRecordItem", MixScrollCell)
+
+function PuzzleRecordItem:init(go)
+	self._txtRecord = gohelper.findChildText(go, "")
+	self._txtRecordNum = gohelper.findChildTextMesh(go, "txt_RecordNum")
 end
 
-function var_0_0.addEvents(arg_2_0)
+function PuzzleRecordItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function PuzzleRecordItem:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function PuzzleRecordItem:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
-	arg_5_0._txtRecordNum.text = arg_5_1:GetIndex()
-	arg_5_0._txtRecord.text = arg_5_1:GetRecord()
+function PuzzleRecordItem:onUpdateMO(mo)
+	self._txtRecordNum.text = mo:GetIndex()
+	self._txtRecord.text = mo:GetRecord()
 end
 
-function var_0_0.onSelect(arg_6_0, arg_6_1)
+function PuzzleRecordItem:onSelect(isSelect)
 	return
 end
 
-function var_0_0.onDestroyView(arg_7_0)
+function PuzzleRecordItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return PuzzleRecordItem

@@ -1,25 +1,27 @@
-﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionFightRoundEnd", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/WaitGuideActionFightRoundEnd.lua
 
-local var_0_0 = class("WaitGuideActionFightRoundEnd", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.WaitGuideActionFightRoundEnd", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+local WaitGuideActionFightRoundEnd = class("WaitGuideActionFightRoundEnd", BaseGuideAction)
 
-	arg_1_0.msgItem = FightMsgMgr.registMsg(FightMsgId.CheckGuideBeforeOperate, arg_1_0.onCheckGuideBeforeOperate, arg_1_0)
-	arg_1_0.msgItem1 = FightMsgMgr.registMsg(FightMsgId.ContinueGuideBeforeOperate, arg_1_0.onContinueGuideBeforeOperate, arg_1_0)
+function WaitGuideActionFightRoundEnd:onStart(context)
+	WaitGuideActionFightRoundEnd.super.onStart(self, context)
+
+	self.msgItem = FightMsgMgr.registMsg(FightMsgId.CheckGuideBeforeOperate, self.onCheckGuideBeforeOperate, self)
+	self.msgItem1 = FightMsgMgr.registMsg(FightMsgId.ContinueGuideBeforeOperate, self.onContinueGuideBeforeOperate, self)
 end
 
-function var_0_0.onCheckGuideBeforeOperate(arg_2_0)
+function WaitGuideActionFightRoundEnd:onCheckGuideBeforeOperate()
 	FightMsgMgr.replyMsg(FightMsgId.CheckGuideBeforeOperate, true)
 end
 
-function var_0_0.onContinueGuideBeforeOperate(arg_3_0)
-	arg_3_0:onDone(true)
+function WaitGuideActionFightRoundEnd:onContinueGuideBeforeOperate()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	FightMsgMgr.removeMsg(arg_4_0.msgItem)
-	FightMsgMgr.removeMsg(arg_4_0.msgItem1)
+function WaitGuideActionFightRoundEnd:clearWork()
+	FightMsgMgr.removeMsg(self.msgItem)
+	FightMsgMgr.removeMsg(self.msgItem1)
 end
 
-return var_0_0
+return WaitGuideActionFightRoundEnd

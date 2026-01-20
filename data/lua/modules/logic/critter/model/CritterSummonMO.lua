@@ -1,79 +1,81 @@
-﻿module("modules.logic.critter.model.CritterSummonMO", package.seeall)
+﻿-- chunkname: @modules/logic/critter/model/CritterSummonMO.lua
 
-local var_0_0 = pureTable("CritterSummonMO")
+module("modules.logic.critter.model.CritterSummonMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1.id or arg_1_1.poolId
-	arg_1_0.poolId = arg_1_1.poolId
-	arg_1_0.hasSummonCritter = {}
+local CritterSummonMO = pureTable("CritterSummonMO")
 
-	for iter_1_0 = 1, #arg_1_1.hasSummonCritter do
-		local var_1_0 = arg_1_1.hasSummonCritter[iter_1_0]
-		local var_1_1 = var_1_0.materialId
-		local var_1_2 = var_1_0.quantity
+function CritterSummonMO:init(info)
+	self.id = info.id or info.poolId
+	self.poolId = info.poolId
+	self.hasSummonCritter = {}
 
-		arg_1_0.hasSummonCritter[var_1_1] = var_1_2
+	for i = 1, #info.hasSummonCritter do
+		local mo = info.hasSummonCritter[i]
+		local id = mo.materialId
+		local count = mo.quantity
+
+		self.hasSummonCritter[id] = count
 	end
 
-	arg_1_0.critterMos = {}
+	self.critterMos = {}
 
-	local var_1_3 = CritterConfig.instance:getCritterSummonPoolCfg(arg_1_1.poolId)
+	local poolCos = CritterConfig.instance:getCritterSummonPoolCfg(info.poolId)
 
-	if var_1_3 then
-		for iter_1_1, iter_1_2 in pairs(var_1_3) do
-			local var_1_4 = GameUtil.splitString2(iter_1_2.critterIds, true)
+	if poolCos then
+		for _, co in pairs(poolCos) do
+			local critterIds = GameUtil.splitString2(co.critterIds, true)
 
-			for iter_1_3, iter_1_4 in pairs(var_1_4) do
-				local var_1_5 = CritterSummonPoolMO.New()
-				local var_1_6 = iter_1_4[1]
-				local var_1_7 = iter_1_4[2]
-				local var_1_8 = arg_1_0.hasSummonCritter[var_1_6] or 0
+			for i, v in pairs(critterIds) do
+				local mo = CritterSummonPoolMO.New()
+				local id = v[1]
+				local count = v[2]
+				local _count = self.hasSummonCritter[id] or 0
 
-				var_1_5:init(iter_1_2.rare, var_1_6, var_1_7, var_1_8)
-				table.insert(arg_1_0.critterMos, var_1_5)
+				mo:init(co.rare, id, count, _count)
+				table.insert(self.critterMos, mo)
 			end
 		end
 	end
 end
 
-function var_0_0.onRefresh(arg_2_0, arg_2_1)
-	arg_2_0.hasSummonCritter = {}
+function CritterSummonMO:onRefresh(hasSummonCritter)
+	self.hasSummonCritter = {}
 
-	for iter_2_0 = 1, #arg_2_1 do
-		local var_2_0 = arg_2_1[iter_2_0]
-		local var_2_1 = var_2_0.materialId
-		local var_2_2 = var_2_0.quantity
+	for i = 1, #hasSummonCritter do
+		local info = hasSummonCritter[i]
+		local id = info.materialId
+		local count = info.quantity
 
-		arg_2_0.hasSummonCritter[var_2_1] = var_2_2
+		self.hasSummonCritter[id] = count
 
-		local var_2_3 = arg_2_0:getCritterMoById(var_2_1)
+		local mo = self:getCritterMoById(id)
 
-		if var_2_3 then
-			var_2_3:onRefreshPoolCount(var_2_2)
+		if mo then
+			mo:onRefreshPoolCount(count)
 		end
 	end
 end
 
-function var_0_0.getCritterMoById(arg_3_0, arg_3_1)
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0.critterMos) do
-		if iter_3_1.critterId == arg_3_1 then
-			return iter_3_1
+function CritterSummonMO:getCritterMoById(id)
+	for _, mo in ipairs(self.critterMos) do
+		if mo.critterId == id then
+			return mo
 		end
 	end
 end
 
-function var_0_0.getCritterMos(arg_4_0)
-	return arg_4_0.critterMos
+function CritterSummonMO:getCritterMos()
+	return self.critterMos
 end
 
-function var_0_0.getCritterCount(arg_5_0)
-	local var_5_0 = 0
+function CritterSummonMO:getCritterCount()
+	local count = 0
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0.critterMos) do
-		var_5_0 = var_5_0 + iter_5_1:getPoolCount()
+	for _, mo in ipairs(self.critterMos) do
+		count = count + mo:getPoolCount()
 	end
 
-	return var_5_0
+	return count
 end
 
-return var_0_0
+return CritterSummonMO

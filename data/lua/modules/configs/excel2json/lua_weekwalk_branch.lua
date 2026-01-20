@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_weekwalk_branch", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_weekwalk_branch.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_weekwalk_branch", package.seeall)
+
+local lua_weekwalk_branch = {}
+local fields = {
 	mapId = 2,
 	name = 4,
 	nodePath = 6,
@@ -9,13 +11,13 @@ local var_0_1 = {
 	finishNodeId = 3,
 	handbookPath = 5
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_weekwalk_branch.onLoad(json)
+	lua_weekwalk_branch.configList, lua_weekwalk_branch.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_weekwalk_branch

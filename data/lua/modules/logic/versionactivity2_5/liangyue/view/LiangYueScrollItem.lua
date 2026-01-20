@@ -1,112 +1,114 @@
-﻿module("modules.logic.versionactivity2_5.liangyue.view.LiangYueScrollItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/liangyue/view/LiangYueScrollItem.lua
 
-local var_0_0 = class("LiangYueScrollItem", LuaCompBase)
-local var_0_1 = ZProj.UIEffectsCollection
+module("modules.logic.versionactivity2_5.liangyue.view.LiangYueScrollItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._go = arg_1_1
-	arg_1_0._goTextBg = gohelper.findChild(arg_1_1, "image_NumBG")
-	arg_1_0._txtNum = gohelper.findChildTextMesh(arg_1_1, "image_NumBG/#txt_Num")
-	arg_1_0._simage_illustration = gohelper.findChildSingleImage(arg_1_1, "#image_Piece")
-	arg_1_0._image_illustration = gohelper.findChildImage(arg_1_1, "#image_Piece")
-	arg_1_0._image_illustrationBg = gohelper.findChildImage(arg_1_1, "image_PieceBG")
-	arg_1_0._goTarget = gohelper.findChild(arg_1_1, "TargetIcon")
-	arg_1_0._goLine = gohelper.findChild(arg_1_1, "#go_Line")
-	arg_1_0._canvasGroup = gohelper.onceAddComponent(arg_1_0._simage_illustration.gameObject, gohelper.Type_CanvasGroup)
+local LiangYueScrollItem = class("LiangYueScrollItem", LuaCompBase)
+local ZProj_UIEffectsCollection = ZProj.UIEffectsCollection
 
-	arg_1_0:initComp()
+function LiangYueScrollItem:init(go)
+	self._go = go
+	self._goTextBg = gohelper.findChild(go, "image_NumBG")
+	self._txtNum = gohelper.findChildTextMesh(go, "image_NumBG/#txt_Num")
+	self._simage_illustration = gohelper.findChildSingleImage(go, "#image_Piece")
+	self._image_illustration = gohelper.findChildImage(go, "#image_Piece")
+	self._image_illustrationBg = gohelper.findChildImage(go, "image_PieceBG")
+	self._goTarget = gohelper.findChild(go, "TargetIcon")
+	self._goLine = gohelper.findChild(go, "#go_Line")
+	self._canvasGroup = gohelper.onceAddComponent(self._simage_illustration.gameObject, gohelper.Type_CanvasGroup)
+
+	self:initComp()
 end
 
-function var_0_0.initComp(arg_2_0)
-	arg_2_0._dragListener = SLFramework.UGUI.UIDragListener.Get(arg_2_0._image_illustrationBg.gameObject)
+function LiangYueScrollItem:initComp()
+	self._dragListener = SLFramework.UGUI.UIDragListener.Get(self._image_illustrationBg.gameObject)
 
-	arg_2_0._dragListener:AddDragBeginListener(arg_2_0._onItemBeginDrag, arg_2_0)
-	arg_2_0._dragListener:AddDragListener(arg_2_0._onItemDrag, arg_2_0)
-	arg_2_0._dragListener:AddDragEndListener(arg_2_0._onItemEndDrag, arg_2_0)
+	self._dragListener:AddDragBeginListener(self._onItemBeginDrag, self)
+	self._dragListener:AddDragListener(self._onItemDrag, self)
+	self._dragListener:AddDragEndListener(self._onItemEndDrag, self)
 
-	arg_2_0._iconHeight = recthelper.getHeight(arg_2_0._simage_illustration.transform)
-	arg_2_0._iconWidth = recthelper.getWidth(arg_2_0._simage_illustration.transform)
+	self._iconHeight = recthelper.getHeight(self._simage_illustration.transform)
+	self._iconWidth = recthelper.getWidth(self._simage_illustration.transform)
 
-	local var_2_0 = LiangYueAttributeItem.New()
+	local comp = LiangYueAttributeItem.New()
 
-	var_2_0:init(arg_2_0._goTarget)
+	comp:init(self._goTarget)
 
-	arg_2_0._attributeComp = var_2_0
-	arg_2_0._uiEffectComp = var_0_1.Get(arg_2_0._image_illustration.gameObject)
+	self._attributeComp = comp
+	self._uiEffectComp = ZProj_UIEffectsCollection.Get(self._image_illustration.gameObject)
 
-	arg_2_0:setEnoughState(true)
+	self:setEnoughState(true)
 
-	arg_2_0._isDrag = false
+	self._isDrag = false
 end
 
-function var_0_0.setActive(arg_3_0, arg_3_1)
-	gohelper.setActive(arg_3_0._go, arg_3_1)
+function LiangYueScrollItem:setActive(active)
+	gohelper.setActive(self._go, active)
 end
 
-function var_0_0.setAlpha(arg_4_0, arg_4_1)
-	arg_4_0._canvasGroup.alpha = arg_4_1
+function LiangYueScrollItem:setAlpha(alpha)
+	self._canvasGroup.alpha = alpha
 end
 
-function var_0_0.setEnoughState(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_1 and LiangYueEnum.ScrollItemColor.Enough or LiangYueEnum.ScrollItemColor.NotEnought
+function LiangYueScrollItem:setEnoughState(enough)
+	local color = enough and LiangYueEnum.ScrollItemColor.Enough or LiangYueEnum.ScrollItemColor.NotEnought
 
-	SLFramework.UGUI.GuiHelper.SetColor(arg_5_0._image_illustration, var_5_0)
-	arg_5_0._uiEffectComp:SetGray(not arg_5_1)
+	SLFramework.UGUI.GuiHelper.SetColor(self._image_illustration, color)
+	self._uiEffectComp:SetGray(not enough)
 end
 
-function var_0_0.setInfo(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5, arg_6_6)
-	arg_6_0.id = arg_6_1
-	arg_6_0.index = arg_6_2
-	arg_6_0._txtNum.text = arg_6_3 > 0 and tostring(arg_6_3) or LiangYueEnum.UnlimitedSign
+function LiangYueScrollItem:setInfo(id, index, count, imageId, aspect, actId)
+	self.id = id
+	self.index = index
+	self._txtNum.text = count > 0 and tostring(count) or LiangYueEnum.UnlimitedSign
 
-	gohelper.setActive(arg_6_0._goLine, arg_6_2 % 2 ~= 0)
+	gohelper.setActive(self._goLine, index % 2 ~= 0)
 
-	local var_6_0 = string.format("v2a5_liangyue_game_piece%s", arg_6_4)
+	local iconName = string.format("v2a5_liangyue_game_piece%s", imageId)
 
-	arg_6_0._simage_illustration:LoadImage(ResUrl.getV2a5LiangYueImg(var_6_0))
-	arg_6_0:setAttributeInfo(arg_6_6, arg_6_1)
+	self._simage_illustration:LoadImage(ResUrl.getV2a5LiangYueImg(iconName))
+	self:setAttributeInfo(actId, id)
 end
 
-function var_0_0.setAttributeInfo(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = LiangYueConfig.instance:getIllustrationAttribute(arg_7_1, arg_7_2)
+function LiangYueScrollItem:setAttributeInfo(actId, id)
+	local data = LiangYueConfig.instance:getIllustrationAttribute(actId, id)
 
-	arg_7_0._attributeComp:setInfo(var_7_0)
+	self._attributeComp:setInfo(data)
 end
 
-function var_0_0.setParentView(arg_8_0, arg_8_1)
-	arg_8_0.view = arg_8_1
+function LiangYueScrollItem:setParentView(view)
+	self.view = view
 end
 
-function var_0_0.setCount(arg_9_0, arg_9_1)
-	arg_9_0._txtNum.text = tostring(arg_9_1)
+function LiangYueScrollItem:setCount(count)
+	self._txtNum.text = tostring(count)
 end
 
-function var_0_0._onItemBeginDrag(arg_10_0, arg_10_1, arg_10_2)
-	if arg_10_0._isDrag or arg_10_0.view._isDrag then
+function LiangYueScrollItem:_onItemBeginDrag(param, pointerEventData)
+	if self._isDrag or self.view._isDrag then
 		logNormal("拖动中")
 
 		return
 	end
 
-	arg_10_0._isDrag = true
+	self._isDrag = true
 
-	arg_10_0.view:_onItemBeginDrag(arg_10_1, arg_10_2, arg_10_0.id)
+	self.view:_onItemBeginDrag(param, pointerEventData, self.id)
 end
 
-function var_0_0._onItemDrag(arg_11_0, arg_11_1, arg_11_2)
-	arg_11_0.view:_onItemDrag(arg_11_1, arg_11_2)
+function LiangYueScrollItem:_onItemDrag(param, pointerEventData)
+	self.view:_onItemDrag(param, pointerEventData)
 end
 
-function var_0_0._onItemEndDrag(arg_12_0, arg_12_1, arg_12_2)
-	arg_12_0._isDrag = false
+function LiangYueScrollItem:_onItemEndDrag(param, pointerEventData)
+	self._isDrag = false
 
-	arg_12_0.view:_onItemEndDrag(arg_12_1, arg_12_2)
+	self.view:_onItemEndDrag(param, pointerEventData)
 end
 
-function var_0_0.onDestroy(arg_13_0)
-	arg_13_0._dragListener:RemoveDragBeginListener()
-	arg_13_0._dragListener:RemoveDragListener()
-	arg_13_0._dragListener:RemoveDragEndListener()
+function LiangYueScrollItem:onDestroy()
+	self._dragListener:RemoveDragBeginListener()
+	self._dragListener:RemoveDragListener()
+	self._dragListener:RemoveDragEndListener()
 end
 
-return var_0_0
+return LiangYueScrollItem

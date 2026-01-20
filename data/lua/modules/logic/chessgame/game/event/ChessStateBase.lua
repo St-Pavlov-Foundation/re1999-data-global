@@ -1,26 +1,28 @@
-﻿module("modules.logic.chessgame.game.event.ChessStateBase", package.seeall)
+﻿-- chunkname: @modules/logic/chessgame/game/event/ChessStateBase.lua
 
-local var_0_0 = class("ChessStateBase")
+module("modules.logic.chessgame.game.event.ChessStateBase", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._stateType = arg_1_1
-	arg_1_0.originData = arg_1_2
+local ChessStateBase = class("ChessStateBase")
+
+function ChessStateBase:init(stateType, originData)
+	self._stateType = stateType
+	self.originData = originData
 end
 
-function var_0_0.start(arg_2_0)
-	arg_2_0._stateType = nil
+function ChessStateBase:start()
+	self._stateType = nil
 end
 
-function var_0_0.onClickPos(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+function ChessStateBase:onClickPos(x, y, manualClick)
 	return
 end
 
-function var_0_0.getStateType(arg_4_0)
-	return arg_4_0._stateType
+function ChessStateBase:getStateType()
+	return self._stateType
 end
 
-function var_0_0.dispose(arg_5_0)
+function ChessStateBase:dispose()
 	return
 end
 
-return var_0_0
+return ChessStateBase

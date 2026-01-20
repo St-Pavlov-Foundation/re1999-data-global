@@ -1,247 +1,269 @@
-﻿module("modules.logic.tips.controller.MaterialTipController", package.seeall)
+﻿-- chunkname: @modules/logic/tips/controller/MaterialTipController.lua
 
-local var_0_0 = class("MaterialTipController", BaseController)
+module("modules.logic.tips.controller.MaterialTipController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local MaterialTipController = class("MaterialTipController", BaseController)
+
+function MaterialTipController:onInit()
 	return
 end
 
-function var_0_0.addConstEvents(arg_2_0)
+function MaterialTipController:addConstEvents()
 	return
 end
 
-function var_0_0.showMaterialInfo(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5, arg_3_6, arg_3_7, arg_3_8, arg_3_9, arg_3_10, arg_3_11, arg_3_12, arg_3_13)
-	arg_3_1 = tonumber(arg_3_1)
-	arg_3_2 = tonumber(arg_3_2)
+function MaterialTipController:showMaterialInfo(type, id, inpack, uid, cantJump, recordFarmItem, fakeQuantity, needQuantity, isConsume, jumpFinishCallback, jumpFinishCallbackObj, jumpFinishCallbackParam, extraParam)
+	type = tonumber(type)
+	id = tonumber(id)
 
-	local var_3_0 = {
-		type = arg_3_1,
-		id = arg_3_2,
-		inpack = arg_3_3,
-		uid = arg_3_4,
-		canJump = not arg_3_5,
-		recordFarmItem = arg_3_6,
-		fakeQuantity = arg_3_7,
-		needQuantity = arg_3_8,
-		isConsume = arg_3_9,
-		jumpFinishCallback = arg_3_10,
-		jumpFinishCallbackObj = arg_3_11,
-		jumpFinishCallbackParam = arg_3_12,
-		roomBuildingLevel = arg_3_13 and arg_3_13.roomBuildingLevel
-	}
+	local data = {}
 
-	arg_3_0:showMaterialInfoWithData(arg_3_1, arg_3_2, var_3_0)
+	data.type = type
+	data.id = id
+	data.inpack = inpack
+	data.uid = uid
+	data.canJump = not cantJump
+	data.recordFarmItem = recordFarmItem
+	data.fakeQuantity = fakeQuantity
+	data.needQuantity = needQuantity
+	data.isConsume = isConsume
+	data.jumpFinishCallback = jumpFinishCallback
+	data.jumpFinishCallbackObj = jumpFinishCallbackObj
+	data.jumpFinishCallbackParam = jumpFinishCallbackParam
+	data.roomBuildingLevel = extraParam and extraParam.roomBuildingLevel
+
+	self:showMaterialInfoWithData(type, id, data)
 end
 
-function var_0_0.showMaterialInfoWithData(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	arg_4_3.type = arg_4_1
-	arg_4_3.id = arg_4_2
+function MaterialTipController:showMaterialInfoWithData(type, id, data)
+	data.type = type
+	data.id = id
 
-	local var_4_0 = arg_4_3.inpack
+	local inpack = data.inpack
 
-	if arg_4_1 == MaterialEnum.MaterialType.Item then
-		local var_4_1 = ItemModel.instance:getItemConfig(arg_4_1, arg_4_2)
+	if type == MaterialEnum.MaterialType.Item then
+		local config = ItemModel.instance:getItemConfig(type, id)
 
-		if var_4_1.subType == ItemEnum.SubType.MainSceneSkin then
-			ViewMgr.instance:openView(ViewName.MainSceneSkinMaterialTipView, arg_4_3)
-
-			return
-		end
-
-		if var_4_1.subType == ItemEnum.SubType.MainUISkin then
-			ViewMgr.instance:openView(ViewName.MainUISkinMaterialTipView, arg_4_3)
+		if config.subType == ItemEnum.SubType.MainSceneSkin then
+			ViewMgr.instance:openView(ViewName.MainSceneSkinMaterialTipView, data)
 
 			return
 		end
 
-		if var_4_1.subType == ItemEnum.SubType.FightCard or var_4_1.subType == ItemEnum.SubType.FightFloatType then
-			ViewMgr.instance:openView(ViewName.FightUISkinMaterialTipView, arg_4_3)
+		if config.subType == ItemEnum.SubType.MainUISkin then
+			ViewMgr.instance:openView(ViewName.MainUISkinMaterialTipView, data)
 
 			return
 		end
 
-		if var_4_0 ~= true and MaterialEnum.SubTypePackages[var_4_1.subType] then
-			ViewMgr.instance:openView(ViewName.MaterialPackageTipView, arg_4_3)
-		elseif ItemEnum.RoomBackpackPropSubType[var_4_1.subType] then
-			ViewMgr.instance:openView(ViewName.RoomManufactureMaterialTipView, arg_4_3)
-		elseif var_4_1.subType == ItemEnum.SubType.PlayerBg then
-			ViewMgr.instance:openView(ViewName.DecorateStoreGoodsTipView, arg_4_3)
+		if config.subType == ItemEnum.SubType.FightCard or config.subType == ItemEnum.SubType.FightFloatType then
+			ViewMgr.instance:openView(ViewName.FightUISkinMaterialTipView, data)
+
+			return
+		end
+
+		if inpack ~= true and MaterialEnum.SubTypePackages[config.subType] then
+			ViewMgr.instance:openView(ViewName.MaterialPackageTipView, data)
+		elseif ItemEnum.RoomBackpackPropSubType[config.subType] then
+			ViewMgr.instance:openView(ViewName.RoomManufactureMaterialTipView, data)
+		elseif config.subType == ItemEnum.SubType.PlayerBg then
+			ViewMgr.instance:openView(ViewName.DecorateStoreGoodsTipView, data)
 		else
-			ViewMgr.instance:openView(ViewName.MaterialTipView, arg_4_3)
+			ViewMgr.instance:openView(ViewName.MaterialTipView, data)
 		end
-	elseif arg_4_1 == MaterialEnum.MaterialType.Currency then
-		arg_4_3.inpack = false
+	elseif type == MaterialEnum.MaterialType.Currency then
+		data.inpack = false
 
-		if arg_4_2 ~= CurrencyEnum.CurrencyType.Act186 then
-			ViewMgr.instance:openView(ViewName.MaterialTipView, arg_4_3)
+		if id ~= CurrencyEnum.CurrencyType.Act186 then
+			ViewMgr.instance:openView(ViewName.MaterialTipView, data)
 		end
-	elseif arg_4_1 == MaterialEnum.MaterialType.Hero then
-		arg_4_3.hero = true
+	elseif type == MaterialEnum.MaterialType.Hero then
+		data.hero = true
 
 		ViewMgr.instance:openView(ViewName.SummonHeroDetailView, {
-			heroId = arg_4_2
+			heroId = id
 		})
-	elseif arg_4_1 == MaterialEnum.MaterialType.HeroSkin then
+	elseif type == MaterialEnum.MaterialType.HeroSkin then
 		CharacterController.instance:openCharacterSkinTipView({
-			skinId = arg_4_2
+			skinId = id
 		})
-	elseif arg_4_1 == MaterialEnum.MaterialType.Equip then
+	elseif type == MaterialEnum.MaterialType.Equip then
 		EquipController.instance:openEquipView({
-			equipId = arg_4_2
+			equipId = id
 		})
-	elseif arg_4_1 == MaterialEnum.MaterialType.PlayerCloth then
-		arg_4_3.isTip = true
+	elseif type == MaterialEnum.MaterialType.PlayerCloth then
+		data.isTip = true
 
-		ViewMgr.instance:openView(ViewName.PlayerClothView, arg_4_3)
-	elseif arg_4_1 == MaterialEnum.MaterialType.Building or arg_4_1 == MaterialEnum.MaterialType.BlockPackage then
-		ViewMgr.instance:openView(ViewName.RoomMaterialTipView, arg_4_3)
-	elseif arg_4_1 == MaterialEnum.MaterialType.EquipCard then
-		Activity104Controller.instance:openSeasonCelebrityCardTipView(arg_4_3)
-	elseif arg_4_1 == MaterialEnum.MaterialType.Season123EquipCard then
-		Season123Controller.instance:openSeasonCelebrityCardTipView(arg_4_3)
-	elseif arg_4_1 == MaterialEnum.MaterialType.Antique then
-		AntiqueController.instance:openAntiqueView(arg_4_2)
-	elseif arg_4_1 == MaterialEnum.MaterialType.Critter then
-		local var_4_2 = ItemModel.instance:getItemConfig(arg_4_1, arg_4_2)
-		local var_4_3 = CritterHelper.buildFakeCritterMoByConfig(var_4_2)
+		ViewMgr.instance:openView(ViewName.PlayerClothView, data)
+	elseif type == MaterialEnum.MaterialType.Building or type == MaterialEnum.MaterialType.BlockPackage then
+		ViewMgr.instance:openView(ViewName.RoomMaterialTipView, data)
+	elseif type == MaterialEnum.MaterialType.EquipCard then
+		Activity104Controller.instance:openSeasonCelebrityCardTipView(data)
+	elseif type == MaterialEnum.MaterialType.Season123EquipCard then
+		Season123Controller.instance:openSeasonCelebrityCardTipView(data)
+	elseif type == MaterialEnum.MaterialType.Antique then
+		AntiqueController.instance:openAntiqueView(id)
+	elseif type == MaterialEnum.MaterialType.Critter then
+		local config = ItemModel.instance:getItemConfig(type, id)
+		local critterMo = CritterHelper.buildFakeCritterMoByConfig(config)
 
-		CritterController.instance:openRoomCritterDetailView(true, var_4_3, true)
+		CritterController.instance:openRoomCritterDetailView(true, critterMo, true)
 	else
-		arg_4_3.special = true
+		data.special = true
 
-		ViewMgr.instance:openView(ViewName.MaterialTipView, arg_4_3)
+		ViewMgr.instance:openView(ViewName.MaterialTipView, data)
 	end
 end
 
-function var_0_0.onUseOptionalHeroGift(arg_5_0, arg_5_1, arg_5_2)
-	if not arg_5_2 or #arg_5_2 < 0 then
+function MaterialTipController:onUseOptionalHeroGift(viewParam, selectHeroIdList)
+	if not selectHeroIdList or #selectHeroIdList < 0 then
 		return
 	end
 
-	local var_5_0 = {}
-	local var_5_1 = {
-		materialId = arg_5_1.id,
-		quantity = arg_5_1.quantity
-	}
+	local data = {}
+	local o = {}
 
-	table.insert(var_5_0, var_5_1)
-	ItemRpc.instance:sendUseItemRequest(var_5_0, arg_5_2[1])
+	o.materialId = viewParam.id
+	o.quantity = viewParam.quantity
+
+	table.insert(data, o)
+	ItemRpc.instance:sendUseItemRequest(data, selectHeroIdList[1])
 	CustomPickChoiceController.instance:dispatchEvent(CustomPickChoiceEvent.onCustomPickComplete)
 end
 
-function var_0_0.onUseSelfSelectSixHeroGift(arg_6_0, arg_6_1, arg_6_2)
-	if not arg_6_2 or #arg_6_2 < 0 then
+function MaterialTipController:onUseSelfSelectSixHeroGift(viewParam, selectHeroIdList)
+	if not selectHeroIdList or #selectHeroIdList < 0 then
 		return
 	end
 
-	local var_6_0 = {}
-	local var_6_1 = {
-		materialId = arg_6_1.id,
-		quantity = arg_6_1.quantity
-	}
+	local data = {}
+	local o = {}
 
-	table.insert(var_6_0, var_6_1)
-	ItemRpc.instance:sendUseItemRequest(var_6_0, arg_6_2[1])
+	o.materialId = viewParam.id
+	o.quantity = viewParam.quantity
+
+	table.insert(data, o)
+	ItemRpc.instance:sendUseItemRequest(data, selectHeroIdList[1])
 	V2a7_SelfSelectSix_PickChoiceController.instance:dispatchEvent(V2a7_SelfSelectSix_PickChoiceEvent.onCustomPickComplete)
 end
 
-function var_0_0.openView_LifeCirclePickChoice(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	local var_7_0 = ItemConfig.instance:getItemConfig(arg_7_1, arg_7_2)
+function MaterialTipController:onUseOptionalTurnbackEquipGift(viewParam, selectEquipIdList)
+	if not selectEquipIdList or #selectEquipIdList < 0 then
+		return
+	end
 
-	arg_7_0:_openView_LifeCirclePickChoice(var_7_0, arg_7_3)
+	local data = {}
+	local o = {}
+
+	o.materialId = viewParam.id
+	o.quantity = viewParam.quantity
+
+	local index = selectEquipIdList[1]
+
+	table.insert(data, o)
+	ItemRpc.instance:sendUseItemRequest(data, index)
+	TurnbackPickEquipController.instance:dispatchEvent(TurnbackEvent.onCustomPickComplete)
 end
 
-function var_0_0._openView_LifeCirclePickChoice(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_2 = arg_8_2 or 1
+function MaterialTipController:openView_LifeCirclePickChoice(itemType, itemId, quantity)
+	local itemCO = ItemConfig.instance:getItemConfig(itemType, itemId)
 
-	if arg_8_2 <= 0 then
+	self:_openView_LifeCirclePickChoice(itemCO, quantity)
+end
+
+function MaterialTipController:_openView_LifeCirclePickChoice(itemCO, quantity)
+	quantity = quantity or 1
+
+	if quantity <= 0 then
 		return
 	end
 
-	local var_8_0 = arg_8_1.effect
+	local effect = itemCO.effect
 
-	if string.nilorempty(var_8_0) then
+	if string.nilorempty(effect) then
 		return
 	end
 
-	local var_8_1 = string.split(var_8_0, "|")
-	local var_8_2 = {}
-	local var_8_3
-	local var_8_4 = #var_8_1
+	local strList = string.split(effect, "|")
+	local heroIdList = {}
+	local isCustomSelect
+	local maxHeroCnt = #strList
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_1) do
-		local var_8_5 = tonumber(iter_8_1)
+	for i, heroIdStr in ipairs(strList) do
+		local characterId = tonumber(heroIdStr)
 
-		table.insert(var_8_2, var_8_5)
+		table.insert(heroIdList, characterId)
 
-		if var_8_3 == nil then
-			if not HeroModel.instance:getByHeroId(var_8_5) then
-				var_8_3 = false
-			elseif iter_8_0 == var_8_4 then
-				var_8_3 = true
+		if isCustomSelect == nil then
+			local heroMO = HeroModel.instance:getByHeroId(characterId)
+
+			if not heroMO then
+				isCustomSelect = false
+			elseif i == maxHeroCnt then
+				isCustomSelect = true
 			end
 		end
 	end
 
-	local var_8_6 = var_8_3 and luaLang("lifecirclepickchoice_txt_Title_custom") or luaLang("lifecirclepickchoice_txt_Title_random")
-	local var_8_7 = var_8_3 and luaLang("lifecirclepickchoice_txt_confirm_custom") or luaLang("lifecirclepickchoice_txt_confirm_random")
-	local var_8_8 = {
-		heroIdList = var_8_2,
-		title = var_8_6,
-		confirmDesc = var_8_7,
-		isCustomSelect = var_8_3,
-		callback = function(arg_9_0)
-			local var_9_0 = var_8_3 and arg_9_0:selectedHeroId() or 0
+	local title = isCustomSelect and luaLang("lifecirclepickchoice_txt_Title_custom") or luaLang("lifecirclepickchoice_txt_Title_random")
+	local confirmDesc = isCustomSelect and luaLang("lifecirclepickchoice_txt_confirm_custom") or luaLang("lifecirclepickchoice_txt_confirm_random")
+	local viewParam = {
+		heroIdList = heroIdList,
+		title = title,
+		confirmDesc = confirmDesc,
+		isCustomSelect = isCustomSelect,
+		callback = function(viewObj)
+			local targetId = isCustomSelect and viewObj:selectedHeroId() or 0
 
-			if var_8_3 and var_9_0 == 0 then
+			if isCustomSelect and targetId == 0 then
 				GameFacade.showToast(ToastEnum.MaterialTipController_LifeCirclePickChoiceSelectOneTips)
 
 				return
 			end
 
-			local var_9_1 = arg_8_1.id
+			local materialId = itemCO.id
 
-			MaterialRpc.instance:set_onReceiveMaterialChangePushOnce(arg_8_0._onReceiveMaterialChangePush_LifeCirclePickChoice, arg_8_0)
-			HeroRpc.instance:set_onReceiveHeroGainPushOnce(arg_8_0._onReceiveHeroGainPush_LifeCirclePickChoice, arg_8_0)
+			MaterialRpc.instance:set_onReceiveMaterialChangePushOnce(self._onReceiveMaterialChangePush_LifeCirclePickChoice, self)
+			HeroRpc.instance:set_onReceiveHeroGainPushOnce(self._onReceiveHeroGainPush_LifeCirclePickChoice, self)
 			CharacterModel.instance:setGainHeroViewShowState(true)
-			ItemRpc.instance:simpleSendUseItemRequest(var_9_1, arg_8_2, var_9_0, arg_9_0.closeThis, arg_9_0)
+			ItemRpc.instance:simpleSendUseItemRequest(materialId, quantity, targetId, viewObj.closeThis, viewObj)
 		end
 	}
 
-	ViewMgr.instance:openView(ViewName.LifeCirclePickChoice, var_8_8)
+	ViewMgr.instance:openView(ViewName.LifeCirclePickChoice, viewParam)
 end
 
-function var_0_0._onReceiveMaterialChangePush_LifeCirclePickChoice(arg_10_0, arg_10_1, arg_10_2)
+function MaterialTipController:_onReceiveMaterialChangePush_LifeCirclePickChoice(resultCode, msg)
 	CharacterModel.instance:setGainHeroViewShowState(false)
 
-	if arg_10_1 ~= 0 then
+	if resultCode ~= 0 then
 		return
 	end
 
-	LifeCircleController.instance:onReceiveMaterialChangePush(arg_10_2)
+	LifeCircleController.instance:onReceiveMaterialChangePush(msg)
 end
 
-function var_0_0._onReceiveHeroGainPush_LifeCirclePickChoice(arg_11_0, arg_11_1, arg_11_2)
-	if arg_11_1 ~= 0 then
+function MaterialTipController:_onReceiveHeroGainPush_LifeCirclePickChoice(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	LifeCircleController.instance:onReceiveHeroGainPush(arg_11_2)
+	LifeCircleController.instance:onReceiveHeroGainPush(msg)
 end
 
-function var_0_0.openExchangeTipView(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4, arg_12_5, arg_12_6, arg_12_7, arg_12_8)
+function MaterialTipController:openExchangeTipView(costMatData, targetMatData, exchangeFunc, exchangeFuncObj, getMaxTimeFunc, getMaxTimeFuncObj, getExchangeNumFunc, getExchangeNumFuncObj)
 	ViewMgr.instance:openView(ViewName.CommonExchangeView, {
-		costMatData = arg_12_1,
-		targetMatData = arg_12_2,
-		exchangeFunc = arg_12_3,
-		exchangeFuncObj = arg_12_4,
-		getMaxTimeFunc = arg_12_5,
-		getMaxTimeFuncObj = arg_12_6,
-		getExchangeNumFunc = arg_12_7,
-		getExchangeNumFuncObj = arg_12_8
+		costMatData = costMatData,
+		targetMatData = targetMatData,
+		exchangeFunc = exchangeFunc,
+		exchangeFuncObj = exchangeFuncObj,
+		getMaxTimeFunc = getMaxTimeFunc,
+		getMaxTimeFuncObj = getMaxTimeFuncObj,
+		getExchangeNumFunc = getExchangeNumFunc,
+		getExchangeNumFuncObj = getExchangeNumFuncObj
 	})
 end
 
-var_0_0.instance = var_0_0.New()
+MaterialTipController.instance = MaterialTipController.New()
 
-return var_0_0
+return MaterialTipController

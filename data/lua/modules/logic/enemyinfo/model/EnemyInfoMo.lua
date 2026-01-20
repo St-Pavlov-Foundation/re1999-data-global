@@ -1,29 +1,31 @@
-﻿module("modules.logic.enemyinfo.model.EnemyInfoMo", package.seeall)
+﻿-- chunkname: @modules/logic/enemyinfo/model/EnemyInfoMo.lua
 
-local var_0_0 = pureTable("EnemyInfoMo")
+module("modules.logic.enemyinfo.model.EnemyInfoMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.showLeftTab = false
-	arg_1_0.battleId = 0
-	arg_1_0.tabEnum = EnemyInfoEnum.TabEnum.Normal
+local EnemyInfoMo = pureTable("EnemyInfoMo")
+
+function EnemyInfoMo:ctor()
+	self.showLeftTab = false
+	self.battleId = 0
+	self.tabEnum = EnemyInfoEnum.TabEnum.Normal
 end
 
-function var_0_0.updateBattleId(arg_2_0, arg_2_1)
-	if arg_2_0.battleId == arg_2_1 then
+function EnemyInfoMo:updateBattleId(battleId)
+	if self.battleId == battleId then
 		return
 	end
 
-	arg_2_0.battleId = arg_2_1
+	self.battleId = battleId
 
-	EnemyInfoController.instance:dispatchEvent(EnemyInfoEvent.UpdateBattleInfo, arg_2_0.battleId)
+	EnemyInfoController.instance:dispatchEvent(EnemyInfoEvent.UpdateBattleInfo, self.battleId)
 end
 
-function var_0_0.setTabEnum(arg_3_0, arg_3_1)
-	arg_3_0.tabEnum = arg_3_1
+function EnemyInfoMo:setTabEnum(tabEnum)
+	self.tabEnum = tabEnum
 end
 
-function var_0_0.setShowLeftTab(arg_4_0, arg_4_1)
-	arg_4_0.showLeftTab = arg_4_1
+function EnemyInfoMo:setShowLeftTab(showLeftTab)
+	self.showLeftTab = showLeftTab
 end
 
-return var_0_0
+return EnemyInfoMo

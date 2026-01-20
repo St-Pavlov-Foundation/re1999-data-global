@@ -1,52 +1,56 @@
-﻿module("modules.logic.fight.system.work.FightWorkAct183Repress", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkAct183Repress.lua
 
-local var_0_0 = class("FightWorkAct183Repress", BaseWork)
+module("modules.logic.fight.system.work.FightWorkAct183Repress", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
+local FightWorkAct183Repress = class("FightWorkAct183Repress", BaseWork)
 
-	if not var_1_0 or var_1_0.type ~= DungeonEnum.EpisodeType.Act183 then
-		arg_1_0:onDone(true)
+function FightWorkAct183Repress:onStart(context)
+	local episodeCo = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
 
-		return
-	end
-
-	local var_1_1 = Act183Model.instance:getBattleFinishedInfo()
-
-	if not var_1_1 or not var_1_1.win then
-		arg_1_0:onDone(true)
+	if not episodeCo or episodeCo.type ~= DungeonEnum.EpisodeType.Act183 then
+		self:onDone(true)
 
 		return
 	end
 
-	local var_1_2 = var_1_1.activityId
+	local battleFinishedInfo = Act183Model.instance:getBattleFinishedInfo()
 
-	if ActivityHelper.getActivityStatus(var_1_2) ~= ActivityEnum.ActivityStatus.Normal then
-		arg_1_0:onDone(true)
-
-		return
-	end
-
-	local var_1_3 = var_1_1.episodeMo
-
-	if not Act183Helper.isLastPassEpisodeInGroup(var_1_3) then
-		ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_1_0._onCloseViewFinish, arg_1_0)
-		Act183Controller.instance:openAct183RepressView(var_1_1)
+	if not battleFinishedInfo or not battleFinishedInfo.win then
+		self:onDone(true)
 
 		return
 	end
 
-	arg_1_0:onDone(true)
+	local activityId = battleFinishedInfo.activityId
+	local status = ActivityHelper.getActivityStatus(activityId)
+
+	if status ~= ActivityEnum.ActivityStatus.Normal then
+		self:onDone(true)
+
+		return
+	end
+
+	local episodeMo = battleFinishedInfo.episodeMo
+	local isLastEpisode = Act183Helper.isLastPassEpisodeInGroup(episodeMo)
+
+	if not isLastEpisode then
+		ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, self._onCloseViewFinish, self)
+		Act183Controller.instance:openAct183RepressView(battleFinishedInfo)
+
+		return
+	end
+
+	self:onDone(true)
 end
 
-function var_0_0._onCloseViewFinish(arg_2_0, arg_2_1)
-	if arg_2_1 == ViewName.Act183RepressView then
-		arg_2_0:onDone(true)
+function FightWorkAct183Repress:_onCloseViewFinish(viewName)
+	if viewName == ViewName.Act183RepressView then
+		self:onDone(true)
 	end
 end
 
-function var_0_0.clearWork(arg_3_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_3_0._onCloseViewFinish, arg_3_0)
+function FightWorkAct183Repress:clearWork()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, self._onCloseViewFinish, self)
 end
 
-return var_0_0
+return FightWorkAct183Repress

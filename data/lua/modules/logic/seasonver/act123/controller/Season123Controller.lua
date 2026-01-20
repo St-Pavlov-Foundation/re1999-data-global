@@ -1,444 +1,452 @@
-﻿module("modules.logic.seasonver.act123.controller.Season123Controller", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/controller/Season123Controller.lua
 
-local var_0_0 = class("Season123Controller", BaseController)
+module("modules.logic.seasonver.act123.controller.Season123Controller", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local Season123Controller = class("Season123Controller", BaseController)
+
+function Season123Controller:onInit()
 	Season123ControllerCardEffectHandleFunc.activeHandleFuncController()
 end
 
-function var_0_0.reInit(arg_2_0)
+function Season123Controller:reInit()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, arg_3_0.handleReceiveActChanged, arg_3_0)
-	TaskController.instance:registerCallback(TaskEvent.UpdateTaskList, arg_3_0.onUpdateTaskList, arg_3_0)
-	TaskController.instance:registerCallback(TaskEvent.SetTaskList, arg_3_0.onSetTaskList, arg_3_0)
+function Season123Controller:addConstEvents()
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, self.handleReceiveActChanged, self)
+	TaskController.instance:registerCallback(TaskEvent.UpdateTaskList, self.onUpdateTaskList, self)
+	TaskController.instance:registerCallback(TaskEvent.SetTaskList, self.onSetTaskList, self)
 end
 
-function var_0_0.handleReceiveActChanged(arg_4_0, arg_4_1)
-	logNormal("handleReceiveActChanged : " .. tostring(arg_4_1))
+function Season123Controller:handleReceiveActChanged(actId)
+	logNormal("handleReceiveActChanged : " .. tostring(actId))
 
-	local var_4_0 = ActivityModel.instance:getOnlineActIdByType(Activity123Enum.ActType)
+	local actList = ActivityModel.instance:getOnlineActIdByType(Activity123Enum.ActType)
 
-	if var_4_0 then
-		Activity123Rpc.instance:sendGet123InfosRequest(var_4_0[1])
+	if actList then
+		Activity123Rpc.instance:sendGet123InfosRequest(actList[1])
 	end
 end
 
-function var_0_0.openSeasonEntry(arg_5_0, arg_5_1)
-	local var_5_0
+function Season123Controller:openSeasonEntry(param)
+	local actId
 
-	if arg_5_1 and arg_5_1.actId then
-		var_5_0 = arg_5_1.actId
+	if param and param.actId then
+		actId = param.actId
 	else
-		arg_5_1 = arg_5_1 or {}
-		var_5_0 = Season123Model.instance:getCurSeasonId()
-		arg_5_1.actId = var_5_0
+		param = param or {}
+		actId = Season123Model.instance:getCurSeasonId()
+		param.actId = actId
 	end
 
-	if not var_5_0 then
+	if not actId then
 		return
 	end
 
-	var_0_0.instance.lastOpenActId = var_5_0
+	Season123Controller.instance.lastOpenActId = actId
 
-	local var_5_1 = Activity123Enum.SeasonViewPrefix[var_5_0] or ""
-	local var_5_2 = string.format("Season123%s%s", var_5_1, "EntryView")
+	local prefix = Activity123Enum.SeasonViewPrefix[actId] or ""
+	local viewName = string.format("Season123%s%s", prefix, "EntryView")
 
-	arg_5_0:enterVersionActivityView(ViewName[var_5_2], var_5_0, function()
-		Season123ViewHelper.openView(var_5_0, "EntryView", arg_5_1)
-		Season123Model.instance:setRetailRandomSceneId(arg_5_1.jumpParam)
-	end, arg_5_0)
+	self:enterVersionActivityView(ViewName[viewName], actId, function()
+		Season123ViewHelper.openView(actId, "EntryView", param)
+		Season123Model.instance:setRetailRandomSceneId(param.jumpParam)
+	end, self)
 end
 
-function var_0_0.openSeasonEntryByJump(arg_7_0)
-	var_0_0.instance:openSeasonEntry(arg_7_0)
+function Season123Controller.openSeasonEntryByJump(param)
+	Season123Controller.instance:openSeasonEntry(param)
 end
 
-function var_0_0.openSeasonOverview(arg_8_0, arg_8_1)
-	arg_8_1 = arg_8_1 or {}
+function Season123Controller:openSeasonOverview(param)
+	param = param or {}
 
-	Season123ViewHelper.openView(arg_8_1.actId, "EntryOverview", arg_8_1)
+	Season123ViewHelper.openView(param.actId, "EntryOverview", param)
 end
 
-function var_0_0.openSeasonRetail(arg_9_0, arg_9_1)
-	arg_9_1 = arg_9_1 or {}
+function Season123Controller:openSeasonRetail(param)
+	param = param or {}
 
-	Season123ViewHelper.openView(arg_9_1.actId, "RetailView", arg_9_1)
-	arg_9_0:dispatchEvent(Season123Event.EnterRetailView)
+	Season123ViewHelper.openView(param.actId, "RetailView", param)
+	self:dispatchEvent(Season123Event.EnterRetailView)
 end
 
-function var_0_0.openSeasonEquipView(arg_10_0, arg_10_1)
-	arg_10_1 = arg_10_1 or {}
+function Season123Controller:openSeasonEquipView(param)
+	param = param or {}
 
-	Season123ViewHelper.openView(arg_10_1.actId, "EquipView", arg_10_1)
+	Season123ViewHelper.openView(param.actId, "EquipView", param)
 end
 
-function var_0_0.onUpdateTaskList(arg_11_0, arg_11_1)
-	if Season123TaskModel.instance:updateInfo(arg_11_1.taskInfo) then
+function Season123Controller:onUpdateTaskList(msg)
+	local isChange = Season123TaskModel.instance:updateInfo(msg.taskInfo)
+
+	if isChange then
 		Season123TaskModel.instance:refreshList()
 	end
 
 	Season123Model.instance:updateTaskReward()
-	arg_11_0:dispatchEvent(Season123Event.TaskUpdated)
+	self:dispatchEvent(Season123Event.TaskUpdated)
 end
 
-function var_0_0.onSetTaskList(arg_12_0)
+function Season123Controller:onSetTaskList()
 	Season123Model.instance:updateTaskReward()
-	arg_12_0:dispatchEvent(Season123Event.TaskUpdated)
+	self:dispatchEvent(Season123Event.TaskUpdated)
 end
 
-function var_0_0.openSeasonStoreView(arg_13_0, arg_13_1)
-	local var_13_0 = Season123Config.instance:getSeasonConstNum(arg_13_1, Activity123Enum.Const.StoreActId)
-	local var_13_1 = Activity123Enum.SeasonViewPrefix[arg_13_1] or ""
-	local var_13_2 = string.format("Season123%s%s", var_13_1, "StoreView")
+function Season123Controller:openSeasonStoreView(actId)
+	local storeActId = Season123Config.instance:getSeasonConstNum(actId, Activity123Enum.Const.StoreActId)
+	local prefix = Activity123Enum.SeasonViewPrefix[actId] or ""
+	local viewName = string.format("Season123%s%s", prefix, "StoreView")
 
-	arg_13_0:enterVersionActivityView(ViewName[var_13_2], var_13_0, arg_13_0._openSeasonStoreView, arg_13_0)
+	self:enterVersionActivityView(ViewName[viewName], storeActId, self._openSeasonStoreView, self)
 end
 
-function var_0_0._openSeasonStoreView(arg_14_0, arg_14_1, arg_14_2)
-	Activity107Rpc.instance:sendGet107GoodsInfoRequest(arg_14_2, function()
-		ViewMgr.instance:openView(arg_14_1, {
-			actId = arg_14_2
+function Season123Controller:_openSeasonStoreView(viewName, storeActId)
+	Activity107Rpc.instance:sendGet107GoodsInfoRequest(storeActId, function()
+		ViewMgr.instance:openView(viewName, {
+			actId = storeActId
 		})
 	end)
 end
 
-function var_0_0.openSeasonTaskView(arg_16_0, arg_16_1)
+function Season123Controller:openSeasonTaskView(param)
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.Season123
 	}, function()
 		Season123TaskModel.instance:resetMapData()
-		Season123ViewHelper.openView(arg_16_1.actId, "TaskView", arg_16_1)
+		Season123ViewHelper.openView(param.actId, "TaskView", param)
 	end)
 end
 
-function var_0_0.openSeasonEquipBookView(arg_18_0, arg_18_1)
-	Season123EquipBookModel.instance:initDatas(arg_18_1)
-	Season123ViewHelper.openView(arg_18_1, "EquipBookView")
+function Season123Controller:openSeasonEquipBookView(actId)
+	Season123EquipBookModel.instance:initDatas(actId)
+	Season123ViewHelper.openView(actId, "EquipBookView")
 end
 
-function var_0_0.openSeasonCardPackageView(arg_19_0, arg_19_1)
-	Season123CardPackageModel.instance:initData(arg_19_1.actId)
+function Season123Controller:openSeasonCardPackageView(param)
+	Season123CardPackageModel.instance:initData(param.actId)
 
 	if Season123CardPackageModel.instance.packageCount > 0 then
-		Season123ViewHelper.openView(arg_19_1.actId, "CardPackageView")
+		Season123ViewHelper.openView(param.actId, "CardPackageView")
 	else
 		GameFacade.showToast(ToastEnum.Season123EmptyCardPackage)
 	end
 end
 
-function var_0_0.openFightTipViewName(arg_20_0)
-	if Season123Model.instance:getCurSeasonId() then
-		ViewMgr.instance:openView(arg_20_0:getFightRuleTipViewName())
+function Season123Controller:openFightTipViewName()
+	local seasonId = Season123Model.instance:getCurSeasonId()
+
+	if seasonId then
+		ViewMgr.instance:openView(self:getFightRuleTipViewName())
 	end
 end
 
-function var_0_0.openResetView(arg_21_0, arg_21_1)
-	arg_21_1 = arg_21_1 or {}
+function Season123Controller:openResetView(param)
+	param = param or {}
 
-	Season123ViewHelper.openView(arg_21_1.actId, "ResetView", arg_21_1)
+	Season123ViewHelper.openView(param.actId, "ResetView", param)
 end
 
-function var_0_0.getRecordWindowViewName(arg_22_0)
+function Season123Controller:getRecordWindowViewName()
 	return Season123ViewHelper.getViewName(nil, "RecordWindow")
 end
 
-function var_0_0.openHeroGroupFightView(arg_23_0, arg_23_1)
-	ViewMgr.instance:openView(arg_23_0:getHeroGroupFightViewName(), arg_23_1)
+function Season123Controller:openHeroGroupFightView(param)
+	ViewMgr.instance:openView(self:getHeroGroupFightViewName(), param)
 end
 
-function var_0_0.getHeroGroupFightViewName(arg_24_0)
+function Season123Controller:getHeroGroupFightViewName()
 	return Season123ViewHelper.getViewName(nil, "HeroGroupFightView")
 end
 
-function var_0_0.getHeroGroupEditViewName(arg_25_0)
+function Season123Controller:getHeroGroupEditViewName()
 	return Season123ViewHelper.getViewName(nil, "HeroGroupEditView")
 end
 
-function var_0_0.getEpisodeListViewName(arg_26_0)
+function Season123Controller:getEpisodeListViewName()
 	return Season123ViewHelper.getViewName(nil, "EpisodeListView")
 end
 
-function var_0_0.getPickHeroEntryViewName(arg_27_0)
+function Season123Controller:getPickHeroEntryViewName()
 	return Season123ViewHelper.getViewName(nil, "PickHeroEntryView")
 end
 
-function var_0_0.getStageLoadingViewName(arg_28_0)
+function Season123Controller:getStageLoadingViewName()
 	return Season123ViewHelper.getViewName(nil, "StageLoadingView")
 end
 
-function var_0_0.getStageFinishViewName(arg_29_0)
+function Season123Controller:getStageFinishViewName()
 	return Season123ViewHelper.getViewName(nil, "StageFinishView")
 end
 
-function var_0_0.getEquipHeroViewName(arg_30_0)
+function Season123Controller:getEquipHeroViewName()
 	return Season123ViewHelper.getViewName(nil, "EquipHeroView")
 end
 
-function var_0_0.getPickAssistViewName(arg_31_0)
+function Season123Controller:getPickAssistViewName()
 	return Season123ViewHelper.getViewName(nil, "PickAssistView")
 end
 
-function var_0_0.getPickHeroViewName(arg_32_0)
+function Season123Controller:getPickHeroViewName()
 	return Season123ViewHelper.getViewName(nil, "PickHeroView")
 end
 
-function var_0_0.getShowHeroViewName(arg_33_0)
+function Season123Controller:getShowHeroViewName()
 	return Season123ViewHelper.getViewName(nil, "ShowHeroView")
 end
 
-function var_0_0.getEpisodeLoadingViewName(arg_34_0)
+function Season123Controller:getEpisodeLoadingViewName()
 	return Season123ViewHelper.getViewName(nil, "EpisodeLoadingView")
 end
 
-function var_0_0.getEpisodeMarketViewName(arg_35_0)
+function Season123Controller:getEpisodeMarketViewName()
 	return Season123ViewHelper.getViewName(nil, "EpisodeDetailView")
 end
 
-function var_0_0.getFightRuleTipViewName(arg_36_0)
+function Season123Controller:getFightRuleTipViewName()
 	return Season123ViewHelper.getViewName(nil, "FightRuleTipView")
 end
 
-function var_0_0.enterVersionActivityView(arg_37_0, arg_37_1, arg_37_2, arg_37_3, arg_37_4)
-	local var_37_0, var_37_1, var_37_2 = ActivityHelper.getActivityStatusAndToast(arg_37_2)
+function Season123Controller:enterVersionActivityView(viewName, actId, callback, callbackObj)
+	local status, toastId, toastParam = ActivityHelper.getActivityStatusAndToast(actId)
 
-	if var_37_0 ~= ActivityEnum.ActivityStatus.Normal then
-		if var_37_1 then
-			GameFacade.showToast(var_37_1, var_37_2)
+	if status ~= ActivityEnum.ActivityStatus.Normal then
+		if toastId then
+			GameFacade.showToast(toastId, toastParam)
 		end
 
 		return
 	end
 
-	if arg_37_3 then
-		arg_37_3(arg_37_4, arg_37_1, arg_37_2)
+	if callback then
+		callback(callbackObj, viewName, actId)
 
 		return
 	end
 
-	ViewMgr.instance:openView(arg_37_1)
+	ViewMgr.instance:openView(viewName)
 end
 
-function var_0_0.openMainViewFromFightScene(arg_38_0)
-	local var_38_0 = Season123Model.instance:getBattleContext()
-	local var_38_1 = {}
+function Season123Controller:openMainViewFromFightScene()
+	local context = Season123Model.instance:getBattleContext()
+	local param = {}
 
-	if var_38_0 then
-		var_38_1.actId = var_38_0.actId
+	if context then
+		param.actId = context.actId
 	else
-		var_38_1.actId = Season123Model.instance:getCurSeasonId()
+		param.actId = Season123Model.instance:getCurSeasonId()
 	end
 
-	arg_38_0:openSeasonEntry(var_38_1)
+	self:openSeasonEntry(param)
 end
 
-function var_0_0.isSeason123EpisodeType(arg_39_0)
-	return arg_39_0 == DungeonEnum.EpisodeType.Season123 or arg_39_0 == DungeonEnum.EpisodeType.Season123Retail or arg_39_0 == DungeonEnum.EpisodeType.Season123Trial
+function Season123Controller.isSeason123EpisodeType(episodeType)
+	return episodeType == DungeonEnum.EpisodeType.Season123 or episodeType == DungeonEnum.EpisodeType.Season123Retail or episodeType == DungeonEnum.EpisodeType.Season123Trial
 end
 
-function var_0_0.canUse123EquipEpisodeType(arg_40_0)
-	return arg_40_0 == DungeonEnum.EpisodeType.Season123 or arg_40_0 == DungeonEnum.EpisodeType.Season123Trial
+function Season123Controller.canUse123EquipEpisodeType(episodeType)
+	return episodeType == DungeonEnum.EpisodeType.Season123 or episodeType == DungeonEnum.EpisodeType.Season123Trial
 end
 
-function var_0_0.isSeason123ChapterType(arg_41_0)
-	return arg_41_0 == DungeonEnum.ChapterType.Season123 or arg_41_0 == DungeonEnum.ChapterType.Season123Retail or arg_41_0 == DungeonEnum.ChapterType.Season123Trial
+function Season123Controller.isSeason123ChapterType(chapterType)
+	return chapterType == DungeonEnum.ChapterType.Season123 or chapterType == DungeonEnum.ChapterType.Season123Retail or chapterType == DungeonEnum.ChapterType.Season123Trial
 end
 
-function var_0_0.sendEpisodeUseSeason123Equip()
-	local var_42_0 = DungeonModel.instance.curSendEpisodeId
+function Season123Controller.sendEpisodeUseSeason123Equip()
+	local curEpisodeId = DungeonModel.instance.curSendEpisodeId
 
-	if not var_42_0 or var_42_0 == 0 then
+	if not curEpisodeId or curEpisodeId == 0 then
 		return false
 	end
 
-	local var_42_1 = DungeonConfig.instance:getEpisodeCO(var_42_0)
+	local episodeCo = DungeonConfig.instance:getEpisodeCO(curEpisodeId)
 
-	if var_0_0.canUse123EquipEpisodeType(var_42_1.type) then
+	if Season123Controller.canUse123EquipEpisodeType(episodeCo.type) then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.openSeasonCelebrityCardTipView(arg_43_0, arg_43_1)
-	arg_43_1 = arg_43_1 or {}
+function Season123Controller:openSeasonCelebrityCardTipView(param)
+	param = param or {}
 
-	Season123ViewHelper.openView(nil, "CelebrityCardTipView", arg_43_1)
+	Season123ViewHelper.openView(nil, "CelebrityCardTipView", param)
 end
 
-function var_0_0.openSeasonCelebrityCardGetView(arg_44_0, arg_44_1)
-	arg_44_1 = arg_44_1 or {}
+function Season123Controller:openSeasonCelebrityCardGetView(param)
+	param = param or {}
 
-	Season123ViewHelper.openView(nil, "CelebrityCardGetView", arg_44_1)
+	Season123ViewHelper.openView(nil, "CelebrityCardGetView", param)
 end
 
-function var_0_0.openSeasonStoryView(arg_45_0, arg_45_1)
-	arg_45_1 = arg_45_1 or {}
+function Season123Controller:openSeasonStoryView(param)
+	param = param or {}
 
-	Season123ViewHelper.openView(arg_45_1.actId, "StoryView", arg_45_1)
+	Season123ViewHelper.openView(param.actId, "StoryView", param)
 end
 
-function var_0_0.checkProcessFightReconnect(arg_46_0)
-	local var_46_0 = FightModel.instance:getFightReason()
-	local var_46_1 = var_46_0.episodeId
-	local var_46_2 = DungeonConfig.instance:getEpisodeCO(var_46_1)
+function Season123Controller:checkProcessFightReconnect()
+	local fightReason = FightModel.instance:getFightReason()
+	local episodeId = fightReason.episodeId
+	local co = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-	if var_46_2 and var_0_0.isSeason123EpisodeType(var_46_2.type) then
-		if var_46_2.type == DungeonEnum.EpisodeType.Season123 then
-			local var_46_3 = Season123Config.instance:getConfigByEpisodeId(var_46_1)
+	if co and Season123Controller.isSeason123EpisodeType(co.type) then
+		if co.type == DungeonEnum.EpisodeType.Season123 then
+			local seasonEpisodeCO = Season123Config.instance:getConfigByEpisodeId(episodeId)
 
-			if var_46_3 then
-				Season123Model.instance:setBattleContext(var_46_3.activityId, var_46_3.stage, var_46_3.layer, var_46_1)
+			if seasonEpisodeCO then
+				Season123Model.instance:setBattleContext(seasonEpisodeCO.activityId, seasonEpisodeCO.stage, seasonEpisodeCO.layer, episodeId)
 			end
-		elseif var_46_2.type == DungeonEnum.EpisodeType.Season123Retail then
-			local var_46_4 = Season123Config.instance:getRetailCOByEpisodeId(var_46_1)
+		elseif co.type == DungeonEnum.EpisodeType.Season123Retail then
+			local retailCO = Season123Config.instance:getRetailCOByEpisodeId(episodeId)
 
-			if var_46_4 then
-				Season123Model.instance:setBattleContext(var_46_4.activityId, nil, nil, var_46_1)
+			if retailCO then
+				Season123Model.instance:setBattleContext(retailCO.activityId, nil, nil, episodeId)
 			end
-		elseif var_46_2.type == DungeonEnum.EpisodeType.Season123Trail then
-			local var_46_5 = Season123Config.instance:getTrailCOByEpisodeId(var_46_1)
+		elseif co.type == DungeonEnum.EpisodeType.Season123Trail then
+			local trailCO = Season123Config.instance:getTrailCOByEpisodeId(episodeId)
 
-			if var_46_5 then
-				Season123Model.instance:setBattleContext(var_46_5.activityId, nil, nil, var_46_1)
+			if trailCO then
+				Season123Model.instance:setBattleContext(trailCO.activityId, nil, nil, episodeId)
 			end
 		end
 
-		local var_46_6 = var_46_0.type == FightEnum.FightReason.DungeonRecord
-		local var_46_7 = var_46_0.multiplication
+		local isReplay = fightReason.type == FightEnum.FightReason.DungeonRecord
+		local multiplication = fightReason.multiplication
 
-		var_46_7 = var_46_7 and var_46_7 > 0 and var_46_7 or 1
+		multiplication = multiplication and multiplication > 0 and multiplication or 1
 
-		FightController.instance:setFightParamByEpisodeId(var_46_1, var_46_6, var_46_7, var_46_0.battleId)
-		HeroGroupModel.instance:setParam(var_46_0.battleId, var_46_1, false, true)
+		FightController.instance:setFightParamByEpisodeId(episodeId, isReplay, multiplication, fightReason.battleId)
+		HeroGroupModel.instance:setParam(fightReason.battleId, episodeId, false, true)
 	end
 end
 
-function var_0_0.isEpisodeFromSeason123(arg_47_0)
-	if not arg_47_0 then
+function Season123Controller.isEpisodeFromSeason123(episodeId)
+	if not episodeId then
 		return false
 	end
 
-	local var_47_0 = DungeonConfig.instance:getEpisodeCO(arg_47_0)
+	local co = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-	if var_47_0 and var_0_0.isSeason123EpisodeType(var_47_0.type) then
+	if co and Season123Controller.isSeason123EpisodeType(co.type) then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.addDontNavigateBtn(arg_48_0, arg_48_1)
-	arg_48_1[var_0_0.instance:getEpisodeLoadingViewName()] = true
-	arg_48_1[var_0_0.instance:getStageLoadingViewName()] = true
-	arg_48_1[var_0_0.instance:getStageFinishViewName()] = true
+function Season123Controller:addDontNavigateBtn(dict)
+	dict[Season123Controller.instance:getEpisodeLoadingViewName()] = true
+	dict[Season123Controller.instance:getStageLoadingViewName()] = true
+	dict[Season123Controller.instance:getStageFinishViewName()] = true
 end
 
-function var_0_0.openSeasonFightFailView(arg_49_0, arg_49_1)
-	arg_49_1 = arg_49_1 or {}
+function Season123Controller:openSeasonFightFailView(param)
+	param = param or {}
 
-	Season123ViewHelper.openView(arg_49_1.actId, "FightFailView", arg_49_1)
+	Season123ViewHelper.openView(param.actId, "FightFailView", param)
 end
 
-function var_0_0.openSeasonFightSuccView(arg_50_0, arg_50_1)
-	arg_50_1 = arg_50_1 or {}
+function Season123Controller:openSeasonFightSuccView(param)
+	param = param or {}
 
-	Season123ViewHelper.openView(arg_50_1.actId, "FightSuccView", arg_50_1)
+	Season123ViewHelper.openView(param.actId, "FightSuccView", param)
 end
 
-function var_0_0.openSeason123SettlementView(arg_51_0, arg_51_1)
-	arg_51_1 = arg_51_1 or {}
+function Season123Controller:openSeason123SettlementView(param)
+	param = param or {}
 
-	Season123ViewHelper.openView(arg_51_1.actId, "SettlementView", arg_51_1)
+	Season123ViewHelper.openView(param.actId, "SettlementView", param)
 end
 
-function var_0_0.openSeasonAdditionRuleTipView(arg_52_0, arg_52_1)
-	arg_52_1 = arg_52_1 or {}
+function Season123Controller:openSeasonAdditionRuleTipView(param)
+	param = param or {}
 
-	Season123ViewHelper.openView(arg_52_1.actId, "AdditionRuleTipView", arg_52_1)
+	Season123ViewHelper.openView(param.actId, "AdditionRuleTipView", param)
 end
 
-function var_0_0.openSeasonStoryPagePopView(arg_53_0, arg_53_1, arg_53_2)
-	local var_53_0 = {
-		actId = arg_53_1,
-		stageId = arg_53_2
+function Season123Controller:openSeasonStoryPagePopView(actId, stageId)
+	local param = {
+		actId = actId,
+		stageId = stageId
 	}
 
-	Season123ViewHelper.openView(var_53_0.actId, "StoryPagePopView", var_53_0)
+	Season123ViewHelper.openView(param.actId, "StoryPagePopView", param)
 end
 
-function var_0_0.getSeasonIcon(arg_54_0, arg_54_1)
-	local var_54_0 = Activity123Enum.SeasonIconFolder[arg_54_1]
+function Season123Controller.getSeasonIcon(resName, seasonId)
+	local folder = Activity123Enum.SeasonIconFolder[seasonId]
 
-	return string.format("singlebg/%s/%s", var_54_0, arg_54_0)
+	return string.format("singlebg/%s/%s", folder, resName)
 end
 
-function var_0_0.checkHasReadUnlockStory(arg_55_0, arg_55_1)
-	local var_55_0 = Season123Model.instance:checkHasUnlockStory(arg_55_1) and 1 or 0
-	local var_55_1 = {
+function Season123Controller:checkHasReadUnlockStory(actId)
+	local needShowRedDot = Season123Model.instance:checkHasUnlockStory(actId) and 1 or 0
+	local redDotInfoList = {
 		{
 			uid = 0,
 			id = RedDotEnum.DotNode.Season123Story,
-			value = var_55_0
+			value = needShowRedDot
 		}
 	}
 
-	RedDotRpc.instance:clientAddRedDotGroupList(var_55_1, true)
+	RedDotRpc.instance:clientAddRedDotGroupList(redDotInfoList, true)
 end
 
-function var_0_0.checkAndHandleEffectEquip(arg_56_0, arg_56_1)
-	local var_56_0 = arg_56_1.layer
-	local var_56_1 = arg_56_1.actId
-	local var_56_2 = arg_56_1.stage
-	local var_56_3 = Season123Model.instance:getActInfo(var_56_1):getStageMO(var_56_2)
+function Season123Controller:checkAndHandleEffectEquip(param)
+	local layer = param.layer
+	local actId = param.actId
+	local stage = param.stage
+	local seasonMO = Season123Model.instance:getActInfo(actId)
+	local stageMO = seasonMO:getStageMO(stage)
 
-	if not var_56_3 then
+	if not stageMO then
 		return
 	end
 
-	if not var_56_0 or var_56_0 <= 0 then
-		for iter_56_0, iter_56_1 in pairs(var_56_3.episodeMap) do
-			arg_56_1.layer = iter_56_0
+	if not layer or layer <= 0 then
+		for index, episodeMO in pairs(stageMO.episodeMap) do
+			param.layer = index
 
-			arg_56_0:handleEffectEquip(iter_56_1, arg_56_1)
+			self:handleEffectEquip(episodeMO, param)
 		end
 	else
-		local var_56_4 = var_56_3.episodeMap[var_56_0]
+		local episodeMO = stageMO.episodeMap[layer]
 
-		arg_56_0:handleEffectEquip(var_56_4, arg_56_1)
+		self:handleEffectEquip(episodeMO, param)
 	end
 end
 
-function var_0_0.handleEffectEquip(arg_57_0, arg_57_1, arg_57_2)
-	local var_57_0 = arg_57_1.effectMainCelebrityEquipIds or {}
+function Season123Controller:handleEffectEquip(episodeMO, param)
+	local effectEquipList = episodeMO.effectMainCelebrityEquipIds or {}
 
-	for iter_57_0, iter_57_1 in pairs(var_57_0) do
-		local var_57_1 = Season123Config.instance:getCardSpecialEffectMap(iter_57_1) or {}
+	for _, equipId in pairs(effectEquipList) do
+		local equipEffectMap = Season123Config.instance:getCardSpecialEffectMap(equipId) or {}
 
-		for iter_57_2, iter_57_3 in pairs(var_57_1) do
-			local var_57_2 = var_0_0.SpecialEffctHandleFunc[iter_57_2]
+		for effectId, effectParams in pairs(equipEffectMap) do
+			local func = Season123Controller.SpecialEffctHandleFunc[effectId]
 
-			if var_57_2 then
-				var_57_2(arg_57_0, iter_57_3, arg_57_2)
+			if func then
+				func(self, effectParams, param)
 			end
 		end
 	end
 end
 
-function var_0_0.isReduceRound(arg_58_0, arg_58_1, arg_58_2, arg_58_3)
-	local var_58_0 = arg_58_1
-	local var_58_1 = arg_58_2
-	local var_58_2 = Season123Model.instance:getActInfo(var_58_0):getStageMO(var_58_1)
+function Season123Controller:isReduceRound(actId, stage, layer)
+	local actId = actId
+	local stage = stage
+	local seasonMO = Season123Model.instance:getActInfo(actId)
+	local stageMO = seasonMO:getStageMO(stage)
 
-	if var_58_2.reduceState then
-		return var_58_2.reduceState[arg_58_3]
+	if stageMO.reduceState then
+		return stageMO.reduceState[layer]
 	end
 
 	return false
 end
 
-var_0_0.instance = var_0_0.New()
+Season123Controller.instance = Season123Controller.New()
 
-return var_0_0
+return Season123Controller

@@ -1,13 +1,15 @@
-﻿module("modules.logic.necrologiststory.game.v3a1.V3A1_RoleStorySuccessViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/necrologiststory/game/v3a1/V3A1_RoleStorySuccessViewContainer.lua
 
-local var_0_0 = class("V3A1_RoleStorySuccessViewContainer", BaseViewContainer)
+module("modules.logic.necrologiststory.game.v3a1.V3A1_RoleStorySuccessViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local V3A1_RoleStorySuccessViewContainer = class("V3A1_RoleStorySuccessViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, V3A1_RoleStorySuccessView.New())
+function V3A1_RoleStorySuccessViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, V3A1_RoleStorySuccessView.New())
+
+	return views
 end
 
-return var_0_0
+return V3A1_RoleStorySuccessViewContainer

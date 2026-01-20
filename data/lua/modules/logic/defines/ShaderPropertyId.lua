@@ -1,18 +1,20 @@
-﻿module("modules.logic.defines.ShaderPropertyId", package.seeall)
+﻿-- chunkname: @modules/logic/defines/ShaderPropertyId.lua
 
-local var_0_0 = _M
-local var_0_1 = UnityEngine.Shader
+module("modules.logic.defines.ShaderPropertyId", package.seeall)
 
-var_0_0.Stencil = var_0_1.PropertyToID("_Stencil")
-var_0_0.StencilComp = var_0_1.PropertyToID("_StencilComp")
-var_0_0.StencilOp = var_0_1.PropertyToID("_StencilOp")
-var_0_0.LumFactor = var_0_1.PropertyToID("_LumFactor")
-var_0_0.Scroll_LeftRamp = var_0_1.PropertyToID("_Scroll_LeftRamp")
-var_0_0.ChangeTexture = var_0_1.PropertyToID("_ChangeTexture")
-var_0_0.DissolveFactor = var_0_1.PropertyToID("_DissolveFactor")
-var_0_0.FrontSceneAlpha = var_0_1.PropertyToID("_FrontSceneAlpha")
-var_0_0.MainTex = var_0_1.PropertyToID("_MainTex")
-var_0_0.MainTexSecond = var_0_1.PropertyToID("_MainTexSecond")
-var_0_0.LightMap = var_0_1.PropertyToID("_LightMap")
+local ShaderPropertyId = _M
+local Shader = UnityEngine.Shader
 
-return var_0_0
+ShaderPropertyId.Stencil = Shader.PropertyToID("_Stencil")
+ShaderPropertyId.StencilComp = Shader.PropertyToID("_StencilComp")
+ShaderPropertyId.StencilOp = Shader.PropertyToID("_StencilOp")
+ShaderPropertyId.LumFactor = Shader.PropertyToID("_LumFactor")
+ShaderPropertyId.Scroll_LeftRamp = Shader.PropertyToID("_Scroll_LeftRamp")
+ShaderPropertyId.ChangeTexture = Shader.PropertyToID("_ChangeTexture")
+ShaderPropertyId.DissolveFactor = Shader.PropertyToID("_DissolveFactor")
+ShaderPropertyId.FrontSceneAlpha = Shader.PropertyToID("_FrontSceneAlpha")
+ShaderPropertyId.MainTex = Shader.PropertyToID("_MainTex")
+ShaderPropertyId.MainTexSecond = Shader.PropertyToID("_MainTexSecond")
+ShaderPropertyId.LightMap = Shader.PropertyToID("_LightMap")
+
+return ShaderPropertyId

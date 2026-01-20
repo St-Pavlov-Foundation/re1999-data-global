@@ -1,28 +1,30 @@
-﻿module("modules.logic.necrologiststory.view.NecrologistStoryReviewViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/necrologiststory/view/NecrologistStoryReviewViewContainer.lua
 
-local var_0_0 = class("NecrologistStoryReviewViewContainer", BaseViewContainer)
+module("modules.logic.necrologiststory.view.NecrologistStoryReviewViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local NecrologistStoryReviewViewContainer = class("NecrologistStoryReviewViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, NecrologistStoryReviewView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
+function NecrologistStoryReviewViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, NecrologistStoryReviewView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_topleft"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		local var_2_0 = NavigateButtonsView.New({
+function NecrologistStoryReviewViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		local navView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			var_2_0
+			navView
 		}
 	end
 end
 
-return var_0_0
+return NecrologistStoryReviewViewContainer

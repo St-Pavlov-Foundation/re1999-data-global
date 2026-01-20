@@ -1,7 +1,9 @@
-﻿module("modules.logic.versionactivity.rpc.VersionActivityRpc", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity/rpc/VersionActivityRpc.lua
 
-local var_0_0 = class("VersionActivityRpc", BaseRpc)
+module("modules.logic.versionactivity.rpc.VersionActivityRpc", package.seeall)
 
-var_0_0.instance = var_0_0.New()
+local VersionActivityRpc = class("VersionActivityRpc", BaseRpc)
 
-return var_0_0
+VersionActivityRpc.instance = VersionActivityRpc.New()
+
+return VersionActivityRpc

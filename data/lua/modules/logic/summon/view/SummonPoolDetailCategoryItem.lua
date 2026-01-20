@@ -1,68 +1,70 @@
-﻿module("modules.logic.summon.view.SummonPoolDetailCategoryItem", package.seeall)
+﻿-- chunkname: @modules/logic/summon/view/SummonPoolDetailCategoryItem.lua
 
-local var_0_0 = class("SummonPoolDetailCategoryItem", ListScrollCellExtend)
+module("modules.logic.summon.view.SummonPoolDetailCategoryItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gounselect = gohelper.findChild(arg_1_0.viewGO, "#go_unselect")
-	arg_1_0._txttitle1 = gohelper.findChildText(arg_1_0.viewGO, "#go_unselect/#txt_title1")
-	arg_1_0._txttitle1En = gohelper.findChildText(arg_1_0.viewGO, "#go_unselect/#txt_title1En")
-	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "#go_select")
-	arg_1_0._txttitle2 = gohelper.findChildText(arg_1_0.viewGO, "#go_select/#txt_title2")
-	arg_1_0._txttitle2En = gohelper.findChildText(arg_1_0.viewGO, "#go_select/#txt_title2En")
+local SummonPoolDetailCategoryItem = class("SummonPoolDetailCategoryItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SummonPoolDetailCategoryItem:onInitView()
+	self._gounselect = gohelper.findChild(self.viewGO, "#go_unselect")
+	self._txttitle1 = gohelper.findChildText(self.viewGO, "#go_unselect/#txt_title1")
+	self._txttitle1En = gohelper.findChildText(self.viewGO, "#go_unselect/#txt_title1En")
+	self._goselect = gohelper.findChild(self.viewGO, "#go_select")
+	self._txttitle2 = gohelper.findChildText(self.viewGO, "#go_select/#txt_title2")
+	self._txttitle2En = gohelper.findChildText(self.viewGO, "#go_select/#txt_title2En")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function SummonPoolDetailCategoryItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function SummonPoolDetailCategoryItem:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._click = gohelper.getClickWithAudio(arg_4_0.viewGO)
+function SummonPoolDetailCategoryItem:_editableInitView()
+	self._click = gohelper.getClickWithAudio(self.viewGO)
 end
 
-function var_0_0._editableAddEvents(arg_5_0)
-	arg_5_0._click:AddClickListener(arg_5_0._onClick, arg_5_0)
+function SummonPoolDetailCategoryItem:_editableAddEvents()
+	self._click:AddClickListener(self._onClick, self)
 end
 
-function var_0_0._editableRemoveEvents(arg_6_0)
-	arg_6_0._click:RemoveClickListener()
+function SummonPoolDetailCategoryItem:_editableRemoveEvents()
+	self._click:RemoveClickListener()
 end
 
-function var_0_0._onClick(arg_7_0)
-	if arg_7_0._isSelect then
+function SummonPoolDetailCategoryItem:_onClick()
+	if self._isSelect then
 		return
 	end
 
-	arg_7_0._view:selectCell(arg_7_0._index, true)
-	arg_7_0._view.viewContainer:dispatchEvent(ViewEvent.ToSwitchTab, 1, arg_7_0._mo.resIndex)
-	SummonController.instance:dispatchEvent(SummonEvent.onSummonPoolDetailCategoryClick, arg_7_0._mo.resIndex)
+	self._view:selectCell(self._index, true)
+	self._view.viewContainer:dispatchEvent(ViewEvent.ToSwitchTab, 1, self._mo.resIndex)
+	SummonController.instance:dispatchEvent(SummonEvent.onSummonPoolDetailCategoryClick, self._mo.resIndex)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
 end
 
-function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
-	arg_8_0._mo = arg_8_1
-	arg_8_0._txttitle1.text = arg_8_1.cnName
-	arg_8_0._txttitle2.text = arg_8_1.cnName
-	arg_8_0._txttitle1En.text = arg_8_1.enName
-	arg_8_0._txttitle2En.text = arg_8_1.enName
+function SummonPoolDetailCategoryItem:onUpdateMO(mo)
+	self._mo = mo
+	self._txttitle1.text = mo.cnName
+	self._txttitle2.text = mo.cnName
+	self._txttitle1En.text = mo.enName
+	self._txttitle2En.text = mo.enName
 end
 
-function var_0_0.onSelect(arg_9_0, arg_9_1)
-	arg_9_0._isSelect = arg_9_1
+function SummonPoolDetailCategoryItem:onSelect(isSelect)
+	self._isSelect = isSelect
 
-	arg_9_0._gounselect:SetActive(not arg_9_0._isSelect)
-	arg_9_0._goselect:SetActive(arg_9_0._isSelect)
+	self._gounselect:SetActive(not self._isSelect)
+	self._goselect:SetActive(self._isSelect)
 end
 
-function var_0_0.onDestroyView(arg_10_0)
+function SummonPoolDetailCategoryItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return SummonPoolDetailCategoryItem

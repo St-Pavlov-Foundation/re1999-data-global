@@ -1,134 +1,136 @@
-﻿module("modules.logic.fight.controller.FightReplayController", package.seeall)
+﻿-- chunkname: @modules/logic/fight/controller/FightReplayController.lua
 
-local var_0_0 = class("FightReplayController", BaseController)
+module("modules.logic.fight.controller.FightReplayController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._replayErrorFix = FightReplayErrorFix.New()
+local FightReplayController = class("FightReplayController", BaseController)
+
+function FightReplayController:onInit()
+	self._replayErrorFix = FightReplayErrorFix.New()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._replayErrorFix:reInit()
-	arg_2_0:_stopReplay()
+function FightReplayController:reInit()
+	self._replayErrorFix:reInit()
+	self:_stopReplay()
 
-	arg_2_0._callback = nil
-	arg_2_0._calbackObj = nil
+	self._callback = nil
+	self._calbackObj = nil
 end
 
-function var_0_0.addConstEvents(arg_3_0)
-	FightController.instance:registerCallback(FightEvent.StartReplay, arg_3_0._startReplay, arg_3_0)
-	FightController.instance:registerCallback(FightEvent.PushEndFight, arg_3_0._stopReplay, arg_3_0)
-	FightController.instance:registerCallback(FightEvent.RespGetFightOperReplay, arg_3_0._onGetOperReplay, arg_3_0)
-	FightController.instance:registerCallback(FightEvent.RespGetFightOperReplayFail, arg_3_0._onGetOperReplayFail, arg_3_0)
-	arg_3_0._replayErrorFix:addConstEvents()
+function FightReplayController:addConstEvents()
+	FightController.instance:registerCallback(FightEvent.StartReplay, self._startReplay, self)
+	FightController.instance:registerCallback(FightEvent.PushEndFight, self._stopReplay, self)
+	FightController.instance:registerCallback(FightEvent.RespGetFightOperReplay, self._onGetOperReplay, self)
+	FightController.instance:registerCallback(FightEvent.RespGetFightOperReplayFail, self._onGetOperReplayFail, self)
+	self._replayErrorFix:addConstEvents()
 end
 
-function var_0_0.reqReplay(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0._callback = arg_4_1
-	arg_4_0._calbackObj = arg_4_2
+function FightReplayController:reqReplay(callback, calbackObj)
+	self._callback = callback
+	self._calbackObj = calbackObj
 
 	FightRpc.instance:sendGetFightOperRequest()
 end
 
-function var_0_0._setQuality(arg_5_0, arg_5_1)
-	if arg_5_1 then
-		if not arg_5_0._quality then
-			arg_5_0._quality = SettingsModel.instance:getModelGraphicsQuality()
-			arg_5_0._frameRate = SettingsModel.instance:getModelTargetFrameRate()
+function FightReplayController:_setQuality(isReplay)
+	if isReplay then
+		if not self._quality then
+			self._quality = SettingsModel.instance:getModelGraphicsQuality()
+			self._frameRate = SettingsModel.instance:getModelTargetFrameRate()
 
 			GameGlobalMgr.instance:getScreenState():setLocalQuality(ModuleEnum.Performance.Low, true)
 			GameGlobalMgr.instance:getScreenState():setTargetFrameRate(ModuleEnum.TargetFrameRate.Low, true)
 		end
-	elseif arg_5_0._quality then
-		GameGlobalMgr.instance:getScreenState():setLocalQuality(arg_5_0._quality, true)
-		GameGlobalMgr.instance:getScreenState():setTargetFrameRate(arg_5_0._frameRate, true)
+	elseif self._quality then
+		GameGlobalMgr.instance:getScreenState():setLocalQuality(self._quality, true)
+		GameGlobalMgr.instance:getScreenState():setTargetFrameRate(self._frameRate, true)
 
-		arg_5_0._quality = nil
-		arg_5_0._frameRate = nil
+		self._quality = nil
+		self._frameRate = nil
 	end
 end
 
-function var_0_0._onGetOperReplay(arg_6_0)
+function FightReplayController:_onGetOperReplay()
 	FightController.instance:dispatchEvent(FightEvent.StartReplay)
 
 	FightDataHelper.stateMgr.isReplay = true
 
-	arg_6_0:_reqReplayCallback()
+	self:_reqReplayCallback()
 end
 
-function var_0_0._onGetOperReplayFail(arg_7_0)
-	arg_7_0:_reqReplayCallback()
+function FightReplayController:_onGetOperReplayFail()
+	self:_reqReplayCallback()
 end
 
-function var_0_0._reqReplayCallback(arg_8_0)
-	local var_8_0 = arg_8_0._callback
-	local var_8_1 = arg_8_0._calbackObj
+function FightReplayController:_reqReplayCallback()
+	local callback = self._callback
+	local callbackObj = self._calbackObj
 
-	arg_8_0._callback = nil
-	arg_8_0._calbackObj = nil
+	self._callback = nil
+	self._calbackObj = nil
 
-	if var_8_0 then
-		var_8_0(var_8_1)
+	if callback then
+		callback(callbackObj)
 	end
 end
 
-function var_0_0._startReplay(arg_9_0)
-	arg_9_0:_setQuality(true)
-	arg_9_0:_stopReplayFlow()
+function FightReplayController:_startReplay()
+	self:_setQuality(true)
+	self:_stopReplayFlow()
 
-	arg_9_0._replayFlow = FightReplayStepBuilder.buildReplaySequence()
+	self._replayFlow = FightReplayStepBuilder.buildReplaySequence()
 
-	arg_9_0._replayFlow:registerDoneListener(arg_9_0._onReplayDone, arg_9_0)
-	arg_9_0._replayFlow:start({})
+	self._replayFlow:registerDoneListener(self._onReplayDone, self)
+	self._replayFlow:start({})
 end
 
-function var_0_0.doneCardStage(arg_10_0)
-	if arg_10_0._replayFlow and arg_10_0._replayFlow.status == WorkStatus.Running then
-		local var_10_0 = arg_10_0._replayFlow:getWorkList()
-		local var_10_1 = arg_10_0._replayFlow._curIndex
-		local var_10_2 = arg_10_0._replayFlow._workList and arg_10_0._replayFlow._workList[var_10_1]
+function FightReplayController:doneCardStage()
+	if self._replayFlow and self._replayFlow.status == WorkStatus.Running then
+		local workList = self._replayFlow:getWorkList()
+		local curWorkIdx = self._replayFlow._curIndex
+		local curWork = self._replayFlow._workList and self._replayFlow._workList[curWorkIdx]
 
-		for iter_10_0 = var_10_1, #var_10_0 do
-			local var_10_3 = var_10_0[iter_10_0]
+		for i = curWorkIdx, #workList do
+			local work = workList[i]
 
-			if isTypeOf(var_10_3, FightReplayWorkWaitRoundEnd) then
-				arg_10_0._replayFlow._curIndex = iter_10_0 - 1
+			if isTypeOf(work, FightReplayWorkWaitRoundEnd) then
+				self._replayFlow._curIndex = i - 1
 
-				arg_10_0._replayFlow:_runNext()
+				self._replayFlow:_runNext()
 
 				break
 			end
 		end
 
-		if var_10_2 then
-			var_10_2:onDone(true)
+		if curWork then
+			curWork:onDone(true)
 		end
 	end
 end
 
-function var_0_0._onReplayDone(arg_11_0)
-	arg_11_0:_stopReplayFlow()
+function FightReplayController:_onReplayDone()
+	self:_stopReplayFlow()
 end
 
-function var_0_0._stopReplay(arg_12_0)
-	arg_12_0:_setQuality(false)
+function FightReplayController:_stopReplay()
+	self:_setQuality(false)
 
 	FightDataHelper.stateMgr.isReplay = false
 
-	arg_12_0:_stopReplayFlow()
+	self:_stopReplayFlow()
 end
 
-function var_0_0._stopReplayFlow(arg_13_0)
-	if arg_13_0._replayFlow then
-		if arg_13_0._replayFlow.status == WorkStatus.Running then
-			arg_13_0._replayFlow:stop()
+function FightReplayController:_stopReplayFlow()
+	if self._replayFlow then
+		if self._replayFlow.status == WorkStatus.Running then
+			self._replayFlow:stop()
 		end
 
-		arg_13_0._replayFlow:unregisterDoneListener(arg_13_0._onReplayDone, arg_13_0)
+		self._replayFlow:unregisterDoneListener(self._onReplayDone, self)
 
-		arg_13_0._replayFlow = nil
+		self._replayFlow = nil
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+FightReplayController.instance = FightReplayController.New()
 
-return var_0_0
+return FightReplayController

@@ -1,72 +1,76 @@
-﻿module("modules.logic.fight.entity.FightEntitySub", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/FightEntitySub.lua
 
-local var_0_0 = class("FightEntitySub", BaseFightEntity)
+module("modules.logic.fight.entity.FightEntitySub", package.seeall)
 
-var_0_0.Online = true
+local FightEntitySub = class("FightEntitySub", BaseFightEntity)
 
-function var_0_0.getTag(arg_1_0)
-	return arg_1_0:isMySide() and SceneTag.UnitPlayer or SceneTag.UnitMonster
+FightEntitySub.Online = true
+
+function FightEntitySub:getTag()
+	return self:isMySide() and SceneTag.UnitPlayer or SceneTag.UnitMonster
 end
 
-function var_0_0.ctor(arg_2_0, arg_2_1)
-	arg_2_0.isSub = true
+function FightEntitySub:ctor(entityId)
+	self.isSub = true
 
-	var_0_0.super.ctor(arg_2_0, arg_2_1)
+	FightEntitySub.super.ctor(self, entityId)
 end
 
-function var_0_0.initComponents(arg_3_0)
-	arg_3_0:addComp("spine", UnitSpine)
-	arg_3_0:addComp("spineRenderer", UnitSpineRenderer)
-	arg_3_0:addComp("entityVisible", FightEntityVisibleComp)
-	arg_3_0:addComp("effect", FightEffectComp)
-	arg_3_0:addComp("variantCrayon", FightVariantCrayonComp)
+function FightEntitySub:initComponents()
+	self:addComp("spine", UnitSpine)
+	self:addComp("spineRenderer", UnitSpineRenderer)
+	self:addComp("entityVisible", FightEntityVisibleComp)
+	self:addComp("effect", FightEffectComp)
+	self:addComp("variantCrayon", FightVariantCrayonComp)
 end
 
-function var_0_0.setRenderOrder(arg_4_0, arg_4_1)
-	var_0_0.super.setRenderOrder(arg_4_0, arg_4_1)
+function FightEntitySub:setRenderOrder(order)
+	FightEntitySub.super.setRenderOrder(self, order)
 end
 
-function var_0_0.setAlpha(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_0.spineRenderer then
-		arg_5_0.spineRenderer:setAlpha(arg_5_1, arg_5_2)
+function FightEntitySub:setAlpha(alpha, duration)
+	if self.spineRenderer then
+		self.spineRenderer:setAlpha(alpha, duration)
 	end
 end
 
-function var_0_0.loadSpine(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_0._callback = arg_6_1
-	arg_6_0._callbackObj = arg_6_2
+function FightEntitySub:loadSpine(callback, callbackObj)
+	self._callback = callback
+	self._callbackObj = callbackObj
 
-	local var_6_0 = arg_6_0:getMO()
-	local var_6_1 = FightConfig.instance:getSkinCO(var_6_0.skin)
-	local var_6_2 = ResUrl.getSpineFightPrefab(var_6_1 and var_6_1.alternateSpine)
+	local entityMO = self:getMO()
+	local skinCO = FightConfig.instance:getSkinCO(entityMO.skin)
+	local spinePath = ResUrl.getSpineFightPrefab(skinCO and skinCO.alternateSpine)
 
-	arg_6_0.spine:setResPath(var_6_2, arg_6_0._onSpineLoaded, arg_6_0)
+	self.spine:setResPath(spinePath, self._onSpineLoaded, self)
 end
 
-function var_0_0._getOrCreateBoxSpine(arg_7_0, arg_7_1)
-	local var_7_0 = gohelper.findChild(arg_7_0.go, arg_7_1) or gohelper.create3d(arg_7_0.go, arg_7_1)
+function FightEntitySub:_getOrCreateBoxSpine(goName)
+	local boxSpineGO = gohelper.findChild(self.go, goName)
 
-	return var_7_0, MonoHelper.addNoUpdateLuaComOnceToGo(var_7_0, UnitSpine)
+	boxSpineGO = boxSpineGO or gohelper.create3d(self.go, goName)
+
+	return boxSpineGO, MonoHelper.addNoUpdateLuaComOnceToGo(boxSpineGO, UnitSpine)
 end
 
-function var_0_0._onSpineLoaded(arg_8_0, arg_8_1)
-	if arg_8_0.spineRenderer then
-		arg_8_0.spineRenderer:setSpine(arg_8_1)
+function FightEntitySub:_onSpineLoaded(spine)
+	if self.spineRenderer then
+		self.spineRenderer:setSpine(spine)
 	end
 
-	if arg_8_0._callback then
-		if arg_8_0._callbackObj then
-			arg_8_0._callback(arg_8_0._callbackObj, arg_8_1, arg_8_0)
+	if self._callback then
+		if self._callbackObj then
+			self._callback(self._callbackObj, spine, self)
 		else
-			arg_8_0._callback(arg_8_1, arg_8_0)
+			self._callback(spine, self)
 		end
 	end
 
-	arg_8_0._callback = nil
-	arg_8_0._callbackObj = nil
-	arg_8_0.parabolaMover = MonoHelper.addLuaComOnceToGo(arg_8_0.spine:getSpineGO(), UnitMoverParabola, arg_8_0)
+	self._callback = nil
+	self._callbackObj = nil
+	self.parabolaMover = MonoHelper.addLuaComOnceToGo(self.spine:getSpineGO(), UnitMoverParabola, self)
 
-	MonoHelper.addLuaComOnceToGo(arg_8_0.spine:getSpineGO(), UnitMoverHandler, arg_8_0)
+	MonoHelper.addLuaComOnceToGo(self.spine:getSpineGO(), UnitMoverHandler, self)
 end
 
-return var_0_0
+return FightEntitySub

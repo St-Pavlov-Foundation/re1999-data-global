@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_rouge_special_trigger", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_rouge_special_trigger.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_rouge_special_trigger", package.seeall)
+
+local lua_rouge_special_trigger = {}
+local fields = {
 	eventCorrectWeight = 4,
 	unlockTask = 8,
 	reasonRange = 3,
@@ -13,13 +15,13 @@ local var_0_1 = {
 	id = 1,
 	isShow = 10
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_rouge_special_trigger.onLoad(json)
+	lua_rouge_special_trigger.configList, lua_rouge_special_trigger.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_rouge_special_trigger

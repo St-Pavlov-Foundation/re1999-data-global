@@ -1,26 +1,28 @@
-﻿module("modules.logic.versionactivity2_6.dicehero.model.fight.DiceHeroFightDiceBoxMo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/dicehero/model/fight/DiceHeroFightDiceBoxMo.lua
 
-local var_0_0 = pureTable("DiceHeroFightDiceBoxMo")
+module("modules.logic.versionactivity2_6.dicehero.model.fight.DiceHeroFightDiceBoxMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.capacity = arg_1_1.capacity
-	arg_1_0.dices = {}
-	arg_1_0.dicesByUid = arg_1_0.dicesByUid or {}
+local DiceHeroFightDiceBoxMo = pureTable("DiceHeroFightDiceBoxMo")
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1.dices) do
-		arg_1_0.dices[iter_1_0] = arg_1_0.dicesByUid[iter_1_1.uid] or DiceHeroFightDiceMo.New()
+function DiceHeroFightDiceBoxMo:init(data)
+	self.capacity = data.capacity
+	self.dices = {}
+	self.dicesByUid = self.dicesByUid or {}
 
-		arg_1_0.dices[iter_1_0]:init(iter_1_1, iter_1_0)
+	for k, v in ipairs(data.dices) do
+		self.dices[k] = self.dicesByUid[v.uid] or DiceHeroFightDiceMo.New()
 
-		arg_1_0.dicesByUid[iter_1_1.uid] = arg_1_0.dices[iter_1_0]
+		self.dices[k]:init(v, k)
+
+		self.dicesByUid[v.uid] = self.dices[k]
 	end
 
-	arg_1_0.resetTimes = arg_1_1.resetTimes
-	arg_1_0.maxResetTimes = arg_1_1.maxResetTimes
+	self.resetTimes = data.resetTimes
+	self.maxResetTimes = data.maxResetTimes
 end
 
-function var_0_0.getDiceMoByUid(arg_2_0, arg_2_1)
-	return arg_2_0.dicesByUid[arg_2_1]
+function DiceHeroFightDiceBoxMo:getDiceMoByUid(uid)
+	return self.dicesByUid[uid]
 end
 
-return var_0_0
+return DiceHeroFightDiceBoxMo

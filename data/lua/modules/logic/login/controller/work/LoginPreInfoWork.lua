@@ -1,53 +1,55 @@
-﻿module("modules.logic.login.controller.work.LoginPreInfoWork", package.seeall)
+﻿-- chunkname: @modules/logic/login/controller/work/LoginPreInfoWork.lua
 
-local var_0_0 = class("LoginPreInfoWork", BaseWork)
+module("modules.logic.login.controller.work.LoginPreInfoWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local LoginPreInfoWork = class("LoginPreInfoWork", BaseWork)
+
+function LoginPreInfoWork:ctor()
 	return
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	CurrencyController.instance:registerCallback(CurrencyEvent.GetCurrencyInfoSuccess, arg_2_0._onGetCurrencyInfoSuccess, arg_2_0)
-	OpenController.instance:registerCallback(OpenEvent.GetOpenInfoSuccess, arg_2_0._onGetPlayerInfoSuccess, arg_2_0)
-	GuideController.instance:registerCallback(GuideEvent.GetGuideInfoSuccess, arg_2_0._onGetGuideInfoSuccess, arg_2_0)
-	arg_2_0:_getPlayerInfoBeforeLoading()
+function LoginPreInfoWork:onStart(context)
+	CurrencyController.instance:registerCallback(CurrencyEvent.GetCurrencyInfoSuccess, self._onGetCurrencyInfoSuccess, self)
+	OpenController.instance:registerCallback(OpenEvent.GetOpenInfoSuccess, self._onGetPlayerInfoSuccess, self)
+	GuideController.instance:registerCallback(GuideEvent.GetGuideInfoSuccess, self._onGetGuideInfoSuccess, self)
+	self:_getPlayerInfoBeforeLoading()
 end
 
-function var_0_0.clearWork(arg_3_0)
-	CurrencyController.instance:unregisterCallback(CurrencyEvent.GetCurrencyInfoSuccess, arg_3_0._onGetCurrencyInfoSuccess, arg_3_0)
-	OpenController.instance:unregisterCallback(OpenEvent.GetOpenInfoSuccess, arg_3_0._onGetPlayerInfoSuccess, arg_3_0)
-	GuideController.instance:unregisterCallback(GuideEvent.GetGuideInfoSuccess, arg_3_0._onGetGuideInfoSuccess, arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0._getInfoTimeout, arg_3_0)
+function LoginPreInfoWork:clearWork()
+	CurrencyController.instance:unregisterCallback(CurrencyEvent.GetCurrencyInfoSuccess, self._onGetCurrencyInfoSuccess, self)
+	OpenController.instance:unregisterCallback(OpenEvent.GetOpenInfoSuccess, self._onGetPlayerInfoSuccess, self)
+	GuideController.instance:unregisterCallback(GuideEvent.GetGuideInfoSuccess, self._onGetGuideInfoSuccess, self)
+	TaskDispatcher.cancelTask(self._getInfoTimeout, self)
 end
 
-function var_0_0._getPlayerInfoBeforeLoading(arg_4_0)
-	arg_4_0._getPlayerInfo = nil
-	arg_4_0._getCurrencyInfo = nil
-	arg_4_0._getGuideInfo = nil
+function LoginPreInfoWork:_getPlayerInfoBeforeLoading()
+	self._getPlayerInfo = nil
+	self._getCurrencyInfo = nil
+	self._getGuideInfo = nil
 
-	TaskDispatcher.runDelay(arg_4_0._getInfoTimeout, arg_4_0, 60)
+	TaskDispatcher.runDelay(self._getInfoTimeout, self, 60)
 	CommonRpc.instance:sendGetServerTimeRequest()
 	PlayerRpc.instance:sendGetPlayerInfoRequest()
 	CurrencyRpc.instance:sendGetAllCurrency()
 	GuideRpc.instance:sendGetGuideInfoRequest()
 end
 
-function var_0_0._sendPlayerBaseProperties(arg_5_0)
+function LoginPreInfoWork:_sendPlayerBaseProperties()
 	StatController.instance:onLogin()
 end
 
-function var_0_0._getInfoTimeout(arg_6_0)
-	if not arg_6_0._getPlayerInfo or not arg_6_0._getCurrencyInfo or not arg_6_0._getGuideInfo then
+function LoginPreInfoWork:_getInfoTimeout()
+	if not self._getPlayerInfo or not self._getCurrencyInfo or not self._getGuideInfo then
 		MessageBoxController.instance:showSystemMsgBox(MessageBoxIdDefine.LoginLostConnect1, MsgBoxEnum.BoxType.Yes, function()
 			LoginController.instance:logout()
 		end, nil)
 	end
 end
 
-function var_0_0._checkPreInfo(arg_8_0)
-	if arg_8_0._getPlayerInfo and arg_8_0._getCurrencyInfo and arg_8_0._getGuideInfo then
-		TaskDispatcher.cancelTask(arg_8_0._getInfoTimeout, arg_8_0)
-		arg_8_0:_sendPlayerBaseProperties()
+function LoginPreInfoWork:_checkPreInfo()
+	if self._getPlayerInfo and self._getCurrencyInfo and self._getGuideInfo then
+		TaskDispatcher.cancelTask(self._getInfoTimeout, self)
+		self:_sendPlayerBaseProperties()
 
 		if SDKDataTrackMgr then
 			StatController.instance:track(StatEnum.EventName.GameLoading, {
@@ -55,32 +57,32 @@ function var_0_0._checkPreInfo(arg_8_0)
 			})
 		end
 
-		arg_8_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._onGetPlayerInfoSuccess(arg_9_0)
-	OpenController.instance:unregisterCallback(OpenEvent.GetOpenInfoSuccess, arg_9_0._onGetPlayerInfoSuccess, arg_9_0)
+function LoginPreInfoWork:_onGetPlayerInfoSuccess()
+	OpenController.instance:unregisterCallback(OpenEvent.GetOpenInfoSuccess, self._onGetPlayerInfoSuccess, self)
 
-	arg_9_0._getPlayerInfo = true
+	self._getPlayerInfo = true
 
-	arg_9_0:_checkPreInfo()
+	self:_checkPreInfo()
 end
 
-function var_0_0._onGetCurrencyInfoSuccess(arg_10_0)
-	CurrencyController.instance:unregisterCallback(CurrencyEvent.GetCurrencyInfoSuccess, arg_10_0._onGetCurrencyInfoSuccess, arg_10_0)
+function LoginPreInfoWork:_onGetCurrencyInfoSuccess()
+	CurrencyController.instance:unregisterCallback(CurrencyEvent.GetCurrencyInfoSuccess, self._onGetCurrencyInfoSuccess, self)
 
-	arg_10_0._getCurrencyInfo = true
+	self._getCurrencyInfo = true
 
-	arg_10_0:_checkPreInfo()
+	self:_checkPreInfo()
 end
 
-function var_0_0._onGetGuideInfoSuccess(arg_11_0)
-	GuideController.instance:unregisterCallback(GuideEvent.GetGuideInfoSuccess, arg_11_0._onGetGuideInfoSuccess, arg_11_0)
+function LoginPreInfoWork:_onGetGuideInfoSuccess()
+	GuideController.instance:unregisterCallback(GuideEvent.GetGuideInfoSuccess, self._onGetGuideInfoSuccess, self)
 
-	arg_11_0._getGuideInfo = true
+	self._getGuideInfo = true
 
-	arg_11_0:_checkPreInfo()
+	self:_checkPreInfo()
 end
 
-return var_0_0
+return LoginPreInfoWork

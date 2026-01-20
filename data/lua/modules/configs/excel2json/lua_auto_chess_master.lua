@@ -1,30 +1,33 @@
-﻿module("modules.configs.excel2json.lua_auto_chess_master", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_auto_chess_master.lua
 
-local var_0_0 = {}
-local var_0_1 = {
-	unlockSkill = 7,
+module("modules.configs.excel2json.lua_auto_chess_master", package.seeall)
+
+local lua_auto_chess_master = {}
+local fields = {
+	unlockSkill = 8,
 	name = 2,
-	spUdimoGoodsId = 18,
+	spUdimoGoodsId = 19,
 	isSelf = 4,
-	udimoCase = 16,
-	spUdimo = 17,
-	skillIcon = 12,
-	skillId = 8,
-	skillName = 11,
-	skillDesc = 13,
-	skillLockDesc = 15,
-	roundTriggerCountLimit = 9,
+	udimoCase = 17,
+	skillIcon = 13,
+	spUdimo = 18,
+	totalTriggerCountLimit = 11,
+	skillId = 9,
+	skillName = 12,
+	skillDesc = 14,
+	skillLockDesc = 16,
+	roundTriggerCountLimit = 10,
 	illustrationShow = 3,
-	image = 6,
-	totalTriggerCountLimit = 10,
-	hp = 5,
-	skillProgressDesc = 14,
+	image = 7,
+	isSpMaster = 5,
+	hp = 6,
+	skillProgressDesc = 15,
 	id = 1
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	name = 1,
 	skillProgressDesc = 4,
 	skillName = 2,
@@ -32,8 +35,8 @@ local var_0_3 = {
 	skillLockDesc = 5
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_auto_chess_master.onLoad(json)
+	lua_auto_chess_master.configList, lua_auto_chess_master.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_auto_chess_master

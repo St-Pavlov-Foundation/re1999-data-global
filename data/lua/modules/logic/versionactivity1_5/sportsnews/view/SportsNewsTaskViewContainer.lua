@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity1_5.sportsnews.view.SportsNewsTaskViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/sportsnews/view/SportsNewsTaskViewContainer.lua
 
-local var_0_0 = class("SportsNewsTaskViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_5.sportsnews.view.SportsNewsTaskViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local SportsNewsTaskViewContainer = class("SportsNewsTaskViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, SportsNewsTaskView.New())
+function SportsNewsTaskViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, SportsNewsTaskView.New())
+
+	return views
 end
 
-return var_0_0
+return SportsNewsTaskViewContainer

@@ -1,129 +1,131 @@
-﻿module("modules.logic.sp01.assassin2.outside.view.AssassinBuildingItemIcon", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/outside/view/AssassinBuildingItemIcon.lua
 
-local var_0_0 = class("AssassinBuildingItemIcon", LuaCompBase)
+module("modules.logic.sp01.assassin2.outside.view.AssassinBuildingItemIcon", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.go, "simage_icon")
-	arg_1_0._gounlock = gohelper.findChild(arg_1_0.go, "go_unlock")
-	arg_1_0._simageiconline = gohelper.findChildSingleImage(arg_1_0.go, "go_unlock/simage_icon_line")
-	arg_1_0._simageiconline2 = gohelper.findChildSingleImage(arg_1_0.go, "go_unlock/simage_icon_line/glow")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.go, "go_unlock/txt_name")
-	arg_1_0._txtlv = gohelper.findChildText(arg_1_0.go, "go_unlock/txt_lv")
-	arg_1_0._golevelup = gohelper.findChild(arg_1_0.go, "go_unlock/go_levelup")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.go, "btn_click", AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
-	arg_1_0._gobuildingclickarea = gohelper.findChild(arg_1_0.go, "btn_click/go_buildingclickarea")
-	arg_1_0._animator = gohelper.onceAddComponent(arg_1_0.go, gohelper.Type_Animator)
+local AssassinBuildingItemIcon = class("AssassinBuildingItemIcon", LuaCompBase)
+
+function AssassinBuildingItemIcon:init(go)
+	self.go = go
+	self._simageicon = gohelper.findChildSingleImage(self.go, "simage_icon")
+	self._gounlock = gohelper.findChild(self.go, "go_unlock")
+	self._simageiconline = gohelper.findChildSingleImage(self.go, "go_unlock/simage_icon_line")
+	self._simageiconline2 = gohelper.findChildSingleImage(self.go, "go_unlock/simage_icon_line/glow")
+	self._txtname = gohelper.findChildText(self.go, "go_unlock/txt_name")
+	self._txtlv = gohelper.findChildText(self.go, "go_unlock/txt_lv")
+	self._golevelup = gohelper.findChild(self.go, "go_unlock/go_levelup")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.go, "btn_click", AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
+	self._gobuildingclickarea = gohelper.findChild(self.go, "btn_click/go_buildingclickarea")
+	self._animator = gohelper.onceAddComponent(self.go, gohelper.Type_Animator)
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
-	arg_2_0:addEventCb(AssassinController.instance, AssassinEvent.UpdateBuildingInfo, arg_2_0._onUpdateBuildingInfo, arg_2_0)
-	arg_2_0:addEventCb(AssassinController.instance, AssassinEvent.UnlockBuildings, arg_2_0._onUnlockBuildings, arg_2_0)
-	arg_2_0:addEventCb(AssassinController.instance, AssassinEvent.FocusBuilding, arg_2_0._onFocusBuilding, arg_2_0)
-	arg_2_0:addEventCb(AssassinController.instance, AssassinEvent.UpdateCoinNum, arg_2_0._onUpdateCoinNum, arg_2_0)
+function AssassinBuildingItemIcon:addEventListeners()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
+	self:addEventCb(AssassinController.instance, AssassinEvent.UpdateBuildingInfo, self._onUpdateBuildingInfo, self)
+	self:addEventCb(AssassinController.instance, AssassinEvent.UnlockBuildings, self._onUnlockBuildings, self)
+	self:addEventCb(AssassinController.instance, AssassinEvent.FocusBuilding, self._onFocusBuilding, self)
+	self:addEventCb(AssassinController.instance, AssassinEvent.UpdateCoinNum, self._onUpdateCoinNum, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
+function AssassinBuildingItemIcon:removeEventListeners()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0._btnclickOnClick(arg_4_0)
-	if not arg_4_0._isUnlocked then
+function AssassinBuildingItemIcon:_btnclickOnClick()
+	if not self._isUnlocked then
 		return
 	end
 
-	AssassinController.instance:dispatchEvent(AssassinEvent.FocusBuilding, arg_4_0._type, true)
-	AssassinController.instance:openAssassinBuildingLevelUpView(arg_4_0._type)
+	AssassinController.instance:dispatchEvent(AssassinEvent.FocusBuilding, self._type, true)
+	AssassinController.instance:openAssassinBuildingLevelUpView(self._type)
 end
 
-function var_0_0.setBuildingType(arg_5_0, arg_5_1)
-	arg_5_0._type = arg_5_1
+function AssassinBuildingItemIcon:setBuildingType(type)
+	self._type = type
 
-	arg_5_0:refresh()
+	self:refresh()
 end
 
-function var_0_0.updateIconPosition(arg_6_0, arg_6_1)
-	if gohelper.isNil(arg_6_1) then
+function AssassinBuildingItemIcon:updateIconPosition(goIconPosTemplate)
+	if gohelper.isNil(goIconPosTemplate) then
 		return
 	end
 
-	local var_6_0, var_6_1 = recthelper.getAnchor(arg_6_1.transform)
+	local posX, posY = recthelper.getAnchor(goIconPosTemplate.transform)
 
-	recthelper.setAnchor(arg_6_0._simageicon.transform, var_6_0 or 0, var_6_1 or 0)
-	recthelper.setAnchor(arg_6_0._simageiconline.transform, var_6_0 or 0, var_6_1 or 0)
+	recthelper.setAnchor(self._simageicon.transform, posX or 0, posY or 0)
+	recthelper.setAnchor(self._simageiconline.transform, posX or 0, posY or 0)
 end
 
-function var_0_0.updateIconClickArea(arg_7_0, arg_7_1)
-	if gohelper.isNil(arg_7_1) then
+function AssassinBuildingItemIcon:updateIconClickArea(goClickAreaTemplate)
+	if gohelper.isNil(goClickAreaTemplate) then
 		return
 	end
 
-	local var_7_0 = arg_7_1.transform
-	local var_7_1, var_7_2 = recthelper.getAnchor(var_7_0)
-	local var_7_3 = recthelper.getWidth(var_7_0)
-	local var_7_4 = recthelper.getHeight(var_7_0)
+	local tranClickAreaTemplate = goClickAreaTemplate.transform
+	local posX, posY = recthelper.getAnchor(tranClickAreaTemplate)
+	local width = recthelper.getWidth(tranClickAreaTemplate)
+	local height = recthelper.getHeight(tranClickAreaTemplate)
 
-	recthelper.setAnchor(arg_7_0._gobuildingclickarea.transform, var_7_1, var_7_2)
-	recthelper.setSize(arg_7_0._gobuildingclickarea.transform, var_7_3, var_7_4)
+	recthelper.setAnchor(self._gobuildingclickarea.transform, posX, posY)
+	recthelper.setSize(self._gobuildingclickarea.transform, width, height)
 end
 
-function var_0_0.refresh(arg_8_0)
-	arg_8_0._mapMo = AssassinOutsideModel.instance:getBuildingMapMo()
-	arg_8_0._isUnlocked = arg_8_0._mapMo and arg_8_0._mapMo:isBuildingTypeUnlocked(arg_8_0._type)
+function AssassinBuildingItemIcon:refresh()
+	self._mapMo = AssassinOutsideModel.instance:getBuildingMapMo()
+	self._isUnlocked = self._mapMo and self._mapMo:isBuildingTypeUnlocked(self._type)
 
-	gohelper.setActive(arg_8_0.go, true)
-	gohelper.setActive(arg_8_0._gounlock, arg_8_0._isUnlocked)
+	gohelper.setActive(self.go, true)
+	gohelper.setActive(self._gounlock, self._isUnlocked)
 
-	if not arg_8_0._isUnlocked then
-		local var_8_0 = AssassinConfig.instance:getBuildingLvCo(arg_8_0._type, 1)
+	if not self._isUnlocked then
+		local buildingCo = AssassinConfig.instance:getBuildingLvCo(self._type, 1)
 
-		arg_8_0._simageicon:LoadImage(ResUrl.getSp01AssassinSingleBg("manor/" .. var_8_0.lockBuildingIcon))
+		self._simageicon:LoadImage(ResUrl.getSp01AssassinSingleBg("manor/" .. buildingCo.lockBuildingIcon))
 
 		return
 	end
 
-	local var_8_1 = arg_8_0._mapMo:getBuildingMo(arg_8_0._type)
-	local var_8_2 = var_8_1 and var_8_1:getConfig()
+	local buildingMo = self._mapMo:getBuildingMo(self._type)
+	local buildingCo = buildingMo and buildingMo:getConfig()
 
-	arg_8_0._lv = var_8_1 and var_8_1:getLv()
-	arg_8_0._txtname.text = var_8_2 and var_8_2.title or ""
-	arg_8_0._txtlv.text = AssassinHelper.formatLv(arg_8_0._lv)
+	self._lv = buildingMo and buildingMo:getLv()
+	self._txtname.text = buildingCo and buildingCo.title or ""
+	self._txtlv.text = AssassinHelper.formatLv(self._lv)
 
-	local var_8_3 = arg_8_0._mapMo:isBuildingLevelUp2NextLv(arg_8_0._type)
+	local canLevelUp = self._mapMo:isBuildingLevelUp2NextLv(self._type)
 
-	gohelper.setActive(arg_8_0._golevelup, var_8_3)
-	arg_8_0._simageicon:LoadImage(ResUrl.getSp01AssassinSingleBg("manor/" .. var_8_2.buildingIcon))
-	arg_8_0._simageiconline:LoadImage(ResUrl.getSp01AssassinSingleBg("manor/" .. var_8_2.buildingBgIcon))
-	arg_8_0._simageiconline2:LoadImage(ResUrl.getSp01AssassinSingleBg("manor/" .. var_8_2.buildingBgIcon))
+	gohelper.setActive(self._golevelup, canLevelUp)
+	self._simageicon:LoadImage(ResUrl.getSp01AssassinSingleBg("manor/" .. buildingCo.buildingIcon))
+	self._simageiconline:LoadImage(ResUrl.getSp01AssassinSingleBg("manor/" .. buildingCo.buildingBgIcon))
+	self._simageiconline2:LoadImage(ResUrl.getSp01AssassinSingleBg("manor/" .. buildingCo.buildingBgIcon))
 end
 
-function var_0_0._onUpdateBuildingInfo(arg_9_0, arg_9_1)
-	if arg_9_0._type ~= arg_9_1 then
+function AssassinBuildingItemIcon:_onUpdateBuildingInfo(buildingType)
+	if self._type ~= buildingType then
 		return
 	end
 
-	arg_9_0:refresh()
+	self:refresh()
 end
 
-function var_0_0._onUnlockBuildings(arg_10_0)
-	arg_10_0:refresh()
+function AssassinBuildingItemIcon:_onUnlockBuildings()
+	self:refresh()
 end
 
-function var_0_0._onFocusBuilding(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = arg_11_2 and "switch" or "bake"
+function AssassinBuildingItemIcon:_onFocusBuilding(buildingType, isFocus)
+	local stateName = isFocus and "switch" or "bake"
 
-	arg_11_0._animator:Play(var_11_0, 0, 0)
+	self._animator:Play(stateName, 0, 0)
 end
 
-function var_0_0._onUpdateCoinNum(arg_12_0)
-	arg_12_0:refresh()
+function AssassinBuildingItemIcon:_onUpdateCoinNum()
+	self:refresh()
 end
 
-function var_0_0.onDestroy(arg_13_0)
-	arg_13_0._simageicon:UnLoadImage()
-	arg_13_0._simageiconline:UnLoadImage()
-	arg_13_0._simageiconline2:UnLoadImage()
+function AssassinBuildingItemIcon:onDestroy()
+	self._simageicon:UnLoadImage()
+	self._simageiconline:UnLoadImage()
+	self._simageiconline2:UnLoadImage()
 end
 
-return var_0_0
+return AssassinBuildingItemIcon

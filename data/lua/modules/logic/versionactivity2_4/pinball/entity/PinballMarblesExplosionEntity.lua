@@ -1,58 +1,59 @@
-﻿module("modules.logic.versionactivity2_4.pinball.entity.PinballMarblesExplosionEntity", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/pinball/entity/PinballMarblesExplosionEntity.lua
 
-local var_0_0 = class("PinballMarblesExplosionEntity", PinballMarblesEntity)
+module("modules.logic.versionactivity2_4.pinball.entity.PinballMarblesExplosionEntity", package.seeall)
 
-function var_0_0.initByCo(arg_1_0)
-	var_0_0.super.initByCo(arg_1_0)
+local PinballMarblesExplosionEntity = class("PinballMarblesExplosionEntity", PinballMarblesEntity)
 
-	arg_1_0._totalExplosion = arg_1_0.effectNum
-	arg_1_0._range = arg_1_0.width * arg_1_0.effectNum2
-	arg_1_0._curExplosionNum = 0
+function PinballMarblesExplosionEntity:initByCo()
+	PinballMarblesExplosionEntity.super.initByCo(self)
+
+	self._totalExplosion = self.effectNum
+	self._range = self.width * self.effectNum2
+	self._curExplosionNum = 0
 end
 
-function var_0_0.onHitExit(arg_2_0, arg_2_1)
-	var_0_0.super.onHitExit(arg_2_0, arg_2_1)
+function PinballMarblesExplosionEntity:onHitExit(hitEntityId)
+	PinballMarblesExplosionEntity.super.onHitExit(self, hitEntityId)
 
-	local var_2_0 = PinballEntityMgr.instance:getEntity(arg_2_1)
+	local hitEntity = PinballEntityMgr.instance:getEntity(hitEntityId)
 
-	if not var_2_0 then
+	if not hitEntity then
 		return
 	end
 
-	if arg_2_0._curExplosionNum < arg_2_0._totalExplosion and var_2_0:isResType() then
-		arg_2_0:doExplosion()
+	if self._curExplosionNum < self._totalExplosion and hitEntity:isResType() then
+		self:doExplosion()
 	end
 end
 
-function var_0_0.doExplosion(arg_3_0)
+function PinballMarblesExplosionEntity:doExplosion()
 	AudioMgr.instance:trigger(AudioEnum.Act178.act178_audio15)
 
-	local var_3_0 = PinballEntityMgr.instance:addEntity(PinballEnum.UnitType.CommonEffect)
+	local explodeEntity = PinballEntityMgr.instance:addEntity(PinballEnum.UnitType.CommonEffect)
 
-	var_3_0:setDelayDispose(2)
+	explodeEntity:setDelayDispose(2)
 
-	var_3_0.x = arg_3_0.x
-	var_3_0.y = arg_3_0.y
+	explodeEntity.x = self.x
+	explodeEntity.y = self.y
 
-	var_3_0:tick(0)
-	var_3_0:setScale(arg_3_0.effectNum2 * 0.4 * arg_3_0.scale / 3)
-	var_3_0:playAnim("explode")
+	explodeEntity:tick(0)
+	explodeEntity:setScale(self.effectNum2 * 0.4 * self.scale / 3)
+	explodeEntity:playAnim("explode")
 
-	local var_3_1 = PinballEntityMgr.instance:getAllEntity()
-	local var_3_2 = arg_3_0.width
-	local var_3_3 = arg_3_0.height
+	local allEntity = PinballEntityMgr.instance:getAllEntity()
+	local rawWidth, rawHeight = self.width, self.height
 
-	arg_3_0.width = arg_3_0._range
-	arg_3_0.height = arg_3_0._range
+	self.width = self._range
+	self.height = self._range
 
-	for iter_3_0, iter_3_1 in pairs(var_3_1) do
-		if iter_3_1:isResType() and not iter_3_1.isDead and PinballHelper.getHitInfo(arg_3_0, iter_3_1) then
-			iter_3_1:doHit(arg_3_0.hitNum)
+	for _, entity in pairs(allEntity) do
+		if entity:isResType() and not entity.isDead and PinballHelper.getHitInfo(self, entity) then
+			entity:doHit(self.hitNum)
 		end
 	end
 
-	arg_3_0.width, arg_3_0.height = var_3_2, var_3_3
-	arg_3_0._curExplosionNum = arg_3_0._curExplosionNum + 1
+	self.width, self.height = rawWidth, rawHeight
+	self._curExplosionNum = self._curExplosionNum + 1
 end
 
-return var_0_0
+return PinballMarblesExplosionEntity

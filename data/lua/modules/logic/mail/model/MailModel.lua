@@ -1,250 +1,279 @@
-﻿module("modules.logic.mail.model.MailModel", package.seeall)
+﻿-- chunkname: @modules/logic/mail/model/MailModel.lua
 
-local var_0_0 = class("MailModel", BaseModel)
+module("modules.logic.mail.model.MailModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._curCategoryId = 0
-	arg_1_0._categoryList = {}
-	arg_1_0._categoryListItem = {}
-	arg_1_0._readedMailIds = {}
+local MailModel = class("MailModel", BaseModel)
 
-	TaskDispatcher.cancelTask(arg_1_0.delExpiredMail, arg_1_0)
+function MailModel:onInit()
+	self._curCategoryId = 0
+	self._categoryList = {}
+	self._categoryListItem = {}
+	self._readedMailIds = {}
+
+	TaskDispatcher.cancelTask(self.delExpiredMail, self)
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._curCategoryId = 0
-	arg_2_0._categoryList = {}
-	arg_2_0._categoryListItem = {}
-	arg_2_0._readedMailIds = {}
+function MailModel:reInit()
+	self._curCategoryId = 0
+	self._categoryList = {}
+	self._categoryListItem = {}
+	self._readedMailIds = {}
 
-	TaskDispatcher.cancelTask(arg_2_0.delExpiredMail, arg_2_0)
+	TaskDispatcher.cancelTask(self.delExpiredMail, self)
 end
 
-function var_0_0.setMailList(arg_3_0)
-	MailCategroyModel.instance:setCategoryList(arg_3_0._categoryList, true)
+function MailModel:setMailList()
+	MailCategroyModel.instance:setCategoryList(self._categoryList, true)
 end
 
-function var_0_0.getReadedMailIds(arg_4_0)
-	return arg_4_0._readedMailIds
+function MailModel:getReadedMailIds()
+	return self._readedMailIds
 end
 
-function var_0_0.getMailList(arg_5_0)
-	return arg_5_0._categoryList
+function MailModel:getMailList()
+	return self._categoryList
 end
 
-function var_0_0.onGetMailItemList(arg_6_0, arg_6_1)
-	arg_6_0._categoryList = {}
+function MailModel:onGetMailItemList(mail)
+	self._categoryList = {}
 
-	for iter_6_0, iter_6_1 in pairs(arg_6_1) do
-		local var_6_0 = arg_6_0:initMailMO(iter_6_1)
+	for _, x in pairs(mail) do
+		local mailMO = self:initMailMO(x)
 
-		if var_6_0 then
-			table.insert(arg_6_0._categoryList, var_6_0)
+		if mailMO then
+			table.insert(self._categoryList, mailMO)
 
-			if var_6_0.state == MailEnum.ReadStatus.Read then
-				arg_6_0._readedMailIds[var_6_0.id] = true
+			if mailMO.state == MailEnum.ReadStatus.Read then
+				self._readedMailIds[mailMO.id] = true
 			end
 		end
 	end
 
-	arg_6_0:checkExpiredMail()
-	MailCategroyModel.instance:setCategoryList(arg_6_0._categoryList, true)
+	self:checkExpiredMail()
+	MailCategroyModel.instance:setCategoryList(self._categoryList, true)
 end
 
-function var_0_0.checkExpiredMail(arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0.delExpiredMail, arg_7_0)
+function MailModel:checkExpiredMail()
+	TaskDispatcher.cancelTask(self.delExpiredMail, self)
 
-	arg_7_0._willDelId = 0
+	self._willDelId = 0
 
-	local var_7_0 = 0
-	local var_7_1 = {}
-	local var_7_2 = {}
+	local nearestTime = 0
+	local newTable = {}
+	local delIds = {}
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0._categoryList) do
-		local var_7_3 = iter_7_1.expireTime
-		local var_7_4 = tonumber(var_7_3)
+	for i, mailMO in ipairs(self._categoryList) do
+		local expireTime = mailMO.expireTime
 
-		if var_7_4 <= 0 then
-			table.insert(var_7_1, iter_7_1)
+		expireTime = tonumber(expireTime)
+
+		if expireTime <= 0 then
+			table.insert(newTable, mailMO)
 		else
-			local var_7_5 = var_7_4 / 1000 - ServerTime.now()
+			expireTime = expireTime / 1000
 
-			if var_7_5 > 0 then
-				if var_7_5 < var_7_0 or var_7_0 == 0 then
-					arg_7_0._willDelId = iter_7_1.id
-					var_7_0 = var_7_5
+			local diffTime = expireTime - ServerTime.now()
+
+			if diffTime > 0 then
+				if diffTime < nearestTime or nearestTime == 0 then
+					self._willDelId = mailMO.id
+					nearestTime = diffTime
 				end
 
-				table.insert(var_7_1, iter_7_1)
+				table.insert(newTable, mailMO)
 			else
-				table.insert(var_7_2, iter_7_1.id)
+				table.insert(delIds, mailMO.id)
 			end
 		end
 	end
 
-	arg_7_0._categoryList = var_7_1
+	self._categoryList = newTable
 
-	if arg_7_0._willDelId ~= 0 then
-		TaskDispatcher.runDelay(arg_7_0.delExpiredMail, arg_7_0, var_7_0)
+	if self._willDelId ~= 0 then
+		TaskDispatcher.runDelay(self.delExpiredMail, self, nearestTime)
 	end
 
-	if #var_7_2 > 0 then
-		MailCategroyModel.instance:setCategoryList(arg_7_0._categoryList)
-		MailCategroyModel.instance:refreshCategoryList(var_7_2)
+	if #delIds > 0 then
+		MailCategroyModel.instance:setCategoryList(self._categoryList)
+		MailCategroyModel.instance:refreshCategoryList(delIds)
 	end
 end
 
-function var_0_0.delExpiredMail(arg_8_0)
-	local var_8_0 = {
-		arg_8_0._willDelId
+function MailModel:delExpiredMail()
+	local ids = {
+		self._willDelId
 	}
 
-	arg_8_0:delMail(var_8_0)
-	arg_8_0:checkExpiredMail()
+	self:delMail(ids)
+	self:checkExpiredMail()
 end
 
-function var_0_0.initMailMO(arg_9_0, arg_9_1)
-	local var_9_0 = {}
-	local var_9_1 = MailConfig.instance:getCategoryCO()
+function MailModel:initMailMO(mail)
+	local co = {}
+	local cataCo = MailConfig.instance:getCategoryCO()
 
-	for iter_9_0, iter_9_1 in pairs(var_9_1) do
-		table.insert(var_9_0, iter_9_1)
+	for _, v in pairs(cataCo) do
+		table.insert(co, v)
 	end
 
-	if arg_9_1.mailId ~= 0 then
-		for iter_9_2, iter_9_3 in pairs(var_9_0) do
-			if iter_9_3.id == arg_9_1.mailId then
-				local var_9_2 = MailCategroyMo.New()
+	if mail.mailId ~= 0 then
+		for _, v in pairs(co) do
+			if v.id == mail.mailId then
+				local cateMo = MailCategroyMo.New()
 
-				var_9_2:init(iter_9_3)
+				cateMo:init(v)
 
-				local var_9_3 = string.split(arg_9_1.attachment, "|")
-				local var_9_4 = string.split(iter_9_3.attachment, "|")
+				local infos = string.split(mail.attachment, "|")
+				local configInfos = string.split(v.attachment, "|")
 
-				var_9_2:getItem(var_9_3, var_9_4)
-				var_9_2:getRpc(arg_9_1.state, arg_9_1.createTime, arg_9_1.params, arg_9_1.incrId, iter_9_3.needShowToast, arg_9_1.mailId)
+				cateMo:getItem(infos, configInfos)
+				cateMo:getRpc(mail.state, mail.createTime, mail.params, mail.incrId, v.needShowToast, mail.mailId, mail.isLock)
 
-				if arg_9_1.expireTime ~= nil then
-					var_9_2:getExpireTime(arg_9_1.expireTime)
+				if mail.expireTime ~= nil then
+					cateMo:getExpireTime(mail.expireTime)
 				end
 
-				return var_9_2
+				return cateMo
 			end
 		end
 	else
-		local var_9_5 = MailCategroyMo.New()
+		local cateMo1 = MailCategroyMo.New()
 
-		var_9_5:getMailType1(arg_9_1)
-		var_9_5:getItem(string.split(arg_9_1.attachment, "|"))
+		cateMo1:getMailType1(mail)
+		cateMo1:getItem(string.split(mail.attachment, "|"))
 
-		return var_9_5
+		return cateMo1
 	end
 end
 
-function var_0_0.readMail(arg_10_0, arg_10_1)
-	local var_10_0 = {
-		arg_10_1
+function MailModel:readMail(id)
+	local ids = {
+		id
 	}
 
-	for iter_10_0, iter_10_1 in pairs(arg_10_0._categoryList) do
-		if arg_10_1 == iter_10_1.id then
-			iter_10_1.state = MailEnum.ReadStatus.Read
+	for _, x in pairs(self._categoryList) do
+		if id == x.id then
+			x.state = MailEnum.ReadStatus.Read
 		end
 	end
 
-	arg_10_0._readedMailIds[arg_10_1] = true
+	self._readedMailIds[id] = true
 
-	MailCategroyModel.instance:setCategoryList(arg_10_0._categoryList)
-	MailCategroyModel.instance:refreshCategoryItem(var_10_0)
+	MailCategroyModel.instance:setCategoryList(self._categoryList)
+	MailCategroyModel.instance:refreshCategoryItem(ids)
 end
 
-function var_0_0.readAllMail(arg_11_0, arg_11_1)
-	local var_11_0 = {}
+function MailModel:readAllMail(co)
+	local ids = {}
 
-	for iter_11_0, iter_11_1 in pairs(arg_11_1) do
-		table.insert(var_11_0, tonumber(iter_11_1))
+	for _, v in pairs(co) do
+		table.insert(ids, tonumber(v))
 	end
 
-	if var_11_0 and next(var_11_0) then
-		for iter_11_2, iter_11_3 in pairs(var_11_0) do
-			for iter_11_4, iter_11_5 in pairs(arg_11_0._categoryList) do
-				if iter_11_3 == iter_11_5.id then
-					iter_11_5.state = MailEnum.ReadStatus.Read
+	if ids and next(ids) then
+		for _, v in pairs(ids) do
+			for _, x in pairs(self._categoryList) do
+				if v == x.id then
+					x.state = MailEnum.ReadStatus.Read
 				end
 			end
 
-			arg_11_0._readedMailIds[iter_11_3] = true
+			self._readedMailIds[v] = true
 		end
 	end
 
-	MailCategroyModel.instance:setCategoryList(arg_11_0._categoryList)
-	MailCategroyModel.instance:refreshCategoryItem(var_11_0)
+	MailCategroyModel.instance:setCategoryList(self._categoryList)
+	MailCategroyModel.instance:refreshCategoryItem(ids)
 end
 
-function var_0_0.delMail(arg_12_0, arg_12_1)
-	local var_12_0 = false
+function MailModel:delMail(ids)
+	local delFlag = false
 
-	for iter_12_0, iter_12_1 in pairs(arg_12_1) do
-		for iter_12_2, iter_12_3 in pairs(arg_12_0._categoryList) do
-			if iter_12_1 == iter_12_3.id then
-				table.remove(arg_12_0._categoryList, iter_12_2)
+	for _, v in pairs(ids) do
+		for _, x in pairs(self._categoryList) do
+			if v == x.id then
+				table.remove(self._categoryList, _)
 
-				var_12_0 = true
+				delFlag = true
 
 				break
 			end
 		end
 	end
 
-	if var_12_0 then
-		MailCategroyModel.instance:setCategoryList(arg_12_0._categoryList)
-		MailCategroyModel.instance:refreshCategoryList(arg_12_1)
+	if delFlag then
+		MailCategroyModel.instance:setCategoryList(self._categoryList)
+		MailCategroyModel.instance:refreshCategoryList(ids)
 	end
 end
 
-function var_0_0.getItemList(arg_13_0, arg_13_1)
-	for iter_13_0, iter_13_1 in pairs(arg_13_0._categoryList) do
-		if iter_13_1.id == arg_13_1 then
-			return iter_13_1
+function MailModel:lockMail(id, isLock)
+	for _, mo in pairs(self._categoryList) do
+		if mo.id == id then
+			mo.isLock = isLock
+		end
+	end
+end
+
+function MailModel:getLockCount()
+	local count = 0
+
+	for _, mo in pairs(self._categoryList) do
+		if mo.isLock == true then
+			count = count + 1
+		end
+	end
+
+	return count
+end
+
+function MailModel:getLockMax()
+	return MainEnum.MaxLockCount
+end
+
+function MailModel:getItemList(id)
+	for _, v in pairs(self._categoryList) do
+		if v.id == id then
+			return v
 		end
 	end
 
 	return nil
 end
 
-function var_0_0.getCount(arg_14_0)
-	return #arg_14_0._categoryList
+function MailModel:getCount()
+	return #self._categoryList
 end
 
-function var_0_0.getUnreadCount(arg_15_0)
-	local var_15_0 = 0
+function MailModel:getUnreadCount()
+	local count = 0
 
-	for iter_15_0, iter_15_1 in pairs(arg_15_0._categoryList) do
-		if iter_15_1.state == MailEnum.ReadStatus.Unread then
-			var_15_0 = var_15_0 + 1
+	for _, v in pairs(self._categoryList) do
+		if v.state == MailEnum.ReadStatus.Unread then
+			count = count + 1
 		end
 	end
 
-	return var_15_0
+	return count
 end
 
-function var_0_0.addMailModel(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_0:initMailMO(arg_16_1[1])
+function MailModel:addMailModel(co)
+	local mailMO = self:initMailMO(co[1])
 
-	if not var_16_0 then
+	if not mailMO then
 		return
 	end
 
-	table.insert(arg_16_0._categoryList, 1, var_16_0)
-	arg_16_0:checkExpiredMail()
-	MailCategroyModel.instance:setCategoryList(arg_16_0._categoryList)
+	table.insert(self._categoryList, 1, mailMO)
+	self:checkExpiredMail()
+	MailCategroyModel.instance:setCategoryList(self._categoryList)
 	MailCategroyModel.instance:addMail()
 
-	if var_16_0.mailId ~= 0 and var_16_0.needShowToast == 1 then
-		MailController.instance:showGetMailToast(var_16_0.id, var_16_0.title)
+	if mailMO.mailId ~= 0 and mailMO.needShowToast == 1 then
+		MailController.instance:showGetMailToast(mailMO.id, mailMO.title)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+MailModel.instance = MailModel.New()
 
-return var_0_0
+return MailModel

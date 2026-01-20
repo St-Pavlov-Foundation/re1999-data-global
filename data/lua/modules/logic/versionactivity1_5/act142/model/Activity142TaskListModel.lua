@@ -1,65 +1,67 @@
-﻿module("modules.logic.versionactivity1_5.act142.model.Activity142TaskListModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/act142/model/Activity142TaskListModel.lua
 
-local var_0_0 = class("Activity142TaskListModel", ListScrollModel)
+module("modules.logic.versionactivity1_5.act142.model.Activity142TaskListModel", package.seeall)
 
-local function var_0_1(arg_1_0)
-	if arg_1_0.id == Activity142Enum.TASK_ALL_RECEIVE_ITEM_EMPTY_ID then
+local Activity142TaskListModel = class("Activity142TaskListModel", ListScrollModel)
+
+local function getSortIndex(objA)
+	if objA.id == Activity142Enum.TASK_ALL_RECEIVE_ITEM_EMPTY_ID then
 		return 1
-	elseif arg_1_0:haveRewardToGet() then
+	elseif objA:haveRewardToGet() then
 		return 2
-	elseif arg_1_0:alreadyGotReward() then
+	elseif objA:alreadyGotReward() then
 		return 100
 	end
 
 	return 50
 end
 
-local function var_0_2(arg_2_0, arg_2_1)
-	local var_2_0 = var_0_1(arg_2_0)
-	local var_2_1 = var_0_1(arg_2_1)
+local function sortMO(objA, objB)
+	local sidxA = getSortIndex(objA)
+	local sidxB = getSortIndex(objB)
 
-	if var_2_0 ~= var_2_1 then
-		return var_2_0 < var_2_1
-	elseif arg_2_0.id ~= arg_2_1.id then
-		return arg_2_0.id < arg_2_1.id
+	if sidxA ~= sidxB then
+		return sidxA < sidxB
+	elseif objA.id ~= objB.id then
+		return objA.id < objB.id
 	end
 end
 
-function var_0_0.init(arg_3_0, arg_3_1)
-	local var_3_0 = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Activity142)
-	local var_3_1 = {}
-	local var_3_2 = 0
+function Activity142TaskListModel:init(actId)
+	local taskDict = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Activity142)
+	local list = {}
+	local rewardCount = 0
 
-	if var_3_0 then
-		local var_3_3 = Activity142Config.instance:getTaskByActId(arg_3_1)
+	if taskDict then
+		local act142TaskCfgList = Activity142Config.instance:getTaskByActId(actId)
 
-		for iter_3_0, iter_3_1 in ipairs(var_3_3) do
-			local var_3_4 = var_3_0[iter_3_1.id]
-			local var_3_5 = Activity142TaskMO.New()
+		for _, taskCfg in ipairs(act142TaskCfgList) do
+			local taskMO = taskDict[taskCfg.id]
+			local act142TaskMO = Activity142TaskMO.New()
 
-			var_3_5:init(iter_3_1, var_3_4)
+			act142TaskMO:init(taskCfg, taskMO)
 
-			if var_3_5:haveRewardToGet() then
-				var_3_2 = var_3_2 + 1
+			if act142TaskMO:haveRewardToGet() then
+				rewardCount = rewardCount + 1
 			end
 
-			table.insert(var_3_1, var_3_5)
+			table.insert(list, act142TaskMO)
 		end
 	end
 
-	if var_3_2 > 1 then
-		local var_3_6 = Activity142TaskMO.New()
+	if rewardCount > 1 then
+		local allMO = Activity142TaskMO.New()
 
-		var_3_6.id = Activity142Enum.TASK_ALL_RECEIVE_ITEM_EMPTY_ID
-		var_3_6.activityId = arg_3_1
+		allMO.id = Activity142Enum.TASK_ALL_RECEIVE_ITEM_EMPTY_ID
+		allMO.activityId = actId
 
-		table.insert(var_3_1, var_3_6)
+		table.insert(list, allMO)
 	end
 
-	table.sort(var_3_1, var_0_2)
-	arg_3_0:setList(var_3_1)
+	table.sort(list, sortMO)
+	self:setList(list)
 end
 
-var_0_0.instance = var_0_0.New()
+Activity142TaskListModel.instance = Activity142TaskListModel.New()
 
-return var_0_0
+return Activity142TaskListModel

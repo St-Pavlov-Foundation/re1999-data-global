@@ -1,22 +1,24 @@
-﻿module("modules.logic.gm.view.GM_VersionActivity1_8EnterView", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GM_VersionActivity1_8EnterView.lua
 
-local var_0_0 = class("GM_VersionActivity1_8EnterView", GM_VersionActivity_EnterView)
+module("modules.logic.gm.view.GM_VersionActivity1_8EnterView", package.seeall)
 
-function var_0_0.register()
-	var_0_0.VersionActivityX_XEnterView(VersionActivity1_8EnterView)
+local GM_VersionActivity1_8EnterView = class("GM_VersionActivity1_8EnterView", GM_VersionActivity_EnterView)
+
+function GM_VersionActivity1_8EnterView.register()
+	GM_VersionActivity1_8EnterView.VersionActivityX_XEnterView(VersionActivity1_8EnterView)
 	GM_VersionActivity_EnterView.VersionActivityX_XEnterViewTabItemBase_register(VersionActivity1_8EnterViewTabItem2)
 end
 
-function var_0_0.VersionActivityX_XEnterView(arg_2_0)
-	GM_VersionActivity_EnterView.VersionActivityX_XEnterView(arg_2_0)
+function GM_VersionActivity1_8EnterView.VersionActivityX_XEnterView(T)
+	GM_VersionActivity_EnterView.VersionActivityX_XEnterView(T)
 
-	function arg_2_0._gm_showAllTabIdUpdate(arg_3_0)
-		arg_3_0:refreshUI()
+	function T._gm_showAllTabIdUpdate(SelfObj)
+		SelfObj:refreshUI()
 
-		for iter_3_0, iter_3_1 in ipairs(arg_3_0.activityTabItemList or {}) do
-			iter_3_1:afterSetData()
+		for _, tabItem in ipairs(SelfObj.activityTabItemList or {}) do
+			tabItem:afterSetData()
 		end
 	end
 end
 
-return var_0_0
+return GM_VersionActivity1_8EnterView

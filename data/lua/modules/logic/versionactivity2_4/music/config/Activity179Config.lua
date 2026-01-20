@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity2_4.music.config.Activity179Config", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/music/config/Activity179Config.lua
 
-local var_0_0 = class("Activity179Config", BaseConfig)
+module("modules.logic.versionactivity2_4.music.config.Activity179Config", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local Activity179Config = class("Activity179Config", BaseConfig)
+
+function Activity179Config:reqConfigNames()
 	return {
 		"activity179_episode",
 		"activity179_beat",
@@ -15,117 +17,117 @@ function var_0_0.reqConfigNames(arg_1_0)
 	}
 end
 
-function var_0_0.onInit(arg_2_0)
+function Activity179Config:onInit()
 	return
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity179_episode" then
-		arg_3_0._episodeConfig = arg_3_2
-		arg_3_0._episodeDict = {}
+function Activity179Config:onConfigLoaded(configName, configTable)
+	if configName == "activity179_episode" then
+		self._episodeConfig = configTable
+		self._episodeDict = {}
 
-		for iter_3_0, iter_3_1 in ipairs(arg_3_0._episodeConfig.configList) do
-			arg_3_0._episodeDict[iter_3_1.activityId] = arg_3_0._episodeDict[iter_3_1.activityId] or {}
+		for _, v in ipairs(self._episodeConfig.configList) do
+			self._episodeDict[v.activityId] = self._episodeDict[v.activityId] or {}
 
-			table.insert(arg_3_0._episodeDict[iter_3_1.activityId], iter_3_1)
+			table.insert(self._episodeDict[v.activityId], v)
 
-			if iter_3_1.episodeType == VersionActivity2_4MusicEnum.EpisodeType.Free then
-				arg_3_0._freeEpisodeId = iter_3_1.id
+			if v.episodeType == VersionActivity2_4MusicEnum.EpisodeType.Free then
+				self._freeEpisodeId = v.id
 			end
 		end
 
 		return
 	end
 
-	if arg_3_1 == "activity179_instrument" then
-		arg_3_0._instrumentSwitchList = {}
-		arg_3_0._instrumentNoSwitchList = {}
+	if configName == "activity179_instrument" then
+		self._instrumentSwitchList = {}
+		self._instrumentNoSwitchList = {}
 
-		for iter_3_2, iter_3_3 in ipairs(lua_activity179_instrument.configList) do
-			if iter_3_3.switch == 1 then
-				table.insert(arg_3_0._instrumentSwitchList, iter_3_3)
+		for i, v in ipairs(lua_activity179_instrument.configList) do
+			if v.switch == 1 then
+				table.insert(self._instrumentSwitchList, v)
 			else
-				table.insert(arg_3_0._instrumentNoSwitchList, iter_3_3)
+				table.insert(self._instrumentNoSwitchList, v)
 			end
 		end
 
 		return
 	end
 
-	if arg_3_1 == "activity179_tone" then
-		arg_3_0._noteDict = {}
-		arg_3_0._noteInstrumentList = {}
+	if configName == "activity179_tone" then
+		self._noteDict = {}
+		self._noteInstrumentList = {}
 
-		for iter_3_4, iter_3_5 in ipairs(lua_activity179_tone.configList) do
-			local var_3_0 = arg_3_0._noteInstrumentList[iter_3_5.instrument] or {}
+		for i, v in ipairs(lua_activity179_tone.configList) do
+			local list = self._noteInstrumentList[v.instrument] or {}
 
-			arg_3_0._noteInstrumentList[iter_3_5.instrument] = var_3_0
+			self._noteInstrumentList[v.instrument] = list
 
-			table.insert(var_3_0, iter_3_5)
+			table.insert(list, v)
 
-			local var_3_1 = arg_3_0._noteDict[iter_3_5.instrument] or {}
+			local indexMap = self._noteDict[v.instrument] or {}
 
-			arg_3_0._noteDict[iter_3_5.instrument] = var_3_1
-			var_3_1[#var_3_0] = iter_3_5
+			self._noteDict[v.instrument] = indexMap
+			indexMap[#list] = v
 		end
 
 		return
 	end
 
-	if arg_3_1 == "activity179_combo" then
-		arg_3_0._comboDict = {}
+	if configName == "activity179_combo" then
+		self._comboDict = {}
 
-		for iter_3_6, iter_3_7 in ipairs(lua_activity179_combo.configList) do
-			local var_3_2 = arg_3_0._comboDict[iter_3_7.episodeId] or {}
+		for i, v in ipairs(lua_activity179_combo.configList) do
+			local list = self._comboDict[v.episodeId] or {}
 
-			arg_3_0._comboDict[iter_3_7.episodeId] = var_3_2
+			self._comboDict[v.episodeId] = list
 
-			table.insert(var_3_2, iter_3_7)
+			table.insert(list, v)
 		end
 
 		return
 	end
 end
 
-function var_0_0.getFreeEpisodeId(arg_4_0)
-	return arg_4_0._freeEpisodeId
+function Activity179Config:getFreeEpisodeId()
+	return self._freeEpisodeId
 end
 
-function var_0_0.getComboList(arg_5_0, arg_5_1)
-	return arg_5_0._comboDict[arg_5_1]
+function Activity179Config:getComboList(episodeId)
+	return self._comboDict[episodeId]
 end
 
-function var_0_0.getNoteConfig(arg_6_0, arg_6_1, arg_6_2)
-	return arg_6_0._noteDict[arg_6_1][arg_6_2]
+function Activity179Config:getNoteConfig(instrument, index)
+	return self._noteDict[instrument][index]
 end
 
-function var_0_0.getInstrumentSwitchList(arg_7_0)
-	return arg_7_0._instrumentSwitchList
+function Activity179Config:getInstrumentSwitchList()
+	return self._instrumentSwitchList
 end
 
-function var_0_0.getInstrumentNoSwitchList(arg_8_0)
-	return arg_8_0._instrumentNoSwitchList
+function Activity179Config:getInstrumentNoSwitchList()
+	return self._instrumentNoSwitchList
 end
 
-function var_0_0.getEpisodeCfgList(arg_9_0, arg_9_1)
-	return arg_9_0._episodeDict[arg_9_1] or {}
+function Activity179Config:getEpisodeCfgList(activityId)
+	return self._episodeDict[activityId] or {}
 end
 
-function var_0_0.getConstValue(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = lua_activity179_const.configDict[arg_10_1]
-	local var_10_1 = var_10_0 and var_10_0[arg_10_2]
+function Activity179Config:getConstValue(activityId, id)
+	local dict = lua_activity179_const.configDict[activityId]
+	local config = dict and dict[id]
 
-	return var_10_1.value1, var_10_1.value2
+	return config.value1, config.value2
 end
 
-function var_0_0.getEpisodeConfig(arg_11_0, arg_11_1)
-	return lua_activity179_episode.configDict[Activity179Model.instance:getActivityId()][arg_11_1]
+function Activity179Config:getEpisodeConfig(episodeId)
+	return lua_activity179_episode.configDict[Activity179Model.instance:getActivityId()][episodeId]
 end
 
-function var_0_0.getBeatConfig(arg_12_0, arg_12_1)
-	return lua_activity179_beat.configDict[Activity179Model.instance:getActivityId()][arg_12_1]
+function Activity179Config:getBeatConfig(id)
+	return lua_activity179_beat.configDict[Activity179Model.instance:getActivityId()][id]
 end
 
-var_0_0.instance = var_0_0.New()
+Activity179Config.instance = Activity179Config.New()
 
-return var_0_0
+return Activity179Config

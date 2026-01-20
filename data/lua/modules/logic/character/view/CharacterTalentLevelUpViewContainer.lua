@@ -1,8 +1,10 @@
-﻿module("modules.logic.character.view.CharacterTalentLevelUpViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterTalentLevelUpViewContainer.lua
 
-local var_0_0 = class("CharacterTalentLevelUpViewContainer", BaseViewContainer)
+module("modules.logic.character.view.CharacterTalentLevelUpViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local CharacterTalentLevelUpViewContainer = class("CharacterTalentLevelUpViewContainer", BaseViewContainer)
+
+function CharacterTalentLevelUpViewContainer:buildViews()
 	return {
 		TabViewGroup.New(1, "#go_lefttop"),
 		TabViewGroup.New(2, "#go_righttop"),
@@ -10,39 +12,39 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._navigateButtonView = NavigateButtonsView.New({
+function CharacterTalentLevelUpViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			true
 		}, HelpEnum.HelpId.Talent)
 
 		return {
-			arg_2_0._navigateButtonView
+			self._navigateButtonView
 		}
-	elseif arg_2_1 == 2 then
-		local var_2_0 = CurrencyEnum.CurrencyType
-		local var_2_1 = {
-			var_2_0.Gold
+	elseif tabContainerId == 2 then
+		local currencyType = CurrencyEnum.CurrencyType
+		local currencyParam = {
+			currencyType.Gold
 		}
 
 		return {
-			CurrencyView.New(var_2_1)
+			CurrencyView.New(currencyParam)
 		}
 	end
 end
 
-function var_0_0.playOpenTransition(arg_3_0)
-	arg_3_0:onPlayOpenTransitionFinish()
+function CharacterTalentLevelUpViewContainer:playOpenTransition()
+	self:onPlayOpenTransitionFinish()
 end
 
-function var_0_0.playCloseTransition(arg_4_0)
+function CharacterTalentLevelUpViewContainer:playCloseTransition()
 	AudioMgr.instance:trigger(AudioEnum.Talent.play_ui_resonate_open)
-	var_0_0.super.playCloseTransition(arg_4_0, {
+	CharacterTalentLevelUpViewContainer.super.playCloseTransition(self, {
 		anim = "charactertalentlevelup_out"
 	})
-	CharacterController.instance:dispatchEvent(CharacterEvent.playTalentViewBackAni, arg_4_0._head_close_ani1 or "2_1", arg_4_0._head_close_ani1 and true or false, arg_4_0._head_close_ani2 or "ani_2_1", true)
+	CharacterController.instance:dispatchEvent(CharacterEvent.playTalentViewBackAni, self._head_close_ani1 or "2_1", self._head_close_ani1 and true or false, self._head_close_ani2 or "ani_2_1", true)
 end
 
-return var_0_0
+return CharacterTalentLevelUpViewContainer

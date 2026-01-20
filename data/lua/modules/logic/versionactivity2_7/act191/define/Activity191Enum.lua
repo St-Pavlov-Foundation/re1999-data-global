@@ -1,9 +1,11 @@
-﻿module("modules.logic.versionactivity2_7.act191.define.Activity191Enum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/act191/define/Activity191Enum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity2_7.act191.define.Activity191Enum", package.seeall)
 
-var_0_0.MaxItemLevel = 4
-var_0_0.NodeType = {
+local Activity191Enum = _M
+
+Activity191Enum.MaxItemLevel = 4
+Activity191Enum.NodeType = {
 	PlayerBattle8 = 27,
 	MonsterBattle3 = 10,
 	MonsterBattle8 = 22,
@@ -38,21 +40,21 @@ var_0_0.NodeType = {
 	PlayerBattle9 = 28,
 	TagShop = 4
 }
-var_0_0.NodeType2Key = {
-	[var_0_0.NodeType.PlayerBattle1] = "playerBattle1",
-	[var_0_0.NodeType.PlayerBattle2] = "playerBattle2",
-	[var_0_0.NodeType.PlayerBattle3] = "playerBattle3",
-	[var_0_0.NodeType.PlayerBattle4] = "playerBattle4",
-	[var_0_0.NodeType.PlayerBattle5] = "playerBattle5",
-	[var_0_0.NodeType.PlayerBattle6] = "playerBattle6",
-	[var_0_0.NodeType.PlayerBattle7] = "playerBattle7",
-	[var_0_0.NodeType.PlayerBattle8] = "playerBattle8",
-	[var_0_0.NodeType.PlayerBattle9] = "playerBattle9",
-	[var_0_0.NodeType.PlayerBattle10] = "playerBattle10",
-	[var_0_0.NodeType.PlayerBattle11] = "playerBattle11",
-	[var_0_0.NodeType.PlayerBattle12] = "playerBattle12"
+Activity191Enum.NodeType2Key = {
+	[Activity191Enum.NodeType.PlayerBattle1] = "playerBattle1",
+	[Activity191Enum.NodeType.PlayerBattle2] = "playerBattle2",
+	[Activity191Enum.NodeType.PlayerBattle3] = "playerBattle3",
+	[Activity191Enum.NodeType.PlayerBattle4] = "playerBattle4",
+	[Activity191Enum.NodeType.PlayerBattle5] = "playerBattle5",
+	[Activity191Enum.NodeType.PlayerBattle6] = "playerBattle6",
+	[Activity191Enum.NodeType.PlayerBattle7] = "playerBattle7",
+	[Activity191Enum.NodeType.PlayerBattle8] = "playerBattle8",
+	[Activity191Enum.NodeType.PlayerBattle9] = "playerBattle9",
+	[Activity191Enum.NodeType.PlayerBattle10] = "playerBattle10",
+	[Activity191Enum.NodeType.PlayerBattle11] = "playerBattle11",
+	[Activity191Enum.NodeType.PlayerBattle12] = "playerBattle12"
 }
-var_0_0.EffectType = {
+Activity191Enum.EffectType = {
 	ItemByItem = 7,
 	CountEffects = 11,
 	DelayEffect = 10,
@@ -67,7 +69,7 @@ var_0_0.EffectType = {
 	HeroByHero = 4,
 	Hero = 2
 }
-var_0_0.PveFiled = {
+Activity191Enum.PveFiled = {
 	8,
 	9,
 	10,
@@ -81,7 +83,7 @@ var_0_0.PveFiled = {
 	25,
 	26
 }
-var_0_0.PvpFiled = {
+Activity191Enum.PvpFiled = {
 	11,
 	12,
 	13,
@@ -95,22 +97,22 @@ var_0_0.PvpFiled = {
 	30,
 	31
 }
-var_0_0.TagShopField = {
+Activity191Enum.TagShopField = {
 	4
 }
-var_0_0.AttrIdList = {
+Activity191Enum.AttrIdList = {
 	CharacterEnum.AttrId.Attack,
 	CharacterEnum.AttrId.Defense,
 	CharacterEnum.AttrId.Technic,
 	CharacterEnum.AttrId.Hp,
 	CharacterEnum.AttrId.Mdefense
 }
-var_0_0.GameState = {
+Activity191Enum.GameState = {
 	Normal = 1,
 	End = -1,
 	None = 0
 }
-var_0_0.ConstKey = {
+Activity191Enum.ConstKey = {
 	EnhanceTitle = 8,
 	CollectionTag = 11,
 	PvpEpisodeName = 18,
@@ -134,28 +136,28 @@ var_0_0.ConstKey = {
 	UpgradeMaxCnt = 39,
 	UpgradeTag = 41
 }
-var_0_0.CharacterType = {
+Activity191Enum.CharacterType = {
 	Monster = "monster",
 	Hero = "hero"
 }
-var_0_0.CollectionColor = {
+Activity191Enum.CollectionColor = {
 	"587FA1",
 	"8D6993",
 	"B8945F",
 	"BD5900"
 }
-var_0_0.CharacterMaxStar = 6
-var_0_0.SortRule = {
+Activity191Enum.CharacterMaxStar = 6
+Activity191Enum.SortRule = {
 	Down = 2,
 	Up = 1
 }
-var_0_0.HyperLinkPattern = {
+Activity191Enum.HyperLinkPattern = {
 	EnhanceDestiny = "「(.-)」",
 	Hero = "《(.-)》",
 	SkillDesc = "﹝(.-)﹞",
 	EnhanceItem = "『(.-)』"
 }
-var_0_0.PrefabPath = {
+Activity191Enum.PrefabPath = {
 	HeroHeadItem = "ui/viewres/versionactivity_2_7/act191/item/act191heroheaditem.prefab",
 	FetterItem = "ui/viewres/versionactivity_2_7/act191/item/act191fetteritem.prefab",
 	CollectionItem = "ui/viewres/versionactivity_2_7/act191/item/act191collectionitem.prefab",
@@ -165,14 +167,14 @@ var_0_0.PrefabPath = {
 	TeamComp = "ui/viewres/versionactivity_2_7/act191/item/act191teamitem.prefab",
 	RewardItem = "ui/viewres/versionactivity_2_7/act191/item/act191rewarditem.prefab"
 }
-var_0_0.InitBuildType = {
+Activity191Enum.InitBuildType = {
 	Random = 2,
 	Extra = 3,
 	Normal = 1
 }
-var_0_0.SummonType = {
+Activity191Enum.SummonType = {
 	Monster = 2,
 	Boss = 1
 }
 
-return var_0_0
+return Activity191Enum

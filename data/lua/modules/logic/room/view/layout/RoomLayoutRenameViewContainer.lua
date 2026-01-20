@@ -1,13 +1,15 @@
-﻿module("modules.logic.room.view.layout.RoomLayoutRenameViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/layout/RoomLayoutRenameViewContainer.lua
 
-local var_0_0 = class("RoomLayoutRenameViewContainer", BaseViewContainer)
+module("modules.logic.room.view.layout.RoomLayoutRenameViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoomLayoutRenameViewContainer = class("RoomLayoutRenameViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RoomLayoutRenameView.New())
+function RoomLayoutRenameViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RoomLayoutRenameView.New())
+
+	return views
 end
 
-return var_0_0
+return RoomLayoutRenameViewContainer

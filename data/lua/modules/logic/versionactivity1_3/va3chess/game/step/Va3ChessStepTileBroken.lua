@@ -1,50 +1,51 @@
-﻿module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepTileBroken", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/va3chess/game/step/Va3ChessStepTileBroken.lua
 
-local var_0_0 = class("Va3ChessStepTileBroken", Va3ChessStepBase)
+module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepTileBroken", package.seeall)
 
-function var_0_0.start(arg_1_0)
-	arg_1_0:processNextTileStatus()
+local Va3ChessStepTileBroken = class("Va3ChessStepTileBroken", Va3ChessStepBase)
+
+function Va3ChessStepTileBroken:start()
+	self:processNextTileStatus()
 end
 
-function var_0_0.processNextTileStatus(arg_2_0)
-	local var_2_0 = arg_2_0.originData.x
-	local var_2_1 = arg_2_0.originData.y
-	local var_2_2 = Va3ChessGameModel.instance:getTileMO(var_2_0, var_2_1)
-	local var_2_3 = Va3ChessEnum.TileTrigger.Broken
+function Va3ChessStepTileBroken:processNextTileStatus()
+	local x, y = self.originData.x, self.originData.y
+	local tileMO = Va3ChessGameModel.instance:getTileMO(x, y)
+	local brokenTriggerType = Va3ChessEnum.TileTrigger.Broken
 
-	if var_2_2 and var_2_2:isHasTrigger(var_2_3) then
-		local var_2_4
-		local var_2_5 = Va3ChessEnum.TriggerStatus[var_2_3]
+	if tileMO and tileMO:isHasTrigger(brokenTriggerType) then
+		local status
+		local brokenTriggerTypeStatus = Va3ChessEnum.TriggerStatus[brokenTriggerType]
 
-		if arg_2_0.originData.stepType == Va3ChessEnum.Act142StepType.TileFragile then
-			var_2_4 = var_2_5.Fragile
-		elseif arg_2_0.originData.stepType == Va3ChessEnum.Act142StepType.TileBroken then
-			var_2_4 = var_2_5.Broken
+		if self.originData.stepType == Va3ChessEnum.Act142StepType.TileFragile then
+			status = brokenTriggerTypeStatus.Fragile
+		elseif self.originData.stepType == Va3ChessEnum.Act142StepType.TileBroken then
+			status = brokenTriggerTypeStatus.Broken
 
-			var_2_2:addFinishTrigger(var_2_3)
+			tileMO:addFinishTrigger(brokenTriggerType)
 		end
 
-		var_2_2:updateTrigger(var_2_3, var_2_4)
-		Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.TileTriggerUpdate, var_2_0, var_2_1, var_2_3)
-		TaskDispatcher.cancelTask(arg_2_0._onDelayFinish, arg_2_0)
-		TaskDispatcher.runDelay(arg_2_0._onDelayFinish, arg_2_0, 0.2)
+		tileMO:updateTrigger(brokenTriggerType, status)
+		Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.TileTriggerUpdate, x, y, brokenTriggerType)
+		TaskDispatcher.cancelTask(self._onDelayFinish, self)
+		TaskDispatcher.runDelay(self._onDelayFinish, self, 0.2)
 	else
-		arg_2_0:_onDelayFinish()
+		self:_onDelayFinish()
 	end
 end
 
-function var_0_0._onDelayFinish(arg_3_0)
-	arg_3_0:finish()
+function Va3ChessStepTileBroken:_onDelayFinish()
+	self:finish()
 end
 
-function var_0_0.finish(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._onDelayFinish, arg_4_0)
-	var_0_0.super.finish(arg_4_0)
+function Va3ChessStepTileBroken:finish()
+	TaskDispatcher.cancelTask(self._onDelayFinish, self)
+	Va3ChessStepTileBroken.super.finish(self)
 end
 
-function var_0_0.dispose(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0._onDelayFinish, arg_5_0)
-	var_0_0.super.dispose(arg_5_0)
+function Va3ChessStepTileBroken:dispose()
+	TaskDispatcher.cancelTask(self._onDelayFinish, self)
+	Va3ChessStepTileBroken.super.dispose(self)
 end
 
-return var_0_0
+return Va3ChessStepTileBroken

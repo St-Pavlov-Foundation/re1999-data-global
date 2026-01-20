@@ -1,24 +1,26 @@
-﻿module("modules.logic.turnback.view.new.view.TurnbackDoubleRewardChargeViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/turnback/view/new/view/TurnbackDoubleRewardChargeViewContainer.lua
 
-local var_0_0 = class("TurnbackDoubleRewardChargeViewContainer", BaseViewContainer)
+module("modules.logic.turnback.view.new.view.TurnbackDoubleRewardChargeViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local TurnbackDoubleRewardChargeViewContainer = class("TurnbackDoubleRewardChargeViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, TurnbackDoubleRewardChargeView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topright"))
+function TurnbackDoubleRewardChargeViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, TurnbackDoubleRewardChargeView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_topright"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._currencyView = CurrencyView.New({})
+function TurnbackDoubleRewardChargeViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._currencyView = CurrencyView.New({})
 
 		return {
-			arg_2_0._currencyView
+			self._currencyView
 		}
 	end
 end
 
-return var_0_0
+return TurnbackDoubleRewardChargeViewContainer

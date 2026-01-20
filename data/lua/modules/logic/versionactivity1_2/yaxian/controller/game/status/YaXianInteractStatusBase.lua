@@ -1,241 +1,247 @@
-﻿module("modules.logic.versionactivity1_2.yaxian.controller.game.status.YaXianInteractStatusBase", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/yaxian/controller/game/status/YaXianInteractStatusBase.lua
 
-local var_0_0 = class("YaXianInteractStatusBase", UserDataDispose)
+module("modules.logic.versionactivity1_2.yaxian.controller.game.status.YaXianInteractStatusBase", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0:__onInit()
+local YaXianInteractStatusBase = class("YaXianInteractStatusBase", UserDataDispose)
+
+function YaXianInteractStatusBase:ctor()
+	self:__onInit()
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.interactItem = arg_2_1
-	arg_2_0.interactMo = arg_2_1.interactMo
-	arg_2_0.iconGoContainer = arg_2_1.iconGoContainer
-	arg_2_0.config = arg_2_0.interactMo.config
+function YaXianInteractStatusBase:init(interactItem)
+	self.interactItem = interactItem
+	self.interactMo = interactItem.interactMo
+	self.iconGoContainer = interactItem.iconGoContainer
+	self.config = self.interactMo.config
 
-	arg_2_0:addEventCb(YaXianGameController.instance, YaXianEvent.OnUpdateEffectInfo, arg_2_0.onUpdateEffectInfo, arg_2_0)
-	arg_2_0:addEventCb(YaXianGameController.instance, YaXianEvent.RefreshInteractStatus, arg_2_0.refreshStatus, arg_2_0)
+	self:addEventCb(YaXianGameController.instance, YaXianEvent.OnUpdateEffectInfo, self.onUpdateEffectInfo, self)
+	self:addEventCb(YaXianGameController.instance, YaXianEvent.RefreshInteractStatus, self.refreshStatus, self)
 end
 
-function var_0_0.onUpdateEffectInfo(arg_3_0)
-	arg_3_0:refreshStatus(arg_3_0.isShow)
+function YaXianInteractStatusBase:onUpdateEffectInfo()
+	self:refreshStatus(self.isShow)
 end
 
-function var_0_0.refreshStatus(arg_4_0, arg_4_1)
-	arg_4_0:stopLoopSwitchAnimation()
+function YaXianInteractStatusBase:refreshStatus(isShow)
+	self:stopLoopSwitchAnimation()
 
-	arg_4_0.isShow = arg_4_1
+	self.isShow = isShow
 
-	if not arg_4_1 then
-		gohelper.setActive(arg_4_0.iconGo, false)
+	if not isShow then
+		gohelper.setActive(self.iconGo, false)
 
 		return
 	end
 
-	if not arg_4_0.iconGo then
-		arg_4_0:loadIconPrefab()
+	if not self.iconGo then
+		self:loadIconPrefab()
 
 		return
 	end
 
 	if not YaXianGameController.instance:isSelectingPlayer() then
-		gohelper.setActive(arg_4_0.iconGo, false)
+		gohelper.setActive(self.iconGo, false)
 
 		return
 	end
 
-	arg_4_0:updateStatus()
+	self:updateStatus()
 
-	local var_4_0 = arg_4_0:hasStatus()
+	local hasStatus = self:hasStatus()
 
-	gohelper.setActive(arg_4_0.iconGo, var_4_0)
+	gohelper.setActive(self.iconGo, hasStatus)
 
-	if var_4_0 then
-		arg_4_0:startStatusAnimation()
+	if hasStatus then
+		self:startStatusAnimation()
 	end
 end
 
-function var_0_0.updateStatus(arg_5_0)
-	arg_5_0.statusDict = {}
+function YaXianInteractStatusBase:updateStatus()
+	self.statusDict = {}
 end
 
-function var_0_0.addStatus(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = arg_6_0.statusDict[arg_6_1]
+function YaXianInteractStatusBase:addStatus(status, direction)
+	local statusMo = self.statusDict[status]
 
-	if not var_6_0 then
-		var_6_0 = YaXianGameController.instance:getInteractStatusPool():getObject()
-		arg_6_0.statusDict[arg_6_1] = var_6_0
+	if not statusMo then
+		local statusPool = YaXianGameController.instance:getInteractStatusPool()
+
+		statusMo = statusPool:getObject()
+		self.statusDict[status] = statusMo
 	end
 
-	var_6_0:addStatus(arg_6_1, arg_6_2)
+	statusMo:addStatus(status, direction)
 end
 
-function var_0_0.hasStatus(arg_7_0)
-	return arg_7_0.statusDict and next(arg_7_0.statusDict)
+function YaXianInteractStatusBase:hasStatus()
+	return self.statusDict and next(self.statusDict)
 end
 
-function var_0_0.loadIconPrefab(arg_8_0)
-	if arg_8_0.iconLoader then
+function YaXianInteractStatusBase:loadIconPrefab()
+	if self.iconLoader then
 		return
 	end
 
-	arg_8_0.iconLoader = PrefabInstantiate.Create(arg_8_0.iconGoContainer)
+	self.iconLoader = PrefabInstantiate.Create(self.iconGoContainer)
 
-	arg_8_0.iconLoader:startLoad(YaXianGameEnum.SceneResPath.MonsterStatus, arg_8_0.onIconLoadCallback, arg_8_0)
+	self.iconLoader:startLoad(YaXianGameEnum.SceneResPath.MonsterStatus, self.onIconLoadCallback, self)
 end
 
-function var_0_0.onIconLoadCallback(arg_9_0)
-	arg_9_0.iconGo = arg_9_0.iconLoader:getInstGO()
-	arg_9_0.statusGoDict = arg_9_0:getUserDataTb_()
-	arg_9_0.statusGoDict[YaXianGameEnum.IconStatus.Assassinate] = gohelper.findChild(arg_9_0.iconGo, "ansha")
-	arg_9_0.statusGoDict[YaXianGameEnum.IconStatus.Fight] = gohelper.findChild(arg_9_0.iconGo, "zhandou")
-	arg_9_0.statusGoDict[YaXianGameEnum.IconStatus.InVisible] = gohelper.findChild(arg_9_0.iconGo, "yingsheng")
-	arg_9_0.statusGoDict[YaXianGameEnum.IconStatus.ThroughWall] = gohelper.findChild(arg_9_0.iconGo, "chuanqiang")
-	arg_9_0.statusGoDict[YaXianGameEnum.IconStatus.PlayerAssassinate] = gohelper.findChild(arg_9_0.iconGo, "dead")
-	arg_9_0.statusAnimatorDict = arg_9_0:getUserDataTb_()
-	arg_9_0.statusDirectionDict = {}
+function YaXianInteractStatusBase:onIconLoadCallback()
+	self.iconGo = self.iconLoader:getInstGO()
+	self.statusGoDict = self:getUserDataTb_()
+	self.statusGoDict[YaXianGameEnum.IconStatus.Assassinate] = gohelper.findChild(self.iconGo, "ansha")
+	self.statusGoDict[YaXianGameEnum.IconStatus.Fight] = gohelper.findChild(self.iconGo, "zhandou")
+	self.statusGoDict[YaXianGameEnum.IconStatus.InVisible] = gohelper.findChild(self.iconGo, "yingsheng")
+	self.statusGoDict[YaXianGameEnum.IconStatus.ThroughWall] = gohelper.findChild(self.iconGo, "chuanqiang")
+	self.statusGoDict[YaXianGameEnum.IconStatus.PlayerAssassinate] = gohelper.findChild(self.iconGo, "dead")
+	self.statusAnimatorDict = self:getUserDataTb_()
+	self.statusDirectionDict = {}
 
-	for iter_9_0, iter_9_1 in pairs(arg_9_0.statusGoDict) do
-		arg_9_0.statusAnimatorDict[iter_9_0] = iter_9_1:GetComponent(typeof(UnityEngine.Animator))
+	for status, go in pairs(self.statusGoDict) do
+		self.statusAnimatorDict[status] = go:GetComponent(typeof(UnityEngine.Animator))
 
-		if YaXianGameEnum.DirectionIcon[iter_9_0] then
-			arg_9_0.statusDirectionDict[iter_9_0] = arg_9_0:getUserDataTb_()
+		if YaXianGameEnum.DirectionIcon[status] then
+			self.statusDirectionDict[status] = self:getUserDataTb_()
 
-			for iter_9_2, iter_9_3 in pairs(YaXianGameEnum.MoveDirection) do
-				arg_9_0.statusDirectionDict[iter_9_0][iter_9_3] = gohelper.findChild(iter_9_1, YaXianGameEnum.DirectionName[iter_9_3])
+			for _, direction in pairs(YaXianGameEnum.MoveDirection) do
+				self.statusDirectionDict[status][direction] = gohelper.findChild(go, YaXianGameEnum.DirectionName[direction])
 			end
 		end
 	end
 
-	arg_9_0:refreshStatus(arg_9_0.isShow)
+	self:refreshStatus(self.isShow)
 end
 
-function var_0_0.startStatusAnimation(arg_10_0)
-	if not arg_10_0.statusDict then
-		gohelper.setActive(arg_10_0.iconGo, false)
+function YaXianInteractStatusBase:startStatusAnimation()
+	if not self.statusDict then
+		gohelper.setActive(self.iconGo, false)
 
 		return
 	end
 
-	arg_10_0.statusLen = tabletool.len(arg_10_0.statusDict)
+	self.statusLen = tabletool.len(self.statusDict)
 
-	if arg_10_0.statusLen <= 0 then
-		gohelper.setActive(arg_10_0.iconGo, false)
+	if self.statusLen <= 0 then
+		gohelper.setActive(self.iconGo, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_10_0.iconGo, true)
+	gohelper.setActive(self.iconGo, true)
 
-	if arg_10_0.statusLen == 1 then
-		for iter_10_0, iter_10_1 in pairs(arg_10_0.statusDict) do
-			arg_10_0:showOneStatusIcon(iter_10_0)
+	if self.statusLen == 1 then
+		for status, _ in pairs(self.statusDict) do
+			self:showOneStatusIcon(status)
 		end
 
 		return
 	end
 
-	arg_10_0.statusList = {}
+	self.statusList = {}
 
-	for iter_10_2, iter_10_3 in pairs(arg_10_0.statusDict) do
-		table.insert(arg_10_0.statusList, iter_10_2)
+	for status, _ in pairs(self.statusDict) do
+		table.insert(self.statusList, status)
 	end
 
-	arg_10_0.currentShowStatusIndex = 0
+	self.currentShowStatusIndex = 0
 
-	arg_10_0:startLoopSwitchAnimation()
+	self:startLoopSwitchAnimation()
 end
 
-function var_0_0.showOneStatusIcon(arg_11_0, arg_11_1)
-	for iter_11_0, iter_11_1 in pairs(arg_11_0.statusGoDict) do
-		gohelper.setActive(iter_11_1, false)
+function YaXianInteractStatusBase:showOneStatusIcon(showStatus)
+	for _, go in pairs(self.statusGoDict) do
+		gohelper.setActive(go, false)
 	end
 
-	gohelper.setActive(arg_11_0.statusGoDict[arg_11_1], true)
+	gohelper.setActive(self.statusGoDict[showStatus], true)
 
-	if YaXianGameEnum.DirectionIcon[arg_11_1] then
-		local var_11_0 = arg_11_0.statusDict[arg_11_1]
+	if YaXianGameEnum.DirectionIcon[showStatus] then
+		local statusMo = self.statusDict[showStatus]
 
-		for iter_11_2, iter_11_3 in pairs(arg_11_0.statusDirectionDict[arg_11_1]) do
-			gohelper.setActive(iter_11_3, false)
+		for _, directGo in pairs(self.statusDirectionDict[showStatus]) do
+			gohelper.setActive(directGo, false)
 		end
 
-		if var_11_0.directionList then
-			for iter_11_4, iter_11_5 in pairs(var_11_0.directionList) do
-				gohelper.setActive(arg_11_0.statusDirectionDict[arg_11_1][iter_11_5], true)
+		if statusMo.directionList then
+			for _, direction in pairs(statusMo.directionList) do
+				gohelper.setActive(self.statusDirectionDict[showStatus][direction], true)
 			end
 		end
 	end
 end
 
-function var_0_0.stopStatusAnimation(arg_12_0)
-	arg_12_0:stopLoopSwitchAnimation()
-	gohelper.setActive(arg_12_0.iconGo, false)
+function YaXianInteractStatusBase:stopStatusAnimation()
+	self:stopLoopSwitchAnimation()
+	gohelper.setActive(self.iconGo, false)
 
-	if arg_12_0.statusDict then
-		for iter_12_0, iter_12_1 in pairs(arg_12_0.statusDict) do
-			YaXianGameController.instance:getInteractStatusPool():putObject(iter_12_1)
+	if self.statusDict then
+		for _, statusMo in pairs(self.statusDict) do
+			local statusPool = YaXianGameController.instance:getInteractStatusPool()
+
+			statusPool:putObject(statusMo)
 		end
 	end
 
-	arg_12_0.statusDict = nil
-	arg_12_0.statusList = nil
+	self.statusDict = nil
+	self.statusList = nil
 end
 
-function var_0_0.startLoopSwitchAnimation(arg_13_0)
-	arg_13_0.flow = FlowSequence.New()
+function YaXianInteractStatusBase:startLoopSwitchAnimation()
+	self.flow = FlowSequence.New()
 
-	local var_13_0 = arg_13_0.currentShowStatusIndex
+	local preShowStatusIndex = self.currentShowStatusIndex
 
-	if var_13_0 > 0 then
-		local var_13_1 = arg_13_0.statusList[var_13_0]
-		local var_13_2 = arg_13_0.statusAnimatorDict[var_13_1]
+	if preShowStatusIndex > 0 then
+		local status = self.statusList[preShowStatusIndex]
+		local animator = self.statusAnimatorDict[status]
 
-		arg_13_0.flow:addWork(DelayFuncWork.New(arg_13_0.playIconCloseAnimation, arg_13_0, YaXianGameEnum.IconAnimationDuration, var_13_2))
+		self.flow:addWork(DelayFuncWork.New(self.playIconCloseAnimation, self, YaXianGameEnum.IconAnimationDuration, animator))
 	end
 
-	arg_13_0.currentShowStatusIndex = arg_13_0.currentShowStatusIndex + 1
+	self.currentShowStatusIndex = self.currentShowStatusIndex + 1
 
-	if arg_13_0.currentShowStatusIndex > arg_13_0.statusLen then
-		arg_13_0.currentShowStatusIndex = 1
+	if self.currentShowStatusIndex > self.statusLen then
+		self.currentShowStatusIndex = 1
 	end
 
-	local var_13_3 = arg_13_0.statusList[arg_13_0.currentShowStatusIndex]
-	local var_13_4 = arg_13_0.statusAnimatorDict[var_13_3]
+	local status = self.statusList[self.currentShowStatusIndex]
+	local animator = self.statusAnimatorDict[status]
 
-	arg_13_0.flow:addWork(DelayFuncWork.New(arg_13_0.playIconOpenAnimation, arg_13_0, YaXianGameEnum.IconAnimationDuration, var_13_4))
-	arg_13_0.flow:registerDoneListener(arg_13_0.onSwitchAnimationDone, arg_13_0)
-	arg_13_0.flow:start()
+	self.flow:addWork(DelayFuncWork.New(self.playIconOpenAnimation, self, YaXianGameEnum.IconAnimationDuration, animator))
+	self.flow:registerDoneListener(self.onSwitchAnimationDone, self)
+	self.flow:start()
 end
 
-function var_0_0.playIconCloseAnimation(arg_14_0, arg_14_1)
-	arg_14_1:Play("close")
+function YaXianInteractStatusBase:playIconCloseAnimation(animator)
+	animator:Play("close")
 end
 
-function var_0_0.playIconOpenAnimation(arg_15_0, arg_15_1)
-	arg_15_0:showOneStatusIcon(arg_15_0.statusList[arg_15_0.currentShowStatusIndex])
-	arg_15_1:Play("open")
+function YaXianInteractStatusBase:playIconOpenAnimation(animator)
+	self:showOneStatusIcon(self.statusList[self.currentShowStatusIndex])
+	animator:Play("open")
 end
 
-function var_0_0.onSwitchAnimationDone(arg_16_0)
-	TaskDispatcher.runDelay(arg_16_0.startLoopSwitchAnimation, arg_16_0, YaXianGameEnum.IconAnimationSwitchInterval)
+function YaXianInteractStatusBase:onSwitchAnimationDone()
+	TaskDispatcher.runDelay(self.startLoopSwitchAnimation, self, YaXianGameEnum.IconAnimationSwitchInterval)
 end
 
-function var_0_0.stopLoopSwitchAnimation(arg_17_0)
-	if arg_17_0.flow then
-		arg_17_0.flow:destroy()
+function YaXianInteractStatusBase:stopLoopSwitchAnimation()
+	if self.flow then
+		self.flow:destroy()
 	end
 
-	TaskDispatcher.cancelTask(arg_17_0.startLoopSwitchAnimation, arg_17_0)
+	TaskDispatcher.cancelTask(self.startLoopSwitchAnimation, self)
 end
 
-function var_0_0.dispose(arg_18_0)
-	arg_18_0:stopStatusAnimation()
+function YaXianInteractStatusBase:dispose()
+	self:stopStatusAnimation()
 
-	if arg_18_0.iconLoader then
-		arg_18_0.iconLoader:dispose()
+	if self.iconLoader then
+		self.iconLoader:dispose()
 	end
 
-	arg_18_0:__onDispose()
+	self:__onDispose()
 end
 
-return var_0_0
+return YaXianInteractStatusBase

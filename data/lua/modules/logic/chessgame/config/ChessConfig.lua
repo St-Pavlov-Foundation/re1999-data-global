@@ -1,136 +1,139 @@
-﻿module("modules.logic.chessgame.config.ChessConfig", package.seeall)
+﻿-- chunkname: @modules/logic/chessgame/config/ChessConfig.lua
 
-local var_0_0 = class("ChessConfig", BaseConfig)
+module("modules.logic.chessgame.config.ChessConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local ChessConfig = class("ChessConfig", BaseConfig)
+
+function ChessConfig:ctor()
 	return
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function ChessConfig:reqConfigNames()
 	return {}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+function ChessConfig:onConfigLoaded(configName, configTable)
 	return
 end
 
-function var_0_0._registerConfigIns(arg_4_0)
+function ChessConfig:_registerConfigIns()
 	return {
 		[VersionActivity2_1Enum.ActivityId.LanShouPa] = Activity164Config.instance
 	}
 end
 
-function var_0_0._getConfigIns(arg_5_0, arg_5_1)
-	if not arg_5_0._configMap then
-		arg_5_0._configMap = arg_5_0:_registerConfigIns()
+function ChessConfig:_getConfigIns(actId)
+	if not self._configMap then
+		self._configMap = self:_registerConfigIns()
 
-		local var_5_0 = {
+		local funcNames = {
 			"getEpisodeCo",
 			"getTipsCo",
 			"getBubbleCo",
 			"getBubbleCoByGroup"
 		}
 
-		for iter_5_0, iter_5_1 in pairs(arg_5_0._configMap) do
-			for iter_5_2, iter_5_3 in ipairs(var_5_0) do
-				if not iter_5_1[iter_5_3] or type(iter_5_1[iter_5_3]) ~= "function" then
-					logError(string.format("[%s] can not find function [%s]", iter_5_1.__cname, iter_5_3))
+		for _, cfgCls in pairs(self._configMap) do
+			for __, funName in ipairs(funcNames) do
+				if not cfgCls[funName] or type(cfgCls[funName]) ~= "function" then
+					logError(string.format("[%s] can not find function [%s]", cfgCls.__cname, funName))
 				end
 			end
 		end
 	end
 
-	if not arg_5_0._configMap[arg_5_1] then
-		logError(string.format("version activity Id[%s] 没注册", arg_5_1))
+	if not self._configMap[actId] then
+		logError(string.format("version activity Id[%s] 没注册", actId))
 	end
 
-	return arg_5_0._configMap[arg_5_1]
+	return self._configMap[actId]
 end
 
-function var_0_0.getMapCo(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = arg_6_0:_getConfigIns(arg_6_1)
+function ChessConfig:getMapCo(actId, mapId)
+	local configIns = self:_getConfigIns(actId)
 
-	if var_6_0 then
-		if var_6_0.getEpisodeCo then
-			local var_6_1 = var_6_0:getEpisodeCo(arg_6_1, arg_6_2)
+	if configIns then
+		if configIns.getEpisodeCo then
+			local episodeCfg = configIns:getEpisodeCo(actId, mapId)
+			local mapCo = ChessGameConfig.instance:getMapCo(episodeCfg.mapIds)
 
-			return (ChessGameConfig.instance:getMapCo(var_6_1.mapIds))
+			return mapCo
 		else
-			logError(string.format("version activity Id[%s]注册类[%s]无 getMapCo接口", arg_6_1, var_6_0.__cname))
+			logError(string.format("version activity Id[%s]注册类[%s]无 getMapCo接口", actId, configIns.__cname))
 		end
 	end
 
 	return nil
 end
 
-function var_0_0.getEpisodeCo(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = arg_7_0:_getConfigIns(arg_7_1)
+function ChessConfig:getEpisodeCo(actId, episodeId)
+	local configIns = self:_getConfigIns(actId)
 
-	if var_7_0 then
-		if var_7_0.getEpisodeCo then
-			return var_7_0:getEpisodeCo(arg_7_1, arg_7_2)
+	if configIns then
+		if configIns.getEpisodeCo then
+			return configIns:getEpisodeCo(actId, episodeId)
 		else
-			logError(string.format("version activity Id[%s]注册类[%s]无 getMapCo接口", arg_7_1, var_7_0.__cname))
+			logError(string.format("version activity Id[%s]注册类[%s]无 getMapCo接口", actId, configIns.__cname))
 		end
 	end
 
 	return nil
 end
 
-function var_0_0.isStoryEpisode(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = arg_8_0:_getConfigIns(arg_8_1)
+function ChessConfig:isStoryEpisode(actId, episodeId)
+	local configIns = self:_getConfigIns(actId)
 
-	if var_8_0 and var_8_0.isStoryEpisode then
-		return var_8_0:isStoryEpisode(arg_8_1, arg_8_2)
+	if configIns and configIns.isStoryEpisode then
+		return configIns:isStoryEpisode(actId, episodeId)
 	end
 
 	return false
 end
 
-function var_0_0.getTipsCo(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = arg_9_0:_getConfigIns(arg_9_1)
+function ChessConfig:getTipsCo(actId, tipsId)
+	local configIns = self:_getConfigIns(actId)
 
-	if var_9_0 and var_9_0.getTipsCo then
-		return var_9_0:getTipsCo(arg_9_1, arg_9_2)
+	if configIns and configIns.getTipsCo then
+		return configIns:getTipsCo(actId, tipsId)
 	end
 
 	return nil
 end
 
-function var_0_0.getBubbleCoByGroup(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = arg_10_0:_getConfigIns(arg_10_1)
+function ChessConfig:getBubbleCoByGroup(actId, groupId)
+	local configIns = self:_getConfigIns(actId)
 
-	if var_10_0 and var_10_0.getBubbleCoByGroup then
-		return var_10_0:getBubbleCoByGroup(arg_10_1, arg_10_2)
+	if configIns and configIns.getBubbleCoByGroup then
+		return configIns:getBubbleCoByGroup(actId, groupId)
 	end
 
 	return nil
 end
 
-function var_0_0.getChapterEpisodeId(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0:_getConfigIns(arg_11_1)
+function ChessConfig:getChapterEpisodeId(actId)
+	local configIns = self:_getConfigIns(actId)
 
-	if var_11_0 then
-		if var_11_0.getChapterEpisodeId then
-			return var_11_0:getChapterEpisodeId(arg_11_1)
+	if configIns then
+		if configIns.getChapterEpisodeId then
+			return configIns:getChapterEpisodeId(actId)
 		else
-			logError(string.format("version activity Id[%s]注册类[%s]无 getChapterEpisodeId 接口", arg_11_1, var_11_0.__cname))
+			logError(string.format("version activity Id[%s]注册类[%s]无 getChapterEpisodeId 接口", actId, configIns.__cname))
 		end
 	end
 
 	return nil
 end
 
-function var_0_0.getEffectCo(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = arg_12_0:_getConfigIns(arg_12_1)
+function ChessConfig:getEffectCo(actId, effectId)
+	local configIns = self:_getConfigIns(actId)
 
-	if var_12_0 and var_12_0.getEffectCo then
-		return var_12_0:getEffectCo(arg_12_1, arg_12_2)
+	if configIns and configIns.getEffectCo then
+		return configIns:getEffectCo(actId, effectId)
 	end
 
 	return nil
 end
 
-var_0_0.instance = var_0_0.New()
+ChessConfig.instance = ChessConfig.New()
 
-return var_0_0
+return ChessConfig

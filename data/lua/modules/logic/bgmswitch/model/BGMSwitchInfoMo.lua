@@ -1,26 +1,28 @@
-﻿module("modules.logic.bgmswitch.model.BGMSwitchInfoMo", package.seeall)
+﻿-- chunkname: @modules/logic/bgmswitch/model/BGMSwitchInfoMo.lua
 
-local var_0_0 = pureTable("BGMSwitchInfoMo")
+module("modules.logic.bgmswitch.model.BGMSwitchInfoMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.bgmId = 0
-	arg_1_0.unlock = 0
-	arg_1_0.favorite = false
-	arg_1_0.isRead = false
+local BGMSwitchInfoMo = pureTable("BGMSwitchInfoMo")
+
+function BGMSwitchInfoMo:ctor()
+	self.bgmId = 0
+	self.unlock = 0
+	self.favorite = false
+	self.isRead = false
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.bgmId = arg_2_1.bgmId
-	arg_2_0.unlock = arg_2_1.unlock
-	arg_2_0.favorite = arg_2_1.favorite
-	arg_2_0.isRead = arg_2_1.isRead
+function BGMSwitchInfoMo:init(info)
+	self.bgmId = info.bgmId
+	self.unlock = info.unlock
+	self.favorite = info.favorite
+	self.isRead = info.isRead
 end
 
-function var_0_0.reset(arg_3_0, arg_3_1)
-	arg_3_0.bgmId = arg_3_1.bgmId
-	arg_3_0.unlock = arg_3_1.unlock
-	arg_3_0.favorite = arg_3_1.favorite
-	arg_3_0.isRead = arg_3_1.isRead
+function BGMSwitchInfoMo:reset(info)
+	self.bgmId = info.bgmId
+	self.unlock = info.unlock
+	self.favorite = info.favorite
+	self.isRead = info.isRead
 end
 
-return var_0_0
+return BGMSwitchInfoMo

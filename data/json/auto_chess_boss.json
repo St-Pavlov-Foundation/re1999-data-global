@@ -1,0 +1,50 @@
+[
+  {
+    "id": 32901,
+    "expBonus": "250#10|500#20|750#30|1000#40",
+    "collectionBonus": "500#1|1000#1",
+    "smallImage": "movingchess_handbook_tab_2",
+    "loadingImage": "movingchess_img_boss_3",
+    "startBtnImage": "autochess_game_bossicon_3"
+  },
+  {
+    "id": 32902,
+    "expBonus": "250#10|500#20|750#30|1000#40",
+    "collectionBonus": "500#1|1000#1",
+    "smallImage": "movingchess_handbook_tab_3",
+    "loadingImage": "movingchess_img_boss_4",
+    "startBtnImage": "autochess_game_bossicon_1"
+  },
+  {
+    "id": 32903,
+    "expBonus": "250#10|500#20|750#30|1000#40",
+    "collectionBonus": "500#1|1000#1",
+    "smallImage": "movingchess_handbook_tab_6",
+    "loadingImage": "movingchess_img_boss_6",
+    "startBtnImage": "autochess_game_bossicon_6"
+  },
+  {
+    "id": 32904,
+    "expBonus": "250#10|500#20|750#30|1000#40",
+    "collectionBonus": "500#1|1000#1",
+    "smallImage": "movingchess_handbook_tab_4",
+    "loadingImage": "movingchess_img_boss_5",
+    "startBtnImage": "autochess_game_bossicon_4"
+  },
+  {
+    "id": 32905,
+    "expBonus": "250#10|500#20|750#30|1000#40",
+    "collectionBonus": "500#1|1000#1",
+    "smallImage": "movingchess_handbook_tab_5",
+    "loadingImage": "movingchess_img_boss_1",
+    "startBtnImage": "autochess_game_bossicon_5"
+  },
+  {
+    "id": 32906,
+    "expBonus": "250#10|500#20|750#30|1000#40",
+    "collectionBonus": "500#1|1000#1",
+    "smallImage": "movingchess_handbook_tab_1",
+    "loadingImage": "movingchess_img_boss_2",
+    "startBtnImage": "autochess_game_bossicon_2"
+  }
+]

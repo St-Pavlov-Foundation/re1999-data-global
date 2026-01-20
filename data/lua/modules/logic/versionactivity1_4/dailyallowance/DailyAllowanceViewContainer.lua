@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity1_4.dailyallowance.DailyAllowanceViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/dailyallowance/DailyAllowanceViewContainer.lua
 
-local var_0_0 = class("DailyAllowanceViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_4.dailyallowance.DailyAllowanceViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local DailyAllowanceViewContainer = class("DailyAllowanceViewContainer", BaseViewContainer)
+
+function DailyAllowanceViewContainer:buildViews()
 	return {
 		DailyAllowanceView.New()
 	}
 end
 
-return var_0_0
+return DailyAllowanceViewContainer

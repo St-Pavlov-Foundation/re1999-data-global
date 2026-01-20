@@ -1,160 +1,162 @@
-﻿module("projbooter.ui.BootMsgBox", package.seeall)
+﻿-- chunkname: @projbooter/ui/BootMsgBox.lua
 
-local var_0_0 = class("BootMsgBox")
+module("projbooter.ui.BootMsgBox", package.seeall)
 
-function var_0_0.init(arg_1_0)
-	arg_1_0._go = BootResMgr.instance:getMsgBoxGo()
-	arg_1_0._rootTr = arg_1_0._go.transform
+local BootMsgBox = class("BootMsgBox")
 
-	local var_1_0 = typeof(UnityEngine.UI.Text)
+function BootMsgBox:init()
+	self._go = BootResMgr.instance:getMsgBoxGo()
+	self._rootTr = self._go.transform
 
-	arg_1_0._txtTitle = arg_1_0._rootTr:Find("txtTitle"):GetComponent(var_1_0)
-	arg_1_0._gotopTipEn = arg_1_0._rootTr:Find("topTip/txtEn").gameObject
-	arg_1_0._txttopTipCn = arg_1_0._rootTr:Find("topTip/txtCn"):GetComponent(var_1_0)
-	arg_1_0._txtContent = arg_1_0._rootTr:Find("txtContent"):GetComponent(var_1_0)
-	arg_1_0._leftBtnGo = arg_1_0._rootTr:Find("btnLeft").gameObject
-	arg_1_0._leftBtn = SLFramework.UGUI.ButtonWrap.Get(arg_1_0._leftBtnGo)
-	arg_1_0._leftBtnTxt = arg_1_0._rootTr:Find("btnLeft/Text"):GetComponent(var_1_0)
-	arg_1_0._leftBtnTxtEn = arg_1_0._rootTr:Find("btnLeft/Text-EN"):GetComponent(var_1_0)
-	arg_1_0._rightBtnGo = arg_1_0._rootTr:Find("btnRight").gameObject
-	arg_1_0._rightBtn = SLFramework.UGUI.ButtonWrap.Get(arg_1_0._rightBtnGo)
-	arg_1_0._rightBtnTxt = arg_1_0._rootTr:Find("btnRight/Text"):GetComponent(var_1_0)
-	arg_1_0._rightBtnTxtEn = arg_1_0._rootTr:Find("btnRight/Text-EN"):GetComponent(var_1_0)
+	local txtType = typeof(UnityEngine.UI.Text)
 
-	arg_1_0._leftBtn:AddClickListener(arg_1_0._onClickLeftBtn, arg_1_0)
-	arg_1_0._rightBtn:AddClickListener(arg_1_0._onClickRightBtn, arg_1_0)
-	GamepadBooter.instance:setBootMsgBoxClick(arg_1_0._onClickRightBtn, arg_1_0, arg_1_0._onClickLeftBtn, arg_1_0)
+	self._txtTitle = self._rootTr:Find("txtTitle"):GetComponent(txtType)
+	self._gotopTipEn = self._rootTr:Find("topTip/txtEn").gameObject
+	self._txttopTipCn = self._rootTr:Find("topTip/txtCn"):GetComponent(txtType)
+	self._txtContent = self._rootTr:Find("txtContent"):GetComponent(txtType)
+	self._leftBtnGo = self._rootTr:Find("btnLeft").gameObject
+	self._leftBtn = SLFramework.UGUI.ButtonWrap.Get(self._leftBtnGo)
+	self._leftBtnTxt = self._rootTr:Find("btnLeft/Text"):GetComponent(txtType)
+	self._leftBtnTxtEn = self._rootTr:Find("btnLeft/Text-EN"):GetComponent(txtType)
+	self._rightBtnGo = self._rootTr:Find("btnRight").gameObject
+	self._rightBtn = SLFramework.UGUI.ButtonWrap.Get(self._rightBtnGo)
+	self._rightBtnTxt = self._rootTr:Find("btnRight/Text"):GetComponent(txtType)
+	self._rightBtnTxtEn = self._rootTr:Find("btnRight/Text-EN"):GetComponent(txtType)
+
+	self._leftBtn:AddClickListener(self._onClickLeftBtn, self)
+	self._rightBtn:AddClickListener(self._onClickRightBtn, self)
+	GamepadBooter.instance:setBootMsgBoxClick(self._onClickRightBtn, self, self._onClickLeftBtn, self)
 end
 
-function var_0_0.show(arg_2_0, arg_2_1)
-	if arg_2_0._isDisable then
+function BootMsgBox:show(args)
+	if self._isDisable then
 		return
 	end
 
-	arg_2_0.args = arg_2_1
+	self.args = args
 
-	local var_2_0 = GameConfig:GetCurLangShortcut()
-	local var_2_1 = true
+	local shortcut = GameConfig:GetCurLangShortcut()
+	local ishide = true
 
-	if var_2_0 ~= "zh" then
-		var_2_1 = false
+	if shortcut ~= "zh" then
+		ishide = false
 
-		SLFramework.UGUI.RectTrHelper.SetAnchorY(arg_2_0._leftBtnTxt.transform, 15)
-		SLFramework.UGUI.RectTrHelper.SetAnchorY(arg_2_0._rightBtnTxt.transform, 15)
+		SLFramework.UGUI.RectTrHelper.SetAnchorY(self._leftBtnTxt.transform, 15)
+		SLFramework.UGUI.RectTrHelper.SetAnchorY(self._rightBtnTxt.transform, 15)
 	end
 
-	arg_2_0._gotopTipEn:SetActive(var_2_1)
-	arg_2_0._leftBtnTxtEn.gameObject:SetActive(var_2_1)
-	arg_2_0._rightBtnTxtEn.gameObject:SetActive(var_2_1)
+	self._gotopTipEn:SetActive(ishide)
+	self._leftBtnTxtEn.gameObject:SetActive(ishide)
+	self._rightBtnTxtEn.gameObject:SetActive(ishide)
 
-	arg_2_0._txtTitle.text = arg_2_1.title
-	arg_2_0._txtContent.text = arg_2_1.content
-	arg_2_0._txttopTipCn.text = booterLang("notice")
+	self._txtTitle.text = args.title
+	self._txtContent.text = args.content
+	self._txttopTipCn.text = booterLang("notice")
 
-	arg_2_0._leftBtnGo:SetActive(arg_2_1.leftMsg ~= nil)
+	self._leftBtnGo:SetActive(args.leftMsg ~= nil)
 
-	arg_2_0._leftBtnTxt.text = arg_2_1.leftMsg and arg_2_1.leftMsg or ""
-	arg_2_0._leftCb = arg_2_1.leftCb
-	arg_2_0._leftCbObj = arg_2_1.leftCbObj
+	self._leftBtnTxt.text = args.leftMsg and args.leftMsg or ""
+	self._leftCb = args.leftCb
+	self._leftCbObj = args.leftCbObj
 
-	arg_2_0._rightBtnGo:SetActive(arg_2_1.rightMsg ~= nil)
+	self._rightBtnGo:SetActive(args.rightMsg ~= nil)
 
-	arg_2_0._rightBtnTxt.text = arg_2_1.rightMsg and arg_2_1.rightMsg or ""
-	arg_2_0._rightCb = arg_2_1.rightCb
-	arg_2_0._rightCbObj = arg_2_1.rightCbObj
-	arg_2_0._leftBtnTxtEn.text = arg_2_1.leftMsgEn or "EXIT"
-	arg_2_0._rightBtnTxtEn.text = arg_2_1.rightMsgEn or "DOWNLOAD"
+	self._rightBtnTxt.text = args.rightMsg and args.rightMsg or ""
+	self._rightCb = args.rightCb
+	self._rightCbObj = args.rightCbObj
+	self._leftBtnTxtEn.text = args.leftMsgEn or "EXIT"
+	self._rightBtnTxtEn.text = args.rightMsgEn or "DOWNLOAD"
 
-	SLFramework.UGUI.RectTrHelper.SetAnchorY(arg_2_0._txtTitle.transform, arg_2_1.titleAnchorY or 55)
+	SLFramework.UGUI.RectTrHelper.SetAnchorY(self._txtTitle.transform, args.titleAnchorY or 55)
 
-	if arg_2_1.rightMsg ~= nil then
-		SLFramework.UGUI.RectTrHelper.SetAnchorX(arg_2_0._leftBtnGo.transform, -247.1)
+	if args.rightMsg ~= nil then
+		SLFramework.UGUI.RectTrHelper.SetAnchorX(self._leftBtnGo.transform, -247.1)
 	else
-		SLFramework.UGUI.RectTrHelper.SetAnchorX(arg_2_0._leftBtnGo.transform, 0)
+		SLFramework.UGUI.RectTrHelper.SetAnchorX(self._leftBtnGo.transform, 0)
 	end
 
-	if arg_2_1.leftMsg ~= nil then
-		SLFramework.UGUI.RectTrHelper.SetAnchorX(arg_2_0._rightBtnGo.transform, 246.7)
+	if args.leftMsg ~= nil then
+		SLFramework.UGUI.RectTrHelper.SetAnchorX(self._rightBtnGo.transform, 246.7)
 	else
-		SLFramework.UGUI.RectTrHelper.SetAnchorX(arg_2_0._rightBtnGo.transform, 0)
+		SLFramework.UGUI.RectTrHelper.SetAnchorX(self._rightBtnGo.transform, 0)
 	end
 
-	arg_2_0._go:SetActive(true)
+	self._go:SetActive(true)
 end
 
-function var_0_0.isShow(arg_3_0)
-	if arg_3_0._go then
-		return arg_3_0._go.activeInHierarchy
-	end
-end
-
-function var_0_0.hide(arg_4_0)
-	arg_4_0._go:SetActive(false)
-end
-
-function var_0_0.dispose(arg_5_0)
-	for iter_5_0, iter_5_1 in pairs(arg_5_0) do
-		arg_5_0[iter_5_0] = nil
+function BootMsgBox:isShow()
+	if self._go then
+		return self._go.activeInHierarchy
 	end
 end
 
-function var_0_0._onClickLeftBtn(arg_6_0)
-	arg_6_0:hide()
+function BootMsgBox:hide()
+	self._go:SetActive(false)
+end
 
-	if arg_6_0._leftCb == nil then
+function BootMsgBox:dispose()
+	for k, v in pairs(self) do
+		self[k] = nil
+	end
+end
+
+function BootMsgBox:_onClickLeftBtn()
+	self:hide()
+
+	if self._leftCb == nil then
 		return
 	end
 
-	local var_6_0 = arg_6_0._leftCb
-	local var_6_1 = arg_6_0._leftCbObj
+	local cb = self._leftCb
+	local obj = self._leftCbObj
 
-	arg_6_0._leftCb = nil
-	arg_6_0._leftCbObj = nil
+	self._leftCb = nil
+	self._leftCbObj = nil
 
-	var_6_0(var_6_1)
+	cb(obj)
 end
 
-function var_0_0._onClickRightBtn(arg_7_0)
-	arg_7_0:hide()
+function BootMsgBox:_onClickRightBtn()
+	self:hide()
 
-	if arg_7_0._rightCb == nil then
+	if self._rightCb == nil then
 		return
 	end
 
-	local var_7_0 = arg_7_0._rightCb
-	local var_7_1 = arg_7_0._rightCbObj
+	local cb = self._rightCb
+	local obj = self._rightCbObj
 
-	arg_7_0._rightCb = nil
-	arg_7_0._rightCbObj = nil
+	self._rightCb = nil
+	self._rightCbObj = nil
 
-	var_7_0(var_7_1)
+	cb(obj)
 end
 
-function var_0_0.dispose(arg_8_0)
+function BootMsgBox:dispose()
 	GamepadBooter.instance:dispose()
-	arg_8_0._leftBtn:RemoveClickListener()
-	arg_8_0._rightBtn:RemoveClickListener()
+	self._leftBtn:RemoveClickListener()
+	self._rightBtn:RemoveClickListener()
 
-	for iter_8_0, iter_8_1 in pairs(arg_8_0) do
-		if type(iter_8_1) == "userdata" then
-			rawset(arg_8_0, iter_8_0, nil)
-			logNormal("key = " .. tostring(iter_8_0) .. " value = " .. tostring(iter_8_1))
+	for key, value in pairs(self) do
+		if type(value) == "userdata" then
+			rawset(self, key, nil)
+			logNormal("key = " .. tostring(key) .. " value = " .. tostring(value))
 		end
 	end
 end
 
-function var_0_0.disable(arg_9_0)
-	arg_9_0._isDisable = true
+function BootMsgBox:disable()
+	self._isDisable = true
 end
 
-function var_0_0.setContentText(arg_10_0, arg_10_1)
-	if arg_10_0._isDisable then
+function BootMsgBox:setContentText(textStr)
+	if self._isDisable then
 		return
 	end
 
-	arg_10_0._txtContent.text = arg_10_1
+	self._txtContent.text = textStr
 end
 
-var_0_0.instance = var_0_0.New()
+BootMsgBox.instance = BootMsgBox.New()
 
-return var_0_0
+return BootMsgBox

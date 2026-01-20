@@ -1,79 +1,82 @@
-﻿module("modules.logic.versionactivity1_3.jialabona.helper.JiaLaBoNaHelper", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/jialabona/helper/JiaLaBoNaHelper.lua
 
-local var_0_0 = {
-	getLimitTimeStr = function()
-		local var_1_0 = ActivityModel.instance:getActMO(VersionActivity1_3Enum.ActivityId.Act306)
+module("modules.logic.versionactivity1_3.jialabona.helper.JiaLaBoNaHelper", package.seeall)
 
-		if var_1_0 then
-			return string.format(luaLang("activity_warmup_remain_time"), var_1_0:getRemainTimeStr2ByEndTime())
-		end
+local JiaLaBoNaHelper = {}
 
-		return ""
-	end,
-	isOpenDay = function(arg_2_0)
-		local var_2_0 = VersionActivity1_3Enum.ActivityId.Act306
-		local var_2_1 = ActivityModel.instance:getActMO(var_2_0)
-		local var_2_2 = Activity120Config.instance:getEpisodeCo(var_2_0, arg_2_0)
+function JiaLaBoNaHelper.getLimitTimeStr()
+	local actMO = ActivityModel.instance:getActMO(VersionActivity1_3Enum.ActivityId.Act306)
 
-		if var_2_1 and var_2_2 then
-			local var_2_3 = var_2_1:getRealStartTimeStamp() + (var_2_2.openDay - 1) * 24 * 60 * 60
-			local var_2_4 = ServerTime.now()
-			local var_2_5 = var_2_2.preEpisode == 0 or Activity120Model.instance:isEpisodeClear(var_2_2.preEpisode)
-			local var_2_6 = math.max(var_2_3 - var_2_4, 0)
-
-			if not var_2_5 or var_2_6 > 0 then
-				return false, var_2_6
-			end
-		else
-			if not var_2_2 then
-				logNormal(string.format("can not find v1a3 activity episodeCfg. actId:%s episodeId:%s", var_2_0, arg_2_0))
-			end
-
-			return false, -1
-		end
-
-		return true
+	if actMO then
+		return string.format(luaLang("activity_warmup_remain_time"), actMO:getRemainTimeStr2ByEndTime())
 	end
-}
 
-function var_0_0.isOpenChapterDay(arg_3_0)
-	local var_3_0 = var_0_0.getFristEpisodeCoByChapterId(arg_3_0)
+	return ""
+end
 
-	if not var_3_0 then
+function JiaLaBoNaHelper.isOpenDay(episodeId)
+	local actId = VersionActivity1_3Enum.ActivityId.Act306
+	local actMO = ActivityModel.instance:getActMO(actId)
+	local cfg = Activity120Config.instance:getEpisodeCo(actId, episodeId)
+
+	if actMO and cfg then
+		local openTime = actMO:getRealStartTimeStamp() + (cfg.openDay - 1) * 24 * 60 * 60
+		local serverTimeStamp = ServerTime.now()
+		local preIsClear = cfg.preEpisode == 0 or Activity120Model.instance:isEpisodeClear(cfg.preEpisode)
+		local cdtime = math.max(openTime - serverTimeStamp, 0)
+
+		if not preIsClear or cdtime > 0 then
+			return false, cdtime
+		end
+	else
+		if not cfg then
+			logNormal(string.format("can not find v1a3 activity episodeCfg. actId:%s episodeId:%s", actId, episodeId))
+		end
+
 		return false, -1
 	end
 
-	return var_0_0.isOpenDay(var_3_0.id)
+	return true
 end
 
-function var_0_0.getFristEpisodeCoByChapterId(arg_4_0)
-	local var_4_0 = VersionActivity1_3Enum.ActivityId.Act306
-	local var_4_1 = Activity120Config.instance:getChapterEpisodeList(var_4_0, arg_4_0)
+function JiaLaBoNaHelper.isOpenChapterDay(chapterId)
+	local episodeCfg = JiaLaBoNaHelper.getFristEpisodeCoByChapterId(chapterId)
 
-	return var_4_1 and var_4_1[1]
+	if not episodeCfg then
+		return false, -1
+	end
+
+	return JiaLaBoNaHelper.isOpenDay(episodeCfg.id)
 end
 
-function var_0_0.showToastByEpsodeId(arg_5_0, arg_5_1)
-	local var_5_0 = VersionActivity1_3Enum.ActivityId.Act306
-	local var_5_1 = Activity120Config.instance:getEpisodeCo(var_5_0, arg_5_0)
+function JiaLaBoNaHelper.getFristEpisodeCoByChapterId(chapterId)
+	local actId = VersionActivity1_3Enum.ActivityId.Act306
+	local episodeCfgList = Activity120Config.instance:getChapterEpisodeList(actId, chapterId)
 
-	if not var_5_1 then
-		logNormal(string.format("can not find v1a3 activity episodeCfg. actId:%s episodeId:%s", VersionActivity1_3Enum.ActivityId.Act306, arg_5_0))
+	return episodeCfgList and episodeCfgList[1]
+end
+
+function JiaLaBoNaHelper.showToastByEpsodeId(episodeId, isChapter)
+	local actId = VersionActivity1_3Enum.ActivityId.Act306
+	local episodeCfg = Activity120Config.instance:getEpisodeCo(actId, episodeId)
+
+	if not episodeCfg then
+		logNormal(string.format("can not find v1a3 activity episodeCfg. actId:%s episodeId:%s", VersionActivity1_3Enum.ActivityId.Act306, episodeId))
 
 		return
 	end
 
-	local var_5_2, var_5_3 = var_0_0.isOpenDay(var_5_1.id)
+	local isOpen, cdTime = JiaLaBoNaHelper.isOpenDay(episodeCfg.id)
 
-	if not var_5_2 then
-		if var_5_1.preEpisode ~= 0 or not Activity120Model.instance:isEpisodeClear(var_5_1.preEpisode) then
-			local var_5_4 = Activity120Config.instance:getEpisodeCo(var_5_1.activityId, var_5_1.preEpisode)
+	if not isOpen then
+		if episodeCfg.preEpisode ~= 0 or not Activity120Model.instance:isEpisodeClear(episodeCfg.preEpisode) then
+			local preCfg = Activity120Config.instance:getEpisodeCo(episodeCfg.activityId, episodeCfg.preEpisode)
 
-			GameFacade.showToast(ToastEnum.Va3Act120PreEpisodeNotOpen, var_5_4 and var_5_4.name or var_5_1.preEpisode)
+			GameFacade.showToast(ToastEnum.Va3Act120PreEpisodeNotOpen, preCfg and preCfg.name or episodeCfg.preEpisode)
 		else
-			GameFacade.showToast(arg_5_1 and ToastEnum.Va3Act120ChapterNotOpenTime or ToastEnum.Va3Act120EpisodeNotOpenTime)
+			GameFacade.showToast(isChapter and ToastEnum.Va3Act120ChapterNotOpenTime or ToastEnum.Va3Act120EpisodeNotOpenTime)
 		end
 	end
 end
 
-return var_0_0
+return JiaLaBoNaHelper

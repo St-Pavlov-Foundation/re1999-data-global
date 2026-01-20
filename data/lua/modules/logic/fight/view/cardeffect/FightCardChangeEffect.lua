@@ -1,197 +1,199 @@
-﻿module("modules.logic.fight.view.cardeffect.FightCardChangeEffect", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/cardeffect/FightCardChangeEffect.lua
 
-local var_0_0 = class("FightCardChangeEffect", BaseWork)
+module("modules.logic.fight.view.cardeffect.FightCardChangeEffect", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+local FightCardChangeEffect = class("FightCardChangeEffect", BaseWork)
 
-	arg_1_0._paramDict = {}
+function FightCardChangeEffect:onStart(context)
+	FightCardChangeEffect.super.onStart(self, context)
 
-	arg_1_0:_playEffects()
-	TaskDispatcher.runDelay(arg_1_0._delayDone, arg_1_0, FightEnum.PerformanceTime.CardLevelChange / FightModel.instance:getUISpeed())
+	self._paramDict = {}
+
+	self:_playEffects()
+	TaskDispatcher.runDelay(self._delayDone, self, FightEnum.PerformanceTime.CardLevelChange / FightModel.instance:getUISpeed())
 end
 
-function var_0_0._playEffects(arg_2_0)
-	arg_2_0._effectGOList = {}
-	arg_2_0._effectLoaderList = {}
+function FightCardChangeEffect:_playEffects()
+	self._effectGOList = {}
+	self._effectLoaderList = {}
 
-	local var_2_0 = arg_2_0.context.cardItem
+	local cardItem = self.context.cardItem
 
-	arg_2_0._entityId = arg_2_0.context.entityId
-	arg_2_0._skillId = arg_2_0.context.skillId
-	arg_2_0._changeFailType = arg_2_0.context.failType
+	self._entityId = self.context.entityId
+	self._skillId = self.context.skillId
+	self._changeFailType = self.context.failType
 
-	local var_2_1 = arg_2_0.context.oldCardLevel
-	local var_2_2 = arg_2_0.context.newCardLevel
-	local var_2_3 = var_2_0.go
-	local var_2_4 = gohelper.create2d(var_2_3, "lvChangeEffect")
-	local var_2_5 = PrefabInstantiate.Create(var_2_4)
+	local oldCardLv = self.context.oldCardLevel
+	local newCardLevel = self.context.newCardLevel
+	local cardItemGO = cardItem.go
+	local changeEffectGO = gohelper.create2d(cardItemGO, "lvChangeEffect")
+	local effectLoader = PrefabInstantiate.Create(changeEffectGO)
 
-	arg_2_0._paramDict[var_2_5] = {
-		newCardLevel = var_2_2,
-		oldCardLv = var_2_1
+	self._paramDict[effectLoader] = {
+		newCardLevel = newCardLevel,
+		oldCardLv = oldCardLv
 	}
 
-	local var_2_6
+	local effectPath
 
-	if arg_2_0._changeFailType then
-		var_2_6 = arg_2_0._changeFailType == FightEnum.CardRankChangeFail.UpFail and FightPreloadOthersWork.LvUpEffectPath or FightPreloadOthersWork.LvDownEffectPath
+	if self._changeFailType then
+		effectPath = self._changeFailType == FightEnum.CardRankChangeFail.UpFail and FightPreloadOthersWork.LvUpEffectPath or FightPreloadOthersWork.LvDownEffectPath
 	else
-		var_2_6 = var_2_1 < var_2_2 and FightPreloadOthersWork.LvUpEffectPath or FightPreloadOthersWork.LvDownEffectPath
+		effectPath = oldCardLv < newCardLevel and FightPreloadOthersWork.LvUpEffectPath or FightPreloadOthersWork.LvDownEffectPath
 	end
 
-	var_2_5:startLoad(var_2_6, arg_2_0._onLvEffectLoaded, arg_2_0)
+	effectLoader:startLoad(effectPath, self._onLvEffectLoaded, self)
 
-	local var_2_7
+	local animPath
 
-	if arg_2_0._changeFailType then
-		var_2_7 = arg_2_0._changeFailType == FightEnum.CardRankChangeFail.UpFail and ViewAnim.LvUpAnimPath or ViewAnim.LvDownAnimPath
+	if self._changeFailType then
+		animPath = self._changeFailType == FightEnum.CardRankChangeFail.UpFail and ViewAnim.LvUpAnimPath or ViewAnim.LvDownAnimPath
 	else
-		var_2_7 = var_2_1 < var_2_2 and ViewAnim.LvUpAnimPath or ViewAnim.LvDownAnimPath
+		animPath = oldCardLv < newCardLevel and ViewAnim.LvUpAnimPath or ViewAnim.LvDownAnimPath
 	end
 
-	local var_2_8 = MultiAbLoader.New()
+	local animLoader = MultiAbLoader.New()
 
-	arg_2_0._paramDict[var_2_8] = {
-		newCardLevel = var_2_2,
-		oldCardLv = var_2_1,
-		cardItem = var_2_0
+	self._paramDict[animLoader] = {
+		newCardLevel = newCardLevel,
+		oldCardLv = oldCardLv,
+		cardItem = cardItem
 	}
 
-	var_2_8:addPath(var_2_7)
-	var_2_8:startLoad(arg_2_0._onLvAnimLoaded, arg_2_0)
+	animLoader:addPath(animPath)
+	animLoader:startLoad(self._onLvAnimLoaded, self)
 
-	arg_2_0._animLoaderList = arg_2_0._animLoaderList or {}
+	self._animLoaderList = self._animLoaderList or {}
 
-	table.insert(arg_2_0._animLoaderList, var_2_8)
-	table.insert(arg_2_0._effectGOList, var_2_4)
-	table.insert(arg_2_0._effectLoaderList, var_2_5)
+	table.insert(self._animLoaderList, animLoader)
+	table.insert(self._effectGOList, changeEffectGO)
+	table.insert(self._effectLoaderList, effectLoader)
 end
 
-function var_0_0._onLvEffectLoaded(arg_3_0, arg_3_1)
-	gohelper.onceAddComponent(arg_3_1:getInstGO(), typeof(ZProj.EffectTimeScale)):SetTimeScale(FightModel.instance:getUISpeed())
+function FightCardChangeEffect:_onLvEffectLoaded(effectLoader)
+	gohelper.onceAddComponent(effectLoader:getInstGO(), typeof(ZProj.EffectTimeScale)):SetTimeScale(FightModel.instance:getUISpeed())
 
-	local var_3_0 = arg_3_0._paramDict[arg_3_1]
-	local var_3_1 = var_3_0.newCardLevel
-	local var_3_2 = var_3_0.oldCardLv
-	local var_3_3 = FightCardDataHelper.isBigSkill(arg_3_0._skillId)
+	local param = self._paramDict[effectLoader]
+	local newCardLevel = param.newCardLevel
+	local oldCardLv = param.oldCardLv
+	local isBigSkill = FightCardDataHelper.isBigSkill(self._skillId)
 
-	if lua_skill_next.configDict[arg_3_0._skillId] then
-		var_3_3 = false
+	if lua_skill_next.configDict[self._skillId] then
+		isBigSkill = false
 	end
 
-	local var_3_4 = arg_3_1:getInstGO()
-	local var_3_5 = gohelper.findChild(var_3_4, "#card/normal_effect")
-	local var_3_6 = gohelper.findChild(var_3_4, "#card/ultimate_effect")
+	local gameObject = effectLoader:getInstGO()
+	local normalObj = gohelper.findChild(gameObject, "#card/normal_effect")
+	local uniqueObj = gohelper.findChild(gameObject, "#card/ultimate_effect")
 
-	gohelper.setActive(var_3_5, not var_3_3)
-	gohelper.setActive(var_3_6, var_3_3)
+	gohelper.setActive(normalObj, not isBigSkill)
+	gohelper.setActive(uniqueObj, isBigSkill)
 
-	local var_3_7 = gohelper.findChild(var_3_4, "#star").transform
-	local var_3_8 = var_3_7.childCount
-	local var_3_9 = var_3_2 .. "_" .. var_3_1
+	local starRoot = gohelper.findChild(gameObject, "#star").transform
+	local starChildCount = starRoot.childCount
+	local starName = oldCardLv .. "_" .. newCardLevel
 
-	for iter_3_0 = 0, var_3_8 - 1 do
-		local var_3_10 = var_3_7:GetChild(iter_3_0)
+	for i = 0, starChildCount - 1 do
+		local star = starRoot:GetChild(i)
 
-		if var_3_10 then
-			gohelper.setActive(var_3_10.gameObject, var_3_10.name == var_3_9)
+		if star then
+			gohelper.setActive(star.gameObject, star.name == starName)
 		end
 	end
 end
 
-function var_0_0._onLvAnimLoaded(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0._paramDict[arg_4_1]
-	local var_4_1 = var_4_0.newCardLevel
-	local var_4_2 = var_4_0.oldCardLv
-	local var_4_3 = var_4_0.cardItem
-	local var_4_4 = var_4_3.go
+function FightCardChangeEffect:_onLvAnimLoaded(animLoader)
+	local param = self._paramDict[animLoader]
+	local newCardLevel = param.newCardLevel
+	local oldCardLv = param.oldCardLv
+	local cardItem = param.cardItem
+	local cardGO = cardItem.go
 
-	gohelper.setActive(gohelper.findChild(var_4_4, "star/star1"), var_4_1 == 1 or var_4_2 == 1)
-	gohelper.setActive(gohelper.findChild(var_4_4, "star/star2"), var_4_1 == 2 or var_4_2 == 2)
-	gohelper.setActive(gohelper.findChild(var_4_4, "star/star3"), var_4_1 == 3 or var_4_2 == 3)
+	gohelper.setActive(gohelper.findChild(cardGO, "star/star1"), newCardLevel == 1 or oldCardLv == 1)
+	gohelper.setActive(gohelper.findChild(cardGO, "star/star2"), newCardLevel == 2 or oldCardLv == 2)
+	gohelper.setActive(gohelper.findChild(cardGO, "star/star3"), newCardLevel == 3 or oldCardLv == 3)
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_3._lvGOs) do
-		gohelper.setActiveCanvasGroup(iter_4_1, var_4_1 == iter_4_0 or var_4_2 == iter_4_0)
+	for i, lvGO in ipairs(cardItem._lvGOs) do
+		gohelper.setActiveCanvasGroup(lvGO, newCardLevel == i or oldCardLv == i)
 	end
 
-	local var_4_5
+	local stateName
 
-	if arg_4_0._changeFailType then
+	if self._changeFailType then
 		-- block empty
-	elseif var_4_2 < var_4_1 then
-		var_4_5 = "fightcard_rising" .. var_4_2 .. "_" .. var_4_1
+	elseif oldCardLv < newCardLevel then
+		stateName = "fightcard_rising" .. oldCardLv .. "_" .. newCardLevel
 	else
-		var_4_5 = "fightcard_escending" .. var_4_2 .. "_" .. var_4_1
+		stateName = "fightcard_escending" .. oldCardLv .. "_" .. newCardLevel
 	end
 
-	if var_4_5 then
-		local var_4_6 = gohelper.onceAddComponent(var_4_4, typeof(UnityEngine.Animator))
+	if stateName then
+		local animator = gohelper.onceAddComponent(cardGO, typeof(UnityEngine.Animator))
 
-		var_4_6.runtimeAnimatorController = nil
-		var_4_6.runtimeAnimatorController = arg_4_1:getFirstAssetItem():GetResource()
-		var_4_6.speed = FightModel.instance:getUISpeed()
-		var_4_6.enabled = true
+		animator.runtimeAnimatorController = nil
+		animator.runtimeAnimatorController = animLoader:getFirstAssetItem():GetResource()
+		animator.speed = FightModel.instance:getUISpeed()
+		animator.enabled = true
 
-		var_4_6:Play(var_4_5, 0, 0)
-		var_4_6:Update(0)
+		animator:Play(stateName, 0, 0)
+		animator:Update(0)
 
-		arg_4_0._animCompList = arg_4_0._animCompList or {}
+		self._animCompList = self._animCompList or {}
 
-		table.insert(arg_4_0._animCompList, var_4_6)
+		table.insert(self._animCompList, animator)
 	end
 end
 
-function var_0_0._delayDone(arg_5_0)
-	arg_5_0:onDone(true)
+function FightCardChangeEffect:_delayDone()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0._removeDownEffect, arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0._delayDone, arg_6_0)
-	arg_6_0:_removeDownEffect()
-	arg_6_0:_removeLvAnim()
+function FightCardChangeEffect:clearWork()
+	TaskDispatcher.cancelTask(self._removeDownEffect, self)
+	TaskDispatcher.cancelTask(self._delayDone, self)
+	self:_removeDownEffect()
+	self:_removeLvAnim()
 
-	arg_6_0._imgMaskMatDict = nil
-	arg_6_0._imgList = nil
-	arg_6_0._paramDict = nil
+	self._imgMaskMatDict = nil
+	self._imgList = nil
+	self._paramDict = nil
 end
 
-function var_0_0._removeDownEffect(arg_7_0)
-	if arg_7_0._effectLoaderList then
-		for iter_7_0, iter_7_1 in ipairs(arg_7_0._effectLoaderList) do
-			iter_7_1:dispose()
+function FightCardChangeEffect:_removeDownEffect()
+	if self._effectLoaderList then
+		for _, prefabInstantiate in ipairs(self._effectLoaderList) do
+			prefabInstantiate:dispose()
 		end
 	end
 
-	if arg_7_0._effectGOList then
-		for iter_7_2, iter_7_3 in ipairs(arg_7_0._effectGOList) do
-			gohelper.destroy(iter_7_3)
+	if self._effectGOList then
+		for _, go in ipairs(self._effectGOList) do
+			gohelper.destroy(go)
 		end
 	end
 
-	arg_7_0._effectGOList = nil
-	arg_7_0._effectLoaderList = nil
+	self._effectGOList = nil
+	self._effectLoaderList = nil
 end
 
-function var_0_0._removeLvAnim(arg_8_0)
-	if arg_8_0._animLoaderList then
-		for iter_8_0, iter_8_1 in ipairs(arg_8_0._animLoaderList) do
-			iter_8_1:dispose()
+function FightCardChangeEffect:_removeLvAnim()
+	if self._animLoaderList then
+		for _, loader in ipairs(self._animLoaderList) do
+			loader:dispose()
 		end
 	end
 
-	arg_8_0._animLoaderList = nil
+	self._animLoaderList = nil
 
-	if arg_8_0._animCompList then
-		for iter_8_2, iter_8_3 in ipairs(arg_8_0._animCompList) do
-			if not gohelper.isNil(iter_8_3) then
-				iter_8_3.runtimeAnimatorController = nil
+	if self._animCompList then
+		for _, animComp in ipairs(self._animCompList) do
+			if not gohelper.isNil(animComp) then
+				animComp.runtimeAnimatorController = nil
 			end
 		end
 	end
 
-	arg_8_0._animCompList = nil
+	self._animCompList = nil
 end
 
-return var_0_0
+return FightCardChangeEffect

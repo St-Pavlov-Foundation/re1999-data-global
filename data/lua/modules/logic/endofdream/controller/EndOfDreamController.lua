@@ -1,23 +1,25 @@
-﻿module("modules.logic.endofdream.controller.EndOfDreamController", package.seeall)
+﻿-- chunkname: @modules/logic/endofdream/controller/EndOfDreamController.lua
 
-local var_0_0 = class("EndOfDreamController", BaseController)
+module("modules.logic.endofdream.controller.EndOfDreamController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local EndOfDreamController = class("EndOfDreamController", BaseController)
+
+function EndOfDreamController:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function EndOfDreamController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function EndOfDreamController:addConstEvents()
 	return
 end
 
-function var_0_0.reInit(arg_4_0)
+function EndOfDreamController:reInit()
 	return
 end
 
-var_0_0.instance = var_0_0.New()
+EndOfDreamController.instance = EndOfDreamController.New()
 
-return var_0_0
+return EndOfDreamController

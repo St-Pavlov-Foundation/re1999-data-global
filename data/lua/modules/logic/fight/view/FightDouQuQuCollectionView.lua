@@ -1,54 +1,56 @@
-﻿module("modules.logic.fight.view.FightDouQuQuCollectionView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightDouQuQuCollectionView.lua
 
-local var_0_0 = class("FightDouQuQuCollectionView", FightBaseView)
+module("modules.logic.fight.view.FightDouQuQuCollectionView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.collectionObjList = {}
-	arg_1_0.simage_iconList = {}
-	arg_1_0.img_rareList = {}
+local FightDouQuQuCollectionView = class("FightDouQuQuCollectionView", FightBaseView)
 
-	for iter_1_0 = 1, 2 do
-		table.insert(arg_1_0.collectionObjList, gohelper.findChild(arg_1_0.viewGO, "root/collection" .. iter_1_0))
-		table.insert(arg_1_0.simage_iconList, gohelper.findChildSingleImage(arg_1_0.viewGO, "root/collection" .. iter_1_0 .. "/simage_Icon"))
-		table.insert(arg_1_0.img_rareList, gohelper.findChildImage(arg_1_0.viewGO, "root/collection" .. iter_1_0 .. "/image_Rare"))
+function FightDouQuQuCollectionView:onInitView()
+	self.collectionObjList = {}
+	self.simage_iconList = {}
+	self.img_rareList = {}
+
+	for i = 1, 2 do
+		table.insert(self.collectionObjList, gohelper.findChild(self.viewGO, "root/collection" .. i))
+		table.insert(self.simage_iconList, gohelper.findChildSingleImage(self.viewGO, "root/collection" .. i .. "/simage_Icon"))
+		table.insert(self.img_rareList, gohelper.findChildImage(self.viewGO, "root/collection" .. i .. "/image_Rare"))
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function FightDouQuQuCollectionView:addEvents()
 	return
 end
 
-function var_0_0.onConstructor(arg_3_0, arg_3_1)
-	arg_3_0.entityMO = arg_3_1
+function FightDouQuQuCollectionView:onConstructor(entityMO)
+	self.entityMO = entityMO
 end
 
-function var_0_0.refreshEntityMO(arg_4_0, arg_4_1)
-	arg_4_0.entityMO = arg_4_1
+function FightDouQuQuCollectionView:refreshEntityMO(entityMO)
+	self.entityMO = entityMO
 
-	if arg_4_0.viewGO then
-		arg_4_0:refreshCollection()
+	if self.viewGO then
+		self:refreshCollection()
 	end
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0.customData = FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.Act191]
+function FightDouQuQuCollectionView:onOpen()
+	self.customData = FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.Act191]
 
-	arg_5_0:refreshCollection()
+	self:refreshCollection()
 end
 
-function var_0_0.refreshCollection(arg_6_0)
-	local var_6_0 = arg_6_0.entityMO.side == FightEnum.EntitySide.MySide and arg_6_0.customData.teamAHeroInfo or arg_6_0.customData.teamBHeroInfo
-	local var_6_1 = {}
+function FightDouQuQuCollectionView:refreshCollection()
+	local data = self.entityMO.side == FightEnum.EntitySide.MySide and self.customData.teamAHeroInfo or self.customData.teamBHeroInfo
+	local collectionList = {}
 
-	for iter_6_0, iter_6_1 in pairs(var_6_0) do
-		if tonumber(iter_6_0) == arg_6_0.entityMO.modelId then
-			local var_6_2 = string.splitToNumber(iter_6_1, "#")
+	for k, v in pairs(data) do
+		if tonumber(k) == self.entityMO.modelId then
+			local arr = string.splitToNumber(v, "#")
 
-			for iter_6_2 = 2, #var_6_2 do
-				local var_6_3 = tonumber(var_6_2[iter_6_2])
+			for i = 2, #arr do
+				local itemId = tonumber(arr[i])
 
-				if var_6_3 ~= 0 then
-					table.insert(var_6_1, var_6_3)
+				if itemId ~= 0 then
+					table.insert(collectionList, itemId)
 				end
 			end
 
@@ -56,52 +58,52 @@ function var_0_0.refreshCollection(arg_6_0)
 		end
 	end
 
-	if #var_6_1 == 0 then
-		gohelper.setActive(arg_6_0.viewGO, false)
+	if #collectionList == 0 then
+		gohelper.setActive(self.viewGO, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_6_0.viewGO, true)
+	gohelper.setActive(self.viewGO, true)
 
-	for iter_6_3 = 1, #arg_6_0.collectionObjList do
-		local var_6_4 = arg_6_0.collectionObjList[iter_6_3]
-		local var_6_5 = var_6_1[iter_6_3]
+	for i = 1, #self.collectionObjList do
+		local obj = self.collectionObjList[i]
+		local itemId = collectionList[i]
 
-		if var_6_5 then
-			gohelper.setActive(var_6_4, true)
+		if itemId then
+			gohelper.setActive(obj, true)
 
-			local var_6_6 = Activity191Config.instance:getCollectionCo(var_6_5)
+			local config = Activity191Config.instance:getCollectionCo(itemId)
 
-			UISpriteSetMgr.instance:setAct174Sprite(arg_6_0.img_rareList[iter_6_3], "act174_propitembg_" .. var_6_6.rare)
-			arg_6_0.simage_iconList[iter_6_3]:LoadImage(ResUrl.getRougeSingleBgCollection(var_6_6.icon))
+			UISpriteSetMgr.instance:setAct174Sprite(self.img_rareList[i], "act174_propitembg_" .. config.rare)
+			self.simage_iconList[i]:LoadImage(ResUrl.getRougeSingleBgCollection(config.icon))
 
-			local var_6_7 = gohelper.getClickWithDefaultAudio(var_6_4)
+			local click = gohelper.getClickWithDefaultAudio(obj)
 
-			arg_6_0:com_registClick(var_6_7, arg_6_0.onItemClick, var_6_5)
+			self:com_registClick(click, self.onItemClick, itemId)
 		else
-			gohelper.setActive(var_6_4, false)
+			gohelper.setActive(obj, false)
 		end
 	end
 end
 
-function var_0_0.onItemClick(arg_7_0, arg_7_1)
-	local var_7_0 = false
+function FightDouQuQuCollectionView:onItemClick(itemId)
+	local enhance = false
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0.customData.updateCollectionIds) do
-		if iter_7_1 == arg_7_1 then
-			var_7_0 = true
+	for i, v in ipairs(self.customData.updateCollectionIds) do
+		if v == itemId then
+			enhance = true
 
 			break
 		end
 	end
 
-	local var_7_1 = {
-		itemId = arg_7_1,
-		enhance = var_7_0
+	local param = {
+		itemId = itemId,
+		enhance = enhance
 	}
 
-	Activity191Controller.instance:openCollectionTipView(var_7_1)
+	Activity191Controller.instance:openCollectionTipView(param)
 end
 
-return var_0_0
+return FightDouQuQuCollectionView

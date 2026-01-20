@@ -1,13 +1,15 @@
-﻿module("modules.logic.room.view.manufacture.RoomManufactureWrongTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/manufacture/RoomManufactureWrongTipViewContainer.lua
 
-local var_0_0 = class("RoomManufactureWrongTipViewContainer", BaseViewContainer)
+module("modules.logic.room.view.manufacture.RoomManufactureWrongTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoomManufactureWrongTipViewContainer = class("RoomManufactureWrongTipViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RoomManufactureWrongTipView.New())
+function RoomManufactureWrongTipViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RoomManufactureWrongTipView.New())
+
+	return views
 end
 
-return var_0_0
+return RoomManufactureWrongTipViewContainer

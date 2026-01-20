@@ -1,36 +1,38 @@
-﻿module("modules.logic.story.model.StoryBgEffectTransModel", package.seeall)
+﻿-- chunkname: @modules/logic/story/model/StoryBgEffectTransModel.lua
 
-local var_0_0 = class("StoryBgEffectTransModel", BaseModel)
+module("modules.logic.story.model.StoryBgEffectTransModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._transList = {}
+local StoryBgEffectTransModel = class("StoryBgEffectTransModel", BaseModel)
+
+function StoryBgEffectTransModel:onInit()
+	self._transList = {}
 end
 
-function var_0_0.setStoryBgEffectTransList(arg_2_0, arg_2_1)
-	arg_2_0._transList = {}
+function StoryBgEffectTransModel:setStoryBgEffectTransList(infos)
+	self._transList = {}
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_1) do
-		local var_2_0 = StoryBgEffectTransMo.New()
+	for k, info in ipairs(infos) do
+		local mo = StoryBgEffectTransMo.New()
 
-		var_2_0:init(iter_2_1, iter_2_0)
-		table.insert(arg_2_0._transList, var_2_0)
+		mo:init(info, k)
+		table.insert(self._transList, mo)
 	end
 end
 
-function var_0_0.getStoryBgEffectTransList(arg_3_0)
-	return arg_3_0._transList
+function StoryBgEffectTransModel:getStoryBgEffectTransList()
+	return self._transList
 end
 
-function var_0_0.getStoryBgEffectTransByType(arg_4_0, arg_4_1)
-	for iter_4_0, iter_4_1 in pairs(arg_4_0._transList) do
-		if iter_4_1.type == arg_4_1 then
-			return iter_4_1
+function StoryBgEffectTransModel:getStoryBgEffectTransByType(type)
+	for _, v in pairs(self._transList) do
+		if v.type == type then
+			return v
 		end
 	end
 
 	return nil
 end
 
-var_0_0.instance = var_0_0.New()
+StoryBgEffectTransModel.instance = StoryBgEffectTransModel.New()
 
-return var_0_0
+return StoryBgEffectTransModel

@@ -1,109 +1,107 @@
-﻿module("modules.logic.fight.entity.comp.skill.FightTLEventSceneMove", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skill/FightTLEventSceneMove.lua
 
-local var_0_0 = class("FightTLEventSceneMove", FightTimelineTrackItem)
+module("modules.logic.fight.entity.comp.skill.FightTLEventSceneMove", package.seeall)
 
-var_0_0.MoveType = {
+local FightTLEventSceneMove = class("FightTLEventSceneMove", FightTimelineTrackItem)
+
+FightTLEventSceneMove.MoveType = {
 	Revert = 2,
 	Move = 1
 }
 
-function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.moveType = tonumber(arg_1_3[1])
-	arg_1_0.easeType = tonumber(arg_1_3[3])
+function FightTLEventSceneMove:onTrackStart(fightStepData, duration, paramsArr)
+	self.moveType = tonumber(paramsArr[1])
+	self.easeType = tonumber(paramsArr[3])
 
-	if arg_1_0.moveType == var_0_0.MoveType.Move then
-		arg_1_0:handleMove(arg_1_1, arg_1_2, arg_1_3)
+	if self.moveType == FightTLEventSceneMove.MoveType.Move then
+		self:handleMove(fightStepData, duration, paramsArr)
 	else
-		arg_1_0:handleRevert(arg_1_1, arg_1_2, arg_1_3)
+		self:handleRevert(fightStepData, duration, paramsArr)
 	end
 end
 
-function var_0_0.handleMove(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	arg_2_0.targetPos = FightStrUtil.instance:getSplitToNumberCache(arg_2_3[2], ",")
+function FightTLEventSceneMove:handleMove(fightStepData, duration, paramsArr)
+	self.targetPos = FightStrUtil.instance:getSplitToNumberCache(paramsArr[2], ",")
 
-	local var_2_0 = FightHelper.getEntity(arg_2_1.fromId)
-	local var_2_1 = var_2_0 and var_2_0:getMO()
+	local entity = FightHelper.getEntity(fightStepData.fromId)
+	local entityMo = entity and entity:getMO()
 
-	if not var_2_1 then
-		logError("not found entity mo : " .. tostring(arg_2_1.fromId))
+	if not entityMo then
+		logError("not found entity mo : " .. tostring(fightStepData.fromId))
 
 		return
 	end
 
-	local var_2_2, var_2_3, var_2_4 = FightHelper.getEntityStandPos(var_2_1)
-	local var_2_5 = arg_2_0.targetPos[1]
-	local var_2_6 = arg_2_0.targetPos[2]
-	local var_2_7 = arg_2_0.targetPos[3]
+	local x, y, z = FightHelper.getEntityStandPos(entityMo)
+	local targetX, targetY, targetZ = self.targetPos[1], self.targetPos[2], self.targetPos[3]
 
-	var_2_5 = var_2_1.side == FightEnum.EntitySide.MySide and var_2_5 or -var_2_5
+	targetX = entityMo.side == FightEnum.EntitySide.MySide and targetX or -targetX
 
-	local var_2_8 = var_2_5 - var_2_2
-	local var_2_9 = var_2_6 - var_2_3
-	local var_2_10 = var_2_7 - var_2_4
-	local var_2_11 = arg_2_0:getSceneTr()
+	local offsetX, offsetY, offsetZ = targetX - x, targetY - y, targetZ - z
+	local tr = self:getSceneTr()
 
-	if var_2_11 then
-		arg_2_0:clearTween()
+	if tr then
+		self:clearTween()
 
-		local var_2_12, var_2_13, var_2_14 = transformhelper.getLocalPos(var_2_11)
+		local curX, curY, curZ = transformhelper.getLocalPos(tr)
 
-		FightModel.instance:setCurSceneOriginPos(var_2_12, var_2_13, var_2_14)
+		FightModel.instance:setCurSceneOriginPos(curX, curY, curZ)
 
-		arg_2_0.tweenId = ZProj.TweenHelper.DOMove(var_2_11, var_2_12 + var_2_8, var_2_13 + var_2_9, var_2_14 + var_2_10, arg_2_2, nil, nil, nil, arg_2_0.easeType)
+		self.tweenId = ZProj.TweenHelper.DOMove(tr, curX + offsetX, curY + offsetY, curZ + offsetZ, duration, nil, nil, nil, self.easeType)
 	end
 end
 
-function var_0_0.handleRevert(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	local var_3_0, var_3_1, var_3_2 = FightModel.instance:getCurSceneOriginPos()
-	local var_3_3 = arg_3_0:getSceneTr()
+function FightTLEventSceneMove:handleRevert(fightStepData, duration, paramsArr)
+	local originX, originY, originZ = FightModel.instance:getCurSceneOriginPos()
+	local tr = self:getSceneTr()
 
-	if var_3_3 then
-		arg_3_0:clearTween()
+	if tr then
+		self:clearTween()
 
-		arg_3_0.tweenId = ZProj.TweenHelper.DOMove(var_3_3, var_3_0, var_3_1, var_3_2, arg_3_2, arg_3_0.onRevertCallback, arg_3_0, nil, arg_3_0.easeType)
+		self.tweenId = ZProj.TweenHelper.DOMove(tr, originX, originY, originZ, duration, self.onRevertCallback, self, nil, self.easeType)
 	end
 end
 
-function var_0_0.getSceneTr(arg_4_0)
-	local var_4_0 = GameSceneMgr.instance:getCurScene()
-	local var_4_1 = var_4_0 and var_4_0:getSceneContainerGO()
+function FightTLEventSceneMove:getSceneTr()
+	local curScene = GameSceneMgr.instance:getCurScene()
+	local sceneGo = curScene and curScene:getSceneContainerGO()
 
-	return var_4_1 and var_4_1.transform
+	return sceneGo and sceneGo.transform
 end
 
-function var_0_0.onRevertCallback(arg_5_0)
-	local var_5_0, var_5_1, var_5_2 = FightModel.instance:getCurSceneOriginPos()
+function FightTLEventSceneMove:onRevertCallback()
+	local originX, originY, originZ = FightModel.instance:getCurSceneOriginPos()
 
 	FightModel.instance:setCurSceneOriginPos(nil, nil, nil)
 
-	local var_5_3 = arg_5_0:getSceneTr()
+	local tr = self:getSceneTr()
 
-	if var_5_3 then
-		transformhelper.setLocalPos(var_5_3, var_5_0, var_5_1, var_5_2)
+	if tr then
+		transformhelper.setLocalPos(tr, originX, originY, originZ)
 	end
 end
 
-function var_0_0.onTrackEnd(arg_6_0)
+function FightTLEventSceneMove:onTrackEnd()
 	return
 end
 
-function var_0_0.clearTween(arg_7_0)
-	if arg_7_0.tweenId then
-		ZProj.TweenHelper.KillById(arg_7_0.tweenId)
+function FightTLEventSceneMove:clearTween()
+	if self.tweenId then
+		ZProj.TweenHelper.KillById(self.tweenId)
 
-		arg_7_0.tweenId = nil
+		self.tweenId = nil
 	end
 end
 
-function var_0_0.clearData(arg_8_0)
-	arg_8_0.moveType = nil
-	arg_8_0.targetPos = nil
-	arg_8_0.easeType = nil
+function FightTLEventSceneMove:clearData()
+	self.moveType = nil
+	self.targetPos = nil
+	self.easeType = nil
 end
 
-function var_0_0.onDestructor(arg_9_0)
-	arg_9_0:clearTween()
-	arg_9_0:clearData()
+function FightTLEventSceneMove:onDestructor()
+	self:clearTween()
+	self:clearData()
 end
 
-return var_0_0
+return FightTLEventSceneMove

@@ -1,190 +1,195 @@
-﻿module("modules.logic.bossrush.view.FightActionBarPopView", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/view/FightActionBarPopView.lua
 
-local var_0_0 = class("FightActionBarPopView", BaseViewExtended)
+module("modules.logic.bossrush.view.FightActionBarPopView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._closeBtn = gohelper.findChildButton(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._content = gohelper.findChild(arg_1_0.viewGO, "middle/#go_cardcontent")
-	arg_1_0._itemModel = gohelper.findChild(arg_1_0.viewGO, "middle/#go_cardcontent/card")
-	arg_1_0._cardItem = gohelper.findChild(arg_1_0.viewGO, "middle/#go_cardcontent/card/cardItem")
-	arg_1_0._cardRoot = gohelper.findChild(arg_1_0.viewGO, "middle/#go_cardcontent/card/cardItem/root")
-	arg_1_0._skillName = gohelper.findChildText(arg_1_0.viewGO, "bottom/skillname")
-	arg_1_0._skillDes = gohelper.findChildText(arg_1_0.viewGO, "bottom/#scroll_txt/Viewport/Content/skilldesc")
+local FightActionBarPopView = class("FightActionBarPopView", BaseViewExtended)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function FightActionBarPopView:onInitView()
+	self._closeBtn = gohelper.findChildButton(self.viewGO, "#btn_close")
+	self._content = gohelper.findChild(self.viewGO, "middle/#go_cardcontent")
+	self._itemModel = gohelper.findChild(self.viewGO, "middle/#go_cardcontent/card")
+	self._cardItem = gohelper.findChild(self.viewGO, "middle/#go_cardcontent/card/cardItem")
+	self._cardRoot = gohelper.findChild(self.viewGO, "middle/#go_cardcontent/card/cardItem/root")
+	self._skillName = gohelper.findChildText(self.viewGO, "bottom/skillname")
+	self._skillDes = gohelper.findChildText(self.viewGO, "bottom/#scroll_txt/Viewport/Content/skilldesc")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._closeBtn, arg_2_0._onCloseBtn, arg_2_0)
+function FightActionBarPopView:addEvents()
+	self:addClickCb(self._closeBtn, self._onCloseBtn, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function FightActionBarPopView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	SkillHelper.addHyperLinkClick(arg_4_0._skillDes, arg_4_0.linkClickCallback, arg_4_0)
+function FightActionBarPopView:_editableInitView()
+	SkillHelper.addHyperLinkClick(self._skillDes, self.linkClickCallback, self)
 
-	arg_4_0._skillName.text = ""
-	arg_4_0._skillDes.text = ""
+	self._skillName.text = ""
+	self._skillDes.text = ""
 end
 
-function var_0_0.linkClickCallback(arg_5_0, arg_5_1)
-	CommonBuffTipController.instance:openCommonTipViewWithCustomPos(arg_5_1, Vector2.zero, CommonBuffTipEnum.Pivot.Center)
+function FightActionBarPopView:linkClickCallback(effId)
+	CommonBuffTipController.instance:openCommonTipViewWithCustomPos(effId, Vector2.zero, CommonBuffTipEnum.Pivot.Center)
 end
 
-function var_0_0._onCloseBtn(arg_6_0)
-	arg_6_0:closeThis()
+function FightActionBarPopView:_onCloseBtn()
+	self:closeThis()
 end
 
-function var_0_0.onRefreshViewParam(arg_7_0)
+function FightActionBarPopView:onRefreshViewParam()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0.entityId = arg_8_0.viewParam.entityId
+function FightActionBarPopView:onOpen()
+	self.entityId = self.viewParam.entityId
 
-	local var_8_0 = "ui/viewres/fight/fightcarditem.prefab"
+	local cardPath = "ui/viewres/fight/fightcarditem.prefab"
 
-	arg_8_0:com_loadAsset(var_8_0, arg_8_0._onLoadFinish)
+	self:com_loadAsset(cardPath, self._onLoadFinish)
 end
 
-function var_0_0._onLoadFinish(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_1:GetResource()
+function FightActionBarPopView:_onLoadFinish(loader)
+	local tarPrefab = loader:GetResource()
+	local obj = gohelper.clone(tarPrefab, self._cardRoot)
 
-	gohelper.clone(var_9_0, arg_9_0._cardRoot).name = "card"
-	arg_9_0._cardObjList = arg_9_0:getUserDataTb_()
-	arg_9_0._cardCount = 0
+	obj.name = "card"
+	self._cardObjList = self:getUserDataTb_()
+	self._cardCount = 0
 
-	table.insert(arg_9_0.viewParam.dataList, 1, 0)
-	arg_9_0:com_createObjList(arg_9_0._onItemShow, arg_9_0.viewParam.dataList, arg_9_0._content, arg_9_0._itemModel)
+	table.insert(self.viewParam.dataList, 1, 0)
+	self:com_createObjList(self._onItemShow, self.viewParam.dataList, self._content, self._itemModel)
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0._cardObjList) do
-		if tonumber(iter_9_1.name) ~= 0 then
-			arg_9_0:_onCardClick(iter_9_1)
+	for i, v in ipairs(self._cardObjList) do
+		local skillId = tonumber(v.name)
+
+		if skillId ~= 0 then
+			self:_onCardClick(v)
 
 			break
 		end
 	end
 end
 
-function var_0_0._onItemShow(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	if arg_10_3 <= 1 then
+function FightActionBarPopView:_onItemShow(obj, data, index)
+	if index <= 1 then
 		return
 	end
 
-	if arg_10_0._cardCount >= 6 then
-		gohelper.setActive(arg_10_1, false)
+	if self._cardCount >= 6 then
+		gohelper.setActive(obj, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_10_1, true)
+	gohelper.setActive(obj, true)
 
-	local var_10_0 = gohelper.findChildText(arg_10_1, "#go_select/#txt_round")
-	local var_10_1 = gohelper.findChildText(arg_10_1, "#go_unselect/#txt_round")
+	local roundText1 = gohelper.findChildText(obj, "#go_select/#txt_round")
+	local roundText2 = gohelper.findChildText(obj, "#go_unselect/#txt_round")
 
-	var_10_0.text = FightModel.instance:getCurRoundId() + arg_10_3 - 2
-	var_10_1.text = FightModel.instance:getCurRoundId() + arg_10_3 - 2
+	roundText1.text = FightModel.instance:getCurRoundId() + index - 2
+	roundText2.text = FightModel.instance:getCurRoundId() + index - 2
 
-	table.insert(arg_10_2, 1, 0)
-	table.insert(arg_10_2, 1, 0)
-	arg_10_0:com_createObjList(arg_10_0._onCardItemShow, arg_10_2, arg_10_1, arg_10_0._cardItem)
+	table.insert(data, 1, 0)
+	table.insert(data, 1, 0)
+	self:com_createObjList(self._onCardItemShow, data, obj, self._cardItem)
 
-	local var_10_2 = gohelper.findChild(arg_10_1, "#go_select")
-	local var_10_3 = gohelper.findChild(arg_10_1, "#go_unselect")
+	local select = gohelper.findChild(obj, "#go_select")
+	local unSelect = gohelper.findChild(obj, "#go_unselect")
 
-	gohelper.setActive(var_10_2, arg_10_3 == 2)
-	gohelper.setActive(var_10_3, arg_10_3 ~= 2)
+	gohelper.setActive(select, index == 2)
+	gohelper.setActive(unSelect, index ~= 2)
 end
 
-function var_0_0._onCardItemShow(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	if arg_11_3 <= 2 then
+function FightActionBarPopView:_onCardItemShow(obj, data, index)
+	if index <= 2 then
 		return
 	end
 
-	arg_11_0._cardCount = arg_11_0._cardCount + 1
+	self._cardCount = self._cardCount + 1
 
-	if arg_11_0._cardCount > 6 then
-		gohelper.setActive(arg_11_1, false)
+	if self._cardCount > 6 then
+		gohelper.setActive(obj, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_11_1, true)
+	gohelper.setActive(obj, true)
 
-	local var_11_0 = arg_11_2.skillId
+	local skillId = data.skillId
 
-	arg_11_1.name = var_11_0
+	obj.name = skillId
 
-	local var_11_1 = gohelper.findChild(arg_11_1, "root/card")
-	local var_11_2 = gohelper.findChild(arg_11_1, "empty")
-	local var_11_3 = gohelper.findChild(arg_11_1, "chant")
-	local var_11_4 = gohelper.findChildText(arg_11_1, "chant/round")
+	local card = gohelper.findChild(obj, "root/card")
+	local empty = gohelper.findChild(obj, "empty")
+	local chant = gohelper.findChild(obj, "chant")
+	local round = gohelper.findChildText(obj, "chant/round")
 
-	gohelper.setActive(var_11_3, arg_11_2.isChannelSkill)
+	gohelper.setActive(chant, data.isChannelSkill)
 
-	var_11_4.text = arg_11_2.round or 0
+	round.text = data.round or 0
 
-	gohelper.setActive(var_11_1, var_11_0 ~= 0)
-	gohelper.setActive(var_11_2, var_11_0 == 0)
+	gohelper.setActive(card, skillId ~= 0)
+	gohelper.setActive(empty, skillId == 0)
 
-	local var_11_5 = MonoHelper.addNoUpdateLuaComOnceToGo(var_11_1, FightViewCardItem, FightEnum.CardShowType.BossAction)
+	local class = MonoHelper.addNoUpdateLuaComOnceToGo(card, FightViewCardItem, FightEnum.CardShowType.BossAction)
 
-	if var_11_0 ~= 0 then
-		var_11_5:updateItem(arg_11_0.viewParam.entityId, var_11_0)
+	if skillId ~= 0 then
+		class:updateItem(self.viewParam.entityId, skillId)
 
-		local var_11_6 = var_11_5._lvImgComps
+		local lvImgComps = class._lvImgComps
 
-		for iter_11_0, iter_11_1 in ipairs(var_11_6) do
-			SLFramework.UGUI.GuiHelper.SetColor(iter_11_1, arg_11_2.isChannelSkill and "#666666" or "#FFFFFF")
+		for i, image in ipairs(lvImgComps) do
+			SLFramework.UGUI.GuiHelper.SetColor(image, data.isChannelSkill and "#666666" or "#FFFFFF")
 		end
 	end
 
-	local var_11_7 = gohelper.getClickWithDefaultAudio(arg_11_1)
+	local click = gohelper.getClickWithDefaultAudio(obj)
 
-	arg_11_0:addClickCb(var_11_7, arg_11_0._onCardClick, arg_11_0, arg_11_1)
-	table.insert(arg_11_0._cardObjList, arg_11_1)
+	self:addClickCb(click, self._onCardClick, self, obj)
+	table.insert(self._cardObjList, obj)
 end
 
-function var_0_0._onCardClick(arg_12_0, arg_12_1)
-	local var_12_0 = tonumber(arg_12_1.name)
+function FightActionBarPopView:_onCardClick(obj)
+	local skillId = tonumber(obj.name)
 
-	if var_12_0 == 0 then
+	if skillId == 0 then
 		return
 	end
 
-	if arg_12_0._curSelectObj == arg_12_1 then
+	if self._curSelectObj == obj then
 		return
 	end
 
-	arg_12_0._curSelectObj = arg_12_1
+	self._curSelectObj = obj
 
-	local var_12_1 = lua_skill.configDict[var_12_0]
+	local skillConfig = lua_skill.configDict[skillId]
 
-	for iter_12_0, iter_12_1 in ipairs(arg_12_0._cardObjList) do
-		local var_12_2 = FightCardDataHelper.isBigSkill(var_12_0)
+	for i, v in ipairs(self._cardObjList) do
+		local isBigSkill = FightCardDataHelper.isBigSkill(skillId)
 
-		gohelper.setActive(gohelper.findChild(iter_12_1, "select"), arg_12_1 == iter_12_1 and not var_12_2)
-		gohelper.setActive(gohelper.findChild(iter_12_1, "uniqueSelect"), arg_12_1 == iter_12_1 and var_12_2)
+		gohelper.setActive(gohelper.findChild(v, "select"), obj == v and not isBigSkill)
+		gohelper.setActive(gohelper.findChild(v, "uniqueSelect"), obj == v and isBigSkill)
 	end
 
-	if var_12_1 then
-		arg_12_0._skillName.text = var_12_1.name
-		arg_12_0._skillDes.text = SkillHelper.getEntityDescBySkillCo(arg_12_0.entityId, var_12_1, "#DB945B", "#5C86DA")
+	if skillConfig then
+		self._skillName.text = skillConfig.name
+		self._skillDes.text = SkillHelper.getEntityDescBySkillCo(self.entityId, skillConfig, "#DB945B", "#5C86DA")
 	else
-		logError("技能表找不到id:" .. var_12_0)
+		logError("技能表找不到id:" .. skillId)
 	end
 end
 
-function var_0_0.onClose(arg_13_0)
+function FightActionBarPopView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_14_0)
+function FightActionBarPopView:onDestroyView()
 	return
 end
 
-return var_0_0
+return FightActionBarPopView

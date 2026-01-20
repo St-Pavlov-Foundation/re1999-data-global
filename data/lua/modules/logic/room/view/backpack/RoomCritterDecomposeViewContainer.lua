@@ -1,79 +1,81 @@
-﻿module("modules.logic.room.view.backpack.RoomCritterDecomposeViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/backpack/RoomCritterDecomposeViewContainer.lua
 
-local var_0_0 = class("RoomCritterDecomposeViewContainer", BaseViewContainer)
-local var_0_1 = 4
-local var_0_2 = 0.03
+module("modules.logic.room.view.backpack.RoomCritterDecomposeViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+local RoomCritterDecomposeViewContainer = class("RoomCritterDecomposeViewContainer", BaseViewContainer)
+local SHOW_LINE = 4
+local LINE_ANIM_TIME = 0.03
 
-	var_1_1.scrollGOPath = "left_container/#go_scrollcontainer/#scroll_critter"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_1.prefabUrl = "left_container/#go_scrollcontainer/#scroll_critter/Viewport/Content/#go_critterItem"
-	var_1_1.cellClass = RoomCritterDecomposeItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = arg_1_0:getLineCount()
-	var_1_1.cellWidth = 200
-	var_1_1.cellHeight = 200
-	var_1_1.frameUpdateMs = 0
-	var_1_1.minUpdateCountInFrame = var_1_1.lineCount
+function RoomCritterDecomposeViewContainer:buildViews()
+	local views = {}
+	local scrollParam = ListScrollParam.New()
 
-	local var_1_2 = arg_1_0.getDelayTimeArray(var_1_1.lineCount)
-	local var_1_3 = LuaListScrollViewWithAnimator.New(RoomCritterDecomposeListModel.instance, var_1_1, var_1_2)
+	scrollParam.scrollGOPath = "left_container/#go_scrollcontainer/#scroll_critter"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "left_container/#go_scrollcontainer/#scroll_critter/Viewport/Content/#go_critterItem"
+	scrollParam.cellClass = RoomCritterDecomposeItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = self:getLineCount()
+	scrollParam.cellWidth = 200
+	scrollParam.cellHeight = 200
+	scrollParam.frameUpdateMs = 0
+	scrollParam.minUpdateCountInFrame = scrollParam.lineCount
 
-	table.insert(var_1_0, var_1_3)
-	table.insert(var_1_0, RoomCritterDecomposeView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_lefttopbtns"))
+	local delayTimeArray = self.getDelayTimeArray(scrollParam.lineCount)
+	local listScrollView = LuaListScrollViewWithAnimator.New(RoomCritterDecomposeListModel.instance, scrollParam, delayTimeArray)
 
-	return var_1_0
+	table.insert(views, listScrollView)
+	table.insert(views, RoomCritterDecomposeView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_lefttopbtns"))
+
+	return views
 end
 
-function var_0_0.getLineCount(arg_2_0)
-	local var_2_0 = gohelper.findChildComponent(arg_2_0.viewGO, "left_container/#go_scrollcontainer", gohelper.Type_Transform)
-	local var_2_1 = recthelper.getWidth(var_2_0)
+function RoomCritterDecomposeViewContainer:getLineCount()
+	local contentTr = gohelper.findChildComponent(self.viewGO, "left_container/#go_scrollcontainer", gohelper.Type_Transform)
+	local contentWidth = recthelper.getWidth(contentTr)
 
-	return math.floor(var_2_1 / 200)
+	return math.floor(contentWidth / 200)
 end
 
-function var_0_0.getDelayTimeArray(arg_3_0)
-	local var_3_0 = {}
+function RoomCritterDecomposeViewContainer.getDelayTimeArray(lineCount)
+	local timeArray = {}
 
-	setmetatable(var_3_0, var_3_0)
+	setmetatable(timeArray, timeArray)
 
-	function var_3_0.__index(arg_4_0, arg_4_1)
-		local var_4_0 = math.floor((arg_4_1 - 1) / arg_3_0)
+	function timeArray.__index(t, index)
+		local line = math.floor((index - 1) / lineCount)
 
-		if var_4_0 > var_0_1 then
+		if line > SHOW_LINE then
 			return
 		end
 
-		return var_4_0 * var_0_2
+		return line * LINE_ANIM_TIME
 	end
 
-	return var_3_0
+	return timeArray
 end
 
-function var_0_0.buildTabViews(arg_5_0, arg_5_1)
-	if arg_5_1 == 1 then
-		arg_5_0.navigateView = NavigateButtonsView.New({
+function RoomCritterDecomposeViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_5_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-function var_0_0.playCloseTransition(arg_6_0)
-	arg_6_0:onPlayCloseTransitionFinish()
+function RoomCritterDecomposeViewContainer:playCloseTransition()
+	self:onPlayCloseTransitionFinish()
 end
 
-function var_0_0.onContainerCloseFinish(arg_7_0)
+function RoomCritterDecomposeViewContainer:onContainerCloseFinish()
 	RoomCritterDecomposeListModel.instance:onInit()
 end
 
-return var_0_0
+return RoomCritterDecomposeViewContainer

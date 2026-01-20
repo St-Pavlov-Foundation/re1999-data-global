@@ -1,21 +1,23 @@
-﻿module("modules.logic.player.model.IconListModel", package.seeall)
+﻿-- chunkname: @modules/logic/player/model/IconListModel.lua
 
-local var_0_0 = class("IconListModel", ListScrollModel)
+module("modules.logic.player.model.IconListModel", package.seeall)
 
-function var_0_0.setIconList(arg_1_0, arg_1_1)
-	arg_1_0._moList = {}
+local IconListModel = class("IconListModel", ListScrollModel)
 
-	if arg_1_1 then
-		arg_1_0._moList = arg_1_1
+function IconListModel:setIconList(infos)
+	self._moList = {}
 
-		table.sort(arg_1_0._moList, function(arg_2_0, arg_2_1)
-			return arg_2_0.id < arg_2_1.id
+	if infos then
+		self._moList = infos
+
+		table.sort(self._moList, function(a, b)
+			return a.id < b.id
 		end)
 	end
 
-	arg_1_0:setList(arg_1_0._moList)
+	self:setList(self._moList)
 end
 
-var_0_0.instance = var_0_0.New()
+IconListModel.instance = IconListModel.New()
 
-return var_0_0
+return IconListModel

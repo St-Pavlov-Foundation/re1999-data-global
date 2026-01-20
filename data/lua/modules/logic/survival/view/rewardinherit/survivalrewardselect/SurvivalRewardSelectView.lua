@@ -1,530 +1,541 @@
-﻿module("modules.logic.survival.view.rewardinherit.survivalrewardselect.SurvivalRewardSelectView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/rewardinherit/survivalrewardselect/SurvivalRewardSelectView.lua
 
-local var_0_0 = class("SurvivalRewardSelectView", BaseView)
+module("modules.logic.survival.view.rewardinherit.survivalrewardselect.SurvivalRewardSelectView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btncloseInfo = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_closeInfo")
-	arg_1_0._btnabandon = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/Left/btn/#btn_abandon")
-	arg_1_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/Left/btn/#btn_confirm")
-	arg_1_0._gogrey = gohelper.findChild(arg_1_0.viewGO, "root/Left/btn/#btn_confirm/#go_grey")
-	arg_1_0._txtcurrent = gohelper.findChildText(arg_1_0.viewGO, "root/Left/score/#txt_current")
-	arg_1_0._txttotal = gohelper.findChildText(arg_1_0.viewGO, "root/Left/score/#txt_total")
-	arg_1_0._scrollList = gohelper.findChild(arg_1_0.viewGO, "root/Left/#scroll_List")
-	arg_1_0._goleftempty = gohelper.findChild(arg_1_0.viewGO, "root/Left/#go_empty")
-	arg_1_0._gorightempty = gohelper.findChild(arg_1_0.viewGO, "root/Right/#go_empty")
-	arg_1_0._gotab1 = gohelper.findChild(arg_1_0.viewGO, "root/Right/top/#go_tab1")
-	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "root/Right/top/#go_tab1/#go_select")
-	arg_1_0._gonum = gohelper.findChild(arg_1_0.viewGO, "root/Right/top/#go_tab1/#go_num")
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "root/Right/top/#go_tab1/#go_num/#txt_num")
-	arg_1_0._btntab = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/Right/top/#go_tab1/#btn_tab")
-	arg_1_0._gotab2 = gohelper.findChild(arg_1_0.viewGO, "root/Right/top/#go_tab2")
-	arg_1_0._tabContent = gohelper.findChild(arg_1_0.viewGO, "root/Right/tabScroll/Viewport/#tabContent")
-	arg_1_0._goSurvivalRewardInheritTab = gohelper.findChild(arg_1_0.viewGO, "root/Right/tabScroll/Viewport/#tabContent/#go_SurvivalRewardInheritTab")
-	arg_1_0._goSelected = gohelper.findChild(arg_1_0.viewGO, "root/Right/tabScroll/Viewport/#tabContent/#go_SurvivalRewardInheritTab/#go_Selected")
-	arg_1_0._scroll_amplifier = gohelper.findChild(arg_1_0.viewGO, "root/Right/#scroll_amplifier")
-	arg_1_0._gocollectionitem = gohelper.findChild(arg_1_0.viewGO, "root/Right/#scroll_amplifier/Viewport/Content/#go_collectionitem")
-	arg_1_0._scroll_npc = gohelper.findChild(arg_1_0.viewGO, "root/Right/#scroll_npc")
-	arg_1_0._gonpcitem = gohelper.findChild(arg_1_0.viewGO, "root/Right/#scroll_npc/Viewport/Content/#go_npcitem")
-	arg_1_0._btnquick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/Right/#btn_quick")
-	arg_1_0.go_infoview = gohelper.findChild(arg_1_0.viewGO, "root/#go_infoview")
-	arg_1_0._goSelectGrey = gohelper.findChild(arg_1_0.viewGO, "root/Right/#btn_quick/#go_grey")
+local SurvivalRewardSelectView = class("SurvivalRewardSelectView", BaseView)
 
-	gohelper.setActive(arg_1_0._goSurvivalRewardInheritTab, false)
+function SurvivalRewardSelectView:onInitView()
+	self._btncloseInfo = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_closeInfo")
+	self._btnabandon = gohelper.findChildButtonWithAudio(self.viewGO, "root/Left/btn/#btn_abandon")
+	self._btnconfirm = gohelper.findChildButtonWithAudio(self.viewGO, "root/Left/btn/#btn_confirm")
+	self._gogrey = gohelper.findChild(self.viewGO, "root/Left/btn/#btn_confirm/#go_grey")
+	self._txtcurrent = gohelper.findChildText(self.viewGO, "root/Left/score/#txt_current")
+	self._txttotal = gohelper.findChildText(self.viewGO, "root/Left/score/#txt_total")
+	self._scrollList = gohelper.findChild(self.viewGO, "root/Left/#scroll_List")
+	self._goleftempty = gohelper.findChild(self.viewGO, "root/Left/#go_empty")
+	self._gorightempty = gohelper.findChild(self.viewGO, "root/Right/#go_empty")
+	self._gotab1 = gohelper.findChild(self.viewGO, "root/Right/top/#go_tab1")
+	self._goselect = gohelper.findChild(self.viewGO, "root/Right/top/#go_tab1/#go_select")
+	self._gonum = gohelper.findChild(self.viewGO, "root/Right/top/#go_tab1/#go_num")
+	self._txtnum = gohelper.findChildText(self.viewGO, "root/Right/top/#go_tab1/#go_num/#txt_num")
+	self._btntab = gohelper.findChildButtonWithAudio(self.viewGO, "root/Right/top/#go_tab1/#btn_tab")
+	self._gotab2 = gohelper.findChild(self.viewGO, "root/Right/top/#go_tab2")
+	self._tabContent = gohelper.findChild(self.viewGO, "root/Right/tabScroll/Viewport/#tabContent")
+	self._goSurvivalRewardInheritTab = gohelper.findChild(self.viewGO, "root/Right/tabScroll/Viewport/#tabContent/#go_SurvivalRewardInheritTab")
+	self._goSelected = gohelper.findChild(self.viewGO, "root/Right/tabScroll/Viewport/#tabContent/#go_SurvivalRewardInheritTab/#go_Selected")
+	self._scroll_amplifier = gohelper.findChild(self.viewGO, "root/Right/#scroll_amplifier")
+	self._gocollectionitem = gohelper.findChild(self.viewGO, "root/Right/#scroll_amplifier/Viewport/Content/#go_collectionitem")
+	self._scroll_npc = gohelper.findChild(self.viewGO, "root/Right/#scroll_npc")
+	self._gonpcitem = gohelper.findChild(self.viewGO, "root/Right/#scroll_npc/Viewport/Content/#go_npcitem")
+	self._btnquick = gohelper.findChildButtonWithAudio(self.viewGO, "root/Right/#btn_quick")
+	self.go_infoview = gohelper.findChild(self.viewGO, "root/#go_infoview")
+	self._goSelectGrey = gohelper.findChild(self.viewGO, "root/Right/#btn_quick/#go_grey")
 
-	arg_1_0.handbookTabs = {}
-	arg_1_0.tabs = {}
+	gohelper.setActive(self._goSurvivalRewardInheritTab, false)
 
-	local var_1_0 = arg_1_0.viewContainer:getSetting().otherRes.survivalmapbagitem
+	self.handbookTabs = {}
+	self.tabs = {}
 
-	arg_1_0._itemAmplifier = arg_1_0:getResInst(var_1_0, arg_1_0.viewGO)
+	local resPath = self.viewContainer:getSetting().otherRes.survivalmapbagitem
 
-	local var_1_1 = arg_1_0.viewContainer:getSetting().otherRes.survivalrewardinheritnpcitem
+	self._itemAmplifier = self:getResInst(resPath, self.viewGO)
+	resPath = self.viewContainer:getSetting().otherRes.survivalrewardinheritnpcitem
+	self._itemNpc = self:getResInst(resPath, self.viewGO)
 
-	arg_1_0._itemNpc = arg_1_0:getResInst(var_1_1, arg_1_0.viewGO)
+	gohelper.setActive(self._itemAmplifier, false)
+	gohelper.setActive(self._itemNpc, false)
 
-	gohelper.setActive(arg_1_0._itemAmplifier, false)
-	gohelper.setActive(arg_1_0._itemNpc, false)
+	self._selectSimpleList = MonoHelper.addNoUpdateLuaComOnceToGo(self._scrollList, SurvivalSimpleListPart)
 
-	arg_1_0._selectSimpleList = MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0._scrollList, SurvivalSimpleListPart)
+	self._selectSimpleList:setCellUpdateCallBack(self._createItemSelect, self, SurvivalBagItem, self._itemAmplifier)
 
-	arg_1_0._selectSimpleList:setCellUpdateCallBack(arg_1_0._createItemSelect, arg_1_0, SurvivalBagItem, arg_1_0._itemAmplifier)
+	self._amplifierSimpleList = MonoHelper.addNoUpdateLuaComOnceToGo(self._scroll_amplifier, SurvivalSimpleListPart)
 
-	arg_1_0._amplifierSimpleList = MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0._scroll_amplifier, SurvivalSimpleListPart)
+	self._amplifierSimpleList:setCellUpdateCallBack(self._createItemAmplifier, self, SurvivalBagItem, self._itemAmplifier)
 
-	arg_1_0._amplifierSimpleList:setCellUpdateCallBack(arg_1_0._createItemAmplifier, arg_1_0, SurvivalBagItem, arg_1_0._itemAmplifier)
+	self._npcSimpleList = MonoHelper.addNoUpdateLuaComOnceToGo(self._scroll_npc, SurvivalSimpleListPart)
 
-	arg_1_0._npcSimpleList = MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0._scroll_npc, SurvivalSimpleListPart)
+	self._npcSimpleList:setCellUpdateCallBack(self._createItemNpc, self, SurvivalRewardInheritNpcItem, self._itemNpc)
 
-	arg_1_0._npcSimpleList:setCellUpdateCallBack(arg_1_0._createItemNpc, arg_1_0, SurvivalRewardInheritNpcItem, arg_1_0._itemNpc)
+	self.selectMo = SurvivalRewardInheritModel.instance.selectMo
 
-	arg_1_0.selectMo = SurvivalRewardInheritModel.instance.selectMo
+	local infoViewRes = self.viewContainer._viewSetting.otherRes.infoView
+	local infoGo = self:getResInst(infoViewRes, self.go_infoview)
 
-	local var_1_2 = arg_1_0.viewContainer._viewSetting.otherRes.infoView
-	local var_1_3 = arg_1_0:getResInst(var_1_2, arg_1_0.go_infoview)
+	self._infoPanel = MonoHelper.addNoUpdateLuaComOnceToGo(infoGo, SurvivalShowBagInfoPart)
 
-	arg_1_0._infoPanel = MonoHelper.addNoUpdateLuaComOnceToGo(var_1_3, SurvivalShowBagInfoPart)
+	self._infoPanel:updateMo(nil)
+	self._infoPanel:setCloseShow(true, self.onCloseInfo, self)
 
-	arg_1_0._infoPanel:updateMo(nil)
-	arg_1_0._infoPanel:setCloseShow(true, arg_1_0.onCloseInfo, arg_1_0)
-
-	arg_1_0.handbookTypes = {
+	self.handbookTypes = {
 		SurvivalEnum.HandBookType.Amplifier,
 		SurvivalEnum.HandBookType.Npc
 	}
 
-	local var_1_4 = SurvivalEnum.HandBookNpcSubType
+	local HandBookNpcSubType = SurvivalEnum.HandBookNpcSubType
 
-	arg_1_0.npcSubType = {
-		var_1_4.Foundation,
-		var_1_4.Laplace,
-		var_1_4.Zeno,
-		var_1_4.People
+	self.npcSubType = {
+		HandBookNpcSubType.Foundation,
+		HandBookNpcSubType.Laplace,
+		HandBookNpcSubType.Zeno,
+		HandBookNpcSubType.People
 	}
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._btnabandon, arg_2_0.onClickBtnAbandon, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._btnconfirm, arg_2_0.onClickBtnConfirm, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._btnquick, arg_2_0.onClickBtnquick, arg_2_0)
+function SurvivalRewardSelectView:addEvents()
+	self:addClickCb(self._btnabandon, self.onClickBtnAbandon, self)
+	self:addClickCb(self._btnconfirm, self.onClickBtnConfirm, self)
+	self:addClickCb(self._btnquick, self.onClickBtnquick, self)
 end
 
-function var_0_0.onOpen(arg_3_0)
-	arg_3_0.selectMo:Record()
-	arg_3_0:refreshScore()
-	arg_3_0:refreshSelectList()
-	arg_3_0:refreshHandbookTab()
+function SurvivalRewardSelectView:onOpen()
+	self.selectMo:Record()
+	self:refreshScore()
+	self:refreshSelectList()
+	self:refreshHandbookTab()
 
-	arg_3_0.mode = 1
+	self.mode = 1
 
-	gohelper.setActive(arg_3_0._goSelectGrey, arg_3_0.mode == 1)
+	gohelper.setActive(self._goSelectGrey, self.mode == 1)
 end
 
-function var_0_0.refreshScore(arg_4_0)
-	arg_4_0.curExtendScore = SurvivalRewardInheritModel.instance:getCurExtendScore()
-	arg_4_0._txtcurrent.text = arg_4_0.curExtendScore
-	arg_4_0.extendScore = SurvivalRewardInheritModel.instance:getExtendScore()
-	arg_4_0._txttotal.text = arg_4_0.extendScore
+function SurvivalRewardSelectView:refreshScore()
+	self.curExtendScore = SurvivalRewardInheritModel.instance:getCurExtendScore()
+	self._txtcurrent.text = self.curExtendScore
+	self.extendScore = SurvivalRewardInheritModel.instance:getExtendScore()
+	self._txttotal.text = self.extendScore
 end
 
-function var_0_0.onClose(arg_5_0)
+function SurvivalRewardSelectView:onClose()
 	SurvivalController.instance:dispatchEvent(SurvivalEvent.OnRewardInheritRefresh)
 end
 
-function var_0_0.onDestroyView(arg_6_0)
+function SurvivalRewardSelectView:onDestroyView()
 	return
 end
 
-function var_0_0.onClickModalMask(arg_7_0)
-	arg_7_0:closeThis()
+function SurvivalRewardSelectView:onClickModalMask()
+	self:closeThis()
 end
 
-function var_0_0.onClickBtnAbandon(arg_8_0)
-	arg_8_0.selectMo:Revert()
-	arg_8_0:closeThis()
+function SurvivalRewardSelectView:onClickBtnAbandon()
+	self.selectMo:Revert()
+	self:closeThis()
 end
 
-function var_0_0.onClickBtnConfirm(arg_9_0)
-	arg_9_0:closeThis()
+function SurvivalRewardSelectView:onClickBtnConfirm()
+	self:closeThis()
 end
 
-function var_0_0.onClickBtnquick(arg_10_0)
-	arg_10_0.mode = -arg_10_0.mode
+function SurvivalRewardSelectView:onClickBtnquick()
+	self.mode = -self.mode
 
-	gohelper.setActive(arg_10_0._goSelectGrey, arg_10_0.mode == 1)
+	gohelper.setActive(self._goSelectGrey, self.mode == 1)
 end
 
-function var_0_0.refreshHandbookTab(arg_11_0)
-	for iter_11_0 = 1, 2 do
-		local var_11_0 = arg_11_0["_gotab" .. iter_11_0]
+function SurvivalRewardSelectView:refreshHandbookTab()
+	for i = 1, 2 do
+		local name = "_gotab" .. i
+		local obj = self[name]
 
-		arg_11_0.handbookTabs[iter_11_0] = MonoHelper.addNoUpdateLuaComOnceToGo(var_11_0, SurvivalRewardSelectTab)
+		self.handbookTabs[i] = MonoHelper.addNoUpdateLuaComOnceToGo(obj, SurvivalRewardSelectTab)
 
-		arg_11_0.handbookTabs[iter_11_0]:setData({
-			index = iter_11_0,
-			handbookType = arg_11_0.handbookTypes[iter_11_0],
-			onClickTabCallBack = arg_11_0.onClickHandbookTabCallBack,
-			onClickTabContext = arg_11_0
+		self.handbookTabs[i]:setData({
+			index = i,
+			handbookType = self.handbookTypes[i],
+			onClickTabCallBack = self.onClickHandbookTabCallBack,
+			onClickTabContext = self
 		})
 	end
 
-	arg_11_0.curSelectHandbookTab = nil
+	self.curSelectHandbookTab = nil
 
-	if arg_11_0.curSelectHandbookTab == nil then
-		arg_11_0:selectHandbookTab(1, nil)
+	if self.curSelectHandbookTab == nil then
+		self:selectHandbookTab(1, nil)
 	end
 end
 
-function var_0_0.onClickHandbookTabCallBack(arg_12_0, arg_12_1)
-	arg_12_0:selectHandbookTab(arg_12_1.index)
+function SurvivalRewardSelectView:onClickHandbookTabCallBack(survivalInheritHandbookTab)
+	self:selectHandbookTab(survivalInheritHandbookTab.index)
 end
 
-function var_0_0.selectHandbookTab(arg_13_0, arg_13_1, arg_13_2)
-	if (not arg_13_1 or not arg_13_0.curSelectHandbookTab or arg_13_0.curSelectHandbookTab ~= arg_13_1) and (not not arg_13_1 or not not arg_13_0.curSelectHandbookTab) then
-		if arg_13_1 then
-			local var_13_0 = arg_13_0.handbookTypes[arg_13_1]
-			local var_13_1, var_13_2 = arg_13_0:haveHandbookData(var_13_0)
+function SurvivalRewardSelectView:selectHandbookTab(tarSelect, selectSubIndex)
+	local haveChange = (not tarSelect or not self.curSelectHandbookTab or self.curSelectHandbookTab ~= tarSelect) and (not not tarSelect or not not self.curSelectHandbookTab)
 
-			if arg_13_2 == nil then
-				arg_13_2 = var_13_2
+	if haveChange then
+		if tarSelect then
+			local handbookType = self.handbookTypes[tarSelect]
+			local have, index = self:haveHandbookData(handbookType)
+
+			if selectSubIndex == nil then
+				selectSubIndex = index
 			end
 		end
 
-		if arg_13_0.curSelectHandbookTab then
-			arg_13_0.handbookTabs[arg_13_0.curSelectHandbookTab]:setSelect(false)
+		if self.curSelectHandbookTab then
+			self.handbookTabs[self.curSelectHandbookTab]:setSelect(false)
 		end
 
-		arg_13_0.curSelectHandbookTab = arg_13_1
+		self.curSelectHandbookTab = tarSelect
 
-		if arg_13_0.curSelectHandbookTab then
-			arg_13_0.handbookTabs[arg_13_0.curSelectHandbookTab]:setSelect(true)
+		if self.curSelectHandbookTab then
+			self.handbookTabs[self.curSelectHandbookTab]:setSelect(true)
 		end
 
-		arg_13_0.handbookType = arg_13_0:getCurHandbookType()
+		self.handbookType = self:getCurHandbookType()
 
-		arg_13_0:refreshTab(arg_13_2)
+		self:refreshTab(selectSubIndex)
 	end
 end
 
-function var_0_0.getCurHandbookType(arg_14_0)
-	if arg_14_0.curSelectHandbookTab == 1 then
+function SurvivalRewardSelectView:getCurHandbookType()
+	if self.curSelectHandbookTab == 1 then
 		return SurvivalEnum.HandBookType.Amplifier
-	elseif arg_14_0.curSelectHandbookTab == 2 then
+	elseif self.curSelectHandbookTab == 2 then
 		return SurvivalEnum.HandBookType.Npc
 	end
 end
 
-function var_0_0.haveHandbookData(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_0:getSubTypes(arg_15_1)
+function SurvivalRewardSelectView:haveHandbookData(handbookType)
+	local subTypes = self:getSubTypes(handbookType)
 
-	for iter_15_0, iter_15_1 in ipairs(var_15_0) do
-		if arg_15_0:haveHandbookSubTypeData(arg_15_1, iter_15_1) then
-			return true, iter_15_0
+	for index, subType in ipairs(subTypes) do
+		if self:haveHandbookSubTypeData(handbookType, subType) then
+			return true, index
 		end
 	end
 end
 
-function var_0_0.haveHandbookSubTypeData(arg_16_0, arg_16_1, arg_16_2)
-	if #SurvivalRewardInheritModel.instance:getInheritHandBookDatas(arg_16_1, arg_16_2) > 0 then
+function SurvivalRewardSelectView:haveHandbookSubTypeData(handbookType, subType)
+	local datas = SurvivalRewardInheritModel.instance:getInheritHandBookDatas(handbookType, subType)
+
+	if #datas > 0 then
 		return true
 	end
 end
 
-function var_0_0.getSubTypes(arg_17_0, arg_17_1)
-	if arg_17_1 == SurvivalEnum.HandBookType.Amplifier then
+function SurvivalRewardSelectView:getSubTypes(handbookType)
+	if handbookType == SurvivalEnum.HandBookType.Amplifier then
 		return SurvivalEnum.HandBookAmplifierSubTypeUIPos
-	elseif arg_17_1 == SurvivalEnum.HandBookType.Npc then
-		return arg_17_0.npcSubType
+	elseif handbookType == SurvivalEnum.HandBookType.Npc then
+		return self.npcSubType
 	end
 end
 
-function var_0_0.refreshTab(arg_18_0, arg_18_1)
-	local var_18_0 = #arg_18_0.tabs
-	local var_18_1 = arg_18_0:getSubTypes(arg_18_0.handbookType)
-	local var_18_2 = #var_18_1
+function SurvivalRewardSelectView:refreshTab(selectSubIndex)
+	local tabAmount = #self.tabs
+	local itemList = self:getSubTypes(self.handbookType)
+	local itemAmount = #itemList
 
-	for iter_18_0 = 1, var_18_2 do
-		local var_18_3 = var_18_1[iter_18_0]
+	for i = 1, itemAmount do
+		local subType = itemList[i]
 
-		if var_18_0 < iter_18_0 then
-			local var_18_4 = gohelper.clone(arg_18_0._goSurvivalRewardInheritTab, arg_18_0._tabContent)
+		if tabAmount < i then
+			local obj = gohelper.clone(self._goSurvivalRewardInheritTab, self._tabContent)
 
-			gohelper.setActive(var_18_4, true)
+			gohelper.setActive(obj, true)
 
-			arg_18_0.tabs[iter_18_0] = MonoHelper.addNoUpdateLuaComOnceToGo(var_18_4, SurvivalRewardInheritTab)
+			self.tabs[i] = MonoHelper.addNoUpdateLuaComOnceToGo(obj, SurvivalRewardInheritTab)
 		end
 
-		gohelper.setActive(arg_18_0.tabs[iter_18_0].go, true)
+		gohelper.setActive(self.tabs[i].go, true)
 
-		local var_18_5 = #SurvivalRewardInheritModel.instance:getInheritHandBookDatas(arg_18_0.handbookType, var_18_3) == 0
+		local datas = SurvivalRewardInheritModel.instance:getInheritHandBookDatas(self.handbookType, subType)
+		local isTransflective = #datas == 0
 
-		arg_18_0.tabs[iter_18_0]:setData({
-			handbookType = arg_18_0.handbookType,
-			subType = var_18_3,
-			index = iter_18_0,
-			onClickTabCallBack = arg_18_0.onClickTabCallBack,
-			onClickTabContext = arg_18_0,
-			isLast = iter_18_0 == var_18_2,
-			isTransflective = var_18_5
+		self.tabs[i]:setData({
+			handbookType = self.handbookType,
+			subType = subType,
+			index = i,
+			onClickTabCallBack = self.onClickTabCallBack,
+			onClickTabContext = self,
+			isLast = i == itemAmount,
+			isTransflective = isTransflective
 		})
 	end
 
-	for iter_18_1 = var_18_2 + 1, var_18_0 do
-		gohelper.setActive(arg_18_0.tabs[iter_18_1].go, false)
-		arg_18_0.tabs[iter_18_1]:setData(nil)
+	for i = itemAmount + 1, tabAmount do
+		gohelper.setActive(self.tabs[i].go, false)
+		self.tabs[i]:setData(nil)
 	end
 
-	arg_18_0:selectTab(nil)
-	arg_18_0:selectTab(arg_18_1)
+	self:selectTab(nil)
+	self:selectTab(selectSubIndex)
 end
 
-function var_0_0.onClickTabCallBack(arg_19_0, arg_19_1)
-	arg_19_0:selectTab(arg_19_1.index, true)
+function SurvivalRewardSelectView:onClickTabCallBack(survivalRewardInheritTab)
+	self:selectTab(survivalRewardInheritTab.index, true)
 end
 
-function var_0_0.selectTab(arg_20_0, arg_20_1, arg_20_2)
-	if (not arg_20_1 or not arg_20_0.curSelect or arg_20_0.curSelect ~= arg_20_1) and (not not arg_20_1 or not not arg_20_0.curSelect) then
-		if arg_20_1 and arg_20_2 and not arg_20_0:haveHandbookSubTypeData(arg_20_0.handbookType, arg_20_0.tabs[arg_20_1].subType) then
+function SurvivalRewardSelectView:selectTab(tarSelect, checkHaveData)
+	local haveChange = (not tarSelect or not self.curSelect or self.curSelect ~= tarSelect) and (not not tarSelect or not not self.curSelect)
+
+	if haveChange then
+		if tarSelect and checkHaveData and not self:haveHandbookSubTypeData(self.handbookType, self.tabs[tarSelect].subType) then
 			GameFacade.showToastString(luaLang("SurvivalRewardSelectView_2"))
 
 			return
 		end
 
-		if arg_20_0.curSelect then
-			arg_20_0.tabs[arg_20_0.curSelect]:setSelect(false)
+		if self.curSelect then
+			self.tabs[self.curSelect]:setSelect(false)
 		end
 
-		arg_20_0.curSelect = arg_20_1
+		self.curSelect = tarSelect
 
-		if arg_20_0.curSelect then
-			arg_20_0.tabs[arg_20_0.curSelect]:setSelect(true)
+		if self.curSelect then
+			self.tabs[self.curSelect]:setSelect(true)
 		end
 
-		arg_20_0:refreshList()
+		self:refreshList()
 	end
 end
 
-function var_0_0.refreshSelectAmount(arg_21_0)
-	for iter_21_0, iter_21_1 in ipairs(arg_21_0.handbookTabs) do
-		iter_21_1:refreshAmount()
+function SurvivalRewardSelectView:refreshSelectAmount()
+	for i, v in ipairs(self.handbookTabs) do
+		v:refreshAmount()
 	end
 
-	for iter_21_2, iter_21_3 in ipairs(arg_21_0.tabs) do
-		iter_21_3:refreshAmount()
+	for i, v in ipairs(self.tabs) do
+		v:refreshAmount()
 	end
 end
 
-function var_0_0.refreshSelectList(arg_22_0)
-	local var_22_0 = SurvivalRewardInheritModel.instance:getSelectMo()
+function SurvivalRewardSelectView:refreshSelectList()
+	local datas = SurvivalRewardInheritModel.instance:getSelectMo()
 
-	arg_22_0._selectSimpleList:setList(var_22_0)
-	gohelper.setActive(arg_22_0._goleftempty, #var_22_0 == 0)
+	self._selectSimpleList:setList(datas)
+	gohelper.setActive(self._goleftempty, #datas == 0)
 end
 
-function var_0_0._createItemSelect(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
-	local var_23_0 = arg_23_2:getSurvivalBagItemMo()
+function SurvivalRewardSelectView:_createItemSelect(obj, data, index)
+	local itemMo = data:getSurvivalBagItemMo()
 
-	arg_23_1:updateMo(var_23_0)
-	arg_23_1:setClickCallback(arg_23_0.onClickItemSelect, arg_23_0)
-	arg_23_1:setExtraParam({
-		index = arg_23_3,
-		survivalHandbookMo = arg_23_2
+	obj:updateMo(itemMo)
+	obj:setClickCallback(self.onClickItemSelect, self)
+	obj:setExtraParam({
+		index = index,
+		survivalHandbookMo = data
 	})
-	arg_23_1:setTextName(false)
-	arg_23_1:setShowNum(false)
-	arg_23_1:showInheritScore()
+	obj:setTextName(false)
+	obj:setShowNum(false)
+	obj:showInheritScore()
 end
 
-function var_0_0.onClickItemSelect(arg_24_0, arg_24_1)
-	local var_24_0 = arg_24_1.extraParam.survivalHandbookMo
+function SurvivalRewardSelectView:onClickItemSelect(item)
+	local survivalHandbookMo = item.extraParam.survivalHandbookMo
 
-	if arg_24_0.mode == 1 then
-		arg_24_0:showInfo(var_24_0)
-		arg_24_0:refreshList()
-	elseif arg_24_0.mode == -1 then
-		arg_24_0.selectMo:removeByValue(arg_24_0:getInheritId(var_24_0))
-		arg_24_0:refreshSelect()
+	if self.mode == 1 then
+		self:showInfo(survivalHandbookMo)
+		self:refreshList()
+	elseif self.mode == -1 then
+		self.selectMo:removeByValue(self:getInheritId(survivalHandbookMo))
+		self:refreshSelect()
 	end
 end
 
-function var_0_0.refreshList(arg_25_0)
-	if arg_25_0.curSelect == nil then
-		gohelper.setActive(arg_25_0._scroll_amplifier, false)
-		gohelper.setActive(arg_25_0._scroll_npc, false)
+function SurvivalRewardSelectView:refreshList()
+	if self.curSelect == nil then
+		gohelper.setActive(self._scroll_amplifier, false)
+		gohelper.setActive(self._scroll_npc, false)
 
 		return
 	end
 
-	local var_25_0 = SurvivalRewardInheritModel.instance:getInheritHandBookDatas(arg_25_0.handbookType, arg_25_0.tabs[arg_25_0.curSelect].subType)
+	local datas = SurvivalRewardInheritModel.instance:getInheritHandBookDatas(self.handbookType, self.tabs[self.curSelect].subType)
 
-	table.sort(var_25_0, SurvivalHandbookModel.instance.handBookSortFunc)
+	table.sort(datas, SurvivalHandbookModel.instance.handBookSortFunc)
 
-	arg_25_0.data = var_25_0
+	self.data = datas
 
-	gohelper.setActive(arg_25_0.go_empty, #var_25_0 == 0)
+	gohelper.setActive(self.go_empty, #datas == 0)
 
-	if arg_25_0.handbookType == SurvivalEnum.HandBookType.Amplifier then
-		gohelper.setActive(arg_25_0._scroll_amplifier, true)
-		gohelper.setActive(arg_25_0._scroll_npc, false)
-		arg_25_0._amplifierSimpleList:setList(var_25_0)
-	elseif arg_25_0.handbookType == SurvivalEnum.HandBookType.Npc then
-		gohelper.setActive(arg_25_0._scroll_amplifier, false)
-		gohelper.setActive(arg_25_0._scroll_npc, true)
+	if self.handbookType == SurvivalEnum.HandBookType.Amplifier then
+		gohelper.setActive(self._scroll_amplifier, true)
+		gohelper.setActive(self._scroll_npc, false)
+		self._amplifierSimpleList:setList(datas)
+	elseif self.handbookType == SurvivalEnum.HandBookType.Npc then
+		gohelper.setActive(self._scroll_amplifier, false)
+		gohelper.setActive(self._scroll_npc, true)
 
-		local var_25_1 = {}
-		local var_25_2 = {}
-		local var_25_3 = 4
+		local list = {}
+		local temp = {}
+		local lineAmount = 4
 
-		for iter_25_0, iter_25_1 in ipairs(var_25_0) do
-			local var_25_4 = arg_25_0.selectMo:isSelect(arg_25_0:getInheritId(iter_25_1))
-			local var_25_5 = {
-				isSelect = var_25_4,
-				survivalHandbookMo = iter_25_1
+		for i, survivalHandbookMo in ipairs(datas) do
+			local isSelect = self.selectMo:isSelect(self:getInheritId(survivalHandbookMo))
+			local t = {
+				isSelect = isSelect,
+				survivalHandbookMo = survivalHandbookMo
 			}
 
-			table.insert(var_25_2, var_25_5)
+			table.insert(temp, t)
 
-			if iter_25_0 % var_25_3 == 0 or iter_25_0 == #var_25_0 then
-				local var_25_6 = iter_25_0 ~= #var_25_0
-				local var_25_7 = {
+			if i % lineAmount == 0 or i == #datas then
+				local isShowLine = i ~= #datas
+				local lineData = {
 					lineYOffset = -20,
 					isShowCost = true,
-					viewContainer = arg_25_0.viewContainer,
-					listData = tabletool.copy(var_25_2),
-					isShowLine = var_25_6
+					viewContainer = self.viewContainer,
+					listData = tabletool.copy(temp),
+					isShowLine = isShowLine
 				}
 
-				table.insert(var_25_1, var_25_7)
-				tabletool.clear(var_25_2)
+				table.insert(list, lineData)
+				tabletool.clear(temp)
 			end
 		end
 
-		arg_25_0._npcSimpleList:setList(var_25_1)
+		self._npcSimpleList:setList(list)
 	end
 
-	gohelper.setActive(arg_25_0._gorightempty, #var_25_0 == 0)
+	gohelper.setActive(self._gorightempty, #datas == 0)
 end
 
-function var_0_0._createItemAmplifier(arg_26_0, arg_26_1, arg_26_2, arg_26_3)
-	local var_26_0 = arg_26_2:getSurvivalBagItemMo()
+function SurvivalRewardSelectView:_createItemAmplifier(obj, data, index)
+	local itemMo = data:getSurvivalBagItemMo()
 
-	arg_26_1:updateMo(var_26_0)
-	arg_26_1:setClickCallback(arg_26_0.onClickItemAmplifier, arg_26_0)
-	arg_26_1:setExtraParam({
-		index = arg_26_3,
-		survivalHandbookMo = arg_26_2
+	obj:updateMo(itemMo)
+	obj:setClickCallback(self.onClickItemAmplifier, self)
+	obj:setExtraParam({
+		index = index,
+		survivalHandbookMo = data
 	})
-	arg_26_1:setTextName(false)
-	arg_26_1:setShowNum(false)
-	arg_26_1:setIsSelect(arg_26_0.selectHandbookMo and arg_26_0:getInheritId(arg_26_0.selectHandbookMo) == arg_26_0:getInheritId(arg_26_2))
+	obj:setTextName(false)
+	obj:setShowNum(false)
+	obj:setIsSelect(self.selectHandbookMo and self:getInheritId(self.selectHandbookMo) == self:getInheritId(data))
 
-	local var_26_1 = arg_26_0.selectMo:isSelect(arg_26_0:getInheritId(arg_26_2))
-	local var_26_2 = ""
+	local isSelect = self.selectMo:isSelect(self:getInheritId(data))
+	local name = ""
 
-	arg_26_1:showRewardInherit(var_26_2, var_26_1)
-	arg_26_1:showInheritScore()
+	obj:showRewardInherit(name, isSelect)
+	obj:showInheritScore()
 end
 
-function var_0_0.onClickItemAmplifier(arg_27_0, arg_27_1)
-	local var_27_0 = arg_27_1.extraParam.survivalHandbookMo
+function SurvivalRewardSelectView:onClickItemAmplifier(item)
+	local survivalHandbookMo = item.extraParam.survivalHandbookMo
 
-	if not var_27_0.isUnlock then
+	if not survivalHandbookMo.isUnlock then
 		return
 	end
 
-	if arg_27_0.mode == 1 then
-		arg_27_0:showInfo(var_27_0)
-		arg_27_0:refreshList()
-	elseif arg_27_0.mode == -1 then
-		local var_27_1 = arg_27_0:getInheritId(var_27_0)
+	if self.mode == 1 then
+		self:showInfo(survivalHandbookMo)
+		self:refreshList()
+	elseif self.mode == -1 then
+		local inheritId = self:getInheritId(survivalHandbookMo)
 
-		if arg_27_0.selectMo:isSelect(var_27_1) then
-			arg_27_0.selectMo:removeByValue(var_27_1)
+		if self.selectMo:isSelect(inheritId) then
+			self.selectMo:removeByValue(inheritId)
 		else
-			local var_27_2 = var_27_0:getSurvivalBagItemMo():getExtendCost()
+			local itemMo = survivalHandbookMo:getSurvivalBagItemMo()
+			local cost = itemMo:getExtendCost()
 
-			if arg_27_0.curExtendScore + var_27_2 > arg_27_0.extendScore then
+			if self.curExtendScore + cost > self.extendScore then
 				GameFacade.showToastString(luaLang("SurvivalRewardSelectView_1"))
 
 				return
 			end
 
-			arg_27_0.selectMo:addToEmptyPos(var_27_1)
+			self.selectMo:addToEmptyPos(inheritId)
 		end
 
-		arg_27_0:refreshSelect()
+		self:refreshSelect()
 	end
 end
 
-function var_0_0._createItemNpc(arg_28_0, arg_28_1, arg_28_2, arg_28_3)
-	arg_28_1:updateMo(arg_28_2, arg_28_0.selectHandbookMo, arg_28_0.onClickItemNpc, arg_28_0)
+function SurvivalRewardSelectView:_createItemNpc(obj, data, index)
+	obj:updateMo(data, self.selectHandbookMo, self.onClickItemNpc, self)
 end
 
-function var_0_0.onClickItemNpc(arg_29_0, arg_29_1)
-	local var_29_0 = arg_29_1.mo
+function SurvivalRewardSelectView:onClickItemNpc(item)
+	local survivalHandbookMo = item.mo
 
-	if not var_29_0.isUnlock then
+	if not survivalHandbookMo.isUnlock then
 		return
 	end
 
-	if arg_29_0.mode == 1 then
-		arg_29_0:showInfo(var_29_0)
-		arg_29_0:refreshList()
-	elseif arg_29_0.mode == -1 then
-		local var_29_1 = arg_29_0:getInheritId(var_29_0)
+	if self.mode == 1 then
+		self:showInfo(survivalHandbookMo)
+		self:refreshList()
+	elseif self.mode == -1 then
+		local inheritId = self:getInheritId(survivalHandbookMo)
 
-		if arg_29_0.selectMo:isSelect(var_29_1) then
-			arg_29_0.selectMo:removeByValue(var_29_1)
+		if self.selectMo:isSelect(inheritId) then
+			self.selectMo:removeByValue(inheritId)
 		else
-			local var_29_2 = var_29_0:getSurvivalBagItemMo():getExtendCost()
+			local itemMo = survivalHandbookMo:getSurvivalBagItemMo()
+			local cost = itemMo:getExtendCost()
 
-			if arg_29_0.curExtendScore + var_29_2 > arg_29_0.extendScore then
+			if self.curExtendScore + cost > self.extendScore then
 				GameFacade.showToastString(luaLang("SurvivalRewardSelectView_1"))
 
 				return
 			end
 
-			arg_29_0.selectMo:addToEmptyPos(var_29_1)
+			self.selectMo:addToEmptyPos(inheritId)
 		end
 
-		arg_29_0:refreshSelect()
+		self:refreshSelect()
 	end
 end
 
-function var_0_0.showInfo(arg_30_0, arg_30_1)
-	arg_30_0.selectHandbookMo = arg_30_1
+function SurvivalRewardSelectView:showInfo(survivalHandbookMo)
+	self.selectHandbookMo = survivalHandbookMo
 
-	arg_30_0._infoPanel:updateMo(arg_30_1:getSurvivalBagItemMo())
+	self._infoPanel:updateMo(survivalHandbookMo:getSurvivalBagItemMo())
 
-	arg_30_0.selectSurvivalHandbookMo = arg_30_1
+	self.selectSurvivalHandbookMo = survivalHandbookMo
 
-	local var_30_0 = arg_30_0.selectMo:isSelect(arg_30_0:getInheritId(arg_30_1))
+	local isSelect = self.selectMo:isSelect(self:getInheritId(survivalHandbookMo))
 
-	arg_30_0._infoPanel:showRewardInheritBtn(arg_30_0, not var_30_0, arg_30_0.onClickSelectCallBack, arg_30_0.onClickUnSelectCallBack)
+	self._infoPanel:showRewardInheritBtn(self, not isSelect, self.onClickSelectCallBack, self.onClickUnSelectCallBack)
 end
 
-function var_0_0.onCloseInfo(arg_31_0)
-	arg_31_0.selectHandbookMo = nil
+function SurvivalRewardSelectView:onCloseInfo()
+	self.selectHandbookMo = nil
 
-	arg_31_0:refreshList()
+	self:refreshList()
 end
 
-function var_0_0.onClickSelectCallBack(arg_32_0)
-	local var_32_0 = arg_32_0:getInheritId(arg_32_0.selectSurvivalHandbookMo)
-	local var_32_1 = arg_32_0.selectSurvivalHandbookMo:getSurvivalBagItemMo():getExtendCost()
+function SurvivalRewardSelectView:onClickSelectCallBack()
+	local inheritId = self:getInheritId(self.selectSurvivalHandbookMo)
+	local itemMo = self.selectSurvivalHandbookMo:getSurvivalBagItemMo()
+	local cost = itemMo:getExtendCost()
 
-	if arg_32_0.curExtendScore + var_32_1 > arg_32_0.extendScore then
+	if self.curExtendScore + cost > self.extendScore then
 		GameFacade.showToastString(luaLang("SurvivalRewardSelectView_1"))
 
 		return
 	end
 
-	arg_32_0.selectMo:addToEmptyPos(var_32_0)
-	arg_32_0._infoPanel:updateMo(nil)
+	self.selectMo:addToEmptyPos(inheritId)
+	self._infoPanel:updateMo(nil)
 
-	arg_32_0.selectHandbookMo = nil
+	self.selectHandbookMo = nil
 
-	arg_32_0:refreshSelect()
+	self:refreshSelect()
 end
 
-function var_0_0.onClickUnSelectCallBack(arg_33_0)
-	arg_33_0.selectMo:removeByValue(arg_33_0:getInheritId(arg_33_0.selectSurvivalHandbookMo))
-	arg_33_0._infoPanel:updateMo(nil)
+function SurvivalRewardSelectView:onClickUnSelectCallBack()
+	self.selectMo:removeByValue(self:getInheritId(self.selectSurvivalHandbookMo))
+	self._infoPanel:updateMo(nil)
 
-	arg_33_0.selectHandbookMo = nil
+	self.selectHandbookMo = nil
 
-	arg_33_0:refreshSelect()
-	arg_33_0:refreshList()
+	self:refreshSelect()
+	self:refreshList()
 end
 
-function var_0_0.refreshSelect(arg_34_0)
-	arg_34_0:refreshScore()
-	arg_34_0:refreshSelectAmount()
-	arg_34_0:refreshList()
-	arg_34_0:refreshSelectList()
+function SurvivalRewardSelectView:refreshSelect()
+	self:refreshScore()
+	self:refreshSelectAmount()
+	self:refreshList()
+	self:refreshSelectList()
 end
 
-function var_0_0.getInheritId(arg_35_0, arg_35_1)
-	return SurvivalRewardInheritModel.instance:getInheritId(arg_35_1)
+function SurvivalRewardSelectView:getInheritId(survivalHandbookMo)
+	return SurvivalRewardInheritModel.instance:getInheritId(survivalHandbookMo)
 end
 
-return var_0_0
+return SurvivalRewardSelectView

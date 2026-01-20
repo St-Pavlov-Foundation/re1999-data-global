@@ -1,166 +1,168 @@
-﻿module("modules.logic.notice.view.NoticeImage", package.seeall)
+﻿-- chunkname: @modules/logic/notice/view/NoticeImage.lua
 
-local var_0_0 = class("NoticeImage", LuaCompBase)
+module("modules.logic.notice.view.NoticeImage", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._go = arg_1_1
-	arg_1_0._img = gohelper.onceAddComponent(arg_1_0._go, gohelper.Type_Image)
-	arg_1_0._assetItem = nil
-	arg_1_0._cacheSprite = {}
+local NoticeImage = class("NoticeImage", LuaCompBase)
 
-	gohelper.setActive(arg_1_0._go, false)
+function NoticeImage:init(go)
+	self._go = go
+	self._img = gohelper.onceAddComponent(self._go, gohelper.Type_Image)
+	self._assetItem = nil
+	self._cacheSprite = {}
+
+	gohelper.setActive(self._go, false)
 end
 
-function var_0_0.load(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_0:getFilenameFormUrl(arg_2_1)
+function NoticeImage:load(url)
+	local fileName = self:getFilenameFormUrl(url)
 
-	gohelper.setActive(arg_2_0._go, true)
+	gohelper.setActive(self._go, true)
 
-	if NoticeModel.instance:isLoaded(var_2_0) then
-		arg_2_0._img.color = Color.white
-		arg_2_0._img.sprite = NoticeModel.instance:getSpriteCache(var_2_0)
+	if NoticeModel.instance:isLoaded(fileName) then
+		self._img.color = Color.white
+		self._img.sprite = NoticeModel.instance:getSpriteCache(fileName)
 
-		arg_2_0:log("【load func】 load cache success , filename is : " .. var_2_0)
+		self:log("【load func】 load cache success , filename is : " .. fileName)
 
 		return true
 	end
 
-	arg_2_0:log("【load func】 load url is : " .. arg_2_1)
+	self:log("【load func】 load url is : " .. url)
 
-	arg_2_0._img.sprite = nil
-	arg_2_0._img.color = Color.clear
+	self._img.sprite = nil
+	self._img.color = Color.clear
 
-	if NoticeModel.instance:filenameInLoadingSprite(var_2_0) then
-		arg_2_0:log("【load func】 " .. var_2_0 .. "  loading return false,")
+	if NoticeModel.instance:filenameInLoadingSprite(fileName) then
+		self:log("【load func】 " .. fileName .. "  loading return false,")
 
 		return false
 	end
 
-	NoticeModel.instance:addLoadingSprite(var_2_0)
-	NoticeModel.instance:addNeedLoadImageUrl(arg_2_1)
-	NoticeModel.instance:addLoadTask(arg_2_0._load, arg_2_0)
-	TaskDispatcher.runDelay(arg_2_0._load, arg_2_0, 0.01)
+	NoticeModel.instance:addLoadingSprite(fileName)
+	NoticeModel.instance:addNeedLoadImageUrl(url)
+	NoticeModel.instance:addLoadTask(self._load, self)
+	TaskDispatcher.runDelay(self._load, self, 0.01)
 
 	return false
 end
 
-function var_0_0._load(arg_3_0)
-	local var_3_0 = NoticeModel.instance:popNeedLoadImageUrl()
+function NoticeImage:_load()
+	local url = NoticeModel.instance:popNeedLoadImageUrl()
 
-	while var_3_0 do
-		local var_3_1 = arg_3_0:getFilenameFormUrl(var_3_0)
-		local var_3_2 = "notice/" .. var_3_1
-		local var_3_3 = arg_3_0:getNoticeImgFilePath(var_3_2)
+	while url do
+		local fileName = self:getFilenameFormUrl(url)
+		local resUrl = "notice/" .. fileName
+		local filePath = self:getNoticeImgFilePath(resUrl)
 
-		if SLFramework.FileHelper.IsFileExists(var_3_3) then
-			loadPersistentRes(var_3_2, SLFramework.AssetType.TEXTURE, arg_3_0._onLoadCallback, arg_3_0)
+		if SLFramework.FileHelper.IsFileExists(filePath) then
+			loadPersistentRes(resUrl, SLFramework.AssetType.TEXTURE, self._onLoadCallback, self)
 		else
-			ZProj.SLPictureDownloader.Instance:Download(var_3_0, arg_3_0._downloadCallback, arg_3_0)
+			ZProj.SLPictureDownloader.Instance:Download(url, self._downloadCallback, self)
 		end
 
-		var_3_0 = NoticeModel.instance:popNeedLoadImageUrl()
+		url = NoticeModel.instance:popNeedLoadImageUrl()
 	end
 
-	NoticeModel.instance:removeLoadTask(arg_3_0._load, arg_3_0)
+	NoticeModel.instance:removeLoadTask(self._load, self)
 end
 
-function var_0_0.addLoadCallback(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0._callback = arg_4_1
-	arg_4_0._callbackObj = arg_4_2
+function NoticeImage:addLoadCallback(callback, callbackObj)
+	self._callback = callback
+	self._callbackObj = callbackObj
 end
 
-function var_0_0._onLoadCallback(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0:getFilenameFormUrl(arg_5_1.ResPath)
+function NoticeImage:_onLoadCallback(assetItem)
+	local filename = self:getFilenameFormUrl(assetItem.ResPath)
 
-	NoticeModel.instance:setLoadedSprite(var_5_0)
+	NoticeModel.instance:setLoadedSprite(filename)
 
-	if arg_5_1.IsLoadSuccess then
-		local var_5_1 = arg_5_0._assetItem
+	if assetItem.IsLoadSuccess then
+		local oldAsstet = self._assetItem
 
-		arg_5_1:Retain()
+		assetItem:Retain()
 
-		arg_5_0._assetItem = arg_5_1
+		self._assetItem = assetItem
 
-		if var_5_1 then
-			var_5_1:Release()
+		if oldAsstet then
+			oldAsstet:Release()
 		end
 
-		local var_5_2 = arg_5_1:GetResource()
+		local texture = assetItem:GetResource()
 
-		NoticeModel.instance:setSpriteCache(var_5_0, UnityEngine.Sprite.Create(var_5_2, UnityEngine.Rect.New(0, 0, var_5_2.width, var_5_2.height), Vector2.zero, 100, 0))
-		NoticeModel.instance:setSpriteCacheDefaultSize(var_5_0, var_5_2.width, var_5_2.height)
-		NoticeModel.instance:addAssetItem(arg_5_1)
-		arg_5_0:_doCallback(true, var_5_0)
+		NoticeModel.instance:setSpriteCache(filename, UnityEngine.Sprite.Create(texture, UnityEngine.Rect.New(0, 0, texture.width, texture.height), Vector2.zero, 100, 0))
+		NoticeModel.instance:setSpriteCacheDefaultSize(filename, texture.width, texture.height)
+		NoticeModel.instance:addAssetItem(assetItem)
+		self:_doCallback(true, filename)
 	else
-		logError("load fail: " .. arg_5_1.ResPath)
-		arg_5_0:_doCallback(false, var_5_0)
+		logError("load fail: " .. assetItem.ResPath)
+		self:_doCallback(false, filename)
 	end
 end
 
-function var_0_0._downloadCallback(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
-	local var_6_0 = arg_6_0:getFilenameFormUrl(arg_6_4)
+function NoticeImage:_downloadCallback(isSuccess, texture, bytes, url)
+	local filename = self:getFilenameFormUrl(url)
 
-	NoticeModel.instance:setLoadedSprite(var_6_0)
+	NoticeModel.instance:setLoadedSprite(filename)
 
-	if arg_6_1 then
-		local var_6_1 = arg_6_0:getNoticeImgFilePath("notice/" .. var_6_0)
+	if isSuccess then
+		local filePath = self:getNoticeImgFilePath("notice/" .. filename)
 
-		SLFramework.FileHelper.WriteAllBytesToPath(var_6_1, arg_6_3)
-		NoticeModel.instance:setSpriteCache(var_6_0, UnityEngine.Sprite.Create(arg_6_2, UnityEngine.Rect.New(0, 0, arg_6_2.width, arg_6_2.height), Vector2.zero, 100, 0))
-		NoticeModel.instance:setSpriteCacheDefaultSize(var_6_0, arg_6_2.width, arg_6_2.height)
-		arg_6_0:_doCallback(true, var_6_0)
+		SLFramework.FileHelper.WriteAllBytesToPath(filePath, bytes)
+		NoticeModel.instance:setSpriteCache(filename, UnityEngine.Sprite.Create(texture, UnityEngine.Rect.New(0, 0, texture.width, texture.height), Vector2.zero, 100, 0))
+		NoticeModel.instance:setSpriteCacheDefaultSize(filename, texture.width, texture.height)
+		self:_doCallback(true, filename)
 	else
-		logError("download fail: " .. arg_6_4)
-		arg_6_0:_doCallback(false, var_6_0)
+		logError("download fail: " .. url)
+		self:_doCallback(false, filename)
 	end
 end
 
-function var_0_0._doCallback(arg_7_0, arg_7_1, arg_7_2)
-	if arg_7_1 then
-		arg_7_0:log("【_doCallback func】 load success, self.filename is " .. arg_7_2)
+function NoticeImage:_doCallback(isSucc, filename)
+	if isSucc then
+		self:log("【_doCallback func】 load success, self.filename is " .. filename)
 	else
-		arg_7_0:log("【_doCallback func】 load fail, self.filename is " .. arg_7_2)
+		self:log("【_doCallback func】 load fail, self.filename is " .. filename)
 	end
 
-	NoticeModel.instance:removeLoadingSpriteCount(arg_7_2)
+	NoticeModel.instance:removeLoadingSpriteCount(filename)
 
 	if NoticeModel.instance:getLoadingSpriteCount() <= 0 then
 		NoticeContentListModel.instance:onModelUpdate()
 	end
 
-	local var_7_0 = arg_7_0._callback
-	local var_7_1 = arg_7_0._callbackObj
+	local callback = self._callback
+	local callbackObj = self._callbackObj
 
-	arg_7_0._callback = nil
-	arg_7_0._callbackObj = nil
+	self._callback = nil
+	self._callbackObj = nil
 
-	if var_7_0 then
-		if var_7_1 then
-			var_7_0(var_7_1, arg_7_1)
+	if callback then
+		if callbackObj then
+			callback(callbackObj, isSucc)
 		else
-			var_7_0(arg_7_1)
+			callback(isSucc)
 		end
 	end
 end
 
-function var_0_0.getNoticeImgFilePath(arg_8_0, arg_8_1)
-	return SLFramework.FrameworkSettings.PersistentResRootDir .. "/" .. arg_8_1
+function NoticeImage:getNoticeImgFilePath(fileName)
+	return SLFramework.FrameworkSettings.PersistentResRootDir .. "/" .. fileName
 end
 
-function var_0_0.getFilenameFormUrl(arg_9_0, arg_9_1)
-	return SLFramework.FileHelper.GetFileName(string.gsub(arg_9_1, "?.*", ""), true)
+function NoticeImage:getFilenameFormUrl(url)
+	return SLFramework.FileHelper.GetFileName(string.gsub(url, "?.*", ""), true)
 end
 
-function var_0_0.log(arg_10_0, arg_10_1)
-	logWarn(string.format("【NoticeImageLog】msg : %s", arg_10_1))
+function NoticeImage:log(msg)
+	logWarn(string.format("【NoticeImageLog】msg : %s", msg))
 end
 
-function var_0_0.onDestroy(arg_11_0)
-	if arg_11_0._assetItem then
-		arg_11_0._assetItem:Release()
+function NoticeImage:onDestroy()
+	if self._assetItem then
+		self._assetItem:Release()
 
-		arg_11_0._assetItem = nil
+		self._assetItem = nil
 	end
 end
 
-return var_0_0
+return NoticeImage

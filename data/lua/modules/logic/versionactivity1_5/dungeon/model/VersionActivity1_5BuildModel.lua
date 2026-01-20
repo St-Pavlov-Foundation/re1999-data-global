@@ -1,159 +1,164 @@
-﻿module("modules.logic.versionactivity1_5.dungeon.model.VersionActivity1_5BuildModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/dungeon/model/VersionActivity1_5BuildModel.lua
 
-local var_0_0 = class("VersionActivity1_5BuildModel", BaseModel)
+module("modules.logic.versionactivity1_5.dungeon.model.VersionActivity1_5BuildModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local VersionActivity1_5BuildModel = class("VersionActivity1_5BuildModel", BaseModel)
+
+function VersionActivity1_5BuildModel:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function VersionActivity1_5BuildModel:reInit()
 	return
 end
 
-function var_0_0.initBuildInfoList(arg_3_0, arg_3_1)
-	arg_3_0.selectBuildList = {}
-	arg_3_0.selectTypeList = {
+function VersionActivity1_5BuildModel:initBuildInfoList(info)
+	self.selectBuildList = {}
+	self.selectTypeList = {
 		0,
 		0,
 		0
 	}
-	arg_3_0.hadBuildList = {}
-	arg_3_0.buildGroupHadBuildCount = {
+	self.hadBuildList = {}
+	self.buildGroupHadBuildCount = {
 		0,
 		0,
 		0
 	}
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1.selectIds) do
-		table.insert(arg_3_0.selectBuildList, iter_3_1)
+	for _, buildId in ipairs(info.selectIds) do
+		table.insert(self.selectBuildList, buildId)
 	end
 
-	arg_3_0:updateSelectTypeList()
+	self:updateSelectTypeList()
 
-	for iter_3_2, iter_3_3 in ipairs(arg_3_1.ownBuildingIds) do
-		table.insert(arg_3_0.hadBuildList, iter_3_3)
+	for _, buildId in ipairs(info.ownBuildingIds) do
+		table.insert(self.hadBuildList, buildId)
 	end
 
-	arg_3_0:updateGroupHadBuildCount()
+	self:updateGroupHadBuildCount()
 
-	arg_3_0.hasGainedReward = arg_3_1.gainedReward
+	self.hasGainedReward = info.gainedReward
 end
 
-function var_0_0.addHadBuild(arg_4_0, arg_4_1)
-	if tabletool.indexOf(arg_4_0.hadBuildList, arg_4_1) then
+function VersionActivity1_5BuildModel:addHadBuild(buildId)
+	if tabletool.indexOf(self.hadBuildList, buildId) then
 		return
 	end
 
-	table.insert(arg_4_0.hadBuildList, arg_4_1)
-	arg_4_0:updateGroupHadBuildCount()
+	table.insert(self.hadBuildList, buildId)
+	self:updateGroupHadBuildCount()
 
-	local var_4_0 = VersionActivity1_5DungeonConfig.instance:getBuildCo(arg_4_1)
+	local buildCo = VersionActivity1_5DungeonConfig.instance:getBuildCo(buildId)
 
-	arg_4_0:setSelectBuildId(var_4_0)
-	VersionActivity1_5DungeonController.instance:dispatchEvent(VersionActivity1_5DungeonEvent.OnUpdateBuildInfo, arg_4_1)
+	self:setSelectBuildId(buildCo)
+	VersionActivity1_5DungeonController.instance:dispatchEvent(VersionActivity1_5DungeonEvent.OnUpdateBuildInfo, buildId)
 end
 
-function var_0_0.updateSelectBuild(arg_5_0, arg_5_1)
-	tabletool.clear(arg_5_0.selectBuildList)
+function VersionActivity1_5BuildModel:updateSelectBuild(buildIdList)
+	tabletool.clear(self.selectBuildList)
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
-		table.insert(arg_5_0.selectBuildList, iter_5_1)
+	for _, buildId in ipairs(buildIdList) do
+		table.insert(self.selectBuildList, buildId)
 	end
 
-	arg_5_0:updateSelectTypeList()
+	self:updateSelectTypeList()
 	VersionActivity1_5DungeonController.instance:dispatchEvent(VersionActivity1_5DungeonEvent.OnUpdateSelectBuild)
 end
 
-function var_0_0.updateGainedReward(arg_6_0, arg_6_1)
-	arg_6_0.hasGainedReward = arg_6_1
+function VersionActivity1_5BuildModel:updateGainedReward(gained)
+	self.hasGainedReward = gained
 
 	VersionActivity1_5DungeonController.instance:dispatchEvent(VersionActivity1_5DungeonEvent.OnUpdateGainedBuildReward)
 end
 
-function var_0_0.updateSelectTypeList(arg_7_0)
-	for iter_7_0 = 1, #arg_7_0.selectTypeList do
-		arg_7_0.selectTypeList[iter_7_0] = 0
+function VersionActivity1_5BuildModel:updateSelectTypeList()
+	for i = 1, #self.selectTypeList do
+		self.selectTypeList[i] = 0
 	end
 
-	for iter_7_1, iter_7_2 in ipairs(arg_7_0.selectBuildList) do
-		if arg_7_0:checkBuildIdIsSelect(iter_7_2) then
-			local var_7_0 = VersionActivity1_5DungeonConfig.instance:getBuildCo(iter_7_2)
+	for _, buildId in ipairs(self.selectBuildList) do
+		if self:checkBuildIdIsSelect(buildId) then
+			local buildCo = VersionActivity1_5DungeonConfig.instance:getBuildCo(buildId)
 
-			arg_7_0.selectTypeList[var_7_0.group] = var_7_0.type
+			self.selectTypeList[buildCo.group] = buildCo.type
 		end
 	end
 end
 
-function var_0_0.checkBuildIdIsSelect(arg_8_0, arg_8_1)
-	return tabletool.indexOf(arg_8_0.selectBuildList, arg_8_1)
+function VersionActivity1_5BuildModel:checkBuildIdIsSelect(build)
+	return tabletool.indexOf(self.selectBuildList, build)
 end
 
-function var_0_0.checkBuildIsHad(arg_9_0, arg_9_1)
-	return tabletool.indexOf(arg_9_0.hadBuildList, arg_9_1)
+function VersionActivity1_5BuildModel:checkBuildIsHad(buildId)
+	return tabletool.indexOf(self.hadBuildList, buildId)
 end
 
-function var_0_0.updateGroupHadBuildCount(arg_10_0)
-	for iter_10_0 = 1, #arg_10_0.buildGroupHadBuildCount do
-		arg_10_0.buildGroupHadBuildCount[iter_10_0] = 0
+function VersionActivity1_5BuildModel:updateGroupHadBuildCount()
+	for i = 1, #self.buildGroupHadBuildCount do
+		self.buildGroupHadBuildCount[i] = 0
 	end
 
-	for iter_10_1, iter_10_2 in ipairs(arg_10_0.hadBuildList) do
-		local var_10_0 = VersionActivity1_5DungeonConfig.instance:getBuildCo(iter_10_2).group
+	for i, buildId in ipairs(self.hadBuildList) do
+		local buildCo = VersionActivity1_5DungeonConfig.instance:getBuildCo(buildId)
+		local group = buildCo.group
 
-		arg_10_0.buildGroupHadBuildCount[var_10_0] = arg_10_0.buildGroupHadBuildCount[var_10_0] + 1
+		self.buildGroupHadBuildCount[group] = self.buildGroupHadBuildCount[group] + 1
 	end
 end
 
-function var_0_0.getCanBuildCount(arg_11_0, arg_11_1)
-	return arg_11_0.buildGroupHadBuildCount[arg_11_1]
+function VersionActivity1_5BuildModel:getCanBuildCount(groupId)
+	return self.buildGroupHadBuildCount[groupId]
 end
 
-function var_0_0.getSelectBuildIdList(arg_12_0)
-	return arg_12_0.selectBuildList
+function VersionActivity1_5BuildModel:getSelectBuildIdList()
+	return self.selectBuildList
 end
 
-function var_0_0.getSelectType(arg_13_0, arg_13_1)
-	return arg_13_0.selectTypeList[arg_13_1]
+function VersionActivity1_5BuildModel:getSelectType(groupId)
+	return self.selectTypeList[groupId]
 end
 
-function var_0_0.getSelectTypeList(arg_14_0)
-	return arg_14_0.selectTypeList
+function VersionActivity1_5BuildModel:getSelectTypeList()
+	return self.selectTypeList
 end
 
-function var_0_0.setSelectBuildId(arg_15_0, arg_15_1)
-	arg_15_0.selectTypeList[arg_15_1.group] = arg_15_1.type
+function VersionActivity1_5BuildModel:setSelectBuildId(buildCo)
+	self.selectTypeList[buildCo.group] = buildCo.type
 
-	tabletool.clear(arg_15_0.selectBuildList)
+	tabletool.clear(self.selectBuildList)
 
-	for iter_15_0, iter_15_1 in pairs(arg_15_0.selectTypeList) do
-		if iter_15_1 ~= VersionActivity1_5DungeonEnum.BuildType.None then
-			arg_15_1 = VersionActivity1_5DungeonConfig.instance:getBuildCoByGroupAndType(iter_15_0, iter_15_1)
+	for groupId, type in pairs(self.selectTypeList) do
+		if type ~= VersionActivity1_5DungeonEnum.BuildType.None then
+			buildCo = VersionActivity1_5DungeonConfig.instance:getBuildCoByGroupAndType(groupId, type)
 
-			table.insert(arg_15_0.selectBuildList, arg_15_1.id)
+			table.insert(self.selectBuildList, buildCo.id)
 		end
 	end
 end
 
-function var_0_0.getHadBuildCount(arg_16_0)
-	return #arg_16_0.hadBuildList
+function VersionActivity1_5BuildModel:getHadBuildCount()
+	return #self.hadBuildList
 end
 
-function var_0_0.getBuildCoByGroupIndex(arg_17_0, arg_17_1)
-	local var_17_0 = arg_17_0:getSelectType(arg_17_1)
+function VersionActivity1_5BuildModel:getBuildCoByGroupIndex(groupIndex)
+	local selectType = self:getSelectType(groupIndex)
 
-	if var_17_0 == VersionActivity1_5DungeonEnum.BuildType.None then
+	if selectType == VersionActivity1_5DungeonEnum.BuildType.None then
 		return nil
 	end
 
-	return VersionActivity1_5DungeonConfig.instance:getBuildCoByGroupAndType(arg_17_1, var_17_0)
+	return VersionActivity1_5DungeonConfig.instance:getBuildCoByGroupAndType(groupIndex, selectType)
 end
 
-function var_0_0.getTextByType(arg_18_0, arg_18_1)
-	local var_18_0 = VersionActivity1_5DungeonEnum.BuildType2TextColor[arg_18_0] or VersionActivity1_5DungeonEnum.BuildType2TextColor[VersionActivity1_5DungeonEnum.BuildType.None]
+function VersionActivity1_5BuildModel.getTextByType(type, text)
+	local color = VersionActivity1_5DungeonEnum.BuildType2TextColor[type]
 
-	return string.format("<color=%s>%s</color>", var_18_0, arg_18_1)
+	color = color or VersionActivity1_5DungeonEnum.BuildType2TextColor[VersionActivity1_5DungeonEnum.BuildType.None]
+
+	return string.format("<color=%s>%s</color>", color, text)
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity1_5BuildModel.instance = VersionActivity1_5BuildModel.New()
 
-return var_0_0
+return VersionActivity1_5BuildModel

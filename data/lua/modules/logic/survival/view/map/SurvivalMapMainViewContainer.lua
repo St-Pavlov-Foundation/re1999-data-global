@@ -1,8 +1,10 @@
-﻿module("modules.logic.survival.view.map.SurvivalMapMainViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/SurvivalMapMainViewContainer.lua
 
-local var_0_0 = class("SurvivalMapMainViewContainer", BaseViewContainer)
+module("modules.logic.survival.view.map.SurvivalMapMainViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local SurvivalMapMainViewContainer = class("SurvivalMapMainViewContainer", BaseViewContainer)
+
+function SurvivalMapMainViewContainer:buildViews()
 	return {
 		SurvivalMapMainView.New(),
 		SurvivalMapUnitView.New(),
@@ -18,32 +20,32 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		local var_2_0 = NavigateButtonsView.New({
+function SurvivalMapMainViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		local navView = NavigateButtonsView.New({
 			true,
 			false,
 			true
 		}, HelpEnum.HelpId.Survival)
 
-		var_2_0:setOverrideClose(arg_2_0.defaultOverrideCloseClick, arg_2_0)
+		navView:setOverrideClose(self.defaultOverrideCloseClick, self)
 
 		return {
-			var_2_0
+			navView
 		}
 	end
 end
 
-function var_0_0.setCloseFunc(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0._closeFunc = arg_3_1
-	arg_3_0._closeObj = arg_3_2
+function SurvivalMapMainViewContainer:setCloseFunc(closeFunc, closeObj)
+	self._closeFunc = closeFunc
+	self._closeObj = closeObj
 end
 
-function var_0_0.defaultOverrideCloseClick(arg_4_0)
+function SurvivalMapMainViewContainer:defaultOverrideCloseClick()
 	SurvivalStatHelper.instance:statBtnClick("onClose", "SurvivalMapMainView")
 
-	if arg_4_0._closeFunc then
-		arg_4_0._closeFunc(arg_4_0._closeObj)
+	if self._closeFunc then
+		self._closeFunc(self._closeObj)
 
 		return
 	end
@@ -57,4 +59,4 @@ function var_0_0.defaultOverrideCloseClick(arg_4_0)
 	SurvivalController.instance:exitMap()
 end
 
-return var_0_0
+return SurvivalMapMainViewContainer

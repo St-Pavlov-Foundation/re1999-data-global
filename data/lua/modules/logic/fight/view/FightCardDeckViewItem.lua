@@ -1,56 +1,58 @@
-﻿module("modules.logic.fight.view.FightCardDeckViewItem", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightCardDeckViewItem.lua
 
-local var_0_0 = class("FightCardDeckViewItem", BaseViewExtended)
+module("modules.logic.fight.view.FightCardDeckViewItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._cardObj = gohelper.findChild(arg_1_0.viewGO, "card/card")
-	arg_1_0._select = gohelper.findChild(arg_1_0.viewGO, "select")
+local FightCardDeckViewItem = class("FightCardDeckViewItem", BaseViewExtended)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function FightCardDeckViewItem:onInitView()
+	self._cardObj = gohelper.findChild(self.viewGO, "card/card")
+	self._select = gohelper.findChild(self.viewGO, "select")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function FightCardDeckViewItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function FightCardDeckViewItem:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function FightCardDeckViewItem:_editableInitView()
 	return
 end
 
-function var_0_0.onRefreshViewParam(arg_5_0)
+function FightCardDeckViewItem:onRefreshViewParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0._cardItem = MonoHelper.addNoUpdateLuaComOnceToGo(arg_6_0._cardObj, FightViewCardItem, FightEnum.CardShowType.Deck)
+function FightCardDeckViewItem:onOpen()
+	self._cardItem = MonoHelper.addNoUpdateLuaComOnceToGo(self._cardObj, FightViewCardItem, FightEnum.CardShowType.Deck)
 end
 
-function var_0_0.refreshItem(arg_7_0, arg_7_1)
-	arg_7_0._data = arg_7_1
+function FightCardDeckViewItem:refreshItem(data)
+	self._data = data
 
-	arg_7_0._cardItem:updateItem(arg_7_1.entityId, arg_7_1.skillId, arg_7_1)
+	self._cardItem:updateItem(data.entityId, data.skillId, data)
 end
 
-function var_0_0.showCount(arg_8_0, arg_8_1)
-	arg_8_0._cardItem:showCountPart(arg_8_1)
+function FightCardDeckViewItem:showCount(count)
+	self._cardItem:showCountPart(count)
 end
 
-function var_0_0.setSelect(arg_9_0, arg_9_1)
-	gohelper.setActive(arg_9_0._select, arg_9_1)
+function FightCardDeckViewItem:setSelect(state)
+	gohelper.setActive(self._select, state)
 end
 
-function var_0_0.onClose(arg_10_0)
+function FightCardDeckViewItem:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function FightCardDeckViewItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return FightCardDeckViewItem

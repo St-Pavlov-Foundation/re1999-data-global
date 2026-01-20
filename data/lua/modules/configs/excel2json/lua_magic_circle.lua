@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_magic_circle", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_magic_circle.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_magic_circle", package.seeall)
+
+local lua_magic_circle = {}
+local fields = {
 	consumeNum = 7,
 	enterTime = 16,
 	selfSkills = 10,
@@ -26,16 +28,16 @@ local var_0_1 = {
 	uiType = 4,
 	closeAniName = 21
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	desc = 2,
 	name = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_magic_circle.onLoad(json)
+	lua_magic_circle.configList, lua_magic_circle.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_magic_circle

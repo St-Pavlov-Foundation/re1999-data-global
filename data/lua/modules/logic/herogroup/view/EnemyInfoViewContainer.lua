@@ -1,30 +1,32 @@
-﻿module("modules.logic.herogroup.view.EnemyInfoViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/herogroup/view/EnemyInfoViewContainer.lua
 
-local var_0_0 = class("EnemyInfoViewContainer", BaseViewContainer)
+module("modules.logic.herogroup.view.EnemyInfoViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local EnemyInfoViewContainer = class("EnemyInfoViewContainer", BaseViewContainer)
+
+function EnemyInfoViewContainer:buildViews()
 	return {
 		EnemyInfoView.New(),
 		TabViewGroup.New(1, "#go_btns")
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigationView = NavigateButtonsView.New({
+function EnemyInfoViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigationView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_2_0.navigationView
+			self.navigationView
 		}
 	end
 end
 
-function var_0_0.onContainerOpenFinish(arg_3_0)
-	arg_3_0.navigationView:resetCloseBtnAudioId(AudioEnum.HeroGroupUI.Play_UI_Action_Return)
+function EnemyInfoViewContainer:onContainerOpenFinish()
+	self.navigationView:resetCloseBtnAudioId(AudioEnum.HeroGroupUI.Play_UI_Action_Return)
 end
 
-return var_0_0
+return EnemyInfoViewContainer

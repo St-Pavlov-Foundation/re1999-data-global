@@ -1,101 +1,103 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.entity.TeamChessUnitEntityBase", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/controller/teamChess/entity/TeamChessUnitEntityBase.lua
 
-local var_0_0 = class("TeamChessUnitEntityBase", LuaCompBase)
-local var_0_1 = ZProj.TweenHelper
+module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.entity.TeamChessUnitEntityBase", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0.trans = arg_1_1.transform
-	arg_1_0._posX = 0
-	arg_1_0._posY = 0
-	arg_1_0._posZ = 0
-	arg_1_0._lastActive = nil
-	arg_1_0._canClick = false
-	arg_1_0._canDrag = false
-	arg_1_0._scale = 1
+local TeamChessUnitEntityBase = class("TeamChessUnitEntityBase", LuaCompBase)
+local tweenHelper = ZProj.TweenHelper
+
+function TeamChessUnitEntityBase:init(go)
+	self.go = go
+	self.trans = go.transform
+	self._posX = 0
+	self._posY = 0
+	self._posZ = 0
+	self._lastActive = nil
+	self._canClick = false
+	self._canDrag = false
+	self._scale = 1
 end
 
-function var_0_0.updateMo(arg_2_0, arg_2_1)
-	arg_2_0._unitMo = arg_2_1
+function TeamChessUnitEntityBase:updateMo(unitMo)
+	self._unitMo = unitMo
 
-	arg_2_0:setScale(arg_2_1:getScale())
-	arg_2_0:loadAsset(arg_2_0._unitMo:getUnitPath())
+	self:setScale(unitMo:getScale())
+	self:loadAsset(self._unitMo:getUnitPath())
 end
 
-function var_0_0.loadAsset(arg_3_0, arg_3_1)
-	if not string.nilorempty(arg_3_1) and not arg_3_0._loader then
-		arg_3_0._loader = PrefabInstantiate.Create(arg_3_0.go)
+function TeamChessUnitEntityBase:loadAsset(path)
+	if not string.nilorempty(path) and not self._loader then
+		self._loader = PrefabInstantiate.Create(self.go)
 
-		arg_3_0._loader:startLoad(arg_3_1, arg_3_0._onResLoaded, arg_3_0)
+		self._loader:startLoad(path, self._onResLoaded, self)
 	end
 end
 
-function var_0_0.updatePos(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	arg_4_0._posX, arg_4_0._posY, arg_4_0._posZ = arg_4_1, arg_4_2, arg_4_3
+function TeamChessUnitEntityBase:updatePos(posX, posY, posZ)
+	self._posX, self._posY, self._posZ = posX, posY, posZ
 
-	transformhelper.setPos(arg_4_0.trans, arg_4_1, arg_4_2, arg_4_3)
+	transformhelper.setPos(self.trans, posX, posY, posZ)
 end
 
-function var_0_0.moveToPos(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	var_0_1.DOMove(arg_5_0.trans, arg_5_1, arg_5_2, arg_5_3, EliminateTeamChessEnum.entityMoveTime, arg_5_0._onMoveEnd, nil, nil, EaseType.OutQuart)
+function TeamChessUnitEntityBase:moveToPos(posX, posY, posZ)
+	tweenHelper.DOMove(self.trans, posX, posY, posZ, EliminateTeamChessEnum.entityMoveTime, self._onMoveEnd, nil, nil, EaseType.OutQuart)
 end
 
-function var_0_0.getPosXYZ(arg_6_0)
-	local var_6_0, var_6_1, var_6_2 = transformhelper.getPos(arg_6_0.trans)
+function TeamChessUnitEntityBase:getPosXYZ()
+	local x, y, z = transformhelper.getPos(self.trans)
 
-	return var_6_0, var_6_1 + 0.4, var_6_2
+	return x, y + 0.4, z
 end
 
-function var_0_0.getTopPosXYZ(arg_7_0)
-	local var_7_0, var_7_1, var_7_2 = arg_7_0:getPosXYZ()
+function TeamChessUnitEntityBase:getTopPosXYZ()
+	local x, y, z = self:getPosXYZ()
 
-	return var_7_0 - 0.1, var_7_1 + 0.5, var_7_2
+	return x - 0.1, y + 0.5, z
 end
 
-function var_0_0.setActive(arg_8_0, arg_8_1)
-	if arg_8_0._lastActive == nil then
-		arg_8_0._lastActive = arg_8_1
+function TeamChessUnitEntityBase:setActive(active)
+	if self._lastActive == nil then
+		self._lastActive = active
 	end
 
-	if arg_8_0._lastActive ~= arg_8_1 then
-		gohelper.setActive(arg_8_0.go, arg_8_1)
+	if self._lastActive ~= active then
+		gohelper.setActive(self.go, active)
 
-		arg_8_0._lastActive = arg_8_1
-	end
-end
-
-function var_0_0.setCanClick(arg_9_0, arg_9_1)
-	arg_9_0._canClick = arg_9_1
-end
-
-function var_0_0.setCanDrag(arg_10_0, arg_10_1)
-	arg_10_0._canDrag = arg_10_1
-end
-
-function var_0_0.setScale(arg_11_0, arg_11_1)
-	arg_11_0._scale = arg_11_1 or 1
-end
-
-function var_0_0._onResLoaded(arg_12_0)
-	arg_12_0._resGo = arg_12_0._loader:getInstGO()
-
-	transformhelper.setLocalScale(arg_12_0._resGo.transform, arg_12_0._scale, arg_12_0._scale, arg_12_0._scale)
-end
-
-function var_0_0.dispose(arg_13_0)
-	arg_13_0:onDestroy()
-end
-
-function var_0_0.onDestroy(arg_14_0)
-	gohelper.destroy(arg_14_0.go)
-
-	arg_14_0._lastActive = nil
-
-	if arg_14_0._loader then
-		arg_14_0._loader:onDestroy()
-
-		arg_14_0._loader = nil
+		self._lastActive = active
 	end
 end
 
-return var_0_0
+function TeamChessUnitEntityBase:setCanClick(state)
+	self._canClick = state
+end
+
+function TeamChessUnitEntityBase:setCanDrag(state)
+	self._canDrag = state
+end
+
+function TeamChessUnitEntityBase:setScale(scale)
+	self._scale = scale or 1
+end
+
+function TeamChessUnitEntityBase:_onResLoaded()
+	self._resGo = self._loader:getInstGO()
+
+	transformhelper.setLocalScale(self._resGo.transform, self._scale, self._scale, self._scale)
+end
+
+function TeamChessUnitEntityBase:dispose()
+	self:onDestroy()
+end
+
+function TeamChessUnitEntityBase:onDestroy()
+	gohelper.destroy(self.go)
+
+	self._lastActive = nil
+
+	if self._loader then
+		self._loader:onDestroy()
+
+		self._loader = nil
+	end
+end
+
+return TeamChessUnitEntityBase

@@ -1,93 +1,97 @@
-﻿module("modules.logic.seasonver.act166.view.Season166HeroGroupFightView", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act166/view/Season166HeroGroupFightView.lua
 
-local var_0_0 = class("Season166HeroGroupFightView", BaseView)
+module("modules.logic.seasonver.act166.view.Season166HeroGroupFightView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnassist = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btnContain/horizontal/#btn_assist")
-	arg_1_0._goassist = gohelper.findChild(arg_1_0.viewGO, "btnContain/horizontal/#btn_assist/#go_assist")
-	arg_1_0._gocancelAssist = gohelper.findChild(arg_1_0.viewGO, "btnContain/horizontal/#btn_assist/#go_cancelAssist")
-	arg_1_0._gofullAssist = gohelper.findChild(arg_1_0.viewGO, "btnContain/horizontal/#btn_assist/#go_fullAssist")
-	arg_1_0._btnstartseason = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btnContain/horizontal/#btn_startseason")
-	arg_1_0._btncloth = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btnContain/#btn_cloth")
-	arg_1_0._txtclothName = gohelper.findChildText(arg_1_0.viewGO, "btnContain/#btn_cloth/#txt_clothName")
-	arg_1_0._txtclothNameEn = gohelper.findChildText(arg_1_0.viewGO, "btnContain/#btn_cloth/#txt_clothName/#txt_clothNameEn")
-	arg_1_0._btntalentTree = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btnContain/#btn_talentTree")
-	arg_1_0._btntalentTreeAdd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btnContain/#btn_talentTreeAdd")
-	arg_1_0._imageTalent = gohelper.findChildImage(arg_1_0.viewGO, "btnContain/#btn_talentTree/#image_talen")
-	arg_1_0._goEquipSlot = gohelper.findChild(arg_1_0.viewGO, "btnContain/#btn_talentTree/equipslot")
-	arg_1_0._gotalentReddot = gohelper.findChild(arg_1_0.viewGO, "btnContain/#btn_talentTree/#go_talentReddot")
-	arg_1_0._gomainFrameBg = gohelper.findChild(arg_1_0.viewGO, "frame/#go_mainFrameBg")
-	arg_1_0._gohelpFrameBg = gohelper.findChild(arg_1_0.viewGO, "frame/#go_helpFrameBg")
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
-	arg_1_0._gorighttop = gohelper.findChild(arg_1_0.viewGO, "#go_righttop")
-	arg_1_0._goruleWindow = gohelper.findChild(arg_1_0.viewGO, "#go_rulewindow")
+local Season166HeroGroupFightView = class("Season166HeroGroupFightView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Season166HeroGroupFightView:onInitView()
+	self._btnassist = gohelper.findChildButtonWithAudio(self.viewGO, "btnContain/horizontal/#btn_assist")
+	self._goassist = gohelper.findChild(self.viewGO, "btnContain/horizontal/#btn_assist/#go_assist")
+	self._gocancelAssist = gohelper.findChild(self.viewGO, "btnContain/horizontal/#btn_assist/#go_cancelAssist")
+	self._gofullAssist = gohelper.findChild(self.viewGO, "btnContain/horizontal/#btn_assist/#go_fullAssist")
+	self._btnstartseason = gohelper.findChildButtonWithAudio(self.viewGO, "btnContain/horizontal/#btn_startseason")
+	self._btncloth = gohelper.findChildButtonWithAudio(self.viewGO, "btnContain/#btn_cloth")
+	self._txtclothName = gohelper.findChildText(self.viewGO, "btnContain/#btn_cloth/#txt_clothName")
+	self._txtclothNameEn = gohelper.findChildText(self.viewGO, "btnContain/#btn_cloth/#txt_clothName/#txt_clothNameEn")
+	self._btntalentTree = gohelper.findChildButtonWithAudio(self.viewGO, "btnContain/#btn_talentTree")
+	self._btntalentTreeAdd = gohelper.findChildButtonWithAudio(self.viewGO, "btnContain/#btn_talentTreeAdd")
+	self._imageTalent = gohelper.findChildImage(self.viewGO, "btnContain/#btn_talentTree/#image_talen")
+	self._goEquipSlot = gohelper.findChild(self.viewGO, "btnContain/#btn_talentTree/equipslot")
+	self._gotalentReddot = gohelper.findChild(self.viewGO, "btnContain/#btn_talentTree/#go_talentReddot")
+	self._gomainFrameBg = gohelper.findChild(self.viewGO, "frame/#go_mainFrameBg")
+	self._gohelpFrameBg = gohelper.findChild(self.viewGO, "frame/#go_helpFrameBg")
+	self._gotopleft = gohelper.findChild(self.viewGO, "#go_topleft")
+	self._gorighttop = gohelper.findChild(self.viewGO, "#go_righttop")
+	self._goruleWindow = gohelper.findChild(self.viewGO, "#go_rulewindow")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnassist:AddClickListener(arg_2_0._btnassistOnClick, arg_2_0)
-	arg_2_0._btnstartseason:AddClickListener(arg_2_0._btnstartseasonOnClick, arg_2_0)
-	arg_2_0._btncloth:AddClickListener(arg_2_0._btnclothOnClick, arg_2_0)
-	arg_2_0._btntalentTree:AddClickListener(arg_2_0._btntalentTreeOnClick, arg_2_0)
-	arg_2_0._btntalentTreeAdd:AddClickListener(arg_2_0._btntalentTreeOnClick, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenFullView, arg_2_0._onOpenFullView, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0._onCloseView, arg_2_0)
-	arg_2_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, arg_2_0._onModifyHeroGroup, arg_2_0)
-	arg_2_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickHeroGroupItem, arg_2_0._onClickHeroGroupItem, arg_2_0)
-	arg_2_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.ShowGuideDragEffect, arg_2_0._showGuideDragEffect, arg_2_0)
-	arg_2_0:addEventCb(Season166Controller.instance, Season166Event.StartFightFailed, arg_2_0.handleStartFightFailed, arg_2_0)
-	arg_2_0:addEventCb(Season166Controller.instance, Season166Event.OnSelectPickAssist, arg_2_0.refreshAssistBtn, arg_2_0)
-	arg_2_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, arg_2_0.refreshAssistBtn, arg_2_0)
-	arg_2_0:addEventCb(Season166Controller.instance, Season166Event.SetTalentId, arg_2_0._onTalentChange, arg_2_0)
-	arg_2_0:addEventCb(Season166Controller.instance, Season166Event.SetTalentSkill, arg_2_0._onTalentSkillChange, arg_2_0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_2_0.checkOneActivityIsEnd, arg_2_0)
+function Season166HeroGroupFightView:addEvents()
+	self._btnassist:AddClickListener(self._btnassistOnClick, self)
+	self._btnstartseason:AddClickListener(self._btnstartseasonOnClick, self)
+	self._btncloth:AddClickListener(self._btnclothOnClick, self)
+	self._btntalentTree:AddClickListener(self._btntalentTreeOnClick, self)
+	self._btntalentTreeAdd:AddClickListener(self._btntalentTreeOnClick, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenFullView, self._onOpenFullView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, self._onModifyHeroGroup, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickHeroGroupItem, self._onClickHeroGroupItem, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.ShowGuideDragEffect, self._showGuideDragEffect, self)
+	self:addEventCb(Season166Controller.instance, Season166Event.StartFightFailed, self.handleStartFightFailed, self)
+	self:addEventCb(Season166Controller.instance, Season166Event.OnSelectPickAssist, self.refreshAssistBtn, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, self.refreshAssistBtn, self)
+	self:addEventCb(Season166Controller.instance, Season166Event.SetTalentId, self._onTalentChange, self)
+	self:addEventCb(Season166Controller.instance, Season166Event.SetTalentSkill, self._onTalentSkillChange, self)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self.checkOneActivityIsEnd, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnassist:RemoveClickListener()
-	arg_3_0._btnstartseason:RemoveClickListener()
-	arg_3_0._btncloth:RemoveClickListener()
-	arg_3_0._btntalentTree:RemoveClickListener()
-	arg_3_0._btntalentTreeAdd:RemoveClickListener()
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenFullView, arg_3_0._onOpenFullView, arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0._onCloseView, arg_3_0)
-	arg_3_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, arg_3_0._onModifyHeroGroup, arg_3_0)
-	arg_3_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickHeroGroupItem, arg_3_0._onClickHeroGroupItem, arg_3_0)
-	arg_3_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.ShowGuideDragEffect, arg_3_0._showGuideDragEffect, arg_3_0)
-	arg_3_0:removeEventCb(Season166Controller.instance, Season166Event.StartFightFailed, arg_3_0.handleStartFightFailed, arg_3_0)
-	arg_3_0:removeEventCb(Season166Controller.instance, Season166Event.OnSelectPickAssist, arg_3_0.refreshAssistBtn, arg_3_0)
-	arg_3_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, arg_3_0.refreshAssistBtn, arg_3_0)
-	arg_3_0:removeEventCb(Season166Controller.instance, Season166Event.SetTalentId, arg_3_0._onTalentChange, arg_3_0)
-	arg_3_0:removeEventCb(Season166Controller.instance, Season166Event.SetTalentSkill, arg_3_0._onTalentSkillChange, arg_3_0)
-	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, arg_3_0.checkOneActivityIsEnd, arg_3_0)
+function Season166HeroGroupFightView:removeEvents()
+	self._btnassist:RemoveClickListener()
+	self._btnstartseason:RemoveClickListener()
+	self._btncloth:RemoveClickListener()
+	self._btntalentTree:RemoveClickListener()
+	self._btntalentTreeAdd:RemoveClickListener()
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenFullView, self._onOpenFullView, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
+	self:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, self._onModifyHeroGroup, self)
+	self:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickHeroGroupItem, self._onClickHeroGroupItem, self)
+	self:removeEventCb(HeroGroupController.instance, HeroGroupEvent.ShowGuideDragEffect, self._showGuideDragEffect, self)
+	self:removeEventCb(Season166Controller.instance, Season166Event.StartFightFailed, self.handleStartFightFailed, self)
+	self:removeEventCb(Season166Controller.instance, Season166Event.OnSelectPickAssist, self.refreshAssistBtn, self)
+	self:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, self.refreshAssistBtn, self)
+	self:removeEventCb(Season166Controller.instance, Season166Event.SetTalentId, self._onTalentChange, self)
+	self:removeEventCb(Season166Controller.instance, Season166Event.SetTalentSkill, self._onTalentSkillChange, self)
+	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, self.checkOneActivityIsEnd, self)
 end
 
-function var_0_0._btnassistOnClick(arg_4_0)
-	if arg_4_0.assistMO then
+function Season166HeroGroupFightView:_btnassistOnClick()
+	if self.assistMO then
 		Season166HeroGroupModel.instance:cleanAssistData()
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
-	elseif arg_4_0.isFullHero then
+	elseif self.isFullHero then
 		GameFacade.showToast(ToastEnum.Season166HeroGroupFull)
-	elseif not arg_4_0.isHasAssist then
+	elseif not self.isHasAssist then
 		Season166Controller.instance:dispatchEvent(Season166Event.OpenPickAssistView)
 	end
 end
 
-var_0_0.UIBlock_SeasonFight = "UIBlock_Season166Fight"
+Season166HeroGroupFightView.UIBlock_SeasonFight = "UIBlock_Season166Fight"
 
-function var_0_0._btnstartseasonOnClick(arg_5_0)
-	if not arg_5_0._blockStart then
-		arg_5_0._blockStart = true
+function Season166HeroGroupFightView:_btnstartseasonOnClick()
+	if not self._blockStart then
+		self._blockStart = true
 
-		arg_5_0:_onClickStart()
+		self:_onClickStart()
 	end
 end
 
-function var_0_0._btnclothOnClick(arg_6_0)
-	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.LeadRoleSkill) or PlayerClothModel.instance:getSpEpisodeClothID() then
+function Season166HeroGroupFightView:_btnclothOnClick()
+	local clothUnlock = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.LeadRoleSkill)
+
+	if clothUnlock or PlayerClothModel.instance:getSpEpisodeClothID() then
 		ViewMgr.instance:openView(ViewName.PlayerClothView, {
 			groupModel = Season166HeroGroupModel.instance
 		})
@@ -96,325 +100,333 @@ function var_0_0._btnclothOnClick(arg_6_0)
 	end
 end
 
-function var_0_0._btntalentTreeOnClick(arg_7_0)
-	local var_7_0
+function Season166HeroGroupFightView:_btntalentTreeOnClick()
+	local talentId
+	local isSpotEpisode = Season166HeroGroupModel.instance:isSeason166BaseSpotEpisode(self.episodeId)
 
-	if Season166HeroGroupModel.instance:isSeason166BaseSpotEpisode(arg_7_0.episodeId) then
-		var_7_0 = arg_7_0.baseSpotTalentId
+	if isSpotEpisode then
+		talentId = self.baseSpotTalentId
 	end
 
-	local var_7_1 = {
+	local viewParam = {
 		showEquip = true,
-		talentId = var_7_0
+		talentId = talentId
 	}
 
-	ViewMgr.instance:openView(ViewName.Season166TalentView, var_7_1)
+	ViewMgr.instance:openView(ViewName.Season166TalentView, viewParam)
 end
 
-function var_0_0._onEscapeBtnClick(arg_8_0)
-	if not arg_8_0._goruleWindow.activeInHierarchy then
-		arg_8_0.viewContainer:_closeCallback()
+function Season166HeroGroupFightView:_onEscapeBtnClick()
+	if not self._goruleWindow.activeInHierarchy then
+		self.viewContainer:_closeCallback()
 	end
 end
 
-function var_0_0._editableInitView(arg_9_0)
-	NavigateMgr.instance:addEscape(ViewName.Season166HeroGroupFightView, arg_9_0._onEscapeBtnClick, arg_9_0)
+function Season166HeroGroupFightView:_editableInitView()
+	NavigateMgr.instance:addEscape(ViewName.Season166HeroGroupFightView, self._onEscapeBtnClick, self)
 
-	arg_9_0._iconGO = arg_9_0:getResInst(arg_9_0.viewContainer:getSetting().otherRes[1], arg_9_0._btncloth.gameObject)
+	self._iconGO = self:getResInst(self.viewContainer:getSetting().otherRes[1], self._btncloth.gameObject)
 
-	recthelper.setAnchor(arg_9_0._iconGO.transform, -100, 1)
+	recthelper.setAnchor(self._iconGO.transform, -100, 1)
 
-	arg_9_0.talentSlotTab = arg_9_0:getUserDataTb_()
+	self.talentSlotTab = self:getUserDataTb_()
 
-	for iter_9_0 = 1, 3 do
-		local var_9_0 = {
-			item = gohelper.findChild(arg_9_0._goEquipSlot, iter_9_0)
-		}
+	for i = 1, 3 do
+		local talentSlotItem = {}
 
-		var_9_0.light = gohelper.findChild(var_9_0.item, "light")
-		var_9_0.imageLight = gohelper.findChildImage(var_9_0.item, "light")
-		var_9_0.lineLight = gohelper.findChild(var_9_0.item, "line_light")
-		var_9_0.lineDark = gohelper.findChild(var_9_0.item, "line_dark")
-		var_9_0.effect1 = gohelper.findChild(var_9_0.item, "light/qi1")
-		var_9_0.effect2 = gohelper.findChild(var_9_0.item, "light/qi2")
-		var_9_0.effect3 = gohelper.findChild(var_9_0.item, "light/qi3")
-		arg_9_0.talentSlotTab[iter_9_0] = var_9_0
+		talentSlotItem.item = gohelper.findChild(self._goEquipSlot, i)
+		talentSlotItem.light = gohelper.findChild(talentSlotItem.item, "light")
+		talentSlotItem.imageLight = gohelper.findChildImage(talentSlotItem.item, "light")
+		talentSlotItem.lineLight = gohelper.findChild(talentSlotItem.item, "line_light")
+		talentSlotItem.lineDark = gohelper.findChild(talentSlotItem.item, "line_dark")
+		talentSlotItem.effect1 = gohelper.findChild(talentSlotItem.item, "light/qi1")
+		talentSlotItem.effect2 = gohelper.findChild(talentSlotItem.item, "light/qi2")
+		talentSlotItem.effect3 = gohelper.findChild(talentSlotItem.item, "light/qi3")
+		self.talentSlotTab[i] = talentSlotItem
 	end
 end
 
-function var_0_0.onUpdateParam(arg_10_0)
+function Season166HeroGroupFightView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_11_0)
-	arg_11_0:initData()
-	arg_11_0:_checkFirstPosHasEquip()
-	arg_11_0:_checkEquipClothSkill()
-	arg_11_0:refreshUI()
-	arg_11_0:refreshTalent()
-	arg_11_0:refreshTalentReddot()
+function Season166HeroGroupFightView:onOpen()
+	self:initData()
+	self:_checkFirstPosHasEquip()
+	self:_checkEquipClothSkill()
+	self:refreshUI()
+	self:refreshTalent()
+	self:refreshTalentReddot()
 end
 
-function var_0_0.initData(arg_12_0)
-	arg_12_0.actId = arg_12_0.viewParam.actId
-	arg_12_0.episodeId = arg_12_0.viewParam.episodeId or Season166HeroGroupModel.instance.episodeId
-	arg_12_0.episodeConfig = DungeonConfig.instance:getEpisodeCO(arg_12_0.episodeId)
-	arg_12_0.battleId = arg_12_0.viewParam.battleId or arg_12_0.episodeConfig.battleId
-	arg_12_0.battleConfig = arg_12_0.battleId and lua_battle.configDict[arg_12_0.episodeConfig.battleId]
+function Season166HeroGroupFightView:initData()
+	self.actId = self.viewParam.actId
+	self.episodeId = self.viewParam.episodeId or Season166HeroGroupModel.instance.episodeId
+	self.episodeConfig = DungeonConfig.instance:getEpisodeCO(self.episodeId)
+	self.battleId = self.viewParam.battleId or self.episodeConfig.battleId
+	self.battleConfig = self.battleId and lua_battle.configDict[self.episodeConfig.battleId]
 
-	Season166HeroGroupController.instance:onOpenViewInitData(arg_12_0.actId, arg_12_0.episodeId)
+	Season166HeroGroupController.instance:onOpenViewInitData(self.actId, self.episodeId)
 
-	arg_12_0.maxHeroCount = Season166HeroGroupModel.instance:getMaxHeroCountInGroup()
-	arg_12_0.isTrainEpisode = Season166HeroGroupModel.instance:isSeason166TrainEpisode(arg_12_0.episodeId)
-	arg_12_0.baseSpotTalentId = arg_12_0:getBaseSpotTalentId()
+	self.maxHeroCount = Season166HeroGroupModel.instance:getMaxHeroCountInGroup()
+	self.isTrainEpisode = Season166HeroGroupModel.instance:isSeason166TrainEpisode(self.episodeId)
+	self.baseSpotTalentId = self:getBaseSpotTalentId()
 end
 
-function var_0_0.getBaseSpotTalentId(arg_13_0)
-	local var_13_0
-	local var_13_1 = lua_activity166_base.configList
+function Season166HeroGroupFightView:getBaseSpotTalentId()
+	local talentId
+	local baseCfgList = lua_activity166_base.configList
 
-	for iter_13_0, iter_13_1 in pairs(var_13_1) do
-		if iter_13_1.episodeId == arg_13_0.episodeId then
-			var_13_0 = iter_13_1.talentId
+	for _, cfg in pairs(baseCfgList) do
+		if cfg.episodeId == self.episodeId then
+			talentId = cfg.talentId
 		end
 	end
 
-	return var_13_0
+	return talentId
 end
 
-function var_0_0.refreshUI(arg_14_0)
-	arg_14_0:refreshCloth()
-	arg_14_0:refreshAssistBtn()
+function Season166HeroGroupFightView:refreshUI()
+	self:refreshCloth()
+	self:refreshAssistBtn()
 
-	arg_14_0.context = Season166Model.instance:getBattleContext()
+	self.context = Season166Model.instance:getBattleContext()
 
-	gohelper.setActive(arg_14_0._btntalentTree.gameObject, not arg_14_0.context.teachId)
+	gohelper.setActive(self._btntalentTree.gameObject, not self.context.teachId)
 end
 
-function var_0_0.refreshCloth(arg_15_0)
-	local var_15_0 = arg_15_0:getShowClothState()
+function Season166HeroGroupFightView:refreshCloth()
+	local canShowCloth = self:getShowClothState()
 
-	gohelper.setActive(arg_15_0._btncloth.gameObject, var_15_0)
+	gohelper.setActive(self._btncloth.gameObject, canShowCloth)
 
-	if not var_15_0 then
+	if not canShowCloth then
 		return
 	end
 
-	local var_15_1 = Season166HeroGroupModel.instance:getCurGroupMO().clothId
-	local var_15_2 = PlayerClothModel.instance:getById(var_15_1)
+	local curGroupMO = Season166HeroGroupModel.instance:getCurGroupMO()
+	local cloth_id = curGroupMO.clothId
+	local clothMO = PlayerClothModel.instance:getById(cloth_id)
 
-	gohelper.setActive(arg_15_0._txtclothName.gameObject, var_15_2)
+	gohelper.setActive(self._txtclothName.gameObject, clothMO)
 
-	if var_15_2 then
-		local var_15_3 = lua_cloth.configDict[var_15_2.clothId]
+	if clothMO then
+		local clothConfig = lua_cloth.configDict[clothMO.clothId]
+		local clothLv = clothMO.level or 0
 
-		if not var_15_2.level then
-			local var_15_4 = 0
-		end
-
-		arg_15_0._txtclothName.text = var_15_3.name
-		arg_15_0._txtclothNameEn.text = var_15_3.enname
+		self._txtclothName.text = clothConfig.name
+		self._txtclothNameEn.text = clothConfig.enname
 	end
 
-	for iter_15_0, iter_15_1 in ipairs(lua_cloth.configList) do
-		local var_15_5 = gohelper.findChild(arg_15_0._iconGO, tostring(iter_15_1.id))
+	for _, clothCO in ipairs(lua_cloth.configList) do
+		local icon = gohelper.findChild(self._iconGO, tostring(clothCO.id))
 
-		if not gohelper.isNil(var_15_5) then
-			gohelper.setActive(var_15_5, iter_15_1.id == var_15_1)
+		if not gohelper.isNil(icon) then
+			gohelper.setActive(icon, clothCO.id == cloth_id)
 		end
 	end
 end
 
-function var_0_0.refreshAssistBtn(arg_16_0)
-	gohelper.setActive(arg_16_0._btnassist.gameObject, arg_16_0.isTrainEpisode)
+function Season166HeroGroupFightView:refreshAssistBtn()
+	gohelper.setActive(self._btnassist.gameObject, self.isTrainEpisode)
 
-	if not arg_16_0.isTrainEpisode then
+	if not self.isTrainEpisode then
 		return
 	end
 
-	arg_16_0.isFullHero = arg_16_0:getCurHeroCount() == arg_16_0.maxHeroCount
-	arg_16_0.assistMO = Season166HeroSingleGroupModel.instance.assistMO
+	local heroCount = self:getCurHeroCount()
 
-	gohelper.setActive(arg_16_0._goassist, not arg_16_0.assistMO and not arg_16_0.isFullHero)
-	gohelper.setActive(arg_16_0._gocancelAssist, arg_16_0.assistMO)
-	gohelper.setActive(arg_16_0._gofullAssist, not arg_16_0.assistMO and arg_16_0.isFullHero)
+	self.isFullHero = heroCount == self.maxHeroCount
+	self.assistMO = Season166HeroSingleGroupModel.instance.assistMO
+
+	gohelper.setActive(self._goassist, not self.assistMO and not self.isFullHero)
+	gohelper.setActive(self._gocancelAssist, self.assistMO)
+	gohelper.setActive(self._gofullAssist, not self.assistMO and self.isFullHero)
 end
 
-function var_0_0.getCurHeroCount(arg_17_0)
-	local var_17_0 = 0
-	local var_17_1 = Season166HeroGroupModel.instance:getCurGroupMO().heroList
+function Season166HeroGroupFightView:getCurHeroCount()
+	local heroCount = 0
+	local curHeroGroup = Season166HeroGroupModel.instance:getCurGroupMO()
+	local heroList = curHeroGroup.heroList
 
-	for iter_17_0, iter_17_1 in ipairs(var_17_1) do
-		if iter_17_1 ~= "0" then
-			var_17_0 = var_17_0 + 1
+	for index, heroUId in ipairs(heroList) do
+		if heroUId ~= "0" then
+			heroCount = heroCount + 1
 		end
 	end
 
-	return var_17_0
+	return heroCount
 end
 
-function var_0_0.getShowClothState(arg_18_0)
+function Season166HeroGroupFightView:getShowClothState()
 	if PlayerClothModel.instance:getSpEpisodeClothID() then
 		return true
 	end
 
-	if not OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.LeadRoleSkill) then
+	local clothShow = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.LeadRoleSkill)
+
+	if not clothShow then
 		return false
 	end
 
-	if arg_18_0.battleConfig and arg_18_0.battleConfig.noClothSkill == 1 then
+	if self.battleConfig and self.battleConfig.noClothSkill == 1 then
 		return false
 	end
 
-	local var_18_0 = PlayerClothModel.instance:getList()
+	local list = PlayerClothModel.instance:getList()
+	local hasUnlock = tabletool.len(list) > 0
 
-	return tabletool.len(var_18_0) > 0
+	return hasUnlock
 end
 
-function var_0_0._onClickStart(arg_19_0)
-	local var_19_0 = 10104
+function Season166HeroGroupFightView:_onClickStart()
+	local guideEpisodeId = 10104
 
-	if Season166HeroGroupModel.instance.episodeId == var_19_0 and not DungeonModel.instance:hasPassLevel(var_19_0) then
-		local var_19_1 = Season166HeroSingleGroupModel.instance:getList()
-		local var_19_2 = 0
+	if Season166HeroGroupModel.instance.episodeId == guideEpisodeId and not DungeonModel.instance:hasPassLevel(guideEpisodeId) then
+		local list = Season166HeroSingleGroupModel.instance:getList()
+		local count = 0
 
-		for iter_19_0, iter_19_1 in ipairs(var_19_1) do
-			if not iter_19_1:isEmpty() then
-				var_19_2 = var_19_2 + 1
+		for i, v in ipairs(list) do
+			if not v:isEmpty() then
+				count = count + 1
 			end
 		end
 
-		if var_19_2 < 2 then
+		if count < 2 then
 			GameFacade.showToast(ToastEnum.HeroSingleGroupCount)
 
-			arg_19_0._blockStart = false
+			self._blockStart = false
 
 			return
 		end
 	end
 
-	arg_19_0:_enterFight()
+	self:_enterFight()
 end
 
-function var_0_0._enterFight(arg_20_0)
-	local var_20_0 = Season166Model.instance:getBattleContext().talentId
+function Season166HeroGroupFightView:_enterFight()
+	local context = Season166Model.instance:getBattleContext()
+	local talentId = context.talentId
 
-	if not var_20_0 then
+	if not talentId then
 		GameFacade.showToast(ToastEnum.Season166TalentEmpty)
 
-		arg_20_0._blockStart = false
+		self._blockStart = false
 
 		return
 	end
 
 	if Season166HeroGroupModel.instance.episodeId then
-		if arg_20_0:setFightHeroGroup() then
-			UIBlockMgr.instance:startBlock(var_0_0.UIBlock_SeasonFight)
+		local result = self:setFightHeroGroup()
 
-			local var_20_1 = FightModel.instance:getFightParam()
-			local var_20_2 = Season166HeroGroupModel.instance:getEpisodeConfigId(var_20_1.episodeId)
+		if result then
+			UIBlockMgr.instance:startBlock(Season166HeroGroupFightView.UIBlock_SeasonFight)
 
-			Season166HeroGroupController.instance:sendStartAct166Battle(var_20_2, var_20_1.chapterId, var_20_1.episodeId, var_20_0, var_20_1, 1)
+			local fightParam = FightModel.instance:getFightParam()
+			local configId = Season166HeroGroupModel.instance:getEpisodeConfigId(fightParam.episodeId)
+
+			Season166HeroGroupController.instance:sendStartAct166Battle(configId, fightParam.chapterId, fightParam.episodeId, talentId, fightParam, 1)
 		end
 	else
 		logError("没选中关卡，无法开始战斗")
 
-		arg_20_0._blockStart = false
+		self._blockStart = false
 	end
 end
 
-function var_0_0.setFightHeroGroup(arg_21_0)
-	local var_21_0 = FightModel.instance:getFightParam()
+function Season166HeroGroupFightView:setFightHeroGroup()
+	local fightParam = FightModel.instance:getFightParam()
 
-	if not var_21_0 then
+	if not fightParam then
 		return false
 	end
 
-	local var_21_1 = Season166HeroGroupModel.instance:getCurGroupMO()
+	local curGroupMO = Season166HeroGroupModel.instance:getCurGroupMO()
 
-	if not var_21_1 then
+	if not curGroupMO then
 		GameFacade.showToast(ToastEnum.FightNoCurGroupMO)
 
-		arg_21_0._blockStart = false
+		self._blockStart = false
 
 		return false
 	end
 
-	local var_21_2, var_21_3 = var_21_1:getMainList()
-	local var_21_4, var_21_5 = var_21_1:getSubList()
-	local var_21_6 = Season166HeroSingleGroupModel.instance:getList()
-	local var_21_7 = var_21_1:getAllHeroEquips()
+	local main, mainCount = curGroupMO:getMainList()
+	local sub, subCount = curGroupMO:getSubList()
+	local alreadyList = Season166HeroSingleGroupModel.instance:getList()
+	local equips = curGroupMO:getAllHeroEquips()
 
-	for iter_21_0 = 1, #var_21_2 do
-		if var_21_2[iter_21_0] ~= var_21_6[iter_21_0].heroUid then
-			var_21_2[iter_21_0] = "0"
-			var_21_3 = var_21_3 - 1
+	for i = 1, #main do
+		if main[i] ~= alreadyList[i].heroUid then
+			main[i] = "0"
+			mainCount = mainCount - 1
 
-			if var_21_7[iter_21_0] then
-				var_21_7[iter_21_0].heroUid = "0"
+			if equips[i] then
+				equips[i].heroUid = "0"
 			end
 		end
 	end
 
-	for iter_21_1 = #var_21_2 + 1, math.min(#var_21_2 + #var_21_4, #var_21_6) do
-		if var_21_4[iter_21_1 - #var_21_2] ~= var_21_6[iter_21_1].heroUid then
-			var_21_4[iter_21_1 - #var_21_2] = "0"
-			var_21_5 = var_21_5 - 1
+	for i = #main + 1, math.min(#main + #sub, #alreadyList) do
+		if sub[i - #main] ~= alreadyList[i].heroUid then
+			sub[i - #main] = "0"
+			subCount = subCount - 1
 
-			if var_21_7[iter_21_1] then
-				var_21_7[iter_21_1].heroUid = "0"
+			if equips[i] then
+				equips[i].heroUid = "0"
 			end
 		end
 	end
 
-	if (not var_21_1.aidDict or #var_21_1.aidDict <= 0) and var_21_3 + var_21_5 == 0 then
+	if (not curGroupMO.aidDict or #curGroupMO.aidDict <= 0) and mainCount + subCount == 0 then
 		GameFacade.showToast(ToastEnum.FightNoCurGroupMO)
 
-		arg_21_0._blockStart = false
+		self._blockStart = false
 
 		return false
 	end
 
-	local var_21_8 = var_21_0.battleId
-	local var_21_9 = var_21_8 and lua_battle.configDict[var_21_8]
-	local var_21_10 = var_21_9 and var_21_9.noClothSkill == 0 and var_21_1.clothId or 0
+	local battleId = fightParam.battleId
+	local battleConfig = battleId and lua_battle.configDict[battleId]
+	local clothId = battleConfig and battleConfig.noClothSkill == 0 and curGroupMO.clothId or 0
 
-	var_21_0:setMySide(var_21_10, var_21_2, var_21_4, var_21_1:getAllHeroEquips())
+	fightParam:setMySide(clothId, main, sub, curGroupMO:getAllHeroEquips())
 
 	return true
 end
 
-function var_0_0._checkFirstPosHasEquip(arg_22_0)
-	local var_22_0 = Season166HeroGroupModel.instance:getCurGroupMO()
+function Season166HeroGroupFightView:_checkFirstPosHasEquip()
+	local curGroupMO = Season166HeroGroupModel.instance:getCurGroupMO()
 
-	if not var_22_0 then
+	if not curGroupMO then
 		return
 	end
 
-	local var_22_1 = var_22_0:getPosEquips(0).equipUid
-	local var_22_2 = var_22_1 and var_22_1[1]
+	local equips = curGroupMO:getPosEquips(0).equipUid
+	local equipId = equips and equips[1]
+	local equipMO = equipId and EquipModel.instance:getEquip(equipId)
 
-	if var_22_2 and EquipModel.instance:getEquip(var_22_2) then
+	if equipMO then
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnFirstPosHasEquip)
 	end
 end
 
-function var_0_0._checkEquipClothSkill(arg_23_0)
+function Season166HeroGroupFightView:_checkEquipClothSkill()
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.LeadRoleSkill) then
 		return
 	end
 
-	local var_23_0 = Season166HeroGroupModel.instance:getCurGroupMO()
+	local curGroupMO = Season166HeroGroupModel.instance:getCurGroupMO()
 
-	if PlayerClothModel.instance:getById(var_23_0.clothId) then
+	if PlayerClothModel.instance:getById(curGroupMO.clothId) then
 		return
 	end
 
-	local var_23_1 = PlayerClothModel.instance:getList()
+	local list = PlayerClothModel.instance:getList()
 
-	for iter_23_0, iter_23_1 in ipairs(var_23_1) do
-		if PlayerClothModel.instance:hasCloth(iter_23_1.id) then
-			Season166HeroGroupModel.instance:replaceCloth(iter_23_1.id)
+	for _, clothMO in ipairs(list) do
+		if PlayerClothModel.instance:hasCloth(clothMO.id) then
+			Season166HeroGroupModel.instance:replaceCloth(clothMO.id)
 			HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
 			Season166HeroGroupModel.instance:saveCurGroupData()
 
@@ -423,150 +435,155 @@ function var_0_0._checkEquipClothSkill(arg_23_0)
 	end
 end
 
-function var_0_0._onOpenFullView(arg_24_0, arg_24_1)
+function Season166HeroGroupFightView:_onOpenFullView(viewName)
 	AudioMgr.instance:trigger(AudioEnum.UI.Stop_HeroNormalVoc)
 end
 
-function var_0_0._onCloseView(arg_25_0, arg_25_1)
-	if arg_25_1 == ViewName.EquipInfoTeamShowView then
-		arg_25_0:_checkFirstPosHasEquip()
+function Season166HeroGroupFightView:_onCloseView(viewName)
+	if viewName == ViewName.EquipInfoTeamShowView then
+		self:_checkFirstPosHasEquip()
 	end
 
-	if arg_25_1 == ViewName.Season166TalentView then
-		arg_25_0:refreshTalentReddot()
-	end
-end
-
-function var_0_0._onModifyHeroGroup(arg_26_0)
-	arg_26_0:refreshCloth()
-	arg_26_0:refreshAssistBtn()
-end
-
-function var_0_0._onClickHeroGroupItem(arg_27_0, arg_27_1)
-	local var_27_0 = Season166HeroGroupModel.instance:getCurGroupMO():getPosEquips(arg_27_1 - 1).equipUid
-
-	arg_27_0._param = tabletool.copy(arg_27_0.viewParam)
-	arg_27_0._param.singleGroupMOId = arg_27_1
-	arg_27_0._param.originalHeroUid = Season166HeroSingleGroupModel.instance:getHeroUid(arg_27_1)
-	arg_27_0._param.equips = var_27_0
-
-	ViewMgr.instance:openView(ViewName.Season166HeroGroupEditView, arg_27_0._param)
-end
-
-function var_0_0._showGuideDragEffect(arg_28_0, arg_28_1)
-	if arg_28_0._dragEffectLoader then
-		arg_28_0._dragEffectLoader:dispose()
-
-		arg_28_0._dragEffectLoader = nil
-	end
-
-	if tonumber(arg_28_1) == 1 then
-		arg_28_0._dragEffectLoader = PrefabInstantiate.Create(arg_28_0.viewGO)
-
-		arg_28_0._dragEffectLoader:startLoad("ui/viewres/guide/guide_herogroup.prefab")
+	if viewName == ViewName.Season166TalentView then
+		self:refreshTalentReddot()
 	end
 end
 
-function var_0_0.handleStartFightFailed(arg_29_0)
-	arg_29_0._blockStart = false
-
-	UIBlockMgr.instance:endBlock(var_0_0.UIBlock_SeasonFight)
+function Season166HeroGroupFightView:_onModifyHeroGroup()
+	self:refreshCloth()
+	self:refreshAssistBtn()
 end
 
-function var_0_0._onTalentChange(arg_30_0, arg_30_1)
-	local var_30_0 = Season166Model.instance:getBattleContext()
+function Season166HeroGroupFightView:_onClickHeroGroupItem(id)
+	local heroGroupMO = Season166HeroGroupModel.instance:getCurGroupMO()
+	local equips = heroGroupMO:getPosEquips(id - 1).equipUid
 
-	if var_30_0 then
-		var_30_0.talentId = arg_30_1
-		arg_30_0.newTalentId = arg_30_1
+	self._param = tabletool.copy(self.viewParam)
+	self._param.singleGroupMOId = id
+	self._param.originalHeroUid = Season166HeroSingleGroupModel.instance:getHeroUid(id)
+	self._param.equips = equips
 
-		arg_30_0:_onTalentSkillChange()
+	ViewMgr.instance:openView(ViewName.Season166HeroGroupEditView, self._param)
+end
+
+function Season166HeroGroupFightView:_showGuideDragEffect(param)
+	if self._dragEffectLoader then
+		self._dragEffectLoader:dispose()
+
+		self._dragEffectLoader = nil
+	end
+
+	local visible = tonumber(param) == 1
+
+	if visible then
+		self._dragEffectLoader = PrefabInstantiate.Create(self.viewGO)
+
+		self._dragEffectLoader:startLoad("ui/viewres/guide/guide_herogroup.prefab")
 	end
 end
 
-function var_0_0._onTalentSkillChange(arg_31_0)
-	arg_31_0:refreshTalentReddot()
-	arg_31_0:refreshTalent()
+function Season166HeroGroupFightView:handleStartFightFailed()
+	self._blockStart = false
+
+	UIBlockMgr.instance:endBlock(Season166HeroGroupFightView.UIBlock_SeasonFight)
 end
 
-function var_0_0.refreshTalent(arg_32_0)
-	local var_32_0 = arg_32_0.baseSpotTalentId or arg_32_0.newTalentId or Season166Model.getPrefsTalent()
+function Season166HeroGroupFightView:_onTalentChange(talentId)
+	local context = Season166Model.instance:getBattleContext()
 
-	if not var_32_0 then
-		gohelper.setActive(arg_32_0._btntalentTreeAdd.gameObject, not arg_32_0.context.teachId)
-		gohelper.setActive(arg_32_0._btntalentTree.gameObject, false)
+	if context then
+		context.talentId = talentId
+		self.newTalentId = talentId
+
+		self:_onTalentSkillChange()
+	end
+end
+
+function Season166HeroGroupFightView:_onTalentSkillChange()
+	self:refreshTalentReddot()
+	self:refreshTalent()
+end
+
+function Season166HeroGroupFightView:refreshTalent()
+	local talentId = self.baseSpotTalentId or self.newTalentId or Season166Model.getPrefsTalent()
+
+	if not talentId then
+		gohelper.setActive(self._btntalentTreeAdd.gameObject, not self.context.teachId)
+		gohelper.setActive(self._btntalentTree.gameObject, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_32_0._btntalentTreeAdd.gameObject, false)
-	gohelper.setActive(arg_32_0._btntalentTree.gameObject, not arg_32_0.context.teachId)
+	gohelper.setActive(self._btntalentTreeAdd.gameObject, false)
+	gohelper.setActive(self._btntalentTree.gameObject, not self.context.teachId)
 
-	local var_32_1 = Season166Model.instance:getTalentInfo(arg_32_0.actId, var_32_0)
-	local var_32_2 = var_32_1.config.talentId
-	local var_32_3 = lua_activity166_talent.configDict[arg_32_0.actId][var_32_2]
+	local talentMO = Season166Model.instance:getTalentInfo(self.actId, talentId)
+	local talentId = talentMO.config.talentId
+	local talentConfig = lua_activity166_talent.configDict[self.actId][talentId]
 
-	UISpriteSetMgr.instance:setSeason166Sprite(arg_32_0._imageTalent, "season166_talentree_btn_talen" .. var_32_3.sortIndex, true)
+	UISpriteSetMgr.instance:setSeason166Sprite(self._imageTalent, "season166_talentree_btn_talen" .. talentConfig.sortIndex, true)
 
-	local var_32_4 = var_32_1.config.slot
-	local var_32_5 = #var_32_1.skillIds
+	local talentSlotCount = talentMO.config.slot
+	local talentEuipCount = #talentMO.skillIds
 
-	for iter_32_0, iter_32_1 in ipairs(arg_32_0.talentSlotTab) do
-		gohelper.setActive(iter_32_1.item, iter_32_0 <= var_32_4)
-		gohelper.setActive(iter_32_1.light, iter_32_0 <= var_32_5)
-		gohelper.setActive(iter_32_1.lineLight, iter_32_0 > 1 and iter_32_0 <= var_32_5)
-		gohelper.setActive(iter_32_1.lineDark, iter_32_0 > 1 and var_32_5 < iter_32_0)
-		UISpriteSetMgr.instance:setSeason166Sprite(iter_32_1.imageLight, "season166_talentree_pointl" .. tostring(var_32_3.sortIndex))
+	for index, talentSlotItem in ipairs(self.talentSlotTab) do
+		gohelper.setActive(talentSlotItem.item, index <= talentSlotCount)
+		gohelper.setActive(talentSlotItem.light, index <= talentEuipCount)
+		gohelper.setActive(talentSlotItem.lineLight, index > 1 and index <= talentEuipCount)
+		gohelper.setActive(talentSlotItem.lineDark, index > 1 and talentEuipCount < index)
+		UISpriteSetMgr.instance:setSeason166Sprite(talentSlotItem.imageLight, "season166_talentree_pointl" .. tostring(talentConfig.sortIndex))
 
-		for iter_32_2 = 1, 3 do
-			gohelper.setActive(iter_32_1["effect" .. iter_32_2], var_32_3.sortIndex == iter_32_2)
+		for i = 1, 3 do
+			gohelper.setActive(talentSlotItem["effect" .. i], talentConfig.sortIndex == i)
 		end
 	end
 end
 
-function var_0_0.refreshTalentReddot(arg_33_0)
-	RedDotController.instance:addRedDot(arg_33_0._gotalentReddot, RedDotEnum.DotNode.Season166TalentEnter, nil, arg_33_0.checkTalentReddotShow, arg_33_0)
+function Season166HeroGroupFightView:refreshTalentReddot()
+	RedDotController.instance:addRedDot(self._gotalentReddot, RedDotEnum.DotNode.Season166TalentEnter, nil, self.checkTalentReddotShow, self)
 end
 
-function var_0_0.checkTalentReddotShow(arg_34_0, arg_34_1)
-	arg_34_1:defaultRefreshDot()
+function Season166HeroGroupFightView:checkTalentReddotShow(redDotIcon)
+	redDotIcon:defaultRefreshDot()
 
-	local var_34_0 = arg_34_0.baseSpotTalentId or arg_34_0.newTalentId or Season166Model.getPrefsTalent()
+	local talentId = self.baseSpotTalentId or self.newTalentId or Season166Model.getPrefsTalent()
 
-	if not var_34_0 and not arg_34_1.show then
-		arg_34_1.show = Season166Model.instance:checkAllHasNewTalent(arg_34_0.actId)
+	if not talentId and not redDotIcon.show then
+		redDotIcon.show = Season166Model.instance:checkAllHasNewTalent(self.actId)
 
-		arg_34_1:showRedDot(RedDotEnum.Style.Green)
+		redDotIcon:showRedDot(RedDotEnum.Style.Green)
 
 		return
 	end
 
-	arg_34_1.show = Season166Model.instance:checkHasNewTalent(var_34_0)
+	local canShowNew = Season166Model.instance:checkHasNewTalent(talentId)
 
-	if arg_34_1.show then
-		arg_34_1:showRedDot(RedDotEnum.Style.Green)
+	redDotIcon.show = canShowNew
+
+	if redDotIcon.show then
+		redDotIcon:showRedDot(RedDotEnum.Style.Green)
 	end
 end
 
-function var_0_0.checkOneActivityIsEnd(arg_35_0)
-	local var_35_0, var_35_1 = Season166Controller.instance:getSeasonEnterCloseTimeStamp(arg_35_0.actId)
+function Season166HeroGroupFightView:checkOneActivityIsEnd()
+	local endTime, offsetSecond = Season166Controller.instance:getSeasonEnterCloseTimeStamp(self.actId)
 
-	if var_35_0 == 0 or var_35_1 <= 0 then
+	if endTime == 0 or offsetSecond <= 0 then
 		MessageBoxController.instance:showSystemMsgBox(MessageBoxIdDefine.EndActivity, MsgBoxEnum.BoxType.Yes, ActivityLiveMgr.yesCallback)
 	end
 end
 
-function var_0_0.onClose(arg_36_0)
-	if arg_36_0._dragEffectLoader then
-		arg_36_0._dragEffectLoader:dispose()
+function Season166HeroGroupFightView:onClose()
+	if self._dragEffectLoader then
+		self._dragEffectLoader:dispose()
 
-		arg_36_0._dragEffectLoader = nil
+		self._dragEffectLoader = nil
 	end
 end
 
-function var_0_0.onDestroyView(arg_37_0)
+function Season166HeroGroupFightView:onDestroyView()
 	Season166HeroGroupController.instance:onCloseViewCleanData()
-	UIBlockMgr.instance:endBlock(var_0_0.UIBlock_SeasonFight)
+	UIBlockMgr.instance:endBlock(Season166HeroGroupFightView.UIBlock_SeasonFight)
 end
 
-return var_0_0
+return Season166HeroGroupFightView

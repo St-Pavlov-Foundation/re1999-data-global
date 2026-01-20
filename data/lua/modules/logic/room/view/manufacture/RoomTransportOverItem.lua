@@ -1,191 +1,196 @@
-﻿module("modules.logic.room.view.manufacture.RoomTransportOverItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/manufacture/RoomTransportOverItem.lua
 
-local var_0_0 = class("RoomTransportOverItem", LuaCompBase)
+module("modules.logic.room.view.manufacture.RoomTransportOverItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
+local RoomTransportOverItem = class("RoomTransportOverItem", LuaCompBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomTransportOverItem:init(go)
+	self.go = go
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0._editableInitView(arg_2_0)
-	arg_2_0._gounlink = gohelper.findChild(arg_2_0.go, "unlink")
-	arg_2_0._golinked = gohelper.findChild(arg_2_0.go, "linked")
-	arg_2_0._btngoto = gohelper.findChildClickWithAudio(arg_2_0.go, "linked/#btn_goto/clickarea")
-	arg_2_0._gocritterInfoItem = gohelper.findChild(arg_2_0.go, "linked/critterInfo/#go_critterInfoItem")
-	arg_2_0._txtto = gohelper.findChildText(arg_2_0.go, "linked/transportInfo/info/#txt_to")
-	arg_2_0._txtfrom = gohelper.findChildText(arg_2_0.go, "linked/transportInfo/info/#txt_from")
-	arg_2_0._gopause = gohelper.findChild(arg_2_0.go, "linked/transportInfo/info/pause")
-	arg_2_0._gotransporting = gohelper.findChild(arg_2_0.go, "linked/transportInfo/info/transporting")
-	arg_2_0._simagevehicle = gohelper.findChildSingleImage(arg_2_0.go, "linked/transportInfo/vehicle/#simage_vehicle")
-	arg_2_0._govehicleimg = arg_2_0._simagevehicle.gameObject
-	arg_2_0._txtvehicle = gohelper.findChildText(arg_2_0.go, "linked/transportInfo/vehicle/#txt_vehicle")
-	arg_2_0._txtway = gohelper.findChildText(arg_2_0.go, "linked/transportInfo/vehicle/#txt_vehicle/#txt_way")
+function RoomTransportOverItem:_editableInitView()
+	self._gounlink = gohelper.findChild(self.go, "unlink")
+	self._golinked = gohelper.findChild(self.go, "linked")
+	self._btngoto = gohelper.findChildClickWithAudio(self.go, "linked/#btn_goto/clickarea")
+	self._gocritterInfoItem = gohelper.findChild(self.go, "linked/critterInfo/#go_critterInfoItem")
+	self._txtto = gohelper.findChildText(self.go, "linked/transportInfo/info/#txt_to")
+	self._txtfrom = gohelper.findChildText(self.go, "linked/transportInfo/info/#txt_from")
+	self._gopause = gohelper.findChild(self.go, "linked/transportInfo/info/pause")
+	self._gotransporting = gohelper.findChild(self.go, "linked/transportInfo/info/transporting")
+	self._simagevehicle = gohelper.findChildSingleImage(self.go, "linked/transportInfo/vehicle/#simage_vehicle")
+	self._govehicleimg = self._simagevehicle.gameObject
+	self._txtvehicle = gohelper.findChildText(self.go, "linked/transportInfo/vehicle/#txt_vehicle")
+	self._txtway = gohelper.findChildText(self.go, "linked/transportInfo/vehicle/#txt_vehicle/#txt_way")
 
-	arg_2_0:clearVar()
+	self:clearVar()
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	arg_3_0._btngoto:AddClickListener(arg_3_0._btngotoOnClick, arg_3_0)
-	arg_3_0:addEventCb(RoomMapController.instance, RoomEvent.TransportCritterChanged, arg_3_0._onCritterChanged, arg_3_0)
-	arg_3_0:addEventCb(RoomMapController.instance, RoomEvent.TransportBuildingChanged, arg_3_0._onVehicleChange, arg_3_0)
+function RoomTransportOverItem:addEventListeners()
+	self._btngoto:AddClickListener(self._btngotoOnClick, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.TransportCritterChanged, self._onCritterChanged, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.TransportBuildingChanged, self._onVehicleChange, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	arg_4_0._btngoto:RemoveClickListener()
-	arg_4_0:removeEventCb(RoomMapController.instance, RoomEvent.TransportCritterChanged, arg_4_0._onCritterChanged, arg_4_0)
-	arg_4_0:removeEventCb(RoomMapController.instance, RoomEvent.TransportBuildingChanged, arg_4_0._onVehicleChange, arg_4_0)
+function RoomTransportOverItem:removeEventListeners()
+	self._btngoto:RemoveClickListener()
+	self:removeEventCb(RoomMapController.instance, RoomEvent.TransportCritterChanged, self._onCritterChanged, self)
+	self:removeEventCb(RoomMapController.instance, RoomEvent.TransportBuildingChanged, self._onVehicleChange, self)
 end
 
-function var_0_0._btngotoOnClick(arg_5_0)
-	if arg_5_0.transportPathMO then
+function RoomTransportOverItem:_btngotoOnClick()
+	if self.transportPathMO then
 		ViewMgr.instance:closeView(ViewName.RoomOverView, true)
 
-		local var_5_0 = RoomTransportHelper.fromTo2SiteType(arg_5_0.transportPathMO.fromType, arg_5_0.transportPathMO.toType)
+		local siteType = RoomTransportHelper.fromTo2SiteType(self.transportPathMO.fromType, self.transportPathMO.toType)
 
-		RoomTransportController.instance:openTransportSiteView(var_5_0, RoomEnum.CameraState.Overlook)
+		RoomTransportController.instance:openTransportSiteView(siteType, RoomEnum.CameraState.Overlook)
 
-		if ViewMgr.instance:isOpen(ViewName.RoomCritterBuildingView) then
+		local isOpenCritterBuildingView = ViewMgr.instance:isOpen(ViewName.RoomCritterBuildingView)
+
+		if isOpenCritterBuildingView then
 			ManufactureController.instance:closeCritterBuildingView(true)
 		end
 	end
 end
 
-function var_0_0.onManufactureInfoUpdate(arg_6_0)
-	arg_6_0:checkIsTransporting()
+function RoomTransportOverItem:onManufactureInfoUpdate()
+	self:checkIsTransporting()
 end
 
-function var_0_0._onCritterChanged(arg_7_0)
-	arg_7_0:refreshCritterItem()
-	arg_7_0:checkHasMood()
+function RoomTransportOverItem:_onCritterChanged()
+	self:refreshCritterItem()
+	self:checkHasMood()
 end
 
-function var_0_0._onVehicleChange(arg_8_0, arg_8_1)
-	arg_8_0:refreshInfo()
-	arg_8_0:checkIsTransporting()
+function RoomTransportOverItem:_onVehicleChange(l)
+	self:refreshInfo()
+	self:checkIsTransporting()
 end
 
-function var_0_0.setData(arg_9_0, arg_9_1)
-	arg_9_0.transportPathMO = arg_9_1
+function RoomTransportOverItem:setData(transportPathMO)
+	self.transportPathMO = transportPathMO
 
-	arg_9_0:checkHasMood()
-	arg_9_0:refresh()
+	self:checkHasMood()
+	self:refresh()
 end
 
-function var_0_0.refresh(arg_10_0)
-	arg_10_0:refreshInfo()
-	arg_10_0:refreshCritterItem()
-	arg_10_0:checkIsTransporting()
+function RoomTransportOverItem:refresh()
+	self:refreshInfo()
+	self:refreshCritterItem()
+	self:checkIsTransporting()
 end
 
-function var_0_0.refreshInfo(arg_11_0)
-	local var_11_0
-	local var_11_1 = false
-	local var_11_2 = ""
-	local var_11_3 = ""
+function RoomTransportOverItem:refreshInfo()
+	local buildingCfg
+	local hasBuilding = false
+	local from = ""
+	local to = ""
 
-	if arg_11_0.transportPathMO then
-		var_11_0 = RoomConfig.instance:getBuildingConfig(arg_11_0.transportPathMO.buildingId)
-		var_11_1 = var_11_0 and true or false
+	if self.transportPathMO then
+		buildingCfg = RoomConfig.instance:getBuildingConfig(self.transportPathMO.buildingId)
+		hasBuilding = buildingCfg and true or false
 
-		local var_11_4 = RoomBuildingEnum.BuildingTypeAreName[arg_11_0.transportPathMO.fromType]
-		local var_11_5 = RoomBuildingEnum.BuildingTypeAreName[arg_11_0.transportPathMO.toType]
+		local fromName = RoomBuildingEnum.BuildingTypeAreName[self.transportPathMO.fromType]
+		local toName = RoomBuildingEnum.BuildingTypeAreName[self.transportPathMO.toType]
 
-		var_11_2 = luaLang(var_11_4)
-		var_11_3 = luaLang(var_11_5)
+		from = luaLang(fromName)
+		to = luaLang(toName)
 	end
 
-	arg_11_0._txtfrom.text = var_11_2
-	arg_11_0._txtto.text = var_11_3
+	self._txtfrom.text = from
+	self._txtto.text = to
 
-	local var_11_6 = ""
-	local var_11_7 = ""
+	local vehicleName = ""
+	local vehicleDesc = ""
 
-	if var_11_1 then
-		var_11_6 = var_11_0.name
-		var_11_7 = var_11_0.useDesc
+	if hasBuilding then
+		vehicleName = buildingCfg.name
+		vehicleDesc = buildingCfg.useDesc
 
-		local var_11_8 = ResUrl.getRoomImage("building/" .. var_11_0.icon)
+		local vehicleIcon = ResUrl.getRoomImage("building/" .. buildingCfg.icon)
 
-		arg_11_0._simagevehicle:LoadImage(var_11_8)
+		self._simagevehicle:LoadImage(vehicleIcon)
 	end
 
-	arg_11_0._txtvehicle.text = var_11_6
-	arg_11_0._txtway.text = var_11_7
+	self._txtvehicle.text = vehicleName
+	self._txtway.text = vehicleDesc
 
-	gohelper.setActive(arg_11_0._govehicleimg, var_11_1)
+	gohelper.setActive(self._govehicleimg, hasBuilding)
 end
 
-function var_0_0.refreshCritterItem(arg_12_0)
-	if not arg_12_0.critterInfoItem then
-		arg_12_0.critterInfoItem = MonoHelper.addNoUpdateLuaComOnceToGo(arg_12_0._gocritterInfoItem, RoomTransportCritterInfo)
+function RoomTransportOverItem:refreshCritterItem()
+	if not self.critterInfoItem then
+		self.critterInfoItem = MonoHelper.addNoUpdateLuaComOnceToGo(self._gocritterInfoItem, RoomTransportCritterInfo)
 	end
 
-	local var_12_0
-	local var_12_1
+	local pathId, critterUid
 
-	if arg_12_0.transportPathMO then
-		var_12_0 = arg_12_0.transportPathMO.id
+	if self.transportPathMO then
+		pathId = self.transportPathMO.id
 
-		local var_12_2 = arg_12_0.transportPathMO.critterUid
+		local curCritterUid = self.transportPathMO.critterUid
 
-		if var_12_2 ~= tonumber(CritterEnum.InvalidCritterUid) and var_12_2 ~= CritterEnum.InvalidCritterUid then
-			var_12_1 = var_12_2
+		if curCritterUid ~= tonumber(CritterEnum.InvalidCritterUid) and curCritterUid ~= CritterEnum.InvalidCritterUid then
+			critterUid = curCritterUid
 		end
 	end
 
-	arg_12_0.critterInfoItem:setData(var_12_1, var_12_0)
+	self.critterInfoItem:setData(critterUid, pathId)
 end
 
-function var_0_0.checkHasMood(arg_13_0)
-	local var_13_0 = 0
+function RoomTransportOverItem:checkHasMood()
+	local critterMood = 0
 
-	if arg_13_0.transportPathMO then
-		local var_13_1 = CritterModel.instance:getCritterMOByUid(arg_13_0.transportPathMO.critterUid)
+	if self.transportPathMO then
+		local critterMO = CritterModel.instance:getCritterMOByUid(self.transportPathMO.critterUid)
 
-		if var_13_1 then
-			var_13_0 = var_13_1:getMoodValue()
+		if critterMO then
+			critterMood = critterMO:getMoodValue()
 		end
 	end
 
-	arg_13_0.hasMood = var_13_0 > 0 and true or false
+	self.hasMood = critterMood > 0 and true or false
 
-	arg_13_0:checkIsTransporting()
+	self:checkIsTransporting()
 end
 
-function var_0_0.checkIsTransporting(arg_14_0)
-	arg_14_0.isTransporting = false
+function RoomTransportOverItem:checkIsTransporting()
+	self.isTransporting = false
 
-	local var_14_0 = arg_14_0.transportPathMO and true or false
+	local isLink = self.transportPathMO and true or false
 
-	gohelper.setActive(arg_14_0._golinked, var_14_0)
-	gohelper.setActive(arg_14_0._gounlink, not var_14_0)
+	gohelper.setActive(self._golinked, isLink)
+	gohelper.setActive(self._gounlink, not isLink)
 
-	if var_14_0 then
-		arg_14_0.isTransporting = arg_14_0.transportPathMO:isTransporting()
+	if isLink then
+		local isTransporting = self.transportPathMO:isTransporting()
+
+		self.isTransporting = isTransporting
 	end
 
-	gohelper.setActive(arg_14_0._gotransporting, arg_14_0.isTransporting)
-	gohelper.setActive(arg_14_0._gopause, not arg_14_0.isTransporting)
+	gohelper.setActive(self._gotransporting, self.isTransporting)
+	gohelper.setActive(self._gopause, not self.isTransporting)
 end
 
-function var_0_0.everySecondCall(arg_15_0)
-	if arg_15_0.hasMood and arg_15_0.isTransporting then
-		arg_15_0:checkHasMood()
+function RoomTransportOverItem:everySecondCall()
+	if self.hasMood and self.isTransporting then
+		self:checkHasMood()
 	end
 end
 
-function var_0_0.clearVar(arg_16_0)
-	arg_16_0.hasMood = false
-	arg_16_0.isTransporting = false
+function RoomTransportOverItem:clearVar()
+	self.hasMood = false
+	self.isTransporting = false
 
-	arg_16_0._simagevehicle:UnLoadImage()
+	self._simagevehicle:UnLoadImage()
 end
 
-function var_0_0.onDestroy(arg_17_0)
-	arg_17_0:clearVar()
+function RoomTransportOverItem:onDestroy()
+	self:clearVar()
 end
 
-return var_0_0
+return RoomTransportOverItem

@@ -1,125 +1,127 @@
-﻿module("modules.logic.versionactivity2_7.v2a7_selfselectsix_1.view.V2a7_SelfSelectSix_PickChoiceItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/v2a7_selfselectsix_1/view/V2a7_SelfSelectSix_PickChoiceItem.lua
 
-local var_0_0 = class("V2a7_SelfSelectSix_PickChoiceItem", ListScrollCellExtend)
+module("modules.logic.versionactivity2_7.v2a7_selfselectsix_1.view.V2a7_SelfSelectSix_PickChoiceItem", package.seeall)
 
-var_0_0.FirstDungeonId = 10101
+local V2a7_SelfSelectSix_PickChoiceItem = class("V2a7_SelfSelectSix_PickChoiceItem", ListScrollCellExtend)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gotitle = gohelper.findChild(arg_1_0.viewGO, "#go_title")
-	arg_1_0._gooriginal = gohelper.findChild(arg_1_0.viewGO, "#go_title/#go_original")
-	arg_1_0._golocked = gohelper.findChild(arg_1_0.viewGO, "#go_title/#go_locked")
-	arg_1_0._txtlocked = gohelper.findChildText(arg_1_0.viewGO, "#go_title/#go_locked/#txt_locked")
-	arg_1_0._gounlock = gohelper.findChild(arg_1_0.viewGO, "#go_title/#go_unlock")
-	arg_1_0._txtunlock = gohelper.findChildText(arg_1_0.viewGO, "#go_title/#go_unlock/#txt_unlock")
-	arg_1_0._gohero = gohelper.findChild(arg_1_0.viewGO, "#go_hero")
-	arg_1_0._herocanvas = gohelper.onceAddComponent(arg_1_0._gohero, typeof(UnityEngine.CanvasGroup))
-	arg_1_0._goheroitem = gohelper.findChild(arg_1_0.viewGO, "#go_hero/heroitem")
-	arg_1_0._goexskill = gohelper.findChild(arg_1_0.viewGO, "#go_hero/heroitem/role/#go_exskill")
-	arg_1_0._imageexskill = gohelper.findChildImage(arg_1_0.viewGO, "#go_hero/heroitem/role/#go_exskill/#image_exskill")
-	arg_1_0._goclick = gohelper.findChild(arg_1_0.viewGO, "#go_hero/heroitem/select/#go_click")
-	arg_1_0._itemList = {}
+V2a7_SelfSelectSix_PickChoiceItem.FirstDungeonId = 10101
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V2a7_SelfSelectSix_PickChoiceItem:onInitView()
+	self._gotitle = gohelper.findChild(self.viewGO, "#go_title")
+	self._gooriginal = gohelper.findChild(self.viewGO, "#go_title/#go_original")
+	self._golocked = gohelper.findChild(self.viewGO, "#go_title/#go_locked")
+	self._txtlocked = gohelper.findChildText(self.viewGO, "#go_title/#go_locked/#txt_locked")
+	self._gounlock = gohelper.findChild(self.viewGO, "#go_title/#go_unlock")
+	self._txtunlock = gohelper.findChildText(self.viewGO, "#go_title/#go_unlock/#txt_unlock")
+	self._gohero = gohelper.findChild(self.viewGO, "#go_hero")
+	self._herocanvas = gohelper.onceAddComponent(self._gohero, typeof(UnityEngine.CanvasGroup))
+	self._goheroitem = gohelper.findChild(self.viewGO, "#go_hero/heroitem")
+	self._goexskill = gohelper.findChild(self.viewGO, "#go_hero/heroitem/role/#go_exskill")
+	self._imageexskill = gohelper.findChildImage(self.viewGO, "#go_hero/heroitem/role/#go_exskill/#image_exskill")
+	self._goclick = gohelper.findChild(self.viewGO, "#go_hero/heroitem/select/#go_click")
+	self._itemList = {}
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(V2a7_SelfSelectSix_PickChoiceController.instance, V2a7_SelfSelectSix_PickChoiceEvent.onCustomPickListChanged, arg_2_0.refreshUI, arg_2_0)
+function V2a7_SelfSelectSix_PickChoiceItem:addEvents()
+	self:addEventCb(V2a7_SelfSelectSix_PickChoiceController.instance, V2a7_SelfSelectSix_PickChoiceEvent.onCustomPickListChanged, self.refreshUI, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(V2a7_SelfSelectSix_PickChoiceController.instance, V2a7_SelfSelectSix_PickChoiceEvent.onCustomPickListChanged, arg_3_0.refreshUI, arg_3_0)
+function V2a7_SelfSelectSix_PickChoiceItem:removeEvents()
+	self:removeEventCb(V2a7_SelfSelectSix_PickChoiceController.instance, V2a7_SelfSelectSix_PickChoiceEvent.onCustomPickListChanged, self.refreshUI, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._transcontent = arg_4_0._gohero.transform
+function V2a7_SelfSelectSix_PickChoiceItem:_editableInitView()
+	self._transcontent = self._gohero.transform
 
-	gohelper.setActive(arg_4_0._goheroitem, false)
+	gohelper.setActive(self._goheroitem, false)
 end
 
-function var_0_0._editableAddEvents(arg_5_0)
+function V2a7_SelfSelectSix_PickChoiceItem:_editableAddEvents()
 	return
 end
 
-function var_0_0._editableRemoveEvents(arg_6_0)
+function V2a7_SelfSelectSix_PickChoiceItem:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.refreshUI(arg_7_0)
-	if arg_7_0._isTitle then
-		arg_7_0:_refreshTitle()
+function V2a7_SelfSelectSix_PickChoiceItem:refreshUI()
+	if self._isTitle then
+		self:_refreshTitle()
 	else
-		arg_7_0:_refreshHeroList()
+		self:_refreshHeroList()
 	end
 
-	arg_7_0._herocanvas.alpha = arg_7_0._mo.isUnlock and 1 or 0.5
+	self._herocanvas.alpha = self._mo.isUnlock and 1 or 0.5
 end
 
-function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
-	arg_8_0._mo = arg_8_1
-	arg_8_0._isTitle = arg_8_1.isTitle
+function V2a7_SelfSelectSix_PickChoiceItem:onUpdateMO(mo)
+	self._mo = mo
+	self._isTitle = mo.isTitle
 
-	gohelper.setActive(arg_8_0._gotitle, arg_8_0._isTitle)
-	gohelper.setActive(arg_8_0._gohero, not arg_8_0._isTitle)
-	arg_8_0:refreshUI()
+	gohelper.setActive(self._gotitle, self._isTitle)
+	gohelper.setActive(self._gohero, not self._isTitle)
+	self:refreshUI()
 end
 
-function var_0_0._refreshTitle(arg_9_0)
-	if arg_9_0._mo.episodeId == var_0_0.FirstDungeonId then
-		gohelper.setActive(arg_9_0._gooriginal, true)
-		gohelper.setActive(arg_9_0._golocked, false)
-		gohelper.setActive(arg_9_0._gounlock, false)
+function V2a7_SelfSelectSix_PickChoiceItem:_refreshTitle()
+	if self._mo.episodeId == V2a7_SelfSelectSix_PickChoiceItem.FirstDungeonId then
+		gohelper.setActive(self._gooriginal, true)
+		gohelper.setActive(self._golocked, false)
+		gohelper.setActive(self._gounlock, false)
 	else
-		gohelper.setActive(arg_9_0._gooriginal, false)
-		gohelper.setActive(arg_9_0._golocked, not arg_9_0._mo.isUnlock)
-		gohelper.setActive(arg_9_0._gounlock, arg_9_0._mo.isUnlock)
+		gohelper.setActive(self._gooriginal, false)
+		gohelper.setActive(self._golocked, not self._mo.isUnlock)
+		gohelper.setActive(self._gounlock, self._mo.isUnlock)
 
-		local var_9_0 = DungeonHelper.getEpisodeName(arg_9_0._mo.episodeId)
+		local episodeName = DungeonHelper.getEpisodeName(self._mo.episodeId)
 
-		arg_9_0._txtlocked.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("v2a7_newbie_storyprocess_locate_item"), var_9_0)
-		arg_9_0._txtunlock.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("v2a7_newbie_storyprocess_locate_item_finish"), var_9_0)
+		self._txtlocked.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("v2a7_newbie_storyprocess_locate_item"), episodeName)
+		self._txtunlock.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("v2a7_newbie_storyprocess_locate_item_finish"), episodeName)
 	end
 end
 
-function var_0_0._refreshHeroList(arg_10_0)
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0._mo.heroIdList) do
-		local var_10_0 = arg_10_0:getOrCreateItem(iter_10_0)
-		local var_10_1 = SummonCustomPickChoiceMO.New()
+function V2a7_SelfSelectSix_PickChoiceItem:_refreshHeroList()
+	for index, heroId in ipairs(self._mo.heroIdList) do
+		local item = self:getOrCreateItem(index)
+		local mo = SummonCustomPickChoiceMO.New()
 
-		var_10_1:init(tonumber(iter_10_1))
-		var_10_0.component:onUpdateMO(var_10_1)
+		mo:init(tonumber(heroId))
+		item.component:onUpdateMO(mo)
 
-		if not arg_10_0._mo.isUnlock then
-			var_10_0.component:setLock()
+		if not self._mo.isUnlock then
+			item.component:setLock()
 		end
 	end
 
-	ZProj.UGUIHelper.RebuildLayout(arg_10_0._transcontent)
+	ZProj.UGUIHelper.RebuildLayout(self._transcontent)
 end
 
-function var_0_0.getOrCreateItem(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0._itemList[arg_11_1]
+function V2a7_SelfSelectSix_PickChoiceItem:getOrCreateItem(index)
+	local item = self._itemList[index]
 
-	if not var_11_0 then
-		var_11_0 = arg_11_0:getUserDataTb_()
-		var_11_0.go = gohelper.clone(arg_11_0._goheroitem, arg_11_0._gohero, "item" .. tostring(arg_11_1))
+	if not item then
+		item = self:getUserDataTb_()
+		item.go = gohelper.clone(self._goheroitem, self._gohero, "item" .. tostring(index))
 
-		gohelper.setActive(var_11_0.go, true)
+		gohelper.setActive(item.go, true)
 
-		var_11_0.component = MonoHelper.addNoUpdateLuaComOnceToGo(var_11_0.go, V2a7_SelfSelectSix_PickChoiceHeroItem)
+		item.component = MonoHelper.addNoUpdateLuaComOnceToGo(item.go, V2a7_SelfSelectSix_PickChoiceHeroItem)
 
-		var_11_0.component:init(var_11_0.go)
-		var_11_0.component:addEvents()
+		item.component:init(item.go)
+		item.component:addEvents()
 
-		arg_11_0._itemList[arg_11_1] = var_11_0
+		self._itemList[index] = item
 	end
 
-	return var_11_0
+	return item
 end
 
-function var_0_0.onDestroyView(arg_12_0)
+function V2a7_SelfSelectSix_PickChoiceItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return V2a7_SelfSelectSix_PickChoiceItem

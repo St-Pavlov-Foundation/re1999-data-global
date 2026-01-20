@@ -1,78 +1,80 @@
-﻿module("modules.logic.activity.view.LinkageActivity_FullView", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/LinkageActivity_FullView.lua
 
-local var_0_0 = class("LinkageActivity_FullView", LinkageActivity_FullViewBase)
+module("modules.logic.activity.view.LinkageActivity_FullView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagePanelBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_PanelBG")
-	arg_1_0._simageLogo = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_Logo")
-	arg_1_0._simageTitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_Title")
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Root/LimitTime/image_LimitTimeBG/#txt_LimitTime")
+local LinkageActivity_FullView = class("LinkageActivity_FullView", LinkageActivity_FullViewBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function LinkageActivity_FullView:onInitView()
+	self._simagePanelBG = gohelper.findChildSingleImage(self.viewGO, "#simage_PanelBG")
+	self._simageLogo = gohelper.findChildSingleImage(self.viewGO, "Root/#simage_Logo")
+	self._simageTitle = gohelper.findChildSingleImage(self.viewGO, "Root/#simage_Title")
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "Root/LimitTime/image_LimitTimeBG/#txt_LimitTime")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	var_0_0.super.addEvents(arg_2_0)
+function LinkageActivity_FullView:addEvents()
+	LinkageActivity_FullView.super.addEvents(self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	var_0_0.super.removeEvents(arg_3_0)
+function LinkageActivity_FullView:removeEvents()
+	LinkageActivity_FullView.super.removeEvents(self)
 end
 
-local var_0_1 = {
+local kPageType = {
 	SkinShop = 1,
 	Sign = 2
 }
 
-function var_0_0.ctor(arg_4_0, ...)
-	var_0_0.super.ctor(arg_4_0, ...)
+function LinkageActivity_FullView:ctor(...)
+	LinkageActivity_FullView.super.ctor(self, ...)
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._txtLimitTime.text = ""
-	arg_5_0._pageGo1 = gohelper.findChild(arg_5_0.viewGO, "Root/Page1")
-	arg_5_0._pageGo2 = gohelper.findChild(arg_5_0.viewGO, "Root/Page2")
+function LinkageActivity_FullView:_editableInitView()
+	self._txtLimitTime.text = ""
+	self._pageGo1 = gohelper.findChild(self.viewGO, "Root/Page1")
+	self._pageGo2 = gohelper.findChild(self.viewGO, "Root/Page2")
 end
 
-function var_0_0.onDestroyView(arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0._refreshTimeTick, arg_6_0)
-	var_0_0.super.onDestroyView(arg_6_0)
+function LinkageActivity_FullView:onDestroyView()
+	TaskDispatcher.cancelTask(self._refreshTimeTick, self)
+	LinkageActivity_FullView.super.onDestroyView(self)
 end
 
-function var_0_0.onStart(arg_7_0)
-	arg_7_0:addPage(var_0_1.SkinShop, arg_7_0._pageGo1, LinkageActivity_FullView_Page1)
-	arg_7_0:addPage(var_0_1.Sign, arg_7_0._pageGo2, LinkageActivity_FullView_Page2)
+function LinkageActivity_FullView:onStart()
+	self:addPage(kPageType.SkinShop, self._pageGo1, LinkageActivity_FullView_Page1)
+	self:addPage(kPageType.Sign, self._pageGo2, LinkageActivity_FullView_Page2)
 
-	if ActivityType101Model.instance:isType101RewardCouldGetAnyOne(arg_7_0:actId()) then
-		arg_7_0:selectedPage_Sign()
+	if ActivityType101Model.instance:isType101RewardCouldGetAnyOne(self:actId()) then
+		self:selectedPage_Sign()
 	else
-		arg_7_0:selectedPage_SkinShop()
+		self:selectedPage_SkinShop()
 	end
 end
 
-function var_0_0.onRefresh(arg_8_0)
-	var_0_0.super.onRefresh(arg_8_0)
-	arg_8_0:_refreshTimeTick()
-	TaskDispatcher.cancelTask(arg_8_0._refreshTimeTick, arg_8_0)
-	TaskDispatcher.runRepeat(arg_8_0._refreshTimeTick, arg_8_0, 1)
+function LinkageActivity_FullView:onRefresh()
+	LinkageActivity_FullView.super.onRefresh(self)
+	self:_refreshTimeTick()
+	TaskDispatcher.cancelTask(self._refreshTimeTick, self)
+	TaskDispatcher.runRepeat(self._refreshTimeTick, self, 1)
 end
 
-function var_0_0.onClose(arg_9_0)
-	TaskDispatcher.cancelTask(arg_9_0._refreshTimeTick, arg_9_0)
+function LinkageActivity_FullView:onClose()
+	TaskDispatcher.cancelTask(self._refreshTimeTick, self)
 end
 
-function var_0_0._refreshTimeTick(arg_10_0)
-	arg_10_0._txtLimitTime.text = arg_10_0:getRemainTimeStr()
+function LinkageActivity_FullView:_refreshTimeTick()
+	self._txtLimitTime.text = self:getRemainTimeStr()
 end
 
-function var_0_0.selectedPage_Sign(arg_11_0)
-	arg_11_0:selectedPage(var_0_1.Sign)
+function LinkageActivity_FullView:selectedPage_Sign()
+	self:selectedPage(kPageType.Sign)
 end
 
-function var_0_0.selectedPage_SkinShop(arg_12_0)
-	arg_12_0:selectedPage(var_0_1.SkinShop)
+function LinkageActivity_FullView:selectedPage_SkinShop()
+	self:selectedPage(kPageType.SkinShop)
 end
 
-return var_0_0
+return LinkageActivity_FullView

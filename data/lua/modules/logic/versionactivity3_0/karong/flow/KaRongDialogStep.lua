@@ -1,56 +1,58 @@
-﻿module("modules.logic.versionactivity3_0.karong.flow.KaRongDialogStep", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/karong/flow/KaRongDialogStep.lua
 
-local var_0_0 = class("KaRongDialogStep", BaseWork)
+module("modules.logic.versionactivity3_0.karong.flow.KaRongDialogStep", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._data = arg_1_1
-	arg_1_0._dialogueId = tonumber(arg_1_1.param)
+local KaRongDialogStep = class("KaRongDialogStep", BaseWork)
+
+function KaRongDialogStep:ctor(data)
+	self._data = data
+	self._dialogueId = tonumber(data.param)
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	if arg_2_0._data.param == 0 then
-		return arg_2_0:onDone(true)
+function KaRongDialogStep:onStart(context)
+	if self._data.param == 0 then
+		return self:onDone(true)
 	end
 
-	arg_2_0:beginPlayDialog()
+	self:beginPlayDialog()
 end
 
-function var_0_0.beginPlayDialog(arg_3_0)
-	local var_3_0 = Activity176Config.instance:getBubbleCo(VersionActivity3_0Enum.ActivityId.KaRong, arg_3_0._dialogueId)
+function KaRongDialogStep:beginPlayDialog()
+	local co = Activity176Config.instance:getBubbleCo(VersionActivity3_0Enum.ActivityId.KaRong, self._dialogueId)
 
-	if not var_3_0 then
-		logError("纸信圈儿对话配置不存在" .. arg_3_0._dialogueId)
-		arg_3_0:onDone(true)
+	if not co then
+		logError("纸信圈儿对话配置不存在" .. self._dialogueId)
+		self:onDone(true)
 
 		return
 	end
 
-	KaRongDrawController.instance:registerCallback(KaRongDrawEvent.OnFinishDialog, arg_3_0._onFinishDialog, arg_3_0)
+	KaRongDrawController.instance:registerCallback(KaRongDrawEvent.OnFinishDialog, self._onFinishDialog, self)
 
-	local var_3_1, var_3_2 = arg_3_0:_getDialogPos()
-	local var_3_3 = {
-		co = var_3_0,
-		dialogPosX = var_3_1,
-		dialogPosY = var_3_2
+	local dialogPosX, dialogPosY = self:_getDialogPos()
+	local params = {
+		co = co,
+		dialogPosX = dialogPosX,
+		dialogPosY = dialogPosY
 	}
 
-	KaRongDrawController.instance:dispatchEvent(KaRongDrawEvent.OnStartDialog, var_3_3)
+	KaRongDrawController.instance:dispatchEvent(KaRongDrawEvent.OnStartDialog, params)
 end
 
-function var_0_0._getDialogPos(arg_4_0)
-	local var_4_0, var_4_1 = KaRongDrawController.instance:getLastPos()
-	local var_4_2, var_4_3 = KaRongDrawModel.instance:getObjectAnchor(var_4_0, var_4_1)
+function KaRongDialogStep:_getDialogPos()
+	local pawnPosX, pawnPosY = KaRongDrawController.instance:getLastPos()
+	local pawnAnchorX, pawnAnchorY = KaRongDrawModel.instance:getObjectAnchor(pawnPosX, pawnPosY)
 
-	return var_4_2, var_4_3 + 100
+	return pawnAnchorX, pawnAnchorY + 100
 end
 
-function var_0_0._onFinishDialog(arg_5_0)
-	KaRongDrawController.instance:unregisterAllCallback(KaRongDrawEvent.OnFinishDialog, arg_5_0._onFinishDialog, arg_5_0)
-	arg_5_0:onDone(true)
+function KaRongDialogStep:_onFinishDialog()
+	KaRongDrawController.instance:unregisterAllCallback(KaRongDrawEvent.OnFinishDialog, self._onFinishDialog, self)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_6_0)
-	KaRongDrawController.instance:unregisterCallback(KaRongDrawEvent.OnFinishDialog, arg_6_0._onFinishDialog, arg_6_0)
+function KaRongDialogStep:clearWork()
+	KaRongDrawController.instance:unregisterCallback(KaRongDrawEvent.OnFinishDialog, self._onFinishDialog, self)
 end
 
-return var_0_0
+return KaRongDialogStep

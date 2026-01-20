@@ -1,616 +1,627 @@
-﻿module("modules.logic.versionactivity1_3.va3chess.game.Va3ChessGameController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/va3chess/game/Va3ChessGameController.lua
 
-local var_0_0 = class("Va3ChessGameController", BaseController)
+module("modules.logic.versionactivity1_3.va3chess.game.Va3ChessGameController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local Va3ChessGameController = class("Va3ChessGameController", BaseController)
+
+function Va3ChessGameController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function Va3ChessGameController:reInit()
 	return
 end
 
-function var_0_0._registerGameController(arg_3_0)
+function Va3ChessGameController:_registerGameController()
 	return {
 		[Va3ChessEnum.ActivityId.Act122] = Activity1_3ChessGameController.instance
 	}
 end
 
-function var_0_0._getActiviyXGameControllerIns(arg_4_0, arg_4_1)
-	if not arg_4_0._actXGameCtlInsMap then
-		arg_4_0._actXGameCtrlInsMap = arg_4_0:_registerGameController()
+function Va3ChessGameController:_getActiviyXGameControllerIns(actId)
+	if not self._actXGameCtlInsMap then
+		self._actXGameCtrlInsMap = self:_registerGameController()
 	end
 
-	return arg_4_0._actXGameCtrlInsMap[arg_4_1]
+	local actGameCtrl = self._actXGameCtrlInsMap[actId]
+
+	return actGameCtrl
 end
 
-function var_0_0.release(arg_5_0)
-	if arg_5_0.interacts then
-		arg_5_0.interacts:removeAll()
+function Va3ChessGameController:release()
+	if self.interacts then
+		self.interacts:removeAll()
 	end
 
-	if arg_5_0.event then
-		arg_5_0.event:removeAll()
+	if self.event then
+		self.event:removeAll()
 	end
 
-	arg_5_0._treeComp = nil
-	arg_5_0.interacts = nil
-	arg_5_0.event = nil
-	arg_5_0._hasMap = false
+	self._treeComp = nil
+	self.interacts = nil
+	self.event = nil
+	self._hasMap = false
 end
 
-function var_0_0.setViewName(arg_6_0, arg_6_1)
-	if arg_6_1 then
-		arg_6_0._viewName = arg_6_1
+function Va3ChessGameController:setViewName(value)
+	if value then
+		self._viewName = value
 	end
 end
 
-function var_0_0.getViewName(arg_7_0)
-	return arg_7_0._viewName or ViewName.Va3ChessGameScene
+function Va3ChessGameController:getViewName()
+	return self._viewName or ViewName.Va3ChessGameScene
 end
 
-function var_0_0.enterChessGame(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+function Va3ChessGameController:enterChessGame(actId, mapId, viewName)
 	logNormal("Va3ChessGameController : enterChessGame!")
 
-	local var_8_0 = Va3ChessModel.instance:getEpisodeId()
+	local episodeId = Va3ChessModel.instance:getEpisodeId()
 
-	GuideController.instance:dispatchEvent(GuideEvent["OnChessEnter" .. var_8_0])
-	arg_8_0:initData(arg_8_1, arg_8_2)
+	GuideController.instance:dispatchEvent(GuideEvent["OnChessEnter" .. episodeId])
+	self:initData(actId, mapId)
 
-	arg_8_0._viewName = arg_8_3 or arg_8_0._viewName
+	self._viewName = viewName or self._viewName
 
-	ViewMgr.instance:openView(arg_8_0._viewName, arg_8_0:packViewParam())
+	ViewMgr.instance:openView(self._viewName, self:packViewParam())
 end
 
-function var_0_0.packViewParam(arg_9_0)
+function Va3ChessGameController:packViewParam()
 	return {
 		fromRefuseBattle = Va3ChessController.instance:getFromRefuseBattle()
 	}
 end
 
-function var_0_0.initData(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_0._treeComp = Va3ChessGameTree.New()
+function Va3ChessGameController:initData(actId, mapId)
+	self._treeComp = Va3ChessGameTree.New()
 
-	Va3ChessGameModel.instance:initData(arg_10_1, arg_10_2)
+	Va3ChessGameModel.instance:initData(actId, mapId)
 
-	arg_10_0._tempSelectObjId = nil
+	self._tempSelectObjId = nil
 
-	local var_10_0 = Va3ChessConfig.instance:getMapCo(arg_10_1, arg_10_2)
+	local mapCO = Va3ChessConfig.instance:getMapCo(actId, mapId)
 
-	if var_10_0 and not string.nilorempty(var_10_0.offset) then
-		local var_10_1 = string.splitToNumber(var_10_0.offset, ",")
+	if mapCO and not string.nilorempty(mapCO.offset) then
+		local offsetArr = string.splitToNumber(mapCO.offset, ",")
 
-		arg_10_0._cacheOffsetX = var_10_1[1]
-		arg_10_0._cacheOffsetY = var_10_1[2]
+		self._cacheOffsetX = offsetArr[1]
+		self._cacheOffsetY = offsetArr[2]
 	else
-		arg_10_0._cacheOffsetX = nil
-		arg_10_0._cacheOffsetY = nil
+		self._cacheOffsetX = nil
+		self._cacheOffsetY = nil
 	end
 end
 
-function var_0_0.initServerMap(arg_11_0, arg_11_1, arg_11_2)
-	if arg_11_2.mapId then
-		Va3ChessGameModel.instance:initData(arg_11_1, arg_11_2.mapId)
+function Va3ChessGameController:initServerMap(actId, map)
+	if map.mapId then
+		Va3ChessGameModel.instance:initData(actId, map.mapId)
 	end
 
-	Va3ChessGameModel.instance:setRound(arg_11_2.currentRound)
-	Va3ChessGameModel.instance:setHp(arg_11_2.hp)
-	Va3ChessGameModel.instance:setFinishedTargetNum(arg_11_2.targetNum)
+	Va3ChessGameModel.instance:setRound(map.currentRound)
+	Va3ChessGameModel.instance:setHp(map.hp)
+	Va3ChessGameModel.instance:setFinishedTargetNum(map.targetNum)
 	Va3ChessGameModel.instance:setResult(nil)
-	Va3ChessGameModel.instance:setFireBallCount(arg_11_2.fireballNum)
-	Va3ChessGameModel.instance:updateFinishInteracts(arg_11_2.finishInteracts)
-	Va3ChessGameModel.instance:updateAllFinishInteracts(arg_11_2.allFinishInteracts)
+	Va3ChessGameModel.instance:setFireBallCount(map.fireballNum)
+	Va3ChessGameModel.instance:updateFinishInteracts(map.finishInteracts)
+	Va3ChessGameModel.instance:updateAllFinishInteracts(map.allFinishInteracts)
 
-	if arg_11_2.fragileTilebases then
-		Va3ChessGameModel.instance:updateFragileTilebases(arg_11_1, arg_11_2.fragileTilebases)
+	if map.fragileTilebases then
+		Va3ChessGameModel.instance:updateFragileTilebases(actId, map.fragileTilebases)
 	end
 
-	if arg_11_2.brokenTilebases then
-		Va3ChessGameModel.instance:updateBrokenTilebases(arg_11_1, arg_11_2.brokenTilebases)
+	if map.brokenTilebases then
+		Va3ChessGameModel.instance:updateBrokenTilebases(actId, map.brokenTilebases)
 	end
 
-	arg_11_0:setClickStatus(Va3ChessEnum.SelectPosStatus.None)
+	self:setClickStatus(Va3ChessEnum.SelectPosStatus.None)
 
-	arg_11_0._selectObj = nil
+	self._selectObj = nil
 
-	arg_11_0:setSelectObj(nil)
+	self:setSelectObj(nil)
 
-	arg_11_0.interacts = arg_11_0.interacts or Va3ChessInteractMgr.New()
+	self.interacts = self.interacts or Va3ChessInteractMgr.New()
 
-	arg_11_0.interacts:removeAll()
-	Va3ChessGameModel.instance:initObjects(arg_11_1, arg_11_2.interactObjects or arg_11_2.id2Interact)
+	self.interacts:removeAll()
+	Va3ChessGameModel.instance:initObjects(actId, map.interactObjects or map.id2Interact)
 
-	if arg_11_2.brazierIds then
-		Va3ChessGameModel.instance:updateLightUpBrazier(arg_11_1, arg_11_2.brazierIds)
+	if map.brazierIds then
+		Va3ChessGameModel.instance:updateLightUpBrazier(actId, map.brazierIds)
 	end
 
-	arg_11_0:initObjects()
+	self:initObjects()
 
-	arg_11_0.event = arg_11_0.event or Va3ChessEventMgr.New()
+	self.event = self.event or Va3ChessEventMgr.New()
 
-	arg_11_0.event:removeAll()
-	arg_11_0.event:setCurEvent(arg_11_2.currentEvent)
-	arg_11_0:onInitServerMap(arg_11_1, arg_11_2)
+	self.event:removeAll()
+	self.event:setCurEvent(map.currentEvent)
+	self:onInitServerMap(actId, map)
 
-	arg_11_0._hasMap = true
+	self._hasMap = true
 end
 
-function var_0_0.isNeedBlock(arg_12_0)
-	if arg_12_0.event and arg_12_0.event:isNeedBlock() then
+function Va3ChessGameController:isNeedBlock()
+	if self.event and self.event:isNeedBlock() then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.onInitServerMap(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0 = arg_13_0:_getActiviyXGameControllerIns(arg_13_1)
+function Va3ChessGameController:onInitServerMap(actId, mapData)
+	local gameCtrl = self:_getActiviyXGameControllerIns(actId)
 
-	if var_13_0 and var_13_0.onInitServerMap then
-		var_13_0:onInitServerMap(arg_13_2)
+	if gameCtrl and gameCtrl.onInitServerMap then
+		gameCtrl:onInitServerMap(mapData)
 	end
 end
 
-function var_0_0.updateServerMap(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = arg_14_0:_getActiviyXGameControllerIns(arg_14_1)
+function Va3ChessGameController:updateServerMap(actId, mapData)
+	local gameCtrl = self:_getActiviyXGameControllerIns(actId)
 
-	if var_14_0 and var_14_0.onUpdateServerMap then
-		var_14_0:onUpdateServerMap(arg_14_2)
+	if gameCtrl and gameCtrl.onUpdateServerMap then
+		gameCtrl:onUpdateServerMap(mapData)
 	end
 end
 
-function var_0_0.initObjects(arg_15_0)
-	local var_15_0 = Va3ChessGameModel.instance:getInteractDatas()
+function Va3ChessGameController:initObjects()
+	local objList = Va3ChessGameModel.instance:getInteractDatas()
 
-	for iter_15_0, iter_15_1 in ipairs(var_15_0) do
-		local var_15_1 = Va3ChessInteractObject.New()
+	for _, originData in ipairs(objList) do
+		local interactObj = Va3ChessInteractObject.New()
 
-		var_15_1:init(iter_15_1)
+		interactObj:init(originData)
 
-		if var_15_1.config ~= nil then
-			arg_15_0.interacts:add(var_15_1)
+		if interactObj.config ~= nil then
+			self.interacts:add(interactObj)
 		end
 	end
 
-	arg_15_0:onInitObjects()
+	self:onInitObjects()
 
-	local var_15_2 = arg_15_0.interacts:getList()
+	local interactList = self.interacts:getList()
 
-	for iter_15_2, iter_15_3 in ipairs(var_15_2) do
-		iter_15_3.goToObject:init()
+	for _, interact in ipairs(interactList) do
+		interact.goToObject:init()
 	end
 
-	arg_15_0:dispatchEvent(Va3ChessEvent.AllObjectCreated)
+	self:dispatchEvent(Va3ChessEvent.AllObjectCreated)
 end
 
-function var_0_0.onInitObjects(arg_16_0)
-	local var_16_0 = Va3ChessModel.instance:getActId()
-	local var_16_1 = arg_16_0:_getActiviyXGameControllerIns(var_16_0)
+function Va3ChessGameController:onInitObjects()
+	local actId = Va3ChessModel.instance:getActId()
+	local gameCtrl = self:_getActiviyXGameControllerIns(actId)
 
-	if var_16_1 and var_16_1.onInitObjects then
-		var_16_1:onInitObjects()
+	if gameCtrl and gameCtrl.onInitObjects then
+		gameCtrl:onInitObjects()
 	end
 end
 
-function var_0_0.initSceneTree(arg_17_0, arg_17_1, arg_17_2)
-	arg_17_0._treeSceneComp = Va3ChessGameTree.New()
-	arg_17_0._offsetSceneY = arg_17_2
+function Va3ChessGameController:initSceneTree(goTouch, offsetSceneY)
+	self._treeSceneComp = Va3ChessGameTree.New()
+	self._offsetSceneY = offsetSceneY
 
-	local var_17_0 = arg_17_0._treeSceneComp:createLeaveNode()
-	local var_17_1, var_17_2 = Va3ChessGameModel.instance:getGameSize()
+	local treeRoot = self._treeSceneComp:createLeaveNode()
+	local w, h = Va3ChessGameModel.instance:getGameSize()
 
-	for iter_17_0 = 1, var_17_1 do
-		for iter_17_1 = 1, var_17_2 do
-			local var_17_3 = {}
-			local var_17_4, var_17_5, var_17_6 = arg_17_0:calcTilePosInScene(iter_17_0 - 1, iter_17_1 - 1)
-			local var_17_7 = recthelper.worldPosToAnchorPos(Vector3.New(var_17_4, var_17_5 + arg_17_2, 0), arg_17_1.transform)
+	for x = 1, w do
+		for y = 1, h do
+			local node = {}
+			local tmpX, tmpY, tmpZ = self:calcTilePosInScene(x - 1, y - 1)
+			local pos = recthelper.worldPosToAnchorPos(Vector3.New(tmpX, tmpY + offsetSceneY, 0), goTouch.transform)
 
-			var_17_3.x, var_17_3.y = var_17_7.x, var_17_7.y
-			var_17_3.tileX, var_17_3.tileY = iter_17_0 - 1, iter_17_1 - 1
+			node.x, node.y = pos.x, pos.y
+			node.tileX, node.tileY = x - 1, y - 1
 
-			table.insert(var_17_0.nodes, var_17_3)
+			table.insert(treeRoot.nodes, node)
 
-			var_17_0.keys = var_17_3
+			treeRoot.keys = node
 		end
 	end
 
-	arg_17_0._treeSceneComp:growToBranch(var_17_0)
-	arg_17_0._treeSceneComp:buildTree(var_17_0)
+	self._treeSceneComp:growToBranch(treeRoot)
+	self._treeSceneComp:buildTree(treeRoot)
 end
 
-function var_0_0.calcTilePosInScene(arg_18_0, arg_18_1, arg_18_2, arg_18_3, arg_18_4)
-	local var_18_0 = Va3ChessEnum.TileShowSettings
-	local var_18_1 = arg_18_0._cacheOffsetX or Va3ChessEnum.ChessBoardOffsetX
-	local var_18_2 = arg_18_0._cacheOffsetY or Va3ChessEnum.ChessBoardOffsetY
-	local var_18_3 = arg_18_1 * var_18_0.width + var_18_0.offsetX * arg_18_2 + var_18_0.offsetXY * (arg_18_1 + arg_18_2) + var_18_1
-	local var_18_4 = arg_18_2 * var_18_0.height + var_18_0.offsetY * arg_18_1 + var_18_0.offsetYX * (arg_18_1 + arg_18_2) + var_18_2
-	local var_18_5 = var_18_3 * 0.01
-	local var_18_6 = var_18_4 * 0.01
-	local var_18_7 = 0
-	local var_18_8 = (arg_18_3 or 0) * 0.001
+function Va3ChessGameController:calcTilePosInScene(tileX, tileY, offsetOrder, calcPosZByPosXY)
+	local setting = Va3ChessEnum.TileShowSettings
+	local cacheOffsetX = self._cacheOffsetX or Va3ChessEnum.ChessBoardOffsetX
+	local cacheOffsetY = self._cacheOffsetY or Va3ChessEnum.ChessBoardOffsetY
+	local x = tileX * setting.width + setting.offsetX * tileY + setting.offsetXY * (tileX + tileY) + cacheOffsetX
+	local y = tileY * setting.height + setting.offsetY * tileX + setting.offsetYX * (tileX + tileY) + cacheOffsetY
 
-	if arg_18_4 then
-		var_18_7 = arg_18_0:getPosZ(arg_18_1, arg_18_2) + var_18_8
+	x = x * 0.01
+	y = y * 0.01
+
+	local z = 0
+	local offsetZ = (offsetOrder or 0) * 0.001
+
+	if calcPosZByPosXY then
+		z = self:getPosZ(tileX, tileY) + offsetZ
 	else
-		var_18_7 = var_18_6 * 0.001 + var_18_8
+		z = y * 0.001 + offsetZ
 	end
 
-	return var_18_5, var_18_6, var_18_7
+	return x, y, z
 end
 
-function var_0_0.getPosZ(arg_19_0, arg_19_1, arg_19_2)
-	local var_19_0, var_19_1 = Va3ChessGameModel.instance:getGameSize()
-	local var_19_2 = arg_19_1 / var_19_0
-	local var_19_3 = Mathf.Lerp(Va3ChessEnum.ScenePosZRange.Min, Va3ChessEnum.ScenePosZRange.Max, var_19_2)
-	local var_19_4 = arg_19_2 / var_19_1
+function Va3ChessGameController:getPosZ(posX, posY)
+	local w, h = Va3ChessGameModel.instance:getGameSize()
+	local xRate = posX / w
+	local xOffsetZ = Mathf.Lerp(Va3ChessEnum.ScenePosZRange.Min, Va3ChessEnum.ScenePosZRange.Max, xRate)
+	local yRate = posY / h
+	local yOffsetZ = Mathf.Lerp(Va3ChessEnum.ScenePosZRange.Max, Va3ChessEnum.ScenePosZRange.Min, yRate)
 
-	return var_19_3 + Mathf.Lerp(Va3ChessEnum.ScenePosZRange.Max, Va3ChessEnum.ScenePosZRange.Min, var_19_4)
+	return xOffsetZ + yOffsetZ
 end
 
-function var_0_0.getOffsetSceneY(arg_20_0)
-	return arg_20_0._offsetSceneY
+function Va3ChessGameController:getOffsetSceneY()
+	return self._offsetSceneY
 end
 
-function var_0_0.addInteractObj(arg_21_0, arg_21_1)
-	local var_21_0 = Va3ChessInteractObject.New()
+function Va3ChessGameController:addInteractObj(interactData)
+	local interactObj = Va3ChessInteractObject.New()
 
-	var_21_0:init(arg_21_1)
-	arg_21_0.interacts:add(var_21_0)
-	var_21_0.goToObject:init()
-	arg_21_0:dispatchEvent(Va3ChessEvent.AddInteractObj, var_21_0)
+	interactObj:init(interactData)
+	self.interacts:add(interactObj)
+	interactObj.goToObject:init()
+	self:dispatchEvent(Va3ChessEvent.AddInteractObj, interactObj)
 end
 
-function var_0_0.deleteInteractObj(arg_22_0, arg_22_1)
-	arg_22_0.interacts:remove(arg_22_1)
-	arg_22_0:dispatchEvent(Va3ChessEvent.DeleteInteractObj, arg_22_1)
+function Va3ChessGameController:deleteInteractObj(id)
+	self.interacts:remove(id)
+	self:dispatchEvent(Va3ChessEvent.DeleteInteractObj, id)
 end
 
-function var_0_0.searchInteractByPos(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
-	local var_23_0 = arg_23_0.interacts:getList()
-	local var_23_1
-	local var_23_2
-	local var_23_3 = 0
+function Va3ChessGameController:searchInteractByPos(x, y, filterFunc)
+	local list = self.interacts:getList()
+	local targetObj, targetObjList
+	local count = 0
 
-	for iter_23_0, iter_23_1 in ipairs(var_23_0) do
-		if iter_23_1.originData.posX == arg_23_1 and iter_23_1.originData.posY == arg_23_2 and (not arg_23_3 or arg_23_3(iter_23_1)) then
-			if var_23_1 ~= nil then
-				var_23_2 = var_23_2 or {
-					var_23_1
+	for _, interactObj in ipairs(list) do
+		if interactObj.originData.posX == x and interactObj.originData.posY == y and (not filterFunc or filterFunc(interactObj)) then
+			if targetObj ~= nil then
+				targetObjList = targetObjList or {
+					targetObj
 				}
 
-				table.insert(var_23_2, iter_23_1)
+				table.insert(targetObjList, interactObj)
 			else
-				var_23_1 = iter_23_1
+				targetObj = interactObj
 			end
 
-			var_23_3 = var_23_3 + 1
+			count = count + 1
 		end
 	end
 
-	if var_23_3 > 1 then
-		table.sort(var_23_2, var_0_0.sortSelectObj)
+	if count > 1 then
+		table.sort(targetObjList, Va3ChessGameController.sortSelectObj)
 	end
 
-	return var_23_3, var_23_2 or var_23_1
+	return count, targetObjList or targetObj
 end
 
-function var_0_0.sortSelectObj(arg_24_0, arg_24_1)
-	return arg_24_0:getSelectPriority() < arg_24_1:getSelectPriority()
+function Va3ChessGameController.sortSelectObj(a, b)
+	return a:getSelectPriority() < b:getSelectPriority()
 end
 
-function var_0_0.filterSelectable(arg_25_0)
-	return arg_25_0.config and (arg_25_0.config.interactType == Va3ChessEnum.InteractType.Player or arg_25_0.config.interactType == Va3ChessEnum.InteractType.AssistPlayer)
+function Va3ChessGameController.filterSelectable(targetObj)
+	return targetObj.config and (targetObj.config.interactType == Va3ChessEnum.InteractType.Player or targetObj.config.interactType == Va3ChessEnum.InteractType.AssistPlayer)
 end
 
-function var_0_0.existGame(arg_26_0)
-	return arg_26_0._hasMap
+function Va3ChessGameController:existGame()
+	return self._hasMap
 end
 
-function var_0_0.setSelectObj(arg_27_0, arg_27_1)
-	if arg_27_0._selectObj == arg_27_1 then
+function Va3ChessGameController:setSelectObj(selectObj)
+	if self._selectObj == selectObj then
 		return
 	end
 
-	if arg_27_0._selectObj ~= nil then
-		arg_27_0._selectObj:onCancelSelect()
+	if self._selectObj ~= nil then
+		self._selectObj:onCancelSelect()
 	end
 
-	arg_27_0._selectObj = arg_27_1
+	self._selectObj = selectObj
 
-	if arg_27_1 ~= nil then
-		arg_27_1:onSelected()
-	end
-end
-
-function var_0_0.forceRefreshObjSelectedView(arg_28_0)
-	if arg_28_0._selectObj ~= nil then
-		arg_28_0._selectObj:onSelected()
+	if selectObj ~= nil then
+		selectObj:onSelected()
 	end
 end
 
-function var_0_0.saveTempSelectObj(arg_29_0)
-	if arg_29_0._selectObj then
-		arg_29_0._tempSelectObjId = arg_29_0._selectObj.id
+function Va3ChessGameController:forceRefreshObjSelectedView()
+	if self._selectObj ~= nil then
+		self._selectObj:onSelected()
 	end
 end
 
-function var_0_0.isTempSelectObj(arg_30_0, arg_30_1)
-	return arg_30_0._tempSelectObjId == arg_30_1
+function Va3ChessGameController:saveTempSelectObj()
+	if self._selectObj then
+		self._tempSelectObjId = self._selectObj.id
+	end
 end
 
-function var_0_0.tryResumeSelectObj(arg_31_0)
-	if arg_31_0.interacts and arg_31_0._tempSelectObjId then
-		local var_31_0 = arg_31_0.interacts:get(arg_31_0._tempSelectObjId)
+function Va3ChessGameController:isTempSelectObj(id)
+	return self._tempSelectObjId == id
+end
 
-		if var_31_0 then
-			arg_31_0:setSelectObj(var_31_0)
+function Va3ChessGameController:tryResumeSelectObj()
+	if self.interacts and self._tempSelectObjId then
+		local obj = self.interacts:get(self._tempSelectObjId)
 
-			arg_31_0._tempSelectObjId = nil
+		if obj then
+			self:setSelectObj(obj)
+
+			self._tempSelectObjId = nil
 
 			return true
 		end
 	end
 
-	arg_31_0:autoSelectPlayer(true)
+	self:autoSelectPlayer(true)
 
 	return false
 end
 
-function var_0_0.refreshAllInteractKillEff(arg_32_0)
-	local var_32_0 = arg_32_0.interacts:getList()
+function Va3ChessGameController:refreshAllInteractKillEff()
+	local interactList = self.interacts:getList()
 
-	for iter_32_0, iter_32_1 in ipairs(var_32_0) do
-		if iter_32_1 and iter_32_1.chessEffectObj and iter_32_1.chessEffectObj.refreshKillEffect then
-			iter_32_1.chessEffectObj:refreshKillEffect()
+	for _, interact in ipairs(interactList) do
+		if interact and interact.chessEffectObj and interact.chessEffectObj.refreshKillEffect then
+			interact.chessEffectObj:refreshKillEffect()
 		end
 	end
 end
 
-function var_0_0.syncServerMap(arg_33_0)
-	local var_33_0 = Va3ChessGameModel.instance:getActId()
-	local var_33_1 = Va3ChessGameModel.instance:getMapId()
+function Va3ChessGameController:syncServerMap()
+	local actId = Va3ChessGameModel.instance:getActId()
+	local mapId = Va3ChessGameModel.instance:getMapId()
 
-	arg_33_0._tempInteractMgr = arg_33_0.interacts
-	arg_33_0._tempEventMgr = arg_33_0.event
+	self._tempInteractMgr = self.interacts
+	self._tempEventMgr = self.event
 
-	if var_33_0 and var_33_1 then
-		arg_33_0.interacts = nil
-		arg_33_0.event = nil
+	if actId and mapId then
+		self.interacts = nil
+		self.event = nil
 
 		Va3ChessGameModel.instance:release()
-		Va3ChessGameModel.instance:initData(var_33_0, var_33_1)
-		Va3ChessRpcController.instance:sendGetActInfoRequest(var_33_0, arg_33_0.onReceiveWhenSync, arg_33_0)
-		arg_33_0:dispatchEvent(Va3ChessEvent.ResetMapView)
+		Va3ChessGameModel.instance:initData(actId, mapId)
+		Va3ChessRpcController.instance:sendGetActInfoRequest(actId, self.onReceiveWhenSync, self)
+		self:dispatchEvent(Va3ChessEvent.ResetMapView)
 	end
 end
 
-function var_0_0.onReceiveWhenSync(arg_34_0, arg_34_1, arg_34_2)
-	if arg_34_2 ~= 0 then
+function Va3ChessGameController:onReceiveWhenSync(cmd, resultCode)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_34_0 = Va3ChessGameModel.instance:getActId()
-	local var_34_1 = Va3ChessGameModel.instance:getMapId()
+	local actId = Va3ChessGameModel.instance:getActId()
+	local mapId = Va3ChessGameModel.instance:getMapId()
 
-	if var_34_0 and var_34_1 then
-		if arg_34_0._tempInteractMgr then
-			arg_34_0._tempInteractMgr:dispose()
+	if actId and mapId then
+		if self._tempInteractMgr then
+			self._tempInteractMgr:dispose()
 
-			arg_34_0._tempInteractMgr = nil
+			self._tempInteractMgr = nil
 		end
 
-		if arg_34_0._tempEventMgr then
-			arg_34_0._tempEventMgr:removeAll()
+		if self._tempEventMgr then
+			self._tempEventMgr:removeAll()
 
-			arg_34_0._tempEventMgr = nil
+			self._tempEventMgr = nil
 		end
 
-		arg_34_0:initData(var_34_0, var_34_1)
-		arg_34_0:initObjects()
+		self:initData(actId, mapId)
+		self:initObjects()
 	end
 end
 
-function var_0_0.getSelectObj(arg_35_0)
-	return arg_35_0._selectObj
+function Va3ChessGameController:getSelectObj()
+	return self._selectObj
 end
 
-function var_0_0.setClickStatus(arg_36_0, arg_36_1)
-	arg_36_0._clickStatus = arg_36_1
+function Va3ChessGameController:setClickStatus(status)
+	self._clickStatus = status
 end
 
-function var_0_0.getClickStatus(arg_37_0)
-	return arg_37_0._clickStatus
+function Va3ChessGameController:getClickStatus()
+	return self._clickStatus
 end
 
-function var_0_0.autoSelectPlayer(arg_38_0, arg_38_1)
-	if not arg_38_0.interacts then
+function Va3ChessGameController:autoSelectPlayer(includeAssistPlayer)
+	if not self.interacts then
 		return
 	end
 
-	local var_38_0 = arg_38_0.interacts:getList()
+	local list = self.interacts:getList()
 
-	if not var_38_0 then
+	if not list then
 		return
 	end
 
-	local var_38_1 = {}
+	local players = {}
 
-	for iter_38_0, iter_38_1 in pairs(var_38_0) do
-		local var_38_2 = iter_38_1.config and iter_38_1.config.interactType or nil
-		local var_38_3 = var_38_2 == Va3ChessEnum.InteractType.Player
-		local var_38_4 = arg_38_1 and var_38_2 == Va3ChessEnum.InteractType.AssistPlayer
+	for _, interact in pairs(list) do
+		local interactType = interact.config and interact.config.interactType or nil
+		local isPlayer = interactType == Va3ChessEnum.InteractType.Player
+		local isAddIncludeAssistPlayer = includeAssistPlayer and interactType == Va3ChessEnum.InteractType.AssistPlayer
 
-		if var_38_3 or var_38_4 then
-			table.insert(var_38_1, iter_38_1)
+		if isPlayer or isAddIncludeAssistPlayer then
+			table.insert(players, interact)
 		end
 	end
 
-	table.sort(var_38_1, var_0_0.sortInteractObjById)
+	table.sort(players, Va3ChessGameController.sortInteractObjById)
 
-	if #var_38_1 > 0 then
-		arg_38_0:setSelectObj(var_38_1[1])
+	if #players > 0 then
+		self:setSelectObj(players[1])
 	end
 end
 
-function var_0_0.sortInteractObjById(arg_39_0, arg_39_1)
-	local var_39_0 = arg_39_0.config.interactType
-	local var_39_1 = arg_39_1.config.interactType
+function Va3ChessGameController.sortInteractObjById(a, b)
+	local aType = a.config.interactType
+	local bType = b.config.interactType
 
-	if var_39_0 ~= var_39_1 then
-		return var_39_0 < var_39_1
+	if aType ~= bType then
+		return aType < bType
 	end
 
-	return arg_39_0.id < arg_39_1.id
+	return a.id < b.id
 end
 
-function var_0_0.gameClear(arg_40_0)
+function Va3ChessGameController:gameClear()
 	Va3ChessGameModel.instance:setResult(true)
-	arg_40_0:dispatchEvent(Va3ChessEvent.SetViewVictory)
-	arg_40_0:dispatchEvent(Va3ChessEvent.CurrentConditionUpdate)
+	self:dispatchEvent(Va3ChessEvent.SetViewVictory)
+	self:dispatchEvent(Va3ChessEvent.CurrentConditionUpdate)
 end
 
-function var_0_0.gameOver(arg_41_0)
+function Va3ChessGameController:gameOver()
 	Va3ChessGameModel.instance:setResult(false)
-	arg_41_0:dispatchEvent(Va3ChessEvent.SetViewFail)
-	arg_41_0:dispatchEvent(Va3ChessEvent.CurrentConditionUpdate)
+	self:dispatchEvent(Va3ChessEvent.SetViewFail)
+	self:dispatchEvent(Va3ChessEvent.CurrentConditionUpdate)
 end
 
-function var_0_0.posCanWalk(arg_42_0, arg_42_1, arg_42_2, arg_42_3, arg_42_4)
-	local var_42_0 = false
+function Va3ChessGameController:posCanWalk(x, y, fromDir, walkObjType)
+	local result = false
 
-	if not Va3ChessGameModel.instance:isPosInChessBoard(arg_42_1, arg_42_2) then
-		return var_42_0
+	if not Va3ChessGameModel.instance:isPosInChessBoard(x, y) then
+		return result
 	end
 
-	local var_42_1 = Va3ChessGameModel.instance:getTileMO(arg_42_1, arg_42_2)
+	local tileMO = Va3ChessGameModel.instance:getTileMO(x, y)
 
-	if not var_42_1 or var_42_1.tileType == Va3ChessEnum.TileBaseType.None then
-		return var_42_0
+	if not tileMO or tileMO.tileType == Va3ChessEnum.TileBaseType.None then
+		return result
 	end
 
-	local var_42_2 = var_42_1:isFinishTrigger(Va3ChessEnum.TileTrigger.PoSui)
-	local var_42_3 = var_42_1:isFinishTrigger(Va3ChessEnum.TileTrigger.Broken)
+	local isFinishTriggerPoSui = tileMO:isFinishTrigger(Va3ChessEnum.TileTrigger.PoSui)
+	local isFinishTriggerBroken = tileMO:isFinishTrigger(Va3ChessEnum.TileTrigger.Broken)
 
-	if not var_42_2 and not var_42_3 and not arg_42_0:isBaffleBlock(arg_42_1, arg_42_2, arg_42_3) then
-		var_42_0 = arg_42_0:posObjCanWalk(arg_42_1, arg_42_2, arg_42_3, arg_42_4)
+	if not isFinishTriggerPoSui and not isFinishTriggerBroken then
+		local isBaffleBlock = self:isBaffleBlock(x, y, fromDir)
+
+		if not isBaffleBlock then
+			result = self:posObjCanWalk(x, y, fromDir, walkObjType)
+		end
 	end
 
-	return var_42_0
+	return result
 end
 
-function var_0_0.getPlayerNextCanWalkPosDict(arg_43_0)
-	local var_43_0 = {}
-	local var_43_1 = arg_43_0.interacts and arg_43_0.interacts:getMainPlayer(true) or nil
+function Va3ChessGameController:getPlayerNextCanWalkPosDict()
+	local result = {}
+	local mainPlayer = self.interacts and self.interacts:getMainPlayer(true) or nil
 
-	if not var_43_1 then
-		return var_43_0
+	if not mainPlayer then
+		return result
 	end
 
-	local var_43_2 = var_43_1.originData.posX
-	local var_43_3 = var_43_1.originData.posY
-	local var_43_4 = {
+	local x, y = mainPlayer.originData.posX, mainPlayer.originData.posY
+	local nextPosList = {
 		{
-			x = var_43_2,
-			y = var_43_3 + 1
+			x = x,
+			y = y + 1
 		},
 		{
-			x = var_43_2,
-			y = var_43_3 - 1
+			x = x,
+			y = y - 1
 		},
 		{
-			x = var_43_2 - 1,
-			y = var_43_3
+			x = x - 1,
+			y = y
 		},
 		{
-			x = var_43_2 + 1,
-			y = var_43_3
+			x = x + 1,
+			y = y
 		}
 	}
 
-	for iter_43_0, iter_43_1 in ipairs(var_43_4) do
-		local var_43_5 = Va3ChessMapUtils.ToDirection(var_43_2, var_43_3, iter_43_1.x, iter_43_1.y)
+	for _, nextPos in ipairs(nextPosList) do
+		local dir = Va3ChessMapUtils.ToDirection(x, y, nextPos.x, nextPos.y)
 
-		if arg_43_0:posCanWalk(iter_43_1.x, iter_43_1.y, var_43_5, var_43_1.objType) then
-			var_43_0[Activity142Helper.getPosHashKey(iter_43_1.x, iter_43_1.y)] = true
+		if self:posCanWalk(nextPos.x, nextPos.y, dir, mainPlayer.objType) then
+			local posHashKey = Activity142Helper.getPosHashKey(nextPos.x, nextPos.y)
+
+			result[posHashKey] = true
 		end
 	end
 
-	return var_43_0
+	return result
 end
 
-function var_0_0.isBaffleBlock(arg_44_0, arg_44_1, arg_44_2, arg_44_3)
-	local var_44_0 = false
-	local var_44_1
-	local var_44_2
-	local var_44_3
+function Va3ChessGameController:isBaffleBlock(x, y, fromDir)
+	local result = false
+	local preX, preY, baffleBlockDir
 
-	if arg_44_3 == Va3ChessEnum.Direction.Down then
-		var_44_1 = arg_44_1
-		var_44_2 = arg_44_2 + 1
-		var_44_3 = Va3ChessEnum.Direction.Up
-	elseif arg_44_3 == Va3ChessEnum.Direction.Left then
-		var_44_1 = arg_44_1 + 1
-		var_44_2 = arg_44_2
-		var_44_3 = Va3ChessEnum.Direction.Right
-	elseif arg_44_3 == Va3ChessEnum.Direction.Right then
-		var_44_1 = arg_44_1 - 1
-		var_44_2 = arg_44_2
-		var_44_3 = Va3ChessEnum.Direction.Left
-	elseif arg_44_3 == Va3ChessEnum.Direction.Up then
-		var_44_1 = arg_44_1
-		var_44_2 = arg_44_2 - 1
-		var_44_3 = Va3ChessEnum.Direction.Down
+	if fromDir == Va3ChessEnum.Direction.Down then
+		preX = x
+		preY = y + 1
+		baffleBlockDir = Va3ChessEnum.Direction.Up
+	elseif fromDir == Va3ChessEnum.Direction.Left then
+		preX = x + 1
+		preY = y
+		baffleBlockDir = Va3ChessEnum.Direction.Right
+	elseif fromDir == Va3ChessEnum.Direction.Right then
+		preX = x - 1
+		preY = y
+		baffleBlockDir = Va3ChessEnum.Direction.Left
+	elseif fromDir == Va3ChessEnum.Direction.Up then
+		preX = x
+		preY = y - 1
+		baffleBlockDir = Va3ChessEnum.Direction.Down
 	else
-		logError(string.format("Va3ChessGameController:isBaffleBlock error, un support direction, x : %s, y : %s, direction : %s", arg_44_1, arg_44_2, arg_44_3))
+		logError(string.format("Va3ChessGameController:isBaffleBlock error, un support direction, x : %s, y : %s, direction : %s", x, y, fromDir))
 
-		return var_44_0
+		return result
 	end
 
-	local var_44_4 = true
-	local var_44_5 = Va3ChessGameModel.instance:getTileMO(var_44_1, var_44_2)
+	local isPreHasBaffle = true
+	local preTileMO = Va3ChessGameModel.instance:getTileMO(preX, preY)
 
-	if var_44_5 then
-		var_44_4 = var_44_5:isHasBaffleInDir(arg_44_3)
+	if preTileMO then
+		isPreHasBaffle = preTileMO:isHasBaffleInDir(fromDir)
 	end
 
-	local var_44_6 = true
-	local var_44_7 = Va3ChessGameModel.instance:getTileMO(arg_44_1, arg_44_2)
+	local isCurHasBaffle = true
+	local tileMO = Va3ChessGameModel.instance:getTileMO(x, y)
 
-	if var_44_7 then
-		var_44_6 = var_44_7:isHasBaffleInDir(var_44_3)
+	if tileMO then
+		isCurHasBaffle = tileMO:isHasBaffleInDir(baffleBlockDir)
 	end
 
-	return var_44_4 or var_44_6
+	result = isPreHasBaffle or isCurHasBaffle
+
+	return result
 end
 
-function var_0_0.posObjCanWalk(arg_45_0, arg_45_1, arg_45_2, arg_45_3, arg_45_4)
-	local var_45_0, var_45_1 = arg_45_0:searchInteractByPos(arg_45_1, arg_45_2)
+function Va3ChessGameController:posObjCanWalk(x, y, fromDir, walkObjType)
+	local len, rs = self:searchInteractByPos(x, y)
 
-	if var_45_0 == 1 then
-		if var_45_1 then
-			if var_45_1:canBlock(arg_45_3, arg_45_4) then
+	if len == 1 then
+		if rs then
+			if rs:canBlock(fromDir, walkObjType) then
 				return false
 			else
-				local var_45_2 = {
-					dir = arg_45_3,
-					objType = arg_45_4
+				local params = {
+					dir = fromDir,
+					objType = walkObjType
 				}
 
-				var_45_1:showStateView(Va3ChessEnum.ObjState.Interoperable, var_45_2)
+				rs:showStateView(Va3ChessEnum.ObjState.Interoperable, params)
 			end
 		end
-	elseif var_45_0 > 1 then
-		for iter_45_0 = 1, var_45_0 do
-			if var_45_1[iter_45_0] then
-				if var_45_1[iter_45_0]:canBlock(arg_45_3, arg_45_4) then
+	elseif len > 1 then
+		for i = 1, len do
+			if rs[i] then
+				if rs[i]:canBlock(fromDir, walkObjType) then
 					return false
 				else
-					local var_45_3 = {
-						dir = arg_45_3,
-						objType = arg_45_4
+					local params = {
+						dir = fromDir,
+						objType = walkObjType
 					}
 
-					var_45_1[iter_45_0]:showStateView(Va3ChessEnum.ObjState.Interoperable, var_45_3)
+					rs[i]:showStateView(Va3ChessEnum.ObjState.Interoperable, params)
 				end
 			end
 		end
@@ -621,50 +632,49 @@ function var_0_0.posObjCanWalk(arg_45_0, arg_45_1, arg_45_2, arg_45_3, arg_45_4)
 	return true
 end
 
-function var_0_0.resetObjStateOnNewRound(arg_46_0)
-	local var_46_0 = arg_46_0.interacts:getList()
+function Va3ChessGameController:resetObjStateOnNewRound()
+	local interactList = self.interacts:getList()
 
-	for iter_46_0, iter_46_1 in ipairs(var_46_0) do
-		iter_46_1:showStateView(Va3ChessEnum.ObjState.Idle)
+	for _, interactObj in ipairs(interactList) do
+		interactObj:showStateView(Va3ChessEnum.ObjState.Idle)
 	end
 end
 
-function var_0_0.getNearestScenePos(arg_47_0, arg_47_1, arg_47_2)
-	if not arg_47_0._treeSceneComp then
+function Va3ChessGameController:getNearestScenePos(x, y)
+	if not self._treeSceneComp then
 		return nil
 	end
 
-	local var_47_0 = arg_47_0._treeSceneComp:search(arg_47_1, arg_47_2)
-	local var_47_1 = 99999999
-	local var_47_2
-	local var_47_3 = Va3ChessEnum.ClickYWeight
+	local nodes = self._treeSceneComp:search(x, y)
+	local minDistance = 99999999
+	local nearestNode
+	local yWeight = Va3ChessEnum.ClickYWeight
 
-	if var_47_0 then
-		for iter_47_0 = 1, #var_47_0 do
-			local var_47_4 = var_47_0[iter_47_0]
-			local var_47_5 = var_47_4.x - arg_47_1
-			local var_47_6 = var_47_4.y - arg_47_2
+	if nodes then
+		for i = 1, #nodes do
+			local node = nodes[i]
+			local deltaX, deltaY = node.x - x, node.y - y
 
-			if math.abs(var_47_5) <= Va3ChessEnum.ClickRangeX and math.abs(var_47_6) <= Va3ChessEnum.ClickRangeY then
-				local var_47_7 = var_47_5 * var_47_5 + var_47_6 * var_47_6 * var_47_3
+			if math.abs(deltaX) <= Va3ChessEnum.ClickRangeX and math.abs(deltaY) <= Va3ChessEnum.ClickRangeY then
+				local tmpDist = deltaX * deltaX + deltaY * deltaY * yWeight
 
-				if var_47_7 < var_47_1 then
-					var_47_2 = var_47_4
-					var_47_1 = var_47_7
+				if tmpDist < minDistance then
+					nearestNode = node
+					minDistance = tmpDist
 				end
 			end
 		end
 	end
 
-	if var_47_2 then
-		return var_47_2.tileX, var_47_2.tileY
+	if nearestNode then
+		return nearestNode.tileX, nearestNode.tileY
 	else
 		return nil
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+Va3ChessGameController.instance = Va3ChessGameController.New()
 
-LuaEventSystem.addEventMechanism(var_0_0.instance)
+LuaEventSystem.addEventMechanism(Va3ChessGameController.instance)
 
-return var_0_0
+return Va3ChessGameController

@@ -1,262 +1,267 @@
-﻿module("modules.logic.fight.view.cardeffect.FightCardDragEffect", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/cardeffect/FightCardDragEffect.lua
 
-local var_0_0 = class("FightCardDragEffect", BaseWork)
-local var_0_1 = "ui/viewres/fight/ui_effect_dna_b.prefab"
-local var_0_2
-local var_0_3
-local var_0_4 = 1
-local var_0_5 = var_0_4 * 0.033
+module("modules.logic.fight.view.cardeffect.FightCardDragEffect", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+local FightCardDragEffect = class("FightCardDragEffect", BaseWork)
+local LinkEffectPath = "ui/viewres/fight/ui_effect_dna_b.prefab"
+local _linkEffectLoader, _linkEffectGO
+local TimeFactor = 1
+local dt = TimeFactor * 0.033
 
-	arg_1_0._dt = var_0_5 / FightModel.instance:getUISpeed()
-	arg_1_0._tweenIds = {}
-	arg_1_0._dragItem = arg_1_1.handCardItemList[arg_1_1.index]
-	arg_1_0._position = arg_1_1.position
-	arg_1_0._cardCount = arg_1_1.cardCount
-	arg_1_0._handCardTr = arg_1_1.handCardTr
-	arg_1_0._handCards = arg_1_1.handCards
+function FightCardDragEffect:onStart(context)
+	FightCardDragEffect.super.onStart(self, context)
 
-	gohelper.setAsLastSibling(arg_1_0._dragItem.go)
+	self._dt = dt / FightModel.instance:getUISpeed()
+	self._tweenIds = {}
+	self._dragItem = context.handCardItemList[context.index]
+	self._position = context.position
+	self._cardCount = context.cardCount
+	self._handCardTr = context.handCardTr
+	self._handCards = context.handCards
 
-	local var_1_0, var_1_1, var_1_2 = transformhelper.getLocalScale(arg_1_0._dragItem.tr)
+	gohelper.setAsLastSibling(self._dragItem.go)
 
-	arg_1_0._dragScale = var_1_0
-	arg_1_0._prevIndex = arg_1_0.context.index
-	arg_1_0._after_drag_card_list = {}
+	local curScale, _, _ = transformhelper.getLocalScale(self._dragItem.tr)
 
-	for iter_1_0 = 1, #arg_1_0.context.handCardItemList do
-		table.insert(arg_1_0._after_drag_card_list, arg_1_0.context.handCardItemList[iter_1_0])
+	self._dragScale = curScale
+	self._prevIndex = self.context.index
+	self._after_drag_card_list = {}
+
+	for i = 1, #self.context.handCardItemList do
+		table.insert(self._after_drag_card_list, self.context.handCardItemList[i])
 	end
 
-	arg_1_0._sequence = FlowSequence.New()
+	self._sequence = FlowSequence.New()
 
-	local var_1_3 = 1.14
-	local var_1_4 = 5
+	local end_scale = 1.14
+	local frame_num = 5
 
-	arg_1_0._sequence:addWork(FunctionWork.New(function()
-		arg_1_0:_playCardSpringEffect(arg_1_0.context.index)
+	self._sequence:addWork(FunctionWork.New(function()
+		self:_playCardSpringEffect(self.context.index)
 	end))
-	arg_1_0._sequence:addWork(TweenWork.New({
+	self._sequence:addWork(TweenWork.New({
 		type = "DOTweenFloat",
-		from = var_1_0,
-		to = var_1_3,
-		t = arg_1_0._dt * var_1_4,
-		frameCb = arg_1_0._tweenFrameScale,
-		cbObj = arg_1_0
+		from = curScale,
+		to = end_scale,
+		t = self._dt * frame_num,
+		frameCb = self._tweenFrameScale,
+		cbObj = self
 	}))
-	arg_1_0._sequence:registerDoneListener(arg_1_0._onWorkDone, arg_1_0)
-	arg_1_0._sequence:start()
-	FightController.instance:registerCallback(FightEvent.DragHandCard, arg_1_0._onDragHandCard, arg_1_0)
-	FightController.instance:registerCallback(FightEvent.CardLongPressEffectEnd, arg_1_0._onCardLongPressEffectEnd, arg_1_0)
+	self._sequence:registerDoneListener(self._onWorkDone, self)
+	self._sequence:start()
+	FightController.instance:registerCallback(FightEvent.DragHandCard, self._onDragHandCard, self)
+	FightController.instance:registerCallback(FightEvent.CardLongPressEffectEnd, self._onCardLongPressEffectEnd, self)
 end
 
-function var_0_0._onCardLongPressEffectEnd(arg_3_0)
-	gohelper.setAsLastSibling(arg_3_0._dragItem.go)
+function FightCardDragEffect:_onCardLongPressEffectEnd()
+	gohelper.setAsLastSibling(self._dragItem.go)
 end
 
-function var_0_0._tweenFrameScale(arg_4_0, arg_4_1)
-	arg_4_0._dragScale = arg_4_1
+function FightCardDragEffect:_tweenFrameScale(value)
+	self._dragScale = value
 
-	transformhelper.setLocalScale(arg_4_0._dragItem.tr, arg_4_0._dragScale, arg_4_0._dragScale, 1)
+	transformhelper.setLocalScale(self._dragItem.tr, self._dragScale, self._dragScale, 1)
 
-	local var_4_0 = FightViewHandCard.HandCardHeight * (arg_4_0._dragScale - 1) / 2
+	local targetPosY = FightViewHandCard.HandCardHeight * (self._dragScale - 1) / 2
 
-	recthelper.setAnchorY(arg_4_0._dragItem.tr, var_4_0)
+	recthelper.setAnchorY(self._dragItem.tr, targetPosY)
 end
 
-function var_0_0._playCardSpringEffect(arg_5_0, arg_5_1)
-	arg_5_0:_killAllPosTween()
+function FightCardDragEffect:_playCardSpringEffect(targetIndex)
+	self:_killAllPosTween()
 
-	for iter_5_0 = 1, arg_5_0._cardCount do
-		if iter_5_0 ~= arg_5_1 then
-			local var_5_0 = arg_5_0._after_drag_card_list[iter_5_0]
-			local var_5_1 = 0
+	for i = 1, self._cardCount do
+		if i ~= targetIndex then
+			local item = self._after_drag_card_list[i]
+			local offset_num = 0
 
-			if math.abs(iter_5_0 - arg_5_1) == 1 then
-				var_5_1 = iter_5_0 < arg_5_1 and 8 or -8
+			if math.abs(i - targetIndex) == 1 then
+				offset_num = i < targetIndex and 8 or -8
 			end
 
-			local var_5_2 = ZProj.TweenHelper.DOAnchorPosX(var_5_0.tr, FightViewHandCard.calcCardPosX(iter_5_0) + var_5_1, 5 * arg_5_0._dt, function()
-				arg_5_0:_setCardsUniversalMatch(arg_5_1)
+			local tweenId = ZProj.TweenHelper.DOAnchorPosX(item.tr, FightViewHandCard.calcCardPosX(i) + offset_num, 5 * self._dt, function()
+				self:_setCardsUniversalMatch(targetIndex)
 			end)
 
-			table.insert(arg_5_0._tweenIds, var_5_2)
+			table.insert(self._tweenIds, tweenId)
 		end
 	end
 end
 
-function var_0_0.onStop(arg_7_0)
-	var_0_0.super.onStop(arg_7_0)
-	arg_7_0._sequence:unregisterDoneListener(arg_7_0._onWorkDone, arg_7_0)
+function FightCardDragEffect:onStop()
+	FightCardDragEffect.super.onStop(self)
+	self._sequence:unregisterDoneListener(self._onWorkDone, self)
 
-	if arg_7_0._sequence.status == WorkStatus.Running then
-		arg_7_0._sequence:stop()
+	if self._sequence.status == WorkStatus.Running then
+		self._sequence:stop()
 	end
 end
 
-function var_0_0.clearWork(arg_8_0)
-	FightController.instance:unregisterCallback(FightEvent.DragHandCard, arg_8_0._onDragHandCard, arg_8_0)
-	FightController.instance:unregisterCallback(FightEvent.CardLongPressEffectEnd, arg_8_0._onCardLongPressEffectEnd, arg_8_0)
-	arg_8_0:_killAllPosTween()
-	arg_8_0:_killDragTween()
+function FightCardDragEffect:clearWork()
+	FightController.instance:unregisterCallback(FightEvent.DragHandCard, self._onDragHandCard, self)
+	FightController.instance:unregisterCallback(FightEvent.CardLongPressEffectEnd, self._onCardLongPressEffectEnd, self)
+	self:_killAllPosTween()
+	self:_killDragTween()
 
-	if var_0_2 then
-		var_0_2:dispose()
+	if _linkEffectLoader then
+		_linkEffectLoader:dispose()
 	end
 
-	var_0_2 = nil
-	var_0_3 = nil
-	arg_8_0._after_drag_card_list = {}
+	_linkEffectLoader = nil
+	_linkEffectGO = nil
+	self._after_drag_card_list = {}
 end
 
-function var_0_0._killDragTween(arg_9_0)
-	if arg_9_0._drag_tween then
-		ZProj.TweenHelper.KillById(arg_9_0._drag_tween)
+function FightCardDragEffect:_killDragTween()
+	if self._drag_tween then
+		ZProj.TweenHelper.KillById(self._drag_tween)
 
-		arg_9_0._drag_tween = nil
+		self._drag_tween = nil
 	end
 end
 
-function var_0_0._killAllPosTween(arg_10_0)
-	if arg_10_0._tweenIds then
-		for iter_10_0, iter_10_1 in ipairs(arg_10_0._tweenIds) do
-			ZProj.TweenHelper.KillById(iter_10_1)
+function FightCardDragEffect:_killAllPosTween()
+	if self._tweenIds then
+		for _, tweenId in ipairs(self._tweenIds) do
+			ZProj.TweenHelper.KillById(tweenId)
 		end
 	end
 
-	arg_10_0._tweenIds = {}
+	self._tweenIds = {}
 end
 
-function var_0_0._onWorkDone(arg_11_0)
-	arg_11_0._sequence:unregisterDoneListener(arg_11_0._onWorkDone, arg_11_0)
+function FightCardDragEffect:_onWorkDone()
+	self._sequence:unregisterDoneListener(self._onWorkDone, self)
 end
 
-function var_0_0._onDragHandCard(arg_12_0, arg_12_1, arg_12_2)
-	arg_12_0._position = arg_12_2
+function FightCardDragEffect:_onDragHandCard(index, position)
+	self._position = position
 
-	arg_12_0:_updateDragHandCards()
+	self:_updateDragHandCards()
 end
 
-function var_0_0._updateDragHandCards(arg_13_0)
-	local var_13_0 = arg_13_0.context.index
-	local var_13_1 = arg_13_0._dragItem
-	local var_13_2 = arg_13_0._cardCount
-	local var_13_3 = 1
-	local var_13_4 = arg_13_0.context.handCardItemList
-	local var_13_5 = recthelper.screenPosToAnchorPos(arg_13_0._position, arg_13_0._handCardTr)
-	local var_13_6 = FightViewHandCard.calcTotalWidth(var_13_2, var_13_3)
-	local var_13_7 = FightViewHandCard.HandCardWidth * 0.5
-	local var_13_8 = var_13_5.x - FightViewHandCard.HalfWidth
-	local var_13_9 = Mathf.Clamp(var_13_8, -var_13_6 + var_13_7, -var_13_7)
+function FightCardDragEffect:_updateDragHandCards()
+	local dragIndex = self.context.index
+	local dragItem = self._dragItem
+	local cardCount = self._cardCount
+	local dragScale = 1
+	local handCardItemList = self.context.handCardItemList
+	local anchorPos = recthelper.screenPosToAnchorPos(self._position, self._handCardTr)
+	local totalWidth = FightViewHandCard.calcTotalWidth(cardCount, dragScale)
+	local halfCardWidth = FightViewHandCard.HandCardWidth * 0.5
+	local targetPosX = anchorPos.x - FightViewHandCard.HalfWidth
 
-	arg_13_0:_killDragTween()
+	targetPosX = Mathf.Clamp(targetPosX, -totalWidth + halfCardWidth, -halfCardWidth)
 
-	local var_13_10 = recthelper.getAnchorX(var_13_1.tr)
+	self:_killDragTween()
 
-	if math.abs(var_13_10 - var_13_9) > 20 then
-		arg_13_0._drag_tween = ZProj.TweenHelper.DOAnchorPosX(var_13_1.tr, var_13_9, 6 * arg_13_0._dt)
+	local curPosX = recthelper.getAnchorX(dragItem.tr)
+
+	if math.abs(curPosX - targetPosX) > 20 then
+		self._drag_tween = ZProj.TweenHelper.DOAnchorPosX(dragItem.tr, targetPosX, 6 * self._dt)
 	else
-		recthelper.setAnchorX(var_13_1.tr, var_13_9)
+		recthelper.setAnchorX(dragItem.tr, targetPosX)
 	end
 
-	local var_13_11 = FightViewHandCard.calcCardIndexDraging(var_13_9, var_13_2, var_13_3)
+	local targetIndex = FightViewHandCard.calcCardIndexDraging(targetPosX, cardCount, dragScale)
 
-	arg_13_0:_setCardsUniversalMatch(var_13_11)
+	self:_setCardsUniversalMatch(targetIndex)
 
-	if arg_13_0._prevIndex and var_13_11 ~= arg_13_0._prevIndex then
-		local var_13_12 = Time.realtimeSinceStartup
+	if self._prevIndex and targetIndex ~= self._prevIndex then
+		local now = Time.realtimeSinceStartup
 
-		if not arg_13_0._lastPlayTime or var_13_12 > arg_13_0._lastPlayTime + 0.25 then
+		if not self._lastPlayTime or now > self._lastPlayTime + 0.25 then
 			AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_FightMoveCard)
 
-			arg_13_0._lastPlayTime = var_13_12
+			self._lastPlayTime = now
 		end
 
-		local var_13_13 = table.remove(arg_13_0._after_drag_card_list, arg_13_0._prevIndex)
+		local card_item = table.remove(self._after_drag_card_list, self._prevIndex)
 
-		table.insert(arg_13_0._after_drag_card_list, var_13_11, var_13_13)
-		arg_13_0:_playCardSpringEffect(var_13_11)
+		table.insert(self._after_drag_card_list, targetIndex, card_item)
+		self:_playCardSpringEffect(targetIndex)
 	end
 
-	arg_13_0._prevIndex = var_13_11
+	self._prevIndex = targetIndex
 end
 
-function var_0_0._setCardsUniversalMatch(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_0.context.index
-	local var_14_1 = arg_14_0.context.handCardItemList
-	local var_14_2 = arg_14_0._cardCount
+function FightCardDragEffect:_setCardsUniversalMatch(targetIndex)
+	local dragIndex = self.context.index
+	local handCardItemList = self.context.handCardItemList
+	local cardCount = self._cardCount
 
-	var_0_0.setCardsUniversalMatch(var_14_1, arg_14_0._handCards, var_14_0, arg_14_1, var_14_2, true)
+	FightCardDragEffect.setCardsUniversalMatch(handCardItemList, self._handCards, dragIndex, targetIndex, cardCount, true)
 end
 
-function var_0_0.setCardsUniversalMatch(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5)
-	local var_15_0 = arg_15_1[arg_15_2]
+function FightCardDragEffect.setCardsUniversalMatch(handCardItemList, handCards, dragIndex, targetIndex, cardCount, hasLinkEffect)
+	local dragCardMO = handCards[dragIndex]
 
-	if not var_15_0 then
-		logError("dragCardMO = nil, dragIndex = " .. arg_15_2 .. ", handCardCount = " .. #arg_15_1)
+	if not dragCardMO then
+		logError("dragCardMO = nil, dragIndex = " .. dragIndex .. ", handCardCount = " .. #handCards)
 	end
 
-	local var_15_1 = arg_15_0[arg_15_2]
-	local var_15_2 = recthelper.getAnchorX(var_15_1.tr)
-	local var_15_3 = FightEnum.UniversalCard[var_15_0.skillId]
-	local var_15_4
-	local var_15_5
+	local dragCardItem = handCardItemList[dragIndex]
+	local dragCardPosX = recthelper.getAnchorX(dragCardItem.tr)
+	local isUniversalCard = FightEnum.UniversalCard[dragCardMO.skillId]
+	local nearestCardOffset, nearestCardIndex
 
-	for iter_15_0 = 1, arg_15_4 do
-		if iter_15_0 ~= arg_15_2 then
-			local var_15_6 = arg_15_0[iter_15_0]
-			local var_15_7 = var_15_2 - recthelper.getAnchorX(var_15_6.tr)
+	for i = 1, cardCount do
+		if i ~= dragIndex then
+			local item = handCardItemList[i]
+			local curPosX = recthelper.getAnchorX(item.tr)
+			local offset = dragCardPosX - curPosX
 
-			if var_15_7 > 0 and (not var_15_4 or var_15_7 < var_15_4) and var_15_7 < 2 * FightViewHandCard.HandCardWidth then
-				var_15_4 = var_15_7
-				var_15_5 = iter_15_0
+			if offset > 0 and (not nearestCardOffset or offset < nearestCardOffset) and offset < 2 * FightViewHandCard.HandCardWidth then
+				nearestCardOffset = offset
+				nearestCardIndex = i
 			end
 		end
 	end
 
-	local var_15_8
+	local linkHandCardItem
 
-	for iter_15_1 = 1, arg_15_4 do
-		if iter_15_1 ~= arg_15_2 then
-			local var_15_9 = arg_15_0[iter_15_1]
+	for i = 1, cardCount do
+		if i ~= dragIndex then
+			local item = handCardItemList[i]
 
-			var_15_9:setUniversal(false)
+			item:setUniversal(false)
 
-			if var_15_3 and iter_15_1 == var_15_5 and FightCardDataHelper.canCombineWithUniversalForPerformance(var_15_0, arg_15_1[iter_15_1]) then
-				var_15_9:setUniversal(true)
+			if isUniversalCard and i == nearestCardIndex and FightCardDataHelper.canCombineWithUniversalForPerformance(dragCardMO, handCards[i]) then
+				item:setUniversal(true)
 
-				var_15_8 = var_15_9
+				linkHandCardItem = item
 			end
 		end
 	end
 
-	if arg_15_5 then
-		var_0_0._setUniversalLinkEffect(var_15_1, var_15_8)
+	if hasLinkEffect then
+		FightCardDragEffect._setUniversalLinkEffect(dragCardItem, linkHandCardItem)
 	end
 
-	arg_15_0[arg_15_2]:setUniversal(var_15_3)
+	handCardItemList[dragIndex]:setUniversal(isUniversalCard)
 end
 
-function var_0_0._setUniversalLinkEffect(arg_16_0, arg_16_1)
-	if arg_16_1 then
-		if recthelper.getAnchorX(arg_16_0.tr) - recthelper.getAnchorX(arg_16_1.tr) > FightViewHandCard.HandCardWidth then
-			if not var_0_2 then
-				var_0_3 = gohelper.create2d(arg_16_1.go, "linkEffect")
-				var_0_2 = PrefabInstantiate.Create(var_0_3)
+function FightCardDragEffect._setUniversalLinkEffect(dragCardItem, handCardItem)
+	if handCardItem then
+		local dragCardPosX = recthelper.getAnchorX(dragCardItem.tr)
+		local handCardPosX = recthelper.getAnchorX(handCardItem.tr)
 
-				var_0_2:startLoad(var_0_1)
+		if dragCardPosX - handCardPosX > FightViewHandCard.HandCardWidth then
+			if not _linkEffectLoader then
+				_linkEffectGO = gohelper.create2d(handCardItem.go, "linkEffect")
+				_linkEffectLoader = PrefabInstantiate.Create(_linkEffectGO)
+
+				_linkEffectLoader:startLoad(LinkEffectPath)
 			end
 
-			gohelper.addChild(arg_16_1.go, var_0_3)
-			recthelper.setAnchorX(var_0_3.transform, 170)
-		elseif var_0_3 then
-			recthelper.setAnchorX(var_0_3.transform, 10000)
+			gohelper.addChild(handCardItem.go, _linkEffectGO)
+			recthelper.setAnchorX(_linkEffectGO.transform, 170)
+		elseif _linkEffectGO then
+			recthelper.setAnchorX(_linkEffectGO.transform, 10000)
 		end
-	elseif var_0_3 then
-		recthelper.setAnchorX(var_0_3.transform, 10000)
+	elseif _linkEffectGO then
+		recthelper.setAnchorX(_linkEffectGO.transform, 10000)
 	end
 end
 
-return var_0_0
+return FightCardDragEffect

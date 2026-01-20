@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity1_9.fairyland.view.FairyLandCompleteViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/fairyland/view/FairyLandCompleteViewContainer.lua
 
-local var_0_0 = class("FairyLandCompleteViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_9.fairyland.view.FairyLandCompleteViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local FairyLandCompleteViewContainer = class("FairyLandCompleteViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, FairyLandCompleteView.New())
+function FairyLandCompleteViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, FairyLandCompleteView.New())
+
+	return views
 end
 
-return var_0_0
+return FairyLandCompleteViewContainer

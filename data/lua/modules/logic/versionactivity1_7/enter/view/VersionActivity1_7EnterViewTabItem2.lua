@@ -1,24 +1,26 @@
-﻿module("modules.logic.versionactivity1_7.enter.view.VersionActivity1_7EnterViewTabItem2", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_7/enter/view/VersionActivity1_7EnterViewTabItem2.lua
 
-local var_0_0 = class("VersionActivity1_7EnterViewTabItem2", VersionActivity1_7EnterViewBaseTabItem)
+module("modules.logic.versionactivity1_7.enter.view.VersionActivity1_7EnterViewTabItem2", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	var_0_0.super._editableInitView(arg_1_0)
+local VersionActivity1_7EnterViewTabItem2 = class("VersionActivity1_7EnterViewTabItem2", VersionActivity1_7EnterViewBaseTabItem)
 
-	arg_1_0.txtName = gohelper.findChildText(arg_1_0.rootGo, "#txt_namebg/#txt_name")
-	arg_1_0.txtNameEn = gohelper.findChildText(arg_1_0.rootGo, "#txt_nameen")
-	arg_1_0.txtName.text = arg_1_0.activityCo.name
-	arg_1_0.txtNameEn.text = arg_1_0.activityCo.nameEn
+function VersionActivity1_7EnterViewTabItem2:_editableInitView()
+	VersionActivity1_7EnterViewTabItem2.super._editableInitView(self)
+
+	self.txtName = gohelper.findChildText(self.rootGo, "#txt_namebg/#txt_name")
+	self.txtNameEn = gohelper.findChildText(self.rootGo, "#txt_nameen")
+	self.txtName.text = self.activityCo.name
+	self.txtNameEn.text = self.activityCo.nameEn
 end
 
-function var_0_0.refreshSelect(arg_2_0, arg_2_1)
-	var_0_0.super.refreshSelect(arg_2_0, arg_2_1)
+function VersionActivity1_7EnterViewTabItem2:refreshSelect(actId)
+	VersionActivity1_7EnterViewTabItem2.super.refreshSelect(self, actId)
 
-	local var_2_0 = arg_2_1 == arg_2_0.actId
+	local select = actId == self.actId
 
-	arg_2_0.txtName.color = var_2_0 and VersionActivity1_7Enum.ActivityNameColor.Select or VersionActivity1_7Enum.ActivityNameColor.UnSelect
-	arg_2_0.txtName.fontSize = var_2_0 and VersionActivity1_7Enum.ActivityNameFontSize.Select or VersionActivity1_7Enum.ActivityNameFontSize.UnSelect
-	arg_2_0.txtNameEn.fontSize = var_2_0 and VersionActivity1_7Enum.ActivityNameEnFontSize.Select or VersionActivity1_7Enum.ActivityNameEnFontSize.UnSelect
+	self.txtName.color = select and VersionActivity1_7Enum.ActivityNameColor.Select or VersionActivity1_7Enum.ActivityNameColor.UnSelect
+	self.txtName.fontSize = select and VersionActivity1_7Enum.ActivityNameFontSize.Select or VersionActivity1_7Enum.ActivityNameFontSize.UnSelect
+	self.txtNameEn.fontSize = select and VersionActivity1_7Enum.ActivityNameEnFontSize.Select or VersionActivity1_7Enum.ActivityNameEnFontSize.UnSelect
 end
 
-return var_0_0
+return VersionActivity1_7EnterViewTabItem2

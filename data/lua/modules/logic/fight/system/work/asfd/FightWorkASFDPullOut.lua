@@ -1,22 +1,24 @@
-﻿module("modules.logic.fight.system.work.asfd.FightWorkASFDPullOut", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/asfd/FightWorkASFDPullOut.lua
 
-local var_0_0 = class("FightWorkASFDPullOut", BaseWork)
+module("modules.logic.fight.system.work.asfd.FightWorkASFDPullOut", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.fightStepData = arg_1_1
+local FightWorkASFDPullOut = class("FightWorkASFDPullOut", BaseWork)
+
+function FightWorkASFDPullOut:ctor(fightStepData)
+	self.fightStepData = fightStepData
 end
 
-function var_0_0.onStart(arg_2_0)
-	FightController.instance:dispatchEvent(FightEvent.ASFD_PullOut, arg_2_0.fightStepData)
-	TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 0.3)
+function FightWorkASFDPullOut:onStart()
+	FightController.instance:dispatchEvent(FightEvent.ASFD_PullOut, self.fightStepData)
+	TaskDispatcher.runDelay(self._delayDone, self, 0.3)
 end
 
-function var_0_0.clearWork(arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0._delayDone, arg_3_0)
+function FightWorkASFDPullOut:clearWork()
+	TaskDispatcher.cancelTask(self._delayDone, self)
 end
 
-function var_0_0._delayDone(arg_4_0)
-	return arg_4_0:onDone(true)
+function FightWorkASFDPullOut:_delayDone()
+	return self:onDone(true)
 end
 
-return var_0_0
+return FightWorkASFDPullOut

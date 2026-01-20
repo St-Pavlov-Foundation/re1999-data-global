@@ -1,33 +1,35 @@
-﻿module("modules.logic.versionactivity3_0.maLiAnNaAct201.view.Activity201MaLiAnNaGameViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/maLiAnNaAct201/view/Activity201MaLiAnNaGameViewContainer.lua
 
-local var_0_0 = class("Activity201MaLiAnNaGameViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity3_0.maLiAnNaAct201.view.Activity201MaLiAnNaGameViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local Activity201MaLiAnNaGameViewContainer = class("Activity201MaLiAnNaGameViewContainer", BaseViewContainer)
+
+function Activity201MaLiAnNaGameViewContainer:buildViews()
 	return {
 		Activity201MaLiAnNaGameView.New(),
 		TabViewGroup.New(1, "#go_lefttop")
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function Activity201MaLiAnNaGameViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
-		arg_2_0.navigateView:setOverrideClose(arg_2_0._overrideClose, arg_2_0)
+		self.navigateView:setOverrideClose(self._overrideClose, self)
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-function var_0_0._overrideClose(arg_3_0)
+function Activity201MaLiAnNaGameViewContainer:_overrideClose()
 	MaLiAnNaStatHelper.instance:sendGameExit(Activity201MaLiAnNaEnum.resultType.cancel)
 	ViewMgr.instance:closeView(ViewName.Activity201MaLiAnNaGameView)
 end
 
-return var_0_0
+return Activity201MaLiAnNaGameViewContainer

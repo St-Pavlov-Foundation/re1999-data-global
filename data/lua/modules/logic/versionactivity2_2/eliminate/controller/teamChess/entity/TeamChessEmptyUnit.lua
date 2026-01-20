@@ -1,91 +1,93 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.entity.TeamChessEmptyUnit", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/controller/teamChess/entity/TeamChessEmptyUnit.lua
 
-local var_0_0 = class("TeamChessEmptyUnit", TeamChessSoldierUnit)
+module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.entity.TeamChessEmptyUnit", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0.trans = arg_1_1.transform
+local TeamChessEmptyUnit = class("TeamChessEmptyUnit", TeamChessSoldierUnit)
+
+function TeamChessEmptyUnit:init(go)
+	self.go = go
+	self.trans = go.transform
 end
 
-function var_0_0.setPath(arg_2_0, arg_2_1)
-	arg_2_0._path = arg_2_1
+function TeamChessEmptyUnit:setPath(path)
+	self._path = path
 
-	arg_2_0:loadAsset(arg_2_1)
+	self:loadAsset(path)
 end
 
-function var_0_0.setScreenPoint(arg_3_0, arg_3_1)
-	arg_3_0._screenPoint = arg_3_1
+function TeamChessEmptyUnit:setScreenPoint(point)
+	self._screenPoint = point
 end
 
-function var_0_0.setUnitParentPosition(arg_4_0, arg_4_1)
-	arg_4_0._unitParentPosition = arg_4_1
+function TeamChessEmptyUnit:setUnitParentPosition(pos)
+	self._unitParentPosition = pos
 end
 
-function var_0_0._onResLoaded(arg_5_0)
-	var_0_0.super._onResLoaded(arg_5_0)
+function TeamChessEmptyUnit:_onResLoaded()
+	TeamChessEmptyUnit.super._onResLoaded(self)
 
-	if gohelper.isNil(arg_5_0._backGo) then
+	if gohelper.isNil(self._backGo) then
 		return
 	end
 
-	arg_5_0:setAllMeshRenderOrderInLayer(20)
-	arg_5_0:updateByScreenPos()
-	arg_5_0:setActive(true)
+	self:setAllMeshRenderOrderInLayer(20)
+	self:updateByScreenPos()
+	self:setActive(true)
 end
 
-function var_0_0.updateByScreenPos(arg_6_0)
-	if arg_6_0._screenPoint == nil or arg_6_0._unitParentPosition == nil then
+function TeamChessEmptyUnit:updateByScreenPos()
+	if self._screenPoint == nil or self._unitParentPosition == nil then
 		return
 	end
 
-	local var_6_0, var_6_1, var_6_2 = recthelper.screenPosToWorldPos3(arg_6_0._screenPoint, nil, arg_6_0._unitParentPosition)
+	local posX, posY, posZ = recthelper.screenPosToWorldPos3(self._screenPoint, nil, self._unitParentPosition)
 
-	arg_6_0:updatePos(var_6_0, var_6_1, var_6_2)
+	self:updatePos(posX, posY, posZ)
 end
 
-function var_0_0.setOutlineActive(arg_7_0, arg_7_1)
-	if gohelper.isNil(arg_7_0._backOutLineGo) then
+function TeamChessEmptyUnit:setOutlineActive(active)
+	if gohelper.isNil(self._backOutLineGo) then
 		return
 	end
 
-	if arg_7_0._normalActive then
-		arg_7_0:setNormalActive(not arg_7_1, false)
+	if self._normalActive then
+		self:setNormalActive(not active, false)
 	end
 
-	gohelper.setActive(arg_7_0._backOutLineGo.gameObject, arg_7_1)
-	var_0_0.super.setOutlineActive(arg_7_0, arg_7_1)
+	gohelper.setActive(self._backOutLineGo.gameObject, active)
+	TeamChessEmptyUnit.super.setOutlineActive(self, active)
 end
 
-function var_0_0.setGrayActive(arg_8_0, arg_8_1)
-	if gohelper.isNil(arg_8_0._backGrayGo) then
+function TeamChessEmptyUnit:setGrayActive(active)
+	if gohelper.isNil(self._backGrayGo) then
 		return
 	end
 
-	if arg_8_0._normalActive then
-		arg_8_0:setNormalActive(not arg_8_1, false)
+	if self._normalActive then
+		self:setNormalActive(not active, false)
 	end
 
-	gohelper.setActive(arg_8_0._backGrayGo.gameObject, arg_8_1)
+	gohelper.setActive(self._backGrayGo.gameObject, active)
 end
 
-function var_0_0.setNormalActive(arg_9_0, arg_9_1, arg_9_2)
-	if gohelper.isNil(arg_9_0._backGo) then
+function TeamChessEmptyUnit:setNormalActive(active, needRecord)
+	if gohelper.isNil(self._backGo) then
 		return
 	end
 
-	arg_9_2 = arg_9_2 == nil and true or arg_9_2
+	needRecord = needRecord == nil and true or needRecord
 
-	if arg_9_2 then
-		arg_9_0._active = arg_9_1
+	if needRecord then
+		self._active = active
 	end
 
-	gohelper.setActive(arg_9_0._backGo.gameObject, arg_9_1)
+	gohelper.setActive(self._backGo.gameObject, active)
 end
 
-function var_0_0.onDestroy(arg_10_0)
-	arg_10_0._screenPoint = nil
+function TeamChessEmptyUnit:onDestroy()
+	self._screenPoint = nil
 
-	var_0_0.super.onDestroy(arg_10_0)
+	TeamChessEmptyUnit.super.onDestroy(self)
 end
 
-return var_0_0
+return TeamChessEmptyUnit

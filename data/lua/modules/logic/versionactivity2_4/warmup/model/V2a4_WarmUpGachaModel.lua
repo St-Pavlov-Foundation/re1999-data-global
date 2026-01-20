@@ -1,99 +1,103 @@
-﻿module("modules.logic.versionactivity2_4.warmup.model.V2a4_WarmUpGachaModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/warmup/model/V2a4_WarmUpGachaModel.lua
 
-local var_0_0 = class("V2a4_WarmUpGachaModel", BaseModel)
-local var_0_1 = table.insert
+module("modules.logic.versionactivity2_4.warmup.model.V2a4_WarmUpGachaModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local V2a4_WarmUpGachaModel = class("V2a4_WarmUpGachaModel", BaseModel)
+local ti = table.insert
+
+function V2a4_WarmUpGachaModel:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._waveList = {}
-	arg_2_0._s_RandomList = {}
+function V2a4_WarmUpGachaModel:reInit()
+	self._waveList = {}
+	self._s_RandomList = {}
 end
 
-function var_0_0.clean(arg_3_0)
-	arg_3_0._waveList = {}
+function V2a4_WarmUpGachaModel:clean()
+	self._waveList = {}
 end
 
-function var_0_0.curWaveIndex(arg_4_0)
-	return #arg_4_0._waveList
+function V2a4_WarmUpGachaModel:curWaveIndex()
+	return #self._waveList
 end
 
-function var_0_0.curWave(arg_5_0)
-	local var_5_0 = arg_5_0:curWaveIndex()
+function V2a4_WarmUpGachaModel:curWave()
+	local index = self:curWaveIndex()
 
-	return arg_5_0._waveList[var_5_0]
+	return self._waveList[index]
 end
 
-function var_0_0.curRound(arg_6_0)
-	local var_6_0 = arg_6_0:curWave()
+function V2a4_WarmUpGachaModel:curRound()
+	local waveMO = self:curWave()
 
-	if not var_6_0 then
+	if not waveMO then
 		return nil
 	end
 
-	return var_6_0:curRound()
+	return waveMO:curRound()
 end
 
-function var_0_0.curRoundIndex(arg_7_0)
-	local var_7_0 = arg_7_0:curRound()
+function V2a4_WarmUpGachaModel:curRoundIndex()
+	local roundMO = self:curRound()
 
-	if not var_7_0 then
+	if not roundMO then
 		return 0
 	end
 
-	return var_7_0:index()
+	return roundMO:index()
 end
 
-function var_0_0.s_RdList(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0._s_RandomList[arg_8_1]
+function V2a4_WarmUpGachaModel:s_RdList(levelId)
+	local list = self._s_RandomList[levelId]
 
-	if var_8_0 then
-		return var_8_0
+	if list then
+		return list
 	end
 
-	local var_8_1 = V2a4_WarmUpController.instance:config()
-	local var_8_2 = var_8_1:getTextItemListCO(arg_8_1)
-	local var_8_3 = var_8_1:getPhotoItemListCO(arg_8_1)
-	local var_8_4 = {
-		[V2a4_WarmUpEnum.AskType.Text] = var_8_2,
-		[V2a4_WarmUpEnum.AskType.Photo] = var_8_3
+	local config = V2a4_WarmUpController.instance:config()
+	local textItemList = config:getTextItemListCO(levelId)
+	local photoItemList = config:getPhotoItemListCO(levelId)
+
+	list = {
+		[V2a4_WarmUpEnum.AskType.Text] = textItemList,
+		[V2a4_WarmUpEnum.AskType.Photo] = photoItemList
 	}
 
-	assert(#var_8_4 == 2)
+	assert(#list == 2)
 
-	arg_8_0._s_RandomList[arg_8_1] = var_8_4
+	self._s_RandomList[levelId] = list
 
-	return var_8_4
+	return list
 end
 
-function var_0_0.restart(arg_9_0, arg_9_1)
-	arg_9_0:clean()
+function V2a4_WarmUpGachaModel:restart(levelId)
+	self:clean()
 
-	local var_9_0 = arg_9_0:s_RdList(arg_9_1)
+	local s_levelCOLists = self:s_RdList(levelId)
 
-	SimpleRandomModel.instance:clean(var_9_0)
+	SimpleRandomModel.instance:clean(s_levelCOLists)
 end
 
-function var_0_0.genWave(arg_10_0, arg_10_1)
-	local var_10_0 = V2a4_WarmUpController.instance:config()
-	local var_10_1 = arg_10_0:s_RdList(arg_10_1)
-	local var_10_2, var_10_3 = SimpleRandomModel.instance:getListIdxAndItemIdx(var_10_1)
-	local var_10_4 = var_10_0:getLevelCO(arg_10_1).askCount
-	local var_10_5 = arg_10_0:curWaveIndex() + 1
-	local var_10_6 = var_10_1[var_10_2]
-	local var_10_7 = V2a4_WarmUpGachaWaveMO.New(var_10_5, var_10_2)
+function V2a4_WarmUpGachaModel:genWave(levelId)
+	local config = V2a4_WarmUpController.instance:config()
+	local s_levelCOLists = self:s_RdList(levelId)
+	local whichList, whichItem = SimpleRandomModel.instance:getListIdxAndItemIdx(s_levelCOLists)
+	local levelCO = config:getLevelCO(levelId)
+	local askCount = levelCO.askCount
+	local waveIndex = self:curWaveIndex() + 1
+	local levelCOList = s_levelCOLists[whichList]
+	local waveMO = V2a4_WarmUpGachaWaveMO.New(waveIndex, whichList)
 
-	for iter_10_0 = 1, var_10_4 do
-		var_10_7:genRound(var_10_6[var_10_3])
+	for i = 1, askCount do
+		waveMO:genRound(levelCOList[whichItem])
 	end
 
-	var_0_1(arg_10_0._waveList, var_10_7)
+	ti(self._waveList, waveMO)
 
-	return var_10_7
+	return waveMO
 end
 
-var_0_0.instance = var_0_0.New()
+V2a4_WarmUpGachaModel.instance = V2a4_WarmUpGachaModel.New()
 
-return var_0_0
+return V2a4_WarmUpGachaModel

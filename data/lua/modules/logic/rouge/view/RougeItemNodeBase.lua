@@ -1,149 +1,151 @@
-﻿module("modules.logic.rouge.view.RougeItemNodeBase", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeItemNodeBase.lua
 
-local var_0_0 = class("RougeItemNodeBase", UserDataDispose)
-local var_0_1 = table.insert
+module("modules.logic.rouge.view.RougeItemNodeBase", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	assert(isTypeOf(arg_1_1, RougeSimpleItemBase), "[RougeItemNodeBase] ctor failed: parent must inherited from RougeSimpleItemBase type(parent)=" .. (arg_1_1.__cname or "nil"))
-	arg_1_0:__onInit()
+local RougeItemNodeBase = class("RougeItemNodeBase", UserDataDispose)
+local table_insert = table.insert
 
-	arg_1_0._parent = arg_1_1
+function RougeItemNodeBase:ctor(parent)
+	assert(isTypeOf(parent, RougeSimpleItemBase), "[RougeItemNodeBase] ctor failed: parent must inherited from RougeSimpleItemBase type(parent)=" .. (parent.__cname or "nil"))
+	self:__onInit()
+
+	self._parent = parent
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.viewGO = arg_2_1
+function RougeItemNodeBase:init(go)
+	self.viewGO = go
 
-	arg_2_0:onInitView()
-	arg_2_0:addEventListeners()
+	self:onInitView()
+	self:addEventListeners()
 end
 
-function var_0_0.onDestroy(arg_3_0)
-	arg_3_0:onDestroyView()
+function RougeItemNodeBase:onDestroy()
+	self:onDestroyView()
 end
 
-function var_0_0.staticData(arg_4_0)
-	if not arg_4_0._parent then
+function RougeItemNodeBase:staticData()
+	if not self._parent then
 		return
 	end
 
-	return arg_4_0._parent._staticData
+	return self._parent._staticData
 end
 
-function var_0_0.parent(arg_5_0)
-	return arg_5_0._parent
+function RougeItemNodeBase:parent()
+	return self._parent
 end
 
-function var_0_0.baseViewContainer(arg_6_0)
-	local var_6_0 = arg_6_0:staticData()
+function RougeItemNodeBase:baseViewContainer()
+	local data = self:staticData()
 
-	if not var_6_0 then
+	if not data then
 		return
 	end
 
-	return var_6_0.baseViewContainer
+	return data.baseViewContainer
 end
 
-function var_0_0.dispatchEvent(arg_7_0, arg_7_1, ...)
-	if not arg_7_0._parent then
+function RougeItemNodeBase:dispatchEvent(evtName, ...)
+	if not self._parent then
 		logWarn("dispatchEvent")
 
 		return
 	end
 
-	local var_7_0 = arg_7_0:baseViewContainer()
+	local c = self:baseViewContainer()
 
-	if not var_7_0 then
+	if not c then
 		return
 	end
 
-	var_7_0:dispatchEvent(arg_7_1, ...)
+	c:dispatchEvent(evtName, ...)
 end
 
-function var_0_0.index(arg_8_0)
-	if not arg_8_0._parent then
+function RougeItemNodeBase:index()
+	if not self._parent then
 		return
 	end
 
-	return arg_8_0._parent:index()
+	return self._parent:index()
 end
 
-function var_0_0.setActive(arg_9_0, arg_9_1)
-	gohelper.setActive(arg_9_0.viewGO, arg_9_1)
+function RougeItemNodeBase:setActive(isActive)
+	gohelper.setActive(self.viewGO, isActive)
 end
 
-function var_0_0.posX(arg_10_0)
-	if not arg_10_0._parent then
+function RougeItemNodeBase:posX()
+	if not self._parent then
 		return
 	end
 
-	return arg_10_0._parent:posX()
+	return self._parent:posX()
 end
 
-function var_0_0.posY(arg_11_0)
-	if not arg_11_0._parent then
+function RougeItemNodeBase:posY()
+	if not self._parent then
 		return
 	end
 
-	return arg_11_0._parent:posY()
+	return self._parent:posY()
 end
 
-function var_0_0._fillUserDataTb(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	local var_12_0 = 1
-	local var_12_1 = arg_12_0[arg_12_1 .. var_12_0]
+function RougeItemNodeBase:_fillUserDataTb(prefixStr, outGoList, outCmpList)
+	local i = 1
+	local cmp = self[prefixStr .. i]
 
-	while not gohelper.isNil(var_12_1) do
-		if arg_12_2 then
-			var_0_1(arg_12_2, var_12_1.gameObject)
+	while not gohelper.isNil(cmp) do
+		if outGoList then
+			table_insert(outGoList, cmp.gameObject)
 		end
 
-		if arg_12_3 then
-			var_0_1(arg_12_3, var_12_1)
+		if outCmpList then
+			table_insert(outCmpList, cmp)
 		end
 
-		var_12_0 = var_12_0 + 1
-		var_12_1 = arg_12_0[arg_12_1 .. var_12_0]
+		i = i + 1
+		cmp = self[prefixStr .. i]
 	end
 end
 
-function var_0_0._onSetScrollParentGameObject(arg_13_0, arg_13_1)
-	if gohelper.isNil(arg_13_1) then
+function RougeItemNodeBase:_onSetScrollParentGameObject(limitScrollRectCmp)
+	if gohelper.isNil(limitScrollRectCmp) then
 		return
 	end
 
-	local var_13_0 = arg_13_0:baseViewContainer()
+	local c = self:baseViewContainer()
 
-	if not var_13_0 then
+	if not c then
 		return
 	end
 
-	local var_13_1 = var_13_0:getScrollViewGo()
+	local go = c:getScrollViewGo()
 
-	if gohelper.isNil(var_13_1) then
+	if gohelper.isNil(go) then
 		return
 	end
 
-	arg_13_1.parentGameObject = var_13_1
+	limitScrollRectCmp.parentGameObject = go
 end
 
-function var_0_0.onUpdateMO(arg_14_0, arg_14_1)
-	arg_14_0:setData(arg_14_1)
+function RougeItemNodeBase:onUpdateMO(mo)
+	self:setData(mo)
 end
 
-function var_0_0.addEventListeners(arg_15_0)
-	arg_15_0:addEvents()
+function RougeItemNodeBase:addEventListeners()
+	self:addEvents()
 end
 
-function var_0_0.removeEventListeners(arg_16_0)
-	arg_16_0:removeEvents()
+function RougeItemNodeBase:removeEventListeners()
+	self:removeEvents()
 end
 
-function var_0_0.onDestroyView(arg_17_0)
-	arg_17_0:removeEventListeners()
-	arg_17_0:__onDispose()
+function RougeItemNodeBase:onDestroyView()
+	self:removeEventListeners()
+	self:__onDispose()
 end
 
-function var_0_0.setData(arg_18_0, arg_18_1)
-	arg_18_0._mo = arg_18_1
+function RougeItemNodeBase:setData(mo)
+	self._mo = mo
 end
 
-return var_0_0
+return RougeItemNodeBase

@@ -1,54 +1,56 @@
-﻿module("modules.logic.sp01.assassin2.controller.stealthgameflow.StealthEnemyMoveWork", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/controller/stealthgameflow/StealthEnemyMoveWork.lua
 
-local var_0_0 = class("StealthEnemyMoveWork", BaseWork)
+module("modules.logic.sp01.assassin2.controller.stealthgameflow.StealthEnemyMoveWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.maxStep = 0
+local StealthEnemyMoveWork = class("StealthEnemyMoveWork", BaseWork)
+
+function StealthEnemyMoveWork:ctor()
+	self.maxStep = 0
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	arg_2_0.curStep = 0
+function StealthEnemyMoveWork:onStart(context)
+	self.curStep = 0
 
-	local var_2_0 = AssassinStealthGameModel.instance:getEnemyOperationData()
+	local enemyOperationData = AssassinStealthGameModel.instance:getEnemyOperationData()
 
-	arg_2_0.moveDataList = var_2_0 and var_2_0.moves or {}
+	self.moveDataList = enemyOperationData and enemyOperationData.moves or {}
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0.moveDataList) do
-		arg_2_0.maxStep = math.max(arg_2_0.maxStep, #iter_2_1.path)
+	for _, moveData in ipairs(self.moveDataList) do
+		self.maxStep = math.max(self.maxStep, #moveData.path)
 	end
 
-	arg_2_0:_nextMove()
+	self:_nextMove()
 end
 
-local var_0_1 = 1
+local STEP_MOVE_TIME = 1
 
-function var_0_0._nextMove(arg_3_0)
-	if arg_3_0.curStep >= arg_3_0.maxStep then
-		local var_3_0 = AssassinStealthGameModel.instance:getEnemyOperationData()
-		local var_3_1 = var_3_0 and var_3_0.monster
+function StealthEnemyMoveWork:_nextMove()
+	if self.curStep >= self.maxStep then
+		local enemyOperationData = AssassinStealthGameModel.instance:getEnemyOperationData()
+		local monsterUnitList = enemyOperationData and enemyOperationData.monster
 
-		AssassinStealthGameController.instance:updateEnemies(var_3_1)
-		arg_3_0:onDone(true)
+		AssassinStealthGameController.instance:updateEnemies(monsterUnitList)
+		self:onDone(true)
 	else
-		arg_3_0.curStep = arg_3_0.curStep + 1
+		self.curStep = self.curStep + 1
 
-		for iter_3_0, iter_3_1 in ipairs(arg_3_0.moveDataList) do
-			arg_3_0.maxStep = math.max(arg_3_0.maxStep, #iter_3_1.path)
+		for _, moveData in ipairs(self.moveDataList) do
+			self.maxStep = math.max(self.maxStep, #moveData.path)
 
-			local var_3_2 = iter_3_1.path[arg_3_0.curStep]
+			local posData = moveData.path[self.curStep]
 
-			if var_3_2 then
-				AssassinStealthGameController.instance:enemyMove(iter_3_1.uid, var_3_2.gridId, var_3_2.pos)
+			if posData then
+				AssassinStealthGameController.instance:enemyMove(moveData.uid, posData.gridId, posData.pos)
 			end
 		end
 
-		TaskDispatcher.cancelTask(arg_3_0._nextMove, arg_3_0)
-		TaskDispatcher.runDelay(arg_3_0._nextMove, arg_3_0, var_0_1)
+		TaskDispatcher.cancelTask(self._nextMove, self)
+		TaskDispatcher.runDelay(self._nextMove, self, STEP_MOVE_TIME)
 	end
 end
 
-function var_0_0.clearWork(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._nextMove, arg_4_0)
+function StealthEnemyMoveWork:clearWork()
+	TaskDispatcher.cancelTask(self._nextMove, self)
 end
 
-return var_0_0
+return StealthEnemyMoveWork

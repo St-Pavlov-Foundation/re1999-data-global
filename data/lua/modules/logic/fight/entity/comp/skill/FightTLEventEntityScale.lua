@@ -1,145 +1,148 @@
-﻿module("modules.logic.fight.entity.comp.skill.FightTLEventEntityScale", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skill/FightTLEventEntityScale.lua
 
-local var_0_0 = class("FightTLEventEntityScale", FightTimelineTrackItem)
+module("modules.logic.fight.entity.comp.skill.FightTLEventEntityScale", package.seeall)
 
-function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0._paramsArr = arg_1_3
-	arg_1_0._targetScale = tonumber(arg_1_3[1])
-	arg_1_0._revertScale = arg_1_3[5] == "1"
+local FightTLEventEntityScale = class("FightTLEventEntityScale", FightTimelineTrackItem)
 
-	local var_1_0 = arg_1_3[2]
-	local var_1_1 = arg_1_3[3] == "1"
-	local var_1_2
+function FightTLEventEntityScale:onTrackStart(fightStepData, duration, paramsArr)
+	self._paramsArr = paramsArr
+	self._targetScale = tonumber(paramsArr[1])
+	self._revertScale = paramsArr[5] == "1"
 
-	if var_1_0 == "1" then
-		var_1_2 = {}
+	local targetType = paramsArr[2]
+	local isImmediate = paramsArr[3] == "1"
+	local targetEntitys
 
-		table.insert(var_1_2, FightHelper.getEntity(arg_1_1.fromId))
-	elseif var_1_0 == "2" then
-		var_1_2 = FightHelper.getSkillTargetEntitys(arg_1_1)
-	elseif var_1_0 == "3" then
-		local var_1_3 = FightHelper.getEntity(arg_1_1.fromId)
+	if targetType == "1" then
+		targetEntitys = {}
 
-		var_1_2 = FightHelper.getSideEntitys(var_1_3:getSide(), true)
-	elseif var_1_0 == "4" then
-		local var_1_4 = FightHelper.getEntity(arg_1_1.toId)
+		table.insert(targetEntitys, FightHelper.getEntity(fightStepData.fromId))
+	elseif targetType == "2" then
+		targetEntitys = FightHelper.getSkillTargetEntitys(fightStepData)
+	elseif targetType == "3" then
+		local from_entity = FightHelper.getEntity(fightStepData.fromId)
 
-		if var_1_4 then
-			var_1_2 = FightHelper.getSideEntitys(var_1_4:getSide(), true)
+		targetEntitys = FightHelper.getSideEntitys(from_entity:getSide(), true)
+	elseif targetType == "4" then
+		local def_entity = FightHelper.getEntity(fightStepData.toId)
+
+		if def_entity then
+			targetEntitys = FightHelper.getSideEntitys(def_entity:getSide(), true)
 		else
-			var_1_2 = {}
+			targetEntitys = {}
 		end
 	end
 
-	if not string.nilorempty(arg_1_3[4]) then
-		local var_1_5 = FightHelper.getEntity(arg_1_1.stepUid .. "_" .. arg_1_3[4])
+	if not string.nilorempty(paramsArr[4]) then
+		local tar_entity = FightHelper.getEntity(fightStepData.stepUid .. "_" .. paramsArr[4])
 
-		var_1_2 = {}
+		targetEntitys = {}
 
-		if var_1_5 then
-			table.insert(var_1_2, var_1_5)
+		if tar_entity then
+			table.insert(targetEntitys, tar_entity)
 		end
 	end
 
-	if var_1_1 then
-		for iter_1_0, iter_1_1 in ipairs(var_1_2) do
-			local var_1_6 = arg_1_0:_getScale(iter_1_1)
+	if isImmediate then
+		for _, entity in ipairs(targetEntitys) do
+			local targetScale = self:_getScale(entity)
 
-			iter_1_1:setScale(var_1_6)
-			FightHelper.refreshCombinativeMonsterScaleAndPos(iter_1_1, var_1_6)
+			entity:setScale(targetScale)
+			FightHelper.refreshCombinativeMonsterScaleAndPos(entity, targetScale)
 		end
-	elseif #var_1_2 > 0 then
-		arg_1_0._tweenList = {}
+	elseif #targetEntitys > 0 then
+		self._tweenList = {}
 
-		for iter_1_2, iter_1_3 in ipairs(var_1_2) do
-			if not gohelper.isNil(iter_1_3.go) then
-				local var_1_7 = iter_1_3:getScale() or 1
-				local var_1_8 = arg_1_0:_getScale(iter_1_3)
-				local var_1_9 = ZProj.TweenHelper.DOTweenFloat(var_1_7, var_1_8, arg_1_2, function(arg_2_0)
-					if iter_1_3.go then
-						iter_1_3:setScale(arg_2_0)
-						FightHelper.refreshCombinativeMonsterScaleAndPos(iter_1_3, arg_2_0)
+		for _, entity in ipairs(targetEntitys) do
+			if not gohelper.isNil(entity.go) then
+				local curScale = entity:getScale() or 1
+				local targetScale = self:_getScale(entity)
+				local tween = ZProj.TweenHelper.DOTweenFloat(curScale, targetScale, duration, function(num)
+					if entity.go then
+						entity:setScale(num)
+						FightHelper.refreshCombinativeMonsterScaleAndPos(entity, num)
 					end
 				end)
 
-				table.insert(arg_1_0._tweenList, var_1_9)
+				table.insert(self._tweenList, tween)
 			end
 		end
 	end
 
-	local var_1_10 = tonumber(arg_1_3[7])
+	local standardHeight = tonumber(paramsArr[7])
 
-	if var_1_10 and var_1_2 then
-		for iter_1_4, iter_1_5 in ipairs(var_1_2) do
-			local var_1_11 = iter_1_5 and iter_1_5.spine and iter_1_5.spine:getSpineGO()
+	if standardHeight and targetEntitys then
+		for i, entity in ipairs(targetEntitys) do
+			local spineObj = entity and entity.spine and entity.spine:getSpineGO()
 
-			if var_1_11 then
-				local var_1_12 = var_1_11:GetComponent(typeof(UnityEngine.MeshFilter))
+			if spineObj then
+				local mesh = spineObj:GetComponent(typeof(UnityEngine.MeshFilter))
 
-				var_1_12 = var_1_12 and var_1_12.mesh
+				mesh = mesh and mesh.mesh
 
-				if var_1_12 then
-					local var_1_13 = var_1_10 / var_1_12.bounds.size.y
+				if mesh then
+					local bounds = mesh.bounds
+					local tarScale = standardHeight / bounds.size.y
 
-					if var_1_13 < 1 then
-						transformhelper.setLocalScale(var_1_11.transform, var_1_13, var_1_13, var_1_13)
+					if tarScale < 1 then
+						transformhelper.setLocalScale(spineObj.transform, tarScale, tarScale, tarScale)
 					end
 				end
 			end
 		end
 	end
 
-	if not string.nilorempty(arg_1_3[8]) and var_1_2 then
-		for iter_1_6, iter_1_7 in ipairs(var_1_2) do
-			local var_1_14 = iter_1_7 and iter_1_7.spine and iter_1_7.spine:getSpineGO()
+	if not string.nilorempty(paramsArr[8]) and targetEntitys then
+		for i, entity in ipairs(targetEntitys) do
+			local spineObj = entity and entity.spine and entity.spine:getSpineGO()
 
-			if var_1_14 then
-				transformhelper.setLocalScale(var_1_14.transform, 1, 1, 1)
+			if spineObj then
+				transformhelper.setLocalScale(spineObj.transform, 1, 1, 1)
 			end
 		end
 	end
 end
 
-function var_0_0._getScale(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_1 and arg_3_1:getMO()
+function FightTLEventEntityScale:_getScale(entity)
+	local entityMO = entity and entity:getMO()
 
-	if arg_3_0._revertScale and var_3_0 then
-		local var_3_1, var_3_2, var_3_3, var_3_4 = FightHelper.getEntityStandPos(var_3_0)
+	if self._revertScale and entityMO then
+		local _, _, _, scale = FightHelper.getEntityStandPos(entityMO)
 
-		return var_3_4
+		return scale
 	end
 
-	if var_3_0 and not string.nilorempty(arg_3_0._paramsArr[6]) then
-		local var_3_5 = FightStrUtil.instance:getSplitCache(arg_3_0._paramsArr[6], "|")
+	if entityMO and not string.nilorempty(self._paramsArr[6]) then
+		local arr = FightStrUtil.instance:getSplitCache(self._paramsArr[6], "|")
 
-		for iter_3_0, iter_3_1 in ipairs(var_3_5) do
-			local var_3_6 = FightStrUtil.instance:getSplitToNumberCache(iter_3_1, "_")
+		for i, v in ipairs(arr) do
+			local skinArr = FightStrUtil.instance:getSplitToNumberCache(v, "_")
 
-			if var_3_0.skin == var_3_6[1] then
-				return var_3_6[2]
+			if entityMO.skin == skinArr[1] then
+				return skinArr[2]
 			end
 		end
 	end
 
-	return arg_3_0._targetScale
+	return self._targetScale
 end
 
-function var_0_0.onTrackEnd(arg_4_0)
-	arg_4_0:_clear()
+function FightTLEventEntityScale:onTrackEnd()
+	self:_clear()
 end
 
-function var_0_0.onDestructor(arg_5_0)
-	arg_5_0:_clear()
+function FightTLEventEntityScale:onDestructor()
+	self:_clear()
 end
 
-function var_0_0._clear(arg_6_0)
-	if arg_6_0._tweenList then
-		for iter_6_0, iter_6_1 in ipairs(arg_6_0._tweenList) do
-			ZProj.TweenHelper.KillById(iter_6_1)
+function FightTLEventEntityScale:_clear()
+	if self._tweenList then
+		for i, v in ipairs(self._tweenList) do
+			ZProj.TweenHelper.KillById(v)
 		end
 
-		arg_6_0._tweenList = nil
+		self._tweenList = nil
 	end
 end
 
-return var_0_0
+return FightTLEventEntityScale

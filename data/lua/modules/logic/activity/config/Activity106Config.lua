@@ -1,14 +1,16 @@
-﻿module("modules.logic.activity.config.Activity106Config", package.seeall)
+﻿-- chunkname: @modules/logic/activity/config/Activity106Config.lua
 
-local var_0_0 = class("Activity106Config", BaseConfig)
+module("modules.logic.activity.config.Activity106Config", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._act106Task = nil
-	arg_1_0._act106Order = nil
-	arg_1_0._act106MiniGame = nil
+local Activity106Config = class("Activity106Config", BaseConfig)
+
+function Activity106Config:ctor()
+	self._act106Task = nil
+	self._act106Order = nil
+	self._act106MiniGame = nil
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function Activity106Config:reqConfigNames()
 	return {
 		"activity106_task",
 		"activity106_order",
@@ -16,44 +18,44 @@ function var_0_0.reqConfigNames(arg_2_0)
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity106_task" then
-		arg_3_0._act106Task = arg_3_2
-	elseif arg_3_1 == "activity106_order" then
-		arg_3_0._act106Order = arg_3_2
-	elseif arg_3_1 == "activity106_minigame" then
-		arg_3_0._act106MiniGame = arg_3_2
+function Activity106Config:onConfigLoaded(configName, configTable)
+	if configName == "activity106_task" then
+		self._act106Task = configTable
+	elseif configName == "activity106_order" then
+		self._act106Order = configTable
+	elseif configName == "activity106_minigame" then
+		self._act106MiniGame = configTable
 	end
 end
 
-function var_0_0.getActivityWarmUpTaskCo(arg_4_0, arg_4_1)
-	return arg_4_0._act106Task.configDict[arg_4_1]
+function Activity106Config:getActivityWarmUpTaskCo(id)
+	return self._act106Task.configDict[id]
 end
 
-function var_0_0.getTaskByActId(arg_5_0, arg_5_1)
-	local var_5_0 = {}
+function Activity106Config:getTaskByActId(actId)
+	local list = {}
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0._act106Task.configList) do
-		if iter_5_1.activityId == arg_5_1 then
-			table.insert(var_5_0, iter_5_1)
+	for _, co in ipairs(self._act106Task.configList) do
+		if co.activityId == actId then
+			table.insert(list, co)
 		end
 	end
 
-	return var_5_0
+	return list
 end
 
-function var_0_0.getActivityWarmUpAllOrderCo(arg_6_0, arg_6_1)
-	return arg_6_0._act106Order.configDict[arg_6_1]
+function Activity106Config:getActivityWarmUpAllOrderCo(actId)
+	return self._act106Order.configDict[actId]
 end
 
-function var_0_0.getActivityWarmUpOrderCo(arg_7_0, arg_7_1, arg_7_2)
-	return arg_7_0._act106Order.configDict[arg_7_1][arg_7_2]
+function Activity106Config:getActivityWarmUpOrderCo(actId, id)
+	return self._act106Order.configDict[actId][id]
 end
 
-function var_0_0.getMiniGameSettings(arg_8_0, arg_8_1)
-	return arg_8_0._act106MiniGame.configDict[arg_8_1]
+function Activity106Config:getMiniGameSettings(id)
+	return self._act106MiniGame.configDict[id]
 end
 
-var_0_0.instance = var_0_0.New()
+Activity106Config.instance = Activity106Config.New()
 
-return var_0_0
+return Activity106Config

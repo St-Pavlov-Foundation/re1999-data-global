@@ -1,45 +1,47 @@
-﻿module("modules.logic.tower.view.TowerGuideView", package.seeall)
+﻿-- chunkname: @modules/logic/tower/view/TowerGuideView.lua
 
-local var_0_0 = class("TowerGuideView", BaseView)
+module("modules.logic.tower.view.TowerGuideView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnlook = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_look")
+local TowerGuideView = class("TowerGuideView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function TowerGuideView:onInitView()
+	self._btnlook = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_look")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnlook:AddClickListener(arg_2_0._btnlookOnClick, arg_2_0)
+function TowerGuideView:addEvents()
+	self._btnlook:AddClickListener(self._btnlookOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnlook:RemoveClickListener()
+function TowerGuideView:removeEvents()
+	self._btnlook:RemoveClickListener()
 end
 
-function var_0_0._btnlookOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function TowerGuideView:_btnlookOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function TowerGuideView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function TowerGuideView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
+function TowerGuideView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_artificial_ui_openfunction)
 end
 
-function var_0_0.onClose(arg_8_0)
+function TowerGuideView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
+function TowerGuideView:onDestroyView()
 	return
 end
 
-return var_0_0
+return TowerGuideView

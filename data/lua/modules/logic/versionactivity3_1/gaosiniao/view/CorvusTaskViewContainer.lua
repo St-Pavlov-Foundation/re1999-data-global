@@ -1,122 +1,128 @@
-﻿module("modules.logic.versionactivity3_1.gaosiniao.view.CorvusTaskViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/gaosiniao/view/CorvusTaskViewContainer.lua
 
-local var_0_0 = class("CorvusTaskViewContainer", TaskViewBaseContainer)
+module("modules.logic.versionactivity3_1.gaosiniao.view.CorvusTaskViewContainer", package.seeall)
 
-function var_0_0.actId(arg_1_0)
-	return assert(arg_1_0.viewParam.actId)
+local CorvusTaskViewContainer = class("CorvusTaskViewContainer", TaskViewBaseContainer)
+
+function CorvusTaskViewContainer:actId()
+	return assert(self.viewParam.actId)
 end
 
-function var_0_0.taskType(arg_2_0)
-	return assert(arg_2_0.viewParam.taskType)
+function CorvusTaskViewContainer:taskType()
+	return assert(self.viewParam.taskType)
 end
 
-function var_0_0._createMainView(arg_3_0)
-	return arg_3_0:onCreateMainView()
+function CorvusTaskViewContainer:_createMainView()
+	return self:onCreateMainView()
 end
 
-function var_0_0._createLeftTopView(arg_4_0)
-	return arg_4_0:onCreateLeftTopView()
+function CorvusTaskViewContainer:_createLeftTopView()
+	return self:onCreateLeftTopView()
 end
 
-function var_0_0._createListScrollParam(arg_5_0)
-	return arg_5_0:onCreateListScrollParam()
+function CorvusTaskViewContainer:_createListScrollParam()
+	return self:onCreateListScrollParam()
 end
 
-function var_0_0._createScrollView(arg_6_0)
-	local var_6_0 = arg_6_0:onCreateScrollView()
-	local var_6_1 = arg_6_0:_createListScrollParam()
+function CorvusTaskViewContainer:_createScrollView()
+	local scrollModel = self:onCreateScrollView()
+	local listScrollParam = self:_createListScrollParam()
 
-	return var_6_0, var_6_1
+	return scrollModel, listScrollParam
 end
 
-function var_0_0.buildViews(arg_7_0)
-	local var_7_0, var_7_1 = arg_7_0:_createScrollView()
+function CorvusTaskViewContainer:buildViews()
+	local scrollModel, listScrollParam = self:_createScrollView()
 
-	arg_7_0.__scrollModel = var_7_0
-	arg_7_0.__listScrollParam = var_7_1
-	arg_7_0.__mainView = arg_7_0:_createMainView()
-	arg_7_0.__leftTopView = arg_7_0:_createLeftTopView()
+	self.__scrollModel = scrollModel
+	self.__listScrollParam = listScrollParam
+	self.__mainView = self:_createMainView()
+	self.__leftTopView = self:_createLeftTopView()
 
-	return arg_7_0:onBuildViews()
+	return self:onBuildViews()
 end
 
-function var_0_0.onBuildViews(arg_8_0)
-	local var_8_0 = {}
+function CorvusTaskViewContainer:onBuildViews()
+	local animationDelayTimes = {}
 
-	for iter_8_0 = 1, 10 do
-		var_8_0[iter_8_0] = (iter_8_0 - 1) * 0.06
+	for i = 1, 10 do
+		local delayTime = (i - 1) * 0.06
+
+		animationDelayTimes[i] = delayTime
 	end
 
-	assert(arg_8_0.__listScrollParam.cellClass)
-	assert(arg_8_0.__listScrollParam.scrollGOPath)
-	assert(arg_8_0.__listScrollParam.prefabUrl)
+	assert(self.__listScrollParam.cellClass)
+	assert(self.__listScrollParam.scrollGOPath)
+	assert(self.__listScrollParam.prefabUrl)
 
-	arg_8_0.__scrollView = LuaListScrollViewWithAnimator.New(arg_8_0.__scrollModel, arg_8_0.__listScrollParam, var_8_0)
+	self.__scrollView = LuaListScrollViewWithAnimator.New(self.__scrollModel, self.__listScrollParam, animationDelayTimes)
 
-	return {
-		arg_8_0.__scrollView,
-		arg_8_0.__mainView,
-		arg_8_0.__leftTopView
+	local views = {
+		self.__scrollView,
+		self.__mainView,
+		self.__leftTopView
 	}
+
+	return views
 end
 
-function var_0_0.scrollModel(arg_9_0)
-	return arg_9_0.__scrollModel
+function CorvusTaskViewContainer:scrollModel()
+	return self.__scrollModel
 end
 
-function var_0_0.onContainerInit(arg_10_0)
-	var_0_0.super.onContainerInit(arg_10_0)
+function CorvusTaskViewContainer:onContainerInit()
+	CorvusTaskViewContainer.super.onContainerInit(self)
 
-	arg_10_0._taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(arg_10_0.__scrollView)
+	self._taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(self.__scrollView)
 
-	arg_10_0._taskAnimRemoveItem:setMoveInterval(0)
+	self._taskAnimRemoveItem:setMoveInterval(0)
 end
 
-function var_0_0.removeByIndex(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	arg_11_0._taskAnimRemoveItem:removeByIndex(arg_11_1, arg_11_2, arg_11_3)
+function CorvusTaskViewContainer:removeByIndex(index, cb, cbObj)
+	self._taskAnimRemoveItem:removeByIndex(index, cb, cbObj)
 end
 
-function var_0_0.onContainerClickModalMask(arg_12_0)
+function CorvusTaskViewContainer:onContainerClickModalMask()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	arg_12_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.onCreateMainView(arg_13_0)
+function CorvusTaskViewContainer:onCreateMainView()
 	assert(false, "please overeide this function!")
 end
 
-function var_0_0.onCreateLeftTopView(arg_14_0)
+function CorvusTaskViewContainer:onCreateLeftTopView()
 	return TabViewGroup.New(1, "#go_lefttop")
 end
 
-function var_0_0.onCreateScrollView(arg_15_0)
+function CorvusTaskViewContainer:onCreateScrollView()
 	return CorvusTaskListModel.New()
 end
 
-function var_0_0.onCreateListScrollParam(arg_16_0)
-	local var_16_0 = ListScrollParam.New()
+function CorvusTaskViewContainer:onCreateListScrollParam()
+	local listScrollParam = ListScrollParam.New()
 
-	var_16_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_16_0.sortMode = ScrollEnum.ScrollSortDown
-	var_16_0.scrollDir = ScrollEnum.ScrollDirV
-	var_16_0.prefabUrl = arg_16_0._viewSetting.otherRes[1]
-	var_16_0.lineCount = 1
-	var_16_0.cellWidth = 1160
-	var_16_0.cellHeight = 165
-	var_16_0.cellSpaceV = 0
-	var_16_0.startSpace = 0
-	var_16_0.scrollGOPath = "#scroll_TaskList"
-	var_16_0.cellClass = CorvusTaskItem
-	var_16_0.rectMaskSoftness = {
+	listScrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	listScrollParam.sortMode = ScrollEnum.ScrollSortDown
+	listScrollParam.scrollDir = ScrollEnum.ScrollDirV
+	listScrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	listScrollParam.lineCount = 1
+	listScrollParam.cellWidth = 1160
+	listScrollParam.cellHeight = 165
+	listScrollParam.cellSpaceV = 0
+	listScrollParam.startSpace = 0
+	listScrollParam.scrollGOPath = "#scroll_TaskList"
+	listScrollParam.cellClass = CorvusTaskItem
+	listScrollParam.rectMaskSoftness = {
 		0,
 		0
 	}
 
-	return var_16_0
+	return listScrollParam
 end
 
-function var_0_0.buildTabViews(arg_17_0, arg_17_1)
-	if arg_17_1 == 1 then
+function CorvusTaskViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -127,4 +133,4 @@ function var_0_0.buildTabViews(arg_17_0, arg_17_1)
 	end
 end
 
-return var_0_0
+return CorvusTaskViewContainer

@@ -1,73 +1,77 @@
-﻿module("modules.logic.versionactivity1_3.chess.model.Activity122TaskListModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/chess/model/Activity122TaskListModel.lua
 
-local var_0_0 = class("Activity122TaskListModel", ListScrollModel)
-local var_0_1 = -100
+module("modules.logic.versionactivity1_3.chess.model.Activity122TaskListModel", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	local var_1_0 = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Activity122)
-	local var_1_1 = {}
-	local var_1_2 = 0
+local Activity122TaskListModel = class("Activity122TaskListModel", ListScrollModel)
+local TaskMOAllFinishId = -100
 
-	if var_1_0 ~= nil then
-		local var_1_3 = Activity122Config.instance:getTaskByActId(arg_1_1)
+function Activity122TaskListModel:init(actId)
+	local taskDict = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Activity122)
+	local data = {}
+	local rewardCount = 0
 
-		for iter_1_0, iter_1_1 in ipairs(var_1_3) do
-			local var_1_4 = Activity122TaskMO.New()
-			local var_1_5 = var_1_0[iter_1_1.id]
+	if taskDict ~= nil then
+		local taskCfgList = Activity122Config.instance:getTaskByActId(actId)
 
-			var_1_4:init(iter_1_1, var_1_5)
+		for _, taskCfg in ipairs(taskCfgList) do
+			local mo = Activity122TaskMO.New()
+			local taskMO = taskDict[taskCfg.id]
 
-			if var_1_4:haveRewardToGet() then
-				var_1_2 = var_1_2 + 1
+			mo:init(taskCfg, taskMO)
+
+			if mo:haveRewardToGet() then
+				rewardCount = rewardCount + 1
 			end
 
-			table.insert(var_1_1, var_1_4)
+			table.insert(data, mo)
 		end
 	end
 
-	if var_1_2 > 1 then
-		local var_1_6 = Activity122TaskMO.New()
+	if rewardCount > 1 then
+		local allMO = Activity122TaskMO.New()
 
-		var_1_6.id = var_0_1
-		var_1_6.activityId = arg_1_1
+		allMO.id = TaskMOAllFinishId
+		allMO.activityId = actId
 
-		table.insert(var_1_1, var_1_6)
+		table.insert(data, allMO)
 	end
 
-	table.sort(var_1_1, var_0_0.sortMO)
-	arg_1_0:setList(var_1_1)
+	table.sort(data, Activity122TaskListModel.sortMO)
+	self:setList(data)
 end
 
-function var_0_0.sortMO(arg_2_0, arg_2_1)
-	local var_2_0 = var_0_0.getSortIndex(arg_2_0)
-	local var_2_1 = var_0_0.getSortIndex(arg_2_1)
+function Activity122TaskListModel.sortMO(objA, objB)
+	local sidxA = Activity122TaskListModel.getSortIndex(objA)
+	local sidxB = Activity122TaskListModel.getSortIndex(objB)
 
-	if var_2_0 ~= var_2_1 then
-		return var_2_0 < var_2_1
-	elseif arg_2_0.id ~= arg_2_1.id then
-		return arg_2_0.id < arg_2_1.id
+	if sidxA ~= sidxB then
+		return sidxA < sidxB
+	elseif objA.id ~= objB.id then
+		return objA.id < objB.id
 	end
 end
 
-function var_0_0.getSortIndex(arg_3_0)
-	if arg_3_0.id == var_0_1 then
+function Activity122TaskListModel.getSortIndex(objA)
+	if objA.id == TaskMOAllFinishId then
 		return 1
-	elseif arg_3_0:haveRewardToGet() then
+	elseif objA:haveRewardToGet() then
 		return 2
-	elseif arg_3_0:alreadyGotReward() then
+	elseif objA:alreadyGotReward() then
 		return 100
 	end
 
 	return 50
 end
 
-function var_0_0.createMO(arg_4_0, arg_4_1, arg_4_2)
-	return {
-		config = arg_4_2.config,
-		originTaskMO = arg_4_2
-	}
+function Activity122TaskListModel:createMO(co, taskMO)
+	local mo = {}
+
+	mo.config = taskMO.config
+	mo.originTaskMO = taskMO
+
+	return mo
 end
 
-var_0_0.instance = var_0_0.New()
+Activity122TaskListModel.instance = Activity122TaskListModel.New()
 
-return var_0_0
+return Activity122TaskListModel

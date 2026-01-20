@@ -1,43 +1,47 @@
-﻿module("modules.logic.fight.system.work.asfd.FightWorkMissileASFD", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/asfd/FightWorkMissileASFD.lua
 
-local var_0_0 = class("FightWorkMissileASFD", BaseWork)
+module("modules.logic.fight.system.work.asfd.FightWorkMissileASFD", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
-	var_0_0.super.ctor(arg_1_0, arg_1_1)
+local FightWorkMissileASFD = class("FightWorkMissileASFD", BaseWork)
 
-	arg_1_0.fightStepData = arg_1_1
-	arg_1_0.asfdContext = arg_1_2
+function FightWorkMissileASFD:ctor(fightStepData, asfdContext)
+	FightWorkMissileASFD.super.ctor(self, fightStepData)
+
+	self.fightStepData = fightStepData
+	self.asfdContext = asfdContext
 end
 
-function var_0_0.onStart(arg_2_0)
-	TaskDispatcher.runDelay(arg_2_0.delayDone, arg_2_0, 1)
+function FightWorkMissileASFD:onStart()
+	TaskDispatcher.runDelay(self.delayDone, self, 1)
 
-	local var_2_0 = FightHelper.getASFDMgr()
+	local asfdMgr = FightHelper.getASFDMgr()
 
-	if not var_2_0 then
-		return arg_2_0:onDone(true)
+	if not asfdMgr then
+		return self:onDone(true)
 	end
 
-	var_2_0:emitMissile(arg_2_0.fightStepData, arg_2_0.asfdContext)
+	asfdMgr:emitMissile(self.fightStepData, self.asfdContext)
 
-	local var_2_1 = FightASFDConfig.instance:getMissileInterval(arg_2_0.asfdContext.emitterAttackNum) / FightModel.instance:getUISpeed()
+	local missInterval = FightASFDConfig.instance:getMissileInterval(self.asfdContext.emitterAttackNum)
 
-	TaskDispatcher.runDelay(arg_2_0.waitDone, arg_2_0, var_2_1)
+	missInterval = missInterval / FightModel.instance:getUISpeed()
+
+	TaskDispatcher.runDelay(self.waitDone, self, missInterval)
 end
 
-function var_0_0.delayDone(arg_3_0)
+function FightWorkMissileASFD:delayDone()
 	logError("发射奥术飞弹 超时了")
 
-	return arg_3_0:onDone(true)
+	return self:onDone(true)
 end
 
-function var_0_0.waitDone(arg_4_0)
-	return arg_4_0:onDone(true)
+function FightWorkMissileASFD:waitDone()
+	return self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0.delayDone, arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0.waitDone, arg_5_0)
+function FightWorkMissileASFD:clearWork()
+	TaskDispatcher.cancelTask(self.delayDone, self)
+	TaskDispatcher.cancelTask(self.waitDone, self)
 end
 
-return var_0_0
+return FightWorkMissileASFD

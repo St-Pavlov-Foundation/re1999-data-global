@@ -1,353 +1,356 @@
-﻿module("modules.logic.achievement.view.AchievementMainItem", package.seeall)
+﻿-- chunkname: @modules/logic/achievement/view/AchievementMainItem.lua
 
-local var_0_0 = class("AchievementMainItem", ListScrollCellExtend)
+module("modules.logic.achievement.view.AchievementMainItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gosingle = gohelper.findChild(arg_1_0.viewGO, "#go_single")
-	arg_1_0._gogroup = gohelper.findChild(arg_1_0.viewGO, "#go_group")
-	arg_1_0._gogroup2 = gohelper.findChild(arg_1_0.viewGO, "#go_group2")
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_group/#image_bg")
-	arg_1_0._gogroupcontainer = gohelper.findChild(arg_1_0.viewGO, "#go_group/#go_groupcontainer")
-	arg_1_0._goupgrade = gohelper.findChild(arg_1_0.viewGO, "#go_group/#go_upgrade")
-	arg_1_0._goallcollect = gohelper.findChild(arg_1_0.viewGO, "#go_group/#go_allcollect")
-	arg_1_0._gotop2 = gohelper.findChild(arg_1_0.viewGO, "#go_group2/go_top2")
-	arg_1_0._simageAchievementGroupBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_group2/go_top2/#simage_AchievementGroupBG")
-	arg_1_0._txtachievementgroupname = gohelper.findChildText(arg_1_0.viewGO, "#go_group2/go_top2/#simage_AchievementGroupBG/#txt_achievementgroupname")
-	arg_1_0._golayout = gohelper.findChild(arg_1_0.viewGO, "#go_group2/#go_layout")
-	arg_1_0._btnpopup = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_group2/go_top2/#btn_popup")
+local AchievementMainItem = class("AchievementMainItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function AchievementMainItem:onInitView()
+	self._gosingle = gohelper.findChild(self.viewGO, "#go_single")
+	self._gogroup = gohelper.findChild(self.viewGO, "#go_group")
+	self._gogroup2 = gohelper.findChild(self.viewGO, "#go_group2")
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#go_group/#image_bg")
+	self._gogroupcontainer = gohelper.findChild(self.viewGO, "#go_group/#go_groupcontainer")
+	self._goupgrade = gohelper.findChild(self.viewGO, "#go_group/#go_upgrade")
+	self._goallcollect = gohelper.findChild(self.viewGO, "#go_group/#go_allcollect")
+	self._gotop2 = gohelper.findChild(self.viewGO, "#go_group2/go_top2")
+	self._simageAchievementGroupBG = gohelper.findChildSingleImage(self.viewGO, "#go_group2/go_top2/#simage_AchievementGroupBG")
+	self._txtachievementgroupname = gohelper.findChildText(self.viewGO, "#go_group2/go_top2/#simage_AchievementGroupBG/#txt_achievementgroupname")
+	self._golayout = gohelper.findChild(self.viewGO, "#go_group2/#go_layout")
+	self._btnpopup = gohelper.findChildButtonWithAudio(self.viewGO, "#go_group2/go_top2/#btn_popup")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function AchievementMainItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function AchievementMainItem:removeEvents()
 	return
 end
 
-function var_0_0._btnpopupOnClick(arg_4_0)
-	local var_4_0 = arg_4_0._mo:getIsFold()
+function AchievementMainItem:_btnpopupOnClick()
+	local isFold = self._mo:getIsFold()
 
-	AchievementMainController.instance:dispatchEvent(AchievementEvent.OnClickGroupFoldBtn, arg_4_0._mo.groupId, not var_4_0)
+	AchievementMainController.instance:dispatchEvent(AchievementEvent.OnClickGroupFoldBtn, self._mo.groupId, not isFold)
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._animator = gohelper.onceAddComponent(arg_5_0.viewGO, typeof(UnityEngine.Animator))
-	arg_5_0._groupBgImage = gohelper.findChildImage(arg_5_0.viewGO, "#go_group/#image_bg")
-	arg_5_0._iconItems = arg_5_0:getUserDataTb_()
+function AchievementMainItem:_editableInitView()
+	self._animator = gohelper.onceAddComponent(self.viewGO, typeof(UnityEngine.Animator))
+	self._groupBgImage = gohelper.findChildImage(self.viewGO, "#go_group/#image_bg")
+	self._iconItems = self:getUserDataTb_()
 
-	arg_5_0:addEventCb(AchievementController.instance, AchievementEvent.OnGroupUpGrade, arg_5_0._onGroupUpGrade, arg_5_0)
-	arg_5_0:addEventCb(AchievementMainController.instance, AchievementEvent.OnFocusAchievementFinished, arg_5_0._onFocusFinished, arg_5_0)
+	self:addEventCb(AchievementController.instance, AchievementEvent.OnGroupUpGrade, self._onGroupUpGrade, self)
+	self:addEventCb(AchievementMainController.instance, AchievementEvent.OnFocusAchievementFinished, self._onFocusFinished, self)
 end
 
-function var_0_0.onDestroy(arg_6_0)
-	arg_6_0:recycleIcons()
-	arg_6_0._simagebg:UnLoadImage()
-	arg_6_0._simageAchievementGroupBG:UnLoadImage()
-	TaskDispatcher.cancelTask(arg_6_0.playItemOpenAim, arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0.playAchievementUnlockAnim, arg_6_0)
+function AchievementMainItem:onDestroy()
+	self:recycleIcons()
+	self._simagebg:UnLoadImage()
+	self._simageAchievementGroupBG:UnLoadImage()
+	TaskDispatcher.cancelTask(self.playItemOpenAim, self)
+	TaskDispatcher.cancelTask(self.playAchievementUnlockAnim, self)
 end
 
-function var_0_0.onUpdateMO(arg_7_0, arg_7_1)
-	if arg_7_0._mo ~= arg_7_1 then
-		arg_7_0:recycleIcons()
+function AchievementMainItem:onUpdateMO(mo)
+	if self._mo ~= mo then
+		self:recycleIcons()
 	end
 
-	arg_7_0._mo = arg_7_1
+	self._mo = mo
 
-	arg_7_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_8_0)
-	local var_8_0 = AchievementUtils.isActivityGroup(arg_8_0._mo.firstAchievementCo.id)
-	local var_8_1 = AchievementUtils.isGamePlayGroup(arg_8_0._mo.firstAchievementCo.id)
-	local var_8_2 = not var_8_0 and not var_8_1
+function AchievementMainItem:refreshUI()
+	local isGroup1 = AchievementUtils.isActivityGroup(self._mo.firstAchievementCo.id)
+	local isGroup2 = AchievementUtils.isGamePlayGroup(self._mo.firstAchievementCo.id)
+	local isSingle = not isGroup1 and not isGroup2
 
-	gohelper.setActive(arg_8_0._gosingle, var_8_2)
-	gohelper.setActive(arg_8_0._gogroup, var_8_0)
-	gohelper.setActive(arg_8_0._gogroup2, var_8_1)
+	gohelper.setActive(self._gosingle, isSingle)
+	gohelper.setActive(self._gogroup, isGroup1)
+	gohelper.setActive(self._gogroup2, isGroup2)
 
-	if var_8_0 then
-		arg_8_0:refreshGroup()
-	elseif var_8_1 then
-		arg_8_0:refreshGroup2()
+	if isGroup1 then
+		self:refreshGroup()
+	elseif isGroup2 then
+		self:refreshGroup2()
 	else
-		arg_8_0:refreshSingle(arg_8_0._gosingle, 1, arg_8_0._mo.count)
+		self:refreshSingle(self._gosingle, 1, self._mo.count)
 	end
 
-	arg_8_0:playAchievementAnim()
+	self:playAchievementAnim()
 end
 
-var_0_0.LockedIconColor = "#4D4D4D"
-var_0_0.UnLockedIconColor = "#FFFFFF"
-var_0_0.LockedNameAlpha = 0.5
-var_0_0.UnLockedNameAlpha = 1
-var_0_0.LockedGroupBgColor = "#808080"
-var_0_0.UnLockedGroupBgColor = "#FFFFFF"
+AchievementMainItem.LockedIconColor = "#4D4D4D"
+AchievementMainItem.UnLockedIconColor = "#FFFFFF"
+AchievementMainItem.LockedNameAlpha = 0.5
+AchievementMainItem.UnLockedNameAlpha = 1
+AchievementMainItem.LockedGroupBgColor = "#808080"
+AchievementMainItem.UnLockedGroupBgColor = "#FFFFFF"
 
-function var_0_0.refreshSingle(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	arg_9_0:checkInitIcon(arg_9_3, arg_9_1)
+function AchievementMainItem:refreshSingle(goparent, startIndex, itemCount)
+	self:checkInitIcon(itemCount, goparent)
 
-	for iter_9_0 = 1, arg_9_3 do
-		local var_9_0 = arg_9_0._iconItems[iter_9_0]
-		local var_9_1 = var_9_0.viewGO.transform
-		local var_9_2 = arg_9_2 + iter_9_0 - 1
+	for i = 1, itemCount do
+		local item = self._iconItems[i]
+		local go = item.viewGO
+		local rect = go.transform
+		local achievementIndex = startIndex + i - 1
 
-		recthelper.setAnchor(var_9_1, var_0_0.IconStartX + (iter_9_0 - 1) * var_0_0.IconIntervalX, 0)
-		var_9_0:setClickCall(arg_9_0.onClickSingleIcon, arg_9_0, var_9_2)
+		recthelper.setAnchor(rect, AchievementMainItem.IconStartX + (i - 1) * AchievementMainItem.IconIntervalX, 0)
+		item:setClickCall(self.onClickSingleIcon, self, achievementIndex)
 
-		local var_9_3 = arg_9_0._mo.achievementCfgs[var_9_2]
+		local achievementCO = self._mo.achievementCfgs[achievementIndex]
 
-		gohelper.setActive(var_9_0.viewGO, var_9_3 ~= nil)
+		gohelper.setActive(item.viewGO, achievementCO ~= nil)
 
-		if var_9_3 then
-			local var_9_4 = var_9_3.id
-			local var_9_5 = AchievementController.instance:getMaxLevelFinishTask(var_9_4)
+		if achievementCO then
+			local achievementId = achievementCO.id
+			local taskCO = AchievementController.instance:getMaxLevelFinishTask(achievementId)
 
-			if var_9_5 then
-				var_9_0:setData(var_9_5)
+			if taskCO then
+				item:setData(taskCO)
 
-				local var_9_6 = AchievementModel.instance:achievementHasLocked(var_9_4)
+				local isLocked = AchievementModel.instance:achievementHasLocked(achievementId)
 
-				var_9_0:setIsLocked(var_9_6)
-				var_9_0:setIconColor(var_9_6 and var_0_0.LockedIconColor or var_0_0.UnLockedIconColor)
-				var_9_0:setNameTxtAlpha(var_9_6 and var_0_0.LockedNameAlpha or var_0_0.UnLockedNameAlpha)
-				var_9_0:setNameTxtVisible(true)
-				var_9_0:setSelectIconVisible(false)
-				var_9_0:setBgVisible(true)
+				item:setIsLocked(isLocked)
+				item:setIconColor(isLocked and AchievementMainItem.LockedIconColor or AchievementMainItem.UnLockedIconColor)
+				item:setNameTxtAlpha(isLocked and AchievementMainItem.LockedNameAlpha or AchievementMainItem.UnLockedNameAlpha)
+				item:setNameTxtVisible(true)
+				item:setSelectIconVisible(false)
+				item:setBgVisible(true)
 			else
-				gohelper.setActive(var_9_0.viewGO, false)
+				gohelper.setActive(item.viewGO, false)
 			end
 		end
 	end
 end
 
-function var_0_0.refreshGroup(arg_10_0)
-	local var_10_0 = AchievementConfig.instance:getGroup(arg_10_0._mo.groupId)
+function AchievementMainItem:refreshGroup()
+	local groupCO = AchievementConfig.instance:getGroup(self._mo.groupId)
 
-	if var_10_0 then
-		gohelper.setActive(arg_10_0._goupgrade, false)
-		arg_10_0:refreshGroupBg(var_10_0)
-		arg_10_0:refreshSingleInGroup()
+	if groupCO then
+		gohelper.setActive(self._goupgrade, false)
+		self:refreshGroupBg(groupCO)
+		self:refreshSingleInGroup()
 	end
 end
 
-function var_0_0.refreshGroup2(arg_11_0)
-	arg_11_0._txtachievementgroupname.text = AchievementConfig.instance:getGroupName(arg_11_0._mo.groupId)
+function AchievementMainItem:refreshGroup2()
+	self._txtachievementgroupname.text = AchievementConfig.instance:getGroupName(self._mo.groupId)
 
-	arg_11_0._simageAchievementGroupBG:LoadImage(ResUrl.getAchievementIcon(string.format("grouptitle/%s", arg_11_0._mo.groupId)))
-	arg_11_0:refreshSingle(arg_11_0._golayout, 1, arg_11_0._mo.count)
-	gohelper.setActive(arg_11_0._gotop2, arg_11_0._mo.isGroupTop)
+	self._simageAchievementGroupBG:LoadImage(ResUrl.getAchievementIcon(string.format("grouptitle/%s", self._mo.groupId)))
+	self:refreshSingle(self._golayout, 1, self._mo.count)
+	gohelper.setActive(self._gotop2, self._mo.isGroupTop)
 
-	arg_11_0._foldAnimComp = AchievementItemFoldAnimComp.Get(arg_11_0._btnpopup.gameObject, arg_11_0._golayout)
+	self._foldAnimComp = AchievementItemFoldAnimComp.Get(self._btnpopup.gameObject, self._golayout)
 
-	arg_11_0._foldAnimComp:onUpdateMO(arg_11_0._mo)
+	self._foldAnimComp:onUpdateMO(self._mo)
 end
 
-function var_0_0.refreshGroupBg(arg_12_0, arg_12_1)
-	if arg_12_1 then
-		local var_12_0 = AchievementModel.instance:isAchievementTaskFinished(arg_12_1.unLockAchievement)
-		local var_12_1 = AchievementConfig.instance:getGroupBgUrl(arg_12_0._mo.groupId, AchievementEnum.GroupParamType.List, var_12_0)
+function AchievementMainItem:refreshGroupBg(groupCO)
+	if groupCO then
+		local isUnLockAchievementFinished = AchievementModel.instance:isAchievementTaskFinished(groupCO.unLockAchievement)
+		local groupBgUrl = AchievementConfig.instance:getGroupBgUrl(self._mo.groupId, AchievementEnum.GroupParamType.List, isUnLockAchievementFinished)
 
-		arg_12_0._simagebg:LoadImage(var_12_1)
+		self._simagebg:LoadImage(groupBgUrl)
 
-		local var_12_2 = AchievementModel.instance:achievementGroupHasLocked(arg_12_0._mo.groupId)
+		local isLocked = AchievementModel.instance:achievementGroupHasLocked(self._mo.groupId)
 
-		SLFramework.UGUI.GuiHelper.SetColor(arg_12_0._groupBgImage, var_12_2 and var_0_0.LockedGroupBgColor or var_0_0.UnLockedGroupBgColor)
+		SLFramework.UGUI.GuiHelper.SetColor(self._groupBgImage, isLocked and AchievementMainItem.LockedGroupBgColor or AchievementMainItem.UnLockedGroupBgColor)
 	end
 end
 
-function var_0_0.refreshSingleInGroup(arg_13_0)
-	local var_13_0 = AchievementConfig.instance:getGroupParamIdTab(arg_13_0._mo.groupId, AchievementEnum.GroupParamType.List)
-	local var_13_1 = var_13_0 and #var_13_0 or 0
+function AchievementMainItem:refreshSingleInGroup()
+	local idTabs = AchievementConfig.instance:getGroupParamIdTab(self._mo.groupId, AchievementEnum.GroupParamType.List)
+	local idCount = idTabs and #idTabs or 0
 
-	arg_13_0:checkInitIcon(var_13_1, arg_13_0._gogroupcontainer)
+	self:checkInitIcon(idCount, self._gogroupcontainer)
 
-	for iter_13_0 = 1, var_13_1 do
-		local var_13_2 = arg_13_0._iconItems[iter_13_0]
+	for i = 1, idCount do
+		local item = self._iconItems[i]
 
-		var_13_2:setClickCall(arg_13_0.onClickSingleIcon, arg_13_0, var_13_0[iter_13_0])
-		arg_13_0:_setGroupAchievementPosAndScale(var_13_2.viewGO, arg_13_0._mo.groupId, iter_13_0)
+		item:setClickCall(self.onClickSingleIcon, self, idTabs[i])
+		self:_setGroupAchievementPosAndScale(item.viewGO, self._mo.groupId, i)
 
-		local var_13_3 = arg_13_0._mo.achievementCfgs[var_13_0[iter_13_0]]
+		local achievementCO = self._mo.achievementCfgs[idTabs[i]]
 
-		gohelper.setActive(var_13_2.viewGO, var_13_3 ~= nil)
+		gohelper.setActive(item.viewGO, achievementCO ~= nil)
 
-		if var_13_3 then
-			local var_13_4 = var_13_3.id
-			local var_13_5 = AchievementController.instance:getMaxLevelFinishTask(var_13_4)
+		if achievementCO then
+			local achievementId = achievementCO.id
+			local taskCO = AchievementController.instance:getMaxLevelFinishTask(achievementId)
 
-			if var_13_5 then
-				var_13_2:setData(var_13_5)
+			if taskCO then
+				item:setData(taskCO)
 
-				local var_13_6 = AchievementModel.instance:achievementHasLocked(var_13_4)
+				local isLocked = AchievementModel.instance:achievementHasLocked(achievementId)
 
-				var_13_2:setIsLocked(var_13_6)
-				var_13_2:setIconColor(var_13_6 and var_0_0.LockedIconColor or var_0_0.UnLockedIconColor)
-				var_13_2:setSelectIconVisible(false)
-				var_13_2:setNameTxtVisible(false)
-				var_13_2:setBgVisible(false)
+				item:setIsLocked(isLocked)
+				item:setIconColor(isLocked and AchievementMainItem.LockedIconColor or AchievementMainItem.UnLockedIconColor)
+				item:setSelectIconVisible(false)
+				item:setNameTxtVisible(false)
+				item:setBgVisible(false)
 			else
-				gohelper.setActive(var_13_2.viewGO, false)
+				gohelper.setActive(item.viewGO, false)
 			end
 		end
 	end
 
-	local var_13_7 = AchievementModel.instance:isGroupFinished(arg_13_0._mo.groupId)
+	local isGroupFinish = AchievementModel.instance:isGroupFinished(self._mo.groupId)
 
-	gohelper.setActive(arg_13_0._goallcollect, var_13_7)
+	gohelper.setActive(self._goallcollect, isGroupFinish)
 end
 
-function var_0_0._setGroupAchievementPosAndScale(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	local var_14_0, var_14_1, var_14_2, var_14_3 = AchievementConfig.instance:getAchievementPosAndScaleInGroup(arg_14_2, arg_14_3, AchievementEnum.GroupParamType.List)
+function AchievementMainItem:_setGroupAchievementPosAndScale(go, groupId, index)
+	local posX, posY, scaleX, scaleY = AchievementConfig.instance:getAchievementPosAndScaleInGroup(groupId, index, AchievementEnum.GroupParamType.List)
 
-	if arg_14_1 then
-		recthelper.setAnchor(arg_14_1.transform, var_14_0 or 0, var_14_1 or 0)
-		transformhelper.setLocalScale(arg_14_1.transform, var_14_2 or 1, var_14_3 or 1, 1)
+	if go then
+		recthelper.setAnchor(go.transform, posX or 0, posY or 0)
+		transformhelper.setLocalScale(go.transform, scaleX or 1, scaleY or 1, 1)
 	end
 end
 
-var_0_0.IconStartX = -535
-var_0_0.IconIntervalX = 262
+AchievementMainItem.IconStartX = -535
+AchievementMainItem.IconIntervalX = 262
 
-function var_0_0.checkInitIcon(arg_15_0, arg_15_1, arg_15_2)
-	if #arg_15_0._iconItems == arg_15_1 then
+function AchievementMainItem:checkInitIcon(count, parent)
+	if #self._iconItems == count then
 		return
 	end
 
-	local var_15_0
+	local poolView
 
-	if arg_15_0._view and arg_15_0._view.viewContainer then
-		var_15_0 = arg_15_0._view.viewContainer:getPoolView()
+	if self._view and self._view.viewContainer then
+		poolView = self._view.viewContainer:getPoolView()
 
-		if not var_15_0 then
+		if not poolView then
 			return
 		end
 	end
 
-	for iter_15_0 = 1, arg_15_1 do
-		local var_15_1 = var_15_0:getIcon(arg_15_2)
+	for i = 1, count do
+		local item = poolView:getIcon(parent)
 
-		gohelper.setActive(var_15_1.viewGO, true)
+		gohelper.setActive(item.viewGO, true)
 
-		arg_15_0._iconItems[iter_15_0] = var_15_1
+		self._iconItems[i] = item
 	end
 end
 
-function var_0_0.recycleIcons(arg_16_0)
-	local var_16_0
+function AchievementMainItem:recycleIcons()
+	local poolView
 
-	if arg_16_0._view and arg_16_0._view.viewContainer then
-		var_16_0 = arg_16_0._view.viewContainer:getPoolView()
+	if self._view and self._view.viewContainer then
+		poolView = self._view.viewContainer:getPoolView()
 
-		if not var_16_0 then
+		if not poolView then
 			return
 		end
 	end
 
-	if arg_16_0._iconItems then
-		for iter_16_0, iter_16_1 in pairs(arg_16_0._iconItems) do
-			var_16_0:recycleIcon(arg_16_0._iconItems[iter_16_0])
+	if self._iconItems then
+		for i, icon in pairs(self._iconItems) do
+			poolView:recycleIcon(self._iconItems[i])
 
-			arg_16_0._iconItems[iter_16_0] = nil
+			self._iconItems[i] = nil
 		end
 	end
 end
 
-function var_0_0.onClickSingleIcon(arg_17_0, arg_17_1)
-	local var_17_0 = arg_17_0._mo.achievementCfgs[arg_17_1]
+function AchievementMainItem:onClickSingleIcon(index)
+	local achievementCO = self._mo.achievementCfgs[index]
 
-	if var_17_0 then
-		local var_17_1 = {
-			achievementId = var_17_0.id,
-			achievementIds = AchievementMainTileModel.instance:getCurrentAchievementIds()
-		}
+	if achievementCO then
+		local viewParam = {}
 
-		ViewMgr.instance:openView(ViewName.AchievementLevelView, var_17_1)
+		viewParam.achievementId = achievementCO.id
+		viewParam.achievementIds = AchievementMainTileModel.instance:getCurrentAchievementIds()
+
+		ViewMgr.instance:openView(ViewName.AchievementLevelView, viewParam)
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_achieve_weiqicard_saga)
 	end
 end
 
-var_0_0.AnimDelayDelta = 0.06
+AchievementMainItem.AnimDelayDelta = 0.06
 
-function var_0_0.playAchievementAnim(arg_18_0)
-	arg_18_0:playAchievementOpenAnim()
-	TaskDispatcher.cancelTask(arg_18_0.playAchievementUnlockAnim, arg_18_0)
-	TaskDispatcher.runDelay(arg_18_0.playAchievementUnlockAnim, arg_18_0, 0.5)
+function AchievementMainItem:playAchievementAnim()
+	self:playAchievementOpenAnim()
+	TaskDispatcher.cancelTask(self.playAchievementUnlockAnim, self)
+	TaskDispatcher.runDelay(self.playAchievementUnlockAnim, self, 0.5)
 end
 
-function var_0_0.playAchievementOpenAnim(arg_19_0)
-	TaskDispatcher.cancelTask(arg_19_0.playItemOpenAim, arg_19_0)
+function AchievementMainItem:playAchievementOpenAnim()
+	TaskDispatcher.cancelTask(self.playItemOpenAim, self)
 
-	if not arg_19_0.viewGO.activeInHierarchy then
+	if not self.viewGO.activeInHierarchy then
 		return
 	end
 
-	local var_19_0 = AchievementMainTileModel.instance:getScrollFocusIndex()
-	local var_19_1 = AchievementMainTileModel.instance:hasPlayOpenAnim()
+	local curScrollFocus = AchievementMainTileModel.instance:getScrollFocusIndex()
+	local hasPlayOpenAnim = AchievementMainTileModel.instance:hasPlayOpenAnim()
 
-	if var_19_0 then
-		if not var_19_1 then
-			arg_19_0._animator:Play("close", 0, 0)
+	if curScrollFocus then
+		if not hasPlayOpenAnim then
+			self._animator:Play("close", 0, 0)
 
-			local var_19_2 = var_0_0.AnimDelayDelta * Mathf.Clamp(arg_19_0._index - var_19_0, 0, arg_19_0._index)
+			local delayPlayAnimTime = AchievementMainItem.AnimDelayDelta * Mathf.Clamp(self._index - curScrollFocus, 0, self._index)
 
-			TaskDispatcher.runDelay(arg_19_0.playItemOpenAim, arg_19_0, var_19_2)
+			TaskDispatcher.runDelay(self.playItemOpenAim, self, delayPlayAnimTime)
 		else
-			arg_19_0._animator:Play("idle", 0, 0)
+			self._animator:Play("idle", 0, 0)
 		end
 	else
-		arg_19_0._animator:Play("close", 0, 0)
+		self._animator:Play("close", 0, 0)
 	end
 end
 
-function var_0_0.playItemOpenAim(arg_20_0)
-	arg_20_0._animator:Play("open", 0, 0)
+function AchievementMainItem:playItemOpenAim()
+	self._animator:Play("open", 0, 0)
 end
 
-function var_0_0._onFocusFinished(arg_21_0, arg_21_1)
-	if arg_21_1 ~= AchievementEnum.ViewType.Tile then
+function AchievementMainItem:_onFocusFinished(viewType)
+	if viewType ~= AchievementEnum.ViewType.Tile then
 		return
 	end
 
-	arg_21_0:playAchievementAnim()
+	self:playAchievementAnim()
 end
 
-function var_0_0.playAchievementUnlockAnim(arg_22_0)
-	if arg_22_0._iconItems then
-		for iter_22_0, iter_22_1 in ipairs(arg_22_0._iconItems) do
-			arg_22_0:playSingleAchievementUnlockAnim(iter_22_1)
+function AchievementMainItem:playAchievementUnlockAnim()
+	if self._iconItems then
+		for _, v in ipairs(self._iconItems) do
+			self:playSingleAchievementUnlockAnim(v)
 		end
 	end
 end
 
-function var_0_0.playSingleAchievementUnlockAnim(arg_23_0, arg_23_1)
-	if not arg_23_1 or not arg_23_1.viewGO or not arg_23_1.viewGO.activeInHierarchy then
+function AchievementMainItem:playSingleAchievementUnlockAnim(achievementIcon)
+	if not achievementIcon or not achievementIcon.viewGO or not achievementIcon.viewGO.activeInHierarchy then
 		return
 	end
 
-	local var_23_0 = arg_23_1:getTaskCO()
-	local var_23_1 = var_23_0 and var_23_0.achievementId
-	local var_23_2 = AchievementModel.instance:achievementHasNew(var_23_1)
-	local var_23_3 = AchievementMainCommonModel.instance:isAchievementPlayEffect(var_23_1)
+	local taskCO = achievementIcon:getTaskCO()
+	local achievementId = taskCO and taskCO.achievementId
+	local isNew = AchievementModel.instance:achievementHasNew(achievementId)
+	local hasShowNewEffect = AchievementMainCommonModel.instance:isAchievementPlayEffect(achievementId)
 
-	if var_23_2 then
-		arg_23_1:playAnim(var_23_3 and AchievementMainIcon.AnimClip.Loop or AchievementMainIcon.AnimClip.New)
+	if isNew then
+		achievementIcon:playAnim(hasShowNewEffect and AchievementMainIcon.AnimClip.Loop or AchievementMainIcon.AnimClip.New)
 	else
-		arg_23_1:playAnim(AchievementMainIcon.AnimClip.Idle)
+		achievementIcon:playAnim(AchievementMainIcon.AnimClip.Idle)
 	end
 
-	AchievementMainCommonModel.instance:markAchievementPlayEffect(var_23_1)
+	AchievementMainCommonModel.instance:markAchievementPlayEffect(achievementId)
 end
 
-function var_0_0._onGroupUpGrade(arg_24_0, arg_24_1)
-	if arg_24_0._mo.groupId == arg_24_1 then
-		gohelper.setActive(arg_24_0._goupgrade, true)
+function AchievementMainItem:_onGroupUpGrade(groupId)
+	if self._mo.groupId == groupId then
+		gohelper.setActive(self._goupgrade, true)
 	end
 end
 
-return var_0_0
+return AchievementMainItem

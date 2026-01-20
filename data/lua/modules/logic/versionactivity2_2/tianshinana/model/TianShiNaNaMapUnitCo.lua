@@ -1,25 +1,27 @@
-﻿module("modules.logic.versionactivity2_2.tianshinana.model.TianShiNaNaMapUnitCo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/tianshinana/model/TianShiNaNaMapUnitCo.lua
 
-local var_0_0 = pureTable("TianShiNaNaMapUnitCo")
+module("modules.logic.versionactivity2_2.tianshinana.model.TianShiNaNaMapUnitCo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1[1]
-	arg_1_0.unitType = arg_1_1[2]
-	arg_1_0.x = arg_1_1[3]
-	arg_1_0.y = arg_1_1[4]
-	arg_1_0.unitPath = arg_1_1[5]
-	arg_1_0.offset = Vector3(arg_1_1[6][1], arg_1_1[6][2], arg_1_1[6][3])
-	arg_1_0.specialData = arg_1_1[7]
-	arg_1_0.dir = arg_1_1[8]
-	arg_1_0.walkable = arg_1_1[9]
-	arg_1_0.effects = {}
+local TianShiNaNaMapUnitCo = pureTable("TianShiNaNaMapUnitCo")
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1[10]) do
-		table.insert(arg_1_0.effects, {
-			type = iter_1_1[1],
-			param = iter_1_1[2]
+function TianShiNaNaMapUnitCo:init(unit)
+	self.id = unit[1]
+	self.unitType = unit[2]
+	self.x = unit[3]
+	self.y = unit[4]
+	self.unitPath = unit[5]
+	self.offset = Vector3(unit[6][1], unit[6][2], unit[6][3])
+	self.specialData = unit[7]
+	self.dir = unit[8]
+	self.walkable = unit[9]
+	self.effects = {}
+
+	for _, effect in ipairs(unit[10]) do
+		table.insert(self.effects, {
+			type = effect[1],
+			param = effect[2]
 		})
 	end
 end
 
-return var_0_0
+return TianShiNaNaMapUnitCo

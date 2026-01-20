@@ -1,8 +1,10 @@
-﻿module("modules.logic.pickassist.define.PickAssistEnum", package.seeall)
+﻿-- chunkname: @modules/logic/pickassist/define/PickAssistEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.pickassist.define.PickAssistEnum", package.seeall)
 
-var_0_0.Type = {
+local PickAssistEnum = _M
+
+PickAssistEnum.Type = {
 	Activity123 = 2,
 	Activity166 = 4,
 	Rouge = 3,
@@ -10,4 +12,4 @@ var_0_0.Type = {
 	Normal = 1
 }
 
-return var_0_0
+return PickAssistEnum

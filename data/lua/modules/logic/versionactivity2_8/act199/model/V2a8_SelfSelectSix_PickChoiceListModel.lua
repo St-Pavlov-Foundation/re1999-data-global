@@ -1,24 +1,26 @@
-﻿module("modules.logic.versionactivity2_8.act199.model.V2a8_SelfSelectSix_PickChoiceListModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/act199/model/V2a8_SelfSelectSix_PickChoiceListModel.lua
 
-local var_0_0 = class("V2a8_SelfSelectSix_PickChoiceListModel", MixScrollModel)
+module("modules.logic.versionactivity2_8.act199.model.V2a8_SelfSelectSix_PickChoiceListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:clear()
+local V2a8_SelfSelectSix_PickChoiceListModel = class("V2a8_SelfSelectSix_PickChoiceListModel", MixScrollModel)
+
+function V2a8_SelfSelectSix_PickChoiceListModel:onInit()
+	self:clear()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clear()
+function V2a8_SelfSelectSix_PickChoiceListModel:reInit()
+	self:clear()
 end
 
-function var_0_0.initDatas(arg_3_0, arg_3_1)
-	arg_3_0._actId = arg_3_1
-	arg_3_0._selectIdList = {}
-	arg_3_0._selectIdMap = {}
+function V2a8_SelfSelectSix_PickChoiceListModel:initDatas(actId)
+	self._actId = actId
+	self._selectIdList = {}
+	self._selectIdMap = {}
 
-	arg_3_0:initList()
+	self:initList()
 end
 
-var_0_0.SkillLevel2Order = {
+V2a8_SelfSelectSix_PickChoiceListModel.SkillLevel2Order = {
 	[0] = 50,
 	40,
 	30,
@@ -27,192 +29,196 @@ var_0_0.SkillLevel2Order = {
 	60
 }
 
-local function var_0_1(arg_4_0, arg_4_1)
-	local var_4_0 = HeroModel.instance:getByHeroId(arg_4_0.id)
-	local var_4_1 = HeroModel.instance:getByHeroId(arg_4_1.id)
-	local var_4_2 = var_4_0 ~= nil
-	local var_4_3 = var_4_1 ~= nil
+local function sortFunc(a, b)
+	local aHeroMo = HeroModel.instance:getByHeroId(a.id)
+	local bHeroMo = HeroModel.instance:getByHeroId(b.id)
+	local aHasHero = aHeroMo ~= nil
+	local bHasHero = bHeroMo ~= nil
 
-	if var_4_2 ~= var_4_3 then
-		return var_4_3
+	if aHasHero ~= bHasHero then
+		return bHasHero
 	end
 
-	local var_4_4 = var_4_0 and var_4_0.exSkillLevel or -1
-	local var_4_5 = var_4_1 and var_4_1.exSkillLevel or -1
+	local aSkillLevel = aHeroMo and aHeroMo.exSkillLevel or -1
+	local bSkillLevel = bHeroMo and bHeroMo.exSkillLevel or -1
 
-	if var_4_4 ~= var_4_5 then
-		return (var_0_0.SkillLevel2Order[var_4_4] or 999) < (var_0_0.SkillLevel2Order[var_4_5] or 999)
+	if aSkillLevel ~= bSkillLevel then
+		local aOrder = V2a8_SelfSelectSix_PickChoiceListModel.SkillLevel2Order[aSkillLevel] or 999
+		local bOrder = V2a8_SelfSelectSix_PickChoiceListModel.SkillLevel2Order[bSkillLevel] or 999
+
+		return aOrder < bOrder
 	end
 
-	return arg_4_0.id < arg_4_1.id
+	return a.id < b.id
 end
 
-function var_0_0.initList(arg_5_0)
-	local var_5_0 = arg_5_0:getCharIdList()
-	local var_5_1 = {}
-	local var_5_2 = {}
-	local var_5_3 = {}
-	local var_5_4 = {}
+function V2a8_SelfSelectSix_PickChoiceListModel:initList()
+	local charIdList = self:getCharIdList()
+	local moList = {}
+	local ownList = {}
+	local noGainList = {}
+	local fullOwnList = {}
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_0) do
-		local var_5_5 = SummonCustomPickChoiceMO.New()
+	for _, characterId in ipairs(charIdList) do
+		local mo = SummonCustomPickChoiceMO.New()
 
-		var_5_5:init(iter_5_1)
+		mo:init(characterId)
 
-		if var_5_5:hasHero() then
-			if var_5_5:checkHeroFullExSkillLevel() then
-				table.insert(var_5_4, var_5_5)
+		if mo:hasHero() then
+			if mo:checkHeroFullExSkillLevel() then
+				table.insert(fullOwnList, mo)
 			else
-				table.insert(var_5_2, var_5_5)
+				table.insert(ownList, mo)
 			end
 		else
-			table.insert(var_5_3, var_5_5)
+			table.insert(noGainList, mo)
 		end
 	end
 
-	table.sort(var_5_2, var_0_1)
-	table.sort(var_5_3, var_0_1)
-	table.sort(var_5_4, var_0_1)
+	table.sort(ownList, sortFunc)
+	table.sort(noGainList, sortFunc)
+	table.sort(fullOwnList, sortFunc)
 
-	if #var_5_2 > 0 then
-		table.insert(var_5_1, {
+	if #ownList > 0 then
+		table.insert(moList, {
 			isUnlock = true,
 			isTitle = true,
 			langTitle = luaLang("p_v2a2_fivestarsupgradepickchoiceview_txt_title2")
 		})
-		table.insert(var_5_1, {
+		table.insert(moList, {
 			isUnlock = true,
-			heroIdList = var_5_2
+			heroIdList = ownList
 		})
 	end
 
-	if #var_5_3 > 0 then
-		table.insert(var_5_1, {
+	if #noGainList > 0 then
+		table.insert(moList, {
 			isTitle = true,
 			langTitle = luaLang("p_achievementlevelview_unget")
 		})
-		table.insert(var_5_1, {
-			heroIdList = var_5_3
+		table.insert(moList, {
+			heroIdList = noGainList
 		})
 	end
 
-	if #var_5_4 > 0 then
-		local var_5_6 = false
+	if #fullOwnList > 0 then
+		local isUnlock = false
 
-		if #var_5_2 < 1 then
-			var_5_6 = true
+		if #ownList < 1 then
+			isUnlock = true
 		end
 
-		table.insert(var_5_1, {
+		table.insert(moList, {
 			isTitle = true,
 			isFull = true,
 			langTitle = luaLang("anniversary_bonus_max")
 		})
-		table.insert(var_5_1, {
-			heroIdList = var_5_4,
-			isUnlock = var_5_6
+		table.insert(moList, {
+			heroIdList = fullOwnList,
+			isUnlock = isUnlock
 		})
 	end
 
-	arg_5_0:setList(var_5_1)
+	self:setList(moList)
 end
 
-function var_0_0.haveAllRole(arg_6_0)
-	return arg_6_0._actId and arg_6_0.noGainList and #arg_6_0.noGainList <= 0
+function V2a8_SelfSelectSix_PickChoiceListModel:haveAllRole()
+	return self._actId and self.noGainList and #self.noGainList <= 0
 end
 
-function var_0_0.setSelectId(arg_7_0, arg_7_1)
-	if not arg_7_0._selectIdList then
+function V2a8_SelfSelectSix_PickChoiceListModel:setSelectId(heroId)
+	if not self._selectIdList then
 		return
 	end
 
-	if arg_7_0._selectIdMap[arg_7_1] then
-		arg_7_0._selectIdMap[arg_7_1] = nil
+	if self._selectIdMap[heroId] then
+		self._selectIdMap[heroId] = nil
 
-		tabletool.removeValue(arg_7_0._selectIdList, arg_7_1)
+		tabletool.removeValue(self._selectIdList, heroId)
 	else
-		arg_7_0._selectIdMap[arg_7_1] = true
+		self._selectIdMap[heroId] = true
 
-		table.insert(arg_7_0._selectIdList, arg_7_1)
+		table.insert(self._selectIdList, heroId)
 	end
 
 	V2a8_SelfSelectSix_PickChoiceController.instance:dispatchEvent(V2a8_SelfSelectSix_PickChoiceEvent.OnCustomPickListChanged)
 end
 
-function var_0_0.clearSelectIds(arg_8_0)
-	arg_8_0._selectIdMap = {}
-	arg_8_0._selectIdList = {}
+function V2a8_SelfSelectSix_PickChoiceListModel:clearSelectIds()
+	self._selectIdMap = {}
+	self._selectIdList = {}
 end
 
-function var_0_0.getSelectIds(arg_9_0)
-	return arg_9_0._selectIdList
+function V2a8_SelfSelectSix_PickChoiceListModel:getSelectIds()
+	return self._selectIdList
 end
 
-function var_0_0.getMaxSelectCount(arg_10_0)
-	return SummonNewCustomPickViewModel.instance:getMaxSelectCount(arg_10_0._actId)
+function V2a8_SelfSelectSix_PickChoiceListModel:getMaxSelectCount()
+	return SummonNewCustomPickViewModel.instance:getMaxSelectCount(self._actId)
 end
 
-function var_0_0.getSelectCount(arg_11_0)
-	if arg_11_0._selectIdList then
-		return #arg_11_0._selectIdList
+function V2a8_SelfSelectSix_PickChoiceListModel:getSelectCount()
+	if self._selectIdList then
+		return #self._selectIdList
 	end
 
 	return 0
 end
 
-function var_0_0.isHeroIdSelected(arg_12_0, arg_12_1)
-	if arg_12_0._selectIdMap then
-		return arg_12_0._selectIdMap[arg_12_1] ~= nil
+function V2a8_SelfSelectSix_PickChoiceListModel:isHeroIdSelected(heroId)
+	if self._selectIdMap then
+		return self._selectIdMap[heroId] ~= nil
 	end
 
 	return false
 end
 
-function var_0_0.getActivityId(arg_13_0)
-	return arg_13_0._actId
+function V2a8_SelfSelectSix_PickChoiceListModel:getActivityId()
+	return self._actId
 end
 
-function var_0_0.getCharIdList(arg_14_0)
-	local var_14_0 = Activity199Config.instance:getSummonConfigById(arg_14_0._actId)
+function V2a8_SelfSelectSix_PickChoiceListModel:getCharIdList()
+	local summonConfig = Activity199Config.instance:getSummonConfigById(self._actId)
 
-	if var_14_0 then
-		local var_14_1 = var_14_0.heroIds
+	if summonConfig then
+		local summonIdStr = summonConfig.heroIds
+		local summonIds = string.splitToNumber(summonIdStr, "#")
 
-		return (string.splitToNumber(var_14_1, "#"))
+		return summonIds
 	end
 
 	return {}
 end
 
-function var_0_0.getInfoList(arg_15_0, arg_15_1)
-	arg_15_0._mixCellInfo = {}
+function V2a8_SelfSelectSix_PickChoiceListModel:getInfoList(scrollGO)
+	self._mixCellInfo = {}
 
-	local var_15_0 = arg_15_0:getList()
+	local list = self:getList()
 
-	for iter_15_0, iter_15_1 in ipairs(var_15_0) do
-		local var_15_1 = iter_15_1.isTitle
-		local var_15_2 = 1
-		local var_15_3 = 7
+	for i, mo in ipairs(list) do
+		local isTitle = mo.isTitle
+		local linecount = 1
+		local lineMaxNode = 7
 
-		if not var_15_1 then
-			var_15_2 = math.ceil(#iter_15_1.heroIdList / var_15_3)
+		if not isTitle then
+			linecount = math.ceil(#mo.heroIdList / lineMaxNode)
 		end
 
-		local var_15_4 = var_15_1 and 0 or 1
-		local var_15_5 = var_15_1 and 66 or 200 * var_15_2
-		local var_15_6 = SLFramework.UGUI.MixCellInfo.New(var_15_4, var_15_5, nil)
+		local type = isTitle and 0 or 1
+		local lineWidth = isTitle and 66 or 200 * linecount
+		local mixCellInfo = SLFramework.UGUI.MixCellInfo.New(type, lineWidth, nil)
 
-		table.insert(arg_15_0._mixCellInfo, var_15_6)
+		table.insert(self._mixCellInfo, mixCellInfo)
 	end
 
-	return arg_15_0._mixCellInfo
+	return self._mixCellInfo
 end
 
-function var_0_0.clearAllSelect(arg_16_0)
-	arg_16_0._selectIdMap = {}
-	arg_16_0._selectIdList = {}
+function V2a8_SelfSelectSix_PickChoiceListModel:clearAllSelect()
+	self._selectIdMap = {}
+	self._selectIdList = {}
 end
 
-var_0_0.instance = var_0_0.New()
+V2a8_SelfSelectSix_PickChoiceListModel.instance = V2a8_SelfSelectSix_PickChoiceListModel.New()
 
-return var_0_0
+return V2a8_SelfSelectSix_PickChoiceListModel

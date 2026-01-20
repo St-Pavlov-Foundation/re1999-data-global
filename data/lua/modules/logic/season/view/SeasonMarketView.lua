@@ -1,498 +1,502 @@
-﻿module("modules.logic.season.view.SeasonMarketView", package.seeall)
+﻿-- chunkname: @modules/logic/season/view/SeasonMarketView.lua
 
-local var_0_0 = class("SeasonMarketView", BaseView)
+module("modules.logic.season.view.SeasonMarketView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goinfo = gohelper.findChild(arg_1_0.viewGO, "#go_info")
-	arg_1_0._simagebg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_info/bg/#simage_bg1")
-	arg_1_0._simagedecorate1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_info/right/#simage_decorate1")
-	arg_1_0._simagedecorate2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_info/right/#simage_decorate2")
-	arg_1_0._simageuttu = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_level/bottom/#simage_uttu")
-	arg_1_0._animatorLeft = gohelper.findChildComponent(arg_1_0.viewGO, "#go_info/left", typeof(UnityEngine.Animator))
-	arg_1_0._txtlevelnamecn = gohelper.findChildText(arg_1_0.viewGO, "#go_info/left/#txt_levelnamecn")
-	arg_1_0._gostageinfoitem1 = gohelper.findChild(arg_1_0.viewGO, "#go_info/left/#txt_levelnamecn/stage/#go_stageinfoitem1")
-	arg_1_0._gostageinfoitem2 = gohelper.findChild(arg_1_0.viewGO, "#go_info/left/#txt_levelnamecn/stage/#go_stageinfoitem2")
-	arg_1_0._gostageinfoitem3 = gohelper.findChild(arg_1_0.viewGO, "#go_info/left/#txt_levelnamecn/stage/#go_stageinfoitem3")
-	arg_1_0._gostageinfoitem4 = gohelper.findChild(arg_1_0.viewGO, "#go_info/left/#txt_levelnamecn/stage/#go_stageinfoitem4")
-	arg_1_0._gostageinfoitem5 = gohelper.findChild(arg_1_0.viewGO, "#go_info/left/#txt_levelnamecn/stage/#go_stageinfoitem5")
-	arg_1_0._gostageinfoitem6 = gohelper.findChild(arg_1_0.viewGO, "#go_info/left/#txt_levelnamecn/stage/#go_stageinfoitem6")
-	arg_1_0._gostageinfoitem7 = gohelper.findChild(arg_1_0.viewGO, "#go_info/left/#txt_levelnamecn/stage/#go_stageinfoitem7")
-	arg_1_0._txtcurindex = gohelper.findChildText(arg_1_0.viewGO, "#go_info/left/position/center/#txt_curindex")
-	arg_1_0._txtmaxindex = gohelper.findChildText(arg_1_0.viewGO, "#go_info/left/position/center/#txt_maxindex")
-	arg_1_0._btnlast = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_info/left/position/#btn_last")
-	arg_1_0._btnnext = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_info/left/position/#btn_next")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#go_info/left/#txt_desc")
-	arg_1_0._txtenemylv = gohelper.findChildText(arg_1_0.viewGO, "#go_info/left/enemylv/#txt_enemylv")
-	arg_1_0._btnstart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_info/left/btns/#btn_start")
-	arg_1_0._btnReplay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_info/left/btns/#btn_storyreplay")
-	arg_1_0._gopart = gohelper.findChild(arg_1_0.viewGO, "#go_info/left/layout/#go_part")
-	arg_1_0._gostage = gohelper.findChild(arg_1_0.viewGO, "#go_info/left/layout/#go_part/#go_stage")
-	arg_1_0._gostagelvlitem = gohelper.findChild(arg_1_0.viewGO, "#go_info/left/layout/#go_part/#go_stage/list/#go_stagelvlitem")
-	arg_1_0._gounlocktype1 = gohelper.findChild(arg_1_0.viewGO, "#go_info/left/layout/root/mask/#scroll_rewards/Viewport/Content/#go_unlocktype1")
-	arg_1_0._gounlocktype2 = gohelper.findChild(arg_1_0.viewGO, "#go_info/left/layout/root/mask/#scroll_rewards/Viewport/Content/#go_unlocktype2")
-	arg_1_0._gounlocktype3 = gohelper.findChild(arg_1_0.viewGO, "#go_info/left/layout/root/mask/#scroll_rewards/Viewport/Content/#go_unlocktype3")
-	arg_1_0._scrollrewards = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_info/left/layout/root/mask/#scroll_rewards")
-	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.viewGO, "#go_info/left/layout/root/mask/#scroll_rewards/Viewport/Content/#go_rewarditem")
-	arg_1_0._godecorate = gohelper.findChild(arg_1_0.viewGO, "#go_info/left/decorate")
-	arg_1_0._golevel = gohelper.findChild(arg_1_0.viewGO, "#go_level")
-	arg_1_0._anilevel = arg_1_0._golevel:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._simagelvbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_level/#simage_lvbg")
-	arg_1_0._simageleftinfobg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_level/#simage_leftinfobg")
-	arg_1_0._simagerightinfobg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_level/#simage_rightinfobg")
-	arg_1_0._goScrollRoot = gohelper.findChild(arg_1_0.viewGO, "#go_level/#go_scrollRoot")
-	arg_1_0._goscrolllv = gohelper.findChild(arg_1_0.viewGO, "#go_level/#go_scrollRoot/#go_scrolllv")
-	arg_1_0._gofront = gohelper.findChild(arg_1_0.viewGO, "#go_level/#go_scrollRoot/#go_scrolllv/Viewport/Content/#go_front")
-	arg_1_0._golvitem = gohelper.findChild(arg_1_0.viewGO, "#go_level/#go_scrollRoot/#go_scrolllv/Viewport/Content/#go_lvitem")
-	arg_1_0._goline = gohelper.findChild(arg_1_0.viewGO, "#go_level/#go_scrollRoot/#go_scrolllv/Viewport/Content/#go_lvitem/#go_line")
-	arg_1_0._goselected = gohelper.findChild(arg_1_0.viewGO, "#go_level/#go_scrollRoot/#go_scrolllv/Viewport/Content/#go_lvitem/#go_selected")
-	arg_1_0._txtselectindex = gohelper.findChildText(arg_1_0.viewGO, "#go_level/#go_scrollRoot/#go_scrolllv/Viewport/Content/#go_lvitem/#go_selected/#txt_selectindex")
-	arg_1_0._gopass = gohelper.findChild(arg_1_0.viewGO, "#go_level/#go_scrollRoot/#go_scrolllv/Viewport/Content/#go_lvitem/#go_pass")
-	arg_1_0._txtpassindex = gohelper.findChildText(arg_1_0.viewGO, "#go_level/#go_scrollRoot/#go_scrolllv/Viewport/Content/#go_lvitem/#go_pass/#txt_passindex")
-	arg_1_0._gounpass = gohelper.findChild(arg_1_0.viewGO, "#go_level/#go_scrollRoot/#go_scrolllv/Viewport/Content/#go_lvitem/#go_unpass")
-	arg_1_0._txtunpassindex = gohelper.findChildText(arg_1_0.viewGO, "#go_level/#go_scrollRoot/#go_scrolllv/Viewport/Content/#go_lvitem/#go_unpass/#txt_unpassindex")
-	arg_1_0._gorear = gohelper.findChild(arg_1_0.viewGO, "#go_level/#go_scrollRoot/#go_scrolllv/Viewport/Content/#go_rear")
-	arg_1_0._txtcurlevelnamecn = gohelper.findChildText(arg_1_0.viewGO, "#go_level/center/#txt_curlevelnamecn")
-	arg_1_0._gostagelvitem1 = gohelper.findChild(arg_1_0.viewGO, "#go_level/center/#txt_curlevelnamecn/stage/#go_stagelvitem1")
-	arg_1_0._gostagelvitem2 = gohelper.findChild(arg_1_0.viewGO, "#go_level/center/#txt_curlevelnamecn/stage/#go_stagelvitem2")
-	arg_1_0._gostagelvitem3 = gohelper.findChild(arg_1_0.viewGO, "#go_level/center/#txt_curlevelnamecn/stage/#go_stagelvitem3")
-	arg_1_0._gostagelvitem4 = gohelper.findChild(arg_1_0.viewGO, "#go_level/center/#txt_curlevelnamecn/stage/#go_stagelvitem4")
-	arg_1_0._gostagelvitem5 = gohelper.findChild(arg_1_0.viewGO, "#go_level/center/#txt_curlevelnamecn/stage/#go_stagelvitem5")
-	arg_1_0._gostagelvitem6 = gohelper.findChild(arg_1_0.viewGO, "#go_level/center/#txt_curlevelnamecn/stage/#go_stagelvitem6")
-	arg_1_0._gostagelvitem7 = gohelper.findChild(arg_1_0.viewGO, "#go_level/center/#txt_curlevelnamecn/stage/#go_stagelvitem7")
+local SeasonMarketView = class("SeasonMarketView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SeasonMarketView:onInitView()
+	self._goinfo = gohelper.findChild(self.viewGO, "#go_info")
+	self._simagebg1 = gohelper.findChildSingleImage(self.viewGO, "#go_info/bg/#simage_bg1")
+	self._simagedecorate1 = gohelper.findChildSingleImage(self.viewGO, "#go_info/right/#simage_decorate1")
+	self._simagedecorate2 = gohelper.findChildSingleImage(self.viewGO, "#go_info/right/#simage_decorate2")
+	self._simageuttu = gohelper.findChildSingleImage(self.viewGO, "#go_level/bottom/#simage_uttu")
+	self._animatorLeft = gohelper.findChildComponent(self.viewGO, "#go_info/left", typeof(UnityEngine.Animator))
+	self._txtlevelnamecn = gohelper.findChildText(self.viewGO, "#go_info/left/#txt_levelnamecn")
+	self._gostageinfoitem1 = gohelper.findChild(self.viewGO, "#go_info/left/#txt_levelnamecn/stage/#go_stageinfoitem1")
+	self._gostageinfoitem2 = gohelper.findChild(self.viewGO, "#go_info/left/#txt_levelnamecn/stage/#go_stageinfoitem2")
+	self._gostageinfoitem3 = gohelper.findChild(self.viewGO, "#go_info/left/#txt_levelnamecn/stage/#go_stageinfoitem3")
+	self._gostageinfoitem4 = gohelper.findChild(self.viewGO, "#go_info/left/#txt_levelnamecn/stage/#go_stageinfoitem4")
+	self._gostageinfoitem5 = gohelper.findChild(self.viewGO, "#go_info/left/#txt_levelnamecn/stage/#go_stageinfoitem5")
+	self._gostageinfoitem6 = gohelper.findChild(self.viewGO, "#go_info/left/#txt_levelnamecn/stage/#go_stageinfoitem6")
+	self._gostageinfoitem7 = gohelper.findChild(self.viewGO, "#go_info/left/#txt_levelnamecn/stage/#go_stageinfoitem7")
+	self._txtcurindex = gohelper.findChildText(self.viewGO, "#go_info/left/position/center/#txt_curindex")
+	self._txtmaxindex = gohelper.findChildText(self.viewGO, "#go_info/left/position/center/#txt_maxindex")
+	self._btnlast = gohelper.findChildButtonWithAudio(self.viewGO, "#go_info/left/position/#btn_last")
+	self._btnnext = gohelper.findChildButtonWithAudio(self.viewGO, "#go_info/left/position/#btn_next")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "#go_info/left/#txt_desc")
+	self._txtenemylv = gohelper.findChildText(self.viewGO, "#go_info/left/enemylv/#txt_enemylv")
+	self._btnstart = gohelper.findChildButtonWithAudio(self.viewGO, "#go_info/left/btns/#btn_start")
+	self._btnReplay = gohelper.findChildButtonWithAudio(self.viewGO, "#go_info/left/btns/#btn_storyreplay")
+	self._gopart = gohelper.findChild(self.viewGO, "#go_info/left/layout/#go_part")
+	self._gostage = gohelper.findChild(self.viewGO, "#go_info/left/layout/#go_part/#go_stage")
+	self._gostagelvlitem = gohelper.findChild(self.viewGO, "#go_info/left/layout/#go_part/#go_stage/list/#go_stagelvlitem")
+	self._gounlocktype1 = gohelper.findChild(self.viewGO, "#go_info/left/layout/root/mask/#scroll_rewards/Viewport/Content/#go_unlocktype1")
+	self._gounlocktype2 = gohelper.findChild(self.viewGO, "#go_info/left/layout/root/mask/#scroll_rewards/Viewport/Content/#go_unlocktype2")
+	self._gounlocktype3 = gohelper.findChild(self.viewGO, "#go_info/left/layout/root/mask/#scroll_rewards/Viewport/Content/#go_unlocktype3")
+	self._scrollrewards = gohelper.findChildScrollRect(self.viewGO, "#go_info/left/layout/root/mask/#scroll_rewards")
+	self._gorewarditem = gohelper.findChild(self.viewGO, "#go_info/left/layout/root/mask/#scroll_rewards/Viewport/Content/#go_rewarditem")
+	self._godecorate = gohelper.findChild(self.viewGO, "#go_info/left/decorate")
+	self._golevel = gohelper.findChild(self.viewGO, "#go_level")
+	self._anilevel = self._golevel:GetComponent(typeof(UnityEngine.Animator))
+	self._simagelvbg = gohelper.findChildSingleImage(self.viewGO, "#go_level/#simage_lvbg")
+	self._simageleftinfobg = gohelper.findChildSingleImage(self.viewGO, "#go_level/#simage_leftinfobg")
+	self._simagerightinfobg = gohelper.findChildSingleImage(self.viewGO, "#go_level/#simage_rightinfobg")
+	self._goScrollRoot = gohelper.findChild(self.viewGO, "#go_level/#go_scrollRoot")
+	self._goscrolllv = gohelper.findChild(self.viewGO, "#go_level/#go_scrollRoot/#go_scrolllv")
+	self._gofront = gohelper.findChild(self.viewGO, "#go_level/#go_scrollRoot/#go_scrolllv/Viewport/Content/#go_front")
+	self._golvitem = gohelper.findChild(self.viewGO, "#go_level/#go_scrollRoot/#go_scrolllv/Viewport/Content/#go_lvitem")
+	self._goline = gohelper.findChild(self.viewGO, "#go_level/#go_scrollRoot/#go_scrolllv/Viewport/Content/#go_lvitem/#go_line")
+	self._goselected = gohelper.findChild(self.viewGO, "#go_level/#go_scrollRoot/#go_scrolllv/Viewport/Content/#go_lvitem/#go_selected")
+	self._txtselectindex = gohelper.findChildText(self.viewGO, "#go_level/#go_scrollRoot/#go_scrolllv/Viewport/Content/#go_lvitem/#go_selected/#txt_selectindex")
+	self._gopass = gohelper.findChild(self.viewGO, "#go_level/#go_scrollRoot/#go_scrolllv/Viewport/Content/#go_lvitem/#go_pass")
+	self._txtpassindex = gohelper.findChildText(self.viewGO, "#go_level/#go_scrollRoot/#go_scrolllv/Viewport/Content/#go_lvitem/#go_pass/#txt_passindex")
+	self._gounpass = gohelper.findChild(self.viewGO, "#go_level/#go_scrollRoot/#go_scrolllv/Viewport/Content/#go_lvitem/#go_unpass")
+	self._txtunpassindex = gohelper.findChildText(self.viewGO, "#go_level/#go_scrollRoot/#go_scrolllv/Viewport/Content/#go_lvitem/#go_unpass/#txt_unpassindex")
+	self._gorear = gohelper.findChild(self.viewGO, "#go_level/#go_scrollRoot/#go_scrolllv/Viewport/Content/#go_rear")
+	self._txtcurlevelnamecn = gohelper.findChildText(self.viewGO, "#go_level/center/#txt_curlevelnamecn")
+	self._gostagelvitem1 = gohelper.findChild(self.viewGO, "#go_level/center/#txt_curlevelnamecn/stage/#go_stagelvitem1")
+	self._gostagelvitem2 = gohelper.findChild(self.viewGO, "#go_level/center/#txt_curlevelnamecn/stage/#go_stagelvitem2")
+	self._gostagelvitem3 = gohelper.findChild(self.viewGO, "#go_level/center/#txt_curlevelnamecn/stage/#go_stagelvitem3")
+	self._gostagelvitem4 = gohelper.findChild(self.viewGO, "#go_level/center/#txt_curlevelnamecn/stage/#go_stagelvitem4")
+	self._gostagelvitem5 = gohelper.findChild(self.viewGO, "#go_level/center/#txt_curlevelnamecn/stage/#go_stagelvitem5")
+	self._gostagelvitem6 = gohelper.findChild(self.viewGO, "#go_level/center/#txt_curlevelnamecn/stage/#go_stagelvitem6")
+	self._gostagelvitem7 = gohelper.findChild(self.viewGO, "#go_level/center/#txt_curlevelnamecn/stage/#go_stagelvitem7")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnlast:AddClickListener(arg_2_0._btnlastOnClick, arg_2_0)
-	arg_2_0._btnnext:AddClickListener(arg_2_0._btnnextOnClick, arg_2_0)
-	arg_2_0._btnstart:AddClickListener(arg_2_0._btnstartOnClick, arg_2_0)
-	arg_2_0._btnReplay:AddClickListener(arg_2_0._btnreplayOnClick, arg_2_0)
-	arg_2_0:addEventCb(Activity104Controller.instance, Activity104Event.StartAct104BattleReply, arg_2_0._onBattleReply, arg_2_0)
+function SeasonMarketView:addEvents()
+	self._btnlast:AddClickListener(self._btnlastOnClick, self)
+	self._btnnext:AddClickListener(self._btnnextOnClick, self)
+	self._btnstart:AddClickListener(self._btnstartOnClick, self)
+	self._btnReplay:AddClickListener(self._btnreplayOnClick, self)
+	self:addEventCb(Activity104Controller.instance, Activity104Event.StartAct104BattleReply, self._onBattleReply, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnlast:RemoveClickListener()
-	arg_3_0._btnnext:RemoveClickListener()
-	arg_3_0._btnstart:RemoveClickListener()
-	arg_3_0._btnReplay:RemoveClickListener()
-	arg_3_0:removeEventCb(Activity104Controller.instance, Activity104Event.StartAct104BattleReply, arg_3_0._onBattleReply, arg_3_0)
+function SeasonMarketView:removeEvents()
+	self._btnlast:RemoveClickListener()
+	self._btnnext:RemoveClickListener()
+	self._btnstart:RemoveClickListener()
+	self._btnReplay:RemoveClickListener()
+	self:removeEventCb(Activity104Controller.instance, Activity104Event.StartAct104BattleReply, self._onBattleReply, self)
 end
 
-function var_0_0._onBattleReply(arg_4_0, arg_4_1)
-	Activity104Model.instance:onStartAct104BattleReply(arg_4_1)
+function SeasonMarketView:_onBattleReply(msg)
+	Activity104Model.instance:onStartAct104BattleReply(msg)
 end
 
-function var_0_0._btnlastOnClick(arg_5_0)
-	if arg_5_0._layer < 2 then
+function SeasonMarketView:_btnlastOnClick()
+	if self._layer < 2 then
 		return
 	end
 
-	arg_5_0._animatorLeft:Play(UIAnimationName.Switch, 0, 0)
+	self._animatorLeft:Play(UIAnimationName.Switch, 0, 0)
 
-	arg_5_0._layer = arg_5_0._layer - 1
+	self._layer = self._layer - 1
 
-	TaskDispatcher.cancelTask(arg_5_0._delayShowInfo, arg_5_0)
-	TaskDispatcher.runDelay(arg_5_0._delayShowInfo, arg_5_0, 0.2)
+	TaskDispatcher.cancelTask(self._delayShowInfo, self)
+	TaskDispatcher.runDelay(self._delayShowInfo, self, 0.2)
 end
 
-function var_0_0._btnnextOnClick(arg_6_0)
-	if Activity104Model.instance:getAct104CurLayer() <= arg_6_0._layer then
+function SeasonMarketView:_btnnextOnClick()
+	local curLayer = Activity104Model.instance:getAct104CurLayer()
+
+	if curLayer <= self._layer then
 		return
 	end
 
-	arg_6_0._animatorLeft:Play(UIAnimationName.Switch, 0, 0)
+	self._animatorLeft:Play(UIAnimationName.Switch, 0, 0)
 
-	arg_6_0._layer = arg_6_0._layer + 1
+	self._layer = self._layer + 1
 
-	TaskDispatcher.cancelTask(arg_6_0._delayShowInfo, arg_6_0)
-	TaskDispatcher.runDelay(arg_6_0._delayShowInfo, arg_6_0, 0.2)
+	TaskDispatcher.cancelTask(self._delayShowInfo, self)
+	TaskDispatcher.runDelay(self._delayShowInfo, self, 0.2)
 end
 
-function var_0_0._delayShowInfo(arg_7_0)
-	arg_7_0:_showInfo()
-	arg_7_0:_setStages()
+function SeasonMarketView:_delayShowInfo()
+	self:_showInfo()
+	self:_setStages()
 end
 
-function var_0_0._btnstartOnClick(arg_8_0)
-	local var_8_0 = ActivityEnum.Activity.Season
-	local var_8_1 = SeasonConfig.instance:getSeasonEpisodeCo(var_8_0, arg_8_0._layer).episodeId
+function SeasonMarketView:_btnstartOnClick()
+	local actId = ActivityEnum.Activity.Season
+	local episodeId = SeasonConfig.instance:getSeasonEpisodeCo(actId, self._layer).episodeId
 
-	Activity104Rpc.instance:sendBeforeStartAct104BattleRequest(var_8_0, arg_8_0._layer, var_8_1)
+	Activity104Rpc.instance:sendBeforeStartAct104BattleRequest(actId, self._layer, episodeId)
 end
 
-function var_0_0._btnreplayOnClick(arg_9_0)
-	local var_9_0 = ActivityEnum.Activity.Season
-	local var_9_1 = SeasonConfig.instance:getSeasonEpisodeCo(var_9_0, arg_9_0._layer)
+function SeasonMarketView:_btnreplayOnClick()
+	local actId = ActivityEnum.Activity.Season
+	local co = SeasonConfig.instance:getSeasonEpisodeCo(actId, self._layer)
 
-	if not var_9_1 or var_9_1.afterStoryId == 0 then
+	if not co or co.afterStoryId == 0 then
 		return
 	end
 
-	StoryController.instance:playStory(var_9_1.afterStoryId)
+	StoryController.instance:playStory(co.afterStoryId)
 end
 
-function var_0_0._editableInitView(arg_10_0)
-	arg_10_0._simagebg1:LoadImage(ResUrl.getSeasonIcon("full/bgyahei.png"))
-	arg_10_0._simagedecorate1:LoadImage(ResUrl.getSeasonIcon("img_circle.png"))
-	arg_10_0._simageleftinfobg:LoadImage(ResUrl.getV1A2SeasonIcon("msg_xia.png"))
-	arg_10_0._simagerightinfobg:LoadImage(ResUrl.getV1A2SeasonIcon("msg_shang.png"))
+function SeasonMarketView:_editableInitView()
+	self._simagebg1:LoadImage(ResUrl.getSeasonIcon("full/bgyahei.png"))
+	self._simagedecorate1:LoadImage(ResUrl.getSeasonIcon("img_circle.png"))
+	self._simageleftinfobg:LoadImage(ResUrl.getV1A2SeasonIcon("msg_xia.png"))
+	self._simagerightinfobg:LoadImage(ResUrl.getV1A2SeasonIcon("msg_shang.png"))
 end
 
-function var_0_0.onUpdateParam(arg_11_0)
+function SeasonMarketView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_12_0)
-	arg_12_0._layer = arg_12_0.viewParam and arg_12_0.viewParam.tarLayer or Activity104Model.instance:getAct104CurLayer()
+function SeasonMarketView:onOpen()
+	self._layer = self.viewParam and self.viewParam.tarLayer or Activity104Model.instance:getAct104CurLayer()
 
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_checkpoint_chain)
-	arg_12_0:resetData()
-	TaskDispatcher.cancelTask(arg_12_0._showInfoByOpen, arg_12_0)
+	self:resetData()
+	TaskDispatcher.cancelTask(self._showInfoByOpen, self)
 
-	if arg_12_0:isShowLevel() then
-		gohelper.setActive(arg_12_0._golevel, true)
-		gohelper.setActive(arg_12_0._goinfo, false)
+	if self:isShowLevel() then
+		gohelper.setActive(self._golevel, true)
+		gohelper.setActive(self._goinfo, false)
 
-		arg_12_0._anilevel.speed = 0
+		self._anilevel.speed = 0
 
-		arg_12_0:_setLevels()
-		arg_12_0:_setStages()
-		Activity104Model.instance:setMakertLayerMark(ActivityEnum.Activity.Season, arg_12_0._layer)
-		TaskDispatcher.runDelay(arg_12_0._showInfoByOpen, arg_12_0, 2)
+		self:_setLevels()
+		self:_setStages()
+		Activity104Model.instance:setMakertLayerMark(ActivityEnum.Activity.Season, self._layer)
+		TaskDispatcher.runDelay(self._showInfoByOpen, self, 2)
 	else
-		arg_12_0:_showInfoByOpen()
+		self:_showInfoByOpen()
 	end
 end
 
-function var_0_0.resetData(arg_13_0)
-	arg_13_0._showLvItems = {}
-	arg_13_0._showStageItems = {}
-	arg_13_0._infoStageItems = {}
-	arg_13_0._equipReward = {}
-	arg_13_0._rewardItems = {}
-	arg_13_0._partStageItems = {}
+function SeasonMarketView:resetData()
+	self._showLvItems = {}
+	self._showStageItems = {}
+	self._infoStageItems = {}
+	self._equipReward = {}
+	self._rewardItems = {}
+	self._partStageItems = {}
 end
 
-function var_0_0.isShowLevel(arg_14_0)
-	return Activity104Model.instance:isCanPlayMakertLayerAnim(ActivityEnum.Activity.Season, arg_14_0._layer)
+function SeasonMarketView:isShowLevel()
+	return Activity104Model.instance:isCanPlayMakertLayerAnim(ActivityEnum.Activity.Season, self._layer)
 end
 
-function var_0_0._showInfoByOpen(arg_15_0)
+function SeasonMarketView:_showInfoByOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_checkpoint_chain_end)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_theft_open)
-	gohelper.setActive(arg_15_0._golevel, false)
-	gohelper.setActive(arg_15_0._goinfo, true)
-	arg_15_0:_showInfo()
-	arg_15_0:_setStages()
+	gohelper.setActive(self._golevel, false)
+	gohelper.setActive(self._goinfo, true)
+	self:_showInfo()
+	self:_setStages()
 end
 
-function var_0_0._setLevels(arg_16_0)
-	local var_16_0 = SeasonConfig.instance:getSeasonEpisodeCo(ActivityEnum.Activity.Season, arg_16_0._layer)
+function SeasonMarketView:_setLevels()
+	local episodeCo = SeasonConfig.instance:getSeasonEpisodeCo(ActivityEnum.Activity.Season, self._layer)
 
-	arg_16_0._txtcurlevelnamecn.text = var_16_0.stageName
+	self._txtcurlevelnamecn.text = episodeCo.stageName
 
-	local var_16_1 = Activity104Model.instance:getMaxLayer()
-	local var_16_2 = Activity104Model.instance:getAct104CurLayer()
+	local maxLayer = Activity104Model.instance:getMaxLayer()
+	local curLayer = Activity104Model.instance:getAct104CurLayer()
 
-	if arg_16_0._layer <= 4 then
-		gohelper.setActive(arg_16_0._gofront, true)
-		gohelper.setActive(arg_16_0._gorear, false)
+	if self._layer <= 4 then
+		gohelper.setActive(self._gofront, true)
+		gohelper.setActive(self._gorear, false)
 
-		for iter_16_0 = 1, 6 do
-			local var_16_3 = gohelper.cloneInPlace(arg_16_0._golvitem)
+		for i = 1, 6 do
+			local child = gohelper.cloneInPlace(self._golvitem)
 
-			arg_16_0._showLvItems[iter_16_0] = SeasonMarketShowLevelItem.New()
+			self._showLvItems[i] = SeasonMarketShowLevelItem.New()
 
-			arg_16_0._showLvItems[iter_16_0]:init(var_16_3, iter_16_0, var_16_2, var_16_1)
+			self._showLvItems[i]:init(child, i, curLayer, maxLayer)
 		end
-	elseif arg_16_0._layer >= var_16_1 - 3 then
-		gohelper.setActive(arg_16_0._gofront, false)
-		gohelper.setActive(arg_16_0._gorear, true)
+	elseif self._layer >= maxLayer - 3 then
+		gohelper.setActive(self._gofront, false)
+		gohelper.setActive(self._gorear, true)
 
-		for iter_16_1 = var_16_1 - 5, var_16_1 do
-			local var_16_4 = gohelper.cloneInPlace(arg_16_0._golvitem)
+		for i = maxLayer - 5, maxLayer do
+			local child = gohelper.cloneInPlace(self._golvitem)
 
-			arg_16_0._showLvItems[iter_16_1] = SeasonMarketShowLevelItem.New()
+			self._showLvItems[i] = SeasonMarketShowLevelItem.New()
 
-			arg_16_0._showLvItems[iter_16_1]:init(var_16_4, iter_16_1, var_16_2, var_16_1)
+			self._showLvItems[i]:init(child, i, curLayer, maxLayer)
 		end
 	else
-		gohelper.setActive(arg_16_0._gofront, false)
-		gohelper.setActive(arg_16_0._gorear, var_16_1 - arg_16_0._layer < 2)
+		gohelper.setActive(self._gofront, false)
+		gohelper.setActive(self._gorear, maxLayer - self._layer < 2)
 
-		for iter_16_2 = arg_16_0._layer - 4, arg_16_0._layer + 4 do
-			local var_16_5 = gohelper.cloneInPlace(arg_16_0._golvitem)
+		for i = self._layer - 4, self._layer + 4 do
+			local child = gohelper.cloneInPlace(self._golvitem)
 
-			arg_16_0._showLvItems[iter_16_2] = SeasonMarketShowLevelItem.New()
+			self._showLvItems[i] = SeasonMarketShowLevelItem.New()
 
-			arg_16_0._showLvItems[iter_16_2]:init(var_16_5, iter_16_2, var_16_2, var_16_1)
+			self._showLvItems[i]:init(child, i, curLayer, maxLayer)
 		end
 	end
 
-	TaskDispatcher.runDelay(arg_16_0._delayShowItem, arg_16_0, 0.1)
-	gohelper.setAsLastSibling(arg_16_0._gorear)
+	TaskDispatcher.runDelay(self._delayShowItem, self, 0.1)
+	gohelper.setAsLastSibling(self._gorear)
 end
 
-function var_0_0._delayShowItem(arg_17_0)
-	local var_17_0, var_17_1 = transformhelper.getPos(arg_17_0._showLvItems[arg_17_0._layer].point.transform)
+function SeasonMarketView:_delayShowItem()
+	local posPointX, posPointY = transformhelper.getPos(self._showLvItems[self._layer].point.transform)
 
-	transformhelper.setPos(arg_17_0._goScrollRoot.transform, -var_17_0, 0, 0)
+	transformhelper.setPos(self._goScrollRoot.transform, -posPointX, 0, 0)
 
-	local var_17_2 = recthelper.getAnchorX(arg_17_0._goScrollRoot.transform)
+	local posX = recthelper.getAnchorX(self._goScrollRoot.transform)
 
-	recthelper.setAnchorX(arg_17_0._goScrollRoot.transform, var_17_2 + 115.2)
+	recthelper.setAnchorX(self._goScrollRoot.transform, posX + 115.2)
 
-	for iter_17_0, iter_17_1 in pairs(arg_17_0._showLvItems) do
-		iter_17_1:show()
+	for _, v in pairs(self._showLvItems) do
+		v:show()
 	end
 
-	arg_17_0._anilevel.speed = 1
+	self._anilevel.speed = 1
 end
 
-function var_0_0._setStages(arg_18_0)
-	local var_18_0 = SeasonConfig.instance:getSeasonEpisodeCo(ActivityEnum.Activity.Season, arg_18_0._layer).stage
+function SeasonMarketView:_setStages()
+	local stage = SeasonConfig.instance:getSeasonEpisodeCo(ActivityEnum.Activity.Season, self._layer).stage
 
-	gohelper.setActive(arg_18_0._gostageinfoitem7, var_18_0 == 7)
-	gohelper.setActive(arg_18_0._gostagelvitem7, var_18_0 == 7)
+	gohelper.setActive(self._gostageinfoitem7, stage == 7)
+	gohelper.setActive(self._gostagelvitem7, stage == 7)
 
-	for iter_18_0 = 1, 7 do
-		local var_18_1 = gohelper.findChildImage(arg_18_0["_gostageinfoitem" .. iter_18_0], "dark")
-		local var_18_2 = gohelper.findChildImage(arg_18_0["_gostageinfoitem" .. iter_18_0], "light")
-		local var_18_3 = gohelper.findChildImage(arg_18_0["_gostagelvitem" .. iter_18_0], "dark")
-		local var_18_4 = gohelper.findChildImage(arg_18_0["_gostagelvitem" .. iter_18_0], "light")
+	for i = 1, 7 do
+		local infoDark = gohelper.findChildImage(self["_gostageinfoitem" .. i], "dark")
+		local infoLight = gohelper.findChildImage(self["_gostageinfoitem" .. i], "light")
+		local lvDark = gohelper.findChildImage(self["_gostagelvitem" .. i], "dark")
+		local lvLight = gohelper.findChildImage(self["_gostagelvitem" .. i], "light")
 
-		gohelper.setActive(var_18_2.gameObject, iter_18_0 <= var_18_0)
-		gohelper.setActive(var_18_1.gameObject, var_18_0 < iter_18_0)
-		gohelper.setActive(var_18_4.gameObject, iter_18_0 <= var_18_0)
-		gohelper.setActive(var_18_3.gameObject, var_18_0 < iter_18_0)
+		gohelper.setActive(infoLight.gameObject, i <= stage)
+		gohelper.setActive(infoDark.gameObject, stage < i)
+		gohelper.setActive(lvLight.gameObject, i <= stage)
+		gohelper.setActive(lvDark.gameObject, stage < i)
 
-		local var_18_5 = iter_18_0 == 7 and "#B83838" or "#FFFFFF"
+		local color = i == 7 and "#B83838" or "#FFFFFF"
 
-		SLFramework.UGUI.GuiHelper.SetColor(var_18_2, var_18_5)
-		SLFramework.UGUI.GuiHelper.SetColor(var_18_4, var_18_5)
+		SLFramework.UGUI.GuiHelper.SetColor(infoLight, color)
+		SLFramework.UGUI.GuiHelper.SetColor(lvLight, color)
 	end
 end
 
-function var_0_0._showInfo(arg_19_0)
-	arg_19_0:_setInfo()
-	arg_19_0:_setParts()
+function SeasonMarketView:_showInfo()
+	self:_setInfo()
+	self:_setParts()
 end
 
-function var_0_0._setInfo(arg_20_0)
-	local var_20_0 = SeasonConfig.instance:getSeasonEpisodeCo(ActivityEnum.Activity.Season, arg_20_0._layer)
+function SeasonMarketView:_setInfo()
+	local episodeCo = SeasonConfig.instance:getSeasonEpisodeCo(ActivityEnum.Activity.Season, self._layer)
 
-	if not var_20_0 then
+	if not episodeCo then
 		return
 	end
 
-	local var_20_1 = Activity104Model.instance:isEpisodeAfterStory(ActivityEnum.Activity.Season, arg_20_0._layer)
+	local afterStory = Activity104Model.instance:isEpisodeAfterStory(ActivityEnum.Activity.Season, self._layer)
 
-	gohelper.setActive(arg_20_0._btnReplay, var_20_1 and var_20_0.afterStoryId ~= 0 or false)
+	gohelper.setActive(self._btnReplay, afterStory and episodeCo.afterStoryId ~= 0 or false)
 
-	arg_20_0._txtlevelnamecn.text = var_20_0.stageName
-	arg_20_0._txtdesc.text = DungeonConfig.instance:getEpisodeCO(var_20_0.episodeId).desc
-	arg_20_0._txtcurindex.text = string.format("%02d", arg_20_0._layer)
+	self._txtlevelnamecn.text = episodeCo.stageName
+	self._txtdesc.text = DungeonConfig.instance:getEpisodeCO(episodeCo.episodeId).desc
+	self._txtcurindex.text = string.format("%02d", self._layer)
 
-	local var_20_2 = Activity104Model.instance:getMaxLayer()
+	local maxLayer = Activity104Model.instance:getMaxLayer()
 
-	arg_20_0._txtmaxindex.text = string.format("%02d", var_20_2)
+	self._txtmaxindex.text = string.format("%02d", maxLayer)
 
-	local var_20_3 = Activity104Model.instance:getAct104CurStage()
-	local var_20_4 = Activity104Model.instance:isNextLayerNewStage(arg_20_0._layer)
+	local stage = Activity104Model.instance:getAct104CurStage()
+	local isNewStage = Activity104Model.instance:isNextLayerNewStage(self._layer)
 
-	gohelper.setActive(arg_20_0._godecorate, var_20_4)
-	arg_20_0._simagedecorate2:LoadImage(ResUrl.getSeasonMarketIcon(var_20_0.stagePicture))
-	gohelper.setActive(arg_20_0._gorewarditem, false)
+	gohelper.setActive(self._godecorate, isNewStage)
+	self._simagedecorate2:LoadImage(ResUrl.getSeasonMarketIcon(episodeCo.stagePicture))
+	gohelper.setActive(self._gorewarditem, false)
 
-	local var_20_5 = DungeonModel.instance:getEpisodeFirstBonus(var_20_0.episodeId)
+	local rewards = DungeonModel.instance:getEpisodeFirstBonus(episodeCo.episodeId)
 
-	for iter_20_0 = 2, math.max(#arg_20_0._rewardItems - 1, #var_20_5) + 1 do
-		local var_20_6 = arg_20_0._rewardItems[iter_20_0] or arg_20_0:createRewardItem(iter_20_0)
+	for i = 2, math.max(#self._rewardItems - 1, #rewards) + 1 do
+		local item = self._rewardItems[i] or self:createRewardItem(i)
 
-		arg_20_0:refreshRewardItem(var_20_6, var_20_5[iter_20_0 - 1])
+		self:refreshRewardItem(item, rewards[i - 1])
 	end
 
-	arg_20_0:refreshEquipCardItem()
+	self:refreshEquipCardItem()
 
-	arg_20_0._btnlast.button.interactable = arg_20_0._layer > 1
-	arg_20_0._btnnext.button.interactable = arg_20_0._layer < Activity104Model.instance:getAct104CurLayer()
+	self._btnlast.button.interactable = self._layer > 1
+	self._btnnext.button.interactable = self._layer < Activity104Model.instance:getAct104CurLayer()
 end
 
-function var_0_0.refreshEquipCardItem(arg_21_0)
-	if not arg_21_0._rewardItems[1] then
-		arg_21_0._rewardItems[1] = arg_21_0:createRewardItem(1)
+function SeasonMarketView:refreshEquipCardItem()
+	if not self._rewardItems[1] then
+		self._rewardItems[1] = self:createRewardItem(1)
 	end
 
-	local var_21_0 = SeasonConfig.instance:getSeasonEpisodeCo(ActivityEnum.Activity.Season, arg_21_0._layer)
+	local episodeCo = SeasonConfig.instance:getSeasonEpisodeCo(ActivityEnum.Activity.Season, self._layer)
 
-	gohelper.setActive(arg_21_0._rewardItems[1].go, var_21_0.firstPassEquipId > 0)
+	gohelper.setActive(self._rewardItems[1].go, episodeCo.firstPassEquipId > 0)
 
-	if var_21_0.firstPassEquipId > 0 then
-		local var_21_1 = arg_21_0._layer < Activity104Model.instance:getAct104CurLayer() or Activity104Model.instance:getEpisodeState(arg_21_0._layer) > 0
+	if episodeCo.firstPassEquipId > 0 then
+		local hasGetReward = self._layer < Activity104Model.instance:getAct104CurLayer() or Activity104Model.instance:getEpisodeState(self._layer) > 0
 
-		if not arg_21_0._rewardItems[1].itemIcon then
-			arg_21_0._rewardItems[1].itemIcon = SeasonCelebrityCardItem.New()
+		if not self._rewardItems[1].itemIcon then
+			self._rewardItems[1].itemIcon = SeasonCelebrityCardItem.New()
 
-			arg_21_0._rewardItems[1].itemIcon:setColorDark(var_21_1)
-			arg_21_0._rewardItems[1].itemIcon:init(arg_21_0._rewardItems[1].cardParent, var_21_0.firstPassEquipId)
+			self._rewardItems[1].itemIcon:setColorDark(hasGetReward)
+			self._rewardItems[1].itemIcon:init(self._rewardItems[1].cardParent, episodeCo.firstPassEquipId)
 		else
-			arg_21_0._rewardItems[1].itemIcon:setColorDark(var_21_1)
-			arg_21_0._rewardItems[1].itemIcon:reset(var_21_0.firstPassEquipId)
+			self._rewardItems[1].itemIcon:setColorDark(hasGetReward)
+			self._rewardItems[1].itemIcon:reset(episodeCo.firstPassEquipId)
 		end
 
-		gohelper.setActive(arg_21_0._rewardItems[1].cardParent, true)
-		gohelper.setActive(arg_21_0._rewardItems[1].itemParent, false)
-		gohelper.setActive(arg_21_0._rewardItems[1].receive, var_21_1)
+		gohelper.setActive(self._rewardItems[1].cardParent, true)
+		gohelper.setActive(self._rewardItems[1].itemParent, false)
+		gohelper.setActive(self._rewardItems[1].receive, hasGetReward)
 	end
 end
 
-function var_0_0.createRewardItem(arg_22_0, arg_22_1)
-	local var_22_0 = arg_22_0:getUserDataTb_()
-	local var_22_1 = gohelper.cloneInPlace(arg_22_0._gorewarditem, "reward_" .. tostring(arg_22_1))
+function SeasonMarketView:createRewardItem(index)
+	local item = self:getUserDataTb_()
+	local itemGo = gohelper.cloneInPlace(self._gorewarditem, "reward_" .. tostring(index))
 
-	var_22_0.go = var_22_1
-	var_22_0.itemParent = gohelper.findChild(var_22_1, "go_prop")
-	var_22_0.cardParent = gohelper.findChild(var_22_1, "go_card")
-	var_22_0.receive = gohelper.findChild(var_22_1, "go_receive")
-	arg_22_0._rewardItems[arg_22_1] = var_22_0
+	item.go = itemGo
+	item.itemParent = gohelper.findChild(itemGo, "go_prop")
+	item.cardParent = gohelper.findChild(itemGo, "go_card")
+	item.receive = gohelper.findChild(itemGo, "go_receive")
+	self._rewardItems[index] = item
 
-	return var_22_0
+	return item
 end
 
-function var_0_0.refreshRewardItem(arg_23_0, arg_23_1, arg_23_2)
-	if not arg_23_2 or not next(arg_23_2) then
-		gohelper.setActive(arg_23_1.go, false)
+function SeasonMarketView:refreshRewardItem(item, itemInfo)
+	if not itemInfo or not next(itemInfo) then
+		gohelper.setActive(item.go, false)
 
 		return
 	end
 
-	if not arg_23_1.itemIcon then
-		arg_23_1.itemIcon = IconMgr.instance:getCommonPropItemIcon(arg_23_1.itemParent)
+	if not item.itemIcon then
+		item.itemIcon = IconMgr.instance:getCommonPropItemIcon(item.itemParent)
 	end
 
-	gohelper.setActive(arg_23_1.cardParent, false)
-	gohelper.setActive(arg_23_1.itemParent, true)
-	arg_23_1.itemIcon:setMOValue(tonumber(arg_23_2[1]), tonumber(arg_23_2[2]), tonumber(arg_23_2[3]), nil, true)
-	arg_23_1.itemIcon:isShowCount(tonumber(arg_23_2[1]) ~= MaterialEnum.MaterialType.Hero)
-	arg_23_1.itemIcon:setCountFontSize(40)
-	arg_23_1.itemIcon:showStackableNum2()
-	arg_23_1.itemIcon:setHideLvAndBreakFlag(true)
-	arg_23_1.itemIcon:hideEquipLvAndBreak(true)
-	gohelper.setActive(arg_23_1.go, true)
+	gohelper.setActive(item.cardParent, false)
+	gohelper.setActive(item.itemParent, true)
+	item.itemIcon:setMOValue(tonumber(itemInfo[1]), tonumber(itemInfo[2]), tonumber(itemInfo[3]), nil, true)
+	item.itemIcon:isShowCount(tonumber(itemInfo[1]) ~= MaterialEnum.MaterialType.Hero)
+	item.itemIcon:setCountFontSize(40)
+	item.itemIcon:showStackableNum2()
+	item.itemIcon:setHideLvAndBreakFlag(true)
+	item.itemIcon:hideEquipLvAndBreak(true)
+	gohelper.setActive(item.go, true)
 
-	local var_23_0 = arg_23_0._layer < Activity104Model.instance:getAct104CurLayer() or Activity104Model.instance:getEpisodeState(arg_23_0._layer) > 0
+	local hasGetReward = self._layer < Activity104Model.instance:getAct104CurLayer() or Activity104Model.instance:getEpisodeState(self._layer) > 0
 
-	gohelper.setActive(arg_23_1.receive, var_23_0)
+	gohelper.setActive(item.receive, hasGetReward)
 
-	local var_23_1 = var_23_0 and "#7b7b7b" or "#ffffff"
+	local color = hasGetReward and "#7b7b7b" or "#ffffff"
 
-	arg_23_1.itemIcon:setItemColor(var_23_1)
+	item.itemIcon:setItemColor(color)
 end
 
-function var_0_0._setParts(arg_24_0)
-	local var_24_0 = SeasonConfig.instance:getSeasonEpisodeCo(ActivityEnum.Activity.Season, arg_24_0._layer)
+function SeasonMarketView:_setParts()
+	local episodeCo = SeasonConfig.instance:getSeasonEpisodeCo(ActivityEnum.Activity.Season, self._layer)
 
-	arg_24_0._txtenemylv.text = HeroConfig.instance:getCommonLevelDisplay(var_24_0.level)
+	self._txtenemylv.text = HeroConfig.instance:getCommonLevelDisplay(episodeCo.level)
 
-	if arg_24_0._layer < Activity104Model.instance:getAct104CurLayer() or arg_24_0._layer >= Activity104Model.instance:getMaxLayer() then
-		gohelper.setActive(arg_24_0._gopart, false)
-		gohelper.setActive(arg_24_0._gounlocktype1, false)
-		gohelper.setActive(arg_24_0._gounlocktype2, false)
-		gohelper.setActive(arg_24_0._gounlocktype3, false)
+	if self._layer < Activity104Model.instance:getAct104CurLayer() or self._layer >= Activity104Model.instance:getMaxLayer() then
+		gohelper.setActive(self._gopart, false)
+		gohelper.setActive(self._gounlocktype1, false)
+		gohelper.setActive(self._gounlocktype2, false)
+		gohelper.setActive(self._gounlocktype3, false)
 	else
-		local var_24_1 = Activity104Model.instance:isNextLayerNewStage(arg_24_0._layer)
+		local isNewStage = Activity104Model.instance:isNextLayerNewStage(self._layer)
 
-		gohelper.setActive(arg_24_0._gostage, var_24_1)
+		gohelper.setActive(self._gostage, isNewStage)
 
-		if var_24_1 then
-			local var_24_2 = Activity104Model.instance:getAct104CurStage()
+		if isNewStage then
+			local stage = Activity104Model.instance:getAct104CurStage()
 
-			arg_24_0:_showPartStageItem(var_24_2 + 1)
+			self:_showPartStageItem(stage + 1)
 		end
 
-		local var_24_3 = string.splitToNumber(var_24_0.unlockEquipIndex, "#")
+		local newUnlocks = string.splitToNumber(episodeCo.unlockEquipIndex, "#")
 
-		if #var_24_3 > 0 then
-			gohelper.setActive(arg_24_0._gounlocktype1, var_24_3[1] < 5)
-			gohelper.setActive(arg_24_0._gounlocktype2, var_24_3[1] > 4 and var_24_3[1] < 9)
-			gohelper.setActive(arg_24_0._gounlocktype3, var_24_3[1] == 9)
+		if #newUnlocks > 0 then
+			gohelper.setActive(self._gounlocktype1, newUnlocks[1] < 5)
+			gohelper.setActive(self._gounlocktype2, newUnlocks[1] > 4 and newUnlocks[1] < 9)
+			gohelper.setActive(self._gounlocktype3, newUnlocks[1] == 9)
 		end
 
-		gohelper.setActive(arg_24_0._gopart, var_24_1 or #var_24_3 > 0)
+		gohelper.setActive(self._gopart, isNewStage or #newUnlocks > 0)
 	end
 end
 
-var_0_0.UnLockStageItemAlpha = 1
-var_0_0.LockStageItemAlpha = 0.3
+SeasonMarketView.UnLockStageItemAlpha = 1
+SeasonMarketView.LockStageItemAlpha = 0.3
 
-function var_0_0._showPartStageItem(arg_25_0, arg_25_1)
-	if arg_25_1 < 7 then
-		if arg_25_0._partStageItems[7] then
-			gohelper.setActive(arg_25_0._partStageItems[7].go, false)
+function SeasonMarketView:_showPartStageItem(stage)
+	if stage < 7 then
+		if self._partStageItems[7] then
+			gohelper.setActive(self._partStageItems[7].go, false)
 		end
 
-		for iter_25_0 = 1, 6 do
-			if not arg_25_0._partStageItems[iter_25_0] then
-				local var_25_0 = arg_25_0:getUserDataTb_()
-				local var_25_1 = gohelper.cloneInPlace(arg_25_0._gostagelvlitem, "partstageitem_" .. tostring(iter_25_0))
+		for i = 1, 6 do
+			if not self._partStageItems[i] then
+				local item = self:getUserDataTb_()
+				local itemGo = gohelper.cloneInPlace(self._gostagelvlitem, "partstageitem_" .. tostring(i))
 
-				var_25_0.go = var_25_1
-				var_25_0.current = gohelper.findChild(var_25_1, "current")
-				var_25_0.next = gohelper.findChild(var_25_1, "next")
-				var_25_0.canvasgroup = gohelper.onceAddComponent(var_25_1, typeof(UnityEngine.CanvasGroup))
-				arg_25_0._partStageItems[iter_25_0] = var_25_0
+				item.go = itemGo
+				item.current = gohelper.findChild(itemGo, "current")
+				item.next = gohelper.findChild(itemGo, "next")
+				item.canvasgroup = gohelper.onceAddComponent(itemGo, typeof(UnityEngine.CanvasGroup))
+				self._partStageItems[i] = item
 			end
 
-			gohelper.setActive(arg_25_0._partStageItems[iter_25_0].go, true)
-			gohelper.setActive(arg_25_0._partStageItems[iter_25_0].next, iter_25_0 == arg_25_1)
-			gohelper.setActive(arg_25_0._partStageItems[iter_25_0].current, iter_25_0 ~= arg_25_1)
+			gohelper.setActive(self._partStageItems[i].go, true)
+			gohelper.setActive(self._partStageItems[i].next, i == stage)
+			gohelper.setActive(self._partStageItems[i].current, i ~= stage)
 
-			arg_25_0._partStageItems[iter_25_0].canvasgroup.alpha = iter_25_0 <= arg_25_1 and var_0_0.UnLockStageItemAlpha or var_0_0.LockStageItemAlpha
+			self._partStageItems[i].canvasgroup.alpha = i <= stage and SeasonMarketView.UnLockStageItemAlpha or SeasonMarketView.LockStageItemAlpha
 		end
 	else
-		for iter_25_1 = 1, 7 do
-			if not arg_25_0._partStageItems[iter_25_1] then
-				local var_25_2 = arg_25_0:getUserDataTb_()
-				local var_25_3 = gohelper.cloneInPlace(arg_25_0._gostagelvlitem, "partstageitem_" .. tostring(iter_25_1))
+		for i = 1, 7 do
+			if not self._partStageItems[i] then
+				local item = self:getUserDataTb_()
+				local itemGo = gohelper.cloneInPlace(self._gostagelvlitem, "partstageitem_" .. tostring(i))
 
-				var_25_2.go = var_25_3
-				var_25_2.current = gohelper.findChild(var_25_3, "current")
-				var_25_2.next = gohelper.findChild(var_25_3, "next")
-				var_25_2.canvasgroup = gohelper.onceAddComponent(var_25_3, typeof(UnityEngine.CanvasGroup))
-				arg_25_0._partStageItems[iter_25_1] = var_25_2
+				item.go = itemGo
+				item.current = gohelper.findChild(itemGo, "current")
+				item.next = gohelper.findChild(itemGo, "next")
+				item.canvasgroup = gohelper.onceAddComponent(itemGo, typeof(UnityEngine.CanvasGroup))
+				self._partStageItems[i] = item
 			end
 
-			gohelper.setActive(arg_25_0._partStageItems[iter_25_1].go, true)
-			gohelper.setActive(arg_25_0._partStageItems[iter_25_1].next, iter_25_1 == arg_25_1)
-			gohelper.setActive(arg_25_0._partStageItems[iter_25_1].current, iter_25_1 ~= arg_25_1)
+			gohelper.setActive(self._partStageItems[i].go, true)
+			gohelper.setActive(self._partStageItems[i].next, i == stage)
+			gohelper.setActive(self._partStageItems[i].current, i ~= stage)
 
-			arg_25_0._partStageItems[iter_25_1].canvasgroup.alpha = iter_25_1 <= arg_25_1 and var_0_0.UnLockStageItemAlpha or var_0_0.LockStageItemAlpha
+			self._partStageItems[i].canvasgroup.alpha = i <= stage and SeasonMarketView.UnLockStageItemAlpha or SeasonMarketView.LockStageItemAlpha
 		end
 	end
 end
 
-function var_0_0.onClose(arg_26_0)
-	TaskDispatcher.cancelTask(arg_26_0._delayShowInfo, arg_26_0)
+function SeasonMarketView:onClose()
+	TaskDispatcher.cancelTask(self._delayShowInfo, self)
 end
 
-function var_0_0.onDestroyView(arg_27_0)
-	TaskDispatcher.cancelTask(arg_27_0._showInfoByOpen, arg_27_0)
-	arg_27_0._simagedecorate1:UnLoadImage()
-	arg_27_0._simagedecorate2:UnLoadImage()
-	arg_27_0._simageleftinfobg:UnLoadImage()
-	arg_27_0._simagerightinfobg:UnLoadImage()
-	arg_27_0._simagebg1:UnLoadImage()
+function SeasonMarketView:onDestroyView()
+	TaskDispatcher.cancelTask(self._showInfoByOpen, self)
+	self._simagedecorate1:UnLoadImage()
+	self._simagedecorate2:UnLoadImage()
+	self._simageleftinfobg:UnLoadImage()
+	self._simagerightinfobg:UnLoadImage()
+	self._simagebg1:UnLoadImage()
 
-	if arg_27_0._showLvItems then
-		for iter_27_0, iter_27_1 in pairs(arg_27_0._showLvItems) do
-			iter_27_1:destroy()
+	if self._showLvItems then
+		for _, v in pairs(self._showLvItems) do
+			v:destroy()
 		end
 
-		arg_27_0._showLvItems = nil
+		self._showLvItems = nil
 	end
 end
 
-return var_0_0
+return SeasonMarketView

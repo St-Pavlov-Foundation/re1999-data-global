@@ -1,49 +1,51 @@
-﻿module("modules.logic.fight.view.FightExPointCommonView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightExPointCommonView.lua
 
-local var_0_0 = class("FightExPointCommonView", FightBaseView)
+module("modules.logic.fight.view.FightExPointCommonView", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1)
-	arg_1_0.entityData = arg_1_1
+local FightExPointCommonView = class("FightExPointCommonView", FightBaseView)
+
+function FightExPointCommonView:onConstructor(entityData)
+	self.entityData = entityData
 end
 
-function var_0_0.onInitView(arg_2_0)
+function FightExPointCommonView:onInitView()
 	return
 end
 
-function var_0_0.addEvents(arg_3_0)
-	arg_3_0:com_registMsg(FightMsgId.GetExPointView, arg_3_0.onGetExPointView)
+function FightExPointCommonView:addEvents()
+	self:com_registMsg(FightMsgId.GetExPointView, self.onGetExPointView)
 end
 
-function var_0_0.removeEvents(arg_4_0)
+function FightExPointCommonView:removeEvents()
 	return
 end
 
-function var_0_0.onGetExPointView(arg_5_0, arg_5_1)
-	if arg_5_1 == arg_5_0.entityData.id and arg_5_0.commonExPoint and not arg_5_0.commonExPoint:checkNeedShieldExPoint() then
-		arg_5_0:com_replyMsg(FightMsgId.GetExPointView, arg_5_0)
+function FightExPointCommonView:onGetExPointView(entityId)
+	if entityId == self.entityData.id and self.commonExPoint and not self.commonExPoint:checkNeedShieldExPoint() then
+		self:com_replyMsg(FightMsgId.GetExPointView, self)
 	end
 end
 
-function var_0_0.onOpen(arg_6_0)
-	local var_6_0 = FightHelper.getEntity(arg_6_0.entityData.id)
+function FightExPointCommonView:onOpen()
+	local entity = FightHelper.getEntity(self.entityData.id)
 
-	if not var_6_0 then
+	if not entity then
 		return
 	end
 
-	arg_6_0.commonExPoint = FightNameUIExPointMgr.New()
+	self.commonExPoint = FightNameUIExPointMgr.New()
 
-	arg_6_0.commonExPoint:initMgr(arg_6_0.viewGO, var_6_0)
+	self.commonExPoint:initMgr(self.viewGO, entity)
 end
 
-function var_0_0.onClose(arg_7_0)
-	if arg_7_0.commonExPoint then
-		arg_7_0.commonExPoint:beforeDestroy()
+function FightExPointCommonView:onClose()
+	if self.commonExPoint then
+		self.commonExPoint:beforeDestroy()
 	end
 end
 
-function var_0_0.onDestroyView(arg_8_0)
+function FightExPointCommonView:onDestroyView()
 	return
 end
 
-return var_0_0
+return FightExPointCommonView

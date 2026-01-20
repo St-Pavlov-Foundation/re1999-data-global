@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity2_0.enter.define.VersionActivity2_0Enum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_0/enter/define/VersionActivity2_0Enum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity2_0.enter.define.VersionActivity2_0Enum", package.seeall)
 
-var_0_0.ActivityId = {
+local VersionActivity2_0Enum = _M
+
+VersionActivity2_0Enum.ActivityId = {
 	EnterView = 12002,
 	DungeonGraffiti = 12005,
 	RoleStory1 = 12011,
@@ -17,63 +19,63 @@ var_0_0.ActivityId = {
 	SeasonStore = 12007,
 	ReactivityStore = 12001
 }
-var_0_0.EnterViewActSetting = {
+VersionActivity2_0Enum.EnterViewActSetting = {
 	{
-		actId = var_0_0.ActivityId.Dungeon,
+		actId = VersionActivity2_0Enum.ActivityId.Dungeon,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.First,
 		actType = VersionActivityEnterViewEnum.ActType.Single,
-		storeId = var_0_0.ActivityId.DungeonStore
+		storeId = VersionActivity2_0Enum.ActivityId.DungeonStore
 	},
 	{
-		actId = var_0_0.ActivityId.Season,
+		actId = VersionActivity2_0Enum.ActivityId.Season,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Single,
-		storeId = var_0_0.ActivityId.SeasonStore
+		storeId = VersionActivity2_0Enum.ActivityId.SeasonStore
 	},
 	{
-		actId = var_0_0.ActivityId.Reactivity,
+		actId = VersionActivity2_0Enum.ActivityId.Reactivity,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Single,
-		storeId = var_0_0.ActivityId.ReactivityStore
+		storeId = VersionActivity2_0Enum.ActivityId.ReactivityStore
 	},
 	{
-		actId = var_0_0.ActivityId.Mercuria,
+		actId = VersionActivity2_0Enum.ActivityId.Mercuria,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Single,
-		redDotUid = var_0_0.ActivityId.Mercuria
+		redDotUid = VersionActivity2_0Enum.ActivityId.Mercuria
 	},
 	{
-		actId = var_0_0.ActivityId.BossRush,
+		actId = VersionActivity2_0Enum.ActivityId.BossRush,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Single
 	},
 	{
-		actId = var_0_0.ActivityId.Joe,
+		actId = VersionActivity2_0Enum.ActivityId.Joe,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Single,
-		redDotUid = var_0_0.ActivityId.Joe
+		redDotUid = VersionActivity2_0Enum.ActivityId.Joe
 	},
 	{
 		actId = {
-			var_0_0.ActivityId.RoleStory1,
-			var_0_0.ActivityId.RoleStory2
+			VersionActivity2_0Enum.ActivityId.RoleStory1,
+			VersionActivity2_0Enum.ActivityId.RoleStory2
 		},
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Multi
 	}
 }
-var_0_0.EnterViewActIdListWithRedDot = {
-	var_0_0.ActivityId.Dungeon,
-	var_0_0.ActivityId.BossRush,
-	var_0_0.ActivityId.Season
+VersionActivity2_0Enum.EnterViewActIdListWithRedDot = {
+	VersionActivity2_0Enum.ActivityId.Dungeon,
+	VersionActivity2_0Enum.ActivityId.BossRush,
+	VersionActivity2_0Enum.ActivityId.Season
 }
-var_0_0.TabSetting = {
+VersionActivity2_0Enum.TabSetting = {
 	select = {
 		fontSize = 42,
 		enFontSize = 14,
 		color = Color(1, 1, 1, 1),
 		act2TabImg = {
-			[var_0_0.ActivityId.Dungeon] = "singlebg_lang/txt_v2a0_mainactivity_singlebg/v2a0_enterview_itemtitleselected.png"
+			[VersionActivity2_0Enum.ActivityId.Dungeon] = "singlebg_lang/txt_v2a0_mainactivity_singlebg/v2a0_enterview_itemtitleselected.png"
 		}
 	},
 	unselect = {
@@ -81,15 +83,15 @@ var_0_0.TabSetting = {
 		enFontSize = 14,
 		color = Color(0.5529411764705883, 0.5529411764705883, 0.5529411764705883, 1),
 		act2TabImg = {
-			[var_0_0.ActivityId.Dungeon] = "singlebg_lang/txt_v2a0_mainactivity_singlebg/v2a0_enterview_itemtitleunselected.png"
+			[VersionActivity2_0Enum.ActivityId.Dungeon] = "singlebg_lang/txt_v2a0_mainactivity_singlebg/v2a0_enterview_itemtitleunselected.png"
 		}
 	}
 }
-var_0_0.MaxShowTimeOffset = 3 * TimeUtil.OneDaySecond
-var_0_0.RedDotOffsetY = 56
-var_0_0.EnterAnimVideoPath = "videos/1_9_enter.mp4"
+VersionActivity2_0Enum.MaxShowTimeOffset = 3 * TimeUtil.OneDaySecond
+VersionActivity2_0Enum.RedDotOffsetY = 56
+VersionActivity2_0Enum.EnterAnimVideoPath = "videos/1_9_enter.mp4"
 
-function var_0_0.JumpNeedCloseView()
+function VersionActivity2_0Enum.JumpNeedCloseView()
 	return {
 		ViewName.VersionActivity2_0DungeonGraffitiView,
 		ViewName.VersionActivity2_0DungeonMapGraffitiEnterView,
@@ -97,4 +99,4 @@ function var_0_0.JumpNeedCloseView()
 	}
 end
 
-return var_0_0
+return VersionActivity2_0Enum

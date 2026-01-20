@@ -1,108 +1,110 @@
-﻿module("modules.logic.battlepass.view.BPTabViewGroup", package.seeall)
+﻿-- chunkname: @modules/logic/battlepass/view/BPTabViewGroup.lua
 
-local var_0_0 = class("BPTabViewGroup", TabViewGroup)
+module("modules.logic.battlepass.view.BPTabViewGroup", package.seeall)
 
-function var_0_0.ctor(arg_1_0, ...)
-	var_0_0.super.ctor(arg_1_0, ...)
+local BPTabViewGroup = class("BPTabViewGroup", TabViewGroup)
 
-	arg_1_0.isInClosingTween = false
-	arg_1_0._tabAnims = {}
-	arg_1_0._closeViewIndex = nil
-	arg_1_0._openId = nil
+function BPTabViewGroup:ctor(...)
+	BPTabViewGroup.super.ctor(self, ...)
+
+	self.isInClosingTween = false
+	self._tabAnims = {}
+	self._closeViewIndex = nil
+	self._openId = nil
 end
 
-function var_0_0._openTabView(arg_2_0, arg_2_1)
-	if arg_2_0._curTabId == arg_2_1 then
+function BPTabViewGroup:_openTabView(tabId)
+	if self._curTabId == tabId then
 		return
 	end
 
-	var_0_0.super._openTabView(arg_2_0, arg_2_1)
+	BPTabViewGroup.super._openTabView(self, tabId)
 end
 
-function var_0_0._setVisible(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = arg_3_0._tabViews[arg_3_1].viewGO
-	local var_3_1 = arg_3_0._tabAnims[arg_3_1]
-	local var_3_2 = false
+function BPTabViewGroup:_setVisible(tabId, isVisible)
+	local viewGO = self._tabViews[tabId].viewGO
+	local anim = self._tabAnims[tabId]
+	local isNew = false
 
-	if var_3_1 == nil then
-		var_3_1 = var_3_0:GetComponent(typeof(UnityEngine.Animator)) and ZProj.ProjAnimatorPlayer.Get(var_3_0) or false
-		arg_3_0._tabAnims[arg_3_1] = var_3_1
-		var_3_2 = true
+	if anim == nil then
+		anim = viewGO:GetComponent(typeof(UnityEngine.Animator)) and ZProj.ProjAnimatorPlayer.Get(viewGO) or false
+		self._tabAnims[tabId] = anim
+		isNew = true
 	end
 
-	if arg_3_2 then
-		if arg_3_0.isInClosingTween then
-			arg_3_0._openId = arg_3_1
+	if isVisible then
+		if self.isInClosingTween then
+			self._openId = tabId
 
-			if arg_3_0._closeViewIndex ~= arg_3_1 then
-				if var_3_2 then
-					var_3_0:GetComponent(typeof(UnityEngine.Animator)).enabled = false
+			if self._closeViewIndex ~= tabId then
+				if isNew then
+					viewGO:GetComponent(typeof(UnityEngine.Animator)).enabled = false
 				end
 
-				var_0_0.super._setVisible(arg_3_0, arg_3_1, false)
+				BPTabViewGroup.super._setVisible(self, tabId, false)
 			end
 
 			return
 		end
 
-		var_3_0:GetComponent(typeof(UnityEngine.Animator)).enabled = true
+		viewGO:GetComponent(typeof(UnityEngine.Animator)).enabled = true
 
-		var_0_0.super._setVisible(arg_3_0, arg_3_1, true)
+		BPTabViewGroup.super._setVisible(self, tabId, true)
 
-		if var_3_1 then
-			var_3_1:Play(UIAnimationName.Open)
+		if anim then
+			anim:Play(UIAnimationName.Open)
 		end
 
-		arg_3_0.viewContainer:dispatchEvent(BpEvent.TapViewOpenAnimBegin, arg_3_1)
+		self.viewContainer:dispatchEvent(BpEvent.TapViewOpenAnimBegin, tabId)
 	else
-		if arg_3_0.isInClosingTween then
+		if self.isInClosingTween then
 			return
 		end
 
-		if arg_3_0._openId == arg_3_1 then
-			arg_3_0._openId = nil
+		if self._openId == tabId then
+			self._openId = nil
 		end
 
-		if var_3_1 then
-			arg_3_0.isInClosingTween = true
-			arg_3_0._closeViewIndex = arg_3_1
+		if anim then
+			self.isInClosingTween = true
+			self._closeViewIndex = tabId
 
-			arg_3_0.viewContainer:dispatchEvent(BpEvent.TapViewCloseAnimBegin, arg_3_1)
-			var_3_1:Play(UIAnimationName.Close, arg_3_0.onCloseTweenFinish, arg_3_0)
+			self.viewContainer:dispatchEvent(BpEvent.TapViewCloseAnimBegin, tabId)
+			anim:Play(UIAnimationName.Close, self.onCloseTweenFinish, self)
 		else
-			var_0_0.super._setVisible(arg_3_0, arg_3_1, false)
+			BPTabViewGroup.super._setVisible(self, tabId, false)
 		end
 	end
 end
 
-function var_0_0.onCloseTweenFinish(arg_4_0)
-	if not arg_4_0._closeViewIndex then
+function BPTabViewGroup:onCloseTweenFinish()
+	if not self._closeViewIndex then
 		return
 	end
 
-	local var_4_0 = arg_4_0._closeViewIndex
+	local closeIndex = self._closeViewIndex
 
-	var_0_0.super._setVisible(arg_4_0, arg_4_0._closeViewIndex, false)
+	BPTabViewGroup.super._setVisible(self, self._closeViewIndex, false)
 
-	arg_4_0._closeViewIndex = nil
-	arg_4_0.isInClosingTween = false
+	self._closeViewIndex = nil
+	self.isInClosingTween = false
 
-	if arg_4_0._openId then
-		arg_4_0:_setVisible(arg_4_0._openId, true)
+	if self._openId then
+		self:_setVisible(self._openId, true)
 
-		arg_4_0._openId = nil
+		self._openId = nil
 	end
 
-	arg_4_0.viewContainer:dispatchEvent(BpEvent.TapViewCloseAnimEnd, var_4_0)
+	self.viewContainer:dispatchEvent(BpEvent.TapViewCloseAnimEnd, closeIndex)
 end
 
-function var_0_0.onDestroyView(arg_5_0, ...)
-	arg_5_0.isInClosingTween = nil
-	arg_5_0._tabAnims = nil
-	arg_5_0._closeViewIndex = nil
-	arg_5_0._openId = nil
+function BPTabViewGroup:onDestroyView(...)
+	self.isInClosingTween = nil
+	self._tabAnims = nil
+	self._closeViewIndex = nil
+	self._openId = nil
 
-	var_0_0.super.onDestroyView(arg_5_0, ...)
+	BPTabViewGroup.super.onDestroyView(self, ...)
 end
 
-return var_0_0
+return BPTabViewGroup

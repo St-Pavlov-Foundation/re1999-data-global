@@ -1,156 +1,158 @@
-﻿module("modules.logic.dungeon.model.DungeonPuzzleCircuitModel", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/model/DungeonPuzzleCircuitModel.lua
 
-local var_0_0 = class("DungeonPuzzleCircuitModel", BaseModel)
+module("modules.logic.dungeon.model.DungeonPuzzleCircuitModel", package.seeall)
 
-var_0_0.constWidth = 10
-var_0_0.constHeight = 6
+local DungeonPuzzleCircuitModel = class("DungeonPuzzleCircuitModel", BaseModel)
 
-function var_0_0.reInit(arg_1_0)
-	arg_1_0:release()
+DungeonPuzzleCircuitModel.constWidth = 10
+DungeonPuzzleCircuitModel.constHeight = 6
+
+function DungeonPuzzleCircuitModel:reInit()
+	self:release()
 end
 
-function var_0_0.release(arg_2_0)
-	arg_2_0._cfgElement = nil
-	arg_2_0._gridDatas = nil
+function DungeonPuzzleCircuitModel:release()
+	self._cfgElement = nil
+	self._gridDatas = nil
 end
 
-function var_0_0.getElementCo(arg_3_0)
-	return arg_3_0._cfgElement
+function DungeonPuzzleCircuitModel:getElementCo()
+	return self._cfgElement
 end
 
-function var_0_0.getEditIndex(arg_4_0)
-	return arg_4_0._editIndex
+function DungeonPuzzleCircuitModel:getEditIndex()
+	return self._editIndex
 end
 
-function var_0_0.setEditIndex(arg_5_0, arg_5_1)
-	arg_5_0._editIndex = arg_5_1
+function DungeonPuzzleCircuitModel:setEditIndex(value)
+	self._editIndex = value
 end
 
-function var_0_0.initByElementCo(arg_6_0, arg_6_1)
-	arg_6_0._cfgElement = arg_6_1
+function DungeonPuzzleCircuitModel:initByElementCo(elementCo)
+	self._cfgElement = elementCo
 
-	if arg_6_0._cfgElement then
-		arg_6_0:initPuzzle(arg_6_0._cfgElement.param)
+	if self._cfgElement then
+		self:initPuzzle(self._cfgElement.param)
 	end
 end
 
-function var_0_0.initPuzzle(arg_7_0, arg_7_1)
-	arg_7_0._powerList = {}
-	arg_7_0._wrongList = {}
-	arg_7_0._capacitanceList = {}
-	arg_7_0._gridDatas = {}
+function DungeonPuzzleCircuitModel:initPuzzle(str)
+	self._powerList = {}
+	self._wrongList = {}
+	self._capacitanceList = {}
+	self._gridDatas = {}
 
-	local var_7_0 = string.split(arg_7_1, ",")
-	local var_7_1 = 0
-	local var_7_2, var_7_3 = arg_7_0:getGameSize()
-	local var_7_4 = 1
+	local list = string.split(str, ",")
+	local constEntry = 0
+	local w, h = self:getGameSize()
+	local index = 1
 
-	for iter_7_0 = 1, var_7_3 do
-		for iter_7_1 = 1, var_7_2 do
-			local var_7_5 = var_7_0[var_7_4]
+	for x = 1, h do
+		for y = 1, w do
+			local str = list[index]
 
-			var_7_4 = var_7_4 + 1
+			index = index + 1
 
-			local var_7_6 = string.splitToNumber(var_7_5, "#")
-			local var_7_7 = var_7_6[1]
-			local var_7_8 = var_7_6[2]
+			local paramList = string.splitToNumber(str, "#")
+			local type = paramList[1]
+			local value = paramList[2]
 
-			if var_7_7 and var_7_7 > 0 then
-				local var_7_9 = arg_7_0:_getMo(iter_7_0, iter_7_1)
+			if type and type > 0 then
+				local mo = self:_getMo(x, y)
 
-				var_7_9.type = var_7_7
-				var_7_9.value = var_7_8
-				var_7_9.rawValue = var_7_8
+				mo.type = type
+				mo.value = value
+				mo.rawValue = value
 
-				if var_7_7 == DungeonPuzzleCircuitEnum.type.power1 or var_7_7 == DungeonPuzzleCircuitEnum.type.power2 then
-					table.insert(arg_7_0._powerList, var_7_9)
-				elseif var_7_7 == DungeonPuzzleCircuitEnum.type.wrong then
-					table.insert(arg_7_0._wrongList, var_7_9)
-				elseif var_7_7 == DungeonPuzzleCircuitEnum.type.capacitance then
-					table.insert(arg_7_0._capacitanceList, var_7_9)
+				if type == DungeonPuzzleCircuitEnum.type.power1 or type == DungeonPuzzleCircuitEnum.type.power2 then
+					table.insert(self._powerList, mo)
+				elseif type == DungeonPuzzleCircuitEnum.type.wrong then
+					table.insert(self._wrongList, mo)
+				elseif type == DungeonPuzzleCircuitEnum.type.capacitance then
+					table.insert(self._capacitanceList, mo)
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.getPowerList(arg_8_0)
-	return arg_8_0._powerList
+function DungeonPuzzleCircuitModel:getPowerList()
+	return self._powerList
 end
 
-function var_0_0.getWrongList(arg_9_0)
-	return arg_9_0._wrongList
+function DungeonPuzzleCircuitModel:getWrongList()
+	return self._wrongList
 end
 
-function var_0_0.getCapacitanceList(arg_10_0)
-	return arg_10_0._capacitanceList
+function DungeonPuzzleCircuitModel:getCapacitanceList()
+	return self._capacitanceList
 end
 
-function var_0_0._getMo(arg_11_0, arg_11_1, arg_11_2)
-	arg_11_0._gridDatas[arg_11_1] = arg_11_0._gridDatas[arg_11_1] or {}
+function DungeonPuzzleCircuitModel:_getMo(x, y)
+	self._gridDatas[x] = self._gridDatas[x] or {}
 
-	local var_11_0 = DungeonPuzzleCircuitMO.New()
+	local mo = DungeonPuzzleCircuitMO.New()
 
-	var_11_0:init(arg_11_1, arg_11_2)
+	mo:init(x, y)
 
-	arg_11_0._gridDatas[arg_11_1][arg_11_2] = var_11_0
+	self._gridDatas[x][y] = mo
 
-	return var_11_0
+	return mo
 end
 
-function var_0_0.debugData(arg_12_0)
-	local var_12_0
-	local var_12_1, var_12_2 = arg_12_0:getGameSize()
+function DungeonPuzzleCircuitModel:debugData()
+	local str
+	local w, h = self:getGameSize()
 
-	for iter_12_0 = 1, var_12_2 do
-		for iter_12_1 = 1, var_12_1 do
-			local var_12_3 = arg_12_0:getData(iter_12_0, iter_12_1)
-			local var_12_4
+	for x = 1, h do
+		for y = 1, w do
+			local mo = self:getData(x, y)
+			local appendStr
 
-			if not var_12_3 or var_12_3.type <= 0 then
-				var_12_4 = string.format("%s", 0)
-			elseif var_12_3.type >= DungeonPuzzleCircuitEnum.type.straight and var_12_3.type <= DungeonPuzzleCircuitEnum.type.t_shape then
-				var_12_4 = string.format("%s#%s", var_12_3.type, var_12_3.value)
+			if not mo or mo.type <= 0 then
+				appendStr = string.format("%s", 0)
+			elseif mo.type >= DungeonPuzzleCircuitEnum.type.straight and mo.type <= DungeonPuzzleCircuitEnum.type.t_shape then
+				appendStr = string.format("%s#%s", mo.type, mo.value)
 			else
-				var_12_4 = string.format("%s", var_12_3.type)
+				appendStr = string.format("%s", mo.type)
 			end
 
-			var_12_0 = string.format("%s%s", var_12_0 and var_12_0 .. "," or "", var_12_4)
+			str = string.format("%s%s", str and str .. "," or "", appendStr)
 		end
 	end
 
-	print("data:", var_12_0)
+	print("data:", str)
 end
 
-function var_0_0.getData(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0 = arg_13_0._gridDatas[arg_13_1]
+function DungeonPuzzleCircuitModel:getData(x, y)
+	local row = self._gridDatas[x]
 
-	return var_13_0 and var_13_0[arg_13_2]
+	return row and row[y]
 end
 
-function var_0_0.getGameSize(arg_14_0)
-	return var_0_0.constWidth, var_0_0.constHeight
+function DungeonPuzzleCircuitModel:getGameSize()
+	return DungeonPuzzleCircuitModel.constWidth, DungeonPuzzleCircuitModel.constHeight
 end
 
-function var_0_0.getRelativePosition(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4)
-	return (arg_15_2 - 1) * arg_15_3, (arg_15_1 - 1) * -arg_15_4
+function DungeonPuzzleCircuitModel:getRelativePosition(x, y, w, h)
+	return (y - 1) * w, (x - 1) * -h
 end
 
-function var_0_0.getIndexByTouchPos(arg_16_0, arg_16_1, arg_16_2, arg_16_3, arg_16_4)
-	arg_16_2 = math.abs(arg_16_2 - 0.5 * arg_16_4)
-	arg_16_1 = math.abs(arg_16_1 + 0.5 * arg_16_3)
+function DungeonPuzzleCircuitModel:getIndexByTouchPos(x, y, w, h)
+	y = math.abs(y - 0.5 * h)
+	x = math.abs(x + 0.5 * w)
 
-	local var_16_0 = math.floor(arg_16_2 / arg_16_4)
-	local var_16_1 = math.floor(arg_16_1 / arg_16_3)
-	local var_16_2, var_16_3 = arg_16_0:getGameSize()
+	local row = math.floor(y / h)
+	local column = math.floor(x / w)
+	local totalW, totalH = self:getGameSize()
 
-	if var_16_1 >= 0 and var_16_1 < var_16_2 and var_16_0 >= 0 and var_16_0 < var_16_3 then
-		return var_16_0 + 1, var_16_1 + 1
+	if column >= 0 and column < totalW and row >= 0 and row < totalH then
+		return row + 1, column + 1
 	end
 
 	return -1, -1
 end
 
-var_0_0.instance = var_0_0.New()
+DungeonPuzzleCircuitModel.instance = DungeonPuzzleCircuitModel.New()
 
-return var_0_0
+return DungeonPuzzleCircuitModel

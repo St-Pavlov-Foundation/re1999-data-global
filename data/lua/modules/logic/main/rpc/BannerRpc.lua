@@ -1,7 +1,9 @@
-﻿module("modules.logic.main.rpc.BannerRpc", package.seeall)
+﻿-- chunkname: @modules/logic/main/rpc/BannerRpc.lua
 
-local var_0_0 = class("BannerRpc", BaseRpc)
+module("modules.logic.main.rpc.BannerRpc", package.seeall)
 
-var_0_0.instance = var_0_0.New()
+local BannerRpc = class("BannerRpc", BaseRpc)
 
-return var_0_0
+BannerRpc.instance = BannerRpc.New()
+
+return BannerRpc

@@ -1,56 +1,58 @@
-﻿module("modules.logic.rouge.view.RougeCollectionHandBookItem", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeCollectionHandBookItem.lua
 
-local var_0_0 = class("RougeCollectionHandBookItem", ListScrollCellExtend)
+module("modules.logic.rouge.view.RougeCollectionHandBookItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._imagebg = gohelper.findChildImage(arg_1_0.viewGO, "normal/#image_bg")
-	arg_1_0._txtindex = gohelper.findChildText(arg_1_0.viewGO, "normal/#txt_index")
-	arg_1_0._simagecollection = gohelper.findChildSingleImage(arg_1_0.viewGO, "normal/#simage_collection")
-	arg_1_0._goselected = gohelper.findChild(arg_1_0.viewGO, "go_selected")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btn_click")
+local RougeCollectionHandBookItem = class("RougeCollectionHandBookItem", ListScrollCellExtend)
+
+function RougeCollectionHandBookItem:onInitView()
+	self._imagebg = gohelper.findChildImage(self.viewGO, "normal/#image_bg")
+	self._txtindex = gohelper.findChildText(self.viewGO, "normal/#txt_index")
+	self._simagecollection = gohelper.findChildSingleImage(self.viewGO, "normal/#simage_collection")
+	self._goselected = gohelper.findChild(self.viewGO, "go_selected")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "btn_click")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+function RougeCollectionHandBookItem:addEvents()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
+function RougeCollectionHandBookItem:removeEvents()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0._editableRemoveEvents(arg_4_0)
+function RougeCollectionHandBookItem:_editableRemoveEvents()
 	return
 end
 
-function var_0_0._btnclickOnClick(arg_5_0)
-	RougeController.instance:dispatchEvent(RougeEvent.OnSelectCollectionHandBookItem, arg_5_0._mo.id)
+function RougeCollectionHandBookItem:_btnclickOnClick()
+	RougeController.instance:dispatchEvent(RougeEvent.OnSelectCollectionHandBookItem, self._mo.id)
 end
 
-function var_0_0.onUpdateMO(arg_6_0, arg_6_1)
-	arg_6_0._mo = arg_6_1
+function RougeCollectionHandBookItem:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_6_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_7_0)
-	local var_7_0 = RougeCollectionConfig.instance:getCollectionCfg(arg_7_0._mo.product)
+function RougeCollectionHandBookItem:refreshUI()
+	local collectionCfg = RougeCollectionConfig.instance:getCollectionCfg(self._mo.product)
 
-	UISpriteSetMgr.instance:setRougeSprite(arg_7_0._imagebg, "rouge_episode_collectionbg_" .. tostring(var_7_0.showRare))
+	UISpriteSetMgr.instance:setRougeSprite(self._imagebg, "rouge_episode_collectionbg_" .. tostring(collectionCfg.showRare))
 
-	local var_7_1 = RougeCollectionHandBookListModel.instance:isCurSelectTargetId(arg_7_0._mo.id)
+	local isSelect = RougeCollectionHandBookListModel.instance:isCurSelectTargetId(self._mo.id)
 
-	gohelper.setActive(arg_7_0._goselected, var_7_1)
-	arg_7_0._simagecollection:LoadImage(RougeCollectionHelper.getCollectionIconUrl(arg_7_0._mo.product))
+	gohelper.setActive(self._goselected, isSelect)
+	self._simagecollection:LoadImage(RougeCollectionHelper.getCollectionIconUrl(self._mo.product))
 
-	arg_7_0._txtindex.text = arg_7_0._index
+	self._txtindex.text = self._index
 end
 
-function var_0_0.onSelect(arg_8_0, arg_8_1)
-	gohelper.setActive(arg_8_0._goselected, arg_8_1)
+function RougeCollectionHandBookItem:onSelect(isSelect)
+	gohelper.setActive(self._goselected, isSelect)
 end
 
-function var_0_0.onDestroyView(arg_9_0)
-	arg_9_0._simagecollection:UnLoadImage()
+function RougeCollectionHandBookItem:onDestroyView()
+	self._simagecollection:UnLoadImage()
 end
 
-return var_0_0
+return RougeCollectionHandBookItem

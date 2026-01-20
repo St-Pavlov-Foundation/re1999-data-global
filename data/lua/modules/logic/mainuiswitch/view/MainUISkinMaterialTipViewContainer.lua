@@ -1,14 +1,16 @@
-﻿module("modules.logic.mainuiswitch.view.MainUISkinMaterialTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/mainuiswitch/view/MainUISkinMaterialTipViewContainer.lua
 
-local var_0_0 = class("MainUISkinMaterialTipViewContainer", BaseViewContainer)
+module("modules.logic.mainuiswitch.view.MainUISkinMaterialTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local MainUISkinMaterialTipViewContainer = class("MainUISkinMaterialTipViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, MainUISkinMaterialTipView.New())
-	table.insert(var_1_0, MainUISkinMaterialTipViewBanner.New())
+function MainUISkinMaterialTipViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, MainUISkinMaterialTipView.New())
+	table.insert(views, MainUISkinMaterialTipViewBanner.New())
+
+	return views
 end
 
-return var_0_0
+return MainUISkinMaterialTipViewContainer

@@ -1,10 +1,12 @@
-﻿module("modules.logic.story.model.StoryStepVideoMo", package.seeall)
+﻿-- chunkname: @modules/logic/story/model/StoryStepVideoMo.lua
 
-local var_0_0 = pureTable("StoryStepVideoMo")
+module("modules.logic.story.model.StoryStepVideoMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.video = ""
-	arg_1_0.delayTimes = {
+local StoryStepVideoMo = pureTable("StoryStepVideoMo")
+
+function StoryStepVideoMo:ctor()
+	self.video = ""
+	self.delayTimes = {
 		0,
 		0,
 		0,
@@ -14,17 +16,17 @@ function var_0_0.ctor(arg_1_0)
 		0,
 		0
 	}
-	arg_1_0.orderType = 0
-	arg_1_0.loop = false
-	arg_1_0.layer = 6
+	self.orderType = 0
+	self.loop = false
+	self.layer = 6
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.video = arg_2_1[1]
-	arg_2_0.delayTimes = arg_2_1[2]
-	arg_2_0.orderType = arg_2_1[3]
-	arg_2_0.loop = arg_2_1[4]
-	arg_2_0.layer = arg_2_1[5]
+function StoryStepVideoMo:init(info)
+	self.video = info[1]
+	self.delayTimes = info[2]
+	self.orderType = info[3]
+	self.loop = info[4]
+	self.layer = info[5]
 end
 
-return var_0_0
+return StoryStepVideoMo

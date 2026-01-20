@@ -1,54 +1,56 @@
-﻿module("modules.logic.fight.model.restart.FightRestartAbandonType.FightRestartAbandonTypeBase", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/restart/FightRestartAbandonType/FightRestartAbandonTypeBase.lua
 
-local var_0_0 = class("FightRestartAbandonTypeBase", UserDataDispose)
+module("modules.logic.fight.model.restart.FightRestartAbandonType.FightRestartAbandonTypeBase", package.seeall)
 
-function var_0_0.episodeCostIsEnough(arg_1_0)
-	arg_1_0._box_type = MessageBoxIdDefine.RestartStage62
+local FightRestartAbandonTypeBase = class("FightRestartAbandonTypeBase", UserDataDispose)
 
-	if not string.nilorempty(arg_1_0._episode_config.failCost) then
-		local var_1_0 = string.splitToNumber(arg_1_0._episode_config.failCost, "#")
+function FightRestartAbandonTypeBase:episodeCostIsEnough()
+	self._box_type = MessageBoxIdDefine.RestartStage62
 
-		if var_1_0[3] == 0 then
+	if not string.nilorempty(self._episode_config.failCost) then
+		local arr = string.splitToNumber(self._episode_config.failCost, "#")
+
+		if arr[3] == 0 then
 			return true
 		end
 
-		local var_1_1, var_1_2 = ItemModel.instance:getItemConfigAndIcon(var_1_0[1], var_1_0[2])
+		local item_config, item_icon = ItemModel.instance:getItemConfigAndIcon(arr[1], arr[2])
 
-		if var_1_1 then
-			local var_1_3 = MessageBoxIdDefine.RestartStage62
-			local var_1_4 = ItemModel.instance:getItemQuantity(var_1_0[1], var_1_0[2])
-			local var_1_5 = string.splitToNumber(arg_1_0._episode_config.cost, "#")[3]
-			local var_1_6 = false
+		if item_config then
+			local box_type = MessageBoxIdDefine.RestartStage62
+			local own_count = ItemModel.instance:getItemQuantity(arr[1], arr[2])
+			local challenge_cost = string.splitToNumber(self._episode_config.cost, "#")[3]
+			local is_enough = false
 
-			if var_1_0[1] == 2 and var_1_0[2] == 4 then
-				local var_1_7 = FightModel.instance:getFightParam()
-				local var_1_8 = var_1_7 and var_1_7.episodeId
+			if arr[1] == 2 and arr[2] == 4 then
+				local fightParam = FightModel.instance:getFightParam()
+				local episodeId = fightParam and fightParam.episodeId
 
-				var_1_6 = true
+				is_enough = true
 
-				local var_1_9 = DungeonConfig.instance:getEpisodeCO(var_1_8)
-				local var_1_10 = var_1_9 and DungeonConfig.instance:getChapterCO(var_1_9.chapterId)
+				local config = DungeonConfig.instance:getEpisodeCO(episodeId)
+				local chapterConfig = config and DungeonConfig.instance:getChapterCO(config.chapterId)
 
-				if var_1_10 and var_1_10.enterAfterFreeLimit > 0 and DungeonModel.instance:getChapterRemainingNum(var_1_10.type) > 0 then
-					var_1_3 = MessageBoxIdDefine.DungeonEquipRestart
-					var_1_6 = true
+				if chapterConfig and chapterConfig.enterAfterFreeLimit > 0 and DungeonModel.instance:getChapterRemainingNum(chapterConfig.type) > 0 then
+					box_type = MessageBoxIdDefine.DungeonEquipRestart
+					is_enough = true
 				end
 			else
-				var_1_3 = MessageBoxIdDefine.RestartStage63
-				var_1_6 = var_1_5 <= var_1_4 - var_1_0[3]
+				box_type = MessageBoxIdDefine.RestartStage63
+				is_enough = challenge_cost <= own_count - arr[3]
 			end
 
-			arg_1_0._box_type = var_1_3
-			arg_1_0._cost_item_config = var_1_1
+			self._box_type = box_type
+			self._cost_item_config = item_config
 
-			if var_1_6 then
+			if is_enough then
 				return true
 			else
-				GameFacade.showMessageBox(arg_1_0._box_type, MsgBoxEnum.BoxType.Yes_No, function()
-					GameFacade.showToastWithIcon(ToastEnum.NotEnoughId, var_1_2, var_1_1.name)
+				GameFacade.showMessageBox(self._box_type, MsgBoxEnum.BoxType.Yes_No, function()
+					GameFacade.showToastWithIcon(ToastEnum.NotEnoughId, item_icon, item_config.name)
 				end, function()
 					FightGameMgr.restartMgr:cancelRestart()
-				end, nil, nil, nil, nil, arg_1_0._cost_item_config.name)
+				end, nil, nil, nil, nil, self._cost_item_config.name)
 
 				return false
 			end
@@ -60,53 +62,53 @@ function var_0_0.episodeCostIsEnough(arg_1_0)
 	return false
 end
 
-function var_0_0.confirmNotice(arg_4_0)
-	local var_4_0 = arg_4_0._cost_item_config and arg_4_0._cost_item_config.name
+function FightRestartAbandonTypeBase:confirmNotice()
+	local msgParam = self._cost_item_config and self._cost_item_config.name
 
-	GameFacade.showMessageBox(arg_4_0._box_type, MsgBoxEnum.BoxType.Yes_No, function()
-		FightController.instance:unregisterCallback(FightEvent.PushEndFight, arg_4_0._onPushEndFight, arg_4_0)
+	GameFacade.showMessageBox(self._box_type, MsgBoxEnum.BoxType.Yes_No, function()
+		FightController.instance:unregisterCallback(FightEvent.PushEndFight, self._onPushEndFight, self)
 
-		if arg_4_0.IS_DEAD then
+		if self.IS_DEAD then
 			ToastController.instance:showToast(-80)
 
 			return
 		end
 
-		arg_4_0:startAbandon()
+		self:startAbandon()
 	end, function()
 		FightGameMgr.restartMgr:cancelRestart()
-	end, nil, nil, nil, nil, var_4_0)
+	end, nil, nil, nil, nil, msgParam)
 end
 
-function var_0_0._onPushEndFight(arg_7_0)
-	arg_7_0.IS_DEAD = true
+function FightRestartAbandonTypeBase:_onPushEndFight()
+	self.IS_DEAD = true
 
 	FightGameMgr.restartMgr:cancelRestart()
 
-	if arg_7_0._box_type then
+	if self._box_type then
 		ViewMgr.instance:closeView(ViewName.MessageBoxView)
 	end
 end
 
-function var_0_0.abandon(arg_8_0)
-	if arg_8_0.confirmNotice then
-		FightController.instance:registerCallback(FightEvent.PushEndFight, arg_8_0._onPushEndFight, arg_8_0, LuaEventSystem.High)
-		arg_8_0:confirmNotice()
+function FightRestartAbandonTypeBase:abandon()
+	if self.confirmNotice then
+		FightController.instance:registerCallback(FightEvent.PushEndFight, self._onPushEndFight, self, LuaEventSystem.High)
+		self:confirmNotice()
 	else
-		arg_8_0:startAbandon()
+		self:startAbandon()
 	end
 end
 
-function var_0_0.releaseEvent(arg_9_0)
-	FightController.instance:unregisterCallback(FightEvent.PushEndFight, arg_9_0._onPushEndFight, arg_9_0)
+function FightRestartAbandonTypeBase:releaseEvent()
+	FightController.instance:unregisterCallback(FightEvent.PushEndFight, self._onPushEndFight, self)
 end
 
-function var_0_0.canRestart(arg_10_0)
+function FightRestartAbandonTypeBase:canRestart()
 	return
 end
 
-function var_0_0.startAbandon(arg_11_0)
+function FightRestartAbandonTypeBase:startAbandon()
 	return
 end
 
-return var_0_0
+return FightRestartAbandonTypeBase

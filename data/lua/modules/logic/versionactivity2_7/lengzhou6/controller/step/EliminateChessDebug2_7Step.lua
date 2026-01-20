@@ -1,68 +1,70 @@
-﻿module("modules.logic.versionactivity2_7.lengzhou6.controller.step.EliminateChessDebug2_7Step", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/lengzhou6/controller/step/EliminateChessDebug2_7Step.lua
 
-local var_0_0 = class("EliminateChessDebug2_7Step", EliminateChessStepBase)
+module("modules.logic.versionactivity2_7.lengzhou6.controller.step.EliminateChessDebug2_7Step", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
+local EliminateChessDebug2_7Step = class("EliminateChessDebug2_7Step", EliminateChessStepBase)
+
+function EliminateChessDebug2_7Step:onStart()
 	if not isDebugBuild then
-		arg_1_0:onDone(true)
+		self:onDone(true)
 
 		return
 	end
 
-	local var_1_0 = LengZhou6EliminateChessItemController.instance:getChess()
-	local var_1_1 = LocalEliminateChessModel.instance:getAllCell()
-	local var_1_2 = "\n"
+	local chess = LengZhou6EliminateChessItemController.instance:getChess()
+	local chessMo = LocalEliminateChessModel.instance:getAllCell()
+	local chessStr = "\n"
 
-	for iter_1_0 = #var_1_0, 1, -1 do
-		local var_1_3 = ""
+	for j = #chess, 1, -1 do
+		local printStr = ""
 
-		for iter_1_1 = 1, #var_1_0[iter_1_0] do
-			local var_1_4 = 0
-			local var_1_5 = -1
+		for i = 1, #chess[j] do
+			local value = 0
+			local id = -1
 
-			if var_1_0[iter_1_1][iter_1_0] ~= nil then
-				local var_1_6 = var_1_0[iter_1_1][iter_1_0]:getData()
+			if chess[i][j] ~= nil then
+				local cell = chess[i][j]:getData()
 
-				if var_1_6 ~= nil then
-					local var_1_7 = var_1_6:getStatus()
+				if cell ~= nil then
+					local status = cell:getStatus()
 
-					for iter_1_2 = 1, #var_1_7 do
-						var_1_4 = var_1_4 + var_1_7[iter_1_2]
+					for k = 1, #status do
+						value = value + status[k]
 					end
 
-					var_1_5 = var_1_6.id
+					id = cell.id
 				end
 			end
 
-			var_1_3 = var_1_3 .. var_1_5 .. "[" .. var_1_4 .. "]" .. " "
+			printStr = printStr .. id .. "[" .. value .. "]" .. " "
 		end
 
-		var_1_2 = var_1_2 .. var_1_3 .. "\n"
+		chessStr = chessStr .. printStr .. "\n"
 	end
 
-	local var_1_8 = "\n"
+	local chessMOStr = "\n"
 
-	for iter_1_3 = #var_1_1, 1, -1 do
-		local var_1_9 = ""
+	for j = #chessMo, 1, -1 do
+		local printStr = ""
 
-		for iter_1_4 = 1, #var_1_1[iter_1_3] do
-			local var_1_10 = var_1_1[iter_1_4][iter_1_3]
-			local var_1_11 = var_1_10:getStatus()
-			local var_1_12 = 0
+		for i = 1, #chessMo[j] do
+			local cell = chessMo[i][j]
+			local status = cell:getStatus()
+			local value = 0
 
-			for iter_1_5 = 1, #var_1_11 do
-				var_1_12 = var_1_12 + var_1_11[iter_1_5]
+			for k = 1, #status do
+				value = value + status[k]
 			end
 
-			var_1_9 = var_1_9 .. var_1_10.id .. "[" .. var_1_12 .. "]" .. " "
+			printStr = printStr .. cell.id .. "[" .. value .. "]" .. " "
 		end
 
-		var_1_8 = var_1_8 .. var_1_9 .. "\n"
+		chessMOStr = chessMOStr .. printStr .. "\n"
 	end
 
-	logNormal("chessStr = " .. var_1_2)
-	logNormal("chessMOStr = " .. var_1_8)
-	arg_1_0:onDone(true)
+	logNormal("chessStr = " .. chessStr)
+	logNormal("chessMOStr = " .. chessMOStr)
+	self:onDone(true)
 end
 
-return var_0_0
+return EliminateChessDebug2_7Step

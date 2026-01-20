@@ -1,63 +1,65 @@
-﻿module("modules.logic.equip.view.EquipStrengthenCostItem", package.seeall)
+﻿-- chunkname: @modules/logic/equip/view/EquipStrengthenCostItem.lua
 
-local var_0_0 = class("EquipStrengthenCostItem", BaseChildView)
+module("modules.logic.equip.view.EquipStrengthenCostItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "#go_item")
-	arg_1_0._goblank = gohelper.findChild(arg_1_0.viewGO, "#go_blank")
+local EquipStrengthenCostItem = class("EquipStrengthenCostItem", BaseChildView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function EquipStrengthenCostItem:onInitView()
+	self._goitem = gohelper.findChild(self.viewGO, "#go_item")
+	self._goblank = gohelper.findChild(self.viewGO, "#go_blank")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function EquipStrengthenCostItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function EquipStrengthenCostItem:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._click = gohelper.getClickWithAudio(arg_4_0.viewGO)
+function EquipStrengthenCostItem:_editableInitView()
+	self._click = gohelper.getClickWithAudio(self.viewGO)
 
-	arg_4_0._click:AddClickListener(arg_4_0._onClick, arg_4_0)
+	self._click:AddClickListener(self._onClick, self)
 end
 
-function var_0_0._onClick(arg_5_0)
+function EquipStrengthenCostItem:_onClick()
 	EquipController.instance:openEquipChooseView()
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
-	if not arg_6_0.viewParam then
-		arg_6_0._goblank:SetActive(true)
-		arg_6_0._goitem:SetActive(false)
+function EquipStrengthenCostItem:onUpdateParam()
+	if not self.viewParam then
+		self._goblank:SetActive(true)
+		self._goitem:SetActive(false)
 
 		return
 	end
 
-	arg_6_0._goblank:SetActive(false)
-	arg_6_0._goitem:SetActive(true)
+	self._goblank:SetActive(false)
+	self._goitem:SetActive(true)
 
-	if not arg_6_0._itemIcon then
-		arg_6_0._itemIcon = IconMgr.instance:getCommonEquipIcon(arg_6_0._goitem)
+	if not self._itemIcon then
+		self._itemIcon = IconMgr.instance:getCommonEquipIcon(self._goitem)
 	end
 
-	arg_6_0._itemIcon:setEquipMO(arg_6_0.viewParam)
-	arg_6_0._itemIcon:showLevel()
+	self._itemIcon:setEquipMO(self.viewParam)
+	self._itemIcon:showLevel()
 end
 
-function var_0_0.onOpen(arg_7_0)
+function EquipStrengthenCostItem:onOpen()
 	return
 end
 
-function var_0_0.onClose(arg_8_0)
+function EquipStrengthenCostItem:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
-	arg_9_0._click:RemoveClickListener()
+function EquipStrengthenCostItem:onDestroyView()
+	self._click:RemoveClickListener()
 end
 
-return var_0_0
+return EquipStrengthenCostItem

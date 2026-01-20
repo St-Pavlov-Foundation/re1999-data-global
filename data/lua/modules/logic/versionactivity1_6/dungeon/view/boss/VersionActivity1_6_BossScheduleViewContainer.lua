@@ -1,32 +1,36 @@
-﻿module("modules.logic.versionactivity1_6.dungeon.view.boss.VersionActivity1_6_BossScheduleViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/dungeon/view/boss/VersionActivity1_6_BossScheduleViewContainer.lua
 
-local var_0_0 = class("VersionActivity1_6_BossScheduleViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_6.dungeon.view.boss.VersionActivity1_6_BossScheduleViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = ListScrollParam.New()
+local VersionActivity1_6_BossScheduleViewContainer = class("VersionActivity1_6_BossScheduleViewContainer", BaseViewContainer)
 
-	var_1_0.cellClass = VersionActivity1_6_BossScheduleItem
-	var_1_0.scrollGOPath = "Root/#scroll_Reward"
-	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_0.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_0.scrollDir = ScrollEnum.ScrollDirH
-	var_1_0.lineCount = 1
-	var_1_0.cellWidth = 200
-	var_1_0.cellHeight = 700
-	var_1_0.cellSpaceH = 100
-	var_1_0.cellSpaceV = 0
-	var_1_0.startSpace = 0
-	var_1_0.endSpace = 300
-	arg_1_0._listScrollParam = var_1_0
-	arg_1_0._scheduleView = VersionActivity1_6_BossScheduleView.New()
+function VersionActivity1_6_BossScheduleViewContainer:buildViews()
+	local scrollParam = ListScrollParam.New()
 
-	return {
-		arg_1_0._scheduleView
+	scrollParam.cellClass = VersionActivity1_6_BossScheduleItem
+	scrollParam.scrollGOPath = "Root/#scroll_Reward"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.scrollDir = ScrollEnum.ScrollDirH
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 200
+	scrollParam.cellHeight = 700
+	scrollParam.cellSpaceH = 100
+	scrollParam.cellSpaceV = 0
+	scrollParam.startSpace = 0
+	scrollParam.endSpace = 300
+	self._listScrollParam = scrollParam
+	self._scheduleView = VersionActivity1_6_BossScheduleView.New()
+
+	local views = {
+		self._scheduleView
 	}
+
+	return views
 end
 
-function var_0_0.getListScrollParam(arg_2_0)
-	return arg_2_0._listScrollParam
+function VersionActivity1_6_BossScheduleViewContainer:getListScrollParam()
+	return self._listScrollParam
 end
 
-return var_0_0
+return VersionActivity1_6_BossScheduleViewContainer

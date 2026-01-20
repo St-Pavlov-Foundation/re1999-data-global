@@ -1,244 +1,250 @@
-﻿module("modules.logic.weekwalk.view.WeekWalkResetView", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk/view/WeekWalkResetView.lua
 
-local var_0_0 = class("WeekWalkResetView", BaseView)
+module("modules.logic.weekwalk.view.WeekWalkResetView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageline = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_line")
-	arg_1_0._goprogress = gohelper.findChild(arg_1_0.viewGO, "#go_progress")
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "levelinfo/#simage_bg")
-	arg_1_0._txtlevelname = gohelper.findChildText(arg_1_0.viewGO, "levelinfo/#go_selectlevel/#txt_levelname")
-	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "levelinfo/#go_empty")
-	arg_1_0._gounselectlevel = gohelper.findChild(arg_1_0.viewGO, "levelinfo/#go_unselectlevel")
-	arg_1_0._gounfinishlevel = gohelper.findChild(arg_1_0.viewGO, "levelinfo/#go_unfinishlevel")
-	arg_1_0._gorevive = gohelper.findChild(arg_1_0.viewGO, "levelinfo/#go_revive")
-	arg_1_0._goroles = gohelper.findChild(arg_1_0.viewGO, "levelinfo/#go_roles")
-	arg_1_0._goheroitem = gohelper.findChild(arg_1_0.viewGO, "levelinfo/#go_roles/#go_heroitem")
-	arg_1_0._btnreset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "levelinfo/#btn_reset")
-	arg_1_0._goselectlevel = gohelper.findChild(arg_1_0.viewGO, "levelinfo/#go_selectlevel")
+local WeekWalkResetView = class("WeekWalkResetView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function WeekWalkResetView:onInitView()
+	self._simageline = gohelper.findChildSingleImage(self.viewGO, "#simage_line")
+	self._goprogress = gohelper.findChild(self.viewGO, "#go_progress")
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "levelinfo/#simage_bg")
+	self._txtlevelname = gohelper.findChildText(self.viewGO, "levelinfo/#go_selectlevel/#txt_levelname")
+	self._goempty = gohelper.findChild(self.viewGO, "levelinfo/#go_empty")
+	self._gounselectlevel = gohelper.findChild(self.viewGO, "levelinfo/#go_unselectlevel")
+	self._gounfinishlevel = gohelper.findChild(self.viewGO, "levelinfo/#go_unfinishlevel")
+	self._gorevive = gohelper.findChild(self.viewGO, "levelinfo/#go_revive")
+	self._goroles = gohelper.findChild(self.viewGO, "levelinfo/#go_roles")
+	self._goheroitem = gohelper.findChild(self.viewGO, "levelinfo/#go_roles/#go_heroitem")
+	self._btnreset = gohelper.findChildButtonWithAudio(self.viewGO, "levelinfo/#btn_reset")
+	self._goselectlevel = gohelper.findChild(self.viewGO, "levelinfo/#go_selectlevel")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnreset:AddClickListener(arg_2_0._btnresetOnClick, arg_2_0)
+function WeekWalkResetView:addEvents()
+	self._btnreset:AddClickListener(self._btnresetOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnreset:RemoveClickListener()
+function WeekWalkResetView:removeEvents()
+	self._btnreset:RemoveClickListener()
 end
 
-function var_0_0._btnresetOnClick(arg_4_0)
-	if not arg_4_0._selectedBattleItem then
+function WeekWalkResetView:_btnresetOnClick()
+	if not self._selectedBattleItem then
 		return
 	end
 
-	if arg_4_0._selectedBattleItem:getBattleInfo().star <= 0 then
+	local battleInfo = self._selectedBattleItem:getBattleInfo()
+
+	if battleInfo.star <= 0 then
 		return
 	end
 
-	local var_4_0 = 0
+	local prevBattleId = 0
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_0._battleItemList) do
-		if iter_4_1 == arg_4_0._selectedBattleItem then
+	for i, v in ipairs(self._battleItemList) do
+		local isSelected = v == self._selectedBattleItem
+
+		if isSelected then
 			break
 		end
 
-		var_4_0 = iter_4_1:getBattleInfo().battleId
+		prevBattleId = v:getBattleInfo().battleId
 	end
 
 	GameFacade.showMessageBox(MessageBoxIdDefine.WeekWalkResetLayerBattle, MsgBoxEnum.BoxType.Yes_No, function()
-		WeekwalkRpc.instance:sendResetLayerRequest(arg_4_0._mapId, var_4_0, arg_4_0.closeThis, arg_4_0)
-	end, nil, nil, nil, nil, nil, arg_4_0:_getBattleName())
+		WeekwalkRpc.instance:sendResetLayerRequest(self._mapId, prevBattleId, self.closeThis, self)
+	end, nil, nil, nil, nil, nil, self:_getBattleName())
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	gohelper.addUIClickAudio(arg_6_0._btnreset.gameObject, AudioEnum.UI.UI_vertical_first_tabs_click)
+function WeekWalkResetView:_editableInitView()
+	gohelper.addUIClickAudio(self._btnreset.gameObject, AudioEnum.UI.UI_vertical_first_tabs_click)
 
-	arg_6_0._resetBtnCanvasGroup = gohelper.onceAddComponent(arg_6_0._btnreset.gameObject, typeof(UnityEngine.CanvasGroup))
-	arg_6_0._mapInfo = WeekWalkModel.instance:getCurMapInfo()
-	arg_6_0._mapConfig = WeekWalkModel.instance:getCurMapConfig()
-	arg_6_0._sceneConfig = lua_weekwalk_scene.configDict[arg_6_0._mapConfig.sceneId]
-	arg_6_0._mapId = arg_6_0._mapInfo.id
-	arg_6_0._heroItemList = nil
+	self._resetBtnCanvasGroup = gohelper.onceAddComponent(self._btnreset.gameObject, typeof(UnityEngine.CanvasGroup))
+	self._mapInfo = WeekWalkModel.instance:getCurMapInfo()
+	self._mapConfig = WeekWalkModel.instance:getCurMapConfig()
+	self._sceneConfig = lua_weekwalk_scene.configDict[self._mapConfig.sceneId]
+	self._mapId = self._mapInfo.id
+	self._heroItemList = nil
 
-	arg_6_0._simagebg:LoadImage(ResUrl.getWeekWalkBg("dreamrewardbg.png"))
-	arg_6_0._simageline:LoadImage(ResUrl.getWeekWalkBg("hw2.png"))
+	self._simagebg:LoadImage(ResUrl.getWeekWalkBg("dreamrewardbg.png"))
+	self._simageline:LoadImage(ResUrl.getWeekWalkBg("hw2.png"))
 
-	arg_6_0._needShowHeros = arg_6_0._mapId > 105
+	self._needShowHeros = self._mapId > 105
 
-	gohelper.setActive(arg_6_0._gorevive, arg_6_0._needShowHeros)
-	gohelper.setActive(arg_6_0._goempty, not arg_6_0._needShowHeros)
+	gohelper.setActive(self._gorevive, self._needShowHeros)
+	gohelper.setActive(self._goempty, not self._needShowHeros)
 
-	if arg_6_0._needShowHeros then
-		arg_6_0:_showHeros()
+	if self._needShowHeros then
+		self:_showHeros()
 	end
 
-	arg_6_0:_showBattleList()
-	arg_6_0:_initFinishStatus()
-	arg_6_0:_showCurLevel()
+	self:_showBattleList()
+	self:_initFinishStatus()
+	self:_showCurLevel()
 end
 
-function var_0_0._showCurLevel(arg_7_0)
-	local var_7_0 = 1
-	local var_7_1 = arg_7_0._mapInfo.battleInfos
+function WeekWalkResetView:_showCurLevel()
+	local index = 1
+	local battleInfos = self._mapInfo.battleInfos
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_1) do
-		local var_7_2 = iter_7_0
+	for i, v in ipairs(battleInfos) do
+		index = i
 
-		if iter_7_1.star <= 0 then
+		if v.star <= 0 then
 			break
 		end
 	end
 end
 
-function var_0_0._initFinishStatus(arg_8_0)
-	gohelper.setActive(arg_8_0._goselectlevel, false)
+function WeekWalkResetView:_initFinishStatus()
+	gohelper.setActive(self._goselectlevel, false)
 
-	local var_8_0 = arg_8_0._mapInfo:getHasStarIndex()
+	local hasStarIndex = self._mapInfo:getHasStarIndex()
 
-	arg_8_0._resetBtnCanvasGroup.alpha = 0.3
+	self._resetBtnCanvasGroup.alpha = 0.3
 
-	if var_8_0 <= 0 then
-		gohelper.setActive(arg_8_0._gounfinishlevel, true)
+	if hasStarIndex <= 0 then
+		gohelper.setActive(self._gounfinishlevel, true)
 
 		return
 	end
 
-	gohelper.setActive(arg_8_0._gounselectlevel, true)
+	gohelper.setActive(self._gounselectlevel, true)
 end
 
-function var_0_0._showBattleList(arg_9_0)
-	arg_9_0._battleItemList = arg_9_0:getUserDataTb_()
+function WeekWalkResetView:_showBattleList()
+	self._battleItemList = self:getUserDataTb_()
 
-	local var_9_0 = arg_9_0._mapInfo.battleInfos
+	local battleInfos = self._mapInfo.battleInfos
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
-		local var_9_1 = arg_9_0.viewContainer:getSetting().otherRes[1]
-		local var_9_2 = arg_9_0:getResInst(var_9_1, arg_9_0._goprogress)
-		local var_9_3 = MonoHelper.addLuaComOnceToGo(var_9_2, WeekWalkResetBattleItem, {
-			arg_9_0,
-			iter_9_1,
-			iter_9_0,
-			var_9_0
+	for i, v in ipairs(battleInfos) do
+		local itemPath = self.viewContainer:getSetting().otherRes[1]
+		local itemGo = self:getResInst(itemPath, self._goprogress)
+		local battleItem = MonoHelper.addLuaComOnceToGo(itemGo, WeekWalkResetBattleItem, {
+			self,
+			v,
+			i,
+			battleInfos
 		})
 
-		table.insert(arg_9_0._battleItemList, var_9_3)
+		table.insert(self._battleItemList, battleItem)
 	end
 end
 
-function var_0_0.selectBattleItem(arg_10_0, arg_10_1)
-	if arg_10_0._selectedBattleItem == arg_10_1 then
-		arg_10_0._selectedBattleItem = nil
+function WeekWalkResetView:selectBattleItem(battleItem)
+	if self._selectedBattleItem == battleItem then
+		self._selectedBattleItem = nil
 	else
-		arg_10_0._selectedBattleItem = arg_10_1
+		self._selectedBattleItem = battleItem
 	end
 
-	local var_10_0
+	local selectedIndex
 
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0._battleItemList) do
-		local var_10_1 = iter_10_1 == arg_10_0._selectedBattleItem
+	for i, v in ipairs(self._battleItemList) do
+		local isSelected = v == self._selectedBattleItem
 
-		if var_10_1 then
-			var_10_0 = iter_10_0
+		if isSelected then
+			selectedIndex = i
 
-			arg_10_0:_showSelectBattleInfo(arg_10_1, iter_10_0)
+			self:_showSelectBattleInfo(battleItem, i)
 		end
 
-		iter_10_1:setSelect(var_10_1)
-		iter_10_1:setFakedReset(var_10_0, var_10_1)
+		v:setSelect(isSelected)
+		v:setFakedReset(selectedIndex, isSelected)
 	end
 
-	gohelper.setActive(arg_10_0._gounselectlevel, not arg_10_0._selectedBattleItem)
+	gohelper.setActive(self._gounselectlevel, not self._selectedBattleItem)
 
-	if arg_10_0._needShowHeros then
-		arg_10_0:_showHeros()
+	if self._needShowHeros then
+		self:_showHeros()
 	end
 
-	if not arg_10_0._selectedBattleItem then
-		arg_10_0._resetBtnCanvasGroup.alpha = 0.3
+	if not self._selectedBattleItem then
+		self._resetBtnCanvasGroup.alpha = 0.3
 
-		gohelper.setActive(arg_10_0._goselectlevel, false)
-	end
-end
-
-function var_0_0._showSelectBattleInfo(arg_11_0, arg_11_1, arg_11_2)
-	arg_11_0._battleIndex = arg_11_2
-
-	gohelper.setActive(arg_11_0._goselectlevel, true)
-
-	arg_11_0._txtlevelname.text = arg_11_0:_getBattleName()
-
-	gohelper.setActive(arg_11_0._gounselectlevel, false)
-
-	arg_11_0._resetBtnCanvasGroup.alpha = 1
-
-	if arg_11_0._needShowHeros then
-		arg_11_0:_showHeros()
+		gohelper.setActive(self._goselectlevel, false)
 	end
 end
 
-function var_0_0._showHeros(arg_12_0)
-	if not arg_12_0._heroItemList then
-		arg_12_0._heroItemList = arg_12_0:getUserDataTb_()
+function WeekWalkResetView:_showSelectBattleInfo(battleItem, index)
+	self._battleIndex = index
 
-		for iter_12_0 = 1, 4 do
-			local var_12_0 = gohelper.cloneInPlace(arg_12_0._goheroitem)
+	gohelper.setActive(self._goselectlevel, true)
 
-			gohelper.setActive(var_12_0, true)
+	self._txtlevelname.text = self:_getBattleName()
 
-			local var_12_1 = arg_12_0:getUserDataTb_()
+	gohelper.setActive(self._gounselectlevel, false)
 
-			var_12_1._goempty = gohelper.findChild(var_12_0, "go_empty")
-			var_12_1._gohero = gohelper.findChild(var_12_0, "go_hero")
-			var_12_1._simageheroicon = gohelper.findChildSingleImage(var_12_0, "go_hero/simage_heroicon")
-			var_12_1._imagecareer = gohelper.findChildImage(var_12_0, "go_hero/image_career")
-			arg_12_0._heroItemList[iter_12_0] = var_12_1
+	self._resetBtnCanvasGroup.alpha = 1
+
+	if self._needShowHeros then
+		self:_showHeros()
+	end
+end
+
+function WeekWalkResetView:_showHeros()
+	if not self._heroItemList then
+		self._heroItemList = self:getUserDataTb_()
+
+		for i = 1, 4 do
+			local go = gohelper.cloneInPlace(self._goheroitem)
+
+			gohelper.setActive(go, true)
+
+			local t = self:getUserDataTb_()
+
+			t._goempty = gohelper.findChild(go, "go_empty")
+			t._gohero = gohelper.findChild(go, "go_hero")
+			t._simageheroicon = gohelper.findChildSingleImage(go, "go_hero/simage_heroicon")
+			t._imagecareer = gohelper.findChildImage(go, "go_hero/image_career")
+			self._heroItemList[i] = t
 		end
 	end
 
-	local var_12_2 = arg_12_0._selectedBattleItem and arg_12_0._selectedBattleItem:getPrevBattleInfo()
-	local var_12_3 = var_12_2 and var_12_2.heroIds
+	local battleInfo = self._selectedBattleItem and self._selectedBattleItem:getPrevBattleInfo()
+	local heroIds = battleInfo and battleInfo.heroIds
 
-	for iter_12_1, iter_12_2 in ipairs(arg_12_0._heroItemList) do
-		local var_12_4 = var_12_3 and var_12_3[iter_12_1]
-		local var_12_5 = arg_12_0._heroItemList[iter_12_1]
+	for i, v in ipairs(self._heroItemList) do
+		local heroId = heroIds and heroIds[i]
+		local t = self._heroItemList[i]
 
-		gohelper.setActive(var_12_5._goempty, not var_12_4)
-		gohelper.setActive(var_12_5._gohero, var_12_4)
+		gohelper.setActive(t._goempty, not heroId)
+		gohelper.setActive(t._gohero, heroId)
 
-		if var_12_4 then
-			local var_12_6 = HeroConfig.instance:getHeroCO(var_12_4)
-			local var_12_7 = SkinConfig.instance:getSkinCo(var_12_6.skinId)
+		if heroId then
+			local heroConfig = HeroConfig.instance:getHeroCO(heroId)
+			local skinConfig = SkinConfig.instance:getSkinCo(heroConfig.skinId)
 
-			var_12_5._simageheroicon:LoadImage(ResUrl.getHeadIconSmall(var_12_7.headIcon))
-			UISpriteSetMgr.instance:setCommonSprite(var_12_5._imagecareer, "lssx_" .. var_12_6.career)
+			t._simageheroicon:LoadImage(ResUrl.getHeadIconSmall(skinConfig.headIcon))
+			UISpriteSetMgr.instance:setCommonSprite(t._imagecareer, "lssx_" .. heroConfig.career)
 		end
 	end
 end
 
-function var_0_0._getBattleName(arg_13_0)
-	return string.format("%s-0%s", arg_13_0._sceneConfig.battleName, arg_13_0._battleIndex)
+function WeekWalkResetView:_getBattleName()
+	return string.format("%s-0%s", self._sceneConfig.battleName, self._battleIndex)
 end
 
-function var_0_0.onOpen(arg_14_0)
+function WeekWalkResetView:onOpen()
 	return
 end
 
-function var_0_0.onClose(arg_15_0)
+function WeekWalkResetView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_16_0)
-	if arg_16_0._heroItemList then
-		for iter_16_0, iter_16_1 in ipairs(arg_16_0._heroItemList) do
-			iter_16_1._simageheroicon:UnLoadImage()
+function WeekWalkResetView:onDestroyView()
+	if self._heroItemList then
+		for i, v in ipairs(self._heroItemList) do
+			v._simageheroicon:UnLoadImage()
 		end
 	end
 
-	arg_16_0._simagebg:UnLoadImage()
-	arg_16_0._simageline:UnLoadImage()
+	self._simagebg:UnLoadImage()
+	self._simageline:UnLoadImage()
 end
 
-return var_0_0
+return WeekWalkResetView

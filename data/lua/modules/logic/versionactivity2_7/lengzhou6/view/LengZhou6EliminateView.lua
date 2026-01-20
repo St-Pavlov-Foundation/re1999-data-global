@@ -1,581 +1,592 @@
-﻿module("modules.logic.versionactivity2_7.lengzhou6.view.LengZhou6EliminateView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/lengzhou6/view/LengZhou6EliminateView.lua
 
-local var_0_0 = class("LengZhou6EliminateView", BaseView)
+module("modules.logic.versionactivity2_7.lengzhou6.view.LengZhou6EliminateView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.viewGO = gohelper.findChild(arg_1_0.viewGO, "#go_Right")
-	arg_1_0._simageGrid = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_Grid")
-	arg_1_0._goTimes = gohelper.findChild(arg_1_0.viewGO, "#go_Times")
-	arg_1_0._btnLeft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_Times/#btn_Left")
-	arg_1_0._txtTimes = gohelper.findChildText(arg_1_0.viewGO, "#go_Times/#txt_Times")
-	arg_1_0._btnRight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_Times/#btn_Right")
-	arg_1_0._goChessBG = gohelper.findChild(arg_1_0.viewGO, "#go_ChessBG")
-	arg_1_0._gochessBoard = gohelper.findChild(arg_1_0.viewGO, "#go_ChessBG/#go_chessBoard")
-	arg_1_0._gochess = gohelper.findChild(arg_1_0.viewGO, "#go_ChessBG/#go_chess")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_ChessBG/#go_chess/#btn_click")
-	arg_1_0._goChessEffect = gohelper.findChild(arg_1_0.viewGO, "#go_ChessEffect")
-	arg_1_0._goLoading = gohelper.findChild(arg_1_0.viewGO, "#go_Loading")
-	arg_1_0._sliderloading = gohelper.findChildSlider(arg_1_0.viewGO, "#go_Loading/#slider_loading")
-	arg_1_0._goContinue = gohelper.findChild(arg_1_0.viewGO, "#go_Continue")
-	arg_1_0._simageMask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_Continue/#simage_Mask")
-	arg_1_0._btnContinue = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_Continue/#btn_Continue")
-	arg_1_0._goMask = gohelper.findChild(arg_1_0.viewGO, "#go_Mask")
-	arg_1_0._goAssess = gohelper.findChild(arg_1_0.viewGO, "#go_Assess")
-	arg_1_0._imageAssess = gohelper.findChildImage(arg_1_0.viewGO, "#go_Assess/#image_Assess")
-	arg_1_0._goAssess2 = gohelper.findChild(arg_1_0.viewGO, "#go_Assess2")
-	arg_1_0._imageAssess2 = gohelper.findChildImage(arg_1_0.viewGO, "#go_Assess2/#image_Assess2")
-	arg_1_0._txtNum = gohelper.findChildText(arg_1_0.viewGO, "#go_Assess2/#txt_Num")
+local LengZhou6EliminateView = class("LengZhou6EliminateView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function LengZhou6EliminateView:onInitView()
+	self.viewGO = gohelper.findChild(self.viewGO, "#go_Right")
+	self._simageGrid = gohelper.findChildSingleImage(self.viewGO, "#simage_Grid")
+	self._goTimes = gohelper.findChild(self.viewGO, "#go_Times")
+	self._btnLeft = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Times/#btn_Left")
+	self._txtTimes = gohelper.findChildText(self.viewGO, "#go_Times/#txt_Times")
+	self._btnRight = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Times/#btn_Right")
+	self._goChessBG = gohelper.findChild(self.viewGO, "#go_ChessBG")
+	self._gochessBoard = gohelper.findChild(self.viewGO, "#go_ChessBG/#go_chessBoard")
+	self._gochess = gohelper.findChild(self.viewGO, "#go_ChessBG/#go_chess")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "#go_ChessBG/#go_chess/#btn_click")
+	self._goChessEffect = gohelper.findChild(self.viewGO, "#go_ChessEffect")
+	self._goLoading = gohelper.findChild(self.viewGO, "#go_Loading")
+	self._sliderloading = gohelper.findChildSlider(self.viewGO, "#go_Loading/#slider_loading")
+	self._goContinue = gohelper.findChild(self.viewGO, "#go_Continue")
+	self._simageMask = gohelper.findChildSingleImage(self.viewGO, "#go_Continue/#simage_Mask")
+	self._btnContinue = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Continue/#btn_Continue")
+	self._goMask = gohelper.findChild(self.viewGO, "#go_Mask")
+	self._goAssess = gohelper.findChild(self.viewGO, "#go_Assess")
+	self._imageAssess = gohelper.findChildImage(self.viewGO, "#go_Assess/#image_Assess")
+	self._goAssess2 = gohelper.findChild(self.viewGO, "#go_Assess2")
+	self._imageAssess2 = gohelper.findChildImage(self.viewGO, "#go_Assess2/#image_Assess2")
+	self._txtNum = gohelper.findChildText(self.viewGO, "#go_Assess2/#txt_Num")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnLeft:AddClickListener(arg_2_0._btnLeftOnClick, arg_2_0)
-	arg_2_0._btnRight:AddClickListener(arg_2_0._btnRightOnClick, arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
-	arg_2_0._btnContinue:AddClickListener(arg_2_0._btnContinueOnClick, arg_2_0)
+function LengZhou6EliminateView:addEvents()
+	self._btnLeft:AddClickListener(self._btnLeftOnClick, self)
+	self._btnRight:AddClickListener(self._btnRightOnClick, self)
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
+	self._btnContinue:AddClickListener(self._btnContinueOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnLeft:RemoveClickListener()
-	arg_3_0._btnRight:RemoveClickListener()
-	arg_3_0._btnclick:RemoveClickListener()
-	arg_3_0._btnContinue:RemoveClickListener()
+function LengZhou6EliminateView:removeEvents()
+	self._btnLeft:RemoveClickListener()
+	self._btnRight:RemoveClickListener()
+	self._btnclick:RemoveClickListener()
+	self._btnContinue:RemoveClickListener()
 end
 
-function var_0_0._btnLeftOnClick(arg_4_0)
+function LengZhou6EliminateView:_btnLeftOnClick()
 	return
 end
 
-function var_0_0._btnRightOnClick(arg_5_0)
+function LengZhou6EliminateView:_btnRightOnClick()
 	return
 end
 
-function var_0_0._btnclickOnClick(arg_6_0)
+function LengZhou6EliminateView:_btnclickOnClick()
 	return
 end
 
-function var_0_0._btnContinueOnClick(arg_7_0)
-	if #LengZhou6GameModel.instance:getSelectSkillIdList() < LengZhou6Enum.defaultPlayerSkillSelectMax then
-		GameFacade.showMessageBox(MessageBoxIdDefine.LengZhou6EndLessContinue, MsgBoxEnum.BoxType.Yes_No, arg_7_0._continueGame, nil, nil, arg_7_0)
+function LengZhou6EliminateView:_btnContinueOnClick()
+	local selectSkill = LengZhou6GameModel.instance:getSelectSkillIdList()
+
+	if #selectSkill < LengZhou6Enum.defaultPlayerSkillSelectMax then
+		GameFacade.showMessageBox(MessageBoxIdDefine.LengZhou6EndLessContinue, MsgBoxEnum.BoxType.Yes_No, self._continueGame, nil, nil, self)
 	else
-		arg_7_0:_continueGame()
+		self:_continueGame()
 	end
 end
 
-function var_0_0._continueGame(arg_8_0)
+function LengZhou6EliminateView:_continueGame()
 	LengZhou6GameModel.instance:enterNextLayer()
 
-	local var_8_0 = LengZhou6GameModel.instance:getSelectSkillIdList()
+	local selectSkill = LengZhou6GameModel.instance:getSelectSkillIdList()
 
 	LengZhou6GameModel.instance:resetSelectSkillId()
 
-	for iter_8_0 = 1, #var_8_0 do
-		local var_8_1 = var_8_0[iter_8_0]
+	for i = 1, #selectSkill do
+		local skillId = selectSkill[i]
 
-		LengZhou6GameModel.instance:setPlayerSelectSkillId(iter_8_0, var_8_1)
+		LengZhou6GameModel.instance:setPlayerSelectSkillId(i, skillId)
 	end
 end
 
-function var_0_0._editableInitView(arg_9_0)
-	gohelper.setActiveCanvasGroup(arg_9_0._gochess, false)
+function LengZhou6EliminateView:_editableInitView()
+	gohelper.setActiveCanvasGroup(self._gochess, false)
 
-	if LengZhou6EliminateChessItemController.instance:InitCloneGo(arg_9_0._gochess, arg_9_0._gochessBoard, arg_9_0._goChessBG, arg_9_0._goChessBG) then
+	local initState = LengZhou6EliminateChessItemController.instance:InitCloneGo(self._gochess, self._gochessBoard, self._goChessBG, self._goChessBG)
+
+	if initState then
 		LengZhou6EliminateChessItemController.instance:InitChess()
 	end
 
-	gohelper.setActive(arg_9_0._goeffect, false)
+	gohelper.setActive(self._goeffect, false)
 end
 
-function var_0_0.onUpdateParam(arg_10_0)
+function LengZhou6EliminateView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_11_0)
-	gohelper.setActive(arg_11_0._goAssess, false)
-	arg_11_0:addEventCb(LengZhou6EliminateController.instance, LengZhou6Event.OnChessSelect, arg_11_0.onSelectItem, arg_11_0)
-	arg_11_0:addEventCb(LengZhou6EliminateController.instance, LengZhou6Event.UpdateGameInfo, arg_11_0.updateRound, arg_11_0)
-	arg_11_0:addEventCb(LengZhou6EliminateController.instance, LengZhou6Event.PerformBegin, arg_11_0.onPerformBegin, arg_11_0)
-	arg_11_0:addEventCb(LengZhou6EliminateController.instance, LengZhou6Event.PerformEnd, arg_11_0.onPerformEnd, arg_11_0)
-	arg_11_0:addEventCb(LengZhou6EliminateController.instance, LengZhou6Event.ReleaseSkill, arg_11_0.onReleaseSkill, arg_11_0)
-	arg_11_0:addEventCb(LengZhou6EliminateController.instance, LengZhou6Event.ShowAssess, arg_11_0.OnShowAssess, arg_11_0)
-	arg_11_0:addEventCb(LengZhou6EliminateController.instance, LengZhou6Event.CancelSkill, arg_11_0.cancelSkill, arg_11_0)
-	arg_11_0:addEventCb(LengZhou6EliminateController.instance, LengZhou6Event.ShowEffect, arg_11_0.showEffect, arg_11_0)
-	arg_11_0:addEventCb(LengZhou6EliminateController.instance, LengZhou6Event.HideEffect, arg_11_0.hideEffect, arg_11_0)
-	arg_11_0:addEventCb(LengZhou6EliminateController.instance, LengZhou6Event.ClearEliminateEffect, arg_11_0.clearAllEffect, arg_11_0)
-	arg_11_0:addEventCb(LengZhou6GameController.instance, LengZhou6Event.OnEndlessChangeSelectState, arg_11_0.endLessModelRefreshView, arg_11_0)
-	arg_11_0:addEventCb(LengZhou6GameController.instance, LengZhou6Event.GameReStart, arg_11_0._gameReStart, arg_11_0)
-	arg_11_0:initView()
+function LengZhou6EliminateView:onOpen()
+	gohelper.setActive(self._goAssess, false)
+	self:addEventCb(LengZhou6EliminateController.instance, LengZhou6Event.OnChessSelect, self.onSelectItem, self)
+	self:addEventCb(LengZhou6EliminateController.instance, LengZhou6Event.UpdateGameInfo, self.updateRound, self)
+	self:addEventCb(LengZhou6EliminateController.instance, LengZhou6Event.PerformBegin, self.onPerformBegin, self)
+	self:addEventCb(LengZhou6EliminateController.instance, LengZhou6Event.PerformEnd, self.onPerformEnd, self)
+	self:addEventCb(LengZhou6EliminateController.instance, LengZhou6Event.ReleaseSkill, self.onReleaseSkill, self)
+	self:addEventCb(LengZhou6EliminateController.instance, LengZhou6Event.ShowAssess, self.OnShowAssess, self)
+	self:addEventCb(LengZhou6EliminateController.instance, LengZhou6Event.CancelSkill, self.cancelSkill, self)
+	self:addEventCb(LengZhou6EliminateController.instance, LengZhou6Event.ShowEffect, self.showEffect, self)
+	self:addEventCb(LengZhou6EliminateController.instance, LengZhou6Event.HideEffect, self.hideEffect, self)
+	self:addEventCb(LengZhou6EliminateController.instance, LengZhou6Event.ClearEliminateEffect, self.clearAllEffect, self)
+	self:addEventCb(LengZhou6GameController.instance, LengZhou6Event.OnEndlessChangeSelectState, self.endLessModelRefreshView, self)
+	self:addEventCb(LengZhou6GameController.instance, LengZhou6Event.GameReStart, self._gameReStart, self)
+	self:initView()
 end
 
-function var_0_0._gameReStart(arg_12_0)
-	gohelper.setActive(arg_12_0._goAssess, false)
-	arg_12_0:initView()
+function LengZhou6EliminateView:_gameReStart()
+	gohelper.setActive(self._goAssess, false)
+	self:initView()
 end
 
-function var_0_0.onSelectItem(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	if arg_13_0._mask then
+function LengZhou6EliminateView:onSelectItem(x, y, isShowSelect)
+	if self._mask then
 		return
 	end
 
-	local var_13_0 = LocalEliminateChessModel.instance:getCell(arg_13_1, arg_13_2)
+	local cell = LocalEliminateChessModel.instance:getCell(x, y)
 
-	if var_13_0 then
-		local var_13_1 = var_13_0:haveStatus(EliminateEnum_2_7.ChessState.Frost)
-		local var_13_2 = var_13_0:getEliminateID() == EliminateEnum_2_7.ChessType.stone
+	if cell then
+		local isFrost = cell:haveStatus(EliminateEnum_2_7.ChessState.Frost)
+		local isStone = cell:getEliminateID() == EliminateEnum_2_7.ChessType.stone
 
-		if arg_13_0._needReleaseSkill == nil and (var_13_1 or var_13_2) then
+		if self._needReleaseSkill == nil and (isFrost or isStone) then
 			return
 		end
 	end
 
-	if arg_13_0._needReleaseSkill ~= nil then
-		if arg_13_0._lastSelectX and arg_13_0._lastSelectY then
-			arg_13_0:setSelect(false, arg_13_0._lastSelectX, arg_13_0._lastSelectY)
-			arg_13_0:recordLastSelect(nil, nil)
+	if self._needReleaseSkill ~= nil then
+		if self._lastSelectX and self._lastSelectY then
+			self:setSelect(false, self._lastSelectX, self._lastSelectY)
+			self:recordLastSelect(nil, nil)
 		end
 
-		arg_13_0:setSkillParams(arg_13_1, arg_13_2)
+		self:setSkillParams(x, y)
 
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum2_7.LengZhou6.play_ui_yuzhou_lzl_click)
 
-	if arg_13_0._lastSelectX and arg_13_0._lastSelectY then
-		if arg_13_0._lastSelectX ~= arg_13_1 or arg_13_0._lastSelectY ~= arg_13_2 then
-			arg_13_0:setSelect(false, arg_13_0._lastSelectX, arg_13_0._lastSelectY)
-			LengZhou6EliminateController.instance:exchangeCell(arg_13_0._lastSelectX, arg_13_0._lastSelectY, arg_13_1, arg_13_2)
-			arg_13_0:recordLastSelect(nil, nil)
-			arg_13_0:setSelect(false, arg_13_1, arg_13_2)
+	if self._lastSelectX and self._lastSelectY then
+		if self._lastSelectX ~= x or self._lastSelectY ~= y then
+			self:setSelect(false, self._lastSelectX, self._lastSelectY)
+			LengZhou6EliminateController.instance:exchangeCell(self._lastSelectX, self._lastSelectY, x, y)
+			self:recordLastSelect(nil, nil)
+			self:setSelect(false, x, y)
 		else
-			arg_13_0:setSelect(false, arg_13_0._lastSelectX, arg_13_0._lastSelectY)
-			arg_13_0:recordLastSelect(nil, nil)
+			self:setSelect(false, self._lastSelectX, self._lastSelectY)
+			self:recordLastSelect(nil, nil)
 		end
 	else
-		if arg_13_3 then
-			arg_13_0:setSelect(true, arg_13_1, arg_13_2)
+		if isShowSelect then
+			self:setSelect(true, x, y)
 		end
 
-		arg_13_0:recordLastSelect(arg_13_1, arg_13_2)
+		self:recordLastSelect(x, y)
 	end
 end
 
-function var_0_0.setSelect(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	local var_14_0
+function LengZhou6EliminateView:setSelect(isSelect, x, y)
+	local item
 
-	if arg_14_2 and arg_14_3 then
-		var_14_0 = LengZhou6EliminateChessItemController.instance:getChessItem(arg_14_2, arg_14_3)
+	if x and y then
+		item = LengZhou6EliminateChessItemController.instance:getChessItem(x, y)
 	else
-		var_14_0 = LengZhou6EliminateChessItemController.instance:getChessItem(arg_14_0._lastSelectX, arg_14_0._lastSelectY)
+		item = LengZhou6EliminateChessItemController.instance:getChessItem(self._lastSelectX, self._lastSelectY)
 	end
 
-	if var_14_0 ~= nil then
-		var_14_0:setSelect(arg_14_1)
+	if item ~= nil then
+		item:setSelect(isSelect)
 	end
 end
 
-function var_0_0.recordLastSelect(arg_15_0, arg_15_1, arg_15_2)
-	arg_15_0._lastSelectX = arg_15_1
-	arg_15_0._lastSelectY = arg_15_2
+function LengZhou6EliminateView:recordLastSelect(x, y)
+	self._lastSelectX = x
+	self._lastSelectY = y
 
-	arg_15_0:updateTipTime()
-	arg_15_0:tip(false)
+	self:updateTipTime()
+	self:tip(false)
 end
 
-function var_0_0.initView(arg_16_0)
-	TaskDispatcher.cancelTask(arg_16_0.showViewByModel, arg_16_0)
+function LengZhou6EliminateView:initView()
+	TaskDispatcher.cancelTask(self.showViewByModel, self)
 
-	if LengZhou6GameModel.instance:getBattleModel() == LengZhou6Enum.BattleModel.normal then
-		arg_16_0:updateRound()
-		arg_16_0:showLoading(true)
+	local battleModel = LengZhou6GameModel.instance:getBattleModel()
+
+	if battleModel == LengZhou6Enum.BattleModel.normal then
+		self:updateRound()
+		self:showLoading(true)
 	else
-		arg_16_0:endLessModelRefreshView(true)
+		self:endLessModelRefreshView(true)
 	end
 end
 
-function var_0_0.endLessModelRefreshView(arg_17_0, arg_17_1)
-	local var_17_0 = LengZhou6GameModel.instance:getEndLessBattleProgress()
-	local var_17_1 = var_17_0 == LengZhou6Enum.BattleProgress.selectSkill
+function LengZhou6EliminateView:endLessModelRefreshView(isInitView)
+	local progress = LengZhou6GameModel.instance:getEndLessBattleProgress()
+	local isSelect = progress == LengZhou6Enum.BattleProgress.selectSkill
 
-	gohelper.setActive(arg_17_0._goContinue, var_17_1)
-	gohelper.setActive(arg_17_0._goLoading, not var_17_1)
-	gohelper.setActive(arg_17_0._goChessBG, not var_17_1)
-	gohelper.setActive(arg_17_0._goChessEffect, not var_17_1)
-	arg_17_0:setMaskActive(false)
-	arg_17_0:updateRound()
+	gohelper.setActive(self._goContinue, isSelect)
+	gohelper.setActive(self._goLoading, not isSelect)
+	gohelper.setActive(self._goChessBG, not isSelect)
+	gohelper.setActive(self._goChessEffect, not isSelect)
+	self:setMaskActive(false)
+	self:updateRound()
 
-	if var_17_0 == LengZhou6Enum.BattleProgress.selectFinish then
-		arg_17_0:showLoading(arg_17_1)
+	if progress == LengZhou6Enum.BattleProgress.selectFinish then
+		self:showLoading(isInitView)
 	else
-		arg_17_0:changeTipState(false, true, false)
+		self:changeTipState(false, true, false)
 		LengZhou6GameModel.instance:recordChessData()
 
-		local var_17_2 = LengZhou6GameModel.instance:getEndLessModelLayer()
+		local layer = LengZhou6GameModel.instance:getEndLessModelLayer()
 
-		LengZhou6Controller.instance:dispatchEvent(LengZhou6Event.ChangePlayerSkill, var_17_2)
+		LengZhou6Controller.instance:dispatchEvent(LengZhou6Event.ChangePlayerSkill, layer)
 	end
 end
 
-function var_0_0.updateRound(arg_18_0)
-	local var_18_0 = LengZhou6GameModel.instance:getCurRound()
+function LengZhou6EliminateView:updateRound()
+	local round = LengZhou6GameModel.instance:getCurRound()
 
-	arg_18_0._txtTimes.text = var_18_0
+	self._txtTimes.text = round
 end
 
-function var_0_0.setMaskActive(arg_19_0, arg_19_1)
-	gohelper.setActive(arg_19_0._goMask, arg_19_1)
+function LengZhou6EliminateView:setMaskActive(active)
+	gohelper.setActive(self._goMask, active)
 
-	arg_19_0._mask = arg_19_1
+	self._mask = active
 end
 
-function var_0_0.onPerformBegin(arg_20_0)
-	arg_20_0:setMaskActive(true)
-	arg_20_0:changeTipState(false, true, false)
+function LengZhou6EliminateView:onPerformBegin()
+	self:setMaskActive(true)
+	self:changeTipState(false, true, false)
 end
 
-function var_0_0.onPerformEnd(arg_21_0)
-	arg_21_0:setMaskActive(false)
-	arg_21_0:changeTipState(true, false, true)
+function LengZhou6EliminateView:onPerformEnd()
+	self:setMaskActive(false)
+	self:changeTipState(true, false, true)
 end
 
-function var_0_0.showLoading(arg_22_0, arg_22_1)
-	arg_22_0:setMaskActive(true)
-	gohelper.setActive(arg_22_0._goLoading, true)
-	gohelper.setActive(arg_22_0._goChessBG, false)
-	gohelper.setActive(arg_22_0._goContinue, false)
-	gohelper.setActive(arg_22_0._goChessEffect, false)
-	arg_22_0:setMaskActive(true)
-	arg_22_0._sliderloading:SetValue(0)
+function LengZhou6EliminateView:showLoading(init)
+	self:setMaskActive(true)
+	gohelper.setActive(self._goLoading, true)
+	gohelper.setActive(self._goChessBG, false)
+	gohelper.setActive(self._goContinue, false)
+	gohelper.setActive(self._goChessEffect, false)
+	self:setMaskActive(true)
+	self._sliderloading:SetValue(0)
 
-	if arg_22_1 then
-		TaskDispatcher.runDelay(arg_22_0._showLoading, arg_22_0, LengZhou6Enum.openViewAniTime)
+	if init then
+		TaskDispatcher.runDelay(self._showLoading, self, LengZhou6Enum.openViewAniTime)
 	else
-		arg_22_0:_showLoading()
+		self:_showLoading()
 	end
 end
 
-function var_0_0._showLoading(arg_23_0)
-	if arg_23_0._conTweenId then
-		ZProj.TweenHelper.KillById(arg_23_0._conTweenId)
+function LengZhou6EliminateView:_showLoading()
+	if self._conTweenId then
+		ZProj.TweenHelper.KillById(self._conTweenId)
 
-		arg_23_0._conTweenId = nil
+		self._conTweenId = nil
 	end
 
 	AudioMgr.instance:trigger(AudioEnum2_7.LengZhou6.play_ui_yuzhou_lzl_loading)
 
-	arg_23_0._conTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, LengZhou6Enum.LoadingTime, arg_23_0._updateLoading, arg_23_0._finishLoading, arg_23_0, nil, EaseType.Linear)
+	self._conTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, LengZhou6Enum.LoadingTime, self._updateLoading, self._finishLoading, self, nil, EaseType.Linear)
 end
 
-function var_0_0._updateLoading(arg_24_0, arg_24_1)
-	if arg_24_0._sliderloading then
-		arg_24_0._sliderloading:SetValue(arg_24_1)
+function LengZhou6EliminateView:_updateLoading(value)
+	if self._sliderloading then
+		self._sliderloading:SetValue(value)
 	end
 end
 
-function var_0_0._finishLoading(arg_25_0)
+function LengZhou6EliminateView:_finishLoading()
 	LengZhou6EliminateController.instance:createInitMoveStepAndUpdatePos()
-	gohelper.setActive(arg_25_0._goLoading, false)
-	gohelper.setActive(arg_25_0._goChessBG, true)
-	gohelper.setActive(arg_25_0._goChessEffect, true)
-	arg_25_0:setMaskActive(false)
+	gohelper.setActive(self._goLoading, false)
+	gohelper.setActive(self._goChessBG, true)
+	gohelper.setActive(self._goChessEffect, true)
+	self:setMaskActive(false)
 
-	local var_25_0 = LengZhou6GameModel.instance:getBattleModel()
-	local var_25_1 = LengZhou6GameModel.instance:getEndLessBattleProgress()
+	local battleModel = LengZhou6GameModel.instance:getBattleModel()
+	local progress = LengZhou6GameModel.instance:getEndLessBattleProgress()
 
-	if var_25_0 == LengZhou6Enum.BattleModel.infinite then
-		if var_25_1 == LengZhou6Enum.BattleProgress.selectFinish then
+	if battleModel == LengZhou6Enum.BattleModel.infinite then
+		if progress == LengZhou6Enum.BattleProgress.selectFinish then
 			if not LengZhou6GameModel.instance:isFirstEnterLayer() then
-				arg_25_0:clearAllEffect()
+				self:clearAllEffect()
 			end
 
 			LengZhou6GameModel.instance:recordChessData()
 		end
 	else
-		local var_25_2 = LengZhou6Model.instance:getCurEpisodeId()
+		local curEpisodeId = LengZhou6Model.instance:getCurEpisodeId()
 
-		LengZhou6Controller.instance:dispatchEvent(LengZhou6Event.EnterGameLevel, var_25_2)
+		LengZhou6Controller.instance:dispatchEvent(LengZhou6Event.EnterGameLevel, curEpisodeId)
 	end
 
-	arg_25_0:changeTipState(true, false, true)
+	self:changeTipState(true, false, true)
 end
 
-function var_0_0.onReleaseSkill(arg_26_0, arg_26_1)
-	if not arg_26_1:paramIsFull() then
-		arg_26_0._needReleaseSkill = arg_26_1
+function LengZhou6EliminateView:onReleaseSkill(skill)
+	if not skill:paramIsFull() then
+		self._needReleaseSkill = skill
 
-		arg_26_0:changeTipState(false, true, false)
-	end
-end
-
-function var_0_0.setSkillParams(arg_27_0, arg_27_1, arg_27_2)
-	if arg_27_0._needReleaseSkill ~= nil then
-		arg_27_0._needReleaseSkill:setParams(arg_27_1, arg_27_2)
-	end
-
-	if arg_27_0._needReleaseSkill:paramIsFull() then
-		arg_27_0._needReleaseSkill:execute()
-
-		arg_27_0._needReleaseSkill = nil
-
-		arg_27_0:changeTipState(true, false, true)
+		self:changeTipState(false, true, false)
 	end
 end
 
-function var_0_0.cancelSkill(arg_28_0)
-	arg_28_0._needReleaseSkill = nil
+function LengZhou6EliminateView:setSkillParams(x, y)
+	if self._needReleaseSkill ~= nil then
+		self._needReleaseSkill:setParams(x, y)
+	end
 
-	arg_28_0:changeTipState(true, false, true)
+	if self._needReleaseSkill:paramIsFull() then
+		self._needReleaseSkill:execute()
+
+		self._needReleaseSkill = nil
+
+		self:changeTipState(true, false, true)
+	end
 end
 
-function var_0_0.OnShowAssess(arg_29_0, arg_29_1)
-	if arg_29_1 == nil then
+function LengZhou6EliminateView:cancelSkill()
+	self._needReleaseSkill = nil
+
+	self:changeTipState(true, false, true)
+end
+
+function LengZhou6EliminateView:OnShowAssess(assessLevel)
+	if assessLevel == nil then
 		return
 	end
 
-	local var_29_0 = EliminateEnum_2_7.AssessLevelToImageName[arg_29_1]
+	local imageName = EliminateEnum_2_7.AssessLevelToImageName[assessLevel]
 
-	UISpriteSetMgr.instance:setHisSaBethSprite(arg_29_0._imageAssess, var_29_0, false)
-	gohelper.setActive(arg_29_0._goAssess, true)
+	UISpriteSetMgr.instance:setHisSaBethSprite(self._imageAssess, imageName, false)
+	gohelper.setActive(self._goAssess, true)
 	AudioMgr.instance:trigger(AudioEnum2_7.LengZhou6.play_ui_yuzhou_lzl_result)
-	TaskDispatcher.runDelay(arg_29_0.hideAssess, arg_29_0, EliminateEnum_2_7.AssessShowTime)
+	TaskDispatcher.runDelay(self.hideAssess, self, EliminateEnum_2_7.AssessShowTime)
 end
 
-function var_0_0.hideAssess(arg_30_0)
-	gohelper.setActive(arg_30_0._goAssess, false)
+function LengZhou6EliminateView:hideAssess()
+	gohelper.setActive(self._goAssess, false)
 end
 
-function var_0_0.onClose(arg_31_0)
-	TaskDispatcher.cancelTask(arg_31_0.hideAssess, arg_31_0)
-	TaskDispatcher.cancelTask(arg_31_0.checkTip, arg_31_0)
+function LengZhou6EliminateView:onClose()
+	TaskDispatcher.cancelTask(self.hideAssess, self)
+	TaskDispatcher.cancelTask(self.checkTip, self)
 
-	if arg_31_0.effectPool ~= nil then
-		arg_31_0.effectPool:dispose()
+	if self.effectPool ~= nil then
+		self.effectPool:dispose()
 
-		arg_31_0.flyItemPool = nil
+		self.flyItemPool = nil
 	end
 end
 
-function var_0_0.showEffect(arg_32_0, arg_32_1, arg_32_2, arg_32_3)
-	if arg_32_1 == nil or arg_32_2 == nil or arg_32_3 == nil then
+function LengZhou6EliminateView:showEffect(x, y, effect)
+	if x == nil or y == nil or effect == nil then
 		return
 	end
 
-	local var_32_0 = arg_32_0:getEffectIndex(arg_32_1, arg_32_2)
+	local index = self:getEffectIndex(x, y)
 
-	if arg_32_0._effectList == nil then
-		arg_32_0._effectList = arg_32_0:getUserDataTb_()
+	if self._effectList == nil then
+		self._effectList = self:getUserDataTb_()
 	end
 
-	local var_32_1 = arg_32_0._effectList[var_32_0]
+	local itemGo = self._effectList[index]
 
-	if var_32_1 == nil then
-		local var_32_2 = arg_32_0.viewContainer:getSetting().otherRes[4]
+	if itemGo == nil then
+		local path = self.viewContainer:getSetting().otherRes[4]
 
-		var_32_1 = arg_32_0:getResInst(var_32_2, arg_32_0._goChessEffect, "effect_" .. var_32_0)
-		arg_32_0._effectList[var_32_0] = var_32_1
+		itemGo = self:getResInst(path, self._goChessEffect, "effect_" .. index)
+		self._effectList[index] = itemGo
 	end
 
-	arg_32_0:updateEffectInfo(var_32_1, arg_32_1, arg_32_2, arg_32_3)
-	LocalEliminateChessModel.instance:recordSpEffect(arg_32_1, arg_32_2, arg_32_3)
+	self:updateEffectInfo(itemGo, x, y, effect)
+	LocalEliminateChessModel.instance:recordSpEffect(x, y, effect)
 end
 
-function var_0_0.hideEffect(arg_33_0, arg_33_1, arg_33_2, arg_33_3)
-	if arg_33_1 == nil or arg_33_2 == nil or arg_33_3 == nil or arg_33_0._effectList == nil then
+function LengZhou6EliminateView:hideEffect(x, y, effect)
+	if x == nil or y == nil or effect == nil or self._effectList == nil then
 		return
 	end
 
-	local var_33_0 = LocalEliminateChessModel.instance:getSpEffect(arg_33_1, arg_33_2)
+	local recordEffect = LocalEliminateChessModel.instance:getSpEffect(x, y)
 
-	if var_33_0 and arg_33_3 == var_33_0 then
-		local var_33_1 = arg_33_0:getEffectIndex(arg_33_1, arg_33_2)
-		local var_33_2 = arg_33_0._effectList[var_33_1]
+	if recordEffect and effect == recordEffect then
+		local index = self:getEffectIndex(x, y)
+		local itemGo = self._effectList[index]
 
-		if var_33_2 ~= nil and arg_33_3 == EliminateEnum_2_7.ChessEffect.frost then
-			gohelper.findChild(var_33_2, "#image_sprite2"):GetComponent(typeof(UnityEngine.Animator)):Play("out", 0, 0)
+		if itemGo ~= nil and effect == EliminateEnum_2_7.ChessEffect.frost then
+			local image2Go = gohelper.findChild(itemGo, "#image_sprite2")
+			local ani = image2Go:GetComponent(typeof(UnityEngine.Animator))
 
-			if arg_33_0._needHidePos == nil then
-				arg_33_0._needHidePos = {}
+			ani:Play("out", 0, 0)
+
+			if self._needHidePos == nil then
+				self._needHidePos = {}
 			end
 
-			table.insert(arg_33_0._needHidePos, {
-				arg_33_1,
-				arg_33_2
+			table.insert(self._needHidePos, {
+				x,
+				y
 			})
-			TaskDispatcher.cancelTask(arg_33_0._delayHideEffect, arg_33_0)
-			TaskDispatcher.runDelay(arg_33_0._delayHideEffect, arg_33_0, 0.5)
+			TaskDispatcher.cancelTask(self._delayHideEffect, self)
+			TaskDispatcher.runDelay(self._delayHideEffect, self, 0.5)
 		else
-			arg_33_0:_realHideEffect(arg_33_1, arg_33_2)
+			self:_realHideEffect(x, y)
 		end
 	end
 end
 
-function var_0_0._delayHideEffect(arg_34_0)
-	TaskDispatcher.cancelTask(arg_34_0._delayHideEffect, arg_34_0)
+function LengZhou6EliminateView:_delayHideEffect()
+	TaskDispatcher.cancelTask(self._delayHideEffect, self)
 
-	if arg_34_0._needHidePos == nil then
+	if self._needHidePos == nil then
 		return
 	end
 
-	local var_34_0 = #arg_34_0._needHidePos
+	local count = #self._needHidePos
 
-	for iter_34_0 = 1, var_34_0 do
-		local var_34_1 = table.remove(arg_34_0._needHidePos, 1)
-		local var_34_2 = var_34_1[1]
-		local var_34_3 = var_34_1[2]
+	for i = 1, count do
+		local pos = table.remove(self._needHidePos, 1)
+		local x = pos[1]
+		local y = pos[2]
 
-		arg_34_0:_realHideEffect(var_34_2, var_34_3)
+		self:_realHideEffect(x, y)
 	end
 end
 
-function var_0_0._realHideEffect(arg_35_0, arg_35_1, arg_35_2)
-	if arg_35_0._effectList == nil then
+function LengZhou6EliminateView:_realHideEffect(x, y)
+	if self._effectList == nil then
 		return
 	end
 
-	local var_35_0 = arg_35_0:getEffectIndex(arg_35_1, arg_35_2)
+	local index = self:getEffectIndex(x, y)
 
-	if arg_35_0._effectList[var_35_0] ~= nil then
-		LocalEliminateChessModel.instance:recordSpEffect(arg_35_1, arg_35_2, nil)
-		gohelper.setActive(arg_35_0._effectList[var_35_0], false)
+	if self._effectList[index] ~= nil then
+		LocalEliminateChessModel.instance:recordSpEffect(x, y, nil)
+		gohelper.setActive(self._effectList[index], false)
 	end
 end
 
-function var_0_0.clearAllEffect(arg_36_0)
-	if arg_36_0._effectList == nil then
+function LengZhou6EliminateView:clearAllEffect()
+	if self._effectList == nil then
 		return
 	end
 
 	LocalEliminateChessModel.instance:clearAllEffect()
 
-	for iter_36_0, iter_36_1 in pairs(arg_36_0._effectList) do
-		if iter_36_1 ~= nil then
-			gohelper.setActive(iter_36_1, false)
-			gohelper.destroy(iter_36_1)
+	for _, itemGo in pairs(self._effectList) do
+		if itemGo ~= nil then
+			gohelper.setActive(itemGo, false)
+			gohelper.destroy(itemGo)
 		end
 	end
 
-	if arg_36_0._needHidePos ~= nil then
-		tabletool.clear(arg_36_0._needHidePos)
+	if self._needHidePos ~= nil then
+		tabletool.clear(self._needHidePos)
 	end
 
-	if arg_36_0._effectList ~= nil then
-		tabletool.clear(arg_36_0._effectList)
+	if self._effectList ~= nil then
+		tabletool.clear(self._effectList)
 	end
 end
 
-function var_0_0.getEffectIndex(arg_37_0, arg_37_1, arg_37_2)
-	return arg_37_1 .. "_" .. arg_37_2
+function LengZhou6EliminateView:getEffectIndex(x, y)
+	return x .. "_" .. y
 end
 
-function var_0_0.updateEffectInfo(arg_38_0, arg_38_1, arg_38_2, arg_38_3, arg_38_4)
-	if arg_38_2 == nil or arg_38_3 == nil or arg_38_4 == nil then
+function LengZhou6EliminateView:updateEffectInfo(itemGo, x, y, effectType)
+	if x == nil or y == nil or effectType == nil then
 		return
 	end
 
-	local var_38_0 = gohelper.findChildImage(arg_38_1, "#image_sprite")
-	local var_38_1 = gohelper.findChildImage(arg_38_1, "#image_sprite2")
-	local var_38_2 = arg_38_4 == EliminateEnum_2_7.ChessEffect.frost
+	local image1 = gohelper.findChildImage(itemGo, "#image_sprite")
+	local image2 = gohelper.findChildImage(itemGo, "#image_sprite2")
+	local isFrost = effectType == EliminateEnum_2_7.ChessEffect.frost
 
-	gohelper.setActive(var_38_0.gameObject, not var_38_2)
-	gohelper.setActive(var_38_1.gameObject, var_38_2)
+	gohelper.setActive(image1.gameObject, not isFrost)
+	gohelper.setActive(image2.gameObject, isFrost)
 
-	local var_38_3, var_38_4 = LocalEliminateChessUtils.instance.getChessPos(arg_38_2, arg_38_3)
+	local posX, posY = LocalEliminateChessUtils.instance.getChessPos(x, y)
 
-	transformhelper.setLocalPosXY(arg_38_1.transform, var_38_3, var_38_4)
-	gohelper.setActive(arg_38_1, true)
+	transformhelper.setLocalPosXY(itemGo.transform, posX, posY)
+	gohelper.setActive(itemGo, true)
 end
 
-function var_0_0.updateTipTime(arg_39_0)
-	arg_39_0._lastClickTime = os.time()
+function LengZhou6EliminateView:updateTipTime()
+	self._lastClickTime = os.time()
 end
 
-function var_0_0.checkTip(arg_40_0)
-	if arg_40_0._lastClickTime == nil then
-		arg_40_0._lastClickTime = os.time()
+function LengZhou6EliminateView:checkTip()
+	if self._lastClickTime == nil then
+		self._lastClickTime = os.time()
 	end
 
-	if os.time() - arg_40_0._lastClickTime >= EliminateEnum.DotMoveTipInterval then
-		arg_40_0:tip(true)
+	if os.time() - self._lastClickTime >= EliminateEnum.DotMoveTipInterval then
+		self:tip(true)
 	end
 end
 
-function var_0_0.tip(arg_41_0, arg_41_1)
-	if arg_41_0._lastTipActive ~= nil and arg_41_0._lastTipActive == arg_41_1 then
+function LengZhou6EliminateView:tip(active)
+	if self._lastTipActive ~= nil and self._lastTipActive == active then
 		return
 	end
 
-	if arg_41_1 and not arg_41_0.canTip then
+	if active and not self.canTip then
 		return
 	end
 
-	if arg_41_1 then
-		local var_41_0 = LocalEliminateChessModel.instance:canEliminate()
+	if active then
+		local tipInfo = LocalEliminateChessModel.instance:canEliminate()
 
-		if var_41_0 and #var_41_0 >= 3 then
-			for iter_41_0 = 1, #var_41_0 do
-				local var_41_1 = var_41_0[iter_41_0]
-				local var_41_2 = var_41_1.x
-				local var_41_3 = var_41_1.y
-				local var_41_4 = LengZhou6EliminateChessItemController.instance:getChessItem(var_41_2, var_41_3)
+		if tipInfo and #tipInfo >= 3 then
+			for i = 1, #tipInfo do
+				local data = tipInfo[i]
+				local x = data.x
+				local y = data.y
+				local item = LengZhou6EliminateChessItemController.instance:getChessItem(x, y)
 
-				if var_41_4 ~= nil then
-					var_41_4:toTip(arg_41_1)
+				if item ~= nil then
+					item:toTip(active)
 				end
 			end
 		end
 	else
-		local var_41_5 = LengZhou6EliminateChessItemController.instance:getChess()
+		local allItem = LengZhou6EliminateChessItemController.instance:getChess()
 
-		for iter_41_1 = 1, #var_41_5 do
-			local var_41_6 = var_41_5[iter_41_1]
+		for i = 1, #allItem do
+			local rowItems = allItem[i]
 
-			for iter_41_2 = 1, #var_41_6 do
-				local var_41_7 = var_41_6[iter_41_2]
+			for j = 1, #rowItems do
+				local item = rowItems[j]
 
-				if var_41_7 ~= nil then
-					var_41_7:toTip(arg_41_1)
+				if item ~= nil then
+					item:toTip(active)
 				end
 			end
 		end
 	end
 
-	arg_41_0._lastTipActive = arg_41_1
+	self._lastTipActive = active
 end
 
-function var_0_0.changeTipState(arg_42_0, arg_42_1, arg_42_2, arg_42_3)
-	arg_42_0.canTip = arg_42_1
+function LengZhou6EliminateView:changeTipState(canTip, stopTip, needReset)
+	self.canTip = canTip
 
-	if arg_42_2 then
-		arg_42_0:tip(false)
+	if stopTip then
+		self:tip(false)
 
-		arg_42_0._lastClickTime = nil
+		self._lastClickTime = nil
 
-		TaskDispatcher.cancelTask(arg_42_0.checkTip, arg_42_0)
+		TaskDispatcher.cancelTask(self.checkTip, self)
 	end
 
-	if arg_42_3 then
-		arg_42_0._lastClickTime = nil
+	if needReset then
+		self._lastClickTime = nil
 
-		TaskDispatcher.cancelTask(arg_42_0.checkTip, arg_42_0)
-		TaskDispatcher.runRepeat(arg_42_0.checkTip, arg_42_0, 1)
+		TaskDispatcher.cancelTask(self.checkTip, self)
+		TaskDispatcher.runRepeat(self.checkTip, self, 1)
 	end
 end
 
-function var_0_0.onDestroyView(arg_43_0)
-	if arg_43_0._conTweenId then
-		ZProj.TweenHelper.KillById(arg_43_0._conTweenId)
+function LengZhou6EliminateView:onDestroyView()
+	if self._conTweenId then
+		ZProj.TweenHelper.KillById(self._conTweenId)
 
-		arg_43_0._conTweenId = nil
+		self._conTweenId = nil
 	end
 
-	arg_43_0._needHidePos = nil
+	self._needHidePos = nil
 
-	TaskDispatcher.cancelTask(arg_43_0._delayHideEffect, arg_43_0)
-	TaskDispatcher.cancelTask(arg_43_0._showLoading, arg_43_0)
-	TaskDispatcher.cancelTask(arg_43_0.checkTip, arg_43_0)
+	TaskDispatcher.cancelTask(self._delayHideEffect, self)
+	TaskDispatcher.cancelTask(self._showLoading, self)
+	TaskDispatcher.cancelTask(self.checkTip, self)
 end
 
-return var_0_0
+return LengZhou6EliminateView

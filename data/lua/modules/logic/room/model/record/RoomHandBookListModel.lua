@@ -1,55 +1,61 @@
-﻿module("modules.logic.room.model.record.RoomHandBookListModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/record/RoomHandBookListModel.lua
 
-local var_0_0 = class("RoomHandBookListModel", ListScrollModel)
+module("modules.logic.room.model.record.RoomHandBookListModel", package.seeall)
 
-function var_0_0.init(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = lua_critter.configList
+local RoomHandBookListModel = class("RoomHandBookListModel", ListScrollModel)
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_1) do
-		local var_1_2 = RoomHandBookMo.New()
+function RoomHandBookListModel:init()
+	local moList = {}
+	local list = lua_critter.configList
 
-		var_1_2:init(iter_1_1)
-		table.insert(var_1_0, var_1_2)
+	for _, handBookCo in ipairs(list) do
+		local mo = RoomHandBookMo.New()
+
+		mo:init(handBookCo)
+		table.insert(moList, mo)
 	end
 
-	table.sort(var_1_0, var_0_0.sort)
-	arg_1_0:setList(var_1_0)
-	RoomHandBookModel.instance:setSelectMo(var_1_0[1])
+	table.sort(moList, RoomHandBookListModel.sort)
+	self:setList(moList)
+	RoomHandBookModel.instance:setSelectMo(moList[1])
 end
 
-function var_0_0.sort(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_0:checkGotCritter() and 2 or 1
-	local var_2_1 = arg_2_1:checkGotCritter() and 2 or 1
+function RoomHandBookListModel.sort(x, y)
+	local xvalue = x:checkGotCritter() and 2 or 1
+	local yvalue = y:checkGotCritter() and 2 or 1
 
-	if var_2_0 ~= var_2_1 then
-		return var_2_1 < var_2_0
+	if xvalue ~= yvalue then
+		return yvalue < xvalue
 	else
-		return arg_2_0.id < arg_2_1.id
+		return x.id < y.id
 	end
 end
 
-function var_0_0.reverseCardBack(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_0:getList()
+function RoomHandBookListModel:reverseCardBack(state)
+	local moList = self:getList()
 
-	for iter_3_0, iter_3_1 in ipairs(var_3_0) do
-		iter_3_1:setReverse(arg_3_1)
+	for index, mo in ipairs(moList) do
+		mo:setReverse(state)
 	end
 end
 
-function var_0_0.clearItemNewState(arg_4_0, arg_4_1)
-	arg_4_0:getById(arg_4_1):clearNewState()
-	arg_4_0:onModelUpdate()
+function RoomHandBookListModel:clearItemNewState(critterId)
+	local mo = self:getById(critterId)
+
+	mo:clearNewState()
+	self:onModelUpdate()
 end
 
-function var_0_0.setMutate(arg_5_0, arg_5_1)
-	if not arg_5_1 then
+function RoomHandBookListModel:setMutate(info)
+	if not info then
 		return
 	end
 
-	arg_5_0:getById(arg_5_1.id):setSpeicalSkin(arg_5_1.UseSpecialSkin)
+	local mo = self:getById(info.id)
+
+	mo:setSpeicalSkin(info.UseSpecialSkin)
 end
 
-var_0_0.instance = var_0_0.New()
+RoomHandBookListModel.instance = RoomHandBookListModel.New()
 
-return var_0_0
+return RoomHandBookListModel

@@ -1,29 +1,31 @@
-﻿module("modules.logic.main.view.MainTempView", package.seeall)
+﻿-- chunkname: @modules/logic/main/view/MainTempView.lua
 
-local var_0_0 = class("MainTempView", BaseView)
+module("modules.logic.main.view.MainTempView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnrouge = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_rouge")
+local MainTempView = class("MainTempView", BaseView)
+
+function MainTempView:onInitView()
+	self._btnrouge = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_rouge")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnrouge:AddClickListener(arg_2_0._btnRougeOnClick, arg_2_0)
+function MainTempView:addEvents()
+	self._btnrouge:AddClickListener(self._btnRougeOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnrouge:RemoveClickListener()
+function MainTempView:removeEvents()
+	self._btnrouge:RemoveClickListener()
 end
 
-function var_0_0._btnRougeOnClick(arg_4_0)
+function MainTempView:_btnRougeOnClick()
 	RougeController.instance:enterRouge()
 end
 
-function var_0_0.onOpen(arg_5_0)
+function MainTempView:onOpen()
 	return
 end
 
-function var_0_0._onCloseView(arg_6_0)
+function MainTempView:_onCloseView()
 	return
 end
 
-return var_0_0
+return MainTempView

@@ -1,338 +1,365 @@
-﻿module("modules.logic.fight.entity.comp.specialeffect.FightEntitySpecialEffectBuffLayer", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/specialeffect/FightEntitySpecialEffectBuffLayer.lua
 
-local var_0_0 = class("FightEntitySpecialEffectBuffLayer", FightEntitySpecialEffectBase)
-local var_0_1 = 3000
+module("modules.logic.fight.entity.comp.specialeffect.FightEntitySpecialEffectBuffLayer", package.seeall)
 
-function var_0_0.initClass(arg_1_0)
-	arg_1_0._effectWraps = {}
-	arg_1_0._buffId2Config = {}
-	arg_1_0._oldLayer = {}
-	arg_1_0._buffType = {}
-	arg_1_0.hideEffectWhenPlaying = {}
+local FightEntitySpecialEffectBuffLayer = class("FightEntitySpecialEffectBuffLayer", FightEntitySpecialEffectBase)
+local defaultReleaseTime = 3000
 
-	arg_1_0:addEventCb(FightController.instance, FightEvent.SetBuffEffectVisible, arg_1_0._onSetBuffEffectVisible, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, arg_1_0._onBuffUpdate, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.BeforeDeadEffect, arg_1_0._onBeforeDeadEffect, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.BeforeEnterStepBehaviour, arg_1_0._onBeforeEnterStepBehaviour, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.SkillEditorRefreshBuff, arg_1_0._onSkillEditorRefreshBuff, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.OnSkillPlayStart, arg_1_0._onSkillPlayStart, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, arg_1_0._onSkillPlayFinish, arg_1_0, LuaEventSystem.High)
+function FightEntitySpecialEffectBuffLayer:initClass()
+	self._effectWraps = {}
+	self._buffId2Config = {}
+	self._oldLayer = {}
+	self._buffType = {}
+	self.hideEffectWhenPlaying = {}
+	self.hideEffectWhenBigSkill = {}
+
+	self:addEventCb(FightController.instance, FightEvent.SetBuffEffectVisible, self._onSetBuffEffectVisible, self)
+	self:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, self._onBuffUpdate, self)
+	self:addEventCb(FightController.instance, FightEvent.BeforeDeadEffect, self._onBeforeDeadEffect, self)
+	self:addEventCb(FightController.instance, FightEvent.BeforeEnterStepBehaviour, self._onBeforeEnterStepBehaviour, self)
+	self:addEventCb(FightController.instance, FightEvent.SkillEditorRefreshBuff, self._onSkillEditorRefreshBuff, self)
+	self:addEventCb(FightController.instance, FightEvent.OnSkillPlayStart, self._onSkillPlayStart, self)
+	self:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self, LuaEventSystem.High)
 end
 
-function var_0_0._onBeforeEnterStepBehaviour(arg_2_0)
-	local var_2_0 = arg_2_0._entity:getMO()
+function FightEntitySpecialEffectBuffLayer:_onBeforeEnterStepBehaviour()
+	local entityMO = self._entity:getMO()
 
-	if var_2_0 then
-		local var_2_1 = var_2_0:getBuffDic()
+	if entityMO then
+		local buffDic = entityMO:getBuffDic()
 
-		for iter_2_0, iter_2_1 in pairs(var_2_1) do
-			arg_2_0:_onBuffUpdate(arg_2_0._entity.id, FightEnum.EffectType.BUFFADD, iter_2_1.buffId, iter_2_1.uid)
+		for i, v in pairs(buffDic) do
+			self:_onBuffUpdate(self._entity.id, FightEnum.EffectType.BUFFADD, v.buffId, v.uid)
 		end
 	end
 end
 
-function var_0_0._onSkillEditorRefreshBuff(arg_3_0)
-	arg_3_0:_releaseAllEffect()
-	arg_3_0:_onBeforeEnterStepBehaviour()
+function FightEntitySpecialEffectBuffLayer:_onSkillEditorRefreshBuff()
+	self:_releaseAllEffect()
+	self:_onBeforeEnterStepBehaviour()
 end
 
-function var_0_0._onSetBuffEffectVisible(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	if arg_4_0._entity.id == arg_4_1 and arg_4_0._effectWraps then
-		for iter_4_0, iter_4_1 in pairs(arg_4_0._effectWraps) do
-			for iter_4_2, iter_4_3 in pairs(iter_4_1) do
-				iter_4_3:setActive(arg_4_2, arg_4_3 or "FightEntitySpecialEffectBuffLayer")
+function FightEntitySpecialEffectBuffLayer:_onSetBuffEffectVisible(entityId, state, sign)
+	if self._entity.id == entityId and self._effectWraps then
+		for buffId, v in pairs(self._effectWraps) do
+			for i, effectWrap in pairs(v) do
+				effectWrap:setActive(state, sign or "FightEntitySpecialEffectBuffLayer")
 			end
 		end
 	end
 end
 
-function var_0_0._onSkillPlayStart(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	local var_5_0 = arg_5_1:getMO()
+function FightEntitySpecialEffectBuffLayer:_onSkillPlayStart(entity, curSkillId, fightStepData)
+	local entityMO = entity:getMO()
 
-	if var_5_0 and var_5_0.id == arg_5_0._entity.id then
-		if FightCardDataHelper.isBigSkill(arg_5_2) then
-			arg_5_0:_onSetBuffEffectVisible(var_5_0.id, false, "FightEntitySpecialEffectBuffLayer_onSkillPlayStart")
+	if entityMO and entityMO.id == self._entity.id then
+		if FightCardDataHelper.isBigSkill(curSkillId) then
+			self:_onSetBuffEffectVisible(entityMO.id, false, "FightEntitySpecialEffectBuffLayer_onSkillPlayStart")
 		end
 
-		for iter_5_0, iter_5_1 in pairs(arg_5_0.hideEffectWhenPlaying) do
-			iter_5_1:setActive(false, "FightEntitySpecialEffectBuffLayerHideWhenPlaying")
+		for uniqueId, effectWrap in pairs(self.hideEffectWhenPlaying) do
+			effectWrap:setActive(false, "FightEntitySpecialEffectBuffLayerHideWhenPlaying")
 		end
+	end
+
+	for uniqueId, effectWrap in pairs(self.hideEffectWhenBigSkill) do
+		effectWrap:setActive(false, "FightEntitySpecialEffectBuffLayerHideWhenBigSkill")
 	end
 end
 
-function var_0_0._onSkillPlayFinish(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	local var_6_0 = arg_6_1:getMO()
+function FightEntitySpecialEffectBuffLayer:_onSkillPlayFinish(entity, curSkillId, fightStepData)
+	local entityMO = entity:getMO()
 
-	if var_6_0 and var_6_0.id == arg_6_0._entity.id then
-		if FightCardDataHelper.isBigSkill(arg_6_2) then
-			arg_6_0:_onSetBuffEffectVisible(var_6_0.id, true, "FightEntitySpecialEffectBuffLayer_onSkillPlayStart")
+	if entityMO and entityMO.id == self._entity.id then
+		if FightCardDataHelper.isBigSkill(curSkillId) then
+			self:_onSetBuffEffectVisible(entityMO.id, true, "FightEntitySpecialEffectBuffLayer_onSkillPlayStart")
 		end
 
-		for iter_6_0, iter_6_1 in pairs(arg_6_0.hideEffectWhenPlaying) do
-			iter_6_1:setActive(true, "FightEntitySpecialEffectBuffLayerHideWhenPlaying")
+		for uniqueId, effectWrap in pairs(self.hideEffectWhenPlaying) do
+			effectWrap:setActive(true, "FightEntitySpecialEffectBuffLayerHideWhenPlaying")
 		end
+	end
+
+	for uniqueId, effectWrap in pairs(self.hideEffectWhenBigSkill) do
+		effectWrap:setActive(true, "FightEntitySpecialEffectBuffLayerHideWhenBigSkill")
 	end
 end
 
-function var_0_0.sortList(arg_7_0, arg_7_1)
-	return arg_7_0.layer > arg_7_1.layer
+function FightEntitySpecialEffectBuffLayer.sortList(item1, item2)
+	return item1.layer > item2.layer
 end
 
-function var_0_0._onBuffUpdate(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4)
-	if arg_8_1 ~= arg_8_0._entity.id then
+function FightEntitySpecialEffectBuffLayer:_onBuffUpdate(targetId, effectType, buffId, buffUid)
+	if targetId ~= self._entity.id then
 		return
 	end
 
-	if lua_fight_buff_layer_effect.configDict[arg_8_3] then
-		if arg_8_2 == FightEnum.EffectType.BUFFDEL or arg_8_2 == FightEnum.EffectType.BUFFDELNOEFFECT then
-			local var_8_0 = arg_8_0._buffType[arg_8_4]
+	if lua_fight_buff_layer_effect.configDict[buffId] then
+		if effectType == FightEnum.EffectType.BUFFDEL or effectType == FightEnum.EffectType.BUFFDELNOEFFECT then
+			local buffType = self._buffType[buffUid]
 
-			if not var_8_0 then
+			if not buffType then
 				return
 			end
 
-			if var_8_0 == FightEnum.BuffType.LayerSalveHalo then
+			if buffType == FightEnum.BuffType.LayerSalveHalo then
 				return
 			end
 
-			arg_8_0:_refreshEffect(arg_8_3, nil, 0, arg_8_2)
+			self:_refreshEffect(buffId, nil, 0, effectType)
 
 			return
 		end
 
-		local var_8_1 = arg_8_0._entity:getMO()
-		local var_8_2 = var_8_1:getBuffMO(arg_8_4)
+		local entityMO = self._entity:getMO()
+		local buffMO = entityMO:getBuffMO(buffUid)
 
-		if not var_8_2 then
+		if not buffMO then
 			return
 		end
 
-		arg_8_0._buffType[arg_8_4] = var_8_2.type
+		self._buffType[buffUid] = buffMO.type
 
-		if var_8_2.type == FightEnum.BuffType.LayerSalveHalo then
+		if buffMO.type == FightEnum.BuffType.LayerSalveHalo then
 			return
 		end
 
-		if var_8_1 then
-			local var_8_3 = lua_fight_buff_layer_effect.configDict[arg_8_3][var_8_1.originSkin] or lua_fight_buff_layer_effect.configDict[arg_8_3][0]
+		if entityMO then
+			local config = lua_fight_buff_layer_effect.configDict[buffId][entityMO.originSkin] or lua_fight_buff_layer_effect.configDict[buffId][0]
 
-			if var_8_3 then
-				local var_8_4 = {}
+			if config then
+				local list = {}
 
-				for iter_8_0, iter_8_1 in pairs(var_8_3) do
-					table.insert(var_8_4, iter_8_1)
+				for k, v in pairs(config) do
+					table.insert(list, v)
 				end
 
-				table.sort(var_8_4, var_0_0.sortList)
+				table.sort(list, FightEntitySpecialEffectBuffLayer.sortList)
 
-				local var_8_5 = var_8_2 and var_8_2.layer or 0
-				local var_8_6 = lua_skill_buff.configDict[arg_8_3]
+				local layer = buffMO and buffMO.layer or 0
+				local buffConfig = lua_skill_buff.configDict[buffId]
 
-				if FightSkillBuffMgr.instance:buffIsStackerBuff(var_8_6) then
-					var_8_5 = FightSkillBuffMgr.instance:getStackedCount(arg_8_1, var_8_2)
+				if FightSkillBuffMgr.instance:buffIsStackerBuff(buffConfig) then
+					layer = FightSkillBuffMgr.instance:getStackedCount(targetId, buffMO)
 				end
 
-				arg_8_0:_refreshEffect(arg_8_3, var_8_4, var_8_5, arg_8_2)
+				self:_refreshEffect(buffId, list, layer, effectType)
 			end
 		end
 	end
 end
 
-function var_0_0._refreshEffect(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
-	if not arg_9_0._effectWraps then
+function FightEntitySpecialEffectBuffLayer:_refreshEffect(buffId, list, layer, effectType)
+	if not self._effectWraps then
 		return
 	end
 
-	if not arg_9_0._effectWraps[arg_9_1] then
-		arg_9_0._effectWraps[arg_9_1] = {}
+	if not self._effectWraps[buffId] then
+		self._effectWraps[buffId] = {}
 	end
 
-	local var_9_0 = arg_9_0._oldLayer[arg_9_1] or 0
+	local oldLayer = self._oldLayer[buffId] or 0
 
-	arg_9_0._oldLayer[arg_9_1] = arg_9_3
+	self._oldLayer[buffId] = layer
 
-	if (arg_9_4 == FightEnum.EffectType.BUFFDEL or arg_9_4 == FightEnum.EffectType.BUFFDELNOEFFECT) and arg_9_3 == 0 then
-		local var_9_1 = arg_9_0._buffId2Config[arg_9_1]
+	if (effectType == FightEnum.EffectType.BUFFDEL or effectType == FightEnum.EffectType.BUFFDELNOEFFECT) and layer == 0 then
+		local config = self._buffId2Config[buffId]
 
-		if var_9_1 and not string.nilorempty(var_9_1.destroyEffect) then
-			local var_9_2 = var_9_1.releaseDestroyEffectTime > 0 and var_9_1.releaseDestroyEffectTime or var_0_1
-			local var_9_3 = arg_9_0._entity.effect:addHangEffect(var_9_1.destroyEffect, var_9_1.destroyEffectRoot, nil, var_9_2 / 1000)
+		if config and not string.nilorempty(config.destroyEffect) then
+			local releaseTime = config.releaseDestroyEffectTime > 0 and config.releaseDestroyEffectTime or defaultReleaseTime
+			local effectWrap = self._entity.effect:addHangEffect(config.destroyEffect, config.destroyEffectRoot, nil, releaseTime / 1000)
 
-			var_9_3:setLocalPos(0, 0, 0)
-			FightRenderOrderMgr.instance:onAddEffectWrap(arg_9_0._entity.id, var_9_3)
+			effectWrap:setLocalPos(0, 0, 0)
+			FightRenderOrderMgr.instance:onAddEffectWrap(self._entity.id, effectWrap)
 
-			if var_9_1.destroyEffectAudio > 0 then
-				AudioMgr.instance:trigger(var_9_1.destroyEffectAudio)
+			if config.destroyEffectAudio > 0 then
+				AudioMgr.instance:trigger(config.destroyEffectAudio)
 			end
 		end
 
-		arg_9_0:_releaseBuffIdEffect(arg_9_1)
+		self:_releaseBuffIdEffect(buffId)
 
 		return
 	end
 
-	local var_9_4
+	local config
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_2) do
-		if arg_9_3 >= iter_9_1.layer then
-			var_9_4 = iter_9_1
+	for i, v in ipairs(list) do
+		if layer >= v.layer then
+			config = v
 
 			break
 		end
 	end
 
-	if not var_9_4 then
-		arg_9_0:_releaseBuffIdEffect(arg_9_1)
+	if not config then
+		self:_releaseBuffIdEffect(buffId)
 
 		return
 	end
 
-	local var_9_5 = var_9_4.layer
-	local var_9_6 = arg_9_0._buffId2Config[arg_9_1]
+	local keyLayer = config.layer
+	local oldConfig = self._buffId2Config[buffId]
 
-	arg_9_0._buffId2Config[arg_9_1] = var_9_4
+	self._buffId2Config[buffId] = config
 
-	local var_9_7 = var_9_6 ~= var_9_4
+	local isNew = oldConfig ~= config
 
-	if not arg_9_0._effectWraps[arg_9_1][var_9_5] and not string.nilorempty(var_9_4.loopEffect) then
-		local var_9_8 = arg_9_0._entity.effect:addHangEffect(var_9_4.loopEffect, var_9_4.loopEffectRoot)
+	if not self._effectWraps[buffId][keyLayer] and not string.nilorempty(config.loopEffect) then
+		local effectWrap = self._entity.effect:addHangEffect(config.loopEffect, config.loopEffectRoot)
 
-		var_9_8:setLocalPos(0, 0, 0)
-		FightRenderOrderMgr.instance:onAddEffectWrap(arg_9_0._entity.id, var_9_8)
+		effectWrap:setLocalPos(0, 0, 0)
+		FightRenderOrderMgr.instance:onAddEffectWrap(self._entity.id, effectWrap)
 
-		arg_9_0._effectWraps[arg_9_1][var_9_5] = var_9_8
+		self._effectWraps[buffId][keyLayer] = effectWrap
 
-		var_9_8:setActive(false)
+		effectWrap:setActive(false)
 
-		if var_9_4.hideEffectWhenPlaying == 1 then
-			arg_9_0.hideEffectWhenPlaying[var_9_8.uniqueId] = var_9_8
+		if config.hideEffectWhenPlaying == 1 then
+			self.hideEffectWhenPlaying[effectWrap.uniqueId] = effectWrap
+		end
+
+		if config.hideEffectWhenBigSkill == 1 then
+			self.hideEffectWhenBigSkill[effectWrap.uniqueId] = effectWrap
 		end
 	end
 
-	if var_9_7 then
-		local var_9_9 = arg_9_0._effectWraps[arg_9_1] and arg_9_0._effectWraps[arg_9_1][var_9_5]
+	if isNew then
+		local loopEffectWrap = self._effectWraps[buffId] and self._effectWraps[buffId][keyLayer]
 
-		if var_9_9 then
-			var_9_9:setActive(false, "FightEntitySpecialEffectBuffLayer_newEffect")
+		if loopEffectWrap then
+			loopEffectWrap:setActive(false, "FightEntitySpecialEffectBuffLayer_newEffect")
 		end
 
-		arg_9_0:_hideEffect(arg_9_1)
+		self:_hideEffect(buffId)
 
-		if not string.nilorempty(var_9_4.createEffect) then
-			local var_9_10 = var_9_4.releaseCreateEffectTime > 0 and var_9_4.releaseCreateEffectTime or var_0_1
-			local var_9_11 = arg_9_0._entity.effect:addHangEffect(var_9_4.createEffect, var_9_4.createEffectRoot, nil, var_9_10 / 1000)
+		if not string.nilorempty(config.createEffect) then
+			local releaseTime = config.releaseCreateEffectTime > 0 and config.releaseCreateEffectTime or defaultReleaseTime
+			local effectWrap = self._entity.effect:addHangEffect(config.createEffect, config.createEffectRoot, nil, releaseTime / 1000)
 
-			var_9_11:setLocalPos(0, 0, 0)
-			FightRenderOrderMgr.instance:onAddEffectWrap(arg_9_0._entity.id, var_9_11)
+			effectWrap:setLocalPos(0, 0, 0)
+			FightRenderOrderMgr.instance:onAddEffectWrap(self._entity.id, effectWrap)
 
-			if var_9_4.createAudio > 0 then
-				AudioMgr.instance:trigger(var_9_4.createAudio)
+			if config.createAudio > 0 then
+				AudioMgr.instance:trigger(config.createAudio)
 			end
 		end
 
-		if var_9_4.delayTimeBeforeLoop > 0 then
+		if config.delayTimeBeforeLoop > 0 then
 			TaskDispatcher.runDelay(function()
-				if var_9_9 then
-					var_9_9:setActive(true, "FightEntitySpecialEffectBuffLayer_newEffect")
+				if loopEffectWrap then
+					loopEffectWrap:setActive(true, "FightEntitySpecialEffectBuffLayer_newEffect")
 				end
 
-				arg_9_0:_refreshEffectState(arg_9_1)
-			end, arg_9_0, var_9_4.delayTimeBeforeLoop / 1000)
+				self:_refreshEffectState(buffId)
+			end, self, config.delayTimeBeforeLoop / 1000)
 		else
-			if var_9_9 then
-				var_9_9:setActive(true, "FightEntitySpecialEffectBuffLayer_newEffect")
+			if loopEffectWrap then
+				loopEffectWrap:setActive(true, "FightEntitySpecialEffectBuffLayer_newEffect")
 			end
 
-			arg_9_0:_refreshEffectState(arg_9_1)
+			self:_refreshEffectState(buffId)
 		end
 	else
-		if var_9_4.loopEffectAudio > 0 then
-			AudioMgr.instance:trigger(var_9_4.loopEffectAudio)
+		if config.loopEffectAudio > 0 then
+			AudioMgr.instance:trigger(config.loopEffectAudio)
 		end
 
-		arg_9_0:_refreshEffectState(arg_9_1)
+		self:_refreshEffectState(buffId)
 
-		if arg_9_4 == FightEnum.EffectType.BUFFUPDATE and var_9_0 < arg_9_3 then
-			if not string.nilorempty(var_9_4.addLayerEffect) then
-				local var_9_12 = var_9_4.releaseAddLayerEffectTime > 0 and var_9_4.releaseAddLayerEffectTime or var_0_1
-				local var_9_13 = arg_9_0._entity.effect:addHangEffect(var_9_4.addLayerEffect, var_9_4.addLayerEffectRoot, nil, var_9_12 / 1000)
+		if effectType == FightEnum.EffectType.BUFFUPDATE and oldLayer < layer then
+			if not string.nilorempty(config.addLayerEffect) then
+				local releaseTime = config.releaseAddLayerEffectTime > 0 and config.releaseAddLayerEffectTime or defaultReleaseTime
+				local effectWrap = self._entity.effect:addHangEffect(config.addLayerEffect, config.addLayerEffectRoot, nil, releaseTime / 1000)
 
-				var_9_13:setLocalPos(0, 0, 0)
-				FightRenderOrderMgr.instance:onAddEffectWrap(arg_9_0._entity.id, var_9_13)
+				effectWrap:setLocalPos(0, 0, 0)
+				FightRenderOrderMgr.instance:onAddEffectWrap(self._entity.id, effectWrap)
 			end
 
-			if var_9_4.addLayerAudio > 0 then
-				AudioMgr.instance:trigger(var_9_4.addLayerAudio)
+			if config.addLayerAudio > 0 then
+				AudioMgr.instance:trigger(config.addLayerAudio)
 			end
 		end
 	end
 end
 
-function var_0_0._refreshEffectState(arg_11_0, arg_11_1)
-	if not arg_11_0 then
+function FightEntitySpecialEffectBuffLayer:_refreshEffectState(buffId)
+	if not self then
 		return
 	end
 
-	if arg_11_0._effectWraps then
-		local var_11_0 = arg_11_0._effectWraps[arg_11_1]
+	if self._effectWraps then
+		local effectDic = self._effectWraps[buffId]
 
-		if var_11_0 then
-			local var_11_1 = arg_11_0._buffId2Config[arg_11_1].layer
+		if effectDic then
+			local entityMO = self._entity:getMO()
+			local layer = self._buffId2Config[buffId].layer
+			local config = lua_fight_buff_layer_effect.configDict[buffId]
 
-			for iter_11_0, iter_11_1 in pairs(var_11_0) do
-				iter_11_1:setActive(var_11_1 == iter_11_0)
+			config = config and config[entityMO.skin]
+			config = config and config[layer]
+
+			local lE = config and config.lE == 1
+
+			for k, v in pairs(effectDic) do
+				if lE then
+					v:setActive(k <= layer)
+				else
+					v:setActive(k == layer)
+				end
 			end
 		end
 	end
 end
 
-function var_0_0._hideEffect(arg_12_0, arg_12_1)
-	if arg_12_0._effectWraps then
-		local var_12_0 = arg_12_0._effectWraps[arg_12_1]
+function FightEntitySpecialEffectBuffLayer:_hideEffect(buffId)
+	if self._effectWraps then
+		local effectDic = self._effectWraps[buffId]
 
-		if var_12_0 then
-			for iter_12_0, iter_12_1 in pairs(var_12_0) do
-				iter_12_1:setActive(false)
+		if effectDic then
+			for k, v in pairs(effectDic) do
+				v:setActive(false)
 			end
 		end
 	end
 end
 
-function var_0_0._releaseAllEffect(arg_13_0)
-	if arg_13_0._effectWraps then
-		for iter_13_0, iter_13_1 in pairs(arg_13_0._effectWraps) do
-			arg_13_0:_releaseBuffIdEffect(iter_13_0)
+function FightEntitySpecialEffectBuffLayer:_releaseAllEffect()
+	if self._effectWraps then
+		for k, v in pairs(self._effectWraps) do
+			self:_releaseBuffIdEffect(k)
 		end
 
-		arg_13_0._effectWraps = nil
+		self._effectWraps = nil
 	end
 end
 
-function var_0_0._releaseBuffIdEffect(arg_14_0, arg_14_1)
-	if arg_14_0._effectWraps then
-		for iter_14_0, iter_14_1 in pairs(arg_14_0._effectWraps[arg_14_1]) do
-			arg_14_0:_releaseEffect(iter_14_1)
+function FightEntitySpecialEffectBuffLayer:_releaseBuffIdEffect(buffId)
+	if self._effectWraps then
+		for k, v in pairs(self._effectWraps[buffId]) do
+			self:_releaseEffect(v)
 		end
 
-		arg_14_0._effectWraps[arg_14_1] = nil
+		self._effectWraps[buffId] = nil
 	end
 end
 
-function var_0_0._releaseEffect(arg_15_0, arg_15_1)
-	arg_15_0._entity.effect:removeEffect(arg_15_1)
-	FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_15_0._entity.id, arg_15_1)
+function FightEntitySpecialEffectBuffLayer:_releaseEffect(effectWrap)
+	self._entity.effect:removeEffect(effectWrap)
+	FightRenderOrderMgr.instance:onRemoveEffectWrap(self._entity.id, effectWrap)
 
-	arg_15_0.hideEffectWhenPlaying[arg_15_1.uniqueId] = nil
+	self.hideEffectWhenPlaying[effectWrap.uniqueId] = nil
+	self.hideEffectWhenBigSkill[effectWrap.uniqueId] = nil
 end
 
-function var_0_0._onBeforeDeadEffect(arg_16_0, arg_16_1)
-	if arg_16_1 == arg_16_0._entity.id then
-		arg_16_0:_releaseAllEffect()
+function FightEntitySpecialEffectBuffLayer:_onBeforeDeadEffect(entityId)
+	if entityId == self._entity.id then
+		self:_releaseAllEffect()
 	end
 end
 
-function var_0_0.releaseSelf(arg_17_0)
-	arg_17_0:_releaseAllEffect()
+function FightEntitySpecialEffectBuffLayer:releaseSelf()
+	self:_releaseAllEffect()
 end
 
-return var_0_0
+return FightEntitySpecialEffectBuffLayer

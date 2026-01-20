@@ -1,234 +1,239 @@
-﻿module("modules.logic.scene.survival.comp.SurvivalSceneMapSpBlock", package.seeall)
+﻿-- chunkname: @modules/logic/scene/survival/comp/SurvivalSceneMapSpBlock.lua
 
-local var_0_0 = class("SurvivalSceneMapSpBlock", BaseSceneComp)
+module("modules.logic.scene.survival.comp.SurvivalSceneMapSpBlock", package.seeall)
 
-var_0_0.EdgeResPath = "survival/effects/prefab/v3a1_scene_bianyuan.prefab"
+local SurvivalSceneMapSpBlock = class("SurvivalSceneMapSpBlock", BaseSceneComp)
 
-function var_0_0.init(arg_1_0)
-	arg_1_0.blockComp = arg_1_0:getCurScene().block
+SurvivalSceneMapSpBlock.EdgeResPath = "survival/effects/prefab/v3a1_scene_bianyuan.prefab"
 
-	arg_1_0:getCurScene().preloader:registerCallback(SurvivalEvent.OnSurvivalPreloadFinish, arg_1_0._onPreloadFinish, arg_1_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapSpBlockAdd, arg_1_0.onSpBlockAdd, arg_1_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapSpBlockDel, arg_1_0.onSpBlockDelete, arg_1_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapDestoryPosAdd, arg_1_0.onMapDestoryPosAdd, arg_1_0)
+function SurvivalSceneMapSpBlock:init()
+	self.blockComp = self:getCurScene().block
+
+	self:getCurScene().preloader:registerCallback(SurvivalEvent.OnSurvivalPreloadFinish, self._onPreloadFinish, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapSpBlockAdd, self.onSpBlockAdd, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapSpBlockDel, self.onSpBlockDelete, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapDestoryPosAdd, self.onMapDestoryPosAdd, self)
 end
 
-function var_0_0._onPreloadFinish(arg_2_0)
-	arg_2_0:getCurScene().preloader:unregisterCallback(SurvivalEvent.OnSurvivalPreloadFinish, arg_2_0._onPreloadFinish, arg_2_0)
+function SurvivalSceneMapSpBlock:_onPreloadFinish()
+	self:getCurScene().preloader:unregisterCallback(SurvivalEvent.OnSurvivalPreloadFinish, self._onPreloadFinish, self)
 
-	arg_2_0._sceneGo = arg_2_0:getCurScene():getSceneContainerGO()
-	arg_2_0._blockRoot = gohelper.create3d(arg_2_0._sceneGo, "SPBlockRoot")
-	arg_2_0._edgeRes = SurvivalMapHelper.instance:getBlockRes(var_0_0.EdgeResPath)
+	self._sceneGo = self:getCurScene():getSceneContainerGO()
+	self._blockRoot = gohelper.create3d(self._sceneGo, "SPBlockRoot")
+	self._edgeRes = SurvivalMapHelper.instance:getBlockRes(SurvivalSceneMapSpBlock.EdgeResPath)
 
-	local var_2_0 = SurvivalMapModel.instance:getSceneMo()
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
 
-	arg_2_0._allBlocks = {}
-	arg_2_0._destroyBlocks = {}
-	arg_2_0._spBlockEdge = {}
-	arg_2_0._edgePool = {}
+	self._allBlocks = {}
+	self._destroyBlocks = {}
+	self._spBlockEdge = {}
+	self._edgePool = {}
 
-	for iter_2_0, iter_2_1 in pairs(var_2_0.allDestroyPos) do
-		arg_2_0._destroyBlocks[iter_2_0] = {}
+	for q, v in pairs(sceneMo.allDestroyPos) do
+		self._destroyBlocks[q] = {}
 
-		for iter_2_2, iter_2_3 in pairs(iter_2_1) do
-			local var_2_1 = SurvivalDestoryBlockEntity.Create({
-				pos = iter_2_3
-			}, arg_2_0._blockRoot)
+		for r, pos in pairs(v) do
+			local block = SurvivalDestoryBlockEntity.Create({
+				pos = pos
+			}, self._blockRoot)
 
-			arg_2_0._destroyBlocks[iter_2_0][iter_2_2] = var_2_1
+			self._destroyBlocks[q][r] = block
 		end
 	end
 
-	for iter_2_4, iter_2_5 in pairs(var_2_0.blocksById) do
-		local var_2_2 = SurvivalSpBlockEntity.Create(iter_2_5, arg_2_0._blockRoot)
+	for id, unitMo in pairs(sceneMo.blocksById) do
+		local block = SurvivalSpBlockEntity.Create(unitMo, self._blockRoot)
 
-		arg_2_0._allBlocks[iter_2_4] = var_2_2
+		self._allBlocks[id] = block
 
-		arg_2_0:showHideBlock(iter_2_5.pos, false, true)
+		self:showHideBlock(unitMo.pos, false, true)
 
-		for iter_2_6, iter_2_7 in ipairs(iter_2_5.exPoints) do
-			arg_2_0:showHideBlock(iter_2_7, false, true)
+		for i, v in ipairs(unitMo.exPoints) do
+			self:showHideBlock(v, false, true)
 		end
 
-		if iter_2_5:getSubType() ~= SurvivalEnum.UnitSubType.Block then
-			arg_2_0:checkEdge(iter_2_5.pos)
+		if unitMo:getSubType() ~= SurvivalEnum.UnitSubType.Block then
+			self:checkEdge(unitMo.pos)
 		end
 	end
 
-	arg_2_0:dispatchEvent(SurvivalEvent.OnSurvivalBlockLoadFinish)
+	self:dispatchEvent(SurvivalEvent.OnSurvivalBlockLoadFinish)
 end
 
-function var_0_0.checkEdge(arg_3_0, arg_3_1)
-	if not arg_3_0._edgeRes then
+function SurvivalSceneMapSpBlock:checkEdge(pos)
+	if not self._edgeRes then
 		return
 	end
 
-	local var_3_0 = SurvivalMapModel.instance:getCacheHexNode(1)
+	local tempPos = SurvivalMapModel.instance:getCacheHexNode(1)
 
-	var_3_0:copyFrom(arg_3_1)
-	arg_3_0:checkEdge2(var_3_0)
-	var_3_0:copyFrom(arg_3_1):Add(SurvivalEnum.DirToPos[SurvivalEnum.Dir.Right])
-	arg_3_0:checkEdge2(var_3_0)
-	var_3_0:copyFrom(arg_3_1):Add(SurvivalEnum.DirToPos[SurvivalEnum.Dir.BottomLeft])
-	arg_3_0:checkEdge2(var_3_0)
-	var_3_0:copyFrom(arg_3_1):Add(SurvivalEnum.DirToPos[SurvivalEnum.Dir.BottomRight])
-	arg_3_0:checkEdge2(var_3_0)
+	tempPos:copyFrom(pos)
+	self:checkEdge2(tempPos)
+	tempPos:copyFrom(pos):Add(SurvivalEnum.DirToPos[SurvivalEnum.Dir.Right])
+	self:checkEdge2(tempPos)
+	tempPos:copyFrom(pos):Add(SurvivalEnum.DirToPos[SurvivalEnum.Dir.BottomLeft])
+	self:checkEdge2(tempPos)
+	tempPos:copyFrom(pos):Add(SurvivalEnum.DirToPos[SurvivalEnum.Dir.BottomRight])
+	self:checkEdge2(tempPos)
 end
 
-function var_0_0.checkEdge2(arg_4_0, arg_4_1)
-	local var_4_0 = SurvivalMapModel.instance:getSceneMo()
-	local var_4_1 = SurvivalMapModel.instance:getCacheHexNode(2)
-	local var_4_2 = var_4_1:copyFrom(arg_4_1):Add(SurvivalEnum.DirToPos[SurvivalEnum.Dir.Left])
-	local var_4_3 = not arg_4_0:isBlockSame(var_4_0:getBlockTypeByPos(arg_4_1), var_4_0:getBlockTypeByPos(var_4_2))
+function SurvivalSceneMapSpBlock:checkEdge2(nowPos)
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
+	local tempPos = SurvivalMapModel.instance:getCacheHexNode(2)
+	local left = tempPos:copyFrom(nowPos):Add(SurvivalEnum.DirToPos[SurvivalEnum.Dir.Left])
+	local isShowLeft = not self:isBlockSame(sceneMo:getBlockTypeByPos(nowPos), sceneMo:getBlockTypeByPos(left))
 
-	arg_4_0:showHideEdge(var_4_3, arg_4_1, 1)
+	self:showHideEdge(isShowLeft, nowPos, 1)
 
-	local var_4_4 = var_4_1:copyFrom(arg_4_1):Add(SurvivalEnum.DirToPos[SurvivalEnum.Dir.TopLeft])
-	local var_4_5 = not arg_4_0:isBlockSame(var_4_0:getBlockTypeByPos(arg_4_1), var_4_0:getBlockTypeByPos(var_4_4))
+	local topLeft = tempPos:copyFrom(nowPos):Add(SurvivalEnum.DirToPos[SurvivalEnum.Dir.TopLeft])
+	local isShowTopLeft = not self:isBlockSame(sceneMo:getBlockTypeByPos(nowPos), sceneMo:getBlockTypeByPos(topLeft))
 
-	arg_4_0:showHideEdge(var_4_5, arg_4_1, 2)
+	self:showHideEdge(isShowTopLeft, nowPos, 2)
 
-	local var_4_6 = var_4_1:copyFrom(arg_4_1):Add(SurvivalEnum.DirToPos[SurvivalEnum.Dir.TopRight])
-	local var_4_7 = not arg_4_0:isBlockSame(var_4_0:getBlockTypeByPos(arg_4_1), var_4_0:getBlockTypeByPos(var_4_6))
+	local topRight = tempPos:copyFrom(nowPos):Add(SurvivalEnum.DirToPos[SurvivalEnum.Dir.TopRight])
+	local isShowTopRight = not self:isBlockSame(sceneMo:getBlockTypeByPos(nowPos), sceneMo:getBlockTypeByPos(topRight))
 
-	arg_4_0:showHideEdge(var_4_7, arg_4_1, 3)
+	self:showHideEdge(isShowTopRight, nowPos, 3)
 end
 
-function var_0_0.showHideEdge(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	arg_5_0._spBlockEdge[arg_5_2.q] = arg_5_0._spBlockEdge[arg_5_2.q] or {}
-	arg_5_0._spBlockEdge[arg_5_2.q][arg_5_2.r] = arg_5_0._spBlockEdge[arg_5_2.q][arg_5_2.r] or {}
+function SurvivalSceneMapSpBlock:showHideEdge(isShow, pos, index)
+	self._spBlockEdge[pos.q] = self._spBlockEdge[pos.q] or {}
+	self._spBlockEdge[pos.q][pos.r] = self._spBlockEdge[pos.q][pos.r] or {}
 
-	local var_5_0 = arg_5_0._spBlockEdge[arg_5_2.q][arg_5_2.r][arg_5_3]
+	local edge = self._spBlockEdge[pos.q][pos.r][index]
 
-	if arg_5_1 and not var_5_0 then
-		var_5_0 = table.remove(arg_5_0._edgePool)
+	if isShow and not edge then
+		edge = table.remove(self._edgePool)
 
-		local var_5_1
+		local edgeTrans
 
-		if not var_5_0 then
-			var_5_0 = gohelper.clone(arg_5_0._edgeRes, arg_5_0._blockRoot, "edge")
+		if not edge then
+			edge = gohelper.clone(self._edgeRes, self._blockRoot, "edge")
 		else
-			gohelper.setActive(var_5_0, true)
+			gohelper.setActive(edge, true)
 		end
 
-		local var_5_2 = var_5_0.transform
+		edgeTrans = edge.transform
 
-		if arg_5_3 == 1 then
-			local var_5_3, var_5_4, var_5_5 = SurvivalHelper.instance:hexPointToWorldPoint(arg_5_2.q - 0.5, arg_5_2.r)
+		if index == 1 then
+			local x, y, z = SurvivalHelper.instance:hexPointToWorldPoint(pos.q - 0.5, pos.r)
 
-			transformhelper.setLocalRotation(var_5_2, 0, 180, 0)
-			transformhelper.setLocalPos(var_5_2, var_5_3, var_5_4, var_5_5)
-		elseif arg_5_3 == 2 then
-			local var_5_6, var_5_7, var_5_8 = SurvivalHelper.instance:hexPointToWorldPoint(arg_5_2.q, arg_5_2.r - 0.5)
+			transformhelper.setLocalRotation(edgeTrans, 0, 180, 0)
+			transformhelper.setLocalPos(edgeTrans, x, y, z)
+		elseif index == 2 then
+			local x, y, z = SurvivalHelper.instance:hexPointToWorldPoint(pos.q, pos.r - 0.5)
 
-			transformhelper.setLocalRotation(var_5_2, 0, -120, 0)
-			transformhelper.setLocalPos(var_5_2, var_5_6, var_5_7, var_5_8)
-		elseif arg_5_3 == 3 then
-			local var_5_9, var_5_10, var_5_11 = SurvivalHelper.instance:hexPointToWorldPoint(arg_5_2.q + 0.5, arg_5_2.r - 0.5)
+			transformhelper.setLocalRotation(edgeTrans, 0, -120, 0)
+			transformhelper.setLocalPos(edgeTrans, x, y, z)
+		elseif index == 3 then
+			local x, y, z = SurvivalHelper.instance:hexPointToWorldPoint(pos.q + 0.5, pos.r - 0.5)
 
-			transformhelper.setLocalRotation(var_5_2, 0, -60, 0)
-			transformhelper.setLocalPos(var_5_2, var_5_9, var_5_10, var_5_11)
+			transformhelper.setLocalRotation(edgeTrans, 0, -60, 0)
+			transformhelper.setLocalPos(edgeTrans, x, y, z)
 		end
 
-		arg_5_0._spBlockEdge[arg_5_2.q][arg_5_2.r][arg_5_3] = var_5_0
-	elseif not arg_5_1 and var_5_0 then
-		if arg_5_0._edgePool[20] then
-			gohelper.destroy(var_5_0)
+		self._spBlockEdge[pos.q][pos.r][index] = edge
+	elseif not isShow and edge then
+		if self._edgePool[20] then
+			gohelper.destroy(edge)
 		else
-			gohelper.setActive(var_5_0, false)
-			table.insert(arg_5_0._edgePool, var_5_0)
+			gohelper.setActive(edge, false)
+			table.insert(self._edgePool, edge)
 		end
 
-		arg_5_0._spBlockEdge[arg_5_2.q][arg_5_2.r][arg_5_3] = nil
+		self._spBlockEdge[pos.q][pos.r][index] = nil
 	end
 end
 
-function var_0_0.isBlockSame(arg_6_0, arg_6_1, arg_6_2)
-	return (arg_6_1 ~= -1 and arg_6_1 ~= SurvivalEnum.UnitSubType.Block) == (arg_6_2 ~= -1 and arg_6_2 ~= SurvivalEnum.UnitSubType.Block)
+function SurvivalSceneMapSpBlock:isBlockSame(type1, type2)
+	local flag1 = type1 ~= -1 and type1 ~= SurvivalEnum.UnitSubType.Block
+	local flag2 = type2 ~= -1 and type2 ~= SurvivalEnum.UnitSubType.Block
+
+	return flag1 == flag2
 end
 
-function var_0_0.onMapDestoryPosAdd(arg_7_0, arg_7_1)
-	arg_7_0:showHideBlock(arg_7_1.pos, true, true)
+function SurvivalSceneMapSpBlock:onMapDestoryPosAdd(unitMo)
+	self:showHideBlock(unitMo.pos, true, true)
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_1.exPoints) do
-		arg_7_0:showHideBlock(iter_7_1, true, true)
+	for i, v in ipairs(unitMo.exPoints) do
+		self:showHideBlock(v, true, true)
 	end
 end
 
-function var_0_0.showHideBlock(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	local var_8_0 = SurvivalHelper.instance:getValueFromDict(arg_8_0._destroyBlocks, arg_8_1)
+function SurvivalSceneMapSpBlock:showHideBlock(pos, isShow, onlyDestroy)
+	local destroyBlock = SurvivalHelper.instance:getValueFromDict(self._destroyBlocks, pos)
 
-	if var_8_0 then
-		gohelper.setActive(var_8_0.go, arg_8_2)
+	if destroyBlock then
+		gohelper.setActive(destroyBlock.go, isShow)
 
-		if arg_8_2 then
-			arg_8_0.blockComp:setBlockActive(arg_8_1, false)
+		if isShow then
+			self.blockComp:setBlockActive(pos, false)
 		end
-	elseif arg_8_3 then
-		if arg_8_2 then
-			arg_8_0._destroyBlocks[arg_8_1.q] = arg_8_0._destroyBlocks[arg_8_1.q] or {}
+	elseif onlyDestroy then
+		if isShow then
+			self._destroyBlocks[pos.q] = self._destroyBlocks[pos.q] or {}
 
-			local var_8_1 = SurvivalDestoryBlockEntity.Create({
-				pos = arg_8_1
-			}, arg_8_0._blockRoot)
+			local block = SurvivalDestoryBlockEntity.Create({
+				pos = pos
+			}, self._blockRoot)
 
-			arg_8_0._destroyBlocks[arg_8_1.q][arg_8_1.r] = var_8_1
+			self._destroyBlocks[pos.q][pos.r] = block
 
-			arg_8_0.blockComp:setBlockActive(arg_8_1, false)
+			self.blockComp:setBlockActive(pos, false)
 		end
 	else
-		arg_8_0.blockComp:setBlockActive(arg_8_1, arg_8_2)
+		self.blockComp:setBlockActive(pos, isShow)
 	end
 end
 
-function var_0_0.onSpBlockAdd(arg_9_0, arg_9_1)
-	local var_9_0 = SurvivalSpBlockEntity.Create(arg_9_1, arg_9_0._blockRoot)
+function SurvivalSceneMapSpBlock:onSpBlockAdd(unitMo)
+	local block = SurvivalSpBlockEntity.Create(unitMo, self._blockRoot)
 
-	arg_9_0._allBlocks[arg_9_1.id] = var_9_0
+	self._allBlocks[unitMo.id] = block
 
-	arg_9_0:showHideBlock(arg_9_1.pos, false, false)
+	self:showHideBlock(unitMo.pos, false, false)
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_1.exPoints) do
-		arg_9_0:showHideBlock(iter_9_1, false, false)
+	for i, v in ipairs(unitMo.exPoints) do
+		self:showHideBlock(v, false, false)
 	end
 
-	if arg_9_1:getSubType() ~= SurvivalEnum.UnitSubType.Block then
-		arg_9_0:checkEdge(arg_9_1.pos)
+	if unitMo:getSubType() ~= SurvivalEnum.UnitSubType.Block then
+		self:checkEdge(unitMo.pos)
 	end
 end
 
-function var_0_0.onSpBlockDelete(arg_10_0, arg_10_1)
-	if arg_10_0._allBlocks[arg_10_1.id] then
-		arg_10_0:showHideBlock(arg_10_1.pos, true, false)
+function SurvivalSceneMapSpBlock:onSpBlockDelete(unitMo)
+	if self._allBlocks[unitMo.id] then
+		self:showHideBlock(unitMo.pos, true, false)
 
-		for iter_10_0, iter_10_1 in ipairs(arg_10_1.exPoints) do
-			arg_10_0:showHideBlock(iter_10_1, true, false)
+		for i, v in ipairs(unitMo.exPoints) do
+			self:showHideBlock(v, true, false)
 		end
 
-		arg_10_0._allBlocks[arg_10_1.id]:tryDestory()
+		self._allBlocks[unitMo.id]:tryDestory()
 
-		arg_10_0._allBlocks[arg_10_1.id] = nil
+		self._allBlocks[unitMo.id] = nil
 	end
 
-	if arg_10_1:getSubType() ~= SurvivalEnum.UnitSubType.Block then
-		arg_10_0:checkEdge(arg_10_1.pos)
+	if unitMo:getSubType() ~= SurvivalEnum.UnitSubType.Block then
+		self:checkEdge(unitMo.pos)
 	end
 end
 
-function var_0_0.onSceneClose(arg_11_0)
-	arg_11_0:getCurScene().preloader:unregisterCallback(SurvivalEvent.OnSurvivalPreloadFinish, arg_11_0._onPreloadFinish, arg_11_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapSpBlockAdd, arg_11_0.onSpBlockAdd, arg_11_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapSpBlockDel, arg_11_0.onSpBlockDelete, arg_11_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapDestoryPosAdd, arg_11_0.onMapDestoryPosAdd, arg_11_0)
-	gohelper.destroy(arg_11_0._blockRoot)
+function SurvivalSceneMapSpBlock:onSceneClose()
+	self:getCurScene().preloader:unregisterCallback(SurvivalEvent.OnSurvivalPreloadFinish, self._onPreloadFinish, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapSpBlockAdd, self.onSpBlockAdd, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapSpBlockDel, self.onSpBlockDelete, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapDestoryPosAdd, self.onMapDestoryPosAdd, self)
+	gohelper.destroy(self._blockRoot)
 
-	arg_11_0._blockRoot = nil
-	arg_11_0._sceneGo = nil
-	arg_11_0._allBlocks = {}
-	arg_11_0._destroyBlocks = {}
-	arg_11_0._edgeRes = nil
-	arg_11_0._spBlockEdge = {}
-	arg_11_0._edgePool = {}
+	self._blockRoot = nil
+	self._sceneGo = nil
+	self._allBlocks = {}
+	self._destroyBlocks = {}
+	self._edgeRes = nil
+	self._spBlockEdge = {}
+	self._edgePool = {}
 end
 
-return var_0_0
+return SurvivalSceneMapSpBlock

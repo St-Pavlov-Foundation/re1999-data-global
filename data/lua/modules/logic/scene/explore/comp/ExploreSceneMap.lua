@@ -1,65 +1,67 @@
-﻿module("modules.logic.scene.explore.comp.ExploreSceneMap", package.seeall)
+﻿-- chunkname: @modules/logic/scene/explore/comp/ExploreSceneMap.lua
 
-local var_0_0 = class("ExploreSceneMap", BaseSceneComp)
+module("modules.logic.scene.explore.comp.ExploreSceneMap", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._scene = arg_1_0:getCurScene()
+local ExploreSceneMap = class("ExploreSceneMap", BaseSceneComp)
+
+function ExploreSceneMap:onInit()
+	self._scene = self:getCurScene()
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
+function ExploreSceneMap:init(sceneId, levelId)
 	return
 end
 
-function var_0_0.onSceneStart(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0._scene.level:registerCallback(CommonSceneLevelComp.OnLevelLoaded, arg_3_0._onLevelLoaded, arg_3_0)
+function ExploreSceneMap:onSceneStart(sceneId, levelId)
+	self._scene.level:registerCallback(CommonSceneLevelComp.OnLevelLoaded, self._onLevelLoaded, self)
 end
 
-function var_0_0._onLevelLoaded(arg_4_0, arg_4_1, arg_4_2)
-	ExploreController.instance:registerCallback(ExploreEvent.InitMapDone, arg_4_0.initMapDone, arg_4_0)
+function ExploreSceneMap:_onLevelLoaded(sceneId, levelId)
+	ExploreController.instance:registerCallback(ExploreEvent.InitMapDone, self.initMapDone, self)
 
-	arg_4_0._comps = {}
+	self._comps = {}
 
-	for iter_4_0, iter_4_1 in pairs(ExploreEnum.MapCompType) do
-		local var_4_0 = "ExploreMap"
+	for typeName, type in pairs(ExploreEnum.MapCompType) do
+		local clsName = "ExploreMap"
 
-		if iter_4_0 ~= "Map" then
-			var_4_0 = var_4_0 .. iter_4_0
+		if typeName ~= "Map" then
+			clsName = clsName .. typeName
 		end
 
-		arg_4_0._comps[iter_4_1] = _G[var_4_0].New()
+		self._comps[type] = _G[clsName].New()
 
-		ExploreController.instance:registerMapComp(iter_4_1, arg_4_0._comps[iter_4_1])
+		ExploreController.instance:registerMapComp(type, self._comps[type])
 	end
 
-	for iter_4_2, iter_4_3 in pairs(arg_4_0._comps) do
-		if iter_4_3.loadMap then
-			iter_4_3:loadMap()
+	for type, comp in pairs(self._comps) do
+		if comp.loadMap then
+			comp:loadMap()
 		end
 	end
 end
 
-function var_0_0.initMapDone(arg_5_0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.InitMapDone, arg_5_0.initMapDone, arg_5_0)
-	arg_5_0:dispatchEvent(ExploreEvent.InitMapDone)
+function ExploreSceneMap:initMapDone()
+	ExploreController.instance:unregisterCallback(ExploreEvent.InitMapDone, self.initMapDone, self)
+	self:dispatchEvent(ExploreEvent.InitMapDone)
 end
 
-function var_0_0.onSceneClose(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_0._scene.level:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, arg_6_0._onLevelLoaded, arg_6_0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.InitMapDone, arg_6_0.initMapDone, arg_6_0)
+function ExploreSceneMap:onSceneClose(sceneId, levelId)
+	self._scene.level:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, self._onLevelLoaded, self)
+	ExploreController.instance:unregisterCallback(ExploreEvent.InitMapDone, self.initMapDone, self)
 
-	for iter_6_0, iter_6_1 in pairs(arg_6_0._comps) do
-		if iter_6_1.unloadMap then
-			iter_6_1:unloadMap()
+	for type, comp in pairs(self._comps) do
+		if comp.unloadMap then
+			comp:unloadMap()
 		end
 	end
 
 	ExploreStepController.instance:clear()
 
-	for iter_6_2 in pairs(arg_6_0._comps) do
-		ExploreController.instance:unRegisterMapComp(iter_6_2)
+	for type in pairs(self._comps) do
+		ExploreController.instance:unRegisterMapComp(type)
 	end
 
-	arg_6_0._comps = {}
+	self._comps = {}
 end
 
-return var_0_0
+return ExploreSceneMap

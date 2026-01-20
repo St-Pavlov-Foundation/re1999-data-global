@@ -1,10 +1,12 @@
-﻿module("modules.logic.rouge.dlc.103.define.RougeDLCEnum103", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/dlc/103/define/RougeDLCEnum103.lua
 
-local var_0_0 = _M
+module("modules.logic.rouge.dlc.103.define.RougeDLCEnum103", package.seeall)
 
-var_0_0.MapRuleType = {
+local RougeDLCEnum103 = _M
+
+RougeDLCEnum103.MapRuleType = {
 	Hard = 2,
 	Normal = 1
 }
 
-return var_0_0
+return RougeDLCEnum103

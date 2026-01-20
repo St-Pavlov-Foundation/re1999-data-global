@@ -1,260 +1,265 @@
-﻿module("modules.logic.story.view.StoryEffectItem", package.seeall)
+﻿-- chunkname: @modules/logic/story/view/StoryEffectItem.lua
 
-local var_0_0 = class("StoryEffectItem")
+module("modules.logic.story.view.StoryEffectItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4, arg_1_5, arg_1_6)
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0._effectPath = arg_1_2
-	arg_1_0._effectGo = nil
-	arg_1_0._uieffectGo = nil
-	arg_1_0._effectCo = arg_1_3
-	arg_1_0._fadeHelper = nil
-	arg_1_0._effOrder = arg_1_4
+local StoryEffectItem = class("StoryEffectItem")
 
-	if arg_1_3.delayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] > 0 then
-		TaskDispatcher.runDelay(arg_1_0._buildNormalEffect, arg_1_0, arg_1_3.delayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()])
+function StoryEffectItem:init(go, path, effCo, order, callback, callbackObj)
+	self.viewGO = go
+	self._effectPath = path
+	self._effectGo = nil
+	self._uieffectGo = nil
+	self._effectCo = effCo
+	self._fadeHelper = nil
+	self._effOrder = order
+
+	if effCo.delayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] > 0 then
+		TaskDispatcher.runDelay(self._buildNormalEffect, self, effCo.delayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()])
 	else
-		arg_1_0:_buildNormalEffect()
+		self:_buildNormalEffect()
 	end
 end
 
-function var_0_0.reset(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	TaskDispatcher.cancelTask(arg_2_0._buildNormalEffect, arg_2_0)
-	TaskDispatcher.cancelTask(arg_2_0._followBg, arg_2_0)
+function StoryEffectItem:reset(go, effCo, order)
+	TaskDispatcher.cancelTask(self._buildNormalEffect, self)
+	TaskDispatcher.cancelTask(self._followBg, self)
 
-	if not arg_2_0._effectGo then
+	if not self._effectGo then
 		return
 	end
 
-	arg_2_0.viewGO = arg_2_1
-	arg_2_0._effectCo = arg_2_2
-	arg_2_0._effOrder = arg_2_3
+	self.viewGO = go
+	self._effectCo = effCo
+	self._effOrder = order
 
-	arg_2_0._effectGo.transform:SetParent(arg_2_0._uieffectGo.transform, false)
-	arg_2_0._effectOrderContainer:SetBaseOrder(arg_2_0._effOrder)
+	self._effectGo.transform:SetParent(self._uieffectGo.transform, false)
+	self._effectOrderContainer:SetBaseOrder(self._effOrder)
 end
 
-function var_0_0._buildNormalEffect(arg_3_0)
-	arg_3_0._uieffectGo = gohelper.create2d(arg_3_0.viewGO, "effect")
-	arg_3_0._canvas = gohelper.onceAddComponent(arg_3_0._uieffectGo, typeof(UnityEngine.CanvasGroup))
+function StoryEffectItem:_buildNormalEffect()
+	self._uieffectGo = gohelper.create2d(self.viewGO, "effect")
+	self._canvas = gohelper.onceAddComponent(self._uieffectGo, typeof(UnityEngine.CanvasGroup))
 
-	local var_3_0 = UnityEngine.Screen.width
-	local var_3_1 = UnityEngine.Screen.height
-	local var_3_2 = var_3_0 / var_3_1 > 1.7777777777777777 and 1080 * var_3_0 / (1920 * var_3_1) or 1
-	local var_3_3 = var_3_0 / var_3_1 < 2 and 1 or 1080 * var_3_0 / (1920 * var_3_1 * var_3_2)
+	local width, height = UnityEngine.Screen.width, UnityEngine.Screen.height
+	local scalex = width / height > 1.7777777777777777 and 1080 * width / (1920 * height) or 1
+	local scaley = width / height < 2 and 1 or 1080 * width / (1920 * height * scalex)
+	local isMatch = self._effectCo.orderType == StoryEnum.EffectOrderType.ContinuityUnscale or self._effectCo.orderType == StoryEnum.EffectOrderType.SingleUnscale or self._effectCo.orderType == StoryEnum.EffectOrderType.NoSettingUnScale
 
-	if arg_3_0._effectCo.orderType == StoryEnum.EffectOrderType.ContinuityUnscale or arg_3_0._effectCo.orderType == StoryEnum.EffectOrderType.SingleUnscale or arg_3_0._effectCo.orderType == StoryEnum.EffectOrderType.NoSettingUnScale then
-		var_3_2 = 1
-		var_3_3 = 1
+	if isMatch then
+		scalex = 1
+		scaley = 1
 	end
 
-	transformhelper.setLocalPosXY(arg_3_0._uieffectGo.transform, arg_3_0._effectCo.pos[1], arg_3_0._effectCo.pos[2])
-	transformhelper.setLocalScale(arg_3_0._uieffectGo.transform, var_3_2, var_3_3, 1)
+	transformhelper.setLocalPosXY(self._uieffectGo.transform, self._effectCo.pos[1], self._effectCo.pos[2])
+	transformhelper.setLocalScale(self._uieffectGo.transform, scalex, scaley, 1)
 
-	arg_3_0._effectLoader = PrefabInstantiate.Create(arg_3_0._uieffectGo)
+	self._effectLoader = PrefabInstantiate.Create(self._uieffectGo)
 
-	arg_3_0._effectLoader:startLoad(arg_3_0._effectPath, arg_3_0._onNormalEffectLoaded, arg_3_0)
+	self._effectLoader:startLoad(self._effectPath, self._onNormalEffectLoaded, self)
 end
 
-function var_0_0._onNormalEffectLoaded(arg_4_0)
-	arg_4_0._effectGo = arg_4_0._effectLoader:getInstGO()
-	arg_4_0._effectAnim = arg_4_0._effectGo:GetComponent(typeof(UnityEngine.Animator))
-	arg_4_0._fadeHelper = StoryEffectFadeHelper.New()
+function StoryEffectItem:_onNormalEffectLoaded()
+	self._effectGo = self._effectLoader:getInstGO()
+	self._effectAnim = self._effectGo:GetComponent(typeof(UnityEngine.Animator))
+	self._fadeHelper = StoryEffectFadeHelper.New()
 
-	arg_4_0._fadeHelper:init(arg_4_0._effectGo)
+	self._fadeHelper:init(self._effectGo)
 
-	if arg_4_0._effectCo.layer < 4 then
-		gohelper.setLayer(arg_4_0._effectGo, UnityLayer.UI, true)
-	elseif arg_4_0._effectCo.layer < 10 then
-		gohelper.setLayer(arg_4_0._effectGo, UnityLayer.UISecond, true)
+	if self._effectCo.layer < 4 then
+		gohelper.setLayer(self._effectGo, UnityLayer.UI, true)
+	elseif self._effectCo.layer < 10 then
+		gohelper.setLayer(self._effectGo, UnityLayer.UISecond, true)
 	else
-		gohelper.setLayer(arg_4_0._effectGo, UnityLayer.UITop, true)
+		gohelper.setLayer(self._effectGo, UnityLayer.UITop, true)
 	end
 
-	local var_4_0 = arg_4_0._effectCo.inTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()]
+	local inTime = self._effectCo.inTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()]
+	local needSet = inTime > 0.1 and self._effectCo.orderType ~= StoryEnum.EffectOrderType.NoSettingUnScale and self._effectCo.orderType ~= StoryEnum.EffectOrderType.NoSetting and self._effectCo.orderType ~= StoryEnum.EffectOrderType.NoSettingFollowBg
 
-	if var_4_0 > 0.1 and arg_4_0._effectCo.orderType ~= StoryEnum.EffectOrderType.NoSettingUnScale and arg_4_0._effectCo.orderType ~= StoryEnum.EffectOrderType.NoSetting then
-		local var_4_1 = arg_4_0._effectCo.orderType == StoryEnum.EffectOrderType.Continuity or arg_4_0._effectCo.orderType == StoryEnum.EffectOrderType.ContinuityUnscale
+	if needSet then
+		local loop = self._effectCo.orderType == StoryEnum.EffectOrderType.Continuity or self._effectCo.orderType == StoryEnum.EffectOrderType.ContinuityUnscale
 
-		arg_4_0._fadeHelper:setEffectLoop(var_4_1)
-		arg_4_0:_doEffectFade(0, 1, var_4_0)
+		self._fadeHelper:setEffectLoop(loop)
+		self:_doEffectFade(0, 1, inTime)
 	end
 
-	if arg_4_0._effectCo.orderType == StoryEnum.EffectOrderType.FollowBg then
-		arg_4_0:_playFollowBg()
+	if self._effectCo.orderType == StoryEnum.EffectOrderType.FollowBg or self._effectCo.orderType == StoryEnum.EffectOrderType.NoSettingFollowBg then
+		self:_playFollowBg()
 	end
 
-	arg_4_0._effectOrderContainer = gohelper.onceAddComponent(arg_4_0._effectGo, typeof(ZProj.EffectOrderContainer))
+	self._effectOrderContainer = gohelper.onceAddComponent(self._effectGo, typeof(ZProj.EffectOrderContainer))
 
-	arg_4_0._effectOrderContainer:SetBaseOrder(arg_4_0._effOrder)
+	self._effectOrderContainer:SetBaseOrder(self._effOrder)
 end
 
-function var_0_0._playFollowBg(arg_5_0)
-	arg_5_0._bgGo = StoryViewMgr.instance:getStoryFrontBgGo()
-	arg_5_0._bgFrontGo = gohelper.findChild(arg_5_0._bgGo, "#simage_bgimg")
+function StoryEffectItem:_playFollowBg()
+	self._bgGo = StoryViewMgr.instance:getStoryFrontBgGo()
+	self._bgFrontGo = gohelper.findChild(self._bgGo, "#simage_bgimg")
 
-	local var_5_0, var_5_1 = transformhelper.getLocalPos(arg_5_0._bgFrontGo.transform)
+	local frontTransX, frontTransY = transformhelper.getLocalPos(self._bgFrontGo.transform)
 
-	arg_5_0._initFrontPos = {
-		var_5_0,
-		var_5_1
+	self._initFrontPos = {
+		frontTransX,
+		frontTransY
 	}
 
-	local var_5_2, var_5_3 = transformhelper.getLocalPos(arg_5_0._uieffectGo.transform)
+	local picTransX, picTransY = transformhelper.getLocalPos(self._uieffectGo.transform)
 
-	arg_5_0._deltaPos = {
-		var_5_2,
-		var_5_3
+	self._deltaPos = {
+		picTransX,
+		picTransY
 	}
 
-	TaskDispatcher.runRepeat(arg_5_0._followBg, arg_5_0, 0.02)
+	TaskDispatcher.runRepeat(self._followBg, self, 0.02)
 end
 
-function var_0_0._followBg(arg_6_0)
-	local var_6_0, var_6_1 = transformhelper.getLocalScale(arg_6_0._bgGo.transform)
-	local var_6_2, var_6_3 = transformhelper.getLocalPos(arg_6_0._bgFrontGo.transform)
-	local var_6_4 = var_6_0 * (arg_6_0._deltaPos[1] + var_6_2 - arg_6_0._initFrontPos[1])
-	local var_6_5 = var_6_1 * (arg_6_0._deltaPos[2] + var_6_3 - arg_6_0._initFrontPos[2])
+function StoryEffectItem:_followBg()
+	local scaleX, scaleY = transformhelper.getLocalScale(self._bgGo.transform)
+	local frontTransX, frontTransY = transformhelper.getLocalPos(self._bgFrontGo.transform)
+	local posX = scaleX * (self._deltaPos[1] + frontTransX - self._initFrontPos[1])
+	local posY = scaleY * (self._deltaPos[2] + frontTransY - self._initFrontPos[2])
 
-	transformhelper.setLocalPosXY(arg_6_0._uieffectGo.transform, var_6_4, var_6_5)
-	transformhelper.setLocalScale(arg_6_0._uieffectGo.transform, var_6_1, var_6_1, 1)
+	transformhelper.setLocalPosXY(self._uieffectGo.transform, posX, posY)
+	transformhelper.setLocalScale(self._uieffectGo.transform, scaleY, scaleY, 1)
 end
 
-function var_0_0._doEffectFade(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4)
-	TaskDispatcher.cancelTask(arg_7_0._effFinished, arg_7_0)
+function StoryEffectItem:_doEffectFade(from, to, duration, destroy)
+	TaskDispatcher.cancelTask(self._effFinished, self)
 
-	local var_7_0 = arg_7_2 == 1
+	local isFadeIn = to == 1
 
-	if arg_7_0:fadeByAnimator(var_7_0) then
-		arg_7_0._needDestroy = arg_7_4
+	if self:fadeByAnimator(isFadeIn) then
+		self._needDestroy = destroy
 
-		TaskDispatcher.runDelay(arg_7_0._effFinished, arg_7_0, arg_7_3)
+		TaskDispatcher.runDelay(self._effFinished, self, duration)
 
 		return
 	end
 
-	if arg_7_3 < 0.1 then
-		arg_7_0:_effUpdate(arg_7_2)
+	if duration < 0.1 then
+		self:_effUpdate(to)
 
-		if arg_7_4 then
-			arg_7_0:onDestroy()
+		if destroy then
+			self:onDestroy()
 		end
 	else
-		arg_7_0._needDestroy = arg_7_4
+		self._needDestroy = destroy
 
-		if arg_7_0._effTweenId then
-			ZProj.TweenHelper.KillById(arg_7_0._effTweenId)
+		if self._effTweenId then
+			ZProj.TweenHelper.KillById(self._effTweenId)
 
-			arg_7_0._effTweenId = nil
+			self._effTweenId = nil
 		end
 
-		arg_7_0._effTweenId = ZProj.TweenHelper.DOTweenFloat(arg_7_1, arg_7_2, arg_7_3, arg_7_0._effUpdate, arg_7_0._effFinished, arg_7_0, nil, EaseType.Linear)
+		self._effTweenId = ZProj.TweenHelper.DOTweenFloat(from, to, duration, self._effUpdate, self._effFinished, self, nil, EaseType.Linear)
 	end
 end
 
-function var_0_0.fadeByAnimator(arg_8_0, arg_8_1)
-	if not arg_8_0._effectAnim then
+function StoryEffectItem:fadeByAnimator(fadeIn)
+	if not self._effectAnim then
 		return
 	end
 
-	if arg_8_1 then
-		arg_8_0._effectAnim:Play("open", 0, 0)
+	if fadeIn then
+		self._effectAnim:Play("open", 0, 0)
 	else
-		arg_8_0._effectAnim:Play("close", 0, 0)
+		self._effectAnim:Play("close", 0, 0)
 	end
 
 	return true
 end
 
-function var_0_0._effUpdate(arg_9_0, arg_9_1)
-	if not ViewMgr.instance:isOpen(ViewName.StoryHeroView) or not arg_9_0._fadeHelper then
-		if arg_9_0._effTweenId then
-			ZProj.TweenHelper.KillById(arg_9_0._effTweenId)
+function StoryEffectItem:_effUpdate(value)
+	local viewOpen = ViewMgr.instance:isOpen(ViewName.StoryHeroView)
 
-			arg_9_0._effTweenId = nil
+	if not viewOpen or not self._fadeHelper then
+		if self._effTweenId then
+			ZProj.TweenHelper.KillById(self._effTweenId)
+
+			self._effTweenId = nil
 		end
 
 		return
 	end
 
-	if arg_9_0._canvas then
-		arg_9_0._canvas.alpha = arg_9_1
+	if self._canvas then
+		self._canvas.alpha = value
 
-		if arg_9_0._fadeHelper then
-			arg_9_0._fadeHelper:setTransparency(arg_9_1)
+		if self._fadeHelper then
+			self._fadeHelper:setTransparency(value)
 		end
-	elseif arg_9_0._effTweenId then
-		ZProj.TweenHelper.KillById(arg_9_0._effTweenId)
+	elseif self._effTweenId then
+		ZProj.TweenHelper.KillById(self._effTweenId)
 
-		arg_9_0._effTweenId = nil
+		self._effTweenId = nil
 	end
 end
 
-function var_0_0._effFinished(arg_10_0)
-	if not arg_10_0._needDestroy then
+function StoryEffectItem:_effFinished()
+	if not self._needDestroy then
 		return
 	end
 
-	arg_10_0:onDestroy()
+	self:onDestroy()
 end
 
-function var_0_0.destroyEffect(arg_11_0, arg_11_1, arg_11_2)
-	if arg_11_1 then
-		arg_11_0._effectCo = arg_11_1
+function StoryEffectItem:destroyEffect(effCo, param)
+	if effCo then
+		self._effectCo = effCo
 	end
 
-	arg_11_0._destroyParam = arg_11_2
+	self._destroyParam = param
 
-	TaskDispatcher.cancelTask(arg_11_0._buildNormalEffect, arg_11_0)
+	TaskDispatcher.cancelTask(self._buildNormalEffect, self)
 
-	if arg_11_0._effectCo.outType == StoryEnum.EffectOutType.Hard then
-		arg_11_0:onDestroy()
+	if self._effectCo.outType == StoryEnum.EffectOutType.Hard then
+		self:onDestroy()
 	else
-		arg_11_0:_doEffectFade(1, 0, arg_11_0._effectCo.outTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], true)
+		self:_doEffectFade(1, 0, self._effectCo.outTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], true)
 	end
 end
 
-function var_0_0.onDestroy(arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0._effFinished, arg_12_0)
+function StoryEffectItem:onDestroy()
+	TaskDispatcher.cancelTask(self._effFinished, self)
 
-	if arg_12_0._destroyParam then
-		arg_12_0._destroyParam.callback(arg_12_0._destroyParam.callbackObj, arg_12_0._effectPath)
+	if self._destroyParam then
+		self._destroyParam.callback(self._destroyParam.callbackObj, self._effectPath)
 	end
 
-	TaskDispatcher.cancelTask(arg_12_0._buildNormalEffect, arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0._followBg, arg_12_0)
+	TaskDispatcher.cancelTask(self._buildNormalEffect, self)
+	TaskDispatcher.cancelTask(self._followBg, self)
 
-	if arg_12_0._fadeHelper then
-		arg_12_0._fadeHelper:destroy()
+	if self._fadeHelper then
+		self._fadeHelper:destroy()
 
-		arg_12_0._fadeHelper = nil
+		self._fadeHelper = nil
 	end
 
-	arg_12_0._canvas = nil
+	self._canvas = nil
 
-	if arg_12_0._effTweenId then
-		ZProj.TweenHelper.KillById(arg_12_0._effTweenId)
+	if self._effTweenId then
+		ZProj.TweenHelper.KillById(self._effTweenId)
 
-		arg_12_0._effTweenId = nil
+		self._effTweenId = nil
 	end
 
-	if arg_12_0._effectLoader then
-		arg_12_0._effectLoader:dispose()
+	if self._effectLoader then
+		self._effectLoader:dispose()
 
-		arg_12_0._effectLoader = nil
+		self._effectLoader = nil
 	end
 
-	if arg_12_0._effectGo then
-		gohelper.destroy(arg_12_0._effectGo)
+	if self._effectGo then
+		gohelper.destroy(self._effectGo)
 
-		arg_12_0._effectGo = nil
+		self._effectGo = nil
 	end
 
-	if arg_12_0._uieffectGo then
-		gohelper.destroy(arg_12_0._uieffectGo)
+	if self._uieffectGo then
+		gohelper.destroy(self._uieffectGo)
 
-		arg_12_0._uieffectGo = nil
+		self._uieffectGo = nil
 	end
 end
 
-return var_0_0
+return StoryEffectItem

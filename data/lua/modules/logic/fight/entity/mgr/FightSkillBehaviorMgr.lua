@@ -1,16 +1,18 @@
-﻿module("modules.logic.fight.entity.mgr.FightSkillBehaviorMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/mgr/FightSkillBehaviorMgr.lua
 
-local var_0_0 = class("FightSkillBehaviorMgr")
+module("modules.logic.fight.entity.mgr.FightSkillBehaviorMgr", package.seeall)
 
-function var_0_0.init(arg_1_0)
-	FightController.instance:registerCallback(FightEvent.OnSkillEffectPlayFinish, arg_1_0._onSkillEffectPlayFinish, arg_1_0)
+local FightSkillBehaviorMgr = class("FightSkillBehaviorMgr")
 
-	arg_1_0._hasPlayDict = {}
-	arg_1_0._specialWorkList = {}
+function FightSkillBehaviorMgr:init()
+	FightController.instance:registerCallback(FightEvent.OnSkillEffectPlayFinish, self._onSkillEffectPlayFinish, self)
+
+	self._hasPlayDict = {}
+	self._specialWorkList = {}
 end
 
-function var_0_0.playSkillEffectBehavior(arg_2_0, arg_2_1, arg_2_2)
-	if not arg_2_1 or not arg_2_2 then
+function FightSkillBehaviorMgr:playSkillEffectBehavior(fightStepData, actEffectData)
+	if not fightStepData or not actEffectData then
 		return
 	end
 
@@ -18,206 +20,210 @@ function var_0_0.playSkillEffectBehavior(arg_2_0, arg_2_1, arg_2_2)
 		return
 	end
 
-	local var_2_0 = arg_2_2.configEffect
+	local behaviorType = actEffectData.configEffect
 
-	if var_2_0 and var_2_0 > 0 then
-		local var_2_1 = arg_2_2.targetId .. ":" .. var_2_0
-		local var_2_2 = arg_2_0._hasPlayDict[arg_2_1.stepUid]
+	if behaviorType and behaviorType > 0 then
+		local entityBehaviorKey = actEffectData.targetId .. ":" .. behaviorType
+		local hasPlayDict = self._hasPlayDict[fightStepData.stepUid]
 
-		if not var_2_2 then
-			var_2_2 = {}
-			arg_2_0._hasPlayDict[arg_2_1.stepUid] = var_2_2
+		if not hasPlayDict then
+			hasPlayDict = {}
+			self._hasPlayDict[fightStepData.stepUid] = hasPlayDict
 		end
 
-		if not var_2_2[var_2_1] then
-			var_2_2[var_2_1] = true
+		if not hasPlayDict[entityBehaviorKey] then
+			hasPlayDict[entityBehaviorKey] = true
 
-			local var_2_3 = lua_skill_behavior.configDict[var_2_0]
+			local skillBehaviorCO = lua_skill_behavior.configDict[behaviorType]
 
-			if var_2_3 then
-				arg_2_0:_doSkillBehaviorEffect(arg_2_1, arg_2_2, var_2_3, false)
+			if skillBehaviorCO then
+				self:_doSkillBehaviorEffect(fightStepData, actEffectData, skillBehaviorCO, false)
 			end
 		end
 	end
 end
 
-function var_0_0.playSkillBehavior(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	if not arg_3_1 then
+function FightSkillBehaviorMgr:playSkillBehavior(fightStepData, needPlayBehaviorTypeDict, isSkillTimeline)
+	if not fightStepData then
 		return
 	end
 
-	local var_3_0 = arg_3_1.actId
+	local skillId = fightStepData.actId
+	local skillCO = lua_skill.configDict[skillId]
 
-	if not lua_skill.configDict[var_3_0] then
+	if not skillCO then
 		return
 	end
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1.actEffect) do
-		local var_3_1 = iter_3_1.configEffect
+	for _, actEffectData in ipairs(fightStepData.actEffect) do
+		local behaviorType = actEffectData.configEffect
 
-		if var_3_1 and var_3_1 > 0 then
-			local var_3_2 = arg_3_2 and arg_3_2[var_3_1]
-			local var_3_3 = iter_3_1.targetId .. ":" .. var_3_1
-			local var_3_4 = arg_3_0._hasPlayDict[arg_3_1.stepUid]
+		if behaviorType and behaviorType > 0 then
+			local timelineNeedPlay = needPlayBehaviorTypeDict and needPlayBehaviorTypeDict[behaviorType]
+			local entityBehaviorKey = actEffectData.targetId .. ":" .. behaviorType
+			local hasPlayDict = self._hasPlayDict[fightStepData.stepUid]
 
-			if not var_3_4 then
-				var_3_4 = {}
-				arg_3_0._hasPlayDict[arg_3_1.stepUid] = var_3_4
+			if not hasPlayDict then
+				hasPlayDict = {}
+				self._hasPlayDict[fightStepData.stepUid] = hasPlayDict
 			end
 
-			local var_3_5 = not arg_3_2 and not var_3_4[var_3_3]
+			local skillEndNeedPlay = not needPlayBehaviorTypeDict and not hasPlayDict[entityBehaviorKey]
 
-			if var_3_2 or var_3_5 then
-				var_3_4[var_3_3] = true
+			if timelineNeedPlay or skillEndNeedPlay then
+				hasPlayDict[entityBehaviorKey] = true
 
-				local var_3_6 = lua_skill_behavior.configDict[var_3_1]
+				local skillBehaviorCO = lua_skill_behavior.configDict[behaviorType]
 
-				if var_3_6 then
-					arg_3_0:_doSkillBehaviorEffect(arg_3_1, iter_3_1, var_3_6, arg_3_3)
+				if skillBehaviorCO then
+					self:_doSkillBehaviorEffect(fightStepData, actEffectData, skillBehaviorCO, isSkillTimeline)
 				end
 			end
 		end
 	end
 end
 
-function var_0_0._doSkillBehaviorEffect(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
-	local var_4_0 = FightHelper.getEntity(arg_4_2.targetId) or arg_4_2.entity and FightHelper.getEntity(arg_4_2.entity.id)
-	local var_4_1 = arg_4_3.effect
-	local var_4_2 = arg_4_3.effectHangPoint
-	local var_4_3 = arg_4_3.audioId
-	local var_4_4 = FightDataHelper.entityMgr:getById(arg_4_1.fromId)
+function FightSkillBehaviorMgr:_doSkillBehaviorEffect(fightStepData, actEffectData, skillBehaviorCO, isSkillTimeline)
+	local targetEntity = FightHelper.getEntity(actEffectData.targetId)
 
-	if var_4_4 then
-		local var_4_5 = lua_fight_replace_skill_behavior_effect.configDict[var_4_4.skin]
+	targetEntity = targetEntity or actEffectData.entity and FightHelper.getEntity(actEffectData.entity.id)
 
-		var_4_5 = var_4_5 and var_4_5[arg_4_3.id]
+	local effectPath = skillBehaviorCO.effect
+	local effectHangPoint = skillBehaviorCO.effectHangPoint
+	local audioId = skillBehaviorCO.audioId
+	local entityMO = FightDataHelper.entityMgr:getById(fightStepData.fromId)
 
-		if var_4_5 then
-			var_4_1 = string.nilorempty(var_4_5.effect) and var_4_1 or var_4_5.effect
-			var_4_2 = string.nilorempty(var_4_5.effectHangPoint) and var_4_2 or var_4_5.effectHangPoint
-			var_4_3 = var_4_5.audioId == 0 and var_4_3 or var_4_5.audioId
+	if entityMO then
+		local replaceConfig = lua_fight_replace_skill_behavior_effect.configDict[entityMO.skin]
+
+		replaceConfig = replaceConfig and replaceConfig[skillBehaviorCO.id]
+
+		if replaceConfig then
+			effectPath = string.nilorempty(replaceConfig.effect) and effectPath or replaceConfig.effect
+			effectHangPoint = string.nilorempty(replaceConfig.effectHangPoint) and effectHangPoint or replaceConfig.effectHangPoint
+			audioId = replaceConfig.audioId == 0 and audioId or replaceConfig.audioId
 		end
 	end
 
-	if arg_4_3.id == 60052 and var_4_4 then
-		local var_4_6 = lua_fight_sp_effect_kkny_bear_damage_hit.configDict[var_4_4.skin]
+	if skillBehaviorCO.id == 60052 and entityMO then
+		local config = lua_fight_sp_effect_kkny_bear_damage_hit.configDict[entityMO.skin]
 
-		if var_4_6 then
-			var_4_1 = var_4_6.path
-			var_4_2 = var_4_6.hangPoint
-			var_4_3 = var_4_6.audio
+		if config then
+			effectPath = config.path
+			effectHangPoint = config.hangPoint
+			audioId = config.audio
 		end
 	end
 
-	if not string.nilorempty(var_4_1) and var_4_0 and var_4_0.effect then
-		local var_4_7
+	if not string.nilorempty(effectPath) and targetEntity and targetEntity.effect then
+		local effectWrap
 
-		if not string.nilorempty(var_4_2) then
-			var_4_7 = var_4_0.effect:addHangEffect(var_4_1, var_4_2)
+		if not string.nilorempty(effectHangPoint) then
+			effectWrap = targetEntity.effect:addHangEffect(effectPath, effectHangPoint)
 
-			var_4_7:setLocalPos(0, 0, 0)
+			effectWrap:setLocalPos(0, 0, 0)
 		else
-			var_4_7 = var_4_0.effect:addGlobalEffect(var_4_1)
+			effectWrap = targetEntity.effect:addGlobalEffect(effectPath)
 
-			var_4_7:setWorldPos(FightHelper.getProcessEntitySpinePos(var_4_0))
+			effectWrap:setWorldPos(FightHelper.getProcessEntitySpinePos(targetEntity))
 		end
 
-		FightRenderOrderMgr.instance:onAddEffectWrap(var_4_0.id, var_4_7)
+		FightRenderOrderMgr.instance:onAddEffectWrap(targetEntity.id, effectWrap)
 
-		arg_4_0._effectCache = arg_4_0._effectCache or {}
+		self._effectCache = self._effectCache or {}
 
-		table.insert(arg_4_0._effectCache, {
-			var_4_0.id,
-			var_4_7,
+		table.insert(self._effectCache, {
+			targetEntity.id,
+			effectWrap,
 			Time.time
 		})
-		TaskDispatcher.runRepeat(arg_4_0._removeEffects, arg_4_0, 0.5)
+		TaskDispatcher.runRepeat(self._removeEffects, self, 0.5)
 	end
 
-	if var_4_3 > 0 then
-		FightAudioMgr.instance:playAudio(var_4_3)
+	if audioId > 0 then
+		FightAudioMgr.instance:playAudio(audioId)
 	end
 
-	if arg_4_3.dec_Type > 0 then
-		local var_4_8 = arg_4_2.targetId
+	if skillBehaviorCO.dec_Type > 0 then
+		local target_entity_id = actEffectData.targetId
 
-		if arg_4_2.effectType == FightEnum.EffectType.CARDLEVELCHANGE then
-			var_4_8 = arg_4_2.entity and arg_4_2.entity.uid or arg_4_1.fromId
+		if actEffectData.effectType == FightEnum.EffectType.CARDLEVELCHANGE then
+			target_entity_id = actEffectData.entity and actEffectData.entity.uid or fightStepData.fromId
 		end
 
-		FightFloatMgr.instance:float(var_4_8, FightEnum.FloatType.buff, arg_4_3.dec, arg_4_3.dec_Type, false)
+		FightFloatMgr.instance:float(target_entity_id, FightEnum.FloatType.buff, skillBehaviorCO.dec, skillBehaviorCO.dec_Type, false)
 	end
 
-	if arg_4_4 then
-		local var_4_9 = arg_4_3.type
+	if isSkillTimeline then
+		local btype = skillBehaviorCO.type
 
-		if (var_4_9 == FightEnum.Behavior_AddExPoint or var_4_9 == FightEnum.Behavior_DelExPoint) and arg_4_2.effectType == FightEnum.EffectType.EXPOINTCHANGE then
-			local var_4_10 = FightWork2Work.New(FightWorkExPointChange, arg_4_1, arg_4_2)
+		if (btype == FightEnum.Behavior_AddExPoint or btype == FightEnum.Behavior_DelExPoint) and actEffectData.effectType == FightEnum.EffectType.EXPOINTCHANGE then
+			local work = FightWork2Work.New(FightWorkExPointChange, fightStepData, actEffectData)
 
-			var_4_10:onStart()
-			table.insert(arg_4_0._specialWorkList, var_4_10)
-		elseif FightEnum.BuffEffectType[arg_4_2.effectType] then
-			FightSkillBuffMgr.instance:playSkillBuff(arg_4_1, arg_4_2)
-		elseif var_4_9 == FightEnum.Behavior_LostLife and arg_4_2.effectType == FightEnum.EffectType.DAMAGE and not arg_4_2:isDone() then
-			local var_4_11 = FightWork2Work.New(FightWorkEffectDamage, arg_4_1, arg_4_2)
+			work:onStart()
+			table.insert(self._specialWorkList, work)
+		elseif FightEnum.BuffEffectType[actEffectData.effectType] then
+			FightSkillBuffMgr.instance:playSkillBuff(fightStepData, actEffectData)
+		elseif btype == FightEnum.Behavior_LostLife and actEffectData.effectType == FightEnum.EffectType.DAMAGE and not actEffectData:isDone() then
+			local work = FightWork2Work.New(FightWorkEffectDamage, fightStepData, actEffectData)
 
-			var_4_11:onStart()
-			table.insert(arg_4_0._specialWorkList, var_4_11)
+			work:onStart()
+			table.insert(self._specialWorkList, work)
 		end
 	end
 end
 
-function var_0_0._onSkillEffectPlayFinish(arg_5_0, arg_5_1)
-	arg_5_0:playSkillBehavior(arg_5_1, false)
+function FightSkillBehaviorMgr:_onSkillEffectPlayFinish(fightStepData)
+	self:playSkillBehavior(fightStepData, false)
 end
 
-function var_0_0._removeEffects(arg_6_0, arg_6_1)
-	if not arg_6_0._effectCache then
+function FightSkillBehaviorMgr:_removeEffects(removeAll)
+	if not self._effectCache then
 		return
 	end
 
-	local var_6_0 = Time.time
+	local now = Time.time
 
-	for iter_6_0 = #arg_6_0._effectCache, 1, -1 do
-		local var_6_1 = arg_6_0._effectCache[iter_6_0][1]
-		local var_6_2 = arg_6_0._effectCache[iter_6_0][2]
-		local var_6_3 = arg_6_0._effectCache[iter_6_0][3]
-		local var_6_4 = FightHelper.getEntity(var_6_1)
+	for i = #self._effectCache, 1, -1 do
+		local entityId = self._effectCache[i][1]
+		local effectWrap = self._effectCache[i][2]
+		local cacheTime = self._effectCache[i][3]
+		local entity = FightHelper.getEntity(entityId)
 
-		if arg_6_1 or var_6_0 - var_6_3 > 2 then
-			if var_6_4 then
-				FightRenderOrderMgr.instance:onRemoveEffectWrap(var_6_4.id, var_6_2)
-				var_6_4.effect:removeEffect(var_6_2)
+		if removeAll or now - cacheTime > 2 then
+			if entity then
+				FightRenderOrderMgr.instance:onRemoveEffectWrap(entity.id, effectWrap)
+				entity.effect:removeEffect(effectWrap)
 			end
 
-			table.remove(arg_6_0._effectCache, iter_6_0)
+			table.remove(self._effectCache, i)
 		end
 	end
 
-	if #arg_6_0._effectCache == 0 then
-		TaskDispatcher.cancelTask(arg_6_0._removeEffects, arg_6_0)
+	if #self._effectCache == 0 then
+		TaskDispatcher.cancelTask(self._removeEffects, self)
 	end
 end
 
-function var_0_0.dispose(arg_7_0)
-	if arg_7_0._specialWorkList then
-		for iter_7_0, iter_7_1 in ipairs(arg_7_0._specialWorkList) do
-			if iter_7_1.status == WorkStatus.Running then
-				iter_7_1:onStop()
+function FightSkillBehaviorMgr:dispose()
+	if self._specialWorkList then
+		for _, work in ipairs(self._specialWorkList) do
+			if work.status == WorkStatus.Running then
+				work:onStop()
 			end
 		end
 	end
 
-	arg_7_0._specialWorkList = nil
+	self._specialWorkList = nil
 
-	FightController.instance:unregisterCallback(FightEvent.OnSkillEffectPlayFinish, arg_7_0._onSkillEffectPlayFinish, arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0._removeEffects, arg_7_0)
-	arg_7_0:_removeEffects(true)
+	FightController.instance:unregisterCallback(FightEvent.OnSkillEffectPlayFinish, self._onSkillEffectPlayFinish, self)
+	TaskDispatcher.cancelTask(self._removeEffects, self)
+	self:_removeEffects(true)
 
-	arg_7_0._effectCache = nil
-	arg_7_0._hasPlayDict = nil
+	self._effectCache = nil
+	self._hasPlayDict = nil
 end
 
-var_0_0.instance = var_0_0.New()
+FightSkillBehaviorMgr.instance = FightSkillBehaviorMgr.New()
 
-return var_0_0
+return FightSkillBehaviorMgr

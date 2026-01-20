@@ -1,25 +1,27 @@
-﻿module("modules.logic.versionactivity2_6.xugouji.controller.gamestep.XugoujiGameStepBase", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/xugouji/controller/gamestep/XugoujiGameStepBase.lua
 
-local var_0_0 = class("XugoujiGameStepBase")
+module("modules.logic.versionactivity2_6.xugouji.controller.gamestep.XugoujiGameStepBase", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._stepData = arg_1_1
+local XugoujiGameStepBase = class("XugoujiGameStepBase")
+
+function XugoujiGameStepBase:init(stepData)
+	self._stepData = stepData
 end
 
-function var_0_0.start(arg_2_0)
+function XugoujiGameStepBase:start()
 	return
 end
 
-function var_0_0.finish(arg_3_0)
-	local var_3_0 = XugoujiGameStepController.instance
+function XugoujiGameStepBase:finish()
+	local stepCtrl = XugoujiGameStepController.instance
 
-	if var_3_0 then
-		var_3_0:nextStep()
+	if stepCtrl then
+		stepCtrl:nextStep()
 	end
 end
 
-function var_0_0.dispose(arg_4_0)
-	arg_4_0._stepData = nil
+function XugoujiGameStepBase:dispose()
+	self._stepData = nil
 end
 
-return var_0_0
+return XugoujiGameStepBase

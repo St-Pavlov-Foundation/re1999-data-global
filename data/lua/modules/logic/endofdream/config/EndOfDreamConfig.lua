@@ -1,54 +1,58 @@
-﻿module("modules.logic.endofdream.config.EndOfDreamConfig", package.seeall)
+﻿-- chunkname: @modules/logic/endofdream/config/EndOfDreamConfig.lua
 
-local var_0_0 = class("EndOfDreamConfig", BaseConfig)
+module("modules.logic.endofdream.config.EndOfDreamConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._levelConfig = nil
-	arg_1_0._episodeConfig = nil
+local EndOfDreamConfig = class("EndOfDreamConfig", BaseConfig)
+
+function EndOfDreamConfig:ctor()
+	self._levelConfig = nil
+	self._episodeConfig = nil
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function EndOfDreamConfig:reqConfigNames()
 	return
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+function EndOfDreamConfig:onConfigLoaded(configName, configTable)
 	return
 end
 
-function var_0_0.getLevelConfig(arg_4_0, arg_4_1)
-	return arg_4_0._levelConfig.configDict[arg_4_1]
+function EndOfDreamConfig:getLevelConfig(levelId)
+	return self._levelConfig.configDict[levelId]
 end
 
-function var_0_0.getLevelConfigList(arg_5_0)
-	return arg_5_0._levelConfig.configList
+function EndOfDreamConfig:getLevelConfigList()
+	return self._levelConfig.configList
 end
 
-function var_0_0.getLevelConfigByEpisodeId(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0:getLevelConfigList()
+function EndOfDreamConfig:getLevelConfigByEpisodeId(episodeId)
+	local levelConfigList = self:getLevelConfigList()
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
-		if iter_6_1.episodeId == arg_6_1 then
-			return iter_6_1, false
-		elseif iter_6_1.hardEpisodeId == arg_6_1 then
-			return iter_6_1, true
+	for i, levelConfig in ipairs(levelConfigList) do
+		if levelConfig.episodeId == episodeId then
+			return levelConfig, false
+		elseif levelConfig.hardEpisodeId == episodeId then
+			return levelConfig, true
 		end
 	end
 end
 
-function var_0_0.getFirstLevelConfig(arg_7_0)
-	return arg_7_0:getLevelConfigList()[1]
+function EndOfDreamConfig:getFirstLevelConfig()
+	local levelConfigList = self:getLevelConfigList()
+
+	return levelConfigList[1]
 end
 
-function var_0_0.getEpisodeConfig(arg_8_0, arg_8_1)
+function EndOfDreamConfig:getEpisodeConfig(episodeId)
 	return
 end
 
-function var_0_0.getEpisodeConfigByLevelId(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = arg_9_0:getLevelConfig(arg_9_1)
+function EndOfDreamConfig:getEpisodeConfigByLevelId(levelId, isHard)
+	local levelConfig = self:getLevelConfig(levelId)
 
-	return var_9_0 and var_9_0.hardEpisodeId
+	return levelConfig and levelConfig.hardEpisodeId
 end
 
-var_0_0.instance = var_0_0.New()
+EndOfDreamConfig.instance = EndOfDreamConfig.New()
 
-return var_0_0
+return EndOfDreamConfig

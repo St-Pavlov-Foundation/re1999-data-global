@@ -1,62 +1,64 @@
-﻿module("modules.logic.fight.entity.comp.buff.FightBuffAddBKLESpBuff", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/buff/FightBuffAddBKLESpBuff.lua
 
-local var_0_0 = class("FightBuffAddBKLESpBuff")
+module("modules.logic.fight.entity.comp.buff.FightBuffAddBKLESpBuff", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local FightBuffAddBKLESpBuff = class("FightBuffAddBKLESpBuff")
+
+function FightBuffAddBKLESpBuff:ctor()
 	return
 end
 
-function var_0_0.onBuffStart(arg_2_0, arg_2_1, arg_2_2)
-	if not arg_2_1 then
+function FightBuffAddBKLESpBuff:onBuffStart(entity, buffMo)
+	if not entity then
 		return
 	end
 
-	local var_2_0 = arg_2_2.fromUid
-	local var_2_1 = FightDataHelper.entityMgr:getById(var_2_0)
+	local formId = buffMo.fromUid
+	local fromEntityMo = FightDataHelper.entityMgr:getById(formId)
 
-	if not var_2_1 then
+	if not fromEntityMo then
 		return
 	end
 
-	local var_2_2 = var_2_1.skin
-	local var_2_3 = lua_fight_sp_effect_bkle.configDict[var_2_2]
+	local skinId = fromEntityMo.skin
+	local co = lua_fight_sp_effect_bkle.configDict[skinId]
 
-	if not var_2_3 then
+	if not co then
 		return
 	end
 
-	local var_2_4 = FightHeroSpEffectConfig.instance:getBKLEAddBuffEffect(var_2_2)
+	local effectRes = FightHeroSpEffectConfig.instance:getBKLEAddBuffEffect(skinId)
 
-	if not var_2_4 then
+	if not effectRes then
 		return
 	end
 
-	arg_2_0.entity = arg_2_1
-	arg_2_0.buffMo = arg_2_2
-	arg_2_0.wrap = arg_2_1.effect:addHangEffect(var_2_4, var_2_3.hangPoint)
+	self.entity = entity
+	self.buffMo = buffMo
+	self.wrap = entity.effect:addHangEffect(effectRes, co.hangPoint)
 
-	FightRenderOrderMgr.instance:onAddEffectWrap(arg_2_1.id, arg_2_0.wrap)
-	arg_2_0.wrap:setLocalPos(0, 0, 0)
+	FightRenderOrderMgr.instance:onAddEffectWrap(entity.id, self.wrap)
+	self.wrap:setLocalPos(0, 0, 0)
 
-	local var_2_5 = var_2_3.audio
+	local audioId = co.audio
 
-	if var_2_5 ~= 0 then
-		AudioMgr.instance:trigger(var_2_5)
+	if audioId ~= 0 then
+		AudioMgr.instance:trigger(audioId)
 	end
 
-	arg_2_1.buff:addLoopBuff(arg_2_0.wrap)
+	entity.buff:addLoopBuff(self.wrap)
 end
 
-function var_0_0.onBuffEnd(arg_3_0)
-	if not arg_3_0.wrap then
+function FightBuffAddBKLESpBuff:onBuffEnd()
+	if not self.wrap then
 		return
 	end
 
-	arg_3_0.entity.buff:removeLoopBuff(arg_3_0.wrap)
-	arg_3_0.entity.effect:removeEffect(arg_3_0.wrap)
-	FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_3_0.entity.id, arg_3_0.wrap)
+	self.entity.buff:removeLoopBuff(self.wrap)
+	self.entity.effect:removeEffect(self.wrap)
+	FightRenderOrderMgr.instance:onRemoveEffectWrap(self.entity.id, self.wrap)
 
-	arg_3_0.wrap = nil
+	self.wrap = nil
 end
 
-return var_0_0
+return FightBuffAddBKLESpBuff

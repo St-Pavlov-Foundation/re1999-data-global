@@ -1,50 +1,47 @@
-﻿module("modules.logic.versionactivity2_3.newcultivationgift.view.VersionActivity2_3NewCultivationGiftFullView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/newcultivationgift/view/VersionActivity2_3NewCultivationGiftFullView.lua
 
-local var_0_0 = class("VersionActivity2_3NewCultivationGiftFullView", VersionActivity2_3NewCultivationGiftView)
+module("modules.logic.versionactivity2_3.newcultivationgift.view.VersionActivity2_3NewCultivationGiftFullView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/#btn_close")
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_bg")
-	arg_1_0._simageTitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_Title")
-	arg_1_0._simagedec = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_dec")
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Root/LimitTime/image_LimitTimeBG/#txt_LimitTime")
-	arg_1_0._btnreward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/reward/#btn_reward")
-	arg_1_0._simageTitle2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/reward/#simage_Title2")
-	arg_1_0._btnstone = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/stone/txt_dec/#btn_stone")
-	arg_1_0._btnget = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/Btn/#btn_get")
-	arg_1_0._gohasget = gohelper.findChild(arg_1_0.viewGO, "Root/Btn/hasget")
+local VersionActivity2_3NewCultivationGiftFullView = class("VersionActivity2_3NewCultivationGiftFullView", VersionActivity2_3NewCultivationGiftView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity2_3NewCultivationGiftFullView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "Root/#btn_close")
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "Root/#simage_bg")
+	self._simageTitle = gohelper.findChildSingleImage(self.viewGO, "Root/#simage_Title")
+	self._simagedec = gohelper.findChildSingleImage(self.viewGO, "Root/#simage_dec")
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "Root/LimitTime/image_LimitTimeBG/#txt_LimitTime")
+	self._btnreward = gohelper.findChildButtonWithAudio(self.viewGO, "Root/reward/#btn_reward")
+	self._simageTitle2 = gohelper.findChildSingleImage(self.viewGO, "Root/reward/#simage_Title2")
+	self._btnstone = gohelper.findChildButtonWithAudio(self.viewGO, "Root/stone/txt_dec/#btn_stone")
+	self._gokeyword = gohelper.findChild(self.viewGO, "Root/stone/#go_keyword")
+	self._btnget = gohelper.findChildButtonWithAudio(self.viewGO, "Root/Btn/#btn_get")
+	self._gohasget = gohelper.findChild(self.viewGO, "Root/Btn/hasget")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnreward:AddClickListener(arg_2_0._btnrewardOnClick, arg_2_0)
-	arg_2_0._btnstone:AddClickListener(arg_2_0._btnstoneOnClick, arg_2_0)
-	arg_2_0._btnget:AddClickListener(arg_2_0._btngetOnClick, arg_2_0)
-	Activity125Controller.instance:registerCallback(Activity125Event.DataUpdate, arg_2_0.onEpisodeFinished, arg_2_0)
-	TaskDispatcher.runRepeat(arg_2_0.refreshRemainTime, arg_2_0, arg_2_0.REMAIN_TIME_REFRESH_INTERVAL)
+function VersionActivity2_3NewCultivationGiftFullView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnreward:AddClickListener(self._btnrewardOnClick, self)
+	self._btnstone:AddClickListener(self._btnstoneOnClick, self)
+	self._btnget:AddClickListener(self._btngetOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnreward:RemoveClickListener()
-	arg_3_0._btnstone:RemoveClickListener()
-	arg_3_0._btnget:RemoveClickListener()
-	Activity125Controller.instance:unregisterCallback(Activity125Event.DataUpdate, arg_3_0.onEpisodeFinished, arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0.refreshRemainTime, arg_3_0)
+function VersionActivity2_3NewCultivationGiftFullView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btnreward:RemoveClickListener()
+	self._btnstone:RemoveClickListener()
+	self._btnget:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function VersionActivity2_3NewCultivationGiftFullView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0._actId = arg_5_0.viewParam.actId
-
-	arg_5_0:_refreshUI()
+function VersionActivity2_3NewCultivationGiftFullView:onOpen()
+	self:onStart()
 end
 
-return var_0_0
+return VersionActivity2_3NewCultivationGiftFullView

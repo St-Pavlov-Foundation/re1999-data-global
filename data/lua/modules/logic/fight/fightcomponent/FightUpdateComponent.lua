@@ -1,27 +1,29 @@
-﻿module("modules.logic.fight.fightcomponent.FightUpdateComponent", package.seeall)
+﻿-- chunkname: @modules/logic/fight/fightcomponent/FightUpdateComponent.lua
 
-local var_0_0 = class("FightUpdateComponent", FightBaseClass)
+module("modules.logic.fight.fightcomponent.FightUpdateComponent", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0._updateItemList = {}
+local FightUpdateComponent = class("FightUpdateComponent", FightBaseClass)
+
+function FightUpdateComponent:onConstructor()
+	self._updateItemList = {}
 end
 
-function var_0_0.registUpdate(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	local var_2_0 = FightUpdateMgr.registUpdate(arg_2_1, arg_2_2, arg_2_3)
+function FightUpdateComponent:registUpdate(func, handle, param)
+	local item = FightUpdateMgr.registUpdate(func, handle, param)
 
-	table.insert(arg_2_0._updateItemList, var_2_0)
+	table.insert(self._updateItemList, item)
 
-	return var_2_0
+	return item
 end
 
-function var_0_0.cancelUpdate(arg_3_0, arg_3_1)
-	return FightUpdateMgr.cancelUpdate(arg_3_1)
+function FightUpdateComponent:cancelUpdate(item)
+	return FightUpdateMgr.cancelUpdate(item)
 end
 
-function var_0_0.onDestructor(arg_4_0)
-	for iter_4_0, iter_4_1 in ipairs(arg_4_0._updateItemList) do
-		iter_4_1.isDone = true
+function FightUpdateComponent:onDestructor()
+	for i, v in ipairs(self._updateItemList) do
+		v.isDone = true
 	end
 end
 
-return var_0_0
+return FightUpdateComponent

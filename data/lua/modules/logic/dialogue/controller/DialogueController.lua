@@ -1,24 +1,26 @@
-﻿module("modules.logic.dialogue.controller.DialogueController", package.seeall)
+﻿-- chunkname: @modules/logic/dialogue/controller/DialogueController.lua
 
-local var_0_0 = class("DialogueController", BaseController)
+module("modules.logic.dialogue.controller.DialogueController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local DialogueController = class("DialogueController", BaseController)
+
+function DialogueController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function DialogueController:reInit()
 	return
 end
 
-function var_0_0.enterDialogue(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
+function DialogueController:enterDialogue(dialogueId, callback, callbackTarget, callbackParams)
 	ViewMgr.instance:openView(ViewName.DialogueView, {
-		dialogueId = arg_3_1,
-		callback = arg_3_2,
-		callbackTarget = arg_3_3,
-		callbackParams = arg_3_4
+		dialogueId = dialogueId,
+		callback = callback,
+		callbackTarget = callbackTarget,
+		callbackParams = callbackParams
 	})
 end
 
-var_0_0.instance = var_0_0.New()
+DialogueController.instance = DialogueController.New()
 
-return var_0_0
+return DialogueController

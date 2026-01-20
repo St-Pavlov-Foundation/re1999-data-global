@@ -1,166 +1,282 @@
-﻿module("modules.logic.necrologiststory.common.NecrologistStoryHelper", package.seeall)
+﻿-- chunkname: @modules/logic/necrologiststory/common/NecrologistStoryHelper.lua
 
-local var_0_0 = class("NecrologistStoryHelper")
+module("modules.logic.necrologiststory.common.NecrologistStoryHelper", package.seeall)
 
-function var_0_0.addHyperLinkClick(arg_1_0, arg_1_1, arg_1_2)
-	if gohelper.isNil(arg_1_0) then
+local NecrologistStoryHelper = class("NecrologistStoryHelper")
+
+function NecrologistStoryHelper.addHyperLinkClick(textComp, clickCallback, clickCallbackObj)
+	if gohelper.isNil(textComp) then
 		logError("textComp is nil, please check !!!")
 
 		return
 	end
 
-	gohelper.onceAddComponent(arg_1_0, typeof(ZProj.TMPHyperLinkClick)):SetClickListener(arg_1_1 or var_0_0.defaultClick, arg_1_2)
+	local hyperLinkClick = gohelper.onceAddComponent(textComp, typeof(ZProj.TMPHyperLinkClick))
+
+	hyperLinkClick:SetClickListener(clickCallback or NecrologistStoryHelper.defaultClick, clickCallbackObj)
 end
 
-function var_0_0.defaultClick(arg_2_0, arg_2_1)
-	NecrologistStoryController.instance:openTipView(arg_2_0, arg_2_1)
+function NecrologistStoryHelper.defaultClick(linkId, clickPosition)
+	NecrologistStoryController.instance:openTipView(linkId, clickPosition)
 end
 
-function var_0_0.getDesc(arg_3_0, arg_3_1)
-	local var_3_0 = NecrologistStoryConfig.instance:getStoryConfig(arg_3_0)
+function NecrologistStoryHelper.getDesc(storyId, bracketColor)
+	local config = NecrologistStoryConfig.instance:getStoryConfig(storyId)
 
-	return var_0_0.getDescByConfig(var_3_0, arg_3_1)
+	return NecrologistStoryHelper.getDescByConfig(config, bracketColor)
 end
 
-function var_0_0.getDescByConfig(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0.desc
+function NecrologistStoryHelper.getDescByConfig(storyConfig, bracketColor)
+	local desc = storyConfig.desc
 
-	return var_0_0.buildDesc(var_4_0, arg_4_1)
+	return NecrologistStoryHelper.buildDesc(desc, bracketColor)
 end
 
-function var_0_0.buildDesc(arg_5_0, arg_5_1)
-	local var_5_0 = false
+function NecrologistStoryHelper.buildDesc(desc, bracketColor)
+	local hasLink = false
 
-	arg_5_0 = var_0_0.addColor(arg_5_0, arg_5_1)
+	desc = NecrologistStoryHelper.addColor(desc, bracketColor)
+	desc, hasLink = NecrologistStoryHelper.addLink(desc)
 
-	local var_5_1
-
-	arg_5_0, var_5_1 = var_0_0.addLink(arg_5_0)
-
-	return arg_5_0, var_5_1
+	return desc, hasLink
 end
 
-function var_0_0.addLink(arg_6_0)
-	local var_6_0 = 0
-	local var_6_1 = false
-	local var_6_2
+function NecrologistStoryHelper.addLink(desc)
+	local count = 0
+	local hasLink = false
 
-	arg_6_0, var_6_2 = string.gsub(arg_6_0, "%[(.-)%]", var_0_0._replaceDescTagFunc1)
+	desc, count = string.gsub(desc, "%[(.-)%]", NecrologistStoryHelper._replaceDescTagFunc1)
+	hasLink = count ~= 0
+	desc, count = string.gsub(desc, "【(.-)】", NecrologistStoryHelper._replaceDescTagFunc2)
 
-	local var_6_3 = var_6_2 ~= 0
-	local var_6_4
-
-	arg_6_0, var_6_4 = string.gsub(arg_6_0, "【(.-)】", var_0_0._replaceDescTagFunc2)
-
-	if var_6_4 ~= 0 then
-		var_6_3 = true
+	if count ~= 0 then
+		hasLink = true
 	end
 
-	return arg_6_0, var_6_3
+	return desc, hasLink
 end
 
-function var_0_0._replaceDescTagFunc1(arg_7_0)
-	local var_7_0 = NecrologistStoryConfig.instance:getIntroduceCoByName(arg_7_0)
+function NecrologistStoryHelper._replaceDescTagFunc1(name)
+	local co = NecrologistStoryConfig.instance:getIntroduceCoByName(name)
 
-	arg_7_0 = var_0_0.removeRichTag(arg_7_0)
+	name = NecrologistStoryHelper.removeRichTag(name)
 
-	if not var_7_0 then
-		return arg_7_0
+	if not co then
+		return name
 	end
 
-	if not var_7_0.notAddLink or var_7_0.notAddLink == 0 then
-		return string.format("<u><link=%s>%s</link></u>", var_7_0.id, arg_7_0)
+	if not co.notAddLink or co.notAddLink == 0 then
+		return string.format("<u><link=%s>%s</link></u>", co.id, name)
 	end
 
-	return arg_7_0
+	return name
 end
 
-function var_0_0._replaceDescTagFunc2(arg_8_0)
-	local var_8_0 = NecrologistStoryConfig.instance:getIntroduceCoByName(arg_8_0)
+function NecrologistStoryHelper._replaceDescTagFunc2(name)
+	local co = NecrologistStoryConfig.instance:getIntroduceCoByName(name)
 
-	arg_8_0 = var_0_0.removeRichTag(arg_8_0)
+	name = NecrologistStoryHelper.removeRichTag(name)
 
-	if not var_8_0 then
-		return arg_8_0
+	if not co then
+		return name
 	end
 
-	if not var_8_0.notAddLink or var_8_0.notAddLink == 0 then
-		return string.format("<u><link=%s>%s</link></u>", var_8_0.id, arg_8_0)
+	if not co.notAddLink or co.notAddLink == 0 then
+		return string.format("<u><link=%s>%s</link></u>", co.id, name)
 	end
 
-	return arg_8_0
+	return name
 end
 
-function var_0_0.removeRichTag(arg_9_0)
-	return string.gsub(arg_9_0, "<.->", "")
+function NecrologistStoryHelper.removeRichTag(name)
+	return string.gsub(name, "<.->", "")
 end
 
-function var_0_0.loadSituationFunc(arg_10_0)
-	local var_10_0 = string.format("return %s", arg_10_0)
-	local var_10_1, var_10_2 = loadstring(var_10_0)
+function NecrologistStoryHelper.loadSituationFunc(situation)
+	local condition = string.format("return %s", situation)
+	local func, err = loadstring(condition)
 
-	if not var_10_1 then
-		logError(string.format("条件表达式错误 表达式:%s error:%s", arg_10_0, var_10_2))
+	if not func then
+		logError(string.format("条件表达式错误 表达式:%s error:%s", situation, err))
 	end
 
-	return var_10_1
+	return func
 end
 
-function var_0_0.addColor(arg_11_0, arg_11_1)
-	arg_11_0 = var_0_0.addBracketColor(arg_11_0, arg_11_1)
+function NecrologistStoryHelper.addColor(desc, bracketColor)
+	desc = NecrologistStoryHelper.addBracketColor(desc, bracketColor)
 
-	return arg_11_0
+	return desc
 end
 
-function var_0_0.addBracketColor(arg_12_0, arg_12_1)
-	if string.nilorempty(arg_12_1) then
-		arg_12_1 = "#AE5D30"
+function NecrologistStoryHelper.addBracketColor(desc, bracketColor)
+	if string.nilorempty(bracketColor) then
+		bracketColor = "#AE5D30"
 	end
 
-	local var_12_0 = var_0_0.getColorFormat(arg_12_1, "%1")
+	local bracketColorFormat = NecrologistStoryHelper.getColorFormat(bracketColor, "%1")
 
-	arg_12_0 = string.gsub(arg_12_0, "%[.-%]", var_12_0)
-	arg_12_0 = string.gsub(arg_12_0, "【.-】", var_12_0)
+	desc = string.gsub(desc, "%[.-%]", bracketColorFormat)
+	desc = string.gsub(desc, "【.-】", bracketColorFormat)
 
-	return arg_12_0
+	return desc
 end
 
-function var_0_0.getColorFormat(arg_13_0, arg_13_1)
-	return string.format("<color=%s>%s</color>", arg_13_0, arg_13_1)
+function NecrologistStoryHelper.getColorFormat(color, text)
+	return string.format("<color=%s>%s</color>", color, text)
 end
 
-function var_0_0.getTimeFormat(arg_14_0)
-	local var_14_0 = math.floor(arg_14_0)
-	local var_14_1 = math.floor((arg_14_0 - var_14_0) * 60)
-	local var_14_2 = var_14_0 >= 12 and "PM" or "AM"
-	local var_14_3 = var_14_0 % 12
+function NecrologistStoryHelper.getTimeFormat(time)
+	local hour = math.floor(time)
+	local minute = math.floor((time - hour) * 60)
+	local period = hour >= 12 and "PM" or "AM"
+	local displayHour = hour % 12
 
-	if var_14_3 == 0 then
-		var_14_3 = 12
+	if displayHour == 0 then
+		displayHour = 12
 	end
 
-	return var_14_3, var_14_1, var_14_2
+	return displayHour, minute, period
 end
 
-function var_0_0.getTimeFormat2(arg_15_0)
-	local var_15_0 = math.floor(arg_15_0)
-	local var_15_1 = math.floor((arg_15_0 - var_15_0) * 60)
+function NecrologistStoryHelper.getTimeFormat2(time)
+	local hour = math.floor(time)
+	local minute = math.floor((time - hour) * 60)
+	local displayHour = hour % 24
 
-	return var_15_0 % 24, var_15_1
+	return displayHour, minute
 end
 
-var_0_0.DialogNameTag = "{roleName}"
+NecrologistStoryHelper.DialogNameTag = "{roleName}"
 
-function var_0_0.getDialogName(arg_16_0)
-	local var_16_0 = arg_16_0.name
+function NecrologistStoryHelper.getDialogName(storyConfig)
+	local name = storyConfig.name
 
-	if string.match(var_16_0, var_0_0.DialogNameTag) then
-		local var_16_1 = NecrologistStoryConfig.instance:getPlotGroupCo(arg_16_0.storygroup)
+	if string.match(name, NecrologistStoryHelper.DialogNameTag) then
+		local storyGroupConfig = NecrologistStoryConfig.instance:getPlotGroupCo(storyConfig.storygroup)
 
-		return true, string.gsub(var_16_0, var_0_0.DialogNameTag, var_16_1.roleName)
+		return true, string.gsub(name, NecrologistStoryHelper.DialogNameTag, storyGroupConfig.roleName)
 	end
 
-	return false, var_16_0
+	return false, name
 end
 
-return var_0_0
+function NecrologistStoryHelper.checkDragDirection(startPos, endPos, checkDir)
+	local dragDeltaX = endPos.x - startPos.x
+	local dragDeltaY = endPos.y - startPos.y
+
+	if checkDir == NecrologistStoryEnum.DirType.Left then
+		return dragDeltaX < 0
+	elseif checkDir == NecrologistStoryEnum.DirType.Right then
+		return dragDeltaX > 0
+	elseif checkDir == NecrologistStoryEnum.DirType.Top then
+		return dragDeltaY > 0
+	elseif checkDir == NecrologistStoryEnum.DirType.Bottom then
+		return dragDeltaY < 0
+	end
+
+	return true
+end
+
+function NecrologistStoryHelper.getPlotRoleStoryId(plotId)
+	local config = NecrologistStoryConfig.instance:getStoryConfig(plotId)
+	local storyGroupConfig = NecrologistStoryConfig.instance:getPlotGroupCo(config.storygroup)
+
+	return storyGroupConfig.storyId
+end
+
+function NecrologistStoryHelper.calculateLinksRectData(tmpText)
+	local list = {}
+	local textTransform = tmpText.transform
+	local linkInfoList = tmpText.textInfo.linkInfo
+	local characterInfoList = tmpText.textInfo.characterInfo
+	local camera = CameraMgr.instance:getUICamera()
+	local bl, tr
+	local iter = linkInfoList:GetEnumerator()
+
+	while iter:MoveNext() do
+		local linkInfo = iter.Current
+		local answerIndex = tonumber(linkInfo:GetLinkID())
+		local firstCharInfo = characterInfoList[linkInfo.linkTextfirstCharacterIndex]
+
+		bl = textTransform:TransformPoint(Vector3.New(firstCharInfo.bottomLeft.x, firstCharInfo.descender, 0))
+
+		if linkInfo.linkTextLength == 1 then
+			tr = textTransform:TransformPoint(Vector3.New(firstCharInfo.topRight.x, firstCharInfo.ascender, 0))
+
+			local centerPos, width, height = NecrologistStoryHelper.getCenterPosAndSize(bl, tr, tmpText, camera)
+
+			table.insert(list, {
+				centerPos,
+				width,
+				height,
+				answerIndex
+			})
+		else
+			local lastCharInfo = characterInfoList[linkInfo.linkTextfirstCharacterIndex + linkInfo.linkTextLength - 1]
+
+			if firstCharInfo.lineNumber == lastCharInfo.lineNumber then
+				tr = textTransform:TransformPoint(Vector3.New(lastCharInfo.topRight.x, lastCharInfo.ascender, 0))
+
+				local centerPos, width, height = NecrologistStoryHelper.getCenterPosAndSize(bl, tr, tmpText, camera)
+
+				table.insert(list, {
+					centerPos,
+					width,
+					height,
+					answerIndex
+				})
+			else
+				tr = textTransform:TransformPoint(Vector3.New(firstCharInfo.topRight.x, firstCharInfo.ascender, 0))
+
+				local startLineNumber = firstCharInfo.lineNumber
+
+				for i = 1, linkInfo.linkTextLength - 1 do
+					local characterIndex = linkInfo.linkTextfirstCharacterIndex + i
+					local tmpCharInfo = characterInfoList[characterIndex]
+					local currentLineNumber = tmpCharInfo.lineNumber
+
+					if currentLineNumber == startLineNumber then
+						tr = textTransform:TransformPoint(Vector3.New(tmpCharInfo.topRight.x, tmpCharInfo.ascender, 0))
+					else
+						local centerPos, width, height = NecrologistStoryHelper.getCenterPosAndSize(bl, tr, tmpText, camera)
+
+						table.insert(list, {
+							centerPos,
+							width,
+							height,
+							answerIndex
+						})
+
+						startLineNumber = currentLineNumber
+						bl = textTransform:TransformPoint(Vector3.New(tmpCharInfo.bottomLeft.x, tmpCharInfo.descender, 0))
+						tr = textTransform:TransformPoint(Vector3.New(tmpCharInfo.topRight.x, tmpCharInfo.ascender, 0))
+					end
+				end
+
+				local centerPos, width, height = NecrologistStoryHelper.getCenterPosAndSize(bl, tr, tmpText, camera)
+
+				table.insert(list, {
+					centerPos,
+					width,
+					height,
+					answerIndex
+				})
+			end
+		end
+	end
+
+	return list
+end
+
+function NecrologistStoryHelper.getCenterPosAndSize(bl, tr, tmpText, camera)
+	local blPos = recthelper.worldPosToAnchorPos(bl, tmpText.transform, camera, camera)
+	local trPos = recthelper.worldPosToAnchorPos(tr, tmpText.transform, camera, camera)
+	local centerPos = (blPos + trPos) * 0.5
+	local width = trPos.x - blPos.x
+	local height = trPos.y - blPos.y
+
+	return centerPos, width, height
+end
+
+return NecrologistStoryHelper

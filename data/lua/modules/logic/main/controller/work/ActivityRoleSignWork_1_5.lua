@@ -1,8 +1,10 @@
-﻿module("modules.logic.main.controller.work.ActivityRoleSignWork_1_5", package.seeall)
+﻿-- chunkname: @modules/logic/main/controller/work/ActivityRoleSignWork_1_5.lua
 
-local var_0_0 = class("ActivityRoleSignWork_1_5", ActivityRoleSignWorkBase)
+module("modules.logic.main.controller.work.ActivityRoleSignWork_1_5", package.seeall)
 
-function var_0_0.onGetViewNames(arg_1_0)
+local ActivityRoleSignWork_1_5 = class("ActivityRoleSignWork_1_5", ActivityRoleSignWorkBase)
+
+function ActivityRoleSignWork_1_5:onGetViewNames()
 	return {
 		ViewName.V1a5_Role_PanelSignView_Part1,
 		ViewName.V1a5_Role_PanelSignView_Part2,
@@ -11,7 +13,7 @@ function var_0_0.onGetViewNames(arg_1_0)
 	}
 end
 
-function var_0_0.onGetActIds(arg_2_0)
+function ActivityRoleSignWork_1_5:onGetActIds()
 	return {
 		ActivityEnum.Activity.RoleSignViewPart1_1_5,
 		ActivityEnum.Activity.RoleSignViewPart2_1_5,
@@ -20,4 +22,4 @@ function var_0_0.onGetActIds(arg_2_0)
 	}
 end
 
-return var_0_0
+return ActivityRoleSignWork_1_5

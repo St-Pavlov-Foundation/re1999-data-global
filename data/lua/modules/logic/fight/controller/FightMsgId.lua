@@ -1,76 +1,83 @@
-﻿module("modules.logic.fight.controller.FightMsgId", package.seeall)
+﻿-- chunkname: @modules/logic/fight/controller/FightMsgId.lua
 
-local var_0_0 = {
-	PlayDouQuQu = GameUtil.getMsgId(),
-	SetBossEvolution = GameUtil.getMsgId(),
-	RestartGame = GameUtil.getMsgId(),
-	CancelRestartGame = GameUtil.getMsgId(),
-	PlayTimelineSkill = GameUtil.getMsgId(),
-	PlayTimelineSkillFinish = GameUtil.getMsgId(),
-	CameraFocusChanged = GameUtil.getMsgId(),
-	ReleaseAllEntrustedEntity = GameUtil.getMsgId(),
-	SpineLoadFinish = GameUtil.getMsgId(),
-	IsEvolutionSkin = GameUtil.getMsgId(),
-	ShowDouQuQuXianHouShou = GameUtil.getMsgId(),
-	FightProgressValueChange = GameUtil.getMsgId(),
-	FightMaxProgressValueChange = GameUtil.getMsgId(),
-	FightAct174Reply = GameUtil.getMsgId(),
-	Act174MonsterAiCard = GameUtil.getMsgId(),
-	MaybeCrashed = GameUtil.getMsgId(),
-	AfterInitDataMgrRef = GameUtil.getMsgId(),
-	AddHandCardWork = GameUtil.getMsgId(),
-	Distribute1Card = GameUtil.getMsgId(),
-	Distribute2Card = GameUtil.getMsgId(),
-	SimulateAddExPoint = GameUtil.getMsgId(),
-	PlayCard = GameUtil.getMsgId(),
-	RequestOperation = GameUtil.getMsgId(),
-	CancelOperation = GameUtil.getMsgId(),
-	MoveCard = GameUtil.getMsgId(),
-	DragCard = GameUtil.getMsgId(),
-	DragCardEnd = GameUtil.getMsgId(),
-	LongPressCardEnd = GameUtil.getMsgId(),
-	CardFly2OperateView = GameUtil.getMsgId(),
-	DiscardHandCardAfterPlayCard = GameUtil.getMsgId(),
-	RefreshPlayerFinisherSkill = GameUtil.getMsgId(),
-	RefreshSimplePolarizationLevel = GameUtil.getMsgId(),
-	RefreshAllHandCardItemName = GameUtil.getMsgId(),
-	GetUIHandCardDataList = GameUtil.getMsgId(),
-	SetHandCardScale = GameUtil.getMsgId(),
-	CheckAliveOperationWork = GameUtil.getMsgId(),
-	PlayAtOperationView = GameUtil.getMsgId(),
-	RegistPlayAtOperationView = GameUtil.getMsgId(),
-	EntrustFightWork = GameUtil.getMsgId(),
-	GetDeadEntityMgr = GameUtil.getMsgId(),
-	GetExPointView = GameUtil.getMsgId(),
-	OperationForPlayEffect = GameUtil.getMsgId(),
-	ForceReleasePlayFlow = GameUtil.getMsgId(),
-	SetAutoState = GameUtil.getMsgId(),
-	AutoRoundReply = GameUtil.getMsgId(),
-	NewProgressValueChange = GameUtil.getMsgId(),
-	ShowAiJiAoExpointEffectBeforeUniqueSkill = GameUtil.getMsgId(),
-	CheckGuideFightItemPlayerSkillGroup = GameUtil.getMsgId(),
-	AutoRoundReplyFail = GameUtil.getMsgId(),
-	BeforeOperate = GameUtil.getMsgId(),
-	AfterOperate = GameUtil.getMsgId(),
-	RegistPlayHandCardWork = GameUtil.getMsgId(),
-	CheckGuideBeforeOperate = GameUtil.getMsgId(),
-	ContinueGuideBeforeOperate = GameUtil.getMsgId(),
-	RegistCardEndAniFlow = GameUtil.getMsgId(),
-	RefreshEnemyAiUseCard = GameUtil.getMsgId(),
-	DiscardUnUsedEnemyAiCard = GameUtil.getMsgId(),
-	GetEnemyAiUseCardItemList = GameUtil.getMsgId(),
-	OnAddBuff = GameUtil.getMsgId(),
-	OnRemoveBuff = GameUtil.getMsgId(),
-	OnUpdateBuff = GameUtil.getMsgId(),
-	EntityHurt = GameUtil.getMsgId(),
-	GMDouQuQuSkip2IndexRound = GameUtil.getMsgId()
-}
-local var_0_1 = {}
+module("modules.logic.fight.controller.FightMsgId", package.seeall)
 
-for iter_0_0, iter_0_1 in pairs(var_0_0) do
-	var_0_1[iter_0_1] = iter_0_0
+local FightMsgId = {}
+
+FightMsgId.PlayDouQuQu = GameUtil.getMsgId()
+FightMsgId.SetBossEvolution = GameUtil.getMsgId()
+FightMsgId.RestartGame = GameUtil.getMsgId()
+FightMsgId.CancelRestartGame = GameUtil.getMsgId()
+FightMsgId.PlayTimelineSkill = GameUtil.getMsgId()
+FightMsgId.PlayTimelineSkillFinish = GameUtil.getMsgId()
+FightMsgId.CameraFocusChanged = GameUtil.getMsgId()
+FightMsgId.ReleaseAllEntrustedEntity = GameUtil.getMsgId()
+FightMsgId.SpineLoadFinish = GameUtil.getMsgId()
+FightMsgId.IsEvolutionSkin = GameUtil.getMsgId()
+FightMsgId.ShowDouQuQuXianHouShou = GameUtil.getMsgId()
+FightMsgId.FightProgressValueChange = GameUtil.getMsgId()
+FightMsgId.FightMaxProgressValueChange = GameUtil.getMsgId()
+FightMsgId.FightAct174Reply = GameUtil.getMsgId()
+FightMsgId.Act174MonsterAiCard = GameUtil.getMsgId()
+FightMsgId.MaybeCrashed = GameUtil.getMsgId()
+FightMsgId.AfterInitDataMgrRef = GameUtil.getMsgId()
+FightMsgId.AddHandCardWork = GameUtil.getMsgId()
+FightMsgId.Distribute1Card = GameUtil.getMsgId()
+FightMsgId.Distribute2Card = GameUtil.getMsgId()
+FightMsgId.SimulateAddExPoint = GameUtil.getMsgId()
+FightMsgId.PlayCard = GameUtil.getMsgId()
+FightMsgId.RequestOperation = GameUtil.getMsgId()
+FightMsgId.CancelOperation = GameUtil.getMsgId()
+FightMsgId.MoveCard = GameUtil.getMsgId()
+FightMsgId.DragCard = GameUtil.getMsgId()
+FightMsgId.DragCardEnd = GameUtil.getMsgId()
+FightMsgId.LongPressCardEnd = GameUtil.getMsgId()
+FightMsgId.CardFly2OperateView = GameUtil.getMsgId()
+FightMsgId.DiscardHandCardAfterPlayCard = GameUtil.getMsgId()
+FightMsgId.RefreshPlayerFinisherSkill = GameUtil.getMsgId()
+FightMsgId.RefreshSimplePolarizationLevel = GameUtil.getMsgId()
+FightMsgId.RefreshAllHandCardItemName = GameUtil.getMsgId()
+FightMsgId.GetUIHandCardDataList = GameUtil.getMsgId()
+FightMsgId.SetHandCardScale = GameUtil.getMsgId()
+FightMsgId.CheckAliveOperationWork = GameUtil.getMsgId()
+FightMsgId.PlayAtOperationView = GameUtil.getMsgId()
+FightMsgId.RegistPlayAtOperationView = GameUtil.getMsgId()
+FightMsgId.EntrustFightWork = GameUtil.getMsgId()
+FightMsgId.GetDeadEntityMgr = GameUtil.getMsgId()
+FightMsgId.GetExPointView = GameUtil.getMsgId()
+FightMsgId.OperationForPlayEffect = GameUtil.getMsgId()
+FightMsgId.ForceReleasePlayFlow = GameUtil.getMsgId()
+FightMsgId.SetAutoState = GameUtil.getMsgId()
+FightMsgId.AutoRoundReply = GameUtil.getMsgId()
+FightMsgId.NewProgressValueChange = GameUtil.getMsgId()
+FightMsgId.ShowAiJiAoExpointEffectBeforeUniqueSkill = GameUtil.getMsgId()
+FightMsgId.CheckGuideFightItemPlayerSkillGroup = GameUtil.getMsgId()
+FightMsgId.AutoRoundReplyFail = GameUtil.getMsgId()
+FightMsgId.BeforeOperate = GameUtil.getMsgId()
+FightMsgId.AfterOperate = GameUtil.getMsgId()
+FightMsgId.RegistPlayHandCardWork = GameUtil.getMsgId()
+FightMsgId.CheckGuideBeforeOperate = GameUtil.getMsgId()
+FightMsgId.ContinueGuideBeforeOperate = GameUtil.getMsgId()
+FightMsgId.RegistCardEndAniFlow = GameUtil.getMsgId()
+FightMsgId.RefreshEnemyAiUseCard = GameUtil.getMsgId()
+FightMsgId.DiscardUnUsedEnemyAiCard = GameUtil.getMsgId()
+FightMsgId.GetEnemyAiUseCardItemList = GameUtil.getMsgId()
+FightMsgId.OnAddBuff = GameUtil.getMsgId()
+FightMsgId.OnRemoveBuff = GameUtil.getMsgId()
+FightMsgId.OnUpdateBuff = GameUtil.getMsgId()
+FightMsgId.EntityHurt = GameUtil.getMsgId()
+FightMsgId.GetAddBuffShowWork = GameUtil.getMsgId()
+FightMsgId.GetRemoveBuffShowWork = GameUtil.getMsgId()
+FightMsgId.GetUpdateBuffShowWork = GameUtil.getMsgId()
+FightMsgId.PlayCameraAnimWhenOperateStage = GameUtil.getMsgId()
+FightMsgId.GMDouQuQuSkip2IndexRound = GameUtil.getMsgId()
+
+local id2Name = {}
+
+for k, v in pairs(FightMsgId) do
+	id2Name[v] = k
 end
 
-var_0_0.id2Name = var_0_1
+FightMsgId.id2Name = id2Name
 
-return var_0_0
+return FightMsgId

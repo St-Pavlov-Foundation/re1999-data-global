@@ -1,13 +1,15 @@
-﻿module("modules.logic.story.model.StoryLogMo", package.seeall)
+﻿-- chunkname: @modules/logic/story/model/StoryLogMo.lua
 
-local var_0_0 = pureTable("StoryLogMo")
+module("modules.logic.story.model.StoryLogMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.info = {}
+local StoryLogMo = pureTable("StoryLogMo")
+
+function StoryLogMo:ctor()
+	self.info = {}
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.info = arg_2_1
+function StoryLogMo:init(info)
+	self.info = info
 end
 
-return var_0_0
+return StoryLogMo

@@ -1,31 +1,33 @@
-﻿module("modules.logic.gm.view.GM_CharacterBackpackViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GM_CharacterBackpackViewContainer.lua
 
-local var_0_0 = class("GM_CharacterBackpackViewContainer", BaseViewContainer)
+module("modules.logic.gm.view.GM_CharacterBackpackViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local GM_CharacterBackpackViewContainer = class("GM_CharacterBackpackViewContainer", BaseViewContainer)
+
+function GM_CharacterBackpackViewContainer:buildViews()
 	return {
 		GM_CharacterBackpackView.New()
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	ViewMgr.instance:closeView(arg_2_0.viewName)
+function GM_CharacterBackpackViewContainer:onContainerClickModalMask()
+	ViewMgr.instance:closeView(self.viewName)
 end
 
-function var_0_0.addEvents(arg_3_0)
-	GMController.instance:registerCallback(GMEvent.CharacterBackpackView_ShowAllTabIdUpdate, arg_3_0._gm_showAllTabIdUpdate, arg_3_0)
-	GMController.instance:registerCallback(GMEvent.CharacterBackpackView_EnableCheckFaceOnSelect, arg_3_0._gm_enableCheckFaceOnSelect, arg_3_0)
-	GMController.instance:registerCallback(GMEvent.CharacterBackpackView_EnableCheckMouthOnSelect, arg_3_0._gm_enableCheckMouthOnSelect, arg_3_0)
-	GMController.instance:registerCallback(GMEvent.CharacterBackpackView_EnableCheckContentOnSelect, arg_3_0._gm_enableCheckContentOnSelect, arg_3_0)
-	GMController.instance:registerCallback(GMEvent.CharacterBackpackView_EnableCheckMotionOnSelect, arg_3_0._gm_enableCheckMotionOnSelect, arg_3_0)
+function GM_CharacterBackpackViewContainer.addEvents(viewObj)
+	GMController.instance:registerCallback(GMEvent.CharacterBackpackView_ShowAllTabIdUpdate, viewObj._gm_showAllTabIdUpdate, viewObj)
+	GMController.instance:registerCallback(GMEvent.CharacterBackpackView_EnableCheckFaceOnSelect, viewObj._gm_enableCheckFaceOnSelect, viewObj)
+	GMController.instance:registerCallback(GMEvent.CharacterBackpackView_EnableCheckMouthOnSelect, viewObj._gm_enableCheckMouthOnSelect, viewObj)
+	GMController.instance:registerCallback(GMEvent.CharacterBackpackView_EnableCheckContentOnSelect, viewObj._gm_enableCheckContentOnSelect, viewObj)
+	GMController.instance:registerCallback(GMEvent.CharacterBackpackView_EnableCheckMotionOnSelect, viewObj._gm_enableCheckMotionOnSelect, viewObj)
 end
 
-function var_0_0.removeEvents(arg_4_0)
-	GMController.instance:unregisterCallback(GMEvent.CharacterBackpackView_ShowAllTabIdUpdate, arg_4_0._gm_showAllTabIdUpdate, arg_4_0)
-	GMController.instance:unregisterCallback(GMEvent.CharacterBackpackView_EnableCheckFaceOnSelect, arg_4_0._gm_enableCheckFaceOnSelect, arg_4_0)
-	GMController.instance:unregisterCallback(GMEvent.CharacterBackpackView_EnableCheckMouthOnSelect, arg_4_0._gm_enableCheckMouthOnSelect, arg_4_0)
-	GMController.instance:unregisterCallback(GMEvent.CharacterBackpackView_EnableCheckContentOnSelect, arg_4_0._gm_enableCheckContentOnSelect, arg_4_0)
-	GMController.instance:unregisterCallback(GMEvent.CharacterBackpackView_EnableCheckMotionOnSelect, arg_4_0._gm_enableCheckMotionOnSelect, arg_4_0)
+function GM_CharacterBackpackViewContainer.removeEvents(viewObj)
+	GMController.instance:unregisterCallback(GMEvent.CharacterBackpackView_ShowAllTabIdUpdate, viewObj._gm_showAllTabIdUpdate, viewObj)
+	GMController.instance:unregisterCallback(GMEvent.CharacterBackpackView_EnableCheckFaceOnSelect, viewObj._gm_enableCheckFaceOnSelect, viewObj)
+	GMController.instance:unregisterCallback(GMEvent.CharacterBackpackView_EnableCheckMouthOnSelect, viewObj._gm_enableCheckMouthOnSelect, viewObj)
+	GMController.instance:unregisterCallback(GMEvent.CharacterBackpackView_EnableCheckContentOnSelect, viewObj._gm_enableCheckContentOnSelect, viewObj)
+	GMController.instance:unregisterCallback(GMEvent.CharacterBackpackView_EnableCheckMotionOnSelect, viewObj._gm_enableCheckMotionOnSelect, viewObj)
 end
 
-return var_0_0
+return GM_CharacterBackpackViewContainer

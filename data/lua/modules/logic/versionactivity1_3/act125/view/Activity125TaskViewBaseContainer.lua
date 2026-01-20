@@ -1,17 +1,19 @@
-﻿module("modules.logic.versionactivity1_3.act125.view.Activity125TaskViewBaseContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/act125/view/Activity125TaskViewBaseContainer.lua
 
-local var_0_0 = class("Activity125TaskViewBaseContainer", Activity125ViewBaseContainer)
+module("modules.logic.versionactivity1_3.act125.view.Activity125TaskViewBaseContainer", package.seeall)
 
-function var_0_0.onContainerInit(arg_1_0)
-	var_0_0.super.onContainerInit(arg_1_0)
+local Activity125TaskViewBaseContainer = class("Activity125TaskViewBaseContainer", Activity125ViewBaseContainer)
 
-	arg_1_0._taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(arg_1_0._taskScrollView)
+function Activity125TaskViewBaseContainer:onContainerInit()
+	Activity125TaskViewBaseContainer.super.onContainerInit(self)
 
-	arg_1_0._taskAnimRemoveItem:setMoveInterval(0)
+	self._taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(self._taskScrollView)
+
+	self._taskAnimRemoveItem:setMoveInterval(0)
 end
 
-function var_0_0.removeByIndex(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	arg_2_0._taskAnimRemoveItem:removeByIndex(arg_2_1, arg_2_2, arg_2_3)
+function Activity125TaskViewBaseContainer:removeByIndex(index, cb, cbObj)
+	self._taskAnimRemoveItem:removeByIndex(index, cb, cbObj)
 end
 
-return var_0_0
+return Activity125TaskViewBaseContainer

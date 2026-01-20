@@ -1,226 +1,228 @@
-﻿module("modules.logic.task.view.TaskView", package.seeall)
+﻿-- chunkname: @modules/logic/task/view/TaskView.lua
 
-local var_0_0 = class("TaskView", BaseView)
+module("modules.logic.task.view.TaskView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._golineicon = gohelper.findChild(arg_1_0.viewGO, "bg/#go_lineIcon")
-	arg_1_0._gonovice = gohelper.findChild(arg_1_0.viewGO, "top/#go_novice")
-	arg_1_0._gonoviceunchoose = gohelper.findChild(arg_1_0.viewGO, "top/#go_novice/#go_noviceunchoose")
-	arg_1_0._gonovicechoose = gohelper.findChild(arg_1_0.viewGO, "top/#go_novice/#go_novicechoose")
-	arg_1_0._gotasknovicereddot = gohelper.findChild(arg_1_0.viewGO, "top/#go_novice/#go_tasknovicereddot")
-	arg_1_0._btnnovice = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "top/#go_novice/#btn_novice")
-	arg_1_0._goweek = gohelper.findChild(arg_1_0.viewGO, "top/#go_week")
-	arg_1_0._goweekunchoose = gohelper.findChild(arg_1_0.viewGO, "top/#go_week/#go_weekunchoose")
-	arg_1_0._goweekchoose = gohelper.findChild(arg_1_0.viewGO, "top/#go_week/#go_weekchoose")
-	arg_1_0._gotaskweekreddot = gohelper.findChild(arg_1_0.viewGO, "top/#go_week/#go_taskweekreddot")
-	arg_1_0._btnweek = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "top/#go_week/#btn_week")
-	arg_1_0._goday = gohelper.findChild(arg_1_0.viewGO, "top/#go_day")
-	arg_1_0._godayunchoose = gohelper.findChild(arg_1_0.viewGO, "top/#go_day/#go_dayunchoose")
-	arg_1_0._godaychoose = gohelper.findChild(arg_1_0.viewGO, "top/#go_day/#go_daychoose")
-	arg_1_0._gotaskdayreddot = gohelper.findChild(arg_1_0.viewGO, "top/#go_day/#go_taskdayreddot")
-	arg_1_0._btnday = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "top/#go_day/#btn_day")
-	arg_1_0._goline1 = gohelper.findChild(arg_1_0.viewGO, "top/#go_line1")
-	arg_1_0._goline2 = gohelper.findChild(arg_1_0.viewGO, "top/#go_line2")
-	arg_1_0._gocontainer = gohelper.findChild(arg_1_0.viewGO, "#go_container")
+local TaskView = class("TaskView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function TaskView:onInitView()
+	self._golineicon = gohelper.findChild(self.viewGO, "bg/#go_lineIcon")
+	self._gonovice = gohelper.findChild(self.viewGO, "top/#go_novice")
+	self._gonoviceunchoose = gohelper.findChild(self.viewGO, "top/#go_novice/#go_noviceunchoose")
+	self._gonovicechoose = gohelper.findChild(self.viewGO, "top/#go_novice/#go_novicechoose")
+	self._gotasknovicereddot = gohelper.findChild(self.viewGO, "top/#go_novice/#go_tasknovicereddot")
+	self._btnnovice = gohelper.findChildButtonWithAudio(self.viewGO, "top/#go_novice/#btn_novice")
+	self._goweek = gohelper.findChild(self.viewGO, "top/#go_week")
+	self._goweekunchoose = gohelper.findChild(self.viewGO, "top/#go_week/#go_weekunchoose")
+	self._goweekchoose = gohelper.findChild(self.viewGO, "top/#go_week/#go_weekchoose")
+	self._gotaskweekreddot = gohelper.findChild(self.viewGO, "top/#go_week/#go_taskweekreddot")
+	self._btnweek = gohelper.findChildButtonWithAudio(self.viewGO, "top/#go_week/#btn_week")
+	self._goday = gohelper.findChild(self.viewGO, "top/#go_day")
+	self._godayunchoose = gohelper.findChild(self.viewGO, "top/#go_day/#go_dayunchoose")
+	self._godaychoose = gohelper.findChild(self.viewGO, "top/#go_day/#go_daychoose")
+	self._gotaskdayreddot = gohelper.findChild(self.viewGO, "top/#go_day/#go_taskdayreddot")
+	self._btnday = gohelper.findChildButtonWithAudio(self.viewGO, "top/#go_day/#btn_day")
+	self._goline1 = gohelper.findChild(self.viewGO, "top/#go_line1")
+	self._goline2 = gohelper.findChild(self.viewGO, "top/#go_line2")
+	self._gocontainer = gohelper.findChild(self.viewGO, "#go_container")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnnovice:AddClickListener(arg_2_0._btnnoviceOnClick, arg_2_0)
-	arg_2_0._btnweek:AddClickListener(arg_2_0._btnweekOnClick, arg_2_0)
-	arg_2_0._btnday:AddClickListener(arg_2_0._btndayOnClick, arg_2_0)
+function TaskView:addEvents()
+	self._btnnovice:AddClickListener(self._btnnoviceOnClick, self)
+	self._btnweek:AddClickListener(self._btnweekOnClick, self)
+	self._btnday:AddClickListener(self._btndayOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnnovice:RemoveClickListener()
-	arg_3_0._btnweek:RemoveClickListener()
-	arg_3_0._btnday:RemoveClickListener()
+function TaskView:removeEvents()
+	self._btnnovice:RemoveClickListener()
+	self._btnweek:RemoveClickListener()
+	self._btnday:RemoveClickListener()
 end
 
-function var_0_0._btnnoviceOnClick(arg_4_0)
+function TaskView:_btnnoviceOnClick()
 	if not ActivityModel.instance:isActOnLine(ActivityEnum.Activity.NoviceTask) then
 		return
 	end
 
-	if arg_4_0._taskType == TaskEnum.TaskType.Novice then
+	if self._taskType == TaskEnum.TaskType.Novice then
 		return
 	end
 
-	arg_4_0._taskType = TaskEnum.TaskType.Novice
+	self._taskType = TaskEnum.TaskType.Novice
 
-	arg_4_0:_refreshTop()
-	arg_4_0:_changeTask()
+	self:_refreshTop()
+	self:_changeTask()
 end
 
-function var_0_0._btndayOnClick(arg_5_0)
-	if arg_5_0._taskType == TaskEnum.TaskType.Daily then
+function TaskView:_btndayOnClick()
+	if self._taskType == TaskEnum.TaskType.Daily then
 		return
 	end
 
-	arg_5_0._taskType = TaskEnum.TaskType.Daily
+	self._taskType = TaskEnum.TaskType.Daily
 
-	arg_5_0:_refreshTop()
-	arg_5_0:_changeTask()
+	self:_refreshTop()
+	self:_changeTask()
 end
 
-function var_0_0._btnweekOnClick(arg_6_0)
-	if arg_6_0._taskType == TaskEnum.TaskType.Weekly then
+function TaskView:_btnweekOnClick()
+	if self._taskType == TaskEnum.TaskType.Weekly then
 		return
 	end
 
-	arg_6_0._taskType = TaskEnum.TaskType.Weekly
+	self._taskType = TaskEnum.TaskType.Weekly
 
-	arg_6_0:_refreshTop()
-	arg_6_0:_changeTask()
+	self:_refreshTop()
+	self:_changeTask()
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0:addEventCb(TaskController.instance, TaskEvent.SetTaskList, arg_7_0._changeTask, arg_7_0)
-	arg_7_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_7_0._refreshView, arg_7_0)
-	gohelper.addUIClickAudio(arg_7_0._btnnovice.gameObject, AudioEnum.UI.UI_Mission_switch)
-	gohelper.addUIClickAudio(arg_7_0._btnweek.gameObject, AudioEnum.UI.UI_Mission_switch)
-	gohelper.addUIClickAudio(arg_7_0._btnday.gameObject, AudioEnum.UI.UI_Mission_switch)
-	RedDotController.instance:addRedDot(arg_7_0._gotaskdayreddot, RedDotEnum.DotNode.DailyTask)
-	RedDotController.instance:addRedDot(arg_7_0._gotaskweekreddot, RedDotEnum.DotNode.WeeklyTask)
-	RedDotController.instance:addRedDot(arg_7_0._gotasknovicereddot, RedDotEnum.DotNode.NoviceTask)
+function TaskView:_editableInitView()
+	self:addEventCb(TaskController.instance, TaskEvent.SetTaskList, self._changeTask, self)
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self._refreshView, self)
+	gohelper.addUIClickAudio(self._btnnovice.gameObject, AudioEnum.UI.UI_Mission_switch)
+	gohelper.addUIClickAudio(self._btnweek.gameObject, AudioEnum.UI.UI_Mission_switch)
+	gohelper.addUIClickAudio(self._btnday.gameObject, AudioEnum.UI.UI_Mission_switch)
+	RedDotController.instance:addRedDot(self._gotaskdayreddot, RedDotEnum.DotNode.DailyTask)
+	RedDotController.instance:addRedDot(self._gotaskweekreddot, RedDotEnum.DotNode.WeeklyTask)
+	RedDotController.instance:addRedDot(self._gotasknovicereddot, RedDotEnum.DotNode.NoviceTask)
 	TaskModel.instance:setRefreshCount(0)
-	gohelper.setActive(arg_7_0._gocontainer, false)
+	gohelper.setActive(self._gocontainer, false)
 end
 
-function var_0_0._refreshView(arg_8_0)
-	local var_8_0 = ActivityModel.instance:isActOnLine(ActivityEnum.Activity.NoviceTask)
+function TaskView:_refreshView()
+	local isNoviceUnlock = ActivityModel.instance:isActOnLine(ActivityEnum.Activity.NoviceTask)
 
-	arg_8_0._taskType = var_8_0 and TaskEnum.TaskType.Novice or TaskEnum.TaskType.Daily
+	self._taskType = isNoviceUnlock and TaskEnum.TaskType.Novice or TaskEnum.TaskType.Daily
 
-	if var_8_0 and #TaskModel.instance:getAllRewardUnreceivedTasks(TaskEnum.TaskType.Novice) > 0 then
-		arg_8_0._taskType = TaskEnum.TaskType.Novice
+	if isNoviceUnlock and #TaskModel.instance:getAllRewardUnreceivedTasks(TaskEnum.TaskType.Novice) > 0 then
+		self._taskType = TaskEnum.TaskType.Novice
 	elseif #TaskModel.instance:getAllRewardUnreceivedTasks(TaskEnum.TaskType.Daily) > 0 and not TaskModel.instance:isAllRewardGet(TaskEnum.TaskType.Daily) then
-		arg_8_0._taskType = TaskEnum.TaskType.Daily
+		self._taskType = TaskEnum.TaskType.Daily
 	elseif #TaskModel.instance:getAllRewardUnreceivedTasks(TaskEnum.TaskType.Weekly) > 0 and not TaskModel.instance:isAllRewardGet(TaskEnum.TaskType.Weekly) then
-		arg_8_0._taskType = TaskEnum.TaskType.Weekly
-	elseif var_8_0 and not TaskModel.instance:isTypeAllTaskFinished(TaskEnum.TaskType.Novice) then
-		arg_8_0._taskType = TaskEnum.TaskType.Novice
+		self._taskType = TaskEnum.TaskType.Weekly
+	elseif isNoviceUnlock and not TaskModel.instance:isTypeAllTaskFinished(TaskEnum.TaskType.Novice) then
+		self._taskType = TaskEnum.TaskType.Novice
 	elseif not TaskModel.instance:isTypeAllTaskFinished(TaskEnum.TaskType.Daily) and not TaskModel.instance:isAllRewardGet(TaskEnum.TaskType.Daily) then
-		arg_8_0._taskType = TaskEnum.TaskType.Daily
+		self._taskType = TaskEnum.TaskType.Daily
 	elseif not TaskModel.instance:isTypeAllTaskFinished(TaskEnum.TaskType.Weekly) and not TaskModel.instance:isAllRewardGet(TaskEnum.TaskType.Weekly) then
-		arg_8_0._taskType = TaskEnum.TaskType.Weekly
+		self._taskType = TaskEnum.TaskType.Weekly
 	end
 
-	arg_8_0:_refreshTop()
-	arg_8_0:_changeTask()
+	self:_refreshTop()
+	self:_changeTask()
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
-	if arg_9_0.viewParam then
-		arg_9_0._taskType = arg_9_0.viewParam
+function TaskView:onUpdateParam()
+	if self.viewParam then
+		self._taskType = self.viewParam
 	end
 
-	arg_9_0:_refreshTop()
-	arg_9_0:_changeTask()
+	self:_refreshTop()
+	self:_changeTask()
 end
 
-function var_0_0.onOpen(arg_10_0)
-	if arg_10_0.viewParam then
-		arg_10_0._taskType = arg_10_0.viewParam
+function TaskView:onOpen()
+	if self.viewParam then
+		self._taskType = self.viewParam
 	else
-		arg_10_0._taskType = var_0_0.getInitTaskType()
+		self._taskType = TaskView.getInitTaskType()
 	end
 
-	arg_10_0._blurTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.35, arg_10_0._onFrame, arg_10_0._onFinish, arg_10_0, nil, EaseType.Linear)
+	self._blurTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.35, self._onFrame, self._onFinish, self, nil, EaseType.Linear)
 
-	TaskDispatcher.runDelay(arg_10_0.checkCanvasGroupAlpha, arg_10_0, 3)
+	TaskDispatcher.runDelay(self.checkCanvasGroupAlpha, self, 3)
 end
 
-function var_0_0.checkCanvasGroupAlpha(arg_11_0)
-	if arg_11_0.viewContainer._canvasGroup and arg_11_0.viewContainer._canvasGroup.alpha == 0 and arg_11_0.viewContainer._isVisible then
-		arg_11_0.viewContainer._canvasGroup.alpha = 1
+function TaskView:checkCanvasGroupAlpha()
+	if self.viewContainer._canvasGroup and self.viewContainer._canvasGroup.alpha == 0 and self.viewContainer._isVisible then
+		self.viewContainer._canvasGroup.alpha = 1
 	end
 end
 
-function var_0_0._onFrame(arg_12_0, arg_12_1)
-	PostProcessingMgr.instance:setBlurWeight(arg_12_1)
+function TaskView:_onFrame(value)
+	PostProcessingMgr.instance:setBlurWeight(value)
 end
 
-function var_0_0.getInitTaskType()
-	local var_13_0 = ActivityModel.instance:isActOnLine(ActivityEnum.Activity.NoviceTask)
-	local var_13_1 = var_13_0 and TaskEnum.TaskType.Novice or TaskEnum.TaskType.Daily
+function TaskView.getInitTaskType()
+	local isNoviceUnlock = ActivityModel.instance:isActOnLine(ActivityEnum.Activity.NoviceTask)
+	local type = isNoviceUnlock and TaskEnum.TaskType.Novice or TaskEnum.TaskType.Daily
 
-	if var_13_0 and #TaskModel.instance:getAllRewardUnreceivedTasks(TaskEnum.TaskType.Novice) > 0 then
-		var_13_1 = TaskEnum.TaskType.Novice
+	if isNoviceUnlock and #TaskModel.instance:getAllRewardUnreceivedTasks(TaskEnum.TaskType.Novice) > 0 then
+		type = TaskEnum.TaskType.Novice
 	elseif #TaskModel.instance:getAllRewardUnreceivedTasks(TaskEnum.TaskType.Daily) > 0 and not TaskModel.instance:isAllRewardGet(TaskEnum.TaskType.Daily) then
-		var_13_1 = TaskEnum.TaskType.Daily
+		type = TaskEnum.TaskType.Daily
 	elseif #TaskModel.instance:getAllRewardUnreceivedTasks(TaskEnum.TaskType.Weekly) > 0 and not TaskModel.instance:isAllRewardGet(TaskEnum.TaskType.Weekly) then
-		var_13_1 = TaskEnum.TaskType.Weekly
-	elseif var_13_0 and not TaskModel.instance:isTypeAllTaskFinished(TaskEnum.TaskType.Novice) then
-		var_13_1 = TaskEnum.TaskType.Novice
+		type = TaskEnum.TaskType.Weekly
+	elseif isNoviceUnlock and not TaskModel.instance:isTypeAllTaskFinished(TaskEnum.TaskType.Novice) then
+		type = TaskEnum.TaskType.Novice
 	elseif not TaskModel.instance:isTypeAllTaskFinished(TaskEnum.TaskType.Daily) and not TaskModel.instance:isAllRewardGet(TaskEnum.TaskType.Daily) then
-		var_13_1 = TaskEnum.TaskType.Daily
+		type = TaskEnum.TaskType.Daily
 	elseif not TaskModel.instance:isTypeAllTaskFinished(TaskEnum.TaskType.Weekly) and not TaskModel.instance:isAllRewardGet(TaskEnum.TaskType.Weekly) then
-		var_13_1 = TaskEnum.TaskType.Weekly
+		type = TaskEnum.TaskType.Weekly
 	end
 
-	return var_13_1
+	return type
 end
 
-function var_0_0._onFinish(arg_14_0)
+function TaskView:_onFinish()
 	PostProcessingMgr.instance:setBlurWeight(1)
 end
 
-function var_0_0.onOpenFinish(arg_15_0)
-	gohelper.setActive(arg_15_0._gocontainer, true)
-	arg_15_0:_refreshTop()
-	arg_15_0:_changeTask()
+function TaskView:onOpenFinish()
+	gohelper.setActive(self._gocontainer, true)
+	self:_refreshTop()
+	self:_changeTask()
 end
 
-function var_0_0._refreshTop(arg_16_0)
-	local var_16_0 = ActivityModel.instance:isActOnLine(ActivityEnum.Activity.NoviceTask)
+function TaskView:_refreshTop()
+	local isNoviceUnlock = ActivityModel.instance:isActOnLine(ActivityEnum.Activity.NoviceTask)
 
-	gohelper.setActive(arg_16_0._gonovice, var_16_0)
-	gohelper.setActive(arg_16_0._goline1, var_16_0 and arg_16_0._taskType == TaskEnum.TaskType.Weekly)
+	gohelper.setActive(self._gonovice, isNoviceUnlock)
+	gohelper.setActive(self._goline1, isNoviceUnlock and self._taskType == TaskEnum.TaskType.Weekly)
 
-	if var_16_0 then
-		gohelper.setActive(arg_16_0._gonoviceunchoose, arg_16_0._taskType ~= TaskEnum.TaskType.Novice)
-		gohelper.setActive(arg_16_0._gonovicechoose, arg_16_0._taskType == TaskEnum.TaskType.Novice)
+	if isNoviceUnlock then
+		gohelper.setActive(self._gonoviceunchoose, self._taskType ~= TaskEnum.TaskType.Novice)
+		gohelper.setActive(self._gonovicechoose, self._taskType == TaskEnum.TaskType.Novice)
 	end
 
-	gohelper.setActive(arg_16_0._goline2, arg_16_0._taskType == TaskEnum.TaskType.Novice)
-	gohelper.setActive(arg_16_0._godayunchoose, arg_16_0._taskType ~= TaskEnum.TaskType.Daily)
-	gohelper.setActive(arg_16_0._godaychoose, arg_16_0._taskType == TaskEnum.TaskType.Daily)
-	gohelper.setActive(arg_16_0._goweekunchoose, arg_16_0._taskType ~= TaskEnum.TaskType.Weekly)
-	gohelper.setActive(arg_16_0._goweekchoose, arg_16_0._taskType == TaskEnum.TaskType.Weekly)
-	gohelper.setActive(arg_16_0._golineicon, arg_16_0._taskType == TaskEnum.TaskType.Daily or arg_16_0._taskType == TaskEnum.TaskType.Weekly)
+	gohelper.setActive(self._goline2, self._taskType == TaskEnum.TaskType.Novice)
+	gohelper.setActive(self._godayunchoose, self._taskType ~= TaskEnum.TaskType.Daily)
+	gohelper.setActive(self._godaychoose, self._taskType == TaskEnum.TaskType.Daily)
+	gohelper.setActive(self._goweekunchoose, self._taskType ~= TaskEnum.TaskType.Weekly)
+	gohelper.setActive(self._goweekchoose, self._taskType == TaskEnum.TaskType.Weekly)
+	gohelper.setActive(self._golineicon, self._taskType == TaskEnum.TaskType.Daily or self._taskType == TaskEnum.TaskType.Weekly)
 end
 
-function var_0_0._changeTask(arg_17_0)
-	local var_17_0 = TaskModel.instance:getRefreshCount()
+function TaskView:_changeTask()
+	local count = TaskModel.instance:getRefreshCount()
 
-	TaskModel.instance:setRefreshCount(var_17_0 + 1)
+	TaskModel.instance:setRefreshCount(count + 1)
 
-	if arg_17_0._taskType == TaskEnum.TaskType.Novice then
-		arg_17_0.viewContainer:switchTab(1)
-	elseif arg_17_0._taskType == TaskEnum.TaskType.Daily then
-		arg_17_0.viewContainer:switchTab(2)
-	elseif arg_17_0._taskType == TaskEnum.TaskType.Weekly then
-		arg_17_0.viewContainer:switchTab(3)
+	if self._taskType == TaskEnum.TaskType.Novice then
+		self.viewContainer:switchTab(1)
+	elseif self._taskType == TaskEnum.TaskType.Daily then
+		self.viewContainer:switchTab(2)
+	elseif self._taskType == TaskEnum.TaskType.Weekly then
+		self.viewContainer:switchTab(3)
 	end
 end
 
-function var_0_0.onClose(arg_18_0)
-	arg_18_0:removeEventCb(TaskController.instance, TaskEvent.SetTaskList, arg_18_0._changeTask, arg_18_0)
-	arg_18_0:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_18_0._refreshView, arg_18_0)
-	TaskDispatcher.cancelTask(arg_18_0.checkCanvasGroupAlpha, arg_18_0)
+function TaskView:onClose()
+	self:removeEventCb(TaskController.instance, TaskEvent.SetTaskList, self._changeTask, self)
+	self:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self._refreshView, self)
+	TaskDispatcher.cancelTask(self.checkCanvasGroupAlpha, self)
 
-	if arg_18_0._blurTweenId then
+	if self._blurTweenId then
 		PostProcessingMgr.instance:setBlurWeight(1)
-		ZProj.TweenHelper.KillById(arg_18_0._blurTweenId)
+		ZProj.TweenHelper.KillById(self._blurTweenId)
 	end
 end
 
-function var_0_0.onDestroyView(arg_19_0)
+function TaskView:onDestroyView()
 	return
 end
 
-return var_0_0
+return TaskView

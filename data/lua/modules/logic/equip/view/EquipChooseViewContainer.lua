@@ -1,26 +1,28 @@
-﻿module("modules.logic.equip.view.EquipChooseViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/equip/view/EquipChooseViewContainer.lua
 
-local var_0_0 = class("EquipChooseViewContainer", BaseViewContainer)
+module("modules.logic.equip.view.EquipChooseViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = ListScrollParam.New()
+local EquipChooseViewContainer = class("EquipChooseViewContainer", BaseViewContainer)
 
-	var_1_0.scrollGOPath = "#scroll_equip"
-	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_0.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_0.cellClass = EquipChooseItem
-	var_1_0.scrollDir = ScrollEnum.ScrollDirV
-	var_1_0.lineCount = 4
-	var_1_0.cellWidth = 232
-	var_1_0.cellHeight = 232
-	var_1_0.cellSpaceH = 15
-	var_1_0.cellSpaceV = 15
-	var_1_0.startSpace = 60
+function EquipChooseViewContainer:buildViews()
+	local equipScrollParam = ListScrollParam.New()
+
+	equipScrollParam.scrollGOPath = "#scroll_equip"
+	equipScrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	equipScrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	equipScrollParam.cellClass = EquipChooseItem
+	equipScrollParam.scrollDir = ScrollEnum.ScrollDirV
+	equipScrollParam.lineCount = 4
+	equipScrollParam.cellWidth = 232
+	equipScrollParam.cellHeight = 232
+	equipScrollParam.cellSpaceH = 15
+	equipScrollParam.cellSpaceV = 15
+	equipScrollParam.startSpace = 60
 
 	return {
-		LuaListScrollView.New(EquipChooseListModel.instance, var_1_0),
+		LuaListScrollView.New(EquipChooseListModel.instance, equipScrollParam),
 		EquipChooseView.New()
 	}
 end
 
-return var_0_0
+return EquipChooseViewContainer

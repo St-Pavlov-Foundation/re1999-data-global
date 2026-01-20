@@ -1,54 +1,56 @@
-﻿module("modules.logic.fight.system.work.FightWorkEffectDice", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkEffectDice.lua
 
-local var_0_0 = class("FightWorkEffectDice", FightEffectBase)
-local var_0_1
+module("modules.logic.fight.system.work.FightWorkEffectDice", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	if var_0_1 then
-		table.insert(var_0_1, {
-			arg_1_0.fightStepData,
-			arg_1_0.actEffectData
+local FightWorkEffectDice = class("FightWorkEffectDice", FightEffectBase)
+local diceList
+
+function FightWorkEffectDice:onStart()
+	if diceList then
+		table.insert(diceList, {
+			self.fightStepData,
+			self.actEffectData
 		})
 	else
-		var_0_1 = {}
+		diceList = {}
 
-		table.insert(var_0_1, {
-			arg_1_0.fightStepData,
-			arg_1_0.actEffectData
+		table.insert(diceList, {
+			self.fightStepData,
+			self.actEffectData
 		})
-		TaskDispatcher.runDelay(arg_1_0._delayStart, arg_1_0, 0.01)
+		TaskDispatcher.runDelay(self._delayStart, self, 0.01)
 	end
 end
 
-function var_0_0._delayStart(arg_2_0)
-	FightController.instance:registerCallback(FightEvent.OnDiceEnd, arg_2_0._onDiceEnd, arg_2_0)
-	arg_2_0:com_registTimer(arg_2_0._delayDone, 10)
+function FightWorkEffectDice:_delayStart()
+	FightController.instance:registerCallback(FightEvent.OnDiceEnd, self._onDiceEnd, self)
+	self:com_registTimer(self._delayDone, 10)
 
-	local var_2_0 = ViewName.FightDiceView
-	local var_2_1 = FightModel.instance:getFightParam()
-	local var_2_2 = DungeonConfig.instance:getEpisodeCO(var_2_1.episodeId)
-	local var_2_3 = var_2_2 and var_2_2.type
+	local viewName = ViewName.FightDiceView
+	local fightParam = FightModel.instance:getFightParam()
+	local episode_config = DungeonConfig.instance:getEpisodeCO(fightParam.episodeId)
+	local episodeType = episode_config and episode_config.type
 
-	if Activity104Model.instance:isSeasonEpisodeType(var_2_3) then
-		var_2_0 = ViewName.FightSeasonDiceView
+	if Activity104Model.instance:isSeasonEpisodeType(episodeType) then
+		viewName = ViewName.FightSeasonDiceView
 	end
 
-	ViewMgr.instance:openView(var_2_0, var_0_1)
+	ViewMgr.instance:openView(viewName, diceList)
 
-	var_0_1 = nil
+	diceList = nil
 end
 
-function var_0_0._delayDone(arg_3_0)
-	arg_3_0:onDone(true)
+function FightWorkEffectDice:_delayDone()
+	self:onDone(true)
 end
 
-function var_0_0._onDiceEnd(arg_4_0)
-	arg_4_0:onDone(true)
+function FightWorkEffectDice:_onDiceEnd()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_5_0)
-	FightController.instance:unregisterCallback(FightEvent.OnDiceEnd, arg_5_0._onDiceEnd, arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0._delayStart, arg_5_0)
+function FightWorkEffectDice:clearWork()
+	FightController.instance:unregisterCallback(FightEvent.OnDiceEnd, self._onDiceEnd, self)
+	TaskDispatcher.cancelTask(self._delayStart, self)
 end
 
-return var_0_0
+return FightWorkEffectDice

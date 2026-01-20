@@ -1,283 +1,319 @@
-﻿module("modules.logic.backpack.model.BackpackModel", package.seeall)
+﻿-- chunkname: @modules/logic/backpack/model/BackpackModel.lua
 
-local var_0_0 = class("BackpackModel", BaseModel)
+module("modules.logic.backpack.model.BackpackModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local BackpackModel = class("BackpackModel", BaseModel)
+
+function BackpackModel:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._curCategoryId = 1
-	arg_2_0._categoryList = {}
-	arg_2_0._itemList = {}
-	arg_2_0._itemAniHasShown = false
+function BackpackModel:reInit()
+	self._curCategoryId = 1
+	self._categoryList = {}
+	self._itemList = {}
+	self._itemAniHasShown = false
 end
 
-function var_0_0.getItemAniHasShown(arg_3_0)
-	return arg_3_0._itemAniHasShown
+function BackpackModel:getItemAniHasShown()
+	return self._itemAniHasShown
 end
 
-function var_0_0.setItemAniHasShown(arg_4_0, arg_4_1)
-	arg_4_0._itemAniHasShown = arg_4_1
+function BackpackModel:setItemAniHasShown(show)
+	self._itemAniHasShown = show
 end
 
-function var_0_0.getCurCategoryId(arg_5_0)
-	return arg_5_0._curCategoryId
+function BackpackModel:getCurCategoryId()
+	return self._curCategoryId
 end
 
-function var_0_0.setCurCategoryId(arg_6_0, arg_6_1)
-	arg_6_0._curCategoryId = arg_6_1
+function BackpackModel:setCurCategoryId(id)
+	self._curCategoryId = id
 end
 
-function var_0_0.setBackpackCategoryList(arg_7_0, arg_7_1)
-	arg_7_0._categoryList = arg_7_1
+function BackpackModel:setBackpackCategoryList(cates)
+	self._categoryList = cates
 end
 
-function var_0_0.setBackpackItemList(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0._itemList = {}
+function BackpackModel:setBackpackItemList(list, adventure)
+	self._itemList = {}
 
-	for iter_8_0, iter_8_1 in pairs(arg_8_1) do
-		local var_8_0
-		local var_8_1
-		local var_8_2 = true
+	for _, v in pairs(list) do
+		local item, type
+		local convert = true
 
-		if iter_8_1.uid then
-			if iter_8_1.insightId then
-				local var_8_3 = MaterialEnum.MaterialType.NewInsight
-				local var_8_4 = ItemInsightModel.instance:getInsightItem(iter_8_1.uid)
+		if v.uid then
+			if v.insightId then
+				type = MaterialEnum.MaterialType.NewInsight
 
-				var_8_2 = var_8_4 ~= nil and var_8_4.quantity > 0
+				local insightItem = ItemInsightModel.instance:getInsightItem(v.uid)
 
-				if var_8_2 then
-					var_8_0 = arg_8_0:_convertItemData(iter_8_1.uid, var_8_3)
+				convert = insightItem and insightItem.quantity > 0
+
+				if convert then
+					item = self:_convertItemData(v.uid, type)
+				end
+			elseif v.talentItemId then
+				type = MaterialEnum.MaterialType.TalentItem
+
+				local talentItem = ItemTalentModel.instance:getTalentItem(v.uid)
+
+				convert = talentItem and talentItem.quantity > 0
+
+				if convert then
+					item = self:_convertItemData(v.uid, type)
 				end
 			else
-				local var_8_5 = MaterialEnum.MaterialType.PowerPotion
-				local var_8_6 = ItemPowerModel.instance:getPowerItem(iter_8_1.uid)
+				type = MaterialEnum.MaterialType.PowerPotion
 
-				var_8_2 = var_8_6 ~= nil and var_8_6.quantity > 0
+				local powerItem = ItemPowerModel.instance:getPowerItem(v.uid)
 
-				if var_8_2 then
-					var_8_0 = arg_8_0:_convertItemData(iter_8_1.uid, var_8_5)
+				convert = powerItem and powerItem.quantity > 0
+
+				if convert then
+					item = self:_convertItemData(v.uid, type)
 				end
 			end
-		elseif iter_8_1.id then
-			local var_8_7 = MaterialEnum.MaterialType.Item
+		elseif v.id then
+			type = MaterialEnum.MaterialType.Item
+			convert = adventure and v.quantity > 0 or ItemModel.instance:getItemCount(v.id) > 0
 
-			var_8_2 = arg_8_2 and iter_8_1.quantity > 0 or ItemModel.instance:getItemCount(iter_8_1.id) > 0
-
-			if var_8_2 then
-				var_8_0 = arg_8_0:_convertItemData(iter_8_1.id, var_8_7, arg_8_2 and iter_8_1.quantity)
+			if convert then
+				item = self:_convertItemData(v.id, type, adventure and v.quantity)
 			end
-		elseif iter_8_1.currencyId then
-			local var_8_8 = MaterialEnum.MaterialType.Currency
-
-			var_8_0 = arg_8_0:_convertItemData(iter_8_1.currencyId, var_8_8)
+		elseif v.currencyId then
+			type = MaterialEnum.MaterialType.Currency
+			item = self:_convertItemData(v.currencyId, type)
 		end
 
-		if var_8_2 and var_8_0 then
-			local var_8_9 = BackpackMo.New()
+		if convert and item then
+			local backMo = BackpackMo.New()
 
-			var_8_9:init(var_8_0)
-			table.insert(arg_8_0._itemList, var_8_9)
+			backMo:init(item)
+			table.insert(self._itemList, backMo)
 		end
 	end
 
-	arg_8_0:setPowerMakerItemsList()
+	self:setPowerMakerItemsList()
 end
 
-function var_0_0.setPowerMakerItemsList(arg_9_0)
-	local var_9_0 = ItemPowerModel.instance:getPowerMakerInfo()
+function BackpackModel:setPowerMakerItemsList()
+	local ofMakerInfo = ItemPowerModel.instance:getPowerMakerInfo()
 
-	if var_9_0 and var_9_0.powerMakerItems then
-		if not arg_9_0._powerMakerItems then
-			arg_9_0._powerMakerItems = {}
+	if ofMakerInfo and ofMakerInfo.powerMakerItems then
+		if not self._powerMakerItems then
+			self._powerMakerItems = {}
 		end
 
-		local var_9_1 = {}
+		local itemList = {}
 
-		for iter_9_0, iter_9_1 in pairs(arg_9_0._itemList) do
-			if iter_9_1.id ~= MaterialEnum.PowerId.OverflowPowerId then
-				table.insert(var_9_1, iter_9_1)
+		for k, v in pairs(self._itemList) do
+			if v.id ~= MaterialEnum.PowerId.OverflowPowerId then
+				table.insert(itemList, v)
 			end
 		end
 
-		for iter_9_2 = 1, #var_9_0.powerMakerItems do
-			local var_9_2 = var_9_0.powerMakerItems[iter_9_2]
-			local var_9_3 = MaterialEnum.MaterialType.PowerPotion
-			local var_9_4 = tonumber(var_9_2.uid)
-			local var_9_5 = arg_9_0:_convertItemData(var_9_4, var_9_3)
-			local var_9_6 = arg_9_0._powerMakerItems[var_9_4] or BackpackMo.New()
+		for i = 1, #ofMakerInfo.powerMakerItems do
+			local v = ofMakerInfo.powerMakerItems[i]
+			local type = MaterialEnum.MaterialType.PowerPotion
+			local uid = tonumber(v.uid)
+			local item = self:_convertItemData(uid, type)
+			local itemMo = self._powerMakerItems[uid] or BackpackMo.New()
 
-			var_9_6:init(var_9_5)
-			table.insert(var_9_1, var_9_6)
+			itemMo:init(item)
+			table.insert(itemList, itemMo)
 		end
 
-		arg_9_0._itemList = var_9_1
+		self._itemList = itemList
 	end
 end
 
-function var_0_0.getBackpackItemList(arg_10_0)
-	return arg_10_0._itemList
+function BackpackModel:getBackpackItemList()
+	return self._itemList
 end
 
-function var_0_0.getBackpackList(arg_11_0)
-	local var_11_0 = {}
+function BackpackModel:getBackpackList()
+	local list = {}
 
-	for iter_11_0, iter_11_1 in pairs(ItemModel.instance:getList()) do
-		table.insert(var_11_0, iter_11_1)
+	for _, v in pairs(ItemModel.instance:getList()) do
+		table.insert(list, v)
 	end
 
-	for iter_11_2, iter_11_3 in pairs(CurrencyModel.instance:getCurrencyList()) do
-		if iter_11_3.quantity > 0 then
-			table.insert(var_11_0, iter_11_3)
+	for _, v in pairs(CurrencyModel.instance:getCurrencyList()) do
+		if v.quantity > 0 then
+			table.insert(list, v)
 		end
 	end
 
-	for iter_11_4, iter_11_5 in pairs(ItemPowerModel.instance:getPowerItemList()) do
-		if iter_11_5.quantity > 0 then
-			table.insert(var_11_0, iter_11_5)
+	for _, v in pairs(ItemPowerModel.instance:getPowerItemList()) do
+		if v.quantity > 0 then
+			table.insert(list, v)
 		end
 	end
 
-	for iter_11_6, iter_11_7 in pairs(ItemInsightModel.instance:getInsightItemList()) do
-		if iter_11_7.quantity > 0 then
-			table.insert(var_11_0, iter_11_7)
+	for _, v in pairs(ItemInsightModel.instance:getInsightItemList()) do
+		if v.quantity > 0 then
+			table.insert(list, v)
 		end
 	end
 
-	return var_11_0
+	for _, v in pairs(ItemTalentModel.instance:getTalentItemList()) do
+		if v.quantity > 0 then
+			table.insert(list, v)
+		end
+	end
+
+	return list
 end
 
-function var_0_0._convertItemData(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	local var_12_0 = {
-		type = arg_12_2
-	}
-	local var_12_1
-	local var_12_2
+function BackpackModel:_convertItemData(id, type, quantity)
+	local data = {}
 
-	if var_12_0.type == MaterialEnum.MaterialType.PowerPotion then
-		var_12_0.uid = arg_12_1
-		var_12_0.id = ItemPowerModel.instance:getPowerItem(arg_12_1).id
-		var_12_1, var_12_2 = ItemModel.instance:getItemConfigAndIcon(var_12_0.type, var_12_0.id)
-	elseif var_12_0.type == MaterialEnum.MaterialType.NewInsight then
-		var_12_0.uid = arg_12_1
-		var_12_0.id = ItemInsightModel.instance:getInsightItem(arg_12_1).insightId
-		var_12_1, var_12_2 = ItemModel.instance:getItemConfigAndIcon(var_12_0.type, var_12_0.id)
+	data.type = type
+
+	local config, icon
+
+	if data.type == MaterialEnum.MaterialType.PowerPotion then
+		data.uid = id
+		data.id = ItemPowerModel.instance:getPowerItem(id).id
+		config, icon = ItemModel.instance:getItemConfigAndIcon(data.type, data.id)
+	elseif data.type == MaterialEnum.MaterialType.TalentItem then
+		data.uid = id
+		data.id = ItemTalentModel.instance:getTalentItem(id).talentItemId
+		config, icon = ItemModel.instance:getItemConfigAndIcon(data.type, data.id)
+	elseif data.type == MaterialEnum.MaterialType.NewInsight then
+		data.uid = id
+		data.id = ItemInsightModel.instance:getInsightItem(id).insightId
+		config, icon = ItemModel.instance:getItemConfigAndIcon(data.type, data.id)
 	else
-		var_12_0.id = arg_12_1
-		var_12_1, var_12_2 = ItemModel.instance:getItemConfigAndIcon(var_12_0.type, arg_12_1)
+		data.id = id
+		config, icon = ItemModel.instance:getItemConfigAndIcon(data.type, id)
 	end
 
-	if not var_12_1 then
-		logError(string.format("convertItemData no config, type: %s, id: %s", arg_12_2, arg_12_1))
+	if not config then
+		logError(string.format("convertItemData no config, type: %s, id: %s", type, id))
 
 		return nil
 	end
 
-	var_12_0.quantity = arg_12_3 or ItemModel.instance:getItemQuantity(var_12_0.type, var_12_0.id, var_12_0.uid)
-	var_12_0.icon = var_12_2
-	var_12_0.rare = var_12_1.rare
+	data.quantity = quantity or ItemModel.instance:getItemQuantity(data.type, data.id, data.uid)
+	data.icon = icon
+	data.rare = config.rare
 
-	if var_12_0.type == MaterialEnum.MaterialType.Item then
-		var_12_0.isStackable = var_12_1.isStackable
-		var_12_0.isShow = var_12_1.isShow
-		var_12_0.subType = var_12_1.subType
-		var_12_0.isTimeShow = var_12_1.isTimeShow
-		var_12_0.expireTime = var_12_1.expireTime or -1
-	elseif var_12_0.type == MaterialEnum.MaterialType.PowerPotion then
-		var_12_0.isStackable = 1
-		var_12_0.isShow = 1
-		var_12_0.subType = 0
-		var_12_0.isTimeShow = var_12_1.expireType == 0 and 0 or 1
+	if data.type == MaterialEnum.MaterialType.Item then
+		data.isStackable = config.isStackable
+		data.isShow = config.isShow
+		data.subType = config.subType
+		data.isTimeShow = config.isTimeShow
+		data.expireTime = config.expireTime or -1
+	elseif data.type == MaterialEnum.MaterialType.PowerPotion then
+		data.isStackable = 1
+		data.isShow = 1
+		data.subType = 0
+		data.isTimeShow = config.expireType == 0 and 0 or 1
 
-		if var_12_1.expireType == 0 then
-			var_12_0.expireTime = -1
+		if config.expireType == 0 then
+			data.expireTime = -1
 		else
-			var_12_0.expireTime = ItemPowerModel.instance:getPowerItemDeadline(arg_12_1)
+			data.expireTime = ItemPowerModel.instance:getPowerItemDeadline(id)
 		end
-	elseif var_12_0.type == MaterialEnum.MaterialType.NewInsight then
-		var_12_0.isStackable = 1
-		var_12_0.isShow = 1
-		var_12_0.subType = 0
-		var_12_0.expireTime = ItemInsightModel.instance:getInsightItemDeadline(arg_12_1)
+	elseif data.type == MaterialEnum.MaterialType.TalentItem then
+		data.isStackable = 1
+		data.isShow = 1
+		data.subType = 0
+		data.isTimeShow = config.expireType == 0 and 0 or 1
 
-		local var_12_3 = ItemConfig.instance:getInsightItemCo(var_12_0.id)
+		if config.expireType == 0 then
+			data.expireTime = -1
+		else
+			data.expireTime = ItemTalentModel.instance:getTalentItemDeadline(id)
+		end
+	elseif data.type == MaterialEnum.MaterialType.NewInsight then
+		data.isStackable = 1
+		data.isShow = 1
+		data.subType = 0
+		data.expireTime = ItemInsightModel.instance:getInsightItemDeadline(id)
 
-		var_12_0.isTimeShow = var_12_3 and var_12_3.expireType ~= 0 and var_12_3.expireHours ~= ItemEnum.NoExpiredNum and 1 or 0
-	elseif var_12_0.type == MaterialEnum.MaterialType.Currency then
-		var_12_0.isStackable = 1
-		var_12_0.isShow = 1
-		var_12_0.subType = 0
-		var_12_0.isTimeShow = 0
+		local config = ItemConfig.instance:getInsightItemCo(data.id)
+		local isTimeShow = config and config.expireType ~= 0 and config.expireHours ~= ItemEnum.NoExpiredNum
+
+		data.isTimeShow = isTimeShow and 1 or 0
+	elseif data.type == MaterialEnum.MaterialType.Currency then
+		data.isStackable = 1
+		data.isShow = 1
+		data.subType = 0
+		data.isTimeShow = 0
 	end
 
-	return var_12_0
+	return data
 end
 
-function var_0_0.getCategoryItemlist(arg_13_0, arg_13_1)
-	local var_13_0 = {}
+function BackpackModel:getCategoryItemlist(id)
+	local items = {}
 
-	for iter_13_0, iter_13_1 in pairs(arg_13_0._itemList) do
-		local var_13_1 = arg_13_0:_getItemBelong(iter_13_1.type, iter_13_1.id)
+	for _, v in pairs(self._itemList) do
+		local belongs = self:_getItemBelong(v.type, v.id)
 
-		if iter_13_1.type == MaterialEnum.MaterialType.PowerPotion then
-			if arg_13_1 == ItemEnum.CategoryType.All or arg_13_1 == ItemEnum.CategoryType.UseType then
-				table.insert(var_13_0, iter_13_1)
+		if v.type == MaterialEnum.MaterialType.PowerPotion then
+			if id == ItemEnum.CategoryType.All or id == ItemEnum.CategoryType.UseType then
+				table.insert(items, v)
 			end
-		elseif iter_13_1.type == MaterialEnum.MaterialType.NewInsight then
-			if arg_13_1 == ItemEnum.CategoryType.All or arg_13_1 == ItemEnum.CategoryType.UseType then
-				table.insert(var_13_0, iter_13_1)
+		elseif v.type == MaterialEnum.MaterialType.TalentItem then
+			if id == ItemEnum.CategoryType.All or id == ItemEnum.CategoryType.UseType then
+				table.insert(items, v)
+			end
+		elseif v.type == MaterialEnum.MaterialType.NewInsight then
+			if id == ItemEnum.CategoryType.All or id == ItemEnum.CategoryType.UseType then
+				table.insert(items, v)
 			end
 		else
-			for iter_13_2, iter_13_3 in pairs(var_13_1) do
-				if iter_13_3 == arg_13_1 then
-					table.insert(var_13_0, iter_13_1)
+			for _, belong in pairs(belongs) do
+				if belong == id then
+					table.insert(items, v)
 				end
 			end
 		end
 	end
 
-	return var_13_0
+	return items
 end
 
-function var_0_0._getItemBelong(arg_14_0, arg_14_1, arg_14_2)
-	arg_14_1 = tonumber(arg_14_1)
-	arg_14_2 = tonumber(arg_14_2)
+function BackpackModel:_getItemBelong(type, id)
+	type = tonumber(type)
+	id = tonumber(id)
 
-	local var_14_0 = {}
+	local belongs = {}
 
-	table.insert(var_14_0, ItemEnum.CategoryType.All)
+	table.insert(belongs, ItemEnum.CategoryType.All)
 
-	for iter_14_0, iter_14_1 in pairs(arg_14_0._categoryList) do
-		local var_14_1
-		local var_14_2
+	for _, v in pairs(self._categoryList) do
+		local includes, tag
 
-		if arg_14_1 == MaterialEnum.MaterialType.Item then
-			var_14_1 = iter_14_1.includeitem
-			var_14_2 = ItemConfig.instance:getItemCo(arg_14_2).subType
-		elseif arg_14_1 == MaterialEnum.MaterialType.Currency then
-			var_14_1 = iter_14_1.includecurrency
-			var_14_2 = arg_14_2
+		if type == MaterialEnum.MaterialType.Item then
+			includes = v.includeitem
+			tag = ItemConfig.instance:getItemCo(id).subType
+		elseif type == MaterialEnum.MaterialType.Currency then
+			includes = v.includecurrency
+			tag = id
 		end
 
-		if arg_14_0:_isItemBelongCate(var_14_1, var_14_2) and not LuaUtil.tableContains(var_14_0, tonumber(iter_14_1.id)) then
-			table.insert(var_14_0, tonumber(iter_14_1.id))
+		if self:_isItemBelongCate(includes, tag) and not LuaUtil.tableContains(belongs, tonumber(v.id)) then
+			table.insert(belongs, tonumber(v.id))
 		end
 	end
 
-	return var_14_0
+	return belongs
 end
 
-function var_0_0._isItemBelongCate(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0 = string.split(arg_15_1, "#")
+function BackpackModel:_isItemBelongCate(include, tag)
+	local includes = string.split(include, "#")
 
-	if not var_15_0 then
+	if not includes then
 		return false
 	end
 
-	for iter_15_0, iter_15_1 in pairs(var_15_0) do
-		if tonumber(iter_15_1) == arg_15_2 then
+	for _, v in pairs(includes) do
+		if tonumber(v) == tag then
 			return true
 		end
 	end
@@ -285,80 +321,96 @@ function var_0_0._isItemBelongCate(arg_15_0, arg_15_1, arg_15_2)
 	return false
 end
 
-function var_0_0.getCategoryItemsDeadline(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_0:getCategoryItemlist(arg_16_1)
-	local var_16_1 = -1
+function BackpackModel:getCategoryItemsDeadline(id)
+	local items = self:getCategoryItemlist(id)
+	local expireTime = -1
 
-	for iter_16_0, iter_16_1 in pairs(var_16_0) do
-		if iter_16_1.isShow == 1 and iter_16_1.isTimeShow == 1 then
-			local var_16_2 = iter_16_1:itemExpireTime()
+	for _, v in pairs(items) do
+		if v.isShow == 1 and v.isTimeShow == 1 then
+			local time = v:itemExpireTime()
 
-			if var_16_2 ~= -1 then
-				if var_16_1 == -1 then
-					var_16_1 = var_16_2
+			if time ~= -1 then
+				if expireTime == -1 then
+					expireTime = time
 				else
-					var_16_1 = var_16_2 < var_16_1 and var_16_2 or var_16_1
+					expireTime = time < expireTime and time or expireTime
 				end
 			end
 		end
 	end
 
-	return var_16_1
+	return expireTime
 end
 
-function var_0_0.getItemDeadline(arg_17_0)
-	local var_17_0 = ItemModel.instance:getItemList() or {}
-	local var_17_1
+function BackpackModel:getItemDeadline()
+	local itemlist = ItemModel.instance:getItemList() or {}
+	local deadline
 
-	for iter_17_0, iter_17_1 in pairs(var_17_0) do
-		local var_17_2 = ItemConfig.instance:getItemCo(iter_17_1.id)
+	for _, v in pairs(itemlist) do
+		local config = ItemConfig.instance:getItemCo(v.id)
 
-		if var_17_2 then
-			if var_17_2.isShow == 1 and var_17_2.expireTime and var_17_2.expireTime ~= "" then
-				local var_17_3 = var_17_2.expireTime
+		if config then
+			if config.isShow == 1 and config.expireTime and config.expireTime ~= "" then
+				local time = config.expireTime
 
-				if type(var_17_3) == "string" then
-					var_17_3 = TimeUtil.stringToTimestamp(var_17_3)
+				if type(time) == "string" then
+					time = TimeUtil.stringToTimestamp(time)
 				end
 
-				if not var_17_1 or var_17_3 < var_17_1 then
-					var_17_1 = var_17_3
+				if not deadline or time < deadline then
+					deadline = time
 				end
 			end
 		else
-			logError("找不到道具配置, id: " .. iter_17_1.id)
+			logError("找不到道具配置, id: " .. v.id)
 		end
 	end
 
-	local var_17_4 = ItemPowerModel.instance:getPowerItemList() or {}
+	local powitemlist = ItemPowerModel.instance:getPowerItemList() or {}
 
-	for iter_17_2, iter_17_3 in pairs(var_17_4) do
-		if ItemConfig.instance:getPowerItemCo(iter_17_3.id).expireType ~= 0 and ItemPowerModel.instance:getPowerItemCount(iter_17_3.uid) > 0 then
-			local var_17_5 = ItemPowerModel.instance:getPowerItemDeadline(iter_17_3.uid)
+	for k, v in pairs(powitemlist) do
+		local config = ItemConfig.instance:getPowerItemCo(v.id)
 
-			if not var_17_1 or var_17_5 < var_17_1 then
-				var_17_1 = var_17_5
+		if config.expireType ~= 0 and ItemPowerModel.instance:getPowerItemCount(v.uid) > 0 then
+			local time = ItemPowerModel.instance:getPowerItemDeadline(v.uid)
+
+			if not deadline or time < deadline then
+				deadline = time
 			end
 		end
 	end
 
-	local var_17_6 = ItemInsightModel.instance:getInsightItemList() or {}
+	local talentItemlist = ItemTalentModel.instance:getTalentItemList() or {}
 
-	for iter_17_4, iter_17_5 in pairs(var_17_6) do
-		local var_17_7 = ItemConfig.instance:getInsightItemCo(iter_17_5.insightId)
+	for k, v in pairs(talentItemlist) do
+		local config = ItemTalentConfig.instance:getTalentItemCo(v.id)
 
-		if var_17_7.expireType ~= 0 and var_17_7.expireHours ~= ItemEnum.NoExpiredNum and ItemInsightModel.instance:getInsightItemCount(iter_17_5.uid) > 0 then
-			local var_17_8 = ItemInsightModel.instance:getInsightItemDeadline(iter_17_5.uid)
+		if ItemTalentModel.instance:getTalentItemCount(v.uid) > 0 then
+			local time = ItemTalentModel.instance:getTalentItemDeadline(v.uid)
 
-			if not var_17_1 or var_17_8 < var_17_1 then
-				var_17_1 = var_17_8
+			if not deadline or time < deadline then
+				deadline = time
 			end
 		end
 	end
 
-	return var_17_1
+	local insightitemlist = ItemInsightModel.instance:getInsightItemList() or {}
+
+	for _, v in pairs(insightitemlist) do
+		local config = ItemConfig.instance:getInsightItemCo(v.insightId)
+
+		if config.expireType ~= 0 and config.expireHours ~= ItemEnum.NoExpiredNum and ItemInsightModel.instance:getInsightItemCount(v.uid) > 0 then
+			local time = ItemInsightModel.instance:getInsightItemDeadline(v.uid)
+
+			if not deadline or time < deadline then
+				deadline = time
+			end
+		end
+	end
+
+	return deadline
 end
 
-var_0_0.instance = var_0_0.New()
+BackpackModel.instance = BackpackModel.New()
 
-return var_0_0
+return BackpackModel

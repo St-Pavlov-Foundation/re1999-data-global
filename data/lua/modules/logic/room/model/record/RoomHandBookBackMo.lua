@@ -1,53 +1,55 @@
-﻿module("modules.logic.room.model.record.RoomHandBookBackMo", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/record/RoomHandBookBackMo.lua
 
-local var_0_0 = class("RoomHandBookBackMo")
+module("modules.logic.room.model.record.RoomHandBookBackMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._config = nil
-	arg_1_0.id = nil
-	arg_1_0.icon = nil
-	arg_1_0._isEmpty = false
-	arg_1_0._isNew = false
+local RoomHandBookBackMo = class("RoomHandBookBackMo")
+
+function RoomHandBookBackMo:ctor()
+	self._config = nil
+	self.id = nil
+	self.icon = nil
+	self._isEmpty = false
+	self._isNew = false
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0._mo = arg_2_1
-	arg_2_0.id = arg_2_1.id
-	arg_2_0._config = ItemConfig.instance:getItemCo(arg_2_0.id)
-	arg_2_0.icon = arg_2_0._config.icon
+function RoomHandBookBackMo:init(mo)
+	self._mo = mo
+	self.id = mo.id
+	self._config = ItemConfig.instance:getItemCo(self.id)
+	self.icon = self._config.icon
 end
 
-function var_0_0.getConfig(arg_3_0)
-	return arg_3_0._config
+function RoomHandBookBackMo:getConfig()
+	return self._config
 end
 
-function var_0_0.checkNew(arg_4_0)
-	return arg_4_0._isNew
+function RoomHandBookBackMo:checkNew()
+	return self._isNew
 end
 
-function var_0_0.clearNewState(arg_5_0)
-	arg_5_0._isNew = false
+function RoomHandBookBackMo:clearNewState()
+	self._isNew = false
 end
 
-function var_0_0.isEmpty(arg_6_0)
-	return arg_6_0._isEmpty
+function RoomHandBookBackMo:isEmpty()
+	return self._isEmpty
 end
 
-function var_0_0.setEmpty(arg_7_0)
-	arg_7_0._isEmpty = true
-	arg_7_0.id = 0
+function RoomHandBookBackMo:setEmpty()
+	self._isEmpty = true
+	self.id = 0
 end
 
-function var_0_0.checkIsUse(arg_8_0)
-	local var_8_0 = RoomHandBookModel.instance:getSelectMoBackGroundId()
+function RoomHandBookBackMo:checkIsUse()
+	local backgroundId = RoomHandBookModel.instance:getSelectMoBackGroundId()
 
-	if var_8_0 and var_8_0 ~= 0 then
-		return var_8_0 == arg_8_0.id
-	elseif arg_8_0._isEmpty then
+	if backgroundId and backgroundId ~= 0 then
+		return backgroundId == self.id
+	elseif self._isEmpty then
 		return true
 	end
 
 	return false
 end
 
-return var_0_0
+return RoomHandBookBackMo

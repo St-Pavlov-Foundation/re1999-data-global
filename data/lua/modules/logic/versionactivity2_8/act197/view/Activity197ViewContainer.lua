@@ -1,45 +1,47 @@
-﻿module("modules.logic.versionactivity2_8.act197.view.Activity197ViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/act197/view/Activity197ViewContainer.lua
 
-local var_0_0 = class("Activity197ViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_8.act197.view.Activity197ViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Activity197ViewContainer = class("Activity197ViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Activity197View.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
-	table.insert(var_1_0, TabViewGroup.New(2, "#go_topright"))
+function Activity197ViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Activity197View.New())
+	table.insert(views, TabViewGroup.New(1, "#go_topleft"))
+	table.insert(views, TabViewGroup.New(2, "#go_topright"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function Activity197ViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
-	elseif arg_2_1 == 2 then
-		local var_2_0 = {
+	elseif tabContainerId == 2 then
+		local currencyParam = {
 			Activity197Enum.KeyCurrency,
 			Activity197Enum.BulbCurrency
 		}
 
-		arg_2_0.currencyView = CurrencyView.New(var_2_0)
-		arg_2_0.currencyView.foreHideBtn = true
+		self.currencyView = CurrencyView.New(currencyParam)
+		self.currencyView.foreHideBtn = true
 
 		return {
-			arg_2_0.currencyView
+			self.currencyView
 		}
 	end
 end
 
-function var_0_0.onClickCurrency(arg_3_0)
+function Activity197ViewContainer:onClickCurrency()
 	return
 end
 
-return var_0_0
+return Activity197ViewContainer

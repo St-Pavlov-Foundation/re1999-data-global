@@ -1,11 +1,13 @@
-﻿module("modules.logic.enemyinfo.view.BaseEnemyInfoViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/enemyinfo/view/BaseEnemyInfoViewContainer.lua
 
-local var_0_0 = class("BaseEnemyInfoViewContainer", BaseViewContainer)
+module("modules.logic.enemyinfo.view.BaseEnemyInfoViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = EnemyInfoLayoutMo.New()
-	local var_1_1 = EnemyInfoMo.New()
-	local var_1_2 = {
+local BaseEnemyInfoViewContainer = class("BaseEnemyInfoViewContainer", BaseViewContainer)
+
+function BaseEnemyInfoViewContainer:buildViews()
+	local layoutMo = EnemyInfoLayoutMo.New()
+	local enemyInfoMo = EnemyInfoMo.New()
+	local views = {
 		EnemyInfoEnterView.New(),
 		EnemyInfoLayoutView.New(),
 		EnemyInfoLeftView.New(),
@@ -14,26 +16,26 @@ function var_0_0.buildViews(arg_1_0)
 		TabViewGroup.New(1, "#go_btns")
 	}
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_2) do
-		iter_1_1.layoutMo = var_1_0
-		iter_1_1.enemyInfoMo = var_1_1
+	for _, view in ipairs(views) do
+		view.layoutMo = layoutMo
+		view.enemyInfoMo = enemyInfoMo
 	end
 
-	return var_1_2
+	return views
 end
 
-function var_0_0.onContainerInit(arg_2_0)
-	var_0_0.super.onContainerInit(arg_2_0)
+function BaseEnemyInfoViewContainer:onContainerInit()
+	BaseEnemyInfoViewContainer.super.onContainerInit(self)
 
-	if arg_2_0._views then
-		for iter_2_0, iter_2_1 in ipairs(arg_2_0._views) do
-			iter_2_1.viewParam = arg_2_0.viewParam
+	if self._views then
+		for _, item in ipairs(self._views) do
+			item.viewParam = self.viewParam
 		end
 	end
 end
 
-function var_0_0.buildTabViews(arg_3_0, arg_3_1)
-	if arg_3_1 == 1 then
+function BaseEnemyInfoViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -44,4 +46,4 @@ function var_0_0.buildTabViews(arg_3_0, arg_3_1)
 	end
 end
 
-return var_0_0
+return BaseEnemyInfoViewContainer

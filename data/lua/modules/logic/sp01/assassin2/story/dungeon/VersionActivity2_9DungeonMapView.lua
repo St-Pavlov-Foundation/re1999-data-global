@@ -1,39 +1,41 @@
-﻿module("modules.logic.sp01.assassin2.story.dungeon.VersionActivity2_9DungeonMapView", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/story/dungeon/VersionActivity2_9DungeonMapView.lua
 
-local var_0_0 = class("VersionActivity2_9DungeonMapView", VersionActivityFixedDungeonMapView)
+module("modules.logic.sp01.assassin2.story.dungeon.VersionActivity2_9DungeonMapView", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	var_0_0.super._editableInitView(arg_1_0)
+local VersionActivity2_9DungeonMapView = class("VersionActivity2_9DungeonMapView", VersionActivityFixedDungeonMapView)
 
-	arg_1_0._topRightAnimator = gohelper.onceAddComponent(arg_1_0._gotopright, gohelper.Type_Animator)
+function VersionActivity2_9DungeonMapView:_editableInitView()
+	VersionActivity2_9DungeonMapView.super._editableInitView(self)
+
+	self._topRightAnimator = gohelper.onceAddComponent(self._gotopright, gohelper.Type_Animator)
 end
 
-function var_0_0.addEvents(arg_2_0)
-	var_0_0.super.addEvents(arg_2_0)
-	arg_2_0:addEventCb(VersionActivityDungeonBaseController.instance, VersionActivityDungeonEvent.OnActivityDungeonMoChange, arg_2_0.onActivityDungeonMoChange, arg_2_0)
+function VersionActivity2_9DungeonMapView:addEvents()
+	VersionActivity2_9DungeonMapView.super.addEvents(self)
+	self:addEventCb(VersionActivityDungeonBaseController.instance, VersionActivityDungeonEvent.OnActivityDungeonMoChange, self.onActivityDungeonMoChange, self)
 end
 
-function var_0_0.showBtnUI(arg_3_0)
-	var_0_0.super.showBtnUI(arg_3_0)
-	gohelper.setActive(arg_3_0._goswitchmodecontainer, false)
-	arg_3_0._topRightAnimator:Play("open")
+function VersionActivity2_9DungeonMapView:showBtnUI()
+	VersionActivity2_9DungeonMapView.super.showBtnUI(self)
+	gohelper.setActive(self._goswitchmodecontainer, false)
+	self._topRightAnimator:Play("open")
 end
 
-function var_0_0.hideBtnUI(arg_4_0)
-	var_0_0.super.hideBtnUI(arg_4_0)
-	gohelper.setActive(arg_4_0._goswitchmodecontainer, false)
-	arg_4_0._topRightAnimator:Play("close")
+function VersionActivity2_9DungeonMapView:hideBtnUI()
+	VersionActivity2_9DungeonMapView.super.hideBtnUI(self)
+	gohelper.setActive(self._goswitchmodecontainer, false)
+	self._topRightAnimator:Play("close")
 end
 
-function var_0_0.refreshMask(arg_5_0)
-	local var_5_0 = VersionActivity2_9DungeonHelper.isAttachedEpisode(arg_5_0.activityDungeonMo.episodeId)
+function VersionActivity2_9DungeonMapView:refreshMask()
+	local isAttachedEpisode = VersionActivity2_9DungeonHelper.isAttachedEpisode(self.activityDungeonMo.episodeId)
 
-	gohelper.setActive(arg_5_0._simagenormalmask.gameObject, not var_5_0)
-	gohelper.setActive(arg_5_0._simagehardmask.gameObject, var_5_0)
+	gohelper.setActive(self._simagenormalmask.gameObject, not isAttachedEpisode)
+	gohelper.setActive(self._simagehardmask.gameObject, isAttachedEpisode)
 end
 
-function var_0_0.onActivityDungeonMoChange(arg_6_0)
-	arg_6_0:refreshMask()
+function VersionActivity2_9DungeonMapView:onActivityDungeonMoChange()
+	self:refreshMask()
 end
 
-return var_0_0
+return VersionActivity2_9DungeonMapView

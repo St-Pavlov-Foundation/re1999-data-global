@@ -1,114 +1,116 @@
-﻿module("modules.logic.tower.view.permanenttower.TowerPermanentItem", package.seeall)
+﻿-- chunkname: @modules/logic/tower/view/permanenttower/TowerPermanentItem.lua
 
-local var_0_0 = class("TowerPermanentItem", ListScrollCellExtend)
+module("modules.logic.tower.view.permanenttower.TowerPermanentItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gostage = gohelper.findChild(arg_1_0.viewGO, "go_stage")
-	arg_1_0._txtstage = gohelper.findChildText(arg_1_0.viewGO, "go_stage/txt_stage")
-	arg_1_0._btnunfold = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_stage/btn_unfold")
-	arg_1_0._btnfold = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_stage/btn_fold")
-	arg_1_0._golockTip = gohelper.findChild(arg_1_0.viewGO, "go_locktip")
-	arg_1_0._txtlockTip = gohelper.findChildText(arg_1_0.viewGO, "go_locktip/txt_lock")
-	arg_1_0._goaltitudeContent = gohelper.findChild(arg_1_0.viewGO, "go_altitudeContent")
-	arg_1_0._goaltitudeItem = gohelper.findChild(arg_1_0.viewGO, "go_altitudeContent/go_altitudeItem")
+local TowerPermanentItem = class("TowerPermanentItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function TowerPermanentItem:onInitView()
+	self._gostage = gohelper.findChild(self.viewGO, "go_stage")
+	self._txtstage = gohelper.findChildText(self.viewGO, "go_stage/txt_stage")
+	self._btnunfold = gohelper.findChildButtonWithAudio(self.viewGO, "go_stage/btn_unfold")
+	self._btnfold = gohelper.findChildButtonWithAudio(self.viewGO, "go_stage/btn_fold")
+	self._golockTip = gohelper.findChild(self.viewGO, "go_locktip")
+	self._txtlockTip = gohelper.findChildText(self.viewGO, "go_locktip/txt_lock")
+	self._goaltitudeContent = gohelper.findChild(self.viewGO, "go_altitudeContent")
+	self._goaltitudeItem = gohelper.findChild(self.viewGO, "go_altitudeContent/go_altitudeItem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnunfold:AddClickListener(arg_2_0._btnUnFoldOnClick, arg_2_0)
-	arg_2_0._btnfold:AddClickListener(arg_2_0._btnFoldOnClick, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.FoldCurStage, arg_2_0.foldCurStage, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.UnFoldMaxStage, arg_2_0.unfoldeMaxStage, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.PermanentTowerFinishLayer, arg_2_0.playFinishEffect, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.PermanentSelectNextLayer, arg_2_0.selectNextLayer, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.OnSelectDeepLayer, arg_2_0.onSelectDeepLayer, arg_2_0)
+function TowerPermanentItem:addEvents()
+	self._btnunfold:AddClickListener(self._btnUnFoldOnClick, self)
+	self._btnfold:AddClickListener(self._btnFoldOnClick, self)
+	self:addEventCb(TowerController.instance, TowerEvent.FoldCurStage, self.foldCurStage, self)
+	self:addEventCb(TowerController.instance, TowerEvent.UnFoldMaxStage, self.unfoldeMaxStage, self)
+	self:addEventCb(TowerController.instance, TowerEvent.PermanentTowerFinishLayer, self.playFinishEffect, self)
+	self:addEventCb(TowerController.instance, TowerEvent.PermanentSelectNextLayer, self.selectNextLayer, self)
+	self:addEventCb(TowerController.instance, TowerEvent.OnSelectDeepLayer, self.onSelectDeepLayer, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnunfold:RemoveClickListener()
-	arg_3_0._btnfold:RemoveClickListener()
-	TaskDispatcher.cancelTask(arg_3_0.refreshLockTip, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.FoldCurStage, arg_3_0.foldCurStage, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.UnFoldMaxStage, arg_3_0.unfoldeMaxStage, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.PermanentTowerFinishLayer, arg_3_0.playFinishEffect, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.PermanentSelectNextLayer, arg_3_0.selectNextLayer, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.OnSelectDeepLayer, arg_3_0.onSelectDeepLayer, arg_3_0)
+function TowerPermanentItem:removeEvents()
+	self._btnunfold:RemoveClickListener()
+	self._btnfold:RemoveClickListener()
+	TaskDispatcher.cancelTask(self.refreshLockTip, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.FoldCurStage, self.foldCurStage, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.UnFoldMaxStage, self.unfoldeMaxStage, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.PermanentTowerFinishLayer, self.playFinishEffect, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.PermanentSelectNextLayer, self.selectNextLayer, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.OnSelectDeepLayer, self.onSelectDeepLayer, self)
 end
 
-var_0_0.animFoldBlock = "TowerPermanentItemAnimFoldBlock"
+TowerPermanentItem.animFoldBlock = "TowerPermanentItemAnimFoldBlock"
 
-function var_0_0.foldCurStage(arg_4_0, arg_4_1)
-	if arg_4_0.mo.stage == arg_4_1 then
-		arg_4_0:doFoldOnClick()
+function TowerPermanentItem:foldCurStage(stage)
+	if self.mo.stage == stage then
+		self:doFoldOnClick()
 	end
 end
 
-function var_0_0.unfoldeMaxStage(arg_5_0)
-	if arg_5_0.mo.stage == arg_5_0.stageCount then
-		arg_5_0:doUnFoldOnClick()
+function TowerPermanentItem:unfoldeMaxStage()
+	if self.mo.stage == self.stageCount then
+		self:doUnFoldOnClick()
 	end
 end
 
-function var_0_0._btnUnFoldOnClick(arg_6_0)
-	arg_6_0:doUnFoldOnClick()
+function TowerPermanentItem:_btnUnFoldOnClick()
+	self:doUnFoldOnClick()
 	TowerPermanentDeepModel.instance:setIsSelectDeepCategory(false)
 end
 
-function var_0_0.doUnFoldOnClick(arg_7_0)
-	if arg_7_0.playingAnim then
+function TowerPermanentItem:doUnFoldOnClick()
+	if self.playingAnim then
 		return
 	end
 
-	arg_7_0.scrollRect.velocity = Vector2(0, 0)
+	self.scrollRect.velocity = Vector2(0, 0)
 
-	TowerPermanentModel.instance:setCurSelectStage(arg_7_0.mo.stage)
+	TowerPermanentModel.instance:setCurSelectStage(self.mo.stage)
 
-	arg_7_0.playingAnim = true
+	self.playingAnim = true
 
-	UIBlockMgr.instance:startBlock(var_0_0.animFoldBlock)
+	UIBlockMgr.instance:startBlock(TowerPermanentItem.animFoldBlock)
 
-	arg_7_0.isUnFold = true
+	self.isUnFold = true
 
-	TowerPermanentModel.instance:initStageUnFoldState(arg_7_0.mo.stage)
-	arg_7_0:moveToTop()
-	arg_7_0:doUnFoldAnim()
+	TowerPermanentModel.instance:initStageUnFoldState(self.mo.stage)
+	self:moveToTop()
+	self:doUnFoldAnim()
 end
 
-function var_0_0._btnFoldOnClick(arg_8_0)
-	arg_8_0:doFoldOnClick()
+function TowerPermanentItem:_btnFoldOnClick()
+	self:doFoldOnClick()
 	TowerPermanentDeepModel.instance:setIsSelectDeepCategory(false)
 end
 
-function var_0_0.doFoldOnClick(arg_9_0)
-	if arg_9_0.playingAnim then
+function TowerPermanentItem:doFoldOnClick()
+	if self.playingAnim then
 		return
 	end
 
-	arg_9_0.scrollRect.velocity = Vector2(0, 0)
-	arg_9_0.isUnFold = false
+	self.scrollRect.velocity = Vector2(0, 0)
+	self.isUnFold = false
 
-	arg_9_0.mo:setIsUnFold(false)
-	arg_9_0:doFoldAnim()
+	self.mo:setIsUnFold(false)
+	self:doFoldAnim()
 end
 
-function var_0_0._btnAltitudeItemClick(arg_10_0, arg_10_1)
-	if arg_10_0.altitudeItemTab[arg_10_1.index].isSelect then
+function TowerPermanentItem:_btnAltitudeItemClick(config)
+	if self.altitudeItemTab[config.index].isSelect then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.Tower.play_ui_fight_tab_switch)
-	TowerPermanentModel.instance:setCurSelectLayer(arg_10_1.index, arg_10_0.mo.stage)
+	TowerPermanentModel.instance:setCurSelectLayer(config.index, self.mo.stage)
 
-	for iter_10_0, iter_10_1 in pairs(arg_10_0.altitudeItemTab) do
-		local var_10_0 = arg_10_0.configList[iter_10_0]
-		local var_10_1 = iter_10_0 == arg_10_1.index
+	for index, altitudeItem in pairs(self.altitudeItemTab) do
+		local co = self.configList[index]
+		local isSelect = index == config.index
 
-		arg_10_0.altitudeItemTab[iter_10_0].isSelect = var_10_1
+		self.altitudeItemTab[index].isSelect = isSelect
 
-		arg_10_0:refreshSelectUI(iter_10_1, var_10_0)
+		self:refreshSelectUI(altitudeItem, co)
 	end
 
 	TowerPermanentDeepModel.instance:setInDeepLayerState(false)
@@ -116,306 +118,310 @@ function var_0_0._btnAltitudeItemClick(arg_10_0, arg_10_1)
 	TowerController.instance:dispatchEvent(TowerEvent.SelectPermanentAltitude)
 end
 
-function var_0_0.onSelectDeepLayer(arg_11_0)
-	if not arg_11_0.altitudeItemTab or not next(arg_11_0.altitudeItemTab) then
+function TowerPermanentItem:onSelectDeepLayer()
+	if not self.altitudeItemTab or not next(self.altitudeItemTab) then
 		return
 	end
 
-	for iter_11_0, iter_11_1 in pairs(arg_11_0.altitudeItemTab) do
-		local var_11_0 = arg_11_0.configList[iter_11_0]
+	for index, altitudeItem in pairs(self.altitudeItemTab) do
+		local co = self.configList[index]
 
-		arg_11_0.altitudeItemTab[iter_11_0].isSelect = false
+		self.altitudeItemTab[index].isSelect = false
 
-		if var_11_0 then
-			arg_11_0:refreshSelectUI(iter_11_1, var_11_0)
+		if co then
+			self:refreshSelectUI(altitudeItem, co)
 		end
 	end
 end
 
-function var_0_0.selectNextLayer(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_1.index
-	local var_12_1 = arg_12_1.stageId
+function TowerPermanentItem:selectNextLayer(permanentEpisodeCo)
+	local layerIndex = permanentEpisodeCo.index
+	local stageId = permanentEpisodeCo.stageId
 
-	if arg_12_0.mo.stage == var_12_1 then
-		arg_12_0:_btnAltitudeItemClick(arg_12_0.configList[var_12_0])
+	if self.mo.stage == stageId then
+		self:_btnAltitudeItemClick(self.configList[layerIndex])
 	end
 end
 
-var_0_0.selectFontSize = 40
-var_0_0.unselectFontSize = 28
-var_0_0.selectFontPos = Vector2.New(70, 5)
-var_0_0.normalFontPos = Vector2.New(50, 0)
-var_0_0.finishFontColor = "#D5E2ED"
-var_0_0.selectFontColor = "#FFFFFF"
-var_0_0.unFinishFontColor = "#7E8A95"
+TowerPermanentItem.selectFontSize = 40
+TowerPermanentItem.unselectFontSize = 28
+TowerPermanentItem.selectFontPos = Vector2.New(70, 5)
+TowerPermanentItem.normalFontPos = Vector2.New(50, 0)
+TowerPermanentItem.finishFontColor = "#D5E2ED"
+TowerPermanentItem.selectFontColor = "#FFFFFF"
+TowerPermanentItem.unFinishFontColor = "#7E8A95"
 
-function var_0_0._editableInitView(arg_13_0)
-	gohelper.setActive(arg_13_0._goaltitudeItem, false)
+function TowerPermanentItem:_editableInitView()
+	gohelper.setActive(self._goaltitudeItem, false)
 
-	arg_13_0.altitudeContentRect = arg_13_0._goaltitudeContent:GetComponent(gohelper.Type_RectTransform)
-	arg_13_0.playingAnim = false
+	self.altitudeContentRect = self._goaltitudeContent:GetComponent(gohelper.Type_RectTransform)
+	self.playingAnim = false
 
-	UIBlockMgr.instance:endBlock(var_0_0.animFoldBlock)
+	UIBlockMgr.instance:endBlock(TowerPermanentItem.animFoldBlock)
 
-	arg_13_0.stageCount = TowerPermanentModel.instance:getStageCount()
+	self.stageCount = TowerPermanentModel.instance:getStageCount()
 end
 
-function var_0_0.onUpdateMO(arg_14_0, arg_14_1)
-	arg_14_0.mo = arg_14_1
-	arg_14_0.isUnFold = arg_14_0.mo:getIsUnFold()
+function TowerPermanentItem:onUpdateMO(mo)
+	self.mo = mo
+	self.isUnFold = self.mo:getIsUnFold()
 
-	local var_14_0 = arg_14_0._view._csMixScroll.gameObject
+	local goScrollCategory = self._view._csMixScroll.gameObject
 
-	arg_14_0.scrollRect = var_14_0:GetComponent(typeof(UnityEngine.UI.ScrollRect))
+	self.scrollRect = goScrollCategory:GetComponent(typeof(UnityEngine.UI.ScrollRect))
 
-	if not arg_14_0.goScrollContent then
-		arg_14_0.scrollCategory = gohelper.findChildScrollRect(var_14_0, "")
-		arg_14_0.rectViewPort = gohelper.findChild(var_14_0, "Viewport"):GetComponent(gohelper.Type_RectTransform)
-		arg_14_0.goScrollContent = gohelper.findChild(var_14_0, "Viewport/#go_Content")
-		arg_14_0.rectScrollContent = arg_14_0.goScrollContent:GetComponent(gohelper.Type_RectTransform)
+	if not self.goScrollContent then
+		self.scrollCategory = gohelper.findChildScrollRect(goScrollCategory, "")
+		self.rectViewPort = gohelper.findChild(goScrollCategory, "Viewport"):GetComponent(gohelper.Type_RectTransform)
+		self.goScrollContent = gohelper.findChild(goScrollCategory, "Viewport/#go_Content")
+		self.rectScrollContent = self.goScrollContent:GetComponent(gohelper.Type_RectTransform)
 	end
 
-	arg_14_0.configList = arg_14_0.mo.configList
+	self.configList = self.mo.configList
 
-	arg_14_0:refreshUI()
-	arg_14_0:refreshAltitudeContentH()
+	self:refreshUI()
+	self:refreshAltitudeContentH()
 end
 
-function var_0_0.refreshUI(arg_15_0)
-	arg_15_0.isDeepLayerUnlock = TowerPermanentDeepModel.instance:checkDeepLayerUnlock()
+function TowerPermanentItem:refreshUI()
+	self.isDeepLayerUnlock = TowerPermanentDeepModel.instance:checkDeepLayerUnlock()
 
-	local var_15_0 = TowerConfig.instance:getTowerPermanentTimeCo(arg_15_0.mo.stage)
+	local timeTowerConfig = TowerConfig.instance:getTowerPermanentTimeCo(self.mo.stage)
 
-	arg_15_0._txtstage.text = var_15_0.name
-	arg_15_0.stageCount = TowerPermanentModel.instance:getStageCount()
+	self._txtstage.text = timeTowerConfig.name
+	self.stageCount = TowerPermanentModel.instance:getStageCount()
 
-	gohelper.setActive(arg_15_0._btnunfold.gameObject, not arg_15_0.isUnFold)
-	gohelper.setActive(arg_15_0._btnfold.gameObject, arg_15_0.isUnFold and arg_15_0.mo.stage < arg_15_0.stageCount)
+	gohelper.setActive(self._btnunfold.gameObject, not self.isUnFold)
+	gohelper.setActive(self._btnfold.gameObject, self.isUnFold and self.mo.stage < self.stageCount)
 
-	local var_15_1 = tabletool.len(arg_15_0.configList) == 0
+	local isAltitudeEmpty = tabletool.len(self.configList) == 0
 
-	gohelper.setActive(arg_15_0._golockTip, var_15_1)
-	gohelper.setActive(arg_15_0._gostage, not var_15_1)
-	gohelper.setActive(arg_15_0._goaltitudeContent, not var_15_1)
-	TaskDispatcher.cancelTask(arg_15_0.refreshLockTip, arg_15_0)
-	TaskDispatcher.runRepeat(arg_15_0.refreshLockTip, arg_15_0, 1)
-	arg_15_0:refreshLockTip()
+	gohelper.setActive(self._golockTip, isAltitudeEmpty)
+	gohelper.setActive(self._gostage, not isAltitudeEmpty)
+	gohelper.setActive(self._goaltitudeContent, not isAltitudeEmpty)
+	TaskDispatcher.cancelTask(self.refreshLockTip, self)
+	TaskDispatcher.runRepeat(self.refreshLockTip, self, 1)
+	self:refreshLockTip()
 
-	local var_15_2 = TowerPermanentModel.instance:getCurSelectStage()
+	local curStage = TowerPermanentModel.instance:getCurSelectStage()
 
-	if not var_15_1 and arg_15_0.mo.stage == var_15_2 then
-		arg_15_0:createOrRefreshAltitudeItem()
-		arg_15_0:moveToTop()
+	if not isAltitudeEmpty and self.mo.stage == curStage then
+		self:createOrRefreshAltitudeItem()
+		self:moveToTop()
 	end
 end
 
-function var_0_0.refreshLockTip(arg_16_0)
-	arg_16_0._txtlockTip.text = ""
+function TowerPermanentItem:refreshLockTip()
+	self._txtlockTip.text = ""
 
-	local var_16_0, var_16_1 = arg_16_0.mo:checkIsOnline()
-	local var_16_2 = TowerConfig.instance:getTowerPermanentTimeCo(arg_16_0.mo.stage)
+	local isOnlie, offsetTimeStamp = self.mo:checkIsOnline()
+	local timeTowerConfig = TowerConfig.instance:getTowerPermanentTimeCo(self.mo.stage)
+	local isAltitudeEmpty = tabletool.len(self.configList) == 0
 
-	if tabletool.len(arg_16_0.configList) == 0 then
-		if var_16_0 then
-			local var_16_3 = TowerConfig.instance:getTowerPermanentTimeCo(arg_16_0.mo.stage - 1)
+	if isAltitudeEmpty then
+		if isOnlie then
+			local lastTimeTowerConfig = TowerConfig.instance:getTowerPermanentTimeCo(self.mo.stage - 1)
 
-			arg_16_0._txtlockTip.text = GameUtil.getSubPlaceholderLuaLang(luaLang("towerpermanent_stageunlocktip"), {
-				var_16_3.name,
-				var_16_2.name
+			self._txtlockTip.text = GameUtil.getSubPlaceholderLuaLang(luaLang("towerpermanent_stageunlocktip"), {
+				lastTimeTowerConfig.name,
+				timeTowerConfig.name
 			})
 		else
-			local var_16_4, var_16_5 = TimeUtil.secondToRoughTime2(var_16_1)
+			local remainTime, dateformate = TimeUtil.secondToRoughTime2(offsetTimeStamp)
 
-			arg_16_0._txtlockTip.text = GameUtil.getSubPlaceholderLuaLang(luaLang("towerpermanent_timeunlocktip"), {
-				var_16_4,
-				var_16_5,
-				var_16_2.name
+			self._txtlockTip.text = GameUtil.getSubPlaceholderLuaLang(luaLang("towerpermanent_timeunlocktip"), {
+				remainTime,
+				dateformate,
+				timeTowerConfig.name
 			})
 		end
 	end
 end
 
-function var_0_0.createOrRefreshAltitudeItem(arg_17_0)
-	arg_17_0.altitudeItemTab = arg_17_0:getUserDataTb_()
+function TowerPermanentItem:createOrRefreshAltitudeItem()
+	self.altitudeItemTab = self:getUserDataTb_()
 
-	local var_17_0, var_17_1 = TowerPermanentModel.instance:getRealSelectStage()
-	local var_17_2 = TowerPermanentDeepModel.instance:getIsInDeepLayerState()
+	local realSelectStage, realSelectLayerIndex = TowerPermanentModel.instance:getRealSelectStage()
+	local isInDeepLayerState = TowerPermanentDeepModel.instance:getIsInDeepLayerState()
 
-	for iter_17_0, iter_17_1 in pairs(arg_17_0.configList) do
-		local var_17_3 = arg_17_0._view.viewContainer:getTowerPermanentPoolView():createOrGetAltitudeItem(iter_17_1, arg_17_0._btnAltitudeItemClick, arg_17_0)
+	for index, config in pairs(self.configList) do
+		local altitudeItem = self._view.viewContainer:getTowerPermanentPoolView():createOrGetAltitudeItem(config, self._btnAltitudeItemClick, self)
 
-		arg_17_0.altitudeItemTab[iter_17_0] = var_17_3
-		var_17_3.isSelect = arg_17_0.mo.stage == var_17_0 and iter_17_0 == var_17_1 and not var_17_2
-		var_17_3.txtNum.text = string.format("%sM", iter_17_1.layerId * 10)
+		self.altitudeItemTab[index] = altitudeItem
+		altitudeItem.isSelect = self.mo.stage == realSelectStage and index == realSelectLayerIndex and not isInDeepLayerState
+		altitudeItem.txtNum.text = string.format("%sM", config.layerId * 10)
 
-		arg_17_0:refreshSelectUI(var_17_3, iter_17_1)
-		gohelper.setActive(var_17_3.go, true)
-		var_17_3.go.transform:SetParent(arg_17_0._goaltitudeContent.transform, false)
-		recthelper.setAnchor(var_17_3.go.transform, 0, 0)
-		ZProj.UGUIHelper.RebuildLayout(arg_17_0._goaltitudeContent.transform)
+		self:refreshSelectUI(altitudeItem, config)
+		gohelper.setActive(altitudeItem.go, true)
+		altitudeItem.go.transform:SetParent(self._goaltitudeContent.transform, false)
+		recthelper.setAnchor(altitudeItem.go.transform, 0, 0)
+		ZProj.UGUIHelper.RebuildLayout(self._goaltitudeContent.transform)
 	end
 
-	arg_17_0._view.viewContainer:getTowerPermanentPoolView():recycleAltitudeItem(arg_17_0.configList)
+	self._view.viewContainer:getTowerPermanentPoolView():recycleAltitudeItem(self.configList)
 end
 
-function var_0_0.refreshSelectUI(arg_18_0, arg_18_1, arg_18_2)
-	local var_18_0 = arg_18_2.isElite == 1
-	local var_18_1 = arg_18_2.layerId <= TowerPermanentModel.instance.curPassLayer
+function TowerPermanentItem:refreshSelectUI(altitudeItem, config)
+	local isElite = config.isElite == 1
+	local isFinish = config.layerId <= TowerPermanentModel.instance.curPassLayer
 
-	gohelper.setActive(arg_18_1.goNormal, not var_18_0)
-	gohelper.setActive(arg_18_1.goElite, var_18_0)
-	gohelper.setActive(arg_18_1.goNormalSelect, arg_18_1.isSelect and not var_18_0)
-	gohelper.setActive(arg_18_1.goEliteSelect, arg_18_1.isSelect and var_18_0)
+	gohelper.setActive(altitudeItem.goNormal, not isElite)
+	gohelper.setActive(altitudeItem.goElite, isElite)
+	gohelper.setActive(altitudeItem.goNormalSelect, altitudeItem.isSelect and not isElite)
+	gohelper.setActive(altitudeItem.goEliteSelect, altitudeItem.isSelect and isElite)
 
-	arg_18_1.txtNum.fontSize = arg_18_1.isSelect and var_0_0.selectFontSize or var_0_0.unselectFontSize
+	altitudeItem.txtNum.fontSize = altitudeItem.isSelect and TowerPermanentItem.selectFontSize or TowerPermanentItem.unselectFontSize
 
-	local var_18_2 = arg_18_1.isSelect and var_0_0.selectFontPos or var_0_0.normalFontPos
-	local var_18_3 = "#FFFFFF"
+	local txtNumPos = altitudeItem.isSelect and TowerPermanentItem.selectFontPos or TowerPermanentItem.normalFontPos
+	local colorStr = "#FFFFFF"
 
-	if arg_18_1.isSelect then
-		var_18_3 = var_0_0.selectFontColor
+	if altitudeItem.isSelect then
+		colorStr = TowerPermanentItem.selectFontColor
 	else
-		var_18_3 = var_18_1 and var_0_0.finishFontColor or var_0_0.unFinishFontColor
+		colorStr = isFinish and TowerPermanentItem.finishFontColor or TowerPermanentItem.unFinishFontColor
 	end
 
-	local var_18_4 = TowerPermanentModel.instance:checkLayerUnlock(arg_18_2)
+	local isLayerUnlock = TowerPermanentModel.instance:checkLayerUnlock(config)
 
-	arg_18_1.itemCanvasGroup.alpha = not var_18_4 and not arg_18_1.isSelect and 0.5 or 1
+	altitudeItem.itemCanvasGroup.alpha = not isLayerUnlock and not altitudeItem.isSelect and 0.5 or 1
 
-	SLFramework.UGUI.GuiHelper.SetColor(arg_18_1.txtNum, var_18_3)
-	recthelper.setAnchor(arg_18_1.txtNum.transform, var_18_2.x, var_18_2.y)
-	gohelper.setActive(arg_18_1.goNormalUnFinish, not var_18_1 and not var_18_0 and not arg_18_1.isSelect)
-	gohelper.setActive(arg_18_1.goNormalFinish, var_18_1 and not var_18_0)
-	gohelper.setActive(arg_18_1.goEliteUnFinish, not var_18_1 and var_18_0 and not arg_18_1.isSelect)
-	gohelper.setActive(arg_18_1.goEliteFinish, var_18_1 and var_18_0)
-	gohelper.setActive(arg_18_1.goArrow, false)
-	gohelper.setActive(arg_18_1.goNormalLock, not var_18_4 and not var_18_0 and not arg_18_1.isSelect)
-	gohelper.setActive(arg_18_1.goEliteLock, not var_18_4 and var_18_0 and not arg_18_1.isSelect)
+	SLFramework.UGUI.GuiHelper.SetColor(altitudeItem.txtNum, colorStr)
+	recthelper.setAnchor(altitudeItem.txtNum.transform, txtNumPos.x, txtNumPos.y)
+	gohelper.setActive(altitudeItem.goNormalUnFinish, not isFinish and not isElite and not altitudeItem.isSelect)
+	gohelper.setActive(altitudeItem.goNormalFinish, isFinish and not isElite)
+	gohelper.setActive(altitudeItem.goEliteUnFinish, not isFinish and isElite and not altitudeItem.isSelect)
+	gohelper.setActive(altitudeItem.goEliteFinish, isFinish and isElite)
+	gohelper.setActive(altitudeItem.goArrow, false)
+	gohelper.setActive(altitudeItem.goNormalLock, not isLayerUnlock and not isElite and not altitudeItem.isSelect)
+	gohelper.setActive(altitudeItem.goEliteLock, not isLayerUnlock and isElite and not altitudeItem.isSelect)
 
-	if not string.nilorempty(arg_18_2.spReward) then
-		transformhelper.setLocalScale(arg_18_1.simageReward.gameObject.transform, 1, 1, 1)
-		gohelper.setActive(arg_18_1.goReward, not arg_18_1.isSelect and not var_18_1)
+	if not string.nilorempty(config.spReward) then
+		transformhelper.setLocalScale(altitudeItem.simageReward.gameObject.transform, 1, 1, 1)
+		gohelper.setActive(altitudeItem.goReward, not altitudeItem.isSelect and not isFinish)
 
-		local var_18_5 = string.splitToNumber(arg_18_2.spReward, "#")
-		local var_18_6, var_18_7 = ItemModel.instance:getItemConfigAndIcon(var_18_5[1], var_18_5[2])
+		local rewardData = string.splitToNumber(config.spReward, "#")
+		local config, icon = ItemModel.instance:getItemConfigAndIcon(rewardData[1], rewardData[2])
 
-		if var_18_6.subType == ItemEnum.SubType.Portrait then
-			var_18_7 = ResUrl.getPlayerHeadIcon(var_18_6.icon)
+		if config.subType == ItemEnum.SubType.Portrait then
+			icon = ResUrl.getPlayerHeadIcon(config.icon)
 
-			transformhelper.setLocalScale(arg_18_1.simageReward.gameObject.transform, 0.7, 0.7, 0.7)
+			transformhelper.setLocalScale(altitudeItem.simageReward.gameObject.transform, 0.7, 0.7, 0.7)
 		end
 
-		arg_18_1.simageReward:LoadImage(var_18_7)
+		altitudeItem.simageReward:LoadImage(icon)
 	else
-		gohelper.setActive(arg_18_1.goReward, false)
+		gohelper.setActive(altitudeItem.goReward, false)
 	end
 end
 
-function var_0_0.playFinishEffect(arg_19_0, arg_19_1)
-	local var_19_0 = TowerConfig.instance:getPermanentEpisodeCo(arg_19_1)
-	local var_19_1 = var_19_0.index
-	local var_19_2
+function TowerPermanentItem:playFinishEffect(layerId)
+	local permanentEpisodeCo = TowerConfig.instance:getPermanentEpisodeCo(layerId)
+	local layerIndex = permanentEpisodeCo.index
+	local altitudeItem
 
-	for iter_19_0, iter_19_1 in pairs(arg_19_0.configList) do
-		if iter_19_1.layerId == arg_19_1 then
-			var_19_2 = arg_19_0._view.viewContainer:getTowerPermanentPoolView():createOrGetAltitudeItem(iter_19_1, arg_19_0._btnAltitudeItemClick, arg_19_0)
+	for index, config in pairs(self.configList) do
+		if config.layerId == layerId then
+			altitudeItem = self._view.viewContainer:getTowerPermanentPoolView():createOrGetAltitudeItem(config, self._btnAltitudeItemClick, self)
 
 			break
 		end
 	end
 
-	if not var_19_2 then
+	if not altitudeItem then
 		return
 	end
 
-	if var_19_0.isElite == 1 then
-		var_19_2.animEliteFinish:Play("in", 0, 0)
+	if permanentEpisodeCo.isElite == 1 then
+		altitudeItem.animEliteFinish:Play("in", 0, 0)
 	else
-		var_19_2.animNormalFinish:Play("in", 0, 0)
+		altitudeItem.animNormalFinish:Play("in", 0, 0)
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.Tower.play_ui_fight_single_star)
 end
 
-function var_0_0.refreshAltitudeContentH(arg_20_0)
-	if arg_20_0.playingAnim then
+function TowerPermanentItem:refreshAltitudeContentH()
+	if self.playingAnim then
 		return
 	end
 
-	arg_20_0.altitudeContentH = arg_20_0.mo:getAltitudeHeight(arg_20_0.isUnFold)
+	self.altitudeContentH = self.mo:getAltitudeHeight(self.isUnFold)
 
-	recthelper.setHeight(arg_20_0.altitudeContentRect, arg_20_0.altitudeContentH)
+	recthelper.setHeight(self.altitudeContentRect, self.altitudeContentH)
 end
 
-function var_0_0.doUnFoldAnim(arg_21_0)
-	UIBlockMgr.instance:startBlock(var_0_0.animFoldBlock)
+function TowerPermanentItem:doUnFoldAnim()
+	UIBlockMgr.instance:startBlock(TowerPermanentItem.animFoldBlock)
 
-	arg_21_0.scrollCategory.movementType = 2
-	arg_21_0.altitudeContentH = arg_21_0.mo:getAltitudeHeight(arg_21_0.isUnFold)
-	arg_21_0._foldAnimTweenId = ZProj.TweenHelper.DOTweenFloat(0, arg_21_0.altitudeContentH, arg_21_0.altitudeContentH * 0.0003, arg_21_0._onFoldTweenFrameCallback, arg_21_0._onUnFoldTweenFinishCallback, arg_21_0, nil)
+	self.scrollCategory.movementType = 2
+	self.altitudeContentH = self.mo:getAltitudeHeight(self.isUnFold)
+	self._foldAnimTweenId = ZProj.TweenHelper.DOTweenFloat(0, self.altitudeContentH, self.altitudeContentH * 0.0003, self._onFoldTweenFrameCallback, self._onUnFoldTweenFinishCallback, self, nil)
 end
 
-function var_0_0.doFoldAnim(arg_22_0)
-	UIBlockMgr.instance:startBlock(var_0_0.animFoldBlock)
+function TowerPermanentItem:doFoldAnim()
+	UIBlockMgr.instance:startBlock(TowerPermanentItem.animFoldBlock)
 
-	arg_22_0.scrollCategory.movementType = 2
-	arg_22_0._foldAnimTweenId = ZProj.TweenHelper.DOTweenFloat(arg_22_0.altitudeContentH, 0, arg_22_0.altitudeContentH * 0.0001, arg_22_0._onFoldTweenFrameCallback, arg_22_0._onFoldTweenFinishCallback, arg_22_0, nil)
+	self.scrollCategory.movementType = 2
+	self._foldAnimTweenId = ZProj.TweenHelper.DOTweenFloat(self.altitudeContentH, 0, self.altitudeContentH * 0.0001, self._onFoldTweenFrameCallback, self._onFoldTweenFinishCallback, self, nil)
 end
 
-function var_0_0._onFoldTweenFrameCallback(arg_23_0, arg_23_1)
-	arg_23_0.playingAnim = true
+function TowerPermanentItem:_onFoldTweenFrameCallback(value)
+	self.playingAnim = true
 
-	arg_23_0:moveToTop()
+	self:moveToTop()
 
-	local var_23_0 = TowerPermanentModel.instance:checkhasLockTip() and TowerEnum.PermanentUI.LockTipH or 0
-	local var_23_1 = arg_23_0.stageCount - arg_23_0.mo.stage + 1
-	local var_23_2 = Mathf.Min(TowerEnum.PermanentUI.StageTitleH * var_23_1 + var_23_0 + arg_23_1, arg_23_0.isDeepLayerUnlock and TowerEnum.PermanentUI.DeepScrollH or TowerEnum.PermanentUI.ScrollH)
+	local hasLockTip = TowerPermanentModel.instance:checkhasLockTip()
+	local lockTipH = hasLockTip and TowerEnum.PermanentUI.LockTipH or 0
+	local stageCount = self.stageCount - self.mo.stage + 1
+	local viewPortH = Mathf.Min(TowerEnum.PermanentUI.StageTitleH * stageCount + lockTipH + value, self.isDeepLayerUnlock and TowerEnum.PermanentUI.DeepScrollH or TowerEnum.PermanentUI.ScrollH)
 
-	recthelper.setHeight(arg_23_0.rectViewPort, var_23_2)
-	arg_23_0.mo:overrideStageHeight(arg_23_1)
-	recthelper.setHeight(arg_23_0.altitudeContentRect, arg_23_1)
+	recthelper.setHeight(self.rectViewPort, viewPortH)
+	self.mo:overrideStageHeight(value)
+	recthelper.setHeight(self.altitudeContentRect, value)
 	TowerPermanentModel.instance:onModelUpdate()
 end
 
-function var_0_0._onFoldTweenFinishCallback(arg_24_0)
-	arg_24_0.playingAnim = false
+function TowerPermanentItem:_onFoldTweenFinishCallback()
+	self.playingAnim = false
 
-	UIBlockMgr.instance:endBlock(var_0_0.animFoldBlock)
-	TowerPermanentModel.instance:setCurSelectStage(arg_24_0.stageCount)
+	UIBlockMgr.instance:endBlock(TowerPermanentItem.animFoldBlock)
+	TowerPermanentModel.instance:setCurSelectStage(self.stageCount)
 	TowerController.instance:dispatchEvent(TowerEvent.UnFoldMaxStage)
 end
 
-function var_0_0.moveToTop(arg_25_0)
-	local var_25_0 = TowerEnum.PermanentUI.StageTitleH * Mathf.Max(arg_25_0.mo.stage - 2, 0)
+function TowerPermanentItem:moveToTop()
+	local moveToPos = TowerEnum.PermanentUI.StageTitleH * Mathf.Max(self.mo.stage - 2, 0)
 
-	recthelper.setAnchorY(arg_25_0.rectScrollContent, var_25_0)
+	recthelper.setAnchorY(self.rectScrollContent, moveToPos)
 end
 
-function var_0_0._onUnFoldTweenFinishCallback(arg_26_0)
-	arg_26_0.playingAnim = false
+function TowerPermanentItem:_onUnFoldTweenFinishCallback()
+	self.playingAnim = false
 
-	UIBlockMgr.instance:endBlock(var_0_0.animFoldBlock)
-	arg_26_0:moveToTop()
-	arg_26_0.mo:cleanCurUnFoldingH()
-	arg_26_0:refreshAltitudeContentH()
+	UIBlockMgr.instance:endBlock(TowerPermanentItem.animFoldBlock)
+	self:moveToTop()
+	self.mo:cleanCurUnFoldingH()
+	self:refreshAltitudeContentH()
 	TowerPermanentModel.instance:onModelUpdate()
 
-	arg_26_0.scrollCategory.movementType = 1
+	self.scrollCategory.movementType = 1
 
-	if TowerPermanentDeepModel.instance:getIsSelectDeepCategory() then
-		arg_26_0.scrollCategory.verticalNormalizedPosition = 0
+	local isSelectDeepCategory = TowerPermanentDeepModel.instance:getIsSelectDeepCategory()
+
+	if isSelectDeepCategory then
+		self.scrollCategory.verticalNormalizedPosition = 0
 	end
 end
 
-function var_0_0.onDestroy(arg_27_0)
-	if arg_27_0._foldAnimTweenId then
-		ZProj.TweenHelper.KillById(arg_27_0._foldAnimTweenId)
+function TowerPermanentItem:onDestroy()
+	if self._foldAnimTweenId then
+		ZProj.TweenHelper.KillById(self._foldAnimTweenId)
 
-		arg_27_0._foldAnimTweenId = nil
+		self._foldAnimTweenId = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_27_0.refreshLockTip, arg_27_0)
-	UIBlockMgr.instance:endBlock(var_0_0.animFoldBlock)
+	TaskDispatcher.cancelTask(self.refreshLockTip, self)
+	UIBlockMgr.instance:endBlock(TowerPermanentItem.animFoldBlock)
 end
 
-return var_0_0
+return TowerPermanentItem

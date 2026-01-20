@@ -1,40 +1,42 @@
-﻿module("modules.logic.settings.model.SettingsKeyItem", package.seeall)
+﻿-- chunkname: @modules/logic/settings/model/SettingsKeyItem.lua
 
-local var_0_0 = class("SettingsKeyItem", ListScrollCell)
+module("modules.logic.settings.model.SettingsKeyItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._go = arg_1_1
-	arg_1_0._txtdec = gohelper.findChildText(arg_1_0._go, "#txt_dec")
-	arg_1_0._btnshortcuts = gohelper.findChildButtonWithAudio(arg_1_0._go, "#btn_shortcuts")
-	arg_1_0._txtshortcuts = gohelper.findChildText(arg_1_0._go, "#btn_shortcuts/#txt_shortcuts")
+local SettingsKeyItem = class("SettingsKeyItem", ListScrollCell)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SettingsKeyItem:init(go)
+	self._go = go
+	self._txtdec = gohelper.findChildText(self._go, "#txt_dec")
+	self._btnshortcuts = gohelper.findChildButtonWithAudio(self._go, "#btn_shortcuts")
+	self._txtshortcuts = gohelper.findChildText(self._go, "#btn_shortcuts/#txt_shortcuts")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.onUpdateMO(arg_2_0, arg_2_1)
-	arg_2_0._mo = arg_2_1
-	arg_2_0._txtdec.text = arg_2_0._mo.value.description
-	arg_2_0._txtshortcuts.text = PCInputController.instance:KeyNameToDescName(arg_2_0._mo.value.key)
+function SettingsKeyItem:onUpdateMO(mo)
+	self._mo = mo
+	self._txtdec.text = self._mo.value.description
+	self._txtshortcuts.text = PCInputController.instance:KeyNameToDescName(self._mo.value.key)
 
-	recthelper.setAnchorY(arg_2_0._go.transform, 0)
+	recthelper.setAnchorY(self._go.transform, 0)
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	arg_3_0._btnshortcuts:AddClickListener(arg_3_0.OnClick, arg_3_0)
+function SettingsKeyItem:addEventListeners()
+	self._btnshortcuts:AddClickListener(self.OnClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	arg_4_0._btnshortcuts:RemoveClickListener()
+function SettingsKeyItem:removeEventListeners()
+	self._btnshortcuts:RemoveClickListener()
 end
 
-function var_0_0.onDestroy(arg_5_0)
+function SettingsKeyItem:onDestroy()
 	return
 end
 
-function var_0_0.OnClick(arg_6_0)
-	ViewMgr.instance:openView(ViewName.KeyMapAlertView, arg_6_0._mo)
+function SettingsKeyItem:OnClick()
+	ViewMgr.instance:openView(ViewName.KeyMapAlertView, self._mo)
 end
 
-return var_0_0
+return SettingsKeyItem

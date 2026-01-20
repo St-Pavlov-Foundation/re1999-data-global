@@ -1,10 +1,12 @@
-﻿module("modules.logic.room.define.RoomBlockEnum", package.seeall)
+﻿-- chunkname: @modules/logic/room/define/RoomBlockEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.room.define.RoomBlockEnum", package.seeall)
 
-var_0_0.BlockSize = 0.499
-var_0_0.EmptyBlockDistanceStyleCount = 1
-var_0_0.BlockState = {
+local RoomBlockEnum = _M
+
+RoomBlockEnum.BlockSize = 0.499
+RoomBlockEnum.EmptyBlockDistanceStyleCount = 1
+RoomBlockEnum.BlockState = {
 	Water = 2,
 	Inventory = 4,
 	WaterReform = 6,
@@ -12,23 +14,23 @@ var_0_0.BlockState = {
 	Temp = 3,
 	Map = 1
 }
-var_0_0.OpState = {
+RoomBlockEnum.OpState = {
 	Back = 2,
 	Normal = 1
 }
-var_0_0.UseState = {
+RoomBlockEnum.UseState = {
 	TransportPath = 2,
 	Normal = 1
 }
-var_0_0.CleanType = {
+RoomBlockEnum.CleanType = {
 	CleanLand = 1,
 	Normal = 0
 }
-var_0_0.OwnType = {
+RoomBlockEnum.OwnType = {
 	Special = 1,
 	Package = 0
 }
-var_0_0.BlockType = {
+RoomBlockEnum.BlockType = {
 	v2a6_Snow = 47,
 	v1a8_Snow = 15,
 	v1a8_Snow2 = 16,
@@ -37,21 +39,21 @@ var_0_0.BlockType = {
 	v2a6_Snow2 = 48,
 	v2a8_Snow = 51
 }
-var_0_0.BlockLinkEffectGOPath = {
-	[var_0_0.BlockType.Green] = "junsi"
+RoomBlockEnum.BlockLinkEffectGOPath = {
+	[RoomBlockEnum.BlockType.Green] = "junsi"
 }
-var_0_0.FootPrintDict = {
-	[var_0_0.BlockType.v1a8_Snow] = true,
-	[var_0_0.BlockType.v1a8_Snow2] = true,
-	[var_0_0.BlockType.v2a6_Snow] = true,
-	[var_0_0.BlockType.v2a6_Snow2] = true,
-	[var_0_0.BlockType.v2a6_Snow3] = true,
-	[var_0_0.BlockType.v2a8_Snow] = true
+RoomBlockEnum.FootPrintDict = {
+	[RoomBlockEnum.BlockType.v1a8_Snow] = true,
+	[RoomBlockEnum.BlockType.v1a8_Snow2] = true,
+	[RoomBlockEnum.BlockType.v2a6_Snow] = true,
+	[RoomBlockEnum.BlockType.v2a6_Snow2] = true,
+	[RoomBlockEnum.BlockType.v2a6_Snow3] = true,
+	[RoomBlockEnum.BlockType.v2a8_Snow] = true
 }
-var_0_0.EmptyDefineId = 1
-var_0_0.PlaceEffectAnimatorCloseTime = 0.16666666666666666
-var_0_0.InitBlockDegreeValue = 48
-var_0_0.WaterReformCommonDefineId = 292
-var_0_0.BlockColorReformCommonDefineId = 6
+RoomBlockEnum.EmptyDefineId = 1
+RoomBlockEnum.PlaceEffectAnimatorCloseTime = 0.16666666666666666
+RoomBlockEnum.InitBlockDegreeValue = 48
+RoomBlockEnum.WaterReformCommonDefineId = 292
+RoomBlockEnum.BlockColorReformCommonDefineId = 6
 
-return var_0_0
+return RoomBlockEnum

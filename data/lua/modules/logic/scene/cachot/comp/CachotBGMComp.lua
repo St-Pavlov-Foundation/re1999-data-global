@@ -1,31 +1,33 @@
-﻿module("modules.logic.scene.cachot.comp.CachotBGMComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/cachot/comp/CachotBGMComp.lua
 
-local var_0_0 = class("CachotBGMComp", BaseSceneComp)
+module("modules.logic.scene.cachot.comp.CachotBGMComp", package.seeall)
 
-function var_0_0.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._scene = arg_1_0:getCurScene()
-	arg_1_0._levelComp = arg_1_0._scene.level
+local CachotBGMComp = class("CachotBGMComp", BaseSceneComp)
 
-	arg_1_0._levelComp:registerCallback(CommonSceneLevelComp.OnLevelLoaded, arg_1_0.onLevelLoaded, arg_1_0)
+function CachotBGMComp:onSceneStart(sceneId, levelId)
+	self._scene = self:getCurScene()
+	self._levelComp = self._scene.level
+
+	self._levelComp:registerCallback(CommonSceneLevelComp.OnLevelLoaded, self.onLevelLoaded, self)
 end
 
-function var_0_0.onLevelLoaded(arg_2_0)
-	local var_2_0 = 0
-	local var_2_1 = V1a6_CachotModel.instance:getRogueInfo()
+function CachotBGMComp:onLevelLoaded()
+	local layer = 0
+	local rogueInfo = V1a6_CachotModel.instance:getRogueInfo()
 
-	if var_2_1 then
-		var_2_0 = var_2_1.layer
+	if rogueInfo then
+		layer = rogueInfo.layer
 	end
 
-	local var_2_2 = V1a6_CachotEventConfig.instance:getBgmIdByLayer(var_2_0)
+	local bgmId = V1a6_CachotEventConfig.instance:getBgmIdByLayer(layer)
 
-	if var_2_2 then
-		AudioBgmManager.instance:modifyBgmAudioId(AudioBgmEnum.Layer.Cachot, var_2_2)
+	if bgmId then
+		AudioBgmManager.instance:modifyBgmAudioId(AudioBgmEnum.Layer.Cachot, bgmId)
 	end
 end
 
-function var_0_0.onSceneClose(arg_3_0)
-	arg_3_0._levelComp:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, arg_3_0.onLevelLoaded, arg_3_0)
+function CachotBGMComp:onSceneClose()
+	self._levelComp:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, self.onLevelLoaded, self)
 end
 
-return var_0_0
+return CachotBGMComp

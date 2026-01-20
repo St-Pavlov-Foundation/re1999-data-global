@@ -1,58 +1,60 @@
-﻿module("modules.logic.versionactivity2_1.lanshoupa.view.LanShouPaStoryView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_1/lanshoupa/view/LanShouPaStoryView.lua
 
-local var_0_0 = class("LanShouPaStoryView", BaseView)
+module("modules.logic.versionactivity2_1.lanshoupa.view.LanShouPaStoryView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagePanelBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_PanelBG")
-	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "Title/#txt_Title")
-	arg_1_0._scrollChapterList = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_ChapterList")
-	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Close")
-	arg_1_0._btncloseMask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_closeMask")
+local LanShouPaStoryView = class("LanShouPaStoryView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function LanShouPaStoryView:onInitView()
+	self._simagePanelBG = gohelper.findChildSingleImage(self.viewGO, "#simage_PanelBG")
+	self._txtTitle = gohelper.findChildText(self.viewGO, "Title/#txt_Title")
+	self._scrollChapterList = gohelper.findChildScrollRect(self.viewGO, "#scroll_ChapterList")
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Close")
+	self._btncloseMask = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_closeMask")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnClose:AddClickListener(arg_2_0._btnCloseOnClick, arg_2_0)
-	arg_2_0._btncloseMask:AddClickListener(arg_2_0._btncloseMaskOnClick, arg_2_0)
+function LanShouPaStoryView:addEvents()
+	self._btnClose:AddClickListener(self._btnCloseOnClick, self)
+	self._btncloseMask:AddClickListener(self._btncloseMaskOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnClose:RemoveClickListener()
-	arg_3_0._btncloseMask:RemoveClickListener()
+function LanShouPaStoryView:removeEvents()
+	self._btnClose:RemoveClickListener()
+	self._btncloseMask:RemoveClickListener()
 end
 
-function var_0_0._btnCloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function LanShouPaStoryView:_btnCloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btncloseMaskOnClick(arg_5_0)
-	arg_5_0:closeThis()
+function LanShouPaStoryView:_btncloseMaskOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._txtTitleEn = gohelper.findChildText(arg_6_0.viewGO, "Title/#txt_Title/txt_TitleEn")
+function LanShouPaStoryView:_editableInitView()
+	self._txtTitleEn = gohelper.findChildText(self.viewGO, "Title/#txt_Title/txt_TitleEn")
 end
 
-function var_0_0.onOpen(arg_7_0)
-	LanShouPaStoryListModel.instance:init(arg_7_0.viewParam.actId, arg_7_0.viewParam.episodeId)
+function LanShouPaStoryView:onOpen()
+	LanShouPaStoryListModel.instance:init(self.viewParam.actId, self.viewParam.episodeId)
 
-	local var_7_0 = Activity164Config.instance:getEpisodeCo(arg_7_0.viewParam.actId, arg_7_0.viewParam.episodeId)
-	local var_7_1 = Activity164Config.instance:getEpisodeCoList(arg_7_0.viewParam.actId)
-	local var_7_2 = tabletool.indexOf(var_7_1, var_7_0)
+	local expiodeCfg = Activity164Config.instance:getEpisodeCo(self.viewParam.actId, self.viewParam.episodeId)
+	local list = Activity164Config.instance:getEpisodeCoList(self.viewParam.actId)
+	local index = tabletool.indexOf(list, expiodeCfg)
 
-	arg_7_0._txtTitle.text = var_7_0 and var_7_0.name or ""
-	arg_7_0._txtTitleEn.text = string.format("STAGE %02d", var_7_2)
+	self._txtTitle.text = expiodeCfg and expiodeCfg.name or ""
+	self._txtTitleEn.text = string.format("STAGE %02d", index)
 end
 
-function var_0_0.onClose(arg_8_0)
+function LanShouPaStoryView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
-	arg_9_0._simagePanelBG:UnLoadImage()
+function LanShouPaStoryView:onDestroyView()
+	self._simagePanelBG:UnLoadImage()
 end
 
-return var_0_0
+return LanShouPaStoryView

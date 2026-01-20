@@ -1,22 +1,26 @@
-﻿module("modules.logic.tips.view.SkillTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/tips/view/SkillTipViewContainer.lua
 
-local var_0_0 = class("SkillTipViewContainer", BaseViewContainer)
+module("modules.logic.tips.view.SkillTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local SkillTipViewContainer = class("SkillTipViewContainer", BaseViewContainer)
+
+function SkillTipViewContainer:buildViews()
 	return {
 		SkillTipView.New()
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
+function SkillTipViewContainer:onContainerClickModalMask()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	arg_2_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.getCustomViewMaskAlpha(arg_3_0)
-	if ViewMgr.instance:isOpen(ViewName.AssassinStatsView) then
+function SkillTipViewContainer:getCustomViewMaskAlpha()
+	local isOpen = ViewMgr.instance:isOpen(ViewName.AssassinStatsView)
+
+	if isOpen then
 		return 0
 	end
 end
 
-return var_0_0
+return SkillTipViewContainer

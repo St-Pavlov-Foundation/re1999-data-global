@@ -1,98 +1,100 @@
-﻿module("modules.logic.fight.entity.comp.skill.FightTLEventSpineMaterial", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skill/FightTLEventSpineMaterial.lua
 
-local var_0_0 = class("FightTLEventSpineMaterial", FightTimelineTrackItem)
+module("modules.logic.fight.entity.comp.skill.FightTLEventSpineMaterial", package.seeall)
 
-function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = arg_1_3[1]
+local FightTLEventSpineMaterial = class("FightTLEventSpineMaterial", FightTimelineTrackItem)
 
-	arg_1_0._matName = arg_1_3[2]
-	arg_1_0._transitName = arg_1_3[3]
-	arg_1_0._transitType = arg_1_3[4]
+function FightTLEventSpineMaterial:onTrackStart(fightStepData, duration, paramsArr)
+	local targetType = paramsArr[1]
 
-	local var_1_1 = arg_1_3[5]
-	local var_1_2 = tonumber(arg_1_3[6])
+	self._matName = paramsArr[2]
+	self._transitName = paramsArr[3]
+	self._transitType = paramsArr[4]
 
-	arg_1_0._targetEntitys = nil
+	local transitValue = paramsArr[5]
+	local transitTime = tonumber(paramsArr[6])
 
-	if var_1_0 == "1" then
-		arg_1_0._targetEntitys = {}
+	self._targetEntitys = nil
 
-		table.insert(arg_1_0._targetEntitys, FightHelper.getEntity(arg_1_1.fromId))
-	elseif var_1_0 == "2" then
-		arg_1_0._targetEntitys = FightHelper.getSkillTargetEntitys(arg_1_1)
-	elseif not string.nilorempty(var_1_0) then
-		local var_1_3 = GameSceneMgr.instance:getCurScene().entityMgr
-		local var_1_4 = arg_1_1.stepUid .. "_" .. var_1_0
-		local var_1_5 = var_1_3:getUnit(SceneTag.UnitNpc, var_1_4)
+	if targetType == "1" then
+		self._targetEntitys = {}
 
-		if var_1_5 then
-			arg_1_0._targetEntitys = {}
+		table.insert(self._targetEntitys, FightHelper.getEntity(fightStepData.fromId))
+	elseif targetType == "2" then
+		self._targetEntitys = FightHelper.getSkillTargetEntitys(fightStepData)
+	elseif not string.nilorempty(targetType) then
+		local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+		local entityId = fightStepData.stepUid .. "_" .. targetType
+		local tempEntity = entityMgr:getUnit(SceneTag.UnitNpc, entityId)
 
-			table.insert(arg_1_0._targetEntitys, var_1_5)
+		if tempEntity then
+			self._targetEntitys = {}
+
+			table.insert(self._targetEntitys, tempEntity)
 		else
-			logError("找不到实体, id: " .. tostring(var_1_0))
+			logError("找不到实体, id: " .. tostring(targetType))
 
 			return
 		end
 	end
 
-	local var_1_6 = not string.nilorempty(arg_1_0._matName) and FightSpineMatPool.getMat(arg_1_0._matName)
-	local var_1_7 = not string.nilorempty(arg_1_0._transitName)
-	local var_1_8 = MaterialUtil.getPropValueFromStr(arg_1_0._transitType, var_1_1)
+	local newMat = not string.nilorempty(self._matName) and FightSpineMatPool.getMat(self._matName)
+	local needChangeProp = not string.nilorempty(self._transitName)
+	local targetValue = MaterialUtil.getPropValueFromStr(self._transitType, transitValue)
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_0._targetEntitys) do
-		if var_1_6 then
-			iter_1_1.spineRenderer:replaceSpineMat(var_1_6)
-			FightController.instance:dispatchEvent(FightEvent.OnSpineMaterialChange, iter_1_1.id, iter_1_1.spineRenderer:getReplaceMat())
+	for _, entity in ipairs(self._targetEntitys) do
+		if newMat then
+			entity.spineRenderer:replaceSpineMat(newMat)
+			FightController.instance:dispatchEvent(FightEvent.OnSpineMaterialChange, entity.id, entity.spineRenderer:getReplaceMat())
 		end
 	end
 
-	if var_1_2 > 0 then
-		local var_1_9 = {}
-		local var_1_10 = {}
-		local var_1_11 = {}
+	if transitTime > 0 then
+		local matDict = {}
+		local originValueDict = {}
+		local valueDict = {}
 
-		for iter_1_2, iter_1_3 in ipairs(arg_1_0._targetEntitys) do
-			local var_1_12 = iter_1_3.spineRenderer:getReplaceMat()
-			local var_1_13 = MaterialUtil.getPropValueFromMat(var_1_12, arg_1_0._transitName, arg_1_0._transitType)
+		for _, entity in ipairs(self._targetEntitys) do
+			local spineMat = entity.spineRenderer:getReplaceMat()
+			local originValue = MaterialUtil.getPropValueFromMat(spineMat, self._transitName, self._transitType)
 
-			var_1_10[iter_1_3.id] = var_1_13
-			var_1_9[iter_1_3.id] = var_1_12
+			originValueDict[entity.id] = originValue
+			matDict[entity.id] = spineMat
 		end
 
-		arg_1_0._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, var_1_2, function(arg_2_0)
-			for iter_2_0, iter_2_1 in ipairs(arg_1_0._targetEntitys) do
-				local var_2_0 = var_1_10[iter_2_1.id]
-				local var_2_1 = var_1_9[iter_2_1.id]
+		self._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, transitTime, function(value)
+			for _, entity in ipairs(self._targetEntitys) do
+				local originValue = originValueDict[entity.id]
+				local spineMat = matDict[entity.id]
 
-				var_1_11[iter_2_1.id] = MaterialUtil.getLerpValue(arg_1_0._transitType, var_2_0, var_1_8, arg_2_0, var_1_11[iter_2_1.id])
+				valueDict[entity.id] = MaterialUtil.getLerpValue(self._transitType, originValue, targetValue, value, valueDict[entity.id])
 
-				MaterialUtil.setPropValue(var_2_1, arg_1_0._transitName, arg_1_0._transitType, var_1_11[iter_2_1.id])
+				MaterialUtil.setPropValue(spineMat, self._transitName, self._transitType, valueDict[entity.id])
 			end
 		end, nil, nil, nil, EaseType.Linear)
-	elseif var_1_7 then
-		for iter_1_4, iter_1_5 in ipairs(arg_1_0._targetEntitys) do
-			local var_1_14 = iter_1_5.spineRenderer:getReplaceMat()
+	elseif needChangeProp then
+		for _, entity in ipairs(self._targetEntitys) do
+			local spineMat = entity.spineRenderer:getReplaceMat()
 
-			MaterialUtil.setPropValue(var_1_14, arg_1_0._transitName, arg_1_0._transitType, var_1_8)
+			MaterialUtil.setPropValue(spineMat, self._transitName, self._transitType, targetValue)
 		end
 	end
 end
 
-function var_0_0.onTrackEnd(arg_3_0)
-	arg_3_0:_clear()
+function FightTLEventSpineMaterial:onTrackEnd()
+	self:_clear()
 end
 
-function var_0_0._clear(arg_4_0)
-	if arg_4_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_4_0._tweenId)
+function FightTLEventSpineMaterial:_clear()
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_4_0._tweenId = nil
+		self._tweenId = nil
 	end
 end
 
-function var_0_0.onDestructor(arg_5_0)
-	arg_5_0:_clear()
+function FightTLEventSpineMaterial:onDestructor()
+	self:_clear()
 end
 
-return var_0_0
+return FightTLEventSpineMaterial

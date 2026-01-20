@@ -1,976 +1,977 @@
-﻿local var_0_0 = {
-	[167] = {
-		count = 1,
-		ptype = 7
-	},
-	[166] = {
-		count = 1,
-		ptype = 2
-	},
-	[165] = {
-		count = 2,
-		ptype = 3
-	},
-	[164] = {
-		count = 2,
-		ptype = 4
-	},
-	[163] = {
-		count = 2,
-		ptype = 1
-	},
-	[162] = {
-		count = 5,
-		ptype = 6
-	},
-	[161] = {
-		zRot = 0,
-		gtype = 4,
-		bMovable = false
-	},
-	[160] = {
-		zRot = 90,
-		bMovable = false,
-		gtype = 3,
-		ptype = 0
-	},
-	[159] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[158] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[157] = {
-		zRot = 0,
-		gtype = 1,
-		bMovable = false
-	},
-	[156] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[155] = {
-		zRot = 0,
-		gtype = 2,
-		bMovable = false
-	},
-	[154] = {
-		zRot = 0,
-		gtype = 1,
-		bMovable = false
-	},
-	[153] = {
-		zRot = 0,
-		gtype = 1,
-		bMovable = false
-	},
-	[152] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[151] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[150] = {
-		zRot = 0,
-		bMovable = false,
-		gtype = 5,
-		ptype = 6
-	},
-	[149] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[148] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[147] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[146] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[145] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[144] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[143] = {
-		zRot = 0,
-		gtype = 1,
-		bMovable = false
-	},
-	[142] = {
-		zRot = 0,
-		bMovable = false,
-		gtype = 5,
-		ptype = 5
-	},
-	[141] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[140] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[139] = {
-		zRot = 0,
-		gtype = 1,
-		bMovable = false
-	},
-	[138] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[137] = {
-		zRot = 0,
-		bMovable = false,
-		gtype = 5,
-		ptype = 3
-	},
-	[136] = {
-		zRot = 180,
-		bMovable = false,
-		gtype = 3,
-		ptype = 0
-	},
-	[135] = {
-		zRot = 0,
-		bMovable = false,
-		gtype = 5,
-		ptype = 5
-	},
-	[134] = {
-		zRot = 0,
-		gtype = 2,
-		bMovable = false
-	},
-	[133] = {
-		zRot = 0,
-		gtype = 1,
-		bMovable = false
-	},
-	[132] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[131] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[130] = {
-		zRot = 0,
-		gtype = 1,
-		bMovable = false
-	},
-	[129] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[128] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[127] = {
-		zRot = 0,
-		bMovable = false,
-		gtype = 5,
-		ptype = 6
-	},
-	[126] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[125] = {
-		count = 1,
-		ptype = 4
-	},
-	[124] = {
-		count = 1,
-		ptype = 1
-	},
-	[123] = {
-		count = 1,
-		ptype = 2
-	},
-	[122] = {
-		count = 1,
-		ptype = 7
-	},
-	[121] = {
-		count = 2,
-		ptype = 6
-	},
-	[120] = {
-		count = 2,
-		ptype = 5
-	},
-	[119] = {
-		zRot = 0,
-		gtype = 4,
-		bMovable = false
-	},
-	[118] = {
-		zRot = 0,
-		gtype = 1,
-		bMovable = false
-	},
-	[117] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[116] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[115] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[114] = {
-		zRot = 0,
-		gtype = 3,
-		bMovable = false
-	},
-	[113] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[112] = {
-		zRot = 0,
-		gtype = 2,
-		bMovable = false
-	},
-	[111] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[110] = {
-		zRot = 0,
-		bMovable = false,
-		gtype = 5,
-		ptype = 3
-	},
-	[109] = {
-		zRot = 0,
-		gtype = 1,
-		bMovable = false
-	},
-	[108] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[107] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[106] = {
-		zRot = 0,
-		gtype = 1,
-		bMovable = false
-	},
-	[105] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[104] = {
-		zRot = 0,
-		bMovable = false,
-		gtype = 5,
-		ptype = 3
-	},
-	[103] = {
-		zRot = 0,
-		bMovable = false,
-		gtype = 5,
-		ptype = 1
-	},
-	[102] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[101] = {
-		zRot = 0,
-		bMovable = false,
-		gtype = 5,
-		ptype = 3
-	},
-	[100] = {
-		zRot = 0,
-		gtype = 2,
-		bMovable = false
-	},
-	[99] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[98] = {
-		zRot = 180,
-		bMovable = false,
-		gtype = 3,
-		ptype = 0
-	},
-	[97] = {
-		zRot = 0,
-		gtype = 1,
-		bMovable = false
-	},
-	[96] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[95] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[94] = {
-		count = 1,
-		ptype = 3
-	},
-	[93] = {
-		count = 3,
-		ptype = 1
-	},
-	[92] = {
-		count = 1,
-		ptype = 5
-	},
-	[91] = {
-		count = 2,
-		ptype = 4
-	},
-	[90] = {
-		count = 2,
-		ptype = 2
-	},
-	[89] = {
-		count = 3,
-		ptype = 6
-	},
-	[88] = {
-		zRot = 0,
-		gtype = 4,
-		bMovable = false
-	},
-	[87] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[86] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[85] = {
-		zRot = 0,
-		gtype = 2,
-		bMovable = false
-	},
-	[84] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[83] = {
-		zRot = 0,
-		gtype = 3,
-		bMovable = false
-	},
-	[82] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[81] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[80] = {
-		zRot = 0,
-		gtype = 1,
-		bMovable = false
-	},
-	[79] = {
-		zRot = 0,
-		bMovable = false,
-		gtype = 5,
-		ptype = 5
-	},
-	[78] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[77] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[76] = {
-		zRot = 0,
-		gtype = 1,
-		bMovable = false
-	},
-	[75] = {
-		zRot = 0,
-		gtype = 2,
-		bMovable = false
-	},
-	[74] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[73] = {
-		zRot = 0,
-		gtype = 1,
-		bMovable = false
-	},
-	[72] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[71] = {
-		zRot = 0,
-		bMovable = false,
-		gtype = 5,
-		ptype = 3
-	},
-	[70] = {
-		zRot = 0,
-		gtype = 1,
-		bMovable = false
-	},
-	[69] = {
-		zRot = 0,
-		gtype = 1,
-		bMovable = false
-	},
-	[68] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[67] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[66] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[65] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[64] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[63] = {
-		count = 2,
-		ptype = 6
-	},
-	[62] = {
-		count = 2,
-		ptype = 3
-	},
-	[61] = {
-		count = 3,
-		ptype = 2
-	},
-	[60] = {
-		zRot = 0,
-		gtype = 4,
-		bMovable = false
-	},
-	[59] = {
-		zRot = 90,
-		bMovable = false,
-		gtype = 3,
-		ptype = 0
-	},
-	[58] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[57] = {
-		zRot = 0,
-		gtype = 1,
-		bMovable = false
-	},
-	[56] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[55] = {
-		zRot = 0,
-		bMovable = false,
-		gtype = 5,
-		ptype = 3
-	},
-	[54] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[53] = {
-		zRot = 0,
-		bMovable = false,
-		gtype = 5,
-		ptype = 6
-	},
-	[52] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[51] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[50] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[49] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[48] = {
-		zRot = 0,
-		gtype = 1,
-		bMovable = false
-	},
-	[47] = {
-		zRot = 0,
-		bMovable = false,
-		gtype = 5,
-		ptype = 5
-	},
-	[46] = {
-		zRot = 0,
-		gtype = 1,
-		bMovable = false
-	},
-	[45] = {
-		zRot = 0,
-		bMovable = false,
-		gtype = 5,
-		ptype = 5
-	},
-	[44] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[43] = {
-		zRot = 0,
-		bMovable = false,
-		gtype = 5,
-		ptype = 6
-	},
-	[42] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[41] = {
-		zRot = 0,
-		bMovable = false,
-		gtype = 5,
-		ptype = 3
-	},
-	[40] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[39] = {
-		zRot = 0,
-		bMovable = false,
-		gtype = 5,
-		ptype = 2
-	},
-	[38] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[37] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[36] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[35] = {
-		count = 1,
-		ptype = 3
-	},
-	[34] = {
-		count = 2,
-		ptype = 6
-	},
-	[33] = {
-		count = 1,
-		ptype = 2
-	},
-	[32] = {
-		count = 2,
-		ptype = 5
-	},
-	[31] = {
-		zRot = 0,
-		gtype = 4,
-		bMovable = false
-	},
-	[30] = {
-		zRot = 90,
-		bMovable = false,
-		gtype = 3,
-		ptype = 0
-	},
-	[29] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[28] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[27] = {
-		zRot = 0,
-		gtype = 1,
-		bMovable = false
-	},
-	[26] = {
-		zRot = 0,
-		gtype = 1,
-		bMovable = false
-	},
-	[25] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[24] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[23] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[22] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[21] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[20] = {
-		zRot = 0,
-		gtype = 1,
-		bMovable = false
-	},
-	[19] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[18] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[17] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	},
-	[16] = {
-		zRot = 0,
-		gtype = 0,
-		bMovable = false
-	}
-}
+﻿-- chunkname: @modules/configs/gaosiniao/map_1_0_0.lua
 
-var_0_0[15] = {
-	var_0_0[162],
-	var_0_0[163],
-	var_0_0[164],
-	var_0_0[165],
-	var_0_0[166],
-	var_0_0[167]
+local _ = {}
+
+_[167] = {
+	count = 1,
+	ptype = 7
 }
-var_0_0[14] = {
-	var_0_0[126],
-	var_0_0[127],
-	var_0_0[128],
-	var_0_0[129],
-	var_0_0[130],
-	var_0_0[131],
-	var_0_0[132],
-	var_0_0[133],
-	var_0_0[134],
-	var_0_0[135],
-	var_0_0[136],
-	var_0_0[137],
-	var_0_0[138],
-	var_0_0[139],
-	var_0_0[140],
-	var_0_0[141],
-	var_0_0[142],
-	var_0_0[143],
-	var_0_0[144],
-	var_0_0[145],
-	var_0_0[146],
-	var_0_0[147],
-	var_0_0[148],
-	var_0_0[149],
-	var_0_0[150],
-	var_0_0[151],
-	var_0_0[152],
-	var_0_0[153],
-	var_0_0[154],
-	var_0_0[155],
-	var_0_0[156],
-	var_0_0[157],
-	var_0_0[158],
-	var_0_0[159],
-	var_0_0[160],
-	[0] = var_0_0[161]
+_[166] = {
+	count = 1,
+	ptype = 2
 }
-var_0_0[13] = {
-	var_0_0[120],
-	var_0_0[121],
-	var_0_0[122],
-	var_0_0[123],
-	var_0_0[124],
-	var_0_0[125]
+_[165] = {
+	count = 2,
+	ptype = 3
 }
-var_0_0[12] = {
-	var_0_0[95],
-	var_0_0[96],
-	var_0_0[97],
-	var_0_0[98],
-	var_0_0[99],
-	var_0_0[100],
-	var_0_0[101],
-	var_0_0[102],
-	var_0_0[103],
-	var_0_0[104],
-	var_0_0[105],
-	var_0_0[106],
-	var_0_0[107],
-	var_0_0[108],
-	var_0_0[109],
-	var_0_0[110],
-	var_0_0[111],
-	var_0_0[112],
-	var_0_0[113],
-	var_0_0[114],
-	var_0_0[115],
-	var_0_0[116],
-	var_0_0[117],
-	var_0_0[118],
-	[0] = var_0_0[119]
+_[164] = {
+	count = 2,
+	ptype = 4
 }
-var_0_0[11] = {
-	var_0_0[89],
-	var_0_0[90],
-	var_0_0[91],
-	var_0_0[92],
-	var_0_0[93],
-	var_0_0[94]
+_[163] = {
+	count = 2,
+	ptype = 1
 }
-var_0_0[10] = {
-	var_0_0[64],
-	var_0_0[65],
-	var_0_0[66],
-	var_0_0[67],
-	var_0_0[68],
-	var_0_0[69],
-	var_0_0[70],
-	var_0_0[71],
-	var_0_0[72],
-	var_0_0[73],
-	var_0_0[74],
-	var_0_0[75],
-	var_0_0[76],
-	var_0_0[77],
-	var_0_0[78],
-	var_0_0[79],
-	var_0_0[80],
-	var_0_0[81],
-	var_0_0[82],
-	var_0_0[83],
-	var_0_0[84],
-	var_0_0[85],
-	var_0_0[86],
-	var_0_0[87],
-	[0] = var_0_0[88]
+_[162] = {
+	count = 5,
+	ptype = 6
 }
-var_0_0[9] = {
-	var_0_0[61],
-	var_0_0[62],
-	var_0_0[63]
+_[161] = {
+	zRot = 0,
+	gtype = 4,
+	bMovable = false
 }
-var_0_0[8] = {
-	var_0_0[36],
-	var_0_0[37],
-	var_0_0[38],
-	var_0_0[39],
-	var_0_0[40],
-	var_0_0[41],
-	var_0_0[42],
-	var_0_0[43],
-	var_0_0[44],
-	var_0_0[45],
-	var_0_0[46],
-	var_0_0[47],
-	var_0_0[48],
-	var_0_0[49],
-	var_0_0[50],
-	var_0_0[51],
-	var_0_0[52],
-	var_0_0[53],
-	var_0_0[54],
-	var_0_0[55],
-	var_0_0[56],
-	var_0_0[57],
-	var_0_0[58],
-	var_0_0[59],
-	[0] = var_0_0[60]
+_[160] = {
+	zRot = 90,
+	bMovable = false,
+	gtype = 3,
+	ptype = 0
 }
-var_0_0[7] = {
-	var_0_0[32],
-	var_0_0[33],
-	var_0_0[34],
-	var_0_0[35]
+_[159] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
 }
-var_0_0[6] = {
-	var_0_0[16],
-	var_0_0[17],
-	var_0_0[18],
-	var_0_0[19],
-	var_0_0[20],
-	var_0_0[21],
-	var_0_0[22],
-	var_0_0[23],
-	var_0_0[24],
-	var_0_0[25],
-	var_0_0[26],
-	var_0_0[27],
-	var_0_0[28],
-	var_0_0[29],
-	var_0_0[30],
-	[0] = var_0_0[31]
+_[158] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
 }
-var_0_0[5] = {
+_[157] = {
+	zRot = 0,
+	gtype = 1,
+	bMovable = false
+}
+_[156] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[155] = {
+	zRot = 0,
+	gtype = 2,
+	bMovable = false
+}
+_[154] = {
+	zRot = 0,
+	gtype = 1,
+	bMovable = false
+}
+_[153] = {
+	zRot = 0,
+	gtype = 1,
+	bMovable = false
+}
+_[152] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[151] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[150] = {
+	zRot = 0,
+	bMovable = false,
+	gtype = 5,
+	ptype = 6
+}
+_[149] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[148] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[147] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[146] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[145] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[144] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[143] = {
+	zRot = 0,
+	gtype = 1,
+	bMovable = false
+}
+_[142] = {
+	zRot = 0,
+	bMovable = false,
+	gtype = 5,
+	ptype = 5
+}
+_[141] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[140] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[139] = {
+	zRot = 0,
+	gtype = 1,
+	bMovable = false
+}
+_[138] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[137] = {
+	zRot = 0,
+	bMovable = false,
+	gtype = 5,
+	ptype = 3
+}
+_[136] = {
+	zRot = 180,
+	bMovable = false,
+	gtype = 3,
+	ptype = 0
+}
+_[135] = {
+	zRot = 0,
+	bMovable = false,
+	gtype = 5,
+	ptype = 5
+}
+_[134] = {
+	zRot = 0,
+	gtype = 2,
+	bMovable = false
+}
+_[133] = {
+	zRot = 0,
+	gtype = 1,
+	bMovable = false
+}
+_[132] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[131] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[130] = {
+	zRot = 0,
+	gtype = 1,
+	bMovable = false
+}
+_[129] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[128] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[127] = {
+	zRot = 0,
+	bMovable = false,
+	gtype = 5,
+	ptype = 6
+}
+_[126] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[125] = {
+	count = 1,
+	ptype = 4
+}
+_[124] = {
+	count = 1,
+	ptype = 1
+}
+_[123] = {
+	count = 1,
+	ptype = 2
+}
+_[122] = {
+	count = 1,
+	ptype = 7
+}
+_[121] = {
+	count = 2,
+	ptype = 6
+}
+_[120] = {
+	count = 2,
+	ptype = 5
+}
+_[119] = {
+	zRot = 0,
+	gtype = 4,
+	bMovable = false
+}
+_[118] = {
+	zRot = 0,
+	gtype = 1,
+	bMovable = false
+}
+_[117] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[116] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[115] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[114] = {
+	zRot = 0,
+	gtype = 3,
+	bMovable = false
+}
+_[113] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[112] = {
+	zRot = 0,
+	gtype = 2,
+	bMovable = false
+}
+_[111] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[110] = {
+	zRot = 0,
+	bMovable = false,
+	gtype = 5,
+	ptype = 3
+}
+_[109] = {
+	zRot = 0,
+	gtype = 1,
+	bMovable = false
+}
+_[108] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[107] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[106] = {
+	zRot = 0,
+	gtype = 1,
+	bMovable = false
+}
+_[105] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[104] = {
+	zRot = 0,
+	bMovable = false,
+	gtype = 5,
+	ptype = 3
+}
+_[103] = {
+	zRot = 0,
+	bMovable = false,
+	gtype = 5,
+	ptype = 1
+}
+_[102] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[101] = {
+	zRot = 0,
+	bMovable = false,
+	gtype = 5,
+	ptype = 3
+}
+_[100] = {
+	zRot = 0,
+	gtype = 2,
+	bMovable = false
+}
+_[99] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[98] = {
+	zRot = 180,
+	bMovable = false,
+	gtype = 3,
+	ptype = 0
+}
+_[97] = {
+	zRot = 0,
+	gtype = 1,
+	bMovable = false
+}
+_[96] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[95] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[94] = {
+	count = 1,
+	ptype = 3
+}
+_[93] = {
+	count = 3,
+	ptype = 1
+}
+_[92] = {
+	count = 1,
+	ptype = 5
+}
+_[91] = {
+	count = 2,
+	ptype = 4
+}
+_[90] = {
+	count = 2,
+	ptype = 2
+}
+_[89] = {
+	count = 3,
+	ptype = 6
+}
+_[88] = {
+	zRot = 0,
+	gtype = 4,
+	bMovable = false
+}
+_[87] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[86] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[85] = {
+	zRot = 0,
+	gtype = 2,
+	bMovable = false
+}
+_[84] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[83] = {
+	zRot = 0,
+	gtype = 3,
+	bMovable = false
+}
+_[82] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[81] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[80] = {
+	zRot = 0,
+	gtype = 1,
+	bMovable = false
+}
+_[79] = {
+	zRot = 0,
+	bMovable = false,
+	gtype = 5,
+	ptype = 5
+}
+_[78] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[77] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[76] = {
+	zRot = 0,
+	gtype = 1,
+	bMovable = false
+}
+_[75] = {
+	zRot = 0,
+	gtype = 2,
+	bMovable = false
+}
+_[74] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[73] = {
+	zRot = 0,
+	gtype = 1,
+	bMovable = false
+}
+_[72] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[71] = {
+	zRot = 0,
+	bMovable = false,
+	gtype = 5,
+	ptype = 3
+}
+_[70] = {
+	zRot = 0,
+	gtype = 1,
+	bMovable = false
+}
+_[69] = {
+	zRot = 0,
+	gtype = 1,
+	bMovable = false
+}
+_[68] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[67] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[66] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[65] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[64] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[63] = {
+	count = 2,
+	ptype = 6
+}
+_[62] = {
+	count = 2,
+	ptype = 3
+}
+_[61] = {
+	count = 3,
+	ptype = 2
+}
+_[60] = {
+	zRot = 0,
+	gtype = 4,
+	bMovable = false
+}
+_[59] = {
+	zRot = 90,
+	bMovable = false,
+	gtype = 3,
+	ptype = 0
+}
+_[58] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[57] = {
+	zRot = 0,
+	gtype = 1,
+	bMovable = false
+}
+_[56] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[55] = {
+	zRot = 0,
+	bMovable = false,
+	gtype = 5,
+	ptype = 3
+}
+_[54] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[53] = {
+	zRot = 0,
+	bMovable = false,
+	gtype = 5,
+	ptype = 6
+}
+_[52] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[51] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[50] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[49] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[48] = {
+	zRot = 0,
+	gtype = 1,
+	bMovable = false
+}
+_[47] = {
+	zRot = 0,
+	bMovable = false,
+	gtype = 5,
+	ptype = 5
+}
+_[46] = {
+	zRot = 0,
+	gtype = 1,
+	bMovable = false
+}
+_[45] = {
+	zRot = 0,
+	bMovable = false,
+	gtype = 5,
+	ptype = 5
+}
+_[44] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[43] = {
+	zRot = 0,
+	bMovable = false,
+	gtype = 5,
+	ptype = 6
+}
+_[42] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[41] = {
+	zRot = 0,
+	bMovable = false,
+	gtype = 5,
+	ptype = 3
+}
+_[40] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[39] = {
+	zRot = 0,
+	bMovable = false,
+	gtype = 5,
+	ptype = 2
+}
+_[38] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[37] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[36] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[35] = {
+	count = 1,
+	ptype = 3
+}
+_[34] = {
+	count = 2,
+	ptype = 6
+}
+_[33] = {
+	count = 1,
+	ptype = 2
+}
+_[32] = {
+	count = 2,
+	ptype = 5
+}
+_[31] = {
+	zRot = 0,
+	gtype = 4,
+	bMovable = false
+}
+_[30] = {
+	zRot = 90,
+	bMovable = false,
+	gtype = 3,
+	ptype = 0
+}
+_[29] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[28] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[27] = {
+	zRot = 0,
+	gtype = 1,
+	bMovable = false
+}
+_[26] = {
+	zRot = 0,
+	gtype = 1,
+	bMovable = false
+}
+_[25] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[24] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[23] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[22] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[21] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[20] = {
+	zRot = 0,
+	gtype = 1,
+	bMovable = false
+}
+_[19] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[18] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[17] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[16] = {
+	zRot = 0,
+	gtype = 0,
+	bMovable = false
+}
+_[15] = {
+	_[162],
+	_[163],
+	_[164],
+	_[165],
+	_[166],
+	_[167]
+}
+_[14] = {
+	_[126],
+	_[127],
+	_[128],
+	_[129],
+	_[130],
+	_[131],
+	_[132],
+	_[133],
+	_[134],
+	_[135],
+	_[136],
+	_[137],
+	_[138],
+	_[139],
+	_[140],
+	_[141],
+	_[142],
+	_[143],
+	_[144],
+	_[145],
+	_[146],
+	_[147],
+	_[148],
+	_[149],
+	_[150],
+	_[151],
+	_[152],
+	_[153],
+	_[154],
+	_[155],
+	_[156],
+	_[157],
+	_[158],
+	_[159],
+	_[160],
+	[0] = _[161]
+}
+_[13] = {
+	_[120],
+	_[121],
+	_[122],
+	_[123],
+	_[124],
+	_[125]
+}
+_[12] = {
+	_[95],
+	_[96],
+	_[97],
+	_[98],
+	_[99],
+	_[100],
+	_[101],
+	_[102],
+	_[103],
+	_[104],
+	_[105],
+	_[106],
+	_[107],
+	_[108],
+	_[109],
+	_[110],
+	_[111],
+	_[112],
+	_[113],
+	_[114],
+	_[115],
+	_[116],
+	_[117],
+	_[118],
+	[0] = _[119]
+}
+_[11] = {
+	_[89],
+	_[90],
+	_[91],
+	_[92],
+	_[93],
+	_[94]
+}
+_[10] = {
+	_[64],
+	_[65],
+	_[66],
+	_[67],
+	_[68],
+	_[69],
+	_[70],
+	_[71],
+	_[72],
+	_[73],
+	_[74],
+	_[75],
+	_[76],
+	_[77],
+	_[78],
+	_[79],
+	_[80],
+	_[81],
+	_[82],
+	_[83],
+	_[84],
+	_[85],
+	_[86],
+	_[87],
+	[0] = _[88]
+}
+_[9] = {
+	_[61],
+	_[62],
+	_[63]
+}
+_[8] = {
+	_[36],
+	_[37],
+	_[38],
+	_[39],
+	_[40],
+	_[41],
+	_[42],
+	_[43],
+	_[44],
+	_[45],
+	_[46],
+	_[47],
+	_[48],
+	_[49],
+	_[50],
+	_[51],
+	_[52],
+	_[53],
+	_[54],
+	_[55],
+	_[56],
+	_[57],
+	_[58],
+	_[59],
+	[0] = _[60]
+}
+_[7] = {
+	_[32],
+	_[33],
+	_[34],
+	_[35]
+}
+_[6] = {
+	_[16],
+	_[17],
+	_[18],
+	_[19],
+	_[20],
+	_[21],
+	_[22],
+	_[23],
+	_[24],
+	_[25],
+	_[26],
+	_[27],
+	_[28],
+	_[29],
+	_[30],
+	[0] = _[31]
+}
+_[5] = {
 	height = 6,
 	id = 1004,
 	width = 6,
-	gridList = var_0_0[14],
-	bagList = var_0_0[15]
+	gridList = _[14],
+	bagList = _[15]
 }
-var_0_0[4] = {
+_[4] = {
 	height = 5,
 	id = 1003,
 	width = 5,
-	gridList = var_0_0[12],
-	bagList = var_0_0[13]
+	gridList = _[12],
+	bagList = _[13]
 }
-var_0_0[3] = {
+_[3] = {
 	height = 5,
 	id = 1002,
 	width = 5,
-	gridList = var_0_0[10],
-	bagList = var_0_0[11]
+	gridList = _[10],
+	bagList = _[11]
 }
-var_0_0[2] = {
+_[2] = {
 	height = 5,
 	id = 1001,
 	width = 5,
-	gridList = var_0_0[8],
-	bagList = var_0_0[9]
+	gridList = _[8],
+	bagList = _[9]
 }
-var_0_0[1] = {
+_[1] = {
 	height = 4,
 	id = 1000,
 	width = 4,
-	gridList = var_0_0[6],
-	bagList = var_0_0[7]
+	gridList = _[6],
+	bagList = _[7]
 }
 
 return {
-	var_0_0[1],
-	var_0_0[2],
-	var_0_0[3],
-	var_0_0[4],
-	var_0_0[5]
+	_[1],
+	_[2],
+	_[3],
+	_[4],
+	_[5]
 }

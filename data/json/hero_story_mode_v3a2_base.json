@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "storyId": 304101,
+    "preId": 0,
+    "unlockItem": 1
+  },
+  {
+    "id": 2,
+    "storyId": 304102,
+    "preId": 1,
+    "unlockItem": 0
+  },
+  {
+    "id": 3,
+    "storyId": 304103,
+    "preId": 2,
+    "unlockItem": 2
+  },
+  {
+    "id": 4,
+    "storyId": 304104,
+    "preId": 3,
+    "unlockItem": 0
+  },
+  {
+    "id": 5,
+    "storyId": 304105,
+    "preId": 4,
+    "unlockItem": 3
+  },
+  {
+    "id": 6,
+    "storyId": 304106,
+    "preId": 5,
+    "unlockItem": 0
+  },
+  {
+    "id": 7,
+    "storyId": 304107,
+    "preId": 6,
+    "unlockItem": 0
+  },
+  {
+    "id": 8,
+    "storyId": 304108,
+    "preId": 7,
+    "unlockItem": 0
+  }
+]

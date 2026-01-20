@@ -1,122 +1,124 @@
-﻿module("modules.logic.versionactivity2_2.lopera.view.LoperaGoodsItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/lopera/view/LoperaGoodsItem.lua
 
-local var_0_0 = class("LoperaGoodsItem", ListScrollCellExtend)
+module("modules.logic.versionactivity2_2.lopera.view.LoperaGoodsItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "#image_Icon")
-	arg_1_0._iconBtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#image_Icon")
-	arg_1_0._numText = gohelper.findChildText(arg_1_0.viewGO, "image_NumBG/#txt_Num")
-	arg_1_0._goNewFlag = gohelper.findChild(arg_1_0.viewGO, "#go_New")
-	arg_1_0._canvasGroup = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.CanvasGroup))
+local LoperaGoodsItem = class("LoperaGoodsItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function LoperaGoodsItem:onInitView()
+	self._imageicon = gohelper.findChildImage(self.viewGO, "#image_Icon")
+	self._iconBtn = gohelper.findChildButtonWithAudio(self.viewGO, "#image_Icon")
+	self._numText = gohelper.findChildText(self.viewGO, "image_NumBG/#txt_Num")
+	self._goNewFlag = gohelper.findChild(self.viewGO, "#go_New")
+	self._canvasGroup = self.viewGO:GetComponent(typeof(UnityEngine.CanvasGroup))
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	if arg_2_0._iconBtn then
-		arg_2_0._iconBtn:AddClickListener(arg_2_0._iconBtnClick, arg_2_0)
+function LoperaGoodsItem:addEvents()
+	if self._iconBtn then
+		self._iconBtn:AddClickListener(self._iconBtnClick, self)
 	end
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	if arg_3_0._iconBtn then
-		arg_3_0._iconBtn:RemoveClickListener()
+function LoperaGoodsItem:removeEvents()
+	if self._iconBtn then
+		self._iconBtn:RemoveClickListener()
 	end
 end
 
-function var_0_0._iconBtnClick(arg_4_0)
-	if arg_4_0._itemCount > 0 then
-		gohelper.setActive(arg_4_0._goNewFlag, false)
+function LoperaGoodsItem:_iconBtnClick()
+	if self._itemCount > 0 then
+		gohelper.setActive(self._goNewFlag, false)
 	end
 
-	LoperaController.instance:dispatchEvent(LoperaEvent.GoodItemClick, arg_4_0._idx)
+	LoperaController.instance:dispatchEvent(LoperaEvent.GoodItemClick, self._idx)
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function LoperaGoodsItem:_editableInitView()
 	return
 end
 
-function var_0_0._editableAddEvents(arg_6_0)
+function LoperaGoodsItem:_editableAddEvents()
 	return
 end
 
-function var_0_0._editableRemoveEvents(arg_7_0)
+function LoperaGoodsItem:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
-	arg_8_0._mo = arg_8_1
+function LoperaGoodsItem:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_8_0:setItemId(arg_8_1.itemId)
+	self:setItemId(mo.itemId)
 
-	if (arg_8_1.quantity or arg_8_1.getQuantity) and not arg_8_1.quantity then
-		local var_8_0 = arg_8_1:getQuantity()
+	if (mo.quantity or mo.getQuantity) and not mo.quantity then
+		local quantity = mo:getQuantity()
 	end
 end
 
-function var_0_0.onUpdateData(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
-	arg_9_0._cfg = arg_9_1
-	arg_9_0._idx = arg_9_3
-	arg_9_0._itemCount = arg_9_2
-	arg_9_0._numText.text = arg_9_2
+function LoperaGoodsItem:onUpdateData(itemCfg, itemCount, idx, params)
+	self._cfg = itemCfg
+	self._idx = idx
+	self._itemCount = itemCount
+	self._numText.text = itemCount
 
-	local var_9_0 = false
+	local showNewFlag = false
 
-	if arg_9_4 and arg_9_4.showNewFlag then
-		var_9_0 = GameUtil.playerPrefsGetNumberByUserId(PlayerPrefsKey.Version2_2LoperaItemNewFlag .. arg_9_1.itemId, 0) == 0 and arg_9_2 > 0
+	if params and params.showNewFlag then
+		showNewFlag = GameUtil.playerPrefsGetNumberByUserId(PlayerPrefsKey.Version2_2LoperaItemNewFlag .. itemCfg.itemId, 0) == 0 and itemCount > 0
 	end
 
-	gohelper.setActive(arg_9_0._goNewFlag, var_9_0)
+	gohelper.setActive(self._goNewFlag, showNewFlag)
 
-	if var_9_0 then
-		GameUtil.playerPrefsSetNumberByUserId(PlayerPrefsKey.Version2_2LoperaItemNewFlag .. arg_9_0._cfg.itemId, 1)
+	if showNewFlag then
+		GameUtil.playerPrefsSetNumberByUserId(PlayerPrefsKey.Version2_2LoperaItemNewFlag .. self._cfg.itemId, 1)
 	end
 
-	arg_9_0:_refreshIcon(arg_9_1.itemId, arg_9_1)
+	self:_refreshIcon(itemCfg.itemId, itemCfg)
 
-	if arg_9_0._canvasGroup then
-		arg_9_0._canvasGroup.alpha = arg_9_2 > 0 and 1 or 0.5
-	end
-end
-
-function var_0_0.setItemId(arg_10_0, arg_10_1)
-	arg_10_0._itemId = arg_10_1
-
-	arg_10_0:_refreshIcon(arg_10_1)
-end
-
-function var_0_0.setShowCount(arg_11_0, arg_11_1, arg_11_2)
-	if arg_11_0._isShow ~= arg_11_1 then
-		arg_11_0._isShow = arg_11_1
-
-		gohelper.setActive(arg_11_0._gocount, arg_11_1)
-	end
-
-	if arg_11_2 == true then
-		arg_11_0._imagecountBG.enabled = true
-	elseif arg_11_2 == false then
-		arg_11_0._imagecountBG.enabled = false
+	if self._canvasGroup then
+		self._canvasGroup.alpha = itemCount > 0 and 1 or 0.5
 	end
 end
 
-function var_0_0.setCountStr(arg_12_0, arg_12_1)
-	arg_12_0._txtcount.text = arg_12_1
+function LoperaGoodsItem:setItemId(itemId)
+	self._itemId = itemId
+
+	self:_refreshIcon(itemId)
 end
 
-function var_0_0._refreshIcon(arg_13_0, arg_13_1, arg_13_2)
-	arg_13_2 = arg_13_2 or Activity168Config.instance:getGameItemCfg(VersionActivity2_2Enum.ActivityId.Lopera, arg_13_1)
+function LoperaGoodsItem:setShowCount(isShow, bgEnabled)
+	if self._isShow ~= isShow then
+		self._isShow = isShow
 
-	UISpriteSetMgr.instance:setLoperaItemSprite(arg_13_0._imageicon, arg_13_2.icon, false)
+		gohelper.setActive(self._gocount, isShow)
+	end
+
+	if bgEnabled == true then
+		self._imagecountBG.enabled = true
+	elseif bgEnabled == false then
+		self._imagecountBG.enabled = false
+	end
 end
 
-function var_0_0.onDestroyView(arg_14_0)
+function LoperaGoodsItem:setCountStr(countStr)
+	self._txtcount.text = countStr
+end
+
+function LoperaGoodsItem:_refreshIcon(itemId, itemCfg)
+	itemCfg = itemCfg or Activity168Config.instance:getGameItemCfg(VersionActivity2_2Enum.ActivityId.Lopera, itemId)
+
+	UISpriteSetMgr.instance:setLoperaItemSprite(self._imageicon, itemCfg.icon, false)
+end
+
+function LoperaGoodsItem:onDestroyView()
 	return
 end
 
-var_0_0.prefabPath = "ui/viewres/versionactivity_2_2/v2a2_lopera/v2a2_lopera_goodsitem_temporary.prefab"
-var_0_0.prefabPath2 = "ui/viewres/versionactivity_2_2/v2a2_lopera/v2a2_lopera_goodsitem2_temporary.prefab"
-var_0_0.prefabPath3 = "ui/viewres/versionactivity_2_2/v2a2_lopera/v2a2_lopera_goodsitem3_temporary.prefab"
+LoperaGoodsItem.prefabPath = "ui/viewres/versionactivity_2_2/v2a2_lopera/v2a2_lopera_goodsitem_temporary.prefab"
+LoperaGoodsItem.prefabPath2 = "ui/viewres/versionactivity_2_2/v2a2_lopera/v2a2_lopera_goodsitem2_temporary.prefab"
+LoperaGoodsItem.prefabPath3 = "ui/viewres/versionactivity_2_2/v2a2_lopera/v2a2_lopera_goodsitem3_temporary.prefab"
 
-return var_0_0
+return LoperaGoodsItem

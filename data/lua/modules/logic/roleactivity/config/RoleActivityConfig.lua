@@ -1,67 +1,70 @@
-﻿module("modules.logic.roleactivity.config.RoleActivityConfig", package.seeall)
+﻿-- chunkname: @modules/logic/roleactivity/config/RoleActivityConfig.lua
 
-local var_0_0 = class("RoleActivityConfig", BaseConfig)
+module("modules.logic.roleactivity.config.RoleActivityConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local RoleActivityConfig = class("RoleActivityConfig", BaseConfig)
+
+function RoleActivityConfig:ctor()
 	return
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function RoleActivityConfig:reqConfigNames()
 	return {
 		"roleactivity_enter",
 		"role_activity_task"
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "roleactivity_enter" then
-		arg_3_0._enterConfig = arg_3_2
-	elseif arg_3_1 == "role_activity_task" then
-		arg_3_0._taskConfig = arg_3_2
+function RoleActivityConfig:onConfigLoaded(configName, configTable)
+	if configName == "roleactivity_enter" then
+		self._enterConfig = configTable
+	elseif configName == "role_activity_task" then
+		self._taskConfig = configTable
 
-		arg_3_0:_rebuildTaskConfig()
+		self:_rebuildTaskConfig()
 	end
 end
 
-function var_0_0._rebuildTaskConfig(arg_4_0)
-	arg_4_0._taskDic = {}
+function RoleActivityConfig:_rebuildTaskConfig()
+	self._taskDic = {}
 
-	for iter_4_0, iter_4_1 in pairs(arg_4_0._taskConfig.configList) do
-		arg_4_0._taskDic[iter_4_1.id] = iter_4_1
+	for _, taskCfg in pairs(self._taskConfig.configList) do
+		self._taskDic[taskCfg.id] = taskCfg
 	end
 end
 
-function var_0_0.getActivityEnterInfo(arg_5_0, arg_5_1)
-	return arg_5_0._enterConfig.configDict[arg_5_1]
+function RoleActivityConfig:getActivityEnterInfo(activityId)
+	return self._enterConfig.configDict[activityId]
 end
 
-function var_0_0.getTaskCo(arg_6_0, arg_6_1)
-	return arg_6_0._taskDic[arg_6_1]
+function RoleActivityConfig:getTaskCo(taskId)
+	return self._taskDic[taskId]
 end
 
-function var_0_0.getStoryLevelList(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0._enterConfig.configDict[arg_7_1].storyGroupId
+function RoleActivityConfig:getStoryLevelList(activityId)
+	local lvlGroupId = self._enterConfig.configDict[activityId].storyGroupId
+	local storyConfigList = DungeonConfig.instance:getChapterEpisodeCOList(lvlGroupId)
 
-	return (DungeonConfig.instance:getChapterEpisodeCOList(var_7_0))
+	return storyConfigList
 end
 
-function var_0_0.getBattleLevelList(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0._enterConfig.configDict[arg_8_1].episodeGroupId
-	local var_8_1 = DungeonConfig.instance:getChapterEpisodeCOList(var_8_0) or {}
+function RoleActivityConfig:getBattleLevelList(activityId)
+	local lvlGroupId = self._enterConfig.configDict[activityId].episodeGroupId
+	local fightConfigList = DungeonConfig.instance:getChapterEpisodeCOList(lvlGroupId) or {}
 
-	table.sort(var_8_1, var_0_0.SortById)
+	table.sort(fightConfigList, RoleActivityConfig.SortById)
 
-	return var_8_1
+	return fightConfigList
 end
 
-function var_0_0.getActicityTaskList(arg_9_0, arg_9_1)
-	return arg_9_0._taskConfig.configDict[arg_9_1]
+function RoleActivityConfig:getActicityTaskList(activityId)
+	return self._taskConfig.configDict[activityId]
 end
 
-function var_0_0.SortById(arg_10_0, arg_10_1)
-	return arg_10_0.id < arg_10_1.id
+function RoleActivityConfig.SortById(a, b)
+	return a.id < b.id
 end
 
-var_0_0.instance = var_0_0.New()
+RoleActivityConfig.instance = RoleActivityConfig.New()
 
-return var_0_0
+return RoleActivityConfig

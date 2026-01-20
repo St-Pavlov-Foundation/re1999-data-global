@@ -1,95 +1,97 @@
-﻿module("modules.logic.store.view.ChargeStoreGoodsView", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/ChargeStoreGoodsView.lua
 
-local var_0_0 = class("ChargeStoreGoodsView", BaseView)
+module("modules.logic.store.view.ChargeStoreGoodsView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageleftbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_leftbg")
-	arg_1_0._simagerightbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_rightbg")
-	arg_1_0._txtsalePrice = gohelper.findChildText(arg_1_0.viewGO, "buy/cost/#txt_salePrice")
-	arg_1_0._txtgoodsNameCn = gohelper.findChildText(arg_1_0.viewGO, "propinfo/#txt_goodsNameCn")
-	arg_1_0._txtgoodsNameEn = gohelper.findChildText(arg_1_0.viewGO, "propinfo/#txt_goodsNameEn")
-	arg_1_0._txtgoodsDesc = gohelper.findChildText(arg_1_0.viewGO, "propinfo/goodsDesc/Viewport/Content/#txt_goodsDesc")
-	arg_1_0._txtgoodsHave = gohelper.findChildText(arg_1_0.viewGO, "propinfo/#txt_goodsHave")
-	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "propinfo/#go_item")
-	arg_1_0._txtitemcount = gohelper.findChildText(arg_1_0.viewGO, "propinfo/#go_item/#txt_itemcount")
-	arg_1_0._txtvalue = gohelper.findChildText(arg_1_0.viewGO, "buy/valuebg/#txt_value")
-	arg_1_0._btncharge = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "buy/#btn_charge")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "propinfo/#btn_click")
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "propinfo/#simage_icon")
+local ChargeStoreGoodsView = class("ChargeStoreGoodsView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ChargeStoreGoodsView:onInitView()
+	self._simageleftbg = gohelper.findChildSingleImage(self.viewGO, "#simage_leftbg")
+	self._simagerightbg = gohelper.findChildSingleImage(self.viewGO, "#simage_rightbg")
+	self._txtsalePrice = gohelper.findChildText(self.viewGO, "buy/cost/#txt_salePrice")
+	self._txtgoodsNameCn = gohelper.findChildText(self.viewGO, "propinfo/#txt_goodsNameCn")
+	self._txtgoodsNameEn = gohelper.findChildText(self.viewGO, "propinfo/#txt_goodsNameEn")
+	self._txtgoodsDesc = gohelper.findChildText(self.viewGO, "propinfo/goodsDesc/Viewport/Content/#txt_goodsDesc")
+	self._txtgoodsHave = gohelper.findChildText(self.viewGO, "propinfo/#txt_goodsHave")
+	self._goitem = gohelper.findChild(self.viewGO, "propinfo/#go_item")
+	self._txtitemcount = gohelper.findChildText(self.viewGO, "propinfo/#go_item/#txt_itemcount")
+	self._txtvalue = gohelper.findChildText(self.viewGO, "buy/valuebg/#txt_value")
+	self._btncharge = gohelper.findChildButtonWithAudio(self.viewGO, "buy/#btn_charge")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "propinfo/#btn_click")
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "propinfo/#simage_icon")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btncharge:AddClickListener(arg_2_0._btnchargeOnClick, arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+function ChargeStoreGoodsView:addEvents()
+	self._btncharge:AddClickListener(self._btnchargeOnClick, self)
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btncharge:RemoveClickListener()
-	arg_3_0._btnclick:RemoveClickListener()
+function ChargeStoreGoodsView:removeEvents()
+	self._btncharge:RemoveClickListener()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0._btnclickOnClick(arg_4_0)
-	MaterialTipController.instance:showMaterialInfo(arg_4_0._itemType, arg_4_0._itemId)
+function ChargeStoreGoodsView:_btnclickOnClick()
+	MaterialTipController.instance:showMaterialInfo(self._itemType, self._itemId)
 end
 
-function var_0_0._btnchargeOnClick(arg_5_0)
+function ChargeStoreGoodsView:_btnchargeOnClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_payment_click)
-	PayController.instance:startPay(arg_5_0._mo.id)
+	PayController.instance:startPay(self._mo.id)
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._simageleftbg:LoadImage(ResUrl.getStoreBottomBgIcon("bg_1"))
-	arg_6_0._simagerightbg:LoadImage(ResUrl.getStoreBottomBgIcon("bg_2"))
+function ChargeStoreGoodsView:_editableInitView()
+	self._simageleftbg:LoadImage(ResUrl.getStoreBottomBgIcon("bg_1"))
+	self._simagerightbg:LoadImage(ResUrl.getStoreBottomBgIcon("bg_2"))
 end
 
-function var_0_0._refreshUI(arg_7_0)
-	local var_7_0 = arg_7_0._mo.config.product
-	local var_7_1 = string.splitToNumber(var_7_0, "#")
+function ChargeStoreGoodsView:_refreshUI()
+	local product = self._mo.config.product
+	local productParams = string.splitToNumber(product, "#")
 
-	arg_7_0._itemType = var_7_1[1]
-	arg_7_0._itemId = var_7_1[2]
-	arg_7_0._itemQuantity = var_7_1[3]
+	self._itemType = productParams[1]
+	self._itemId = productParams[2]
+	self._itemQuantity = productParams[3]
 
-	local var_7_2, var_7_3 = ItemModel.instance:getItemConfigAndIcon(arg_7_0._itemType, arg_7_0._itemId, true)
+	local itemConfig, itemIcon = ItemModel.instance:getItemConfigAndIcon(self._itemType, self._itemId, true)
 
-	arg_7_0._simageicon:LoadImage(var_7_3)
-	gohelper.setActive(arg_7_0._goitem, arg_7_0._itemQuantity > 1)
+	self._simageicon:LoadImage(itemIcon)
+	gohelper.setActive(self._goitem, self._itemQuantity > 1)
 
-	arg_7_0._txtitemcount.text = GameUtil.numberDisplay(arg_7_0._itemQuantity)
-	arg_7_0._txtgoodsNameCn.text = var_7_2.name
-	arg_7_0._txtgoodsDesc.text = var_7_2.useDesc
-	arg_7_0._txtsalePrice.text = string.format("%s%s", StoreModel.instance:getCostStr(arg_7_0._mo.config.price))
+	self._txtitemcount.text = GameUtil.numberDisplay(self._itemQuantity)
+	self._txtgoodsNameCn.text = itemConfig.name
+	self._txtgoodsDesc.text = itemConfig.useDesc
+	self._txtsalePrice.text = string.format("%s%s", StoreModel.instance:getCostStr(self._mo.config.price))
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0._mo = arg_8_0.viewParam
+function ChargeStoreGoodsView:onOpen()
+	self._mo = self.viewParam
 
-	arg_8_0:addEventCb(PayController.instance, PayEvent.PayFinished, arg_8_0._payFinished, arg_8_0)
-	arg_8_0:_refreshUI()
+	self:addEventCb(PayController.instance, PayEvent.PayFinished, self._payFinished, self)
+	self:_refreshUI()
 end
 
-function var_0_0._payFinished(arg_9_0)
-	arg_9_0:closeThis()
+function ChargeStoreGoodsView:_payFinished()
+	self:closeThis()
 end
 
-function var_0_0.onClose(arg_10_0)
-	arg_10_0:removeEventCb(PayController.instance, PayEvent.PayFinished, arg_10_0._payFinished, arg_10_0)
+function ChargeStoreGoodsView:onClose()
+	self:removeEventCb(PayController.instance, PayEvent.PayFinished, self._payFinished, self)
 end
 
-function var_0_0.onUpdateParam(arg_11_0)
-	arg_11_0._mo = arg_11_0.viewParam
+function ChargeStoreGoodsView:onUpdateParam()
+	self._mo = self.viewParam
 
-	arg_11_0:_refreshUI()
+	self:_refreshUI()
 end
 
-function var_0_0.onDestroyView(arg_12_0)
-	arg_12_0._simageleftbg:UnLoadImage()
-	arg_12_0._simagerightbg:UnLoadImage()
-	arg_12_0._simageicon:UnLoadImage()
+function ChargeStoreGoodsView:onDestroyView()
+	self._simageleftbg:UnLoadImage()
+	self._simagerightbg:UnLoadImage()
+	self._simageicon:UnLoadImage()
 end
 
-return var_0_0
+return ChargeStoreGoodsView

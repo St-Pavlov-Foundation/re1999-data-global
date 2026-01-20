@@ -1,4 +1,6 @@
-﻿return {
+﻿-- chunkname: @modules/configs/match3/T_lua_eliminate_chess.lua
+
+return {
 	{
 		strId = "stone",
 		id = 10,

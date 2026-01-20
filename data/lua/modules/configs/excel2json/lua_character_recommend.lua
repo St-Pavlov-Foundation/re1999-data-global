@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_character_recommend", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_character_recommend.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_character_recommend", package.seeall)
+
+local lua_character_recommend = {}
+local fields = {
 	equipRec = 4,
 	teamDisplay = 3,
 	resonanceRec = 7,
@@ -10,13 +12,13 @@ local var_0_1 = {
 	equipDisplay = 5,
 	teamRec = 2
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_character_recommend.onLoad(json)
+	lua_character_recommend.configList, lua_character_recommend.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_character_recommend

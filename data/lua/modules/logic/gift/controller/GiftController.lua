@@ -1,35 +1,37 @@
-﻿module("modules.logic.gift.controller.GiftController", package.seeall)
+﻿-- chunkname: @modules/logic/gift/controller/GiftController.lua
 
-local var_0_0 = class("GiftController", BaseController)
+module("modules.logic.gift.controller.GiftController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local GiftController = class("GiftController", BaseController)
+
+function GiftController:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function GiftController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function GiftController:addConstEvents()
 	return
 end
 
-function var_0_0.reInit(arg_4_0)
+function GiftController:reInit()
 	return
 end
 
-function var_0_0.openGiftMultipleChoiceView(arg_5_0, arg_5_1, arg_5_2)
-	ViewMgr.instance:openView(ViewName.GiftMultipleChoiceView, arg_5_1, arg_5_2)
+function GiftController:openGiftMultipleChoiceView(param, isImmediate)
+	ViewMgr.instance:openView(ViewName.GiftMultipleChoiceView, param, isImmediate)
 end
 
-function var_0_0.openOptionalGiftMultipleChoiceView(arg_6_0, arg_6_1, arg_6_2)
-	ViewMgr.instance:openView(ViewName.OptionalGiftMultipleChoiceView, arg_6_1, arg_6_2)
+function GiftController:openOptionalGiftMultipleChoiceView(param, isImmediate)
+	ViewMgr.instance:openView(ViewName.OptionalGiftMultipleChoiceView, param, isImmediate)
 end
 
-function var_0_0.openGiftInsightHeroChoiceView(arg_7_0, arg_7_1)
-	ViewMgr.instance:openView(ViewName.GiftInsightHeroChoiceView, arg_7_1)
+function GiftController:openGiftInsightHeroChoiceView(param)
+	ViewMgr.instance:openView(ViewName.GiftInsightHeroChoiceView, param)
 end
 
-var_0_0.instance = var_0_0.New()
+GiftController.instance = GiftController.New()
 
-return var_0_0
+return GiftController

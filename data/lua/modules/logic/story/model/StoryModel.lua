@@ -1,228 +1,230 @@
-﻿module("modules.logic.story.model.StoryModel", package.seeall)
+﻿-- chunkname: @modules/logic/story/model/StoryModel.lua
 
-local var_0_0 = class("StoryModel", BaseModel)
+module("modules.logic.story.model.StoryModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local StoryModel = class("StoryModel", BaseModel)
+
+function StoryModel:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._log = {}
-	arg_2_0._herocuts = {}
-	arg_2_0._hideBtns = false
-	arg_2_0.skipFade = false
-	arg_2_0._storyStepLines = {}
-	arg_2_0._storyState = {}
-	arg_2_0._isVersionActivityPV = false
-	arg_2_0._isReplay = false
-	arg_2_0._statStepClickTime = 0
+function StoryModel:reInit()
+	self._log = {}
+	self._herocuts = {}
+	self._hideBtns = false
+	self.skipFade = false
+	self._storyStepLines = {}
+	self._storyState = {}
+	self._isVersionActivityPV = false
+	self._isReplay = false
+	self._statStepClickTime = 0
 
-	arg_2_0:resetStoryState()
+	self:resetStoryState()
 end
 
-function var_0_0.resetStoryState(arg_3_0)
-	arg_3_0._stepLines = {}
-	arg_3_0._auto = false
-	arg_3_0._isNormalStep = false
-	arg_3_0._hide = false
-	arg_3_0._textShowing = false
-	arg_3_0._enableClick = true
-	arg_3_0._needFadeIn = false
-	arg_3_0._needFadeOut = false
-	arg_3_0._hasBottomEffect = false
-	arg_3_0._specialPlayingVideos = {}
-	arg_3_0._playingVideos = {}
-	arg_3_0._isPlayFinished = false
-	arg_3_0._uiActive = false
+function StoryModel:resetStoryState()
+	self._stepLines = {}
+	self._auto = false
+	self._isNormalStep = false
+	self._hide = false
+	self._textShowing = false
+	self._enableClick = true
+	self._needFadeIn = false
+	self._needFadeOut = false
+	self._hasBottomEffect = false
+	self._specialPlayingVideos = {}
+	self._playingVideos = {}
+	self._isPlayFinished = false
+	self._uiActive = false
 end
 
-function var_0_0.setPlayFnished(arg_4_0)
-	arg_4_0._isPlayFinished = true
+function StoryModel:setPlayFnished()
+	self._isPlayFinished = true
 end
 
-function var_0_0.isPlayFinished(arg_5_0)
-	return arg_5_0._isPlayFinished
+function StoryModel:isPlayFinished()
+	return self._isPlayFinished
 end
 
-function var_0_0.clearStepLine(arg_6_0)
-	arg_6_0._stepLines = {}
+function StoryModel:clearStepLine()
+	self._stepLines = {}
 end
 
-function var_0_0.isVersionActivityPV(arg_7_0)
-	return arg_7_0._isVersionActivityPV
+function StoryModel:isVersionActivityPV()
+	return self._isVersionActivityPV
 end
 
-function var_0_0.setVersionActivityPV(arg_8_0, arg_8_1)
-	arg_8_0._isVersionActivityPV = arg_8_1
+function StoryModel:setVersionActivityPV(isPv)
+	self._isVersionActivityPV = isPv
 end
 
-function var_0_0.isReplay(arg_9_0)
-	return arg_9_0._isReplay
+function StoryModel:isReplay()
+	return self._isReplay
 end
 
-function var_0_0.setIsReplay(arg_10_0, arg_10_1)
-	arg_10_0._isReplay = arg_10_1
+function StoryModel:setIsReplay(replay)
+	self._isReplay = replay
 end
 
-function var_0_0.addSkipStepLine(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	if not arg_11_0._stepLines[arg_11_1] then
-		arg_11_0._stepLines[arg_11_1] = {}
+function StoryModel:addSkipStepLine(storyId, stepId, skip)
+	if not self._stepLines[storyId] then
+		self._stepLines[storyId] = {}
 
-		local var_11_0 = {
-			stepId = arg_11_2,
-			skip = arg_11_3
-		}
+		local stepParam = {}
 
-		table.insert(arg_11_0._stepLines[arg_11_1], var_11_0)
+		stepParam.stepId = stepId
+		stepParam.skip = skip
+
+		table.insert(self._stepLines[storyId], stepParam)
 
 		return
 	end
 
-	if arg_11_0._stepLines[arg_11_1][#arg_11_0._stepLines[arg_11_1]].stepId ~= arg_11_2 then
-		local var_11_1 = {
-			stepId = arg_11_2,
-			skip = arg_11_3
-		}
+	if self._stepLines[storyId][#self._stepLines[storyId]].stepId ~= stepId then
+		local stepParam = {}
 
-		table.insert(arg_11_0._stepLines[arg_11_1], var_11_1)
+		stepParam.stepId = stepId
+		stepParam.skip = skip
+
+		table.insert(self._stepLines[storyId], stepParam)
 	end
 end
 
-function var_0_0.getStepLine(arg_12_0)
-	return arg_12_0._stepLines
+function StoryModel:getStepLine()
+	return self._stepLines
 end
 
-function var_0_0.setHideBtns(arg_13_0, arg_13_1)
-	arg_13_0._hideBtns = arg_13_1
+function StoryModel:setHideBtns(hide)
+	self._hideBtns = hide
 end
 
-function var_0_0.getHideBtns(arg_14_0)
-	return arg_14_0._hideBtns
+function StoryModel:getHideBtns()
+	return self._hideBtns
 end
 
-function var_0_0.isStoryAuto(arg_15_0)
-	return arg_15_0._auto
+function StoryModel:isStoryAuto()
+	return self._auto
 end
 
-function var_0_0.setStoryAuto(arg_16_0, arg_16_1)
-	arg_16_0._auto = arg_16_1
+function StoryModel:setStoryAuto(auto)
+	self._auto = auto
 
 	StoryController.instance:dispatchEvent(StoryEvent.AutoChange)
 end
 
-function var_0_0.isNormalStep(arg_17_0)
-	return arg_17_0._isNormalStep
+function StoryModel:isNormalStep()
+	return self._isNormalStep
 end
 
-function var_0_0.setStepNormal(arg_18_0, arg_18_1)
-	arg_18_0._isNormalStep = arg_18_1
+function StoryModel:setStepNormal(normal)
+	self._isNormalStep = normal
 end
 
-function var_0_0.isViewHide(arg_19_0)
-	return arg_19_0._hide
+function StoryModel:isViewHide()
+	return self._hide
 end
 
-function var_0_0.setViewHide(arg_20_0, arg_20_1)
-	arg_20_0._hide = arg_20_1
+function StoryModel:setViewHide(hide)
+	self._hide = hide
 end
 
-function var_0_0.isTextShowing(arg_21_0)
-	return arg_21_0._textShowing
+function StoryModel:isTextShowing()
+	return self._textShowing
 end
 
-function var_0_0.setTextShowing(arg_22_0, arg_22_1)
-	arg_22_0._textShowing = arg_22_1
+function StoryModel:setTextShowing(show)
+	self._textShowing = show
 end
 
-function var_0_0.isEnableClick(arg_23_0)
-	return arg_23_0._enableClick
+function StoryModel:isEnableClick()
+	return self._enableClick
 end
 
-function var_0_0.enableClick(arg_24_0, arg_24_1)
-	arg_24_0._enableClick = arg_24_1
+function StoryModel:enableClick(enable)
+	self._enableClick = enable
 end
 
-function var_0_0.isNeedFadeIn(arg_25_0)
-	return arg_25_0._needFadeIn
+function StoryModel:isNeedFadeIn()
+	return self._needFadeIn
 end
 
-function var_0_0.setNeedFadeIn(arg_26_0, arg_26_1)
-	arg_26_0._needFadeIn = arg_26_1
+function StoryModel:setNeedFadeIn(need)
+	self._needFadeIn = need
 end
 
-function var_0_0.isNeedFadeOut(arg_27_0)
-	return arg_27_0._needFadeOut
+function StoryModel:isNeedFadeOut()
+	return self._needFadeOut
 end
 
-function var_0_0.setNeedFadeOut(arg_28_0, arg_28_1)
-	arg_28_0._needFadeOut = arg_28_1
+function StoryModel:setNeedFadeOut(need)
+	self._needFadeOut = need
 end
 
-function var_0_0.hasBottomEffect(arg_29_0)
-	return arg_29_0._hasBottomEffect
+function StoryModel:hasBottomEffect()
+	return self._hasBottomEffect
 end
 
-function var_0_0.setHasBottomEffect(arg_30_0, arg_30_1)
-	arg_30_0._hasBottomEffect = arg_30_1
+function StoryModel:setHasBottomEffect(has)
+	self._hasBottomEffect = has
 end
 
-function var_0_0.setUIActive(arg_31_0, arg_31_1)
-	arg_31_0._uiActive = arg_31_1
+function StoryModel:setUIActive(active)
+	self._uiActive = active
 
-	PostProcessingMgr.instance:setUIActive(arg_31_1)
+	PostProcessingMgr.instance:setUIActive(active)
 end
 
-function var_0_0.getUIActive(arg_32_0)
-	return arg_32_0._uiActive
+function StoryModel:getUIActive()
+	return self._uiActive
 end
 
-function var_0_0.isHeroIconCuts(arg_33_0, arg_33_1)
-	if not next(arg_33_0._herocuts) then
-		arg_33_0._herocuts = {}
+function StoryModel:isHeroIconCuts(str)
+	if not next(self._herocuts) then
+		self._herocuts = {}
 
-		for iter_33_0, iter_33_1 in pairs(StoryConfig.instance:getStoryCutConfig()) do
-			arg_33_0._herocuts[iter_33_1.cutName] = 1
+		for _, v in pairs(StoryConfig.instance:getStoryCutConfig()) do
+			self._herocuts[v.cutName] = 1
 		end
 	end
 
-	return arg_33_0._herocuts[arg_33_1]
+	return self._herocuts[str]
 end
 
-function var_0_0.setStoryList(arg_34_0, arg_34_1)
-	if arg_34_1 then
-		local var_34_0 = StoryMo.New()
+function StoryModel:setStoryList(serco)
+	if serco then
+		local storyMo = StoryMo.New()
 
-		var_34_0:init(arg_34_1)
+		storyMo:init(serco)
 
-		arg_34_0._storyState = var_34_0
+		self._storyState = storyMo
 	end
 end
 
-function var_0_0.isStoryFinished(arg_35_0, arg_35_1)
-	return arg_35_0._storyState and arg_35_0._storyState.finishList and arg_35_0._storyState.finishList[arg_35_1]
+function StoryModel:isStoryFinished(id)
+	return self._storyState and self._storyState.finishList and self._storyState.finishList[id]
 end
 
-function var_0_0._setStoryFinished(arg_36_0, arg_36_1)
-	arg_36_0._storyState.finishList[arg_36_1] = true
+function StoryModel:_setStoryFinished(id)
+	self._storyState.finishList[id] = true
 end
 
-function var_0_0.updateStoryList(arg_37_0, arg_37_1)
-	if not arg_37_0._storyState or not arg_37_0._storyState.finishList or arg_37_0._storyState.finishList[arg_37_1.storyId] then
+function StoryModel:updateStoryList(info)
+	if not self._storyState or not self._storyState.finishList or self._storyState.finishList[info.storyId] then
 		return
 	end
 
-	arg_37_0._storyState:update(arg_37_1)
+	self._storyState:update(info)
 end
 
-function var_0_0.isStoryHasPlayed(arg_38_0, arg_38_1)
-	local var_38_0 = false
+function StoryModel:isStoryHasPlayed(storyId)
+	local played = false
 
-	if arg_38_0._storyState.finishList[arg_38_1] then
+	if self._storyState.finishList[storyId] then
 		return true
 	end
 
-	for iter_38_0, iter_38_1 in pairs(arg_38_0._storyState.processList) do
-		if iter_38_1.storyId == arg_38_1 then
+	for _, v in pairs(self._storyState.processList) do
+		if v.storyId == storyId then
 			return true
 		end
 	end
@@ -230,112 +232,112 @@ function var_0_0.isStoryHasPlayed(arg_38_0, arg_38_1)
 	return false
 end
 
-function var_0_0.setStoryFirstStep(arg_39_0, arg_39_1)
-	arg_39_0._firstStep = arg_39_1
+function StoryModel:setStoryFirstStep(stepId)
+	self._firstStep = stepId
 end
 
-function var_0_0.getStoryFirstSteps(arg_40_0)
-	if arg_40_0._firstStep and arg_40_0._firstStep ~= 0 then
+function StoryModel:getStoryFirstSteps()
+	if self._firstStep and self._firstStep ~= 0 then
 		return {
-			arg_40_0._firstStep
+			self._firstStep
 		}
 	end
 
-	local var_40_0 = {}
-	local var_40_1 = StoryStepModel.instance:getStepList()
+	local startStep = {}
+	local stepList = StoryStepModel.instance:getStepList()
 
-	if #var_40_1 == 0 then
-		return var_40_0
+	if #stepList == 0 then
+		return startStep
 	end
 
-	if #var_40_1 == 1 then
-		table.insert(var_40_0, var_40_1[1].id)
+	if #stepList == 1 then
+		table.insert(startStep, stepList[1].id)
 
-		return var_40_0
+		return startStep
 	end
 
-	local var_40_2 = StoryGroupModel.instance:getGroupList()
+	local groupConfig = StoryGroupModel.instance:getGroupList()
 
-	for iter_40_0, iter_40_1 in pairs(var_40_2) do
-		for iter_40_2, iter_40_3 in ipairs(iter_40_1) do
-			if #arg_40_0:getPreSteps(iter_40_3.id) == 0 then
-				local var_40_3 = false
+	for _, config in pairs(groupConfig) do
+		for _, v in ipairs(config) do
+			if #self:getPreSteps(v.id) == 0 then
+				local contain = false
 
-				for iter_40_4, iter_40_5 in pairs(var_40_0) do
-					if iter_40_5 == iter_40_3.id then
-						var_40_3 = true
+				for _, step in pairs(startStep) do
+					if step == v.id then
+						contain = true
 					end
 				end
 
-				if not var_40_3 then
-					table.insert(var_40_0, iter_40_3.id)
+				if not contain then
+					table.insert(startStep, v.id)
 				end
 			end
 		end
 	end
 
-	return var_40_0
+	return startStep
 end
 
-function var_0_0.getFollowSteps(arg_41_0, arg_41_1)
-	local var_41_0 = {}
-	local var_41_1 = StoryGroupModel.instance:getGroupListById(arg_41_1)
+function StoryModel:getFollowSteps(stepId)
+	local steps = {}
+	local config = StoryGroupModel.instance:getGroupListById(stepId)
 
-	if not var_41_1 then
+	if not config then
 		return {}
 	end
 
-	for iter_41_0, iter_41_1 in ipairs(var_41_1) do
-		table.insert(var_41_0, iter_41_1.branchId)
+	for _, branch in ipairs(config) do
+		table.insert(steps, branch.branchId)
 	end
 
-	return var_41_0
+	return steps
 end
 
-function var_0_0.getPreSteps(arg_42_0, arg_42_1)
-	local var_42_0 = {}
-	local var_42_1 = StoryGroupModel.instance:getGroupList()
+function StoryModel:getPreSteps(stepId)
+	local steps = {}
+	local groupConfig = StoryGroupModel.instance:getGroupList()
 
-	for iter_42_0, iter_42_1 in ipairs(var_42_1) do
-		for iter_42_2, iter_42_3 in ipairs(iter_42_1) do
-			if iter_42_3.branchId == arg_42_1 then
-				table.insert(var_42_0, iter_42_3.id)
+	for _, config in ipairs(groupConfig) do
+		for _, value in ipairs(config) do
+			if value.branchId == stepId then
+				table.insert(steps, value.id)
 			end
 		end
 	end
 
-	return var_42_0
+	return steps
 end
 
-function var_0_0.setSpecialVideoPlaying(arg_43_0, arg_43_1)
-	local var_43_0 = StoryConfig.instance:getStoryDialogFadeConfig()
+function StoryModel:setSpecialVideoPlaying(videoName)
+	local videoList = StoryConfig.instance:getStoryDialogFadeConfig()
 
-	for iter_43_0, iter_43_1 in pairs(var_43_0) do
-		if arg_43_1 == iter_43_1.skipvideo then
-			table.insert(arg_43_0._specialPlayingVideos, arg_43_1)
+	for _, sv in pairs(videoList) do
+		if videoName == sv.skipvideo then
+			table.insert(self._specialPlayingVideos, videoName)
 		end
 	end
 
-	arg_43_0._playingVideos[arg_43_1] = 1
+	self._playingVideos[videoName] = 1
 
 	StoryController.instance:dispatchEvent(StoryEvent.VideoChange, true)
 end
 
-function var_0_0.setSpecialVideoEnd(arg_44_0, arg_44_1)
-	for iter_44_0 = #arg_44_0._specialPlayingVideos, 1, -1 do
-		if arg_44_0._specialPlayingVideos[iter_44_0] == arg_44_1 then
-			table.remove(arg_44_0._specialPlayingVideos, iter_44_0)
+function StoryModel:setSpecialVideoEnd(videoName)
+	for i = #self._specialPlayingVideos, 1, -1 do
+		if self._specialPlayingVideos[i] == videoName then
+			table.remove(self._specialPlayingVideos, i)
 		end
 	end
 
-	arg_44_0._playingVideos[arg_44_1] = nil
+	self._playingVideos[videoName] = nil
 
 	StoryController.instance:dispatchEvent(StoryEvent.VideoChange, false)
 end
 
-function var_0_0.isPlayingVideo(arg_45_0)
-	if arg_45_0._playingVideos then
-		for iter_45_0, iter_45_1 in pairs(arg_45_0._playingVideos) do
+function StoryModel:isPlayingVideo()
+	if self._playingVideos then
+		for k, v in pairs(self._playingVideos) do
 			return true
 		end
 	end
@@ -343,194 +345,194 @@ function var_0_0.isPlayingVideo(arg_45_0)
 	return false
 end
 
-function var_0_0.isSpecialVideoPlaying(arg_46_0)
-	return #arg_46_0._specialPlayingVideos > 0
+function StoryModel:isSpecialVideoPlaying()
+	return #self._specialPlayingVideos > 0
 end
 
-function var_0_0.getSkipStep(arg_47_0, arg_47_1, arg_47_2)
-	local var_47_0 = arg_47_2
-	local var_47_1 = {
-		var_47_0
+function StoryModel:getSkipStep(storyId, stepId)
+	local id = stepId
+	local steps = {
+		id
 	}
-	local var_47_2 = true
+	local skip = true
 
 	repeat
-		var_47_0 = var_47_1[1]
+		id = steps[1]
 
-		arg_47_0:addSkipStepLine(arg_47_1, var_47_0, true)
+		self:addSkipStepLine(storyId, id, true)
 
-		local var_47_3 = StoryStepModel.instance:getStepListById(var_47_0)
-		local var_47_4 = var_47_3 and var_47_3.videoList
+		local stepList = StoryStepModel.instance:getStepListById(id)
+		local videoList = stepList and stepList.videoList
 
-		if var_47_4 and #var_47_4 > 0 and var_47_0 ~= arg_47_2 and not arg_47_0._needWait then
-			for iter_47_0, iter_47_1 in pairs(var_47_4) do
-				if iter_47_1.orderType == StoryEnum.VideoOrderType.Produce then
-					var_47_2 = false
+		if videoList and #videoList > 0 and id ~= stepId and not self._needWait then
+			for _, v in pairs(videoList) do
+				if v.orderType == StoryEnum.VideoOrderType.Produce then
+					skip = false
 				end
 			end
 		end
 
-		var_47_1 = arg_47_0:getFollowSteps(var_47_1[1])
+		steps = self:getFollowSteps(steps[1])
 
-		if #var_47_1 < 1 then
-			var_47_2 = false
+		if #steps < 1 then
+			skip = false
 		end
-	until not var_47_2
+	until not skip
 
-	return var_47_0
+	return id
 end
 
-function var_0_0.isBranchHasCondition(arg_48_0, arg_48_1)
-	local var_48_0 = false
-	local var_48_1 = {
-		arg_48_1
+function StoryModel:isBranchHasCondition(id)
+	local has = false
+	local steps = {
+		id
 	}
-	local var_48_2 = arg_48_1
-	local var_48_3 = true
+	local curId = id
+	local skip = true
 
 	repeat
-		local var_48_4 = var_48_1[1]
-		local var_48_5 = StoryStepModel.instance:getStepListById(arg_48_1).videoList
+		curId = steps[1]
 
-		if #var_48_5 > 0 then
-			for iter_48_0, iter_48_1 in pairs(var_48_5) do
-				if iter_48_1.orderType == StoryEnum.VideoOrderType.Produce then
-					var_48_0 = true
+		local videoList = StoryStepModel.instance:getStepListById(id).videoList
+
+		if #videoList > 0 then
+			for _, v in pairs(videoList) do
+				if v.orderType == StoryEnum.VideoOrderType.Produce then
+					has = true
 				end
 			end
 		end
 
-		var_48_1 = arg_48_0:getFollowSteps(var_48_4)
+		steps = self:getFollowSteps(curId)
 
-		if #var_48_1 < 1 then
-			var_48_3 = false
+		if #steps < 1 then
+			skip = false
 		end
-	until not var_48_3
+	until not skip
 
-	return var_48_0
+	return has
 end
 
-function var_0_0.addLog(arg_49_0, arg_49_1)
-	if arg_49_0._log[#arg_49_0._log] == arg_49_1 then
+function StoryModel:addLog(log)
+	if self._log[#self._log] == log then
 		return
 	end
 
-	if LuaUtil.isTable(arg_49_1) and LuaUtil.isTable(arg_49_0._log[#arg_49_0._log]) and arg_49_0._log[#arg_49_0._log].stepId == arg_49_1.stepId then
+	if LuaUtil.isTable(log) and LuaUtil.isTable(self._log[#self._log]) and self._log[#self._log].stepId == log.stepId then
 		return
 	end
 
-	table.insert(arg_49_0._log, arg_49_1)
+	table.insert(self._log, log)
 end
 
-function var_0_0.getLog(arg_50_0)
-	local var_50_0 = {}
+function StoryModel:getLog()
+	local log = {}
 
-	if arg_50_0._log then
-		for iter_50_0, iter_50_1 in ipairs(arg_50_0._log) do
-			local var_50_1 = StoryStepModel.instance:getStepListById(iter_50_1)
+	if self._log then
+		for _, v in ipairs(self._log) do
+			local stepCo = StoryStepModel.instance:getStepListById(v)
 
-			if not var_50_1 then
-				table.insert(var_50_0, iter_50_1)
-			elseif var_50_1.conversation.type ~= StoryEnum.ConversationType.None and var_50_1.conversation.type ~= StoryEnum.ConversationType.SlideDialog and not string.match(var_50_1.conversation.diaTexts[GameLanguageMgr.instance:getLanguageTypeStoryIndex()], "<notShowInLog>") then
-				table.insert(var_50_0, iter_50_1)
+			if not stepCo then
+				table.insert(log, v)
+			elseif stepCo.conversation.type ~= StoryEnum.ConversationType.None and stepCo.conversation.type ~= StoryEnum.ConversationType.SlideDialog and not string.match(stepCo.conversation.diaTexts[GameLanguageMgr.instance:getLanguageTypeStoryIndex()], "<notShowInLog>") then
+				table.insert(log, v)
 			end
 		end
 	end
 
-	return var_50_0
+	return log
 end
 
-function var_0_0.addSkipLog(arg_51_0, arg_51_1)
-	local var_51_0 = arg_51_1
-	local var_51_1 = {
-		var_51_0
+function StoryModel:addSkipLog(stepId)
+	local id = stepId
+	local steps = {
+		id
 	}
-	local var_51_2 = true
+	local skip = true
 
 	repeat
-		local var_51_3 = var_51_1[1]
+		id = steps[1]
 
-		arg_51_0:addLog(var_51_3)
+		self:addLog(id)
 
-		local var_51_4 = StoryStepModel.instance:getStepListById(var_51_3)
-		local var_51_5 = var_51_4 and var_51_4.videoList
+		local stepList = StoryStepModel.instance:getStepListById(id)
+		local videoList = stepList and stepList.videoList
 
-		if var_51_5 and #var_51_5 > 0 then
-			for iter_51_0, iter_51_1 in pairs(var_51_5) do
-				if iter_51_1.orderType == StoryEnum.VideoOrderType.Produce then
-					var_51_2 = false
+		if videoList and #videoList > 0 then
+			for _, v in pairs(videoList) do
+				if v.orderType == StoryEnum.VideoOrderType.Produce then
+					skip = false
 				end
 			end
 		end
 
-		var_51_1 = arg_51_0:getFollowSteps(var_51_1[1])
+		steps = self:getFollowSteps(steps[1])
 
-		if #var_51_1 ~= 1 then
-			var_51_2 = false
+		if #steps ~= 1 then
+			skip = false
 		end
-	until not var_51_2
+	until not skip
 end
 
-function var_0_0.clearData(arg_52_0)
-	arg_52_0._isPlayFinished = false
-	arg_52_0._log = {}
+function StoryModel:clearData()
+	self._isPlayFinished = false
+	self._log = {}
 
 	StoryLogListModel.instance:clearData()
 end
 
-function var_0_0.getStoryTxtByVoiceType(arg_53_0, arg_53_1, arg_53_2)
-	local var_53_0 = arg_53_1
-	local var_53_1 = GameLanguageMgr.instance:getLanguageTypeStoryIndex()
-	local var_53_2 = StoryConfig.instance:getStoryTxtDiffConfig()
-	local var_53_3 = GameLanguageMgr.instance:getVoiceTypeStoryIndex()
-	local var_53_4 = LanguageEnum.LanguageStoryType2Key[var_53_3]
-	local var_53_5 = LanguageEnum.LanguageStoryType2Key[var_53_1]
-	local var_53_6 = LanguageEnum.LanguageStoryType.EN
-	local var_53_7 = LanguageEnum.LanguageStoryType2Key[var_53_6]
-	local var_53_8 = arg_53_2 and arg_53_2 ~= 0 and var_53_2[arg_53_2] and (var_53_2[arg_53_2][var_53_1] or var_53_2[arg_53_2][var_53_6])
+function StoryModel:getStoryTxtByVoiceType(txt, audioId)
+	local result = txt
+	local txtType = GameLanguageMgr.instance:getLanguageTypeStoryIndex()
+	local txtDiffCos = StoryConfig.instance:getStoryTxtDiffConfig()
+	local voiceType = GameLanguageMgr.instance:getVoiceTypeStoryIndex()
+	local key1 = LanguageEnum.LanguageStoryType2Key[voiceType]
+	local key2 = LanguageEnum.LanguageStoryType2Key[txtType]
+	local defaultType = LanguageEnum.LanguageStoryType.EN
+	local defaultKey = LanguageEnum.LanguageStoryType2Key[defaultType]
+	local txtDiffCfg = audioId and audioId ~= 0 and txtDiffCos[audioId] and (txtDiffCos[audioId][txtType] or txtDiffCos[audioId][defaultType])
 
-	if var_53_8 then
-		if var_53_1 ~= var_53_3 then
-			var_53_0 = string.gsub(var_53_0, var_53_8[var_53_5], var_53_8[var_53_4])
+	if txtDiffCfg then
+		if txtType ~= voiceType then
+			result = string.gsub(result, txtDiffCfg[key2], txtDiffCfg[key1])
 		end
 
-		return var_53_0
+		return result
 	end
 
-	local var_53_9 = {}
+	local matchTxts = {}
 
-	for iter_53_0, iter_53_1 in pairs(var_53_2) do
-		local var_53_10 = iter_53_1[var_53_1] or iter_53_1[var_53_6]
+	for _, v in pairs(txtDiffCos) do
+		local cfg = v[txtType] or v[defaultType]
 
-		if var_53_10 and math.floor(var_53_10.id / 100000) < 1 then
-			table.insert(var_53_9, var_53_10)
-		end
-	end
-
-	local var_53_11
-	local var_53_12
-
-	for iter_53_2, iter_53_3 in pairs(var_53_9) do
-		local var_53_13 = iter_53_3[var_53_5]
-		local var_53_14 = iter_53_3[var_53_4]
-
-		if not string.nilorempty(var_53_13) then
-			var_53_0 = string.gsub(var_53_0, var_53_13, var_53_14)
+		if cfg and math.floor(cfg.id / 100000) < 1 then
+			table.insert(matchTxts, cfg)
 		end
 	end
 
-	return var_53_0
+	local findString, replaceString
+
+	for k, v in pairs(matchTxts) do
+		findString = v[key2]
+		replaceString = v[key1]
+
+		if not string.nilorempty(findString) then
+			result = string.gsub(result, findString, replaceString)
+		end
+	end
+
+	return result
 end
 
-function var_0_0.isTypeSkip(arg_54_0, arg_54_1, arg_54_2)
-	if (arg_54_1 == StoryEnum.SkipType.InDarkFade or arg_54_1 == StoryEnum.SkipType.OutDarkFade) and StoryController.instance._hideStartAndEndDark then
+function StoryModel:isTypeSkip(type, storyId)
+	if (type == StoryEnum.SkipType.InDarkFade or type == StoryEnum.SkipType.OutDarkFade) and StoryController.instance._hideStartAndEndDark then
 		return true
 	end
 
-	local var_54_0 = string.splitToNumber(StoryConfig.instance:getStorySkipConfig(arg_54_1).skipDetail, "#")
+	local skipIds = string.splitToNumber(StoryConfig.instance:getStorySkipConfig(type).skipDetail, "#")
 
-	for iter_54_0, iter_54_1 in pairs(var_54_0) do
-		if iter_54_1 == arg_54_2 then
+	for _, v in pairs(skipIds) do
+		if v == storyId then
 			return true
 		end
 	end
@@ -538,32 +540,32 @@ function var_0_0.isTypeSkip(arg_54_0, arg_54_1, arg_54_2)
 	return false
 end
 
-function var_0_0.isPrologueSkipAndGetTxt(arg_55_0, arg_55_1, arg_55_2)
-	local var_55_0 = StoryConfig.instance:getStoryPrologueSkipConfig()
-	local var_55_1 = {}
+function StoryModel:isPrologueSkipAndGetTxt(storyId, stepId)
+	local prologueCo = StoryConfig.instance:getStoryPrologueSkipConfig()
+	local keySteps = {}
 
-	for iter_55_0, iter_55_1 in pairs(var_55_0) do
-		local var_55_2 = string.split(iter_55_1.prologues, "|")
+	for _, co in pairs(prologueCo) do
+		local prologueIds = string.split(co.prologues, "|")
 
-		for iter_55_2, iter_55_3 in pairs(var_55_2) do
-			local var_55_3 = string.splitToNumber(iter_55_3, "#")
+		for _, prologueId in pairs(prologueIds) do
+			local ids = string.splitToNumber(prologueId, "#")
 
-			if arg_55_1 == var_55_3[1] then
-				local var_55_4 = {
-					stepId = var_55_3[2],
-					content = iter_55_1.content
-				}
+			if storyId == ids[1] then
+				local stepParam = {}
 
-				table.insert(var_55_1, var_55_4)
+				stepParam.stepId = ids[2]
+				stepParam.content = co.content
+
+				table.insert(keySteps, stepParam)
 			end
 		end
 	end
 
-	if #var_55_1 > 0 then
-		for iter_55_4 = #arg_55_0._log, 1, -1 do
-			for iter_55_5, iter_55_6 in pairs(var_55_1) do
-				if iter_55_6.stepId == arg_55_0._log[iter_55_4] then
-					return true, iter_55_6.content
+	if #keySteps > 0 then
+		for i = #self._log, 1, -1 do
+			for _, v in pairs(keySteps) do
+				if v.stepId == self._log[i] then
+					return true, v.content
 				end
 			end
 		end
@@ -572,8 +574,8 @@ function var_0_0.isPrologueSkipAndGetTxt(arg_55_0, arg_55_1, arg_55_2)
 	return false, ""
 end
 
-function var_0_0.isPrologueSkip(arg_56_0, arg_56_1)
-	local var_56_0 = {
+function StoryModel:isPrologueSkip(storyId)
+	local skipIds = {
 		{
 			100001,
 			100002
@@ -590,20 +592,20 @@ function var_0_0.isPrologueSkip(arg_56_0, arg_56_1)
 		}
 	}
 
-	if arg_56_0._skipStoryId and arg_56_0._skipStoryId > 0 then
-		local var_56_1 = 0
+	if self._skipStoryId and self._skipStoryId > 0 then
+		local targetIndex = 0
 
-		for iter_56_0, iter_56_1 in ipairs(var_56_0) do
-			for iter_56_2, iter_56_3 in pairs(iter_56_1) do
-				if iter_56_3 == arg_56_0._skipStoryId then
-					var_56_1 = iter_56_0
+		for k, v in ipairs(skipIds) do
+			for _, id in pairs(v) do
+				if id == self._skipStoryId then
+					targetIndex = k
 				end
 			end
 		end
 
-		if var_56_1 > 0 and #var_56_0[var_56_1] > 0 then
-			for iter_56_4, iter_56_5 in pairs(var_56_0[var_56_1]) do
-				if iter_56_5 == arg_56_1 then
+		if targetIndex > 0 and #skipIds[targetIndex] > 0 then
+			for _, v in pairs(skipIds[targetIndex]) do
+				if v == storyId then
 					return true
 				end
 			end
@@ -613,39 +615,39 @@ function var_0_0.isPrologueSkip(arg_56_0, arg_56_1)
 	return false
 end
 
-function var_0_0.setPrologueSkipId(arg_57_0, arg_57_1)
-	arg_57_0._skipStoryId = arg_57_1
+function StoryModel:setPrologueSkipId(storyId)
+	self._skipStoryId = storyId
 end
 
-function var_0_0.getStoryBranchOpts(arg_58_0, arg_58_1)
-	local var_58_0 = {}
-	local var_58_1 = StoryStepModel.instance:getStepListById(arg_58_1).optList
+function StoryModel:getStoryBranchOpts(stepId)
+	local opts = {}
+	local optList = StoryStepModel.instance:getStepListById(stepId).optList
 
-	for iter_58_0, iter_58_1 in ipairs(var_58_1) do
-		if iter_58_1.conditionType == StoryEnum.OptionConditionType.None then
-			table.insert(var_58_0, iter_58_1)
+	for _, opt in ipairs(optList) do
+		if opt.conditionType == StoryEnum.OptionConditionType.None then
+			table.insert(opts, opt)
 		end
 	end
 
-	return var_58_0
+	return opts
 end
 
-function var_0_0.addStepClickTime(arg_59_0)
-	arg_59_0._statStepClickTime = arg_59_0._statStepClickTime + 1
+function StoryModel:addStepClickTime()
+	self._statStepClickTime = self._statStepClickTime + 1
 end
 
-function var_0_0.hasConfigNotExist(arg_60_0)
-	local var_60_0 = StoryStepModel.instance:getStepList()
+function StoryModel:hasConfigNotExist()
+	local stepCos = StoryStepModel.instance:getStepList()
 
-	if not var_60_0 or not next(var_60_0) then
+	if not stepCos or not next(stepCos) then
 		logError("剧情step数据异常,请检查数据！")
 
 		return true
 	end
 
-	local var_60_1 = StoryGroupModel.instance:getGroupList()
+	local groupCos = StoryGroupModel.instance:getGroupList()
 
-	if not var_60_1 or not next(var_60_1) then
+	if not groupCos or not next(groupCos) then
 		logError("剧情group数据异常,请检查数据！")
 
 		return true
@@ -654,91 +656,91 @@ function var_0_0.hasConfigNotExist(arg_60_0)
 	return false
 end
 
-function var_0_0.getStepClickTime(arg_61_0)
-	return arg_61_0._statStepClickTime
+function StoryModel:getStepClickTime()
+	return self._statStepClickTime
 end
 
-function var_0_0.resetStepClickTime(arg_62_0)
-	arg_62_0._statStepClickTime = 0
+function StoryModel:resetStepClickTime()
+	self._statStepClickTime = 0
 end
 
-function var_0_0.needWaitStoryFinish(arg_63_0)
-	return arg_63_0._needWait
+function StoryModel:needWaitStoryFinish()
+	return self._needWait
 end
 
-function var_0_0.setNeedWaitStoryFinish(arg_64_0, arg_64_1)
-	arg_64_0._needWait = arg_64_1
+function StoryModel:setNeedWaitStoryFinish(need)
+	self._needWait = need
 end
 
-function var_0_0.setReplaceHero(arg_65_0, arg_65_1, arg_65_2)
-	if not arg_65_0._replaceHeroList then
-		arg_65_0._replaceHeroList = {}
+function StoryModel:setReplaceHero(initHero, replaceHero)
+	if not self._replaceHeroList then
+		self._replaceHeroList = {}
 	end
 
-	local var_65_0 = {
-		initHero = arg_65_1,
-		replaceHeroPath = arg_65_2
-	}
+	local hero = {}
 
-	table.insert(arg_65_0._replaceHeroList, var_65_0)
+	hero.initHero = initHero
+	hero.replaceHeroPath = replaceHero
+
+	table.insert(self._replaceHeroList, hero)
 end
 
-function var_0_0.getReplaceHeroPath(arg_66_0, arg_66_1)
-	if not arg_66_0._replaceHeroList then
+function StoryModel:getReplaceHeroPath(initHero)
+	if not self._replaceHeroList then
 		return
 	end
 
-	for iter_66_0, iter_66_1 in pairs(arg_66_0._replaceHeroList) do
-		if arg_66_1 == iter_66_1.initHero then
-			return iter_66_1.replaceHeroPath
+	for _, v in pairs(self._replaceHeroList) do
+		if initHero == v.initHero then
+			return v.replaceHeroPath
 		end
 	end
 end
 
-function var_0_0.isDirectSkipStory(arg_67_0, arg_67_1)
-	if math.floor(arg_67_1 / 100) == 8008 then
-		return arg_67_1 % 100 > 4
+function StoryModel:isDirectSkipStory(storyId)
+	if math.floor(storyId / 100) == 8008 then
+		return storyId % 100 > 4
 	end
 
 	return false
 end
 
-function var_0_0.setCurStoryId(arg_68_0, arg_68_1)
-	arg_68_0._curStoryId = arg_68_1
+function StoryModel:setCurStoryId(storyId)
+	self._curStoryId = storyId
 end
 
-function var_0_0.getCurStoryId(arg_69_0)
-	return arg_69_0._curStoryId or 0
+function StoryModel:getCurStoryId()
+	return self._curStoryId or 0
 end
 
-function var_0_0.setCurStepId(arg_70_0, arg_70_1)
-	arg_70_0._curStepId = arg_70_1 or 0
+function StoryModel:setCurStepId(stepId)
+	self._curStepId = stepId or 0
 end
 
-function var_0_0.getCurStepId(arg_71_0)
-	return arg_71_0._curStepId
+function StoryModel:getCurStepId()
+	return self._curStepId
 end
 
-function var_0_0.isStoryPvPause(arg_72_0)
-	return arg_72_0._pvPause
+function StoryModel:isStoryPvPause()
+	return self._pvPause
 end
 
-function var_0_0.setStoryPvPause(arg_73_0, arg_73_1)
-	arg_73_0._pvPause = arg_73_1
+function StoryModel:setStoryPvPause(pause)
+	self._pvPause = pause
 end
 
-function var_0_0.setLimitNoInteractLock(arg_74_0, arg_74_1)
-	arg_74_0._isLimitNoInteractLock = arg_74_1
+function StoryModel:setLimitNoInteractLock(lock)
+	self._isLimitNoInteractLock = lock
 end
 
-function var_0_0.isLimitNoInteractLock(arg_75_0, arg_75_1)
-	if not arg_75_1 or arg_75_1.conversation.type ~= StoryEnum.ConversationType.LimitNoInteract then
+function StoryModel:isLimitNoInteractLock(stepCo)
+	if not stepCo or stepCo.conversation.type ~= StoryEnum.ConversationType.LimitNoInteract then
 		return false
 	end
 
-	return arg_75_0._isLimitNoInteractLock
+	return self._isLimitNoInteractLock
 end
 
-var_0_0.instance = var_0_0.New()
+StoryModel.instance = StoryModel.New()
 
-return var_0_0
+return StoryModel

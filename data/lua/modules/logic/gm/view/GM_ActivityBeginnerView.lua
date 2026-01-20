@@ -1,95 +1,98 @@
-﻿module("modules.logic.gm.view.GM_ActivityBeginnerView", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GM_ActivityBeginnerView.lua
 
-local var_0_0 = class("GM_ActivityBeginnerView", BaseView)
-local var_0_1 = "#FFFF00"
+module("modules.logic.gm.view.GM_ActivityBeginnerView", package.seeall)
 
-function var_0_0.register()
-	var_0_0.ActivityBeginnerView_register(ActivityBeginnerView)
-	var_0_0.ActivityCategoryItem_register(ActivityCategoryItem)
+local GM_ActivityBeginnerView = class("GM_ActivityBeginnerView", BaseView)
+local kYellow = "#FFFF00"
+
+function GM_ActivityBeginnerView.register()
+	GM_ActivityBeginnerView.ActivityBeginnerView_register(ActivityBeginnerView)
+	GM_ActivityBeginnerView.ActivityCategoryItem_register(ActivityCategoryItem)
 end
 
-function var_0_0.ActivityBeginnerView_register(arg_2_0)
-	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "_editableInitView")
-	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "addEvents")
-	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "removeEvents")
+function GM_ActivityBeginnerView.ActivityBeginnerView_register(T)
+	GMMinusModel.instance:saveOriginalFunc(T, "_editableInitView")
+	GMMinusModel.instance:saveOriginalFunc(T, "addEvents")
+	GMMinusModel.instance:saveOriginalFunc(T, "removeEvents")
 
-	function arg_2_0._editableInitView(arg_3_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_3_0, "_editableInitView", ...)
-		GMMinusModel.instance:addBtnGM(arg_3_0)
+	function T:_editableInitView(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "_editableInitView", ...)
+		GMMinusModel.instance:addBtnGM(self)
 	end
 
-	function arg_2_0.addEvents(arg_4_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_4_0, "addEvents", ...)
-		GMMinusModel.instance:btnGM_AddClickListener(arg_4_0)
-		GM_ActivityBeginnerViewContainer.addEvents(arg_4_0)
+	function T:addEvents(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "addEvents", ...)
+		GMMinusModel.instance:btnGM_AddClickListener(self)
+		GM_ActivityBeginnerViewContainer.addEvents(self)
 	end
 
-	function arg_2_0.removeEvents(arg_5_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_5_0, "removeEvents", ...)
-		GMMinusModel.instance:btnGM_RemoveClickListener(arg_5_0)
-		GM_ActivityBeginnerViewContainer.removeEvents(arg_5_0)
+	function T:removeEvents(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "removeEvents", ...)
+		GMMinusModel.instance:btnGM_RemoveClickListener(self)
+		GM_ActivityBeginnerViewContainer.removeEvents(self)
 	end
 
-	function arg_2_0._gm_showAllTabIdUpdate(arg_6_0)
+	function T._gm_showAllTabIdUpdate(selfObj)
 		ActivityBeginnerCategoryListModel.instance:onModelUpdate()
 	end
 end
 
-function var_0_0.ActivityCategoryItem_register(arg_7_0)
-	GMMinusModel.instance:saveOriginalFunc(arg_7_0, "_refreshItem")
+function GM_ActivityBeginnerView.ActivityCategoryItem_register(T)
+	GMMinusModel.instance:saveOriginalFunc(T, "_refreshItem")
 
-	function arg_7_0._refreshItem(arg_8_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_8_0, "_refreshItem", ...)
+	function T._refreshItem(selfObj, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(selfObj, "_refreshItem", ...)
 
-		if not var_0_0.s_ShowAllTabId then
+		if not GM_ActivityBeginnerView.s_ShowAllTabId then
 			return
 		end
 
-		local var_8_0 = arg_8_0._mo.id
-		local var_8_1 = gohelper.getRichColorText(var_8_0, var_0_1)
+		local mo = selfObj._mo
+		local actId = mo.id
+		local desc = gohelper.getRichColorText(actId, kYellow)
 
-		arg_8_0._txtnamecn.text = var_8_1
-		arg_8_0._txtunselectnamecn.text = var_8_1
+		selfObj._txtnamecn.text = desc
+		selfObj._txtunselectnamecn.text = desc
 	end
 end
 
-function var_0_0.onInitView(arg_9_0)
-	arg_9_0._btnClose = gohelper.findChildButtonWithAudio(arg_9_0.viewGO, "btnClose")
-	arg_9_0._item1Toggle = gohelper.findChildToggle(arg_9_0.viewGO, "viewport/content/item1/Toggle")
+function GM_ActivityBeginnerView:onInitView()
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "btnClose")
+	self._item1Toggle = gohelper.findChildToggle(self.viewGO, "viewport/content/item1/Toggle")
 end
 
-function var_0_0.addEvents(arg_10_0)
-	arg_10_0._btnClose:AddClickListener(arg_10_0.closeThis, arg_10_0)
-	arg_10_0._item1Toggle:AddOnValueChanged(arg_10_0._onItem1ToggleValueChanged, arg_10_0)
+function GM_ActivityBeginnerView:addEvents()
+	self._btnClose:AddClickListener(self.closeThis, self)
+	self._item1Toggle:AddOnValueChanged(self._onItem1ToggleValueChanged, self)
 end
 
-function var_0_0.removeEvents(arg_11_0)
-	arg_11_0._btnClose:RemoveClickListener()
-	arg_11_0._item1Toggle:RemoveOnValueChanged()
+function GM_ActivityBeginnerView:removeEvents()
+	self._btnClose:RemoveClickListener()
+	self._item1Toggle:RemoveOnValueChanged()
 end
 
-function var_0_0.onOpen(arg_12_0)
-	arg_12_0:_refreshItem1()
+function GM_ActivityBeginnerView:onOpen()
+	self:_refreshItem1()
 end
 
-function var_0_0.onDestroyView(arg_13_0)
+function GM_ActivityBeginnerView:onDestroyView()
 	return
 end
 
-var_0_0.s_ShowAllTabId = false
+GM_ActivityBeginnerView.s_ShowAllTabId = false
 
-function var_0_0._refreshItem1(arg_14_0)
-	local var_14_0 = var_0_0.s_ShowAllTabId
+function GM_ActivityBeginnerView:_refreshItem1()
+	local isOn = GM_ActivityBeginnerView.s_ShowAllTabId
 
-	arg_14_0._item1Toggle.isOn = var_14_0
+	self._item1Toggle.isOn = isOn
 end
 
-function var_0_0._onItem1ToggleValueChanged(arg_15_0)
-	local var_15_0 = arg_15_0._item1Toggle.isOn
+function GM_ActivityBeginnerView:_onItem1ToggleValueChanged()
+	local isOn = self._item1Toggle.isOn
 
-	var_0_0.s_ShowAllTabId = var_15_0
+	GM_ActivityBeginnerView.s_ShowAllTabId = isOn
 
-	GMController.instance:dispatchEvent(GMEvent.ActivityBeginnerView_ShowAllTabIdUpdate, var_15_0)
+	GMController.instance:dispatchEvent(GMEvent.ActivityBeginnerView_ShowAllTabIdUpdate, isOn)
 end
 
-return var_0_0
+return GM_ActivityBeginnerView

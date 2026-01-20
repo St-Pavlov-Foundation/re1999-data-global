@@ -1,46 +1,50 @@
-﻿module("modules.logic.versionactivity1_9.matildagift.controller.V1a9_MatildaGiftController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/matildagift/controller/V1a9_MatildaGiftController.lua
 
-local var_0_0 = class("V1a9_MatildaGiftController", BaseController)
+module("modules.logic.versionactivity1_9.matildagift.controller.V1a9_MatildaGiftController", package.seeall)
 
-function var_0_0.addConstEvents(arg_1_0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, arg_1_0._checkActivityInfo, arg_1_0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_1_0._checkActivityInfo, arg_1_0)
+local V1a9_MatildaGiftController = class("V1a9_MatildaGiftController", BaseController)
+
+function V1a9_MatildaGiftController:addConstEvents()
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, self._checkActivityInfo, self)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self._checkActivityInfo, self)
 end
 
-function var_0_0.reInit(arg_2_0)
+function V1a9_MatildaGiftController:reInit()
 	return
 end
 
-function var_0_0._checkActivityInfo(arg_3_0, arg_3_1)
-	local var_3_0 = V1a9_MatildaGiftModel.instance:getMatildagiftActId()
+function V1a9_MatildaGiftController:_checkActivityInfo(actId)
+	local _actId = V1a9_MatildaGiftModel.instance:getMatildagiftActId()
 
-	if ActivityHelper.getActivityStatus(var_3_0) == ActivityEnum.ActivityStatus.Normal then
-		arg_3_0:sendGet101InfosRequest()
+	if ActivityHelper.getActivityStatus(_actId) == ActivityEnum.ActivityStatus.Normal then
+		self:sendGet101InfosRequest()
 	end
 end
 
-function var_0_0.openMatildaGiftView(arg_4_0)
-	if not V1a9_MatildaGiftModel.instance:isMatildaGiftOpen(true) then
+function V1a9_MatildaGiftController:openMatildaGiftView()
+	local isOpen = V1a9_MatildaGiftModel.instance:isMatildaGiftOpen(true)
+
+	if not isOpen then
 		return
 	end
 
-	arg_4_0:sendGet101InfosRequest(arg_4_0._realOpenMatildaGiftView)
+	self:sendGet101InfosRequest(self._realOpenMatildaGiftView)
 end
 
-function var_0_0._realOpenMatildaGiftView(arg_5_0)
-	local var_5_0 = V1a9_MatildaGiftModel.instance:isShowRedDot()
+function V1a9_MatildaGiftController:_realOpenMatildaGiftView()
+	local isShowRedDot = V1a9_MatildaGiftModel.instance:isShowRedDot()
 
 	ViewMgr.instance:openView(ViewName.V1a9_MatildagiftView, {
-		isDisplayView = not var_5_0
+		isDisplayView = not isShowRedDot
 	})
 end
 
-function var_0_0.sendGet101InfosRequest(arg_6_0, arg_6_1)
-	local var_6_0 = V1a9_MatildaGiftModel.instance:getMatildagiftActId()
+function V1a9_MatildaGiftController:sendGet101InfosRequest(callback)
+	local actId = V1a9_MatildaGiftModel.instance:getMatildagiftActId()
 
-	Activity101Rpc.instance:sendGet101InfosRequest(var_6_0, arg_6_1, arg_6_0)
+	Activity101Rpc.instance:sendGet101InfosRequest(actId, callback, self)
 end
 
-var_0_0.instance = var_0_0.New()
+V1a9_MatildaGiftController.instance = V1a9_MatildaGiftController.New()
 
-return var_0_0
+return V1a9_MatildaGiftController

@@ -1,39 +1,41 @@
-﻿module("modules.logic.story.model.StoryGroupModel", package.seeall)
+﻿-- chunkname: @modules/logic/story/model/StoryGroupModel.lua
 
-local var_0_0 = class("StoryGroupModel", BaseModel)
+module("modules.logic.story.model.StoryGroupModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._groupList = {}
+local StoryGroupModel = class("StoryGroupModel", BaseModel)
+
+function StoryGroupModel:onInit()
+	self._groupList = {}
 end
 
-function var_0_0.setGroupList(arg_2_0, arg_2_1)
-	arg_2_0._groupList = {}
+function StoryGroupModel:setGroupList(infos)
+	self._groupList = {}
 
-	if arg_2_1 then
-		for iter_2_0, iter_2_1 in pairs(arg_2_1) do
-			local var_2_0 = {}
+	if infos then
+		for _, info in pairs(infos) do
+			local mo = {}
 
-			for iter_2_2, iter_2_3 in ipairs(iter_2_1) do
-				local var_2_1 = StoryGroupMo.New()
+			for _, value in ipairs(info) do
+				local groupMo = StoryGroupMo.New()
 
-				var_2_1:init(iter_2_3)
-				table.insert(var_2_0, var_2_1)
+				groupMo:init(value)
+				table.insert(mo, groupMo)
 			end
 
-			table.insert(arg_2_0._groupList, var_2_0)
+			table.insert(self._groupList, mo)
 		end
 	end
 end
 
-function var_0_0.getGroupList(arg_3_0)
-	return arg_3_0._groupList
+function StoryGroupModel:getGroupList()
+	return self._groupList
 end
 
-function var_0_0.getGroupListById(arg_4_0, arg_4_1)
-	for iter_4_0, iter_4_1 in pairs(arg_4_0._groupList) do
-		for iter_4_2, iter_4_3 in pairs(iter_4_1) do
-			if iter_4_3.id == arg_4_1 then
-				return iter_4_1
+function StoryGroupModel:getGroupListById(stepId)
+	for _, branch in pairs(self._groupList) do
+		for _, v in pairs(branch) do
+			if v.id == stepId then
+				return branch
 			end
 		end
 	end
@@ -41,6 +43,6 @@ function var_0_0.getGroupListById(arg_4_0, arg_4_1)
 	return nil
 end
 
-var_0_0.instance = var_0_0.New()
+StoryGroupModel.instance = StoryGroupModel.New()
 
-return var_0_0
+return StoryGroupModel

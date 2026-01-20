@@ -1,76 +1,78 @@
-﻿module("modules.logic.login.work.AutoOpenNoticeWork", package.seeall)
+﻿-- chunkname: @modules/logic/login/work/AutoOpenNoticeWork.lua
 
-local var_0_0 = class("AutoOpenNoticeWork", BaseWork)
+module("modules.logic.login.work.AutoOpenNoticeWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
+local AutoOpenNoticeWork = class("AutoOpenNoticeWork", BaseWork)
+
+function AutoOpenNoticeWork:onStart(context)
 	if VersionValidator.instance:isInReviewing() then
-		arg_1_0:onDone(true)
+		self:onDone(true)
 
 		return
 	end
 
 	if GameFacade.isExternalTest() then
-		arg_1_0:onDone(true)
+		self:onDone(true)
 
 		return
 	end
 
 	if SDKMgr.getShowNotice and not SDKMgr.instance:getShowNotice() then
-		arg_1_0:onDone(true)
+		self:onDone(true)
 
 		return
 	end
 
-	NoticeController.instance:startRequest(arg_1_0.onReceiveNotice, arg_1_0)
+	NoticeController.instance:startRequest(self.onReceiveNotice, self)
 end
 
-function var_0_0.onReceiveNotice(arg_2_0, arg_2_1, arg_2_2)
-	if not arg_2_1 then
-		return arg_2_0:onDone(true)
+function AutoOpenNoticeWork:onReceiveNotice(isSuccess, msg)
+	if not isSuccess then
+		return self:onDone(true)
 	end
 
 	if not NoticeModel.instance:canAutoOpen() then
-		return arg_2_0:onDone(true)
+		return self:onDone(true)
 	end
 
-	NoticeController.instance:getNoticeConfig(arg_2_0.autoOpenNoticeView, arg_2_0)
+	NoticeController.instance:getNoticeConfig(self.autoOpenNoticeView, self)
 end
 
-function var_0_0.autoOpenNoticeView(arg_3_0)
-	arg_3_0:saveCurrentTime()
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_3_0.onCloseViewFinish, arg_3_0)
+function AutoOpenNoticeWork:autoOpenNoticeView()
+	self:saveCurrentTime()
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self.onCloseViewFinish, self)
 	NoticeController.instance:setAutoOpenNoticeView(true)
 	ViewMgr.instance:openView(ViewName.NoticeView)
 end
 
-function var_0_0.saveCurrentTime(arg_4_0)
-	local var_4_0 = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.NoticePatKey)
-	local var_4_1 = PlayerPrefsHelper.getString(var_4_0, "")
-	local var_4_2 = ServerTime.nowInLocal() - TimeDispatcher.DailyRefreshTime * TimeUtil.OneHourSecond
-	local var_4_3 = os.date("*t", var_4_2)
-	local var_4_4 = var_4_3.year
-	local var_4_5 = var_4_3.month
-	local var_4_6 = var_4_3.day
-	local var_4_7 = var_4_3.hour
-	local var_4_8 = string.format("%s%s%s%s%s%s%s", var_4_4, NoticeEnum.FirstSplitChar, var_4_5, NoticeEnum.FirstSplitChar, var_4_6, NoticeEnum.FirstSplitChar, var_4_7)
+function AutoOpenNoticeWork:saveCurrentTime()
+	local key = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.NoticePatKey)
+	local preStr = PlayerPrefsHelper.getString(key, "")
+	local timeStamp = ServerTime.nowInLocal() - TimeDispatcher.DailyRefreshTime * TimeUtil.OneHourSecond
+	local dt = os.date("*t", timeStamp)
+	local year = dt.year
+	local month = dt.month
+	local day = dt.day
+	local hour = dt.hour
+	local saveStr = string.format("%s%s%s%s%s%s%s", year, NoticeEnum.FirstSplitChar, month, NoticeEnum.FirstSplitChar, day, NoticeEnum.FirstSplitChar, hour)
 
-	if not string.nilorempty(var_4_1) then
-		var_4_8 = var_4_1 .. NoticeEnum.SecondSplitChar .. var_4_8
+	if not string.nilorempty(preStr) then
+		saveStr = preStr .. NoticeEnum.SecondSplitChar .. saveStr
 	end
 
-	PlayerPrefsHelper.setString(var_4_0, var_4_8)
+	PlayerPrefsHelper.setString(key, saveStr)
 end
 
-function var_0_0.onCloseViewFinish(arg_5_0, arg_5_1)
-	if arg_5_1 == ViewName.NoticeView then
-		arg_5_0:onDone(true)
+function AutoOpenNoticeWork:onCloseViewFinish(viewName)
+	if viewName == ViewName.NoticeView then
+		self:onDone(true)
 	end
 end
 
-function var_0_0.clearWork(arg_6_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_6_0.onCloseViewFinish, arg_6_0)
+function AutoOpenNoticeWork:clearWork()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self.onCloseViewFinish, self)
 	NoticeController.instance:stopRequest()
 	NoticeController.instance:stopGetConfigRequest()
 end
 
-return var_0_0
+return AutoOpenNoticeWork

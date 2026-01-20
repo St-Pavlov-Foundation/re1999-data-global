@@ -1,807 +1,867 @@
-﻿module("modules.ugui.icon.common.CommonItemIcon", package.seeall)
+﻿-- chunkname: @modules/ugui/icon/common/CommonItemIcon.lua
 
-local var_0_0 = class("CommonItemIcon", ListScrollCell)
+module("modules.ugui.icon.common.CommonItemIcon", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0.tr = arg_1_1.transform
-	arg_1_0._countbg = gohelper.findChild(arg_1_1, "countbg")
-	arg_1_0._txtQuantity = gohelper.findChildText(arg_1_1, "count")
-	arg_1_0._icon = gohelper.findChildSingleImage(arg_1_1, "icon")
-	arg_1_0._goheadiconmask = gohelper.findChild(arg_1_1, "headiconmask")
-	arg_1_0._playerheadicon = gohelper.findChildSingleImage(arg_1_1, "headiconmask/playerheadicon")
-	arg_1_0._iconImage = arg_1_0._icon:GetComponent(gohelper.Type_Image)
-	arg_1_0._txtequiplv = gohelper.findChildText(arg_1_1, "#txt_equiplv")
-	arg_1_0._iconbg = gohelper.findChildImage(arg_1_1, "quality")
-	arg_1_0._nameTxt = gohelper.findChildText(arg_1_1, "txt")
-	arg_1_0._deadline = gohelper.findChild(arg_1_1, "deadline")
-	arg_1_0._deadline1 = gohelper.findChild(arg_1_1, "deadline1")
-	arg_1_0._imagetimebg = gohelper.findChildImage(arg_1_0._deadline, "timebg")
-	arg_1_0._imagetimeicon = gohelper.findChildImage(arg_1_0._deadline, "timetxt/timeicon")
-	arg_1_0._timetxt = gohelper.findChildText(arg_1_0._deadline, "timetxt")
-	arg_1_0._formattxt = gohelper.findChildText(arg_1_0._deadline, "timetxt/format")
-	arg_1_0._deadlineEffect = gohelper.findChild(arg_1_0._deadline, "#effect")
-	arg_1_0._goequipcarerr = gohelper.findChild(arg_1_1, "click/#go_equipcareer")
-	arg_1_0._gorefinebg = gohelper.findChild(arg_1_1, "click/#go_equipcareer/#go_refinebg")
-	arg_1_0._goboth = gohelper.findChild(arg_1_1, "click/#go_equipcareer/#go_both")
-	arg_1_0._txtrefinelv = gohelper.findChildText(arg_1_1, "click/#go_equipcareer/#txt_refinelv")
-	arg_1_0._imagecareer = gohelper.findChildImage(arg_1_1, "click/#go_equipcareer/#go_both/#image_carrer")
-	arg_1_0._goframe = gohelper.findChild(arg_1_1, "headiconmask/#go_frame")
-	arg_1_0._goframenode = gohelper.findChild(arg_1_1, "headiconmask/#go_framenode")
-	arg_1_0._goAddition = gohelper.findChild(arg_1_1, "turnback")
-	arg_1_0._click = gohelper.getClick(arg_1_1)
-	arg_1_0._ani = arg_1_1:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._ani.enabled = false
-	arg_1_0._effectGos = {}
-	arg_1_0._effectLoader = MultiAbLoader.New()
+local CommonItemIcon = class("CommonItemIcon", ListScrollCell)
 
-	arg_1_0._effectLoader:setPathList({
+function CommonItemIcon:init(go)
+	self.go = go
+	self.tr = go.transform
+	self._countbg = gohelper.findChild(go, "countbg")
+	self._txtQuantity = gohelper.findChildText(go, "count")
+	self._icon = gohelper.findChildSingleImage(go, "icon")
+	self._goheadiconmask = gohelper.findChild(go, "headiconmask")
+	self._playerheadicon = gohelper.findChildSingleImage(go, "headiconmask/playerheadicon")
+	self._iconImage = self._icon:GetComponent(gohelper.Type_Image)
+	self._txtequiplv = gohelper.findChildText(go, "#txt_equiplv")
+	self._iconbg = gohelper.findChildImage(go, "quality")
+	self._nameTxt = gohelper.findChildText(go, "txt")
+	self._deadline = gohelper.findChild(go, "deadline")
+	self._deadline1 = gohelper.findChild(go, "deadline1")
+	self._imagetimebg = gohelper.findChildImage(self._deadline, "timebg")
+	self._imagetimeicon = gohelper.findChildImage(self._deadline, "timetxt/timeicon")
+	self._timetxt = gohelper.findChildText(self._deadline, "timetxt")
+	self._formattxt = gohelper.findChildText(self._deadline, "timetxt/format")
+	self._deadlineEffect = gohelper.findChild(self._deadline, "#effect")
+	self._goequipcarerr = gohelper.findChild(go, "click/#go_equipcareer")
+	self._gorefinebg = gohelper.findChild(go, "click/#go_equipcareer/#go_refinebg")
+	self._goboth = gohelper.findChild(go, "click/#go_equipcareer/#go_both")
+	self._txtrefinelv = gohelper.findChildText(go, "click/#go_equipcareer/#txt_refinelv")
+	self._imagecareer = gohelper.findChildImage(go, "click/#go_equipcareer/#go_both/#image_carrer")
+	self._goframe = gohelper.findChild(go, "headiconmask/#go_frame")
+	self._goframenode = gohelper.findChild(go, "headiconmask/#go_framenode")
+	self._goAddition = gohelper.findChild(go, "turnback")
+	self._click = gohelper.getClick(go)
+	self._ani = go:GetComponent(typeof(UnityEngine.Animator))
+	self._ani.enabled = false
+	self._effectGos = {}
+	self._effectLoader = MultiAbLoader.New()
+
+	self._effectLoader:setPathList({
 		ResUrl.getCommonitemEffect("itemeffect")
 	})
-	arg_1_0._effectLoader:startLoad(arg_1_0.LoadEffect, arg_1_0)
+	self._effectLoader:startLoad(self.LoadEffect, self)
 
-	arg_1_0._isEnableClick = true
-	arg_1_0._isShowCount = true
-	arg_1_0._refreshDeadline = false
-	arg_1_0.canShowDeadLine = true
-	arg_1_0._inPack = false
+	self._isEnableClick = true
+	self._isShowCount = true
+	self._refreshDeadline = false
+	self.canShowDeadLine = true
+	self._inPack = false
 
-	gohelper.setActive(arg_1_0._txtequiplv.gameObject, false)
+	gohelper.setActive(self._txtequiplv.gameObject, false)
 
-	arg_1_0._frameloader = MultiAbLoader.New()
+	self._frameloader = MultiAbLoader.New()
 end
 
-function var_0_0.LoadEffect(arg_2_0)
-	if gohelper.isNil(arg_2_0._iconbg) then
-		if arg_2_0._effectLoader then
-			arg_2_0._effectLoader:dispose()
+function CommonItemIcon:LoadEffect()
+	if gohelper.isNil(self._iconbg) then
+		if self._effectLoader then
+			self._effectLoader:dispose()
 
-			arg_2_0._effectLoader = nil
+			self._effectLoader = nil
 		end
 
 		return
 	end
 
-	local var_2_0 = arg_2_0._effectLoader:getFirstAssetItem():GetResource()
+	local prefabGO = self._effectLoader:getFirstAssetItem():GetResource()
 
-	arg_2_0._effect = gohelper.clone(var_2_0, arg_2_0._iconbg.gameObject, "itemEffect")
+	self._effect = gohelper.clone(prefabGO, self._iconbg.gameObject, "itemEffect")
 
-	for iter_2_0 = 4, 5 do
-		local var_2_1 = gohelper.findChild(arg_2_0._effect, "effect" .. tostring(iter_2_0))
+	for i = 4, 5 do
+		local go = gohelper.findChild(self._effect, "effect" .. tostring(i))
 
-		arg_2_0._effectGos[iter_2_0] = var_2_1
+		self._effectGos[i] = go
 	end
 
-	if arg_2_0._showeffectrare then
-		arg_2_0:showEffect(arg_2_0._showeffectrare)
+	if self._showeffectrare then
+		self:showEffect(self._showeffectrare)
 	end
 end
 
-function var_0_0.playAnimation(arg_3_0, arg_3_1)
-	arg_3_0._ani.enabled = true
+function CommonItemIcon:playAnimation(ani)
+	self._ani.enabled = true
 
-	if arg_3_1 then
-		arg_3_0._ani:Play(arg_3_1, 0, 0)
+	if ani then
+		self._ani:Play(ani, 0, 0)
 	else
-		arg_3_0._ani:Play("commonitemicon_in")
+		self._ani:Play("commonitemicon_in")
 	end
 end
 
-function var_0_0.setAlpha(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0.iconAlpha = arg_4_1
+function CommonItemIcon:setAlpha(iconAlpha, bgAlpha)
+	self.iconAlpha = iconAlpha
 
-	local var_4_0 = arg_4_0:getRare()
+	local rare = self:getRare()
 
-	UISpriteSetMgr.instance:setCommonSprite(arg_4_0._iconbg, "bgequip" .. tostring(ItemEnum.Color[var_4_0]), nil, arg_4_2)
+	UISpriteSetMgr.instance:setCommonSprite(self._iconbg, "bgequip" .. tostring(ItemEnum.Color[rare]), nil, bgAlpha)
 
-	if arg_4_0._iconImage.sprite then
-		local var_4_1 = arg_4_0._iconImage.color
+	if self._iconImage.sprite then
+		local color = self._iconImage.color
 
-		var_4_1.a = arg_4_1
-		arg_4_0._iconImage.color = var_4_1
+		color.a = iconAlpha
+		self._iconImage.color = color
 	end
 end
 
-function var_0_0.getRare(arg_5_0)
-	return arg_5_0._config.rare or 5
+function CommonItemIcon:getRare()
+	local rare = self._config.rare or 5
+
+	return rare
 end
 
-function var_0_0.setItemColor(arg_6_0, arg_6_1)
-	SLFramework.UGUI.GuiHelper.SetColor(arg_6_0._goframe:GetComponent(gohelper.Type_Image), arg_6_1 or "#FFFFFF")
-	SLFramework.UGUI.GuiHelper.SetColor(arg_6_0._playerheadicon:GetComponent(gohelper.Type_Image), arg_6_1 or "#FFFFFF")
-	SLFramework.UGUI.GuiHelper.SetColor(arg_6_0._iconbg, arg_6_1 or "#FFFFFF")
-	SLFramework.UGUI.GuiHelper.SetColor(arg_6_0._iconImage, arg_6_1 or "#FFFFFF")
-	SLFramework.UGUI.GuiHelper.SetColor(arg_6_0._countbg:GetComponent(gohelper.Type_Image), arg_6_1 or "#FFFFFF")
-	SLFramework.UGUI.GuiHelper.SetColor(arg_6_0._txtQuantity, arg_6_1 or "#EBE6E6")
+function CommonItemIcon:setItemColor(color)
+	SLFramework.UGUI.GuiHelper.SetColor(self._goframe:GetComponent(gohelper.Type_Image), color or "#FFFFFF")
+	SLFramework.UGUI.GuiHelper.SetColor(self._playerheadicon:GetComponent(gohelper.Type_Image), color or "#FFFFFF")
+	SLFramework.UGUI.GuiHelper.SetColor(self._iconbg, color or "#FFFFFF")
+	SLFramework.UGUI.GuiHelper.SetColor(self._iconImage, color or "#FFFFFF")
+	SLFramework.UGUI.GuiHelper.SetColor(self._countbg:GetComponent(gohelper.Type_Image), color or "#FFFFFF")
+	SLFramework.UGUI.GuiHelper.SetColor(self._txtQuantity, color or "#EBE6E6")
 end
 
-function var_0_0.setAutoPlay(arg_7_0, arg_7_1)
-	arg_7_0._ani.enabled = arg_7_1
+function CommonItemIcon:setAutoPlay(autoPlay)
+	self._ani.enabled = autoPlay
 end
 
-function var_0_0.setWidth(arg_8_0, arg_8_1)
-	recthelper.setWidth(arg_8_0.go.transform, arg_8_1)
+function CommonItemIcon:setWidth(width)
+	recthelper.setWidth(self.go.transform, width)
 end
 
-function var_0_0.getQuality(arg_9_0)
-	return arg_9_0._iconbg
+function CommonItemIcon:setHeight(height)
+	recthelper.setHeight(self.go.transform, height)
 end
 
-function var_0_0.getIcon(arg_10_0)
-	return arg_10_0._icon
+function CommonItemIcon:setWidtAndHeight(value)
+	recthelper.setWidth(self.go.transform, value)
+	recthelper.setHeight(self.go.transform, value)
 end
 
-function var_0_0.getCountBg(arg_11_0)
-	return arg_11_0._countbg
+function CommonItemIcon:getQuality()
+	return self._iconbg
 end
 
-function var_0_0.getCount(arg_12_0)
-	return arg_12_0._txtQuantity
+function CommonItemIcon:getIcon()
+	return self._icon
 end
 
-function var_0_0.getDeadline1(arg_13_0)
-	return arg_13_0._deadline1
+function CommonItemIcon:getCountBg()
+	return self._countbg
 end
 
-function var_0_0.setCountText(arg_14_0, arg_14_1)
-	arg_14_0._txtQuantity.text = arg_14_1
+function CommonItemIcon:getCount()
+	return self._txtQuantity
 end
 
-function var_0_0.addEventListeners(arg_15_0)
-	arg_15_0._click:AddClickListener(arg_15_0._onClick, arg_15_0)
+function CommonItemIcon:getDeadline1()
+	return self._deadline1
 end
 
-function var_0_0.removeEventListeners(arg_16_0)
-	if arg_16_0._click then
-		arg_16_0._click:RemoveClickListener()
+function CommonItemIcon:setCountText(str)
+	self._txtQuantity.text = str
+end
 
-		arg_16_0._click = nil
+function CommonItemIcon:addEventListeners()
+	self._click:AddClickListener(self._onClick, self)
+end
+
+function CommonItemIcon:removeEventListeners()
+	if self._click then
+		self._click:RemoveClickListener()
+
+		self._click = nil
 	end
 end
 
-function var_0_0.setIconWithAndHeight(arg_17_0, arg_17_1)
-	recthelper.setWidth(arg_17_0._icon.transform, arg_17_1)
-	recthelper.setHeight(arg_17_0._icon.transform, arg_17_1)
+function CommonItemIcon:setIconWithAndHeight(value)
+	recthelper.setWidth(self._icon.transform, value)
+	recthelper.setHeight(self._icon.transform, value)
 end
 
-function var_0_0.isEnableClick(arg_18_0, arg_18_1)
-	arg_18_0._isEnableClick = arg_18_1
+function CommonItemIcon:isEnableClick(flag)
+	self._isEnableClick = flag
 end
 
-function var_0_0.isShowQuality(arg_19_0, arg_19_1)
-	gohelper.setActive(arg_19_0._iconbg.gameObject, arg_19_1)
-	gohelper.setActive(arg_19_0._effect, arg_19_0._isCfgNeedVfx and arg_19_1)
+function CommonItemIcon:isShowQuality(flag)
+	gohelper.setActive(self._iconbg.gameObject, flag)
+	gohelper.setActive(self._effect, self._isCfgNeedVfx and flag)
 end
 
-function var_0_0.isShowEffect(arg_20_0, arg_20_1)
-	arg_20_0._showeffectrare = arg_20_1 and arg_20_0._showeffectrare or false
+function CommonItemIcon:isShowEffect(flag)
+	self._showeffectrare = flag and self._showeffectrare or false
 
-	gohelper.setActive(arg_20_0._effect, arg_20_0._isCfgNeedVfx and arg_20_1)
+	gohelper.setActive(self._effect, self._isCfgNeedVfx and flag)
 end
 
-function var_0_0.isShowName(arg_21_0, arg_21_1)
-	gohelper.setActive(arg_21_0._nameTxt.gameObject, arg_21_1)
+function CommonItemIcon:isShowName(flag)
+	gohelper.setActive(self._nameTxt.gameObject, flag)
 end
 
-function var_0_0.isShowCount(arg_22_0, arg_22_1)
-	arg_22_0._isShowCount = arg_22_1
+function CommonItemIcon:isShowCount(flag)
+	self._isShowCount = flag
 
-	gohelper.setActive(arg_22_0._txtQuantity.gameObject, arg_22_1)
-	gohelper.setActive(arg_22_0._countbg.gameObject, arg_22_1)
+	gohelper.setActive(self._txtQuantity.gameObject, flag)
+	gohelper.setActive(self._countbg.gameObject, flag)
 end
 
-function var_0_0.isShowAddition(arg_23_0, arg_23_1)
-	gohelper.setActive(arg_23_0._goAddition, arg_23_1)
+function CommonItemIcon:isShowAddition(flag)
+	gohelper.setActive(self._goAddition, flag)
 end
 
-function var_0_0.isShowRefinelv(arg_24_0, arg_24_1)
-	gohelper.setActive(arg_24_0._txtrefinelv.gameObject, arg_24_1)
+function CommonItemIcon:isShowRefinelv(flag)
+	gohelper.setActive(self._txtrefinelv.gameObject, flag)
 end
 
-function var_0_0.isShowEquiplv(arg_25_0, arg_25_1)
-	gohelper.setActive(arg_25_0._txtequiplv.gameObject, arg_25_1)
+function CommonItemIcon:isShowEquiplv(flag)
+	gohelper.setActive(self._txtequiplv.gameObject, flag)
 end
 
-function var_0_0.showName(arg_26_0, arg_26_1)
-	gohelper.setActive(arg_26_0._nameTxt.gameObject, false)
+function CommonItemIcon:showName(nameText)
+	gohelper.setActive(self._nameTxt.gameObject, false)
 
-	arg_26_1 = arg_26_1 or arg_26_0._nameTxt
+	nameText = nameText or self._nameTxt
 
-	gohelper.setActive(arg_26_1.gameObject, true)
+	gohelper.setActive(nameText.gameObject, true)
 
-	arg_26_1.text = arg_26_0._config.name
+	nameText.text = self._config.name
 end
 
-function var_0_0.setNameType(arg_27_0, arg_27_1)
-	arg_27_0._nameTxt.text = string.format(arg_27_1, arg_27_0._config.name)
+function CommonItemIcon:setNameType(str)
+	self._nameTxt.text = string.format(str, self._config.name)
 end
 
-function var_0_0.setScale(arg_28_0, arg_28_1)
-	transformhelper.setLocalScale(arg_28_0.tr, arg_28_1, arg_28_1, arg_28_1)
+function CommonItemIcon:setScale(scale)
+	transformhelper.setLocalScale(self.tr, scale, scale, scale)
 end
 
-function var_0_0.setItemIconScale(arg_29_0, arg_29_1)
-	transformhelper.setLocalScale(arg_29_0._icon.transform, arg_29_1, arg_29_1, arg_29_1)
+function CommonItemIcon:setItemIconScale(scale)
+	transformhelper.setLocalScale(self._icon.transform, scale, scale, scale)
 end
 
-function var_0_0.setCountFontSize(arg_30_0, arg_30_1)
-	if not arg_30_0._scale then
-		arg_30_0._scale = arg_30_1 / arg_30_0._txtQuantity.fontSize
+function CommonItemIcon:setCountFontSize(fontsize)
+	if not self._scale then
+		self._scale = fontsize / self._txtQuantity.fontSize
 	end
 
-	transformhelper.setLocalScale(arg_30_0._countbg.transform, 1, arg_30_0._scale, 1)
+	transformhelper.setLocalScale(self._countbg.transform, 1, self._scale, 1)
 
-	arg_30_0._txtQuantity.fontSize = arg_30_1
+	self._txtQuantity.fontSize = fontsize
 end
 
-function var_0_0.setInPack(arg_31_0, arg_31_1)
-	arg_31_0._inPack = arg_31_1
+function CommonItemIcon:setInPack(value)
+	self._inPack = value
 end
 
-function var_0_0.setConsume(arg_32_0, arg_32_1)
-	arg_32_0._isConsume = arg_32_1
+function CommonItemIcon:setConsume(consume)
+	self._isConsume = consume
 end
 
-function var_0_0.setCanShowDeadLine(arg_33_0, arg_33_1)
-	arg_33_0.canShowDeadLine = arg_33_1
+function CommonItemIcon:setCanShowDeadLine(canShowDeadLine)
+	self.canShowDeadLine = canShowDeadLine
 
-	arg_33_0:showNormalDeadline()
+	self:showNormalDeadline()
 end
 
-function var_0_0.showNormalDeadline(arg_34_0)
-	gohelper.setActive(arg_34_0._deadline, false)
+function CommonItemIcon:showNormalDeadline()
+	gohelper.setActive(self._deadline, false)
 
-	if arg_34_0.canShowDeadLine then
-		gohelper.setActive(arg_34_0._deadline1, arg_34_0:isExpiredItem())
+	if self.canShowDeadLine then
+		gohelper.setActive(self._deadline1, self:isExpiredItem())
 	else
-		gohelper.setActive(arg_34_0._deadline1, false)
+		gohelper.setActive(self._deadline1, false)
 	end
 end
 
-function var_0_0.SetCountLocalY(arg_35_0, arg_35_1)
-	if arg_35_0._txtQuantity then
-		recthelper.setAnchorY(arg_35_0._txtQuantity.transform, arg_35_1)
+function CommonItemIcon:SetCountLocalY(localY)
+	if self._txtQuantity then
+		recthelper.setAnchorY(self._txtQuantity.transform, localY)
 	end
 end
 
-function var_0_0.SetCountBgHeight(arg_36_0, arg_36_1)
-	if arg_36_0._countbg then
-		recthelper.setHeight(arg_36_0._countbg.transform, arg_36_1)
+function CommonItemIcon:SetCountBgLocalY(localY)
+	if self._countbg then
+		recthelper.setAnchorY(self._countbg.transform, localY)
 	end
 end
 
-function var_0_0.refreshDeadline(arg_37_0, arg_37_1)
-	gohelper.setActive(arg_37_0._deadline, true)
-	gohelper.setActive(arg_37_0._deadline1, false)
-	TaskDispatcher.cancelTask(arg_37_0._onRefreshDeadline, arg_37_0)
+function CommonItemIcon:SetCountBgHeight(height)
+	if self._countbg then
+		recthelper.setHeight(self._countbg.transform, height)
+	end
+end
 
-	arg_37_0._lasthasday = nil
+function CommonItemIcon:refreshDeadline(notrealtime)
+	gohelper.setActive(self._deadline, true)
+	gohelper.setActive(self._deadline1, false)
+	TaskDispatcher.cancelTask(self._onRefreshDeadline, self)
 
-	if not arg_37_0:_isItemHasDeadline() then
-		gohelper.setActive(arg_37_0._deadline, false)
+	self._lasthasday = nil
+
+	if not self:_isItemHasDeadline() then
+		gohelper.setActive(self._deadline, false)
 	else
-		arg_37_0._refreshDeadline = true
+		self._refreshDeadline = true
 
-		arg_37_0:_onRefreshDeadline()
+		self:_onRefreshDeadline()
 
-		if not arg_37_1 then
-			TaskDispatcher.runRepeat(arg_37_0._onRefreshDeadline, arg_37_0, 1)
+		if not notrealtime then
+			TaskDispatcher.runRepeat(self._onRefreshDeadline, self, 1)
 		end
 	end
 end
 
-function var_0_0._isItemHasDeadline(arg_38_0)
-	if arg_38_0._itemType == MaterialEnum.MaterialType.Item then
-		if not arg_38_0._expireTime or arg_38_0._expireTime == "" or arg_38_0._expireTime == 0 then
+function CommonItemIcon:_isItemHasDeadline()
+	if self._itemType == MaterialEnum.MaterialType.Item then
+		if not self._expireTime or self._expireTime == "" or self._expireTime == 0 then
 			return false
 		end
 
-		if arg_38_0._config.isTimeShow == 0 then
+		if self._config.isTimeShow == 0 then
 			return false
 		end
 
 		return true
-	elseif arg_38_0._itemType == MaterialEnum.MaterialType.PowerPotion then
-		return arg_38_0._config.expireType ~= 0 and arg_38_0._expireTime ~= 0
-	elseif arg_38_0._itemType == MaterialEnum.MaterialType.NewInsight then
-		return arg_38_0._expireTime > 0 and arg_38_0._expireTime ~= ItemEnum.NoExpiredNum
+	elseif self._itemType == MaterialEnum.MaterialType.PowerPotion then
+		return self._config.expireType ~= 0 and self._expireTime ~= 0
+	elseif self._itemType == MaterialEnum.MaterialType.NewInsight then
+		return self._expireTime > 0 and self._expireTime ~= ItemEnum.NoExpiredNum
+	elseif self._itemType == MaterialEnum.MaterialType.TalentItem then
+		return self._expireTime ~= 0
 	end
 end
 
-function var_0_0._isLimitPowerPotion(arg_39_0)
-	if not arg_39_0._itemUid and arg_39_0._config.expireType == 1 then
+function CommonItemIcon:_isLimitPowerPotion()
+	if not self._itemUid and self._config.expireType == 1 then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0._onRefreshDeadline(arg_40_0)
-	arg_40_0._hasday = false
+function CommonItemIcon:_onRefreshDeadline()
+	self._hasday = false
 
-	if not arg_40_0:_isItemHasDeadline() then
-		gohelper.setActive(arg_40_0._deadline, false)
+	if not self:_isItemHasDeadline() then
+		gohelper.setActive(self._deadline, false)
 
 		return
 	end
 
-	local var_40_0 = arg_40_0._expireTime - ServerTime.now()
+	local limitSec = self._expireTime - ServerTime.now()
 
-	if var_40_0 <= 0 then
-		if arg_40_0._itemType == MaterialEnum.MaterialType.PowerPotion then
+	if limitSec <= 0 then
+		if self._itemType == MaterialEnum.MaterialType.PowerPotion then
 			ItemRpc.instance:sendAutoUseExpirePowerItemRequest()
-			gohelper.setActive(arg_40_0._deadline, false)
+			gohelper.setActive(self._deadline, false)
 
 			return
-		elseif arg_40_0._itemType == MaterialEnum.MaterialType.NewInsight then
+		elseif self._itemType == MaterialEnum.MaterialType.NewInsight then
+			return
+		elseif self._itemType == MaterialEnum.MaterialType.TalentItem then
 			return
 		end
 	end
 
-	arg_40_0._timetxt.text, arg_40_0._formattxt.text, arg_40_0._hasday = TimeUtil.secondToRoughTime(var_40_0, true)
+	self._timetxt.text, self._formattxt.text, self._hasday = TimeUtil.secondToRoughTime(limitSec, true)
 
-	if arg_40_0._itemType == MaterialEnum.MaterialType.NewInsight and arg_40_0._config.expireHours ~= ItemEnum.NoExpiredNum or arg_40_0._itemType == MaterialEnum.MaterialType.PowerPotion then
-		gohelper.setActive(arg_40_0._deadline, true)
+	if self._itemType == MaterialEnum.MaterialType.NewInsight and self._config.expireHours ~= ItemEnum.NoExpiredNum or self._itemType == MaterialEnum.MaterialType.PowerPotion or self._itemType == MaterialEnum.MaterialType.TalentItem then
+		gohelper.setActive(self._deadline, true)
 	else
-		gohelper.setActive(arg_40_0._deadline, arg_40_0._config.isTimeShow == 1)
+		gohelper.setActive(self._deadline, self._config.isTimeShow == 1)
 	end
 
-	if arg_40_0._lasthasday == nil or arg_40_0._lasthasday ~= arg_40_0._hasday then
-		UISpriteSetMgr.instance:setCommonSprite(arg_40_0._imagetimebg, arg_40_0._hasday and "daojishi_01" or "daojishi_02")
-		UISpriteSetMgr.instance:setCommonSprite(arg_40_0._imagetimeicon, arg_40_0._hasday and "daojishiicon_01" or "daojishiicon_02")
-		SLFramework.UGUI.GuiHelper.SetColor(arg_40_0._timetxt, arg_40_0._hasday and "#98D687" or "#E99B56")
-		SLFramework.UGUI.GuiHelper.SetColor(arg_40_0._formattxt, arg_40_0._hasday and "#98D687" or "#E99B56")
-		gohelper.setActive(arg_40_0._deadlineEffect, not arg_40_0._hasday)
+	if self._lasthasday == nil or self._lasthasday ~= self._hasday then
+		UISpriteSetMgr.instance:setCommonSprite(self._imagetimebg, self._hasday and "daojishi_01" or "daojishi_02")
+		UISpriteSetMgr.instance:setCommonSprite(self._imagetimeicon, self._hasday and "daojishiicon_01" or "daojishiicon_02")
+		SLFramework.UGUI.GuiHelper.SetColor(self._timetxt, self._hasday and "#98D687" or "#E99B56")
+		SLFramework.UGUI.GuiHelper.SetColor(self._formattxt, self._hasday and "#98D687" or "#E99B56")
+		gohelper.setActive(self._deadlineEffect, not self._hasday)
 
-		arg_40_0._lasthasday = arg_40_0._hasday
+		self._lasthasday = self._hasday
 	end
 end
 
-function var_0_0.showStackableNum(arg_41_0)
-	if (not arg_41_0._config.isStackable or arg_41_0._config.isStackable == 1) and arg_41_0._itemQuantity >= 1 then
-		arg_41_0._txtQuantity.text = arg_41_0:_getQuantityText(arg_41_0._itemQuantity)
+function CommonItemIcon:showStackableNum()
+	if (not self._config.isStackable or self._config.isStackable == 1) and self._itemQuantity >= 1 then
+		self._txtQuantity.text = self:_getQuantityText(self._itemQuantity)
 
-		gohelper.setActive(arg_41_0._countbg, true)
+		gohelper.setActive(self._countbg, true)
 	else
-		arg_41_0._txtQuantity.text = ""
+		self._txtQuantity.text = ""
 
-		gohelper.setActive(arg_41_0._countbg, false)
+		gohelper.setActive(self._countbg, false)
 	end
 end
 
-function var_0_0.showEffect(arg_42_0, arg_42_1)
-	arg_42_0._showeffectrare = arg_42_1
+function CommonItemIcon:showEffect(rare)
+	self._showeffectrare = rare
 
-	local var_42_0 = arg_42_0._isCfgNeedVfx and arg_42_0._showeffectrare
+	local active = self._isCfgNeedVfx and self._showeffectrare
 
-	gohelper.setActive(arg_42_0._effect, var_42_0)
+	gohelper.setActive(self._effect, active)
 
-	if var_42_0 and arg_42_0._effectGos and tabletool.len(arg_42_0._effectGos) > 0 then
-		for iter_42_0 = 4, 5 do
-			gohelper.setActive(arg_42_0._effectGos[iter_42_0], iter_42_0 == arg_42_1)
+	if active and self._effectGos and tabletool.len(self._effectGos) > 0 then
+		for i = 4, 5 do
+			gohelper.setActive(self._effectGos[i], i == rare)
 		end
 	end
 end
 
-function var_0_0.setCantJump(arg_43_0, arg_43_1)
-	arg_43_0._cantJump = arg_43_1
+function CommonItemIcon:setCantJump(cantJump)
+	self._cantJump = cantJump
 end
 
-function var_0_0.setRecordFarmItem(arg_44_0, arg_44_1)
-	arg_44_0._recordFarmItem = arg_44_1
+function CommonItemIcon:setRecordFarmItem(recordFarmItem)
+	self._recordFarmItem = recordFarmItem
 end
 
-function var_0_0.setQuantityColor(arg_45_0, arg_45_1)
-	arg_45_0._quantityColor = arg_45_1
+function CommonItemIcon:setQuantityColor(quantityColor)
+	self._quantityColor = quantityColor
 end
 
-function var_0_0.setQuantityText(arg_46_0, arg_46_1)
-	local var_46_0 = ItemModel.instance:getItemQuantity(arg_46_0._itemType, arg_46_0._itemId)
-	local var_46_1 = GameUtil.numberDisplay(arg_46_0._itemQuantity)
+function CommonItemIcon:setQuantityText(quantityColor)
+	local ownQuantity = ItemModel.instance:getItemQuantity(self._itemType, self._itemId)
+	local quantityStr = GameUtil.numberDisplay(self._itemQuantity)
 
-	if arg_46_0._itemType == MaterialEnum.MaterialType.Currency then
-		if var_46_0 < arg_46_0._itemQuantity then
-			var_46_1 = string.format("<color=%s>%s</color>", arg_46_1, var_46_1)
+	if self._itemType == MaterialEnum.MaterialType.Currency then
+		if ownQuantity < self._itemQuantity then
+			quantityStr = string.format("<color=%s>%s</color>", quantityColor, quantityStr)
 		end
 	else
-		local var_46_2 = GameUtil.numberDisplay(var_46_0)
+		local ownQuantityStr = GameUtil.numberDisplay(ownQuantity)
 
-		if var_46_0 < arg_46_0._itemQuantity then
-			var_46_1 = string.format("<color=%s>%s</color>/%s", arg_46_1, var_46_2, var_46_1)
+		if ownQuantity < self._itemQuantity then
+			quantityStr = string.format("<color=%s>%s</color>/%s", quantityColor, ownQuantityStr, quantityStr)
 		else
-			var_46_1 = string.format("%s/%s", var_46_2, var_46_1)
+			quantityStr = string.format("%s/%s", ownQuantityStr, quantityStr)
 		end
 	end
 
-	arg_46_0._txtQuantity.text = var_46_1
+	self._txtQuantity.text = quantityStr
 end
 
-function var_0_0.showStackableNum2(arg_47_0, arg_47_1, arg_47_2)
-	arg_47_1 = arg_47_1 or arg_47_0._countbg
-	arg_47_2 = arg_47_2 or arg_47_0._txtQuantity
+function CommonItemIcon:showStackableNum2(countbg, txtQuantity)
+	countbg = countbg or self._countbg
+	txtQuantity = txtQuantity or self._txtQuantity
 
-	if (arg_47_0._itemType == MaterialEnum.MaterialType.Hero or arg_47_0._itemType == MaterialEnum.MaterialType.HeroSkin or arg_47_0._itemType == MaterialEnum.MaterialType.PlayerCloth or arg_47_0._itemType == MaterialEnum.MaterialType.PlayerCloth) and arg_47_0._itemQuantity <= 1 then
-		arg_47_2.text = ""
+	if (self._itemType == MaterialEnum.MaterialType.Hero or self._itemType == MaterialEnum.MaterialType.HeroSkin or self._itemType == MaterialEnum.MaterialType.PlayerCloth or self._itemType == MaterialEnum.MaterialType.PlayerCloth) and self._itemQuantity <= 1 then
+		txtQuantity.text = ""
 
-		gohelper.setActive(arg_47_1, false)
-	elseif (not arg_47_0._config.isStackable or arg_47_0._config.isStackable == 1 or arg_47_0._itemType == MaterialEnum.MaterialType.Equip or tonumber(arg_47_0._config.subType) == ItemEnum.SubType.Portrait) and arg_47_0._itemQuantity then
-		arg_47_2.text = arg_47_0:_getQuantityText(arg_47_0._itemQuantity)
+		gohelper.setActive(countbg, false)
+	elseif (not self._config.isStackable or self._config.isStackable == 1 or self._itemType == MaterialEnum.MaterialType.Equip or tonumber(self._config.subType) == ItemEnum.SubType.Portrait) and self._itemQuantity then
+		txtQuantity.text = self:_getQuantityText(self._itemQuantity)
 
-		gohelper.setActive(arg_47_1, true)
+		gohelper.setActive(countbg, true)
 	else
-		arg_47_2.text = ""
+		txtQuantity.text = ""
 
-		gohelper.setActive(arg_47_1, false)
+		gohelper.setActive(countbg, false)
 	end
 end
 
-function var_0_0._getQuantityText(arg_48_0, arg_48_1)
-	if arg_48_0._quantityColor then
-		return string.format("<color=%s>%s</color>", arg_48_0._quantityColor, GameUtil.numberDisplay(arg_48_1))
+function CommonItemIcon:_getQuantityText(quantity)
+	if self._quantityColor then
+		return string.format("<color=%s>%s</color>", self._quantityColor, GameUtil.numberDisplay(quantity))
 	else
-		return GameUtil.numberDisplay(arg_48_1)
+		return GameUtil.numberDisplay(quantity)
 	end
 end
 
-function var_0_0.setMOValue(arg_49_0, arg_49_1, arg_49_2, arg_49_3, arg_49_4, arg_49_5, arg_49_6)
-	arg_49_0._itemType = tonumber(arg_49_1)
-	arg_49_0._itemId = arg_49_2
-	arg_49_0._itemQuantity = tonumber(arg_49_3)
-	arg_49_0._itemUid = arg_49_4
+function CommonItemIcon:setMOValue(materilType, materilId, quantity, materilUid, isIcon, extraParam)
+	self._itemType = tonumber(materilType)
+	self._itemId = materilId
+	self._itemQuantity = tonumber(quantity)
+	self._itemUid = materilUid
 
-	local var_49_0 = arg_49_6 and arg_49_6.specificIcon
-	local var_49_1, var_49_2 = ItemModel.instance:getItemConfigAndIcon(arg_49_0._itemType, arg_49_0._itemId, arg_49_5)
+	local specificIcon = extraParam and extraParam.specificIcon
+	local config, icon = ItemModel.instance:getItemConfigAndIcon(self._itemType, self._itemId, isIcon)
 
-	arg_49_0._config = var_49_1
+	self._config = config
 
-	if arg_49_0._itemType == MaterialEnum.MaterialType.PowerPotion then
-		local var_49_3 = ItemPowerModel.instance:getPowerItemDeadline(arg_49_0._itemUid)
+	if self._itemType == MaterialEnum.MaterialType.PowerPotion then
+		local powerdeadline = ItemPowerModel.instance:getPowerItemDeadline(self._itemUid)
 
-		if var_49_3 and var_49_3 > 0 and ItemConfig.instance:getPowerItemCo(arg_49_0._itemId).expireType ~= 0 then
-			arg_49_0._expireTime = var_49_3
+		if powerdeadline and powerdeadline > 0 and ItemConfig.instance:getPowerItemCo(self._itemId).expireType ~= 0 then
+			self._expireTime = powerdeadline
 		else
-			arg_49_0._expireTime = 0
+			self._expireTime = 0
 		end
-	elseif arg_49_0._itemType == MaterialEnum.MaterialType.NewInsight then
-		if arg_49_0._itemUid then
-			arg_49_0._expireTime = ItemInsightModel.instance:getInsightItemDeadline(arg_49_0._itemUid)
+	elseif self._itemType == MaterialEnum.MaterialType.TalentItem then
+		local talentdeadline = ItemTalentModel.instance:getTalentItemDeadline(self._itemUid)
+
+		if talentdeadline and talentdeadline > 0 then
+			self._expireTime = talentdeadline
 		else
-			arg_49_0._expireTime = ItemConfig.instance:getInsightItemCo(tonumber(arg_49_0._itemId)).expireHours
+			self._expireTime = 0
 		end
-	elseif string.nilorempty(arg_49_0._config.expireTime) then
-		arg_49_0._expireTime = 0
+	elseif self._itemType == MaterialEnum.MaterialType.NewInsight then
+		if self._itemUid then
+			self._expireTime = ItemInsightModel.instance:getInsightItemDeadline(self._itemUid)
+		else
+			local itemCfg = ItemConfig.instance:getInsightItemCo(tonumber(self._itemId))
+
+			self._expireTime = itemCfg.expireHours
+		end
+	elseif self._itemType == MaterialEnum.MaterialType.SpecialExpiredItem then
+		if self._itemUid then
+			local deadline = ItemExpiredModel.instance:getExpireItemDeadline(self._itemUid)
+
+			if deadline and deadline > 0 and ItemConfig.instance:getPowerItemCo(self._itemId).expireType ~= 0 then
+				self._expireTime = deadline
+			else
+				self._expireTime = 0
+			end
+		end
+	elseif string.nilorempty(self._config.expireTime) then
+		self._expireTime = 0
 	else
-		arg_49_0._expireTime = TimeUtil.stringToTimestamp(arg_49_0._config.expireTime)
+		self._expireTime = TimeUtil.stringToTimestamp(self._config.expireTime)
 	end
 
-	if var_49_0 then
-		var_49_2 = var_49_0
+	if specificIcon then
+		icon = specificIcon
 	end
 
-	local var_49_4 = tonumber(var_49_1.subType) == ItemEnum.SubType.Portrait
+	local isPortrait = tonumber(config.subType) == ItemEnum.SubType.Portrait
 
-	if string.nilorempty(var_49_2) then
+	if string.nilorempty(icon) then
 		logError("icon为空")
 	else
-		if not arg_49_0._iconImage.sprite then
-			arg_49_0:_setIconAlpha(0)
+		if not self._iconImage.sprite then
+			self:_setIconAlpha(0)
 		end
 
-		if var_49_4 then
-			if not arg_49_0._liveHeadIcon then
-				arg_49_0._liveHeadIcon = IconMgr.instance:getCommonLiveHeadIcon(arg_49_0._playerheadicon)
+		if isPortrait then
+			if not self._liveHeadIcon then
+				local commonLiveIcon = IconMgr.instance:getCommonLiveHeadIcon(self._playerheadicon)
+
+				self._liveHeadIcon = commonLiveIcon
 			end
 
-			arg_49_0._liveHeadIcon:setLiveHead(var_49_1.id, nil, nil, function(arg_50_0, arg_50_1)
-				local var_50_0 = arg_50_0.iconAlpha or 1
+			self._liveHeadIcon:setLiveHead(config.id, nil, nil, function(self, liveIcon)
+				local alpha = self.iconAlpha or 1
 
-				arg_50_1:setAlpha(var_50_0)
-			end, arg_49_0)
+				liveIcon:setAlpha(alpha)
+			end, self)
 
-			local var_49_5 = string.split(arg_49_0._config.effect, "#")
+			local effectArr = string.split(self._config.effect, "#")
 
-			if #var_49_5 > 1 and arg_49_0._config.id == tonumber(var_49_5[#var_49_5]) then
-				gohelper.setActive(arg_49_0._goframe, false)
-				gohelper.setActive(arg_49_0._goframenode, true)
+			if #effectArr > 1 and self._config.id == tonumber(effectArr[#effectArr]) then
+				gohelper.setActive(self._goframe, false)
+				gohelper.setActive(self._goframenode, true)
 
-				if not arg_49_0.frame and not arg_49_0.isloading then
-					arg_49_0.isloading = true
+				if not self.frame and not self.isloading then
+					self.isloading = true
 
-					local var_49_6 = "ui/viewres/common/effect/frame.prefab"
+					local framePath = "ui/viewres/common/effect/frame.prefab"
 
-					arg_49_0._frameloader:addPath(var_49_6)
-					arg_49_0._frameloader:startLoad(arg_49_0._onFrameLoadCallback, arg_49_0)
+					self._frameloader:addPath(framePath)
+					self._frameloader:startLoad(self._onFrameLoadCallback, self)
 				end
 			else
-				gohelper.setActive(arg_49_0._goframe, true)
-				gohelper.setActive(arg_49_0._goframenode, false)
+				gohelper.setActive(self._goframe, true)
+				gohelper.setActive(self._goframenode, false)
 			end
 		else
-			arg_49_0._icon:LoadImage(var_49_2, arg_49_0._loadImageFinish, arg_49_0)
+			self._icon:LoadImage(icon, self._loadImageFinish, self)
 		end
 	end
 
-	arg_49_0:refreshItemEffect()
+	self:refreshItemEffect()
 
-	if tonumber(arg_49_1) == MaterialEnum.MaterialType.Hero and not arg_49_5 or tonumber(arg_49_1) == MaterialEnum.MaterialType.HeroSkin or tonumber(arg_49_1) == MaterialEnum.MaterialType.Equip then
-		recthelper.setWidth(arg_49_0._icon.transform, 248)
-		recthelper.setHeight(arg_49_0._icon.transform, 248)
-		arg_49_0:_setIconPos(0, 0)
-	elseif tonumber(arg_49_1) == MaterialEnum.MaterialType.BlockPackage or tonumber(arg_49_1) == MaterialEnum.MaterialType.SpecialBlock then
-		arg_49_0:_setIconPos(-1, 12.5)
+	if tonumber(materilType) == MaterialEnum.MaterialType.Hero and not isIcon or tonumber(materilType) == MaterialEnum.MaterialType.HeroSkin or tonumber(materilType) == MaterialEnum.MaterialType.Equip then
+		recthelper.setWidth(self._icon.transform, 248)
+		recthelper.setHeight(self._icon.transform, 248)
+		self:_setIconPos(0, 0)
+	elseif tonumber(materilType) == MaterialEnum.MaterialType.BlockPackage or tonumber(materilType) == MaterialEnum.MaterialType.SpecialBlock then
+		self:_setIconPos(-1, 12.5)
 	else
-		recthelper.setWidth(arg_49_0._icon.transform, 256)
-		recthelper.setHeight(arg_49_0._icon.transform, 256)
-		arg_49_0:_setIconPos(0, -7)
+		recthelper.setWidth(self._icon.transform, 256)
+		recthelper.setHeight(self._icon.transform, 256)
+		self:_setIconPos(0, -7)
 	end
 
-	local var_49_7 = var_49_1.rare and var_49_1.rare or 5
+	local rare = config.rare and config.rare or 5
 
-	arg_49_0:setIconBg("bgequip" .. tostring(ItemEnum.Color[var_49_7]))
+	self:setIconBg("bgequip" .. tostring(ItemEnum.Color[rare]))
 
-	arg_49_0._isCfgNeedVfx = ItemModel.canShowVfx(arg_49_0._itemType, var_49_1, var_49_7)
+	self._isCfgNeedVfx = ItemModel.canShowVfx(self._itemType, config, rare)
 
-	gohelper.setActive(arg_49_0._goheadiconmask.gameObject, var_49_4)
-	gohelper.setActive(arg_49_0._icon.gameObject, not var_49_4)
-	arg_49_0:showStackableNum2()
-	arg_49_0:refreshEquipInfo()
+	gohelper.setActive(self._goheadiconmask.gameObject, isPortrait)
+	gohelper.setActive(self._icon.gameObject, not isPortrait)
+	self:showStackableNum2()
+	self:refreshEquipInfo()
 
-	if arg_49_0._inPack then
-		arg_49_0:refreshDeadline()
+	if self._inPack then
+		self:refreshDeadline()
 	else
-		arg_49_0:showNormalDeadline()
+		self:showNormalDeadline()
 	end
 
-	arg_49_0:showEffect(var_49_7)
+	self:showEffect(rare)
 end
 
-function var_0_0.setRoomBuildingLevel(arg_51_0, arg_51_1)
-	arg_51_0._roomBuildingLevel = arg_51_1
+function CommonItemIcon:setRoomBuildingLevel(roomBuildingLevel)
+	self._roomBuildingLevel = roomBuildingLevel
 end
 
-function var_0_0.setSpecificIcon(arg_52_0, arg_52_1)
-	if string.nilorempty(arg_52_1) or not arg_52_0._icon then
+function CommonItemIcon:setSpecificIcon(icon)
+	if string.nilorempty(icon) or not self._icon then
 		return
 	end
 
-	arg_52_0._icon:UnLoadImage()
-	arg_52_0._icon:LoadImage(arg_52_1, arg_52_0._loadImageFinish, arg_52_0)
+	self._icon:UnLoadImage()
+	self._icon:LoadImage(icon, self._loadImageFinish, self)
 end
 
-function var_0_0.refreshItemEffect(arg_53_0)
-	if ItemEnum.ItemIconEffect[string.format("%s#%s", arg_53_0._itemType, arg_53_0._itemId)] then
-		local var_53_0 = string.format("ui/viewres/common/effect/propitem_%s_%s.prefab", arg_53_0._itemType, arg_53_0._itemId)
+function CommonItemIcon:refreshItemEffect()
+	local hasEffect = ItemEnum.ItemIconEffect[string.format("%s#%s", self._itemType, self._itemId)]
 
-		if var_53_0 == arg_53_0.iconEffectPath then
+	if hasEffect then
+		local effectPath = string.format("ui/viewres/common/effect/propitem_%s_%s.prefab", self._itemType, self._itemId)
+
+		if effectPath == self.iconEffectPath then
 			return
 		end
 
-		if arg_53_0.iconEffectGo then
-			gohelper.destroy(arg_53_0.iconEffectGo)
+		if self.iconEffectGo then
+			gohelper.destroy(self.iconEffectGo)
 
-			arg_53_0.iconEffectGo = nil
+			self.iconEffectGo = nil
 		end
 
-		arg_53_0.iconEffectPath = var_53_0
+		self.iconEffectPath = effectPath
 
-		if arg_53_0._iconEffectloader then
-			arg_53_0._iconEffectloader:dispose()
+		if self._iconEffectloader then
+			self._iconEffectloader:dispose()
 
-			arg_53_0._iconEffectloader = nil
+			self._iconEffectloader = nil
 		end
 
-		arg_53_0._iconEffectloader = MultiAbLoader.New()
+		self._iconEffectloader = MultiAbLoader.New()
 
-		arg_53_0._iconEffectloader:addPath(var_53_0)
-		arg_53_0._iconEffectloader:startLoad(arg_53_0._onIconEffectLoadCallback, arg_53_0)
+		self._iconEffectloader:addPath(effectPath)
+		self._iconEffectloader:startLoad(self._onIconEffectLoadCallback, self)
 	else
-		gohelper.setActive(arg_53_0.iconEffectGo, false)
+		gohelper.setActive(self.iconEffectGo, false)
 	end
 end
 
-function var_0_0._onIconEffectLoadCallback(arg_54_0)
-	if not arg_54_0._iconEffectloader then
+function CommonItemIcon:_onIconEffectLoadCallback()
+	if not self._iconEffectloader then
 		return
 	end
 
-	local var_54_0 = arg_54_0.iconEffectPath
-	local var_54_1 = arg_54_0._iconEffectloader:getAssetItem(var_54_0):GetResource(var_54_0)
+	local path = self.iconEffectPath
+	local assetItem = self._iconEffectloader:getAssetItem(path)
+	local mainPrefab = assetItem:GetResource(path)
 
-	arg_54_0.iconEffectGo = gohelper.clone(var_54_1, arg_54_0._icon.gameObject, var_54_0)
+	self.iconEffectGo = gohelper.clone(mainPrefab, self._icon.gameObject, path)
 end
 
-function var_0_0._setIconPos(arg_55_0, arg_55_1, arg_55_2)
-	if arg_55_0._iconPosX == arg_55_1 and arg_55_0._iconPosY == arg_55_2 then
+function CommonItemIcon:_setIconPos(posX, posY)
+	if self._iconPosX == posX and self._iconPosY == posY then
 		return
 	end
 
-	arg_55_0._iconPosX = arg_55_1
-	arg_55_0._iconPosY = arg_55_2
+	self._iconPosX = posX
+	self._iconPosY = posY
 
-	transformhelper.setLocalPosXY(arg_55_0._icon.transform, arg_55_1, arg_55_2)
+	transformhelper.setLocalPosXY(self._icon.transform, posX, posY)
 end
 
-function var_0_0.setIconBg(arg_56_0, arg_56_1)
-	UISpriteSetMgr.instance:setCommonSprite(arg_56_0._iconbg, arg_56_1)
+function CommonItemIcon:setIconBg(bg)
+	UISpriteSetMgr.instance:setCommonSprite(self._iconbg, bg)
 end
 
-function var_0_0.setItemOffset(arg_57_0, arg_57_1, arg_57_2)
-	recthelper.setAnchor(arg_57_0._icon.transform, arg_57_1 or -1, arg_57_2 or 0)
+function CommonItemIcon:setItemOffset(offsetX, offsetY)
+	recthelper.setAnchor(self._icon.transform, offsetX or -1, offsetY or 0)
 end
 
-function var_0_0._onFrameLoadCallback(arg_58_0)
-	arg_58_0.isloading = false
+function CommonItemIcon:_onFrameLoadCallback()
+	self.isloading = false
 
-	local var_58_0 = arg_58_0._frameloader:getFirstAssetItem():GetResource()
+	local framePrefab = self._frameloader:getFirstAssetItem():GetResource()
 
-	gohelper.clone(var_58_0, arg_58_0._goframenode, "frame")
+	gohelper.clone(framePrefab, self._goframenode, "frame")
 
-	arg_58_0.frame = gohelper.findChild(arg_58_0._goframenode, "frame")
+	self.frame = gohelper.findChild(self._goframenode, "frame")
 end
 
-function var_0_0._setFrameMaskable(arg_59_0, arg_59_1)
-	local var_59_0 = gohelper.findChild(arg_59_0._goframenode, "frame/quxian")
+function CommonItemIcon:_setFrameMaskable(state)
+	local framemask = gohelper.findChild(self._goframenode, "frame/quxian")
 
-	if var_59_0 then
-		var_59_0:GetComponent(gohelper.Type_Image).maskable = arg_59_1
+	if framemask then
+		local framemaskImage = framemask:GetComponent(gohelper.Type_Image)
+
+		framemaskImage.maskable = state
 	end
 end
 
-function var_0_0._loadImageFinish(arg_60_0)
-	arg_60_0:_setIconAlpha(arg_60_0.iconAlpha or 1)
+function CommonItemIcon:_loadImageFinish()
+	self:_setIconAlpha(self.iconAlpha or 1)
 
-	if arg_60_0._icon.gameObject.activeSelf then
-		gohelper.setActive(arg_60_0._icon, false)
-		gohelper.setActive(arg_60_0._icon, true)
+	if self._icon.gameObject.activeSelf then
+		gohelper.setActive(self._icon, false)
+		gohelper.setActive(self._icon, true)
 	end
 end
 
-function var_0_0._setIconAlpha(arg_61_0, arg_61_1)
-	local var_61_0 = arg_61_0._iconImage.color
+function CommonItemIcon:_setIconAlpha(value)
+	local color = self._iconImage.color
 
-	var_61_0.a = arg_61_1
-	arg_61_0._iconImage.color = var_61_0
+	color.a = value
+	self._iconImage.color = color
 end
 
-function var_0_0.onUpdateMO(arg_62_0, arg_62_1)
-	arg_62_0:setMOValue(arg_62_1.materilType, arg_62_1.materilId, arg_62_1.quantity)
+function CommonItemIcon:onUpdateMO(mo)
+	self:setMOValue(mo.materilType, mo.materilId, mo.quantity)
 end
 
-function var_0_0.refreshEquipInfo(arg_63_0)
-	if arg_63_0._itemType == MaterialEnum.MaterialType.Equip then
-		local var_63_0 = EquipConfig.instance:getEquipCo(tonumber(arg_63_0._itemId))
+function CommonItemIcon:refreshEquipInfo()
+	if self._itemType == MaterialEnum.MaterialType.Equip then
+		local equipCo = EquipConfig.instance:getEquipCo(tonumber(self._itemId))
+		local isNormalEquip = EquipHelper.isNormalEquip(equipCo)
 
-		if EquipHelper.isNormalEquip(var_63_0) then
-			gohelper.setActive(arg_63_0._goequipcarerr, true)
+		if isNormalEquip then
+			gohelper.setActive(self._goequipcarerr, true)
 
-			arg_63_0._txtrefinelv.text = 1
+			self._txtrefinelv.text = 1
 
-			local var_63_1 = EquipHelper.getEquipSkillCareer(var_63_0.id, 1)
-			local var_63_2 = EquipHelper.isHasSkillBaseDesc(arg_63_0._config.id, arg_63_0._refineLv or 1)
+			local equipCareer = EquipHelper.getEquipSkillCareer(equipCo.id, 1)
+			local isHasSkillBaseDesc = EquipHelper.isHasSkillBaseDesc(self._config.id, self._refineLv or 1)
 
-			if not string.nilorempty(var_63_1) and var_63_2 then
-				local var_63_3 = EquipHelper.getSkillCarrerSpecialIconName(var_63_1)
+			if not string.nilorempty(equipCareer) and isHasSkillBaseDesc then
+				local skillCareerIconName = EquipHelper.getSkillCarrerSpecialIconName(equipCareer)
 
-				UISpriteSetMgr.instance:setCommonSprite(arg_63_0._imagecareer, var_63_3)
-				gohelper.setActive(arg_63_0._gorefinebg, false)
-				gohelper.setActive(arg_63_0._goboth, true)
+				UISpriteSetMgr.instance:setCommonSprite(self._imagecareer, skillCareerIconName)
+				gohelper.setActive(self._gorefinebg, false)
+				gohelper.setActive(self._goboth, true)
 			else
-				gohelper.setActive(arg_63_0._gorefinebg, true)
-				gohelper.setActive(arg_63_0._goboth, false)
+				gohelper.setActive(self._gorefinebg, true)
+				gohelper.setActive(self._goboth, false)
 			end
 
-			gohelper.setActive(arg_63_0._txtQuantity.gameObject, false)
-			gohelper.setActive(arg_63_0._countbg.gameObject, false)
-			gohelper.setActive(arg_63_0._txtequiplv.gameObject, true)
+			gohelper.setActive(self._txtQuantity.gameObject, false)
+			gohelper.setActive(self._countbg.gameObject, false)
+			gohelper.setActive(self._txtequiplv.gameObject, true)
 
-			arg_63_0._txtequiplv.text = "Lv. 1"
+			self._txtequiplv.text = "Lv. 1"
 		else
-			gohelper.setActive(arg_63_0._goequipcarerr, false)
+			gohelper.setActive(self._goequipcarerr, false)
 		end
 	else
-		gohelper.setActive(arg_63_0._txtequiplv.gameObject, false)
-		gohelper.setActive(arg_63_0._txtQuantity.gameObject, true)
-		gohelper.setActive(arg_63_0._goequipcarerr, false)
+		gohelper.setActive(self._txtequiplv.gameObject, false)
+		gohelper.setActive(self._txtQuantity.gameObject, true)
+		gohelper.setActive(self._goequipcarerr, false)
 	end
 end
 
-function var_0_0.hideEquipLvAndCount(arg_64_0)
-	if arg_64_0._itemType == MaterialEnum.MaterialType.Equip then
-		gohelper.setActive(arg_64_0._txtequiplv.gameObject, false)
+function CommonItemIcon:hideEquipLvAndCount()
+	if self._itemType == MaterialEnum.MaterialType.Equip then
+		gohelper.setActive(self._txtequiplv.gameObject, false)
 
-		local var_64_0 = EquipConfig.instance:getEquipCo(tonumber(arg_64_0._itemId))
-		local var_64_1 = EquipHelper.isNormalEquip(var_64_0)
+		local equipCo = EquipConfig.instance:getEquipCo(tonumber(self._itemId))
+		local isNormalEquip = EquipHelper.isNormalEquip(equipCo)
 
-		gohelper.setActive(arg_64_0._txtequiplv.gameObject, false)
-		gohelper.setActive(arg_64_0._goequipcarerr, false)
-		arg_64_0:isShowCount(not var_64_1)
+		gohelper.setActive(self._txtequiplv.gameObject, false)
+		gohelper.setActive(self._goequipcarerr, false)
+		self:isShowCount(not isNormalEquip)
 	end
 end
 
-function var_0_0.setGetMask(arg_65_0, arg_65_1)
-	SLFramework.UGUI.GuiHelper.SetColor(arg_65_0._iconImage, arg_65_1 and "#666666" or "#FFFFFF")
-	SLFramework.UGUI.GuiHelper.SetColor(arg_65_0._iconbg, arg_65_1 and "#666666" or "#FFFFFF")
-	SLFramework.UGUI.GuiHelper.SetColor(arg_65_0._txtQuantity, arg_65_1 and "#525252" or "#EBE6E6")
-	ZProj.UGUIHelper.SetColorAlpha(arg_65_0._countbg:GetComponent(gohelper.Type_Image), arg_65_1 and 0.8 or 1)
+function CommonItemIcon:setGetMask(isMask)
+	SLFramework.UGUI.GuiHelper.SetColor(self._iconImage, isMask and "#666666" or "#FFFFFF")
+	SLFramework.UGUI.GuiHelper.SetColor(self._iconbg, isMask and "#666666" or "#FFFFFF")
+	SLFramework.UGUI.GuiHelper.SetColor(self._txtQuantity, isMask and "#525252" or "#EBE6E6")
+	ZProj.UGUIHelper.SetColorAlpha(self._countbg:GetComponent(gohelper.Type_Image), isMask and 0.8 or 1)
 end
 
-function var_0_0.onDestroy(arg_66_0)
-	if arg_66_0._icon then
-		arg_66_0._icon:UnLoadImage()
+function CommonItemIcon:onDestroy()
+	if self._icon then
+		self._icon:UnLoadImage()
 
-		arg_66_0._icon = nil
+		self._icon = nil
 	end
 
-	if arg_66_0._playerheadicon then
-		arg_66_0._playerheadicon:UnLoadImage()
+	if self._playerheadicon then
+		self._playerheadicon:UnLoadImage()
 
-		arg_66_0._playerheadicon = nil
+		self._playerheadicon = nil
 	end
 
-	if arg_66_0._refreshDeadline then
-		TaskDispatcher.cancelTask(arg_66_0._onRefreshDeadline, arg_66_0)
+	if self._refreshDeadline then
+		TaskDispatcher.cancelTask(self._onRefreshDeadline, self)
 	end
 
-	if arg_66_0._effectLoader then
-		arg_66_0._effectLoader:dispose()
+	if self._effectLoader then
+		self._effectLoader:dispose()
 
-		arg_66_0._effectLoader = nil
+		self._effectLoader = nil
 	end
 
-	if arg_66_0._frameloader then
-		arg_66_0._frameloader:dispose()
+	if self._frameloader then
+		self._frameloader:dispose()
 
-		arg_66_0._frameloader = nil
+		self._frameloader = nil
 	end
 
-	if arg_66_0._iconEffectloader then
-		arg_66_0._iconEffectloader:dispose()
+	if self._iconEffectloader then
+		self._iconEffectloader:dispose()
 
-		arg_66_0._iconEffectloader = nil
+		self._iconEffectloader = nil
 	end
 end
 
-function var_0_0.customOnClickCallback(arg_67_0, arg_67_1, arg_67_2)
-	arg_67_0._customCallback = arg_67_1
-	arg_67_0.params = arg_67_2
+function CommonItemIcon:customOnClickCallback(callback, params)
+	self._customCallback = callback
+	self.params = params
 end
 
-function var_0_0.setOnBeforeClickCallback(arg_68_0, arg_68_1, arg_68_2, arg_68_3)
-	arg_68_0.onBeforeClickCallback = arg_68_1
-	arg_68_0.onBeforeClickCallbackObj = arg_68_2
-	arg_68_0.onBeforeClickParam = arg_68_3
+function CommonItemIcon:setOnBeforeClickCallback(callback, callbackObj, param)
+	self.onBeforeClickCallback = callback
+	self.onBeforeClickCallbackObj = callbackObj
+	self.onBeforeClickParam = param
 end
 
-function var_0_0.setJumpFinishCallback(arg_69_0, arg_69_1, arg_69_2, arg_69_3)
-	arg_69_0.jumpFinishCallback = arg_69_1
-	arg_69_0.jumpFinishCallbackObj = arg_69_2
-	arg_69_0.jumpFinishCallbackParam = arg_69_3
+function CommonItemIcon:setJumpFinishCallback(callback, callbackObj, param)
+	self.jumpFinishCallback = callback
+	self.jumpFinishCallbackObj = callbackObj
+	self.jumpFinishCallbackParam = param
 end
 
-function var_0_0._onClick(arg_70_0)
-	if not arg_70_0._isEnableClick then
+function CommonItemIcon:setInterceptClick(callback, callbackObj)
+	self.interceptCallback = callback
+	self.interceptCallbackObj = callbackObj
+end
+
+function CommonItemIcon:_onClick()
+	if not self._isEnableClick then
+		return
+	end
+
+	if self.interceptCallback and self.interceptCallback(self.interceptCallbackObj) then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.Store_Good_Click)
 
-	if arg_70_0._customCallback then
-		return arg_70_0._customCallback(arg_70_0.params)
+	if self._customCallback then
+		return self._customCallback(self.params)
 	end
 
-	if arg_70_0.onBeforeClickCallback then
-		arg_70_0.onBeforeClickCallback(arg_70_0.onBeforeClickCallbackObj, arg_70_0.onBeforeClickParam, arg_70_0)
+	if self.onBeforeClickCallback then
+		self.onBeforeClickCallback(self.onBeforeClickCallbackObj, self.onBeforeClickParam, self)
 	end
 
-	local var_70_0 = {
-		roomBuildingLevel = arg_70_0._roomBuildingLevel
+	local extraParam = {
+		roomBuildingLevel = self._roomBuildingLevel
 	}
 
-	MaterialTipController.instance:showMaterialInfo(arg_70_0._itemType, arg_70_0._itemId, arg_70_0._inPack, arg_70_0._itemUid, arg_70_0._cantJump, arg_70_0._recordFarmItem, nil, arg_70_0._itemQuantity, arg_70_0._isConsume, arg_70_0.jumpFinishCallback, arg_70_0.jumpFinishCallbackObj, arg_70_0.jumpFinishCallbackParam, var_70_0)
+	MaterialTipController.instance:showMaterialInfo(self._itemType, self._itemId, self._inPack, self._itemUid, self._cantJump, self._recordFarmItem, nil, self._itemQuantity, self._isConsume, self.jumpFinishCallback, self.jumpFinishCallbackObj, self.jumpFinishCallbackParam, extraParam)
 end
 
-function var_0_0.isExpiredItem(arg_71_0)
-	return arg_71_0:_isItemHasDeadline() or arg_71_0:_isLimitPowerPotion()
+function CommonItemIcon:isExpiredItem()
+	return self:_isItemHasDeadline() or self:_isLimitPowerPotion()
 end
 
-return var_0_0
+return CommonItemIcon

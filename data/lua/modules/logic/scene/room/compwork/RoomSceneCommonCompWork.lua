@@ -1,29 +1,31 @@
-﻿module("modules.logic.scene.room.compwork.RoomSceneCommonCompWork", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/compwork/RoomSceneCommonCompWork.lua
 
-local var_0_0 = class("RoomSceneCommonCompWork", BaseWork)
+module("modules.logic.scene.room.compwork.RoomSceneCommonCompWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._comp = arg_1_1
+local RoomSceneCommonCompWork = class("RoomSceneCommonCompWork", BaseWork)
+
+function RoomSceneCommonCompWork:ctor(comp)
+	self._comp = comp
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_1.sceneId
-	local var_2_1 = arg_2_1.levelId
+function RoomSceneCommonCompWork:onStart(context)
+	local sceneId = context.sceneId
+	local levelId = context.levelId
 
-	if not arg_2_0._comp then
+	if not self._comp then
 		logError("RoomSceneCommonCompWork: 没有comp")
-		arg_2_0:onDone(true)
+		self:onDone(true)
 
 		return
 	end
 
-	if arg_2_0._comp.init then
-		arg_2_0._comp:init(var_2_0, var_2_1)
-		arg_2_0:onDone(true)
+	if self._comp.init then
+		self._comp:init(sceneId, levelId)
+		self:onDone(true)
 	else
-		logError(string.format("%s: 没有init", arg_2_0._comp.__cname))
-		arg_2_0:onDone(true)
+		logError(string.format("%s: 没有init", self._comp.__cname))
+		self:onDone(true)
 	end
 end
 
-return var_0_0
+return RoomSceneCommonCompWork

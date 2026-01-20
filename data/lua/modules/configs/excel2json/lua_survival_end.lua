@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_survival_end", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_survival_end.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_survival_end", package.seeall)
+
+local lua_survival_end = {}
+local fields = {
 	endImg = 7,
 	name = 2,
 	mainImg = 9,
@@ -12,16 +14,16 @@ local var_0_1 = {
 	id = 1,
 	order = 8
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	endDesc = 2,
 	name = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_survival_end.onLoad(json)
+	lua_survival_end.configList, lua_survival_end.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_survival_end

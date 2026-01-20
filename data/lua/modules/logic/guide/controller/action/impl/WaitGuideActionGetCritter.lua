@@ -1,44 +1,46 @@
-﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionGetCritter", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/WaitGuideActionGetCritter.lua
 
-local var_0_0 = class("WaitGuideActionGetCritter", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.WaitGuideActionGetCritter", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
-	CritterController.instance:registerCallback(CritterEvent.CritterGuideReply, arg_1_0._onCritterGuideReply, arg_1_0)
-	CritterRpc.instance:sendGainGuideCritterRequest(arg_1_0.guideId, arg_1_0.stepId)
+local WaitGuideActionGetCritter = class("WaitGuideActionGetCritter", BaseGuideAction)
 
-	arg_1_0.noOpenView = tonumber(arg_1_0.actionParam) == 1
+function WaitGuideActionGetCritter:onStart(context)
+	WaitGuideActionGetCritter.super.onStart(self, context)
+	CritterController.instance:registerCallback(CritterEvent.CritterGuideReply, self._onCritterGuideReply, self)
+	CritterRpc.instance:sendGainGuideCritterRequest(self.guideId, self.stepId)
+
+	self.noOpenView = tonumber(self.actionParam) == 1
 end
 
-function var_0_0._check(arg_2_0)
-	arg_2_0:onDone(true)
+function WaitGuideActionGetCritter:_check()
+	self:onDone(true)
 end
 
-function var_0_0._onCritterGuideReply(arg_3_0, arg_3_1)
-	if not arg_3_0.noOpenView then
-		local var_3_0 = arg_3_1.uids
+function WaitGuideActionGetCritter:_onCritterGuideReply(msg)
+	if not self.noOpenView then
+		local uids = msg.uids
 
-		for iter_3_0 = 1, #var_3_0 do
-			local var_3_1 = CritterModel.instance:getCritterMOByUid(var_3_0[iter_3_0])
+		for i = 1, #uids do
+			local critterMo = CritterModel.instance:getCritterMOByUid(uids[i])
 
-			if var_3_1 then
-				local var_3_2 = {
+			if critterMo then
+				local param = {
 					mode = RoomSummonEnum.SummonType.Summon,
-					critterMo = var_3_1
+					critterMo = critterMo
 				}
 
-				ViewMgr.instance:openView(ViewName.RoomGetCritterView, var_3_2)
+				ViewMgr.instance:openView(ViewName.RoomGetCritterView, param)
 
 				break
 			end
 		end
 	end
 
-	arg_3_0:_check()
+	self:_check()
 end
 
-function var_0_0.clearWork(arg_4_0)
-	CritterController.instance:unregisterCallback(CritterEvent.CritterGuideReply, arg_4_0._onCritterGuideReply, arg_4_0)
+function WaitGuideActionGetCritter:clearWork()
+	CritterController.instance:unregisterCallback(CritterEvent.CritterGuideReply, self._onCritterGuideReply, self)
 end
 
-return var_0_0
+return WaitGuideActionGetCritter

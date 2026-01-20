@@ -1,24 +1,26 @@
-﻿local var_0_0 = pureTable("Season123ItemMO")
+﻿-- chunkname: @modules/logic/seasonver/act123/model/Season123ItemMO.lua
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.id = 0
-	arg_1_0.uid = 0
-	arg_1_0.itemId = 0
-	arg_1_0.quantity = 0
+local Season123ItemMO = pureTable("Season123ItemMO")
+
+function Season123ItemMO:ctor()
+	self.id = 0
+	self.uid = 0
+	self.itemId = 0
+	self.quantity = 0
 end
 
-function var_0_0.setData(arg_2_0, arg_2_1)
-	arg_2_0.id = arg_2_1.uid
-	arg_2_0.uid = arg_2_1.uid
-	arg_2_0.itemId = arg_2_1.itemId
-	arg_2_0.quantity = arg_2_1.quantity
+function Season123ItemMO:setData(info)
+	self.id = info.uid
+	self.uid = info.uid
+	self.itemId = info.itemId
+	self.quantity = info.quantity
 end
 
-function var_0_0.reset(arg_3_0, arg_3_1)
-	arg_3_0.id = arg_3_1.uid
-	arg_3_0.uid = arg_3_1.uid
-	arg_3_0.itemId = arg_3_1.itemId
-	arg_3_0.quantity = arg_3_1.quantity
+function Season123ItemMO:reset(info)
+	self.id = info.uid
+	self.uid = info.uid
+	self.itemId = info.itemId
+	self.quantity = info.quantity
 end
 
-return var_0_0
+return Season123ItemMO

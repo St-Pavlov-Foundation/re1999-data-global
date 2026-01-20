@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity2_3.zhixinquaner.view.ZhiXinQuanErTalkViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/zhixinquaner/view/ZhiXinQuanErTalkViewContainer.lua
 
-local var_0_0 = class("ZhiXinQuanErTalkViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_3.zhixinquaner.view.ZhiXinQuanErTalkViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local ZhiXinQuanErTalkViewContainer = class("ZhiXinQuanErTalkViewContainer", BaseViewContainer)
+
+function ZhiXinQuanErTalkViewContainer:buildViews()
 	return {
 		ZhiXinQuanErTalkView.New()
 	}
 end
 
-return var_0_0
+return ZhiXinQuanErTalkViewContainer

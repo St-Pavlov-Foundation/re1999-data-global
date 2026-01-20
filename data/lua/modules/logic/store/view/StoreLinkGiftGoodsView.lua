@@ -1,335 +1,343 @@
-﻿module("modules.logic.store.view.StoreLinkGiftGoodsView", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/StoreLinkGiftGoodsView.lua
 
-local var_0_0 = class("StoreLinkGiftGoodsView", BaseView)
+module("modules.logic.store.view.StoreLinkGiftGoodsView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtgoodsNameCn = gohelper.findChildText(arg_1_0.viewGO, "view/common/title/#txt_goodsNameCn")
-	arg_1_0._btnbuy = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/common/#btn_buy")
-	arg_1_0._txtmaterialNum = gohelper.findChildText(arg_1_0.viewGO, "view/common/#btn_buy/cost/#txt_materialNum")
-	arg_1_0._txtprice = gohelper.findChildText(arg_1_0.viewGO, "view/common/#btn_buy/cost/#txt_price")
-	arg_1_0._gohasget = gohelper.findChild(arg_1_0.viewGO, "view/common/#go_hasget")
-	arg_1_0._goleftbg = gohelper.findChild(arg_1_0.viewGO, "view/normal/remain/#go_leftbg")
-	arg_1_0._txtremain = gohelper.findChildText(arg_1_0.viewGO, "view/normal/remain/#go_leftbg/#txt_remain")
-	arg_1_0._gorightbg = gohelper.findChild(arg_1_0.viewGO, "view/normal/remain/#go_rightbg")
-	arg_1_0._txtremaintime = gohelper.findChildText(arg_1_0.viewGO, "view/normal/remain/#go_rightbg/#txt_remaintime")
-	arg_1_0._txtgoodsUseDesc = gohelper.findChildText(arg_1_0.viewGO, "view/normal/info/goodsDesc/Viewport/Content/#txt_goodsUseDesc")
-	arg_1_0._txtgoodsDesc = gohelper.findChildText(arg_1_0.viewGO, "view/normal/info/goodsDesc/Viewport/Content/#txt_goodsDesc")
-	arg_1_0._simagerewardIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/normal/reward/right/hasget/#simage_rewardIcon")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/#btn_close")
-	arg_1_0._gotopright = gohelper.findChild(arg_1_0.viewGO, "#go_topright")
+local StoreLinkGiftGoodsView = class("StoreLinkGiftGoodsView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function StoreLinkGiftGoodsView:onInitView()
+	self._txtgoodsNameCn = gohelper.findChildText(self.viewGO, "view/common/title/#txt_goodsNameCn")
+	self._btnbuy = gohelper.findChildButtonWithAudio(self.viewGO, "view/common/#btn_buy")
+	self._txtmaterialNum = gohelper.findChildText(self.viewGO, "view/common/#btn_buy/cost/#txt_materialNum")
+	self._txtprice = gohelper.findChildText(self.viewGO, "view/common/#btn_buy/cost/#txt_price")
+	self._gohasget = gohelper.findChild(self.viewGO, "view/common/#go_hasget")
+	self._goleftbg = gohelper.findChild(self.viewGO, "view/normal/remain/#go_leftbg")
+	self._txtremain = gohelper.findChildText(self.viewGO, "view/normal/remain/#go_leftbg/#txt_remain")
+	self._gorightbg = gohelper.findChild(self.viewGO, "view/normal/remain/#go_rightbg")
+	self._txtremaintime = gohelper.findChildText(self.viewGO, "view/normal/remain/#go_rightbg/#txt_remaintime")
+	self._txtgoodsUseDesc = gohelper.findChildText(self.viewGO, "view/normal/info/goodsDesc/Viewport/Content/#txt_goodsUseDesc")
+	self._txtgoodsDesc = gohelper.findChildText(self.viewGO, "view/normal/info/goodsDesc/Viewport/Content/#txt_goodsDesc")
+	self._simagerewardIcon = gohelper.findChildSingleImage(self.viewGO, "view/normal/reward/right/hasget/#simage_rewardIcon")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "view/#btn_close")
+	self._gotopright = gohelper.findChild(self.viewGO, "#go_topright")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnbuy:AddClickListener(arg_2_0._btnbuyOnClick, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function StoreLinkGiftGoodsView:addEvents()
+	self._btnbuy:AddClickListener(self._btnbuyOnClick, self)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnbuy:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
+function StoreLinkGiftGoodsView:removeEvents()
+	self._btnbuy:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btnbuyOnClick(arg_4_0)
-	if StoreConfig.instance:hasNextGood(arg_4_0._mo.id) then
-		StoreModel.instance:setCurBuyPackageId(arg_4_0._mo.id)
+function StoreLinkGiftGoodsView:_btnbuyOnClick()
+	local isCurGoodHasNext = StoreConfig.instance:hasNextGood(self._mo.id)
+
+	if isCurGoodHasNext then
+		StoreModel.instance:setCurBuyPackageId(self._mo.id)
 	end
 
-	if arg_4_0._mo.isChargeGoods then
+	if self._mo.isChargeGoods then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_payment_click)
-		PayController.instance:startPay(arg_4_0._mo.goodsId)
+		PayController.instance:startPay(self._mo.goodsId)
 	else
 		AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 
-		if arg_4_0._costType == MaterialEnum.MaterialType.Currency and arg_4_0._costId == CurrencyEnum.CurrencyType.FreeDiamondCoupon then
-			if CurrencyController.instance:checkFreeDiamondEnough(arg_4_0._costQuantity, CurrencyEnum.PayDiamondExchangeSource.Store, nil, arg_4_0._buyGoods, arg_4_0, arg_4_0.closeThis, arg_4_0) then
-				arg_4_0:_buyGoods()
+		if self._costType == MaterialEnum.MaterialType.Currency and self._costId == CurrencyEnum.CurrencyType.FreeDiamondCoupon then
+			if CurrencyController.instance:checkFreeDiamondEnough(self._costQuantity, CurrencyEnum.PayDiamondExchangeSource.Store, nil, self._buyGoods, self, self.closeThis, self) then
+				self:_buyGoods()
 			end
-		elseif arg_4_0._costType == MaterialEnum.MaterialType.Currency and arg_4_0._costId == CurrencyEnum.CurrencyType.Diamond then
-			if CurrencyController.instance:checkDiamondEnough(arg_4_0._costQuantity, arg_4_0.closeThis, arg_4_0) then
-				arg_4_0:_buyGoods()
+		elseif self._costType == MaterialEnum.MaterialType.Currency and self._costId == CurrencyEnum.CurrencyType.Diamond then
+			if CurrencyController.instance:checkDiamondEnough(self._costQuantity, self.closeThis, self) then
+				self:_buyGoods()
 			end
 		else
-			arg_4_0:_buyGoods()
+			self:_buyGoods()
 		end
 	end
 end
 
-function var_0_0._btncloseOnClick(arg_5_0)
-	arg_5_0:closeThis()
+function StoreLinkGiftGoodsView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._gonormal = gohelper.findChild(arg_6_0.viewGO, "view/normal")
-	arg_6_0._goremain = gohelper.findChild(arg_6_0._gonormal, "info/remain")
-	arg_6_0._gotxtgoodsDesc = gohelper.findChild(arg_6_0.viewGO, "view/normal/info/goodsDesc/Viewport/Content/#txt_goodsDesc")
-	arg_6_0._imagematerial = gohelper.findChildImage(arg_6_0.viewGO, "view/common/#btn_buy/cost/simage_material")
-	arg_6_0._txtnum = gohelper.findChildText(arg_6_0.viewGO, "view/left/num1/txt_num")
-	arg_6_0._txtnum2 = gohelper.findChildText(arg_6_0.viewGO, "view/left/num2/txt_num")
-	arg_6_0._txtnum3 = gohelper.findChildText(arg_6_0.viewGO, "view/left/num3/txt_num")
-	arg_6_0._gonum = gohelper.findChild(arg_6_0.viewGO, "view/left/num1")
-	arg_6_0._gonum2 = gohelper.findChild(arg_6_0.viewGO, "view/left/num2")
-	arg_6_0._gonum3 = gohelper.findChild(arg_6_0.viewGO, "view/left/num3")
-	arg_6_0._goimagedec = gohelper.findChild(arg_6_0.viewGO, "view/left/image_dec")
-	arg_6_0._simageicon = gohelper.findChildSingleImage(arg_6_0.viewGO, "view/left/simage_icon")
-	arg_6_0._imageicon = gohelper.findChildImage(arg_6_0.viewGO, "view/left/simage_icon")
-	arg_6_0._goleftIcon = gohelper.findChild(arg_6_0.viewGO, "view/normal/reward/left/normal/#simage_leftIcon")
-	arg_6_0._gotxtnormal = gohelper.findChild(arg_6_0.viewGO, "view/normal/reward/left/normal/txt_normal")
-	arg_6_0._gorightIcon = gohelper.findChild(arg_6_0.viewGO, "view/normal/reward/right/lock/#simage_rightIcon")
-	arg_6_0._golefthasget = gohelper.findChild(arg_6_0.viewGO, "view/normal/reward/left/hasget")
-	arg_6_0._gofigithasget = gohelper.findChild(arg_6_0.viewGO, "view/normal/reward/right/hasget")
-	arg_6_0._txtlock = gohelper.findChildText(arg_6_0.viewGO, "view/normal/reward/right/lock/txt_lock")
-	arg_6_0._golockicon = gohelper.findChild(arg_6_0.viewGO, "view/normal/reward/right/lock/lockicon")
-	arg_6_0._golockBg = gohelper.findChild(arg_6_0.viewGO, "view/normal/reward/right/lock/bg")
-	arg_6_0._gounlockBg = gohelper.findChild(arg_6_0.viewGO, "view/normal/reward/right/lock/unlockbg")
+function StoreLinkGiftGoodsView:_editableInitView()
+	self._gonormal = gohelper.findChild(self.viewGO, "view/normal")
+	self._goremain = gohelper.findChild(self._gonormal, "info/remain")
+	self._gotxtgoodsDesc = gohelper.findChild(self.viewGO, "view/normal/info/goodsDesc/Viewport/Content/#txt_goodsDesc")
+	self._imagematerial = gohelper.findChildImage(self.viewGO, "view/common/#btn_buy/cost/simage_material")
+	self._txtnum = gohelper.findChildText(self.viewGO, "view/left/num1/txt_num")
+	self._txtnum2 = gohelper.findChildText(self.viewGO, "view/left/num2/txt_num")
+	self._txtnum3 = gohelper.findChildText(self.viewGO, "view/left/num3/txt_num")
+	self._gonum = gohelper.findChild(self.viewGO, "view/left/num1")
+	self._gonum2 = gohelper.findChild(self.viewGO, "view/left/num2")
+	self._gonum3 = gohelper.findChild(self.viewGO, "view/left/num3")
+	self._goimagedec = gohelper.findChild(self.viewGO, "view/left/image_dec")
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "view/left/simage_icon")
+	self._imageicon = gohelper.findChildImage(self.viewGO, "view/left/simage_icon")
+	self._goleftIcon = gohelper.findChild(self.viewGO, "view/normal/reward/left/normal/#simage_leftIcon")
+	self._gotxtnormal = gohelper.findChild(self.viewGO, "view/normal/reward/left/normal/txt_normal")
+	self._gorightIcon = gohelper.findChild(self.viewGO, "view/normal/reward/right/lock/#simage_rightIcon")
+	self._golefthasget = gohelper.findChild(self.viewGO, "view/normal/reward/left/hasget")
+	self._gofigithasget = gohelper.findChild(self.viewGO, "view/normal/reward/right/hasget")
+	self._txtlock = gohelper.findChildText(self.viewGO, "view/normal/reward/right/lock/txt_lock")
+	self._golockicon = gohelper.findChild(self.viewGO, "view/normal/reward/right/lock/lockicon")
+	self._golockBg = gohelper.findChild(self.viewGO, "view/normal/reward/right/lock/bg")
+	self._gounlockBg = gohelper.findChild(self.viewGO, "view/normal/reward/right/lock/unlockbg")
 
-	gohelper.setActive(arg_6_0._txtgoodsDesc, false)
-	gohelper.setActive(arg_6_0._txtgoodsUseDesc, false)
+	gohelper.setActive(self._txtgoodsDesc, false)
+	gohelper.setActive(self._txtgoodsUseDesc, false)
 
-	arg_6_0._canvasGroup = gohelper.onceAddComponent(arg_6_0._gorightIcon, typeof(UnityEngine.CanvasGroup))
+	self._canvasGroup = gohelper.onceAddComponent(self._gorightIcon, typeof(UnityEngine.CanvasGroup))
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function StoreLinkGiftGoodsView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0:addEventCb(PayController.instance, PayEvent.PayFinished, arg_8_0._payFinished, arg_8_0)
+function StoreLinkGiftGoodsView:onOpen()
+	self:addEventCb(PayController.instance, PayEvent.PayFinished, self._payFinished, self)
 
-	arg_8_0._mo = arg_8_0.viewParam
+	self._mo = self.viewParam
 
-	arg_8_0:_refreshPriceArea()
-	arg_8_0:_updateNormal()
-	StoreController.instance:statOpenChargeGoods(arg_8_0._mo.belongStoreId, arg_8_0._mo.config)
+	self:_refreshPriceArea()
+	self:_updateNormal()
+	StoreController.instance:statOpenChargeGoods(self._mo.belongStoreId, self._mo.config)
 end
 
-function var_0_0.onClose(arg_9_0)
+function StoreLinkGiftGoodsView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	arg_10_0._simageicon:UnLoadImage()
+function StoreLinkGiftGoodsView:onDestroyView()
+	self._simageicon:UnLoadImage()
 end
 
-function var_0_0._payFinished(arg_11_0)
-	arg_11_0:closeThis()
+function StoreLinkGiftGoodsView:_payFinished()
+	self:closeThis()
 end
 
-function var_0_0._updateNormal(arg_12_0)
-	local var_12_0 = arg_12_0._mo:isLevelOpen()
-	local var_12_1 = arg_12_0._mo.maxBuyCount > arg_12_0._mo.buyCount
-	local var_12_2 = arg_12_0._mo.buyCount > 0
-	local var_12_3 = StoreCharageConditionalHelper.isCharageCondition(arg_12_0._mo.id)
-	local var_12_4 = StoreCharageConditionalHelper.isCharageTaskNotFinish(arg_12_0._mo.id)
-	local var_12_5 = StoreConfig.instance:getChargeConditionalConfig(arg_12_0._mo.config.taskid)
-	local var_12_6 = var_12_5.bigImg2
-	local var_12_7 = true
+function StoreLinkGiftGoodsView:_updateNormal()
+	local isLevelOpen = self._mo:isLevelOpen()
+	local isCanBuy = self._mo.maxBuyCount > self._mo.buyCount
+	local isAlreadyBuy = self._mo.buyCount > 0
+	local isUnlock = StoreCharageConditionalHelper.isCharageCondition(self._mo.id)
+	local isTaskNotFinish = StoreCharageConditionalHelper.isCharageTaskNotFinish(self._mo.id)
+	local condCfg = StoreConfig.instance:getChargeConditionalConfig(self._mo.config.taskid)
+	local iconName = condCfg.bigImg2
+	local showCondIcon = true
 
-	gohelper.setActive(arg_12_0._btnbuy, var_12_0 and var_12_1)
-	gohelper.setActive(arg_12_0._gohasget, not var_12_1)
-	gohelper.setActive(arg_12_0._gotxtnormal, var_12_1)
-	gohelper.setActive(arg_12_0._golefthasget, var_12_2)
-	gohelper.setActive(arg_12_0._goleftTxt, not var_12_2)
-	gohelper.setActive(arg_12_0._golockicon, not var_12_3)
-	gohelper.setActive(arg_12_0._golockBg, not var_12_3)
-	gohelper.setActive(arg_12_0._gounlockBg, var_12_3)
-	gohelper.setActive(arg_12_0._gofigithasget, not var_12_4)
-	gohelper.setActive(arg_12_0._txtlock, var_12_4)
+	gohelper.setActive(self._btnbuy, isLevelOpen and isCanBuy)
+	gohelper.setActive(self._gohasget, not isCanBuy)
+	gohelper.setActive(self._gotxtnormal, isCanBuy)
+	gohelper.setActive(self._golefthasget, isAlreadyBuy)
+	gohelper.setActive(self._goleftTxt, not isAlreadyBuy)
+	gohelper.setActive(self._golockicon, not isUnlock)
+	gohelper.setActive(self._golockBg, not isUnlock)
+	gohelper.setActive(self._gounlockBg, isUnlock)
+	gohelper.setActive(self._gofigithasget, not isTaskNotFinish)
+	gohelper.setActive(self._txtlock, isTaskNotFinish)
 
-	arg_12_0._txtgoodsNameCn.text = arg_12_0._mo.config.name
+	self._txtgoodsNameCn.text = self._mo.config.name
 
-	if var_12_3 then
-		arg_12_0._txtlock.text = luaLang("store_linkfigt_getitnow_txt")
+	if isUnlock then
+		self._txtlock.text = luaLang("store_linkfigt_getitnow_txt")
 	else
-		arg_12_0._txtlock.text = var_12_5 and var_12_5.conDesc
+		self._txtlock.text = condCfg and condCfg.conDesc
 	end
 
-	arg_12_0._canvasGroup.alpha = var_12_3 and 1 or 0.5
+	self._canvasGroup.alpha = isUnlock and 1 or 0.5
 
-	arg_12_0._simageicon:LoadImage(ResUrl.getStorePackageIcon(var_12_6), arg_12_0._onIconLoadFinish, arg_12_0)
+	self._simageicon:LoadImage(ResUrl.getStorePackageIcon(iconName), self._onIconLoadFinish, self)
 
-	if arg_12_0._mo.offlineTime > 0 then
-		local var_12_8 = math.floor(arg_12_0._mo.offlineTime - ServerTime.now())
+	if self._mo.offlineTime > 0 then
+		local limitSec = math.floor(self._mo.offlineTime - ServerTime.now())
 
-		arg_12_0._txtremaintime.text = string.format("%s%s", TimeUtil.secondToRoughTime(var_12_8))
+		self._txtremaintime.text = string.format("%s%s", TimeUtil.secondToRoughTime(limitSec))
 	end
 
-	arg_12_0:_updateNormalPackCommon(arg_12_0._goleftbg, arg_12_0._txtremain, arg_12_0._goremain)
+	self:_updateNormalPackCommon(self._goleftbg, self._txtremain, self._goremain)
 
-	local var_12_9 = arg_12_0._mo.config.detailDesc
-	local var_12_10 = string.split(var_12_9, "\n")
+	local detailDesc = self._mo.config.detailDesc
+	local detailDescStrList = string.split(detailDesc, "\n")
 
-	gohelper.CreateObjList(arg_12_0, arg_12_0._onDescItemShow, var_12_10, nil, arg_12_0._gotxtgoodsDesc)
+	gohelper.CreateObjList(self, self._onDescItemShow, detailDescStrList, nil, self._gotxtgoodsDesc)
 
-	local var_12_11 = arg_12_0._mo.config.product and GameUtil.splitString2(arg_12_0._mo.config.product, true)
-	local var_12_12 = var_12_5 and GameUtil.splitString2(var_12_5.bonus, true)
+	local bonusList = self._mo.config.product and GameUtil.splitString2(self._mo.config.product, true)
+	local condBonusList = condCfg and GameUtil.splitString2(condCfg.bonus, true)
 
-	gohelper.setActive(arg_12_0._gonum, var_12_7)
-	gohelper.setActive(arg_12_0._gonum2, var_12_7)
-	gohelper.setActive(arg_12_0._goimagedec, var_12_7)
-	gohelper.setActive(arg_12_0._gonum3, not var_12_7)
+	gohelper.setActive(self._gonum, showCondIcon)
+	gohelper.setActive(self._gonum2, showCondIcon)
+	gohelper.setActive(self._goimagedec, showCondIcon)
+	gohelper.setActive(self._gonum3, not showCondIcon)
 
-	if var_12_7 then
-		arg_12_0._txtnum.text = arg_12_0:_getNumStr(arg_12_0:_getRewardCount(var_12_11))
-		arg_12_0._txtnum2.text = arg_12_0:_getNumStr(arg_12_0:_getRewardCount(var_12_12))
+	if showCondIcon then
+		self._txtnum.text = self:_getNumStr(self:_getRewardCount(bonusList))
+		self._txtnum2.text = self:_getNumStr(self:_getRewardCount(condBonusList))
 	else
-		arg_12_0._txtnum3.text = arg_12_0:_getNumStr(arg_12_0:_getRewardCount(var_12_12) + arg_12_0:_getRewardCount(var_12_11))
+		self._txtnum3.text = self:_getNumStr(self:_getRewardCount(condBonusList) + self:_getRewardCount(bonusList))
 	end
 
-	arg_12_0._iconItemList = arg_12_0._iconItemList or arg_12_0:getUserDataTb_()
-	arg_12_0._iconItem2List = arg_12_0._iconItem2List or arg_12_0:getUserDataTb_()
+	self._iconItemList = self._iconItemList or self:getUserDataTb_()
+	self._iconItem2List = self._iconItem2List or self:getUserDataTb_()
 
-	arg_12_0:_setIconBouns(arg_12_0._iconItemList, var_12_11, arg_12_0._goleftIcon)
-	arg_12_0:_setIconBouns(arg_12_0._iconItem2List, var_12_12, arg_12_0._gorightIcon)
+	self:_setIconBouns(self._iconItemList, bonusList, self._goleftIcon)
+	self:_setIconBouns(self._iconItem2List, condBonusList, self._gorightIcon)
 end
 
-function var_0_0._getNumStr(arg_13_0, arg_13_1)
-	return string.format("×<size=32>%s", arg_13_1)
+function StoreLinkGiftGoodsView:_getNumStr(num)
+	return string.format("×<size=32>%s", num)
 end
 
-function var_0_0._onIconLoadFinish(arg_14_0)
-	arg_14_0._imageicon:SetNativeSize()
+function StoreLinkGiftGoodsView:_onIconLoadFinish()
+	self._imageicon:SetNativeSize()
 end
 
-function var_0_0._onDescItemShow(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	gohelper.findChildText(arg_15_1, "").text = arg_15_2
+function StoreLinkGiftGoodsView:_onDescItemShow(itemViewGo, str, index)
+	local txtDesc = gohelper.findChildText(itemViewGo, "")
+
+	txtDesc.text = str
 end
 
-function var_0_0._refreshPriceArea(arg_16_0)
-	local var_16_0 = arg_16_0._mo.cost
+function StoreLinkGiftGoodsView:_refreshPriceArea()
+	local cost = self._mo.cost
 
-	gohelper.setActive(arg_16_0._txtprice.gameObject, arg_16_0._mo.config.originalCost > 0)
+	gohelper.setActive(self._txtprice.gameObject, self._mo.config.originalCost > 0)
 
-	if string.nilorempty(var_16_0) or var_16_0 == 0 then
-		arg_16_0._txtmaterialNum.text = luaLang("store_free")
+	if string.nilorempty(cost) or cost == 0 then
+		self._txtmaterialNum.text = luaLang("store_free")
 
-		gohelper.setActive(arg_16_0._imagematerial, false)
-	elseif arg_16_0._mo.isChargeGoods then
-		arg_16_0._txtmaterialNum.text = StoreModel.instance:getCostPriceFull(arg_16_0._mo.id)
-		arg_16_0._txtprice.text = StoreModel.instance:getOriginCostPriceFull(arg_16_0._mo.id)
+		gohelper.setActive(self._imagematerial, false)
+	elseif self._mo.isChargeGoods then
+		self._txtmaterialNum.text = StoreModel.instance:getCostPriceFull(self._mo.id)
+		self._txtprice.text = StoreModel.instance:getOriginCostPriceFull(self._mo.id)
 
-		gohelper.setActive(arg_16_0._imagematerial, false)
+		gohelper.setActive(self._imagematerial, false)
 	else
-		local var_16_1 = GameUtil.splitString2(var_16_0, true)
-		local var_16_2 = var_16_1[arg_16_0._mo.buyCount + 1] or var_16_1[#var_16_1]
+		local costs = GameUtil.splitString2(cost, true)
+		local costInfo = costs[self._mo.buyCount + 1] or costs[#costs]
 
-		arg_16_0._costType = var_16_2[1]
-		arg_16_0._costId = var_16_2[2]
-		arg_16_0._costQuantity = var_16_2[3]
+		self._costType = costInfo[1]
+		self._costId = costInfo[2]
+		self._costQuantity = costInfo[3]
 
-		local var_16_3, var_16_4 = ItemModel.instance:getItemConfigAndIcon(arg_16_0._costType, arg_16_0._costId)
-		local var_16_5 = var_16_3.icon
-		local var_16_6 = string.format("%s_1", var_16_5)
+		local costConfig, costIcon = ItemModel.instance:getItemConfigAndIcon(self._costType, self._costId)
+		local id = costConfig.icon
+		local str = string.format("%s_1", id)
 
-		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_16_0._imagematerial, var_16_6)
+		UISpriteSetMgr.instance:setCurrencyItemSprite(self._imagematerial, str)
 
-		arg_16_0._txtmaterialNum.text = arg_16_0._costQuantity
-		arg_16_0._txtprice.text = arg_16_0._mo.config.originalCost
+		self._txtmaterialNum.text = self._costQuantity
+		self._txtprice.text = self._mo.config.originalCost
 
-		gohelper.setActive(arg_16_0._imagematerial, true)
+		gohelper.setActive(self._imagematerial, true)
 
-		if ItemModel.instance:getItemQuantity(arg_16_0._costType, arg_16_0._costId) >= arg_16_0._costQuantity then
-			SLFramework.UGUI.GuiHelper.SetColor(arg_16_0._txtmaterialNum, "#393939")
+		local hadQuantity = ItemModel.instance:getItemQuantity(self._costType, self._costId)
+
+		if hadQuantity >= self._costQuantity then
+			SLFramework.UGUI.GuiHelper.SetColor(self._txtmaterialNum, "#393939")
 		else
-			SLFramework.UGUI.GuiHelper.SetColor(arg_16_0._txtmaterialNum, "#bf2e11")
+			SLFramework.UGUI.GuiHelper.SetColor(self._txtmaterialNum, "#bf2e11")
 		end
 	end
 end
 
-function var_0_0._getRewardCount(arg_17_0, arg_17_1)
-	local var_17_0 = 0
+function StoreLinkGiftGoodsView:_getRewardCount(bonusList)
+	local count = 0
 
-	if arg_17_1 and #arg_17_1 > 0 then
-		for iter_17_0, iter_17_1 in ipairs(arg_17_1) do
-			if iter_17_1 and #iter_17_1 >= 2 then
-				var_17_0 = var_17_0 + iter_17_1[3]
+	if bonusList and #bonusList > 0 then
+		for i, bonus in ipairs(bonusList) do
+			if bonus and #bonus >= 2 then
+				count = count + bonus[3]
 			end
 		end
 	end
 
-	return var_17_0
+	return count
 end
 
-function var_0_0._updateNormalPackCommon(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	local var_18_0 = arg_18_0._mo.maxBuyCount
-	local var_18_1 = var_18_0 - arg_18_0._mo.buyCount
-	local var_18_2
+function StoreLinkGiftGoodsView:_updateNormalPackCommon(leftbg, txtremain, goremain)
+	local maxBuyCount = self._mo.maxBuyCount
+	local remain = maxBuyCount - self._mo.buyCount
+	local content
 
-	if arg_18_0._mo.isChargeGoods then
-		var_18_2 = StoreConfig.instance:getChargeRemainText(var_18_0, arg_18_0._mo.refreshTime, var_18_1, arg_18_0._mo.offlineTime)
+	if self._mo.isChargeGoods then
+		content = StoreConfig.instance:getChargeRemainText(maxBuyCount, self._mo.refreshTime, remain, self._mo.offlineTime)
 	else
-		var_18_2 = StoreConfig.instance:getRemainText(var_18_0, arg_18_0._mo.refreshTime, var_18_1, arg_18_0._mo.offlineTime)
+		content = StoreConfig.instance:getRemainText(maxBuyCount, self._mo.refreshTime, remain, self._mo.offlineTime)
 	end
 
-	if string.nilorempty(var_18_2) then
-		gohelper.setActive(arg_18_1, false)
-		gohelper.setActive(arg_18_2.gameObject, false)
-		gohelper.setActive(arg_18_3, arg_18_0._mo.offlineTime > 0)
+	if string.nilorempty(content) then
+		gohelper.setActive(leftbg, false)
+		gohelper.setActive(txtremain.gameObject, false)
+		gohelper.setActive(goremain, self._mo.offlineTime > 0)
 	else
-		gohelper.setActive(arg_18_1, true)
-		gohelper.setActive(arg_18_2.gameObject, true)
+		gohelper.setActive(leftbg, true)
+		gohelper.setActive(txtremain.gameObject, true)
 
-		arg_18_2.text = var_18_2
+		txtremain.text = content
 	end
 end
 
-function var_0_0._get2GOList(arg_19_0, arg_19_1, arg_19_2)
-	local var_19_0 = arg_19_0:getUserDataTb_()
+function StoreLinkGiftGoodsView:_get2GOList(go1, go2)
+	local list = self:getUserDataTb_()
 
-	table.insert(var_19_0, arg_19_1)
-	table.insert(var_19_0, arg_19_2)
+	table.insert(list, go1)
+	table.insert(list, go2)
 
-	return var_19_0
+	return list
 end
 
-function var_0_0._setIconBouns(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
-	if not arg_20_2 then
+function StoreLinkGiftGoodsView:_setIconBouns(iconList, bonusList, parentGO)
+	if not bonusList then
 		return
 	end
 
-	local var_20_0 = 0
+	local countIdx = 0
 
-	for iter_20_0, iter_20_1 in ipairs(arg_20_2) do
-		if iter_20_1 and #iter_20_1 >= 2 then
-			var_20_0 = var_20_0 + 1
+	for i, bonus in ipairs(bonusList) do
+		if bonus and #bonus >= 2 then
+			countIdx = countIdx + 1
 
-			local var_20_1 = arg_20_1[var_20_0]
+			local itemIcon = iconList[countIdx]
 
-			if not var_20_1 then
-				var_20_1 = IconMgr.instance:getCommonItemIcon(arg_20_3)
+			if not itemIcon then
+				itemIcon = IconMgr.instance:getCommonItemIcon(parentGO)
 
-				table.insert(arg_20_1, var_20_1)
+				table.insert(iconList, itemIcon)
 			end
 
-			local var_20_2 = iter_20_1[1]
-			local var_20_3 = iter_20_1[2]
-			local var_20_4 = iter_20_1[3] or 0
+			local itemType = bonus[1]
+			local itemId = bonus[2]
+			local quantity = bonus[3] or 0
 
-			arg_20_0:_setIcon(var_20_1, var_20_2, var_20_3, var_20_4)
+			self:_setIcon(itemIcon, itemType, itemId, quantity)
 		end
 	end
 end
 
-function var_0_0._setIcon(arg_21_0, arg_21_1, arg_21_2, arg_21_3, arg_21_4)
-	arg_21_1:setMOValue(arg_21_2, arg_21_3, arg_21_4, nil, true)
-	arg_21_1:setCantJump(true)
-	arg_21_1:setCountFontSize(36)
-	arg_21_1:setScale(0.7)
-	arg_21_1:SetCountLocalY(43.6)
-	arg_21_1:SetCountBgHeight(25)
+function StoreLinkGiftGoodsView:_setIcon(icon, type, id, quantity)
+	icon:setMOValue(type, id, quantity, nil, true)
+	icon:setCantJump(true)
+	icon:setCountFontSize(36)
+	icon:setScale(0.7)
+	icon:SetCountLocalY(43.6)
+	icon:SetCountBgHeight(25)
 end
 
-function var_0_0._buyCallback(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
-	if arg_22_2 == 0 then
-		arg_22_0:closeThis()
+function StoreLinkGiftGoodsView:_buyCallback(cmd, resultCode, msg)
+	if resultCode == 0 then
+		self:closeThis()
 	end
 end
 
-function var_0_0._payFinished(arg_23_0)
-	arg_23_0:closeThis()
+function StoreLinkGiftGoodsView:_payFinished()
+	self:closeThis()
 end
 
-return var_0_0
+return StoreLinkGiftGoodsView

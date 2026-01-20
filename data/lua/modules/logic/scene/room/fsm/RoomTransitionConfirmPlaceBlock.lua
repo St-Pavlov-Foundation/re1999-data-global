@@ -1,99 +1,104 @@
-﻿module("modules.logic.scene.room.fsm.RoomTransitionConfirmPlaceBlock", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/fsm/RoomTransitionConfirmPlaceBlock.lua
 
-local var_0_0 = class("RoomTransitionConfirmPlaceBlock", JompFSMBaseTransition)
+module("modules.logic.scene.room.fsm.RoomTransitionConfirmPlaceBlock", package.seeall)
 
-function var_0_0.start(arg_1_0)
-	arg_1_0._scene = GameSceneMgr.instance:getCurScene()
+local RoomTransitionConfirmPlaceBlock = class("RoomTransitionConfirmPlaceBlock", JompFSMBaseTransition)
+
+function RoomTransitionConfirmPlaceBlock:start()
+	self._scene = GameSceneMgr.instance:getCurScene()
 end
 
-function var_0_0.check(arg_2_0)
+function RoomTransitionConfirmPlaceBlock:check()
 	return true
 end
 
-function var_0_0.onStart(arg_3_0, arg_3_1)
-	arg_3_0._param = arg_3_1
-	arg_3_0._animDone = false
+function RoomTransitionConfirmPlaceBlock:onStart(param)
+	self._param = param
+	self._animDone = false
 
-	local var_3_0 = arg_3_0._param.tempBlockMO
-	local var_3_1 = var_3_0.hexPoint
-	local var_3_2 = var_3_1:getInRanges(RoomBlockEnum.EmptyBlockDistanceStyleCount, true)
+	local tempBlockMO = self._param.tempBlockMO
+	local hexPoint = tempBlockMO.hexPoint
+	local ranges = hexPoint:getInRanges(RoomBlockEnum.EmptyBlockDistanceStyleCount, true)
 
-	for iter_3_0, iter_3_1 in ipairs(var_3_2) do
-		local var_3_3 = RoomMapBlockModel.instance:getBlockMO(iter_3_1.x, iter_3_1.y)
+	for i, range in ipairs(ranges) do
+		local rangeMO = RoomMapBlockModel.instance:getBlockMO(range.x, range.y)
 
-		if var_3_3 and var_3_3.blockState == RoomBlockEnum.BlockState.Water and not arg_3_0._scene.mapmgr:getBlockEntity(var_3_3.id, SceneTag.RoomEmptyBlock) then
-			local var_3_4 = arg_3_0._scene.mapmgr:spawnMapBlock(var_3_3)
+		if rangeMO and rangeMO.blockState == RoomBlockEnum.BlockState.Water then
+			local entity = self._scene.mapmgr:getBlockEntity(rangeMO.id, SceneTag.RoomEmptyBlock)
+
+			entity = entity or self._scene.mapmgr:spawnMapBlock(rangeMO)
 		end
 	end
 
-	local var_3_5 = arg_3_0._scene.mapmgr:getBlockEntity(var_3_0.id, SceneTag.RoomMapBlock)
+	local curEntity = self._scene.mapmgr:getBlockEntity(tempBlockMO.id, SceneTag.RoomMapBlock)
 
-	if var_3_5 then
-		var_3_5:refreshBlock()
-		var_3_5:refreshRotation()
-		var_3_5:playSmokeEffect()
-		var_3_5:playAmbientAudio()
+	if curEntity then
+		curEntity:refreshBlock()
+		curEntity:refreshRotation()
+		curEntity:playSmokeEffect()
+		curEntity:playAmbientAudio()
 	end
 
-	local var_3_6 = var_3_1:getNeighbors()
+	local neighbors = hexPoint:getNeighbors()
 
-	for iter_3_2, iter_3_3 in ipairs(var_3_6) do
-		local var_3_7 = RoomMapBlockModel.instance:getBlockMO(iter_3_3.x, iter_3_3.y)
+	for i, neighbor in ipairs(neighbors) do
+		local neighborMO = RoomMapBlockModel.instance:getBlockMO(neighbor.x, neighbor.y)
 
-		if var_3_7 and var_3_7.blockState == RoomBlockEnum.BlockState.Map and arg_3_0:_isNeighborsCanAnim(iter_3_3.x, iter_3_3.y) then
-			local var_3_8 = arg_3_0._scene.mapmgr:getBlockEntity(var_3_7.id, SceneTag.RoomMapBlock)
+		if neighborMO and neighborMO.blockState == RoomBlockEnum.BlockState.Map and self:_isNeighborsCanAnim(neighbor.x, neighbor.y) then
+			local entity = self._scene.mapmgr:getBlockEntity(neighborMO.id, SceneTag.RoomMapBlock)
 
-			if var_3_8 then
-				var_3_8:playAnim(RoomScenePreloader.ResAnim.ContainerUp, "container_up")
+			if entity then
+				entity:playAnim(RoomScenePreloader.ResAnim.ContainerUp, "container_up")
 			end
 		end
 	end
 
 	RoomMapController.instance:dispatchEvent(RoomEvent.UpdateWater)
 	RoomMapController.instance:dispatchEvent(RoomEvent.UpdateInventoryCount)
-	arg_3_0._scene.inventorymgr:playForwardAnim(arg_3_0._animCallback, arg_3_0)
+	self._scene.inventorymgr:playForwardAnim(self._animCallback, self)
 	RoomBlockController.instance:refreshResourceLight()
 	RoomMapController.instance:dispatchEvent(RoomEvent.ConfirmBlock)
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_board_fix)
 end
 
-function var_0_0._isNeighborsCanAnim(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = RoomMapBuildingModel.instance:getBuildingParam(arg_4_1, arg_4_2)
+function RoomTransitionConfirmPlaceBlock:_isNeighborsCanAnim(x, y)
+	local builingParam = RoomMapBuildingModel.instance:getBuildingParam(x, y)
 
-	if var_4_0 and RoomBuildingEnum.NotPlaceBlockAnimDict[var_4_0.buildingId] then
+	if builingParam and RoomBuildingEnum.NotPlaceBlockAnimDict[builingParam.buildingId] then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0._animCallback(arg_5_0)
-	local var_5_0 = arg_5_0._param.tempBlockMO.hexPoint
-	local var_5_1 = RoomBlockHelper.getNearBlockEntity(false, var_5_0, 1, true)
+function RoomTransitionConfirmPlaceBlock:_animCallback()
+	local tempBlockMO = self._param.tempBlockMO
+	local hexPoint = tempBlockMO.hexPoint
+	local nearMapEntityList = RoomBlockHelper.getNearBlockEntity(false, hexPoint, 1, true)
 
-	RoomBlockHelper.refreshBlockEntity(var_5_1, "refreshSideShow")
-	arg_5_0._scene.inventorymgr:moveForward()
+	RoomBlockHelper.refreshBlockEntity(nearMapEntityList, "refreshSideShow")
+	self._scene.inventorymgr:moveForward()
 
-	arg_5_0._animDone = true
+	self._animDone = true
 
-	arg_5_0:_checkDone()
+	self:_checkDone()
 end
 
-function var_0_0._checkDone(arg_6_0)
-	if arg_6_0._animDone then
-		local var_6_0 = arg_6_0._param.tempBlockMO
+function RoomTransitionConfirmPlaceBlock:_checkDone()
+	if self._animDone then
+		local tempBlockMO = self._param.tempBlockMO
 
-		RoomMapController.instance:dispatchEvent(RoomEvent.OnUseBlock, var_6_0.id)
-		arg_6_0:onDone()
+		RoomMapController.instance:dispatchEvent(RoomEvent.OnUseBlock, tempBlockMO.id)
+		self:onDone()
 	end
 end
 
-function var_0_0.stop(arg_7_0)
+function RoomTransitionConfirmPlaceBlock:stop()
 	return
 end
 
-function var_0_0.clear(arg_8_0)
+function RoomTransitionConfirmPlaceBlock:clear()
 	return
 end
 
-return var_0_0
+return RoomTransitionConfirmPlaceBlock

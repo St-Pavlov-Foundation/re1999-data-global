@@ -1,334 +1,340 @@
-﻿module("modules.logic.fight.view.cardeffect.FightCardDissolveEffect", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/cardeffect/FightCardDissolveEffect.lua
 
-local var_0_0 = class("FightCardDissolveEffect", BaseWork)
-local var_0_1 = 1
-local var_0_2 = var_0_1 * 0.033
-local var_0_3 = "CardItemMeshs"
-local var_0_4 = "_MainTex"
-local var_0_5 = "UNITY_UI_DISSOLVE"
-local var_0_6 = "_UseUIDissolve"
-local var_0_7 = {
+module("modules.logic.fight.view.cardeffect.FightCardDissolveEffect", package.seeall)
+
+local FightCardDissolveEffect = class("FightCardDissolveEffect", BaseWork)
+local TimeFactor = 1
+local dt = TimeFactor * 0.033
+local MeshGOName = "CardItemMeshs"
+local MainTex_ID = "_MainTex"
+local KeyWorkVariant = "UNITY_UI_DISSOLVE"
+local KeyWork = "_UseUIDissolve"
+local DissolveParam = {
 	"_DissolveOffset",
 	"Vector4",
 	Vector4.New(0, 25, 3.35, 0),
 	Vector4.New(1.3, 25, 3.35, 0)
 }
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+function FightCardDissolveEffect:onStart(context)
+	FightCardDissolveEffect.super.onStart(self, context)
 	AudioMgr.instance:trigger(AudioEnum.HeroGroupUI.Play_UI_Formation_Cardsdisappear)
 
-	arg_1_0._dt = var_0_2 / FightModel.instance:getUISpeed()
-	arg_1_0._cloneItemGOs = {}
+	self._dt = dt / FightModel.instance:getUISpeed()
+	self._cloneItemGOs = {}
 
-	local var_1_0 = FightHelper.getPreloadAssetItem(FightPreloadOthersWork.ui_mesh):GetResource(FightPreloadOthersWork.ui_mesh)
-	local var_1_1 = FightHelper.getPreloadAssetItem(FightPreloadOthersWork.ui_effectsmat):GetResource(FightPreloadOthersWork.ui_effectsmat)
+	local uiMeshAssetItem = FightHelper.getPreloadAssetItem(FightPreloadOthersWork.ui_mesh)
+	local uiMeshPrefab = uiMeshAssetItem:GetResource(FightPreloadOthersWork.ui_mesh)
+	local matAssetItem = FightHelper.getPreloadAssetItem(FightPreloadOthersWork.ui_effectsmat)
+	local uiEffectMat = matAssetItem:GetResource(FightPreloadOthersWork.ui_effectsmat)
 
-	arg_1_0._mats = {}
-	arg_1_0._cloneMats = {}
-	arg_1_0._meshGOs = {}
-	arg_1_0._renderers = {}
-	arg_1_0._txtList = {}
+	self._mats = {}
+	self._cloneMats = {}
+	self._meshGOs = {}
+	self._renderers = {}
+	self._txtList = {}
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1.dissolveSkillItemGOs) do
-		local var_1_2 = gohelper.cloneInPlace(iter_1_1)
+	for _, skillItemGO in ipairs(context.dissolveSkillItemGOs) do
+		local cloneSkillItemGO = gohelper.cloneInPlace(skillItemGO)
 
-		gohelper.setActive(iter_1_1, false)
-		table.insert(arg_1_0._cloneItemGOs, var_1_2)
-		arg_1_0:_hideEffect(var_1_2)
+		gohelper.setActive(skillItemGO, false)
+		table.insert(self._cloneItemGOs, cloneSkillItemGO)
+		self:_hideEffect(cloneSkillItemGO)
 
-		local var_1_3 = var_1_2:GetComponentsInChildren(gohelper.Type_Image, false)
-		local var_1_4 = {}
+		local imgList = cloneSkillItemGO:GetComponentsInChildren(gohelper.Type_Image, false)
+		local imageGoList = {}
 
-		for iter_1_2 = 0, var_1_3.Length - 1 do
-			local var_1_5 = var_1_3[iter_1_2]
+		for i = 0, imgList.Length - 1 do
+			local img = imgList[i]
 
-			var_1_5.color.a = 1
-			var_1_5.enabled = false
+			img.color.a = 1
+			img.enabled = false
 
-			if var_1_5.material == var_1_5.defaultMaterial then
-				var_1_5.material = var_1_1
+			if img.material == img.defaultMaterial then
+				img.material = uiEffectMat
 
-				table.insert(var_1_4, var_1_5)
+				table.insert(imageGoList, img)
 			end
 		end
 
-		local var_1_6 = var_1_2:GetComponentsInChildren(gohelper.Type_TextMesh, false)
+		local textList = cloneSkillItemGO:GetComponentsInChildren(gohelper.Type_TextMesh, false)
 
-		for iter_1_3 = 0, var_1_6.Length - 1 do
-			local var_1_7 = var_1_6[iter_1_3]
+		for i = 0, textList.Length - 1 do
+			local text = textList[i]
 
-			table.insert(arg_1_0._txtList, var_1_7)
+			table.insert(self._txtList, text)
 		end
 
-		local var_1_8 = var_1_2:GetComponentsInChildren(gohelper.Type_Text, false)
+		textList = cloneSkillItemGO:GetComponentsInChildren(gohelper.Type_Text, false)
 
-		for iter_1_4 = 0, var_1_8.Length - 1 do
-			local var_1_9 = var_1_8[iter_1_4]
+		for i = 0, textList.Length - 1 do
+			local text = textList[i]
 
-			table.insert(arg_1_0._txtList, var_1_9)
+			table.insert(self._txtList, text)
 		end
 
-		local var_1_10 = arg_1_0:_setupMesh(var_1_4, var_1_0)
+		local meshGO = self:_setupMesh(imageGoList, uiMeshPrefab)
 
-		table.insert(arg_1_0._meshGOs, var_1_10)
+		table.insert(self._meshGOs, meshGO)
 
-		local var_1_11 = var_1_10:GetComponentsInChildren(typeof(UnityEngine.Renderer), false)
+		local meshRenderList = meshGO:GetComponentsInChildren(typeof(UnityEngine.Renderer), false)
 
-		for iter_1_5 = 0, var_1_11.Length - 1 do
-			local var_1_12 = var_1_11[iter_1_5].material
+		for i = 0, meshRenderList.Length - 1 do
+			local mat = meshRenderList[i].material
 
-			table.insert(arg_1_0._mats, var_1_12)
-			var_1_12:EnableKeyword(var_0_5)
-			var_1_12:SetFloat(var_0_6, 1)
+			table.insert(self._mats, mat)
+			mat:EnableKeyword(KeyWorkVariant)
+			mat:SetFloat(KeyWork, 1)
 		end
 	end
 
-	arg_1_0._flow = FlowSequence.New()
+	self._flow = FlowSequence.New()
 
-	arg_1_0._flow:addWork(TweenWork.New({
+	self._flow:addWork(TweenWork.New({
 		from = 0,
 		type = "DOTweenFloat",
 		to = 1,
-		t = arg_1_0._dt * 30,
-		frameCb = arg_1_0._tweenFrameFunc,
-		cbObj = arg_1_0
+		t = self._dt * 30,
+		frameCb = self._tweenFrameFunc,
+		cbObj = self
 	}))
-	arg_1_0._flow:registerDoneListener(arg_1_0._onWorkDone, arg_1_0)
-	arg_1_0._flow:start()
+	self._flow:registerDoneListener(self._onWorkDone, self)
+	self._flow:start()
 end
 
-function var_0_0._tweenFrameFunc(arg_2_0, arg_2_1)
-	if arg_2_0._txtList then
-		for iter_2_0, iter_2_1 in ipairs(arg_2_0._txtList) do
-			ZProj.UGUIHelper.SetColorAlpha(iter_2_1, math.max(1 - arg_2_1 * 2, 0))
+function FightCardDissolveEffect:_tweenFrameFunc(value)
+	if self._txtList then
+		for _, txt in ipairs(self._txtList) do
+			ZProj.UGUIHelper.SetColorAlpha(txt, math.max(1 - value * 2, 0))
 		end
 	end
 
-	if arg_2_0._mats then
-		for iter_2_2, iter_2_3 in ipairs(arg_2_0._mats) do
-			local var_2_0 = var_0_7[1]
-			local var_2_1 = var_0_7[2]
-			local var_2_2 = var_0_7[3]
-			local var_2_3 = var_0_7[4]
-			local var_2_4 = MaterialUtil.getLerpValue(var_2_1, var_2_2, var_2_3, arg_2_1)
+	if self._mats then
+		for _, mat in ipairs(self._mats) do
+			local propName = DissolveParam[1]
+			local propType = DissolveParam[2]
+			local startValue = DissolveParam[3]
+			local endValue = DissolveParam[4]
+			local frameValue = MaterialUtil.getLerpValue(propType, startValue, endValue, value)
 
-			MaterialUtil.setPropValue(iter_2_3, var_2_0, var_2_1, var_2_4)
-		end
-	end
-end
-
-function var_0_0._setupMesh(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = CameraMgr.instance:getUnitCamera()
-	local var_3_1 = CameraMgr.instance:getUICamera()
-	local var_3_2 = CameraMgr.instance:getCameraTraceGO().transform.rotation * Quaternion.Euler(0, 180, 0)
-	local var_3_3 = arg_3_0:getCameraDistance()
-	local var_3_4 = var_3_0.fieldOfView * Mathf.Deg2Rad
-	local var_3_5 = Mathf.Tan(var_3_4 * 0.5) * var_3_3 / UnityEngine.Screen.height
-	local var_3_6, var_3_7 = arg_3_0:getScaleFactor()
-	local var_3_8 = UnityEngine.GameObject.New()
-
-	var_3_8.name = var_0_3
-	var_3_8.transform.parent = var_3_0.transform
-
-	for iter_3_0 = 1, #arg_3_1 do
-		local var_3_9 = arg_3_1[iter_3_0]
-		local var_3_10 = var_3_9.transform
-		local var_3_11 = UnityEngine.GameObject.Instantiate(var_3_9.material)
-
-		table.insert(arg_3_0._cloneMats, var_3_11)
-
-		var_3_11.name = var_3_9.material.name .. "_clone"
-
-		local var_3_12 = var_3_9.sprite
-		local var_3_13 = var_3_12 and var_3_12.texture
-
-		if not gohelper.isNil(var_3_13) then
-			var_3_11:SetTexture(var_0_4, var_3_9.sprite.texture)
-
-			local var_3_14 = Vector2.New(var_3_9.sprite.texture.width, var_3_9.sprite.texture.height)
-			local var_3_15 = var_3_9.sprite.textureRect.min
-			local var_3_16 = var_3_9.sprite.textureRect.size
-			local var_3_17 = Vector2.New(var_3_16.x / var_3_14.x, var_3_16.y / var_3_14.y)
-			local var_3_18 = Vector2.New(var_3_15.x / var_3_14.x, var_3_15.y / var_3_14.y)
-
-			var_3_11:SetTextureOffset(var_0_4, var_3_18)
-			var_3_11:SetTextureScale(var_0_4, var_3_17)
-
-			local var_3_19 = gohelper.clone(arg_3_2, var_3_8, var_3_9.name)
-			local var_3_20 = var_3_19.transform
-
-			gohelper.setLayer(var_3_19, UnityLayer.Unit, true)
-
-			local var_3_21 = var_3_19:GetComponent(typeof(UnityEngine.Renderer))
-
-			var_3_21.sortingOrder = var_3_21.sortingOrder + iter_3_0
-			var_3_21.sharedMaterial = var_3_11
-
-			table.insert(arg_3_0._renderers, var_3_21)
-
-			local var_3_22 = var_3_1:WorldToScreenPoint(var_3_10.position)
-			local var_3_23 = (UnityEngine.Screen.width - var_3_22.x * 2) * var_3_5
-			local var_3_24 = (UnityEngine.Screen.height - var_3_22.y * 2) * var_3_5
-			local var_3_25 = var_3_6 * var_3_10.sizeDelta.x * (arg_3_0.context.dissolveScale or 1)
-			local var_3_26 = var_3_7 * var_3_10.sizeDelta.y * (arg_3_0.context.dissolveScale or 1)
-			local var_3_27 = Vector3.New(-var_3_23, -var_3_24, var_3_3) * 0.5
-
-			var_3_20.localScale = Vector3.New(var_3_25, var_3_26, 1)
-			var_3_20.rotation = var_3_2
-			var_3_20.position = var_3_0.transform:TransformPoint(var_3_27)
-		end
-	end
-
-	return var_3_8
-end
-
-function var_0_0.getScaleFactor(arg_4_0)
-	if arg_4_0.wRate then
-		return arg_4_0.wRate, arg_4_0.hRate
-	end
-
-	local var_4_0 = CameraMgr.instance:getUnitCamera()
-	local var_4_1 = arg_4_0:getCameraDistance()
-	local var_4_2 = ViewMgr.instance:getUIRoot():GetComponent(gohelper.Type_RectTransform)
-	local var_4_3 = recthelper.getWidth(var_4_2)
-	local var_4_4 = recthelper.getHeight(var_4_2)
-	local var_4_5 = var_4_3 / var_4_4
-	local var_4_6 = var_4_0.fieldOfView * Mathf.Deg2Rad * 0.5
-	local var_4_7 = Mathf.Tan(var_4_6) * var_4_1
-
-	arg_4_0.wRate, arg_4_0.hRate = var_4_5 * var_4_7 / var_4_3, var_4_7 / var_4_4
-
-	return arg_4_0.wRate, arg_4_0.hRate
-end
-
-function var_0_0.onStop(arg_5_0)
-	var_0_0.super.onStop(arg_5_0)
-
-	if arg_5_0._flow then
-		arg_5_0._flow:unregisterDoneListener(arg_5_0._onWorkDone, arg_5_0)
-
-		if arg_5_0._flow.status == WorkStatus.Running then
-			arg_5_0._flow:stop()
+			MaterialUtil.setPropValue(mat, propName, propType, frameValue)
 		end
 	end
 end
 
-function var_0_0._onWorkDone(arg_6_0)
-	arg_6_0:onDone(true)
+function FightCardDissolveEffect:_setupMesh(imgList, uiMeshPrefab)
+	local unitCamera = CameraMgr.instance:getUnitCamera()
+	local uiCamera = CameraMgr.instance:getUICamera()
+	local unitObjRotation = CameraMgr.instance:getCameraTraceGO().transform.rotation * Quaternion.Euler(0, 180, 0)
+	local cameraDistance = self:getCameraDistance()
+	local fovInRads = unitCamera.fieldOfView * Mathf.Deg2Rad
+	local horizontalFov = Mathf.Tan(fovInRads * 0.5) * cameraDistance / UnityEngine.Screen.height
+	local scaleFactorX, scaleFactorY = self:getScaleFactor()
+	local meshGO = UnityEngine.GameObject.New()
+
+	meshGO.name = MeshGOName
+	meshGO.transform.parent = unitCamera.transform
+
+	for i = 1, #imgList do
+		local img = imgList[i]
+		local imgTr = img.transform
+		local cloneMat = UnityEngine.GameObject.Instantiate(img.material)
+
+		table.insert(self._cloneMats, cloneMat)
+
+		cloneMat.name = img.material.name .. "_clone"
+
+		local sprite = img.sprite
+		local texture = sprite and sprite.texture
+
+		if not gohelper.isNil(texture) then
+			cloneMat:SetTexture(MainTex_ID, img.sprite.texture)
+
+			local totalSize = Vector2.New(img.sprite.texture.width, img.sprite.texture.height)
+			local pos = img.sprite.textureRect.min
+			local scale = img.sprite.textureRect.size
+			local tilling = Vector2.New(scale.x / totalSize.x, scale.y / totalSize.y)
+			local offset = Vector2.New(pos.x / totalSize.x, pos.y / totalSize.y)
+
+			cloneMat:SetTextureOffset(MainTex_ID, offset)
+			cloneMat:SetTextureScale(MainTex_ID, tilling)
+
+			local imgMeshGO = gohelper.clone(uiMeshPrefab, meshGO, img.name)
+			local imgMeshTr = imgMeshGO.transform
+
+			gohelper.setLayer(imgMeshGO, UnityLayer.Unit, true)
+
+			local renderer = imgMeshGO:GetComponent(typeof(UnityEngine.Renderer))
+
+			renderer.sortingOrder = renderer.sortingOrder + i
+			renderer.sharedMaterial = cloneMat
+
+			table.insert(self._renderers, renderer)
+
+			local pos = uiCamera:WorldToScreenPoint(imgTr.position)
+			local posX = (UnityEngine.Screen.width - pos.x * 2) * horizontalFov
+			local posY = (UnityEngine.Screen.height - pos.y * 2) * horizontalFov
+			local scaX = scaleFactorX * imgTr.sizeDelta.x * (self.context.dissolveScale or 1)
+			local scaY = scaleFactorY * imgTr.sizeDelta.y * (self.context.dissolveScale or 1)
+			local localPosition = Vector3.New(-posX, -posY, cameraDistance) * 0.5
+
+			imgMeshTr.localScale = Vector3.New(scaX, scaY, 1)
+			imgMeshTr.rotation = unitObjRotation
+			imgMeshTr.position = unitCamera.transform:TransformPoint(localPosition)
+		end
+	end
+
+	return meshGO
 end
 
-function var_0_0.clearWork(arg_7_0)
-	if arg_7_0._cloneMats then
-		for iter_7_0 = 1, #arg_7_0._cloneMats do
-			gohelper.destroy(arg_7_0._cloneMats[iter_7_0])
-
-			arg_7_0._cloneMats[iter_7_0] = nil
-		end
+function FightCardDissolveEffect:getScaleFactor()
+	if self.wRate then
+		return self.wRate, self.hRate
 	end
 
-	if arg_7_0._cloneItemGOs then
-		for iter_7_1 = 1, #arg_7_0._cloneItemGOs do
-			gohelper.destroy(arg_7_0._cloneItemGOs[iter_7_1])
+	local unitCamera = CameraMgr.instance:getUnitCamera()
+	local cameraDistance = self:getCameraDistance()
+	local uiRoot = ViewMgr.instance:getUIRoot()
+	local rectTr = uiRoot:GetComponent(gohelper.Type_RectTransform)
+	local curPixelWidth, curPixelHeight = recthelper.getWidth(rectTr), recthelper.getHeight(rectTr)
+	local curRate = curPixelWidth / curPixelHeight
+	local fovInRads = unitCamera.fieldOfView * Mathf.Deg2Rad * 0.5
+	local tan_FovInRads = Mathf.Tan(fovInRads)
+	local unitCameraHeight = tan_FovInRads * cameraDistance
+	local unitCameraWidth = curRate * unitCameraHeight
 
-			arg_7_0._cloneItemGOs[iter_7_1] = nil
-		end
-	end
+	self.wRate, self.hRate = unitCameraWidth / curPixelWidth, unitCameraHeight / curPixelHeight
 
-	if arg_7_0._meshGOs then
-		for iter_7_2 = 1, #arg_7_0._meshGOs do
-			gohelper.destroy(arg_7_0._meshGOs[iter_7_2])
-
-			arg_7_0._meshGOs[iter_7_2] = nil
-		end
-	end
-
-	if arg_7_0._mats then
-		for iter_7_3 = 1, #arg_7_0._mats do
-			arg_7_0._mats[iter_7_3] = nil
-		end
-	end
-
-	if arg_7_0._txtList then
-		for iter_7_4 = 1, #arg_7_0._txtList do
-			arg_7_0._txtList[iter_7_4] = nil
-		end
-	end
-
-	if arg_7_0._renderers then
-		for iter_7_5 = 1, #arg_7_0._renderers do
-			gohelper.destroy(arg_7_0._renderers[iter_7_5].material)
-
-			arg_7_0._renderers[iter_7_5] = nil
-		end
-	end
-
-	if arg_7_0._flow then
-		arg_7_0._flow:unregisterDoneListener(arg_7_0._onWorkDone, arg_7_0)
-		arg_7_0._flow:stop()
-
-		arg_7_0._flow = nil
-	end
-
-	arg_7_0._cloneMats = nil
-	arg_7_0._cloneItemGOs = nil
-	arg_7_0._meshGOs = nil
-	arg_7_0._mats = nil
-	arg_7_0._renderers = nil
+	return self.wRate, self.hRate
 end
 
-function var_0_0.clear()
-	local var_8_0 = CameraMgr.instance:getUnitCameraTrs()
-	local var_8_1
-	local var_8_2 = var_8_0.childCount
+function FightCardDissolveEffect:onStop()
+	FightCardDissolveEffect.super.onStop(self)
 
-	for iter_8_0 = 1, var_8_2 do
-		local var_8_3 = var_8_0:GetChild(iter_8_0 - 1)
+	if self._flow then
+		self._flow:unregisterDoneListener(self._onWorkDone, self)
 
-		if var_8_3.name == var_0_3 then
-			var_8_1 = var_8_1 or {}
-
-			table.insert(var_8_1, var_8_3)
-		end
-	end
-
-	if var_8_1 then
-		for iter_8_1, iter_8_2 in ipairs(var_8_1) do
-			gohelper.destroy(iter_8_2.gameObject)
+		if self._flow.status == WorkStatus.Running then
+			self._flow:stop()
 		end
 	end
 end
 
-function var_0_0.getCameraDistance(arg_9_0)
-	if arg_9_0.cameraDistance then
-		return arg_9_0.cameraDistance
+function FightCardDissolveEffect:_onWorkDone()
+	self:onDone(true)
+end
+
+function FightCardDissolveEffect:clearWork()
+	if self._cloneMats then
+		for i = 1, #self._cloneMats do
+			gohelper.destroy(self._cloneMats[i])
+
+			self._cloneMats[i] = nil
+		end
 	end
 
-	local var_9_0 = CameraMgr.instance:getUnitCamera()
-	local var_9_1 = ViewMgr.instance:getUIRoot()
+	if self._cloneItemGOs then
+		for i = 1, #self._cloneItemGOs do
+			gohelper.destroy(self._cloneItemGOs[i])
 
-	arg_9_0.cameraDistance = math.abs(var_9_0.transform.position.z - var_9_1.transform.position.z)
+			self._cloneItemGOs[i] = nil
+		end
+	end
 
-	return arg_9_0.cameraDistance
+	if self._meshGOs then
+		for i = 1, #self._meshGOs do
+			gohelper.destroy(self._meshGOs[i])
+
+			self._meshGOs[i] = nil
+		end
+	end
+
+	if self._mats then
+		for i = 1, #self._mats do
+			self._mats[i] = nil
+		end
+	end
+
+	if self._txtList then
+		for i = 1, #self._txtList do
+			self._txtList[i] = nil
+		end
+	end
+
+	if self._renderers then
+		for i = 1, #self._renderers do
+			gohelper.destroy(self._renderers[i].material)
+
+			self._renderers[i] = nil
+		end
+	end
+
+	if self._flow then
+		self._flow:unregisterDoneListener(self._onWorkDone, self)
+		self._flow:stop()
+
+		self._flow = nil
+	end
+
+	self._cloneMats = nil
+	self._cloneItemGOs = nil
+	self._meshGOs = nil
+	self._mats = nil
+	self._renderers = nil
 end
 
-function var_0_0._hideEffect(arg_10_0, arg_10_1)
-	gohelper.setActive(gohelper.findChild(arg_10_1, "foranim/lock"), false)
-	gohelper.setActive(gohelper.findChild(arg_10_1, "lock"), false)
-	gohelper.setActive(gohelper.findChild(arg_10_1, "ui_dazhaoka(Clone)"), false)
-	gohelper.setActive(gohelper.findChild(arg_10_1, "foranim/card/ui_dazhaoka(Clone)"), false)
-	gohelper.setActive(gohelper.findChild(arg_10_1, "foranim/card/predisplay"), false)
-	gohelper.setActive(gohelper.findChild(arg_10_1, "vx_balance"), false)
-	gohelper.setActive(gohelper.findChild(arg_10_1, "foranim/card/lv1/#cardeffect"), false)
-	gohelper.setActive(gohelper.findChild(arg_10_1, "foranim/card/lv2/#cardeffect"), false)
-	gohelper.setActive(gohelper.findChild(arg_10_1, "foranim/card/lv3/#cardeffect"), false)
-	gohelper.setActive(gohelper.findChild(arg_10_1, "foranim/card/lv4/#cardeffect"), false)
-	gohelper.setActive(gohelper.findChild(arg_10_1, "cardmask"), false)
-	gohelper.setActive(gohelper.findChild(arg_10_1, "cardAppearEffectRoot"), false)
-	gohelper.setActive(gohelper.findChild(arg_10_1, "lvChangeEffect"), false)
-	gohelper.setActive(gohelper.findChild(arg_10_1, "foranim/cardConvertEffect"), false)
-	gohelper.setActive(gohelper.findChild(arg_10_1, "layout"), false)
-	gohelper.setActive(gohelper.findChild(arg_10_1, "foranim/restrain"), false)
+function FightCardDissolveEffect.clear()
+	local unitCameraTrs = CameraMgr.instance:getUnitCameraTrs()
+	local toRemoveList
+	local childCount = unitCameraTrs.childCount
+
+	for i = 1, childCount do
+		local child = unitCameraTrs:GetChild(i - 1)
+
+		if child.name == MeshGOName then
+			toRemoveList = toRemoveList or {}
+
+			table.insert(toRemoveList, child)
+		end
+	end
+
+	if toRemoveList then
+		for _, child in ipairs(toRemoveList) do
+			gohelper.destroy(child.gameObject)
+		end
+	end
 end
 
-return var_0_0
+function FightCardDissolveEffect:getCameraDistance()
+	if self.cameraDistance then
+		return self.cameraDistance
+	end
+
+	local unitCamera = CameraMgr.instance:getUnitCamera()
+	local uiRoot = ViewMgr.instance:getUIRoot()
+
+	self.cameraDistance = math.abs(unitCamera.transform.position.z - uiRoot.transform.position.z)
+
+	return self.cameraDistance
+end
+
+function FightCardDissolveEffect:_hideEffect(cloneSkillItemGO)
+	gohelper.setActive(gohelper.findChild(cloneSkillItemGO, "foranim/lock"), false)
+	gohelper.setActive(gohelper.findChild(cloneSkillItemGO, "lock"), false)
+	gohelper.setActive(gohelper.findChild(cloneSkillItemGO, "ui_dazhaoka(Clone)"), false)
+	gohelper.setActive(gohelper.findChild(cloneSkillItemGO, "foranim/card/ui_dazhaoka(Clone)"), false)
+	gohelper.setActive(gohelper.findChild(cloneSkillItemGO, "foranim/card/predisplay"), false)
+	gohelper.setActive(gohelper.findChild(cloneSkillItemGO, "vx_balance"), false)
+	gohelper.setActive(gohelper.findChild(cloneSkillItemGO, "foranim/card/lv1/#cardeffect"), false)
+	gohelper.setActive(gohelper.findChild(cloneSkillItemGO, "foranim/card/lv2/#cardeffect"), false)
+	gohelper.setActive(gohelper.findChild(cloneSkillItemGO, "foranim/card/lv3/#cardeffect"), false)
+	gohelper.setActive(gohelper.findChild(cloneSkillItemGO, "foranim/card/lv4/#cardeffect"), false)
+	gohelper.setActive(gohelper.findChild(cloneSkillItemGO, "cardmask"), false)
+	gohelper.setActive(gohelper.findChild(cloneSkillItemGO, "cardAppearEffectRoot"), false)
+	gohelper.setActive(gohelper.findChild(cloneSkillItemGO, "lvChangeEffect"), false)
+	gohelper.setActive(gohelper.findChild(cloneSkillItemGO, "foranim/cardConvertEffect"), false)
+	gohelper.setActive(gohelper.findChild(cloneSkillItemGO, "layout"), false)
+	gohelper.setActive(gohelper.findChild(cloneSkillItemGO, "foranim/restrain"), false)
+end
+
+return FightCardDissolveEffect

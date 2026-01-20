@@ -1,101 +1,107 @@
-﻿module("modules.logic.explore.map.heroanimflow.ExploreHeroFallAnimFlow", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/heroanimflow/ExploreHeroFallAnimFlow.lua
 
-local var_0_0 = class("ExploreHeroFallAnimFlow")
+module("modules.logic.explore.map.heroanimflow.ExploreHeroFallAnimFlow", package.seeall)
 
-function var_0_0.begin(arg_1_0, arg_1_1, arg_1_2)
+local ExploreHeroFallAnimFlow = class("ExploreHeroFallAnimFlow")
+
+function ExploreHeroFallAnimFlow:begin(pos, sourceUnitId)
 	UIBlockMgrExtend.instance.setNeedCircleMv(false)
 	UIBlockMgr.instance:startBlock("ExploreHeroFallAnimFlow")
 	ExploreModel.instance:setHeroControl(false, ExploreEnum.HeroLock.HeroAnim)
 
-	arg_1_0.toPos = arg_1_1
-	arg_1_0.sourceUnitId = arg_1_2
+	self.toPos = pos
+	self.sourceUnitId = sourceUnitId
 
-	local var_1_0 = ExploreController.instance:getMap()
+	local map = ExploreController.instance:getMap()
 
-	var_1_0:setMapStatus(ExploreEnum.MapStatus.Normal)
+	map:setMapStatus(ExploreEnum.MapStatus.Normal)
 
-	for iter_1_0, iter_1_1 in pairs(var_1_0:getAllUnit()) do
-		if iter_1_1:getUnitType() == ExploreEnum.ItemType.Spike then
-			iter_1_1:pauseTriggerSpike()
+	for k, v in pairs(map:getAllUnit()) do
+		if v:getUnitType() == ExploreEnum.ItemType.Spike then
+			v:pauseTriggerSpike()
 		end
 	end
 
-	local var_1_1 = var_1_0:getHero()
+	local hero = map:getHero()
 
-	var_1_1:stopMoving(true)
-	var_1_1:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.Fall)
-	var_1_1:setTrOffset(nil, var_1_1.trans.position + Vector3(0, -0.5, 0), nil, arg_1_0.onHeroFallEnd, arg_1_0)
+	hero:stopMoving(true)
+	hero:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.Fall)
+	hero:setTrOffset(nil, hero.trans.position + Vector3(0, -0.5, 0), nil, self.onHeroFallEnd, self)
 end
 
-function var_0_0.onHeroFallEnd(arg_2_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_2_0.onOpenViewFinish, arg_2_0)
+function ExploreHeroFallAnimFlow:onHeroFallEnd()
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, self.onOpenViewFinish, self)
 	ViewMgr.instance:openView(ViewName.ExploreBlackView)
 end
 
-function var_0_0.onOpenViewFinish(arg_3_0, arg_3_1)
-	if arg_3_1 ~= ViewName.ExploreBlackView then
+function ExploreHeroFallAnimFlow:onOpenViewFinish(viewName)
+	if viewName ~= ViewName.ExploreBlackView then
 		return
 	end
 
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_3_0.onOpenViewFinish, arg_3_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, self.onOpenViewFinish, self)
 
-	local var_3_0 = ExploreController.instance:getMap()
-	local var_3_1 = var_3_0:getHero()
+	local map = ExploreController.instance:getMap()
+	local hero = map:getHero()
 
-	for iter_3_0, iter_3_1 in pairs(var_3_0:getAllUnit()) do
-		if iter_3_1:getUnitType() == ExploreEnum.ItemType.Spike then
-			iter_3_1:beginTriggerSpike()
+	for k, v in pairs(map:getAllUnit()) do
+		if v:getUnitType() == ExploreEnum.ItemType.Spike then
+			v:beginTriggerSpike()
 		end
 	end
 
-	local var_3_2 = var_3_0:getUnit(arg_3_0.sourceUnitId)
+	local sourceUnit = map:getUnit(self.sourceUnitId)
 
-	if var_3_2 then
-		var_3_1.dir = var_3_2.mo.heroDir
+	if sourceUnit then
+		hero.dir = sourceUnit.mo.heroDir
 
-		var_3_1:setRotate(0, var_3_2.mo.heroDir, 0)
+		hero:setRotate(0, sourceUnit.mo.heroDir, 0)
 	end
 
-	arg_3_0.sourceUnitId = nil
-	var_3_1._displayTr.localPosition = Vector3.zero
+	self.sourceUnitId = nil
+	hero._displayTr.localPosition = Vector3.zero
 
-	var_3_1:setTilemapPos(arg_3_0.toPos)
-	var_3_1:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.None)
+	hero:setTilemapPos(self.toPos)
+	hero:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.None)
 
-	arg_3_0.toPos = nil
+	self.toPos = nil
 
-	TaskDispatcher.runDelay(arg_3_0._delayLoadObj, arg_3_0, 0.1)
+	TaskDispatcher.runDelay(self._delayLoadObj, self, 0.1)
 end
 
-function var_0_0._delayLoadObj(arg_4_0)
-	ExploreController.instance:registerCallback(ExploreEvent.SceneObjAllLoadedDone, arg_4_0.onBlackEnd, arg_4_0)
+function ExploreHeroFallAnimFlow:_delayLoadObj()
+	ExploreController.instance:registerCallback(ExploreEvent.SceneObjAllLoadedDone, self.onBlackEnd, self)
 	ExploreController.instance:getMap():markWaitAllSceneObj()
 	ExploreController.instance:getMap():clearUnUseObj()
 end
 
-function var_0_0.onBlackEnd(arg_5_0)
+function ExploreHeroFallAnimFlow:onBlackEnd()
 	ViewMgr.instance:closeView(ViewName.ExploreBlackView)
-	ExploreController.instance:getMap():getHero():setHeroStatus(ExploreAnimEnum.RoleAnimStatus.Entry, true, true)
+
+	local map = ExploreController.instance:getMap()
+	local hero = map:getHero()
+
+	hero:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.Entry, true, true)
 	UIBlockMgrExtend.instance.setNeedCircleMv(true)
 	UIBlockMgr.instance:endBlock("ExploreHeroFallAnimFlow")
-	ExploreController.instance:unregisterCallback(ExploreEvent.SceneObjAllLoadedDone, arg_5_0.onBlackEnd, arg_5_0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.SceneObjAllLoadedDone, self.onBlackEnd, self)
 	ExploreModel.instance:setHeroControl(true, ExploreEnum.HeroLock.Spike)
 end
 
-function var_0_0.clear(arg_6_0)
+function ExploreHeroFallAnimFlow:clear()
 	ViewMgr.instance:closeView(ViewName.ExploreBlackView)
 	UIBlockMgrExtend.instance.setNeedCircleMv(true)
-	TaskDispatcher.cancelTask(arg_6_0._delayLoadObj, arg_6_0)
+	TaskDispatcher.cancelTask(self._delayLoadObj, self)
 	UIBlockMgr.instance:endBlock("ExploreHeroFallAnimFlow")
-	ExploreController.instance:unregisterCallback(ExploreEvent.SceneObjAllLoadedDone, arg_6_0.onBlackEnd, arg_6_0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.SceneObjAllLoadedDone, self.onBlackEnd, self)
 
-	arg_6_0.toPos = nil
-	arg_6_0.sourceUnitId = nil
+	self.toPos = nil
+	self.sourceUnitId = nil
 
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_6_0.onOpenViewFinish, arg_6_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, self.onOpenViewFinish, self)
 	ExploreModel.instance:setHeroControl(true, ExploreEnum.HeroLock.Spike)
 end
 
-var_0_0.instance = var_0_0.New()
+ExploreHeroFallAnimFlow.instance = ExploreHeroFallAnimFlow.New()
 
-return var_0_0
+return ExploreHeroFallAnimFlow

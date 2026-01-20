@@ -1,27 +1,29 @@
-﻿module("modules.logic.fight.mgr.FightCheckCrashMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/mgr/FightCheckCrashMgr.lua
 
-local var_0_0 = class("FightCheckCrashMgr", FightBaseClass)
+module("modules.logic.fight.mgr.FightCheckCrashMgr", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0:com_registFightEvent(FightEvent.OnRoundSequenceStart, arg_1_0._onRoundSequenceStart)
-	arg_1_0:com_registFightEvent(FightEvent.OnRoundSequenceFinish, arg_1_0._onRoundSequenceFinish)
-	arg_1_0:com_registFightEvent(FightEvent.OnRestartStageBefore, arg_1_0._onRestartStageBefore)
-	arg_1_0:com_registFightEvent(FightEvent.FightDialogEnd, arg_1_0._onFightDialogEnd)
-	arg_1_0:com_registFightEvent(FightEvent.StartFightEnd, arg_1_0.onStartFightEnd)
-	arg_1_0:com_registEvent(ViewMgr.instance, ViewEvent.OnCloseView, arg_1_0._onCloseView)
+local FightCheckCrashMgr = class("FightCheckCrashMgr", FightBaseClass)
+
+function FightCheckCrashMgr:onConstructor()
+	self:com_registFightEvent(FightEvent.OnRoundSequenceStart, self._onRoundSequenceStart)
+	self:com_registFightEvent(FightEvent.OnRoundSequenceFinish, self._onRoundSequenceFinish)
+	self:com_registFightEvent(FightEvent.OnRestartStageBefore, self._onRestartStageBefore)
+	self:com_registFightEvent(FightEvent.FightDialogEnd, self._onFightDialogEnd)
+	self:com_registFightEvent(FightEvent.StartFightEnd, self.onStartFightEnd)
+	self:com_registEvent(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView)
 end
 
-function var_0_0._onFightDialogEnd(arg_2_0)
-	arg_2_0:clearTab()
+function FightCheckCrashMgr:_onFightDialogEnd()
+	self:clearTab()
 end
 
-function var_0_0._onCloseView(arg_3_0, arg_3_1)
-	if arg_3_1 == ViewName.StoryView then
-		arg_3_0:clearTab()
+function FightCheckCrashMgr:_onCloseView(viewName)
+	if viewName == ViewName.StoryView then
+		self:clearTab()
 	end
 end
 
-function var_0_0.checkFunc(arg_4_0)
+function FightCheckCrashMgr:checkFunc()
 	if FightViewDialog.playingDialog then
 		return
 	end
@@ -30,74 +32,74 @@ function var_0_0.checkFunc(arg_4_0)
 		return
 	end
 
-	local var_4_0 = true
+	local same = true
 
-	arg_4_0.hpDic = arg_4_0.hpDic or {}
-	arg_4_0.exPointDic = arg_4_0.exPointDic or {}
-	arg_4_0.buffCount = arg_4_0.buffCount or {}
+	self.hpDic = self.hpDic or {}
+	self.exPointDic = self.exPointDic or {}
+	self.buffCount = self.buffCount or {}
 
-	local var_4_1 = FightDataHelper.entityMgr.entityDataDic
+	local entityDataDic = FightDataHelper.entityMgr.entityDataDic
 
-	for iter_4_0, iter_4_1 in pairs(var_4_1) do
-		local var_4_2 = iter_4_1.currentHp
+	for entityId, entityData in pairs(entityDataDic) do
+		local curHp = entityData.currentHp
 
-		if arg_4_0.hpDic[iter_4_0] ~= var_4_2 then
-			var_4_0 = false
-			arg_4_0.hpDic[iter_4_0] = var_4_2
+		if self.hpDic[entityId] ~= curHp then
+			same = false
+			self.hpDic[entityId] = curHp
 		end
 
-		local var_4_3 = iter_4_1:getExPoint()
+		local curExpoint = entityData:getExPoint()
 
-		if arg_4_0.exPointDic[iter_4_0] ~= var_4_3 then
-			var_4_0 = false
-			arg_4_0.exPointDic[iter_4_0] = var_4_3
+		if self.exPointDic[entityId] ~= curExpoint then
+			same = false
+			self.exPointDic[entityId] = curExpoint
 		end
 
-		local var_4_4 = iter_4_1:getBuffList()
-		local var_4_5 = var_4_4 and #var_4_4 or 0
+		local buffList = entityData:getBuffList()
+		local curBuffCount = buffList and #buffList or 0
 
-		if arg_4_0.buffCount[iter_4_0] ~= var_4_5 then
-			var_4_0 = false
-			arg_4_0.buffCount[iter_4_0] = var_4_5
+		if self.buffCount[entityId] ~= curBuffCount then
+			same = false
+			self.buffCount[entityId] = curBuffCount
 		end
 	end
 
-	if var_4_0 then
+	if same then
 		logError("场上角色数据一分钟没有变化了,可能卡住了")
 		FightMsgMgr.sendMsg(FightMsgId.MaybeCrashed)
-		arg_4_0:releaseTimer()
+		self:releaseTimer()
 	end
 end
 
-function var_0_0._onRoundSequenceStart(arg_5_0)
-	arg_5_0:com_registSingleRepeatTimer(arg_5_0.checkFunc, 60, -1)
+function FightCheckCrashMgr:_onRoundSequenceStart()
+	self:com_registSingleRepeatTimer(self.checkFunc, 60, -1)
 end
 
-function var_0_0._onRoundSequenceFinish(arg_6_0)
-	arg_6_0:com_releaseSingleTimer(arg_6_0.checkFunc)
+function FightCheckCrashMgr:_onRoundSequenceFinish()
+	self:com_releaseSingleTimer(self.checkFunc)
 end
 
-function var_0_0._onRestartStageBefore(arg_7_0)
-	arg_7_0:com_releaseSingleTimer(arg_7_0.checkFunc)
+function FightCheckCrashMgr:_onRestartStageBefore()
+	self:com_releaseSingleTimer(self.checkFunc)
 end
 
-function var_0_0.releaseTimer(arg_8_0)
-	arg_8_0:com_releaseSingleTimer(arg_8_0.checkFunc)
-	arg_8_0:clearTab()
+function FightCheckCrashMgr:releaseTimer()
+	self:com_releaseSingleTimer(self.checkFunc)
+	self:clearTab()
 end
 
-function var_0_0.onStartFightEnd(arg_9_0)
-	arg_9_0:releaseTimer()
+function FightCheckCrashMgr:onStartFightEnd()
+	self:releaseTimer()
 end
 
-function var_0_0.clearTab(arg_10_0)
-	arg_10_0.hpDic = nil
-	arg_10_0.exPointDic = nil
-	arg_10_0.buffCount = nil
+function FightCheckCrashMgr:clearTab()
+	self.hpDic = nil
+	self.exPointDic = nil
+	self.buffCount = nil
 end
 
-function var_0_0.onDestructor(arg_11_0)
+function FightCheckCrashMgr:onDestructor()
 	return
 end
 
-return var_0_0
+return FightCheckCrashMgr

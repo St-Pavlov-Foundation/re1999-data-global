@@ -1,22 +1,24 @@
-﻿module("modules.logic.survival.controller.work.step.SurvivalGameTimeUpdateWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/step/SurvivalGameTimeUpdateWork.lua
 
-local var_0_0 = class("SurvivalGameTimeUpdateWork", SurvivalStepBaseWork)
+module("modules.logic.survival.controller.work.step.SurvivalGameTimeUpdateWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = SurvivalMapModel.instance:getSceneMo()
+local SurvivalGameTimeUpdateWork = class("SurvivalGameTimeUpdateWork", SurvivalStepBaseWork)
 
-	var_1_0.gameTime = arg_1_0._stepMo.paramInt[1] or 0
-	var_1_0.currMaxGameTime = arg_1_0._stepMo.paramInt[2] or 0
-	var_1_0.addTime = var_1_0.currMaxGameTime - tonumber((SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.TotalTime)))
+function SurvivalGameTimeUpdateWork:onStart(context)
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
 
-	local var_1_1 = arg_1_0._stepMo.paramInt[3] or SurvivalEnum.GameTimeUpdateReason.Normal
+	sceneMo.gameTime = self._stepMo.paramInt[1] or 0
+	sceneMo.currMaxGameTime = self._stepMo.paramInt[2] or 0
+	sceneMo.addTime = sceneMo.currMaxGameTime - tonumber((SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.TotalTime)))
 
-	SurvivalController.instance:dispatchEvent(SurvivalEvent.OnMapGameTimeUpdate, var_1_1)
-	arg_1_0:onDone(true)
+	local reason = self._stepMo.paramInt[3] or SurvivalEnum.GameTimeUpdateReason.Normal
+
+	SurvivalController.instance:dispatchEvent(SurvivalEvent.OnMapGameTimeUpdate, reason)
+	self:onDone(true)
 end
 
-function var_0_0.getRunOrder(arg_2_0, arg_2_1, arg_2_2)
+function SurvivalGameTimeUpdateWork:getRunOrder(params, flow)
 	return SurvivalEnum.StepRunOrder.Before
 end
 
-return var_0_0
+return SurvivalGameTimeUpdateWork

@@ -1,4 +1,6 @@
-﻿return {
+﻿-- chunkname: @modules/configs/sudoku/lua_sudoku_1001.lua
+
+return {
 	{
 		7,
 		3,

@@ -1,8 +1,10 @@
-﻿module("modules.logic.fight.view.FightViewDialog", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightViewDialog.lua
 
-local var_0_0 = class("FightViewDialog", BaseView)
+module("modules.logic.fight.view.FightViewDialog", package.seeall)
 
-var_0_0.Type = {
+local FightViewDialog = class("FightViewDialog", BaseView)
+
+FightViewDialog.Type = {
 	BeforeSkill = 10,
 	MonsterSpawn = 1,
 	MonsterDieP = 16,
@@ -44,213 +46,213 @@ var_0_0.Type = {
 	NewHeroSpawn = 3
 }
 
-local var_0_1
+local deadMonsterId
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._godialogcontainer = gohelper.findChild(arg_1_0.viewGO, "root/#go_dialogcontainer")
-	arg_1_0._godialog = gohelper.findChild(arg_1_0.viewGO, "root/#go_dialogcontainer/#go_dialog")
-	arg_1_0._click = gohelper.getClick(arg_1_0._godialogcontainer)
+function FightViewDialog:onInitView()
+	self._godialogcontainer = gohelper.findChild(self.viewGO, "root/#go_dialogcontainer")
+	self._godialog = gohelper.findChild(self.viewGO, "root/#go_dialogcontainer/#go_dialog")
+	self._click = gohelper.getClick(self._godialogcontainer)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._click:AddClickListener(arg_2_0._onClickThis, arg_2_0)
+function FightViewDialog:addEvents()
+	self._click:AddClickListener(self._onClickThis, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._click:RemoveClickListener()
+function FightViewDialog:removeEvents()
+	self._click:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	gohelper.setActive(arg_4_0._godialogcontainer, false)
-	gohelper.setActive(arg_4_0._godialog, false)
-	gohelper.addChild(arg_4_0.viewGO, arg_4_0._godialogcontainer)
+function FightViewDialog:_editableInitView()
+	gohelper.setActive(self._godialogcontainer, false)
+	gohelper.setActive(self._godialog, false)
+	gohelper.addChild(self.viewGO, self._godialogcontainer)
 
-	arg_4_0._dialogItem = MonoHelper.addNoUpdateLuaComOnceToGo(arg_4_0._godialog, FightViewDialogItem, arg_4_0)
-	arg_4_0._toShowConfigList = {}
-	arg_4_0._showedDialogIdDict = {}
-	arg_4_0._showingItemList = {}
+	self._dialogItem = MonoHelper.addNoUpdateLuaComOnceToGo(self._godialog, FightViewDialogItem, self)
+	self._toShowConfigList = {}
+	self._showedDialogIdDict = {}
+	self._showingItemList = {}
 
-	arg_4_0:_initConfig()
+	self:_initConfig()
 
-	arg_4_0._playedDeadEnemyMOList = {}
+	self._playedDeadEnemyMOList = {}
 end
 
-function var_0_0._initConfig(arg_5_0)
-	arg_5_0._dialogChecks = {}
+function FightViewDialog:_initConfig()
+	self._dialogChecks = {}
 
-	local var_5_0 = FightModel.instance:getFightParam()
+	local fightParam = FightModel.instance:getFightParam()
 
-	if not var_5_0 then
+	if not fightParam then
 		return
 	end
 
-	local var_5_1 = var_5_0.episodeId
-	local var_5_2 = var_5_1 and var_5_1 ~= 0 and DungeonModel.instance:hasPassLevel(var_5_1)
-	local var_5_3 = var_5_0.battleId
+	local episodeId = fightParam.episodeId
+	local hasPassLevel = episodeId and episodeId ~= 0 and DungeonModel.instance:hasPassLevel(episodeId)
+	local battleId = fightParam.battleId
 
-	for iter_5_0, iter_5_1 in ipairs(lua_battle_dialog.configList) do
-		if iter_5_1.code == var_5_3 and (not var_5_2 or iter_5_1.canRepeat) then
-			local var_5_4 = string.splitToNumber(iter_5_1.param, "#")
-			local var_5_5 = {
-				type = var_5_4[1],
-				param1 = var_5_4[2],
-				param2 = var_5_4[3],
-				param3 = var_5_4[4],
-				param4 = var_5_4[5],
-				dialogConfig = iter_5_1
-			}
+	for _, dialogConfig in ipairs(lua_battle_dialog.configList) do
+		if dialogConfig.code == battleId and (not hasPassLevel or dialogConfig.canRepeat) then
+			local dialog = string.splitToNumber(dialogConfig.param, "#")
+			local dialogCheck = {}
 
-			table.insert(arg_5_0._dialogChecks, var_5_5)
+			dialogCheck.type = dialog[1]
+			dialogCheck.param1 = dialog[2]
+			dialogCheck.param2 = dialog[3]
+			dialogCheck.param3 = dialog[4]
+			dialogCheck.param4 = dialog[5]
+			dialogCheck.dialogConfig = dialogConfig
+
+			table.insert(self._dialogChecks, dialogCheck)
 		end
 	end
 end
 
-function var_0_0._checkShowDialog(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
-	if arg_6_0:_isReplay() then
+function FightViewDialog:_checkShowDialog(type, param1, param2, checkFun)
+	if self:_isReplay() then
 		return
 	end
 
-	local var_6_0 = 0
+	local showCount = 0
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0._dialogChecks) do
-		local var_6_1 = iter_6_1.dialogConfig
-		local var_6_2 = iter_6_1.type == arg_6_1
-		local var_6_3 = var_6_1.insideRepeat or not arg_6_0._showedDialogIdDict[var_6_1.id]
-		local var_6_4 = var_6_2 and arg_6_4 and arg_6_4(iter_6_1)
-		local var_6_5 = not iter_6_1.param1 or iter_6_1.param1 == arg_6_2
-		local var_6_6 = not iter_6_1.param2 or iter_6_1.param2 == arg_6_3
+	for i, dialogCheck in ipairs(self._dialogChecks) do
+		local dialogConfig = dialogCheck.dialogConfig
+		local isType = dialogCheck.type == type
+		local canRepeat = dialogConfig.insideRepeat or not self._showedDialogIdDict[dialogConfig.id]
+		local checkFunSucc = isType and checkFun and checkFun(dialogCheck)
+		local param1Succ = not dialogCheck.param1 or dialogCheck.param1 == param1
+		local param2Succ = not dialogCheck.param2 or dialogCheck.param2 == param2
 
-		if var_6_2 and var_6_3 and (var_6_4 or var_6_5 and var_6_6) then
-			table.insert(arg_6_0._toShowConfigList, var_6_1)
+		if isType and canRepeat and (checkFunSucc or param1Succ and param2Succ) then
+			table.insert(self._toShowConfigList, dialogConfig)
 
-			arg_6_0._showedDialogIdDict[var_6_1.id] = true
-			var_6_0 = var_6_0 + 1
+			self._showedDialogIdDict[dialogConfig.id] = true
+			showCount = showCount + 1
 		end
 	end
 
-	if var_6_0 <= 0 then
+	if showCount <= 0 then
 		return
 	end
 
-	var_0_0.showFightDialog = true
-	arg_6_0._showingType = arg_6_0._showingType or {}
-	arg_6_0._showingType[arg_6_1] = true
+	FightViewDialog.showFightDialog = true
+	self._showingType = self._showingType or {}
+	self._showingType[type] = true
 
-	if arg_6_0._godialogcontainer.activeInHierarchy then
-		return #arg_6_0._toShowConfigList > 0
+	if self._godialogcontainer.activeInHierarchy then
+		return #self._toShowConfigList > 0
 	else
-		return arg_6_0:_tryShow()
+		return self:_tryShow()
 	end
 end
 
-function var_0_0._playDialogByTrigger(arg_7_0, arg_7_1)
-	table.insert(arg_7_0._toShowConfigList, arg_7_1)
+function FightViewDialog:_playDialogByTrigger(dialogConfig)
+	table.insert(self._toShowConfigList, dialogConfig)
 
-	arg_7_0._showingType = arg_7_0._showingType or {}
-	arg_7_0._showingType[var_0_0.Type.Trigger] = true
+	self._showingType = self._showingType or {}
+	self._showingType[FightViewDialog.Type.Trigger] = true
 
-	return arg_7_0:_tryShow()
+	return self:_tryShow()
 end
 
-function var_0_0._tryShow(arg_8_0)
-	if arg_8_0._audioId then
-		AudioEffectMgr.instance:stopAudio(arg_8_0._audioId)
+function FightViewDialog:_tryShow()
+	if self._audioId then
+		AudioEffectMgr.instance:stopAudio(self._audioId)
 
-		arg_8_0._audioId = nil
+		self._audioId = nil
 	end
 
-	if #arg_8_0._toShowConfigList <= 0 then
+	if #self._toShowConfigList <= 0 then
 		FightModel.instance:updateRTPCSpeed()
 
 		return false
 	end
 
-	gohelper.setActive(arg_8_0._godialogcontainer, true)
+	gohelper.setActive(self._godialogcontainer, true)
 
-	local var_8_0 = arg_8_0._toShowConfigList[1]
+	local dialogConfig = self._toShowConfigList[1]
 
-	table.remove(arg_8_0._toShowConfigList, 1)
+	table.remove(self._toShowConfigList, 1)
 
-	arg_8_0._tempDialogConfig = var_8_0
+	self._tempDialogConfig = dialogConfig
 
-	if var_8_0.delay and var_8_0.delay > 0 then
-		arg_8_0:_addBlock()
-		gohelper.setActive(arg_8_0._godialog, false)
-		TaskDispatcher.runDelay(arg_8_0._playDialogItem, arg_8_0, var_8_0.delay)
+	if dialogConfig.delay and dialogConfig.delay > 0 then
+		self:_addBlock()
+		gohelper.setActive(self._godialog, false)
+		TaskDispatcher.runDelay(self._playDialogItem, self, dialogConfig.delay)
 	else
-		arg_8_0:_playDialogItem()
+		self:_playDialogItem()
 	end
 
-	var_0_0.playingDialog = true
+	FightViewDialog.playingDialog = true
 
-	FightController.instance:dispatchEvent(FightEvent.FightDialogShow, var_8_0)
+	FightController.instance:dispatchEvent(FightEvent.FightDialogShow, dialogConfig)
 
 	return true
 end
 
-function var_0_0._playDialogItem(arg_9_0)
-	arg_9_0:_removeBlock()
-	gohelper.setActive(arg_9_0._godialog, true)
+function FightViewDialog:_playDialogItem()
+	self:_removeBlock()
+	gohelper.setActive(self._godialog, true)
 
-	local var_9_0 = arg_9_0._tempDialogConfig
-	local var_9_1
+	local dialogConfig = self._tempDialogConfig
+	local icon
 
-	if not string.nilorempty(var_9_0.icon) then
-		var_9_1 = ResUrl.getHeadIconSmall(var_9_0.icon)
+	if not string.nilorempty(dialogConfig.icon) then
+		icon = ResUrl.getHeadIconSmall(dialogConfig.icon)
 	end
 
-	arg_9_0._dialogItem:showDialogContent(var_9_1, var_9_0)
+	self._dialogItem:showDialogContent(icon, dialogConfig)
 
-	if var_9_0.audioId and var_9_0.audioId ~= 0 then
-		arg_9_0._audioId = var_9_0.audioId
+	if dialogConfig.audioId and dialogConfig.audioId ~= 0 then
+		self._audioId = dialogConfig.audioId
 
-		FightAudioMgr.instance:playAudio(var_9_0.audioId)
+		FightAudioMgr.instance:playAudio(dialogConfig.audioId)
 		FightModel.instance:resetRTPCSpeedTo1()
 	end
 
-	FightController.instance:dispatchEvent(FightEvent.PlayDialog, var_9_0.id)
+	FightController.instance:dispatchEvent(FightEvent.PlayDialog, dialogConfig.id)
 end
 
-function var_0_0._addBlock(arg_10_0)
-	arg_10_0._hasBlockUI = true
+function FightViewDialog:_addBlock()
+	self._hasBlockUI = true
 
 	UIBlockMgrExtend.setNeedCircleMv(false)
 	UIBlockMgr.instance:startBlock(UIBlockKey.FightDialog)
 end
 
-function var_0_0._removeBlock(arg_11_0)
-	if arg_11_0._hasBlockUI then
-		arg_11_0._hasBlockUI = nil
+function FightViewDialog:_removeBlock()
+	if self._hasBlockUI then
+		self._hasBlockUI = nil
 
 		UIBlockMgrExtend.setNeedCircleMv(true)
 		UIBlockMgr.instance:endBlock(UIBlockKey.FightDialog)
 	end
 end
 
-function var_0_0._onClickThis(arg_12_0)
-	var_0_0.playingDialog = false
+function FightViewDialog:_onClickThis()
+	FightViewDialog.playingDialog = false
 
-	if arg_12_0._tempDialogConfig then
-		FightController.instance:dispatchEvent(FightEvent.AfterPlayDialog, arg_12_0._tempDialogConfig.id)
+	if self._tempDialogConfig then
+		FightController.instance:dispatchEvent(FightEvent.AfterPlayDialog, self._tempDialogConfig.id)
 	end
 
-	if not arg_12_0:_tryShow() then
-		gohelper.setActive(arg_12_0._godialogcontainer, false)
-		gohelper.setActive(arg_12_0._godialog, false)
+	if not self:_tryShow() then
+		gohelper.setActive(self._godialogcontainer, false)
+		gohelper.setActive(self._godialog, false)
 
-		local var_12_0 = tabletool.copy(arg_12_0._showingType)
+		local showTypes = tabletool.copy(self._showingType)
 
-		arg_12_0._showingType = nil
+		self._showingType = nil
 
-		if var_12_0[var_0_0.Type.BeforeSkill] then
+		if showTypes[FightViewDialog.Type.BeforeSkill] then
 			FightController.instance:dispatchEvent(FightEvent.DialogContinueSkill)
 		end
 
-		if var_12_0[var_0_0.Type.Trigger] then
+		if showTypes[FightViewDialog.Type.Trigger] then
 			FightController.instance:dispatchEvent(FightEvent.TriggerDialogEnd)
 		end
 
@@ -258,385 +260,403 @@ function var_0_0._onClickThis(arg_12_0)
 	end
 end
 
-function var_0_0.onOpen(arg_13_0)
-	FightController.instance:registerCallback(FightEvent.OnStartSequenceFinish, arg_13_0._onStartSequenceFinish, arg_13_0)
-	FightController.instance:registerCallback(FightEvent.OnRoundSequenceFinish, arg_13_0._onRoundSequenceFinish, arg_13_0)
-	FightController.instance:registerCallback(FightEvent.OnStartChangeEntity, arg_13_0._onStartChangeEntity, arg_13_0)
-	FightController.instance:registerCallback(FightEvent.BeforeDeadEffect, arg_13_0._beforeDeadEffect1, arg_13_0)
-	FightController.instance:registerCallback(FightEvent.BeforeDeadEffect, arg_13_0._beforeDeadEffect2, arg_13_0)
-	FightController.instance:registerCallback(FightEvent.OnStartFightPlayBornNormal, arg_13_0._onStartFightPlayBornNormal, arg_13_0)
-	FightController.instance:registerCallback(FightEvent.OnSkillPlayStart, arg_13_0._onSkillPlayStart, arg_13_0)
-	FightController.instance:registerCallback(FightEvent.OnInvokeSkill, arg_13_0._onInvokeSkill, arg_13_0)
-	FightController.instance:registerCallback(FightEvent.BeforeSkillDialog, arg_13_0._beforeSkill, arg_13_0)
-	FightController.instance:registerCallback(FightEvent.FightDialog, arg_13_0._onFightDialogCheck, arg_13_0)
-	FightController.instance:registerCallback(FightEvent.OnBuffUpdate, arg_13_0._onBuffUpdate, arg_13_0)
+function FightViewDialog:onOpen()
+	FightController.instance:registerCallback(FightEvent.OnStartSequenceFinish, self._onStartSequenceFinish, self)
+	FightController.instance:registerCallback(FightEvent.OnRoundSequenceFinish, self._onRoundSequenceFinish, self)
+	FightController.instance:registerCallback(FightEvent.OnStartChangeEntity, self._onStartChangeEntity, self)
+	FightController.instance:registerCallback(FightEvent.BeforeDeadEffect, self._beforeDeadEffect1, self)
+	FightController.instance:registerCallback(FightEvent.BeforeDeadEffect, self._beforeDeadEffect2, self)
+	FightController.instance:registerCallback(FightEvent.OnStartFightPlayBornNormal, self._onStartFightPlayBornNormal, self)
+	FightController.instance:registerCallback(FightEvent.OnSkillPlayStart, self._onSkillPlayStart, self)
+	FightController.instance:registerCallback(FightEvent.OnInvokeSkill, self._onInvokeSkill, self)
+	FightController.instance:registerCallback(FightEvent.BeforeSkillDialog, self._beforeSkill, self)
+	FightController.instance:registerCallback(FightEvent.FightDialog, self._onFightDialogCheck, self)
+	FightController.instance:registerCallback(FightEvent.OnBuffUpdate, self._onBuffUpdate, self)
 end
 
-function var_0_0.onClose(arg_14_0)
-	var_0_0.playingDialog = false
+function FightViewDialog:onClose()
+	FightViewDialog.playingDialog = false
 
-	FightController.instance:unregisterCallback(FightEvent.OnStartSequenceFinish, arg_14_0._onStartSequenceFinish, arg_14_0)
-	FightController.instance:unregisterCallback(FightEvent.OnRoundSequenceFinish, arg_14_0._onRoundSequenceFinish, arg_14_0)
-	FightController.instance:unregisterCallback(FightEvent.OnStartChangeEntity, arg_14_0._onStartChangeEntity, arg_14_0)
-	FightController.instance:unregisterCallback(FightEvent.BeforeDeadEffect, arg_14_0._beforeDeadEffect1, arg_14_0)
-	FightController.instance:unregisterCallback(FightEvent.BeforeDeadEffect, arg_14_0._beforeDeadEffect2, arg_14_0)
-	FightController.instance:unregisterCallback(FightEvent.OnStartFightPlayBornNormal, arg_14_0._onStartFightPlayBornNormal, arg_14_0)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayStart, arg_14_0._onSkillPlayStart, arg_14_0)
-	FightController.instance:unregisterCallback(FightEvent.OnInvokeSkill, arg_14_0._onInvokeSkill, arg_14_0)
-	FightController.instance:unregisterCallback(FightEvent.BeforeSkillDialog, arg_14_0._beforeSkill, arg_14_0)
-	FightController.instance:unregisterCallback(FightEvent.FightDialog, arg_14_0._onFightDialogCheck, arg_14_0)
-	FightController.instance:unregisterCallback(FightEvent.OnBuffUpdate, arg_14_0._onBuffUpdate, arg_14_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_14_0._onCloseSpecialView, arg_14_0)
+	FightController.instance:unregisterCallback(FightEvent.OnStartSequenceFinish, self._onStartSequenceFinish, self)
+	FightController.instance:unregisterCallback(FightEvent.OnRoundSequenceFinish, self._onRoundSequenceFinish, self)
+	FightController.instance:unregisterCallback(FightEvent.OnStartChangeEntity, self._onStartChangeEntity, self)
+	FightController.instance:unregisterCallback(FightEvent.BeforeDeadEffect, self._beforeDeadEffect1, self)
+	FightController.instance:unregisterCallback(FightEvent.BeforeDeadEffect, self._beforeDeadEffect2, self)
+	FightController.instance:unregisterCallback(FightEvent.OnStartFightPlayBornNormal, self._onStartFightPlayBornNormal, self)
+	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayStart, self._onSkillPlayStart, self)
+	FightController.instance:unregisterCallback(FightEvent.OnInvokeSkill, self._onInvokeSkill, self)
+	FightController.instance:unregisterCallback(FightEvent.BeforeSkillDialog, self._beforeSkill, self)
+	FightController.instance:unregisterCallback(FightEvent.FightDialog, self._onFightDialogCheck, self)
+	FightController.instance:unregisterCallback(FightEvent.OnBuffUpdate, self._onBuffUpdate, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, self._onCloseSpecialView, self)
 end
 
-function var_0_0._onBuffUpdate(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5)
-	if arg_15_2 == FightEnum.EffectType.BUFFADD then
-		arg_15_0:_checkShowDialog(var_0_0.Type.BuffAdd, arg_15_3)
+function FightViewDialog:_onBuffUpdate(entityId, effectType, buffId, buffUid, configEffect)
+	if effectType == FightEnum.EffectType.BUFFADD then
+		self:_checkShowDialog(FightViewDialog.Type.BuffAdd, buffId)
 	end
 end
 
-function var_0_0._isReplay(arg_16_0)
+function FightViewDialog:_isReplay()
 	return FightDataHelper.stateMgr.isReplay
 end
 
-function var_0_0._onStartSequenceFinish(arg_17_0)
+function FightViewDialog:_onStartSequenceFinish()
 	return
 end
 
-function var_0_0._onCloseSpecialView(arg_18_0, arg_18_1)
+function FightViewDialog:_onCloseSpecialView(viewName)
 	return
 end
 
-function var_0_0._onRoundSequenceFinish(arg_19_0)
+function FightViewDialog:_onRoundSequenceFinish()
 	return
 end
 
-function var_0_0._onStartChangeEntity(arg_20_0, arg_20_1)
-	if not arg_20_1 then
+function FightViewDialog:_onStartChangeEntity(entityMO)
+	if not entityMO then
 		return
 	end
 
-	local var_20_0 = FightModel.instance:getFightParam().mySideSubUids
+	local fightParam = FightModel.instance:getFightParam()
+	local mySideSubUids = fightParam.mySideSubUids
 
-	if not var_20_0 then
+	if not mySideSubUids then
 		return
 	end
 
-	for iter_20_0, iter_20_1 in ipairs(var_20_0) do
-		if iter_20_1 == arg_20_1.uid then
-			arg_20_0:_checkShowDialog(var_0_0.Type.NewHeroSpawn, iter_20_0)
+	for index, subUid in ipairs(mySideSubUids) do
+		if subUid == entityMO.uid then
+			self:_checkShowDialog(FightViewDialog.Type.NewHeroSpawn, index)
 
 			return
 		end
 	end
 end
 
-function var_0_0._beforeDeadEffect1(arg_21_0, arg_21_1)
-	local var_21_0 = FightDataHelper.entityMgr:getById(arg_21_1)
+function FightViewDialog:_beforeDeadEffect1(entityId)
+	local entityMO = FightDataHelper.entityMgr:getById(entityId)
 
-	if not var_21_0 then
+	if not entityMO then
 		return
 	end
 
-	local var_21_1 = FightModel.instance:getFightParam().monsterGroupIds
-	local var_21_2 = FightModel.instance:getCurMonsterGroupId()
+	local fightParam = FightModel.instance:getFightParam()
+	local monsterGroupIds = fightParam.monsterGroupIds
+	local curMonsterGroupId = FightModel.instance:getCurMonsterGroupId()
 
-	for iter_21_0, iter_21_1 in ipairs(var_21_1) do
-		if iter_21_1 == var_21_2 then
+	for i, monsterGroupId in ipairs(monsterGroupIds) do
+		if monsterGroupId == curMonsterGroupId then
 			break
 		end
 
-		local var_21_3 = lua_monster_group.configDict[iter_21_1]
-		local var_21_4 = FightStrUtil.instance:getSplitToNumberCache(var_21_3.monster, "#")
+		local monsterGroupConfig = lua_monster_group.configDict[monsterGroupId]
+		local monsterList = FightStrUtil.instance:getSplitToNumberCache(monsterGroupConfig.monster, "#")
 
-		for iter_21_2, iter_21_3 in ipairs(var_21_4) do
-			if iter_21_3 == tonumber(var_21_0.modelId) then
+		for _, monsterId in ipairs(monsterList) do
+			if monsterId == tonumber(entityMO.modelId) then
 				return
 			end
 		end
 
-		if not string.nilorempty(var_21_3.spMonster) then
-			local var_21_5 = FightStrUtil.instance:getSplitToNumberCache(var_21_3.spMonster, "#")
+		if not string.nilorempty(monsterGroupConfig.spMonster) then
+			local spMonsterList = FightStrUtil.instance:getSplitToNumberCache(monsterGroupConfig.spMonster, "#")
 
-			for iter_21_4, iter_21_5 in ipairs(var_21_5) do
-				if iter_21_5 == tonumber(var_21_0.modelId) then
+			for _, monsterId in ipairs(spMonsterList) do
+				if monsterId == tonumber(entityMO.modelId) then
 					return
 				end
 			end
 		end
 	end
 
-	local var_21_6 = {}
+	local deadEnemyMOList = {}
 
-	for iter_21_6, iter_21_7 in ipairs(FightDataHelper.entityMgr:getEnemyNormalList()) do
-		if iter_21_7:isStatusDead() then
-			table.insert(var_21_6, iter_21_7)
+	for i, v in ipairs(FightDataHelper.entityMgr:getEnemyNormalList()) do
+		if v:isStatusDead() then
+			table.insert(deadEnemyMOList, v)
 		end
 	end
 
-	local var_21_7 = {}
+	local allEnemyMOList = {}
 
-	for iter_21_8, iter_21_9 in ipairs(var_21_6) do
-		table.insert(var_21_7, iter_21_9)
+	for i, deadEnemyMO in ipairs(deadEnemyMOList) do
+		table.insert(allEnemyMOList, deadEnemyMO)
 	end
 
-	for iter_21_10, iter_21_11 in ipairs(arg_21_0._playedDeadEnemyMOList) do
-		table.insert(var_21_7, iter_21_11)
+	for i, enemyMO in ipairs(self._playedDeadEnemyMOList) do
+		table.insert(allEnemyMOList, enemyMO)
 	end
 
-	for iter_21_12, iter_21_13 in ipairs(var_21_7) do
-		if iter_21_13.uid ~= var_21_0.uid and iter_21_13.modelId == var_21_0.modelId then
+	for _, enemyMO in ipairs(allEnemyMOList) do
+		if enemyMO.uid ~= entityMO.uid and enemyMO.modelId == entityMO.modelId then
 			return
 		end
 
-		if iter_21_13.uid == var_21_0.uid then
+		if enemyMO.uid == entityMO.uid then
 			break
 		end
 	end
 
-	table.insert(arg_21_0._playedDeadEnemyMOList, var_21_0)
-	arg_21_0:_checkShowDialog(var_0_0.Type.MonsterDie, tonumber(var_21_0.modelId))
+	table.insert(self._playedDeadEnemyMOList, entityMO)
+	self:_checkShowDialog(FightViewDialog.Type.MonsterDie, tonumber(entityMO.modelId))
 end
 
-function var_0_0._beforeDeadEffect2(arg_22_0, arg_22_1)
-	local var_22_0 = FightDataHelper.entityMgr:getById(arg_22_1)
+function FightViewDialog:_beforeDeadEffect2(entityId)
+	local entityMO = FightDataHelper.entityMgr:getById(entityId)
 
-	if not var_22_0 then
+	if not entityMO then
 		return
 	end
 
-	if not var_22_0:isCharacter() then
+	if not entityMO:isCharacter() then
 		return
 	end
 
-	arg_22_0:_checkShowDialog(var_0_0.Type.CharacterDie)
+	self:_checkShowDialog(FightViewDialog.Type.CharacterDie)
 end
 
-function var_0_0._onStartFightPlayBornNormal(arg_23_0, arg_23_1)
+function FightViewDialog:_onStartFightPlayBornNormal(entityId)
 	if SkillEditorMgr and SkillEditorMgr.instance.inEditMode then
 		return
 	end
 
-	local var_23_0 = FightDataHelper.entityMgr:getById(arg_23_1)
+	local entityMO = FightDataHelper.entityMgr:getById(entityId)
 
-	if not var_23_0 then
+	if not entityMO then
 		return
 	end
 
-	local var_23_1 = FightModel.instance:getFightParam().monsterGroupIds
-	local var_23_2 = FightModel.instance:getCurMonsterGroupId()
+	local fightParam = FightModel.instance:getFightParam()
+	local monsterGroupIds = fightParam.monsterGroupIds
+	local curMonsterGroupId = FightModel.instance:getCurMonsterGroupId()
 
-	for iter_23_0, iter_23_1 in ipairs(var_23_1) do
-		if iter_23_1 == var_23_2 then
+	for i, monsterGroupId in ipairs(monsterGroupIds) do
+		if monsterGroupId == curMonsterGroupId then
 			break
 		end
 
-		local var_23_3 = lua_monster_group.configDict[iter_23_1]
-		local var_23_4 = FightStrUtil.instance:getSplitToNumberCache(var_23_3.monster, "#")
+		local monsterGroupConfig = lua_monster_group.configDict[monsterGroupId]
+		local monsterList = FightStrUtil.instance:getSplitToNumberCache(monsterGroupConfig.monster, "#")
 
-		for iter_23_2, iter_23_3 in ipairs(var_23_4) do
-			if iter_23_3 == tonumber(var_23_0.modelId) then
+		for _, monsterId in ipairs(monsterList) do
+			if monsterId == tonumber(entityMO.modelId) then
 				return
 			end
 		end
 
-		if not string.nilorempty(var_23_3.spMonster) then
-			local var_23_5 = FightStrUtil.instance:getSplitToNumberCache(var_23_3.spMonster, "#")
+		if not string.nilorempty(monsterGroupConfig.spMonster) then
+			local spMonsterList = FightStrUtil.instance:getSplitToNumberCache(monsterGroupConfig.spMonster, "#")
 
-			for iter_23_4, iter_23_5 in ipairs(var_23_5) do
-				if iter_23_5 == tonumber(var_23_0.modelId) then
+			for _, monsterId in ipairs(spMonsterList) do
+				if monsterId == tonumber(entityMO.modelId) then
 					return
 				end
 			end
 		end
 	end
 
-	local var_23_6 = {}
-	local var_23_7 = FightDataHelper.entityMgr:getNormalList(FightEnum.EntitySide.EnemySide, nil, true)
+	local allEnemyMOList = {}
+	local enemyMOList = FightDataHelper.entityMgr:getNormalList(FightEnum.EntitySide.EnemySide, nil, true)
 
-	for iter_23_6, iter_23_7 in ipairs(var_23_7) do
-		table.insert(var_23_6, iter_23_7)
+	for i, enemyMO in ipairs(enemyMOList) do
+		table.insert(allEnemyMOList, enemyMO)
 	end
 
-	for iter_23_8, iter_23_9 in ipairs(var_23_6) do
-		if iter_23_9.uid ~= var_23_0.uid and iter_23_9.modelId == var_23_0.modelId then
+	for _, enemyMO in ipairs(allEnemyMOList) do
+		if enemyMO.uid ~= entityMO.uid and enemyMO.modelId == entityMO.modelId then
 			return
 		end
 
-		if iter_23_9.uid == var_23_0.uid then
+		if enemyMO.uid == entityMO.uid then
 			break
 		end
 	end
 
-	arg_23_0:_checkShowDialog(var_0_0.Type.MonsterSpawn, tonumber(var_23_0.modelId))
+	self:_checkShowDialog(FightViewDialog.Type.MonsterSpawn, tonumber(entityMO.modelId))
 end
 
-function var_0_0.onDestroyView(arg_24_0)
-	arg_24_0:_removeBlock()
+function FightViewDialog:onDestroyView()
+	self:_removeBlock()
 	UIBlockMgr.instance:endBlock(UIBlockKey.FightDialog)
-	TaskDispatcher.cancelTask(arg_24_0._playDialogItem, arg_24_0)
-	arg_24_0._dialogItem:onDestroy()
+	TaskDispatcher.cancelTask(self._playDialogItem, self)
+	self._dialogItem:onDestroy()
 end
 
-function var_0_0._onSkillPlayStart(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
-	local var_25_0 = FightHelper.getEntity(arg_25_3.fromId)
-	local var_25_1 = FightHelper.getEntity(arg_25_3.toId)
-	local var_25_2 = var_25_0 and var_25_0:getMO()
-	local var_25_3 = var_25_1 and var_25_1:getMO()
-	local var_25_4 = var_25_2 and var_25_2.modelId
-	local var_25_5 = var_25_3 and var_25_3.modelId
+function FightViewDialog:_onSkillPlayStart(entity, skillId, fightStepData)
+	local attacker = FightHelper.getEntity(fightStepData.fromId)
+	local defender = FightHelper.getEntity(fightStepData.toId)
+	local attackerMO = attacker and attacker:getMO()
+	local defenderMO = defender and defender:getMO()
+	local attackId = attackerMO and attackerMO.modelId
+	local defenderId = defenderMO and defenderMO.modelId
 
-	arg_25_0:_checkShowDialog(var_0_0.Type.AttackStart, var_25_4, var_25_5)
-	arg_25_0:_checkShowDialog(var_0_0.Type.SkillStart, arg_25_3.actId)
+	self:_checkShowDialog(FightViewDialog.Type.AttackStart, attackId, defenderId)
+	self:_checkShowDialog(FightViewDialog.Type.SkillStart, fightStepData.actId)
 end
 
-function var_0_0._onInvokeSkill(arg_26_0, arg_26_1)
-	arg_26_0:_checkShowDialog(var_0_0.Type.SkillStart, arg_26_1.actId)
+function FightViewDialog:_onInvokeSkill(fightStepData)
+	self:_checkShowDialog(FightViewDialog.Type.SkillStart, fightStepData.actId)
 end
 
-function var_0_0._beforeSkill(arg_27_0, arg_27_1)
-	if arg_27_0:_checkShowDialog(var_0_0.Type.BeforeSkill, arg_27_1) then
+function FightViewDialog:_beforeSkill(skillId)
+	local result = self:_checkShowDialog(FightViewDialog.Type.BeforeSkill, skillId)
+
+	if result then
 		FightWorkStepSkill.needWaitBeforeSkill = true
 	end
 end
 
-function var_0_0._onFightDialogCheck(arg_28_0, arg_28_1, arg_28_2, arg_28_3, arg_28_4)
-	var_0_0.showFightDialog = nil
+function FightViewDialog:_onFightDialogCheck(dialogType, param1, param2, param3)
+	FightViewDialog.showFightDialog = nil
 
-	if arg_28_1 == var_0_0.Type.MonsterWave then
-		local var_28_0 = arg_28_2
+	if dialogType == FightViewDialog.Type.MonsterWave then
+		local waveId = param1
 
-		if arg_28_0:_checkShowDialog(arg_28_1, var_28_0) then
-			if var_28_0 == 1 then
+		if self:_checkShowDialog(dialogType, waveId) then
+			if waveId == 1 then
 				FightStartSequence.needStopMonsterWave = true
 			else
 				FightWorkStepChangeWave.needStopMonsterWave = true
 			end
 		end
-	elseif arg_28_1 == var_0_0.Type.MonsterWaveEnd then
-		local var_28_1 = arg_28_2
+	elseif dialogType == FightViewDialog.Type.MonsterWaveEnd then
+		local waveId = param1
 
-		if arg_28_0:_checkShowDialog(arg_28_1, var_28_1) then
-			if var_28_1 < FightModel.instance.maxWave then
+		if self:_checkShowDialog(dialogType, waveId) then
+			local maxWave = FightModel.instance.maxWave
+
+			if waveId < maxWave then
 				FightWorkStepChangeWave.needStopMonsterWave = true
 			else
 				FightEndSequence.needStopMonsterWave = true
 			end
 		end
-	elseif arg_28_1 == var_0_0.Type.HPRateAfterSkillP then
-		if arg_28_0:_checkShowDialog(arg_28_1, nil, nil, arg_28_0._checkHpLessThan) then
+	elseif dialogType == FightViewDialog.Type.HPRateAfterSkillP then
+		if self:_checkShowDialog(dialogType, nil, nil, self._checkHpLessThan) then
 			FightWorkStepSkill.needStopSkillEnd = true
 		end
-	elseif arg_28_1 == var_0_0.Type.HPRateAfterSkillNP then
-		arg_28_0:_checkShowDialog(arg_28_1, nil, nil, arg_28_0._checkHpLessThan)
-	elseif arg_28_1 == var_0_0.Type.MonsterDieP then
-		var_0_1 = arg_28_2
+	elseif dialogType == FightViewDialog.Type.HPRateAfterSkillNP then
+		self:_checkShowDialog(dialogType, nil, nil, self._checkHpLessThan)
+	elseif dialogType == FightViewDialog.Type.MonsterDieP then
+		deadMonsterId = param1
 
-		if var_0_1 and arg_28_0:_checkShowDialog(arg_28_1, nil, nil, arg_28_0._detectMonsterDie) then
+		if deadMonsterId and self:_checkShowDialog(dialogType, nil, nil, self._detectMonsterDie) then
 			FightWorkEffectDeadNew.needStopDeadWork = true
 		end
-	elseif arg_28_1 == var_0_0.Type.MonsterWaveEndAndCheckBuffId then
-		local var_28_2 = arg_28_2
+	elseif dialogType == FightViewDialog.Type.MonsterWaveEndAndCheckBuffId then
+		local waveId = param1
 
-		if arg_28_0:_checkShowDialog(arg_28_1, var_28_2, nil, arg_28_0._checkMonsterWaveEndAndCheckBuffId) then
-			if var_28_2 < FightModel.instance.maxWave then
+		if self:_checkShowDialog(dialogType, waveId, nil, self._checkMonsterWaveEndAndCheckBuffId) then
+			local maxWave = FightModel.instance.maxWave
+
+			if waveId < maxWave then
 				FightWorkStepChangeWave.needStopMonsterWave = true
 			else
 				FightEndSequence.needStopMonsterWave = true
 			end
 		end
-	elseif arg_28_1 == var_0_0.Type.Trigger then
-		arg_28_0:_playDialogByTrigger(arg_28_2)
-	elseif arg_28_1 == var_0_0.Type.BuffRoundBefore then
-		if arg_28_0:_checkShowDialog(arg_28_1, nil, nil, arg_28_0._checkFirstGetBuff) then
-			FightWorkShowBuffDialog.needStopWork = arg_28_0._tempDialogConfig
+	elseif dialogType == FightViewDialog.Type.Trigger then
+		self:_playDialogByTrigger(param1)
+	elseif dialogType == FightViewDialog.Type.BuffRoundBefore then
+		if self:_checkShowDialog(dialogType, nil, nil, self._checkFirstGetBuff) then
+			FightWorkShowBuffDialog.needStopWork = self._tempDialogConfig
 		end
-	elseif arg_28_1 == var_0_0.Type.BuffRoundAfter then
-		if arg_28_0:_checkShowDialog(arg_28_1, nil, nil, arg_28_0._checkHasBuff) then
-			FightWorkShowBuffDialog.needStopWork = arg_28_0._tempDialogConfig
+	elseif dialogType == FightViewDialog.Type.BuffRoundAfter then
+		if self:_checkShowDialog(dialogType, nil, nil, self._checkHasBuff) then
+			FightWorkShowBuffDialog.needStopWork = self._tempDialogConfig
 		end
-	elseif arg_28_1 == var_0_0.Type.RoundEndAndCheckBuff then
-		if arg_28_0:_checkShowDialog(arg_28_1, nil, nil, arg_28_0._checkEntityBuff) then
-			FightWorkShowBuffDialog.needStopWork = arg_28_0._tempDialogConfig
+	elseif dialogType == FightViewDialog.Type.RoundEndAndCheckBuff then
+		if self:_checkShowDialog(dialogType, nil, nil, self._checkEntityBuff) then
+			FightWorkShowBuffDialog.needStopWork = self._tempDialogConfig
 		end
-	elseif arg_28_1 == var_0_0.Type.checkHaveMagicCircle then
-		if arg_28_0:_checkShowDialog(arg_28_1, nil, nil, arg_28_0._checkHaveMagicCircle) and not arg_28_0._playedShuZhen then
-			arg_28_0._playedShuZhen = true
-			FightWorkShowBuffDialog.needStopWork = arg_28_0._tempDialogConfig
+	elseif dialogType == FightViewDialog.Type.checkHaveMagicCircle then
+		if self:_checkShowDialog(dialogType, nil, nil, self._checkHaveMagicCircle) and not self._playedShuZhen then
+			self._playedShuZhen = true
+			FightWorkShowBuffDialog.needStopWork = self._tempDialogConfig
 		end
-	elseif arg_28_1 == var_0_0.Type.CheckDeadEntityCount then
-		local var_28_3 = #FightDataHelper.entityMgr:getDeadList(FightEnum.EntitySide.MySide)
+	elseif dialogType == FightViewDialog.Type.CheckDeadEntityCount then
+		local count = #FightDataHelper.entityMgr:getDeadList(FightEnum.EntitySide.MySide)
 
-		arg_28_0:_checkShowDialog(arg_28_1, var_28_3)
-	elseif arg_28_1 == var_0_0.Type.FightFail then
-		arg_28_0:_checkShowDialog(arg_28_1)
-	elseif arg_28_1 == var_0_0.Type.BeforeStartFight then
-		arg_28_0:_checkShowDialog(arg_28_1)
-	elseif arg_28_1 == var_0_0.Type.BeforeMonsterA2B then
-		arg_28_0:_checkShowDialog(arg_28_1, arg_28_2)
-	elseif arg_28_1 == var_0_0.Type.AfterMonsterA2B then
-		arg_28_0:_checkShowDialog(arg_28_1, arg_28_2)
-	elseif arg_28_1 == var_0_0.Type.MonsterChangeBefore then
-		arg_28_0:_checkShowDialog(arg_28_1, arg_28_2)
-	elseif arg_28_1 == var_0_0.Type.MonsterChangeAfter then
-		arg_28_0:_checkShowDialog(arg_28_1, arg_28_2)
-	elseif arg_28_1 == var_0_0.Type.AfterAppearTimeline then
-		arg_28_0:_checkShowDialog(arg_28_1, arg_28_2)
-	elseif arg_28_1 == var_0_0.Type.ChangeCareer then
-		arg_28_0:_checkShowDialog(arg_28_1)
-	elseif arg_28_1 == var_0_0.Type.BossDieTimelineBefore then
-		arg_28_0:_checkShowDialog(arg_28_1, arg_28_2)
-	elseif arg_28_1 == var_0_0.Type.DeadPerformanceNoCondition then
-		arg_28_0:_checkShowDialog(arg_28_1, arg_28_2)
-	elseif arg_28_1 == var_0_0.Type.HaveBuffAndHaveDamageSkill_onlyCheckOnce then
-		arg_28_0:_onHaveBuffAndHaveDamageSkill_onlyCheckOnce()
-	elseif arg_28_1 == var_0_0.Type.DetectHaveCardAfterEndOperation then
-		arg_28_0:_onDetectHaveCardAfterEndOperation(arg_28_2)
-	elseif arg_28_1 == var_0_0.Type.AfterSummon then
-		arg_28_0:_checkShowDialog(arg_28_1, arg_28_2)
-	elseif arg_28_1 == var_0_0.Type.Success then
-		arg_28_0:_checkShowDialog(arg_28_1, arg_28_2)
-	elseif arg_28_1 == var_0_0.Type.BeforeStartFightAndXXTimesEnterBattleId then
-		arg_28_0:_checkShowDialog(arg_28_1, nil, nil, arg_28_0._onCheckBeforeStartFightAndXXTimesEnterBattleId)
-	elseif arg_28_1 == var_0_0.Type.NoCondition then
-		arg_28_0:_checkShowDialog(arg_28_1, arg_28_2)
-	elseif arg_28_1 == var_0_0.Type.RoundStart then
-		arg_28_0:_checkShowDialog(var_0_0.Type.RoundStart, arg_28_2)
+		self:_checkShowDialog(dialogType, count)
+	elseif dialogType == FightViewDialog.Type.FightFail then
+		self:_checkShowDialog(dialogType)
+	elseif dialogType == FightViewDialog.Type.BeforeStartFight then
+		self:_checkShowDialog(dialogType)
+	elseif dialogType == FightViewDialog.Type.BeforeMonsterA2B then
+		self:_checkShowDialog(dialogType, param1)
+	elseif dialogType == FightViewDialog.Type.AfterMonsterA2B then
+		self:_checkShowDialog(dialogType, param1)
+	elseif dialogType == FightViewDialog.Type.MonsterChangeBefore then
+		self:_checkShowDialog(dialogType, param1)
+	elseif dialogType == FightViewDialog.Type.MonsterChangeAfter then
+		self:_checkShowDialog(dialogType, param1)
+	elseif dialogType == FightViewDialog.Type.AfterAppearTimeline then
+		self:_checkShowDialog(dialogType, param1)
+	elseif dialogType == FightViewDialog.Type.ChangeCareer then
+		self:_checkShowDialog(dialogType)
+	elseif dialogType == FightViewDialog.Type.BossDieTimelineBefore then
+		self:_checkShowDialog(dialogType, param1)
+	elseif dialogType == FightViewDialog.Type.DeadPerformanceNoCondition then
+		self:_checkShowDialog(dialogType, param1)
+	elseif dialogType == FightViewDialog.Type.HaveBuffAndHaveDamageSkill_onlyCheckOnce then
+		self:_onHaveBuffAndHaveDamageSkill_onlyCheckOnce()
+	elseif dialogType == FightViewDialog.Type.DetectHaveCardAfterEndOperation then
+		self:_onDetectHaveCardAfterEndOperation(param1)
+	elseif dialogType == FightViewDialog.Type.AfterSummon then
+		self:_checkShowDialog(dialogType, param1)
+	elseif dialogType == FightViewDialog.Type.Success then
+		self:_checkShowDialog(dialogType, param1)
+	elseif dialogType == FightViewDialog.Type.BeforeStartFightAndXXTimesEnterBattleId then
+		self:_checkShowDialog(dialogType, nil, nil, self._onCheckBeforeStartFightAndXXTimesEnterBattleId)
+	elseif dialogType == FightViewDialog.Type.NoCondition then
+		self:_checkShowDialog(dialogType, param1)
+	elseif dialogType == FightViewDialog.Type.RoundStart then
+		self:_checkShowDialog(FightViewDialog.Type.RoundStart, param1)
 	end
 end
 
-function var_0_0._haveSkillCard(arg_29_0, arg_29_1)
-	local var_29_0 = FightDataHelper.operationDataMgr:getOpList()
+function FightViewDialog:_haveSkillCard(skillId)
+	local ops = FightDataHelper.operationDataMgr:getOpList()
 
-	for iter_29_0, iter_29_1 in ipairs(var_29_0) do
-		if iter_29_1:isPlayCard() and arg_29_1 == iter_29_1.skillId then
+	for i, v in ipairs(ops) do
+		if v:isPlayCard() and skillId == v.skillId then
 			return true
 		end
 	end
 end
 
-function var_0_0._onDetectHaveCardAfterEndOperation(arg_30_0)
-	for iter_30_0, iter_30_1 in ipairs(arg_30_0._dialogChecks) do
-		local var_30_0 = iter_30_1.dialogConfig
+function FightViewDialog:_onDetectHaveCardAfterEndOperation()
+	for i, dialogCheck in ipairs(self._dialogChecks) do
+		local dialogConfig = dialogCheck.dialogConfig
+		local isType = dialogCheck.type == FightViewDialog.Type.DetectHaveCardAfterEndOperation
 
-		if iter_30_1.type == var_0_0.Type.DetectHaveCardAfterEndOperation and (var_30_0.insideRepeat or not arg_30_0._showedDialogIdDict[var_30_0.id]) then
-			local var_30_1 = iter_30_1.param1
-			local var_30_2 = iter_30_1.param2
-			local var_30_3 = FightDataHelper.entityMgr:getNormalList(FightEnum.EntitySide.EnemySide)
+		if isType then
+			local canRepeat = dialogConfig.insideRepeat or not self._showedDialogIdDict[dialogConfig.id]
 
-			for iter_30_2, iter_30_3 in ipairs(var_30_3) do
-				if iter_30_3.side == FightEnum.EntitySide.EnemySide then
-					local var_30_4 = iter_30_3:getBuffDic()
+			if canRepeat then
+				local buffId = dialogCheck.param1
+				local skillId = dialogCheck.param2
+				local list = FightDataHelper.entityMgr:getNormalList(FightEnum.EntitySide.EnemySide)
 
-					for iter_30_4, iter_30_5 in pairs(var_30_4) do
-						if iter_30_5.buffId == var_30_1 then
-							if arg_30_0:_haveSkillCard(var_30_2) then
-								arg_30_0:_checkShowDialog(iter_30_1.type, var_30_1, var_30_2)
-							else
-								arg_30_0:_checkShowDialog(var_0_0.Type.DetectFail33, var_30_1, var_30_2)
+				for e_index, entityMO in ipairs(list) do
+					local isEnemySide = entityMO.side == FightEnum.EntitySide.EnemySide
+
+					if isEnemySide then
+						local buffDic = entityMO:getBuffDic()
+
+						for b_index, buffMO in pairs(buffDic) do
+							if buffMO.buffId == buffId then
+								local have = self:_haveSkillCard(skillId)
+
+								if have then
+									self:_checkShowDialog(dialogCheck.type, buffId, skillId)
+								else
+									self:_checkShowDialog(FightViewDialog.Type.DetectFail33, buffId, skillId)
+								end
+
+								self._showedDialogIdDict[dialogConfig.id] = true
 							end
-
-							arg_30_0._showedDialogIdDict[var_30_0.id] = true
 						end
 					end
 				end
@@ -645,82 +665,101 @@ function var_0_0._onDetectHaveCardAfterEndOperation(arg_30_0)
 	end
 end
 
-function var_0_0._detectStepIsDamgeSkill(arg_31_0, arg_31_1)
-	if arg_31_1.actType == FightEnum.ActType.SKILL or arg_31_1.actType == FightEnum.ActType.EFFECT then
-		if arg_31_1.actType == FightEnum.ActType.SKILL and arg_31_1.fromId ~= FightEntityScene.MySideId then
-			local var_31_0 = FightHelper.getEntity(arg_31_1.fromId)
+function FightViewDialog:_detectStepIsDamgeSkill(fightStepData)
+	if fightStepData.actType == FightEnum.ActType.SKILL or fightStepData.actType == FightEnum.ActType.EFFECT then
+		if fightStepData.actType == FightEnum.ActType.SKILL and fightStepData.fromId ~= FightEntityScene.MySideId then
+			local fromEntity = FightHelper.getEntity(fightStepData.fromId)
 
-			if var_31_0 and var_31_0:isMySide() then
-				local var_31_1 = lua_skill.configDict[arg_31_1.actId]
+			if fromEntity and fromEntity:isMySide() then
+				local skillConfig = lua_skill.configDict[fightStepData.actId]
 
-				if var_31_1 and var_31_1.damageRate > 0 then
+				if skillConfig and skillConfig.damageRate > 0 then
 					return true
 				end
 			end
 		end
 
-		if arg_31_0:_haveDamageSkillactEffect(arg_31_1.actEffect) then
+		local effectHaveDamgeSkill = self:_haveDamageSkillactEffect(fightStepData.actEffect)
+
+		if effectHaveDamgeSkill then
 			return true
 		end
 	end
 end
 
-function var_0_0._haveDamageSkill(arg_32_0, arg_32_1)
-	for iter_32_0, iter_32_1 in ipairs(arg_32_1) do
-		if arg_32_0:_detectStepIsDamgeSkill(iter_32_1) then
+function FightViewDialog:_haveDamageSkill(roundData)
+	for s_index, fightStepData in ipairs(roundData) do
+		local have = self:_detectStepIsDamgeSkill(fightStepData)
+
+		if have then
 			return true
 		end
 	end
 end
 
-function var_0_0._haveDamageSkillactEffect(arg_33_0, arg_33_1)
-	for iter_33_0, iter_33_1 in ipairs(arg_33_1) do
-		local var_33_0 = iter_33_1.fightStep
+function FightViewDialog:_haveDamageSkillactEffect(actEffect)
+	for i, v in ipairs(actEffect) do
+		local fightStepData = v.fightStep
 
-		if var_33_0 and arg_33_0:_detectStepIsDamgeSkill(var_33_0) then
-			return
+		if fightStepData then
+			local have = self:_detectStepIsDamgeSkill(fightStepData)
+
+			if have then
+				return
+			end
 		end
 	end
 end
 
-function var_0_0._onCheckBeforeStartFightAndXXTimesEnterBattleId(arg_34_0)
-	local var_34_0 = FightDataHelper.fieldMgr.battleId
+function FightViewDialog._onCheckBeforeStartFightAndXXTimesEnterBattleId(dialogCheck)
+	local battleId = FightDataHelper.fieldMgr.battleId
+	local matchBattleId = dialogCheck.param1
 
-	if var_34_0 == arg_34_0.param1 then
-		local var_34_1 = PlayerPrefsKey.EnterBattleIdTimes .. var_34_0
-		local var_34_2 = PlayerPrefsHelper.getNumber(var_34_1, 0) + 1
+	if battleId == matchBattleId then
+		local key = PlayerPrefsKey.EnterBattleIdTimes .. battleId
+		local times = PlayerPrefsHelper.getNumber(key, 0)
 
-		PlayerPrefsHelper.setNumber(var_34_1, var_34_2)
+		times = times + 1
 
-		if var_34_2 >= arg_34_0.param2 then
+		PlayerPrefsHelper.setNumber(key, times)
+
+		if times >= dialogCheck.param2 then
 			return true
 		end
 	end
 end
 
-function var_0_0._onHaveBuffAndHaveDamageSkill_onlyCheckOnce(arg_35_0)
-	for iter_35_0, iter_35_1 in ipairs(arg_35_0._dialogChecks) do
-		local var_35_0 = iter_35_1.dialogConfig
+function FightViewDialog:_onHaveBuffAndHaveDamageSkill_onlyCheckOnce()
+	for i, dialogCheck in ipairs(self._dialogChecks) do
+		local dialogConfig = dialogCheck.dialogConfig
+		local isType = dialogCheck.type == FightViewDialog.Type.HaveBuffAndHaveDamageSkill_onlyCheckOnce
 
-		if iter_35_1.type == var_0_0.Type.HaveBuffAndHaveDamageSkill_onlyCheckOnce and (var_35_0.insideRepeat or not arg_35_0._showedDialogIdDict[var_35_0.id]) then
-			local var_35_1 = iter_35_1.param1
-			local var_35_2 = FightDataHelper.entityMgr:getNormalList(FightEnum.EntitySide.EnemySide)
+		if isType then
+			local canRepeat = dialogConfig.insideRepeat or not self._showedDialogIdDict[dialogConfig.id]
 
-			for iter_35_2, iter_35_3 in ipairs(var_35_2) do
-				if iter_35_3.side == FightEnum.EntitySide.EnemySide then
-					local var_35_3 = iter_35_3:getBuffDic()
+			if canRepeat then
+				local buffId = dialogCheck.param1
+				local list = FightDataHelper.entityMgr:getNormalList(FightEnum.EntitySide.EnemySide)
 
-					for iter_35_4, iter_35_5 in pairs(var_35_3) do
-						if iter_35_5.buffId == var_35_1 then
-							local var_35_4 = FightDataHelper.roundMgr:getRoundData()
+				for e_index, entityMO in ipairs(list) do
+					local isEnemySide = entityMO.side == FightEnum.EntitySide.EnemySide
 
-							if var_35_4 and arg_35_0:_haveDamageSkill(var_35_4.fightStep) then
-								arg_35_0:_checkShowDialog(iter_35_1.type, var_35_1)
-							else
-								arg_35_0:_checkShowDialog(var_0_0.Type.DetectFail31, var_35_1)
+					if isEnemySide then
+						local buffDic = entityMO:getBuffDic()
+
+						for b_index, buffMO in pairs(buffDic) do
+							if buffMO.buffId == buffId then
+								local roundData = FightDataHelper.roundMgr:getRoundData()
+								local have = roundData and self:_haveDamageSkill(roundData.fightStep)
+
+								if have then
+									self:_checkShowDialog(dialogCheck.type, buffId)
+								else
+									self:_checkShowDialog(FightViewDialog.Type.DetectFail31, buffId)
+								end
+
+								self._showedDialogIdDict[dialogConfig.id] = true
 							end
-
-							arg_35_0._showedDialogIdDict[var_35_0.id] = true
 						end
 					end
 				end
@@ -729,122 +768,127 @@ function var_0_0._onHaveBuffAndHaveDamageSkill_onlyCheckOnce(arg_35_0)
 	end
 end
 
-function var_0_0._checkFirstGetBuff(arg_36_0)
-	local var_36_0 = arg_36_0.param1
+function FightViewDialog._checkFirstGetBuff(dialogCheck)
+	local buffId = dialogCheck.param1
 
-	var_0_0._checkBuffState(var_36_0)
+	FightViewDialog._checkBuffState(buffId)
 
-	local var_36_1 = arg_36_0.param2
+	local roundId = dialogCheck.param2
 
-	if not FightWorkShowBuffDialog.addBuffRoundId and var_36_1 == FightModel.instance:getCurRoundId() then
+	if not FightWorkShowBuffDialog.addBuffRoundId and roundId == FightModel.instance:getCurRoundId() then
 		return true
 	end
 end
 
-function var_0_0._checkEntityBuff(arg_37_0)
-	local var_37_0 = arg_37_0.param1
+function FightViewDialog._checkEntityBuff(dialogCheck)
+	local buffId = dialogCheck.param1
 
-	if var_0_0._hasBuff(var_37_0) then
+	if FightViewDialog._hasBuff(buffId) then
 		return true
 	end
 end
 
-function var_0_0._checkHaveMagicCircle(arg_38_0)
-	local var_38_0 = FightModel.instance:getMagicCircleInfo()
+function FightViewDialog._checkHaveMagicCircle(dialogCheck)
+	local magicCircleInfo = FightModel.instance:getMagicCircleInfo()
 
-	if var_38_0.magicCircleId then
-		if var_38_0.magicCircleId == arg_38_0.param1 then
+	if magicCircleInfo.magicCircleId then
+		if magicCircleInfo.magicCircleId == dialogCheck.param1 then
 			return true
 		end
 
-		if var_38_0.magicCircleId == arg_38_0.param2 then
+		if magicCircleInfo.magicCircleId == dialogCheck.param2 then
 			return true
 		end
 
-		if var_38_0.magicCircleId == arg_38_0.param3 then
+		if magicCircleInfo.magicCircleId == dialogCheck.param3 then
 			return true
 		end
 
-		if var_38_0.magicCircleId == arg_38_0.param4 then
+		if magicCircleInfo.magicCircleId == dialogCheck.param4 then
 			return true
 		end
 	end
 end
 
-function var_0_0._checkHasBuff(arg_39_0)
-	local var_39_0 = arg_39_0.param1
+function FightViewDialog._checkHasBuff(dialogCheck)
+	local buffId = dialogCheck.param1
 
-	var_0_0._checkBuffState(var_39_0)
+	FightViewDialog._checkBuffState(buffId)
 
-	local var_39_1 = FightModel.instance:getCurRoundId()
-	local var_39_2 = arg_39_0.param2
+	local curRoundId = FightModel.instance:getCurRoundId()
+	local roundId = dialogCheck.param2
 
 	if FightWorkShowBuffDialog.addBuffRoundId and not FightWorkShowBuffDialog.delBuffRoundId then
-		return var_39_2 == var_39_1 - FightWorkShowBuffDialog.addBuffRoundId + 1
+		return roundId == curRoundId - FightWorkShowBuffDialog.addBuffRoundId + 1
 	end
 end
 
-function var_0_0._checkBuffState(arg_40_0)
-	local var_40_0 = FightModel.instance:getCurRoundId()
+function FightViewDialog._checkBuffState(buffId)
+	local curRoundId = FightModel.instance:getCurRoundId()
+	local hasBuff = FightViewDialog._hasBuff(buffId)
 
-	if var_0_0._hasBuff(arg_40_0) then
+	if hasBuff then
 		if not FightWorkShowBuffDialog.addBuffRoundId then
-			FightWorkShowBuffDialog.addBuffRoundId = var_40_0
+			FightWorkShowBuffDialog.addBuffRoundId = curRoundId
 		end
 	elseif FightWorkShowBuffDialog.addBuffRoundId and not FightWorkShowBuffDialog.delBuffRoundId then
-		FightWorkShowBuffDialog.delBuffRoundId = var_40_0
+		FightWorkShowBuffDialog.delBuffRoundId = curRoundId
 	end
 end
 
-function var_0_0._hasBuff(arg_41_0)
-	local var_41_0 = FightHelper.getAllEntitys()
+function FightViewDialog._hasBuff(buffId)
+	local entitys = FightHelper.getAllEntitys()
 
-	for iter_41_0, iter_41_1 in ipairs(var_41_0) do
-		local var_41_1 = iter_41_1:getMO():getBuffDic()
+	for _, entity in ipairs(entitys) do
+		local buffDic = entity:getMO():getBuffDic()
 
-		for iter_41_2, iter_41_3 in pairs(var_41_1) do
-			if iter_41_3.buffId == arg_41_0 then
+		for _, buffMO in pairs(buffDic) do
+			if buffMO.buffId == buffId then
 				return true
 			end
 		end
 	end
 end
 
-local var_0_2
+local _hpEntityTemp
 
-function var_0_0._checkHpLessThan(arg_42_0)
-	local var_42_0 = arg_42_0.type
-	local var_42_1 = arg_42_0.param1
-	local var_42_2 = arg_42_0.param2
-	local var_42_3 = arg_42_0.param3
-	local var_42_4 = arg_42_0.param4
+function FightViewDialog._checkHpLessThan(dialogCheck)
+	local type = dialogCheck.type
+	local side = dialogCheck.param1
+	local posId = dialogCheck.param2
+	local rate = dialogCheck.param3
+	local monsterId = dialogCheck.param4
 
-	var_0_2 = nil
+	_hpEntityTemp = nil
 
-	if var_42_2 == 0 then
-		local var_42_5 = var_42_1 == 1 and FightEnum.EntitySide.EnemySide or FightEnum.EntitySide.MySide
+	if posId == 0 then
+		local realSide = side == 1 and FightEnum.EntitySide.EnemySide or FightEnum.EntitySide.MySide
+		local all = FightHelper.getSideEntitys(realSide, false)
 
-		var_0_2 = FightHelper.getSideEntitys(var_42_5, false)
+		_hpEntityTemp = all
 	else
-		local var_42_6 = GameSceneMgr.instance:getCurScene().entityMgr
-		local var_42_7 = var_42_1 == 1 and SceneTag.UnitMonster or SceneTag.UnitPlayer
-		local var_42_8 = var_42_6:getEntityByPosId(var_42_7, var_42_2)
+		local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+		local tag = side == 1 and SceneTag.UnitMonster or SceneTag.UnitPlayer
+		local entity = entityMgr:getEntityByPosId(tag, posId)
 
-		var_0_2 = var_0_2 or {}
+		_hpEntityTemp = _hpEntityTemp or {}
 
-		tabletool.clear(var_0_2)
+		tabletool.clear(_hpEntityTemp)
 
-		if var_42_8 then
-			table.insert(var_0_2, var_42_8)
+		if entity then
+			table.insert(_hpEntityTemp, entity)
 		end
 	end
 
-	for iter_42_0, iter_42_1 in ipairs(var_0_2) do
-		local var_42_9 = iter_42_1:getMO()
+	for _, entity in ipairs(_hpEntityTemp) do
+		local entityMO = entity:getMO()
+		local currentHp = entityMO and entityMO.currentHp or 0
+		local maxHp = entityMO.attrMO and entityMO.attrMO.hp > 0 and entityMO.attrMO.hp or 1
+		local hpPercent = currentHp / maxHp
 
-		if (var_42_9 and var_42_9.currentHp or 0) / (var_42_9.attrMO and var_42_9.attrMO.hp > 0 and var_42_9.attrMO.hp or 1) < var_42_3 / 1000 then
-			if var_42_4 then
-				if var_42_4 == var_42_9.modelId then
+		if hpPercent < rate / 1000 then
+			if monsterId then
+				if monsterId == entityMO.modelId then
 					return true
 				end
 			else
@@ -854,21 +898,23 @@ function var_0_0._checkHpLessThan(arg_42_0)
 	end
 end
 
-function var_0_0._checkMonsterWaveEndAndCheckBuffId(arg_43_0)
-	if FightModel.instance:getCurWaveId() ~= arg_43_0.param1 then
+function FightViewDialog._checkMonsterWaveEndAndCheckBuffId(dialogCheck)
+	local currWaveId = FightModel.instance:getCurWaveId()
+
+	if currWaveId ~= dialogCheck.param1 then
 		return
 	end
 
-	local var_43_0 = arg_43_0.param2
-	local var_43_1 = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, true)
+	local buffId = dialogCheck.param2
+	local entityList = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, true)
 
-	for iter_43_0, iter_43_1 in ipairs(var_43_1) do
-		local var_43_2 = iter_43_1:getMO()
-		local var_43_3 = var_43_2 and var_43_2:getBuffDic()
+	for i, v in ipairs(entityList) do
+		local entityMO = v:getMO()
+		local buffDic = entityMO and entityMO:getBuffDic()
 
-		if var_43_3 then
-			for iter_43_2, iter_43_3 in pairs(var_43_3) do
-				if iter_43_3.buffId == var_43_0 then
+		if buffDic then
+			for index, buff in pairs(buffDic) do
+				if buff.buffId == buffId then
 					return true
 				end
 			end
@@ -876,14 +922,14 @@ function var_0_0._checkMonsterWaveEndAndCheckBuffId(arg_43_0)
 	end
 end
 
-function var_0_0._detectMonsterDie(arg_44_0)
-	local var_44_0 = FightStrUtil.instance:getSplitToNumberCache(arg_44_0.dialogConfig.param, "#")
+function FightViewDialog._detectMonsterDie(dialogCheck)
+	local monsterIds = FightStrUtil.instance:getSplitToNumberCache(dialogCheck.dialogConfig.param, "#")
 
-	for iter_44_0 = 2, #var_44_0 do
-		if var_0_1 == var_44_0[iter_44_0] then
+	for i = 2, #monsterIds do
+		if deadMonsterId == monsterIds[i] then
 			return true
 		end
 	end
 end
 
-return var_0_0
+return FightViewDialog

@@ -1,200 +1,203 @@
-﻿module("modules.logic.main.view.MainThumbnailBgmView", package.seeall)
+﻿-- chunkname: @modules/logic/main/view/MainThumbnailBgmView.lua
 
-local var_0_0 = class("MainThumbnailBgmView", BaseView)
+module("modules.logic.main.view.MainThumbnailBgmView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goBgm = gohelper.findChild(arg_1_0.viewGO, "#go_bgm")
-	arg_1_0._goNone = gohelper.findChild(arg_1_0.viewGO, "#go_bgm/none")
-	arg_1_0._btnNoneBgm = gohelper.findChildButton(arg_1_0.viewGO, "#go_bgm/none/#btn_nonebgm")
-	arg_1_0._goPlay0 = gohelper.findChild(arg_1_0.viewGO, "#go_bgm/playing_0")
-	arg_1_0._btnPlay0Bgm = gohelper.findChildButton(arg_1_0.viewGO, "#go_bgm/playing_0/#btn_play0bgm")
-	arg_1_0._btnPlay0Open = gohelper.findChildButton(arg_1_0.viewGO, "#go_bgm/playing_0/#btn_play0open")
-	arg_1_0._goPlay1 = gohelper.findChild(arg_1_0.viewGO, "#go_bgm/playing_1")
-	arg_1_0._play1Ani = arg_1_0._goPlay1:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._btnPlay1Bgm = gohelper.findChildButton(arg_1_0.viewGO, "#go_bgm/playing_1/#btn_play1bgm")
-	arg_1_0._txtPlay1BgmName = gohelper.findChildText(arg_1_0.viewGO, "#go_bgm/playing_1/#txt_play1bgmname")
-	arg_1_0._btnPlay1Close = gohelper.findChildButton(arg_1_0.viewGO, "#go_bgm/playing_1/#btn_play1close")
-	arg_1_0._goloop = gohelper.findChild(arg_1_0.viewGO, "#go_bgm/playing_1/loop")
-	arg_1_0._goSingleLoop = gohelper.findChild(arg_1_0.viewGO, "#go_bgm/playing_1/SingleLoop")
-	arg_1_0._btnPlay1Love = gohelper.findChildButton(arg_1_0.viewGO, "#go_bgm/playing_1/#btn_play1love")
-	arg_1_0._goLoveSelect = gohelper.findChild(arg_1_0.viewGO, "#go_bgm/playing_1/#btn_play1love/select")
-	arg_1_0._goLoveSelectEmpty = gohelper.findChild(arg_1_0.viewGO, "#go_bgm/playing_1/#btn_play1love/empty")
-	arg_1_0._goReddot = gohelper.findChild(arg_1_0.viewGO, "#go_bgm/bgm_reddot")
+local MainThumbnailBgmView = class("MainThumbnailBgmView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function MainThumbnailBgmView:onInitView()
+	self._goBgm = gohelper.findChild(self.viewGO, "#go_bgm")
+	self._goNone = gohelper.findChild(self.viewGO, "#go_bgm/none")
+	self._btnNoneBgm = gohelper.findChildButton(self.viewGO, "#go_bgm/none/#btn_nonebgm")
+	self._goPlay0 = gohelper.findChild(self.viewGO, "#go_bgm/playing_0")
+	self._btnPlay0Bgm = gohelper.findChildButton(self.viewGO, "#go_bgm/playing_0/#btn_play0bgm")
+	self._btnPlay0Open = gohelper.findChildButton(self.viewGO, "#go_bgm/playing_0/#btn_play0open")
+	self._goPlay1 = gohelper.findChild(self.viewGO, "#go_bgm/playing_1")
+	self._play1Ani = self._goPlay1:GetComponent(typeof(UnityEngine.Animator))
+	self._btnPlay1Bgm = gohelper.findChildButton(self.viewGO, "#go_bgm/playing_1/#btn_play1bgm")
+	self._txtPlay1BgmName = gohelper.findChildText(self.viewGO, "#go_bgm/playing_1/#txt_play1bgmname")
+	self._btnPlay1Close = gohelper.findChildButton(self.viewGO, "#go_bgm/playing_1/#btn_play1close")
+	self._goloop = gohelper.findChild(self.viewGO, "#go_bgm/playing_1/loop")
+	self._goSingleLoop = gohelper.findChild(self.viewGO, "#go_bgm/playing_1/SingleLoop")
+	self._btnPlay1Love = gohelper.findChildButton(self.viewGO, "#go_bgm/playing_1/#btn_play1love")
+	self._goLoveSelect = gohelper.findChild(self.viewGO, "#go_bgm/playing_1/#btn_play1love/select")
+	self._goLoveSelectEmpty = gohelper.findChild(self.viewGO, "#go_bgm/playing_1/#btn_play1love/empty")
+	self._goReddot = gohelper.findChild(self.viewGO, "#go_bgm/bgm_reddot")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnNoneBgm:AddClickListener(arg_2_0._btnNoneBgmOnClick, arg_2_0)
-	arg_2_0._btnPlay0Bgm:AddClickListener(arg_2_0._btnPlay0BgmOnClick, arg_2_0)
-	arg_2_0._btnPlay0Open:AddClickListener(arg_2_0._btnPlay0OpenOnClick, arg_2_0)
-	arg_2_0._btnPlay1Bgm:AddClickListener(arg_2_0._btnPlay1BgmOnClick, arg_2_0)
-	arg_2_0._btnPlay1Close:AddClickListener(arg_2_0._btnPlay1CloseOnClick, arg_2_0)
-	arg_2_0._btnPlay1Love:AddClickListener(arg_2_0._btnPlay1LoveOnClick, arg_2_0)
+function MainThumbnailBgmView:addEvents()
+	self._btnNoneBgm:AddClickListener(self._btnNoneBgmOnClick, self)
+	self._btnPlay0Bgm:AddClickListener(self._btnPlay0BgmOnClick, self)
+	self._btnPlay0Open:AddClickListener(self._btnPlay0OpenOnClick, self)
+	self._btnPlay1Bgm:AddClickListener(self._btnPlay1BgmOnClick, self)
+	self._btnPlay1Close:AddClickListener(self._btnPlay1CloseOnClick, self)
+	self._btnPlay1Love:AddClickListener(self._btnPlay1LoveOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnNoneBgm:RemoveClickListener()
-	arg_3_0._btnPlay0Bgm:RemoveClickListener()
-	arg_3_0._btnPlay0Open:RemoveClickListener()
-	arg_3_0._btnPlay1Bgm:RemoveClickListener()
-	arg_3_0._btnPlay1Close:RemoveClickListener()
-	arg_3_0._btnPlay1Love:RemoveClickListener()
+function MainThumbnailBgmView:removeEvents()
+	self._btnNoneBgm:RemoveClickListener()
+	self._btnPlay0Bgm:RemoveClickListener()
+	self._btnPlay0Open:RemoveClickListener()
+	self._btnPlay1Bgm:RemoveClickListener()
+	self._btnPlay1Close:RemoveClickListener()
+	self._btnPlay1Love:RemoveClickListener()
 end
 
-function var_0_0._btnNoneBgmOnClick(arg_4_0)
-	local var_4_0 = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.BGMSwitch)
-	local var_4_1 = GuideController.instance:isForbidGuides()
-	local var_4_2 = GuideModel.instance:isStepFinish(BGMSwitchEnum.BGMGuideId, 1)
+function MainThumbnailBgmView:_btnNoneBgmOnClick()
+	local isUnlock = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.BGMSwitch)
+	local forbidGuides = GuideController.instance:isForbidGuides()
+	local isBGMGuideFirstStepFinished = GuideModel.instance:isStepFinish(BGMSwitchEnum.BGMGuideId, 1)
 
-	if var_4_0 and not var_4_1 and not var_4_2 then
+	if isUnlock and not forbidGuides and not isBGMGuideFirstStepFinished then
 		BGMSwitchController.instance:dispatchEvent(BGMSwitchEvent.ClickBgmEntranceInGuide)
 	else
-		arg_4_0:_clickToOpenBGMSwitchView()
+		self:_clickToOpenBGMSwitchView()
 	end
 end
 
-function var_0_0._btnPlay0BgmOnClick(arg_5_0)
-	local var_5_0 = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.BGMSwitch)
-	local var_5_1 = GuideController.instance:isForbidGuides()
-	local var_5_2 = GuideModel.instance:isStepFinish(BGMSwitchEnum.BGMGuideId, 1)
+function MainThumbnailBgmView:_btnPlay0BgmOnClick()
+	local isUnlock = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.BGMSwitch)
+	local forbidGuides = GuideController.instance:isForbidGuides()
+	local isBGMGuideFirstStepFinished = GuideModel.instance:isStepFinish(BGMSwitchEnum.BGMGuideId, 1)
 
-	if var_5_0 and not var_5_1 and not var_5_2 then
+	if isUnlock and not forbidGuides and not isBGMGuideFirstStepFinished then
 		BGMSwitchController.instance:dispatchEvent(BGMSwitchEvent.ClickBgmEntranceInGuide)
 	else
-		arg_5_0:_clickToOpenBGMSwitchView()
+		self:_clickToOpenBGMSwitchView()
 	end
 end
 
-function var_0_0._btnPlay0OpenOnClick(arg_6_0)
+function MainThumbnailBgmView:_btnPlay0OpenOnClick()
 	BGMSwitchModel.instance:setPlayingState(BGMSwitchEnum.PlayingState.UnfoldPlaying)
-	arg_6_0:_refreshView()
+	self:_refreshView()
 	BGMSwitchAudioTrigger.play_ui_replay_tinyopen()
 end
 
-function var_0_0._btnPlay1BgmOnClick(arg_7_0)
-	local var_7_0 = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.BGMSwitch)
-	local var_7_1 = GuideController.instance:isForbidGuides()
-	local var_7_2 = GuideModel.instance:isStepFinish(BGMSwitchEnum.BGMGuideId, 1)
+function MainThumbnailBgmView:_btnPlay1BgmOnClick()
+	local isUnlock = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.BGMSwitch)
+	local forbidGuides = GuideController.instance:isForbidGuides()
+	local isBGMGuideFirstStepFinished = GuideModel.instance:isStepFinish(BGMSwitchEnum.BGMGuideId, 1)
 
-	if var_7_0 and not var_7_1 and not var_7_2 then
+	if isUnlock and not forbidGuides and not isBGMGuideFirstStepFinished then
 		BGMSwitchController.instance:dispatchEvent(BGMSwitchEvent.ClickBgmEntranceInGuide)
 	else
-		arg_7_0:_clickToOpenBGMSwitchView()
+		self:_clickToOpenBGMSwitchView()
 	end
 end
 
-function var_0_0._btnPlay1CloseOnClick(arg_8_0)
+function MainThumbnailBgmView:_btnPlay1CloseOnClick()
 	BGMSwitchModel.instance:setPlayingState(BGMSwitchEnum.PlayingState.FoldPlaying)
-	arg_8_0._play1Ani:Play("close")
-	TaskDispatcher.runDelay(arg_8_0._refreshView, arg_8_0, 0.34)
+	self._play1Ani:Play("close")
+	TaskDispatcher.runDelay(self._refreshView, self, 0.34)
 	BGMSwitchAudioTrigger.play_ui_replay_tinyclose()
 end
 
-function var_0_0._btnPlay1LoveOnClick(arg_9_0)
-	local var_9_0, var_9_1 = arg_9_0:getIdRandomAndNeedShowBgm()
-	local var_9_2 = var_9_1.id
-	local var_9_3 = not BGMSwitchModel.instance:isBgmFavorite(var_9_2)
+function MainThumbnailBgmView:_btnPlay1LoveOnClick()
+	local _, mainBgmCo = self:getIdRandomAndNeedShowBgm()
+	local bgmId = mainBgmCo.id
+	local favorite = not BGMSwitchModel.instance:isBgmFavorite(bgmId)
 
-	BgmRpc.instance:sendSetFavoriteBgmRequest(var_9_2, var_9_3)
-	BGMSwitchAudioTrigger.play_ui_replay_heart(var_9_3)
+	BgmRpc.instance:sendSetFavoriteBgmRequest(bgmId, favorite)
+	BGMSwitchAudioTrigger.play_ui_replay_heart(favorite)
 end
 
-function var_0_0._clickToOpenBGMSwitchView(arg_10_0)
-	arg_10_0:_bgmMarkRead()
+function MainThumbnailBgmView:_clickToOpenBGMSwitchView()
+	self:_bgmMarkRead()
 	BGMSwitchController.instance:openBGMSwitchView(true)
 end
 
-function var_0_0.getIdRandomAndNeedShowBgm(arg_11_0)
-	local var_11_0 = BGMSwitchController.instance:getMainBgmAudioId()
-	local var_11_1 = BGMSwitchConfig.instance:getBGMSwitchCoByAudioId(var_11_0)
+function MainThumbnailBgmView:getIdRandomAndNeedShowBgm()
+	local mainBgmAudioId = BGMSwitchController.instance:getMainBgmAudioId()
+	local mainBgmCo = BGMSwitchConfig.instance:getBGMSwitchCoByAudioId(mainBgmAudioId)
+	local isRandom = BGMSwitchModel.instance:getUsedBgmIdFromServer() == BGMSwitchModel.RandomBgmId
 
-	return BGMSwitchModel.instance:getUsedBgmIdFromServer() == BGMSwitchModel.RandomBgmId, var_11_1
+	return isRandom, mainBgmCo
 end
 
-function var_0_0._refreshView(arg_12_0)
-	local var_12_0 = BGMSwitchModel.instance:getPlayingState()
-	local var_12_1 = BGMSwitchModel.instance:machineGearIsNeedPlayBgm()
+function MainThumbnailBgmView:_refreshView()
+	local playingState = BGMSwitchModel.instance:getPlayingState()
+	local isPlaying = BGMSwitchModel.instance:machineGearIsNeedPlayBgm()
 
-	gohelper.setActive(arg_12_0._goNone, not var_12_1 or var_12_0 == BGMSwitchEnum.PlayingState.None)
-	gohelper.setActive(arg_12_0._goPlay0, var_12_1 and var_12_0 == BGMSwitchEnum.PlayingState.FoldPlaying)
-	gohelper.setActive(arg_12_0._goPlay1, var_12_1 and var_12_0 == BGMSwitchEnum.PlayingState.UnfoldPlaying)
+	gohelper.setActive(self._goNone, not isPlaying or playingState == BGMSwitchEnum.PlayingState.None)
+	gohelper.setActive(self._goPlay0, isPlaying and playingState == BGMSwitchEnum.PlayingState.FoldPlaying)
+	gohelper.setActive(self._goPlay1, isPlaying and playingState == BGMSwitchEnum.PlayingState.UnfoldPlaying)
 
-	if var_12_1 and var_12_0 == BGMSwitchEnum.PlayingState.UnfoldPlaying then
-		local var_12_2, var_12_3 = arg_12_0:getIdRandomAndNeedShowBgm()
+	if isPlaying and playingState == BGMSwitchEnum.PlayingState.UnfoldPlaying then
+		local isRandom, mainBgmCo = self:getIdRandomAndNeedShowBgm()
 
-		gohelper.setActive(arg_12_0._goloop, var_12_2)
-		gohelper.setActive(arg_12_0._goSingleLoop, not var_12_2)
+		gohelper.setActive(self._goloop, isRandom)
+		gohelper.setActive(self._goSingleLoop, not isRandom)
 
-		arg_12_0._txtPlay1BgmName.text = var_12_3.audioName
+		self._txtPlay1BgmName.text = mainBgmCo.audioName
 
-		local var_12_4 = BGMSwitchModel.instance:isBgmFavorite(var_12_3.id)
+		local isFavorite = BGMSwitchModel.instance:isBgmFavorite(mainBgmCo.id)
 
-		gohelper.setActive(arg_12_0._goLoveSelect, var_12_4)
-		gohelper.setActive(arg_12_0._goLoveSelectEmpty, not var_12_4)
+		gohelper.setActive(self._goLoveSelect, isFavorite)
+		gohelper.setActive(self._goLoveSelectEmpty, not isFavorite)
 	end
 end
 
-function var_0_0.onOpen(arg_13_0)
-	arg_13_0.isUnlock = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.BGMSwitch)
+function MainThumbnailBgmView:onOpen()
+	self.isUnlock = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.BGMSwitch)
 
-	if arg_13_0.isUnlock then
-		arg_13_0:_addSelfEvents()
-		arg_13_0:_refreshView()
+	if self.isUnlock then
+		self:_addSelfEvents()
+		self:_refreshView()
 	end
 
-	gohelper.setActive(arg_13_0._goBgm, arg_13_0.isUnlock)
+	gohelper.setActive(self._goBgm, self.isUnlock)
 end
 
-function var_0_0._addSelfEvents(arg_14_0)
-	arg_14_0:addEventCb(BGMSwitchController.instance, BGMSwitchEvent.SelectPlayGear, arg_14_0._refreshView, arg_14_0)
-	arg_14_0:addEventCb(BGMSwitchController.instance, BGMSwitchEvent.BgmSwitched, arg_14_0._refreshView, arg_14_0)
-	arg_14_0:addEventCb(BGMSwitchController.instance, BGMSwitchEvent.BgmFavorite, arg_14_0._refreshView, arg_14_0)
-	arg_14_0:addEventCb(BGMSwitchController.instance, BGMSwitchEvent.RandomFinished, arg_14_0._refreshView, arg_14_0)
-	arg_14_0:addEventCb(BGMSwitchController.instance, BGMSwitchEvent.BGMSwitchClose, arg_14_0._refreshView, arg_14_0)
-	arg_14_0:addEventCb(BGMSwitchController.instance, BGMSwitchEvent.BgmMarkRead, arg_14_0._bgmMarkRead, arg_14_0)
-	arg_14_0:addEventCb(BGMSwitchController.instance, BGMSwitchEvent.OnPlayMainBgm, arg_14_0._onPlayMainBgm, arg_14_0)
+function MainThumbnailBgmView:_addSelfEvents()
+	self:addEventCb(BGMSwitchController.instance, BGMSwitchEvent.SelectPlayGear, self._refreshView, self)
+	self:addEventCb(BGMSwitchController.instance, BGMSwitchEvent.BgmSwitched, self._refreshView, self)
+	self:addEventCb(BGMSwitchController.instance, BGMSwitchEvent.BgmFavorite, self._refreshView, self)
+	self:addEventCb(BGMSwitchController.instance, BGMSwitchEvent.RandomFinished, self._refreshView, self)
+	self:addEventCb(BGMSwitchController.instance, BGMSwitchEvent.BGMSwitchClose, self._refreshView, self)
+	self:addEventCb(BGMSwitchController.instance, BGMSwitchEvent.BgmMarkRead, self._bgmMarkRead, self)
+	self:addEventCb(BGMSwitchController.instance, BGMSwitchEvent.OnPlayMainBgm, self._onPlayMainBgm, self)
 end
 
-function var_0_0._removeSelfEvents(arg_15_0)
-	arg_15_0:removeEventCb(BGMSwitchController.instance, BGMSwitchEvent.SelectPlayGear, arg_15_0._refreshView, arg_15_0)
-	arg_15_0:removeEventCb(BGMSwitchController.instance, BGMSwitchEvent.BgmSwitched, arg_15_0._refreshView, arg_15_0)
-	arg_15_0:removeEventCb(BGMSwitchController.instance, BGMSwitchEvent.BgmFavorite, arg_15_0._refreshView, arg_15_0)
-	arg_15_0:removeEventCb(BGMSwitchController.instance, BGMSwitchEvent.RandomFinished, arg_15_0._refreshView, arg_15_0)
-	arg_15_0:removeEventCb(BGMSwitchController.instance, BGMSwitchEvent.BGMSwitchClose, arg_15_0._refreshView, arg_15_0)
-	arg_15_0:removeEventCb(BGMSwitchController.instance, BGMSwitchEvent.BgmMarkRead, arg_15_0._bgmMarkRead, arg_15_0)
-	arg_15_0:removeEventCb(BGMSwitchController.instance, BGMSwitchEvent.OnPlayMainBgm, arg_15_0._onPlayMainBgm, arg_15_0)
+function MainThumbnailBgmView:_removeSelfEvents()
+	self:removeEventCb(BGMSwitchController.instance, BGMSwitchEvent.SelectPlayGear, self._refreshView, self)
+	self:removeEventCb(BGMSwitchController.instance, BGMSwitchEvent.BgmSwitched, self._refreshView, self)
+	self:removeEventCb(BGMSwitchController.instance, BGMSwitchEvent.BgmFavorite, self._refreshView, self)
+	self:removeEventCb(BGMSwitchController.instance, BGMSwitchEvent.RandomFinished, self._refreshView, self)
+	self:removeEventCb(BGMSwitchController.instance, BGMSwitchEvent.BGMSwitchClose, self._refreshView, self)
+	self:removeEventCb(BGMSwitchController.instance, BGMSwitchEvent.BgmMarkRead, self._bgmMarkRead, self)
+	self:removeEventCb(BGMSwitchController.instance, BGMSwitchEvent.OnPlayMainBgm, self._onPlayMainBgm, self)
 end
 
-function var_0_0._editableInitView(arg_16_0)
-	arg_16_0._redDotComp = RedDotController.instance:addNotEventRedDot(arg_16_0._goReddot, arg_16_0._isNotRead, arg_16_0)
+function MainThumbnailBgmView:_editableInitView()
+	self._redDotComp = RedDotController.instance:addNotEventRedDot(self._goReddot, self._isNotRead, self)
 end
 
-function var_0_0._onPlayMainBgm(arg_17_0, arg_17_1)
-	arg_17_0:_refreshView()
+function MainThumbnailBgmView:_onPlayMainBgm(audioId)
+	self:_refreshView()
 end
 
-function var_0_0._bgmMarkRead(arg_18_0)
-	local var_18_0 = BGMSwitchModel.instance:getUnReadCount()
+function MainThumbnailBgmView:_bgmMarkRead()
+	local unReadCount = BGMSwitchModel.instance:getUnReadCount()
 
-	PlayerPrefsHelper.setNumber(BGMSwitchController.instance:getPlayerPrefKey(), var_18_0)
+	PlayerPrefsHelper.setNumber(BGMSwitchController.instance:getPlayerPrefKey(), unReadCount)
 
-	if arg_18_0._redDotComp then
-		arg_18_0._redDotComp:refreshRedDot()
+	if self._redDotComp then
+		self._redDotComp:refreshRedDot()
 	end
 end
 
-function var_0_0._isNotRead(arg_19_0)
+function MainThumbnailBgmView:_isNotRead()
 	return BGMSwitchController.instance:hasBgmRedDot()
 end
 
-function var_0_0.onDestroyView(arg_20_0)
-	if arg_20_0.isUnlock then
-		TaskDispatcher.cancelTask(arg_20_0._refreshView, arg_20_0)
-		arg_20_0:_removeSelfEvents()
+function MainThumbnailBgmView:onDestroyView()
+	if self.isUnlock then
+		TaskDispatcher.cancelTask(self._refreshView, self)
+		self:_removeSelfEvents()
 	end
 end
 
-return var_0_0
+return MainThumbnailBgmView

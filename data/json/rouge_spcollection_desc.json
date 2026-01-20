@@ -818,17 +818,17 @@
   {
     "id": 8180022,
     "effectId": 7,
-    "condition": "language_10093956",
+    "condition": "language_10071807",
     "desc": "language_10071012",
-    "conditionSimply": "language_10093956",
+    "conditionSimply": "language_10071807",
     "descSimply": "language_10071012"
   },
   {
     "id": 8180022,
     "effectId": 8,
-    "condition": "language_10093957",
+    "condition": "language_10071808",
     "desc": "language_10071013",
-    "conditionSimply": "language_10093957",
+    "conditionSimply": "language_10071808",
     "descSimply": "language_10071809"
   },
   {

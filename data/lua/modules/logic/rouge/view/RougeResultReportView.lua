@@ -1,54 +1,56 @@
-﻿module("modules.logic.rouge.view.RougeResultReportView", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeResultReportView.lua
 
-local var_0_0 = class("RougeResultReportView", BaseView)
+module("modules.logic.rouge.view.RougeResultReportView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg")
-	arg_1_0._scrollrecordlist = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_recordlist")
-	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "#go_empty")
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
+local RougeResultReportView = class("RougeResultReportView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeResultReportView:onInitView()
+	self._simagefullbg = gohelper.findChildSingleImage(self.viewGO, "#simage_fullbg")
+	self._scrollrecordlist = gohelper.findChildScrollRect(self.viewGO, "#scroll_recordlist")
+	self._goempty = gohelper.findChild(self.viewGO, "#go_empty")
+	self._gotopleft = gohelper.findChild(self.viewGO, "#go_topleft")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RougeResultReportView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RougeResultReportView:removeEvents()
 	return
 end
 
-function var_0_0._btndetailsOnClick(arg_4_0)
+function RougeResultReportView:_btndetailsOnClick()
 	return
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function RougeResultReportView:_editableInitView()
 	RougeResultReportListModel.instance.startFrameCount = UnityEngine.Time.frameCount
 
 	RougeResultReportListModel.instance:init()
 
-	local var_5_0 = RougeResultReportListModel.instance:getList()
+	local list = RougeResultReportListModel.instance:getList()
 
-	gohelper.setActive(arg_5_0._goempty, #var_5_0 == 0)
+	gohelper.setActive(self._goempty, #list == 0)
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function RougeResultReportView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
+function RougeResultReportView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.RougeFavoriteAudio9)
 end
 
-function var_0_0.onClose(arg_8_0)
+function RougeResultReportView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
+function RougeResultReportView:onDestroyView()
 	RougeResultReportListModel.instance:clear()
 end
 
-return var_0_0
+return RougeResultReportView

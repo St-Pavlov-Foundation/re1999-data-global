@@ -1,87 +1,89 @@
-﻿module("modules.logic.room.entity.comp.base.RoomBaseBlockEffectComp", package.seeall)
+﻿-- chunkname: @modules/logic/room/entity/comp/base/RoomBaseBlockEffectComp.lua
 
-local var_0_0 = class("RoomBaseBlockEffectComp", LuaCompBase)
+module("modules.logic.room.entity.comp.base.RoomBaseBlockEffectComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.entity = arg_1_1
-	arg_1_0.delayTaskTime = 0.1
-	arg_1_0._effectKeyDict = {}
-	arg_1_0._allEffectKeyList = {}
-	arg_1_0._effectPrefixKey = arg_1_0.__cname
+local RoomBaseBlockEffectComp = class("RoomBaseBlockEffectComp", LuaCompBase)
+
+function RoomBaseBlockEffectComp:ctor(entity)
+	self.entity = entity
+	self.delayTaskTime = 0.1
+	self._effectKeyDict = {}
+	self._allEffectKeyList = {}
+	self._effectPrefixKey = self.__cname
 end
 
-function var_0_0.addEventListeners(arg_2_0)
+function RoomBaseBlockEffectComp:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
+function RoomBaseBlockEffectComp:removeEventListeners()
 	return
 end
 
-function var_0_0.onBeforeDestroy(arg_4_0)
+function RoomBaseBlockEffectComp:onBeforeDestroy()
 	return
 end
 
-function var_0_0.onRunDelayTask(arg_5_0)
+function RoomBaseBlockEffectComp:onRunDelayTask()
 	return
 end
 
-function var_0_0.removeParamsAndPlayAnimator(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	local var_6_0 = arg_6_0.entity.effect
+function RoomBaseBlockEffectComp:removeParamsAndPlayAnimator(keyList, animName, delayDestroy)
+	local effect = self.entity.effect
 
-	if arg_6_3 then
-		for iter_6_0 = 1, #arg_6_1 do
-			var_6_0:playEffectAnimator(arg_6_1[iter_6_0], arg_6_2)
+	if delayDestroy then
+		for i = 1, #keyList do
+			effect:playEffectAnimator(keyList[i], animName)
 		end
 	end
 
-	var_6_0:removeParams(arg_6_1, arg_6_3)
+	effect:removeParams(keyList, delayDestroy)
 end
 
-function var_0_0.getEffectKeyById(arg_7_0, arg_7_1)
-	if not arg_7_0._effectKeyDict[arg_7_1] then
-		local var_7_0 = arg_7_0:formatEffectKey(arg_7_1)
+function RoomBaseBlockEffectComp:getEffectKeyById(index)
+	if not self._effectKeyDict[index] then
+		local effectNameKey = self:formatEffectKey(index)
 
-		arg_7_0._effectKeyDict[arg_7_1] = var_7_0
+		self._effectKeyDict[index] = effectNameKey
 
-		table.insert(arg_7_0._allEffectKeyList, var_7_0)
+		table.insert(self._allEffectKeyList, effectNameKey)
 	end
 
-	return arg_7_0._effectKeyDict[arg_7_1]
+	return self._effectKeyDict[index]
 end
 
-function var_0_0.formatEffectKey(arg_8_0, arg_8_1)
-	return string.format("%s_%s", arg_8_0._effectPrefixKey, arg_8_1)
+function RoomBaseBlockEffectComp:formatEffectKey(index)
+	return string.format("%s_%s", self._effectPrefixKey, index)
 end
 
-function var_0_0.startWaitRunDelayTask(arg_9_0)
-	if not arg_9_0.__hasWaitRunDelayTask_ then
-		arg_9_0.__hasWaitRunDelayTask_ = true
+function RoomBaseBlockEffectComp:startWaitRunDelayTask()
+	if not self.__hasWaitRunDelayTask_ then
+		self.__hasWaitRunDelayTask_ = true
 
-		local var_9_0 = arg_9_0.delayTaskTime or 0.001
+		local delay = self.delayTaskTime or 0.001
 
-		TaskDispatcher.runDelay(arg_9_0.__onWaitRunDelayTask_, arg_9_0, math.max(0.001, tonumber(var_9_0)))
-	end
-end
-
-function var_0_0.__onWaitRunDelayTask_(arg_10_0)
-	arg_10_0.__hasWaitRunDelayTask_ = false
-
-	if not arg_10_0:isWillDestory() then
-		arg_10_0:onRunDelayTask()
+		TaskDispatcher.runDelay(self.__onWaitRunDelayTask_, self, math.max(0.001, tonumber(delay)))
 	end
 end
 
-function var_0_0.isWillDestory(arg_11_0)
-	return arg_11_0.__willDestroy
+function RoomBaseBlockEffectComp:__onWaitRunDelayTask_()
+	self.__hasWaitRunDelayTask_ = false
+
+	if not self:isWillDestory() then
+		self:onRunDelayTask()
+	end
 end
 
-function var_0_0.beforeDestroy(arg_12_0)
-	arg_12_0.__willDestroy = true
-	arg_12_0.__hasWaitRunDelayTask_ = false
-
-	TaskDispatcher.cancelTask(arg_12_0.__onWaitRunDelayTask_, arg_12_0)
-	arg_12_0:onBeforeDestroy()
+function RoomBaseBlockEffectComp:isWillDestory()
+	return self.__willDestroy
 end
 
-return var_0_0
+function RoomBaseBlockEffectComp:beforeDestroy()
+	self.__willDestroy = true
+	self.__hasWaitRunDelayTask_ = false
+
+	TaskDispatcher.cancelTask(self.__onWaitRunDelayTask_, self)
+	self:onBeforeDestroy()
+end
+
+return RoomBaseBlockEffectComp

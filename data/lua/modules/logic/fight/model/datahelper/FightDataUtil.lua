@@ -1,259 +1,261 @@
-﻿module("modules.logic.fight.model.datahelper.FightDataUtil", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/datahelper/FightDataUtil.lua
 
-local var_0_0 = {}
+module("modules.logic.fight.model.datahelper.FightDataUtil", package.seeall)
 
-function var_0_0.copyData(arg_1_0)
-	if type(arg_1_0) ~= "table" then
-		return arg_1_0
+local FightDataUtil = {}
+
+function FightDataUtil.copyData(data)
+	if type(data) ~= "table" then
+		return data
 	else
-		local var_1_0 = {}
+		local table = {}
 
-		for iter_1_0, iter_1_1 in pairs(arg_1_0) do
-			var_1_0[iter_1_0] = var_0_0.copyData(iter_1_1)
+		for k, v in pairs(data) do
+			table[k] = FightDataUtil.copyData(v)
 		end
 
-		local var_1_1 = getmetatable(arg_1_0)
+		local meta = getmetatable(data)
 
-		if var_1_1 then
-			setmetatable(var_1_0, var_1_1)
+		if meta then
+			setmetatable(table, meta)
 		end
 
-		return var_1_0
+		return table
 	end
 end
 
-local var_0_1 = {
+local defaultFilterCoverKey = {
 	class = true
 }
 
-function var_0_0.coverData(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	if arg_2_0 == nil then
+function FightDataUtil.coverData(data1, data2, filterKey, coverFunc)
+	if data1 == nil then
 		return nil
 	end
 
-	if arg_2_1 == nil then
-		arg_2_1 = {}
+	if data2 == nil then
+		data2 = {}
 
-		local var_2_0 = getmetatable(arg_2_0)
+		local meta = getmetatable(data1)
 
-		if var_2_0 then
-			setmetatable(arg_2_1, var_2_0)
+		if meta then
+			setmetatable(data2, meta)
 		end
 	end
 
-	for iter_2_0, iter_2_1 in pairs(arg_2_1) do
-		local var_2_1 = false
+	for k, v in pairs(data2) do
+		local continue = false
 
-		if arg_2_2 and arg_2_2[iter_2_0] then
-			var_2_1 = true
+		if filterKey and filterKey[k] then
+			continue = true
 		end
 
-		if var_0_1[iter_2_0] then
-			var_2_1 = true
+		if defaultFilterCoverKey[k] then
+			continue = true
 		end
 
-		if not var_2_1 and arg_2_0[iter_2_0] == nil then
-			arg_2_1[iter_2_0] = nil
+		if not continue and data1[k] == nil then
+			data2[k] = nil
 		end
 	end
 
-	for iter_2_2, iter_2_3 in pairs(arg_2_0) do
-		local var_2_2 = false
+	for k, v in pairs(data1) do
+		local continue = false
 
-		if arg_2_2 and arg_2_2[iter_2_2] then
-			var_2_2 = true
+		if filterKey and filterKey[k] then
+			continue = true
 		end
 
-		if var_0_1[iter_2_2] then
-			var_2_2 = true
+		if defaultFilterCoverKey[k] then
+			continue = true
 		end
 
-		if not var_2_2 then
-			if arg_2_3 and arg_2_3[iter_2_2] then
-				arg_2_3[iter_2_2](arg_2_0, arg_2_1)
-			elseif arg_2_1[iter_2_2] == nil then
-				arg_2_1[iter_2_2] = FightHelper.deepCopySimpleWithMeta(arg_2_0[iter_2_2])
-			elseif type(iter_2_3) == "table" then
-				var_0_0.coverInternal(iter_2_3, arg_2_1[iter_2_2])
+		if not continue then
+			if coverFunc and coverFunc[k] then
+				coverFunc[k](data1, data2)
+			elseif data2[k] == nil then
+				data2[k] = FightHelper.deepCopySimpleWithMeta(data1[k])
+			elseif type(v) == "table" then
+				FightDataUtil.coverInternal(v, data2[k])
 			else
-				arg_2_1[iter_2_2] = iter_2_3
+				data2[k] = v
 			end
 		end
 	end
 
-	return arg_2_1
+	return data2
 end
 
-function var_0_0.coverInternal(arg_3_0, arg_3_1)
-	for iter_3_0, iter_3_1 in pairs(arg_3_1) do
-		if arg_3_0[iter_3_0] == nil then
-			arg_3_1[iter_3_0] = nil
+function FightDataUtil.coverInternal(data1, data2)
+	for k, v in pairs(data2) do
+		if data1[k] == nil then
+			data2[k] = nil
 		end
 	end
 
-	for iter_3_2, iter_3_3 in pairs(arg_3_0) do
-		if type(iter_3_3) == "table" then
-			if arg_3_1[iter_3_2] == nil then
-				arg_3_1[iter_3_2] = FightHelper.deepCopySimpleWithMeta(iter_3_3)
+	for k, v in pairs(data1) do
+		if type(v) == "table" then
+			if data2[k] == nil then
+				data2[k] = FightHelper.deepCopySimpleWithMeta(v)
 			else
-				var_0_0.coverInternal(iter_3_3, arg_3_1[iter_3_2])
+				FightDataUtil.coverInternal(v, data2[k])
 			end
 		else
-			arg_3_1[iter_3_2] = iter_3_3
+			data2[k] = v
 		end
 	end
 end
 
-var_0_0.findDiffList = {}
-var_0_0.findDiffPath = {}
+FightDataUtil.findDiffList = {}
+FightDataUtil.findDiffPath = {}
 
-function var_0_0.addPathkey(arg_4_0)
-	table.insert(var_0_0.findDiffPath, arg_4_0)
+function FightDataUtil.addPathkey(key)
+	table.insert(FightDataUtil.findDiffPath, key)
 end
 
-function var_0_0.removePathKey()
-	table.remove(var_0_0.findDiffPath)
+function FightDataUtil.removePathKey()
+	table.remove(FightDataUtil.findDiffPath)
 end
 
-function var_0_0.findDiff(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	var_0_0.findDiffList = {}
-	var_0_0.findDiffPath = {}
+function FightDataUtil.findDiff(data1, data2, filterKey, compareFuncTab)
+	FightDataUtil.findDiffList = {}
+	FightDataUtil.findDiffPath = {}
 
-	var_0_0.doFindDiff(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	FightDataUtil.doFindDiff(data1, data2, filterKey, compareFuncTab)
 
-	local var_6_0 = {}
+	local diffTab = {}
 
-	for iter_6_0, iter_6_1 in ipairs(var_0_0.findDiffList) do
-		local var_6_1 = iter_6_1.pathList[1]
+	for i, v in ipairs(FightDataUtil.findDiffList) do
+		local rootKey = v.pathList[1]
 
-		var_6_0[var_6_1] = var_6_0[var_6_1] or {}
+		diffTab[rootKey] = diffTab[rootKey] or {}
 
-		table.insert(var_6_0[var_6_1], iter_6_1)
+		table.insert(diffTab[rootKey], v)
 	end
 
-	return #var_0_0.findDiffList > 0, var_6_0, var_0_0.findDiffList
+	return #FightDataUtil.findDiffList > 0, diffTab, FightDataUtil.findDiffList
 end
 
-function var_0_0.doFindDiff(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4)
-	if type(arg_7_0) ~= "table" or type(arg_7_1) ~= "table" then
+function FightDataUtil.doFindDiff(data1, data2, filterKey, compareFuncTab, compareValueFunc)
+	if type(data1) ~= "table" or type(data2) ~= "table" then
 		logError("传入的参数必须是表结构,请检查代码")
 
 		return
 	end
 
-	var_0_0.doCheckMissing(arg_7_0, arg_7_1, arg_7_2)
+	FightDataUtil.doCheckMissing(data1, data2, filterKey)
 
-	for iter_7_0, iter_7_1 in pairs(arg_7_0) do
-		local var_7_0 = false
+	for k, v in pairs(data1) do
+		local continue = false
 
-		if arg_7_2 and arg_7_2[iter_7_0] then
-			var_7_0 = true
+		if filterKey and filterKey[k] then
+			continue = true
 		end
 
-		if not var_7_0 and arg_7_1[iter_7_0] ~= nil then
-			var_0_0.addPathkey(iter_7_0)
+		if not continue and data2[k] ~= nil then
+			FightDataUtil.addPathkey(k)
 
-			if arg_7_3 and arg_7_3[iter_7_0] then
-				arg_7_3[iter_7_0](arg_7_0[iter_7_0], arg_7_1[iter_7_0], arg_7_0, arg_7_1)
-			elseif arg_7_4 then
-				arg_7_4(arg_7_0[iter_7_0], arg_7_1[iter_7_0])
+			if compareFuncTab and compareFuncTab[k] then
+				compareFuncTab[k](data1[k], data2[k], data1, data2)
+			elseif compareValueFunc then
+				compareValueFunc(data1[k], data2[k])
 			else
-				var_0_0.checkDifference(arg_7_0[iter_7_0], arg_7_1[iter_7_0])
+				FightDataUtil.checkDifference(data1[k], data2[k])
 			end
 
-			var_0_0.removePathKey()
+			FightDataUtil.removePathKey()
 		end
 	end
 end
 
-function var_0_0.checkDifference(arg_8_0, arg_8_1)
-	if type(arg_8_0) ~= type(arg_8_1) then
-		var_0_0.addDiff(nil, var_0_0.diffType.difference)
+function FightDataUtil.checkDifference(data1, data2)
+	if type(data1) ~= type(data2) then
+		FightDataUtil.addDiff(nil, FightDataUtil.diffType.difference)
 
 		return
-	elseif type(arg_8_0) == "table" then
-		var_0_0.doCheckMissing(arg_8_0, arg_8_1)
+	elseif type(data1) == "table" then
+		FightDataUtil.doCheckMissing(data1, data2)
 
-		for iter_8_0, iter_8_1 in pairs(arg_8_0) do
-			if arg_8_1[iter_8_0] ~= nil then
-				var_0_0.addPathkey(iter_8_0)
-				var_0_0.checkDifference(iter_8_1, arg_8_1[iter_8_0])
-				var_0_0.removePathKey()
+		for k, v in pairs(data1) do
+			if data2[k] ~= nil then
+				FightDataUtil.addPathkey(k)
+				FightDataUtil.checkDifference(v, data2[k])
+				FightDataUtil.removePathKey()
 			end
 		end
-	elseif arg_8_0 ~= arg_8_1 then
-		var_0_0.addDiff(nil, var_0_0.diffType.difference)
+	elseif data1 ~= data2 then
+		FightDataUtil.addDiff(nil, FightDataUtil.diffType.difference)
 	end
 end
 
-function var_0_0.doCheckMissing(arg_9_0, arg_9_1, arg_9_2)
-	for iter_9_0, iter_9_1 in pairs(arg_9_1) do
-		local var_9_0 = false
+function FightDataUtil.doCheckMissing(data1, data2, filterKey)
+	for k, v in pairs(data2) do
+		local continue = false
 
-		if arg_9_2 and arg_9_2[iter_9_0] then
-			var_9_0 = true
+		if filterKey and filterKey[k] then
+			continue = true
 		end
 
-		if not var_9_0 and arg_9_0[iter_9_0] == nil then
-			var_0_0.addDiff(iter_9_0, var_0_0.diffType.missingSource)
+		if not continue and data1[k] == nil then
+			FightDataUtil.addDiff(k, FightDataUtil.diffType.missingSource)
 		end
 	end
 
-	for iter_9_2, iter_9_3 in pairs(arg_9_0) do
-		local var_9_1 = false
+	for k, v in pairs(data1) do
+		local continue = false
 
-		if arg_9_2 and arg_9_2[iter_9_2] then
-			var_9_1 = true
+		if filterKey and filterKey[k] then
+			continue = true
 		end
 
-		if not var_9_1 and arg_9_1[iter_9_2] == nil then
-			var_0_0.addDiff(iter_9_2, var_0_0.diffType.missingTarget)
+		if not continue and data2[k] == nil then
+			FightDataUtil.addDiff(k, FightDataUtil.diffType.missingTarget)
 		end
 	end
 end
 
-var_0_0.diffType = {
+FightDataUtil.diffType = {
 	missingTarget = 2,
 	difference = 3,
 	missingSource = 1
 }
 
-function var_0_0.addDiff(arg_10_0, arg_10_1)
-	local var_10_0 = {
-		diffType = arg_10_1 or var_0_0.diffType.difference
-	}
-	local var_10_1 = var_0_0.coverData(var_0_0.findDiffPath)
+function FightDataUtil.addDiff(key, diffType)
+	local tab = {}
 
-	if arg_10_0 then
-		table.insert(var_10_1, arg_10_0)
+	tab.diffType = diffType or FightDataUtil.diffType.difference
+
+	local pathList = FightDataUtil.coverData(FightDataUtil.findDiffPath)
+
+	if key then
+		table.insert(pathList, key)
 	end
 
-	var_10_0.pathList = var_10_1
-	var_10_0.pathStr = table.concat(var_10_1, ".")
+	tab.pathList = pathList
+	tab.pathStr = table.concat(pathList, ".")
 
-	table.insert(var_0_0.findDiffList, var_10_0)
+	table.insert(FightDataUtil.findDiffList, tab)
 
-	return var_10_0
+	return tab
 end
 
-function var_0_0.getDiffValue(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0
-	local var_11_1
-	local var_11_2 = arg_11_2.pathList
-	local var_11_3 = arg_11_0
-	local var_11_4 = arg_11_1
+function FightDataUtil.getDiffValue(sourceData, targetData, tab)
+	local value1, value2
+	local pathList = tab.pathList
+	local ref1 = sourceData
+	local ref2 = targetData
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_2) do
-		var_11_0 = var_11_3[iter_11_1]
-		var_11_1 = var_11_4[iter_11_1]
-		var_11_3 = var_11_0
-		var_11_4 = var_11_1
+	for i, v in ipairs(pathList) do
+		value1 = ref1[v]
+		value2 = ref2[v]
+		ref1 = value1
+		ref2 = value2
 	end
 
-	var_11_0 = var_11_0 == nil and "nil" or var_11_0
-	var_11_1 = var_11_1 == nil and "nil" or var_11_1
+	value1 = value1 == nil and "nil" or value1
+	value2 = value2 == nil and "nil" or value2
 
-	return var_11_0, var_11_1
+	return value1, value2
 end
 
-return var_0_0
+return FightDataUtil

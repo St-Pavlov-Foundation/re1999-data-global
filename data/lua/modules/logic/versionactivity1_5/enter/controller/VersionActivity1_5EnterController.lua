@@ -1,58 +1,62 @@
-﻿module("modules.logic.versionactivity1_5.enter.controller.VersionActivity1_5EnterController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/enter/controller/VersionActivity1_5EnterController.lua
 
-local var_0_0 = class("VersionActivity1_5EnterController", BaseController)
+module("modules.logic.versionactivity1_5.enter.controller.VersionActivity1_5EnterController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local VersionActivity1_5EnterController = class("VersionActivity1_5EnterController", BaseController)
+
+function VersionActivity1_5EnterController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function VersionActivity1_5EnterController:reInit()
 	return
 end
 
-function var_0_0.openVersionActivityEnterViewIfNotOpened(arg_3_0, arg_3_1, arg_3_2)
+function VersionActivity1_5EnterController:openVersionActivityEnterViewIfNotOpened(openedCallback, openedCallbackObj)
 	if ViewMgr.instance:isOpen(ViewName.VersionActivity1_5EnterView) then
-		if arg_3_1 then
-			arg_3_1(arg_3_2)
+		if openedCallback then
+			openedCallback(openedCallbackObj)
 		end
 
 		return
 	end
 
-	arg_3_0:openVersionActivityEnterView(arg_3_1, arg_3_2)
+	self:openVersionActivityEnterView(openedCallback, openedCallbackObj)
 end
 
-function var_0_0.openVersionActivityEnterView(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0.openedCallback = arg_4_1
-	arg_4_0.openedCallbackObj = arg_4_2
+function VersionActivity1_5EnterController:openVersionActivityEnterView(openedCallback, openedCallbackObj)
+	self.openedCallback = openedCallback
+	self.openedCallbackObj = openedCallbackObj
 
-	arg_4_0:_enterVersionActivityView(ViewName.VersionActivity1_5EnterView, VersionActivity1_5Enum.ActivityId.EnterView, arg_4_0._openVersionActivityEnterView, arg_4_0)
+	self:_enterVersionActivityView(ViewName.VersionActivity1_5EnterView, VersionActivity1_5Enum.ActivityId.EnterView, self._openVersionActivityEnterView, self)
 end
 
-function var_0_0._onFinishStory(arg_5_0)
-	if ActivityHelper.getActivityStatus(VersionActivity1_5Enum.ActivityId.EnterView) ~= ActivityEnum.ActivityStatus.Normal then
+function VersionActivity1_5EnterController:_onFinishStory()
+	local status = ActivityHelper.getActivityStatus(VersionActivity1_5Enum.ActivityId.EnterView)
+
+	if status ~= ActivityEnum.ActivityStatus.Normal then
 		return
 	end
 
-	arg_5_0:_openVersionActivityEnterView()
+	self:_openVersionActivityEnterView()
 end
 
-function var_0_0._openVersionActivityEnterView(arg_6_0)
+function VersionActivity1_5EnterController:_openVersionActivityEnterView()
 	if not VersionActivityBaseController.instance:isPlayedActivityVideo(VersionActivity1_5Enum.ActivityId.EnterView) then
-		local var_6_0 = ActivityModel.instance:getActMO(VersionActivity1_5Enum.ActivityId.EnterView)
-		local var_6_1 = var_6_0 and var_6_0.config and var_6_0.config.storyId
+		local activityMo = ActivityModel.instance:getActMO(VersionActivity1_5Enum.ActivityId.EnterView)
+		local storyId = activityMo and activityMo.config and activityMo.config.storyId
 
-		if not var_6_1 then
-			logError(string.format("act id %s dot config story id", var_6_1))
+		if not storyId then
+			logError(string.format("act id %s dot config story id", storyId))
 
-			var_6_1 = 100010
+			storyId = 100010
 		end
 
-		local var_6_2 = {}
+		local param = {}
 
-		var_6_2.isVersionActivityPV = true
+		param.isVersionActivityPV = true
 
-		StoryController.instance:playStory(var_6_1, var_6_2, arg_6_0._onFinishStory, arg_6_0)
+		StoryController.instance:playStory(storyId, param, self._onFinishStory, self)
 
 		return
 	end
@@ -65,16 +69,16 @@ function var_0_0._openVersionActivityEnterView(arg_6_0)
 		actId2OpenAudioDict = VersionActivity1_5Enum.ActId2OpenAudio
 	})
 
-	if arg_6_0.openedCallback then
-		arg_6_0.openedCallback(arg_6_0.openedCallbackObj)
+	if self.openedCallback then
+		self.openedCallback(self.openedCallbackObj)
 
-		arg_6_0.openedCallback = nil
-		arg_6_0.openedCallbackObj = nil
+		self.openedCallback = nil
+		self.openedCallbackObj = nil
 	end
 end
 
-function var_0_0.directOpenVersionActivityEnterView(arg_7_0)
-	arg_7_0:_enterVersionActivityView(ViewName.VersionActivity1_5EnterView, VersionActivity1_5Enum.ActivityId.EnterView, function()
+function VersionActivity1_5EnterController:directOpenVersionActivityEnterView()
+	self:_enterVersionActivityView(ViewName.VersionActivity1_5EnterView, VersionActivity1_5Enum.ActivityId.EnterView, function()
 		ViewMgr.instance:openView(ViewName.VersionActivity1_5EnterView, {
 			skipOpenAnim = true,
 			actId = VersionActivity1_5Enum.ActivityId.EnterView,
@@ -83,34 +87,34 @@ function var_0_0.directOpenVersionActivityEnterView(arg_7_0)
 			actId2AmbientDict = VersionActivity1_5Enum.ActId2Ambient,
 			actId2OpenAudioDict = VersionActivity1_5Enum.ActId2OpenAudio
 		})
-	end, arg_7_0)
+	end, self)
 end
 
-function var_0_0.openStoreView(arg_9_0)
-	arg_9_0:_enterVersionActivityView(ViewName.VersionActivity1_5StoreView, VersionActivity1_5Enum.ActivityId.DungeonStore, arg_9_0._openStoreView, arg_9_0)
+function VersionActivity1_5EnterController:openStoreView()
+	self:_enterVersionActivityView(ViewName.VersionActivity1_5StoreView, VersionActivity1_5Enum.ActivityId.DungeonStore, self._openStoreView, self)
 end
 
-function var_0_0._openStoreView(arg_10_0, arg_10_1, arg_10_2)
-	Activity107Rpc.instance:sendGet107GoodsInfoRequest(arg_10_2, function()
-		ViewMgr.instance:openView(arg_10_1, {
-			actId = arg_10_2
+function VersionActivity1_5EnterController:_openStoreView(viewName, actId)
+	Activity107Rpc.instance:sendGet107GoodsInfoRequest(actId, function()
+		ViewMgr.instance:openView(viewName, {
+			actId = actId
 		})
 	end)
 end
 
-function var_0_0.openSeasonStoreView(arg_12_0)
-	local var_12_0 = Activity104Model.instance:getCurSeasonId()
-	local var_12_1 = SeasonViewHelper.getViewName(var_12_0, Activity104Enum.ViewName.StoreView)
-	local var_12_2 = Activity104Enum.SeasonStore[var_12_0]
+function VersionActivity1_5EnterController:openSeasonStoreView()
+	local actId = Activity104Model.instance:getCurSeasonId()
+	local viewName = SeasonViewHelper.getViewName(actId, Activity104Enum.ViewName.StoreView)
+	local storeActId = Activity104Enum.SeasonStore[actId]
 
-	arg_12_0:_enterVersionActivityView(var_12_1, var_12_2, arg_12_0._openStoreView, arg_12_0)
+	self:_enterVersionActivityView(viewName, storeActId, self._openStoreView, self)
 end
 
-function var_0_0.openTaskView(arg_13_0)
-	arg_13_0:_enterVersionActivityView(ViewName.VersionActivityTaskView, VersionActivity1_5Enum.ActivityId.Act113, arg_13_0._openTaskView, arg_13_0)
+function VersionActivity1_5EnterController:openTaskView()
+	self:_enterVersionActivityView(ViewName.VersionActivityTaskView, VersionActivity1_5Enum.ActivityId.Act113, self._openTaskView, self)
 end
 
-function var_0_0._openTaskView(arg_14_0)
+function VersionActivity1_5EnterController:_openTaskView()
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.ActivityDungeon
 	}, function()
@@ -118,34 +122,34 @@ function var_0_0._openTaskView(arg_14_0)
 	end)
 end
 
-function var_0_0._enterVersionActivityView(arg_16_0, arg_16_1, arg_16_2, arg_16_3, arg_16_4)
-	local var_16_0, var_16_1, var_16_2 = ActivityHelper.getActivityStatusAndToast(arg_16_2)
+function VersionActivity1_5EnterController:_enterVersionActivityView(viewName, actId, callback, callbackObj)
+	local status, toastId, toastParam = ActivityHelper.getActivityStatusAndToast(actId)
 
-	if var_16_0 ~= ActivityEnum.ActivityStatus.Normal then
-		if var_16_1 then
-			GameFacade.showToast(var_16_1, var_16_2)
+	if status ~= ActivityEnum.ActivityStatus.Normal then
+		if toastId then
+			GameFacade.showToast(toastId, toastParam)
 		end
 
 		return
 	end
 
-	if arg_16_3 then
-		arg_16_3(arg_16_4, arg_16_1, arg_16_2)
+	if callback then
+		callback(callbackObj, viewName, actId)
 
 		return
 	end
 
-	ViewMgr.instance:openView(arg_16_1)
+	ViewMgr.instance:openView(viewName)
 end
 
-function var_0_0.GetActivityPrefsKey(arg_17_0)
-	return VersionActivity1_5Enum.ActivityId.EnterView .. arg_17_0
+function VersionActivity1_5EnterController.GetActivityPrefsKey(key)
+	return VersionActivity1_5Enum.ActivityId.EnterView .. key
 end
 
-function var_0_0.GetActivityPrefsKeyWithUser(arg_18_0)
-	return PlayerModel.instance:getPlayerPrefsKey(var_0_0.GetActivityPrefsKey(arg_18_0))
+function VersionActivity1_5EnterController.GetActivityPrefsKeyWithUser(key)
+	return PlayerModel.instance:getPlayerPrefsKey(VersionActivity1_5EnterController.GetActivityPrefsKey(key))
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity1_5EnterController.instance = VersionActivity1_5EnterController.New()
 
-return var_0_0
+return VersionActivity1_5EnterController

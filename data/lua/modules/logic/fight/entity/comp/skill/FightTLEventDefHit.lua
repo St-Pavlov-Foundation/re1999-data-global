@@ -1,9 +1,11 @@
-﻿module("modules.logic.fight.entity.comp.skill.FightTLEventDefHit", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skill/FightTLEventDefHit.lua
 
-local var_0_0 = class("FightTLEventDefHit", FightTimelineTrackItem)
-local var_0_1 = {}
+module("modules.logic.fight.entity.comp.skill.FightTLEventDefHit", package.seeall)
 
-var_0_0.directCharacterHitEffectType = {
+local FightTLEventDefHit = class("FightTLEventDefHit", FightTimelineTrackItem)
+local HittingEntity2Counter = {}
+
+FightTLEventDefHit.directCharacterHitEffectType = {
 	[FightEnum.EffectType.MISS] = true,
 	[FightEnum.EffectType.DAMAGE] = true,
 	[FightEnum.EffectType.CRIT] = true,
@@ -14,1106 +16,1111 @@ var_0_0.directCharacterHitEffectType = {
 	[FightEnum.EffectType.EZIOBIGSKILLDAMAGE] = true
 }
 
-local var_0_2 = {
+local originHitEffectType = {
 	[FightEnum.EffectType.ORIGINDAMAGE] = true,
 	[FightEnum.EffectType.ORIGINCRIT] = true
 }
 
-var_0_0.originHitEffectType = var_0_2
+FightTLEventDefHit.originHitEffectType = originHitEffectType
 
-local var_0_3 = {
+local additionalHitEffectType = {
 	[FightEnum.EffectType.ADDITIONALDAMAGE] = true,
 	[FightEnum.EffectType.ADDITIONALDAMAGECRIT] = true
 }
 
-function var_0_0.setContext(arg_1_0, arg_1_1)
-	arg_1_0._context = arg_1_1
+function FightTLEventDefHit:setContext(tlEventContext)
+	self._context = tlEventContext
 end
 
-function var_0_0.onTrackStart(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	arg_2_0._paramsArr = arg_2_3
-	arg_2_0.fightStepData = arg_2_1
-	arg_2_0._duration = arg_2_2
-	arg_2_0._attacker = FightHelper.getEntity(arg_2_1.fromId)
-	arg_2_0._defeAction = arg_2_3[1]
-	arg_2_0._critAction = not string.nilorempty(arg_2_3[2]) and arg_2_3[2] or arg_2_3[1]
-	arg_2_0._missAction = arg_2_3[3]
-	arg_2_0._hasRatio = not string.nilorempty(arg_2_3[4])
-	arg_2_0._ratio = tonumber(arg_2_3[4]) or 0
-	arg_2_0._audioId = tonumber(arg_2_3[5]) or 0
-	arg_2_0._isLastHit = arg_2_3[6] == "1"
+function FightTLEventDefHit:onTrackStart(fightStepData, duration, paramsArr)
+	self._paramsArr = paramsArr
+	self.fightStepData = fightStepData
+	self._duration = duration
+	self._attacker = FightHelper.getEntity(fightStepData.fromId)
+	self._defeAction = paramsArr[1]
+	self._critAction = not string.nilorempty(paramsArr[2]) and paramsArr[2] or paramsArr[1]
+	self._missAction = paramsArr[3]
+	self._hasRatio = not string.nilorempty(paramsArr[4])
+	self._ratio = tonumber(paramsArr[4]) or 0
+	self._audioId = tonumber(paramsArr[5]) or 0
+	self._isLastHit = paramsArr[6] == "1"
 
-	local var_2_0 = FightStrUtil.instance:getSplitToNumberCache(arg_2_3[7], "#")
-	local var_2_1 = FightStrUtil.instance:getSplitToNumberCache(arg_2_3[8], "#")
-	local var_2_2 = arg_2_3[9]
+	local buffIds = FightStrUtil.instance:getSplitToNumberCache(paramsArr[7], "#")
+	local behaviorTypeIds = FightStrUtil.instance:getSplitToNumberCache(paramsArr[8], "#")
+	local effectTemplate = paramsArr[9]
 
-	if not string.nilorempty(arg_2_3[10]) then
-		local var_2_3 = FightStrUtil.instance:getSplitToNumberCache(arg_2_3[10], "#")
+	if not string.nilorempty(paramsArr[10]) then
+		local arr = FightStrUtil.instance:getSplitToNumberCache(paramsArr[10], "#")
 
-		arg_2_0._act_on_index_entity = var_2_3[2]
-		arg_2_0._act_on_entity_count = var_2_3[1]
+		self._act_on_index_entity = arr[2]
+		self._act_on_entity_count = arr[1]
 	else
-		arg_2_0._act_on_index_entity = nil
-		arg_2_0._act_on_entity_count = nil
+		self._act_on_index_entity = nil
+		self._act_on_entity_count = nil
 	end
 
-	local var_2_4 = arg_2_3[11]
+	local dontSkillEffectIdStr = paramsArr[11]
 
-	arg_2_0._floatTotalIndex = nil
-	arg_2_0._floatFixedPosArr = nil
+	self._floatTotalIndex = nil
+	self._floatFixedPosArr = nil
 
-	if not string.nilorempty(arg_2_0._paramsArr[12]) then
-		arg_2_0._floatFixedPosArr = FightStrUtil.instance:getSplitString2Cache(arg_2_0._paramsArr[12], true)
+	if not string.nilorempty(self._paramsArr[12]) then
+		self._floatFixedPosArr = FightStrUtil.instance:getSplitString2Cache(self._paramsArr[12], true)
 	end
 
-	arg_2_0._skinId2OffetPos = nil
+	self._skinId2OffetPos = nil
 
-	if not string.nilorempty(arg_2_0._paramsArr[13]) then
-		arg_2_0._skinId2OffetPos = {}
+	if not string.nilorempty(self._paramsArr[13]) then
+		self._skinId2OffetPos = {}
 
-		local var_2_5 = FightStrUtil.instance:getSplitCache(arg_2_0._paramsArr[13], "|")
+		local arr = FightStrUtil.instance:getSplitCache(self._paramsArr[13], "|")
 
-		for iter_2_0, iter_2_1 in ipairs(var_2_5) do
-			local var_2_6 = FightStrUtil.instance:getSplitCache(iter_2_1, "#")
-			local var_2_7 = tonumber(var_2_6[1])
-			local var_2_8 = FightStrUtil.instance:getSplitToNumberCache(var_2_6[2], ",")
+		for i, v in ipairs(arr) do
+			local val = FightStrUtil.instance:getSplitCache(v, "#")
+			local skinId = tonumber(val[1])
+			local pos = FightStrUtil.instance:getSplitToNumberCache(val[2], ",")
 
-			arg_2_0._skinId2OffetPos[var_2_7] = {
-				var_2_8[1],
-				var_2_8[2]
+			self._skinId2OffetPos[skinId] = {
+				pos[1],
+				pos[2]
 			}
 		end
 	end
 
-	arg_2_0._forcePlayHitForOrigin = arg_2_0._paramsArr[14] == "1"
+	self._forcePlayHitForOrigin = self._paramsArr[14] == "1"
 
-	arg_2_0:_buildSkillEffect(var_2_0, var_2_1, var_2_2)
+	self:_buildSkillEffect(buffIds, behaviorTypeIds, effectTemplate)
 
-	arg_2_0._floatParams = {}
-	arg_2_0._defenders = {}
-	arg_2_0._hitActionDefenders = {}
+	self._floatParams = {}
+	self._defenders = {}
+	self._hitActionDefenders = {}
 
-	local var_2_9 = {}
+	local invoke_list = {}
 
-	if arg_2_0._act_on_index_entity then
-		var_2_9 = arg_2_0:_directCharacterDataFilter()
+	if self._act_on_index_entity then
+		invoke_list = self:_directCharacterDataFilter()
 	else
-		var_2_9 = arg_2_0.fightStepData.actEffect
+		invoke_list = self.fightStepData.actEffect
 	end
 
-	arg_2_0:_preProcessShieldData(arg_2_1, arg_2_0.fightStepData.actEffect)
+	self:_preProcessShieldData(fightStepData, self.fightStepData.actEffect)
 
-	for iter_2_2, iter_2_3 in ipairs(var_2_9) do
-		if not arg_2_0:needFilter(iter_2_3) then
-			local var_2_10 = iter_2_3.effectType
-			local var_2_11 = FightHelper.getEntity(iter_2_3.targetId)
+	for _, actEffectData in ipairs(invoke_list) do
+		if not self:needFilter(actEffectData) then
+			local effectType = actEffectData.effectType
+			local oneDefender = FightHelper.getEntity(actEffectData.targetId)
 
-			if var_0_0.directCharacterHitEffectType[iter_2_3.effectType] then
-				if var_2_11 then
-					table.insert(arg_2_0._defenders, var_2_11)
+			if FightTLEventDefHit.directCharacterHitEffectType[actEffectData.effectType] then
+				if oneDefender then
+					table.insert(self._defenders, oneDefender)
 
-					if iter_2_3.effectType == FightEnum.EffectType.SHIELDDEL then
-						FightWorkEffectShieldDel.New(arg_2_1, iter_2_3):start()
-					elseif iter_2_3.configEffect == FightEnum.DirectDamageType then
-						arg_2_0:_playDefHit(var_2_11, iter_2_3)
-					elseif var_2_4 == tostring(iter_2_3.configEffect) then
+					if actEffectData.effectType == FightEnum.EffectType.SHIELDDEL then
+						local effectShieldDel = FightWorkEffectShieldDel.New(fightStepData, actEffectData)
+
+						effectShieldDel:start()
+					elseif actEffectData.configEffect == FightEnum.DirectDamageType then
+						self:_playDefHit(oneDefender, actEffectData)
+					elseif dontSkillEffectIdStr == tostring(actEffectData.configEffect) then
 						-- block empty
 					else
-						arg_2_0:_playDefHit(var_2_11, iter_2_3)
+						self:_playDefHit(oneDefender, actEffectData)
 					end
 				else
-					logNormal("defender hit fail, entity not exist: " .. iter_2_3.targetId)
+					logNormal("defender hit fail, entity not exist: " .. actEffectData.targetId)
 				end
 			end
 
-			if arg_2_0._isLastHit and var_0_2[iter_2_3.effectType] and var_2_11 then
-				arg_2_0:_playDefHit(var_2_11, iter_2_3)
+			if self._isLastHit and originHitEffectType[actEffectData.effectType] and oneDefender then
+				self:_playDefHit(oneDefender, actEffectData)
 			end
 
-			if arg_2_0._isLastHit and (var_2_10 == FightEnum.EffectType.GUARDCHANGE or var_2_10 == FightEnum.EffectType.GUARDBREAK) then
-				arg_2_0._guardEffectList = arg_2_0._guardEffectList or {}
+			if self._isLastHit and (effectType == FightEnum.EffectType.GUARDCHANGE or effectType == FightEnum.EffectType.GUARDBREAK) then
+				self._guardEffectList = self._guardEffectList or {}
 
-				local var_2_12 = FightStepBuilder.ActEffectWorkCls[var_2_10].New(arg_2_0.fightStepData, iter_2_3)
+				local class = FightStepBuilder.ActEffectWorkCls[effectType].New(self.fightStepData, actEffectData)
 
-				var_2_12:start()
-				table.insert(arg_2_0._guardEffectList, var_2_12)
+				class:start()
+				table.insert(self._guardEffectList, class)
 			end
 
-			if arg_2_0._isLastHit and var_0_3[iter_2_3.effectType] and var_2_11 then
-				arg_2_0:_playDefHit(var_2_11, iter_2_3)
+			if self._isLastHit and additionalHitEffectType[actEffectData.effectType] and oneDefender then
+				self:_playDefHit(oneDefender, actEffectData)
 			end
 
-			if var_2_10 == FightEnum.EffectType.EZIOBIGSKILLORIGINDAMAGE then
-				if arg_2_0._isLastHit and var_2_11 then
-					arg_2_0:_playDefHit(var_2_11, iter_2_3)
+			if effectType == FightEnum.EffectType.EZIOBIGSKILLORIGINDAMAGE then
+				if self._isLastHit and oneDefender then
+					self:_playDefHit(oneDefender, actEffectData)
 				end
 
-				arg_2_0.hasEzioOriginDamage = true
+				self.hasEzioOriginDamage = true
 			end
 		end
 	end
 
-	if arg_2_0._ratio > 0 then
-		arg_2_0:_statisticAndFloat()
+	if self._ratio > 0 then
+		self:_statisticAndFloat()
 	end
 
-	arg_2_0:_playSkillBuff(var_2_9)
-	arg_2_0:_playSkillBehavior()
-	arg_2_0:_trySetKillTimeScale(arg_2_1, arg_2_3)
+	self:_playSkillBuff(invoke_list)
+	self:_playSkillBehavior()
+	self:_trySetKillTimeScale(fightStepData, paramsArr)
 end
 
-local var_0_4 = {
+local FilterEffectType = {
 	[FightEnum.EffectType.DEADLYPOISONORIGINDAMAGE] = true,
 	[FightEnum.EffectType.DEADLYPOISONORIGINCRIT] = true
 }
 
-var_0_0.nuoDiKaLostLife = 60212
+FightTLEventDefHit.nuoDiKaLostLife = 60212
 
-function var_0_0.needFilter(arg_3_0, arg_3_1)
-	if not arg_3_1 then
+function FightTLEventDefHit:needFilter(actEffectData)
+	if not actEffectData then
 		return false
 	end
 
-	if arg_3_1.effectType == FightEnum.EffectType.SHIELD and var_0_4[arg_3_1.configEffect] then
+	local effectType = actEffectData.effectType
+
+	if effectType == FightEnum.EffectType.SHIELD and FilterEffectType[actEffectData.configEffect] then
 		return true
 	end
 
-	if arg_3_1.configEffect == var_0_0.nuoDiKaLostLife then
+	if actEffectData.configEffect == FightTLEventDefHit.nuoDiKaLostLife then
 		return true
 	end
 end
 
-function var_0_0.onTrackEnd(arg_4_0)
-	if arg_4_0._defenders and #arg_4_0._defenders > 0 then
-		arg_4_0:_onDelayActionFinish()
+function FightTLEventDefHit:onTrackEnd()
+	if self._defenders and #self._defenders > 0 then
+		self:_onDelayActionFinish()
 	end
 end
 
-function var_0_0._preProcessShieldData(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_1.hasProcessShield then
+function FightTLEventDefHit:_preProcessShieldData(fightStepData, invoke_list)
+	if fightStepData.hasProcessShield then
 		return
 	end
 
-	arg_5_1.hasProcessShield = true
+	fightStepData.hasProcessShield = true
 
-	local var_5_0 = {}
+	local oldShieldDict = {}
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_2) do
-		if iter_5_1.effectType == FightEnum.EffectType.SHIELD then
-			local var_5_1 = FightHelper.getEntity(iter_5_1.targetId)
+	for i, actEffectData in ipairs(invoke_list) do
+		if actEffectData.effectType == FightEnum.EffectType.SHIELD then
+			local oneDefender = FightHelper.getEntity(actEffectData.targetId)
 
-			if var_5_1 then
-				local var_5_2 = var_5_0[iter_5_1.targetId]
+			if oneDefender then
+				local oldShield = oldShieldDict[actEffectData.targetId]
 
-				if not var_5_2 then
-					local var_5_3 = var_5_1:getMO()
+				if not oldShield then
+					local defenderMO = oneDefender:getMO()
 
-					var_5_2 = var_5_3 and var_5_3.shieldValue or 0
-					var_5_0[iter_5_1.targetId] = var_5_2
+					oldShield = defenderMO and defenderMO.shieldValue or 0
+					oldShieldDict[actEffectData.targetId] = oldShield
 				end
 
-				iter_5_1.diffValue = math.abs(iter_5_1.effectNum - var_5_2)
-				iter_5_1.sign = var_5_2 < iter_5_1.effectNum and 1 or -1
+				actEffectData.diffValue = math.abs(actEffectData.effectNum - oldShield)
+				actEffectData.sign = oldShield < actEffectData.effectNum and 1 or -1
 
-				local var_5_4 = arg_5_2[iter_5_0 + 1]
+				local nextMO = invoke_list[i + 1]
 
-				if var_5_4 and var_5_4.effectType == FightEnum.EffectType.SHIELDBROCKEN then
-					var_5_4 = arg_5_2[iter_5_0 + 2]
+				if nextMO and nextMO.effectType == FightEnum.EffectType.SHIELDBROCKEN then
+					nextMO = invoke_list[i + 2]
 				end
 
-				if var_5_4 and var_5_4.targetId == iter_5_1.targetId and var_0_2[var_5_4.effectType] then
-					iter_5_1.isShieldOriginDamage = true
-					var_5_4.shieldOriginEffectNum = var_5_4.effectNum + iter_5_1.diffValue
+				if nextMO and nextMO.targetId == actEffectData.targetId and originHitEffectType[nextMO.effectType] then
+					actEffectData.isShieldOriginDamage = true
+					nextMO.shieldOriginEffectNum = nextMO.effectNum + actEffectData.diffValue
 				end
 
-				if var_5_4 and var_5_4.targetId == iter_5_1.targetId and var_0_3[var_5_4.effectType] then
-					iter_5_1.isShieldAdditionalDamage = true
-					var_5_4.shieldAdditionalEffectNum = var_5_4.effectNum + iter_5_1.diffValue
+				if nextMO and nextMO.targetId == actEffectData.targetId and additionalHitEffectType[nextMO.effectType] then
+					actEffectData.isShieldAdditionalDamage = true
+					nextMO.shieldAdditionalEffectNum = nextMO.effectNum + actEffectData.diffValue
 				end
 
-				var_5_0[iter_5_1.targetId] = iter_5_1.effectNum
+				oldShieldDict[actEffectData.targetId] = actEffectData.effectNum
 			end
 		end
 
-		if iter_5_1.effectType == FightEnum.EffectType.SHIELDDEL then
-			var_5_0[iter_5_1.targetId] = 0
+		if actEffectData.effectType == FightEnum.EffectType.SHIELDDEL then
+			oldShieldDict[actEffectData.targetId] = 0
 		end
 
-		if iter_5_1.effectType == FightEnum.EffectType.SHIELDVALUECHANGE then
-			var_5_0[iter_5_1.targetId] = iter_5_1.effectNum
+		if actEffectData.effectType == FightEnum.EffectType.SHIELDVALUECHANGE then
+			oldShieldDict[actEffectData.targetId] = actEffectData.effectNum
 		end
 	end
 end
 
-function var_0_0._buildSkillEffect(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	arg_6_0._buffIdDict = {}
-	arg_6_0._behaviorTypeDict = {}
+function FightTLEventDefHit:_buildSkillEffect(buffIds, behaviorTypeIds, effectTemplate)
+	self._buffIdDict = {}
+	self._behaviorTypeDict = {}
 
-	if string.nilorempty(arg_6_3) then
-		for iter_6_0, iter_6_1 in ipairs(arg_6_1) do
-			arg_6_0._buffIdDict[iter_6_1] = true
+	if string.nilorempty(effectTemplate) then
+		for _, buffId in ipairs(buffIds) do
+			self._buffIdDict[buffId] = true
 		end
 
-		for iter_6_2, iter_6_3 in ipairs(arg_6_2) do
-			arg_6_0._behaviorTypeDict[iter_6_3] = true
+		for _, behaviorType in ipairs(behaviorTypeIds) do
+			self._behaviorTypeDict[behaviorType] = true
 		end
 	else
-		local var_6_0 = FightStrUtil.instance:getSplitToNumberCache(arg_6_3, "#")
+		local skillEffectIds = FightStrUtil.instance:getSplitToNumberCache(effectTemplate, "#")
 
-		for iter_6_4, iter_6_5 in ipairs(var_6_0) do
-			local var_6_1 = lua_skill_effect.configDict[iter_6_5]
+		for _, skillEffectId in ipairs(skillEffectIds) do
+			local skillEffectCO = lua_skill_effect.configDict[skillEffectId]
 
-			if var_6_1 then
-				for iter_6_6 = 1, FightEnum.MaxBehavior do
-					local var_6_2 = var_6_1["behavior" .. iter_6_6]
-					local var_6_3 = FightStrUtil.instance:getSplitToNumberCache(var_6_2, "#")
-					local var_6_4 = var_6_3[1]
+			if skillEffectCO then
+				for i = 1, FightEnum.MaxBehavior do
+					local behavior = skillEffectCO["behavior" .. i]
+					local sp = FightStrUtil.instance:getSplitToNumberCache(behavior, "#")
+					local behaviorType = sp[1]
 
-					if var_6_3 and #var_6_3 > 0 and var_6_4 == 1 then
-						local var_6_5 = var_6_3[2]
+					if sp and #sp > 0 and behaviorType == 1 then
+						local buffId = sp[2]
 
-						arg_6_0._buffIdDict[var_6_5] = true
+						self._buffIdDict[buffId] = true
 					end
 
-					if var_6_3 and #var_6_3 > 0 then
-						arg_6_0._behaviorTypeDict[var_6_4] = true
+					if sp and #sp > 0 then
+						self._behaviorTypeDict[behaviorType] = true
 					end
 				end
 			else
-				logError("技能调用效果不存在" .. iter_6_5)
+				logError("技能调用效果不存在" .. skillEffectId)
 			end
 		end
 	end
 end
 
-function var_0_0._playDefHit(arg_7_0, arg_7_1, arg_7_2)
-	FightDataHelper.playEffectData(arg_7_2)
+function FightTLEventDefHit:_playDefHit(oneDefender, actEffectData)
+	FightDataHelper.playEffectData(actEffectData)
 
-	local var_7_0 = arg_7_0._attacker:getMO()
-	local var_7_1 = arg_7_1:getMO()
+	local attackerMO = self._attacker:getMO()
+	local defenderMO = oneDefender:getMO()
 
-	arg_7_0:com_sendFightEvent(FightEvent.PlayTimelineHit, arg_7_0.fightStepData, var_7_1, var_7_0)
+	self:com_sendFightEvent(FightEvent.PlayTimelineHit, self.fightStepData, defenderMO, attackerMO)
 
-	local var_7_2 = var_7_0 and var_7_0:getCO()
-	local var_7_3 = var_7_1 and var_7_1:getCO()
-	local var_7_4 = var_7_2 and var_7_2.career or 0
-	local var_7_5 = var_7_3 and var_7_3.career or 0
+	local attackerCO = attackerMO and attackerMO:getCO()
+	local defenderCO = defenderMO and defenderMO:getCO()
+	local career1 = attackerCO and attackerCO.career or 0
+	local career2 = defenderCO and defenderCO.career or 0
+	local version = FightModel.instance:getVersion()
 
-	if FightModel.instance:getVersion() >= 2 and var_7_0 and var_7_1 then
-		var_7_4 = var_7_0.career
-		var_7_5 = var_7_1.career
+	if version >= 2 and attackerMO and defenderMO then
+		career1 = attackerMO.career
+		career2 = defenderMO.career
 	end
 
-	local var_7_6 = FightConfig.instance:getRestrain(var_7_4, var_7_5) or 1000
+	local restrain = FightConfig.instance:getRestrain(career1, career2) or 1000
 
-	if var_7_0 and FightBuffHelper.restrainAll(var_7_0.id) then
-		var_7_6 = 1100
+	if attackerMO and FightBuffHelper.restrainAll(attackerMO.id) then
+		restrain = 1100
 	end
 
-	local var_7_7 = arg_7_0._attacker.buff
+	local attactBuffComp = self._attacker.buff
 
-	if var_7_7 and var_7_7:haveBuffId(72540006) then
-		var_7_6 = (var_7_5 == 1 or var_7_5 == 2 or var_7_5 == 3 or var_7_5 == 4) and 1100 or 1000
+	if attactBuffComp and attactBuffComp:haveBuffId(72540006) then
+		restrain = (career2 == 1 or career2 == 2 or career2 == 3 or career2 == 4) and 1100 or 1000
 	end
 
-	local var_7_8
+	local isRestrain = restrain > 1000
 
-	if arg_7_0._floatFixedPosArr then
-		arg_7_0._floatTotalIndex = arg_7_0._floatTotalIndex and arg_7_0._floatTotalIndex + 1 or 1
-		var_7_8 = arg_7_0._floatFixedPosArr[arg_7_0._floatTotalIndex] or arg_7_0._floatFixedPosArr[#arg_7_0._floatFixedPosArr]
+	if actEffectData.hurtInfo then
+		isRestrain = actEffectData.hurtInfo.careerRestraint
 	end
 
-	local var_7_9 = (arg_7_2.effectType == FightEnum.EffectType.NUODIKARANDOMATTACK or arg_7_2.effectType == FightEnum.EffectType.NUODIKATEAMATTACK) and arg_7_2.effectNum1 == FightEnum.EffectType.DAMAGE
-	local var_7_10 = (arg_7_2.effectType == FightEnum.EffectType.NUODIKARANDOMATTACK or arg_7_2.effectType == FightEnum.EffectType.NUODIKATEAMATTACK) and arg_7_2.effectNum1 == FightEnum.EffectType.CRIT
+	local fixedPos
 
-	if arg_7_2.effectType == FightEnum.EffectType.DAMAGE or var_7_9 then
-		local var_7_11 = true
+	if self._floatFixedPosArr then
+		self._floatTotalIndex = self._floatTotalIndex and self._floatTotalIndex + 1 or 1
+		fixedPos = self._floatFixedPosArr[self._floatTotalIndex] or self._floatFixedPosArr[#self._floatFixedPosArr]
+	end
 
-		if arg_7_0.ezioDamage == arg_7_2.configEffect then
-			var_7_11 = false
+	local nuoDiKaDamage = (actEffectData.effectType == FightEnum.EffectType.NUODIKARANDOMATTACK or actEffectData.effectType == FightEnum.EffectType.NUODIKATEAMATTACK) and actEffectData.effectNum1 == FightEnum.EffectType.DAMAGE
+	local nuoDiKaCrit = (actEffectData.effectType == FightEnum.EffectType.NUODIKARANDOMATTACK or actEffectData.effectType == FightEnum.EffectType.NUODIKATEAMATTACK) and actEffectData.effectNum1 == FightEnum.EffectType.CRIT
+
+	if actEffectData.effectType == FightEnum.EffectType.DAMAGE or nuoDiKaDamage then
+		local showFloat = true
+
+		if self.ezioDamage == actEffectData.configEffect then
+			showFloat = false
 			FightDataHelper.tempMgr.aiJiAoFakeHpOffset = {}
 		end
 
-		local var_7_12 = arg_7_0:_calcNum(arg_7_2.clientId, arg_7_2.targetId, arg_7_2.effectNum, arg_7_0._ratio)
-		local var_7_13 = var_7_12
+		local numAbs = self:_calcNum(actEffectData.clientId, actEffectData.targetId, actEffectData.effectNum, self._ratio)
+		local decreaseHp = numAbs
 
-		if arg_7_1.nameUI then
-			if var_7_9 then
-				local var_7_14 = arg_7_1.nameUI._curShield
+		if oneDefender.nameUI then
+			if nuoDiKaDamage then
+				local shield = oneDefender.nameUI._curShield
 
-				if var_7_14 and var_7_14 > 0 then
-					if var_7_13 <= var_7_14 then
-						local var_7_15 = var_7_14 - var_7_13
+				if shield and shield > 0 then
+					if decreaseHp <= shield then
+						shield = shield - decreaseHp
 
-						arg_7_1.nameUI:setShield(var_7_15)
-						FightController.instance:dispatchEvent(FightEvent.SetFakeNuoDiKaDamageShield, var_7_1.id, var_7_15)
+						oneDefender.nameUI:setShield(shield)
+						FightController.instance:dispatchEvent(FightEvent.SetFakeNuoDiKaDamageShield, defenderMO.id, shield)
 
-						var_7_13 = 0
+						decreaseHp = 0
 					else
-						local var_7_16 = 0
+						shield = 0
 
-						arg_7_1.nameUI:setShield(var_7_16)
-						FightController.instance:dispatchEvent(FightEvent.SetFakeNuoDiKaDamageShield, var_7_1.id, var_7_16)
+						oneDefender.nameUI:setShield(shield)
+						FightController.instance:dispatchEvent(FightEvent.SetFakeNuoDiKaDamageShield, defenderMO.id, shield)
 
-						var_7_13 = var_7_13 - var_7_16
+						decreaseHp = decreaseHp - shield
 					end
 				end
 			end
 
-			arg_7_1.nameUI:addHp(-var_7_13)
+			oneDefender.nameUI:addHp(-decreaseHp)
 		end
 
-		local var_7_17 = var_7_6 == 1000 and FightEnum.FloatType.damage or var_7_6 > 1000 and FightEnum.FloatType.restrain or FightEnum.FloatType.berestrain
-		local var_7_18 = arg_7_1:isMySide() and -var_7_12 or var_7_12
+		local floatType = isRestrain and FightEnum.FloatType.restrain or FightEnum.FloatType.damage
+		local floatNum = oneDefender:isMySide() and -numAbs or numAbs
 
-		if var_7_11 then
-			table.insert(arg_7_0._floatParams, {
-				arg_7_2.targetId,
-				var_7_17,
-				var_7_18,
-				arg_7_2.effectNum1 == 1
+		if showFloat then
+			table.insert(self._floatParams, {
+				actEffectData.targetId,
+				floatType,
+				floatNum,
+				actEffectData.effectNum1 == 1
 			})
 		end
 
-		if var_7_12 ~= 0 then
-			arg_7_0:_checkPlayAction(arg_7_1, arg_7_0._defeAction, arg_7_2)
+		if numAbs ~= 0 then
+			self:_checkPlayAction(oneDefender, self._defeAction, actEffectData)
 		end
 
-		arg_7_0:_playHitAudio(arg_7_1, false)
-		arg_7_0:_playHitVoice(arg_7_1)
-		arg_7_0:_playDefRestrain(arg_7_1, var_7_6)
-		FightController.instance:dispatchEvent(FightEvent.OnHpChange, arg_7_1, -var_7_13)
-		FightController.instance:dispatchEvent(FightEvent.OnSkillDamage, arg_7_0.fightStepData, arg_7_2, arg_7_1, var_7_18, arg_7_0._isLastHit, var_7_8)
-	elseif arg_7_2.effectType == FightEnum.EffectType.CRIT or var_7_10 then
-		local var_7_19 = true
+		self:_playHitAudio(oneDefender, false)
+		self:_playHitVoice(oneDefender)
+		FightController.instance:dispatchEvent(FightEvent.OnHpChange, oneDefender, -decreaseHp)
+		FightController.instance:dispatchEvent(FightEvent.OnSkillDamage, self.fightStepData, actEffectData, oneDefender, floatNum, self._isLastHit, fixedPos)
+	elseif actEffectData.effectType == FightEnum.EffectType.CRIT or nuoDiKaCrit then
+		local showFloat = true
 
-		if arg_7_0.ezioDamage == arg_7_2.configEffect then
-			var_7_19 = false
+		if self.ezioDamage == actEffectData.configEffect then
+			showFloat = false
 			FightDataHelper.tempMgr.aiJiAoFakeHpOffset = {}
 		end
 
-		local var_7_20 = arg_7_0:_calcNum(arg_7_2.clientId, arg_7_2.targetId, arg_7_2.effectNum, arg_7_0._ratio)
-		local var_7_21 = var_7_20
+		local numAbs = self:_calcNum(actEffectData.clientId, actEffectData.targetId, actEffectData.effectNum, self._ratio)
+		local decreaseHp = numAbs
 
-		if arg_7_1.nameUI then
-			if var_7_10 then
-				local var_7_22 = arg_7_1.nameUI._curShield
+		if oneDefender.nameUI then
+			if nuoDiKaCrit then
+				local shield = oneDefender.nameUI._curShield
 
-				if var_7_22 and var_7_22 > 0 then
-					if var_7_21 <= var_7_22 then
-						local var_7_23 = var_7_22 - var_7_21
+				if shield and shield > 0 then
+					if decreaseHp <= shield then
+						shield = shield - decreaseHp
 
-						arg_7_1.nameUI:setShield(var_7_23)
-						FightController.instance:dispatchEvent(FightEvent.SetFakeNuoDiKaDamageShield, var_7_1.id, var_7_23)
+						oneDefender.nameUI:setShield(shield)
+						FightController.instance:dispatchEvent(FightEvent.SetFakeNuoDiKaDamageShield, defenderMO.id, shield)
 
-						var_7_21 = 0
+						decreaseHp = 0
 					else
-						local var_7_24 = 0
+						shield = 0
 
-						arg_7_1.nameUI:setShield(var_7_24)
-						FightController.instance:dispatchEvent(FightEvent.SetFakeNuoDiKaDamageShield, var_7_1.id, var_7_24)
+						oneDefender.nameUI:setShield(shield)
+						FightController.instance:dispatchEvent(FightEvent.SetFakeNuoDiKaDamageShield, defenderMO.id, shield)
 
-						var_7_21 = var_7_21 - var_7_24
+						decreaseHp = decreaseHp - shield
 					end
 				end
 			end
 
-			arg_7_1.nameUI:addHp(-var_7_21)
+			oneDefender.nameUI:addHp(-decreaseHp)
 		end
 
-		local var_7_25 = var_7_6 == 1000 and FightEnum.FloatType.crit_damage or var_7_6 > 1000 and FightEnum.FloatType.crit_restrain or FightEnum.FloatType.crit_berestrain
-		local var_7_26 = arg_7_1:isMySide() and -var_7_20 or var_7_20
+		local floatType = isRestrain and FightEnum.FloatType.crit_restrain or FightEnum.FloatType.crit_damage
+		local floatNum = oneDefender:isMySide() and -numAbs or numAbs
 
-		if var_7_19 then
-			table.insert(arg_7_0._floatParams, {
-				arg_7_2.targetId,
-				var_7_25,
-				var_7_26,
-				arg_7_2.effectNum1 == 1
+		if showFloat then
+			table.insert(self._floatParams, {
+				actEffectData.targetId,
+				floatType,
+				floatNum,
+				actEffectData.effectNum1 == 1
 			})
 		end
 
-		if var_7_20 ~= 0 then
-			arg_7_0:_checkPlayAction(arg_7_1, arg_7_0._critAction, arg_7_2)
+		if numAbs ~= 0 then
+			self:_checkPlayAction(oneDefender, self._critAction, actEffectData)
 		end
 
-		arg_7_0:_playHitAudio(arg_7_1, true)
-		arg_7_0:_playHitVoice(arg_7_1)
-		arg_7_0:_playDefRestrain(arg_7_1, var_7_6)
-		FightController.instance:dispatchEvent(FightEvent.OnHpChange, arg_7_1, -var_7_21)
-		FightController.instance:dispatchEvent(FightEvent.OnSkillDamage, arg_7_0.fightStepData, arg_7_2, arg_7_1, var_7_26, arg_7_0._isLastHit, var_7_8)
-	elseif arg_7_2.effectType == FightEnum.EffectType.MISS then
-		if arg_7_0._ratio > 0 then
-			arg_7_0:_checkPlayAction(arg_7_1, arg_7_0._missAction, arg_7_2)
-			FightFloatMgr.instance:float(arg_7_2.targetId, FightEnum.FloatType.buff, luaLang("fight_float_miss"), FightEnum.BuffFloatEffectType.Good, false)
+		self:_playHitAudio(oneDefender, true)
+		self:_playHitVoice(oneDefender)
+		FightController.instance:dispatchEvent(FightEvent.OnHpChange, oneDefender, -decreaseHp)
+		FightController.instance:dispatchEvent(FightEvent.OnSkillDamage, self.fightStepData, actEffectData, oneDefender, floatNum, self._isLastHit, fixedPos)
+	elseif actEffectData.effectType == FightEnum.EffectType.MISS then
+		if self._ratio > 0 then
+			self:_checkPlayAction(oneDefender, self._missAction, actEffectData)
+			FightFloatMgr.instance:float(actEffectData.targetId, FightEnum.FloatType.buff, luaLang("fight_float_miss"), FightEnum.BuffFloatEffectType.Good, false)
 		end
-	elseif arg_7_2.effectType == FightEnum.EffectType.EZIOBIGSKILLDAMAGE then
-		arg_7_0.ezioDamage = arg_7_2.configEffect
+	elseif actEffectData.effectType == FightEnum.EffectType.EZIOBIGSKILLDAMAGE then
+		self.ezioDamage = actEffectData.configEffect
 
-		local var_7_27 = arg_7_0:_calcNum(arg_7_2.clientId, arg_7_2.targetId, arg_7_2.effectNum, arg_7_0._ratio)
+		local numAbs = self:_calcNum(actEffectData.clientId, actEffectData.targetId, actEffectData.effectNum, self._ratio)
 
-		FightWorkEzioBigSkillDamage1000.fakeDecreaseHp(arg_7_1.id, var_7_27)
-		arg_7_0:com_sendFightEvent(FightEvent.AiJiAoFakeDecreaseHp, arg_7_1.id)
+		FightWorkEzioBigSkillDamage1000.fakeDecreaseHp(oneDefender.id, numAbs)
+		self:com_sendFightEvent(FightEvent.AiJiAoFakeDecreaseHp, oneDefender.id)
 
-		local var_7_28 = var_7_6 == 1000 and FightEnum.FloatType.damage or var_7_6 > 1000 and FightEnum.FloatType.restrain or FightEnum.FloatType.berestrain
+		local floatType = isRestrain and FightEnum.FloatType.restrain or FightEnum.FloatType.damage
 
-		if arg_7_2.effectNum1 == 3 then
-			var_7_28 = var_7_6 == 1000 and FightEnum.FloatType.crit_damage or var_7_6 > 1000 and FightEnum.FloatType.crit_restrain or FightEnum.FloatType.crit_berestrain
+		if actEffectData.effectNum1 == 3 then
+			floatType = isRestrain and FightEnum.FloatType.crit_restrain or FightEnum.FloatType.crit_damage
 		end
 
-		local var_7_29 = arg_7_1:isMySide() and -var_7_27 or var_7_27
+		local floatNum = oneDefender:isMySide() and -numAbs or numAbs
 
-		table.insert(arg_7_0._floatParams, {
-			arg_7_2.targetId,
-			var_7_28,
-			var_7_29,
+		table.insert(self._floatParams, {
+			actEffectData.targetId,
+			floatType,
+			floatNum,
 			true
 		})
 
-		if var_7_27 ~= 0 then
-			arg_7_0:_checkPlayAction(arg_7_1, arg_7_0._defeAction, arg_7_2)
+		if numAbs ~= 0 then
+			self:_checkPlayAction(oneDefender, self._defeAction, actEffectData)
 		end
 
-		arg_7_0:_playHitAudio(arg_7_1, false)
-		arg_7_0:_playHitVoice(arg_7_1)
-		arg_7_0:_playDefRestrain(arg_7_1, var_7_6)
-	elseif arg_7_2.effectType == FightEnum.EffectType.EZIOBIGSKILLORIGINDAMAGE then
-		arg_7_0.ezioDamage = arg_7_2.configEffect
+		self:_playHitAudio(oneDefender, false)
+		self:_playHitVoice(oneDefender)
+	elseif actEffectData.effectType == FightEnum.EffectType.EZIOBIGSKILLORIGINDAMAGE then
+		self.ezioDamage = actEffectData.configEffect
 
-		local var_7_30 = arg_7_2.effectNum
+		local numAbs = actEffectData.effectNum
 
-		FightWorkEzioBigSkillDamage1000.fakeDecreaseHp(arg_7_1.id, var_7_30)
-		arg_7_0:com_sendFightEvent(FightEvent.AiJiAoFakeDecreaseHp, arg_7_1.id)
+		FightWorkEzioBigSkillDamage1000.fakeDecreaseHp(oneDefender.id, numAbs)
+		self:com_sendFightEvent(FightEvent.AiJiAoFakeDecreaseHp, oneDefender.id)
 
-		local var_7_31 = arg_7_2.effectNum1 == 131 and FightEnum.FloatType.crit_damage_origin or FightEnum.FloatType.damage_origin
-		local var_7_32 = arg_7_1:isMySide() and -var_7_30 or var_7_30
+		local floatType = actEffectData.effectNum1 == 131 and FightEnum.FloatType.crit_damage_origin or FightEnum.FloatType.damage_origin
+		local floatNum = oneDefender:isMySide() and -numAbs or numAbs
 
-		table.insert(arg_7_0._floatParams, {
-			arg_7_2.targetId,
-			var_7_31,
-			var_7_32,
+		table.insert(self._floatParams, {
+			actEffectData.targetId,
+			floatType,
+			floatNum,
 			false
 		})
 
-		if var_7_30 ~= 0 then
-			arg_7_0:_checkPlayAction(arg_7_1, arg_7_0._defeAction, arg_7_2)
+		if numAbs ~= 0 then
+			self:_checkPlayAction(oneDefender, self._defeAction, actEffectData)
 		end
 
-		arg_7_0:_playHitAudio(arg_7_1, false)
-		arg_7_0:_playHitVoice(arg_7_1)
-		arg_7_0:_playDefRestrain(arg_7_1, var_7_6)
-	elseif arg_7_2.effectType == FightEnum.EffectType.SHIELD then
-		local var_7_33 = var_7_1.shieldValue
-		local var_7_34 = arg_7_0:_calcNum(arg_7_2.clientId, arg_7_2.targetId, arg_7_2.diffValue or 0, arg_7_0._ratio)
-		local var_7_35 = arg_7_1:isMySide() and -var_7_34 or var_7_34
+		self:_playHitAudio(oneDefender, false)
+		self:_playHitVoice(oneDefender)
+	elseif actEffectData.effectType == FightEnum.EffectType.SHIELD then
+		local old = defenderMO.shieldValue
+		local numAbs = self:_calcNum(actEffectData.clientId, actEffectData.targetId, actEffectData.diffValue or 0, self._ratio)
+		local floatNum = oneDefender:isMySide() and -numAbs or numAbs
 
-		if arg_7_1.nameUI then
-			arg_7_1.nameUI:setShield(arg_7_1.nameUI._curShield + var_7_34 * arg_7_2.sign)
+		if oneDefender.nameUI then
+			oneDefender.nameUI:setShield(oneDefender.nameUI._curShield + numAbs * actEffectData.sign)
 		end
 
-		if arg_7_2.sign == -1 then
-			if not arg_7_2.isShieldOriginDamage and not arg_7_2.isShieldAdditionalDamage then
-				local var_7_36 = var_7_6 == 1000 and FightEnum.FloatType.shield_damage or var_7_6 > 1000 and FightEnum.FloatType.shield_restrain or FightEnum.FloatType.shield_berestrain
+		if actEffectData.sign == -1 then
+			if not actEffectData.isShieldOriginDamage and not actEffectData.isShieldAdditionalDamage then
+				local floatType = isRestrain and FightEnum.FloatType.shield_restrain or FightEnum.FloatType.shield_damage
 
-				table.insert(arg_7_0._floatParams, {
-					arg_7_2.targetId,
-					var_7_36,
-					var_7_35,
-					arg_7_2.buffActId == 1
+				table.insert(self._floatParams, {
+					actEffectData.targetId,
+					floatType,
+					floatNum,
+					actEffectData.buffActId == 1
 				})
 			end
 
-			local var_7_37 = true
+			local playHit = true
 
-			if not FightHelper.checkShieldHit(arg_7_2) then
-				var_7_37 = false
+			if not FightHelper.checkShieldHit(actEffectData) then
+				playHit = false
 			end
 
-			if arg_7_2.effectNum1 == FightEnum.EffectType.ORIGINDAMAGE and not arg_7_0._forcePlayHitForOrigin then
-				var_7_37 = false
+			if actEffectData.effectNum1 == FightEnum.EffectType.ORIGINDAMAGE and not self._forcePlayHitForOrigin then
+				playHit = false
 			end
 
-			if arg_7_2.effectNum1 == FightEnum.EffectType.ORIGINCRIT and not arg_7_0._forcePlayHitForOrigin then
-				var_7_37 = false
+			if actEffectData.effectNum1 == FightEnum.EffectType.ORIGINCRIT and not self._forcePlayHitForOrigin then
+				playHit = false
 			end
 
-			if var_7_34 ~= 0 and var_7_37 then
-				arg_7_0:_checkPlayAction(arg_7_1, arg_7_0._defeAction, arg_7_2)
+			if numAbs ~= 0 and playHit then
+				self:_checkPlayAction(oneDefender, self._defeAction, actEffectData)
 			end
 
-			if var_7_37 then
-				arg_7_0:_playHitAudio(arg_7_1, false)
-				arg_7_0:_playHitVoice(arg_7_1)
-				arg_7_0:_playDefRestrain(arg_7_1, var_7_6)
+			if playHit then
+				self:_playHitAudio(oneDefender, false)
+				self:_playHitVoice(oneDefender)
 			end
 		end
 
-		FightController.instance:dispatchEvent(FightEvent.OnShieldChange, arg_7_1, var_7_34 * arg_7_2.sign)
-		FightController.instance:dispatchEvent(FightEvent.OnSkillDamage, arg_7_0.fightStepData, arg_7_2, arg_7_1, var_7_35, arg_7_0._isLastHit, var_7_8)
-	elseif var_0_2[arg_7_2.effectType] then
-		local var_7_38 = arg_7_2.effectNum
-		local var_7_39 = arg_7_2.effectType == FightEnum.EffectType.ORIGINCRIT
+		FightController.instance:dispatchEvent(FightEvent.OnShieldChange, oneDefender, numAbs * actEffectData.sign)
+		FightController.instance:dispatchEvent(FightEvent.OnSkillDamage, self.fightStepData, actEffectData, oneDefender, floatNum, self._isLastHit, fixedPos)
+	elseif originHitEffectType[actEffectData.effectType] then
+		local numAbs = actEffectData.effectNum
+		local isCrit = actEffectData.effectType == FightEnum.EffectType.ORIGINCRIT
 
-		if var_7_38 > 0 and arg_7_1.nameUI then
-			arg_7_1.nameUI:addHp(-var_7_38)
+		if numAbs > 0 and oneDefender.nameUI then
+			oneDefender.nameUI:addHp(-numAbs)
 		end
 
-		local var_7_40 = var_7_39 and FightEnum.FloatType.crit_damage_origin or FightEnum.FloatType.damage_origin
-		local var_7_41 = arg_7_1:isMySide() and -var_7_38 or var_7_38
+		local floatType = isCrit and FightEnum.FloatType.crit_damage_origin or FightEnum.FloatType.damage_origin
+		local floatNum = oneDefender:isMySide() and -numAbs or numAbs
 
-		if not arg_7_2.shieldOriginEffectNum then
-			if var_7_38 > 0 then
-				table.insert(arg_7_0._floatParams, {
-					arg_7_2.targetId,
-					var_7_40,
-					var_7_41,
-					arg_7_2.effectNum1 == 1
-				})
-			end
-		else
-			local var_7_42 = arg_7_1:isMySide() and -arg_7_2.shieldOriginEffectNum or arg_7_2.shieldOriginEffectNum
-
-			table.insert(arg_7_0._floatParams, {
-				arg_7_2.targetId,
-				var_7_40,
-				var_7_42,
-				arg_7_2.effectNum1 == 1
-			})
-		end
-
-		if var_7_38 > 0 then
-			FightController.instance:dispatchEvent(FightEvent.OnHpChange, arg_7_1, -var_7_38)
-			FightController.instance:dispatchEvent(FightEvent.OnSkillDamage, arg_7_0.fightStepData, arg_7_2, arg_7_1, var_7_41, arg_7_0._isLastHit, var_7_8)
-		end
-
-		if arg_7_0._forcePlayHitForOrigin then
-			arg_7_0:_checkPlayAction(arg_7_1, arg_7_0._defeAction, arg_7_2)
-			arg_7_0:_playHitAudio(arg_7_1, false)
-			arg_7_0:_playHitVoice(arg_7_1)
-			arg_7_0:_playDefRestrain(arg_7_1, var_7_6)
-		end
-	elseif var_0_3[arg_7_2.effectType] then
-		local var_7_43 = arg_7_2.effectNum
-		local var_7_44 = arg_7_2.effectType == FightEnum.EffectType.ADDITIONALDAMAGECRIT
-
-		if var_7_43 > 0 and arg_7_1.nameUI then
-			arg_7_1.nameUI:addHp(-var_7_43)
-		end
-
-		local var_7_45 = var_7_44 and FightEnum.FloatType.crit_additional_damage or FightEnum.FloatType.additional_damage
-		local var_7_46 = arg_7_1:isMySide() and -var_7_43 or var_7_43
-
-		if not arg_7_2.shieldAdditionalEffectNum then
-			if var_7_43 > 0 then
-				table.insert(arg_7_0._floatParams, {
-					arg_7_2.targetId,
-					var_7_45,
-					var_7_46,
-					arg_7_2.effectNum1 == 1
+		if not actEffectData.shieldOriginEffectNum then
+			if numAbs > 0 then
+				table.insert(self._floatParams, {
+					actEffectData.targetId,
+					floatType,
+					floatNum,
+					actEffectData.effectNum1 == 1
 				})
 			end
 		else
-			local var_7_47 = arg_7_1:isMySide() and -arg_7_2.shieldAdditionalEffectNum or arg_7_2.shieldAdditionalEffectNum
+			local tempNum = oneDefender:isMySide() and -actEffectData.shieldOriginEffectNum or actEffectData.shieldOriginEffectNum
 
-			table.insert(arg_7_0._floatParams, {
-				arg_7_2.targetId,
-				var_7_45,
-				var_7_47,
-				arg_7_2.effectNum1 == 1
+			table.insert(self._floatParams, {
+				actEffectData.targetId,
+				floatType,
+				tempNum,
+				actEffectData.effectNum1 == 1
 			})
 		end
 
-		if var_7_43 > 0 then
-			FightController.instance:dispatchEvent(FightEvent.OnHpChange, arg_7_1, -var_7_43)
-			FightController.instance:dispatchEvent(FightEvent.OnSkillDamage, arg_7_0.fightStepData, arg_7_2, arg_7_1, var_7_46, arg_7_0._isLastHit, var_7_8)
+		if numAbs > 0 then
+			FightController.instance:dispatchEvent(FightEvent.OnHpChange, oneDefender, -numAbs)
+			FightController.instance:dispatchEvent(FightEvent.OnSkillDamage, self.fightStepData, actEffectData, oneDefender, floatNum, self._isLastHit, fixedPos)
+		end
+
+		if self._forcePlayHitForOrigin then
+			self:_checkPlayAction(oneDefender, self._defeAction, actEffectData)
+			self:_playHitAudio(oneDefender, false)
+			self:_playHitVoice(oneDefender)
+		end
+	elseif additionalHitEffectType[actEffectData.effectType] then
+		local numAbs = actEffectData.effectNum
+		local isCrit = actEffectData.effectType == FightEnum.EffectType.ADDITIONALDAMAGECRIT
+
+		if numAbs > 0 and oneDefender.nameUI then
+			oneDefender.nameUI:addHp(-numAbs)
+		end
+
+		local floatType = isCrit and FightEnum.FloatType.crit_additional_damage or FightEnum.FloatType.additional_damage
+		local floatNum = oneDefender:isMySide() and -numAbs or numAbs
+
+		if not actEffectData.shieldAdditionalEffectNum then
+			if numAbs > 0 then
+				table.insert(self._floatParams, {
+					actEffectData.targetId,
+					floatType,
+					floatNum,
+					actEffectData.effectNum1 == 1
+				})
+			end
+		else
+			local tempNum = oneDefender:isMySide() and -actEffectData.shieldAdditionalEffectNum or actEffectData.shieldAdditionalEffectNum
+
+			table.insert(self._floatParams, {
+				actEffectData.targetId,
+				floatType,
+				tempNum,
+				actEffectData.effectNum1 == 1
+			})
+		end
+
+		if numAbs > 0 then
+			FightController.instance:dispatchEvent(FightEvent.OnHpChange, oneDefender, -numAbs)
+			FightController.instance:dispatchEvent(FightEvent.OnSkillDamage, self.fightStepData, actEffectData, oneDefender, floatNum, self._isLastHit, fixedPos)
 		end
 	end
 
-	FightDataHelper.playEffectData(arg_7_2)
+	FightDataHelper.playEffectData(actEffectData)
 end
 
-function var_0_0._statisticAndFloat(arg_8_0)
-	local var_8_0 = {}
+function FightTLEventDefHit:_statisticAndFloat()
+	local targetFloatDict = {}
 
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0._floatParams) do
-		local var_8_1 = iter_8_1[1]
-		local var_8_2 = iter_8_1[2]
-		local var_8_3 = iter_8_1[3]
-		local var_8_4 = iter_8_1[4]
-		local var_8_5 = var_8_0[var_8_1]
+	for _, param in ipairs(self._floatParams) do
+		local targetId = param[1]
+		local floatType = param[2]
+		local num = param[3]
+		local isAssassinate = param[4]
+		local targetDict = targetFloatDict[targetId]
 
-		if not var_8_5 then
-			var_8_5 = {
+		if not targetDict then
+			targetDict = {
 				list = {}
 			}
-			var_8_0[var_8_1] = var_8_5
+			targetFloatDict[targetId] = targetDict
 		end
 
-		if not var_8_5[var_8_2] then
-			local var_8_6 = {
-				floatType = var_8_2,
-				num = var_8_3,
-				isAssassinate = var_8_4
+		if not targetDict[floatType] then
+			local tb = {
+				floatType = floatType,
+				num = num,
+				isAssassinate = isAssassinate
 			}
 
-			table.insert(var_8_5.list, var_8_6)
+			table.insert(targetDict.list, tb)
 
-			var_8_5[var_8_2] = var_8_6
+			targetDict[floatType] = tb
 		else
-			local var_8_7 = var_8_5[var_8_2]
+			local oldValue = targetDict[floatType]
 
-			var_8_7.num = var_8_7.num + var_8_3
+			oldValue.num = oldValue.num + num
 
-			if var_8_4 then
-				var_8_7.isAssassinate = true
+			if isAssassinate then
+				oldValue.isAssassinate = true
 			end
 		end
 	end
 
-	local var_8_8 = 0
+	local entity_index = 0
 
-	for iter_8_2, iter_8_3 in pairs(var_8_0) do
-		local var_8_9 = {}
+	for targetId, targetDict in pairs(targetFloatDict) do
+		local transferDic = {}
 
-		for iter_8_4, iter_8_5 in pairs(iter_8_3) do
-			local var_8_10 = iter_8_5.num
+		for floatType, tb in pairs(targetDict) do
+			local num = tb.num
 
-			if var_8_10 and var_8_10 ~= 0 then
-				local var_8_11 = iter_8_4
+			if num and num ~= 0 then
+				local finallyFloatType = floatType
 
-				if iter_8_4 == FightEnum.FloatType.shield_damage then
-					var_8_11 = iter_8_3[FightEnum.FloatType.damage] and FightEnum.FloatType.damage or FightEnum.FloatType.crit_damage
-				elseif iter_8_4 == FightEnum.FloatType.shield_restrain then
-					var_8_11 = iter_8_3[FightEnum.FloatType.restrain] and FightEnum.FloatType.restrain or FightEnum.FloatType.crit_restrain
-				elseif iter_8_4 == FightEnum.FloatType.shield_berestrain then
-					var_8_11 = iter_8_3[FightEnum.FloatType.berestrain] and FightEnum.FloatType.berestrain or FightEnum.FloatType.crit_berestrain
+				if floatType == FightEnum.FloatType.shield_damage then
+					finallyFloatType = targetDict[FightEnum.FloatType.damage] and FightEnum.FloatType.damage or FightEnum.FloatType.crit_damage
+				elseif floatType == FightEnum.FloatType.shield_restrain then
+					finallyFloatType = targetDict[FightEnum.FloatType.restrain] and FightEnum.FloatType.restrain or FightEnum.FloatType.crit_restrain
+				elseif floatType == FightEnum.FloatType.shield_berestrain then
+					finallyFloatType = targetDict[FightEnum.FloatType.berestrain] and FightEnum.FloatType.berestrain or FightEnum.FloatType.crit_berestrain
 				end
 
-				if var_8_11 ~= iter_8_4 then
-					iter_8_3[iter_8_4] = 0
-					iter_8_5.num = 0
+				if finallyFloatType ~= floatType then
+					targetDict[floatType] = 0
+					tb.num = 0
 
-					if iter_8_3[var_8_11] then
-						local var_8_12 = iter_8_3[var_8_11]
+					if targetDict[finallyFloatType] then
+						local existNum = targetDict[finallyFloatType]
 
-						var_8_12.num = var_8_12.num + var_8_10
-					elseif not var_8_9[var_8_11] then
-						local var_8_13 = {
-							floatType = var_8_11,
-							num = var_8_10
+						existNum.num = existNum.num + num
+					elseif not transferDic[finallyFloatType] then
+						local newTb = {
+							floatType = finallyFloatType,
+							num = num
 						}
 
-						table.insert(iter_8_3.list, var_8_13)
+						table.insert(targetDict.list, newTb)
 
-						var_8_9[var_8_11] = var_8_13
+						transferDic[finallyFloatType] = newTb
 					else
-						local var_8_14 = var_8_9[var_8_11]
+						local existNum = transferDic[finallyFloatType]
 
-						var_8_14.num = var_8_14.num + var_8_10
+						existNum.num = existNum.num + num
 					end
 				end
 			end
 		end
 
-		var_8_8 = var_8_8 + 1
+		entity_index = entity_index + 1
 
-		table.sort(iter_8_3.list, var_0_0._sortByFloatType)
+		table.sort(targetDict.list, FightTLEventDefHit._sortByFloatType)
 
-		for iter_8_6, iter_8_7 in pairs(iter_8_3.list) do
-			local var_8_15 = iter_8_7.floatType
-			local var_8_16 = iter_8_7.num
-			local var_8_17 = iter_8_7.isAssassinate
+		for _, tb in pairs(targetDict.list) do
+			local floatType = tb.floatType
+			local num = tb.num
+			local isAssassinate = tb.isAssassinate
 
-			if var_8_16 ~= 0 then
-				local var_8_18
+			if num ~= 0 then
+				local param
 
-				if arg_8_0._floatFixedPosArr then
-					var_8_18 = {}
+				if self._floatFixedPosArr then
+					param = {}
 
-					if var_8_8 >= #arg_8_0._floatFixedPosArr then
-						var_8_8 = #arg_8_0._floatFixedPosArr
+					if entity_index >= #self._floatFixedPosArr then
+						entity_index = #self._floatFixedPosArr
 					end
 
-					var_8_18.pos_x = arg_8_0._floatFixedPosArr[var_8_8][1]
-					var_8_18.pos_y = arg_8_0._floatFixedPosArr[var_8_8][2]
+					param.pos_x = self._floatFixedPosArr[entity_index][1]
+					param.pos_y = self._floatFixedPosArr[entity_index][2]
 				end
 
-				local var_8_19 = FightHelper.getEntity(iter_8_2)
+				local oneDefender = FightHelper.getEntity(targetId)
 
-				if arg_8_0._skinId2OffetPos then
-					local var_8_20 = var_8_19:getMO()
+				if self._skinId2OffetPos then
+					local entityMO = oneDefender:getMO()
 
-					if var_8_20 then
-						local var_8_21 = arg_8_0._skinId2OffetPos[var_8_20.skin]
+					if entityMO then
+						local offsetData = self._skinId2OffetPos[entityMO.skin]
 
-						if var_8_21 then
-							var_8_18 = var_8_18 or {}
-							var_8_18.offset_x = var_8_21[1]
-							var_8_18.offset_y = var_8_21[2]
+						if offsetData then
+							param = param or {}
+							param.offset_x = offsetData[1]
+							param.offset_y = offsetData[2]
 						end
 					end
 				end
 
-				FightFloatMgr.instance:float(iter_8_2, var_8_15, var_8_16, var_8_18, var_8_17)
-				FightController.instance:dispatchEvent(FightEvent.OnDamageTotal, arg_8_0.fightStepData, var_8_19, var_8_16, arg_8_0._isLastHit)
+				FightFloatMgr.instance:float(targetId, floatType, num, param, isAssassinate)
+				FightController.instance:dispatchEvent(FightEvent.OnDamageTotal, self.fightStepData, oneDefender, num, self._isLastHit)
 			end
 		end
 	end
 end
 
-local var_0_5 = {
+local FloatOrder = {
 	[FightEnum.FloatType.additional_damage] = 10,
 	[FightEnum.FloatType.crit_additional_damage] = 11,
 	[FightEnum.FloatType.damage_origin] = 12,
 	[FightEnum.FloatType.crit_damage_origin] = 13
 }
 
-function var_0_0._sortByFloatType(arg_9_0, arg_9_1)
-	local var_9_0 = var_0_5[arg_9_0.floatType] or 100
-	local var_9_1 = var_0_5[arg_9_1.floatType] or 100
+function FightTLEventDefHit._sortByFloatType(tb1, tb2)
+	local order1 = FloatOrder[tb1.floatType] or 100
+	local order2 = FloatOrder[tb2.floatType] or 100
 
-	if var_9_0 ~= var_9_1 then
-		return var_9_1 < var_9_0
+	if order1 ~= order2 then
+		return order2 < order1
 	end
 
-	return arg_9_0.num > arg_9_1.num
+	return tb1.num > tb2.num
 end
 
-function var_0_0._playHitAudio(arg_10_0, arg_10_1, arg_10_2)
-	if arg_10_0._audioId > 0 then
-		FightAudioMgr.instance:playHit(arg_10_0._audioId, arg_10_1:getMO().skin, arg_10_2)
-	elseif arg_10_0._ratio > 0 and arg_10_0.fightStepData.atkAudioId and arg_10_0.fightStepData.atkAudioId > 0 then
-		FightAudioMgr.instance:playHitByAtkAudioId(arg_10_0.fightStepData.atkAudioId, arg_10_1:getMO().skin, arg_10_2)
+function FightTLEventDefHit:_playHitAudio(entity, isCrit)
+	if self._audioId > 0 then
+		FightAudioMgr.instance:playHit(self._audioId, entity:getMO().skin, isCrit)
+	elseif self._ratio > 0 and self.fightStepData.atkAudioId and self.fightStepData.atkAudioId > 0 then
+		FightAudioMgr.instance:playHitByAtkAudioId(self.fightStepData.atkAudioId, entity:getMO().skin, isCrit)
 	end
 end
 
-function var_0_0._playHitVoice(arg_11_0, arg_11_1)
-	if arg_11_0._isLastHit then
-		local var_11_0 = arg_11_1:isMySide()
-		local var_11_1 = GameConfig:GetCurVoiceShortcut()
-		local var_11_2 = arg_11_1:getMO()
-		local var_11_3 = var_11_2 and var_11_2.modelId
+function FightTLEventDefHit:_playHitVoice(entity)
+	if self._isLastHit then
+		local isMySide = entity:isMySide()
+		local customAudioLang = GameConfig:GetCurVoiceShortcut()
+		local entityMO = entity:getMO()
+		local heroId = entityMO and entityMO.modelId
 
-		if var_11_0 and var_11_3 then
-			local var_11_4, var_11_5, var_11_6 = SettingsRoleVoiceModel.instance:getCharVoiceLangPrefValue(var_11_3)
-			local var_11_7 = LangSettings.shortcutTab[var_11_4]
+		if isMySide and heroId then
+			local charVoiceLangId, langStr, usingDefaultLang = SettingsRoleVoiceModel.instance:getCharVoiceLangPrefValue(heroId)
+			local charVoiceLang = LangSettings.shortcutTab[charVoiceLangId]
 
-			if not string.nilorempty(var_11_7) and not var_11_6 then
-				var_11_1 = var_11_7
+			if not string.nilorempty(charVoiceLang) and not usingDefaultLang then
+				customAudioLang = charVoiceLang
 			end
 		end
 
-		FightAudioMgr.instance:playHitVoice(var_11_3, var_11_1)
+		FightAudioMgr.instance:playHitVoice(heroId, customAudioLang)
 	end
 end
 
-function var_0_0._playDefRestrain(arg_12_0, arg_12_1, arg_12_2)
-	return
-end
+function FightTLEventDefHit:_calcNum(actEffectDataId, targetId, effectNum, ratio)
+	if self._hasRatio then
+		self._context.floatNum = self._context.floatNum or {}
+		self._context.floatNum[targetId] = self._context.floatNum[targetId] or {}
+		self._context.floatNum[targetId][actEffectDataId] = self._context.floatNum[targetId][actEffectDataId] or {}
 
-function var_0_0._calcNum(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4)
-	if arg_13_0._hasRatio then
-		arg_13_0._context.floatNum = arg_13_0._context.floatNum or {}
-		arg_13_0._context.floatNum[arg_13_2] = arg_13_0._context.floatNum[arg_13_2] or {}
-		arg_13_0._context.floatNum[arg_13_2][arg_13_1] = arg_13_0._context.floatNum[arg_13_2][arg_13_1] or {}
+		local numTable = self._context.floatNum[targetId][actEffectDataId]
+		local preRatio = numTable.ratio or 0
+		local preTotal = numTable.total or 0
+		local nowRatio = ratio + preRatio
 
-		local var_13_0 = arg_13_0._context.floatNum[arg_13_2][arg_13_1]
-		local var_13_1 = var_13_0.ratio or 0
-		local var_13_2 = var_13_0.total or 0
-		local var_13_3 = arg_13_4 + var_13_1
+		nowRatio = nowRatio < 1 and nowRatio or 1
 
-		var_13_3 = var_13_3 < 1 and var_13_3 or 1
+		local num = math.floor(nowRatio * effectNum + 0.5) - preTotal
 
-		local var_13_4 = math.floor(var_13_3 * arg_13_3 + 0.5) - var_13_2
+		numTable.ratio = ratio + preRatio
+		numTable.total = preTotal + num
 
-		var_13_0.ratio = arg_13_4 + var_13_1
-		var_13_0.total = var_13_2 + var_13_4
-
-		return var_13_4
+		return num
 	else
 		return 0
 	end
 end
 
-function var_0_0._checkPlayAction(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	if string.nilorempty(arg_14_2) then
+function FightTLEventDefHit:_checkPlayAction(entity, action, actEffectData)
+	if string.nilorempty(action) then
 		return
 	end
 
-	local var_14_0 = arg_14_1.spine:getAnimState()
-	local var_14_1
+	local curState = entity.spine:getAnimState()
+	local tar_is_dead
 
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0.fightStepData.actEffect) do
-		if iter_14_1.effectType == FightEnum.EffectType.DEAD and iter_14_1.targetId == arg_14_1.id then
-			var_14_1 = true
+	for i, v in ipairs(self.fightStepData.actEffect) do
+		if v.effectType == FightEnum.EffectType.DEAD and v.targetId == entity.id then
+			tar_is_dead = true
 		end
 	end
 
-	if arg_14_0._isLastHit then
-		if var_14_1 and arg_14_0.fightStepData.actId == arg_14_1.deadBySkillId and arg_14_0:_canPlayDead(arg_14_3) then
-			if arg_14_1:getSide() ~= arg_14_0._attacker:getSide() then
-				FightController.instance:dispatchEvent(FightEvent.OnSkillLastHit, arg_14_1.id, arg_14_0.fightStepData)
+	if self._isLastHit then
+		if tar_is_dead and self.fightStepData.actId == entity.deadBySkillId and self:_canPlayDead(actEffectData) then
+			if entity:getSide() ~= self._attacker:getSide() then
+				FightController.instance:dispatchEvent(FightEvent.OnSkillLastHit, entity.id, self.fightStepData)
 			end
-		elseif var_14_0 ~= SpineAnimState.freeze then
-			arg_14_0:_playAction(arg_14_1, arg_14_2)
+		elseif curState ~= SpineAnimState.freeze then
+			self:_playAction(entity, action)
 		end
-	elseif var_14_1 and arg_14_0.fightStepData.actId == arg_14_1.deadBySkillId then
-		if var_14_0 ~= SpineAnimState.freeze and var_14_0 ~= SpineAnimState.die then
-			arg_14_0:_playAction(arg_14_1, arg_14_2)
+	elseif tar_is_dead and self.fightStepData.actId == entity.deadBySkillId then
+		if curState ~= SpineAnimState.freeze and curState ~= SpineAnimState.die then
+			self:_playAction(entity, action)
 		end
-	elseif var_14_0 ~= SpineAnimState.freeze then
-		arg_14_0:_playAction(arg_14_1, arg_14_2)
+	elseif curState ~= SpineAnimState.freeze then
+		self:_playAction(entity, action)
 	end
 end
 
-function var_0_0._playAction(arg_15_0, arg_15_1, arg_15_2)
-	if arg_15_1.buff:haveBuffId(2112031) then
+function FightTLEventDefHit:_playAction(entity, action)
+	if entity.buff:haveBuffId(2112031) then
 		return
 	end
 
-	arg_15_2 = FightHelper.processEntityActionName(arg_15_1, arg_15_2, arg_15_0.fightStepData)
+	action = FightHelper.processEntityActionName(entity, action, self.fightStepData)
 
-	arg_15_1.spine:play(arg_15_2, false, true, true)
-	arg_15_1.spine:addAnimEventCallback(arg_15_0._onAnimEvent, arg_15_0, {
-		arg_15_1,
-		arg_15_2
+	entity.spine:play(action, false, true, true)
+	entity.spine:addAnimEventCallback(self._onAnimEvent, self, {
+		entity,
+		action
 	})
-	table.insert(arg_15_0._hitActionDefenders, arg_15_1)
+	table.insert(self._hitActionDefenders, entity)
 
-	local var_15_0 = var_0_1[arg_15_1.id] or 0
+	local count = HittingEntity2Counter[entity.id] or 0
 
-	var_0_1[arg_15_1.id] = var_15_0 + 1
+	HittingEntity2Counter[entity.id] = count + 1
 end
 
-function var_0_0._onAnimEvent(arg_16_0, arg_16_1, arg_16_2, arg_16_3, arg_16_4)
-	local var_16_0 = arg_16_4[1]
-	local var_16_1 = arg_16_4[2]
+function FightTLEventDefHit:_onAnimEvent(actionName, eventName, eventArgs, param)
+	local entity = param[1]
+	local action = param[2]
 
-	if arg_16_2 == SpineAnimEvent.ActionComplete and arg_16_1 == var_16_1 then
-		var_16_0.spine:removeAnimEventCallback(arg_16_0._onAnimEvent, arg_16_0)
-		var_16_0:resetAnimState()
+	if eventName == SpineAnimEvent.ActionComplete and actionName == action then
+		entity.spine:removeAnimEventCallback(self._onAnimEvent, self)
+		entity:resetAnimState()
 	end
 end
 
-function var_0_0._onDelayActionFinish(arg_17_0)
-	if arg_17_0._hitActionDefenders then
-		for iter_17_0, iter_17_1 in ipairs(arg_17_0._hitActionDefenders) do
-			iter_17_1.spine:removeAnimEventCallback(arg_17_0._onAnimEvent, arg_17_0)
+function FightTLEventDefHit:_onDelayActionFinish()
+	if self._hitActionDefenders then
+		for _, defender in ipairs(self._hitActionDefenders) do
+			defender.spine:removeAnimEventCallback(self._onAnimEvent, self)
 
-			local var_17_0 = var_0_1[iter_17_1.id] or 1
+			local count = HittingEntity2Counter[defender.id] or 1
 
-			var_0_1[iter_17_1.id] = var_17_0 - 1
+			HittingEntity2Counter[defender.id] = count - 1
 
-			if var_0_1[iter_17_1.id] == 0 then
-				iter_17_1:resetAnimState()
+			if HittingEntity2Counter[defender.id] == 0 then
+				defender:resetAnimState()
 			end
 		end
 
-		arg_17_0._hitActionDefenders = nil
+		self._hitActionDefenders = nil
 	end
 end
 
-function var_0_0._playSkillBuff(arg_18_0, arg_18_1)
-	if GameUtil.tabletool_dictIsEmpty(arg_18_0._buffIdDict) then
+function FightTLEventDefHit:_playSkillBuff(invoke_list)
+	if GameUtil.tabletool_dictIsEmpty(self._buffIdDict) then
 		return
 	end
 
-	for iter_18_0, iter_18_1 in ipairs(arg_18_1) do
-		if FightHelper.getEntity(iter_18_1.targetId) and FightEnum.BuffEffectType[iter_18_1.effectType] and arg_18_0._buffIdDict and arg_18_0._buffIdDict[iter_18_1.buff.buffId] then
-			FightSkillBuffMgr.instance:playSkillBuff(arg_18_0.fightStepData, iter_18_1)
+	for _, actEffectData in ipairs(invoke_list) do
+		local oneDefender = FightHelper.getEntity(actEffectData.targetId)
+
+		if oneDefender and FightEnum.BuffEffectType[actEffectData.effectType] and self._buffIdDict and self._buffIdDict[actEffectData.buff.buffId] then
+			FightSkillBuffMgr.instance:playSkillBuff(self.fightStepData, actEffectData)
 		end
 	end
 end
 
-function var_0_0._playSkillBehavior(arg_19_0)
-	if not arg_19_0._behaviorTypeDict then
+function FightTLEventDefHit:_playSkillBehavior()
+	if not self._behaviorTypeDict then
 		return
 	end
 
-	FightSkillBehaviorMgr.instance:playSkillBehavior(arg_19_0.fightStepData, arg_19_0._behaviorTypeDict, true)
+	FightSkillBehaviorMgr.instance:playSkillBehavior(self.fightStepData, self._behaviorTypeDict, true)
 end
 
-function var_0_0._trySetKillTimeScale(arg_20_0, arg_20_1, arg_20_2)
-	arg_20_0._context.hitCount = (arg_20_0._context.hitCount or 0) + 1
+function FightTLEventDefHit:_trySetKillTimeScale(fightStepData, param)
+	self._context.hitCount = (self._context.hitCount or 0) + 1
 
-	if not (arg_20_2[7] == "1") then
+	local isFinal = param[7] == "1"
+
+	if not isFinal then
 		return
 	end
 
-	local var_20_0 = FightHelper.getEntity(arg_20_1.fromId):getMO()
+	local entity = FightHelper.getEntity(fightStepData.fromId)
+	local entityMO = entity:getMO()
 
-	if not var_20_0 then
+	if not entityMO then
 		return
 	end
 
-	if var_20_0.side ~= FightEnum.EntitySide.MySide or not var_20_0:isCharacter() then
+	if entityMO.side ~= FightEnum.EntitySide.MySide or not entityMO:isCharacter() then
 		return
 	end
 
-	local var_20_1 = arg_20_1.actId
+	local skillId = fightStepData.actId
 
-	if not FightCardDataHelper.isBigSkill(var_20_1) then
+	if not FightCardDataHelper.isBigSkill(skillId) then
 		return
 	end
 
-	local var_20_2 = false
+	local isKill = false
 
-	for iter_20_0, iter_20_1 in ipairs(arg_20_0.fightStepData.actEffect) do
-		if iter_20_1.effectType == FightEnum.EffectType.DEAD then
-			var_20_2 = true
+	for _, actEffectData in ipairs(self.fightStepData.actEffect) do
+		if actEffectData.effectType == FightEnum.EffectType.DEAD then
+			isKill = true
 
 			break
 		end
 	end
 
-	if not var_20_2 then
+	if not isKill then
 		return
 	end
 
-	if arg_20_0._context.hitCount and arg_20_0._context.hitCount > 1 then
-		TaskDispatcher.runDelay(arg_20_0._revertKillTimeScale, arg_20_0, 0.2)
+	if self._context.hitCount and self._context.hitCount > 1 then
+		TaskDispatcher.runDelay(self._revertKillTimeScale, self, 0.2)
 	else
-		TaskDispatcher.runDelay(arg_20_0._revertKillTimeScale, arg_20_0, 0.2)
+		TaskDispatcher.runDelay(self._revertKillTimeScale, self, 0.2)
 	end
 end
 
-function var_0_0._directCharacterDataFilter(arg_21_0)
-	local var_21_0 = {}
-	local var_21_1 = {}
+function FightTLEventDefHit:_directCharacterDataFilter()
+	local invoke_list = {}
+	local filterDic = {}
 
-	for iter_21_0, iter_21_1 in pairs(var_0_0.directCharacterHitEffectType) do
-		var_21_1[iter_21_0] = iter_21_1
+	for k, v in pairs(FightTLEventDefHit.directCharacterHitEffectType) do
+		filterDic[k] = v
 	end
 
-	for iter_21_2, iter_21_3 in pairs(var_0_2) do
-		var_21_1[iter_21_2] = iter_21_3
+	for k, v in pairs(originHitEffectType) do
+		filterDic[k] = v
 	end
 
-	for iter_21_4, iter_21_5 in pairs(var_0_3) do
-		var_21_1[iter_21_4] = iter_21_5
+	for k, v in pairs(additionalHitEffectType) do
+		filterDic[k] = v
 	end
 
-	local var_21_2 = FightHelper.filterActEffect(arg_21_0.fightStepData.actEffect, var_21_1)
-	local var_21_3, var_21_4 = LuaUtil.float2Fraction(arg_21_0._ratio)
-	local var_21_5 = #var_21_2
-	local var_21_6
-	local var_21_7
+	local effect_list = FightHelper.filterActEffect(self.fightStepData.actEffect, filterDic)
+	local numerator, denominator = LuaUtil.float2Fraction(self._ratio)
+	local data_len = #effect_list
+	local act_on_index, act_on_target_id
 
-	if var_21_2[arg_21_0._act_on_index_entity] then
-		var_21_7 = var_21_2[arg_21_0._act_on_index_entity][1].targetId
-		var_21_6 = arg_21_0._act_on_index_entity
-	elseif var_21_5 > 0 then
-		var_21_7 = var_21_2[var_21_5][1].targetId
-		var_21_6 = var_21_5
+	if effect_list[self._act_on_index_entity] then
+		act_on_target_id = effect_list[self._act_on_index_entity][1].targetId
+		act_on_index = self._act_on_index_entity
+	elseif data_len > 0 then
+		act_on_target_id = effect_list[data_len][1].targetId
+		act_on_index = data_len
 	end
 
-	if arg_21_0._act_on_entity_count ~= var_21_5 and var_21_6 == var_21_5 then
-		var_21_3, var_21_4 = LuaUtil.divisionOperation2Fraction(arg_21_0._ratio, arg_21_0._act_on_entity_count - var_21_5 + 1)
-		arg_21_0._ratio = arg_21_0._ratio / (arg_21_0._act_on_entity_count - var_21_5 + 1)
+	if self._act_on_entity_count ~= data_len and act_on_index == data_len then
+		numerator, denominator = LuaUtil.divisionOperation2Fraction(self._ratio, self._act_on_entity_count - data_len + 1)
+		self._ratio = self._ratio / (self._act_on_entity_count - data_len + 1)
 	end
 
-	for iter_21_6, iter_21_7 in ipairs(arg_21_0.fightStepData.actEffect) do
-		if iter_21_7.targetId == var_21_7 then
-			table.insert(var_21_0, iter_21_7)
+	for i, v in ipairs(self.fightStepData.actEffect) do
+		if v.targetId == act_on_target_id then
+			table.insert(invoke_list, v)
 		end
 	end
 
-	for iter_21_8 = #var_21_0, 1, -1 do
-		local var_21_8 = var_21_0[iter_21_8]
+	for i = #invoke_list, 1, -1 do
+		local actEffectData = invoke_list[i]
 
-		if not var_21_8 then
+		if not actEffectData then
 			logError("找不到数据")
 		end
 
-		if arg_21_0:_detectInvokeActEffect(var_21_8.clientId, var_21_8.targetId, var_21_3, var_21_4) then
+		if self:_detectInvokeActEffect(actEffectData.clientId, actEffectData.targetId, numerator, denominator) then
 			-- block empty
-		elseif not var_0_0.directCharacterHitEffectType[var_21_8.effectType] then
-			table.remove(var_21_0, iter_21_8)
+		elseif not FightTLEventDefHit.directCharacterHitEffectType[actEffectData.effectType] then
+			table.remove(invoke_list, i)
 		end
 	end
 
-	return var_21_0
+	return invoke_list
 end
 
-function var_0_0._detectInvokeActEffect(arg_22_0, arg_22_1, arg_22_2, arg_22_3, arg_22_4)
-	if arg_22_0._hasRatio then
-		if not arg_22_0._context.ratio_fraction then
-			arg_22_0._context.ratio_fraction = {}
+function FightTLEventDefHit:_detectInvokeActEffect(actEffectDataId, targetId, numerator, denominator)
+	if self._hasRatio then
+		if not self._context.ratio_fraction then
+			self._context.ratio_fraction = {}
 		end
 
-		if not arg_22_0._context.ratio_fraction[arg_22_2] then
-			arg_22_0._context.ratio_fraction[arg_22_2] = arg_22_0._context.ratio_fraction[arg_22_2] or {}
+		if not self._context.ratio_fraction[targetId] then
+			self._context.ratio_fraction[targetId] = self._context.ratio_fraction[targetId] or {}
 		end
 
-		if not arg_22_0._context.ratio_fraction[arg_22_2][arg_22_1] then
-			arg_22_0._context.ratio_fraction[arg_22_2][arg_22_1] = arg_22_0._context.ratio_fraction[arg_22_2][arg_22_1] or {}
-			arg_22_0._context.ratio_fraction[arg_22_2][arg_22_1].numerator = 0
-			arg_22_0._context.ratio_fraction[arg_22_2][arg_22_1].denominator = 1
+		if not self._context.ratio_fraction[targetId][actEffectDataId] then
+			self._context.ratio_fraction[targetId][actEffectDataId] = self._context.ratio_fraction[targetId][actEffectDataId] or {}
+			self._context.ratio_fraction[targetId][actEffectDataId].numerator = 0
+			self._context.ratio_fraction[targetId][actEffectDataId].denominator = 1
 		end
 
-		local var_22_0, var_22_1 = LuaUtil.fractionAddition(arg_22_0._context.ratio_fraction[arg_22_2][arg_22_1].numerator, arg_22_0._context.ratio_fraction[arg_22_2][arg_22_1].denominator, arg_22_3, arg_22_4)
+		local final_numerator, final_denominator = LuaUtil.fractionAddition(self._context.ratio_fraction[targetId][actEffectDataId].numerator, self._context.ratio_fraction[targetId][actEffectDataId].denominator, numerator, denominator)
 
-		arg_22_0._context.ratio_fraction[arg_22_2][arg_22_1].numerator = var_22_0
-		arg_22_0._context.ratio_fraction[arg_22_2][arg_22_1].denominator = var_22_1
+		self._context.ratio_fraction[targetId][actEffectDataId].numerator = final_numerator
+		self._context.ratio_fraction[targetId][actEffectDataId].denominator = final_denominator
 
-		return var_22_1 <= var_22_0
-	end
-
-	return true
-end
-
-function var_0_0._canPlayDead(arg_23_0, arg_23_1)
-	if arg_23_0._context.ratio_fraction and arg_23_0._context.ratio_fraction[arg_23_1.targetId] and arg_23_0._context.ratio_fraction[arg_23_1.targetId][arg_23_1.clientId] then
-		return arg_23_0._context.ratio_fraction[arg_23_1.targetId][arg_23_1.clientId].numerator >= arg_23_0._context.ratio_fraction[arg_23_1.targetId][arg_23_1.clientId].denominator
+		return final_denominator <= final_numerator
 	end
 
 	return true
 end
 
-function var_0_0._revertKillTimeScale(arg_24_0)
+function FightTLEventDefHit:_canPlayDead(actEffectData)
+	if self._context.ratio_fraction and self._context.ratio_fraction[actEffectData.targetId] and self._context.ratio_fraction[actEffectData.targetId][actEffectData.clientId] then
+		return self._context.ratio_fraction[actEffectData.targetId][actEffectData.clientId].numerator >= self._context.ratio_fraction[actEffectData.targetId][actEffectData.clientId].denominator
+	end
+
+	return true
+end
+
+function FightTLEventDefHit:_revertKillTimeScale()
 	GameTimeMgr.instance:setTimeScale(GameTimeMgr.TimeScaleType.FightKillEnemy, 1)
 end
 
-function var_0_0.onDestructor(arg_25_0)
-	arg_25_0:_onDelayActionFinish()
+function FightTLEventDefHit:onDestructor()
+	self:_onDelayActionFinish()
 
-	if arg_25_0._guardEffectList then
-		for iter_25_0, iter_25_1 in ipairs(arg_25_0._guardEffectList) do
-			iter_25_1:disposeSelf()
+	if self._guardEffectList then
+		for i, v in ipairs(self._guardEffectList) do
+			v:disposeSelf()
 		end
 
-		arg_25_0._guardEffectList = nil
+		self._guardEffectList = nil
 	end
 
-	arg_25_0:_revertKillTimeScale()
-	TaskDispatcher.cancelTask(arg_25_0._revertKillTimeScale, arg_25_0)
+	self:_revertKillTimeScale()
+	TaskDispatcher.cancelTask(self._revertKillTimeScale, self)
 
-	arg_25_0._defenders = nil
-	arg_25_0._attacker = nil
+	self._defenders = nil
+	self._attacker = nil
 
-	arg_25_0:showEzioOriginFloat()
+	self:showEzioOriginFloat()
 end
 
-function var_0_0.showEzioOriginFloat(arg_26_0)
-	if arg_26_0.ezioDamage and not arg_26_0._isLastHit and arg_26_0.hasEzioOriginDamage then
-		for iter_26_0, iter_26_1 in ipairs(arg_26_0.fightStepData.actEffect) do
-			if iter_26_1.effectType == FightEnum.EffectType.EZIOBIGSKILLORIGINDAMAGE and not iter_26_1:isDone() then
-				local var_26_0 = iter_26_1.targetId
+function FightTLEventDefHit:showEzioOriginFloat()
+	if self.ezioDamage and not self._isLastHit and self.hasEzioOriginDamage then
+		for i, actEffectData in ipairs(self.fightStepData.actEffect) do
+			if actEffectData.effectType == FightEnum.EffectType.EZIOBIGSKILLORIGINDAMAGE and not actEffectData:isDone() then
+				local entityId = actEffectData.targetId
 
-				FightDataHelper.playEffectData(iter_26_1)
+				FightDataHelper.playEffectData(actEffectData)
 
-				local var_26_1 = iter_26_1.effectNum
-				local var_26_2 = iter_26_1.effectNum1 == 131 and FightEnum.FloatType.crit_damage_origin or FightEnum.FloatType.damage_origin
-				local var_26_3 = FightHelper.getEntity(var_26_0)
+				local numAbs = actEffectData.effectNum
+				local floatType = actEffectData.effectNum1 == 131 and FightEnum.FloatType.crit_damage_origin or FightEnum.FloatType.damage_origin
+				local oneDefender = FightHelper.getEntity(entityId)
 
-				if var_26_3 then
-					local var_26_4 = var_26_3:isMySide() and -var_26_1 or var_26_1
+				if oneDefender then
+					local floatNum = oneDefender:isMySide() and -numAbs or numAbs
 
-					FightFloatMgr.instance:float(iter_26_1.targetId, var_26_2, var_26_4, nil, false)
+					FightFloatMgr.instance:float(actEffectData.targetId, floatType, floatNum, nil, false)
 				end
 			end
 		end
 	end
 end
 
-return var_0_0
+return FightTLEventDefHit

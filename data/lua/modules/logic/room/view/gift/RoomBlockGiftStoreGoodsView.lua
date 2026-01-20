@@ -1,362 +1,372 @@
-﻿module("modules.logic.room.view.gift.RoomBlockGiftStoreGoodsView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/gift/RoomBlockGiftStoreGoodsView.lua
 
-local var_0_0 = class("RoomBlockGiftStoreGoodsView", BaseView)
+module("modules.logic.room.view.gift.RoomBlockGiftStoreGoodsView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageblur = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/#simage_blur")
-	arg_1_0._simagerightbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/bg/#simage_rightbg")
-	arg_1_0._simageleftbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/bg/#simage_leftbg")
-	arg_1_0._txtgoodsNameCn = gohelper.findChildText(arg_1_0.viewGO, "view/common/title/#txt_goodsNameCn")
-	arg_1_0._btnbuy = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/common/#btn_buy")
-	arg_1_0._godiscount = gohelper.findChild(arg_1_0.viewGO, "view/common/#btn_buy/#go_discount")
-	arg_1_0._txtdiscount = gohelper.findChildText(arg_1_0.viewGO, "view/common/#btn_buy/#go_discount/#txt_discount")
-	arg_1_0._godiscount2 = gohelper.findChild(arg_1_0.viewGO, "view/common/#btn_buy/#go_discount2")
-	arg_1_0._txtdiscount2 = gohelper.findChildText(arg_1_0.viewGO, "view/common/#btn_buy/#go_discount2/#txt_discount")
-	arg_1_0._gocost = gohelper.findChild(arg_1_0.viewGO, "view/common/cost")
-	arg_1_0._btncost1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/common/cost/#btn_cost1")
-	arg_1_0._gounselect1 = gohelper.findChild(arg_1_0.viewGO, "view/common/cost/#btn_cost1/unselect")
-	arg_1_0._imageiconunselect1 = gohelper.findChildImage(arg_1_0.viewGO, "view/common/cost/#btn_cost1/unselect/icon/simage_icon")
-	arg_1_0._txtcurpriceunselect1 = gohelper.findChildText(arg_1_0.viewGO, "view/common/cost/#btn_cost1/unselect/txt_Num")
-	arg_1_0._txtoriginalpriceunselect1 = gohelper.findChildText(arg_1_0.viewGO, "view/common/cost/#btn_cost1/unselect/#txt_original_price")
-	arg_1_0._goselect1 = gohelper.findChild(arg_1_0.viewGO, "view/common/cost/#btn_cost1/select")
-	arg_1_0._imageiconselect1 = gohelper.findChildImage(arg_1_0.viewGO, "view/common/cost/#btn_cost1/select/icon/simage_icon")
-	arg_1_0._txtcurpriceselect1 = gohelper.findChildText(arg_1_0.viewGO, "view/common/cost/#btn_cost1/select/txt_Num")
-	arg_1_0._txtoriginalpriceselect1 = gohelper.findChildText(arg_1_0.viewGO, "view/common/cost/#btn_cost1/select/#txt_original_price")
-	arg_1_0._btncost2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/common/cost/#btn_cost2")
-	arg_1_0._gounselect2 = gohelper.findChild(arg_1_0.viewGO, "view/common/cost/#btn_cost2/unselect")
-	arg_1_0._imageiconunselect2 = gohelper.findChildImage(arg_1_0.viewGO, "view/common/cost/#btn_cost2/unselect/icon/simage_icon")
-	arg_1_0._txtcurpriceunselect2 = gohelper.findChildText(arg_1_0.viewGO, "view/common/cost/#btn_cost2/unselect/txt_Num")
-	arg_1_0._txtoriginalpriceunselect2 = gohelper.findChildText(arg_1_0.viewGO, "view/common/cost/#btn_cost2/unselect/#txt_original_price")
-	arg_1_0._goselect2 = gohelper.findChild(arg_1_0.viewGO, "view/common/cost/#btn_cost2/select")
-	arg_1_0._imageiconselect2 = gohelper.findChildImage(arg_1_0.viewGO, "view/common/cost/#btn_cost2/select/icon/simage_icon")
-	arg_1_0._txtcurpriceselect2 = gohelper.findChildText(arg_1_0.viewGO, "view/common/cost/#btn_cost2/select/txt_Num")
-	arg_1_0._txtoriginalpriceselect2 = gohelper.findChildText(arg_1_0.viewGO, "view/common/cost/#btn_cost2/select/#txt_original_price")
-	arg_1_0._gocostsingle = gohelper.findChild(arg_1_0.viewGO, "view/common/cost_single")
-	arg_1_0._imageiconsingle = gohelper.findChildImage(arg_1_0.viewGO, "view/common/cost_single/simage_material")
-	arg_1_0._txtcurpricesingle = gohelper.findChildText(arg_1_0.viewGO, "view/common/cost_single/#txt_materialNum")
-	arg_1_0._txtoriginalpricesingle = gohelper.findChildText(arg_1_0.viewGO, "view/common/cost_single/#txt_price")
-	arg_1_0._gonormaldetail = gohelper.findChild(arg_1_0.viewGO, "view/normal_detail")
-	arg_1_0._godetailremain = gohelper.findChild(arg_1_0.viewGO, "view/normal_detail/remain")
-	arg_1_0._godetailleftbg = gohelper.findChild(arg_1_0.viewGO, "view/normal_detail/remain/#go_leftbg")
-	arg_1_0._txtdetailleftremain = gohelper.findChildText(arg_1_0.viewGO, "view/normal_detail/remain/#go_leftbg/#txt_remain")
-	arg_1_0._godetailrightbg = gohelper.findChild(arg_1_0.viewGO, "view/normal_detail/remain/#go_rightbg")
-	arg_1_0._txtdetailrightremain = gohelper.findChildText(arg_1_0.viewGO, "view/normal_detail/remain/#go_rightbg/#txt_remaintime")
-	arg_1_0._gonormaldetailinfo = gohelper.findChild(arg_1_0.viewGO, "view/normal_detail/info")
-	arg_1_0._txtnormaldetailUseDesc = gohelper.findChildText(arg_1_0.viewGO, "view/normal_detail/info/goodsDesc/Viewport/Content/#txt_goodsUseDesc")
-	arg_1_0._txtnormaldetaildesc = gohelper.findChildText(arg_1_0.viewGO, "view/normal_detail/info/goodsDesc/Viewport/Content/#txt_goodsDesc")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/#btn_close")
-	arg_1_0._simagetype1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/right/type1/#simage_icon")
-	arg_1_0._gohadnumber = gohelper.findChild(arg_1_0.viewGO, "view/right/type1/#go_hadnumber")
-	arg_1_0._txttype1num = gohelper.findChildText(arg_1_0.viewGO, "view/right/type1/#go_hadnumber/#txt_hadnumber")
-	arg_1_0._btnicon = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/right/#btn_click")
-	arg_1_0._gotopright = gohelper.findChild(arg_1_0.viewGO, "#go_topright")
+local RoomBlockGiftStoreGoodsView = class("RoomBlockGiftStoreGoodsView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomBlockGiftStoreGoodsView:onInitView()
+	self._simageblur = gohelper.findChildSingleImage(self.viewGO, "view/#simage_blur")
+	self._simagerightbg = gohelper.findChildSingleImage(self.viewGO, "view/bg/#simage_rightbg")
+	self._simageleftbg = gohelper.findChildSingleImage(self.viewGO, "view/bg/#simage_leftbg")
+	self._txtgoodsNameCn = gohelper.findChildText(self.viewGO, "view/common/title/#txt_goodsNameCn")
+	self._btnbuy = gohelper.findChildButtonWithAudio(self.viewGO, "view/common/#btn_buy")
+	self._godiscount = gohelper.findChild(self.viewGO, "view/common/#btn_buy/#go_discount")
+	self._txtdiscount = gohelper.findChildText(self.viewGO, "view/common/#btn_buy/#go_discount/#txt_discount")
+	self._godiscount2 = gohelper.findChild(self.viewGO, "view/common/#btn_buy/#go_discount2")
+	self._txtdiscount2 = gohelper.findChildText(self.viewGO, "view/common/#btn_buy/#go_discount2/#txt_discount")
+	self._gocost = gohelper.findChild(self.viewGO, "view/common/cost")
+	self._btncost1 = gohelper.findChildButtonWithAudio(self.viewGO, "view/common/cost/#btn_cost1")
+	self._gounselect1 = gohelper.findChild(self.viewGO, "view/common/cost/#btn_cost1/unselect")
+	self._imageiconunselect1 = gohelper.findChildImage(self.viewGO, "view/common/cost/#btn_cost1/unselect/icon/simage_icon")
+	self._txtcurpriceunselect1 = gohelper.findChildText(self.viewGO, "view/common/cost/#btn_cost1/unselect/txt_Num")
+	self._txtoriginalpriceunselect1 = gohelper.findChildText(self.viewGO, "view/common/cost/#btn_cost1/unselect/#txt_original_price")
+	self._goselect1 = gohelper.findChild(self.viewGO, "view/common/cost/#btn_cost1/select")
+	self._imageiconselect1 = gohelper.findChildImage(self.viewGO, "view/common/cost/#btn_cost1/select/icon/simage_icon")
+	self._txtcurpriceselect1 = gohelper.findChildText(self.viewGO, "view/common/cost/#btn_cost1/select/txt_Num")
+	self._txtoriginalpriceselect1 = gohelper.findChildText(self.viewGO, "view/common/cost/#btn_cost1/select/#txt_original_price")
+	self._btncost2 = gohelper.findChildButtonWithAudio(self.viewGO, "view/common/cost/#btn_cost2")
+	self._gounselect2 = gohelper.findChild(self.viewGO, "view/common/cost/#btn_cost2/unselect")
+	self._imageiconunselect2 = gohelper.findChildImage(self.viewGO, "view/common/cost/#btn_cost2/unselect/icon/simage_icon")
+	self._txtcurpriceunselect2 = gohelper.findChildText(self.viewGO, "view/common/cost/#btn_cost2/unselect/txt_Num")
+	self._txtoriginalpriceunselect2 = gohelper.findChildText(self.viewGO, "view/common/cost/#btn_cost2/unselect/#txt_original_price")
+	self._goselect2 = gohelper.findChild(self.viewGO, "view/common/cost/#btn_cost2/select")
+	self._imageiconselect2 = gohelper.findChildImage(self.viewGO, "view/common/cost/#btn_cost2/select/icon/simage_icon")
+	self._txtcurpriceselect2 = gohelper.findChildText(self.viewGO, "view/common/cost/#btn_cost2/select/txt_Num")
+	self._txtoriginalpriceselect2 = gohelper.findChildText(self.viewGO, "view/common/cost/#btn_cost2/select/#txt_original_price")
+	self._gocostsingle = gohelper.findChild(self.viewGO, "view/common/cost_single")
+	self._imageiconsingle = gohelper.findChildImage(self.viewGO, "view/common/cost_single/simage_material")
+	self._txtcurpricesingle = gohelper.findChildText(self.viewGO, "view/common/cost_single/#txt_materialNum")
+	self._txtoriginalpricesingle = gohelper.findChildText(self.viewGO, "view/common/cost_single/#txt_price")
+	self._gonormaldetail = gohelper.findChild(self.viewGO, "view/normal_detail")
+	self._godetailremain = gohelper.findChild(self.viewGO, "view/normal_detail/remain")
+	self._godetailleftbg = gohelper.findChild(self.viewGO, "view/normal_detail/remain/#go_leftbg")
+	self._txtdetailleftremain = gohelper.findChildText(self.viewGO, "view/normal_detail/remain/#go_leftbg/#txt_remain")
+	self._godetailrightbg = gohelper.findChild(self.viewGO, "view/normal_detail/remain/#go_rightbg")
+	self._txtdetailrightremain = gohelper.findChildText(self.viewGO, "view/normal_detail/remain/#go_rightbg/#txt_remaintime")
+	self._gonormaldetailinfo = gohelper.findChild(self.viewGO, "view/normal_detail/info")
+	self._txtnormaldetailUseDesc = gohelper.findChildText(self.viewGO, "view/normal_detail/info/goodsDesc/Viewport/Content/#txt_goodsUseDesc")
+	self._txtnormaldetaildesc = gohelper.findChildText(self.viewGO, "view/normal_detail/info/goodsDesc/Viewport/Content/#txt_goodsDesc")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "view/#btn_close")
+	self._simagetype1 = gohelper.findChildSingleImage(self.viewGO, "view/right/type1/#simage_icon")
+	self._gohadnumber = gohelper.findChild(self.viewGO, "view/right/type1/#go_hadnumber")
+	self._txttype1num = gohelper.findChildText(self.viewGO, "view/right/type1/#go_hadnumber/#txt_hadnumber")
+	self._btnicon = gohelper.findChildButtonWithAudio(self.viewGO, "view/right/#btn_click")
+	self._gotopright = gohelper.findChild(self.viewGO, "#go_topright")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnbuy:AddClickListener(arg_2_0._btnbuyOnClick, arg_2_0)
-	arg_2_0._btncost1:AddClickListener(arg_2_0._btncost1OnClick, arg_2_0)
-	arg_2_0._btncost2:AddClickListener(arg_2_0._btncost2OnClick, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnicon:AddClickListener(arg_2_0._btniconOnClick, arg_2_0)
+function RoomBlockGiftStoreGoodsView:addEvents()
+	self._btnbuy:AddClickListener(self._btnbuyOnClick, self)
+	self._btncost1:AddClickListener(self._btncost1OnClick, self)
+	self._btncost2:AddClickListener(self._btncost2OnClick, self)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnicon:AddClickListener(self._btniconOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnbuy:RemoveClickListener()
-	arg_3_0._btncost1:RemoveClickListener()
-	arg_3_0._btncost2:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnicon:RemoveClickListener()
+function RoomBlockGiftStoreGoodsView:removeEvents()
+	self._btnbuy:RemoveClickListener()
+	self._btncost1:RemoveClickListener()
+	self._btncost2:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
+	self._btnicon:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function RoomBlockGiftStoreGoodsView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btniconOnClick(arg_5_0)
-	local var_5_0 = string.splitToNumber(arg_5_0._goodConfig.product, "#")
+function RoomBlockGiftStoreGoodsView:_btniconOnClick()
+	local products = string.splitToNumber(self._goodConfig.product, "#")
 
-	MaterialTipController.instance:showMaterialInfo(var_5_0[1], var_5_0[2])
+	MaterialTipController.instance:showMaterialInfo(products[1], products[2])
 end
 
-function var_0_0._btncost1OnClick(arg_6_0)
-	if arg_6_0._curSelectCostIndex == 1 then
+function RoomBlockGiftStoreGoodsView:_btncost1OnClick()
+	if self._curSelectCostIndex == 1 then
 		return
 	end
 
-	arg_6_0._curSelectCostIndex = 1
+	self._curSelectCostIndex = 1
 
-	arg_6_0:_refreshCost()
+	self:_refreshCost()
 end
 
-function var_0_0._btncost2OnClick(arg_7_0)
-	if arg_7_0._curSelectCostIndex == 2 then
+function RoomBlockGiftStoreGoodsView:_btncost2OnClick()
+	if self._curSelectCostIndex == 2 then
 		return
 	end
 
-	arg_7_0._curSelectCostIndex = 2
+	self._curSelectCostIndex = 2
 
-	arg_7_0:_refreshCost()
+	self:_refreshCost()
 end
 
-function var_0_0._btnbuyOnClick(arg_8_0)
-	if string.nilorempty(arg_8_0._mo.config.cost) and string.nilorempty(arg_8_0._mo.config.cost2) then
-		arg_8_0:_buyGood()
+function RoomBlockGiftStoreGoodsView:_btnbuyOnClick()
+	local isFree = string.nilorempty(self._mo.config.cost) and string.nilorempty(self._mo.config.cost2)
+
+	if isFree then
+		self:_buyGood()
 
 		return
 	end
 
-	if arg_8_0._curSelectCostIndex == 1 then
-		local var_8_0 = string.splitToNumber(arg_8_0._mo.config.cost, "#")
+	if self._curSelectCostIndex == 1 then
+		local costs = string.splitToNumber(self._mo.config.cost, "#")
 
-		arg_8_0._costType = var_8_0[1]
-		arg_8_0._costId = var_8_0[2]
-		arg_8_0._costQuantity = var_8_0[3]
+		self._costType = costs[1]
+		self._costId = costs[2]
+		self._costQuantity = costs[3]
 	else
-		local var_8_1 = string.splitToNumber(arg_8_0._mo.config.cost2, "#")
+		local cost2s = string.splitToNumber(self._mo.config.cost2, "#")
 
-		arg_8_0._costType = var_8_1[1]
-		arg_8_0._costId = var_8_1[2]
-		arg_8_0._costQuantity = var_8_1[3]
+		self._costType = cost2s[1]
+		self._costId = cost2s[2]
+		self._costQuantity = cost2s[3]
 	end
 
-	if arg_8_0._costType == MaterialEnum.MaterialType.Currency and arg_8_0._costId == CurrencyEnum.CurrencyType.FreeDiamondCoupon then
-		if CurrencyController.instance:checkFreeDiamondEnough(arg_8_0._costQuantity, CurrencyEnum.PayDiamondExchangeSource.Store, nil, arg_8_0._buyGood, arg_8_0, arg_8_0.closeThis, arg_8_0) then
-			arg_8_0:_buyGood(arg_8_0._curSelectCostIndex)
+	if self._costType == MaterialEnum.MaterialType.Currency and self._costId == CurrencyEnum.CurrencyType.FreeDiamondCoupon then
+		if CurrencyController.instance:checkFreeDiamondEnough(self._costQuantity, CurrencyEnum.PayDiamondExchangeSource.Store, nil, self._buyGood, self, self.closeThis, self) then
+			self:_buyGood(self._curSelectCostIndex)
 		end
-	elseif arg_8_0._costType == MaterialEnum.MaterialType.Currency and arg_8_0._costId == CurrencyEnum.CurrencyType.Diamond then
-		if CurrencyController.instance:checkDiamondEnough(arg_8_0._costQuantity, arg_8_0.closeThis, arg_8_0) then
-			arg_8_0:_buyGood(arg_8_0._curSelectCostIndex)
+	elseif self._costType == MaterialEnum.MaterialType.Currency and self._costId == CurrencyEnum.CurrencyType.Diamond then
+		if CurrencyController.instance:checkDiamondEnough(self._costQuantity, self.closeThis, self) then
+			self:_buyGood(self._curSelectCostIndex)
 		end
-	elseif arg_8_0._costType == MaterialEnum.MaterialType.Currency and arg_8_0._costId == CurrencyEnum.CurrencyType.OldTravelTicket then
-		local var_8_2 = CurrencyModel.instance:getCurrency(arg_8_0._costId)
+	elseif self._costType == MaterialEnum.MaterialType.Currency and self._costId == CurrencyEnum.CurrencyType.OldTravelTicket then
+		local currencyMo = CurrencyModel.instance:getCurrency(self._costId)
 
-		if var_8_2 then
-			if var_8_2.quantity >= arg_8_0._costQuantity then
-				arg_8_0:_buyGood(arg_8_0._curSelectCostIndex)
+		if currencyMo then
+			if currencyMo.quantity >= self._costQuantity then
+				self:_buyGood(self._curSelectCostIndex)
 			else
 				GameFacade.showToast(ToastEnum.CurrencyNotEnough)
 
 				return false
 			end
 		end
-	elseif ItemModel.instance:goodsIsEnough(arg_8_0._costType, arg_8_0._costId, arg_8_0._costQuantity) then
-		arg_8_0:_buyGood(arg_8_0._curSelectCostIndex)
+	elseif ItemModel.instance:goodsIsEnough(self._costType, self._costId, self._costQuantity) then
+		self:_buyGood(self._curSelectCostIndex)
 	else
-		local var_8_3, var_8_4 = ItemModel.instance:getItemConfigAndIcon(arg_8_0._costType, arg_8_0._costId)
+		local config, icon = ItemModel.instance:getItemConfigAndIcon(self._costType, self._costId)
 
-		if var_8_3 then
-			GameFacade.showToast(ToastEnum.ClickRoomStoreInsight, var_8_3.name)
+		if config then
+			GameFacade.showToast(ToastEnum.ClickRoomStoreInsight, config.name)
 		end
 	end
 end
 
-function var_0_0._storeCurrencyNotEnoughCallback(arg_9_0)
+function RoomBlockGiftStoreGoodsView:_storeCurrencyNotEnoughCallback()
 	GameFacade.jump(JumpEnum.JumpId.GlowCharge)
 end
 
-function var_0_0._buyGood(arg_10_0, arg_10_1)
-	StoreController.instance:buyGoods(arg_10_0._mo, 1, arg_10_0._buyCallback, arg_10_0, arg_10_1)
+function RoomBlockGiftStoreGoodsView:_buyGood(index)
+	StoreController.instance:buyGoods(self._mo, 1, self._buyCallback, self, index)
 end
 
-function var_0_0._buyCallback(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	if arg_11_2 == 0 then
-		arg_11_0:closeThis()
+function RoomBlockGiftStoreGoodsView:_buyCallback(cmd, resultCode, msg)
+	if resultCode == 0 then
+		self:closeThis()
 	end
 end
 
-function var_0_0._editableInitView(arg_12_0)
-	gohelper.addUIClickAudio(arg_12_0._btnbuy.gameObject, AudioEnum.UI.Store_Good_Click)
+function RoomBlockGiftStoreGoodsView:_editableInitView()
+	gohelper.addUIClickAudio(self._btnbuy.gameObject, AudioEnum.UI.Store_Good_Click)
 
-	arg_12_0._curSelectCostIndex = 1
+	self._curSelectCostIndex = 1
 
-	gohelper.setActive(arg_12_0._txtoriginalpriceunselect1.gameObject, false)
-	gohelper.setActive(arg_12_0._txtoriginalpriceselect1.gameObject, false)
-	gohelper.setActive(arg_12_0._txtoriginalpriceunselect2.gameObject, false)
-	gohelper.setActive(arg_12_0._txtoriginalpriceselect2.gameObject, false)
+	gohelper.setActive(self._txtoriginalpriceunselect1.gameObject, false)
+	gohelper.setActive(self._txtoriginalpriceselect1.gameObject, false)
+	gohelper.setActive(self._txtoriginalpriceunselect2.gameObject, false)
+	gohelper.setActive(self._txtoriginalpriceselect2.gameObject, false)
 end
 
-function var_0_0._refreshUI(arg_13_0)
-	arg_13_0._goodConfig = StoreConfig.instance:getGoodsConfig(arg_13_0._mo.goodsId)
+function RoomBlockGiftStoreGoodsView:_refreshUI()
+	self._goodConfig = StoreConfig.instance:getGoodsConfig(self._mo.goodsId)
 
-	arg_13_0:_refreshIcon()
-	arg_13_0:_refreshGoodDetail()
-	arg_13_0:_refreshCost()
+	self:_refreshIcon()
+	self:_refreshGoodDetail()
+	self:_refreshCost()
 end
 
-function var_0_0._refreshIcon(arg_14_0)
-	local var_14_0 = string.splitToNumber(arg_14_0._goodConfig.product, "#")
-	local var_14_1, var_14_2 = ItemModel.instance:getItemConfigAndIcon(var_14_0[1], var_14_0[2], true)
-	local var_14_3 = ItemModel.instance:getItemCount(var_14_0[2])
+function RoomBlockGiftStoreGoodsView:_refreshIcon()
+	local products = string.splitToNumber(self._goodConfig.product, "#")
+	local _, icon = ItemModel.instance:getItemConfigAndIcon(products[1], products[2], true)
+	local itemCount = ItemModel.instance:getItemCount(products[2])
 
-	arg_14_0._simagetype1:LoadImage(var_14_2)
+	self._simagetype1:LoadImage(icon)
 
-	arg_14_0._txttype1num.text = var_14_3
+	self._txttype1num.text = itemCount
 end
 
-function var_0_0._refreshGoodDetail(arg_15_0)
-	local var_15_0 = string.splitToNumber(arg_15_0._goodConfig.product, "#")
-	local var_15_1 = ItemModel.instance:getItemConfig(var_15_0[1], var_15_0[2])
+function RoomBlockGiftStoreGoodsView:_refreshGoodDetail()
+	local items = string.splitToNumber(self._goodConfig.product, "#")
+	local itemConfig = ItemModel.instance:getItemConfig(items[1], items[2])
 
-	arg_15_0._txtgoodsNameCn.text = arg_15_0._mo.config.name
-	arg_15_0._txtnormaldetailUseDesc.text = var_15_1.useDesc
-	arg_15_0._txtnormaldetaildesc.text = var_15_1.desc
+	self._txtgoodsNameCn.text = self._mo.config.name
+	self._txtnormaldetailUseDesc.text = itemConfig.useDesc
+	self._txtnormaldetaildesc.text = itemConfig.desc
 
-	local var_15_2 = arg_15_0._mo:getOfflineTime()
+	local offlineTime = self._mo:getOfflineTime()
 
-	if var_15_2 > 0 then
-		local var_15_3 = math.floor(var_15_2 - ServerTime.now())
+	if offlineTime > 0 then
+		local limitSec = math.floor(offlineTime - ServerTime.now())
 
-		gohelper.setActive(arg_15_0._godetailrightbg, true)
+		gohelper.setActive(self._godetailrightbg, true)
 
-		arg_15_0._txtdetailrightremain.text = string.format("%s%s", TimeUtil.secondToRoughTime(var_15_3))
+		self._txtdetailrightremain.text = string.format("%s%s", TimeUtil.secondToRoughTime(limitSec))
 	else
-		gohelper.setActive(arg_15_0._godetailrightbg, false)
+		gohelper.setActive(self._godetailrightbg, false)
 	end
 
-	if arg_15_0._goodConfig.maxBuyCount and arg_15_0._goodConfig.maxBuyCount > 0 then
-		gohelper.setActive(arg_15_0._godetailleftbg, true)
+	if self._goodConfig.maxBuyCount and self._goodConfig.maxBuyCount > 0 then
+		gohelper.setActive(self._godetailleftbg, true)
 
-		local var_15_4 = arg_15_0._goodConfig.maxBuyCount - arg_15_0._mo.buyCount
+		local remain = self._goodConfig.maxBuyCount - self._mo.buyCount
 
-		arg_15_0._txtdetailleftremain.text = GameUtil.getSubPlaceholderLuaLang(luaLang("store_buylimit_count"), {
-			var_15_4
+		self._txtdetailleftremain.text = GameUtil.getSubPlaceholderLuaLang(luaLang("store_buylimit_count"), {
+			remain
 		})
 	else
-		gohelper.setActive(arg_15_0._godetailleftbg, false)
+		gohelper.setActive(self._godetailleftbg, false)
 	end
 
-	gohelper.setActive(arg_15_0._gonormaldetail, true)
+	gohelper.setActive(self._gonormaldetail, true)
 end
 
-function var_0_0._refreshCost(arg_16_0)
-	gohelper.setActive(arg_16_0._btncost1, not string.nilorempty(arg_16_0._goodConfig.cost))
-	gohelper.setActive(arg_16_0._btncost2, not string.nilorempty(arg_16_0._goodConfig.cost2))
+function RoomBlockGiftStoreGoodsView:_refreshCost()
+	gohelper.setActive(self._btncost1, not string.nilorempty(self._goodConfig.cost))
+	gohelper.setActive(self._btncost2, not string.nilorempty(self._goodConfig.cost2))
 
-	if string.nilorempty(arg_16_0._goodConfig.cost) then
-		gohelper.setActive(arg_16_0._gocost, false)
+	if string.nilorempty(self._goodConfig.cost) then
+		gohelper.setActive(self._gocost, false)
 
 		return
 	end
 
-	local var_16_0 = string.splitToNumber(arg_16_0._mo.config.cost, "#")
+	local costs = string.splitToNumber(self._mo.config.cost, "#")
 
-	gohelper.setActive(arg_16_0._gocost, true)
+	gohelper.setActive(self._gocost, true)
 
-	if string.nilorempty(arg_16_0._mo.config.cost2) then
-		gohelper.setActive(arg_16_0._gocost, false)
-		gohelper.setActive(arg_16_0._gocostsingle, true)
+	if string.nilorempty(self._mo.config.cost2) then
+		gohelper.setActive(self._gocost, false)
+		gohelper.setActive(self._gocostsingle, true)
 
-		local var_16_1, var_16_2 = ItemModel.instance:getItemConfigAndIcon(var_16_0[1], var_16_0[2])
+		local costCo, _ = ItemModel.instance:getItemConfigAndIcon(costs[1], costs[2])
 
-		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_16_0._imageiconsingle, var_16_1.icon .. "_1", true)
+		UISpriteSetMgr.instance:setCurrencyItemSprite(self._imageiconsingle, costCo.icon .. "_1", true)
 
-		if ItemModel.instance:getItemQuantity(var_16_0[1], var_16_0[2]) >= var_16_0[3] then
-			SLFramework.UGUI.GuiHelper.SetColor(arg_16_0._txtcurpricesingle, "#393939")
+		local hadQuantity = ItemModel.instance:getItemQuantity(costs[1], costs[2])
+
+		if hadQuantity >= costs[3] then
+			SLFramework.UGUI.GuiHelper.SetColor(self._txtcurpricesingle, "#393939")
 		else
-			SLFramework.UGUI.GuiHelper.SetColor(arg_16_0._txtcurpricesingle, "#bf2e11")
+			SLFramework.UGUI.GuiHelper.SetColor(self._txtcurpricesingle, "#bf2e11")
 		end
 
-		arg_16_0._txtcurpricesingle.text = var_16_0[3]
+		self._txtcurpricesingle.text = costs[3]
 	else
-		gohelper.setActive(arg_16_0._gocost, true)
-		gohelper.setActive(arg_16_0._gocostsingle, false)
+		gohelper.setActive(self._gocost, true)
+		gohelper.setActive(self._gocostsingle, false)
 
-		local var_16_3, var_16_4 = ItemModel.instance:getItemConfigAndIcon(var_16_0[1], var_16_0[2])
+		local costCo, _ = ItemModel.instance:getItemConfigAndIcon(costs[1], costs[2])
 
-		arg_16_0._txtcurpriceunselect1.text = var_16_0[3]
-		arg_16_0._txtcurpriceselect1.text = var_16_0[3]
+		self._txtcurpriceunselect1.text = costs[3]
+		self._txtcurpriceselect1.text = costs[3]
 
-		if ItemModel.instance:getItemQuantity(var_16_0[1], var_16_0[2]) >= var_16_0[3] then
-			SLFramework.UGUI.GuiHelper.SetColor(arg_16_0._txtcurpriceunselect1, "#393939")
-			SLFramework.UGUI.GuiHelper.SetColor(arg_16_0._txtcurpriceselect1, "#ffffff")
+		local hadQuantity = ItemModel.instance:getItemQuantity(costs[1], costs[2])
+
+		if hadQuantity >= costs[3] then
+			SLFramework.UGUI.GuiHelper.SetColor(self._txtcurpriceunselect1, "#393939")
+			SLFramework.UGUI.GuiHelper.SetColor(self._txtcurpriceselect1, "#ffffff")
 		else
-			SLFramework.UGUI.GuiHelper.SetColor(arg_16_0._txtcurpriceunselect1, "#bf2e11")
-			SLFramework.UGUI.GuiHelper.SetColor(arg_16_0._txtcurpriceselect1, "#bf2e11")
+			SLFramework.UGUI.GuiHelper.SetColor(self._txtcurpriceunselect1, "#bf2e11")
+			SLFramework.UGUI.GuiHelper.SetColor(self._txtcurpriceselect1, "#bf2e11")
 		end
 
-		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_16_0._imageiconselect1, var_16_3.icon .. "_1", true)
-		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_16_0._imageiconunselect1, var_16_3.icon .. "_1", true)
-		gohelper.setActive(arg_16_0._goselect1, arg_16_0._curSelectCostIndex == 1)
-		gohelper.setActive(arg_16_0._gounselect1, arg_16_0._curSelectCostIndex ~= 1)
+		UISpriteSetMgr.instance:setCurrencyItemSprite(self._imageiconselect1, costCo.icon .. "_1", true)
+		UISpriteSetMgr.instance:setCurrencyItemSprite(self._imageiconunselect1, costCo.icon .. "_1", true)
+		gohelper.setActive(self._goselect1, self._curSelectCostIndex == 1)
+		gohelper.setActive(self._gounselect1, self._curSelectCostIndex ~= 1)
 
-		if string.nilorempty(arg_16_0._goodConfig.cost2) then
-			gohelper.setActive(arg_16_0._txtoriginalpriceselect2.gameObject, false)
-			gohelper.setActive(arg_16_0._txtoriginalpriceunselect2.gameObject, false)
+		if string.nilorempty(self._goodConfig.cost2) then
+			gohelper.setActive(self._txtoriginalpriceselect2.gameObject, false)
+			gohelper.setActive(self._txtoriginalpriceunselect2.gameObject, false)
 
 			return
 		end
 
-		local var_16_5 = string.splitToNumber(arg_16_0._goodConfig.cost2, "#")
-		local var_16_6, var_16_7 = ItemModel.instance:getItemConfigAndIcon(var_16_5[1], var_16_5[2])
+		local costs2 = string.splitToNumber(self._goodConfig.cost2, "#")
+		local cost2Co, _ = ItemModel.instance:getItemConfigAndIcon(costs2[1], costs2[2])
 
-		arg_16_0._txtcurpriceunselect2.text = var_16_5[3]
-		arg_16_0._txtcurpriceselect2.text = var_16_5[3]
+		self._txtcurpriceunselect2.text = costs2[3]
+		self._txtcurpriceselect2.text = costs2[3]
 
-		if ItemModel.instance:getItemQuantity(var_16_5[1], var_16_5[2]) >= var_16_5[3] then
-			SLFramework.UGUI.GuiHelper.SetColor(arg_16_0._txtcurpriceunselect2, "#393939")
-			SLFramework.UGUI.GuiHelper.SetColor(arg_16_0._txtcurpriceselect2, "#ffffff")
+		local hadQuantity2 = ItemModel.instance:getItemQuantity(costs2[1], costs2[2])
+
+		if hadQuantity2 >= costs2[3] then
+			SLFramework.UGUI.GuiHelper.SetColor(self._txtcurpriceunselect2, "#393939")
+			SLFramework.UGUI.GuiHelper.SetColor(self._txtcurpriceselect2, "#ffffff")
 		else
-			SLFramework.UGUI.GuiHelper.SetColor(arg_16_0._txtcurpriceunselect2, "#bf2e11")
-			SLFramework.UGUI.GuiHelper.SetColor(arg_16_0._txtcurpriceselect2, "#bf2e11")
+			SLFramework.UGUI.GuiHelper.SetColor(self._txtcurpriceunselect2, "#bf2e11")
+			SLFramework.UGUI.GuiHelper.SetColor(self._txtcurpriceselect2, "#bf2e11")
 		end
 
-		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_16_0._imageiconselect2, var_16_6.icon .. "_1", true)
-		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_16_0._imageiconunselect2, var_16_6.icon .. "_1", true)
-		gohelper.setActive(arg_16_0._goselect2, arg_16_0._curSelectCostIndex == 2)
-		gohelper.setActive(arg_16_0._gounselect2, arg_16_0._curSelectCostIndex ~= 2)
+		UISpriteSetMgr.instance:setCurrencyItemSprite(self._imageiconselect2, cost2Co.icon .. "_1", true)
+		UISpriteSetMgr.instance:setCurrencyItemSprite(self._imageiconunselect2, cost2Co.icon .. "_1", true)
+		gohelper.setActive(self._goselect2, self._curSelectCostIndex == 2)
+		gohelper.setActive(self._gounselect2, self._curSelectCostIndex ~= 2)
 	end
 end
 
-function var_0_0.onOpen(arg_17_0)
-	arg_17_0._mo = arg_17_0.viewParam
+function RoomBlockGiftStoreGoodsView:onOpen()
+	self._mo = self.viewParam
 
-	arg_17_0:_setCurrency()
-	arg_17_0:_refreshUI()
+	self:_setCurrency()
+	self:_refreshUI()
 	AudioMgr.instance:trigger(AudioEnum.TeachNote.play_ui_mail_open)
 end
 
-function var_0_0._setCurrency(arg_18_0)
-	local var_18_0 = {}
+function RoomBlockGiftStoreGoodsView:_setCurrency()
+	local currencyParam = {}
 
-	if arg_18_0._mo.config.cost ~= "" then
-		local var_18_1 = string.splitToNumber(arg_18_0._mo.config.cost, "#")
+	if self._mo.config.cost ~= "" then
+		local costs = string.splitToNumber(self._mo.config.cost, "#")
 
-		table.insert(var_18_0, var_18_1[2])
+		table.insert(currencyParam, costs[2])
 	end
 
-	if arg_18_0._mo.config.cost2 ~= "" then
-		local var_18_2 = string.splitToNumber(arg_18_0._mo.config.cost2, "#")
+	if self._mo.config.cost2 ~= "" then
+		local cost2s = string.splitToNumber(self._mo.config.cost2, "#")
 
-		table.insert(var_18_0, var_18_2[2])
+		table.insert(currencyParam, cost2s[2])
 	end
 
-	for iter_18_0, iter_18_1 in pairs(var_18_0) do
-		if iter_18_1 == CurrencyEnum.CurrencyType.FreeDiamondCoupon then
-			table.insert(var_18_0, CurrencyEnum.CurrencyType.Diamond)
+	for _, v in pairs(currencyParam) do
+		if v == CurrencyEnum.CurrencyType.FreeDiamondCoupon then
+			table.insert(currencyParam, CurrencyEnum.CurrencyType.Diamond)
 		end
 	end
 
-	local var_18_3 = LuaUtil.getReverseArrTab(var_18_0)
+	local result = LuaUtil.getReverseArrTab(currencyParam)
 
-	arg_18_0.viewContainer:setCurrencyType(var_18_3)
+	self.viewContainer:setCurrencyType(result)
 end
 
-function var_0_0.onClose(arg_19_0)
+function RoomBlockGiftStoreGoodsView:onClose()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_20_0)
-	arg_20_0._mo = arg_20_0.viewParam
+function RoomBlockGiftStoreGoodsView:onUpdateParam()
+	self._mo = self.viewParam
 
-	arg_20_0:_refreshUI()
+	self:_refreshUI()
 end
 
-function var_0_0.onDestroyView(arg_21_0)
-	arg_21_0._simagetype1:UnLoadImage()
+function RoomBlockGiftStoreGoodsView:onDestroyView()
+	self._simagetype1:UnLoadImage()
 end
 
-return var_0_0
+return RoomBlockGiftStoreGoodsView

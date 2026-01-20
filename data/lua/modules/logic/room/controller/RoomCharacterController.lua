@@ -1,195 +1,198 @@
-﻿module("modules.logic.room.controller.RoomCharacterController", package.seeall)
+﻿-- chunkname: @modules/logic/room/controller/RoomCharacterController.lua
 
-local var_0_0 = class("RoomCharacterController", BaseController)
+module("modules.logic.room.controller.RoomCharacterController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:clear()
+local RoomCharacterController = class("RoomCharacterController", BaseController)
+
+function RoomCharacterController:onInit()
+	self:clear()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clear()
+function RoomCharacterController:reInit()
+	self:clear()
 end
 
-function var_0_0.clear(arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0._refreshNextCharacterFaithUpdate, arg_3_0)
+function RoomCharacterController:clear()
+	TaskDispatcher.cancelTask(self._refreshNextCharacterFaithUpdate, self)
 
-	arg_3_0._isCharacterListShow = false
-	arg_3_0._characterFocus = RoomCharacterEnum.CameraFocus.Normal
-	arg_3_0._lastCameraState = nil
-	arg_3_0._playingInteractionParam = nil
-	arg_3_0._dialogNextTime = nil
-	arg_3_0._lastSendgainCharacterFaithHeroId = nil
+	self._isCharacterListShow = false
+	self._characterFocus = RoomCharacterEnum.CameraFocus.Normal
+	self._lastCameraState = nil
+	self._playingInteractionParam = nil
+	self._dialogNextTime = nil
+	self._lastSendgainCharacterFaithHeroId = nil
 end
 
-function var_0_0.addConstEvents(arg_4_0)
+function RoomCharacterController:addConstEvents()
 	return
 end
 
-function var_0_0.init(arg_5_0)
-	RedDotController.instance:registerCallback(RedDotEvent.UpdateRelateDotInfo, arg_5_0._refreshRelateDot, arg_5_0)
+function RoomCharacterController:init()
+	RedDotController.instance:registerCallback(RedDotEvent.UpdateRelateDotInfo, self._refreshRelateDot, self)
 end
 
-function var_0_0.setCharacterFocus(arg_6_0, arg_6_1)
-	arg_6_0._characterFocus = arg_6_1 or RoomCharacterEnum.CameraFocus.Normal
+function RoomCharacterController:setCharacterFocus(characterFocus)
+	self._characterFocus = characterFocus or RoomCharacterEnum.CameraFocus.Normal
 end
 
-function var_0_0.getCharacterFocus(arg_7_0)
-	return arg_7_0._characterFocus
+function RoomCharacterController:getCharacterFocus()
+	return self._characterFocus
 end
 
-function var_0_0.setCharacterListShow(arg_8_0, arg_8_1)
-	arg_8_0._isCharacterListShow = arg_8_1
+function RoomCharacterController:setCharacterListShow(isShow)
+	self._isCharacterListShow = isShow
 
-	local var_8_0 = GameSceneMgr.instance:getCurScene()
-	local var_8_1 = var_8_0.camera:getCameraState()
+	local scene = GameSceneMgr.instance:getCurScene()
+	local cameraState = scene.camera:getCameraState()
 
-	if var_8_1 ~= RoomEnum.CameraState.Character then
-		arg_8_0._lastCameraState = var_8_1
+	if cameraState ~= RoomEnum.CameraState.Character then
+		self._lastCameraState = cameraState
 	end
 
-	if arg_8_1 then
-		var_8_0.camera:switchCameraState(RoomEnum.CameraState.Character, {})
-	elseif var_8_1 == RoomEnum.CameraState.Character then
-		var_8_0.camera:switchCameraState(arg_8_0._lastCameraState or RoomEnum.CameraState.Overlook, {})
+	if isShow then
+		scene.camera:switchCameraState(RoomEnum.CameraState.Character, {})
+	elseif cameraState == RoomEnum.CameraState.Character then
+		scene.camera:switchCameraState(self._lastCameraState or RoomEnum.CameraState.Overlook, {})
 
-		if arg_8_0._lastCameraState == RoomEnum.CameraState.Normal then
-			arg_8_0:tryPlayAllSpecialIdle()
+		if self._lastCameraState == RoomEnum.CameraState.Normal then
+			self:tryPlayAllSpecialIdle()
 		end
 	end
 
-	if arg_8_1 then
+	if isShow then
 		if UIBlockMgrExtend.needCircleMv then
 			UIBlockMgrExtend.setNeedCircleMv(false)
 		end
 
 		ViewMgr.instance:openView(ViewName.RoomCharacterPlaceView)
 
-		local var_8_2 = RoomCharacterModel.instance:getList()
+		local characterMOList = RoomCharacterModel.instance:getList()
 
-		for iter_8_0, iter_8_1 in ipairs(var_8_2) do
-			var_8_0.character:setCharacterAnimal(iter_8_1.heroId, false)
-			var_8_0.character:setCharacterTouch(iter_8_1.heroId, false)
+		for i, characterMO in ipairs(characterMOList) do
+			scene.character:setCharacterAnimal(characterMO.heroId, false)
+			scene.character:setCharacterTouch(characterMO.heroId, false)
 
-			if iter_8_1:getMoveState() == RoomCharacterEnum.CharacterMoveState.Move then
-				local var_8_3 = iter_8_1:getNearestPoint()
+			if characterMO:getMoveState() == RoomCharacterEnum.CharacterMoveState.Move then
+				local nearestPoint = characterMO:getNearestPoint()
 
-				iter_8_1:endMove()
-				iter_8_1:setPosition(RoomCharacterHelper.getCharacterPosition3D(var_8_3, true))
+				characterMO:endMove()
+				characterMO:setPosition(RoomCharacterHelper.getCharacterPosition3D(nearestPoint, true))
 			end
 		end
 	else
 		ViewMgr.instance:closeView(ViewName.RoomCharacterPlaceView)
 	end
 
-	arg_8_0:dispatchEvent(RoomEvent.CharacterListShowChanged, arg_8_1)
-	arg_8_0:dispatchEvent(RoomEvent.RefreshSpineShow)
+	self:dispatchEvent(RoomEvent.CharacterListShowChanged, isShow)
+	self:dispatchEvent(RoomEvent.RefreshSpineShow)
 
 	if RoomHelper.isFSMState(RoomEnum.FSMObState.PlaceCharacterConfirm) then
-		var_8_0.fsm:triggerEvent(RoomSceneEvent.CancelPlaceCharacter)
+		scene.fsm:triggerEvent(RoomSceneEvent.CancelPlaceCharacter)
 	end
 end
 
-function var_0_0.isCharacterListShow(arg_9_0)
-	return arg_9_0._isCharacterListShow
+function RoomCharacterController:isCharacterListShow()
+	return self._isCharacterListShow
 end
 
-function var_0_0.tryCorrectAllCharacter(arg_10_0, arg_10_1)
-	local var_10_0 = RoomCharacterModel.instance:getList()
+function RoomCharacterController:tryCorrectAllCharacter(useRandomPoint)
+	local roomCharacterMOList = RoomCharacterModel.instance:getList()
 
-	if arg_10_1 == true then
-		arg_10_0:_tryRandomByCharacterList(var_10_0)
+	if useRandomPoint == true then
+		self:_tryRandomByCharacterList(roomCharacterMOList)
 
-		for iter_10_0, iter_10_1 in ipairs(var_10_0) do
-			arg_10_0:interruptInteraction(iter_10_1:getCurrentInteractionId())
+		for _, roomCharacterMO in ipairs(roomCharacterMOList) do
+			self:interruptInteraction(roomCharacterMO:getCurrentInteractionId())
 		end
 
 		return
 	end
 
-	local var_10_1 = RoomCharacterModel.instance:getList()
-	local var_10_2
+	local roomCharacterMOList = RoomCharacterModel.instance:getList()
+	local randomCharacterMOList
 
-	for iter_10_2, iter_10_3 in ipairs(var_10_1) do
-		local var_10_3 = iter_10_3.currentPosition
+	for _, roomCharacterMO in ipairs(roomCharacterMOList) do
+		local currentPosition = roomCharacterMO.currentPosition
 
-		if not RoomCharacterHelper.canConfirmPlace(iter_10_3.heroId, var_10_3, iter_10_3.skinId, nil) then
-			local var_10_4 = RoomCharacterHelper.getRandomPosition() or iter_10_3.currentPosition
-			local var_10_5 = RoomCharacterHelper.getRecommendHexPoint(iter_10_3.heroId, iter_10_3.skinId, Vector2.New(var_10_4.x, var_10_4.z))
+		if not RoomCharacterHelper.canConfirmPlace(roomCharacterMO.heroId, currentPosition, roomCharacterMO.skinId, nil) then
+			local nearPosition = RoomCharacterHelper.getRandomPosition() or roomCharacterMO.currentPosition
+			local bestParam = RoomCharacterHelper.getRecommendHexPoint(roomCharacterMO.heroId, roomCharacterMO.skinId, Vector2.New(nearPosition.x, nearPosition.z))
 
-			if var_10_5 then
-				arg_10_0:moveCharacterTo(iter_10_3, var_10_5.position, false)
+			if bestParam then
+				self:moveCharacterTo(roomCharacterMO, bestParam.position, false)
 			else
-				var_10_2 = var_10_1 or {}
+				randomCharacterMOList = roomCharacterMOList or {}
 
-				table.insert(var_10_2, iter_10_3)
+				table.insert(randomCharacterMOList, roomCharacterMO)
 			end
 
-			arg_10_0:interruptInteraction(iter_10_3:getCurrentInteractionId())
+			self:interruptInteraction(roomCharacterMO:getCurrentInteractionId())
 		end
 	end
 
-	if var_10_2 then
-		arg_10_0:_tryRandomByCharacterList(var_10_1)
+	if randomCharacterMOList then
+		self:_tryRandomByCharacterList(roomCharacterMOList)
 	end
 end
 
-function var_0_0.checkCharacterMax(arg_11_0)
-	local var_11_0 = RoomCharacterModel.instance:getMaxCharacterCount()
+function RoomCharacterController:checkCharacterMax()
+	local maxCharacterCount = RoomCharacterModel.instance:getMaxCharacterCount()
+	local placeCount = RoomCharacterModel.instance:getPlaceCount()
 
-	if var_11_0 < RoomCharacterModel.instance:getPlaceCount() then
-		local var_11_1 = {}
+	if maxCharacterCount < placeCount then
+		local roomCharacterMOList = {}
 
-		tabletool.tabletool.addValues(var_11_1, RoomCharacterModel.instance:getList())
+		tabletool.tabletool.addValues(roomCharacterMOList, RoomCharacterModel.instance:getList())
 
-		local var_11_2 = GameSceneMgr.instance:getCurScene()
+		local scene = GameSceneMgr.instance:getCurScene()
 
-		arg_11_0:_randomArray(var_11_1)
+		self:_randomArray(roomCharacterMOList)
 
-		local var_11_3 = {}
+		local roomHeroIds = {}
 
-		for iter_11_0, iter_11_1 in ipairs(var_11_1) do
-			if iter_11_1:isPlaceSourceState() then
-				if var_11_0 > #var_11_3 then
-					table.insert(var_11_3, iter_11_1.heroId)
+		for _, roomCharacterMO in ipairs(roomCharacterMOList) do
+			if roomCharacterMO:isPlaceSourceState() then
+				if maxCharacterCount > #roomHeroIds then
+					table.insert(roomHeroIds, roomCharacterMO.heroId)
 				else
-					local var_11_4 = var_11_2.charactermgr:getCharacterEntity(iter_11_1.id)
+					local entity = scene.charactermgr:getCharacterEntity(roomCharacterMO.id)
 
-					if var_11_4 then
-						var_11_2.charactermgr:destroyCharacter(var_11_4)
+					if entity then
+						scene.charactermgr:destroyCharacter(entity)
 					end
 
-					RoomCharacterModel.instance:deleteCharacterMO(iter_11_1.heroId)
+					RoomCharacterModel.instance:deleteCharacterMO(roomCharacterMO.heroId)
 				end
 			end
 		end
 
-		RoomRpc.instance:sendUpdateRoomHeroDataRequest(var_11_3)
+		RoomRpc.instance:sendUpdateRoomHeroDataRequest(roomHeroIds)
 	end
 end
 
-function var_0_0._findPlaceBlockMOList(arg_12_0)
-	local var_12_0 = RoomMapBlockModel.instance:getFullBlockMOList()
-	local var_12_1 = RoomMapBuildingModel.instance
-	local var_12_2 = {}
+function RoomCharacterController:_findPlaceBlockMOList()
+	local mapBlockMOList = RoomMapBlockModel.instance:getFullBlockMOList()
+	local tRoomMapBuildingModel = RoomMapBuildingModel.instance
+	local placeBlockMOList = {}
 
-	for iter_12_0 = 1, #var_12_0 do
-		local var_12_3 = var_12_0[iter_12_0]
+	for i = 1, #mapBlockMOList do
+		local blockMO = mapBlockMOList[i]
 
-		if not var_12_1:getBuildingParam(var_12_3.hexPoint.x, var_12_3.hexPoint.y) and not RoomBuildingHelper.isInInitBlock(var_12_3.hexPoint) then
-			table.insert(var_12_2, var_12_3)
+		if not tRoomMapBuildingModel:getBuildingParam(blockMO.hexPoint.x, blockMO.hexPoint.y) and not RoomBuildingHelper.isInInitBlock(blockMO.hexPoint) then
+			table.insert(placeBlockMOList, blockMO)
 		end
 	end
 
-	return var_12_2
+	return placeBlockMOList
 end
 
-function var_0_0._randomArray(arg_13_0, arg_13_1)
-	RoomHelper.randomArray(arg_13_1)
+function RoomCharacterController:_randomArray(array)
+	RoomHelper.randomArray(array)
 end
 
-function var_0_0._getRandomResDirectionArray(arg_14_0)
-	if not arg_14_0._randomResDirectionList then
-		arg_14_0._randomResDirectionList = {
+function RoomCharacterController:_getRandomResDirectionArray()
+	if not self._randomResDirectionList then
+		self._randomResDirectionList = {
 			0,
 			1,
 			2,
@@ -200,25 +203,24 @@ function var_0_0._getRandomResDirectionArray(arg_14_0)
 		}
 	end
 
-	arg_14_0:_randomArray(arg_14_0._randomResDirectionList)
+	self:_randomArray(self._randomResDirectionList)
 
-	return arg_14_0._randomResDirectionList
+	return self._randomResDirectionList
 end
 
-function var_0_0._randomDirectionByBlockMO(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0 = arg_15_2 and arg_15_2:getBlockDefineCfg()
+function RoomCharacterController:_randomDirectionByBlockMO(characterMO, blockMO)
+	local defineCfg = blockMO and blockMO:getBlockDefineCfg()
 
-	if var_15_0 then
-		local var_15_1 = arg_15_0:_getRandomResDirectionArray()
-		local var_15_2
-		local var_15_3
+	if defineCfg then
+		local resDirectionList = self:_getRandomResDirectionArray()
+		local resId, direction
 
-		for iter_15_0 = 1, #var_15_1 do
-			local var_15_4 = var_15_1[iter_15_0]
-			local var_15_5 = var_15_0.resourceIds[var_15_4]
+		for i = 1, #resDirectionList do
+			direction = resDirectionList[i]
+			resId = defineCfg.resourceIds[direction]
 
-			if arg_15_1:isCanPlaceByResId(var_15_5) then
-				return RoomRotateHelper.rotateDirection(var_15_4, -arg_15_2:getRotate())
+			if characterMO:isCanPlaceByResId(resId) then
+				return RoomRotateHelper.rotateDirection(direction, -blockMO:getRotate())
 			end
 		end
 	end
@@ -226,269 +228,272 @@ function var_0_0._randomDirectionByBlockMO(arg_15_0, arg_15_1, arg_15_2)
 	return nil
 end
 
-function var_0_0.tryRandomByCharacterList(arg_16_0, arg_16_1)
-	arg_16_0:_tryRandomByCharacterList(arg_16_1)
+function RoomCharacterController:tryRandomByCharacterList(roomCharacterMOList)
+	self:_tryRandomByCharacterList(roomCharacterMOList)
 end
 
-function var_0_0._tryRandomByCharacterList(arg_17_0, arg_17_1)
-	local var_17_0 = arg_17_0:_findPlaceBlockMOList()
+function RoomCharacterController:_tryRandomByCharacterList(roomCharacterMOList)
+	local blockMOList = self:_findPlaceBlockMOList()
 
-	arg_17_0:_randomArray(var_17_0)
+	self:_randomArray(blockMOList)
 
-	local var_17_1 = #var_17_0
-	local var_17_2 = 1
-	local var_17_3
+	local count = #blockMOList
+	local nextIndex = 1
+	local notPlaceCharacterMOList
 
 	RoomHelper.logEnd("RoomCharacterController:_tryRandomByCharacterList(roomCharacterMOList) start")
 
-	for iter_17_0, iter_17_1 in ipairs(arg_17_1) do
-		local var_17_4 = true
+	for _, roomCharacterMO in ipairs(roomCharacterMOList) do
+		local isNotPlace = true
 
-		for iter_17_2 = var_17_2, var_17_1 do
-			local var_17_5 = var_17_0[iter_17_2]
-			local var_17_6 = arg_17_0:_randomDirectionByBlockMO(iter_17_1, var_17_5)
+		for i = nextIndex, count do
+			local blockMO = blockMOList[i]
+			local dire = self:_randomDirectionByBlockMO(roomCharacterMO, blockMO)
 
-			if var_17_6 then
-				local var_17_7 = ResourcePoint(var_17_5.hexPoint, var_17_6)
-				local var_17_8 = RoomCharacterHelper.getCharacterPosition3D(var_17_7)
-				local var_17_9 = RoomCharacterHelper.getRecommendHexPoint(iter_17_1.heroId, iter_17_1.skinId, Vector2.New(var_17_8.x, var_17_8.z))
+			if dire then
+				local resourcePoint = ResourcePoint(blockMO.hexPoint, dire)
+				local position = RoomCharacterHelper.getCharacterPosition3D(resourcePoint)
+				local bestParam = RoomCharacterHelper.getRecommendHexPoint(roomCharacterMO.heroId, roomCharacterMO.skinId, Vector2.New(position.x, position.z))
 
-				RoomHelper.logEnd(iter_17_1.heroConfig.name)
+				RoomHelper.logEnd(roomCharacterMO.heroConfig.name)
 
-				if var_17_9 then
-					var_17_0[iter_17_2] = var_17_0[var_17_2]
-					var_17_0[var_17_2] = var_17_5
-					var_17_2 = var_17_2 + 1
+				if bestParam then
+					blockMOList[i] = blockMOList[nextIndex]
+					blockMOList[nextIndex] = blockMO
+					nextIndex = nextIndex + 1
 
-					arg_17_0:moveCharacterTo(iter_17_1, var_17_9 and var_17_9.position or var_17_8, false)
+					self:moveCharacterTo(roomCharacterMO, bestParam and bestParam.position or position, false)
 
-					var_17_4 = false
+					isNotPlace = false
 
 					break
 				end
 			end
 		end
 
-		if var_17_4 then
-			var_17_3 = var_17_3 or {}
+		if isNotPlace then
+			notPlaceCharacterMOList = notPlaceCharacterMOList or {}
 
-			table.insert(var_17_3, iter_17_1)
+			table.insert(notPlaceCharacterMOList, roomCharacterMO)
 		end
 	end
 
 	RoomHelper.logEnd("RoomCharacterController:_tryRandomByCharacterList(roomCharacterMOList) end")
 
-	if var_17_3 then
-		local var_17_10 = {}
+	if notPlaceCharacterMOList then
+		local posCfgList = {}
 
-		tabletool.addValues(var_17_10, RoomConfig.instance:getBlockPlacePositionCfgList())
-		arg_17_0:_randomArray(var_17_10)
+		tabletool.addValues(posCfgList, RoomConfig.instance:getBlockPlacePositionCfgList())
+		self:_randomArray(posCfgList)
 
-		if #var_17_3 > #var_17_10 then
+		if #notPlaceCharacterMOList > #posCfgList then
 			logError("export_初始坐标[\"block_place_position\"] 坐标数量不足")
 		end
 
-		for iter_17_3 = 1, #var_17_3 do
-			local var_17_11 = var_17_10[iter_17_3]
+		for i = 1, #notPlaceCharacterMOList do
+			local posCfg = posCfgList[i]
 
-			if var_17_11 then
-				arg_17_0:moveCharacterTo(var_17_3[iter_17_3], Vector3(var_17_11.x * 0.001, var_17_11.y * 0.001, var_17_11.z * 0.001), false)
+			if posCfg then
+				self:moveCharacterTo(notPlaceCharacterMOList[i], Vector3(posCfg.x * 0.001, posCfg.y * 0.001, posCfg.z * 0.001), false)
 			end
 		end
 	end
 end
 
-function var_0_0.moveCharacterTo(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	local var_18_0 = GameSceneMgr.instance:getCurScene()
-	local var_18_1 = var_18_0.charactermgr:getCharacterEntity(arg_18_1.id)
+function RoomCharacterController:moveCharacterTo(roomCharacterMO, position, height)
+	local scene = GameSceneMgr.instance:getCurScene()
+	local entity = scene.charactermgr:getCharacterEntity(roomCharacterMO.id)
 
-	if var_18_1 then
-		if arg_18_3 then
-			arg_18_2 = RoomCharacterHelper.reCalculateHeight(arg_18_2)
+	if entity then
+		if height then
+			position = RoomCharacterHelper.reCalculateHeight(position)
 		end
 
-		var_18_0.charactermgr:moveTo(var_18_1, arg_18_2)
+		scene.charactermgr:moveTo(entity, position)
 	end
 
-	RoomCharacterModel.instance:resetCharacterMO(arg_18_1.heroId, arg_18_2)
+	RoomCharacterModel.instance:resetCharacterMO(roomCharacterMO.heroId, position)
 end
 
-function var_0_0.tryMoveCharacterAfterRotateCamera(arg_19_0)
-	local var_19_0 = RoomCharacterModel.instance:getList()
+function RoomCharacterController:tryMoveCharacterAfterRotateCamera()
+	local roomCharacterMOList = RoomCharacterModel.instance:getList()
 
-	for iter_19_0, iter_19_1 in ipairs(var_19_0) do
-		if iter_19_1:getMoveState() == RoomCharacterEnum.CharacterMoveState.Move then
-			local var_19_1 = iter_19_1:getRemainMovePositions()
+	for _, roomCharacterMO in ipairs(roomCharacterMOList) do
+		if roomCharacterMO:getMoveState() == RoomCharacterEnum.CharacterMoveState.Move then
+			local remainMovePositions = roomCharacterMO:getRemainMovePositions()
 
-			if not RoomCharacterHelper.isMoveCameraWalkable(var_19_1) then
-				iter_19_1:endMove(true)
-				iter_19_1:moveNeighbor()
+			if not RoomCharacterHelper.isMoveCameraWalkable(remainMovePositions) then
+				roomCharacterMO:endMove(true)
+				roomCharacterMO:moveNeighbor()
 			end
 		end
 	end
 end
 
-function var_0_0.correctAllCharacterHeight(arg_20_0)
-	local var_20_0 = RoomCharacterModel.instance:getList()
+function RoomCharacterController:correctAllCharacterHeight()
+	local roomCharacterMOList = RoomCharacterModel.instance:getList()
 
-	for iter_20_0, iter_20_1 in ipairs(var_20_0) do
-		arg_20_0:correctCharacterHeight(iter_20_1)
+	for _, roomCharacterMO in ipairs(roomCharacterMOList) do
+		self:correctCharacterHeight(roomCharacterMO)
 	end
 end
 
-function var_0_0.correctCharacterHeight(arg_21_0, arg_21_1)
-	if arg_21_1 == nil then
+function RoomCharacterController:correctCharacterHeight(roomCharacterMO)
+	if roomCharacterMO == nil then
 		return
 	end
 
-	local var_21_0 = arg_21_1:getIsFreeze()
+	local isFreeze = roomCharacterMO:getIsFreeze()
 
-	if arg_21_1:getMoveState() == RoomCharacterEnum.CharacterMoveState.Move or var_21_0 then
+	if roomCharacterMO:getMoveState() == RoomCharacterEnum.CharacterMoveState.Move or isFreeze then
 		return
 	end
 
-	local var_21_1 = arg_21_1.currentPosition
-	local var_21_2 = var_21_1.x
-	local var_21_3 = var_21_1.z
-	local var_21_4 = RoomCharacterHelper.getLandHeightByRaycast(var_21_1)
+	local currentPosition = roomCharacterMO.currentPosition
+	local worldX = currentPosition.x
+	local worldZ = currentPosition.z
+	local height = RoomCharacterHelper.getLandHeightByRaycast(currentPosition)
 
-	arg_21_1:setPositionXYZ(var_21_2, var_21_4, var_21_3)
+	roomCharacterMO:setPositionXYZ(worldX, height, worldZ)
 end
 
-function var_0_0.checkCanSpineShow(arg_22_0, arg_22_1)
+function RoomCharacterController:checkCanSpineShow(cameraState)
 	if RoomMapController.instance:isInRoomInitBuildingViewCamera() then
 		return false
 	end
 
-	if arg_22_0:isCharacterListShow() then
+	if self:isCharacterListShow() then
 		return true
 	end
 
-	return RoomEnum.CameraShowSpineMap[arg_22_1]
+	return RoomEnum.CameraShowSpineMap[cameraState]
 end
 
-function var_0_0.pressCharacterUp(arg_23_0, arg_23_1, arg_23_2)
-	if arg_23_2 then
-		arg_23_0._pressHeroId = arg_23_2
+function RoomCharacterController:pressCharacterUp(pos, heroId)
+	if heroId then
+		self._pressHeroId = heroId
 	end
 
-	if not arg_23_0._pressHeroId then
+	if not self._pressHeroId then
 		return
 	end
 
-	if not arg_23_0:isCharacterListShow() then
-		arg_23_0:setCharacterListShow(true)
+	if not self:isCharacterListShow() then
+		self:setCharacterListShow(true)
 	end
 
-	local var_23_0 = GameSceneMgr.instance:getCurScene()
-	local var_23_1 = var_23_0.charactermgr:getCharacterEntity(arg_23_0._pressHeroId, SceneTag.RoomCharacter)
+	local scene = GameSceneMgr.instance:getCurScene()
+	local entity = scene.charactermgr:getCharacterEntity(self._pressHeroId, SceneTag.RoomCharacter)
 
-	if not var_23_1 then
+	if not entity then
 		return
 	end
 
-	if arg_23_2 then
-		local var_23_2 = RoomCharacterModel.instance:getTempCharacterMO()
+	if heroId then
+		local tempCharacterMO = RoomCharacterModel.instance:getTempCharacterMO()
 
-		if not var_23_2 or var_23_2.id ~= arg_23_2 then
-			local var_23_3 = RoomCharacterModel.instance:getCharacterMOById(arg_23_2)
+		if not tempCharacterMO or tempCharacterMO.id ~= heroId then
+			local characterMO = RoomCharacterModel.instance:getCharacterMOById(heroId)
 
-			var_23_0.fsm:triggerEvent(RoomSceneEvent.TryPlaceCharacter, {
+			scene.fsm:triggerEvent(RoomSceneEvent.TryPlaceCharacter, {
 				press = true,
-				heroId = arg_23_2,
-				position = var_23_3.currentPosition
+				heroId = heroId,
+				position = characterMO.currentPosition
 			})
 		end
 
-		var_23_1:tweenUp()
-		RoomCharacterPlaceListModel.instance:setSelect(arg_23_2)
+		entity:tweenUp()
+		RoomCharacterPlaceListModel.instance:setSelect(heroId)
 	end
 
-	local var_23_4 = RoomCharacterModel.instance:getTempCharacterMO()
+	local tempCharacterMO = RoomCharacterModel.instance:getTempCharacterMO()
 
-	if not arg_23_0._pressCharacterHexPoint then
-		arg_23_0._pressCharacterHexPoint = var_23_4:getMoveTargetPoint().hexPoint
+	if not self._pressCharacterHexPoint then
+		self._pressCharacterHexPoint = tempCharacterMO:getMoveTargetPoint().hexPoint
 	end
 
-	local var_23_5 = arg_23_0._pressCharacterHexPoint
-	local var_23_6 = RoomBendingHelper.screenPosToHex(arg_23_1)
+	local prepressCharacterHexPoint = self._pressCharacterHexPoint
+	local pressCharacterHexPoint = RoomBendingHelper.screenPosToHex(pos)
 
-	if not var_23_6 then
+	if not pressCharacterHexPoint then
 		return
 	end
 
-	arg_23_0._pressCharacterHexPoint = var_23_6
+	self._pressCharacterHexPoint = pressCharacterHexPoint
 
-	local var_23_7 = RoomBendingHelper.screenToWorld(arg_23_1)
+	local worldPos = RoomBendingHelper.screenToWorld(pos)
 
-	if var_23_7 then
-		local var_23_8 = var_23_7.x
-		local var_23_9 = var_23_7.y
-		local var_23_10 = RoomCharacterHelper.getLandHeightByRaycast(Vector3(var_23_8, 0, var_23_9))
+	if worldPos then
+		local worldX = worldPos.x
+		local worldZ = worldPos.y
+		local height = RoomCharacterHelper.getLandHeightByRaycast(Vector3(worldX, 0, worldZ))
 
-		var_23_4:setPositionXYZ(var_23_8, var_23_10, var_23_9)
-		var_23_1:setLocalPos(var_23_8, var_23_10, var_23_9, true)
+		tempCharacterMO:setPositionXYZ(worldX, height, worldZ)
+		entity:setLocalPos(worldX, height, worldZ, true)
 	end
 
-	arg_23_0:dispatchEvent(RoomEvent.PressCharacterUp)
+	self:dispatchEvent(RoomEvent.PressCharacterUp)
 end
 
-function var_0_0.getPressCharacterHexPoint(arg_24_0)
-	return arg_24_0._pressCharacterHexPoint
+function RoomCharacterController:getPressCharacterHexPoint()
+	return self._pressCharacterHexPoint
 end
 
-function var_0_0.dropCharacterDown(arg_25_0, arg_25_1)
-	if not arg_25_0._pressHeroId then
+function RoomCharacterController:dropCharacterDown(pos)
+	if not self._pressHeroId then
 		return
 	end
 
-	local var_25_0 = RoomCharacterModel.instance:getCharacterMOById(arg_25_0._pressHeroId)
-	local var_25_1
-	local var_25_2 = arg_25_1 and RoomBendingHelper.screenToWorld(arg_25_1)
-	local var_25_3 = var_25_2 and RoomCharacterHelper.getRecommendHexPoint(arg_25_0._pressHeroId, var_25_0.skinId, Vector2(var_25_2.x, var_25_2.y))
+	local characterMO = RoomCharacterModel.instance:getCharacterMOById(self._pressHeroId)
+	local position
+	local worldPos = pos and RoomBendingHelper.screenToWorld(pos)
+	local bestParam = worldPos and RoomCharacterHelper.getRecommendHexPoint(self._pressHeroId, characterMO.skinId, Vector2(worldPos.x, worldPos.y))
 
-	if var_25_3 then
-		var_25_1 = var_25_3.position
+	if bestParam then
+		position = bestParam.position
 	end
 
-	var_25_1 = var_25_1 or var_25_0.currentPosition
+	position = position or characterMO.currentPosition
 
-	local var_25_4 = GameSceneMgr.instance:getCurScene()
-	local var_25_5 = {
+	local scene = GameSceneMgr.instance:getCurScene()
+	local param = {
 		isPressing = true,
-		position = var_25_1
+		position = position
 	}
 
-	arg_25_0:cancelPressCharacter()
-	var_25_4.fsm:triggerEvent(RoomSceneEvent.TryPlaceCharacter, var_25_5)
+	self:cancelPressCharacter()
+	scene.fsm:triggerEvent(RoomSceneEvent.TryPlaceCharacter, param)
 end
 
-function var_0_0.cancelPressCharacter(arg_26_0)
-	if not arg_26_0._pressHeroId then
+function RoomCharacterController:cancelPressCharacter()
+	if not self._pressHeroId then
 		return
 	end
 
-	local var_26_0 = GameSceneMgr.instance:getCurScene().charactermgr:getCharacterEntity(arg_26_0._pressHeroId, SceneTag.RoomCharacter)
+	local scene = GameSceneMgr.instance:getCurScene()
+	local entity = scene.charactermgr:getCharacterEntity(self._pressHeroId, SceneTag.RoomCharacter)
 
-	if not var_26_0 then
+	if not entity then
 		return
 	end
 
-	arg_26_0._pressHeroId = nil
-	arg_26_0._pressCharacterHexPoint = nil
+	self._pressHeroId = nil
+	self._pressCharacterHexPoint = nil
 
-	var_26_0:tweenDown()
-	arg_26_0:dispatchEvent(RoomEvent.DropCharacterDown)
+	entity:tweenDown()
+	self:dispatchEvent(RoomEvent.DropCharacterDown)
 end
 
-function var_0_0.isPressCharacter(arg_27_0)
-	return arg_27_0._pressHeroId
+function RoomCharacterController:isPressCharacter()
+	return self._pressHeroId
 end
 
-function var_0_0.updateCharacterFaith(arg_28_0, arg_28_1)
-	TaskDispatcher.cancelTask(arg_28_0._refreshNextCharacterFaithUpdate, arg_28_0)
+function RoomCharacterController:updateCharacterFaith(roomHeroDatas)
+	TaskDispatcher.cancelTask(self._refreshNextCharacterFaithUpdate, self)
 
-	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Room then
+	local sceneType = GameSceneMgr.instance:getCurSceneType()
+
+	if sceneType ~= SceneType.Room then
 		return
 	end
 
@@ -496,423 +501,434 @@ function var_0_0.updateCharacterFaith(arg_28_0, arg_28_1)
 		return
 	end
 
-	RoomCharacterModel.instance:updateCharacterFaith(arg_28_1)
-	arg_28_0:dispatchEvent(RoomEvent.RefreshFaithShow)
-	arg_28_0:refreshCharacterFaithTimer()
+	RoomCharacterModel.instance:updateCharacterFaith(roomHeroDatas)
+	self:dispatchEvent(RoomEvent.RefreshFaithShow)
+	self:refreshCharacterFaithTimer()
 end
 
-function var_0_0.playCharacterFaithEffect(arg_29_0, arg_29_1)
-	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Room then
+function RoomCharacterController:playCharacterFaithEffect(roomHeroDatas)
+	local sceneType = GameSceneMgr.instance:getCurSceneType()
+
+	if sceneType ~= SceneType.Room then
 		return
 	end
 
-	local var_29_0 = GameSceneMgr.instance:getCurScene()
+	local scene = GameSceneMgr.instance:getCurScene()
 
 	if not RoomController.instance:isObMode() then
 		return
 	end
 
-	for iter_29_0, iter_29_1 in ipairs(arg_29_1) do
-		local var_29_1 = iter_29_1.heroId
-		local var_29_2 = var_29_0.charactermgr:getCharacterEntity(var_29_1, SceneTag.RoomCharacter)
+	for i, roomHeroData in ipairs(roomHeroDatas) do
+		local heroId = roomHeroData.heroId
+		local entity = scene.charactermgr:getCharacterEntity(heroId, SceneTag.RoomCharacter)
 
-		if var_29_2 then
-			var_29_2:playFaithEffect()
+		if entity then
+			entity:playFaithEffect()
 		end
 	end
 end
 
-function var_0_0.refreshCharacterFaithTimer(arg_30_0)
-	TaskDispatcher.cancelTask(arg_30_0._refreshNextCharacterFaithUpdate, arg_30_0)
+function RoomCharacterController:refreshCharacterFaithTimer()
+	TaskDispatcher.cancelTask(self._refreshNextCharacterFaithUpdate, self)
 
-	local var_30_0
-	local var_30_1 = RoomCharacterModel.instance:getList()
+	local minTime
+	local roomCharacterMOList = RoomCharacterModel.instance:getList()
 
-	for iter_30_0, iter_30_1 in ipairs(var_30_1) do
-		local var_30_2 = iter_30_1.nextRefreshTime
+	for i, roomCharacterMO in ipairs(roomCharacterMOList) do
+		local nextRefreshTime = roomCharacterMO.nextRefreshTime
 
-		if var_30_2 and var_30_2 > 0 and (not var_30_0 or var_30_2 < var_30_0) then
-			var_30_0 = var_30_2
+		if nextRefreshTime and nextRefreshTime > 0 and (not minTime or nextRefreshTime < minTime) then
+			minTime = nextRefreshTime
 		end
 	end
 
-	if var_30_0 and var_30_0 > 0 then
-		local var_30_3 = var_30_0 - ServerTime.now()
-		local var_30_4 = math.max(1, var_30_3) + 0.5
+	if minTime and minTime > 0 then
+		local nowTime = ServerTime.now()
+		local delayTime = minTime - nowTime
 
-		TaskDispatcher.runDelay(arg_30_0._refreshNextCharacterFaithUpdate, arg_30_0, var_30_4)
+		delayTime = math.max(1, delayTime) + 0.5
+
+		TaskDispatcher.runDelay(self._refreshNextCharacterFaithUpdate, self, delayTime)
 	end
 end
 
-function var_0_0._refreshNextCharacterFaithUpdate(arg_31_0)
-	local var_31_0 = {}
-	local var_31_1 = RoomCharacterModel.instance:getList()
+function RoomCharacterController:_refreshNextCharacterFaithUpdate()
+	local heroIds = {}
+	local roomCharacterMOList = RoomCharacterModel.instance:getList()
 
-	for iter_31_0, iter_31_1 in ipairs(var_31_1) do
-		table.insert(var_31_0, iter_31_1.heroId)
+	for i, roomCharacterMO in ipairs(roomCharacterMOList) do
+		table.insert(heroIds, roomCharacterMO.heroId)
 	end
 
-	RoomRpc.instance:sendGetRoomObInfoRequest(false, arg_31_0._getRoomObInfoReply, arg_31_0)
+	RoomRpc.instance:sendGetRoomObInfoRequest(false, self._getRoomObInfoReply, self)
 end
 
-function var_0_0._getRoomObInfoReply(arg_32_0, arg_32_1, arg_32_2, arg_32_3)
-	if arg_32_2 ~= 0 then
+function RoomCharacterController:_getRoomObInfoReply(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	arg_32_0:updateCharacterFaith(arg_32_3.roomHeroDatas)
+	self:updateCharacterFaith(msg.roomHeroDatas)
 end
 
-function var_0_0.gainCharacterFaith(arg_33_0, arg_33_1, arg_33_2, arg_33_3)
-	RoomRpc.instance:sendGainRoomHeroFaithRequest(arg_33_1, arg_33_2, arg_33_3)
+function RoomCharacterController:gainCharacterFaith(heroIds, callback, callbackObj)
+	RoomRpc.instance:sendGainRoomHeroFaithRequest(heroIds, callback, callbackObj)
 end
 
-function var_0_0.findGainMaxFaithHeroId(arg_34_0)
-	local var_34_0
-	local var_34_1 = -1
-	local var_34_2 = RoomCharacterModel.instance:getList()
+function RoomCharacterController:findGainMaxFaithHeroId()
+	local maxFaithHeroId
+	local maxFiathValue = -1
+	local roomCharacterMOList = RoomCharacterModel.instance:getList()
 
-	for iter_34_0, iter_34_1 in ipairs(var_34_2) do
-		local var_34_3 = HeroModel.instance:getByHeroId(iter_34_1.heroId)
+	for i, roomCharacterMO in ipairs(roomCharacterMOList) do
+		local heroMO = HeroModel.instance:getByHeroId(roomCharacterMO.heroId)
 
-		if var_34_3 and iter_34_1.currentFaith > 0 then
-			local var_34_4 = iter_34_1.currentFaith + var_34_3.faith
+		if heroMO and roomCharacterMO.currentFaith > 0 then
+			local tempFaith = roomCharacterMO.currentFaith + heroMO.faith
 
-			if var_34_1 < var_34_4 then
-				var_34_1 = var_34_4
-				var_34_0 = iter_34_1.heroId
+			if maxFiathValue < tempFaith then
+				maxFiathValue = tempFaith
+				maxFaithHeroId = roomCharacterMO.heroId
 			end
 		end
 	end
 
-	return var_34_0
+	return maxFaithHeroId
 end
 
-function var_0_0.gainAllCharacterFaith(arg_35_0, arg_35_1, arg_35_2, arg_35_3)
-	local var_35_0 = {}
-	local var_35_1 = RoomCharacterModel.instance:getList()
+function RoomCharacterController:gainAllCharacterFaith(callback, callbackObj, firstHeroId)
+	local heroIds = {}
+	local roomCharacterMOList = RoomCharacterModel.instance:getList()
 
-	for iter_35_0, iter_35_1 in ipairs(var_35_1) do
-		if iter_35_1.currentFaith > 0 then
-			table.insert(var_35_0, iter_35_1.heroId)
+	for i, roomCharacterMO in ipairs(roomCharacterMOList) do
+		if roomCharacterMO.currentFaith > 0 then
+			table.insert(heroIds, roomCharacterMO.heroId)
 		end
 	end
 
-	if #var_35_0 > 0 then
-		local var_35_2 = tabletool.indexOf(var_35_0, arg_35_3)
+	if #heroIds > 0 then
+		local indexOf = tabletool.indexOf(heroIds, firstHeroId)
 
-		if var_35_2 == nil then
-			arg_35_3 = arg_35_0:findGainMaxFaithHeroId()
-			var_35_2 = tabletool.indexOf(var_35_0, arg_35_3)
+		if indexOf == nil then
+			firstHeroId = self:findGainMaxFaithHeroId()
+			indexOf = tabletool.indexOf(heroIds, firstHeroId)
 		end
 
-		if var_35_2 then
-			var_35_0[var_35_2] = var_35_0[1]
-			var_35_0[1] = arg_35_3
+		if indexOf then
+			heroIds[indexOf] = heroIds[1]
+			heroIds[1] = firstHeroId
 		end
 
-		arg_35_0._lastSendgainCharacterFaithHeroId = arg_35_3
+		self._lastSendgainCharacterFaithHeroId = firstHeroId
 
-		arg_35_0:gainCharacterFaith(var_35_0, arg_35_1, arg_35_2)
+		self:gainCharacterFaith(heroIds, callback, callbackObj)
 	end
 end
 
-function var_0_0.tweenCameraFocusCharacter(arg_36_0, arg_36_1, arg_36_2)
-	local var_36_0 = RoomCharacterModel.instance:getById(arg_36_1)
+function RoomCharacterController:tweenCameraFocusCharacter(heroId, cameraState)
+	local roomCharacterMO = RoomCharacterModel.instance:getById(heroId)
 
-	if not var_36_0 then
+	if not roomCharacterMO then
 		return
 	end
 
-	arg_36_2 = arg_36_2 or RoomEnum.CameraState.Overlook
+	cameraState = cameraState or RoomEnum.CameraState.Overlook
 
-	local var_36_1 = GameSceneMgr.instance:getCurScene()
-	local var_36_2 = var_36_0.currentPosition
+	local scene = GameSceneMgr.instance:getCurScene()
+	local currentPosition = roomCharacterMO.currentPosition
 
-	var_36_1.camera:switchCameraState(arg_36_2, {
-		focusX = var_36_2.x,
-		focusY = var_36_2.z
+	scene.camera:switchCameraState(cameraState, {
+		focusX = currentPosition.x,
+		focusY = currentPosition.z
 	})
 end
 
-function var_0_0.isCharacterFaithFull(arg_37_0, arg_37_1)
-	local var_37_0 = HeroModel.instance:getByHeroId(arg_37_1)
+function RoomCharacterController:isCharacterFaithFull(heroId)
+	local heroMO = HeroModel.instance:getByHeroId(heroId)
 
-	if not var_37_0 then
+	if not heroMO then
 		return false
 	end
 
-	local var_37_1 = var_37_0.faith
+	local faith = heroMO.faith
+	local percent = HeroConfig.instance:getFaithPercent(faith)[1]
 
-	return HeroConfig.instance:getFaithPercent(var_37_1)[1] >= 1
+	return percent >= 1
 end
 
-function var_0_0.hideCharacterFaithFull(arg_38_0, arg_38_1)
-	RoomCharacterModel.instance:setHideFaithFull(arg_38_1, true)
-	arg_38_0:dispatchEvent(RoomEvent.RefreshFaithShow)
+function RoomCharacterController:hideCharacterFaithFull(heroId)
+	RoomCharacterModel.instance:setHideFaithFull(heroId, true)
+	self:dispatchEvent(RoomEvent.RefreshFaithShow)
 end
 
-function var_0_0.setCharacterFullFaithChecked(arg_39_0, arg_39_1)
+function RoomCharacterController:setCharacterFullFaithChecked(heroId)
 	RedDotRpc.instance:sendShowRedDotRequest(RedDotEnum.DotNode.RoomCharacterFaithFull, false)
 end
 
-function var_0_0._refreshRelateDot(arg_40_0, arg_40_1)
-	for iter_40_0, iter_40_1 in pairs(arg_40_1) do
-		if iter_40_0 == RedDotEnum.DotNode.RoomCharacterFaithFull then
-			arg_40_0:dispatchEvent(RoomEvent.RefreshFaithShow)
+function RoomCharacterController:_refreshRelateDot(dict)
+	for id, _ in pairs(dict) do
+		if id == RedDotEnum.DotNode.RoomCharacterFaithFull then
+			self:dispatchEvent(RoomEvent.RefreshFaithShow)
 
 			return
 		end
 	end
 end
 
-function var_0_0.showGainFaithToast(arg_41_0, arg_41_1)
-	local var_41_0 = {}
-	local var_41_1
+function RoomCharacterController:showGainFaithToast(materialDataMOList)
+	local filterList = {}
+	local lastSendMO
 
-	for iter_41_0, iter_41_1 in ipairs(arg_41_1) do
-		if iter_41_1.materilType == MaterialEnum.MaterialType.Faith then
-			if arg_41_0._lastSendgainCharacterFaithHeroId == iter_41_1.materilId then
-				arg_41_0._lastSendgainCharacterFaithHeroId = nil
-				var_41_1 = iter_41_1
+	for i, materialDataMO in ipairs(materialDataMOList) do
+		if materialDataMO.materilType == MaterialEnum.MaterialType.Faith then
+			if self._lastSendgainCharacterFaithHeroId == materialDataMO.materilId then
+				self._lastSendgainCharacterFaithHeroId = nil
+				lastSendMO = materialDataMO
 			end
 
-			table.insert(var_41_0, iter_41_1)
+			table.insert(filterList, materialDataMO)
 		end
 	end
 
-	local var_41_2 = #var_41_0
+	local count = #filterList
 
-	if var_41_2 <= 0 then
+	if count <= 0 then
 		return
 	end
 
-	local var_41_3 = var_41_1 or var_41_0[1]
-	local var_41_4 = HeroModel.instance:getByHeroId(var_41_3.materilId)
+	local mo = lastSendMO or filterList[1]
+	local heroMO = HeroModel.instance:getByHeroId(mo.materilId)
 
-	if not var_41_4 then
+	if not heroMO then
 		return
 	end
 
-	if var_41_2 > 1 then
-		GameFacade.showToast(RoomEnum.Toast.GainFaithMultipleCharacter, var_41_4.config.name)
+	if count > 1 then
+		GameFacade.showToast(RoomEnum.Toast.GainFaithMultipleCharacter, heroMO.config.name)
 	else
-		local var_41_5 = HeroConfig.instance:getFaithPercent(var_41_4.faith)[1]
+		local percent = HeroConfig.instance:getFaithPercent(heroMO.faith)[1]
 
-		GameFacade.showToast(RoomEnum.Toast.GainFaithSingleCharacter, var_41_4.config.name, var_41_5 * 100)
+		GameFacade.showToast(RoomEnum.Toast.GainFaithSingleCharacter, heroMO.config.name, percent * 100)
 	end
 
-	for iter_41_2, iter_41_3 in ipairs(var_41_0) do
-		local var_41_6 = HeroModel.instance:getByHeroId(iter_41_3.materilId)
+	for i, mo in ipairs(filterList) do
+		local heroMO = HeroModel.instance:getByHeroId(mo.materilId)
 
-		if var_41_6 and HeroConfig.instance:getFaithPercent(var_41_6.faith)[1] >= 1 then
-			GameFacade.showToast(RoomEnum.Toast.GainFaithFull)
+		if heroMO then
+			local percent = HeroConfig.instance:getFaithPercent(heroMO.faith)[1]
 
-			return
+			if percent >= 1 then
+				GameFacade.showToast(RoomEnum.Toast.GainFaithFull)
+
+				return
+			end
 		end
 	end
 end
 
-function var_0_0.interruptInteraction(arg_42_0, arg_42_1)
-	if not arg_42_1 then
+function RoomCharacterController:interruptInteraction(interactionId)
+	if not interactionId then
 		return
 	end
 
-	local var_42_0 = RoomConfig.instance:getCharacterInteractionConfig(arg_42_1)
+	local config = RoomConfig.instance:getCharacterInteractionConfig(interactionId)
 
-	if var_42_0.behaviour == RoomCharacterEnum.InteractionType.Dialog then
-		local var_42_1 = RoomCharacterModel.instance:getCharacterMOById(var_42_0.heroId)
+	if config.behaviour == RoomCharacterEnum.InteractionType.Dialog then
+		local roomCharacterMO = RoomCharacterModel.instance:getCharacterMOById(config.heroId)
 
-		if var_42_1 then
-			var_42_1:setCurrentInteractionId(nil)
+		if roomCharacterMO then
+			roomCharacterMO:setCurrentInteractionId(nil)
 		end
 
-		local var_42_2 = RoomCharacterModel.instance:getCharacterMOById(var_42_0.relateHeroId)
+		local relateRoomCharacterMO = RoomCharacterModel.instance:getCharacterMOById(config.relateHeroId)
 
-		if var_42_2 then
-			var_42_2:setCurrentInteractionId(nil)
+		if relateRoomCharacterMO then
+			relateRoomCharacterMO:setCurrentInteractionId(nil)
 		end
-	elseif var_42_0.behaviour == RoomCharacterEnum.InteractionType.Building then
+	elseif config.behaviour == RoomCharacterEnum.InteractionType.Building then
 		-- block empty
 	end
 
-	arg_42_0:dispatchEvent(RoomEvent.UpdateCharacterInteractionUI)
+	self:dispatchEvent(RoomEvent.UpdateCharacterInteractionUI)
 end
 
-function var_0_0.startInteraction(arg_43_0, arg_43_1, arg_43_2, arg_43_3)
-	if not arg_43_1 then
+function RoomCharacterController:startInteraction(currentInteractionId, getReward, getFaith)
+	if not currentInteractionId then
 		return
 	end
 
-	arg_43_0._interactionGetReward = arg_43_2
-	arg_43_0._interactionGetFaith = arg_43_3
+	self._interactionGetReward = getReward
+	self._interactionGetFaith = getFaith
 
-	if not arg_43_0._interactionGetReward or RoomModel.instance:getInteractionState(arg_43_1) == RoomCharacterEnum.InteractionState.Start then
-		arg_43_0:_onRealStartInteraction(arg_43_1)
+	if not self._interactionGetReward or RoomModel.instance:getInteractionState(currentInteractionId) == RoomCharacterEnum.InteractionState.Start then
+		self:_onRealStartInteraction(currentInteractionId)
 	else
-		RoomRpc.instance:sendStartCharacterInteractionRequest(arg_43_1, arg_43_0._onStartInteraction, arg_43_0)
+		RoomRpc.instance:sendStartCharacterInteractionRequest(currentInteractionId, self._onStartInteraction, self)
 	end
 end
 
-function var_0_0._onStartInteraction(arg_44_0, arg_44_1, arg_44_2, arg_44_3)
-	if arg_44_2 ~= 0 then
+function RoomCharacterController:_onStartInteraction(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	arg_44_0:_onRealStartInteraction(arg_44_3.id)
+	self:_onRealStartInteraction(msg.id)
 end
 
-function var_0_0._onRealStartInteraction(arg_45_0, arg_45_1)
-	local var_45_0 = RoomConfig.instance:getCharacterInteractionConfig(arg_45_1)
+function RoomCharacterController:_onRealStartInteraction(id)
+	local config = RoomConfig.instance:getCharacterInteractionConfig(id)
 
-	if var_45_0.behaviour == RoomCharacterEnum.InteractionType.Dialog then
-		arg_45_0:startDialogInteraction(var_45_0)
+	if config.behaviour == RoomCharacterEnum.InteractionType.Dialog then
+		self:startDialogInteraction(config)
 	else
-		arg_45_0._playingInteractionParam = {}
+		self._playingInteractionParam = {}
 	end
 
-	arg_45_0:dispatchEvent(RoomEvent.UpdateCharacterInteractionUI)
+	self:dispatchEvent(RoomEvent.UpdateCharacterInteractionUI)
 end
 
-function var_0_0.startDialogInteraction(arg_46_0, arg_46_1, arg_46_2)
-	local var_46_0 = arg_46_1.dialogId
+function RoomCharacterController:startDialogInteraction(config, buildingUid)
+	local dialogId = config.dialogId
 
-	arg_46_0._playingInteractionParam = {
+	self._playingInteractionParam = {
 		stepId = 0,
-		id = arg_46_1.id,
-		behaviour = arg_46_1.behaviour,
-		dialogId = arg_46_1.dialogId,
-		heroId = arg_46_1.heroId,
-		relateHeroId = arg_46_1.relateHeroId,
+		id = config.id,
+		behaviour = config.behaviour,
+		dialogId = config.dialogId,
+		heroId = config.heroId,
+		relateHeroId = config.relateHeroId,
 		selectIds = {},
-		buildingUid = arg_46_2,
+		buildingUid = buildingUid,
 		positionList = {}
 	}
 
-	if arg_46_1.behaviour == RoomCharacterEnum.InteractionType.Dialog then
-		arg_46_0:tweenDialogCamera(arg_46_1)
+	if config.behaviour == RoomCharacterEnum.InteractionType.Dialog then
+		self:tweenDialogCamera(config)
 	end
 end
 
-function var_0_0.startDialogTrainCritter(arg_47_0, arg_47_1, arg_47_2, arg_47_3)
-	arg_47_0._playingInteractionParam = {
+function RoomCharacterController:startDialogTrainCritter(config, critterUid, heroId)
+	self._playingInteractionParam = {
 		stepId = 0,
-		id = arg_47_1.id,
-		behaviour = arg_47_1.behaviour,
-		dialogId = arg_47_1.dialogId,
-		heroId = arg_47_1.heroId,
-		relateHeroId = arg_47_1.relateHeroId,
+		id = config.id,
+		behaviour = config.behaviour,
+		dialogId = config.dialogId,
+		heroId = config.heroId,
+		relateHeroId = config.relateHeroId,
 		selectIds = {},
 		positionList = {},
-		critterUid = arg_47_2
+		critterUid = critterUid
 	}
 
-	arg_47_0:nextDialogInteraction()
+	self:nextDialogInteraction()
 end
 
-function var_0_0.tweenDialogCamera(arg_48_0, arg_48_1)
-	local var_48_0 = GameSceneMgr.instance:getCurScene()
-	local var_48_1 = RoomCharacterModel.instance:getCharacterMOById(arg_48_1.heroId)
+function RoomCharacterController:tweenDialogCamera(config)
+	local scene = GameSceneMgr.instance:getCurScene()
+	local roomCharacterMO = RoomCharacterModel.instance:getCharacterMOById(config.heroId)
 
-	var_48_1:endMove(true)
+	roomCharacterMO:endMove(true)
 
-	local var_48_2 = var_48_1.currentPosition
+	local pos = roomCharacterMO.currentPosition
 
-	table.insert(arg_48_0._playingInteractionParam.positionList, var_48_2)
+	table.insert(self._playingInteractionParam.positionList, pos)
 
-	if arg_48_1.relateHeroId == 0 then
-		local var_48_3 = {
+	if config.relateHeroId == 0 then
+		local cameraParam = {
 			zoom = 0.2,
-			focusX = var_48_2.x,
-			focusY = var_48_2.z
+			focusX = pos.x,
+			focusY = pos.z
 		}
 
-		var_48_0.camera:switchCameraState(RoomEnum.CameraState.Normal, var_48_3, nil, arg_48_0.interactionCameraDone, arg_48_0)
+		scene.camera:switchCameraState(RoomEnum.CameraState.Normal, cameraParam, nil, self.interactionCameraDone, self)
 
-		arg_48_0._playingInteractionParam.cameraParam = var_48_3
+		self._playingInteractionParam.cameraParam = cameraParam
 
 		return
 	end
 
-	local var_48_4 = RoomCharacterModel.instance:getCharacterMOById(arg_48_1.relateHeroId)
+	local relateRoomCharacterMO = RoomCharacterModel.instance:getCharacterMOById(config.relateHeroId)
 
-	var_48_4:endMove(true)
+	relateRoomCharacterMO:endMove(true)
 
-	local var_48_5 = var_48_4.currentPosition
+	local relatePos = relateRoomCharacterMO.currentPosition
 
-	table.insert(arg_48_0._playingInteractionParam.positionList, var_48_5)
+	table.insert(self._playingInteractionParam.positionList, relatePos)
 
-	local var_48_6 = (var_48_2 + var_48_5) / 2
-	local var_48_7 = Vector3.Normalize(var_48_5 - var_48_2)
-	local var_48_8 = math.acos(Vector3.Dot(var_48_7, Vector3.forward))
+	local center = (pos + relatePos) / 2
+	local target = Vector3.Normalize(relatePos - pos)
+	local rotate = math.acos(Vector3.Dot(target, Vector3.forward))
 
-	if var_48_7.x < 0 then
-		var_48_8 = RoomRotateHelper.getMod(math.pi * 2 - var_48_8, math.pi * 2)
+	if target.x < 0 then
+		rotate = RoomRotateHelper.getMod(math.pi * 2 - rotate, math.pi * 2)
 	end
 
-	local var_48_9 = RoomRotateHelper.getMod(var_48_8 + math.pi / 2, math.pi * 2)
-	local var_48_10 = RoomRotateHelper.getMod(var_48_8 - math.pi / 2, math.pi * 2)
-	local var_48_11 = RoomRotateHelper.getMod(var_48_0.camera:getCameraRotate(), math.pi * 2)
-	local var_48_12 = var_48_9
-	local var_48_13 = math.min(math.abs(var_48_9 - var_48_11), math.pi * 2 - math.abs(var_48_9 - var_48_11)) > math.min(math.abs(var_48_10 - var_48_11), math.pi * 2 - math.abs(var_48_10 - var_48_11)) and SpineLookDir.Left or SpineLookDir.Right
+	local rotate1 = RoomRotateHelper.getMod(rotate + math.pi / 2, math.pi * 2)
+	local rotate2 = RoomRotateHelper.getMod(rotate - math.pi / 2, math.pi * 2)
+	local currentRotate = RoomRotateHelper.getMod(scene.camera:getCameraRotate(), math.pi * 2)
+	local targetRotate = rotate1
+	local rotateOffset1 = math.min(math.abs(rotate1 - currentRotate), math.pi * 2 - math.abs(rotate1 - currentRotate))
+	local rotateOffset2 = math.min(math.abs(rotate2 - currentRotate), math.pi * 2 - math.abs(rotate2 - currentRotate))
+	local lookDir = rotateOffset2 < rotateOffset1 and SpineLookDir.Left or SpineLookDir.Right
 
-	if var_48_13 == SpineLookDir.Left then
-		var_48_12 = var_48_10
+	if lookDir == SpineLookDir.Left then
+		targetRotate = rotate2
 	end
 
-	local var_48_14 = var_48_0.charactermgr:getCharacterEntity(var_48_1.id, SceneTag.RoomCharacter)
+	local entity = scene.charactermgr:getCharacterEntity(roomCharacterMO.id, SceneTag.RoomCharacter)
 
-	if var_48_14 and var_48_14.charactermove then
-		var_48_14.charactermove:forcePositionAndLookDir(nil, -var_48_13, nil)
+	if entity and entity.charactermove then
+		entity.charactermove:forcePositionAndLookDir(nil, -lookDir, nil)
 	end
 
-	local var_48_15 = var_48_0.charactermgr:getCharacterEntity(var_48_4.id, SceneTag.RoomCharacter)
+	local relateEntity = scene.charactermgr:getCharacterEntity(relateRoomCharacterMO.id, SceneTag.RoomCharacter)
 
-	if var_48_15 and var_48_15.charactermove then
-		var_48_15.charactermove:forcePositionAndLookDir(nil, var_48_13, nil)
+	if relateEntity and relateEntity.charactermove then
+		relateEntity.charactermove:forcePositionAndLookDir(nil, lookDir, nil)
 	end
 
-	local var_48_16 = {
+	local cameraParam = {
 		zoom = 0.2,
-		focusX = var_48_6.x,
-		focusY = var_48_6.z,
-		rotate = var_48_12
+		focusX = center.x,
+		focusY = center.z,
+		rotate = targetRotate
 	}
 
-	var_48_0.camera:switchCameraState(RoomEnum.CameraState.Normal, var_48_16, nil, arg_48_0.interactionCameraDone, arg_48_0)
+	scene.camera:switchCameraState(RoomEnum.CameraState.Normal, cameraParam, nil, self.interactionCameraDone, self)
 
-	arg_48_0._playingInteractionParam.cameraParam = var_48_16
+	self._playingInteractionParam.cameraParam = cameraParam
 end
 
-function var_0_0.trynextDialogInteraction(arg_49_0)
-	if arg_49_0._dialogNextTime and arg_49_0._dialogNextTime > Time.time then
+function RoomCharacterController:trynextDialogInteraction()
+	if self._dialogNextTime and self._dialogNextTime > Time.time then
 		return
 	end
 
-	arg_49_0._dialogNextTime = Time.time + RoomCharacterEnum.DialogClickCDTime
+	self._dialogNextTime = Time.time + RoomCharacterEnum.DialogClickCDTime
 
-	arg_49_0:nextDialogInteraction()
+	self:nextDialogInteraction()
 end
 
-function var_0_0.interactionCameraDone(arg_50_0)
-	arg_50_0:nextDialogInteraction()
+function RoomCharacterController:interactionCameraDone()
+	self:nextDialogInteraction()
 
-	local var_50_0 = GameSceneMgr.instance:getCurScene()
+	local scene = GameSceneMgr.instance:getCurScene()
 end
 
-function var_0_0.nextDialogInteraction(arg_51_0, arg_51_1)
-	if not arg_51_0._playingInteractionParam or arg_51_0._playingInteractionParam.behaviour ~= RoomCharacterEnum.InteractionType.Dialog then
+function RoomCharacterController:nextDialogInteraction(selectIndex)
+	if not self._playingInteractionParam or self._playingInteractionParam.behaviour ~= RoomCharacterEnum.InteractionType.Dialog then
 		return
 	end
 
-	local var_51_0 = RoomConfig.instance:getCharacterDialogConfig(arg_51_0._playingInteractionParam.dialogId, arg_51_0._playingInteractionParam.stepId)
+	local preDialogConfig = RoomConfig.instance:getCharacterDialogConfig(self._playingInteractionParam.dialogId, self._playingInteractionParam.stepId)
 
-	if not arg_51_1 and var_51_0 and not string.nilorempty(var_51_0.selectIds) then
-		local var_51_1 = GameUtil.splitString2(var_51_0.selectIds, true)
+	if not selectIndex and preDialogConfig and not string.nilorempty(preDialogConfig.selectIds) then
+		local selectParam = GameUtil.splitString2(preDialogConfig.selectIds, true)
 
-		arg_51_0._playingInteractionParam.selectParam = var_51_1
+		self._playingInteractionParam.selectParam = selectParam
 
-		arg_51_0:dispatchEvent(RoomEvent.UpdateCharacterInteractionUI)
+		self:dispatchEvent(RoomEvent.UpdateCharacterInteractionUI)
 
 		if not ViewMgr.instance:isOpen(ViewName.RoomBranchView) then
 			ViewMgr.instance:openView(ViewName.RoomBranchView)
@@ -921,23 +937,25 @@ function var_0_0.nextDialogInteraction(arg_51_0, arg_51_1)
 		return
 	end
 
-	if arg_51_1 and arg_51_0._playingInteractionParam.selectParam then
-		local var_51_2 = arg_51_0._playingInteractionParam.selectParam[arg_51_1][1]
+	if selectIndex and self._playingInteractionParam.selectParam then
+		local selectId = self._playingInteractionParam.selectParam[selectIndex][1]
 
-		arg_51_0._playingInteractionParam.stepId = arg_51_0._playingInteractionParam.selectParam[arg_51_1][2]
-		arg_51_0._playingInteractionParam.selectParam = nil
+		self._playingInteractionParam.stepId = self._playingInteractionParam.selectParam[selectIndex][2]
+		self._playingInteractionParam.selectParam = nil
 
-		table.insert(arg_51_0._playingInteractionParam.selectIds, var_51_2)
-	elseif var_51_0 and not string.nilorempty(var_51_0.nextStepId) then
-		arg_51_0._playingInteractionParam.stepId = tonumber(var_51_0.nextStepId)
+		table.insert(self._playingInteractionParam.selectIds, selectId)
+	elseif preDialogConfig and not string.nilorempty(preDialogConfig.nextStepId) then
+		self._playingInteractionParam.stepId = tonumber(preDialogConfig.nextStepId)
 	else
-		arg_51_0._playingInteractionParam.stepId = arg_51_0._playingInteractionParam.stepId + 1
+		self._playingInteractionParam.stepId = self._playingInteractionParam.stepId + 1
 	end
 
-	if not RoomConfig.instance:getCharacterDialogConfig(arg_51_0._playingInteractionParam.dialogId, arg_51_0._playingInteractionParam.stepId) then
-		arg_51_0:finishInteraction()
+	local dialogConfig = RoomConfig.instance:getCharacterDialogConfig(self._playingInteractionParam.dialogId, self._playingInteractionParam.stepId)
+
+	if not dialogConfig then
+		self:finishInteraction()
 	else
-		arg_51_0:dispatchEvent(RoomEvent.UpdateCharacterInteractionUI)
+		self:dispatchEvent(RoomEvent.UpdateCharacterInteractionUI)
 
 		if not ViewMgr.instance:isOpen(ViewName.RoomBranchView) then
 			ViewMgr.instance:openView(ViewName.RoomBranchView)
@@ -945,158 +963,162 @@ function var_0_0.nextDialogInteraction(arg_51_0, arg_51_1)
 	end
 end
 
-function var_0_0.finishInteraction(arg_52_0)
+function RoomCharacterController:finishInteraction()
 	ViewMgr.instance:closeView(ViewName.RoomBranchView)
 
-	if not arg_52_0._playingInteractionParam then
+	if not self._playingInteractionParam then
 		return
 	end
 
-	if arg_52_0._interactionGetReward then
-		arg_52_0._interactionGetReward = false
+	if self._interactionGetReward then
+		self._interactionGetReward = false
 
-		RoomRpc.instance:sendGetCharacterInteractionBonusRequest(arg_52_0._playingInteractionParam.id, arg_52_0._playingInteractionParam.selectIds)
+		RoomRpc.instance:sendGetCharacterInteractionBonusRequest(self._playingInteractionParam.id, self._playingInteractionParam.selectIds)
 	end
 
-	if arg_52_0._interactionGetFaith then
-		arg_52_0._interactionGetFaith = false
+	if self._interactionGetFaith then
+		self._interactionGetFaith = false
 
-		var_0_0.instance:gainAllCharacterFaith(nil, nil, arg_52_0._playingInteractionParam.heroId)
+		RoomCharacterController.instance:gainAllCharacterFaith(nil, nil, self._playingInteractionParam.heroId)
 	end
 
-	local var_52_0 = arg_52_0._playingInteractionParam.critterUid
+	local critterUid = self._playingInteractionParam.critterUid
 
-	if var_52_0 then
-		CritterController.instance:finishTrainSpecialEventByUid(var_52_0)
+	if critterUid then
+		CritterController.instance:finishTrainSpecialEventByUid(critterUid)
 	end
 
-	arg_52_0:endInteraction()
+	self:endInteraction()
 end
 
-function var_0_0.endInteraction(arg_53_0)
-	if not arg_53_0._playingInteractionParam then
+function RoomCharacterController:endInteraction()
+	if not self._playingInteractionParam then
 		return
 	end
 
-	local var_53_0 = GameSceneMgr.instance:getCurScene()
-	local var_53_1 = arg_53_0._playingInteractionParam.id
+	local scene = GameSceneMgr.instance:getCurScene()
+	local currentInteractionId = self._playingInteractionParam.id
 
-	arg_53_0._playingInteractionParam = nil
-	arg_53_0._dialogNextTime = nil
+	self._playingInteractionParam = nil
+	self._dialogNextTime = nil
 
-	arg_53_0:interruptInteraction(var_53_1)
+	self:interruptInteraction(currentInteractionId)
 
-	local var_53_2 = RoomConfig.instance:getCharacterInteractionConfig(var_53_1)
+	local config = RoomConfig.instance:getCharacterInteractionConfig(currentInteractionId)
 
-	if var_53_2.behaviour == RoomCharacterEnum.InteractionType.Dialog then
-		local var_53_3 = RoomCharacterModel.instance:getCharacterMOById(var_53_2.heroId)
+	if config.behaviour == RoomCharacterEnum.InteractionType.Dialog then
+		local roomCharacterMO = RoomCharacterModel.instance:getCharacterMOById(config.heroId)
 
-		if var_53_3 then
-			var_53_3:setCurrentInteractionId(nil)
+		if roomCharacterMO then
+			roomCharacterMO:setCurrentInteractionId(nil)
 
-			local var_53_4 = var_53_0.charactermgr:getCharacterEntity(var_53_3.id, SceneTag.RoomCharacter)
+			local entity = scene.charactermgr:getCharacterEntity(roomCharacterMO.id, SceneTag.RoomCharacter)
 
-			if var_53_4 and var_53_4.charactermove then
-				var_53_4.charactermove:clearForcePositionAndLookDir()
+			if entity and entity.charactermove then
+				entity.charactermove:clearForcePositionAndLookDir()
 			end
 		end
 
-		local var_53_5 = RoomCharacterModel.instance:getCharacterMOById(var_53_2.relateHeroId)
+		local relateRoomCharacterMO = RoomCharacterModel.instance:getCharacterMOById(config.relateHeroId)
 
-		if var_53_5 then
-			var_53_5:setCurrentInteractionId(nil)
+		if relateRoomCharacterMO then
+			relateRoomCharacterMO:setCurrentInteractionId(nil)
 
-			local var_53_6 = var_53_0.charactermgr:getCharacterEntity(var_53_5.id, SceneTag.RoomCharacter)
+			local relateEntity = scene.charactermgr:getCharacterEntity(relateRoomCharacterMO.id, SceneTag.RoomCharacter)
 
-			if var_53_6 and var_53_6.charactermove then
-				var_53_6.charactermove:clearForcePositionAndLookDir()
+			if relateEntity and relateEntity.charactermove then
+				relateEntity.charactermove:clearForcePositionAndLookDir()
 			end
 		end
 	end
 end
 
-function var_0_0.getPlayingInteractionParam(arg_54_0)
-	return arg_54_0._playingInteractionParam
+function RoomCharacterController:getPlayingInteractionParam()
+	return self._playingInteractionParam
 end
 
-function var_0_0.tryPlayAllSpecialIdle(arg_55_0)
-	local var_55_0 = RoomCharacterModel.instance:getList()
+function RoomCharacterController:tryPlayAllSpecialIdle()
+	local roomCharacterMOList = RoomCharacterModel.instance:getList()
 
-	for iter_55_0, iter_55_1 in ipairs(var_55_0) do
-		arg_55_0:tryPlaySpecialIdle(iter_55_1.id)
-	end
-end
-
-function var_0_0.tryPlaySpecialIdle(arg_56_0, arg_56_1)
-	local var_56_0 = GameSceneMgr.instance:getCurScene()
-	local var_56_1 = RoomCharacterModel.instance:getCharacterMOById(arg_56_1)
-
-	if not var_56_1 then
-		return
-	end
-
-	local var_56_2 = var_56_0.charactermgr:getCharacterEntity(arg_56_1)
-
-	if not var_56_2 then
-		return
-	end
-
-	if var_56_2.characterspine:isRandomSpecialRate() then
-		var_56_2.characterspine:tryPlaySpecialIdle()
-
-		var_56_1.stateDuration = -5
+	for i, roomCharacterMO in ipairs(roomCharacterMOList) do
+		self:tryPlaySpecialIdle(roomCharacterMO.id)
 	end
 end
 
-function var_0_0.tweenCameraFocus(arg_57_0, arg_57_1, arg_57_2, arg_57_3, arg_57_4, arg_57_5)
-	local var_57_0 = GameSceneMgr.instance:getCurSceneType()
-	local var_57_1 = GameSceneMgr.instance:getCurScene()
+function RoomCharacterController:tryPlaySpecialIdle(heroId)
+	local scene = GameSceneMgr.instance:getCurScene()
+	local roomCharacterMO = RoomCharacterModel.instance:getCharacterMOById(heroId)
 
-	if var_57_0 ~= SceneType.Room or not var_57_1 or not var_57_1.camera then
+	if not roomCharacterMO then
 		return
 	end
 
-	if RoomCharacterEnum.CameraFocus.MoreShowList == arg_57_3 then
-		local var_57_2 = UnityEngine.Screen.width
-		local var_57_3 = UnityEngine.Screen.height
-		local var_57_4 = Vector2(var_57_2 * 0.5, var_57_3 * 0.7)
-		local var_57_5 = RoomBendingHelper.screenToWorld(var_57_4)
-		local var_57_6 = RoomBendingHelper.screenToWorld(Vector2(var_57_2 * 0.5, var_57_3 * 0.5))
+	local entity = scene.charactermgr:getCharacterEntity(heroId)
 
-		if var_57_5 and var_57_6 then
-			local var_57_7 = var_57_5.x - var_57_6.x
-			local var_57_8 = var_57_5.y - var_57_6.y
+	if not entity then
+		return
+	end
 
-			arg_57_1 = arg_57_1 - var_57_7
-			arg_57_2 = arg_57_2 - var_57_8
+	if entity.characterspine:isRandomSpecialRate() then
+		entity.characterspine:tryPlaySpecialIdle()
+
+		roomCharacterMO.stateDuration = -5
+	end
+end
+
+function RoomCharacterController:tweenCameraFocus(worldX, worldZ, characterFocus, callback, obj)
+	local sceneType = GameSceneMgr.instance:getCurSceneType()
+	local scene = GameSceneMgr.instance:getCurScene()
+
+	if sceneType ~= SceneType.Room or not scene or not scene.camera then
+		return
+	end
+
+	if RoomCharacterEnum.CameraFocus.MoreShowList == characterFocus then
+		local width = UnityEngine.Screen.width
+		local height = UnityEngine.Screen.height
+		local scenePos = Vector2(width * 0.5, height * 0.7)
+		local wordldPos = RoomBendingHelper.screenToWorld(scenePos)
+		local centerPos = RoomBendingHelper.screenToWorld(Vector2(width * 0.5, height * 0.5))
+
+		if wordldPos and centerPos then
+			local deltaX = wordldPos.x - centerPos.x
+			local deltaY = wordldPos.y - centerPos.y
+
+			worldX = worldX - deltaX
+			worldZ = worldZ - deltaY
 		end
 	end
 
-	local var_57_9 = {
-		focusX = arg_57_1,
-		focusY = arg_57_2
+	local cameraParam = {
+		focusX = worldX,
+		focusY = worldZ
 	}
 
-	var_57_1.camera:tweenCamera(var_57_9, nil, arg_57_4, arg_57_5)
+	scene.camera:tweenCamera(cameraParam, nil, callback, obj)
 end
 
-function var_0_0.setFilterOnBirthday(arg_58_0, arg_58_1)
-	if arg_58_1 and not RoomCharacterPlaceListModel.instance:hasHeroOnBirthday() then
-		GameFacade.showToast(ToastEnum.NoCharacterOnBirthday)
+function RoomCharacterController:setFilterOnBirthday(isFilter)
+	if isFilter then
+		local hasOnBirthdayHero = RoomCharacterPlaceListModel.instance:hasHeroOnBirthday()
 
-		return false
+		if not hasOnBirthdayHero then
+			GameFacade.showToast(ToastEnum.NoCharacterOnBirthday)
+
+			return false
+		end
 	end
 
-	RoomCharacterPlaceListModel.instance:setIsFilterOnBirthday(arg_58_1)
+	RoomCharacterPlaceListModel.instance:setIsFilterOnBirthday(isFilter)
 	RoomCharacterPlaceListModel.instance:setCharacterPlaceList()
 
 	return true
 end
 
-function var_0_0.onCloseRoomCharacterPlaceView(arg_59_0)
+function RoomCharacterController:onCloseRoomCharacterPlaceView()
 	RoomCharacterPlaceListModel.instance:setIsFilterOnBirthday()
 end
 
-var_0_0.instance = var_0_0.New()
+RoomCharacterController.instance = RoomCharacterController.New()
 
-return var_0_0
+return RoomCharacterController

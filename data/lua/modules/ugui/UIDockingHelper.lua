@@ -1,32 +1,34 @@
-﻿module("modules.ugui.UIDockingHelper", package.seeall)
+﻿-- chunkname: @modules/ugui/UIDockingHelper.lua
 
-local var_0_0 = SLFramework.UGUI.RectTrHelper
-local var_0_1 = {
-	__calcOfsV2FromCenterPivot = function(arg_1_0)
-		local var_1_0 = arg_1_0.rect
+module("modules.ugui.UIDockingHelper", package.seeall)
 
-		return Vector2(var_1_0.width * (0.5 - arg_1_0.pivot.x), var_1_0.height * (0.5 - arg_1_0.pivot.y))
-	end
-}
+local CSRectTrHelper = SLFramework.UGUI.RectTrHelper
+local UIDockingHelper = {}
 
-function var_0_1.__calcMidCenterLocalPosV2(arg_2_0, arg_2_1, arg_2_2)
-	local var_2_0 = CameraMgr.instance:getUICamera()
-	local var_2_1 = var_2_0:WorldToScreenPoint(arg_2_1.position)
-	local var_2_2 = var_0_0.ScreenPosToAnchorPos(var_2_1, arg_2_0.parent, var_2_0)
+function UIDockingHelper.__calcOfsV2FromCenterPivot(rectTransform)
+	local rc = rectTransform.rect
 
-	if not arg_2_2 then
-		local var_2_3 = var_0_1.__calcOfsV2FromCenterPivot(arg_2_0)
-		local var_2_4 = var_0_1.__calcOfsV2FromCenterPivot(arg_2_1)
-
-		var_2_2 = var_2_2 - var_2_3 + var_2_4
-	end
-
-	return var_2_2
+	return Vector2(rc.width * (0.5 - rectTransform.pivot.x), rc.height * (0.5 - rectTransform.pivot.y))
 end
 
-local var_0_2 = 16
+function UIDockingHelper.__calcMidCenterLocalPosV2(tr, targetTr, isKeepPivot)
+	local uiCamera = CameraMgr.instance:getUICamera()
+	local screenPos = uiCamera:WorldToScreenPoint(targetTr.position)
+	local localPosV2 = CSRectTrHelper.ScreenPosToAnchorPos(screenPos, tr.parent, uiCamera)
 
-var_0_1.Dock = {
+	if not isKeepPivot then
+		local trOfs = UIDockingHelper.__calcOfsV2FromCenterPivot(tr)
+		local targetTrOfs = UIDockingHelper.__calcOfsV2FromCenterPivot(targetTr)
+
+		localPosV2 = localPosV2 - trOfs + targetTrOfs
+	end
+
+	return localPosV2
+end
+
+local ofs = 16
+
+UIDockingHelper.Dock = {
 	LB_RT = 10,
 	RB_RT = 14,
 	LB_RB = 8,
@@ -43,139 +45,145 @@ var_0_1.Dock = {
 	RB_RB = 12,
 	LB_LT = 11,
 	RT_LT = 7,
-	LT_U = 0 + var_0_2,
-	MT_U = 3 + var_0_2,
-	RT_U = 6 + var_0_2,
-	LT_M = 1 + var_0_2,
-	MT_M = 3 + var_0_2,
-	RT_M = 7 + var_0_2,
-	LT_D = 2 + var_0_2,
-	MT_D = 5 + var_0_2,
-	RT_D = 8 + var_0_2,
-	ML_L = 9 + var_0_2,
-	ML_M = 10 + var_0_2,
-	ML_R = 11 + var_0_2,
-	MR_L = 12 + var_0_2,
-	MR_M = 13 + var_0_2,
-	MR_R = 14 + var_0_2,
-	LB_U = 15 + var_0_2,
-	MB_U = 18 + var_0_2,
-	RB_U = 21 + var_0_2,
-	LB_M = 16 + var_0_2,
-	MB_M = 19 + var_0_2,
-	RB_M = 22 + var_0_2,
-	LB_D = 17 + var_0_2,
-	MB_D = 20 + var_0_2,
-	RB_D = 23 + var_0_2
+	LT_U = 0 + ofs,
+	MT_U = 3 + ofs,
+	RT_U = 6 + ofs,
+	LT_M = 1 + ofs,
+	MT_M = 3 + ofs,
+	RT_M = 7 + ofs,
+	LT_D = 2 + ofs,
+	MT_D = 5 + ofs,
+	RT_D = 8 + ofs,
+	ML_L = 9 + ofs,
+	ML_M = 10 + ofs,
+	ML_R = 11 + ofs,
+	MR_L = 12 + ofs,
+	MR_M = 13 + ofs,
+	MR_R = 14 + ofs,
+	LB_U = 15 + ofs,
+	MB_U = 18 + ofs,
+	RB_U = 21 + ofs,
+	LB_M = 16 + ofs,
+	MB_M = 19 + ofs,
+	RB_M = 22 + ofs,
+	LB_D = 17 + ofs,
+	MB_D = 20 + ofs,
+	RB_D = 23 + ofs
 }
 
-function var_0_1._calcDockSudokuLocalPosV2(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	if not arg_3_0 then
-		return arg_3_1
+function UIDockingHelper._calcDockSudokuLocalPosV2(index, v2, tr, targetTr)
+	if not index then
+		return v2
 	end
 
-	local var_3_0 = 0
-	local var_3_1 = 0
-	local var_3_2 = math.modf(arg_3_0 / 3)
-	local var_3_3 = arg_3_0 % 3 - 1
-	local var_3_4 = arg_3_3.rect
-	local var_3_5 = var_3_4.width * 0.5
-	local var_3_6 = var_3_4.height * 0.5
-	local var_3_7 = arg_3_2.rect
-	local var_3_8 = var_3_7.width * 0.5
-	local var_3_9 = var_3_7.height * 0.5
+	local offsetX = 0
+	local offsetY = 0
+	local a = math.modf(index / 3)
+	local b = index % 3
 
-	if var_3_2 <= 2 then
-		var_3_1 = var_3_1 + var_3_6 - var_3_9 * var_3_3
-		var_3_2 = var_3_2 - 1
-		var_3_0 = var_3_0 + var_3_5 * var_3_2
-	elseif var_3_2 <= 4 then
-		var_3_2 = var_3_2 * 2 - 7
-		var_3_0 = var_3_0 + var_3_5 * var_3_2 + var_3_8 * var_3_3
+	b = b - 1
+
+	local targetRc = targetTr.rect
+	local thw = targetRc.width * 0.5
+	local thh = targetRc.height * 0.5
+	local trRc = tr.rect
+	local hw = trRc.width * 0.5
+	local hh = trRc.height * 0.5
+
+	if a <= 2 then
+		offsetY = offsetY + thh - hh * b
+		a = a - 1
+		offsetX = offsetX + thw * a
+	elseif a <= 4 then
+		a = a * 2 - 7
+		offsetX = offsetX + thw * a + hw * b
 	else
-		var_3_1 = var_3_1 - var_3_6 - var_3_9 * var_3_3
-		var_3_0 = var_3_0 + var_3_5 * (var_3_2 - 6)
+		offsetY = offsetY - thh - hh * b
+		a = a - 6
+		offsetX = offsetX + thw * a
 	end
 
-	arg_3_1.x = arg_3_1.x + var_3_0
-	arg_3_1.y = arg_3_1.y + var_3_1
+	v2.x = v2.x + offsetX
+	v2.y = v2.y + offsetY
 
-	return arg_3_1
+	return v2
 end
 
-function var_0_1._calcDockCornorLocalPosV2(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	if not arg_4_0 then
-		return arg_4_1
+function UIDockingHelper._calcDockCornorLocalPosV2(index, v2, tr, targetTr)
+	if not index then
+		return v2
 	end
 
-	local var_4_0 = 0
-	local var_4_1 = 0
-	local var_4_2 = math.modf(arg_4_0 / 4)
-	local var_4_3 = arg_4_0 % 4
-	local var_4_4 = arg_4_3.rect
-	local var_4_5 = var_4_4.width * 0.5
-	local var_4_6 = var_4_4.height * 0.5
+	local offsetX = 0
+	local offsetY = 0
+	local a = math.modf(index / 4)
+	local b = index % 4
+	local targetRc = targetTr.rect
+	local thw = targetRc.width * 0.5
+	local thh = targetRc.height * 0.5
 
-	if var_4_2 == 0 then
-		var_4_0 = var_4_0 - var_4_5
-		var_4_1 = var_4_1 + var_4_6
-	elseif var_4_2 == 1 then
-		var_4_0 = var_4_0 + var_4_5
-		var_4_1 = var_4_1 + var_4_6
-	elseif var_4_2 == 2 then
-		var_4_0 = var_4_0 - var_4_5
-		var_4_1 = var_4_1 - var_4_6
-	elseif var_4_2 == 3 then
-		var_4_0 = var_4_0 + var_4_5
-		var_4_1 = var_4_1 - var_4_6
+	if a == 0 then
+		offsetX = offsetX - thw
+		offsetY = offsetY + thh
+	elseif a == 1 then
+		offsetX = offsetX + thw
+		offsetY = offsetY + thh
+	elseif a == 2 then
+		offsetX = offsetX - thw
+		offsetY = offsetY - thh
+	elseif a == 3 then
+		offsetX = offsetX + thw
+		offsetY = offsetY - thh
 	end
 
-	local var_4_7 = arg_4_2.rect
-	local var_4_8 = var_4_7.width * 0.5
-	local var_4_9 = var_4_7.height * 0.5
+	local trRc = tr.rect
+	local hw = trRc.width * 0.5
+	local hh = trRc.height * 0.5
 
-	if var_4_3 == 0 then
-		var_4_0 = var_4_0 + var_4_8
-		var_4_1 = var_4_1 - var_4_9
-	elseif var_4_3 == 1 then
-		var_4_0 = var_4_0 - var_4_8
-		var_4_1 = var_4_1 - var_4_9
-	elseif var_4_3 == 2 then
-		var_4_0 = var_4_0 + var_4_8
-		var_4_1 = var_4_1 + var_4_9
-	elseif var_4_3 == 3 then
-		var_4_0 = var_4_0 - var_4_8
-		var_4_1 = var_4_1 + var_4_9
+	if b == 0 then
+		offsetX = offsetX + hw
+		offsetY = offsetY - hh
+	elseif b == 1 then
+		offsetX = offsetX - hw
+		offsetY = offsetY - hh
+	elseif b == 2 then
+		offsetX = offsetX + hw
+		offsetY = offsetY + hh
+	elseif b == 3 then
+		offsetX = offsetX - hw
+		offsetY = offsetY + hh
 	end
 
-	arg_4_1.x = arg_4_1.x + var_4_0
-	arg_4_1.y = arg_4_1.y + var_4_1
+	v2.x = v2.x + offsetX
+	v2.y = v2.y + offsetY
 
-	return arg_4_1
+	return v2
 end
 
-function var_0_1.calcDockLocalPosV2(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	local var_5_0 = var_0_1.__calcMidCenterLocalPosV2(arg_5_1, arg_5_2, arg_5_3)
+function UIDockingHelper.calcDockLocalPosV2(eDock, curRectTrans, targetRectTrans, isKeepPivot)
+	local midCenterLocalPosV2 = UIDockingHelper.__calcMidCenterLocalPosV2(curRectTrans, targetRectTrans, isKeepPivot)
 
-	if not arg_5_0 then
-		return var_5_0
+	if not eDock then
+		return midCenterLocalPosV2
 	end
 
-	assert(arg_5_0 >= 0 and arg_5_0 <= 23 + var_0_2, "eDock=" .. tostring(arg_5_0))
+	assert(eDock >= 0 and eDock <= 23 + ofs, "eDock=" .. tostring(eDock))
 
-	if arg_5_0 >= var_0_2 then
-		return var_0_1._calcDockSudokuLocalPosV2(arg_5_0 - var_0_2, var_5_0, arg_5_1, arg_5_2)
+	local isSudoku = eDock >= ofs
+
+	if isSudoku then
+		return UIDockingHelper._calcDockSudokuLocalPosV2(eDock - ofs, midCenterLocalPosV2, curRectTrans, targetRectTrans)
 	else
-		return var_0_1._calcDockCornorLocalPosV2(arg_5_0, var_5_0, arg_5_1, arg_5_2)
+		return UIDockingHelper._calcDockCornorLocalPosV2(eDock, midCenterLocalPosV2, curRectTrans, targetRectTrans)
 	end
 end
 
-function var_0_1.setDock(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5)
-	arg_6_0 = arg_6_0 or var_0_1.Dock.MM_M
+function UIDockingHelper.setDock(eDock, curRectTrans, targetRectTrans, offsetX, offsetY, isKeepPivot)
+	eDock = eDock or UIDockingHelper.Dock.MM_M
 
-	local var_6_0 = var_0_1.calcDockLocalPosV2(arg_6_0, arg_6_1, arg_6_2, arg_6_5)
+	local v2 = UIDockingHelper.calcDockLocalPosV2(eDock, curRectTrans, targetRectTrans, isKeepPivot)
 
-	transformhelper.setLocalPos(arg_6_1, var_6_0.x + (arg_6_3 or 0), var_6_0.y + (arg_6_4 or 0), 0)
+	transformhelper.setLocalPos(curRectTrans, v2.x + (offsetX or 0), v2.y + (offsetY or 0), 0)
 end
 
-return var_0_1
+return UIDockingHelper

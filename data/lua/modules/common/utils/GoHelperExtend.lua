@@ -1,196 +1,203 @@
-﻿module("modules.common.utils.GoHelperExtend", package.seeall)
+﻿-- chunkname: @modules/common/utils/GoHelperExtend.lua
 
-local var_0_0 = gohelper
+module("modules.common.utils.GoHelperExtend", package.seeall)
 
-var_0_0.Type_UIClickAudio = typeof(ZProj.UIClickAudio)
-var_0_0.Type_CanvasGroup = typeof(UnityEngine.CanvasGroup)
-var_0_0.Type_TMPInputField = typeof(TMPro.TMP_InputField)
-var_0_0.Type_Animator = typeof(UnityEngine.Animator)
-var_0_0.Type_LimitedScrollRect = typeof(ZProj.LimitedScrollRect)
-var_0_0.Type_RectTransform = typeof(UnityEngine.RectTransform)
-var_0_0.Type_Transform = typeof(UnityEngine.Transform)
-var_0_0.Type_ParticleSystem = typeof(UnityEngine.ParticleSystem)
-var_0_0.Type_AnimationEventWrap = typeof(ZProj.AnimationEventWrap)
-var_0_0.Type_Animation = typeof(UnityEngine.Animation)
-var_0_0.Type_TMP_SubMeshUI = typeof(TMPro.TMP_SubMeshUI)
-var_0_0.Type_RectMask2D = typeof(UnityEngine.UI.RectMask2D)
-var_0_0.Type_GridLayoutGroup = typeof(UnityEngine.UI.GridLayoutGroup)
-var_0_0.Type_ContentSizeFitter = typeof(UnityEngine.UI.ContentSizeFitter)
-var_0_0.Type_MeshRender = typeof(UnityEngine.MeshRenderer)
-var_0_0.Type_Render = typeof(UnityEngine.Renderer)
-var_0_0.Type_LangTextDynamicSize = typeof(ZProj.LangTextDynamicSize)
-var_0_0.Type_Spine_SkeletonAnimation = typeof(Spine.Unity.SkeletonAnimation)
-var_0_0.Type_Spine_SkeletonGraphic = typeof(Spine.Unity.SkeletonGraphic)
-var_0_0.Type_UIFollower = typeof(ZProj.UIFollower)
+local gohelper = gohelper
 
-local var_0_1 = SLFramework.UGUI.ButtonWrap
-local var_0_2 = SLFramework.UGUI.UIClickListener
-local var_0_3 = ZProj.GameHelper
-local var_0_4 = ZProj.LangTextDynamicSize
-local var_0_5 = SLFramework.UGUI.UIDragListener
-local var_0_6 = ZProj.TextMeshInputFieldWrap
-local var_0_7 = ZProj.ScrollbarWrap
-local var_0_8 = ZProj.DropdownWrap
-local var_0_9 = ZProj.TMPDropdownWrap
+gohelper.Type_UIClickAudio = typeof(ZProj.UIClickAudio)
+gohelper.Type_CanvasGroup = typeof(UnityEngine.CanvasGroup)
+gohelper.Type_TMPInputField = typeof(TMPro.TMP_InputField)
+gohelper.Type_Animator = typeof(UnityEngine.Animator)
+gohelper.Type_LimitedScrollRect = typeof(ZProj.LimitedScrollRect)
+gohelper.Type_RectTransform = typeof(UnityEngine.RectTransform)
+gohelper.Type_Transform = typeof(UnityEngine.Transform)
+gohelper.Type_ParticleSystem = typeof(UnityEngine.ParticleSystem)
+gohelper.Type_AnimationEventWrap = typeof(ZProj.AnimationEventWrap)
+gohelper.Type_Animation = typeof(UnityEngine.Animation)
+gohelper.Type_TMP_SubMeshUI = typeof(TMPro.TMP_SubMeshUI)
+gohelper.Type_RectMask2D = typeof(UnityEngine.UI.RectMask2D)
+gohelper.Type_GridLayoutGroup = typeof(UnityEngine.UI.GridLayoutGroup)
+gohelper.Type_ContentSizeFitter = typeof(UnityEngine.UI.ContentSizeFitter)
+gohelper.Type_MeshRender = typeof(UnityEngine.MeshRenderer)
+gohelper.Type_Render = typeof(UnityEngine.Renderer)
+gohelper.Type_LangTextDynamicSize = typeof(ZProj.LangTextDynamicSize)
+gohelper.Type_Spine_SkeletonAnimation = typeof(Spine.Unity.SkeletonAnimation)
+gohelper.Type_Spine_SkeletonGraphic = typeof(Spine.Unity.SkeletonGraphic)
+gohelper.Type_UIFollower = typeof(ZProj.UIFollower)
 
-function var_0_0.addUIClickAudio(arg_1_0, arg_1_1)
-	arg_1_1 = arg_1_1 or AudioEnum.UI.UI_Common_Click
-	var_0_0.onceAddComponent(arg_1_0, var_0_0.Type_UIClickAudio).audioId = arg_1_1
+local ButtonWrap = SLFramework.UGUI.ButtonWrap
+local UIClickListener = SLFramework.UGUI.UIClickListener
+local GameHelper = ZProj.GameHelper
+local LangTextDynamicSize = ZProj.LangTextDynamicSize
+local UIDragListener = SLFramework.UGUI.UIDragListener
+local ZProj_TextMeshInputFieldWrap = ZProj.TextMeshInputFieldWrap
+local ZProj_ScrollbarWrap = ZProj.ScrollbarWrap
+local ZProj_DropdownWrap = ZProj.DropdownWrap
+local ZProj_TMPDropdownWrap = ZProj.TMPDropdownWrap
+
+function gohelper.addUIClickAudio(go, audioId)
+	audioId = audioId or AudioEnum.UI.UI_Common_Click
+
+	local uiClickAudio = gohelper.onceAddComponent(go, gohelper.Type_UIClickAudio)
+
+	uiClickAudio.audioId = audioId
 end
 
-function var_0_0.removeUIClickAudio(arg_2_0)
-	var_0_0.onceAddComponent(arg_2_0, var_0_0.Type_UIClickAudio).audioId = 0
+function gohelper.removeUIClickAudio(go)
+	local uiClickAudio = gohelper.onceAddComponent(go, gohelper.Type_UIClickAudio)
+
+	uiClickAudio.audioId = 0
 end
 
-function var_0_0.findChildButtonWithAudio(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = var_0_1.GetWithPath(arg_3_0, arg_3_1)
+function gohelper.findChildButtonWithAudio(go, childPath, audioId)
+	local buttonWrap = ButtonWrap.GetWithPath(go, childPath)
 
-	if var_3_0 then
-		var_0_0.addUIClickAudio(var_3_0.gameObject, arg_3_2)
+	if buttonWrap then
+		gohelper.addUIClickAudio(buttonWrap.gameObject, audioId)
 	end
 
-	return var_3_0
+	return buttonWrap
 end
 
-function var_0_0.findButtonWithAudio(arg_4_0, arg_4_1)
-	local var_4_0 = var_0_1.Get(arg_4_0)
+function gohelper.findButtonWithAudio(go, audioId)
+	local buttonWrap = ButtonWrap.Get(go)
 
-	if var_4_0 then
-		var_0_0.addUIClickAudio(var_4_0.gameObject, arg_4_1)
+	if buttonWrap then
+		gohelper.addUIClickAudio(buttonWrap.gameObject, audioId)
 	end
 
-	return var_4_0
+	return buttonWrap
 end
 
-function var_0_0.findChildClickWithAudio(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = var_0_2.GetWithPath(arg_5_0, arg_5_1)
+function gohelper.findChildClickWithAudio(go, childPath, audioId)
+	local listener = UIClickListener.GetWithPath(go, childPath)
 
-	if var_5_0 and arg_5_2 then
-		var_0_0.addUIClickAudio(var_5_0.gameObject, arg_5_2)
+	if listener and audioId then
+		gohelper.addUIClickAudio(listener.gameObject, audioId)
 	end
 
-	return var_5_0
+	return listener
 end
 
-function var_0_0.findChildAnim(arg_6_0, arg_6_1)
-	local var_6_0 = var_0_0.findChild(arg_6_0, arg_6_1)
+function gohelper.findChildAnim(go, path)
+	local child = gohelper.findChild(go, path)
 
-	if var_6_0 then
-		return var_6_0:GetComponent(var_0_0.Type_Animator)
+	if child then
+		return child:GetComponent(gohelper.Type_Animator)
 	end
 end
 
-function var_0_0.findComponentAnim(arg_7_0)
-	if var_0_0.isNil(arg_7_0) then
+function gohelper.findComponentAnim(go)
+	if gohelper.isNil(go) then
 		logError("gohelper.findComponentAnimator: go is nil")
 
 		return nil
 	end
 
-	return arg_7_0:GetComponent(var_0_0.Type_Animator)
+	return go:GetComponent(gohelper.Type_Animator)
 end
 
-function var_0_0.getClickWithAudio(arg_8_0, arg_8_1)
-	local var_8_0 = var_0_2.Get(arg_8_0)
+function gohelper.getClickWithAudio(go, audioId)
+	local listener = UIClickListener.Get(go)
 
-	if var_8_0 and arg_8_1 then
-		var_0_0.addUIClickAudio(var_8_0.gameObject, arg_8_1)
+	if listener and audioId then
+		gohelper.addUIClickAudio(listener.gameObject, audioId)
 	end
 
-	return var_8_0
+	return listener
 end
 
-function var_0_0.getClickWithDefaultAudio(arg_9_0)
-	return var_0_0.getClickWithAudio(arg_9_0, AudioEnum.UI.UI_Common_Click)
+function gohelper.getClickWithDefaultAudio(go)
+	return gohelper.getClickWithAudio(go, AudioEnum.UI.UI_Common_Click)
 end
 
-function var_0_0.findChildClickWithDefaultAudio(arg_10_0, arg_10_1)
-	return var_0_0.findChildClickWithAudio(arg_10_0, arg_10_1, AudioEnum.UI.UI_Common_Click)
+function gohelper.findChildClickWithDefaultAudio(go, childPath)
+	return gohelper.findChildClickWithAudio(go, childPath, AudioEnum.UI.UI_Common_Click)
 end
 
-function var_0_0.findChildTextMeshInputField(arg_11_0, arg_11_1)
-	return var_0_6.GetWithPath(arg_11_0, arg_11_1)
+function gohelper.findChildTextMeshInputField(go, childPath)
+	return ZProj_TextMeshInputFieldWrap.GetWithPath(go, childPath)
 end
 
-function var_0_0.findChildDropdown(arg_12_0, arg_12_1)
-	return var_0_8.GetWithPath(arg_12_0, arg_12_1) or var_0_9.GetWithPath(arg_12_0, arg_12_1)
+function gohelper.findChildDropdown(go, childPath)
+	return ZProj_DropdownWrap.GetWithPath(go, childPath) or ZProj_TMPDropdownWrap.GetWithPath(go, childPath)
 end
 
-function var_0_0.findChildScrollbar(arg_13_0, arg_13_1)
-	return var_0_7.GetWithPath(arg_13_0, arg_13_1)
+function gohelper.findChildScrollbar(go, childPath)
+	return ZProj_ScrollbarWrap.GetWithPath(go, childPath)
 end
 
-function var_0_0.findChildUIMesh(arg_14_0, arg_14_1)
-	if string.nilorempty(arg_14_1) then
-		return arg_14_0:GetComponent(typeof(UIMesh))
+function gohelper.findChildUIMesh(go, path)
+	if string.nilorempty(path) then
+		return go:GetComponent(typeof(UIMesh))
 	end
 
-	local var_14_0 = var_0_0.findChild(arg_14_0, arg_14_1)
+	local child = gohelper.findChild(go, path)
 
-	if var_14_0 then
-		return var_14_0:GetComponent(typeof(UIMesh))
+	if child then
+		return child:GetComponent(typeof(UIMesh))
 	end
 end
 
-function var_0_0.findChildUIDragListener(arg_15_0, arg_15_1)
-	if string.nilorempty(arg_15_1) then
-		return var_0_5.Get(arg_15_0)
+function gohelper.findChildUIDragListener(go, path)
+	if string.nilorempty(path) then
+		return UIDragListener.Get(go)
 	else
-		return var_0_5.GetWithPath(arg_15_0, arg_15_1)
+		return UIDragListener.GetWithPath(go, path)
 	end
 end
 
-function var_0_0.setActiveCanvasGroup(arg_16_0, arg_16_1)
-	var_0_3.SetActiveCanvasGroup(arg_16_0, arg_16_1)
+function gohelper.setActiveCanvasGroup(go_canvasGroup, isActive)
+	GameHelper.SetActiveCanvasGroup(go_canvasGroup, isActive)
 end
 
-function var_0_0.setActiveCanvasGroupNoAnchor(arg_17_0, arg_17_1)
-	if var_0_0.isNil(arg_17_0) then
+function gohelper.setActiveCanvasGroupNoAnchor(go_canvasGroup, isActive)
+	if gohelper.isNil(go_canvasGroup) then
 		return
 	end
 
-	arg_17_0.alpha = arg_17_1 and 1 or 0
-	arg_17_0.interactable = arg_17_1 and true or false
-	arg_17_0.blocksRaycasts = arg_17_1 and true or false
+	go_canvasGroup.alpha = isActive and 1 or 0
+	go_canvasGroup.interactable = isActive and true or false
+	go_canvasGroup.blocksRaycasts = isActive and true or false
 end
 
-function var_0_0.getRichColorText(arg_18_0, arg_18_1)
-	return string.format("<color=%s>%s</color>", arg_18_1, arg_18_0)
+function gohelper.getRichColorText(text, color)
+	return string.format("<color=%s>%s</color>", color, text)
 end
 
-function var_0_0.getRemindFourNumberFloat(arg_19_0)
-	return arg_19_0 - arg_19_0 % 0.0001
+function gohelper.getRemindFourNumberFloat(value)
+	return value - value % 0.0001
 end
 
-function var_0_0.activateExtend()
+function gohelper.activateExtend()
 	return
 end
 
-function var_0_0.CreateObjList(arg_21_0, arg_21_1, arg_21_2, arg_21_3, arg_21_4, arg_21_5, arg_21_6, arg_21_7, arg_21_8)
-	if var_0_0.isNil(arg_21_3) and not var_0_0.isNil(arg_21_4) then
-		arg_21_3 = arg_21_4.transform.parent.gameObject
+function gohelper.CreateObjList(class, callback, data, parent_obj, model_obj, component, start_index, end_index, offsetNum)
+	if gohelper.isNil(parent_obj) and not gohelper.isNil(model_obj) then
+		parent_obj = model_obj.transform.parent.gameObject
 	end
 
-	local var_21_0
-	local var_21_1 = #arg_21_2
-	local var_21_2 = arg_21_3.transform
+	local modelIsChild
+	local data_len = #data
+	local parent_transform = parent_obj.transform
 
-	arg_21_6 = arg_21_6 or 1
-	arg_21_7 = arg_21_7 or var_21_1
-	arg_21_8 = arg_21_8 or 0
+	start_index = start_index or 1
+	end_index = end_index or data_len
+	offsetNum = offsetNum or 0
 
-	if arg_21_6 > 1 then
-		for iter_21_0 = 1, arg_21_6 - 1 do
-			local var_21_3
+	if start_index > 1 then
+		for i = 1, start_index - 1 do
+			local child_obj
 
-			if arg_21_2[iter_21_0] then
-				local var_21_4 = var_21_2.childCount >= iter_21_0 + arg_21_8 and var_21_2:GetChild(iter_21_0 - 1 + arg_21_8).gameObject
+			if data[i] then
+				child_obj = parent_transform.childCount >= i + offsetNum and parent_transform:GetChild(i - 1 + offsetNum).gameObject
 
-				if var_21_4 == arg_21_4 then
-					var_0_0.setActive(var_21_4, false)
+				if child_obj == model_obj then
+					gohelper.setActive(child_obj, false)
 
-					arg_21_8 = arg_21_8 + 1
-					var_21_0 = var_21_4
+					offsetNum = offsetNum + 1
+					modelIsChild = child_obj
 
 					break
 				end
@@ -198,348 +205,348 @@ function var_0_0.CreateObjList(arg_21_0, arg_21_1, arg_21_2, arg_21_3, arg_21_4,
 		end
 	end
 
-	for iter_21_1 = arg_21_6, arg_21_7 do
-		local var_21_5
+	for i = start_index, end_index do
+		local child_obj
 
-		if arg_21_2[iter_21_1] then
-			local var_21_6 = var_21_2.childCount >= iter_21_1 + arg_21_8 and var_21_2:GetChild(iter_21_1 - 1 + arg_21_8).gameObject or var_0_0.clone(arg_21_4, arg_21_3, iter_21_1)
+		if data[i] then
+			child_obj = parent_transform.childCount >= i + offsetNum and parent_transform:GetChild(i - 1 + offsetNum).gameObject or gohelper.clone(model_obj, parent_obj, i)
 
-			if var_21_6 == arg_21_4 then
-				var_0_0.setActive(var_21_6, false)
+			if child_obj == model_obj then
+				gohelper.setActive(child_obj, false)
 
-				arg_21_8 = arg_21_8 + 1
-				var_21_0 = var_21_6
-				var_21_6 = var_21_2.childCount >= iter_21_1 + arg_21_8 and var_21_2:GetChild(iter_21_1 - 1 + arg_21_8).gameObject or var_0_0.clone(arg_21_4, arg_21_3, iter_21_1)
+				offsetNum = offsetNum + 1
+				modelIsChild = child_obj
+				child_obj = parent_transform.childCount >= i + offsetNum and parent_transform:GetChild(i - 1 + offsetNum).gameObject or gohelper.clone(model_obj, parent_obj, i)
 			end
 
-			var_0_0.setActive(var_21_6, true)
+			gohelper.setActive(child_obj, true)
 
-			if arg_21_1 then
-				if arg_21_5 then
-					arg_21_1(arg_21_0, MonoHelper.addNoUpdateLuaComOnceToGo(var_21_6, arg_21_5), arg_21_2[iter_21_1], iter_21_1)
+			if callback then
+				if component then
+					callback(class, MonoHelper.addNoUpdateLuaComOnceToGo(child_obj, component), data[i], i)
 				else
-					arg_21_1(arg_21_0, var_21_6, arg_21_2[iter_21_1], iter_21_1)
+					callback(class, child_obj, data[i], i)
 				end
 			end
 		else
-			arg_21_7 = iter_21_1 - 1
+			end_index = i - 1
 
 			break
 		end
 	end
 
-	arg_21_6 = arg_21_7 + 1 + arg_21_8
-	arg_21_6 = arg_21_6 < 1 and 1 or arg_21_6
+	start_index = end_index + 1 + offsetNum
+	start_index = start_index < 1 and 1 or start_index
 
-	for iter_21_2 = arg_21_6, var_21_2.childCount do
-		local var_21_7 = var_21_2:GetChild(iter_21_2 - 1)
-		local var_21_8 = var_21_7 and var_21_7.gameObject
+	for i = start_index, parent_transform.childCount do
+		local child = parent_transform:GetChild(i - 1)
+		local child_obj = child and child.gameObject
 
-		if var_21_8 then
-			var_0_0.setActive(var_21_8, false)
+		if child_obj then
+			gohelper.setActive(child_obj, false)
 		end
 	end
 
-	if var_21_0 then
-		var_21_0.transform:SetSiblingIndex(var_21_2.childCount - 1)
+	if modelIsChild then
+		modelIsChild.transform:SetSiblingIndex(parent_transform.childCount - 1)
 	end
 end
 
-function var_0_0.CreateNumObjList(arg_22_0, arg_22_1, arg_22_2)
-	local var_22_0 = arg_22_0.transform
-	local var_22_1 = var_22_0.childCount
-	local var_22_2 = var_22_1 <= arg_22_2 and arg_22_2 or var_22_1
+function gohelper.CreateNumObjList(parent_obj, model_obj, count, callback, callbackObj)
+	local parent_transform = parent_obj.transform
+	local child_num = parent_transform.childCount
+	local max_num = child_num <= count and count or child_num
 
-	for iter_22_0 = 1, var_22_2 do
-		local var_22_3
+	for i = 1, max_num do
+		local child_obj
 
-		if iter_22_0 <= arg_22_2 then
-			local var_22_4 = iter_22_0 <= var_22_1 and var_22_0:GetChild(iter_22_0 - 1).gameObject or var_0_0.clone(arg_22_1, arg_22_0, iter_22_0)
+		if i <= count then
+			child_obj = i <= child_num and parent_transform:GetChild(i - 1).gameObject or gohelper.clone(model_obj, parent_obj, i)
 
-			var_0_0.setActive(var_22_4, true)
+			gohelper.setActive(child_obj, true)
+
+			if callback then
+				callback(callbackObj, child_obj, i)
+			end
 		else
-			local var_22_5 = iter_22_0 <= var_22_1 and var_22_0:GetChild(iter_22_0 - 1).gameObject
+			child_obj = i <= child_num and parent_transform:GetChild(i - 1).gameObject
 
-			if var_22_5 then
-				var_0_0.setActive(var_22_5, false)
+			if child_obj then
+				gohelper.setActive(child_obj, false)
 			end
 		end
 	end
 end
 
-function var_0_0.removeComponent(arg_23_0, arg_23_1)
-	var_0_3.RemoveComponent(arg_23_0, arg_23_1)
+function gohelper.removeComponent(go, componentType)
+	GameHelper.RemoveComponent(go, componentType)
 end
 
-function var_0_0.enableAkListener(arg_24_0, arg_24_1)
-	if arg_24_1 then
-		ZProj.AudioHelper.EnableAkListener(arg_24_0)
+function gohelper.enableAkListener(go, enable)
+	if enable then
+		ZProj.AudioHelper.EnableAkListener(go)
 	else
-		ZProj.AudioHelper.DisableAkListener(arg_24_0)
+		ZProj.AudioHelper.DisableAkListener(go)
 	end
 end
 
-function var_0_0.addAkGameObject(arg_25_0)
-	ZProj.AudioHelper.AddAkGameObject(arg_25_0)
+function gohelper.addAkGameObject(go)
+	ZProj.AudioHelper.AddAkGameObject(go)
 end
 
-function var_0_0.fitScreenOffset(arg_26_0)
-	ZProj.UGUIHelper.RebuildLayout(arg_26_0)
+function gohelper.fitScreenOffset(rectTransform)
+	ZProj.UGUIHelper.RebuildLayout(rectTransform)
 
-	local var_26_0 = ViewMgr.instance:getUIRoot().transform
-	local var_26_1 = recthelper.getWidth(var_26_0)
-	local var_26_2 = recthelper.getHeight(var_26_0)
-	local var_26_3 = var_26_1 / var_26_2 < 1.7777777777777777 and 1080 or var_26_2
-	local var_26_4
-	local var_26_5
-	local var_26_6
-	local var_26_7
-	local var_26_8 = arg_26_0.gameObject:GetComponentsInChildren(typeof(UnityEngine.UI.Graphic))
+	local root = ViewMgr.instance:getUIRoot().transform
+	local screenRightX = recthelper.getWidth(root)
+	local screenTopY = recthelper.getHeight(root)
+	local screenTopY = screenRightX / screenTopY < 1.7777777777777777 and 1080 or screenTopY
+	local childMinX, childMaxX, childMinY, childMaxY
+	local graphics = rectTransform.gameObject:GetComponentsInChildren(typeof(UnityEngine.UI.Graphic))
 
-	if var_26_8 then
-		local var_26_9 = var_26_8:GetEnumerator()
+	if graphics then
+		local iter = graphics:GetEnumerator()
 
-		while var_26_9:MoveNext() do
-			local var_26_10 = var_26_9.Current.gameObject:GetComponent(typeof(UnityEngine.RectTransform))
-			local var_26_11 = var_26_0:InverseTransformPoint(var_26_10.position)
-			local var_26_12 = var_26_11.x - var_26_10.pivot.x * recthelper.getWidth(var_26_10)
-			local var_26_13 = var_26_11.x + (1 - var_26_10.pivot.x) * recthelper.getWidth(var_26_10)
-			local var_26_14 = var_26_11.y + (1 - var_26_10.pivot.y) * recthelper.getHeight(var_26_10)
-			local var_26_15 = var_26_11.y - var_26_10.pivot.y * recthelper.getHeight(var_26_10)
+		while iter:MoveNext() do
+			local rectChild = iter.Current.gameObject:GetComponent(typeof(UnityEngine.RectTransform))
+			local uiRectChild = root:InverseTransformPoint(rectChild.position)
+			local childLeftX = uiRectChild.x - rectChild.pivot.x * recthelper.getWidth(rectChild)
+			local childRightX = uiRectChild.x + (1 - rectChild.pivot.x) * recthelper.getWidth(rectChild)
+			local childTopY = uiRectChild.y + (1 - rectChild.pivot.y) * recthelper.getHeight(rectChild)
+			local childBottomY = uiRectChild.y - rectChild.pivot.y * recthelper.getHeight(rectChild)
 
-			var_26_4 = var_26_4 or var_26_12
+			childMinX = childMinX or childLeftX
 
-			if var_26_12 < var_26_4 then
-				var_26_4 = var_26_12
+			if childLeftX < childMinX then
+				childMinX = childLeftX
 			end
 
-			var_26_5 = var_26_5 or var_26_13
+			childMaxX = childMaxX or childRightX
 
-			if var_26_5 < var_26_13 then
-				var_26_5 = var_26_13
+			if childMaxX < childRightX then
+				childMaxX = childRightX
 			end
 
-			var_26_6 = var_26_6 or var_26_15
+			childMinY = childMinY or childBottomY
 
-			if var_26_15 < var_26_6 then
-				var_26_6 = var_26_15
+			if childBottomY < childMinY then
+				childMinY = childBottomY
 			end
 
-			var_26_7 = var_26_7 or var_26_14
+			childMaxY = childMaxY or childTopY
 
-			if var_26_7 < var_26_14 then
-				var_26_7 = var_26_14
+			if childMaxY < childTopY then
+				childMaxY = childTopY
 			end
 		end
 	end
 
-	local var_26_16 = var_26_1 / 2
-	local var_26_17 = var_26_3 / 2
-	local var_26_18 = false
+	local halfScreenWidth = screenRightX / 2
+	local halfScreenHeight = screenTopY / 2
+	local corrected = false
 
-	if var_26_4 < -var_26_16 then
-		var_26_18 = true
+	if childMinX < -halfScreenWidth then
+		corrected = true
 
-		recthelper.setAnchorX(arg_26_0, recthelper.getAnchorX(arg_26_0) - (var_26_4 + var_26_16))
-	elseif var_26_16 < var_26_5 then
-		var_26_18 = true
+		recthelper.setAnchorX(rectTransform, recthelper.getAnchorX(rectTransform) - (childMinX + halfScreenWidth))
+	elseif halfScreenWidth < childMaxX then
+		corrected = true
 
-		recthelper.setAnchorX(arg_26_0, recthelper.getAnchorX(arg_26_0) - (var_26_5 - var_26_16))
+		recthelper.setAnchorX(rectTransform, recthelper.getAnchorX(rectTransform) - (childMaxX - halfScreenWidth))
 	end
 
-	if var_26_6 < -var_26_17 then
-		var_26_18 = true
+	if childMinY < -halfScreenHeight then
+		corrected = true
 
-		recthelper.setAnchorY(arg_26_0, recthelper.getAnchorY(arg_26_0) - (var_26_6 + var_26_17))
-	elseif var_26_17 < var_26_7 then
-		var_26_18 = true
+		recthelper.setAnchorY(rectTransform, recthelper.getAnchorY(rectTransform) - (childMinY + halfScreenHeight))
+	elseif halfScreenHeight < childMaxY then
+		corrected = true
 
-		recthelper.setAnchorY(arg_26_0, recthelper.getAnchorY(arg_26_0) - (var_26_7 - var_26_17))
+		recthelper.setAnchorY(rectTransform, recthelper.getAnchorY(rectTransform) - (childMaxY - halfScreenHeight))
 	end
 
-	return var_26_18
+	return corrected
 end
 
-function var_0_0.addChildPosStay(arg_27_0, arg_27_1)
-	if var_0_0.isNil(arg_27_1) then
+function gohelper.addChildPosStay(parentGO, childGO)
+	if gohelper.isNil(childGO) then
 		return
 	end
 
-	if var_0_0.isNil(arg_27_0) then
-		arg_27_1.transform:SetParent(nil, true)
+	if gohelper.isNil(parentGO) then
+		childGO.transform:SetParent(nil, true)
 	else
-		arg_27_1.transform:SetParent(arg_27_0.transform, true)
+		childGO.transform:SetParent(parentGO.transform, true)
 	end
 end
 
-function var_0_0.addBoxCollider2D(arg_28_0, arg_28_1)
-	local var_28_0 = var_0_0.onceAddComponent(arg_28_0, typeof(UnityEngine.BoxCollider2D))
+function gohelper.addBoxCollider2D(go, size)
+	local box = gohelper.onceAddComponent(go, typeof(UnityEngine.BoxCollider2D))
 
-	var_28_0.enabled = true
-	var_28_0.size = arg_28_1 or Vector2(1.5, 1.5)
+	box.enabled = true
+	box.size = size or Vector2(1.5, 1.5)
 
-	return var_28_0
+	return box
 end
 
-function var_0_0.fitScrollItemOffset(arg_29_0, arg_29_1, arg_29_2, arg_29_3)
-	local var_29_0 = ViewMgr.instance:getUIRoot().transform
-	local var_29_1 = arg_29_0:GetComponent(typeof(UnityEngine.RectTransform))
-	local var_29_2 = var_29_0:InverseTransformPoint(var_29_1.position)
-	local var_29_3 = transformhelper.getLocalScale(arg_29_0.transform) * var_0_0.getTotalParentScale(arg_29_0)
-	local var_29_4 = var_29_2.x - var_29_1.pivot.x * recthelper.getWidth(var_29_1) * var_29_3
-	local var_29_5 = var_29_2.x + (1 - var_29_1.pivot.x) * recthelper.getWidth(var_29_1) * var_29_3
-	local var_29_6 = var_29_2.y + (1 - var_29_1.pivot.y) * recthelper.getHeight(var_29_1) * var_29_3
-	local var_29_7 = var_29_2.y - var_29_1.pivot.y * recthelper.getHeight(var_29_1) * var_29_3
-	local var_29_8 = 100000
-	local var_29_9 = -100000
-	local var_29_10 = 100000
-	local var_29_11 = -100000
-	local var_29_12 = 0
-	local var_29_13 = arg_29_2:GetComponentsInChildren(typeof(UnityEngine.UI.Graphic))
+function gohelper.fitScrollItemOffset(viewGO, contentGO, itemGO, scrollDir)
+	local rootTrans = ViewMgr.instance:getUIRoot().transform
+	local viewTrans = viewGO:GetComponent(typeof(UnityEngine.RectTransform))
+	local uiViewTrans = rootTrans:InverseTransformPoint(viewTrans.position)
+	local viewTotalScale = transformhelper.getLocalScale(viewGO.transform) * gohelper.getTotalParentScale(viewGO)
+	local viewLeftX = uiViewTrans.x - viewTrans.pivot.x * recthelper.getWidth(viewTrans) * viewTotalScale
+	local viewRightX = uiViewTrans.x + (1 - viewTrans.pivot.x) * recthelper.getWidth(viewTrans) * viewTotalScale
+	local viewTopY = uiViewTrans.y + (1 - viewTrans.pivot.y) * recthelper.getHeight(viewTrans) * viewTotalScale
+	local viewBottomY = uiViewTrans.y - viewTrans.pivot.y * recthelper.getHeight(viewTrans) * viewTotalScale
+	local childMinX, childMaxX, childMinY, childMaxY, moveOffset = 100000, -100000, 100000, -100000, 0
+	local graphics = itemGO:GetComponentsInChildren(typeof(UnityEngine.UI.Graphic))
 
-	if var_29_13 then
-		local var_29_14 = var_29_13:GetEnumerator()
+	if graphics then
+		local iter = graphics:GetEnumerator()
 
-		while var_29_14:MoveNext() do
-			local var_29_15 = var_29_14.Current.gameObject
+		while iter:MoveNext() do
+			local currentGo = iter.Current.gameObject
 
-			if var_29_15:GetComponent(var_0_0.Type_ParticleSystem) == nil then
-				local var_29_16 = var_29_15:GetComponent(typeof(UnityEngine.RectTransform))
-				local var_29_17 = transformhelper.getLocalScale(var_29_15.transform) * var_0_0.getTotalParentScale(var_29_15)
-				local var_29_18 = var_29_0:InverseTransformPoint(var_29_16.position)
-				local var_29_19 = var_29_18.x - var_29_16.pivot.x * recthelper.getWidth(var_29_16) * var_29_17
-				local var_29_20 = var_29_18.x + (1 - var_29_16.pivot.x) * recthelper.getWidth(var_29_16) * var_29_17
-				local var_29_21 = var_29_18.y + (1 - var_29_16.pivot.y) * recthelper.getHeight(var_29_16) * var_29_17
-				local var_29_22 = var_29_18.y - var_29_16.pivot.y * recthelper.getHeight(var_29_16) * var_29_17
+			if currentGo:GetComponent(gohelper.Type_ParticleSystem) == nil then
+				local rectChild = currentGo:GetComponent(typeof(UnityEngine.RectTransform))
+				local childTotalScale = transformhelper.getLocalScale(currentGo.transform) * gohelper.getTotalParentScale(currentGo)
+				local uiRectChild = rootTrans:InverseTransformPoint(rectChild.position)
+				local childLeftX = uiRectChild.x - rectChild.pivot.x * recthelper.getWidth(rectChild) * childTotalScale
+				local childRightX = uiRectChild.x + (1 - rectChild.pivot.x) * recthelper.getWidth(rectChild) * childTotalScale
+				local childTopY = uiRectChild.y + (1 - rectChild.pivot.y) * recthelper.getHeight(rectChild) * childTotalScale
+				local childBottomY = uiRectChild.y - rectChild.pivot.y * recthelper.getHeight(rectChild) * childTotalScale
 
-				var_29_8 = math.min(var_29_8, var_29_19)
-				var_29_9 = math.max(var_29_9, var_29_20)
-				var_29_10 = math.min(var_29_10, var_29_22)
-				var_29_11 = math.max(var_29_11, var_29_21)
+				childMinX = math.min(childMinX, childLeftX)
+				childMaxX = math.max(childMaxX, childRightX)
+				childMinY = math.min(childMinY, childBottomY)
+				childMaxY = math.max(childMaxY, childTopY)
 			end
 		end
 	end
 
-	if arg_29_3 == ScrollEnum.ScrollDirH then
-		if var_29_8 < var_29_4 then
-			var_29_12 = var_29_4 - var_29_8
+	if scrollDir == ScrollEnum.ScrollDirH then
+		if childMinX < viewLeftX then
+			moveOffset = viewLeftX - childMinX
 		end
 
-		if var_29_5 < var_29_9 then
-			var_29_12 = var_29_5 - var_29_9
+		if viewRightX < childMaxX then
+			moveOffset = viewRightX - childMaxX
 		end
-	elseif arg_29_3 == ScrollEnum.ScrollDirV then
-		if var_29_10 < var_29_7 then
-			var_29_12 = var_29_7 - var_29_10
+	elseif scrollDir == ScrollEnum.ScrollDirV then
+		if childMinY < viewBottomY then
+			moveOffset = viewBottomY - childMinY
 		end
 
-		if var_29_6 < var_29_11 then
-			var_29_12 = var_29_6 - var_29_11
+		if viewTopY < childMaxY then
+			moveOffset = viewTopY - childMaxY
 		end
 	end
 
-	return var_29_12 / var_0_0.getTotalParentScale(arg_29_1)
+	return moveOffset / gohelper.getTotalParentScale(contentGO)
 end
 
-function var_0_0.getTotalParentScale(arg_30_0)
-	local var_30_0 = arg_30_0.transform.parent.gameObject
-	local var_30_1 = transformhelper.getLocalScale(var_30_0.transform)
+function gohelper.getTotalParentScale(itemGO)
+	local parentGO = itemGO.transform.parent.gameObject
+	local totalParentScale = transformhelper.getLocalScale(parentGO.transform)
 
-	while var_30_0.transform.parent.gameObject.name ~= "UIRoot" do
-		var_30_0 = var_30_0.transform.parent.gameObject
-		var_30_1 = var_30_1 * transformhelper.getLocalScale(var_30_0.transform)
+	while parentGO.transform.parent.gameObject.name ~= "UIRoot" do
+		parentGO = parentGO.transform.parent.gameObject
+		totalParentScale = totalParentScale * transformhelper.getLocalScale(parentGO.transform)
 	end
 
-	return var_30_1
+	return totalParentScale
 end
 
-function var_0_0.isMouseOverGo(arg_31_0, arg_31_1)
-	if not arg_31_0 then
+function gohelper.isMouseOverGo(goOrComp, screenPos)
+	if not goOrComp then
 		return false
 	end
 
-	local var_31_0 = arg_31_0.transform
-	local var_31_1 = recthelper.getWidth(var_31_0)
-	local var_31_2 = recthelper.getHeight(var_31_0)
+	local trans = goOrComp.transform
+	local width = recthelper.getWidth(trans)
+	local height = recthelper.getHeight(trans)
 
-	arg_31_1 = arg_31_1 or GamepadController.instance:getMousePosition()
+	screenPos = screenPos or GamepadController.instance:getMousePosition()
 
-	local var_31_3 = recthelper.screenPosToAnchorPos(arg_31_1, var_31_0)
-	local var_31_4 = var_31_0.pivot
+	local touchPos = recthelper.screenPosToAnchorPos(screenPos, trans)
+	local pivot = trans.pivot
 
-	if var_31_3.x >= -var_31_1 * var_31_4.x and var_31_3.x <= var_31_1 * (1 - var_31_4.x) and var_31_3.y <= var_31_2 * (1 - var_31_4.y) and var_31_3.y >= -var_31_2 * var_31_4.y then
+	if touchPos.x >= -width * pivot.x and touchPos.x <= width * (1 - pivot.x) and touchPos.y <= height * (1 - pivot.y) and touchPos.y >= -height * pivot.y then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.removeEffectNode(arg_32_0)
-	if not arg_32_0 then
+function gohelper.removeEffectNode(go)
+	if not go then
 		return
 	end
 
-	local var_32_0 = GameGlobalMgr.instance:getScreenState():getLocalQuality()
-	local var_32_1 = var_32_0 == ModuleEnum.Performance.Middle or var_32_0 == ModuleEnum.Performance.Low
-	local var_32_2 = var_32_0 == ModuleEnum.Performance.Low
+	local performanceLevel = GameGlobalMgr.instance:getScreenState():getLocalQuality()
+	local removeH = performanceLevel == ModuleEnum.Performance.Middle or performanceLevel == ModuleEnum.Performance.Low
+	local removeM = performanceLevel == ModuleEnum.Performance.Low
 
-	if var_32_1 or var_32_2 then
-		var_0_0._deleteLodNode(arg_32_0.transform, var_32_1, var_32_2)
+	if removeH or removeM then
+		gohelper._deleteLodNode(go.transform, removeH, removeM)
 	end
 end
 
-function var_0_0._deleteLodNode(arg_33_0, arg_33_1, arg_33_2)
-	for iter_33_0 = arg_33_0.childCount - 1, 0, -1 do
-		local var_33_0 = arg_33_0:GetChild(iter_33_0)
+function gohelper._deleteLodNode(effectTr, removeH, removeM)
+	local childCount = effectTr.childCount
 
-		if arg_33_1 and string.find(var_33_0.name, "^h_") then
-			var_0_0.destroy(var_33_0.gameObject)
-		elseif arg_33_2 and string.find(var_33_0.name, "^m_") then
-			var_0_0.destroy(var_33_0.gameObject)
+	for i = childCount - 1, 0, -1 do
+		local childTr = effectTr:GetChild(i)
+
+		if removeH and string.find(childTr.name, "^h_") then
+			gohelper.destroy(childTr.gameObject)
+		elseif removeM and string.find(childTr.name, "^m_") then
+			gohelper.destroy(childTr.gameObject)
 		else
-			var_0_0._deleteLodNode(var_33_0, arg_33_1, arg_33_2)
+			gohelper._deleteLodNode(childTr, removeH, removeM)
 		end
 	end
 end
 
-function var_0_0.getParent(arg_34_0, arg_34_1)
-	local var_34_0 = arg_34_0
+function gohelper.getParent(tr, depth)
+	local temp = tr
 
-	for iter_34_0 = 1, arg_34_1 do
-		if not var_34_0 then
+	for i = 1, depth do
+		if not temp then
 			return
 		end
 
-		var_34_0 = var_34_0.parent
+		temp = temp.parent
 	end
 
-	return var_34_0
+	return temp
 end
 
-function var_0_0.getChildDynamicSizeText(arg_35_0, arg_35_1)
-	local var_35_0 = var_0_0.findChild(arg_35_0, arg_35_1)
+function gohelper.getChildDynamicSizeText(parentGO, childPath)
+	local go = gohelper.findChild(parentGO, childPath)
 
-	return var_0_4.Get(var_35_0)
+	return LangTextDynamicSize.Get(go)
 end
 
-function var_0_0.findChildDynamicSizeText(arg_36_0, arg_36_1)
-	return var_0_0.findChildComponent(arg_36_0, arg_36_1, var_0_0.Type_LangTextDynamicSize)
+function gohelper.findChildDynamicSizeText(parentGO, childPath)
+	return gohelper.findChildComponent(parentGO, childPath, gohelper.Type_LangTextDynamicSize)
 end
 
-function var_0_0.getDynamicSizeText(arg_37_0)
-	return arg_37_0:GetComponent(var_0_0.Type_LangTextDynamicSize)
+function gohelper.getDynamicSizeText(go)
+	return go:GetComponent(gohelper.Type_LangTextDynamicSize)
 end
 
-function var_0_0.getUIScreenWidth()
-	local var_38_0 = UnityEngine.GameObject.Find("UIRoot/POPUP_TOP")
+function gohelper.getUIScreenWidth()
+	local go = UnityEngine.GameObject.Find("UIRoot/POPUP_TOP")
 
-	if var_38_0 then
-		return recthelper.getWidth(var_38_0.transform)
+	if go then
+		return recthelper.getWidth(go.transform)
 	end
 
-	local var_38_1 = 1080 / UnityEngine.Screen.height
+	local scale = 1080 / UnityEngine.Screen.height
+	local screenWidth = math.floor(UnityEngine.Screen.width * scale + 0.5)
 
-	return (math.floor(UnityEngine.Screen.width * var_38_1 + 0.5))
+	return screenWidth
 end
 
-return var_0_0
+return gohelper

@@ -1,59 +1,61 @@
-﻿module("modules.logic.survival.controller.work.step.SurvivalUnitHideWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/step/SurvivalUnitHideWork.lua
 
-local var_0_0 = class("SurvivalUnitHideWork", SurvivalStepBaseWork)
+module("modules.logic.survival.controller.work.step.SurvivalUnitHideWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = SurvivalMapModel.instance:getSceneMo()
-	local var_1_1
+local SurvivalUnitHideWork = class("SurvivalUnitHideWork", SurvivalStepBaseWork)
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_0._stepMo.paramInt) do
-		if iter_1_0 == 1 then
-			var_1_1 = iter_1_1
+function SurvivalUnitHideWork:onStart(context)
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
+	local reason
+
+	for k, v in ipairs(self._stepMo.paramInt) do
+		if k == 1 then
+			reason = v
 		else
-			if var_1_1 == SurvivalEnum.UnitDeadReason.DieByQuickItem then
-				local var_1_2 = var_1_0.unitsById[iter_1_1]
+			if reason == SurvivalEnum.UnitDeadReason.DieByQuickItem then
+				local unitMo = sceneMo.unitsById[v]
 
-				if var_1_2 then
-					SurvivalMapHelper.instance:addPointEffect(var_1_2.pos)
+				if unitMo then
+					SurvivalMapHelper.instance:addPointEffect(unitMo.pos)
 
-					for iter_1_2, iter_1_3 in ipairs(var_1_2.exPoints) do
-						SurvivalMapHelper.instance:addPointEffect(iter_1_3)
+					for _, exPos in ipairs(unitMo.exPoints) do
+						SurvivalMapHelper.instance:addPointEffect(exPos)
 					end
 				end
 			end
 
-			var_1_0:deleteUnit(iter_1_1, var_1_1 == SurvivalEnum.UnitDeadReason.PlayDieAnim)
+			sceneMo:deleteUnit(v, reason == SurvivalEnum.UnitDeadReason.PlayDieAnim)
 		end
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.getRunOrder(arg_2_0, arg_2_1, arg_2_2)
-	local var_2_0 = false
+function SurvivalUnitHideWork:getRunOrder(params, flow)
+	local haveMoveItem = false
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0._stepMo.paramInt) do
-		if iter_2_0 ~= 1 and arg_2_1.moveIdSet[iter_2_1] then
-			var_2_0 = true
+	for k, id in ipairs(self._stepMo.paramInt) do
+		if k ~= 1 and params.moveIdSet[id] then
+			haveMoveItem = true
 
 			break
 		end
 	end
 
-	if var_2_0 then
+	if haveMoveItem then
 		return SurvivalEnum.StepRunOrder.After
 	else
-		if arg_2_1.haveHeroMove then
-			arg_2_1.beforeFlow = FlowParallel.New()
+		if params.haveHeroMove then
+			params.beforeFlow = FlowParallel.New()
 
-			arg_2_2:addWork(arg_2_1.beforeFlow)
+			flow:addWork(params.beforeFlow)
 
-			arg_2_1.moveIdSet = {}
-			arg_2_1.haveHeroMove = false
+			params.moveIdSet = {}
+			params.haveHeroMove = false
 		end
 
 		return SurvivalEnum.StepRunOrder.Before
 	end
 end
 
-return var_0_0
+return SurvivalUnitHideWork

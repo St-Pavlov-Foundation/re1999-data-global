@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity.view.VersionActivityStoreViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity/view/VersionActivityStoreViewContainer.lua
 
-local var_0_0 = class("VersionActivityStoreViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity.view.VersionActivityStoreViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local VersionActivityStoreViewContainer = class("VersionActivityStoreViewContainer", BaseViewContainer)
+
+function VersionActivityStoreViewContainer:buildViews()
 	return {
 		VersionActivityStoreView.New(),
 		TabViewGroup.New(1, "#go_btns"),
@@ -10,8 +12,8 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
+function VersionActivityStoreViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -21,7 +23,7 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 		}
 	end
 
-	if arg_2_1 == 2 then
+	if tabContainerId == 2 then
 		return {
 			CurrencyView.New({
 				CurrencyEnum.CurrencyType.LeiMiTeBei
@@ -30,16 +32,22 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	end
 end
 
-function var_0_0.playOpenTransition(arg_3_0)
-	arg_3_0:startViewOpenBlock()
-	arg_3_0.viewGO:GetComponent(typeof(UnityEngine.Animation)):Play("activitystore_open")
-	TaskDispatcher.runDelay(arg_3_0.onPlayOpenTransitionFinish, arg_3_0, 0.5)
+function VersionActivityStoreViewContainer:playOpenTransition()
+	self:startViewOpenBlock()
+
+	local animation = self.viewGO:GetComponent(typeof(UnityEngine.Animation))
+
+	animation:Play("activitystore_open")
+	TaskDispatcher.runDelay(self.onPlayOpenTransitionFinish, self, 0.5)
 end
 
-function var_0_0.playCloseTransition(arg_4_0)
-	arg_4_0:startViewCloseBlock()
-	arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animation)):Play("activitystore_close")
-	TaskDispatcher.runDelay(arg_4_0.onPlayCloseTransitionFinish, arg_4_0, 0.167)
+function VersionActivityStoreViewContainer:playCloseTransition()
+	self:startViewCloseBlock()
+
+	local animation = self.viewGO:GetComponent(typeof(UnityEngine.Animation))
+
+	animation:Play("activitystore_close")
+	TaskDispatcher.runDelay(self.onPlayCloseTransitionFinish, self, 0.167)
 end
 
-return var_0_0
+return VersionActivityStoreViewContainer

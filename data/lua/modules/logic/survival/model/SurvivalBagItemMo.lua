@@ -1,237 +1,244 @@
-﻿module("modules.logic.survival.model.SurvivalBagItemMo", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/SurvivalBagItemMo.lua
 
-local var_0_0 = pureTable("SurvivalBagItemMo")
+module("modules.logic.survival.model.SurvivalBagItemMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.uid = nil
-	arg_1_0.co = nil
-	arg_1_0.id = 0
-	arg_1_0.count = 0
-	arg_1_0.exScore = 0
-	arg_1_0.equipLevel = 0
-	arg_1_0.source = SurvivalEnum.ItemSource.None
-	arg_1_0.isUnknown = false
+local SurvivalBagItemMo = pureTable("SurvivalBagItemMo")
+
+function SurvivalBagItemMo:ctor()
+	self.uid = nil
+	self.co = nil
+	self.id = 0
+	self.count = 0
+	self.exScore = 0
+	self.equipLevel = 0
+	self.source = SurvivalEnum.ItemSource.None
+	self.isUnknown = false
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.uid = arg_2_1.uid
-	arg_2_0.id = arg_2_1.id
-	arg_2_0.count = arg_2_1.count and arg_2_1.count or arg_2_0.count
-	arg_2_0.param = arg_2_1.param
-	arg_2_0.bagReason = arg_2_1.bagReason
-	arg_2_0.co = lua_survival_item.configDict[arg_2_0.id]
+function SurvivalBagItemMo:init(data)
+	self.uid = data.uid
+	self.id = data.id
+	self.count = data.count and data.count or self.count
+	self.param = data.param
+	self.bagReason = data.bagReason
+	self.co = lua_survival_item.configDict[self.id]
 
-	if arg_2_0.co and arg_2_0.co.type == SurvivalEnum.ItemType.Equip then
-		arg_2_0.equipCo = lua_survival_equip.configDict[arg_2_0.id]
-	elseif arg_2_0.co and arg_2_0.co.type == SurvivalEnum.ItemType.NPC then
-		local var_2_0 = tonumber(arg_2_0.co.effect) or 0
+	if self.co and self.co.type == SurvivalEnum.ItemType.Equip then
+		self.equipCo = lua_survival_equip.configDict[self.id]
+	elseif self.co and self.co.type == SurvivalEnum.ItemType.NPC then
+		local npcId = tonumber(self.co.effect) or 0
 
-		arg_2_0.npcCo = SurvivalConfig.instance:getNpcConfig(var_2_0)
+		self.npcCo = SurvivalConfig.instance:getNpcConfig(npcId)
 	end
 
-	arg_2_0.sellPrice = 0
+	self.sellPrice = 0
 
-	if arg_2_0.co and not string.nilorempty(arg_2_0.co.sellPrice) then
-		local var_2_1 = string.match(arg_2_0.co.sellPrice, "^item#1:(.+)$")
+	if self.co and not string.nilorempty(self.co.sellPrice) then
+		local price = string.match(self.co.sellPrice, "^item#1:(.+)$")
 
-		if var_2_1 then
-			arg_2_0.sellPrice = tonumber(var_2_1) or 0
+		if price then
+			self.sellPrice = tonumber(price) or 0
 		end
 	end
 
-	arg_2_0.shopPrice = {}
+	self.shopPrice = {}
 
-	if arg_2_0.co and not string.nilorempty(arg_2_0.co.specialSellPrice) then
-		local var_2_2 = GameUtil.splitString2(arg_2_0.co.specialSellPrice, false, ",", "#")
+	if self.co and not string.nilorempty(self.co.specialSellPrice) then
+		local infos = GameUtil.splitString2(self.co.specialSellPrice, false, ",", "#")
 
-		for iter_2_0, iter_2_1 in ipairs(var_2_2) do
-			local var_2_3 = tonumber(iter_2_1[1])
-			local var_2_4 = string.splitToNumber(iter_2_1[3], ":")
+		for i, info in ipairs(infos) do
+			local shopId = tonumber(info[1])
+			local priceInfo = string.splitToNumber(info[3], ":")
 
-			arg_2_0.shopPrice[var_2_3] = {
-				price = var_2_4[2]
+			self.shopPrice[shopId] = {
+				price = priceInfo[2]
 			}
 		end
 	end
 end
 
-function var_0_0.getSellPrice(arg_3_0, arg_3_1)
-	local var_3_0 = SurvivalShelterModel.instance:getWeekInfo()
-	local var_3_1 = SurvivalEnum.ShopType.Normal
-	local var_3_2 = arg_3_0.sellPrice
+function SurvivalBagItemMo:getSellPrice(shopId)
+	local weekMo = SurvivalShelterModel.instance:getWeekInfo()
+	local shopType = SurvivalEnum.ShopType.Normal
+	local sellPrice = self.sellPrice
 
-	if arg_3_1 then
-		var_3_1 = SurvivalConfig.instance:getShopType(arg_3_1)
+	if shopId then
+		shopType = SurvivalConfig.instance:getShopType(shopId)
 
-		local var_3_3 = arg_3_0.shopPrice[arg_3_1]
+		local info = self.shopPrice[shopId]
 
-		if var_3_3 then
-			var_3_2 = var_3_3.price
+		if info then
+			sellPrice = info.price
 		end
 	end
 
-	local var_3_4 = var_3_0:getAttrRaw(SurvivalEnum.AttrType.SellPriceFix)
-	local var_3_5 = 0
+	local rate1 = weekMo:getAttrRaw(SurvivalEnum.AttrType.SellPriceFix)
+	local rate2 = 0
 
-	if var_3_1 == SurvivalEnum.ShopType.Normal then
-		var_3_5 = var_3_0:getAttrRaw(SurvivalEnum.AttrType.MapSellPriceFix)
+	if shopType == SurvivalEnum.ShopType.Normal then
+		rate2 = weekMo:getAttrRaw(SurvivalEnum.AttrType.MapSellPriceFix)
 	else
-		var_3_5 = var_3_0:getAttr(SurvivalEnum.AttrType.BuildSellPriceFix)
+		rate2 = weekMo:getAttr(SurvivalEnum.AttrType.BuildSellPriceFix)
 	end
 
-	return math.floor(var_3_2 * (1 + (var_3_4 + var_3_5) / 1000))
+	return math.floor(sellPrice * (1 + (rate1 + rate2) / 1000))
 end
 
-function var_0_0.isCurrency(arg_4_0)
-	return arg_4_0.co and arg_4_0.co.type == SurvivalEnum.ItemType.Currency
+function SurvivalBagItemMo:isCurrency()
+	return self.co and self.co.type == SurvivalEnum.ItemType.Currency
 end
 
-function var_0_0.getMass(arg_5_0)
-	return arg_5_0.co.mass * arg_5_0.count
+function SurvivalBagItemMo:getMass()
+	return self.co.mass * self.count
 end
 
-function var_0_0.getRare(arg_6_0)
-	return arg_6_0.co.rare
+function SurvivalBagItemMo:getRare()
+	return self.co.rare
 end
 
-function var_0_0.isNPC(arg_7_0)
-	return arg_7_0.co.type == SurvivalEnum.ItemType.NPC
+function SurvivalBagItemMo:isNPC()
+	return self.co.type == SurvivalEnum.ItemType.NPC
 end
 
-function var_0_0.isEmpty(arg_8_0)
-	return arg_8_0.id == 0 or arg_8_0.count == 0
+function SurvivalBagItemMo:isEmpty()
+	return self.id == 0 or self.count == 0
 end
 
-function var_0_0.isReputationItem(arg_9_0)
-	if arg_9_0.co then
-		return arg_9_0.co.type == SurvivalEnum.ItemType.Reputation
+function SurvivalBagItemMo:isReputationItem()
+	if self.co then
+		return self.co.type == SurvivalEnum.ItemType.Reputation
 	end
 end
 
-function var_0_0.canExchangeReputationItem(arg_10_0)
-	return arg_10_0.isExchangeReputationItem
+function SurvivalBagItemMo:canExchangeReputationItem()
+	return self.isExchangeReputationItem
 end
 
-function var_0_0.getExchangeReputationAmountTotal(arg_11_0)
-	local var_11_0 = SurvivalShelterModel.instance:getWeekInfo()
-	local var_11_1 = tonumber(arg_11_0.co.effect)
-	local var_11_2 = var_11_0:getAttr(SurvivalEnum.AttrType.RenownChangeFix, var_11_1)
+function SurvivalBagItemMo:getExchangeReputationAmountTotal()
+	local weekMo = SurvivalShelterModel.instance:getWeekInfo()
+	local v = tonumber(self.co.effect)
 
-	return arg_11_0.count * var_11_2
+	v = weekMo:getAttr(SurvivalEnum.AttrType.RenownChangeFix, v)
+
+	return self.count * v
 end
 
-function var_0_0.getEquipEffectDesc(arg_12_0)
-	if not arg_12_0.equipCo then
+function SurvivalBagItemMo:getEquipEffectDesc()
+	if not self.equipCo then
 		return ""
 	end
 
-	local var_12_0 = arg_12_0.equipCo.effectDesc
+	local desc = self.equipCo.effectDesc
 
 	if SurvivalModel.instance._isUseSimpleDesc == 1 then
-		var_12_0 = arg_12_0.equipCo.effectDesc2
+		desc = self.equipCo.effectDesc2
 	end
 
-	local var_12_1 = arg_12_0.equipValues or {}
-	local var_12_2 = {}
+	local attrVals = self.equipValues or {}
+	local list = {}
 
-	if not string.nilorempty(var_12_0) then
-		local var_12_3 = {}
-		local var_12_4 = {}
-		local var_12_5
+	if not string.nilorempty(desc) then
+		local list1 = {}
+		local list2 = {}
+		local attrMapTotal
 
-		if arg_12_0.source == SurvivalEnum.ItemSource.Equip then
-			var_12_5 = SurvivalShelterModel.instance:getWeekInfo().equipBox.values
+		if self.source == SurvivalEnum.ItemSource.Equip then
+			attrMapTotal = SurvivalShelterModel.instance:getWeekInfo().equipBox.values
 		end
 
-		for iter_12_0, iter_12_1 in ipairs(string.split(var_12_0, "|")) do
-			local var_12_6, var_12_7 = SurvivalDescExpressionHelper.instance:parstDesc(iter_12_1, var_12_1, var_12_5)
+		for i, v in ipairs(string.split(desc, "|")) do
+			local val, active = SurvivalDescExpressionHelper.instance:parstDesc(v, attrVals, attrMapTotal)
 
-			if var_12_7 then
-				table.insert(var_12_3, {
-					var_12_6,
-					var_12_7
+			if active then
+				table.insert(list1, {
+					val,
+					active
 				})
 			else
-				table.insert(var_12_4, {
-					var_12_6,
-					var_12_7
+				table.insert(list2, {
+					val,
+					active
 				})
 			end
 		end
 
-		tabletool.addValues(var_12_2, var_12_3)
-		tabletool.addValues(var_12_2, var_12_4)
+		tabletool.addValues(list, list1)
+		tabletool.addValues(list, list2)
 	end
 
-	return var_12_2
+	return list
 end
 
-local var_0_1 = {
+local scoreColor = {
 	"#617B8E",
 	"#855AA1",
 	"#AF490B"
 }
 
-function var_0_0.getEquipScoreLevel(arg_13_0)
-	if not arg_13_0.equipCo then
-		return 1, var_0_1[1]
+function SurvivalBagItemMo:getEquipScoreLevel()
+	if not self.equipCo then
+		return 1, scoreColor[1]
 	end
 
-	local var_13_0 = arg_13_0.equipCo.score + arg_13_0.exScore
-	local var_13_1 = 1
+	local score = self.equipCo.score + self.exScore
+	local worldLevel = 1
+	local outSideMo = SurvivalModel.instance:getOutSideInfo()
 
-	if SurvivalModel.instance:getOutSideInfo().inWeek then
-		local var_13_2 = SurvivalShelterModel.instance:getWeekInfo()
+	if outSideMo.inWeek then
+		local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
 
-		if var_13_2 then
-			var_13_1 = var_13_2:getAttr(SurvivalEnum.AttrType.WorldLevel)
+		if weekInfo then
+			worldLevel = weekInfo:getAttr(SurvivalEnum.AttrType.WorldLevel)
 		end
 	end
 
-	local var_13_3 = lua_survival_equip_score.configDict[var_13_1][1].level
-	local var_13_4 = 1
+	local str = lua_survival_equip_score.configDict[worldLevel][1].level
+	local level = 1
 
-	if not string.nilorempty(var_13_3) then
-		for iter_13_0, iter_13_1 in ipairs(string.splitToNumber(var_13_3, "#")) do
-			if iter_13_1 <= var_13_0 then
-				var_13_4 = iter_13_0 + 1
+	if not string.nilorempty(str) then
+		for i, v in ipairs(string.splitToNumber(str, "#")) do
+			if v <= score then
+				level = i + 1
 			end
 		end
 	end
 
-	return var_13_4, var_0_1[var_13_4] or var_0_1[1]
+	return level, scoreColor[level] or scoreColor[1]
 end
 
-function var_0_0.isDisasterRecommendItem(arg_14_0, arg_14_1)
-	if not arg_14_0.co then
+function SurvivalBagItemMo:isDisasterRecommendItem(mapId)
+	if not self.co then
 		return false
 	end
 
-	if arg_14_1 then
-		local var_14_0 = lua_survival_map_group_mapping.configDict[arg_14_1]
-		local var_14_1 = var_14_0 and var_14_0.id or 0
-		local var_14_2 = lua_survival_map_group.configDict[var_14_1].initDisaster
-		local var_14_3 = lua_survival_disaster.configDict[var_14_2]
-		local var_14_4 = SurvivalShelterModel.instance:getWeekInfo():getSurvivalMapInfoMo(arg_14_1).disasterCo
+	if mapId then
+		local groupMapperCo = lua_survival_map_group_mapping.configDict[mapId]
+		local groupId = groupMapperCo and groupMapperCo.id or 0
+		local groupCo = lua_survival_map_group.configDict[groupId]
+		local initDisaster = groupCo.initDisaster
+		local disasterCo = lua_survival_disaster.configDict[initDisaster]
+		local weekMo = SurvivalShelterModel.instance:getWeekInfo()
+		local mapInfoMo = weekMo:getSurvivalMapInfoMo(mapId)
+		local serverDisasterCo = mapInfoMo.disasterCo
 
-		if var_14_3 and var_14_3.recommend == arg_14_0.co.id or var_14_4 and var_14_4.recommend == arg_14_0.co.id then
+		if disasterCo and disasterCo.recommend == self.co.id or serverDisasterCo and serverDisasterCo.recommend == self.co.id then
 			return true
 		end
 	else
-		local var_14_5 = SurvivalMapModel.instance:getSceneMo()
+		local sceneMo = SurvivalMapModel.instance:getSceneMo()
 
-		if not var_14_5 then
+		if not sceneMo then
 			return false
 		end
 
-		if not var_14_5._mapInfo.groupCo or not var_14_5._mapInfo.disasterCo then
+		if not sceneMo._mapInfo.groupCo or not sceneMo._mapInfo.disasterCo then
 			return false
 		end
 
-		local var_14_6 = var_14_5._mapInfo.groupCo.initDisaster
-		local var_14_7 = lua_survival_disaster.configDict[var_14_6]
+		local initDisaster = sceneMo._mapInfo.groupCo.initDisaster
+		local disasterCo = lua_survival_disaster.configDict[initDisaster]
 
-		if var_14_7 and var_14_7.recommend == arg_14_0.co.id or var_14_5._mapInfo.disasterCo.recommend == arg_14_0.co.id then
+		if disasterCo and disasterCo.recommend == self.co.id or sceneMo._mapInfo.disasterCo.recommend == self.co.id then
 			return true
 		end
 	end
@@ -239,32 +246,32 @@ function var_0_0.isDisasterRecommendItem(arg_14_0, arg_14_1)
 	return false
 end
 
-function var_0_0.isNPCRecommendItem(arg_15_0)
-	if not arg_15_0.co then
+function SurvivalBagItemMo:isNPCRecommendItem()
+	if not self.co then
 		return false
 	end
 
-	return arg_15_0.co.type == SurvivalEnum.ItemType.Material and arg_15_0.co.subType == SurvivalEnum.ItemSubType.Material_NPCItem
+	return self.co.type == SurvivalEnum.ItemType.Material and self.co.subType == SurvivalEnum.ItemSubType.Material_NPCItem
 end
 
-function var_0_0.getExtendCost(arg_16_0)
-	if arg_16_0.co.type == SurvivalEnum.ItemType.Equip then
-		return arg_16_0.equipCo.extendCost
-	elseif arg_16_0.co.type == SurvivalEnum.ItemType.NPC then
-		return arg_16_0.npcCo.extendCost
+function SurvivalBagItemMo:getExtendCost()
+	if self.co.type == SurvivalEnum.ItemType.Equip then
+		return self.equipCo.extendCost
+	elseif self.co.type == SurvivalEnum.ItemType.NPC then
+		return self.npcCo.extendCost
 	end
 
 	return 0
 end
 
-function var_0_0.clone(arg_17_0)
-	local var_17_0 = var_0_0.New()
+function SurvivalBagItemMo:clone()
+	local itemMo = SurvivalBagItemMo.New()
 
-	var_17_0:init(arg_17_0)
+	itemMo:init(self)
 
-	return var_17_0
+	return itemMo
 end
 
-rawset(var_0_0, "Empty", var_0_0.New())
+rawset(SurvivalBagItemMo, "Empty", SurvivalBagItemMo.New())
 
-return var_0_0
+return SurvivalBagItemMo

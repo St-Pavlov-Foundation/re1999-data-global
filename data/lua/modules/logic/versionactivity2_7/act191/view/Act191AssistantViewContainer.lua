@@ -1,28 +1,30 @@
-﻿module("modules.logic.versionactivity2_7.act191.view.Act191AssistantViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/act191/view/Act191AssistantViewContainer.lua
 
-local var_0_0 = class("Act191AssistantViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_7.act191.view.Act191AssistantViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Act191AssistantViewContainer = class("Act191AssistantViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Act191AssistantView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
+function Act191AssistantViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Act191AssistantView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_topleft"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function Act191AssistantViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-return var_0_0
+return Act191AssistantViewContainer

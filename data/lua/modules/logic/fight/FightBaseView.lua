@@ -1,268 +1,308 @@
-﻿module("modules.logic.fight.FightBaseView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/FightBaseView.lua
 
-local var_0_0 = class("FightBaseView", FightBaseClass)
+module("modules.logic.fight.FightBaseView", package.seeall)
 
-var_0_0.IS_FIGHT_BASE_VIEW = true
+local FightBaseView = class("FightBaseView", FightBaseClass)
 
-function var_0_0.onConstructor(arg_1_0, ...)
-	arg_1_0.inner_visible = true
-	arg_1_0.viewGO = nil
-	arg_1_0.viewContainer = nil
-	arg_1_0.viewParam = nil
-	arg_1_0.viewName = nil
-	arg_1_0.PARENT_VIEW = nil
+FightBaseView.IS_FIGHT_BASE_VIEW = true
+
+function FightBaseView:onConstructor(...)
+	self.inner_visible = true
+	self.viewGO = nil
+	self.viewContainer = nil
+	self.viewParam = nil
+	self.viewName = nil
+	self.PARENT_VIEW = nil
 end
 
-function var_0_0.setViewVisible(arg_2_0, arg_2_1)
-	arg_2_0:setViewVisibleInternal(arg_2_1)
+function FightBaseView:setViewVisible(state)
+	self:setViewVisibleInternal(state)
 end
 
-function var_0_0.setViewVisibleInternal(arg_3_0, arg_3_1)
-	if arg_3_0.inner_visible == arg_3_1 then
+function FightBaseView:setViewVisibleInternal(state)
+	if self.inner_visible == state then
 		return
 	end
 
-	arg_3_0.inner_visible = arg_3_1
+	self.inner_visible = state
 
-	if not arg_3_0.viewGO then
+	if not self.viewGO then
 		return
 	end
 
-	arg_3_0.canvasGroup_internal = arg_3_0.canvasGroup_internal or gohelper.onceAddComponent(arg_3_0.viewGO, typeof(UnityEngine.CanvasGroup))
-	arg_3_0.canvasGroup_internal.alpha = arg_3_1 and 1 or 0
-	arg_3_0.canvasGroup_internal.interactable = arg_3_1
-	arg_3_0.canvasGroup_internal.blocksRaycasts = arg_3_1
+	self.canvasGroup_internal = self.canvasGroup_internal or gohelper.onceAddComponent(self.viewGO, typeof(UnityEngine.CanvasGroup))
+	self.canvasGroup_internal.alpha = state and 1 or 0
+	self.canvasGroup_internal.interactable = state
+	self.canvasGroup_internal.blocksRaycasts = state
 end
 
-function var_0_0.inner_startView(arg_4_0)
-	arg_4_0:onInitViewInternal()
-	arg_4_0:addEventsInternal()
-	arg_4_0:onOpenInternal()
-	arg_4_0:onOpenFinishInternal()
+function FightBaseView:inner_startView()
+	self:onInitViewInternal()
+	self:addEventsInternal()
+	self:onOpenInternal()
+	self:onOpenFinishInternal()
 end
 
-function var_0_0.onInitViewInternal(arg_5_0)
-	arg_5_0.INVOKED_OPEN_VIEW = true
+function FightBaseView:onInitViewInternal()
+	self.INVOKED_OPEN_VIEW = true
 
-	arg_5_0:onInitView()
+	self:onInitView()
 end
 
-function var_0_0.addEventsInternal(arg_6_0)
-	arg_6_0:addEvents()
+function FightBaseView:addEventsInternal()
+	self:addEvents()
 end
 
-function var_0_0.onOpenInternal(arg_7_0)
-	arg_7_0:onOpen()
+function FightBaseView:onOpenInternal()
+	self:onOpen()
 end
 
-function var_0_0.onOpenFinishInternal(arg_8_0)
-	arg_8_0:onOpenFinish()
+function FightBaseView:onOpenFinishInternal()
+	self:onOpenFinish()
 end
 
-function var_0_0.onUpdateParamInternal(arg_9_0)
-	arg_9_0:onUpdateParam()
+function FightBaseView:onUpdateParamInternal()
+	self:onUpdateParam()
 end
 
-function var_0_0.onClickModalMaskInternal(arg_10_0)
-	arg_10_0:onClickModalMask()
+function FightBaseView:onClickModalMaskInternal()
+	self:onClickModalMask()
 end
 
-function var_0_0.inner_destroyView(arg_11_0)
-	arg_11_0:onCloseInternal()
-	arg_11_0:onCloseFinishInternal()
-	arg_11_0:removeEventsInternal()
-	arg_11_0:onDestroyViewInternal()
+function FightBaseView:inner_destroyView()
+	self:onCloseInternal()
+	self:onCloseFinishInternal()
+	self:removeEventsInternal()
+	self:onDestroyViewInternal()
 end
 
-function var_0_0.onCloseInternal(arg_12_0)
-	arg_12_0:onClose()
+function FightBaseView:onCloseInternal()
+	self:onClose()
 end
 
-function var_0_0.onCloseFinishInternal(arg_13_0)
-	arg_13_0:onCloseFinish()
+function FightBaseView:onCloseFinishInternal()
+	self:onCloseFinish()
 end
 
-function var_0_0.removeEventsInternal(arg_14_0)
-	arg_14_0:removeEvents()
+function FightBaseView:removeEventsInternal()
+	self:removeEvents()
 end
 
-function var_0_0.onDestroyViewInternal(arg_15_0)
-	arg_15_0:onDestroyView()
+function FightBaseView:onDestroyViewInternal()
+	self:onDestroyView()
 
-	arg_15_0.INVOKED_DESTROY_VIEW = true
+	self.INVOKED_DESTROY_VIEW = true
 end
 
-function var_0_0.onDestructor(arg_16_0)
-	if arg_16_0.INVOKED_OPEN_VIEW and not arg_16_0.INVOKED_DESTROY_VIEW then
-		arg_16_0:killComponent(FightViewComponent)
-		arg_16_0:inner_destroyView()
+function FightBaseView:onDestructor()
+	if self.INVOKED_OPEN_VIEW and not self.INVOKED_DESTROY_VIEW then
+		self:killComponent(FightViewComponent)
+		self:inner_destroyView()
 	end
 end
 
-function var_0_0.__onInit(arg_17_0)
+function FightBaseView:__onInit()
 	return
 end
 
-function var_0_0.__onDispose(arg_18_0)
-	arg_18_0:disposeSelf()
+function FightBaseView:__onDispose()
+	self:disposeSelf()
 end
 
-function var_0_0.onInitView(arg_19_0)
+function FightBaseView:onInitView()
 	return
 end
 
-function var_0_0.addEvents(arg_20_0)
+function FightBaseView:addEvents()
 	return
 end
 
-function var_0_0.onOpen(arg_21_0)
+function FightBaseView:onOpen()
 	return
 end
 
-function var_0_0.onOpenFinish(arg_22_0)
+function FightBaseView:onOpenFinish()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_23_0)
+function FightBaseView:onUpdateParam()
 	return
 end
 
-function var_0_0.onClickModalMask(arg_24_0)
+function FightBaseView:onClickModalMask()
 	return
 end
 
-function var_0_0.onClose(arg_25_0)
+function FightBaseView:onClose()
 	return
 end
 
-function var_0_0.onCloseFinish(arg_26_0)
+function FightBaseView:onCloseFinish()
 	return
 end
 
-function var_0_0.removeEvents(arg_27_0)
+function FightBaseView:removeEvents()
 	return
 end
 
-function var_0_0.onDestroyView(arg_28_0)
+function FightBaseView:onDestroyView()
 	return
 end
 
-function var_0_0.getResInst(arg_29_0, arg_29_1, arg_29_2, arg_29_3)
-	return arg_29_0.viewContainer:getResInst(arg_29_1, arg_29_2, arg_29_3)
+function FightBaseView:getResInst(resPath, parentGO, name)
+	return self.viewContainer:getResInst(resPath, parentGO, name)
 end
 
-function var_0_0.closeThis(arg_30_0)
-	ViewMgr.instance:closeView(arg_30_0.viewName, nil, true)
+function FightBaseView:closeThis()
+	ViewMgr.instance:closeView(self.viewName, nil, true)
 end
 
-function var_0_0.tryCallMethodName(arg_31_0, arg_31_1)
-	if arg_31_1 == "__onDispose" then
-		arg_31_0:__onDispose()
+function FightBaseView:tryCallMethodName(name)
+	if name == "__onDispose" then
+		self:__onDispose()
 	end
 end
 
-function var_0_0.isHasTryCallFail(arg_32_0)
+function FightBaseView:isHasTryCallFail()
 	return false
 end
 
-function var_0_0.com_createObjList(arg_33_0, arg_33_1, arg_33_2, arg_33_3, arg_33_4)
-	if type(arg_33_2) == "number" then
-		local var_33_0 = arg_33_2
+function FightBaseView:com_createObjList(callback, dataList, parentObj, opItem)
+	if type(dataList) == "number" then
+		local num = dataList
 
-		arg_33_2 = {}
+		dataList = {}
 
-		for iter_33_0 = 1, var_33_0 do
-			table.insert(arg_33_2, iter_33_0)
+		for i = 1, num do
+			table.insert(dataList, i)
 		end
 	end
 
-	gohelper.CreateObjList(arg_33_0, arg_33_1, arg_33_2, arg_33_3, arg_33_4)
+	gohelper.CreateObjList(self, callback, dataList, parentObj, opItem)
 end
 
-function var_0_0.addEventCb(arg_34_0, arg_34_1, arg_34_2, arg_34_3, arg_34_4, arg_34_5)
-	arg_34_0:getComponent(FightEventComponent):registEvent(arg_34_1, arg_34_2, arg_34_3, arg_34_4, arg_34_5)
+function FightBaseView:addEventCb(ctrlInstance, evtName, callback, cbObj, priority)
+	local comp = self:getComponent(FightEventComponent)
+
+	comp:registEvent(ctrlInstance, evtName, callback, cbObj, priority)
 end
 
-function var_0_0.removeEventCb(arg_35_0, arg_35_1, arg_35_2, arg_35_3, arg_35_4)
-	if not arg_35_1 or not arg_35_2 or not arg_35_3 then
+function FightBaseView:removeEventCb(ctrlInstance, evtName, callback, cbObj)
+	if not ctrlInstance or not evtName or not callback then
 		logError("UserDataDispose:removeEventCb ctrlInstance or evtName or callback is null!")
 
 		return
 	end
 
-	arg_35_0:getComponent(FightEventComponent):cancelEvent(arg_35_1, arg_35_2, arg_35_3, arg_35_4)
+	local comp = self:getComponent(FightEventComponent)
+
+	comp:cancelEvent(ctrlInstance, evtName, callback, cbObj)
 end
 
-function var_0_0.com_registViewItemList(arg_36_0, arg_36_1, arg_36_2, arg_36_3)
-	return arg_36_0:getComponent(FightObjItemListComponent):registViewItemList(arg_36_1, arg_36_2, arg_36_3)
+function FightBaseView:com_registViewItemList(gameObject, itemClass, parentObject)
+	local comp = self:getComponent(FightObjItemListComponent)
+
+	return comp:registViewItemList(gameObject, itemClass, parentObject)
 end
 
-function var_0_0.com_openSubView(arg_37_0, arg_37_1, arg_37_2, arg_37_3, ...)
-	return arg_37_0:getComponent(FightViewComponent):openSubView(arg_37_1, arg_37_2, arg_37_3, ...)
+function FightBaseView:com_openSubView(view, viewGO, parent_obj, ...)
+	local comp = self:getComponent(FightViewComponent)
+
+	return comp:openSubView(view, viewGO, parent_obj, ...)
 end
 
-function var_0_0.com_openSubViewForBaseView(arg_38_0, arg_38_1, arg_38_2, ...)
-	return arg_38_0:getComponent(FightViewComponent):openSubViewForBaseView(arg_38_1, arg_38_2, ...)
+function FightBaseView:com_openSubViewForBaseView(view, viewGO, ...)
+	local comp = self:getComponent(FightViewComponent)
+
+	return comp:openSubViewForBaseView(view, viewGO, ...)
 end
 
-function var_0_0.com_openExclusiveView(arg_39_0, arg_39_1, arg_39_2, arg_39_3, arg_39_4, ...)
-	return arg_39_0:getComponent(FightViewComponent):openExclusiveView(arg_39_1, arg_39_2, arg_39_3, arg_39_4, ...)
+function FightBaseView:com_openExclusiveView(exclusive_id, view, viewGO, parent_obj, ...)
+	local comp = self:getComponent(FightViewComponent)
+
+	return comp:openExclusiveView(exclusive_id, view, viewGO, parent_obj, ...)
 end
 
-function var_0_0.com_hideExclusiveGroup(arg_40_0, arg_40_1)
-	return arg_40_0:getComponent(FightViewComponent):hideExclusiveGroup(arg_40_1)
+function FightBaseView:com_hideExclusiveGroup(sign)
+	local comp = self:getComponent(FightViewComponent)
+
+	return comp:hideExclusiveGroup(sign)
 end
 
-function var_0_0.com_hideExclusiveView(arg_41_0, arg_41_1, arg_41_2, arg_41_3)
-	return arg_41_0:getComponent(FightViewComponent):hideExclusiveView(arg_41_1, arg_41_2, arg_41_3)
+function FightBaseView:com_hideExclusiveView(handler, sign, exclusive_id)
+	local comp = self:getComponent(FightViewComponent)
+
+	return comp:hideExclusiveView(handler, sign, exclusive_id)
 end
 
-function var_0_0.com_setExclusiveViewVisible(arg_42_0, arg_42_1, arg_42_2)
-	return arg_42_0:getComponent(FightViewComponent):setExclusiveViewVisible(arg_42_1, arg_42_2)
+function FightBaseView:com_setExclusiveViewVisible(handler, state)
+	local comp = self:getComponent(FightViewComponent)
+
+	return comp:setExclusiveViewVisible(handler, state)
 end
 
-function var_0_0.com_registClick(arg_43_0, arg_43_1, arg_43_2, arg_43_3)
-	return arg_43_0:getComponent(FightClickComponent):registClick(arg_43_1, arg_43_2, arg_43_0, arg_43_3)
+function FightBaseView:com_registClick(click, callback, param)
+	local comp = self:getComponent(FightClickComponent)
+
+	return comp:registClick(click, callback, self, param)
 end
 
-function var_0_0.com_removeClick(arg_44_0, arg_44_1)
-	return arg_44_0:getComponent(FightClickComponent):removeClick(arg_44_1)
+function FightBaseView:com_removeClick(click)
+	local comp = self:getComponent(FightClickComponent)
+
+	return comp:removeClick(click)
 end
 
-function var_0_0.com_registDragBegin(arg_45_0, arg_45_1, arg_45_2, arg_45_3)
-	return arg_45_0:getComponent(FightDragComponent):registDragBegin(arg_45_1, arg_45_2, arg_45_0, arg_45_3)
+function FightBaseView:com_registDragBegin(drag, callback, param)
+	local comp = self:getComponent(FightDragComponent)
+
+	return comp:registDragBegin(drag, callback, self, param)
 end
 
-function var_0_0.com_registDrag(arg_46_0, arg_46_1, arg_46_2, arg_46_3)
-	return arg_46_0:getComponent(FightDragComponent):registDrag(arg_46_1, arg_46_2, arg_46_0, arg_46_3)
+function FightBaseView:com_registDrag(drag, callback, param)
+	local comp = self:getComponent(FightDragComponent)
+
+	return comp:registDrag(drag, callback, self, param)
 end
 
-function var_0_0.com_registDragEnd(arg_47_0, arg_47_1, arg_47_2, arg_47_3)
-	return arg_47_0:getComponent(FightDragComponent):registDragEnd(arg_47_1, arg_47_2, arg_47_0, arg_47_3)
+function FightBaseView:com_registDragEnd(drag, callback, param)
+	local comp = self:getComponent(FightDragComponent)
+
+	return comp:registDragEnd(drag, callback, self, param)
 end
 
-function var_0_0.com_registLongPress(arg_48_0, arg_48_1, arg_48_2, arg_48_3)
-	return arg_48_0:getComponent(FightLongPressComponent):registLongPress(arg_48_1, arg_48_2, arg_48_0, arg_48_3)
+function FightBaseView:com_registLongPress(longPress, callback, param)
+	local comp = self:getComponent(FightLongPressComponent)
+
+	return comp:registLongPress(longPress, callback, self, param)
 end
 
-function var_0_0.com_registHover(arg_49_0, arg_49_1, arg_49_2)
-	return arg_49_0:getComponent(FightLongPressComponent):registHover(arg_49_1, arg_49_2, arg_49_0)
+function FightBaseView:com_registHover(longPress, callback)
+	local comp = self:getComponent(FightLongPressComponent)
+
+	return comp:registHover(longPress, callback, self)
 end
 
-function var_0_0.com_killTween(arg_50_0, arg_50_1)
-	if not arg_50_1 then
+function FightBaseView:com_killTween(tweenId)
+	if not tweenId then
 		return
 	end
 
-	return arg_50_0:getComponent(FightTweenComponent):killTween(arg_50_1)
+	local comp = self:getComponent(FightTweenComponent)
+
+	return comp:killTween(tweenId)
 end
 
-function var_0_0.com_KillTweenByObj(arg_51_0, arg_51_1, arg_51_2)
-	return arg_51_0:getComponent(FightTweenComponent):KillTweenByObj(arg_51_1, arg_51_2)
+function FightBaseView:com_KillTweenByObj(obj, complete)
+	local comp = self:getComponent(FightTweenComponent)
+
+	return comp:KillTweenByObj(obj, complete)
 end
 
-function var_0_0.com_scrollNumTween(arg_52_0, arg_52_1, arg_52_2, arg_52_3, arg_52_4, arg_52_5)
-	return arg_52_0:getComponent(FightTweenComponent):scrollNumTween(arg_52_1, arg_52_2, arg_52_3, arg_52_4, arg_52_5)
+function FightBaseView:com_scrollNumTween(text, start, final, duration, ease)
+	local comp = self:getComponent(FightTweenComponent)
+
+	return comp:scrollNumTween(text, start, final, duration, ease)
 end
 
-return var_0_0
+return FightBaseView

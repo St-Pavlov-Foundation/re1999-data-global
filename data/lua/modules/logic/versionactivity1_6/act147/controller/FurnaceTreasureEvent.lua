@@ -1,7 +1,9 @@
-﻿module("modules.logic.versionactivity1_6.act147.controller.FurnaceTreasureEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/act147/controller/FurnaceTreasureEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_6.act147.controller.FurnaceTreasureEvent", package.seeall)
 
-var_0_0.onFurnaceTreasureGoodsUpdate = 1
+local FurnaceTreasureEvent = _M
 
-return var_0_0
+FurnaceTreasureEvent.onFurnaceTreasureGoodsUpdate = 1
+
+return FurnaceTreasureEvent

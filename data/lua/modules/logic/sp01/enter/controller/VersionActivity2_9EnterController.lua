@@ -1,40 +1,42 @@
-﻿module("modules.logic.sp01.enter.controller.VersionActivity2_9EnterController", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/enter/controller/VersionActivity2_9EnterController.lua
 
-local var_0_0 = class("VersionActivity2_9EnterController", VersionActivityFixedEnterController)
+module("modules.logic.sp01.enter.controller.VersionActivity2_9EnterController", package.seeall)
 
-function var_0_0.onInitFinish(arg_1_0)
-	var_0_0.super.onInitFinish(arg_1_0)
+local VersionActivity2_9EnterController = class("VersionActivity2_9EnterController", VersionActivityFixedEnterController)
 
-	arg_1_0._lastEnterMainActId = nil
+function VersionActivity2_9EnterController:onInitFinish()
+	VersionActivity2_9EnterController.super.onInitFinish(self)
+
+	self._lastEnterMainActId = nil
 end
 
-function var_0_0.openVersionActivityEnterView(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4, arg_2_5)
-	arg_2_0.openEnterViewCb = arg_2_1
-	arg_2_0.openEnterViewCbObj = arg_2_2
+function VersionActivity2_9EnterController:openVersionActivityEnterView(openCb, openCbObj, jumpActId, isDirectOpen, isExitFight)
+	self.openEnterViewCb = openCb
+	self.openEnterViewCbObj = openCbObj
 
-	local var_2_0 = arg_2_0:getShowMainActId()
+	local actId = self:getShowMainActId()
 
-	arg_2_0:recordLastEnterMainActId(var_2_0)
+	self:recordLastEnterMainActId(actId)
 
-	local var_2_1 = {
-		actId = var_2_0,
+	local viewParams = {
+		actId = actId,
 		activityIdListWithGroup = VersionActivity2_9Enum.EnterViewActIdListWithGroup,
 		mainActIdList = VersionActivity2_9Enum.EnterViewMainActIdList,
 		actId2AmbientDict = VersionActivity2_9Enum.ActId2Ambient,
 		actId2OpenAudioDict = VersionActivity2_9Enum.ActId2OpenAudio,
-		jumpActId = arg_2_3,
-		isExitFight = arg_2_5,
-		skipOpenAnim = arg_2_4,
-		isDirectOpen = arg_2_4
+		jumpActId = jumpActId,
+		isExitFight = isExitFight,
+		skipOpenAnim = isDirectOpen,
+		isDirectOpen = isDirectOpen
 	}
-	local var_2_2
+	local openFunc
 
-	if not arg_2_4 then
-		var_2_2 = arg_2_0._internalOpenEnterView
+	if not isDirectOpen then
+		openFunc = self._internalOpenEnterView
 	end
 
-	local function var_2_3()
-		arg_2_0:_internalOpenView(ViewName.VersionActivity2_9EnterView, var_2_0, var_2_2, arg_2_0, var_2_1, arg_2_0.openEnterViewCb, arg_2_0.openEnterViewCbObj)
+	local function rpcCallBack()
+		self:_internalOpenView(ViewName.VersionActivity2_9EnterView, actId, openFunc, self, viewParams, self.openEnterViewCb, self.openEnterViewCbObj)
 	end
 
 	if ActivityHelper.isOpen(VersionActivity2_9Enum.ActivityId.Dungeon2) then
@@ -45,57 +47,59 @@ function var_0_0.openVersionActivityEnterView(arg_2_0, arg_2_1, arg_2_2, arg_2_3
 	end
 
 	if ActivityHelper.isOpen(VersionActivity2_9Enum.ActivityId.Outside) then
-		AssassinOutSideRpc.instance:sendGetAssassinLibraryInfoRequest(VersionActivity2_9Enum.ActivityId.Outside, var_2_3)
+		AssassinOutSideRpc.instance:sendGetAssassinLibraryInfoRequest(VersionActivity2_9Enum.ActivityId.Outside, rpcCallBack)
 
 		return
 	end
 
-	var_2_3()
+	rpcCallBack()
 end
 
-function var_0_0.getShowMainActId(arg_4_0)
-	if arg_4_0._lastEnterMainActId then
-		return arg_4_0._lastEnterMainActId
+function VersionActivity2_9EnterController:getShowMainActId()
+	if self._lastEnterMainActId then
+		return self._lastEnterMainActId
 	end
 
-	local var_4_0 = VersionActivity2_9Enum.EnterViewMainActIdList[1]
+	local showMainActId = VersionActivity2_9Enum.EnterViewMainActIdList[1]
 
-	for iter_4_0, iter_4_1 in ipairs(VersionActivity2_9Enum.EnterViewMainActIdList) do
-		if ActivityHelper.getActivityStatus(iter_4_1) == ActivityEnum.ActivityStatus.Normal then
-			local var_4_1 = VersionActivity2_9Enum.actId2GuideId[iter_4_1]
+	for _, enterActId in ipairs(VersionActivity2_9Enum.EnterViewMainActIdList) do
+		local status = ActivityHelper.getActivityStatus(enterActId)
 
-			if var_4_1 and not GuideModel.instance:isGuideFinish(var_4_1) then
+		if status == ActivityEnum.ActivityStatus.Normal then
+			local guideId = VersionActivity2_9Enum.actId2GuideId[enterActId]
+
+			if guideId and not GuideModel.instance:isGuideFinish(guideId) then
 				break
 			end
 
-			var_4_0 = iter_4_1
+			showMainActId = enterActId
 		end
 	end
 
-	return var_4_0
+	return showMainActId
 end
 
-function var_0_0.openSeasonStoreView(arg_5_0)
-	local var_5_0 = Activity104Model.instance:getCurSeasonId()
-	local var_5_1 = SeasonViewHelper.getViewName(var_5_0, Activity104Enum.ViewName.StoreView)
-	local var_5_2 = Activity104Enum.SeasonStore[var_5_0]
+function VersionActivity2_9EnterController:openSeasonStoreView()
+	local actId = Activity104Model.instance:getCurSeasonId()
+	local viewName = SeasonViewHelper.getViewName(actId, Activity104Enum.ViewName.StoreView)
+	local storeActId = Activity104Enum.SeasonStore[actId]
 
-	arg_5_0:_enterVersionActivityView(var_5_1, var_5_2, arg_5_0._openStoreView, arg_5_0)
+	self:_enterVersionActivityView(viewName, storeActId, self._openStoreView, self)
 end
 
-function var_0_0._openStoreView(arg_6_0, arg_6_1, arg_6_2)
-	Activity107Rpc.instance:sendGet107GoodsInfoRequest(arg_6_2, function()
-		ViewMgr.instance:openView(arg_6_1, {
-			actId = arg_6_2
+function VersionActivity2_9EnterController:_openStoreView(viewName, actId)
+	Activity107Rpc.instance:sendGet107GoodsInfoRequest(actId, function()
+		ViewMgr.instance:openView(viewName, {
+			actId = actId
 		})
 	end)
 end
 
-function var_0_0.openTaskView(arg_8_0)
-	arg_8_0:_enterVersionActivityView(ViewName.VersionActivityTaskView, VersionActivity1_5Enum.ActivityId.Act113, arg_8_0._openTaskView, arg_8_0)
+function VersionActivity2_9EnterController:openTaskView()
+	self:_enterVersionActivityView(ViewName.VersionActivityTaskView, VersionActivity1_5Enum.ActivityId.Act113, self._openTaskView, self)
 end
 
-function var_0_0._openTaskView(arg_9_0)
+function VersionActivity2_9EnterController:_openTaskView()
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.ActivityDungeon
 	}, function()
@@ -103,36 +107,38 @@ function var_0_0._openTaskView(arg_9_0)
 	end)
 end
 
-function var_0_0._enterVersionActivityView(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4)
-	local var_11_0, var_11_1, var_11_2 = ActivityHelper.getActivityStatusAndToast(arg_11_2)
+function VersionActivity2_9EnterController:_enterVersionActivityView(viewName, actId, callback, callbackObj)
+	local status, toastId, toastParam = ActivityHelper.getActivityStatusAndToast(actId)
 
-	if ActivityEnum.ActivityStatus.Normal ~= ActivityEnum.ActivityStatus.Normal then
-		if var_11_1 then
-			GameFacade.showToast(var_11_1, var_11_2)
+	status = ActivityEnum.ActivityStatus.Normal
+
+	if status ~= ActivityEnum.ActivityStatus.Normal then
+		if toastId then
+			GameFacade.showToast(toastId, toastParam)
 		end
 
 		return
 	end
 
-	if arg_11_3 then
-		arg_11_3(arg_11_4, arg_11_1, arg_11_2)
+	if callback then
+		callback(callbackObj, viewName, actId)
 
 		return
 	end
 
-	ViewMgr.instance:openView(arg_11_1)
+	ViewMgr.instance:openView(viewName)
 end
 
-function var_0_0.recordLastEnterMainActId(arg_12_0, arg_12_1)
-	arg_12_0._lastEnterMainActId = arg_12_1
+function VersionActivity2_9EnterController:recordLastEnterMainActId(mainActId)
+	self._lastEnterMainActId = mainActId
 end
 
-function var_0_0.clearLastEnterMainActId(arg_13_0)
-	arg_13_0._lastEnterMainActId = nil
+function VersionActivity2_9EnterController:clearLastEnterMainActId()
+	self._lastEnterMainActId = nil
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity2_9EnterController.instance = VersionActivity2_9EnterController.New()
 
-LuaEventSystem.addEventMechanism(var_0_0.instance)
+LuaEventSystem.addEventMechanism(VersionActivity2_9EnterController.instance)
 
-return var_0_0
+return VersionActivity2_9EnterController

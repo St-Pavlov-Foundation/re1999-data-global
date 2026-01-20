@@ -1,17 +1,19 @@
-﻿module("modules.common.others.LuaListScrollExtend", package.seeall)
+﻿-- chunkname: @modules/common/others/LuaListScrollExtend.lua
 
-local var_0_0 = class("LuaListScrollExtend", LuaListScrollView)
+module("modules.common.others.LuaListScrollExtend", package.seeall)
 
-function var_0_0.onUpdateFinish(arg_1_0)
-	for iter_1_0, iter_1_1 in pairs(arg_1_0._cellCompDict) do
-		iter_1_0.parent_view = arg_1_0
+local LuaListScrollExtend = class("LuaListScrollExtend", LuaListScrollView)
 
-		if iter_1_0.initDone then
-			iter_1_0:initDone()
+function LuaListScrollExtend:onUpdateFinish()
+	for k, v in pairs(self._cellCompDict) do
+		k.parent_view = self
+
+		if k.initDone then
+			k:initDone()
 		end
 	end
 
-	arg_1_0.isInitDone = true
+	self.isInitDone = true
 end
 
-return var_0_0
+return LuaListScrollExtend

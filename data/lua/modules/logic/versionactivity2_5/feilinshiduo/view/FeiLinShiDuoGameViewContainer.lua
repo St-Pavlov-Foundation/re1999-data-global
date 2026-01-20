@@ -1,44 +1,46 @@
-﻿module("modules.logic.versionactivity2_5.feilinshiduo.view.FeiLinShiDuoGameViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/feilinshiduo/view/FeiLinShiDuoGameViewContainer.lua
 
-local var_0_0 = class("FeiLinShiDuoGameViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_5.feilinshiduo.view.FeiLinShiDuoGameViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local FeiLinShiDuoGameViewContainer = class("FeiLinShiDuoGameViewContainer", BaseViewContainer)
 
-	arg_1_0.feiLinShiDuoSceneView = FeiLinShiDuoSceneView.New()
-	arg_1_0.feiLinShiDuoGameView = FeiLinShiDuoGameView.New()
+function FeiLinShiDuoGameViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, arg_1_0.feiLinShiDuoSceneView)
-	table.insert(var_1_0, arg_1_0.feiLinShiDuoGameView)
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
+	self.feiLinShiDuoSceneView = FeiLinShiDuoSceneView.New()
+	self.feiLinShiDuoGameView = FeiLinShiDuoGameView.New()
 
-	return var_1_0
+	table.insert(views, self.feiLinShiDuoSceneView)
+	table.insert(views, self.feiLinShiDuoGameView)
+	table.insert(views, TabViewGroup.New(1, "#go_topleft"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function FeiLinShiDuoGameViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-function var_0_0.getSceneView(arg_3_0)
-	return arg_3_0.feiLinShiDuoSceneView
+function FeiLinShiDuoGameViewContainer:getSceneView()
+	return self.feiLinShiDuoSceneView
 end
 
-function var_0_0.getGameView(arg_4_0)
-	return arg_4_0.feiLinShiDuoGameView
+function FeiLinShiDuoGameViewContainer:getGameView()
+	return self.feiLinShiDuoGameView
 end
 
-function var_0_0.setOverrideCloseClick(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0.navigateView:setOverrideClose(arg_5_1, arg_5_2)
+function FeiLinShiDuoGameViewContainer:setOverrideCloseClick(overrideCloseFunc, overrideCloseObj)
+	self.navigateView:setOverrideClose(overrideCloseFunc, overrideCloseObj)
 end
 
-return var_0_0
+return FeiLinShiDuoGameViewContainer

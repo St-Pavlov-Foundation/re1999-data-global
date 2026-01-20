@@ -1,13 +1,15 @@
-﻿module("modules.logic.resonance.view.CharacterTalentUseLayoutViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/resonance/view/CharacterTalentUseLayoutViewContainer.lua
 
-local var_0_0 = class("CharacterTalentUseLayoutViewContainer", BaseViewContainer)
+module("modules.logic.resonance.view.CharacterTalentUseLayoutViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local CharacterTalentUseLayoutViewContainer = class("CharacterTalentUseLayoutViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, CharacterTalentUseLayoutView.New())
+function CharacterTalentUseLayoutViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, CharacterTalentUseLayoutView.New())
+
+	return views
 end
 
-return var_0_0
+return CharacterTalentUseLayoutViewContainer

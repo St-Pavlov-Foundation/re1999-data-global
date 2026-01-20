@@ -1,9 +1,11 @@
-﻿module("modules.logic.fight.system.work.FightWorkCheckNewSeasonSubSkill", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkCheckNewSeasonSubSkill.lua
 
-local var_0_0 = class("FightWorkCheckNewSeasonSubSkill", FightWorkItem)
+module("modules.logic.fight.system.work.FightWorkCheckNewSeasonSubSkill", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0:onDone(true)
+local FightWorkCheckNewSeasonSubSkill = class("FightWorkCheckNewSeasonSubSkill", FightWorkItem)
+
+function FightWorkCheckNewSeasonSubSkill:onStart()
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkCheckNewSeasonSubSkill

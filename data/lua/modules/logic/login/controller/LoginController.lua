@@ -1,134 +1,138 @@
-﻿module("modules.logic.login.controller.LoginController", package.seeall)
+﻿-- chunkname: @modules/logic/login/controller/LoginController.lua
 
-local var_0_0 = class("LoginController", BaseController)
-local var_0_1, var_0_2, var_0_3, var_0_4, var_0_5 = GameUrlConfig.getLoginUrls(false)
-local var_0_6, var_0_7, var_0_8, var_0_9, var_0_10 = GameUrlConfig.getLoginUrls(true)
+module("modules.logic.login.controller.LoginController", package.seeall)
 
-var_0_0.HeartBeatInterval = 10
-var_0_0.MaxReconnectCount = 3
+local LoginController = class("LoginController", BaseController)
+local loginDomain, session, web, slist, start = GameUrlConfig.getLoginUrls(false)
+local bak_loginDomain, bak_session, bak_web, bak_slist, bak_start = GameUrlConfig.getLoginUrls(true)
 
-function var_0_0.get_getSessionIdUrl(arg_1_0, arg_1_1)
-	return arg_1_1 and var_0_7 or var_0_2
+LoginController.HeartBeatInterval = 10
+LoginController.MaxReconnectCount = 3
+
+function LoginController:get_getSessionIdUrl(useBackupUrl)
+	return useBackupUrl and bak_session or session
 end
 
-function var_0_0.get_httpWebLoginUrl(arg_2_0, arg_2_1)
-	return arg_2_1 and var_0_8 or var_0_3
+function LoginController:get_httpWebLoginUrl(useBackupUrl)
+	return useBackupUrl and bak_web or web
 end
 
-function var_0_0.get_getServerListUrl(arg_3_0, arg_3_1)
-	return arg_3_1 and var_0_9 or var_0_4
+function LoginController:get_getServerListUrl(useBackupUrl)
+	return useBackupUrl and bak_slist or slist
 end
 
-function var_0_0.get_startGameUrl(arg_4_0, arg_4_1)
-	return arg_4_1 and var_0_10 or var_0_5
+function LoginController:get_startGameUrl(useBackupUrl)
+	return useBackupUrl and bak_start or start
 end
 
-function var_0_0.onInit(arg_5_0)
-	arg_5_0.enteredGame = false
+function LoginController:onInit()
+	self.enteredGame = false
 end
 
-function var_0_0.onInitFinish(arg_6_0)
-	arg_6_0._moduleLoginFlow = FlowSequence.New()
-	arg_6_0._moduleLoginFlow.flowName = "moduleLoginFlow"
+function LoginController:onInitFinish()
+	self._moduleLoginFlow = FlowSequence.New()
+	self._moduleLoginFlow.flowName = "moduleLoginFlow"
 
-	arg_6_0._moduleLoginFlow:addWork(LoginPreInfoWork.New())
-	arg_6_0._moduleLoginFlow:addWork(LoginPreLoadWork.New())
-	arg_6_0._moduleLoginFlow:addWork(LoginGetInfoWork.New())
-	arg_6_0._moduleLoginFlow:addWork(LoginParseFightConfigWork.New())
-	arg_6_0._moduleLoginFlow:addWork(LoginFirstGuideWork.New())
-	arg_6_0._moduleLoginFlow:addWork(LoginEnterMainSceneWork.New())
-	arg_6_0._moduleLoginFlow:registerDoneListener(arg_6_0._onModuleLoginDone, arg_6_0)
+	self._moduleLoginFlow:addWork(LoginPreInfoWork.New())
+	self._moduleLoginFlow:addWork(LoginPreLoadWork.New())
+	self._moduleLoginFlow:addWork(LoginGetInfoWork.New())
+	self._moduleLoginFlow:addWork(LoginParseFightConfigWork.New())
+	self._moduleLoginFlow:addWork(LoginFirstGuideWork.New())
+	self._moduleLoginFlow:addWork(LoginEnterMainSceneWork.New())
+	self._moduleLoginFlow:registerDoneListener(self._onModuleLoginDone, self)
 
-	arg_6_0._moduleLogoutFlow = FlowSequence.New()
-	arg_6_0._moduleLogoutFlow.flowName = "moduleLogoutFlow"
+	self._moduleLogoutFlow = FlowSequence.New()
+	self._moduleLogoutFlow.flowName = "moduleLogoutFlow"
 
-	arg_6_0._moduleLogoutFlow:addWork(LogoutSocketWork.New())
-	arg_6_0._moduleLogoutFlow:addWork(LogoutCleanWork.New())
-	arg_6_0._moduleLogoutFlow:addWork(LogoutOpenLoginWork.New())
-	arg_6_0._moduleLogoutFlow:registerDoneListener(arg_6_0._onModuleLogoutDone, arg_6_0)
+	self._moduleLogoutFlow:addWork(LogoutSocketWork.New())
+	self._moduleLogoutFlow:addWork(LogoutCleanWork.New())
+	self._moduleLogoutFlow:addWork(LogoutOpenLoginWork.New())
+	self._moduleLogoutFlow:registerDoneListener(self._onModuleLogoutDone, self)
 end
 
-function var_0_0.addConstEvents(arg_7_0)
-	ConnectAliveMgr.instance:registerCallback(ConnectEvent.OnLostConnect, arg_7_0._onLostConnect, arg_7_0)
-	ConnectAliveMgr.instance:registerCallback(ConnectEvent.OnReconnectSucc, arg_7_0._onReconnectSucc, arg_7_0)
-	ConnectAliveMgr.instance:registerCallback(ConnectEvent.OnReconnectFail, arg_7_0._promptReconnectAgain, arg_7_0)
-	ConnectAliveMgr.instance:registerCallback(ConnectEvent.OnServerKickedOut, arg_7_0._onServerKickedOut, arg_7_0)
-	ConnectAliveMgr.instance:registerCallback(ConnectEvent.OnLostMessage, arg_7_0._onLostMessage, arg_7_0)
-	GameSceneMgr.instance:registerCallback(SceneEventName.StopLoading, arg_7_0._stopModuleLogin, arg_7_0)
-	DungeonController.instance:registerCallback(DungeonEvent.OnUpdateDungeonInfo, arg_7_0._onUpdateShowLoginVideoFlag, arg_7_0)
+function LoginController:addConstEvents()
+	ConnectAliveMgr.instance:registerCallback(ConnectEvent.OnLostConnect, self._onLostConnect, self)
+	ConnectAliveMgr.instance:registerCallback(ConnectEvent.OnReconnectSucc, self._onReconnectSucc, self)
+	ConnectAliveMgr.instance:registerCallback(ConnectEvent.OnReconnectFail, self._promptReconnectAgain, self)
+	ConnectAliveMgr.instance:registerCallback(ConnectEvent.OnServerKickedOut, self._onServerKickedOut, self)
+	ConnectAliveMgr.instance:registerCallback(ConnectEvent.OnLostMessage, self._onLostMessage, self)
+	GameSceneMgr.instance:registerCallback(SceneEventName.StopLoading, self._stopModuleLogin, self)
+	DungeonController.instance:registerCallback(DungeonEvent.OnUpdateDungeonInfo, self._onUpdateShowLoginVideoFlag, self)
 end
 
-function var_0_0.dispose(arg_8_0)
-	ConnectAliveMgr.instance:unregisterCallback(ConnectEvent.OnLostConnect, arg_8_0._onLostConnect, arg_8_0)
-	ConnectAliveMgr.instance:unregisterCallback(ConnectEvent.OnReconnectSucc, arg_8_0._onReconnectSucc, arg_8_0)
-	ConnectAliveMgr.instance:unregisterCallback(ConnectEvent.OnReconnectFail, arg_8_0._promptReconnectAgain, arg_8_0)
-	ConnectAliveMgr.instance:unregisterCallback(ConnectEvent.OnServerKickedOut, arg_8_0._onServerKickedOut, arg_8_0)
-	ConnectAliveMgr.instance:unregisterCallback(ConnectEvent.OnLostMessage, arg_8_0._onLostMessage, arg_8_0)
-	GameSceneMgr.instance:unregisterCallback(SceneEventName.StopLoading, arg_8_0._stopModuleLogin, arg_8_0)
-	DungeonController.instance:unregisterCallback(DungeonEvent.OnUpdateDungeonInfo, arg_8_0._onUpdateShowLoginVideoFlag, arg_8_0)
-	arg_8_0._moduleLoginFlow:stop()
-	arg_8_0._moduleLogoutFlow:stop()
+function LoginController:dispose()
+	ConnectAliveMgr.instance:unregisterCallback(ConnectEvent.OnLostConnect, self._onLostConnect, self)
+	ConnectAliveMgr.instance:unregisterCallback(ConnectEvent.OnReconnectSucc, self._onReconnectSucc, self)
+	ConnectAliveMgr.instance:unregisterCallback(ConnectEvent.OnReconnectFail, self._promptReconnectAgain, self)
+	ConnectAliveMgr.instance:unregisterCallback(ConnectEvent.OnServerKickedOut, self._onServerKickedOut, self)
+	ConnectAliveMgr.instance:unregisterCallback(ConnectEvent.OnLostMessage, self._onLostMessage, self)
+	GameSceneMgr.instance:unregisterCallback(SceneEventName.StopLoading, self._stopModuleLogin, self)
+	DungeonController.instance:unregisterCallback(DungeonEvent.OnUpdateDungeonInfo, self._onUpdateShowLoginVideoFlag, self)
+	self._moduleLoginFlow:stop()
+	self._moduleLogoutFlow:stop()
 end
 
-function var_0_0.reInit(arg_9_0)
-	arg_9_0.enteredGame = false
+function LoginController:reInit()
+	self.enteredGame = false
+
+	LoginConfig.instance:getEpisodeIdList(true)
 end
 
-function var_0_0.login(arg_10_0, arg_10_1)
+function LoginController:login(param)
 	if canLogNormal then
 		logNormal("LoginController:login" .. debug.traceback("", 2))
 	end
 
-	arg_10_0.userManualLogout = arg_10_1 and arg_10_1.userManualLogout
+	self.userManualLogout = param and param.userManualLogout
 
-	ViewMgr.instance:openView(ViewName.LoginView, arg_10_1, true)
+	ViewMgr.instance:openView(ViewName.LoginView, param, true)
 end
 
-function var_0_0.logout(arg_11_0, arg_11_1)
+function LoginController:logout(isVoicePackageDonwload)
 	if canLogNormal then
 		logNormal("LoginController:logout" .. debug.traceback("", 2))
 	end
 
 	TimeDispatcher.instance:stopTick()
-	arg_11_0:_moduleLogout(LuaSocketMgr.instance:isConnected(), false, arg_11_1)
+	self:_moduleLogout(LuaSocketMgr.instance:isConnected(), false, isVoicePackageDonwload)
 end
 
-function var_0_0.onSdkLogout(arg_12_0)
-	local var_12_0 = arg_12_0.userManualLogout
+function LoginController:onSdkLogout()
+	local userManualLogout = self.userManualLogout
 
-	arg_12_0.userManualLogout = nil
+	self.userManualLogout = nil
 
 	LoginModel.instance:clearDatas()
 	TimeDispatcher.instance:stopTick()
 
 	if ViewMgr.instance:isOpen(ViewName.LoginView) then
-		if var_12_0 ~= true or not SDKMgr.instance:getBoolMetaData("ssgame_dontShowLoginPanelAfterLogout") then
+		if userManualLogout ~= true or not SDKMgr.instance:getBoolMetaData("ssgame_dontShowLoginPanelAfterLogout") then
 			SDKMgr.instance:login()
 		end
 	else
-		arg_12_0:_moduleLogout(LuaSocketMgr.instance:isConnected(), true)
+		self:_moduleLogout(LuaSocketMgr.instance:isConnected(), true)
 	end
 end
 
-function var_0_0.sdkLogout(arg_13_0, arg_13_1)
-	arg_13_0.userManualLogout = arg_13_1
+function LoginController:sdkLogout(userManualLogout)
+	self.userManualLogout = userManualLogout
 
 	LoginModel.instance:clearDatas()
 	SDKMgr.instance:logout()
 end
 
-function var_0_0.startLogin(arg_14_0)
-	arg_14_0:_startLogin()
+function LoginController:startLogin()
+	self:_startLogin()
 end
 
-function var_0_0._startLogin(arg_15_0)
+function LoginController:_startLogin()
 	if LoginModel.instance:isNotLogin() then
-		arg_15_0:_startBlock()
+		self:_startBlock()
 		LoginModel.instance:doingLogin()
 
-		arg_15_0._enableModuleLogin = true
+		self._enableModuleLogin = true
 
-		arg_15_0:_socketConnectAndLogin()
+		self:_socketConnectAndLogin()
 	elseif LoginModel.instance:isDoingLogin() then
 		logError("正在登录游戏，无法重复登录")
 	elseif LoginModel.instance:isDoneLogin() then
@@ -136,162 +140,166 @@ function var_0_0._startLogin(arg_15_0)
 	end
 end
 
-function var_0_0._socketConnectAndLogin(arg_16_0)
+function LoginController:_socketConnectAndLogin()
 	logNormal(string.format("login %s:%d  userName = %s  sessionId = %s", LoginModel.instance.serverIp, LoginModel.instance.serverPort, LoginModel.instance.userName, LoginModel.instance.sessionId))
 
-	arg_16_0._callbackId = SystemLoginRpc.instance:addCallback(1, arg_16_0._onSystemLoginCallback, arg_16_0)
+	self._callbackId = SystemLoginRpc.instance:addCallback(1, self._onSystemLoginCallback, self)
 
-	local var_16_0 = LoginModel.instance.serverIp
-	local var_16_1 = LoginModel.instance.serverPort
+	local ip = LoginModel.instance.serverIp
+	local port = LoginModel.instance.serverPort
 
-	if arg_16_0._useBak then
-		var_16_0 = LoginModel.instance.serverBakIp
-		var_16_1 = LoginModel.instance.serverBakPort
+	if self._useBak then
+		ip = LoginModel.instance.serverBakIp
+		port = LoginModel.instance.serverBakPort
 	end
 
-	arg_16_0._systemLoginStatus = nil
+	self._systemLoginStatus = nil
 
-	ConnectAliveMgr.instance:login(var_16_0, var_16_1, LoginModel.instance.userName, LoginModel.instance.sessionId, arg_16_0._onLogin, arg_16_0)
+	ConnectAliveMgr.instance:login(ip, port, LoginModel.instance.userName, LoginModel.instance.sessionId, self._onLogin, self)
 end
 
-function var_0_0._startBlock(arg_17_0)
+function LoginController:_startBlock()
 	UIBlockMgr.instance:startBlock(UIBlockKey.Login)
 end
 
-function var_0_0._endBlock(arg_18_0)
+function LoginController:_endBlock()
 	UIBlockMgr.instance:endBlock(UIBlockKey.Login)
 end
 
-function var_0_0._onSystemLoginCallback(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
-	arg_19_0._systemLoginStatus = arg_19_2
+function LoginController:_onSystemLoginCallback(cmd, status, msg)
+	self._systemLoginStatus = status
 
-	arg_19_0:_removeSystemLoginCallback()
+	self:_removeSystemLoginCallback()
 end
 
-function var_0_0._removeSystemLoginCallback(arg_20_0)
-	if arg_20_0._callbackId then
-		SystemLoginRpc.instance:removeCallbackById(arg_20_0._callbackId)
+function LoginController:_removeSystemLoginCallback()
+	if self._callbackId then
+		SystemLoginRpc.instance:removeCallbackById(self._callbackId)
 
-		arg_20_0._callbackId = nil
+		self._callbackId = nil
 	end
 end
 
-function var_0_0._onLogin(arg_21_0, arg_21_1, arg_21_2)
-	if not arg_21_1 and not arg_21_0._useBak and not string.nilorempty(LoginModel.instance.serverBakIp) and arg_21_2 and arg_21_2.socketFail and not arg_21_0._systemLoginStatus then
-		arg_21_0._useBak = true
+function LoginController:_onLogin(isSuccess, resultTable)
+	if not isSuccess and not self._useBak and not string.nilorempty(LoginModel.instance.serverBakIp) then
+		local socketFail = resultTable and resultTable.socketFail
 
-		LoginModel.instance:notLogin()
-		logNormal("业务层 登录失败，切换备用节点")
-		TaskDispatcher.runDelay(arg_21_0._socketConnectAndLogin, arg_21_0, 0.5)
+		if socketFail and not self._systemLoginStatus then
+			self._useBak = true
 
-		return
+			LoginModel.instance:notLogin()
+			logNormal("业务层 登录失败，切换备用节点")
+			TaskDispatcher.runDelay(self._socketConnectAndLogin, self, 0.5)
+
+			return
+		end
 	end
 
-	arg_21_0:_removeSystemLoginCallback()
-	arg_21_0:_endBlock()
+	self:_removeSystemLoginCallback()
+	self:_endBlock()
 
-	if arg_21_1 then
+	if isSuccess then
 		LoginModel.instance:doneLogin()
 
-		arg_21_0._reconectTimes = 0
-		arg_21_0._enableModuleLogin = true
+		self._reconectTimes = 0
+		self._enableModuleLogin = true
 
 		logNormal("<color=#00FF00>业务层 登录成功，可以开始做逻辑了</color>")
-		arg_21_0:_startHeartBeat()
+		self:_startHeartBeat()
 		SDKController.instance:onLoginSuccess()
 		StatController.instance:sendBaseProperties()
-		arg_21_0:_moduleLogin()
-	elseif not arg_21_0._systemLoginStatus then
+		self:_moduleLogin()
+	elseif not self._systemLoginStatus then
 		LoginModel.instance:notLogin()
 		logNormal("<color=#FFA500>业务层 socket连接失败，请选择重连or取消</color>")
-		var_0_0.instance:dispatchEvent(LoginEvent.SystemLoginFail)
+		LoginController.instance:dispatchEvent(LoginEvent.SystemLoginFail)
 		MessageBoxController.instance:showSystemMsgBox(MessageBoxIdDefine.LoginFail, MsgBoxEnum.BoxType.Yes_No, function()
-			arg_21_0:_socketConnectAndLogin()
+			self:_socketConnectAndLogin()
 		end, function()
-			arg_21_0:logout()
+			self:logout()
 		end)
 
-		if arg_21_0._useBak then
+		if self._useBak then
 			logError("业务层 登录失败，备用节点都不行")
 		end
-	elseif arg_21_0._systemLoginStatus ~= 0 then
+	elseif self._systemLoginStatus ~= 0 then
 		LoginModel.instance:notLogin()
 		logNormal("<color=#FFA500>业务层 系统登录失败</color>")
-		var_0_0.instance:dispatchEvent(LoginEvent.SystemLoginFail)
+		LoginController.instance:dispatchEvent(LoginEvent.SystemLoginFail)
 
-		local var_21_0 = arg_21_2 and arg_21_2.msg or "resultCode:" .. arg_21_0._systemLoginStatus
+		local msg = resultTable and resultTable.msg or "resultCode:" .. self._systemLoginStatus
 
-		MessageBoxController.instance:showSystemMsgBoxByStr(var_21_0, MsgBoxEnum.BoxType.Yes, function()
-			arg_21_0:logout()
+		MessageBoxController.instance:showSystemMsgBoxByStr(msg, MsgBoxEnum.BoxType.Yes, function()
+			self:logout()
 		end)
 	else
 		LoginModel.instance:notLogin()
 		logNormal("系统登录失败，不能重连了，可能是黑号/write back now")
-		var_0_0.instance:dispatchEvent(LoginEvent.SystemLoginFail)
-		arg_21_0:logout()
+		LoginController.instance:dispatchEvent(LoginEvent.SystemLoginFail)
+		self:logout()
 	end
 
-	arg_21_0._useBak = nil
+	self._useBak = nil
 end
 
-function var_0_0._onLostMessage(arg_25_0)
+function LoginController:_onLostMessage()
 	logNormal("<color=red>丢包了</color>")
-	arg_25_0:_stopHeartBeat()
+	self:_stopHeartBeat()
 
-	arg_25_0._reconectTimes = 3
+	self._reconectTimes = 3
 
-	arg_25_0:_promptReconnectAgain()
+	self:_promptReconnectAgain()
 end
 
-function var_0_0._onLostConnect(arg_26_0, arg_26_1, arg_26_2)
-	arg_26_0:_stopHeartBeat()
-	arg_26_0:_promptReconnectAgain(arg_26_1, arg_26_2)
+function LoginController:_onLostConnect(dontReconnect, msg)
+	self:_stopHeartBeat()
+	self:_promptReconnectAgain(dontReconnect, msg)
 end
 
-function var_0_0._delayReConnect(arg_27_0)
+function LoginController:_delayReConnect()
 	ConnectAliveMgr.instance:reconnect()
 end
 
-function var_0_0._onReconnectSucc(arg_28_0)
-	arg_28_0._reconectTimes = 0
+function LoginController:_onReconnectSucc()
+	self._reconectTimes = 0
 
 	logNormal("<color=#00FF00>业务层 收到 断线重连成功</color>")
-	arg_28_0:_startHeartBeat()
+	self:_startHeartBeat()
 end
 
-function var_0_0.stopReconnect(arg_29_0)
+function LoginController:stopReconnect()
 	ConnectAliveMgr.instance:reconnect()
 end
 
-function var_0_0._startHeartBeat(arg_30_0)
-	TaskDispatcher.runRepeat(arg_30_0._sendHeartBeat, arg_30_0, var_0_0.HeartBeatInterval)
+function LoginController:_startHeartBeat()
+	TaskDispatcher.runRepeat(self._sendHeartBeat, self, LoginController.HeartBeatInterval)
 end
 
-function var_0_0.stopHeartBeat(arg_31_0)
-	TaskDispatcher.cancelTask(arg_31_0._sendHeartBeat, arg_31_0)
+function LoginController:stopHeartBeat()
+	TaskDispatcher.cancelTask(self._sendHeartBeat, self)
 end
 
-function var_0_0._stopHeartBeat(arg_32_0)
-	TaskDispatcher.cancelTask(arg_32_0._sendHeartBeat, arg_32_0)
+function LoginController:_stopHeartBeat()
+	TaskDispatcher.cancelTask(self._sendHeartBeat, self)
 end
 
-function var_0_0._sendHeartBeat(arg_33_0)
+function LoginController:_sendHeartBeat()
 	CommonRpc.instance:sendGetServerTimeRequest()
 end
 
-function var_0_0._promptReconnectAgain(arg_34_0, arg_34_1, arg_34_2)
-	arg_34_0._reconectTimes = arg_34_0._reconectTimes + 1
+function LoginController:_promptReconnectAgain(dontReconnect, msg)
+	self._reconectTimes = self._reconectTimes + 1
 
-	if arg_34_1 then
-		MessageBoxController.instance:showMsgBoxByStr(arg_34_2, MsgBoxEnum.BoxType.Yes, function()
-			arg_34_0._moduleLoginFlow:stop()
-			var_0_0.instance:logout()
+	if dontReconnect then
+		MessageBoxController.instance:showMsgBoxByStr(msg, MsgBoxEnum.BoxType.Yes, function()
+			self._moduleLoginFlow:stop()
+			LoginController.instance:logout()
 		end, nil)
-	elseif arg_34_0._reconectTimes > var_0_0.MaxReconnectCount then
+	elseif self._reconectTimes > LoginController.MaxReconnectCount then
 		logNormal("<color=#FFA500>断线重连次数过多，确认网络已断开，返回登陆界面</color>")
 		MessageBoxController.instance:showSystemMsgBox(MessageBoxIdDefine.LoginLostConnect1, MsgBoxEnum.BoxType.Yes, function()
-			arg_34_0._moduleLoginFlow:stop()
-			var_0_0.instance:logout()
+			self._moduleLoginFlow:stop()
+			LoginController.instance:logout()
 		end, nil)
 	else
 		UIBlockMgr.instance:endAll()
@@ -299,109 +307,115 @@ function var_0_0._promptReconnectAgain(arg_34_0, arg_34_1, arg_34_2)
 		MessageBoxController.instance:showSystemMsgBox(MessageBoxIdDefine.LoginLostConnect2, MsgBoxEnum.BoxType.Yes_No, function()
 			ConnectAliveMgr.instance:reconnect()
 		end, function()
-			arg_34_0._moduleLoginFlow:stop()
-			var_0_0.instance:logout()
+			self._moduleLoginFlow:stop()
+			LoginController.instance:logout()
 		end)
 	end
 end
 
-function var_0_0._tryReconnect(arg_39_0)
+function LoginController:_tryReconnect()
 	ConnectAliveMgr.instance:reconnect()
 end
 
-function var_0_0._stopModuleLogin(arg_40_0)
-	arg_40_0._enableModuleLogin = false
+function LoginController:_stopModuleLogin()
+	self._enableModuleLogin = false
 end
 
-function var_0_0._onServerKickedOut(arg_41_0, arg_41_1, arg_41_2)
+function LoginController:_onServerKickedOut(reason, resultCode)
 	ConnectAliveMgr.instance:logout()
 
-	if arg_41_2 == -10 then
+	if resultCode == -10 then
 		logNormal("设备解绑，退出sdk")
-		arg_41_0:sdkLogout()
+		self:sdkLogout()
 	end
 
-	arg_41_0:_stopHeartBeat()
+	self:_stopHeartBeat()
 
-	local var_41_0 = arg_41_1
+	local reasonTranslate = reason
+	local langIdCfg = lua_language_coder.configDict[reason]
 
-	if lua_language_coder.configDict[arg_41_1] or lua_language_prefab.configDict[arg_41_1] then
-		var_41_0 = luaLang(arg_41_1)
+	langIdCfg = langIdCfg or lua_language_prefab.configDict[reason]
+
+	if langIdCfg then
+		reasonTranslate = luaLang(reason)
 	end
 
 	MessageBoxController.instance:showSystemMsgBox(MessageBoxIdDefine.LoginReturn, MsgBoxEnum.BoxType.Yes, function()
-		if arg_41_1 == "repeat login" and GameChannelConfig.isEfun() then
-			arg_41_0:sdkLogout()
+		if reason == "repeat login" and GameChannelConfig.isEfun() then
+			self:sdkLogout()
 		else
-			var_0_0.instance:logout()
+			LoginController.instance:logout()
 		end
-	end, nil, nil, nil, nil, nil, var_41_0)
+	end, nil, nil, nil, nil, nil, reasonTranslate)
 end
 
-function var_0_0._moduleLogin(arg_43_0)
-	if not arg_43_0._enableModuleLogin then
+function LoginController:_moduleLogin()
+	if not self._enableModuleLogin then
 		return
 	end
 
-	arg_43_0._moduleLoginFlow:start({})
+	self._moduleLoginFlow:start({})
 end
 
-function var_0_0._onModuleLoginDone(arg_44_0, arg_44_1)
-	if arg_44_1 then
+function LoginController:_onModuleLoginDone(isSuccess)
+	if isSuccess then
 		logNormal("游戏登入流程结束，已进入主场景")
 		TimeDispatcher.instance:startTick()
-		var_0_0.instance:dispatchEvent(LoginEvent.OnLoginEnterMainScene)
+		LoginController.instance:dispatchEvent(LoginEvent.OnLoginEnterMainScene)
 
-		arg_44_0.enteredGame = true
+		self.enteredGame = true
 	else
 		logWarn("游戏登入流程失败！")
 	end
 end
 
-function var_0_0._moduleLogout(arg_45_0, arg_45_1, arg_45_2, arg_45_3)
-	arg_45_0.enteredGame = false
+function LoginController:_moduleLogout(isConnected, isSdkLogout, isVoicePackageDonwload)
+	self.enteredGame = false
 
-	TaskDispatcher.cancelTask(arg_45_0._socketConnectAndLogin, arg_45_0)
-	TaskDispatcher.cancelTask(arg_45_0._delayReConnect, arg_45_0)
-	TaskDispatcher.cancelTask(arg_45_0._tryReconnect, arg_45_0)
-	arg_45_0:_stopHeartBeat()
+	TaskDispatcher.cancelTask(self._socketConnectAndLogin, self)
+	TaskDispatcher.cancelTask(self._delayReConnect, self)
+	TaskDispatcher.cancelTask(self._tryReconnect, self)
+	self:_stopHeartBeat()
 	PopupController.instance:clear()
 	AudioMgr.instance:trigger(AudioEnum.UI.Stop_UI_Bus)
-	var_0_0.instance:dispatchEvent(LoginEvent.OnBeginLogout)
+	LoginController.instance:dispatchEvent(LoginEvent.OnBeginLogout)
 	GameSceneMgr.instance:dispatchEvent(SceneEventName.OpenLoading, SceneType.Main)
-	arg_45_0._moduleLogoutFlow:start({
-		isConnected = arg_45_1,
-		isSdkLogout = arg_45_2,
-		isVoicePackageDonwload = arg_45_3
+	self._moduleLogoutFlow:start({
+		isConnected = isConnected,
+		isSdkLogout = isSdkLogout,
+		isVoicePackageDonwload = isVoicePackageDonwload
 	})
 end
 
-function var_0_0._onModuleLogoutDone(arg_46_0, arg_46_1)
-	if arg_46_1 then
+function LoginController:_onModuleLogoutDone(isSuccess)
+	if isSuccess then
 		logNormal("返回登陆界面")
 	else
 		logWarn("返回登陆失败！")
 	end
 
-	var_0_0.instance:dispatchEvent(LoginEvent.OnLogout)
+	LoginController.instance:dispatchEvent(LoginEvent.OnLogout)
 	GameSceneMgr.instance:dispatchEvent(SceneEventName.CloseLoading)
 end
 
-function var_0_0.isEnteredGame(arg_47_0)
-	return arg_47_0.enteredGame
+function LoginController:isEnteredGame()
+	return self.enteredGame
 end
 
-function var_0_0._onUpdateShowLoginVideoFlag(arg_48_0)
-	local var_48_0 = CommonConfig.instance:getConstNum(ConstEnum.LoginViewVideoShowDungeonId)
-	local var_48_1 = DungeonModel.instance:hasPassLevel(var_48_0)
+function LoginController:_onUpdateShowLoginVideoFlag()
+	local episodeIdList = LoginConfig.instance:getEpisodeIdList()
 
-	PlayerPrefsHelper.setNumber(PlayerPrefsKey.LoginViewShowVideoKey, var_48_1 and 1 or 0)
+	for _, episodeId in ipairs(episodeIdList) do
+		local isPass = DungeonModel.instance:hasPassLevel(episodeId)
+
+		PlayerPrefsHelper.setNumber(PlayerPrefsKey.GameEpisodeIdPassKey .. episodeId, isPass and 1 or 0)
+	end
 end
 
-function var_0_0.isShowLoginVideo(arg_49_0)
-	return PlayerPrefsHelper.getNumber(PlayerPrefsKey.LoginViewShowVideoKey, 0) ~= 0
+function LoginController:isPassDungeonById(episodeId)
+	return PlayerPrefsHelper.getNumber(PlayerPrefsKey.GameEpisodeIdPassKey .. episodeId, 0) ~= 0
 end
 
-var_0_0.instance = var_0_0.New()
+LoginController.instance = LoginController.New()
 
-return var_0_0
+return LoginController

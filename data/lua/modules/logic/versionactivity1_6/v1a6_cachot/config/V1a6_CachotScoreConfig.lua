@@ -1,56 +1,55 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.config.V1a6_CachotScoreConfig", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/config/V1a6_CachotScoreConfig.lua
 
-local var_0_0 = class("V1a6_CachotScoreConfig")
+module("modules.logic.versionactivity1_6.v1a6_cachot.config.V1a6_CachotScoreConfig", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._scroeConfigTable = arg_1_1
+local V1a6_CachotScoreConfig = class("V1a6_CachotScoreConfig")
+
+function V1a6_CachotScoreConfig:init(configTable)
+	self._scroeConfigTable = configTable
 end
 
-function var_0_0.getConfigList(arg_2_0)
-	return arg_2_0._scroeConfigTable.configList
+function V1a6_CachotScoreConfig:getConfigList()
+	return self._scroeConfigTable.configList
 end
 
-function var_0_0.getStagePartRange(arg_3_0, arg_3_1)
-	if arg_3_0._scroeConfigTable.configDict then
-		local var_3_0
-		local var_3_1
-		local var_3_2
-		local var_3_3
+function V1a6_CachotScoreConfig:getStagePartRange(score)
+	if self._scroeConfigTable.configDict then
+		local nextScore, lastScore, lastPartId, nextPartId
 
-		for iter_3_0, iter_3_1 in pairs(arg_3_0._scroeConfigTable.configDict) do
-			if arg_3_1 <= iter_3_1.score and (not var_3_0 or var_3_0 >= iter_3_1.score) then
-				var_3_0 = iter_3_1.score
-				var_3_3 = iter_3_0
+		for id, v in pairs(self._scroeConfigTable.configDict) do
+			if score <= v.score and (not nextScore or nextScore >= v.score) then
+				nextScore = v.score
+				nextPartId = id
 			end
 
-			if arg_3_1 > iter_3_1.score and (not var_3_1 or var_3_1 < iter_3_1.score) then
-				var_3_1 = iter_3_1.score
-				var_3_2 = iter_3_0
+			if score > v.score and (not lastScore or lastScore < v.score) then
+				lastScore = v.score
+				lastPartId = id
 			end
 		end
 
-		return var_3_2, var_3_3
+		return lastPartId, nextPartId
 	end
 end
 
-function var_0_0.getStagePartConfig(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0._scroeConfigTable and arg_4_0._scroeConfigTable.configDict
+function V1a6_CachotScoreConfig:getStagePartConfig(id)
+	local configDic = self._scroeConfigTable and self._scroeConfigTable.configDict
 
-	if var_4_0 then
-		return var_4_0[arg_4_1]
+	if configDic then
+		return configDic[id]
 	end
 end
 
-function var_0_0.getStagePartScore(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0._scroeConfigTable and arg_5_0._scroeConfigTable.configDict
+function V1a6_CachotScoreConfig:getStagePartScore(id)
+	local configDic = self._scroeConfigTable and self._scroeConfigTable.configDict
 
-	if var_5_0 and var_5_0[arg_5_1] then
-		return var_5_0[arg_5_1].score
+	if configDic and configDic[id] then
+		return configDic[id].score
 	end
 
 	return 0
 end
 
-var_0_0.instance = var_0_0.New()
+V1a6_CachotScoreConfig.instance = V1a6_CachotScoreConfig.New()
 
-return var_0_0
+return V1a6_CachotScoreConfig

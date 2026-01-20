@@ -1,173 +1,175 @@
-﻿module("modules.logic.versionactivity2_7.coopergarland.model.CooperGarlandGameModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/coopergarland/model/CooperGarlandGameModel.lua
 
-local var_0_0 = class("CooperGarlandGameModel", BaseModel)
+module("modules.logic.versionactivity2_7.coopergarland.model.CooperGarlandGameModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:clearAllData()
+local CooperGarlandGameModel = class("CooperGarlandGameModel", BaseModel)
+
+function CooperGarlandGameModel:onInit()
+	self:clearAllData()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clearAllData()
+function CooperGarlandGameModel:reInit()
+	self:clearAllData()
 end
 
-function var_0_0.clearAllData(arg_3_0)
-	arg_3_0:setEpisodeId()
-	arg_3_0:setGameId()
-	arg_3_0:setGameRound()
-	arg_3_0:setMapId()
-	arg_3_0:setRemoveCount()
-	arg_3_0:setRemoveMode()
-	arg_3_0:setBallHasKey(false)
-	arg_3_0:setIsStopGame(false)
-	arg_3_0:setSceneOpenAnimShowBall(false)
+function CooperGarlandGameModel:clearAllData()
+	self:setEpisodeId()
+	self:setGameId()
+	self:setGameRound()
+	self:setMapId()
+	self:setRemoveCount()
+	self:setRemoveMode()
+	self:setBallHasKey(false)
+	self:setIsStopGame(false)
+	self:setSceneOpenAnimShowBall(false)
 end
 
-function var_0_0.enterGameInitData(arg_4_0, arg_4_1)
-	arg_4_0:setEpisodeId(arg_4_1)
+function CooperGarlandGameModel:enterGameInitData(episodeId)
+	self:setEpisodeId(episodeId)
 
-	local var_4_0 = CooperGarlandModel.instance:getAct192Id()
-	local var_4_1 = CooperGarlandConfig.instance:getGameId(var_4_0, arg_4_1)
+	local actId = CooperGarlandModel.instance:getAct192Id()
+	local gameId = CooperGarlandConfig.instance:getGameId(actId, episodeId)
 
-	arg_4_0:setGameId(var_4_1)
+	self:setGameId(gameId)
 
-	local var_4_2 = CooperGarlandModel.instance:getEpisodeProgress(var_4_0, arg_4_1)
+	local saveRound = CooperGarlandModel.instance:getEpisodeProgress(actId, episodeId)
 
-	arg_4_0:changeRound(var_4_2)
-	arg_4_0:setSceneOpenAnimShowBall(false)
+	self:changeRound(saveRound)
+	self:setSceneOpenAnimShowBall(false)
 end
 
-function var_0_0.changeRound(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0:getGameId()
+function CooperGarlandGameModel:changeRound(round)
+	local gameId = self:getGameId()
 
-	if not var_5_0 then
+	if not gameId then
 		return
 	end
 
-	arg_5_0:setGameRound(arg_5_1)
+	self:setGameRound(round)
 
-	local var_5_1 = CooperGarlandConfig.instance:getMapId(var_5_0, arg_5_1)
+	local mapId = CooperGarlandConfig.instance:getMapId(gameId, round)
 
-	arg_5_0:setMapId(var_5_1)
+	self:setMapId(mapId)
 
-	local var_5_2 = CooperGarlandConfig.instance:getRemoveCount(var_5_0, arg_5_1)
+	local removeCount = CooperGarlandConfig.instance:getRemoveCount(gameId, round)
 
-	arg_5_0:setRemoveCount(var_5_2)
-	arg_5_0:setBallHasKey(false)
-	arg_5_0:setRemoveMode(false)
-	arg_5_0:setIsStopGame(false)
+	self:setRemoveCount(removeCount)
+	self:setBallHasKey(false)
+	self:setRemoveMode(false)
+	self:setIsStopGame(false)
 end
 
-function var_0_0.resetGameData(arg_6_0)
-	local var_6_0 = arg_6_0:getGameRound()
+function CooperGarlandGameModel:resetGameData()
+	local curRound = self:getGameRound()
 
-	arg_6_0:changeRound(var_6_0)
+	self:changeRound(curRound)
 end
 
-function var_0_0.setEpisodeId(arg_7_0, arg_7_1)
-	arg_7_0._episodeId = arg_7_1
+function CooperGarlandGameModel:setEpisodeId(episodeId)
+	self._episodeId = episodeId
 end
 
-function var_0_0.setGameId(arg_8_0, arg_8_1)
-	arg_8_0._gameId = arg_8_1
+function CooperGarlandGameModel:setGameId(gameId)
+	self._gameId = gameId
 end
 
-function var_0_0.setGameRound(arg_9_0, arg_9_1)
-	arg_9_0._gameRound = arg_9_1
+function CooperGarlandGameModel:setGameRound(round)
+	self._gameRound = round
 end
 
-function var_0_0.setMapId(arg_10_0, arg_10_1)
-	arg_10_0._mapId = arg_10_1
+function CooperGarlandGameModel:setMapId(mapId)
+	self._mapId = mapId
 end
 
-function var_0_0.setRemoveCount(arg_11_0, arg_11_1)
-	arg_11_0._removeCount = arg_11_1
+function CooperGarlandGameModel:setRemoveCount(count)
+	self._removeCount = count
 end
 
-function var_0_0.setRemoveMode(arg_12_0, arg_12_1)
-	arg_12_0._isRemoveMode = arg_12_1
+function CooperGarlandGameModel:setRemoveMode(isRemoveMode)
+	self._isRemoveMode = isRemoveMode
 end
 
-function var_0_0.setBallHasKey(arg_13_0, arg_13_1)
-	arg_13_0._hasKey = arg_13_1
+function CooperGarlandGameModel:setBallHasKey(isHas)
+	self._hasKey = isHas
 end
 
-function var_0_0.setControlMode(arg_14_0, arg_14_1)
-	arg_14_0._controlMode = arg_14_1
+function CooperGarlandGameModel:setControlMode(controlMode)
+	self._controlMode = controlMode
 
-	GameUtil.playerPrefsSetNumberByUserId(PlayerPrefsKey.CooperGarlandControlMode, arg_14_1)
+	GameUtil.playerPrefsSetNumberByUserId(PlayerPrefsKey.CooperGarlandControlMode, controlMode)
 end
 
-function var_0_0.setIsStopGame(arg_15_0, arg_15_1)
-	arg_15_0._isStopGame = arg_15_1
+function CooperGarlandGameModel:setIsStopGame(isStop)
+	self._isStopGame = isStop
 end
 
-function var_0_0.setSceneOpenAnimShowBall(arg_16_0, arg_16_1)
-	arg_16_0._openAnimShowBall = arg_16_1
+function CooperGarlandGameModel:setSceneOpenAnimShowBall(isShowBall)
+	self._openAnimShowBall = isShowBall
 end
 
-function var_0_0.getEpisodeId(arg_17_0)
-	return arg_17_0._episodeId
+function CooperGarlandGameModel:getEpisodeId()
+	return self._episodeId
 end
 
-function var_0_0.getGameId(arg_18_0)
-	return arg_18_0._gameId
+function CooperGarlandGameModel:getGameId()
+	return self._gameId
 end
 
-function var_0_0.getGameRound(arg_19_0)
-	return arg_19_0._gameRound
+function CooperGarlandGameModel:getGameRound()
+	return self._gameRound
 end
 
-function var_0_0.getMapId(arg_20_0)
-	return arg_20_0._mapId
+function CooperGarlandGameModel:getMapId()
+	return self._mapId
 end
 
-function var_0_0.getRemoveCount(arg_21_0)
-	return arg_21_0._removeCount or 0
+function CooperGarlandGameModel:getRemoveCount()
+	return self._removeCount or 0
 end
 
-function var_0_0.getIsRemoveMode(arg_22_0)
-	return arg_22_0._isRemoveMode
+function CooperGarlandGameModel:getIsRemoveMode()
+	return self._isRemoveMode
 end
 
-function var_0_0.getBallHasKey(arg_23_0)
-	return arg_23_0._hasKey
+function CooperGarlandGameModel:getBallHasKey()
+	return self._hasKey
 end
 
-function var_0_0.getControlMode(arg_24_0)
-	if not arg_24_0._controlMode then
-		arg_24_0._controlMode = GameUtil.playerPrefsGetNumberByUserId(PlayerPrefsKey.CooperGarlandControlMode, CooperGarlandEnum.Const.JoystickModeRight)
+function CooperGarlandGameModel:getControlMode()
+	if not self._controlMode then
+		self._controlMode = GameUtil.playerPrefsGetNumberByUserId(PlayerPrefsKey.CooperGarlandControlMode, CooperGarlandEnum.Const.JoystickModeRight)
 	end
 
-	return arg_24_0._controlMode
+	return self._controlMode
 end
 
-function var_0_0.getIsJoystick(arg_25_0)
-	local var_25_0 = arg_25_0:getControlMode()
+function CooperGarlandGameModel:getIsJoystick()
+	local controlMode = self:getControlMode()
 
-	return var_25_0 == CooperGarlandEnum.Const.JoystickModeRight or var_25_0 == CooperGarlandEnum.Const.JoystickModeLeft
+	return controlMode == CooperGarlandEnum.Const.JoystickModeRight or controlMode == CooperGarlandEnum.Const.JoystickModeLeft
 end
 
-function var_0_0.isFinishedStoryComponent(arg_26_0, arg_26_1, arg_26_2)
-	local var_26_0 = false
-	local var_26_1 = CooperGarlandConfig.instance:getMapComponentType(arg_26_1, arg_26_2)
-	local var_26_2 = CooperGarlandConfig.instance:getMapComponentExtraParams(arg_26_1, arg_26_2)
-	local var_26_3 = var_26_2 and tonumber(var_26_2)
+function CooperGarlandGameModel:isFinishedStoryComponent(mapId, componentId)
+	local result = false
+	local componentType = CooperGarlandConfig.instance:getMapComponentType(mapId, componentId)
+	local strParam = CooperGarlandConfig.instance:getMapComponentExtraParams(mapId, componentId)
+	local guideId = strParam and tonumber(strParam)
 
-	if var_26_1 == CooperGarlandEnum.ComponentType.Story and var_26_3 then
-		var_26_0 = GuideModel.instance:isGuideFinish(var_26_3)
+	if componentType == CooperGarlandEnum.ComponentType.Story and guideId then
+		result = GuideModel.instance:isGuideFinish(guideId)
 	end
 
-	return var_26_0
+	return result
 end
 
-function var_0_0.getIsStopGame(arg_27_0)
-	return arg_27_0._isStopGame
+function CooperGarlandGameModel:getIsStopGame()
+	return self._isStopGame
 end
 
-function var_0_0.getSceneOpenAnimShowBall(arg_28_0)
-	return arg_28_0._openAnimShowBall
+function CooperGarlandGameModel:getSceneOpenAnimShowBall()
+	return self._openAnimShowBall
 end
 
-var_0_0.instance = var_0_0.New()
+CooperGarlandGameModel.instance = CooperGarlandGameModel.New()
 
-return var_0_0
+return CooperGarlandGameModel

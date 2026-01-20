@@ -1,95 +1,97 @@
-﻿module("modules.logic.versionactivity1_9.enter.view.subview.V1a9_RougeEnterView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/enter/view/subview/V1a9_RougeEnterView.lua
 
-local var_0_0 = class("V1a9_RougeEnterView", BaseView)
+module("modules.logic.versionactivity1_9.enter.view.subview.V1a9_RougeEnterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnEnter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_start")
-	arg_1_0._btnReward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_reward")
-	arg_1_0._goRewardNew = gohelper.findChild(arg_1_0.viewGO, "Right/#btn_reward/#go_new")
-	arg_1_0._txtRewardNum = gohelper.findChildText(arg_1_0.viewGO, "Right/#btn_reward/#txt_RewardNum")
-	arg_1_0._txtDescr = gohelper.findChildText(arg_1_0.viewGO, "Right/txt_Descr")
-	arg_1_0._btnlock = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_locked")
-	arg_1_0._txtUnlockedTips = gohelper.findChildText(arg_1_0.viewGO, "Right/#btn_locked/#txt_UnLockedTips")
+local V1a9_RougeEnterView = class("V1a9_RougeEnterView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V1a9_RougeEnterView:onInitView()
+	self._btnEnter = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_start")
+	self._btnReward = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_reward")
+	self._goRewardNew = gohelper.findChild(self.viewGO, "Right/#btn_reward/#go_new")
+	self._txtRewardNum = gohelper.findChildText(self.viewGO, "Right/#btn_reward/#txt_RewardNum")
+	self._txtDescr = gohelper.findChildText(self.viewGO, "Right/txt_Descr")
+	self._btnlock = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_locked")
+	self._txtUnlockedTips = gohelper.findChildText(self.viewGO, "Right/#btn_locked/#txt_UnLockedTips")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnEnter:AddClickListener(arg_2_0._btnEnterOnClick, arg_2_0)
-	arg_2_0._btnReward:AddClickListener(arg_2_0._btnRewardOnClick, arg_2_0)
-	arg_2_0._btnlock:AddClickListener(arg_2_0._btnLockOnClick, arg_2_0)
-	arg_2_0:addEventCb(RougeController.instance, RougeEvent.OnUpdateRougeRewardInfo, arg_2_0.refreshReward, arg_2_0)
-	OpenController.instance:registerCallback(OpenEvent.NewFuncUnlock, arg_2_0.refreshLock, arg_2_0)
+function V1a9_RougeEnterView:addEvents()
+	self._btnEnter:AddClickListener(self._btnEnterOnClick, self)
+	self._btnReward:AddClickListener(self._btnRewardOnClick, self)
+	self._btnlock:AddClickListener(self._btnLockOnClick, self)
+	self:addEventCb(RougeController.instance, RougeEvent.OnUpdateRougeRewardInfo, self.refreshReward, self)
+	OpenController.instance:registerCallback(OpenEvent.NewFuncUnlock, self.refreshLock, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnEnter:RemoveClickListener()
-	arg_3_0._btnReward:RemoveClickListener()
-	arg_3_0._btnlock:RemoveClickListener()
-	arg_3_0:removeEventCb(RougeController.instance, RougeEvent.OnUpdateRougeRewardInfo, arg_3_0.refreshReward, arg_3_0)
-	OpenController.instance:unregisterCallback(OpenEvent.NewFuncUnlock, arg_3_0.refreshLock, arg_3_0)
+function V1a9_RougeEnterView:removeEvents()
+	self._btnEnter:RemoveClickListener()
+	self._btnReward:RemoveClickListener()
+	self._btnlock:RemoveClickListener()
+	self:removeEventCb(RougeController.instance, RougeEvent.OnUpdateRougeRewardInfo, self.refreshReward, self)
+	OpenController.instance:unregisterCallback(OpenEvent.NewFuncUnlock, self.refreshLock, self)
 end
 
-function var_0_0._btnEnterOnClick(arg_4_0)
+function V1a9_RougeEnterView:_btnEnterOnClick()
 	RougeController.instance:openRougeMainView()
 end
 
-function var_0_0._btnRewardOnClick(arg_5_0)
+function V1a9_RougeEnterView:_btnRewardOnClick()
 	RougeController.instance:openRougeRewardView()
 end
 
-function var_0_0._btnLockOnClick(arg_6_0)
-	local var_6_0, var_6_1 = OpenHelper.getToastIdAndParam(arg_6_0.config.openId)
+function V1a9_RougeEnterView:_btnLockOnClick()
+	local toastId, toastParamList = OpenHelper.getToastIdAndParam(self.config.openId)
 
-	GameFacade.showToastWithTableParam(var_6_0, var_6_1)
+	GameFacade.showToastWithTableParam(toastId, toastParamList)
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0.animComp = VersionActivitySubAnimatorComp.get(arg_7_0.viewGO, arg_7_0)
+function V1a9_RougeEnterView:_editableInitView()
+	self.animComp = VersionActivitySubAnimatorComp.get(self.viewGO, self)
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0._season = RougeOutsideModel.instance:season()
+function V1a9_RougeEnterView:onOpen()
+	self._season = RougeOutsideModel.instance:season()
 
-	RougeOutsideRpc.instance:sendGetRougeOutSideInfoRequest(arg_8_0._season)
-	arg_8_0.animComp:playOpenAnim()
+	RougeOutsideRpc.instance:sendGetRougeOutSideInfoRequest(self._season)
+	self.animComp:playOpenAnim()
 
-	arg_8_0.config = ActivityConfig.instance:getActivityCo(VersionActivity1_9Enum.ActivityId.Rouge)
-	arg_8_0._txtDescr.text = arg_8_0.config.actDesc
+	self.config = ActivityConfig.instance:getActivityCo(VersionActivity1_9Enum.ActivityId.Rouge)
+	self._txtDescr.text = self.config.actDesc
 
-	arg_8_0:refreshLock()
-	arg_8_0:refreshReward()
+	self:refreshLock()
+	self:refreshReward()
 end
 
-function var_0_0.refreshLock(arg_9_0)
-	local var_9_0 = arg_9_0.config.openId
-	local var_9_1 = var_9_0 ~= 0 and not OpenModel.instance:isFunctionUnlock(var_9_0)
+function V1a9_RougeEnterView:refreshLock()
+	local openId = self.config.openId
+	local isLock = openId ~= 0 and not OpenModel.instance:isFunctionUnlock(openId)
 
-	gohelper.setActive(arg_9_0._btnlock, var_9_1)
+	gohelper.setActive(self._btnlock, isLock)
 
-	if var_9_1 then
-		local var_9_2, var_9_3 = OpenHelper.getToastIdAndParam(arg_9_0.config.openId)
-		local var_9_4 = ToastConfig.instance:getToastCO(var_9_2).tips
-		local var_9_5 = GameUtil.getSubPlaceholderLuaLang(var_9_4, var_9_3)
+	if isLock then
+		local toastId, toastParamList = OpenHelper.getToastIdAndParam(self.config.openId)
+		local tip = ToastConfig.instance:getToastCO(toastId).tips
 
-		arg_9_0._txtUnlockedTips.text = var_9_5
+		tip = GameUtil.getSubPlaceholderLuaLang(tip, toastParamList)
+		self._txtUnlockedTips.text = tip
 	else
-		arg_9_0._txtUnlockedTips.text = ""
+		self._txtUnlockedTips.text = ""
 	end
 end
 
-function var_0_0.refreshReward(arg_10_0)
-	arg_10_0._txtRewardNum.text = RougeRewardModel.instance:getRewardPoint()
+function V1a9_RougeEnterView:refreshReward()
+	self._txtRewardNum.text = RougeRewardModel.instance:getRewardPoint()
 
-	local var_10_0 = RougeRewardModel.instance:checkIsNewStage()
+	local isNew = RougeRewardModel.instance:checkIsNewStage()
 
-	gohelper.setActive(arg_10_0._goRewardNew, var_10_0)
+	gohelper.setActive(self._goRewardNew, isNew)
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	arg_11_0.animComp:destroy()
+function V1a9_RougeEnterView:onDestroyView()
+	self.animComp:destroy()
 end
 
-return var_0_0
+return V1a9_RougeEnterView

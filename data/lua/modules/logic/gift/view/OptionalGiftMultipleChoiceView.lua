@@ -1,49 +1,53 @@
-﻿module("modules.logic.gift.view.OptionalGiftMultipleChoiceView", package.seeall)
+﻿-- chunkname: @modules/logic/gift/view/OptionalGiftMultipleChoiceView.lua
 
-local var_0_0 = class("OptionalGiftMultipleChoiceView", GiftMultipleChoiceView)
+module("modules.logic.gift.view.OptionalGiftMultipleChoiceView", package.seeall)
 
-function var_0_0._btnokOnClick(arg_1_0)
-	if GiftModel.instance:getMultipleChoiceIndex() == 0 then
+local OptionalGiftMultipleChoiceView = class("OptionalGiftMultipleChoiceView", GiftMultipleChoiceView)
+
+function OptionalGiftMultipleChoiceView:_btnokOnClick()
+	local index = GiftModel.instance:getMultipleChoiceIndex()
+
+	if index == 0 then
 		GameFacade.showToast(ToastEnum.GiftMultipleChoice)
 	else
-		local var_1_0 = GiftModel.instance:getMultipleChoiceId()
+		local id = GiftModel.instance:getMultipleChoiceId()
 
-		arg_1_0:closeThis()
+		self:closeThis()
 
-		local var_1_1 = {}
-		local var_1_2 = {
-			materialId = arg_1_0.viewParam.param.id,
-			quantity = arg_1_0.viewParam.quantity
-		}
+		local data = {}
+		local o = {}
 
-		table.insert(var_1_1, var_1_2)
-		ItemRpc.instance:sendUseItemRequest(var_1_1, var_1_0)
+		o.materialId = self.viewParam.param.id
+		o.quantity = self.viewParam.quantity
+
+		table.insert(data, o)
+		ItemRpc.instance:sendUseItemRequest(data, id)
 	end
 end
 
-function var_0_0._setPropItems(arg_2_0)
-	local var_2_0 = {}
+function OptionalGiftMultipleChoiceView:_setPropItems()
+	local co = {}
 
-	arg_2_0.giftIds = GiftMultipleChoiceListModel.instance:getOptionalGiftIdList(arg_2_0.viewParam.param.id)
-	arg_2_0._contentGrid.enabled = #arg_2_0.giftIds < 6
+	self.giftIds = GiftMultipleChoiceListModel.instance:getOptionalGiftIdList(self.viewParam.param.id)
+	self._contentGrid.enabled = #self.giftIds < 6
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0.giftIds) do
-		local var_2_1 = MaterialDataMO.New()
+	for index, id in ipairs(self.giftIds) do
+		local o = MaterialDataMO.New()
 
-		var_2_1.index = iter_2_0
-		var_2_1.materilType = 1
-		var_2_1.materilId = iter_2_1
-		var_2_1.quantity = arg_2_0.viewParam.quantity * 1
+		o.index = index
+		o.materilType = 1
+		o.materilId = id
+		o.quantity = self.viewParam.quantity * 1
 
-		if GiftModel.instance:isGiftNeed(var_2_1.materilId) then
-			GiftModel.instance:setMultipleChoiceIndex(iter_2_0)
-			GiftModel.instance:setMultipleChoiceId(iter_2_1)
+		if GiftModel.instance:isGiftNeed(o.materilId) then
+			GiftModel.instance:setMultipleChoiceIndex(index)
+			GiftModel.instance:setMultipleChoiceId(id)
 		end
 
-		table.insert(var_2_0, var_2_1)
+		table.insert(co, o)
 	end
 
-	GiftMultipleChoiceListModel.instance:setPropList(var_2_0)
+	GiftMultipleChoiceListModel.instance:setPropList(co)
 end
 
-return var_0_0
+return OptionalGiftMultipleChoiceView

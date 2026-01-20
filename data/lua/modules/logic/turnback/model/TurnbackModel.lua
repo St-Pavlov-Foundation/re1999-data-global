@@ -1,455 +1,515 @@
-﻿module("modules.logic.turnback.model.TurnbackModel", package.seeall)
+﻿-- chunkname: @modules/logic/turnback/model/TurnbackModel.lua
 
-local var_0_0 = class("TurnbackModel", BaseModel)
+module("modules.logic.turnback.model.TurnbackModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local TurnbackModel = class("TurnbackModel", BaseModel)
+
+function TurnbackModel.sortFunc(a, b)
+	local aCo = ItemConfig.instance:getItemConfig(a.type, a.id)
+	local bCo = ItemConfig.instance:getItemConfig(b.type, b.id)
+
+	if aCo.type == bCo.type then
+		if aCo.rare == bCo.rare then
+			if aCo.id == bCo.id then
+				return a.num > b.num
+			end
+
+			return aCo.id < bCo.id
+		end
+
+		return aCo.rare > bCo.rare
+	end
+
+	return aCo.type > bCo.type
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0.turnbackSubModuleInfo = {}
-	arg_2_0.unExitSubModules = {}
-	arg_2_0.turnbackInfoMo = nil
-	arg_2_0.targetCategoryId = 0
-	arg_2_0.curTurnbackId = 0
-	arg_2_0.lastGetSigninDay = nil
+function TurnbackModel:onInit()
+	self:reInit()
 end
 
-function var_0_0.setTurnbackInfo(arg_3_0, arg_3_1)
-	if TurnbackConfig.instance:getTurnbackCo(arg_3_1.id) then
-		arg_3_0.turnbackInfoMo = TurnbackInfoMo.New()
+function TurnbackModel:reInit()
+	self.turnbackSubModuleInfo = {}
+	self.unExitSubModules = {}
+	self.turnbackInfoMo = nil
+	self.targetCategoryId = 0
+	self.curTurnbackId = 0
+	self.lastGetSigninDay = nil
+	self._openpopview = false
+end
 
-		arg_3_0.turnbackInfoMo:init(arg_3_1)
-		arg_3_0:setCurTurnbackId(arg_3_1.id)
-		arg_3_0:setTaskInfoList()
-		arg_3_0:setSignInInfoList()
-		arg_3_0:initRecommendData()
-		arg_3_0:getBonusHeroConfigList()
-		arg_3_0:_calcAllBonus()
-		arg_3_0:setDropInfoList(arg_3_1.dropInfos)
+function TurnbackModel:setTurnbackInfo(info)
+	local config = TurnbackConfig.instance:getTurnbackCo(info.id)
+
+	if config then
+		self.turnbackInfoMo = TurnbackInfoMo.New()
+
+		self.turnbackInfoMo:init(info)
+		self:setCurTurnbackId(info.id)
+		self:setTaskInfoList()
+		self:setSignInInfoList()
+		self:initRecommendData()
+		self:getBonusHeroConfigList()
+		self:_calcAllBonus()
+		self:setDropInfoList(info.dropInfos)
 	end
 end
 
-function var_0_0.setCurTurnbackId(arg_4_0, arg_4_1)
-	arg_4_0.curTurnbackId = arg_4_1
+function TurnbackModel:setCurTurnbackId(turnbackId)
+	self.curTurnbackId = turnbackId
 end
 
-function var_0_0.getCurTurnbackId(arg_5_0)
-	return arg_5_0.curTurnbackId
+function TurnbackModel:getCurTurnbackId()
+	return self.curTurnbackId
 end
 
-function var_0_0.isNewType(arg_6_0)
-	return arg_6_0.turnbackInfoMo:isNewType()
+function TurnbackModel:isNewType()
+	return self.turnbackInfoMo:isNewType()
 end
 
-function var_0_0.getCurTurnbackMo(arg_7_0)
-	return arg_7_0.turnbackInfoMo
+function TurnbackModel:getCurTurnbackMo()
+	return self.turnbackInfoMo
 end
 
-function var_0_0.getLeaveTime(arg_8_0)
-	return arg_8_0.turnbackInfoMo.leaveTime
+function TurnbackModel:getLeaveTime()
+	return self.turnbackInfoMo.leaveTime
 end
 
-function var_0_0.getCurTurnbackMoWithNilError(arg_9_0)
-	local var_9_0 = arg_9_0:getCurTurnbackMo()
+function TurnbackModel:getCurTurnbackMoWithNilError()
+	local turnbackMo = self:getCurTurnbackMo()
 
-	if not var_9_0 then
+	if not turnbackMo then
 		logError("TurnbackModel:getCurTurnbackMoWithNilError, can't find turnbackMo")
 	end
 
-	return var_9_0
+	return turnbackMo
 end
 
-function var_0_0.canShowTurnbackPop(arg_10_0)
-	if not arg_10_0.turnbackInfoMo then
+function TurnbackModel:canShowTurnbackPop()
+	if not self.turnbackInfoMo then
 		return false
-	elseif arg_10_0.turnbackInfoMo.firstShow then
+	elseif self.turnbackInfoMo.firstShow then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0.initTurnbackSubModules(arg_11_0, arg_11_1)
-	local var_11_0 = TurnbackConfig.instance:getAllTurnbackSubModules(arg_11_1)
+function TurnbackModel:initTurnbackSubModules(turnbackId)
+	local subModuleTab = TurnbackConfig.instance:getAllTurnbackSubModules(turnbackId)
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
-		if not arg_11_0.turnbackSubModuleInfo[iter_11_1] then
-			local var_11_1 = {
-				id = iter_11_1,
-				config = TurnbackConfig.instance:getTurnbackSubModuleCo(iter_11_1),
-				order = iter_11_0
+	for index, subId in ipairs(subModuleTab) do
+		local subModule = self.turnbackSubModuleInfo[subId]
+
+		if not subModule then
+			subModule = {
+				id = subId,
+				config = TurnbackConfig.instance:getTurnbackSubModuleCo(subId),
+				order = index
 			}
-
-			arg_11_0.turnbackSubModuleInfo[iter_11_1] = var_11_1
+			self.turnbackSubModuleInfo[subId] = subModule
 		end
 	end
 
-	arg_11_0:removeUnExitSubModules(arg_11_0.turnbackSubModuleInfo)
+	self:removeUnExitSubModules(self.turnbackSubModuleInfo)
 end
 
-function var_0_0.setTargetCategoryId(arg_12_0, arg_12_1)
-	arg_12_0.targetCategoryId = arg_12_1
+function TurnbackModel:setTargetCategoryId(subId)
+	self.targetCategoryId = subId
 end
 
-function var_0_0.getTargetCategoryId(arg_13_0, arg_13_1)
-	arg_13_0:initTurnbackSubModules(arg_13_1)
+function TurnbackModel:getTargetCategoryId(turnbackId)
+	self:initTurnbackSubModules(turnbackId)
 
-	if GameUtil.getTabLen(arg_13_0.turnbackSubModuleInfo) == 0 then
-		arg_13_0.targetCategoryId = 0
+	if GameUtil.getTabLen(self.turnbackSubModuleInfo) == 0 then
+		self.targetCategoryId = 0
 
 		return 0
 	end
 
-	for iter_13_0, iter_13_1 in pairs(arg_13_0.turnbackSubModuleInfo) do
-		if iter_13_1.config.id == arg_13_0.targetCategoryId and iter_13_1.config.turnbackId == arg_13_1 then
-			return arg_13_0.targetCategoryId
+	for _, v in pairs(self.turnbackSubModuleInfo) do
+		if v.config.id == self.targetCategoryId and v.config.turnbackId == turnbackId then
+			return self.targetCategoryId
 		end
 	end
 
-	if not arg_13_0:isNewType() then
-		arg_13_0.targetCategoryId = arg_13_0:getTargetSubModules()
+	if turnbackId == 2 then
+		self.targetCategoryId = self:getTargetNewSubModules()
 	else
-		arg_13_0.targetCategoryId = arg_13_0:getTargetNewSubModules()
+		self.targetCategoryId = self:getTargetSubModules(turnbackId)
 	end
 
-	return arg_13_0.targetCategoryId
+	return self.targetCategoryId
 end
 
-function var_0_0.getTargetSubModules(arg_14_0)
-	if var_0_0.instance:haveOnceBonusReward() then
-		return TurnbackEnum.ActivityId.RewardShowView
-	elseif var_0_0.instance:haveSignInReward() then
-		return TurnbackEnum.ActivityId.SignIn
-	elseif var_0_0.instance:haveTaskReward() then
-		return TurnbackEnum.ActivityId.TaskView
+function TurnbackModel:getTargetSubModules(turnbackId)
+	local signin = string.format("Turnback%sSignInView", turnbackId)
+	local bp = string.format("Turnback%sBPView", turnbackId)
+	local search = string.format("Turnback%sDoubleView", turnbackId)
+	local store = string.format("Turnback%sStoreView", turnbackId)
+
+	if self:haveSignInReward() then
+		return TurnbackEnum.ActivityId[signin]
+	elseif self:haveTaskReward() then
+		return TurnbackEnum.ActivityId[bp]
+	elseif TurnbackTaskModel.instance:checkSearchTaskCanReceive() then
+		return TurnbackEnum.ActivityId[search]
+	elseif not self:checkTodayBonusReceive() then
+		return TurnbackEnum.ActivityId[store]
 	end
 
-	return TurnbackEnum.ActivityId.TaskView
+	return TurnbackEnum.ActivityId[signin]
 end
 
-function var_0_0.getTargetNewSubModules(arg_15_0)
-	if var_0_0.instance:haveSignInReward() then
+function TurnbackModel:getTargetNewSubModules()
+	if TurnbackModel.instance:haveSignInReward() then
 		return TurnbackEnum.ActivityId.NewSignIn
-	elseif var_0_0.instance:haveTaskReward() then
+	elseif TurnbackModel.instance:haveTaskReward() then
 		return TurnbackEnum.ActivityId.NewTaskView
 	end
 
 	return TurnbackEnum.ActivityId.NewSignIn
 end
 
-function var_0_0.haveOnceBonusReward(arg_16_0)
-	return not arg_16_0.turnbackInfoMo.onceBonus
+function TurnbackModel:haveOnceBonusReward()
+	return not self.turnbackInfoMo.onceBonus
 end
 
-function var_0_0.haveSignInReward(arg_17_0)
+function TurnbackModel:haveSignInReward()
 	return TurnbackSignInModel.instance:getTheFirstCanGetIndex() ~= 0
 end
 
-function var_0_0.setLastGetSigninReward(arg_18_0, arg_18_1)
-	arg_18_0.lastGetSigninDay = arg_18_1
+function TurnbackModel:setLastGetSigninReward(day)
+	self.lastGetSigninDay = day
 end
 
-function var_0_0.getLastGetSigninReward(arg_19_0)
-	return arg_19_0.lastGetSigninDay
+function TurnbackModel:getLastGetSigninReward()
+	return self.lastGetSigninDay
 end
 
-function var_0_0.haveTaskReward(arg_20_0)
-	local var_20_0 = TurnbackTaskModel.instance:haveTaskItemReward()
-	local var_20_1 = arg_20_0:getCurHasGetTaskBonus()
-	local var_20_2 = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(arg_20_0.curTurnbackId)
-	local var_20_3 = {}
+function TurnbackModel:getNextDay()
+	local day = self:getCurSignInDay()
 
-	for iter_20_0, iter_20_1 in ipairs(var_20_2) do
-		local var_20_4 = {
-			config = iter_20_1
-		}
+	if day < 7 then
+		return day + 1
+	end
+end
 
-		var_20_4.hasGetState = false
+function TurnbackModel:haveTaskReward()
+	local haveTaskItemReward = TurnbackTaskModel.instance:haveTaskItemReward()
+	local curHasGetTaskBonus = self:getCurHasGetTaskBonus()
+	local allTaskBonusItemCo = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(self.curTurnbackId)
+	local taskBonusItemTab = {}
 
-		for iter_20_2, iter_20_3 in ipairs(var_20_1) do
-			if iter_20_1.id == iter_20_3 then
-				var_20_4.hasGetState = true
+	if not allTaskBonusItemCo or not curHasGetTaskBonus then
+		return
+	end
+
+	for index, bonusCo in ipairs(allTaskBonusItemCo) do
+		local taskBonusItem = {}
+
+		taskBonusItem.config = bonusCo
+		taskBonusItem.hasGetState = false
+
+		for k, hasGetTaskBonusId in ipairs(curHasGetTaskBonus) do
+			if bonusCo.id == hasGetTaskBonusId then
+				taskBonusItem.hasGetState = true
 
 				break
 			end
 		end
 
-		var_20_3[iter_20_0] = var_20_4
+		taskBonusItemTab[index] = taskBonusItem
 	end
 
-	local var_20_5 = arg_20_0.turnbackInfoMo.bonusPoint
-	local var_20_6 = false
+	local bonusPoint = self.turnbackInfoMo.bonusPoint
+	local haveTaskBonusReward = false
 
-	for iter_20_4, iter_20_5 in ipairs(var_20_3) do
-		if var_20_5 >= iter_20_5.config.needPoint and iter_20_5.hasGetState == false then
-			var_20_6 = true
+	for _, taskBonusItem in ipairs(taskBonusItemTab) do
+		if bonusPoint >= taskBonusItem.config.needPoint and taskBonusItem.hasGetState == false then
+			haveTaskBonusReward = true
 
 			break
 		end
 	end
 
-	return var_20_0 or var_20_6
+	return haveTaskItemReward or haveTaskBonusReward
 end
 
-function var_0_0.addUnExitSubModule(arg_21_0, arg_21_1)
-	arg_21_0.unExitSubModules[arg_21_1] = arg_21_1
+function TurnbackModel:addUnExitSubModule(subModuleId)
+	self.unExitSubModules[subModuleId] = subModuleId
 end
 
-function var_0_0.removeUnExitSubModules(arg_22_0, arg_22_1)
-	if GameUtil.getTabLen(arg_22_1) == 0 then
+function TurnbackModel:removeUnExitSubModules(subModuleIds)
+	if GameUtil.getTabLen(subModuleIds) == 0 then
 		return
 	end
 
-	for iter_22_0, iter_22_1 in pairs(arg_22_0.unExitSubModules) do
-		for iter_22_2, iter_22_3 in ipairs(arg_22_1) do
-			if iter_22_3.id == iter_22_1 then
-				table.remove(arg_22_1, iter_22_2)
+	for _, moduleId in pairs(self.unExitSubModules) do
+		for index, info in ipairs(subModuleIds) do
+			if info.id == moduleId then
+				table.remove(subModuleIds, index)
 			end
 		end
 	end
 
-	return arg_22_1
+	return subModuleIds
 end
 
-function var_0_0.removeUnExitCategory(arg_23_0, arg_23_1)
-	for iter_23_0, iter_23_1 in ipairs(arg_23_1) do
-		if iter_23_1 == TurnbackEnum.ActivityId.DungeonShowView and not arg_23_0.turnbackInfoMo:isAdditionInOpenTime() then
-			arg_23_0:addUnExitSubModule(iter_23_1)
-			table.remove(arg_23_1, iter_23_0)
+function TurnbackModel:removeUnExitCategory(subModuleTab)
+	for index, subModuleId in ipairs(subModuleTab) do
+		if subModuleId == TurnbackEnum.ActivityId.DungeonShowView and not self.turnbackInfoMo:isAdditionInOpenTime() then
+			self:addUnExitSubModule(subModuleId)
+			table.remove(subModuleTab, index)
 		end
 
-		if iter_23_1 == TurnbackEnum.ActivityId.RecommendView and (TurnbackRecommendModel.instance:getCanShowRecommendCount() == 0 or not arg_23_0.turnbackInfoMo:isInReommendTime()) then
-			arg_23_0:addUnExitSubModule(iter_23_1)
-			table.remove(arg_23_1, iter_23_0)
+		if subModuleId == TurnbackEnum.ActivityId.RecommendView and (TurnbackRecommendModel.instance:getCanShowRecommendCount() == 0 or not self.turnbackInfoMo:isInReommendTime()) then
+			self:addUnExitSubModule(subModuleId)
+			table.remove(subModuleTab, index)
 		end
 	end
 
-	return arg_23_1
+	return subModuleTab
 end
 
-function var_0_0.getRemainTime(arg_24_0, arg_24_1)
-	local var_24_0 = arg_24_0:getCurTurnbackMo()
+function TurnbackModel:getRemainTime(endTime)
+	local turnbackInfoMO = self:getCurTurnbackMo()
 
-	if var_24_0 then
-		local var_24_1 = (arg_24_1 or var_24_0.endTime) - ServerTime.now()
-		local var_24_2 = Mathf.Floor(var_24_1 / TimeUtil.OneDaySecond)
-		local var_24_3 = var_24_1 % TimeUtil.OneDaySecond
-		local var_24_4 = Mathf.Floor(var_24_3 / TimeUtil.OneHourSecond)
-		local var_24_5 = var_24_3 % TimeUtil.OneHourSecond
-		local var_24_6 = Mathf.Floor(var_24_5 / TimeUtil.OneMinuteSecond)
-		local var_24_7 = Mathf.Floor(var_24_5 % TimeUtil.OneMinuteSecond)
+	if turnbackInfoMO then
+		local time = endTime or turnbackInfoMO.endTime
+		local remainTimeSec = time - ServerTime.now()
+		local day = Mathf.Floor(remainTimeSec / TimeUtil.OneDaySecond)
+		local hourSecond = remainTimeSec % TimeUtil.OneDaySecond
+		local hour = Mathf.Floor(hourSecond / TimeUtil.OneHourSecond)
+		local minuteSecond = hourSecond % TimeUtil.OneHourSecond
+		local minute = Mathf.Floor(minuteSecond / TimeUtil.OneMinuteSecond)
+		local second = Mathf.Floor(minuteSecond % TimeUtil.OneMinuteSecond)
 
-		return var_24_2, var_24_4, var_24_6, var_24_7
+		return day, hour, minute, second
 	else
 		return 0, 0, 0, 0
 	end
 end
 
-function var_0_0.isInOpenTime(arg_25_0)
-	if arg_25_0.turnbackInfoMo then
-		return arg_25_0.turnbackInfoMo:isInOpenTime()
+function TurnbackModel:isInOpenTime()
+	if self.turnbackInfoMo then
+		return self.turnbackInfoMo:isInOpenTime()
 	end
 end
 
-function var_0_0.setTaskInfoList(arg_26_0)
-	TurnbackTaskModel.instance:setTaskInfoList(arg_26_0.turnbackInfoMo.tasks)
-
-	if not arg_26_0:isNewType() then
-		TurnbackTaskModel.instance:refreshList(TurnbackTaskModel.instance:getCurTaskLoopType())
-	else
-		TurnbackTaskModel.instance:refreshListNewTaskList()
-	end
+function TurnbackModel:setTaskInfoList()
+	TurnbackTaskModel.instance:setTaskInfoList(self.turnbackInfoMo.tasks)
+	TurnbackTaskModel.instance:refreshListNewTaskList()
 end
 
-function var_0_0.getBuyDoubleBonus(arg_27_0)
-	return arg_27_0.turnbackInfoMo:getBuyDoubleBonus()
+function TurnbackModel:getBuyDoubleBonus()
+	return self.turnbackInfoMo:getBuyDoubleBonus()
 end
 
-function var_0_0.updateHasGetTaskBonus(arg_28_0, arg_28_1)
-	arg_28_0.turnbackInfoMo:updateHasGetTaskBonus(arg_28_1.hasGetTaskBonus)
+function TurnbackModel:setBuyDoubleBonus()
+	self.turnbackInfoMo.hasBuyDoubleBonus = true
 end
 
-function var_0_0.updateCurBonusPoint(arg_29_0, arg_29_1)
-	arg_29_0.turnbackInfoMo.bonusPoint = arg_29_1
+function TurnbackModel:updateHasGetTaskBonus(info)
+	self.turnbackInfoMo:updateHasGetTaskBonus(info.hasGetTaskBonus)
 end
 
-function var_0_0.getCurHasGetTaskBonus(arg_30_0)
-	return arg_30_0.turnbackInfoMo.hasGetTaskBonus
+function TurnbackModel:updateCurBonusPoint(pointNum)
+	self.turnbackInfoMo.bonusPoint = pointNum
 end
 
-function var_0_0.setOnceBonusGetState(arg_31_0)
-	arg_31_0.turnbackInfoMo.onceBonus = true
+function TurnbackModel:getCurHasGetTaskBonus()
+	return self.turnbackInfoMo.hasGetTaskBonus
 end
 
-function var_0_0.getOnceBonusGetState(arg_32_0)
-	return arg_32_0.turnbackInfoMo.onceBonus
+function TurnbackModel:setOnceBonusGetState()
+	self.turnbackInfoMo.onceBonus = true
 end
 
-function var_0_0.setSignInInfoList(arg_33_0)
-	TurnbackSignInModel.instance:setSignInInfoList(arg_33_0.turnbackInfoMo.signInInfos)
+function TurnbackModel:getOnceBonusGetState()
+	return self.turnbackInfoMo.onceBonus
 end
 
-function var_0_0.getCurSignInDay(arg_34_0)
-	return arg_34_0.turnbackInfoMo.signInDay
+function TurnbackModel:setSignInInfoList()
+	TurnbackSignInModel.instance:setSignInInfoList(self.turnbackInfoMo.signInInfos)
 end
 
-function var_0_0.initRecommendData(arg_35_0)
-	TurnbackRecommendModel.instance:initReommendShowState(arg_35_0.curTurnbackId)
+function TurnbackModel:getCurSignInDay()
+	return self.turnbackInfoMo.signInDay
 end
 
-function var_0_0.isAdditionValid(arg_36_0)
-	local var_36_0 = false
-	local var_36_1 = arg_36_0:getCurTurnbackMo()
-
-	if var_36_1 then
-		var_36_0 = var_36_1:isAdditionValid()
-	end
-
-	return var_36_0
+function TurnbackModel:initRecommendData()
+	TurnbackRecommendModel.instance:initReommendShowState(self.curTurnbackId)
 end
 
-function var_0_0.isShowTurnBackAddition(arg_37_0, arg_37_1)
-	local var_37_0 = arg_37_0:isAdditionValid()
-	local var_37_1 = var_0_0.instance:getCurTurnbackId()
-	local var_37_2 = TurnbackConfig.instance:isTurnBackAdditionToChapter(var_37_1, arg_37_1)
+function TurnbackModel:isAdditionValid()
+	local result = false
+	local turnbackInfoMo = self:getCurTurnbackMo()
 
-	return var_37_0 and var_37_2
-end
-
-function var_0_0.getAdditionCountInfo(arg_38_0)
-	local var_38_0 = arg_38_0:getCurTurnbackId()
-	local var_38_1 = TurnbackConfig.instance:getAdditionTotalCount(var_38_0)
-	local var_38_2 = 0
-	local var_38_3 = arg_38_0:getCurTurnbackMoWithNilError()
-
-	if var_38_3 then
-		var_38_2 = var_38_3:getRemainAdditionCount()
+	if turnbackInfoMo then
+		result = turnbackInfoMo:isAdditionValid()
 	end
 
-	return var_38_2, var_38_1
+	return result
 end
 
-function var_0_0.getAdditionRewardList(arg_39_0, arg_39_1)
-	local var_39_0 = {}
+function TurnbackModel:isShowTurnBackAddition(chapterId)
+	local isValid = self:isAdditionValid()
+	local turnbackId = TurnbackModel.instance:getCurTurnbackId()
+	local isAdditionChapter = TurnbackConfig.instance:isTurnBackAdditionToChapter(turnbackId, chapterId)
+	local isShowAddition = isValid and isAdditionChapter
 
-	if not arg_39_1 then
-		return var_39_0
+	return isShowAddition
+end
+
+function TurnbackModel:getAdditionCountInfo()
+	local turnbackId = self:getCurTurnbackId()
+	local totalCount = TurnbackConfig.instance:getAdditionTotalCount(turnbackId)
+	local remainCount = 0
+	local turnbackInfoMo = self:getCurTurnbackMoWithNilError()
+
+	if turnbackInfoMo then
+		remainCount = turnbackInfoMo:getRemainAdditionCount()
 	end
 
-	local var_39_1 = arg_39_0:getCurTurnbackId()
-	local var_39_2 = TurnbackConfig.instance:getAdditionRate(var_39_1)
+	return remainCount, totalCount
+end
 
-	if var_39_2 and var_39_2 > 0 then
-		for iter_39_0, iter_39_1 in ipairs(arg_39_1) do
-			local var_39_3 = {
-				iter_39_1[1],
-				iter_39_1[2],
-				math.ceil(iter_39_1[3] * var_39_2 / 1000),
+function TurnbackModel:getAdditionRewardList(rewardList)
+	local result = {}
+
+	if not rewardList then
+		return result
+	end
+
+	local turnbackId = self:getCurTurnbackId()
+	local additionRate = TurnbackConfig.instance:getAdditionRate(turnbackId)
+
+	if additionRate and additionRate > 0 then
+		for _, reward in ipairs(rewardList) do
+			local additionReward = {
 				isAddition = true
 			}
 
-			table.insert(var_39_0, var_39_3)
+			additionReward[1] = reward[1]
+			additionReward[2] = reward[2]
+			additionReward[3] = math.ceil(reward[3] * additionRate / 1000)
+
+			table.insert(result, additionReward)
 		end
 	end
 
-	return var_39_0
+	return result
 end
 
-function var_0_0.getMonthCardShowState(arg_40_0)
-	local var_40_0 = arg_40_0:getCurTurnbackMo()
+function TurnbackModel:getMonthCardShowState()
+	local turnbackMO = self:getCurTurnbackMo()
 
-	if var_40_0 == nil then
+	if turnbackMO == nil then
 		return false
 	end
 
-	local var_40_1 = var_40_0.config
+	local config = turnbackMO.config
 
-	if var_40_1 == nil then
+	if config == nil then
 		return false
 	end
 
-	if var_40_1.monthCardAddedId == nil then
+	if config.monthCardAddedId == nil then
 		return false
 	end
 
-	local var_40_2 = StoreConfig.instance:getMonthCardAddConfig(var_40_1.monthCardAddedId)
+	local monthCardAddConfig = StoreConfig.instance:getMonthCardAddConfig(config.monthCardAddedId)
 
-	if var_40_2 == nil then
+	if monthCardAddConfig == nil then
 		return false
 	end
 
-	return var_40_0.monthCardAddedBuyCount < var_40_2.limit
+	return turnbackMO.monthCardAddedBuyCount < monthCardAddConfig.limit
 end
 
-function var_0_0.getCurrentTurnbackMonthCardId(arg_41_0)
-	local var_41_0 = arg_41_0:getCurTurnbackMo()
+function TurnbackModel:getCurrentTurnbackMonthCardId()
+	local turnbackMO = self:getCurTurnbackMo()
 
-	if var_41_0 == nil then
+	if turnbackMO == nil then
 		return nil
 	end
 
-	return var_41_0.config.monthCardAddedId
+	local config = turnbackMO.config
+
+	return config.monthCardAddedId
 end
 
-function var_0_0.addCurrentMonthBuyCount(arg_42_0)
-	local var_42_0 = arg_42_0:getCurTurnbackMo()
+function TurnbackModel:addCurrentMonthBuyCount()
+	local turnbackMO = self:getCurTurnbackMo()
 
-	if var_42_0 == nil then
+	if turnbackMO == nil then
 		return
 	end
 
-	var_42_0.monthCardAddedBuyCount = var_42_0.monthCardAddedBuyCount + 1
+	turnbackMO.monthCardAddedBuyCount = turnbackMO.monthCardAddedBuyCount + 1
 end
 
-function var_0_0.getCanGetRewardList(arg_43_0)
-	local var_43_0 = {}
-	local var_43_1 = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(arg_43_0.curTurnbackId)
+function TurnbackModel:getCurrentMonthBuyCount()
+	local turnbackMO = self:getCurTurnbackMo()
 
-	for iter_43_0, iter_43_1 in ipairs(var_43_1) do
-		if arg_43_0:checkBonusCanGetById(iter_43_1.id) then
-			table.insert(var_43_0, iter_43_1.id)
+	if turnbackMO == nil then
+		return 999
+	end
+
+	return turnbackMO.monthCardAddedBuyCount
+end
+
+function TurnbackModel:getCanGetRewardList()
+	local list = {}
+	local coList = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(self.curTurnbackId)
+
+	for index, co in ipairs(coList) do
+		if self:checkBonusCanGetById(co.id) then
+			table.insert(list, co.id)
 		end
 	end
 
-	return var_43_0
+	return list
 end
 
-function var_0_0.getNextUnlockReward(arg_44_0)
-	local var_44_0 = arg_44_0:getCurrentPointId()
-	local var_44_1 = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(arg_44_0.curTurnbackId)
+function TurnbackModel:getNextUnlockReward()
+	local point = self:getCurrentPointId()
+	local coList = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(self.curTurnbackId)
 
-	for iter_44_0, iter_44_1 in ipairs(var_44_1) do
-		if var_44_0 < iter_44_1.needPoint then
-			return iter_44_1.id
+	for _, co in ipairs(coList) do
+		if point < co.needPoint then
+			return co.id
 		end
 	end
 
-	if var_44_0 >= var_44_1[#var_44_1].needPoint then
-		return var_44_1[#var_44_1].id
+	if point >= coList[#coList].needPoint then
+		return coList[#coList].id
 	end
 end
 
-function var_0_0.checkBonusCanGetById(arg_45_0, arg_45_1)
-	if arg_45_0:getCurrentPointId() >= TurnbackConfig.instance:getTurnbackTaskBonusCo(arg_45_0.curTurnbackId, arg_45_1).needPoint and not arg_45_0:checkBonusGetById(arg_45_1) then
+function TurnbackModel:checkBonusCanGetById(id)
+	local pointId = self:getCurrentPointId()
+	local co = TurnbackConfig.instance:getTurnbackTaskBonusCo(self.curTurnbackId, id)
+
+	if pointId >= co.needPoint and not self:checkBonusGetById(id) then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.getCurrentPointId(arg_46_0)
-	local var_46_0, var_46_1 = TurnbackConfig.instance:getBonusPointCo(arg_46_0.curTurnbackId)
-	local var_46_2 = CurrencyModel.instance:getCurrency(var_46_1)
+function TurnbackModel:getCurrentPointId()
+	local bonusPointType, bonusPointId = TurnbackConfig.instance:getBonusPointCo(self.curTurnbackId)
+	local bonusPointMo = CurrencyModel.instance:getCurrency(bonusPointId)
 
-	return var_46_2 and var_46_2.quantity or 0
+	return bonusPointMo and bonusPointMo.quantity or 0
 end
 
-function var_0_0.checkBonusGetById(arg_47_0, arg_47_1)
-	local var_47_0 = arg_47_0:getCurHasGetTaskBonus()
+function TurnbackModel:checkBonusGetById(id)
+	local idList = self:getCurHasGetTaskBonus()
 
-	for iter_47_0, iter_47_1 in ipairs(var_47_0) do
-		if arg_47_1 == iter_47_1 then
+	for index, value in ipairs(idList) do
+		if id == value then
 			return true
 		end
 	end
@@ -457,179 +517,282 @@ function var_0_0.checkBonusGetById(arg_47_0, arg_47_1)
 	return false
 end
 
-function var_0_0.checkHasGetAllTaskReward(arg_48_0)
-	local var_48_0 = arg_48_0:getCurHasGetTaskBonus()
-	local var_48_1 = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(arg_48_0.curTurnbackId)
+function TurnbackModel:checkHasGetAllTaskReward()
+	local idList = self:getCurHasGetTaskBonus()
+	local coList = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(self.curTurnbackId)
 
-	if #var_48_0 == #var_48_1 then
+	if #idList == #coList then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0._calcAllBonus(arg_49_0)
-	arg_49_0.bounsdict = {}
-	arg_49_0.allBonusList = {}
+function TurnbackModel:_calcAllBonus()
+	self.bounsdict = {}
+	self.allBonusList = {}
 
-	local var_49_0 = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(arg_49_0.curTurnbackId)
+	local bonusList = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(self.curTurnbackId)
 
-	for iter_49_0, iter_49_1 in ipairs(var_49_0) do
-		arg_49_0:_calcBonus(arg_49_0.bounsdict, arg_49_0.allBonusList, iter_49_1.bonus)
+	for index, co in ipairs(bonusList) do
+		self:_calcBonus(self.bounsdict, self.allBonusList, co.bonus)
 	end
 end
 
-function var_0_0.getAllBonus(arg_50_0)
-	return arg_50_0.allBonusList
+function TurnbackModel:getAllBonus()
+	return self.allBonusList
 end
 
-function var_0_0.getAllBonusCount(arg_51_0)
-	return #arg_51_0.allBonusList
+function TurnbackModel:getAllBonusCount()
+	return #self.allBonusList
 end
 
-function var_0_0._calcBonus(arg_52_0, arg_52_1, arg_52_2, arg_52_3)
-	for iter_52_0, iter_52_1 in pairs(string.split(arg_52_3, "|")) do
-		local var_52_0 = string.splitToNumber(iter_52_1, "#")
-		local var_52_1 = var_52_0[2]
-		local var_52_2 = var_52_0[3]
+function TurnbackModel:_calcBonus(dict, list, bonusStr)
+	for _, str in pairs(string.split(bonusStr, "|")) do
+		local sp = string.splitToNumber(str, "#")
+		local id = sp[2]
+		local num = sp[3]
 
-		if not arg_52_1[var_52_1] then
-			arg_52_1[var_52_1] = var_52_0
+		if not dict[id] then
+			dict[id] = sp
 
-			table.insert(arg_52_2, var_52_0)
+			table.insert(list, sp)
 		else
-			arg_52_1[var_52_1][3] = arg_52_1[var_52_1][3] + var_52_2
+			dict[id][3] = dict[id][3] + num
 		end
 	end
 end
 
-function var_0_0.getFirstBonusHeroConfig(arg_53_0)
-	if not arg_53_0.bonusHeroConfigList then
-		return arg_53_0:getBonusHeroConfigList()[1]
+function TurnbackModel:getFirstBonusHeroConfig()
+	if not self.bonusHeroConfigList then
+		local list = self:getBonusHeroConfigList()
+
+		return list[1]
 	else
-		return arg_53_0.bonusHeroConfigList[1]
+		return self.bonusHeroConfigList[1]
 	end
 end
 
-function var_0_0.getBonusHeroConfigList(arg_54_0)
-	if arg_54_0.bonusHeroConfigList then
-		return arg_54_0.bonusHeroConfigList
+function TurnbackModel:getBonusHeroConfigList()
+	if self.bonusHeroConfigList then
+		return self.bonusHeroConfigList
 	else
-		arg_54_0.bonusHeroConfigList = {}
-		arg_54_0.unlockHeroList = {}
+		self.bonusHeroConfigList = {}
+		self.unlockHeroList = {}
 
-		local var_54_0 = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(arg_54_0.curTurnbackId)
+		local list = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(self.curTurnbackId)
 
-		for iter_54_0, iter_54_1 in ipairs(var_54_0) do
-			if iter_54_1 and not string.nilorempty(iter_54_1.character) then
-				if not arg_54_0.firstBonusHeroConfig then
-					arg_54_0.firstBonusHeroConfig = iter_54_1
+		for index, bonusCo in ipairs(list) do
+			if bonusCo and not string.nilorempty(bonusCo.character) then
+				if not self.firstBonusHeroConfig then
+					self.firstBonusHeroConfig = bonusCo
 				end
 
-				local var_54_1 = iter_54_1.id
+				local id = bonusCo.id
 
-				if arg_54_0:checkBonusGetById(var_54_1) then
-					table.insert(arg_54_0.unlockHeroList, var_54_1)
+				if self:checkBonusGetById(id) then
+					table.insert(self.unlockHeroList, id)
 				end
 
-				table.insert(arg_54_0.bonusHeroConfigList, iter_54_1)
+				table.insert(self.bonusHeroConfigList, bonusCo)
 			end
 		end
 	end
 end
 
-function var_0_0.getUnlockHeroList(arg_55_0)
-	arg_55_0.unlockHeroList = {}
+function TurnbackModel:getUnlockHeroList()
+	self.unlockHeroList = {}
 
-	local var_55_0 = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(arg_55_0.curTurnbackId)
+	local list = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(self.curTurnbackId)
 
-	for iter_55_0, iter_55_1 in ipairs(var_55_0) do
-		if iter_55_1 and not string.nilorempty(iter_55_1.character) then
-			if arg_55_0:getCurrentPointId() >= iter_55_1.needPoint then
-				table.insert(arg_55_0.unlockHeroList, iter_55_1)
+	for index, bonusCo in ipairs(list) do
+		if bonusCo and not string.nilorempty(bonusCo.character) then
+			local point = self:getCurrentPointId()
+
+			if point >= bonusCo.needPoint then
+				table.insert(self.unlockHeroList, bonusCo)
 			else
-				table.insert(arg_55_0.unlockHeroList, iter_55_1)
+				table.insert(self.unlockHeroList, bonusCo)
 
-				return arg_55_0.unlockHeroList
+				return self.unlockHeroList
 			end
 		end
 	end
 
-	return arg_55_0.unlockHeroList
+	return self.unlockHeroList
 end
 
-function var_0_0.setDropInfoList(arg_56_0, arg_56_1)
-	arg_56_0._dropInfoList = {}
+function TurnbackModel:setDropInfoList(dropInfoList)
+	self._dropInfoList = {}
 
-	local var_56_0 = TurnbackConfig.instance:getDropCoList()
+	local colist = TurnbackConfig.instance:getDropCoList()
 
-	if arg_56_1 then
-		for iter_56_0, iter_56_1 in ipairs(var_56_0) do
-			local var_56_1 = {
-				co = iter_56_1
-			}
+	if dropInfoList then
+		for _, co in ipairs(colist) do
+			local mo = {}
 
-			if #arg_56_1 > 0 then
-				for iter_56_2, iter_56_3 in ipairs(arg_56_1) do
-					if iter_56_1.id == iter_56_3.type then
-						var_56_1.progress = iter_56_3.currentNum / iter_56_3.totalNum
+			mo.co = co
+
+			if #dropInfoList > 0 then
+				for i, dropinfo in ipairs(dropInfoList) do
+					if co.id == dropinfo.type then
+						local progress = dropinfo.currentNum / dropinfo.totalNum
+
+						mo.progress = progress
 					end
 				end
 			else
-				var_56_1.progress = 0
+				mo.progress = 0
 			end
 
-			arg_56_0._dropInfoList[iter_56_1.id] = var_56_1
+			self._dropInfoList[co.id] = mo
 		end
 	end
 end
 
-function var_0_0.getDropInfoByType(arg_57_0, arg_57_1)
-	return arg_57_0._dropInfoList and arg_57_0._dropInfoList[arg_57_1]
+function TurnbackModel:getDropInfoByType(type)
+	return self._dropInfoList and self._dropInfoList[type]
 end
 
-function var_0_0.getDropInfoList(arg_58_0)
-	local var_58_0 = {}
-	local var_58_1 = {}
-	local var_58_2 = {}
-	local var_58_3 = TurnbackConfig.instance:getDropCoCount()
+function TurnbackModel:getDropInfoList()
+	local level2list = {}
+	local level3list = {}
+	local checklist = {}
+	local count = TurnbackConfig.instance:getDropCoCount()
 
-	if arg_58_0._dropInfoList and #arg_58_0._dropInfoList > 0 then
-		while #var_58_2 < 4 do
-			local var_58_4 = math.random(1, var_58_3)
+	if self._dropInfoList and #self._dropInfoList > 0 then
+		while #checklist < 4 do
+			local type = math.random(1, count)
 
-			if not tabletool.indexOf(var_58_2, var_58_4) then
-				local var_58_5 = TurnbackConfig.instance:getDropCoById(var_58_4)
+			if not tabletool.indexOf(checklist, type) then
+				local co = TurnbackConfig.instance:getDropCoById(type)
 
-				if var_58_5.level == 2 and #var_58_0 < TurnbackEnum.Level2Count then
-					local var_58_6 = arg_58_0._dropInfoList[var_58_4]
+				if co.level == 2 and #level2list < TurnbackEnum.Level2Count then
+					local mo = self._dropInfoList[type]
 
-					table.insert(var_58_0, var_58_6)
-					table.insert(var_58_2, var_58_4)
-				elseif var_58_5.level == 3 and #var_58_1 < TurnbackEnum.Level3Count then
-					local var_58_7 = arg_58_0._dropInfoList[var_58_4]
+					table.insert(level2list, mo)
+					table.insert(checklist, type)
+				elseif co.level == 3 and #level3list < TurnbackEnum.Level3Count then
+					local mo = self._dropInfoList[type]
 
-					table.insert(var_58_1, var_58_7)
-					table.insert(var_58_2, var_58_4)
+					table.insert(level3list, mo)
+					table.insert(checklist, type)
 				end
 			end
 		end
 	end
 
-	return var_58_0, var_58_1
+	return level2list, level3list
 end
 
-function var_0_0.getContentWidth(arg_59_0)
-	local var_59_0 = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(arg_59_0.curTurnbackId)
-	local var_59_1 = 50
-	local var_59_2 = 50
-	local var_59_3 = 100
-	local var_59_4 = #var_59_0
-	local var_59_5 = 100
+function TurnbackModel:getContentWidth()
+	local rewardColist = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(self.curTurnbackId)
+	local left = 50
+	local right = 50
+	local itemspace = 100
+	local count = #rewardColist
+	local itemWidth = 100
+	local allwidth = left + right + itemWidth * count + itemspace * (count - 1)
 
-	return var_59_1 + var_59_2 + var_59_5 * var_59_4 + var_59_3 * (var_59_4 - 1)
+	return allwidth
 end
 
-var_0_0.instance = var_0_0.New()
+function TurnbackModel:getCurrenUnLockPayReward()
+	local rewardList = {}
+	local idList = self:getCurHasGetTaskBonus()
 
-return var_0_0
+	for index, id in ipairs(idList) do
+		local co = TurnbackConfig.instance:getTurnbackTaskBonusCo(self.curTurnbackId, id)
+		local mo = {}
+		local temp = co and not string.nilorempty(co.extraBonus) and string.splitToNumber(co.extraBonus, "#")
+
+		mo.type, mo.id, mo.num = temp[1], temp[2], temp[3]
+
+		table.insert(rewardList, mo)
+	end
+
+	table.sort(rewardList, TurnbackModel.sortFunc)
+
+	local config = TurnbackConfig.instance:getTurnbackCo(self.curTurnbackId)
+	local temp = not string.nilorempty(config.buyBonus) and string.splitToNumber(config.buyBonus, "#")
+	local buyBonus = {
+		type = temp[1],
+		id = temp[2],
+		num = temp[3]
+	}
+	local unlockRewardList = {
+		buyBonus
+	}
+
+	tabletool.addValues(unlockRewardList, rewardList)
+
+	return unlockRewardList
+end
+
+function TurnbackModel:getCurrenLockAllReward()
+	local rewardList = {}
+	local colist = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(self.curTurnbackId)
+	local idList = self:getCurHasGetTaskBonus()
+
+	for index, co in ipairs(colist) do
+		if not tabletool.indexOf(idList, co.id) then
+			local mo1 = {}
+			local temp = co and not string.nilorempty(co.bonus) and string.splitToNumber(co.bonus, "#")
+
+			mo1.type, mo1.id, mo1.num = temp[1], temp[2], temp[3]
+
+			table.insert(rewardList, mo1)
+
+			local mo2 = {}
+			local temp = co and not string.nilorempty(co.extraBonus) and string.splitToNumber(co.extraBonus, "#")
+
+			mo2.type, mo2.id, mo2.num = temp[1], temp[2], temp[3]
+
+			table.insert(rewardList, mo2)
+		end
+	end
+
+	table.sort(rewardList, TurnbackModel.sortFunc)
+
+	return rewardList
+end
+
+function TurnbackModel:getCurrentTurnbackDay()
+	local time = ServerTime.now() - self:getCurTurnbackMo().startTime
+	local day = math.ceil(time / TimeUtil.OneDaySecond)
+
+	return day
+end
+
+function TurnbackModel:checkIsLastTurnbackDay()
+	local time = self:getCurTurnbackMo().endTime - ServerTime.now()
+	local day = math.floor(time / TimeUtil.OneDaySecond)
+
+	return day < 1
+end
+
+function TurnbackModel:setDailyBonus(getDailyBonus)
+	self.turnbackInfoMo:setDailyBonus(getDailyBonus)
+end
+
+function TurnbackModel:isClaimedDailyBonus(day)
+	return self.turnbackInfoMo:isClaimedDailyBonus(day)
+end
+
+function TurnbackModel:checkTodayBonusReceive()
+	local day = self:getCurrentTurnbackDay()
+
+	return self:isClaimedDailyBonus(day)
+end
+
+function TurnbackModel:setOpenPopTipView(state)
+	self._openpopview = state
+end
+
+function TurnbackModel:getOpenPopTipView()
+	return self._openpopview
+end
+
+TurnbackModel.instance = TurnbackModel.New()
+
+return TurnbackModel

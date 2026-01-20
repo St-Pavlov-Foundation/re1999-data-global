@@ -1,37 +1,39 @@
-﻿module("modules.logic.herogroup.model.HeroGroupRecommendCharacterListModel", package.seeall)
+﻿-- chunkname: @modules/logic/herogroup/model/HeroGroupRecommendCharacterListModel.lua
 
-local var_0_0 = class("HeroGroupRecommendCharacterListModel", ListScrollModel)
+module("modules.logic.herogroup.model.HeroGroupRecommendCharacterListModel", package.seeall)
 
-function var_0_0.setCharacterList(arg_1_0, arg_1_1)
-	local var_1_0 = {}
+local HeroGroupRecommendCharacterListModel = class("HeroGroupRecommendCharacterListModel", ListScrollModel)
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1) do
-		local var_1_1 = HeroGroupRecommendCharacterMO.New()
+function HeroGroupRecommendCharacterListModel:setCharacterList(infos)
+	local moList = {}
 
-		var_1_1:init(iter_1_1)
-		table.insert(var_1_0, var_1_1)
+	for i, character in ipairs(infos) do
+		local characterMO = HeroGroupRecommendCharacterMO.New()
+
+		characterMO:init(character)
+		table.insert(moList, characterMO)
 	end
 
-	table.sort(var_1_0, function(arg_2_0, arg_2_1)
-		return arg_2_0.rate > arg_2_1.rate
+	table.sort(moList, function(x, y)
+		return x.rate > y.rate
 	end)
 
-	for iter_1_2 = #arg_1_1 + 1, 5 do
-		local var_1_2 = HeroGroupRecommendCharacterMO.New()
+	for i = #infos + 1, 5 do
+		local characterMO = HeroGroupRecommendCharacterMO.New()
 
-		var_1_2:init()
-		table.insert(var_1_0, var_1_2)
+		characterMO:init()
+		table.insert(moList, characterMO)
 	end
 
-	arg_1_0:setList(var_1_0)
+	self:setList(moList)
 
-	if #var_1_0 > 0 then
-		for iter_1_3, iter_1_4 in ipairs(arg_1_0._scrollViews) do
-			iter_1_4:selectCell(1, true)
+	if #moList > 0 then
+		for _, view in ipairs(self._scrollViews) do
+			view:selectCell(1, true)
 		end
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+HeroGroupRecommendCharacterListModel.instance = HeroGroupRecommendCharacterListModel.New()
 
-return var_0_0
+return HeroGroupRecommendCharacterListModel

@@ -1,17 +1,19 @@
-﻿module("modules.logic.character.model.CharacterBtnMo", package.seeall)
+﻿-- chunkname: @modules/logic/character/model/CharacterBtnMo.lua
 
-local var_0_0 = pureTable("CharacterBtnMo")
+module("modules.logic.character.model.CharacterBtnMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.id = 0
-	arg_1_0.name = ""
-	arg_1_0.icon = ""
+local CharacterBtnMo = pureTable("CharacterBtnMo")
+
+function CharacterBtnMo:ctor()
+	self.id = 0
+	self.name = ""
+	self.icon = ""
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.id = arg_2_1.id
-	arg_2_0.name = arg_2_1.name
-	arg_2_0.icon = arg_2_1.iconres
+function CharacterBtnMo:init(info)
+	self.id = info.id
+	self.name = info.name
+	self.icon = info.iconres
 end
 
-return var_0_0
+return CharacterBtnMo

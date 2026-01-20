@@ -1,18 +1,20 @@
-﻿module("modules.configs.excel2json.lua_skin_monster_hide_buff_effect", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_skin_monster_hide_buff_effect.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_skin_monster_hide_buff_effect", package.seeall)
+
+local lua_skin_monster_hide_buff_effect = {}
+local fields = {
 	effectName = 2,
 	exceptEffect = 3,
 	skillId = 1
 }
-local var_0_2 = {
+local primaryKey = {
 	"skillId"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_skin_monster_hide_buff_effect.onLoad(json)
+	lua_skin_monster_hide_buff_effect.configList, lua_skin_monster_hide_buff_effect.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_skin_monster_hide_buff_effect

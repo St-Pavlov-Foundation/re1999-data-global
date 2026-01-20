@@ -1,743 +1,759 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.view.eliminateChess.EliminateTeamChessView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/view/eliminateChess/EliminateTeamChessView.lua
 
-local var_0_0 = class("EliminateTeamChessView", BaseView)
+module("modules.logic.versionactivity2_2.eliminate.view.eliminateChess.EliminateTeamChessView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._viewGO = arg_1_0.viewGO
-	arg_1_0.viewGO = gohelper.findChild(arg_1_0._viewGO, "#go_cameraMain/Middle/#go_teamchess")
-	arg_1_0._gostrongHolds = gohelper.findChild(arg_1_0.viewGO, "#go_strongHolds")
-	arg_1_0._gostrongHold = gohelper.findChild(arg_1_0.viewGO, "#go_strongHolds/#go_strongHold")
-	arg_1_0._goinfo = gohelper.findChild(arg_1_0.viewGO, "#go_strongHolds/#go_strongHold/#go_info")
-	arg_1_0._imageslotBGColor = gohelper.findChildImage(arg_1_0.viewGO, "#go_strongHolds/#go_strongHold/#go_info/#image_slotBGColor")
-	arg_1_0._simageslotBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_strongHolds/#go_strongHold/#go_info/#simage_slotBG")
-	arg_1_0._imageInfoTextBG = gohelper.findChildImage(arg_1_0.viewGO, "#go_strongHolds/#go_strongHold/#go_info/#image_InfoTextBG")
-	arg_1_0._txtInfo = gohelper.findChildText(arg_1_0.viewGO, "#go_strongHolds/#go_strongHold/#go_info/#image_InfoTextBG/#scroll_ver/viewport/#txt_Info")
-	arg_1_0._goEnemyPower = gohelper.findChild(arg_1_0.viewGO, "#go_strongHolds/#go_strongHold/#go_info/#go_EnemyPower")
-	arg_1_0._imageEnemyPower = gohelper.findChildImage(arg_1_0.viewGO, "#go_strongHolds/#go_strongHold/#go_info/#go_EnemyPower/#image_EnemyPower")
-	arg_1_0._imageEnemyPower2 = gohelper.findChildImage(arg_1_0.viewGO, "#go_strongHolds/#go_strongHold/#go_info/#go_EnemyPower/#image_EnemyPower2")
-	arg_1_0._txtEnemyPower = gohelper.findChildText(arg_1_0.viewGO, "#go_strongHolds/#go_strongHold/#go_info/#go_EnemyPower/#txt_Enemy_Power")
-	arg_1_0._txtEnemyPower1 = gohelper.findChildText(arg_1_0.viewGO, "#go_strongHolds/#go_strongHold/#go_info/#go_EnemyPower/#txt_Enemy_Power1")
-	arg_1_0._goPlayerPower = gohelper.findChild(arg_1_0.viewGO, "#go_strongHolds/#go_strongHold/#go_info/#go_PlayerPower")
-	arg_1_0._imagePlayerPower = gohelper.findChildImage(arg_1_0.viewGO, "#go_strongHolds/#go_strongHold/#go_info/#go_PlayerPower/#image_PlayerPower")
-	arg_1_0._imagePlayerPower2 = gohelper.findChildImage(arg_1_0.viewGO, "#go_strongHolds/#go_strongHold/#go_info/#go_PlayerPower/#image_PlayerPower2")
-	arg_1_0._txtPlayerPower = gohelper.findChildText(arg_1_0.viewGO, "#go_strongHolds/#go_strongHold/#go_info/#go_PlayerPower/#txt_Player_Power")
-	arg_1_0._txtPlayerPower1 = gohelper.findChildText(arg_1_0.viewGO, "#go_strongHolds/#go_strongHold/#go_info/#go_PlayerPower/#txt_Player_Power1")
-	arg_1_0._goEnemy = gohelper.findChild(arg_1_0.viewGO, "#go_strongHolds/#go_strongHold/#go_Enemy")
-	arg_1_0._goEnemyWin = gohelper.findChild(arg_1_0.viewGO, "#go_strongHolds/#go_strongHold/#go_EnemyWin")
-	arg_1_0._goPlayer = gohelper.findChild(arg_1_0.viewGO, "#go_strongHolds/#go_strongHold/#go_Player")
-	arg_1_0._goPlayerWin = gohelper.findChild(arg_1_0.viewGO, "#go_strongHolds/#go_strongHold/#go_PlayerWin")
-	arg_1_0._goLine4 = gohelper.findChild(arg_1_0.viewGO, "#go_strongHolds/#go_strongHold/#go_Line4")
-	arg_1_0._goLine6 = gohelper.findChild(arg_1_0.viewGO, "#go_strongHolds/#go_strongHold/#go_Line6")
-	arg_1_0._gopower = gohelper.findChild(arg_1_0.viewGO, "#go_strongHolds/#go_power")
-	arg_1_0._imagechessPower = gohelper.findChildImage(arg_1_0.viewGO, "#go_strongHolds/#go_power/#image_chessPower")
-	arg_1_0._txtchessPower = gohelper.findChildText(arg_1_0.viewGO, "#go_strongHolds/#go_power/#image_chessPower/#txt_chessPower")
-	arg_1_0._goHP = gohelper.findChild(arg_1_0.viewGO, "#go_strongHolds/#go_HP")
-	arg_1_0._btnresult = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_result")
-	arg_1_0._goreslutvx = gohelper.findChild(arg_1_0.viewGO, "#btn_result/#go_reslut_vx")
-	arg_1_0._goreslutvxloop = gohelper.findChild(arg_1_0.viewGO, "#btn_result/#go_reslut_vx_loop")
-	arg_1_0._goSlot = gohelper.findChild(arg_1_0.viewGO, "Bottom/#go_Slot")
-	arg_1_0._goresources = gohelper.findChild(arg_1_0.viewGO, "Bottom/#go_resources")
-	arg_1_0._goresource = gohelper.findChild(arg_1_0.viewGO, "Bottom/#go_resources/#go_resource")
-	arg_1_0._imageQuality = gohelper.findChildImage(arg_1_0.viewGO, "Bottom/#go_resources/#go_resource/#image_Quality")
-	arg_1_0._txtResourceNum = gohelper.findChildText(arg_1_0.viewGO, "Bottom/#go_resources/#go_resource/#image_Quality/#txt_ResourceNum")
-	arg_1_0._goResourceTips = gohelper.findChild(arg_1_0.viewGO, "Bottom/#go_ResourceTips")
-	arg_1_0._txtopt = gohelper.findChildText(arg_1_0.viewGO, "Bottom/#go_ResourceTips/#txt_opt")
-	arg_1_0._goaddResources = gohelper.findChild(arg_1_0.viewGO, "Bottom/#go_ResourceTips/#go_addResources")
-	arg_1_0._goaddResource = gohelper.findChild(arg_1_0.viewGO, "Bottom/#go_ResourceTips/#go_addResources/#go_addResource")
-	arg_1_0._btnmask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_mask")
-	arg_1_0._gomask = gohelper.findChild(arg_1_0.viewGO, "#go_mask")
+local EliminateTeamChessView = class("EliminateTeamChessView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function EliminateTeamChessView:onInitView()
+	self._viewGO = self.viewGO
+	self.viewGO = gohelper.findChild(self._viewGO, "#go_cameraMain/Middle/#go_teamchess")
+	self._gostrongHolds = gohelper.findChild(self.viewGO, "#go_strongHolds")
+	self._gostrongHold = gohelper.findChild(self.viewGO, "#go_strongHolds/#go_strongHold")
+	self._goinfo = gohelper.findChild(self.viewGO, "#go_strongHolds/#go_strongHold/#go_info")
+	self._imageslotBGColor = gohelper.findChildImage(self.viewGO, "#go_strongHolds/#go_strongHold/#go_info/#image_slotBGColor")
+	self._simageslotBG = gohelper.findChildSingleImage(self.viewGO, "#go_strongHolds/#go_strongHold/#go_info/#simage_slotBG")
+	self._imageInfoTextBG = gohelper.findChildImage(self.viewGO, "#go_strongHolds/#go_strongHold/#go_info/#image_InfoTextBG")
+	self._txtInfo = gohelper.findChildText(self.viewGO, "#go_strongHolds/#go_strongHold/#go_info/#image_InfoTextBG/#scroll_ver/viewport/#txt_Info")
+	self._goEnemyPower = gohelper.findChild(self.viewGO, "#go_strongHolds/#go_strongHold/#go_info/#go_EnemyPower")
+	self._imageEnemyPower = gohelper.findChildImage(self.viewGO, "#go_strongHolds/#go_strongHold/#go_info/#go_EnemyPower/#image_EnemyPower")
+	self._imageEnemyPower2 = gohelper.findChildImage(self.viewGO, "#go_strongHolds/#go_strongHold/#go_info/#go_EnemyPower/#image_EnemyPower2")
+	self._txtEnemyPower = gohelper.findChildText(self.viewGO, "#go_strongHolds/#go_strongHold/#go_info/#go_EnemyPower/#txt_Enemy_Power")
+	self._txtEnemyPower1 = gohelper.findChildText(self.viewGO, "#go_strongHolds/#go_strongHold/#go_info/#go_EnemyPower/#txt_Enemy_Power1")
+	self._goPlayerPower = gohelper.findChild(self.viewGO, "#go_strongHolds/#go_strongHold/#go_info/#go_PlayerPower")
+	self._imagePlayerPower = gohelper.findChildImage(self.viewGO, "#go_strongHolds/#go_strongHold/#go_info/#go_PlayerPower/#image_PlayerPower")
+	self._imagePlayerPower2 = gohelper.findChildImage(self.viewGO, "#go_strongHolds/#go_strongHold/#go_info/#go_PlayerPower/#image_PlayerPower2")
+	self._txtPlayerPower = gohelper.findChildText(self.viewGO, "#go_strongHolds/#go_strongHold/#go_info/#go_PlayerPower/#txt_Player_Power")
+	self._txtPlayerPower1 = gohelper.findChildText(self.viewGO, "#go_strongHolds/#go_strongHold/#go_info/#go_PlayerPower/#txt_Player_Power1")
+	self._goEnemy = gohelper.findChild(self.viewGO, "#go_strongHolds/#go_strongHold/#go_Enemy")
+	self._goEnemyWin = gohelper.findChild(self.viewGO, "#go_strongHolds/#go_strongHold/#go_EnemyWin")
+	self._goPlayer = gohelper.findChild(self.viewGO, "#go_strongHolds/#go_strongHold/#go_Player")
+	self._goPlayerWin = gohelper.findChild(self.viewGO, "#go_strongHolds/#go_strongHold/#go_PlayerWin")
+	self._goLine4 = gohelper.findChild(self.viewGO, "#go_strongHolds/#go_strongHold/#go_Line4")
+	self._goLine6 = gohelper.findChild(self.viewGO, "#go_strongHolds/#go_strongHold/#go_Line6")
+	self._gopower = gohelper.findChild(self.viewGO, "#go_strongHolds/#go_power")
+	self._imagechessPower = gohelper.findChildImage(self.viewGO, "#go_strongHolds/#go_power/#image_chessPower")
+	self._txtchessPower = gohelper.findChildText(self.viewGO, "#go_strongHolds/#go_power/#image_chessPower/#txt_chessPower")
+	self._goHP = gohelper.findChild(self.viewGO, "#go_strongHolds/#go_HP")
+	self._btnresult = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_result")
+	self._goreslutvx = gohelper.findChild(self.viewGO, "#btn_result/#go_reslut_vx")
+	self._goreslutvxloop = gohelper.findChild(self.viewGO, "#btn_result/#go_reslut_vx_loop")
+	self._goSlot = gohelper.findChild(self.viewGO, "Bottom/#go_Slot")
+	self._goresources = gohelper.findChild(self.viewGO, "Bottom/#go_resources")
+	self._goresource = gohelper.findChild(self.viewGO, "Bottom/#go_resources/#go_resource")
+	self._imageQuality = gohelper.findChildImage(self.viewGO, "Bottom/#go_resources/#go_resource/#image_Quality")
+	self._txtResourceNum = gohelper.findChildText(self.viewGO, "Bottom/#go_resources/#go_resource/#image_Quality/#txt_ResourceNum")
+	self._goResourceTips = gohelper.findChild(self.viewGO, "Bottom/#go_ResourceTips")
+	self._txtopt = gohelper.findChildText(self.viewGO, "Bottom/#go_ResourceTips/#txt_opt")
+	self._goaddResources = gohelper.findChild(self.viewGO, "Bottom/#go_ResourceTips/#go_addResources")
+	self._goaddResource = gohelper.findChild(self.viewGO, "Bottom/#go_ResourceTips/#go_addResources/#go_addResource")
+	self._btnmask = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_mask")
+	self._gomask = gohelper.findChild(self.viewGO, "#go_mask")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnresult:AddClickListener(arg_2_0._btnresultOnClick, arg_2_0)
-	arg_2_0._btnmask:AddClickListener(arg_2_0._btnmaskOnClick, arg_2_0)
+function EliminateTeamChessView:addEvents()
+	self._btnresult:AddClickListener(self._btnresultOnClick, self)
+	self._btnmask:AddClickListener(self._btnmaskOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnresult:RemoveClickListener()
-	arg_3_0._btnmask:RemoveClickListener()
+function EliminateTeamChessView:removeEvents()
+	self._btnresult:RemoveClickListener()
+	self._btnmask:RemoveClickListener()
 end
 
-function var_0_0._btnmaskOnClick(arg_4_0)
-	arg_4_0:hideSoliderChessTip()
+function EliminateTeamChessView:_btnmaskOnClick()
+	self:hideSoliderChessTip()
 end
 
-function var_0_0._btnresultOnClick(arg_5_0)
-	if not arg_5_0._canClickResult then
+function EliminateTeamChessView:_btnresultOnClick()
+	if not self._canClickResult then
 		return
 	end
 
-	arg_5_0._canClickResult = false
+	self._canClickResult = false
 
 	EliminateTeamChessController.instance:sendWarChessRoundEndRequest(function()
-		arg_5_0:refreshViewByRoundState()
+		self:refreshViewByRoundState()
 
-		arg_5_0._canClickResult = true
-	end, arg_5_0)
+		self._canClickResult = true
+	end, self)
 end
 
-function var_0_0.setTipViewParent(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_0._btnmask.transform:SetParent(arg_7_1.transform)
-	EliminateTeamChessModel.instance:setTipViewParent(arg_7_1)
+function EliminateTeamChessView:setTipViewParent(parent, canvas)
+	self._btnmask.transform:SetParent(parent.transform)
+	EliminateTeamChessModel.instance:setTipViewParent(parent)
 
-	arg_7_0._powerParent = gohelper.create2d(arg_7_1, "powerParent")
+	self._powerParent = gohelper.create2d(parent, "powerParent")
 
-	gohelper.setAsFirstSibling(arg_7_0._powerParent)
+	gohelper.setAsFirstSibling(self._powerParent)
 
-	arg_7_0._powerParentTr = arg_7_0._powerParent.transform
+	self._powerParentTr = self._powerParent.transform
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0._soliderTipView = nil
+function EliminateTeamChessView:_editableInitView()
+	self._soliderTipView = nil
 
-	arg_8_0:hideSoliderChessTip()
+	self:hideSoliderChessTip()
 
-	arg_8_0._teamChessViewAni = arg_8_0._viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._teamChessViewAni = self._viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	gohelper.setActive(arg_8_0._gostrongHolds, true)
-	gohelper.setActive(arg_8_0._gostrongHold, false)
+	gohelper.setActive(self._gostrongHolds, true)
+	gohelper.setActive(self._gostrongHold, false)
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
+function EliminateTeamChessView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0:addEventCb(EliminateLevelController.instance, EliminateChessEvent.TeamChessWarInfoInit, arg_10_0.initInfo, arg_10_0)
-	arg_10_0:addEventCb(EliminateLevelController.instance, EliminateChessEvent.EliminateRoundStateChangeEnd, arg_10_0.updateViewStateEnd, arg_10_0)
-	arg_10_0:addEventCb(EliminateLevelController.instance, EliminateChessEvent.EliminateRoundStateChange, arg_10_0.updateViewState, arg_10_0)
-	arg_10_0:addEventCb(EliminateLevelController.instance, EliminateChessEvent.TeamChessViewWatchView, arg_10_0.updateTeamChessViewWatchState, arg_10_0)
-	arg_10_0:addEventCb(EliminateLevelController.instance, EliminateChessEvent.TeamChessSelectEffectEnd, arg_10_0.onTeamChessSkillRelease, arg_10_0)
-	arg_10_0:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.TeamChessItemBeginModelUpdated, arg_10_0.teamChessItemDragBegin, arg_10_0)
-	arg_10_0:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.TeamChessItemDragModelUpdated, arg_10_0.teamChessItemDrag, arg_10_0)
-	arg_10_0:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.TeamChessItemDragEndModelUpdated, arg_10_0.teamChessItemDragEnd, arg_10_0)
-	arg_10_0:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.AddStrongholdChess, arg_10_0.addStrongholdChess, arg_10_0)
-	arg_10_0:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.TeamChessPowerChange, arg_10_0.teamChessPowerChange, arg_10_0)
-	arg_10_0:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.StrongHoldPowerChange, arg_10_0.strongHoldPowerChange, arg_10_0)
-	arg_10_0:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.ResourceDataChange, arg_10_0.resourceDataChange, arg_10_0)
-	arg_10_0:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.TeamChessOnFlowEnd, arg_10_0.flowEnd, arg_10_0)
-	arg_10_0:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.RemoveStrongholdChess, arg_10_0.removeStrongholdChess, arg_10_0)
-	arg_10_0:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.StrongHoldSettle, arg_10_0.strongHoldSettle, arg_10_0)
-	arg_10_0:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.SoliderChessModelClick, arg_10_0.soliderChessModelClick, arg_10_0)
-	arg_10_0:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.ShowChessView, arg_10_0.showSoliderChessTip, arg_10_0)
-	arg_10_0:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.StrongHoldPerformReduction, arg_10_0.strongHoldPerformReduction, arg_10_0)
-	arg_10_0:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.TeamChessUpdateActiveMoveState, arg_10_0.teamChessUpdateActiveMoveState, arg_10_0)
-	arg_10_0:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.TeamChessGrowUpSkillChange, arg_10_0.teamChessGrowUpValueChange, arg_10_0)
-	arg_10_0:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.TeamChessOnFlowStart, arg_10_0.teamChessOnFlowStart, arg_10_0)
-	arg_10_0:initInfo()
+function EliminateTeamChessView:onOpen()
+	self:addEventCb(EliminateLevelController.instance, EliminateChessEvent.TeamChessWarInfoInit, self.initInfo, self)
+	self:addEventCb(EliminateLevelController.instance, EliminateChessEvent.EliminateRoundStateChangeEnd, self.updateViewStateEnd, self)
+	self:addEventCb(EliminateLevelController.instance, EliminateChessEvent.EliminateRoundStateChange, self.updateViewState, self)
+	self:addEventCb(EliminateLevelController.instance, EliminateChessEvent.TeamChessViewWatchView, self.updateTeamChessViewWatchState, self)
+	self:addEventCb(EliminateLevelController.instance, EliminateChessEvent.TeamChessSelectEffectEnd, self.onTeamChessSkillRelease, self)
+	self:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.TeamChessItemBeginModelUpdated, self.teamChessItemDragBegin, self)
+	self:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.TeamChessItemDragModelUpdated, self.teamChessItemDrag, self)
+	self:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.TeamChessItemDragEndModelUpdated, self.teamChessItemDragEnd, self)
+	self:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.AddStrongholdChess, self.addStrongholdChess, self)
+	self:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.TeamChessPowerChange, self.teamChessPowerChange, self)
+	self:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.StrongHoldPowerChange, self.strongHoldPowerChange, self)
+	self:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.ResourceDataChange, self.resourceDataChange, self)
+	self:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.TeamChessOnFlowEnd, self.flowEnd, self)
+	self:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.RemoveStrongholdChess, self.removeStrongholdChess, self)
+	self:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.StrongHoldSettle, self.strongHoldSettle, self)
+	self:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.SoliderChessModelClick, self.soliderChessModelClick, self)
+	self:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.ShowChessView, self.showSoliderChessTip, self)
+	self:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.StrongHoldPerformReduction, self.strongHoldPerformReduction, self)
+	self:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.TeamChessUpdateActiveMoveState, self.teamChessUpdateActiveMoveState, self)
+	self:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.TeamChessGrowUpSkillChange, self.teamChessGrowUpValueChange, self)
+	self:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.TeamChessOnFlowStart, self.teamChessOnFlowStart, self)
+	self:initInfo()
 end
 
-function var_0_0.onClose(arg_11_0)
+function EliminateTeamChessView:onClose()
 	return
 end
 
-function var_0_0.onOpenFinish(arg_12_0)
+function EliminateTeamChessView:onOpenFinish()
 	return
 end
 
-function var_0_0.initInfo(arg_13_0)
-	arg_13_0._canClickResult = true
+function EliminateTeamChessView:initInfo()
+	self._canClickResult = true
 
-	arg_13_0:initSlot()
-	arg_13_0:initStrongHold()
-	arg_13_0:initResource()
-	arg_13_0:refreshViewByRoundState()
+	self:initSlot()
+	self:initStrongHold()
+	self:initResource()
+	self:refreshViewByRoundState()
 end
 
-function var_0_0.updateViewState(arg_14_0)
-	local var_14_0 = EliminateLevelModel.instance:getCurRoundType() == EliminateEnum.RoundType.TeamChess
+function EliminateTeamChessView:updateViewState()
+	local roundType = EliminateLevelModel.instance:getCurRoundType()
+	local isTeamChess = roundType == EliminateEnum.RoundType.TeamChess
 
-	if not var_14_0 and not gohelper.isNil(arg_14_0._powerParent) then
-		gohelper.setActive(arg_14_0._powerParent, var_14_0)
+	if not isTeamChess and not gohelper.isNil(self._powerParent) then
+		gohelper.setActive(self._powerParent, isTeamChess)
 	end
 
-	TeamChessUnitEntityMgr.instance:setAllEntityCanClick(var_14_0)
-	TeamChessUnitEntityMgr.instance:setAllEntityCanDrag(var_14_0)
+	TeamChessUnitEntityMgr.instance:setAllEntityCanClick(isTeamChess)
+	TeamChessUnitEntityMgr.instance:setAllEntityCanDrag(isTeamChess)
 end
 
-function var_0_0.updateViewStateEnd(arg_15_0)
-	local var_15_0 = EliminateLevelModel.instance:getCurRoundType() == EliminateEnum.RoundType.TeamChess
+function EliminateTeamChessView:updateViewStateEnd()
+	local roundType = EliminateLevelModel.instance:getCurRoundType()
+	local isTeamChess = roundType == EliminateEnum.RoundType.TeamChess
 
-	if var_15_0 then
-		arg_15_0:updateResourceDataChange()
-		arg_15_0:refreshAndSortSlot()
+	if isTeamChess then
+		self:updateResourceDataChange()
+		self:refreshAndSortSlot()
 
-		if not gohelper.isNil(arg_15_0._powerParent) then
-			gohelper.setActive(arg_15_0._powerParent, true)
+		if not gohelper.isNil(self._powerParent) then
+			gohelper.setActive(self._powerParent, true)
 		end
 
-		arg_15_0:refreshViewByRoundState()
-		arg_15_0:refreshActiveMoveState()
-		arg_15_0:refreshTotalScoreState()
+		self:refreshViewByRoundState()
+		self:refreshActiveMoveState()
+		self:refreshTotalScoreState()
 
-		for iter_15_0 = 1, #arg_15_0._strongHoldItems do
-			arg_15_0._strongHoldItems[iter_15_0]:refreshAni(true)
+		for i = 1, #self._strongHoldItems do
+			self._strongHoldItems[i]:refreshAni(true)
 		end
 	end
 
-	if var_15_0 and arg_15_0._teamChessViewAni then
-		arg_15_0._teamChessViewAni:Play("open")
-		TaskDispatcher.runDelay(arg_15_0.refreshViewActive, arg_15_0, 0.33)
+	if isTeamChess and self._teamChessViewAni then
+		self._teamChessViewAni:Play("open")
+		TaskDispatcher.runDelay(self.refreshViewActive, self, 0.33)
 	end
 
-	EliminateTeamChessController.instance:setStartStepFlow(var_15_0)
+	EliminateTeamChessController.instance:setStartStepFlow(isTeamChess)
 end
 
-function var_0_0.refreshViewActive(arg_16_0)
-	TaskDispatcher.cancelTask(arg_16_0.refreshViewActive, arg_16_0)
+function EliminateTeamChessView:refreshViewActive()
+	TaskDispatcher.cancelTask(self.refreshViewActive, self)
 	EliminateTeamChessController.instance:startSeqStepFlow()
 end
 
-function var_0_0.updateInfo(arg_17_0)
+function EliminateTeamChessView:updateInfo()
 	return
 end
 
-function var_0_0.initSlot(arg_18_0)
-	arg_18_0._slotList = arg_18_0:getUserDataTb_()
+function EliminateTeamChessView:initSlot()
+	self._slotList = self:getUserDataTb_()
 
-	local var_18_0 = EliminateTeamChessModel.instance:getSlotIds()
-	local var_18_1 = arg_18_0.viewContainer:getSetting().otherRes[1]
+	local slotIds = EliminateTeamChessModel.instance:getSlotIds()
+	local path = self.viewContainer:getSetting().otherRes[1]
 
-	for iter_18_0, iter_18_1 in ipairs(var_18_0) do
-		local var_18_2 = arg_18_0:getResInst(var_18_1, arg_18_0._goSlot)
-		local var_18_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_18_2, EliminateTeamChessItem)
+	for i, slotId in ipairs(slotIds) do
+		local itemGO = self:getResInst(path, self._goSlot)
+		local slotItem = MonoHelper.addNoUpdateLuaComOnceToGo(itemGO, EliminateTeamChessItem)
 
-		table.insert(arg_18_0._slotList, var_18_3)
-		var_18_3:setSoliderId(iter_18_1)
+		table.insert(self._slotList, slotItem)
+		slotItem:setSoliderId(slotId)
 	end
 
-	arg_18_0:refreshAndSortSlot()
+	self:refreshAndSortSlot()
 end
 
-function var_0_0.refreshAndSortSlot(arg_19_0)
-	if arg_19_0._slotList == nil or #arg_19_0._slotList < 1 then
+function EliminateTeamChessView:refreshAndSortSlot()
+	if self._slotList == nil or #self._slotList < 1 then
 		return
 	end
 
-	for iter_19_0 = 1, #arg_19_0._slotList do
-		local var_19_0 = arg_19_0._slotList[iter_19_0]
+	for i = 1, #self._slotList do
+		local slotItem = self._slotList[i]
 
-		var_19_0:refreshView()
-		var_19_0:setChildIndex(iter_19_0 - 1)
+		slotItem:refreshView()
+		slotItem:setChildIndex(i - 1)
 	end
 end
 
-function var_0_0.initStrongHold(arg_20_0)
-	local var_20_0 = EliminateTeamChessModel.instance:getStrongholds()
+function EliminateTeamChessView:initStrongHold()
+	local strongholds = EliminateTeamChessModel.instance:getStrongholds()
 
-	arg_20_0._strongHoldItems = arg_20_0:getUserDataTb_()
+	self._strongHoldItems = self:getUserDataTb_()
 
-	local var_20_1 = #var_20_0
+	local maxlen = #strongholds
 
-	for iter_20_0 = 1, var_20_1 do
-		local var_20_2 = var_20_0[iter_20_0]
-		local var_20_3 = var_20_2.id
-		local var_20_4 = gohelper.clone(arg_20_0._gostrongHold, arg_20_0._gostrongHolds, var_20_3)
-		local var_20_5 = MonoHelper.addNoUpdateLuaComOnceToGo(var_20_4, EliminateStrongHoldItem)
+	for i = 1, maxlen do
+		local data = strongholds[i]
+		local id = data.id
+		local strongHold = gohelper.clone(self._gostrongHold, self._gostrongHolds, id)
+		local strongHoldItem = MonoHelper.addNoUpdateLuaComOnceToGo(strongHold, EliminateStrongHoldItem)
 
-		var_20_5:initData(var_20_2, iter_20_0, var_20_1)
+		strongHoldItem:initData(data, i, maxlen)
 
-		local var_20_6 = var_20_2:getStrongholdConfig()
+		local slotConfig = data:getStrongholdConfig()
 
-		if var_20_6 then
-			local var_20_7 = arg_20_0:_getResPathByCapacity(var_20_6.friendCapacity)
-			local var_20_8 = arg_20_0:getResInst(var_20_7, var_20_5._goPlayer)
-			local var_20_9 = arg_20_0:_getResPathByCapacity(var_20_6.enemyCapacity)
-			local var_20_10 = arg_20_0:getResInst(var_20_9, var_20_5._goEnemy)
+		if slotConfig then
+			local playerPath = self:_getResPathByCapacity(slotConfig.friendCapacity)
+			local playerItemGO = self:getResInst(playerPath, strongHoldItem._goPlayer)
+			local enemyPath = self:_getResPathByCapacity(slotConfig.enemyCapacity)
+			local enemyItemGO = self:getResInst(enemyPath, strongHoldItem._goEnemy)
 
-			var_20_5:initStrongHoldChess(var_20_8, var_20_10, arg_20_0._gopower, arg_20_0._goHP)
+			strongHoldItem:initStrongHoldChess(playerItemGO, enemyItemGO, self._gopower, self._goHP)
 		end
 
-		gohelper.setActive(var_20_4, true)
+		gohelper.setActive(strongHold, true)
 
-		arg_20_0._strongHoldItems[#arg_20_0._strongHoldItems + 1] = var_20_5
+		self._strongHoldItems[#self._strongHoldItems + 1] = strongHoldItem
 	end
 
-	ZProj.UGUIHelper.RebuildLayout(arg_20_0._gostrongHolds.transform)
+	ZProj.UGUIHelper.RebuildLayout(self._gostrongHolds.transform)
 
-	for iter_20_1, iter_20_2 in ipairs(arg_20_0._strongHoldItems) do
-		if iter_20_2 then
-			iter_20_2:setPowerTrParent(arg_20_0._powerParentTr)
+	for _, strongHoldItem in ipairs(self._strongHoldItems) do
+		if strongHoldItem then
+			strongHoldItem:setPowerTrParent(self._powerParentTr)
 		end
 	end
 end
 
-function var_0_0.initResource(arg_21_0)
-	local var_21_0 = EliminateTeamChessEnum.ResourceType
+function EliminateTeamChessView:initResource()
+	local resources = EliminateTeamChessEnum.ResourceType
 
-	arg_21_0._resourceItem = arg_21_0:getUserDataTb_()
+	self._resourceItem = self:getUserDataTb_()
 
-	for iter_21_0, iter_21_1 in pairs(var_21_0) do
-		local var_21_1 = gohelper.clone(arg_21_0._goresource, arg_21_0._goresources, iter_21_0)
-		local var_21_2 = gohelper.findChildImage(var_21_1, "#image_Quality")
-		local var_21_3 = gohelper.findChildText(var_21_1, "#image_Quality/#txt_ResourceNum")
-		local var_21_4 = var_21_1:GetComponent(typeof(UnityEngine.Animator))
-		local var_21_5 = EliminateTeamChessModel.instance:getResourceNumber(iter_21_0)
-		local var_21_6 = var_21_5 and var_21_5 or 0
+	for resourceId, _ in pairs(resources) do
+		local item = gohelper.clone(self._goresource, self._goresources, resourceId)
+		local resourceImage = gohelper.findChildImage(item, "#image_Quality")
+		local resourceNumberText = gohelper.findChildText(item, "#image_Quality/#txt_ResourceNum")
+		local ani = item:GetComponent(typeof(UnityEngine.Animator))
+		local number = EliminateTeamChessModel.instance:getResourceNumber(resourceId)
+		local num = number and number or 0
 
-		UISpriteSetMgr.instance:setV2a2EliminateSprite(var_21_2, EliminateTeamChessEnum.ResourceTypeToImagePath[iter_21_0], false)
-		gohelper.setActive(var_21_1, true)
+		UISpriteSetMgr.instance:setV2a2EliminateSprite(resourceImage, EliminateTeamChessEnum.ResourceTypeToImagePath[resourceId], false)
+		gohelper.setActive(item, true)
 
-		var_21_3.text = var_21_6
-		arg_21_0._resourceItem[iter_21_0] = {
-			item = var_21_1,
-			resourceImage = var_21_2,
-			resourceNumberText = var_21_3,
-			ani = var_21_4
+		resourceNumberText.text = num
+		self._resourceItem[resourceId] = {
+			item = item,
+			resourceImage = resourceImage,
+			resourceNumberText = resourceNumberText,
+			ani = ani
 		}
 	end
 end
 
-function var_0_0._getResPathByCapacity(arg_22_0, arg_22_1)
-	local var_22_0 = arg_22_0.viewContainer:getSetting().otherRes
-	local var_22_1 = var_22_0[2]
+function EliminateTeamChessView:_getResPathByCapacity(capacity)
+	local otherResPath = self.viewContainer:getSetting().otherRes
+	local path = otherResPath[2]
 
-	if arg_22_1 > 4 and arg_22_1 <= 6 then
-		var_22_1 = var_22_0[3]
+	if capacity > 4 and capacity <= 6 then
+		path = otherResPath[3]
 	end
 
-	if arg_22_1 > 6 then
-		var_22_1 = var_22_0[7]
+	if capacity > 6 then
+		path = otherResPath[7]
 	end
 
-	return var_22_1
+	return path
 end
 
-function var_0_0.teamChessItemDragBegin(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
-	local var_23_0 = TeamChessUnitEntityMgr.instance:getEmptyEntity(nil, arg_23_1)
+function EliminateTeamChessView:teamChessItemDragBegin(soliderId, x, y)
+	local entity = TeamChessUnitEntityMgr.instance:getEmptyEntity(nil, soliderId)
 end
 
-function var_0_0.teamChessItemDrag(arg_24_0, arg_24_1, arg_24_2, arg_24_3, arg_24_4, arg_24_5)
-	local var_24_0 = arg_24_0:_checkStrongHoldInRect(arg_24_4, arg_24_5)
-	local var_24_1 = false
+function EliminateTeamChessView:teamChessItemDrag(soliderId, uid, strongHoldId, x, y)
+	local checkStrongHoldId = self:_checkStrongHoldInRect(x, y)
+	local showAdd = false
 
-	if var_24_0 and arg_24_3 and var_24_0 == arg_24_3 then
+	if checkStrongHoldId and strongHoldId and checkStrongHoldId == strongHoldId then
 		-- block empty
 	end
 
-	arg_24_0:setStrongHoldSelect(arg_24_1, var_24_0)
+	self:setStrongHoldSelect(soliderId, checkStrongHoldId)
 
-	local var_24_2 = TeamChessUnitEntityMgr.instance:getEmptyEntity(nil, arg_24_1)
+	local entity = TeamChessUnitEntityMgr.instance:getEmptyEntity(nil, soliderId)
 
-	if var_24_2 then
-		if arg_24_2 == nil then
-			if var_24_0 then
-				var_24_1 = not EliminateTeamChessModel.instance:strongHoldIsFull(var_24_0)
+	if entity then
+		if uid == nil then
+			if checkStrongHoldId then
+				showAdd = not EliminateTeamChessModel.instance:strongHoldIsFull(checkStrongHoldId)
 			end
 
-			arg_24_0:updateViewPositionByEntity(arg_24_1, EliminateTeamChessEnum.ChessTipType.showDragTip, var_24_2, nil, var_24_1)
+			self:updateViewPositionByEntity(soliderId, EliminateTeamChessEnum.ChessTipType.showDragTip, entity, nil, showAdd)
 		end
 
-		local var_24_3 = (var_24_0 ~= nil or arg_24_3 ~= nil) and EliminateTeamChessEnum.ModeType.Outline or EliminateTeamChessEnum.ModeType.Normal
+		local showModel = (checkStrongHoldId ~= nil or strongHoldId ~= nil) and EliminateTeamChessEnum.ModeType.Outline or EliminateTeamChessEnum.ModeType.Normal
 
-		var_24_2:setShowModeType(var_24_3)
+		entity:setShowModeType(showModel)
 	end
 
-	arg_24_0:setViewCanvasGroupActive(var_24_0 ~= nil)
+	self:setViewCanvasGroupActive(checkStrongHoldId ~= nil)
 end
 
-function var_0_0.teamChessItemDragEnd(arg_25_0, arg_25_1, arg_25_2, arg_25_3, arg_25_4, arg_25_5)
-	local var_25_0 = arg_25_0:_checkStrongHoldInRect(arg_25_4, arg_25_5)
+function EliminateTeamChessView:teamChessItemDragEnd(soliderId, uid, strongHoldId, x, y)
+	local checkStrongHoldId = self:_checkStrongHoldInRect(x, y)
 
-	if var_25_0 and arg_25_3 and var_25_0 == arg_25_3 then
-		var_25_0 = nil
+	if checkStrongHoldId and strongHoldId and checkStrongHoldId == strongHoldId then
+		checkStrongHoldId = nil
 	end
 
-	if var_25_0 ~= nil and (EliminateTeamChessModel.instance:isCanPlaceByStrongHoldRule(var_25_0, arg_25_1) or arg_25_2 ~= nil) then
-		EliminateTeamChessController.instance:createPlaceSkill(arg_25_1, arg_25_2, var_25_0)
+	if checkStrongHoldId ~= nil then
+		local canPlace = EliminateTeamChessModel.instance:isCanPlaceByStrongHoldRule(checkStrongHoldId, soliderId)
 
-		arg_25_0._placeSkillReleaseSuccess = EliminateTeamChessController.instance:checkAndReleasePlaceSkill()
+		if canPlace or uid ~= nil then
+			EliminateTeamChessController.instance:createPlaceSkill(soliderId, uid, checkStrongHoldId)
 
-		if not arg_25_0._placeSkillReleaseSuccess then
-			EliminateTeamChessController.instance:addTempChessAndPlace(arg_25_1, arg_25_2, var_25_0)
+			self._placeSkillReleaseSuccess = EliminateTeamChessController.instance:checkAndReleasePlaceSkill()
 
-			local var_25_1 = arg_25_0._gostrongHolds.transform
-			local var_25_2 = recthelper.getHeight(var_25_1)
-			local var_25_3 = recthelper.getWidth(var_25_1)
+			if not self._placeSkillReleaseSuccess then
+				EliminateTeamChessController.instance:addTempChessAndPlace(soliderId, uid, checkStrongHoldId)
 
-			EliminateLevelController.instance:dispatchEvent(EliminateChessEvent.TeamChessSelectEffectBegin, var_25_3, var_25_2)
+				local tr = self._gostrongHolds.transform
+				local height = recthelper.getHeight(tr)
+				local width = recthelper.getWidth(tr)
+
+				EliminateLevelController.instance:dispatchEvent(EliminateChessEvent.TeamChessSelectEffectBegin, width, height)
+			end
 		end
 	end
 
-	local var_25_4 = TeamChessUnitEntityMgr.instance:getEmptyEntity(nil, arg_25_1)
+	local entity = TeamChessUnitEntityMgr.instance:getEmptyEntity(nil, soliderId)
 
-	if var_25_4 then
-		var_25_4:setShowModeType(EliminateTeamChessEnum.ModeType.Normal)
+	if entity then
+		entity:setShowModeType(EliminateTeamChessEnum.ModeType.Normal)
 	end
 
-	arg_25_0:teamChessUpdateActiveMoveState(arg_25_2)
-	arg_25_0:setStrongHoldSelect(arg_25_1, nil)
-	arg_25_0:hideSoliderChessTip()
+	self:teamChessUpdateActiveMoveState(uid)
+	self:setStrongHoldSelect(soliderId, nil)
+	self:hideSoliderChessTip()
 end
 
-function var_0_0._checkStrongHoldInRect(arg_26_0, arg_26_1, arg_26_2)
-	if arg_26_0._strongHoldItems == nil then
+function EliminateTeamChessView:_checkStrongHoldInRect(x, y)
+	if self._strongHoldItems == nil then
 		return nil
 	end
 
-	local var_26_0
+	local strongHoldId
 
-	for iter_26_0, iter_26_1 in pairs(arg_26_0._strongHoldItems) do
-		if iter_26_1:checkInPlayerChessRect(arg_26_1, arg_26_2) and iter_26_1._data then
-			var_26_0 = iter_26_1._data.id
+	for _, item in pairs(self._strongHoldItems) do
+		if item:checkInPlayerChessRect(x, y) and item._data then
+			strongHoldId = item._data.id
 
 			break
 		end
 	end
 
-	return var_26_0
+	return strongHoldId
 end
 
-function var_0_0.setStrongHoldSelect(arg_27_0, arg_27_1, arg_27_2)
-	if arg_27_0._strongHoldItems == nil then
+function EliminateTeamChessView:setStrongHoldSelect(soliderId, strongHoldId)
+	if self._strongHoldItems == nil then
 		return
 	end
 
-	for iter_27_0 = 1, #arg_27_0._strongHoldItems do
-		arg_27_0._strongHoldItems[iter_27_0]:setStrongHoldSelect(arg_27_1, arg_27_2)
+	for i = 1, #self._strongHoldItems do
+		self._strongHoldItems[i]:setStrongHoldSelect(soliderId, strongHoldId)
 	end
 end
 
-function var_0_0.addStrongholdChess(arg_28_0, arg_28_1, arg_28_2, arg_28_3)
-	if arg_28_0._strongHoldItems == nil then
+function EliminateTeamChessView:addStrongholdChess(data, strongholdId, index)
+	if self._strongHoldItems == nil then
 		return
 	end
 
-	for iter_28_0 = 1, #arg_28_0._strongHoldItems do
-		arg_28_0._strongHoldItems[iter_28_0]:addStrongholdChess(arg_28_1, arg_28_2, arg_28_3)
+	for i = 1, #self._strongHoldItems do
+		self._strongHoldItems[i]:addStrongholdChess(data, strongholdId, index)
 	end
 
-	arg_28_0:refreshTotalScoreState()
+	self:refreshTotalScoreState()
 end
 
-function var_0_0.removeStrongholdChess(arg_29_0, arg_29_1, arg_29_2, arg_29_3, arg_29_4)
-	if arg_29_0._strongHoldItems == nil then
+function EliminateTeamChessView:removeStrongholdChess(strongholdId, uid, index, teamType)
+	if self._strongHoldItems == nil then
 		return
 	end
 
-	for iter_29_0 = 1, #arg_29_0._strongHoldItems do
-		arg_29_0._strongHoldItems[iter_29_0]:removeStrongholdChess(arg_29_1, arg_29_2, arg_29_3, arg_29_4)
+	for i = 1, #self._strongHoldItems do
+		self._strongHoldItems[i]:removeStrongholdChess(strongholdId, uid, index, teamType)
 	end
 
-	arg_29_0:refreshTotalScoreState()
+	self:refreshTotalScoreState()
 end
 
-function var_0_0.strongHoldSettle(arg_30_0, arg_30_1)
-	if arg_30_0._strongHoldItems == nil then
+function EliminateTeamChessView:strongHoldSettle(strongholdId)
+	if self._strongHoldItems == nil then
 		return
 	end
 
-	for iter_30_0 = 1, #arg_30_0._strongHoldItems do
-		arg_30_0._strongHoldItems[iter_30_0]:strongHoldSettle(arg_30_1)
+	for i = 1, #self._strongHoldItems do
+		self._strongHoldItems[i]:strongHoldSettle(strongholdId)
 	end
 end
 
-function var_0_0.strongHoldPerformReduction(arg_31_0)
-	if arg_31_0._strongHoldItems == nil then
+function EliminateTeamChessView:strongHoldPerformReduction()
+	if self._strongHoldItems == nil then
 		return
 	end
 
-	for iter_31_0 = 1, #arg_31_0._strongHoldItems do
-		arg_31_0._strongHoldItems[iter_31_0]:strongHoldSettleResetShow()
+	for i = 1, #self._strongHoldItems do
+		self._strongHoldItems[i]:strongHoldSettleResetShow()
 	end
 end
 
-function var_0_0.teamChessUpdateActiveMoveState(arg_32_0, arg_32_1)
-	if arg_32_0._strongHoldItems == nil then
+function EliminateTeamChessView:teamChessUpdateActiveMoveState(uid)
+	if self._strongHoldItems == nil then
 		return
 	end
 
-	for iter_32_0 = 1, #arg_32_0._strongHoldItems do
-		arg_32_0._strongHoldItems[iter_32_0]:teamChessUpdateActiveMoveState(arg_32_1)
+	for i = 1, #self._strongHoldItems do
+		self._strongHoldItems[i]:teamChessUpdateActiveMoveState(uid)
 	end
 end
 
-function var_0_0.refreshActiveMoveState(arg_33_0)
+function EliminateTeamChessView:refreshActiveMoveState()
 	TeamChessUnitEntityMgr.instance:refreshShowModeStateByTeamType(EliminateTeamChessEnum.TeamChessTeamType.player)
 end
 
-function var_0_0.teamChessPowerChange(arg_34_0, arg_34_1, arg_34_2)
-	if arg_34_0._strongHoldItems == nil then
+function EliminateTeamChessView:teamChessPowerChange(uid, diffValue)
+	if self._strongHoldItems == nil then
 		return
 	end
 
-	for iter_34_0 = 1, #arg_34_0._strongHoldItems do
-		arg_34_0._strongHoldItems[iter_34_0]:teamChessPowerChange(arg_34_1, arg_34_2)
+	for i = 1, #self._strongHoldItems do
+		self._strongHoldItems[i]:teamChessPowerChange(uid, diffValue)
 	end
 end
 
-function var_0_0.teamChessGrowUpValueChange(arg_35_0, arg_35_1, arg_35_2, arg_35_3)
-	if arg_35_0._strongHoldItems == nil then
+function EliminateTeamChessView:teamChessGrowUpValueChange(uid, skillId, upValue)
+	if self._strongHoldItems == nil then
 		return
 	end
 
-	for iter_35_0 = 1, #arg_35_0._strongHoldItems do
-		arg_35_0._strongHoldItems[iter_35_0]:teamChessGrowUpValueChange(arg_35_1, arg_35_2, arg_35_3)
+	for i = 1, #self._strongHoldItems do
+		self._strongHoldItems[i]:teamChessGrowUpValueChange(uid, skillId, upValue)
 	end
 end
 
-function var_0_0.strongHoldPowerChange(arg_36_0, arg_36_1, arg_36_2, arg_36_3)
-	if arg_36_0._strongHoldItems == nil then
+function EliminateTeamChessView:strongHoldPowerChange(strongholdId, teamType, diffValue)
+	if self._strongHoldItems == nil then
 		return
 	end
 
-	for iter_36_0 = 1, #arg_36_0._strongHoldItems do
-		arg_36_0._strongHoldItems[iter_36_0]:strongHoldPowerChange(arg_36_1, arg_36_2, arg_36_3)
+	for i = 1, #self._strongHoldItems do
+		self._strongHoldItems[i]:strongHoldPowerChange(strongholdId, teamType, diffValue)
 	end
 
-	arg_36_0:refreshTotalScoreState()
+	self:refreshTotalScoreState()
 end
 
-function var_0_0.resourceDataChange(arg_37_0, arg_37_1)
-	for iter_37_0, iter_37_1 in pairs(arg_37_1) do
-		if not arg_37_0._resourceItem or not arg_37_0._resourceItem[iter_37_0] then
+function EliminateTeamChessView:resourceDataChange(resourceIdMap)
+	for resourceId, _ in pairs(resourceIdMap) do
+		if not self._resourceItem or not self._resourceItem[resourceId] then
 			return
 		end
 	end
 
-	arg_37_0:showAddResourceView(arg_37_0.updateResourceDataChange, arg_37_0, arg_37_1)
-	arg_37_0:refreshAndSortSlot()
-	arg_37_0:refreshTotalScoreState()
+	self:showAddResourceView(self.updateResourceDataChange, self, resourceIdMap)
+	self:refreshAndSortSlot()
+	self:refreshTotalScoreState()
 end
 
-function var_0_0.showAddResourceView(arg_38_0, arg_38_1, arg_38_2, arg_38_3)
-	local var_38_0 = tabletool.len(arg_38_3)
-	local var_38_1 = 1
+function EliminateTeamChessView:showAddResourceView(cb, cbTarget, resourceMap)
+	local num = tabletool.len(resourceMap)
+	local index = 1
 
-	if arg_38_0._addResourceItem == nil then
-		arg_38_0._addResourceItem = arg_38_0:getUserDataTb_()
+	if self._addResourceItem == nil then
+		self._addResourceItem = self:getUserDataTb_()
 	end
 
-	for iter_38_0, iter_38_1 in pairs(arg_38_3) do
-		arg_38_0._txtopt.text = iter_38_1 > 0 and "＋" or "－"
+	for resourceId, diffValue in pairs(resourceMap) do
+		self._txtopt.text = diffValue > 0 and "＋" or "－"
 
-		local var_38_2 = arg_38_0._addResourceItem[var_38_1]
+		local item = self._addResourceItem[index]
 
-		if var_38_2 == nil then
-			var_38_2 = gohelper.clone(arg_38_0._goaddResource, arg_38_0._goaddResources, iter_38_0)
+		if item == nil then
+			item = gohelper.clone(self._goaddResource, self._goaddResources, resourceId)
 
-			local var_38_3 = gohelper.findChildImage(var_38_2, "#image_Quality")
-			local var_38_4 = gohelper.findChildText(var_38_2, "#image_Quality/#txt_ResourceNum")
+			local resourceImage = gohelper.findChildImage(item, "#image_Quality")
+			local resourceNumberText = gohelper.findChildText(item, "#image_Quality/#txt_ResourceNum")
 
-			UISpriteSetMgr.instance:setV2a2EliminateSprite(var_38_3, EliminateTeamChessEnum.ResourceTypeToImagePath[iter_38_0], false)
+			UISpriteSetMgr.instance:setV2a2EliminateSprite(resourceImage, EliminateTeamChessEnum.ResourceTypeToImagePath[resourceId], false)
 
-			var_38_4.text = math.abs(iter_38_1 and iter_38_1 or 0)
+			resourceNumberText.text = math.abs(diffValue and diffValue or 0)
 
-			gohelper.setActive(var_38_2, true)
-			table.insert(arg_38_0._addResourceItem, {
-				item = var_38_2,
-				resourceImage = var_38_3,
-				resourceNumberText = var_38_4
+			gohelper.setActive(item, true)
+			table.insert(self._addResourceItem, {
+				item = item,
+				resourceImage = resourceImage,
+				resourceNumberText = resourceNumberText
 			})
-		elseif var_38_2.resourceImage and var_38_2.resourceNumberText then
-			UISpriteSetMgr.instance:setV2a2EliminateSprite(var_38_2.resourceImage, EliminateTeamChessEnum.ResourceTypeToImagePath[iter_38_0], false)
+		elseif item.resourceImage and item.resourceNumberText then
+			UISpriteSetMgr.instance:setV2a2EliminateSprite(item.resourceImage, EliminateTeamChessEnum.ResourceTypeToImagePath[resourceId], false)
 
-			var_38_2.resourceNumberText.text = math.abs(iter_38_1 and iter_38_1 or 0)
+			item.resourceNumberText.text = math.abs(diffValue and diffValue or 0)
 
-			gohelper.setActive(var_38_2.item, true)
+			gohelper.setActive(item.item, true)
 		end
 
-		var_38_1 = var_38_1 + 1
+		index = index + 1
 	end
 
-	gohelper.setActive(arg_38_0._goResourceTips, true)
+	gohelper.setActive(self._goResourceTips, true)
 	TaskDispatcher.runDelay(function()
-		gohelper.setActive(arg_38_0._goResourceTips, false)
+		gohelper.setActive(self._goResourceTips, false)
 
-		for iter_39_0 = 1, #arg_38_0._addResourceItem do
-			gohelper.setActive(arg_38_0._addResourceItem[iter_39_0].item, false)
+		for i = 1, #self._addResourceItem do
+			gohelper.setActive(self._addResourceItem[i].item, false)
 		end
 
-		if arg_38_1 then
-			arg_38_1(arg_38_2, arg_38_3)
+		if cb then
+			cb(cbTarget, resourceMap)
 		end
 	end, nil, EliminateTeamChessEnum.addResourceTipTime)
 end
 
-function var_0_0.updateResourceDataChange(arg_40_0, arg_40_1)
-	if arg_40_0._resourceItem == nil then
+function EliminateTeamChessView:updateResourceDataChange(resourceMap)
+	if self._resourceItem == nil then
 		return
 	end
 
-	if arg_40_1 ~= nil then
+	if resourceMap ~= nil then
 		AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2EliminateChess.play_ui_youyu_sources_lit)
 	end
 
-	for iter_40_0, iter_40_1 in pairs(arg_40_0._resourceItem) do
-		local var_40_0 = EliminateTeamChessModel.instance:getResourceNumber(iter_40_0)
+	for resourceId, item in pairs(self._resourceItem) do
+		local number = EliminateTeamChessModel.instance:getResourceNumber(resourceId)
 
-		if iter_40_1.resourceNumberText then
-			iter_40_1.resourceNumberText.text = var_40_0
+		if item.resourceNumberText then
+			item.resourceNumberText.text = number
 		end
 	end
 
-	if arg_40_1 then
-		for iter_40_2, iter_40_3 in pairs(arg_40_1) do
-			local var_40_1 = arg_40_0._resourceItem[iter_40_2]
+	if resourceMap then
+		for resourceId, _ in pairs(resourceMap) do
+			local item = self._resourceItem[resourceId]
 
-			if var_40_1 and var_40_1.ani then
-				var_40_1.ani:Play("add", 0, 0)
+			if item and item.ani then
+				item.ani:Play("add", 0, 0)
 			end
 		end
 	end
 end
 
-function var_0_0.showSoliderChessTip(arg_41_0, arg_41_1, arg_41_2, arg_41_3, arg_41_4, arg_41_5, arg_41_6)
-	if arg_41_0._soliderTipView == nil then
-		local var_41_0 = arg_41_0.viewContainer:getSetting().otherRes[6]
-		local var_41_1 = arg_41_0:getResInst(var_41_0, arg_41_0._btnmask.gameObject)
+function EliminateTeamChessView:showSoliderChessTip(soliderId, uid, strongholdId, showType, entity, offsetData)
+	if self._soliderTipView == nil then
+		local tipPath = self.viewContainer:getSetting().otherRes[6]
+		local playerItemGO = self:getResInst(tipPath, self._btnmask.gameObject)
 
-		arg_41_0._soliderTipView = MonoHelper.addNoUpdateLuaComOnceToGo(var_41_1, EliminateChessTipView)
+		self._soliderTipView = MonoHelper.addNoUpdateLuaComOnceToGo(playerItemGO, EliminateChessTipView)
 
-		arg_41_0._soliderTipView:setSellCb(arg_41_0.hideSoliderChessTip, arg_41_0)
+		self._soliderTipView:setSellCb(self.hideSoliderChessTip, self)
 	end
 
-	arg_41_0._soliderTipView:setChessUidAndStrongHoldId(arg_41_2, arg_41_3)
-	arg_41_0._soliderTipView:setSoliderIdAndShowType(arg_41_1, arg_41_4)
+	self._soliderTipView:setChessUidAndStrongHoldId(uid, strongholdId)
+	self._soliderTipView:setSoliderIdAndShowType(soliderId, showType)
 
-	if arg_41_0._soliderTipView then
-		arg_41_0._soliderTipView:updateViewPositionByEntity(arg_41_5, arg_41_6)
+	if self._soliderTipView then
+		self._soliderTipView:updateViewPositionByEntity(entity, offsetData)
 	end
 
-	gohelper.setActive(arg_41_0._btnmask, true)
+	gohelper.setActive(self._btnmask, true)
 end
 
-function var_0_0.updateViewPositionByEntity(arg_42_0, arg_42_1, arg_42_2, arg_42_3, arg_42_4, arg_42_5)
-	if arg_42_0._soliderTipView == nil or not arg_42_0._btnmask.gameObject.activeSelf then
-		arg_42_0:showSoliderChessTip(arg_42_1, nil, nil, arg_42_2, arg_42_3, arg_42_4)
+function EliminateTeamChessView:updateViewPositionByEntity(soliderId, showType, entity, offsetData, showAdd)
+	if self._soliderTipView == nil or not self._btnmask.gameObject.activeSelf then
+		self:showSoliderChessTip(soliderId, nil, nil, showType, entity, offsetData)
 	end
 
-	if arg_42_0._soliderTipView then
-		arg_42_0._soliderTipView:updateViewPositionByEntity(arg_42_3, arg_42_4, arg_42_5)
-	end
-end
-
-function var_0_0.setViewCanvasGroupActive(arg_43_0, arg_43_1)
-	if arg_43_0._soliderTipView then
-		arg_43_0._soliderTipView:setViewActive(arg_43_1)
+	if self._soliderTipView then
+		self._soliderTipView:updateViewPositionByEntity(entity, offsetData, showAdd)
 	end
 end
 
-function var_0_0.hideSoliderChessTip(arg_44_0)
-	if arg_44_0._soliderTipView then
-		arg_44_0._soliderTipView:hideView()
+function EliminateTeamChessView:setViewCanvasGroupActive(active)
+	if self._soliderTipView then
+		self._soliderTipView:setViewActive(active)
 	end
-
-	gohelper.setActive(arg_44_0._btnmask, false)
 end
 
-function var_0_0.refreshViewByRoundState(arg_45_0)
-	local var_45_0 = EliminateTeamChessModel.instance:getCurTeamRoundStepState()
+function EliminateTeamChessView:hideSoliderChessTip()
+	if self._soliderTipView then
+		self._soliderTipView:hideView()
+	end
 
-	gohelper.setActive(arg_45_0._goSlot, var_45_0 == EliminateTeamChessEnum.TeamChessRoundType.player)
-	gohelper.setActive(arg_45_0._goresources, var_45_0 == EliminateTeamChessEnum.TeamChessRoundType.player)
-	gohelper.setActive(arg_45_0._btnresult, var_45_0 == EliminateTeamChessEnum.TeamChessRoundType.player)
+	gohelper.setActive(self._btnmask, false)
+end
 
-	if arg_45_0._strongHoldItems == nil then
+function EliminateTeamChessView:refreshViewByRoundState()
+	local roundStepState = EliminateTeamChessModel.instance:getCurTeamRoundStepState()
+
+	gohelper.setActive(self._goSlot, roundStepState == EliminateTeamChessEnum.TeamChessRoundType.player)
+	gohelper.setActive(self._goresources, roundStepState == EliminateTeamChessEnum.TeamChessRoundType.player)
+	gohelper.setActive(self._btnresult, roundStepState == EliminateTeamChessEnum.TeamChessRoundType.player)
+
+	if self._strongHoldItems == nil then
 		return
 	end
 
-	for iter_45_0 = 1, #arg_45_0._strongHoldItems do
-		arg_45_0._strongHoldItems[iter_45_0]:refreshViewByRoundState(var_45_0)
+	for i = 1, #self._strongHoldItems do
+		self._strongHoldItems[i]:refreshViewByRoundState(roundStepState)
 	end
 end
 
-function var_0_0.updateTeamChessViewWatchState(arg_46_0, arg_46_1)
-	gohelper.setActive(arg_46_0._goSlot, not arg_46_1)
-	gohelper.setActive(arg_46_0._goresources, not arg_46_1)
-	gohelper.setActive(arg_46_0._btnresult, not arg_46_1)
+function EliminateTeamChessView:updateTeamChessViewWatchState(state)
+	gohelper.setActive(self._goSlot, not state)
+	gohelper.setActive(self._goresources, not state)
+	gohelper.setActive(self._btnresult, not state)
 
-	if not gohelper.isNil(arg_46_0._powerParent) then
-		gohelper.setActive(arg_46_0._powerParent, arg_46_1)
+	if not gohelper.isNil(self._powerParent) then
+		gohelper.setActive(self._powerParent, state)
 	end
 
-	if not arg_46_1 then
-		arg_46_0:hideSoliderChessTip()
+	if not state then
+		self:hideSoliderChessTip()
 	end
 
-	for iter_46_0 = 1, #arg_46_0._strongHoldItems do
-		arg_46_0._strongHoldItems[iter_46_0]:refreshAni(arg_46_1)
+	for i = 1, #self._strongHoldItems do
+		self._strongHoldItems[i]:refreshAni(state)
 	end
 end
 
-function var_0_0.soliderChessModelClick(arg_47_0, arg_47_1, arg_47_2, arg_47_3, arg_47_4, arg_47_5, arg_47_6)
-	if arg_47_0._placeSkillReleaseSuccess == nil or arg_47_0._placeSkillReleaseSuccess then
-		arg_47_0:showSoliderChessTip(arg_47_1, arg_47_2, arg_47_3, arg_47_4, arg_47_5, arg_47_6)
+function EliminateTeamChessView:soliderChessModelClick(soliderId, uid, strongholdId, showType, entity, offsetData)
+	if self._placeSkillReleaseSuccess == nil or self._placeSkillReleaseSuccess then
+		self:showSoliderChessTip(soliderId, uid, strongholdId, showType, entity, offsetData)
 
 		return
 	end
 
-	local var_47_0 = EliminateTeamChessController.instance:getPlaceSkill()
+	local placeSkill = EliminateTeamChessController.instance:getPlaceSkill()
 
-	if var_47_0 and var_47_0:setSelectSoliderId(arg_47_2) then
-		arg_47_0._placeSkillReleaseSuccess = EliminateTeamChessController.instance:checkAndReleasePlaceSkill()
+	if placeSkill then
+		local state = placeSkill:setSelectSoliderId(uid)
+
+		if state then
+			self._placeSkillReleaseSuccess = EliminateTeamChessController.instance:checkAndReleasePlaceSkill()
+		end
 	end
 end
 
-function var_0_0.onTeamChessSkillRelease(arg_48_0)
-	arg_48_0._placeSkillReleaseSuccess = nil
+function EliminateTeamChessView:onTeamChessSkillRelease()
+	self._placeSkillReleaseSuccess = nil
 end
 
-function var_0_0.flowEnd(arg_49_0)
-	local var_49_0 = EliminateLevelModel.instance:getLevelId()
-	local var_49_1 = EliminateTeamChessModel.instance:getAllPlayerSoliderCount()
-	local var_49_2 = string.format("%s_%s", var_49_0, var_49_1)
+function EliminateTeamChessView:flowEnd()
+	local levelId = EliminateLevelModel.instance:getLevelId()
+	local count = EliminateTeamChessModel.instance:getAllPlayerSoliderCount()
+	local value = string.format("%s_%s", levelId, count)
 
-	EliminateLevelController.instance:dispatchEvent(EliminateChessEvent.TeamChessRoundBeginAndPlayerSoliderCount, var_49_2)
-	arg_49_0:setClickMaskState(false)
+	EliminateLevelController.instance:dispatchEvent(EliminateChessEvent.TeamChessRoundBeginAndPlayerSoliderCount, value)
+	self:setClickMaskState(false)
 end
 
-function var_0_0.teamChessOnFlowStart(arg_50_0)
-	arg_50_0:setClickMaskState(true)
+function EliminateTeamChessView:teamChessOnFlowStart()
+	self:setClickMaskState(true)
 end
 
-function var_0_0.setClickMaskState(arg_51_0, arg_51_1)
-	if EliminateTeamChessModel.instance:getWarFightResult() ~= nil then
+function EliminateTeamChessView:setClickMaskState(active)
+	local result = EliminateTeamChessModel.instance:getWarFightResult()
+
+	if result ~= nil then
 		return
 	end
 
-	TeamChessUnitEntityMgr.instance:setAllEntityCanClick(not arg_51_1)
-	TeamChessUnitEntityMgr.instance:setAllEntityCanDrag(not arg_51_1)
-	gohelper.setActive(arg_51_0._gomask.gameObject, arg_51_1)
+	TeamChessUnitEntityMgr.instance:setAllEntityCanClick(not active)
+	TeamChessUnitEntityMgr.instance:setAllEntityCanDrag(not active)
+	gohelper.setActive(self._gomask.gameObject, active)
 end
 
-function var_0_0.refreshTotalScoreState(arg_52_0)
-	if EliminateTeamChessModel.instance:getCurTeamRoundStepState() == EliminateTeamChessEnum.TeamChessRoundType.player then
-		local var_52_0 = false
+function EliminateTeamChessView:refreshTotalScoreState()
+	local roundState = EliminateTeamChessModel.instance:getCurTeamRoundStepState()
+
+	if roundState == EliminateTeamChessEnum.TeamChessRoundType.player then
+		local isShowVx = false
 
 		if not EliminateTeamChessModel.instance:allStrongHoldIsIsFull() then
-			local var_52_1 = EliminateTeamChessModel.instance:haveEnoughResource()
-			local var_52_2 = EliminateTeamChessModel.instance:canReleaseSkillAddResource()
+			local haveEnoughResource = EliminateTeamChessModel.instance:haveEnoughResource()
+			local canReleaseSkillAddResource = EliminateTeamChessModel.instance:canReleaseSkillAddResource()
 
-			logNormal("haveEnoughResource", tostring(var_52_1), "canReleaseSkillAddResource", tostring(var_52_2))
+			logNormal("haveEnoughResource", tostring(haveEnoughResource), "canReleaseSkillAddResource", tostring(canReleaseSkillAddResource))
 
-			var_52_0 = not var_52_1 and not var_52_2
+			isShowVx = not haveEnoughResource and not canReleaseSkillAddResource
 		end
 
-		gohelper.setActive(arg_52_0._goreslutvxloop, var_52_0)
+		gohelper.setActive(self._goreslutvxloop, isShowVx)
 	end
 end
 
-function var_0_0.onDestroyView(arg_53_0)
-	arg_53_0._powerParentTr = nil
+function EliminateTeamChessView:onDestroyView()
+	self._powerParentTr = nil
 
-	if arg_53_0._powerParent then
-		gohelper.destroy(arg_53_0._powerParent)
+	if self._powerParent then
+		gohelper.destroy(self._powerParent)
 
-		arg_53_0._powerParent = nil
+		self._powerParent = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_53_0.refreshViewActive, arg_53_0)
+	TaskDispatcher.cancelTask(self.refreshViewActive, self)
 
-	if arg_53_0._soliderTipView then
-		arg_53_0._soliderTipView:onDestroy()
+	if self._soliderTipView then
+		self._soliderTipView:onDestroy()
 
-		arg_53_0._soliderTipView = nil
+		self._soliderTipView = nil
 	end
 end
 
-return var_0_0
+return EliminateTeamChessView

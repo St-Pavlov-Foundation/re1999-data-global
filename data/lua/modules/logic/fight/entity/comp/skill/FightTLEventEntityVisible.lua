@@ -1,137 +1,139 @@
-﻿module("modules.logic.fight.entity.comp.skill.FightTLEventEntityVisible", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skill/FightTLEventEntityVisible.lua
 
-local var_0_0 = class("FightTLEventEntityVisible", FightTimelineTrackItem)
-local var_0_1
-local var_0_2 = {
+module("modules.logic.fight.entity.comp.skill.FightTLEventEntityVisible", package.seeall)
+
+local FightTLEventEntityVisible = class("FightTLEventEntityVisible", FightTimelineTrackItem)
+local latestStepUid
+local filterEffectType = {
 	[FightEnum.EffectType.DAMAGEFROMABSORB] = true,
 	[FightEnum.EffectType.STORAGEINJURY] = true,
 	[FightEnum.EffectType.SHIELDVALUECHANGE] = true,
 	[FightEnum.EffectType.SHAREHURT] = true
 }
 
-function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = FightHelper.getEntity(arg_1_1.fromId)
-	local var_1_1 = var_1_0 and var_1_0.skill and var_1_0.skill:sameSkillPlaying()
+function FightTLEventEntityVisible:onTrackStart(fightStepData, duration, paramsArr)
+	local tar_entity = FightHelper.getEntity(fightStepData.fromId)
+	local is_same_skill_playing = tar_entity and tar_entity.skill and tar_entity.skill:sameSkillPlaying()
 
-	if var_1_1 then
+	if is_same_skill_playing then
 		-- block empty
-	elseif var_0_1 and arg_1_1.stepUid < var_0_1 then
+	elseif latestStepUid and fightStepData.stepUid < latestStepUid then
 		return
 	end
 
-	if not arg_1_1.isFakeStep then
-		var_0_1 = arg_1_1.stepUid
-		var_0_0.latestStepUid = var_0_1
+	if not fightStepData.isFakeStep then
+		latestStepUid = fightStepData.stepUid
+		FightTLEventEntityVisible.latestStepUid = latestStepUid
 	end
 
-	local var_1_2 = tonumber(arg_1_3[1]) or 1
-	local var_1_3 = tonumber(arg_1_3[2]) or 1
-	local var_1_4 = tonumber(arg_1_3[3]) or 0.2
-	local var_1_5 = FightHelper.getEntity(arg_1_1.fromId)
-	local var_1_6 = FightHelper.getDefenders(arg_1_1, false, var_0_2)
-	local var_1_7 = GameSceneMgr.instance:getCurScene().entityMgr
-	local var_1_8 = var_1_7:getTagUnitDict(SceneTag.UnitPlayer)
-	local var_1_9 = var_1_7:getTagUnitDict(SceneTag.UnitMonster)
-	local var_1_10 = var_1_5:isMySide() and var_1_8 or var_1_9
-	local var_1_11 = var_1_5:isMySide() and var_1_9 or var_1_8
-	local var_1_12, var_1_13 = arg_1_0:_getVisibleList(var_1_5, var_1_6, var_1_10, var_1_2, var_1_11, var_1_3, arg_1_1)
+	local attackerVisibleType = tonumber(paramsArr[1]) or 1
+	local defenderVisibleType = tonumber(paramsArr[2]) or 1
+	local transitionTime = tonumber(paramsArr[3]) or 0.2
+	local attacker = FightHelper.getEntity(fightStepData.fromId)
+	local defenders = FightHelper.getDefenders(fightStepData, false, filterEffectType)
+	local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+	local mySide = entityMgr:getTagUnitDict(SceneTag.UnitPlayer)
+	local enemySide = entityMgr:getTagUnitDict(SceneTag.UnitMonster)
+	local attackerSide = attacker:isMySide() and mySide or enemySide
+	local defenderSide = attacker:isMySide() and enemySide or mySide
+	local showEntitys, hideEntitys = self:_getVisibleList(attacker, defenders, attackerSide, attackerVisibleType, defenderSide, defenderVisibleType, fightStepData)
 
-	if not string.nilorempty(arg_1_3[5]) then
-		local var_1_14 = FightHelper.getEntity(arg_1_1.stepUid .. "_" .. arg_1_3[5])
+	if not string.nilorempty(paramsArr[5]) then
+		local tar_entity = FightHelper.getEntity(fightStepData.stepUid .. "_" .. paramsArr[5])
 
-		if var_1_14 then
-			table.insert(var_1_13, var_1_14)
+		if tar_entity then
+			table.insert(hideEntitys, tar_entity)
 		end
 	end
 
-	if not string.nilorempty(arg_1_3[6]) then
-		local var_1_15 = FightHelper.getEntity(arg_1_1.stepUid .. "_" .. arg_1_3[6])
+	if not string.nilorempty(paramsArr[6]) then
+		local tar_entity = FightHelper.getEntity(fightStepData.stepUid .. "_" .. paramsArr[6])
 
-		if var_1_15 then
-			table.insert(var_1_12, var_1_15)
+		if tar_entity then
+			table.insert(showEntitys, tar_entity)
 		end
 	end
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_12) do
-		FightController.instance:dispatchEvent(FightEvent.SetEntityVisibleByTimeline, iter_1_1, arg_1_1, true, var_1_4)
+	for _, entity in ipairs(showEntitys) do
+		FightController.instance:dispatchEvent(FightEvent.SetEntityVisibleByTimeline, entity, fightStepData, true, transitionTime)
 	end
 
-	if arg_1_3[4] == "1" and var_1_1 then
+	if paramsArr[4] == "1" and is_same_skill_playing then
 		-- block empty
 	else
-		for iter_1_2, iter_1_3 in ipairs(var_1_13) do
-			local var_1_16 = true
+		for _, entity in ipairs(hideEntitys) do
+			local can_hide = true
 
-			if var_1_16 then
-				FightController.instance:dispatchEvent(FightEvent.SetEntityVisibleByTimeline, iter_1_3, arg_1_1, false, var_1_4)
+			if can_hide then
+				FightController.instance:dispatchEvent(FightEvent.SetEntityVisibleByTimeline, entity, fightStepData, false, transitionTime)
 			end
 		end
 	end
 end
 
-function var_0_0._getVisibleList(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4, arg_2_5, arg_2_6, arg_2_7)
-	local var_2_0 = {}
-	local var_2_1 = {}
+function FightTLEventEntityVisible:_getVisibleList(attacker, defenders, attackerSide, attackerVisibleType, defenderSide, defenderVisibleType, fightStepData)
+	local hideEntitys = {}
+	local showEntitys = {}
 
-	for iter_2_0, iter_2_1 in pairs(arg_2_3) do
-		local var_2_2
+	for _, entity in pairs(attackerSide) do
+		local isHide
 
-		if arg_2_4 == 0 then
-			var_2_2 = true
-		elseif arg_2_4 == 1 then
-			var_2_2 = false
-		elseif arg_2_4 == 2 then
-			var_2_2 = arg_2_1 ~= iter_2_1
-		elseif arg_2_4 == 3 then
-			var_2_2 = arg_2_1 == iter_2_1
-		elseif arg_2_4 == 4 then
-			var_2_2 = arg_2_1 ~= iter_2_1 and not tabletool.indexOf(arg_2_2, iter_2_1)
-		elseif arg_2_4 == 5 then
-			var_2_2 = iter_2_1.id ~= arg_2_7.toId
+		if attackerVisibleType == 0 then
+			isHide = true
+		elseif attackerVisibleType == 1 then
+			isHide = false
+		elseif attackerVisibleType == 2 then
+			isHide = attacker ~= entity
+		elseif attackerVisibleType == 3 then
+			isHide = attacker == entity
+		elseif attackerVisibleType == 4 then
+			isHide = attacker ~= entity and not tabletool.indexOf(defenders, entity)
+		elseif attackerVisibleType == 5 then
+			isHide = entity.id ~= fightStepData.toId
 		end
 
-		if var_2_2 then
-			table.insert(var_2_0, iter_2_1)
+		if isHide then
+			table.insert(hideEntitys, entity)
 		else
-			table.insert(var_2_1, iter_2_1)
+			table.insert(showEntitys, entity)
 		end
 	end
 
-	for iter_2_2, iter_2_3 in pairs(arg_2_5) do
-		local var_2_3
+	for _, entity in pairs(defenderSide) do
+		local isHide
 
-		if arg_2_6 == 0 then
-			var_2_3 = true
-		elseif arg_2_6 == 1 then
-			var_2_3 = false
-		elseif arg_2_6 == 2 then
-			var_2_3 = not tabletool.indexOf(arg_2_2, iter_2_3)
+		if defenderVisibleType == 0 then
+			isHide = true
+		elseif defenderVisibleType == 1 then
+			isHide = false
+		elseif defenderVisibleType == 2 then
+			isHide = not tabletool.indexOf(defenders, entity)
 
-			if var_2_3 then
-				local var_2_4 = iter_2_3:getMO()
+			if isHide then
+				local entity_mo = entity:getMO()
 
-				if var_2_4 then
-					local var_2_5 = FightConfig.instance:getSkinCO(var_2_4.skin)
+				if entity_mo then
+					local skin_config = FightConfig.instance:getSkinCO(entity_mo.skin)
 
-					if var_2_5 and var_2_5.canHide == 1 then
-						var_2_3 = false
+					if skin_config and skin_config.canHide == 1 then
+						isHide = false
 					end
 				end
 			end
-		elseif arg_2_6 == 3 then
-			var_2_3 = tabletool.indexOf(arg_2_2, iter_2_3)
-		elseif arg_2_6 == 4 then
-			var_2_3 = iter_2_3.id ~= arg_2_7.toId
+		elseif defenderVisibleType == 3 then
+			isHide = tabletool.indexOf(defenders, entity)
+		elseif defenderVisibleType == 4 then
+			isHide = entity.id ~= fightStepData.toId
 		end
 
-		if var_2_3 then
-			table.insert(var_2_0, iter_2_3)
+		if isHide then
+			table.insert(hideEntitys, entity)
 		else
-			table.insert(var_2_1, iter_2_3)
+			table.insert(showEntitys, entity)
 		end
 	end
 
-	return var_2_1, var_2_0
+	return showEntitys, hideEntitys
 end
 
-return var_0_0
+return FightTLEventEntityVisible

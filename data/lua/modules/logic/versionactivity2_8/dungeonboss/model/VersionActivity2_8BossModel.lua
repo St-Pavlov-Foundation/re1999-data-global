@@ -1,44 +1,48 @@
-﻿module("modules.logic.versionactivity2_8.dungeonboss.model.VersionActivity2_8BossModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/dungeonboss/model/VersionActivity2_8BossModel.lua
 
-local var_0_0 = class("VersionActivity2_8BossModel", BaseModel)
+module("modules.logic.versionactivity2_8.dungeonboss.model.VersionActivity2_8BossModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local VersionActivity2_8BossModel = class("VersionActivity2_8BossModel", BaseModel)
+
+function VersionActivity2_8BossModel:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._isFocusElement = false
-	arg_2_0._bossStoryFightEpisodeId = nil
+function VersionActivity2_8BossModel:reInit()
+	self._isFocusElement = false
+	self._bossStoryFightEpisodeId = nil
 end
 
-function var_0_0.setFocusElement(arg_3_0, arg_3_1)
-	arg_3_0._isFocusElement = arg_3_1
+function VersionActivity2_8BossModel:setFocusElement(value)
+	self._isFocusElement = value
 end
 
-function var_0_0.isFocusElement(arg_4_0)
-	return arg_4_0._isFocusElement
+function VersionActivity2_8BossModel:isFocusElement()
+	return self._isFocusElement
 end
 
-function var_0_0.enterBossStoryFight(arg_5_0, arg_5_1)
-	arg_5_0._bossStoryFightEpisodeId = arg_5_1
+function VersionActivity2_8BossModel:enterBossStoryFight(episodeId)
+	self._bossStoryFightEpisodeId = episodeId
 end
 
-function var_0_0.getBossStoryFightEpisodeId(arg_6_0)
-	return arg_6_0._bossStoryFightEpisodeId
+function VersionActivity2_8BossModel:getBossStoryFightEpisodeId()
+	return self._bossStoryFightEpisodeId
 end
 
-function var_0_0.getStoryBossCurEpisodeId(arg_7_0)
-	local var_7_0 = DungeonConfig.instance:getChapterEpisodeCOList(DungeonEnum.ChapterId.BossStory)
+function VersionActivity2_8BossModel:getStoryBossCurEpisodeId()
+	local list = DungeonConfig.instance:getChapterEpisodeCOList(DungeonEnum.ChapterId.BossStory)
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-		if not DungeonModel.instance:hasPassLevelAndStory(iter_7_1.id) then
-			return iter_7_1.id
+	for i, v in ipairs(list) do
+		local pass = DungeonModel.instance:hasPassLevelAndStory(v.id)
+
+		if not pass then
+			return v.id
 		end
 	end
 
-	return var_7_0[#var_7_0].id
+	return list[#list].id
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity2_8BossModel.instance = VersionActivity2_8BossModel.New()
 
-return var_0_0
+return VersionActivity2_8BossModel

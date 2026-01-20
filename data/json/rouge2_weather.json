@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "title": "language_10101718",
+    "icon": "rouge2_layer_weather_1",
+    "pathSelectWeatherUrl": "ui/viewres/rouge2/map/rouge2_layertop_time1.prefab"
+  },
+  {
+    "id": 2,
+    "title": "language_10101719",
+    "icon": "rouge2_layer_weather_4",
+    "pathSelectWeatherUrl": "ui/viewres/rouge2/map/rouge2_layertop_time4.prefab"
+  },
+  {
+    "id": 3,
+    "title": "language_10101720",
+    "icon": "rouge2_layer_weather_2",
+    "pathSelectWeatherUrl": "ui/viewres/rouge2/map/rouge2_layertop_time2.prefab"
+  },
+  {
+    "id": 4,
+    "title": "language_10101721",
+    "icon": "rouge2_layer_weather_3",
+    "pathSelectWeatherUrl": "ui/viewres/rouge2/map/rouge2_layertop_time3.prefab"
+  }
+]

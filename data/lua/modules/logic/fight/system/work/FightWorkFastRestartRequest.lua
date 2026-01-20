@@ -1,10 +1,12 @@
-﻿module("modules.logic.fight.system.work.FightWorkFastRestartRequest", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkFastRestartRequest.lua
 
-local var_0_0 = class("FightWorkFastRestartRequest", BaseWork)
+module("modules.logic.fight.system.work.FightWorkFastRestartRequest", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
+local FightWorkFastRestartRequest = class("FightWorkFastRestartRequest", BaseWork)
+
+function FightWorkFastRestartRequest:onStart()
 	DungeonFightController.instance:restartStage()
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkFastRestartRequest

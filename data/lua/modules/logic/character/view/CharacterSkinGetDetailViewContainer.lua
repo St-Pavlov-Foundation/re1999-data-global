@@ -1,11 +1,13 @@
-﻿module("modules.logic.character.view.CharacterSkinGetDetailViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterSkinGetDetailViewContainer.lua
 
-local var_0_0 = class("CharacterSkinGetDetailViewContainer", BaseViewContainer)
+module("modules.logic.character.view.CharacterSkinGetDetailViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local CharacterSkinGetDetailViewContainer = class("CharacterSkinGetDetailViewContainer", BaseViewContainer)
+
+function CharacterSkinGetDetailViewContainer:buildViews()
 	return {
 		CharacterSkinGetDetailView.New()
 	}
 end
 
-return var_0_0
+return CharacterSkinGetDetailViewContainer

@@ -1,108 +1,111 @@
-﻿module("modules.logic.bossrush.view.v1a6.taskachievement.V1a6_BossRush_AchievementView", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/view/v1a6/taskachievement/V1a6_BossRush_AchievementView.lua
 
-local var_0_0 = class("V1a6_BossRush_AchievementView", BaseView)
+module("modules.logic.bossrush.view.v1a6.taskachievement.V1a6_BossRush_AchievementView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goAssessIcon = gohelper.findChild(arg_1_0.viewGO, "Left/#go_AssessIcon")
-	arg_1_0._txtScoreNum = gohelper.findChildText(arg_1_0.viewGO, "Left/#txt_ScoreNum")
-	arg_1_0._scrollScoreList = gohelper.findChildScrollRect(arg_1_0.viewGO, "Right/#scroll_ScoreList")
-	arg_1_0._goRight = gohelper.findChild(arg_1_0.viewGO, "Right")
-	arg_1_0._animatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_1_0.viewGO)
-	arg_1_0._animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._isFirstOpen = true
+local V1a6_BossRush_AchievementView = class("V1a6_BossRush_AchievementView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V1a6_BossRush_AchievementView:onInitView()
+	self._goAssessIcon = gohelper.findChild(self.viewGO, "Left/#go_AssessIcon")
+	self._txtScoreNum = gohelper.findChildText(self.viewGO, "Left/#txt_ScoreNum")
+	self._scrollScoreList = gohelper.findChildScrollRect(self.viewGO, "Right/#scroll_ScoreList")
+	self._goRight = gohelper.findChild(self.viewGO, "Right")
+	self._animatorPlayer = ZProj.ProjAnimatorPlayer.Get(self.viewGO)
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._isFirstOpen = true
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_2_0._refresh, arg_2_0)
-	arg_2_0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_2_0._refresh, arg_2_0)
-	arg_2_0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_2_0._refresh, arg_2_0)
-	arg_2_0:addEventCb(TaskController.instance, TaskEvent.SetTaskList, arg_2_0._refresh, arg_2_0)
+function V1a6_BossRush_AchievementView:addEvents()
+	self:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, self._refresh, self)
+	self:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, self._refresh, self)
+	self:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, self._refresh, self)
+	self:addEventCb(TaskController.instance, TaskEvent.SetTaskList, self._refresh, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_3_0._refresh, arg_3_0)
-	arg_3_0:removeEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_3_0._refresh, arg_3_0)
-	arg_3_0:removeEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_3_0._refresh, arg_3_0)
-	arg_3_0:removeEventCb(TaskController.instance, TaskEvent.SetTaskList, arg_3_0._refresh, arg_3_0)
+function V1a6_BossRush_AchievementView:removeEvents()
+	self:removeEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, self._refresh, self)
+	self:removeEventCb(TaskController.instance, TaskEvent.OnFinishTask, self._refresh, self)
+	self:removeEventCb(TaskController.instance, TaskEvent.UpdateTaskList, self._refresh, self)
+	self:removeEventCb(TaskController.instance, TaskEvent.SetTaskList, self._refresh, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function V1a6_BossRush_AchievementView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function V1a6_BossRush_AchievementView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0.stage = arg_6_0.viewParam.stage
+function V1a6_BossRush_AchievementView:onOpen()
+	self.stage = self.viewParam.stage
 
-	arg_6_0:_initAssessIcon()
-	gohelper.setActive(arg_6_0._goRight, true)
+	self:_initAssessIcon()
+	gohelper.setActive(self._goRight, true)
+	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_mission_open)
 
-	local var_6_0 = arg_6_0._isFirstOpen and BossRushEnum.V1a6_BonusViewAnimName.Open or BossRushEnum.V1a6_BonusViewAnimName.In
+	local anim = self._isFirstOpen and BossRushEnum.V1a6_BonusViewAnimName.Open or BossRushEnum.V1a6_BonusViewAnimName.In
 
-	arg_6_0:playAnim(var_6_0)
+	self:playAnim(anim)
 
-	arg_6_0._isFirstOpen = nil
-	arg_6_0._scrollScoreList.verticalNormalizedPosition = 1
+	self._isFirstOpen = nil
+	self._scrollScoreList.verticalNormalizedPosition = 1
 
-	arg_6_0:_refresh()
+	self:_refresh()
 end
 
-function var_0_0.onClose(arg_7_0)
-	gohelper.setActive(arg_7_0._goRight, false)
+function V1a6_BossRush_AchievementView:onClose()
+	gohelper.setActive(self._goRight, false)
 
-	if arg_7_0._assessIcon then
-		arg_7_0._assessIcon:onClose()
+	if self._assessIcon then
+		self._assessIcon:onClose()
 	end
 
-	arg_7_0:playAnim(BossRushEnum.V1a6_BonusViewAnimName.Out)
+	self:playAnim(BossRushEnum.V1a6_BonusViewAnimName.Out)
 end
 
-function var_0_0.onDestroyView(arg_8_0)
-	if arg_8_0._assessIcon then
-		arg_8_0._assessIcon:onDestroyView()
-	end
-end
-
-function var_0_0._initAssessIcon(arg_9_0)
-	if not arg_9_0._assessIcon then
-		local var_9_0 = V1a4_BossRush_Task_AssessIcon
-		local var_9_1 = arg_9_0.viewContainer:getResInst(BossRushEnum.ResPath.v1a4_bossrush_achievement_assessicon, arg_9_0._goAssessIcon, var_9_0.__cname)
-
-		arg_9_0._assessIcon = MonoHelper.addNoUpdateLuaComOnceToGo(var_9_1, var_9_0)
-	end
-
-	local var_9_2 = BossRushModel.instance:getActivityBonus()
-	local var_9_3 = var_9_2 and var_9_2[V1a6_BossRush_BonusModel.instance:getTab()]
-	local var_9_4 = BossRushModel.instance:getHighestPoint(arg_9_0.stage)
-
-	if var_9_3.SpModel and var_9_3.SpModel.instance.getHighestPoint then
-		var_9_4 = var_9_3.SpModel.instance:getHighestPoint(arg_9_0.stage)
-	end
-
-	arg_9_0._assessIcon:setData(arg_9_0.stage, var_9_4, false)
-
-	arg_9_0._txtScoreNum.text = BossRushConfig.instance:getScoreStr(var_9_4)
-end
-
-function var_0_0._refresh(arg_10_0)
-	arg_10_0:_refreshRight()
-end
-
-function var_0_0._refreshRight(arg_11_0)
-	V1a6_BossRush_BonusModel.instance:selecAchievementTab(arg_11_0.stage)
-end
-
-function var_0_0.playAnim(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	if arg_12_0._animatorPlayer then
-		arg_12_0._animatorPlayer:Play(arg_12_1, arg_12_2, arg_12_3)
+function V1a6_BossRush_AchievementView:onDestroyView()
+	if self._assessIcon then
+		self._assessIcon:onDestroyView()
 	end
 end
 
-return var_0_0
+function V1a6_BossRush_AchievementView:_initAssessIcon()
+	if not self._assessIcon then
+		local itemClass = V1a4_BossRush_Task_AssessIcon
+		local go = self.viewContainer:getResInst(BossRushEnum.ResPath.v1a4_bossrush_achievement_assessicon, self._goAssessIcon, itemClass.__cname)
+
+		self._assessIcon = MonoHelper.addNoUpdateLuaComOnceToGo(go, itemClass)
+	end
+
+	local bonusTab = BossRushModel.instance:getActivityBonus()
+	local tab = bonusTab and bonusTab[V1a6_BossRush_BonusModel.instance:getTab()]
+	local highestPoint = BossRushModel.instance:getHighestPoint(self.stage)
+
+	if tab.SpModel and tab.SpModel.instance.getHighestPoint then
+		highestPoint = tab.SpModel.instance:getHighestPoint(self.stage)
+	end
+
+	self._assessIcon:setData(self.stage, highestPoint, false)
+
+	self._txtScoreNum.text = BossRushConfig.instance:getScoreStr(highestPoint)
+end
+
+function V1a6_BossRush_AchievementView:_refresh()
+	self:_refreshRight()
+end
+
+function V1a6_BossRush_AchievementView:_refreshRight()
+	V1a6_BossRush_BonusModel.instance:selecAchievementTab(self.stage)
+end
+
+function V1a6_BossRush_AchievementView:playAnim(name, callback, callbackobj)
+	if self._animatorPlayer then
+		self._animatorPlayer:Play(name, callback, callbackobj)
+	end
+end
+
+return V1a6_BossRush_AchievementView

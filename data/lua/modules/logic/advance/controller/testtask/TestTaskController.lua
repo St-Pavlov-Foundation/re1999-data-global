@@ -1,20 +1,22 @@
-﻿module("modules.logic.advance.controller.testtask.TestTaskController", package.seeall)
+﻿-- chunkname: @modules/logic/advance/controller/testtask/TestTaskController.lua
 
-local var_0_0 = class("TestTaskController", BaseController)
+module("modules.logic.advance.controller.testtask.TestTaskController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local TestTaskController = class("TestTaskController", BaseController)
+
+function TestTaskController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function TestTaskController:reInit()
 	return
 end
 
-function var_0_0.openTestTaskView(arg_3_0)
-	arg_3_0:_openTestTaskView()
+function TestTaskController:openTestTaskView()
+	self:_openTestTaskView()
 end
 
-function var_0_0._openTestTaskView(arg_4_0)
+function TestTaskController:_openTestTaskView()
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.TestTask
 	}, function()
@@ -22,8 +24,8 @@ function var_0_0._openTestTaskView(arg_4_0)
 	end)
 end
 
-var_0_0.instance = var_0_0.New()
+TestTaskController.instance = TestTaskController.New()
 
-LuaEventSystem.addEventMechanism(var_0_0.instance)
+LuaEventSystem.addEventMechanism(TestTaskController.instance)
 
-return var_0_0
+return TestTaskController

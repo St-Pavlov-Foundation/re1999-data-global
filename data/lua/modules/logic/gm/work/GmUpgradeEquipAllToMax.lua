@@ -1,50 +1,52 @@
-﻿module("modules.logic.gm.work.GmUpgradeEquipAllToMax", package.seeall)
+﻿-- chunkname: @modules/logic/gm/work/GmUpgradeEquipAllToMax.lua
 
-local var_0_0 = class("GmUpgradeEquipAllToMax", BaseWork)
+module("modules.logic.gm.work.GmUpgradeEquipAllToMax", package.seeall)
 
-var_0_0.BlockKey = "send equip all to max msg ing"
+local GmUpgradeEquipAllToMax = class("GmUpgradeEquipAllToMax", BaseWork)
 
-function var_0_0.onStart(arg_1_0)
-	UIBlockMgr.instance:startBlock(var_0_0.BlockKey)
+GmUpgradeEquipAllToMax.BlockKey = "send equip all to max msg ing"
 
-	arg_1_0.equipList = EquipModel.instance:getEquips()
-	arg_1_0.curIndex = 0
-	arg_1_0.maxCount = #arg_1_0.equipList
+function GmUpgradeEquipAllToMax:onStart()
+	UIBlockMgr.instance:startBlock(GmUpgradeEquipAllToMax.BlockKey)
 
-	local var_1_0 = 50
+	self.equipList = EquipModel.instance:getEquips()
+	self.curIndex = 0
+	self.maxCount = #self.equipList
 
-	TaskDispatcher.runRepeat(arg_1_0.senMsg, arg_1_0, 1 / var_1_0)
+	local everySecondSendMsgCount = 50
+
+	TaskDispatcher.runRepeat(self.senMsg, self, 1 / everySecondSendMsgCount)
 end
 
-function var_0_0.senMsg(arg_2_0)
-	arg_2_0.curIndex = arg_2_0.curIndex + 1
+function GmUpgradeEquipAllToMax:senMsg()
+	self.curIndex = self.curIndex + 1
 
-	local var_2_0 = arg_2_0.equipList[arg_2_0.curIndex]
+	local equipMo = self.equipList[self.curIndex]
 
-	if not var_2_0 then
-		return arg_2_0:senMsgDone()
+	if not equipMo then
+		return self:senMsgDone()
 	end
 
-	if not EquipHelper.isNormalEquip(var_2_0.config) then
+	if not EquipHelper.isNormalEquip(equipMo.config) then
 		return
 	end
 
-	local var_2_1 = EquipConfig.instance:getEquipRefineLvMax()
-	local var_2_2 = 60
-	local var_2_3 = string.format("add equip %d#%d#%d", var_2_0.equipId, var_2_2, var_2_1)
+	local maxRefineLv = EquipConfig.instance:getEquipRefineLvMax()
+	local maxLv = 60
+	local msg = string.format("add equip %d#%d#%d", equipMo.equipId, maxLv, maxRefineLv)
 
-	GMRpc.instance:sendGMRequest(var_2_3)
-	GameFacade.showToastString(string.format("心相全部拉满进度  %s / %s", arg_2_0.curIndex, arg_2_0.maxCount))
+	GMRpc.instance:sendGMRequest(msg)
+	GameFacade.showToastString(string.format("心相全部拉满进度  %s / %s", self.curIndex, self.maxCount))
 end
 
-function var_0_0.senMsgDone(arg_3_0)
-	arg_3_0:clearWork()
-	arg_3_0:onDone(true)
+function GmUpgradeEquipAllToMax:senMsgDone()
+	self:clearWork()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0.senMsg, arg_4_0)
-	UIBlockMgr.instance:endBlock(var_0_0.BlockKey)
+function GmUpgradeEquipAllToMax:clearWork()
+	TaskDispatcher.cancelTask(self.senMsg, self)
+	UIBlockMgr.instance:endBlock(GmUpgradeEquipAllToMax.BlockKey)
 end
 
-return var_0_0
+return GmUpgradeEquipAllToMax

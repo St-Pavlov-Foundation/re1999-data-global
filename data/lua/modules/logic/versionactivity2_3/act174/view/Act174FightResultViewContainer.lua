@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity2_3.act174.view.Act174FightResultViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/act174/view/Act174FightResultViewContainer.lua
 
-local var_0_0 = class("Act174FightResultViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_3.act174.view.Act174FightResultViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Act174FightResultViewContainer = class("Act174FightResultViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Act174FightResultView.New())
+function Act174FightResultViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Act174FightResultView.New())
+
+	return views
 end
 
-return var_0_0
+return Act174FightResultViewContainer

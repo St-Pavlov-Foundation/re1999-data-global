@@ -1,18 +1,20 @@
-﻿module("modules.logic.versionactivity2_1.activity165.config.Activity165Config", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_1/activity165/config/Activity165Config.lua
 
-local var_0_0 = class("Activity165Config", BaseConfig)
+module("modules.logic.versionactivity2_1.activity165.config.Activity165Config", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._storyCoDic = nil
-	arg_1_0._storyEndCoDic = nil
-	arg_1_0._keywordsCoDic = nil
-	arg_1_0._stepCoDic = nil
-	arg_1_0._rewardCoDic = nil
-	arg_1_0._storyStepCoDic = nil
-	arg_1_0._storyEndingCoDic = nil
+local Activity165Config = class("Activity165Config", BaseConfig)
+
+function Activity165Config:ctor()
+	self._storyCoDic = nil
+	self._storyEndCoDic = nil
+	self._keywordsCoDic = nil
+	self._stepCoDic = nil
+	self._rewardCoDic = nil
+	self._storyStepCoDic = nil
+	self._storyEndingCoDic = nil
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function Activity165Config:reqConfigNames()
 	return {
 		"activity165_ending",
 		"activity165_keyword",
@@ -22,149 +24,165 @@ function var_0_0.reqConfigNames(arg_2_0)
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity165_ending" then
-		arg_3_0._storyEndCoDic = arg_3_2
+function Activity165Config:onConfigLoaded(configName, configTable)
+	if configName == "activity165_ending" then
+		self._storyEndCoDic = configTable
 
-		arg_3_0:initEndingConfig()
-	elseif arg_3_1 == "activity165_keyword" then
-		arg_3_0._keywordsCoDic = arg_3_2
-	elseif arg_3_1 == "activity165_step" then
-		arg_3_0._stepCoDic = arg_3_2
+		self:initEndingConfig()
+	elseif configName == "activity165_keyword" then
+		self._keywordsCoDic = configTable
+	elseif configName == "activity165_step" then
+		self._stepCoDic = configTable
 
-		arg_3_0:initStepCofig()
-	elseif arg_3_1 == "activity165_story" then
-		arg_3_0._storyCoDic = arg_3_2
-		arg_3_0._storyCoMap = {}
-		arg_3_0._storyElementList = {}
-	elseif arg_3_1 == "activity165_reward" then
-		arg_3_0._rewardCoDic = arg_3_2
+		self:initStepCofig()
+	elseif configName == "activity165_story" then
+		self._storyCoDic = configTable
+		self._storyCoMap = {}
+		self._storyElementList = {}
+	elseif configName == "activity165_reward" then
+		self._rewardCoDic = configTable
 	end
 end
 
-function var_0_0.initStepCofig(arg_4_0)
-	arg_4_0._storyStepCoDic = {}
+function Activity165Config:initStepCofig()
+	self._storyStepCoDic = {}
 
-	for iter_4_0, iter_4_1 in pairs(arg_4_0._stepCoDic.configList) do
-		local var_4_0 = arg_4_0._storyStepCoDic[iter_4_1.belongStoryId]
+	for _, co in pairs(self._stepCoDic.configList) do
+		local storyCos = self._storyStepCoDic[co.belongStoryId]
 
-		if not var_4_0 then
-			var_4_0 = {}
-			arg_4_0._storyStepCoDic[iter_4_1.belongStoryId] = var_4_0
+		if not storyCos then
+			storyCos = {}
+			self._storyStepCoDic[co.belongStoryId] = storyCos
 		end
 
-		table.insert(var_4_0, iter_4_1)
+		table.insert(storyCos, co)
 	end
 end
 
-function var_0_0.initEndingConfig(arg_5_0)
-	arg_5_0._storyEndingCoDic = {}
+function Activity165Config:initEndingConfig()
+	self._storyEndingCoDic = {}
 
-	for iter_5_0, iter_5_1 in pairs(arg_5_0._storyEndCoDic.configList) do
-		local var_5_0 = arg_5_0._storyEndingCoDic[iter_5_1.belongStoryId]
+	for _, co in pairs(self._storyEndCoDic.configList) do
+		local storyCos = self._storyEndingCoDic[co.belongStoryId]
 
-		if not var_5_0 then
-			var_5_0 = {}
-			arg_5_0._storyEndingCoDic[iter_5_1.belongStoryId] = var_5_0
+		if not storyCos then
+			storyCos = {}
+			self._storyEndingCoDic[co.belongStoryId] = storyCos
 		end
 
-		var_5_0[tonumber(iter_5_1.finalStepId)] = iter_5_1
+		local stepId = tonumber(co.finalStepId)
+
+		storyCos[stepId] = co
 	end
 end
 
-function var_0_0.getStoryCo(arg_6_0, arg_6_1, arg_6_2)
-	return arg_6_0._storyCoDic.configDict[arg_6_1] and arg_6_0._storyCoDic.configDict[arg_6_1][arg_6_2]
+function Activity165Config:getStoryCo(actId, storyId)
+	local co = self._storyCoDic.configDict[actId] and self._storyCoDic.configDict[actId][storyId]
+
+	return co
 end
 
-function var_0_0.getAllStoryCoList(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0._storyCoMap[arg_7_1]
+function Activity165Config:getAllStoryCoList(actId)
+	local storyCoList = self._storyCoMap[actId]
 
-	if not var_7_0 then
-		var_7_0 = {}
+	if not storyCoList then
+		storyCoList = {}
 
-		local var_7_1 = arg_7_0._storyCoDic.configDict[arg_7_1] or {}
+		local storyCoMap = self._storyCoDic.configDict[actId] or {}
 
-		for iter_7_0, iter_7_1 in pairs(var_7_1) do
-			table.insert(var_7_0, iter_7_1)
+		for storyId, storyCo in pairs(storyCoMap) do
+			table.insert(storyCoList, storyCo)
 		end
 
-		table.sort(var_7_0, function(arg_8_0, arg_8_1)
-			return arg_8_0.storyId < arg_8_1.storyId
+		table.sort(storyCoList, function(a, b)
+			return a.storyId < b.storyId
 		end)
 
-		arg_7_0._storyCoMap[arg_7_1] = var_7_0
+		self._storyCoMap[actId] = storyCoList
 	end
 
-	return var_7_0
+	return storyCoList
 end
 
-function var_0_0.getStoryElements(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = arg_9_0:getStoryCo(arg_9_1, arg_9_2)
-	local var_9_1 = arg_9_0._storyElementList[arg_9_2]
+function Activity165Config:getStoryElements(actId, storyId)
+	local storyCo = self:getStoryCo(actId, storyId)
+	local elementList = self._storyElementList[storyId]
 
-	if not var_9_1 then
-		var_9_1 = string.splitToNumber(var_9_0.unlockElementIds1, "#") or {}
-		arg_9_0._storyElementList[arg_9_2] = var_9_1
+	if not elementList then
+		elementList = string.splitToNumber(storyCo.unlockElementIds1, "#") or {}
+		self._storyElementList[storyId] = elementList
 	end
 
-	return var_9_1
+	return elementList
 end
 
-function var_0_0.getStepCo(arg_10_0, arg_10_1, arg_10_2)
-	return arg_10_0._stepCoDic.configDict[arg_10_2]
+function Activity165Config:getStepCo(actId, stepId)
+	local co = self._stepCoDic.configDict[stepId]
+
+	return co
 end
 
-function var_0_0.getStoryStepCoList(arg_11_0, arg_11_1, arg_11_2)
-	return arg_11_0._storyStepCoDic[arg_11_2]
+function Activity165Config:getStoryStepCoList(actId, storyId)
+	local coList = self._storyStepCoDic[storyId]
+
+	return coList
 end
 
-function var_0_0.getKeywordCo(arg_12_0, arg_12_1, arg_12_2)
-	return arg_12_0._keywordsCoDic.configDict[arg_12_2]
+function Activity165Config:getKeywordCo(actId, keywordId)
+	local co = self._keywordsCoDic.configDict[keywordId]
+
+	return co
 end
 
-function var_0_0.getEndingCo(arg_13_0, arg_13_1, arg_13_2)
-	return arg_13_0._storyEndCoDic.configDict[arg_13_2]
+function Activity165Config:getEndingCo(actId, endingId)
+	local co = self._storyEndCoDic.configDict[endingId]
+
+	return co
 end
 
-function var_0_0.getStoryKeywordCoList(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = arg_14_0._keywordsCoDic.configList
-	local var_14_1 = {}
+function Activity165Config:getStoryKeywordCoList(actId, storyId)
+	local cos = self._keywordsCoDic.configList
+	local coList = {}
 
-	if var_14_0 then
-		for iter_14_0, iter_14_1 in pairs(var_14_0) do
-			if iter_14_1.belongStoryId == arg_14_2 then
-				table.insert(var_14_1, iter_14_1)
+	if cos then
+		for _, co in pairs(cos) do
+			if co.belongStoryId == storyId then
+				table.insert(coList, co)
 			end
 		end
 	end
 
-	return var_14_1
+	return coList
 end
 
-function var_0_0.getEndingCoByFinalStep(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	if arg_15_0._storyEndingCoDic and arg_15_0._storyEndingCoDic[arg_15_2] then
-		local var_15_0 = arg_15_0._storyEndingCoDic[arg_15_2][arg_15_3]
+function Activity165Config:getEndingCoByFinalStep(actId, storyId, stepId)
+	if self._storyEndingCoDic and self._storyEndingCoDic[storyId] then
+		local co = self._storyEndingCoDic[storyId][stepId]
 
-		if var_15_0 then
-			return var_15_0
+		if co then
+			return co
 		end
 	end
 end
 
-function var_0_0.getEndingCosByStoryId(arg_16_0, arg_16_1, arg_16_2)
-	if arg_16_0._storyEndingCoDic then
-		return arg_16_0._storyEndingCoDic[arg_16_2]
+function Activity165Config:getEndingCosByStoryId(actId, storyId)
+	if self._storyEndingCoDic then
+		return self._storyEndingCoDic[storyId]
 	end
 end
 
-function var_0_0.getStoryRewardCo(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	return arg_17_0._rewardCoDic.configDict[arg_17_2][arg_17_3]
+function Activity165Config:getStoryRewardCo(actId, storyId, endingId)
+	local co = self._rewardCoDic.configDict[storyId][endingId]
+
+	return co
 end
 
-function var_0_0.getStoryRewardCoList(arg_18_0, arg_18_1, arg_18_2)
-	return arg_18_0._rewardCoDic.configDict[arg_18_2]
+function Activity165Config:getStoryRewardCoList(actId, storyId)
+	local list = self._rewardCoDic.configDict[storyId]
+
+	return list
 end
 
-var_0_0.instance = var_0_0.New()
+Activity165Config.instance = Activity165Config.New()
 
-return var_0_0
+return Activity165Config

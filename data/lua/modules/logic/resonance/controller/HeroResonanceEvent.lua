@@ -1,9 +1,11 @@
-﻿module("modules.logic.resonance.controller.HeroResonanceEvent", package.seeall)
+﻿-- chunkname: @modules/logic/resonance/controller/HeroResonanceEvent.lua
 
-local var_0_0 = {}
+module("modules.logic.resonance.controller.HeroResonanceEvent", package.seeall)
 
-var_0_0.RefreshCubeList = 1
-var_0_0.playBackAni = 2
-var_0_0.UseShareCode = 101
+local HeroResonanceEvent = {}
 
-return var_0_0
+HeroResonanceEvent.RefreshCubeList = 1
+HeroResonanceEvent.playBackAni = 2
+HeroResonanceEvent.UseShareCode = 101
+
+return HeroResonanceEvent

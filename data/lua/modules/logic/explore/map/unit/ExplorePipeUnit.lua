@@ -1,19 +1,21 @@
-﻿module("modules.logic.explore.map.unit.ExplorePipeUnit", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/unit/ExplorePipeUnit.lua
 
-local var_0_0 = class("ExplorePipeUnit", ExploreBaseDisplayUnit)
+module("modules.logic.explore.map.unit.ExplorePipeUnit", package.seeall)
 
-function var_0_0.initComponents(arg_1_0)
-	var_0_0.super.initComponents(arg_1_0)
-	arg_1_0:addComp("pipeComp", ExplorePipeComp)
+local ExplorePipeUnit = class("ExplorePipeUnit", ExploreBaseDisplayUnit)
+
+function ExplorePipeUnit:initComponents()
+	ExplorePipeUnit.super.initComponents(self)
+	self:addComp("pipeComp", ExplorePipeComp)
 end
 
-function var_0_0.setupMO(arg_2_0)
-	var_0_0.super.setupMO(arg_2_0)
-	arg_2_0.pipeComp:initData()
+function ExplorePipeUnit:setupMO()
+	ExplorePipeUnit.super.setupMO(self)
+	self.pipeComp:initData()
 end
 
-function var_0_0.onRotateFinish(arg_3_0)
+function ExplorePipeUnit:onRotateFinish()
 	ExploreController.instance:getMapPipe():initColors()
 end
 
-return var_0_0
+return ExplorePipeUnit

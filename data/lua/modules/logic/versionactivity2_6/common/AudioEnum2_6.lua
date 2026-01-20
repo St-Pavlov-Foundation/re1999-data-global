@@ -1,25 +1,27 @@
-﻿module("modules.logic.versionactivity2_6.common.AudioEnum2_6", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/common/AudioEnum2_6.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity2_6.common.AudioEnum2_6", package.seeall)
 
-var_0_0.VersionActivity2_6Store = {
+local AudioEnum2_6 = _M
+
+AudioEnum2_6.VersionActivity2_6Store = {
 	play_ui_jinye_chess_talk = 20170010,
 	play_ui_jinye_click_stage = 20170011,
 	stop_ui_jinye_chess_talk = 20170012,
 	play_ui_jinye_chess_enter = 20170009
 }
-var_0_0.VersionActivity2_6Enter = {
+AudioEnum2_6.VersionActivity2_6Enter = {
 	play_ui_jinye_open = 20260001,
 	play_ui_jinye_unfold = 20260002
 }
-var_0_0.WeekWalk_2 = {
+AudioEnum2_6.WeekWalk_2 = {
 	play_ui_fight_artificial_unlock = 20260143,
 	play_ui_fight_artificial_equip = 20260123,
 	play_ui_fight_artificial_stars_pad = 20260125,
 	play_ui_fight_artificial_unequip = 20260124,
 	play_ui_fight_artificial_star = 20260126
 }
-var_0_0.DiceHero = {
+AudioEnum2_6.DiceHero = {
 	play_ui_wenming_buff = 20260108,
 	play_ui_wenming_roll = 20260110,
 	play_ui_wenming_shotimp = 20260106,
@@ -45,7 +47,7 @@ var_0_0.DiceHero = {
 	stop_ui_feichi_yure_caption = 20260118,
 	play_ui_wenming_defense = 20260107
 }
-var_0_0.Xugouji = {
+AudioEnum2_6.Xugouji = {
 	episodeFinish = 20260147,
 	cardPerspective = 20260136,
 	episodeSelect = 20260139,
@@ -64,17 +66,17 @@ var_0_0.Xugouji = {
 	cardLock = 20260142,
 	cardPair = 20260133
 }
-var_0_0.BP = {
+AudioEnum2_6.BP = {
 	FaceView = 20260144,
 	MainBtn = 20260020,
 	BpDayFirstAnim = 20260130
 }
-var_0_0.WeekwalkHeart = {
+AudioEnum2_6.WeekwalkHeart = {
 	play_ui_wenming_popup = 20260902
 }
-var_0_0.WarmUp = {
+AudioEnum2_6.WarmUp = {
 	play_ui_wenming_cut_20260903 = 20260903,
 	play_ui_wenming_page_20260904 = 20260904
 }
 
-return var_0_0
+return AudioEnum2_6

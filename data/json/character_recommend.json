@@ -273,7 +273,7 @@
     "id": 3037,
     "teamRec": "3037#3114#3063#3024",
     "teamDisplay": 1,
-    "equipRec": "1503",
+    "equipRec": "1503|1443",
     "equipDisplay": 1,
     "lvRec": "2#40|3#50|4#60",
     "resonanceRec": "5|10|13|15"
@@ -309,7 +309,7 @@
     "id": 3041,
     "teamRec": "3041#3108#3113#3117|3041#3108#3048#3117",
     "teamDisplay": 1,
-    "equipRec": "1540|1437",
+    "equipRec": "1540|1437|1444",
     "equipDisplay": 1,
     "lvRec": "2#40|3#50|4#60",
     "resonanceRec": "5|10|13|15"
@@ -399,7 +399,7 @@
     "id": 3051,
     "teamRec": "3051#3062#3121#3047|3051#3126#3088#3074",
     "teamDisplay": 1,
-    "equipRec": "1528|1413|1426",
+    "equipRec": "1528|1413|1426#1555",
     "equipDisplay": 1,
     "lvRec": "2#40|3#50|4#60",
     "resonanceRec": "5|10|13|15"
@@ -525,7 +525,7 @@
     "id": 3070,
     "teamRec": "3070#3063#3105#3109",
     "teamDisplay": 1,
-    "equipRec": "1513|1524|1539",
+    "equipRec": "1521|1524|1539",
     "equipDisplay": 1,
     "lvRec": "2#40|3#50|4#60",
     "resonanceRec": "5|10|13|15"
@@ -642,7 +642,7 @@
     "id": 3081,
     "teamRec": "3081#3073#3095#3102|3081#3083#3066#3109",
     "teamDisplay": 1,
-    "equipRec": "1523|1504",
+    "equipRec": "1523|1504|1560",
     "equipDisplay": 1,
     "lvRec": "2#40|3#50|4#60",
     "resonanceRec": "5|10|13|15"
@@ -1012,6 +1012,24 @@
     "teamRec": "3124#3123#3105#3109|3124#3123#3084#3047",
     "teamDisplay": 1,
     "equipRec": "1552",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3134,
+    "teamRec": "3134#3081#3105#3109|3134#3095#3097#3087",
+    "teamDisplay": 1,
+    "equipRec": "1558",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3135,
+    "teamRec": "3135#3132#3128#3074|3135#3134#3081#3109",
+    "teamDisplay": 1,
+    "equipRec": "1559",
     "equipDisplay": 1,
     "lvRec": "2#40|3#50|4#60",
     "resonanceRec": "5|10|13|15"

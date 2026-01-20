@@ -1,77 +1,79 @@
-﻿module("modules.logic.necrologiststory.view.control.NecrologistStoryControlMgrItem", package.seeall)
+﻿-- chunkname: @modules/logic/necrologiststory/view/control/NecrologistStoryControlMgrItem.lua
 
-local var_0_0 = class("NecrologistStoryControlMgrItem", UserDataDispose)
+module("modules.logic.necrologiststory.view.control.NecrologistStoryControlMgrItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+local NecrologistStoryControlMgrItem = class("NecrologistStoryControlMgrItem", UserDataDispose)
 
-	arg_1_0.mgrComp = arg_1_1
+function NecrologistStoryControlMgrItem:ctor(mgr)
+	self:__onInit()
+
+	self.mgrComp = mgr
 end
 
-function var_0_0.setStoryId(arg_2_0, arg_2_1)
-	arg_2_0.storyId = arg_2_1
+function NecrologistStoryControlMgrItem:setStoryId(storyId)
+	self.storyId = storyId
 end
 
-function var_0_0.setParam(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	arg_3_0.controlParam = arg_3_1
-	arg_3_0.controlDelay = arg_3_2
-	arg_3_0.isSkip = arg_3_3
-	arg_3_0.fromItem = arg_3_4
-	arg_3_0._isFinish = false
+function NecrologistStoryControlMgrItem:setParam(controlParam, controlDelay, isSkip, fromItem)
+	self.controlParam = controlParam
+	self.controlDelay = controlDelay
+	self.isSkip = isSkip
+	self.fromItem = fromItem
+	self._isFinish = false
 
-	if arg_3_0.fromItem then
-		arg_3_0:addEventCb(NecrologistStoryController.instance, NecrologistStoryEvent.OnStoryItemClickNext, arg_3_0.onStoryItemClickNextInternal, arg_3_0)
+	if self.fromItem then
+		self:addEventCb(NecrologistStoryController.instance, NecrologistStoryEvent.OnStoryItemClickNext, self.onStoryItemClickNextInternal, self)
 	end
 end
 
-function var_0_0.playControl(arg_4_0)
-	local var_4_0 = tonumber(arg_4_0.controlDelay)
+function NecrologistStoryControlMgrItem:playControl()
+	local delayTime = tonumber(self.controlDelay)
 
-	if var_4_0 and var_4_0 > 0 and not arg_4_0.isSkip then
-		TaskDispatcher.runDelay(arg_4_0.onPlayControl, arg_4_0, var_4_0)
-		arg_4_0:onPlayControlFinish()
+	if delayTime and delayTime > 0 and not self.isSkip then
+		TaskDispatcher.runDelay(self.onPlayControl, self, delayTime)
+		self:onPlayControlFinish()
 	else
-		arg_4_0:onPlayControl()
+		self:onPlayControl()
 	end
 end
 
-function var_0_0.getControlItem(arg_5_0, arg_5_1)
-	arg_5_0.mgrComp:createControlItem(arg_5_1, arg_5_0.storyId, arg_5_0.controlParam, arg_5_0.onPlayControlFinish, arg_5_0)
+function NecrologistStoryControlMgrItem:getControlItem(cls)
+	self.mgrComp:createControlItem(cls, self.storyId, self.controlParam, self.onPlayControlFinish, self)
 end
 
-function var_0_0.isFinish(arg_6_0)
-	return arg_6_0._isFinish
+function NecrologistStoryControlMgrItem:isFinish()
+	return self._isFinish
 end
 
-function var_0_0.onPlayControl(arg_7_0)
+function NecrologistStoryControlMgrItem:onPlayControl()
 	return
 end
 
-function var_0_0.onPlayControlFinish(arg_8_0)
-	if arg_8_0._isFinish then
+function NecrologistStoryControlMgrItem:onPlayControlFinish()
+	if self._isFinish then
 		return
 	end
 
-	arg_8_0._isFinish = true
+	self._isFinish = true
 
-	arg_8_0.mgrComp:onItemFinish(arg_8_0)
+	self.mgrComp:onItemFinish(self)
 end
 
-function var_0_0.onStoryItemClickNextInternal(arg_9_0, arg_9_1)
-	if arg_9_1 ~= arg_9_0.storyId then
+function NecrologistStoryControlMgrItem:onStoryItemClickNextInternal(storyId)
+	if storyId ~= self.storyId then
 		return
 	end
 
-	arg_9_0:onStoryItemClickNext()
+	self:onStoryItemClickNext()
 end
 
-function var_0_0.onStoryItemClickNext(arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0.onPlayControl, arg_10_0)
+function NecrologistStoryControlMgrItem:onStoryItemClickNext()
+	TaskDispatcher.cancelTask(self.onPlayControl, self)
 end
 
-function var_0_0.onDestory(arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0.onPlayControl, arg_11_0)
-	arg_11_0:__onDispose()
+function NecrologistStoryControlMgrItem:onDestory()
+	TaskDispatcher.cancelTask(self.onPlayControl, self)
+	self:__onDispose()
 end
 
-return var_0_0
+return NecrologistStoryControlMgrItem

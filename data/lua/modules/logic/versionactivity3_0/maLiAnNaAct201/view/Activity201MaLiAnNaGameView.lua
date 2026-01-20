@@ -1,1011 +1,1028 @@
-﻿module("modules.logic.versionactivity3_0.maLiAnNaAct201.view.Activity201MaLiAnNaGameView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/maLiAnNaAct201/view/Activity201MaLiAnNaGameView.lua
 
-local var_0_0 = class("Activity201MaLiAnNaGameView", BaseView)
+module("modules.logic.versionactivity3_0.maLiAnNaAct201.view.Activity201MaLiAnNaGameView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gocameraMain = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain")
-	arg_1_0._simageBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_cameraMain/#simage_BG")
-	arg_1_0._goRoads = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Middle/Middle/#go_Roads")
-	arg_1_0._goroad = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Middle/Middle/#go_Roads/#go_road")
-	arg_1_0._goSlots = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Middle/Middle/#go_Slots")
-	arg_1_0._goEntitys = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Middle/Middle/#go_Entitys")
-	arg_1_0._goEffects = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Middle/Middle/#go_Effects")
-	arg_1_0._goarrowLines = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Middle/Middle/#go_Effects/#go_arrowLines")
-	arg_1_0._goarrowenemy = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Middle/Middle/#go_Effects/#go_arrowLines/#go_arrow_enemy")
-	arg_1_0._goarrowplayer = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Middle/Middle/#go_Effects/#go_arrowLines/#go_arrow_player")
-	arg_1_0._goFinger = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Middle/Middle/#go_Effects/#go_Finger")
-	arg_1_0._gobattleEffects = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Middle/Middle/#go_battleEffects")
-	arg_1_0._gobattleEffect = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Middle/Middle/#go_battleEffects/#go_battleEffect")
-	arg_1_0._govxboom = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Middle/Middle/#go_battleEffects/#go_vx_boom")
-	arg_1_0._goTips = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Middle/#go_Tips")
-	arg_1_0._txtTips = gohelper.findChildText(arg_1_0.viewGO, "#go_cameraMain/Middle/#go_Tips/#txt_Tips")
-	arg_1_0._goIcon = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Middle/#go_Tips/#txt_Tips/#go_Icon")
-	arg_1_0._goTips2 = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Middle/#go_Tips2")
-	arg_1_0._txtTips2 = gohelper.findChildText(arg_1_0.viewGO, "#go_cameraMain/Middle/#go_Tips2/#txt_Tips2")
-	arg_1_0._scrollTargetList = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_cameraMain/Left/Target/#scroll_TargetList")
-	arg_1_0._gotarget = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Left/Target/#scroll_TargetList/viewport/#go_target")
-	arg_1_0._txtTarget = gohelper.findChildText(arg_1_0.viewGO, "#go_cameraMain/Left/Target/#scroll_TargetList/viewport/#go_target/#txt_Target")
-	arg_1_0._goRole = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Left/RoleList/#go_Role")
-	arg_1_0._gotips = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Left/RoleList/#go_Role/#go_tips")
-	arg_1_0._txtRoleName = gohelper.findChildText(arg_1_0.viewGO, "#go_cameraMain/Left/RoleList/#go_Role/#go_tips/#txt_RoleName")
-	arg_1_0._txtdec = gohelper.findChildText(arg_1_0.viewGO, "#go_cameraMain/Left/RoleList/#go_Role/#go_tips/#txt_dec")
-	arg_1_0._txtRoleHP = gohelper.findChildText(arg_1_0.viewGO, "#go_cameraMain/Left/RoleList/#go_Role/#go_tips/#txt_RoleHP")
-	arg_1_0._txtreduceHP = gohelper.findChildText(arg_1_0.viewGO, "#go_cameraMain/Left/RoleList/#go_Role/#txt_reduceHP")
-	arg_1_0._goSelf = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Left/RoleList/#go_Role/#go_Self")
-	arg_1_0._goEnemy = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Left/RoleList/#go_Role/#go_Enemy")
-	arg_1_0._simageRole = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_cameraMain/Left/RoleList/#go_Role/image/#simage_Role")
-	arg_1_0._txtRoleHP2 = gohelper.findChildText(arg_1_0.viewGO, "#go_cameraMain/Left/RoleList/#go_Role/image_RoleHPNumBG/#txt_RoleHP_2")
-	arg_1_0._txtRoleHP3 = gohelper.findChildText(arg_1_0.viewGO, "#go_cameraMain/Left/RoleList/#go_Role/image_RoleHPNumBG/#txt_RoleHP_3")
-	arg_1_0._goDead = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Left/RoleList/#go_Role/#go_Dead")
-	arg_1_0._btnrole = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_cameraMain/Left/RoleList/#go_Role/#btn_role")
-	arg_1_0._goSwitch = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Left/#go_Switch")
-	arg_1_0._gosolider = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Left/#go_Switch/#go_solider")
-	arg_1_0._simageswitchsolider = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_cameraMain/Left/#go_Switch/#go_solider/Head/image/#simage_switch_solider")
-	arg_1_0._gohero = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Left/#go_Switch/#go_hero")
-	arg_1_0._simageswitchhero = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_cameraMain/Left/#go_Switch/#go_hero/Head/image/#simage_switch_hero")
-	arg_1_0._goskillList = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Right/#go_skillList")
-	arg_1_0._btncancel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_cameraMain/Right/#go_skillList/#btn_cancel")
-	arg_1_0._goskillItem = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Right/#go_skillList/#go_skillItem")
-	arg_1_0._imageskill = gohelper.findChildImage(arg_1_0.viewGO, "#go_cameraMain/Right/#go_skillList/#go_skillItem/#image_skill")
-	arg_1_0._btnPause = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_cameraMain/Right/#btn_Pause")
-	arg_1_0._gopause = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Right/#go_pause")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_cameraMain/Right/#go_pause/#btn_close")
-	arg_1_0._btnReset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_cameraMain/Right/#btn_Reset")
-	arg_1_0._golefttop = gohelper.findChild(arg_1_0.viewGO, "#go_lefttop")
+local Activity201MaLiAnNaGameView = class("Activity201MaLiAnNaGameView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Activity201MaLiAnNaGameView:onInitView()
+	self._gocameraMain = gohelper.findChild(self.viewGO, "#go_cameraMain")
+	self._simageBG = gohelper.findChildSingleImage(self.viewGO, "#go_cameraMain/#simage_BG")
+	self._goRoads = gohelper.findChild(self.viewGO, "#go_cameraMain/Middle/Middle/#go_Roads")
+	self._goroad = gohelper.findChild(self.viewGO, "#go_cameraMain/Middle/Middle/#go_Roads/#go_road")
+	self._goSlots = gohelper.findChild(self.viewGO, "#go_cameraMain/Middle/Middle/#go_Slots")
+	self._goEntitys = gohelper.findChild(self.viewGO, "#go_cameraMain/Middle/Middle/#go_Entitys")
+	self._goEffects = gohelper.findChild(self.viewGO, "#go_cameraMain/Middle/Middle/#go_Effects")
+	self._goarrowLines = gohelper.findChild(self.viewGO, "#go_cameraMain/Middle/Middle/#go_Effects/#go_arrowLines")
+	self._goarrowenemy = gohelper.findChild(self.viewGO, "#go_cameraMain/Middle/Middle/#go_Effects/#go_arrowLines/#go_arrow_enemy")
+	self._goarrowplayer = gohelper.findChild(self.viewGO, "#go_cameraMain/Middle/Middle/#go_Effects/#go_arrowLines/#go_arrow_player")
+	self._goFinger = gohelper.findChild(self.viewGO, "#go_cameraMain/Middle/Middle/#go_Effects/#go_Finger")
+	self._gobattleEffects = gohelper.findChild(self.viewGO, "#go_cameraMain/Middle/Middle/#go_battleEffects")
+	self._gobattleEffect = gohelper.findChild(self.viewGO, "#go_cameraMain/Middle/Middle/#go_battleEffects/#go_battleEffect")
+	self._govxboom = gohelper.findChild(self.viewGO, "#go_cameraMain/Middle/Middle/#go_battleEffects/#go_vx_boom")
+	self._goTips = gohelper.findChild(self.viewGO, "#go_cameraMain/Middle/#go_Tips")
+	self._txtTips = gohelper.findChildText(self.viewGO, "#go_cameraMain/Middle/#go_Tips/#txt_Tips")
+	self._goIcon = gohelper.findChild(self.viewGO, "#go_cameraMain/Middle/#go_Tips/#txt_Tips/#go_Icon")
+	self._goTips2 = gohelper.findChild(self.viewGO, "#go_cameraMain/Middle/#go_Tips2")
+	self._txtTips2 = gohelper.findChildText(self.viewGO, "#go_cameraMain/Middle/#go_Tips2/#txt_Tips2")
+	self._scrollTargetList = gohelper.findChildScrollRect(self.viewGO, "#go_cameraMain/Left/Target/#scroll_TargetList")
+	self._gotarget = gohelper.findChild(self.viewGO, "#go_cameraMain/Left/Target/#scroll_TargetList/viewport/#go_target")
+	self._txtTarget = gohelper.findChildText(self.viewGO, "#go_cameraMain/Left/Target/#scroll_TargetList/viewport/#go_target/#txt_Target")
+	self._goRole = gohelper.findChild(self.viewGO, "#go_cameraMain/Left/RoleList/#go_Role")
+	self._gotips = gohelper.findChild(self.viewGO, "#go_cameraMain/Left/RoleList/#go_Role/#go_tips")
+	self._txtRoleName = gohelper.findChildText(self.viewGO, "#go_cameraMain/Left/RoleList/#go_Role/#go_tips/#txt_RoleName")
+	self._txtdec = gohelper.findChildText(self.viewGO, "#go_cameraMain/Left/RoleList/#go_Role/#go_tips/#txt_dec")
+	self._txtRoleHP = gohelper.findChildText(self.viewGO, "#go_cameraMain/Left/RoleList/#go_Role/#go_tips/#txt_RoleHP")
+	self._txtreduceHP = gohelper.findChildText(self.viewGO, "#go_cameraMain/Left/RoleList/#go_Role/#txt_reduceHP")
+	self._goSelf = gohelper.findChild(self.viewGO, "#go_cameraMain/Left/RoleList/#go_Role/#go_Self")
+	self._goEnemy = gohelper.findChild(self.viewGO, "#go_cameraMain/Left/RoleList/#go_Role/#go_Enemy")
+	self._simageRole = gohelper.findChildSingleImage(self.viewGO, "#go_cameraMain/Left/RoleList/#go_Role/image/#simage_Role")
+	self._txtRoleHP2 = gohelper.findChildText(self.viewGO, "#go_cameraMain/Left/RoleList/#go_Role/image_RoleHPNumBG/#txt_RoleHP_2")
+	self._txtRoleHP3 = gohelper.findChildText(self.viewGO, "#go_cameraMain/Left/RoleList/#go_Role/image_RoleHPNumBG/#txt_RoleHP_3")
+	self._goDead = gohelper.findChild(self.viewGO, "#go_cameraMain/Left/RoleList/#go_Role/#go_Dead")
+	self._btnrole = gohelper.findChildButtonWithAudio(self.viewGO, "#go_cameraMain/Left/RoleList/#go_Role/#btn_role")
+	self._goSwitch = gohelper.findChild(self.viewGO, "#go_cameraMain/Left/#go_Switch")
+	self._gosolider = gohelper.findChild(self.viewGO, "#go_cameraMain/Left/#go_Switch/#go_solider")
+	self._simageswitchsolider = gohelper.findChildSingleImage(self.viewGO, "#go_cameraMain/Left/#go_Switch/#go_solider/Head/image/#simage_switch_solider")
+	self._gohero = gohelper.findChild(self.viewGO, "#go_cameraMain/Left/#go_Switch/#go_hero")
+	self._simageswitchhero = gohelper.findChildSingleImage(self.viewGO, "#go_cameraMain/Left/#go_Switch/#go_hero/Head/image/#simage_switch_hero")
+	self._goskillList = gohelper.findChild(self.viewGO, "#go_cameraMain/Right/#go_skillList")
+	self._btncancel = gohelper.findChildButtonWithAudio(self.viewGO, "#go_cameraMain/Right/#go_skillList/#btn_cancel")
+	self._goskillItem = gohelper.findChild(self.viewGO, "#go_cameraMain/Right/#go_skillList/#go_skillItem")
+	self._imageskill = gohelper.findChildImage(self.viewGO, "#go_cameraMain/Right/#go_skillList/#go_skillItem/#image_skill")
+	self._btnPause = gohelper.findChildButtonWithAudio(self.viewGO, "#go_cameraMain/Right/#btn_Pause")
+	self._gopause = gohelper.findChild(self.viewGO, "#go_cameraMain/Right/#go_pause")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#go_cameraMain/Right/#go_pause/#btn_close")
+	self._btnReset = gohelper.findChildButtonWithAudio(self.viewGO, "#go_cameraMain/Right/#btn_Reset")
+	self._golefttop = gohelper.findChild(self.viewGO, "#go_lefttop")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnrole:AddClickListener(arg_2_0._btnroleOnClick, arg_2_0)
-	arg_2_0._btncancel:AddClickListener(arg_2_0._btncancelOnClick, arg_2_0)
-	arg_2_0._btnPause:AddClickListener(arg_2_0._btnPauseOnClick, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnReset:AddClickListener(arg_2_0._btnResetOnClick, arg_2_0)
+function Activity201MaLiAnNaGameView:addEvents()
+	self._btnrole:AddClickListener(self._btnroleOnClick, self)
+	self._btncancel:AddClickListener(self._btncancelOnClick, self)
+	self._btnPause:AddClickListener(self._btnPauseOnClick, self)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnReset:AddClickListener(self._btnResetOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnrole:RemoveClickListener()
-	arg_3_0._btncancel:RemoveClickListener()
-	arg_3_0._btnPause:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnReset:RemoveClickListener()
+function Activity201MaLiAnNaGameView:removeEvents()
+	self._btnrole:RemoveClickListener()
+	self._btncancel:RemoveClickListener()
+	self._btnPause:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
+	self._btnReset:RemoveClickListener()
 end
 
-function var_0_0._btnPauseOnClick(arg_4_0)
+function Activity201MaLiAnNaGameView:_btnPauseOnClick()
 	Activity201MaLiAnNaGameController.instance:setPause(true)
-	gohelper.setActive(arg_4_0._gopause, true)
+	gohelper.setActive(self._gopause, true)
 end
 
-function var_0_0._btncloseOnClick(arg_5_0)
-	gohelper.setActive(arg_5_0._gopause, false)
+function Activity201MaLiAnNaGameView:_btncloseOnClick()
+	gohelper.setActive(self._gopause, false)
 	Activity201MaLiAnNaGameController.instance:setPause(false)
 end
 
-function var_0_0._btncancelOnClick(arg_6_0)
-	arg_6_0:_onSelectActiveSkill(nil)
+function Activity201MaLiAnNaGameView:_btncancelOnClick()
+	self:_onSelectActiveSkill(nil)
 end
 
-function var_0_0._btnroleOnClick(arg_7_0)
+function Activity201MaLiAnNaGameView:_btnroleOnClick()
 	return
 end
 
-function var_0_0._btnResetOnClick(arg_8_0)
+function Activity201MaLiAnNaGameView:_btnResetOnClick()
 	GameFacade.showMessageBox(MessageBoxIdDefine.MaLiAnNaGameReset, MsgBoxEnum.BoxType.Yes_No, function()
 		MaLiAnNaStatHelper.instance:sendGameExit(Activity201MaLiAnNaEnum.resultType.reset)
 		Activity201MaLiAnNaGameController.instance:restartGame()
 	end, nil, nil, nil, nil, nil)
 end
 
-function var_0_0._editableInitView(arg_10_0)
-	arg_10_0._fingerTr = arg_10_0._goFinger.transform
-	arg_10_0._fingerGo = arg_10_0._goFinger
-	arg_10_0._effectsTr = arg_10_0._goEffects.transform
-	arg_10_0._tipImage = arg_10_0._goTips:GetComponent(gohelper.Type_Image)
-	arg_10_0._tipIconImage = arg_10_0._goIcon:GetComponent(gohelper.Type_Image)
+function Activity201MaLiAnNaGameView:_editableInitView()
+	self._fingerTr = self._goFinger.transform
+	self._fingerGo = self._goFinger
+	self._effectsTr = self._goEffects.transform
+	self._tipImage = self._goTips:GetComponent(gohelper.Type_Image)
+	self._tipIconImage = self._goIcon:GetComponent(gohelper.Type_Image)
 
-	local var_10_0 = arg_10_0.viewContainer._viewSetting.otherRes[3]
-	local var_10_1 = arg_10_0.viewContainer._viewSetting.otherRes[4]
-	local var_10_2 = arg_10_0:getResInst(var_10_0, arg_10_0._goEntitys, "solider_temp")
-	local var_10_3 = arg_10_0:getResInst(var_10_1, arg_10_0._goEntitys, "hero_temp")
+	local soliderPath = self.viewContainer._viewSetting.otherRes[3]
+	local heroPath = self.viewContainer._viewSetting.otherRes[4]
+	local soliderGo = self:getResInst(soliderPath, self._goEntitys, "solider_temp")
+	local heroGo = self:getResInst(heroPath, self._goEntitys, "hero_temp")
 
-	gohelper.setActive(var_10_2, false)
-	gohelper.setActive(var_10_3, false)
-	MaliAnNaSoliderEntityMgr.instance:init(var_10_2, var_10_3)
-	MaliAnNaBulletEntityMgr.instance:init(arg_10_0._goEffects)
+	gohelper.setActive(soliderGo, false)
+	gohelper.setActive(heroGo, false)
+	MaliAnNaSoliderEntityMgr.instance:init(soliderGo, heroGo)
+	MaliAnNaBulletEntityMgr.instance:init(self._goEffects)
 
-	arg_10_0._switchClick = gohelper.getClickWithDefaultAudio(arg_10_0._goSwitch)
+	self._switchClick = gohelper.getClickWithDefaultAudio(self._goSwitch)
 
-	arg_10_0._switchClick:AddClickListener(arg_10_0._switchOnClick, arg_10_0)
+	self._switchClick:AddClickListener(self._switchOnClick, self)
 
-	arg_10_0._switchAni = arg_10_0._goSwitch:GetComponent(gohelper.Type_Animator)
-	arg_10_0._tipAni = arg_10_0._goTips:GetComponent(gohelper.Type_Animator)
-	arg_10_0._tip2Ani = arg_10_0._goTips2:GetComponent(gohelper.Type_Animator)
+	self._switchAni = self._goSwitch:GetComponent(gohelper.Type_Animator)
+	self._tipAni = self._goTips:GetComponent(gohelper.Type_Animator)
+	self._tip2Ani = self._goTips2:GetComponent(gohelper.Type_Animator)
 end
 
-function var_0_0.onUpdateParam(arg_11_0)
+function Activity201MaLiAnNaGameView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_12_0)
-	arg_12_0:addEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.OnGameReStart, arg_12_0._onGameReStart, arg_12_0)
-	arg_12_0:addEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.OnRefreshView, arg_12_0._refreshView, arg_12_0)
-	arg_12_0:addEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.OnDragBeginSlot, arg_12_0._onDragBeginSlot, arg_12_0)
-	arg_12_0:addEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.OnDragSlot, arg_12_0._onDragSlot, arg_12_0)
-	arg_12_0:addEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.OnDragEndSlot, arg_12_0._onDragEndSlot, arg_12_0)
-	arg_12_0:addEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.OnShowBattleEffect, arg_12_0._onShowBattleEffect, arg_12_0)
-	arg_12_0:addEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.OnSelectActiveSkill, arg_12_0._onSelectActiveSkill, arg_12_0)
-	arg_12_0:addEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.OnClickSlot, arg_12_0._onClickSlot, arg_12_0)
-	arg_12_0:addEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.ShowDisPatchPath, arg_12_0.showDispatchPathByAI, arg_12_0)
-	arg_12_0:addEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.ShowBattleEvent, arg_12_0.addEventInfo, arg_12_0)
-	arg_12_0:addEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.ShowShowVX, arg_12_0._showShowVX, arg_12_0)
-	arg_12_0:addEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.GenerateSolider, arg_12_0._generateSolider, arg_12_0)
-	arg_12_0:addEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.SoliderHpChange, arg_12_0._soliderHpChange, arg_12_0)
-	gohelper.setActive(arg_12_0._goTips, false)
-	arg_12_0:_refreshView(true)
-	arg_12_0:_initBaseInfo()
-	TaskDispatcher.runRepeat(arg_12_0._hideDispatchPathByAI, arg_12_0, 0.5)
+function Activity201MaLiAnNaGameView:onOpen()
+	self:addEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.OnGameReStart, self._onGameReStart, self)
+	self:addEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.OnRefreshView, self._refreshView, self)
+	self:addEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.OnDragBeginSlot, self._onDragBeginSlot, self)
+	self:addEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.OnDragSlot, self._onDragSlot, self)
+	self:addEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.OnDragEndSlot, self._onDragEndSlot, self)
+	self:addEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.OnShowBattleEffect, self._onShowBattleEffect, self)
+	self:addEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.OnSelectActiveSkill, self._onSelectActiveSkill, self)
+	self:addEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.OnClickSlot, self._onClickSlot, self)
+	self:addEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.ShowDisPatchPath, self.showDispatchPathByAI, self)
+	self:addEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.ShowBattleEvent, self.addEventInfo, self)
+	self:addEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.ShowShowVX, self._showShowVX, self)
+	self:addEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.GenerateSolider, self._generateSolider, self)
+	self:addEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.SoliderHpChange, self._soliderHpChange, self)
+	gohelper.setActive(self._goTips, false)
+	self:_refreshView(true)
+	self:_initBaseInfo()
+	TaskDispatcher.runRepeat(self._hideDispatchPathByAI, self, 0.5)
 
-	arg_12_0._canSwitch = true
+	self._canSwitch = true
 
 	Activity201MaLiAnNaGameController.instance:_checkGameStart()
 	AudioMgr.instance:trigger(AudioEnum3_0.MaLiAnNa.play_ui_leimi_smalluncharted_open)
 end
 
-function var_0_0._initBaseInfo(arg_13_0)
+function Activity201MaLiAnNaGameView:_initBaseInfo()
 	Activity201MaLiAnNaGameModel.instance:setDispatchHeroFirst(false)
 
-	local var_13_0 = Activity201MaLiAnNaGameModel.instance:getCurGameConfig()
-	local var_13_1 = var_13_0.battlePic
+	local config = Activity201MaLiAnNaGameModel.instance:getCurGameConfig()
+	local path = config.battlePic
 
-	if string.nilorempty(var_13_1) then
-		arg_13_0._simageBG:LoadImage(var_13_1)
+	if string.nilorempty(path) then
+		self._simageBG:LoadImage(path)
 	end
 
-	arg_13_0._txtTarget.text = var_13_0.targetDesc
+	self._txtTarget.text = config.targetDesc
 
-	local var_13_2 = Activity201MaLiAnNaConfig.instance:getSoldierById(11001)
+	local soliderConfig = Activity201MaLiAnNaConfig.instance:getSoldierById(11001)
 
-	if var_13_2 and var_13_2.icon then
-		arg_13_0._simageswitchhero:LoadImage(ResUrl.getHeadIconSmall(var_13_2.icon))
+	if soliderConfig and soliderConfig.icon then
+		self._simageswitchhero:LoadImage(ResUrl.getHeadIconSmall(soliderConfig.icon))
 	end
 
-	local var_13_3 = Activity201MaLiAnNaConfig.instance:getSoldierById(1001)
+	soliderConfig = Activity201MaLiAnNaConfig.instance:getSoldierById(1001)
 
-	if var_13_3 and var_13_3.icon then
-		arg_13_0._simageswitchsolider:LoadImage(ResUrl.monsterHeadIcon(var_13_3.icon))
+	if soliderConfig and soliderConfig.icon then
+		self._simageswitchsolider:LoadImage(ResUrl.monsterHeadIcon(soliderConfig.icon))
 	end
 end
 
-function var_0_0._onGameReStart(arg_14_0)
-	arg_14_0._canSwitch = true
+function Activity201MaLiAnNaGameView:_onGameReStart()
+	self._canSwitch = true
 
-	gohelper.setActive(arg_14_0._gopause, false)
-	gohelper.setActive(arg_14_0._goTips, false)
+	gohelper.setActive(self._gopause, false)
+	gohelper.setActive(self._goTips, false)
 	Activity201MaLiAnNaGameModel.instance:setDispatchHeroFirst(false)
 	MaliAnNaSoliderEntityMgr.instance:clear()
 	MaliAnNaBulletEntityMgr.instance:clear()
-	arg_14_0:_initAndUpdateHeroSolider(true)
-	arg_14_0:_refreshView()
+	self:_initAndUpdateHeroSolider(true)
+	self:_refreshView()
 	Activity201MaLiAnNaGameController.instance:setPause(false)
-	arg_14_0:_gameReset()
-	arg_14_0:_onSelectActiveSkill(nil)
+	self:_gameReset()
+	self:_onSelectActiveSkill(nil)
 
-	arg_14_0._lastTriggerSlotId = nil
+	self._lastTriggerSlotId = nil
 end
 
-function var_0_0._gameReset(arg_15_0)
-	if arg_15_0._slotItem then
-		for iter_15_0, iter_15_1 in pairs(arg_15_0._slotItem) do
-			iter_15_1:reset()
+function Activity201MaLiAnNaGameView:_gameReset()
+	if self._slotItem then
+		for _, item in pairs(self._slotItem) do
+			item:reset()
 		end
 	end
 
-	if arg_15_0._heroSoliderItem then
-		for iter_15_2, iter_15_3 in pairs(arg_15_0._heroSoliderItem) do
-			iter_15_3:reset()
+	if self._heroSoliderItem then
+		for _, item in pairs(self._heroSoliderItem) do
+			item:reset()
 		end
 	end
 end
 
-function var_0_0._refreshView(arg_16_0, arg_16_1)
-	arg_16_0._gameMo = Activity201MaLiAnNaGameModel.instance:getGameMo()
+function Activity201MaLiAnNaGameView:_refreshView(isInit)
+	self._gameMo = Activity201MaLiAnNaGameModel.instance:getGameMo()
 
-	arg_16_0:_initSlot()
-	arg_16_0:_initLine()
-	arg_16_0:_initSkill()
-	arg_16_0:refreshDisPatchState()
-	arg_16_0:_initAndUpdateHeroSolider(arg_16_1)
+	self:_initSlot()
+	self:_initLine()
+	self:_initSkill()
+	self:refreshDisPatchState()
+	self:_initAndUpdateHeroSolider(isInit)
 end
 
-function var_0_0._initSlot(arg_17_0)
-	if arg_17_0._slotItem == nil then
-		arg_17_0._slotItem = arg_17_0:getUserDataTb_()
+function Activity201MaLiAnNaGameView:_initSlot()
+	if self._slotItem == nil then
+		self._slotItem = self:getUserDataTb_()
 	end
 
-	local var_17_0 = arg_17_0._gameMo:getAllSlot()
+	local allSlot = self._gameMo:getAllSlot()
 
-	if var_17_0 == nil then
+	if allSlot == nil then
 		return
 	end
 
-	for iter_17_0, iter_17_1 in pairs(var_17_0) do
-		local var_17_1 = arg_17_0._slotItem[iter_17_1.id]
+	for _, slot in pairs(allSlot) do
+		local item = self._slotItem[slot.id]
 
-		if var_17_1 == nil then
-			local var_17_2 = arg_17_0.viewContainer._viewSetting.otherRes[1]
-			local var_17_3 = arg_17_0:getResInst(var_17_2, arg_17_0._goSlots, "slot" .. iter_17_1.id .. "_" .. iter_17_1.configId)
+		if item == nil then
+			local slotResPath = self.viewContainer._viewSetting.otherRes[1]
+			local go = self:getResInst(slotResPath, self._goSlots, "slot" .. slot.id .. "_" .. slot.configId)
 
-			var_17_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_17_3, MaLiAnNaSlotItem)
+			item = MonoHelper.addNoUpdateLuaComOnceToGo(go, MaLiAnNaSlotItem)
 
-			var_17_1:initData(iter_17_1)
+			item:initData(slot)
 
-			arg_17_0._slotItem[iter_17_1.id] = var_17_1
+			self._slotItem[slot.id] = item
 		end
 
-		var_17_1:updateInfo(iter_17_1)
+		item:updateInfo(slot)
 	end
 end
 
-function var_0_0._initLine(arg_18_0)
-	if arg_18_0._lineItem == nil then
-		arg_18_0._lineItem = arg_18_0:getUserDataTb_()
+function Activity201MaLiAnNaGameView:_initLine()
+	if self._lineItem == nil then
+		self._lineItem = self:getUserDataTb_()
 
-		gohelper.CreateObjList(arg_18_0, arg_18_0._roadItem, arg_18_0._gameMo:getAllRoad(), arg_18_0._goRoads, arg_18_0._goroad, MaLiAnNaLineGameComp)
+		gohelper.CreateObjList(self, self._roadItem, self._gameMo:getAllRoad(), self._goRoads, self._goroad, MaLiAnNaLineGameComp)
 	end
 end
 
-function var_0_0._roadItem(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
-	if arg_19_1 and arg_19_2 then
-		arg_19_1:updateInfo(arg_19_2)
+function Activity201MaLiAnNaGameView:_roadItem(item, data, index)
+	if item and data then
+		item:updateInfo(data)
 
-		arg_19_0._lineItem[arg_19_2.id] = arg_19_1
+		self._lineItem[data.id] = item
 	end
 end
 
-function var_0_0._switchOnClick(arg_20_0)
-	if not arg_20_0._canSwitch then
+function Activity201MaLiAnNaGameView:_switchOnClick()
+	if not self._canSwitch then
 		return
 	end
 
-	local var_20_0 = Activity201MaLiAnNaGameModel.instance:getDispatchHeroFirst()
+	local state = Activity201MaLiAnNaGameModel.instance:getDispatchHeroFirst()
 
-	Activity201MaLiAnNaGameModel.instance:setDispatchHeroFirst(not var_20_0)
-	arg_20_0:refreshDisPatchState()
+	Activity201MaLiAnNaGameModel.instance:setDispatchHeroFirst(not state)
+	self:refreshDisPatchState()
 end
 
-function var_0_0.refreshDisPatchState(arg_21_0)
-	local var_21_0 = Activity201MaLiAnNaGameModel.instance:getDispatchHeroFirst()
+function Activity201MaLiAnNaGameView:refreshDisPatchState()
+	local isFirst = Activity201MaLiAnNaGameModel.instance:getDispatchHeroFirst()
 
-	if arg_21_0._lastDisPatchHeroFirst == nil or var_21_0 ~= arg_21_0._lastDisPatchHeroFirst then
-		arg_21_0._canSwitch = false
+	if self._lastDisPatchHeroFirst == nil or isFirst ~= self._lastDisPatchHeroFirst then
+		self._canSwitch = false
 
-		local var_21_1 = var_21_0 and "hero" or "solider"
+		local name = isFirst and "hero" or "solider"
 
-		arg_21_0._switchAni:Play(var_21_1)
-		TaskDispatcher.runDelay(function(arg_22_0)
-			arg_22_0._canSwitch = true
-		end, arg_21_0, 0.4)
+		self._switchAni:Play(name)
+		TaskDispatcher.runDelay(function(self)
+			self._canSwitch = true
+		end, self, 0.4)
 
-		arg_21_0._lastDisPatchHeroFirst = var_21_0
+		self._lastDisPatchHeroFirst = isFirst
 	end
 end
 
-local var_0_1 = SLFramework.UGUI.RectTrHelper
+local CSRectTrHelper = SLFramework.UGUI.RectTrHelper
 
-function var_0_0._onDragBeginSlot(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
+function Activity201MaLiAnNaGameView:_onDragBeginSlot(id, x, y)
 	return
 end
 
-function var_0_0._onDragSlot(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
-	if Activity201MaLiAnNaGameModel.instance:getSlotById(arg_24_1) == nil then
+function Activity201MaLiAnNaGameView:_onDragSlot(id, x, y)
+	local slot = Activity201MaLiAnNaGameModel.instance:getSlotById(id)
+
+	if slot == nil then
 		return
 	end
 
-	local var_24_0, var_24_1 = var_0_1.ScreenPosXYToAnchorPosXY(arg_24_2, arg_24_3, arg_24_0._effectsTr, CameraMgr.instance:getUICamera(), nil, nil)
+	local anchorX, anchorY = CSRectTrHelper.ScreenPosXYToAnchorPosXY(x, y, self._effectsTr, CameraMgr.instance:getUICamera(), nil, nil)
 
-	recthelper.setAnchor(arg_24_0._fingerTr, var_24_0, var_24_1)
+	recthelper.setAnchor(self._fingerTr, anchorX, anchorY)
 
-	local var_24_2, var_24_3 = transformhelper.getLocalPos(arg_24_0._fingerTr)
+	local posX, posY = transformhelper.getLocalPos(self._fingerTr)
 
-	Activity201MaLiAnNaGameModel.instance:checkPosAndDisPatch(var_24_2, var_24_3)
+	Activity201MaLiAnNaGameModel.instance:checkPosAndDisPatch(posX, posY)
 
-	local var_24_4 = Activity201MaLiAnNaGameModel.instance:getDisPatchSlotList()
+	local disPatchSlot = Activity201MaLiAnNaGameModel.instance:getDisPatchSlotList()
 
-	if var_24_4 and var_24_4[1] == arg_24_1 then
-		if not arg_24_0._fingerGo.activeSelf then
-			gohelper.setActive(arg_24_0._fingerGo, true)
+	if disPatchSlot and disPatchSlot[1] == id then
+		if not self._fingerGo.activeSelf then
+			gohelper.setActive(self._fingerGo, true)
 		end
 
-		if arg_24_0._disPatchId == nil then
-			arg_24_0._disPatchId = Activity201MaLiAnNaGameModel.instance:getNextDisPatchId()
+		if self._disPatchId == nil then
+			self._disPatchId = Activity201MaLiAnNaGameModel.instance:getNextDisPatchId()
 		end
 
-		arg_24_0:showDispatch(arg_24_0._disPatchId, Activity201MaLiAnNaEnum.CampType.Player, var_24_4, true, var_24_2, var_24_3)
-		arg_24_0:updateDisPatchMiddlePoint(Activity201MaLiAnNaEnum.CampType.Player, var_24_4, true)
-		arg_24_0:updateCurLine(var_24_4, Activity201MaLiAnNaEnum.CampType.Player, true, var_24_2, var_24_3)
+		self:showDispatch(self._disPatchId, Activity201MaLiAnNaEnum.CampType.Player, disPatchSlot, true, posX, posY)
+		self:updateDisPatchMiddlePoint(Activity201MaLiAnNaEnum.CampType.Player, disPatchSlot, true)
+		self:updateCurLine(disPatchSlot, Activity201MaLiAnNaEnum.CampType.Player, true, posX, posY)
 
-		local var_24_5, var_24_6 = Activity201MaLiAnNaGameModel.instance:inSlotCanSelectRange(var_24_2, var_24_3)
+		local inRange, rangeSlotId = Activity201MaLiAnNaGameModel.instance:inSlotCanSelectRange(posX, posY)
 
-		if var_24_5 and var_24_6 ~= arg_24_1 then
-			arg_24_0:playerDragAnim(var_24_6)
+		if inRange and rangeSlotId ~= id then
+			self:playerDragAnim(rangeSlotId)
 
-			if arg_24_0._lastTriggerSlotId == nil or arg_24_0._lastTriggerSlotId ~= var_24_6 then
+			if self._lastTriggerSlotId == nil or self._lastTriggerSlotId ~= rangeSlotId then
 				AudioMgr.instance:trigger(AudioEnum3_0.MaLiAnNa.play_ui_lushang_link_click)
 
-				arg_24_0._lastTriggerSlotId = var_24_6
+				self._lastTriggerSlotId = rangeSlotId
 			end
 		else
-			arg_24_0:playerDragAnim(nil)
+			self:playerDragAnim(nil)
 		end
 	end
 end
 
-function var_0_0._onDragEndSlot(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
-	if Activity201MaLiAnNaGameModel.instance:getSlotById(arg_25_1) == nil then
+function Activity201MaLiAnNaGameView:_onDragEndSlot(id, x, y)
+	local slot = Activity201MaLiAnNaGameModel.instance:getSlotById(id)
+
+	if slot == nil then
 		return
 	end
 
-	gohelper.setActive(arg_25_0._fingerGo, false)
+	gohelper.setActive(self._fingerGo, false)
 
-	local var_25_0, var_25_1 = var_0_1.ScreenPosXYToAnchorPosXY(arg_25_2, arg_25_3, arg_25_0._effectsTr, CameraMgr.instance:getUICamera(), nil, nil)
+	local anchorX, anchorY = CSRectTrHelper.ScreenPosXYToAnchorPosXY(x, y, self._effectsTr, CameraMgr.instance:getUICamera(), nil, nil)
 
-	recthelper.setAnchor(arg_25_0._fingerTr, var_25_0, var_25_1)
+	recthelper.setAnchor(self._fingerTr, anchorX, anchorY)
 
-	local var_25_2, var_25_3 = transformhelper.getLocalPos(arg_25_0._fingerTr)
-	local var_25_4 = Activity201MaLiAnNaGameModel.instance:getDisPatchSlotList()
+	local posX, posY = transformhelper.getLocalPos(self._fingerTr)
+	local slotIdList = Activity201MaLiAnNaGameModel.instance:getDisPatchSlotList()
 
-	if var_25_4 and var_25_4[1] == arg_25_1 then
-		arg_25_0:showDispatch(arg_25_0._disPatchId, Activity201MaLiAnNaEnum.CampType.Player, var_25_4, false)
-		arg_25_0:updateDisPatchMiddlePoint(Activity201MaLiAnNaEnum.CampType.Player, var_25_4, false)
-		arg_25_0:updateCurLine(var_25_4, Activity201MaLiAnNaEnum.CampType.Player, false)
+	if slotIdList and slotIdList[1] == id then
+		self:showDispatch(self._disPatchId, Activity201MaLiAnNaEnum.CampType.Player, slotIdList, false)
+		self:updateDisPatchMiddlePoint(Activity201MaLiAnNaEnum.CampType.Player, slotIdList, false)
+		self:updateCurLine(slotIdList, Activity201MaLiAnNaEnum.CampType.Player, false)
 	end
 
-	if Activity201MaLiAnNaGameModel.instance:inSlotCanSelectRange(var_25_2, var_25_3) and arg_25_0._disPatchId ~= nil then
-		Activity201MaLiAnNaGameModel.instance:disPatch(arg_25_0._disPatchId)
+	if Activity201MaLiAnNaGameModel.instance:inSlotCanSelectRange(posX, posY) and self._disPatchId ~= nil then
+		Activity201MaLiAnNaGameModel.instance:disPatch(self._disPatchId)
 
-		arg_25_0._disPatchId = nil
+		self._disPatchId = nil
 	end
 
 	Activity201MaLiAnNaGameModel.instance:clearDisPatch()
 
-	arg_25_0._disPatchId = nil
+	self._disPatchId = nil
 
-	arg_25_0:playerDragAnim(nil)
+	self:playerDragAnim(nil)
 
-	arg_25_0._lastTriggerSlotId = nil
+	self._lastTriggerSlotId = nil
 end
 
-function var_0_0.showDispatch(arg_26_0, arg_26_1, arg_26_2, arg_26_3, arg_26_4)
-	if arg_26_3 == nil or #arg_26_3 == 0 or arg_26_1 == nil or arg_26_2 == nil then
+function Activity201MaLiAnNaGameView:showDispatch(disPatchId, camp, slotIdList, active)
+	if slotIdList == nil or #slotIdList == 0 or disPatchId == nil or camp == nil then
 		return nil
 	end
 
-	if arg_26_0._lineItems == nil then
-		arg_26_0._lineItems = {}
+	if self._lineItems == nil then
+		self._lineItems = {}
 	end
 
-	if arg_26_0._lineItems[arg_26_1] == nil then
-		arg_26_0._lineItems[arg_26_1] = {}
+	if self._lineItems[disPatchId] == nil then
+		self._lineItems[disPatchId] = {}
 	end
 
-	local var_26_0 = #arg_26_3
+	local itemCount = #slotIdList
 
-	for iter_26_0 = 1, var_26_0 do
-		local var_26_1 = arg_26_3[iter_26_0]
-		local var_26_2 = arg_26_3[iter_26_0 + 1]
+	for i = 1, itemCount do
+		local slotId1 = slotIdList[i]
+		local slotId2 = slotIdList[i + 1]
 
-		if var_26_1 and var_26_2 then
-			local var_26_3 = var_26_1 .. "_" .. var_26_2
-			local var_26_4 = arg_26_0._lineItems[arg_26_1][var_26_3]
+		if slotId1 and slotId2 then
+			local key = slotId1 .. "_" .. slotId2
+			local lineTr = self._lineItems[disPatchId][key]
 
-			if var_26_4 == nil then
-				var_26_4 = arg_26_0:getLineObject(arg_26_2)
-				arg_26_0._lineItems[arg_26_1][var_26_3] = var_26_4
+			if lineTr == nil then
+				lineTr = self:getLineObject(camp)
+				self._lineItems[disPatchId][key] = lineTr
 			end
 
-			if arg_26_4 then
-				local var_26_5 = Activity201MaLiAnNaGameModel.instance:getSlotById(var_26_1)
-				local var_26_6 = Activity201MaLiAnNaGameModel.instance:getSlotById(var_26_2)
+			if active then
+				local slot1 = Activity201MaLiAnNaGameModel.instance:getSlotById(slotId1)
+				local slot2 = Activity201MaLiAnNaGameModel.instance:getSlotById(slotId2)
 
-				if var_26_5 and var_26_6 then
-					local var_26_7, var_26_8 = var_26_5:getBasePosXY()
-					local var_26_9, var_26_10 = var_26_6:getBasePosXY()
+				if slot1 and slot2 then
+					local beginX, beginY = slot1:getBasePosXY()
+					local endX, endY = slot2:getBasePosXY()
 
-					arg_26_0:setLineData(var_26_4, var_26_7, var_26_8, var_26_9, var_26_10)
-					gohelper.setActive(var_26_4.gameObject, true)
+					self:setLineData(lineTr, beginX, beginY, endX, endY)
+					gohelper.setActive(lineTr.gameObject, true)
 				end
 			else
-				arg_26_0:recycleLineGo(var_26_4, arg_26_2)
+				self:recycleLineGo(lineTr, camp)
 
-				arg_26_0._lineItems[arg_26_1][var_26_3] = nil
+				self._lineItems[disPatchId][key] = nil
 			end
 		end
 	end
 
-	if not arg_26_4 then
-		arg_26_0._lineItems[arg_26_1] = nil
+	if not active then
+		self._lineItems[disPatchId] = nil
 	end
 end
 
-function var_0_0.updateDisPatchMiddlePoint(arg_27_0, arg_27_1, arg_27_2, arg_27_3)
-	if arg_27_1 ~= Activity201MaLiAnNaEnum.CampType.Player then
+function Activity201MaLiAnNaGameView:updateDisPatchMiddlePoint(camp, slotIdList, active)
+	if camp ~= Activity201MaLiAnNaEnum.CampType.Player then
 		return
 	end
 
-	if arg_27_2 == nil or #arg_27_2 < 2 then
+	if slotIdList == nil or #slotIdList < 2 then
 		return
 	end
 
-	local var_27_0 = #arg_27_2
+	local count = #slotIdList
 
-	for iter_27_0 = 2, var_27_0 - 1 do
-		local var_27_1 = arg_27_2[iter_27_0]
+	for i = 2, count - 1 do
+		local slotId = slotIdList[i]
 
-		if var_27_1 and arg_27_0._slotItem[var_27_1] then
-			arg_27_0._slotItem[var_27_1]:setMiddlePointActive(arg_27_3)
+		if slotId and self._slotItem[slotId] then
+			self._slotItem[slotId]:setMiddlePointActive(active)
 		end
 	end
 end
 
-function var_0_0.updateCurLine(arg_28_0, arg_28_1, arg_28_2, arg_28_3, arg_28_4, arg_28_5)
-	if not arg_28_3 and arg_28_0._curLine and arg_28_0._curLineSlotId then
-		arg_28_0:recycleLineGo(arg_28_0._curLine, Activity201MaLiAnNaEnum.CampType.Player)
+function Activity201MaLiAnNaGameView:updateCurLine(slotIdList, camp, active, posX, posY)
+	if not active and self._curLine and self._curLineSlotId then
+		self:recycleLineGo(self._curLine, Activity201MaLiAnNaEnum.CampType.Player)
 
-		arg_28_0._curLine = nil
+		self._curLine = nil
 
 		return
 	end
 
-	if arg_28_1 == nil or #arg_28_1 == 0 then
+	if slotIdList == nil or #slotIdList == 0 then
 		return
 	end
 
-	local var_28_0 = arg_28_1[#arg_28_1]
+	local slotId = slotIdList[#slotIdList]
 
-	if arg_28_0._curLineSlotId ~= var_28_0 and arg_28_0._curLine ~= nil then
-		arg_28_0:recycleLineGo(arg_28_0._curLine, arg_28_2)
+	if self._curLineSlotId ~= slotId and self._curLine ~= nil then
+		self:recycleLineGo(self._curLine, camp)
 
-		arg_28_0._curLine = nil
+		self._curLine = nil
 	end
 
-	if var_28_0 ~= nil and arg_28_3 and arg_28_0._curLine == nil then
-		arg_28_0._curLine = arg_28_0:getLineObject(arg_28_2)
+	if slotId ~= nil and active and self._curLine == nil then
+		self._curLine = self:getLineObject(camp)
 
-		local var_28_1 = Activity201MaLiAnNaGameModel.instance:getSlotById(var_28_0)
+		local slot = Activity201MaLiAnNaGameModel.instance:getSlotById(slotId)
 
-		if var_28_1 then
-			local var_28_2, var_28_3 = var_28_1:getBasePosXY()
+		if slot then
+			local startX, startY = slot:getBasePosXY()
 
-			arg_28_0:setLineData(arg_28_0._curLine, var_28_2, var_28_3, arg_28_4 or var_28_2, arg_28_5 or var_28_3)
-			gohelper.setActive(arg_28_0._curLine.gameObject, true)
+			self:setLineData(self._curLine, startX, startY, posX or startX, posY or startY)
+			gohelper.setActive(self._curLine.gameObject, true)
 		end
 
-		arg_28_0._curLineSlotId = var_28_0
+		self._curLineSlotId = slotId
 	end
 
-	if arg_28_0._curLine ~= nil then
-		local var_28_4 = Activity201MaLiAnNaGameModel.instance:getSlotById(var_28_0)
+	if self._curLine ~= nil then
+		local slot = Activity201MaLiAnNaGameModel.instance:getSlotById(slotId)
 
-		if var_28_4 then
-			local var_28_5, var_28_6 = var_28_4:getBasePosXY()
+		if slot then
+			local startX, startY = slot:getBasePosXY()
 
-			arg_28_0:setLineData(arg_28_0._curLine, var_28_5, var_28_6, arg_28_4 or var_28_5, arg_28_5 or var_28_6)
+			self:setLineData(self._curLine, startX, startY, posX or startX, posY or startY)
 		end
 	end
 end
 
-function var_0_0.setLineData(arg_29_0, arg_29_1, arg_29_2, arg_29_3, arg_29_4, arg_29_5)
-	local var_29_0 = true
-	local var_29_1 = true
-	local var_29_2, var_29_3 = Activity201MaLiAnNaGameModel.instance:inSlotCanSelectRange(arg_29_2, arg_29_3)
+function Activity201MaLiAnNaGameView:setLineData(lineTr, beginX, beginY, endX, endY)
+	local needHideEnd = true
+	local needHideBegin = true
+	local isInSlot, slotId = Activity201MaLiAnNaGameModel.instance:inSlotCanSelectRange(beginX, beginY)
 
-	if var_29_2 and Activity201MaLiAnNaGameModel.instance:getSlotById(var_29_3):isInCanSelectRange(arg_29_4, arg_29_5) then
-		arg_29_2, arg_29_3, arg_29_4, arg_29_5 = 0, 0, 0, 0
+	if isInSlot then
+		local slot = Activity201MaLiAnNaGameModel.instance:getSlotById(slotId)
+		local inRange = slot:isInCanSelectRange(endX, endY)
 
-		local var_29_4 = false
-
-		var_29_1 = false
+		if inRange then
+			beginX, beginY, endX, endY = 0, 0, 0, 0
+			needHideEnd = false
+			needHideBegin = false
+		end
 	end
 
-	local var_29_5, var_29_6 = Activity201MaLiAnNaGameModel.instance:inSlotCanSelectRange(arg_29_4, arg_29_5)
-	local var_29_7 = var_29_6
-	local var_29_8 = var_29_5 and true or false
+	isInSlot, slotId = Activity201MaLiAnNaGameModel.instance:inSlotCanSelectRange(endX, endY)
+	needHideEnd = isInSlot and true or false
 
-	if var_29_1 or var_29_8 then
-		arg_29_2, arg_29_3, arg_29_4, arg_29_5 = MathUtil.calculateVisiblePoints(arg_29_2, arg_29_3, Activity201MaLiAnNaEnum.defaultHideLineRange, arg_29_4, arg_29_5, Activity201MaLiAnNaEnum.defaultHideLineRange)
+	if needHideBegin or needHideEnd then
+		beginX, beginY, endX, endY = MathUtil.calculateVisiblePoints(beginX, beginY, Activity201MaLiAnNaEnum.defaultHideLineRange, endX, endY, Activity201MaLiAnNaEnum.defaultHideLineRange)
 	end
 
-	transformhelper.setLocalPosXY(arg_29_1, arg_29_2, arg_29_3)
+	transformhelper.setLocalPosXY(lineTr, beginX, beginY)
 
-	local var_29_9 = MathUtil.vec2_length(arg_29_2, arg_29_3, arg_29_4, arg_29_5)
+	local width = MathUtil.vec2_length(beginX, beginY, endX, endY)
 
-	recthelper.setWidth(arg_29_1, var_29_9)
+	recthelper.setWidth(lineTr, width)
 
-	local var_29_10 = MathUtil.calculateV2Angle(arg_29_4, arg_29_5, arg_29_2, arg_29_3)
+	local angle = MathUtil.calculateV2Angle(endX, endY, beginX, beginY)
 
-	transformhelper.setEulerAngles(arg_29_1, 0, 0, var_29_10)
+	transformhelper.setEulerAngles(lineTr, 0, 0, angle)
 end
 
-function var_0_0.getLineObject(arg_30_0, arg_30_1)
-	if arg_30_0._lineItemPools == nil then
-		arg_30_0._lineItemPools = {}
+function Activity201MaLiAnNaGameView:getLineObject(camp)
+	if self._lineItemPools == nil then
+		self._lineItemPools = {}
 	end
 
-	arg_30_1 = arg_30_1 or Activity201MaLiAnNaEnum.CampType.Player
+	camp = camp or Activity201MaLiAnNaEnum.CampType.Player
 
-	if arg_30_0._lineItemPools[arg_30_1] == nil then
-		local var_30_0 = 20
+	if self._lineItemPools[camp] == nil then
+		local maxCount = 20
 
-		arg_30_0._lineItemPools[arg_30_1] = LuaObjPool.New(var_30_0, function()
-			if arg_30_1 == Activity201MaLiAnNaEnum.CampType.Player then
-				return gohelper.cloneInPlace(arg_30_0._goarrowplayer, "playerLine").transform
+		self._lineItemPools[camp] = LuaObjPool.New(maxCount, function()
+			if camp == Activity201MaLiAnNaEnum.CampType.Player then
+				local go = gohelper.cloneInPlace(self._goarrowplayer, "playerLine")
+
+				return go.transform
 			end
 
-			if arg_30_1 == Activity201MaLiAnNaEnum.CampType.Enemy then
-				return gohelper.cloneInPlace(arg_30_0._goarrowenemy, "enemyLine").transform
+			if camp == Activity201MaLiAnNaEnum.CampType.Enemy then
+				local go = gohelper.cloneInPlace(self._goarrowenemy, "enemyLine")
+
+				return go.transform
 			end
-		end, function(arg_32_0)
-			if arg_32_0 then
-				gohelper.destroy(arg_32_0.gameObject)
+		end, function(tr)
+			if tr then
+				gohelper.destroy(tr.gameObject)
 			end
-		end, function(arg_33_0)
-			if arg_33_0 then
-				gohelper.setActive(arg_33_0.gameObject, false)
+		end, function(tr)
+			if tr then
+				gohelper.setActive(tr.gameObject, false)
 			end
 		end)
 	end
 
-	return (arg_30_0._lineItemPools[arg_30_1]:getObject())
+	local tr = self._lineItemPools[camp]:getObject()
+
+	return tr
 end
 
-function var_0_0.recycleLineGo(arg_34_0, arg_34_1, arg_34_2)
-	if arg_34_1 == nil then
+function Activity201MaLiAnNaGameView:recycleLineGo(tr, camp)
+	if tr == nil then
 		return
 	end
 
-	if arg_34_0._lineItemPools ~= nil and arg_34_0._lineItemPools[arg_34_2] then
-		arg_34_0._lineItemPools[arg_34_2]:putObject(arg_34_1)
+	if self._lineItemPools ~= nil and self._lineItemPools[camp] then
+		self._lineItemPools[camp]:putObject(tr)
 	end
 end
 
-function var_0_0._onShowBattleEffect(arg_35_0, arg_35_1, arg_35_2, arg_35_3, arg_35_4)
-	if arg_35_0._goBattleEffectItem == nil then
-		arg_35_0._goBattleEffectItem = arg_35_0:getUserDataTb_()
+function Activity201MaLiAnNaGameView:_onShowBattleEffect(posX, posY, showTime, isBattle)
+	if self._goBattleEffectItem == nil then
+		self._goBattleEffectItem = self:getUserDataTb_()
 	end
 
-	local var_35_0
+	local go
 
-	if arg_35_4 then
-		var_35_0 = gohelper.cloneInPlace(arg_35_0._gobattleEffect, "battleEffect_" .. arg_35_1 .. "_" .. arg_35_2)
+	if isBattle then
+		go = gohelper.cloneInPlace(self._gobattleEffect, "battleEffect_" .. posX .. "_" .. posY)
 	else
-		var_35_0 = gohelper.cloneInPlace(arg_35_0._govxboom, "effect" .. arg_35_1 .. "_" .. arg_35_2)
+		go = gohelper.cloneInPlace(self._govxboom, "effect" .. posX .. "_" .. posY)
 	end
 
-	if var_35_0 == nil then
+	if go == nil then
 		return
 	end
 
-	transformhelper.setLocalPosXY(var_35_0.transform, arg_35_1, arg_35_2)
-	gohelper.setActive(var_35_0, true)
+	transformhelper.setLocalPosXY(go.transform, posX, posY)
+	gohelper.setActive(go, true)
 	TaskDispatcher.runDelay(function()
-		if var_35_0 then
-			gohelper.setActive(var_35_0, false)
-			gohelper.destroy(var_35_0)
+		if go then
+			gohelper.setActive(go, false)
+			gohelper.destroy(go)
 		end
-	end, nil, arg_35_3)
+	end, nil, showTime)
 end
 
-function var_0_0._initSkill(arg_37_0)
-	if arg_37_0._skillItem == nil then
-		arg_37_0._skillItem = arg_37_0:getUserDataTb_()
+function Activity201MaLiAnNaGameView:_initSkill()
+	if self._skillItem == nil then
+		self._skillItem = self:getUserDataTb_()
 	end
 
-	local var_37_0 = Activity201MaLiAnNaGameModel.instance:getAllActiveSkill()
+	local allActiveSkill = Activity201MaLiAnNaGameModel.instance:getAllActiveSkill()
 
-	if var_37_0 == nil then
+	if allActiveSkill == nil then
 		return
 	end
 
-	for iter_37_0 = 1, #var_37_0 do
-		local var_37_1 = arg_37_0._skillItem[iter_37_0]
+	for i = 1, #allActiveSkill do
+		local item = self._skillItem[i]
 
-		if var_37_1 == nil then
-			local var_37_2 = arg_37_0.viewContainer._viewSetting.otherRes[2]
-			local var_37_3 = arg_37_0:getResInst(var_37_2, arg_37_0._goskillList, "skill_" .. var_37_0[iter_37_0]._configId)
+		if item == nil then
+			local skillPath = self.viewContainer._viewSetting.otherRes[2]
+			local go = self:getResInst(skillPath, self._goskillList, "skill_" .. allActiveSkill[i]._configId)
 
-			var_37_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_37_3, MaLiAnNaSkillItem)
+			item = MonoHelper.addNoUpdateLuaComOnceToGo(go, MaLiAnNaSkillItem)
 
-			var_37_1:initData(var_37_0[iter_37_0])
-			table.insert(arg_37_0._skillItem, var_37_1)
+			item:initData(allActiveSkill[i])
+			table.insert(self._skillItem, item)
 		end
 
-		var_37_1:updateInfo(var_37_0[iter_37_0])
-		var_37_1:refreshSelect(arg_37_0._skillData)
+		item:updateInfo(allActiveSkill[i])
+		item:refreshSelect(self._skillData)
 	end
 end
 
-function var_0_0.refreshSkillSelect(arg_38_0)
-	if arg_38_0._skillItem == nil then
+function Activity201MaLiAnNaGameView:refreshSkillSelect()
+	if self._skillItem == nil then
 		return
 	end
 
-	for iter_38_0, iter_38_1 in pairs(arg_38_0._skillItem) do
-		if iter_38_1 then
-			iter_38_1:refreshSelect(arg_38_0._skillData)
+	for _, item in pairs(self._skillItem) do
+		if item then
+			item:refreshSelect(self._skillData)
 		end
 	end
 end
 
-function var_0_0._onSelectActiveSkill(arg_39_0, arg_39_1)
-	local var_39_0
+function Activity201MaLiAnNaGameView:_onSelectActiveSkill(skillData)
+	local camp
 
-	if arg_39_1 ~= nil then
-		var_39_0 = arg_39_1:getSkillNeedSlotCamp()
+	if skillData ~= nil then
+		camp = skillData:getSkillNeedSlotCamp()
 	end
 
-	if var_39_0 == nil and arg_39_0._skillData ~= nil then
-		var_39_0 = arg_39_0._skillData:getSkillNeedSlotCamp()
+	if camp == nil and self._skillData ~= nil then
+		camp = self._skillData:getSkillNeedSlotCamp()
 	end
 
-	if arg_39_1 == nil and arg_39_0._skillData ~= nil then
-		arg_39_0._skillData:clearParams()
+	if skillData == nil and self._skillData ~= nil then
+		self._skillData:clearParams()
 	end
 
-	Activity201MaLiAnNaGameController.instance:setPause(arg_39_1 ~= nil)
+	Activity201MaLiAnNaGameController.instance:setPause(skillData ~= nil)
 
-	arg_39_0._skillData = arg_39_1
+	self._skillData = skillData
 
-	arg_39_0:refreshSkillSelect()
+	self:refreshSkillSelect()
 
-	if arg_39_0._skillData ~= nil then
-		arg_39_0:showSkillInfo(arg_39_0._skillData:getConfig().description)
+	if self._skillData ~= nil then
+		self:showSkillInfo(self._skillData:getConfig().description)
 	else
-		arg_39_0:showSkillInfo(nil)
+		self:showSkillInfo(nil)
 	end
 
-	if arg_39_0._skillData == nil then
-		arg_39_0:slotPlayAniNameByCamp(var_39_0, true)
+	if self._skillData == nil then
+		self:slotPlayAniNameByCamp(camp, true)
 	else
-		arg_39_0:slotPlayAniNameByCamp(var_39_0, false)
+		self:slotPlayAniNameByCamp(camp, false)
 	end
 
-	gohelper.setActive(arg_39_0._btncancel.gameObject, arg_39_0._skillData ~= nil)
+	gohelper.setActive(self._btncancel.gameObject, self._skillData ~= nil)
 end
 
-function var_0_0.releaseSkill(arg_40_0, arg_40_1)
-	if arg_40_0._skillData == nil then
+function Activity201MaLiAnNaGameView:releaseSkill(slotId)
+	if self._skillData == nil then
 		return false
 	end
 
-	local var_40_0 = arg_40_0._skillData:addParams(arg_40_1)
+	local setSuccess = self._skillData:addParams(slotId)
 
-	if var_40_0 and arg_40_0._skillData:paramIsFull() then
-		MaLiAnNaStatHelper.instance:addUseSkillInfo(arg_40_0._skillData:getConfigId())
-		arg_40_0._skillData:execute()
-		arg_40_0:_onSelectActiveSkill(nil)
+	if setSuccess and self._skillData:paramIsFull() then
+		MaLiAnNaStatHelper.instance:addUseSkillInfo(self._skillData:getConfigId())
+		self._skillData:execute()
+		self:_onSelectActiveSkill(nil)
 		Activity201MaLiAnNaGameController.instance:setPause(false)
 
 		return true
 	end
 
-	return var_40_0
+	return setSuccess
 end
 
-function var_0_0._onClickSlot(arg_41_0, arg_41_1)
-	if arg_41_0._skillData == nil then
+function Activity201MaLiAnNaGameView:_onClickSlot(slotId)
+	if self._skillData == nil then
 		return
 	end
 
-	arg_41_0:releaseSkill(arg_41_1)
+	self:releaseSkill(slotId)
 end
 
-function var_0_0._initAndUpdateHeroSolider(arg_42_0, arg_42_1)
-	if arg_42_0._heroSoliderItem == nil then
-		arg_42_0._heroSoliderItem = arg_42_0:getUserDataTb_()
+function Activity201MaLiAnNaGameView:_initAndUpdateHeroSolider(isInit)
+	if self._heroSoliderItem == nil then
+		self._heroSoliderItem = self:getUserDataTb_()
 	end
 
-	local var_42_0 = MaLiAnNaLaSoliderMoUtil.instance:getAllHeroSolider(Activity201MaLiAnNaEnum.CampType.Player)
+	local allSolider = MaLiAnNaLaSoliderMoUtil.instance:getAllHeroSolider(Activity201MaLiAnNaEnum.CampType.Player)
 
-	if var_42_0 == nil then
+	if allSolider == nil then
 		return
 	end
 
-	for iter_42_0, iter_42_1 in pairs(var_42_0) do
-		local var_42_1 = arg_42_0._heroSoliderItem[iter_42_1:getId()]
+	for _, solider in pairs(allSolider) do
+		local item = self._heroSoliderItem[solider:getId()]
 
-		if var_42_1 == nil then
-			local var_42_2 = gohelper.cloneInPlace(arg_42_0._goRole, "heroSolider_" .. iter_42_1:getId())
+		if item == nil then
+			local go = gohelper.cloneInPlace(self._goRole, "heroSolider_" .. solider:getId())
 
-			gohelper.setActive(var_42_2, true)
+			gohelper.setActive(go, true)
 
-			var_42_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_42_2, MaLiAnNaHeroSoliderItem)
-			arg_42_0._heroSoliderItem[iter_42_1:getId()] = var_42_1
+			item = MonoHelper.addNoUpdateLuaComOnceToGo(go, MaLiAnNaHeroSoliderItem)
+			self._heroSoliderItem[solider:getId()] = item
 		end
 
-		if arg_42_1 then
-			var_42_1:initData(iter_42_1)
+		if isInit then
+			item:initData(solider)
 		end
 
-		var_42_1:updateInfo(iter_42_1)
+		item:updateInfo(solider)
 	end
 end
 
-function var_0_0.showDispatchPathByAI(arg_43_0, arg_43_1, arg_43_2, arg_43_3)
-	if arg_43_1 == nil or arg_43_2 == nil or arg_43_3 == nil then
+function Activity201MaLiAnNaGameView:showDispatchPathByAI(disPatchId, camp, path)
+	if disPatchId == nil or camp == nil or path == nil then
 		return
 	end
 
-	if arg_43_0._aiDisPatchInfo == nil then
-		arg_43_0._aiDisPatchInfo = {}
+	if self._aiDisPatchInfo == nil then
+		self._aiDisPatchInfo = {}
 	end
 
-	table.insert(arg_43_0._aiDisPatchInfo, {
-		disPatchId = arg_43_1,
-		camp = arg_43_2,
-		path = arg_43_3,
+	table.insert(self._aiDisPatchInfo, {
+		disPatchId = disPatchId,
+		camp = camp,
+		path = path,
 		time = os.time()
 	})
-	arg_43_0:showDispatch(arg_43_1, arg_43_2, arg_43_3, true)
+	self:showDispatch(disPatchId, camp, path, true)
 end
 
-function var_0_0._hideDispatchPathByAI(arg_44_0)
-	if arg_44_0._aiDisPatchInfo == nil then
+function Activity201MaLiAnNaGameView:_hideDispatchPathByAI()
+	if self._aiDisPatchInfo == nil then
 		return
 	end
 
-	local var_44_0 = arg_44_0._aiDisPatchInfo[1]
+	local data = self._aiDisPatchInfo[1]
 
-	if var_44_0 and os.time() - var_44_0.time >= Activity201MaLiAnNaEnum.enemyLineShowTime then
-		arg_44_0:showDispatch(var_44_0.disPatchId, var_44_0.camp, var_44_0.path, false)
-		table.remove(arg_44_0._aiDisPatchInfo, 1)
+	if data and os.time() - data.time >= Activity201MaLiAnNaEnum.enemyLineShowTime then
+		self:showDispatch(data.disPatchId, data.camp, data.path, false)
+		table.remove(self._aiDisPatchInfo, 1)
 	end
 end
 
-function var_0_0.addEventInfo(arg_45_0, arg_45_1, arg_45_2, arg_45_3)
-	arg_45_0:_showInfo(arg_45_1, arg_45_2)
+function Activity201MaLiAnNaGameView:addEventInfo(camp, info, autoHide)
+	self:_showInfo(camp, info)
 end
 
-function var_0_0.showInfo(arg_46_0)
-	if arg_46_0._infoList == nil then
-		gohelper.setActive(arg_46_0._goTips, false)
+function Activity201MaLiAnNaGameView:showInfo()
+	if self._infoList == nil then
+		gohelper.setActive(self._goTips, false)
 
 		return
 	end
 end
 
-function var_0_0.showSkillInfo(arg_47_0, arg_47_1)
-	if arg_47_1 ~= nil then
-		arg_47_0._txtTips2.text = arg_47_1
+function Activity201MaLiAnNaGameView:showSkillInfo(info)
+	if info ~= nil then
+		self._txtTips2.text = info
 	end
 
-	if arg_47_1 ~= nil then
-		gohelper.setActive(arg_47_0._goTips2, true)
+	local isShowInfo = info ~= nil
+
+	if isShowInfo then
+		gohelper.setActive(self._goTips2, true)
 	else
-		arg_47_0:_closeSkillTip()
+		self:_closeSkillTip()
 	end
 end
 
-function var_0_0._closeSkillTip(arg_48_0)
-	if arg_48_0._tip2Ani then
-		arg_48_0._tip2Ani:Play("close")
-		TaskDispatcher.runDelay(function(arg_49_0)
-			if arg_49_0._goTips2 then
-				gohelper.setActive(arg_49_0._goTips2, false)
+function Activity201MaLiAnNaGameView:_closeSkillTip()
+	if self._tip2Ani then
+		self._tip2Ani:Play("close")
+		TaskDispatcher.runDelay(function(self)
+			if self._goTips2 then
+				gohelper.setActive(self._goTips2, false)
 			end
-		end, arg_48_0, 0.5)
+		end, self, 0.5)
 	end
 end
 
-function var_0_0._showInfo(arg_50_0, arg_50_1, arg_50_2)
-	if arg_50_2 ~= nil then
-		arg_50_0._txtTips.text = arg_50_2
+function Activity201MaLiAnNaGameView:_showInfo(camp, info)
+	if info ~= nil then
+		self._txtTips.text = info
 	end
 
-	local var_50_0 = Activity201MaLiAnNaEnum.tipBgByCamp[arg_50_1]
+	local bgName = Activity201MaLiAnNaEnum.tipBgByCamp[camp]
 
-	if var_50_0 and arg_50_0._tipImage then
-		UISpriteSetMgr.instance:setMaliAnNaSprite(arg_50_0._tipImage, var_50_0)
+	if bgName and self._tipImage then
+		UISpriteSetMgr.instance:setMaliAnNaSprite(self._tipImage, bgName)
 	end
 
-	local var_50_1 = Activity201MaLiAnNaEnum.tipIconByCamp[arg_50_1]
+	local iconName = Activity201MaLiAnNaEnum.tipIconByCamp[camp]
 
-	if var_50_1 and arg_50_0._tipIconImage then
-		UISpriteSetMgr.instance:setMaliAnNaSprite(arg_50_0._tipIconImage, var_50_1)
+	if iconName and self._tipIconImage then
+		UISpriteSetMgr.instance:setMaliAnNaSprite(self._tipIconImage, iconName)
 	end
 
-	local var_50_2 = arg_50_2 ~= nil
+	local showTips = info ~= nil
 
-	if var_50_2 and arg_50_0._goTips.activeSelf then
-		gohelper.setActive(arg_50_0._goTips, false)
+	if showTips and self._goTips.activeSelf then
+		gohelper.setActive(self._goTips, false)
 	end
 
-	gohelper.setActive(arg_50_0._goTips, var_50_2)
-	TaskDispatcher.cancelTask(arg_50_0._closeTip, arg_50_0)
-	TaskDispatcher.runDelay(arg_50_0._closeTip, arg_50_0, 1.5)
+	gohelper.setActive(self._goTips, showTips)
+	TaskDispatcher.cancelTask(self._closeTip, self)
+	TaskDispatcher.runDelay(self._closeTip, self, 1.5)
 end
 
-function var_0_0._closeTip(arg_51_0)
-	if arg_51_0._tipAni then
-		arg_51_0._tipAni:Play("close")
-		TaskDispatcher.runDelay(function(arg_52_0)
-			if arg_52_0._goTips then
-				gohelper.setActive(arg_52_0._goTips, false)
+function Activity201MaLiAnNaGameView:_closeTip()
+	if self._tipAni then
+		self._tipAni:Play("close")
+		TaskDispatcher.runDelay(function(self)
+			if self._goTips then
+				gohelper.setActive(self._goTips, false)
 			end
-		end, arg_51_0, 0.5)
+		end, self, 0.5)
 	end
 end
 
-function var_0_0.playerDragAnim(arg_53_0, arg_53_1)
-	if arg_53_0._lastShowDragSlotId == arg_53_1 then
+function Activity201MaLiAnNaGameView:playerDragAnim(slotId)
+	if self._lastShowDragSlotId == slotId then
 		return
 	end
 
-	if arg_53_0._lastShowDragSlotId ~= nil then
-		arg_53_0:slotPlayAniName(arg_53_0._lastShowDragSlotId, nil, true)
+	if self._lastShowDragSlotId ~= nil then
+		self:slotPlayAniName(self._lastShowDragSlotId, nil, true)
 
-		arg_53_0._lastShowDragSlotId = nil
+		self._lastShowDragSlotId = nil
 	end
 
-	if arg_53_1 == nil then
+	if slotId == nil then
 		return
 	end
 
-	local var_53_0 = Activity201MaLiAnNaGameModel.instance:getSlotById(arg_53_1):getSlotCamp() == Activity201MaLiAnNaEnum.CampType.Player and Activity201MaLiAnNaEnum.slotAnimName.help or Activity201MaLiAnNaEnum.slotAnimName.attack
+	local slot = Activity201MaLiAnNaGameModel.instance:getSlotById(slotId)
+	local name = slot:getSlotCamp() == Activity201MaLiAnNaEnum.CampType.Player and Activity201MaLiAnNaEnum.slotAnimName.help or Activity201MaLiAnNaEnum.slotAnimName.attack
 
-	arg_53_0:slotPlayAniName(arg_53_1, var_53_0, false)
+	self:slotPlayAniName(slotId, name, false)
 
-	arg_53_0._lastShowDragSlotId = arg_53_1
+	self._lastShowDragSlotId = slotId
 end
 
-function var_0_0.slotPlayAniNameByCamp(arg_54_0, arg_54_1, arg_54_2)
-	if arg_54_1 == nil then
+function Activity201MaLiAnNaGameView:slotPlayAniNameByCamp(camp, isReset)
+	if camp == nil then
 		return
 	end
 
-	for iter_54_0, iter_54_1 in pairs(arg_54_0._slotItem) do
-		if iter_54_1:getCamp() == arg_54_1 then
-			arg_54_0:slotPlayAniName(iter_54_0, Activity201MaLiAnNaEnum.slotAnimName.skill, arg_54_2)
+	for slotId, item in pairs(self._slotItem) do
+		if item:getCamp() == camp then
+			self:slotPlayAniName(slotId, Activity201MaLiAnNaEnum.slotAnimName.skill, isReset)
 		end
 	end
 end
 
-function var_0_0.slotPlayAniName(arg_55_0, arg_55_1, arg_55_2, arg_55_3)
-	if arg_55_0._cacheSlotResetAniName == nil then
-		arg_55_0._cacheSlotResetAniName = {}
+function Activity201MaLiAnNaGameView:slotPlayAniName(slotId, name, isReset)
+	if self._cacheSlotResetAniName == nil then
+		self._cacheSlotResetAniName = {}
 	end
 
-	local var_55_0 = arg_55_0._slotItem[arg_55_1]
+	local slot = self._slotItem[slotId]
 
-	if var_55_0 == nil then
+	if slot == nil then
 		return
 	end
 
-	local var_55_1 = arg_55_2
+	local playName = name
 
-	if arg_55_3 then
-		if arg_55_0._cacheSlotResetAniName[arg_55_1] then
-			if var_55_0:getCamp() == Activity201MaLiAnNaEnum.CampType.Player then
-				var_55_1 = Activity201MaLiAnNaEnum.slotAnimName.myIdle
+	if isReset then
+		if self._cacheSlotResetAniName[slotId] then
+			if slot:getCamp() == Activity201MaLiAnNaEnum.CampType.Player then
+				playName = Activity201MaLiAnNaEnum.slotAnimName.myIdle
 			end
 
-			if var_55_0:getCamp() == Activity201MaLiAnNaEnum.CampType.Enemy then
-				var_55_1 = Activity201MaLiAnNaEnum.slotAnimName.enemyIdle
+			if slot:getCamp() == Activity201MaLiAnNaEnum.CampType.Enemy then
+				playName = Activity201MaLiAnNaEnum.slotAnimName.enemyIdle
 			end
 
-			if var_55_0:getCamp() == Activity201MaLiAnNaEnum.CampType.Middle then
-				var_55_1 = Activity201MaLiAnNaEnum.slotAnimName.middle
+			if slot:getCamp() == Activity201MaLiAnNaEnum.CampType.Middle then
+				playName = Activity201MaLiAnNaEnum.slotAnimName.middle
 			end
 		end
 
-		arg_55_0._cacheSlotResetAniName[arg_55_1] = nil
+		self._cacheSlotResetAniName[slotId] = nil
 	else
-		arg_55_0._cacheSlotResetAniName[arg_55_1] = true
+		self._cacheSlotResetAniName[slotId] = true
 	end
 
-	if not string.nilorempty(var_55_1) then
-		var_55_0:playAnim(var_55_1)
+	if not string.nilorempty(playName) then
+		slot:playAnim(playName)
 	end
 end
 
-function var_0_0._showShowVX(arg_56_0, arg_56_1, arg_56_2, arg_56_3)
-	if arg_56_1 == nil or arg_56_2 == nil then
+function Activity201MaLiAnNaGameView:_showShowVX(slotId, actionType, delayTime)
+	if slotId == nil or actionType == nil then
 		return
 	end
 
-	local var_56_0 = arg_56_0._slotItem[arg_56_1]
+	local slot = self._slotItem[slotId]
 
-	if var_56_0 ~= nil then
-		var_56_0:showVxBySkill(arg_56_2, arg_56_3)
+	if slot ~= nil then
+		slot:showVxBySkill(actionType, delayTime)
 	end
 end
 
-function var_0_0._generateSolider(arg_57_0, arg_57_1, arg_57_2)
-	if arg_57_1 == nil or arg_57_2 == nil then
+function Activity201MaLiAnNaGameView:_generateSolider(slotId, addValue)
+	if slotId == nil or addValue == nil then
 		return
 	end
 
-	local var_57_0 = arg_57_0._slotItem[arg_57_1]
+	local slot = self._slotItem[slotId]
 
-	if var_57_0 ~= nil then
-		var_57_0:showAddSolider(arg_57_2)
+	if slot ~= nil then
+		slot:showAddSolider(addValue)
 	end
 end
 
-function var_0_0._soliderHpChange(arg_58_0, arg_58_1, arg_58_2)
-	if arg_58_0._heroSoliderItem == nil then
+function Activity201MaLiAnNaGameView:_soliderHpChange(soliderId, hpDiff)
+	if self._heroSoliderItem == nil then
 		return
 	end
 
-	local var_58_0 = arg_58_0._heroSoliderItem[arg_58_1]
+	local item = self._heroSoliderItem[soliderId]
 
-	if var_58_0 then
-		var_58_0:showDiff(arg_58_2)
+	if item then
+		item:showDiff(hpDiff)
 	end
 end
 
-function var_0_0.onClose(arg_59_0)
-	arg_59_0:removeEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.OnGameReStart, arg_59_0._onGameReStart, arg_59_0)
-	arg_59_0:removeEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.OnRefreshView, arg_59_0._refreshView, arg_59_0)
-	arg_59_0:removeEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.OnDragBeginSlot, arg_59_0._onDragBeginSlot, arg_59_0)
-	arg_59_0:removeEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.OnDragSlot, arg_59_0._onDragSlot, arg_59_0)
-	arg_59_0:removeEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.OnDragEndSlot, arg_59_0._onDragEndSlot, arg_59_0)
-	arg_59_0:removeEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.OnShowBattleEffect, arg_59_0._onShowBattleEffect, arg_59_0)
-	arg_59_0:removeEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.OnSelectActiveSkill, arg_59_0._onSelectActiveSkill, arg_59_0)
-	arg_59_0:removeEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.OnClickSlot, arg_59_0._onClickSlot, arg_59_0)
-	arg_59_0:removeEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.ShowDisPatchPath, arg_59_0.showDispatchPathByAI, arg_59_0)
-	arg_59_0:removeEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.ShowBattleEvent, arg_59_0.addEventInfo, arg_59_0)
-	arg_59_0:removeEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.ShowShowVX, arg_59_0._showShowVX, arg_59_0)
-	arg_59_0:removeEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.GenerateSolider, arg_59_0._generateSolider, arg_59_0)
-	arg_59_0:removeEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.SoliderHpChange, arg_59_0._soliderHpChange, arg_59_0)
+function Activity201MaLiAnNaGameView:onClose()
+	self:removeEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.OnGameReStart, self._onGameReStart, self)
+	self:removeEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.OnRefreshView, self._refreshView, self)
+	self:removeEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.OnDragBeginSlot, self._onDragBeginSlot, self)
+	self:removeEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.OnDragSlot, self._onDragSlot, self)
+	self:removeEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.OnDragEndSlot, self._onDragEndSlot, self)
+	self:removeEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.OnShowBattleEffect, self._onShowBattleEffect, self)
+	self:removeEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.OnSelectActiveSkill, self._onSelectActiveSkill, self)
+	self:removeEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.OnClickSlot, self._onClickSlot, self)
+	self:removeEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.ShowDisPatchPath, self.showDispatchPathByAI, self)
+	self:removeEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.ShowBattleEvent, self.addEventInfo, self)
+	self:removeEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.ShowShowVX, self._showShowVX, self)
+	self:removeEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.GenerateSolider, self._generateSolider, self)
+	self:removeEventCb(Activity201MaLiAnNaGameController.instance, Activity201MaLiAnNaEvent.SoliderHpChange, self._soliderHpChange, self)
 
-	arg_59_0._aiDisPatchInfo = nil
-	arg_59_0._cacheSlotResetAniName = nil
-	arg_59_0._lastShowDragSlotId = nil
+	self._aiDisPatchInfo = nil
+	self._cacheSlotResetAniName = nil
+	self._lastShowDragSlotId = nil
 
-	if arg_59_0._switchClick then
-		arg_59_0._switchClick:RemoveClickListener()
+	if self._switchClick then
+		self._switchClick:RemoveClickListener()
 
-		arg_59_0._switchClick = nil
+		self._switchClick = nil
 	end
 
-	if arg_59_0._curLine ~= nil then
-		arg_59_0._curLine = nil
+	if self._curLine ~= nil then
+		self._curLine = nil
 	end
 
-	if arg_59_0._lineItems then
-		for iter_59_0, iter_59_1 in pairs(arg_59_0._lineItems) do
-			if iter_59_1 ~= nil then
-				for iter_59_2, iter_59_3 in pairs(iter_59_1) do
-					if iter_59_3 then
-						gohelper.destroy(iter_59_3.gameObject)
+	if self._lineItems then
+		for _, disPatchLines in pairs(self._lineItems) do
+			if disPatchLines ~= nil then
+				for _, keyLines in pairs(disPatchLines) do
+					if keyLines then
+						gohelper.destroy(keyLines.gameObject)
 					end
 				end
 			end
 		end
 
-		arg_59_0._lineItems = nil
+		self._lineItems = nil
 	end
 
-	if arg_59_0._lineItemPools ~= nil then
-		for iter_59_4, iter_59_5 in pairs(arg_59_0._lineItemPools) do
-			iter_59_5:dispose()
+	if self._lineItemPools ~= nil then
+		for _, lineItemPool in pairs(self._lineItemPools) do
+			lineItemPool:dispose()
 
-			iter_59_5 = nil
+			lineItemPool = nil
 		end
 
-		arg_59_0._lineItemPools = nil
+		self._lineItemPools = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_59_0._hideDispatchPathByAI, arg_59_0)
+	TaskDispatcher.cancelTask(self._hideDispatchPathByAI, self)
 	Activity201MaLiAnNaGameController.instance:exitGame()
 end
 
-function var_0_0.onDestroyView(arg_60_0)
+function Activity201MaLiAnNaGameView:onDestroyView()
 	MaliAnNaSoliderEntityMgr.instance:onDestroy()
 	MaliAnNaBulletEntityMgr.instance:onDestroy()
 end
 
-return var_0_0
+return Activity201MaLiAnNaGameView

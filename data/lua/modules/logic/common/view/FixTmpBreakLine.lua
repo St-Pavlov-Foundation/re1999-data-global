@@ -1,82 +1,85 @@
-﻿module("modules.logic.common.view.FixTmpBreakLine", package.seeall)
+﻿-- chunkname: @modules/logic/common/view/FixTmpBreakLine.lua
 
-local var_0_0 = class("FixTmpBreakLine", LuaCompBase)
-local var_0_1 = typeof(ZProj.LangFont)
-local var_0_2 = {
+module("modules.logic.common.view.FixTmpBreakLine", package.seeall)
+
+local FixTmpBreakLine = class("FixTmpBreakLine", LuaCompBase)
+local Type_LangFont = typeof(ZProj.LangFont)
+local needIgnoreLang = {
 	"en",
 	"de",
 	"fr",
 	"thai"
 }
 
-function var_0_0.initData(arg_1_0, arg_1_1)
-	arg_1_0.textMeshPro = arg_1_1.gameObject:GetComponent(typeof(TMPro.TextMeshProUGUI))
+function FixTmpBreakLine:initData(txtComp)
+	self.textMeshPro = txtComp.gameObject:GetComponent(typeof(TMPro.TextMeshProUGUI))
 
-	if arg_1_0.textMeshPro then
-		arg_1_0.textMeshPro.richText = true
+	if self.textMeshPro then
+		self.textMeshPro.richText = true
 	end
 end
 
-function var_0_0.refreshTmpContent(arg_2_0, arg_2_1)
-	for iter_2_0, iter_2_1 in pairs(var_0_2) do
-		if GameConfig:GetCurLangShortcut() == iter_2_1 then
+function FixTmpBreakLine:refreshTmpContent(txtComp)
+	for _, lang in pairs(needIgnoreLang) do
+		if GameConfig:GetCurLangShortcut() == lang then
 			return
 		end
 	end
 
-	if not arg_2_1 then
+	if not txtComp then
 		return
 	end
 
-	arg_2_0:initData(arg_2_1)
+	self:initData(txtComp)
 
-	local var_2_0 = arg_2_0.textMeshPro.text
+	local content = self.textMeshPro.text
 
-	if not arg_2_0:startsWith(var_2_0, "<nobr>") then
-		var_2_0 = string.format("<nobr>%s", var_2_0)
+	if not self:startsWith(content, "<nobr>") then
+		content = string.format("<nobr>%s", content)
 	end
 
-	GameGlobalMgr.instance:getLangFont():refreshFontAsset(arg_2_0.textMeshPro)
+	local gameLangFont = GameGlobalMgr.instance:getLangFont()
 
-	local var_2_1 = arg_2_0:replaceContent(var_2_0)
+	gameLangFont:refreshFontAsset(self.textMeshPro)
 
-	arg_2_0.textMeshPro.text = var_2_1
+	content = self:replaceContent(content)
+	self.textMeshPro.text = content
 
-	arg_2_0.textMeshPro:Rebuild(UnityEngine.UI.CanvasUpdate.PreRender)
+	self.textMeshPro:Rebuild(UnityEngine.UI.CanvasUpdate.PreRender)
 end
 
-function var_0_0.replaceContent(arg_3_0, arg_3_1)
-	local var_3_0 = 0
-	local var_3_1 = ""
-	local var_3_2 = ""
-	local var_3_3 = false
+function FixTmpBreakLine:replaceContent(content)
+	local spaceCount = 0
+	local result = ""
+	local char = ""
+	local isInTag = false
 
-	for iter_3_0 = 1, #arg_3_1 do
-		local var_3_4 = string.sub(arg_3_1, iter_3_0, iter_3_0)
+	for i = 1, #content do
+		char = string.sub(content, i, i)
 
-		if var_3_4 == "<" then
-			var_3_3 = true
-		elseif var_3_4 == ">" then
-			var_3_3 = false
+		if char == "<" then
+			isInTag = true
+		elseif char == ">" then
+			isInTag = false
 		end
 
-		if not var_3_3 and var_3_4 == " " then
-			var_3_0 = var_3_0 + 1
+		if not isInTag and char == " " then
+			spaceCount = spaceCount + 1
 		else
-			if var_3_0 > 0 then
-				var_3_1 = var_3_1 .. "<space=" .. var_3_0 * ZProj.GameHelper.GetTmpCharWidth(arg_3_0.textMeshPro, 32) .. ">"
-				var_3_0 = 0
+			if spaceCount > 0 then
+				result = result .. "<space=" .. spaceCount * ZProj.GameHelper.GetTmpCharWidth(self.textMeshPro, 32) .. ">"
+				spaceCount = 0
 			end
 
-			var_3_1 = var_3_1 .. var_3_4
+			result = result .. char
 		end
 	end
 
-	return var_3_1
+	return result
 end
 
-function var_0_0.startsWith(arg_4_0, arg_4_1, arg_4_2)
-	return string.sub(arg_4_1, 1, string.len(arg_4_2)) == arg_4_2
+function FixTmpBreakLine:startsWith(content, str)
+	return string.sub(content, 1, string.len(str)) == str
 end
 
-return var_0_0
+return FixTmpBreakLine

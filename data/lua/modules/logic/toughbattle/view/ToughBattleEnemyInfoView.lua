@@ -1,117 +1,121 @@
-﻿module("modules.logic.toughbattle.view.ToughBattleEnemyInfoView", package.seeall)
+﻿-- chunkname: @modules/logic/toughbattle/view/ToughBattleEnemyInfoView.lua
 
-local var_0_0 = class("ToughBattleEnemyInfoView", BaseView)
+module("modules.logic.toughbattle.view.ToughBattleEnemyInfoView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._imgenemy = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/#simage_enemy")
-	arg_1_0._txttitle = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/title/titletxt")
-	arg_1_0._txtdesc = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/#txt_desc")
-	arg_1_0._txtrecommend = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/#go_recommend/recommend_txt")
-	arg_1_0._recommenditem = gohelper.findChild(arg_1_0.viewGO, "root/#go_recommend/recommend_txt/#go_iconlist/#simage_icon")
-	arg_1_0._imgskillicon = gohelper.findChildImage(arg_1_0.viewGO, "root/role/#simage_rolehead")
-	arg_1_0._btnskill = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/role/#btn_skill")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_closebtn")
-	arg_1_0._btnchallenge = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_challengebtn")
+local ToughBattleEnemyInfoView = class("ToughBattleEnemyInfoView", BaseView)
+
+function ToughBattleEnemyInfoView:onInitView()
+	self._imgenemy = gohelper.findChildSingleImage(self.viewGO, "root/#simage_enemy")
+	self._txttitle = gohelper.findChildTextMesh(self.viewGO, "root/title/titletxt")
+	self._txtdesc = gohelper.findChildTextMesh(self.viewGO, "root/#txt_desc")
+	self._txtrecommend = gohelper.findChildTextMesh(self.viewGO, "root/#go_recommend/recommend_txt")
+	self._recommenditem = gohelper.findChild(self.viewGO, "root/#go_recommend/recommend_txt/#go_iconlist/#simage_icon")
+	self._imgskillicon = gohelper.findChildImage(self.viewGO, "root/role/#simage_rolehead")
+	self._btnskill = gohelper.findChildButtonWithAudio(self.viewGO, "root/role/#btn_skill")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_closebtn")
+	self._btnchallenge = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_challengebtn")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0.closeThis, arg_2_0)
-	arg_2_0._btnchallenge:AddClickListener(arg_2_0.enterFight, arg_2_0)
-	arg_2_0._btnskill:AddClickListener(arg_2_0.onClickSkill, arg_2_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_2_0._onOpenViewFinish, arg_2_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_2_0._onCloseViewFinish, arg_2_0)
+function ToughBattleEnemyInfoView:addEvents()
+	self._btnclose:AddClickListener(self.closeThis, self)
+	self._btnchallenge:AddClickListener(self.enterFight, self)
+	self._btnskill:AddClickListener(self.onClickSkill, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnchallenge:RemoveClickListener()
-	arg_3_0._btnskill:RemoveClickListener()
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_3_0._onOpenViewFinish, arg_3_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_3_0._onCloseViewFinish, arg_3_0)
+function ToughBattleEnemyInfoView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btnchallenge:RemoveClickListener()
+	self._btnskill:RemoveClickListener()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 end
 
-function var_0_0.onOpen(arg_4_0)
+function ToughBattleEnemyInfoView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.Meilanni.play_ui_mln_unlock)
 
-	local var_4_0 = arg_4_0.viewParam
-	local var_4_1 = var_4_0.episodeId
-	local var_4_2 = DungeonConfig.instance:getEpisodeCO(var_4_1)
+	local co = self.viewParam
+	local episodeId = co.episodeId
+	local config = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-	arg_4_0._txttitle.text = var_4_2.name
-	arg_4_0._txtdesc.text = var_4_2.desc
+	self._txttitle.text = config.name
+	self._txtdesc.text = config.desc
 
-	arg_4_0._imgenemy:LoadImage("singlebg/toughbattle_singlebg/toughbattle_monster" .. var_4_0.sort .. ".png")
-	UISpriteSetMgr.instance:setToughBattleRoleSprite(arg_4_0._imgskillicon, "roleheadpic0" .. var_4_0.sort)
+	self._imgenemy:LoadImage("singlebg/toughbattle_singlebg/toughbattle_monster" .. co.sort .. ".png")
+	UISpriteSetMgr.instance:setToughBattleRoleSprite(self._imgskillicon, "roleheadpic0" .. co.sort)
 
-	local var_4_3 = arg_4_0:getRecommendList(var_4_1)
+	local recommendList = self:getRecommendList(episodeId)
 
-	gohelper.CreateObjList(arg_4_0, arg_4_0.onCreateItem, var_4_3, arg_4_0._recommenditem.transform.parent.gameObject, arg_4_0._recommenditem)
+	gohelper.CreateObjList(self, self.onCreateItem, recommendList, self._recommenditem.transform.parent.gameObject, self._recommenditem)
 
-	arg_4_0._txtrecommend.text = #var_4_3 == 0 and luaLang("herogroupeditview_notrecommend") or luaLang("herogroupeditview_recommend")
+	self._txtrecommend.text = #recommendList == 0 and luaLang("herogroupeditview_notrecommend") or luaLang("herogroupeditview_recommend")
 end
 
-function var_0_0.onOpenFinish(arg_5_0)
-	local var_5_0 = arg_5_0.viewParam.id
+function ToughBattleEnemyInfoView:onOpenFinish()
+	local co = self.viewParam
+	local bossIdx = co.id
 
-	ToughBattleController.instance:dispatchEvent(ToughBattleEvent.GuideOpenBossInfoView, var_5_0)
+	ToughBattleController.instance:dispatchEvent(ToughBattleEvent.GuideOpenBossInfoView, bossIdx)
 end
 
-function var_0_0.onCreateItem(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	local var_6_0 = gohelper.findChildImage(arg_6_1, "")
+function ToughBattleEnemyInfoView:onCreateItem(obj, data, index)
+	local img = gohelper.findChildImage(obj, "")
 
-	UISpriteSetMgr.instance:setFightSprite(var_6_0, FightFailView.CareerToImageName[arg_6_2])
+	UISpriteSetMgr.instance:setFightSprite(img, FightFailView.CareerToImageName[data])
 end
 
-function var_0_0.getRecommendList(arg_7_0, arg_7_1)
-	local var_7_0 = {}
-	local var_7_1 = DungeonConfig.instance:getEpisodeBattleId(arg_7_1)
-	local var_7_2 = lua_battle.configDict[var_7_1]
+function ToughBattleEnemyInfoView:getRecommendList(episodeId)
+	local recommended = {}
+	local battleId = DungeonConfig.instance:getEpisodeBattleId(episodeId)
+	local battleConfig = lua_battle.configDict[battleId]
 
-	if var_7_2 and not string.nilorempty(var_7_2.monsterGroupIds) then
-		local var_7_3 = string.splitToNumber(var_7_2.monsterGroupIds, "#")
+	if battleConfig and not string.nilorempty(battleConfig.monsterGroupIds) then
+		local monsterGroupIds = string.splitToNumber(battleConfig.monsterGroupIds, "#")
 
-		var_7_0 = FightHelper.getAttributeCounter(var_7_3, false)
+		recommended = FightHelper.getAttributeCounter(monsterGroupIds, false)
 	end
 
-	return var_7_0
+	return recommended
 end
 
-function var_0_0.onClickSkill(arg_8_0)
+function ToughBattleEnemyInfoView:onClickSkill()
 	ViewMgr.instance:openView(ViewName.ToughBattleSkillView, {
 		isShowList = false,
-		showCo = arg_8_0.viewParam
+		showCo = self.viewParam
 	})
 end
 
-function var_0_0.enterFight(arg_9_0)
-	local var_9_0 = arg_9_0.viewParam.episodeId
-	local var_9_1 = DungeonConfig.instance:getEpisodeCO(var_9_0)
+function ToughBattleEnemyInfoView:enterFight()
+	local co = self.viewParam
+	local episodeId = co.episodeId
+	local config = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-	DungeonFightController.instance:enterFight(var_9_1.chapterId, var_9_0)
+	DungeonFightController.instance:enterFight(config.chapterId, episodeId)
 end
 
-function var_0_0.onClickModalMask(arg_10_0)
-	arg_10_0:closeThis()
+function ToughBattleEnemyInfoView:onClickModalMask()
+	self:closeThis()
 end
 
-function var_0_0._onOpenViewFinish(arg_11_0, arg_11_1)
-	if arg_11_1 == ViewName.ToughBattleSkillView then
-		gohelper.setActive(arg_11_0.viewGO, false)
+function ToughBattleEnemyInfoView:_onOpenViewFinish(viewName)
+	if viewName == ViewName.ToughBattleSkillView then
+		gohelper.setActive(self.viewGO, false)
 	end
 end
 
-function var_0_0._onCloseViewFinish(arg_12_0, arg_12_1)
-	if arg_12_1 == ViewName.ToughBattleSkillView then
-		gohelper.setActive(arg_12_0.viewGO, true)
+function ToughBattleEnemyInfoView:_onCloseViewFinish(viewName)
+	if viewName == ViewName.ToughBattleSkillView then
+		gohelper.setActive(self.viewGO, true)
 	end
 end
 
-function var_0_0.onClose(arg_13_0)
+function ToughBattleEnemyInfoView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_14_0)
-	arg_14_0._imgenemy:UnLoadImage()
+function ToughBattleEnemyInfoView:onDestroyView()
+	self._imgenemy:UnLoadImage()
 end
 
-return var_0_0
+return ToughBattleEnemyInfoView

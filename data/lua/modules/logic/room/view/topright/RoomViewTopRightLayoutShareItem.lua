@@ -1,60 +1,62 @@
-﻿module("modules.logic.room.view.topright.RoomViewTopRightLayoutShareItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/topright/RoomViewTopRightLayoutShareItem.lua
 
-local var_0_0 = class("RoomViewTopRightLayoutShareItem", RoomViewTopRightBaseItem)
+module("modules.logic.room.view.topright.RoomViewTopRightLayoutShareItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0, arg_1_1)
+local RoomViewTopRightLayoutShareItem = class("RoomViewTopRightLayoutShareItem", RoomViewTopRightBaseItem)
 
-	arg_1_0._ismap = arg_1_0._param.ismap
+function RoomViewTopRightLayoutShareItem:ctor(param)
+	RoomViewTopRightLayoutShareItem.super.ctor(self, param)
+
+	self._ismap = self._param.ismap
 end
 
-function var_0_0._customOnInit(arg_2_0)
-	arg_2_0._resourceItem.simageicon = gohelper.findChildImage(arg_2_0._resourceItem.go, "icon")
+function RoomViewTopRightLayoutShareItem:_customOnInit()
+	self._resourceItem.simageicon = gohelper.findChildImage(self._resourceItem.go, "icon")
 
-	UISpriteSetMgr.instance:setRoomSprite(arg_2_0._resourceItem.simageicon, "room_layout_icon_redu")
+	UISpriteSetMgr.instance:setRoomSprite(self._resourceItem.simageicon, "room_layout_icon_redu")
 end
 
-function var_0_0._onClick(arg_3_0)
+function RoomViewTopRightLayoutShareItem:_onClick()
 	if RoomController.instance:isVisitMode() then
 		return
 	end
 
 	ViewMgr.instance:openView(ViewName.RoomTipsView, {
 		type = RoomTipsView.ViewType.PlanShare,
-		shareCount = arg_3_0:_getQuantity()
+		shareCount = self:_getQuantity()
 	})
 end
 
-function var_0_0.addEventListeners(arg_4_0)
+function RoomViewTopRightLayoutShareItem:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_5_0)
+function RoomViewTopRightLayoutShareItem:removeEventListeners()
 	return
 end
 
-function var_0_0._refreshUI(arg_6_0)
-	local var_6_0 = true
+function RoomViewTopRightLayoutShareItem:_refreshUI()
+	local isShow = true
 
-	if arg_6_0._ismap and not RoomController.instance:isVisitShareMode() then
-		var_6_0 = false
+	if self._ismap and not RoomController.instance:isVisitShareMode() then
+		isShow = false
 	end
 
-	if var_6_0 then
-		arg_6_0._resourceItem.txtquantity.text = arg_6_0:_getQuantity()
+	if isShow then
+		self._resourceItem.txtquantity.text = self:_getQuantity()
 	end
 
-	arg_6_0:_setShow(var_6_0)
+	self:_setShow(isShow)
 end
 
-function var_0_0._getQuantity(arg_7_0)
-	if arg_7_0._ismap then
-		local var_7_0 = RoomModel.instance:getInfoByMode(RoomModel.instance:getGameMode())
+function RoomViewTopRightLayoutShareItem:_getQuantity()
+	if self._ismap then
+		local info = RoomModel.instance:getInfoByMode(RoomModel.instance:getGameMode())
 
-		return var_7_0 and var_7_0.useCount or 0
+		return info and info.useCount or 0
 	end
 
 	return RoomLayoutModel.instance:getUseCount()
 end
 
-return var_0_0
+return RoomViewTopRightLayoutShareItem

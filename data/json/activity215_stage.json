@@ -1,0 +1,26 @@
+[
+  {
+    "activityId": 13213,
+    "stageId": 1,
+    "globalTaskActivityId": 13218,
+    "globalTaskId": 3200001
+  },
+  {
+    "activityId": 13213,
+    "stageId": 2,
+    "globalTaskActivityId": 13219,
+    "globalTaskId": 3200002
+  },
+  {
+    "activityId": 13213,
+    "stageId": 3,
+    "globalTaskActivityId": 13220,
+    "globalTaskId": 3200003
+  },
+  {
+    "activityId": 13213,
+    "stageId": 4,
+    "globalTaskActivityId": 13221,
+    "globalTaskId": 3200004
+  }
+]

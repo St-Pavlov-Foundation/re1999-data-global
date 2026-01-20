@@ -1,109 +1,112 @@
-﻿module("modules.logic.versionactivity2_0.enter.view.subview.V2a0_RoleActEnterView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_0/enter/view/subview/V2a0_RoleActEnterView.lua
 
-local var_0_0 = class("V2a0_RoleActEnterView", BaseView)
+module("modules.logic.versionactivity2_0.enter.view.subview.V2a0_RoleActEnterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._simageTitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "Right/#simage_Title")
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Right/image_LimitTimeBG/#txt_LimitTime")
-	arg_1_0._txtDescr = gohelper.findChildText(arg_1_0.viewGO, "Right/#txt_Descr")
-	arg_1_0._gorewards = gohelper.findChild(arg_1_0.viewGO, "Right/scroll_Reward/Viewport/#go_rewards")
-	arg_1_0._btnEnter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Enter")
-	arg_1_0._btnLocked = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Locked")
-	arg_1_0._txtLocked = gohelper.findChildText(arg_1_0.viewGO, "Right/#btn_Locked/#txt_UnLocked")
+local V2a0_RoleActEnterView = class("V2a0_RoleActEnterView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V2a0_RoleActEnterView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._simageTitle = gohelper.findChildSingleImage(self.viewGO, "Right/#simage_Title")
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "Right/image_LimitTimeBG/#txt_LimitTime")
+	self._txtDescr = gohelper.findChildText(self.viewGO, "Right/#txt_Descr")
+	self._gorewards = gohelper.findChild(self.viewGO, "Right/scroll_Reward/Viewport/#go_rewards")
+	self._btnEnter = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_Enter")
+	self._btnLocked = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_Locked")
+	self._txtLocked = gohelper.findChildText(self.viewGO, "Right/#btn_Locked/#txt_UnLocked")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnEnter:AddClickListener(arg_2_0._btnEnterOnClick, arg_2_0)
-	arg_2_0._btnLocked:AddClickListener(arg_2_0._btnLockedOnClick, arg_2_0)
+function V2a0_RoleActEnterView:addEvents()
+	self._btnEnter:AddClickListener(self._btnEnterOnClick, self)
+	self._btnLocked:AddClickListener(self._btnLockedOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnEnter:RemoveClickListener()
-	arg_3_0._btnLocked:RemoveClickListener()
+function V2a0_RoleActEnterView:removeEvents()
+	self._btnEnter:RemoveClickListener()
+	self._btnLocked:RemoveClickListener()
 end
 
-function var_0_0._btnEnterOnClick(arg_4_0)
-	local var_4_0 = arg_4_0.config.confirmCondition
+function V2a0_RoleActEnterView:_btnEnterOnClick()
+	local condition = self.config.confirmCondition
 
-	if string.nilorempty(var_4_0) then
-		RoleActivityController.instance:enterActivity(arg_4_0.actId)
+	if string.nilorempty(condition) then
+		RoleActivityController.instance:enterActivity(self.actId)
 	else
-		local var_4_1 = string.split(var_4_0, "=")
-		local var_4_2 = tonumber(var_4_1[2])
-		local var_4_3 = PlayerModel.instance:getPlayinfo().userId
-		local var_4_4 = PlayerPrefsKey.EnterRoleActivity .. arg_4_0.actId .. var_4_3
-		local var_4_5 = PlayerPrefsHelper.getNumber(var_4_4, 0) == 1
+		local strs = string.split(condition, "=")
+		local openId = tonumber(strs[2])
+		local userid = PlayerModel.instance:getPlayinfo().userId
+		local key = PlayerPrefsKey.EnterRoleActivity .. self.actId .. userid
+		local hasTiped = PlayerPrefsHelper.getNumber(key, 0) == 1
 
-		if OpenModel.instance:isFunctionUnlock(var_4_2) or var_4_5 then
-			RoleActivityController.instance:enterActivity(arg_4_0.actId)
+		if OpenModel.instance:isFunctionUnlock(openId) or hasTiped then
+			RoleActivityController.instance:enterActivity(self.actId)
 		else
-			local var_4_6 = OpenConfig.instance:getOpenCo(var_4_2)
-			local var_4_7 = DungeonConfig.instance:getEpisodeDisplay(var_4_6.episodeId)
-			local var_4_8 = DungeonConfig.instance:getEpisodeCO(var_4_6.episodeId).name
-			local var_4_9 = var_4_7 .. var_4_8
+			local openCO = OpenConfig.instance:getOpenCo(openId)
+			local dungeonDisplay = DungeonConfig.instance:getEpisodeDisplay(openCO.episodeId)
+			local dungeonName = DungeonConfig.instance:getEpisodeCO(openCO.episodeId).name
+			local name = dungeonDisplay .. dungeonName
 
 			GameFacade.showMessageBox(MessageBoxIdDefine.RoleActivityOpenTip, MsgBoxEnum.BoxType.Yes_No, function()
-				PlayerPrefsHelper.setNumber(var_4_4, 1)
-				RoleActivityController.instance:enterActivity(arg_4_0.actId)
-			end, nil, nil, nil, nil, nil, var_4_9)
+				PlayerPrefsHelper.setNumber(key, 1)
+				RoleActivityController.instance:enterActivity(self.actId)
+			end, nil, nil, nil, nil, nil, name)
 		end
 	end
 end
 
-function var_0_0._btnLockedOnClick(arg_6_0)
-	local var_6_0, var_6_1, var_6_2 = ActivityHelper.getActivityStatusAndToast(arg_6_0.actId)
+function V2a0_RoleActEnterView:_btnLockedOnClick()
+	local status, toastId, paramList = ActivityHelper.getActivityStatusAndToast(self.actId)
 
-	if var_6_0 == ActivityEnum.ActivityStatus.NotUnlock and var_6_1 then
-		GameFacade.showToastWithTableParam(var_6_1, var_6_2)
+	if status == ActivityEnum.ActivityStatus.NotUnlock and toastId then
+		GameFacade.showToastWithTableParam(toastId, paramList)
 	end
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0.actId = arg_7_0.viewContainer.activityId
-	arg_7_0.config = ActivityConfig.instance:getActivityCo(arg_7_0.actId)
-	arg_7_0._txtDescr.text = arg_7_0.config.actDesc
+function V2a0_RoleActEnterView:_editableInitView()
+	self.actId = self.viewContainer.activityId
+	self.config = ActivityConfig.instance:getActivityCo(self.actId)
+	self._txtDescr.text = self.config.actDesc
 
-	local var_7_0 = OpenHelper.getActivityUnlockTxt(arg_7_0.config.openId)
+	local unlockTxt = OpenHelper.getActivityUnlockTxt(self.config.openId)
 
-	arg_7_0._txtLocked.text = var_7_0
-	arg_7_0.animComp = VersionActivitySubAnimatorComp.get(arg_7_0.viewGO, arg_7_0)
+	self._txtLocked.text = unlockTxt
+	self.animComp = VersionActivitySubAnimatorComp.get(self.viewGO, self)
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_8_0._onActStatusChange, arg_8_0)
+function V2a0_RoleActEnterView:onOpen()
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self._onActStatusChange, self)
 
-	local var_8_0 = gohelper.findChild(arg_8_0._btnEnter.gameObject, "#go_reddot")
+	local goreddot = gohelper.findChild(self._btnEnter.gameObject, "#go_reddot")
+	local redDotIcon = RedDotController.instance:addRedDot(goreddot, RedDotEnum.DotNode.V1a6RoleActivityTask, self.actId)
 
-	RedDotController.instance:addRedDot(var_8_0, RedDotEnum.DotNode.V1a6RoleActivityTask, arg_8_0.actId):setRedDotTranScale(RedDotEnum.Style.Normal, 1.4, 1.4)
-	arg_8_0:_freshLockStatus()
-	arg_8_0:_showLeftTime()
-	TaskDispatcher.runRepeat(arg_8_0._showLeftTime, arg_8_0, 1)
-	arg_8_0.animComp:playOpenAnim()
+	redDotIcon:setRedDotTranScale(RedDotEnum.Style.Normal, 1.4, 1.4)
+	self:_freshLockStatus()
+	self:_showLeftTime()
+	TaskDispatcher.runRepeat(self._showLeftTime, self, 1)
+	self.animComp:playOpenAnim()
 end
 
-function var_0_0.onDestroyView(arg_9_0)
-	TaskDispatcher.cancelTask(arg_9_0._showLeftTime, arg_9_0)
-	arg_9_0.animComp:destroy()
+function V2a0_RoleActEnterView:onDestroyView()
+	TaskDispatcher.cancelTask(self._showLeftTime, self)
+	self.animComp:destroy()
 end
 
-function var_0_0._freshLockStatus(arg_10_0)
-	local var_10_0 = ActivityHelper.getActivityStatus(arg_10_0.actId)
+function V2a0_RoleActEnterView:_freshLockStatus()
+	local status = ActivityHelper.getActivityStatus(self.actId)
 
-	gohelper.setActive(arg_10_0._btnEnter, var_10_0 ~= ActivityEnum.ActivityStatus.NotUnlock)
-	gohelper.setActive(arg_10_0._btnLocked, var_10_0 == ActivityEnum.ActivityStatus.NotUnlock)
+	gohelper.setActive(self._btnEnter, status ~= ActivityEnum.ActivityStatus.NotUnlock)
+	gohelper.setActive(self._btnLocked, status == ActivityEnum.ActivityStatus.NotUnlock)
 end
 
-function var_0_0._showLeftTime(arg_11_0)
-	arg_11_0._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(arg_11_0.actId)
+function V2a0_RoleActEnterView:_showLeftTime()
+	self._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(self.actId)
 end
 
-function var_0_0._onActStatusChange(arg_12_0)
-	arg_12_0:_freshLockStatus()
+function V2a0_RoleActEnterView:_onActStatusChange()
+	self:_freshLockStatus()
 end
 
-return var_0_0
+return V2a0_RoleActEnterView

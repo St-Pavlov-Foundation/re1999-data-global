@@ -1,36 +1,38 @@
-﻿module("modules.logic.versionactivity2_4.dungeon.view.sudoku.VersionActivity2_4SudokuViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/dungeon/view/sudoku/VersionActivity2_4SudokuViewContainer.lua
 
-local var_0_0 = class("VersionActivity2_4SudokuViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_4.dungeon.view.sudoku.VersionActivity2_4SudokuViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local VersionActivity2_4SudokuViewContainer = class("VersionActivity2_4SudokuViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, VersionActivity2_4SudokuView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
+function VersionActivity2_4SudokuViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, VersionActivity2_4SudokuView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_topleft"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function VersionActivity2_4SudokuViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
-		arg_2_0.navigateView:setOverrideClose(arg_2_0._overrideCloseAction, arg_2_0)
+		self.navigateView:setOverrideClose(self._overrideCloseAction, self)
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-function var_0_0._overrideCloseAction(arg_3_0)
+function VersionActivity2_4SudokuViewContainer:_overrideCloseAction()
 	VersionActivity2_4SudokuController.instance:setStatResult("break")
 	VersionActivity2_4SudokuController.instance:sendStat()
-	arg_3_0:closeThis()
+	self:closeThis()
 end
 
-return var_0_0
+return VersionActivity2_4SudokuViewContainer

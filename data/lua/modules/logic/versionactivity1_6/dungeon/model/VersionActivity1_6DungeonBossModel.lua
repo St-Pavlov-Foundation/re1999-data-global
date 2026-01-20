@@ -1,72 +1,75 @@
-﻿module("modules.logic.versionactivity1_6.dungeon.model.VersionActivity1_6DungeonBossModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/dungeon/model/VersionActivity1_6DungeonBossModel.lua
 
-local var_0_0 = class("VersionActivity1_6DungeonBossModel", Activity149Model)
-local var_0_1 = VersionActivity1_6Enum.ActivityId.DungeonBossRush .. "Score"
+module("modules.logic.versionactivity1_6.dungeon.model.VersionActivity1_6DungeonBossModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	var_0_0.super.onInit(arg_1_0)
+local VersionActivity1_6DungeonBossModel = class("VersionActivity1_6DungeonBossModel", Activity149Model)
+local ScorePlayerPrefsKey = VersionActivity1_6Enum.ActivityId.DungeonBossRush .. "Score"
 
-	arg_1_0._receivedMsgInit = false
+function VersionActivity1_6DungeonBossModel:onInit()
+	VersionActivity1_6DungeonBossModel.super.onInit(self)
+
+	self._receivedMsgInit = false
 end
 
-function var_0_0.reInit(arg_2_0)
-	var_0_0.super.reInit(arg_2_0)
+function VersionActivity1_6DungeonBossModel:reInit()
+	VersionActivity1_6DungeonBossModel.super.reInit(self)
 end
 
-function var_0_0.isInBossFight(arg_3_0)
+function VersionActivity1_6DungeonBossModel:isInBossFight()
 	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Fight then
 		return false
 	end
 
-	return arg_3_0:checkBattleEpisodeType(DungeonEnum.EpisodeType.Act1_6DungeonBoss)
+	return self:checkBattleEpisodeType(DungeonEnum.EpisodeType.Act1_6DungeonBoss)
 end
 
-function var_0_0.checkBattleEpisodeType(arg_4_0, arg_4_1)
-	local var_4_0 = DungeonModel.instance.curSendEpisodeId
+function VersionActivity1_6DungeonBossModel:checkBattleEpisodeType(episodeType)
+	local episodeId = DungeonModel.instance.curSendEpisodeId
 
-	if not var_4_0 then
+	if not episodeId then
 		return false
 	end
 
-	local var_4_1 = DungeonConfig.instance:getEpisodeCO(var_4_0)
+	local episodeCfg = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-	if not var_4_1 then
+	if not episodeCfg then
 		return false
 	end
 
-	return var_4_1.type == arg_4_1
+	return episodeCfg.type == episodeType
 end
 
-function var_0_0.onReceiveInfos(arg_5_0, arg_5_1)
-	var_0_0.super.onReceiveInfos(arg_5_0, arg_5_1)
+function VersionActivity1_6DungeonBossModel:onReceiveInfos(msg)
+	VersionActivity1_6DungeonBossModel.super.onReceiveInfos(self, msg)
 
-	if not arg_5_0._receivedMsgInit then
-		arg_5_0:applyPreScoreToCurScore()
+	if not self._receivedMsgInit then
+		self:applyPreScoreToCurScore()
 
-		arg_5_0._receivedMsgInit = true
+		self._receivedMsgInit = true
 	end
 end
 
-function var_0_0.getScorePrefValue(arg_6_0)
-	local var_6_0 = PlayerModel.instance:getPlayerPrefsKey(var_0_1)
+function VersionActivity1_6DungeonBossModel:getScorePrefValue()
+	local key = PlayerModel.instance:getPlayerPrefsKey(ScorePlayerPrefsKey)
+	local localScore = PlayerPrefsHelper.getNumber(key)
 
-	return PlayerPrefsHelper.getNumber(var_6_0) or 0
+	return localScore or 0
 end
 
-function var_0_0.setScorePrefValue(arg_7_0, arg_7_1)
-	local var_7_0 = PlayerModel.instance:getPlayerPrefsKey(var_0_1)
+function VersionActivity1_6DungeonBossModel:setScorePrefValue(score)
+	local key = PlayerModel.instance:getPlayerPrefsKey(ScorePlayerPrefsKey)
 
-	PlayerPrefsHelper.setNumber(var_7_0, arg_7_1)
+	PlayerPrefsHelper.setNumber(key, score)
 end
 
-function var_0_0.SetOpenBossViewWithDailyBonus(arg_8_0, arg_8_1)
-	arg_8_0._getDailyBonus = arg_8_1
+function VersionActivity1_6DungeonBossModel:SetOpenBossViewWithDailyBonus(getDailyBonus)
+	self._getDailyBonus = getDailyBonus
 end
 
-function var_0_0.GetOpenBossViewWithDailyBonus(arg_9_0)
-	return arg_9_0._getDailyBonus
+function VersionActivity1_6DungeonBossModel:GetOpenBossViewWithDailyBonus()
+	return self._getDailyBonus
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity1_6DungeonBossModel.instance = VersionActivity1_6DungeonBossModel.New()
 
-return var_0_0
+return VersionActivity1_6DungeonBossModel

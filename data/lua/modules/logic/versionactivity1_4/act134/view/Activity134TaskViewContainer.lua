@@ -1,46 +1,48 @@
-﻿module("modules.logic.versionactivity1_4.act134.view.Activity134TaskViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act134/view/Activity134TaskViewContainer.lua
 
-local var_0_0 = class("Activity134TaskViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_4.act134.view.Activity134TaskViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+local Activity134TaskViewContainer = class("Activity134TaskViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "main/#scroll_view"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_1.cellClass = Activity134TaskItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 1
-	var_1_1.cellWidth = 1300
-	var_1_1.cellHeight = 160
-	var_1_1.cellSpaceV = 0
-	var_1_1.startSpace = 0
+function Activity134TaskViewContainer:buildViews()
+	local views = {}
+	local scrollParam = ListScrollParam.New()
 
-	local var_1_2 = {}
+	scrollParam.scrollGOPath = "main/#scroll_view"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = Activity134TaskItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 1300
+	scrollParam.cellHeight = 160
+	scrollParam.cellSpaceV = 0
+	scrollParam.startSpace = 0
 
-	for iter_1_0 = 1, 6 do
-		var_1_2[iter_1_0] = (iter_1_0 - 1) * 0.06
+	local times = {}
+
+	for i = 1, 6 do
+		times[i] = (i - 1) * 0.06
 	end
 
-	arg_1_0._scrollview = LuaListScrollViewWithAnimator.New(Activity134TaskListModel.instance, var_1_1, var_1_2)
+	self._scrollview = LuaListScrollViewWithAnimator.New(Activity134TaskListModel.instance, scrollParam, times)
 
-	table.insert(var_1_0, arg_1_0._scrollview)
-	table.insert(var_1_0, Activity134TaskView.New())
+	table.insert(views, self._scrollview)
+	table.insert(views, Activity134TaskView.New())
 
-	return var_1_0
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function Activity134TaskViewContainer:buildTabViews(tabContainerId)
 	return
 end
 
-function var_0_0.onContainerInit(arg_3_0)
-	arg_3_0.taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(arg_3_0._scrollview)
+function Activity134TaskViewContainer:onContainerInit()
+	self.taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(self._scrollview)
 end
 
-function var_0_0.onContainerClickModalMask(arg_4_0)
-	arg_4_0:closeThis()
+function Activity134TaskViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return Activity134TaskViewContainer

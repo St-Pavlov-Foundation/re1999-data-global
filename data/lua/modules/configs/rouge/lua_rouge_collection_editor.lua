@@ -1,4 +1,6 @@
-﻿return {
+﻿-- chunkname: @modules/configs/rouge/lua_rouge_collection_editor.lua
+
+return {
 	{
 		ownerId = 0,
 		type = 0,

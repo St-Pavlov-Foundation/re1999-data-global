@@ -1,53 +1,55 @@
-﻿module("modules.logic.character.view.CharacterTalentChessViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterTalentChessViewContainer.lua
 
-local var_0_0 = class("CharacterTalentChessViewContainer", BaseViewContainer)
+module("modules.logic.character.view.CharacterTalentChessViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	arg_1_0.chess_view = CharacterTalentChessView.New()
+local CharacterTalentChessViewContainer = class("CharacterTalentChessViewContainer", BaseViewContainer)
+
+function CharacterTalentChessViewContainer:buildViews()
+	self.chess_view = CharacterTalentChessView.New()
 
 	return {
 		TabViewGroup.New(1, "#go_btns"),
-		arg_1_0.chess_view
+		self.chess_view
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._navigateButtonView = NavigateButtonsView.New({
+function CharacterTalentChessViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			true
 		}, HelpEnum.HelpId.Talent)
 
 		return {
-			arg_2_0._navigateButtonView
+			self._navigateButtonView
 		}
 	end
 end
 
-function var_0_0.onContainerInit(arg_3_0)
-	HelpController.instance:registerCallback(HelpEvent.RefreshHelp, arg_3_0._navigateButtonView.showHelpBtnIcon, arg_3_0._navigateButtonView)
+function CharacterTalentChessViewContainer:onContainerInit()
+	HelpController.instance:registerCallback(HelpEvent.RefreshHelp, self._navigateButtonView.showHelpBtnIcon, self._navigateButtonView)
 end
 
-function var_0_0.onContainerDestroy(arg_4_0)
-	HelpController.instance:unregisterCallback(HelpEvent.RefreshHelp, arg_4_0._navigateButtonView.showHelpBtnIcon, arg_4_0._navigateButtonView)
+function CharacterTalentChessViewContainer:onContainerDestroy()
+	HelpController.instance:unregisterCallback(HelpEvent.RefreshHelp, self._navigateButtonView.showHelpBtnIcon, self._navigateButtonView)
 end
 
-function var_0_0.onContainerOpenFinish(arg_5_0)
-	arg_5_0._navigateButtonView:resetOnCloseViewAudio(AudioEnum.UI.play_ui_checkpoint_click)
+function CharacterTalentChessViewContainer:onContainerOpenFinish()
+	self._navigateButtonView:resetOnCloseViewAudio(AudioEnum.UI.play_ui_checkpoint_click)
 end
 
-function var_0_0.playOpenTransition(arg_6_0)
-	arg_6_0:onPlayOpenTransitionFinish()
+function CharacterTalentChessViewContainer:playOpenTransition()
+	self:onPlayOpenTransitionFinish()
 end
 
-function var_0_0.playCloseTransition(arg_7_0)
+function CharacterTalentChessViewContainer:playCloseTransition()
 	AudioMgr.instance:trigger(AudioEnum.Talent.play_ui_resonate_property_close)
-	var_0_0.super.playCloseTransition(arg_7_0, {
+	CharacterTalentChessViewContainer.super.playCloseTransition(self, {
 		anim = "charactertalentchess_out"
 	})
 	CharacterController.instance:dispatchEvent(CharacterEvent.playTalentViewBackAni, "3_1", false, "ani_3_1", true)
-	arg_7_0.chess_view:playChessIconOutAni()
+	self.chess_view:playChessIconOutAni()
 end
 
-return var_0_0
+return CharacterTalentChessViewContainer

@@ -1,28 +1,30 @@
-﻿module("modules.logic.survival.model.SurvivalOutSideClientDataMo", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/SurvivalOutSideClientDataMo.lua
 
-local var_0_0 = pureTable("SurvivalOutSideClientDataMo")
+module("modules.logic.survival.model.SurvivalOutSideClientDataMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	local var_1_0 = {}
+local SurvivalOutSideClientDataMo = pureTable("SurvivalOutSideClientDataMo")
 
-	if not string.nilorempty(arg_1_1) then
-		var_1_0 = cjson.decode(arg_1_1)
+function SurvivalOutSideClientDataMo:init(data)
+	local dict = {}
+
+	if not string.nilorempty(data) then
+		dict = cjson.decode(data)
 	end
 
-	if var_1_0.ver and var_1_0.ver ~= arg_1_0:getCurVersion() then
-		var_1_0 = {}
+	if dict.ver and dict.ver ~= self:getCurVersion() then
+		dict = {}
 	end
 
-	var_1_0.ver = var_1_0.ver or arg_1_0:getCurVersion()
-	arg_1_0.data = var_1_0
+	dict.ver = dict.ver or self:getCurVersion()
+	self.data = dict
 end
 
-function var_0_0.getCurVersion(arg_2_0)
+function SurvivalOutSideClientDataMo:getCurVersion()
 	return 1
 end
 
-function var_0_0.saveDataToServer(arg_3_0)
-	SurvivalOutSideRpc.instance:sendSurvivalSurvivalOutSideClientData(cjson.encode(arg_3_0.data))
+function SurvivalOutSideClientDataMo:saveDataToServer()
+	SurvivalOutSideRpc.instance:sendSurvivalSurvivalOutSideClientData(cjson.encode(self.data))
 end
 
-return var_0_0
+return SurvivalOutSideClientDataMo

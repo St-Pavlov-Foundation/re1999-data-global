@@ -1,148 +1,150 @@
-﻿module("modules.logic.necrologiststory.game.v3a1.V3A1_RoleStoryTicketView", package.seeall)
+﻿-- chunkname: @modules/logic/necrologiststory/game/v3a1/V3A1_RoleStoryTicketView.lua
 
-local var_0_0 = class("V3A1_RoleStoryTicketView", BaseView)
+module("modules.logic.necrologiststory.game.v3a1.V3A1_RoleStoryTicketView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.txtPlace = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/Title/#txt_place")
-	arg_1_0.txtTime = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/Title/#txt_time")
-	arg_1_0.btnConfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/Ticket/#btn_confirm")
-	arg_1_0.txtFrom = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/Ticket/simage_bg/#txt_from")
-	arg_1_0.dropdownOption = gohelper.findChildDropdown(arg_1_0.viewGO, "root/Ticket/#drop_filter")
-	arg_1_0.txtError = gohelper.findChildTextMesh(arg_1_0.dropdownOption.gameObject, "Label")
-	arg_1_0.txtCorrectly = gohelper.findChildTextMesh(arg_1_0.dropdownOption.gameObject, "Correctly")
-	arg_1_0.imageArrow = gohelper.findChildImage(arg_1_0.dropdownOption.gameObject, "arrow")
+local V3A1_RoleStoryTicketView = class("V3A1_RoleStoryTicketView", BaseView)
 
-	arg_1_0.dropdownOption:AddOnValueChanged(arg_1_0.handleDropValueChanged, arg_1_0)
+function V3A1_RoleStoryTicketView:onInitView()
+	self.txtPlace = gohelper.findChildTextMesh(self.viewGO, "root/Title/#txt_place")
+	self.txtTime = gohelper.findChildTextMesh(self.viewGO, "root/Title/#txt_time")
+	self.btnConfirm = gohelper.findChildButtonWithAudio(self.viewGO, "root/Ticket/#btn_confirm")
+	self.txtFrom = gohelper.findChildTextMesh(self.viewGO, "root/Ticket/simage_bg/#txt_from")
+	self.dropdownOption = gohelper.findChildDropdown(self.viewGO, "root/Ticket/#drop_filter")
+	self.txtError = gohelper.findChildTextMesh(self.dropdownOption.gameObject, "Label")
+	self.txtCorrectly = gohelper.findChildTextMesh(self.dropdownOption.gameObject, "Correctly")
+	self.imageArrow = gohelper.findChildImage(self.dropdownOption.gameObject, "arrow")
 
-	arg_1_0.optionClick = gohelper.getClickWithAudio(arg_1_0.dropdownOption.gameObject, AudioEnum.UI.UI_Common_Click)
-	arg_1_0.imageWeather = gohelper.findChildImage(arg_1_0.viewGO, "root/Title/#image_weather")
-	arg_1_0.animatorPlayer = SLFramework.AnimatorPlayer.Get(arg_1_0.viewGO)
+	self.dropdownOption:AddOnValueChanged(self.handleDropValueChanged, self)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	self.optionClick = gohelper.getClickWithAudio(self.dropdownOption.gameObject, AudioEnum.UI.UI_Common_Click)
+	self.imageWeather = gohelper.findChildImage(self.viewGO, "root/Title/#image_weather")
+	self.animatorPlayer = SLFramework.AnimatorPlayer.Get(self.viewGO)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnConfirm, arg_2_0.onClickBtnConfirm, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.optionClick, arg_2_0.onClickOption, arg_2_0)
+function V3A1_RoleStoryTicketView:addEvents()
+	self:addClickCb(self.btnConfirm, self.onClickBtnConfirm, self)
+	self:addClickCb(self.optionClick, self.onClickOption, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeClickCb(arg_3_0.btnConfirm)
-	arg_3_0:removeClickCb(arg_3_0.optionClick)
+function V3A1_RoleStoryTicketView:removeEvents()
+	self:removeClickCb(self.btnConfirm)
+	self:removeClickCb(self.optionClick)
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function V3A1_RoleStoryTicketView:_editableInitView()
 	return
 end
 
-function var_0_0.onClickModalMask(arg_5_0)
+function V3A1_RoleStoryTicketView:onClickModalMask()
 	return
 end
 
-function var_0_0.onClickOption(arg_6_0)
+function V3A1_RoleStoryTicketView:onClickOption()
 	return
 end
 
-function var_0_0.handleDropValueChanged(arg_7_0, arg_7_1)
-	arg_7_0.selectIndex = arg_7_1
+function V3A1_RoleStoryTicketView:handleDropValueChanged(index)
+	self.selectIndex = index
 
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
-	arg_7_0:refreshOption()
+	self:refreshOption()
 end
 
-function var_0_0.onClickBtnConfirm(arg_8_0)
-	if arg_8_0.selectIndex == -1 then
+function V3A1_RoleStoryTicketView:onClickBtnConfirm()
+	if self.selectIndex == -1 then
 		return
 	end
 
-	local var_8_0 = arg_8_0.selectIndex + 1
+	local option = self.selectIndex + 1
 
-	if arg_8_0.rightOption == var_8_0 then
+	if self.rightOption == option then
 		AudioMgr.instance:trigger(AudioEnum.NecrologistStory.play_ui_wulu_build)
-		arg_8_0.gameBaseMO:tryFinishBase(arg_8_0.curBaseId)
-		arg_8_0.animatorPlayer:Play("correctly", arg_8_0.onCorrectlyFinished, arg_8_0)
+		self.gameBaseMO:tryFinishBase(self.curBaseId)
+		self.animatorPlayer:Play("correctly", self.onCorrectlyFinished, self)
 	end
 end
 
-function var_0_0.onCorrectlyFinished(arg_9_0)
-	arg_9_0:closeThis()
+function V3A1_RoleStoryTicketView:onCorrectlyFinished()
+	self:closeThis()
 end
 
-function var_0_0.initViewParam(arg_10_0)
-	local var_10_0 = arg_10_0.viewParam.roleStoryId
+function V3A1_RoleStoryTicketView:initViewParam()
+	local storyId = self.viewParam.roleStoryId
 
-	arg_10_0.gameBaseMO = NecrologistStoryModel.instance:getGameMO(var_10_0)
-	arg_10_0.curBaseId = arg_10_0.gameBaseMO:getCurBaseId()
+	self.gameBaseMO = NecrologistStoryModel.instance:getGameMO(storyId)
+	self.curBaseId = self.gameBaseMO:getCurBaseId()
 
-	local var_10_1 = NecrologistStoryV3A1Config.instance:getFugaorenBaseCo(arg_10_0.curBaseId)
+	local config = NecrologistStoryV3A1Config.instance:getFugaorenBaseCo(self.curBaseId)
 
-	arg_10_0.options = string.split(var_10_1.choose, "#")
-	arg_10_0.rightOption = var_10_1.rightChoose
-	arg_10_0.selectIndex = -1
+	self.options = string.split(config.choose, "#")
+	self.rightOption = config.rightChoose
+	self.selectIndex = -1
 end
 
-function var_0_0.onOpen(arg_11_0)
-	arg_11_0:initViewParam()
-	arg_11_0:refreshView()
+function V3A1_RoleStoryTicketView:onOpen()
+	self:initViewParam()
+	self:refreshView()
 end
 
-function var_0_0.refreshView(arg_12_0)
-	arg_12_0:refreshTitle()
-	arg_12_0.dropdownOption:ClearOptions()
-	arg_12_0.dropdownOption:AddOptions(arg_12_0.options)
-	arg_12_0.dropdownOption:SetValue(arg_12_0.selectIndex)
-	gohelper.setActive(arg_12_0.btnConfirm, false)
+function V3A1_RoleStoryTicketView:refreshView()
+	self:refreshTitle()
+	self.dropdownOption:ClearOptions()
+	self.dropdownOption:AddOptions(self.options)
+	self.dropdownOption:SetValue(self.selectIndex)
+	gohelper.setActive(self.btnConfirm, false)
 end
 
-function var_0_0.refreshTitle(arg_13_0)
-	local var_13_0 = arg_13_0.gameBaseMO:getCurTime()
-	local var_13_1 = NecrologistStoryV3A1Config.instance:getFugaorenBaseCo(arg_13_0.curBaseId)
-	local var_13_2, var_13_3 = NecrologistStoryHelper.getTimeFormat2(var_13_0)
+function V3A1_RoleStoryTicketView:refreshTitle()
+	local curTime = self.gameBaseMO:getCurTime()
+	local baseConfig = NecrologistStoryV3A1Config.instance:getFugaorenBaseCo(self.curBaseId)
+	local displayHour, minute = NecrologistStoryHelper.getTimeFormat2(curTime)
 
-	arg_13_0.txtTime.text = string.format("%d:%02d", var_13_2, var_13_3)
-	arg_13_0.txtPlace.text = var_13_1.name
-	arg_13_0.txtFrom.text = var_13_1.name
+	self.txtTime.text = string.format("%d:%02d", displayHour, minute)
+	self.txtPlace.text = baseConfig.name
+	self.txtFrom.text = baseConfig.name
 
-	UISpriteSetMgr.instance:setRoleStorySprite(arg_13_0.imageWeather, string.format("rolestory_weather%s", var_13_1.weather))
+	UISpriteSetMgr.instance:setRoleStorySprite(self.imageWeather, string.format("rolestory_weather%s", baseConfig.weather))
 end
 
-function var_0_0.refreshOption(arg_14_0)
-	local var_14_0 = arg_14_0.selectIndex + 1
-	local var_14_1 = arg_14_0.rightOption == var_14_0
+function V3A1_RoleStoryTicketView:refreshOption()
+	local optionId = self.selectIndex + 1
+	local isRight = self.rightOption == optionId
 
-	gohelper.setActive(arg_14_0.btnConfirm, var_14_1)
+	gohelper.setActive(self.btnConfirm, isRight)
 
-	local var_14_2 = NecrologistStoryV3A1Config.instance:getFugaorenBaseCo(arg_14_0.curBaseId)
-	local var_14_3 = string.splitToNumber(var_14_2.dialogId, "#")
-	local var_14_4 = var_14_1 and var_14_3[1] or var_14_3[2]
+	local baseConfig = NecrologistStoryV3A1Config.instance:getFugaorenBaseCo(self.curBaseId)
+	local dialogIds = string.splitToNumber(baseConfig.dialogId, "#")
+	local dialogId = isRight and dialogIds[1] or dialogIds[2]
 
-	if var_14_4 then
-		TipDialogController.instance:openTipDialogView(var_14_4, arg_14_0.onDialogFinished, arg_14_0)
+	if dialogId then
+		TipDialogController.instance:openTipDialogView(dialogId, self.onDialogFinished, self)
 	end
 
-	local var_14_5 = arg_14_0.options[var_14_0]
+	local optionStr = self.options[optionId]
 
-	if var_14_1 then
-		arg_14_0.txtCorrectly.text = var_14_5
-		arg_14_0.txtError.text = ""
+	if isRight then
+		self.txtCorrectly.text = optionStr
+		self.txtError.text = ""
 	else
-		arg_14_0.txtCorrectly.text = ""
-		arg_14_0.txtError.text = var_14_5
+		self.txtCorrectly.text = ""
+		self.txtError.text = optionStr
 	end
 end
 
-function var_0_0.onDialogFinished(arg_15_0)
+function V3A1_RoleStoryTicketView:onDialogFinished()
 	return
 end
 
-function var_0_0.onDestroyView(arg_16_0)
-	if arg_16_0.dropdownOption then
-		arg_16_0.dropdownOption:RemoveOnValueChanged()
+function V3A1_RoleStoryTicketView:onDestroyView()
+	if self.dropdownOption then
+		self.dropdownOption:RemoveOnValueChanged()
 
-		arg_16_0.dropdownOption = nil
+		self.dropdownOption = nil
 	end
 end
 
-return var_0_0
+return V3A1_RoleStoryTicketView

@@ -1,106 +1,110 @@
-﻿module("modules.logic.versionactivity2_3.zhixinquaner.maze.view.PuzzleMazeDrawView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/zhixinquaner/maze/view/PuzzleMazeDrawView.lua
 
-local var_0_0 = class("PuzzleMazeDrawView", PuzzleMazeDrawBaseView)
-local var_0_1 = 1.13
-local var_0_2 = "PuzzleMazeDrawController;PuzzleEvent;EnableTriggerEffect"
+module("modules.logic.versionactivity2_3.zhixinquaner.maze.view.PuzzleMazeDrawView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gomap = gohelper.findChild(arg_1_0.viewGO, "#go_map")
-	arg_1_0._goconnect = gohelper.findChild(arg_1_0.viewGO, "#go_connect")
-	arg_1_0._imagelinetemplater = gohelper.findChildImage(arg_1_0.viewGO, "#image_line_template_r")
-	arg_1_0._imagelinetemplatel = gohelper.findChildImage(arg_1_0.viewGO, "#image_line_template_l")
-	arg_1_0._btnreset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_reset")
-	arg_1_0._goplane = gohelper.findChild(arg_1_0.viewGO, "#go_map/#go_plane")
-	arg_1_0._gofinish = gohelper.findChild(arg_1_0.viewGO, "#go_finish")
-	arg_1_0._txtTarget = gohelper.findChildText(arg_1_0.viewGO, "Target/txt_Target")
-	arg_1_0._goCheckMark = gohelper.findChild(arg_1_0.viewGO, "Target/txt_Target/image_Check/image_CheckMark")
+local PuzzleMazeDrawView = class("PuzzleMazeDrawView", PuzzleMazeDrawBaseView)
+local DelayEnableTriggerEffectTime = 1.13
+local WaitEnableTriggerEffectParam = "PuzzleMazeDrawController;PuzzleEvent;EnableTriggerEffect"
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function PuzzleMazeDrawView:onInitView()
+	self._gomap = gohelper.findChild(self.viewGO, "#go_map")
+	self._goconnect = gohelper.findChild(self.viewGO, "#go_connect")
+	self._imagelinetemplater = gohelper.findChildImage(self.viewGO, "#image_line_template_r")
+	self._imagelinetemplatel = gohelper.findChildImage(self.viewGO, "#image_line_template_l")
+	self._btnreset = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_reset")
+	self._goplane = gohelper.findChild(self.viewGO, "#go_map/#go_plane")
+	self._gofinish = gohelper.findChild(self.viewGO, "#go_finish")
+	self._txtTarget = gohelper.findChildText(self.viewGO, "Target/txt_Target")
+	self._goCheckMark = gohelper.findChild(self.viewGO, "Target/txt_Target/image_Check/image_CheckMark")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnreset:AddClickListener(arg_2_0._btnresetOnClick, arg_2_0)
-	arg_2_0:addEventCb(PuzzleMazeDrawController.instance, PuzzleEvent.InitGameDone, arg_2_0._initGameDone, arg_2_0)
+function PuzzleMazeDrawView:addEvents()
+	self._btnreset:AddClickListener(self._btnresetOnClick, self)
+	self:addEventCb(PuzzleMazeDrawController.instance, PuzzleEvent.InitGameDone, self._initGameDone, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnreset:RemoveClickListener()
+function PuzzleMazeDrawView:removeEvents()
+	self._btnreset:RemoveClickListener()
 end
 
-function var_0_0.onOpen(arg_4_0)
-	var_0_0.super.onOpen(arg_4_0)
-	arg_4_0:registerAlertTriggerFunc(PuzzleEnum.MazeAlertType.VisitRepeat, arg_4_0.onVisitRepeatObj)
-	arg_4_0:refreshTargetTips()
+function PuzzleMazeDrawView:onOpen()
+	PuzzleMazeDrawView.super.onOpen(self)
+	self:registerAlertTriggerFunc(PuzzleEnum.MazeAlertType.VisitRepeat, self.onVisitRepeatObj)
+	self:refreshTargetTips()
 
-	arg_4_0._startGameTime = ServerTime.now()
+	self._startGameTime = ServerTime.now()
 
-	TaskDispatcher.cancelTask(arg_4_0._enableTriggerEffect, arg_4_0)
-	TaskDispatcher.runDelay(arg_4_0._enableTriggerEffect, arg_4_0, var_0_1)
+	TaskDispatcher.cancelTask(self._enableTriggerEffect, self)
+	TaskDispatcher.runDelay(self._enableTriggerEffect, self, DelayEnableTriggerEffectTime)
 	AudioMgr.instance:trigger(AudioEnum.UI.Act176_EnterView)
 end
 
-function var_0_0._enableTriggerEffect(arg_5_0)
-	arg_5_0._enableTrigger = true
+function PuzzleMazeDrawView:_enableTriggerEffect()
+	self._enableTrigger = true
 
 	PuzzleMazeDrawController.instance:dispatchEvent(PuzzleEvent.EnableTriggerEffect)
 end
 
-function var_0_0._btnresetOnClick(arg_6_0)
+function PuzzleMazeDrawView:_btnresetOnClick()
 	GameFacade.showMessageBox(MessageBoxIdDefine.Act176PuzzleMazeResetGame, MsgBoxEnum.BoxType.Yes_No, function()
-		arg_6_0:_resetGame()
+		self:_resetGame()
 	end)
 end
 
-function var_0_0._resetGame(arg_8_0)
-	if not arg_8_0:canTouch() then
+function PuzzleMazeDrawView:_resetGame()
+	local canTouch = self:canTouch()
+
+	if not canTouch then
 		GameFacade.showToast(ToastEnum.DungeonPuzzle)
 
 		return
 	end
 
-	arg_8_0:stat(PuzzleEnum.GameResult.Restart)
-	arg_8_0:restartGame()
+	self:stat(PuzzleEnum.GameResult.Restart)
+	self:restartGame()
 end
 
-function var_0_0.restartGame(arg_9_0)
-	var_0_0.super.restartGame(arg_9_0)
-	gohelper.setActive(arg_9_0._goplane, false)
-	gohelper.setActive(arg_9_0._goCheckMark, false)
+function PuzzleMazeDrawView:restartGame()
+	PuzzleMazeDrawView.super.restartGame(self)
+	gohelper.setActive(self._goplane, false)
+	gohelper.setActive(self._goCheckMark, false)
 end
 
-function var_0_0.getModelInst(arg_10_0)
+function PuzzleMazeDrawView:getModelInst()
 	return PuzzleMazeDrawModel.instance
 end
 
-function var_0_0.getCtrlInst(arg_11_0)
+function PuzzleMazeDrawView:getCtrlInst()
 	return PuzzleMazeDrawController.instance
 end
 
-function var_0_0.getDragGo(arg_12_0)
-	return arg_12_0._gomap
+function PuzzleMazeDrawView:getDragGo()
+	return self._gomap
 end
 
-function var_0_0.getLineParentGo(arg_13_0)
-	return arg_13_0._goconnect
+function PuzzleMazeDrawView:getLineParentGo()
+	return self._goconnect
 end
 
-function var_0_0.getPawnParentGo(arg_14_0)
-	return arg_14_0._gomap
+function PuzzleMazeDrawView:getPawnParentGo()
+	return self._gomap
 end
 
-function var_0_0.getObjectParentGo(arg_15_0)
-	return arg_15_0._gomap
+function PuzzleMazeDrawView:getObjectParentGo()
+	return self._gomap
 end
 
-function var_0_0.getAlertParentGo(arg_16_0)
-	return arg_16_0._gomap
+function PuzzleMazeDrawView:getAlertParentGo()
+	return self._gomap
 end
 
-function var_0_0.getMazeObjCls(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	if not arg_17_0._mazeObjClsMap then
-		arg_17_0._mazeObjClsMap = {
+function PuzzleMazeDrawView:getMazeObjCls(objType, subType, group)
+	if not self._mazeObjClsMap then
+		self._mazeObjClsMap = {
 			[PuzzleEnum.MazeObjType.Start] = {
 				[PuzzleEnum.MazeObjSubType.Default] = PuzzleMazeNormalObj
 			},
@@ -119,232 +123,234 @@ function var_0_0.getMazeObjCls(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
 		}
 	end
 
-	arg_17_2 = arg_17_2 or PuzzleEnum.MazeObjSubType.Default
+	subType = subType or PuzzleEnum.MazeObjSubType.Default
 
-	local var_17_0 = arg_17_0._mazeObjClsMap[arg_17_1]
-	local var_17_1 = var_17_0 and var_17_0[arg_17_2]
+	local clsMap = self._mazeObjClsMap[objType]
+	local cls = clsMap and clsMap[subType]
 
-	if not var_17_1 then
-		logError(string.format("find mazeObjCls failed, objType = %s, subType = %s, group = %s", arg_17_1, arg_17_2, arg_17_3))
+	if not cls then
+		logError(string.format("find mazeObjCls failed, objType = %s, subType = %s, group = %s", objType, subType, group))
 	end
 
-	return var_17_1
+	return cls
 end
 
-function var_0_0.getPawnObjCls(arg_18_0)
+function PuzzleMazeDrawView:getPawnObjCls()
 	return PuzzleMazePawnObj
 end
 
-function var_0_0.getLineObjCls(arg_19_0, arg_19_1)
-	if arg_19_1 == PuzzleEnum.LineType.Map then
+function PuzzleMazeDrawView:getLineObjCls(lineType)
+	if lineType == PuzzleEnum.LineType.Map then
 		return PuzzleMazeMapLine
 	end
 
 	return PuzzleMazeLine
 end
 
-function var_0_0.getAlertObjCls(arg_20_0, arg_20_1)
+function PuzzleMazeDrawView:getAlertObjCls(alertType)
 	return PuzzleMazeObjAlert
 end
 
-function var_0_0.getPawnResUrl(arg_21_0)
-	return arg_21_0.viewContainer:getSetting().otherRes[3]
+function PuzzleMazeDrawView:getPawnResUrl()
+	return self.viewContainer:getSetting().otherRes[3]
 end
 
-function var_0_0.getLineResUrl(arg_22_0)
-	return arg_22_0.viewContainer:getSetting().otherRes[2]
+function PuzzleMazeDrawView:getLineResUrl()
+	return self.viewContainer:getSetting().otherRes[2]
 end
 
-function var_0_0.getObjectResUrl(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
-	if arg_23_1 == PuzzleEnum.MazeObjType.Switch then
-		return arg_23_0.viewContainer:getSetting().otherRes[4]
+function PuzzleMazeDrawView:getObjectResUrl(objType, subType, group)
+	if objType == PuzzleEnum.MazeObjType.Switch then
+		return self.viewContainer:getSetting().otherRes[4]
 	else
-		return arg_23_0.viewContainer:getSetting().otherRes[1]
+		return self.viewContainer:getSetting().otherRes[1]
 	end
 end
 
-function var_0_0.getAlertResUrl(arg_24_0, arg_24_1)
-	return arg_24_0.viewContainer:getSetting().otherRes[1]
+function PuzzleMazeDrawView:getAlertResUrl(alertType)
+	return self.viewContainer:getSetting().otherRes[1]
 end
 
-function var_0_0.getLineTemplateFillOrigin(arg_25_0)
-	return arg_25_0._imagelinetemplatel.fillOrigin, arg_25_0._imagelinetemplater.fillOrigin
+function PuzzleMazeDrawView:getLineTemplateFillOrigin()
+	return self._imagelinetemplatel.fillOrigin, self._imagelinetemplater.fillOrigin
 end
 
-function var_0_0.onVisitRepeatObj(arg_26_0, arg_26_1)
+function PuzzleMazeDrawView:onVisitRepeatObj(alertObj)
 	AudioMgr.instance:trigger(AudioEnum.Puzzle.play_ui_main_puzzles_warn)
 end
 
-function var_0_0.onEndRefreshCheckPoint(arg_27_0, arg_27_1, arg_27_2, arg_27_3, arg_27_4)
-	if arg_27_1 ~= nil and arg_27_1 ~= arg_27_2 and arg_27_3 <= arg_27_4 then
+function PuzzleMazeDrawView:onEndRefreshCheckPoint(lastCheckSum, checkSum, lastCheckCount, checkCount)
+	if lastCheckSum ~= nil and lastCheckSum ~= checkSum and lastCheckCount <= checkCount then
 		AudioMgr.instance:trigger(AudioEnum.Puzzle.play_ui_main_puzzles_unlock)
 	end
 
-	var_0_0.super.onEndRefreshCheckPoint(arg_27_0, arg_27_1, arg_27_2, arg_27_3, arg_27_4)
+	PuzzleMazeDrawView.super.onEndRefreshCheckPoint(self, lastCheckSum, checkSum, lastCheckCount, checkCount)
 end
 
-function var_0_0.onBeginDragFailed(arg_28_0, arg_28_1)
+function PuzzleMazeDrawView:onBeginDragFailed(pointerEventData)
 	GameFacade.showToast(ToastEnum.DungeonPuzzle)
 end
 
-function var_0_0.onBeginDrag_SyncPawn(arg_29_0)
-	var_0_0.super.onBeginDrag_SyncPawn(arg_29_0)
+function PuzzleMazeDrawView:onBeginDrag_SyncPawn()
+	PuzzleMazeDrawView.super.onBeginDrag_SyncPawn(self)
 
-	if not arg_29_0._alreadyDrag then
-		local var_29_0, var_29_1 = PuzzleMazeDrawModel.instance:getStartPoint()
+	if not self._alreadyDrag then
+		local x1, y1 = PuzzleMazeDrawModel.instance:getStartPoint()
 
-		arg_29_0:closeCheckObject(var_29_0, var_29_1)
+		self:closeCheckObject(x1, y1)
 
-		arg_29_0._alreadyDrag = true
+		self._alreadyDrag = true
 	end
 end
 
-function var_0_0._initGameDone(arg_30_0)
-	arg_30_0:destroy_EndDrag_NoneAlert_Flow()
+function PuzzleMazeDrawView:_initGameDone()
+	self:destroy_EndDrag_NoneAlert_Flow()
 
-	arg_30_0._endDrag_NoneAlert_Flow = FlowSequence.New()
+	self._endDrag_NoneAlert_Flow = FlowSequence.New()
 
-	arg_30_0._endDrag_NoneAlert_Flow:addWork(FunctionWork.New(arg_30_0.tryTriggerEffect, arg_30_0, arg_30_0._endDrag_NoneAlert_Flow))
-	arg_30_0._endDrag_NoneAlert_Flow:start()
+	self._endDrag_NoneAlert_Flow:addWork(FunctionWork.New(self.tryTriggerEffect, self, self._endDrag_NoneAlert_Flow))
+	self._endDrag_NoneAlert_Flow:start()
 end
 
-function var_0_0.onEndDrag_NoneAlert(arg_31_0)
-	arg_31_0:destroy_EndDrag_NoneAlert_Flow()
+function PuzzleMazeDrawView:onEndDrag_NoneAlert()
+	self:destroy_EndDrag_NoneAlert_Flow()
 
-	arg_31_0._endDrag_NoneAlert_Flow = FlowSequence.New()
+	self._endDrag_NoneAlert_Flow = FlowSequence.New()
 
-	arg_31_0._endDrag_NoneAlert_Flow:addWork(FunctionWork.New(arg_31_0.onEndDrag_SyncPawn, arg_31_0))
-	arg_31_0._endDrag_NoneAlert_Flow:addWork(FunctionWork.New(arg_31_0.syncPath, arg_31_0))
-	arg_31_0._endDrag_NoneAlert_Flow:addWork(FunctionWork.New(arg_31_0.cleanDragLine, arg_31_0))
-	arg_31_0._endDrag_NoneAlert_Flow:addWork(FunctionWork.New(arg_31_0.tryTriggerEffect, arg_31_0, arg_31_0._endDrag_NoneAlert_Flow))
-	arg_31_0._endDrag_NoneAlert_Flow:registerDoneListener(arg_31_0.checkGameFinished, arg_31_0)
-	arg_31_0._endDrag_NoneAlert_Flow:start()
+	self._endDrag_NoneAlert_Flow:addWork(FunctionWork.New(self.onEndDrag_SyncPawn, self))
+	self._endDrag_NoneAlert_Flow:addWork(FunctionWork.New(self.syncPath, self))
+	self._endDrag_NoneAlert_Flow:addWork(FunctionWork.New(self.cleanDragLine, self))
+	self._endDrag_NoneAlert_Flow:addWork(FunctionWork.New(self.tryTriggerEffect, self, self._endDrag_NoneAlert_Flow))
+	self._endDrag_NoneAlert_Flow:registerDoneListener(self.checkGameFinished, self)
+	self._endDrag_NoneAlert_Flow:start()
 end
 
-function var_0_0.destroy_EndDrag_NoneAlert_Flow(arg_32_0)
-	if arg_32_0._endDrag_NoneAlert_Flow ~= nil then
-		arg_32_0._endDrag_NoneAlert_Flow:destroy()
+function PuzzleMazeDrawView:destroy_EndDrag_NoneAlert_Flow()
+	if self._endDrag_NoneAlert_Flow ~= nil then
+		self._endDrag_NoneAlert_Flow:destroy()
 
-		arg_32_0._endDrag_NoneAlert_Flow = nil
+		self._endDrag_NoneAlert_Flow = nil
 	end
 end
 
-function var_0_0.tryTriggerEffect(arg_33_0, arg_33_1)
-	local var_33_0, var_33_1 = arg_33_0._ctrlInst:getLastPos()
-	local var_33_2 = PuzzleMazeDrawModel.instance:getObjAtPos(var_33_0, var_33_1)
+function PuzzleMazeDrawView:tryTriggerEffect(flow)
+	local posX, posY = self._ctrlInst:getLastPos()
+	local obj = PuzzleMazeDrawModel.instance:getObjAtPos(posX, posY)
 
-	if not var_33_2 or not var_33_2.effects or #var_33_2.effects <= 0 then
+	if not obj or not obj.effects or #obj.effects <= 0 then
 		return
 	end
 
-	if not PuzzleMazeDrawModel.instance:canTriggerEffect(var_33_0, var_33_1) then
+	local canTrigger = PuzzleMazeDrawModel.instance:canTriggerEffect(posX, posY)
+
+	if not canTrigger then
 		return
 	end
 
-	arg_33_0:setCanTouch(false)
+	self:setCanTouch(false)
 
-	arg_33_0._triggerEffectPosX = var_33_0
-	arg_33_0._triggerEffectPosY = var_33_1
+	self._triggerEffectPosX = posX
+	self._triggerEffectPosY = posY
 
-	arg_33_0:buildTriggerEffectFlow(var_33_2.effects, arg_33_1)
+	self:buildTriggerEffectFlow(obj.effects, flow)
 end
 
-function var_0_0.buildTriggerEffectFlow(arg_34_0, arg_34_1, arg_34_2)
-	if not arg_34_0._enableTrigger then
-		arg_34_2:addWork(WaitEventWork.New(var_0_2))
+function PuzzleMazeDrawView:buildTriggerEffectFlow(effects, flow)
+	if not self._enableTrigger then
+		flow:addWork(WaitEventWork.New(WaitEnableTriggerEffectParam))
 	end
 
-	local var_34_0 = FlowSequence.New()
+	local effectFlow = FlowSequence.New()
 
-	for iter_34_0, iter_34_1 in ipairs(arg_34_1) do
-		local var_34_1 = arg_34_0:getTriggerEffectCls(iter_34_1.type)
+	for _, effect in ipairs(effects) do
+		local cls = self:getTriggerEffectCls(effect.type)
 
-		if var_34_1 then
-			local var_34_2 = var_34_1.New()
+		if cls then
+			local work = cls.New()
 
-			var_34_2:initData(iter_34_1)
-			var_34_0:addWork(var_34_2)
+			work:initData(effect)
+			effectFlow:addWork(work)
 		end
 	end
 
-	var_34_0:registerDoneListener(arg_34_0.onTriggerEffectDone, arg_34_0)
-	arg_34_2:addWork(var_34_0)
+	effectFlow:registerDoneListener(self.onTriggerEffectDone, self)
+	flow:addWork(effectFlow)
 end
 
-function var_0_0.getTriggerEffectCls(arg_35_0, arg_35_1)
-	if not arg_35_0._effectClsMap then
-		arg_35_0._effectClsMap = {
+function PuzzleMazeDrawView:getTriggerEffectCls(effectType)
+	if not self._effectClsMap then
+		self._effectClsMap = {
 			[PuzzleEnum.EffectType.Dialog] = ZhiXinQuanErDialogStep,
 			[PuzzleEnum.EffectType.Story] = ZhiXinQuanErStoryStep,
 			[PuzzleEnum.EffectType.Guide] = ZhiXinQuanErGuideStep
 		}
 	end
 
-	return arg_35_0._effectClsMap[arg_35_1]
+	return self._effectClsMap[effectType]
 end
 
-function var_0_0.onTriggerEffectDone(arg_36_0)
-	PuzzleMazeDrawModel.instance:setTriggerEffectDone(arg_36_0._triggerEffectPosX, arg_36_0._triggerEffectPosY)
+function PuzzleMazeDrawView:onTriggerEffectDone()
+	PuzzleMazeDrawModel.instance:setTriggerEffectDone(self._triggerEffectPosX, self._triggerEffectPosY)
 
-	arg_36_0._triggerEffectPosX = nil
-	arg_36_0._triggerEffectPosY = nil
+	self._triggerEffectPosX = nil
+	self._triggerEffectPosY = nil
 
-	arg_36_0:setCanTouch(true)
+	self:setCanTouch(true)
 	PuzzleMazeDrawController.instance:dispatchEvent(PuzzleEvent.OnTriggerEffectDone)
 end
 
-function var_0_0.closeCheckObject(arg_37_0, arg_37_1, arg_37_2)
-	local var_37_0 = PuzzleMazeHelper.getPosKey(arg_37_1, arg_37_2)
-	local var_37_1 = arg_37_0._objectMap[var_37_0]
+function PuzzleMazeDrawView:closeCheckObject(x1, y1)
+	local key = PuzzleMazeHelper.getPosKey(x1, y1)
+	local itemObj = self._objectMap[key]
 
-	if var_37_1 and var_37_1.setCheckIconVisible then
-		var_37_1:setCheckIconVisible(false)
+	if itemObj and itemObj.setCheckIconVisible then
+		itemObj:setCheckIconVisible(false)
 	end
 end
 
-function var_0_0.onGameSucc(arg_38_0)
-	var_0_0.super.onGameSucc(arg_38_0)
+function PuzzleMazeDrawView:onGameSucc()
+	PuzzleMazeDrawView.super.onGameSucc(self)
 	AudioMgr.instance:trigger(AudioEnum.Puzzle.play_ui_main_puzzles_achievement)
-	gohelper.setActive(arg_38_0._gofinish, true)
-	gohelper.setActive(arg_38_0._goCheckMark, true)
+	gohelper.setActive(self._gofinish, true)
+	gohelper.setActive(self._goCheckMark, true)
 	PuzzleMazeDrawController.instance:restartGame()
-	arg_38_0:stat(PuzzleEnum.GameResult.Success)
+	self:stat(PuzzleEnum.GameResult.Success)
 end
 
-function var_0_0.refreshTargetTips(arg_39_0)
-	local var_39_0 = arg_39_0:getModelInst()
-	local var_39_1 = var_39_0 and var_39_0:getElementCo()
-	local var_39_2 = var_39_1 and var_39_1.id
-	local var_39_3 = Activity176Config.instance:getEpisodeCoByElementId(VersionActivity2_3Enum.ActivityId.ZhiXinQuanEr, var_39_2)
+function PuzzleMazeDrawView:refreshTargetTips()
+	local modelInst = self:getModelInst()
+	local elementCo = modelInst and modelInst:getElementCo()
+	local elementId = elementCo and elementCo.id
+	local episodeCo = Activity176Config.instance:getEpisodeCoByElementId(VersionActivity2_3Enum.ActivityId.ZhiXinQuanEr, elementId)
 
-	arg_39_0._txtTarget.text = var_39_3 and var_39_3.target or ""
+	self._txtTarget.text = episodeCo and episodeCo.target or ""
 end
 
-function var_0_0.onClose(arg_40_0)
-	var_0_0.super.onClose(arg_40_0)
-	arg_40_0:destroy_EndDrag_NoneAlert_Flow()
-	TaskDispatcher.cancelTask(arg_40_0._enableTriggerEffect, arg_40_0)
+function PuzzleMazeDrawView:onClose()
+	PuzzleMazeDrawView.super.onClose(self)
+	self:destroy_EndDrag_NoneAlert_Flow()
+	TaskDispatcher.cancelTask(self._enableTriggerEffect, self)
 end
 
-local var_0_3 = {
+local GameResultStatName = {
 	[PuzzleEnum.GameResult.Success] = "成功",
 	[PuzzleEnum.GameResult.Abort] = "中断",
 	[PuzzleEnum.GameResult.Restart] = "重新开始"
 }
 
-function var_0_0.stat(arg_41_0, arg_41_1)
-	local var_41_0 = ServerTime.now() - arg_41_0._startGameTime
-	local var_41_1 = PuzzleMazeDrawModel.instance:getElementCo()
-	local var_41_2 = var_41_1 and var_41_1.id
-	local var_41_3 = Activity176Config.instance:getEpisodeCoByElementId(VersionActivity2_3Enum.ActivityId.ZhiXinQuanEr, var_41_2)
-	local var_41_4 = var_41_3 and var_41_3.id
-	local var_41_5 = var_0_3 and var_0_3[arg_41_1]
+function PuzzleMazeDrawView:stat(gameResult)
+	local useTime = ServerTime.now() - self._startGameTime
+	local elementCo = PuzzleMazeDrawModel.instance:getElementCo()
+	local elementId = elementCo and elementCo.id
+	local episodeCo = Activity176Config.instance:getEpisodeCoByElementId(VersionActivity2_3Enum.ActivityId.ZhiXinQuanEr, elementId)
+	local episodeId = episodeCo and episodeCo.id
+	local resultName = GameResultStatName and GameResultStatName[gameResult]
 
 	StatController.instance:track(StatEnum.EventName.Exit_Flutterpage_activity, {
-		[StatEnum.EventProperties.UseTime] = var_41_0,
-		[StatEnum.EventProperties.MapId] = tostring(var_41_4),
-		[StatEnum.EventProperties.Result] = var_41_5
+		[StatEnum.EventProperties.UseTime] = useTime,
+		[StatEnum.EventProperties.MapId] = tostring(episodeId),
+		[StatEnum.EventProperties.Result] = resultName
 	})
 end
 
-return var_0_0
+return PuzzleMazeDrawView

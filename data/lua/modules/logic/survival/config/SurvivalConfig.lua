@@ -1,21 +1,23 @@
-﻿module("modules.logic.survival.config.SurvivalConfig", package.seeall)
+﻿-- chunkname: @modules/logic/survival/config/SurvivalConfig.lua
 
-local var_0_0 = class("SurvivalConfig", BaseConfig)
+module("modules.logic.survival.config.SurvivalConfig", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._allMapCo = {}
-	arg_1_0._allShelterCo = {}
-	arg_1_0.attrNameToId = {}
-	arg_1_0.npcIdToItemCo = {}
-	arg_1_0._npcConfigTags = {}
-	arg_1_0._npcConfigShowTags = {}
+local SurvivalConfig = class("SurvivalConfig", BaseConfig)
+
+function SurvivalConfig:onInit()
+	self._allMapCo = {}
+	self._allShelterCo = {}
+	self.attrNameToId = {}
+	self.npcIdToItemCo = {}
+	self._npcConfigTags = {}
+	self._npcConfigShowTags = {}
 end
 
-function var_0_0.reInit(arg_2_0)
+function SurvivalConfig:reInit()
 	return
 end
 
-function var_0_0.reqConfigNames(arg_3_0)
+function SurvivalConfig:reqConfigNames()
 	return {
 		"survival_behavior",
 		"survival_booster",
@@ -71,466 +73,485 @@ function var_0_0.reqConfigNames(arg_3_0)
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 == "survival_attr" then
-		for iter_4_0, iter_4_1 in ipairs(arg_4_2.configList) do
-			arg_4_0.attrNameToId[iter_4_1.flag] = iter_4_1.id
+function SurvivalConfig:onConfigLoaded(configName, configTable)
+	if configName == "survival_attr" then
+		for _, v in ipairs(configTable.configList) do
+			self.attrNameToId[v.flag] = v.id
 		end
-	elseif arg_4_1 == "survival_item" then
-		for iter_4_2, iter_4_3 in ipairs(arg_4_2.configList) do
-			if iter_4_3.type == SurvivalEnum.ItemType.NPC then
-				local var_4_0 = tonumber(iter_4_3.effect) or 0
+	elseif configName == "survival_item" then
+		for _, v in ipairs(configTable.configList) do
+			if v.type == SurvivalEnum.ItemType.NPC then
+				local npcId = tonumber(v.effect) or 0
 
-				arg_4_0.npcIdToItemCo[var_4_0] = iter_4_3
+				self.npcIdToItemCo[npcId] = v
 			end
 		end
-	elseif arg_4_1 == "survival_fight" and isDebugBuild then
-		for iter_4_4, iter_4_5 in pairs(arg_4_2.configList) do
-			local var_4_1 = lua_battle.configDict[iter_4_5.battleId]
+	elseif configName == "survival_fight" and isDebugBuild then
+		for k, v in pairs(configTable.configList) do
+			local battleCo = lua_battle.configDict[v.battleId]
 
-			if not var_4_1 then
-				logError("战斗ID不存在" .. tostring(iter_4_5.battleId))
-			elseif not string.nilorempty(var_4_1.trialHeros) then
-				logError("探索内战斗配置了试用角色 " .. iter_4_5.id .. " >> " .. iter_4_5.battleId)
+			if not battleCo then
+				logError("战斗ID不存在" .. tostring(v.battleId))
+			elseif not string.nilorempty(battleCo.trialHeros) then
+				logError("探索内战斗配置了试用角色 " .. v.id .. " >> " .. v.battleId)
 			end
 		end
 	end
 end
 
-function var_0_0.getBuildingConfig(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	local var_5_0 = lua_survival_building.configDict[arg_5_1]
-	local var_5_1 = var_5_0 and var_5_0[arg_5_2]
+function SurvivalConfig:getBuildingConfig(buildingId, buildingLevel, notError)
+	local dict = lua_survival_building.configDict[buildingId]
+	local config = dict and dict[buildingLevel]
 
-	if not var_5_1 and not arg_5_3 then
-		logError(string.format("SurvivalConfig BuildingConfig is nil, buildingId:%s, buildingLevel:%s", arg_5_1, arg_5_2))
+	if not config and not notError then
+		logError(string.format("SurvivalConfig BuildingConfig is nil, buildingId:%s, buildingLevel:%s", buildingId, buildingLevel))
 	end
 
-	return var_5_1
+	return config
 end
 
-function var_0_0.getBuildingConfigByType(arg_6_0, arg_6_1)
-	for iter_6_0, iter_6_1 in ipairs(lua_survival_building.configList) do
-		if iter_6_1.type == arg_6_1 then
-			return iter_6_1
+function SurvivalConfig:getBuildingConfigByType(buildType)
+	for _, v in ipairs(lua_survival_building.configList) do
+		if v.type == buildType then
+			return v
 		end
 	end
 end
 
-function var_0_0.getMapConfig(arg_7_0, arg_7_1)
-	if not arg_7_0._allMapCo[arg_7_1] then
-		local var_7_0 = addGlobalModule("modules.configs.survival.lua_survival_map_" .. tostring(arg_7_1), "lua_survival_map_" .. tostring(arg_7_1))
-		local var_7_1 = SurvivalMapCo.New()
+function SurvivalConfig:getMapConfig(mapId)
+	if not self._allMapCo[mapId] then
+		local data = addGlobalModule("modules.configs.survival.lua_survival_map_" .. tostring(mapId), "lua_survival_map_" .. tostring(mapId))
+		local mapCo = SurvivalMapCo.New()
 
-		var_7_1:init(var_7_0)
+		mapCo:init(data)
 
-		arg_7_0._allMapCo[arg_7_1] = var_7_1
+		self._allMapCo[mapId] = mapCo
 	end
 
-	return arg_7_0._allMapCo[arg_7_1]
+	return self._allMapCo[mapId]
 end
 
-function var_0_0.getCurShelterMapId(arg_8_0)
-	local var_8_0 = SurvivalShelterModel.instance:getWeekInfo()
-	local var_8_1 = var_8_0 and var_8_0.shelterMapId or 10001
+function SurvivalConfig:getCurShelterMapId()
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local mapId = weekInfo and weekInfo.shelterMapId or 10001
 
-	if var_8_1 == 0 then
-		var_8_1 = 10001
+	if mapId == 0 then
+		mapId = 10001
 	end
 
-	return var_8_1
+	return mapId
 end
 
-function var_0_0.getShelterMapCo(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_1 or arg_9_0:getCurShelterMapId()
+function SurvivalConfig:getShelterMapCo(id)
+	local mapId = id or self:getCurShelterMapId()
 
-	if not arg_9_0._allShelterCo[var_9_0] then
-		local var_9_1 = addGlobalModule("modules.configs.survival.lua_survival_shelter_building_" .. tostring(var_9_0), "lua_survival_shelter_building_" .. tostring(var_9_0))
+	if not self._allShelterCo[mapId] then
+		local data = addGlobalModule("modules.configs.survival.lua_survival_shelter_building_" .. tostring(mapId), "lua_survival_shelter_building_" .. tostring(mapId))
 
-		arg_9_0._allShelterCo[var_9_0] = SurvivalShelterMapCo.New()
+		self._allShelterCo[mapId] = SurvivalShelterMapCo.New()
 
-		arg_9_0._allShelterCo[var_9_0]:init(var_9_1)
+		self._allShelterCo[mapId]:init(data)
 	end
 
-	return arg_9_0._allShelterCo[var_9_0]
+	return self._allShelterCo[mapId]
 end
 
-function var_0_0.getConstValue(arg_10_0, arg_10_1)
-	local var_10_0 = lua_survival_const.configDict[arg_10_1]
+function SurvivalConfig:getConstValue(id)
+	local constCo = lua_survival_const.configDict[id]
 
-	if not var_10_0 then
+	if not constCo then
 		return "", ""
 	end
 
-	return var_10_0.value, var_10_0.value2
+	return constCo.value, constCo.value2
 end
 
-function var_0_0.getHighValueUnitSubTypes(arg_11_0)
-	if not arg_11_0._highValueUnitSubType then
-		local var_11_0 = arg_11_0:getConstValue(SurvivalEnum.ConstId.ShowEffectUnitSubTypes)
+function SurvivalConfig:getHighValueUnitSubTypes()
+	if not self._highValueUnitSubType then
+		local str = self:getConstValue(SurvivalEnum.ConstId.ShowEffectUnitSubTypes)
 
-		arg_11_0._highValueUnitSubType = string.splitToNumber(var_11_0, "#") or {}
+		self._highValueUnitSubType = string.splitToNumber(str, "#") or {}
 	end
 
-	return arg_11_0._highValueUnitSubType
+	return self._highValueUnitSubType
 end
 
-function var_0_0.getTaskCo(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0
+function SurvivalConfig:getTaskCo(moduleId, taskId)
+	local taskCo
 
-	if arg_12_1 == SurvivalEnum.TaskModule.MainTask then
-		var_12_0 = lua_survival_maintask.configDict[arg_12_2]
-	elseif arg_12_1 == SurvivalEnum.TaskModule.SubTask then
-		var_12_0 = lua_survival_subtask.configDict[arg_12_2]
-	elseif arg_12_1 == SurvivalEnum.TaskModule.StoryTask then
-		var_12_0 = lua_survival_storytask.configDict[arg_12_2]
-	elseif arg_12_1 == SurvivalEnum.TaskModule.NormalTask then
-		var_12_0 = lua_survival_normaltask.configDict[arg_12_2]
-	elseif arg_12_1 == SurvivalEnum.TaskModule.MapMainTarget then
-		var_12_0 = lua_survival_maptarget.configDict[arg_12_2]
+	if moduleId == SurvivalEnum.TaskModule.MainTask then
+		taskCo = lua_survival_maintask.configDict[taskId]
+	elseif moduleId == SurvivalEnum.TaskModule.SubTask then
+		taskCo = lua_survival_subtask.configDict[taskId]
+	elseif moduleId == SurvivalEnum.TaskModule.StoryTask then
+		taskCo = lua_survival_storytask.configDict[taskId]
+	elseif moduleId == SurvivalEnum.TaskModule.NormalTask then
+		taskCo = lua_survival_normaltask.configDict[taskId]
+	elseif moduleId == SurvivalEnum.TaskModule.MapMainTarget then
+		taskCo = lua_survival_maptarget.configDict[taskId]
 	end
 
-	if not var_12_0 then
-		logError(string.format("SurvivalConfig:getTaskCo taskCo is nil, moduleId:%s, taskId:%s", arg_12_1, arg_12_2))
+	if not taskCo then
+		logError(string.format("SurvivalConfig:getTaskCo taskCo is nil, moduleId:%s, taskId:%s", moduleId, taskId))
 	end
 
-	return var_12_0
+	return taskCo
 end
 
-function var_0_0.getShelterCfg(arg_13_0)
-	local var_13_0 = SurvivalShelterModel.instance:getWeekInfo().shelterMapId
+function SurvivalConfig:getShelterCfg()
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local shelterMapId = weekInfo.shelterMapId
 
-	return lua_survival_shelter.configDict[var_13_0]
+	return lua_survival_shelter.configDict[shelterMapId]
 end
 
-function var_0_0.getShelterPlayerInitPos(arg_14_0, arg_14_1)
-	local var_14_0 = lua_survival_shelter.configDict[arg_14_1]
+function SurvivalConfig:getShelterPlayerInitPos(shelterMapId)
+	local config = lua_survival_shelter.configDict[shelterMapId]
 
-	return var_14_0 and var_14_0.position
+	return config and config.position
 end
 
-function var_0_0.getShelterIntrudeSchemeConfig(arg_15_0, arg_15_1)
-	if arg_15_1 == nil then
+function SurvivalConfig:getShelterIntrudeSchemeConfig(id)
+	if id == nil then
 		logError("SurvivalConfig:getShelterIntrudeSchemeConfig id is nil")
 	end
 
-	local var_15_0 = lua_survival_shelter_intrude_scheme.configDict[arg_15_1]
+	local config = lua_survival_shelter_intrude_scheme.configDict[id]
 
-	if var_15_0 == nil then
-		logError("SurvivalConfig:getShelterIntrudeSchemeConfig config is nil, id:" .. tostring(arg_15_1))
+	if config == nil then
+		logError("SurvivalConfig:getShelterIntrudeSchemeConfig config is nil, id:" .. tostring(id))
 	end
 
-	return var_15_0
+	return config
 end
 
-function var_0_0.getNpcConfigTag(arg_16_0, arg_16_1)
-	if not arg_16_0._npcConfigTags[arg_16_1] then
-		local var_16_0 = arg_16_0:getNpcConfig(arg_16_1)
+function SurvivalConfig:getNpcConfigTag(npcId)
+	if not self._npcConfigTags[npcId] then
+		local npcCo = self:getNpcConfig(npcId)
 
-		if var_16_0 == nil then
+		if npcCo == nil then
 			return {}, {}
 		end
 
-		local var_16_1 = var_16_0.tag
-		local var_16_2 = string.splitToNumber(var_16_1, "#") or {}
+		local tag = npcCo.tag
+		local tags = string.splitToNumber(tag, "#") or {}
 
-		arg_16_0._npcConfigTags[arg_16_1] = var_16_2
+		self._npcConfigTags[npcId] = tags
 
-		local var_16_3 = {}
+		local showTags = {}
 
-		for iter_16_0, iter_16_1 in ipairs(var_16_2) do
-			local var_16_4 = lua_survival_tag.configDict[iter_16_1]
-			local var_16_5 = var_16_4 and var_16_4.beHidden
-			local var_16_6 = false
+		for _, v in ipairs(tags) do
+			local tagCo = lua_survival_tag.configDict[v]
+			local hiddenStr = tagCo and tagCo.beHidden
+			local isHide = false
 
-			if not string.nilorempty(var_16_5) then
-				local var_16_7 = string.splitToNumber(var_16_5, "#")
+			if not string.nilorempty(hiddenStr) then
+				local arr = string.splitToNumber(hiddenStr, "#")
 
-				for iter_16_2, iter_16_3 in ipairs(var_16_7) do
-					if tabletool.indexOf(var_16_2, iter_16_3) then
-						var_16_6 = true
+				for _, vv in ipairs(arr) do
+					if tabletool.indexOf(tags, vv) then
+						isHide = true
 
 						break
 					end
 				end
 			end
 
-			if not var_16_6 then
-				table.insert(var_16_3, iter_16_1)
+			if not isHide then
+				table.insert(showTags, v)
 			end
 		end
 
-		arg_16_0._npcConfigShowTags[arg_16_1] = var_16_3
+		self._npcConfigShowTags[npcId] = showTags
 	end
 
-	return arg_16_0._npcConfigTags[arg_16_1], arg_16_0._npcConfigShowTags[arg_16_1]
+	return self._npcConfigTags[npcId], self._npcConfigShowTags[npcId]
 end
 
-function var_0_0.getMonsterBuffConfigTag(arg_17_0, arg_17_1)
+function SurvivalConfig:getMonsterBuffConfigTag(monsterBuffId)
 	return false
 end
 
-function var_0_0.getDecreeCo(arg_18_0, arg_18_1)
-	local var_18_0 = lua_survival_decree.configDict[arg_18_1]
+function SurvivalConfig:getDecreeCo(id)
+	local config = lua_survival_decree.configDict[id]
 
-	if var_18_0 == nil then
-		logError(string.format("decree config is nil id:%s", arg_18_1))
+	if config == nil then
+		logError(string.format("decree config is nil id:%s", id))
 	end
 
-	return var_18_0
+	return config
 end
 
-function var_0_0.getTagCo(arg_19_0, arg_19_1)
-	local var_19_0 = lua_survival_tag.configDict[arg_19_1]
+function SurvivalConfig:getTagCo(id)
+	local config = lua_survival_tag.configDict[id]
 
-	if var_19_0 == nil then
-		logError(string.format("tag config is nil id:%s", arg_19_1))
+	if config == nil then
+		logError(string.format("tag config is nil id:%s", id))
 	end
 
-	return var_19_0
+	return config
 end
 
-function var_0_0.getSplitTag(arg_20_0, arg_20_1)
-	if string.nilorempty(arg_20_1) then
+function SurvivalConfig:getSplitTag(tag)
+	if string.nilorempty(tag) then
 		return {}
 	end
 
-	return (string.splitToNumber(arg_20_1, "#"))
+	local tags = string.splitToNumber(tag, "#")
+
+	return tags
 end
 
-function var_0_0.getRewardList(arg_21_0)
-	local var_21_0 = {}
+function SurvivalConfig:getRewardList()
+	local list = {}
 
-	for iter_21_0, iter_21_1 in ipairs(lua_survival_reward.configList) do
-		table.insert(var_21_0, iter_21_1)
+	for i, v in ipairs(lua_survival_reward.configList) do
+		table.insert(list, v)
 	end
 
-	return var_21_0
+	return list
 end
 
-function var_0_0.saveLocalShelterEntityPosAndDir(arg_22_0, arg_22_1, arg_22_2, arg_22_3, arg_22_4, arg_22_5)
-	local var_22_0 = arg_22_0:getLocalShelterEntityPosKey(arg_22_1, arg_22_2, arg_22_3)
+function SurvivalConfig:saveLocalShelterEntityPosAndDir(shelterMapId, unitType, unitId, pos, dir)
+	local key = self:getLocalShelterEntityPosKey(shelterMapId, unitType, unitId)
 
-	PlayerPrefsHelper.setString(var_22_0, string.format("%s#%s#%s#%s", arg_22_4.q, arg_22_4.r, arg_22_4.s, arg_22_5))
+	PlayerPrefsHelper.setString(key, string.format("%s#%s#%s#%s", pos.q, pos.r, pos.s, dir))
 end
 
-function var_0_0.getLocalShelterEntityPosAndDir(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
-	local var_23_0 = arg_23_0:getLocalShelterEntityPosKey(arg_23_1, arg_23_2, arg_23_3)
-	local var_23_1 = PlayerPrefsHelper.getString(var_23_0)
+function SurvivalConfig:getLocalShelterEntityPosAndDir(shelterMapId, unitType, unitId)
+	local key = self:getLocalShelterEntityPosKey(shelterMapId, unitType, unitId)
+	local localPos = PlayerPrefsHelper.getString(key)
 
-	if string.nilorempty(var_23_1) then
+	if string.nilorempty(localPos) then
 		return
 	end
 
-	local var_23_2 = string.splitToNumber(var_23_1, "#")
-	local var_23_3 = SurvivalHexNode.New(var_23_2[1], var_23_2[2], var_23_2[3])
-	local var_23_4 = var_23_2[4] or SurvivalEnum.Dir.Right
+	local posList = string.splitToNumber(localPos, "#")
+	local pos = SurvivalHexNode.New(posList[1], posList[2], posList[3])
+	local dir = posList[4] or SurvivalEnum.Dir.Right
 
-	return var_23_3, var_23_4
+	return pos, dir
 end
 
-function var_0_0.getLocalShelterEntityPosKey(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
-	return (string.format("%s_shelter_entitypos_%s_%s_%s", PlayerModel.instance:getPlayinfo().userId, arg_24_1, arg_24_2, arg_24_3))
+function SurvivalConfig:getLocalShelterEntityPosKey(shelterMapId, unitType, unitId)
+	local key = string.format("%s_shelter_entitypos_%s_%s_%s", PlayerModel.instance:getPlayinfo().userId, shelterMapId, unitType, unitId)
+
+	return key
 end
 
-function var_0_0.getNpcConfig(arg_25_0, arg_25_1, arg_25_2)
-	local var_25_0 = lua_survival_npc.configDict[arg_25_1]
+function SurvivalConfig:getNpcConfig(npcId, noError)
+	local config = lua_survival_npc.configDict[npcId]
 
-	if var_25_0 == nil and not arg_25_2 then
-		logError(string.format("npc config is nil npcId:%s", arg_25_1))
+	if config == nil and not noError then
+		logError(string.format("npc config is nil npcId:%s", npcId))
 	end
 
-	return var_25_0
+	return config
 end
 
-function var_0_0.getNpcRenown(arg_26_0, arg_26_1)
-	if not arg_26_0.npcRenown then
-		arg_26_0.npcRenown = {}
+function SurvivalConfig:getNpcRenown(npcId)
+	if not self.npcRenown then
+		self.npcRenown = {}
 	end
 
-	if not arg_26_0.npcRenown[arg_26_1] then
-		local var_26_0 = lua_survival_npc.configDict[arg_26_1]
+	if not self.npcRenown[npcId] then
+		local config = lua_survival_npc.configDict[npcId]
 
-		if not string.nilorempty(var_26_0.renown) then
-			arg_26_0.npcRenown[arg_26_1] = string.splitToNumber(var_26_0.renown, "#")
+		if not string.nilorempty(config.renown) then
+			self.npcRenown[npcId] = string.splitToNumber(config.renown, "#")
 		end
 	end
 
-	return arg_26_0.npcRenown[arg_26_1]
+	return self.npcRenown[npcId]
 end
 
-function var_0_0.getNpcReputationValue(arg_27_0, arg_27_1)
-	local var_27_0 = arg_27_0:getNpcRenown(arg_27_1)[2]
+function SurvivalConfig:getNpcReputationValue(npcId)
+	local renown = self:getNpcRenown(npcId)
+	local v = renown[2]
+	local weekMo = SurvivalShelterModel.instance:getWeekInfo()
 
-	return (SurvivalShelterModel.instance:getWeekInfo():getAttr(SurvivalEnum.AttrType.RenownChangeFix, var_27_0))
+	v = weekMo:getAttr(SurvivalEnum.AttrType.RenownChangeFix, v)
+
+	return v
 end
 
-function var_0_0.getReputationCfgById(arg_28_0, arg_28_1, arg_28_2)
-	return lua_survival_reputation.configDict[arg_28_1][arg_28_2]
+function SurvivalConfig:getReputationCfgById(id, level)
+	local configDict = lua_survival_reputation.configDict
+
+	return configDict[id][level]
 end
 
-function var_0_0.getReputationCost(arg_29_0, arg_29_1, arg_29_2)
-	local var_29_0 = lua_survival_reputation.configDict[arg_29_1][arg_29_2 + 1].cost
+function SurvivalConfig:getReputationCost(id, level)
+	local configDict = lua_survival_reputation.configDict
+	local cost = configDict[id][level + 1].cost
 
-	return tonumber(var_29_0)
+	return tonumber(cost)
 end
 
-function var_0_0.getReputationMaxLevel(arg_30_0, arg_30_1)
-	local var_30_0 = lua_survival_reputation.configDict[arg_30_1]
-	local var_30_1 = 0
+function SurvivalConfig:getReputationMaxLevel(id)
+	local configDict = lua_survival_reputation.configDict
+	local t = configDict[id]
+	local max = 0
 
-	for iter_30_0, iter_30_1 in pairs(var_30_0) do
-		if var_30_1 < iter_30_0 then
-			var_30_1 = iter_30_0
+	for i, v in pairs(t) do
+		if max < i then
+			max = i
 		end
 	end
 
-	return var_30_1
+	return max
 end
 
-function var_0_0.getBuildReputationIcon(arg_31_0, arg_31_1, arg_31_2)
-	local var_31_0 = lua_survival_reputation.configDict[arg_31_1][arg_31_2]
+function SurvivalConfig:getBuildReputationIcon(id, level)
+	local configDict = lua_survival_reputation.configDict
+	local cfg = configDict[id][level]
 
-	return SurvivalUnitIconHelper.instance:getRelationIcon(var_31_0.type)
+	return SurvivalUnitIconHelper.instance:getRelationIcon(cfg.type)
 end
 
-function var_0_0.getShopFreeReward(arg_32_0, arg_32_1, arg_32_2)
-	if arg_32_0.shopFreeReward == nil then
-		arg_32_0:_parsReputation()
+function SurvivalConfig:getShopFreeReward(id, level)
+	if self.shopFreeReward == nil then
+		self:_parsReputation()
 	end
 
-	return arg_32_0.shopFreeReward[arg_32_1][arg_32_2]
+	return self.shopFreeReward[id][level]
 end
 
-function var_0_0._parsReputation(arg_33_0)
-	local var_33_0 = lua_survival_reputation.configList
+function SurvivalConfig:_parsReputation()
+	local configList = lua_survival_reputation.configList
 
-	arg_33_0.shopFreeReward = {}
+	self.shopFreeReward = {}
 
-	for iter_33_0, iter_33_1 in ipairs(var_33_0) do
-		local var_33_1 = iter_33_1.reward
-		local var_33_2 = string.match(var_33_1, "^item#(.+)$")
+	for i, cfg in ipairs(configList) do
+		local reward = cfg.reward
+		local itemStr = string.match(reward, "^item#(.+)$")
 
-		if not string.nilorempty(var_33_2) then
-			local var_33_3 = GameUtil.splitString2(var_33_2, true, "&", ":")
+		if not string.nilorempty(itemStr) then
+			local exchangeInfos = GameUtil.splitString2(itemStr, true, "&", ":")
 
-			if arg_33_0.shopFreeReward[iter_33_1.id] == nil then
-				arg_33_0.shopFreeReward[iter_33_1.id] = {}
+			if self.shopFreeReward[cfg.id] == nil then
+				self.shopFreeReward[cfg.id] = {}
 			end
 
-			arg_33_0.shopFreeReward[iter_33_1.id][iter_33_1.lv] = var_33_3[1]
+			self.shopFreeReward[cfg.id][cfg.lv] = exchangeInfos[1]
 		end
 	end
 end
 
-function var_0_0.getReputationRedDotType(arg_34_0, arg_34_1)
-	if arg_34_1 == 31011201 then
+function SurvivalConfig:getReputationRedDotType(buildCfgId)
+	if buildCfgId == 31011201 then
 		return RedDotEnum.DotNode.SurvivalReputationShop_3119
-	elseif arg_34_1 == 31011202 then
+	elseif buildCfgId == 31011202 then
 		return RedDotEnum.DotNode.SurvivalReputationShop_3120
-	elseif arg_34_1 == 31011203 then
+	elseif buildCfgId == 31011203 then
 		return RedDotEnum.DotNode.SurvivalReputationShop_3121
-	elseif arg_34_1 == 31011204 then
+	elseif buildCfgId == 31011204 then
 		return RedDotEnum.DotNode.SurvivalReputationShop_3122
 	end
 end
 
-function var_0_0.getShopType(arg_35_0, arg_35_1)
-	return lua_survival_shop.configDict[arg_35_1].type
+function SurvivalConfig:getShopType(id)
+	local shopCfg = lua_survival_shop.configDict[id]
+
+	return shopCfg.type
 end
 
-function var_0_0.getShopName(arg_36_0, arg_36_1)
-	return lua_survival_shop.configDict[arg_36_1].name
+function SurvivalConfig:getShopName(id)
+	local shopCfg = lua_survival_shop.configDict[id]
+
+	return shopCfg.name
 end
 
-function var_0_0.getShopItemUnlock(arg_37_0, arg_37_1)
-	if arg_37_0.reputationShopItemUnlock == nil then
-		arg_37_0:_parseShopItem()
+function SurvivalConfig:getShopItemUnlock(id)
+	if self.reputationShopItemUnlock == nil then
+		self:_parseShopItem()
 	end
 
-	return arg_37_0.reputationShopItemUnlock[arg_37_1]
+	return self.reputationShopItemUnlock[id]
 end
 
-function var_0_0.getShopItemsByLevel(arg_38_0, arg_38_1, arg_38_2)
-	if arg_38_0.reputationShopLevelItems == nil then
-		arg_38_0:_parseShopItem()
+function SurvivalConfig:getShopItemsByLevel(reputationId, reputationLevel)
+	if self.reputationShopLevelItems == nil then
+		self:_parseShopItem()
 	end
 
-	return arg_38_0.reputationShopLevelItems[arg_38_1][arg_38_2]
+	return self.reputationShopLevelItems[reputationId][reputationLevel]
 end
 
-function var_0_0.getReputationItemMaxLevel(arg_39_0, arg_39_1)
-	if arg_39_0.reputationShopLevelItems == nil then
-		arg_39_0:_parseShopItem()
+function SurvivalConfig:getReputationItemMaxLevel(reputationId)
+	if self.reputationShopLevelItems == nil then
+		self:_parseShopItem()
 	end
 
-	return #arg_39_0.reputationShopLevelItems[arg_39_1]
+	return #self.reputationShopLevelItems[reputationId]
 end
 
-function var_0_0._parseShopItem(arg_40_0)
-	arg_40_0.reputationShopItemUnlock = {}
-	arg_40_0.reputationShopLevelItems = {}
+function SurvivalConfig:_parseShopItem()
+	self.reputationShopItemUnlock = {}
+	self.reputationShopLevelItems = {}
 
-	for iter_40_0, iter_40_1 in ipairs(lua_survival_shop_item.configList) do
-		if not string.nilorempty(iter_40_1.unlock) then
-			local var_40_0 = string.split(iter_40_1.unlock, "#")
+	for i, cfg in ipairs(lua_survival_shop_item.configList) do
+		if not string.nilorempty(cfg.unlock) then
+			local info = string.split(cfg.unlock, "#")
 
-			if var_40_0[1] == "reputation" then
-				local var_40_1 = tonumber(var_40_0[2])
-				local var_40_2 = tonumber(var_40_0[3])
+			if info[1] == "reputation" then
+				local id = tonumber(info[2])
+				local level = tonumber(info[3])
 
-				arg_40_0.reputationShopItemUnlock[iter_40_1.id] = {
-					id = var_40_1,
-					level = var_40_2
+				self.reputationShopItemUnlock[cfg.id] = {
+					id = id,
+					level = level
 				}
 
-				if arg_40_0.reputationShopLevelItems[var_40_1] == nil then
-					arg_40_0.reputationShopLevelItems[var_40_1] = {}
+				if self.reputationShopLevelItems[id] == nil then
+					self.reputationShopLevelItems[id] = {}
 				end
 
-				if arg_40_0.reputationShopLevelItems[var_40_1][var_40_2] == nil then
-					arg_40_0.reputationShopLevelItems[var_40_1][var_40_2] = {}
+				if self.reputationShopLevelItems[id][level] == nil then
+					self.reputationShopLevelItems[id][level] = {}
 				end
 
-				table.insert(arg_40_0.reputationShopLevelItems[var_40_1][var_40_2], iter_40_1)
+				table.insert(self.reputationShopLevelItems[id][level], cfg)
 			end
 		end
 	end
 end
 
-function var_0_0.getShopTabConfigs(arg_41_0)
+function SurvivalConfig:getShopTabConfigs()
 	return lua_survival_shop_type.configList
 end
 
-function var_0_0.getHardnessCfg(arg_42_0)
-	local var_42_0 = SurvivalShelterModel.instance:getWeekInfo()
-	local var_42_1 = SurvivalModel.instance:getOutSideInfo()
-	local var_42_2 = var_42_0 and var_42_0.difficulty or var_42_1.currMod
+function SurvivalConfig:getHardnessCfg()
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local outSideInfo = SurvivalModel.instance:getOutSideInfo()
+	local difficulty = weekInfo and weekInfo.difficulty or outSideInfo.currMod
+	local config = lua_survival_hardness_mod.configDict[difficulty]
 
-	return lua_survival_hardness_mod.configDict[var_42_2]
+	return config
 end
 
-function var_0_0.parseEquip(arg_43_0)
-	arg_43_0.equipGroup = {}
+function SurvivalConfig:parseEquip()
+	self.equipGroup = {}
 
-	for iter_43_0, iter_43_1 in ipairs(lua_survival_equip.configList) do
-		local var_43_0 = iter_43_1.group
+	for i, v in ipairs(lua_survival_equip.configList) do
+		local group = v.group
 
-		if arg_43_0.equipGroup[var_43_0] == nil then
-			arg_43_0.equipGroup[var_43_0] = {}
+		if self.equipGroup[group] == nil then
+			self.equipGroup[group] = {}
 		end
 
-		table.insert(arg_43_0.equipGroup[var_43_0], iter_43_1)
+		table.insert(self.equipGroup[group], v)
 	end
 end
 
-function var_0_0.getEquipByGroup(arg_44_0, arg_44_1)
-	if arg_44_0.equipGroup == nil then
-		arg_44_0:parseEquip()
+function SurvivalConfig:getEquipByGroup(group)
+	if self.equipGroup == nil then
+		self:parseEquip()
 	end
 
-	return arg_44_0.equipGroup[arg_44_1]
+	return self.equipGroup[group]
 end
 
-var_0_0.instance = var_0_0.New()
+SurvivalConfig.instance = SurvivalConfig.New()
 
-return var_0_0
+return SurvivalConfig

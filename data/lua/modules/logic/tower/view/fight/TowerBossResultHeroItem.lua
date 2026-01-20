@@ -1,118 +1,120 @@
-﻿module("modules.logic.tower.view.fight.TowerBossResultHeroItem", package.seeall)
+﻿-- chunkname: @modules/logic/tower/view/fight/TowerBossResultHeroItem.lua
 
-local var_0_0 = class("TowerBossResultHeroItem", LuaCompBase)
+module("modules.logic.tower.view.fight.TowerBossResultHeroItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._gohero = gohelper.findChild(arg_1_1, "heroitemani")
-	arg_1_0._simageheroicon = gohelper.findChildSingleImage(arg_1_1, "heroitemani/hero/charactericon")
-	arg_1_0._imagecareer = gohelper.findChildImage(arg_1_1, "heroitemani/hero/career")
-	arg_1_0._gorank1 = gohelper.findChild(arg_1_1, "heroitemani/hero/vertical/layout/rankobj/rank1")
-	arg_1_0._gorank2 = gohelper.findChild(arg_1_1, "heroitemani/hero/vertical/layout/rankobj/rank2")
-	arg_1_0._gorank3 = gohelper.findChild(arg_1_1, "heroitemani/hero/vertical/layout/rankobj/rank3")
-	arg_1_0._txtlv = gohelper.findChildText(arg_1_1, "heroitemani/hero/vertical/layout/lv/lvnum")
-	arg_1_0._gostar1 = gohelper.findChild(arg_1_1, "heroitemani/hero/vertical/#go_starList/star1")
-	arg_1_0._gostar2 = gohelper.findChild(arg_1_1, "heroitemani/hero/vertical/#go_starList/star2")
-	arg_1_0._gostar3 = gohelper.findChild(arg_1_1, "heroitemani/hero/vertical/#go_starList/star3")
-	arg_1_0._gostar4 = gohelper.findChild(arg_1_1, "heroitemani/hero/vertical/#go_starList/star4")
-	arg_1_0._gostar5 = gohelper.findChild(arg_1_1, "heroitemani/hero/vertical/#go_starList/star5")
-	arg_1_0._gostar6 = gohelper.findChild(arg_1_1, "heroitemani/hero/vertical/#go_starList/star6")
-	arg_1_0._goequip = gohelper.findChild(arg_1_1, "heroitemani/equip")
-	arg_1_0._imageequiprare = gohelper.findChildImage(arg_1_1, "heroitemani/equip/equiprare")
-	arg_1_0._imageequipicon = gohelper.findChildImage(arg_1_1, "heroitemani/equip/equipicon")
-	arg_1_0._txtequiplvl = gohelper.findChildText(arg_1_1, "heroitemani/equip/equiplv/txtequiplv")
-	arg_1_0._goEmpty = gohelper.findChild(arg_1_1, "empty")
-	arg_1_0._emptyEquipGo = gohelper.findChild(arg_1_1, "heroitemani/emptyequip")
-	arg_1_0._goFakeEquip = gohelper.findChild(arg_1_1, "heroitemani/hero/vertical/fakeequip")
+local TowerBossResultHeroItem = class("TowerBossResultHeroItem", LuaCompBase)
+
+function TowerBossResultHeroItem:init(go)
+	self.go = go
+	self._gohero = gohelper.findChild(go, "heroitemani")
+	self._simageheroicon = gohelper.findChildSingleImage(go, "heroitemani/hero/charactericon")
+	self._imagecareer = gohelper.findChildImage(go, "heroitemani/hero/career")
+	self._gorank1 = gohelper.findChild(go, "heroitemani/hero/vertical/layout/rankobj/rank1")
+	self._gorank2 = gohelper.findChild(go, "heroitemani/hero/vertical/layout/rankobj/rank2")
+	self._gorank3 = gohelper.findChild(go, "heroitemani/hero/vertical/layout/rankobj/rank3")
+	self._txtlv = gohelper.findChildText(go, "heroitemani/hero/vertical/layout/lv/lvnum")
+	self._gostar1 = gohelper.findChild(go, "heroitemani/hero/vertical/#go_starList/star1")
+	self._gostar2 = gohelper.findChild(go, "heroitemani/hero/vertical/#go_starList/star2")
+	self._gostar3 = gohelper.findChild(go, "heroitemani/hero/vertical/#go_starList/star3")
+	self._gostar4 = gohelper.findChild(go, "heroitemani/hero/vertical/#go_starList/star4")
+	self._gostar5 = gohelper.findChild(go, "heroitemani/hero/vertical/#go_starList/star5")
+	self._gostar6 = gohelper.findChild(go, "heroitemani/hero/vertical/#go_starList/star6")
+	self._goequip = gohelper.findChild(go, "heroitemani/equip")
+	self._imageequiprare = gohelper.findChildImage(go, "heroitemani/equip/equiprare")
+	self._imageequipicon = gohelper.findChildImage(go, "heroitemani/equip/equipicon")
+	self._txtequiplvl = gohelper.findChildText(go, "heroitemani/equip/equiplv/txtequiplv")
+	self._goEmpty = gohelper.findChild(go, "empty")
+	self._emptyEquipGo = gohelper.findChild(go, "heroitemani/emptyequip")
+	self._goFakeEquip = gohelper.findChild(go, "heroitemani/hero/vertical/fakeequip")
 end
 
-function var_0_0.setData(arg_2_0, arg_2_1, arg_2_2)
-	gohelper.setActive(arg_2_0.go, true)
+function TowerBossResultHeroItem:setData(heroMo, equipMo)
+	gohelper.setActive(self.go, true)
 
-	arg_2_0.heroMo = arg_2_1
-	arg_2_0.equipMo = arg_2_2
+	self.heroMo = heroMo
+	self.equipMo = equipMo
 
-	arg_2_0:_refreshHero()
-	arg_2_0:_refreshEquip()
-	gohelper.setActive(arg_2_0._gohero, arg_2_1 ~= nil)
-	gohelper.setActive(arg_2_0._goEmpty, arg_2_1 == nil)
-	gohelper.setActive(arg_2_0._emptyEquipGo, false)
+	self:_refreshHero()
+	self:_refreshEquip()
+	gohelper.setActive(self._gohero, heroMo ~= nil)
+	gohelper.setActive(self._goEmpty, heroMo == nil)
+	gohelper.setActive(self._emptyEquipGo, false)
 end
 
-function var_0_0._refreshHero(arg_3_0)
-	local var_3_0 = arg_3_0.heroMo
+function TowerBossResultHeroItem:_refreshHero()
+	local heroMo = self.heroMo
 
-	if not var_3_0 then
+	if not heroMo then
 		return
 	end
 
-	local var_3_1 = FightConfig.instance:getSkinCO(var_3_0.skin)
-	local var_3_2 = ResUrl.getHeadIconMiddle(var_3_1.retangleIcon)
+	local skinCO = FightConfig.instance:getSkinCO(heroMo.skin)
+	local headIconMiddleResUrl = ResUrl.getHeadIconMiddle(skinCO.retangleIcon)
 
-	arg_3_0._simageheroicon:LoadImage(var_3_2)
+	self._simageheroicon:LoadImage(headIconMiddleResUrl)
 
-	local var_3_3 = "lssx_" .. tostring(var_3_0.config.career)
+	local careerSpriteName = "lssx_" .. tostring(heroMo.config.career)
 
-	UISpriteSetMgr.instance:setCommonSprite(arg_3_0._imagecareer, var_3_3)
+	UISpriteSetMgr.instance:setCommonSprite(self._imagecareer, careerSpriteName)
 
-	local var_3_4 = var_3_0.level or 0
-	local var_3_5, var_3_6 = HeroConfig.instance:getShowLevel(var_3_4)
+	local level = heroMo.level or 0
+	local showLevel, _ = HeroConfig.instance:getShowLevel(level)
 
-	arg_3_0._txtlv.text = var_3_5
+	self._txtlv.text = showLevel
 
-	arg_3_0:_refreshLevelList()
-	arg_3_0:_refreshStarList()
+	self:_refreshLevelList()
+	self:_refreshStarList()
 end
 
-function var_0_0._refreshEquip(arg_4_0)
-	local var_4_0 = arg_4_0.equipMo
+function TowerBossResultHeroItem:_refreshEquip()
+	local equipMo = self.equipMo
 
-	gohelper.setActive(arg_4_0._goequip, var_4_0 ~= nil)
-	gohelper.setActive(arg_4_0._goFakeEquip, var_4_0 ~= nil)
+	gohelper.setActive(self._goequip, equipMo ~= nil)
+	gohelper.setActive(self._goFakeEquip, equipMo ~= nil)
 
-	if not var_4_0 then
+	if not equipMo then
 		return
 	end
 
-	local var_4_1 = var_4_0.config
-	local var_4_2 = var_4_1.icon
+	local config = equipMo.config
+	local equipIconSpriteName = config.icon
 
-	UISpriteSetMgr.instance:setHerogroupEquipIconSprite(arg_4_0._imageequipicon, var_4_2)
+	UISpriteSetMgr.instance:setHerogroupEquipIconSprite(self._imageequipicon, equipIconSpriteName)
 
-	local var_4_3 = "bianduixingxian_" .. tostring(var_4_1.rare)
+	local equipRareSprite = "bianduixingxian_" .. tostring(config.rare)
 
-	UISpriteSetMgr.instance:setHeroGroupSprite(arg_4_0._imageequiprare, var_4_3)
+	UISpriteSetMgr.instance:setHeroGroupSprite(self._imageequiprare, equipRareSprite)
 
-	local var_4_4 = var_4_0.level
+	local level = equipMo.level
 
-	arg_4_0._txtequiplvl.text = var_4_4
+	self._txtequiplvl.text = level
 end
 
-function var_0_0._refreshLevelList(arg_5_0)
-	local var_5_0 = arg_5_0.heroMo
-	local var_5_1 = var_5_0 and var_5_0.level or 0
-	local var_5_2, var_5_3 = HeroConfig.instance:getShowLevel(var_5_1)
+function TowerBossResultHeroItem:_refreshLevelList()
+	local heroMo = self.heroMo
+	local level = heroMo and heroMo.level or 0
+	local _, rank = HeroConfig.instance:getShowLevel(level)
 
-	for iter_5_0 = 1, 3 do
-		local var_5_4 = "_gorank" .. iter_5_0
+	for i = 1, 3 do
+		local key = "_gorank" .. i
 
-		gohelper.setActive(arg_5_0[var_5_4], iter_5_0 == var_5_3 - 1)
+		gohelper.setActive(self[key], i == rank - 1)
 	end
 end
 
-function var_0_0._refreshStarList(arg_6_0)
-	local var_6_0 = arg_6_0.heroMo
-	local var_6_1 = var_6_0.config and var_6_0.config.rare or -1
+function TowerBossResultHeroItem:_refreshStarList()
+	local heroMo = self.heroMo
+	local rare = heroMo.config and heroMo.config.rare or -1
 
-	for iter_6_0 = 1, 6 do
-		local var_6_2 = "_gostar" .. iter_6_0
+	for i = 1, 6 do
+		local key = "_gostar" .. i
 
-		gohelper.setActive(arg_6_0[var_6_2], iter_6_0 <= var_6_1 + 1)
+		gohelper.setActive(self[key], i <= rare + 1)
 	end
 end
 
-function var_0_0.onDestroy(arg_7_0)
-	arg_7_0._simageheroicon:UnLoadImage()
+function TowerBossResultHeroItem:onDestroy()
+	self._simageheroicon:UnLoadImage()
 end
 
-return var_0_0
+return TowerBossResultHeroItem

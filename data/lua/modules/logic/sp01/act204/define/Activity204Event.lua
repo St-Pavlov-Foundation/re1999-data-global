@@ -1,18 +1,20 @@
-﻿module("modules.logic.sp01.act204.define.Activity204Event", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/act204/define/Activity204Event.lua
 
-local var_0_0 = _M
+module("modules.logic.sp01.act204.define.Activity204Event", package.seeall)
 
-var_0_0.UpdateInfo = 1
-var_0_0.FinishTask = 2
-var_0_0.LocalKeyChange = 3
-var_0_0.FinishGame = 4
-var_0_0.GetDailyCollection = 5
-var_0_0.SpBonusStageChange = 6
-var_0_0.PlayGame = 7
-var_0_0.GetOnceBonus = 8
-var_0_0.GetMilestoneReward = 9
-var_0_0.PlayTalk = 10
-var_0_0.UpdateTask = 11
-var_0_0.RefreshRed = 12
+local Activity204Event = _M
 
-return var_0_0
+Activity204Event.UpdateInfo = 1
+Activity204Event.FinishTask = 2
+Activity204Event.LocalKeyChange = 3
+Activity204Event.FinishGame = 4
+Activity204Event.GetDailyCollection = 5
+Activity204Event.SpBonusStageChange = 6
+Activity204Event.PlayGame = 7
+Activity204Event.GetOnceBonus = 8
+Activity204Event.GetMilestoneReward = 9
+Activity204Event.PlayTalk = 10
+Activity204Event.UpdateTask = 11
+Activity204Event.RefreshRed = 12
+
+return Activity204Event

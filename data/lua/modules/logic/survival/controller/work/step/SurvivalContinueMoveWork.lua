@@ -1,71 +1,73 @@
-﻿module("modules.logic.survival.controller.work.step.SurvivalContinueMoveWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/step/SurvivalContinueMoveWork.lua
 
-local var_0_0 = class("SurvivalContinueMoveWork", BaseWork)
+module("modules.logic.survival.controller.work.step.SurvivalContinueMoveWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = SurvivalMapModel.instance:getSceneMo()
+local SurvivalContinueMoveWork = class("SurvivalContinueMoveWork", BaseWork)
 
-	if SurvivalMapHelper.instance:isInSurvivalScene() and var_1_0 and not arg_1_1.isEnterFight and SurvivalMapModel.instance.result == SurvivalEnum.MapResult.None and not arg_1_0.context.fastExecute then
-		if var_1_0.panel then
-			SurvivalMapHelper.instance:tryShowServerPanel(var_1_0.panel)
-			arg_1_0:onDone(true)
+function SurvivalContinueMoveWork:onStart(context)
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
+
+	if SurvivalMapHelper.instance:isInSurvivalScene() and sceneMo and not context.isEnterFight and SurvivalMapModel.instance.result == SurvivalEnum.MapResult.None and not self.context.fastExecute then
+		if sceneMo.panel then
+			SurvivalMapHelper.instance:tryShowServerPanel(sceneMo.panel)
+			self:onDone(true)
 
 			return
 		end
 
-		local var_1_1 = var_1_0.player.pos
+		local playerPos = sceneMo.player.pos
 
-		if type(arg_1_1.tryTrigger) == "table" then
-			local var_1_2 = var_1_0:getUnitByPos(var_1_1, true)
-			local var_1_3 = false
+		if type(context.tryTrigger) == "table" then
+			local allUnitMo = sceneMo:getUnitByPos(playerPos, true)
+			local haveUnit = false
 
-			for iter_1_0, iter_1_1 in ipairs(var_1_2) do
-				if arg_1_1.tryTrigger[iter_1_1.id] then
-					var_1_3 = true
+			for _, v in ipairs(allUnitMo) do
+				if context.tryTrigger[v.id] then
+					haveUnit = true
 
 					break
 				end
 			end
 
-			if not var_1_3 then
-				arg_1_1.tryTrigger = nil
+			if not haveUnit then
+				context.tryTrigger = nil
 			end
 		end
 
-		local var_1_4, var_1_5 = SurvivalMapModel.instance:getTargetPos()
+		local targetPos, targetPath = SurvivalMapModel.instance:getTargetPos()
 
-		if var_1_4 or arg_1_1.tryTrigger and not var_1_0.panel then
-			if arg_1_1.tryTrigger or var_1_4 == var_1_1 then
-				SurvivalMapHelper.instance:tryShowEventView(var_1_1)
+		if targetPos or context.tryTrigger and not sceneMo.panel then
+			if context.tryTrigger or targetPos == playerPos then
+				SurvivalMapHelper.instance:tryShowEventView(playerPos)
 			else
-				local var_1_6
+				local nextPos
 
-				if var_1_5 then
-					for iter_1_2, iter_1_3 in ipairs(var_1_5) do
-						if iter_1_3 == var_1_1 then
-							var_1_6 = var_1_5[iter_1_2 + 1]
+				if targetPath then
+					for k, point in ipairs(targetPath) do
+						if point == playerPos then
+							nextPos = targetPath[k + 1]
 
 							break
 						end
 					end
 				end
 
-				local var_1_7 = SurvivalMapModel.instance:getCurMapCo().walkables
+				local walkables = SurvivalMapModel.instance:getCurMapCo().walkables
 
-				if var_1_6 and SurvivalHelper.instance:getValueFromDict(var_1_7, var_1_6) then
-					arg_1_0._nextPos = var_1_6
+				if nextPos and SurvivalHelper.instance:getValueFromDict(walkables, nextPos) then
+					self._nextPos = nextPos
 
-					TaskDispatcher.runDelay(arg_1_0._delaySendMoveReq, arg_1_0, 0)
+					TaskDispatcher.runDelay(self._delaySendMoveReq, self, 0)
 				end
 			end
 		end
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0._delaySendMoveReq(arg_2_0)
-	if SurvivalMapHelper.instance:isInFlow() or not arg_2_0._nextPos then
+function SurvivalContinueMoveWork:_delaySendMoveReq()
+	if SurvivalMapHelper.instance:isInFlow() or not self._nextPos then
 		return
 	end
 
@@ -77,10 +79,11 @@ function var_0_0._delaySendMoveReq(arg_2_0)
 		return
 	end
 
-	local var_2_0 = SurvivalMapModel.instance:getSceneMo().player.pos
-	local var_2_1 = SurvivalHelper.instance:getDir(var_2_0, arg_2_0._nextPos)
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
+	local playerPos = sceneMo.player.pos
+	local dir = SurvivalHelper.instance:getDir(playerPos, self._nextPos)
 
-	SurvivalInteriorRpc.instance:sendSurvivalSceneOperation(SurvivalEnum.OperType.PlayerMove, tostring(var_2_1))
+	SurvivalInteriorRpc.instance:sendSurvivalSceneOperation(SurvivalEnum.OperType.PlayerMove, tostring(dir))
 end
 
-return var_0_0
+return SurvivalContinueMoveWork

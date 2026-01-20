@@ -1,10 +1,14 @@
-﻿module("modules.logic.explore.controller.steps.ExploreCheckCounterStep", package.seeall)
+﻿-- chunkname: @modules/logic/explore/controller/steps/ExploreCheckCounterStep.lua
 
-local var_0_0 = class("ExploreCheckCounterStep", ExploreStepBase)
+module("modules.logic.explore.controller.steps.ExploreCheckCounterStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	ExploreController.instance:getMap():getUnit(arg_1_0._data.id).mo:checkActiveCount()
-	arg_1_0:onDone()
+local ExploreCheckCounterStep = class("ExploreCheckCounterStep", ExploreStepBase)
+
+function ExploreCheckCounterStep:onStart()
+	local unit = ExploreController.instance:getMap():getUnit(self._data.id)
+
+	unit.mo:checkActiveCount()
+	self:onDone()
 end
 
-return var_0_0
+return ExploreCheckCounterStep

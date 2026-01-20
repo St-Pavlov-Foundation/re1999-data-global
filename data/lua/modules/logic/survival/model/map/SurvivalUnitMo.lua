@@ -1,107 +1,111 @@
-﻿module("modules.logic.survival.model.map.SurvivalUnitMo", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/map/SurvivalUnitMo.lua
 
-local var_0_0 = pureTable("SurvivalUnitMo")
+module("modules.logic.survival.model.map.SurvivalUnitMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1.id
-	arg_1_0.cfgId = arg_1_1.cfgId
-	arg_1_0.unitType = arg_1_1.unitType
-	arg_1_0.dir = arg_1_1.position.dir
-	arg_1_0.visionVal = arg_1_1.visionVal
-	arg_1_0.fall = arg_1_1.fall
-	arg_1_0.extraParam = {}
+local SurvivalUnitMo = pureTable("SurvivalUnitMo")
 
-	if not string.nilorempty(arg_1_1.extraParam) then
-		local var_1_0, var_1_1 = pcall(cjson.decode, arg_1_1.extraParam)
+function SurvivalUnitMo:init(data)
+	self.id = data.id
+	self.cfgId = data.cfgId
+	self.unitType = data.unitType
+	self.dir = data.position.dir
+	self.visionVal = data.visionVal
+	self.fall = data.fall
+	self.extraParam = {}
 
-		if var_1_0 then
-			arg_1_0.extraParam = var_1_1
+	if not string.nilorempty(data.extraParam) then
+		local ok, json = pcall(cjson.decode, data.extraParam)
+
+		if ok then
+			self.extraParam = json
 		else
-			logError("非法json" .. arg_1_1.extraParam)
+			logError("非法json" .. data.extraParam)
 		end
 	end
 
-	arg_1_0.pos = SurvivalHexNode.New(arg_1_1.position.hex.q, arg_1_1.position.hex.r)
+	self.pos = SurvivalHexNode.New(data.position.hex.q, data.position.hex.r)
 
-	if arg_1_0.unitType == SurvivalEnum.UnitType.Battle then
-		arg_1_0.co = lua_survival_fight.configDict[arg_1_0.cfgId]
-	elseif arg_1_0.unitType == SurvivalEnum.UnitType.NPC then
-		arg_1_0.co = SurvivalConfig.instance:getNpcConfig(arg_1_0.cfgId)
-	elseif arg_1_0.unitType == SurvivalEnum.UnitType.Search then
-		arg_1_0.co = lua_survival_search.configDict[arg_1_0.cfgId]
-	elseif arg_1_0.unitType == SurvivalEnum.UnitType.Treasure then
-		arg_1_0.co = lua_survival_mission.configDict[arg_1_0.cfgId]
-	elseif arg_1_0.unitType == SurvivalEnum.UnitType.Task then
-		arg_1_0.co = lua_survival_mission.configDict[arg_1_0.cfgId]
-	elseif arg_1_0.unitType == SurvivalEnum.UnitType.Door then
-		arg_1_0.co = lua_survival_mission.configDict[arg_1_0.cfgId]
-	elseif arg_1_0.unitType == SurvivalEnum.UnitType.Exit then
-		arg_1_0.co = lua_survival_mission.configDict[arg_1_0.cfgId]
-	elseif arg_1_0.unitType == SurvivalEnum.UnitType.Block then
-		arg_1_0.co = lua_survival_block.configDict[arg_1_0.cfgId]
+	if self.unitType == SurvivalEnum.UnitType.Battle then
+		self.co = lua_survival_fight.configDict[self.cfgId]
+	elseif self.unitType == SurvivalEnum.UnitType.NPC then
+		self.co = SurvivalConfig.instance:getNpcConfig(self.cfgId)
+	elseif self.unitType == SurvivalEnum.UnitType.Search then
+		self.co = lua_survival_search.configDict[self.cfgId]
+	elseif self.unitType == SurvivalEnum.UnitType.Treasure then
+		self.co = lua_survival_mission.configDict[self.cfgId]
+	elseif self.unitType == SurvivalEnum.UnitType.Task then
+		self.co = lua_survival_mission.configDict[self.cfgId]
+	elseif self.unitType == SurvivalEnum.UnitType.Door then
+		self.co = lua_survival_mission.configDict[self.cfgId]
+	elseif self.unitType == SurvivalEnum.UnitType.Exit then
+		self.co = lua_survival_mission.configDict[self.cfgId]
+	elseif self.unitType == SurvivalEnum.UnitType.Block then
+		self.co = lua_survival_block.configDict[self.cfgId]
 	end
 
-	if not arg_1_0.co and arg_1_0.unitType ~= SurvivalEnum.UnitType.Born then
-		logError("没有元件配置" .. arg_1_0.cfgId .. " >> " .. arg_1_0.unitType)
+	if not self.co and self.unitType ~= SurvivalEnum.UnitType.Born then
+		logError("没有元件配置" .. self.cfgId .. " >> " .. self.unitType)
 	end
 
-	arg_1_0.exPoints = {}
+	self.exPoints = {}
 
-	if arg_1_0.co and not string.nilorempty(arg_1_0.co.grid) then
-		local var_1_2 = GameUtil.splitString2(arg_1_0.co.grid, true, ",", "#")
+	if self.co and not string.nilorempty(self.co.grid) then
+		local dict = GameUtil.splitString2(self.co.grid, true, ",", "#")
 
-		for iter_1_0, iter_1_1 in ipairs(var_1_2) do
-			local var_1_3 = SurvivalHexNode.New(iter_1_1[1], iter_1_1[2])
+		for index, arr in ipairs(dict) do
+			local point = SurvivalHexNode.New(arr[1], arr[2])
 
-			var_1_3:Add(arg_1_0.pos)
-			var_1_3:rotateDir(arg_1_0.pos, arg_1_0.dir)
+			point:Add(self.pos)
+			point:rotateDir(self.pos, self.dir)
 
-			arg_1_0.exPoints[iter_1_0] = var_1_3
+			self.exPoints[index] = point
 		end
 	end
 end
 
-function var_0_0.isSearched(arg_2_0)
-	return arg_2_0.extraParam.panelUid and arg_2_0.extraParam.panelUid > 0
+function SurvivalUnitMo:isSearched()
+	return self.extraParam.panelUid and self.extraParam.panelUid > 0
 end
 
-function var_0_0.isDestory(arg_3_0)
-	return arg_3_0.extraParam.destroy
+function SurvivalUnitMo:isDestory()
+	return self.extraParam.destroy
 end
 
-function var_0_0.copyFrom(arg_4_0, arg_4_1)
-	tabletool.clear(arg_4_0)
+function SurvivalUnitMo:copyFrom(unitMo)
+	tabletool.clear(self)
 
-	for iter_4_0, iter_4_1 in pairs(arg_4_1) do
-		arg_4_0[iter_4_0] = iter_4_1
+	for k, v in pairs(unitMo) do
+		self[k] = v
 	end
 end
 
-function var_0_0.getResPath(arg_5_0)
-	if arg_5_0.co then
-		return arg_5_0.co.resource
+function SurvivalUnitMo:getResPath()
+	if self.co then
+		return self.co.resource
 	end
 end
 
-function var_0_0.getSceneResPath(arg_6_0)
-	if SurvivalMapModel.instance:getSceneMo():getBlockTypeByPos(arg_6_0.pos) == SurvivalEnum.UnitSubType.Water and arg_6_0.co and not string.nilorempty(arg_6_0.co.waterResource) then
-		return arg_6_0.co.waterResource
+function SurvivalUnitMo:getSceneResPath()
+	local isInWater = SurvivalMapModel.instance:getSceneMo():getBlockTypeByPos(self.pos) == SurvivalEnum.UnitSubType.Water
+
+	if isInWater and self.co and not string.nilorempty(self.co.waterResource) then
+		return self.co.waterResource
 	end
 
-	return arg_6_0:getResPath()
+	return self:getResPath()
 end
 
-function var_0_0.isInNode(arg_7_0, arg_7_1, arg_7_2)
-	if not arg_7_2 and not arg_7_0:canTrigger() then
+function SurvivalUnitMo:isInNode(node, includeNotTrigger)
+	if not includeNotTrigger and not self:canTrigger() then
 		return false
 	end
 
-	if arg_7_1 == arg_7_0.pos then
+	if node == self.pos then
 		return true
 	end
 
-	for iter_7_0, iter_7_1 in pairs(arg_7_0.exPoints) do
-		if iter_7_1 == arg_7_1 then
+	for _, exPoint in pairs(self.exPoints) do
+		if exPoint == node then
 			return true
 		end
 	end
@@ -109,68 +113,68 @@ function var_0_0.isInNode(arg_7_0, arg_7_1, arg_7_2)
 	return false
 end
 
-function var_0_0.canTrigger(arg_8_0)
-	if not arg_8_0.co or arg_8_0.co.enforce == 1 then
+function SurvivalUnitMo:canTrigger()
+	if not self.co or self.co.enforce == 1 then
 		return false
 	end
 
-	if arg_8_0:isBlock() then
+	if self:isBlock() then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0.getWarmingRange(arg_9_0)
-	if not arg_9_0.co or arg_9_0.unitType ~= SurvivalEnum.UnitType.Battle then
+function SurvivalUnitMo:getWarmingRange()
+	if not self.co or self.unitType ~= SurvivalEnum.UnitType.Battle then
 		return false
 	end
 
-	local var_9_0 = SurvivalShelterModel.instance:getWeekInfo()
+	local weekMo = SurvivalShelterModel.instance:getWeekInfo()
 
-	if not var_9_0 then
+	if not weekMo then
 		return false
 	end
 
-	if arg_9_0.fall then
+	if self.fall then
 		return false
 	end
 
-	if arg_9_0.co.skip == 1 and arg_9_0.co.fightLevel <= var_9_0:getAttr(SurvivalEnum.AttrType.HeroFightLevel) then
+	if self.co.skip == 1 and self.co.fightLevel <= weekMo:getAttr(SurvivalEnum.AttrType.HeroFightLevel) then
 		return false
 	end
 
-	local var_9_1 = arg_9_0.co.warningRange
+	local warmingRange = self.co.warningRange
 
-	if var_9_1 > 0 then
-		var_9_1 = var_9_1 + var_9_0:getAttr(SurvivalEnum.AttrType.WarningRange)
+	if warmingRange > 0 then
+		warmingRange = warmingRange + weekMo:getAttr(SurvivalEnum.AttrType.WarningRange)
 	end
 
-	if var_9_1 > 0 and arg_9_0.visionVal ~= 8 then
-		return var_9_1
+	if warmingRange > 0 and self.visionVal ~= 8 then
+		return warmingRange
 	end
 end
 
-function var_0_0.isPointInWarming(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0:getWarmingRange()
+function SurvivalUnitMo:isPointInWarming(hexNode)
+	local warmingRange = self:getWarmingRange()
 
-	if not var_10_0 then
+	if not warmingRange then
 		return false
 	end
 
-	return var_10_0 >= SurvivalHelper.instance:getDistance(arg_10_1, arg_10_0.pos)
+	return warmingRange >= SurvivalHelper.instance:getDistance(hexNode, self.pos)
 end
 
-function var_0_0.isBlock(arg_11_0)
-	return arg_11_0.unitType == SurvivalEnum.UnitType.Block
+function SurvivalUnitMo:isBlock()
+	return self.unitType == SurvivalEnum.UnitType.Block
 end
 
-function var_0_0.isBlockEvent(arg_12_0)
-	return arg_12_0.co and arg_12_0.co.subType == SurvivalEnum.UnitSubType.BlockEvent
+function SurvivalUnitMo:isBlockEvent()
+	return self.co and self.co.subType == SurvivalEnum.UnitSubType.BlockEvent
 end
 
-function var_0_0.getSubType(arg_13_0)
-	return arg_13_0.co and arg_13_0.co.subType or 0
+function SurvivalUnitMo:getSubType()
+	return self.co and self.co.subType or 0
 end
 
-return var_0_0
+return SurvivalUnitMo

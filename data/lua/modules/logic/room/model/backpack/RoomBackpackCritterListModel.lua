@@ -1,126 +1,135 @@
-﻿module("modules.logic.room.model.backpack.RoomBackpackCritterListModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/backpack/RoomBackpackCritterListModel.lua
 
-local var_0_0 = class("RoomBackpackCritterListModel", ListScrollModel)
+module("modules.logic.room.model.backpack.RoomBackpackCritterListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:clear()
-	arg_1_0:clearData()
+local RoomBackpackCritterListModel = class("RoomBackpackCritterListModel", ListScrollModel)
+
+function RoomBackpackCritterListModel:onInit()
+	self:clear()
+	self:clearData()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clearData()
+function RoomBackpackCritterListModel:reInit()
+	self:clearData()
 end
 
-function var_0_0.clearData(arg_3_0)
-	arg_3_0:setIsSortByRareAscend(false)
-	arg_3_0:setMatureFilterType(CritterEnum.MatureFilterType.All)
+function RoomBackpackCritterListModel:clearData()
+	self:setIsSortByRareAscend(false)
+	self:setMatureFilterType(CritterEnum.MatureFilterType.All)
 end
 
-local function var_0_1(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0:getId()
-	local var_4_1 = arg_4_1:getId()
-	local var_4_2 = arg_4_0:getDefineId()
-	local var_4_3 = arg_4_1:getDefineId()
-	local var_4_4 = CritterConfig.instance:getCritterRare(var_4_2)
-	local var_4_5 = CritterConfig.instance:getCritterRare(var_4_3)
+local function _sortFunction(aCritterMO, bCritterMO)
+	local aCritterUid = aCritterMO:getId()
+	local bCritterUid = bCritterMO:getId()
+	local aCritterId = aCritterMO:getDefineId()
+	local bCritterId = bCritterMO:getDefineId()
+	local aRare = CritterConfig.instance:getCritterRare(aCritterId)
+	local bRare = CritterConfig.instance:getCritterRare(bCritterId)
 
-	if var_4_4 ~= var_4_5 then
-		if var_0_0.instance:getIsSortByRareAscend() then
-			return var_4_4 < var_4_5
+	if aRare ~= bRare then
+		local isRareAscend = RoomBackpackCritterListModel.instance:getIsSortByRareAscend()
+
+		if isRareAscend then
+			return aRare < bRare
 		else
-			return var_4_5 < var_4_4
+			return bRare < aRare
 		end
 	end
 
-	local var_4_6 = false
-	local var_4_7 = ManufactureModel.instance:getCritterWorkingBuilding(var_4_0)
-	local var_4_8 = RoomMapTransportPathModel.instance:getTransportPathMOByCritterUid(var_4_0)
+	local aIsWorking = false
+	local aWorkingBuilding = ManufactureModel.instance:getCritterWorkingBuilding(aCritterUid)
+	local aWorkingPathMO = RoomMapTransportPathModel.instance:getTransportPathMOByCritterUid(aCritterUid)
 
-	if var_4_7 or var_4_8 then
-		var_4_6 = true
+	if aWorkingBuilding or aWorkingPathMO then
+		aIsWorking = true
 	end
 
-	local var_4_9 = false
-	local var_4_10 = ManufactureModel.instance:getCritterWorkingBuilding(var_4_1)
-	local var_4_11 = RoomMapTransportPathModel.instance:getTransportPathMOByCritterUid(var_4_1)
+	local bIsWorking = false
+	local bWorkingBuilding = ManufactureModel.instance:getCritterWorkingBuilding(bCritterUid)
+	local bWorkingPathMO = RoomMapTransportPathModel.instance:getTransportPathMOByCritterUid(bCritterUid)
 
-	if var_4_10 or var_4_11 then
-		var_4_9 = true
+	if bWorkingBuilding or bWorkingPathMO then
+		bIsWorking = true
 	end
 
-	if var_4_6 ~= var_4_9 then
-		return var_4_6
+	if aIsWorking ~= bIsWorking then
+		return aIsWorking
 	end
 
-	local var_4_12 = arg_4_0:isMaturity()
+	local aIsMature = aCritterMO:isMaturity()
+	local bIsMature = bCritterMO:isMaturity()
 
-	if var_4_12 ~= arg_4_1:isMaturity() then
-		return var_4_12
+	if aIsMature ~= bIsMature then
+		return aIsMature
 	end
 
-	local var_4_13 = arg_4_0:isCultivating()
+	local aIsCultivating = aCritterMO:isCultivating()
+	local bIsCultivating = bCritterMO:isCultivating()
 
-	if var_4_13 ~= arg_4_1:isCultivating() then
-		return var_4_13
+	if aIsCultivating ~= bIsCultivating then
+		return aIsCultivating
 	end
 
-	if var_4_2 ~= var_4_3 then
-		return var_4_2 < var_4_3
+	if aCritterId ~= bCritterId then
+		return aCritterId < bCritterId
 	end
 
-	return var_4_0 < var_4_1
+	return aCritterUid < bCritterUid
 end
 
-function var_0_0.setBackpackCritterList(arg_5_0, arg_5_1)
-	local var_5_0 = CritterModel.instance:getAllCritters()
-	local var_5_1 = {}
-	local var_5_2 = not arg_5_0.matureFilterType or arg_5_0.matureFilterType == CritterEnum.MatureFilterType.All
-	local var_5_3 = arg_5_0.matureFilterType == CritterEnum.MatureFilterType.Mature
+function RoomBackpackCritterListModel:setBackpackCritterList(filterMO)
+	local allCritterList = CritterModel.instance:getAllCritters()
+	local list = {}
+	local matureIsAll = not self.matureFilterType or self.matureFilterType == CritterEnum.MatureFilterType.All
+	local filterIsMature = self.matureFilterType == CritterEnum.MatureFilterType.Mature
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_0) do
-		local var_5_4 = true
+	for i, critterMO in ipairs(allCritterList) do
+		local isPassFilter = true
 
-		if arg_5_1 then
-			var_5_4 = arg_5_1:isPassedFilter(iter_5_1)
+		if filterMO then
+			isPassFilter = filterMO:isPassedFilter(critterMO)
 		end
 
-		if var_5_4 then
-			if var_5_2 then
-				var_5_1[#var_5_1 + 1] = iter_5_1
+		if isPassFilter then
+			if matureIsAll then
+				list[#list + 1] = critterMO
 			else
-				local var_5_5 = iter_5_1:isMaturity()
+				local isCritterMature = critterMO:isMaturity()
 
-				if var_5_3 and var_5_5 or not var_5_3 and not var_5_5 then
-					var_5_1[#var_5_1 + 1] = iter_5_1
+				if filterIsMature and isCritterMature or not filterIsMature and not isCritterMature then
+					list[#list + 1] = critterMO
 				end
 			end
 		end
 	end
 
-	table.sort(var_5_1, var_0_1)
-	arg_5_0:setList(var_5_1)
+	table.sort(list, _sortFunction)
+	self:setList(list)
 end
 
-function var_0_0.setIsSortByRareAscend(arg_6_0, arg_6_1)
-	arg_6_0._rareAscend = arg_6_1
+function RoomBackpackCritterListModel:setIsSortByRareAscend(isAscend)
+	self._rareAscend = isAscend
 end
 
-function var_0_0.setMatureFilterType(arg_7_0, arg_7_1)
-	arg_7_0.matureFilterType = arg_7_1
+function RoomBackpackCritterListModel:setMatureFilterType(filterType)
+	self.matureFilterType = filterType
 end
 
-function var_0_0.getIsSortByRareAscend(arg_8_0)
-	return arg_8_0._rareAscend
+function RoomBackpackCritterListModel:getIsSortByRareAscend()
+	return self._rareAscend
 end
 
-function var_0_0.getMatureFilterType(arg_9_0)
-	return arg_9_0.matureFilterType
+function RoomBackpackCritterListModel:getMatureFilterType()
+	return self.matureFilterType
 end
 
-function var_0_0.isBackpackEmpty(arg_10_0)
-	return arg_10_0:getCount() <= 0
+function RoomBackpackCritterListModel:isBackpackEmpty()
+	local count = self:getCount()
+	local result = count <= 0
+
+	return result
 end
 
-var_0_0.instance = var_0_0.New()
+RoomBackpackCritterListModel.instance = RoomBackpackCritterListModel.New()
 
-return var_0_0
+return RoomBackpackCritterListModel

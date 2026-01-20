@@ -1,18 +1,20 @@
-﻿module("modules.logic.versionactivity2_7.lengzhou6.controller.step.EliminatePlayAudioStep", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/lengzhou6/controller/step/EliminatePlayAudioStep.lua
 
-local var_0_0 = class("EliminatePlayAudioStep", EliminateChessStepBase)
+module("modules.logic.versionactivity2_7.lengzhou6.controller.step.EliminatePlayAudioStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0._data
+local EliminatePlayAudioStep = class("EliminatePlayAudioStep", EliminateChessStepBase)
 
-	if var_1_0 == nil then
-		arg_1_0:onDone(true)
+function EliminatePlayAudioStep:onStart()
+	local audioId = self._data
+
+	if audioId == nil then
+		self:onDone(true)
 
 		return
 	end
 
-	AudioMgr.instance:trigger(var_1_0)
-	arg_1_0:onDone(true)
+	AudioMgr.instance:trigger(audioId)
+	self:onDone(true)
 end
 
-return var_0_0
+return EliminatePlayAudioStep

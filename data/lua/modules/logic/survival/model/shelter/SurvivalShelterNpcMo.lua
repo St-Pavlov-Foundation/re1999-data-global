@@ -1,62 +1,66 @@
-﻿module("modules.logic.survival.model.shelter.SurvivalShelterNpcMo", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/shelter/SurvivalShelterNpcMo.lua
 
-local var_0_0 = pureTable("SurvivalShelterNpcMo")
+module("modules.logic.survival.model.shelter.SurvivalShelterNpcMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1.id
-	arg_1_0.status = arg_1_1.status
-	arg_1_0.co = SurvivalConfig.instance:getNpcConfig(arg_1_0.id)
+local SurvivalShelterNpcMo = pureTable("SurvivalShelterNpcMo")
+
+function SurvivalShelterNpcMo:init(data)
+	self.id = data.id
+	self.status = data.status
+	self.co = SurvivalConfig.instance:getNpcConfig(self.id)
 end
 
-function var_0_0.sort(arg_2_0, arg_2_1)
-	local var_2_0, var_2_1 = arg_2_0:getShelterNpcStatus()
-	local var_2_2, var_2_3 = arg_2_1:getShelterNpcStatus()
+function SurvivalShelterNpcMo.sort(a, b)
+	local shelterStatus1, buildingId1 = a:getShelterNpcStatus()
+	local shelterStatus2, buildingId2 = b:getShelterNpcStatus()
 
-	if var_2_0 ~= var_2_2 then
-		return var_2_0 < var_2_2
+	if shelterStatus1 ~= shelterStatus2 then
+		return shelterStatus1 < shelterStatus2
 	end
 
-	if var_2_1 and var_2_3 and var_2_1 ~= var_2_3 then
-		return var_2_1 < var_2_3
+	if buildingId1 and buildingId2 and buildingId1 ~= buildingId2 then
+		return buildingId1 < buildingId2
 	end
 
-	return arg_2_0.id < arg_2_1.id
+	return a.id < b.id
 end
 
-function var_0_0.getShelterNpcStatus(arg_3_0)
-	local var_3_0 = SurvivalShelterModel.instance:getWeekInfo()
-	local var_3_1 = var_3_0:getNpcPostion(arg_3_0.id)
+function SurvivalShelterNpcMo:getShelterNpcStatus()
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local buildingId = weekInfo:getNpcPostion(self.id)
 
-	if var_3_1 then
-		local var_3_2 = var_3_0:getBuildingInfo(var_3_1)
+	if buildingId then
+		local buildingInfo = weekInfo:getBuildingInfo(buildingId)
 
-		if var_3_2 and var_3_2:isDestoryed() then
+		if buildingInfo and buildingInfo:isDestoryed() then
 			return SurvivalEnum.ShelterNpcStatus.InDestoryBuild
 		else
-			return SurvivalEnum.ShelterNpcStatus.InBuild, var_3_1
+			return SurvivalEnum.ShelterNpcStatus.InBuild, buildingId
 		end
 	else
 		return SurvivalEnum.ShelterNpcStatus.NotInBuild
 	end
 end
 
-function var_0_0.isEqualStatus(arg_4_0, arg_4_1)
-	return arg_4_0:getShelterNpcStatus() == arg_4_1
+function SurvivalShelterNpcMo:isEqualStatus(status)
+	return self:getShelterNpcStatus() == status
 end
 
-function var_0_0.isRecommend(arg_5_0, arg_5_1)
-	local var_5_0 = lua_survival_map_group_mapping.configDict[arg_5_1].id
-	local var_5_1 = lua_survival_map_group.configDict[var_5_0].type
-	local var_5_2 = SurvivalConfig.instance:getNpcConfigTag(arg_5_0.co.id)
+function SurvivalShelterNpcMo:isRecommend(mapId)
+	local map_group_mapping = lua_survival_map_group_mapping.configDict[mapId]
+	local group = map_group_mapping.id
+	local map_group = lua_survival_map_group.configDict[group]
+	local mapType = map_group.type
+	local list = SurvivalConfig.instance:getNpcConfigTag(self.co.id)
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_2) do
-		local var_5_3 = SurvivalConfig:getTagCo(iter_5_1)
+	for i, cfgId in ipairs(list) do
+		local cfg = SurvivalConfig:getTagCo(cfgId)
 
-		if not string.nilorempty(var_5_3.suggestMap) then
-			local var_5_4 = string.splitToNumber(var_5_3.suggestMap, "#")
+		if not string.nilorempty(cfg.suggestMap) then
+			local tags = string.splitToNumber(cfg.suggestMap, "#")
 
-			for iter_5_2, iter_5_3 in ipairs(var_5_4) do
-				if iter_5_3 == var_5_1 then
+			for j, t in ipairs(tags) do
+				if t == mapType then
 					return true
 				end
 			end
@@ -66,4 +70,4 @@ function var_0_0.isRecommend(arg_5_0, arg_5_1)
 	return false
 end
 
-return var_0_0
+return SurvivalShelterNpcMo

@@ -1,32 +1,34 @@
-﻿module("modules.logic.commandstation.model.CommandStationBonusListModel", package.seeall)
+﻿-- chunkname: @modules/logic/commandstation/model/CommandStationBonusListModel.lua
 
-local var_0_0 = class("CommandStationBonusListModel", MixScrollModel)
+module("modules.logic.commandstation.model.CommandStationBonusListModel", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	var_0_0.super.ctor(arg_1_0)
+local CommandStationBonusListModel = class("CommandStationBonusListModel", MixScrollModel)
 
-	arg_1_0._itemCounts = {}
+function CommandStationBonusListModel:ctor()
+	CommandStationBonusListModel.super.ctor(self)
+
+	self._itemCounts = {}
 end
 
-function var_0_0.setData(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._itemCounts = arg_2_2
+function CommandStationBonusListModel:setData(data, countList)
+	self._itemCounts = countList
 
-	arg_2_0:setList(arg_2_1)
+	self:setList(data)
 end
 
-function var_0_0.getInfoList(arg_3_0, arg_3_1)
-	arg_3_0._mixCellInfo = {}
+function CommandStationBonusListModel:getInfoList(scrollGO)
+	self._mixCellInfo = {}
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0._itemCounts) do
-		local var_3_0 = iter_3_1 * 100 + 70
-		local var_3_1 = SLFramework.UGUI.MixCellInfo.New(1, var_3_0, nil)
+	for i, count in ipairs(self._itemCounts) do
+		local width = count * 100 + 70
+		local mixCellInfo = SLFramework.UGUI.MixCellInfo.New(1, width, nil)
 
-		table.insert(arg_3_0._mixCellInfo, var_3_1)
+		table.insert(self._mixCellInfo, mixCellInfo)
 	end
 
-	return arg_3_0._mixCellInfo
+	return self._mixCellInfo
 end
 
-var_0_0.instance = var_0_0.New()
+CommandStationBonusListModel.instance = CommandStationBonusListModel.New()
 
-return var_0_0
+return CommandStationBonusListModel

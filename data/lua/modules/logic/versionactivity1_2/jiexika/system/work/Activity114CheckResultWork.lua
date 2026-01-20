@@ -1,35 +1,37 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114CheckResultWork", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/system/work/Activity114CheckResultWork.lua
 
-local var_0_0 = class("Activity114CheckResultWork", Activity114BaseWork)
+module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114CheckResultWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_0.context.eventCo
+local Activity114CheckResultWork = class("Activity114CheckResultWork", Activity114BaseWork)
 
-	if var_1_0.config.isCheckEvent == 1 then
-		arg_1_0:getFlow():addWork(Activity114StopStoryWork.New())
+function Activity114CheckResultWork:onStart(context)
+	local eventCo = self.context.eventCo
+
+	if eventCo.config.isCheckEvent == 1 then
+		self:getFlow():addWork(Activity114StopStoryWork.New())
 	end
 
-	if arg_1_0.context.result == Activity114Enum.Result.None then
-		arg_1_0.context.storyId = nil
-	elseif arg_1_0.context.result == Activity114Enum.Result.Success then
-		arg_1_0:getFlow():addWork(Activity114StoryWork.New(var_1_0.config.successStoryId, Activity114Enum.StoryType.Result))
-		arg_1_0:getFlow():addWork(Activity114StopStoryWork.New())
-		arg_1_0:getFlow():addWork(Activity114OpenAttrViewWork.New())
-	elseif arg_1_0.context.result == Activity114Enum.Result.Fail then
-		arg_1_0:getFlow():addWork(Activity114StoryWork.New(var_1_0.config.failureStoryId, Activity114Enum.StoryType.Result))
+	if self.context.result == Activity114Enum.Result.None then
+		self.context.storyId = nil
+	elseif self.context.result == Activity114Enum.Result.Success then
+		self:getFlow():addWork(Activity114StoryWork.New(eventCo.config.successStoryId, Activity114Enum.StoryType.Result))
+		self:getFlow():addWork(Activity114StopStoryWork.New())
+		self:getFlow():addWork(Activity114OpenAttrViewWork.New())
+	elseif self.context.result == Activity114Enum.Result.Fail then
+		self:getFlow():addWork(Activity114StoryWork.New(eventCo.config.failureStoryId, Activity114Enum.StoryType.Result))
 
-		if var_1_0.config.battleId > 0 then
-			arg_1_0:getFlow():addWork(Activity114StopStoryWork.New())
-			arg_1_0:getFlow():addWork(Activity114FightWork.New())
-			arg_1_0:getFlow():addWork(Activity114FightResultWork.New())
-			arg_1_0:getFlow():addWork(Activity114OpenAttrViewWork.New())
+		if eventCo.config.battleId > 0 then
+			self:getFlow():addWork(Activity114StopStoryWork.New())
+			self:getFlow():addWork(Activity114FightWork.New())
+			self:getFlow():addWork(Activity114FightResultWork.New())
+			self:getFlow():addWork(Activity114OpenAttrViewWork.New())
 		else
-			arg_1_0:getFlow():addWork(Activity114StopStoryWork.New())
-			arg_1_0:getFlow():addWork(Activity114OpenAttrViewWork.New())
+			self:getFlow():addWork(Activity114StopStoryWork.New())
+			self:getFlow():addWork(Activity114OpenAttrViewWork.New())
 		end
 	end
 
-	arg_1_0:startFlow()
+	self:startFlow()
 end
 
-return var_0_0
+return Activity114CheckResultWork

@@ -1,39 +1,42 @@
-﻿module("modules.logic.bossrush.view.V1a4_BossRushLevelDetailContainer", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/view/V1a4_BossRushLevelDetailContainer.lua
 
-local var_0_0 = class("V1a4_BossRushLevelDetailContainer", BaseViewContainer)
+module("modules.logic.bossrush.view.V1a4_BossRushLevelDetailContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	arg_1_0._bossRushViewRule = V1a4_BossRushViewRule.New()
+local V1a4_BossRushLevelDetailContainer = class("V1a4_BossRushLevelDetailContainer", BaseViewContainer)
 
-	local var_1_0 = BossRushConfig.instance:getActivityId()
-	local var_1_1 = arg_1_0:_getHelpId(var_1_0)
-	local var_1_2 = BossRushModel.instance:getActivityMainView()
+function V1a4_BossRushLevelDetailContainer:buildViews()
+	self._bossRushViewRule = V1a4_BossRushViewRule.New()
 
-	arg_1_0._levelDetail = (var_1_2 and var_1_2.LevelDetail or V1a4_BossRushLevelDetail).New()
+	local actId = BossRushConfig.instance:getActivityId()
+	local helpId = self:_getHelpId(actId)
+	local activitylevelDetail = BossRushModel.instance:getActivityMainView()
+	local levelDetailClass = activitylevelDetail and activitylevelDetail.LevelDetail or V1a4_BossRushLevelDetail
 
-	local var_1_3 = {
-		arg_1_0._levelDetail,
+	self._levelDetail = levelDetailClass.New()
+
+	local views = {
+		self._levelDetail,
 		TabViewGroup.New(1, "top_left"),
-		arg_1_0._bossRushViewRule
+		self._bossRushViewRule
 	}
 
-	if var_1_1 then
-		local var_1_4 = HelpShowView.New()
+	if helpId then
+		local helpShowView = HelpShowView.New()
 
-		var_1_4:setHelpId(var_1_1)
-		var_1_4:setDelayTime(0.5)
-		table.insert(var_1_3, var_1_4)
+		helpShowView:setHelpId(helpId)
+		helpShowView:setDelayTime(0.5)
+		table.insert(views, helpShowView)
 	end
 
-	return var_1_3
+	return views
 end
 
-function var_0_0._getHelpId(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_0.viewParam.stage
+function V1a4_BossRushLevelDetailContainer:_getHelpId(actId)
+	local stage = self.viewParam.stage
 
-	if var_2_0 then
-		if not arg_2_0._stageHelpId then
-			arg_2_0._stageHelpId = {
+	if stage then
+		if not self._stageHelpId then
+			self._stageHelpId = {
 				[VersionActivity2_9Enum.ActivityId.BossRush] = {
 					HelpEnum.HelpId.BossRushViewHelpSp01_1,
 					HelpEnum.HelpId.BossRushViewHelpSp01_2
@@ -41,56 +44,56 @@ function var_0_0._getHelpId(arg_2_0, arg_2_1)
 			}
 		end
 
-		local var_2_1 = arg_2_0._stageHelpId[arg_2_1]
+		local helps = self._stageHelpId[actId]
 
-		return var_2_1 and var_2_1[var_2_0]
+		return helps and helps[stage]
 	end
 end
 
-function var_0_0.getBossRushViewRule(arg_3_0)
-	return arg_3_0._bossRushViewRule
+function V1a4_BossRushLevelDetailContainer:getBossRushViewRule()
+	return self._bossRushViewRule
 end
 
-function var_0_0.buildTabViews(arg_4_0, arg_4_1)
-	if arg_4_1 == 1 then
-		local var_4_0 = BossRushConfig.instance:getActivityId()
-		local var_4_1 = arg_4_0:_getHelpId(var_4_0)
-		local var_4_2 = var_4_1 ~= nil
+function V1a4_BossRushLevelDetailContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		local actId = BossRushConfig.instance:getActivityId()
+		local helpId = self:_getHelpId(actId)
+		local isHelp = helpId ~= nil
 
-		arg_4_0._navigateButtonView = NavigateButtonsView.New({
+		self._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
-			var_4_2
-		}, var_4_1 or 100, arg_4_0._closeCallback, nil, nil, arg_4_0)
+			isHelp
+		}, helpId or 100, self._closeCallback, nil, nil, self)
 
 		return {
-			arg_4_0._navigateButtonView
+			self._navigateButtonView
 		}
 	end
 end
 
-function var_0_0.playCloseTransition(arg_5_0)
-	arg_5_0._levelDetail:playCloseTransition()
+function V1a4_BossRushLevelDetailContainer:playCloseTransition()
+	self._levelDetail:playCloseTransition()
 end
 
-function var_0_0.playOpenTransition(arg_6_0)
-	arg_6_0:onPlayOpenTransitionFinish()
+function V1a4_BossRushLevelDetailContainer:playOpenTransition()
+	self:onPlayOpenTransitionFinish()
 end
 
-function var_0_0.diffRootChild(arg_7_0, arg_7_1)
-	arg_7_0:setRootChild(arg_7_1)
+function V1a4_BossRushLevelDetailContainer:diffRootChild(viewGO)
+	self:setRootChild(viewGO)
 
 	return true
 end
 
-function var_0_0.setRootChild(arg_8_0, arg_8_1)
-	local var_8_0 = gohelper.findChild(arg_8_1.viewGO, "DetailPanel/Condition")
+function V1a4_BossRushLevelDetailContainer:setRootChild(viewSelf)
+	local root = gohelper.findChild(viewSelf.viewGO, "DetailPanel/Condition")
 
-	arg_8_1._goadditionRule = gohelper.findChild(var_8_0, "#scroll_ConditionIcons")
-	arg_8_1._goruletemp = gohelper.findChild(arg_8_1._goadditionRule, "#go_ruletemp")
-	arg_8_1._imagetagicon = gohelper.findChildImage(arg_8_1._goruletemp, "#image_tagicon")
-	arg_8_1._gorulelist = gohelper.findChild(arg_8_1._goadditionRule, "Viewport/content")
-	arg_8_1._btnadditionRuleclick = gohelper.findChildButtonWithAudio(arg_8_1._goadditionRule, "#btn_additionRuleclick")
+	viewSelf._goadditionRule = gohelper.findChild(root, "#scroll_ConditionIcons")
+	viewSelf._goruletemp = gohelper.findChild(viewSelf._goadditionRule, "#go_ruletemp")
+	viewSelf._imagetagicon = gohelper.findChildImage(viewSelf._goruletemp, "#image_tagicon")
+	viewSelf._gorulelist = gohelper.findChild(viewSelf._goadditionRule, "Viewport/content")
+	viewSelf._btnadditionRuleclick = gohelper.findChildButtonWithAudio(viewSelf._goadditionRule, "#btn_additionRuleclick")
 end
 
-return var_0_0
+return V1a4_BossRushLevelDetailContainer

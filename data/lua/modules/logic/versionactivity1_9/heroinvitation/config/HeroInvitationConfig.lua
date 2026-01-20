@@ -1,45 +1,47 @@
-﻿module("modules.logic.versionactivity1_9.heroinvitation.config.HeroInvitationConfig", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/heroinvitation/config/HeroInvitationConfig.lua
 
-local var_0_0 = class("HeroInvitationConfig", BaseConfig)
+module("modules.logic.versionactivity1_9.heroinvitation.config.HeroInvitationConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local HeroInvitationConfig = class("HeroInvitationConfig", BaseConfig)
+
+function HeroInvitationConfig:ctor()
 	return
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function HeroInvitationConfig:reqConfigNames()
 	return {
 		"hero_invitation"
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "hero_invitation" then
-		arg_3_0._roleStoryConfig = arg_3_2
+function HeroInvitationConfig:onConfigLoaded(configName, configTable)
+	if configName == "hero_invitation" then
+		self._roleStoryConfig = configTable
 
-		arg_3_0:initHeroInvitation()
+		self:initHeroInvitation()
 	end
 end
 
-function var_0_0.initHeroInvitation(arg_4_0)
-	arg_4_0._elementDict = {}
+function HeroInvitationConfig:initHeroInvitation()
+	self._elementDict = {}
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_0._roleStoryConfig.configList) do
-		arg_4_0._elementDict[iter_4_1.elementId] = iter_4_1
+	for i, v in ipairs(self._roleStoryConfig.configList) do
+		self._elementDict[v.elementId] = v
 	end
 end
 
-function var_0_0.getInvitationConfig(arg_5_0, arg_5_1)
-	return arg_5_0._roleStoryConfig.configDict[arg_5_1]
+function HeroInvitationConfig:getInvitationConfig(id)
+	return self._roleStoryConfig.configDict[id]
 end
 
-function var_0_0.getInvitationList(arg_6_0)
-	return arg_6_0._roleStoryConfig.configList
+function HeroInvitationConfig:getInvitationList()
+	return self._roleStoryConfig.configList
 end
 
-function var_0_0.getInvitationConfigByElementId(arg_7_0, arg_7_1)
-	return arg_7_0._elementDict[arg_7_1]
+function HeroInvitationConfig:getInvitationConfigByElementId(elementId)
+	return self._elementDict[elementId]
 end
 
-var_0_0.instance = var_0_0.New()
+HeroInvitationConfig.instance = HeroInvitationConfig.New()
 
-return var_0_0
+return HeroInvitationConfig

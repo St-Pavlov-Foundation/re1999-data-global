@@ -1,9 +1,11 @@
-﻿module("modules.logic.pickassist.controller.PickAssistEvent", package.seeall)
+﻿-- chunkname: @modules/logic/pickassist/controller/PickAssistEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.pickassist.controller.PickAssistEvent", package.seeall)
 
-var_0_0.SetCareer = 1
-var_0_0.RefreshSelectAssistHero = 2
-var_0_0.BeforeRefreshAssistList = 3
+local PickAssistEvent = _M
 
-return var_0_0
+PickAssistEvent.SetCareer = 1
+PickAssistEvent.RefreshSelectAssistHero = 2
+PickAssistEvent.BeforeRefreshAssistList = 3
+
+return PickAssistEvent

@@ -1,30 +1,33 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.controller.chess.step.EliminateChessShowEndStep", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/controller/chess/step/EliminateChessShowEndStep.lua
 
-local var_0_0 = class("EliminateChessShowEndStep", EliminateChessStepBase)
+module("modules.logic.versionactivity2_2.eliminate.controller.chess.step.EliminateChessShowEndStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0._data.time
+local EliminateChessShowEndStep = class("EliminateChessShowEndStep", EliminateChessStepBase)
 
-	arg_1_0._cb = arg_1_0._data.cb
+function EliminateChessShowEndStep:onStart()
+	local time = self._data.time
 
-	local var_1_1 = arg_1_0._data.needShowEnd
-	local var_1_2 = EliminateTeamChessEnum.matchToTeamChessStepTime
-	local var_1_3 = math.min(var_1_0, var_1_2)
+	self._cb = self._data.cb
 
-	if var_1_1 then
+	local needShowEnd = self._data.needShowEnd
+	local switchTime = EliminateTeamChessEnum.matchToTeamChessStepTime
+
+	time = math.min(time, switchTime)
+
+	if needShowEnd then
 		EliminateChessController.instance:dispatchEvent(EliminateChessEvent.Match3ChessEndViewOpen)
-		EliminateChessController.instance:openNoticeView(false, true, false, false, 0, var_1_3, nil, nil)
+		EliminateChessController.instance:openNoticeView(false, true, false, false, 0, time, nil, nil)
 	end
 
-	TaskDispatcher.runDelay(arg_1_0._onDone, arg_1_0, var_1_2)
+	TaskDispatcher.runDelay(self._onDone, self, switchTime)
 end
 
-function var_0_0._onDone(arg_2_0)
-	if arg_2_0._cb then
-		arg_2_0._cb()
+function EliminateChessShowEndStep:_onDone()
+	if self._cb then
+		self._cb()
 	end
 
-	var_0_0.super._onDone(arg_2_0)
+	EliminateChessShowEndStep.super._onDone(self)
 end
 
-return var_0_0
+return EliminateChessShowEndStep

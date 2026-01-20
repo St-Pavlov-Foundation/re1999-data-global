@@ -1,37 +1,41 @@
-﻿module("modules.logic.versionactivity2_2.tianshinana.controller.TianShiNaNaEffectPool", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/tianshinana/controller/TianShiNaNaEffectPool.lua
 
-local var_0_0 = class("TianShiNaNaEffectPool")
+module("modules.logic.versionactivity2_2.tianshinana.controller.TianShiNaNaEffectPool", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._effect = {}
-	arg_1_0.root = nil
+local TianShiNaNaEffectPool = class("TianShiNaNaEffectPool")
+
+function TianShiNaNaEffectPool:ctor()
+	self._effect = {}
+	self.root = nil
 end
 
-function var_0_0.setRoot(arg_2_0, arg_2_1)
-	arg_2_0.root = arg_2_1
+function TianShiNaNaEffectPool:setRoot(root)
+	self.root = root
 end
 
-function var_0_0.getFromPool(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5)
-	local var_3_0 = table.remove(arg_3_0._effect) or TianShiNaNaPathEffect.Create(arg_3_0.root)
+function TianShiNaNaEffectPool:getFromPool(x, y, type, delay, duration)
+	local effect = table.remove(self._effect)
 
-	var_3_0:initData(arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5)
+	effect = effect or TianShiNaNaPathEffect.Create(self.root)
 
-	return var_3_0
+	effect:initData(x, y, type, delay, duration)
+
+	return effect
 end
 
-function var_0_0.returnToPool(arg_4_0, arg_4_1)
-	table.insert(arg_4_0._effect, arg_4_1)
+function TianShiNaNaEffectPool:returnToPool(effect)
+	table.insert(self._effect, effect)
 end
 
-function var_0_0.clear(arg_5_0)
-	for iter_5_0, iter_5_1 in pairs(arg_5_0._effect) do
-		iter_5_1:dispose()
+function TianShiNaNaEffectPool:clear()
+	for _, effect in pairs(self._effect) do
+		effect:dispose()
 	end
 
-	arg_5_0._effect = {}
-	arg_5_0.root = nil
+	self._effect = {}
+	self.root = nil
 end
 
-var_0_0.instance = var_0_0.New()
+TianShiNaNaEffectPool.instance = TianShiNaNaEffectPool.New()
 
-return var_0_0
+return TianShiNaNaEffectPool

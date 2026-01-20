@@ -1,8 +1,10 @@
-﻿module("projbooter.gamepad.define.GamepadKeyMapEnum", package.seeall)
+﻿-- chunkname: @projbooter/gamepad/define/GamepadKeyMapEnum.lua
 
-local var_0_0 = _M
+module("projbooter.gamepad.define.GamepadKeyMapEnum", package.seeall)
 
-var_0_0.KeyMap = {
+local GamepadKeyMapEnum = _M
+
+GamepadKeyMapEnum.KeyMap = {
 	BEITONG = {
 		GamepadXBoxKey,
 		GamepadXBoxKey_Android
@@ -13,4 +15,4 @@ var_0_0.KeyMap = {
 	}
 }
 
-return var_0_0
+return GamepadKeyMapEnum

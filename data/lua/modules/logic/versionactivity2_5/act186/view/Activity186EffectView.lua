@@ -1,80 +1,82 @@
-﻿module("modules.logic.versionactivity2_5.act186.view.Activity186EffectView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/act186/view/Activity186EffectView.lua
 
-local var_0_0 = class("Activity186EffectView", BaseView)
+module("modules.logic.versionactivity2_5.act186.view.Activity186EffectView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.effectList = arg_1_0:getUserDataTb_()
+local Activity186EffectView = class("Activity186EffectView", BaseView)
 
-	for iter_1_0 = 1, 4 do
-		arg_1_0.effectList[iter_1_0] = gohelper.findChild(arg_1_0.viewGO, "#go_effect" .. iter_1_0)
+function Activity186EffectView:onInitView()
+	self.effectList = self:getUserDataTb_()
+
+	for i = 1, 4 do
+		self.effectList[i] = gohelper.findChild(self.viewGO, "#go_effect" .. i)
 	end
 
-	arg_1_0.audioIdList = {
+	self.audioIdList = {
 		[Activity186Enum.ViewEffect.Caidai] = AudioEnum.Act186.play_ui_tangren_banger,
 		[Activity186Enum.ViewEffect.Yanhua] = AudioEnum.Act186.play_ui_tangren_firework,
 		[Activity186Enum.ViewEffect.Jinsha] = AudioEnum.Act186.play_ui_tangren_mysticism,
 		[Activity186Enum.ViewEffect.Xiangyun] = AudioEnum.Act186.play_ui_tangren_cloud
 	}
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function Activity186EffectView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Activity186EffectView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function Activity186EffectView:_editableInitView()
 	return
 end
 
-function var_0_0.onClickBtnClose(arg_5_0)
-	arg_5_0:closeThis()
+function Activity186EffectView:onClickBtnClose()
+	self:closeThis()
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
-	arg_6_0:refreshParam()
-	arg_6_0:refreshView()
+function Activity186EffectView:onUpdateParam()
+	self:refreshParam()
+	self:refreshView()
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0:refreshParam()
-	arg_7_0:refreshView()
+function Activity186EffectView:onOpen()
+	self:refreshParam()
+	self:refreshView()
 end
 
-function var_0_0.refreshParam(arg_8_0)
-	arg_8_0.effectId = arg_8_0.viewParam.effectId
+function Activity186EffectView:refreshParam()
+	self.effectId = self.viewParam.effectId
 end
 
-function var_0_0.refreshView(arg_9_0)
+function Activity186EffectView:refreshView()
 	AudioMgr.instance:trigger(AudioEnum.Act186.stop_ui_bus)
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0.effectList) do
-		gohelper.setActive(iter_9_1, false)
+	for i, v in ipairs(self.effectList) do
+		gohelper.setActive(v, false)
 
-		if iter_9_0 == arg_9_0.effectId then
-			gohelper.setActive(iter_9_1, true)
+		if i == self.effectId then
+			gohelper.setActive(v, true)
 		end
 	end
 
-	local var_9_0 = arg_9_0.audioIdList[arg_9_0.effectId]
+	local audioId = self.audioIdList[self.effectId]
 
-	if var_9_0 then
-		AudioMgr.instance:trigger(var_9_0)
+	if audioId then
+		AudioMgr.instance:trigger(audioId)
 	end
 end
 
-function var_0_0.onClose(arg_10_0)
+function Activity186EffectView:onClose()
 	AudioMgr.instance:trigger(AudioEnum.Act186.stop_ui_bus)
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function Activity186EffectView:onDestroyView()
 	return
 end
 
-return var_0_0
+return Activity186EffectView

@@ -1,50 +1,52 @@
-﻿module("modules.logic.versionactivity2_8.nuodika.model.NuoDiKaMapMo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/nuodika/model/NuoDiKaMapMo.lua
 
-local var_0_0 = pureTable("NuoDiKaMapMo")
+module("modules.logic.versionactivity2_8.nuodika.model.NuoDiKaMapMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.mapId = 0
-	arg_1_0.lineCount = 0
-	arg_1_0.rowCount = 0
-	arg_1_0.passType = NuoDiKaEnum.MapPassType.ClearEnemy
-	arg_1_0.mapBg = ""
-	arg_1_0.nodeDict = {}
+local NuoDiKaMapMo = pureTable("NuoDiKaMapMo")
+
+function NuoDiKaMapMo:ctor()
+	self.mapId = 0
+	self.lineCount = 0
+	self.rowCount = 0
+	self.passType = NuoDiKaEnum.MapPassType.ClearEnemy
+	self.mapBg = ""
+	self.nodeDict = {}
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.mapId = arg_2_1[1]
-	arg_2_0.lineCount = arg_2_1[2]
-	arg_2_0.rowCount = arg_2_1[3]
-	arg_2_0.taskValue = arg_2_1[4]
-	arg_2_0.passType = arg_2_1[5]
-	arg_2_0.mapBg = arg_2_1[6]
-	arg_2_0.nodeDict = arg_2_0._toNodes(arg_2_1[7])
+function NuoDiKaMapMo:init(mapCo)
+	self.mapId = mapCo[1]
+	self.lineCount = mapCo[2]
+	self.rowCount = mapCo[3]
+	self.taskValue = mapCo[4]
+	self.passType = mapCo[5]
+	self.mapBg = mapCo[6]
+	self.nodeDict = self._toNodes(mapCo[7])
 end
 
-function var_0_0._toNodes(arg_3_0)
-	local var_3_0 = {}
+function NuoDiKaMapMo._toNodes(nodeCos)
+	local dict = {}
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0) do
-		local var_3_1 = NuoDiKaMapNodeMo.New()
+	for _, node in ipairs(nodeCos) do
+		local nodeMo = NuoDiKaMapNodeMo.New()
 
-		var_3_1:init(iter_3_1)
+		nodeMo:init(node)
 
-		var_3_0[var_3_1.id] = var_3_1
+		dict[nodeMo.id] = nodeMo
 	end
 
-	table.sort(var_3_0, function(arg_4_0, arg_4_1)
-		return arg_4_0.id < arg_4_1.id
+	table.sort(dict, function(a, b)
+		return a.id < b.id
 	end)
 
-	return var_3_0
+	return dict
 end
 
-function var_0_0.getNodeMo(arg_5_0, arg_5_1)
-	if not arg_5_0.nodeDict[arg_5_1] then
+function NuoDiKaMapMo:getNodeMo(id)
+	if not self.nodeDict[id] then
 		return
 	end
 
-	return arg_5_0.nodeDict[arg_5_1]
+	return self.nodeDict[id]
 end
 
-return var_0_0
+return NuoDiKaMapMo

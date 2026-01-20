@@ -1,51 +1,53 @@
-﻿module("modules.logic.versionactivity1_7.lantern.config.LanternFestivalConfig", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_7/lantern/config/LanternFestivalConfig.lua
 
-local var_0_0 = class("LanternFestivalConfig", BaseConfig)
+module("modules.logic.versionactivity1_7.lantern.config.LanternFestivalConfig", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local LanternFestivalConfig = class("LanternFestivalConfig", BaseConfig)
+
+function LanternFestivalConfig:reqConfigNames()
 	return {
 		"activity154",
 		"activity154_options"
 	}
 end
 
-function var_0_0.onInit(arg_2_0)
-	arg_2_0._actCfgDict = nil
-	arg_2_0._actOptions = {}
+function LanternFestivalConfig:onInit()
+	self._actCfgDict = nil
+	self._actOptions = {}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity154" then
-		arg_3_0._actCfgDict = arg_3_2.configDict
-	elseif arg_3_1 == "activity154_options" then
-		arg_3_0._actOptions = arg_3_2.configDict
+function LanternFestivalConfig:onConfigLoaded(configName, configTable)
+	if configName == "activity154" then
+		self._actCfgDict = configTable.configDict
+	elseif configName == "activity154_options" then
+		self._actOptions = configTable.configDict
 	end
 end
 
-function var_0_0.getAct154Co(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_1 = arg_4_1 or ActivityEnum.Activity.LanternFestival
+function LanternFestivalConfig:getAct154Co(actId, day)
+	actId = actId or ActivityEnum.Activity.LanternFestival
 
-	return arg_4_0._actCfgDict[arg_4_1][arg_4_2]
+	return self._actCfgDict[actId][day]
 end
 
-function var_0_0.getPuzzleCo(arg_5_0, arg_5_1)
-	for iter_5_0, iter_5_1 in pairs(arg_5_0._actCfgDict[ActivityEnum.Activity.LanternFestival]) do
-		if iter_5_1.puzzleId == arg_5_1 then
-			return iter_5_1
+function LanternFestivalConfig:getPuzzleCo(puzzleId)
+	for _, v in pairs(self._actCfgDict[ActivityEnum.Activity.LanternFestival]) do
+		if v.puzzleId == puzzleId then
+			return v
 		end
 	end
 
 	return nil
 end
 
-function var_0_0.getAct154Cos(arg_6_0)
-	return arg_6_0._actCfgDict[ActivityEnum.Activity.LanternFestival]
+function LanternFestivalConfig:getAct154Cos()
+	return self._actCfgDict[ActivityEnum.Activity.LanternFestival]
 end
 
-function var_0_0.getAct154Options(arg_7_0, arg_7_1)
-	return arg_7_0._actOptions[arg_7_1]
+function LanternFestivalConfig:getAct154Options(puzzleId)
+	return self._actOptions[puzzleId]
 end
 
-var_0_0.instance = var_0_0.New()
+LanternFestivalConfig.instance = LanternFestivalConfig.New()
 
-return var_0_0
+return LanternFestivalConfig

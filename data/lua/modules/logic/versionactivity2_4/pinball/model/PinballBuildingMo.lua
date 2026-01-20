@@ -1,65 +1,67 @@
-﻿module("modules.logic.versionactivity2_4.pinball.model.PinballBuildingMo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/pinball/model/PinballBuildingMo.lua
 
-local var_0_0 = pureTable("PinballBuildingMo")
+module("modules.logic.versionactivity2_4.pinball.model.PinballBuildingMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.configId = arg_1_1.configId
-	arg_1_0.level = arg_1_1.level
-	arg_1_0.index = arg_1_1.index
-	arg_1_0.food = arg_1_1.food
-	arg_1_0.interact = arg_1_1.interact
+local PinballBuildingMo = pureTable("PinballBuildingMo")
 
-	arg_1_0:refreshCo()
+function PinballBuildingMo:init(data)
+	self.configId = data.configId
+	self.level = data.level
+	self.index = data.index
+	self.food = data.food
+	self.interact = data.interact
+
+	self:refreshCo()
 end
 
-function var_0_0.refreshCo(arg_2_0)
-	local var_2_0 = lua_activity178_building.configDict[VersionActivity2_4Enum.ActivityId.Pinball][arg_2_0.configId]
+function PinballBuildingMo:refreshCo()
+	local coList = lua_activity178_building.configDict[VersionActivity2_4Enum.ActivityId.Pinball][self.configId]
 
-	if not var_2_0 then
-		logError("没有建筑配置" .. tostring(arg_2_0.configId))
+	if not coList then
+		logError("没有建筑配置" .. tostring(self.configId))
 
 		return
 	end
 
-	arg_2_0.co = var_2_0[arg_2_0.level]
-	arg_2_0.baseCo = var_2_0[1]
-	arg_2_0.nextCo = var_2_0[arg_2_0.level + 1]
-	arg_2_0._foodCost = 0
-	arg_2_0._playDemand = 0
+	self.co = coList[self.level]
+	self.baseCo = coList[1]
+	self.nextCo = coList[self.level + 1]
+	self._foodCost = 0
+	self._playDemand = 0
 
-	if arg_2_0.co then
-		local var_2_1 = GameUtil.splitString2(arg_2_0.co.effect, true) or {}
+	if self.co then
+		local effectDict = GameUtil.splitString2(self.co.effect, true) or {}
 
-		for iter_2_0, iter_2_1 in pairs(var_2_1) do
-			if iter_2_1[1] == PinballEnum.BuildingEffectType.CostFood then
-				arg_2_0._foodCost = arg_2_0._foodCost + iter_2_1[2]
-			elseif iter_2_1[1] == PinballEnum.BuildingEffectType.AddPlayDemand then
-				arg_2_0._playDemand = arg_2_0._playDemand + iter_2_1[2]
+		for _, arr in pairs(effectDict) do
+			if arr[1] == PinballEnum.BuildingEffectType.CostFood then
+				self._foodCost = self._foodCost + arr[2]
+			elseif arr[1] == PinballEnum.BuildingEffectType.AddPlayDemand then
+				self._playDemand = self._playDemand + arr[2]
 			end
 		end
 	end
 end
 
-function var_0_0.upgrade(arg_3_0)
-	arg_3_0.level = arg_3_0.level + 1
+function PinballBuildingMo:upgrade()
+	self.level = self.level + 1
 
-	arg_3_0:refreshCo()
+	self:refreshCo()
 end
 
-function var_0_0.isMainCity(arg_4_0)
-	return arg_4_0.co.type == PinballEnum.BuildingType.MainCity
+function PinballBuildingMo:isMainCity()
+	return self.co.type == PinballEnum.BuildingType.MainCity
 end
 
-function var_0_0.isTalent(arg_5_0)
-	return arg_5_0.co.type == PinballEnum.BuildingType.Talent
+function PinballBuildingMo:isTalent()
+	return self.co.type == PinballEnum.BuildingType.Talent
 end
 
-function var_0_0.getFoodCost(arg_6_0)
-	return arg_6_0._foodCost
+function PinballBuildingMo:getFoodCost()
+	return self._foodCost
 end
 
-function var_0_0.getPlayDemand(arg_7_0)
-	return arg_7_0._playDemand
+function PinballBuildingMo:getPlayDemand()
+	return self._playDemand
 end
 
-return var_0_0
+return PinballBuildingMo

@@ -1,22 +1,24 @@
-﻿module("modules.logic.fight.system.work.FightWorkPlayChangeRankFail", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkPlayChangeRankFail.lua
 
-local var_0_0 = class("FightWorkPlayChangeRankFail", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkPlayChangeRankFail", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	if not FightCardDataHelper.cardChangeIsMySide(arg_1_0.actEffectData) then
-		arg_1_0:onDone(true)
+local FightWorkPlayChangeRankFail = class("FightWorkPlayChangeRankFail", FightEffectBase)
+
+function FightWorkPlayChangeRankFail:onStart()
+	if not FightCardDataHelper.cardChangeIsMySide(self.actEffectData) then
+		self:onDone(true)
 
 		return
 	end
 
-	local var_1_0 = arg_1_0.actEffectData.effectNum
+	local index = self.actEffectData.effectNum
 
-	arg_1_0:com_sendFightEvent(FightEvent.PlayChangeRankFail, var_1_0, arg_1_0.actEffectData.reserveStr)
-	arg_1_0:com_registTimer(arg_1_0._delayAfterPerformance, FightEnum.PerformanceTime.CardLevelChange / FightModel.instance:getUISpeed())
+	self:com_sendFightEvent(FightEvent.PlayChangeRankFail, index, self.actEffectData.reserveStr)
+	self:com_registTimer(self._delayAfterPerformance, FightEnum.PerformanceTime.CardLevelChange / FightModel.instance:getUISpeed())
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkPlayChangeRankFail:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkPlayChangeRankFail

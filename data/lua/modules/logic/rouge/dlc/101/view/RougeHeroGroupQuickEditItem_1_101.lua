@@ -1,7 +1,9 @@
-﻿module("modules.logic.rouge.dlc.101.view.RougeHeroGroupQuickEditItem_1_101", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/dlc/101/view/RougeHeroGroupQuickEditItem_1_101.lua
 
-local var_0_0 = class("RougeHeroGroupQuickEditItem_1_101", RougeHeroBaseStressItem)
+module("modules.logic.rouge.dlc.101.view.RougeHeroGroupQuickEditItem_1_101", package.seeall)
 
-var_0_0.ParentObjPath = "#go_fightstressitem"
+local RougeHeroGroupQuickEditItem_1_101 = class("RougeHeroGroupQuickEditItem_1_101", RougeHeroBaseStressItem)
 
-return var_0_0
+RougeHeroGroupQuickEditItem_1_101.ParentObjPath = "#go_fightstressitem"
+
+return RougeHeroGroupQuickEditItem_1_101

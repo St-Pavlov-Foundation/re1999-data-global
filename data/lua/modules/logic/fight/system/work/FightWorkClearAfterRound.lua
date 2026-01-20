@@ -1,16 +1,18 @@
-﻿module("modules.logic.fight.system.work.FightWorkClearAfterRound", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkClearAfterRound.lua
 
-local var_0_0 = class("FightWorkClearAfterRound", BaseWork)
+module("modules.logic.fight.system.work.FightWorkClearAfterRound", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
+local FightWorkClearAfterRound = class("FightWorkClearAfterRound", BaseWork)
+
+function FightWorkClearAfterRound:onStart(context)
 	FightRoundSequence.roundTempData = {}
 
 	FightPlayCardModel.instance:clearUsedCards()
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkClearAfterRound:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkClearAfterRound

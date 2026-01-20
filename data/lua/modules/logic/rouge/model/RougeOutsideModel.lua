@@ -1,338 +1,341 @@
-﻿module("modules.logic.rouge.model.RougeOutsideModel", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/model/RougeOutsideModel.lua
 
-local var_0_0 = class("RougeOutsideModel", BaseModel)
+module("modules.logic.rouge.model.RougeOutsideModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local RougeOutsideModel = class("RougeOutsideModel", BaseModel)
+
+function RougeOutsideModel:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:_setRougeSeason(nil, RougeConfig1.instance:season())
+function RougeOutsideModel:reInit()
+	self:_setRougeSeason(nil, RougeConfig1.instance:season())
 end
 
-function var_0_0.onReceiveGetRougeOutsideInfoReply(arg_3_0, arg_3_1)
-	arg_3_0:updateRougeOutsideInfo(arg_3_1.rougeInfo)
+function RougeOutsideModel:onReceiveGetRougeOutsideInfoReply(msg)
+	self:updateRougeOutsideInfo(msg.rougeInfo)
 end
 
-function var_0_0.updateRougeOutsideInfo(arg_4_0, arg_4_1)
-	arg_4_0:_setRougeSeason(arg_4_1)
+function RougeOutsideModel:updateRougeOutsideInfo(rougeInfo)
+	self:_setRougeSeason(rougeInfo)
 
-	arg_4_0._rougeGameRecord = arg_4_0._rougeGameRecord or RougeGameRecordInfoMO.New()
+	self._rougeGameRecord = self._rougeGameRecord or RougeGameRecordInfoMO.New()
 
-	arg_4_0._rougeGameRecord:init(arg_4_1.gameRecordInfo)
-	RougeFavoriteModel.instance:initReviews(arg_4_1.review)
+	self._rougeGameRecord:init(rougeInfo.gameRecordInfo)
+	RougeFavoriteModel.instance:initReviews(rougeInfo.review)
 	RougeOutsideController.instance:dispatchEvent(RougeEvent.OnUpdateRougeOutsideInfo)
 end
 
-function var_0_0.getRougeGameRecord(arg_5_0)
-	return arg_5_0._rougeGameRecord
+function RougeOutsideModel:getRougeGameRecord()
+	return self._rougeGameRecord
 end
 
-function var_0_0._setRougeSeason(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_1 ~= nil then
-		arg_6_0._rougeInfo = arg_6_1
+function RougeOutsideModel:_setRougeSeason(rougeInfo, season)
+	if rougeInfo ~= nil then
+		self._rougeInfo = rougeInfo
 	else
-		assert(tonumber(arg_6_2))
+		assert(tonumber(season))
 
-		arg_6_0._rougeInfo = RougeOutsideModule_pb.GetRougeOutsideInfoReply()
+		self._rougeInfo = RougeOutsideModule_pb.GetRougeOutsideInfoReply()
 
-		rawset(arg_6_0._rougeInfo, "season", arg_6_2)
+		rawset(self._rougeInfo, "season", season)
 	end
 
-	arg_6_2 = arg_6_2 or arg_6_0:season()
+	season = season or self:season()
 
-	if not arg_6_0._config or arg_6_0._config:season() ~= arg_6_2 then
-		arg_6_0._config = _G["RougeConfig" .. arg_6_2].instance
+	if not self._config or self._config:season() ~= season then
+		self._config = _G["RougeConfig" .. season].instance
 	end
 end
 
-function var_0_0.config(arg_7_0)
-	return arg_7_0._config
+function RougeOutsideModel:config()
+	return self._config
 end
 
-function var_0_0.openUnlockId(arg_8_0)
-	return arg_8_0._config:openUnlockId()
+function RougeOutsideModel:openUnlockId()
+	return self._config:openUnlockId()
 end
 
-function var_0_0.season(arg_9_0)
-	local var_9_0
+function RougeOutsideModel:season()
+	local season
 
-	if arg_9_0._rougeInfo then
-		var_9_0 = arg_9_0._rougeInfo.season
+	if self._rougeInfo then
+		season = self._rougeInfo.season
 	end
 
-	if not var_9_0 and arg_9_0._config then
-		var_9_0 = arg_9_0._config:season()
+	if not season and self._config then
+		season = self._config:season()
 	end
 
-	if not var_9_0 then
+	if not season then
 		return 1
 	end
 
-	return math.max(var_9_0, 1)
+	return math.max(season, 1)
 end
 
-function var_0_0.isUnlock(arg_10_0)
-	local var_10_0 = arg_10_0:openUnlockId()
+function RougeOutsideModel:isUnlock()
+	local openUnlockId = self:openUnlockId()
 
-	return OpenModel.instance:isFunctionUnlock(var_10_0)
+	return OpenModel.instance:isFunctionUnlock(openUnlockId)
 end
 
-function var_0_0.passedDifficulty(arg_11_0)
-	if not arg_11_0._rougeGameRecord then
+function RougeOutsideModel:passedDifficulty()
+	if not self._rougeGameRecord then
 		return 0
 	end
 
-	return arg_11_0._rougeGameRecord.maxDifficulty or 0
+	return self._rougeGameRecord.maxDifficulty or 0
 end
 
-function var_0_0.isPassedDifficulty(arg_12_0, arg_12_1)
-	return arg_12_1 <= arg_12_0:passedDifficulty()
+function RougeOutsideModel:isPassedDifficulty(difficulty)
+	return difficulty <= self:passedDifficulty()
 end
 
-function var_0_0.isOpenedDifficulty(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0._config:getDifficultyCO(arg_13_1)
+function RougeOutsideModel:isOpenedDifficulty(difficulty)
+	local difficultyCO = self._config:getDifficultyCO(difficulty)
 
-	return arg_13_0:isPassedDifficulty(var_13_0.preDifficulty)
+	return self:isPassedDifficulty(difficultyCO.preDifficulty)
 end
 
-function var_0_0.isOpenedStyle(arg_14_0, arg_14_1)
-	if not arg_14_1 then
+function RougeOutsideModel:isOpenedStyle(style)
+	if not style then
 		return
 	end
 
-	local var_14_0 = arg_14_0._config:getStyleConfig(arg_14_1)
-	local var_14_1 = var_14_0.unlockType
+	local styleCO = self._config:getStyleConfig(style)
+	local unlockType = styleCO.unlockType
 
-	if not var_14_1 or var_14_1 == 0 then
+	if not unlockType or unlockType == 0 then
 		return true
 	end
 
-	return RougeMapUnlockHelper.checkIsUnlock(var_14_1, var_14_0.unlockParam)
+	return RougeMapUnlockHelper.checkIsUnlock(unlockType, styleCO.unlockParam)
 end
 
-function var_0_0.endCdTs(arg_15_0)
-	if not arg_15_0._rougeGameRecord then
+function RougeOutsideModel:endCdTs()
+	if not self._rougeGameRecord then
 		return 0
 	end
 
-	local var_15_0 = arg_15_0._rougeGameRecord:lastGameEndTimestamp()
+	local fromTs = self._rougeGameRecord:lastGameEndTimestamp()
 
-	if var_15_0 <= 0 then
+	if fromTs <= 0 then
 		return 0
 	end
 
-	local var_15_1 = arg_15_0._config:getAbortCDDuration()
+	local duration = self._config:getAbortCDDuration()
 
-	if var_15_1 == 0 then
+	if duration == 0 then
 		return 0
 	end
 
-	return var_15_0 + var_15_1
+	return fromTs + duration
 end
 
-function var_0_0.leftCdSec(arg_16_0)
-	return arg_16_0:endCdTs() - ServerTime.now()
+function RougeOutsideModel:leftCdSec()
+	return self:endCdTs() - ServerTime.now()
 end
 
-function var_0_0.isInCdStart(arg_17_0)
-	return arg_17_0:leftCdSec() > 0
+function RougeOutsideModel:isInCdStart()
+	return self:leftCdSec() > 0
 end
 
-function var_0_0.getDifficultyInfoList(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_0._config:getDifficultyCOListByVersions(arg_18_1)
-	local var_18_1 = {}
+function RougeOutsideModel:getDifficultyInfoList(versionList)
+	local difficultyCOList = self._config:getDifficultyCOListByVersions(versionList)
+	local res = {}
 
-	for iter_18_0, iter_18_1 in ipairs(var_18_0) do
-		local var_18_2 = iter_18_1.difficulty
+	for _, difficultyCO in ipairs(difficultyCOList) do
+		local difficulty = difficultyCO.difficulty
 
-		table.insert(var_18_1, {
-			difficulty = var_18_2,
-			difficultyCO = iter_18_1,
-			isUnLocked = arg_18_0:isOpenedDifficulty(var_18_2)
+		table.insert(res, {
+			difficulty = difficulty,
+			difficultyCO = difficultyCO,
+			isUnLocked = self:isOpenedDifficulty(difficulty)
 		})
 	end
 
-	table.sort(var_18_1, function(arg_19_0, arg_19_1)
-		local var_19_0 = arg_19_0.difficulty
-		local var_19_1 = arg_19_1.difficulty
+	table.sort(res, function(a, b)
+		local a_difficulty = a.difficulty
+		local b_difficulty = b.difficulty
 
-		if var_19_0 ~= var_19_1 then
-			return var_19_0 < var_19_1
+		if a_difficulty ~= b_difficulty then
+			return a_difficulty < b_difficulty
 		end
 	end)
 
-	return var_18_1
+	return res
 end
 
-function var_0_0.getStyleInfoList(arg_20_0, arg_20_1)
-	local var_20_0 = arg_20_0._config:getStyleCOListByVersions(arg_20_1)
-	local var_20_1 = {}
+function RougeOutsideModel:getStyleInfoList(versionList)
+	local styleCOList = self._config:getStyleCOListByVersions(versionList)
+	local res = {}
 
-	for iter_20_0, iter_20_1 in ipairs(var_20_0) do
-		var_20_1[#var_20_1 + 1] = arg_20_0:_createStyleMo(iter_20_1)
+	for _, styleCO in ipairs(styleCOList) do
+		res[#res + 1] = self:_createStyleMo(styleCO)
 	end
 
-	table.sort(var_20_1, var_0_0._styleSortFunc)
+	table.sort(res, RougeOutsideModel._styleSortFunc)
 
-	return var_20_1
+	return res
 end
 
-function var_0_0._createStyleMo(arg_21_0, arg_21_1)
-	local var_21_0 = arg_21_1.id
-
-	return {
-		style = var_21_0,
-		styleCO = arg_21_1,
-		isUnLocked = arg_21_0:isOpenedStyle(var_21_0)
+function RougeOutsideModel:_createStyleMo(styleCO)
+	local style = styleCO.id
+	local styleMo = {
+		style = style,
+		styleCO = styleCO,
+		isUnLocked = self:isOpenedStyle(style)
 	}
+
+	return styleMo
 end
 
-function var_0_0._styleSortFunc(arg_22_0, arg_22_1)
-	local var_22_0 = arg_22_0.isUnLocked and 1 or 0
-	local var_22_1 = arg_22_1.isUnLocked and 1 or 0
+function RougeOutsideModel._styleSortFunc(a, b)
+	local a_isUnLocked = a.isUnLocked and 1 or 0
+	local b_isUnLocked = b.isUnLocked and 1 or 0
 
-	if var_22_0 ~= var_22_1 then
-		return var_22_1 < var_22_0
+	if a_isUnLocked ~= b_isUnLocked then
+		return b_isUnLocked < a_isUnLocked
 	end
 
-	return arg_22_0.style < arg_22_1.style
+	return a.style < b.style
 end
 
-function var_0_0.getSeasonStyleInfoList(arg_23_0)
-	local var_23_0 = arg_23_0._config:getSeasonStyleConfigs()
-	local var_23_1 = {}
+function RougeOutsideModel:getSeasonStyleInfoList()
+	local styleCOList = self._config:getSeasonStyleConfigs()
+	local res = {}
 
-	for iter_23_0, iter_23_1 in ipairs(var_23_0) do
-		var_23_1[#var_23_1 + 1] = arg_23_0:_createStyleMo(iter_23_1)
+	for _, styleCO in ipairs(styleCOList) do
+		res[#res + 1] = self:_createStyleMo(styleCO)
 	end
 
-	table.sort(var_23_1, var_0_0._styleSortFunc)
+	table.sort(res, RougeOutsideModel._styleSortFunc)
 
-	return var_23_1
+	return res
 end
 
-local var_0_1 = 1
-local var_0_2 = 0
+local TRUE = 1
+local FALSE = 0
 
-function var_0_0.getIsNewUnlockDifficulty(arg_24_0, arg_24_1)
-	return arg_24_0:_getUnlockDifficulty(arg_24_1, var_0_2) == var_0_1
+function RougeOutsideModel:getIsNewUnlockDifficulty(difficulty)
+	return self:_getUnlockDifficulty(difficulty, FALSE) == TRUE
 end
 
-function var_0_0.setIsNewUnlockDifficulty(arg_25_0, arg_25_1, arg_25_2)
-	arg_25_0:_saveUnlockDifficulty(arg_25_1, arg_25_2 and var_0_1 or var_0_2)
+function RougeOutsideModel:setIsNewUnlockDifficulty(difficulty, isNew)
+	self:_saveUnlockDifficulty(difficulty, isNew and TRUE or FALSE)
 end
 
-function var_0_0.getIsNewUnlockStyle(arg_26_0, arg_26_1)
-	return arg_26_0:_getUnlockStyle(arg_26_1, var_0_2) == var_0_1
+function RougeOutsideModel:getIsNewUnlockStyle(style)
+	return self:_getUnlockStyle(style, FALSE) == TRUE
 end
 
-function var_0_0.setIsNewUnlockStyle(arg_27_0, arg_27_1, arg_27_2)
-	arg_27_0:_saveUnlockStyle(arg_27_1, arg_27_2 and var_0_1 or var_0_2)
+function RougeOutsideModel:setIsNewUnlockStyle(style, isNew)
+	self:_saveUnlockStyle(style, isNew and TRUE or FALSE)
 end
 
-local var_0_3 = "RougeOutside|"
-local var_0_4 = "LastMark|"
+local kPrefix = "RougeOutside|"
+local kLastMarkPrefix = "LastMark|"
 
-function var_0_0._getPrefsKeyPrefix(arg_28_0)
-	local var_28_0 = arg_28_0:season()
-	local var_28_1 = RougeModel.instance:getVersion()
-	local var_28_2 = table.concat(var_28_1, "#")
+function RougeOutsideModel:_getPrefsKeyPrefix()
+	local season = self:season()
+	local versionList = RougeModel.instance:getVersion()
+	local versionStr = table.concat(versionList, "#")
 
-	return var_0_3 .. tostring(var_28_0) .. tostring(var_28_2)
+	return kPrefix .. tostring(season) .. tostring(versionStr)
 end
 
-function var_0_0._saveInteger(arg_29_0, arg_29_1, arg_29_2)
-	GameUtil.playerPrefsSetNumberByUserId(arg_29_1, arg_29_2)
+function RougeOutsideModel:_saveInteger(key, value)
+	GameUtil.playerPrefsSetNumberByUserId(key, value)
 end
 
-function var_0_0._getInteger(arg_30_0, arg_30_1, arg_30_2)
-	return GameUtil.playerPrefsGetNumberByUserId(arg_30_1, arg_30_2)
+function RougeOutsideModel:_getInteger(key, defaultValue)
+	return GameUtil.playerPrefsGetNumberByUserId(key, defaultValue)
 end
 
-local var_0_5 = "D|"
+local kDifficultyPrefix = "D|"
 
-function var_0_0._getPrefsKeyDifficulty(arg_31_0, arg_31_1)
-	assert(type(arg_31_1) == "number")
+function RougeOutsideModel:_getPrefsKeyDifficulty(difficulty)
+	assert(type(difficulty) == "number")
 
-	return arg_31_0:_getPrefsKeyPrefix() .. var_0_5 .. tostring(arg_31_1)
+	return self:_getPrefsKeyPrefix() .. kDifficultyPrefix .. tostring(difficulty)
 end
 
-function var_0_0._saveUnlockDifficulty(arg_32_0, arg_32_1, arg_32_2)
-	local var_32_0 = arg_32_0:_getPrefsKeyDifficulty(arg_32_1)
+function RougeOutsideModel:_saveUnlockDifficulty(difficulty, value)
+	local playerPrefsKey = self:_getPrefsKeyDifficulty(difficulty)
 
-	arg_32_0:_saveInteger(var_32_0, arg_32_2)
+	self:_saveInteger(playerPrefsKey, value)
 end
 
-function var_0_0._getUnlockDifficulty(arg_33_0, arg_33_1, arg_33_2)
-	local var_33_0 = arg_33_0:_getPrefsKeyDifficulty(arg_33_1)
+function RougeOutsideModel:_getUnlockDifficulty(difficulty, defaultValue)
+	local playerPrefsKey = self:_getPrefsKeyDifficulty(difficulty)
 
-	return arg_33_0:_getInteger(var_33_0, arg_33_2)
+	return self:_getInteger(playerPrefsKey, defaultValue)
 end
 
-function var_0_0._getPrefsKeyLastMarkDifficulty(arg_34_0)
-	return arg_34_0:_getPrefsKeyPrefix() .. var_0_4 .. var_0_5
+function RougeOutsideModel:_getPrefsKeyLastMarkDifficulty()
+	return self:_getPrefsKeyPrefix() .. kLastMarkPrefix .. kDifficultyPrefix
 end
 
-function var_0_0.setLastMarkSelectedDifficulty(arg_35_0, arg_35_1)
-	local var_35_0 = arg_35_0:_getPrefsKeyLastMarkDifficulty()
+function RougeOutsideModel:setLastMarkSelectedDifficulty(value)
+	local playerPrefsKey = self:_getPrefsKeyLastMarkDifficulty()
 
-	arg_35_0:_saveInteger(var_35_0, arg_35_1)
+	self:_saveInteger(playerPrefsKey, value)
 end
 
-function var_0_0.getLastMarkSelectedDifficulty(arg_36_0, arg_36_1)
-	local var_36_0 = arg_36_0:_getPrefsKeyLastMarkDifficulty()
+function RougeOutsideModel:getLastMarkSelectedDifficulty(defaultValue)
+	local playerPrefsKey = self:_getPrefsKeyLastMarkDifficulty()
 
-	return arg_36_0:_getInteger(var_36_0, arg_36_1)
+	return self:_getInteger(playerPrefsKey, defaultValue)
 end
 
-local var_0_6 = "S|"
+local kStylePrefix = "S|"
 
-function var_0_0._getPrefsKeyStyle(arg_37_0, arg_37_1)
-	assert(type(arg_37_1) == "number")
+function RougeOutsideModel:_getPrefsKeyStyle(style)
+	assert(type(style) == "number")
 
-	return arg_37_0:_getPrefsKeyPrefix() .. var_0_6 .. tostring(arg_37_1)
+	return self:_getPrefsKeyPrefix() .. kStylePrefix .. tostring(style)
 end
 
-function var_0_0._saveUnlockStyle(arg_38_0, arg_38_1, arg_38_2)
-	local var_38_0 = arg_38_0:_getPrefsKeyStyle(arg_38_1)
+function RougeOutsideModel:_saveUnlockStyle(style, value)
+	local playerPrefsKey = self:_getPrefsKeyStyle(style)
 
-	arg_38_0:_saveInteger(var_38_0, arg_38_2)
+	self:_saveInteger(playerPrefsKey, value)
 end
 
-function var_0_0._getUnlockStyle(arg_39_0, arg_39_1, arg_39_2)
-	local var_39_0 = arg_39_0:_getPrefsKeyStyle(arg_39_1)
+function RougeOutsideModel:_getUnlockStyle(style, defaultValue)
+	local playerPrefsKey = self:_getPrefsKeyStyle(style)
 
-	return arg_39_0:_getInteger(var_39_0, arg_39_2)
+	return self:_getInteger(playerPrefsKey, defaultValue)
 end
 
-function var_0_0.passedLayerId(arg_40_0, arg_40_1)
-	if not arg_40_0._rougeGameRecord then
+function RougeOutsideModel:passedLayerId(layerId)
+	if not self._rougeGameRecord then
 		return false
 	end
 
-	return arg_40_0._rougeGameRecord:passedLayerId(arg_40_1)
+	return self._rougeGameRecord:passedLayerId(layerId)
 end
 
-function var_0_0.collectionIsPass(arg_41_0, arg_41_1)
-	if not arg_41_0._rougeGameRecord then
+function RougeOutsideModel:collectionIsPass(id)
+	if not self._rougeGameRecord then
 		return false
 	end
 
-	return arg_41_0._rougeGameRecord:collectionIsPass(arg_41_1)
+	return self._rougeGameRecord:collectionIsPass(id)
 end
 
-function var_0_0.storyIsPass(arg_42_0, arg_42_1)
-	if not arg_42_0._rougeGameRecord then
+function RougeOutsideModel:storyIsPass(id)
+	if not self._rougeGameRecord then
 		return false
 	end
 
-	return arg_42_0._rougeGameRecord:storyIsPass(arg_42_1)
+	return self._rougeGameRecord:storyIsPass(id)
 end
 
-function var_0_0.passedAnyEventId(arg_43_0, arg_43_1)
-	for iter_43_0, iter_43_1 in ipairs(arg_43_1) do
-		if arg_43_0:passedEventId(iter_43_1) then
+function RougeOutsideModel:passedAnyEventId(list)
+	for i, v in ipairs(list) do
+		if self:passedEventId(v) then
 			return true
 		end
 	end
@@ -340,83 +343,87 @@ function var_0_0.passedAnyEventId(arg_43_0, arg_43_1)
 	return false
 end
 
-function var_0_0.passedEventId(arg_44_0, arg_44_1)
-	if not arg_44_0._rougeGameRecord then
+function RougeOutsideModel:passedEventId(eventId)
+	if not self._rougeGameRecord then
 		return false
 	end
 
-	return arg_44_0._rougeGameRecord:passedEventId(arg_44_1)
+	return self._rougeGameRecord:passedEventId(eventId)
 end
 
-function var_0_0.passAnyOneEnd(arg_45_0)
-	return arg_45_0._rougeGameRecord and arg_45_0._rougeGameRecord:passAnyOneEnd()
+function RougeOutsideModel:passAnyOneEnd()
+	return self._rougeGameRecord and self._rougeGameRecord:passAnyOneEnd()
 end
 
-function var_0_0.passEndId(arg_46_0, arg_46_1)
-	return arg_46_0._rougeGameRecord and arg_46_0._rougeGameRecord:passEndId(arg_46_1)
+function RougeOutsideModel:passEndId(endId)
+	return self._rougeGameRecord and self._rougeGameRecord:passEndId(endId)
 end
 
-function var_0_0.passEntrustId(arg_47_0, arg_47_1)
-	return arg_47_0._rougeGameRecord and arg_47_0._rougeGameRecord:passEntrustId(arg_47_1)
+function RougeOutsideModel:passEntrustId(entrustId)
+	return self._rougeGameRecord and self._rougeGameRecord:passEntrustId(entrustId)
 end
 
-function var_0_0.getGeniusBranchStartViewInfo(arg_48_0, arg_48_1)
-	if not RougeTalentModel.instance:isTalentUnlock(arg_48_1) then
+function RougeOutsideModel:getGeniusBranchStartViewInfo(geniusBranchId)
+	local isUnlock = RougeTalentModel.instance:isTalentUnlock(geniusBranchId)
+
+	if not isUnlock then
 		return 0
 	end
 
-	return arg_48_0._config:getGeniusBranchStartViewInfo(arg_48_1)
+	return self._config:getGeniusBranchStartViewInfo(geniusBranchId)
 end
 
-function var_0_0.getGeniusBranchStartViewDeltaValue(arg_49_0, arg_49_1, arg_49_2)
-	return arg_49_0:getGeniusBranchStartViewInfo(arg_49_1)[arg_49_2] or 0
+function RougeOutsideModel:getGeniusBranchStartViewDeltaValue(geniusBranchId, eStartViewEnum)
+	local startViewInfo = self:getGeniusBranchStartViewInfo(geniusBranchId)
+
+	return startViewInfo[eStartViewEnum] or 0
 end
 
-function var_0_0.getGeniusBranchStartViewAllInfo(arg_50_0)
-	local var_50_0 = {}
-	local var_50_1 = arg_50_0._config:getGeniusBranchIdListWithStartView()
+function RougeOutsideModel:getGeniusBranchStartViewAllInfo()
+	local refDict = {}
+	local list = self._config:getGeniusBranchIdListWithStartView()
 
-	for iter_50_0, iter_50_1 in ipairs(var_50_1) do
-		var_50_0[iter_50_1] = false
+	for _, geniusBranchId in ipairs(list) do
+		refDict[geniusBranchId] = false
 	end
 
-	RougeTalentModel.instance:calcTalentUnlockIds(var_50_0)
+	RougeTalentModel.instance:calcTalentUnlockIds(refDict)
 
-	local var_50_2 = {}
+	local res = {}
 
-	for iter_50_2, iter_50_3 in pairs(var_50_0) do
-		if iter_50_3 then
-			local var_50_3 = arg_50_0._config:getGeniusBranchStartViewInfo(iter_50_2)
+	for geniusBranchId, isUnlock in pairs(refDict) do
+		if isUnlock then
+			local startViewInfo = self._config:getGeniusBranchStartViewInfo(geniusBranchId)
 
-			for iter_50_4, iter_50_5 in pairs(var_50_3) do
-				var_50_2[iter_50_4] = (var_50_2[iter_50_4] or 0) + iter_50_5
+			for eStartViewEnum, value in pairs(startViewInfo) do
+				res[eStartViewEnum] = (res[eStartViewEnum] or 0) + value
 			end
 		end
 	end
 
-	return var_50_2
+	return res
 end
 
-function var_0_0.getStartViewAllInfo(arg_51_0, arg_51_1)
-	local var_51_0 = arg_51_0._config:getDifficultyCOStartViewInfo(arg_51_1)
-	local var_51_1 = arg_51_0:getGeniusBranchStartViewAllInfo()
-	local var_51_2 = {}
+function RougeOutsideModel:getStartViewAllInfo(difficulty)
+	local dict1 = self._config:getDifficultyCOStartViewInfo(difficulty)
+	local dict2 = self:getGeniusBranchStartViewAllInfo()
+	local res = {}
 
-	for iter_51_0, iter_51_1 in pairs(var_51_0) do
-		var_51_2[iter_51_0] = (var_51_2[iter_51_0] or 0) + iter_51_1
+	for eStartViewEnum, value in pairs(dict1) do
+		res[eStartViewEnum] = (res[eStartViewEnum] or 0) + value
 	end
 
-	for iter_51_2, iter_51_3 in pairs(var_51_1) do
-		var_51_2[iter_51_2] = (var_51_2[iter_51_2] or 0) + iter_51_3
+	for eStartViewEnum, value in pairs(dict2) do
+		res[eStartViewEnum] = (res[eStartViewEnum] or 0) + value
 	end
 
-	return var_51_2
+	return res
 end
 
-function var_0_0.getCurExtraPoint(arg_52_0)
-	return arg_52_0._rougeInfo and arg_52_0._rougeInfo.curExtraPoint or 0
+function RougeOutsideModel:getCurExtraPoint()
+	return self._rougeInfo and self._rougeInfo.curExtraPoint or 0
 end
 
-var_0_0.instance = var_0_0.New()
+RougeOutsideModel.instance = RougeOutsideModel.New()
 
-return var_0_0
+return RougeOutsideModel

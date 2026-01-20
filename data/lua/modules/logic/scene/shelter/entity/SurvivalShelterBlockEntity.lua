@@ -1,34 +1,37 @@
-﻿module("modules.logic.scene.shelter.entity.SurvivalShelterBlockEntity", package.seeall)
+﻿-- chunkname: @modules/logic/scene/shelter/entity/SurvivalShelterBlockEntity.lua
 
-local var_0_0 = class("SurvivalShelterBlockEntity", LuaCompBase)
+module("modules.logic.scene.shelter.entity.SurvivalShelterBlockEntity", package.seeall)
 
-function var_0_0.Create(arg_1_0, arg_1_1)
-	local var_1_0 = gohelper.create3d(arg_1_1, tostring(arg_1_0.pos))
-	local var_1_1, var_1_2, var_1_3 = SurvivalHelper.instance:hexPointToWorldPoint(arg_1_0.pos.q, arg_1_0.pos.r)
-	local var_1_4 = var_1_0.transform
+local SurvivalShelterBlockEntity = class("SurvivalShelterBlockEntity", LuaCompBase)
 
-	transformhelper.setLocalPos(var_1_4, var_1_1, var_1_2, var_1_3)
-	transformhelper.setLocalRotation(var_1_4, 0, arg_1_0.dir * 60 + 30, 0)
+function SurvivalShelterBlockEntity.Create(blockCo, root)
+	local go = gohelper.create3d(root, tostring(blockCo.pos))
+	local x, y, z = SurvivalHelper.instance:hexPointToWorldPoint(blockCo.pos.q, blockCo.pos.r)
+	local rootTrans = go.transform
 
-	local var_1_5 = SurvivalMapHelper.instance:getBlockRes(arg_1_0.assetPath)
+	transformhelper.setLocalPos(rootTrans, x, y, z)
+	transformhelper.setLocalRotation(rootTrans, 0, blockCo.dir * 60 + 30, 0)
 
-	if var_1_5 then
-		local var_1_6 = gohelper.clone(var_1_5, var_1_0).transform
+	local blockRes = SurvivalMapHelper.instance:getBlockRes(blockCo.assetPath)
 
-		transformhelper.setLocalPos(var_1_6, 0, 0, 0)
-		transformhelper.setLocalRotation(var_1_6, 0, 0, 0)
-		transformhelper.setLocalScale(var_1_6, 1, 1, 1)
+	if blockRes then
+		local blockGo = gohelper.clone(blockRes, go)
+		local trans = blockGo.transform
+
+		transformhelper.setLocalPos(trans, 0, 0, 0)
+		transformhelper.setLocalRotation(trans, 0, 0, 0)
+		transformhelper.setLocalScale(trans, 1, 1, 1)
 	end
 
-	return MonoHelper.addNoUpdateLuaComOnceToGo(var_1_0, var_0_0, arg_1_0)
+	return MonoHelper.addNoUpdateLuaComOnceToGo(go, SurvivalShelterBlockEntity, blockCo)
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
+function SurvivalShelterBlockEntity:init(go)
+	self.go = go
 end
 
-function var_0_0.onStart(arg_3_0)
-	arg_3_0.go:GetComponent(typeof(SLFramework.LuaMonobehavier)).enabled = false
+function SurvivalShelterBlockEntity:onStart()
+	self.go:GetComponent(typeof(SLFramework.LuaMonobehavier)).enabled = false
 end
 
-return var_0_0
+return SurvivalShelterBlockEntity

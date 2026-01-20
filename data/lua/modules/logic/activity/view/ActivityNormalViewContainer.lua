@@ -1,46 +1,48 @@
-﻿module("modules.logic.activity.view.ActivityNormalViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/ActivityNormalViewContainer.lua
 
-local var_0_0 = class("ActivityNormalViewContainer", BaseViewContainer)
+module("modules.logic.activity.view.ActivityNormalViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+local ActivityNormalViewContainer = class("ActivityNormalViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "#scroll_item"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_1.cellClass = ActivityCategoryItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 1
-	var_1_1.cellWidth = 300
-	var_1_1.cellHeight = 125
-	var_1_1.cellSpaceH = 0
-	var_1_1.cellSpaceV = 9.8
-	var_1_1.startSpace = 0
+function ActivityNormalViewContainer:buildViews()
+	local views = {}
+	local scrollParam = ListScrollParam.New()
 
-	table.insert(var_1_0, LuaListScrollView.New(ActivityNormalCategoryListModel.instance, var_1_1))
-	table.insert(var_1_0, ActivityNormalView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
+	scrollParam.scrollGOPath = "#scroll_item"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = ActivityCategoryItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 300
+	scrollParam.cellHeight = 125
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 9.8
+	scrollParam.startSpace = 0
 
-	return var_1_0
+	table.insert(views, LuaListScrollView.New(ActivityNormalCategoryListModel.instance, scrollParam))
+	table.insert(views, ActivityNormalView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_btns"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigationView = NavigateButtonsView.New({
+function ActivityNormalViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigationView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			arg_2_0.navigationView
+			self.navigationView
 		}
 	end
 end
 
-function var_0_0.onContainerOpenFinish(arg_3_0)
-	arg_3_0.navigationView:resetOnCloseViewAudio(AudioEnum.UI.UI_Activity_close)
+function ActivityNormalViewContainer:onContainerOpenFinish()
+	self.navigationView:resetOnCloseViewAudio(AudioEnum.UI.UI_Activity_close)
 end
 
-return var_0_0
+return ActivityNormalViewContainer

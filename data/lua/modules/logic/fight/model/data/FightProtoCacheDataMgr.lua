@@ -1,50 +1,52 @@
-﻿module("modules.logic.fight.model.data.FightProtoCacheDataMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightProtoCacheDataMgr.lua
 
-local var_0_0 = FightDataClass("FightProtoCacheDataMgr", FightDataMgrBase)
+module("modules.logic.fight.model.data.FightProtoCacheDataMgr", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0.roundProtoList = {}
-	arg_1_0.fightProtoList = {}
+local FightProtoCacheDataMgr = FightDataClass("FightProtoCacheDataMgr", FightDataMgrBase)
+
+function FightProtoCacheDataMgr:onConstructor()
+	self.roundProtoList = {}
+	self.fightProtoList = {}
 end
 
-function var_0_0.addFightProto(arg_2_0, arg_2_1)
-	table.insert(arg_2_0.fightProtoList, arg_2_1)
+function FightProtoCacheDataMgr:addFightProto(proto)
+	table.insert(self.fightProtoList, proto)
 end
 
-function var_0_0.addRoundProto(arg_3_0, arg_3_1)
-	table.insert(arg_3_0.roundProtoList, arg_3_1)
+function FightProtoCacheDataMgr:addRoundProto(proto)
+	table.insert(self.roundProtoList, proto)
 end
 
-function var_0_0.getLastRoundProto(arg_4_0)
-	return arg_4_0.roundProtoList[#arg_4_0.roundProtoList]
+function FightProtoCacheDataMgr:getLastRoundProto()
+	return self.roundProtoList[#self.roundProtoList]
 end
 
-function var_0_0.getPreRoundProto(arg_5_0)
-	return arg_5_0.roundProtoList[#arg_5_0.roundProtoList - 1]
+function FightProtoCacheDataMgr:getPreRoundProto()
+	return self.roundProtoList[#self.roundProtoList - 1]
 end
 
-function var_0_0.getLastRoundNum(arg_6_0)
-	local var_6_0 = arg_6_0:getPreRoundProto()
+function FightProtoCacheDataMgr:getLastRoundNum()
+	local preRoundProto = self:getPreRoundProto()
 
-	if var_6_0 then
-		return var_6_0.curRound
+	if preRoundProto then
+		return preRoundProto.curRound
 	end
 end
 
-function var_0_0.getRoundNumByRoundProto(arg_7_0, arg_7_1)
-	local var_7_0
+function FightProtoCacheDataMgr:getRoundNumByRoundProto(roundProto)
+	local preRoundProto
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0.roundProtoList) do
-		if iter_7_1 == arg_7_1 then
-			var_7_0 = arg_7_0.roundProtoList[iter_7_0 - 1]
+	for i, v in ipairs(self.roundProtoList) do
+		if v == roundProto then
+			preRoundProto = self.roundProtoList[i - 1]
 
 			break
 		end
 	end
 
-	if var_7_0 then
-		return var_7_0.curRound
+	if preRoundProto then
+		return preRoundProto.curRound
 	end
 end
 
-return var_0_0
+return FightProtoCacheDataMgr

@@ -1,14 +1,16 @@
-﻿module("modules.logic.sdk.config.SDKEfunChannelEventEnum", package.seeall)
+﻿-- chunkname: @modules/logic/sdk/config/SDKEfunChannelEventEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.sdk.config.SDKEfunChannelEventEnum", package.seeall)
 
-var_0_0.EpisodePass = {
+local SDKEfunChannelEventEnum = _M
+
+SDKEfunChannelEventEnum.EpisodePass = {
 	[10103] = "finish_chap1.4",
 	[10106] = "finish_chap1.7",
 	[110101] = "finish_fight1",
 	[10101] = "finish_chap1.1"
 }
-var_0_0.PlayerLevelUp = {
+SDKEfunChannelEventEnum.PlayerLevelUp = {
 	"upgradeRole_l1",
 	"upgradeRole_l2",
 	"upgradeRole_l3",
@@ -26,27 +28,27 @@ var_0_0.PlayerLevelUp = {
 	"upgradeRole_l15",
 	[20] = "upgradeRole_l20"
 }
-var_0_0.FirstSummon = "first_1draw"
-var_0_0.FirstPurchase = "firstpurchase"
-var_0_0.NickName = "name"
-var_0_0.Purchase = {
+SDKEfunChannelEventEnum.FirstSummon = "first_1draw"
+SDKEfunChannelEventEnum.FirstPurchase = "firstpurchase"
+SDKEfunChannelEventEnum.NickName = "name"
+SDKEfunChannelEventEnum.Purchase = {
 	[710001] = "BattlePass1",
 	[610001] = "monthcard"
 }
-var_0_0.TotalChargeAmount = {
+SDKEfunChannelEventEnum.TotalChargeAmount = {
 	[999] = "rev9.99",
 	[99] = "rev0.99",
 	[9999] = "rev99.99",
 	[4999] = "rev49.99",
 	[2999] = "rev29.99"
 }
-var_0_0.ConsumeItem = {}
-var_0_0.Summon = {
+SDKEfunChannelEventEnum.ConsumeItem = {}
+SDKEfunChannelEventEnum.Summon = {
 	[10] = "first_10draws"
 }
-var_0_0.DailyTaskActive = {
+SDKEfunChannelEventEnum.DailyTaskActive = {
 	[16] = "daily_18"
 }
-var_0_0.HeroRankUp = {}
+SDKEfunChannelEventEnum.HeroRankUp = {}
 
-return var_0_0
+return SDKEfunChannelEventEnum

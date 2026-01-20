@@ -1,15 +1,17 @@
-﻿module("modules.logic.versionactivity1_9.heroinvitation.controller.HeroInvitationController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/heroinvitation/controller/HeroInvitationController.lua
 
-local var_0_0 = class("HeroInvitationController", BaseController)
+module("modules.logic.versionactivity1_9.heroinvitation.controller.HeroInvitationController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local HeroInvitationController = class("HeroInvitationController", BaseController)
+
+function HeroInvitationController:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function HeroInvitationController:onInitFinish()
 	return
 end
 
-var_0_0.instance = var_0_0.New()
+HeroInvitationController.instance = HeroInvitationController.New()
 
-return var_0_0
+return HeroInvitationController

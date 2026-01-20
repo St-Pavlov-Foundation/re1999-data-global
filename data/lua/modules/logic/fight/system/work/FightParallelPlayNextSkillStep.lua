@@ -1,65 +1,73 @@
-﻿module("modules.logic.fight.system.work.FightParallelPlayNextSkillStep", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightParallelPlayNextSkillStep.lua
 
-local var_0_0 = class("FightParallelPlayNextSkillStep", BaseWork)
+module("modules.logic.fight.system.work.FightParallelPlayNextSkillStep", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.fightStepData = arg_1_1
-	arg_1_0.preStepData = arg_1_2
-	arg_1_0.fightStepDataList = arg_1_3
+local FightParallelPlayNextSkillStep = class("FightParallelPlayNextSkillStep", BaseWork)
 
-	FightController.instance:registerCallback(FightEvent.ParallelPlayNextSkillCheck, arg_1_0._parallelPlayNextSkillCheck, arg_1_0)
+function FightParallelPlayNextSkillStep:ctor(fightStepData, preStepData, fightStepDataList)
+	self.fightStepData = fightStepData
+	self.preStepData = preStepData
+	self.fightStepDataList = fightStepDataList
+
+	FightController.instance:registerCallback(FightEvent.ParallelPlayNextSkillCheck, self._parallelPlayNextSkillCheck, self)
 end
 
-function var_0_0.onStart(arg_2_0)
-	arg_2_0:onDone(true)
+function FightParallelPlayNextSkillStep:onStart()
+	self:onDone(true)
 end
 
-function var_0_0._parallelPlayNextSkillCheck(arg_3_0, arg_3_1)
-	if arg_3_1 ~= arg_3_0.preStepData then
+function FightParallelPlayNextSkillStep:_parallelPlayNextSkillCheck(playingFightStepData)
+	if playingFightStepData ~= self.preStepData then
 		return
 	end
 
-	if not FightDataHelper.entityMgr:getById(arg_3_0.preStepData.fromId) then
+	local prevEntityMO = FightDataHelper.entityMgr:getById(self.preStepData.fromId)
+
+	if not prevEntityMO then
 		return
 	end
 
-	if FightCardDataHelper.isBigSkill(arg_3_0.preStepData.actId) then
+	if FightCardDataHelper.isBigSkill(self.preStepData.actId) then
 		return
 	end
 
-	if not FightDataHelper.entityMgr:getById(arg_3_0.fightStepData.fromId) then
+	local entityMO = FightDataHelper.entityMgr:getById(self.fightStepData.fromId)
+
+	if not entityMO then
 		return
 	end
 
-	if FightCardDataHelper.isBigSkill(arg_3_0.fightStepData.actId) then
+	if FightCardDataHelper.isBigSkill(self.fightStepData.actId) then
 		return
 	end
 
-	if FightSkillMgr.instance:isEntityPlayingTimeline(arg_3_0.fightStepData.fromId) then
+	if FightSkillMgr.instance:isEntityPlayingTimeline(self.fightStepData.fromId) then
 		return
 	end
 
-	if arg_3_0.fightStepData.fromId == arg_3_0.preStepData.fromId then
+	if self.fightStepData.fromId == self.preStepData.fromId then
 		return
 	end
 
-	local var_3_0 = FightDataHelper.entityMgr:getById(arg_3_0.fightStepData.fromId)
-	local var_3_1 = FightDataHelper.entityMgr:getById(arg_3_0.preStepData.fromId)
+	local entityMO1 = FightDataHelper.entityMgr:getById(self.fightStepData.fromId)
+	local entityMO2 = FightDataHelper.entityMgr:getById(self.preStepData.fromId)
 
-	if var_3_0.side ~= var_3_1.side then
+	if entityMO1.side ~= entityMO2.side then
 		return
 	end
 
-	if arg_3_0.fightStepDataList then
-		for iter_3_0 = (tabletool.indexOf(arg_3_0.fightStepDataList, arg_3_1) or #arg_3_0.fightStepDataList) + 1, #arg_3_0.fightStepDataList do
-			local var_3_2 = arg_3_0.fightStepDataList[iter_3_0]
+	if self.fightStepDataList then
+		local indexInMOList = tabletool.indexOf(self.fightStepDataList, playingFightStepData) or #self.fightStepDataList
 
-			if var_3_2.actType == FightEnum.ActType.EFFECT then
-				for iter_3_1, iter_3_2 in ipairs(var_3_2.actEffect) do
-					local var_3_3 = iter_3_2.effectType == FightEnum.EffectType.DEAD
-					local var_3_4 = arg_3_1.fromId == iter_3_2.targetId
+		for i = indexInMOList + 1, #self.fightStepDataList do
+			local oneFightStepData = self.fightStepDataList[i]
 
-					if var_3_3 and var_3_4 then
+			if oneFightStepData.actType == FightEnum.ActType.EFFECT then
+				for _, oneActEffectData in ipairs(oneFightStepData.actEffect) do
+					local hasDead = oneActEffectData.effectType == FightEnum.EffectType.DEAD
+					local isDeadEntity = playingFightStepData.fromId == oneActEffectData.targetId
+
+					if hasDead and isDeadEntity then
 						return
 					end
 				end
@@ -67,15 +75,15 @@ function var_0_0._parallelPlayNextSkillCheck(arg_3_0, arg_3_1)
 		end
 	end
 
-	FightController.instance:unregisterCallback(FightEvent.ParallelPlayNextSkillCheck, arg_3_0._parallelPlayNextSkillCheck, arg_3_0)
+	FightController.instance:unregisterCallback(FightEvent.ParallelPlayNextSkillCheck, self._parallelPlayNextSkillCheck, self)
 
-	arg_3_0.fightStepData.isParallelStep = true
+	self.fightStepData.isParallelStep = true
 
-	FightController.instance:dispatchEvent(FightEvent.ParallelPlayNextSkillDoneThis, arg_3_1)
+	FightController.instance:dispatchEvent(FightEvent.ParallelPlayNextSkillDoneThis, playingFightStepData)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	FightController.instance:unregisterCallback(FightEvent.ParallelPlayNextSkillCheck, arg_4_0._parallelPlayNextSkillCheck, arg_4_0)
+function FightParallelPlayNextSkillStep:clearWork()
+	FightController.instance:unregisterCallback(FightEvent.ParallelPlayNextSkillCheck, self._parallelPlayNextSkillCheck, self)
 end
 
-return var_0_0
+return FightParallelPlayNextSkillStep

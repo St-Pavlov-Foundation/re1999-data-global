@@ -1,64 +1,66 @@
-﻿module("modules.logic.versionactivity.model.VersionActivity112Model", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity/model/VersionActivity112Model.lua
 
-local var_0_0 = class("VersionActivity112Model", BaseModel)
+module("modules.logic.versionactivity.model.VersionActivity112Model", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0.infosDic = {}
+local VersionActivity112Model = class("VersionActivity112Model", BaseModel)
+
+function VersionActivity112Model:onInit()
+	self.infosDic = {}
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:onInit()
+function VersionActivity112Model:reInit()
+	self:onInit()
 end
 
-function var_0_0.updateInfo(arg_3_0, arg_3_1)
-	arg_3_0._lastActId = arg_3_1.activityId
-	arg_3_0.infosDic[arg_3_1.activityId] = {}
+function VersionActivity112Model:updateInfo(msg)
+	self._lastActId = msg.activityId
+	self.infosDic[msg.activityId] = {}
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1.infos) do
-		arg_3_0.infosDic[arg_3_1.activityId][iter_3_1.id] = iter_3_1
+	for i, v in ipairs(msg.infos) do
+		self.infosDic[msg.activityId][v.id] = v
 	end
 
-	VersionActivity112TaskListModel.instance:refreshAlllTaskInfo(arg_3_1.activityId, arg_3_1.act112Tasks)
+	VersionActivity112TaskListModel.instance:refreshAlllTaskInfo(msg.activityId, msg.act112Tasks)
 	VersionActivityController.instance:dispatchEvent(VersionActivityEvent.VersionActivity112Update)
 end
 
-function var_0_0.updateRewardState(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0.infosDic[arg_4_1][arg_4_2].state = 1
+function VersionActivity112Model:updateRewardState(actId, id)
+	self.infosDic[actId][id].state = 1
 
 	VersionActivityController.instance:dispatchEvent(VersionActivityEvent.VersionActivity112Update)
 end
 
-function var_0_0.getRewardState(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_0.infosDic[arg_5_1] and arg_5_0.infosDic[arg_5_1][arg_5_2] then
-		return arg_5_0.infosDic[arg_5_1][arg_5_2].state
+function VersionActivity112Model:getRewardState(actId, id)
+	if self.infosDic[actId] and self.infosDic[actId][id] then
+		return self.infosDic[actId][id].state
 	end
 
 	return 0
 end
 
-function var_0_0.hasGetReward(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_2 = arg_6_2 or arg_6_0._lastActId
+function VersionActivity112Model:hasGetReward(id, actId)
+	actId = actId or self._lastActId
 
-	if arg_6_0.infosDic[arg_6_2] and arg_6_0.infosDic[arg_6_2][arg_6_1] then
-		return arg_6_0.infosDic[arg_6_2][arg_6_1].state == 1
+	if self.infosDic[actId] and self.infosDic[actId][id] then
+		return self.infosDic[actId][id].state == 1
 	end
 
 	return false
 end
 
-function var_0_0.getRewardList(arg_7_0, arg_7_1)
-	arg_7_1 = arg_7_1 or arg_7_0._lastActId
+function VersionActivity112Model:getRewardList(actId)
+	actId = actId or self._lastActId
 
-	local var_7_0 = VersionActivityConfig.instance:getAct112Config(arg_7_1)
-	local var_7_1 = {}
+	local configList = VersionActivityConfig.instance:getAct112Config(actId)
+	local list = {}
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-		table.insert(var_7_1, iter_7_1)
+	for i, v in ipairs(configList) do
+		table.insert(list, v)
 	end
 
-	return var_7_1
+	return list
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity112Model.instance = VersionActivity112Model.New()
 
-return var_0_0
+return VersionActivity112Model

@@ -1,80 +1,82 @@
-﻿module("modules.logic.weather.eggs.SceneBaseEgg", package.seeall)
+﻿-- chunkname: @modules/logic/weather/eggs/SceneBaseEgg.lua
 
-local var_0_0 = class("SceneBaseEgg")
+module("modules.logic.weather.eggs.SceneBaseEgg", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local SceneBaseEgg = class("SceneBaseEgg")
+
+function SceneBaseEgg:ctor()
 	return
 end
 
-function var_0_0.onEnable(arg_2_0)
-	arg_2_0:_onEnable()
+function SceneBaseEgg:onEnable()
+	self:_onEnable()
 end
 
-function var_0_0._onEnable(arg_3_0)
+function SceneBaseEgg:_onEnable()
 	return
 end
 
-function var_0_0.onDisable(arg_4_0)
-	arg_4_0:_onDisable()
+function SceneBaseEgg:onDisable()
+	self:_onDisable()
 end
 
-function var_0_0._onDisable(arg_5_0)
+function SceneBaseEgg:_onDisable()
 	return
 end
 
-function var_0_0.onReportChange(arg_6_0, arg_6_1)
-	arg_6_0:_onReportChange(arg_6_1)
+function SceneBaseEgg:onReportChange(report)
+	self:_onReportChange(report)
 end
 
-function var_0_0._onReportChange(arg_7_0, arg_7_1)
+function SceneBaseEgg:_onReportChange(report)
 	return
 end
 
-function var_0_0.init(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4)
-	arg_8_0._sceneGo = arg_8_1
-	arg_8_0._context = arg_8_4
-	arg_8_0._goList = arg_8_2
-	arg_8_0._eggConfig = arg_8_3
+function SceneBaseEgg:init(sceneGo, goList, eggConfig, context)
+	self._sceneGo = sceneGo
+	self._context = context
+	self._goList = goList
+	self._eggConfig = eggConfig
 
-	arg_8_0:_onInit()
+	self:_onInit()
 end
 
-function var_0_0.setGoListVisible(arg_9_0, arg_9_1)
-	if not arg_9_0._goList then
+function SceneBaseEgg:setGoListVisible(value)
+	if not self._goList then
 		return
 	end
 
-	for iter_9_0, iter_9_1 in pairs(arg_9_0._goList) do
-		gohelper.setActive(iter_9_1, arg_9_1)
+	for _, go in pairs(self._goList) do
+		gohelper.setActive(go, value)
 	end
 end
 
-function var_0_0.playAnim(arg_10_0, arg_10_1)
-	for iter_10_0, iter_10_1 in pairs(arg_10_0._goList) do
-		gohelper.setActive(iter_10_1, true)
+function SceneBaseEgg:playAnim(name)
+	for _, go in pairs(self._goList) do
+		gohelper.setActive(go, true)
 
-		local var_10_0 = iter_10_1 and iter_10_1:GetComponent("Animator")
+		local animator = go and go:GetComponent("Animator")
 
-		if var_10_0 then
-			var_10_0:Play(arg_10_1, 0, 0)
+		if animator then
+			animator:Play(name, 0, 0)
 		else
-			logError("go has no animator animName:" .. arg_10_1)
+			logError("go has no animator animName:" .. name)
 		end
 	end
 end
 
-function var_0_0._onInit(arg_11_0)
+function SceneBaseEgg:_onInit()
 	return
 end
 
-function var_0_0.onSceneClose(arg_12_0)
-	arg_12_0._goList = nil
+function SceneBaseEgg:onSceneClose()
+	self._goList = nil
 
-	arg_12_0:_onSceneClose()
+	self:_onSceneClose()
 end
 
-function var_0_0._onSceneClose(arg_13_0)
+function SceneBaseEgg:_onSceneClose()
 	return
 end
 
-return var_0_0
+return SceneBaseEgg

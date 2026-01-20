@@ -1,379 +1,399 @@
-﻿module("modules.logic.versionactivity1_3.chess.view.Activity1_3ChessMapView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/chess/view/Activity1_3ChessMapView.lua
 
-local var_0_0 = class("Activity1_3ChessMapView", BaseView)
+module("modules.logic.versionactivity1_3.chess.view.Activity1_3ChessMapView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageTitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "LeftTop/#simage_Title")
-	arg_1_0._btnRewardBtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "RightTop/#btn_RewardBtn")
-	arg_1_0._goStage1 = gohelper.findChild(arg_1_0.viewGO, "Map/Path1/#go_Stage1")
-	arg_1_0._goStage2 = gohelper.findChild(arg_1_0.viewGO, "Map/Path1/#go_Stage2")
-	arg_1_0._goStage3 = gohelper.findChild(arg_1_0.viewGO, "Map/Path1/#go_Stage3")
-	arg_1_0._goStage4 = gohelper.findChild(arg_1_0.viewGO, "Map/Path1/#go_Stage4")
-	arg_1_0._goNextBtn = gohelper.findChild(arg_1_0.viewGO, "Map/Path1/#go_NextBtn")
-	arg_1_0._goNextBtnRoot = gohelper.findChild(arg_1_0.viewGO, "Map/Path1/#go_NextBtn/Root")
-	arg_1_0._txtStageName = gohelper.findChildText(arg_1_0.viewGO, "Map/Path1/#go_NextBtn/Root/Info/#txt_StageName")
-	arg_1_0._goImageLock = gohelper.findChild(arg_1_0.viewGO, "Map/Path1/#go_NextBtn/Root/Info/#image_Lock")
-	arg_1_0._goLockBg = gohelper.findChild(arg_1_0.viewGO, "Map/Path1/#go_NextBtn/Root/#image_StageNormalBG")
-	arg_1_0._txtStageNum = gohelper.findChildText(arg_1_0.viewGO, "Map/Path1/#go_NextBtn/Root/Info/#txt_StageName/#txt_StageNum")
-	arg_1_0._btnGoNextClick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Map/Path1/#go_NextBtn/Root/#btn_Click")
-	arg_1_0._goPath2Stage1 = gohelper.findChild(arg_1_0.viewGO, "Map/Path2/#go_Stage1")
-	arg_1_0._goPath2Stage2 = gohelper.findChild(arg_1_0.viewGO, "Map/Path2/#go_Stage2")
-	arg_1_0._goPath2Stage3 = gohelper.findChild(arg_1_0.viewGO, "Map/Path2/#go_Stage3")
-	arg_1_0._goPath2Stage4 = gohelper.findChild(arg_1_0.viewGO, "Map/Path2/#go_Stage4")
-	arg_1_0._goPreviousBtn = gohelper.findChild(arg_1_0.viewGO, "Map/Path2/#go_PreviousBtn")
-	arg_1_0._btnPath2Click = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Map/Path2/#go_PreviousBtn/Root/#btn_Click")
-	arg_1_0._goPath1 = gohelper.findChild(arg_1_0.viewGO, "Map/Path1")
-	arg_1_0._goPath2 = gohelper.findChild(arg_1_0.viewGO, "Map/Path2")
-	arg_1_0._goreceive = gohelper.findChild(arg_1_0.viewGO, "RightTop/ani/gifts_receive")
-	arg_1_0._simageMask = gohelper.findChildSingleImage(arg_1_0.viewGO, "image_Mask")
-	arg_1_0._simageMainPath1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "Map/Path1/image_MainPath1")
-	arg_1_0._simageMainPath2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "Map/Path2/image_MainPath2")
-	arg_1_0._goexcessive = gohelper.findChild(arg_1_0.viewGO, "#go_excessive")
+local Activity1_3ChessMapView = class("Activity1_3ChessMapView", BaseView)
 
-	gohelper.setActive(arg_1_0._goexcessive, true)
+function Activity1_3ChessMapView:onInitView()
+	self._simageTitle = gohelper.findChildSingleImage(self.viewGO, "LeftTop/#simage_Title")
+	self._btnRewardBtn = gohelper.findChildButtonWithAudio(self.viewGO, "RightTop/#btn_RewardBtn")
+	self._goStage1 = gohelper.findChild(self.viewGO, "Map/Path1/#go_Stage1")
+	self._goStage2 = gohelper.findChild(self.viewGO, "Map/Path1/#go_Stage2")
+	self._goStage3 = gohelper.findChild(self.viewGO, "Map/Path1/#go_Stage3")
+	self._goStage4 = gohelper.findChild(self.viewGO, "Map/Path1/#go_Stage4")
+	self._goNextBtn = gohelper.findChild(self.viewGO, "Map/Path1/#go_NextBtn")
+	self._goNextBtnRoot = gohelper.findChild(self.viewGO, "Map/Path1/#go_NextBtn/Root")
+	self._txtStageName = gohelper.findChildText(self.viewGO, "Map/Path1/#go_NextBtn/Root/Info/#txt_StageName")
+	self._goImageLock = gohelper.findChild(self.viewGO, "Map/Path1/#go_NextBtn/Root/Info/#image_Lock")
+	self._goLockBg = gohelper.findChild(self.viewGO, "Map/Path1/#go_NextBtn/Root/#image_StageNormalBG")
+	self._txtStageNum = gohelper.findChildText(self.viewGO, "Map/Path1/#go_NextBtn/Root/Info/#txt_StageName/#txt_StageNum")
+	self._btnGoNextClick = gohelper.findChildButtonWithAudio(self.viewGO, "Map/Path1/#go_NextBtn/Root/#btn_Click")
+	self._goPath2Stage1 = gohelper.findChild(self.viewGO, "Map/Path2/#go_Stage1")
+	self._goPath2Stage2 = gohelper.findChild(self.viewGO, "Map/Path2/#go_Stage2")
+	self._goPath2Stage3 = gohelper.findChild(self.viewGO, "Map/Path2/#go_Stage3")
+	self._goPath2Stage4 = gohelper.findChild(self.viewGO, "Map/Path2/#go_Stage4")
+	self._goPreviousBtn = gohelper.findChild(self.viewGO, "Map/Path2/#go_PreviousBtn")
+	self._btnPath2Click = gohelper.findChildButtonWithAudio(self.viewGO, "Map/Path2/#go_PreviousBtn/Root/#btn_Click")
+	self._goPath1 = gohelper.findChild(self.viewGO, "Map/Path1")
+	self._goPath2 = gohelper.findChild(self.viewGO, "Map/Path2")
+	self._goreceive = gohelper.findChild(self.viewGO, "RightTop/ani/gifts_receive")
+	self._simageMask = gohelper.findChildSingleImage(self.viewGO, "image_Mask")
+	self._simageMainPath1 = gohelper.findChildSingleImage(self.viewGO, "Map/Path1/image_MainPath1")
+	self._simageMainPath2 = gohelper.findChildSingleImage(self.viewGO, "Map/Path2/image_MainPath2")
+	self._goexcessive = gohelper.findChild(self.viewGO, "#go_excessive")
 
-	arg_1_0._goRedDotRoot = gohelper.findChild(arg_1_0.viewGO, "RightTop/#go_reddotreward")
+	gohelper.setActive(self._goexcessive, true)
 
-	local var_1_0 = typeof(UnityEngine.Animator)
+	self._goRedDotRoot = gohelper.findChild(self.viewGO, "RightTop/#go_reddotreward")
 
-	arg_1_0._viewAnimator = arg_1_0.viewGO:GetComponent(var_1_0)
-	arg_1_0._rewardAnimator = gohelper.findChildComponent(arg_1_0.viewGO, "RightTop/ani", var_1_0)
+	local animatorType = typeof(UnityEngine.Animator)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	self._viewAnimator = self.viewGO:GetComponent(animatorType)
+	self._rewardAnimator = gohelper.findChildComponent(self.viewGO, "RightTop/ani", animatorType)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnRewardBtn:AddClickListener(arg_2_0._btnRewardBtnOnClick, arg_2_0)
-	arg_2_0._btnGoNextClick:AddClickListener(arg_2_0._btnClickOnClick, arg_2_0)
-	arg_2_0._btnPath2Click:AddClickListener(arg_2_0._btnPath2ClickOnClick, arg_2_0)
-	arg_2_0:addEventCb(Activity1_3ChessController.instance, Activity1_3ChessEvent.ClickEpisode, arg_2_0._onGotoTaskEpisode, arg_2_0)
-	arg_2_0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_2_0._refreshRewardAnim, arg_2_0)
+function Activity1_3ChessMapView:addEvents()
+	self._btnRewardBtn:AddClickListener(self._btnRewardBtnOnClick, self)
+	self._btnGoNextClick:AddClickListener(self._btnClickOnClick, self)
+	self._btnPath2Click:AddClickListener(self._btnPath2ClickOnClick, self)
+	self:addEventCb(Activity1_3ChessController.instance, Activity1_3ChessEvent.ClickEpisode, self._onGotoTaskEpisode, self)
+	self:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, self._refreshRewardAnim, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnRewardBtn:RemoveClickListener()
-	arg_3_0._btnGoNextClick:RemoveClickListener()
-	arg_3_0._btnPath2Click:RemoveClickListener()
+function Activity1_3ChessMapView:removeEvents()
+	self._btnRewardBtn:RemoveClickListener()
+	self._btnGoNextClick:RemoveClickListener()
+	self._btnPath2Click:RemoveClickListener()
 end
 
-function var_0_0._btnRewardBtnOnClick(arg_4_0)
+function Activity1_3ChessMapView:_btnRewardBtnOnClick()
 	ViewMgr.instance:openView(ViewName.Activity1_3ChessTaskView)
 end
 
-function var_0_0._btnClickOnClick(arg_5_0)
-	if Activity1_3ChessController.instance:checkEpisodeIsOpenByChapterId(Activity1_3ChessEnum.Chapter.Two) then
+function Activity1_3ChessMapView:_btnClickOnClick()
+	local isChapter2Open = Activity1_3ChessController.instance:checkEpisodeIsOpenByChapterId(Activity1_3ChessEnum.Chapter.Two)
+
+	if isChapter2Open then
 		AudioMgr.instance:trigger(AudioEnum.RoleChessGame1_3Common.NextStage)
-		arg_5_0:_beginSwitchStage(Activity1_3ChessEnum.Chapter.Two)
+		self:_beginSwitchStage(Activity1_3ChessEnum.Chapter.Two)
 	else
 		GameFacade.showToast(ToastEnum.Va3Act120ChapterNotOpenTime)
 	end
 end
 
-function var_0_0._btnPath2ClickOnClick(arg_6_0)
+function Activity1_3ChessMapView:_btnPath2ClickOnClick()
 	AudioMgr.instance:trigger(AudioEnum.RoleChessGame1_3Common.NextStage)
-	arg_6_0:_beginSwitchStage(Activity1_3ChessEnum.Chapter.One)
+	self:_beginSwitchStage(Activity1_3ChessEnum.Chapter.One)
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0._path1NodeRoots = {
-		arg_7_0._goStage1,
-		arg_7_0._goStage2,
-		arg_7_0._goStage3,
-		arg_7_0._goStage4
+function Activity1_3ChessMapView:_editableInitView()
+	self._path1NodeRoots = {
+		self._goStage1,
+		self._goStage2,
+		self._goStage3,
+		self._goStage4
 	}
-	arg_7_0._path2NodeRoots = {
-		arg_7_0._goPath2Stage1,
-		arg_7_0._goPath2Stage2,
-		arg_7_0._goPath2Stage3,
-		arg_7_0._goPath2Stage4
+	self._path2NodeRoots = {
+		self._goPath2Stage1,
+		self._goPath2Stage2,
+		self._goPath2Stage3,
+		self._goPath2Stage4
 	}
-	arg_7_0._stageRoots = {
-		arg_7_0._goPath1,
-		arg_7_0._goPath2
+	self._stageRoots = {
+		self._goPath1,
+		self._goPath2
 	}
 
-	MainCameraMgr.instance:addView(arg_7_0.viewName, arg_7_0.initCamera, nil, arg_7_0)
-	arg_7_0._simageMask:LoadImage(ResUrl.getJiaLaBoNaIcon("v1a3_role1_igfullmask"))
-	arg_7_0._simageMainPath1:LoadImage(ResUrl.get1_3ChessMapIcon("v1a3_role2_og_mapmainpath_1"))
-	arg_7_0._simageMainPath2:LoadImage(ResUrl.get1_3ChessMapIcon("v1a3_role2_og_mapmainpath_2"))
-	RedDotController.instance:addRedDot(arg_7_0._goRedDotRoot, RedDotEnum.DotNode.Activity1_3RedDotAct122Reward)
+	MainCameraMgr.instance:addView(self.viewName, self.initCamera, nil, self)
+	self._simageMask:LoadImage(ResUrl.getJiaLaBoNaIcon("v1a3_role1_igfullmask"))
+	self._simageMainPath1:LoadImage(ResUrl.get1_3ChessMapIcon("v1a3_role2_og_mapmainpath_1"))
+	self._simageMainPath2:LoadImage(ResUrl.get1_3ChessMapIcon("v1a3_role2_og_mapmainpath_2"))
+	RedDotController.instance:addRedDot(self._goRedDotRoot, RedDotEnum.DotNode.Activity1_3RedDotAct122Reward)
 end
 
-function var_0_0.initCamera(arg_8_0)
-	local var_8_0 = CameraMgr.instance:getMainCamera()
+function Activity1_3ChessMapView:initCamera()
+	local camera = CameraMgr.instance:getMainCamera()
 
-	var_8_0.orthographic = true
-	var_8_0.orthographicSize = 8.75 * GameUtil.getAdapterScale(true)
+	camera.orthographic = true
+
+	local scale = GameUtil.getAdapterScale(true)
+
+	camera.orthographicSize = 8.75 * scale
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
-	arg_9_0:_refreshNextChapterView()
+function Activity1_3ChessMapView:onUpdateParam()
+	self:_refreshNextChapterView()
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0:_initMapNodeItems()
-	arg_10_0:_refreshNodeItemViews()
+function Activity1_3ChessMapView:onOpen()
+	self:_initMapNodeItems()
+	self:_refreshNodeItemViews()
 
-	local var_10_0 = Activity122Model.instance:getCurEpisodeId()
-	local var_10_1 = VersionActivity1_3Enum.ActivityId.Act304
-	local var_10_2 = Va3ChessConfig.instance:getEpisodeCo(var_10_1, var_10_0)
-	local var_10_3 = var_10_2 and var_10_2.chapterId or 1
+	local curEpisodeId = Activity122Model.instance:getCurEpisodeId()
+	local actId = VersionActivity1_3Enum.ActivityId.Act304
+	local episodeCfg = Va3ChessConfig.instance:getEpisodeCo(actId, curEpisodeId)
+	local stage = episodeCfg and episodeCfg.chapterId or 1
 
-	arg_10_0:_switchToStage(var_10_3)
-	arg_10_0.viewContainer:showEnterSceneView(var_10_3)
-	arg_10_0:_refreshNextChapterView()
-	arg_10_0:_refreshRewardAnim()
-	arg_10_0:playViewAnimation(UIAnimationName.Open)
+	self:_switchToStage(stage)
+	self.viewContainer:showEnterSceneView(stage)
+	self:_refreshNextChapterView()
+	self:_refreshRewardAnim()
+	self:playViewAnimation(UIAnimationName.Open)
 end
 
-function var_0_0.onClose(arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0._acturalSwitchStage, arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0._playNodeAppearEnd, arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0._playNextBtnUnlockAni, arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0._playNodeAppearAnimation, arg_11_0)
+function Activity1_3ChessMapView:onClose()
+	TaskDispatcher.cancelTask(self._acturalSwitchStage, self)
+	TaskDispatcher.cancelTask(self._playNodeAppearEnd, self)
+	TaskDispatcher.cancelTask(self._playNextBtnUnlockAni, self)
+	TaskDispatcher.cancelTask(self._playNodeAppearAnimation, self)
 end
 
-function var_0_0.onDestroyView(arg_12_0)
-	if arg_12_0._nodeItemDict then
-		for iter_12_0, iter_12_1 in pairs(arg_12_0._nodeItemDict) do
-			iter_12_1:onDestroyView()
+function Activity1_3ChessMapView:onDestroyView()
+	if self._nodeItemDict then
+		for _, nodeItem in pairs(self._nodeItemDict) do
+			nodeItem:onDestroyView()
 		end
 	end
 
-	arg_12_0._nodeItemDict = nil
+	self._nodeItemDict = nil
 
-	arg_12_0._simageMask:UnLoadImage()
-	arg_12_0._simageMainPath2:UnLoadImage()
-	arg_12_0._simageMainPath1:UnLoadImage()
+	self._simageMask:UnLoadImage()
+	self._simageMainPath2:UnLoadImage()
+	self._simageMainPath1:UnLoadImage()
 end
 
-function var_0_0._initMapNodeItems(arg_13_0)
-	if arg_13_0._nodeItemDict then
+function Activity1_3ChessMapView:_initMapNodeItems()
+	if self._nodeItemDict then
 		return
 	end
 
-	arg_13_0._nodeItemDict = {}
+	self._nodeItemDict = {}
 
-	local var_13_0 = VersionActivity1_3Enum.ActivityId.Act304
+	local actId = VersionActivity1_3Enum.ActivityId.Act304
 
-	arg_13_0._episodeCfgList = Activity122Config.instance:getEpisodeList(var_13_0)
+	self._episodeCfgList = Activity122Config.instance:getEpisodeList(actId)
 
-	for iter_13_0, iter_13_1 in ipairs(arg_13_0._episodeCfgList) do
-		arg_13_0:_createMapNodeItem(iter_13_1)
+	for i, episodeCfg in ipairs(self._episodeCfgList) do
+		self:_createMapNodeItem(episodeCfg)
 	end
 end
 
-function var_0_0._createMapNodeItem(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_1.id
+function Activity1_3ChessMapView:_createMapNodeItem(episodeCfg)
+	local id = episodeCfg.id
+	local nodeItem = self._nodeItemDict[id]
 
-	if not arg_14_0._nodeItemDict[var_14_0] then
-		local var_14_1 = Activity1_3ChessMapNodeItem.prefabPath
-		local var_14_2 = var_14_0 <= #arg_14_0._path1NodeRoots and arg_14_0._path1NodeRoots[var_14_0] or arg_14_0._path2NodeRoots[var_14_0 - #arg_14_0._path1NodeRoots]
-		local var_14_3 = arg_14_0:getResInst(var_14_1, var_14_2)
-		local var_14_4 = MonoHelper.addNoUpdateLuaComOnceToGo(var_14_3, Activity1_3ChessMapNodeItem, arg_14_0)
+	if not nodeItem then
+		local prefabPath = Activity1_3ChessMapNodeItem.prefabPath
+		local root = id <= #self._path1NodeRoots and self._path1NodeRoots[id] or self._path2NodeRoots[id - #self._path1NodeRoots]
+		local cloneGo = self:getResInst(prefabPath, root)
+		local nodeItem = MonoHelper.addNoUpdateLuaComOnceToGo(cloneGo, Activity1_3ChessMapNodeItem, self)
 
-		var_14_4:setCfg(arg_14_1)
-		var_14_4:setClickCallback(arg_14_0._clickNodeCallback, arg_14_0)
+		nodeItem:setCfg(episodeCfg)
+		nodeItem:setClickCallback(self._clickNodeCallback, self)
 
-		arg_14_0._nodeItemDict[var_14_0] = var_14_4
+		self._nodeItemDict[id] = nodeItem
 	end
 end
 
-function var_0_0._refreshNodeItemViews(arg_15_0)
-	if not arg_15_0._nodeItemDict then
+function Activity1_3ChessMapView:_refreshNodeItemViews()
+	if not self._nodeItemDict then
 		return
 	end
 
-	for iter_15_0, iter_15_1 in pairs(arg_15_0._nodeItemDict) do
-		iter_15_1:refreshUI()
+	for id, nodeItem in pairs(self._nodeItemDict) do
+		nodeItem:refreshUI()
 	end
 end
 
-function var_0_0._refreshNextChapterView(arg_16_0)
-	gohelper.setActive(arg_16_0._goNextBtn, true)
+function Activity1_3ChessMapView:_refreshNextChapterView()
+	gohelper.setActive(self._goNextBtn, true)
 
-	local var_16_0 = Activity122Model.instance:getPlayerCacheData()
-	local var_16_1 = Activity1_3ChessController.instance:checkEpisodeIsOpenByChapterId(Activity1_3ChessEnum.Chapter.Two)
+	local playerCacheData = Activity122Model.instance:getPlayerCacheData()
+	local isChapter2Open = Activity1_3ChessController.instance:checkEpisodeIsOpenByChapterId(Activity1_3ChessEnum.Chapter.Two)
+	local needShowUnlockAni = isChapter2Open and playerCacheData.isNextChapterLock
 
-	if var_16_1 and var_16_0.isNextChapterLock then
-		var_16_0.isNextChapterLock = false
+	if needShowUnlockAni then
+		playerCacheData.isNextChapterLock = false
 
 		Activity122Model.instance:saveCacheData()
-		TaskDispatcher.runDelay(arg_16_0._playNextBtnUnlockAni, arg_16_0, 0.4)
+		TaskDispatcher.runDelay(self._playNextBtnUnlockAni, self, 0.4)
 	end
 
-	gohelper.setActive(arg_16_0._goImageLock, not var_16_1)
-	ZProj.UGUIHelper.SetGrayFactor(arg_16_0._goLockBg, var_16_1 and 0 or 1)
+	gohelper.setActive(self._goImageLock, not isChapter2Open)
+	ZProj.UGUIHelper.SetGrayFactor(self._goLockBg, isChapter2Open and 0 or 1)
 end
 
-function var_0_0._clickNodeCallback(arg_17_0, arg_17_1)
-	local var_17_0 = Activity122Model.instance:getCurEpisodeId()
+function Activity1_3ChessMapView:_clickNodeCallback(id)
+	local curEpisodeId = Activity122Model.instance:getCurEpisodeId()
 
-	if var_17_0 == arg_17_1 then
-		arg_17_0._targetNodeId = arg_17_1
+	if curEpisodeId == id then
+		self._targetNodeId = id
 
-		arg_17_0:_playNodeAppearEnd()
+		self:_playNodeAppearEnd()
 	else
-		local var_17_1 = VersionActivity1_3Enum.ActivityId.Act304
-		local var_17_2 = Va3ChessConfig.instance:getEpisodeCo(var_17_1, var_17_0)
-		local var_17_3 = Va3ChessConfig.instance:getEpisodeCo(var_17_1, var_17_0)
-		local var_17_4 = var_17_2.chapterId
-		local var_17_5 = var_17_3.chapterId == var_17_4
-		local var_17_6 = arg_17_0._nodeItemDict[var_17_0]
-		local var_17_7 = arg_17_0._nodeItemDict[arg_17_1]
+		local actId = VersionActivity1_3Enum.ActivityId.Act304
+		local episodeCfg = Va3ChessConfig.instance:getEpisodeCo(actId, curEpisodeId)
+		local targetEpisodeCfg = Va3ChessConfig.instance:getEpisodeCo(actId, curEpisodeId)
+		local curEpisodeChapter = episodeCfg.chapterId
+		local targetEpisodeChapter = targetEpisodeCfg.chapterId
+		local isSameChapter = targetEpisodeChapter == curEpisodeChapter
+		local curNode = self._nodeItemDict[curEpisodeId]
+		local targetNode = self._nodeItemDict[id]
 
-		if var_17_5 then
+		if isSameChapter then
 			UIBlockMgr.instance:startBlock(Activity1_3ChessEnum.UIBlockKey)
-			var_17_6:playDisAppearAni(arg_17_1)
+			curNode:playDisAppearAni(id)
 
-			arg_17_0._targetNodeId = arg_17_1
+			self._targetNodeId = id
 
-			TaskDispatcher.runDelay(arg_17_0._playNodeAppearAnimation, arg_17_0, 0.4)
+			TaskDispatcher.runDelay(self._playNodeAppearAnimation, self, 0.4)
 			AudioMgr.instance:trigger(AudioEnum.RoleChessGame1_3Common.PlayerChessMove)
 		else
-			var_17_7:playAppearAni(var_17_0)
+			targetNode:playAppearAni(curEpisodeId)
 			AudioMgr.instance:trigger(AudioEnum.RoleChessGame1_3Common.PlayerChessMove)
 		end
 	end
 end
 
-function var_0_0._playNodeAppearAnimation(arg_18_0, arg_18_1)
+function Activity1_3ChessMapView:_playNodeAppearAnimation(nodeId)
 	UIBlockMgr.instance:startBlock(Activity1_3ChessEnum.UIBlockKey)
 
-	local var_18_0 = Activity122Model.instance:getCurEpisodeId()
+	local curEpisodeId = Activity122Model.instance:getCurEpisodeId()
+	local nodeItem = self._nodeItemDict[self._targetNodeId]
 
-	arg_18_0._nodeItemDict[arg_18_0._targetNodeId]:playAppearAni(var_18_0)
-	TaskDispatcher.runDelay(arg_18_0._playNodeAppearEnd, arg_18_0, 0.8)
+	nodeItem:playAppearAni(curEpisodeId)
+	TaskDispatcher.runDelay(self._playNodeAppearEnd, self, 0.8)
 end
 
-function var_0_0._playNodeAppearEnd(arg_19_0)
+function Activity1_3ChessMapView:_playNodeAppearEnd()
 	UIBlockMgr.instance:startBlock(Activity1_3ChessEnum.UIBlockKey)
-	arg_19_0:playViewAnimation(UIAnimationName.Close)
-	Activity1_3ChessController.instance:requestEnterChessGame(arg_19_0._targetNodeId, 0.3)
+	self:playViewAnimation(UIAnimationName.Close)
+	Activity1_3ChessController.instance:requestEnterChessGame(self._targetNodeId, 0.3)
 
-	arg_19_0._targetNodeId = nil
+	self._targetNodeId = nil
 end
 
-function var_0_0._beginSwitchStage(arg_20_0, arg_20_1)
+function Activity1_3ChessMapView:_beginSwitchStage(Stage)
 	UIBlockMgr.instance:startBlock(Activity1_3ChessEnum.UIBlockKey)
-	arg_20_0:playSwitchSceneAni(arg_20_1 == Activity1_3ChessEnum.Chapter.Two)
+	self:playSwitchSceneAni(Stage == Activity1_3ChessEnum.Chapter.Two)
 
-	arg_20_0._delayToStage = arg_20_1
+	self._delayToStage = Stage
 
-	TaskDispatcher.cancelTask(arg_20_0._acturalSwitchStage, arg_20_0)
-	TaskDispatcher.runDelay(arg_20_0._acturalSwitchStage, arg_20_0, 0.5)
+	TaskDispatcher.cancelTask(self._acturalSwitchStage, self)
+	TaskDispatcher.runDelay(self._acturalSwitchStage, self, 0.5)
 end
 
-function var_0_0._acturalSwitchStage(arg_21_0, arg_21_1)
+function Activity1_3ChessMapView:_acturalSwitchStage(page)
 	UIBlockMgr.instance:endBlock(Activity1_3ChessEnum.UIBlockKey)
-	arg_21_0:_switchToStage(arg_21_0._delayToStage)
+	self:_switchToStage(self._delayToStage)
 end
 
-function var_0_0._switchToStage(arg_22_0, arg_22_1)
-	if arg_22_0:_checkChessMapStageOpen(arg_22_1) then
-		arg_22_0._curStage = arg_22_1
+function Activity1_3ChessMapView:_switchToStage(stage)
+	local isStageOpen = self:_checkChessMapStageOpen(stage)
 
-		for iter_22_0 = 1, #arg_22_0._stageRoots do
-			gohelper.setActive(arg_22_0._stageRoots[iter_22_0], iter_22_0 == arg_22_1)
+	if isStageOpen then
+		self._curStage = stage
+
+		for i = 1, #self._stageRoots do
+			gohelper.setActive(self._stageRoots[i], i == stage)
 		end
 	end
 
-	if arg_22_0.viewContainer.switchStage then
-		arg_22_0.viewContainer:switchStage(arg_22_1)
+	if self.viewContainer.switchStage then
+		self.viewContainer:switchStage(stage)
 	end
 end
 
-function var_0_0._checkChessMapStageOpen(arg_23_0, arg_23_1)
-	return (Activity1_3ChessController.instance:checkEpisodeIsOpenByChapterId(arg_23_1))
+function Activity1_3ChessMapView:_checkChessMapStageOpen(stage)
+	local isChapterOpen = Activity1_3ChessController.instance:checkEpisodeIsOpenByChapterId(stage)
+
+	return isChapterOpen
 end
 
-function var_0_0.onSetVisible(arg_24_0, arg_24_1, arg_24_2)
-	if arg_24_1 then
-		arg_24_0:_refreshNodeItemViews()
+function Activity1_3ChessMapView:onSetVisible(visible, isReviewingStory)
+	if visible then
+		self:_refreshNodeItemViews()
 
-		local var_24_0 = Activity122Model.instance:getCurEpisodeId()
-		local var_24_1 = VersionActivity1_3Enum.ActivityId.Act304
-		local var_24_2 = Va3ChessConfig.instance:getEpisodeCo(var_24_1, var_24_0)
-		local var_24_3 = var_24_2 and var_24_2.chapterId or 1
+		local curEpisodeId = Activity122Model.instance:getCurEpisodeId()
+		local actId = VersionActivity1_3Enum.ActivityId.Act304
+		local episodeCfg = Va3ChessConfig.instance:getEpisodeCo(actId, curEpisodeId)
+		local stage = episodeCfg and episodeCfg.chapterId or 1
 
-		if not arg_24_2 then
-			arg_24_0:_switchToStage(var_24_3)
+		if not isReviewingStory then
+			self:_switchToStage(stage)
 		end
 
-		arg_24_0:_refreshNextChapterView()
+		self:_refreshNextChapterView()
 	end
 end
 
-function var_0_0._onGotoTaskEpisode(arg_25_0, arg_25_1)
-	local var_25_0 = arg_25_0:_getEpisodeChapterId(arg_25_1)
+function Activity1_3ChessMapView:_onGotoTaskEpisode(EpisodeId)
+	local chapterId = self:_getEpisodeChapterId(EpisodeId)
 
-	if var_25_0 and var_25_0 ~= arg_25_0._curStage then
-		arg_25_0:_switchToStage(var_25_0)
+	if chapterId and chapterId ~= self._curStage then
+		self:_switchToStage(chapterId)
 	end
 
-	arg_25_0:_clickNodeCallback(arg_25_1)
+	self:_clickNodeCallback(EpisodeId)
 end
 
-function var_0_0._getEpisodeChapterId(arg_26_0, arg_26_1)
-	if not arg_26_0._episodeCfgList or #arg_26_0._episodeCfgList < 1 then
+function Activity1_3ChessMapView:_getEpisodeChapterId(episodeId)
+	if not self._episodeCfgList or #self._episodeCfgList < 1 then
 		return
 	end
 
-	local var_26_0 = arg_26_1 and Activity122Config.instance:getEpisodeCo(VersionActivity1_3Enum.ActivityId.Act304, arg_26_1)
+	local episodeCfg = episodeId and Activity122Config.instance:getEpisodeCo(VersionActivity1_3Enum.ActivityId.Act304, episodeId)
 
-	if var_26_0 and Activity1_3ChessController.isOpenDay(arg_26_1) then
-		return var_26_0.chapterId
+	if episodeCfg and Activity1_3ChessController.isOpenDay(episodeId) then
+		return episodeCfg.chapterId
 	end
 
-	local var_26_1 = arg_26_0._episodeCfgList[1]
+	local selectCfg = self._episodeCfgList[1]
 
-	for iter_26_0, iter_26_1 in ipairs(arg_26_0._episodeCfgList) do
-		if Activity122Model.instance:isEpisodeClear(iter_26_1.id) then
-			var_26_1 = iter_26_1
+	for _, episodeCfg in ipairs(self._episodeCfgList) do
+		if Activity122Model.instance:isEpisodeClear(episodeCfg.id) then
+			selectCfg = episodeCfg
 		else
-			if Activity1_3ChessController.isOpenDay(iter_26_1.id) then
-				var_26_1 = iter_26_1
+			if Activity1_3ChessController.isOpenDay(episodeCfg.id) then
+				selectCfg = episodeCfg
 			end
 
 			break
 		end
 	end
 
-	if var_26_1 then
-		return var_26_1.chapterId
+	if selectCfg then
+		return selectCfg.chapterId
 	end
 end
 
-function var_0_0.playViewAnimation(arg_27_0, arg_27_1)
-	arg_27_0._viewAnimator:Play(arg_27_1, 0, 0)
+function Activity1_3ChessMapView:playViewAnimation(aniName)
+	self._viewAnimator:Play(aniName, 0, 0)
 end
 
-function var_0_0._playNextBtnUnlockAni(arg_28_0)
-	gohelper.onceAddComponent(arg_28_0._goNextBtnRoot, typeof(UnityEngine.Animator)):Play(UIAnimationName.Unlock)
+function Activity1_3ChessMapView:_playNextBtnUnlockAni()
+	local animator = gohelper.onceAddComponent(self._goNextBtnRoot, typeof(UnityEngine.Animator))
+
+	animator:Play(UIAnimationName.Unlock)
 end
 
-function var_0_0.playCloseAnimation(arg_29_0, arg_29_1, arg_29_2)
-	gohelper.onceAddComponent(arg_29_0.viewGO, typeof(UnityEngine.Animator)):Play(UIAnimationName.Close, arg_29_1, arg_29_2)
+function Activity1_3ChessMapView:playCloseAnimation(callback, obj)
+	local animator = gohelper.onceAddComponent(self.viewGO, typeof(UnityEngine.Animator))
+
+	animator:Play(UIAnimationName.Close, callback, obj)
 end
 
-function var_0_0.playSwitchSceneAni(arg_30_0, arg_30_1)
-	gohelper.setActive(arg_30_0._goexcessive, true)
+function Activity1_3ChessMapView:playSwitchSceneAni(isNext)
+	gohelper.setActive(self._goexcessive, true)
 
-	local var_30_0 = typeof(UnityEngine.Animator)
+	local animatorType = typeof(UnityEngine.Animator)
+	local swicthSceneAnimator = gohelper.findChildComponent(self.viewGO, "#go_excessive", animatorType)
 
-	gohelper.findChildComponent(arg_30_0.viewGO, "#go_excessive", var_30_0):Play(arg_30_1 and "story" or "hard")
+	swicthSceneAnimator:Play(isNext and "story" or "hard")
 end
 
-function var_0_0._refreshRewardAnim(arg_31_0)
-	local var_31_0 = Activity1_3ChessController.instance:checkHasReward()
+function Activity1_3ChessMapView:_refreshRewardAnim()
+	local isHas = Activity1_3ChessController.instance:checkHasReward()
 
-	if arg_31_0._lastIsHasReward ~= var_31_0 then
-		arg_31_0._lastIsHasReward = var_31_0
+	if self._lastIsHasReward ~= isHas then
+		self._lastIsHasReward = isHas
 
-		arg_31_0._rewardAnimator:Play(var_31_0 and "loop" or "idle")
+		self._rewardAnimator:Play(isHas and "loop" or "idle")
 	end
 end
 
-return var_0_0
+return Activity1_3ChessMapView

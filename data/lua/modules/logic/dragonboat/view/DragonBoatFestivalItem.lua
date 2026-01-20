@@ -1,178 +1,183 @@
-﻿module("modules.logic.dragonboat.view.DragonBoatFestivalItem", package.seeall)
+﻿-- chunkname: @modules/logic/dragonboat/view/DragonBoatFestivalItem.lua
 
-local var_0_0 = class("DragonBoatFestivalItem", ListScrollCell)
+module("modules.logic.dragonboat.view.DragonBoatFestivalItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0._id = arg_1_2
-	arg_1_0._goNormalBG = gohelper.findChild(arg_1_0.viewGO, "Root/#go_NormalBG")
-	arg_1_0._goSelectedBG = gohelper.findChild(arg_1_0.viewGO, "Root/#go_SelectedBG")
-	arg_1_0._txtDay = gohelper.findChildText(arg_1_0.viewGO, "Root/#txt_Day")
-	arg_1_0._txtDayEn = gohelper.findChildText(arg_1_0.viewGO, "Root/#txt_DayEn")
-	arg_1_0._goTomorrowTag = gohelper.findChild(arg_1_0.viewGO, "Root/#go_TomorrowTag")
-	arg_1_0._goitem1 = gohelper.findChild(arg_1_0.viewGO, "Root/Item/#go_item1")
-	arg_1_0._goitem2 = gohelper.findChild(arg_1_0.viewGO, "Root/Item/#go_item2")
-	arg_1_0._goIcon1 = gohelper.findChild(arg_1_0.viewGO, "Root/Item/#go_item2/#go_Icon1")
-	arg_1_0._goIcon2 = gohelper.findChild(arg_1_0.viewGO, "Root/Item/#go_item2/#go_Icon2")
-	arg_1_0._goFinishedBG = gohelper.findChild(arg_1_0.viewGO, "Root/#go_FinishedBG")
-	arg_1_0._goTick1 = gohelper.findChild(arg_1_0.viewGO, "Root/#go_FinishedBG/#go_Tick1")
-	arg_1_0._goTick2 = gohelper.findChild(arg_1_0.viewGO, "Root/#go_FinishedBG/#go_Tick2")
-	arg_1_0._goSelected = gohelper.findChild(arg_1_0.viewGO, "Root/#go_Selected")
-	arg_1_0._txtName = gohelper.findChildText(arg_1_0.viewGO, "Root/#txt_Name")
-	arg_1_0._anim = arg_1_0.viewGO:GetComponent(gohelper.Type_Animator)
-	arg_1_0._itemClick = gohelper.getClickWithAudio(arg_1_0._goSelectedBG)
-	arg_1_0._itemClick1 = gohelper.getClickWithAudio(arg_1_0._goNormalBG)
-	arg_1_0._itemAnimator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+local DragonBoatFestivalItem = class("DragonBoatFestivalItem", ListScrollCell)
 
-	gohelper.setActive(arg_1_0.viewGO, false)
-	gohelper.setActive(arg_1_0._goSelected, false)
-	TaskDispatcher.runDelay(arg_1_0._playOpen, arg_1_0, 0.03 * arg_1_0._id)
+function DragonBoatFestivalItem:init(go, id)
+	self.viewGO = go
+	self._id = id
+	self._goNormalBG = gohelper.findChild(self.viewGO, "Root/#go_NormalBG")
+	self._goSelectedBG = gohelper.findChild(self.viewGO, "Root/#go_SelectedBG")
+	self._txtDay = gohelper.findChildText(self.viewGO, "Root/#txt_Day")
+	self._txtDayEn = gohelper.findChildText(self.viewGO, "Root/#txt_DayEn")
+	self._goTomorrowTag = gohelper.findChild(self.viewGO, "Root/#go_TomorrowTag")
+	self._goitem1 = gohelper.findChild(self.viewGO, "Root/Item/#go_item1")
+	self._goitem2 = gohelper.findChild(self.viewGO, "Root/Item/#go_item2")
+	self._goIcon1 = gohelper.findChild(self.viewGO, "Root/Item/#go_item2/#go_Icon1")
+	self._goIcon2 = gohelper.findChild(self.viewGO, "Root/Item/#go_item2/#go_Icon2")
+	self._goFinishedBG = gohelper.findChild(self.viewGO, "Root/#go_FinishedBG")
+	self._goTick1 = gohelper.findChild(self.viewGO, "Root/#go_FinishedBG/#go_Tick1")
+	self._goTick2 = gohelper.findChild(self.viewGO, "Root/#go_FinishedBG/#go_Tick2")
+	self._goSelected = gohelper.findChild(self.viewGO, "Root/#go_Selected")
+	self._txtName = gohelper.findChildText(self.viewGO, "Root/#txt_Name")
+	self._anim = self.viewGO:GetComponent(gohelper.Type_Animator)
+	self._itemClick = gohelper.getClickWithAudio(self._goSelectedBG)
+	self._itemClick1 = gohelper.getClickWithAudio(self._goNormalBG)
+	self._itemAnimator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	arg_1_0._itemList = {}
-	arg_1_0._item = IconMgr.instance:getCommonPropItemIcon(arg_1_0._goitem1)
+	gohelper.setActive(self.viewGO, false)
+	gohelper.setActive(self._goSelected, false)
+	TaskDispatcher.runDelay(self._playOpen, self, 0.03 * self._id)
 
-	arg_1_0:_editableAddEvents()
-	arg_1_0:refresh(arg_1_0._id)
+	self._itemList = {}
+	self._item = IconMgr.instance:getCommonPropItemIcon(self._goitem1)
+
+	self:_editableAddEvents()
+	self:refresh(self._id)
 end
 
-function var_0_0._playOpen(arg_2_0)
-	gohelper.setActive(arg_2_0.viewGO, true)
-	arg_2_0._itemAnimator:Play("open", 0, 0)
+function DragonBoatFestivalItem:_playOpen()
+	gohelper.setActive(self.viewGO, true)
+	self._itemAnimator:Play("open", 0, 0)
 end
 
-function var_0_0._editableAddEvents(arg_3_0)
-	arg_3_0._itemClick:AddClickListener(arg_3_0._onItemClick, arg_3_0)
-	arg_3_0._itemClick1:AddClickListener(arg_3_0._onItemClick, arg_3_0)
-	DragonBoatFestivalController.instance:registerCallback(DragonBoatFestivalEvent.SelectItem, arg_3_0._onSelectItem, arg_3_0)
-	DragonBoatFestivalController.instance:registerCallback(DragonBoatFestivalEvent.ShowMapFinished, arg_3_0._startGetReward, arg_3_0)
+function DragonBoatFestivalItem:_editableAddEvents()
+	self._itemClick:AddClickListener(self._onItemClick, self)
+	self._itemClick1:AddClickListener(self._onItemClick, self)
+	DragonBoatFestivalController.instance:registerCallback(DragonBoatFestivalEvent.SelectItem, self._onSelectItem, self)
+	DragonBoatFestivalController.instance:registerCallback(DragonBoatFestivalEvent.ShowMapFinished, self._startGetReward, self)
 end
 
-function var_0_0._editableRemoveEvents(arg_4_0)
-	arg_4_0._itemClick:RemoveClickListener()
-	arg_4_0._itemClick1:RemoveClickListener()
-	DragonBoatFestivalController.instance:unregisterCallback(DragonBoatFestivalEvent.SelectItem, arg_4_0._onSelectItem, arg_4_0)
-	DragonBoatFestivalController.instance:unregisterCallback(DragonBoatFestivalEvent.ShowMapFinished, arg_4_0._startGetReward, arg_4_0)
+function DragonBoatFestivalItem:_editableRemoveEvents()
+	self._itemClick:RemoveClickListener()
+	self._itemClick1:RemoveClickListener()
+	DragonBoatFestivalController.instance:unregisterCallback(DragonBoatFestivalEvent.SelectItem, self._onSelectItem, self)
+	DragonBoatFestivalController.instance:unregisterCallback(DragonBoatFestivalEvent.ShowMapFinished, self._startGetReward, self)
 end
 
-function var_0_0._onSelectItem(arg_5_0)
-	local var_5_0 = DragonBoatFestivalModel.instance:getCurDay()
+function DragonBoatFestivalItem:_onSelectItem()
+	local curDay = DragonBoatFestivalModel.instance:getCurDay()
 
-	gohelper.setActive(arg_5_0._goSelected, var_5_0 == arg_5_0._id)
+	gohelper.setActive(self._goSelected, curDay == self._id)
 end
 
-function var_0_0._onItemClick(arg_6_0)
-	if not DragonBoatFestivalModel.instance:isGiftUnlock(arg_6_0._id) then
+function DragonBoatFestivalItem:_onItemClick()
+	if not DragonBoatFestivalModel.instance:isGiftUnlock(self._id) then
 		return
 	end
 
-	local var_6_0 = DragonBoatFestivalModel.instance:getCurDay()
+	local curDay = DragonBoatFestivalModel.instance:getCurDay()
 
-	if DragonBoatFestivalModel.instance:isGiftGet(var_6_0) and var_6_0 == arg_6_0._id then
+	if DragonBoatFestivalModel.instance:isGiftGet(curDay) and curDay == self._id then
 		return
 	end
 
-	if not DragonBoatFestivalModel.instance:isGiftGet(arg_6_0._id) then
-		DragonBoatFestivalModel.instance:setCurDay(arg_6_0._id)
-		arg_6_0:_startGetReward()
+	if not DragonBoatFestivalModel.instance:isGiftGet(self._id) then
+		DragonBoatFestivalModel.instance:setCurDay(self._id)
+		self:_startGetReward()
 
 		return
 	end
 
-	gohelper.setActive(arg_6_0._goSelected, true)
-	DragonBoatFestivalModel.instance:setCurDay(arg_6_0._id)
+	gohelper.setActive(self._goSelected, true)
+	DragonBoatFestivalModel.instance:setCurDay(self._id)
 	UIBlockMgrExtend.setNeedCircleMv(false)
 	DragonBoatFestivalController.instance:dispatchEvent(DragonBoatFestivalEvent.SelectItem)
 end
 
-function var_0_0._startGetReward(arg_7_0)
-	local var_7_0 = DragonBoatFestivalModel.instance:isGiftGet(arg_7_0._id)
-	local var_7_1 = DragonBoatFestivalModel.instance:isGiftUnlock(arg_7_0._id)
+function DragonBoatFestivalItem:_startGetReward()
+	local rewardGet = DragonBoatFestivalModel.instance:isGiftGet(self._id)
+	local unlock = DragonBoatFestivalModel.instance:isGiftUnlock(self._id)
 
-	if not var_7_0 and var_7_1 then
-		local var_7_2 = ActivityEnum.Activity.DragonBoatFestival
+	if not rewardGet and unlock then
+		local actId = ActivityEnum.Activity.DragonBoatFestival
 
-		Activity101Rpc.instance:sendGet101BonusRequest(var_7_2, arg_7_0._id)
+		Activity101Rpc.instance:sendGet101BonusRequest(actId, self._id)
 	end
 end
 
-function var_0_0.refresh(arg_8_0, arg_8_1)
-	arg_8_0._id = arg_8_1
+function DragonBoatFestivalItem:refresh(id)
+	self._id = id
 
-	local var_8_0 = ActivityEnum.Activity.DragonBoatFestival
-	local var_8_1 = DragonBoatFestivalModel.instance:isGiftGet(arg_8_0._id)
-	local var_8_2 = DragonBoatFestivalModel.instance:isGiftUnlock(arg_8_0._id)
-	local var_8_3 = DragonBoatFestivalModel.instance:getLoginCount()
-	local var_8_4 = DragonBoatFestivalModel.instance:getCurDay()
-	local var_8_5 = ActivityConfig.instance:getNorSignActivityCo(var_8_0, arg_8_0._id)
-	local var_8_6 = string.split(var_8_5.bonus, "|")
-	local var_8_7 = #var_8_6
-	local var_8_8 = var_8_7 == 1
+	local actId = ActivityEnum.Activity.DragonBoatFestival
+	local rewardGet = DragonBoatFestivalModel.instance:isGiftGet(self._id)
+	local isUnlock = DragonBoatFestivalModel.instance:isGiftUnlock(self._id)
+	local loginCount = DragonBoatFestivalModel.instance:getLoginCount()
+	local curDay = DragonBoatFestivalModel.instance:getCurDay()
+	local co = ActivityConfig.instance:getNorSignActivityCo(actId, self._id)
+	local rewards = string.split(co.bonus, "|")
+	local rewardCount = #rewards
+	local isShowOneReward = rewardCount == 1
 
-	arg_8_0._txtName.text = ""
+	self._txtName.text = ""
 
-	for iter_8_0 = 1, var_8_7 do
-		local var_8_9 = string.splitToNumber(var_8_6[iter_8_0], "#")
-		local var_8_10 = arg_8_0._itemList[iter_8_0]
+	for i = 1, rewardCount do
+		local itemCo = string.splitToNumber(rewards[i], "#")
+		local item = self._itemList[i]
 
-		if not var_8_10 then
-			var_8_10 = IconMgr.instance:getCommonPropItemIcon(arg_8_0["_goIcon" .. iter_8_0])
+		if not item then
+			item = IconMgr.instance:getCommonPropItemIcon(self["_goIcon" .. i])
 
-			table.insert(arg_8_0._itemList, var_8_10)
+			table.insert(self._itemList, item)
 		end
 
-		arg_8_0:_refreshRewardItem(var_8_10, var_8_9)
+		self:_refreshRewardItem(item, itemCo)
 
-		if iter_8_0 == 1 then
-			arg_8_0:_refreshRewardItem(arg_8_0._item, var_8_9)
+		if i == 1 then
+			self:_refreshRewardItem(self._item, itemCo)
 
-			if var_8_8 then
-				local var_8_11 = ItemModel.instance:getItemConfig(var_8_9[1], var_8_9[2])
+			if isShowOneReward then
+				local itemConfig = ItemModel.instance:getItemConfig(itemCo[1], itemCo[2])
 
-				arg_8_0._txtName.text = var_8_11.name
+				self._txtName.text = itemConfig.name
 			end
 		end
 	end
 
-	arg_8_0._txtDay.text = string.format("%02d", arg_8_0._id)
-	arg_8_0._txtDayEn.text = string.format("DAY\n%s", GameUtil.getEnglishNumber(arg_8_0._id))
+	self._txtDay.text = string.format("%02d", self._id)
+	self._txtDayEn.text = string.format("DAY\n%s", GameUtil.getEnglishNumber(self._id))
 
-	gohelper.setActive(arg_8_0._goitem1, var_8_8)
-	gohelper.setActive(arg_8_0._goTick1, var_8_8)
-	gohelper.setActive(arg_8_0._goitem2, not var_8_8)
-	gohelper.setActive(arg_8_0._goTick2, not var_8_8)
-	gohelper.setActive(arg_8_0._goSelectedBG, not var_8_1 and var_8_2)
-	gohelper.setActive(arg_8_0._goTomorrowTag, arg_8_0._id == var_8_3 + 1)
-	gohelper.setActive(arg_8_0._goFinishedBG, var_8_1)
+	gohelper.setActive(self._goitem1, isShowOneReward)
+	gohelper.setActive(self._goTick1, isShowOneReward)
+	gohelper.setActive(self._goitem2, not isShowOneReward)
+	gohelper.setActive(self._goTick2, not isShowOneReward)
+	gohelper.setActive(self._goSelectedBG, not rewardGet and isUnlock)
+	gohelper.setActive(self._goTomorrowTag, self._id == loginCount + 1)
+	gohelper.setActive(self._goFinishedBG, rewardGet)
 
-	local var_8_12 = DragonBoatFestivalModel.instance:getMaxUnlockDay()
-	local var_8_13 = DragonBoatFestivalModel.instance:isGiftGet(var_8_12)
+	local maxUnlockDay = DragonBoatFestivalModel.instance:getMaxUnlockDay()
+	local maxDayGet = DragonBoatFestivalModel.instance:isGiftGet(maxUnlockDay)
 
-	if arg_8_0._id == var_8_12 and not var_8_13 then
-		gohelper.setActive(arg_8_0._goSelected, arg_8_0._goSelected.activeSelf)
+	if self._id == maxUnlockDay and not maxDayGet then
+		gohelper.setActive(self._goSelected, self._goSelected.activeSelf)
 	else
-		gohelper.setActive(arg_8_0._goSelected, arg_8_0._id == var_8_4)
+		gohelper.setActive(self._goSelected, self._id == curDay)
 	end
 end
 
-function var_0_0._refreshRewardItem(arg_9_0, arg_9_1, arg_9_2)
-	arg_9_1:setMOValue(arg_9_2[1], arg_9_2[2], arg_9_2[3])
-	arg_9_1:setCountFontSize(46)
-	arg_9_1:setHideLvAndBreakFlag(true)
-	arg_9_1:hideEquipLvAndBreak(true)
-	arg_9_1:customOnClickCallback(function()
-		if not DragonBoatFestivalModel.instance:isGiftGet(arg_9_0._id) and DragonBoatFestivalModel.instance:isGiftUnlock(arg_9_0._id) then
-			arg_9_0:_onItemClick()
+function DragonBoatFestivalItem:_refreshRewardItem(item, itemCo)
+	item:setMOValue(itemCo[1], itemCo[2], itemCo[3])
+	item:setCountFontSize(46)
+	item:setHideLvAndBreakFlag(true)
+	item:hideEquipLvAndBreak(true)
+	item:customOnClickCallback(function()
+		local rewardGet = DragonBoatFestivalModel.instance:isGiftGet(self._id)
+		local couldGet = not rewardGet and DragonBoatFestivalModel.instance:isGiftUnlock(self._id)
+
+		if couldGet then
+			self:_onItemClick()
 
 			return
 		end
 
-		MaterialTipController.instance:showMaterialInfo(arg_9_2[1], arg_9_2[2])
+		MaterialTipController.instance:showMaterialInfo(itemCo[1], itemCo[2])
 	end)
 end
 
-function var_0_0.destroy(arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0._playOpen, arg_11_0)
-	arg_11_0:_editableRemoveEvents()
+function DragonBoatFestivalItem:destroy()
+	TaskDispatcher.cancelTask(self._playOpen, self)
+	self:_editableRemoveEvents()
 end
 
-return var_0_0
+return DragonBoatFestivalItem

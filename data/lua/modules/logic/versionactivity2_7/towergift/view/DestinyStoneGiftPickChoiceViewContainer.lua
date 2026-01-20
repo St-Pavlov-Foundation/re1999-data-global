@@ -1,28 +1,30 @@
-﻿module("modules.logic.versionactivity2_7.towergift.view.DestinyStoneGiftPickChoiceViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/towergift/view/DestinyStoneGiftPickChoiceViewContainer.lua
 
-local var_0_0 = class("DestinyStoneGiftPickChoiceViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_7.towergift.view.DestinyStoneGiftPickChoiceViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+local DestinyStoneGiftPickChoiceViewContainer = class("DestinyStoneGiftPickChoiceViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "#scroll_stone"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_1.prefabUrl = "#scroll_stone/Viewport/Content/stoneitem"
-	var_1_1.cellClass = DestinyStoneGiftPickChoiceListItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 4
-	var_1_1.cellWidth = 408
-	var_1_1.cellHeight = 208
-	var_1_1.cellSpaceH = 16
-	var_1_1.cellSpaceV = 16
-	var_1_1.startSpace = 10
-	var_1_1.endSpace = 30
+function DestinyStoneGiftPickChoiceViewContainer:buildViews()
+	local views = {}
+	local scrollParam = ListScrollParam.New()
 
-	table.insert(var_1_0, LuaListScrollView.New(DestinyStoneGiftPickChoiceListModel.instance, var_1_1))
-	table.insert(var_1_0, DestinyStoneGiftPickChoiceView.New())
+	scrollParam.scrollGOPath = "#scroll_stone"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "#scroll_stone/Viewport/Content/stoneitem"
+	scrollParam.cellClass = DestinyStoneGiftPickChoiceListItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 4
+	scrollParam.cellWidth = 408
+	scrollParam.cellHeight = 208
+	scrollParam.cellSpaceH = 16
+	scrollParam.cellSpaceV = 16
+	scrollParam.startSpace = 10
+	scrollParam.endSpace = 30
 
-	return var_1_0
+	table.insert(views, LuaListScrollView.New(DestinyStoneGiftPickChoiceListModel.instance, scrollParam))
+	table.insert(views, DestinyStoneGiftPickChoiceView.New())
+
+	return views
 end
 
-return var_0_0
+return DestinyStoneGiftPickChoiceViewContainer

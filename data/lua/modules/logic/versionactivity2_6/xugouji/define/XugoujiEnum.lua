@@ -1,17 +1,19 @@
-﻿module("modules.logic.versionactivity2_6.xugouji.define.XugoujiEnum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/xugouji/define/XugoujiEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity2_6.xugouji.define.XugoujiEnum", package.seeall)
 
-var_0_0.LevelType = {
+local XugoujiEnum = _M
+
+XugoujiEnum.LevelType = {
 	Level = 2,
 	Story = 1
 }
-var_0_0.ResultEnum = {
+XugoujiEnum.ResultEnum = {
 	Completed = 1,
 	PowerUseup = 2,
 	Quit = 3
 }
-var_0_0.GameViewState = {
+XugoujiEnum.GameViewState = {
 	PlayerOperating = 1,
 	PlayerOperaEnd = 3,
 	PlayerOperaDisplay = 2,
@@ -20,18 +22,18 @@ var_0_0.GameViewState = {
 	EnemyOperaDisplay = 5,
 	EnemyOperaEnd = 6
 }
-var_0_0.DefaultOperateTime = 2
-var_0_0.ResultType = {
+XugoujiEnum.DefaultOperateTime = 2
+XugoujiEnum.ResultType = {
 	TimeOut = 3,
 	Lose = 2,
 	Win = 1
 }
-var_0_0.resultStatUse = {
+XugoujiEnum.resultStatUse = {
 	"成功",
 	"失败",
 	"回合耗尽"
 }
-var_0_0.GameStepType = {
+XugoujiEnum.GameStepType = {
 	UpdateInitialCard = 102,
 	UpdateCardEffectStatus = 9,
 	WaitGameStart = 101,
@@ -45,33 +47,33 @@ var_0_0.GameStepType = {
 	ChangeTurn = 5,
 	GotCardPair = 6
 }
-var_0_0.GameStatus = {
+XugoujiEnum.GameStatus = {
 	UnOperatable = 2,
 	Operatable = 1
 }
-var_0_0.CardType = {
+XugoujiEnum.CardType = {
 	Immediate = 2,
 	Attack = 0,
 	Func = 1
 }
-var_0_0.CardStatus = {
+XugoujiEnum.CardStatus = {
 	Disappear = 3,
 	Back = 1,
 	Front = 2
 }
-var_0_0.CardEffectStatus = {
+XugoujiEnum.CardEffectStatus = {
 	PerspectiveEnemy = 2,
 	Perspective = 1,
 	Lock = 3,
 	LockEnemy = 4
 }
-var_0_0.BuffType = {
+XugoujiEnum.BuffType = {
 	Round = 2,
 	Layer = 1,
 	None = 0
 }
-var_0_0.FirstEpisodeId = 20002
-var_0_0.ChallengeEpisodeId = 20013
-var_0_0.TaskMOAllFinishId = -100
+XugoujiEnum.FirstEpisodeId = 20002
+XugoujiEnum.ChallengeEpisodeId = 20013
+XugoujiEnum.TaskMOAllFinishId = -100
 
-return var_0_0
+return XugoujiEnum

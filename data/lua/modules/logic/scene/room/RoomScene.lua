@@ -1,124 +1,129 @@
-﻿module("modules.logic.scene.room.RoomScene", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/RoomScene.lua
 
-local var_0_0 = class("RoomScene", BaseScene)
+module("modules.logic.scene.room.RoomScene", package.seeall)
 
-function var_0_0._createAllComps(arg_1_0)
-	arg_1_0:_addComp("director", RoomSceneDirector)
-	arg_1_0:_addComp("tween", RoomSceneTweenComp)
-	arg_1_0:_addComp("timer", RoomSceneTimerComp)
-	arg_1_0:_addComp("init", RoomSceneInitComp)
-	arg_1_0:_addComp("level", RoomSceneLevelComp)
-	arg_1_0:_addComp("loader", RoomSceneLoader)
-	arg_1_0:_addComp("preloader", RoomScenePreloader)
-	arg_1_0:_addComp("bloom", RoomSceneBloomComp)
-	arg_1_0:_addComp("go", RoomSceneGOComp)
-	arg_1_0:_addComp("bending", RoomSceneBendingComp)
-	arg_1_0:_addComp("camera", RoomSceneCameraComp)
-	arg_1_0:_addComp("light", RoomSceneLightComp)
-	arg_1_0:_addComp("weather", RoomSceneWeatherComp)
-	arg_1_0:_addComp("ambient", RoomSceneAmbientComp)
-	arg_1_0:_addComp("mapmgr", RoomSceneMapEntityMgr)
-	arg_1_0:_addComp("inventorymgr", RoomSceneInventoryEntitySelectMgr)
-	arg_1_0:_addComp("buildingmgr", RoomSceneBuildingEntityMgr)
-	arg_1_0:_addComp("charactermgr", RoomSceneCharacterEntityMgr)
-	arg_1_0:_addComp("vehiclemgr", RoomSceneVehicleEntityMgr)
-	arg_1_0:_addComp("crittermgr", RoomSceneCritterEntityMgr)
-	arg_1_0:_addComp("buildingcrittermgr", RoomSceneBuildingCritterMgr)
-	arg_1_0:_addComp("sitemgr", RoomSceneTransportSiteEntityMgr)
-	arg_1_0:_addComp("ocean", RoomSceneOceanComp)
-	arg_1_0:_addComp("fog", RoomSceneFogComp)
-	arg_1_0:_addComp("fsm", RoomSceneFSMComp)
-	arg_1_0:_addComp("view", RoomSceneViewComp)
-	arg_1_0:_addComp("touch", RoomSceneTouchComp)
-	arg_1_0:_addComp("graphics", RoomSceneGraphicsComp)
-	arg_1_0:_addComp("character", RoomSceneCharacterComp)
-	arg_1_0:_addComp("fovblock", RoomSceneCameraFOVBlockComp)
-	arg_1_0:_addComp("path", RoomScenePathComp)
-	arg_1_0:_addComp("debug", RoomSceneDebugComp)
-	arg_1_0:_addComp("audio", RoomSceneAudioComp)
-	arg_1_0:_addComp("cameraFollow", RoomSceneCameraFollowComp)
+local RoomScene = class("RoomScene", BaseScene)
+
+function RoomScene:_createAllComps()
+	self:_addComp("director", RoomSceneDirector)
+	self:_addComp("tween", RoomSceneTweenComp)
+	self:_addComp("timer", RoomSceneTimerComp)
+	self:_addComp("init", RoomSceneInitComp)
+	self:_addComp("level", RoomSceneLevelComp)
+	self:_addComp("loader", RoomSceneLoader)
+	self:_addComp("preloader", RoomScenePreloader)
+	self:_addComp("bloom", RoomSceneBloomComp)
+	self:_addComp("go", RoomSceneGOComp)
+	self:_addComp("bending", RoomSceneBendingComp)
+	self:_addComp("camera", RoomSceneCameraComp)
+	self:_addComp("light", RoomSceneLightComp)
+	self:_addComp("weather", RoomSceneWeatherComp)
+	self:_addComp("ambient", RoomSceneAmbientComp)
+	self:_addComp("mapmgr", RoomSceneMapEntityMgr)
+	self:_addComp("inventorymgr", RoomSceneInventoryEntitySelectMgr)
+	self:_addComp("buildingmgr", RoomSceneBuildingEntityMgr)
+	self:_addComp("charactermgr", RoomSceneCharacterEntityMgr)
+	self:_addComp("vehiclemgr", RoomSceneVehicleEntityMgr)
+	self:_addComp("crittermgr", RoomSceneCritterEntityMgr)
+	self:_addComp("buildingcrittermgr", RoomSceneBuildingCritterMgr)
+	self:_addComp("sitemgr", RoomSceneTransportSiteEntityMgr)
+	self:_addComp("ocean", RoomSceneOceanComp)
+	self:_addComp("fog", RoomSceneFogComp)
+	self:_addComp("fsm", RoomSceneFSMComp)
+	self:_addComp("view", RoomSceneViewComp)
+	self:_addComp("touch", RoomSceneTouchComp)
+	self:_addComp("graphics", RoomSceneGraphicsComp)
+	self:_addComp("character", RoomSceneCharacterComp)
+	self:_addComp("fovblock", RoomSceneCameraFOVBlockComp)
+	self:_addComp("path", RoomScenePathComp)
+	self:_addComp("debug", RoomSceneDebugComp)
+	self:_addComp("audio", RoomSceneAudioComp)
+	self:_addComp("cameraFollow", RoomSceneCameraFollowComp)
 end
 
-var_0_0.UnitCameraKey = "RoomScene_UnitCameraKey"
+RoomScene.UnitCameraKey = "RoomScene_UnitCameraKey"
 
-function var_0_0.onStart(arg_2_0, arg_2_1, arg_2_2)
+function RoomScene:onStart(sceneId, levelId)
 	RoomHelper.logElapse("RoomScene:onStart")
 	GameResMgr:SetMaxFileLoadingCount(128)
 
-	local var_2_0 = CameraMgr.instance:getMainCamera()
+	local mainCamera = CameraMgr.instance:getMainCamera()
 
-	arg_2_0._mainFarClipValue = var_2_0.farClipPlane
-	arg_2_0._mainNearClipValue = var_2_0.nearClipPlane
+	self._mainFarClipValue = mainCamera.farClipPlane
+	self._mainNearClipValue = mainCamera.nearClipPlane
 
-	CameraMgr.instance:setSceneCameraActive(false, var_0_0.UnitCameraKey)
-	var_0_0.super.onStart(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0:initPPVolume()
-	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnQualityChange, arg_2_0.updatePPLevel, arg_2_0)
+	CameraMgr.instance:setSceneCameraActive(false, RoomScene.UnitCameraKey)
+	RoomScene.super.onStart(self, sceneId, levelId)
+	self:initPPVolume()
+	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnQualityChange, self.updatePPLevel, self)
 end
 
-function var_0_0.initPPVolume(arg_3_0)
-	if arg_3_0._ppVolumeGo then
+function RoomScene:initPPVolume()
+	if self._ppVolumeGo then
 		return
 	end
 
-	arg_3_0._highProfile = ConstAbCache.instance:getRes(RoomResourceEnum.PPVolume.High)
-	arg_3_0._middleProfile = ConstAbCache.instance:getRes(RoomResourceEnum.PPVolume.Middle)
-	arg_3_0._lowProfile = ConstAbCache.instance:getRes(RoomResourceEnum.PPVolume.Low)
-	arg_3_0._ppVolumeGo = gohelper.create3d(CameraMgr.instance:getMainCameraGO(), "PPVolume")
-	arg_3_0._ppVolumeWrap = gohelper.onceAddComponent(arg_3_0._ppVolumeGo, PostProcessingMgr.PPVolumeWrapType)
+	self._highProfile = ConstAbCache.instance:getRes(RoomResourceEnum.PPVolume.High)
+	self._middleProfile = ConstAbCache.instance:getRes(RoomResourceEnum.PPVolume.Middle)
+	self._lowProfile = ConstAbCache.instance:getRes(RoomResourceEnum.PPVolume.Low)
+	self._ppVolumeGo = gohelper.create3d(CameraMgr.instance:getMainCameraGO(), "PPVolume")
+	self._ppVolumeWrap = gohelper.onceAddComponent(self._ppVolumeGo, PostProcessingMgr.PPVolumeWrapType)
 
-	arg_3_0:updatePPLevel()
+	self:updatePPLevel()
 end
 
-function var_0_0.updatePPLevel(arg_4_0)
-	if not arg_4_0._ppVolumeWrap then
+function RoomScene:updatePPLevel()
+	if not self._ppVolumeWrap then
 		return
 	end
 
-	local var_4_0 = GameGlobalMgr.instance:getScreenState():getLocalQuality()
-	local var_4_1 = arg_4_0._highProfile
+	local grade = GameGlobalMgr.instance:getScreenState():getLocalQuality()
+	local targetProfile = self._highProfile
 
-	if var_4_0 == ModuleEnum.Performance.High then
-		var_4_1 = arg_4_0._highProfile
-	elseif var_4_0 == ModuleEnum.Performance.Middle then
-		var_4_1 = arg_4_0._middleProfile
-	elseif var_4_0 == ModuleEnum.Performance.Low then
-		var_4_1 = arg_4_0._lowProfile
+	if grade == ModuleEnum.Performance.High then
+		targetProfile = self._highProfile
+	elseif grade == ModuleEnum.Performance.Middle then
+		targetProfile = self._middleProfile
+	elseif grade == ModuleEnum.Performance.Low then
+		targetProfile = self._lowProfile
 	end
 
-	arg_4_0._ppVolumeWrap:SetProfile(var_4_1)
+	self._ppVolumeWrap:SetProfile(targetProfile)
 end
 
-function var_0_0.onClose(arg_5_0)
+function RoomScene:onClose()
 	RoomHelper.logElapse("RoomScene:onClose")
-	GameGlobalMgr.instance:getScreenState():resetMaxFileLoadingCount()
-	CameraMgr.instance:setSceneCameraActive(true, var_0_0.UnitCameraKey)
-	var_0_0.super.onClose(arg_5_0)
-	GameGlobalMgr.instance:unregisterCallback(GameStateEvent.OnQualityChange, arg_5_0.updatePPLevel, arg_5_0)
-	arg_5_0:destroyPPVolume()
 
-	if arg_5_0._mainFarClipValue then
-		local var_5_0 = CameraMgr.instance:getMainCamera()
+	local gameScreenState = GameGlobalMgr.instance:getScreenState()
 
-		var_5_0.farClipPlane = arg_5_0._mainFarClipValue
-		var_5_0.nearClipPlane = arg_5_0._mainNearClipValue
-		arg_5_0._mainFarClipValue = nil
-		arg_5_0._mainNearClipValue = nil
+	gameScreenState:resetMaxFileLoadingCount()
+	CameraMgr.instance:setSceneCameraActive(true, RoomScene.UnitCameraKey)
+	RoomScene.super.onClose(self)
+	GameGlobalMgr.instance:unregisterCallback(GameStateEvent.OnQualityChange, self.updatePPLevel, self)
+	self:destroyPPVolume()
+
+	if self._mainFarClipValue then
+		local mainCamera = CameraMgr.instance:getMainCamera()
+
+		mainCamera.farClipPlane = self._mainFarClipValue
+		mainCamera.nearClipPlane = self._mainNearClipValue
+		self._mainFarClipValue = nil
+		self._mainNearClipValue = nil
 	end
 end
 
-function var_0_0.destroyPPVolume(arg_6_0)
-	if not arg_6_0._ppVolumeGo then
+function RoomScene:destroyPPVolume()
+	if not self._ppVolumeGo then
 		return
 	end
 
-	gohelper.destroy(arg_6_0._ppVolumeGo)
+	gohelper.destroy(self._ppVolumeGo)
 
-	arg_6_0._ppVolumeGo = nil
-	arg_6_0._ppVolumeWrap = nil
-	arg_6_0._highProfile = nil
-	arg_6_0._middleProfile = nil
-	arg_6_0._lowProfile = nil
+	self._ppVolumeGo = nil
+	self._ppVolumeWrap = nil
+	self._highProfile = nil
+	self._middleProfile = nil
+	self._lowProfile = nil
 end
 
-return var_0_0
+return RoomScene

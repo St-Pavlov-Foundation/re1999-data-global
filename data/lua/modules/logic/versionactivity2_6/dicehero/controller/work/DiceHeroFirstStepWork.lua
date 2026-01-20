@@ -1,9 +1,11 @@
-﻿module("modules.logic.versionactivity2_6.dicehero.controller.work.DiceHeroFirstStepWork", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/dicehero/controller/work/DiceHeroFirstStepWork.lua
 
-local var_0_0 = class("DiceHeroFirstStepWork", BaseWork)
+module("modules.logic.versionactivity2_6.dicehero.controller.work.DiceHeroFirstStepWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	arg_1_0:onDone(true)
+local DiceHeroFirstStepWork = class("DiceHeroFirstStepWork", BaseWork)
+
+function DiceHeroFirstStepWork:onStart(context)
+	self:onDone(true)
 end
 
-return var_0_0
+return DiceHeroFirstStepWork

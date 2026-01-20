@@ -1,0 +1,602 @@
+[
+  {
+    "id": 3210101,
+    "locationDesc": "language_10104241",
+    "position": [
+      14.8,
+      -13.1,
+      0
+    ],
+    "titleRotation": [
+      17,
+      -23,
+      -7.5
+    ],
+    "titlePos": [
+      -644.8108,
+      350.9,
+      36.24664
+    ],
+    "descRotation": [
+      0,
+      0,
+      0
+    ],
+    "descPos": [
+      23.4,
+      -49.07,
+      53.85918
+    ],
+    "descOffset": -210
+  },
+  {
+    "id": 3210102,
+    "locationDesc": "language_10104241",
+    "position": [
+      19.6,
+      -11.8,
+      0
+    ],
+    "titleRotation": [
+      17,
+      -23,
+      -7.5
+    ],
+    "titlePos": [
+      -644.8108,
+      350.9,
+      36.24664
+    ],
+    "descRotation": [
+      0,
+      0,
+      0
+    ],
+    "descPos": [
+      23.4,
+      -49.07,
+      53.85918
+    ],
+    "descOffset": -210
+  },
+  {
+    "id": 3210103,
+    "locationDesc": "language_10097666",
+    "position": [
+      16.12,
+      -17.7,
+      0
+    ],
+    "titleRotation": [
+      17,
+      -23,
+      -7.5
+    ],
+    "titlePos": [
+      -579.9108,
+      199,
+      36.24664
+    ],
+    "descRotation": [
+      0,
+      0,
+      0
+    ],
+    "descPos": [
+      23.4,
+      -49.07,
+      53.85918
+    ],
+    "descOffset": -210
+  },
+  {
+    "id": 3210104,
+    "locationDesc": "language_10104242",
+    "position": [
+      54.73,
+      -3.8,
+      0
+    ],
+    "titleRotation": [
+      17,
+      -7.26,
+      2.7
+    ],
+    "titlePos": [
+      -1093.041,
+      218.4,
+      36.24664
+    ],
+    "descRotation": [
+      4.15,
+      28.6,
+      2
+    ],
+    "descPos": [
+      23.4,
+      -15.7,
+      53.85918
+    ],
+    "descOffset": 100
+  },
+  {
+    "id": 3210105,
+    "locationDesc": "language_10104243",
+    "position": [
+      46.07,
+      -17,
+      0
+    ],
+    "titleRotation": [
+      17,
+      22,
+      -1.1
+    ],
+    "titlePos": [
+      -859.0108,
+      382.7,
+      36.24664
+    ],
+    "descRotation": [
+      0,
+      17.8,
+      0
+    ],
+    "descPos": [
+      82.6,
+      -14.69,
+      53.85918
+    ],
+    "descOffset": 60
+  },
+  {
+    "id": 3210106,
+    "locationDesc": "language_10104244",
+    "position": [
+      51.9,
+      -14,
+      0
+    ],
+    "titleRotation": [
+      17,
+      17.1,
+      -7.2
+    ],
+    "titlePos": [
+      -631.0108,
+      269.48,
+      36.24664
+    ],
+    "descRotation": [
+      0,
+      -3.9,
+      0
+    ],
+    "descPos": [
+      82.6,
+      -45.9,
+      60.4
+    ],
+    "descOffset": -210
+  },
+  {
+    "id": 3210107,
+    "locationDesc": "language_10104244",
+    "position": [
+      56.58,
+      -14.4,
+      0
+    ],
+    "titleRotation": [
+      17,
+      17.1,
+      -7.2
+    ],
+    "titlePos": [
+      -631.0108,
+      269.48,
+      36.24664
+    ],
+    "descRotation": [
+      0,
+      -3.9,
+      0
+    ],
+    "descPos": [
+      82.6,
+      -45.9,
+      60.4
+    ],
+    "descOffset": -210
+  },
+  {
+    "id": 3210108,
+    "locationDesc": "language_10104245",
+    "position": [
+      39.8,
+      -17.1,
+      0
+    ],
+    "titleRotation": [
+      17,
+      13.2,
+      -1.72
+    ],
+    "titlePos": [
+      -926.5108,
+      333.7,
+      36.24664
+    ],
+    "descRotation": [
+      -0.4,
+      16.1,
+      0
+    ],
+    "descPos": [
+      174.8,
+      -54,
+      60.4
+    ],
+    "descOffset": 60
+  },
+  {
+    "id": 3210109,
+    "locationDesc": "language_10104246",
+    "position": [
+      50.13,
+      -3.9,
+      0
+    ],
+    "titleRotation": [
+      17,
+      2.7,
+      3.3
+    ],
+    "titlePos": [
+      -576.5108,
+      217.9,
+      36.24664
+    ],
+    "descRotation": [
+      0,
+      33.54,
+      0
+    ],
+    "descPos": [
+      333.7,
+      102.1,
+      53.85918
+    ],
+    "descOffset": 140
+  },
+  {
+    "id": 3210110,
+    "locationDesc": "language_10097666",
+    "position": [
+      47.6,
+      -6.8,
+      0
+    ],
+    "titleRotation": [
+      17,
+      2.7,
+      3.3
+    ],
+    "titlePos": [
+      -1049.111,
+      364.9,
+      36.24664
+    ],
+    "descRotation": [
+      0,
+      33.54,
+      0
+    ],
+    "descPos": [
+      69.2,
+      -150.5,
+      53.85918
+    ],
+    "descOffset": 150
+  },
+  {
+    "id": 3210111,
+    "locationDesc": "language_10104247",
+    "position": [
+      16.69,
+      -5.2,
+      0
+    ],
+    "titleRotation": [
+      -25.2,
+      31.9,
+      -17
+    ],
+    "titlePos": [
+      -706.1108,
+      286.9,
+      36.24664
+    ],
+    "descRotation": [
+      -1.2,
+      -19.2,
+      -1.9
+    ],
+    "descPos": [
+      -119.3,
+      -34.9,
+      53.85918
+    ],
+    "descOffset": -210
+  },
+  {
+    "id": 3210112,
+    "locationDesc": "language_10104248",
+    "position": [
+      10.1,
+      -4.4,
+      0
+    ],
+    "titleRotation": [
+      17,
+      1.7,
+      6
+    ],
+    "titlePos": [
+      -925.2108,
+      322.8,
+      36.24664
+    ],
+    "descRotation": [
+      0,
+      47.2,
+      0
+    ],
+    "descPos": [
+      251,
+      -47.3,
+      53.85918
+    ],
+    "descOffset": 380
+  },
+  {
+    "id": 3210113,
+    "locationDesc": "language_10104247",
+    "position": [
+      16.5,
+      -7.86,
+      0
+    ],
+    "titleRotation": [
+      -25.2,
+      31.9,
+      -17
+    ],
+    "titlePos": [
+      -706.1108,
+      286.9,
+      36.24664
+    ],
+    "descRotation": [
+      -1.2,
+      -19.2,
+      -1.9
+    ],
+    "descPos": [
+      -119.3,
+      -34.9,
+      53.85918
+    ],
+    "descOffset": -210
+  },
+  {
+    "id": 3210114,
+    "locationDesc": "language_10097664",
+    "position": [
+      27,
+      -7.5,
+      0
+    ],
+    "titleRotation": [
+      0,
+      30.2,
+      -7.1
+    ],
+    "titlePos": [
+      -416.8108,
+      364.2,
+      36.24664
+    ],
+    "descRotation": [
+      0,
+      -5.8,
+      0
+    ],
+    "descPos": [
+      100.19,
+      -8.1,
+      53.85918
+    ],
+    "descOffset": -210
+  },
+  {
+    "id": 3210115,
+    "locationDesc": "language_10104249",
+    "position": [
+      32.6,
+      -23.5,
+      0
+    ],
+    "titleRotation": [
+      17,
+      0,
+      -10
+    ],
+    "titlePos": [
+      -741.2108,
+      289.63,
+      36.24664
+    ],
+    "descRotation": [
+      0,
+      -5.8,
+      0
+    ],
+    "descPos": [
+      100.19,
+      -8.1,
+      53.85918
+    ],
+    "descOffset": -210
+  },
+  {
+    "id": 3210116,
+    "locationDesc": "language_10097668",
+    "position": [
+      76.8,
+      -17.3,
+      0
+    ],
+    "titleRotation": [
+      5,
+      4.3,
+      -5
+    ],
+    "titlePos": [
+      -486.8108,
+      276.9,
+      36.24664
+    ],
+    "descRotation": [
+      0,
+      2.3,
+      0
+    ],
+    "descPos": [
+      100.19,
+      -8.1,
+      53.85918
+    ],
+    "descOffset": 150
+  },
+  {
+    "id": 3210117,
+    "locationDesc": "language_10097668",
+    "position": [
+      75.8,
+      -12.8,
+      0
+    ],
+    "titleRotation": [
+      5,
+      4.3,
+      -4.3
+    ],
+    "titlePos": [
+      -579.6108,
+      237.6,
+      36.24664
+    ],
+    "descRotation": [
+      0,
+      2.3,
+      0
+    ],
+    "descPos": [
+      32.24,
+      -64.66,
+      53.85918
+    ],
+    "descOffset": 150
+  },
+  {
+    "id": 3210118,
+    "locationDesc": "language_10097668",
+    "position": [
+      76.85,
+      -7.9,
+      0
+    ],
+    "titleRotation": [
+      5,
+      4.3,
+      -4.3
+    ],
+    "titlePos": [
+      -439.9108,
+      178.3,
+      36.24664
+    ],
+    "descRotation": [
+      0,
+      2.3,
+      0
+    ],
+    "descPos": [
+      32.24,
+      -64.66,
+      53.85918
+    ],
+    "descOffset": 150
+  },
+  {
+    "id": 3210119,
+    "locationDesc": "language_10104249",
+    "position": [
+      40,
+      -22.3,
+      0
+    ],
+    "titleRotation": [
+      17,
+      0,
+      -10
+    ],
+    "titlePos": [
+      -741.2108,
+      289.63,
+      36.24664
+    ],
+    "descRotation": [
+      0,
+      -5.8,
+      0
+    ],
+    "descPos": [
+      100.19,
+      -8.1,
+      53.85918
+    ],
+    "descOffset": -210
+  },
+  {
+    "id": 3210120,
+    "locationDesc": "language_10104250",
+    "position": [
+      79.9,
+      -20.4,
+      0
+    ],
+    "titleRotation": [
+      5,
+      4.3,
+      2.8
+    ],
+    "titlePos": [
+      -933.4108,
+      414.6,
+      36.24664
+    ],
+    "descRotation": [
+      0,
+      37.3,
+      0
+    ],
+    "descPos": [
+      108.1,
+      -97,
+      53.85918
+    ],
+    "descOffset": 400
+  }
+]

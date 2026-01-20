@@ -1,11 +1,13 @@
-﻿module("modules.logic.login.view.SimulateLoginViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/login/view/SimulateLoginViewContainer.lua
 
-local var_0_0 = class("SimulateLoginViewContainer", BaseViewContainer)
+module("modules.logic.login.view.SimulateLoginViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local SimulateLoginViewContainer = class("SimulateLoginViewContainer", BaseViewContainer)
+
+function SimulateLoginViewContainer:buildViews()
 	return {
 		SimulateLoginView.New()
 	}
 end
 
-return var_0_0
+return SimulateLoginViewContainer

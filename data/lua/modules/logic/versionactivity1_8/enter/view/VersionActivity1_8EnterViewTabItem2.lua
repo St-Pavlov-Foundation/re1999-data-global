@@ -1,33 +1,35 @@
-﻿module("modules.logic.versionactivity1_8.enter.view.VersionActivity1_8EnterViewTabItem2", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_8/enter/view/VersionActivity1_8EnterViewTabItem2.lua
 
-local var_0_0 = class("VersionActivity1_8EnterViewTabItem2", VersionActivity1_8EnterViewTabItemBase)
+module("modules.logic.versionactivity1_8.enter.view.VersionActivity1_8EnterViewTabItem2", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	var_0_0.super._editableInitView(arg_1_0)
+local VersionActivity1_8EnterViewTabItem2 = class("VersionActivity1_8EnterViewTabItem2", VersionActivity1_8EnterViewTabItemBase)
 
-	arg_1_0.txtName = gohelper.findChildText(arg_1_0.go, "#txt_name")
-	arg_1_0.txtNameEn = gohelper.findChildText(arg_1_0.go, "#txt_nameen")
+function VersionActivity1_8EnterViewTabItem2:_editableInitView()
+	VersionActivity1_8EnterViewTabItem2.super._editableInitView(self)
+
+	self.txtName = gohelper.findChildText(self.go, "#txt_name")
+	self.txtNameEn = gohelper.findChildText(self.go, "#txt_nameen")
 end
 
-function var_0_0.afterSetData(arg_2_0)
-	var_0_0.super.afterSetData(arg_2_0)
+function VersionActivity1_8EnterViewTabItem2:afterSetData()
+	VersionActivity1_8EnterViewTabItem2.super.afterSetData(self)
 
-	arg_2_0.txtName.text = arg_2_0.activityCo and arg_2_0.activityCo.name or ""
-	arg_2_0.txtNameEn.text = arg_2_0.activityCo and arg_2_0.activityCo.nameEn or ""
+	self.txtName.text = self.activityCo and self.activityCo.name or ""
+	self.txtNameEn.text = self.activityCo and self.activityCo.nameEn or ""
 end
 
-function var_0_0.childRefreshSelect(arg_3_0, arg_3_1)
-	var_0_0.super.childRefreshSelect(arg_3_0, arg_3_1)
+function VersionActivity1_8EnterViewTabItem2:childRefreshSelect(actId)
+	VersionActivity1_8EnterViewTabItem2.super.childRefreshSelect(self, actId)
 
-	local var_3_0 = VersionActivity1_8Enum.TabSetting.unselect
+	local tabSetting = VersionActivity1_8Enum.TabSetting.unselect
 
-	if arg_3_0.isSelect then
-		var_3_0 = VersionActivity1_8Enum.TabSetting.select
+	if self.isSelect then
+		tabSetting = VersionActivity1_8Enum.TabSetting.select
 	end
 
-	arg_3_0.txtName.color = var_3_0.color
-	arg_3_0.txtName.fontSize = var_3_0.fontSize
-	arg_3_0.txtNameEn.fontSize = var_3_0.enFontSize
+	self.txtName.color = tabSetting.color
+	self.txtName.fontSize = tabSetting.fontSize
+	self.txtNameEn.fontSize = tabSetting.enFontSize
 end
 
-return var_0_0
+return VersionActivity1_8EnterViewTabItem2

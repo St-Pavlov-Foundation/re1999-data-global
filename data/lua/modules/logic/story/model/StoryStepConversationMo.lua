@@ -1,10 +1,12 @@
-﻿module("modules.logic.story.model.StoryStepConversationMo", package.seeall)
+﻿-- chunkname: @modules/logic/story/model/StoryStepConversationMo.lua
 
-local var_0_0 = pureTable("StoryStepConversationMo")
+module("modules.logic.story.model.StoryStepConversationMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.type = 0
-	arg_1_0.delayTimes = {
+local StoryStepConversationMo = pureTable("StoryStepConversationMo")
+
+function StoryStepConversationMo:ctor()
+	self.type = 0
+	self.delayTimes = {
 		1,
 		1,
 		1,
@@ -14,10 +16,10 @@ function var_0_0.ctor(arg_1_0)
 		1,
 		1
 	}
-	arg_1_0.isAuto = false
-	arg_1_0.effType = 0
-	arg_1_0.effLv = 0
-	arg_1_0.effDelayTimes = {
+	self.isAuto = false
+	self.effType = 0
+	self.effLv = 0
+	self.effDelayTimes = {
 		0,
 		0,
 		0,
@@ -27,7 +29,7 @@ function var_0_0.ctor(arg_1_0)
 		0,
 		0
 	}
-	arg_1_0.effTimes = {
+	self.effTimes = {
 		0,
 		0,
 		0,
@@ -37,11 +39,11 @@ function var_0_0.ctor(arg_1_0)
 		0,
 		0
 	}
-	arg_1_0.effRate = 1
-	arg_1_0.showList = {}
-	arg_1_0.nameShow = false
-	arg_1_0.nameEnShow = false
-	arg_1_0.heroNames = {
+	self.effRate = 1
+	self.showList = {}
+	self.nameShow = false
+	self.nameEnShow = false
+	self.heroNames = {
 		"",
 		"",
 		"",
@@ -51,10 +53,10 @@ function var_0_0.ctor(arg_1_0)
 		"",
 		""
 	}
-	arg_1_0.iconShow = false
-	arg_1_0.heroIcon = ""
-	arg_1_0.audios = {}
-	arg_1_0.audioDelayTimes = {
+	self.iconShow = false
+	self.heroIcon = ""
+	self.audios = {}
+	self.audioDelayTimes = {
 		0,
 		0,
 		0,
@@ -64,7 +66,7 @@ function var_0_0.ctor(arg_1_0)
 		0,
 		0
 	}
-	arg_1_0.diaTexts = {
+	self.diaTexts = {
 		"",
 		"",
 		"",
@@ -74,7 +76,7 @@ function var_0_0.ctor(arg_1_0)
 		"",
 		""
 	}
-	arg_1_0.showTimes = {
+	self.showTimes = {
 		0,
 		0,
 		0,
@@ -84,7 +86,7 @@ function var_0_0.ctor(arg_1_0)
 		0,
 		0
 	}
-	arg_1_0.keepTimes = {
+	self.keepTimes = {
 		1.5,
 		1.5,
 		1.5,
@@ -96,39 +98,39 @@ function var_0_0.ctor(arg_1_0)
 	}
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.type = arg_2_1[1]
-	arg_2_0.delayTimes = arg_2_1[2]
-	arg_2_0.isAuto = arg_2_1[3]
-	arg_2_0.effType = arg_2_1[4]
-	arg_2_0.effLv = arg_2_1[5]
-	arg_2_0.effDelayTimes = arg_2_1[6]
-	arg_2_0.effTimes = arg_2_1[7]
-	arg_2_0.effRate = arg_2_1[8]
-	arg_2_0.showList = arg_2_1[9]
-	arg_2_0.nameShow = arg_2_1[10]
-	arg_2_0.nameEnShow = arg_2_1[11]
-	arg_2_0.heroNames = arg_2_1[12]
-	arg_2_0.iconShow = arg_2_1[13]
-	arg_2_0.heroIcon = arg_2_1[14]
+function StoryStepConversationMo:init(info)
+	self.type = info[1]
+	self.delayTimes = info[2]
+	self.isAuto = info[3]
+	self.effType = info[4]
+	self.effLv = info[5]
+	self.effDelayTimes = info[6]
+	self.effTimes = info[7]
+	self.effRate = info[8]
+	self.showList = info[9]
+	self.nameShow = info[10]
+	self.nameEnShow = info[11]
+	self.heroNames = info[12]
+	self.iconShow = info[13]
+	self.heroIcon = info[14]
 
-	local var_2_0 = string.split(arg_2_1[15], "#")
+	local audioParams = string.split(info[15], "#")
 
-	arg_2_0.audios = var_2_0[1] == "" and {
+	self.audios = audioParams[1] == "" and {
 		0
-	} or string.splitToNumber(var_2_0[1], "&")
+	} or string.splitToNumber(audioParams[1], "&")
 
-	if var_2_0[2] then
-		local var_2_1 = string.splitToNumber(var_2_0[2], "|")
+	if audioParams[2] then
+		local audios = string.splitToNumber(audioParams[2], "|")
 
-		for iter_2_0 = 1, #var_2_1 do
-			arg_2_0.audioDelayTimes[iter_2_0] = var_2_1[iter_2_0]
+		for i = 1, #audios do
+			self.audioDelayTimes[i] = audios[i]
 		end
 	end
 
-	arg_2_0.diaTexts = arg_2_1[16]
-	arg_2_0.showTimes = arg_2_1[17]
-	arg_2_0.keepTimes = arg_2_1[18]
+	self.diaTexts = info[16]
+	self.showTimes = info[17]
+	self.keepTimes = info[18]
 end
 
-return var_0_0
+return StoryStepConversationMo

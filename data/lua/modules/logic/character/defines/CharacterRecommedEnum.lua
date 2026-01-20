@@ -1,21 +1,23 @@
-﻿module("modules.logic.character.defines.CharacterRecommedEnum", package.seeall)
+﻿-- chunkname: @modules/logic/character/defines/CharacterRecommedEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.character.defines.CharacterRecommedEnum", package.seeall)
 
-var_0_0.TabSubType = {
+local CharacterRecommedEnum = _M
+
+CharacterRecommedEnum.TabSubType = {
 	DevelopGoals = 2,
 	RecommedGroup = 1
 }
-var_0_0.DevelopGoalsType = {
+CharacterRecommedEnum.DevelopGoalsType = {
 	RankLevel = 1,
 	TalentLevel = 2
 }
-var_0_0.JumpView = {
+CharacterRecommedEnum.JumpView = {
 	Level = 2,
 	Rank = 1,
 	Dungeon = 3
 }
-var_0_0.ResDungeon = {
+CharacterRecommedEnum.ResDungeon = {
 	[DungeonEnum.ChapterId.ResourceExp] = {
 		UnlockFunc = OpenEnum.UnlockFunc.GoldDungeon
 	},
@@ -29,18 +31,18 @@ var_0_0.ResDungeon = {
 		UnlockFunc = OpenEnum.UnlockFunc.Buildings
 	}
 }
-var_0_0.RankResDungeon = {
+CharacterRecommedEnum.RankResDungeon = {
 	DungeonEnum.ChapterId.InsightMountain,
 	DungeonEnum.ChapterId.InsightStarfall,
 	DungeonEnum.ChapterId.InsightSylvanus,
 	DungeonEnum.ChapterId.InsightBrutes
 }
-var_0_0.AnimName = {
+CharacterRecommedEnum.AnimName = {
 	Switch = "switch",
 	Close = "close",
 	Open = "open"
 }
-var_0_0.TracedIconPath = "ui/viewres/character/recommed/traceitem.prefab"
-var_0_0.TraceHeroPref = "CharacterRecommedEnum_TraceHeroPref_"
+CharacterRecommedEnum.TracedIconPath = "ui/viewres/character/recommed/traceitem.prefab"
+CharacterRecommedEnum.TraceHeroPref = "CharacterRecommedEnum_TraceHeroPref_"
 
-return var_0_0
+return CharacterRecommedEnum

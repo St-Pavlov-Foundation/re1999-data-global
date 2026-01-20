@@ -1,16 +1,18 @@
-﻿module("modules.logic.versionactivity2_7.lengzhou6.define.EliminateEnum_2_7", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/lengzhou6/define/EliminateEnum_2_7.lua
 
-local var_0_0 = class("EliminateEnum_2_7", EliminateEnum)
+module("modules.logic.versionactivity2_7.lengzhou6.define.EliminateEnum_2_7", package.seeall)
 
-var_0_0.MaxBuffCount = 50
-var_0_0.ChessType = {
+local EliminateEnum_2_7 = class("EliminateEnum_2_7", EliminateEnum)
+
+EliminateEnum_2_7.MaxBuffCount = 50
+EliminateEnum_2_7.ChessType = {
 	beast = "beast",
 	cliff = "cliff",
 	stone = "stone",
 	tree = "tree",
 	star = "star"
 }
-var_0_0.ChessIndexToType = {
+EliminateEnum_2_7.ChessIndexToType = {
 	nil,
 	nil,
 	nil,
@@ -22,54 +24,54 @@ var_0_0.ChessIndexToType = {
 	[9] = "star",
 	[10] = "stone"
 }
-var_0_0.ChessTypeToIndex = {
+EliminateEnum_2_7.ChessTypeToIndex = {
 	beast = 6,
 	cliff = 8,
 	stone = 10,
 	tree = 7,
 	star = 9
 }
-var_0_0.eliminateType = {
+EliminateEnum_2_7.eliminateType = {
 	five = "five",
 	three = "three",
 	base = "base",
 	four = "four",
 	cross = "cross"
 }
-var_0_0.AllChessType = {
+EliminateEnum_2_7.AllChessType = {
 	"beast",
 	"tree",
 	"cliff",
 	"star"
 }
-var_0_0.AllChessID = {
+EliminateEnum_2_7.AllChessID = {
 	6,
 	7,
 	8,
 	9
 }
-var_0_0.ChessWidth = 120
-var_0_0.ChessHeight = 122
-var_0_0.ChessIntervalX = 2
-var_0_0.ChessIntervalY = 2
-var_0_0.MaxRow = 6
-var_0_0.MaxCol = 6
-var_0_0.AssessShowTime = LengZhou6Config.instance:getEliminateBattleCost(26) / 1000
-var_0_0.UpdateDamageStepTime = 1
-var_0_0.DieStepTime = 0.3
-var_0_0.AssessLevel = {
+EliminateEnum_2_7.ChessWidth = 120
+EliminateEnum_2_7.ChessHeight = 122
+EliminateEnum_2_7.ChessIntervalX = 2
+EliminateEnum_2_7.ChessIntervalY = 2
+EliminateEnum_2_7.MaxRow = 6
+EliminateEnum_2_7.MaxCol = 6
+EliminateEnum_2_7.AssessShowTime = LengZhou6Config.instance:getEliminateBattleCost(26) / 1000
+EliminateEnum_2_7.UpdateDamageStepTime = 1
+EliminateEnum_2_7.DieStepTime = 0.3
+EliminateEnum_2_7.AssessLevel = {
 	3,
 	5,
 	7,
 	10
 }
-var_0_0.AssessLevelToImageName = {
+EliminateEnum_2_7.AssessLevelToImageName = {
 	"v2a7_hissabeth_game_paneltips3",
 	"v2a7_hissabeth_game_paneltips4",
 	"v2a7_hissabeth_game_paneltips5",
 	"v2a7_hissabeth_game_paneltips6"
 }
-var_0_0.SpecialChessImage = {
+EliminateEnum_2_7.SpecialChessImage = {
 	frost = LengZhou6Config.instance:getEliminateBattleCostStr(23),
 	pollution = LengZhou6Config.instance:getEliminateBattleCostStr(22),
 	beast = LengZhou6Config.instance:getEliminateBattleCostStr(18),
@@ -77,14 +79,14 @@ var_0_0.SpecialChessImage = {
 	cliff = LengZhou6Config.instance:getEliminateBattleCostStr(21),
 	star = LengZhou6Config.instance:getEliminateBattleCostStr(20)
 }
-var_0_0.ChessEffect = {
+EliminateEnum_2_7.ChessEffect = {
 	frost = "frost",
 	pollution = "pollution"
 }
-var_0_0.SpecialChessAni = {
+EliminateEnum_2_7.SpecialChessAni = {
 	frost = "freeze",
 	pollution = "glitch"
 }
-var_0_0.InitDropTime = 0.1
+EliminateEnum_2_7.InitDropTime = 0.1
 
-return var_0_0
+return EliminateEnum_2_7

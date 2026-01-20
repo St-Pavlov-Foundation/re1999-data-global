@@ -1,349 +1,355 @@
-﻿module("modules.logic.versionactivity2_5.act187.view.Activity187PaintingView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/act187/view/Activity187PaintingView.lua
 
-local var_0_0 = class("Activity187PaintingView", BaseView)
-local var_0_1 = 1
-local var_0_2 = 0.3
+module("modules.logic.versionactivity2_5.act187.view.Activity187PaintingView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "v2a5_lanternfestivalpainting/#btn_close")
-	arg_1_0._golowribbon = gohelper.findChild(arg_1_0.viewGO, "v2a5_lanternfestivalpainting/#go_decorationLower")
-	arg_1_0._simagelantern = gohelper.findChildSingleImage(arg_1_0.viewGO, "v2a5_lanternfestivalpainting/#simage_lantern")
-	arg_1_0._goupribbon = gohelper.findChild(arg_1_0.viewGO, "v2a5_lanternfestivalpainting/#go_decorationUpper")
-	arg_1_0._simagepicturebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "v2a5_lanternfestivalpainting/#simage_lantern/#simage_pictureshadow")
-	arg_1_0._simagepicture = gohelper.findChildSingleImage(arg_1_0.viewGO, "v2a5_lanternfestivalpainting/#simage_lantern/#simage_pictureshadow/#simage_picture")
-	arg_1_0._goriddles = gohelper.findChild(arg_1_0.viewGO, "v2a5_lanternfestivalpainting/#simage_lantern/#go_riddles")
-	arg_1_0._txtriddles = gohelper.findChildText(arg_1_0.viewGO, "v2a5_lanternfestivalpainting/#simage_lantern/#go_riddles/#txt_riddles")
-	arg_1_0._goriddlesRewards = gohelper.findChild(arg_1_0.viewGO, "v2a5_lanternfestivalpainting/#simage_lantern/#go_riddles/#go_riddlesRewards")
-	arg_1_0._goriddlesRewardItem = gohelper.findChild(arg_1_0.viewGO, "v2a5_lanternfestivalpainting/#simage_lantern/#go_riddles/#go_riddlesRewards/#go_riddlesRewardItem")
-	arg_1_0._gopaintTips = gohelper.findChild(arg_1_0.viewGO, "v2a5_lanternfestivalpainting/#go_paintTips")
-	arg_1_0._gopaintingArea = gohelper.findChild(arg_1_0.viewGO, "v2a5_lanternfestivalpainting/#go_paintingArea")
-	arg_1_0._gofinishVx = gohelper.findChild(arg_1_0.viewGO, "v2a5_lanternfestivalpainting/vx_finish")
-	arg_1_0._rawimage = arg_1_0._gopaintingArea:GetComponent(gohelper.Type_RawImage)
+local Activity187PaintingView = class("Activity187PaintingView", BaseView)
+local REWARD_HAS_GET_ANIM_TIME = 1
+local MOUSE_PAUSE_TIME = 0.3
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Activity187PaintingView:onInitView()
+	self._btnclose = gohelper.findChildClickWithDefaultAudio(self.viewGO, "v2a5_lanternfestivalpainting/#btn_close")
+	self._golowribbon = gohelper.findChild(self.viewGO, "v2a5_lanternfestivalpainting/#go_decorationLower")
+	self._simagelantern = gohelper.findChildSingleImage(self.viewGO, "v2a5_lanternfestivalpainting/#simage_lantern")
+	self._goupribbon = gohelper.findChild(self.viewGO, "v2a5_lanternfestivalpainting/#go_decorationUpper")
+	self._simagepicturebg = gohelper.findChildSingleImage(self.viewGO, "v2a5_lanternfestivalpainting/#simage_lantern/#simage_pictureshadow")
+	self._simagepicture = gohelper.findChildSingleImage(self.viewGO, "v2a5_lanternfestivalpainting/#simage_lantern/#simage_pictureshadow/#simage_picture")
+	self._goriddles = gohelper.findChild(self.viewGO, "v2a5_lanternfestivalpainting/#simage_lantern/#go_riddles")
+	self._txtriddles = gohelper.findChildText(self.viewGO, "v2a5_lanternfestivalpainting/#simage_lantern/#go_riddles/#txt_riddles")
+	self._goriddlesRewards = gohelper.findChild(self.viewGO, "v2a5_lanternfestivalpainting/#simage_lantern/#go_riddles/#go_riddlesRewards")
+	self._goriddlesRewardItem = gohelper.findChild(self.viewGO, "v2a5_lanternfestivalpainting/#simage_lantern/#go_riddles/#go_riddlesRewards/#go_riddlesRewardItem")
+	self._gopaintTips = gohelper.findChild(self.viewGO, "v2a5_lanternfestivalpainting/#go_paintTips")
+	self._gopaintingArea = gohelper.findChild(self.viewGO, "v2a5_lanternfestivalpainting/#go_paintingArea")
+	self._gofinishVx = gohelper.findChild(self.viewGO, "v2a5_lanternfestivalpainting/vx_finish")
+	self._rawimage = self._gopaintingArea:GetComponent(gohelper.Type_RawImage)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._drag:AddDragBeginListener(arg_2_0._onDragBegin, arg_2_0)
-	arg_2_0._drag:AddDragListener(arg_2_0._onDrag, arg_2_0)
-	arg_2_0._drag:AddDragEndListener(arg_2_0._onDragEnd, arg_2_0)
-	arg_2_0:addEventCb(Activity187Controller.instance, Activity187Event.PaintViewDisplayChange, arg_2_0._onDisplayChange, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_2_0._onOpenView, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0._onCloseView, arg_2_0)
+function Activity187PaintingView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._drag:AddDragBeginListener(self._onDragBegin, self)
+	self._drag:AddDragListener(self._onDrag, self)
+	self._drag:AddDragEndListener(self._onDragEnd, self)
+	self:addEventCb(Activity187Controller.instance, Activity187Event.PaintViewDisplayChange, self._onDisplayChange, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, self._onOpenView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._drag:RemoveDragBeginListener()
-	arg_3_0._drag:RemoveDragListener()
-	arg_3_0._drag:RemoveDragEndListener()
-	arg_3_0:removeEventCb(Activity187Controller.instance, Activity187Event.PaintViewDisplayChange, arg_3_0._onDisplayChange, arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_3_0._onOpenView, arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0._onCloseView, arg_3_0)
+function Activity187PaintingView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._drag:RemoveDragBeginListener()
+	self._drag:RemoveDragListener()
+	self._drag:RemoveDragEndListener()
+	self:removeEventCb(Activity187Controller.instance, Activity187Event.PaintViewDisplayChange, self._onDisplayChange, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0.viewContainer:setPaintingViewDisplay()
+function Activity187PaintingView:_btncloseOnClick()
+	self.viewContainer:setPaintingViewDisplay()
 end
 
-function var_0_0._onDragBegin(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_0._status == Activity187Enum.PaintStatus.Finish then
+function Activity187PaintingView:_onDragBegin(param, pointerEventData)
+	if self._status == Activity187Enum.PaintStatus.Finish then
 		return
 	end
 
-	arg_5_0:setPaintStatus(Activity187Enum.PaintStatus.Painting)
-	arg_5_0:_onDrag(arg_5_1, arg_5_2)
-	TaskDispatcher.cancelTask(arg_5_0._checkMouseMove, arg_5_0)
-	TaskDispatcher.runRepeat(arg_5_0._checkMouseMove, arg_5_0, var_0_2)
+	self:setPaintStatus(Activity187Enum.PaintStatus.Painting)
+	self:_onDrag(param, pointerEventData)
+	TaskDispatcher.cancelTask(self._checkMouseMove, self)
+	TaskDispatcher.runRepeat(self._checkMouseMove, self, MOUSE_PAUSE_TIME)
 end
 
-function var_0_0._onDrag(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_0._status == Activity187Enum.PaintStatus.Finish then
+function Activity187PaintingView:_onDrag(param, pointerEventData)
+	if self._status == Activity187Enum.PaintStatus.Finish then
 		return
 	end
 
-	arg_6_0._mouseMove = true
+	self._mouseMove = true
 
-	arg_6_0:_playPaintingAudio(true)
-	arg_6_0._writingBrush:OnMouseMove(arg_6_2.position.x, arg_6_2.position.y)
+	self:_playPaintingAudio(true)
+	self._writingBrush:OnMouseMove(pointerEventData.position.x, pointerEventData.position.y)
 end
 
-function var_0_0._checkMouseMove(arg_7_0)
-	if not arg_7_0._mouseMove then
-		arg_7_0:_playPaintingAudio(false)
+function Activity187PaintingView:_checkMouseMove()
+	if not self._mouseMove then
+		self:_playPaintingAudio(false)
 	end
 
-	arg_7_0._mouseMove = false
+	self._mouseMove = false
 end
 
-function var_0_0._playPaintingAudio(arg_8_0, arg_8_1)
-	if arg_8_0._isPlayPaintingAudio == arg_8_1 then
+function Activity187PaintingView:_playPaintingAudio(isPlay)
+	if self._isPlayPaintingAudio == isPlay then
 		return
 	end
 
-	local var_8_0 = arg_8_1 and AudioEnum.Act187.play_ui_tangren_yuanxiao_draw_loop or AudioEnum.Act187.stop_ui_tangren_yuanxiao_draw_loop
+	local audioName = isPlay and AudioEnum.Act187.play_ui_tangren_yuanxiao_draw_loop or AudioEnum.Act187.stop_ui_tangren_yuanxiao_draw_loop
 
-	AudioMgr.instance:trigger(var_8_0)
+	AudioMgr.instance:trigger(audioName)
 
-	arg_8_0._isPlayPaintingAudio = arg_8_1
+	self._isPlayPaintingAudio = isPlay
 end
 
-function var_0_0._onDragEnd(arg_9_0, arg_9_1, arg_9_2)
-	arg_9_0:_playPaintingAudio(false)
+function Activity187PaintingView:_onDragEnd(param, pointerEventData)
+	self:_playPaintingAudio(false)
 
-	if arg_9_0._status == Activity187Enum.PaintStatus.Finish then
+	if self._status == Activity187Enum.PaintStatus.Finish then
 		return
 	end
 
-	arg_9_0._writingBrush:OnMouseUp()
+	self._writingBrush:OnMouseUp()
 
-	if arg_9_0.viewContainer:isShowPaintView() then
-		arg_9_0._paintAreaAnimatorPlayer:Play("close", arg_9_0._onCloseAreaFinish, arg_9_0)
-		Activity187Controller.instance:finishPainting(arg_9_0.onPainFinish, arg_9_0)
+	local isShowPaintingView = self.viewContainer:isShowPaintView()
+
+	if isShowPaintingView then
+		self._paintAreaAnimatorPlayer:Play("close", self._onCloseAreaFinish, self)
+		Activity187Controller.instance:finishPainting(self.onPainFinish, self)
 	end
 
-	arg_9_0._mouseMove = false
+	self._mouseMove = false
 
-	TaskDispatcher.cancelTask(arg_9_0._checkMouseMove, arg_9_0)
+	TaskDispatcher.cancelTask(self._checkMouseMove, self)
 end
 
-function var_0_0._onCloseAreaFinish(arg_10_0)
-	arg_10_0._writingBrush:Clear()
-	gohelper.setActive(arg_10_0._gopaintingArea, false)
+function Activity187PaintingView:_onCloseAreaFinish()
+	self._writingBrush:Clear()
+	gohelper.setActive(self._gopaintingArea, false)
 end
 
-function var_0_0.onPainFinish(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	if arg_11_2 == 0 then
-		arg_11_0._rewardsMaterials = MaterialRpc.receiveMaterial({
-			dataList = arg_11_3.randomBonusList
+function Activity187PaintingView:onPainFinish(cmd, resultCode, msg)
+	if resultCode == 0 then
+		self._rewardsMaterials = MaterialRpc.receiveMaterial({
+			dataList = msg.randomBonusList
 		})
 
 		UIBlockMgr.instance:startBlock(Activity187Enum.BlockKey.GetPaintingReward)
-		TaskDispatcher.cancelTask(arg_11_0._showMaterials, arg_11_0)
-		TaskDispatcher.runDelay(arg_11_0._showMaterials, arg_11_0, var_0_1)
+		TaskDispatcher.cancelTask(self._showMaterials, self)
+		TaskDispatcher.runDelay(self._showMaterials, self, REWARD_HAS_GET_ANIM_TIME)
 	end
 
-	arg_11_0:setPaintStatus(Activity187Enum.PaintStatus.Finish)
+	self:setPaintStatus(Activity187Enum.PaintStatus.Finish)
 end
 
-function var_0_0._showMaterials(arg_12_0)
-	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, arg_12_0._rewardsMaterials)
+function Activity187PaintingView:_showMaterials()
+	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, self._rewardsMaterials)
 
-	arg_12_0._rewardsMaterials = nil
+	self._rewardsMaterials = nil
 
 	UIBlockMgr.instance:endBlock(Activity187Enum.BlockKey.GetPaintingReward)
 end
 
-function var_0_0._onDisplayChange(arg_13_0, arg_13_1, arg_13_2)
-	arg_13_0._mouseMove = false
+function Activity187PaintingView:_onDisplayChange(isShow, index)
+	self._mouseMove = false
 
-	if arg_13_1 then
-		arg_13_0:ready2Paint(arg_13_2)
+	if isShow then
+		self:ready2Paint(index)
 	else
-		TaskDispatcher.cancelTask(arg_13_0._checkMouseMove, arg_13_0)
-		arg_13_0:_playPaintingAudio(false)
-		gohelper.setActive(arg_13_0._gopaintingArea, false)
+		TaskDispatcher.cancelTask(self._checkMouseMove, self)
+		self:_playPaintingAudio(false)
+		gohelper.setActive(self._gopaintingArea, false)
 	end
 end
 
-function var_0_0.ready2Paint(arg_14_0, arg_14_1)
-	arg_14_0._curIndex = arg_14_1
+function Activity187PaintingView:ready2Paint(index)
+	self._curIndex = index
 
-	arg_14_0._writingBrush:OnMouseUp()
+	self._writingBrush:OnMouseUp()
 
-	if arg_14_0._rawimage.texture then
-		arg_14_0._writingBrush:Clear()
+	if self._rawimage.texture then
+		self._writingBrush:Clear()
 	end
 
-	arg_14_0:setPaintStatus(Activity187Enum.PaintStatus.Ready)
-	arg_14_0._paintAreaAnimator:Play("idle", 0, 0)
+	self:setPaintStatus(Activity187Enum.PaintStatus.Ready)
+	self._paintAreaAnimator:Play("idle", 0, 0)
 end
 
-function var_0_0._onOpenView(arg_15_0, arg_15_1)
-	if arg_15_1 ~= ViewName.CommonPropView or not arg_15_0._waitOpenCommonProp then
+function Activity187PaintingView:_onOpenView(viewName)
+	if viewName ~= ViewName.CommonPropView or not self._waitOpenCommonProp then
 		return
 	end
 
-	local var_15_0 = Activity187Enum.EmptyLantern
-	local var_15_1
-	local var_15_2 = Activity187Model.instance:getPaintingRewardId(arg_15_0._curIndex)
+	local lantern = Activity187Enum.EmptyLantern
+	local ribbonIndex
+	local rewardId = Activity187Model.instance:getPaintingRewardId(self._curIndex)
 
-	if var_15_2 then
-		local var_15_3 = Activity187Model.instance:getAct187Id()
+	if rewardId then
+		local actId = Activity187Model.instance:getAct187Id()
 
-		var_15_0 = Activity187Config.instance:getLantern(var_15_3, var_15_2)
-		var_15_1 = Activity187Config.instance:getLanternRibbon(var_15_3, var_15_2)
+		lantern = Activity187Config.instance:getLantern(actId, rewardId)
+		ribbonIndex = Activity187Config.instance:getLanternRibbon(actId, rewardId)
 	end
 
-	arg_15_0._simagelantern:LoadImage(ResUrl.getAct184LanternIcon(var_15_0))
+	self._simagelantern:LoadImage(ResUrl.getAct184LanternIcon(lantern))
 
-	for iter_15_0, iter_15_1 in pairs(arg_15_0._lowRibbonDict) do
-		gohelper.setActive(iter_15_1, iter_15_0 == var_15_1)
+	for index, go in pairs(self._lowRibbonDict) do
+		gohelper.setActive(go, index == ribbonIndex)
 	end
 
-	for iter_15_2, iter_15_3 in pairs(arg_15_0._upRibbonDict) do
-		gohelper.setActive(iter_15_3, iter_15_2 == var_15_1)
+	for index, go in pairs(self._upRibbonDict) do
+		gohelper.setActive(go, index == ribbonIndex)
 	end
 
-	arg_15_0._waitOpenCommonProp = nil
-	arg_15_0._waitCloseCommonProp = true
+	self._waitOpenCommonProp = nil
+	self._waitCloseCommonProp = true
 end
 
-function var_0_0._onCloseView(arg_16_0, arg_16_1)
-	if arg_16_1 ~= ViewName.CommonPropView or not arg_16_0._waitCloseCommonProp then
+function Activity187PaintingView:_onCloseView(viewName)
+	if viewName ~= ViewName.CommonPropView or not self._waitCloseCommonProp then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.Act187.play_ui_shuori_dreamsong_open)
-	gohelper.setActive(arg_16_0._simagepicturebg, true)
-	gohelper.setActive(arg_16_0._goriddles, true)
+	gohelper.setActive(self._simagepicturebg, true)
+	gohelper.setActive(self._goriddles, true)
 
-	arg_16_0._waitCloseCommonProp = nil
+	self._waitCloseCommonProp = nil
 end
 
-function var_0_0._editableInitView(arg_17_0)
-	arg_17_0._writingBrush = arg_17_0._gopaintingArea:GetComponent(typeof(ZProj.WritingBrush))
-	arg_17_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_17_0._gopaintingArea)
-	arg_17_0._paintAreaAnimator = arg_17_0._gopaintingArea:GetComponent(typeof(UnityEngine.Animator))
-	arg_17_0._paintAreaAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_17_0._gopaintingArea)
-	arg_17_0._lowRibbonDict = arg_17_0:getUserDataTb_()
-	arg_17_0._upRibbonDict = arg_17_0:getUserDataTb_()
+function Activity187PaintingView:_editableInitView()
+	self._writingBrush = self._gopaintingArea:GetComponent(typeof(ZProj.WritingBrush))
+	self._drag = SLFramework.UGUI.UIDragListener.Get(self._gopaintingArea)
+	self._paintAreaAnimator = self._gopaintingArea:GetComponent(typeof(UnityEngine.Animator))
+	self._paintAreaAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(self._gopaintingArea)
+	self._lowRibbonDict = self:getUserDataTb_()
+	self._upRibbonDict = self:getUserDataTb_()
 
-	arg_17_0:_fillRibbonDict(arg_17_0._golowribbon.transform, arg_17_0._lowRibbonDict)
-	arg_17_0:_fillRibbonDict(arg_17_0._goupribbon.transform, arg_17_0._upRibbonDict)
+	self:_fillRibbonDict(self._golowribbon.transform, self._lowRibbonDict)
+	self:_fillRibbonDict(self._goupribbon.transform, self._upRibbonDict)
 
-	arg_17_0._riddlesRewardItemList = {}
+	self._riddlesRewardItemList = {}
 
-	gohelper.setActive(arg_17_0._goriddlesRewardItem, false)
+	gohelper.setActive(self._goriddlesRewardItem, false)
 
-	arg_17_0._rewardsMaterials = nil
-	arg_17_0._status = nil
+	self._rewardsMaterials = nil
+	self._status = nil
 end
 
-function var_0_0._fillRibbonDict(arg_18_0, arg_18_1, arg_18_2)
-	local var_18_0 = arg_18_1.childCount
+function Activity187PaintingView:_fillRibbonDict(parentTrans, dict)
+	local childCount = parentTrans.childCount
 
-	for iter_18_0 = 1, var_18_0 do
-		local var_18_1 = arg_18_1:GetChild(iter_18_0 - 1)
+	for i = 1, childCount do
+		local child = parentTrans:GetChild(i - 1)
 
-		arg_18_2[var_18_1.name] = var_18_1
+		dict[child.name] = child
 	end
 end
 
-function var_0_0.onUpdateParam(arg_19_0)
+function Activity187PaintingView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_20_0)
+function Activity187PaintingView:onOpen()
 	return
 end
 
-function var_0_0.setPaintStatus(arg_21_0, arg_21_1)
-	arg_21_0._status = arg_21_1
-	arg_21_0._waitOpenCommonProp = nil
-	arg_21_0._waitCloseCommonProp = nil
+function Activity187PaintingView:setPaintStatus(status)
+	self._status = status
+	self._waitOpenCommonProp = nil
+	self._waitCloseCommonProp = nil
 
-	local var_21_0 = arg_21_1 == Activity187Enum.PaintStatus.Ready
-	local var_21_1 = arg_21_1 == Activity187Enum.PaintStatus.Finish
+	local isReady = status == Activity187Enum.PaintStatus.Ready
+	local isFinish = status == Activity187Enum.PaintStatus.Finish
 
-	arg_21_0:hideAllRiddlesRewardItem()
+	self:hideAllRiddlesRewardItem()
 
-	if var_21_1 then
-		local var_21_2 = Activity187Model.instance:getPaintingRewardId(arg_21_0._curIndex)
+	if isFinish then
+		local rewardId = Activity187Model.instance:getPaintingRewardId(self._curIndex)
 
-		if var_21_2 then
-			arg_21_0._waitOpenCommonProp = true
+		if rewardId then
+			self._waitOpenCommonProp = true
 
-			local var_21_3 = Activity187Model.instance:getAct187Id()
-			local var_21_4 = Activity187Config.instance:getLanternImg(var_21_3, var_21_2)
-			local var_21_5 = Activity187Config.instance:getLanternImgBg(var_21_3, var_21_2)
+			local actId = Activity187Model.instance:getAct187Id()
+			local lanternImg = Activity187Config.instance:getLanternImg(actId, rewardId)
+			local lanternImgBg = Activity187Config.instance:getLanternImgBg(actId, rewardId)
 
-			arg_21_0._simagepicture:LoadImage(ResUrl.getAct184LanternIcon(var_21_4))
-			arg_21_0._simagepicturebg:LoadImage(ResUrl.getAct184LanternIcon(var_21_5))
+			self._simagepicture:LoadImage(ResUrl.getAct184LanternIcon(lanternImg))
+			self._simagepicturebg:LoadImage(ResUrl.getAct184LanternIcon(lanternImgBg))
 
-			arg_21_0._txtriddles.text = Activity187Config.instance:getBlessing(var_21_3, var_21_2)
+			self._txtriddles.text = Activity187Config.instance:getBlessing(actId, rewardId)
 
-			local var_21_6 = Activity187Model.instance:getPaintingRewardList(arg_21_0._curIndex)
+			local rewardList = Activity187Model.instance:getPaintingRewardList(self._curIndex)
 
-			for iter_21_0, iter_21_1 in ipairs(var_21_6) do
-				arg_21_0:getRiddlesRewardItem(iter_21_0).itemIcon:onUpdateMO(iter_21_1)
+			for i, matMO in ipairs(rewardList) do
+				local rewardItem = self:getRiddlesRewardItem(i)
+
+				rewardItem.itemIcon:onUpdateMO(matMO)
 			end
 		end
 	end
 
-	arg_21_0._simagelantern:LoadImage(ResUrl.getAct184LanternIcon(Activity187Enum.EmptyLantern))
+	self._simagelantern:LoadImage(ResUrl.getAct184LanternIcon(Activity187Enum.EmptyLantern))
 
-	for iter_21_2, iter_21_3 in pairs(arg_21_0._lowRibbonDict) do
-		gohelper.setActive(iter_21_3, false)
+	for _, go in pairs(self._lowRibbonDict) do
+		gohelper.setActive(go, false)
 	end
 
-	for iter_21_4, iter_21_5 in pairs(arg_21_0._upRibbonDict) do
-		gohelper.setActive(iter_21_5, false)
+	for _, go in pairs(self._upRibbonDict) do
+		gohelper.setActive(go, false)
 	end
 
-	if not var_21_1 then
-		gohelper.setActive(arg_21_0._gopaintingArea, true)
-		arg_21_0._paintAreaAnimator:Play("idle", 0, 1)
+	if not isFinish then
+		gohelper.setActive(self._gopaintingArea, true)
+		self._paintAreaAnimator:Play("idle", 0, 1)
 	end
 
-	gohelper.setActive(arg_21_0._gopaintTips, var_21_0)
-	gohelper.setActive(arg_21_0._btnclose, var_21_1)
-	gohelper.setActive(arg_21_0._gofinishVx, var_21_1)
-	gohelper.setActive(arg_21_0._simagepicturebg, false)
-	gohelper.setActive(arg_21_0._goriddles, false)
+	gohelper.setActive(self._gopaintTips, isReady)
+	gohelper.setActive(self._btnclose, isFinish)
+	gohelper.setActive(self._gofinishVx, isFinish)
+	gohelper.setActive(self._simagepicturebg, false)
+	gohelper.setActive(self._goriddles, false)
 end
 
-function var_0_0.hideAllRiddlesRewardItem(arg_22_0)
-	if not arg_22_0._riddlesRewardItemList then
-		arg_22_0._riddlesRewardItemList = {}
+function Activity187PaintingView:hideAllRiddlesRewardItem()
+	if not self._riddlesRewardItemList then
+		self._riddlesRewardItemList = {}
 	end
 
-	for iter_22_0, iter_22_1 in ipairs(arg_22_0._riddlesRewardItemList) do
-		gohelper.setActive(iter_22_1.go, false)
+	for _, riddlesRewardItem in ipairs(self._riddlesRewardItemList) do
+		gohelper.setActive(riddlesRewardItem.go, false)
 	end
 end
 
-function var_0_0.getRiddlesRewardItem(arg_23_0, arg_23_1)
-	if not arg_23_0._riddlesRewardItemList then
-		arg_23_0._riddlesRewardItemList = {}
+function Activity187PaintingView:getRiddlesRewardItem(index)
+	if not self._riddlesRewardItemList then
+		self._riddlesRewardItemList = {}
 	end
 
-	local var_23_0 = arg_23_0._riddlesRewardItemList[arg_23_1]
+	local rewardItem = self._riddlesRewardItemList[index]
 
-	if not var_23_0 then
-		var_23_0 = arg_23_0:getUserDataTb_()
-		var_23_0.go = gohelper.clone(arg_23_0._goriddlesRewardItem, arg_23_0._goriddlesRewards, arg_23_1)
+	if not rewardItem then
+		rewardItem = self:getUserDataTb_()
+		rewardItem.go = gohelper.clone(self._goriddlesRewardItem, self._goriddlesRewards, index)
 
-		local var_23_1 = gohelper.findChild(var_23_0.go, "#go_item")
+		local itemGo = gohelper.findChild(rewardItem.go, "#go_item")
 
-		var_23_0.itemIcon = IconMgr.instance:getCommonItemIcon(var_23_1)
+		rewardItem.itemIcon = IconMgr.instance:getCommonItemIcon(itemGo)
 
-		var_23_0.itemIcon:setCountFontSize(40)
+		rewardItem.itemIcon:setCountFontSize(40)
 
-		arg_23_0._riddlesRewardItemList[arg_23_1] = var_23_0
+		self._riddlesRewardItemList[index] = rewardItem
 	end
 
-	gohelper.setActive(var_23_0.go, true)
+	gohelper.setActive(rewardItem.go, true)
 
-	return var_23_0
+	return rewardItem
 end
 
-function var_0_0.onClose(arg_24_0)
-	arg_24_0._simagepicture:UnLoadImage()
-	arg_24_0._simagepicturebg:UnLoadImage()
-	arg_24_0._simagelantern:UnLoadImage()
-	TaskDispatcher.cancelTask(arg_24_0._showMaterials, arg_24_0)
+function Activity187PaintingView:onClose()
+	self._simagepicture:UnLoadImage()
+	self._simagepicturebg:UnLoadImage()
+	self._simagelantern:UnLoadImage()
+	TaskDispatcher.cancelTask(self._showMaterials, self)
 	UIBlockMgr.instance:endBlock(Activity187Enum.BlockKey.GetPaintingReward)
 
-	arg_24_0._rewardsMaterials = nil
-	arg_24_0._status = nil
+	self._rewardsMaterials = nil
+	self._status = nil
 end
 
-function var_0_0.onDestroyView(arg_25_0)
+function Activity187PaintingView:onDestroyView()
 	return
 end
 
-return var_0_0
+return Activity187PaintingView

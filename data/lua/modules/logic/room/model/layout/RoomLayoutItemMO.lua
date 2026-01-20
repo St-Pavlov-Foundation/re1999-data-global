@@ -1,52 +1,54 @@
-﻿module("modules.logic.room.model.layout.RoomLayoutItemMO", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/layout/RoomLayoutItemMO.lua
 
-local var_0_0 = pureTable("RoomLayoutItemMO")
+module("modules.logic.room.model.layout.RoomLayoutItemMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	arg_1_0.id = arg_1_1
-	arg_1_0.itemId = arg_1_2
-	arg_1_0.itemType = arg_1_3
-	arg_1_0.materialType = arg_1_3
-	arg_1_0.itemNum = arg_1_4 or 1
-	arg_1_0.itemIndex = 1
+local RoomLayoutItemMO = pureTable("RoomLayoutItemMO")
+
+function RoomLayoutItemMO:init(id, itemId, itemType, itemNum)
+	self.id = id
+	self.itemId = itemId
+	self.itemType = itemType
+	self.materialType = itemType
+	self.itemNum = itemNum or 1
+	self.itemIndex = 1
 end
 
-function var_0_0.getItemQuantity(arg_2_0)
-	return ItemModel.instance:getItemQuantity(arg_2_0.materialType, arg_2_0.itemId) or 0
+function RoomLayoutItemMO:getItemQuantity()
+	return ItemModel.instance:getItemQuantity(self.materialType, self.itemId) or 0
 end
 
-function var_0_0.getItemConfig(arg_3_0)
-	return ItemModel.instance:getItemConfig(arg_3_0.materialType, arg_3_0.itemId)
+function RoomLayoutItemMO:getItemConfig()
+	return ItemModel.instance:getItemConfig(self.materialType, self.itemId)
 end
 
-function var_0_0.getNeedNum(arg_4_0)
-	if arg_4_0.materialType == MaterialEnum.MaterialType.BlockPackage or arg_4_0.materialType == MaterialEnum.MaterialType.SpecialBlock then
+function RoomLayoutItemMO:getNeedNum()
+	if self.materialType == MaterialEnum.MaterialType.BlockPackage or self.materialType == MaterialEnum.MaterialType.SpecialBlock then
 		return 1
 	end
 
-	return arg_4_0.itemNum
+	return self.itemNum
 end
 
-function var_0_0.isLack(arg_5_0)
-	local var_5_0 = arg_5_0:getNeedNum()
+function RoomLayoutItemMO:isLack()
+	local needNum = self:getNeedNum()
 
-	if arg_5_0:isBuilding() then
-		var_5_0 = math.max(var_5_0, arg_5_0.itemIndex)
+	if self:isBuilding() then
+		needNum = math.max(needNum, self.itemIndex)
 	end
 
-	return var_5_0 > arg_5_0:getItemQuantity()
+	return needNum > self:getItemQuantity()
 end
 
-function var_0_0.isBuilding(arg_6_0)
-	return arg_6_0.materialType == MaterialEnum.MaterialType.Building
+function RoomLayoutItemMO:isBuilding()
+	return self.materialType == MaterialEnum.MaterialType.Building
 end
 
-function var_0_0.isBlockPackage(arg_7_0)
-	return arg_7_0.materialType == MaterialEnum.MaterialType.BlockPackage
+function RoomLayoutItemMO:isBlockPackage()
+	return self.materialType == MaterialEnum.MaterialType.BlockPackage
 end
 
-function var_0_0.isSpecialBlock(arg_8_0)
-	return arg_8_0.materialType == MaterialEnum.MaterialType.SpecialBlock
+function RoomLayoutItemMO:isSpecialBlock()
+	return self.materialType == MaterialEnum.MaterialType.SpecialBlock
 end
 
-return var_0_0
+return RoomLayoutItemMO

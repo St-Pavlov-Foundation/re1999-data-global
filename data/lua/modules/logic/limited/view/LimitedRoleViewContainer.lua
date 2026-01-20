@@ -1,11 +1,13 @@
-﻿module("modules.logic.limited.view.LimitedRoleViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/limited/view/LimitedRoleViewContainer.lua
 
-local var_0_0 = class("LimitedRoleViewContainer", BaseViewContainer)
+module("modules.logic.limited.view.LimitedRoleViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local LimitedRoleViewContainer = class("LimitedRoleViewContainer", BaseViewContainer)
+
+function LimitedRoleViewContainer:buildViews()
 	return {
 		LimitedRoleView.New()
 	}
 end
 
-return var_0_0
+return LimitedRoleViewContainer

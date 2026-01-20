@@ -1,7 +1,9 @@
-﻿module("modules.logic.nfc.rpc.NFCRpc", package.seeall)
+﻿-- chunkname: @modules/logic/nfc/rpc/NFCRpc.lua
 
-local var_0_0 = class("NFCRpc", BaseRpc)
+module("modules.logic.nfc.rpc.NFCRpc", package.seeall)
 
-var_0_0.instance = var_0_0.New()
+local NFCRpc = class("NFCRpc", BaseRpc)
 
-return var_0_0
+NFCRpc.instance = NFCRpc.New()
+
+return NFCRpc

@@ -1,44 +1,46 @@
-﻿module("modules.logic.versionactivity2_4.wuerlixi.view.WuErLiXiTaskView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/wuerlixi/view/WuErLiXiTaskView.lua
 
-local var_0_0 = class("WuErLiXiTaskView", BaseView)
+module("modules.logic.versionactivity2_4.wuerlixi.view.WuErLiXiTaskView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_LimitTime")
+local WuErLiXiTaskView = class("WuErLiXiTaskView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function WuErLiXiTaskView:onInitView()
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_LimitTime")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.onOpen(arg_2_0)
+function WuErLiXiTaskView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.Act1_6DungeonEnterTaskView)
-	arg_2_0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_2_0._oneClaimReward, arg_2_0)
-	arg_2_0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_2_0._onFinishTask, arg_2_0)
+	self:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, self._oneClaimReward, self)
+	self:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, self._onFinishTask, self)
 	WuErLiXiTaskListModel.instance:clear()
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.Activity180
-	}, arg_2_0._oneClaimReward, arg_2_0)
-	TaskDispatcher.runRepeat(arg_2_0._showLeftTime, arg_2_0, 60)
-	arg_2_0:_showLeftTime()
+	}, self._oneClaimReward, self)
+	TaskDispatcher.runRepeat(self._showLeftTime, self, 60)
+	self:_showLeftTime()
 end
 
-function var_0_0._oneClaimReward(arg_3_0)
+function WuErLiXiTaskView:_oneClaimReward()
 	WuErLiXiTaskListModel.instance:init(VersionActivity2_4Enum.ActivityId.WuErLiXi)
 end
 
-function var_0_0._onFinishTask(arg_4_0, arg_4_1)
-	if WuErLiXiTaskListModel.instance:getById(arg_4_1) then
+function WuErLiXiTaskView:_onFinishTask(taskId)
+	if WuErLiXiTaskListModel.instance:getById(taskId) then
 		WuErLiXiTaskListModel.instance:init(VersionActivity2_4Enum.ActivityId.WuErLiXi)
 	end
 end
 
-function var_0_0._showLeftTime(arg_5_0)
-	arg_5_0._txtLimitTime.text = WuErLiXiHelper.getLimitTimeStr()
+function WuErLiXiTaskView:_showLeftTime()
+	self._txtLimitTime.text = WuErLiXiHelper.getLimitTimeStr()
 end
 
-function var_0_0.onClose(arg_6_0)
+function WuErLiXiTaskView:onClose()
 	WuErLiXiController.instance:dispatchEvent(WuErLiXiEvent.OnCloseTask)
-	TaskDispatcher.cancelTask(arg_6_0._showLeftTime, arg_6_0)
+	TaskDispatcher.cancelTask(self._showLeftTime, self)
 end
 
-return var_0_0
+return WuErLiXiTaskView

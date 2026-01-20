@@ -1,11 +1,15 @@
-﻿module("modules.logic.bgmswitch.view.BGMSwitchMusicFilterViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/bgmswitch/view/BGMSwitchMusicFilterViewContainer.lua
 
-local var_0_0 = class("BGMSwitchMusicFilterViewContainer", BaseViewContainer)
+module("modules.logic.bgmswitch.view.BGMSwitchMusicFilterViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	return {
+local BGMSwitchMusicFilterViewContainer = class("BGMSwitchMusicFilterViewContainer", BaseViewContainer)
+
+function BGMSwitchMusicFilterViewContainer:buildViews()
+	local views = {
 		BGMSwitchMusicFilterView.New()
 	}
+
+	return views
 end
 
-return var_0_0
+return BGMSwitchMusicFilterViewContainer

@@ -1,50 +1,52 @@
-﻿module("modules.logic.character.view.CharacterSkinSwitchSpineGCView", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterSkinSwitchSpineGCView.lua
 
-local var_0_0 = class("CharacterSkinSwitchSpineGCView", BaseView)
-local var_0_1 = 4
+module("modules.logic.character.view.CharacterSkinSwitchSpineGCView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._skinList = {}
+local CharacterSkinSwitchSpineGCView = class("CharacterSkinSwitchSpineGCView", BaseView)
+local NeedGCSpineCount = 4
+
+function CharacterSkinSwitchSpineGCView:onInitView()
+	self._skinList = {}
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.OnSkinSwitchSpine, arg_2_0._recordSkin, arg_2_0)
+function CharacterSkinSwitchSpineGCView:addEvents()
+	self:addEventCb(CharacterController.instance, CharacterEvent.OnSkinSwitchSpine, self._recordSkin, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:addEventCb(CharacterController.instance, CharacterEvent.OnSkinSwitchSpine, arg_3_0._recordSkin, arg_3_0)
+function CharacterSkinSwitchSpineGCView:removeEvents()
+	self:addEventCb(CharacterController.instance, CharacterEvent.OnSkinSwitchSpine, self._recordSkin, self)
 end
 
-function var_0_0.onOpenFinish(arg_4_0)
-	arg_4_0:_recordSkin()
+function CharacterSkinSwitchSpineGCView:onOpenFinish()
+	self:_recordSkin()
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
-	arg_5_0:_recordSkin()
+function CharacterSkinSwitchSpineGCView:onUpdateParam()
+	self:_recordSkin()
 end
 
-function var_0_0.onClose(arg_6_0)
-	arg_6_0._skinList = {}
+function CharacterSkinSwitchSpineGCView:onClose()
+	self._skinList = {}
 
-	TaskDispatcher.cancelTask(arg_6_0._delayGC, arg_6_0)
+	TaskDispatcher.cancelTask(self._delayGC, self)
 end
 
-function var_0_0._recordSkin(arg_7_0, arg_7_1)
-	table.insert(arg_7_0._skinList, arg_7_1)
+function CharacterSkinSwitchSpineGCView:_recordSkin(skinId)
+	table.insert(self._skinList, skinId)
 
-	if #arg_7_0._skinList > var_0_1 then
-		if #arg_7_0._skinList < var_0_1 * 2 then
-			TaskDispatcher.cancelTask(arg_7_0._delayGC, arg_7_0)
+	if #self._skinList > NeedGCSpineCount then
+		if #self._skinList < NeedGCSpineCount * 2 then
+			TaskDispatcher.cancelTask(self._delayGC, self)
 		end
 
-		TaskDispatcher.runDelay(arg_7_0._delayGC, arg_7_0, 1)
+		TaskDispatcher.runDelay(self._delayGC, self, 1)
 	end
 end
 
-function var_0_0._delayGC(arg_8_0)
-	GameGCMgr.instance:dispatchEvent(GameGCEvent.FullGC, arg_8_0)
+function CharacterSkinSwitchSpineGCView:_delayGC()
+	GameGCMgr.instance:dispatchEvent(GameGCEvent.FullGC, self)
 
-	arg_8_0._skinList = {}
+	self._skinList = {}
 end
 
-return var_0_0
+return CharacterSkinSwitchSpineGCView

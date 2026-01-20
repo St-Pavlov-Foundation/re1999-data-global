@@ -1,54 +1,56 @@
-﻿module("modules.logic.gm.view.GMFightSimulateLeftItem", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GMFightSimulateLeftItem.lua
 
-local var_0_0 = class("GMFightSimulateLeftItem", ListScrollCell)
-local var_0_1 = Color.New(1, 0.8, 0.8, 1)
-local var_0_2 = Color.white
-local var_0_3
+module("modules.logic.gm.view.GMFightSimulateLeftItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._btn = gohelper.findChildButtonWithAudio(arg_1_1, "btn")
+local GMFightSimulateLeftItem = class("GMFightSimulateLeftItem", ListScrollCell)
+local SelectColor = Color.New(1, 0.8, 0.8, 1)
+local NotSelectColor = Color.white
+local PrevSelectId
 
-	arg_1_0._btn:AddClickListener(arg_1_0._onClickItem, arg_1_0)
+function GMFightSimulateLeftItem:init(go)
+	self._btn = gohelper.findChildButtonWithAudio(go, "btn")
 
-	arg_1_0._imgBtn = gohelper.findChildImage(arg_1_1, "btn")
-	arg_1_0._txtName = gohelper.findChildText(arg_1_1, "btn/Text")
+	self._btn:AddClickListener(self._onClickItem, self)
+
+	self._imgBtn = gohelper.findChildImage(go, "btn")
+	self._txtName = gohelper.findChildText(go, "btn/Text")
 end
 
-function var_0_0.onUpdateMO(arg_2_0, arg_2_1)
-	arg_2_0._chapterCO = arg_2_1
-	arg_2_0._txtName.text = arg_2_0._chapterCO.name
-	arg_2_0._imgBtn.color = arg_2_0._chapterCO.id == var_0_3 and var_0_1 or var_0_2
+function GMFightSimulateLeftItem:onUpdateMO(mo)
+	self._chapterCO = mo
+	self._txtName.text = self._chapterCO.name
+	self._imgBtn.color = self._chapterCO.id == PrevSelectId and SelectColor or NotSelectColor
 
-	if var_0_3 then
-		if arg_2_0._chapterCO.id == var_0_3 then
-			GMFightSimulateRightModel.instance:setChapterId(arg_2_0._chapterCO.id)
+	if PrevSelectId then
+		if self._chapterCO.id == PrevSelectId then
+			GMFightSimulateRightModel.instance:setChapterId(self._chapterCO.id)
 		end
-	elseif arg_2_0._index == 1 then
-		var_0_3 = arg_2_0._chapterCO.id
+	elseif self._index == 1 then
+		PrevSelectId = self._chapterCO.id
 
-		arg_2_0._view:setSelect(arg_2_0._chapterCO)
-		GMFightSimulateRightModel.instance:setChapterId(arg_2_0._chapterCO.id)
+		self._view:setSelect(self._chapterCO)
+		GMFightSimulateRightModel.instance:setChapterId(self._chapterCO.id)
 	end
 end
 
-function var_0_0._onClickItem(arg_3_0)
-	var_0_3 = arg_3_0._chapterCO.id
-	arg_3_0._imgBtn.color = var_0_1
+function GMFightSimulateLeftItem:_onClickItem()
+	PrevSelectId = self._chapterCO.id
+	self._imgBtn.color = SelectColor
 
-	arg_3_0._view:setSelect(arg_3_0._chapterCO)
-	GMFightSimulateRightModel.instance:setChapterId(arg_3_0._chapterCO.id)
+	self._view:setSelect(self._chapterCO)
+	GMFightSimulateRightModel.instance:setChapterId(self._chapterCO.id)
 end
 
-function var_0_0.onSelect(arg_4_0, arg_4_1)
-	arg_4_0._imgBtn.color = arg_4_0._chapterCO.id == var_0_3 and var_0_1 or var_0_2
+function GMFightSimulateLeftItem:onSelect(isSelect)
+	self._imgBtn.color = self._chapterCO.id == PrevSelectId and SelectColor or NotSelectColor
 end
 
-function var_0_0.onDestroy(arg_5_0)
-	if arg_5_0._btn then
-		arg_5_0._btn:RemoveClickListener()
+function GMFightSimulateLeftItem:onDestroy()
+	if self._btn then
+		self._btn:RemoveClickListener()
 
-		arg_5_0._btn = nil
+		self._btn = nil
 	end
 end
 
-return var_0_0
+return GMFightSimulateLeftItem

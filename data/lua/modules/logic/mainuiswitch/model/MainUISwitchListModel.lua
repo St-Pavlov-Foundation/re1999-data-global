@@ -1,125 +1,127 @@
-﻿module("modules.logic.mainuiswitch.model.MainUISwitchListModel", package.seeall)
+﻿-- chunkname: @modules/logic/mainuiswitch/model/MainUISwitchListModel.lua
 
-local var_0_0 = class("MainUISwitchListModel", MixScrollModel)
+module("modules.logic.mainuiswitch.model.MainUISwitchListModel", package.seeall)
 
-function var_0_0._getUIList(arg_1_0)
-	if arg_1_0._UIMoList then
-		table.sort(arg_1_0._UIMoList, arg_1_0._sort)
+local MainUISwitchListModel = class("MainUISwitchListModel", MixScrollModel)
 
-		return arg_1_0._UIMoList
+function MainUISwitchListModel:_getUIList()
+	if self._UIMoList then
+		table.sort(self._UIMoList, self._sort)
+
+		return self._UIMoList
 	end
 
-	arg_1_0._UIMoList = {}
+	self._UIMoList = {}
 
-	for iter_1_0, iter_1_1 in ipairs(lua_scene_ui.configList) do
-		local var_1_0 = {
-			id = iter_1_1.id,
-			co = iter_1_1
+	for i, v in ipairs(lua_scene_ui.configList) do
+		local mo = {
+			id = v.id,
+			co = v
 		}
 
-		table.insert(arg_1_0._UIMoList, var_1_0)
+		table.insert(self._UIMoList, mo)
 	end
 
-	table.sort(arg_1_0._UIMoList, arg_1_0._sort)
+	table.sort(self._UIMoList, self._sort)
 
-	return arg_1_0._UIMoList
+	return self._UIMoList
 end
 
-function var_0_0._sort(arg_2_0, arg_2_1)
-	if arg_2_0.id == MainUISwitchModel.instance:getCurUseUI() then
+function MainUISwitchListModel._sort(a, b)
+	if a.id == MainUISwitchModel.instance:getCurUseUI() then
 		return true
 	end
 
-	if arg_2_1.id == MainUISwitchModel.instance:getCurUseUI() then
+	if b.id == MainUISwitchModel.instance:getCurUseUI() then
 		return false
 	end
 
-	return arg_2_0.id < arg_2_1.id
+	return a.id < b.id
 end
 
-function var_0_0.initList(arg_3_0)
-	local var_3_0 = arg_3_0:_getUIList()
+function MainUISwitchListModel:initList()
+	local list = self:_getUIList()
 
-	arg_3_0:setMoList(var_3_0)
-	arg_3_0:selectCellIndex(1)
+	self:setMoList(list)
+	self:selectCellIndex(1)
 end
 
-function var_0_0._getIndexById(arg_4_0, arg_4_1, arg_4_2)
-	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
-		if iter_4_1.co.id == arg_4_2 then
-			return iter_4_0
+function MainUISwitchListModel:_getIndexById(list, id)
+	for i, mo in ipairs(list) do
+		if mo.co.id == id then
+			return i
 		end
 	end
 end
 
-function var_0_0.setMoList(arg_5_0, arg_5_1)
-	arg_5_0:setList(arg_5_1)
+function MainUISwitchListModel:setMoList(list)
+	self:setList(list)
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0._scrollViews) do
-		for iter_5_2 = 0, #arg_5_0._cellInfoList - 1 do
-			local var_5_0 = iter_5_1:getCsScroll():GetRenderCell(iter_5_2)
+	for _, scrollView in ipairs(self._scrollViews) do
+		for i = 0, #self._cellInfoList - 1 do
+			local cell = scrollView:getCsScroll():GetRenderCell(i)
 
-			if var_5_0 then
-				gohelper.setActive(var_5_0.gameObject, iter_5_2 < #arg_5_1)
+			if cell then
+				gohelper.setActive(cell.gameObject, i < #list)
 			end
 		end
 	end
 end
 
-function var_0_0.clearList(arg_6_0)
-	arg_6_0._selectedCellIndex = nil
-	arg_6_0._cellInfoList = nil
+function MainUISwitchListModel:clearList()
+	self._selectedCellIndex = nil
+	self._cellInfoList = nil
 
-	arg_6_0:clear()
+	self:clear()
 end
 
-function var_0_0.getSelectedCellIndex(arg_7_0)
-	return arg_7_0._selectedCellIndex
+function MainUISwitchListModel:getSelectedCellIndex()
+	return self._selectedCellIndex
 end
 
-function var_0_0.selectCellIndex(arg_8_0, arg_8_1)
-	arg_8_0._selectedCellIndex = arg_8_1
+function MainUISwitchListModel:selectCellIndex(index)
+	self._selectedCellIndex = index
 
-	arg_8_0:refreshScroll()
+	self:refreshScroll()
 end
 
-function var_0_0.selectCellIndexBy(arg_9_0, arg_9_1)
-	arg_9_1 = arg_9_1 or MainUISwitchModel.instance:getCurUseUI()
+function MainUISwitchListModel:selectCellIndexBy(skinId)
+	skinId = skinId or MainUISwitchModel.instance:getCurUseUI()
 
-	local var_9_0 = arg_9_0:getList()
-	local var_9_1 = arg_9_0:_getIndexById(var_9_0, arg_9_1)
+	local list = self:getList()
+	local index = self:_getIndexById(list, skinId)
 
-	arg_9_0:selectCellIndex(var_9_1)
+	self:selectCellIndex(index)
 end
 
-function var_0_0.refreshScroll(arg_10_0)
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0._scrollViews) do
-		iter_10_1:refreshScroll()
+function MainUISwitchListModel:refreshScroll()
+	for _, scrollView in ipairs(self._scrollViews) do
+		scrollView:refreshScroll()
 	end
 end
 
-function var_0_0.getInfoList(arg_11_0, arg_11_1)
-	arg_11_0._cellInfoList = arg_11_0._cellInfoList or {}
+function MainUISwitchListModel:getInfoList(scrollGO)
+	self._cellInfoList = self._cellInfoList or {}
 
-	local var_11_0 = arg_11_0:getList()
+	local list = self:getList()
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
-		local var_11_1 = arg_11_0._cellInfoList[iter_11_0] or SLFramework.UGUI.MixCellInfo.New(MainUISwitchEnum.ItemTypeUnSelected, MainUISwitchEnum.ItemHeight, iter_11_0)
+	for i, mo in ipairs(list) do
+		local mixCellInfo = self._cellInfoList[i] or SLFramework.UGUI.MixCellInfo.New(MainUISwitchEnum.ItemTypeUnSelected, MainUISwitchEnum.ItemHeight, i)
 
-		if iter_11_0 == arg_11_0._selectedCellIndex then
-			var_11_1.type = MainUISwitchEnum.ItemTypeSelected
-			var_11_1.lineLength = MainUISwitchEnum.ItemHeight
+		if i == self._selectedCellIndex then
+			mixCellInfo.type = MainUISwitchEnum.ItemTypeSelected
+			mixCellInfo.lineLength = MainUISwitchEnum.ItemHeight
 		else
-			var_11_1.type = MainUISwitchEnum.ItemTypeUnSelected
-			var_11_1.lineLength = MainUISwitchEnum.ItemUnSelectedHeight
+			mixCellInfo.type = MainUISwitchEnum.ItemTypeUnSelected
+			mixCellInfo.lineLength = MainUISwitchEnum.ItemUnSelectedHeight
 		end
 
-		arg_11_0._cellInfoList[iter_11_0] = var_11_1
+		self._cellInfoList[i] = mixCellInfo
 	end
 
-	return arg_11_0._cellInfoList
+	return self._cellInfoList
 end
 
-var_0_0.instance = var_0_0.New()
+MainUISwitchListModel.instance = MainUISwitchListModel.New()
 
-return var_0_0
+return MainUISwitchListModel

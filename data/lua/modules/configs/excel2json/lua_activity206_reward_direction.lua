@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_activity206_reward_direction", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_activity206_reward_direction.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_activity206_reward_direction", package.seeall)
+
+local lua_activity206_reward_direction = {}
+local fields = {
 	activityId = 1,
 	name = 9,
 	guaranteeCount = 6,
@@ -13,17 +15,17 @@ local var_0_1 = {
 	directionId = 2,
 	des = 8
 }
-local var_0_2 = {
+local primaryKey = {
 	"activityId",
 	"directionId"
 }
-local var_0_3 = {
+local mlStringKey = {
 	name = 2,
 	des = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_activity206_reward_direction.onLoad(json)
+	lua_activity206_reward_direction.configList, lua_activity206_reward_direction.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_activity206_reward_direction

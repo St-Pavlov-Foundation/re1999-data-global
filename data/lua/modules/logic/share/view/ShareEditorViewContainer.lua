@@ -1,15 +1,17 @@
-﻿module("modules.logic.share.view.ShareEditorViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/share/view/ShareEditorViewContainer.lua
 
-local var_0_0 = class("ShareEditorViewContainer", BaseViewContainer)
+module("modules.logic.share.view.ShareEditorViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local ShareEditorViewContainer = class("ShareEditorViewContainer", BaseViewContainer)
+
+function ShareEditorViewContainer:buildViews()
 	return {
 		ShareEditorView.New(),
 		TabViewGroup.New(1, "#go_btns")
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function ShareEditorViewContainer:buildTabViews(tabContainerId)
 	return {
 		NavigateButtonsView.New({
 			true,
@@ -19,4 +21,4 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	}
 end
 
-return var_0_0
+return ShareEditorViewContainer

@@ -1,128 +1,131 @@
-﻿module("modules.logic.versionactivity1_2.yaxian.controller.game.YaXianGameHelper", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/yaxian/controller/game/YaXianGameHelper.lua
 
-local var_0_0 = class("YaXianGameHelper")
+module("modules.logic.versionactivity1_2.yaxian.controller.game.YaXianGameHelper", package.seeall)
 
-function var_0_0.getRowStartPosInScene(arg_1_0)
-	return arg_1_0 * YaXianGameEnum.TileSetting.halfWidth, -arg_1_0 * YaXianGameEnum.TileSetting.halfHeight
+local YaXianGameHelper = class("YaXianGameHelper")
+
+function YaXianGameHelper.getRowStartPosInScene(row)
+	return row * YaXianGameEnum.TileSetting.halfWidth, -row * YaXianGameEnum.TileSetting.halfHeight
 end
 
-function var_0_0.getPosZ(arg_2_0)
-	local var_2_0 = (arg_2_0 - YaXianGameEnum.ScenePosYRange.Min) / YaXianGameEnum.ScenePosYRangeArea
+function YaXianGameHelper.getPosZ(posY)
+	local rate = (posY - YaXianGameEnum.ScenePosYRange.Min) / YaXianGameEnum.ScenePosYRangeArea
 
-	return Mathf.Lerp(YaXianGameEnum.LevelScenePosZRange.Min, YaXianGameEnum.LevelScenePosZRange.Max, var_2_0)
+	return Mathf.Lerp(YaXianGameEnum.LevelScenePosZRange.Min, YaXianGameEnum.LevelScenePosZRange.Max, rate)
 end
 
-function var_0_0.calcTilePosInScene(arg_3_0, arg_3_1)
-	local var_3_0, var_3_1 = var_0_0.getRowStartPosInScene(arg_3_0)
-	local var_3_2 = var_3_0 + arg_3_1 * YaXianGameEnum.TileSetting.halfWidth
-	local var_3_3 = var_3_1 + arg_3_1 * YaXianGameEnum.TileSetting.halfHeight
-	local var_3_4 = var_3_2 + YaXianGameModel.instance.mapOffsetX
-	local var_3_5 = var_3_3 + YaXianGameModel.instance.mapOffsetY
+function YaXianGameHelper.calcTilePosInScene(tileX, tileY)
+	local x, y = YaXianGameHelper.getRowStartPosInScene(tileX)
 
-	return var_3_4, var_3_5, var_0_0.getPosZ(var_3_5)
+	x = x + tileY * YaXianGameEnum.TileSetting.halfWidth
+	y = y + tileY * YaXianGameEnum.TileSetting.halfHeight
+	x = x + YaXianGameModel.instance.mapOffsetX
+	y = y + YaXianGameModel.instance.mapOffsetY
+
+	return x, y, YaXianGameHelper.getPosZ(y)
 end
 
-function var_0_0.calBafflePosInScene(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0, var_4_1, var_4_2 = var_0_0.calcTilePosInScene(arg_4_0, arg_4_1)
+function YaXianGameHelper.calBafflePosInScene(tileX, tileY, direction)
+	local x, y, z = YaXianGameHelper.calcTilePosInScene(tileX, tileY)
 
-	if arg_4_2 == YaXianGameEnum.BaffleDirection.Left then
-		var_4_0 = var_4_0 - YaXianGameEnum.TileSetting.baffleOffsetX
-		var_4_1 = var_4_1 + YaXianGameEnum.TileSetting.baffleOffsetY
-	elseif arg_4_2 == YaXianGameEnum.BaffleDirection.Top then
-		var_4_0 = var_4_0 + YaXianGameEnum.TileSetting.baffleOffsetX
-		var_4_1 = var_4_1 + YaXianGameEnum.TileSetting.baffleOffsetY
-	elseif arg_4_2 == YaXianGameEnum.BaffleDirection.Right then
-		var_4_0 = var_4_0 + YaXianGameEnum.TileSetting.baffleOffsetX
-		var_4_1 = var_4_1 - YaXianGameEnum.TileSetting.baffleOffsetY
-	elseif arg_4_2 == YaXianGameEnum.BaffleDirection.Bottom then
-		var_4_0 = var_4_0 - YaXianGameEnum.TileSetting.baffleOffsetX
-		var_4_1 = var_4_1 - YaXianGameEnum.TileSetting.baffleOffsetY
+	if direction == YaXianGameEnum.BaffleDirection.Left then
+		x = x - YaXianGameEnum.TileSetting.baffleOffsetX
+		y = y + YaXianGameEnum.TileSetting.baffleOffsetY
+	elseif direction == YaXianGameEnum.BaffleDirection.Top then
+		x = x + YaXianGameEnum.TileSetting.baffleOffsetX
+		y = y + YaXianGameEnum.TileSetting.baffleOffsetY
+	elseif direction == YaXianGameEnum.BaffleDirection.Right then
+		x = x + YaXianGameEnum.TileSetting.baffleOffsetX
+		y = y - YaXianGameEnum.TileSetting.baffleOffsetY
+	elseif direction == YaXianGameEnum.BaffleDirection.Bottom then
+		x = x - YaXianGameEnum.TileSetting.baffleOffsetX
+		y = y - YaXianGameEnum.TileSetting.baffleOffsetY
 	else
-		logError("un support direction, please check ... " .. arg_4_2)
+		logError("un support direction, please check ... " .. direction)
 	end
 
-	return var_4_0, var_4_1, var_0_0.getPosZ(var_4_1)
+	return x, y, YaXianGameHelper.getPosZ(y)
 end
 
-function var_0_0.hasBaffle(arg_5_0, arg_5_1)
-	return bit.band(arg_5_0, bit.lshift(1, arg_5_1)) ~= 0
+function YaXianGameHelper.hasBaffle(tileData, directionPosPos)
+	return bit.band(tileData, bit.lshift(1, directionPosPos)) ~= 0
 end
 
-function var_0_0.getBaffleType(arg_6_0, arg_6_1)
-	return bit.band(arg_6_0, bit.lshift(1, arg_6_1 - 1)) == 0 and 0 or 1
+function YaXianGameHelper.getBaffleType(tileData, directionPosPos)
+	return bit.band(tileData, bit.lshift(1, directionPosPos - 1)) == 0 and 0 or 1
 end
 
-function var_0_0.canBlock(arg_7_0)
-	if arg_7_0 then
-		return arg_7_0.interactType == YaXianGameEnum.InteractType.Obstacle or arg_7_0.interactType == YaXianGameEnum.InteractType.TriggerFail or arg_7_0.interactType == YaXianGameEnum.InteractType.Player
+function YaXianGameHelper.canBlock(interactConfig)
+	if interactConfig then
+		return interactConfig.interactType == YaXianGameEnum.InteractType.Obstacle or interactConfig.interactType == YaXianGameEnum.InteractType.TriggerFail or interactConfig.interactType == YaXianGameEnum.InteractType.Player
 	end
 
 	return false
 end
 
-function var_0_0.canSelect(arg_8_0)
-	return arg_8_0 and arg_8_0.interactType == YaXianGameEnum.InteractType.Player
+function YaXianGameHelper.canSelect(interactConfig)
+	return interactConfig and interactConfig.interactType == YaXianGameEnum.InteractType.Player
 end
 
-function var_0_0.getDirection(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	if arg_9_0 ~= arg_9_2 then
-		if arg_9_0 < arg_9_2 then
+function YaXianGameHelper.getDirection(startX, startY, targetX, targetY)
+	if startX ~= targetX then
+		if startX < targetX then
 			return YaXianGameEnum.MoveDirection.Right
 		else
 			return YaXianGameEnum.MoveDirection.Left
 		end
 	end
 
-	if arg_9_1 ~= arg_9_3 then
-		if arg_9_1 < arg_9_3 then
+	if startY ~= targetY then
+		if startY < targetY then
 			return YaXianGameEnum.MoveDirection.Top
 		else
 			return YaXianGameEnum.MoveDirection.Bottom
 		end
 	end
 
-	logError(string.format("get direction fail ... startX : %s, startY : %s, targetX : %s, targetY : %s", arg_9_0, arg_9_1, arg_9_2, arg_9_3))
+	logError(string.format("get direction fail ... startX : %s, startY : %s, targetX : %s, targetY : %s", startX, startY, targetX, targetY))
 end
 
-function var_0_0.getNextPos(arg_10_0, arg_10_1, arg_10_2)
-	if arg_10_2 == YaXianGameEnum.MoveDirection.Bottom then
-		arg_10_1 = arg_10_1 - 1
-	elseif arg_10_2 == YaXianGameEnum.MoveDirection.Left then
-		arg_10_0 = arg_10_0 - 1
-	elseif arg_10_2 == YaXianGameEnum.MoveDirection.Right then
-		arg_10_0 = arg_10_0 + 1
-	elseif arg_10_2 == YaXianGameEnum.MoveDirection.Top then
-		arg_10_1 = arg_10_1 + 1
+function YaXianGameHelper.getNextPos(startX, startY, direction)
+	if direction == YaXianGameEnum.MoveDirection.Bottom then
+		startY = startY - 1
+	elseif direction == YaXianGameEnum.MoveDirection.Left then
+		startX = startX - 1
+	elseif direction == YaXianGameEnum.MoveDirection.Right then
+		startX = startX + 1
+	elseif direction == YaXianGameEnum.MoveDirection.Top then
+		startY = startY + 1
 	else
-		logError(string.format("un support direction, x : %s, y : %s, direction : %s", arg_10_0, arg_10_1, arg_10_2))
+		logError(string.format("un support direction, x : %s, y : %s, direction : %s", startX, startY, direction))
 	end
 
-	return arg_10_0, arg_10_1
+	return startX, startY
 end
 
-function var_0_0.getPassPosGenerator(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	local var_11_0 = var_0_0.getDirection(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	local var_11_1 = false
+function YaXianGameHelper.getPassPosGenerator(startX, startY, targetX, targetY)
+	local moveDir = YaXianGameHelper.getDirection(startX, startY, targetX, targetY)
+	local isArrived = false
 
 	return function()
-		if var_11_1 then
+		if isArrived then
 			return nil
 		end
 
-		local var_12_0, var_12_1 = var_0_0.getNextPos(arg_11_0, arg_11_1, var_11_0)
+		local nextPosX, nextPosY = YaXianGameHelper.getNextPos(startX, startY, moveDir)
 
-		if var_12_0 == arg_11_2 and var_12_1 == arg_11_3 then
-			var_11_1 = true
+		if nextPosX == targetX and nextPosY == targetY then
+			isArrived = true
 		end
 
-		arg_11_0, arg_11_1 = var_12_0, var_12_1
+		startX, startY = nextPosX, nextPosY
 
-		return var_12_0, var_12_1
+		return nextPosX, nextPosY
 	end
 end
 
-function var_0_0.getPosHashKey(arg_13_0, arg_13_1)
-	return arg_13_0 .. "." .. arg_13_1
+function YaXianGameHelper.getPosHashKey(posX, posY)
+	return posX .. "." .. posY
 end
 
-return var_0_0
+return YaXianGameHelper

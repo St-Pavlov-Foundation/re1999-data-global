@@ -1,40 +1,42 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotCollectionBagViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/view/V1a6_CachotCollectionBagViewContainer.lua
 
-local var_0_0 = class("V1a6_CachotCollectionBagViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotCollectionBagViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = arg_1_0:getScrollParam()
+local V1a6_CachotCollectionBagViewContainer = class("V1a6_CachotCollectionBagViewContainer", BaseViewContainer)
 
-	arg_1_0._scrollView = LuaListScrollView.New(V1a6_CachotCollectionBagListModel.instance, var_1_0)
+function V1a6_CachotCollectionBagViewContainer:buildViews()
+	local scrollParam = self:getScrollParam()
+
+	self._scrollView = LuaListScrollView.New(V1a6_CachotCollectionBagListModel.instance, scrollParam)
 
 	return {
 		V1a6_CachotCollectionBagView.New(),
-		arg_1_0._scrollView
+		self._scrollView
 	}
 end
 
-function var_0_0.getScrollView(arg_2_0)
-	return arg_2_0._scrollView
+function V1a6_CachotCollectionBagViewContainer:getScrollView()
+	return self._scrollView
 end
 
-function var_0_0.getScrollParam(arg_3_0)
-	if not arg_3_0._scrollParam then
-		arg_3_0._scrollParam = ListScrollParam.New()
-		arg_3_0._scrollParam.scrollGOPath = "left/#scroll_view"
-		arg_3_0._scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
-		arg_3_0._scrollParam.prefabUrl = arg_3_0._viewSetting.otherRes[1]
-		arg_3_0._scrollParam.cellClass = V1a6_CachotCollectionBagItem
-		arg_3_0._scrollParam.scrollDir = ScrollEnum.ScrollDirV
-		arg_3_0._scrollParam.lineCount = 4
-		arg_3_0._scrollParam.cellWidth = 248
-		arg_3_0._scrollParam.cellHeight = 256
-		arg_3_0._scrollParam.cellSpaceH = 0
-		arg_3_0._scrollParam.cellSpaceV = 0
-		arg_3_0._scrollParam.startSpace = 0
-		arg_3_0._scrollParam.endSpace = 0
+function V1a6_CachotCollectionBagViewContainer:getScrollParam()
+	if not self._scrollParam then
+		self._scrollParam = ListScrollParam.New()
+		self._scrollParam.scrollGOPath = "left/#scroll_view"
+		self._scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+		self._scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+		self._scrollParam.cellClass = V1a6_CachotCollectionBagItem
+		self._scrollParam.scrollDir = ScrollEnum.ScrollDirV
+		self._scrollParam.lineCount = 4
+		self._scrollParam.cellWidth = 248
+		self._scrollParam.cellHeight = 256
+		self._scrollParam.cellSpaceH = 0
+		self._scrollParam.cellSpaceV = 0
+		self._scrollParam.startSpace = 0
+		self._scrollParam.endSpace = 0
 	end
 
-	return arg_3_0._scrollParam
+	return self._scrollParam
 end
 
-return var_0_0
+return V1a6_CachotCollectionBagViewContainer

@@ -1,20 +1,22 @@
-﻿module("modules.logic.fight.system.work.FightWorkGuardChange", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkGuardChange.lua
 
-local var_0_0 = class("FightWorkGuardChange", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkGuardChange", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0.actEffectData
-	local var_1_1 = FightDataHelper.entityMgr:getById(var_1_0.targetId)
+local FightWorkGuardChange = class("FightWorkGuardChange", FightEffectBase)
 
-	if var_1_1 then
-		FightController.instance:dispatchEvent(FightEvent.EntityGuardChange, var_1_1.id, arg_1_0.actEffectData.effectNum, var_1_1.guard)
+function FightWorkGuardChange:onStart()
+	local actEffectData = self.actEffectData
+	local entityMO = FightDataHelper.entityMgr:getById(actEffectData.targetId)
+
+	if entityMO then
+		FightController.instance:dispatchEvent(FightEvent.EntityGuardChange, entityMO.id, self.actEffectData.effectNum, entityMO.guard)
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkGuardChange:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkGuardChange

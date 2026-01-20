@@ -1,38 +1,42 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.task.Act183TaskHeadItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/task/Act183TaskHeadItem.lua
 
-local var_0_0 = class("Act183TaskHeadItem", Act183TaskBaseItem)
+module("modules.logic.versionactivity2_5.challenge.view.task.Act183TaskHeadItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	var_0_0.super.init(arg_1_0, arg_1_1)
+local Act183TaskHeadItem = class("Act183TaskHeadItem", Act183TaskBaseItem)
 
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.go, "txt_desc")
+function Act183TaskHeadItem:init(go)
+	Act183TaskHeadItem.super.init(self, go)
+
+	self._txtdesc = gohelper.findChildText(self.go, "txt_desc")
 end
 
-function var_0_0.onUpdateMO(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	var_0_0.super.onUpdateMO(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+function Act183TaskHeadItem:onUpdateMO(mo, mixType, param)
+	Act183TaskHeadItem.super.onUpdateMO(self, mo, mixType, param)
 
-	arg_2_0._firstTaskMo = arg_2_1.data
-	arg_2_0._firstTaskCo = arg_2_0._firstTaskMo and arg_2_0._firstTaskMo.config
+	self._firstTaskMo = mo.data
+	self._firstTaskCo = self._firstTaskMo and self._firstTaskMo.config
 
-	arg_2_0:refresh()
+	self:refresh()
 end
 
-function var_0_0.refresh(arg_3_0)
-	arg_3_0._txtdesc.text = arg_3_0._firstTaskCo and arg_3_0._firstTaskCo.minType
+function Act183TaskHeadItem:refresh()
+	self._txtdesc.text = self._firstTaskCo and self._firstTaskCo.minType
 end
 
-function var_0_0._getTaskFinishCount(arg_4_0, arg_4_1)
-	local var_4_0 = 0
+function Act183TaskHeadItem:_getTaskFinishCount(groupTaskCos)
+	local finishCount = 0
 
-	if arg_4_1 then
-		for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
-			if TaskModel.instance:taskHasFinished(TaskEnum.TaskType.Activity183, iter_4_1.id) then
-				var_4_0 = var_4_0 + 1
+	if groupTaskCos then
+		for _, taskCo in ipairs(groupTaskCos) do
+			local isTaskFinish = TaskModel.instance:taskHasFinished(TaskEnum.TaskType.Activity183, taskCo.id)
+
+			if isTaskFinish then
+				finishCount = finishCount + 1
 			end
 		end
 	end
 
-	return var_4_0
+	return finishCount
 end
 
-return var_0_0
+return Act183TaskHeadItem

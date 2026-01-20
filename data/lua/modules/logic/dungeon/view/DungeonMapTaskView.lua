@@ -1,95 +1,100 @@
-﻿module("modules.logic.dungeon.view.DungeonMapTaskView", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/DungeonMapTaskView.lua
 
-local var_0_0 = class("DungeonMapTaskView", BaseView)
+module("modules.logic.dungeon.view.DungeonMapTaskView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._simageleftbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_leftbg")
-	arg_1_0._simagerightbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_rightbg")
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "#txt_title")
-	arg_1_0._gotasklist = gohelper.findChild(arg_1_0.viewGO, "#go_tasklist")
-	arg_1_0._gotaskitem = gohelper.findChild(arg_1_0.viewGO, "#go_tasklist/#go_taskitem")
-	arg_1_0._txtopen = gohelper.findChildText(arg_1_0.viewGO, "#go_tipbg/#txt_open")
-	arg_1_0._gotipsbg = gohelper.findChild(arg_1_0.viewGO, "#go_tipbg")
+local DungeonMapTaskView = class("DungeonMapTaskView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function DungeonMapTaskView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._simageleftbg = gohelper.findChildSingleImage(self.viewGO, "#simage_leftbg")
+	self._simagerightbg = gohelper.findChildSingleImage(self.viewGO, "#simage_rightbg")
+	self._txttitle = gohelper.findChildText(self.viewGO, "#txt_title")
+	self._gotasklist = gohelper.findChild(self.viewGO, "#go_tasklist")
+	self._gotaskitem = gohelper.findChild(self.viewGO, "#go_tasklist/#go_taskitem")
+	self._txtopen = gohelper.findChildText(self.viewGO, "#go_tipbg/#txt_open")
+	self._gotipsbg = gohelper.findChild(self.viewGO, "#go_tipbg")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function DungeonMapTaskView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function DungeonMapTaskView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function DungeonMapTaskView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._simageleftbg:LoadImage(ResUrl.getCommonIcon("bg_1"))
-	arg_5_0._simagerightbg:LoadImage(ResUrl.getCommonIcon("bg_2"))
+function DungeonMapTaskView:_editableInitView()
+	self._simageleftbg:LoadImage(ResUrl.getCommonIcon("bg_1"))
+	self._simagerightbg:LoadImage(ResUrl.getCommonIcon("bg_2"))
+	gohelper.setActive(self._gotaskitem, false)
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function DungeonMapTaskView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
+function DungeonMapTaskView:onOpen()
 	DungeonController.instance:dispatchEvent(DungeonEvent.OnClickGuidepost)
 	DungeonController.instance:dispatchEvent(DungeonEvent.OnSetEpisodeListVisible, false)
 
-	local var_7_0 = arg_7_0.viewParam.viewParam
+	local episodeId = self.viewParam.viewParam
 
-	arg_7_0:_showTaskList(var_7_0)
+	self:_showTaskList(episodeId)
 
-	local var_7_1 = DungeonConfig.instance:getUnlockEpisodeId(var_7_0)
-	local var_7_2 = lua_episode.configDict[var_7_1]
-	local var_7_3 = DungeonConfig.instance:getChapterCO(var_7_2.chapterId)
+	local targetEpisodeId = DungeonConfig.instance:getUnlockEpisodeId(episodeId)
+	local episodeConfig = lua_episode.configDict[targetEpisodeId]
+	local chapterConfig = DungeonConfig.instance:getChapterCO(episodeConfig.chapterId)
 
-	if var_7_2 and var_7_3 then
-		local var_7_4 = var_7_3.chapterIndex
-		local var_7_5, var_7_6 = DungeonConfig.instance:getChapterEpisodeIndexWithSP(var_7_3.id, var_7_2.id)
+	if episodeConfig and chapterConfig then
+		local chapterIndex = chapterConfig.chapterIndex
+		local episodeIndex, type = DungeonConfig.instance:getChapterEpisodeIndexWithSP(chapterConfig.id, episodeConfig.id)
 
-		if var_7_6 == DungeonEnum.EpisodeType.Sp then
-			var_7_4 = "SP"
+		if type == DungeonEnum.EpisodeType.Sp then
+			chapterIndex = "SP"
 		end
 
-		local var_7_7 = string.format("%s-%s", var_7_4, var_7_5)
+		local index = string.format("%s-%s", chapterIndex, episodeIndex)
 
-		arg_7_0._txtopen.text = string.format(lua_language_coder.configDict.dungeonmaptaskview_open.lang)
+		self._txtopen.text = string.format(lua_language_coder.configDict.dungeonmaptaskview_open.lang)
 	end
 end
 
-function var_0_0._showTaskList(arg_8_0, arg_8_1)
-	local var_8_0 = DungeonConfig.instance:getElementList(arg_8_1)
-	local var_8_1 = string.splitToNumber(var_8_0, "#")
+function DungeonMapTaskView:_showTaskList(episodeId)
+	local listStr = DungeonConfig.instance:getElementList(episodeId)
+	local list = string.splitToNumber(listStr, "#")
 
-	arg_8_0._listCount = #var_8_1
+	self._listCount = #list
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_1) do
-		local var_8_2 = gohelper.cloneInPlace(arg_8_0._gotaskitem)
-		local var_8_3 = MonoHelper.addLuaComOnceToGo(var_8_2, DungeonMapTaskItem)
+	for i, id in ipairs(list) do
+		local go = gohelper.cloneInPlace(self._gotaskitem)
+		local item = MonoHelper.addLuaComOnceToGo(go, DungeonMapTaskItem)
 
-		var_8_3:setParam({
-			iter_8_0,
-			iter_8_1
+		item:setParam({
+			i,
+			id,
+			self.viewParam.viewParam,
+			self.viewParam.isMain
 		})
-		gohelper.setActive(var_8_3.viewGO, true)
+		gohelper.setActive(item.viewGO, true)
 	end
 end
 
-function var_0_0.onClose(arg_9_0)
+function DungeonMapTaskView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	arg_10_0._simageleftbg:UnLoadImage()
-	arg_10_0._simagerightbg:UnLoadImage()
+function DungeonMapTaskView:onDestroyView()
+	self._simageleftbg:UnLoadImage()
+	self._simagerightbg:UnLoadImage()
 	DungeonController.instance:dispatchEvent(DungeonEvent.OnSetEpisodeListVisible, true)
 end
 
-return var_0_0
+return DungeonMapTaskView

@@ -1,61 +1,64 @@
-﻿module("modules.logic.bossrush.view.V1a4_BossRush_ResultPanelItem", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/view/V1a4_BossRush_ResultPanelItem.lua
 
-local var_0_0 = class("V1a4_BossRush_ResultPanelItem", ListScrollCellExtend)
+module("modules.logic.bossrush.view.V1a4_BossRush_ResultPanelItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtScore = gohelper.findChildText(arg_1_0.viewGO, "txt_Score")
+local V1a4_BossRush_ResultPanelItem = class("V1a4_BossRush_ResultPanelItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V1a4_BossRush_ResultPanelItem:onInitView()
+	self._txtScore = gohelper.findChildText(self.viewGO, "txt_Score")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function V1a4_BossRush_ResultPanelItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function V1a4_BossRush_ResultPanelItem:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._img = gohelper.findChildImage(arg_4_0.viewGO, "")
+function V1a4_BossRush_ResultPanelItem:_editableInitView()
+	self._img = gohelper.findChildImage(self.viewGO, "")
 end
 
-function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
-	arg_5_0._mo = arg_5_1
+function V1a4_BossRush_ResultPanelItem:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_5_0:_refresh()
+	self:_refresh()
 end
 
-function var_0_0.onSelect(arg_6_0, arg_6_1)
+function V1a4_BossRush_ResultPanelItem:onSelect(isSelect)
 	return
 end
 
-function var_0_0._refresh(arg_7_0)
-	local var_7_0 = arg_7_0._mo
-	local var_7_1 = var_7_0.isGray
-	local var_7_2 = var_7_0.stageRewardCO.rewardPointNum
-	local var_7_3 = var_7_1 and BossRushEnum.Color.GRAY or BossRushEnum.Color.WHITE
+function V1a4_BossRush_ResultPanelItem:_refresh()
+	local mo = self._mo
+	local isGray = mo.isGray
+	local stageRewardCO = mo.stageRewardCO
+	local rewardPointNum = stageRewardCO.rewardPointNum
+	local color = isGray and BossRushEnum.Color.GRAY or BossRushEnum.Color.WHITE
 
-	arg_7_0:setDesc(BossRushConfig.instance:getScoreStr(var_7_2))
-	arg_7_0:setImgColor(var_7_3)
+	self:setDesc(BossRushConfig.instance:getScoreStr(rewardPointNum))
+	self:setImgColor(color)
 end
 
-function var_0_0.setDesc(arg_8_0, arg_8_1)
-	arg_8_0._txtScore.text = arg_8_1
+function V1a4_BossRush_ResultPanelItem:setDesc(desc)
+	self._txtScore.text = desc
 end
 
-function var_0_0.setActive(arg_9_0, arg_9_1)
-	gohelper.setActive(arg_9_0._go, arg_9_1)
+function V1a4_BossRush_ResultPanelItem:setActive(isActive)
+	gohelper.setActive(self._go, isActive)
 end
 
-function var_0_0.setImgColor(arg_10_0, arg_10_1)
-	UIColorHelper.set(arg_10_0._img, arg_10_1)
+function V1a4_BossRush_ResultPanelItem:setImgColor(hexColor)
+	UIColorHelper.set(self._img, hexColor)
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function V1a4_BossRush_ResultPanelItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return V1a4_BossRush_ResultPanelItem

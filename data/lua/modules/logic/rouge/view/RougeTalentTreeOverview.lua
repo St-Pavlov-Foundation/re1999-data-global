@@ -1,195 +1,198 @@
-﻿module("modules.logic.rouge.view.RougeTalentTreeOverview", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeTalentTreeOverview.lua
 
-local var_0_0 = class("RougeTalentTreeOverview", BaseView)
+module("modules.logic.rouge.view.RougeTalentTreeOverview", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._scrolldesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_desc")
-	arg_1_0._goattribute = gohelper.findChild(arg_1_0.viewGO, "#scroll_desc/Viewport/Content/base/#go_attribute/attribute")
-	arg_1_0._gotalentitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_desc/Viewport/Content/talent/#go_talentitem")
-	arg_1_0._godetails = gohelper.findChild(arg_1_0.viewGO, "#scroll_desc/Viewport/Content/talent/#go_talentitem/#go_details")
-	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "#go_empty")
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
-	arg_1_0._goarrow = gohelper.findChild(arg_1_0.viewGO, "#go_arrow")
-	arg_1_0._attributeItemList = {}
-	arg_1_0._talentItemList = {}
+local RougeTalentTreeOverview = class("RougeTalentTreeOverview", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeTalentTreeOverview:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._scrolldesc = gohelper.findChildScrollRect(self.viewGO, "#scroll_desc")
+	self._goattribute = gohelper.findChild(self.viewGO, "#scroll_desc/Viewport/Content/base/#go_attribute/attribute")
+	self._gotalentitem = gohelper.findChild(self.viewGO, "#scroll_desc/Viewport/Content/talent/#go_talentitem")
+	self._godetails = gohelper.findChild(self.viewGO, "#scroll_desc/Viewport/Content/talent/#go_talentitem/#go_details")
+	self._goempty = gohelper.findChild(self.viewGO, "#go_empty")
+	self._gotopleft = gohelper.findChild(self.viewGO, "#go_topleft")
+	self._goarrow = gohelper.findChild(self.viewGO, "#go_arrow")
+	self._attributeItemList = {}
+	self._talentItemList = {}
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RougeTalentTreeOverview:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	for iter_3_0, iter_3_1 in pairs(arg_3_0._talentItemList) do
-		if iter_3_1 and iter_3_1.btn then
-			iter_3_1.btn:RemoveClickListener()
+function RougeTalentTreeOverview:removeEvents()
+	for key, item in pairs(self._talentItemList) do
+		if item and item.btn then
+			item.btn:RemoveClickListener()
 		end
 	end
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function RougeTalentTreeOverview:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function RougeTalentTreeOverview:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0._season = RougeOutsideModel.instance:season()
+function RougeTalentTreeOverview:onOpen()
+	self._season = RougeOutsideModel.instance:season()
 
 	AudioMgr.instance:trigger(AudioEnum.UI.OpenTalentOverView)
 
-	arg_6_0._attributeMo, arg_6_0._showMo = RougeTalentModel.instance:calculateTalent()
+	self._attributeMo, self._showMo = RougeTalentModel.instance:calculateTalent()
 
-	if not arg_6_0._showMo and not arg_6_0._attributeMo then
-		gohelper.setActive(arg_6_0._goempty, true)
-		gohelper.setActive(arg_6_0._scrolldesc.gameObject, false)
+	if not self._showMo and not self._attributeMo then
+		gohelper.setActive(self._goempty, true)
+		gohelper.setActive(self._scrolldesc.gameObject, false)
 
 		return
 	else
-		gohelper.setActive(arg_6_0._goempty, false)
-		gohelper.setActive(arg_6_0._scrolldesc.gameObject, true)
+		gohelper.setActive(self._goempty, false)
+		gohelper.setActive(self._scrolldesc.gameObject, true)
 	end
 
-	if next(arg_6_0._showMo) then
-		for iter_6_0, iter_6_1 in pairs(arg_6_0._showMo) do
-			local var_6_0 = arg_6_0._talentItemList[iter_6_0]
+	if next(self._showMo) then
+		for talent, mo in pairs(self._showMo) do
+			local item = self._talentItemList[talent]
 
-			if not var_6_0 then
-				var_6_0 = arg_6_0:getUserDataTb_()
+			if not item then
+				item = self:getUserDataTb_()
 
-				local var_6_1 = gohelper.cloneInPlace(arg_6_0._gotalentitem, iter_6_0)
-				local var_6_2 = gohelper.findChildText(var_6_1, "info/img_titleline/#txt_talenname")
-				local var_6_3 = gohelper.findChildImage(var_6_1, "info/img_titleline/#image_icon")
-				local var_6_4 = gohelper.findChildButton(var_6_1, "info/#btn_arrow")
-				local var_6_5 = gohelper.findChild(var_6_1, "info/#btn_arrow/open")
-				local var_6_6 = gohelper.findChild(var_6_1, "info/#btn_arrow/close")
+				local go = gohelper.cloneInPlace(self._gotalentitem, talent)
+				local talentname = gohelper.findChildText(go, "info/img_titleline/#txt_talenname")
+				local icon = gohelper.findChildImage(go, "info/img_titleline/#image_icon")
+				local btn = gohelper.findChildButton(go, "info/#btn_arrow")
+				local gobtnopen = gohelper.findChild(go, "info/#btn_arrow/open")
+				local gobtnclose = gohelper.findChild(go, "info/#btn_arrow/close")
 
-				var_6_0.go = var_6_1
-				var_6_0.name = var_6_2
-				var_6_0.icon = var_6_3
-				var_6_0.btn = var_6_4
-				var_6_0.gobtnopen = var_6_5
-				var_6_0.gobtnclose = var_6_6
-				var_6_0.isopen = false
-				var_6_0.details = {}
+				item.go = go
+				item.name = talentname
+				item.icon = icon
+				item.btn = btn
+				item.gobtnopen = gobtnopen
+				item.gobtnclose = gobtnclose
+				item.isopen = false
+				item.details = {}
 
-				for iter_6_2, iter_6_3 in pairs(iter_6_1) do
-					local var_6_7 = arg_6_0:getUserDataTb_()
-					local var_6_8 = gohelper.clone(arg_6_0._godetails, var_6_1, iter_6_3)
+				for _, talentid in pairs(mo) do
+					local detail = self:getUserDataTb_()
+					local detailGo = gohelper.clone(self._godetails, go, talentid)
 
-					var_6_7.go = var_6_8
+					detail.go = detailGo
 
-					gohelper.setActive(var_6_8, false)
+					gohelper.setActive(detailGo, false)
 
-					var_6_7.gotalentdesc = gohelper.findChild(var_6_8, "#txt_unlockdec")
-					var_6_7.txttalentdesc = gohelper.findChildText(var_6_8, "#txt_unlockdec")
-					var_6_7.goUnlockdesc = gohelper.findChild(var_6_8, "#txt_talentdec")
-					var_6_7.txtUnlockdesc = gohelper.findChildText(var_6_8, "#txt_talentdec")
+					detail.gotalentdesc = gohelper.findChild(detailGo, "#txt_unlockdec")
+					detail.txttalentdesc = gohelper.findChildText(detailGo, "#txt_unlockdec")
+					detail.goUnlockdesc = gohelper.findChild(detailGo, "#txt_talentdec")
+					detail.txtUnlockdesc = gohelper.findChildText(detailGo, "#txt_talentdec")
 
-					local var_6_9 = RougeTalentConfig.instance:getBranchConfigByID(arg_6_0._season, iter_6_3)
-					local var_6_10 = var_6_9.isOrigin == 1
+					local co = RougeTalentConfig.instance:getBranchConfigByID(self._season, talentid)
+					local isOrigin = co.isOrigin == 1
 
-					gohelper.setActive(var_6_7.gotalentdesc, not var_6_10)
-					gohelper.setActive(var_6_7.goUnlockdesc, var_6_10)
+					gohelper.setActive(detail.gotalentdesc, not isOrigin)
+					gohelper.setActive(detail.goUnlockdesc, isOrigin)
 
-					var_6_7.txttalentdesc.text = var_6_9.desc
-					var_6_7.txtUnlockdesc.text = var_6_9.desc
-					var_6_0.details[iter_6_3] = var_6_7
+					detail.txttalentdesc.text = co.desc
+					detail.txtUnlockdesc.text = co.desc
+					item.details[talentid] = detail
 				end
 
-				local function var_6_11()
-					var_6_0.isopen = not var_6_0.isopen
+				local function click()
+					item.isopen = not item.isopen
 
-					if next(var_6_0.details) then
-						for iter_7_0, iter_7_1 in pairs(var_6_0.details) do
-							local var_7_0 = iter_7_1.go
+					if next(item.details) then
+						for _, details in pairs(item.details) do
+							local go = details.go
 
-							gohelper.setActive(var_7_0, var_6_0.isopen)
+							gohelper.setActive(go, item.isopen)
 						end
 					end
 
-					gohelper.setActive(var_6_5, var_6_0.isopen)
-					gohelper.setActive(var_6_6, not var_6_0.isopen)
+					gohelper.setActive(gobtnopen, item.isopen)
+					gohelper.setActive(gobtnclose, not item.isopen)
 					AudioMgr.instance:trigger(AudioEnum.UI.ClickOverBranch)
 				end
 
-				gohelper.setActive(var_6_5, false)
-				gohelper.setActive(var_6_6, true)
-				var_6_0.btn:AddClickListener(var_6_11, arg_6_0)
-				gohelper.setActive(var_6_1, true)
+				gohelper.setActive(gobtnopen, false)
+				gohelper.setActive(gobtnclose, true)
+				item.btn:AddClickListener(click, self)
+				gohelper.setActive(go, true)
 
-				arg_6_0._talentItemList[iter_6_0] = var_6_0
+				self._talentItemList[talent] = item
 			end
 
-			local var_6_12 = RougeTalentConfig.instance:getConfigByTalent(arg_6_0._season, iter_6_0)
+			local talentco = RougeTalentConfig.instance:getConfigByTalent(self._season, talent)
 
-			var_6_0.name.text = var_6_12.name
+			item.name.text = talentco.name
 
-			UISpriteSetMgr.instance:setRougeSprite(var_6_0.icon, var_6_12.icon)
+			UISpriteSetMgr.instance:setRougeSprite(item.icon, talentco.icon)
 		end
 	end
 
-	if #arg_6_0._attributeMo > 0 then
-		for iter_6_4, iter_6_5 in ipairs(arg_6_0._attributeMo) do
-			local var_6_13 = arg_6_0._attributeItemList[iter_6_4]
+	if #self._attributeMo > 0 then
+		for index, co in ipairs(self._attributeMo) do
+			local item = self._attributeItemList[index]
 
-			if not var_6_13 then
-				var_6_13 = arg_6_0:getUserDataTb_()
+			if not item then
+				item = self:getUserDataTb_()
 
-				local var_6_14 = gohelper.cloneInPlace(arg_6_0._goattribute, iter_6_4)
-				local var_6_15 = gohelper.findChildImage(var_6_14, "icon")
-				local var_6_16 = gohelper.findChildText(var_6_14, "txt_attribute")
-				local var_6_17 = gohelper.findChildText(var_6_14, "name")
-				local var_6_18 = gohelper.findChild(var_6_14, "bg")
+				local go = gohelper.cloneInPlace(self._goattribute, index)
+				local icon = gohelper.findChildImage(go, "icon")
+				local rate = gohelper.findChildText(go, "txt_attribute")
+				local name = gohelper.findChildText(go, "name")
+				local bg = gohelper.findChild(go, "bg")
 
-				var_6_13.go = var_6_14
-				var_6_13.rate = var_6_16
-				var_6_13.name = var_6_17
-				var_6_13.icon = var_6_15
+				item.go = go
+				item.rate = rate
+				item.name = name
+				item.icon = icon
 
-				local var_6_19 = math.ceil(iter_6_4 / 2) % 2 ~= 0
+				local layout = math.ceil(index / 2)
+				local showbg = layout % 2 ~= 0
 
-				gohelper.setActive(var_6_14, true)
-				gohelper.setActive(var_6_18, var_6_19)
-				table.insert(arg_6_0._attributeItemList, var_6_13)
+				gohelper.setActive(go, true)
+				gohelper.setActive(bg, showbg)
+				table.insert(self._attributeItemList, item)
 			end
 
-			if iter_6_5.ismul then
-				local var_6_20 = "+" .. iter_6_5.rate * 0.1 .. "%"
-				local var_6_21 = "+" .. iter_6_5.rate .. "%"
+			if co.ismul then
+				local attributevalue = "+" .. co.rate * 0.1 .. "%"
+				local rougevalue = "+" .. co.rate .. "%"
 
-				var_6_13.rate.text = iter_6_5.isattribute and var_6_20 or var_6_21
+				item.rate.text = co.isattribute and attributevalue or rougevalue
 			else
-				var_6_13.rate.text = "+" .. iter_6_5.rate
+				item.rate.text = "+" .. co.rate
 			end
 
-			if iter_6_5.isattribute then
-				if iter_6_5.id == 215 or iter_6_5.id == 216 then
-					UISpriteSetMgr.instance:setCommonSprite(var_6_13.icon, iter_6_5.icon)
+			if co.isattribute then
+				if co.id == 215 or co.id == 216 then
+					UISpriteSetMgr.instance:setCommonSprite(item.icon, co.icon)
 				end
 
-				UISpriteSetMgr.instance:setCommonSprite(var_6_13.icon, iter_6_5.icon)
+				UISpriteSetMgr.instance:setCommonSprite(item.icon, co.icon)
 			else
-				UISpriteSetMgr.instance:setRougeSprite(var_6_13.icon, iter_6_5.icon)
+				UISpriteSetMgr.instance:setRougeSprite(item.icon, co.icon)
 			end
 
-			var_6_13.name.text = iter_6_5.name
+			item.name.text = co.name
 		end
 	end
 end
 
-function var_0_0.onClose(arg_8_0)
+function RougeTalentTreeOverview:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
+function RougeTalentTreeOverview:onDestroyView()
 	return
 end
 
-return var_0_0
+return RougeTalentTreeOverview

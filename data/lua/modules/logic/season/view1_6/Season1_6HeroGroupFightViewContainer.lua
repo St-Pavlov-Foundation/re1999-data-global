@@ -1,8 +1,10 @@
-﻿module("modules.logic.season.view1_6.Season1_6HeroGroupFightViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/season/view1_6/Season1_6HeroGroupFightViewContainer.lua
 
-local var_0_0 = class("Season1_6HeroGroupFightViewContainer", BaseViewContainer)
+module("modules.logic.season.view1_6.Season1_6HeroGroupFightViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local Season1_6HeroGroupFightViewContainer = class("Season1_6HeroGroupFightViewContainer", BaseViewContainer)
+
+function Season1_6HeroGroupFightViewContainer:buildViews()
 	return {
 		Season1_6HeroGroupFightView.New(),
 		Season1_6HeroGroupListView.New(),
@@ -13,44 +15,44 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-function var_0_0.getSeason1_6HeroGroupFightView(arg_2_0)
-	return arg_2_0._views[1]
+function Season1_6HeroGroupFightViewContainer:getSeason1_6HeroGroupFightView()
+	return self._views[1]
 end
 
-function var_0_0.buildTabViews(arg_3_0, arg_3_1)
-	if arg_3_1 == 1 then
-		arg_3_0._navigateButtonsView = NavigateButtonsView.New({
+function Season1_6HeroGroupFightViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonsView = NavigateButtonsView.New({
 			true,
 			true,
 			true
-		}, HelpEnum.HelpId.Season1_6HerogroupHelp, arg_3_0._closeCallback, nil, nil, arg_3_0)
+		}, HelpEnum.HelpId.Season1_6HerogroupHelp, self._closeCallback, nil, nil, self)
 
-		arg_3_0._navigateButtonsView:setCloseCheck(arg_3_0.defaultOverrideCloseCheck, arg_3_0)
+		self._navigateButtonsView:setCloseCheck(self.defaultOverrideCloseCheck, self)
 
 		return {
-			arg_3_0._navigateButtonsView
+			self._navigateButtonsView
 		}
 	end
 end
 
-function var_0_0._closeCallback(arg_4_0)
-	arg_4_0:closeThis()
+function Season1_6HeroGroupFightViewContainer:_closeCallback()
+	self:closeThis()
 
-	if arg_4_0:handleVersionActivityCloseCall() then
+	if self:handleVersionActivityCloseCall() then
 		return
 	end
 
-	local var_4_0 = HeroGroupModel.instance.episodeId
-	local var_4_1 = DungeonConfig.instance:getEpisodeCO(var_4_0)
+	local episodeId = HeroGroupModel.instance.episodeId
+	local episodeCO = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-	if var_4_1.type == DungeonEnum.EpisodeType.Explore then
-		ExploreController.instance:enterExploreChapter(var_4_1.chapterId)
+	if episodeCO.type == DungeonEnum.EpisodeType.Explore then
+		ExploreController.instance:enterExploreChapter(episodeCO.chapterId)
 	else
 		MainController.instance:enterMainScene(true, false)
 	end
 end
 
-function var_0_0.handleVersionActivityCloseCall(arg_5_0)
+function Season1_6HeroGroupFightViewContainer:handleVersionActivityCloseCall()
 	if EnterActivityViewOnExitFightSceneHelper.checkCurrentIsActivityFight() then
 		EnterActivityViewOnExitFightSceneHelper.enterCurrentActivity(true, true)
 
@@ -58,19 +60,21 @@ function var_0_0.handleVersionActivityCloseCall(arg_5_0)
 	end
 end
 
-function var_0_0.setNavigateOverrideClose(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_0._navigateButtonsView:setOverrideClose(arg_6_1, arg_6_2)
+function Season1_6HeroGroupFightViewContainer:setNavigateOverrideClose(callBack, callbackObject)
+	self._navigateButtonsView:setOverrideClose(callBack, callbackObject)
 end
 
-function var_0_0.defaultOverrideCloseCheck(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = DungeonModel.instance.curSendChapterId
+function Season1_6HeroGroupFightViewContainer:defaultOverrideCloseCheck(reallyClose, reallyCloseObj)
+	local chapterId = DungeonModel.instance.curSendChapterId
+	local chapterCo = DungeonConfig.instance:getChapterCO(chapterId)
+	local actId = chapterCo.actId
 
-	if DungeonConfig.instance:getChapterCO(var_7_0).actId == VersionActivityEnum.ActivityId.Act109 then
-		local function var_7_1()
-			arg_7_1(arg_7_2)
+	if actId == VersionActivityEnum.ActivityId.Act109 then
+		local function yesFunc()
+			reallyClose(reallyCloseObj)
 		end
 
-		GameFacade.showMessageBox(MessageBoxIdDefine.QuitPushBoxEpisode, MsgBoxEnum.BoxType.Yes_No, var_7_1)
+		GameFacade.showMessageBox(MessageBoxIdDefine.QuitPushBoxEpisode, MsgBoxEnum.BoxType.Yes_No, yesFunc)
 
 		return false
 	end
@@ -78,4 +82,4 @@ function var_0_0.defaultOverrideCloseCheck(arg_7_0, arg_7_1, arg_7_2)
 	return true
 end
 
-return var_0_0
+return Season1_6HeroGroupFightViewContainer

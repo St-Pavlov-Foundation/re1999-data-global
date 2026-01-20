@@ -1,15 +1,17 @@
-﻿module("modules.logic.versionactivity1_4.act134.define.Activity134Enum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act134/define/Activity134Enum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_4.act134.define.Activity134Enum", package.seeall)
 
-var_0_0.StroyStatus = {
+local Activity134Enum = _M
+
+Activity134Enum.StroyStatus = {
 	Finish = 1,
 	Orgin = 2
 }
-var_0_0.AnimName = {
+Activity134Enum.AnimName = {
 	CutRight = "switch_right",
 	CutLeft = "switch_left",
 	Open = "open"
 }
 
-return var_0_0
+return Activity134Enum

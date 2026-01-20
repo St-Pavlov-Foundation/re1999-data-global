@@ -1,116 +1,118 @@
-﻿module("modules.logic.versionactivity2_4.warmup.model.V2a4_WarmUpGachaWaveMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/warmup/model/V2a4_WarmUpGachaWaveMO.lua
 
-local var_0_0 = math.randomseed
-local var_0_1 = table.insert
-local var_0_2 = string.format
-local var_0_3 = class("V2a4_WarmUpGachaWaveMO")
+module("modules.logic.versionactivity2_4.warmup.model.V2a4_WarmUpGachaWaveMO", package.seeall)
 
-function var_0_3.ctor(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._index = arg_1_1
-	arg_1_0._type = arg_1_2
-	arg_1_0._roundMOList = {}
+local randomseed = math.randomseed
+local ti = table.insert
+local sf = string.format
+local V2a4_WarmUpGachaWaveMO = class("V2a4_WarmUpGachaWaveMO")
+
+function V2a4_WarmUpGachaWaveMO:ctor(index, eV2a4_WarmUpEnum_AskType)
+	self._index = index
+	self._type = eV2a4_WarmUpEnum_AskType
+	self._roundMOList = {}
 end
 
-function var_0_3._getYesOrNo(arg_2_0)
-	local var_2_0 = arg_2_0.__rdIdxList or {}
-	local var_2_1 = arg_2_0.__curRdIdx or 0
+function V2a4_WarmUpGachaWaveMO:_getYesOrNo()
+	local list = self.__rdIdxList or {}
+	local idx = self.__curRdIdx or 0
 
-	arg_2_0.__rdSet = arg_2_0.__rdSet or {}
+	self.__rdSet = self.__rdSet or {}
 
-	if var_2_1 < #var_2_0 then
-		local var_2_2, var_2_3 = arg_2_0:_nextRandomYesNo()
-		local var_2_4 = 10
+	if idx < #list then
+		local isNo, yesOrNoIndex = self:_nextRandomYesNo()
+		local stk_overflow = 10
 
-		while arg_2_0.__rdSet[var_2_3] do
-			var_2_4 = var_2_4 - 1
+		while self.__rdSet[yesOrNoIndex] do
+			stk_overflow = stk_overflow - 1
 
-			if var_2_4 < 0 then
+			if stk_overflow < 0 then
 				logError("[V2a4_WarmUpGachaWaveMO - _getYesOrNo] stack overflow")
 
 				break
 			end
 
-			var_2_2, var_2_3 = arg_2_0:_nextRandomYesNo()
+			isNo, yesOrNoIndex = self:_nextRandomYesNo()
 		end
 
-		if arg_2_0.__curRdIdx <= #var_2_0 then
-			arg_2_0.__rdSet[var_2_3] = true
+		if self.__curRdIdx <= #list then
+			self.__rdSet[yesOrNoIndex] = true
 
-			return var_2_2, var_2_3
+			return isNo, yesOrNoIndex
 		end
 
-		arg_2_0.__rdSet = {}
+		self.__rdSet = {}
 	end
 
-	local var_2_5 = V2a4_WarmUpConfig.instance:getYesAndNoMaxCount(arg_2_0._type)
+	local yesAndNoMaxCount = V2a4_WarmUpConfig.instance:getYesAndNoMaxCount(self._type)
 
 	if isDebugBuild then
-		assert(var_2_5 > 0, var_0_2("unsupported V2a4_WarmUpEnum.AskType.xxx = %s", arg_2_0._type))
+		assert(yesAndNoMaxCount > 0, sf("unsupported V2a4_WarmUpEnum.AskType.xxx = %s", self._type))
 	end
 
-	for iter_2_0 = #var_2_0 + 1, var_2_5 do
-		var_0_1(var_2_0, iter_2_0)
+	for i = #list + 1, yesAndNoMaxCount do
+		ti(list, i)
 	end
 
-	var_0_0(os.time())
+	randomseed(os.time())
 
-	arg_2_0.__rdIdxList = GameUtil.randomTable(var_2_0)
-	arg_2_0.__curRdIdx = 0
+	self.__rdIdxList = GameUtil.randomTable(list)
+	self.__curRdIdx = 0
 
-	local var_2_6, var_2_7 = arg_2_0:_nextRandomYesNo()
+	local isNo, yesOrNoIndex = self:_nextRandomYesNo()
 
-	arg_2_0.__rdSet[var_2_7] = true
+	self.__rdSet[yesOrNoIndex] = true
 
-	return var_2_6, var_2_7
+	return isNo, yesOrNoIndex
 end
 
-function var_0_3._nextRandomYesNo(arg_3_0)
-	local var_3_0 = arg_3_0.__curRdIdx + 1
-	local var_3_1 = arg_3_0.__rdIdxList[var_3_0]
-	local var_3_2 = var_3_1 % 2 == 0
-	local var_3_3 = math.ceil(var_3_1 / 2)
+function V2a4_WarmUpGachaWaveMO:_nextRandomYesNo()
+	local rdIdx = self.__curRdIdx + 1
+	local idx = self.__rdIdxList[rdIdx]
+	local isNo = idx % 2 == 0
+	local yesOrNoIndex = math.ceil(idx / 2)
 
-	arg_3_0.__curRdIdx = var_3_0
+	self.__curRdIdx = rdIdx
 
-	return var_3_2, var_3_3
+	return isNo, yesOrNoIndex
 end
 
-function var_0_3.index(arg_4_0)
-	return arg_4_0._index
+function V2a4_WarmUpGachaWaveMO:index()
+	return self._index
 end
 
-function var_0_3.type(arg_5_0)
-	return arg_5_0._type
+function V2a4_WarmUpGachaWaveMO:type()
+	return self._type
 end
 
-function var_0_3.roundCount(arg_6_0)
-	return #arg_6_0._roundMOList
+function V2a4_WarmUpGachaWaveMO:roundCount()
+	return #self._roundMOList
 end
 
-function var_0_3.roundMOList(arg_7_0)
-	return arg_7_0._roundMOList
+function V2a4_WarmUpGachaWaveMO:roundMOList()
+	return self._roundMOList
 end
 
-function var_0_3.isAllAskYes(arg_8_0)
-	local var_8_0 = 0
+function V2a4_WarmUpGachaWaveMO:isAllAskYes()
+	local askYesCnt = 0
 
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0._roundMOList) do
-		if iter_8_1:ansIsYes() then
-			var_8_0 = var_8_0 + 1
+	for _, roundMO in ipairs(self._roundMOList) do
+		if roundMO:ansIsYes() then
+			askYesCnt = askYesCnt + 1
 		end
 	end
 
-	return var_8_0 > 0 and var_8_0 == arg_8_0:roundCount()
+	return askYesCnt > 0 and askYesCnt == self:roundCount()
 end
 
-function var_0_3.genRound(arg_9_0, arg_9_1)
-	local var_9_0, var_9_1 = arg_9_0:_getYesOrNo()
-	local var_9_2 = arg_9_0:roundCount() + 1
-	local var_9_3 = V2a4_WarmUpGachaRoundMO.New(arg_9_0, var_9_2, arg_9_1, var_9_0, var_9_1)
+function V2a4_WarmUpGachaWaveMO:genRound(CO)
+	local isNo, yesOrNoIndex = self:_getYesOrNo()
+	local roundIndex = self:roundCount() + 1
+	local roundMO = V2a4_WarmUpGachaRoundMO.New(self, roundIndex, CO, isNo, yesOrNoIndex)
 
-	var_0_1(arg_9_0._roundMOList, var_9_3)
+	ti(self._roundMOList, roundMO)
 
-	return var_9_3
+	return roundMO
 end
 
-return var_0_3
+return V2a4_WarmUpGachaWaveMO

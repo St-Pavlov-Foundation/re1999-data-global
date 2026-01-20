@@ -1,24 +1,26 @@
-﻿module("modules.logic.summon.model.SummonCustomPickChoiceListModel", package.seeall)
+﻿-- chunkname: @modules/logic/summon/model/SummonCustomPickChoiceListModel.lua
 
-local var_0_0 = class("SummonCustomPickChoiceListModel", ListScrollModel)
+module("modules.logic.summon.model.SummonCustomPickChoiceListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:clear()
+local SummonCustomPickChoiceListModel = class("SummonCustomPickChoiceListModel", ListScrollModel)
+
+function SummonCustomPickChoiceListModel:onInit()
+	self:clear()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clear()
+function SummonCustomPickChoiceListModel:reInit()
+	self:clear()
 end
 
-function var_0_0.initDatas(arg_3_0, arg_3_1)
-	arg_3_0._poolId = arg_3_1
-	arg_3_0._selectIdList = {}
-	arg_3_0._selectIdMap = {}
+function SummonCustomPickChoiceListModel:initDatas(poolId)
+	self._poolId = poolId
+	self._selectIdList = {}
+	self._selectIdMap = {}
 
-	arg_3_0:initList()
+	self:initList()
 end
 
-var_0_0.SkillLevel2Order = {
+SummonCustomPickChoiceListModel.SkillLevel2Order = {
 	[0] = 50,
 	40,
 	30,
@@ -27,125 +29,132 @@ var_0_0.SkillLevel2Order = {
 	60
 }
 
-local function var_0_1(arg_4_0, arg_4_1)
-	local var_4_0 = HeroModel.instance:getByHeroId(arg_4_0.id)
-	local var_4_1 = HeroModel.instance:getByHeroId(arg_4_1.id)
-	local var_4_2 = var_4_0 ~= nil
-	local var_4_3 = var_4_1 ~= nil
+local function sortFunc(a, b)
+	local aHeroMo = HeroModel.instance:getByHeroId(a.id)
+	local bHeroMo = HeroModel.instance:getByHeroId(b.id)
+	local aHasHero = aHeroMo ~= nil
+	local bHasHero = bHeroMo ~= nil
 
-	if var_4_2 ~= var_4_3 then
-		return var_4_3
+	if aHasHero ~= bHasHero then
+		return bHasHero
 	end
 
-	local var_4_4 = var_4_0 and var_4_0.exSkillLevel or -1
-	local var_4_5 = var_4_1 and var_4_1.exSkillLevel or -1
+	local aSkillLevel = aHeroMo and aHeroMo.exSkillLevel or -1
+	local bSkillLevel = bHeroMo and bHeroMo.exSkillLevel or -1
 
-	if var_4_4 ~= var_4_5 then
-		return (var_0_0.SkillLevel2Order[var_4_4] or 999) < (var_0_0.SkillLevel2Order[var_4_5] or 999)
+	if aSkillLevel ~= bSkillLevel then
+		local aOrder = SummonCustomPickChoiceListModel.SkillLevel2Order[aSkillLevel] or 999
+		local bOrder = SummonCustomPickChoiceListModel.SkillLevel2Order[bSkillLevel] or 999
+
+		return aOrder < bOrder
 	end
 
-	return arg_4_0.id > arg_4_1.id
+	return a.id > b.id
 end
 
-function var_0_0.initList(arg_5_0)
-	local var_5_0 = arg_5_0:getCharIdList()
+function SummonCustomPickChoiceListModel:initList()
+	local charIdList = self:getCharIdList()
 
-	arg_5_0.noGainList = {}
-	arg_5_0.ownList = {}
+	self.noGainList = {}
+	self.ownList = {}
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_0) do
-		local var_5_1 = SummonCustomPickChoiceMO.New()
+	for _, characterId in ipairs(charIdList) do
+		local mo = SummonCustomPickChoiceMO.New()
 
-		var_5_1:init(iter_5_1)
+		mo:init(characterId)
 
-		if var_5_1:hasHero() then
-			table.insert(arg_5_0.ownList, var_5_1)
+		if mo:hasHero() then
+			table.insert(self.ownList, mo)
 		else
-			table.insert(arg_5_0.noGainList, var_5_1)
+			table.insert(self.noGainList, mo)
 		end
 	end
 
-	local var_5_2 = SummonConfig.instance:getSummonPool(arg_5_0._poolId)
+	local summonPoolCfg = SummonConfig.instance:getSummonPool(self._poolId)
 
-	if var_5_2 and var_5_2.type ~= SummonEnum.Type.CustomPick then
-		table.sort(arg_5_0.ownList, var_0_1)
-		table.sort(arg_5_0.noGainList, var_0_1)
+	if summonPoolCfg and summonPoolCfg.type ~= SummonEnum.Type.CustomPick then
+		table.sort(self.ownList, sortFunc)
+		table.sort(self.noGainList, sortFunc)
 	end
 end
 
-function var_0_0.setSelectId(arg_6_0, arg_6_1)
-	if not arg_6_0._selectIdList then
+function SummonCustomPickChoiceListModel:setSelectId(heroId)
+	if not self._selectIdList then
 		return
 	end
 
-	if arg_6_0._selectIdMap[arg_6_1] then
-		arg_6_0._selectIdMap[arg_6_1] = nil
+	if self._selectIdMap[heroId] then
+		self._selectIdMap[heroId] = nil
 
-		tabletool.removeValue(arg_6_0._selectIdList, arg_6_1)
+		tabletool.removeValue(self._selectIdList, heroId)
 	else
-		arg_6_0._selectIdMap[arg_6_1] = true
+		self._selectIdMap[heroId] = true
 
-		table.insert(arg_6_0._selectIdList, arg_6_1)
+		table.insert(self._selectIdList, heroId)
 	end
 end
 
-function var_0_0.clearSelectIds(arg_7_0)
-	arg_7_0._selectIdMap = {}
-	arg_7_0._selectIdList = {}
+function SummonCustomPickChoiceListModel:clearSelectIds()
+	self._selectIdMap = {}
+	self._selectIdList = {}
 end
 
-function var_0_0.getSelectIds(arg_8_0)
-	return arg_8_0._selectIdList
+function SummonCustomPickChoiceListModel:getSelectIds()
+	return self._selectIdList
 end
 
-function var_0_0.getMaxSelectCount(arg_9_0)
-	return SummonCustomPickModel.instance:getMaxSelectCount(arg_9_0._poolId)
+function SummonCustomPickChoiceListModel:getMaxSelectCount()
+	return SummonCustomPickModel.instance:getMaxSelectCount(self._poolId)
 end
 
-function var_0_0.getSelectCount(arg_10_0)
-	if arg_10_0._selectIdList then
-		return #arg_10_0._selectIdList
+function SummonCustomPickChoiceListModel:getSelectCount()
+	if self._selectIdList then
+		return #self._selectIdList
 	end
 
 	return 0
 end
 
-function var_0_0.isHeroIdSelected(arg_11_0, arg_11_1)
-	if arg_11_0._selectIdMap then
-		return arg_11_0._selectIdMap[arg_11_1] ~= nil
+function SummonCustomPickChoiceListModel:isHeroIdSelected(heroId)
+	if self._selectIdMap then
+		return self._selectIdMap[heroId] ~= nil
 	end
 
 	return false
 end
 
-function var_0_0.getPoolId(arg_12_0)
-	return arg_12_0._poolId
+function SummonCustomPickChoiceListModel:getPoolId()
+	return self._poolId
 end
 
-function var_0_0.getPoolType(arg_13_0)
-	return SummonConfig.instance:getSummonPool(arg_13_0._poolId).type or SummonEnum.Type.Normal
+function SummonCustomPickChoiceListModel:getPoolType()
+	local summonPoolCfg = SummonConfig.instance:getSummonPool(self._poolId)
+
+	return summonPoolCfg.type or SummonEnum.Type.Normal
 end
 
-function var_0_0.getCharIdList(arg_14_0)
-	local var_14_0 = SummonConfig.instance:getSummonPool(arg_14_0._poolId)
+function SummonCustomPickChoiceListModel:getCharIdList()
+	local summonPoolCfg = SummonConfig.instance:getSummonPool(self._poolId)
 
-	if var_14_0.type == SummonEnum.Type.StrongCustomOnePick then
-		local var_14_1 = var_14_0.param
+	if summonPoolCfg.type == SummonEnum.Type.StrongCustomOnePick then
+		local summonIdStr = summonPoolCfg.param
+		local summonIds = string.splitToNumber(summonIdStr, "#")
 
-		return (string.splitToNumber(var_14_1, "#"))
+		return summonIds
 	end
 
-	local var_14_2 = SummonConfig.instance:getSummon(arg_14_0._poolId)
+	local rare2Cfg = SummonConfig.instance:getSummon(self._poolId)
 
-	if var_14_2 then
-		local var_14_3 = var_14_2[SummonEnum.CustomPickRare].summonId
+	if rare2Cfg then
+		local summonIdStr = rare2Cfg[SummonEnum.CustomPickRare].summonId
+		local summonIds = string.splitToNumber(summonIdStr, "#")
 
-		return (string.splitToNumber(var_14_3, "#"))
+		return summonIds
 	end
 
 	return {}
 end
 
-var_0_0.instance = var_0_0.New()
+SummonCustomPickChoiceListModel.instance = SummonCustomPickChoiceListModel.New()
 
-return var_0_0
+return SummonCustomPickChoiceListModel

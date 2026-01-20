@@ -1,40 +1,42 @@
-﻿module("modules.logic.reactivity.view.ReactivityTaskViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/reactivity/view/ReactivityTaskViewContainer.lua
 
-local var_0_0 = class("ReactivityTaskViewContainer", BaseViewContainer)
+module("modules.logic.reactivity.view.ReactivityTaskViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = ListScrollParam.New()
+local ReactivityTaskViewContainer = class("ReactivityTaskViewContainer", BaseViewContainer)
 
-	var_1_0.scrollGOPath = "#scroll_TaskList"
-	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_0.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_0.cellClass = ReactivityTaskItem
-	var_1_0.scrollDir = ScrollEnum.ScrollDirV
-	var_1_0.lineCount = 1
-	var_1_0.cellWidth = 1136
-	var_1_0.cellHeight = 152
-	var_1_0.cellSpaceH = 0
-	var_1_0.cellSpaceV = 16
+function ReactivityTaskViewContainer:buildViews()
+	local scrollParam = ListScrollParam.New()
 
-	local var_1_1 = {}
+	scrollParam.scrollGOPath = "#scroll_TaskList"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = ReactivityTaskItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 1136
+	scrollParam.cellHeight = 152
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 16
 
-	for iter_1_0 = 1, 8 do
-		var_1_1[iter_1_0] = (iter_1_0 - 1) * 0.04
+	local times = {}
+
+	for i = 1, 8 do
+		times[i] = (i - 1) * 0.04
 	end
 
-	local var_1_2 = LuaListScrollViewWithAnimator.New(ReactivityTaskModel.instance, var_1_0, var_1_1)
+	local scrollView = LuaListScrollViewWithAnimator.New(ReactivityTaskModel.instance, scrollParam, times)
 
-	var_1_2.dontPlayCloseAnimation = true
-	arg_1_0._taskScrollView = var_1_2
+	scrollView.dontPlayCloseAnimation = true
+	self._taskScrollView = scrollView
 
 	return {
-		var_1_2,
+		scrollView,
 		ReactivityTaskView.New(),
 		TabViewGroup.New(1, "#go_lefttop")
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function ReactivityTaskViewContainer:buildTabViews(tabContainerId)
 	return {
 		NavigateButtonsView.New({
 			true,
@@ -44,10 +46,10 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	}
 end
 
-function var_0_0.onContainerInit(arg_3_0)
-	arg_3_0.taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(arg_3_0._taskScrollView)
+function ReactivityTaskViewContainer:onContainerInit()
+	self.taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(self._taskScrollView)
 
-	arg_3_0.taskAnimRemoveItem:setMoveInterval(0)
+	self.taskAnimRemoveItem:setMoveInterval(0)
 end
 
-return var_0_0
+return ReactivityTaskViewContainer

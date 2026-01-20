@@ -1,207 +1,221 @@
-﻿module("modules.logic.fight.view.FightViewPartVisible", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightViewPartVisible.lua
 
-local var_0_0 = class("FightViewPartVisible", BaseView)
-local var_0_1 = false
-local var_0_2 = false
-local var_0_3 = false
-local var_0_4 = false
-local var_0_5 = false
+module("modules.logic.fight.view.FightViewPartVisible", package.seeall)
 
-function var_0_0.setWaitAreaActive(arg_1_0)
-	var_0_5 = arg_1_0
+local FightViewPartVisible = class("FightViewPartVisible", BaseView)
+local visible_clothSkill = false
+local visible_handCard = false
+local visible_playCard = false
+local visible_enemyRound = false
+local visible_waitingArea = false
 
-	FightController.instance:dispatchEvent(FightEvent.UpdateUIPartVisible)
-end
-
-function var_0_0.set(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
-	var_0_1 = arg_2_0
-	var_0_2 = arg_2_1
-	var_0_3 = arg_2_2
-	var_0_4 = arg_2_3
-	var_0_5 = arg_2_4
+function FightViewPartVisible.setWaitAreaActive(active)
+	visible_waitingArea = active
 
 	FightController.instance:dispatchEvent(FightEvent.UpdateUIPartVisible)
 end
 
-function var_0_0.setPlayStatus(arg_3_0, arg_3_1)
-	var_0_4 = arg_3_0
+function FightViewPartVisible.set(clothSkill, handCard, playCard, enemyRound, waitingArea)
+	visible_clothSkill = clothSkill
+	visible_handCard = handCard
+	visible_playCard = playCard
+	visible_enemyRound = enemyRound
+	visible_waitingArea = waitingArea
 
-	if FightModel.instance:getVersion() >= 1 then
+	FightController.instance:dispatchEvent(FightEvent.UpdateUIPartVisible)
+end
+
+function FightViewPartVisible.setPlayStatus(enemyRound, waitingArea)
+	visible_enemyRound = enemyRound
+
+	local version = FightModel.instance:getVersion()
+
+	if version >= 1 then
 		return
 	end
 
-	var_0_5 = arg_3_1
+	visible_waitingArea = waitingArea
 end
 
-function var_0_0.setWaitingStatus(arg_4_0)
-	var_0_5 = arg_4_0
+function FightViewPartVisible.setWaitingStatus(state)
+	visible_waitingArea = state
 end
 
-function var_0_0.onInitView(arg_5_0)
-	arg_5_0._clothSkillGO = gohelper.findChild(arg_5_0.viewGO, "root/heroSkill")
-	arg_5_0._handCardGO = gohelper.findChild(arg_5_0.viewGO, "root/handcards")
-	arg_5_0._handCardInnerGO = gohelper.findChild(arg_5_0.viewGO, "root/handcards/handcards")
-	arg_5_0._playCardGO = gohelper.findChild(arg_5_0.viewGO, "root/playcards")
-	arg_5_0._enemyRoundGO = gohelper.findChild(arg_5_0.viewGO, "root/enemyRound")
-	arg_5_0._enemyRoundTextGO = gohelper.findChild(arg_5_0.viewGO, "root/enemyRoundText")
-	arg_5_0._waitingAreaGO = gohelper.findChild(arg_5_0.viewGO, "root/waitingArea")
-	arg_5_0._rogueSkillRoot = gohelper.findChild(arg_5_0.viewGO, "root/rogueSkillRoot")
-	var_0_1 = false
-	var_0_2 = false
-	var_0_3 = false
-	var_0_4 = false
-	var_0_5 = false
-	arg_5_0._play_card_origin_x, arg_5_0._play_card_origin_y = recthelper.getAnchor(arg_5_0._playCardGO.transform)
+function FightViewPartVisible:onInitView()
+	self._clothSkillGO = gohelper.findChild(self.viewGO, "root/heroSkill")
+	self._handCardGO = gohelper.findChild(self.viewGO, "root/handcards")
+	self._handCardInnerGO = gohelper.findChild(self.viewGO, "root/handcards/handcards")
+	self._playCardGO = gohelper.findChild(self.viewGO, "root/playcards")
+	self._enemyRoundGO = gohelper.findChild(self.viewGO, "root/enemyRound")
+	self._enemyRoundTextGO = gohelper.findChild(self.viewGO, "root/enemyRoundText")
+	self._waitingAreaGO = gohelper.findChild(self.viewGO, "root/waitingArea")
+	self._rogueSkillRoot = gohelper.findChild(self.viewGO, "root/rogueSkillRoot")
+	visible_clothSkill = false
+	visible_handCard = false
+	visible_playCard = false
+	visible_enemyRound = false
+	visible_waitingArea = false
+	self._play_card_origin_x, self._play_card_origin_y = recthelper.getAnchor(self._playCardGO.transform)
 end
 
-function var_0_0.addEvents(arg_6_0)
-	arg_6_0:addEventCb(FightController.instance, FightEvent.UpdateUIPartVisible, arg_6_0._updateUI, arg_6_0)
-	arg_6_0:addEventCb(FightController.instance, FightEvent.OnCameraFocusChanged, arg_6_0.onCameraFocusChanged, arg_6_0)
-	arg_6_0:addEventCb(FightController.instance, FightEvent.OnUniversalAppear, arg_6_0._tweenHandCardContainerScale, arg_6_0)
-	arg_6_0:addEventCb(FightController.instance, FightEvent.OnPlayHandCard, arg_6_0._onPlayHandCard, arg_6_0)
-	arg_6_0:addEventCb(FightController.instance, FightEvent.OnResetCard, arg_6_0._tweenHandCardContainerScale, arg_6_0)
-	arg_6_0:addEventCb(FightController.instance, FightEvent.OnClothSkillExpand, arg_6_0._onClothSkillExpand, arg_6_0)
-	arg_6_0:addEventCb(FightController.instance, FightEvent.OnClothSkillShrink, arg_6_0._onClothSkillShrink, arg_6_0)
-	arg_6_0:addEventCb(FightController.instance, FightEvent.OnCombineOneCard, arg_6_0._onCombineOneCard, arg_6_0)
-	arg_6_0:addEventCb(FightController.instance, FightEvent.OnStartSequenceFinish, arg_6_0._onClothSkillShrink, arg_6_0)
-	arg_6_0:addEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, arg_6_0._onClothSkillShrink, arg_6_0)
-	arg_6_0:addEventCb(FightController.instance, FightEvent.SetPlayCardPartOutScreen, arg_6_0._onSetPlayCardPartOutScreen, arg_6_0)
-	arg_6_0:addEventCb(FightController.instance, FightEvent.SetPlayCardPartOriginPos, arg_6_0._onSetPlayCardPartOriginPos, arg_6_0)
-	arg_6_0:addEventCb(FightController.instance, FightEvent.GMHideFightView, arg_6_0._updateUI, arg_6_0)
-	arg_6_0:addEventCb(FightController.instance, FightEvent.SetHandCardVisible, arg_6_0._onSetHandCardVisible, arg_6_0)
-	arg_6_0:addEventCb(FightController.instance, FightEvent.CancelVisibleViewScaleTween, arg_6_0._onCancelVisibleViewScaleTween, arg_6_0)
+function FightViewPartVisible:addEvents()
+	self:addEventCb(FightController.instance, FightEvent.UpdateUIPartVisible, self._updateUI, self)
+	self:addEventCb(FightController.instance, FightEvent.OnCameraFocusChanged, self.onCameraFocusChanged, self)
+	self:addEventCb(FightController.instance, FightEvent.OnUniversalAppear, self._tweenHandCardContainerScale, self)
+	self:addEventCb(FightController.instance, FightEvent.OnPlayHandCard, self._onPlayHandCard, self)
+	self:addEventCb(FightController.instance, FightEvent.OnResetCard, self._tweenHandCardContainerScale, self)
+	self:addEventCb(FightController.instance, FightEvent.OnClothSkillExpand, self._onClothSkillExpand, self)
+	self:addEventCb(FightController.instance, FightEvent.OnClothSkillShrink, self._onClothSkillShrink, self)
+	self:addEventCb(FightController.instance, FightEvent.OnCombineOneCard, self._onCombineOneCard, self)
+	self:addEventCb(FightController.instance, FightEvent.OnStartSequenceFinish, self._onClothSkillShrink, self)
+	self:addEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, self._onClothSkillShrink, self)
+	self:addEventCb(FightController.instance, FightEvent.SetPlayCardPartOutScreen, self._onSetPlayCardPartOutScreen, self)
+	self:addEventCb(FightController.instance, FightEvent.SetPlayCardPartOriginPos, self._onSetPlayCardPartOriginPos, self)
+	self:addEventCb(FightController.instance, FightEvent.GMHideFightView, self._updateUI, self)
+	self:addEventCb(FightController.instance, FightEvent.SetHandCardVisible, self._onSetHandCardVisible, self)
+	self:addEventCb(FightController.instance, FightEvent.CancelVisibleViewScaleTween, self._onCancelVisibleViewScaleTween, self)
 end
 
-function var_0_0.removeEvents(arg_7_0)
-	arg_7_0:removeEventCb(FightController.instance, FightEvent.UpdateUIPartVisible, arg_7_0._updateUI, arg_7_0)
-	arg_7_0:removeEventCb(FightController.instance, FightEvent.OnCameraFocusChanged, arg_7_0.onCameraFocusChanged, arg_7_0)
-	arg_7_0:removeEventCb(FightController.instance, FightEvent.OnUniversalAppear, arg_7_0._tweenHandCardContainerScale, arg_7_0)
-	arg_7_0:removeEventCb(FightController.instance, FightEvent.OnPlayHandCard, arg_7_0._onPlayHandCard, arg_7_0)
-	arg_7_0:removeEventCb(FightController.instance, FightEvent.OnResetCard, arg_7_0._tweenHandCardContainerScale, arg_7_0)
-	arg_7_0:removeEventCb(FightController.instance, FightEvent.OnClothSkillExpand, arg_7_0._onClothSkillExpand, arg_7_0)
-	arg_7_0:removeEventCb(FightController.instance, FightEvent.OnClothSkillShrink, arg_7_0._onClothSkillShrink, arg_7_0)
-	arg_7_0:removeEventCb(FightController.instance, FightEvent.OnCombineOneCard, arg_7_0._onCombineOneCard, arg_7_0)
-	arg_7_0:removeEventCb(FightController.instance, FightEvent.OnStartSequenceFinish, arg_7_0._onClothSkillShrink, arg_7_0)
-	arg_7_0:removeEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, arg_7_0._onClothSkillShrink, arg_7_0)
-	arg_7_0:removeEventCb(FightController.instance, FightEvent.SetPlayCardPartOutScreen, arg_7_0._onSetPlayCardPartOutScreen, arg_7_0)
-	arg_7_0:removeEventCb(FightController.instance, FightEvent.SetPlayCardPartOriginPos, arg_7_0._onSetPlayCardPartOriginPos, arg_7_0)
-	arg_7_0:removeEventCb(FightController.instance, FightEvent.GMHideFightView, arg_7_0._updateUI, arg_7_0)
-	arg_7_0:removeEventCb(FightController.instance, FightEvent.SetHandCardVisible, arg_7_0._onSetHandCardVisible, arg_7_0)
-	arg_7_0:removeEventCb(FightController.instance, FightEvent.CancelVisibleViewScaleTween, arg_7_0._onCancelVisibleViewScaleTween, arg_7_0)
+function FightViewPartVisible:removeEvents()
+	self:removeEventCb(FightController.instance, FightEvent.UpdateUIPartVisible, self._updateUI, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnCameraFocusChanged, self.onCameraFocusChanged, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnUniversalAppear, self._tweenHandCardContainerScale, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnPlayHandCard, self._onPlayHandCard, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnResetCard, self._tweenHandCardContainerScale, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnClothSkillExpand, self._onClothSkillExpand, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnClothSkillShrink, self._onClothSkillShrink, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnCombineOneCard, self._onCombineOneCard, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnStartSequenceFinish, self._onClothSkillShrink, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, self._onClothSkillShrink, self)
+	self:removeEventCb(FightController.instance, FightEvent.SetPlayCardPartOutScreen, self._onSetPlayCardPartOutScreen, self)
+	self:removeEventCb(FightController.instance, FightEvent.SetPlayCardPartOriginPos, self._onSetPlayCardPartOriginPos, self)
+	self:removeEventCb(FightController.instance, FightEvent.GMHideFightView, self._updateUI, self)
+	self:removeEventCb(FightController.instance, FightEvent.SetHandCardVisible, self._onSetHandCardVisible, self)
+	self:removeEventCb(FightController.instance, FightEvent.CancelVisibleViewScaleTween, self._onCancelVisibleViewScaleTween, self)
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0:_updateUI()
+function FightViewPartVisible:onOpen()
+	self:_updateUI()
 
-	arg_8_0._clothSkillExpand = false
+	self._clothSkillExpand = false
 
-	arg_8_0:_tweenHandCardContainerScale()
+	self:_tweenHandCardContainerScale()
 end
 
-function var_0_0._onClothSkillExpand(arg_9_0)
-	arg_9_0._clothSkillExpand = true
+function FightViewPartVisible:_onClothSkillExpand()
+	self._clothSkillExpand = true
 
-	arg_9_0:_tweenHandCardContainerScale()
+	self:_tweenHandCardContainerScale()
 end
 
-function var_0_0._onClothSkillShrink(arg_10_0)
-	arg_10_0._clothSkillExpand = false
+function FightViewPartVisible:_onClothSkillShrink()
+	self._clothSkillExpand = false
 
-	arg_10_0:_tweenHandCardContainerScale()
+	self:_tweenHandCardContainerScale()
 end
 
-function var_0_0._onCombineOneCard(arg_11_0)
+function FightViewPartVisible:_onCombineOneCard()
 	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Operate then
-		arg_11_0:_onClothSkillShrink()
+		self:_onClothSkillShrink()
 	end
 end
 
-function var_0_0._onPlayHandCard(arg_12_0, arg_12_1, arg_12_2)
-	if arg_12_2 then
+function FightViewPartVisible:_onPlayHandCard(cardInfoMO, waitRemoveCard)
+	if waitRemoveCard then
 		return
 	end
 
-	arg_12_0:_tweenHandCardContainerScale()
+	self:_tweenHandCardContainerScale()
 end
 
-function var_0_0._tweenHandCardContainerScale(arg_13_0)
-	local var_13_0 = FightWorkEffectDistributeCard.getHandCardScaleTime()
-	local var_13_1 = FightCardDataHelper.getHandCardContainerScale(arg_13_0._clothSkillExpand)
+function FightViewPartVisible:_tweenHandCardContainerScale()
+	local time = FightWorkEffectDistributeCard.getHandCardScaleTime()
+	local scale = FightCardDataHelper.getHandCardContainerScale(self._clothSkillExpand)
 
-	arg_13_0._scaleTweenId = ZProj.TweenHelper.DOScale(arg_13_0._handCardGO.transform, var_13_1, var_13_1, var_13_1, var_13_0)
+	self._scaleTweenId = ZProj.TweenHelper.DOScale(self._handCardGO.transform, scale, scale, scale, time)
 end
 
-function var_0_0._onCancelVisibleViewScaleTween(arg_14_0)
-	if arg_14_0._scaleTweenId then
-		ZProj.TweenHelper.KillById(arg_14_0._scaleTweenId)
+function FightViewPartVisible:_onCancelVisibleViewScaleTween()
+	if self._scaleTweenId then
+		ZProj.TweenHelper.KillById(self._scaleTweenId)
 
-		arg_14_0._scaleTweenId = nil
+		self._scaleTweenId = nil
 	end
 end
 
-function var_0_0._updateUI(arg_15_0)
-	local var_15_0 = gohelper.onceAddComponent(arg_15_0._playCardGO, typeof(UnityEngine.CanvasGroup))
-	local var_15_1 = arg_15_0._playCardGO.activeInHierarchy and var_15_0.alpha > 0.9
+function FightViewPartVisible:_updateUI()
+	local canvasGroup = gohelper.onceAddComponent(self._playCardGO, typeof(UnityEngine.CanvasGroup))
+	local isPrevShowPlayCard = self._playCardGO.activeInHierarchy and canvasGroup.alpha > 0.9
 
-	if not var_15_1 and var_0_3 then
+	if not isPrevShowPlayCard and visible_playCard then
 		if GMFightShowState.cards then
-			ZProj.TweenHelper.KillByObj(var_15_0)
-			ZProj.TweenHelper.DOFadeCanvasGroup(arg_15_0._playCardGO, 0, 1, 0.165)
+			ZProj.TweenHelper.KillByObj(canvasGroup)
+			ZProj.TweenHelper.DOFadeCanvasGroup(self._playCardGO, 0, 1, 0.165)
 		end
-	elseif var_15_1 and not var_0_3 then
-		ZProj.TweenHelper.KillByObj(var_15_0)
-		ZProj.TweenHelper.DOFadeCanvasGroup(arg_15_0._playCardGO, 1, 0, 0.165)
+	elseif isPrevShowPlayCard and not visible_playCard then
+		ZProj.TweenHelper.KillByObj(canvasGroup)
+		ZProj.TweenHelper.DOFadeCanvasGroup(self._playCardGO, 1, 0, 0.165)
 	end
 
-	local var_15_2 = PlayerClothModel.instance:getSpEpisodeClothID() or OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.LeadRoleSkill) and FightModel.instance.clothId > 0
+	if FightDataHelper.fieldMgr:isRouge2() then
+		local curCareer = FightHelper.getRouge2Career()
 
-	gohelper.setActive(arg_15_0._clothSkillGO, var_0_1 and var_15_2 and GMFightShowState.clothSkill)
-
-	local var_15_3 = var_0_1 and var_15_2 and GMFightShowState.clothSkill
-
-	if var_15_3 then
-		FightController.instance:dispatchEvent(FightEvent.OnGuideShowRougeSkill)
-	end
-
-	gohelper.setActive(arg_15_0._rogueSkillRoot, var_15_3)
-	gohelper.setActive(arg_15_0._handCardGO, var_0_2)
-	gohelper.setActive(arg_15_0._playCardGO, var_0_3)
-	gohelper.setActive(arg_15_0._enemyRoundGO, var_0_4 and GMFightShowState.bottomEnemyRound)
-	gohelper.setActive(arg_15_0._enemyRoundTextGO, var_0_4 and GMFightShowState.bottomEnemyRound)
-	gohelper.setActive(arg_15_0._waitingAreaGO, var_0_5 and GMFightShowState.cards)
-	arg_15_0:setActiveCanvasGroup(arg_15_0._handCardInnerGO, GMFightShowState.cards)
-	arg_15_0:setActiveCanvasGroup(arg_15_0._playCardGO, GMFightShowState.cards)
-	arg_15_0:setActiveCanvasGroup(arg_15_0._waitingAreaGO, GMFightShowState.cards)
-end
-
-function var_0_0.setActiveCanvasGroup(arg_16_0, arg_16_1, arg_16_2)
-	gohelper.onceAddComponent(arg_16_1, gohelper.Type_CanvasGroup).alpha = arg_16_2 and 1 or 0
-end
-
-function var_0_0.onCameraFocusChanged(arg_17_0, arg_17_1)
-	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Operate then
-		arg_17_0:setActiveCanvasGroup(arg_17_0._playCardGO, not arg_17_1)
-		gohelper.setActive(arg_17_0._handCardGO, not arg_17_1)
-		gohelper.setActiveCanvasGroup(FightNameMgr.instance:getNameParent(), not arg_17_1)
-	end
-end
-
-function var_0_0._onSetPlayCardPartOutScreen(arg_18_0)
-	recthelper.setAnchor(arg_18_0._playCardGO.transform, 10000, 10000)
-end
-
-function var_0_0._onSetPlayCardPartOriginPos(arg_19_0)
-	recthelper.setAnchor(arg_19_0._playCardGO.transform, arg_19_0._play_card_origin_x, arg_19_0._play_card_origin_y)
-end
-
-function var_0_0._onSetHandCardVisible(arg_20_0, arg_20_1, arg_20_2)
-	if arg_20_2 then
-		gohelper.setActive(arg_20_0._waitingAreaGO, var_0_5)
-		gohelper.setActive(arg_20_0._handCardGO, var_0_2)
+		gohelper.setActive(self._rogueSkillRoot, curCareer == FightEnum.Rouge2Career.TubularBell and GMFightShowState.clothSkill)
+		gohelper.setActive(self._clothSkillGO, false)
 	else
-		gohelper.setActive(arg_20_0._waitingAreaGO, false)
-		gohelper.setActive(arg_20_0._handCardGO, arg_20_1)
+		local canShowCloth = PlayerClothModel.instance:getSpEpisodeClothID() or OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.LeadRoleSkill) and FightModel.instance.clothId > 0
+
+		gohelper.setActive(self._clothSkillGO, visible_clothSkill and canShowCloth and GMFightShowState.clothSkill)
+
+		local showRougeSkill = visible_clothSkill and canShowCloth and GMFightShowState.clothSkill
+
+		if showRougeSkill then
+			FightController.instance:dispatchEvent(FightEvent.OnGuideShowRougeSkill)
+		end
+
+		gohelper.setActive(self._rogueSkillRoot, showRougeSkill)
+	end
+
+	gohelper.setActive(self._handCardGO, visible_handCard)
+	gohelper.setActive(self._playCardGO, visible_playCard)
+	gohelper.setActive(self._enemyRoundGO, visible_enemyRound and GMFightShowState.bottomEnemyRound)
+	gohelper.setActive(self._enemyRoundTextGO, visible_enemyRound and GMFightShowState.bottomEnemyRound)
+	gohelper.setActive(self._waitingAreaGO, visible_waitingArea and GMFightShowState.cards)
+	self:setActiveCanvasGroup(self._handCardInnerGO, GMFightShowState.cards)
+	self:setActiveCanvasGroup(self._playCardGO, GMFightShowState.cards)
+	self:setActiveCanvasGroup(self._waitingAreaGO, GMFightShowState.cards)
+end
+
+function FightViewPartVisible:setActiveCanvasGroup(go, active)
+	local canvasGroup = gohelper.onceAddComponent(go, gohelper.Type_CanvasGroup)
+
+	canvasGroup.alpha = active and 1 or 0
+end
+
+function FightViewPartVisible:onCameraFocusChanged(isFocus)
+	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Operate then
+		self:setActiveCanvasGroup(self._playCardGO, not isFocus)
+		gohelper.setActive(self._handCardGO, not isFocus)
+		gohelper.setActiveCanvasGroup(FightNameMgr.instance:getNameParent(), not isFocus)
 	end
 end
 
-return var_0_0
+function FightViewPartVisible:_onSetPlayCardPartOutScreen()
+	recthelper.setAnchor(self._playCardGO.transform, 10000, 10000)
+end
+
+function FightViewPartVisible:_onSetPlayCardPartOriginPos()
+	recthelper.setAnchor(self._playCardGO.transform, self._play_card_origin_x, self._play_card_origin_y)
+end
+
+function FightViewPartVisible:_onSetHandCardVisible(state, revert)
+	if revert then
+		gohelper.setActive(self._waitingAreaGO, visible_waitingArea)
+		gohelper.setActive(self._handCardGO, visible_handCard)
+	else
+		gohelper.setActive(self._waitingAreaGO, false)
+		gohelper.setActive(self._handCardGO, state)
+	end
+end
+
+return FightViewPartVisible

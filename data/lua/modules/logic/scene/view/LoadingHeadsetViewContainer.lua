@@ -1,11 +1,13 @@
-﻿module("modules.logic.scene.view.LoadingHeadsetViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/scene/view/LoadingHeadsetViewContainer.lua
 
-local var_0_0 = class("LoadingHeadsetViewContainer", BaseViewContainer)
+module("modules.logic.scene.view.LoadingHeadsetViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local LoadingHeadsetViewContainer = class("LoadingHeadsetViewContainer", BaseViewContainer)
+
+function LoadingHeadsetViewContainer:buildViews()
 	return {
 		LoadingHeadsetView.New()
 	}
 end
 
-return var_0_0
+return LoadingHeadsetViewContainer

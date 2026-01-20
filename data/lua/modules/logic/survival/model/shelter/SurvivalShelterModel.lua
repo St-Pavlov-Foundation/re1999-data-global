@@ -1,70 +1,74 @@
-﻿module("modules.logic.survival.model.shelter.SurvivalShelterModel", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/shelter/SurvivalShelterModel.lua
 
-local var_0_0 = class("SurvivalShelterModel", BaseModel)
+module("modules.logic.survival.model.shelter.SurvivalShelterModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._weekInfo = nil
-	arg_1_0._bossFightId = nil
-	arg_1_0._needShowDestroy = nil
-	arg_1_0._needShowBossInvade = nil
+local SurvivalShelterModel = class("SurvivalShelterModel", BaseModel)
+
+function SurvivalShelterModel:onInit()
+	self._weekInfo = nil
+	self._bossFightId = nil
+	self._needShowDestroy = nil
+	self._needShowBossInvade = nil
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:onInit()
+function SurvivalShelterModel:reInit()
+	self:onInit()
 end
 
-function var_0_0.setWeekData(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	if not arg_3_0._weekInfo then
-		arg_3_0._weekInfo = SurvivalShelterWeekMo.New()
+function SurvivalShelterModel:setWeekData(data, isNewWeek, extendScore)
+	if not self._weekInfo then
+		self._weekInfo = SurvivalShelterWeekMo.New()
 	end
 
-	arg_3_0._weekInfo:init(arg_3_1, arg_3_3)
+	self._weekInfo:init(data, extendScore)
 
-	if not arg_3_0._playerMo then
-		arg_3_0._playerMo = SurvivalShelterPlayerMo.New()
+	if not self._playerMo then
+		self._playerMo = SurvivalShelterPlayerMo.New()
 	end
 
-	arg_3_0._playerMo:init(arg_3_1.shelterMapId, arg_3_2)
+	self._playerMo:init(data.shelterMapId, isNewWeek)
 	SurvivalEquipRedDotHelper.instance:checkRed()
 end
 
-function var_0_0.getWeekInfo(arg_4_0)
-	return arg_4_0._weekInfo
+function SurvivalShelterModel:getWeekInfo()
+	return self._weekInfo
 end
 
-function var_0_0.getPlayerMo(arg_5_0)
-	return arg_5_0._playerMo
+function SurvivalShelterModel:getPlayerMo()
+	return self._playerMo
 end
 
-function var_0_0.addExRule(arg_6_0, arg_6_1)
-	arg_6_1 = arg_6_1 or {}
+function SurvivalShelterModel:addExRule(ruleList)
+	ruleList = ruleList or {}
 
-	local var_6_0 = arg_6_0:getWeekInfo()
+	local weekInfo = self:getWeekInfo()
 
-	if var_6_0 then
-		local var_6_1 = var_6_0:getAttr(SurvivalEnum.AttrType.WorldLevel)
-		local var_6_2 = SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.FightExRule)
+	if weekInfo then
+		local worldLv = weekInfo:getAttr(SurvivalEnum.AttrType.WorldLevel)
+		local str = SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.FightExRule)
 
-		if not string.nilorempty(var_6_2) then
-			local var_6_3 = GameUtil.splitString2(var_6_2, true)
+		if not string.nilorempty(str) then
+			local dict = GameUtil.splitString2(str, true)
 
-			for iter_6_0, iter_6_1 in ipairs(var_6_3) do
-				if iter_6_1[1] == var_6_1 then
-					table.insert(arg_6_1, {
-						iter_6_1[2],
-						iter_6_1[3]
+			for _, arr in ipairs(dict) do
+				if arr[1] == worldLv then
+					table.insert(ruleList, {
+						arr[2],
+						arr[3]
 					})
 				end
 			end
 		end
 	end
 
-	return arg_6_1
+	return ruleList
 end
 
-function var_0_0.haveBoss(arg_7_0)
-	if arg_7_0._weekInfo then
-		return arg_7_0._weekInfo:getMonsterFight():isFighting()
+function SurvivalShelterModel:haveBoss()
+	if self._weekInfo then
+		local fight = self._weekInfo:getMonsterFight()
+
+		return fight:isFighting()
 	else
 		return true
 	end
@@ -72,26 +76,26 @@ function var_0_0.haveBoss(arg_7_0)
 	return false
 end
 
-function var_0_0.setNeedShowFightSuccess(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0._needShowDestroy = arg_8_1
+function SurvivalShelterModel:setNeedShowFightSuccess(state, fightId)
+	self._needShowDestroy = state
 
-	if arg_8_2 ~= nil then
-		arg_8_0._bossFightId = arg_8_2
+	if fightId ~= nil then
+		self._bossFightId = fightId
 	end
 end
 
-function var_0_0.getNeedShowFightSuccess(arg_9_0)
-	return arg_9_0._needShowDestroy, arg_9_0._bossFightId
+function SurvivalShelterModel:getNeedShowFightSuccess()
+	return self._needShowDestroy, self._bossFightId
 end
 
-function var_0_0.setNeedShowBossInvade(arg_10_0, arg_10_1)
-	arg_10_0._needShowBossInvade = arg_10_1
+function SurvivalShelterModel:setNeedShowBossInvade(isNeedShow)
+	self._needShowBossInvade = isNeedShow
 end
 
-function var_0_0.getNeedShowBossInvade(arg_11_0)
-	return arg_11_0._needShowBossInvade
+function SurvivalShelterModel:getNeedShowBossInvade()
+	return self._needShowBossInvade
 end
 
-var_0_0.instance = var_0_0.New()
+SurvivalShelterModel.instance = SurvivalShelterModel.New()
 
-return var_0_0
+return SurvivalShelterModel

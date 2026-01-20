@@ -1,30 +1,32 @@
-﻿module("modules.logic.versionactivity2_8.nuodika.model.NuoDiKaEpisodeMo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/nuodika/model/NuoDiKaEpisodeMo.lua
 
-local var_0_0 = class("NuoDiKaEpisodeMo")
+module("modules.logic.versionactivity2_8.nuodika.model.NuoDiKaEpisodeMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.episodeId = 0
-	arg_1_0.isFinished = false
-	arg_1_0.status = NuoDiKaEnum.EpisodeStatus.BeforeStory
-	arg_1_0.gameString = ""
+local NuoDiKaEpisodeMo = class("NuoDiKaEpisodeMo")
+
+function NuoDiKaEpisodeMo:ctor()
+	self.episodeId = 0
+	self.isFinished = false
+	self.status = NuoDiKaEnum.EpisodeStatus.BeforeStory
+	self.gameString = ""
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.episodeId = arg_2_1.episodeId
-	arg_2_0.isFinished = arg_2_1.isFinished
-	arg_2_0.status = arg_2_1.status
-	arg_2_0.gameString = arg_2_1.gameString
+function NuoDiKaEpisodeMo:init(info)
+	self.episodeId = info.episodeId
+	self.isFinished = info.isFinished
+	self.status = info.status
+	self.gameString = info.gameString
 end
 
-function var_0_0.update(arg_3_0, arg_3_1)
-	arg_3_0.episodeId = arg_3_1.episodeId
-	arg_3_0.isFinished = arg_3_1.isFinished
-	arg_3_0.status = arg_3_1.status
-	arg_3_0.gameString = arg_3_1.gameString
+function NuoDiKaEpisodeMo:update(info)
+	self.episodeId = info.episodeId
+	self.isFinished = info.isFinished
+	self.status = info.status
+	self.gameString = info.gameString
 end
 
-function var_0_0.updateGameString(arg_4_0, arg_4_1)
-	arg_4_0.gameString = arg_4_1
+function NuoDiKaEpisodeMo:updateGameString(str)
+	self.gameString = str
 end
 
-return var_0_0
+return NuoDiKaEpisodeMo

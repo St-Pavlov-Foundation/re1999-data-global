@@ -1,90 +1,92 @@
-﻿module("modules.logic.tips.view.stress.FightFocusStressComp", package.seeall)
+﻿-- chunkname: @modules/logic/tips/view/stress/FightFocusStressComp.lua
 
-local var_0_0 = class("FightFocusStressComp", FightFocusStressCompBase)
+module("modules.logic.tips.view.stress.FightFocusStressComp", package.seeall)
 
-function var_0_0.getUiType(arg_1_0)
+local FightFocusStressComp = class("FightFocusStressComp", FightFocusStressCompBase)
+
+function FightFocusStressComp:getUiType()
 	return FightNameUIStressMgr.UiType.Normal
 end
 
-function var_0_0.initUI(arg_2_0)
-	arg_2_0.stressText = gohelper.findChildText(arg_2_0.instanceGo, "#txt_stress")
-	arg_2_0.goBlue = gohelper.findChild(arg_2_0.instanceGo, "blue")
-	arg_2_0.goRed = gohelper.findChild(arg_2_0.instanceGo, "red")
-	arg_2_0.goBroken = gohelper.findChild(arg_2_0.instanceGo, "broken")
-	arg_2_0.goStaunch = gohelper.findChild(arg_2_0.instanceGo, "staunch")
-	arg_2_0.click = gohelper.findChildClickWithDefaultAudio(arg_2_0.instanceGo, "#go_clickarea")
+function FightFocusStressComp:initUI()
+	self.stressText = gohelper.findChildText(self.instanceGo, "#txt_stress")
+	self.goBlue = gohelper.findChild(self.instanceGo, "blue")
+	self.goRed = gohelper.findChild(self.instanceGo, "red")
+	self.goBroken = gohelper.findChild(self.instanceGo, "broken")
+	self.goStaunch = gohelper.findChild(self.instanceGo, "staunch")
+	self.click = gohelper.findChildClickWithDefaultAudio(self.instanceGo, "#go_clickarea")
 
-	arg_2_0.click:AddClickListener(arg_2_0.onClickStress, arg_2_0)
-	arg_2_0:resetGo()
+	self.click:AddClickListener(self.onClickStress, self)
+	self:resetGo()
 
-	arg_2_0.statusDict = arg_2_0:getUserDataTb_()
-	arg_2_0.statusDict[FightEnum.Status.Positive] = arg_2_0.goBlue
-	arg_2_0.statusDict[FightEnum.Status.Negative] = arg_2_0.goRed
+	self.statusDict = self:getUserDataTb_()
+	self.statusDict[FightEnum.Status.Positive] = self.goBlue
+	self.statusDict[FightEnum.Status.Negative] = self.goRed
 end
 
-function var_0_0.resetGo(arg_3_0)
-	gohelper.setActive(arg_3_0.goBlue, false)
-	gohelper.setActive(arg_3_0.goRed, false)
-	gohelper.setActive(arg_3_0.goBroken, false)
-	gohelper.setActive(arg_3_0.goStaunch, false)
+function FightFocusStressComp:resetGo()
+	gohelper.setActive(self.goBlue, false)
+	gohelper.setActive(self.goRed, false)
+	gohelper.setActive(self.goBroken, false)
+	gohelper.setActive(self.goStaunch, false)
 end
 
-function var_0_0.onClickStress(arg_4_0)
-	if not arg_4_0.entityMo then
+function FightFocusStressComp:onClickStress()
+	if not self.entityMo then
 		return
 	end
 
-	if arg_4_0.entityMo.side == FightEnum.EntitySide.MySide then
-		StressTipController.instance:openHeroStressTip(arg_4_0.entityMo:getCO())
+	if self.entityMo.side == FightEnum.EntitySide.MySide then
+		StressTipController.instance:openHeroStressTip(self.entityMo:getCO())
 	else
-		StressTipController.instance:openMonsterStressTip(arg_4_0.entityMo:getCO())
+		StressTipController.instance:openMonsterStressTip(self.entityMo:getCO())
 	end
 end
 
-function var_0_0.refreshStress(arg_5_0, arg_5_1)
-	if not arg_5_0.loaded then
-		arg_5_0.cacheEntityMo = arg_5_1
+function FightFocusStressComp:refreshStress(entityMo)
+	if not self.loaded then
+		self.cacheEntityMo = entityMo
 
 		return
 	end
 
-	if not arg_5_1 then
-		arg_5_0:hide()
+	if not entityMo then
+		self:hide()
 
 		return
 	end
 
-	if not arg_5_1:hasStress() then
-		arg_5_0:hide()
+	if not entityMo:hasStress() then
+		self:hide()
 
 		return
 	end
 
-	arg_5_0:show()
-	arg_5_0:resetGo()
+	self:show()
+	self:resetGo()
 
-	arg_5_0.entityMo = arg_5_1
+	self.entityMo = entityMo
 
-	local var_5_0 = arg_5_1:getPowerInfo(FightEnum.PowerType.Stress)
-	local var_5_1 = var_5_0 and var_5_0.num or 0
+	local powerInfo = entityMo:getPowerInfo(FightEnum.PowerType.Stress)
+	local curStress = powerInfo and powerInfo.num or 0
 
-	arg_5_0.stressText.text = var_5_1
+	self.stressText.text = curStress
 
-	local var_5_2 = FightEnum.MonsterId2StressThresholdDict[arg_5_0.entityMo.modelId]
+	local thresholdDict = FightEnum.MonsterId2StressThresholdDict[self.entityMo.modelId]
 
-	arg_5_0.status = FightHelper.getStressStatus(var_5_1, var_5_2)
+	self.status = FightHelper.getStressStatus(curStress, thresholdDict)
 
-	local var_5_3 = arg_5_0.status and arg_5_0.statusDict[arg_5_0.status]
+	local go = self.status and self.statusDict[self.status]
 
-	gohelper.setActive(var_5_3, true)
+	gohelper.setActive(go, true)
 end
 
-function var_0_0.destroy(arg_6_0)
-	arg_6_0.click:RemoveClickListener()
+function FightFocusStressComp:destroy()
+	self.click:RemoveClickListener()
 
-	arg_6_0.click = nil
+	self.click = nil
 
-	var_0_0.super.destroy(arg_6_0)
+	FightFocusStressComp.super.destroy(self)
 end
 
-return var_0_0
+return FightFocusStressComp

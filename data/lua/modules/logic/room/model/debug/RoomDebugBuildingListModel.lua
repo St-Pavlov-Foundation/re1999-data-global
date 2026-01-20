@@ -1,83 +1,85 @@
-﻿module("modules.logic.room.model.debug.RoomDebugBuildingListModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/debug/RoomDebugBuildingListModel.lua
 
-local var_0_0 = class("RoomDebugBuildingListModel", ListScrollModel)
+module("modules.logic.room.model.debug.RoomDebugBuildingListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:_clearData()
+local RoomDebugBuildingListModel = class("RoomDebugBuildingListModel", ListScrollModel)
+
+function RoomDebugBuildingListModel:onInit()
+	self:_clearData()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:_clearData()
+function RoomDebugBuildingListModel:reInit()
+	self:_clearData()
 end
 
-function var_0_0.clear(arg_3_0)
-	var_0_0.super.clear(arg_3_0)
-	arg_3_0:_clearData()
+function RoomDebugBuildingListModel:clear()
+	RoomDebugBuildingListModel.super.clear(self)
+	self:_clearData()
 end
 
-function var_0_0._clearData(arg_4_0)
-	arg_4_0._selectBuildingId = nil
+function RoomDebugBuildingListModel:_clearData()
+	self._selectBuildingId = nil
 end
 
-function var_0_0.setDebugBuildingList(arg_5_0)
-	local var_5_0 = {}
-	local var_5_1 = RoomConfig.instance:getBuildingConfigList()
+function RoomDebugBuildingListModel:setDebugBuildingList()
+	local moList = {}
+	local buildingConfigList = RoomConfig.instance:getBuildingConfigList()
 
-	for iter_5_0, iter_5_1 in pairs(var_5_1) do
-		local var_5_2 = RoomDebugBuildingMO.New()
+	for i, buildingConfig in pairs(buildingConfigList) do
+		local roomDebugBuildingMO = RoomDebugBuildingMO.New()
 
-		var_5_2:init({
-			id = iter_5_1.id
+		roomDebugBuildingMO:init({
+			id = buildingConfig.id
 		})
-		table.insert(var_5_0, var_5_2)
+		table.insert(moList, roomDebugBuildingMO)
 	end
 
-	table.sort(var_5_0, arg_5_0._sortFunction)
-	arg_5_0:setList(var_5_0)
-	arg_5_0:_refreshSelect()
+	table.sort(moList, self._sortFunction)
+	self:setList(moList)
+	self:_refreshSelect()
 end
 
-function var_0_0._sortFunction(arg_6_0, arg_6_1)
-	return arg_6_0.id < arg_6_1.id
+function RoomDebugBuildingListModel._sortFunction(x, y)
+	return x.id < y.id
 end
 
-function var_0_0.clearSelect(arg_7_0)
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0._scrollViews) do
-		iter_7_1:setSelect(nil)
+function RoomDebugBuildingListModel:clearSelect()
+	for i, view in ipairs(self._scrollViews) do
+		view:setSelect(nil)
 	end
 
-	arg_7_0._selectBuildingId = nil
+	self._selectBuildingId = nil
 end
 
-function var_0_0._refreshSelect(arg_8_0)
-	local var_8_0
-	local var_8_1 = arg_8_0:getList()
+function RoomDebugBuildingListModel:_refreshSelect()
+	local selectMO
+	local moList = self:getList()
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_1) do
-		if iter_8_1.id == arg_8_0._selectBuildingId then
-			var_8_0 = iter_8_1
+	for i, mo in ipairs(moList) do
+		if mo.id == self._selectBuildingId then
+			selectMO = mo
 		end
 	end
 
-	for iter_8_2, iter_8_3 in ipairs(arg_8_0._scrollViews) do
-		iter_8_3:setSelect(var_8_0)
+	for i, view in ipairs(self._scrollViews) do
+		view:setSelect(selectMO)
 	end
 end
 
-function var_0_0.setSelect(arg_9_0, arg_9_1)
-	arg_9_0._selectBuildingId = arg_9_1
+function RoomDebugBuildingListModel:setSelect(buildingId)
+	self._selectBuildingId = buildingId
 
-	arg_9_0:_refreshSelect()
+	self:_refreshSelect()
 end
 
-function var_0_0.getSelect(arg_10_0)
-	return arg_10_0._selectBuildingId
+function RoomDebugBuildingListModel:getSelect()
+	return self._selectBuildingId
 end
 
-function var_0_0.initDebugBuilding(arg_11_0)
-	arg_11_0:setDebugBuildingList()
+function RoomDebugBuildingListModel:initDebugBuilding()
+	self:setDebugBuildingList()
 end
 
-var_0_0.instance = var_0_0.New()
+RoomDebugBuildingListModel.instance = RoomDebugBuildingListModel.New()
 
-return var_0_0
+return RoomDebugBuildingListModel

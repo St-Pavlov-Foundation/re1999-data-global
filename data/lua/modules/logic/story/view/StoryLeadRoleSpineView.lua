@@ -1,93 +1,95 @@
-﻿module("modules.logic.story.view.StoryLeadRoleSpineView", package.seeall)
+﻿-- chunkname: @modules/logic/story/view/StoryLeadRoleSpineView.lua
 
-local var_0_0 = class("StoryLeadRoleSpineView", BaseView)
+module("modules.logic.story.view.StoryLeadRoleSpineView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gorolebg = gohelper.findChild(arg_1_0.viewGO, "#go_rolebg")
-	arg_1_0._gospineroot = gohelper.findChild(arg_1_0.viewGO, "#go_spineroot")
-	arg_1_0._gospine = gohelper.findChild(arg_1_0.viewGO, "#go_spineroot/mask/#go_spine")
+local StoryLeadRoleSpineView = class("StoryLeadRoleSpineView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function StoryLeadRoleSpineView:onInitView()
+	self._gorolebg = gohelper.findChild(self.viewGO, "#go_rolebg")
+	self._gospineroot = gohelper.findChild(self.viewGO, "#go_spineroot")
+	self._gospine = gohelper.findChild(self.viewGO, "#go_spineroot/mask/#go_spine")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function StoryLeadRoleSpineView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function StoryLeadRoleSpineView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._blitEff = arg_4_0._gorolebg:GetComponent(typeof(UrpCustom.UIBlitEffect))
-	arg_4_0._heroSpines = {}
-	arg_4_0._goSpines = {}
-	arg_4_0._heroSkeletonGraphics = {}
-	arg_4_0._heroSpineGos = {}
+function StoryLeadRoleSpineView:_editableInitView()
+	self._blitEff = self._gorolebg:GetComponent(typeof(UrpCustom.UIBlitEffect))
+	self._heroSpines = {}
+	self._goSpines = {}
+	self._heroSkeletonGraphics = {}
+	self._heroSpineGos = {}
 
-	local var_4_0 = StoryConfig.instance:getStoryLeadHeroSpine()
+	local leadHeroSpineCos = StoryConfig.instance:getStoryLeadHeroSpine()
 
-	for iter_4_0 = 1, #var_4_0 do
-		if var_4_0[iter_4_0].resType == StoryEnum.IconResType.Spine then
-			if not arg_4_0._goSpines[iter_4_0] then
-				arg_4_0._goSpines[iter_4_0] = gohelper.create2d(arg_4_0._gospine, "spine" .. iter_4_0)
-				arg_4_0._heroSpines[iter_4_0] = GuiSpine.Create(arg_4_0._goSpines[iter_4_0], true)
+	for i = 1, #leadHeroSpineCos do
+		if leadHeroSpineCos[i].resType == StoryEnum.IconResType.Spine then
+			if not self._goSpines[i] then
+				self._goSpines[i] = gohelper.create2d(self._gospine, "spine" .. i)
+				self._heroSpines[i] = GuiSpine.Create(self._goSpines[i], true)
 			end
 
-			local var_4_1 = "rolesstory/" .. var_4_0[iter_4_0].path
+			local path = "rolesstory/" .. leadHeroSpineCos[i].path
 
-			arg_4_0._heroSpines[iter_4_0]:setResPath(var_4_1, arg_4_0["_onHeroSpineLoaded" .. iter_4_0], arg_4_0)
+			self._heroSpines[i]:setResPath(path, self["_onHeroSpineLoaded" .. i], self)
 		end
 	end
 
-	arg_4_0._animator = arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	gohelper.setActive(arg_4_0._gospineroot, false)
+	gohelper.setActive(self._gospineroot, false)
 end
 
-function var_0_0._onHeroSpineLoaded1(arg_5_0)
-	arg_5_0._heroSkeletonGraphics[1] = arg_5_0._heroSpines[1]:getSkeletonGraphic()
-	arg_5_0._heroSpineGos[1] = arg_5_0._heroSpines[1]:getSpineGo()
+function StoryLeadRoleSpineView:_onHeroSpineLoaded1()
+	self._heroSkeletonGraphics[1] = self._heroSpines[1]:getSkeletonGraphic()
+	self._heroSpineGos[1] = self._heroSpines[1]:getSpineGo()
 end
 
-function var_0_0._onHeroSpineLoaded2(arg_6_0)
-	arg_6_0._heroSkeletonGraphics[2] = arg_6_0._heroSpines[2]:getSkeletonGraphic()
-	arg_6_0._heroSpineGos[2] = arg_6_0._heroSpines[2]:getSpineGo()
+function StoryLeadRoleSpineView:_onHeroSpineLoaded2()
+	self._heroSkeletonGraphics[2] = self._heroSpines[2]:getSkeletonGraphic()
+	self._heroSpineGos[2] = self._heroSpines[2]:getSpineGo()
 end
 
-function var_0_0._onHeroSpineLoaded3(arg_7_0)
-	arg_7_0._heroSkeletonGraphics[3] = arg_7_0._heroSpines[3]:getSkeletonGraphic()
-	arg_7_0._heroSpineGos[3] = arg_7_0._heroSpines[3]:getSpineGo()
+function StoryLeadRoleSpineView:_onHeroSpineLoaded3()
+	self._heroSkeletonGraphics[3] = self._heroSpines[3]:getSkeletonGraphic()
+	self._heroSpineGos[3] = self._heroSpines[3]:getSpineGo()
 end
 
-function var_0_0._onHeroSpineLoaded4(arg_8_0)
-	arg_8_0._heroSkeletonGraphics[4] = arg_8_0._heroSpines[4]:getSkeletonGraphic()
-	arg_8_0._heroSpineGos[4] = arg_8_0._heroSpines[3]:getSpineGo()
+function StoryLeadRoleSpineView:_onHeroSpineLoaded4()
+	self._heroSkeletonGraphics[4] = self._heroSpines[4]:getSkeletonGraphic()
+	self._heroSpineGos[4] = self._heroSpines[3]:getSpineGo()
 end
 
-function var_0_0._onHeroSpineLoaded5(arg_9_0)
-	arg_9_0._heroSkeletonGraphics[5] = arg_9_0._heroSpines[5]:getSkeletonGraphic()
-	arg_9_0._heroSpineGos[5] = arg_9_0._heroSpines[5]:getSpineGo()
+function StoryLeadRoleSpineView:_onHeroSpineLoaded5()
+	self._heroSkeletonGraphics[5] = self._heroSpines[5]:getSkeletonGraphic()
+	self._heroSpineGos[5] = self._heroSpines[5]:getSpineGo()
 end
 
-function var_0_0.onUpdateParam(arg_10_0)
+function StoryLeadRoleSpineView:onUpdateParam()
 	return
 end
 
-function var_0_0._showView(arg_11_0, arg_11_1, arg_11_2)
-	gohelper.setActive(arg_11_0.viewGO, arg_11_1)
+function StoryLeadRoleSpineView:_showView(show, heroIcon)
+	gohelper.setActive(self.viewGO, show)
 
-	if arg_11_2 then
-		gohelper.setActive(arg_11_0._gospineroot, true)
+	if heroIcon then
+		gohelper.setActive(self._gospineroot, true)
 
-		local var_11_0 = StoryConfig.instance:getStoryLeadHeroSpine()
+		local leadHeroSpineCos = StoryConfig.instance:getStoryLeadHeroSpine()
 
-		for iter_11_0, iter_11_1 in ipairs(var_11_0) do
-			if arg_11_2 == iter_11_1.icon then
-				for iter_11_2, iter_11_3 in ipairs(arg_11_0._goSpines) do
-					gohelper.setActive(iter_11_3, iter_11_0 == iter_11_2)
+		for roleType, spineCo in ipairs(leadHeroSpineCos) do
+			if heroIcon == spineCo.icon then
+				for spineIndex, gospine in ipairs(self._goSpines) do
+					gohelper.setActive(gospine, roleType == spineIndex)
 				end
 
 				return
@@ -96,205 +98,205 @@ function var_0_0._showView(arg_11_0, arg_11_1, arg_11_2)
 	end
 end
 
-function var_0_0._keepSpineAni(arg_12_0, arg_12_1)
-	if not arg_12_0._gospineroot.activeSelf then
+function StoryLeadRoleSpineView:_keepSpineAni(roleType)
+	if not self._gospineroot.activeSelf then
 		return false
 	end
 
-	if not arg_12_0._goSpines[arg_12_1].activeSelf then
+	if not self._goSpines[roleType].activeSelf then
 		return false
 	end
 
-	if arg_12_0._mainheroco and (arg_12_0._mainheroco.motion ~= "" or arg_12_0._mainheroco.face ~= "" or arg_12_0._mainheroco.mouth ~= "") and arg_12_0._mainheroco.motion == arg_12_0._stepCo.mainRole.anims[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] and arg_12_0._mainheroco.face == arg_12_0._stepCo.mainRole.expressions[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] and arg_12_0._mainheroco.mouth == arg_12_0._stepCo.mainRole.mouses[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] then
+	if self._mainheroco and (self._mainheroco.motion ~= "" or self._mainheroco.face ~= "" or self._mainheroco.mouth ~= "") and self._mainheroco.motion == self._stepCo.mainRole.anims[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] and self._mainheroco.face == self._stepCo.mainRole.expressions[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] and self._mainheroco.mouth == self._stepCo.mainRole.mouses[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0._isSpineKeepShow(arg_13_0, arg_13_1)
-	if not arg_13_0._gospineroot.activeSelf then
+function StoryLeadRoleSpineView:_isSpineKeepShow(roleType)
+	if not self._gospineroot.activeSelf then
 		return false
 	end
 
-	if not arg_13_0._goSpines[arg_13_1].activeSelf then
+	if not self._goSpines[roleType].activeSelf then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0._showLeadHero(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4)
-	arg_14_0._stepCo = arg_14_1
+function StoryLeadRoleSpineView:_showLeadHero(co, show, fadeIn, fadeOut)
+	self._stepCo = co
 
-	local var_14_0 = string.split(arg_14_0._stepCo.conversation.heroIcon, ".")[1]
+	local heroIcon = string.split(self._stepCo.conversation.heroIcon, ".")[1]
 
-	if not arg_14_0._roleType then
-		arg_14_0._roleType = 1
+	if not self._roleType then
+		self._roleType = 1
 	end
 
-	if arg_14_0._stepCo.conversation.iconShow then
-		local var_14_1 = StoryConfig.instance:getStoryLeadHeroSpine()
+	if self._stepCo.conversation.iconShow then
+		local leadHeroSpineCos = StoryConfig.instance:getStoryLeadHeroSpine()
 
-		for iter_14_0, iter_14_1 in ipairs(var_14_1) do
-			if var_14_0 == iter_14_1.icon then
-				arg_14_0._roleType = iter_14_0
+		for index, v in ipairs(leadHeroSpineCos) do
+			if heroIcon == v.icon then
+				self._roleType = index
 			end
 		end
 	end
 
-	if arg_14_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_14_0._tweenId)
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_14_0._tweenId = nil
+		self._tweenId = nil
 	end
 
-	if arg_14_0:_keepSpineAni(arg_14_0._roleType) then
+	if self:_keepSpineAni(self._roleType) then
 		return
 	end
 
-	if not arg_14_2 then
-		arg_14_0._mainheroco = nil
+	if not show then
+		self._mainheroco = nil
 
-		arg_14_0._animator:Play(UIAnimationName.Idle)
+		self._animator:Play(UIAnimationName.Idle)
 
-		arg_14_0._animator.enabled = false
+		self._animator.enabled = false
 
-		gohelper.setActive(arg_14_0._gospineroot, false)
+		gohelper.setActive(self._gospineroot, false)
 
-		for iter_14_2, iter_14_3 in pairs(arg_14_0._goSpines) do
-			gohelper.setActive(iter_14_3, false)
+		for _, v in pairs(self._goSpines) do
+			gohelper.setActive(v, false)
 		end
 
 		return
 	end
 
-	gohelper.setActive(arg_14_0._gospineroot, true)
-	arg_14_0:_playHeroLeadSpineVoice(arg_14_0._roleType)
+	gohelper.setActive(self._gospineroot, true)
+	self:_playHeroLeadSpineVoice(self._roleType)
 
-	arg_14_3 = arg_14_3 and not arg_14_0:_isSpineKeepShow(arg_14_0._roleType)
-	arg_14_4 = arg_14_4 and not arg_14_0:_isSpineKeepShow(arg_14_0._roleType)
+	fadeIn = fadeIn and not self:_isSpineKeepShow(self._roleType)
+	fadeOut = fadeOut and not self:_isSpineKeepShow(self._roleType)
 
-	if not arg_14_3 and not arg_14_4 then
-		arg_14_0:_fadeUpdate(1)
+	if not fadeIn and not fadeOut then
+		self:_fadeUpdate(1)
 	end
 
-	if arg_14_3 then
-		arg_14_0._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.5, arg_14_0._fadeUpdate, arg_14_0._fadeInFinished, arg_14_0, nil, EaseType.Linear)
+	if fadeIn then
+		self._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.5, self._fadeUpdate, self._fadeInFinished, self, nil, EaseType.Linear)
 	end
 
-	if arg_14_4 then
-		arg_14_0._tweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, 0.35, arg_14_0._fadeUpdate, arg_14_0._fadeOutFinished, arg_14_0, nil, EaseType.Linear)
+	if fadeOut then
+		self._tweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, 0.35, self._fadeUpdate, self._fadeOutFinished, self, nil, EaseType.Linear)
 	end
 end
 
-function var_0_0._playHeroLeadSpineVoice(arg_15_0, arg_15_1)
-	for iter_15_0, iter_15_1 in ipairs(arg_15_0._goSpines) do
-		gohelper.setActive(iter_15_1, arg_15_1 == iter_15_0)
+function StoryLeadRoleSpineView:_playHeroLeadSpineVoice(roleType)
+	for index, v in ipairs(self._goSpines) do
+		gohelper.setActive(v, roleType == index)
 	end
 
-	if arg_15_0._stepCo.conversation.heroIcon == "" or not arg_15_0._stepCo.conversation.iconShow then
+	if self._stepCo.conversation.heroIcon == "" or not self._stepCo.conversation.iconShow then
 		return
 	end
 
-	arg_15_0._mainheroco = {}
-	arg_15_0._mainheroco.motion = arg_15_0._stepCo.mainRole.anims[GameLanguageMgr.instance:getVoiceTypeStoryIndex()]
-	arg_15_0._mainheroco.face = arg_15_0._stepCo.mainRole.expressions[GameLanguageMgr.instance:getVoiceTypeStoryIndex()]
-	arg_15_0._mainheroco.mouth = arg_15_0._stepCo.mainRole.mouses[GameLanguageMgr.instance:getVoiceTypeStoryIndex()]
+	self._mainheroco = {}
+	self._mainheroco.motion = self._stepCo.mainRole.anims[GameLanguageMgr.instance:getVoiceTypeStoryIndex()]
+	self._mainheroco.face = self._stepCo.mainRole.expressions[GameLanguageMgr.instance:getVoiceTypeStoryIndex()]
+	self._mainheroco.mouth = self._stepCo.mainRole.mouses[GameLanguageMgr.instance:getVoiceTypeStoryIndex()]
 
-	for iter_15_2, iter_15_3 in ipairs(arg_15_0._heroSpines) do
-		iter_15_3:stopVoice()
+	for index, v in ipairs(self._heroSpines) do
+		v:stopVoice()
 
-		if iter_15_2 == arg_15_1 then
-			iter_15_3:playVoice(arg_15_0._mainheroco)
+		if index == roleType then
+			v:playVoice(self._mainheroco)
 		end
 	end
 end
 
-function var_0_0._fadeUpdate(arg_16_0, arg_16_1)
-	for iter_16_0, iter_16_1 in ipairs(arg_16_0._heroSpineGos) do
-		local var_16_0, var_16_1, var_16_2 = transformhelper.getLocalPos(iter_16_1.transform)
+function StoryLeadRoleSpineView:_fadeUpdate(value)
+	for _, v in ipairs(self._heroSpineGos) do
+		local x, y, _ = transformhelper.getLocalPos(v.transform)
 
-		transformhelper.setLocalPos(iter_16_1.transform, var_16_0, var_16_1, 1 - arg_16_1)
+		transformhelper.setLocalPos(v.transform, x, y, 1 - value)
 	end
 
-	arg_16_0:_setHeroFadeMat()
+	self:_setHeroFadeMat()
 end
 
-function var_0_0._fadeInFinished(arg_17_0)
+function StoryLeadRoleSpineView:_fadeInFinished()
 	return
 end
 
-function var_0_0._fadeOutFinished(arg_18_0)
-	arg_18_0:_fadeUpdate(0)
+function StoryLeadRoleSpineView:_fadeOutFinished()
+	self:_fadeUpdate(0)
 end
 
-function var_0_0._actShake(arg_19_0, arg_19_1, arg_19_2, arg_19_3, arg_19_4)
-	arg_19_0._stepCo = arg_19_1
+function StoryLeadRoleSpineView:_actShake(co, shake, level, immediate)
+	self._stepCo = co
 
-	if arg_19_0._stepCo.conversation.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
-		arg_19_2 = false
+	if self._stepCo.conversation.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
+		shake = false
 	end
 
-	if not arg_19_2 then
-		arg_19_0._animator.speed = arg_19_0._stepCo.conversation.effRate
+	if not shake then
+		self._animator.speed = self._stepCo.conversation.effRate
 
-		if arg_19_4 then
-			arg_19_0._animator:Play(UIAnimationName.Idle)
+		if immediate then
+			self._animator:Play(UIAnimationName.Idle)
 
-			arg_19_0._animator.enabled = false
+			self._animator.enabled = false
 		else
-			arg_19_0._animator:SetBool("stoploop", true)
+			self._animator:SetBool("stoploop", true)
 		end
 
 		return
 	end
 
-	arg_19_0._animator.enabled = true
+	self._animator.enabled = true
 
-	arg_19_0._animator:SetBool("stoploop", false)
+	self._animator:SetBool("stoploop", false)
 
-	local var_19_0 = {
+	local aniName = {
 		"low",
 		"middle",
 		"high"
 	}
 
-	arg_19_0._animator:Play(var_19_0[arg_19_3])
+	self._animator:Play(aniName[level])
 
-	arg_19_0._animator.speed = arg_19_0._stepCo.conversation.effRate
+	self._animator.speed = self._stepCo.conversation.effRate
 end
 
-function var_0_0._setHeroFadeMat(arg_20_0)
-	local var_20_0 = ViewMgr.instance:getContainer(ViewName.StoryBackgroundView).viewGO
+function StoryLeadRoleSpineView:_setHeroFadeMat()
+	local bgRootGo = ViewMgr.instance:getContainer(ViewName.StoryBackgroundView).viewGO
 
-	arg_20_0._bgGo = gohelper.findChild(var_20_0, "#go_upbg/#simage_bgimg")
+	self._bgGo = gohelper.findChild(bgRootGo, "#go_upbg/#simage_bgimg")
 
-	local var_20_1, var_20_2 = transformhelper.getLocalPos(arg_20_0._bgGo.transform)
-	local var_20_3, var_20_4 = transformhelper.getLocalScale(arg_20_0._bgGo.transform)
-	local var_20_5 = Vector4.New(var_20_3, var_20_4, var_20_1, var_20_2)
-	local var_20_6 = arg_20_0._blitEff.capturedTexture
+	local posx, posy = transformhelper.getLocalPos(self._bgGo.transform)
+	local scalex, scaley = transformhelper.getLocalScale(self._bgGo.transform)
+	local vec4 = Vector4.New(scalex, scaley, posx, posy)
+	local texture = self._blitEff.capturedTexture
 
-	for iter_20_0, iter_20_1 in ipairs(arg_20_0._heroSkeletonGraphics) do
-		iter_20_1.materialForRendering:SetTexture("_SceneMask", var_20_6)
-		iter_20_1.materialForRendering:SetVector("_SceneMask_ST", var_20_5)
+	for _, v in ipairs(self._heroSkeletonGraphics) do
+		v.materialForRendering:SetTexture("_SceneMask", texture)
+		v.materialForRendering:SetVector("_SceneMask_ST", vec4)
 	end
 end
 
-function var_0_0.onOpen(arg_21_0)
-	StoryController.instance:registerCallback(StoryEvent.ShowLeadRole, arg_21_0._showLeadHero, arg_21_0)
-	StoryController.instance:registerCallback(StoryEvent.LeadRoleViewShow, arg_21_0._showView, arg_21_0)
-	StoryController.instance:registerCallback(StoryEvent.ConversationShake, arg_21_0._actShake, arg_21_0)
+function StoryLeadRoleSpineView:onOpen()
+	StoryController.instance:registerCallback(StoryEvent.ShowLeadRole, self._showLeadHero, self)
+	StoryController.instance:registerCallback(StoryEvent.LeadRoleViewShow, self._showView, self)
+	StoryController.instance:registerCallback(StoryEvent.ConversationShake, self._actShake, self)
 end
 
-function var_0_0.onClose(arg_22_0)
-	StoryController.instance:unregisterCallback(StoryEvent.ShowLeadRole, arg_22_0._showLeadHero, arg_22_0)
-	StoryController.instance:unregisterCallback(StoryEvent.LeadRoleViewShow, arg_22_0._showView, arg_22_0)
-	StoryController.instance:unregisterCallback(StoryEvent.ConversationShake, arg_22_0._actShake, arg_22_0)
+function StoryLeadRoleSpineView:onClose()
+	StoryController.instance:unregisterCallback(StoryEvent.ShowLeadRole, self._showLeadHero, self)
+	StoryController.instance:unregisterCallback(StoryEvent.LeadRoleViewShow, self._showView, self)
+	StoryController.instance:unregisterCallback(StoryEvent.ConversationShake, self._actShake, self)
 end
 
-function var_0_0.onDestroyView(arg_23_0)
+function StoryLeadRoleSpineView:onDestroyView()
 	return
 end
 
-return var_0_0
+return StoryLeadRoleSpineView

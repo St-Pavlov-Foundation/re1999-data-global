@@ -1,96 +1,98 @@
-﻿module("modules.logic.explore.map.ExploreMapUnitCatchComp", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/ExploreMapUnitCatchComp.lua
 
-local var_0_0 = class("ExploreMapUnitCatchComp", LuaCompBase)
+module("modules.logic.explore.map.ExploreMapUnitCatchComp", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._mapGo = arg_1_1
+local ExploreMapUnitCatchComp = class("ExploreMapUnitCatchComp", LuaCompBase)
+
+function ExploreMapUnitCatchComp:init(go)
+	self._mapGo = go
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0:addEventCb(ExploreController.instance, ExploreEvent.UseItemChanged, arg_2_0._onUpdateCatchUnit, arg_2_0)
-	arg_2_0:addEventCb(ExploreController.instance, ExploreEvent.OnClickHero, arg_2_0._onClickHero, arg_2_0)
-	arg_2_0:addEventCb(ExploreController.instance, ExploreEvent.HeroResInitDone, arg_2_0._onHeroInitDone, arg_2_0)
+function ExploreMapUnitCatchComp:addEventListeners()
+	self:addEventCb(ExploreController.instance, ExploreEvent.UseItemChanged, self._onUpdateCatchUnit, self)
+	self:addEventCb(ExploreController.instance, ExploreEvent.OnClickHero, self._onClickHero, self)
+	self:addEventCb(ExploreController.instance, ExploreEvent.HeroResInitDone, self._onHeroInitDone, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0:removeEventCb(ExploreController.instance, ExploreEvent.UseItemChanged, arg_3_0._onUpdateCatchUnit, arg_3_0)
-	arg_3_0:removeEventCb(ExploreController.instance, ExploreEvent.HeroResInitDone, arg_3_0._onHeroInitDone, arg_3_0)
-	arg_3_0:removeEventCb(ExploreController.instance, ExploreEvent.OnClickHero, arg_3_0._onClickHero, arg_3_0)
+function ExploreMapUnitCatchComp:removeEventListeners()
+	self:removeEventCb(ExploreController.instance, ExploreEvent.UseItemChanged, self._onUpdateCatchUnit, self)
+	self:removeEventCb(ExploreController.instance, ExploreEvent.HeroResInitDone, self._onHeroInitDone, self)
+	self:removeEventCb(ExploreController.instance, ExploreEvent.OnClickHero, self._onClickHero, self)
 end
 
-function var_0_0.setMap(arg_4_0, arg_4_1)
-	arg_4_0._map = arg_4_1
-	arg_4_0._hero = arg_4_1:getHero()
+function ExploreMapUnitCatchComp:setMap(map)
+	self._map = map
+	self._hero = map:getHero()
 
-	arg_4_0:_onUpdateCatchUnit()
+	self:_onUpdateCatchUnit()
 
-	if arg_4_0._catchUnit then
-		arg_4_0._catchUnit:setActive(false)
+	if self._catchUnit then
+		self._catchUnit:setActive(false)
 	end
 end
 
-function var_0_0._onHeroInitDone(arg_5_0)
-	if arg_5_0._catchUnit then
-		arg_5_0._catchUnit:setActive(true)
-		arg_5_0._catchUnit:setupRes()
-		arg_5_0._hero:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.Carry)
+function ExploreMapUnitCatchComp:_onHeroInitDone()
+	if self._catchUnit then
+		self._catchUnit:setActive(true)
+		self._catchUnit:setupRes()
+		self._hero:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.Carry)
 		ExploreController.instance:dispatchEvent(ExploreEvent.HeroCarryChange)
 
-		local var_5_0 = arg_5_0._hero:getHangTrans(ExploreAnimEnum.RoleHangPointType.Hand_Right)
+		local trans = self._hero:getHangTrans(ExploreAnimEnum.RoleHangPointType.Hand_Right)
 
-		if var_5_0 then
-			arg_5_0._catchUnit:setParent(var_5_0, ExploreEnum.ExplorePipePotHangType.Carry)
+		if trans then
+			self._catchUnit:setParent(trans, ExploreEnum.ExplorePipePotHangType.Carry)
 		end
 	end
 end
 
-function var_0_0._onUpdateCatchUnit(arg_6_0, arg_6_1)
-	local var_6_0 = tonumber(ExploreModel.instance:getUseItemUid())
-	local var_6_1 = arg_6_0._catchUnit
+function ExploreMapUnitCatchComp:_onUpdateCatchUnit(useItemUid)
+	local id = tonumber(ExploreModel.instance:getUseItemUid())
+	local preUnit = self._catchUnit
 
-	arg_6_0._catchUnit = arg_6_0._map:getUnit(var_6_0, true)
+	self._catchUnit = self._map:getUnit(id, true)
 
-	local var_6_2 = arg_6_0._catchUnit ~= var_6_1
+	local isChange = self._catchUnit ~= preUnit
 
-	if arg_6_0._catchUnit then
-		arg_6_0._catchUnit:removeFromNode()
+	if self._catchUnit then
+		self._catchUnit:removeFromNode()
 	end
 
-	if var_6_2 and arg_6_1 then
-		if arg_6_0._catchUnit ~= nil then
-			if not arg_6_0._catchUnit.nodePos then
-				arg_6_0._catchUnit.nodePos = arg_6_0._catchUnit.mo.nodePos
+	if isChange and useItemUid then
+		if self._catchUnit ~= nil then
+			if not self._catchUnit.nodePos then
+				self._catchUnit.nodePos = self._catchUnit.mo.nodePos
 			end
 
-			ExploreHeroCatchUnitFlow.instance:catchUnit(arg_6_0._catchUnit)
+			ExploreHeroCatchUnitFlow.instance:catchUnit(self._catchUnit)
 		else
-			ExploreHeroCatchUnitFlow.instance:uncatchUnit(var_6_1)
+			ExploreHeroCatchUnitFlow.instance:uncatchUnit(preUnit)
 		end
 	end
 end
 
-function var_0_0.setCatchUnit(arg_7_0, arg_7_1)
-	arg_7_0._catchUnit = arg_7_1
+function ExploreMapUnitCatchComp:setCatchUnit(unit)
+	self._catchUnit = unit
 end
 
-function var_0_0._onClickHero(arg_8_0)
+function ExploreMapUnitCatchComp:_onClickHero()
 	if not ExploreModel.instance:isHeroInControl() then
 		return
 	end
 
-	if arg_8_0._hero:isMoving() then
+	if self._hero:isMoving() then
 		return
 	end
 
-	if arg_8_0._catchUnit then
-		ExploreController.instance:dispatchEvent(ExploreEvent.TryCancelTriggerUnit, arg_8_0._catchUnit.id)
+	if self._catchUnit then
+		ExploreController.instance:dispatchEvent(ExploreEvent.TryCancelTriggerUnit, self._catchUnit.id)
 	end
 end
 
-function var_0_0.onDestroy(arg_9_0)
-	arg_9_0._mapGo = nil
-	arg_9_0._map = nil
-	arg_9_0._catchUnit = nil
+function ExploreMapUnitCatchComp:onDestroy()
+	self._mapGo = nil
+	self._map = nil
+	self._catchUnit = nil
 end
 
-return var_0_0
+return ExploreMapUnitCatchComp

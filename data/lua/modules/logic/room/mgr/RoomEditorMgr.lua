@@ -1,16 +1,18 @@
-﻿module("modules.logic.room.mgr.RoomEditorMgr", package.seeall)
+﻿-- chunkname: @modules/logic/room/mgr/RoomEditorMgr.lua
 
-local var_0_0 = class("RoomEditorMgr")
+module("modules.logic.room.mgr.RoomEditorMgr", package.seeall)
 
-function var_0_0.start(arg_1_0)
+local RoomEditorMgr = class("RoomEditorMgr")
+
+function RoomEditorMgr:start()
 	RoomController.instance:setEditorMode(true)
 	ViewMgr.instance:openView(ViewName.RoomDebugEntranceView)
 end
 
-function var_0_0.exit(arg_2_0)
+function RoomEditorMgr:exit()
 	return
 end
 
-var_0_0.instance = var_0_0.New()
+RoomEditorMgr.instance = RoomEditorMgr.New()
 
-return var_0_0
+return RoomEditorMgr

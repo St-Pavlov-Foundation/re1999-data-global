@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.defines.Activity114Enum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/defines/Activity114Enum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_2.jiexika.defines.Activity114Enum", package.seeall)
 
-var_0_0.Attr = {
+local Activity114Enum = _M
+
+Activity114Enum.Attr = {
 	Social = 4,
 	End = 6,
 	Physical = 3,
@@ -10,7 +12,7 @@ var_0_0.Attr = {
 	Secret = 5,
 	Cognition = 2
 }
-var_0_0.AddAttrType = {
+Activity114Enum.AddAttrType = {
 	Feature = 6,
 	KeyDayScore = 10,
 	UnLockTravel = 8,
@@ -18,24 +20,24 @@ var_0_0.AddAttrType = {
 	LastKeyDayScore = 11,
 	UnLockMeet = 9
 }
-var_0_0.TaskStatu = {
+Activity114Enum.TaskStatu = {
 	NoFinish = 2,
 	Finish = 1,
 	GetBonus = 3
 }
-var_0_0.EventType = {
+Activity114Enum.EventType = {
 	Meet = 3,
 	Rest = 4,
 	KeyDay = 5,
 	Travel = 2,
 	Edu = 1
 }
-var_0_0.EventContentType = {
+Activity114Enum.EventContentType = {
 	Check = 2,
 	Check_Once = 3,
 	Normal = 1
 }
-var_0_0.ConstId = {
+Activity114Enum.ConstId = {
 	ScoreA = 30,
 	Rest1 = 8,
 	WeekEndGuideId = 31,
@@ -46,7 +48,7 @@ var_0_0.ConstId = {
 	ScoreB = 29,
 	Rest3 = 10
 }
-var_0_0.Result = {
+Activity114Enum.Result = {
 	NoFinish = -1,
 	Success = 2,
 	Fail = 1,
@@ -54,47 +56,47 @@ var_0_0.Result = {
 	FightSucess = 999,
 	None = 0
 }
-var_0_0.StoryType = {
+Activity114Enum.StoryType = {
 	RoundEnd = 4,
 	Result = 3,
 	Event = 2,
 	RoundStart = 1
 }
-var_0_0.MotionType = {
+Activity114Enum.MotionType = {
 	Rest = 4,
 	Time = 1,
 	KeyDay = 5,
 	Click = 2,
 	Edu = 3
 }
-var_0_0.PlayStartRoundType = {
+Activity114Enum.PlayStartRoundType = {
 	Story = 2,
 	Guide = 1
 }
-var_0_0.TravelStatus = {
+Activity114Enum.TravelStatus = {
 	EventLock = 2,
 	EventBlock = 3,
 	EventEnd = 5,
 	TravelLock = 4,
 	Normal = 1
 }
-var_0_0.RoundType = {
+Activity114Enum.RoundType = {
 	Free = 3,
 	Edu = 2,
 	KeyDay = 1
 }
-var_0_0.RateColor = {
+Activity114Enum.RateColor = {
 	"#ff4c4c",
 	"#ff934b",
 	"#db95e5",
 	"#9dbaf2",
 	"#84cb84"
 }
-var_0_0.TabIndex = {
+Activity114Enum.TabIndex = {
 	EnterView = 1,
 	MainView = 3,
 	TaskView = 2
 }
-var_0_0.episodeId = 1250101
+Activity114Enum.episodeId = 1250101
 
-return var_0_0
+return Activity114Enum

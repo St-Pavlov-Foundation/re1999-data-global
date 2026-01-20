@@ -1,40 +1,42 @@
-﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.rpc.Activity121Rpc", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/versionactivity1_2dungeon/rpc/Activity121Rpc.lua
 
-local var_0_0 = class("Activity121Rpc", BaseRpc)
+module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.rpc.Activity121Rpc", package.seeall)
 
-function var_0_0.sendGet121InfosRequest(arg_1_0)
-	local var_1_0 = Activity121Module_pb.Get121InfosRequest()
+local Activity121Rpc = class("Activity121Rpc", BaseRpc)
 
-	var_1_0.activityId = VersionActivityEnum.ActivityId.Act121
+function Activity121Rpc:sendGet121InfosRequest()
+	local req = Activity121Module_pb.Get121InfosRequest()
 
-	arg_1_0:sendMsg(var_1_0)
+	req.activityId = VersionActivityEnum.ActivityId.Act121
+
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveGet121InfosReply(arg_2_0, arg_2_1, arg_2_2)
-	VersionActivity1_2NoteModel.instance:onReceiveGet121InfosReply(arg_2_1, arg_2_2)
+function Activity121Rpc:onReceiveGet121InfosReply(resultCode, msg)
+	VersionActivity1_2NoteModel.instance:onReceiveGet121InfosReply(resultCode, msg)
 end
 
-function var_0_0.sendGet121BonusRequest(arg_3_0, arg_3_1)
-	local var_3_0 = Activity121Module_pb.Get121BonusRequest()
+function Activity121Rpc:sendGet121BonusRequest(storyId)
+	local req = Activity121Module_pb.Get121BonusRequest()
 
-	var_3_0.activityId = VersionActivityEnum.ActivityId.Act121
-	var_3_0.storyId = arg_3_1
+	req.activityId = VersionActivityEnum.ActivityId.Act121
+	req.storyId = storyId
 
-	arg_3_0:sendMsg(var_3_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveGet121BonusReply(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 == 0 then
-		VersionActivity1_2NoteModel.instance:onReceiveGet121BonusReply(arg_4_2)
+function Activity121Rpc:onReceiveGet121BonusReply(resultCode, msg)
+	if resultCode == 0 then
+		VersionActivity1_2NoteModel.instance:onReceiveGet121BonusReply(msg)
 	end
 end
 
-function var_0_0.onReceiveAct121UpdatePush(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_1 == 0 then
-		VersionActivity1_2NoteModel.instance:onReceiveAct121UpdatePush(arg_5_2)
+function Activity121Rpc:onReceiveAct121UpdatePush(resultCode, msg)
+	if resultCode == 0 then
+		VersionActivity1_2NoteModel.instance:onReceiveAct121UpdatePush(msg)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+Activity121Rpc.instance = Activity121Rpc.New()
 
-return var_0_0
+return Activity121Rpc

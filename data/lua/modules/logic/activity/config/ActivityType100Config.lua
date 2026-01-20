@@ -1,36 +1,38 @@
-﻿module("modules.logic.activity.config.ActivityType100Config", package.seeall)
+﻿-- chunkname: @modules/logic/activity/config/ActivityType100Config.lua
 
-local var_0_0 = class("ActivityType100Config", BaseConfig)
+module("modules.logic.activity.config.ActivityType100Config", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local ActivityType100Config = class("ActivityType100Config", BaseConfig)
+
+function ActivityType100Config:reqConfigNames()
 	return {
 		"activity_const",
 		"warmup_h5"
 	}
 end
 
-local function var_0_1(arg_2_0)
-	return lua_warmup_h5.configDict[arg_2_0]
+local function _getWarmUpH5CO(activityId)
+	return lua_warmup_h5.configDict[activityId]
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+function ActivityType100Config:onConfigLoaded(configName, configTable)
 	return
 end
 
-function var_0_0.getWarmUpH5ActivityId(arg_4_0, arg_4_1)
-	return ActivityConfig.instance:getConstAsNum(3, arg_4_1 or 13119)
+function ActivityType100Config:getWarmUpH5ActivityId(fallback)
+	return ActivityConfig.instance:getConstAsNum(3, fallback or 13119)
 end
 
-function var_0_0.getWarmUpH5Link(arg_5_0, arg_5_1)
-	local var_5_0 = var_0_1(arg_5_1)
+function ActivityType100Config:getWarmUpH5Link(actId)
+	local CO = _getWarmUpH5CO(actId)
 
-	if not var_5_0 then
+	if not CO then
 		return
 	end
 
-	return SettingsModel.instance:extractByRegion(var_5_0.link)
+	return SettingsModel.instance:extractByRegion(CO.link)
 end
 
-var_0_0.instance = var_0_0.New()
+ActivityType100Config.instance = ActivityType100Config.New()
 
-return var_0_0
+return ActivityType100Config

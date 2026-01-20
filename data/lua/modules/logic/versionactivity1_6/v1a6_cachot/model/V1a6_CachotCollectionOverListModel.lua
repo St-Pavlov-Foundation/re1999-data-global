@@ -1,46 +1,48 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotCollectionOverListModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/model/V1a6_CachotCollectionOverListModel.lua
 
-local var_0_0 = class("V1a6_CachotCollectionOverListModel", ListScrollModel)
+module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotCollectionOverListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._collectionList = nil
+local V1a6_CachotCollectionOverListModel = class("V1a6_CachotCollectionOverListModel", ListScrollModel)
+
+function V1a6_CachotCollectionOverListModel:onInit()
+	self._collectionList = nil
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:onInit()
+function V1a6_CachotCollectionOverListModel:reInit()
+	self:onInit()
 end
 
-function var_0_0.onInitData(arg_3_0)
-	local var_3_0 = V1a6_CachotModel.instance:getRogueInfo()
-	local var_3_1 = var_3_0 and var_3_0.collections
+function V1a6_CachotCollectionOverListModel:onInitData()
+	local rogueInfo = V1a6_CachotModel.instance:getRogueInfo()
+	local collections = rogueInfo and rogueInfo.collections
 
-	arg_3_0._collectionList = {}
+	self._collectionList = {}
 
-	if var_3_1 then
-		for iter_3_0, iter_3_1 in ipairs(var_3_1) do
-			table.insert(arg_3_0._collectionList, iter_3_1)
+	if collections then
+		for _, collectionMO in ipairs(collections) do
+			table.insert(self._collectionList, collectionMO)
 		end
 	end
 
-	table.sort(arg_3_0._collectionList, arg_3_0.sortFunc)
-	arg_3_0:setList(arg_3_0._collectionList)
+	table.sort(self._collectionList, self.sortFunc)
+	self:setList(self._collectionList)
 end
 
-function var_0_0.sortFunc(arg_4_0, arg_4_1)
-	local var_4_0 = V1a6_CachotCollectionConfig.instance:getCollectionConfig(arg_4_0.cfgId)
-	local var_4_1 = V1a6_CachotCollectionConfig.instance:getCollectionConfig(arg_4_1.cfgId)
+function V1a6_CachotCollectionOverListModel.sortFunc(a, b)
+	local aCfg = V1a6_CachotCollectionConfig.instance:getCollectionConfig(a.cfgId)
+	local bCfg = V1a6_CachotCollectionConfig.instance:getCollectionConfig(b.cfgId)
 
-	if var_4_0 and var_4_1 and var_4_0.type ~= var_4_1.type then
-		return var_4_0.type < var_4_1.type
+	if aCfg and bCfg and aCfg.type ~= bCfg.type then
+		return aCfg.type < bCfg.type
 	end
 
-	return arg_4_0.id > arg_4_1.id
+	return a.id > b.id
 end
 
-function var_0_0.isBagEmpty(arg_5_0)
-	return arg_5_0:getCount() <= 0
+function V1a6_CachotCollectionOverListModel:isBagEmpty()
+	return self:getCount() <= 0
 end
 
-var_0_0.instance = var_0_0.New()
+V1a6_CachotCollectionOverListModel.instance = V1a6_CachotCollectionOverListModel.New()
 
-return var_0_0
+return V1a6_CachotCollectionOverListModel

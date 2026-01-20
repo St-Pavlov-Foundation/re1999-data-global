@@ -1,198 +1,211 @@
-﻿module("modules.logic.chessgame.controller.ChessGameHelper", package.seeall)
+﻿-- chunkname: @modules/logic/chessgame/controller/ChessGameHelper.lua
 
-local var_0_0 = class("ChessGameHelper")
+module("modules.logic.chessgame.controller.ChessGameHelper", package.seeall)
 
-function var_0_0.isNodeWalkable(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = ChessGameNodeModel.instance:getNode(arg_1_0, arg_1_1)
+local ChessGameHelper = class("ChessGameHelper")
 
-	if not var_1_0 then
+function ChessGameHelper.isNodeWalkable(x, y, isCanDestory)
+	local node = ChessGameNodeModel.instance:getNode(x, y)
+
+	if not node then
 		return false
 	end
 
-	return var_1_0:isCanWalk(arg_1_2)
+	return node:isCanWalk(isCanDestory)
 end
 
-function var_0_0.nodePosToWorldPos(arg_2_0)
-	local var_2_0 = Vector3.New()
+function ChessGameHelper.nodePosToWorldPos(nodePos)
+	local v3 = Vector3.New()
 
-	var_2_0.x = (arg_2_0.x + arg_2_0.y) * ChessGameEnum.NodeXOffset
-	var_2_0.y = (arg_2_0.y - arg_2_0.x) * ChessGameEnum.NodeYOffset
-	var_2_0.z = (arg_2_0.y - arg_2_0.x) * ChessGameEnum.NodeZOffset
+	v3.x = (nodePos.x + nodePos.y) * ChessGameEnum.NodeXOffset
+	v3.y = (nodePos.y - nodePos.x) * ChessGameEnum.NodeYOffset
+	v3.z = (nodePos.y - nodePos.x) * ChessGameEnum.NodeZOffset
 
-	return var_2_0
+	return v3
 end
 
-function var_0_0.worldPosToNodePos(arg_3_0)
-	local var_3_0 = Vector3.New()
-	local var_3_1 = arg_3_0.x / ChessGameEnum.NodeXOffset
-	local var_3_2 = arg_3_0.y / ChessGameEnum.NodeYOffset
+function ChessGameHelper.worldPosToNodePos(pos)
+	local v3 = Vector3.New()
+	local x = pos.x / ChessGameEnum.NodeXOffset
+	local y = pos.y / ChessGameEnum.NodeYOffset
 
-	var_3_0.x = Mathf.Round((var_3_1 - var_3_2) / 2)
-	var_3_0.y = Mathf.Round((var_3_1 + var_3_2) / 2)
+	v3.x = Mathf.Round((x - y) / 2)
+	v3.y = Mathf.Round((x + y) / 2)
 
-	return var_3_0
+	return v3
 end
 
-function var_0_0.getMap()
+function ChessGameHelper.getMap()
 	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.ChessGame then
 		return
 	end
 
-	return GameSceneMgr.instance:getCurScene().map
+	local scene = GameSceneMgr.instance:getCurScene()
+
+	return scene.map
 end
 
-local var_0_1 = 8
+local colTileNum = 8
 
-function var_0_0.ToDirection(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	if arg_5_2 < arg_5_0 then
-		if arg_5_3 < arg_5_1 then
+function ChessGameHelper.ToDirection(sourceX, sourceY, targetX, targetY)
+	if targetX < sourceX then
+		if targetY < sourceY then
 			return 1
-		elseif arg_5_1 < arg_5_3 then
+		elseif sourceY < targetY then
 			return 7
 		else
 			return 4
 		end
-	elseif arg_5_0 < arg_5_2 then
-		if arg_5_3 < arg_5_1 then
+	elseif sourceX < targetX then
+		if targetY < sourceY then
 			return 3
-		elseif arg_5_1 < arg_5_3 then
+		elseif sourceY < targetY then
 			return 9
 		else
 			return 6
 		end
-	elseif arg_5_3 < arg_5_1 then
+	elseif targetY < sourceY then
 		return 2
-	elseif arg_5_1 < arg_5_3 then
+	elseif sourceY < targetY then
 		return 8
 	else
 		return 5
 	end
 end
 
-function var_0_0.CalNextCellPos(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_2 == 2 then
-		return arg_6_0, arg_6_1 - 1
-	elseif arg_6_2 == 8 then
-		return arg_6_0, arg_6_1 + 1
-	elseif arg_6_2 == 6 then
-		return arg_6_0 + 1, arg_6_1
-	elseif arg_6_2 == 4 then
-		return arg_6_0 - 1, arg_6_1
+function ChessGameHelper.CalNextCellPos(sourceX, sourceY, dir)
+	if dir == 2 then
+		return sourceX, sourceY - 1
+	elseif dir == 8 then
+		return sourceX, sourceY + 1
+	elseif dir == 6 then
+		return sourceX + 1, sourceY
+	elseif dir == 4 then
+		return sourceX - 1, sourceY
 	end
 end
 
-function var_0_0.CalOppositeDir(arg_7_0)
-	if arg_7_0 == 2 then
+function ChessGameHelper.CalOppositeDir(dir)
+	if dir == 2 then
 		return 8
-	elseif arg_7_0 == 8 then
+	elseif dir == 8 then
 		return 2
-	elseif arg_7_0 == 6 then
+	elseif dir == 6 then
 		return 4
-	elseif arg_7_0 == 4 then
+	elseif dir == 4 then
 		return 6
 	end
 end
 
-function var_0_0.IsEdgeTile(arg_8_0, arg_8_1)
-	return arg_8_1 == var_0_1 - 1
+function ChessGameHelper.IsEdgeTile(x, y)
+	return y == colTileNum - 1
 end
 
-function var_0_0.getClearConditionDesc(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0[1]
-	local var_9_1 = var_0_0.conditionDescFuncMap[var_9_0]
+function ChessGameHelper.getClearConditionDesc(params, actId)
+	local conditionType = params[1]
+	local func = ChessGameHelper.conditionDescFuncMap[conditionType]
 
-	return var_9_1 and var_9_1(arg_9_0, arg_9_1) or ""
+	return func and func(params, actId) or ""
 end
 
-function var_0_0.isClearConditionFinish(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0[1]
-	local var_10_1 = var_0_0.conditionCheckMap[var_10_0]
+function ChessGameHelper.isClearConditionFinish(params, actId)
+	local conditionType = params[1]
+	local func = ChessGameHelper.conditionCheckMap[conditionType]
 
-	if var_10_1 then
-		return var_10_1(arg_10_0, arg_10_1)
+	if func then
+		return func(params, actId)
 	end
 
 	return false
 end
 
-function var_0_0.calPosIndex(arg_11_0, arg_11_1)
-	return arg_11_0 + arg_11_1 * var_0_1
+function ChessGameHelper.calPosIndex(x, y)
+	return x + y * colTileNum
 end
 
-function var_0_0.calPosXY(arg_12_0)
-	return arg_12_0 % var_0_1, math.floor(arg_12_0 / var_0_1)
+function ChessGameHelper.calPosXY(index)
+	return index % colTileNum, math.floor(index / colTileNum)
 end
 
-function var_0_0.getConditionDescRoundLimit(arg_13_0, arg_13_1)
-	return string.format(luaLang("chessgame_clear_round_limit"), arg_13_0[2])
+function ChessGameHelper.getConditionDescRoundLimit(params, actId)
+	return string.format(luaLang("chessgame_clear_round_limit"), params[2])
 end
 
-function var_0_0.getConditionDescInteractFinish(arg_14_0, arg_14_1)
-	local var_14_0 = ChessGameConfig.instance:getInteractObjectCo(arg_14_1, arg_14_0[2])
+function ChessGameHelper.getConditionDescInteractFinish(params, actId)
+	local interactCo = ChessGameConfig.instance:getInteractObjectCo(actId, params[2])
 
-	return var_14_0 and string.format(luaLang("chessgame_clear_interact_finish"), var_14_0.name) or string.format(luaLang("chessgame_clear_interact_finish"), arg_14_0[2])
+	return interactCo and string.format(luaLang("chessgame_clear_interact_finish"), interactCo.name) or string.format(luaLang("chessgame_clear_interact_finish"), params[2])
 end
 
-function var_0_0.checkRoundLimit(arg_15_0, arg_15_1)
-	if not ChessGameModel.instance:getResult() then
+function ChessGameHelper.checkRoundLimit(params, actId)
+	local result = ChessGameModel.instance:getResult()
+
+	if not result then
 		return false
 	else
-		return ChessGameModel.instance:getRound() <= arg_15_0[2]
+		local round = ChessGameModel.instance:getRound()
+
+		return round <= params[2]
 	end
 end
 
-function var_0_0.checkInteractFinish(arg_16_0, arg_16_1)
-	for iter_16_0 = 2, #arg_16_0 do
-		if not ChessGameInteractModel.instance:checkInteractFinish(arg_16_0[iter_16_0]) then
+function ChessGameHelper.checkInteractFinish(params, actId)
+	for i = 2, #params do
+		if not ChessGameInteractModel.instance:checkInteractFinish(params[i]) then
 			return false
 		end
 	end
 
-	return #arg_16_0 > 1
+	return #params > 1
 end
 
-function var_0_0.checkHpLimit(arg_17_0, arg_17_1)
-	return ChessGameModel.instance:getHp() >= arg_17_0[2]
+function ChessGameHelper.checkHpLimit(params, actId)
+	local result = ChessGameModel.instance:getHp()
+
+	return result >= params[2]
 end
 
-function var_0_0.checkAllInteractFinish(arg_18_0, arg_18_1)
-	if ChessGameModel.instance:getResult() == false then
+function ChessGameHelper.checkAllInteractFinish(params, actId)
+	local result = ChessGameModel.instance:getResult()
+
+	if result == false then
 		return false
 	end
 
-	local var_18_0 = 0
+	local unFinishedCount = 0
 
-	for iter_18_0 = 2, #arg_18_0 do
-		if not ChessGameModel.instance:isInteractFinish(arg_18_0[iter_18_0]) then
-			var_18_0 = var_18_0 + 1
+	for i = 2, #params do
+		if not ChessGameModel.instance:isInteractFinish(params[i]) then
+			unFinishedCount = unFinishedCount + 1
 		end
 	end
 
-	if var_18_0 > 0 then
-		return false, var_18_0
+	if unFinishedCount > 0 then
+		return false, unFinishedCount
 	else
 		return true
 	end
 end
 
-function var_0_0.calBulletFlyTime(arg_19_0, arg_19_1, arg_19_2, arg_19_3, arg_19_4)
-	local var_19_0 = ChessGameEnum.DEFAULT_BULLET_FLY_TIME
+function ChessGameHelper.calBulletFlyTime(speed, startX, startY, endX, endY)
+	local result = ChessGameEnum.DEFAULT_BULLET_FLY_TIME
 
-	arg_19_0 = arg_19_0 or ChessGameEnum.DEFAULT_BULLET_SPEED
+	speed = speed or ChessGameEnum.DEFAULT_BULLET_SPEED
 
-	if arg_19_1 and arg_19_2 and arg_19_3 and arg_19_4 then
-		local var_19_1 = math.pow(arg_19_3 - arg_19_1, 2)
-		local var_19_2 = math.pow(arg_19_4 - arg_19_2, 2)
+	if startX and startY and endX and endY then
+		local xSquare = math.pow(endX - startX, 2)
+		local ySquare = math.pow(endY - startY, 2)
+		local dis = math.sqrt(xSquare + ySquare)
 
-		var_19_0 = math.sqrt(var_19_1 + var_19_2) / arg_19_0
+		result = dis / speed
 	end
 
-	return var_19_0
+	return result
 end
 
-var_0_0.conditionCheckMap = {
-	[ChessGameEnum.ChessClearCondition.InteractFinish] = var_0_0.checkInteractFinish,
-	[ChessGameEnum.ChessClearCondition.InteractAllFinish] = var_0_0.checkAllInteractFinish
+ChessGameHelper.conditionCheckMap = {
+	[ChessGameEnum.ChessClearCondition.InteractFinish] = ChessGameHelper.checkInteractFinish,
+	[ChessGameEnum.ChessClearCondition.InteractAllFinish] = ChessGameHelper.checkAllInteractFinish
 }
 
-return var_0_0
+return ChessGameHelper

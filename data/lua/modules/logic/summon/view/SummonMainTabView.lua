@@ -1,196 +1,199 @@
-﻿module("modules.logic.summon.view.SummonMainTabView", package.seeall)
+﻿-- chunkname: @modules/logic/summon/view/SummonMainTabView.lua
 
-local var_0_0 = class("SummonMainTabView", BaseView)
+module("modules.logic.summon.view.SummonMainTabView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goui = gohelper.findChild(arg_1_0.viewGO, "#go_ui")
-	arg_1_0._godrag = gohelper.findChild(arg_1_0.viewGO, "#go_ui/#go_drag")
-	arg_1_0._gocategory = gohelper.findChild(arg_1_0.viewGO, "#go_ui/#go_category")
-	arg_1_0._scrollcategory = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_ui/#go_category/#scroll_category")
-	arg_1_0._golefttop = gohelper.findChild(arg_1_0.viewGO, "#go_ui/#go_lefttop")
-	arg_1_0._gosummonmaincategoryitem = gohelper.findChild(arg_1_0.viewGO, "#go_ui/#go_category/#scroll_category/Viewport/Content/#go_summonmaincategoryitem")
+local SummonMainTabView = class("SummonMainTabView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SummonMainTabView:onInitView()
+	self._goui = gohelper.findChild(self.viewGO, "#go_ui")
+	self._godrag = gohelper.findChild(self.viewGO, "#go_ui/#go_drag")
+	self._gocategory = gohelper.findChild(self.viewGO, "#go_ui/#go_category")
+	self._scrollcategory = gohelper.findChildScrollRect(self.viewGO, "#go_ui/#go_category/#scroll_category")
+	self._golefttop = gohelper.findChild(self.viewGO, "#go_ui/#go_lefttop")
+	self._gosummonmaincategoryitem = gohelper.findChild(self.viewGO, "#go_ui/#go_category/#scroll_category/Viewport/Content/#go_summonmaincategoryitem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function SummonMainTabView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function SummonMainTabView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._tabItems = {}
+function SummonMainTabView:_editableInitView()
+	self._tabItems = {}
 end
 
-function var_0_0.onDestroyView(arg_5_0)
-	for iter_5_0, iter_5_1 in pairs(arg_5_0._tabItems) do
-		gohelper.setActive(iter_5_1.go, true)
-		iter_5_1.component:onDestroyView()
-		gohelper.destroy(iter_5_1.go)
+function SummonMainTabView:onDestroyView()
+	for _, item in pairs(self._tabItems) do
+		gohelper.setActive(item.go, true)
+		item.component:onDestroyView()
+		gohelper.destroy(item.go)
 	end
 
-	arg_5_0._tabItems = nil
+	self._tabItems = nil
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:addEventCb(SummonController.instance, SummonEvent.onSummonTabSet, arg_6_0._handleTabSet, arg_6_0)
-	arg_6_0:addEventCb(SummonController.instance, SummonEvent.guideScrollShowEquipPool, arg_6_0._guideScrollShowEquipPool, arg_6_0)
-	arg_6_0:addEventCb(SummonController.instance, SummonEvent.onSummonInfoGot, arg_6_0.refreshUI, arg_6_0)
-	arg_6_0:refreshUI()
-	arg_6_0:setOpenFlag()
+function SummonMainTabView:onOpen()
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonTabSet, self._handleTabSet, self)
+	self:addEventCb(SummonController.instance, SummonEvent.guideScrollShowEquipPool, self._guideScrollShowEquipPool, self)
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonInfoGot, self.refreshUI, self)
+	self:refreshUI()
+	self:setOpenFlag()
 	SummonController.instance:dispatchEvent(SummonEvent.onSummonTabSet)
 end
 
-function var_0_0._guideScrollShowEquipPool(arg_7_0)
-	arg_7_0._scrollcategory.verticalNormalizedPosition = 0
+function SummonMainTabView:_guideScrollShowEquipPool()
+	self._scrollcategory.verticalNormalizedPosition = 0
 end
 
-function var_0_0.onClose(arg_8_0)
-	arg_8_0:killTween()
+function SummonMainTabView:onClose()
+	self:killTween()
 	SummonMainModel.instance:releaseViewData()
 end
 
-function var_0_0.refreshUI(arg_9_0)
-	local var_9_0 = SummonMainCategoryListModel.instance:getList()
-	local var_9_1 = {}
-	local var_9_2 = arg_9_0:refreshTabGroupByType(var_9_0, SummonEnum.ResultType.Char, 1, var_9_1)
-	local var_9_3 = arg_9_0:refreshTabGroupByType(var_9_0, SummonEnum.ResultType.Equip, var_9_2, var_9_1)
+function SummonMainTabView:refreshUI()
+	local datas = SummonMainCategoryListModel.instance:getList()
+	local parseUISet = {}
+	local index = self:refreshTabGroupByType(datas, SummonEnum.ResultType.Char, 1, parseUISet)
 
-	ZProj.UGUIHelper.RebuildLayout(arg_9_0._scrollcategory.content.transform)
+	index = self:refreshTabGroupByType(datas, SummonEnum.ResultType.Equip, index, parseUISet)
 
-	for iter_9_0, iter_9_1 in pairs(arg_9_0._tabItems) do
-		if not var_9_1[iter_9_1] then
-			gohelper.setActive(iter_9_1.go, false)
-			iter_9_1.component:cleanData()
+	ZProj.UGUIHelper.RebuildLayout(self._scrollcategory.content.transform)
+
+	for _, item in pairs(self._tabItems) do
+		if not parseUISet[item] then
+			gohelper.setActive(item.go, false)
+			item.component:cleanData()
 		end
 	end
 end
 
-function var_0_0.refreshTabGroupByType(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4)
-	local var_10_0 = 0
-	local var_10_1 = arg_10_3
+function SummonMainTabView:refreshTabGroupByType(datas, resultType, startIndex, parseSet)
+	local totalHeight = 0
+	local index = startIndex
 
-	for iter_10_0, iter_10_1 in ipairs(arg_10_1) do
-		if SummonMainModel.getResultType(iter_10_1.originConf) == arg_10_2 then
-			local var_10_2 = arg_10_0:getOrCreateItem(var_10_1)
+	for i, data in ipairs(datas) do
+		if SummonMainModel.getResultType(data.originConf) == resultType then
+			local item = self:getOrCreateItem(index)
 
-			gohelper.setActive(var_10_2.go, true)
-			gohelper.setAsLastSibling(var_10_2.go)
-			var_10_2.component:onUpdateMO(iter_10_1)
+			gohelper.setActive(item.go, true)
+			gohelper.setAsLastSibling(item.go)
+			item.component:onUpdateMO(data)
 
-			arg_10_4[var_10_2] = true
-			var_10_1 = var_10_1 + 1
+			parseSet[item] = true
+			index = index + 1
 		end
 	end
 
-	return var_10_1
+	return index
 end
 
-function var_0_0.setOpenFlag(arg_11_0)
-	local var_11_0 = SummonMainModel.instance:getCurId()
+function SummonMainTabView:setOpenFlag()
+	local curId = SummonMainModel.instance:getCurId()
 
-	if var_11_0 and SummonMainModel.instance.flagModel then
-		SummonMainModel.instance.flagModel:cleanFlag(var_11_0)
+	if curId and SummonMainModel.instance.flagModel then
+		SummonMainModel.instance.flagModel:cleanFlag(curId)
 	end
 end
 
-function var_0_0.getOrCreateItem(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0._tabItems[arg_12_1]
+function SummonMainTabView:getOrCreateItem(index)
+	local item = self._tabItems[index]
 
-	if not var_12_0 then
-		var_12_0 = arg_12_0:getUserDataTb_()
-		var_12_0.go = gohelper.cloneInPlace(arg_12_0._gosummonmaincategoryitem, "tabitem_" .. tostring(arg_12_1))
-		var_12_0.rect = var_12_0.go.transform
-		var_12_0.component = MonoHelper.addNoUpdateLuaComOnceToGo(var_12_0.go, SummonMainCategoryItem)
-		var_12_0.component.viewGO = var_12_0.go
+	if not item then
+		item = self:getUserDataTb_()
+		item.go = gohelper.cloneInPlace(self._gosummonmaincategoryitem, "tabitem_" .. tostring(index))
+		item.rect = item.go.transform
+		item.component = MonoHelper.addNoUpdateLuaComOnceToGo(item.go, SummonMainCategoryItem)
+		item.component.viewGO = item.go
 
-		var_12_0.component:onInitView()
-		var_12_0.component:addEvents()
-		var_12_0.component:customAddEvent()
+		item.component:onInitView()
+		item.component:addEvents()
+		item.component:customAddEvent()
 
-		arg_12_0._tabItems[arg_12_1] = var_12_0
+		self._tabItems[index] = item
 	end
 
-	return var_12_0
+	return item
 end
 
-var_0_0.TweenTimeCategory = 0.1
+SummonMainTabView.TweenTimeCategory = 0.1
 
-function var_0_0._handleTabSet(arg_13_0, arg_13_1)
-	local var_13_0 = SummonMainModel.instance:getCurADPageIndex()
+function SummonMainTabView:_handleTabSet(forceNoAnim)
+	local tabIndex = SummonMainModel.instance:getCurADPageIndex()
 
-	if var_13_0 then
-		local var_13_1 = arg_13_0._tabIndex == nil
+	if tabIndex then
+		local isFirstTimeEnter = self._tabIndex == nil
 
-		arg_13_0._tabIndex = var_13_0
+		self._tabIndex = tabIndex
 
-		arg_13_0.viewContainer:dispatchEvent(ViewEvent.ToSwitchTab, 3, var_13_0)
-		arg_13_0:refreshUI()
-		arg_13_0:scrollToCurTab(var_13_1, arg_13_1)
+		self.viewContainer:dispatchEvent(ViewEvent.ToSwitchTab, 3, tabIndex)
+		self:refreshUI()
+		self:scrollToCurTab(isFirstTimeEnter, forceNoAnim)
 		logNormal(string.format("set summon pool to [%s]", SummonMainModel.instance:getCurId()))
 	end
 end
 
-function var_0_0.scrollToCurTab(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = SummonMainModel.instance:getCurPool()
-	local var_14_1
-	local var_14_2 = 0
+function SummonMainTabView:scrollToCurTab(isFirstTimeEnter, forceNoAnim)
+	local curPool = SummonMainModel.instance:getCurPool()
+	local curItem
+	local curIndex = 0
 
-	for iter_14_0, iter_14_1 in pairs(arg_14_0._tabItems) do
-		local var_14_3 = iter_14_1.component:getData()
+	for i, item in pairs(self._tabItems) do
+		local data = item.component:getData()
 
-		if var_14_3 and var_14_3.originConf.id == var_14_0.id then
-			var_14_1 = iter_14_1
-			var_14_2 = iter_14_0 - 1
+		if data and data.originConf.id == curPool.id then
+			curItem = item
+			curIndex = i - 1
 
 			break
 		end
 	end
 
-	if not var_14_1 then
+	if not curItem then
 		return
 	end
 
-	local var_14_4 = recthelper.getHeight(arg_14_0._scrollcategory.content.transform)
-	local var_14_5 = recthelper.getAnchorY(var_14_1.rect)
+	local contentHeight = recthelper.getHeight(self._scrollcategory.content.transform)
+	local itemAnchorY = recthelper.getAnchorY(curItem.rect)
 
-	if var_14_4 <= 0 then
+	if contentHeight <= 0 then
 		return
 	end
 
-	local var_14_6 = arg_14_0._scrollcategory.verticalNormalizedPosition
-	local var_14_7 = 1 - var_14_2 / (#arg_14_0._tabItems - 1)
+	local originNormPos = self._scrollcategory.verticalNormalizedPosition
+	local newNormPos = 1 - curIndex / (#self._tabItems - 1)
 
-	if arg_14_1 or arg_14_2 then
-		arg_14_0._scrollcategory.verticalNormalizedPosition = var_14_7
+	if isFirstTimeEnter or forceNoAnim then
+		self._scrollcategory.verticalNormalizedPosition = newNormPos
 	else
-		arg_14_0:killTween()
+		self:killTween()
 
-		arg_14_0._tweenIdCategory = ZProj.TweenHelper.DOTweenFloat(var_14_6, var_14_7, var_0_0.TweenTimeCategory, arg_14_0.onTweenCategory, arg_14_0.onTweenFinishCategory, arg_14_0)
+		self._tweenIdCategory = ZProj.TweenHelper.DOTweenFloat(originNormPos, newNormPos, SummonMainTabView.TweenTimeCategory, self.onTweenCategory, self.onTweenFinishCategory, self)
 	end
 end
 
-function var_0_0.onTweenCategory(arg_15_0, arg_15_1)
-	if not gohelper.isNil(arg_15_0._scrollcategory) then
-		arg_15_0._scrollcategory.verticalNormalizedPosition = arg_15_1
+function SummonMainTabView:onTweenCategory(value)
+	if not gohelper.isNil(self._scrollcategory) then
+		self._scrollcategory.verticalNormalizedPosition = value
 	end
 end
 
-function var_0_0.onTweenFinishCategory(arg_16_0)
-	arg_16_0:killTween()
+function SummonMainTabView:onTweenFinishCategory()
+	self:killTween()
 end
 
-function var_0_0.killTween(arg_17_0)
-	if arg_17_0._tweenIdCategory then
-		ZProj.TweenHelper.KillById(arg_17_0._tweenIdCategory)
+function SummonMainTabView:killTween()
+	if self._tweenIdCategory then
+		ZProj.TweenHelper.KillById(self._tweenIdCategory)
 
-		arg_17_0._tweenIdCategory = nil
+		self._tweenIdCategory = nil
 	end
 end
 
-return var_0_0
+return SummonMainTabView

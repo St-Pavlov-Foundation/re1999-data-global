@@ -1,978 +1,1000 @@
-﻿module("modules.logic.character.view.CharacterTipView", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterTipView.lua
 
-local var_0_0 = class("CharacterTipView", BaseView)
+module("modules.logic.character.view.CharacterTipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goattributetip = gohelper.findChild(arg_1_0.viewGO, "#go_attributetip")
-	arg_1_0._goattrassassinbg = gohelper.findChild(arg_1_0.viewGO, "#go_attributetip/skillbgassassin")
-	arg_1_0._btnbg = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_attributetip/scrollview/viewport/#btn_bg")
-	arg_1_0._goattributecontent = gohelper.findChild(arg_1_0.viewGO, "#go_attributetip/scrollview/viewport/content")
-	arg_1_0._godetailcontent = gohelper.findChild(arg_1_0.viewGO, "#go_attributetip/#go_detailContent")
-	arg_1_0._goattributecontentitem = gohelper.findChild(arg_1_0.viewGO, "#go_attributetip/#go_detailContent/detailscroll/Viewport/#go_attributeContent/#go_attributeItem")
-	arg_1_0._gopassiveskilltip = gohelper.findChild(arg_1_0.viewGO, "#go_passiveskilltip")
-	arg_1_0._goeffectdesc = gohelper.findChild(arg_1_0.viewGO, "#go_passiveskilltip/mask/root/scrollview/viewport/content/#go_effectdesc")
-	arg_1_0._goeffectdescitem = gohelper.findChild(arg_1_0.viewGO, "#go_passiveskilltip/mask/root/scrollview/viewport/content/#go_effectdesc/#go_effectdescitem")
-	arg_1_0._scrollview = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_passiveskilltip/mask/root/scrollview")
-	arg_1_0._gopassiveassassinbg = gohelper.findChild(arg_1_0.viewGO, "#go_passiveskilltip/mask/root/scrollview/skillbgassassin")
-	arg_1_0._gomask1 = gohelper.findChild(arg_1_0.viewGO, "#go_passiveskilltip/mask/root/scrollview/#go_mask1")
-	arg_1_0._simageshadow = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_passiveskilltip/mask/root/scrollview/#simage_shadow")
-	arg_1_0._btnclosepassivetip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_passiveskilltip/#btn_closepassivetip")
-	arg_1_0._goBuffContainer = gohelper.findChild(arg_1_0.viewGO, "#go_buffContainer")
-	arg_1_0._btnclosebuff = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_buffContainer/buff_bg")
-	arg_1_0._goBuffItem = gohelper.findChild(arg_1_0.viewGO, "#go_buffContainer/#go_buffitem")
-	arg_1_0._txtBuffName = gohelper.findChildText(arg_1_0.viewGO, "#go_buffContainer/#go_buffitem/title/txt_name")
-	arg_1_0._goBuffTag = gohelper.findChild(arg_1_0.viewGO, "#go_buffContainer/#go_buffitem/title/txt_name/go_tag")
-	arg_1_0._txtBuffTagName = gohelper.findChildText(arg_1_0.viewGO, "#go_buffContainer/#go_buffitem/title/txt_name/go_tag/bg/txt_tagname")
-	arg_1_0._txtBuffDesc = gohelper.findChildText(arg_1_0.viewGO, "#go_buffContainer/#go_buffitem/txt_desc")
+local CharacterTipView = class("CharacterTipView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CharacterTipView:onInitView()
+	self._goattributetip = gohelper.findChild(self.viewGO, "#go_attributetip")
+	self._goattrassassinbg = gohelper.findChild(self.viewGO, "#go_attributetip/skillbgassassin")
+	self._btnbg = gohelper.findChildButtonWithAudio(self.viewGO, "#go_attributetip/scrollview/viewport/#btn_bg")
+	self._goattributecontent = gohelper.findChild(self.viewGO, "#go_attributetip/scrollview/viewport/content")
+	self._godetailcontent = gohelper.findChild(self.viewGO, "#go_attributetip/#go_detailContent")
+	self._goattributecontentitem = gohelper.findChild(self.viewGO, "#go_attributetip/#go_detailContent/detailscroll/Viewport/#go_attributeContent/#go_attributeItem")
+	self._gopassiveskilltip = gohelper.findChild(self.viewGO, "#go_passiveskilltip")
+	self._goeffectdesc = gohelper.findChild(self.viewGO, "#go_passiveskilltip/mask/root/scrollview/viewport/content/#go_effectdesc")
+	self._goeffectdescitem = gohelper.findChild(self.viewGO, "#go_passiveskilltip/mask/root/scrollview/viewport/content/#go_effectdesc/#go_effectdescitem")
+	self._scrollview = gohelper.findChildScrollRect(self.viewGO, "#go_passiveskilltip/mask/root/scrollview")
+	self._gopassiveassassinbg = gohelper.findChild(self.viewGO, "#go_passiveskilltip/mask/root/scrollview/skillbgassassin")
+	self._gomask1 = gohelper.findChild(self.viewGO, "#go_passiveskilltip/mask/root/scrollview/#go_mask1")
+	self._simageshadow = gohelper.findChildSingleImage(self.viewGO, "#go_passiveskilltip/mask/root/scrollview/#simage_shadow")
+	self._btnclosepassivetip = gohelper.findChildButtonWithAudio(self.viewGO, "#go_passiveskilltip/#btn_closepassivetip")
+	self._goBuffContainer = gohelper.findChild(self.viewGO, "#go_buffContainer")
+	self._btnclosebuff = gohelper.findChildButtonWithAudio(self.viewGO, "#go_buffContainer/buff_bg")
+	self._goBuffItem = gohelper.findChild(self.viewGO, "#go_buffContainer/#go_buffitem")
+	self._txtBuffName = gohelper.findChildText(self.viewGO, "#go_buffContainer/#go_buffitem/title/txt_name")
+	self._goBuffTag = gohelper.findChild(self.viewGO, "#go_buffContainer/#go_buffitem/title/txt_name/go_tag")
+	self._txtBuffTagName = gohelper.findChildText(self.viewGO, "#go_buffContainer/#go_buffitem/title/txt_name/go_tag/bg/txt_tagname")
+	self._txtBuffDesc = gohelper.findChildText(self.viewGO, "#go_buffContainer/#go_buffitem/txt_desc")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnbg:AddClickListener(arg_2_0._btnbgOnClick, arg_2_0)
-	arg_2_0._btnclosebuff:AddClickListener(arg_2_0._btnclosebuffOnClick, arg_2_0)
-	arg_2_0._scrollview:AddOnValueChanged(arg_2_0._onDragCallHandler, arg_2_0)
-	arg_2_0._btnclosepassivetip:AddClickListener(arg_2_0._btnclosepassivetipOnClick, arg_2_0)
+function CharacterTipView:addEvents()
+	self._btnbg:AddClickListener(self._btnbgOnClick, self)
+	self._btnclosebuff:AddClickListener(self._btnclosebuffOnClick, self)
+	self._scrollview:AddOnValueChanged(self._onDragCallHandler, self)
+	self._btnclosepassivetip:AddClickListener(self._btnclosepassivetipOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnbg:RemoveClickListener()
-	arg_3_0._btnclosebuff:RemoveClickListener()
-	arg_3_0._scrollview:RemoveOnValueChanged()
-	arg_3_0._btnclosepassivetip:RemoveClickListener()
+function CharacterTipView:removeEvents()
+	self._btnbg:RemoveClickListener()
+	self._btnclosebuff:RemoveClickListener()
+	self._scrollview:RemoveOnValueChanged()
+	self._btnclosepassivetip:RemoveClickListener()
 end
 
-var_0_0.DetailOffset = 25
-var_0_0.DetailBottomPos = -133.7
-var_0_0.DetailClickMinPos = -148
-var_0_0.AttrColor = GameUtil.parseColor("#323c34")
+CharacterTipView.DetailOffset = 25
+CharacterTipView.DetailBottomPos = -133.7
+CharacterTipView.DetailClickMinPos = -148
+CharacterTipView.AttrColor = GameUtil.parseColor("#323c34")
 
-function var_0_0._btnbgOnClick(arg_4_0)
-	if not arg_4_0._isOpenAttrDesc then
+function CharacterTipView:_btnbgOnClick()
+	if not self._isOpenAttrDesc then
 		return
 	end
 
-	arg_4_0._isOpenAttrDesc = false
+	self._isOpenAttrDesc = false
 
-	gohelper.setActive(arg_4_0._godetailcontent, false)
+	gohelper.setActive(self._godetailcontent, false)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_ui_role_description)
 end
 
-function var_0_0._btnclosebuffOnClick(arg_5_0)
-	gohelper.setActive(arg_5_0._goBuffContainer, false)
+function CharacterTipView:_btnclosebuffOnClick()
+	gohelper.setActive(self._goBuffContainer, false)
 end
 
-function var_0_0._btnclosepassivetipOnClick(arg_6_0)
+function CharacterTipView:_btnclosepassivetipOnClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	arg_6_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._onDragCallHandler(arg_7_0)
-	gohelper.setActive(arg_7_0._gomask1, arg_7_0._couldScroll and not (gohelper.getRemindFourNumberFloat(arg_7_0._scrollview.verticalNormalizedPosition) <= 0))
+function CharacterTipView:_onDragCallHandler()
+	gohelper.setActive(self._gomask1, self._couldScroll and not (gohelper.getRemindFourNumberFloat(self._scrollview.verticalNormalizedPosition) <= 0))
 
-	arg_7_0._passiveskilltipmask.enabled = arg_7_0._couldScroll and gohelper.getRemindFourNumberFloat(arg_7_0._scrollview.verticalNormalizedPosition) < 1
+	self._passiveskilltipmask.enabled = self._couldScroll and gohelper.getRemindFourNumberFloat(self._scrollview.verticalNormalizedPosition) < 1
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0._isOpenAttrDesc = false
+function CharacterTipView:_editableInitView()
+	self._isOpenAttrDesc = false
 
-	gohelper.setActive(arg_8_0._goBuffContainer, false)
+	gohelper.setActive(self._goBuffContainer, false)
 
-	arg_8_0.gocontent = gohelper.findChild(arg_8_0._goattributetip, "scrollview/viewport/content")
-	arg_8_0.gotitleitem = gohelper.findChild(arg_8_0._goattributetip, "scrollview/viewport/content/titleitem")
-	arg_8_0.godescitem = gohelper.findChild(arg_8_0._goattributetip, "scrollview/viewport/content/descitem")
-	arg_8_0.goattrnormalitem = gohelper.findChild(arg_8_0._goattributetip, "scrollview/viewport/content/attrnormalitem")
-	arg_8_0.goattrnormalwithdescitem = gohelper.findChild(arg_8_0._goattributetip, "scrollview/viewport/content/attrnormalwithdescitem")
-	arg_8_0.goattrupperitem = gohelper.findChild(arg_8_0._goattributetip, "scrollview/viewport/content/attrupperitem")
-	arg_8_0._txtDetailItemName = gohelper.findChildText(arg_8_0._goattributecontentitem, "name")
-	arg_8_0._txtDetailItemIcon = gohelper.findChildImage(arg_8_0._goattributecontentitem, "name/icon")
-	arg_8_0._txtDetailItemDesc = gohelper.findChildText(arg_8_0._goattributecontentitem, "desc")
-	arg_8_0._passiveskilltipcontent = gohelper.findChild(arg_8_0._gopassiveskilltip, "mask/root/scrollview/viewport/content")
-	arg_8_0._passiveskilltipmask = gohelper.findChild(arg_8_0._gopassiveskilltip, "mask"):GetComponent(typeof(UnityEngine.UI.RectMask2D))
+	self.gocontent = gohelper.findChild(self._goattributetip, "scrollview/viewport/content")
+	self.gotitleitem = gohelper.findChild(self._goattributetip, "scrollview/viewport/content/titleitem")
+	self.godescitem = gohelper.findChild(self._goattributetip, "scrollview/viewport/content/descitem")
+	self.goattrnormalitem = gohelper.findChild(self._goattributetip, "scrollview/viewport/content/attrnormalitem")
+	self.goattrnormalwithdescitem = gohelper.findChild(self._goattributetip, "scrollview/viewport/content/attrnormalwithdescitem")
+	self.goattrupperitem = gohelper.findChild(self._goattributetip, "scrollview/viewport/content/attrupperitem")
+	self._txtDetailItemName = gohelper.findChildText(self._goattributecontentitem, "name")
+	self._txtDetailItemIcon = gohelper.findChildImage(self._goattributecontentitem, "name/icon")
+	self._txtDetailItemDesc = gohelper.findChildText(self._goattributecontentitem, "desc")
+	self._passiveskilltipcontent = gohelper.findChild(self._gopassiveskilltip, "mask/root/scrollview/viewport/content")
+	self._passiveskilltipmask = gohelper.findChild(self._gopassiveskilltip, "mask"):GetComponent(typeof(UnityEngine.UI.RectMask2D))
 
-	gohelper.setActive(arg_8_0.gotitleitem, false)
-	gohelper.setActive(arg_8_0.godescitem, false)
-	gohelper.setActive(arg_8_0.goattrnormalitem, false)
-	gohelper.setActive(arg_8_0.goattrnormalwithdescitem, false)
-	gohelper.setActive(arg_8_0.goattrupperitem, false)
+	gohelper.setActive(self.gotitleitem, false)
+	gohelper.setActive(self.godescitem, false)
+	gohelper.setActive(self.goattrnormalitem, false)
+	gohelper.setActive(self.goattrnormalwithdescitem, false)
+	gohelper.setActive(self.goattrupperitem, false)
 
-	arg_8_0.goTotalTitle = gohelper.clone(arg_8_0.gotitleitem, arg_8_0.gocontent, "totaltitle")
+	self.goTotalTitle = gohelper.clone(self.gotitleitem, self.gocontent, "totaltitle")
 
-	gohelper.setActive(arg_8_0.goTotalTitle, false)
-	arg_8_0:_setTitleText(arg_8_0.goTotalTitle, luaLang("character_tip_total_attribute"), "STATS")
+	gohelper.setActive(self.goTotalTitle, false)
+	self:_setTitleText(self.goTotalTitle, luaLang("character_tip_total_attribute"), "STATS")
 
-	arg_8_0.goDescTitle = gohelper.clone(arg_8_0.godescitem, arg_8_0.gocontent, "descitem")
+	self.goDescTitle = gohelper.clone(self.godescitem, self.gocontent, "descitem")
 
-	gohelper.setActive(arg_8_0.goDescTitle, false)
+	gohelper.setActive(self.goDescTitle, false)
 
-	arg_8_0._attnormalitems = {}
+	self._attnormalitems = {}
 
-	for iter_8_0 = 1, 4 do
-		local var_8_0 = arg_8_0:getUserDataTb_()
+	for i = 1, 4 do
+		local o = self:getUserDataTb_()
 
-		var_8_0.go = gohelper.clone(arg_8_0.goattrnormalitem, arg_8_0.gocontent, "attrnormal" .. 1)
+		o.go = gohelper.clone(self.goattrnormalitem, self.gocontent, "attrnormal" .. 1)
 
-		gohelper.setActive(var_8_0.go, true)
+		gohelper.setActive(o.go, true)
 
-		var_8_0.value = gohelper.findChildText(var_8_0.go, "value")
-		var_8_0.addValue = gohelper.findChildText(var_8_0.go, "addvalue")
-		var_8_0.name = gohelper.findChildText(var_8_0.go, "name")
-		var_8_0.icon = gohelper.findChildImage(var_8_0.go, "icon")
-		var_8_0.rate = gohelper.findChildImage(var_8_0.go, "rate")
-		var_8_0.detail = gohelper.findChild(var_8_0.go, "btndetail")
-		var_8_0.withDesc = false
-		arg_8_0._attnormalitems[iter_8_0] = var_8_0
+		o.value = gohelper.findChildText(o.go, "value")
+		o.addValue = gohelper.findChildText(o.go, "addvalue")
+		o.name = gohelper.findChildText(o.go, "name")
+		o.icon = gohelper.findChildImage(o.go, "icon")
+		o.rate = gohelper.findChildImage(o.go, "rate")
+		o.detail = gohelper.findChild(o.go, "btndetail")
+		o.withDesc = false
+		self._attnormalitems[i] = o
 	end
 
-	local var_8_1 = arg_8_0:getUserDataTb_()
+	local o = self:getUserDataTb_()
 
-	var_8_1.go = gohelper.clone(arg_8_0.goattrnormalwithdescitem, arg_8_0.gocontent, "attrnormal" .. #arg_8_0._attnormalitems + 1)
+	o.go = gohelper.clone(self.goattrnormalwithdescitem, self.gocontent, "attrnormal" .. #self._attnormalitems + 1)
 
-	gohelper.setActive(var_8_1.go, true)
+	gohelper.setActive(o.go, true)
 
-	var_8_1.value = gohelper.findChildText(var_8_1.go, "attr/value")
-	var_8_1.addValue = gohelper.findChildText(var_8_1.go, "attr/addvalue")
-	var_8_1.name = gohelper.findChildText(var_8_1.go, "attr/namelayout/name")
-	var_8_1.icon = gohelper.findChildImage(var_8_1.go, "attr/icon")
-	var_8_1.detail = gohelper.findChild(var_8_1.go, "attr/btndetail")
-	var_8_1.desc = gohelper.findChildText(var_8_1.go, "desc/#txt_desc")
-	var_8_1.withDesc = true
-	arg_8_0._attnormalitems[#arg_8_0._attnormalitems + 1] = var_8_1
-	arg_8_0._attrupperitems = {}
+	o.value = gohelper.findChildText(o.go, "attr/value")
+	o.addValue = gohelper.findChildText(o.go, "attr/addvalue")
+	o.name = gohelper.findChildText(o.go, "attr/namelayout/name")
+	o.icon = gohelper.findChildImage(o.go, "attr/icon")
+	o.detail = gohelper.findChild(o.go, "attr/btndetail")
+	o.desc = gohelper.findChildText(o.go, "desc/#txt_desc")
+	o.withDesc = true
+	self._attnormalitems[#self._attnormalitems + 1] = o
+	self._attrupperitems = {}
 
-	for iter_8_1 = 1, 12 do
-		arg_8_0:_getAttrUpperItem(iter_8_1)
+	for i = 1, 12 do
+		self:_getAttrUpperItem(i)
 	end
 
-	arg_8_0._passiveskillitems = {}
+	self._passiveskillitems = {}
 
-	for iter_8_2 = 1, 3 do
-		arg_8_0._passiveskillitems[iter_8_2] = arg_8_0:_findPassiveskillitems(iter_8_2)
+	for i = 1, 3 do
+		self._passiveskillitems[i] = self:_findPassiveskillitems(i)
 	end
 
-	arg_8_0._passiveskillitems[0] = arg_8_0:_findPassiveskillitems(4)
-	arg_8_0._txtpassivename = gohelper.findChildText(arg_8_0.viewGO, "#go_passiveskilltip/name/bg/#txt_passivename")
-	arg_8_0._detailClickItems = {}
-	arg_8_0._detailDescTab = arg_8_0:getUserDataTb_()
-	arg_8_0._skillEffectDescItems = arg_8_0:getUserDataTb_()
+	self._passiveskillitems[0] = self:_findPassiveskillitems(4)
+	self._txtpassivename = gohelper.findChildText(self.viewGO, "#go_passiveskilltip/name/bg/#txt_passivename")
+	self._detailClickItems = {}
+	self._detailDescTab = self:getUserDataTb_()
+	self._skillEffectDescItems = self:getUserDataTb_()
 
-	arg_8_0._simageshadow:LoadImage(ResUrl.getCharacterIcon("bg_shade"))
+	self._simageshadow:LoadImage(ResUrl.getCharacterIcon("bg_shade"))
 end
 
-function var_0_0._findPassiveskillitems(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0:getUserDataTb_()
+function CharacterTipView:_findPassiveskillitems(index)
+	local o = self:getUserDataTb_()
 
-	var_9_0.go = gohelper.findChild(arg_9_0._gopassiveskilltip, "mask/root/scrollview/viewport/content/talentstar" .. arg_9_1)
-	var_9_0.desc = gohelper.findChildTextMesh(var_9_0.go, "desctxt")
-	var_9_0.hyperLinkClick = SkillHelper.addHyperLinkClick(var_9_0.desc, arg_9_0._onHyperLinkClick, arg_9_0)
-	var_9_0.fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(var_9_0.desc.gameObject, FixTmpBreakLine)
-	var_9_0.on = gohelper.findChild(var_9_0.go, "#go_passiveskills/passiveskill/on")
-	var_9_0.unlocktxt = gohelper.findChildText(var_9_0.go, "#go_passiveskills/passiveskill/unlocktxt")
-	var_9_0.canvasgroup = gohelper.onceAddComponent(var_9_0.go, typeof(UnityEngine.CanvasGroup))
-	var_9_0.connectline = gohelper.findChild(var_9_0.go, "line")
+	o.go = gohelper.findChild(self._gopassiveskilltip, "mask/root/scrollview/viewport/content/talentstar" .. index)
+	o.desc = gohelper.findChildTextMesh(o.go, "desctxt")
+	o.hyperLinkClick = SkillHelper.addHyperLinkClick(o.desc, self._onHyperLinkClick, self)
+	o.fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(o.desc.gameObject, FixTmpBreakLine)
+	o.on = gohelper.findChild(o.go, "#go_passiveskills/passiveskill/on")
+	o.unlocktxt = gohelper.findChildText(o.go, "#go_passiveskills/passiveskill/unlocktxt")
+	o.canvasgroup = gohelper.onceAddComponent(o.go, typeof(UnityEngine.CanvasGroup))
+	o.connectline = gohelper.findChild(o.go, "line")
 
-	return var_9_0
+	return o
 end
 
-function var_0_0._getAttrUpperItem(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0._attrupperitems[arg_10_1]
+function CharacterTipView:_getAttrUpperItem(index)
+	local o = self._attrupperitems[index]
 
-	if not var_10_0 then
-		var_10_0 = arg_10_0:getUserDataTb_()
-		var_10_0.go = gohelper.clone(arg_10_0.goattrupperitem, arg_10_0.gocontent, "attrupper" .. arg_10_1)
+	if not o then
+		o = self:getUserDataTb_()
+		o.go = gohelper.clone(self.goattrupperitem, self.gocontent, "attrupper" .. index)
 
-		gohelper.setActive(var_10_0.go, true)
+		gohelper.setActive(o.go, true)
 
-		var_10_0.value = gohelper.findChildText(var_10_0.go, "value")
-		var_10_0.addValue = gohelper.findChildText(var_10_0.go, "addvalue")
-		var_10_0.name = gohelper.findChildText(var_10_0.go, "name")
-		var_10_0.icon = gohelper.findChildImage(var_10_0.go, "icon")
-		var_10_0.detail = gohelper.findChild(var_10_0.go, "btndetail")
-		arg_10_0._attrupperitems[arg_10_1] = var_10_0
+		o.value = gohelper.findChildText(o.go, "value")
+		o.addValue = gohelper.findChildText(o.go, "addvalue")
+		o.name = gohelper.findChildText(o.go, "name")
+		o.icon = gohelper.findChildImage(o.go, "icon")
+		o.detail = gohelper.findChild(o.go, "btndetail")
+		self._attrupperitems[index] = o
 	end
 
-	return var_10_0
+	return o
 end
 
-function var_0_0._setTitleText(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	local var_11_0 = gohelper.findChildText(arg_11_1, "attcn")
+function CharacterTipView:_setTitleText(go, cn, en)
+	local textCn = gohelper.findChildText(go, "attcn")
 
-	if var_11_0 then
-		var_11_0.text = arg_11_2
+	if textCn then
+		textCn.text = cn
 	end
 
-	local var_11_1 = gohelper.findChildText(arg_11_1, "atten")
+	local textEn = gohelper.findChildText(go, "atten")
 
-	if var_11_1 then
-		var_11_1.text = arg_11_3
+	if textEn then
+		textEn.text = en
 	end
 end
 
-function var_0_0.onUpdateParam(arg_12_0)
+function CharacterTipView:onUpdateParam()
 	return
 end
 
-function var_0_0.onDestroyView(arg_13_0)
-	arg_13_0._simageshadow:UnLoadImage()
+function CharacterTipView:onDestroyView()
+	self._simageshadow:UnLoadImage()
 end
 
-function var_0_0.onOpen(arg_14_0)
-	gohelper.setActive(arg_14_0._godetailcontent, false)
+function CharacterTipView:onOpen()
+	gohelper.setActive(self._godetailcontent, false)
 
-	local var_14_0 = arg_14_0.viewParam
+	local info = self.viewParam
 
-	arg_14_0.heroId = arg_14_0.viewParam.heroid
-	arg_14_0._level = arg_14_0.viewParam.level
-	arg_14_0._rank = arg_14_0.viewParam.rank
-	arg_14_0._passiveSkillLevel = arg_14_0.viewParam.passiveSkillLevel
-	arg_14_0._setEquipInfo = arg_14_0.viewParam.setEquipInfo
-	arg_14_0._talentCubeInfos = arg_14_0.viewParam.talentCubeInfos
-	arg_14_0._balanceHelper = arg_14_0.viewParam.balanceHelper or HeroGroupBalanceHelper
-	arg_14_0._hideAttrDetail = arg_14_0.viewParam.hideAttrDetail
+	self.heroId = self.viewParam.heroid
+	self._level = self.viewParam.level
+	self._rank = self.viewParam.rank
+	self._passiveSkillLevel = self.viewParam.passiveSkillLevel
+	self._setEquipInfo = self.viewParam.setEquipInfo
+	self._talentCubeInfos = self.viewParam.talentCubeInfos
+	self._balanceHelper = self.viewParam.balanceHelper or HeroGroupBalanceHelper
+	self._hideAttrDetail = self.viewParam.hideAttrDetail
 
-	gohelper.setActive(arg_14_0.goDescTitle, true)
-	gohelper.setActive(arg_14_0.goTotalTitle, true)
-	gohelper.setActive(arg_14_0._goattributetip, var_14_0.tag == "attribute")
-	gohelper.setActive(arg_14_0._gopassiveskilltip, var_14_0.tag == "passiveskill")
-	gohelper.setActive(arg_14_0._goattrassassinbg, var_14_0.showAssassinBg)
-	gohelper.setActive(arg_14_0._gopassiveassassinbg, var_14_0.showAssassinBg)
+	gohelper.setActive(self.goDescTitle, true)
+	gohelper.setActive(self.goTotalTitle, true)
+	gohelper.setActive(self._goattributetip, info.tag == "attribute")
+	gohelper.setActive(self._gopassiveskilltip, info.tag == "passiveskill")
+	gohelper.setActive(self._goattrassassinbg, info.showAssassinBg)
+	gohelper.setActive(self._gopassiveassassinbg, info.showAssassinBg)
 
-	var_14_0.showAttributeOption = var_14_0.showAttributeOption or CharacterEnum.showAttributeOption.ShowCurrent
+	info.showAttributeOption = info.showAttributeOption or CharacterEnum.showAttributeOption.ShowCurrent
 
-	if var_14_0.tag == "attribute" then
-		arg_14_0:_setAttribute(var_14_0.equips, var_14_0.showAttributeOption, var_14_0.anchorParams, var_14_0.tipPos)
-	elseif var_14_0.tag == "passiveskill" then
-		arg_14_0:_setPassiveSkill(var_14_0.heroid, var_14_0.showAttributeOption, var_14_0.anchorParams, var_14_0.tipPos)
+	if info.tag == "attribute" then
+		self:_setAttribute(info.equips, info.showAttributeOption, info.anchorParams, info.tipPos)
+	elseif info.tag == "passiveskill" then
+		self:_setPassiveSkill(info.heroid, info.showAttributeOption, info.anchorParams, info.tipPos)
 	end
 end
 
-function var_0_0._setAttribute(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4)
-	for iter_15_0 = 7, 11 do
-		gohelper.setActive(arg_15_0._attrupperitems[iter_15_0].go, false)
+function CharacterTipView:_setAttribute(equips, showAttributeOption, anchorParams, tipPos)
+	for i = 7, 11 do
+		gohelper.setActive(self._attrupperitems[i].go, false)
 	end
 
-	arg_15_0:refreshBaseAttrItem(arg_15_1, arg_15_2)
-	arg_15_0:refreshUpAttrItem(arg_15_1, arg_15_2)
-	arg_15_0:_setTipPos(arg_15_0._goattributetip.transform, arg_15_4, arg_15_3)
+	self:refreshBaseAttrItem(equips, showAttributeOption)
+	self:refreshUpAttrItem(equips, showAttributeOption)
+	self:_setTipPos(self._goattributetip.transform, tipPos, anchorParams)
 end
 
-function var_0_0.refreshBaseAttrItem(arg_16_0, arg_16_1, arg_16_2)
-	local var_16_0 = arg_16_0:getBaseAttrValueList(arg_16_2)
-	local var_16_1 = arg_16_0:getEquipAddBaseValues(arg_16_1, var_16_0)
-	local var_16_2 = arg_16_0:getTalentValues(arg_16_2)
-	local var_16_3 = arg_16_0.viewParam.heroMo or HeroModel.instance:getByHeroId(arg_16_0.heroId)
-	local var_16_4 = var_16_3 and var_16_3.destinyStoneMo
-	local var_16_5 = var_16_4 and var_16_4:getAddAttrValues()
+function CharacterTipView:refreshBaseAttrItem(equips, showAttributeOption)
+	local baseAttrDict = self:getBaseAttrValueList(showAttributeOption)
+	local equipAddValues = self:getEquipAddBaseValues(equips, baseAttrDict)
+	local talentAddValues = self:getTalentValues(showAttributeOption)
+	local heroMo = self.viewParam.heroMo or HeroModel.instance:getByHeroId(self.heroId)
+	local destinyStoneMo = heroMo and heroMo.destinyStoneMo
+	local destinyStoneValues = destinyStoneMo and destinyStoneMo:getAddAttrValues()
 
-	for iter_16_0, iter_16_1 in ipairs(CharacterEnum.BaseAttrIdList) do
-		local var_16_6 = HeroConfig.instance:getHeroAttributeCO(iter_16_1)
-		local var_16_7 = var_16_4 and var_16_4:getAddValueByAttrId(var_16_5, iter_16_1, var_16_3) or 0
-		local var_16_8 = var_16_1[iter_16_1] + (var_16_2[iter_16_1] and var_16_2[iter_16_1].value or 0) + var_16_7
+	for i, attrId in ipairs(CharacterEnum.BaseAttrIdList) do
+		local co = HeroConfig.instance:getHeroAttributeCO(attrId)
+		local destinyStoneAddValue = destinyStoneMo and destinyStoneMo:getAddValueByAttrId(destinyStoneValues, attrId, heroMo) or 0
+		local addValue = equipAddValues[attrId] + (talentAddValues[attrId] and talentAddValues[attrId].value or 0) + destinyStoneAddValue
 
-		arg_16_0._attnormalitems[iter_16_0].value.text = var_16_0[iter_16_1]
-		arg_16_0._attnormalitems[iter_16_0].addValue.text = var_16_8 == 0 and "" or "+" .. var_16_8
-		arg_16_0._attnormalitems[iter_16_0].name.text = var_16_6.name
+		self._attnormalitems[i].value.text = baseAttrDict[attrId]
+		self._attnormalitems[i].addValue.text = addValue == 0 and "" or "+" .. addValue
+		self._attnormalitems[i].name.text = co.name
 
-		CharacterController.instance:SetAttriIcon(arg_16_0._attnormalitems[iter_16_0].icon, iter_16_1, GameUtil.parseColor("#323c34"))
+		CharacterController.instance:SetAttriIcon(self._attnormalitems[i].icon, attrId, GameUtil.parseColor("#323c34"))
 
-		if var_16_6.isShowTips == 1 and not arg_16_0._hideAttrDetail then
-			local var_16_9 = {
-				attributeId = var_16_6.id,
-				icon = iter_16_1,
-				go = arg_16_0._attnormalitems[iter_16_0].go
+		if co.isShowTips == 1 and not self._hideAttrDetail then
+			local param = {
+				attributeId = co.id,
+				icon = attrId,
+				go = self._attnormalitems[i].go
 			}
-			local var_16_10 = gohelper.getClick(arg_16_0._attnormalitems[iter_16_0].detail)
+			local click = gohelper.getClick(self._attnormalitems[i].detail)
 
-			var_16_10:AddClickListener(arg_16_0.showDetail, arg_16_0, var_16_9)
-			table.insert(arg_16_0._detailClickItems, var_16_10)
-			gohelper.setActive(arg_16_0._attnormalitems[iter_16_0].detail, true)
+			click:AddClickListener(self.showDetail, self, param)
+			table.insert(self._detailClickItems, click)
+			gohelper.setActive(self._attnormalitems[i].detail, true)
 		else
-			gohelper.setActive(arg_16_0._attnormalitems[iter_16_0].detail, false)
+			gohelper.setActive(self._attnormalitems[i].detail, false)
 		end
 
-		if arg_16_0._attnormalitems[iter_16_0].withDesc then
-			local var_16_11, var_16_12 = arg_16_0:calculateTechnic(var_16_0[CharacterEnum.AttrId.Technic], arg_16_2)
-			local var_16_13 = CommonConfig.instance:getConstStr(ConstEnum.CharacterTechnicDesc)
-			local var_16_14 = string.gsub(var_16_13, "▩1%%s", var_16_11)
-			local var_16_15 = string.gsub(var_16_14, "▩2%%s", var_16_12)
+		if self._attnormalitems[i].withDesc then
+			local technicAddCri, technicAddCriDmg = self:calculateTechnic(baseAttrDict[CharacterEnum.AttrId.Technic], showAttributeOption)
+			local technicDesc = CommonConfig.instance:getConstStr(ConstEnum.CharacterTechnicDesc)
 
-			arg_16_0._attnormalitems[iter_16_0].desc.text = var_16_15
+			technicDesc = string.gsub(technicDesc, "▩1%%s", technicAddCri)
+			technicDesc = string.gsub(technicDesc, "▩2%%s", technicAddCriDmg)
+			self._attnormalitems[i].desc.text = technicDesc
 		end
 	end
 end
 
-function var_0_0.refreshUpAttrItem(arg_17_0, arg_17_1, arg_17_2)
-	local var_17_0 = arg_17_0:getBaseAttrValueList(arg_17_2)
-	local var_17_1 = arg_17_0:_getTotalUpAttributes(arg_17_2)
-	local var_17_2 = arg_17_0:getEquipBreakAddAttrValues(arg_17_1)
-	local var_17_3 = arg_17_0:getTalentValues(arg_17_2)
-	local var_17_4 = arg_17_0.viewParam.heroMo or HeroModel.instance:getByHeroId(arg_17_0.heroId)
-	local var_17_5 = var_17_4 and var_17_4.destinyStoneMo
-	local var_17_6 = var_17_5 and var_17_5:getAddAttrValues()
-	local var_17_7, var_17_8 = arg_17_0:calculateTechnic(var_17_0[CharacterEnum.AttrId.Technic], arg_17_2)
-	local var_17_9 = 1
+function CharacterTipView:refreshUpAttrItem(equips, showAttributeOption)
+	local baseAttrDict = self:getBaseAttrValueList(showAttributeOption)
+	local upAttrValueDict = self:_getTotalUpAttributes(showAttributeOption)
+	local equipAddValues = self:getEquipBreakAddAttrValues(equips)
+	local talentAddValues = self:getTalentValues(showAttributeOption)
+	local heroMo = self.viewParam.heroMo or HeroModel.instance:getByHeroId(self.heroId)
+	local destinyStoneMo = heroMo and heroMo.destinyStoneMo
+	local destinyStoneValues = destinyStoneMo and destinyStoneMo:getAddAttrValues()
+	local technicAddCri, technicAddCriDmg = self:calculateTechnic(baseAttrDict[CharacterEnum.AttrId.Technic], showAttributeOption)
+	local index = 1
 
-	for iter_17_0, iter_17_1 in ipairs(CharacterEnum.UpAttrIdList) do
-		gohelper.setActive(arg_17_0._attrupperitems[iter_17_0].go, true)
+	for i, attrId in ipairs(CharacterEnum.UpAttrIdList) do
+		gohelper.setActive(self._attrupperitems[i].go, true)
 
-		local var_17_10 = HeroConfig.instance:getHeroAttributeCO(iter_17_1)
-		local var_17_11 = var_17_5 and var_17_5:getAddValueByAttrId(var_17_6, iter_17_1, var_17_4) or 0
-		local var_17_12 = var_17_2[iter_17_1] + (var_17_3[iter_17_1] and var_17_3[iter_17_1].value or 0) + var_17_11
-		local var_17_13 = (var_17_1[iter_17_1] or 0) / 10
+		local attrCo = HeroConfig.instance:getHeroAttributeCO(attrId)
+		local destinyStoneAddValue = destinyStoneMo and destinyStoneMo:getAddValueByAttrId(destinyStoneValues, attrId, heroMo) or 0
+		local addValue = equipAddValues[attrId] + (talentAddValues[attrId] and talentAddValues[attrId].value or 0) + destinyStoneAddValue
+		local realPercent = (upAttrValueDict[attrId] or 0) / 10
 
-		if iter_17_1 == CharacterEnum.AttrId.Cri then
-			var_17_13 = var_17_13 + var_17_7
+		if attrId == CharacterEnum.AttrId.Cri then
+			realPercent = realPercent + technicAddCri
 		end
 
-		if iter_17_1 == CharacterEnum.AttrId.CriDmg then
-			var_17_13 = var_17_13 + var_17_8
+		if attrId == CharacterEnum.AttrId.CriDmg then
+			realPercent = realPercent + technicAddCriDmg
 		end
 
-		local var_17_14 = tostring(GameUtil.noMoreThanOneDecimalPlace(var_17_13)) .. "%"
+		realPercent = tostring(GameUtil.noMoreThanOneDecimalPlace(realPercent)) .. "%"
+		self._attrupperitems[i].value.text = realPercent
+		self._attrupperitems[i].addValue.text = addValue == 0 and "" or "+" .. tostring(GameUtil.noMoreThanOneDecimalPlace(addValue)) .. "%"
+		self._attrupperitems[i].name.text = attrCo.name
 
-		arg_17_0._attrupperitems[iter_17_0].value.text = var_17_14
-		arg_17_0._attrupperitems[iter_17_0].addValue.text = var_17_12 == 0 and "" or "+" .. tostring(GameUtil.noMoreThanOneDecimalPlace(var_17_12)) .. "%"
-		arg_17_0._attrupperitems[iter_17_0].name.text = var_17_10.name
+		CharacterController.instance:SetAttriIcon(self._attrupperitems[i].icon, attrId, CharacterTipView.AttrColor)
 
-		CharacterController.instance:SetAttriIcon(arg_17_0._attrupperitems[iter_17_0].icon, iter_17_1, var_0_0.AttrColor)
-
-		if var_17_10.isShowTips == 1 and not arg_17_0._hideAttrDetail then
-			local var_17_15 = {
-				attributeId = var_17_10.id,
-				icon = iter_17_1,
-				go = arg_17_0._attrupperitems[iter_17_0].go
+		if attrCo.isShowTips == 1 and not self._hideAttrDetail then
+			local param = {
+				attributeId = attrCo.id,
+				icon = attrId,
+				go = self._attrupperitems[i].go
 			}
-			local var_17_16 = gohelper.getClick(arg_17_0._attrupperitems[iter_17_0].detail)
+			local click = gohelper.getClick(self._attrupperitems[i].detail)
 
-			var_17_16:AddClickListener(arg_17_0.showDetail, arg_17_0, var_17_15)
-			table.insert(arg_17_0._detailClickItems, var_17_16)
-			gohelper.setActive(arg_17_0._attrupperitems[iter_17_0].detail, true)
+			click:AddClickListener(self.showDetail, self, param)
+			table.insert(self._detailClickItems, click)
+			gohelper.setActive(self._attrupperitems[i].detail, true)
 		else
-			gohelper.setActive(arg_17_0._attrupperitems[iter_17_0].detail, false)
+			gohelper.setActive(self._attrupperitems[i].detail, false)
 		end
 
-		var_17_9 = var_17_9 + 1
+		index = index + 1
 	end
 
-	for iter_17_2, iter_17_3 in ipairs(CharacterDestinyEnum.DestinyUpSpecialAttr) do
-		local var_17_17 = var_17_5 and var_17_5:getAddValueByAttrId(var_17_6, iter_17_3, var_17_4) or 0
+	for i, attrId in ipairs(CharacterDestinyEnum.DestinyUpSpecialAttr) do
+		local destinyStoneAddValue = destinyStoneMo and destinyStoneMo:getAddValueByAttrId(destinyStoneValues, attrId, heroMo) or 0
 
-		if var_17_17 ~= 0 then
-			local var_17_18 = arg_17_0:_getAttrUpperItem(var_17_9)
+		if destinyStoneAddValue ~= 0 then
+			local item = self:_getAttrUpperItem(index)
 
-			gohelper.setActive(var_17_18.go, true)
+			gohelper.setActive(item.go, true)
 
-			local var_17_19 = HeroConfig.instance:getHeroAttributeCO(iter_17_3)
+			local attrCo = HeroConfig.instance:getHeroAttributeCO(attrId)
 
-			var_17_18.value.text = 0
+			item.value.text = 0
 
-			local var_17_20 = "+" .. tostring(GameUtil.noMoreThanOneDecimalPlace(var_17_17)) .. "%"
+			local addValue = "+" .. tostring(GameUtil.noMoreThanOneDecimalPlace(destinyStoneAddValue)) .. "%"
 
-			var_17_18.addValue.text = var_17_17 == 0 and "" or var_17_20
-			var_17_18.name.text = var_17_19.name
+			item.addValue.text = destinyStoneAddValue == 0 and "" or addValue
+			item.name.text = attrCo.name
 
-			CharacterController.instance:SetAttriIcon(var_17_18.icon, iter_17_3, var_0_0.AttrColor)
+			CharacterController.instance:SetAttriIcon(item.icon, attrId, CharacterTipView.AttrColor)
 
-			if var_17_19.isShowTips == 1 then
-				local var_17_21 = {
-					attributeId = var_17_19.id,
-					icon = iter_17_3,
-					go = var_17_18.go
+			if attrCo.isShowTips == 1 then
+				local param = {
+					attributeId = attrCo.id,
+					icon = attrId,
+					go = item.go
 				}
-				local var_17_22 = gohelper.getClick(var_17_18.detail)
+				local click = gohelper.getClick(item.detail)
 
-				var_17_22:AddClickListener(arg_17_0.showDetail, arg_17_0, var_17_21)
-				table.insert(arg_17_0._detailClickItems, var_17_22)
-				gohelper.setActive(var_17_18.detail, true)
+				click:AddClickListener(self.showDetail, self, param)
+				table.insert(self._detailClickItems, click)
+				gohelper.setActive(item.detail, true)
 			else
-				gohelper.setActive(var_17_18.detail, false)
+				gohelper.setActive(item.detail, false)
 			end
 
-			var_17_9 = var_17_9 + 1
+			index = index + 1
 		end
 	end
 end
 
-function var_0_0.getBaseAttrValueList(arg_18_0, arg_18_1)
-	local var_18_0 = {}
+function CharacterTipView:getBaseAttrValueList(showAttributeOption)
+	local result = {}
 
-	if arg_18_1 == CharacterEnum.showAttributeOption.ShowMax then
-		var_18_0 = arg_18_0:_getMaxNormalAtrributes()
-	elseif arg_18_1 == CharacterEnum.showAttributeOption.ShowMin then
-		var_18_0 = arg_18_0:_getMinNormalAttribute()
+	if showAttributeOption == CharacterEnum.showAttributeOption.ShowMax then
+		result = self:_getMaxNormalAtrributes()
+	elseif showAttributeOption == CharacterEnum.showAttributeOption.ShowMin then
+		result = self:_getMinNormalAttribute()
 	else
-		local var_18_1 = arg_18_0.viewParam.heroMo or HeroModel.instance:getByHeroId(arg_18_0.heroId)
-		local var_18_2 = arg_18_0._level
-		local var_18_3 = arg_18_0._rank
+		local heroMo = self.viewParam.heroMo or HeroModel.instance:getByHeroId(self.heroId)
+		local level, rank = self._level, self._rank
 
-		if arg_18_0.viewParam.isBalance then
-			var_18_2 = arg_18_0._balanceHelper.getHeroBalanceLv(var_18_1.heroId)
-			_, var_18_3 = HeroConfig.instance:getShowLevel(var_18_2)
+		if self.viewParam.isBalance then
+			level = self._balanceHelper.getHeroBalanceLv(heroMo.heroId)
+			_, rank = HeroConfig.instance:getShowLevel(level)
 		end
 
-		var_18_0 = var_18_1:getHeroBaseAttrDict(var_18_2, var_18_3)
+		result = heroMo:getHeroBaseAttrDict(level, rank)
 	end
 
-	return var_18_0
+	return result
 end
 
-function var_0_0.getEquipAddBaseValues(arg_19_0, arg_19_1, arg_19_2)
-	local var_19_0 = {}
-	local var_19_1 = {}
+function CharacterTipView:getEquipAddBaseValues(equips, baseAttrDict)
+	local equipAddValues = {}
+	local equipBreakAddAttrDict = {}
 
-	for iter_19_0, iter_19_1 in ipairs(CharacterEnum.BaseAttrIdList) do
-		var_19_0[iter_19_1] = 0
-		var_19_1[iter_19_1] = 0
+	for _, attrId in ipairs(CharacterEnum.BaseAttrIdList) do
+		equipAddValues[attrId] = 0
+		equipBreakAddAttrDict[attrId] = 0
 	end
 
-	local var_19_2
+	local equipLv
 
-	if arg_19_0.viewParam.isBalance then
-		_, _, var_19_2 = arg_19_0._balanceHelper.getBalanceLv()
+	if self.viewParam.isBalance then
+		_, _, equipLv = self._balanceHelper.getBalanceLv()
 	end
 
-	local var_19_3 = arg_19_0.viewParam.heroMo or HeroModel.instance:getByHeroId(arg_19_0.heroId)
+	local heroMo = self.viewParam.heroMo or HeroModel.instance:getByHeroId(self.heroId)
 
-	if arg_19_1 then
-		if arg_19_0.viewParam.trialEquipMo then
-			var_19_3:_calcEquipAttr(arg_19_0.viewParam.trialEquipMo, var_19_0, var_19_1)
+	if equips then
+		if self.viewParam.trialEquipMo then
+			heroMo:_calcEquipAttr(self.viewParam.trialEquipMo, equipAddValues, equipBreakAddAttrDict)
 		end
 
-		for iter_19_2 = 1, #arg_19_1 do
-			local var_19_4 = EquipModel.instance:getEquip(arg_19_1[iter_19_2])
+		for i = 1, #equips do
+			local equipMo = EquipModel.instance:getEquip(equips[i])
 
-			var_19_4 = var_19_4 and arg_19_0:_modifyEquipInfo(var_19_4)
+			equipMo = equipMo and self:_modifyEquipInfo(equipMo)
 
-			var_19_3:_calcEquipAttr(var_19_4, var_19_0, var_19_1, var_19_2)
+			heroMo:_calcEquipAttr(equipMo, equipAddValues, equipBreakAddAttrDict, equipLv)
 		end
 	end
 
-	for iter_19_3, iter_19_4 in ipairs(CharacterEnum.BaseAttrIdList) do
-		var_19_0[iter_19_4] = var_19_0[iter_19_4] + math.floor(var_19_1[iter_19_4] / 1000 * arg_19_2[iter_19_4])
+	for _, attrId in ipairs(CharacterEnum.BaseAttrIdList) do
+		equipAddValues[attrId] = equipAddValues[attrId] + math.floor(equipBreakAddAttrDict[attrId] / 1000 * baseAttrDict[attrId])
 	end
 
-	return var_19_0
+	return equipAddValues
 end
 
-function var_0_0._modifyEquipInfo(arg_20_0, arg_20_1)
-	if arg_20_0._setEquipInfo then
-		local var_20_0 = arg_20_0._setEquipInfo[1]
-		local var_20_1 = arg_20_0._setEquipInfo[2]
-		local var_20_2 = arg_20_0._setEquipInfo[3]
+function CharacterTipView:_modifyEquipInfo(equipMO)
+	if self._setEquipInfo then
+		local callback = self._setEquipInfo[1]
+		local callbackTarget = self._setEquipInfo[2]
+		local param = self._setEquipInfo[3]
 
-		if var_20_2 and var_20_2.isCachot then
-			return var_20_0(var_20_1, {
-				seatLevel = var_20_2.seatLevel,
-				equipMO = arg_20_1
+		if param and param.isCachot then
+			return callback(callbackTarget, {
+				seatLevel = param.seatLevel,
+				equipMO = equipMO
 			})
 		end
 	end
 
-	return arg_20_1
+	return equipMO
 end
 
-function var_0_0.getTalentValues(arg_21_0, arg_21_1)
-	local var_21_0 = {}
+function CharacterTipView:getTalentValues(showAttributeOption)
+	local result = {}
 
-	if arg_21_1 == CharacterEnum.showAttributeOption.ShowCurrent then
-		local var_21_1 = arg_21_0.viewParam.heroMo or HeroModel.instance:getByHeroId(arg_21_0.heroId)
+	if showAttributeOption == CharacterEnum.showAttributeOption.ShowCurrent then
+		local heroMo = self.viewParam.heroMo or HeroModel.instance:getByHeroId(self.heroId)
 
-		if arg_21_0.viewParam.isBalance then
-			local var_21_2, var_21_3, var_21_4, var_21_5 = arg_21_0._balanceHelper.getHeroBalanceInfo(var_21_1.heroId)
+		if self.viewParam.isBalance then
+			local balanceLv, rank, fixTalent, talentCubeInfos = self._balanceHelper.getHeroBalanceInfo(heroMo.heroId)
 
-			var_21_0 = var_21_1:getTalentGain(var_21_2, var_21_3, nil, var_21_5)
+			result = heroMo:getTalentGain(balanceLv, rank, nil, talentCubeInfos)
 		else
-			var_21_0 = var_21_1:getTalentGain(arg_21_0._level or var_21_1.level, arg_21_0._rank, nil, arg_21_0._talentCubeInfos)
+			result = heroMo:getTalentGain(self._level or heroMo.level, self._rank, nil, self._talentCubeInfos)
 		end
 
-		var_21_0 = HeroConfig.instance:talentGainTab2IDTab(var_21_0)
+		result = HeroConfig.instance:talentGainTab2IDTab(result)
 
-		for iter_21_0, iter_21_1 in pairs(var_21_0) do
-			if HeroConfig.instance:getHeroAttributeCO(iter_21_0).type ~= 1 then
-				var_21_0[iter_21_0].value = var_21_0[iter_21_0].value / 10
+		for attrId, value in pairs(result) do
+			local config = HeroConfig.instance:getHeroAttributeCO(attrId)
+
+			if config.type ~= 1 then
+				result[attrId].value = result[attrId].value / 10
 			else
-				var_21_0[iter_21_0].value = math.floor(var_21_0[iter_21_0].value)
+				result[attrId].value = math.floor(result[attrId].value)
 			end
 		end
 	end
 
-	return var_21_0
+	return result
 end
 
-function var_0_0.getDestinyStoneAddValues(arg_22_0, arg_22_1)
-	local var_22_0 = arg_22_0.viewParam.heroMo or HeroModel.instance:getByHeroId(arg_22_0.heroId)
+function CharacterTipView:getDestinyStoneAddValues(showAttributeOption)
+	local heroMo = self.viewParam.heroMo or HeroModel.instance:getByHeroId(self.heroId)
 
-	if var_22_0 then
-		local var_22_1 = var_22_0.destinyStoneMo
+	if heroMo then
+		local destinyStoneMo = heroMo.destinyStoneMo
 
-		if var_22_1 then
-			return var_22_1:getAddAttrValues()
+		if destinyStoneMo then
+			return destinyStoneMo:getAddAttrValues()
 		end
 	end
 end
 
-function var_0_0.getEquipBreakAddAttrValues(arg_23_0, arg_23_1)
-	local var_23_0 = {}
+function CharacterTipView:getEquipBreakAddAttrValues(equips)
+	local upAddValues = {}
 
-	for iter_23_0, iter_23_1 in ipairs(CharacterEnum.BaseAttrIdList) do
-		var_23_0[iter_23_1] = 0
+	for _, attrId in ipairs(CharacterEnum.BaseAttrIdList) do
+		upAddValues[attrId] = 0
 	end
 
-	for iter_23_2, iter_23_3 in ipairs(CharacterEnum.UpAttrIdList) do
-		var_23_0[iter_23_3] = 0
+	for _, attrId in ipairs(CharacterEnum.UpAttrIdList) do
+		upAddValues[attrId] = 0
 	end
 
-	if arg_23_1 and arg_23_0.viewParam.heroMo and arg_23_0.viewParam.trialEquipMo then
-		local var_23_1 = arg_23_0.viewParam.trialEquipMo
-		local var_23_2, var_23_3 = EquipConfig.instance:getEquipCurrentBreakLvAttrEffect(var_23_1.config, var_23_1.breakLv)
+	if equips and self.viewParam.heroMo and self.viewParam.trialEquipMo then
+		local equipMo = self.viewParam.trialEquipMo
+		local attrId, value = EquipConfig.instance:getEquipCurrentBreakLvAttrEffect(equipMo.config, equipMo.breakLv)
 
-		if var_23_2 then
-			var_23_0[var_23_2] = var_23_0[var_23_2] + var_23_3
+		if attrId then
+			upAddValues[attrId] = upAddValues[attrId] + value
 		end
 	end
 
-	if arg_23_1 and #arg_23_1 > 0 then
-		for iter_23_4, iter_23_5 in ipairs(arg_23_1) do
-			local var_23_4 = EquipModel.instance:getEquip(iter_23_5)
+	if equips and #equips > 0 then
+		for _, equipUid in ipairs(equips) do
+			local equipMo = EquipModel.instance:getEquip(equipUid)
 
-			if var_23_4 then
-				local var_23_5 = arg_23_0:_modifyEquipInfo(var_23_4)
-				local var_23_6, var_23_7 = EquipConfig.instance:getEquipCurrentBreakLvAttrEffect(var_23_5.config, var_23_5.breakLv)
+			if equipMo then
+				equipMo = self:_modifyEquipInfo(equipMo)
 
-				if var_23_6 then
-					var_23_0[var_23_6] = var_23_0[var_23_6] + var_23_7
+				local attrId, value = EquipConfig.instance:getEquipCurrentBreakLvAttrEffect(equipMo.config, equipMo.breakLv)
+
+				if attrId then
+					upAddValues[attrId] = upAddValues[attrId] + value
 				end
 			end
 		end
 	end
 
-	for iter_23_6, iter_23_7 in pairs(var_23_0) do
-		var_23_0[iter_23_6] = iter_23_7 / 10
+	for attrId, value in pairs(upAddValues) do
+		upAddValues[attrId] = value / 10
 	end
 
-	return var_23_0
+	return upAddValues
 end
 
-function var_0_0.calculateTechnic(arg_24_0, arg_24_1, arg_24_2)
-	local var_24_0
-	local var_24_1
-	local var_24_2
+function CharacterTipView:calculateTechnic(technicValue, showAttributeOption)
+	local technicAddCri, technicAddCriDmg, level
 
-	if arg_24_2 == CharacterEnum.showAttributeOption.ShowMax then
-		var_24_2 = CharacterModel.instance:getMaxLevel(arg_24_0.viewParam.heroid)
-	elseif arg_24_2 == CharacterEnum.showAttributeOption.ShowMin then
-		var_24_2 = 1
+	if showAttributeOption == CharacterEnum.showAttributeOption.ShowMax then
+		level = CharacterModel.instance:getMaxLevel(self.viewParam.heroid)
+	elseif showAttributeOption == CharacterEnum.showAttributeOption.ShowMin then
+		level = 1
 	else
-		local var_24_3 = arg_24_0.viewParam.heroMo or HeroModel.instance:getByHeroId(arg_24_0.viewParam.heroid)
+		local heroMo = self.viewParam.heroMo or HeroModel.instance:getByHeroId(self.viewParam.heroid)
 
-		var_24_2 = arg_24_0._level or var_24_3.level
+		level = self._level or heroMo.level
 
-		if arg_24_0.viewParam.isBalance then
-			var_24_2 = arg_24_0._balanceHelper.getHeroBalanceLv(var_24_3.heroId)
+		if self.viewParam.isBalance then
+			level = self._balanceHelper.getHeroBalanceLv(heroMo.heroId)
 		end
 	end
 
-	local var_24_4 = tonumber(lua_fight_const.configDict[11].value)
-	local var_24_5 = tonumber(lua_fight_const.configDict[12].value)
-	local var_24_6 = (tonumber(lua_fight_const.configDict[13].value) + var_24_2 * tonumber(lua_fight_const.configDict[14].value) * 10) * 10
-	local var_24_7 = string.format("%.1f", arg_24_1 * var_24_4 / var_24_6)
-	local var_24_8 = string.format("%.1f", arg_24_1 * var_24_5 / var_24_6)
+	local critChanceNum = tonumber(lua_fight_const.configDict[11].value)
+	local critDmgChanceNum = tonumber(lua_fight_const.configDict[12].value)
+	local fitConstNum = tonumber(lua_fight_const.configDict[13].value)
+	local targetLevelNum = tonumber(lua_fight_const.configDict[14].value)
+	local tempVal = fitConstNum + level * targetLevelNum * 10
 
-	return var_24_7, var_24_8
+	tempVal = tempVal * 10
+	technicAddCri = string.format("%.1f", technicValue * critChanceNum / tempVal)
+	technicAddCriDmg = string.format("%.1f", technicValue * critDmgChanceNum / tempVal)
+
+	return technicAddCri, technicAddCriDmg
 end
 
-function var_0_0._getTotalUpAttributes(arg_25_0, arg_25_1)
-	local var_25_0
+function CharacterTipView:_getTotalUpAttributes(showAttributeOption)
+	local attrDict
 
-	if arg_25_1 == CharacterEnum.showAttributeOption.ShowMax then
-		local var_25_1 = CharacterModel.instance:getMaxRank(arg_25_0.viewParam.heroid)
-		local var_25_2 = CharacterModel.instance:getrankEffects(arg_25_0.viewParam.heroid, var_25_1)[1]
+	if showAttributeOption == CharacterEnum.showAttributeOption.ShowMax then
+		local maxRank = CharacterModel.instance:getMaxRank(self.viewParam.heroid)
+		local maxLevel = CharacterModel.instance:getrankEffects(self.viewParam.heroid, maxRank)[1]
 
-		var_25_0 = SkillConfig.instance:getherolevelCO(arg_25_0.viewParam.heroid, var_25_2)
-	elseif arg_25_1 == CharacterEnum.showAttributeOption.ShowMin then
-		var_25_0 = SkillConfig.instance:getherolevelCO(arg_25_0.viewParam.heroid, 1)
+		attrDict = SkillConfig.instance:getherolevelCO(self.viewParam.heroid, maxLevel)
+	elseif showAttributeOption == CharacterEnum.showAttributeOption.ShowMin then
+		attrDict = SkillConfig.instance:getherolevelCO(self.viewParam.heroid, 1)
 	else
-		var_25_0 = (arg_25_0.viewParam.heroMo or HeroModel.instance:getByHeroId(arg_25_0.viewParam.heroid)):getHeroLevelConfig()
+		local heroMO = self.viewParam.heroMo or HeroModel.instance:getByHeroId(self.viewParam.heroid)
+
+		attrDict = heroMO:getHeroLevelConfig()
 	end
 
-	local var_25_3 = {}
+	local result = {}
 
-	for iter_25_0, iter_25_1 in ipairs(CharacterEnum.UpAttrIdList) do
-		var_25_3[iter_25_1] = var_25_0[CharacterEnum.AttrIdToAttrName[iter_25_1]] or 0
+	for _, attrId in ipairs(CharacterEnum.UpAttrIdList) do
+		result[attrId] = attrDict[CharacterEnum.AttrIdToAttrName[attrId]] or 0
 	end
 
-	return var_25_3
+	return result
 end
 
-function var_0_0._getMaxNormalAtrributes(arg_26_0)
-	local var_26_0 = CharacterModel.instance:getMaxRank(arg_26_0.viewParam.heroid)
-	local var_26_1 = CharacterModel.instance:getMaxLevel(arg_26_0.viewParam.heroid)
-	local var_26_2 = SkillConfig.instance:getherolevelCO(arg_26_0.viewParam.heroid, var_26_1)
-	local var_26_3 = SkillConfig.instance:getHeroRankAttribute(arg_26_0.viewParam.heroid, var_26_0)
+function CharacterTipView:_getMaxNormalAtrributes()
+	local maxRank = CharacterModel.instance:getMaxRank(self.viewParam.heroid)
+	local maxlv = CharacterModel.instance:getMaxLevel(self.viewParam.heroid)
+	local lvCo = SkillConfig.instance:getherolevelCO(self.viewParam.heroid, maxlv)
+	local rankValues = SkillConfig.instance:getHeroRankAttribute(self.viewParam.heroid, maxRank)
 
 	return {
-		[CharacterEnum.AttrId.Attack] = var_26_2.atk + var_26_3.atk,
-		[CharacterEnum.AttrId.Hp] = var_26_2.hp + var_26_3.hp,
-		[CharacterEnum.AttrId.Defense] = var_26_2.def + var_26_3.def,
-		[CharacterEnum.AttrId.Mdefense] = var_26_2.mdef + var_26_3.mdef,
-		[CharacterEnum.AttrId.Technic] = var_26_2.technic + var_26_3.technic
+		[CharacterEnum.AttrId.Attack] = lvCo.atk + rankValues.atk,
+		[CharacterEnum.AttrId.Hp] = lvCo.hp + rankValues.hp,
+		[CharacterEnum.AttrId.Defense] = lvCo.def + rankValues.def,
+		[CharacterEnum.AttrId.Mdefense] = lvCo.mdef + rankValues.mdef,
+		[CharacterEnum.AttrId.Technic] = lvCo.technic + rankValues.technic
 	}
 end
 
-function var_0_0._getMinNormalAttribute(arg_27_0)
-	local var_27_0 = SkillConfig.instance:getherolevelCO(arg_27_0.viewParam.heroid, 1)
+function CharacterTipView:_getMinNormalAttribute()
+	local lvCo = SkillConfig.instance:getherolevelCO(self.viewParam.heroid, 1)
 
 	return {
-		[CharacterEnum.AttrId.Attack] = var_27_0.atk,
-		[CharacterEnum.AttrId.Hp] = var_27_0.hp,
-		[CharacterEnum.AttrId.Defense] = var_27_0.def,
-		[CharacterEnum.AttrId.Mdefense] = var_27_0.mdef,
-		[CharacterEnum.AttrId.Technic] = var_27_0.technic
+		[CharacterEnum.AttrId.Attack] = lvCo.atk,
+		[CharacterEnum.AttrId.Hp] = lvCo.hp,
+		[CharacterEnum.AttrId.Defense] = lvCo.def,
+		[CharacterEnum.AttrId.Mdefense] = lvCo.mdef,
+		[CharacterEnum.AttrId.Technic] = lvCo.technic
 	}
 end
 
-function var_0_0._countRate(arg_28_0, arg_28_1, arg_28_2, arg_28_3)
-	for iter_28_0 = 1, arg_28_3 - 1 do
-		if arg_28_1 < arg_28_2[iter_28_0 + 1] then
-			return iter_28_0
+function CharacterTipView:_countRate(baseCo, attr, max)
+	for i = 1, max - 1 do
+		if baseCo < attr[i + 1] then
+			return i
 		end
 	end
 
-	return arg_28_3
+	return max
 end
 
-function var_0_0._setPassiveSkill(arg_29_0, arg_29_1, arg_29_2, arg_29_3, arg_29_4)
-	arg_29_0._matchSkillNames = {}
+function CharacterTipView:_setPassiveSkill(heroid, showAttributeOption, anchorParams, tipPos)
+	self._matchSkillNames = {}
 
-	local var_29_0
+	local exSkillLevel
 
-	if arg_29_2 == CharacterEnum.showAttributeOption.ShowMax then
-		var_29_0 = CharacterEnum.MaxSkillExLevel
+	if showAttributeOption == CharacterEnum.showAttributeOption.ShowMax then
+		exSkillLevel = CharacterEnum.MaxSkillExLevel
+	elseif showAttributeOption == CharacterEnum.showAttributeOption.ShowMin then
+		exSkillLevel = 0
 	else
-		var_29_0 = arg_29_2 == CharacterEnum.showAttributeOption.ShowMin and 0 or (arg_29_0.viewParam.heroMo or HeroModel.instance:getByHeroId(arg_29_1)).exSkillLevel
+		local heroMo = self.viewParam.heroMo or HeroModel.instance:getByHeroId(heroid)
+
+		exSkillLevel = heroMo.exSkillLevel
 	end
 
-	local var_29_1 = SkillConfig.instance:getPassiveSKillsCoByExSkillLevel(arg_29_1, var_29_0)
+	local pskills = SkillConfig.instance:getPassiveSKillsCoByExSkillLevel(heroid, exSkillLevel)
 
-	if arg_29_0.viewParam.heroMo and arg_29_0.viewParam.heroMo.trialAttrCo then
-		var_29_1 = arg_29_0.viewParam.heroMo:getpassiveskillsCO()
+	if self.viewParam.heroMo and self.viewParam.heroMo.trialAttrCo then
+		pskills = self.viewParam.heroMo:getpassiveskillsCO()
 	end
 
-	local var_29_2 = arg_29_0:_checkReplaceSkill(var_29_1, arg_29_0.viewParam.heroMo)
-	local var_29_3 = var_29_1[1].skillPassive
+	local skillIds = self:_checkReplaceSkill(pskills, self.viewParam.heroMo)
+	local firstSkill = pskills[1]
+	local firstSkillId = firstSkill.skillPassive
 
-	arg_29_0._txtpassivename.text = lua_skill.configDict[var_29_3].name
+	self._txtpassivename.text = lua_skill.configDict[firstSkillId].name
 
-	local var_29_4 = HeroConfig.instance:getHeroCO(arg_29_1)
-	local var_29_5 = {}
+	local heroCo = HeroConfig.instance:getHeroCO(heroid)
+	local txtTab = {}
 
-	for iter_29_0, iter_29_1 in pairs(var_29_2) do
-		local var_29_6 = lua_skill.configDict[iter_29_1]
+	for i, skillId in pairs(skillIds) do
+		local skillCo = lua_skill.configDict[skillId]
+		local desc = FightConfig.instance:getSkillEffectDesc(heroCo.name, skillCo)
 
-		var_29_5[iter_29_0] = FightConfig.instance:getSkillEffectDesc(var_29_4.name, var_29_6)
+		txtTab[i] = desc
 	end
 
-	local var_29_7 = HeroSkillModel.instance:getSkillEffectTagIdsFormDescTabRecursion(var_29_5)
-	local var_29_8 = {}
-	local var_29_9 = {}
-	local var_29_10 = 0
+	local matchTxtTab = HeroSkillModel.instance:getSkillEffectTagIdsFormDescTabRecursion(txtTab)
+	local tagNameExistDict = {}
+	local skillEffectDescTab = {}
+	local passiveLevel = 0
 
-	if arg_29_0.viewParam.isBalance then
-		local var_29_11 = arg_29_0._balanceHelper.getHeroBalanceLv(arg_29_0.viewParam.heroMo.heroId)
+	if self.viewParam.isBalance then
+		local balanceLv = self._balanceHelper.getHeroBalanceLv(self.viewParam.heroMo.heroId)
 
-		var_29_10 = SkillConfig.instance:getHeroExSkillLevelByLevel(arg_29_0.viewParam.heroMo.heroId, math.max(arg_29_0._level or arg_29_0.viewParam.heroMo.level, var_29_11))
+		passiveLevel = SkillConfig.instance:getHeroExSkillLevelByLevel(self.viewParam.heroMo.heroId, math.max(self._level or self.viewParam.heroMo.level, balanceLv))
 	end
 
-	for iter_29_2, iter_29_3 in pairs(var_29_2) do
-		if iter_29_3 then
-			local var_29_12 = true
+	for i, skillId in pairs(skillIds) do
+		if skillId then
+			local unlock = true
 
-			if iter_29_2 ~= 0 then
-				var_29_12 = arg_29_0:_getPassiveUnlock(arg_29_2, arg_29_1, iter_29_2, arg_29_0.viewParam.heroMo)
+			if i ~= 0 then
+				unlock = self:_getPassiveUnlock(showAttributeOption, heroid, i, self.viewParam.heroMo)
 
-				if arg_29_0.viewParam.isBalance then
-					var_29_12 = iter_29_2 <= var_29_10
+				if self.viewParam.isBalance then
+					unlock = i <= passiveLevel
 				end
 			end
 
-			local var_29_13 = lua_skill.configDict[iter_29_3]
-			local var_29_14 = FightConfig.instance:getSkillEffectDesc(var_29_4.name, var_29_13)
+			local skillCo = lua_skill.configDict[skillId]
+			local txt = FightConfig.instance:getSkillEffectDesc(heroCo.name, skillCo)
 
-			for iter_29_4, iter_29_5 in ipairs(var_29_7[iter_29_2]) do
-				local var_29_15 = SkillConfig.instance:getSkillEffectDescCo(iter_29_5)
-				local var_29_16 = var_29_15.name
+			for _, v in ipairs(matchTxtTab[i]) do
+				local effectCo = SkillConfig.instance:getSkillEffectDescCo(v)
+				local name = effectCo.name
+				local canShowSkillTag = HeroSkillModel.instance:canShowSkillTag(name, true)
 
-				if HeroSkillModel.instance:canShowSkillTag(var_29_16, true) and not var_29_8[var_29_16] then
-					var_29_8[var_29_16] = true
+				if canShowSkillTag and not tagNameExistDict[name] then
+					tagNameExistDict[name] = true
 
-					if var_29_15.isSpecialCharacter == 1 then
-						local var_29_17 = var_29_15.desc
+					if effectCo.isSpecialCharacter == 1 then
+						local desc = effectCo.desc
 
-						var_29_14 = string.format("%s", var_29_14)
+						txt = string.format("%s", txt)
 
-						local var_29_18 = SkillHelper.buildDesc(var_29_17)
+						local skillEffectDesc = SkillHelper.buildDesc(desc)
 
-						table.insert(var_29_9, {
-							desc = var_29_18,
-							title = var_29_15.name
+						table.insert(skillEffectDescTab, {
+							desc = skillEffectDesc,
+							title = effectCo.name
 						})
 					end
 				end
 			end
 
-			local var_29_19 = SkillHelper.buildDesc(var_29_14)
-			local var_29_20 = arg_29_0:_getTargetRankByEffect(arg_29_1, iter_29_2)
+			local desc = SkillHelper.buildDesc(txt)
+			local ranknum = self:_getTargetRankByEffect(heroid, i)
 
-			if not var_29_12 then
-				arg_29_0._passiveskillitems[iter_29_2].unlocktxt.text = string.format(luaLang("character_passive_get"), GameUtil.getRomanNums(var_29_20))
+			if not unlock then
+				self._passiveskillitems[i].unlocktxt.text = string.format(luaLang("character_passive_get"), GameUtil.getRomanNums(ranknum))
 
-				SLFramework.UGUI.GuiHelper.SetColor(arg_29_0._passiveskillitems[iter_29_2].unlocktxt, "#3A3A3A")
+				SLFramework.UGUI.GuiHelper.SetColor(self._passiveskillitems[i].unlocktxt, "#3A3A3A")
 			else
-				local var_29_21
+				local unlocktxt
 
-				if iter_29_2 == 0 then
-					var_29_21 = luaLang("character_skill_passive_0")
+				if i == 0 then
+					unlocktxt = luaLang("character_skill_passive_0")
 				else
-					var_29_21 = string.format(luaLang("character_passive_unlock"), GameUtil.getRomanNums(var_29_20))
+					unlocktxt = string.format(luaLang("character_passive_unlock"), GameUtil.getRomanNums(ranknum))
 				end
 
-				arg_29_0._passiveskillitems[iter_29_2].unlocktxt.text = var_29_21
+				self._passiveskillitems[i].unlocktxt.text = unlocktxt
 
-				SLFramework.UGUI.GuiHelper.SetColor(arg_29_0._passiveskillitems[iter_29_2].unlocktxt, "#313B33")
+				SLFramework.UGUI.GuiHelper.SetColor(self._passiveskillitems[i].unlocktxt, "#313B33")
 			end
 
-			arg_29_0._passiveskillitems[iter_29_2].canvasgroup.alpha = var_29_12 and 1 or 0.83
+			self._passiveskillitems[i].canvasgroup.alpha = unlock and 1 or 0.83
 
-			gohelper.setActive(arg_29_0._passiveskillitems[iter_29_2].on, var_29_12)
+			gohelper.setActive(self._passiveskillitems[i].on, unlock)
 
-			arg_29_0._passiveskillitems[iter_29_2].desc.text = var_29_19
+			self._passiveskillitems[i].desc.text = desc
 
-			arg_29_0._passiveskillitems[iter_29_2].fixTmpBreakLine:refreshTmpContent(arg_29_0._passiveskillitems[iter_29_2].desc)
-			SLFramework.UGUI.GuiHelper.SetColor(arg_29_0._passiveskillitems[iter_29_2].desc, var_29_12 and "#272525" or "#3A3A3A")
-			gohelper.setActive(arg_29_0._passiveskillitems[iter_29_2].go, true)
-			gohelper.setActive(arg_29_0._passiveskillitems[iter_29_2].connectline, iter_29_2 ~= #var_29_1)
+			self._passiveskillitems[i].fixTmpBreakLine:refreshTmpContent(self._passiveskillitems[i].desc)
+			SLFramework.UGUI.GuiHelper.SetColor(self._passiveskillitems[i].desc, unlock and "#272525" or "#3A3A3A")
+			gohelper.setActive(self._passiveskillitems[i].go, true)
+			gohelper.setActive(self._passiveskillitems[i].connectline, i ~= #pskills)
 		else
-			gohelper.setActive(arg_29_0._passiveskillitems[iter_29_2].go, false)
+			gohelper.setActive(self._passiveskillitems[i].go, false)
 		end
 	end
 
-	for iter_29_6 = #var_29_1 + 1, #arg_29_0._passiveskillitems do
-		gohelper.setActive(arg_29_0._passiveskillitems[iter_29_6].go, false)
+	for i = #pskills + 1, #self._passiveskillitems do
+		gohelper.setActive(self._passiveskillitems[i].go, false)
 	end
 
-	gohelper.setActive(arg_29_0._passiveskillitems[0].go, var_29_2[0] ~= nil)
-	arg_29_0:_showSkillEffectDesc(var_29_9)
-	arg_29_0:_refreshPassiveSkillScroll()
-	arg_29_0:_setTipPos(arg_29_0._gopassiveskilltip.transform, arg_29_4, arg_29_3)
+	gohelper.setActive(self._passiveskillitems[0].go, skillIds[0] ~= nil)
+	self:_showSkillEffectDesc(skillEffectDescTab)
+	self:_refreshPassiveSkillScroll()
+	self:_setTipPos(self._gopassiveskilltip.transform, tipPos, anchorParams)
 end
 
-function var_0_0._checkReplaceSkill(arg_30_0, arg_30_1, arg_30_2)
-	local var_30_0 = {}
+function CharacterTipView:_checkReplaceSkill(skillIdList, heroMo)
+	local skillIds = {}
 
-	if arg_30_1 then
-		for iter_30_0, iter_30_1 in pairs(arg_30_1) do
-			var_30_0[iter_30_0] = iter_30_1.skillPassive
+	if skillIdList then
+		for i, v in pairs(skillIdList) do
+			skillIds[i] = v.skillPassive
 		end
 
-		if arg_30_2 then
-			var_30_0 = arg_30_2:checkReplaceSkill(var_30_0)
+		if heroMo then
+			skillIds = heroMo:checkReplaceSkill(skillIds)
 		end
 	end
 
-	return var_30_0
+	return skillIds
 end
 
-function var_0_0._setTipPos(arg_31_0, arg_31_1, arg_31_2, arg_31_3)
-	if not arg_31_1 then
+function CharacterTipView:_setTipPos(tipTran, tipPos, anchorParams)
+	if not tipTran then
 		return
 	end
 
-	local var_31_0 = arg_31_3 and arg_31_3[1] or Vector2.New(0.5, 0.5)
-	local var_31_1 = arg_31_3 and arg_31_3[2] or Vector2.New(0.5, 0.5)
-	local var_31_2 = arg_31_2 and arg_31_2 or Vector2.New(0, 0)
+	local targetAnchorMin = anchorParams and anchorParams[1] or Vector2.New(0.5, 0.5)
+	local targetAnchorMax = anchorParams and anchorParams[2] or Vector2.New(0.5, 0.5)
+	local targetTipPos = tipPos and tipPos or Vector2.New(0, 0)
 
-	arg_31_1.anchorMin = var_31_0
-	arg_31_1.anchorMax = var_31_1
-	arg_31_0._goBuffItem.transform.anchorMin = var_31_0
-	arg_31_0._goBuffItem.transform.anchorMax = var_31_1
+	tipTran.anchorMin = targetAnchorMin
+	tipTran.anchorMax = targetAnchorMax
+	self._goBuffItem.transform.anchorMin = targetAnchorMin
+	self._goBuffItem.transform.anchorMax = targetAnchorMax
 
-	recthelper.setAnchor(arg_31_1, var_31_2.x, var_31_2.y)
-	recthelper.setAnchorX(arg_31_0._goBuffItem.transform, arg_31_0.viewParam.buffTipsX or 0)
+	recthelper.setAnchor(tipTran, targetTipPos.x, targetTipPos.y)
+	recthelper.setAnchorX(self._goBuffItem.transform, self.viewParam.buffTipsX or 0)
 end
 
-function var_0_0._refreshPassiveSkillScroll(arg_32_0)
-	arg_32_0:_setScrollMaskVisible()
+function CharacterTipView:_refreshPassiveSkillScroll()
+	self:_setScrollMaskVisible()
 
-	local var_32_0 = gohelper.findChild(arg_32_0._gopassiveskilltip, "mask/root/scrollview/viewport")
-	local var_32_1 = gohelper.onceAddComponent(var_32_0, gohelper.Type_VerticalLayoutGroup)
-	local var_32_2 = gohelper.onceAddComponent(var_32_0, typeof(UnityEngine.UI.LayoutElement))
-	local var_32_3 = recthelper.getHeight(var_32_0.transform)
+	local passviewskilltipviewport = gohelper.findChild(self._gopassiveskilltip, "mask/root/scrollview/viewport")
+	local psviewportVerticalGroup = gohelper.onceAddComponent(passviewskilltipviewport, gohelper.Type_VerticalLayoutGroup)
+	local psviewportLayoutElement = gohelper.onceAddComponent(passviewskilltipviewport, typeof(UnityEngine.UI.LayoutElement))
+	local height = recthelper.getHeight(passviewskilltipviewport.transform)
 
-	var_32_1.enabled = false
-	var_32_2.enabled = true
-	var_32_2.preferredHeight = var_32_3
+	psviewportVerticalGroup.enabled = false
+	psviewportLayoutElement.enabled = true
+	psviewportLayoutElement.preferredHeight = height
 end
 
-function var_0_0._showSkillEffectDesc(arg_33_0, arg_33_1)
-	gohelper.setActive(arg_33_0._goeffectdesc, arg_33_1 and #arg_33_1 > 0)
+function CharacterTipView:_showSkillEffectDesc(skillEffectDescTab)
+	gohelper.setActive(self._goeffectdesc, skillEffectDescTab and #skillEffectDescTab > 0)
 
-	for iter_33_0 = 1, #arg_33_1 do
-		local var_33_0 = arg_33_1[iter_33_0]
-		local var_33_1 = arg_33_0:_getSkillEffectDescItem(iter_33_0)
+	for i = 1, #skillEffectDescTab do
+		local skillDesc = skillEffectDescTab[i]
+		local descItem = self:_getSkillEffectDescItem(i)
 
-		var_33_1.desc.text = var_33_0.desc
-		var_33_1.title.text = SkillHelper.removeRichTag(var_33_0.title)
+		descItem.desc.text = skillDesc.desc
+		descItem.title.text = SkillHelper.removeRichTag(skillDesc.title)
 
-		var_33_1.fixTmpBreakLine:refreshTmpContent(var_33_1.desc)
-		gohelper.setActive(var_33_1.go, true)
+		descItem.fixTmpBreakLine:refreshTmpContent(descItem.desc)
+		gohelper.setActive(descItem.go, true)
 	end
 
-	for iter_33_1 = #arg_33_1 + 1, #arg_33_0._skillEffectDescItems do
-		gohelper.setActive(arg_33_0._passiveskillitems[iter_33_1].go, false)
+	for i = #skillEffectDescTab + 1, #self._skillEffectDescItems do
+		gohelper.setActive(self._passiveskillitems[i].go, false)
 	end
 end
 
-function var_0_0._getSkillEffectDescItem(arg_34_0, arg_34_1)
-	local var_34_0 = arg_34_0._skillEffectDescItems[arg_34_1]
+function CharacterTipView:_getSkillEffectDescItem(index)
+	local descItem = self._skillEffectDescItems[index]
 
-	if not var_34_0 then
-		var_34_0 = arg_34_0:getUserDataTb_()
-		var_34_0.go = gohelper.cloneInPlace(arg_34_0._goeffectdescitem, "descitem" .. arg_34_1)
-		var_34_0.desc = gohelper.findChildText(var_34_0.go, "effectdesc")
-		var_34_0.title = gohelper.findChildText(var_34_0.go, "titlebg/bg/name")
-		var_34_0.fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(var_34_0.desc.gameObject, FixTmpBreakLine)
-		var_34_0.hyperLinkClick = SkillHelper.addHyperLinkClick(var_34_0.desc, arg_34_0._onHyperLinkClick, arg_34_0)
+	if not descItem then
+		descItem = self:getUserDataTb_()
+		descItem.go = gohelper.cloneInPlace(self._goeffectdescitem, "descitem" .. index)
+		descItem.desc = gohelper.findChildText(descItem.go, "effectdesc")
+		descItem.title = gohelper.findChildText(descItem.go, "titlebg/bg/name")
+		descItem.fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(descItem.desc.gameObject, FixTmpBreakLine)
+		descItem.hyperLinkClick = SkillHelper.addHyperLinkClick(descItem.desc, self._onHyperLinkClick, self)
 
-		table.insert(arg_34_0._skillEffectDescItems, arg_34_1, var_34_0)
+		table.insert(self._skillEffectDescItems, index, descItem)
 	end
 
-	return var_34_0
+	return descItem
 end
 
-var_0_0.LeftWidth = 470
-var_0_0.RightWidth = 190
-var_0_0.TopHeight = 292
-var_0_0.Interval = 10
+CharacterTipView.LeftWidth = 470
+CharacterTipView.RightWidth = 190
+CharacterTipView.TopHeight = 292
+CharacterTipView.Interval = 10
 
-function var_0_0._onHyperLinkClick(arg_35_0, arg_35_1, arg_35_2)
-	CommonBuffTipController.instance:openCommonTipViewWithCustomPosCallback(tonumber(arg_35_1), arg_35_0.setTipPosCallback, arg_35_0)
+function CharacterTipView:_onHyperLinkClick(effectId, clickPosition)
+	self._defaultVNP = self._defaultVNP or self.viewParam.defaultVNP
+
+	CommonBuffTipController.instance:openCommonTipViewWithCustomPosCallback(tonumber(effectId), self.setTipPosCallback, self, nil, self._defaultVNP)
 end
 
-function var_0_0.setTipPosCallback(arg_36_0, arg_36_1, arg_36_2)
-	arg_36_0.rectTrPassive = arg_36_0.rectTrPassive or arg_36_0._gopassiveskilltip:GetComponent(gohelper.Type_RectTransform)
+function CharacterTipView:setTipPosCallback(rectTrTipViewGo, rectTrScrollTip)
+	self.rectTrPassive = self.rectTrPassive or self._gopassiveskilltip:GetComponent(gohelper.Type_RectTransform)
 
-	local var_36_0 = GameUtil.getViewSize() / 2
-	local var_36_1, var_36_2 = recthelper.uiPosToScreenPos2(arg_36_0.rectTrPassive)
-	local var_36_3, var_36_4 = SLFramework.UGUI.RectTrHelper.ScreenPosXYToAnchorPosXY(var_36_1, var_36_2, arg_36_1, CameraMgr.instance:getUICamera(), nil, nil)
-	local var_36_5 = var_36_0 + var_36_3 - var_0_0.LeftWidth - var_0_0.Interval
-	local var_36_6 = recthelper.getWidth(arg_36_2)
-	local var_36_7 = var_36_6 <= var_36_5
+	local w = GameUtil.getViewSize()
+	local halfW = w / 2
+	local screenPosX, screenPosY = recthelper.uiPosToScreenPos2(self.rectTrPassive)
+	local localPosX, localPosY = SLFramework.UGUI.RectTrHelper.ScreenPosXYToAnchorPosXY(screenPosX, screenPosY, rectTrTipViewGo, CameraMgr.instance:getUICamera(), nil, nil)
+	local leftRemainWidth = halfW + localPosX - CharacterTipView.LeftWidth - CharacterTipView.Interval
+	local scrollTipWidth = recthelper.getWidth(rectTrScrollTip)
+	local showLeft = scrollTipWidth <= leftRemainWidth
 
-	arg_36_2.pivot = CommonBuffTipEnum.Pivot.Right
+	rectTrScrollTip.pivot = CommonBuffTipEnum.Pivot.Right
 
-	local var_36_8 = var_36_3
-	local var_36_9 = var_36_4
+	local anchorX = localPosX
+	local anchorY = localPosY
 
-	if var_36_7 then
-		var_36_8 = var_36_8 - var_0_0.LeftWidth - var_0_0.Interval
+	if showLeft then
+		anchorX = anchorX - CharacterTipView.LeftWidth - CharacterTipView.Interval
 	else
-		var_36_8 = var_36_8 + var_0_0.RightWidth + var_0_0.Interval + var_36_6
+		anchorX = anchorX + CharacterTipView.RightWidth + CharacterTipView.Interval + scrollTipWidth
 	end
 
-	local var_36_10 = var_36_9 + var_0_0.TopHeight
+	anchorY = anchorY + CharacterTipView.TopHeight
 
-	recthelper.setAnchor(arg_36_2, var_36_8, var_36_10)
+	recthelper.setAnchor(rectTrScrollTip, anchorX, anchorY)
 end
 
-function var_0_0._setScrollMaskVisible(arg_37_0)
-	local var_37_0 = gohelper.findChild(arg_37_0._gopassiveskilltip, "mask/root")
+function CharacterTipView:_setScrollMaskVisible()
+	local root = gohelper.findChild(self._gopassiveskilltip, "mask/root")
 
-	ZProj.UGUIHelper.RebuildLayout(var_37_0.transform)
+	ZProj.UGUIHelper.RebuildLayout(root.transform)
 
-	arg_37_0._couldScroll = recthelper.getHeight(arg_37_0._passiveskilltipcontent.transform) > recthelper.getHeight(arg_37_0._scrollview.transform)
+	local scrollContentHeight = recthelper.getHeight(self._passiveskilltipcontent.transform)
+	local scrollViewHeight = recthelper.getHeight(self._scrollview.transform)
 
-	gohelper.setActive(arg_37_0._gomask1, arg_37_0._couldScroll and not (gohelper.getRemindFourNumberFloat(arg_37_0._scrollview.verticalNormalizedPosition) <= 0))
+	self._couldScroll = scrollViewHeight < scrollContentHeight
 
-	arg_37_0._passiveskilltipmask.enabled = false
+	gohelper.setActive(self._gomask1, self._couldScroll and not (gohelper.getRemindFourNumberFloat(self._scrollview.verticalNormalizedPosition) <= 0))
+
+	self._passiveskilltipmask.enabled = false
 end
 
-function var_0_0._getPassiveUnlock(arg_38_0, arg_38_1, arg_38_2, arg_38_3, arg_38_4)
-	if arg_38_1 == CharacterEnum.showAttributeOption.ShowMax then
+function CharacterTipView:_getPassiveUnlock(state, heroid, i, heroMo)
+	if state == CharacterEnum.showAttributeOption.ShowMax then
 		return true
-	elseif arg_38_1 == CharacterEnum.showAttributeOption.ShowMin then
+	elseif state == CharacterEnum.showAttributeOption.ShowMin then
 		return false
-	elseif arg_38_4 then
-		return CharacterModel.instance:isPassiveUnlockByHeroMo(arg_38_4, arg_38_3, arg_38_0._passiveSkillLevel)
+	elseif heroMo then
+		return CharacterModel.instance:isPassiveUnlockByHeroMo(heroMo, i, self._passiveSkillLevel)
 	else
-		return CharacterModel.instance:isPassiveUnlock(arg_38_2, arg_38_3)
+		return CharacterModel.instance:isPassiveUnlock(heroid, i)
 	end
 end
 
-function var_0_0._getTargetRankByEffect(arg_39_0, arg_39_1, arg_39_2)
-	local var_39_0 = SkillConfig.instance:getheroranksCO(arg_39_1)
+function CharacterTipView:_getTargetRankByEffect(heroid, skilllv)
+	local rankCo = SkillConfig.instance:getheroranksCO(heroid)
 
-	for iter_39_0, iter_39_1 in pairs(var_39_0) do
-		if CharacterModel.instance:getrankEffects(arg_39_1, iter_39_0)[2] == arg_39_2 then
-			return iter_39_0 - 1
+	for k, _ in pairs(rankCo) do
+		local effect = CharacterModel.instance:getrankEffects(heroid, k)
+
+		if effect[2] == skilllv then
+			return k - 1
 		end
 	end
 
 	return 0
 end
 
-function var_0_0.showDetail(arg_40_0, arg_40_1)
-	arg_40_0._isOpenAttrDesc = not arg_40_0._isOpenAttrDesc
+function CharacterTipView:showDetail(param)
+	self._isOpenAttrDesc = not self._isOpenAttrDesc
 
-	gohelper.setActive(arg_40_0._godetailcontent, arg_40_0._isOpenAttrDesc)
+	gohelper.setActive(self._godetailcontent, self._isOpenAttrDesc)
 
-	if not arg_40_0._isOpenAttrDesc then
+	if not self._isOpenAttrDesc then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_ui_role_description)
 
-	local var_40_0 = recthelper.rectToRelativeAnchorPos(arg_40_1.go.transform.position, arg_40_0._goattributetip.transform)
+	local tipClickPosition = recthelper.rectToRelativeAnchorPos(param.go.transform.position, self._goattributetip.transform)
 
-	if var_40_0.y < var_0_0.DetailClickMinPos then
-		recthelper.setAnchorY(arg_40_0._godetailcontent.transform, var_0_0.DetailBottomPos)
+	if tipClickPosition.y < CharacterTipView.DetailClickMinPos then
+		recthelper.setAnchorY(self._godetailcontent.transform, CharacterTipView.DetailBottomPos)
 	else
-		recthelper.setAnchorY(arg_40_0._godetailcontent.transform, var_40_0.y + var_0_0.DetailOffset)
+		recthelper.setAnchorY(self._godetailcontent.transform, tipClickPosition.y + CharacterTipView.DetailOffset)
 	end
 
-	local var_40_1 = HeroConfig.instance:getHeroAttributeCO(arg_40_1.attributeId)
+	local attributeCo = HeroConfig.instance:getHeroAttributeCO(param.attributeId)
 
-	arg_40_0._txtDetailItemName.text = var_40_1.name
+	self._txtDetailItemName.text = attributeCo.name
 
-	CharacterController.instance:SetAttriIcon(arg_40_0._txtDetailItemIcon, arg_40_1.icon, GameUtil.parseColor("#975129"))
+	CharacterController.instance:SetAttriIcon(self._txtDetailItemIcon, param.icon, GameUtil.parseColor("#975129"))
 
-	local var_40_2 = string.split(var_40_1.desc, "|")
+	local attributeDescList = string.split(attributeCo.desc, "|")
 
-	for iter_40_0, iter_40_1 in ipairs(var_40_2) do
-		local var_40_3 = arg_40_0._detailDescTab[iter_40_0]
+	for k, v in ipairs(attributeDescList) do
+		local descItem = self._detailDescTab[k]
 
-		if not var_40_3 then
-			var_40_3 = gohelper.clone(arg_40_0._txtDetailItemDesc.gameObject, arg_40_0._goattributecontentitem, "descItem")
+		if not descItem then
+			descItem = gohelper.clone(self._txtDetailItemDesc.gameObject, self._goattributecontentitem, "descItem")
 
-			gohelper.setActive(var_40_3, false)
-			table.insert(arg_40_0._detailDescTab, var_40_3)
+			gohelper.setActive(descItem, false)
+			table.insert(self._detailDescTab, descItem)
 		end
 
-		gohelper.setActive(var_40_3, true)
+		gohelper.setActive(descItem, true)
 
-		var_40_3:GetComponent(gohelper.Type_TextMesh).text = iter_40_1
+		descItem:GetComponent(gohelper.Type_TextMesh).text = v
 	end
 
-	for iter_40_2 = #var_40_2 + 1, #arg_40_0._detailDescTab do
-		gohelper.setActive(arg_40_0._detailDescTab[iter_40_2], false)
-	end
-end
-
-function var_0_0.onClose(arg_41_0)
-	for iter_41_0, iter_41_1 in pairs(arg_41_0._detailClickItems) do
-		iter_41_1:RemoveClickListener()
+	for i = #attributeDescList + 1, #self._detailDescTab do
+		gohelper.setActive(self._detailDescTab[i], false)
 	end
 end
 
-return var_0_0
+function CharacterTipView:onClose()
+	for _, click in pairs(self._detailClickItems) do
+		click:RemoveClickListener()
+	end
+end
+
+return CharacterTipView

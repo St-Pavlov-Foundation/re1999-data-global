@@ -1,395 +1,397 @@
-﻿module("modules.logic.sp01.assassin2.outside.view.AssassinTechniqueView", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/outside/view/AssassinTechniqueView.lua
 
-local var_0_0 = class("AssassinTechniqueView", BaseView)
-local var_0_1 = 1
-local var_0_2 = 1
-local var_0_3 = 1
-local var_0_4 = 0.3
-local var_0_5 = 130
+module("modules.logic.sp01.assassin2.outside.view.AssassinTechniqueView", package.seeall)
 
-local function var_0_6(arg_1_0, arg_1_1)
-	local var_1_0 = AssassinConfig.instance:getStealthTechniqueSubTitleId(arg_1_0)
-	local var_1_1 = AssassinConfig.instance:getStealthTechniqueSubTitleId(arg_1_1)
+local AssassinTechniqueView = class("AssassinTechniqueView", BaseView)
+local DEFAULT_SHOW_INDEX = 1
+local DEFAULT_MAIN_TAB_INDEX = 1
+local DEFAULT_SUB_TAB_INDEX = 1
+local TAB_TWEEN_TIME = 0.3
+local MAIN_TAB_HEIGHT = 130
 
-	if var_1_0 ~= var_1_1 then
-		return var_1_0 < var_1_1
+local function _sortTechniqueBySubTitleId(techniqueIdA, techniqueIdB)
+	local subTitleIdA = AssassinConfig.instance:getStealthTechniqueSubTitleId(techniqueIdA)
+	local subTitleIdB = AssassinConfig.instance:getStealthTechniqueSubTitleId(techniqueIdB)
+
+	if subTitleIdA ~= subTitleIdB then
+		return subTitleIdA < subTitleIdB
 	end
 
-	return arg_1_0 < arg_1_1
+	return techniqueIdA < techniqueIdB
 end
 
-local function var_0_7(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_0[1]
-	local var_2_1 = arg_2_1[1]
-	local var_2_2 = AssassinConfig.instance:getStealthTechniqueMainTitleId(var_2_0)
-	local var_2_3 = AssassinConfig.instance:getStealthTechniqueMainTitleId(var_2_1)
+local function _sortTechniqueByMainTitleId(mainTitleDictA, mainTitleDictB)
+	local techniqueIdA = mainTitleDictA[1]
+	local techniqueIdB = mainTitleDictB[1]
+	local mainTitleIdA = AssassinConfig.instance:getStealthTechniqueMainTitleId(techniqueIdA)
+	local mainTitleIdB = AssassinConfig.instance:getStealthTechniqueMainTitleId(techniqueIdB)
 
-	if var_2_2 ~= var_2_3 then
-		return var_2_2 < var_2_3
+	if mainTitleIdA ~= mainTitleIdB then
+		return mainTitleIdA < mainTitleIdB
 	end
 
-	return var_2_0 < var_2_1
+	return techniqueIdA < techniqueIdB
 end
 
-function var_0_0.onInitView(arg_3_0)
-	arg_3_0._gocenter = gohelper.findChild(arg_3_0.viewGO, "#go_root/#go_center")
-	arg_3_0._simageicon = gohelper.findChildSingleImage(arg_3_0.viewGO, "#go_root/#go_center/content/#simage_icon")
-	arg_3_0._txttitle = gohelper.findChildText(arg_3_0.viewGO, "#go_root/#go_center/content/#txt_title")
-	arg_3_0._txtdec = gohelper.findChildText(arg_3_0.viewGO, "#go_root/#go_center/content/#txt_dec")
-	arg_3_0._btnquit = gohelper.findChildButtonWithAudio(arg_3_0.viewGO, "#go_root/#btn_quit", AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
-	arg_3_0._goleft = gohelper.findChild(arg_3_0.viewGO, "#go_root/left")
-	arg_3_0._goscroll = gohelper.findChild(arg_3_0.viewGO, "#go_root/left/scroll_category")
-	arg_3_0._gocategorycontent = gohelper.findChild(arg_3_0.viewGO, "#go_root/left/scroll_category/viewport/#go_categorycontent")
-	arg_3_0._gostorecategoryitem = gohelper.findChild(arg_3_0.viewGO, "#go_root/left/scroll_category/viewport/#go_categorycontent/#go_storecategoryitem")
+function AssassinTechniqueView:onInitView()
+	self._gocenter = gohelper.findChild(self.viewGO, "#go_root/#go_center")
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "#go_root/#go_center/content/#simage_icon")
+	self._txttitle = gohelper.findChildText(self.viewGO, "#go_root/#go_center/content/#txt_title")
+	self._txtdec = gohelper.findChildText(self.viewGO, "#go_root/#go_center/content/#txt_dec")
+	self._btnquit = gohelper.findChildButtonWithAudio(self.viewGO, "#go_root/#btn_quit", AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
+	self._goleft = gohelper.findChild(self.viewGO, "#go_root/left")
+	self._goscroll = gohelper.findChild(self.viewGO, "#go_root/left/scroll_category")
+	self._gocategorycontent = gohelper.findChild(self.viewGO, "#go_root/left/scroll_category/viewport/#go_categorycontent")
+	self._gostorecategoryitem = gohelper.findChild(self.viewGO, "#go_root/left/scroll_category/viewport/#go_categorycontent/#go_storecategoryitem")
 
-	if arg_3_0._editableInitView then
-		arg_3_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_4_0)
-	arg_4_0._btnquit:AddClickListener(arg_4_0._btnquitOnClick, arg_4_0)
-	arg_4_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_4_0._onOpenView, arg_4_0)
+function AssassinTechniqueView:addEvents()
+	self._btnquit:AddClickListener(self._btnquitOnClick, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
 end
 
-function var_0_0.removeEvents(arg_5_0)
-	arg_5_0._btnquit:RemoveClickListener()
-	arg_5_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_5_0._onOpenView, arg_5_0)
-	arg_5_0:clearTab()
+function AssassinTechniqueView:removeEvents()
+	self._btnquit:RemoveClickListener()
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
+	self:clearTab()
 end
 
-function var_0_0._btnquitOnClick(arg_6_0)
-	if arg_6_0._showTechniqueIdList and #arg_6_0._showTechniqueIdList > 0 then
-		arg_6_0:_showNextTechnique()
+function AssassinTechniqueView:_btnquitOnClick()
+	if self._showTechniqueIdList and #self._showTechniqueIdList > 0 then
+		self:_showNextTechnique()
 	else
-		arg_6_0:closeThis()
+		self:closeThis()
 	end
 end
 
-function var_0_0._showNextTechnique(arg_7_0)
-	local var_7_0
+function AssassinTechniqueView:_showNextTechnique()
+	local nextTechniqueId
 
-	if not arg_7_0.showIndex then
-		arg_7_0.showIndex = var_0_1
+	if not self.showIndex then
+		self.showIndex = DEFAULT_SHOW_INDEX
 	else
-		arg_7_0.showIndex = arg_7_0.showIndex + 1
+		self.showIndex = self.showIndex + 1
 	end
 
-	if arg_7_0._showTechniqueIdList and #arg_7_0._showTechniqueIdList > 0 then
-		var_7_0 = arg_7_0._showTechniqueIdList[arg_7_0.showIndex]
+	if self._showTechniqueIdList and #self._showTechniqueIdList > 0 then
+		nextTechniqueId = self._showTechniqueIdList[self.showIndex]
 	end
 
-	if var_7_0 then
-		arg_7_0:_refreshContentData(var_7_0)
+	if nextTechniqueId then
+		self:_refreshContentData(nextTechniqueId)
 	else
-		arg_7_0:closeThis()
+		self:closeThis()
 	end
 end
 
-function var_0_0._onMainTabClick(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_1.index
-	local var_8_1 = arg_8_1.subIndex or var_0_3
+function AssassinTechniqueView:_onMainTabClick(param)
+	local index = param.index
+	local subIndex = param.subIndex or DEFAULT_SUB_TAB_INDEX
 
-	if arg_8_0.selectedMainTabIndex == var_8_0 then
-		arg_8_0:killTween()
+	if self.selectedMainTabIndex == index then
+		self:killTween()
 
-		arg_8_0._btnTweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, var_0_4, arg_8_0._onBtnAniFrameCallback, arg_8_0._btnTweenCloseFinish, arg_8_0)
+		self._btnTweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, TAB_TWEEN_TIME, self._onBtnAniFrameCallback, self._btnTweenCloseFinish, self)
 	else
-		local var_8_2 = arg_8_0.mainTabItemList[arg_8_0.selectedMainTabIndex]
+		local lastSelectedMainTabItem = self.mainTabItemList[self.selectedMainTabIndex]
 
-		if var_8_2 then
-			recthelper.setHeight(var_8_2.trans, var_0_5)
-			recthelper.setHeight(var_8_2.transSubTabContent, 0)
+		if lastSelectedMainTabItem then
+			recthelper.setHeight(lastSelectedMainTabItem.trans, MAIN_TAB_HEIGHT)
+			recthelper.setHeight(lastSelectedMainTabItem.transSubTabContent, 0)
 		end
 
-		arg_8_0.selectedMainTabIndex = var_8_0
+		self.selectedMainTabIndex = index
 
-		arg_8_0:_detectBtnState()
+		self:_detectBtnState()
 
-		arg_8_0.selectedSubTabIndex = nil
+		self.selectedSubTabIndex = nil
 
-		arg_8_0:_onSubBtnClick(var_8_1)
-		arg_8_0:killTween()
+		self:_onSubBtnClick(subIndex)
+		self:killTween()
 
-		arg_8_0._btnTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, var_0_4, arg_8_0._onBtnAniFrameCallback, arg_8_0._btnTweenOpenFinished, arg_8_0)
+		self._btnTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, TAB_TWEEN_TIME, self._onBtnAniFrameCallback, self._btnTweenOpenFinished, self)
 	end
 end
 
-function var_0_0._onBtnAniFrameCallback(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0.mainTabItemList[arg_9_0.selectedMainTabIndex]
+function AssassinTechniqueView:_onBtnAniFrameCallback(value)
+	local selectedMainTabItem = self.mainTabItemList[self.selectedMainTabIndex]
 
-	if var_9_0 then
-		local var_9_1 = arg_9_0.subTabItemHeight[arg_9_0.selectedMainTabIndex] * arg_9_1
+	if selectedMainTabItem then
+		local height = self.subTabItemHeight[self.selectedMainTabIndex] * value
 
-		recthelper.setHeight(var_9_0.trans, var_0_5 + var_9_1)
-		recthelper.setHeight(var_9_0.transSubTabContent, var_9_1)
+		recthelper.setHeight(selectedMainTabItem.trans, MAIN_TAB_HEIGHT + height)
+		recthelper.setHeight(selectedMainTabItem.transSubTabContent, height)
 	end
 end
 
-function var_0_0._btnTweenOpenFinished(arg_10_0)
-	local var_10_0 = arg_10_0.mainTabItemList[arg_10_0.selectedMainTabIndex]
+function AssassinTechniqueView:_btnTweenOpenFinished()
+	local selectedMainTabItem = self.mainTabItemList[self.selectedMainTabIndex]
 
-	if not var_10_0 then
+	if not selectedMainTabItem then
 		return
 	end
 
-	local var_10_1 = arg_10_0._transscroll:InverseTransformPoint(var_10_0.trans.position).y + recthelper.getHeight(var_10_0.trans) / 2
+	local targetPosY = self._transscroll:InverseTransformPoint(selectedMainTabItem.trans.position).y + recthelper.getHeight(selectedMainTabItem.trans) / 2
 
-	if var_10_1 >= 65 or var_10_1 <= -785 then
-		recthelper.setAnchorY(arg_10_0._gocategorycontent.transform, var_0_5 * (arg_10_0.selectedMainTabIndex - 1) - 60)
+	if targetPosY >= 65 or targetPosY <= -785 then
+		recthelper.setAnchorY(self._gocategorycontent.transform, MAIN_TAB_HEIGHT * (self.selectedMainTabIndex - 1) - 60)
 	end
 end
 
-function var_0_0._btnTweenCloseFinish(arg_11_0)
-	arg_11_0.selectedMainTabIndex = nil
+function AssassinTechniqueView:_btnTweenCloseFinish()
+	self.selectedMainTabIndex = nil
 
-	arg_11_0:_detectBtnState()
+	self:_detectBtnState()
 end
 
-function var_0_0._detectBtnState(arg_12_0)
-	if not arg_12_0.mainTabItemList then
+function AssassinTechniqueView:_detectBtnState()
+	if not self.mainTabItemList then
 		return
 	end
 
-	for iter_12_0, iter_12_1 in ipairs(arg_12_0.mainTabItemList) do
-		local var_12_0 = iter_12_0 == arg_12_0.selectedMainTabIndex
+	for index, mainTabItem in ipairs(self.mainTabItemList) do
+		local isSelected = index == self.selectedMainTabIndex
 
-		gohelper.setActive(iter_12_1.goSubTabContent, var_12_0)
-		gohelper.setActive(iter_12_1.goSelected, var_12_0)
-		gohelper.setActive(iter_12_1.goUnselected, not var_12_0)
+		gohelper.setActive(mainTabItem.goSubTabContent, isSelected)
+		gohelper.setActive(mainTabItem.goSelected, isSelected)
+		gohelper.setActive(mainTabItem.goUnselected, not isSelected)
 	end
 end
 
-function var_0_0._onSubBtnClick(arg_13_0, arg_13_1)
-	if arg_13_0.selectedSubTabIndex == arg_13_1 then
+function AssassinTechniqueView:_onSubBtnClick(index)
+	if self.selectedSubTabIndex == index then
 		return
 	end
 
-	arg_13_0.selectedSubTabIndex = arg_13_1
+	self.selectedSubTabIndex = index
 
-	arg_13_0:_detectSubBtnState()
-	arg_13_0:_refreshContentData()
+	self:_detectSubBtnState()
+	self:_refreshContentData()
 end
 
-function var_0_0._detectSubBtnState(arg_14_0)
-	if arg_14_0.subTabItemDict and arg_14_0.subTabItemDict[arg_14_0.selectedMainTabIndex] then
-		for iter_14_0, iter_14_1 in ipairs(arg_14_0.subTabItemDict[arg_14_0.selectedMainTabIndex]) do
-			local var_14_0 = iter_14_0 == arg_14_0.selectedSubTabIndex
+function AssassinTechniqueView:_detectSubBtnState()
+	if self.subTabItemDict and self.subTabItemDict[self.selectedMainTabIndex] then
+		for index, subTabItem in ipairs(self.subTabItemDict[self.selectedMainTabIndex]) do
+			local isSelected = index == self.selectedSubTabIndex
 
-			gohelper.setActive(iter_14_1.goSelected, var_14_0)
-			gohelper.setActive(iter_14_1.goUnselected, not var_14_0)
+			gohelper.setActive(subTabItem.goSelected, isSelected)
+			gohelper.setActive(subTabItem.goUnselected, not isSelected)
 		end
 	end
 end
 
-function var_0_0._refreshContentData(arg_15_0, arg_15_1)
-	local var_15_0
+function AssassinTechniqueView:_refreshContentData(techniqueId)
+	local selectedTechniqueId
 
-	if arg_15_1 then
-		var_15_0 = arg_15_1
+	if techniqueId then
+		selectedTechniqueId = techniqueId
 	else
-		local var_15_1 = arg_15_0.subTabItemDict[arg_15_0.selectedMainTabIndex]
-		local var_15_2 = var_15_1 and var_15_1[arg_15_0.selectedSubTabIndex]
+		local subTabItemList = self.subTabItemDict[self.selectedMainTabIndex]
+		local selectedSubTabItem = subTabItemList and subTabItemList[self.selectedSubTabIndex]
 
-		if not var_15_2 then
+		if not selectedSubTabItem then
 			return
 		end
 
-		var_15_0 = var_15_2.data
+		selectedTechniqueId = selectedSubTabItem.data
 	end
 
-	local var_15_3 = AssassinConfig.instance:getStealthTechniqueSubTitle(var_15_0)
+	local subTitle = AssassinConfig.instance:getStealthTechniqueSubTitle(selectedTechniqueId)
 
-	arg_15_0._txttitle.text = var_15_3
+	self._txttitle.text = subTitle
 
-	local var_15_4 = AssassinConfig.instance:getStealthTechniquePicture(var_15_0)
+	local picture = AssassinConfig.instance:getStealthTechniquePicture(selectedTechniqueId)
 
-	arg_15_0._simageicon:LoadImage(ResUrl.getSp01AssassinSingleBg("help/" .. var_15_4), arg_15_0._afterLoadPicture, arg_15_0)
+	self._simageicon:LoadImage(ResUrl.getSp01AssassinSingleBg("help/" .. picture), self._afterLoadPicture, self)
 
-	local var_15_5 = AssassinConfig.instance:getStealthTechniqueContent(var_15_0)
+	local content = AssassinConfig.instance:getStealthTechniqueContent(selectedTechniqueId)
 
-	arg_15_0._txtdec.text = var_15_5
+	self._txtdec.text = content
 end
 
-function var_0_0._afterLoadPicture(arg_16_0)
-	arg_16_0._imageicon:SetNativeSize()
+function AssassinTechniqueView:_afterLoadPicture()
+	self._imageicon:SetNativeSize()
 end
 
-function var_0_0._onOpenView(arg_17_0, arg_17_1)
-	if arg_17_1 == ViewName.GuideView then
-		arg_17_0:closeThis()
+function AssassinTechniqueView:_onOpenView(viewName)
+	if viewName == ViewName.GuideView then
+		self:closeThis()
 	end
 end
 
-function var_0_0._editableInitView(arg_18_0)
-	arg_18_0._transscroll = arg_18_0._goscroll.transform
-	arg_18_0._imageicon = arg_18_0._simageicon:GetComponent(gohelper.Type_Image)
+function AssassinTechniqueView:_editableInitView()
+	self._transscroll = self._goscroll.transform
+	self._imageicon = self._simageicon:GetComponent(gohelper.Type_Image)
 end
 
-function var_0_0.onUpdateParam(arg_19_0)
+function AssassinTechniqueView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_20_0)
-	local var_20_0 = arg_20_0.viewParam and arg_20_0.viewParam.viewParam
+function AssassinTechniqueView:onOpen()
+	local mapId = self.viewParam and self.viewParam.viewParam
 
-	arg_20_0._showTechniqueIdList = AssassinConfig.instance:getMapShowTechniqueList(var_20_0)
+	self._showTechniqueIdList = AssassinConfig.instance:getMapShowTechniqueList(mapId)
 
-	if arg_20_0._showTechniqueIdList and #arg_20_0._showTechniqueIdList > 0 then
-		arg_20_0:_showNextTechnique()
-		gohelper.setActive(arg_20_0._goleft, false)
+	if self._showTechniqueIdList and #self._showTechniqueIdList > 0 then
+		self:_showNextTechnique()
+		gohelper.setActive(self._goleft, false)
 	else
-		arg_20_0:setMainTabList()
+		self:setMainTabList()
 
-		arg_20_0.selectedMainTabIndex = var_0_2
+		self.selectedMainTabIndex = DEFAULT_MAIN_TAB_INDEX
 
-		local var_20_1 = arg_20_0.mainTabItemList[arg_20_0.selectedMainTabIndex]
+		local mainTabItem = self.mainTabItemList[self.selectedMainTabIndex]
 
-		if var_20_1 then
-			recthelper.setHeight(var_20_1.trans, var_0_5)
-			recthelper.setHeight(var_20_1.transSubTabContent, 0)
+		if mainTabItem then
+			recthelper.setHeight(mainTabItem.trans, MAIN_TAB_HEIGHT)
+			recthelper.setHeight(mainTabItem.transSubTabContent, 0)
 		end
 
-		arg_20_0:_detectBtnState()
+		self:_detectBtnState()
 
-		arg_20_0.selectedSubTabIndex = nil
+		self.selectedSubTabIndex = nil
 
-		arg_20_0:_onSubBtnClick(var_0_3)
-		arg_20_0:_btnTweenCloseFinish()
+		self:_onSubBtnClick(DEFAULT_SUB_TAB_INDEX)
+		self:_btnTweenCloseFinish()
 	end
 end
 
-function var_0_0.clearTab(arg_21_0)
-	if arg_21_0.mainTabItemList then
-		for iter_21_0, iter_21_1 in ipairs(arg_21_0.mainTabItemList) do
-			iter_21_1.btnClick:RemoveClickListener()
+function AssassinTechniqueView:clearTab()
+	if self.mainTabItemList then
+		for _, mainTabItem in ipairs(self.mainTabItemList) do
+			mainTabItem.btnClick:RemoveClickListener()
 		end
 	end
 
-	arg_21_0.mainTabItemList = {}
+	self.mainTabItemList = {}
 
-	if arg_21_0.subTabItemDict then
-		for iter_21_2, iter_21_3 in pairs(arg_21_0.subTabItemDict) do
-			for iter_21_4, iter_21_5 in ipairs(iter_21_3) do
-				iter_21_5.btnClick:RemoveClickListener()
+	if self.subTabItemDict then
+		for _, subTabItemList in pairs(self.subTabItemDict) do
+			for _, subTabItem in ipairs(subTabItemList) do
+				subTabItem.btnClick:RemoveClickListener()
 			end
 		end
 	end
 
-	arg_21_0.subTabItemDict = {}
-	arg_21_0.subTabItemHeight = {}
+	self.subTabItemDict = {}
+	self.subTabItemHeight = {}
 end
 
-function var_0_0.setMainTabList(arg_22_0)
-	arg_22_0:clearTab()
+function AssassinTechniqueView:setMainTabList()
+	self:clearTab()
 
-	local var_22_0 = {}
-	local var_22_1 = {}
-	local var_22_2 = AssassinConfig.instance:getTechniqueIdList()
+	local mainTabDataList = {}
+	local mainTabDataDict = {}
+	local techniqueIdList = AssassinConfig.instance:getTechniqueIdList()
 
-	for iter_22_0, iter_22_1 in ipairs(var_22_2) do
-		local var_22_3 = AssassinConfig.instance:getStealthTechniqueMainTitleId(iter_22_1)
+	for _, techniqueId in ipairs(techniqueIdList) do
+		local mainTitleId = AssassinConfig.instance:getStealthTechniqueMainTitleId(techniqueId)
 
-		if var_22_3 ~= 0 then
-			if not var_22_1[var_22_3] then
-				var_22_1[var_22_3] = {}
+		if mainTitleId ~= 0 then
+			if not mainTabDataDict[mainTitleId] then
+				mainTabDataDict[mainTitleId] = {}
 			end
 
-			table.insert(var_22_1[var_22_3], iter_22_1)
+			table.insert(mainTabDataDict[mainTitleId], techniqueId)
 		end
 	end
 
-	for iter_22_2, iter_22_3 in pairs(var_22_1) do
-		if #var_22_1[iter_22_2] > 0 then
-			table.sort(var_22_1[iter_22_2], var_0_6)
-			table.insert(var_22_0, var_22_1[iter_22_2])
+	for mainTitleId, _ in pairs(mainTabDataDict) do
+		if #mainTabDataDict[mainTitleId] > 0 then
+			table.sort(mainTabDataDict[mainTitleId], _sortTechniqueBySubTitleId)
+			table.insert(mainTabDataList, mainTabDataDict[mainTitleId])
 		end
 	end
 
-	table.sort(var_22_0, var_0_7)
-	gohelper.CreateObjList(arg_22_0, arg_22_0._onMainTabShow, var_22_0, arg_22_0._gocategorycontent, arg_22_0._gostorecategoryitem)
+	table.sort(mainTabDataList, _sortTechniqueByMainTitleId)
+	gohelper.CreateObjList(self, self._onMainTabShow, mainTabDataList, self._gocategorycontent, self._gostorecategoryitem)
 end
 
-function var_0_0._onMainTabShow(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
-	local var_23_0 = arg_23_0:getUserDataTb_()
+function AssassinTechniqueView:_onMainTabShow(obj, data, index)
+	local mainTabItem = self:getUserDataTb_()
 
-	var_23_0.go = arg_23_1
-	var_23_0.trans = var_23_0.go.transform
-	var_23_0.data = arg_23_2
-	var_23_0.goSelected = gohelper.findChild(arg_23_1, "go_selected")
-	var_23_0.goUnselected = gohelper.findChild(arg_23_1, "go_unselected")
-	var_23_0.goSubTabContent = gohelper.findChild(arg_23_1, "go_childcategory")
-	var_23_0.transSubTabContent = var_23_0.goSubTabContent.transform
-	var_23_0.btnClick = gohelper.findChildClickWithAudio(var_23_0.go, "clickArea", AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
+	mainTabItem.go = obj
+	mainTabItem.trans = mainTabItem.go.transform
+	mainTabItem.data = data
+	mainTabItem.goSelected = gohelper.findChild(obj, "go_selected")
+	mainTabItem.goUnselected = gohelper.findChild(obj, "go_unselected")
+	mainTabItem.goSubTabContent = gohelper.findChild(obj, "go_childcategory")
+	mainTabItem.transSubTabContent = mainTabItem.goSubTabContent.transform
+	mainTabItem.btnClick = gohelper.findChildClickWithAudio(mainTabItem.go, "clickArea", AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
 
-	var_23_0.btnClick:AddClickListener(arg_23_0._onMainTabClick, arg_23_0, {
-		index = arg_23_3
+	mainTabItem.btnClick:AddClickListener(self._onMainTabClick, self, {
+		index = index
 	})
 
-	local var_23_1 = AssassinConfig.instance:getStealthTechniqueMainTitle(arg_23_2[1])
-	local var_23_2 = gohelper.findChildTextMesh(arg_23_1, "go_unselected/txt_itemcn1")
-	local var_23_3 = gohelper.findChildTextMesh(arg_23_1, "go_selected/txt_itemcn2")
+	local mainTitle = AssassinConfig.instance:getStealthTechniqueMainTitle(data[1])
+	local txtTitle1 = gohelper.findChildTextMesh(obj, "go_unselected/txt_itemcn1")
+	local txtTitle2 = gohelper.findChildTextMesh(obj, "go_selected/txt_itemcn2")
 
-	var_23_2.text = var_23_1
-	var_23_3.text = var_23_1
-	arg_23_0.subTabPosY = -60
-	arg_23_0.subBelongMainTabIndex = arg_23_3
+	txtTitle1.text = mainTitle
+	txtTitle2.text = mainTitle
+	self.subTabPosY = -60
+	self.subBelongMainTabIndex = index
 
-	local var_23_4 = gohelper.findChild(arg_23_1, "go_childcategory/go_childitem")
+	local goSubTab = gohelper.findChild(obj, "go_childcategory/go_childitem")
 
-	gohelper.CreateObjList(arg_23_0, arg_23_0._onSubTabShow, arg_23_2, var_23_0.goSubTabContent, var_23_4)
+	gohelper.CreateObjList(self, self._onSubTabShow, data, mainTabItem.goSubTabContent, goSubTab)
 
-	arg_23_0.subTabItemHeight[arg_23_3] = math.abs(arg_23_0.subTabPosY + 70)
+	self.subTabItemHeight[index] = math.abs(self.subTabPosY + 70)
 
-	table.insert(arg_23_0.mainTabItemList, var_23_0)
+	table.insert(self.mainTabItemList, mainTabItem)
 end
 
-function var_0_0._onSubTabShow(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
-	local var_24_0 = arg_24_0:getUserDataTb_()
+function AssassinTechniqueView:_onSubTabShow(obj, data, index)
+	local subTabItem = self:getUserDataTb_()
 
-	var_24_0.go = arg_24_1
-	var_24_0.data = arg_24_2
-	var_24_0.goSelected = gohelper.findChild(arg_24_1, "go_selected")
-	var_24_0.goUnselected = gohelper.findChild(arg_24_1, "go_unselected")
-	var_24_0.btnClick = gohelper.findChildClickWithAudio(var_24_0.go, "clickArea", AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
+	subTabItem.go = obj
+	subTabItem.data = data
+	subTabItem.goSelected = gohelper.findChild(obj, "go_selected")
+	subTabItem.goUnselected = gohelper.findChild(obj, "go_unselected")
+	subTabItem.btnClick = gohelper.findChildClickWithAudio(subTabItem.go, "clickArea", AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
 
-	var_24_0.btnClick:AddClickListener(arg_24_0._onSubBtnClick, arg_24_0, arg_24_3)
+	subTabItem.btnClick:AddClickListener(self._onSubBtnClick, self, index)
 
-	local var_24_1 = AssassinConfig.instance:getStealthTechniqueSubTitle(arg_24_2)
-	local var_24_2 = gohelper.findChildTextMesh(arg_24_1, "go_unselected/txt_itemcn1")
-	local var_24_3 = gohelper.findChildTextMesh(arg_24_1, "go_selected/txt_itemcn2")
+	local subTitle = AssassinConfig.instance:getStealthTechniqueSubTitle(data)
+	local txt_itemcn1 = gohelper.findChildTextMesh(obj, "go_unselected/txt_itemcn1")
+	local txt_itemcn2 = gohelper.findChildTextMesh(obj, "go_selected/txt_itemcn2")
 
-	var_24_2.text = var_24_1
-	var_24_3.text = var_24_1
+	txt_itemcn1.text = subTitle
+	txt_itemcn2.text = subTitle
 
-	recthelper.setAnchorY(arg_24_1.transform, arg_24_0.subTabPosY)
+	recthelper.setAnchorY(obj.transform, self.subTabPosY)
 
-	arg_24_0.subTabPosY = arg_24_0.subTabPosY - 120
+	self.subTabPosY = self.subTabPosY - 120
 
-	local var_24_4 = arg_24_0.subTabItemDict[arg_24_0.subBelongMainTabIndex]
+	local subTabItemList = self.subTabItemDict[self.subBelongMainTabIndex]
 
-	if not var_24_4 then
-		var_24_4 = {}
-		arg_24_0.subTabItemDict[arg_24_0.subBelongMainTabIndex] = var_24_4
+	if not subTabItemList then
+		subTabItemList = {}
+		self.subTabItemDict[self.subBelongMainTabIndex] = subTabItemList
 	end
 
-	table.insert(var_24_4, var_24_0)
+	table.insert(subTabItemList, subTabItem)
 end
 
-function var_0_0.killTween(arg_25_0)
-	if arg_25_0._btnTweenId then
-		ZProj.TweenHelper.KillById(arg_25_0._btnTweenId)
+function AssassinTechniqueView:killTween()
+	if self._btnTweenId then
+		ZProj.TweenHelper.KillById(self._btnTweenId)
 	end
 
-	arg_25_0._btnTweenId = nil
+	self._btnTweenId = nil
 end
 
-function var_0_0.onClose(arg_26_0)
-	arg_26_0:killTween()
+function AssassinTechniqueView:onClose()
+	self:killTween()
 end
 
-function var_0_0.onDestroyView(arg_27_0)
-	arg_27_0._simageicon:UnLoadImage()
+function AssassinTechniqueView:onDestroyView()
+	self._simageicon:UnLoadImage()
 end
 
-return var_0_0
+return AssassinTechniqueView

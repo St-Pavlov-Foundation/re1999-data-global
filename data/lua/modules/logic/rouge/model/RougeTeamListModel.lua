@@ -1,158 +1,166 @@
-﻿module("modules.logic.rouge.model.RougeTeamListModel", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/model/RougeTeamListModel.lua
 
-local var_0_0 = class("RougeTeamListModel", ListScrollModel)
+module("modules.logic.rouge.model.RougeTeamListModel", package.seeall)
 
-function var_0_0.getHp(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_1.heroId
-	local var_1_1 = arg_1_0._heroLifeMap[var_1_0]
+local RougeTeamListModel = class("RougeTeamListModel", ListScrollModel)
 
-	return var_1_1 and var_1_1.life or 0
+function RougeTeamListModel:getHp(mo)
+	local id = mo.heroId
+	local hpInfo = self._heroLifeMap[id]
+
+	return hpInfo and hpInfo.life or 0
 end
 
-function var_0_0.isInTeam(arg_2_0, arg_2_1)
-	return arg_2_0._teamInfo:inTeam(arg_2_1.heroId)
+function RougeTeamListModel:isInTeam(mo)
+	return self._teamInfo:inTeam(mo.heroId)
 end
 
-function var_0_0.isAssit(arg_3_0, arg_3_1)
-	return arg_3_0._teamInfo:inTeamAssist(arg_3_1.heroId)
+function RougeTeamListModel:isAssit(mo)
+	return self._teamInfo:inTeamAssist(mo.heroId)
 end
 
-function var_0_0.getTeamType(arg_4_0)
-	return arg_4_0._teamType
+function RougeTeamListModel:getTeamType()
+	return self._teamType
 end
 
-function var_0_0.getSelectedHeroMap(arg_5_0)
-	return arg_5_0._selectedHeroMap
+function RougeTeamListModel:getSelectedHeroMap()
+	return self._selectedHeroMap
 end
 
-function var_0_0.getSelectedHeroList(arg_6_0)
-	local var_6_0 = {}
+function RougeTeamListModel:getSelectedHeroList()
+	local list = {}
 
-	for iter_6_0, iter_6_1 in pairs(arg_6_0._selectedHeroMap) do
-		table.insert(var_6_0, iter_6_0)
+	for k, v in pairs(self._selectedHeroMap) do
+		table.insert(list, k)
 	end
 
-	table.sort(var_6_0, function(arg_7_0, arg_7_1)
-		return arg_6_0._selectedHeroMap[arg_7_0] < arg_6_0._selectedHeroMap[arg_7_1]
+	table.sort(list, function(a, b)
+		return self._selectedHeroMap[a] < self._selectedHeroMap[b]
 	end)
 
-	for iter_6_2, iter_6_3 in ipairs(var_6_0) do
-		var_6_0[iter_6_2] = iter_6_3.heroId
+	for i, v in ipairs(list) do
+		list[i] = v.heroId
 	end
 
-	return var_6_0
+	return list
 end
 
-function var_0_0.isHeroSelected(arg_8_0, arg_8_1)
-	return arg_8_0._selectedHeroMap[arg_8_1] ~= nil
+function RougeTeamListModel:isHeroSelected(mo)
+	return self._selectedHeroMap[mo] ~= nil
 end
 
-function var_0_0.selectHero(arg_9_0, arg_9_1)
-	if arg_9_0._selectedHeroMap[arg_9_1] then
-		arg_9_0._selectedHeroMap[arg_9_1] = nil
+function RougeTeamListModel:selectHero(mo)
+	if self._selectedHeroMap[mo] then
+		self._selectedHeroMap[mo] = nil
 
 		return
 	end
 
-	if tabletool.len(arg_9_0._selectedHeroMap) >= arg_9_0._heroNum then
+	if tabletool.len(self._selectedHeroMap) >= self._heroNum then
 		GameFacade.showToast(ToastEnum.RougeTeamSelectedFull)
 
 		return
 	end
 
-	arg_9_0._selectedHeroMap[arg_9_1] = UnityEngine.Time.frameCount
+	self._selectedHeroMap[mo] = UnityEngine.Time.frameCount
 end
 
-function var_0_0.initList(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = RougeModel.instance:getTeamInfo()
-	local var_10_1 = var_10_0.heroLifeList
+function RougeTeamListModel:initList(teamType, heroNum)
+	local teamInfo = RougeModel.instance:getTeamInfo()
+	local heroLifeList = teamInfo.heroLifeList
 
-	arg_10_0._heroLifeMap = var_10_0.heroLifeMap
-	arg_10_0._teamInfo = var_10_0
-	arg_10_0._teamType = arg_10_1
-	arg_10_0._heroNum = arg_10_2
-	arg_10_0._selectedHeroMap = {}
+	self._heroLifeMap = teamInfo.heroLifeMap
+	self._teamInfo = teamInfo
+	self._teamType = teamType
+	self._heroNum = heroNum
+	self._selectedHeroMap = {}
 
-	local var_10_2 = {}
+	local list = {}
 
-	if arg_10_1 == RougeEnum.TeamType.View then
-		arg_10_0:_getViewList(var_10_1, var_10_2)
-	elseif arg_10_1 == RougeEnum.TeamType.Treat then
-		arg_10_0:_getTreatList(var_10_1, var_10_2)
-	elseif arg_10_1 == RougeEnum.TeamType.Revive then
-		arg_10_0:_getReviveList(var_10_1, var_10_2)
-	elseif arg_10_1 == RougeEnum.TeamType.Assignment then
-		arg_10_0:_getAssignmentList(var_10_1, var_10_2)
+	if teamType == RougeEnum.TeamType.View then
+		self:_getViewList(heroLifeList, list)
+	elseif teamType == RougeEnum.TeamType.Treat then
+		self:_getTreatList(heroLifeList, list)
+	elseif teamType == RougeEnum.TeamType.Revive then
+		self:_getReviveList(heroLifeList, list)
+	elseif teamType == RougeEnum.TeamType.Assignment then
+		self:_getAssignmentList(heroLifeList, list)
 	end
 
-	arg_10_0:setList(var_10_2)
+	self:setList(list)
 end
 
-function var_0_0._getViewList(arg_11_0, arg_11_1, arg_11_2)
-	for iter_11_0 = #arg_11_1, 1, -1 do
-		local var_11_0 = arg_11_1[iter_11_0]
-		local var_11_1 = arg_11_0:getByHeroId(var_11_0.heroId)
+function RougeTeamListModel:_getViewList(heroLifeList, list)
+	for i = #heroLifeList, 1, -1 do
+		local v = heroLifeList[i]
+		local heroMo = self:getByHeroId(v.heroId)
 
-		if var_11_0.life > 0 then
-			table.insert(arg_11_2, 1, var_11_1)
+		if v.life > 0 then
+			table.insert(list, 1, heroMo)
 		else
-			table.insert(arg_11_2, var_11_1)
+			table.insert(list, heroMo)
 		end
 	end
 end
 
-function var_0_0._getTreatList(arg_12_0, arg_12_1, arg_12_2)
-	for iter_12_0, iter_12_1 in ipairs(arg_12_1) do
-		if iter_12_1.life > 0 then
-			local var_12_0 = arg_12_0:getByHeroId(iter_12_1.heroId)
+function RougeTeamListModel:_getTreatList(heroLifeList, list)
+	for i, v in ipairs(heroLifeList) do
+		if v.life > 0 then
+			local heroMo = self:getByHeroId(v.heroId)
 
-			table.insert(arg_12_2, var_12_0)
+			table.insert(list, heroMo)
 		end
 	end
 end
 
-function var_0_0._getReviveList(arg_13_0, arg_13_1, arg_13_2)
-	for iter_13_0, iter_13_1 in ipairs(arg_13_1) do
-		if iter_13_1.life <= 0 then
-			local var_13_0 = arg_13_0:getByHeroId(iter_13_1.heroId)
+function RougeTeamListModel:_getReviveList(heroLifeList, list)
+	for i, v in ipairs(heroLifeList) do
+		if v.life <= 0 then
+			local heroMo = self:getByHeroId(v.heroId)
 
-			table.insert(arg_13_2, var_13_0)
+			table.insert(list, heroMo)
 		end
 	end
 end
 
-function var_0_0._getAssignmentList(arg_14_0, arg_14_1, arg_14_2)
-	for iter_14_0, iter_14_1 in ipairs(arg_14_1) do
-		if iter_14_1.life > 0 then
-			local var_14_0 = arg_14_0:getByHeroId(iter_14_1.heroId)
+function RougeTeamListModel:_getAssignmentList(heroLifeList, list)
+	for i, v in ipairs(heroLifeList) do
+		if v.life > 0 then
+			local heroMo = self:getByHeroId(v.heroId)
 
-			table.insert(arg_14_2, var_14_0)
+			table.insert(list, heroMo)
 		end
 	end
 end
 
-function var_0_0.getByHeroId(arg_15_0, arg_15_1)
-	return HeroModel.instance:getByHeroId(arg_15_1)
+function RougeTeamListModel:getByHeroId(heroId)
+	return HeroModel.instance:getByHeroId(heroId)
 end
 
-function var_0_0.addAssistHook()
-	HeroModel.instance:addHookGetHeroId(var_0_0.addHookGetHeroId)
-	HeroModel.instance:addHookGetHeroUid(var_0_0.addHookGetHeroUid)
+function RougeTeamListModel.addAssistHook()
+	HeroModel.instance:addHookGetHeroId(RougeTeamListModel.addHookGetHeroId)
+	HeroModel.instance:addHookGetHeroUid(RougeTeamListModel.addHookGetHeroUid)
 end
 
-function var_0_0.removeAssistHook()
-	HeroModel.instance:removeHookGetHeroId(var_0_0.addHookGetHeroId)
-	HeroModel.instance:removeHookGetHeroUid(var_0_0.addHookGetHeroUid)
+function RougeTeamListModel.removeAssistHook()
+	HeroModel.instance:removeHookGetHeroId(RougeTeamListModel.addHookGetHeroId)
+	HeroModel.instance:removeHookGetHeroUid(RougeTeamListModel.addHookGetHeroUid)
 end
 
-function var_0_0.addHookGetHeroId(arg_18_0)
-	return (RougeModel.instance:getTeamInfo():getAssistHeroMo(arg_18_0))
+function RougeTeamListModel.addHookGetHeroId(heroId)
+	local teamInfo = RougeModel.instance:getTeamInfo()
+	local mo = teamInfo:getAssistHeroMo(heroId)
+
+	return mo
 end
 
-function var_0_0.addHookGetHeroUid(arg_19_0)
-	return (RougeModel.instance:getTeamInfo():getAssistHeroMoByUid(arg_19_0))
+function RougeTeamListModel.addHookGetHeroUid(uid)
+	local teamInfo = RougeModel.instance:getTeamInfo()
+	local mo = teamInfo:getAssistHeroMoByUid(uid)
+
+	return mo
 end
 
-var_0_0.instance = var_0_0.New()
+RougeTeamListModel.instance = RougeTeamListModel.New()
 
-return var_0_0
+return RougeTeamListModel

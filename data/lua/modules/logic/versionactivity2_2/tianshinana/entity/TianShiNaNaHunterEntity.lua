@@ -1,38 +1,40 @@
-﻿module("modules.logic.versionactivity2_2.tianshinana.entity.TianShiNaNaHunterEntity", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/tianshinana/entity/TianShiNaNaHunterEntity.lua
 
-local var_0_0 = class("TianShiNaNaHunterEntity", TianShiNaNaUnitEntityBase)
+module("modules.logic.versionactivity2_2.tianshinana.entity.TianShiNaNaHunterEntity", package.seeall)
 
-function var_0_0.updateMo(arg_1_0, arg_1_1)
-	local var_1_0 = string.splitToNumber(arg_1_1.co.specialData, "#")
+local TianShiNaNaHunterEntity = class("TianShiNaNaHunterEntity", TianShiNaNaUnitEntityBase)
 
-	arg_1_0._range = var_1_0 and var_1_0[1] or 0
+function TianShiNaNaHunterEntity:updateMo(unitMo)
+	local arr = string.splitToNumber(unitMo.co.specialData, "#")
 
-	var_0_0.super.updateMo(arg_1_0, arg_1_1)
+	self._range = arr and arr[1] or 0
+
+	TianShiNaNaHunterEntity.super.updateMo(self, unitMo)
 end
 
-function var_0_0.onResLoaded(arg_2_0)
-	local var_2_0 = gohelper.findChild(arg_2_0._resGo, "vx_warn")
+function TianShiNaNaHunterEntity:onResLoaded()
+	local root = gohelper.findChild(self._resGo, "vx_warn")
 
-	gohelper.setActive(var_2_0, true)
+	gohelper.setActive(root, true)
 
-	if var_2_0 then
-		arg_2_0._rootAnim = var_2_0:GetComponent(typeof(UnityEngine.Animator))
+	if root then
+		self._rootAnim = root:GetComponent(typeof(UnityEngine.Animator))
 	end
 
-	arg_2_0:checkActive()
+	self:checkActive()
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	TianShiNaNaController.instance:registerCallback(TianShiNaNaEvent.CubePointUpdate, arg_3_0.checkActive, arg_3_0)
+function TianShiNaNaHunterEntity:addEventListeners()
+	TianShiNaNaController.instance:registerCallback(TianShiNaNaEvent.CubePointUpdate, self.checkActive, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	TianShiNaNaController.instance:unregisterCallback(TianShiNaNaEvent.CubePointUpdate, arg_4_0.checkActive, arg_4_0)
+function TianShiNaNaHunterEntity:removeEventListeners()
+	TianShiNaNaController.instance:unregisterCallback(TianShiNaNaEvent.CubePointUpdate, self.checkActive, self)
 end
 
-function var_0_0.willActive(arg_5_0)
-	for iter_5_0, iter_5_1 in pairs(TianShiNaNaModel.instance.curPointList) do
-		if TianShiNaNaHelper.getMinDis(iter_5_1.x, iter_5_1.y, arg_5_0._unitMo.x, arg_5_0._unitMo.y) <= arg_5_0._range then
+function TianShiNaNaHunterEntity:willActive()
+	for _, point in pairs(TianShiNaNaModel.instance.curPointList) do
+		if TianShiNaNaHelper.getMinDis(point.x, point.y, self._unitMo.x, self._unitMo.y) <= self._range then
 			return true
 		end
 	end
@@ -40,25 +42,25 @@ function var_0_0.willActive(arg_5_0)
 	return false
 end
 
-function var_0_0.checkActive(arg_6_0)
-	if not arg_6_0._rootAnim then
+function TianShiNaNaHunterEntity:checkActive()
+	if not self._rootAnim then
 		return
 	end
 
-	local var_6_0 = arg_6_0._unitMo.isActive or arg_6_0:willActive()
+	local isActive = self._unitMo.isActive or self:willActive()
 
-	if var_6_0 == arg_6_0._isActive then
+	if isActive == self._isActive then
 		return
 	end
 
-	arg_6_0._isActive = var_6_0
+	self._isActive = isActive
 
-	if var_6_0 then
+	if isActive then
 		AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2TianShiNaNa.play_ui_youyu_warn)
-		arg_6_0._rootAnim:Play("warn_red", 0, 0)
+		self._rootAnim:Play("warn_red", 0, 0)
 	else
-		arg_6_0._rootAnim:Play("warn_open", 0, 0)
+		self._rootAnim:Play("warn_open", 0, 0)
 	end
 end
 
-return var_0_0
+return TianShiNaNaHunterEntity

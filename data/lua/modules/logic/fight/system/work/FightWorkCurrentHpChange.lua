@@ -1,34 +1,38 @@
-﻿module("modules.logic.fight.system.work.FightWorkCurrentHpChange", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkCurrentHpChange.lua
 
-local var_0_0 = class("FightWorkCurrentHpChange", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkCurrentHpChange", package.seeall)
 
-function var_0_0.beforePlayEffectData(arg_1_0)
-	arg_1_0._entityId = arg_1_0.actEffectData.targetId
-	arg_1_0._entityMO = FightDataHelper.entityMgr:getById(arg_1_0._entityId)
-	arg_1_0._oldValue = arg_1_0._entityMO and arg_1_0._entityMO.currentHp
+local FightWorkCurrentHpChange = class("FightWorkCurrentHpChange", FightEffectBase)
+
+function FightWorkCurrentHpChange:beforePlayEffectData()
+	self._entityId = self.actEffectData.targetId
+	self._entityMO = FightDataHelper.entityMgr:getById(self._entityId)
+	self._oldValue = self._entityMO and self._entityMO.currentHp
 end
 
-function var_0_0.onStart(arg_2_0)
-	if not FightHelper.getEntity(arg_2_0._entityId) then
-		arg_2_0:onDone(true)
+function FightWorkCurrentHpChange:onStart()
+	local entity = FightHelper.getEntity(self._entityId)
+
+	if not entity then
+		self:onDone(true)
 
 		return
 	end
 
-	if not arg_2_0._entityMO then
-		arg_2_0:onDone(true)
+	if not self._entityMO then
+		self:onDone(true)
 
 		return
 	end
 
-	arg_2_0._newValue = arg_2_0._entityMO and arg_2_0._entityMO.currentHp
+	self._newValue = self._entityMO and self._entityMO.currentHp
 
-	FightController.instance:dispatchEvent(FightEvent.OnCurrentHpChange, arg_2_0.actEffectData.targetId, arg_2_0._oldValue, arg_2_0._newValue)
-	arg_2_0:onDone(true)
+	FightController.instance:dispatchEvent(FightEvent.OnCurrentHpChange, self.actEffectData.targetId, self._oldValue, self._newValue)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
+function FightWorkCurrentHpChange:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkCurrentHpChange

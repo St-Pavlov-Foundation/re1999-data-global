@@ -1,169 +1,174 @@
-﻿module("modules.logic.versionactivity2_7.lengzhou6.view.LengZhou6EliminatePlayerSkill", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/lengzhou6/view/LengZhou6EliminatePlayerSkill.lua
 
-local var_0_0 = class("LengZhou6EliminatePlayerSkill", ListScrollCellExtend)
+module("modules.logic.versionactivity2_7.lengzhou6.view.LengZhou6EliminatePlayerSkill", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gorectMask = gohelper.findChild(arg_1_0.viewGO, "#go_rectMask")
-	arg_1_0._txtskillTipDesc = gohelper.findChildText(arg_1_0.viewGO, "#txt_skillTipDesc")
+local LengZhou6EliminatePlayerSkill = class("LengZhou6EliminatePlayerSkill", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function LengZhou6EliminatePlayerSkill:onInitView()
+	self._gorectMask = gohelper.findChild(self.viewGO, "#go_rectMask")
+	self._txtskillTipDesc = gohelper.findChildText(self.viewGO, "#txt_skillTipDesc")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function LengZhou6EliminatePlayerSkill:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function LengZhou6EliminatePlayerSkill:removeEvents()
 	return
 end
 
-local var_0_1 = typeof(ZProj.RectMaskHole)
-local var_0_2 = SLFramework.UGUI.UIClickListener
-local var_0_3 = UnityEngine.EventSystems.EventSystem
+local ZProj_RectMaskHoleType = typeof(ZProj.RectMaskHole)
+local SLFramework_UGUI_UIClickListener = SLFramework.UGUI.UIClickListener
+local UnityEngine_EventSystems_EventSystem = UnityEngine.EventSystems.EventSystem
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._rectMaskHole = arg_4_0._gorectMask:GetComponent(var_0_1)
-	arg_4_0._rectMaskHoleTr = arg_4_0._rectMaskHole.transform
-	arg_4_0._rectMaskHole.enableClick = false
-	arg_4_0._rectMaskHole.enableDrag = false
-	arg_4_0._rectMaskHole.enablePress = false
-	arg_4_0._rectMaskHole.enableTargetClick = false
-	arg_4_0._rectMaskClick = var_0_2.Get(arg_4_0._gorectMask)
+function LengZhou6EliminatePlayerSkill:_editableInitView()
+	self._rectMaskHole = self._gorectMask:GetComponent(ZProj_RectMaskHoleType)
+	self._rectMaskHoleTr = self._rectMaskHole.transform
+	self._rectMaskHole.enableClick = false
+	self._rectMaskHole.enableDrag = false
+	self._rectMaskHole.enablePress = false
+	self._rectMaskHole.enableTargetClick = false
+	self._rectMaskClick = SLFramework_UGUI_UIClickListener.Get(self._gorectMask)
 
-	arg_4_0._rectMaskClick:AddClickListener(arg_4_0.onClick, arg_4_0)
-	arg_4_0:setCanvas()
+	self._rectMaskClick:AddClickListener(self.onClick, self)
+	self:setCanvas()
 end
 
-function var_0_0.onClick(arg_5_0)
-	local var_5_0 = UnityEngine.Input.mousePosition
+function LengZhou6EliminatePlayerSkill:onClick()
+	local pos = UnityEngine.Input.mousePosition
 
-	if arg_5_0._pointerEventData == nil then
-		arg_5_0._pointerEventData = UnityEngine.EventSystems.PointerEventData.New(var_0_3.current)
-		arg_5_0._raycastResults = System.Collections.Generic.List_UnityEngine_EventSystems_RaycastResult.New()
+	if self._pointerEventData == nil then
+		self._pointerEventData = UnityEngine.EventSystems.PointerEventData.New(UnityEngine_EventSystems_EventSystem.current)
+		self._raycastResults = System.Collections.Generic.List_UnityEngine_EventSystems_RaycastResult.New()
 	end
 
-	arg_5_0._pointerEventData.position = var_5_0
+	self._pointerEventData.position = pos
 
-	if arg_5_0:isInRect(arg_5_0._pointerEventData) then
-		arg_5_0:checkAndExecute()
+	if self:isInRect(self._pointerEventData) then
+		self:checkAndExecute()
 	else
-		arg_5_0:rectMaskClick()
+		self:rectMaskClick()
 	end
 end
 
-function var_0_0.checkAndExecute(arg_6_0)
-	if arg_6_0._raycastResults == nil then
+function LengZhou6EliminatePlayerSkill:checkAndExecute()
+	if self._raycastResults == nil then
 		return
 	end
 
-	var_0_3.current:RaycastAll(arg_6_0._pointerEventData, arg_6_0._raycastResults)
+	UnityEngine_EventSystems_EventSystem.current:RaycastAll(self._pointerEventData, self._raycastResults)
 
-	local var_6_0 = arg_6_0._pointerEventData.pointerCurrentRaycast.gameObject
+	local current = self._pointerEventData.pointerCurrentRaycast.gameObject
+	local roundType = EliminateLevelModel.instance:getCurRoundType()
+	local isTeamChess = roundType == EliminateEnum.RoundType.TeamChess
 
-	if EliminateLevelModel.instance:getCurRoundType() == EliminateEnum.RoundType.TeamChess then
-		arg_6_0._raycastResults:Clear()
+	if isTeamChess then
+		self._raycastResults:Clear()
 	end
 
-	local var_6_1 = arg_6_0._raycastResults:GetEnumerator()
+	local iter = self._raycastResults:GetEnumerator()
 
-	while var_6_1:MoveNext() do
-		local var_6_2 = var_6_1.Current.gameObject
+	while iter:MoveNext() do
+		local raycastResult = iter.Current
+		local go = raycastResult.gameObject
 
-		if var_6_2 ~= var_6_0 and var_6_2 ~= arg_6_0._gorectMask then
-			local var_6_3 = var_6_2:GetComponent(typeof(UnityEngine.UI.Button))
+		if go ~= current and go ~= self._gorectMask then
+			local btn = go:GetComponent(typeof(UnityEngine.UI.Button))
 
-			if not gohelper.isNil(var_6_3) then
-				var_6_3:OnPointerClick(arg_6_0._pointerEventData)
+			if not gohelper.isNil(btn) then
+				btn:OnPointerClick(self._pointerEventData)
 			end
 		end
 	end
 end
 
-local var_0_4 = Vector2.New(0, 0)
-local var_0_5 = UnityEngine.Rect.New(0, 0, 0, 0)
+local tempVector2 = Vector2.New(0, 0)
+local tempRect = UnityEngine.Rect.New(0, 0, 0, 0)
 
-function var_0_0.isInRect(arg_7_0, arg_7_1)
-	if arg_7_0._size == nil or arg_7_0._center == nil then
+function LengZhou6EliminatePlayerSkill:isInRect(eventData)
+	if self._size == nil or self._center == nil then
 		return false
 	end
 
-	local var_7_0 = CameraMgr.instance:getUICamera()
-	local var_7_1 = arg_7_0._center.x or 0
-	local var_7_2 = arg_7_0._center.y or 0
-	local var_7_3 = arg_7_0._size.x or 0
-	local var_7_4 = arg_7_0._size.y or 0
+	local camera3d = CameraMgr.instance:getUICamera()
+	local centerX = self._center.x or 0
+	local centerY = self._center.y or 0
+	local sizeX = self._size.x or 0
+	local sizeY = self._size.y or 0
 
-	var_0_5:Set(var_7_1 - var_7_3 * 0.5, var_7_2 - var_7_4 * 0.5, var_7_3, var_7_4)
+	tempRect:Set(centerX - sizeX * 0.5, centerY - sizeY * 0.5, sizeX, sizeY)
 
-	local var_7_5, var_7_6 = UnityEngine.RectTransformUtility.ScreenPointToLocalPointInRectangle(arg_7_0._rectMaskHoleTr, arg_7_1.position, var_7_0, var_0_4)
+	local isRect, tempVector2 = UnityEngine.RectTransformUtility.ScreenPointToLocalPointInRectangle(self._rectMaskHoleTr, eventData.position, camera3d, tempVector2)
 
-	if var_7_5 and var_0_5:Contains(var_7_6) then
+	if isRect and tempRect:Contains(tempVector2) then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.rectMaskClick(arg_8_0)
-	if arg_8_0._rectMaskClickCb and arg_8_0._rectMaskClickCbTarget then
-		arg_8_0._rectMaskClickCb(arg_8_0._rectMaskClickCbTarget)
+function LengZhou6EliminatePlayerSkill:rectMaskClick()
+	if self._rectMaskClickCb and self._rectMaskClickCbTarget then
+		self._rectMaskClickCb(self._rectMaskClickCbTarget)
 	end
 end
 
-function var_0_0.setTargetTrAndHoleSize(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4, arg_9_5)
-	local var_9_0 = Vector2(arg_9_2, arg_9_3)
+function LengZhou6EliminatePlayerSkill:setTargetTrAndHoleSize(targetTr, x, y, offsetY, offsetX)
+	local size = Vector2(x, y)
 
-	arg_9_0._rectMaskHole.size = var_9_0
-	arg_9_4 = arg_9_4 or -30
-	arg_9_5 = arg_9_5 or 0
+	self._rectMaskHole.size = size
+	offsetY = offsetY or -30
+	offsetX = offsetX or 0
 
-	local var_9_1 = Vector2(arg_9_5, arg_9_4)
+	local sizeOffset = Vector2(offsetX, offsetY)
 
-	arg_9_0._center = var_9_1
-	arg_9_0._size = var_9_0
+	self._center = sizeOffset
+	self._size = size
 
-	arg_9_0._rectMaskHole:SetTarget(arg_9_1, var_9_1, var_9_1, nil)
+	self._rectMaskHole:SetTarget(targetTr, sizeOffset, sizeOffset, nil)
 end
 
-function var_0_0.setCanvas(arg_10_0)
-	arg_10_0._rectMaskHole.mainCanvas = ViewMgr.instance:getUICanvas()
+function LengZhou6EliminatePlayerSkill:setCanvas()
+	self._rectMaskHole.mainCanvas = ViewMgr.instance:getUICanvas()
 
-	local var_10_0 = CameraMgr.instance:getUICamera()
+	local mainCamera = CameraMgr.instance:getUICamera()
 
-	arg_10_0._rectMaskHole.mainCamera = var_10_0
-	arg_10_0._rectMaskHole.uiCamera = var_10_0
+	self._rectMaskHole.mainCamera = mainCamera
+	self._rectMaskHole.uiCamera = mainCamera
 end
 
-function var_0_0.setClickCb(arg_11_0, arg_11_1, arg_11_2)
-	arg_11_0._rectMaskClickCb = arg_11_1
-	arg_11_0._rectMaskClickCbTarget = arg_11_2
+function LengZhou6EliminatePlayerSkill:setClickCb(cb, target)
+	self._rectMaskClickCb = cb
+	self._rectMaskClickCbTarget = target
 end
 
-function var_0_0.refreshSkillData(arg_12_0)
+function LengZhou6EliminatePlayerSkill:refreshSkillData()
 	return
 end
 
-function var_0_0.onDestroyView(arg_13_0)
-	if arg_13_0._rectMaskHole then
-		arg_13_0._rectMaskHole:InitPointerLuaFunction(nil, nil)
+function LengZhou6EliminatePlayerSkill:onDestroyView()
+	if self._rectMaskHole then
+		self._rectMaskHole:InitPointerLuaFunction(nil, nil)
 
-		arg_13_0._rectMaskHole = nil
+		self._rectMaskHole = nil
 	end
 
-	if arg_13_0._rectMaskClick then
-		arg_13_0._rectMaskClick:RemoveClickListener()
+	if self._rectMaskClick then
+		self._rectMaskClick:RemoveClickListener()
 
-		arg_13_0._rectMaskClick = nil
-		arg_13_0._pointerEventData = nil
-		arg_13_0._raycastResults = nil
+		self._rectMaskClick = nil
+		self._pointerEventData = nil
+		self._raycastResults = nil
 	end
 
-	arg_13_0._size = nil
-	arg_13_0._center = nil
-	arg_13_0._rectMaskClickCb = nil
-	arg_13_0._rectMaskClickCbTarget = nil
+	self._size = nil
+	self._center = nil
+	self._rectMaskClickCb = nil
+	self._rectMaskClickCbTarget = nil
 end
 
-return var_0_0
+return LengZhou6EliminatePlayerSkill

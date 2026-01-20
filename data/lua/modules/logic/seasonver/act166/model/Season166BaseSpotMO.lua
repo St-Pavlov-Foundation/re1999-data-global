@@ -1,17 +1,19 @@
-﻿module("modules.logic.seasonver.act166.model.Season166BaseSpotMO", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act166/model/Season166BaseSpotMO.lua
 
-local var_0_0 = pureTable("Season166BaseSpotMO")
+module("modules.logic.seasonver.act166.model.Season166BaseSpotMO", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.id = 0
-	arg_1_0.isEnter = false
-	arg_1_0.maxScore = 0
+local Season166BaseSpotMO = pureTable("Season166BaseSpotMO")
+
+function Season166BaseSpotMO:ctor()
+	self.id = 0
+	self.isEnter = false
+	self.maxScore = 0
 end
 
-function var_0_0.setData(arg_2_0, arg_2_1)
-	arg_2_0.id = arg_2_1.id
-	arg_2_0.isEnter = arg_2_1.isEnter
-	arg_2_0.maxScore = arg_2_1.maxScore
+function Season166BaseSpotMO:setData(info)
+	self.id = info.id
+	self.isEnter = info.isEnter
+	self.maxScore = info.maxScore
 end
 
-return var_0_0
+return Season166BaseSpotMO

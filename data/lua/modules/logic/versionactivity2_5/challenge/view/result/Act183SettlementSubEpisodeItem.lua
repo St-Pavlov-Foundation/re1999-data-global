@@ -1,103 +1,106 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.result.Act183SettlementSubEpisodeItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/result/Act183SettlementSubEpisodeItem.lua
 
-local var_0_0 = class("Act183SettlementSubEpisodeItem", LuaCompBase)
+module("modules.logic.versionactivity2_5.challenge.view.result.Act183SettlementSubEpisodeItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._imageindex = gohelper.findChildImage(arg_1_1, "image_index")
-	arg_1_0._imagestar = gohelper.findChildImage(arg_1_1, "image_star")
-	arg_1_0._gobadgebg = gohelper.findChild(arg_1_1, "mask")
-	arg_1_0._txtbadgenum = gohelper.findChildText(arg_1_1, "txt_badgenum")
-	arg_1_0._imageruleicon1 = gohelper.findChildImage(arg_1_1, "rules/go_rule1/image_icon")
-	arg_1_0._gorepress1 = gohelper.findChild(arg_1_1, "rules/go_rule1/go_repress")
-	arg_1_0._goescape1 = gohelper.findChild(arg_1_1, "rules/go_rule1/go_escape")
-	arg_1_0._imageruleicon2 = gohelper.findChildImage(arg_1_1, "rules/go_rule2/image_icon")
-	arg_1_0._gorepress2 = gohelper.findChild(arg_1_1, "rules/go_rule2/go_repress")
-	arg_1_0._goescape2 = gohelper.findChild(arg_1_1, "rules/go_rule2/go_escape")
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_1, "image_episode")
-	arg_1_0._goherocontainer = gohelper.findChild(arg_1_1, "heros")
-	arg_1_0._gorules1 = gohelper.findChild(arg_1_1, "rules")
-	arg_1_0._gorules2 = gohelper.findChild(arg_1_1, "rules2")
-	arg_1_0._gorepress1_v2 = gohelper.findChild(arg_1_1, "rules2/go_rule1/go_repress")
-	arg_1_0._goescape1_v2 = gohelper.findChild(arg_1_1, "rules2/go_rule1/go_escape")
-	arg_1_0._imageruleicon2_v2 = gohelper.findChildImage(arg_1_1, "rules2/go_rule2/image_icon")
-	arg_1_0._gorepress2_v2 = gohelper.findChild(arg_1_1, "rules2/go_rule2/go_repress")
+local Act183SettlementSubEpisodeItem = class("Act183SettlementSubEpisodeItem", LuaCompBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Act183SettlementSubEpisodeItem:init(go)
+	self.go = go
+	self._imageindex = gohelper.findChildImage(go, "image_index")
+	self._imagestar = gohelper.findChildImage(go, "image_star")
+	self._gobadgebg = gohelper.findChild(go, "mask")
+	self._txtbadgenum = gohelper.findChildText(go, "txt_badgenum")
+	self._imageruleicon1 = gohelper.findChildImage(go, "rules/go_rule1/image_icon")
+	self._gorepress1 = gohelper.findChild(go, "rules/go_rule1/go_repress")
+	self._goescape1 = gohelper.findChild(go, "rules/go_rule1/go_escape")
+	self._imageruleicon2 = gohelper.findChildImage(go, "rules/go_rule2/image_icon")
+	self._gorepress2 = gohelper.findChild(go, "rules/go_rule2/go_repress")
+	self._goescape2 = gohelper.findChild(go, "rules/go_rule2/go_escape")
+	self._imageicon = gohelper.findChildImage(go, "image_episode")
+	self._goherocontainer = gohelper.findChild(go, "heros")
+	self._gorules1 = gohelper.findChild(go, "rules")
+	self._gorules2 = gohelper.findChild(go, "rules2")
+	self._gorepress1_v2 = gohelper.findChild(go, "rules2/go_rule1/go_repress")
+	self._goescape1_v2 = gohelper.findChild(go, "rules2/go_rule1/go_escape")
+	self._imageruleicon2_v2 = gohelper.findChildImage(go, "rules2/go_rule2/image_icon")
+	self._gorepress2_v2 = gohelper.findChild(go, "rules2/go_rule2/go_repress")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function Act183SettlementSubEpisodeItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Act183SettlementSubEpisodeItem:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._herogroupComp = MonoHelper.addLuaComOnceToGo(arg_4_0._goherocontainer, Act183SettlementSubEpisodeHeroComp)
+function Act183SettlementSubEpisodeItem:_editableInitView()
+	self._herogroupComp = MonoHelper.addLuaComOnceToGo(self._goherocontainer, Act183SettlementSubEpisodeHeroComp)
 end
 
-function var_0_0.setHeroTemplate(arg_5_0, arg_5_1)
-	if arg_5_0._herogroupComp then
-		arg_5_0._herogroupComp:setHeroTemplate(arg_5_1)
+function Act183SettlementSubEpisodeItem:setHeroTemplate(templateGo)
+	if self._herogroupComp then
+		self._herogroupComp:setHeroTemplate(templateGo)
 	end
 end
 
-function var_0_0.onUpdateMO(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = arg_6_2:isAllConditionPass()
-	local var_6_1 = arg_6_2:getUseBadgeNum()
+function Act183SettlementSubEpisodeItem:onUpdateMO(groupRecordMo, episodeRecordMo)
+	local isAllConditionPass = episodeRecordMo:isAllConditionPass()
+	local useBadgeNum = episodeRecordMo:getUseBadgeNum()
 
-	UISpriteSetMgr.instance:setChallengeSprite(arg_6_0._imageindex, "v2a5_challenge_result_level_" .. arg_6_2:getPassOrder())
+	UISpriteSetMgr.instance:setChallengeSprite(self._imageindex, "v2a5_challenge_result_level_" .. episodeRecordMo:getPassOrder())
 
-	arg_6_0._txtbadgenum.text = var_6_1
+	self._txtbadgenum.text = useBadgeNum
 
-	gohelper.setActive(arg_6_0._txtbadgenum.gameObject, var_6_1 > 0)
-	gohelper.setActive(arg_6_0._gobadgebg, var_6_1 > 0)
+	gohelper.setActive(self._txtbadgenum.gameObject, useBadgeNum > 0)
+	gohelper.setActive(self._gobadgebg, useBadgeNum > 0)
 
-	local var_6_2 = arg_6_2:getEpisodeId()
+	local episodeId = episodeRecordMo:getEpisodeId()
 
-	Act183Helper.setRuleIcon(var_6_2, 1, arg_6_0._imageruleicon1)
-	Act183Helper.setRuleIcon(var_6_2, 2, arg_6_0._imageruleicon2)
-	Act183Helper.setSubEpisodeResultIcon(var_6_2, arg_6_0._imageicon)
-	arg_6_0:refreshRepressIcon(arg_6_2)
-	arg_6_0:refreshHeroGroup(arg_6_2)
-	Act183Helper.setEpisodeConditionStar(arg_6_0._imagestar, var_6_0, nil)
-	gohelper.setActive(arg_6_0.go, true)
+	Act183Helper.setRuleIcon(episodeId, 1, self._imageruleicon1)
+	Act183Helper.setRuleIcon(episodeId, 2, self._imageruleicon2)
+	Act183Helper.setSubEpisodeResultIcon(episodeId, self._imageicon)
+	self:refreshRepressIcon(episodeRecordMo)
+	self:refreshHeroGroup(episodeRecordMo)
+	Act183Helper.setEpisodeConditionStar(self._imagestar, isAllConditionPass, nil)
+	gohelper.setActive(self.go, true)
 end
 
-function var_0_0.refreshRepressIcon(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_1:getRuleStatus(1)
-	local var_7_1 = arg_7_1:getRuleStatus(2)
-	local var_7_2 = arg_7_1:getHeroMos()
-	local var_7_3 = (var_7_2 and #var_7_2 or 0) == 5
+function Act183SettlementSubEpisodeItem:refreshRepressIcon(episodeRecordMo)
+	local rulestatus1 = episodeRecordMo:getRuleStatus(1)
+	local rulestatus2 = episodeRecordMo:getRuleStatus(2)
+	local heroMos = episodeRecordMo:getHeroMos()
+	local heroCount = heroMos and #heroMos or 0
+	local useRepressIcon_v2 = heroCount == 5
 
-	if var_7_3 then
-		gohelper.setActive(arg_7_0._gorepress1_v2, var_7_0 == Act183Enum.RuleStatus.Repress)
-		gohelper.setActive(arg_7_0._gorepress2_v2, var_7_1 == Act183Enum.RuleStatus.Repress)
-		gohelper.setActive(arg_7_0._goescape1_v2, var_7_0 == Act183Enum.RuleStatus.Escape)
-		gohelper.setActive(arg_7_0._goescape2_v2, var_7_1 == Act183Enum.RuleStatus.Escape)
+	if useRepressIcon_v2 then
+		gohelper.setActive(self._gorepress1_v2, rulestatus1 == Act183Enum.RuleStatus.Repress)
+		gohelper.setActive(self._gorepress2_v2, rulestatus2 == Act183Enum.RuleStatus.Repress)
+		gohelper.setActive(self._goescape1_v2, rulestatus1 == Act183Enum.RuleStatus.Escape)
+		gohelper.setActive(self._goescape2_v2, rulestatus2 == Act183Enum.RuleStatus.Escape)
 	else
-		gohelper.setActive(arg_7_0._gorepress1, var_7_0 == Act183Enum.RuleStatus.Repress)
-		gohelper.setActive(arg_7_0._gorepress2, var_7_1 == Act183Enum.RuleStatus.Repress)
-		gohelper.setActive(arg_7_0._goescape1, var_7_0 == Act183Enum.RuleStatus.Escape)
-		gohelper.setActive(arg_7_0._goescape2, var_7_1 == Act183Enum.RuleStatus.Escape)
+		gohelper.setActive(self._gorepress1, rulestatus1 == Act183Enum.RuleStatus.Repress)
+		gohelper.setActive(self._gorepress2, rulestatus2 == Act183Enum.RuleStatus.Repress)
+		gohelper.setActive(self._goescape1, rulestatus1 == Act183Enum.RuleStatus.Escape)
+		gohelper.setActive(self._goescape2, rulestatus2 == Act183Enum.RuleStatus.Escape)
 	end
 
-	gohelper.setActive(arg_7_0._gorules1, not var_7_3)
-	gohelper.setActive(arg_7_0._gorules2, var_7_3)
+	gohelper.setActive(self._gorules1, not useRepressIcon_v2)
+	gohelper.setActive(self._gorules2, useRepressIcon_v2)
 end
 
-function var_0_0.refreshHeroGroup(arg_8_0, arg_8_1)
-	if arg_8_0._herogroupComp then
-		arg_8_0._herogroupComp:onUpdateMO(arg_8_1)
+function Act183SettlementSubEpisodeItem:refreshHeroGroup(episodeRecordMo)
+	if self._herogroupComp then
+		self._herogroupComp:onUpdateMO(episodeRecordMo)
 	end
 end
 
-function var_0_0.onDestroy(arg_9_0)
+function Act183SettlementSubEpisodeItem:onDestroy()
 	return
 end
 
-return var_0_0
+return Act183SettlementSubEpisodeItem

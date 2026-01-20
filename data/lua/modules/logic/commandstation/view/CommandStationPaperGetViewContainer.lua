@@ -1,11 +1,13 @@
-﻿module("modules.logic.commandstation.view.CommandStationPaperGetViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/commandstation/view/CommandStationPaperGetViewContainer.lua
 
-local var_0_0 = class("CommandStationPaperGetViewContainer", BaseViewContainer)
+module("modules.logic.commandstation.view.CommandStationPaperGetViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local CommandStationPaperGetViewContainer = class("CommandStationPaperGetViewContainer", BaseViewContainer)
+
+function CommandStationPaperGetViewContainer:buildViews()
 	return {
 		CommandStationPaperGetView.New()
 	}
 end
 
-return var_0_0
+return CommandStationPaperGetViewContainer

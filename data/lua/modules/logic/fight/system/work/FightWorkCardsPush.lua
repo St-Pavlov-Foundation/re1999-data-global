@@ -1,18 +1,20 @@
-﻿module("modules.logic.fight.system.work.FightWorkCardsPush", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkCardsPush.lua
 
-local var_0_0 = class("FightWorkCardsPush", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkCardsPush", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
+local FightWorkCardsPush = class("FightWorkCardsPush", FightEffectBase)
+
+function FightWorkCardsPush:onStart()
 	FightController.instance:dispatchEvent(FightEvent.RefreshHandCard)
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0._delayDone(arg_2_0)
-	arg_2_0:onDone(true)
+function FightWorkCardsPush:_delayDone()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
+function FightWorkCardsPush:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkCardsPush

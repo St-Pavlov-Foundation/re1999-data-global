@@ -1,532 +1,539 @@
-﻿module("modules.logic.versionactivity3_1.yeshumei.view.YeShuMeiGameView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/yeshumei/view/YeShuMeiGameView.lua
 
-local var_0_0 = class("YeShuMeiGameView", BaseView)
+module("modules.logic.versionactivity3_1.yeshumei.view.YeShuMeiGameView", package.seeall)
 
-var_0_0.GuideId = 31401
+local YeShuMeiGameView = class("YeShuMeiGameView", BaseView)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gogame = gohelper.findChild(arg_1_0.viewGO, "#go_Game")
-	arg_1_0._goshadow = gohelper.findChild(arg_1_0._gogame, "#go_shadow")
-	arg_1_0._goComplete = gohelper.findChild(arg_1_0._gogame, "#go_Complete")
-	arg_1_0._simageshadow = gohelper.findChildSingleImage(arg_1_0._gogame, "#go_shadow/#simage_shadow")
-	arg_1_0._imageshadow = gohelper.findChildImage(arg_1_0._gogame, "#go_shadow/#simage_shadow")
-	arg_1_0._goreview = gohelper.findChild(arg_1_0._gogame, "#btn_review")
-	arg_1_0._btnreview = gohelper.findChildButtonWithAudio(arg_1_0._gogame, "#btn_review")
-	arg_1_0._goreviewoff = gohelper.findChild(arg_1_0._gogame, "#btn_review/#go_State1")
-	arg_1_0._goreviewon = gohelper.findChild(arg_1_0._gogame, "#btn_review/#go_State2")
-	arg_1_0._gopointroot = gohelper.findChild(arg_1_0._gogame, "pointroot")
-	arg_1_0._gopoint = gohelper.findChild(arg_1_0._gogame, "pointroot/#go_point")
-	arg_1_0._golineroot = gohelper.findChild(arg_1_0._gogame, "lineroot")
-	arg_1_0._goline = gohelper.findChild(arg_1_0._gogame, "lineroot/#go_line")
-	arg_1_0._goshowline = gohelper.findChild(arg_1_0._gogame, "#go_showline")
-	arg_1_0._godrag = gohelper.findChild(arg_1_0._gogame, "#go_drag")
-	arg_1_0._goguid = gohelper.findChild(arg_1_0._gogame, "#go_guid")
-	arg_1_0._gotarget = gohelper.findChild(arg_1_0._gogame, "LeftTop/TargetList")
-	arg_1_0._gotargetitem = gohelper.findChild(arg_1_0._gogame, "LeftTop/TargetList/#go_TargetItem")
-	arg_1_0._goconditiontip = gohelper.findChild(arg_1_0.viewGO, "#go_conditiontip")
-	arg_1_0._txtconditiontip = gohelper.findChildText(arg_1_0.viewGO, "#go_conditiontip/Target/#txt_TargetDescr")
-	arg_1_0._btncomplete = gohelper.findChildButtonWithAudio(arg_1_0._gogame, "#go_Complete/#btn_complete")
-	arg_1_0._isHidePoint = false
-	arg_1_0._isReviewing = false
+YeShuMeiGameView.GuideId = 31401
 
-	gohelper.setActive(arg_1_0._goreviewoff, not arg_1_0._isReviewing)
-	gohelper.setActive(arg_1_0._goreviewon, arg_1_0._isReviewing)
-	gohelper.setActive(arg_1_0._btncomplete.gameObject, false)
+function YeShuMeiGameView:onInitView()
+	self._gogame = gohelper.findChild(self.viewGO, "#go_Game")
+	self._goshadow = gohelper.findChild(self._gogame, "#go_shadow")
+	self._goComplete = gohelper.findChild(self._gogame, "#go_Complete")
+	self._simageshadow = gohelper.findChildSingleImage(self._gogame, "#go_shadow/#simage_shadow")
+	self._imageshadow = gohelper.findChildImage(self._gogame, "#go_shadow/#simage_shadow")
+	self._goreview = gohelper.findChild(self._gogame, "#btn_review")
+	self._btnreview = gohelper.findChildButtonWithAudio(self._gogame, "#btn_review")
+	self._goreviewoff = gohelper.findChild(self._gogame, "#btn_review/#go_State1")
+	self._goreviewon = gohelper.findChild(self._gogame, "#btn_review/#go_State2")
+	self._gopointroot = gohelper.findChild(self._gogame, "pointroot")
+	self._gopoint = gohelper.findChild(self._gogame, "pointroot/#go_point")
+	self._golineroot = gohelper.findChild(self._gogame, "lineroot")
+	self._goline = gohelper.findChild(self._gogame, "lineroot/#go_line")
+	self._goshowline = gohelper.findChild(self._gogame, "#go_showline")
+	self._godrag = gohelper.findChild(self._gogame, "#go_drag")
+	self._goguid = gohelper.findChild(self._gogame, "#go_guid")
+	self._gotarget = gohelper.findChild(self._gogame, "LeftTop/TargetList")
+	self._gotargetitem = gohelper.findChild(self._gogame, "LeftTop/TargetList/#go_TargetItem")
+	self._goconditiontip = gohelper.findChild(self.viewGO, "#go_conditiontip")
+	self._txtconditiontip = gohelper.findChildText(self.viewGO, "#go_conditiontip/Target/#txt_TargetDescr")
+	self._btncomplete = gohelper.findChildButtonWithAudio(self._gogame, "#go_Complete/#btn_complete")
+	self._isHidePoint = false
+	self._isReviewing = false
 
-	arg_1_0._shadowAnimator = arg_1_0._goshadow:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._pointRootAnimator = arg_1_0._gopointroot:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._lineRootAnimator = arg_1_0._golineroot:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._shadowAnimOutTime = 0.333
+	gohelper.setActive(self._goreviewoff, not self._isReviewing)
+	gohelper.setActive(self._goreviewon, self._isReviewing)
+	gohelper.setActive(self._btncomplete.gameObject, false)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	self._shadowAnimator = self._goshadow:GetComponent(typeof(UnityEngine.Animator))
+	self._pointRootAnimator = self._gopointroot:GetComponent(typeof(UnityEngine.Animator))
+	self._lineRootAnimator = self._golineroot:GetComponent(typeof(UnityEngine.Animator))
+	self._shadowAnimOutTime = 0.333
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnreview:AddClickListener(arg_2_0._onClickReview, arg_2_0)
-	arg_2_0._btncomplete:AddClickListener(arg_2_0._onBtnComlete, arg_2_0)
-	CommonDragHelper.instance:registerDragObj(arg_2_0._godrag, arg_2_0._onDragBeginPoint, arg_2_0._onDragPoint, arg_2_0._onDragEndPoint, nil, arg_2_0, nil, true)
-	arg_2_0:addEventCb(YeShuMeiController.instance, YeShuMeiEvent.ShowGuideDrag, arg_2_0._showGuideDrag, arg_2_0)
-	arg_2_0:addEventCb(YeShuMeiController.instance, YeShuMeiEvent.OnClickShadowGuide, arg_2_0._onClickShadow, arg_2_0)
+function YeShuMeiGameView:addEvents()
+	self._btnreview:AddClickListener(self._onClickReview, self)
+	self._btncomplete:AddClickListener(self._onBtnComlete, self)
+	CommonDragHelper.instance:registerDragObj(self._godrag, self._onDragBeginPoint, self._onDragPoint, self._onDragEndPoint, nil, self, nil, true)
+	self:addEventCb(YeShuMeiController.instance, YeShuMeiEvent.ShowGuideDrag, self._showGuideDrag, self)
+	self:addEventCb(YeShuMeiController.instance, YeShuMeiEvent.OnClickShadowGuide, self._onClickShadow, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnreview:RemoveClickListener()
-	arg_3_0._btncomplete:RemoveClickListener()
-	CommonDragHelper.instance:unregisterDragObj(arg_3_0._godrag)
-	arg_3_0:removeEventCb(YeShuMeiController.instance, YeShuMeiEvent.ShowGuideDrag, arg_3_0._showGuideDrag, arg_3_0)
-	arg_3_0:removeEventCb(YeShuMeiController.instance, YeShuMeiEvent.OnClickShadowGuide, arg_3_0._onClickShadow, arg_3_0)
+function YeShuMeiGameView:removeEvents()
+	self._btnreview:RemoveClickListener()
+	self._btncomplete:RemoveClickListener()
+	CommonDragHelper.instance:unregisterDragObj(self._godrag)
+	self:removeEventCb(YeShuMeiController.instance, YeShuMeiEvent.ShowGuideDrag, self._showGuideDrag, self)
+	self:removeEventCb(YeShuMeiController.instance, YeShuMeiEvent.OnClickShadowGuide, self._onClickShadow, self)
 end
 
-function var_0_0._onClickShadow(arg_4_0)
-	gohelper.setActive(arg_4_0._goshadow, false)
-	arg_4_0._pointRootAnimator:Play("in", 0, 0)
-	arg_4_0._lineRootAnimator:Play("in", 0, 0)
-	arg_4_0:_initPoint()
-	gohelper.setActive(arg_4_0._godrag, true)
+function YeShuMeiGameView:_onClickShadow()
+	gohelper.setActive(self._goshadow, false)
+	self._pointRootAnimator:Play("in", 0, 0)
+	self._lineRootAnimator:Play("in", 0, 0)
+	self:_initPoint()
+	gohelper.setActive(self._godrag, true)
 end
 
-function var_0_0._onClickReview(arg_5_0)
-	if GuideModel.instance:isGuideRunning(var_0_0.GuideId) then
+function YeShuMeiGameView:_onClickReview()
+	if GuideModel.instance:isGuideRunning(YeShuMeiGameView.GuideId) then
 		return
 	end
 
-	if arg_5_0._pointItem == nil then
+	if self._pointItem == nil then
 		return
 	end
 
-	if arg_5_0._isReviewing then
+	if self._isReviewing then
 		return
 	end
 
-	local var_5_0 = YeShuMeiGameModel.instance:getNeedCheckPointList()
+	local list = YeShuMeiGameModel.instance:getNeedCheckPointList()
 
-	if var_5_0 and #var_5_0 >= 2 then
-		GameFacade.showMessageBox(MessageBoxIdDefine.V3A1YeShuMei_ResetGame, MsgBoxEnum.BoxType.Yes_No, arg_5_0.resetGame, nil, nil, arg_5_0)
+	if list and #list >= 2 then
+		GameFacade.showMessageBox(MessageBoxIdDefine.V3A1YeShuMei_ResetGame, MsgBoxEnum.BoxType.Yes_No, self.resetGame, nil, nil, self)
 	else
-		arg_5_0:_reviewShadow()
+		self:_reviewShadow()
 	end
 end
 
-function var_0_0._reviewShadow(arg_6_0)
-	arg_6_0:_hidePoint()
-	gohelper.setActive(arg_6_0._goshadow, true)
-	gohelper.setActive(arg_6_0._godrag, false)
+function YeShuMeiGameView:_reviewShadow()
+	self:_hidePoint()
+	gohelper.setActive(self._goshadow, true)
+	gohelper.setActive(self._godrag, false)
 
-	arg_6_0._isReviewing = true
+	self._isReviewing = true
 
-	gohelper.setActive(arg_6_0._goreviewoff, not arg_6_0._isReviewing)
-	gohelper.setActive(arg_6_0._goreviewon, arg_6_0._isReviewing)
-	TaskDispatcher.runDelay(arg_6_0._onClickUp, arg_6_0, arg_6_0._reviewShowShadowTime)
+	gohelper.setActive(self._goreviewoff, not self._isReviewing)
+	gohelper.setActive(self._goreviewon, self._isReviewing)
+	TaskDispatcher.runDelay(self._onClickUp, self, self._reviewShowShadowTime)
 end
 
-function var_0_0._onClickUp(arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0._onClickUp, arg_7_0)
-	arg_7_0._shadowAnimator:Play("out", 0, 0)
-	TaskDispatcher.runDelay(arg_7_0._onClickShadowOut, arg_7_0, arg_7_0._shadowAnimOutTime)
+function YeShuMeiGameView:_onClickUp()
+	TaskDispatcher.cancelTask(self._onClickUp, self)
+	self._shadowAnimator:Play("out", 0, 0)
+	TaskDispatcher.runDelay(self._onClickShadowOut, self, self._shadowAnimOutTime)
 end
 
-function var_0_0._onClickShadowOut(arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0._onClickShadowOut, arg_8_0)
-	arg_8_0:_showPoint()
-	gohelper.setActive(arg_8_0._goshadow, false)
-	gohelper.setActive(arg_8_0._godrag, true)
-	arg_8_0:_clearReview()
+function YeShuMeiGameView:_onClickShadowOut()
+	TaskDispatcher.cancelTask(self._onClickShadowOut, self)
+	self:_showPoint()
+	gohelper.setActive(self._goshadow, false)
+	gohelper.setActive(self._godrag, true)
+	self:_clearReview()
 end
 
-function var_0_0._clearReview(arg_9_0)
-	arg_9_0._isReviewing = false
+function YeShuMeiGameView:_clearReview()
+	self._isReviewing = false
 
-	gohelper.setActive(arg_9_0._goreviewoff, not arg_9_0._isReviewing)
-	gohelper.setActive(arg_9_0._goreviewon, arg_9_0._isReviewing)
+	gohelper.setActive(self._goreviewoff, not self._isReviewing)
+	gohelper.setActive(self._goreviewon, self._isReviewing)
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0._episodeId = arg_10_0.viewParam
-	arg_10_0._config = YeShuMeiGameModel.instance:getCurGameConfig()
-	arg_10_0._beforeShowShadowTime = YeShuMeiConfig.instance:getConstValueNumber(YeShuMeiEnum.BeForePlayGame)
-	arg_10_0._finishShowShadowTime = YeShuMeiConfig.instance:getConstValueNumber(YeShuMeiEnum.AfterPlayGame)
-	arg_10_0._reviewShowShadowTime = YeShuMeiConfig.instance:getConstValueNumber(YeShuMeiEnum.ReViewTime)
-	arg_10_0._switchShowShadowTime = 1.5
+function YeShuMeiGameView:onOpen()
+	self._episodeId = self.viewParam
+	self._config = YeShuMeiGameModel.instance:getCurGameConfig()
+	self._beforeShowShadowTime = YeShuMeiConfig.instance:getConstValueNumber(YeShuMeiEnum.BeForePlayGame)
+	self._finishShowShadowTime = YeShuMeiConfig.instance:getConstValueNumber(YeShuMeiEnum.AfterPlayGame)
+	self._reviewShowShadowTime = YeShuMeiConfig.instance:getConstValueNumber(YeShuMeiEnum.ReViewTime)
+	self._switchShowShadowTime = 1.5
 
-	arg_10_0:_initView()
+	self:_initView()
 end
 
-function var_0_0._initView(arg_11_0)
-	arg_11_0._gameMo = YeShuMeiGameModel.instance:getGameMo()
+function YeShuMeiGameView:_initView()
+	self._gameMo = YeShuMeiGameModel.instance:getGameMo()
 
-	arg_11_0:_initCondition()
-	arg_11_0:_showCondition()
+	self:_initCondition()
+	self:_showCondition()
 end
 
-function var_0_0._initCondition(arg_12_0)
-	arg_12_0._txtconditiontip.text = arg_12_0._config and arg_12_0._config.desc
+function YeShuMeiGameView:_initCondition()
+	self._txtconditiontip.text = self._config and self._config.desc
 end
 
-function var_0_0._showCondition(arg_13_0)
-	gohelper.setActive(arg_13_0._goconditiontip, true)
+function YeShuMeiGameView:_showCondition()
+	gohelper.setActive(self._goconditiontip, true)
 	AudioMgr.instance:trigger(AudioEnum3_1.YeShuMei.play_ui_mingdi_ysm_mubiao)
-	gohelper.setActive(arg_13_0._gogame, false)
-	TaskDispatcher.runDelay(arg_13_0._initGame, arg_13_0, 2.8)
+	gohelper.setActive(self._gogame, false)
+	TaskDispatcher.runDelay(self._initGame, self, 2.8)
 end
 
-function var_0_0._initGame(arg_14_0)
-	gohelper.setActive(arg_14_0._gogame, true)
-	gohelper.setActive(arg_14_0._goconditiontip, false)
-	gohelper.setActive(arg_14_0._goComplete, false)
-	arg_14_0:_initTargetList()
+function YeShuMeiGameView:_initGame()
+	gohelper.setActive(self._gogame, true)
+	gohelper.setActive(self._goconditiontip, false)
+	gohelper.setActive(self._goComplete, false)
+	self:_initTargetList()
 
-	if GuideModel.instance:isStepFinish(var_0_0.GuideId, 2) or GuideController.instance:isForbidGuides() then
-		arg_14_0:_showShadow()
+	local isFinishedGuide = GuideModel.instance:isStepFinish(YeShuMeiGameView.GuideId, 2)
+
+	if isFinishedGuide or GuideController.instance:isForbidGuides() then
+		self:_showShadow()
 	else
-		local var_14_0 = YeShuMeiGameModel.instance:getCurrentLevelIndex()
+		local index = YeShuMeiGameModel.instance:getCurrentLevelIndex()
 
-		if not arg_14_0._bgList then
-			if not arg_14_0._config or not arg_14_0._config.shadowBg then
+		if not self._bgList then
+			if not self._config or not self._config.shadowBg then
 				return
 			end
 
-			arg_14_0._bgList = string.split(arg_14_0._config.shadowBg, "#")
+			self._bgList = string.split(self._config.shadowBg, "#")
 		end
 
-		if arg_14_0._bgList and #arg_14_0._bgList > 0 then
-			local var_14_1 = arg_14_0._bgList[var_14_0]
+		if self._bgList and #self._bgList > 0 then
+			local url = self._bgList[index]
 
-			arg_14_0._simageshadow:LoadImage(ResUrl.getV3a1YeShuMeiSingleBg(var_14_1), arg_14_0._loadedImage, arg_14_0)
+			self._simageshadow:LoadImage(ResUrl.getV3a1YeShuMeiSingleBg(url), self._loadedImage, self)
 		end
 
-		gohelper.setActive(arg_14_0._goshadow, true)
-		gohelper.setActive(arg_14_0._godrag, false)
+		gohelper.setActive(self._goshadow, true)
+		gohelper.setActive(self._godrag, false)
 	end
 end
 
-function var_0_0.resetGame(arg_15_0)
+function YeShuMeiGameView:resetGame()
 	YeShuMeiStatHelper.instance:sendGameReset()
-	arg_15_0:_deletePoint()
-	arg_15_0:_clearLines()
+	self:_deletePoint()
+	self:_clearLines()
 	YeShuMeiGameModel.instance:_onStart()
-	arg_15_0:_initPoint()
-	arg_15_0:_reviewShadow()
+	self:_initPoint()
+	self:_reviewShadow()
 end
 
-function var_0_0._initTargetList(arg_16_0)
-	arg_16_0._targetDescList = {}
-	arg_16_0._targetItemList = {}
+function YeShuMeiGameView:_initTargetList()
+	self._targetDescList = {}
+	self._targetItemList = {}
 
-	local var_16_0 = arg_16_0._config and arg_16_0._config.targetDesc
+	local targetdesc = self._config and self._config.targetDesc
 
-	if not string.nilorempty(var_16_0) then
-		arg_16_0._targetdescList = string.split(var_16_0, "#")
+	if not string.nilorempty(targetdesc) then
+		self._targetdescList = string.split(targetdesc, "#")
 	end
 
-	if #arg_16_0._targetdescList > 0 then
-		gohelper.CreateObjList(arg_16_0, arg_16_0._createTargetItem, arg_16_0._targetdescList, arg_16_0._gotarget, arg_16_0._gotargetitem)
+	if #self._targetdescList > 0 then
+		gohelper.CreateObjList(self, self._createTargetItem, self._targetdescList, self._gotarget, self._gotargetitem)
 	end
 end
 
-function var_0_0._createTargetItem(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	local var_17_0 = arg_17_0:getUserDataTb_()
+function YeShuMeiGameView:_createTargetItem(obj, data, index)
+	local item = self:getUserDataTb_()
 
-	var_17_0.index = arg_17_3
-	var_17_0.gook = gohelper.findChild(arg_17_1, "#go_TargetOK")
-	var_17_0.txtdesc = gohelper.findChildText(arg_17_1, "#txt_TargetDesc")
-	var_17_0.govx = gohelper.findChild(arg_17_1, "vx_glow")
-	var_17_0.txtdesc.text = arg_17_2
-	arg_17_0._targetItemList[arg_17_3] = var_17_0
+	item.index = index
+	item.gook = gohelper.findChild(obj, "#go_TargetOK")
+	item.txtdesc = gohelper.findChildText(obj, "#txt_TargetDesc")
+	item.govx = gohelper.findChild(obj, "vx_glow")
+	item.txtdesc.text = data
+	self._targetItemList[index] = item
 end
 
-function var_0_0._showShadow(arg_18_0, arg_18_1)
-	local var_18_0 = YeShuMeiGameModel.instance:getCurrentLevelIndex()
+function YeShuMeiGameView:_showShadow(isNext)
+	local index = YeShuMeiGameModel.instance:getCurrentLevelIndex()
 
-	if not arg_18_0._bgList then
-		if not arg_18_0._config or not arg_18_0._config.shadowBg then
+	if not self._bgList then
+		if not self._config or not self._config.shadowBg then
 			return
 		end
 
-		arg_18_0._bgList = string.split(arg_18_0._config.shadowBg, "#")
+		self._bgList = string.split(self._config.shadowBg, "#")
 	end
 
-	if arg_18_0._bgList and #arg_18_0._bgList > 0 then
-		local var_18_1 = arg_18_0._bgList[var_18_0]
+	if self._bgList and #self._bgList > 0 then
+		local url = self._bgList[index]
 
-		arg_18_0._simageshadow:LoadImage(ResUrl.getV3a1YeShuMeiSingleBg(var_18_1), arg_18_0._loadedImage, arg_18_0)
+		self._simageshadow:LoadImage(ResUrl.getV3a1YeShuMeiSingleBg(url), self._loadedImage, self)
 	end
 
-	gohelper.setActive(arg_18_0._goshadow, true)
-	gohelper.setActive(arg_18_0._godrag, false)
+	gohelper.setActive(self._goshadow, true)
+	gohelper.setActive(self._godrag, false)
 
-	if arg_18_1 then
-		arg_18_0._shadowAnimator:Play("insp", 0, 0)
+	if isNext then
+		self._shadowAnimator:Play("insp", 0, 0)
 		AudioMgr.instance:trigger(AudioEnum3_1.YeShuMei.play_ui_mingdi_ysm_wipe)
-		TaskDispatcher.runDelay(arg_18_0._switchShowShadow, arg_18_0, arg_18_0._switchShowShadowTime)
+		TaskDispatcher.runDelay(self._switchShowShadow, self, self._switchShowShadowTime)
 	else
-		TaskDispatcher.runDelay(arg_18_0._afterShowShadow, arg_18_0, arg_18_0._beforeShowShadowTime)
+		TaskDispatcher.runDelay(self._afterShowShadow, self, self._beforeShowShadowTime)
 	end
 end
 
-function var_0_0._switchShowShadow(arg_19_0)
-	TaskDispatcher.cancelTask(arg_19_0._switchShowShadow, arg_19_0)
-	TaskDispatcher.runDelay(arg_19_0._afterShowShadow, arg_19_0, arg_19_0._beforeShowShadowTime)
+function YeShuMeiGameView:_switchShowShadow()
+	TaskDispatcher.cancelTask(self._switchShowShadow, self)
+	TaskDispatcher.runDelay(self._afterShowShadow, self, self._beforeShowShadowTime)
 end
 
-function var_0_0._loadedImage(arg_20_0)
-	arg_20_0._imageshadow:SetNativeSize()
+function YeShuMeiGameView:_loadedImage()
+	self._imageshadow:SetNativeSize()
 end
 
-function var_0_0._afterShowShadow(arg_21_0)
-	TaskDispatcher.cancelTask(arg_21_0._afterShowShadow, arg_21_0)
-	gohelper.setActive(arg_21_0._btnreview.gameObject, true)
-	gohelper.setActive(arg_21_0._goshadow, false)
-	gohelper.setActive(arg_21_0._godrag, true)
-	arg_21_0._pointRootAnimator:Play("in", 0, 0)
-	arg_21_0._lineRootAnimator:Play("in", 0, 0)
-	arg_21_0:_initPoint()
-	arg_21_0:_showPoint()
+function YeShuMeiGameView:_afterShowShadow()
+	TaskDispatcher.cancelTask(self._afterShowShadow, self)
+	gohelper.setActive(self._btnreview.gameObject, true)
+	gohelper.setActive(self._goshadow, false)
+	gohelper.setActive(self._godrag, true)
+	self._pointRootAnimator:Play("in", 0, 0)
+	self._lineRootAnimator:Play("in", 0, 0)
+	self:_initPoint()
+	self:_showPoint()
 end
 
-function var_0_0._hidePoint(arg_22_0)
-	if arg_22_0._isHidePoint then
+function YeShuMeiGameView:_hidePoint()
+	if self._isHidePoint then
 		return
 	end
 
-	arg_22_0._isHidePoint = true
+	self._isHidePoint = true
 
-	if arg_22_0._pointItem and #arg_22_0._pointItem > 0 then
-		for iter_22_0, iter_22_1 in ipairs(arg_22_0._pointItem) do
-			gohelper.setActive(iter_22_1.go, false)
+	if self._pointItem and #self._pointItem > 0 then
+		for _, point in ipairs(self._pointItem) do
+			gohelper.setActive(point.go, false)
 		end
 	end
 end
 
-function var_0_0._showPoint(arg_23_0)
-	arg_23_0._isHidePoint = false
+function YeShuMeiGameView:_showPoint()
+	self._isHidePoint = false
 
-	if arg_23_0._pointItem and #arg_23_0._pointItem > 0 then
-		for iter_23_0, iter_23_1 in ipairs(arg_23_0._pointItem) do
-			gohelper.setActive(iter_23_1.go, true)
+	if self._pointItem and #self._pointItem > 0 then
+		for _, point in ipairs(self._pointItem) do
+			gohelper.setActive(point.go, true)
 		end
 	end
 
 	AudioMgr.instance:trigger(AudioEnum3_1.YeShuMei.play_ui_mingdi_ysm_dian)
 end
 
-function var_0_0._deletePoint(arg_24_0)
-	if not arg_24_0._pointItem then
+function YeShuMeiGameView:_deletePoint()
+	if not self._pointItem then
 		return
 	end
 
-	for iter_24_0, iter_24_1 in ipairs(arg_24_0._pointItem) do
-		gohelper.destroy(iter_24_1.go)
-		iter_24_1.mo:clearPoint()
+	for _, item in ipairs(self._pointItem) do
+		gohelper.destroy(item.go)
+		item.mo:clearPoint()
 	end
 
-	arg_24_0._pointItem = nil
+	self._pointItem = nil
 end
 
-function var_0_0._initPoint(arg_25_0)
-	if arg_25_0._pointItem == nil then
-		arg_25_0._pointItem = arg_25_0:getUserDataTb_()
+function YeShuMeiGameView:_initPoint()
+	if self._pointItem == nil then
+		self._pointItem = self:getUserDataTb_()
 	end
 
-	local var_25_0 = arg_25_0._gameMo:getAllPoint()
+	local allPoint = self._gameMo:getAllPoint()
 
-	if var_25_0 == nil then
+	if allPoint == nil then
 		return
 	end
 
-	for iter_25_0, iter_25_1 in pairs(var_25_0) do
-		if arg_25_0._pointItem[iter_25_1.id] == nil then
-			local var_25_1 = arg_25_0:getUserDataTb_()
+	for _, pointmo in pairs(allPoint) do
+		local item = self._pointItem[pointmo.id]
 
-			var_25_1.go = gohelper.clone(arg_25_0._gopoint, arg_25_0._gopointroot, "point" .. iter_25_1.id)
-			var_25_1.comp = MonoHelper.addNoUpdateLuaComOnceToGo(var_25_1.go, YeShuMeiPointItem)
-			var_25_1.mo = iter_25_1
-			arg_25_0._pointItem[iter_25_1.id] = var_25_1
+		if item == nil then
+			local point = self:getUserDataTb_()
 
-			var_25_1.comp:updateInfo(iter_25_1)
+			point.go = gohelper.clone(self._gopoint, self._gopointroot, "point" .. pointmo.id)
+			point.comp = MonoHelper.addNoUpdateLuaComOnceToGo(point.go, YeShuMeiPointItem)
+			point.mo = pointmo
+			self._pointItem[pointmo.id] = point
+
+			point.comp:updateInfo(pointmo)
 		end
 	end
 end
 
-function var_0_0._onDragBeginPoint(arg_26_0, arg_26_1, arg_26_2)
-	if arg_26_0._isReviewing then
+function YeShuMeiGameView:_onDragBeginPoint(_, pointerEventData)
+	if self._isReviewing then
 		return
 	end
 
-	local var_26_0 = arg_26_2.position
-	local var_26_1, var_26_2 = recthelper.screenPosToAnchorPos2(var_26_0, arg_26_0.viewGO.transform)
+	local position = pointerEventData.position
+	local mousePosX, mousePosY = recthelper.screenPosToAnchorPos2(position, self.viewGO.transform)
 
 	if YeShuMeiGameModel.instance:checkNeedCheckListEmpty() then
-		local var_26_3 = YeShuMeiGameModel.instance:getStartPointIds()
+		local curStartPointIds = YeShuMeiGameModel.instance:getStartPointIds()
 
-		if var_26_3 then
-			for iter_26_0, iter_26_1 in ipairs(var_26_3) do
-				local var_26_4 = YeShuMeiGameModel.instance:getPointById(iter_26_1)
+		if curStartPointIds then
+			for index, pointId in ipairs(curStartPointIds) do
+				local pointMo = YeShuMeiGameModel.instance:getPointById(pointId)
 
-				if var_26_4 and var_26_4:isInCanConnectionRange(var_26_1, var_26_2) then
-					arg_26_0._canDrag = true
+				if pointMo and pointMo:isInCanConnectionRange(mousePosX, mousePosY) then
+					self._canDrag = true
 
 					break
 				end
 			end
 		end
 	else
-		local var_26_5 = YeShuMeiGameModel.instance:getCurStartPointId()
-		local var_26_6 = YeShuMeiGameModel.instance:getPointById(var_26_5)
+		local curStartPointId = YeShuMeiGameModel.instance:getCurStartPointId()
+		local pointMo = YeShuMeiGameModel.instance:getPointById(curStartPointId)
 
-		if var_26_6 and var_26_6:isInCanConnectionRange(var_26_1, var_26_2) then
-			arg_26_0._canDrag = true
+		if pointMo and pointMo:isInCanConnectionRange(mousePosX, mousePosY) then
+			self._canDrag = true
 		else
-			arg_26_0._canDrag = false
+			self._canDrag = false
 		end
 	end
 end
 
-function var_0_0._onDragPoint(arg_27_0, arg_27_1, arg_27_2)
-	if not arg_27_0._canDrag then
+function YeShuMeiGameView:_onDragPoint(_, pointerEventData)
+	if not self._canDrag then
 		return
 	end
 
-	local var_27_0 = arg_27_2.position
-	local var_27_1, var_27_2 = recthelper.screenPosToAnchorPos2(var_27_0, arg_27_0.viewGO.transform)
+	local position = pointerEventData.position
+	local mousePosX, mousePosY = recthelper.screenPosToAnchorPos2(position, self.viewGO.transform)
+	local hasNewValidPoint = YeShuMeiGameModel.instance:checkDiffPosAndConnection(mousePosX, mousePosY)
 
-	if YeShuMeiGameModel.instance:checkDiffPosAndConnection(var_27_1, var_27_2) then
-		local var_27_3 = YeShuMeiGameModel.instance:getStartState()
-		local var_27_4 = YeShuMeiGameModel.instance:getNeedCheckPointList()
-		local var_27_5 = YeShuMeiGameModel.instance:getConfigStartPointIds()
+	if hasNewValidPoint then
+		local isStart = YeShuMeiGameModel.instance:getStartState()
+		local pointIdList = YeShuMeiGameModel.instance:getNeedCheckPointList()
+		local curStartPointIds = YeShuMeiGameModel.instance:getConfigStartPointIds()
 
-		if not var_27_3 then
-			for iter_27_0, iter_27_1 in ipairs(var_27_5) do
-				local var_27_6 = arg_27_0._pointItem[iter_27_1]
+		if not isStart then
+			for _, pointId in ipairs(curStartPointIds) do
+				local point = self._pointItem[pointId]
 
-				if var_27_6 and var_27_6.comp then
-					var_27_6.comp:updateUI()
+				if point and point.comp then
+					point.comp:updateUI()
 				end
 			end
 
 			YeShuMeiGameModel.instance:setStartState(true)
 		end
 
-		if var_27_4 and #var_27_4 > 0 then
-			for iter_27_2, iter_27_3 in ipairs(var_27_4) do
-				local var_27_7 = arg_27_0._pointItem[iter_27_3]
+		if pointIdList and #pointIdList > 0 then
+			for _, pointId in ipairs(pointIdList) do
+				local point = self._pointItem[pointId]
 
-				if var_27_7 and var_27_7.comp then
-					var_27_7.comp:updateUI()
+				if point and point.comp then
+					point.comp:updateUI()
 				end
 			end
 
-			arg_27_0:checkCreateLine(var_27_4)
+			self:checkCreateLine(pointIdList)
 		end
 	end
 
 	if YeShuMeiGameModel.instance:getCurrentLevelComplete() then
-		arg_27_0:_updateTargetList()
+		self:_updateTargetList()
 
 		if YeShuMeiGameModel.instance:checkHaveNextLevel() then
 			UIBlockMgr.instance:startBlock("YeShuMeiGameView_NextLevel")
-			arg_27_0:updateCurLine(nil, false)
-			gohelper.setActive(arg_27_0._goshadow, true)
+			self:updateCurLine(nil, false)
+			gohelper.setActive(self._goshadow, true)
 			AudioMgr.instance:trigger(AudioEnum3_1.YeShuMei.play_ui_mingdi_ysm_shadow)
-			gohelper.setActive(arg_27_0._godrag, false)
-			gohelper.setActive(arg_27_0._btnreview.gameObject, false)
-			TaskDispatcher.runDelay(arg_27_0._toNextLevel, arg_27_0, arg_27_0._finishShowShadowTime)
+			gohelper.setActive(self._godrag, false)
+			gohelper.setActive(self._btnreview.gameObject, false)
+			TaskDispatcher.runDelay(self._toNextLevel, self, self._finishShowShadowTime)
 		else
-			arg_27_0:_finishGame()
+			self:_finishGame()
 		end
 	else
-		local var_27_8 = YeShuMeiGameModel.instance:getNeedCheckPointList() or {}
+		local currentPointList = YeShuMeiGameModel.instance:getNeedCheckPointList() or {}
 
-		arg_27_0:updateCurLine(var_27_8, true, var_27_1, var_27_2)
+		self:updateCurLine(currentPointList, true, mousePosX, mousePosY)
 	end
 end
 
-function var_0_0._toNextLevel(arg_28_0)
+function YeShuMeiGameView:_toNextLevel()
 	UIBlockMgr.instance:endBlock("YeShuMeiGameView_NextLevel")
-	TaskDispatcher.cancelTask(arg_28_0._toNextLevel, arg_28_0)
-	arg_28_0._shadowAnimator:Play("out", 0, 0)
-	arg_28_0._pointRootAnimator:Play("out", 0, 0)
-	arg_28_0._lineRootAnimator:Play("out", 0, 0)
-	TaskDispatcher.runDelay(arg_28_0._animShadowOut, arg_28_0, arg_28_0._shadowAnimOutTime)
+	TaskDispatcher.cancelTask(self._toNextLevel, self)
+	self._shadowAnimator:Play("out", 0, 0)
+	self._pointRootAnimator:Play("out", 0, 0)
+	self._lineRootAnimator:Play("out", 0, 0)
+	TaskDispatcher.runDelay(self._animShadowOut, self, self._shadowAnimOutTime)
 end
 
-function var_0_0._animShadowOut(arg_29_0)
-	TaskDispatcher.cancelTask(arg_29_0._animShadowOut, arg_29_0)
-	gohelper.setActive(arg_29_0._goshadow, false)
-	gohelper.setActive(arg_29_0._godrag, true)
-	arg_29_0:_updateTargetList()
+function YeShuMeiGameView:_animShadowOut()
+	TaskDispatcher.cancelTask(self._animShadowOut, self)
+	gohelper.setActive(self._goshadow, false)
+	gohelper.setActive(self._godrag, true)
+	self:_updateTargetList()
 	YeShuMeiGameModel.instance:setNextLevelGame()
-	arg_29_0:setNextLevelGame()
+	self:setNextLevelGame()
 end
 
-function var_0_0._updateTargetList(arg_30_0)
-	local var_30_0 = YeShuMeiGameModel.instance:getCurrentLevelIndex()
-	local var_30_1 = arg_30_0._targetItemList[var_30_0]
+function YeShuMeiGameView:_updateTargetList()
+	local index = YeShuMeiGameModel.instance:getCurrentLevelIndex()
+	local item = self._targetItemList[index]
 
-	if var_30_1 then
-		gohelper.setActive(var_30_1.gook, true)
-		gohelper.setActive(var_30_1.govx, true)
+	if item then
+		gohelper.setActive(item.gook, true)
+		gohelper.setActive(item.govx, true)
 	end
 end
 
-function var_0_0._finishGame(arg_31_0)
-	arg_31_0:updateCurLine(nil, false)
-	gohelper.setActive(arg_31_0._goshadow, true)
-	gohelper.setActive(arg_31_0._godrag, false)
-	gohelper.setActive(arg_31_0._goreview, false)
-	gohelper.setActive(arg_31_0._goComplete, true)
+function YeShuMeiGameView:_finishGame()
+	self:updateCurLine(nil, false)
+	gohelper.setActive(self._goshadow, true)
+	gohelper.setActive(self._godrag, false)
+	gohelper.setActive(self._goreview, false)
+	gohelper.setActive(self._goComplete, true)
 	AudioMgr.instance:trigger(AudioEnum3_1.YeShuMei.play_ui_mingdi_ysm_finish)
-	TaskDispatcher.runDelay(arg_31_0._gameFinish, arg_31_0, arg_31_0._finishShowShadowTime)
+	TaskDispatcher.runDelay(self._gameFinish, self, self._finishShowShadowTime)
 end
 
-function var_0_0._gameFinish(arg_32_0)
-	TaskDispatcher.cancelTask(arg_32_0._gameFinish, arg_32_0)
-	gohelper.setActive(arg_32_0._btncomplete.gameObject, true)
+function YeShuMeiGameView:_gameFinish()
+	TaskDispatcher.cancelTask(self._gameFinish, self)
+	gohelper.setActive(self._btncomplete.gameObject, true)
 end
 
-function var_0_0._onDragEndPoint(arg_33_0, arg_33_1, arg_33_2)
+function YeShuMeiGameView:_onDragEndPoint(_, pointerEventData)
 	if YeShuMeiGameModel.instance:getCurrentLevelComplete() then
-		arg_33_0:_updateTargetList()
+		self:_updateTargetList()
 
 		if YeShuMeiGameModel.instance:checkHaveNextLevel() then
 			UIBlockMgr.instance:startBlock("YeShuMeiGameView_NextLevel")
-			arg_33_0:updateCurLine(nil, false)
-			TaskDispatcher.runDelay(arg_33_0._toNextLevel, arg_33_0, arg_33_0._finishShowShadowTime)
+			self:updateCurLine(nil, false)
+			TaskDispatcher.runDelay(self._toNextLevel, self, self._finishShowShadowTime)
 		else
-			arg_33_0:_finishGame()
+			self:_finishGame()
 		end
 	else
-		local var_33_0 = YeShuMeiGameModel.instance:getNeedCheckPointList()
+		local pointIdList = YeShuMeiGameModel.instance:getNeedCheckPointList()
 
-		if var_33_0 and #var_33_0 < 2 then
-			arg_33_0:resetPoint(var_33_0)
+		if pointIdList and #pointIdList < 2 then
+			self:resetPoint(pointIdList)
 			YeShuMeiGameModel.instance:setStartState(false)
 			YeShuMeiGameModel.instance:resetToLastConnection()
 
-			local var_33_1 = YeShuMeiGameModel.instance:getConfigStartPointIds()
+			local curStartPointIds = YeShuMeiGameModel.instance:getConfigStartPointIds()
 
-			for iter_33_0, iter_33_1 in ipairs(var_33_1) do
-				local var_33_2 = arg_33_0._pointItem[iter_33_1]
+			for _, pointId in ipairs(curStartPointIds) do
+				local point = self._pointItem[pointId]
 
-				if var_33_2 and var_33_2.comp then
-					var_33_2.comp:updateUI()
+				if point and point.comp then
+					point.comp:updateUI()
 				end
 			end
 		else
-			local var_33_3 = YeShuMeiGameModel.instance:getCurStartPointAfter()
+			local errorIdList = YeShuMeiGameModel.instance:getCurStartPointAfter()
 
 			YeShuMeiGameModel.instance:checkCorrectConnection()
-			arg_33_0:checkDeleteLineAndResetPoint(var_33_3)
+			self:checkDeleteLineAndResetPoint(errorIdList)
 		end
 	end
 
-	arg_33_0:updateCurLine(nil, false)
+	self:updateCurLine(nil, false)
 	YeShuMeiController.instance:dispatchEvent(YeShuMeiEvent.OnDragGuideFinish)
 
-	arg_33_0._canDrag = false
+	self._canDrag = false
 end
 
-function var_0_0.checkCreateLine(arg_34_0, arg_34_1)
-	if not arg_34_1 or #arg_34_1 < 2 then
+function YeShuMeiGameView:checkCreateLine(pointIdList)
+	if not pointIdList or #pointIdList < 2 then
 		return
 	else
-		for iter_34_0 = 1, #arg_34_1 - 1 do
-			local var_34_0 = arg_34_0._pointItem[arg_34_1[iter_34_0]]
-			local var_34_1 = arg_34_0._pointItem[arg_34_1[iter_34_0 + 1]]
+		for i = 1, #pointIdList - 1 do
+			local beginPoint = self._pointItem[pointIdList[i]]
+			local endPoint = self._pointItem[pointIdList[i + 1]]
 
-			if var_34_0 and var_34_1 and not YeShuMeiGameModel.instance:checkLineExist(var_34_0.comp.id, var_34_1.comp.id) then
-				local var_34_2 = YeShuMeiGameModel.instance:addLines(var_34_0.comp.id, var_34_1.comp.id)
-				local var_34_3 = arg_34_0:createLine()
+			if beginPoint and endPoint and not YeShuMeiGameModel.instance:checkLineExist(beginPoint.comp.id, endPoint.comp.id) then
+				local lineMo = YeShuMeiGameModel.instance:addLines(beginPoint.comp.id, endPoint.comp.id)
+				local line = self:createLine()
 
-				var_34_3.comp:initData(var_34_2)
-				var_34_3.comp:updatePoint(var_34_0.comp, var_34_1.comp)
+				line.comp:initData(lineMo)
+				line.comp:updatePoint(beginPoint.comp, endPoint.comp)
 
-				if arg_34_0._lineItemList == nil then
-					arg_34_0._lineItemList = {}
+				if self._lineItemList == nil then
+					self._lineItemList = {}
 				end
 
-				arg_34_0._lineItemList[var_34_2.id] = var_34_3
+				self._lineItemList[lineMo.id] = line
 
 				if YeShuMeiGameModel.instance:getWrong() then
 					AudioMgr.instance:trigger(AudioEnum3_1.YeShuMei.play_ui_mingdi_ysm_wrong)
@@ -540,217 +547,224 @@ function var_0_0.checkCreateLine(arg_34_0, arg_34_1)
 	end
 end
 
-function var_0_0.checkDeleteLineAndResetPoint(arg_35_0, arg_35_1)
-	local var_35_0 = YeShuMeiGameModel.instance:getNeedCheckPointList()
+function YeShuMeiGameView:checkDeleteLineAndResetPoint(errorIdList)
+	local pointIdList = YeShuMeiGameModel.instance:getNeedCheckPointList()
 
-	if not var_35_0 then
-		arg_35_0:_clearLines()
+	if not pointIdList then
+		self:_clearLines()
 	else
-		if #var_35_0 < 2 then
-			arg_35_0:resetPoint(var_35_0)
+		if #pointIdList < 2 then
+			self:resetPoint(pointIdList)
 			YeShuMeiGameModel.instance:resetToLastConnection()
 			YeShuMeiGameModel.instance:setStartState(false)
 
-			local var_35_1 = YeShuMeiGameModel.instance:getConfigStartPointIds()
+			local curStartPointIds = YeShuMeiGameModel.instance:getConfigStartPointIds()
 
-			for iter_35_0, iter_35_1 in ipairs(var_35_1) do
-				local var_35_2 = arg_35_0._pointItem[iter_35_1]
+			for _, pointId in ipairs(curStartPointIds) do
+				local point = self._pointItem[pointId]
 
-				if var_35_2 and var_35_2.comp then
-					var_35_2.comp:updateUI()
+				if point and point.comp then
+					point.comp:updateUI()
 				end
 			end
 		end
 
-		if arg_35_1 and #arg_35_1 > 0 then
-			for iter_35_2, iter_35_3 in ipairs(arg_35_1) do
-				local var_35_3 = YeShuMeiGameModel.instance:getLineMoByErrorId(iter_35_3)
+		if errorIdList and #errorIdList > 0 then
+			for index, errorId in ipairs(errorIdList) do
+				local lineMo = YeShuMeiGameModel.instance:getLineMoByErrorId(errorId)
 
-				if var_35_3 then
-					local var_35_4 = arg_35_0._lineItemList[var_35_3.id]
+				if lineMo then
+					local lineItem = self._lineItemList[lineMo.id]
 
-					var_35_4.comp:onDestroy()
-					gohelper.destroy(var_35_4.go)
+					lineItem.comp:onDestroy()
+					gohelper.destroy(lineItem.go)
 
-					local var_35_5
+					lineItem = nil
 
 					YeShuMeiGameModel.instance:deleteLines({
-						var_35_3.id
+						lineMo.id
 					})
 				end
 			end
 
-			arg_35_0:resetPoint(arg_35_1)
+			self:resetPoint(errorIdList)
 		end
 	end
 end
 
-function var_0_0.createLine(arg_36_0)
-	local var_36_0 = arg_36_0:getUserDataTb_()
+function YeShuMeiGameView:createLine()
+	local line = self:getUserDataTb_()
 
-	var_36_0.go = gohelper.clone(arg_36_0._goline, arg_36_0._golineroot, "line")
-	var_36_0.comp = MonoHelper.addNoUpdateLuaComOnceToGo(var_36_0.go, YeShuMeiLineItem)
+	line.go = gohelper.clone(self._goline, self._golineroot, "line")
+	line.comp = MonoHelper.addNoUpdateLuaComOnceToGo(line.go, YeShuMeiLineItem)
 
-	gohelper.setActive(var_36_0.go, true)
+	gohelper.setActive(line.go, true)
 
-	return var_36_0
+	return line
 end
 
-function var_0_0._clearLines(arg_37_0)
+function YeShuMeiGameView:_clearLines()
 	YeShuMeiGameModel.instance:deleteLines()
 
-	if arg_37_0._lineItemList and #arg_37_0._lineItemList > 0 then
-		for iter_37_0, iter_37_1 in ipairs(arg_37_0._lineItemList) do
-			iter_37_1.comp:onDestroy()
-			gohelper.destroy(iter_37_1.go)
+	if self._lineItemList and #self._lineItemList > 0 then
+		for _, item in ipairs(self._lineItemList) do
+			item.comp:onDestroy()
+			gohelper.destroy(item.go)
 		end
 	end
 end
 
-function var_0_0.resetPoint(arg_38_0, arg_38_1)
-	if arg_38_1 and #arg_38_1 > 0 then
-		for iter_38_0, iter_38_1 in ipairs(arg_38_1) do
-			YeShuMeiGameModel.instance:getPointById(iter_38_1):clearPoint()
-			arg_38_0._pointItem[iter_38_1].comp:updateUI()
+function YeShuMeiGameView:resetPoint(errorIdList)
+	if errorIdList and #errorIdList > 0 then
+		for _, pointId in ipairs(errorIdList) do
+			local pointMo = YeShuMeiGameModel.instance:getPointById(pointId)
+
+			pointMo:clearPoint()
+
+			local point = self._pointItem[pointId]
+
+			point.comp:updateUI()
 		end
 	end
 end
 
-function var_0_0.updateCurLine(arg_39_0, arg_39_1, arg_39_2, arg_39_3, arg_39_4)
-	if not arg_39_2 and arg_39_0._curShowLine and arg_39_0._curLinePointId then
-		arg_39_0:recycleLineGo(arg_39_0._curShowLine)
+function YeShuMeiGameView:updateCurLine(pointIdList, active, posX, posY)
+	if not active and self._curShowLine and self._curLinePointId then
+		self:recycleLineGo(self._curShowLine)
 
-		arg_39_0._curShowLine = nil
+		self._curShowLine = nil
 
 		return
 	end
 
-	if arg_39_1 == nil or #arg_39_1 == 0 then
+	if pointIdList == nil or #pointIdList == 0 then
 		return
 	end
 
-	local var_39_0 = arg_39_1[#arg_39_1]
+	local pointId = pointIdList[#pointIdList]
 
-	if arg_39_0._curLinePointId ~= var_39_0 and arg_39_0._curShowLine ~= nil then
-		arg_39_0:recycleLineGo(arg_39_0._curShowLine)
+	if self._curLinePointId ~= pointId and self._curShowLine ~= nil then
+		self:recycleLineGo(self._curShowLine)
 
-		arg_39_0._curShowLine = nil
+		self._curShowLine = nil
 	end
 
-	if var_39_0 ~= nil and arg_39_2 and arg_39_0._curShowLine == nil then
-		arg_39_0._curShowLine = arg_39_0:getLineObject()
+	if pointId ~= nil and active and self._curShowLine == nil then
+		self._curShowLine = self:getLineObject()
 
-		local var_39_1 = YeShuMeiGameModel.instance:getPointById(var_39_0)
+		local point = YeShuMeiGameModel.instance:getPointById(pointId)
 
-		if var_39_1 then
-			local var_39_2, var_39_3 = var_39_1:getPosXY()
+		if point then
+			local startX, startY = point:getPosXY()
 
-			arg_39_0:setLineData(arg_39_0._curShowLine, var_39_2, var_39_3, arg_39_3 or var_39_2, arg_39_4 or var_39_3)
-			gohelper.setActive(arg_39_0._curShowLine.go, true)
+			self:setLineData(self._curShowLine, startX, startY, posX or startX, posY or startY)
+			gohelper.setActive(self._curShowLine.go, true)
 		end
 
-		arg_39_0._curLinePointId = var_39_0
+		self._curLinePointId = pointId
 	end
 
-	if arg_39_0._curShowLine ~= nil then
-		local var_39_4 = YeShuMeiGameModel.instance:getPointById(var_39_0)
+	if self._curShowLine ~= nil then
+		local point = YeShuMeiGameModel.instance:getPointById(pointId)
 
-		if var_39_4 then
-			local var_39_5, var_39_6 = var_39_4:getPosXY()
+		if point then
+			local startX, startY = point:getPosXY()
 
-			arg_39_0:setLineData(arg_39_0._curShowLine, var_39_5, var_39_6, arg_39_3 or var_39_5, arg_39_4 or var_39_6)
+			self:setLineData(self._curShowLine, startX, startY, posX or startX, posY or startY)
 		end
 	end
 end
 
-function var_0_0.setLineData(arg_40_0, arg_40_1, arg_40_2, arg_40_3, arg_40_4, arg_40_5)
-	local var_40_0 = arg_40_1.transform
+function YeShuMeiGameView:setLineData(showLine, beginX, beginY, endX, endY)
+	local lineTr = showLine.transform
 
-	transformhelper.setLocalPosXY(var_40_0, arg_40_2, arg_40_3)
+	transformhelper.setLocalPosXY(lineTr, beginX, beginY)
 
-	local var_40_1 = MathUtil.vec2_length(arg_40_2, arg_40_3, arg_40_4, arg_40_5)
+	local width = MathUtil.vec2_length(beginX, beginY, endX, endY)
 
-	recthelper.setWidth(var_40_0, var_40_1)
+	recthelper.setWidth(lineTr, width)
 
-	local var_40_2 = MathUtil.calculateV2Angle(arg_40_4, arg_40_5, arg_40_2, arg_40_3)
+	local angle = MathUtil.calculateV2Angle(endX, endY, beginX, beginY)
 
-	transformhelper.setEulerAngles(var_40_0, 0, 0, var_40_2)
+	transformhelper.setEulerAngles(lineTr, 0, 0, angle)
 
-	local var_40_3 = YeShuMeiGameModel.instance:getWrong()
+	local isWrong = YeShuMeiGameModel.instance:getWrong()
 
-	gohelper.setActive(arg_40_1.gonormal, not var_40_3)
-	gohelper.setActive(arg_40_1.godisturb, var_40_3)
+	gohelper.setActive(showLine.gonormal, not isWrong)
+	gohelper.setActive(showLine.godisturb, isWrong)
 end
 
-function var_0_0.getLineObject(arg_41_0)
-	if arg_41_0._lineItemPools == nil then
-		local var_41_0 = 20
+function YeShuMeiGameView:getLineObject()
+	if self._lineItemPools == nil then
+		local maxCount = 20
 
-		arg_41_0._lineItemPools = LuaObjPool.New(var_41_0, function()
-			local var_42_0 = arg_41_0:getUserDataTb_()
+		self._lineItemPools = LuaObjPool.New(maxCount, function()
+			local showLine = self:getUserDataTb_()
 
-			var_42_0.go = gohelper.cloneInPlace(arg_41_0._goshowline, "showLine")
-			var_42_0.transform = var_42_0.go.transform
-			var_42_0.gonormal = gohelper.findChild(var_42_0.go, "#go_normal")
-			var_42_0.godisturb = gohelper.findChild(var_42_0.go, "#go_disturb")
+			showLine.go = gohelper.cloneInPlace(self._goshowline, "showLine")
+			showLine.transform = showLine.go.transform
+			showLine.gonormal = gohelper.findChild(showLine.go, "#go_normal")
+			showLine.godisturb = gohelper.findChild(showLine.go, "#go_disturb")
 
-			return var_42_0
-		end, function(arg_43_0)
-			if arg_43_0 then
-				gohelper.destroy(arg_43_0.go)
+			return showLine
+		end, function(showLine)
+			if showLine then
+				gohelper.destroy(showLine.go)
 			end
-		end, function(arg_44_0)
-			if arg_44_0 then
-				gohelper.setActive(arg_44_0.go, false)
-				gohelper.setActive(arg_44_0.gonormal, true)
-				gohelper.setActive(arg_44_0.godisturb, false)
+		end, function(showLine)
+			if showLine then
+				gohelper.setActive(showLine.go, false)
+				gohelper.setActive(showLine.gonormal, true)
+				gohelper.setActive(showLine.godisturb, false)
 			end
 		end)
 	end
 
-	return (arg_41_0._lineItemPools:getObject())
+	local showLine = self._lineItemPools:getObject()
+
+	return showLine
 end
 
-function var_0_0.recycleLineGo(arg_45_0, arg_45_1)
-	if arg_45_1 == nil then
+function YeShuMeiGameView:recycleLineGo(showLine)
+	if showLine == nil then
 		return
 	end
 
-	gohelper.setActive(arg_45_1.gameObject, false)
+	gohelper.setActive(showLine.gameObject, false)
 
-	if arg_45_0._lineItemPools ~= nil then
-		arg_45_0._lineItemPools:putObject(arg_45_1)
+	if self._lineItemPools ~= nil then
+		self._lineItemPools:putObject(showLine)
 	end
 end
 
-function var_0_0.setNextLevelGame(arg_46_0)
-	arg_46_0:_deletePoint()
-	arg_46_0:_clearLines()
-	arg_46_0:_showShadow(true)
+function YeShuMeiGameView:setNextLevelGame()
+	self:_deletePoint()
+	self:_clearLines()
+	self:_showShadow(true)
 
-	arg_46_0._canDrag = false
-	arg_46_0._gameMo = YeShuMeiGameModel.instance:getGameMo()
+	self._canDrag = false
+	self._gameMo = YeShuMeiGameModel.instance:getGameMo()
 end
 
-function var_0_0._onBtnComlete(arg_47_0)
-	YeShuMeiController.instance:_onGameFinished(VersionActivity3_1Enum.ActivityId.YeShuMei, arg_47_0._episodeId)
+function YeShuMeiGameView:_onBtnComlete()
+	YeShuMeiController.instance:_onGameFinished(VersionActivity3_1Enum.ActivityId.YeShuMei, self._episodeId)
 end
 
-function var_0_0._showGuideDrag(arg_48_0, arg_48_1)
-	local var_48_0 = tonumber(arg_48_1) == 1
+function YeShuMeiGameView:_showGuideDrag(param)
+	local visible = tonumber(param) == 1
 
-	gohelper.setActive(arg_48_0._goguid, var_48_0)
+	gohelper.setActive(self._goguid, visible)
 end
 
-function var_0_0.onClose(arg_49_0)
-	TaskDispatcher.cancelTask(arg_49_0._toNextLevel, arg_49_0)
-	TaskDispatcher.cancelTask(arg_49_0._afterShowShadow, arg_49_0)
-	TaskDispatcher.cancelTask(arg_49_0._initGame, arg_49_0)
-	TaskDispatcher.cancelTask(arg_49_0._gameFinish, arg_49_0)
-	TaskDispatcher.cancelTask(arg_49_0._animShadowOut, arg_49_0)
-	TaskDispatcher.cancelTask(arg_49_0._switchShowShadow, arg_49_0)
-	TaskDispatcher.cancelTask(arg_49_0._onClickUp, arg_49_0)
-	TaskDispatcher.cancelTask(arg_49_0._onClickShadowOut, arg_49_0)
+function YeShuMeiGameView:onClose()
+	TaskDispatcher.cancelTask(self._toNextLevel, self)
+	TaskDispatcher.cancelTask(self._afterShowShadow, self)
+	TaskDispatcher.cancelTask(self._initGame, self)
+	TaskDispatcher.cancelTask(self._gameFinish, self)
+	TaskDispatcher.cancelTask(self._animShadowOut, self)
+	TaskDispatcher.cancelTask(self._switchShowShadow, self)
+	TaskDispatcher.cancelTask(self._onClickUp, self)
+	TaskDispatcher.cancelTask(self._onClickShadowOut, self)
 end
 
-return var_0_0
+return YeShuMeiGameView

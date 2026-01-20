@@ -1,173 +1,190 @@
-﻿module("modules.logic.necrologiststory.model.NecrologistStoryGameBaseMO", package.seeall)
+﻿-- chunkname: @modules/logic/necrologiststory/model/NecrologistStoryGameBaseMO.lua
 
-local var_0_0 = class("NecrologistStoryGameBaseMO")
+module("modules.logic.necrologiststory.model.NecrologistStoryGameBaseMO", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.id = nil
-	arg_1_0.data = nil
-	arg_1_0.dataIsDirty = false
-	arg_1_0.isAutoSave = true
+local NecrologistStoryGameBaseMO = class("NecrologistStoryGameBaseMO")
+
+function NecrologistStoryGameBaseMO:ctor()
+	self.id = nil
+	self.data = nil
+	self.dataIsDirty = false
+	self.isAutoSave = true
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.id = arg_2_1
-	arg_2_0.plotInfoDict = {}
+function NecrologistStoryGameBaseMO:init(id)
+	self.id = id
+	self.plotInfoDict = {}
 
-	arg_2_0:onInit()
+	self:onInit()
 end
 
-function var_0_0.updateInfo(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_1.info
+function NecrologistStoryGameBaseMO:updateInfo(info)
+	local infoStr = info.info
 
-	arg_3_0.data = string.nilorempty(var_3_0) and {} or cjson.decode(var_3_0)
-	arg_3_0.plotInfoDict = {}
+	self.data = string.nilorempty(infoStr) and {} or cjson.decode(infoStr)
+	self.plotInfoDict = {}
 
-	for iter_3_0 = 1, #arg_3_1.plotInfos do
-		local var_3_1 = arg_3_1.plotInfos[iter_3_0]
+	for i = 1, #info.plotInfos do
+		local plotInfo = info.plotInfos[i]
 
-		arg_3_0:updatePlotInfo(var_3_1)
+		self:updatePlotInfo(plotInfo)
 	end
 
-	arg_3_0:onUpdateData()
+	self:onUpdateData()
 
-	arg_3_0.dataIsDirty = false
+	self.dataIsDirty = false
 end
 
-function var_0_0.getPlotInfo(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = arg_4_0.plotInfoDict[arg_4_1]
+function NecrologistStoryGameBaseMO:getPlotInfo(plotId, createIfNotExist)
+	local mo = self.plotInfoDict[plotId]
 
-	if not var_4_0 and arg_4_2 then
-		var_4_0 = NecrologistStoryPlotMO.New()
+	if not mo and createIfNotExist then
+		mo = NecrologistStoryPlotMO.New()
 
-		var_4_0:init(arg_4_1)
+		mo:init(plotId)
 
-		arg_4_0.plotInfoDict[arg_4_1] = var_4_0
+		self.plotInfoDict[plotId] = mo
 	end
 
-	return var_4_0
+	return mo
 end
 
-function var_0_0.updatePlotInfo(arg_5_0, arg_5_1)
-	arg_5_0:getPlotInfo(arg_5_1.id, true):updateInfo(arg_5_1)
+function NecrologistStoryGameBaseMO:updatePlotInfo(plotInfo)
+	local plotMo = self:getPlotInfo(plotInfo.id, true)
+
+	plotMo:updateInfo(plotInfo)
 end
 
-function var_0_0.getData(arg_6_0)
-	return arg_6_0.data
+function NecrologistStoryGameBaseMO:getData()
+	return self.data
 end
 
-function var_0_0.saveData(arg_7_0, arg_7_1, arg_7_2)
-	if not arg_7_0.dataIsDirty then
-		if arg_7_1 then
-			arg_7_1(arg_7_2)
+function NecrologistStoryGameBaseMO:saveData(callback, callbackObj)
+	if not self.dataIsDirty then
+		if callback then
+			callback(callbackObj)
 		end
 
 		return
 	end
 
-	arg_7_0:onSaveData()
-	NecrologistStoryRpc.instance:sendUpdateNecrologistStoryRequest(arg_7_0.id, arg_7_0, arg_7_1, arg_7_2)
+	self:onSaveData()
+	NecrologistStoryRpc.instance:sendUpdateNecrologistStoryRequest(self.id, self, callback, callbackObj)
 end
 
-function var_0_0.setDataDirty(arg_8_0)
-	arg_8_0.dataIsDirty = true
+function NecrologistStoryGameBaseMO:setDataDirty()
+	self.dataIsDirty = true
 
-	if arg_8_0.isAutoSave then
-		arg_8_0:saveData()
+	if self.isAutoSave then
+		self:saveData()
 	end
 end
 
-function var_0_0.getStoryState(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0:getPlotInfo(arg_9_1)
-	local var_9_1 = var_9_0 and var_9_0:getState()
+function NecrologistStoryGameBaseMO:getStoryState(storyId)
+	local plotMo = self:getPlotInfo(storyId)
+	local state = plotMo and plotMo:getState()
 
-	if var_9_1 == nil then
-		local var_9_2 = NecrologistStoryV3A1Config.instance:getStoryConfig(arg_9_1)
+	if state == nil then
+		local config = NecrologistStoryConfig.instance:getPlotGroupCo(storyId)
 
-		if var_9_2.preId == 0 then
-			var_9_1 = NecrologistStoryEnum.StoryState.Normal
+		if config.preId == 0 then
+			state = NecrologistStoryEnum.StoryState.Normal
 		else
-			local var_9_3 = arg_9_0:getPlotInfo(var_9_2.preId)
+			local prePlotMo = self:getPlotInfo(config.preId)
+			local preState = prePlotMo and prePlotMo:getState()
 
-			if (var_9_3 and var_9_3:getState()) == NecrologistStoryEnum.StoryState.Finish then
-				var_9_1 = NecrologistStoryEnum.StoryState.Normal
+			if preState == NecrologistStoryEnum.StoryState.Finish then
+				state = NecrologistStoryEnum.StoryState.Normal
 			else
-				var_9_1 = NecrologistStoryEnum.StoryState.Lock
+				state = NecrologistStoryEnum.StoryState.Lock
 			end
 		end
 	end
 
-	return var_9_1
+	return state
 end
 
-function var_0_0.isStoryFinish(arg_10_0, arg_10_1)
-	return arg_10_0:getStoryState(arg_10_1) == NecrologistStoryEnum.StoryState.Finish
+function NecrologistStoryGameBaseMO:isStoryFinish(storyId)
+	local state = self:getStoryState(storyId)
+
+	return state == NecrologistStoryEnum.StoryState.Finish
 end
 
-function var_0_0.setStoryState(arg_11_0, arg_11_1, arg_11_2)
-	if arg_11_0:getStoryState(arg_11_1) == arg_11_2 then
+function NecrologistStoryGameBaseMO:setStoryState(storyId, state)
+	local curState = self:getStoryState(storyId)
+
+	if state <= curState then
 		return
 	end
 
-	arg_11_0:getPlotInfo(arg_11_1, true):setState(arg_11_2)
-	arg_11_0:onStoryStateChange(arg_11_1, arg_11_2)
+	local plotMo = self:getPlotInfo(storyId, true)
 
-	if arg_11_2 == NecrologistStoryEnum.StoryState.Finish then
-		HeroStoryRpc.instance:sendHeroStoryPlotFinishRequest(arg_11_1)
+	plotMo:setState(state)
+	self:onStoryStateChange(storyId, state)
+
+	if state == NecrologistStoryEnum.StoryState.Finish then
+		HeroStoryRpc.instance:sendHeroStoryPlotFinishRequest(storyId)
 	end
 
-	NecrologistStoryController.instance:dispatchEvent(NecrologistStoryEvent.OnStoryStateChange, arg_11_1)
-	arg_11_0:setDataDirty()
+	NecrologistStoryController.instance:dispatchEvent(NecrologistStoryEvent.OnStoryStateChange, storyId)
+	self:setDataDirty()
 end
 
-function var_0_0.getPlotSituationTab(arg_12_0)
-	local var_12_0 = {}
+function NecrologistStoryGameBaseMO:getPlotSituationTab(excludePlotId)
+	local dict = {}
 
-	setmetatable(var_12_0, {
-		__index = function(arg_13_0, arg_13_1)
+	setmetatable(dict, {
+		__index = function(t, k)
 			return 0
 		end
 	})
 
-	for iter_12_0, iter_12_1 in pairs(arg_12_0.plotInfoDict) do
-		for iter_12_2, iter_12_3 in pairs(iter_12_1:getSituationValueTab()) do
-			var_12_0[iter_12_2] = var_12_0[iter_12_2] + iter_12_3
+	for plotId, info in pairs(self.plotInfoDict) do
+		if plotId ~= excludePlotId then
+			for key, value in pairs(info:getSituationValueTab()) do
+				dict[key] = dict[key] + value
+			end
 		end
 	end
 
-	return var_12_0
+	return dict
 end
 
-function var_0_0.setPlotSituationTab(arg_14_0, arg_14_1, arg_14_2)
-	arg_14_0:getPlotInfo(arg_14_1, true):setSituationValueTab(arg_14_2)
-	arg_14_0:setDataDirty()
+function NecrologistStoryGameBaseMO:setPlotSituationTab(plotId, dict)
+	local plotMo = self:getPlotInfo(plotId, true)
+
+	plotMo:setSituationValueTab(dict)
+	self:setDataDirty()
 end
 
-function var_0_0.toString(arg_15_0)
-	return (cjson.encode(arg_15_0.data))
+function NecrologistStoryGameBaseMO:toString()
+	local jsonStr = cjson.encode(self.data)
+
+	return jsonStr
 end
 
-function var_0_0.onInit(arg_16_0)
+function NecrologistStoryGameBaseMO:onInit()
 	return
 end
 
-function var_0_0.onUpdateData(arg_17_0)
+function NecrologistStoryGameBaseMO:onUpdateData()
 	return
 end
 
-function var_0_0.onSaveData(arg_18_0)
+function NecrologistStoryGameBaseMO:onSaveData()
 	return
 end
 
-function var_0_0.onStoryStateChange(arg_19_0, arg_19_1, arg_19_2)
+function NecrologistStoryGameBaseMO:onStoryStateChange(storyId, state)
 	return
 end
 
-function var_0_0.setNecrologistStoryRequest(arg_20_0, arg_20_1)
-	arg_20_1.info = arg_20_0:toString()
+function NecrologistStoryGameBaseMO:setNecrologistStoryRequest(req)
+	req.info = self:toString()
 
-	for iter_20_0, iter_20_1 in pairs(arg_20_0.plotInfoDict) do
-		table.insert(arg_20_1.plotInfos, iter_20_1:getSaveData())
+	for plotId, plotMo in pairs(self.plotInfoDict) do
+		table.insert(req.plotInfos, plotMo:getSaveData())
 	end
 end
 
-return var_0_0
+return NecrologistStoryGameBaseMO

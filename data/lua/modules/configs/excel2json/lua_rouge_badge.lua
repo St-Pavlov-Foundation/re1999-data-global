@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_rouge_badge", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_rouge_badge.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_rouge_badge", package.seeall)
+
+local lua_rouge_badge = {}
+local fields = {
 	score = 8,
 	name = 3,
 	triggerParam = 7,
@@ -11,17 +13,17 @@ local var_0_1 = {
 	trigger = 6,
 	desc = 4
 }
-local var_0_2 = {
+local primaryKey = {
 	"season",
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	desc = 2,
 	name = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_rouge_badge.onLoad(json)
+	lua_rouge_badge.configList, lua_rouge_badge.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_rouge_badge

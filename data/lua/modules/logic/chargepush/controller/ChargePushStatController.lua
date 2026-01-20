@@ -1,25 +1,27 @@
-﻿module("modules.logic.chargepush.controller.ChargePushStatController", package.seeall)
+﻿-- chunkname: @modules/logic/chargepush/controller/ChargePushStatController.lua
 
-local var_0_0 = class("ChargePushStatController")
+module("modules.logic.chargepush.controller.ChargePushStatController", package.seeall)
 
-function var_0_0.statShow(arg_1_0, arg_1_1)
-	if not arg_1_1 then
+local ChargePushStatController = class("ChargePushStatController")
+
+function ChargePushStatController:statShow(config)
+	if not config then
 		return
 	end
 
-	arg_1_0.config = arg_1_1
+	self.config = config
 
-	local var_1_0 = arg_1_1.goodpushsId
-	local var_1_1 = arg_1_1.className
+	local pushId = config.goodpushsId
+	local pushType = config.className
 
 	StatController.instance:track(StatEnum.EventName.ChargePushShow, {
-		[StatEnum.EventProperties.ChargePushId] = var_1_0,
-		[StatEnum.EventProperties.ChargePushType] = var_1_1
+		[StatEnum.EventProperties.ChargePushId] = pushId,
+		[StatEnum.EventProperties.ChargePushType] = pushType
 	})
 end
 
-function var_0_0.statClick(arg_2_0, arg_2_1)
-	if not arg_2_0.config then
+function ChargePushStatController:statClick(goodsId)
+	if not self.config then
 		return
 	end
 
@@ -27,20 +29,20 @@ function var_0_0.statClick(arg_2_0, arg_2_1)
 		return
 	end
 
-	local var_2_0 = arg_2_0.config.goodpushsId
-	local var_2_1 = arg_2_0.config.className
+	local pushId = self.config.goodpushsId
+	local pushType = self.config.className
 
 	StatController.instance:track(StatEnum.EventName.ChargePushClick, {
-		[StatEnum.EventProperties.ChargePushId] = var_2_0,
-		[StatEnum.EventProperties.ChargePushType] = var_2_1,
-		[StatEnum.EventProperties.ChargePushGoodsId] = arg_2_1
+		[StatEnum.EventProperties.ChargePushId] = pushId,
+		[StatEnum.EventProperties.ChargePushType] = pushType,
+		[StatEnum.EventProperties.ChargePushGoodsId] = goodsId
 	})
 
 	return true
 end
 
-function var_0_0.statBuyFinished(arg_3_0, arg_3_1, arg_3_2)
-	if not arg_3_0.config then
+function ChargePushStatController:statBuyFinished(resultCode, info)
+	if not self.config then
 		return
 	end
 
@@ -48,18 +50,18 @@ function var_0_0.statBuyFinished(arg_3_0, arg_3_1, arg_3_2)
 		return
 	end
 
-	local var_3_0 = arg_3_2.goodsId
-	local var_3_1 = arg_3_2.storeId
-	local var_3_2 = arg_3_2.num
-	local var_3_3 = StoreConfig.instance:getGoodsConfig(var_3_0)
-	local var_3_4 = StoreController.instance:_itemsMultipleWithBuyCount(var_3_3.cost, var_3_2, 0)
-	local var_3_5 = arg_3_1 == 0 and StatEnum.Result.Success or StatEnum.Result.Fail
+	local goodsId = info.goodsId
+	local storeId = info.storeId
+	local buyCount = info.num
+	local goodsConfig = StoreConfig.instance:getGoodsConfig(goodsId)
+	local cost = StoreController.instance:_itemsMultipleWithBuyCount(goodsConfig.cost, buyCount, 0)
+	local result = resultCode == 0 and StatEnum.Result.Success or StatEnum.Result.Fail
 
-	arg_3_0:statBuy(arg_3_0.config, var_3_0, var_3_4, var_3_5)
+	self:statBuy(self.config, goodsId, cost, result)
 end
 
-function var_0_0.statPayFinished(arg_4_0, arg_4_1, arg_4_2)
-	if not arg_4_0.config then
+function ChargePushStatController:statPayFinished(resultCode, info)
+	if not self.config then
 		return
 	end
 
@@ -67,30 +69,30 @@ function var_0_0.statPayFinished(arg_4_0, arg_4_1, arg_4_2)
 		return
 	end
 
-	local var_4_0 = arg_4_2.id or arg_4_2.gameOrderId
-	local var_4_1 = {}
-	local var_4_2 = arg_4_1 == 0 and StatEnum.Result.Success or StatEnum.Result.Fail
+	local goodsId = info.id or info.gameOrderId
+	local cost = {}
+	local result = resultCode == 0 and StatEnum.Result.Success or StatEnum.Result.Fail
 
-	arg_4_0:statBuy(arg_4_0.config, var_4_0, var_4_1, var_4_2)
+	self:statBuy(self.config, goodsId, cost, result)
 end
 
-function var_0_0.statBuy(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
-	if not arg_5_1 then
+function ChargePushStatController:statBuy(config, goodsId, cost, result)
+	if not config then
 		return
 	end
 
-	local var_5_0 = arg_5_1.goodpushsId
-	local var_5_1 = arg_5_1.className
+	local pushId = config.goodpushsId
+	local pushType = config.className
 
 	StatController.instance:track(StatEnum.EventName.ChargePushBuy, {
-		[StatEnum.EventProperties.ChargePushId] = var_5_0,
-		[StatEnum.EventProperties.ChargePushType] = var_5_1,
-		[StatEnum.EventProperties.ChargePushGoodsId] = arg_5_2,
-		[StatEnum.EventProperties.ChargePushCost] = arg_5_3,
-		[StatEnum.EventProperties.Result] = StatEnum.Result2Cn[arg_5_4]
+		[StatEnum.EventProperties.ChargePushId] = pushId,
+		[StatEnum.EventProperties.ChargePushType] = pushType,
+		[StatEnum.EventProperties.ChargePushGoodsId] = goodsId,
+		[StatEnum.EventProperties.ChargePushCost] = cost,
+		[StatEnum.EventProperties.Result] = StatEnum.Result2Cn[result]
 	})
 end
 
-var_0_0.instance = var_0_0.New()
+ChargePushStatController.instance = ChargePushStatController.New()
 
-return var_0_0
+return ChargePushStatController

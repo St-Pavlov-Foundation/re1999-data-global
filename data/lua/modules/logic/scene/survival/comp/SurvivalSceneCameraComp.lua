@@ -1,128 +1,130 @@
-﻿module("modules.logic.scene.survival.comp.SurvivalSceneCameraComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/survival/comp/SurvivalSceneCameraComp.lua
 
-local var_0_0 = class("SurvivalSceneCameraComp", CommonSceneCameraComp)
+module("modules.logic.scene.survival.comp.SurvivalSceneCameraComp", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._scene = arg_1_0:getCurScene()
-	arg_1_0._rawcameraTrace = CameraMgr.instance:getCameraTrace()
-	arg_1_0._cameraTrace = arg_1_0._rawcameraTrace
-	arg_1_0._cameraCO = nil
+local SurvivalSceneCameraComp = class("SurvivalSceneCameraComp", CommonSceneCameraComp)
+
+function SurvivalSceneCameraComp:onInit()
+	self._scene = self:getCurScene()
+	self._rawcameraTrace = CameraMgr.instance:getCameraTrace()
+	self._cameraTrace = self._rawcameraTrace
+	self._cameraCO = nil
 end
 
-function var_0_0._onScreenResize(arg_2_0)
-	local var_2_0 = CameraMgr.instance:getFocusTrs()
-	local var_2_1, var_2_2, var_2_3 = transformhelper.getPos(var_2_0)
+function SurvivalSceneCameraComp:_onScreenResize()
+	local focusTrs = CameraMgr.instance:getFocusTrs()
+	local x, y, z = transformhelper.getPos(focusTrs)
 
-	arg_2_0._cameraTrace:SetTargetFocusPos(var_2_1, var_2_2, var_2_3)
+	self._cameraTrace:SetTargetFocusPos(x, y, z)
 
-	if arg_2_0._nowFov then
-		arg_2_0:setFov(arg_2_0._nowFov)
-		arg_2_0._cameraTrace:ApplyDirectly()
+	if self._nowFov then
+		self:setFov(self._nowFov)
+		self._cameraTrace:ApplyDirectly()
 	end
 end
 
-function var_0_0.onSceneStart(arg_3_0, ...)
-	arg_3_0._rawcameraTrace.enabled = false
-	arg_3_0._cameraTrace = gohelper.onceAddComponent(arg_3_0._rawcameraTrace, typeof(ZProj.ExploreCameraTrace))
+function SurvivalSceneCameraComp:onSceneStart(...)
+	self._rawcameraTrace.enabled = false
+	self._cameraTrace = gohelper.onceAddComponent(self._rawcameraTrace, typeof(ZProj.ExploreCameraTrace))
 
-	arg_3_0._cameraTrace:SetEaseTime(SurvivalConst.CameraTraceTime)
+	self._cameraTrace:SetEaseTime(SurvivalConst.CameraTraceTime)
 
-	arg_3_0.sceneType = GameSceneMgr.instance:getCurSceneType()
+	self.sceneType = GameSceneMgr.instance:getCurSceneType()
 
-	if arg_3_0.sceneType == SceneType.SurvivalShelter then
-		local var_3_0 = SurvivalConfig.instance:getShelterMapCo()
+	if self.sceneType == SceneType.SurvivalShelter then
+		local mapCo = SurvivalConfig.instance:getShelterMapCo()
 
-		arg_3_0.mapMinX = var_3_0.minX + 2
-		arg_3_0.mapMaxX = var_3_0.maxX - 2
-		arg_3_0.mapMinY = var_3_0.minY
-		arg_3_0.mapMaxY = var_3_0.maxY - 2
-		arg_3_0.maxDis = 10
-		arg_3_0.minDis = 4.5
-		arg_3_0._mapMaxPitch = 60
-		arg_3_0._mapMinPitch = 45
-	elseif arg_3_0.sceneType == SceneType.Survival then
-		local var_3_1 = SurvivalMapModel.instance:getCurMapCo()
+		self.mapMinX = mapCo.minX + 2
+		self.mapMaxX = mapCo.maxX - 2
+		self.mapMinY = mapCo.minY
+		self.mapMaxY = mapCo.maxY - 2
+		self.maxDis = 10
+		self.minDis = 4.5
+		self._mapMaxPitch = 60
+		self._mapMinPitch = 45
+	elseif self.sceneType == SceneType.Survival then
+		local mapCo = SurvivalMapModel.instance:getCurMapCo()
 
-		arg_3_0.mapMinX = var_3_1.minX
-		arg_3_0.mapMaxX = var_3_1.maxX
-		arg_3_0.mapMinY = var_3_1.minY
-		arg_3_0.mapMaxY = var_3_1.maxY
-		arg_3_0.maxDis = SurvivalConst.MapCameraParams.MaxDis
-		arg_3_0.minDis = SurvivalConst.MapCameraParams.MinDis
+		self.mapMinX = mapCo.minX
+		self.mapMaxX = mapCo.maxX
+		self.mapMinY = mapCo.minY
+		self.mapMaxY = mapCo.maxY
+		self.maxDis = SurvivalConst.MapCameraParams.MaxDis
+		self.minDis = SurvivalConst.MapCameraParams.MinDis
 	end
 
-	var_0_0.super.onSceneStart(arg_3_0, ...)
+	SurvivalSceneCameraComp.super.onSceneStart(self, ...)
 end
 
-function var_0_0.onScenePrepared(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0._cameraTrace.EnableTrace = true
+function SurvivalSceneCameraComp:onScenePrepared(sceneId, levelId)
+	self._cameraTrace.EnableTrace = true
 
-	arg_4_0:checkIsInMiasma(true)
+	self:checkIsInMiasma(true)
 
-	if arg_4_0.sceneType == SceneType.SurvivalShelter then
-		arg_4_0:setDistance(10)
-		arg_4_0:setRotate(0, 45)
+	if self.sceneType == SceneType.SurvivalShelter then
+		self:setDistance(10)
+		self:setRotate(0, 45)
 
-		local var_4_0 = SurvivalShelterModel.instance:getPlayerMo()
-		local var_4_1 = var_4_0 and var_4_0:getPos()
-		local var_4_2, var_4_3, var_4_4 = SurvivalHelper.instance:hexPointToWorldPoint(var_4_1 and var_4_1.q or 0, var_4_1 and var_4_1.r or 0)
-		local var_4_5 = Vector3(var_4_2, var_4_3, var_4_4)
+		local playerMo = SurvivalShelterModel.instance:getPlayerMo()
+		local playerPos = playerMo and playerMo:getPos()
+		local x, y, z = SurvivalHelper.instance:hexPointToWorldPoint(playerPos and playerPos.q or 0, playerPos and playerPos.r or 0)
+		local targetPos = Vector3(x, y, z)
 
-		arg_4_0:setFocus(var_4_5.x, var_4_5.y, var_4_5.z)
-	elseif arg_4_0.sceneType == SceneType.Survival then
-		local var_4_6 = SurvivalMapModel.instance.save_mapScale
+		self:setFocus(targetPos.x, targetPos.y, targetPos.z)
+	elseif self.sceneType == SceneType.Survival then
+		local scale = SurvivalMapModel.instance.save_mapScale
 
-		arg_4_0:setDistance(arg_4_0.maxDis - (arg_4_0.maxDis - arg_4_0.minDis) * var_4_6)
+		self:setDistance(self.maxDis - (self.maxDis - self.minDis) * scale)
 
-		local var_4_7 = SurvivalMapModel.instance:getSceneMo()
-		local var_4_8 = Vector3(var_4_7.player:getWorldPos())
+		local sceneMo = SurvivalMapModel.instance:getSceneMo()
+		local targetPos = Vector3(sceneMo.player:getWorldPos())
 
-		arg_4_0:setFocus(var_4_8.x, var_4_8.y, var_4_8.z)
-	elseif arg_4_0.sceneType == SceneType.SurvivalSummaryAct then
-		arg_4_0:setDistance(6)
-		arg_4_0:setRotate(0)
-		arg_4_0:setPitchAngle(45)
+		self:setFocus(targetPos.x, targetPos.y, targetPos.z)
+	elseif self.sceneType == SceneType.SurvivalSummaryAct then
+		self:setDistance(6)
+		self:setRotate(0)
+		self:setPitchAngle(45)
 
-		local var_4_9, var_4_10, var_4_11 = SurvivalHelper.instance:hexPointToWorldPoint(0, 0)
+		local x, y, z = SurvivalHelper.instance:hexPointToWorldPoint(0, 0)
 
-		arg_4_0:setFocus(var_4_9 + 0.5, var_4_10, var_4_11)
-		arg_4_0:setFov(35)
+		self:setFocus(x + 0.5, y, z)
+		self:setFov(35)
 	end
 end
 
-function var_0_0.setFocus(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	local var_5_0 = CameraMgr.instance:getFocusTrs()
+function SurvivalSceneCameraComp:setFocus(x, y, z)
+	local focusTrs = CameraMgr.instance:getFocusTrs()
 
-	transformhelper.setPos(var_5_0, arg_5_1, arg_5_2, arg_5_3)
-	arg_5_0._cameraTrace:SetTargetFocusPos(arg_5_1, arg_5_2, arg_5_3)
-	arg_5_0._cameraTrace:ApplyDirectly()
+	transformhelper.setPos(focusTrs, x, y, z)
+	self._cameraTrace:SetTargetFocusPos(x, y, z)
+	self._cameraTrace:ApplyDirectly()
 end
 
-function var_0_0.setFov(arg_6_0, arg_6_1)
-	local var_6_0 = 1.7777777777777777 * (UnityEngine.Screen.height / UnityEngine.Screen.width)
-	local var_6_1 = math.max(var_6_0, 1)
+function SurvivalSceneCameraComp:setFov(fov)
+	local fovRatio = 1.7777777777777777 * (UnityEngine.Screen.height / UnityEngine.Screen.width)
 
-	arg_6_0._nowFov = arg_6_1
+	fovRatio = math.max(fovRatio, 1)
+	self._nowFov = fov
 
-	arg_6_0._cameraTrace:SetTargetFov(arg_6_1 * var_6_1)
+	self._cameraTrace:SetTargetFov(fov * fovRatio)
 end
 
-function var_0_0.checkIsInMiasma(arg_7_0, arg_7_1)
-	local var_7_0 = SurvivalMapModel.instance:isInMiasma()
+function SurvivalSceneCameraComp:checkIsInMiasma(isFirst)
+	local isInMiasma = SurvivalMapModel.instance:isInMiasma()
 
-	if arg_7_1 then
-		local var_7_1 = var_7_0 and math.random(5) or 0
+	if isFirst then
+		local dir = isInMiasma and math.random(5) or 0
 
-		if var_7_1 > 2 then
-			var_7_1 = var_7_1 - 6
+		if dir > 2 then
+			dir = dir - 6
 		end
 
-		arg_7_0:setRotate(var_7_1 * 60)
-		arg_7_0._cameraTrace:ApplyDirectly()
+		self:setRotate(dir * 60)
+		self._cameraTrace:ApplyDirectly()
 
-		arg_7_0._isInMiasma = var_7_0
-	elseif arg_7_0._isInMiasma ~= var_7_0 then
-		arg_7_0._isInMiasma = var_7_0
+		self._isInMiasma = isInMiasma
+	elseif self._isInMiasma ~= isInMiasma then
+		self._isInMiasma = isInMiasma
 	else
 		return false
 	end
@@ -130,27 +132,27 @@ function var_0_0.checkIsInMiasma(arg_7_0, arg_7_1)
 	return true
 end
 
-function var_0_0.setRotate(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = arg_8_0._cameraCO and arg_8_0._cameraCO.pitch or 40
+function SurvivalSceneCameraComp:setRotate(yawAngle, pitchAngle)
+	local pitch = self._cameraCO and self._cameraCO.pitch or 40
 
-	arg_8_0.yaw = arg_8_1
+	self.yaw = yawAngle
 
-	arg_8_0._cameraTrace:SetTargetRotate(arg_8_1, var_8_0)
+	self._cameraTrace:SetTargetRotate(yawAngle, pitch)
 end
 
-function var_0_0.setPitchAngle(arg_9_0, arg_9_1)
-	arg_9_0._cameraTrace:SetTargetRotate(arg_9_0.yaw, arg_9_1)
+function SurvivalSceneCameraComp:setPitchAngle(pitchAngle)
+	self._cameraTrace:SetTargetRotate(self.yaw, pitchAngle)
 end
 
-function var_0_0.onSceneClose(arg_10_0, ...)
-	arg_10_0._isInMiasma = false
-	arg_10_0._rawcameraTrace.enabled = true
+function SurvivalSceneCameraComp:onSceneClose(...)
+	self._isInMiasma = false
+	self._rawcameraTrace.enabled = true
 
-	gohelper.destroy(arg_10_0._cameraTrace)
+	gohelper.destroy(self._cameraTrace)
 
-	arg_10_0._cameraTrace = arg_10_0._rawcameraTrace
+	self._cameraTrace = self._rawcameraTrace
 
-	var_0_0.super.onSceneClose(arg_10_0, ...)
+	SurvivalSceneCameraComp.super.onSceneClose(self, ...)
 end
 
-return var_0_0
+return SurvivalSceneCameraComp

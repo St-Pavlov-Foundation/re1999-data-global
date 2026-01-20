@@ -1,45 +1,47 @@
-﻿module("modules.logic.survival.view.shelter.SurvivalShelterRewardViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/SurvivalShelterRewardViewContainer.lua
 
-local var_0_0 = class("SurvivalShelterRewardViewContainer", BaseViewContainer)
+module("modules.logic.survival.view.shelter.SurvivalShelterRewardViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+local SurvivalShelterRewardViewContainer = class("SurvivalShelterRewardViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "Left/progress/#scroll_view"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes.itemRes
-	var_1_1.cellClass = SurvivalShelterRewardItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirH
-	var_1_1.lineCount = 1
-	var_1_1.cellWidth = 268
-	var_1_1.cellHeight = 700
-	var_1_1.cellSpaceH = 0
-	var_1_1.cellSpaceV = 0
-	var_1_1.startSpace = 2
-	arg_1_0.scrollView = LuaListScrollViewWithAnimator.New(SurvivalShelterRewardListModel.instance, var_1_1)
+function SurvivalShelterRewardViewContainer:buildViews()
+	local views = {}
+	local scrollParam1 = ListScrollParam.New()
 
-	table.insert(var_1_0, arg_1_0.scrollView)
-	table.insert(var_1_0, SurvivalShelterRewardView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
+	scrollParam1.scrollGOPath = "Left/progress/#scroll_view"
+	scrollParam1.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam1.prefabUrl = self._viewSetting.otherRes.itemRes
+	scrollParam1.cellClass = SurvivalShelterRewardItem
+	scrollParam1.scrollDir = ScrollEnum.ScrollDirH
+	scrollParam1.lineCount = 1
+	scrollParam1.cellWidth = 268
+	scrollParam1.cellHeight = 700
+	scrollParam1.cellSpaceH = 0
+	scrollParam1.cellSpaceV = 0
+	scrollParam1.startSpace = 2
+	self.scrollView = LuaListScrollViewWithAnimator.New(SurvivalShelterRewardListModel.instance, scrollParam1)
 
-	return var_1_0
+	table.insert(views, self.scrollView)
+	table.insert(views, SurvivalShelterRewardView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_topleft"))
+
+	return views
 end
 
-function var_0_0.getScrollView(arg_2_0)
-	return arg_2_0.scrollView
+function SurvivalShelterRewardViewContainer:getScrollView()
+	return self.scrollView
 end
 
-function var_0_0.buildTabViews(arg_3_0, arg_3_1)
-	local var_3_0 = NavigateButtonsView.New({
+function SurvivalShelterRewardViewContainer:buildTabViews(tabContainerId)
+	local view = NavigateButtonsView.New({
 		true,
 		false,
 		false
 	})
 
 	return {
-		var_3_0
+		view
 	}
 end
 
-return var_0_0
+return SurvivalShelterRewardViewContainer

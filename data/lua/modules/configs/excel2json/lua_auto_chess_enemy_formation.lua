@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_auto_chess_enemy_formation", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_auto_chess_enemy_formation.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_auto_chess_enemy_formation", package.seeall)
+
+local lua_auto_chess_enemy_formation = {}
+local fields = {
 	index5 = 9,
 	index3 = 7,
 	zoneId = 4,
@@ -17,13 +19,13 @@ local var_0_1 = {
 	id = 1,
 	index1 = 5
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_auto_chess_enemy_formation.onLoad(json)
+	lua_auto_chess_enemy_formation.configList, lua_auto_chess_enemy_formation.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_auto_chess_enemy_formation

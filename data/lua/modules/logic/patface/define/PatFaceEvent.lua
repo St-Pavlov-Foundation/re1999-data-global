@@ -1,8 +1,10 @@
-﻿module("modules.logic.patface.define.PatFaceEvent", package.seeall)
+﻿-- chunkname: @modules/logic/patface/define/PatFaceEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.patface.define.PatFaceEvent", package.seeall)
 
-var_0_0.FinishAllPatFace = 1
-var_0_0.PatFaceWorkDone = 2
+local PatFaceEvent = _M
 
-return var_0_0
+PatFaceEvent.FinishAllPatFace = 1
+PatFaceEvent.PatFaceWorkDone = 2
+
+return PatFaceEvent

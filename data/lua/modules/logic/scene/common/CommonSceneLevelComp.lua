@@ -1,157 +1,159 @@
-﻿module("modules.logic.scene.common.CommonSceneLevelComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/common/CommonSceneLevelComp.lua
 
-local var_0_0 = class("CommonSceneLevelComp", BaseSceneComp)
+module("modules.logic.scene.common.CommonSceneLevelComp", package.seeall)
 
-var_0_0.OnLevelLoaded = 1
+local CommonSceneLevelComp = class("CommonSceneLevelComp", BaseSceneComp)
 
-local var_0_1 = "scenes/common/vx_prefabs/%s.prefab"
+CommonSceneLevelComp.OnLevelLoaded = 1
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._sceneId = nil
-	arg_1_0._levelId = nil
-	arg_1_0._isLoadingRes = false
-	arg_1_0._levelId = nil
-	arg_1_0._resPath = nil
-	arg_1_0._assetItem = nil
-	arg_1_0._instGO = nil
+local sceneEffectPath = "scenes/common/vx_prefabs/%s.prefab"
+
+function CommonSceneLevelComp:onInit()
+	self._sceneId = nil
+	self._levelId = nil
+	self._isLoadingRes = false
+	self._levelId = nil
+	self._resPath = nil
+	self._assetItem = nil
+	self._instGO = nil
 end
 
-function var_0_0.getCurLevelId(arg_2_0)
-	return arg_2_0._levelId
+function CommonSceneLevelComp:getCurLevelId()
+	return self._levelId
 end
 
-function var_0_0.onSceneStart(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	arg_3_0._sceneId = arg_3_1
-	arg_3_0._levelId = arg_3_2
-	arg_3_0._failCallback = arg_3_3
+function CommonSceneLevelComp:onSceneStart(sceneId, levelId, failCallback)
+	self._sceneId = sceneId
+	self._levelId = levelId
+	self._failCallback = failCallback
 
-	arg_3_0:loadLevel(arg_3_2)
+	self:loadLevel(levelId)
 end
 
-function var_0_0.onSceneClose(arg_4_0)
-	if arg_4_0._isLoadingRes and arg_4_0._resPath then
-		removeAssetLoadCb(arg_4_0._resPath, arg_4_0._onLoadCallback, arg_4_0)
+function CommonSceneLevelComp:onSceneClose()
+	if self._isLoadingRes and self._resPath then
+		removeAssetLoadCb(self._resPath, self._onLoadCallback, self)
 
-		arg_4_0._isLoadingRes = nil
+		self._isLoadingRes = nil
 	end
 
-	if arg_4_0._assetItem then
-		gohelper.destroy(arg_4_0._instGO)
-		arg_4_0._assetItem:Release()
+	if self._assetItem then
+		gohelper.destroy(self._instGO)
+		self._assetItem:Release()
 	end
 
-	arg_4_0._levelId = nil
-	arg_4_0._resPath = nil
-	arg_4_0._assetItem = nil
-	arg_4_0._instGO = nil
+	self._levelId = nil
+	self._resPath = nil
+	self._assetItem = nil
+	self._instGO = nil
 
-	arg_4_0:releaseSceneEffectsLoader()
+	self:releaseSceneEffectsLoader()
 end
 
-function var_0_0.loadLevel(arg_5_0, arg_5_1)
-	if arg_5_0._isLoadingRes then
-		logError("is loading scene level res, cur id = " .. (arg_5_0._levelId or "nil") .. ", try to load id = " .. (arg_5_1 or "nil"))
+function CommonSceneLevelComp:loadLevel(levelId)
+	if self._isLoadingRes then
+		logError("is loading scene level res, cur id = " .. (self._levelId or "nil") .. ", try to load id = " .. (levelId or "nil"))
 
 		return
 	end
 
-	if arg_5_0._assetItem then
-		gohelper.destroy(arg_5_0._instGO)
-		arg_5_0._assetItem:Release()
+	if self._assetItem then
+		gohelper.destroy(self._instGO)
+		self._assetItem:Release()
 
-		arg_5_0._assetItem = nil
-		arg_5_0._instGO = nil
+		self._assetItem = nil
+		self._instGO = nil
 
-		arg_5_0:releaseSceneEffectsLoader()
+		self:releaseSceneEffectsLoader()
 	end
 
-	arg_5_0._isLoadingRes = true
-	arg_5_0._levelId = arg_5_1
+	self._isLoadingRes = true
+	self._levelId = levelId
 
-	arg_5_0:getCurScene():setCurLevelId(arg_5_0._levelId)
+	self:getCurScene():setCurLevelId(self._levelId)
 
-	arg_5_0._resPath = ResUrl.getSceneLevelUrl(arg_5_1)
+	self._resPath = ResUrl.getSceneLevelUrl(levelId)
 
-	loadAbAsset(arg_5_0._resPath, false, arg_5_0._onLoadCallback, arg_5_0)
+	loadAbAsset(self._resPath, false, self._onLoadCallback, self)
 end
 
-function var_0_0._onLoadCallback(arg_6_0, arg_6_1)
-	arg_6_0._isLoadingRes = false
+function CommonSceneLevelComp:_onLoadCallback(assetItem)
+	self._isLoadingRes = false
 
-	if arg_6_1.IsLoadSuccess then
-		local var_6_0 = arg_6_0._assetItem
+	if assetItem.IsLoadSuccess then
+		local oldAsstet = self._assetItem
 
-		arg_6_0._assetItem = arg_6_1
+		self._assetItem = assetItem
 
-		arg_6_0._assetItem:Retain()
+		self._assetItem:Retain()
 
-		if var_6_0 then
-			var_6_0:Release()
+		if oldAsstet then
+			oldAsstet:Release()
 		end
 
-		local var_6_1 = arg_6_0:getCurScene():getSceneContainerGO()
+		local sceneGO = self:getCurScene():getSceneContainerGO()
 
-		arg_6_0._instGO = gohelper.clone(arg_6_0._assetItem:GetResource(arg_6_0._resPath), var_6_1)
+		self._instGO = gohelper.clone(self._assetItem:GetResource(self._resPath), sceneGO)
 
-		arg_6_0:dispatchEvent(var_0_0.OnLevelLoaded, arg_6_0._levelId)
-		GameSceneMgr.instance:dispatchEvent(SceneEventName.OnLevelLoaded, arg_6_0._levelId)
+		self:dispatchEvent(CommonSceneLevelComp.OnLevelLoaded, self._levelId)
+		GameSceneMgr.instance:dispatchEvent(SceneEventName.OnLevelLoaded, self._levelId)
 
-		local var_6_2 = SceneType.NameDict[GameSceneMgr.instance:getCurSceneType()]
-		local var_6_3 = arg_6_0._sceneId or -1
-		local var_6_4 = arg_6_0._levelId or -1
+		local typeName = SceneType.NameDict[GameSceneMgr.instance:getCurSceneType()]
+		local sceneId = self._sceneId or -1
+		local levelId = self._levelId or -1
 
-		logNormal(string.format("load scene level finish: %s %d level_%d", var_6_2, var_6_3, var_6_4))
+		logNormal(string.format("load scene level finish: %s %d level_%d", typeName, sceneId, levelId))
 
-		local var_6_5 = lua_scene_level.configDict[var_6_4]
+		local levelConfig = lua_scene_level.configDict[levelId]
 
-		if var_6_5 and not string.nilorempty(var_6_5.sceneEffects) then
-			arg_6_0:releaseSceneEffectsLoader()
+		if levelConfig and not string.nilorempty(levelConfig.sceneEffects) then
+			self:releaseSceneEffectsLoader()
 
-			local var_6_6 = string.split(var_6_5.sceneEffects, "#")
+			local effects = string.split(levelConfig.sceneEffects, "#")
 
-			arg_6_0._sceneEffectsLoader = MultiAbLoader.New()
+			self._sceneEffectsLoader = MultiAbLoader.New()
 
-			for iter_6_0, iter_6_1 in ipairs(var_6_6) do
-				arg_6_0._sceneEffectsLoader:addPath(string.format(var_0_1, iter_6_1))
+			for i, v in ipairs(effects) do
+				self._sceneEffectsLoader:addPath(string.format(sceneEffectPath, v))
 			end
 
-			arg_6_0._sceneEffectsObj = {}
+			self._sceneEffectsObj = {}
 
-			arg_6_0._sceneEffectsLoader:setOneFinishCallback(arg_6_0._onSceneEffectsLoaded)
-			arg_6_0._sceneEffectsLoader:startLoad(arg_6_0._onAllSceneEffectsLoaded, arg_6_0)
+			self._sceneEffectsLoader:setOneFinishCallback(self._onSceneEffectsLoaded)
+			self._sceneEffectsLoader:startLoad(self._onAllSceneEffectsLoaded, self)
 		end
-	elseif arg_6_0._failCallback then
-		arg_6_0._failCallback(arg_6_0)
+	elseif self._failCallback then
+		self._failCallback(self)
 	else
-		logError("load scene level fail, level_" .. (arg_6_0._levelId or "nil"))
+		logError("load scene level fail, level_" .. (self._levelId or "nil"))
 	end
 end
 
-function var_0_0._onSceneEffectsLoaded(arg_7_0, arg_7_1)
-	if not gohelper.isNil(arg_7_0._instGO) then
-		local var_7_0 = arg_7_1:getFirstAssetItem()
-		local var_7_1 = var_7_0 and var_7_0:GetResource()
+function CommonSceneLevelComp:_onSceneEffectsLoaded(loader)
+	if not gohelper.isNil(self._instGO) then
+		local assetItem = loader:getFirstAssetItem()
+		local tarPrefab = assetItem and assetItem:GetResource()
 
-		if var_7_1 then
-			table.insert(arg_7_0._sceneEffectsObj, gohelper.clone(var_7_1, arg_7_0._instGO))
+		if tarPrefab then
+			table.insert(self._sceneEffectsObj, gohelper.clone(tarPrefab, self._instGO))
 		end
 	end
 end
 
-function var_0_0._onAllSceneEffectsLoaded(arg_8_0)
+function CommonSceneLevelComp:_onAllSceneEffectsLoaded()
 	return
 end
 
-function var_0_0.releaseSceneEffectsLoader(arg_9_0)
-	if arg_9_0._sceneEffectsLoader then
-		arg_9_0._sceneEffectsLoader:dispose()
+function CommonSceneLevelComp:releaseSceneEffectsLoader()
+	if self._sceneEffectsLoader then
+		self._sceneEffectsLoader:dispose()
 
-		arg_9_0._sceneEffectsLoader = nil
+		self._sceneEffectsLoader = nil
 	end
 end
 
-function var_0_0.getSceneGo(arg_10_0)
-	return arg_10_0._instGO
+function CommonSceneLevelComp:getSceneGo()
+	return self._instGO
 end
 
-return var_0_0
+return CommonSceneLevelComp

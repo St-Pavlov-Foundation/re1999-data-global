@@ -1,40 +1,42 @@
-﻿module("modules.logic.turnback.view.new.view.TurnbackNewBeginnerViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/turnback/view/new/view/TurnbackNewBeginnerViewContainer.lua
 
-local var_0_0 = class("TurnbackNewBeginnerViewContainer", BaseViewContainer)
+module("modules.logic.turnback.view.new.view.TurnbackNewBeginnerViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+local TurnbackNewBeginnerViewContainer = class("TurnbackNewBeginnerViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "#go_category/#scroll_categoryitem"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_1.cellClass = TurnbackNewCategoryItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 1
-	var_1_1.cellWidth = 320
-	var_1_1.cellHeight = 125
-	var_1_1.cellSpaceH = 0
-	var_1_1.cellSpaceV = 9.8
-	var_1_1.startSpace = 0
+function TurnbackNewBeginnerViewContainer:buildViews()
+	local views = {}
+	local scrollParam = ListScrollParam.New()
 
-	table.insert(var_1_0, LuaListScrollView.New(TurnbackBeginnerCategoryListModel.instance, var_1_1))
-	table.insert(var_1_0, TurnbackNewBeginnerView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
+	scrollParam.scrollGOPath = "#go_category/#scroll_categoryitem"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = TurnbackNewCategoryItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 320
+	scrollParam.cellHeight = 125
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 9.8
+	scrollParam.startSpace = 0
 
-	return var_1_0
+	table.insert(views, LuaListScrollView.New(TurnbackBeginnerCategoryListModel.instance, scrollParam))
+	table.insert(views, TurnbackNewBeginnerView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_btns"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	arg_2_0.navigationView = NavigateButtonsView.New({
+function TurnbackNewBeginnerViewContainer:buildTabViews(tabContainerId)
+	self.navigationView = NavigateButtonsView.New({
 		true,
 		true,
 		false
 	})
 
 	return {
-		arg_2_0.navigationView
+		self.navigationView
 	}
 end
 
-return var_0_0
+return TurnbackNewBeginnerViewContainer

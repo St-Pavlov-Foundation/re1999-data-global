@@ -1,12 +1,14 @@
-﻿module("modules.logic.versionactivity2_1.lanshoupa.define.LanShouPaEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_1/lanshoupa/define/LanShouPaEvent.lua
 
-local var_0_0 = _M
-local var_0_1 = GameUtil.getUniqueTb()
+module("modules.logic.versionactivity2_1.lanshoupa.define.LanShouPaEvent", package.seeall)
 
-var_0_0.StartEnterGameView = var_0_1()
-var_0_0.SetScenePos = var_0_1()
-var_0_0.EpisodeClick = var_0_1()
-var_0_0.OnEpisodeFinish = var_0_1()
-var_0_0.OneClickClaimReward = var_0_1()
+local LanShouPaEvent = _M
+local _get = GameUtil.getUniqueTb()
 
-return var_0_0
+LanShouPaEvent.StartEnterGameView = _get()
+LanShouPaEvent.SetScenePos = _get()
+LanShouPaEvent.EpisodeClick = _get()
+LanShouPaEvent.OnEpisodeFinish = _get()
+LanShouPaEvent.OneClickClaimReward = _get()
+
+return LanShouPaEvent

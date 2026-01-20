@@ -31,7 +31,7 @@
     "desc": "language_10085968",
     "toward": "0,0",
     "saveMonster": "107313303",
-    "cleanpoint": "60|80",
+    "cleanpoint": "60|90",
     "destructionLevel": "1000:500:500&500:200:250",
     "drop": 0
   },
@@ -49,7 +49,7 @@
     "desc": "language_10085970",
     "toward": "0,0",
     "saveMonster": "107313201",
-    "cleanpoint": "60|80",
+    "cleanpoint": "60|90",
     "destructionLevel": "1000:500:500&500:200:250",
     "drop": 8050912
   },
@@ -67,7 +67,7 @@
     "desc": "language_10085968",
     "toward": "0,0",
     "saveMonster": "107313305",
-    "cleanpoint": "60|80",
+    "cleanpoint": "60|90",
     "destructionLevel": "1000:500:500&500:200:250",
     "drop": 0
   },
@@ -85,7 +85,7 @@
     "desc": "language_10085970",
     "toward": "0,0",
     "saveMonster": "107313204",
-    "cleanpoint": "60|80",
+    "cleanpoint": "60|90",
     "destructionLevel": "1000:500:500&500:200:250",
     "drop": 8050913
   },
@@ -103,7 +103,7 @@
     "desc": "language_10085968",
     "toward": "0,0",
     "saveMonster": "107313307",
-    "cleanpoint": "60|80",
+    "cleanpoint": "60|90",
     "destructionLevel": "1000:500:500&500:200:250",
     "drop": 0
   },
@@ -121,7 +121,7 @@
     "desc": "language_10090891",
     "toward": "0,0",
     "saveMonster": "107313101",
-    "cleanpoint": "60|80",
+    "cleanpoint": "60|90",
     "destructionLevel": "1000:500:500&500:200:250",
     "drop": 0
   },
@@ -139,7 +139,7 @@
     "desc": "language_10085970",
     "toward": "0,0",
     "saveMonster": "107313207",
-    "cleanpoint": "60|80",
+    "cleanpoint": "60|90",
     "destructionLevel": "1000:500:500&500:200:250",
     "drop": 8050912
   },
@@ -157,7 +157,7 @@
     "desc": "language_10085968",
     "toward": "0,0",
     "saveMonster": "107313309",
-    "cleanpoint": "60|80",
+    "cleanpoint": "60|90",
     "destructionLevel": "1000:500:500&500:200:250",
     "drop": 0
   },
@@ -175,7 +175,7 @@
     "desc": "language_10090891",
     "toward": "0,0",
     "saveMonster": "107313104",
-    "cleanpoint": "60|80",
+    "cleanpoint": "60|90",
     "destructionLevel": "1000:500:500&500:200:250",
     "drop": 0
   },
@@ -193,7 +193,7 @@
     "desc": "language_10096484",
     "toward": "0,0",
     "saveMonster": "107313001",
-    "cleanpoint": "60|80",
+    "cleanpoint": "60|90",
     "destructionLevel": "1000:500:500&500:200:250",
     "drop": 8050922
   },
@@ -211,7 +211,7 @@
     "desc": "language_10085968",
     "toward": "0,0",
     "saveMonster": "107313311",
-    "cleanpoint": "60|80",
+    "cleanpoint": "60|90",
     "destructionLevel": "1000:500:500&500:200:250",
     "drop": 0
   },
@@ -229,7 +229,7 @@
     "desc": "language_10090891",
     "toward": "0,0",
     "saveMonster": "107313107",
-    "cleanpoint": "60|80",
+    "cleanpoint": "60|90",
     "destructionLevel": "1000:500:500&500:200:250",
     "drop": 0
   },

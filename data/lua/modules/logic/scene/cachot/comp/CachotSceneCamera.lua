@@ -1,47 +1,55 @@
-﻿module("modules.logic.scene.cachot.comp.CachotSceneCamera", package.seeall)
+﻿-- chunkname: @modules/logic/scene/cachot/comp/CachotSceneCamera.lua
 
-local var_0_0 = class("CachotSceneCamera", BaseSceneComp)
+module("modules.logic.scene.cachot.comp.CachotSceneCamera", package.seeall)
 
-function var_0_0.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._scene = arg_1_0:getCurScene()
-	arg_1_0._levelComp = arg_1_0._scene.level
+local CachotSceneCamera = class("CachotSceneCamera", BaseSceneComp)
 
-	local var_1_0 = CameraMgr.instance:getCameraTrace()
+function CachotSceneCamera:onSceneStart(sceneId, levelId)
+	self._scene = self:getCurScene()
+	self._levelComp = self._scene.level
 
-	arg_1_0._traceEnabled = var_1_0.enabled
-	var_1_0.enabled = false
+	local trace = CameraMgr.instance:getCameraTrace()
 
-	local var_1_1 = CameraMgr.instance:getMainCamera()
-	local var_1_2 = CameraMgr.instance:getMainCameraTrs()
+	self._traceEnabled = trace.enabled
+	trace.enabled = false
 
-	arg_1_0._rawCameraIsOrthographic = var_1_1.orthographic
-	arg_1_0._rawCameraIsOrthographicSize = var_1_1.orthographicSize
+	local camera = CameraMgr.instance:getMainCamera()
+	local cameraTrs = CameraMgr.instance:getMainCameraTrs()
+
+	self._rawCameraIsOrthographic = camera.orthographic
+	self._rawCameraIsOrthographicSize = camera.orthographicSize
 
 	gohelper.setActive(CameraMgr.instance:getVirtualCameraGO(), false)
-	transformhelper.setLocalPos(var_1_2, 0, 0, 0)
-	transformhelper.setLocalRotation(var_1_2, 0, 0, 0)
+	transformhelper.setLocalPos(cameraTrs, 0, 0, 0)
+	transformhelper.setLocalRotation(cameraTrs, 0, 0, 0)
 
-	var_1_1.orthographic = true
-	var_1_1.orthographicSize = 5 * GameUtil.getAdapterScale(true)
+	camera.orthographic = true
+	camera.orthographicSize = 5 * GameUtil.getAdapterScale(true)
 
-	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnScreenResize, arg_1_0.onScreenResize, arg_1_0)
+	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnScreenResize, self.onScreenResize, self)
 end
 
-function var_0_0.onScreenResize(arg_2_0)
-	local var_2_0 = CameraMgr.instance:getMainCamera()
+function CachotSceneCamera:onScreenResize()
+	local camera = CameraMgr.instance:getMainCamera()
 
-	var_2_0.orthographic = true
-	var_2_0.orthographicSize = 5 * GameUtil.getAdapterScale(true)
+	camera.orthographic = true
+
+	local scale = GameUtil.getAdapterScale(true)
+
+	camera.orthographicSize = 5 * scale
 end
 
-function var_0_0.onSceneClose(arg_3_0)
-	GameGlobalMgr.instance:unregisterCallback(GameStateEvent.OnScreenResize, arg_3_0.onScreenResize, arg_3_0)
+function CachotSceneCamera:onSceneClose()
+	GameGlobalMgr.instance:unregisterCallback(GameStateEvent.OnScreenResize, self.onScreenResize, self)
 
-	local var_3_0 = CameraMgr.instance:getMainCamera()
+	local camera = CameraMgr.instance:getMainCamera()
 
-	var_3_0.orthographicSize = arg_3_0._rawCameraIsOrthographicSize
-	var_3_0.orthographic = arg_3_0._rawCameraIsOrthographic
-	CameraMgr.instance:getCameraTrace().enabled = arg_3_0._traceEnabled
+	camera.orthographicSize = self._rawCameraIsOrthographicSize
+	camera.orthographic = self._rawCameraIsOrthographic
+
+	local trace = CameraMgr.instance:getCameraTrace()
+
+	trace.enabled = self._traceEnabled
 end
 
-return var_0_0
+return CachotSceneCamera

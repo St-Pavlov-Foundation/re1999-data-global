@@ -1,63 +1,65 @@
-﻿module("modules.logic.equip.view.EquipChooseItem", package.seeall)
+﻿-- chunkname: @modules/logic/equip/view/EquipChooseItem.lua
 
-local var_0_0 = class("EquipChooseItem", ListScrollCellExtend)
+module("modules.logic.equip.view.EquipChooseItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goequip = gohelper.findChild(arg_1_0.viewGO, "#go_equip")
-	arg_1_0._goreduce = gohelper.findChild(arg_1_0.viewGO, "#go_reduce")
+local EquipChooseItem = class("EquipChooseItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function EquipChooseItem:onInitView()
+	self._goequip = gohelper.findChild(self.viewGO, "#go_equip")
+	self._goreduce = gohelper.findChild(self.viewGO, "#go_reduce")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function EquipChooseItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function EquipChooseItem:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._longPressLister = SLFramework.UGUI.UILongPressListener.Get(arg_4_0.viewGO)
+function EquipChooseItem:_editableInitView()
+	self._longPressLister = SLFramework.UGUI.UILongPressListener.Get(self.viewGO)
 
-	arg_4_0._longPressLister:AddLongPressListener(arg_4_0._longPressTimeEnd, arg_4_0)
-	arg_4_0._longPressLister:SetLongPressTime({
+	self._longPressLister:AddLongPressListener(self._longPressTimeEnd, self)
+	self._longPressLister:SetLongPressTime({
 		0.5,
 		0.2
 	})
 
-	arg_4_0._addClick = gohelper.getClick(arg_4_0.viewGO)
+	self._addClick = gohelper.getClick(self.viewGO)
 
-	arg_4_0._addClick:AddClickListener(arg_4_0._onClick, arg_4_0)
+	self._addClick:AddClickListener(self._onClick, self)
 
-	arg_4_0._reduceClick = gohelper.getClick(arg_4_0._goreduce)
+	self._reduceClick = gohelper.getClick(self._goreduce)
 
-	arg_4_0._reduceClick:AddClickListener(arg_4_0._onReduceClick, arg_4_0)
+	self._reduceClick:AddClickListener(self._onReduceClick, self)
 
-	arg_4_0.animator = arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_4_0._commonEquipIcon = IconMgr.instance:getCommonEquipIcon(arg_4_0._goequip, 1)
+	self.animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._commonEquipIcon = IconMgr.instance:getCommonEquipIcon(self._goequip, 1)
 
-	arg_4_0._commonEquipIcon:_overrideLoadIconFunc(EquipHelper.getEquipIconLoadPath, arg_4_0._commonEquipIcon)
+	self._commonEquipIcon:_overrideLoadIconFunc(EquipHelper.getEquipIconLoadPath, self._commonEquipIcon)
 end
 
-function var_0_0._onReduceClick(arg_5_0)
+function EquipChooseItem:_onReduceClick()
 	AudioMgr.instance:trigger(AudioEnum.HeroGroupUI.Play_UI_Inking_Forget)
-	EquipChooseListModel.instance:deselectEquip(arg_5_0._mo)
+	EquipChooseListModel.instance:deselectEquip(self._mo)
 	ViewMgr.instance:closeView(ViewName.EquipInfoTipsView)
 end
 
-function var_0_0._onClick(arg_6_0)
+function EquipChooseItem:_onClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
-	arg_6_0.animator:Play(UIAnimationName.Click, 0, 0)
+	self.animator:Play(UIAnimationName.Click, 0, 0)
 
-	if arg_6_0._mo.isLock then
+	if self._mo.isLock then
 		GameFacade.showToast(ToastEnum.EquipChooseLock)
 
-		if EquipHelper.isNormalEquip(arg_6_0._mo.config) then
+		if EquipHelper.isNormalEquip(self._mo.config) then
 			ViewMgr.instance:openView(ViewName.EquipInfoTipsView, {
-				equipMo = arg_6_0._mo
+				equipMo = self._mo
 			})
 		end
 
@@ -65,100 +67,102 @@ function var_0_0._onClick(arg_6_0)
 	end
 
 	ViewMgr.instance:closeView(ViewName.EquipInfoTipsView)
-	arg_6_0:addSelf()
+	self:addSelf()
 end
 
-function var_0_0._longPressTimeEnd(arg_7_0)
-	if not EquipHelper.isExpEquip(arg_7_0._mo.config) then
+function EquipChooseItem:_longPressTimeEnd()
+	if not EquipHelper.isExpEquip(self._mo.config) then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
 
-	if arg_7_0:addSelf() == EquipEnum.ChooseEquipStatus.Success then
-		arg_7_0.animator:Play(UIAnimationName.Click, 0, 0)
+	local status = self:addSelf()
+
+	if status == EquipEnum.ChooseEquipStatus.Success then
+		self.animator:Play(UIAnimationName.Click, 0, 0)
 	end
 end
 
-function var_0_0.addSelf(arg_8_0)
-	if arg_8_0._mo.isLock then
+function EquipChooseItem:addSelf()
+	if self._mo.isLock then
 		return nil
 	end
 
-	local var_8_0 = EquipChooseListModel.instance:selectEquip(arg_8_0._mo)
+	local chooseStatus = EquipChooseListModel.instance:selectEquip(self._mo)
 
-	if var_8_0 == EquipEnum.ChooseEquipStatus.BeyondEquipHadNum then
-		return var_8_0
-	elseif var_8_0 == EquipEnum.ChooseEquipStatus.Lock then
-		return var_8_0
-	elseif var_8_0 == EquipEnum.ChooseEquipStatus.BeyondMaxSelectEquip then
+	if chooseStatus == EquipEnum.ChooseEquipStatus.BeyondEquipHadNum then
+		return chooseStatus
+	elseif chooseStatus == EquipEnum.ChooseEquipStatus.Lock then
+		return chooseStatus
+	elseif chooseStatus == EquipEnum.ChooseEquipStatus.BeyondMaxSelectEquip then
 		GameFacade.showToast(ToastEnum.MaxEquips)
 
-		return var_8_0
-	elseif var_8_0 == EquipEnum.ChooseEquipStatus.BeyondMaxStrengthenExperience then
+		return chooseStatus
+	elseif chooseStatus == EquipEnum.ChooseEquipStatus.BeyondMaxStrengthenExperience then
 		GameFacade.showToast(ToastEnum.MaxLevEquips)
 
-		return var_8_0
+		return chooseStatus
 	end
 
 	EquipController.instance:dispatchEvent(EquipEvent.onAddEquipToPlayEffect, {
-		arg_8_0._mo.uid
+		self._mo.uid
 	})
 
-	return var_8_0
+	return chooseStatus
 end
 
-function var_0_0._onChooseEquip(arg_9_0)
+function EquipChooseItem:_onChooseEquip()
 	EquipController.instance:dispatchEvent(EquipEvent.onChooseEquip)
 end
 
-function var_0_0._editableAddEvents(arg_10_0)
-	EquipController.instance:registerCallback(EquipEvent.onChooseChange, arg_10_0._updateSelected, arg_10_0)
-	EquipController.instance:registerCallback(EquipEvent.onGuideChooseEquip, arg_10_0._onGuideChooseEquip, arg_10_0)
+function EquipChooseItem:_editableAddEvents()
+	EquipController.instance:registerCallback(EquipEvent.onChooseChange, self._updateSelected, self)
+	EquipController.instance:registerCallback(EquipEvent.onGuideChooseEquip, self._onGuideChooseEquip, self)
 end
 
-function var_0_0._editableRemoveEvents(arg_11_0)
-	EquipController.instance:unregisterCallback(EquipEvent.onChooseChange, arg_11_0._updateSelected, arg_11_0)
-	EquipController.instance:unregisterCallback(EquipEvent.onGuideChooseEquip, arg_11_0._onGuideChooseEquip, arg_11_0)
+function EquipChooseItem:_editableRemoveEvents()
+	EquipController.instance:unregisterCallback(EquipEvent.onChooseChange, self._updateSelected, self)
+	EquipController.instance:unregisterCallback(EquipEvent.onGuideChooseEquip, self._onGuideChooseEquip, self)
 end
 
-function var_0_0._onGuideChooseEquip(arg_12_0, arg_12_1)
-	if tonumber(arg_12_1) == arg_12_0._index then
-		arg_12_0:_onClick()
+function EquipChooseItem:_onGuideChooseEquip(index)
+	if tonumber(index) == self._index then
+		self:_onClick()
 	end
 end
 
-function var_0_0._updateSelected(arg_13_0)
-	if (arg_13_0._mo._chooseNum or 0) > 0 then
-		gohelper.setActive(arg_13_0._goreduce, true)
+function EquipChooseItem:_updateSelected()
+	if (self._mo._chooseNum or 0) > 0 then
+		gohelper.setActive(self._goreduce, true)
 
-		arg_13_0._commonEquipIcon._txtnum.text = string.format("%s/%s", arg_13_0._mo._chooseNum, GameUtil.numberDisplay(arg_13_0._mo.count))
+		self._commonEquipIcon._txtnum.text = string.format("%s/%s", self._mo._chooseNum, GameUtil.numberDisplay(self._mo.count))
 	else
-		gohelper.setActive(arg_13_0._goreduce, false)
+		gohelper.setActive(self._goreduce, false)
 
-		arg_13_0._commonEquipIcon._txtnum.text = GameUtil.numberDisplay(arg_13_0._mo.count)
+		self._commonEquipIcon._txtnum.text = GameUtil.numberDisplay(self._mo.count)
 	end
 end
 
-function var_0_0.onUpdateMO(arg_14_0, arg_14_1)
-	arg_14_0._mo = arg_14_1
+function EquipChooseItem:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_14_0._commonEquipIcon:setEquipMO(arg_14_1)
-	arg_14_0:_updateSelected()
+	self._commonEquipIcon:setEquipMO(mo)
+	self:_updateSelected()
 end
 
-function var_0_0.onSelect(arg_15_0, arg_15_1)
-	arg_15_0:onUpdateMO(arg_15_0._mo)
+function EquipChooseItem:onSelect(isSelect)
+	self:onUpdateMO(self._mo)
 end
 
-function var_0_0.refreshLockUI(arg_16_0)
-	arg_16_0._commonEquipIcon:refreshLock(arg_16_0._mo.isLock)
+function EquipChooseItem:refreshLockUI()
+	self._commonEquipIcon:refreshLock(self._mo.isLock)
 end
 
-function var_0_0.onDestroyView(arg_17_0)
-	arg_17_0._longPressLister:RemoveLongPressListener()
-	arg_17_0._addClick:RemoveClickListener()
-	arg_17_0._reduceClick:RemoveClickListener()
+function EquipChooseItem:onDestroyView()
+	self._longPressLister:RemoveLongPressListener()
+	self._addClick:RemoveClickListener()
+	self._reduceClick:RemoveClickListener()
 end
 
-return var_0_0
+return EquipChooseItem

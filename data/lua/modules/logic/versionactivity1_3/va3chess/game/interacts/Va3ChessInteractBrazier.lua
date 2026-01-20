@@ -1,35 +1,37 @@
-﻿module("modules.logic.versionactivity1_3.va3chess.game.interacts.Va3ChessInteractBrazier", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/va3chess/game/interacts/Va3ChessInteractBrazier.lua
 
-local var_0_0 = class("Va3ChessInteractBrazier", Va3ChessInteractBase)
+module("modules.logic.versionactivity1_3.va3chess.game.interacts.Va3ChessInteractBrazier", package.seeall)
 
-function var_0_0.onAvatarLoaded(arg_1_0)
-	var_0_0.super.onAvatarLoaded(arg_1_0)
+local Va3ChessInteractBrazier = class("Va3ChessInteractBrazier", Va3ChessInteractBase)
 
-	local var_1_0 = arg_1_0._target.avatar.loader
+function Va3ChessInteractBrazier:onAvatarLoaded()
+	Va3ChessInteractBrazier.super.onAvatarLoaded(self)
 
-	if not var_1_0 then
+	local loader = self._target.avatar.loader
+
+	if not loader then
 		return
 	end
 
-	local var_1_1 = var_1_0:getInstGO()
+	local go = loader:getInstGO()
 
-	if not gohelper.isNil(var_1_1) then
-		arg_1_0._goFire = gohelper.findChild(var_1_1, "huopeng_fire")
+	if not gohelper.isNil(go) then
+		self._goFire = gohelper.findChild(go, "huopeng_fire")
 	end
 
-	arg_1_0:refreshBrazier()
+	self:refreshBrazier()
 end
 
-function var_0_0.refreshBrazier(arg_2_0)
-	local var_2_0 = false
+function Va3ChessInteractBrazier:refreshBrazier()
+	local isLight = false
 
-	if arg_2_0._target.originData then
-		var_2_0 = arg_2_0._target.originData:getBrazierIsLight()
+	if self._target.originData then
+		isLight = self._target.originData:getBrazierIsLight()
 	end
 
-	if not gohelper.isNil(arg_2_0._goFire) then
-		gohelper.setActive(arg_2_0._goFire, var_2_0)
+	if not gohelper.isNil(self._goFire) then
+		gohelper.setActive(self._goFire, isLight)
 	end
 end
 
-return var_0_0
+return Va3ChessInteractBrazier

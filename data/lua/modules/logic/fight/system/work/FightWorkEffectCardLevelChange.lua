@@ -1,72 +1,78 @@
-﻿module("modules.logic.fight.system.work.FightWorkEffectCardLevelChange", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkEffectCardLevelChange.lua
 
-local var_0_0 = class("FightWorkEffectCardLevelChange", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkEffectCardLevelChange", package.seeall)
 
-function var_0_0.beforePlayEffectData(arg_1_0)
-	local var_1_0 = FightDataHelper.handCardMgr.handCard
+local FightWorkEffectCardLevelChange = class("FightWorkEffectCardLevelChange", FightEffectBase)
 
-	arg_1_0.cardIndex = tonumber(arg_1_0.actEffectData.targetId)
+function FightWorkEffectCardLevelChange:beforePlayEffectData()
+	local cards = FightDataHelper.handCardMgr.handCard
 
-	local var_1_1 = var_1_0[arg_1_0.cardIndex]
+	self.cardIndex = tonumber(self.actEffectData.targetId)
 
-	arg_1_0.oldSkillId = var_1_1 and var_1_1.skillId
+	local cardInfo = cards[self.cardIndex]
+
+	self.oldSkillId = cardInfo and cardInfo.skillId
 end
 
-function var_0_0.onStart(arg_2_0)
-	arg_2_0:_startChangeCardEffect()
+function FightWorkEffectCardLevelChange:onStart()
+	self:_startChangeCardEffect()
 end
 
-function var_0_0._startChangeCardEffect(arg_3_0)
-	if not FightCardDataHelper.cardChangeIsMySide(arg_3_0.actEffectData) then
-		arg_3_0:onDone(true)
+function FightWorkEffectCardLevelChange:_startChangeCardEffect()
+	if not FightCardDataHelper.cardChangeIsMySide(self.actEffectData) then
+		self:onDone(true)
 
 		return
 	end
 
-	if FightModel.instance:getVersion() < 1 then
-		local var_3_0 = arg_3_0.actEffectData.entity.id
-		local var_3_1 = FightHelper.getEntity(var_3_0)
+	local version = FightModel.instance:getVersion()
 
-		if not var_3_1 then
-			arg_3_0:onDone(true)
+	if version < 1 then
+		local entityId = self.actEffectData.entity.id
+		local entity = FightHelper.getEntity(entityId)
+
+		if not entity then
+			self:onDone(true)
 
 			return
 		end
 
-		if not var_3_1:isMySide() then
-			arg_3_0:onDone(true)
+		if not entity:isMySide() then
+			self:onDone(true)
 
 			return
 		end
 	end
 
-	if not arg_3_0.oldSkillId then
-		arg_3_0:onDone(true)
+	if not self.oldSkillId then
+		self:onDone(true)
 
 		return
 	end
 
-	arg_3_0._revertVisible = true
+	self._revertVisible = true
 
 	FightController.instance:dispatchEvent(FightEvent.SetHandCardVisible, true)
 
-	if FightModel.instance:getVersion() >= 4 then
-		FightController.instance:dispatchEvent(FightEvent.CardLevelChange, arg_3_0.cardIndex, arg_3_0.oldSkillId)
-		arg_3_0:com_registTimer(arg_3_0._delayDone, FightEnum.PerformanceTime.CardLevelChange / FightModel.instance:getUISpeed())
+	local version = FightModel.instance:getVersion()
+
+	if version >= 4 then
+		FightController.instance:dispatchEvent(FightEvent.CardLevelChange, self.cardIndex, self.oldSkillId)
+		self:com_registTimer(self._delayDone, FightEnum.PerformanceTime.CardLevelChange / FightModel.instance:getUISpeed())
 	else
 		FightController.instance:dispatchEvent(FightEvent.RefreshHandCard)
-		arg_3_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._delayDone(arg_4_0)
-	arg_4_0:onDone(true)
+function FightWorkEffectCardLevelChange:_delayDone()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_5_0)
-	if arg_5_0._revertVisible then
+function FightWorkEffectCardLevelChange:clearWork()
+	if self._revertVisible then
 		FightController.instance:dispatchEvent(FightEvent.SetHandCardVisible, true, true)
 	end
 end
 
-return var_0_0
+return FightWorkEffectCardLevelChange

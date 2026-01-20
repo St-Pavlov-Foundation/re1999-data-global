@@ -1,32 +1,34 @@
-﻿module("modules.logic.dialogue.defines.DialogueEnum", package.seeall)
+﻿-- chunkname: @modules/logic/dialogue/defines/DialogueEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.dialogue.defines.DialogueEnum", package.seeall)
 
-var_0_0.Type = {
+local DialogueEnum = _M
+
+DialogueEnum.Type = {
 	RightMessage = 2,
 	LeftMessage = 1,
 	Option = 4,
 	JumpToGroup = 5,
 	SystemMessage = 3
 }
-var_0_0.MinHeight = {
-	[var_0_0.Type.LeftMessage] = 150,
-	[var_0_0.Type.RightMessage] = 150,
-	[var_0_0.Type.SystemMessage] = 50,
-	[var_0_0.Type.Option] = 50
+DialogueEnum.MinHeight = {
+	[DialogueEnum.Type.LeftMessage] = 150,
+	[DialogueEnum.Type.RightMessage] = 150,
+	[DialogueEnum.Type.SystemMessage] = 50,
+	[DialogueEnum.Type.Option] = 50
 }
-var_0_0.IntervalY = 26
-var_0_0.MessageBgOffsetWidth = 30
-var_0_0.MessageBgOffsetHeight = 20
-var_0_0.MessageTxtMaxWidth = 711
-var_0_0.MessageTxtOneLineHeight = 40
-var_0_0.MessageNameHeight = 50
-var_0_0.DialogueItemCls = {
-	[var_0_0.Type.LeftMessage] = DialogueNormalItem,
-	[var_0_0.Type.RightMessage] = DialogueNormalItem,
-	[var_0_0.Type.SystemMessage] = DialogueSystemMessageItem,
-	[var_0_0.Type.Option] = DialogueOptionItem
+DialogueEnum.IntervalY = 26
+DialogueEnum.MessageBgOffsetWidth = 30
+DialogueEnum.MessageBgOffsetHeight = 20
+DialogueEnum.MessageTxtMaxWidth = 711
+DialogueEnum.MessageTxtOneLineHeight = 40
+DialogueEnum.MessageNameHeight = 50
+DialogueEnum.DialogueItemCls = {
+	[DialogueEnum.Type.LeftMessage] = DialogueNormalItem,
+	[DialogueEnum.Type.RightMessage] = DialogueNormalItem,
+	[DialogueEnum.Type.SystemMessage] = DialogueSystemMessageItem,
+	[DialogueEnum.Type.Option] = DialogueOptionItem
 }
-var_0_0.OnDialogueDoneWaitTime = 1.5
+DialogueEnum.OnDialogueDoneWaitTime = 1.5
 
-return var_0_0
+return DialogueEnum

@@ -1,245 +1,249 @@
-﻿module("modules.logic.summon.view.SummonMainView", package.seeall)
+﻿-- chunkname: @modules/logic/summon/view/SummonMainView.lua
 
-local var_0_0 = class("SummonMainView", BaseView)
+module("modules.logic.summon.view.SummonMainView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goui = gohelper.findChild(arg_1_0.viewGO, "#go_ui")
-	arg_1_0._godrag = gohelper.findChild(arg_1_0.viewGO, "#go_ui/#go_drag")
-	arg_1_0._gocategory = gohelper.findChild(arg_1_0.viewGO, "#go_ui/#go_category")
-	arg_1_0._scrollcategory = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_ui/#go_category/#scroll_category")
-	arg_1_0._gonormalRoleCategoryItem = gohelper.findChild(arg_1_0.viewGO, "#go_ui/#go_category/#scroll_category/Viewport/Content/GameObject/#go_normalRoleCategoryItem")
-	arg_1_0._goequipCategoryItem = gohelper.findChild(arg_1_0.viewGO, "#go_ui/#go_category/#scroll_category/Viewport/Content/GameObject/#go_equipCategoryItem")
-	arg_1_0._goRoleUpCategoryItem = gohelper.findChild(arg_1_0.viewGO, "#go_ui/#go_category/#scroll_category/Viewport/Content/GameObject/#go_RoleUpCategoryItem")
-	arg_1_0._btnconvertStore = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_ui/btns/#btn_convertStore")
-	arg_1_0._btndetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_ui/btns/#btn_detail")
-	arg_1_0._btnsummonrecord = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_ui/btns/#btn_summonrecord")
-	arg_1_0._golefttop = gohelper.findChild(arg_1_0.viewGO, "#go_ui/#go_lefttop")
+local SummonMainView = class("SummonMainView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SummonMainView:onInitView()
+	self._goui = gohelper.findChild(self.viewGO, "#go_ui")
+	self._godrag = gohelper.findChild(self.viewGO, "#go_ui/#go_drag")
+	self._gocategory = gohelper.findChild(self.viewGO, "#go_ui/#go_category")
+	self._scrollcategory = gohelper.findChildScrollRect(self.viewGO, "#go_ui/#go_category/#scroll_category")
+	self._gonormalRoleCategoryItem = gohelper.findChild(self.viewGO, "#go_ui/#go_category/#scroll_category/Viewport/Content/GameObject/#go_normalRoleCategoryItem")
+	self._goequipCategoryItem = gohelper.findChild(self.viewGO, "#go_ui/#go_category/#scroll_category/Viewport/Content/GameObject/#go_equipCategoryItem")
+	self._goRoleUpCategoryItem = gohelper.findChild(self.viewGO, "#go_ui/#go_category/#scroll_category/Viewport/Content/GameObject/#go_RoleUpCategoryItem")
+	self._btnconvertStore = gohelper.findChildButtonWithAudio(self.viewGO, "#go_ui/btns/#btn_convertStore")
+	self._btndetail = gohelper.findChildButtonWithAudio(self.viewGO, "#go_ui/btns/#btn_detail")
+	self._btnsummonrecord = gohelper.findChildButtonWithAudio(self.viewGO, "#go_ui/btns/#btn_summonrecord")
+	self._golefttop = gohelper.findChild(self.viewGO, "#go_ui/#go_lefttop")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnconvertStore:AddClickListener(arg_2_0._btnconvertStoreOnClick, arg_2_0)
-	arg_2_0._btndetail:AddClickListener(arg_2_0._btndetailOnClick, arg_2_0)
-	arg_2_0._btnsummonrecord:AddClickListener(arg_2_0._btnsummonrecordOnClick, arg_2_0)
+function SummonMainView:addEvents()
+	self._btnconvertStore:AddClickListener(self._btnconvertStoreOnClick, self)
+	self._btndetail:AddClickListener(self._btndetailOnClick, self)
+	self._btnsummonrecord:AddClickListener(self._btnsummonrecordOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnconvertStore:RemoveClickListener()
-	arg_3_0._btndetail:RemoveClickListener()
-	arg_3_0._btnsummonrecord:RemoveClickListener()
+function SummonMainView:removeEvents()
+	self._btnconvertStore:RemoveClickListener()
+	self._btndetail:RemoveClickListener()
+	self._btnsummonrecord:RemoveClickListener()
 end
 
-function var_0_0._btnconvertStoreOnClick(arg_4_0)
-	local var_4_0 = SummonMainModel.instance:getCurPool()
-	local var_4_1 = StoreEnum.StoreId.SummonExchange
+function SummonMainView:_btnconvertStoreOnClick()
+	local pool = SummonMainModel.instance:getCurPool()
+	local jumpTab = StoreEnum.StoreId.SummonExchange
 
-	if var_4_0 and SummonMainModel.getResultType(var_4_0) == SummonEnum.ResultType.Equip then
-		var_4_1 = StoreEnum.StoreId.SummonEquipExchange
+	if pool and SummonMainModel.getResultType(pool) == SummonEnum.ResultType.Equip then
+		jumpTab = StoreEnum.StoreId.SummonEquipExchange
 	end
 
-	StoreController.instance:checkAndOpenStoreView(var_4_1)
+	StoreController.instance:checkAndOpenStoreView(jumpTab)
 end
 
-function var_0_0._btndetailOnClick(arg_5_0)
-	local var_5_0 = SummonMainModel.instance:getCurPool()
+function SummonMainView:_btndetailOnClick()
+	local curPool = SummonMainModel.instance:getCurPool()
 
-	SummonMainController.instance:openSummonDetail(var_5_0)
+	SummonMainController.instance:openSummonDetail(curPool)
 end
 
-function var_0_0._btnsummonrecordOnClick(arg_6_0)
+function SummonMainView:_btnsummonrecordOnClick()
 	ViewMgr.instance:openView(ViewName.SummonPoolHistoryView)
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0._txtrecord = gohelper.findChildTextMesh(arg_7_0.viewGO, "#go_ui/btns/#btn_summonrecord/txt")
-	arg_7_0._goblackloading = gohelper.findChild(arg_7_0.viewGO, "#blackloading")
-	arg_7_0._animLoading = arg_7_0._goblackloading:GetComponent(typeof(UnityEngine.Animator))
-	arg_7_0._animUI = arg_7_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function SummonMainView:_editableInitView()
+	self._txtrecord = gohelper.findChildTextMesh(self.viewGO, "#go_ui/btns/#btn_summonrecord/txt")
+	self._goblackloading = gohelper.findChild(self.viewGO, "#blackloading")
+	self._animLoading = self._goblackloading:GetComponent(typeof(UnityEngine.Animator))
+	self._animUI = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
 	SummonMainModel.instance:setFirstTimeSwitch(true)
-	gohelper.addUIClickAudio(arg_7_0._btnconvertStore.gameObject, AudioEnum.UI.play_ui_checkpoint_click)
-	gohelper.addUIClickAudio(arg_7_0._btndetail.gameObject, AudioEnum.UI.play_ui_checkpoint_click)
+	gohelper.addUIClickAudio(self._btnconvertStore.gameObject, AudioEnum.UI.play_ui_checkpoint_click)
+	gohelper.addUIClickAudio(self._btndetail.gameObject, AudioEnum.UI.play_ui_checkpoint_click)
 end
 
-function var_0_0._handleTabSet(arg_8_0)
-	local var_8_0 = SummonMainModel.instance:getCurADPageIndex()
+function SummonMainView:_handleTabSet()
+	local tabIndex = SummonMainModel.instance:getCurADPageIndex()
 
-	if var_8_0 then
-		arg_8_0:checkCallPreloader()
-		arg_8_0.viewContainer:refreshCurrencyType()
+	if tabIndex then
+		self:checkCallPreloader()
+		self.viewContainer:refreshCurrencyType()
 	end
 
-	arg_8_0._tabIndex = var_8_0
+	self._tabIndex = tabIndex
 
-	local var_8_1 = SummonMainModel.instance:getCurPool()
+	local curPool = SummonMainModel.instance:getCurPool()
+	local result = SummonMainModel.getResultType(curPool)
 
-	if SummonMainModel.getResultType(var_8_1) == SummonEnum.ResultType.Equip then
-		arg_8_0._txtrecord:SetText(luaLang("p_summonpool_equip_record"))
+	if result == SummonEnum.ResultType.Equip then
+		self._txtrecord:SetText(luaLang("p_summonpool_equip_record"))
 	else
-		arg_8_0._txtrecord:SetText(luaLang("p_summonpool_record"))
+		self._txtrecord:SetText(luaLang("p_summonpool_record"))
 	end
 end
 
-function var_0_0.onItemChanged(arg_9_0)
-	arg_9_0.viewContainer:refreshCurrencyType()
+function SummonMainView:onItemChanged()
+	self.viewContainer:refreshCurrencyType()
 end
 
-function var_0_0.onUpdateParam(arg_10_0)
+function SummonMainView:onUpdateParam()
 	SummonController.instance:dispatchEvent(SummonEvent.onSummonTabSet)
 end
 
-function var_0_0.onOpen(arg_11_0)
-	local var_11_0 = SummonMainModel.instance:getList()
+function SummonMainView:onOpen()
+	local list = SummonMainModel.instance:getList()
 
-	if not var_11_0 or #var_11_0 <= 0 then
+	if not list or #list <= 0 then
 		logError("没有卡池")
-		TaskDispatcher.runDelay(arg_11_0.returnToMainScene, arg_11_0, 2)
+		TaskDispatcher.runDelay(self.returnToMainScene, self, 2)
 
 		return
 	end
 
-	arg_11_0:addEventCb(SummonController.instance, SummonEvent.onSummonTabSet, arg_11_0._handleTabSet, arg_11_0)
-	arg_11_0:addEventCb(SummonController.instance, SummonEvent.onViewCanPlayEnterAnim, arg_11_0.checkCallPreloader, arg_11_0)
-	arg_11_0:addEventCb(SummonController.instance, SummonEvent.onSummonInfoGot, arg_11_0.onSummonInfoGot, arg_11_0)
-	arg_11_0:addEventCb(HelpController.instance, HelpEvent.RefreshHelp, arg_11_0.viewContainer.refreshHelp, arg_11_0.viewContainer)
-	arg_11_0:addEventCb(SummonController.instance, SummonEvent.summonShowBlackScreen, arg_11_0.onReceiveShowBlackScreen, arg_11_0)
-	arg_11_0:addEventCb(SummonController.instance, SummonEvent.summonShowExitAnim, arg_11_0.startExitLoading, arg_11_0)
-	arg_11_0:addEventCb(SummonController.instance, SummonEvent.summonCloseBlackScreen, arg_11_0.onReceiveCloseBlackScreen, arg_11_0)
-	arg_11_0:addEventCb(SummonController.instance, SummonEvent.summonMainCloseImmediately, arg_11_0.closeThis, arg_11_0)
-	arg_11_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_11_0.onItemChanged, arg_11_0)
-	arg_11_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_11_0.onItemChanged, arg_11_0)
-	TaskDispatcher.runRepeat(arg_11_0.repeatCallCountdown, arg_11_0, 10)
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonTabSet, self._handleTabSet, self)
+	self:addEventCb(SummonController.instance, SummonEvent.onViewCanPlayEnterAnim, self.checkCallPreloader, self)
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonInfoGot, self.onSummonInfoGot, self)
+	self:addEventCb(HelpController.instance, HelpEvent.RefreshHelp, self.viewContainer.refreshHelp, self.viewContainer)
+	self:addEventCb(SummonController.instance, SummonEvent.summonShowBlackScreen, self.onReceiveShowBlackScreen, self)
+	self:addEventCb(SummonController.instance, SummonEvent.summonShowExitAnim, self.startExitLoading, self)
+	self:addEventCb(SummonController.instance, SummonEvent.summonCloseBlackScreen, self.onReceiveCloseBlackScreen, self)
+	self:addEventCb(SummonController.instance, SummonEvent.summonMainCloseImmediately, self.closeThis, self)
+	self:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self.onItemChanged, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self.onItemChanged, self)
+	TaskDispatcher.runRepeat(self.repeatCallCountdown, self, 10)
 
 	if SDKChannelEventModel.instance:needAppReview() then
 		SDKController.instance:openSDKScoreJumpView()
 	end
 end
 
-function var_0_0.onOpenFinish(arg_12_0)
+function SummonMainView:onOpenFinish()
 	GuideController.instance:dispatchEvent(GuideEvent.SpecialEventDone, GuideEnum.SpecialEventEnum.SummonUI)
 end
 
-function var_0_0.returnToMainScene(arg_13_0)
+function SummonMainView:returnToMainScene()
 	MainController.instance:enterMainScene(true)
 	VirtualSummonScene.instance:close(true)
 	ViewMgr.instance:closeView(ViewName.SummonADView)
 	ViewMgr.instance:closeView(ViewName.SummonView)
 end
 
-function var_0_0.checkCallPreloader(arg_14_0)
-	TaskDispatcher.cancelTask(arg_14_0.delayLoadSceneResPreloader, arg_14_0)
-	TaskDispatcher.runDelay(arg_14_0.delayLoadSceneResPreloader, arg_14_0, 1)
+function SummonMainView:checkCallPreloader()
+	TaskDispatcher.cancelTask(self.delayLoadSceneResPreloader, self)
+	TaskDispatcher.runDelay(self.delayLoadSceneResPreloader, self, 1)
 end
 
-function var_0_0.delayLoadSceneResPreloader(arg_15_0)
-	local var_15_0 = SummonMainModel.instance:getCurId()
-	local var_15_1 = SummonMainModel.getResultTypeById(var_15_0) == SummonEnum.ResultType.Char
+function SummonMainView:delayLoadSceneResPreloader()
+	local curId = SummonMainModel.instance:getCurId()
+	local resultType = SummonMainModel.getResultTypeById(curId)
+	local isChar = resultType == SummonEnum.ResultType.Char
 
-	VirtualSummonScene.instance:checkNeedLoad(var_15_1, false)
+	VirtualSummonScene.instance:checkNeedLoad(isChar, false)
 end
 
-function var_0_0.onSummonInfoGot(arg_16_0)
-	local var_16_0 = SummonMainModel.instance:getList()
+function SummonMainView:onSummonInfoGot()
+	local list = SummonMainModel.instance:getList()
 
-	if not var_16_0 or #var_16_0 <= 0 then
+	if not list or #list <= 0 then
 		logError("返回消息没有卡池")
-		TaskDispatcher.runDelay(arg_16_0.returnToMainScene, arg_16_0, 1)
+		TaskDispatcher.runDelay(self.returnToMainScene, self, 1)
 
 		return
 	end
 
-	arg_16_0:checkCurPoolValid()
+	self:checkCurPoolValid()
 end
 
-function var_0_0.onReceiveShowBlackScreen(arg_17_0)
-	gohelper.setActive(arg_17_0._goblackloading, true)
-	arg_17_0._animLoading:Play("blackloading_open", 0, 0)
+function SummonMainView:onReceiveShowBlackScreen()
+	gohelper.setActive(self._goblackloading, true)
+	self._animLoading:Play("blackloading_open", 0, 0)
 
-	arg_17_0._isShowBlackScreen = true
+	self._isShowBlackScreen = true
 
-	TaskDispatcher.runDelay(arg_17_0.afterBlackLoading, arg_17_0, 0.3)
+	TaskDispatcher.runDelay(self.afterBlackLoading, self, 0.3)
 end
 
-function var_0_0.afterBlackLoading(arg_18_0)
-	TaskDispatcher.cancelTask(arg_18_0.afterBlackLoading, arg_18_0)
-	gohelper.setActive(arg_18_0._goui, false)
+function SummonMainView:afterBlackLoading()
+	TaskDispatcher.cancelTask(self.afterBlackLoading, self)
+	gohelper.setActive(self._goui, false)
 	SummonController.instance:onFirstLoadSceneBlock()
 end
 
-function var_0_0.onReceiveCloseBlackScreen(arg_19_0)
-	if not gohelper.isNil(arg_19_0._animLoading) then
-		arg_19_0._animLoading:Play("blackloading_close", 0, 0)
+function SummonMainView:onReceiveCloseBlackScreen()
+	if not gohelper.isNil(self._animLoading) then
+		self._animLoading:Play("blackloading_close", 0, 0)
 	end
 
-	TaskDispatcher.runDelay(arg_19_0.afterCloseLoading, arg_19_0, 0.4)
+	TaskDispatcher.runDelay(self.afterCloseLoading, self, 0.4)
 end
 
-function var_0_0.afterCloseLoading(arg_20_0)
+function SummonMainView:afterCloseLoading()
 	logNormal("close SummonMainView")
-	TaskDispatcher.cancelTask(arg_20_0.afterCloseLoading, arg_20_0)
-	arg_20_0:closeThis()
+	TaskDispatcher.cancelTask(self.afterCloseLoading, self)
+	self:closeThis()
 end
 
-function var_0_0.startExitLoading(arg_21_0)
-	if not gohelper.isNil(arg_21_0._animUI) then
-		arg_21_0._animUI:Play(UIAnimationName.Close, 0, 0)
+function SummonMainView:startExitLoading()
+	if not gohelper.isNil(self._animUI) then
+		self._animUI:Play(UIAnimationName.Close, 0, 0)
 	end
 
-	local var_21_0 = arg_21_0.viewContainer:getCurTabInst()
+	local inst = self.viewContainer:getCurTabInst()
 
-	if var_21_0 and not gohelper.isNil(var_21_0.viewGO) then
-		local var_21_1 = var_21_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	if inst and not gohelper.isNil(inst.viewGO) then
+		local anim = inst.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-		if var_21_1 then
-			var_21_1:Play(UIAnimationName.Close, 0, 0)
+		if anim then
+			anim:Play(UIAnimationName.Close, 0, 0)
 		end
 	end
 
 	return 0.16
 end
 
-function var_0_0.startExitSummonFadeOut(arg_22_0)
-	if not gohelper.isNil(arg_22_0._animUI) then
-		arg_22_0._animUI:Play("out", 0, 0)
+function SummonMainView:startExitSummonFadeOut()
+	if not gohelper.isNil(self._animUI) then
+		self._animUI:Play("out", 0, 0)
 	end
 
 	return 0.16
 end
 
-function var_0_0.checkCurPoolValid(arg_23_0)
-	local var_23_0 = SummonMainModel.instance:getCurPool()
-	local var_23_1 = SummonMainModel.instance:getCurADPageIndex()
+function SummonMainView:checkCurPoolValid()
+	local curPool = SummonMainModel.instance:getCurPool()
+	local tabIndex = SummonMainModel.instance:getCurADPageIndex()
 
-	if not var_23_0 then
+	if not curPool then
 		return
 	end
 
-	if not SummonMainModel.instance:getById(var_23_0.id) then
+	if not SummonMainModel.instance:getById(curPool.id) then
 		if SummonMainModel.instance:trySetSelectPoolIndex(1) then
 			SummonController.instance:dispatchEvent(SummonEvent.onSummonTabSet)
 		end
-	elseif var_23_1 ~= arg_23_0._tabIndex then
+	elseif tabIndex ~= self._tabIndex then
 		SummonController.instance:dispatchEvent(SummonEvent.onSummonTabSet)
 	end
 end
 
-function var_0_0.repeatCallCountdown(arg_24_0)
+function SummonMainView:repeatCallCountdown()
 	SummonController.instance:dispatchEvent(SummonEvent.onRemainTimeCountdown)
 end
 
-function var_0_0.onClose(arg_25_0)
-	TaskDispatcher.cancelTask(arg_25_0.afterBlackLoading, arg_25_0)
-	TaskDispatcher.cancelTask(arg_25_0.afterCloseLoading, arg_25_0)
-	TaskDispatcher.cancelTask(arg_25_0.checkCallPreloader, arg_25_0)
-	TaskDispatcher.cancelTask(arg_25_0.repeatCallCountdown, arg_25_0)
-	TaskDispatcher.cancelTask(arg_25_0.returnToMainScene, arg_25_0)
+function SummonMainView:onClose()
+	TaskDispatcher.cancelTask(self.afterBlackLoading, self)
+	TaskDispatcher.cancelTask(self.afterCloseLoading, self)
+	TaskDispatcher.cancelTask(self.checkCallPreloader, self)
+	TaskDispatcher.cancelTask(self.repeatCallCountdown, self)
+	TaskDispatcher.cancelTask(self.returnToMainScene, self)
 end
 
-function var_0_0.onDestroyView(arg_26_0)
+function SummonMainView:onDestroyView()
 	return
 end
 
-return var_0_0
+return SummonMainView

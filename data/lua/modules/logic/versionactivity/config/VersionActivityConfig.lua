@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity.config.VersionActivityConfig", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity/config/VersionActivityConfig.lua
 
-local var_0_0 = class("VersionActivityConfig", BaseConfig)
+module("modules.logic.versionactivity.config.VersionActivityConfig", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local VersionActivityConfig = class("VersionActivityConfig", BaseConfig)
+
+function VersionActivityConfig:reqConfigNames()
 	return {
 		"activity106_task",
 		"activity106_order",
@@ -16,97 +18,101 @@ function var_0_0.reqConfigNames(arg_1_0)
 	}
 end
 
-function var_0_0.onInit(arg_2_0)
-	arg_2_0.activityId2TaskCountDict = {}
-	arg_2_0.activityId2TaskConfigList = {}
+function VersionActivityConfig:onInit()
+	self.activityId2TaskCountDict = {}
+	self.activityId2TaskConfigList = {}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity112_task" then
-		arg_3_0._activity112TaskConfig = arg_3_2
-	elseif arg_3_1 == "activity112" then
-		arg_3_0._activity112Config = arg_3_2
+function VersionActivityConfig:onConfigLoaded(configName, configTable)
+	if configName == "activity112_task" then
+		self._activity112TaskConfig = configTable
+	elseif configName == "activity112" then
+		self._activity112Config = configTable
 	end
 end
 
-function var_0_0.getAct112Config(arg_4_0, arg_4_1)
-	return arg_4_0._activity112Config.configDict[arg_4_1]
+function VersionActivityConfig:getAct112Config(actid)
+	return self._activity112Config.configDict[actid]
 end
 
-function var_0_0.getActTaskDicConfig(arg_5_0, arg_5_1)
-	if arg_5_0._activity112TaskConfig.configDict[arg_5_1] then
-		return arg_5_0._activity112TaskConfig.configDict[arg_5_1]
+function VersionActivityConfig:getActTaskDicConfig(actid)
+	if self._activity112TaskConfig.configDict[actid] then
+		return self._activity112TaskConfig.configDict[actid]
 	end
 end
 
-function var_0_0.getTaskConfig(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_0._activity112TaskConfig.configDict[arg_6_1] then
-		return arg_6_0._activity112TaskConfig.configDict[arg_6_1][arg_6_2]
+function VersionActivityConfig:getTaskConfig(actid, taskId)
+	if self._activity112TaskConfig.configDict[actid] then
+		return self._activity112TaskConfig.configDict[actid][taskId]
 	end
 end
 
-function var_0_0.getAct113TaskCount(arg_7_0, arg_7_1)
-	if arg_7_0.activityId2TaskCountDict[arg_7_1] then
-		return arg_7_0.activityId2TaskCountDict[arg_7_1]
+function VersionActivityConfig:getAct113TaskCount(actId)
+	if self.activityId2TaskCountDict[actId] then
+		return self.activityId2TaskCountDict[actId]
 	end
 
-	local var_7_0 = 0
+	local count = 0
 
-	for iter_7_0, iter_7_1 in ipairs(lua_activity113_task.configList) do
-		if iter_7_1.activityId == arg_7_1 and iter_7_1.isOnline == 1 then
-			var_7_0 = var_7_0 + 1
+	for _, config in ipairs(lua_activity113_task.configList) do
+		if config.activityId == actId and config.isOnline == 1 then
+			count = count + 1
 		end
 	end
 
-	arg_7_0.activityId2TaskCountDict[arg_7_1] = var_7_0
+	self.activityId2TaskCountDict[actId] = count
 
-	return arg_7_0.activityId2TaskCountDict[arg_7_1]
+	return self.activityId2TaskCountDict[actId]
 end
 
-function var_0_0.getAct113TaskList(arg_8_0, arg_8_1)
-	if arg_8_0.activityId2TaskConfigList[arg_8_1] then
-		return arg_8_0.activityId2TaskConfigList[arg_8_1]
+function VersionActivityConfig:getAct113TaskList(actId)
+	if self.activityId2TaskConfigList[actId] then
+		return self.activityId2TaskConfigList[actId]
 	end
 
-	local var_8_0 = {}
+	local configList = {}
 
-	for iter_8_0, iter_8_1 in ipairs(lua_activity113_task.configList) do
-		if iter_8_1.activityId == arg_8_1 then
-			table.insert(var_8_0, iter_8_1)
+	for _, config in ipairs(lua_activity113_task.configList) do
+		if config.activityId == actId then
+			table.insert(configList, config)
 		end
 	end
 
-	arg_8_0.activityId2TaskConfigList[arg_8_1] = var_8_0
+	self.activityId2TaskConfigList[actId] = configList
 
-	return arg_8_0.activityId2TaskConfigList[arg_8_1]
+	return self.activityId2TaskConfigList[actId]
 end
 
-function var_0_0.getAct113TaskConfig(arg_9_0, arg_9_1)
-	return lua_activity113_task.configDict[arg_9_1]
+function VersionActivityConfig:getAct113TaskConfig(id)
+	return lua_activity113_task.configDict[id]
 end
 
-function var_0_0.getAct113DungeonChapterIsOpen(arg_10_0, arg_10_1)
-	local var_10_0 = lua_activity113_dungeon.configDict[arg_10_1]
+function VersionActivityConfig:getAct113DungeonChapterIsOpen(chapterId)
+	local dungeonCo = lua_activity113_dungeon.configDict[chapterId]
 
-	if not var_10_0 then
+	if not dungeonCo then
 		return true
 	end
 
-	if ActivityHelper.getActivityStatus(var_10_0.activityId) ~= ActivityEnum.ActivityStatus.Normal then
+	local status = ActivityHelper.getActivityStatus(dungeonCo.activityId)
+
+	if status ~= ActivityEnum.ActivityStatus.Normal then
 		return false
 	end
 
-	local var_10_1 = ActivityModel.instance:getActivityInfo()[var_10_0.activityId]:getRealStartTimeStamp() + (var_10_0.openDay - 1) * TimeUtil.OneDaySecond
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[dungeonCo.activityId]
+	local chapterOpenTimeStamp = actInfoMo:getRealStartTimeStamp() + (dungeonCo.openDay - 1) * TimeUtil.OneDaySecond
 
-	return ServerTime.now() - var_10_1 >= 0
+	return ServerTime.now() - chapterOpenTimeStamp >= 0
 end
 
-function var_0_0.getAct113DungeonChapterOpenTimeStamp(arg_11_0, arg_11_1)
-	local var_11_0 = lua_activity113_dungeon.configDict[arg_11_1]
+function VersionActivityConfig:getAct113DungeonChapterOpenTimeStamp(chapterId)
+	local dungeonCo = lua_activity113_dungeon.configDict[chapterId]
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[dungeonCo.activityId]
 
-	return ActivityModel.instance:getActivityInfo()[var_11_0.activityId]:getRealStartTimeStamp() + (var_11_0.openDay - 1) * TimeUtil.OneDaySecond
+	return actInfoMo:getRealStartTimeStamp() + (dungeonCo.openDay - 1) * TimeUtil.OneDaySecond
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivityConfig.instance = VersionActivityConfig.New()
 
-return var_0_0
+return VersionActivityConfig

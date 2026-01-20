@@ -1,50 +1,56 @@
-﻿module("modules.logic.seasonver.act123.utils.Season123LayerLocalRecord", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/utils/Season123LayerLocalRecord.lua
 
-local var_0_0 = class("Season123LayerLocalRecord")
+module("modules.logic.seasonver.act123.utils.Season123LayerLocalRecord", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.activityId = arg_1_1
-	arg_1_0.reasonKey = PlayerPrefsKey.Season123LayerAnimAlreadyPlay
-	arg_1_0._localKey = arg_1_0:getLocalKey()
-	arg_1_0._dict = nil
+local Season123LayerLocalRecord = class("Season123LayerLocalRecord")
 
-	arg_1_0:initLocalSave()
+function Season123LayerLocalRecord:init(actId)
+	self.activityId = actId
+	self.reasonKey = PlayerPrefsKey.Season123LayerAnimAlreadyPlay
+	self._localKey = self:getLocalKey()
+	self._dict = nil
+
+	self:initLocalSave()
 end
 
-function var_0_0.initLocalSave(arg_2_0)
-	local var_2_0 = PlayerPrefsHelper.getString(arg_2_0._localKey, "")
+function Season123LayerLocalRecord:initLocalSave()
+	local rs = PlayerPrefsHelper.getString(self._localKey, "")
 
-	if not string.nilorempty(var_2_0) then
-		local var_2_1 = cjson.decode(var_2_0)
+	if not string.nilorempty(rs) then
+		local mapObj = cjson.decode(rs)
 
-		if var_2_1 then
-			arg_2_0._dict = var_2_1
+		if mapObj then
+			self._dict = mapObj
 		else
-			arg_2_0._dict = {}
+			self._dict = {}
 		end
 	else
-		arg_2_0._dict = {}
+		self._dict = {}
 	end
 end
 
-function var_0_0.add(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	if arg_3_2 > (arg_3_0._dict[arg_3_1] or 0) then
-		arg_3_0._dict[arg_3_1] = arg_3_2
+function Season123LayerLocalRecord:add(stage, layer, subModule)
+	local oldLayer = self._dict[stage] or 0
 
-		arg_3_0:save()
+	if oldLayer < layer then
+		self._dict[stage] = layer
+
+		self:save()
 	end
 end
 
-function var_0_0.contain(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	return arg_4_2 > (arg_4_0._dict[arg_4_1] or 0)
+function Season123LayerLocalRecord:contain(stage, layer, subModule)
+	local oldLayer = self._dict[stage] or 0
+
+	return oldLayer < layer
 end
 
-function var_0_0.save(arg_5_0)
-	PlayerPrefsHelper.setString(arg_5_0._localKey, cjson.encode(arg_5_0._dict))
+function Season123LayerLocalRecord:save()
+	PlayerPrefsHelper.setString(self._localKey, cjson.encode(self._dict))
 end
 
-function var_0_0.getLocalKey(arg_6_0)
-	return tostring(arg_6_0.reasonKey) .. "#" .. tostring(arg_6_0.activityId) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
+function Season123LayerLocalRecord:getLocalKey()
+	return tostring(self.reasonKey) .. "#" .. tostring(self.activityId) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
 end
 
-return var_0_0
+return Season123LayerLocalRecord

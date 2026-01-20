@@ -1,11 +1,13 @@
-﻿module("modules.logic.gm.view.rouge.RougePathSelectMapEditorViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/rouge/RougePathSelectMapEditorViewContainer.lua
 
-local var_0_0 = class("RougePathSelectMapEditorViewContainer", BaseViewContainer)
+module("modules.logic.gm.view.rouge.RougePathSelectMapEditorViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local RougePathSelectMapEditorViewContainer = class("RougePathSelectMapEditorViewContainer", BaseViewContainer)
+
+function RougePathSelectMapEditorViewContainer:buildViews()
 	return {
 		RougePathSelectMapEditorView.New()
 	}
 end
 
-return var_0_0
+return RougePathSelectMapEditorViewContainer

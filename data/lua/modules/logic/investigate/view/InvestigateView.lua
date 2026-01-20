@@ -1,82 +1,90 @@
-﻿module("modules.logic.investigate.view.InvestigateView", package.seeall)
+﻿-- chunkname: @modules/logic/investigate/view/InvestigateView.lua
 
-local var_0_0 = class("InvestigateView", BaseView)
+module("modules.logic.investigate.view.InvestigateView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagefullbg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/Bg/#simage_fullbg1")
-	arg_1_0._imagetitle = gohelper.findChildImage(arg_1_0.viewGO, "root/Bg/#image_title")
-	arg_1_0._gorole1 = gohelper.findChild(arg_1_0.viewGO, "root/Role/#go_role1")
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/Role/#go_role1/#simage_bg")
-	arg_1_0._gorole2 = gohelper.findChild(arg_1_0.viewGO, "root/Role/#go_role2")
-	arg_1_0._gorole3 = gohelper.findChild(arg_1_0.viewGO, "root/Role/#go_role3")
-	arg_1_0._gorole4 = gohelper.findChild(arg_1_0.viewGO, "root/Role/#go_role4")
-	arg_1_0._btnreward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_reward")
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "root/#go_topleft")
+local InvestigateView = class("InvestigateView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function InvestigateView:onInitView()
+	self._simagefullbg1 = gohelper.findChildSingleImage(self.viewGO, "root/Bg/#simage_fullbg1")
+	self._imagetitle = gohelper.findChildImage(self.viewGO, "root/Bg/#image_title")
+	self._gorole1 = gohelper.findChild(self.viewGO, "root/Role/#go_role1")
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "root/Role/#go_role1/#simage_bg")
+	self._gorole2 = gohelper.findChild(self.viewGO, "root/Role/#go_role2")
+	self._gorole3 = gohelper.findChild(self.viewGO, "root/Role/#go_role3")
+	self._gorole4 = gohelper.findChild(self.viewGO, "root/Role/#go_role4")
+	self._btnreward = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_reward")
+	self._gotopleft = gohelper.findChild(self.viewGO, "root/#go_topleft")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnreward:AddClickListener(arg_2_0._btnrewardOnClick, arg_2_0)
+function InvestigateView:addEvents()
+	self._btnreward:AddClickListener(self._btnrewardOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnreward:RemoveClickListener()
+function InvestigateView:removeEvents()
+	self._btnreward:RemoveClickListener()
 end
 
-function var_0_0._btnrewardOnClick(arg_4_0)
+function InvestigateView:_btnrewardOnClick()
 	InvestigateController.instance:openInvestigateTaskView()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0:_initRoles()
+function InvestigateView:_editableInitView()
+	self:_initRoles()
 
-	arg_5_0._animator = gohelper.findChild(arg_5_0.viewGO, "root/#btn_reward/ani"):GetComponent("Animator")
-	arg_5_0._goreddot = gohelper.findChild(arg_5_0.viewGO, "root/#btn_reward/reddot")
+	local aniGo = gohelper.findChild(self.viewGO, "root/#btn_reward/ani")
 
-	gohelper.setActive(arg_5_0._goreddot, true)
-	RedDotController.instance:addRedDot(arg_5_0._goreddot, RedDotEnum.DotNode.InvestigateTask, nil, arg_5_0._refreshReddot, arg_5_0)
+	self._animator = aniGo:GetComponent("Animator")
+	self._goreddot = gohelper.findChild(self.viewGO, "root/#btn_reward/reddot")
+
+	gohelper.setActive(self._goreddot, true)
+	RedDotController.instance:addRedDot(self._goreddot, RedDotEnum.DotNode.InvestigateTask, nil, self._refreshReddot, self)
 end
 
-function var_0_0._refreshReddot(arg_6_0, arg_6_1)
-	arg_6_1:defaultRefreshDot()
+function InvestigateView:_refreshReddot(redDotIcon)
+	redDotIcon:defaultRefreshDot()
 
-	local var_6_0 = arg_6_1.show
+	local show = redDotIcon.show
 
-	arg_6_0._animator:Play(var_6_0 and "loop" or "idle", 0, 0)
+	self._animator:Play(show and "loop" or "idle", 0, 0)
 end
 
-function var_0_0._initRoles(arg_7_0)
-	local var_7_0 = InvestigateConfig.instance:getRoleEntranceInfos()
+function InvestigateView:_initRoles()
+	local infos = InvestigateConfig.instance:getRoleEntranceInfos()
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-		local var_7_1 = arg_7_0["_gorole" .. iter_7_0]
-		local var_7_2 = InvestigateConfig.instance:getRoleGroupInfoList(iter_7_1.group)
+	for i, v in ipairs(infos) do
+		local go = self["_gorole" .. i]
+		local list = InvestigateConfig.instance:getRoleGroupInfoList(v.group)
 
-		if #var_7_2 > 1 then
-			MonoHelper.addNoUpdateLuaComOnceToGo(var_7_1, InvestigateRoleMultiItem):onUpdateMO(var_7_2)
+		if #list > 1 then
+			local roleItem = MonoHelper.addNoUpdateLuaComOnceToGo(go, InvestigateRoleMultiItem)
+
+			roleItem:onUpdateMO(list)
 		else
-			MonoHelper.addNoUpdateLuaComOnceToGo(var_7_1, InvestigateRoleItem):onUpdateMO(var_7_2[1])
+			local roleItem = MonoHelper.addNoUpdateLuaComOnceToGo(go, InvestigateRoleItem)
+
+			roleItem:onUpdateMO(list[1])
 		end
 	end
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
+function InvestigateView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_9_0)
+function InvestigateView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2Investigate.play_ui_mln_day_night)
 end
 
-function var_0_0.onClose(arg_10_0)
+function InvestigateView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function InvestigateView:onDestroyView()
 	return
 end
 
-return var_0_0
+return InvestigateView

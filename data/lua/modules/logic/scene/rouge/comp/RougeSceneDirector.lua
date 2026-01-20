@@ -1,23 +1,25 @@
-﻿module("modules.logic.scene.rouge.comp.RougeSceneDirector", package.seeall)
+﻿-- chunkname: @modules/logic/scene/rouge/comp/RougeSceneDirector.lua
 
-local var_0_0 = class("RougeSceneDirector", BaseSceneComp)
+module("modules.logic.scene.rouge.comp.RougeSceneDirector", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local RougeSceneDirector = class("RougeSceneDirector", BaseSceneComp)
+
+function RougeSceneDirector:onInit()
 	return
 end
 
-function var_0_0.onSceneStart(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._scene = arg_2_0:getCurScene()
+function RougeSceneDirector:onSceneStart(sceneId, levelId)
+	self._scene = self:getCurScene()
 
-	RougeMapController.instance:registerCallback(RougeMapEvent.onLoadMapDone, arg_2_0.onMapLoadDone, arg_2_0)
+	RougeMapController.instance:registerCallback(RougeMapEvent.onLoadMapDone, self.onMapLoadDone, self)
 end
 
-function var_0_0.onMapLoadDone(arg_3_0)
-	arg_3_0._scene:onPrepared()
+function RougeSceneDirector:onMapLoadDone()
+	self._scene:onPrepared()
 end
 
-function var_0_0.onSceneClose(arg_4_0)
-	RougeMapController.instance:unregisterCallback(RougeMapEvent.onLoadMapDone, arg_4_0.onMapLoadDone, arg_4_0)
+function RougeSceneDirector:onSceneClose()
+	RougeMapController.instance:unregisterCallback(RougeMapEvent.onLoadMapDone, self.onMapLoadDone, self)
 end
 
-return var_0_0
+return RougeSceneDirector

@@ -1,12 +1,14 @@
-﻿module("modules.logic.summon.view.custompick.SummonCustomPickChoiceContainer", package.seeall)
+﻿-- chunkname: @modules/logic/summon/view/custompick/SummonCustomPickChoiceContainer.lua
 
-local var_0_0 = class("SummonCustomPickChoiceContainer", BaseViewContainer)
+module("modules.logic.summon.view.custompick.SummonCustomPickChoiceContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local SummonCustomPickChoiceContainer = class("SummonCustomPickChoiceContainer", BaseViewContainer)
+
+function SummonCustomPickChoiceContainer:buildViews()
 	return {
 		SummonCustomPickChoice.New(),
 		SummonCustomPickChoiceList.New()
 	}
 end
 
-return var_0_0
+return SummonCustomPickChoiceContainer

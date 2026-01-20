@@ -1,111 +1,116 @@
-﻿module("modules.logic.activity.view.V2a3_Special_SignItem", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/V2a3_Special_SignItem.lua
 
-local var_0_0 = class("V2a3_Special_SignItem", LinkageActivity_Page2RewardBase)
+module("modules.logic.activity.view.V2a3_Special_SignItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "icon/#txt_num")
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "icon/#simage_icon")
+local V2a3_Special_SignItem = class("V2a3_Special_SignItem", LinkageActivity_Page2RewardBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V2a3_Special_SignItem:onInitView()
+	self._txtnum = gohelper.findChildText(self.viewGO, "icon/#txt_num")
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "icon/#simage_icon")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function V2a3_Special_SignItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function V2a3_Special_SignItem:removeEvents()
 	return
 end
 
-local var_0_1 = string.split
+local split = string.split
 
-function var_0_0.ctor(arg_4_0, ...)
-	var_0_0.super.ctor(arg_4_0, ...)
+function V2a3_Special_SignItem:ctor(...)
+	V2a3_Special_SignItem.super.ctor(self, ...)
 end
 
-function var_0_0.onDestroyView(arg_5_0)
-	var_0_0.super.onDestroyView(arg_5_0)
+function V2a3_Special_SignItem:onDestroyView()
+	V2a3_Special_SignItem.super.onDestroyView(self)
 end
 
-function var_0_0._editableAddEvents(arg_6_0)
-	var_0_0.super._editableInitView(arg_6_0)
-	arg_6_0._click:AddClickListener(arg_6_0._onClick, arg_6_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_6_0._OnOpenView, arg_6_0)
+function V2a3_Special_SignItem:_editableAddEvents()
+	V2a3_Special_SignItem.super._editableInitView(self)
+	self._click:AddClickListener(self._onClick, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, self._OnOpenView, self)
 end
 
-function var_0_0._editableRemoveEvents(arg_7_0)
-	arg_7_0._click:RemoveClickListener()
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, arg_7_0._OnOpenView, arg_7_0)
+function V2a3_Special_SignItem:_editableRemoveEvents()
+	self._click:RemoveClickListener()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, self._OnOpenView, self)
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0._simageiconImg = gohelper.findChildImage(arg_8_0._simageicon.gameObject, "")
-	arg_8_0._bgImg = gohelper.findChildImage(arg_8_0.viewGO, "icon/bg")
-	arg_8_0._go_nextday = gohelper.findChild(arg_8_0.viewGO, "go_nextday")
-	arg_8_0._goCanGet = gohelper.findChild(arg_8_0.viewGO, "go_canget")
-	arg_8_0._goGet = gohelper.findChild(arg_8_0.viewGO, "go_hasget")
-	arg_8_0._click = gohelper.getClick(gohelper.findChild(arg_8_0.viewGO, "clickarea"))
-	arg_8_0._txtnum.text = ""
+function V2a3_Special_SignItem:_editableInitView()
+	self._simageiconImg = gohelper.findChildImage(self._simageicon.gameObject, "")
+	self._bgImg = gohelper.findChildImage(self.viewGO, "icon/bg")
+	self._go_nextday = gohelper.findChild(self.viewGO, "go_nextday")
+	self._goCanGet = gohelper.findChild(self.viewGO, "go_canget")
+	self._goGet = gohelper.findChild(self.viewGO, "go_hasget")
+	self._click = gohelper.getClick(gohelper.findChild(self.viewGO, "clickarea"))
+	self._txtnum.text = ""
 
-	arg_8_0:setActive_goGet(false)
-	arg_8_0:setActive_goCanGet(false)
+	self:setActive_goGet(false)
+	self:setActive_goCanGet(false)
 end
 
-function var_0_0.onUpdateMO(arg_9_0, arg_9_1)
-	var_0_0.super.onUpdateMO(arg_9_0, arg_9_1)
+function V2a3_Special_SignItem:onUpdateMO(mo)
+	V2a3_Special_SignItem.super.onUpdateMO(self, mo)
 
-	local var_9_0 = arg_9_0:isType101RewardGet()
-	local var_9_1 = var_9_0 and "#808080" or "#ffffff"
-	local var_9_2 = arg_9_0:getNorSignActivityCo()
-	local var_9_3 = arg_9_0._index
-	local var_9_4 = var_0_1(var_9_2.bonus, "|")
-	local var_9_5 = #var_9_4
+	local isClaimed = self:isType101RewardGet()
+	local hexColor = isClaimed and "#808080" or "#ffffff"
+	local co = self:getNorSignActivityCo()
+	local index = self._index
+	local rewards = split(co.bonus, "|")
+	local rewardCount = #rewards
 
-	assert(var_9_5 == 1, string.format("[V2a3_Special_SignItem] rewardCount=%s", tostring(var_9_5)))
+	assert(rewardCount == 1, string.format("[V2a3_Special_SignItem] rewardCount=%s", tostring(rewardCount)))
 
-	local var_9_6 = string.splitToNumber(var_9_4[1], "#")
+	local itemCo = string.splitToNumber(rewards[1], "#")
 
-	arg_9_1._itemCo = var_9_6
+	mo._itemCo = itemCo
 
-	local var_9_7 = arg_9_0:_assetGetViewContainer():getItemIconResUrl(var_9_6[1], var_9_6[2])
+	local c = self:_assetGetViewContainer()
+	local resUrl = c:getItemIconResUrl(itemCo[1], itemCo[2])
 
-	GameUtil.loadSImage(arg_9_0._simageicon, var_9_7)
-	UIColorHelper.set(arg_9_0._simageiconImg, var_9_1)
-	UIColorHelper.set(arg_9_0._bgImg, var_9_1)
+	GameUtil.loadSImage(self._simageicon, resUrl)
+	UIColorHelper.set(self._simageiconImg, hexColor)
+	UIColorHelper.set(self._bgImg, hexColor)
 
-	arg_9_0._txtnum.text = luaLang("multiple") .. var_9_6[3]
+	self._txtnum.text = luaLang("multiple") .. itemCo[3]
 
-	arg_9_0:setActive_goGet(var_9_0)
-	arg_9_0:setActive_goCanGet(arg_9_0:isType101RewardCouldGet())
+	self:setActive_goGet(isClaimed)
+	self:setActive_goCanGet(self:isType101RewardCouldGet())
 
-	local var_9_8 = arg_9_0:getType101LoginCount()
+	local totalday = self:getType101LoginCount()
 
-	arg_9_0:setActive_goTmr(var_9_8 + 1 == var_9_3)
+	self:setActive_goTmr(totalday + 1 == index)
 end
 
-function var_0_0.setActive_goCanGet(arg_10_0, arg_10_1)
-	gohelper.setActive(arg_10_0._goCanGet, arg_10_1)
+function V2a3_Special_SignItem:setActive_goCanGet(isActive)
+	gohelper.setActive(self._goCanGet, isActive)
 end
 
-function var_0_0.setActive_goGet(arg_11_0, arg_11_1)
-	gohelper.setActive(arg_11_0._goGet, arg_11_1)
+function V2a3_Special_SignItem:setActive_goGet(isActive)
+	gohelper.setActive(self._goGet, isActive)
 end
 
-function var_0_0.setActive_goTmr(arg_12_0, arg_12_1)
-	gohelper.setActive(arg_12_0._go_nextday, arg_12_1)
+function V2a3_Special_SignItem:setActive_goTmr(isActive)
+	gohelper.setActive(self._go_nextday, isActive)
 end
 
-function var_0_0._onClick(arg_13_0)
-	if not arg_13_0:isActOnLine() then
+function V2a3_Special_SignItem:_onClick()
+	if not self:isActOnLine() then
 		GameFacade.showToast(ToastEnum.BattlePass)
 
 		return
 	end
 
-	if arg_13_0:isType101RewardCouldGet() then
-		arg_13_0:sendGet101BonusRequest()
+	local couldGet = self:isType101RewardCouldGet()
+
+	if couldGet then
+		self:sendGet101BonusRequest()
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_tags_2000013)
 
 		return
@@ -113,15 +118,16 @@ function var_0_0._onClick(arg_13_0)
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_common_click_25050217)
 
-	local var_13_0 = arg_13_0._mo._itemCo
+	local mo = self._mo
+	local itemCo = mo._itemCo
 
-	MaterialTipController.instance:showMaterialInfo(var_13_0[1], var_13_0[2])
+	MaterialTipController.instance:showMaterialInfo(itemCo[1], itemCo[2])
 end
 
-function var_0_0._OnOpenView(arg_14_0, arg_14_1)
-	if arg_14_1 == ViewName.RoomBlockPackageGetView then
+function V2a3_Special_SignItem:_OnOpenView(viewName)
+	if viewName == ViewName.RoomBlockPackageGetView then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_shenghuo_building_collect_20234002)
 	end
 end
 
-return var_0_0
+return V2a3_Special_SignItem

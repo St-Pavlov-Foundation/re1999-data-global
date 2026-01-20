@@ -1,39 +1,41 @@
-﻿module("modules.logic.gm.view.GMFightEntityBuffSearchItem", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GMFightEntityBuffSearchItem.lua
 
-local var_0_0 = class("GMFightEntityBuffSearchItem", ListScrollCell)
+module("modules.logic.gm.view.GMFightEntityBuffSearchItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._mo = nil
-	arg_1_0._itemClick = SLFramework.UGUI.UIClickListener.Get(arg_1_1)
+local GMFightEntityBuffSearchItem = class("GMFightEntityBuffSearchItem", ListScrollCell)
 
-	arg_1_0._itemClick:AddClickListener(arg_1_0._onClickItem, arg_1_0)
+function GMFightEntityBuffSearchItem:init(go)
+	self._mo = nil
+	self._itemClick = SLFramework.UGUI.UIClickListener.Get(go)
 
-	arg_1_0._img1 = gohelper.findChildImage(arg_1_1, "img1")
-	arg_1_0._img2 = gohelper.findChildImage(arg_1_1, "img2")
-	arg_1_0._txtName = gohelper.findChildText(arg_1_1, "txtName")
-	arg_1_0._txtId = gohelper.findChildText(arg_1_1, "txtId")
+	self._itemClick:AddClickListener(self._onClickItem, self)
+
+	self._img1 = gohelper.findChildImage(go, "img1")
+	self._img2 = gohelper.findChildImage(go, "img2")
+	self._txtName = gohelper.findChildText(go, "txtName")
+	self._txtId = gohelper.findChildText(go, "txtId")
 end
 
-function var_0_0.onUpdateMO(arg_2_0, arg_2_1)
-	arg_2_0._mo = arg_2_1
+function GMFightEntityBuffSearchItem:onUpdateMO(mo)
+	self._mo = mo
 
-	gohelper.setActive(arg_2_0._img1.gameObject, arg_2_1.id % 2 == 1)
-	gohelper.setActive(arg_2_0._img2.gameObject, arg_2_1.id % 2 == 0)
+	gohelper.setActive(self._img1.gameObject, mo.id % 2 == 1)
+	gohelper.setActive(self._img2.gameObject, mo.id % 2 == 0)
 
-	arg_2_0._txtName.text = arg_2_0._mo.name
-	arg_2_0._txtId.text = arg_2_0._mo.buffId
+	self._txtName.text = self._mo.name
+	self._txtId.text = self._mo.buffId
 end
 
-function var_0_0._onClickItem(arg_3_0)
-	GMController.instance:dispatchEvent(GMFightEntityBuffView.ClickSearchItem, arg_3_0._mo)
+function GMFightEntityBuffSearchItem:_onClickItem()
+	GMController.instance:dispatchEvent(GMFightEntityBuffView.ClickSearchItem, self._mo)
 end
 
-function var_0_0.onDestroy(arg_4_0)
-	if arg_4_0._itemClick then
-		arg_4_0._itemClick:RemoveClickListener()
+function GMFightEntityBuffSearchItem:onDestroy()
+	if self._itemClick then
+		self._itemClick:RemoveClickListener()
 
-		arg_4_0._itemClick = nil
+		self._itemClick = nil
 	end
 end
 
-return var_0_0
+return GMFightEntityBuffSearchItem

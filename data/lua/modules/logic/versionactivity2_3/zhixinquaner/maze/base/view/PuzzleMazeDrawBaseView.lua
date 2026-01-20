@@ -1,710 +1,739 @@
-﻿module("modules.logic.versionactivity2_3.zhixinquaner.maze.base.view.PuzzleMazeDrawBaseView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/zhixinquaner/maze/base/view/PuzzleMazeDrawBaseView.lua
 
-local var_0_0 = class("PuzzleMazeDrawBaseView", BaseView)
+module("modules.logic.versionactivity2_3.zhixinquaner.maze.base.view.PuzzleMazeDrawBaseView", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	arg_1_0:onInit()
+local PuzzleMazeDrawBaseView = class("PuzzleMazeDrawBaseView", BaseView)
+
+function PuzzleMazeDrawBaseView:_editableInitView()
+	self:onInit()
 end
 
-function var_0_0.onOpen(arg_2_0)
-	arg_2_0:startGame()
+function PuzzleMazeDrawBaseView:onOpen()
+	self:startGame()
 end
 
-function var_0_0.onClose(arg_3_0)
-	arg_3_0:unregisterDragCallBacks()
-	arg_3_0:destroyPawnObj()
-	arg_3_0:removeAllPathLines()
-	arg_3_0:removeAllMapLines()
-	arg_3_0:removeAllObjects()
+function PuzzleMazeDrawBaseView:onClose()
+	self:unregisterDragCallBacks()
+	self:destroyPawnObj()
+	self:removeAllPathLines()
+	self:removeAllMapLines()
+	self:removeAllObjects()
 end
 
-function var_0_0.onInit(arg_4_0)
-	arg_4_0._curDragLine = {
+function PuzzleMazeDrawBaseView:onInit()
+	self._curDragLine = {
 		x2 = 0,
 		y2 = 0,
 		x1 = 0,
 		y1 = 0
 	}
-	arg_4_0._objectMap = {}
-	arg_4_0._pathLineMap = {}
-	arg_4_0._mapLineSet = {}
-	arg_4_0._alertObjList = {}
-	arg_4_0._alertFreePool = {}
+	self._objectMap = {}
+	self._pathLineMap = {}
+	self._mapLineSet = {}
+	self._alertObjList = {}
+	self._alertFreePool = {}
 
-	arg_4_0:setCanTouch(true)
+	self:setCanTouch(true)
 
-	arg_4_0._modelInst = arg_4_0:getModelInst()
-	arg_4_0._ctrlInst = arg_4_0:getCtrlInst()
-	arg_4_0._alertTriggerFuncMap = {}
+	self._modelInst = self:getModelInst()
+	self._ctrlInst = self:getCtrlInst()
+	self._alertTriggerFuncMap = {}
 
-	arg_4_0:registerDragCallBacks()
+	self:registerDragCallBacks()
 end
 
-function var_0_0.registerDragCallBacks(arg_5_0)
-	local var_5_0 = arg_5_0:getDragGo()
+function PuzzleMazeDrawBaseView:registerDragCallBacks()
+	local goDrag = self:getDragGo()
 
-	if var_5_0 then
-		arg_5_0._drag = SLFramework.UGUI.UIDragListener.Get(var_5_0)
+	if goDrag then
+		self._drag = SLFramework.UGUI.UIDragListener.Get(goDrag)
 
-		arg_5_0._drag:AddDragBeginListener(arg_5_0.onBeginDragHandler, arg_5_0)
-		arg_5_0._drag:AddDragListener(arg_5_0.onDragHandler, arg_5_0)
-		arg_5_0._drag:AddDragEndListener(arg_5_0.onEndDragHandler, arg_5_0)
+		self._drag:AddDragBeginListener(self.onBeginDragHandler, self)
+		self._drag:AddDragListener(self.onDragHandler, self)
+		self._drag:AddDragEndListener(self.onEndDragHandler, self)
 	end
 end
 
-function var_0_0.unregisterDragCallBacks(arg_6_0)
-	if arg_6_0._drag then
-		arg_6_0._drag:RemoveDragBeginListener()
-		arg_6_0._drag:RemoveDragListener()
-		arg_6_0._drag:RemoveDragEndListener()
+function PuzzleMazeDrawBaseView:unregisterDragCallBacks()
+	if self._drag then
+		self._drag:RemoveDragBeginListener()
+		self._drag:RemoveDragListener()
+		self._drag:RemoveDragEndListener()
 
-		arg_6_0._drag = nil
+		self._drag = nil
 	end
 end
 
-function var_0_0.startGame(arg_7_0)
-	arg_7_0:setCanTouch(true)
-	arg_7_0:setGameFinished(false)
-	arg_7_0:removeAllPathLines()
-	arg_7_0:removeAllMapLines()
-	arg_7_0:removeAllObjects()
-	arg_7_0:initAllMapLines()
-	arg_7_0:initAllObjects()
-	arg_7_0:initPawn()
-	arg_7_0:syncPath()
-	arg_7_0:syncAlertObjs()
-	arg_7_0:syncCheckPoints()
-	arg_7_0._ctrlInst:dispatchEvent(PuzzleEvent.InitGameDone)
+function PuzzleMazeDrawBaseView:startGame()
+	self:setCanTouch(true)
+	self:setGameFinished(false)
+	self:removeAllPathLines()
+	self:removeAllMapLines()
+	self:removeAllObjects()
+	self:initAllMapLines()
+	self:initAllObjects()
+	self:initPawn()
+	self:syncPath()
+	self:syncAlertObjs()
+	self:syncCheckPoints()
+	self._ctrlInst:dispatchEvent(PuzzleEvent.InitGameDone)
 end
 
-function var_0_0.restartGame(arg_8_0)
-	arg_8_0._ctrlInst:restartGame()
-	arg_8_0:startGame()
+function PuzzleMazeDrawBaseView:restartGame()
+	self._ctrlInst:restartGame()
+	self:startGame()
 end
 
-function var_0_0.initAllMapLines(arg_9_0)
-	local var_9_0, var_9_1 = arg_9_0._modelInst:getGameSize()
+function PuzzleMazeDrawBaseView:initAllMapLines()
+	local width, height = self._modelInst:getGameSize()
 
-	for iter_9_0 = 1, var_9_0 + 1 do
-		for iter_9_1 = 1, var_9_1 + 1 do
-			if iter_9_0 <= var_9_0 then
-				arg_9_0:initMapLine(iter_9_0, iter_9_1, iter_9_0 + 1, iter_9_1)
+	for i = 1, width + 1 do
+		for j = 1, height + 1 do
+			if i <= width then
+				self:initMapLine(i, j, i + 1, j)
 			end
 
-			if iter_9_1 <= var_9_1 then
-				arg_9_0:initMapLine(iter_9_0, iter_9_1, iter_9_0, iter_9_1 + 1)
+			if j <= height then
+				self:initMapLine(i, j, i, j + 1)
 			end
 		end
 	end
 end
 
-function var_0_0.initMapLine(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4)
-	arg_10_1, arg_10_2, arg_10_3, arg_10_4 = PuzzleMazeHelper.formatPos(arg_10_1, arg_10_2, arg_10_3, arg_10_4)
+function PuzzleMazeDrawBaseView:initMapLine(startPosX, startPosY, endPosX, endPosY)
+	startPosX, startPosY, endPosX, endPosY = PuzzleMazeHelper.formatPos(startPosX, startPosY, endPosX, endPosY)
 
-	local var_10_0 = PuzzleMazeHelper.getLineKey(arg_10_1, arg_10_2, arg_10_3, arg_10_4)
-	local var_10_1 = arg_10_0._mapLineSet[var_10_0]
+	local key = PuzzleMazeHelper.getLineKey(startPosX, startPosY, endPosX, endPosY)
+	local lineObj = self._mapLineSet[key]
 
-	if not var_10_1 then
-		local var_10_2 = arg_10_0:getLineObjCls(PuzzleEnum.LineType.Map)
-		local var_10_3 = arg_10_0:getLineResUrl(PuzzleEnum.LineType.Map)
-		local var_10_4 = arg_10_0:getLineParentGo(PuzzleEnum.LineType.Map)
-		local var_10_5 = arg_10_0:getResInst(var_10_3, var_10_4, var_10_0)
-		local var_10_6, var_10_7 = arg_10_0:getLineTemplateFillOrigin()
+	if not lineObj then
+		local lineObjCls = self:getLineObjCls(PuzzleEnum.LineType.Map)
+		local lineResUrl = self:getLineResUrl(PuzzleEnum.LineType.Map)
+		local lineParentGo = self:getLineParentGo(PuzzleEnum.LineType.Map)
+		local itemGo = self:getResInst(lineResUrl, lineParentGo, key)
+		local fillOrigin_left, fillOrigin_right = self:getLineTemplateFillOrigin()
 
-		var_10_1 = var_10_2.New(var_10_5, var_10_6, var_10_7)
-		arg_10_0._mapLineSet[var_10_0] = var_10_1
+		lineObj = lineObjCls.New(itemGo, fillOrigin_left, fillOrigin_right)
+		self._mapLineSet[key] = lineObj
 	end
 
-	var_10_1:onInit(arg_10_1, arg_10_2, arg_10_3, arg_10_4)
+	lineObj:onInit(startPosX, startPosY, endPosX, endPosY)
 
-	return var_10_1
+	return lineObj
 end
 
-function var_0_0.getOrCreatePathLine(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4, arg_11_5)
-	arg_11_2, arg_11_3, arg_11_4, arg_11_5 = PuzzleMazeHelper.formatPos(arg_11_2, arg_11_3, arg_11_4, arg_11_5)
+function PuzzleMazeDrawBaseView:getOrCreatePathLine(lineType, x1, y1, x2, y2)
+	x1, y1, x2, y2 = PuzzleMazeHelper.formatPos(x1, y1, x2, y2)
 
-	local var_11_0 = PuzzleMazeHelper.getLineKey(arg_11_2, arg_11_3, arg_11_4, arg_11_5)
-	local var_11_1 = arg_11_0._pathLineMap[var_11_0]
+	local key = PuzzleMazeHelper.getLineKey(x1, y1, x2, y2)
+	local lineObj = self._pathLineMap[key]
 
-	if not var_11_1 then
-		local var_11_2 = arg_11_0:getLineObjCls(arg_11_1)
-		local var_11_3 = arg_11_0:getLineResUrl(arg_11_1)
-		local var_11_4 = arg_11_0:getLineParentGo(arg_11_1)
-		local var_11_5 = arg_11_0:getResInst(var_11_3, var_11_4, var_11_0)
-		local var_11_6, var_11_7 = arg_11_0:getLineTemplateFillOrigin()
+	if not lineObj then
+		local lineObjCls = self:getLineObjCls(lineType)
+		local lineResUrl = self:getLineResUrl(lineType)
+		local lineParentGo = self:getLineParentGo(lineType)
+		local itemGo = self:getResInst(lineResUrl, lineParentGo, key)
+		local fillOrigin_left, fillOrigin_right = self:getLineTemplateFillOrigin()
 
-		var_11_1 = var_11_2.New(var_11_5, var_11_6, var_11_7)
+		lineObj = lineObjCls.New(itemGo, fillOrigin_left, fillOrigin_right)
 
-		var_11_1:onInit(arg_11_2, arg_11_3, arg_11_4, arg_11_5)
+		lineObj:onInit(x1, y1, x2, y2)
 
-		arg_11_0._pathLineMap[var_11_0] = var_11_1
+		self._pathLineMap[key] = lineObj
 	end
 
-	return var_11_1
+	return lineObj
 end
 
-function var_0_0.removeAllPathLines(arg_12_0)
-	for iter_12_0, iter_12_1 in pairs(arg_12_0._pathLineMap) do
-		iter_12_1:destroy()
+function PuzzleMazeDrawBaseView:removeAllPathLines()
+	for k, itemObj in pairs(self._pathLineMap) do
+		itemObj:destroy()
 
-		arg_12_0._pathLineMap[iter_12_0] = nil
-	end
-end
-
-function var_0_0.removeAllMapLines(arg_13_0)
-	for iter_13_0, iter_13_1 in pairs(arg_13_0._mapLineSet) do
-		iter_13_1:destroy()
-
-		arg_13_0._mapLineSet[iter_13_0] = nil
+		self._pathLineMap[k] = nil
 	end
 end
 
-function var_0_0.getOrCreateObject(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_1:getKey()
-	local var_14_1 = arg_14_0._objectMap[var_14_0]
+function PuzzleMazeDrawBaseView:removeAllMapLines()
+	for k, itemObj in pairs(self._mapLineSet) do
+		itemObj:destroy()
 
-	if not var_14_1 then
-		local var_14_2 = arg_14_0:getObjectParentGo()
-		local var_14_3 = arg_14_0:getObjectResUrl(arg_14_1.objType, arg_14_1.subType, arg_14_1.group)
-		local var_14_4 = arg_14_0:getResInst(var_14_3, var_14_2, var_14_0)
-
-		var_14_1 = arg_14_0:getMazeObjCls(arg_14_1.objType, arg_14_1.subType, arg_14_1.group).New(var_14_4)
-		arg_14_0._objectMap[var_14_0] = var_14_1
-	end
-
-	return var_14_1
-end
-
-function var_0_0.removeAllObjects(arg_15_0)
-	for iter_15_0, iter_15_1 in pairs(arg_15_0._objectMap) do
-		iter_15_1:destroy()
-
-		arg_15_0._objectMap[iter_15_0] = nil
+		self._mapLineSet[k] = nil
 	end
 end
 
-function var_0_0.initAllObjects(arg_16_0)
-	local var_16_0 = arg_16_0._modelInst:getList()
+function PuzzleMazeDrawBaseView:getOrCreateObject(mo)
+	local key = mo:getKey()
+	local itemObj = self._objectMap[key]
 
-	for iter_16_0, iter_16_1 in ipairs(var_16_0) do
-		arg_16_0:getOrCreateObject(iter_16_1):onInit(iter_16_1)
+	if not itemObj then
+		local objParentGo = self:getObjectParentGo()
+		local objResUrl = self:getObjectResUrl(mo.objType, mo.subType, mo.group)
+		local itemGo = self:getResInst(objResUrl, objParentGo, key)
+		local cls = self:getMazeObjCls(mo.objType, mo.subType, mo.group)
+
+		itemObj = cls.New(itemGo)
+		self._objectMap[key] = itemObj
+	end
+
+	return itemObj
+end
+
+function PuzzleMazeDrawBaseView:removeAllObjects()
+	for k, itemObj in pairs(self._objectMap) do
+		itemObj:destroy()
+
+		self._objectMap[k] = nil
 	end
 end
 
-function var_0_0.getOrCreateAlertObj(arg_17_0, arg_17_1)
-	local var_17_0
+function PuzzleMazeDrawBaseView:initAllObjects()
+	local moList = self._modelInst:getList()
 
-	if #arg_17_0._alertFreePool <= 0 then
-		local var_17_1 = arg_17_0:getAlertParentGo(arg_17_1)
-		local var_17_2 = arg_17_0:getAlertResUrl(arg_17_1)
-		local var_17_3 = arg_17_0:getAlertObjCls(arg_17_1)
-		local var_17_4 = arg_17_0._alertObjList and #arg_17_0._alertObjList or 0
-		local var_17_5 = string.format("alert_%s", var_17_4 + 1)
-		local var_17_6 = arg_17_0:getResInst(var_17_2, var_17_1, var_17_5)
+	for _, mo in ipairs(moList) do
+		local itemObj = self:getOrCreateObject(mo)
 
-		var_17_0 = var_17_3.New(var_17_6)
+		itemObj:onInit(mo)
+	end
+end
+
+function PuzzleMazeDrawBaseView:getOrCreateAlertObj(alertType)
+	local itemObj
+
+	if #self._alertFreePool <= 0 then
+		local alertParentObj = self:getAlertParentGo(alertType)
+		local alertResUrl = self:getAlertResUrl(alertType)
+		local alertObjCls = self:getAlertObjCls(alertType)
+		local alertUseCount = self._alertObjList and #self._alertObjList or 0
+		local alertObjName = string.format("alert_%s", alertUseCount + 1)
+		local itemGo = self:getResInst(alertResUrl, alertParentObj, alertObjName)
+
+		itemObj = alertObjCls.New(itemGo)
 	else
-		var_17_0 = table.remove(arg_17_0._alertFreePool)
+		itemObj = table.remove(self._alertFreePool)
 	end
 
-	table.insert(arg_17_0._alertObjList, var_17_0)
+	table.insert(self._alertObjList, itemObj)
 
-	return var_17_0
+	return itemObj
 end
 
-function var_0_0.recycleAlertObjs(arg_18_0)
-	for iter_18_0 = #arg_18_0._alertObjList, 1, -1 do
-		local var_18_0 = arg_18_0._alertObjList[iter_18_0]
+function PuzzleMazeDrawBaseView:recycleAlertObjs()
+	for i = #self._alertObjList, 1, -1 do
+		local itemObj = self._alertObjList[i]
 
-		var_18_0:onDisable()
-		var_18_0:onRecycle()
-		table.insert(arg_18_0._alertFreePool, var_18_0)
+		itemObj:onDisable()
+		itemObj:onRecycle()
+		table.insert(self._alertFreePool, itemObj)
 
-		arg_18_0._alertObjList[iter_18_0] = nil
-	end
-end
-
-function var_0_0.initPawn(arg_19_0)
-	local var_19_0, var_19_1 = arg_19_0._ctrlInst:getLastPos()
-
-	if var_19_0 ~= nil then
-		local var_19_2, var_19_3 = arg_19_0._modelInst:getObjectAnchor(var_19_0, var_19_1)
-
-		arg_19_0:getOrCreatePawnObj():onInit(var_19_2, var_19_3)
+		self._alertObjList[i] = nil
 	end
 end
 
-function var_0_0.getOrCreatePawnObj(arg_20_0)
-	local var_20_0 = arg_20_0._objPawn
+function PuzzleMazeDrawBaseView:initPawn()
+	local startX, startY = self._ctrlInst:getLastPos()
 
-	if not var_20_0 then
-		local var_20_1 = arg_20_0:getPawnResUrl()
-		local var_20_2 = arg_20_0:getPawnParentGo()
-		local var_20_3 = arg_20_0:getResInst(var_20_1, var_20_2, "pawn")
+	if startX ~= nil then
+		local x, y = self._modelInst:getObjectAnchor(startX, startY)
+		local itemObj = self:getOrCreatePawnObj()
 
-		gohelper.setAsLastSibling(var_20_3)
-
-		var_20_0 = arg_20_0:getPawnObjCls().New(var_20_3)
-		arg_20_0._objPawn = var_20_0
-	end
-
-	return var_20_0
-end
-
-function var_0_0.destroyPawnObj(arg_21_0)
-	local var_21_0 = arg_21_0:getOrCreatePawnObj()
-
-	if var_21_0 then
-		var_21_0:destroy()
+		itemObj:onInit(x, y)
 	end
 end
 
-function var_0_0.syncPath(arg_22_0)
-	local var_22_0, var_22_1 = arg_22_0._ctrlInst:getPassedPoints()
-	local var_22_2
-	local var_22_3
-	local var_22_4 = {}
+function PuzzleMazeDrawBaseView:getOrCreatePawnObj()
+	local itemObj = self._objPawn
 
-	for iter_22_0 = 1, var_22_0 and #var_22_0 or 0 do
-		local var_22_5 = var_22_0[iter_22_0]
-		local var_22_6 = var_22_1[iter_22_0]
+	if not itemObj then
+		local pawnResUrl = self:getPawnResUrl()
+		local pawnParentGo = self:getPawnParentGo()
+		local itemGo = self:getResInst(pawnResUrl, pawnParentGo, "pawn")
 
-		if var_22_2 ~= nil then
-			local var_22_7 = PuzzleMazeHelper.getFromToDir(var_22_2, var_22_3, var_22_5, var_22_6)
+		gohelper.setAsLastSibling(itemGo)
 
-			if var_22_7 then
-				local var_22_8 = PuzzleMazeHelper.getLineKey(var_22_2, var_22_3, var_22_5, var_22_6)
-				local var_22_9 = arg_22_0:getOrCreatePathLine(PuzzleEnum.LineType.Path, var_22_2, var_22_3, var_22_5, var_22_6)
+		local pawnObjCls = self:getPawnObjCls()
 
-				var_22_9:onCrossFull(var_22_7)
-				var_22_9:onAlert(arg_22_0._alertType)
+		itemObj = pawnObjCls.New(itemGo)
+		self._objPawn = itemObj
+	end
 
-				var_22_4[var_22_8] = true
+	return itemObj
+end
+
+function PuzzleMazeDrawBaseView:destroyPawnObj()
+	local itemObj = self:getOrCreatePawnObj()
+
+	if itemObj then
+		itemObj:destroy()
+	end
+end
+
+function PuzzleMazeDrawBaseView:syncPath()
+	local passXList, passYList = self._ctrlInst:getPassedPoints()
+	local lastX, lastY
+	local syncSet = {}
+
+	for i = 1, passXList and #passXList or 0 do
+		local x, y = passXList[i], passYList[i]
+
+		if lastX ~= nil then
+			local forwardDir = PuzzleMazeHelper.getFromToDir(lastX, lastY, x, y)
+
+			if forwardDir then
+				local key = PuzzleMazeHelper.getLineKey(lastX, lastY, x, y)
+				local lineObj = self:getOrCreatePathLine(PuzzleEnum.LineType.Path, lastX, lastY, x, y)
+
+				lineObj:onCrossFull(forwardDir)
+				lineObj:onAlert(self._alertType)
+
+				syncSet[key] = true
 			else
-				logNormal(string.format("error dir in (%s,%s,%s,%s)", var_22_2, var_22_3, var_22_5, var_22_6))
+				logNormal(string.format("error dir in (%s,%s,%s,%s)", lastX, lastY, x, y))
 			end
 		end
 
-		var_22_2, var_22_3 = var_22_5, var_22_6
+		lastX, lastY = x, y
 	end
 
-	for iter_22_1, iter_22_2 in pairs(arg_22_0._pathLineMap) do
-		if not var_22_4[iter_22_1] then
-			iter_22_2:clear()
+	for k, itemObj in pairs(self._pathLineMap) do
+		if not syncSet[k] then
+			itemObj:clear()
 		end
 	end
 
-	arg_22_0._ctrlInst:resetLineDirty()
+	self._ctrlInst:resetLineDirty()
 end
 
-function var_0_0.syncDragLine(arg_23_0)
-	local var_23_0 = false
-	local var_23_1, var_23_2, var_23_3, var_23_4 = arg_23_0._ctrlInst:getProgressLine()
+function PuzzleMazeDrawBaseView:syncDragLine()
+	local isDirty = false
+	local x, y, progressX, progressY = self._ctrlInst:getProgressLine()
 
-	if not arg_23_0._ctrlInst:isBackward(var_23_1, var_23_2) then
-		local var_23_5 = arg_23_0._ctrlInst:getAlertMap()
+	if not self._ctrlInst:isBackward(x, y) then
+		local alertMap = self._ctrlInst:getAlertMap()
 
-		for iter_23_0, iter_23_1 in pairs(var_23_5) do
+		for mo, _ in pairs(alertMap) do
 			return false
 		end
 	end
 
-	local var_23_6 = var_23_3 or var_23_4
+	local progress = progressX or progressY
 
-	if var_23_1 and var_23_2 and var_23_6 then
-		local var_23_7, var_23_8 = arg_23_0._ctrlInst:getLastPos()
-		local var_23_9, var_23_10, var_23_11, var_23_12 = PuzzleMazeHelper.formatPos(var_23_7, var_23_8, var_23_1, var_23_2)
+	if x and y and progress then
+		local curX, curY = self._ctrlInst:getLastPos()
+		local x1, y1, x2, y2 = PuzzleMazeHelper.formatPos(curX, curY, x, y)
 
-		if arg_23_0._curDragLine.x1 ~= var_23_9 or arg_23_0._curDragLine.y1 ~= var_23_10 or arg_23_0._curDragLine.x2 ~= var_23_11 or arg_23_0._curDragLine.y2 ~= var_23_12 then
-			arg_23_0._curDragLine.x1, arg_23_0._curDragLine.y1, arg_23_0._curDragLine.x2, arg_23_0._curDragLine.y2 = var_23_9, var_23_10, var_23_11, var_23_12
-			var_23_0 = true
+		if self._curDragLine.x1 ~= x1 or self._curDragLine.y1 ~= y1 or self._curDragLine.x2 ~= x2 or self._curDragLine.y2 ~= y2 then
+			self._curDragLine.x1, self._curDragLine.y1, self._curDragLine.x2, self._curDragLine.y2 = x1, y1, x2, y2
+			isDirty = true
 
-			arg_23_0:cleanDragLine()
+			self:cleanDragLine()
 		end
 
-		local var_23_13 = PuzzleMazeHelper.getFromToDir(var_23_7, var_23_8, var_23_1, var_23_2)
+		local dir = PuzzleMazeHelper.getFromToDir(curX, curY, x, y)
+		local pawnObj = self:getOrCreatePawnObj()
 
-		arg_23_0:getOrCreatePawnObj():setDir(var_23_13)
-		arg_23_0:getOrCreatePathLine(PuzzleEnum.LineType.Path, var_23_9, var_23_10, var_23_11, var_23_12):onCrossHalf(var_23_13, var_23_6)
+		pawnObj:setDir(dir)
 
-		return var_23_0
+		local lineObj = self:getOrCreatePathLine(PuzzleEnum.LineType.Path, x1, y1, x2, y2)
+
+		lineObj:onCrossHalf(dir, progress)
+
+		return isDirty
 	end
 
 	return false
 end
 
-function var_0_0.syncAlertObjs(arg_24_0)
-	arg_24_0:recycleAlertObjs()
+function PuzzleMazeDrawBaseView:syncAlertObjs()
+	self:recycleAlertObjs()
 
-	arg_24_0._alertType = PuzzleEnum.MazeAlertType.None
+	self._alertType = PuzzleEnum.MazeAlertType.None
 
-	local var_24_0 = arg_24_0._ctrlInst:getAlertMap()
+	local alertMap = self._ctrlInst:getAlertMap()
 
-	if var_24_0 then
-		for iter_24_0, iter_24_1 in pairs(var_24_0) do
-			arg_24_0:onTriggerAlert(iter_24_1, iter_24_0)
+	if alertMap then
+		for key, alertType in pairs(alertMap) do
+			self:onTriggerAlert(alertType, key)
 
-			arg_24_0._alertType = iter_24_1
+			self._alertType = alertType
 
 			return
 		end
 	end
 end
 
-function var_0_0.onTriggerAlert(arg_25_0, arg_25_1, arg_25_2)
-	arg_25_0:getOrCreateAlertObj(arg_25_1):onEnable(arg_25_1, arg_25_2)
+function PuzzleMazeDrawBaseView:onTriggerAlert(alertType, alertObj)
+	local alertItem = self:getOrCreateAlertObj(alertType)
 
-	local var_25_0 = arg_25_0:getAlertTriggerFunc(arg_25_1)
+	alertItem:onEnable(alertType, alertObj)
 
-	if var_25_0 then
-		var_25_0(arg_25_0, arg_25_2)
+	local alertTriggerFunc = self:getAlertTriggerFunc(alertType)
+
+	if alertTriggerFunc then
+		alertTriggerFunc(self, alertObj)
 	end
 end
 
-function var_0_0.registerAlertTriggerFunc(arg_26_0, arg_26_1, arg_26_2)
-	if not arg_26_1 or not arg_26_2 then
+function PuzzleMazeDrawBaseView:registerAlertTriggerFunc(alertType, alertTriggerFunc)
+	if not alertType or not alertTriggerFunc then
 		logError("注册警告触发方法时警告类型及回调方法不可为空")
 
 		return
 	end
 
-	if arg_26_0._alertTriggerFuncMap[arg_26_1] then
-		logError("注册了重复的警告执行方法 :" .. tostring(arg_26_1))
+	if self._alertTriggerFuncMap[alertType] then
+		logError("注册了重复的警告执行方法 :" .. tostring(alertType))
 
 		return
 	end
 
-	arg_26_0._alertTriggerFuncMap[arg_26_1] = arg_26_2
+	self._alertTriggerFuncMap[alertType] = alertTriggerFunc
 end
 
-function var_0_0.getAlertTriggerFunc(arg_27_0, arg_27_1)
-	if not arg_27_1 then
+function PuzzleMazeDrawBaseView:getAlertTriggerFunc(alertType)
+	if not alertType then
 		return
 	end
 
-	return arg_27_0._alertTriggerFuncMap and arg_27_0._alertTriggerFuncMap[arg_27_1]
+	return self._alertTriggerFuncMap and self._alertTriggerFuncMap[alertType]
 end
 
-function var_0_0.onBeginDragHandler(arg_28_0, arg_28_1, arg_28_2)
-	if not arg_28_0:canTouch() then
-		arg_28_0:onBeginDragFailed(arg_28_2)
+function PuzzleMazeDrawBaseView:onBeginDragHandler(_, pointerEventData)
+	local canTouch = self:canTouch()
+
+	if not canTouch then
+		self:onBeginDragFailed(pointerEventData)
 
 		return
 	end
 
-	arg_28_0:onBeginDragSucc(arg_28_2)
+	self:onBeginDragSucc(pointerEventData)
 end
 
-function var_0_0.onDragHandler(arg_29_0, arg_29_1, arg_29_2)
-	if not arg_29_0:canTouch() then
+function PuzzleMazeDrawBaseView:onDragHandler(_, pointerEventData)
+	local canTouch = self:canTouch()
+
+	if not canTouch then
 		return
 	end
 
-	if arg_29_0._isPawnMoving then
-		local var_29_0 = arg_29_0:getDragGo()
-		local var_29_1 = recthelper.screenPosToAnchorPos(arg_29_2.position, var_29_0.transform)
+	if self._isPawnMoving then
+		local dragGo = self:getDragGo()
+		local tempPos = recthelper.screenPosToAnchorPos(pointerEventData.position, dragGo.transform)
 
-		arg_29_0:onDrag_StartProcessPos(arg_29_2, var_29_1)
-		arg_29_0:onDrag_EndProcessPos(arg_29_2, var_29_1)
+		self:onDrag_StartProcessPos(pointerEventData, tempPos)
+		self:onDrag_EndProcessPos(pointerEventData, tempPos)
 	end
 end
 
-function var_0_0.onDrag_StartProcessPos(arg_30_0, arg_30_1, arg_30_2)
-	local var_30_0, var_30_1 = arg_30_0._modelInst:getClosePosByTouchPos(arg_30_2.x, arg_30_2.y)
+function PuzzleMazeDrawBaseView:onDrag_StartProcessPos(pointerEventData, dragPos)
+	local x, y = self._modelInst:getClosePosByTouchPos(dragPos.x, dragPos.y)
 
-	if var_30_0 ~= -1 then
-		arg_30_0._ctrlInst:goPassPos(var_30_0, var_30_1)
+	if x ~= -1 then
+		self._ctrlInst:goPassPos(x, y)
 	else
-		local var_30_2, var_30_3, var_30_4, var_30_5, var_30_6, var_30_7, var_30_8 = arg_30_0._modelInst:getLineFieldByTouchPos(arg_30_2.x, arg_30_2.y)
+		local rs, x1, y1, x2, y2, progressX, progressY = self._modelInst:getLineFieldByTouchPos(dragPos.x, dragPos.y)
 
-		if var_30_2 then
-			arg_30_0._ctrlInst:goPassLine(var_30_3, var_30_4, var_30_5, var_30_6, var_30_7, var_30_8)
+		if rs then
+			self._ctrlInst:goPassLine(x1, y1, x2, y2, progressX, progressY)
 		end
 	end
 end
 
-function var_0_0.onDrag_EndProcessPos(arg_31_0, arg_31_1, arg_31_2)
-	arg_31_0:onDrag_SyncPawn(arg_31_1, arg_31_2)
-	arg_31_0:onDrag_SyncPath(arg_31_1, arg_31_2)
+function PuzzleMazeDrawBaseView:onDrag_EndProcessPos(pointerEventData, dragPos)
+	self:onDrag_SyncPawn(pointerEventData, dragPos)
+	self:onDrag_SyncPath(pointerEventData, dragPos)
 end
 
-function var_0_0.onDrag_SyncPath(arg_32_0, arg_32_1, arg_32_2)
-	local var_32_0 = arg_32_0._ctrlInst:isLineDirty()
+function PuzzleMazeDrawBaseView:onDrag_SyncPath(pointerEventData, dragPos)
+	local isLineDirty = self._ctrlInst:isLineDirty()
 
-	if var_32_0 then
-		arg_32_0:syncPath()
-		arg_32_0:syncAlertObjs()
-		arg_32_0:syncCheckPoints()
+	if isLineDirty then
+		self:syncPath()
+		self:syncAlertObjs()
+		self:syncCheckPoints()
 	end
 
-	local var_32_1 = arg_32_0:syncDragLine()
+	local isDirty = self:syncDragLine()
 
-	if not var_32_0 and var_32_1 then
-		arg_32_0:syncPath()
+	if not isLineDirty and isDirty then
+		self:syncPath()
 	end
 
-	if var_32_0 then
-		arg_32_0:checkGameFinished()
+	if isLineDirty then
+		self:checkGameFinished()
 	end
 end
 
-function var_0_0.onEndDragHandler(arg_33_0, arg_33_1, arg_33_2)
-	if not arg_33_0:canTouch() then
+function PuzzleMazeDrawBaseView:onEndDragHandler(_, pointerEventData)
+	local canTouch = self:canTouch()
+
+	if not canTouch then
 		return
 	end
 
-	if arg_33_0._isPawnMoving then
-		arg_33_0._isPawnMoving = false
+	if self._isPawnMoving then
+		self._isPawnMoving = false
 
-		if arg_33_0._ctrlInst:hasAlertObj() then
-			arg_33_0:onEndDrag_HasAlert()
+		if self._ctrlInst:hasAlertObj() then
+			self:onEndDrag_HasAlert()
 		else
-			arg_33_0:onEndDrag_NoneAlert()
+			self:onEndDrag_NoneAlert()
 		end
 	end
 end
 
-function var_0_0.cleanDragLine(arg_34_0)
-	for iter_34_0, iter_34_1 in pairs(arg_34_0._pathLineMap) do
-		local var_34_0 = iter_34_1:getProgress()
+function PuzzleMazeDrawBaseView:cleanDragLine()
+	for _, lineObj in pairs(self._pathLineMap) do
+		local progress = lineObj:getProgress()
 
-		if var_34_0 <= 0.999 and var_34_0 >= 0.01 then
-			iter_34_1:clear()
+		if progress <= 0.999 and progress >= 0.01 then
+			lineObj:clear()
 		end
 	end
 end
 
-function var_0_0.syncCheckPoints(arg_35_0)
-	local var_35_0 = arg_35_0._modelInst:getList()
-	local var_35_1 = {}
-	local var_35_2 = 0
+function PuzzleMazeDrawBaseView:syncCheckPoints()
+	local objList = self._modelInst:getList()
+	local checkSum = {}
+	local checkCount = 0
 
-	for iter_35_0, iter_35_1 in ipairs(var_35_0) do
-		local var_35_3 = arg_35_0:getOrCreateObject(iter_35_1)
+	for _, mo in ipairs(objList) do
+		local itemObj = self:getOrCreateObject(mo)
 
-		if iter_35_1.objType == PuzzleEnum.MazeObjType.CheckPoint and arg_35_0._ctrlInst:alreadyCheckPoint(iter_35_1) then
-			table.insert(var_35_1, tostring(iter_35_1))
+		if mo.objType == PuzzleEnum.MazeObjType.CheckPoint and self._ctrlInst:alreadyCheckPoint(mo) then
+			table.insert(checkSum, tostring(mo))
 
-			var_35_2 = var_35_2 + 1
+			checkCount = checkCount + 1
 		end
 
-		arg_35_0:tickObjBehaviour(iter_35_1, var_35_3)
+		self:tickObjBehaviour(mo, itemObj)
 	end
 
-	local var_35_4 = table.concat(var_35_1)
+	checkSum = table.concat(checkSum)
 
-	arg_35_0:onEndRefreshCheckPoint(arg_35_0._lastCheckSum, var_35_4, arg_35_0._lastCheckCount, var_35_2)
+	self:onEndRefreshCheckPoint(self._lastCheckSum, checkSum, self._lastCheckCount, checkCount)
 end
 
-function var_0_0.tickObjBehaviour(arg_36_0, arg_36_1, arg_36_2)
-	local var_36_0 = false
+function PuzzleMazeDrawBaseView:tickObjBehaviour(mo, itemObj)
+	local alreadyCheck = false
 
-	if arg_36_1.objType ~= PuzzleEnum.MazeObjType.Block then
-		var_36_0 = arg_36_0._ctrlInst:alreadyPassed(arg_36_1.x, arg_36_1.y)
+	if mo.objType ~= PuzzleEnum.MazeObjType.Block then
+		alreadyCheck = self._ctrlInst:alreadyPassed(mo.x, mo.y)
 	end
 
-	local var_36_1 = arg_36_2:HasEnter()
+	local hasEnter = itemObj:HasEnter()
 
-	if var_36_1 then
-		if var_36_0 then
-			arg_36_2:onAlreadyEnter()
+	if hasEnter then
+		if alreadyCheck then
+			itemObj:onAlreadyEnter()
 		else
-			arg_36_2:onExit()
+			itemObj:onExit()
 		end
-	elseif not var_36_1 and var_36_0 then
-		arg_36_2:onEnter()
+	elseif not hasEnter and alreadyCheck then
+		itemObj:onEnter()
 	end
 end
 
-function var_0_0.checkGameFinished(arg_37_0)
-	if arg_37_0:isGameFinished() then
+function PuzzleMazeDrawBaseView:checkGameFinished()
+	local isFinished = self:isGameFinished()
+
+	if isFinished then
 		return
 	end
 
-	if arg_37_0:checkIsGameFailed() then
-		arg_37_0:onGameFailed()
+	local isFailed = self:checkIsGameFailed()
+
+	if isFailed then
+		self:onGameFailed()
 
 		return
 	end
 
-	if arg_37_0:checkIsGameSucc() then
-		arg_37_0:onGameSucc()
+	local isSucc = self:checkIsGameSucc()
+
+	if isSucc then
+		self:onGameSucc()
 
 		return
 	end
 end
 
-function var_0_0.onBeginDragSucc(arg_38_0, arg_38_1)
-	local var_38_0, var_38_1 = arg_38_0._ctrlInst:getLastPos()
-	local var_38_2, var_38_3 = arg_38_0:getPawnPosByPointerEventData(arg_38_1)
+function PuzzleMazeDrawBaseView:onBeginDragSucc(pointerEventData)
+	local lastX, lastY = self._ctrlInst:getLastPos()
+	local x, y = self:getPawnPosByPointerEventData(pointerEventData)
 
-	if var_38_2 ~= -1 and var_38_0 == var_38_2 and var_38_1 == var_38_3 then
-		arg_38_0:onBeginDrag_SyncPawn()
+	if x ~= -1 and lastX == x and lastY == y then
+		self:onBeginDrag_SyncPawn()
 	end
 end
 
-function var_0_0.getPawnPosByPointerEventData(arg_39_0, arg_39_1)
-	local var_39_0 = arg_39_0:getDragGo()
-	local var_39_1 = recthelper.screenPosToAnchorPos(arg_39_1.position, var_39_0.transform)
-	local var_39_2, var_39_3 = arg_39_0._modelInst:getClosePosByTouchPos(var_39_1.x - PuzzleEnum.mazeMonsterTouchOffsetX, var_39_1.y - PuzzleEnum.mazeMonsterHeight)
+function PuzzleMazeDrawBaseView:getPawnPosByPointerEventData(pointerEventData)
+	local dragGo = self:getDragGo()
+	local tempPos = recthelper.screenPosToAnchorPos(pointerEventData.position, dragGo.transform)
+	local x, y = self._modelInst:getClosePosByTouchPos(tempPos.x - PuzzleEnum.mazeMonsterTouchOffsetX, tempPos.y - PuzzleEnum.mazeMonsterHeight)
 
-	return var_39_2, var_39_3
+	return x, y
 end
 
-function var_0_0.onEndDrag_HasAlert(arg_40_0)
-	arg_40_0._ctrlInst:goBackPos()
-	arg_40_0:onEndDrag_SyncPawn()
-	arg_40_0:syncAlertObjs()
-	arg_40_0:syncPath()
-	arg_40_0:cleanDragLine()
-	arg_40_0:syncCheckPoints()
+function PuzzleMazeDrawBaseView:onEndDrag_HasAlert()
+	self._ctrlInst:goBackPos()
+	self:onEndDrag_SyncPawn()
+	self:syncAlertObjs()
+	self:syncPath()
+	self:cleanDragLine()
+	self:syncCheckPoints()
 end
 
-function var_0_0.onEndDrag_NoneAlert(arg_41_0)
-	arg_41_0:onEndDrag_SyncPawn()
-	arg_41_0:syncPath()
-	arg_41_0:cleanDragLine()
-	arg_41_0:checkGameFinished()
+function PuzzleMazeDrawBaseView:onEndDrag_NoneAlert()
+	self:onEndDrag_SyncPawn()
+	self:syncPath()
+	self:cleanDragLine()
+	self:checkGameFinished()
 end
 
-function var_0_0.onBeginDrag_SyncPawn(arg_42_0)
-	arg_42_0._isPawnMoving = true
+function PuzzleMazeDrawBaseView:onBeginDrag_SyncPawn()
+	self._isPawnMoving = true
 
-	arg_42_0:getOrCreatePawnObj():onBeginDrag()
-	arg_42_0._ctrlInst:dispatchEvent(PuzzleEvent.OnBeginDragPawn)
+	local pawnObj = self:getOrCreatePawnObj()
+
+	pawnObj:onBeginDrag()
+	self._ctrlInst:dispatchEvent(PuzzleEvent.OnBeginDragPawn)
 end
 
-function var_0_0.onDrag_SyncPawn(arg_43_0, arg_43_1, arg_43_2)
-	arg_43_0:getOrCreatePawnObj():onDraging(arg_43_2.x, arg_43_2.y)
+function PuzzleMazeDrawBaseView:onDrag_SyncPawn(pointerEventData, dragPos)
+	local pawnObj = self:getOrCreatePawnObj()
+
+	pawnObj:onDraging(dragPos.x, dragPos.y)
 end
 
-function var_0_0.onEndDrag_SyncPawn(arg_44_0)
-	local var_44_0, var_44_1 = arg_44_0._ctrlInst:getLastPos()
-	local var_44_2, var_44_3 = arg_44_0._modelInst:getObjectAnchor(var_44_0, var_44_1)
+function PuzzleMazeDrawBaseView:onEndDrag_SyncPawn()
+	local curX, curY = self._ctrlInst:getLastPos()
+	local x, y = self._modelInst:getObjectAnchor(curX, curY)
+	local itemObj = self:getOrCreatePawnObj()
 
-	arg_44_0:getOrCreatePawnObj():onEndDrag(var_44_2, var_44_3)
-	arg_44_0._ctrlInst:dispatchEvent(PuzzleEvent.OnEndDragPawn)
+	itemObj:onEndDrag(x, y)
+	self._ctrlInst:dispatchEvent(PuzzleEvent.OnEndDragPawn)
 end
 
-function var_0_0.canTouch(arg_45_0)
-	return arg_45_0._canTouch
+function PuzzleMazeDrawBaseView:canTouch()
+	return self._canTouch
 end
 
-function var_0_0.setCanTouch(arg_46_0, arg_46_1)
-	arg_46_0._canTouch = arg_46_1
+function PuzzleMazeDrawBaseView:setCanTouch(canTouch)
+	self._canTouch = canTouch
 end
 
-function var_0_0.onBeginDragFailed(arg_47_0, arg_47_1)
+function PuzzleMazeDrawBaseView:onBeginDragFailed(pointerEventData)
 	return
 end
 
-function var_0_0.onEndRefreshCheckPoint(arg_48_0, arg_48_1, arg_48_2, arg_48_3, arg_48_4)
-	arg_48_0._lastCheckSum = arg_48_2
-	arg_48_0._lastCheckCount = arg_48_4
+function PuzzleMazeDrawBaseView:onEndRefreshCheckPoint(lastCheckSum, checkSum, lastCheckCount, checkCount)
+	self._lastCheckSum = checkSum
+	self._lastCheckCount = checkCount
 end
 
-function var_0_0.checkIsGameSucc(arg_49_0)
-	return arg_49_0._ctrlInst:isGameClear()
+function PuzzleMazeDrawBaseView:checkIsGameSucc()
+	return self._ctrlInst:isGameClear()
 end
 
-function var_0_0.onGameSucc(arg_50_0)
-	if arg_50_0._isPawnMoving then
-		arg_50_0:onEndDrag_SyncPawn()
+function PuzzleMazeDrawBaseView:onGameSucc()
+	if self._isPawnMoving then
+		self:onEndDrag_SyncPawn()
 	end
 
-	arg_50_0:setCanTouch(false)
-	arg_50_0:setGameFinished(true)
-	arg_50_0._modelInst:setGameStatus(true)
+	self:setCanTouch(false)
+	self:setGameFinished(true)
+	self._modelInst:setGameStatus(true)
 
-	local var_50_0 = arg_50_0._modelInst:getElementCo()
-	local var_50_1 = var_50_0 and var_50_0.id
-	local var_50_2 = DungeonModel.instance:isFinishElementList(var_50_0)
+	local elementCo = self._modelInst:getElementCo()
+	local elementId = elementCo and elementCo.id
+	local isElementFinished = DungeonModel.instance:isFinishElementList(elementCo)
 
-	if var_50_1 and not var_50_2 then
-		DungeonRpc.instance:sendMapElementRequest(var_50_1)
+	if elementId and not isElementFinished then
+		DungeonRpc.instance:sendMapElementRequest(elementId)
 	end
 
-	arg_50_0._ctrlInst:dispatchEvent(PuzzleEvent.OnGameFinished, var_50_1)
+	self._ctrlInst:dispatchEvent(PuzzleEvent.OnGameFinished, elementId)
 end
 
-function var_0_0.checkIsGameFailed(arg_51_0)
+function PuzzleMazeDrawBaseView:checkIsGameFailed()
 	return
 end
 
-function var_0_0.onGameFailed(arg_52_0)
-	arg_52_0:setGameFinished(true)
+function PuzzleMazeDrawBaseView:onGameFailed()
+	self:setGameFinished(true)
 end
 
-function var_0_0.isGameFinished(arg_53_0)
-	return arg_53_0._isFinished
+function PuzzleMazeDrawBaseView:isGameFinished()
+	return self._isFinished
 end
 
-function var_0_0.setGameFinished(arg_54_0, arg_54_1)
-	arg_54_0._isFinished = arg_54_1
+function PuzzleMazeDrawBaseView:setGameFinished(isFinished)
+	self._isFinished = isFinished
 end
 
-function var_0_0.getModelInst(arg_55_0)
+function PuzzleMazeDrawBaseView:getModelInst()
 	return
 end
 
-function var_0_0.getCtrlInst(arg_56_0)
+function PuzzleMazeDrawBaseView:getCtrlInst()
 	return
 end
 
-function var_0_0.getDragGo(arg_57_0)
+function PuzzleMazeDrawBaseView:getDragGo()
 	return
 end
 
-function var_0_0.getLineParentGo(arg_58_0)
+function PuzzleMazeDrawBaseView:getLineParentGo()
 	return
 end
 
-function var_0_0.getPawnParentGo(arg_59_0)
+function PuzzleMazeDrawBaseView:getPawnParentGo()
 	return
 end
 
-function var_0_0.getObjectParentGo(arg_60_0)
+function PuzzleMazeDrawBaseView:getObjectParentGo()
 	return
 end
 
-function var_0_0.getAlertParentGo(arg_61_0)
+function PuzzleMazeDrawBaseView:getAlertParentGo()
 	return
 end
 
-function var_0_0.getMazeObjCls(arg_62_0, arg_62_1, arg_62_2, arg_62_3)
+function PuzzleMazeDrawBaseView:getMazeObjCls(objType, subType, group)
 	return
 end
 
-function var_0_0.getPawnObjCls(arg_63_0)
+function PuzzleMazeDrawBaseView:getPawnObjCls()
 	return
 end
 
-function var_0_0.getLineObjCls(arg_64_0, arg_64_1)
+function PuzzleMazeDrawBaseView:getLineObjCls(lineType)
 	return
 end
 
-function var_0_0.getAlertObjCls(arg_65_0, arg_65_1)
+function PuzzleMazeDrawBaseView:getAlertObjCls(alertType)
 	return
 end
 
-function var_0_0.getPawnResUrl(arg_66_0)
+function PuzzleMazeDrawBaseView:getPawnResUrl()
 	return
 end
 
-function var_0_0.getLineResUrl(arg_67_0, arg_67_1)
+function PuzzleMazeDrawBaseView:getLineResUrl(lineType)
 	return
 end
 
-function var_0_0.getObjectResUrl(arg_68_0, arg_68_1, arg_68_2, arg_68_3)
+function PuzzleMazeDrawBaseView:getObjectResUrl(objType, subType, group)
 	return
 end
 
-function var_0_0.getAlertResUrl(arg_69_0, arg_69_1)
+function PuzzleMazeDrawBaseView:getAlertResUrl(alertType)
 	return
 end
 
-function var_0_0.getLineTemplateFillOrigin(arg_70_0)
+function PuzzleMazeDrawBaseView:getLineTemplateFillOrigin()
 	return
 end
 
-return var_0_0
+return PuzzleMazeDrawBaseView

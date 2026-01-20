@@ -1,117 +1,119 @@
-﻿module("modules.logic.fight.view.preview.SkillEditorToolAutoPlaySkillModel", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/preview/SkillEditorToolAutoPlaySkillModel.lua
 
-local var_0_0 = class("SkillEditorToolAutoPlaySkillModel", ListScrollModel)
+module("modules.logic.fight.view.preview.SkillEditorToolAutoPlaySkillModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._selectList = {}
+local SkillEditorToolAutoPlaySkillModel = class("SkillEditorToolAutoPlaySkillModel", ListScrollModel)
+
+function SkillEditorToolAutoPlaySkillModel:onInit()
+	self._selectList = {}
 end
 
-function var_0_0.setSelect(arg_2_0, arg_2_1)
-	arg_2_0:_buildCOList()
+function SkillEditorToolAutoPlaySkillModel:setSelect(searchText)
+	self:_buildCOList()
 
-	local var_2_0 = {}
+	local list = {}
 
-	for iter_2_0, iter_2_1 in pairs(arg_2_0._dataList) do
-		if iter_2_0 ~= SkillEditorMgr.SelectType.Group then
-			for iter_2_2, iter_2_3 in ipairs(iter_2_1) do
-				if string.find(tostring(iter_2_3.id), arg_2_1) or string.find(tostring(iter_2_3.skinId), arg_2_1) or string.find(iter_2_3.name or "", arg_2_1) or string.find(FightConfig.instance:getSkinCO(iter_2_3.skinId) and FightConfig.instance:getSkinCO(iter_2_3.skinId).name or "", arg_2_1) then
-					local var_2_1 = {
-						co = iter_2_3,
-						type = iter_2_0,
-						skinId = iter_2_3.skinId
+	for key, config in pairs(self._dataList) do
+		if key ~= SkillEditorMgr.SelectType.Group then
+			for i, co in ipairs(config) do
+				if string.find(tostring(co.id), searchText) or string.find(tostring(co.skinId), searchText) or string.find(co.name or "", searchText) or string.find(FightConfig.instance:getSkinCO(co.skinId) and FightConfig.instance:getSkinCO(co.skinId).name or "", searchText) then
+					local mo = {
+						co = co,
+						type = key,
+						skinId = co.skinId
 					}
 
-					table.insert(var_2_0, var_2_1)
+					table.insert(list, mo)
 				end
 			end
 		else
-			for iter_2_4, iter_2_5 in ipairs(iter_2_1) do
-				arg_2_0:_cacheGroupNames()
+			for i, co in ipairs(config) do
+				self:_cacheGroupNames()
 
-				local var_2_2 = arg_2_0._groupId2NameDict[iter_2_5.id]
+				local groupMonsterName = self._groupId2NameDict[co.id]
 
-				if var_2_2 and string.find(var_2_2, arg_2_1) then
-					local var_2_3 = {
-						co = iter_2_5,
-						type = iter_2_0,
-						skinId = iter_2_5.skinId
+				if groupMonsterName and string.find(groupMonsterName, searchText) then
+					local mo = {
+						co = co,
+						type = key,
+						skinId = co.skinId
 					}
 
-					table.insert(var_2_0, var_2_3)
+					table.insert(list, mo)
 				end
 			end
 		end
 	end
 
-	arg_2_0:setList(var_2_0)
+	self:setList(list)
 end
 
-function var_0_0._buildCOList(arg_3_0)
-	arg_3_0._dataList = {}
-	arg_3_0._dataList[SkillEditorMgr.SelectType.Hero] = arg_3_0._dataList[SkillEditorMgr.SelectType.Hero] or {}
+function SkillEditorToolAutoPlaySkillModel:_buildCOList()
+	self._dataList = {}
+	self._dataList[SkillEditorMgr.SelectType.Hero] = self._dataList[SkillEditorMgr.SelectType.Hero] or {}
 
-	tabletool.addValues(arg_3_0._dataList[SkillEditorMgr.SelectType.Hero], lua_character.configList)
+	tabletool.addValues(self._dataList[SkillEditorMgr.SelectType.Hero], lua_character.configList)
 
-	local var_3_0 = {}
-	local var_3_1 = {}
+	local dict = {}
+	local list = {}
 
-	for iter_3_0, iter_3_1 in ipairs(lua_monster.configList) do
-		if not var_3_0[iter_3_1.skinId] then
-			var_3_0[iter_3_1.skinId] = true
+	for _, monsterCO in ipairs(lua_monster.configList) do
+		if not dict[monsterCO.skinId] then
+			dict[monsterCO.skinId] = true
 
-			table.insert(var_3_1, iter_3_1)
+			table.insert(list, monsterCO)
 		end
 	end
 
-	arg_3_0._dataList[SkillEditorMgr.SelectType.Monster] = arg_3_0._dataList[SkillEditorMgr.SelectType.Monster] or {}
-	arg_3_0._dataList[SkillEditorMgr.SelectType.Group] = arg_3_0._dataList[SkillEditorMgr.SelectType.Group] or {}
+	self._dataList[SkillEditorMgr.SelectType.Monster] = self._dataList[SkillEditorMgr.SelectType.Monster] or {}
+	self._dataList[SkillEditorMgr.SelectType.Group] = self._dataList[SkillEditorMgr.SelectType.Group] or {}
 
-	tabletool.addValues(arg_3_0._dataList[SkillEditorMgr.SelectType.Monster], var_3_1)
-	tabletool.addValues(arg_3_0._dataList[SkillEditorMgr.SelectType.Group], lua_monster_group.configList)
-	arg_3_0:_cacheGroupNames()
+	tabletool.addValues(self._dataList[SkillEditorMgr.SelectType.Monster], list)
+	tabletool.addValues(self._dataList[SkillEditorMgr.SelectType.Group], lua_monster_group.configList)
+	self:_cacheGroupNames()
 end
 
-function var_0_0._cacheGroupNames(arg_4_0)
-	if arg_4_0._groupId2NameDict then
+function SkillEditorToolAutoPlaySkillModel:_cacheGroupNames()
+	if self._groupId2NameDict then
 		return
 	end
 
-	arg_4_0._groupId2NameDict = {}
+	self._groupId2NameDict = {}
 
-	for iter_4_0, iter_4_1 in ipairs(lua_monster_group.configList) do
-		local var_4_0 = string.splitToNumber(iter_4_1.monster, "#")
-		local var_4_1 = lua_monster.configDict[var_4_0[1]]
+	for _, co in ipairs(lua_monster_group.configList) do
+		local monsterIds = string.splitToNumber(co.monster, "#")
+		local monsterCO = lua_monster.configDict[monsterIds[1]]
 
-		for iter_4_2 = 2, #var_4_0 do
-			if tabletool.indexOf(string.splitToNumber(iter_4_1.bossId, "#"), var_4_0[iter_4_2]) then
-				var_4_1 = lua_monster.configDict[var_4_0[iter_4_2]]
+		for i = 2, #monsterIds do
+			if tabletool.indexOf(string.splitToNumber(co.bossId, "#"), monsterIds[i]) then
+				monsterCO = lua_monster.configDict[monsterIds[i]]
 
 				break
 			end
 		end
 
-		arg_4_0._groupId2NameDict[iter_4_1.id] = var_4_1 and var_4_1.name
+		self._groupId2NameDict[co.id] = monsterCO and monsterCO.name
 	end
 end
 
-function var_0_0.addSelect(arg_5_0, arg_5_1)
-	local var_5_0 = tabletool.indexOf(arg_5_0._selectList, arg_5_1)
+function SkillEditorToolAutoPlaySkillModel:addSelect(mo)
+	local existIndex = tabletool.indexOf(self._selectList, mo)
 
-	if var_5_0 then
-		arg_5_0._list[var_5_0] = arg_5_1
+	if existIndex then
+		self._list[existIndex] = mo
 	else
-		table.insert(arg_5_0._selectList, arg_5_1)
+		table.insert(self._selectList, mo)
 	end
 end
 
-function var_0_0.removeSelect(arg_6_0, arg_6_1)
-	tabletool.removeValue(arg_6_0._selectList, arg_6_1)
+function SkillEditorToolAutoPlaySkillModel:removeSelect(mo)
+	tabletool.removeValue(self._selectList, mo)
 end
 
-function var_0_0.getSelectList(arg_7_0)
-	return arg_7_0._selectList
+function SkillEditorToolAutoPlaySkillModel:getSelectList()
+	return self._selectList
 end
 
-var_0_0.instance = var_0_0.New()
+SkillEditorToolAutoPlaySkillModel.instance = SkillEditorToolAutoPlaySkillModel.New()
 
-return var_0_0
+return SkillEditorToolAutoPlaySkillModel

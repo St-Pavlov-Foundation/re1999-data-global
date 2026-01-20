@@ -1,10 +1,12 @@
-﻿module("modules.logic.fight.system.work.FightWorkAverageLife", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkAverageLife.lua
 
-local var_0_0 = class("FightWorkAverageLife", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkAverageLife", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0:com_sendFightEvent(FightEvent.OnCurrentHpChange, arg_1_0.actEffectData.targetId)
-	arg_1_0:onDone(true)
+local FightWorkAverageLife = class("FightWorkAverageLife", FightEffectBase)
+
+function FightWorkAverageLife:onStart()
+	self:com_sendFightEvent(FightEvent.OnCurrentHpChange, self.actEffectData.targetId)
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkAverageLife

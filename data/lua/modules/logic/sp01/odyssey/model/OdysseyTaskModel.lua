@@ -1,347 +1,355 @@
-﻿module("modules.logic.sp01.odyssey.model.OdysseyTaskModel", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/model/OdysseyTaskModel.lua
 
-local var_0_0 = class("OdysseyTaskModel", ListScrollModel)
+module("modules.logic.sp01.odyssey.model.OdysseyTaskModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0.tempTaskModel = BaseModel.New()
-	arg_1_0.ColumnCount = 1
-	arg_1_0.OpenAnimTime = 0.06
-	arg_1_0.OpenAnimStartTime = 0
-	arg_1_0.AnimRowCount = 6
+local OdysseyTaskModel = class("OdysseyTaskModel", ListScrollModel)
 
-	arg_1_0:reInit()
+function OdysseyTaskModel:onInit()
+	self.tempTaskModel = BaseModel.New()
+	self.ColumnCount = 1
+	self.OpenAnimTime = 0.06
+	self.OpenAnimStartTime = 0
+	self.AnimRowCount = 6
+
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0.tempTaskModel:clear()
-	var_0_0.super.clear(arg_2_0)
+function OdysseyTaskModel:reInit()
+	self.tempTaskModel:clear()
+	OdysseyTaskModel.super.clear(self)
 
-	arg_2_0._itemStartAnimTime = nil
-	arg_2_0.reddotShowMap = {}
-	arg_2_0.levelRewardTaskMap = {}
-	arg_2_0.normalTaskMap = {}
-	arg_2_0.levelRewardTaskList = {}
-	arg_2_0.normalTaskList = {}
-	arg_2_0.bigRewardTaskMo = nil
+	self._itemStartAnimTime = nil
+	self.reddotShowMap = {}
+	self.levelRewardTaskMap = {}
+	self.normalTaskMap = {}
+	self.levelRewardTaskList = {}
+	self.normalTaskList = {}
+	self.bigRewardTaskMo = nil
 end
 
-function var_0_0.setTaskInfoList(arg_3_0)
-	local var_3_0 = {}
+function OdysseyTaskModel:setTaskInfoList()
+	local list = {}
 
-	arg_3_0.levelRewardTaskMap = {}
-	arg_3_0.normalTaskMap = {}
+	self.levelRewardTaskMap = {}
+	self.normalTaskMap = {}
 
-	local var_3_1 = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Odyssey)
+	local taskMoDict = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Odyssey)
 
-	for iter_3_0, iter_3_1 in pairs(var_3_1) do
-		if not iter_3_1.config then
-			local var_3_2 = OdysseyConfig.instance:getTaskConfig(iter_3_1.id)
+	for taskId, taskMo in pairs(taskMoDict) do
+		if not taskMo.config then
+			local config = OdysseyConfig.instance:getTaskConfig(taskMo.id)
 
-			if not var_3_2 then
-				logError("奥德赛任务配置表id不存在,请检查: " .. tostring(iter_3_1.id))
+			if not config then
+				logError("奥德赛任务配置表id不存在,请检查: " .. tostring(taskMo.id))
 			end
 
-			iter_3_1:init(iter_3_1, var_3_2)
+			taskMo:init(taskMo, config)
 		end
 
-		table.insert(var_3_0, iter_3_1)
+		table.insert(list, taskMo)
 	end
 
-	arg_3_0.tempTaskModel:setList(var_3_0)
+	self.tempTaskModel:setList(list)
 
-	for iter_3_2, iter_3_3 in ipairs(arg_3_0.tempTaskModel:getList()) do
-		arg_3_0:initTaskMap(iter_3_3)
+	for _, taskMo in ipairs(self.tempTaskModel:getList()) do
+		self:initTaskMap(taskMo)
 	end
 
-	arg_3_0:initTaskList()
-	arg_3_0:sortList()
-	arg_3_0:checkRedDot()
+	self:initTaskList()
+	self:sortList()
+	self:checkRedDot()
 end
 
-function var_0_0.initTaskMap(arg_4_0, arg_4_1)
-	if arg_4_1.config.taskGroupId == OdysseyEnum.TaskGroupType.LevelReward then
-		arg_4_0.levelRewardTaskMap[arg_4_1.id] = arg_4_1
-	elseif OdysseyEnum.NormalTaskGroupType[arg_4_1.config.taskGroupId] then
-		if not arg_4_0.normalTaskMap[arg_4_1.config.taskGroupId] then
-			local var_4_0 = {}
+function OdysseyTaskModel:initTaskMap(taskMo)
+	if taskMo.config.taskGroupId == OdysseyEnum.TaskGroupType.LevelReward then
+		self.levelRewardTaskMap[taskMo.id] = taskMo
+	elseif OdysseyEnum.NormalTaskGroupType[taskMo.config.taskGroupId] then
+		local taskTypeList = self.normalTaskMap[taskMo.config.taskGroupId]
 
-			arg_4_0.normalTaskMap[arg_4_1.config.taskGroupId] = var_4_0
+		if not taskTypeList then
+			taskTypeList = {}
+			self.normalTaskMap[taskMo.config.taskGroupId] = taskTypeList
 		end
 
-		arg_4_0.normalTaskMap[arg_4_1.config.taskGroupId][arg_4_1.id] = arg_4_1
-	elseif arg_4_1.config.taskGroupId == 0 and arg_4_1.config.isKeyReward == 1 then
-		arg_4_0.bigRewardTaskMo = arg_4_1
-	end
-end
-
-function var_0_0.initTaskList(arg_5_0)
-	arg_5_0.levelRewardTaskList = {}
-
-	for iter_5_0, iter_5_1 in pairs(arg_5_0.levelRewardTaskMap) do
-		table.insert(arg_5_0.levelRewardTaskList, iter_5_1)
-	end
-
-	arg_5_0.normalTaskList = {}
-
-	for iter_5_2, iter_5_3 in pairs(arg_5_0.normalTaskMap) do
-		arg_5_0.normalTaskList[iter_5_2] = {}
-
-		for iter_5_4, iter_5_5 in pairs(iter_5_3) do
-			table.insert(arg_5_0.normalTaskList[iter_5_2], iter_5_5)
-		end
+		self.normalTaskMap[taskMo.config.taskGroupId][taskMo.id] = taskMo
+	elseif taskMo.config.taskGroupId == 0 and taskMo.config.isKeyReward == 1 then
+		self.bigRewardTaskMo = taskMo
 	end
 end
 
-function var_0_0.sortList(arg_6_0)
-	if #arg_6_0.levelRewardTaskList > 0 then
-		table.sort(arg_6_0.levelRewardTaskList, var_0_0.levelRewardTaskSortFunc)
+function OdysseyTaskModel:initTaskList()
+	self.levelRewardTaskList = {}
+
+	for _, taskMo in pairs(self.levelRewardTaskMap) do
+		table.insert(self.levelRewardTaskList, taskMo)
 	end
 
-	if tabletool.len(arg_6_0.normalTaskList) > 0 then
-		for iter_6_0, iter_6_1 in pairs(arg_6_0.normalTaskList) do
-			table.sort(iter_6_1, var_0_0.taskSortFunc)
+	self.normalTaskList = {}
+
+	for typeGroupdId, taskList in pairs(self.normalTaskMap) do
+		self.normalTaskList[typeGroupdId] = {}
+
+		for taskId, taskMO in pairs(taskList) do
+			table.insert(self.normalTaskList[typeGroupdId], taskMO)
 		end
 	end
 end
 
-function var_0_0.levelRewardTaskSortFunc(arg_7_0, arg_7_1)
-	return arg_7_0.config.maxProgress < arg_7_1.config.maxProgress
+function OdysseyTaskModel:sortList()
+	if #self.levelRewardTaskList > 0 then
+		table.sort(self.levelRewardTaskList, OdysseyTaskModel.levelRewardTaskSortFunc)
+	end
+
+	if tabletool.len(self.normalTaskList) > 0 then
+		for _, taskList in pairs(self.normalTaskList) do
+			table.sort(taskList, OdysseyTaskModel.taskSortFunc)
+		end
+	end
 end
 
-function var_0_0.taskSortFunc(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0.finishCount > 0 and arg_8_0.progress >= arg_8_0.config.maxProgress and 3 or arg_8_0.hasFinished and 1 or 2
-	local var_8_1 = arg_8_1.finishCount > 0 and arg_8_1.progress >= arg_8_1.config.maxProgress and 3 or arg_8_1.hasFinished and 1 or 2
+function OdysseyTaskModel.levelRewardTaskSortFunc(a, b)
+	return a.config.maxProgress < b.config.maxProgress
+end
 
-	if var_8_0 ~= var_8_1 then
-		return var_8_0 < var_8_1
+function OdysseyTaskModel.taskSortFunc(a, b)
+	local aValue = a.finishCount > 0 and a.progress >= a.config.maxProgress and 3 or a.hasFinished and 1 or 2
+	local bValue = b.finishCount > 0 and b.progress >= b.config.maxProgress and 3 or b.hasFinished and 1 or 2
+
+	if aValue ~= bValue then
+		return aValue < bValue
 	else
-		return arg_8_0.config.id < arg_8_1.config.id
+		return a.config.id < b.config.id
 	end
 end
 
-function var_0_0.updateTaskInfo(arg_9_0, arg_9_1)
-	local var_9_0 = false
+function OdysseyTaskModel:updateTaskInfo(taskInfoList)
+	local isChange = false
 
-	if GameUtil.getTabLen(arg_9_0.tempTaskModel:getList()) == 0 then
+	if GameUtil.getTabLen(self.tempTaskModel:getList()) == 0 then
 		return
 	end
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_1) do
-		if iter_9_1.type == TaskEnum.TaskType.Odyssey then
-			local var_9_1 = arg_9_0.tempTaskModel:getById(iter_9_1.id)
+	for _, info in ipairs(taskInfoList) do
+		if info.type == TaskEnum.TaskType.Odyssey then
+			local mo = self.tempTaskModel:getById(info.id)
 
-			if not var_9_1 then
-				local var_9_2 = OdysseyConfig.instance:getTaskConfig(iter_9_1.id)
+			if not mo then
+				local config = OdysseyConfig.instance:getTaskConfig(info.id)
 
-				if var_9_2 then
-					var_9_1 = TaskMo.New()
+				if config then
+					mo = TaskMo.New()
 
-					var_9_1:init(iter_9_1, var_9_2)
-					arg_9_0.tempTaskModel:addAtLast(var_9_1)
-					arg_9_0:initTaskMap(var_9_1)
+					mo:init(info, config)
+					self.tempTaskModel:addAtLast(mo)
+					self:initTaskMap(mo)
 				else
-					logError("奥德赛任务配置表id不存在,请检查: " .. tostring(iter_9_1.id))
+					logError("奥德赛任务配置表id不存在,请检查: " .. tostring(info.id))
 				end
 			else
-				var_9_1:update(iter_9_1)
+				mo:update(info)
 			end
 
-			arg_9_0:initTaskMap(var_9_1)
+			self:initTaskMap(mo)
 
-			var_9_0 = true
+			isChange = true
 		end
 	end
 
-	if var_9_0 then
-		arg_9_0:initTaskList()
-		arg_9_0:sortList()
-		arg_9_0:checkRedDot()
+	if isChange then
+		self:initTaskList()
+		self:sortList()
+		self:checkRedDot()
 	end
 
-	return var_9_0
+	return isChange
 end
 
-function var_0_0.checkRedDot(arg_10_0)
-	if tabletool.len(arg_10_0.levelRewardTaskList) > 0 then
-		local var_10_0 = arg_10_0:getTaskItemCanGetCount(arg_10_0.levelRewardTaskList)
+function OdysseyTaskModel:checkRedDot()
+	if tabletool.len(self.levelRewardTaskList) > 0 then
+		local cangetCount = self:getTaskItemCanGetCount(self.levelRewardTaskList)
 
-		arg_10_0.reddotShowMap[OdysseyEnum.TaskType.LevelReward] = var_10_0 > 0
+		self.reddotShowMap[OdysseyEnum.TaskType.LevelReward] = cangetCount > 0
 	end
 
-	if tabletool.len(arg_10_0.normalTaskList) > 0 then
-		arg_10_0.reddotShowMap[OdysseyEnum.TaskType.NormalTask] = {}
+	if tabletool.len(self.normalTaskList) > 0 then
+		self.reddotShowMap[OdysseyEnum.TaskType.NormalTask] = {}
 
-		for iter_10_0, iter_10_1 in pairs(arg_10_0.normalTaskList) do
-			local var_10_1 = arg_10_0:getTaskItemCanGetCount(iter_10_1)
+		for typeGroupdId, taskList in pairs(self.normalTaskList) do
+			local cangetCount = self:getTaskItemCanGetCount(taskList)
 
-			arg_10_0.reddotShowMap[OdysseyEnum.TaskType.NormalTask][iter_10_0] = var_10_1 > 0
+			self.reddotShowMap[OdysseyEnum.TaskType.NormalTask][typeGroupdId] = cangetCount > 0
 		end
 	end
 end
 
-function var_0_0.canShowReddot(arg_11_0, arg_11_1, arg_11_2)
-	if arg_11_1 == OdysseyEnum.TaskType.LevelReward then
-		return arg_11_0.reddotShowMap[arg_11_1]
+function OdysseyTaskModel:canShowReddot(taskType, groupTypeId)
+	if taskType == OdysseyEnum.TaskType.LevelReward then
+		return self.reddotShowMap[taskType]
 	else
-		return arg_11_0.reddotShowMap[arg_11_1][arg_11_2]
+		return self.reddotShowMap[taskType][groupTypeId]
 	end
 end
 
-function var_0_0.setCurSelectTaskTypeAndGroupId(arg_12_0, arg_12_1, arg_12_2)
-	arg_12_0.curTaskType = arg_12_1
-	arg_12_0.curSelectGroupTypeId = arg_12_2
+function OdysseyTaskModel:setCurSelectTaskTypeAndGroupId(taskType, groupTypeId)
+	self.curTaskType = taskType
+	self.curSelectGroupTypeId = groupTypeId
 end
 
-function var_0_0.getCurSelectTaskTypeAndGroupId(arg_13_0)
-	return arg_13_0.curTaskType, arg_13_0.curSelectGroupTypeId
+function OdysseyTaskModel:getCurSelectTaskTypeAndGroupId()
+	return self.curTaskType, self.curSelectGroupTypeId
 end
 
-function var_0_0.refreshList(arg_14_0)
-	local var_14_0 = arg_14_0:getCurTaskList(arg_14_0.curTaskType) or {}
+function OdysseyTaskModel:refreshList()
+	local curTaskList = self:getCurTaskList(self.curTaskType) or {}
 
-	if not var_14_0 or #var_14_0 == 0 then
+	if not curTaskList or #curTaskList == 0 then
 		return
 	end
 
-	local var_14_1 = tabletool.copy(var_14_0)
+	local list = tabletool.copy(curTaskList)
 
-	if arg_14_0.curTaskType == OdysseyEnum.TaskType.NormalTask and arg_14_0:getTaskItemCanGetCount(var_14_1) > 1 then
-		table.insert(var_14_1, 1, {
-			id = 0,
-			canGetAll = true
-		})
+	if self.curTaskType == OdysseyEnum.TaskType.NormalTask then
+		local rewardCount = self:getTaskItemCanGetCount(list)
+
+		if rewardCount > 1 then
+			table.insert(list, 1, {
+				id = 0,
+				canGetAll = true
+			})
+		end
 	end
 
-	arg_14_0:setList(var_14_1)
-	arg_14_0:checkRedDot()
+	self:setList(list)
+	self:checkRedDot()
 	OdysseyController.instance:dispatchEvent(OdysseyEvent.OdysseyTaskRefresh)
 end
 
-function var_0_0.getCurTaskList(arg_15_0, arg_15_1)
-	local var_15_0 = {}
+function OdysseyTaskModel:getCurTaskList(type)
+	local list = {}
 
-	if arg_15_1 == OdysseyEnum.TaskType.LevelReward then
-		var_15_0 = arg_15_0.levelRewardTaskList
-	elseif arg_15_1 == OdysseyEnum.TaskType.NormalTask then
-		var_15_0 = arg_15_0.normalTaskList[arg_15_0.curSelectGroupTypeId]
+	if type == OdysseyEnum.TaskType.LevelReward then
+		list = self.levelRewardTaskList
+	elseif type == OdysseyEnum.TaskType.NormalTask then
+		list = self.normalTaskList[self.curSelectGroupTypeId]
 	end
 
-	return var_15_0
+	return list
 end
 
-function var_0_0.getTaskItemCanGetCount(arg_16_0, arg_16_1)
-	local var_16_0 = 0
+function OdysseyTaskModel:getTaskItemCanGetCount(list)
+	local count = 0
 
-	for iter_16_0, iter_16_1 in pairs(arg_16_1) do
-		if iter_16_1.progress >= iter_16_1.config.maxProgress and iter_16_1.finishCount == 0 then
-			var_16_0 = var_16_0 + 1
+	for _, taskMo in pairs(list) do
+		if taskMo.progress >= taskMo.config.maxProgress and taskMo.finishCount == 0 then
+			count = count + 1
 		end
 	end
 
-	return var_16_0
+	return count
 end
 
-function var_0_0.isTaskHasGet(arg_17_0, arg_17_1)
-	return arg_17_1.finishCount > 0 and arg_17_1.progress >= arg_17_1.config.maxProgress
+function OdysseyTaskModel:isTaskHasGet(taskMo)
+	return taskMo.finishCount > 0 and taskMo.progress >= taskMo.config.maxProgress
 end
 
-function var_0_0.isTaskCanGet(arg_18_0, arg_18_1)
-	return arg_18_1.hasFinished
+function OdysseyTaskModel:isTaskCanGet(taskMo)
+	return taskMo.hasFinished
 end
 
-function var_0_0.getAllCanGetMoList(arg_19_0, arg_19_1)
-	local var_19_0 = {}
-	local var_19_1 = arg_19_1 or arg_19_0.curTaskType
-	local var_19_2 = arg_19_0:getCurTaskList(var_19_1)
+function OdysseyTaskModel:getAllCanGetMoList(type)
+	local taskMoList = {}
+	local curType = type or self.curTaskType
+	local taskList = self:getCurTaskList(curType)
 
-	for iter_19_0, iter_19_1 in ipairs(var_19_2) do
-		if arg_19_0:isTaskCanGet(iter_19_1) then
-			table.insert(var_19_0, iter_19_1)
+	for index, taskMo in ipairs(taskList) do
+		if self:isTaskCanGet(taskMo) then
+			table.insert(taskMoList, taskMo)
 		end
 	end
 
-	return var_19_0
+	return taskMoList
 end
 
-function var_0_0.getAllCanGetIdList(arg_20_0, arg_20_1)
-	local var_20_0 = {}
-	local var_20_1 = arg_20_1 or arg_20_0.curTaskType
-	local var_20_2 = arg_20_0:getAllCanGetMoList(var_20_1)
+function OdysseyTaskModel:getAllCanGetIdList(type)
+	local taskIdList = {}
+	local curType = type or self.curTaskType
+	local taskMoList = self:getAllCanGetMoList(curType)
 
-	for iter_20_0, iter_20_1 in ipairs(var_20_2) do
-		table.insert(var_20_0, iter_20_1.id)
+	for index, taskMo in ipairs(taskMoList) do
+		table.insert(taskIdList, taskMo.id)
 	end
 
-	return var_20_0
+	return taskIdList
 end
 
-function var_0_0.getBigRewardTaskMo(arg_21_0)
-	return arg_21_0.bigRewardTaskMo
+function OdysseyTaskModel:getBigRewardTaskMo()
+	return self.bigRewardTaskMo
 end
 
-function var_0_0.checkHasLevelReawrdTaskCanGet(arg_22_0)
-	return arg_22_0:canShowReddot(OdysseyEnum.TaskType.LevelReward)
+function OdysseyTaskModel:checkHasLevelReawrdTaskCanGet()
+	return self:canShowReddot(OdysseyEnum.TaskType.LevelReward)
 end
 
-function var_0_0.checkHasNormalTaskCanGet(arg_23_0)
-	local var_23_0 = arg_23_0.reddotShowMap[OdysseyEnum.TaskType.NormalTask] or {}
-	local var_23_1 = false
+function OdysseyTaskModel:checkHasNormalTaskCanGet()
+	local reddotShowMap = self.reddotShowMap[OdysseyEnum.TaskType.NormalTask] or {}
+	local hasCanGetReward = false
 
-	for iter_23_0, iter_23_1 in pairs(var_23_0) do
-		if iter_23_1 then
-			var_23_1 = true
+	for _, isCanGet in pairs(reddotShowMap) do
+		if isCanGet then
+			hasCanGetReward = true
 
 			break
 		end
 	end
 
-	local var_23_2 = arg_23_0.bigRewardTaskMo and arg_23_0:isTaskCanGet(arg_23_0.bigRewardTaskMo)
+	local hasBigRewardCanGet = self.bigRewardTaskMo and self:isTaskCanGet(self.bigRewardTaskMo)
 
-	return var_23_1 or var_23_2
+	return hasCanGetReward or hasBigRewardCanGet
 end
 
-function var_0_0.getNormalTaskListByGroupType(arg_24_0, arg_24_1)
-	return arg_24_0.normalTaskList[arg_24_1]
+function OdysseyTaskModel:getNormalTaskListByGroupType(groupType)
+	return self.normalTaskList[groupType]
 end
 
-function var_0_0.getTaskItemRewardCount(arg_25_0, arg_25_1)
-	local var_25_0 = 0
+function OdysseyTaskModel:getTaskItemRewardCount(list)
+	local count = 0
 
-	for iter_25_0, iter_25_1 in ipairs(arg_25_1) do
-		if iter_25_1.progress >= iter_25_1.config.maxProgress then
-			var_25_0 = var_25_0 + 1
+	for _, taskMo in ipairs(list) do
+		if taskMo.progress >= taskMo.config.maxProgress then
+			count = count + 1
 		end
 	end
 
-	return var_25_0
+	return count
 end
 
-function var_0_0.getDelayPlayTime(arg_26_0, arg_26_1)
-	if arg_26_1 == nil then
+function OdysseyTaskModel:getDelayPlayTime(mo)
+	if mo == nil then
 		return -1
 	end
 
-	local var_26_0 = Time.time
+	local curTime = Time.time
 
-	if arg_26_0._itemStartAnimTime == nil then
-		arg_26_0._itemStartAnimTime = var_26_0 + arg_26_0.OpenAnimStartTime
+	if self._itemStartAnimTime == nil then
+		self._itemStartAnimTime = curTime + self.OpenAnimStartTime
 	end
 
-	local var_26_1 = arg_26_0:getIndex(arg_26_1)
+	local index = self:getIndex(mo)
 
-	if not var_26_1 or var_26_1 > arg_26_0.AnimRowCount * arg_26_0.ColumnCount then
+	if not index or index > self.AnimRowCount * self.ColumnCount then
 		return -1
 	end
 
-	local var_26_2 = math.floor((var_26_1 - 1) / arg_26_0.ColumnCount) * arg_26_0.OpenAnimTime + arg_26_0.OpenAnimStartTime
+	local delayTime = math.floor((index - 1) / self.ColumnCount) * self.OpenAnimTime + self.OpenAnimStartTime
+	local passTime = curTime - self._itemStartAnimTime
 
-	if var_26_0 - arg_26_0._itemStartAnimTime - var_26_2 > 0.1 then
+	if passTime - delayTime > 0.1 then
 		return -1
 	else
-		return var_26_2
+		return delayTime
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+OdysseyTaskModel.instance = OdysseyTaskModel.New()
 
-return var_0_0
+return OdysseyTaskModel

@@ -1,81 +1,84 @@
-﻿module("modules.logic.fight.entity.comp.skill.FightTLEventAtkSpineLookDir", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skill/FightTLEventAtkSpineLookDir.lua
 
-local var_0_0 = class("FightTLEventAtkSpineLookDir", FightTimelineTrackItem)
+module("modules.logic.fight.entity.comp.skill.FightTLEventAtkSpineLookDir", package.seeall)
 
-function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = string.nilorempty(arg_1_3[2]) and "1" or arg_1_3[2]
-	local var_1_1 = arg_1_3[3] == "1"
-	local var_1_2 = arg_1_0._getEntitys(arg_1_1, var_1_0)
-	local var_1_3 = FightHelper.getEntity(arg_1_1.fromId).spine:getLookDir()
+local FightTLEventAtkSpineLookDir = class("FightTLEventAtkSpineLookDir", FightTimelineTrackItem)
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_2) do
-		if var_1_1 then
-			local var_1_4 = iter_1_1:getMO()
-			local var_1_5 = FightHelper.getEntitySpineLookDir(var_1_4)
+function FightTLEventAtkSpineLookDir:onTrackStart(fightStepData, duration, paramsArr)
+	local selectEntityType = string.nilorempty(paramsArr[2]) and "1" or paramsArr[2]
+	local revertDir = paramsArr[3] == "1"
+	local entitys = self._getEntitys(fightStepData, selectEntityType)
+	local attacker = FightHelper.getEntity(fightStepData.fromId)
+	local atkLookDir = attacker.spine:getLookDir()
 
-			if iter_1_1.spine then
-				iter_1_1.spine:changeLookDir(var_1_5)
+	for _, entity in ipairs(entitys) do
+		if revertDir then
+			local entityMO = entity:getMO()
+			local lookDir = FightHelper.getEntitySpineLookDir(entityMO)
+
+			if entity.spine then
+				entity.spine:changeLookDir(lookDir)
 			end
 		else
-			local var_1_6 = iter_1_1.spine:getLookDir()
-			local var_1_7 = var_1_6
+			local oldLookDir = entity.spine:getLookDir()
+			local newLookDir = oldLookDir
 
-			if arg_1_3[1] == "1" then
-				var_1_7 = 1
-			elseif arg_1_3[1] == "2" then
-				var_1_7 = -1
-			elseif arg_1_3[1] == "3" then
-				var_1_7 = var_1_3
-			elseif arg_1_3[1] == "4" then
-				var_1_7 = -var_1_3
+			if paramsArr[1] == "1" then
+				newLookDir = 1
+			elseif paramsArr[1] == "2" then
+				newLookDir = -1
+			elseif paramsArr[1] == "3" then
+				newLookDir = atkLookDir
+			elseif paramsArr[1] == "4" then
+				newLookDir = -atkLookDir
 			end
 
-			if var_1_7 ~= var_1_6 then
-				iter_1_1.spine:changeLookDir(var_1_7)
+			if newLookDir ~= oldLookDir then
+				entity.spine:changeLookDir(newLookDir)
 			end
 		end
 	end
 end
 
-function var_0_0._getEntitys(arg_2_0, arg_2_1)
-	local var_2_0 = {}
-	local var_2_1 = FightHelper.getEntity(arg_2_0.fromId)
-	local var_2_2 = FightHelper.getEntity(arg_2_0.toId)
+function FightTLEventAtkSpineLookDir._getEntitys(fightStepData, selectEntityType)
+	local entitys = {}
+	local attacker = FightHelper.getEntity(fightStepData.fromId)
+	local defender = FightHelper.getEntity(fightStepData.toId)
 
-	if arg_2_1 == "1" then
-		table.insert(var_2_0, var_2_1)
-	elseif arg_2_1 == "2" then
-		local var_2_3 = {}
+	if selectEntityType == "1" then
+		table.insert(entitys, attacker)
+	elseif selectEntityType == "2" then
+		local dict = {}
 
-		for iter_2_0, iter_2_1 in ipairs(arg_2_0.actEffect) do
-			local var_2_4 = FightHelper.getEntity(iter_2_1.targetId)
+		for _, actEffectData in ipairs(fightStepData.actEffect) do
+			local targetEntity = FightHelper.getEntity(actEffectData.targetId)
 
-			if var_2_4 and var_2_4:getSide() ~= var_2_1:getSide() and not var_2_3[iter_2_1.targetId] then
-				table.insert(var_2_0, var_2_4)
+			if targetEntity and targetEntity:getSide() ~= attacker:getSide() and not dict[actEffectData.targetId] then
+				table.insert(entitys, targetEntity)
 
-				var_2_3[iter_2_1.targetId] = true
+				dict[actEffectData.targetId] = true
 			end
 		end
-	elseif arg_2_1 == "3" then
-		var_2_0 = FightHelper.getSideEntitys(var_2_1:getSide(), false)
-	elseif arg_2_1 == "4" then
-		var_2_0 = FightHelper.getSideEntitys(var_2_2:getSide(), false)
-	elseif arg_2_1 == "5" then
-		local var_2_5 = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, false)
-		local var_2_6 = FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide, false)
+	elseif selectEntityType == "3" then
+		entitys = FightHelper.getSideEntitys(attacker:getSide(), false)
+	elseif selectEntityType == "4" then
+		entitys = FightHelper.getSideEntitys(defender:getSide(), false)
+	elseif selectEntityType == "5" then
+		local my = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, false)
+		local enemy = FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide, false)
 
-		tabletool.addValues(var_2_0, var_2_5)
-		tabletool.addValues(var_2_0, var_2_6)
-	elseif arg_2_1 == "6" then
-		table.insert(var_2_0, var_2_2)
+		tabletool.addValues(entitys, my)
+		tabletool.addValues(entitys, enemy)
+	elseif selectEntityType == "6" then
+		table.insert(entitys, defender)
 	else
-		local var_2_7 = GameSceneMgr.instance:getCurScene().entityMgr
-		local var_2_8 = arg_2_0.stepUid .. "_" .. arg_2_1
+		local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+		local entityId = fightStepData.stepUid .. "_" .. selectEntityType
 
-		table.insert(var_2_0, var_2_7:getUnit(SceneTag.UnitNpc, var_2_8))
+		table.insert(entitys, entityMgr:getUnit(SceneTag.UnitNpc, entityId))
 	end
 
-	return var_2_0
+	return entitys
 end
 
-return var_0_0
+return FightTLEventAtkSpineLookDir

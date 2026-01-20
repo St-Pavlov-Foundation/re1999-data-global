@@ -1,88 +1,93 @@
-﻿module("modules.logic.room.controller.RoomBuildingFormulaController", package.seeall)
+﻿-- chunkname: @modules/logic/room/controller/RoomBuildingFormulaController.lua
 
-local var_0_0 = class("RoomBuildingFormulaController", BaseController)
+module("modules.logic.room.controller.RoomBuildingFormulaController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:clear()
+local RoomBuildingFormulaController = class("RoomBuildingFormulaController", BaseController)
+
+function RoomBuildingFormulaController:onInit()
+	self:clear()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clear()
+function RoomBuildingFormulaController:reInit()
+	self:clear()
 end
 
-function var_0_0.clear(arg_3_0)
+function RoomBuildingFormulaController:clear()
 	return
 end
 
-function var_0_0.addConstEvents(arg_4_0)
+function RoomBuildingFormulaController:addConstEvents()
 	return
 end
 
-function var_0_0.resetSelectFormulaStrId(arg_5_0)
+function RoomBuildingFormulaController:resetSelectFormulaStrId()
 	RoomFormulaListModel.instance:resetSelectFormulaStrId()
 end
 
-function var_0_0.setSelectFormulaStrId(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	if arg_6_0._waitingSelectFormulaParam then
+function RoomBuildingFormulaController:setSelectFormulaStrId(selectFormulaStrId, forceSet, treeLevel)
+	if self._waitingSelectFormulaParam then
 		return
 	end
 
-	local var_6_0 = RoomFormulaModel.instance:getFormulaMo(arg_6_1)
+	local formulaMo = RoomFormulaModel.instance:getFormulaMo(selectFormulaStrId)
 
-	if not var_6_0 then
+	if not formulaMo then
 		return
 	end
 
-	local var_6_1 = false
-	local var_6_2 = arg_6_1
+	local isCollapse = false
+	local newSelectFormulaStrId = selectFormulaStrId
+	local preFormulaStrId = RoomFormulaListModel.instance:getSelectFormulaStrId()
 
-	if arg_6_1 == RoomFormulaListModel.instance:getSelectFormulaStrId() and not arg_6_2 then
-		var_6_2 = var_6_0:getParentStrId()
-		var_6_1 = true
+	if selectFormulaStrId == preFormulaStrId and not forceSet then
+		local parentStrId = formulaMo:getParentStrId()
+
+		newSelectFormulaStrId = parentStrId
+		isCollapse = true
 	end
 
-	arg_6_0._waitingSelectFormulaParam = {
-		formulaStrId = var_6_2,
-		isCollapse = var_6_1,
-		treeLevel = arg_6_3
+	self._waitingSelectFormulaParam = {
+		formulaStrId = newSelectFormulaStrId,
+		isCollapse = isCollapse,
+		treeLevel = treeLevel
 	}
 
-	if arg_6_3 and arg_6_0:_checkTreeLevel(arg_6_3) then
-		RoomMapController.instance:dispatchEvent(RoomEvent.UIFormulaIdTreeLevelHideAnim, arg_6_3)
-		TaskDispatcher.runDelay(arg_6_0._onDelaySelectFormulaStrId, arg_6_0, RoomProductLineEnum.AnimTime.TreeAnim)
+	if treeLevel and self:_checkTreeLevel(treeLevel) then
+		RoomMapController.instance:dispatchEvent(RoomEvent.UIFormulaIdTreeLevelHideAnim, treeLevel)
+		TaskDispatcher.runDelay(self._onDelaySelectFormulaStrId, self, RoomProductLineEnum.AnimTime.TreeAnim)
 	else
-		arg_6_0:_onDelaySelectFormulaStrId()
+		self:_onDelaySelectFormulaStrId()
 	end
 end
 
-function var_0_0._onDelaySelectFormulaStrId(arg_7_0)
-	if arg_7_0._waitingSelectFormulaParam then
-		local var_7_0 = RoomFormulaListModel.instance:getSelectFormulaStrId()
-		local var_7_1 = arg_7_0._waitingSelectFormulaParam.formulaStrId
-		local var_7_2 = arg_7_0._waitingSelectFormulaParam.isCollapse
-		local var_7_3 = arg_7_0._waitingSelectFormulaParam.treeLevel
+function RoomBuildingFormulaController:_onDelaySelectFormulaStrId()
+	if self._waitingSelectFormulaParam then
+		local preFormulaStrId = RoomFormulaListModel.instance:getSelectFormulaStrId()
+		local newSelectFormulaStrId = self._waitingSelectFormulaParam.formulaStrId
+		local isCollapse = self._waitingSelectFormulaParam.isCollapse
+		local treeLevel = self._waitingSelectFormulaParam.treeLevel
 
-		arg_7_0._waitingSelectFormulaParam = nil
+		self._waitingSelectFormulaParam = nil
 
 		RoomFormulaListModel.instance:refreshRankDiff()
 
-		if var_7_3 and not arg_7_0:_checkTreeLevel(var_7_3) then
-			RoomMapController.instance:dispatchEvent(RoomEvent.UIFormulaIdTreeLevelShowAnim, var_7_3)
+		if treeLevel and not self:_checkTreeLevel(treeLevel) then
+			RoomMapController.instance:dispatchEvent(RoomEvent.UIFormulaIdTreeLevelShowAnim, treeLevel)
 		end
 
 		RoomMapController.instance:dispatchEvent(RoomEvent.UIFormulaIdTreeLevelMoveAnim)
-		RoomFormulaListModel.instance:setSelectFormulaStrId(var_7_1)
-		RoomMapController.instance:dispatchEvent(RoomEvent.SelectFormulaIdChanged, var_7_0, var_7_2)
+		RoomFormulaListModel.instance:setSelectFormulaStrId(newSelectFormulaStrId)
+		RoomMapController.instance:dispatchEvent(RoomEvent.SelectFormulaIdChanged, preFormulaStrId, isCollapse)
 	end
 end
 
-function var_0_0._checkTreeLevel(arg_8_0, arg_8_1)
-	local var_8_0 = RoomFormulaListModel.instance:getList()
+function RoomBuildingFormulaController:_checkTreeLevel(treeLevel)
+	local listLineMO = RoomFormulaListModel.instance:getList()
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_0) do
-		local var_8_1 = iter_8_1:getFormulaTreeLevel()
+	for _, lineMO in ipairs(listLineMO) do
+		local curTreeLevel = lineMO:getFormulaTreeLevel()
 
-		if var_8_1 and arg_8_1 < var_8_1 then
+		if curTreeLevel and treeLevel < curTreeLevel then
 			return true
 		end
 	end
@@ -90,6 +95,6 @@ function var_0_0._checkTreeLevel(arg_8_0, arg_8_1)
 	return false
 end
 
-var_0_0.instance = var_0_0.New()
+RoomBuildingFormulaController.instance = RoomBuildingFormulaController.New()
 
-return var_0_0
+return RoomBuildingFormulaController

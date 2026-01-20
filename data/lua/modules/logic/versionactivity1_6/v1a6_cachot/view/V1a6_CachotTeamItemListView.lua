@@ -1,157 +1,160 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotTeamItemListView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/view/V1a6_CachotTeamItemListView.lua
 
-local var_0_0 = class("V1a6_CachotTeamItemListView", BaseView)
+module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotTeamItemListView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gopresetcontent = gohelper.findChild(arg_1_0.viewGO, "#go_tipswindow/left/scroll_view/Viewport/#go_presetcontent")
-	arg_1_0._gopreparecontent = gohelper.findChild(arg_1_0.viewGO, "#go_tipswindow/right/scroll_view/Viewport/#go_preparecontent")
+local V1a6_CachotTeamItemListView = class("V1a6_CachotTeamItemListView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V1a6_CachotTeamItemListView:onInitView()
+	self._gopresetcontent = gohelper.findChild(self.viewGO, "#go_tipswindow/left/scroll_view/Viewport/#go_presetcontent")
+	self._gopreparecontent = gohelper.findChild(self.viewGO, "#go_tipswindow/right/scroll_view/Viewport/#go_preparecontent")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function V1a6_CachotTeamItemListView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function V1a6_CachotTeamItemListView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function V1a6_CachotTeamItemListView:_editableInitView()
 	return
 end
 
-function var_0_0._initPresetItemList(arg_5_0)
-	if arg_5_0._presetItemList then
+function V1a6_CachotTeamItemListView:_initPresetItemList()
+	if self._presetItemList then
 		return
 	end
 
-	arg_5_0._presetItemList = arg_5_0:getUserDataTb_()
+	self._presetItemList = self:getUserDataTb_()
 
-	local var_5_0 = arg_5_0.viewContainer:getSetting().otherRes[1]
+	local path = self.viewContainer:getSetting().otherRes[1]
 
-	for iter_5_0 = 1, V1a6_CachotEnum.HeroCountInGroup do
-		local var_5_1 = arg_5_0:getResInst(var_5_0, arg_5_0._gopresetcontent, "item" .. tostring(iter_5_0))
-		local var_5_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_5_1, V1a6_CachotTeamItem)
+	for i = 1, V1a6_CachotEnum.HeroCountInGroup do
+		local childGO = self:getResInst(path, self._gopresetcontent, "item" .. tostring(i))
+		local item = MonoHelper.addNoUpdateLuaComOnceToGo(childGO, V1a6_CachotTeamItem)
 
-		arg_5_0._presetItemList[iter_5_0] = var_5_2
+		self._presetItemList[i] = item
 
-		var_5_2:setInteractable(arg_5_0._isInitSelect)
-		var_5_2:setHpVisible(not arg_5_0._isInitSelect)
+		item:setInteractable(self._isInitSelect)
+		item:setHpVisible(not self._isInitSelect)
 	end
 end
 
-function var_0_0._initPrepareItemList(arg_6_0)
-	if arg_6_0._prepareItemList then
+function V1a6_CachotTeamItemListView:_initPrepareItemList()
+	if self._prepareItemList then
 		return
 	end
 
-	arg_6_0._prepareItemList = arg_6_0:getUserDataTb_()
+	self._prepareItemList = self:getUserDataTb_()
 
-	local var_6_0 = arg_6_0.viewContainer:getSetting().otherRes[2]
-	local var_6_1 = V1a6_CachotTeamModel.instance:getPrepareNum()
+	local path = self.viewContainer:getSetting().otherRes[2]
+	local num = V1a6_CachotTeamModel.instance:getPrepareNum()
 
-	for iter_6_0 = 1, 4 do
-		local var_6_2 = arg_6_0:getResInst(var_6_0, arg_6_0._gopreparecontent, "item" .. tostring(iter_6_0))
-		local var_6_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_6_2, V1a6_CachotTeamPrepareItem)
+	for i = 1, 4 do
+		local childGO = self:getResInst(path, self._gopreparecontent, "item" .. tostring(i))
+		local item = MonoHelper.addNoUpdateLuaComOnceToGo(childGO, V1a6_CachotTeamPrepareItem)
 
-		arg_6_0._prepareItemList[iter_6_0] = var_6_3
+		self._prepareItemList[i] = item
 
-		var_6_3:setInteractable(arg_6_0._isInitSelect and iter_6_0 <= var_6_1)
-		var_6_3:setHpVisible(not arg_6_0._isInitSelect)
+		item:setInteractable(self._isInitSelect and i <= num)
+		item:setHpVisible(not self._isInitSelect)
 
-		if var_6_1 < iter_6_0 then
-			var_6_3:showNone()
+		if num < i then
+			item:showNone()
 		end
 	end
 end
 
-function var_0_0._initParams(arg_7_0)
-	arg_7_0._isInitSelect = arg_7_0.viewParam and arg_7_0.viewParam.isInitSelect
+function V1a6_CachotTeamItemListView:_initParams()
+	self._isInitSelect = self.viewParam and self.viewParam.isInitSelect
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0:_initParams()
+function V1a6_CachotTeamItemListView:onOpen()
+	self:_initParams()
 
-	if arg_8_0._isInitSelect then
-		arg_8_0:_initModel()
+	if self._isInitSelect then
+		self:_initModel()
 	end
 
-	arg_8_0:_initPresetItemList()
-	arg_8_0:_initPrepareItemList()
-	arg_8_0:_updatePresetAndPrepare()
-	arg_8_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, arg_8_0._modifyHeroGroup, arg_8_0)
+	self:_initPresetItemList()
+	self:_initPrepareItemList()
+	self:_updatePresetAndPrepare()
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, self._modifyHeroGroup, self)
 end
 
-function var_0_0._modifyHeroGroup(arg_9_0)
-	arg_9_0._isModify = true
+function V1a6_CachotTeamItemListView:_modifyHeroGroup()
+	self._isModify = true
 
-	arg_9_0:_updatePresetAndPrepare()
+	self:_updatePresetAndPrepare()
 
-	arg_9_0._isModify = false
+	self._isModify = false
 end
 
-function var_0_0._updatePresetAndPrepare(arg_10_0)
+function V1a6_CachotTeamItemListView:_updatePresetAndPrepare()
 	V1a6_CachotTeamModel.instance:clearSeatInfos()
-	arg_10_0:_updatePresetItemList()
-	arg_10_0:_updatePrepareItemList()
+	self:_updatePresetItemList()
+	self:_updatePrepareItemList()
 end
 
-function var_0_0._initModel(arg_11_0)
-	local var_11_0 = V1a6_CachotTeamModel.instance:getPrepareNum()
-	local var_11_1, var_11_2 = V1a6_CachotModel.instance:getRogueStateInfo():getLastGroupInfo(var_11_0)
-	local var_11_3 = V1a6_CachotHeroGroupMO.New()
+function V1a6_CachotTeamItemListView:_initModel()
+	local num = V1a6_CachotTeamModel.instance:getPrepareNum()
+	local rogueStateInfo = V1a6_CachotModel.instance:getRogueStateInfo()
+	local heroList, equips = rogueStateInfo:getLastGroupInfo(num)
+	local groupMO = V1a6_CachotHeroGroupMO.New()
 
-	var_11_3:setMaxHeroCount(V1a6_CachotEnum.InitTeamMaxHeroCountInGroup)
+	groupMO:setMaxHeroCount(V1a6_CachotEnum.InitTeamMaxHeroCountInGroup)
 
-	local var_11_4 = 1
+	local curGroupId = 1
 
-	var_11_3:init({
-		groupId = var_11_4,
-		heroList = var_11_1,
-		equips = var_11_2
+	groupMO:init({
+		groupId = curGroupId,
+		heroList = heroList,
+		equips = equips
 	})
 	V1a6_CachotHeroSingleGroupModel.instance:setMaxHeroCount(V1a6_CachotEnum.InitTeamMaxHeroCountInGroup)
-	V1a6_CachotHeroSingleGroupModel.instance:setSingleGroup(var_11_3)
+	V1a6_CachotHeroSingleGroupModel.instance:setSingleGroup(groupMO)
 end
 
-function var_0_0._updatePresetItemList(arg_12_0)
-	for iter_12_0, iter_12_1 in ipairs(arg_12_0._presetItemList) do
-		local var_12_0 = V1a6_CachotHeroSingleGroupModel.instance:getById(iter_12_0)
+function V1a6_CachotTeamItemListView:_updatePresetItemList()
+	for i, item in ipairs(self._presetItemList) do
+		local mo = V1a6_CachotHeroSingleGroupModel.instance:getById(i)
 
-		V1a6_CachotTeamModel.instance:setSeatInfo(iter_12_0, V1a6_CachotTeamModel.instance:getInitSeatLevel(iter_12_0), var_12_0)
+		V1a6_CachotTeamModel.instance:setSeatInfo(i, V1a6_CachotTeamModel.instance:getInitSeatLevel(i), mo)
 
-		local var_12_1 = var_12_0:getHeroMO()
+		local heroMo = mo:getHeroMO()
 
-		if arg_12_0._isModify and var_12_1 and iter_12_1:getHeroMo() ~= var_12_1 then
-			iter_12_1:showSelectEffect()
+		if self._isModify and heroMo and item:getHeroMo() ~= heroMo then
+			item:showSelectEffect()
 		end
 
-		iter_12_1:onUpdateMO(var_12_0)
+		item:onUpdateMO(mo)
 	end
 end
 
-function var_0_0._updatePrepareItemList(arg_13_0)
-	for iter_13_0, iter_13_1 in ipairs(arg_13_0._prepareItemList) do
-		local var_13_0 = V1a6_CachotHeroSingleGroupModel.instance:getById(iter_13_0 + V1a6_CachotEnum.HeroCountInGroup)
-		local var_13_1 = var_13_0:getHeroMO()
+function V1a6_CachotTeamItemListView:_updatePrepareItemList()
+	for i, item in ipairs(self._prepareItemList) do
+		local mo = V1a6_CachotHeroSingleGroupModel.instance:getById(i + V1a6_CachotEnum.HeroCountInGroup)
+		local heroMo = mo:getHeroMO()
 
-		if arg_13_0._isModify and var_13_1 and iter_13_1:getHeroMo() ~= var_13_1 then
-			iter_13_1:showSelectEffect()
+		if self._isModify and heroMo and item:getHeroMo() ~= heroMo then
+			item:showSelectEffect()
 		end
 
-		iter_13_1:onUpdateMO(var_13_0)
+		item:onUpdateMO(mo)
 	end
 end
 
-function var_0_0.onClose(arg_14_0)
+function V1a6_CachotTeamItemListView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_15_0)
+function V1a6_CachotTeamItemListView:onDestroyView()
 	return
 end
 
-return var_0_0
+return V1a6_CachotTeamItemListView

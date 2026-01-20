@@ -1,191 +1,193 @@
-﻿module("modules.logic.act189.controller.Activity189Testing", package.seeall)
+﻿-- chunkname: @modules/logic/act189/controller/Activity189Testing.lua
 
-local var_0_0 = table.insert
-local var_0_1 = _G.class("TestingBase")
-local var_0_2 = TaskEnum.TaskType.Activity189
+module("modules.logic.act189.controller.Activity189Testing", package.seeall)
 
-function var_0_1.ctor(arg_1_0)
-	arg_1_0._pb = Activity189Module_pb
-	arg_1_0._cCfg = Activity189Config
-	arg_1_0._cTaskCfg = TaskConfig
-	arg_1_0._pbTask = TaskModule_pb
+local ti = table.insert
+local TestingBase = _G.class("TestingBase")
+local KTaskType = TaskEnum.TaskType.Activity189
+
+function TestingBase:ctor()
+	self._pb = Activity189Module_pb
+	self._cCfg = Activity189Config
+	self._cTaskCfg = TaskConfig
+	self._pbTask = TaskModule_pb
 end
 
-function var_0_1.build_test(arg_2_0)
+function TestingBase:build_test()
 	return
 end
 
-function var_0_1.link(arg_3_0, arg_3_1)
-	arg_3_0._obj = arg_3_1
+function TestingBase:link(obj)
+	self._obj = obj
 end
 
-local var_0_3 = 0
-local var_0_4 = 1
-local var_0_5 = "服务器异常"
-local var_0_6 = "returnCode: -2"
-local var_0_7 = _G.class("STesting", var_0_1)
+local STATE_NONE = 0
+local STATE_COMPLETED = 1
+local kErrMsgServer = "服务器异常"
+local kErrMsgClient = "returnCode: -2"
+local STesting = _G.class("STesting", TestingBase)
 
-function var_0_7.ctor(arg_4_0)
-	var_0_1.ctor(arg_4_0)
+function STesting:ctor()
+	TestingBase.ctor(self)
 
-	arg_4_0._taskInfoDict = {}
-	arg_4_0._taskActivityInfoDict = {}
+	self._taskInfoDict = {}
+	self._taskActivityInfoDict = {}
 end
 
-function var_0_7._make_taskInfos(arg_5_0, arg_5_1)
-	local var_5_0 = {}
+function STesting:_make_taskInfos(typeId)
+	local dict = {}
 
-	if arg_5_1 == var_0_2 then
-		for iter_5_0, iter_5_1 in ipairs(lua_activity189_task.configList) do
-			local var_5_1 = iter_5_1.id
-			local var_5_2 = iter_5_1.activityId
+	if typeId == KTaskType then
+		for _, CO in ipairs(lua_activity189_task.configList) do
+			local taskId = CO.id
+			local activityId = CO.activityId
 
-			var_5_0[var_5_2] = var_5_0[var_5_2] or {}
+			dict[activityId] = dict[activityId] or {}
 
-			if iter_5_1.isOnline then
-				var_5_0[var_5_2][var_5_1] = arg_5_0:_make_TaskInfo(var_5_1, arg_5_1)
+			if CO.isOnline then
+				dict[activityId][taskId] = self:_make_TaskInfo(taskId, typeId)
 			end
 		end
 	else
-		assert(false, "please init task type: " .. arg_5_1)
+		assert(false, "please init task type: " .. typeId)
 	end
 
-	return var_5_0
+	return dict
 end
 
-function var_0_7._make_TaskActivityInfo(arg_6_0, arg_6_1)
+function STesting:_make_TaskActivityInfo(typeId)
 	return {
 		defineId = 0,
 		expiryTime = 0,
 		value = 0,
 		gainValue = 0,
-		typeId = arg_6_1
+		typeId = typeId
 	}
 end
 
-function var_0_7.handleGetTaskInfoReply(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = arg_7_1.typeIds
-	local var_7_1 = {}
-	local var_7_2 = {}
+function STesting:handleGetTaskInfoReply(req, reply)
+	local typeIds = req.typeIds
+	local taskInfo = {}
+	local activityInfo = {}
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-		if not arg_7_0._taskInfoDict[iter_7_1] then
-			arg_7_0._taskInfoDict[iter_7_1] = arg_7_0:_make_taskInfos(iter_7_1)
+	for _, typeId in ipairs(typeIds) do
+		if not self._taskInfoDict[typeId] then
+			self._taskInfoDict[typeId] = self:_make_taskInfos(typeId)
 		end
 
-		if not arg_7_0._taskActivityInfoDict[iter_7_1] then
-			arg_7_0._taskActivityInfoDict[iter_7_1] = arg_7_0:_make_TaskActivityInfo(iter_7_1)
+		if not self._taskActivityInfoDict[typeId] then
+			self._taskActivityInfoDict[typeId] = self:_make_TaskActivityInfo(typeId)
 		end
 
-		for iter_7_2, iter_7_3 in pairs(arg_7_0._taskInfoDict[iter_7_1]) do
-			for iter_7_4, iter_7_5 in pairs(iter_7_3) do
-				var_0_0(var_7_1, iter_7_5)
+		for actId, actTable in pairs(self._taskInfoDict[typeId]) do
+			for taskId, info in pairs(actTable) do
+				ti(taskInfo, info)
 			end
 		end
 
-		var_0_0(var_7_2, arg_7_0._taskActivityInfoDict[iter_7_1])
+		ti(activityInfo, self._taskActivityInfoDict[typeId])
 	end
 
-	rawset(arg_7_2, "taskInfo", var_7_1)
-	rawset(arg_7_2, "activityInfo", var_7_2)
-	rawset(arg_7_2, "typeIds", var_7_0)
+	rawset(reply, "taskInfo", taskInfo)
+	rawset(reply, "activityInfo", activityInfo)
+	rawset(reply, "typeIds", typeIds)
 end
 
-function var_0_7._make_TaskInfo(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = TaskModel.instance:getTaskConfig(arg_8_2, arg_8_1)
+function STesting:_make_TaskInfo(taskId, taskType)
+	local taskCO = TaskModel.instance:getTaskConfig(taskType, taskId)
 
-	assert(var_8_0, var_0_5)
+	assert(taskCO, kErrMsgServer)
 
-	local var_8_1 = var_8_0.maxProgress
-	local var_8_2 = {
+	local maxProgress = taskCO.maxProgress
+	local res = {
 		hasFinished = false,
 		expiryTime = 0,
 		finishCount = 0,
-		id = arg_8_1,
-		type = arg_8_2,
-		progress = math.random(0, var_8_1)
+		id = taskId,
+		type = taskType,
+		progress = math.random(0, maxProgress)
 	}
 
-	var_8_2.hasFinished = var_8_2.progress == var_8_1
+	res.hasFinished = res.progress == maxProgress
 
-	return var_8_2
+	return res
 end
 
-local var_0_8 = 0
-local var_0_9 = _G.class("CTesting", var_0_1)
+local kResultCode = 0
+local CTesting = _G.class("CTesting", TestingBase)
 
-function var_0_9.ctor(arg_9_0)
-	var_0_1.ctor(arg_9_0)
+function CTesting:ctor()
+	TestingBase.ctor(self)
 
-	arg_9_0._cRpc = Activity189Rpc
-	arg_9_0._cCtrl = Activity189Controller
-	arg_9_0._cModel = Activity189Model
-	arg_9_0._cTaskRpc = TaskRpc
-	arg_9_0._cTaskModel = TaskModel
-	arg_9_0._cTaskController = TaskController
+	self._cRpc = Activity189Rpc
+	self._cCtrl = Activity189Controller
+	self._cModel = Activity189Model
+	self._cTaskRpc = TaskRpc
+	self._cTaskModel = TaskModel
+	self._cTaskController = TaskController
 end
 
-function var_0_9.build_test(arg_10_0)
-	arg_10_0:build_test__Task()
-	arg_10_0:build_test__Player()
+function CTesting:build_test()
+	self:build_test__Task()
+	self:build_test__Player()
 end
 
-function var_0_9.build_test__Player(arg_11_0)
+function CTesting:build_test__Player()
 	function PlayerModel.forceSetSimpleProperty()
 		return
 	end
 end
 
-function var_0_9.build_test__Task(arg_13_0)
-	local var_13_0 = arg_13_0._cTaskCfg.instance
-	local var_13_1 = arg_13_0._cTaskRpc.instance
-	local var_13_2 = arg_13_0._cTaskController.instance
-	local var_13_3 = arg_13_0._cTaskModel.instance
-	local var_13_4 = arg_13_0._pbTask
+function CTesting:build_test__Task()
+	local cfgObj = self._cTaskCfg.instance
+	local rpcObj = self._cTaskRpc.instance
+	local ctrlObj = self._cTaskController.instance
+	local modelObj = self._cTaskModel.instance
+	local pb = self._pbTask
 
-	function arg_13_0._cTaskRpc.sendGetTaskInfoRequest(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-		local var_14_0 = var_13_4.GetTaskInfoRequest()
+	function self._cTaskRpc.sendGetTaskInfoRequest(thisObj, typeIds, callback, callbackObj)
+		local req = pb.GetTaskInfoRequest()
 
-		for iter_14_0, iter_14_1 in pairs(arg_14_1) do
-			table.insert(var_14_0.typeIds, iter_14_1)
+		for _, v in pairs(typeIds) do
+			table.insert(req.typeIds, v)
 		end
 
-		if #arg_14_1 == 1 and arg_14_1[1] == var_0_2 then
-			local var_14_1 = var_13_4.GetTaskInfoReply()
+		if #typeIds == 1 and typeIds[1] == KTaskType then
+			local reply = pb.GetTaskInfoReply()
 
-			arg_13_0._obj:handleGetTaskInfoReply(var_14_0, var_14_1)
-			var_13_1:onReceiveGetTaskInfoReply(var_0_8, var_14_1)
+			self._obj:handleGetTaskInfoReply(req, reply)
+			rpcObj:onReceiveGetTaskInfoReply(kResultCode, reply)
 
-			local var_14_2 = LuaSocketMgr.instance:getCmdByPbStructName(var_14_0.__cname)
+			local cmd = LuaSocketMgr.instance:getCmdByPbStructName(req.__cname)
 
-			if arg_14_2 then
-				if arg_14_3 then
-					arg_14_2(arg_14_3, var_14_2, var_0_8)
+			if callback then
+				if callbackObj then
+					callback(callbackObj, cmd, kResultCode)
 				else
-					arg_14_2(var_14_2, var_0_8)
+					callback(cmd, kResultCode)
 				end
 			end
 		else
-			return arg_14_0:sendMsg(var_14_0, arg_14_2, arg_14_3)
+			return thisObj:sendMsg(req, callback, callbackObj)
 		end
 	end
 end
 
-local var_0_10 = _G.class("Activity189Testing")
+local Activity189Testing = _G.class("Activity189Testing")
 
-function var_0_10.ctor(arg_15_0)
-	arg_15_0._client = var_0_9.New()
-	arg_15_0._sever = var_0_7.New()
+function Activity189Testing:ctor()
+	self._client = CTesting.New()
+	self._sever = STesting.New()
 
-	arg_15_0._sever:link(arg_15_0._client)
-	arg_15_0._client:link(arg_15_0._sever)
+	self._sever:link(self._client)
+	self._client:link(self._sever)
 end
 
-function var_0_10._test(arg_16_0)
-	arg_16_0._client:build_test()
-	arg_16_0._sever:build_test()
+function Activity189Testing:_test()
+	self._client:build_test()
+	self._sever:build_test()
 end
 
-var_0_10.instance = var_0_10.New()
+Activity189Testing.instance = Activity189Testing.New()
 
-return var_0_10
+return Activity189Testing

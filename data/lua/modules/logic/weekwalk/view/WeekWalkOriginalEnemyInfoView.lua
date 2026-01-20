@@ -1,739 +1,746 @@
-﻿module("modules.logic.weekwalk.view.WeekWalkOriginalEnemyInfoView", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk/view/WeekWalkOriginalEnemyInfoView.lua
 
-local var_0_0 = class("WeekWalkOriginalEnemyInfoView", BaseView)
+module("modules.logic.weekwalk.view.WeekWalkOriginalEnemyInfoView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagerightbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_rightbg")
-	arg_1_0._goenemygroupitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_enemy/viewport/content/#go_enemygroupitem")
-	arg_1_0._simageicon = gohelper.findChildImage(arg_1_0.viewGO, "enemyinfo/#simage_icon")
-	arg_1_0._imagecareer = gohelper.findChildImage(arg_1_0.viewGO, "enemyinfo/#image_career")
-	arg_1_0._txtlevel = gohelper.findChildText(arg_1_0.viewGO, "enemyinfo/#txt_level")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "enemyinfo/#txt_name")
-	arg_1_0._imagedmgtype = gohelper.findChildImage(arg_1_0.viewGO, "enemyinfo/#txt_name/#image_dmgtype")
-	arg_1_0._txtnameen = gohelper.findChildText(arg_1_0.viewGO, "enemyinfo/#txt_nameen")
-	arg_1_0._txthp = gohelper.findChildText(arg_1_0.viewGO, "enemyinfo/#txt_hp")
-	arg_1_0._godescscrollview = gohelper.findChild(arg_1_0.viewGO, "enemyinfo/#go_desccontainer/Viewport/#go_desccontainer/#go_descscrollview")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "enemyinfo/#go_desccontainer/Viewport/#go_desccontainer/#go_descscrollview/#txt_desc")
-	arg_1_0._goattribute = gohelper.findChild(arg_1_0.viewGO, "enemyinfo/#go_desccontainer/Viewport/#go_desccontainer/#go_attribute")
-	arg_1_0._gopassiveskill = gohelper.findChild(arg_1_0.viewGO, "enemyinfo/#go_desccontainer/Viewport/#go_desccontainer/#go_passiveskill")
-	arg_1_0._gopassiveskillitem = gohelper.findChild(arg_1_0.viewGO, "enemyinfo/#go_desccontainer/Viewport/#go_desccontainer/#go_passiveskill/passiveSkills/item")
-	arg_1_0._btnpassiveskill = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "enemyinfo/#go_desccontainer/Viewport/#go_desccontainer/#go_passiveskill/passiveSkills/btn_passiveclick")
-	arg_1_0._btnshowattribute = gohelper.findChildButton(arg_1_0.viewGO, "enemyinfo/#btn_showAttribute")
-	arg_1_0._gonormalicon = gohelper.findChild(arg_1_0.viewGO, "enemyinfo/#btn_showAttribute/#go_normalIcon")
-	arg_1_0._goselecticon = gohelper.findChild(arg_1_0.viewGO, "enemyinfo/#btn_showAttribute/#go_selectIcon")
-	arg_1_0._goenemypassiveitem = gohelper.findChild(arg_1_0.viewGO, "enemyinfo/#go_desccontainer/Viewport/#go_desccontainer/#go_monster_desccontainer/#go_enemypassiveitem")
-	arg_1_0._gonoskill = gohelper.findChild(arg_1_0.viewGO, "enemyinfo/noskill")
-	arg_1_0._goskill = gohelper.findChild(arg_1_0.viewGO, "enemyinfo/skill")
-	arg_1_0._goskillitem = gohelper.findChild(arg_1_0.viewGO, "enemyinfo/skill/card/scrollview/viewport/content/skills/#go_skillitem")
-	arg_1_0._gosuperitem = gohelper.findChild(arg_1_0.viewGO, "enemyinfo/skill/card/scrollview/viewport/content/supers/#go_superitem")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._scrollskill = gohelper.findChildScrollRect(arg_1_0.viewGO, "enemyinfo/skill/card/scrollview")
-	arg_1_0._gocareercontent = gohelper.findChild(arg_1_0.viewGO, "careerContent/#go_careercontent")
-	arg_1_0._gobuffpassiveview = gohelper.findChild(arg_1_0.viewGO, "enemyinfo/#go_buffpassiveview")
-	arg_1_0._btnclosepassiveview = gohelper.findChildButton(arg_1_0.viewGO, "enemyinfo/#go_buffpassiveview/#btn_closeview")
-	arg_1_0._gobuffpassiveitem = gohelper.findChild(arg_1_0.viewGO, "enemyinfo/#go_buffpassiveview/#scroll_buff/viewport/content/#go_buffitem")
-	arg_1_0._specialskillIconGOs = arg_1_0:getUserDataTb_()
-	arg_1_0._enemybuffpassiveGOs = arg_1_0:getUserDataTb_()
-	arg_1_0._passiveSkillImgs = arg_1_0:getUserDataTb_()
-	arg_1_0._passiveiconImgs = arg_1_0:getUserDataTb_()
-	arg_1_0.bossSkillInfos = {}
-	arg_1_0.isopenpassiveview = false
+local WeekWalkOriginalEnemyInfoView = class("WeekWalkOriginalEnemyInfoView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function WeekWalkOriginalEnemyInfoView:onInitView()
+	self._simagerightbg = gohelper.findChildSingleImage(self.viewGO, "#simage_rightbg")
+	self._goenemygroupitem = gohelper.findChild(self.viewGO, "#scroll_enemy/viewport/content/#go_enemygroupitem")
+	self._simageicon = gohelper.findChildImage(self.viewGO, "enemyinfo/#simage_icon")
+	self._imagecareer = gohelper.findChildImage(self.viewGO, "enemyinfo/#image_career")
+	self._txtlevel = gohelper.findChildText(self.viewGO, "enemyinfo/#txt_level")
+	self._txtname = gohelper.findChildText(self.viewGO, "enemyinfo/#txt_name")
+	self._imagedmgtype = gohelper.findChildImage(self.viewGO, "enemyinfo/#txt_name/#image_dmgtype")
+	self._txtnameen = gohelper.findChildText(self.viewGO, "enemyinfo/#txt_nameen")
+	self._txthp = gohelper.findChildText(self.viewGO, "enemyinfo/#txt_hp")
+	self._godescscrollview = gohelper.findChild(self.viewGO, "enemyinfo/#go_desccontainer/Viewport/#go_desccontainer/#go_descscrollview")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "enemyinfo/#go_desccontainer/Viewport/#go_desccontainer/#go_descscrollview/#txt_desc")
+	self._goattribute = gohelper.findChild(self.viewGO, "enemyinfo/#go_desccontainer/Viewport/#go_desccontainer/#go_attribute")
+	self._gopassiveskill = gohelper.findChild(self.viewGO, "enemyinfo/#go_desccontainer/Viewport/#go_desccontainer/#go_passiveskill")
+	self._gopassiveskillitem = gohelper.findChild(self.viewGO, "enemyinfo/#go_desccontainer/Viewport/#go_desccontainer/#go_passiveskill/passiveSkills/item")
+	self._btnpassiveskill = gohelper.findChildButtonWithAudio(self.viewGO, "enemyinfo/#go_desccontainer/Viewport/#go_desccontainer/#go_passiveskill/passiveSkills/btn_passiveclick")
+	self._btnshowattribute = gohelper.findChildButton(self.viewGO, "enemyinfo/#btn_showAttribute")
+	self._gonormalicon = gohelper.findChild(self.viewGO, "enemyinfo/#btn_showAttribute/#go_normalIcon")
+	self._goselecticon = gohelper.findChild(self.viewGO, "enemyinfo/#btn_showAttribute/#go_selectIcon")
+	self._goenemypassiveitem = gohelper.findChild(self.viewGO, "enemyinfo/#go_desccontainer/Viewport/#go_desccontainer/#go_monster_desccontainer/#go_enemypassiveitem")
+	self._gonoskill = gohelper.findChild(self.viewGO, "enemyinfo/noskill")
+	self._goskill = gohelper.findChild(self.viewGO, "enemyinfo/skill")
+	self._goskillitem = gohelper.findChild(self.viewGO, "enemyinfo/skill/card/scrollview/viewport/content/skills/#go_skillitem")
+	self._gosuperitem = gohelper.findChild(self.viewGO, "enemyinfo/skill/card/scrollview/viewport/content/supers/#go_superitem")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._scrollskill = gohelper.findChildScrollRect(self.viewGO, "enemyinfo/skill/card/scrollview")
+	self._gocareercontent = gohelper.findChild(self.viewGO, "careerContent/#go_careercontent")
+	self._gobuffpassiveview = gohelper.findChild(self.viewGO, "enemyinfo/#go_buffpassiveview")
+	self._btnclosepassiveview = gohelper.findChildButton(self.viewGO, "enemyinfo/#go_buffpassiveview/#btn_closeview")
+	self._gobuffpassiveitem = gohelper.findChild(self.viewGO, "enemyinfo/#go_buffpassiveview/#scroll_buff/viewport/content/#go_buffitem")
+	self._specialskillIconGOs = self:getUserDataTb_()
+	self._enemybuffpassiveGOs = self:getUserDataTb_()
+	self._passiveSkillImgs = self:getUserDataTb_()
+	self._passiveiconImgs = self:getUserDataTb_()
+	self.bossSkillInfos = {}
+	self.isopenpassiveview = false
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnshowattribute:AddClickListener(arg_2_0._setInfoShowState, arg_2_0)
-	arg_2_0._btnclosepassiveview:AddClickListener(arg_2_0._onClosePassiveView, arg_2_0)
+function WeekWalkOriginalEnemyInfoView:addEvents()
+	self._btnshowattribute:AddClickListener(self._setInfoShowState, self)
+	self._btnclosepassiveview:AddClickListener(self._onClosePassiveView, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnshowattribute:RemoveClickListener()
-	arg_3_0._btnpassiveskill:RemoveClickListener()
-	arg_3_0._btnclosepassiveview:RemoveClickListener()
+function WeekWalkOriginalEnemyInfoView:removeEvents()
+	self._btnshowattribute:RemoveClickListener()
+	self._btnpassiveskill:RemoveClickListener()
+	self._btnclosepassiveview:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	gohelper.addUIClickAudio(arg_4_0._btnshowattribute.gameObject, AudioEnum.UI.play_ui_screenplay_photo_click)
+function WeekWalkOriginalEnemyInfoView:_editableInitView()
+	gohelper.addUIClickAudio(self._btnshowattribute.gameObject, AudioEnum.UI.play_ui_screenplay_photo_click)
 
-	arg_4_0._imageSelectEnemy = gohelper.findChildImage(arg_4_0.viewGO, "enemyinfo/#simage_icon")
-	arg_4_0._contentHorizontal = gohelper.findChild(arg_4_0.viewGO, "enemyinfo/skill/card/scrollview/viewport/content"):GetComponent(typeof(UnityEngine.UI.HorizontalLayoutGroup))
-	arg_4_0._skillHorizontal = gohelper.findChild(arg_4_0.viewGO, "enemyinfo/skill/card/scrollview/viewport/content/skills"):GetComponent(typeof(UnityEngine.UI.HorizontalLayoutGroup))
-	arg_4_0._gosupers = gohelper.findChild(arg_4_0.viewGO, "enemyinfo/skill/card/scrollview/viewport/content/supers")
+	self._imageSelectEnemy = gohelper.findChildImage(self.viewGO, "enemyinfo/#simage_icon")
+	self._contentHorizontal = gohelper.findChild(self.viewGO, "enemyinfo/skill/card/scrollview/viewport/content"):GetComponent(typeof(UnityEngine.UI.HorizontalLayoutGroup))
+	self._skillHorizontal = gohelper.findChild(self.viewGO, "enemyinfo/skill/card/scrollview/viewport/content/skills"):GetComponent(typeof(UnityEngine.UI.HorizontalLayoutGroup))
+	self._gosupers = gohelper.findChild(self.viewGO, "enemyinfo/skill/card/scrollview/viewport/content/supers")
 
-	arg_4_0._simagerightbg:LoadImage(ResUrl.getDungeonIcon("bg_battledetail"))
+	self._simagerightbg:LoadImage(ResUrl.getDungeonIcon("bg_battledetail"))
 
-	arg_4_0._enemyGroupItemGOs = {}
-	arg_4_0._passiveSkillGOs = {}
-	arg_4_0._skillGOs = {}
-	arg_4_0._superItemList = {}
-	arg_4_0._isShowAttributeInfo = false
+	self._enemyGroupItemGOs = {}
+	self._passiveSkillGOs = {}
+	self._skillGOs = {}
+	self._superItemList = {}
+	self._isShowAttributeInfo = false
 
-	gohelper.setActive(arg_4_0._goenemygroupitem, false)
-	gohelper.setActive(arg_4_0._goenemypassiveitem, false)
-	gohelper.setActive(arg_4_0._goskillitem, false)
-	gohelper.setActive(arg_4_0._gosuperitem, false)
-	gohelper.setActive(arg_4_0._gonormalicon, not arg_4_0._isShowAttributeInfo)
-	gohelper.setActive(arg_4_0._godescscrollview, not arg_4_0._isShowAttributeInfo)
-	gohelper.setActive(arg_4_0._goselecticon, arg_4_0._isShowAttributeInfo)
-	gohelper.setActive(arg_4_0._goattribute, arg_4_0._isShowAttributeInfo)
+	gohelper.setActive(self._goenemygroupitem, false)
+	gohelper.setActive(self._goenemypassiveitem, false)
+	gohelper.setActive(self._goskillitem, false)
+	gohelper.setActive(self._gosuperitem, false)
+	gohelper.setActive(self._gonormalicon, not self._isShowAttributeInfo)
+	gohelper.setActive(self._godescscrollview, not self._isShowAttributeInfo)
+	gohelper.setActive(self._goselecticon, self._isShowAttributeInfo)
+	gohelper.setActive(self._goattribute, self._isShowAttributeInfo)
 
-	for iter_4_0 = 1, 6 do
-		local var_4_0 = gohelper.findChildImage(arg_4_0._gocareercontent, "career" .. iter_4_0)
+	for i = 1, 6 do
+		local career = gohelper.findChildImage(self._gocareercontent, "career" .. i)
 
-		UISpriteSetMgr.instance:setCommonSprite(var_4_0, "lssx_" .. iter_4_0)
+		UISpriteSetMgr.instance:setCommonSprite(career, "lssx_" .. i)
 	end
 
-	arg_4_0.scrollDescContainer = gohelper.findChildScrollRect(arg_4_0.viewGO, "enemyinfo/#go_desccontainer")
+	self.scrollDescContainer = gohelper.findChildScrollRect(self.viewGO, "enemyinfo/#go_desccontainer")
 end
 
-function var_0_0._onClosePassiveView(arg_5_0)
-	gohelper.setActive(arg_5_0._gobuffpassiveview, false)
+function WeekWalkOriginalEnemyInfoView:_onClosePassiveView()
+	gohelper.setActive(self._gobuffpassiveview, false)
 
-	arg_5_0.isopenpassiveview = false
+	self.isopenpassiveview = false
 end
 
-function var_0_0._refreshUI(arg_6_0)
-	if not arg_6_0._battleId then
+function WeekWalkOriginalEnemyInfoView:_refreshUI()
+	if not self._battleId then
 		logError("地方信息界面缺少战斗Id")
 
 		return
 	end
 
-	local var_6_0 = lua_battle.configDict[arg_6_0._battleId]
-	local var_6_1 = {}
+	local battleConfig = lua_battle.configDict[self._battleId]
+	local monsterGroupIds = {}
 
-	if not var_6_0.monsterGroupIds or var_6_0.monsterGroupIds == "" then
+	if not battleConfig.monsterGroupIds or battleConfig.monsterGroupIds == "" then
 		return
 	end
 
-	local var_6_2 = string.split(var_6_0.monsterGroupIds, "#")
+	monsterGroupIds = string.split(battleConfig.monsterGroupIds, "#")
+	self._enemyItemIndex = 1
 
-	arg_6_0._enemyItemIndex = 1
+	for i = 1, #monsterGroupIds do
+		local enemyGroupItemTable = self._enemyGroupItemGOs[i]
 
-	for iter_6_0 = 1, #var_6_2 do
-		local var_6_3 = arg_6_0._enemyGroupItemGOs[iter_6_0]
+		if not enemyGroupItemTable then
+			local enemyGroupItemGO = gohelper.cloneInPlace(self._goenemygroupitem, "item" .. i)
 
-		if not var_6_3 then
-			local var_6_4 = gohelper.cloneInPlace(arg_6_0._goenemygroupitem, "item" .. iter_6_0)
+			enemyGroupItemTable = self:getUserDataTb_()
+			enemyGroupItemTable.go = enemyGroupItemGO
+			enemyGroupItemTable.txttitlenum = gohelper.findChildText(enemyGroupItemGO, "#txt_titlenum")
+			enemyGroupItemTable.goenemyitem = gohelper.findChild(enemyGroupItemGO, "content/enemyitem")
+			enemyGroupItemTable.enemyItemGOs = {}
 
-			var_6_3 = arg_6_0:getUserDataTb_()
-			var_6_3.go = var_6_4
-			var_6_3.txttitlenum = gohelper.findChildText(var_6_4, "#txt_titlenum")
-			var_6_3.goenemyitem = gohelper.findChild(var_6_4, "content/enemyitem")
-			var_6_3.enemyItemGOs = {}
+			gohelper.setActive(enemyGroupItemTable.goenemyitem, false)
+			table.insert(self._enemyGroupItemGOs, enemyGroupItemTable)
 
-			gohelper.setActive(var_6_3.goenemyitem, false)
-			table.insert(arg_6_0._enemyGroupItemGOs, var_6_3)
-
-			var_6_3.txttitlenum.text = iter_6_0
+			enemyGroupItemTable.txttitlenum.text = i
 		end
 
-		arg_6_0:_refreshEnemyItem(iter_6_0, var_6_2, var_6_3)
-		gohelper.setActive(var_6_3.go, true)
+		self:_refreshEnemyItem(i, monsterGroupIds, enemyGroupItemTable)
+		gohelper.setActive(enemyGroupItemTable.go, true)
 	end
 
-	for iter_6_1 = #var_6_2 + 1, #arg_6_0._enemyGroupItemGOs do
-		gohelper.setActive(arg_6_0._enemyGroupItemGOs[iter_6_1].go, false)
+	for i = #monsterGroupIds + 1, #self._enemyGroupItemGOs do
+		gohelper.setActive(self._enemyGroupItemGOs[i].go, false)
 	end
 end
 
-function var_0_0._refreshEnemyItem(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	local var_7_0 = false
+function WeekWalkOriginalEnemyInfoView:_refreshEnemyItem(i, monsterGroupIds, enemyGroupItemTable)
+	local isBoss = false
 
-	arg_7_0.selectMonsterIndex = nil
+	self.selectMonsterIndex = nil
 
-	local var_7_1 = lua_monster_group.configDict[tonumber(arg_7_2[arg_7_1])]
-	local var_7_2 = {}
-	local var_7_3 = string.nilorempty(var_7_1.monster)
-	local var_7_4 = string.nilorempty(var_7_1.spMonster)
+	local monsterGroupConfig = lua_monster_group.configDict[tonumber(monsterGroupIds[i])]
+	local monsterIds = {}
+	local monsterNilOrEmpty = string.nilorempty(monsterGroupConfig.monster)
+	local spmonsterNilOrEmpty = string.nilorempty(monsterGroupConfig.spMonster)
 
-	if var_7_3 and var_7_4 then
+	if monsterNilOrEmpty and spmonsterNilOrEmpty then
 		return
 	end
 
-	local var_7_5 = var_7_3 and {} or string.split(var_7_1.monster, "#")
-	local var_7_6 = var_7_4 and {} or string.split(var_7_1.spMonster, "#")
+	monsterIds = monsterNilOrEmpty and {} or string.split(monsterGroupConfig.monster, "#")
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_6) do
-		table.insert(var_7_5, iter_7_1)
+	local spMonsterIds = spmonsterNilOrEmpty and {} or string.split(monsterGroupConfig.spMonster, "#")
+
+	for _, spMonsterId in ipairs(spMonsterIds) do
+		table.insert(monsterIds, spMonsterId)
 	end
 
-	for iter_7_2 = 1, #var_7_5 do
-		local var_7_7 = tonumber(var_7_5[iter_7_2])
-		local var_7_8 = arg_7_3.enemyItemGOs[iter_7_2]
+	for j = 1, #monsterIds do
+		local monsterId = tonumber(monsterIds[j])
+		local enemyItemTable = enemyGroupItemTable.enemyItemGOs[j]
 
-		if not var_7_8 then
-			local var_7_9 = gohelper.cloneInPlace(arg_7_3.goenemyitem, "item" .. iter_7_2)
+		if not enemyItemTable then
+			local enemyItemGO = gohelper.cloneInPlace(enemyGroupItemTable.goenemyitem, "item" .. j)
 
-			var_7_8 = arg_7_0:_initEnemyItem(var_7_9, var_7_7, arg_7_1)
+			enemyItemTable = self:_initEnemyItem(enemyItemGO, monsterId, i)
 
-			table.insert(arg_7_3.enemyItemGOs, var_7_8)
+			table.insert(enemyGroupItemTable.enemyItemGOs, enemyItemTable)
 		end
 
-		var_7_8.monsterId = var_7_7
+		enemyItemTable.monsterId = monsterId
 
-		local var_7_10 = lua_monster.configDict[var_7_7]
-		local var_7_11 = FightConfig.instance:getSkinCO(var_7_10.skinId)
+		local monsterConfig = lua_monster.configDict[monsterId]
+		local skinConfig = FightConfig.instance:getSkinCO(monsterConfig.skinId)
 
-		arg_7_0:_setEnemyItem(var_7_8, var_7_10, var_7_11, arg_7_1, iter_7_2)
-		gohelper.setActive(var_7_8.go, true)
-		gohelper.setActive(var_7_8.bosstag, false)
+		self:_setEnemyItem(enemyItemTable, monsterConfig, skinConfig, i, j)
+		gohelper.setActive(enemyItemTable.go, true)
+		gohelper.setActive(enemyItemTable.bosstag, false)
 
-		if not var_7_0 and FightHelper.isBossId(var_7_1.bossId, var_7_7) then
-			gohelper.setActive(var_7_8.bosstag, true)
+		if not isBoss and FightHelper.isBossId(monsterGroupConfig.bossId, monsterId) then
+			gohelper.setActive(enemyItemTable.bosstag, true)
 
-			var_7_0 = true
+			isBoss = true
 		end
 
-		arg_7_0._enemyItemIndex = arg_7_0._enemyItemIndex + 1
+		self._enemyItemIndex = self._enemyItemIndex + 1
 	end
 
-	for iter_7_3 = #var_7_5 + 1, #arg_7_3.enemyItemGOs do
-		gohelper.setActive(arg_7_3.enemyItemGOs[iter_7_3].go, false)
+	for j = #monsterIds + 1, #enemyGroupItemTable.enemyItemGOs do
+		gohelper.setActive(enemyGroupItemTable.enemyItemGOs[j].go, false)
 	end
 end
 
-function var_0_0._initEnemyItem(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	local var_8_0 = arg_8_0:getUserDataTb_()
+function WeekWalkOriginalEnemyInfoView:_initEnemyItem(enemyItemGO, monsterId, groupIndex)
+	local enemyItemTable = self:getUserDataTb_()
 
-	var_8_0.go = arg_8_1
-	var_8_0.monsterId = arg_8_2
-	var_8_0.iconframe = gohelper.findChildImage(arg_8_1, "iconframe")
-	var_8_0.icon = gohelper.findChildImage(arg_8_1, "icon")
-	var_8_0.career = gohelper.findChildImage(arg_8_1, "career")
-	var_8_0.selectframe = gohelper.findChild(arg_8_1, "selectframe")
-	var_8_0.bosstag = gohelper.findChild(arg_8_1, "bosstag")
-	var_8_0.btn = gohelper.findChildButtonWithAudio(arg_8_1, "btn_click", AudioEnum.UI.Play_UI_Tags)
+	enemyItemTable.go = enemyItemGO
+	enemyItemTable.monsterId = monsterId
+	enemyItemTable.iconframe = gohelper.findChildImage(enemyItemGO, "iconframe")
+	enemyItemTable.icon = gohelper.findChildImage(enemyItemGO, "icon")
+	enemyItemTable.career = gohelper.findChildImage(enemyItemGO, "career")
+	enemyItemTable.selectframe = gohelper.findChild(enemyItemGO, "selectframe")
+	enemyItemTable.bosstag = gohelper.findChild(enemyItemGO, "bosstag")
+	enemyItemTable.btn = gohelper.findChildButtonWithAudio(enemyItemGO, "btn_click", AudioEnum.UI.Play_UI_Tags)
 
-	var_8_0.btn:AddClickListener(function(arg_9_0)
-		local var_9_0 = {
-			index = arg_9_0.index,
-			monsterId = arg_9_0.monsterId,
-			groupIndex = arg_8_3
-		}
+	enemyItemTable.btn:AddClickListener(function(enemyItemTable)
+		local clickInfo = {}
 
-		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickEnemyItem, var_9_0)
+		clickInfo.index = enemyItemTable.index
+		clickInfo.monsterId = enemyItemTable.monsterId
+		clickInfo.groupIndex = groupIndex
 
-		arg_8_0.scrollDescContainer.verticalNormalizedPosition = 1
-	end, var_8_0)
+		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickEnemyItem, clickInfo)
 
-	function var_8_0.onClickEnemyItem(arg_10_0, arg_10_1, arg_10_2)
-		local var_10_0 = arg_10_0._isSelected
+		self.scrollDescContainer.verticalNormalizedPosition = 1
+	end, enemyItemTable)
 
-		arg_10_0._isSelected = arg_10_0.index == arg_10_1.index
+	function enemyItemTable.onClickEnemyItem(enemyItemTable, clickInfo, isOpen)
+		local isSelected = enemyItemTable._isSelected
 
-		gohelper.setActive(arg_10_0.selectframe, arg_10_0._isSelected)
+		enemyItemTable._isSelected = enemyItemTable.index == clickInfo.index
+
+		gohelper.setActive(enemyItemTable.selectframe, enemyItemTable._isSelected)
 	end
 
-	HeroGroupController.instance:registerCallback(HeroGroupEvent.OnClickEnemyItem, var_8_0.onClickEnemyItem, var_8_0)
+	HeroGroupController.instance:registerCallback(HeroGroupEvent.OnClickEnemyItem, enemyItemTable.onClickEnemyItem, enemyItemTable)
 
-	return var_8_0
+	return enemyItemTable
 end
 
-function var_0_0._setEnemyItem(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4, arg_11_5)
-	gohelper.setActive(arg_11_1.selectframe, false)
+function WeekWalkOriginalEnemyInfoView:_setEnemyItem(enemyItemTable, monsterConfig, skinConfig, groupIndex, j)
+	gohelper.setActive(enemyItemTable.selectframe, false)
 
-	arg_11_1.index = arg_11_0._enemyItemIndex
-	arg_11_1.groupIndex = arg_11_4
+	enemyItemTable.index = self._enemyItemIndex
+	enemyItemTable.groupIndex = groupIndex
 
-	gohelper.getSingleImage(arg_11_1.icon.gameObject):LoadImage(ResUrl.monsterHeadIcon(arg_11_3.headIcon))
-	UISpriteSetMgr.instance:setEnemyInfoSprite(arg_11_1.career, "sxy_" .. tostring(arg_11_2.career))
+	gohelper.getSingleImage(enemyItemTable.icon.gameObject):LoadImage(ResUrl.monsterHeadIcon(skinConfig.headIcon))
+	UISpriteSetMgr.instance:setEnemyInfoSprite(enemyItemTable.career, "sxy_" .. tostring(monsterConfig.career))
 
-	if arg_11_2.heartVariantId ~= 0 then
-		IconMaterialMgr.instance:loadMaterialAddSet(IconMaterialMgr.instance:getMaterialPathWithRound(arg_11_2.heartVariantId), arg_11_1.icon)
+	if monsterConfig.heartVariantId ~= 0 then
+		IconMaterialMgr.instance:loadMaterialAddSet(IconMaterialMgr.instance:getMaterialPathWithRound(monsterConfig.heartVariantId), enemyItemTable.icon)
 	end
 
-	if arg_11_0._adventure then
-		local var_11_0 = 1
+	if self._adventure then
+		local hp = 1
 
-		ZProj.UGUIHelper.SetGrayscale(arg_11_1.iconframe.gameObject, var_11_0 <= 0)
-		ZProj.UGUIHelper.SetGrayscale(arg_11_1.icon.gameObject, var_11_0 <= 0)
-		SLFramework.UGUI.GuiHelper.SetColor(arg_11_1.icon, var_11_0 <= 0 and "#999999" or "#FFFFFF")
+		ZProj.UGUIHelper.SetGrayscale(enemyItemTable.iconframe.gameObject, hp <= 0)
+		ZProj.UGUIHelper.SetGrayscale(enemyItemTable.icon.gameObject, hp <= 0)
+		SLFramework.UGUI.GuiHelper.SetColor(enemyItemTable.icon, hp <= 0 and "#999999" or "#FFFFFF")
 	end
 
-	if arg_11_0._enemyItemIndex == 1 then
-		local var_11_1 = {}
+	if self._enemyItemIndex == 1 then
+		local clickInfo = {}
 
-		var_11_1.index = 1
-		var_11_1.monsterId = arg_11_1.monsterId
-		var_11_1.groupIndex = arg_11_1.groupIndex
+		clickInfo.index = 1
+		clickInfo.monsterId = enemyItemTable.monsterId
+		clickInfo.groupIndex = enemyItemTable.groupIndex
 
-		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickEnemyItem, var_11_1, true)
+		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickEnemyItem, clickInfo, true)
 	end
 end
 
-function var_0_0._refreshInfo(arg_12_0, arg_12_1)
-	if arg_12_1.index ~= arg_12_0.selectMonsterIndex then
-		arg_12_0.selectMonsterIndex = arg_12_1.index
+function WeekWalkOriginalEnemyInfoView:_refreshInfo(clickInfo)
+	if clickInfo.index ~= self.selectMonsterIndex then
+		self.selectMonsterIndex = clickInfo.index
 
-		local var_12_0 = arg_12_1.monsterId
-		local var_12_1 = arg_12_1.groupIndex
-		local var_12_2 = lua_monster.configDict[var_12_0]
-		local var_12_3 = FightConfig.instance:getSkinCO(var_12_2.skinId)
+		local monsterId = clickInfo.monsterId
+		local groupIndex = clickInfo.groupIndex
+		local monsterConfig = lua_monster.configDict[monsterId]
+		local skinConfig = FightConfig.instance:getSkinCO(monsterConfig.skinId)
 
-		gohelper.getSingleImage(arg_12_0._simageicon.gameObject):LoadImage(ResUrl.monsterHeadIcon(var_12_3.headIcon))
+		gohelper.getSingleImage(self._simageicon.gameObject):LoadImage(ResUrl.monsterHeadIcon(skinConfig.headIcon))
 
-		if var_12_2.heartVariantId ~= 0 then
-			IconMaterialMgr.instance:loadMaterialAddSet(IconMaterialMgr.instance:getMaterialPathWithRound(var_12_2.heartVariantId), arg_12_0._imageSelectEnemy)
+		if monsterConfig.heartVariantId ~= 0 then
+			IconMaterialMgr.instance:loadMaterialAddSet(IconMaterialMgr.instance:getMaterialPathWithRound(monsterConfig.heartVariantId), self._imageSelectEnemy)
 		end
 
-		UISpriteSetMgr.instance:setEnemyInfoSprite(arg_12_0._imagecareer, "sxy_" .. tostring(var_12_2.career))
+		UISpriteSetMgr.instance:setEnemyInfoSprite(self._imagecareer, "sxy_" .. tostring(monsterConfig.career))
 
-		arg_12_0._txtlevel.text = HeroConfig.instance:getCommonLevelDisplay(var_12_2.level)
+		self._txtlevel.text = HeroConfig.instance:getCommonLevelDisplay(monsterConfig.level)
 
-		local var_12_4 = FightConfig.instance:getNewMonsterConfig(var_12_2)
+		local isUseNewConfig = FightConfig.instance:getNewMonsterConfig(monsterConfig)
 
-		arg_12_0._txtname.text = var_12_4 and var_12_2.highPriorityName or var_12_2.name
-		arg_12_0._txtnameen.text = var_12_4 and var_12_2.highPriorityNameEng or var_12_2.nameEng
+		self._txtname.text = isUseNewConfig and monsterConfig.highPriorityName or monsterConfig.name
+		self._txtnameen.text = isUseNewConfig and monsterConfig.highPriorityNameEng or monsterConfig.nameEng
 
-		UISpriteSetMgr.instance:setCommonSprite(arg_12_0._imagedmgtype, "dmgtype" .. tostring(var_12_2.dmgType))
+		UISpriteSetMgr.instance:setCommonSprite(self._imagedmgtype, "dmgtype" .. tostring(monsterConfig.dmgType))
 
-		arg_12_0._txthp.text = string.format(luaLang("maxhp"), CharacterDataConfig.instance:getMonsterHp(var_12_0))
-		arg_12_0._txtdesc.text = var_12_4 and var_12_2.highPriorityDes or var_12_2.des
-		arg_12_0.bossSkillInfos = {}
+		self._txthp.text = string.format(luaLang("maxhp"), CharacterDataConfig.instance:getMonsterHp(monsterId))
+		self._txtdesc.text = isUseNewConfig and monsterConfig.highPriorityDes or monsterConfig.des
+		self.bossSkillInfos = {}
 
-		if FightHelper.isBossId(arg_12_0:_getBossId(var_12_1), var_12_2.id) then
-			arg_12_0:_refreshSpeicalSkillIcon(var_12_2)
+		if FightHelper.isBossId(self:_getBossId(groupIndex), monsterConfig.id) then
+			self:_refreshSpeicalSkillIcon(monsterConfig)
 		else
-			gohelper.setActive(arg_12_0._gopassiveskill, false)
+			gohelper.setActive(self._gopassiveskill, false)
 		end
 
-		arg_12_0:_refreshPassiveSkill(var_12_2, var_12_1)
-		arg_12_0:_refreshSkill(var_12_2)
-		arg_12_0:_refreshSuper(var_12_2)
-		arg_12_0:_refreshAttribute(var_12_2)
+		self:_refreshPassiveSkill(monsterConfig, groupIndex)
+		self:_refreshSkill(monsterConfig)
+		self:_refreshSuper(monsterConfig)
+		self:_refreshAttribute(monsterConfig)
 
-		arg_12_0._scrollskill.horizontalNormalizedPosition = 0
+		self._scrollskill.horizontalNormalizedPosition = 0
 
-		local var_12_5 = string.nilorempty(var_12_2.activeSkill)
-		local var_12_6 = #var_12_2.uniqueSkill < 1
-		local var_12_7 = var_12_5 and var_12_6
+		local notSmallSkill = string.nilorempty(monsterConfig.activeSkill)
+		local notUniqueSkill = #monsterConfig.uniqueSkill < 1
+		local IsNotSkill = notSmallSkill and notUniqueSkill
 
-		gohelper.setActive(arg_12_0._gonoskill, var_12_7)
-		gohelper.setActive(arg_12_0._goskill, not var_12_7)
+		gohelper.setActive(self._gonoskill, IsNotSkill)
+		gohelper.setActive(self._goskill, not IsNotSkill)
 	end
 end
 
-function var_0_0._getBossId(arg_13_0, arg_13_1)
-	local var_13_0 = FightModel.instance:getSelectMonsterGroupId(arg_13_1, arg_13_0._battleId)
-	local var_13_1 = var_13_0 and lua_monster_group.configDict[var_13_0]
+function WeekWalkOriginalEnemyInfoView:_getBossId(groupIndex)
+	local monsterGroupId = FightModel.instance:getSelectMonsterGroupId(groupIndex, self._battleId)
+	local monsterGroupCO = monsterGroupId and lua_monster_group.configDict[monsterGroupId]
+	local bossId = monsterGroupCO and not string.nilorempty(monsterGroupCO.bossId) and monsterGroupCO.bossId or nil
 
-	return var_13_1 and not string.nilorempty(var_13_1.bossId) and var_13_1.bossId or nil
+	return bossId
 end
 
-function var_0_0._refreshSpeicalSkillIcon(arg_14_0, arg_14_1)
-	local var_14_0 = FightConfig.instance:getPassiveSkillsAfterUIFilter(arg_14_1.id)
-	local var_14_1 = FightConfig.instance:_filterSpeicalSkillIds(var_14_0, true)
+function WeekWalkOriginalEnemyInfoView:_refreshSpeicalSkillIcon(monsterConfig)
+	local skills = FightConfig.instance:getPassiveSkillsAfterUIFilter(monsterConfig.id)
 
-	for iter_14_0 = 1, #var_14_1 do
-		local var_14_2 = var_14_1[iter_14_0]
-		local var_14_3 = lua_skill_specialbuff.configDict[var_14_2]
+	skills = FightConfig.instance:_filterSpeicalSkillIds(skills, true)
 
-		if var_14_3 then
-			local var_14_4 = arg_14_0._specialskillIconGOs[iter_14_0]
+	for i = 1, #skills do
+		local skillId = skills[i]
+		local specialco = lua_skill_specialbuff.configDict[skillId]
 
-			if not var_14_4 then
-				var_14_4 = arg_14_0:getUserDataTb_()
-				var_14_4.go = gohelper.cloneInPlace(arg_14_0._gopassiveskillitem, "item" .. iter_14_0)
-				var_14_4._gotag = gohelper.findChild(var_14_4.go, "tag")
-				var_14_4._txttag = gohelper.findChildText(var_14_4.go, "tag/#txt_tag")
+		if specialco then
+			local specialSkillTable = self._specialskillIconGOs[i]
 
-				table.insert(arg_14_0._specialskillIconGOs, var_14_4)
+			if not specialSkillTable then
+				specialSkillTable = self:getUserDataTb_()
+				specialSkillTable.go = gohelper.cloneInPlace(self._gopassiveskillitem, "item" .. i)
+				specialSkillTable._gotag = gohelper.findChild(specialSkillTable.go, "tag")
+				specialSkillTable._txttag = gohelper.findChildText(specialSkillTable.go, "tag/#txt_tag")
 
-				local var_14_5 = gohelper.findChildImage(var_14_4.go, "icon")
+				table.insert(self._specialskillIconGOs, specialSkillTable)
 
-				table.insert(arg_14_0._passiveiconImgs, var_14_5)
-				gohelper.setActive(var_14_4.go, true)
+				local img = gohelper.findChildImage(specialSkillTable.go, "icon")
+
+				table.insert(self._passiveiconImgs, img)
+				gohelper.setActive(specialSkillTable.go, true)
 			else
-				gohelper.setActive(var_14_4.go, true)
+				gohelper.setActive(specialSkillTable.go, true)
 			end
 
-			if not string.nilorempty(var_14_3.lv) then
-				gohelper.setActive(var_14_4._gotag, true)
+			if not string.nilorempty(specialco.lv) then
+				gohelper.setActive(specialSkillTable._gotag, true)
 
-				var_14_4._txttag.text = var_14_3.lv
+				specialSkillTable._txttag.text = specialco.lv
 			else
-				gohelper.setActive(var_14_4._gotag, false)
+				gohelper.setActive(specialSkillTable._gotag, false)
 			end
 
-			if arg_14_0.bossSkillInfos[iter_14_0] == nil then
-				arg_14_0.bossSkillInfos[iter_14_0] = {
-					skillId = var_14_2,
-					icon = var_14_3.icon
+			local info = self.bossSkillInfos[i]
+
+			if info == nil then
+				self.bossSkillInfos[i] = {
+					skillId = skillId,
+					icon = specialco.icon
 				}
 			end
 
-			if string.nilorempty(var_14_3.icon) then
-				logError("boss抗性表的icon字段没有配置,技能ID:" .. var_14_3.id)
+			if string.nilorempty(specialco.icon) then
+				logError("boss抗性表的icon字段没有配置,技能ID:" .. specialco.id)
 			end
 
-			UISpriteSetMgr.instance:setFightPassiveSprite(arg_14_0._passiveiconImgs[iter_14_0], var_14_3.icon)
+			UISpriteSetMgr.instance:setFightPassiveSprite(self._passiveiconImgs[i], specialco.icon)
 		end
 	end
 
-	if #var_14_1 < #arg_14_0._specialskillIconGOs then
-		for iter_14_1 = #var_14_1 + 1, #arg_14_0._specialskillIconGOs do
-			gohelper.setActive(arg_14_0._specialskillIconGOs[iter_14_1].go, false)
+	if #skills < #self._specialskillIconGOs then
+		for i = #skills + 1, #self._specialskillIconGOs do
+			gohelper.setActive(self._specialskillIconGOs[i].go, false)
 		end
 	end
 
-	if #arg_14_0._specialskillIconGOs > 0 then
-		gohelper.setActive(arg_14_0._gopassiveskill, true)
+	if #self._specialskillIconGOs > 0 then
+		gohelper.setActive(self._gopassiveskill, true)
 	end
 
-	gohelper.setAsLastSibling(arg_14_0._btnpassiveskill.gameObject)
-	arg_14_0._btnpassiveskill:AddClickListener(arg_14_0._onBuffPassiveSkillClick, arg_14_0)
+	gohelper.setAsLastSibling(self._btnpassiveskill.gameObject)
+	self._btnpassiveskill:AddClickListener(self._onBuffPassiveSkillClick, self)
 end
 
-function var_0_0._onBuffPassiveSkillClick(arg_15_0)
-	if arg_15_0.bossSkillInfos then
-		local var_15_0
+function WeekWalkOriginalEnemyInfoView:_onBuffPassiveSkillClick()
+	if self.bossSkillInfos then
+		local skillId
 
-		for iter_15_0, iter_15_1 in pairs(arg_15_0.bossSkillInfos) do
-			local var_15_1 = iter_15_1.skillId
-			local var_15_2 = arg_15_0._enemybuffpassiveGOs[iter_15_0]
+		for i, skillInfo in pairs(self.bossSkillInfos) do
+			skillId = skillInfo.skillId
 
-			if not var_15_2 then
-				var_15_2 = gohelper.cloneInPlace(arg_15_0._gobuffpassiveitem, "item" .. iter_15_0)
+			local passiveSkillGO = self._enemybuffpassiveGOs[i]
 
-				table.insert(arg_15_0._enemybuffpassiveGOs, var_15_2)
+			if not passiveSkillGO then
+				passiveSkillGO = gohelper.cloneInPlace(self._gobuffpassiveitem, "item" .. i)
 
-				local var_15_3 = gohelper.findChildImage(var_15_2, "title/simage_icon")
+				table.insert(self._enemybuffpassiveGOs, passiveSkillGO)
 
-				table.insert(arg_15_0._passiveSkillImgs, var_15_3)
-				gohelper.setActive(var_15_2, true)
+				local img = gohelper.findChildImage(passiveSkillGO, "title/simage_icon")
+
+				table.insert(self._passiveSkillImgs, img)
+				gohelper.setActive(passiveSkillGO, true)
 			else
-				gohelper.setActive(var_15_2, true)
+				gohelper.setActive(passiveSkillGO, true)
 			end
 
-			local var_15_4 = gohelper.findChild(var_15_2, "txt_desc/image_line")
+			local line = gohelper.findChild(passiveSkillGO, "txt_desc/image_line")
 
-			gohelper.setActive(var_15_4, true)
-			arg_15_0:_setPassiveSkillTip(var_15_2, iter_15_1)
-			UISpriteSetMgr.instance:setFightPassiveSprite(arg_15_0._passiveSkillImgs[iter_15_0], iter_15_1.icon)
+			gohelper.setActive(line, true)
+			self:_setPassiveSkillTip(passiveSkillGO, skillInfo)
+			UISpriteSetMgr.instance:setFightPassiveSprite(self._passiveSkillImgs[i], skillInfo.icon)
 		end
 
-		if #arg_15_0.bossSkillInfos < #arg_15_0._enemybuffpassiveGOs then
-			for iter_15_2 = #arg_15_0.bossSkillInfos + 1, #arg_15_0._enemybuffpassiveGOs do
-				gohelper.setActive(arg_15_0._enemybuffpassiveGOs[iter_15_2], false)
+		if #self.bossSkillInfos < #self._enemybuffpassiveGOs then
+			for i = #self.bossSkillInfos + 1, #self._enemybuffpassiveGOs do
+				gohelper.setActive(self._enemybuffpassiveGOs[i], false)
 			end
 		end
 
-		local var_15_5 = gohelper.findChild(arg_15_0._enemybuffpassiveGOs[#arg_15_0.bossSkillInfos], "txt_desc/image_line")
+		local line = gohelper.findChild(self._enemybuffpassiveGOs[#self.bossSkillInfos], "txt_desc/image_line")
 
-		gohelper.setActive(var_15_5, false)
-		gohelper.setActive(arg_15_0._gobuffpassiveview, true)
+		gohelper.setActive(line, false)
+		gohelper.setActive(self._gobuffpassiveview, true)
 
-		arg_15_0.isopenpassiveview = false
+		self.isopenpassiveview = false
 	end
 end
 
-function var_0_0._setPassiveSkillTip(arg_16_0, arg_16_1, arg_16_2)
-	local var_16_0 = gohelper.findChildText(arg_16_1, "title/txt_name")
-	local var_16_1 = gohelper.findChildText(arg_16_1, "txt_desc")
-	local var_16_2 = lua_skill.configDict[arg_16_2.skillId]
+function WeekWalkOriginalEnemyInfoView:_setPassiveSkillTip(skillgo, skillInfo)
+	local name = gohelper.findChildText(skillgo, "title/txt_name")
+	local desc = gohelper.findChildText(skillgo, "txt_desc")
+	local skillCO = lua_skill.configDict[skillInfo.skillId]
 
-	var_16_0.text = var_16_2.name
-	var_16_1.text = HeroSkillModel.instance:skillDesToSpot(var_16_2.desc, "#CC492F", "#485E92")
+	name.text = skillCO.name
+
+	local desctxt = HeroSkillModel.instance:skillDesToSpot(skillCO.desc, "#CC492F", "#485E92")
+
+	desc.text = desctxt
 end
 
-function var_0_0._refreshPassiveSkill(arg_17_0, arg_17_1, arg_17_2)
-	local var_17_0 = FightConfig.instance:getPassiveSkillsAfterUIFilter(arg_17_1.id)
+function WeekWalkOriginalEnemyInfoView:_refreshPassiveSkill(monsterConfig, groupIndex)
+	local passiveSkillIds = FightConfig.instance:getPassiveSkillsAfterUIFilter(monsterConfig.id)
 
-	if FightHelper.isBossId(arg_17_0:_getBossId(arg_17_2), arg_17_1.id) then
-		var_17_0 = FightConfig.instance:_filterSpeicalSkillIds(var_17_0, false)
+	if FightHelper.isBossId(self:_getBossId(groupIndex), monsterConfig.id) then
+		passiveSkillIds = FightConfig.instance:_filterSpeicalSkillIds(passiveSkillIds, false)
 	end
 
-	if var_17_0 and #var_17_0 > 0 then
-		local var_17_1 = {}
+	if passiveSkillIds and #passiveSkillIds > 0 then
+		local tagNameExistDict = {}
 
-		for iter_17_0 = 1, #var_17_0 do
-			local var_17_2 = arg_17_0._passiveSkillGOs[iter_17_0]
+		for i = 1, #passiveSkillIds do
+			local passiveSkillTable = self._passiveSkillGOs[i]
 
-			if not var_17_2 then
-				local var_17_3 = gohelper.cloneInPlace(arg_17_0._goenemypassiveitem, "item" .. iter_17_0)
+			if not passiveSkillTable then
+				local passiveSkillGO = gohelper.cloneInPlace(self._goenemypassiveitem, "item" .. i)
 
-				var_17_2 = arg_17_0:getUserDataTb_()
-				var_17_2.go = var_17_3
-				var_17_2.name = gohelper.findChildText(var_17_3, "bg/bg/name")
-				var_17_2.desc = gohelper.findChildText(var_17_3, "desc")
-				var_17_2.descicon = gohelper.findChild(var_17_3, "desc/icon")
-				var_17_2.detailPassiveStateTables = arg_17_0:getUserDataTb_()
+				passiveSkillTable = self:getUserDataTb_()
+				passiveSkillTable.go = passiveSkillGO
+				passiveSkillTable.name = gohelper.findChildText(passiveSkillGO, "bg/bg/name")
+				passiveSkillTable.desc = gohelper.findChildText(passiveSkillGO, "desc")
+				passiveSkillTable.descicon = gohelper.findChild(passiveSkillGO, "desc/icon")
+				passiveSkillTable.detailPassiveStateTables = self:getUserDataTb_()
 
-				table.insert(arg_17_0._passiveSkillGOs, var_17_2)
+				table.insert(self._passiveSkillGOs, passiveSkillTable)
 			end
 
-			local var_17_4 = tonumber(var_17_0[iter_17_0])
-			local var_17_5 = lua_skill.configDict[var_17_4]
+			local passiveSkillId = tonumber(passiveSkillIds[i])
+			local skillConfig = lua_skill.configDict[passiveSkillId]
 
-			if not var_17_5 then
-				logError("找不到技能配置, id: " .. tostring(var_17_4))
+			if not skillConfig then
+				logError("找不到技能配置, id: " .. tostring(passiveSkillId))
 			end
 
-			var_17_2.name.text = var_17_5.name
+			passiveSkillTable.name.text = skillConfig.name
 
-			local var_17_6 = var_17_5.desc
-			local var_17_7 = HeroSkillModel.instance:getEffectTagIDsFromDescRecursion(var_17_6)
-			local var_17_8 = 0
+			local txt = skillConfig.desc
+			local matches = HeroSkillModel.instance:getEffectTagIDsFromDescRecursion(txt)
+			local showCount = 0
 
-			for iter_17_1 = 1, #var_17_7 do
-				local var_17_9 = SkillConfig.instance:getSkillEffectDescCo(var_17_7[iter_17_1]).name
+			for k = 1, #matches do
+				local name = SkillConfig.instance:getSkillEffectDescCo(matches[k]).name
+				local canShowSkillTag = HeroSkillModel.instance:canShowSkillTag(name)
 
-				if HeroSkillModel.instance:canShowSkillTag(var_17_9) and not var_17_1[var_17_9] then
-					var_17_8 = var_17_8 + 1
-					var_17_1[var_17_9] = true
+				if canShowSkillTag and not tagNameExistDict[name] then
+					showCount = showCount + 1
+					tagNameExistDict[name] = true
 
-					local var_17_10 = SkillConfig.instance:getSkillEffectDescCo(var_17_7[iter_17_1]).desc
-					local var_17_11 = var_17_2.detailPassiveStateTables[var_17_8]
+					local desc = SkillConfig.instance:getSkillEffectDescCo(matches[k]).desc
+					local detailPassiveState = passiveSkillTable.detailPassiveStateTables[showCount]
 
-					if not var_17_11 then
-						local var_17_12 = gohelper.cloneInPlace(var_17_2.desc.gameObject, "state")
+					if not detailPassiveState then
+						local detailPassiveStateGO = gohelper.cloneInPlace(passiveSkillTable.desc.gameObject, "state")
 
-						var_17_11 = arg_17_0:getUserDataTb_()
-						var_17_11.go = var_17_12
-						var_17_11.desc = var_17_12:GetComponent(gohelper.Type_TextMesh)
+						detailPassiveState = self:getUserDataTb_()
+						detailPassiveState.go = detailPassiveStateGO
+						detailPassiveState.desc = detailPassiveStateGO:GetComponent(gohelper.Type_TextMesh)
 
-						gohelper.setActive(var_17_11.go, false)
+						gohelper.setActive(detailPassiveState.go, false)
 
-						var_17_11.desc.text = ""
-						var_17_2.detailPassiveStateTables[var_17_8] = var_17_11
+						detailPassiveState.desc.text = ""
+						passiveSkillTable.detailPassiveStateTables[showCount] = detailPassiveState
 					end
 
-					gohelper.setActive(var_17_11.go, true)
+					gohelper.setActive(detailPassiveState.go, true)
 
-					var_17_11.desc.text = HeroSkillModel.instance:skillDesToSpot(string.format("[%s]:%s", SkillConfig.instance:processSkillDesKeyWords(var_17_9), SkillConfig.instance:processSkillDesKeyWords(var_17_10)))
+					detailPassiveState.desc.text = HeroSkillModel.instance:skillDesToSpot(string.format("[%s]:%s", SkillConfig.instance:processSkillDesKeyWords(name), SkillConfig.instance:processSkillDesKeyWords(desc)))
 				end
 			end
 
-			for iter_17_2 = var_17_8 + 1, #var_17_2.detailPassiveStateTables do
-				if var_17_2.detailPassiveStateTables[iter_17_2] then
-					gohelper.setActive(var_17_2.detailPassiveStateTables[iter_17_2].go, false)
+			for k = showCount + 1, #passiveSkillTable.detailPassiveStateTables do
+				if passiveSkillTable.detailPassiveStateTables[k] then
+					gohelper.setActive(passiveSkillTable.detailPassiveStateTables[k].go, false)
 				end
 			end
 
-			var_17_2.desc.text = HeroSkillModel.instance:skillDesToSpot(var_17_6)
+			passiveSkillTable.desc.text = HeroSkillModel.instance:skillDesToSpot(txt)
 
-			gohelper.setActive(var_17_2.descicon, not string.nilorempty(var_17_2.desc.text))
-			gohelper.setActive(var_17_2.go, true)
+			gohelper.setActive(passiveSkillTable.descicon, not string.nilorempty(passiveSkillTable.desc.text))
+			gohelper.setActive(passiveSkillTable.go, true)
 		end
 	end
 
-	for iter_17_3 = #var_17_0 + 1, #arg_17_0._passiveSkillGOs do
-		gohelper.setActive(arg_17_0._passiveSkillGOs[iter_17_3].go, false)
+	for i = #passiveSkillIds + 1, #self._passiveSkillGOs do
+		gohelper.setActive(self._passiveSkillGOs[i].go, false)
 	end
 end
 
-function var_0_0._refreshSkill(arg_18_0, arg_18_1)
-	local var_18_0 = {}
+function WeekWalkOriginalEnemyInfoView:_refreshSkill(monsterConfig)
+	local skillIds = {}
 
-	if not string.nilorempty(arg_18_1.activeSkill) then
-		var_18_0 = string.split(arg_18_1.activeSkill, "|")
+	if not string.nilorempty(monsterConfig.activeSkill) then
+		skillIds = string.split(monsterConfig.activeSkill, "|")
 
-		for iter_18_0 = 1, #var_18_0 do
-			local var_18_1 = arg_18_0._skillGOs[iter_18_0]
+		for i = 1, #skillIds do
+			local skillTable = self._skillGOs[i]
 
-			if not var_18_1 then
-				local var_18_2 = gohelper.cloneInPlace(arg_18_0._goskillitem, "item" .. iter_18_0)
+			if not skillTable then
+				local skillGO = gohelper.cloneInPlace(self._goskillitem, "item" .. i)
 
-				var_18_1 = arg_18_0:getUserDataTb_()
-				var_18_1.go = var_18_2
-				var_18_1.icon = gohelper.findChildSingleImage(var_18_2, "imgIcon")
-				var_18_1.btn = gohelper.findChildButtonWithAudio(var_18_2, "bg", AudioEnum.UI.Play_UI_Activity_tips)
+				skillTable = self:getUserDataTb_()
+				skillTable.go = skillGO
+				skillTable.icon = gohelper.findChildSingleImage(skillGO, "imgIcon")
+				skillTable.btn = gohelper.findChildButtonWithAudio(skillGO, "bg", AudioEnum.UI.Play_UI_Activity_tips)
 
-				var_18_1.btn:AddClickListener(function(arg_19_0)
-					ViewMgr.instance:openView(ViewName.SkillTipView3, arg_19_0.info)
-				end, var_18_1)
+				skillTable.btn:AddClickListener(function(skillTable)
+					ViewMgr.instance:openView(ViewName.SkillTipView3, skillTable.info)
+				end, skillTable)
 
-				var_18_1.tag = gohelper.findChildSingleImage(var_18_2, "tag/tagIcon")
+				skillTable.tag = gohelper.findChildSingleImage(skillGO, "tag/tagIcon")
 
-				table.insert(arg_18_0._skillGOs, var_18_1)
+				table.insert(self._skillGOs, skillTable)
 			end
 
-			local var_18_3 = string.splitToNumber(var_18_0[iter_18_0], "#")
-			local var_18_4 = var_18_3[2]
-			local var_18_5 = lua_skill.configDict[var_18_4]
+			local skillIdList = string.splitToNumber(skillIds[i], "#")
+			local skillId = skillIdList[2]
+			local skillConfig = lua_skill.configDict[skillId]
 
-			var_18_1.icon:LoadImage(ResUrl.getSkillIcon(var_18_5.icon))
-			var_18_1.tag:LoadImage(ResUrl.getAttributeIcon("attribute_" .. var_18_5.showTag))
+			skillTable.icon:LoadImage(ResUrl.getSkillIcon(skillConfig.icon))
+			skillTable.tag:LoadImage(ResUrl.getAttributeIcon("attribute_" .. skillConfig.showTag))
 
-			local var_18_6 = {}
+			local info = {}
 
-			var_18_6.super = false
+			info.super = false
 
-			table.remove(var_18_3, 1)
+			table.remove(skillIdList, 1)
 
-			var_18_6.skillIdList = var_18_3
-			var_18_1.info = var_18_6
+			info.skillIdList = skillIdList
+			skillTable.info = info
 
-			gohelper.setActive(var_18_1.go, true)
+			gohelper.setActive(skillTable.go, true)
 		end
 	end
 
-	for iter_18_1 = #var_18_0 + 1, #arg_18_0._skillGOs do
-		gohelper.setActive(arg_18_0._skillGOs[iter_18_1].go, false)
+	for i = #skillIds + 1, #self._skillGOs do
+		gohelper.setActive(self._skillGOs[i].go, false)
 	end
 end
 
-function var_0_0._refreshSuper(arg_20_0, arg_20_1)
-	local var_20_0 = arg_20_1.uniqueSkill
-	local var_20_1
-	local var_20_2
-	local var_20_3
-	local var_20_4
+function WeekWalkOriginalEnemyInfoView:_refreshSuper(monsterConfig)
+	local uniqueSkillList = monsterConfig.uniqueSkill
+	local superItem, skillId, skillConfig, info
 
-	for iter_20_0 = 1, #var_20_0 do
-		local var_20_5 = arg_20_0._superItemList[iter_20_0]
+	for i = 1, #uniqueSkillList do
+		superItem = self._superItemList[i]
 
-		if not var_20_5 then
-			var_20_5 = arg_20_0:createSuperItem()
+		if not superItem then
+			superItem = self:createSuperItem()
 
-			table.insert(arg_20_0._superItemList, var_20_5)
+			table.insert(self._superItemList, superItem)
 		end
 
-		local var_20_6 = var_20_0[iter_20_0]
-		local var_20_7 = lua_skill.configDict[var_20_6]
+		skillId = uniqueSkillList[i]
+		skillConfig = lua_skill.configDict[skillId]
 
-		var_20_5.icon:LoadImage(ResUrl.getSkillIcon(var_20_7.icon))
-		var_20_5.tag:LoadImage(ResUrl.getAttributeIcon("attribute_" .. var_20_7.showTag))
+		superItem.icon:LoadImage(ResUrl.getSkillIcon(skillConfig.icon))
+		superItem.tag:LoadImage(ResUrl.getAttributeIcon("attribute_" .. skillConfig.showTag))
 
-		local var_20_8 = {}
-
-		var_20_8.super = true
-		var_20_8.skillIdList = {
-			var_20_6
+		info = {}
+		info.super = true
+		info.skillIdList = {
+			skillId
 		}
-		var_20_5.info = var_20_8
+		superItem.info = info
 
-		gohelper.setActive(var_20_5.go, true)
+		gohelper.setActive(superItem.go, true)
 	end
 
-	gohelper.setActive(arg_20_0._gosupers, #var_20_0 > 0)
+	gohelper.setActive(self._gosupers, #uniqueSkillList > 0)
 
-	for iter_20_1 = #var_20_0 + 1, #arg_20_0._superItemList do
-		gohelper.setActive(arg_20_0._superItemList[iter_20_1].go, false)
+	for i = #uniqueSkillList + 1, #self._superItemList do
+		gohelper.setActive(self._superItemList[i].go, false)
 	end
 end
 
-function var_0_0.createSuperItem(arg_21_0)
-	local var_21_0 = arg_21_0:getUserDataTb_()
+function WeekWalkOriginalEnemyInfoView:createSuperItem()
+	local superItem = self:getUserDataTb_()
 
-	var_21_0.go = gohelper.cloneInPlace(arg_21_0._gosuperitem)
-	var_21_0.icon = gohelper.findChildSingleImage(var_21_0.go, "imgIcon")
-	var_21_0.tag = gohelper.findChildSingleImage(var_21_0.go, "tag/tagIcon")
-	var_21_0.btn = gohelper.findChildButtonWithAudio(var_21_0.go, "bg", AudioEnum.UI.Play_UI_Activity_tips)
+	superItem.go = gohelper.cloneInPlace(self._gosuperitem)
+	superItem.icon = gohelper.findChildSingleImage(superItem.go, "imgIcon")
+	superItem.tag = gohelper.findChildSingleImage(superItem.go, "tag/tagIcon")
+	superItem.btn = gohelper.findChildButtonWithAudio(superItem.go, "bg", AudioEnum.UI.Play_UI_Activity_tips)
 
-	var_21_0.btn:AddClickListener(function(arg_22_0)
-		ViewMgr.instance:openView(ViewName.SkillTipView3, arg_22_0.info)
-	end, var_21_0)
+	superItem.btn:AddClickListener(function(item)
+		ViewMgr.instance:openView(ViewName.SkillTipView3, item.info)
+	end, superItem)
 
-	return var_21_0
+	return superItem
 end
 
-function var_0_0._refreshAttribute(arg_23_0, arg_23_1)
-	local var_23_0 = lua_monster_skill_template.configDict[arg_23_1.skillTemplate]
-	local var_23_1 = CharacterDataConfig.instance:getMonsterAttributeScoreList(arg_23_1.id)
+function WeekWalkOriginalEnemyInfoView:_refreshAttribute(monsterConfig)
+	local monsterSkillTemplateConfig = lua_monster_skill_template.configDict[monsterConfig.skillTemplate]
+	local attrTab = CharacterDataConfig.instance:getMonsterAttributeScoreList(monsterConfig.id)
 
-	table.insert(var_23_1, 2, table.remove(var_23_1, 4))
+	table.insert(attrTab, 2, table.remove(attrTab, 4))
 
-	local var_23_2 = {
+	local attrType = {
 		"atk",
 		"technic",
 		"def",
 		"mdef"
 	}
-	local var_23_3 = {}
+	local data = {}
 
-	for iter_23_0, iter_23_1 in ipairs(var_23_1) do
-		table.insert(var_23_3, {
-			id = HeroConfig.instance:getIDByAttrType(var_23_2[iter_23_0]),
-			value = iter_23_1
+	for i, v in ipairs(attrTab) do
+		table.insert(data, {
+			id = HeroConfig.instance:getIDByAttrType(attrType[i]),
+			value = v
 		})
 	end
 
-	gohelper.CreateObjList(arg_23_0, arg_23_0._onMonsterAttrItemShow, var_23_3, arg_23_0._goattribute)
+	gohelper.CreateObjList(self, self._onMonsterAttrItemShow, data, self._goattribute)
 end
 
-function var_0_0._onMonsterAttrItemShow(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
-	local var_24_0 = arg_24_1.transform
-	local var_24_1 = var_24_0:Find("icon"):GetComponent(gohelper.Type_Image)
-	local var_24_2 = var_24_0:Find("name"):GetComponent(gohelper.Type_TextMesh)
-	local var_24_3 = var_24_0:Find("rate"):GetComponent(gohelper.Type_Image)
-	local var_24_4 = HeroConfig.instance:getHeroAttributeCO(arg_24_2.id)
+function WeekWalkOriginalEnemyInfoView:_onMonsterAttrItemShow(obj, data, index)
+	local transform = obj.transform
+	local icon = transform:Find("icon"):GetComponent(gohelper.Type_Image)
+	local name = transform:Find("name"):GetComponent(gohelper.Type_TextMesh)
+	local rate = transform:Find("rate"):GetComponent(gohelper.Type_Image)
+	local config = HeroConfig.instance:getHeroAttributeCO(data.id)
 
-	var_24_2.text = var_24_4.name
+	name.text = config.name
 
-	UISpriteSetMgr.instance:setCommonSprite(var_24_1, "icon_att_" .. var_24_4.id)
-	UISpriteSetMgr.instance:setCommonSprite(var_24_3, "sx_" .. arg_24_2.value, true)
+	UISpriteSetMgr.instance:setCommonSprite(icon, "icon_att_" .. config.id)
+	UISpriteSetMgr.instance:setCommonSprite(rate, "sx_" .. data.value, true)
 end
 
-function var_0_0._setInfoShowState(arg_25_0)
-	arg_25_0._isShowAttributeInfo = not arg_25_0._isShowAttributeInfo
+function WeekWalkOriginalEnemyInfoView:_setInfoShowState()
+	self._isShowAttributeInfo = not self._isShowAttributeInfo
 
-	gohelper.setActive(arg_25_0._gonormalicon, not arg_25_0._isShowAttributeInfo)
-	gohelper.setActive(arg_25_0._godescscrollview, not arg_25_0._isShowAttributeInfo)
-	gohelper.setActive(arg_25_0._goselecticon, arg_25_0._isShowAttributeInfo)
-	gohelper.setActive(arg_25_0._goattribute, arg_25_0._isShowAttributeInfo)
+	gohelper.setActive(self._gonormalicon, not self._isShowAttributeInfo)
+	gohelper.setActive(self._godescscrollview, not self._isShowAttributeInfo)
+	gohelper.setActive(self._goselecticon, self._isShowAttributeInfo)
+	gohelper.setActive(self._goattribute, self._isShowAttributeInfo)
 
-	arg_25_0.scrollDescContainer.verticalNormalizedPosition = 1
+	self.scrollDescContainer.verticalNormalizedPosition = 1
 end
 
-function var_0_0.onUpdateParam(arg_26_0)
-	arg_26_0._battleId = arg_26_0.viewParam.battleId
-	arg_26_0._battleInfo = arg_26_0.viewParam.battleInfo
+function WeekWalkOriginalEnemyInfoView:onUpdateParam()
+	self._battleId = self.viewParam.battleId
+	self._battleInfo = self.viewParam.battleInfo
 
-	arg_26_0:_refreshUI()
+	self:_refreshUI()
 end
 
-function var_0_0.onOpen(arg_27_0)
-	arg_27_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickEnemyItem, arg_27_0._refreshInfo, arg_27_0)
+function WeekWalkOriginalEnemyInfoView:onOpen()
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickEnemyItem, self._refreshInfo, self)
 
-	arg_27_0._battleId = arg_27_0.viewParam.battleId
-	arg_27_0._battleInfo = arg_27_0.viewParam.battleInfo
-	arg_27_0._adventure = arg_27_0.viewParam.adventure
+	self._battleId = self.viewParam.battleId
+	self._battleInfo = self.viewParam.battleInfo
+	self._adventure = self.viewParam.adventure
 
-	arg_27_0:_refreshUI()
+	self:_refreshUI()
 end
 
-function var_0_0.onClose(arg_28_0)
-	arg_28_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickEnemyItem, arg_28_0._refreshInfo, arg_28_0)
+function WeekWalkOriginalEnemyInfoView:onClose()
+	self:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickEnemyItem, self._refreshInfo, self)
 end
 
-function var_0_0.onDestroyView(arg_29_0)
-	arg_29_0._simagerightbg:UnLoadImage()
+function WeekWalkOriginalEnemyInfoView:onDestroyView()
+	self._simagerightbg:UnLoadImage()
 
-	arg_29_0._simagerightbg = nil
+	self._simagerightbg = nil
 
-	if arg_29_0._enemyGroupItemGOs then
-		for iter_29_0 = 1, #arg_29_0._enemyGroupItemGOs do
-			if arg_29_0._enemyGroupItemGOs[iter_29_0].enemyItemGOs then
-				for iter_29_1 = 1, #arg_29_0._enemyGroupItemGOs[iter_29_0].enemyItemGOs do
-					local var_29_0 = arg_29_0._enemyGroupItemGOs[iter_29_0].enemyItemGOs[iter_29_1]
+	if self._enemyGroupItemGOs then
+		for i = 1, #self._enemyGroupItemGOs do
+			if self._enemyGroupItemGOs[i].enemyItemGOs then
+				for j = 1, #self._enemyGroupItemGOs[i].enemyItemGOs do
+					local enemyItemTable = self._enemyGroupItemGOs[i].enemyItemGOs[j]
 
-					var_29_0.btn:RemoveClickListener()
-					HeroGroupController.instance:unregisterCallback(HeroGroupEvent.OnClickEnemyItem, var_29_0.onClickEnemyItem, var_29_0)
+					enemyItemTable.btn:RemoveClickListener()
+					HeroGroupController.instance:unregisterCallback(HeroGroupEvent.OnClickEnemyItem, enemyItemTable.onClickEnemyItem, enemyItemTable)
 				end
 			end
 		end
 	end
 
-	if arg_29_0._skillGOs then
-		for iter_29_2 = 1, #arg_29_0._skillGOs do
-			local var_29_1 = arg_29_0._skillGOs[iter_29_2]
+	if self._skillGOs then
+		for i = 1, #self._skillGOs do
+			local skillTable = self._skillGOs[i]
 
-			var_29_1.tag:UnLoadImage()
-			var_29_1.icon:UnLoadImage()
-			var_29_1.btn:RemoveClickListener()
+			skillTable.tag:UnLoadImage()
+			skillTable.icon:UnLoadImage()
+			skillTable.btn:RemoveClickListener()
 		end
 	end
 
-	for iter_29_3, iter_29_4 in ipairs(arg_29_0._superItemList) do
-		iter_29_4.btn:RemoveClickListener()
+	for _, superItem in ipairs(self._superItemList) do
+		superItem.btn:RemoveClickListener()
 	end
 
-	arg_29_0:__onDispose()
+	self:__onDispose()
 end
 
-return var_0_0
+return WeekWalkOriginalEnemyInfoView

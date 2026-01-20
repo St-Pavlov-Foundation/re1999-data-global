@@ -1,143 +1,145 @@
-﻿module("modules.logic.fight.view.FightEnemyActionCardItem", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightEnemyActionCardItem.lua
 
-local var_0_0 = class("FightEnemyActionCardItem", UserDataDispose)
+module("modules.logic.fight.view.FightEnemyActionCardItem", package.seeall)
 
-function var_0_0.get(arg_1_0, arg_1_1)
-	local var_1_0 = var_0_0.New()
+local FightEnemyActionCardItem = class("FightEnemyActionCardItem", UserDataDispose)
 
-	var_1_0:init(arg_1_0, arg_1_1)
+function FightEnemyActionCardItem.get(go, cardMo)
+	local item = FightEnemyActionCardItem.New()
 
-	return var_1_0
+	item:init(go, cardMo)
+
+	return item
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
-	var_0_0.super.__onInit(arg_2_0)
+function FightEnemyActionCardItem:init(go, cardMo)
+	FightEnemyActionCardItem.super.__onInit(self)
 
-	arg_2_0.goCard = arg_2_1
-	arg_2_0.tr = arg_2_1.transform
-	arg_2_0.cardMo = arg_2_2
-	arg_2_0.skillId = arg_2_2.skillId
-	arg_2_0.entityId = arg_2_2.uid
-	arg_2_0.entityMo = FightDataHelper.entityMgr:getById(arg_2_0.entityId)
-	arg_2_0.skillCo = lua_skill.configDict[arg_2_0.skillId]
-	arg_2_0.skillCardLv = FightCardDataHelper.getSkillLv(arg_2_0.entityId, arg_2_0.skillId)
-	arg_2_0.lvGoList = arg_2_0:getUserDataTb_()
-	arg_2_0.lvImgIconList = arg_2_0:getUserDataTb_()
-	arg_2_0.lvImgCompList = arg_2_0:getUserDataTb_()
-	arg_2_0.starItemCanvasList = arg_2_0:getUserDataTb_()
+	self.goCard = go
+	self.tr = go.transform
+	self.cardMo = cardMo
+	self.skillId = cardMo.skillId
+	self.entityId = cardMo.uid
+	self.entityMo = FightDataHelper.entityMgr:getById(self.entityId)
+	self.skillCo = lua_skill.configDict[self.skillId]
+	self.skillCardLv = FightCardDataHelper.getSkillLv(self.entityId, self.skillId)
+	self.lvGoList = self:getUserDataTb_()
+	self.lvImgIconList = self:getUserDataTb_()
+	self.lvImgCompList = self:getUserDataTb_()
+	self.starItemCanvasList = self:getUserDataTb_()
 
-	for iter_2_0 = 0, 4 do
-		local var_2_0 = gohelper.findChild(arg_2_0.goCard, "lv" .. iter_2_0)
-		local var_2_1 = gohelper.findChildSingleImage(var_2_0, "imgIcon")
-		local var_2_2 = gohelper.findChildImage(var_2_0, "imgIcon")
+	for i = 0, 4 do
+		local lvGO = gohelper.findChild(self.goCard, "lv" .. i)
+		local lvIcon = gohelper.findChildSingleImage(lvGO, "imgIcon")
+		local lvImgComp = gohelper.findChildImage(lvGO, "imgIcon")
 
-		gohelper.setActive(var_2_0, true)
+		gohelper.setActive(lvGO, true)
 
-		arg_2_0.lvGoList[iter_2_0] = var_2_0
-		arg_2_0.lvImgIconList[iter_2_0] = var_2_1
-		arg_2_0.lvImgCompList[iter_2_0] = var_2_2
+		self.lvGoList[i] = lvGO
+		self.lvImgIconList[i] = lvIcon
+		self.lvImgCompList[i] = lvImgComp
 	end
 
-	arg_2_0.goTag = gohelper.findChild(arg_2_0.goCard, "tag")
-	arg_2_0.tagPosLevelDic = {}
+	self.goTag = gohelper.findChild(self.goCard, "tag")
+	self.tagPosLevelDic = {}
 
-	for iter_2_1 = 0, 4 do
-		local var_2_3, var_2_4 = recthelper.getAnchor(gohelper.findChild(arg_2_0.goCard, "tag/pos" .. iter_2_1).transform)
+	for i = 0, 4 do
+		local x, y = recthelper.getAnchor(gohelper.findChild(self.goCard, "tag/pos" .. i).transform)
 
-		arg_2_0.tagPosLevelDic[iter_2_1] = {
-			var_2_3,
-			var_2_4
+		self.tagPosLevelDic[i] = {
+			x,
+			y
 		}
 	end
 
-	arg_2_0.tagRootTr = gohelper.findChild(arg_2_0.goCard, "tag/tag").transform
-	arg_2_0.tagIcon = gohelper.findChildSingleImage(arg_2_0.goCard, "tag/tag/tagIcon")
-	arg_2_0.starGo = gohelper.findChild(arg_2_0.goCard, "star")
-	arg_2_0.starCanvas = gohelper.onceAddComponent(arg_2_0.starGo, typeof(UnityEngine.CanvasGroup))
-	arg_2_0.innerStartGoList = arg_2_0:getUserDataTb_()
-	arg_2_0.innerStartCanvasList = arg_2_0:getUserDataTb_()
+	self.tagRootTr = gohelper.findChild(self.goCard, "tag/tag").transform
+	self.tagIcon = gohelper.findChildSingleImage(self.goCard, "tag/tag/tagIcon")
+	self.starGo = gohelper.findChild(self.goCard, "star")
+	self.starCanvas = gohelper.onceAddComponent(self.starGo, typeof(UnityEngine.CanvasGroup))
+	self.innerStartGoList = self:getUserDataTb_()
+	self.innerStartCanvasList = self:getUserDataTb_()
 
-	for iter_2_2 = 1, FightEnum.MaxSkillCardLv do
-		local var_2_5 = gohelper.findChild(arg_2_0.goCard, "star/star" .. iter_2_2)
+	for i = 1, FightEnum.MaxSkillCardLv do
+		local starObj = gohelper.findChild(self.goCard, "star/star" .. i)
 
-		table.insert(arg_2_0.innerStartGoList, var_2_5)
-		table.insert(arg_2_0.innerStartCanvasList, gohelper.onceAddComponent(var_2_5, typeof(UnityEngine.CanvasGroup)))
+		table.insert(self.innerStartGoList, starObj)
+		table.insert(self.innerStartCanvasList, gohelper.onceAddComponent(starObj, typeof(UnityEngine.CanvasGroup)))
 	end
 
-	arg_2_0:hideOther()
+	self:hideOther()
 end
 
-function var_0_0.hideOther(arg_3_0)
-	local var_3_0 = gohelper.onceAddComponent(arg_3_0.goCard, typeof(UnityEngine.Animator))
+function FightEnemyActionCardItem:hideOther()
+	local cardAni = gohelper.onceAddComponent(self.goCard, typeof(UnityEngine.Animator))
 
-	if var_3_0 then
-		var_3_0.enabled = false
+	if cardAni then
+		cardAni.enabled = false
 	end
 
-	local var_3_1 = arg_3_0.tr.childCount
+	local count = self.tr.childCount
 
-	for iter_3_0 = 1, var_3_1 do
-		local var_3_2 = arg_3_0.tr:GetChild(iter_3_0 - 1)
+	for index = 1, count do
+		local child = self.tr:GetChild(index - 1)
 
-		gohelper.setActive(var_3_2.gameObject, false)
+		gohelper.setActive(child.gameObject, false)
 	end
 end
 
-function var_0_0.refreshCard(arg_4_0)
-	for iter_4_0, iter_4_1 in pairs(arg_4_0.lvGoList) do
-		gohelper.setActive(iter_4_1, true)
-		gohelper.setActiveCanvasGroup(iter_4_1, arg_4_0.skillCardLv == iter_4_0)
+function FightEnemyActionCardItem:refreshCard()
+	for level, lvGO in pairs(self.lvGoList) do
+		gohelper.setActive(lvGO, true)
+		gohelper.setActiveCanvasGroup(lvGO, self.skillCardLv == level)
 	end
 
-	local var_4_0 = ResUrl.getSkillIcon(arg_4_0.skillCo.icon)
+	local targetIconUrl = ResUrl.getSkillIcon(self.skillCo.icon)
 
-	for iter_4_2, iter_4_3 in pairs(arg_4_0.lvImgIconList) do
-		if gohelper.isNil(arg_4_0.lvImgCompList[iter_4_2].sprite) then
-			iter_4_3:UnLoadImage()
-		elseif iter_4_3.curImageUrl ~= var_4_0 then
-			iter_4_3:UnLoadImage()
+	for level, img in pairs(self.lvImgIconList) do
+		if gohelper.isNil(self.lvImgCompList[level].sprite) then
+			img:UnLoadImage()
+		elseif img.curImageUrl ~= targetIconUrl then
+			img:UnLoadImage()
 		end
 
-		iter_4_3:LoadImage(var_4_0)
+		img:LoadImage(targetIconUrl)
 	end
 
-	local var_4_1 = arg_4_0.skillCardLv < FightEnum.UniqueSkillCardLv and arg_4_0.skillCardLv > 0
+	local showStar = self.skillCardLv < FightEnum.UniqueSkillCardLv and self.skillCardLv > 0
 
-	gohelper.setActive(arg_4_0.starGo, var_4_1)
+	gohelper.setActive(self.starGo, showStar)
 
-	arg_4_0.starCanvas.alpha = 1
+	self.starCanvas.alpha = 1
 
-	for iter_4_4, iter_4_5 in ipairs(arg_4_0.innerStartGoList) do
-		gohelper.setActive(iter_4_5, iter_4_4 == arg_4_0.skillCardLv)
+	for i, startGO in ipairs(self.innerStartGoList) do
+		gohelper.setActive(startGO, i == self.skillCardLv)
 
-		if arg_4_0.innerStartCanvasList[iter_4_4] then
-			arg_4_0.innerStartCanvasList[iter_4_4].alpha = 1
+		if self.innerStartCanvasList[i] then
+			self.innerStartCanvasList[i].alpha = 1
 		end
 	end
 
-	gohelper.setActive(arg_4_0.goTag, true)
-	arg_4_0.tagIcon:LoadImage(ResUrl.getAttributeIcon("attribute_" .. arg_4_0.skillCo.showTag))
+	gohelper.setActive(self.goTag, true)
+	self.tagIcon:LoadImage(ResUrl.getAttributeIcon("attribute_" .. self.skillCo.showTag))
 
-	local var_4_2 = arg_4_0.tagPosLevelDic[arg_4_0.skillCardLv]
+	local showTagPos = self.tagPosLevelDic[self.skillCardLv]
 
-	if var_4_2 then
-		recthelper.setAnchor(arg_4_0.tagRootTr, var_4_2[1], var_4_2[2])
+	if showTagPos then
+		recthelper.setAnchor(self.tagRootTr, showTagPos[1], showTagPos[2])
 	end
 
-	gohelper.setActive(arg_4_0.tagIcon.gameObject, arg_4_0.skillCardLv < FightEnum.UniqueSkillCardLv)
+	gohelper.setActive(self.tagIcon.gameObject, self.skillCardLv < FightEnum.UniqueSkillCardLv)
 end
 
-function var_0_0.refreshSelect(arg_5_0, arg_5_1)
-	arg_5_0.select = arg_5_1
+function FightEnemyActionCardItem:refreshSelect(select)
+	self.select = select
 end
 
-function var_0_0.destroy(arg_6_0)
-	for iter_6_0, iter_6_1 in pairs(arg_6_0.lvImgIconList) do
-		iter_6_1:UnLoadImage()
+function FightEnemyActionCardItem:destroy()
+	for _, img in pairs(self.lvImgIconList) do
+		img:UnLoadImage()
 	end
 
-	arg_6_0.tagIcon:UnLoadImage()
-	var_0_0.super.__onDispose(arg_6_0)
+	self.tagIcon:UnLoadImage()
+	FightEnemyActionCardItem.super.__onDispose(self)
 end
 
-return var_0_0
+return FightEnemyActionCardItem

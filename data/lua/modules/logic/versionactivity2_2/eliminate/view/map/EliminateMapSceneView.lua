@@ -1,100 +1,102 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.view.map.EliminateMapSceneView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/view/map/EliminateMapSceneView.lua
 
-local var_0_0 = class("EliminateMapSceneView", BaseView)
+module("modules.logic.versionactivity2_2.eliminate.view.map.EliminateMapSceneView", package.seeall)
 
-function var_0_0.onOpen(arg_1_0)
-	arg_1_0._oldSceneResList = arg_1_0:getUserDataTb_()
+local EliminateMapSceneView = class("EliminateMapSceneView", BaseView)
 
-	arg_1_0:addEventCb(EliminateMapController.instance, EliminateMapEvent.OnSelectChapterChange, arg_1_0.onSelectChapterChange, arg_1_0)
-	arg_1_0:_initSceneRoot()
-	arg_1_0:_loadScene()
+function EliminateMapSceneView:onOpen()
+	self._oldSceneResList = self:getUserDataTb_()
+
+	self:addEventCb(EliminateMapController.instance, EliminateMapEvent.OnSelectChapterChange, self.onSelectChapterChange, self)
+	self:_initSceneRoot()
+	self:_loadScene()
 end
 
-function var_0_0._initSceneRoot(arg_2_0)
-	local var_2_0 = CameraMgr.instance:getSceneRoot()
+function EliminateMapSceneView:_initSceneRoot()
+	local sceneRoot = CameraMgr.instance:getSceneRoot()
 
-	arg_2_0._sceneRoot = UnityEngine.GameObject.New(arg_2_0.__cname)
+	self._sceneRoot = UnityEngine.GameObject.New(self.__cname)
 
-	gohelper.addChild(var_2_0, arg_2_0._sceneRoot)
+	gohelper.addChild(sceneRoot, self._sceneRoot)
 
-	local var_2_1 = CameraMgr.instance:getMainCameraTrs().parent
-	local var_2_2, var_2_3, var_2_4 = transformhelper.getLocalPos(var_2_1)
+	local mainTrans = CameraMgr.instance:getMainCameraTrs().parent
+	local x, y, z = transformhelper.getLocalPos(mainTrans)
 
-	transformhelper.setLocalPos(arg_2_0._sceneRoot.transform, 0, var_2_3, 0)
+	transformhelper.setLocalPos(self._sceneRoot.transform, 0, y, 0)
 end
 
-function var_0_0.onSelectChapterChange(arg_3_0)
-	arg_3_0:_loadScene()
+function EliminateMapSceneView:onSelectChapterChange()
+	self:_loadScene()
 end
 
-function var_0_0._loadScene(arg_4_0)
-	arg_4_0.chapterId = arg_4_0.viewContainer.chapterId
+function EliminateMapSceneView:_loadScene()
+	self.chapterId = self.viewContainer.chapterId
 
-	local var_4_0 = UnityEngine.GameObject.New(tostring(arg_4_0.chapterId))
+	local chapterRoot = UnityEngine.GameObject.New(tostring(self.chapterId))
 
-	gohelper.addChild(arg_4_0._sceneRoot, var_4_0)
-	table.insert(arg_4_0._oldSceneResList, arg_4_0._chapterRoot)
+	gohelper.addChild(self._sceneRoot, chapterRoot)
+	table.insert(self._oldSceneResList, self._chapterRoot)
 
-	arg_4_0._chapterRoot = var_4_0
-	arg_4_0._loader = PrefabInstantiate.Create(var_4_0)
+	self._chapterRoot = chapterRoot
+	self._loader = PrefabInstantiate.Create(chapterRoot)
 
-	MainCameraMgr.instance:addView(arg_4_0.viewName, arg_4_0._initCamera, nil, arg_4_0)
-	arg_4_0._loader:startLoad(arg_4_0:getScenePath(), arg_4_0._onSceneLoadEnd, arg_4_0)
+	MainCameraMgr.instance:addView(self.viewName, self._initCamera, nil, self)
+	self._loader:startLoad(self:getScenePath(), self._onSceneLoadEnd, self)
 end
 
-function var_0_0.getScenePath(arg_5_0)
-	return lua_eliminate_chapter.configDict[arg_5_0.chapterId].map
+function EliminateMapSceneView:getScenePath()
+	return lua_eliminate_chapter.configDict[self.chapterId].map
 end
 
-function var_0_0._onSceneLoadEnd(arg_6_0, arg_6_1)
-	if arg_6_1 ~= arg_6_0._loader then
+function EliminateMapSceneView:_onSceneLoadEnd(loader)
+	if loader ~= self._loader then
 		return
 	end
 
-	local var_6_0 = arg_6_0._loader:getInstGO()
+	local go = self._loader:getInstGO()
 
-	var_6_0.name = "Scene"
+	go.name = "Scene"
 
-	transformhelper.setLocalPos(var_6_0.transform, 0, 0, 5)
-	arg_6_0:_disposeOldRes()
+	transformhelper.setLocalPos(go.transform, 0, 0, 5)
+	self:_disposeOldRes()
 end
 
-function var_0_0._disposeOldRes(arg_7_0)
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0._oldSceneResList) do
-		gohelper.destroy(iter_7_1)
+function EliminateMapSceneView:_disposeOldRes()
+	for _, v in ipairs(self._oldSceneResList) do
+		gohelper.destroy(v)
 	end
 
-	arg_7_0._oldSceneResList = arg_7_0:getUserDataTb_()
+	self._oldSceneResList = self:getUserDataTb_()
 end
 
-function var_0_0._initCamera(arg_8_0)
-	local var_8_0 = CameraMgr.instance:getMainCamera()
-	local var_8_1 = GameUtil.getAdapterScale(true)
+function EliminateMapSceneView:_initCamera()
+	local camera = CameraMgr.instance:getMainCamera()
+	local scale = GameUtil.getAdapterScale(true)
 
-	var_8_0.orthographic = true
-	var_8_0.orthographicSize = 5 * var_8_1
+	camera.orthographic = true
+	camera.orthographicSize = 5 * scale
 end
 
-function var_0_0.setSceneVisible(arg_9_0, arg_9_1)
-	arg_9_0._sceneVisible = arg_9_1
+function EliminateMapSceneView:setSceneVisible(isVisible)
+	self._sceneVisible = isVisible
 
-	gohelper.setActive(arg_9_0._sceneRoot, arg_9_1)
+	gohelper.setActive(self._sceneRoot, isVisible)
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	arg_10_0:_disposeOldRes()
+function EliminateMapSceneView:onDestroyView()
+	self:_disposeOldRes()
 
-	if arg_10_0._loader then
-		arg_10_0._loader:dispose()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_10_0._loader = nil
+		self._loader = nil
 	end
 
-	if arg_10_0._sceneRoot then
-		gohelper.destroy(arg_10_0._sceneRoot)
+	if self._sceneRoot then
+		gohelper.destroy(self._sceneRoot)
 
-		arg_10_0._sceneRoot = nil
+		self._sceneRoot = nil
 	end
 end
 
-return var_0_0
+return EliminateMapSceneView

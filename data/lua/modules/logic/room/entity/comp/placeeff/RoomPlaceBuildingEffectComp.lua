@@ -1,139 +1,140 @@
-﻿module("modules.logic.room.entity.comp.placeeff.RoomPlaceBuildingEffectComp", package.seeall)
+﻿-- chunkname: @modules/logic/room/entity/comp/placeeff/RoomPlaceBuildingEffectComp.lua
 
-local var_0_0 = class("RoomPlaceBuildingEffectComp", RoomBaseBlockEffectComp)
+module("modules.logic.room.entity.comp.placeeff.RoomPlaceBuildingEffectComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0, arg_1_1)
+local RoomPlaceBuildingEffectComp = class("RoomPlaceBuildingEffectComp", RoomBaseBlockEffectComp)
 
-	arg_1_0.entity = arg_1_1
-	arg_1_0._effectPrefixKey = RoomEnum.EffectKey.BuilidCanPlaceKey
+function RoomPlaceBuildingEffectComp:ctor(entity)
+	RoomPlaceBuildingEffectComp.super.ctor(self, entity)
+
+	self.entity = entity
+	self._effectPrefixKey = RoomEnum.EffectKey.BuilidCanPlaceKey
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	RoomMapController.instance:registerCallback(RoomEvent.BuildingCanConfirm, arg_2_0._refreshBuildingConfirmEffect, arg_2_0)
+function RoomPlaceBuildingEffectComp:addEventListeners()
+	RoomMapController.instance:registerCallback(RoomEvent.BuildingCanConfirm, self._refreshBuildingConfirmEffect, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.BuildingCanConfirm, arg_3_0._refreshBuildingConfirmEffect, arg_3_0)
+function RoomPlaceBuildingEffectComp:removeEventListeners()
+	RoomMapController.instance:unregisterCallback(RoomEvent.BuildingCanConfirm, self._refreshBuildingConfirmEffect, self)
 end
 
-function var_0_0._refreshBuildingConfirmEffect(arg_4_0)
-	local var_4_0 = RoomMapBuildingModel.instance:getTempBuildingMO()
-	local var_4_1
-	local var_4_2 = false
+function RoomPlaceBuildingEffectComp:_refreshBuildingConfirmEffect()
+	local tempBuildingMO = RoomMapBuildingModel.instance:getTempBuildingMO()
+	local curBuilingUId
+	local canPlaceEffect = false
 
-	if var_4_0 and RoomBuildingController.instance:isBuildingListShow() then
-		var_4_2 = true
-		var_4_1 = var_4_0.uid
+	if tempBuildingMO and RoomBuildingController.instance:isBuildingListShow() then
+		canPlaceEffect = true
+		curBuilingUId = tempBuildingMO.uid
 	end
 
-	if arg_4_0._lastBuildingUid == var_4_1 then
+	if self._lastBuildingUid == curBuilingUId then
 		return
 	end
 
-	arg_4_0._lastBuildingUid = var_4_1
+	self._lastBuildingUid = curBuilingUId
 
-	local var_4_3 = RoomMapBlockModel.instance
-	local var_4_4 = RoomResourceModel.instance
-	local var_4_5
-	local var_4_6
-	local var_4_7 = var_4_3:getFullBlockMOList()
-	local var_4_8 = false
-	local var_4_9
+	local tRoomMapBlockModel = RoomMapBlockModel.instance
+	local tRoomResourceModel = RoomResourceModel.instance
+	local addParams, removeParams
+	local blockMOList = tRoomMapBlockModel:getFullBlockMOList()
+	local isCheckBuildingArea = false
+	local rangesHexPointList
 
-	if var_4_0 and var_4_0:isBuildingArea() and not var_4_0:isAreaMainBuilding() then
-		var_4_8 = true
-		var_4_9 = arg_4_0:_getRangesHexPointList(var_4_0)
+	if tempBuildingMO and tempBuildingMO:isBuildingArea() and not tempBuildingMO:isAreaMainBuilding() then
+		isCheckBuildingArea = true
+		rangesHexPointList = self:_getRangesHexPointList(tempBuildingMO)
 	end
 
-	local var_4_10 = arg_4_0.entity.effect
+	local effectComp = self.entity.effect
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_7) do
-		local var_4_11 = iter_4_1.hexPoint
-		local var_4_12 = var_4_4:getIndexByXY(var_4_11.x, var_4_11.y)
-		local var_4_13 = true
-		local var_4_14 = arg_4_0:getEffectKeyById(var_4_12)
+	for i, blockMO in ipairs(blockMOList) do
+		local hexPoint = blockMO.hexPoint
+		local index = tRoomResourceModel:getIndexByXY(hexPoint.x, hexPoint.y)
+		local isRemove = true
+		local effectKey = self:getEffectKeyById(index)
 
-		if var_4_2 and arg_4_0:_checkBuildingAreaShow(var_4_8, var_4_11, var_4_9) then
-			local var_4_15 = arg_4_0:_isCanNotConfirm(iter_4_1, var_4_0)
+		if canPlaceEffect and self:_checkBuildingAreaShow(isCheckBuildingArea, hexPoint, rangesHexPointList) then
+			local isnotCan = self:_isCanNotConfirm(blockMO, tempBuildingMO)
 
-			if not var_4_10:isHasKey(var_4_14) then
-				if var_4_5 == nil then
-					var_4_5 = {}
+			if not effectComp:isHasKey(effectKey) then
+				if addParams == nil then
+					addParams = {}
 				end
 
-				local var_4_16, var_4_17 = HexMath.hexXYToPosXY(var_4_11.x, var_4_11.y, RoomBlockEnum.BlockSize)
+				local posX, posY = HexMath.hexXYToPosXY(hexPoint.x, hexPoint.y, RoomBlockEnum.BlockSize)
 
-				var_4_5[var_4_14] = {
-					res = var_4_15 and RoomScenePreloader.ResEffectD04 or RoomScenePreloader.ResEffectD03,
-					localPos = Vector3(var_4_16, 0, var_4_17)
+				addParams[effectKey] = {
+					res = isnotCan and RoomScenePreloader.ResEffectD04 or RoomScenePreloader.ResEffectD03,
+					localPos = Vector3(posX, 0, posY)
 				}
 			end
-		elseif var_4_10:getEffectRes(var_4_14) then
-			if var_4_6 == nil then
-				var_4_6 = {}
+		elseif effectComp:getEffectRes(effectKey) then
+			if removeParams == nil then
+				removeParams = {}
 			end
 
-			table.insert(var_4_6, var_4_14)
+			table.insert(removeParams, effectKey)
 		end
 	end
 
-	if var_4_5 then
-		var_4_10:addParams(var_4_5)
-		var_4_10:refreshEffect()
+	if addParams then
+		effectComp:addParams(addParams)
+		effectComp:refreshEffect()
 	end
 
-	if var_4_6 then
-		arg_4_0:removeParamsAndPlayAnimator(var_4_6, "close", RoomBlockEnum.PlaceEffectAnimatorCloseTime)
+	if removeParams then
+		self:removeParamsAndPlayAnimator(removeParams, "close", RoomBlockEnum.PlaceEffectAnimatorCloseTime)
 	end
 end
 
-function var_0_0._getRangesHexPointList(arg_5_0, arg_5_1)
-	if arg_5_1 and arg_5_1:isBuildingArea() and not arg_5_1:isAreaMainBuilding() then
-		local var_5_0 = RoomMapBuildingAreaModel.instance:getAreaMOByBId(arg_5_1.buildingId)
+function RoomPlaceBuildingEffectComp:_getRangesHexPointList(tempBuildingMO)
+	if tempBuildingMO and tempBuildingMO:isBuildingArea() and not tempBuildingMO:isAreaMainBuilding() then
+		local areaMO = RoomMapBuildingAreaModel.instance:getAreaMOByBId(tempBuildingMO.buildingId)
 
-		if var_5_0 then
-			return var_5_0:getRangesHexPointList()
+		if areaMO then
+			return areaMO:getRangesHexPointList()
 		end
 	end
 
 	return nil
 end
 
-function var_0_0._checkBuildingAreaShow(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	if arg_6_1 and not RoomBuildingHelper.isInInitBlock(arg_6_2) and (not arg_6_3 or not tabletool.indexOf(arg_6_3, arg_6_2)) and not RoomMapBuildingModel.instance:getBuildingParam(arg_6_2.x, arg_6_2.y) then
+function RoomPlaceBuildingEffectComp:_checkBuildingAreaShow(isCheckBuildingArea, hexPoint, hexPointList)
+	if isCheckBuildingArea and not RoomBuildingHelper.isInInitBlock(hexPoint) and (not hexPointList or not tabletool.indexOf(hexPointList, hexPoint)) and not RoomMapBuildingModel.instance:getBuildingParam(hexPoint.x, hexPoint.y) then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0._isCanNotConfirm(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = arg_7_1.hexPoint
+function RoomPlaceBuildingEffectComp:_isCanNotConfirm(blockMO, tempBuildingMO)
+	local hexPoint = blockMO.hexPoint
 
-	if RoomBuildingHelper.isInInitBlock(var_7_0) then
+	if RoomBuildingHelper.isInInitBlock(hexPoint) then
 		return true
 	end
 
-	local var_7_1 = RoomMapBuildingModel.instance:getBuildingParam(var_7_0.x, var_7_0.y)
+	local buildingParam = RoomMapBuildingModel.instance:getBuildingParam(hexPoint.x, hexPoint.y)
 
-	if not arg_7_2 then
-		if var_7_1 then
+	if not tempBuildingMO then
+		if buildingParam then
 			return true
 		end
 	else
-		if var_7_1 and var_7_1.buildingUid ~= arg_7_2.uid then
+		if buildingParam and buildingParam.buildingUid ~= tempBuildingMO.uid then
 			return true
 		end
 
-		if RoomTransportHelper.checkInLoadHexXY(var_7_0.x, var_7_0.y) then
+		if RoomTransportHelper.checkInLoadHexXY(hexPoint.x, hexPoint.y) then
 			return true
 		end
 
-		return RoomBuildingHelper.checkBuildResId(arg_7_2.buildingId, arg_7_1:getResourceList(true)) == false
+		return RoomBuildingHelper.checkBuildResId(tempBuildingMO.buildingId, blockMO:getResourceList(true)) == false
 	end
 
 	return false
 end
 
-return var_0_0
+return RoomPlaceBuildingEffectComp

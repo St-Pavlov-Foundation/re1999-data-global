@@ -1,44 +1,48 @@
-﻿module("modules.logic.survival.controller.work.step.SurvivalUnitShowWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/step/SurvivalUnitShowWork.lua
 
-local var_0_0 = class("SurvivalUnitShowWork", SurvivalStepBaseWork)
+module("modules.logic.survival.controller.work.step.SurvivalUnitShowWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = {}
-	local var_1_1 = SurvivalMapModel.instance:getSceneMo()
+local SurvivalUnitShowWork = class("SurvivalUnitShowWork", SurvivalStepBaseWork)
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_0._stepMo.unit) do
-		local var_1_2 = SurvivalUnitMo.New()
+function SurvivalUnitShowWork:onStart(context)
+	local newUnitIds = {}
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
 
-		var_1_2:init(iter_1_1)
-		var_1_1:addUnit(var_1_2)
+	for i, unit in ipairs(self._stepMo.unit) do
+		local unitMo = SurvivalUnitMo.New()
 
-		var_1_0[var_1_2.id] = true
+		unitMo:init(unit)
+		sceneMo:addUnit(unitMo)
+
+		newUnitIds[unitMo.id] = true
 	end
 
-	if (arg_1_0._stepMo.paramInt[1] or 0) == 1002 then
-		if type(arg_1_1.tryTrigger) == "table" then
-			for iter_1_2 in pairs(var_1_0) do
-				arg_1_1.tryTrigger[iter_1_2] = true
+	local reason = self._stepMo.paramInt[1] or 0
+
+	if reason == 1002 then
+		if type(context.tryTrigger) == "table" then
+			for id in pairs(newUnitIds) do
+				context.tryTrigger[id] = true
 			end
 		else
-			arg_1_1.tryTrigger = var_1_0
+			context.tryTrigger = newUnitIds
 		end
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.getRunOrder(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1.haveHeroMove then
-		arg_2_1.beforeFlow = FlowParallel.New()
+function SurvivalUnitShowWork:getRunOrder(params, flow)
+	if params.haveHeroMove then
+		params.beforeFlow = FlowParallel.New()
 
-		arg_2_2:addWork(arg_2_1.beforeFlow)
+		flow:addWork(params.beforeFlow)
 
-		arg_2_1.moveIdSet = {}
-		arg_2_1.haveHeroMove = false
+		params.moveIdSet = {}
+		params.haveHeroMove = false
 	end
 
 	return SurvivalEnum.StepRunOrder.Before
 end
 
-return var_0_0
+return SurvivalUnitShowWork

@@ -1,69 +1,75 @@
-﻿module("modules.logic.main.view.Activity101SignViewBtnBase", package.seeall)
+﻿-- chunkname: @modules/logic/main/view/Activity101SignViewBtnBase.lua
 
-local var_0_0 = class("Activity101SignViewBtnBase", ActCenterItemBase)
+module("modules.logic.main.view.Activity101SignViewBtnBase", package.seeall)
 
-function var_0_0.onAddEvent(arg_1_0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, arg_1_0._refreshRedDot, arg_1_0)
+local Activity101SignViewBtnBase = class("Activity101SignViewBtnBase", ActCenterItemBase)
+
+function Activity101SignViewBtnBase:onAddEvent()
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, self._refreshRedDot, self)
 end
 
-function var_0_0.onRemoveEvent(arg_2_0)
-	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, arg_2_0._refreshRedDot, arg_2_0)
+function Activity101SignViewBtnBase:onRemoveEvent()
+	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, self._refreshRedDot, self)
 end
 
-function var_0_0.onClick(arg_3_0)
-	local var_3_0, var_3_1 = arg_3_0:onGetViewNameAndParam()
+function Activity101SignViewBtnBase:onClick()
+	local viewName, _ = self:onGetViewNameAndParam()
 
-	if ViewMgr.instance:isOpen(var_3_0) then
+	if ViewMgr.instance:isOpen(viewName) then
 		return
 	end
 
-	local var_3_2 = arg_3_0:onGetActId()
+	local actId = self:onGetActId()
 
-	Activity101Rpc.instance:sendGet101InfosRequest(var_3_2, arg_3_0._onReceiveGet101InfosReply, arg_3_0)
+	Activity101Rpc.instance:sendGet101InfosRequest(actId, self._onReceiveGet101InfosReply, self)
 end
 
-function var_0_0._onReceiveGet101InfosReply(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_2 == 0 then
-		local var_4_0, var_4_1 = arg_4_0:onGetViewNameAndParam()
+function Activity101SignViewBtnBase:_onReceiveGet101InfosReply(_, resultCode)
+	if resultCode == 0 then
+		local viewName, viewParam = self:onGetViewNameAndParam()
 
-		ViewMgr.instance:openView(var_4_0, var_4_1)
+		ViewMgr.instance:openView(viewName, viewParam)
 	else
 		GameFacade.showToast(ToastEnum.BattlePass)
 	end
 end
 
-function var_0_0._tryInit(arg_5_0)
-	local var_5_0 = arg_5_0:onGetActId()
+function Activity101SignViewBtnBase:_tryInit()
+	local actId = self:onGetActId()
 
-	if not ActivityType101Model.instance:isInit(var_5_0) then
-		Activity101Rpc.instance:sendGet101InfosRequest(var_5_0)
+	if not ActivityType101Model.instance:isInit(actId) then
+		Activity101Rpc.instance:sendGet101InfosRequest(actId)
 	end
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:_tryInit()
-	arg_6_0:_addNotEventRedDot(arg_6_0._checkRed, arg_6_0)
+function Activity101SignViewBtnBase:onOpen()
+	self:_tryInit()
+	self:_addNotEventRedDot(self._checkRed, self)
 end
 
-function var_0_0._checkRed(arg_7_0)
-	local var_7_0 = arg_7_0:onGetActId()
+function Activity101SignViewBtnBase:_checkRed()
+	local actId = self:onGetActId()
 
-	return ActivityType101Model.instance:isType101RewardCouldGetAnyOne(var_7_0) and true or false
+	return ActivityType101Model.instance:isType101RewardCouldGetAnyOne(actId) and true or false
 end
 
-function var_0_0.onRefresh(arg_8_0)
+function Activity101SignViewBtnBase:onRefresh()
 	assert(false, "please override this function")
 end
 
-function var_0_0.onGetViewNameAndParam(arg_9_0)
-	local var_9_0 = arg_9_0:getCustomData()
-	local var_9_1 = var_9_0.viewParam
+function Activity101SignViewBtnBase:onGetViewNameAndParam()
+	local data = self:getCustomData()
+	local viewParam = data.viewParam
+	local viewName = data.viewName
 
-	return var_9_0.viewName, var_9_1
+	return viewName, viewParam
 end
 
-function var_0_0.onGetActId(arg_10_0)
-	return arg_10_0:getCustomData().viewParam.actId
+function Activity101SignViewBtnBase:onGetActId()
+	local data = self:getCustomData()
+	local viewParam = data.viewParam
+
+	return viewParam.actId
 end
 
-return var_0_0
+return Activity101SignViewBtnBase

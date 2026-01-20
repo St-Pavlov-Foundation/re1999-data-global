@@ -1,46 +1,50 @@
-﻿module("modules.logic.versionactivity1_4.act133.view.Activity133TaskViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act133/view/Activity133TaskViewContainer.lua
 
-local var_0_0 = class("Activity133TaskViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_4.act133.view.Activity133TaskViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+local Activity133TaskViewContainer = class("Activity133TaskViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "main/#scroll_view"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_1.cellClass = Activity133TaskItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 1
-	var_1_1.cellWidth = 1300
-	var_1_1.cellHeight = 160
-	var_1_1.cellSpaceV = 10
-	var_1_1.startSpace = 0
+function Activity133TaskViewContainer:buildViews()
+	local views = {}
+	local scrollParam = ListScrollParam.New()
 
-	local var_1_2 = {}
+	scrollParam.scrollGOPath = "main/#scroll_view"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = Activity133TaskItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 1300
+	scrollParam.cellHeight = 160
+	scrollParam.cellSpaceV = 10
+	scrollParam.startSpace = 0
 
-	for iter_1_0 = 1, 5 do
-		var_1_2[iter_1_0] = (iter_1_0 - 1) * 0.06
+	local animationDelayTimes = {}
+
+	for i = 1, 5 do
+		local delayTime = (i - 1) * 0.06
+
+		animationDelayTimes[i] = delayTime
 	end
 
-	arg_1_0._scrollview = LuaListScrollViewWithAnimator.New(Activity133TaskListModel.instance, var_1_1, var_1_2)
+	self._scrollview = LuaListScrollViewWithAnimator.New(Activity133TaskListModel.instance, scrollParam, animationDelayTimes)
 
-	table.insert(var_1_0, arg_1_0._scrollview)
-	table.insert(var_1_0, Activity133TaskView.New())
+	table.insert(views, self._scrollview)
+	table.insert(views, Activity133TaskView.New())
 
-	return var_1_0
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function Activity133TaskViewContainer:buildTabViews(tabContainerId)
 	return
 end
 
-function var_0_0.onContainerInit(arg_3_0)
-	arg_3_0.taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(arg_3_0._scrollview)
+function Activity133TaskViewContainer:onContainerInit()
+	self.taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(self._scrollview)
 end
 
-function var_0_0.onContainerClickModalMask(arg_4_0)
-	arg_4_0:closeThis()
+function Activity133TaskViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return Activity133TaskViewContainer

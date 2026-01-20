@@ -1,113 +1,117 @@
-﻿module("modules.logic.playercard.view.PlayerCardThemeView", package.seeall)
+﻿-- chunkname: @modules/logic/playercard/view/PlayerCardThemeView.lua
 
-local var_0_0 = class("PlayerCardThemeView", BaseView)
+module("modules.logic.playercard.view.PlayerCardThemeView", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.viewGO = arg_1_1
+local PlayerCardThemeView = class("PlayerCardThemeView", BaseView)
 
-	arg_1_0:onInitView()
+function PlayerCardThemeView:init(go)
+	self.viewGO = go
+
+	self:onInitView()
 end
 
-function var_0_0.onInitView(arg_2_0)
-	arg_2_0.goBottom = gohelper.findChild(arg_2_0.viewGO, "bottom")
-	arg_2_0.btnConfirm = gohelper.findChildButtonWithAudio(arg_2_0.goBottom, "#btn_confirm")
-	arg_2_0.goLocked = gohelper.findChild(arg_2_0.goBottom, "#go_locked")
-	arg_2_0.goUsing = gohelper.findChild(arg_2_0.goBottom, "#go_using")
-	arg_2_0.golimitsale = gohelper.findChild(arg_2_0.goBottom, "#go_limitsale")
-	arg_2_0.btnSource = gohelper.findChildButtonWithAudio(arg_2_0.goBottom, "#btn_get")
-	arg_2_0.txtSourceTitle = gohelper.findChildTextMesh(arg_2_0.goBottom, "source/layout/#txt_title")
-	arg_2_0.txtSourceDesc = gohelper.findChildTextMesh(arg_2_0.goBottom, "source/layout/#txt_dec")
-	arg_2_0._goSourceLock = gohelper.findChild(arg_2_0.goBottom, "source/locked")
+function PlayerCardThemeView:onInitView()
+	self.goBottom = gohelper.findChild(self.viewGO, "bottom")
+	self.btnConfirm = gohelper.findChildButtonWithAudio(self.goBottom, "#btn_confirm")
+	self.goLocked = gohelper.findChild(self.goBottom, "#go_locked")
+	self.goUsing = gohelper.findChild(self.goBottom, "#go_using")
+	self.golimitsale = gohelper.findChild(self.goBottom, "#go_limitsale")
+	self.btnSource = gohelper.findChildButtonWithAudio(self.goBottom, "#btn_get")
+	self.txtSourceTitle = gohelper.findChildTextMesh(self.goBottom, "source/layout/#txt_title")
+	self.txtSourceDesc = gohelper.findChildTextMesh(self.goBottom, "source/layout/#txt_dec")
+	self._goSourceLock = gohelper.findChild(self.goBottom, "source/locked")
 end
 
-function var_0_0.canOpen(arg_3_0)
-	arg_3_0:addEvents()
+function PlayerCardThemeView:canOpen()
+	self:addEvents()
 end
 
-function var_0_0.addEvents(arg_4_0)
-	arg_4_0:addClickCb(arg_4_0.btnConfirm, arg_4_0.onClickConfirm, arg_4_0)
-	arg_4_0:addClickCb(arg_4_0.btnSource, arg_4_0.onClickSource, arg_4_0)
-	arg_4_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.ShowTheme, arg_4_0.refreshView, arg_4_0)
-	arg_4_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.SwitchTheme, arg_4_0.onSwitchView, arg_4_0)
-	arg_4_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.ChangeSkin, arg_4_0.onSwitchView, arg_4_0)
+function PlayerCardThemeView:addEvents()
+	self:addClickCb(self.btnConfirm, self.onClickConfirm, self)
+	self:addClickCb(self.btnSource, self.onClickSource, self)
+	self:addEventCb(PlayerCardController.instance, PlayerCardEvent.ShowTheme, self.refreshView, self)
+	self:addEventCb(PlayerCardController.instance, PlayerCardEvent.SwitchTheme, self.onSwitchView, self)
+	self:addEventCb(PlayerCardController.instance, PlayerCardEvent.ChangeSkin, self.onSwitchView, self)
 end
 
-function var_0_0.removeEvents(arg_5_0)
-	arg_5_0:removeClickCb(arg_5_0.btnConfirm, arg_5_0.onClickConfirm, arg_5_0)
-	arg_5_0:removeClickCb(arg_5_0.btnSource, arg_5_0.onClickSource, arg_5_0)
+function PlayerCardThemeView:removeEvents()
+	self:removeClickCb(self.btnConfirm, self.onClickConfirm, self)
+	self:removeClickCb(self.btnSource, self.onClickSource, self)
 end
 
-function var_0_0.onClickConfirm(arg_6_0)
-	local var_6_0 = PlayerCardModel.instance:getSelectSkinMO()
+function PlayerCardThemeView:onClickConfirm()
+	local selectSkinMO = PlayerCardModel.instance:getSelectSkinMO()
 
-	PlayerCardRpc.instance:sendSetPlayerCardThemeRequest(var_6_0.id)
+	PlayerCardRpc.instance:sendSetPlayerCardThemeRequest(selectSkinMO.id)
 end
 
-function var_0_0.onClickSource(arg_7_0)
-	local var_7_0 = PlayerCardModel.instance:getSelectSkinMO()
+function PlayerCardThemeView:onClickSource()
+	local selectSkinMO = PlayerCardModel.instance:getSelectSkinMO()
 
-	GameFacade.jump(var_7_0:getSources())
+	GameFacade.jump(selectSkinMO:getSources())
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
+function PlayerCardThemeView:onUpdateParam()
 	return
 end
 
-function var_0_0.refreshView(arg_9_0, arg_9_1)
-	if not PlayerCardModel.instance:getCardInfo(arg_9_1) then
+function PlayerCardThemeView:refreshView(userId)
+	local info = PlayerCardModel.instance:getCardInfo(userId)
+
+	if not info then
 		return
 	end
 
 	PlayerCardThemeListModel.instance:init()
-	arg_9_0:onSwitchView()
+	self:onSwitchView()
 end
 
-function var_0_0.onSwitchView(arg_10_0)
-	local var_10_0 = PlayerCardModel.instance:getSelectSkinMO()
-	local var_10_1 = var_10_0:isUnLock()
-	local var_10_2 = var_10_0:canBuyInStore()
-	local var_10_3 = var_10_0:isStoreDecorateGoodsValid()
+function PlayerCardThemeView:onSwitchView()
+	local selectSkinMO = PlayerCardModel.instance:getSelectSkinMO()
+	local isUnLock = selectSkinMO:isUnLock()
+	local canBuy = selectSkinMO:canBuyInStore()
+	local isVaild = selectSkinMO:isStoreDecorateGoodsValid()
 
-	if not var_10_1 then
-		local var_10_4 = var_10_0:getSources()
-		local var_10_5 = JumpController.instance:isJumpOpen(var_10_4)
+	if not isUnLock then
+		local jumpId = selectSkinMO:getSources()
+		local canJump = JumpController.instance:isJumpOpen(jumpId)
 
-		if var_10_2 then
-			gohelper.setActive(arg_10_0.goLocked, false)
-			gohelper.setActive(arg_10_0.golimitsale, not var_10_3)
-			gohelper.setActive(arg_10_0.btnSource.gameObject, var_10_3)
+		if canBuy then
+			gohelper.setActive(self.goLocked, false)
+			gohelper.setActive(self.golimitsale, not isVaild)
+			gohelper.setActive(self.btnSource.gameObject, isVaild)
 		else
-			gohelper.setActive(arg_10_0.golimitsale, false)
-			gohelper.setActive(arg_10_0.btnSource.gameObject, var_10_5)
-			gohelper.setActive(arg_10_0.goLocked, not var_10_5)
+			gohelper.setActive(self.golimitsale, false)
+			gohelper.setActive(self.btnSource.gameObject, canJump)
+			gohelper.setActive(self.goLocked, not canJump)
 		end
 
-		gohelper.setActive(arg_10_0._goSourceLock, true)
+		gohelper.setActive(self._goSourceLock, true)
 	else
-		gohelper.setActive(arg_10_0.goLocked, false)
-		gohelper.setActive(arg_10_0.golimitsale, false)
-		gohelper.setActive(arg_10_0.btnSource.gameObject, false)
-		gohelper.setActive(arg_10_0._goSourceLock, false)
+		gohelper.setActive(self.goLocked, false)
+		gohelper.setActive(self.golimitsale, false)
+		gohelper.setActive(self.btnSource.gameObject, false)
+		gohelper.setActive(self._goSourceLock, false)
 	end
 
-	local var_10_6 = var_10_0:checkIsUse()
+	local isUsing = selectSkinMO:checkIsUse()
 
-	gohelper.setActive(arg_10_0.goUsing, var_10_6)
-	gohelper.setActive(arg_10_0.btnConfirm, not var_10_6 and var_10_1)
+	gohelper.setActive(self.goUsing, isUsing)
+	gohelper.setActive(self.btnConfirm, not isUsing and isUnLock)
 
-	if var_10_0:isEmpty() then
-		arg_10_0.txtSourceTitle.text = luaLang("talent_style_special_tag_998")
-		arg_10_0.txtSourceDesc.text = luaLang("playercard_skin_default")
+	if selectSkinMO:isEmpty() then
+		self.txtSourceTitle.text = luaLang("talent_style_special_tag_998")
+		self.txtSourceDesc.text = luaLang("playercard_skin_default")
 	else
-		local var_10_7 = var_10_0:getConfig()
+		local config = selectSkinMO:getConfig()
 
-		arg_10_0.txtSourceTitle.text = var_10_7.name
-		arg_10_0.txtSourceDesc.text = var_10_7.desc
+		self.txtSourceTitle.text = config.name
+		self.txtSourceDesc.text = config.desc
 	end
 end
 
-function var_0_0.onDestroy(arg_11_0)
+function PlayerCardThemeView:onDestroy()
 	return
 end
 
-return var_0_0
+return PlayerCardThemeView

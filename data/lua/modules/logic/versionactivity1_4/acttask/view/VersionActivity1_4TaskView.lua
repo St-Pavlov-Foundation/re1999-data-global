@@ -1,204 +1,208 @@
-﻿module("modules.logic.versionactivity1_4.acttask.view.VersionActivity1_4TaskView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/acttask/view/VersionActivity1_4TaskView.lua
 
-local var_0_0 = class("VersionActivity1_4TaskView", BaseView)
+module("modules.logic.versionactivity1_4.acttask.view.VersionActivity1_4TaskView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.simageFullBg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0.txtTime = gohelper.findChildTextMesh(arg_1_0.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_LimitTime")
-	arg_1_0.btnNote = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/Note/#btn_note")
-	arg_1_0.goFinish = gohelper.findChild(arg_1_0.viewGO, "Left/Note/#simage_finished")
-	arg_1_0.btnReward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btnReward")
-	arg_1_0.simageIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "btnReward/#simage_icon")
+local VersionActivity1_4TaskView = class("VersionActivity1_4TaskView", BaseView)
 
-	local var_1_0 = gohelper.findChild(arg_1_0.viewGO, "Left/#go_reddot")
+function VersionActivity1_4TaskView:onInitView()
+	self.simageFullBg = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self.txtTime = gohelper.findChildTextMesh(self.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_LimitTime")
+	self.btnNote = gohelper.findChildButtonWithAudio(self.viewGO, "Left/Note/#btn_note")
+	self.goFinish = gohelper.findChild(self.viewGO, "Left/Note/#simage_finished")
+	self.btnReward = gohelper.findChildButtonWithAudio(self.viewGO, "btnReward")
+	self.simageIcon = gohelper.findChildSingleImage(self.viewGO, "btnReward/#simage_icon")
 
-	arg_1_0._redDot = RedDotController.instance:addRedDot(var_1_0, 1095)
+	local goRedDot = gohelper.findChild(self.viewGO, "Left/#go_reddot")
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	self._redDot = RedDotController.instance:addRedDot(goRedDot, 1095)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function VersionActivity1_4TaskView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function VersionActivity1_4TaskView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0.simageFullBg:LoadImage("singlebg/v1a4_taskview_singlebg/v1a4_taskview_fullbg.png")
-	arg_4_0:addClickCb(arg_4_0.btnReward, arg_4_0.onClickRewad, arg_4_0)
-	arg_4_0:addClickCb(arg_4_0.btnNote, arg_4_0.onClickNote, arg_4_0)
+function VersionActivity1_4TaskView:_editableInitView()
+	self.simageFullBg:LoadImage("singlebg/v1a4_taskview_singlebg/v1a4_taskview_fullbg.png")
+	self:addClickCb(self.btnReward, self.onClickRewad, self)
+	self:addClickCb(self.btnNote, self.onClickNote, self)
 end
 
-function var_0_0.onClickRewad(arg_5_0)
-	arg_5_0.viewContainer:getScrollView():moveToByCheckFunc(function(arg_6_0)
-		return arg_6_0.config and arg_6_0.config.isKeyReward == 1 and arg_6_0.finishCount < arg_6_0.config.maxFinishCount
-	end, 0.5, arg_5_0.onFouceReward, arg_5_0)
+function VersionActivity1_4TaskView:onClickRewad()
+	local scrollView = self.viewContainer:getScrollView()
+
+	scrollView:moveToByCheckFunc(function(mo)
+		return mo.config and mo.config.isKeyReward == 1 and mo.finishCount < mo.config.maxFinishCount
+	end, 0.5, self.onFouceReward, self)
 end
 
-function var_0_0.onFouceReward(arg_7_0)
+function VersionActivity1_4TaskView:onFouceReward()
 	return
 end
 
-function var_0_0.onClickNote(arg_8_0)
+function VersionActivity1_4TaskView:onClickNote()
 	Activity132Controller.instance:openCollectView(VersionActivity1_4Enum.ActivityId.Collect)
 end
 
-function var_0_0.onOpen(arg_9_0)
+function VersionActivity1_4TaskView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_mission_open)
 
-	arg_9_0.actId = arg_9_0.viewParam.activityId
+	self.actId = self.viewParam.activityId
 
-	arg_9_0:initTab()
+	self:initTab()
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.ActivityDungeon
-	}, arg_9_0._onOpen, arg_9_0)
-	ActivityEnterMgr.instance:enterActivity(arg_9_0.actId)
+	}, self._onOpen, self)
+	ActivityEnterMgr.instance:enterActivity(self.actId)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
-		arg_9_0.actId
+		self.actId
 	})
 end
 
-function var_0_0.initTab(arg_10_0)
-	arg_10_0.tabList = {}
+function VersionActivity1_4TaskView:initTab()
+	self.tabList = {}
 
-	for iter_10_0 = 1, 3 do
-		arg_10_0.tabList[iter_10_0] = arg_10_0:createTab(iter_10_0)
+	for i = 1, 3 do
+		self.tabList[i] = self:createTab(i)
 	end
 end
 
-function var_0_0.createTab(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0:getUserDataTb_()
+function VersionActivity1_4TaskView:createTab(index)
+	local item = self:getUserDataTb_()
 
-	var_11_0.actId = arg_11_0.actId
-	var_11_0.index = arg_11_1
-	var_11_0.go = gohelper.findChild(arg_11_0.viewGO, string.format("Top/#go_tab%s", arg_11_1))
-	var_11_0.goChoose = gohelper.findChild(var_11_0.go, "#go_choose")
-	var_11_0.goRed = gohelper.findChild(var_11_0.go, "#go_reddot")
-	var_11_0.btn = gohelper.findChildButtonWithAudio(var_11_0.go, "#btn")
+	item.actId = self.actId
+	item.index = index
+	item.go = gohelper.findChild(self.viewGO, string.format("Top/#go_tab%s", index))
+	item.goChoose = gohelper.findChild(item.go, "#go_choose")
+	item.goRed = gohelper.findChild(item.go, "#go_reddot")
+	item.btn = gohelper.findChildButtonWithAudio(item.go, "#btn")
 
-	function var_11_0.refreshRed(arg_12_0)
-		arg_12_0.redDot.show = VersionActivity1_4TaskListModel.instance:checkTaskRedByPage(arg_12_0.actId, arg_12_0.index)
+	function item.refreshRed(tabItem)
+		tabItem.redDot.show = VersionActivity1_4TaskListModel.instance:checkTaskRedByPage(tabItem.actId, tabItem.index)
 
-		arg_12_0.redDot:showRedDot(1)
+		tabItem.redDot:showRedDot(1)
 	end
 
-	var_11_0.redDot = MonoHelper.addNoUpdateLuaComOnceToGo(var_11_0.goRed, CommonRedDotIcon)
+	item.redDot = MonoHelper.addNoUpdateLuaComOnceToGo(item.goRed, CommonRedDotIcon)
 
-	var_11_0.redDot:setMultiId({
+	item.redDot:setMultiId({
 		id = 1096
 	})
-	var_11_0.redDot:overrideRefreshDotFunc(var_11_0.refreshRed, var_11_0)
-	var_11_0.redDot:refreshDot()
-	arg_11_0:addClickCb(var_11_0.btn, arg_11_0.onClickTab, arg_11_0, arg_11_1)
+	item.redDot:overrideRefreshDotFunc(item.refreshRed, item)
+	item.redDot:refreshDot()
+	self:addClickCb(item.btn, self.onClickTab, self, index)
 
-	return var_11_0
+	return item
 end
 
-function var_0_0.refreshTabRed(arg_13_0)
-	for iter_13_0, iter_13_1 in pairs(arg_13_0.tabList) do
-		iter_13_1.redDot:refreshDot()
+function VersionActivity1_4TaskView:refreshTabRed()
+	for k, v in pairs(self.tabList) do
+		v.redDot:refreshDot()
 	end
 end
 
-function var_0_0.onClickTab(arg_14_0, arg_14_1)
-	if arg_14_0.tabIndex == arg_14_1 then
+function VersionActivity1_4TaskView:onClickTab(index)
+	if self.tabIndex == index then
 		return
 	end
 
-	arg_14_0.tabIndex = arg_14_1
+	self.tabIndex = index
 
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0.tabList) do
-		gohelper.setActive(iter_14_1.goChoose, iter_14_0 == arg_14_0.tabIndex)
+	for i, v in ipairs(self.tabList) do
+		gohelper.setActive(v.goChoose, i == self.tabIndex)
 	end
 
-	arg_14_0:refreshRight()
+	self:refreshRight()
 end
 
-function var_0_0._onOpen(arg_15_0)
-	arg_15_0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_15_0.refreshRight, arg_15_0)
-	arg_15_0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_15_0.refreshRight, arg_15_0)
-	arg_15_0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_15_0.refreshRight, arg_15_0)
-	TaskDispatcher.runRepeat(arg_15_0.refreshRemainTime, arg_15_0, TimeUtil.OneMinuteSecond)
-	arg_15_0:refreshLeft()
-	arg_15_0:onClickTab(1)
+function VersionActivity1_4TaskView:_onOpen()
+	self:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, self.refreshRight, self)
+	self:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, self.refreshRight, self)
+	self:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, self.refreshRight, self)
+	TaskDispatcher.runRepeat(self.refreshRemainTime, self, TimeUtil.OneMinuteSecond)
+	self:refreshLeft()
+	self:onClickTab(1)
 end
 
-function var_0_0.refreshLeft(arg_16_0)
-	arg_16_0:refreshRemainTime()
+function VersionActivity1_4TaskView:refreshLeft()
+	self:refreshRemainTime()
 end
 
-function var_0_0.refreshRemainTime(arg_17_0)
-	local var_17_0 = ActivityModel.instance:getActMO(arg_17_0.actId)
+function VersionActivity1_4TaskView:refreshRemainTime()
+	local actInfoMo = ActivityModel.instance:getActMO(self.actId)
 
-	arg_17_0.txtTime.text = string.format(luaLang("remain"), arg_17_0:_getRemainTimeStr(var_17_0))
+	self.txtTime.text = string.format(luaLang("remain"), self:_getRemainTimeStr(actInfoMo))
 end
 
-function var_0_0.refreshRight(arg_18_0)
-	VersionActivity1_4TaskListModel.instance:sortTaskMoList(arg_18_0.actId, arg_18_0.tabIndex)
+function VersionActivity1_4TaskView:refreshRight()
+	VersionActivity1_4TaskListModel.instance:sortTaskMoList(self.actId, self.tabIndex)
 
-	local var_18_0 = VersionActivity1_4TaskListModel.instance:getKeyRewardMo()
-	local var_18_1 = var_18_0 ~= nil
+	local keyMo = VersionActivity1_4TaskListModel.instance:getKeyRewardMo()
+	local hasKeyReward = keyMo ~= nil
 
-	gohelper.setActive(arg_18_0.btnReward, var_18_1)
+	gohelper.setActive(self.btnReward, hasKeyReward)
 
-	if var_18_1 then
-		local var_18_2 = GameUtil.splitString2(var_18_0.config.bonus, true, "|", "#")[1]
-		local var_18_3 = var_18_2[1]
-		local var_18_4 = var_18_2[2]
-		local var_18_5, var_18_6 = ItemModel.instance:getItemConfigAndIcon(var_18_3, var_18_4, true)
+	if hasKeyReward then
+		local rewardList = GameUtil.splitString2(keyMo.config.bonus, true, "|", "#")
+		local firstReward = rewardList[1]
+		local type, id = firstReward[1], firstReward[2]
+		local _, icon = ItemModel.instance:getItemConfigAndIcon(type, id, true)
 
-		arg_18_0.simageIcon:LoadImage(var_18_6)
+		self.simageIcon:LoadImage(icon)
 	end
 
-	gohelper.setActive(arg_18_0.goFinish, VersionActivity1_4TaskListModel.instance.allTaskFinish)
-	arg_18_0:refreshTabRed()
+	gohelper.setActive(self.goFinish, VersionActivity1_4TaskListModel.instance.allTaskFinish)
+	self:refreshTabRed()
 end
 
-function var_0_0.onClose(arg_19_0)
-	TaskDispatcher.cancelTask(arg_19_0.refreshRemainTime, arg_19_0)
+function VersionActivity1_4TaskView:onClose()
+	TaskDispatcher.cancelTask(self.refreshRemainTime, self)
 end
 
-function var_0_0.onDestroyView(arg_20_0)
-	arg_20_0.simageFullBg:UnLoadImage()
-	arg_20_0.simageIcon:UnLoadImage()
+function VersionActivity1_4TaskView:onDestroyView()
+	self.simageFullBg:UnLoadImage()
+	self.simageIcon:UnLoadImage()
 end
 
-function var_0_0._getRemainTimeStr(arg_21_0, arg_21_1)
-	local var_21_0
+function VersionActivity1_4TaskView:_getRemainTimeStr(actInfoMo)
+	local offsetSecond
 
-	if arg_21_1 then
-		var_21_0 = arg_21_1:getRealEndTimeStamp() - ServerTime.now()
+	if actInfoMo then
+		offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
 	end
 
-	if not var_21_0 or var_21_0 <= 0 then
+	if not offsetSecond or offsetSecond <= 0 then
 		return luaLang("turnback_end")
 	end
 
-	local var_21_1, var_21_2, var_21_3, var_21_4 = TimeUtil.secondsToDDHHMMSS(var_21_0)
+	local day, hour, min, _ = TimeUtil.secondsToDDHHMMSS(offsetSecond)
 
-	if var_21_1 > 0 then
-		local var_21_5 = luaLang("time_day")
+	if day > 0 then
+		local time_day = luaLang("time_day")
 
 		if LangSettings.instance:isEn() then
-			var_21_5 = var_21_5 .. " "
+			time_day = time_day .. " "
 		end
 
-		return (var_21_1 .. var_21_5) .. var_21_2 .. luaLang("time_hour2")
+		return (day .. time_day) .. hour .. luaLang("time_hour2")
 	end
 
-	if var_21_2 > 0 then
-		return var_21_2 .. luaLang("time_hour2")
+	if hour > 0 then
+		return hour .. luaLang("time_hour2")
 	end
 
-	if var_21_3 <= 0 then
-		var_21_3 = "<1"
+	if min <= 0 then
+		min = "<1"
 	end
 
-	return var_21_3 .. luaLang("time_minute2")
+	return min .. luaLang("time_minute2")
 end
 
-return var_0_0
+return VersionActivity1_4TaskView

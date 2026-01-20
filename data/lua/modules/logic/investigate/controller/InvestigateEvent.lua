@@ -1,11 +1,13 @@
-﻿module("modules.logic.investigate.controller.InvestigateEvent", package.seeall)
+﻿-- chunkname: @modules/logic/investigate/controller/InvestigateEvent.lua
 
-local var_0_0 = _M
-local var_0_1 = GameUtil.getUniqueTb()
+module("modules.logic.investigate.controller.InvestigateEvent", package.seeall)
 
-var_0_0.ClueUpdate = var_0_1()
-var_0_0.ShowGetEffect = var_0_1()
-var_0_0.LinkedOpinionSuccess = var_0_1()
-var_0_0.ChangeArrow = var_0_1()
+local InvestigateEvent = _M
+local _get = GameUtil.getUniqueTb()
 
-return var_0_0
+InvestigateEvent.ClueUpdate = _get()
+InvestigateEvent.ShowGetEffect = _get()
+InvestigateEvent.LinkedOpinionSuccess = _get()
+InvestigateEvent.ChangeArrow = _get()
+
+return InvestigateEvent

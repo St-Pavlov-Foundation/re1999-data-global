@@ -1,122 +1,125 @@
-﻿module("modules.logic.scene.room.fsm.RoomTransitionTryBackBlock", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/fsm/RoomTransitionTryBackBlock.lua
 
-local var_0_0 = class("RoomTransitionTryBackBlock", JompFSMBaseTransition)
+module("modules.logic.scene.room.fsm.RoomTransitionTryBackBlock", package.seeall)
 
-function var_0_0.start(arg_1_0)
-	arg_1_0._scene = GameSceneMgr.instance:getCurScene()
-	arg_1_0._opToDis = {
+local RoomTransitionTryBackBlock = class("RoomTransitionTryBackBlock", JompFSMBaseTransition)
+
+function RoomTransitionTryBackBlock:start()
+	self._scene = GameSceneMgr.instance:getCurScene()
+	self._opToDis = {
 		[RoomBlockEnum.OpState.Normal] = RoomBlockEnum.OpState.Back,
 		[RoomBlockEnum.OpState.Back] = RoomBlockEnum.OpState.Normal
 	}
 end
 
-function var_0_0.check(arg_2_0)
+function RoomTransitionTryBackBlock:check()
 	return true
 end
 
-function var_0_0.onStart(arg_3_0, arg_3_1)
-	arg_3_0._param = arg_3_1
+function RoomTransitionTryBackBlock:onStart(param)
+	self._param = param
 
-	local var_3_0 = arg_3_0._param.hexPoint
-	local var_3_1 = RoomMapBlockModel.instance:getBlockMO(var_3_0.x, var_3_0.y)
-	local var_3_2 = RoomMapBlockModel.instance:getBackBlockModel()
+	local hexPoint = self._param.hexPoint
+	local blockMO = RoomMapBlockModel.instance:getBlockMO(hexPoint.x, hexPoint.y)
+	local backBlockModel = RoomMapBlockModel.instance:getBackBlockModel()
 
-	if var_3_2:getCount() >= RoomEnum.ConstNum.InventoryBlockOneBackMax and var_3_2:getById(var_3_1.id) == nil then
+	if backBlockModel:getCount() >= RoomEnum.ConstNum.InventoryBlockOneBackMax and backBlockModel:getById(blockMO.id) == nil then
 		GameFacade.showToast(RoomEnum.Toast.InventoryBlockOneBackMax)
-		arg_3_0:onDone()
+		self:onDone()
 
 		return
 	end
 
 	if not RoomMapBlockModel.instance:isBackMore() then
-		arg_3_0:_backOne(var_3_1.id)
+		self:_backOne(blockMO.id)
 	end
 
-	local var_3_3 = arg_3_0._scene.mapmgr:getBlockEntity(var_3_1.id, SceneTag.RoomMapBlock)
-	local var_3_4 = arg_3_0._opToDis[var_3_1:getOpState()] or RoomBlockEnum.OpState.Normal
+	local curEntity = self._scene.mapmgr:getBlockEntity(blockMO.id, SceneTag.RoomMapBlock)
+	local opstate = self._opToDis[blockMO:getOpState()] or RoomBlockEnum.OpState.Normal
 
-	var_3_1:setOpState(var_3_4)
+	blockMO:setOpState(opstate)
 
-	if var_3_4 == RoomBlockEnum.OpState.Back then
-		var_3_2:addAtLast(var_3_1)
+	if opstate == RoomBlockEnum.OpState.Back then
+		backBlockModel:addAtLast(blockMO)
 	else
-		var_3_2:remove(var_3_1)
-		var_3_3:refreshBlock()
+		backBlockModel:remove(blockMO)
+		curEntity:refreshBlock()
 
-		var_3_0 = nil
+		hexPoint = nil
 	end
 
-	arg_3_0:onDone()
-	arg_3_0:_refreshBackBlock()
+	self:onDone()
+	self:_refreshBackBlock()
 	RoomMapController.instance:dispatchEvent(RoomEvent.ClientTryBackBlock)
 
-	if var_3_0 then
-		local var_3_5 = HexMath.hexToPosition(var_3_0, RoomBlockEnum.BlockSize)
-		local var_3_6 = {}
+	if hexPoint then
+		local pos = HexMath.hexToPosition(hexPoint, RoomBlockEnum.BlockSize)
+		local cameraParam = {}
 
-		if arg_3_0:_isOutScreen(var_3_5) then
-			var_3_6.focusX = var_3_5.x
-			var_3_6.focusY = var_3_5.y
+		if self:_isOutScreen(pos) then
+			cameraParam.focusX = pos.x
+			cameraParam.focusY = pos.y
 		end
 
-		arg_3_0._scene.camera:tweenCamera(var_3_6)
+		self._scene.camera:tweenCamera(cameraParam)
 	end
 end
 
-function var_0_0._refreshBackBlock(arg_4_0)
-	local var_4_0 = RoomMapBlockModel.instance:isCanBackBlock()
-	local var_4_1 = RoomMapBlockModel.instance:getBackBlockModel():getList()
+function RoomTransitionTryBackBlock:_refreshBackBlock()
+	local isCanBack = RoomMapBlockModel.instance:isCanBackBlock()
+	local backBlockModel = RoomMapBlockModel.instance:getBackBlockModel()
+	local list = backBlockModel:getList()
 
-	for iter_4_0 = 1, #var_4_1 do
-		local var_4_2 = var_4_1[iter_4_0]
+	for i = 1, #list do
+		local blockMO = list[i]
 
-		if var_4_2:getOpStateParam() ~= var_4_0 then
-			var_4_2:setOpState(RoomBlockEnum.OpState.Back, var_4_0)
+		if blockMO:getOpStateParam() ~= isCanBack then
+			blockMO:setOpState(RoomBlockEnum.OpState.Back, isCanBack)
 
-			local var_4_3 = arg_4_0._scene.mapmgr:getBlockEntity(var_4_2.id, SceneTag.RoomMapBlock)
+			local blockEntity = self._scene.mapmgr:getBlockEntity(blockMO.id, SceneTag.RoomMapBlock)
 
-			if var_4_3 then
-				var_4_3:refreshBlock()
+			if blockEntity then
+				blockEntity:refreshBlock()
 			end
 		end
 	end
 end
 
-function var_0_0._backOne(arg_5_0, arg_5_1)
-	local var_5_0 = RoomMapBlockModel.instance:getBackBlockModel()
-	local var_5_1 = var_5_0:getList()
+function RoomTransitionTryBackBlock:_backOne(selectBlockId)
+	local backBlockModel = RoomMapBlockModel.instance:getBackBlockModel()
+	local list = backBlockModel:getList()
 
-	for iter_5_0 = 1, #var_5_1 do
-		local var_5_2 = var_5_1[iter_5_0]
+	for i = 1, #list do
+		local blockMO = list[i]
 
-		if var_5_2 and var_5_2.id ~= arg_5_1 then
-			var_5_2:setOpState(RoomBlockEnum.OpState.Normal)
+		if blockMO and blockMO.id ~= selectBlockId then
+			blockMO:setOpState(RoomBlockEnum.OpState.Normal)
 
-			local var_5_3 = arg_5_0._scene.mapmgr:getBlockEntity(var_5_2.id, SceneTag.RoomMapBlock)
+			local blockEntity = self._scene.mapmgr:getBlockEntity(blockMO.id, SceneTag.RoomMapBlock)
 
-			if var_5_3 then
-				var_5_3:refreshBlock()
+			if blockEntity then
+				blockEntity:refreshBlock()
 			end
 		end
 	end
 
-	var_5_0:clear()
+	backBlockModel:clear()
 end
 
-function var_0_0._isOutScreen(arg_6_0, arg_6_1)
-	return RoomHelper.isOutCameraFocus(arg_6_1)
+function RoomTransitionTryBackBlock:_isOutScreen(pos)
+	return RoomHelper.isOutCameraFocus(pos)
 end
 
-function var_0_0.stop(arg_7_0)
+function RoomTransitionTryBackBlock:stop()
 	return
 end
 
-function var_0_0.clear(arg_8_0)
+function RoomTransitionTryBackBlock:clear()
 	return
 end
 
-function var_0_0.onDone(arg_9_0)
-	var_0_0.super.onDone(arg_9_0)
+function RoomTransitionTryBackBlock:onDone()
+	RoomTransitionTryBackBlock.super.onDone(self)
 end
 
-return var_0_0
+return RoomTransitionTryBackBlock

@@ -1,73 +1,75 @@
-﻿module("modules.logic.room.entity.comp.RoomBuildingReflectionComp", package.seeall)
+﻿-- chunkname: @modules/logic/room/entity/comp/RoomBuildingReflectionComp.lua
 
-local var_0_0 = class("RoomBuildingReflectionComp", LuaCompBase)
+module("modules.logic.room.entity.comp.RoomBuildingReflectionComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.entity = arg_1_1
-	arg_1_0._effectKey = RoomEnum.EffectKey.BuildingGOKey
+local RoomBuildingReflectionComp = class("RoomBuildingReflectionComp", LuaCompBase)
+
+function RoomBuildingReflectionComp:ctor(entity)
+	self.entity = entity
+	self._effectKey = RoomEnum.EffectKey.BuildingGOKey
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
+function RoomBuildingReflectionComp:init(go)
+	self.go = go
 
-	local var_2_0 = arg_2_0:getMO()
+	local mo = self:getMO()
 
-	arg_2_0._isReflection = arg_2_0:_checkReflection()
+	self._isReflection = self:_checkReflection()
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	RoomBuildingController.instance:registerCallback(RoomEvent.DropBuildingDown, arg_3_0._onDropBuildingDown, arg_3_0)
+function RoomBuildingReflectionComp:addEventListeners()
+	RoomBuildingController.instance:registerCallback(RoomEvent.DropBuildingDown, self._onDropBuildingDown, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	RoomBuildingController.instance:unregisterCallback(RoomEvent.DropBuildingDown, arg_4_0._onDropBuildingDown, arg_4_0)
+function RoomBuildingReflectionComp:removeEventListeners()
+	RoomBuildingController.instance:unregisterCallback(RoomEvent.DropBuildingDown, self._onDropBuildingDown, self)
 end
 
-function var_0_0.beforeDestroy(arg_5_0)
-	arg_5_0:removeEventListeners()
+function RoomBuildingReflectionComp:beforeDestroy()
+	self:removeEventListeners()
 end
 
-function var_0_0._onDropBuildingDown(arg_6_0)
-	arg_6_0:refreshReflection()
+function RoomBuildingReflectionComp:_onDropBuildingDown()
+	self:refreshReflection()
 end
 
-function var_0_0.refreshReflection(arg_7_0)
-	local var_7_0 = arg_7_0:_checkReflection()
+function RoomBuildingReflectionComp:refreshReflection()
+	local isReflection = self:_checkReflection()
 
-	if arg_7_0._isReflection ~= var_7_0 then
-		arg_7_0._isReflection = var_7_0
+	if self._isReflection ~= isReflection then
+		self._isReflection = isReflection
 
-		arg_7_0:_updateReflection()
+		self:_updateReflection()
 	end
 end
 
-function var_0_0._updateReflection(arg_8_0)
-	local var_8_0 = arg_8_0.entity.effect:getGameObjectsByName(arg_8_0._effectKey, RoomEnum.EntityChildKey.ReflerctionGOKey)
+function RoomBuildingReflectionComp:_updateReflection()
+	local golist = self.entity.effect:getGameObjectsByName(self._effectKey, RoomEnum.EntityChildKey.ReflerctionGOKey)
 
-	if var_8_0 and #var_8_0 > 0 then
-		for iter_8_0, iter_8_1 in ipairs(var_8_0) do
-			gohelper.setActive(iter_8_1, arg_8_0._isReflection)
+	if golist and #golist > 0 then
+		for i, tempGO in ipairs(golist) do
+			gohelper.setActive(tempGO, self._isReflection)
 		end
 	end
 end
 
-function var_0_0._checkReflection(arg_9_0)
-	if arg_9_0.entity.id == RoomBuildingController.instance:isPressBuilding() then
+function RoomBuildingReflectionComp:_checkReflection()
+	if self.entity.id == RoomBuildingController.instance:isPressBuilding() then
 		return false
 	end
 
-	local var_9_0, var_9_1 = arg_9_0:_getOccupyDict()
+	local occupyDict, hexPointList = self:_getOccupyDict()
 
-	if not var_9_0 then
+	if not occupyDict then
 		return false
 	end
 
-	local var_9_2 = RoomMapBlockModel.instance
+	local tRoomMapBlockModel = RoomMapBlockModel.instance
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_1) do
-		local var_9_3 = var_9_2:getBlockMO(iter_9_1.x, iter_9_1.y)
+	for i, hexPoint in ipairs(hexPointList) do
+		local blockMO = tRoomMapBlockModel:getBlockMO(hexPoint.x, hexPoint.y)
 
-		if var_9_3 and var_9_3:isInMapBlock() and var_9_3:hasRiver() then
+		if blockMO and blockMO:isInMapBlock() and blockMO:hasRiver() then
 			return true
 		end
 	end
@@ -75,22 +77,22 @@ function var_0_0._checkReflection(arg_9_0)
 	return false
 end
 
-function var_0_0._getOccupyDict(arg_10_0)
-	return arg_10_0.entity:getOccupyDict()
+function RoomBuildingReflectionComp:_getOccupyDict()
+	return self.entity:getOccupyDict()
 end
 
-function var_0_0.getMO(arg_11_0)
-	return arg_11_0.entity:getMO()
+function RoomBuildingReflectionComp:getMO()
+	return self.entity:getMO()
 end
 
-function var_0_0.onEffectRebuild(arg_12_0)
-	local var_12_0 = arg_12_0.entity.effect
+function RoomBuildingReflectionComp:onEffectRebuild()
+	local effect = self.entity.effect
 
-	if var_12_0:isHasEffectGOByKey(arg_12_0._effectKey) and not var_12_0:isSameResByKey(arg_12_0._effectKey, arg_12_0._effectRes) then
-		arg_12_0._effectRes = var_12_0:getEffectRes(arg_12_0._effectKey)
+	if effect:isHasEffectGOByKey(self._effectKey) and not effect:isSameResByKey(self._effectKey, self._effectRes) then
+		self._effectRes = effect:getEffectRes(self._effectKey)
 
-		arg_12_0:_updateReflection()
+		self:_updateReflection()
 	end
 end
 
-return var_0_0
+return RoomBuildingReflectionComp

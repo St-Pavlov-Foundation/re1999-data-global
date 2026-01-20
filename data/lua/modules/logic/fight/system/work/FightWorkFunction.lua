@@ -1,22 +1,24 @@
-﻿module("modules.logic.fight.system.work.FightWorkFunction", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkFunction.lua
 
-local var_0_0 = class("FightWorkFunction", FightWorkItem)
+module("modules.logic.fight.system.work.FightWorkFunction", package.seeall)
 
-function var_0_0.onLogicEnter(arg_1_0, arg_1_1, arg_1_2, ...)
-	arg_1_0._func = arg_1_1
-	arg_1_0._target = arg_1_2
-	arg_1_0._param = {
+local FightWorkFunction = class("FightWorkFunction", FightWorkItem)
+
+function FightWorkFunction:onLogicEnter(func, target, ...)
+	self._func = func
+	self._target = target
+	self._param = {
 		...
 	}
-	arg_1_0._paramCount = select("#", ...)
+	self._paramCount = select("#", ...)
 end
 
-function var_0_0.onStart(arg_2_0)
-	arg_2_0._func(arg_2_0._target, unpack(arg_2_0._param, 1, arg_2_0._paramCount))
+function FightWorkFunction:onStart()
+	self._func(self._target, unpack(self._param, 1, self._paramCount))
 
-	if not arg_2_0.IS_DISPOSED and not arg_2_0.IS_RELEASING then
-		arg_2_0:onDone(true)
+	if not self.IS_DISPOSED and not self.IS_RELEASING then
+		self:onDone(true)
 	end
 end
 
-return var_0_0
+return FightWorkFunction

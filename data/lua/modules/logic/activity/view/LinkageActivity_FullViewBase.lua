@@ -1,40 +1,42 @@
-﻿module("modules.logic.activity.view.LinkageActivity_FullViewBase", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/LinkageActivity_FullViewBase.lua
 
-local var_0_0 = class("LinkageActivity_FullViewBase", LinkageActivity_BaseView)
+module("modules.logic.activity.view.LinkageActivity_FullViewBase", package.seeall)
 
-function var_0_0.ctor(arg_1_0, ...)
-	var_0_0.super.ctor(arg_1_0, ...)
-	arg_1_0:internal_set_openMode(Activity101SignViewBase.eOpenMode.ActivityBeginnerView)
+local LinkageActivity_FullViewBase = class("LinkageActivity_FullViewBase", LinkageActivity_BaseView)
 
-	arg_1_0._inited = false
+function LinkageActivity_FullViewBase:ctor(...)
+	LinkageActivity_FullViewBase.super.ctor(self, ...)
+	self:internal_set_openMode(Activity101SignViewBase.eOpenMode.ActivityBeginnerView)
+
+	self._inited = false
 end
 
-function var_0_0.onDestroyView(arg_2_0)
-	arg_2_0._inited = false
+function LinkageActivity_FullViewBase:onDestroyView()
+	self._inited = false
 
-	var_0_0.super.onDestroyView(arg_2_0)
+	LinkageActivity_FullViewBase.super.onDestroyView(self)
 end
 
-function var_0_0.onUpdateParam(arg_3_0)
-	arg_3_0:_refresh()
+function LinkageActivity_FullViewBase:onUpdateParam()
+	self:_refresh()
 end
 
-function var_0_0.onOpen(arg_4_0)
-	if not arg_4_0._inited then
-		arg_4_0:internal_onOpen()
+function LinkageActivity_FullViewBase:onOpen()
+	if not self._inited then
+		self:internal_onOpen()
 
-		arg_4_0._inited = true
+		self._inited = true
 	else
-		arg_4_0:_refresh()
+		self:_refresh()
 	end
 end
 
-function var_0_0.addEvents(arg_5_0)
-	var_0_0.super.addEvents(arg_5_0)
+function LinkageActivity_FullViewBase:addEvents()
+	LinkageActivity_FullViewBase.super.addEvents(self)
 end
 
-function var_0_0.removeEvents(arg_6_0)
-	var_0_0.super.removeEvents(arg_6_0)
+function LinkageActivity_FullViewBase:removeEvents()
+	LinkageActivity_FullViewBase.super.removeEvents(self)
 end
 
-return var_0_0
+return LinkageActivity_FullViewBase

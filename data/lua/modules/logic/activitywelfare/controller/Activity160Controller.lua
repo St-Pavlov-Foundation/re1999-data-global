@@ -1,15 +1,17 @@
-﻿module("modules.logic.activitywelfare.controller.Activity160Controller", package.seeall)
+﻿-- chunkname: @modules/logic/activitywelfare/controller/Activity160Controller.lua
 
-local var_0_0 = class("Activity160Controller", BaseController)
+module("modules.logic.activitywelfare.controller.Activity160Controller", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local Activity160Controller = class("Activity160Controller", BaseController)
+
+function Activity160Controller:onInit()
 	return
 end
 
-function var_0_0.addConstEvents(arg_2_0)
+function Activity160Controller:addConstEvents()
 	return
 end
 
-var_0_0.instance = var_0_0.New()
+Activity160Controller.instance = Activity160Controller.New()
 
-return var_0_0
+return Activity160Controller

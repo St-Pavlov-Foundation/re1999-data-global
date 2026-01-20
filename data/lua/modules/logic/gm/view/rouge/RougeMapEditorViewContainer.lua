@@ -1,11 +1,13 @@
-﻿module("modules.logic.gm.view.rouge.RougeMapEditorViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/rouge/RougeMapEditorViewContainer.lua
 
-local var_0_0 = class("RougeMapEditorViewContainer", BaseViewContainer)
+module("modules.logic.gm.view.rouge.RougeMapEditorViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local RougeMapEditorViewContainer = class("RougeMapEditorViewContainer", BaseViewContainer)
+
+function RougeMapEditorViewContainer:buildViews()
 	return {
 		RougeMapEditorView.New()
 	}
 end
 
-return var_0_0
+return RougeMapEditorViewContainer

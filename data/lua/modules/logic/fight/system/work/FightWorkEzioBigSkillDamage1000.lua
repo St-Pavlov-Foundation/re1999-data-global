@@ -1,43 +1,45 @@
-﻿module("modules.logic.fight.system.work.FightWorkEzioBigSkillDamage1000", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkEzioBigSkillDamage1000.lua
 
-local var_0_0 = class("FightWorkEzioBigSkillDamage1000", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkEzioBigSkillDamage1000", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0:onDone(true)
+local FightWorkEzioBigSkillDamage1000 = class("FightWorkEzioBigSkillDamage1000", FightEffectBase)
+
+function FightWorkEzioBigSkillDamage1000:onStart()
+	self:onDone(true)
 end
 
-function var_0_0.fakeDecreaseHp(arg_2_0, arg_2_1)
-	local var_2_0 = FightDataHelper.entityMgr:getById(arg_2_0)
+function FightWorkEzioBigSkillDamage1000.fakeDecreaseHp(entityId, effectNum)
+	local entityData = FightDataHelper.entityMgr:getById(entityId)
 
-	if not var_2_0 then
+	if not entityData then
 		return
 	end
 
-	local var_2_1 = (FightDataHelper.tempMgr.aiJiAoFakeHpOffset[var_2_0.id] or 0) + arg_2_1
+	local oldValue = FightDataHelper.tempMgr.aiJiAoFakeHpOffset[entityData.id] or 0
+	local newValue = oldValue + effectNum
 
-	FightDataHelper.tempMgr.aiJiAoFakeHpOffset[var_2_0.id] = var_2_1
+	FightDataHelper.tempMgr.aiJiAoFakeHpOffset[entityData.id] = newValue
 end
 
-function var_0_0.calFakeHpAndShield(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = FightDataHelper.tempMgr.aiJiAoFakeHpOffset[arg_3_0]
+function FightWorkEzioBigSkillDamage1000.calFakeHpAndShield(entityId, curHp, curShield)
+	local aiJiAoFakeHpOffset = FightDataHelper.tempMgr.aiJiAoFakeHpOffset[entityId]
 
-	if var_3_0 then
-		if arg_3_2 > 0 then
-			if var_3_0 <= arg_3_2 then
-				arg_3_2 = arg_3_2 - var_3_0
-				var_3_0 = 0
+	if aiJiAoFakeHpOffset then
+		if curShield > 0 then
+			if aiJiAoFakeHpOffset <= curShield then
+				curShield = curShield - aiJiAoFakeHpOffset
+				aiJiAoFakeHpOffset = 0
 			else
-				var_3_0 = var_3_0 - arg_3_2
-				arg_3_2 = 0
+				aiJiAoFakeHpOffset = aiJiAoFakeHpOffset - curShield
+				curShield = 0
 			end
 		end
 
-		arg_3_1 = arg_3_1 - var_3_0
-
-		local var_3_1 = 0
+		curHp = curHp - aiJiAoFakeHpOffset
+		aiJiAoFakeHpOffset = 0
 	end
 
-	return arg_3_1, arg_3_2
+	return curHp, curShield
 end
 
-return var_0_0
+return FightWorkEzioBigSkillDamage1000

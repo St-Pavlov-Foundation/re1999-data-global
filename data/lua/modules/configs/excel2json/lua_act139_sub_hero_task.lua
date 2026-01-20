@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_act139_sub_hero_task", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_act139_sub_hero_task.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_act139_sub_hero_task", package.seeall)
+
+local lua_act139_sub_hero_task = {}
+local fields = {
 	reward = 8,
 	descSuffix = 7,
 	desc = 6,
@@ -15,18 +17,18 @@ local var_0_1 = {
 	id = 1,
 	elementIds = 9
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	descSuffix = 3,
 	title = 1,
 	lockDesc = 4,
 	desc = 2
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_act139_sub_hero_task.onLoad(json)
+	lua_act139_sub_hero_task.configList, lua_act139_sub_hero_task.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_act139_sub_hero_task

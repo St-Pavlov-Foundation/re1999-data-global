@@ -1,9 +1,11 @@
-﻿module("modules.logic.help.controller.HelpEvent", package.seeall)
+﻿-- chunkname: @modules/logic/help/controller/HelpEvent.lua
 
-local var_0_0 = {}
+module("modules.logic.help.controller.HelpEvent", package.seeall)
 
-var_0_0.RefreshHelp = 1
-var_0_0.UIVoideFullScreenChange = 25001
-var_0_0.UIPageTabSelectChange = 25002
+local HelpEvent = {}
 
-return var_0_0
+HelpEvent.RefreshHelp = 1
+HelpEvent.UIVoideFullScreenChange = 25001
+HelpEvent.UIPageTabSelectChange = 25002
+
+return HelpEvent

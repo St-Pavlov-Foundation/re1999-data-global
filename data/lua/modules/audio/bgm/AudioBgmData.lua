@@ -1,26 +1,28 @@
-﻿module("modules.audio.bgm.AudioBgmData", package.seeall)
+﻿-- chunkname: @modules/audio/bgm/AudioBgmData.lua
 
-local var_0_0 = class("AudioBgmData")
+module("modules.audio.bgm.AudioBgmData", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.layer = nil
+local AudioBgmData = class("AudioBgmData")
 
-	arg_1_0:clear()
+function AudioBgmData:ctor()
+	self.layer = nil
+
+	self:clear()
 end
 
-function var_0_0.clear(arg_2_0)
-	arg_2_0.playId = 0
-	arg_2_0.stopId = 0
-	arg_2_0.pauseId = nil
-	arg_2_0.resumeId = nil
-	arg_2_0.switchGroup = nil
-	arg_2_0.switchState = nil
+function AudioBgmData:clear()
+	self.playId = 0
+	self.stopId = 0
+	self.pauseId = nil
+	self.resumeId = nil
+	self.switchGroup = nil
+	self.switchState = nil
 end
 
-function var_0_0.setSwitch(arg_3_0)
-	if arg_3_0.switchGroup and arg_3_0.switchState then
-		AudioMgr.instance:setSwitch(AudioMgr.instance:getIdFromString(arg_3_0.switchGroup), AudioMgr.instance:getIdFromString(arg_3_0.switchState))
+function AudioBgmData:setSwitch()
+	if self.switchGroup and self.switchState then
+		AudioMgr.instance:setSwitch(AudioMgr.instance:getIdFromString(self.switchGroup), AudioMgr.instance:getIdFromString(self.switchState))
 	end
 end
 
-return var_0_0
+return AudioBgmData

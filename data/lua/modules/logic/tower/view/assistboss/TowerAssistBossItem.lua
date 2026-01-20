@@ -1,246 +1,261 @@
-﻿module("modules.logic.tower.view.assistboss.TowerAssistBossItem", package.seeall)
+﻿-- chunkname: @modules/logic/tower/view/assistboss/TowerAssistBossItem.lua
 
-local var_0_0 = class("TowerAssistBossItem", ListScrollCellExtend)
+module("modules.logic.tower.view.assistboss.TowerAssistBossItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.goOpen = gohelper.findChild(arg_1_0.viewGO, "root/go_open")
-	arg_1_0.goLock = gohelper.findChild(arg_1_0.viewGO, "root/go_lock")
-	arg_1_0.goSelected = gohelper.findChild(arg_1_0.viewGO, "root/go_selected")
-	arg_1_0.goUnSelect = gohelper.findChild(arg_1_0.viewGO, "root/go_unselect")
-	arg_1_0.btnClick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "click")
-	arg_1_0.btnSure = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/btnSure")
-	arg_1_0.goSureBg = gohelper.findChild(arg_1_0.viewGO, "root/btnSure/bg")
-	arg_1_0.btnCancel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/btnCancel")
-	arg_1_0.goLevel = gohelper.findChild(arg_1_0.viewGO, "root/level")
-	arg_1_0.txtLevel = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/level/#txt_level")
-	arg_1_0.goArrow = gohelper.findChild(arg_1_0.viewGO, "root/level/#go_Arrow")
-	arg_1_0.goTrial = gohelper.findChild(arg_1_0.viewGO, "root/go_trial")
-	arg_1_0.goTrialEffect = gohelper.findChild(arg_1_0.viewGO, "root/#saoguang")
-	arg_1_0.hasPlayTrialEffect = false
-	arg_1_0.itemList = {}
+local TowerAssistBossItem = class("TowerAssistBossItem", ListScrollCellExtend)
 
-	arg_1_0:createItem(arg_1_0.goOpen)
-	arg_1_0:createItem(arg_1_0.goLock)
-	arg_1_0:createItem(arg_1_0.goSelected)
-	arg_1_0:createItem(arg_1_0.goUnSelect)
+function TowerAssistBossItem:onInitView()
+	self.goOpen = gohelper.findChild(self.viewGO, "root/go_open")
+	self.goLock = gohelper.findChild(self.viewGO, "root/go_lock")
+	self.goSelected = gohelper.findChild(self.viewGO, "root/go_selected")
+	self.goUnSelect = gohelper.findChild(self.viewGO, "root/go_unselect")
+	self.btnClick = gohelper.findChildButtonWithAudio(self.viewGO, "click")
+	self.btnSure = gohelper.findChildButtonWithAudio(self.viewGO, "root/btnSure")
+	self.goSureBg = gohelper.findChild(self.viewGO, "root/btnSure/bg")
+	self.btnCancel = gohelper.findChildButtonWithAudio(self.viewGO, "root/btnCancel")
+	self.goLevel = gohelper.findChild(self.viewGO, "root/level")
+	self.txtLevel = gohelper.findChildTextMesh(self.viewGO, "root/level/#txt_level")
+	self.goArrow = gohelper.findChild(self.viewGO, "root/level/#go_Arrow")
+	self.goTrial = gohelper.findChild(self.viewGO, "root/go_trial")
+	self.goTrialEffect = gohelper.findChild(self.viewGO, "root/#saoguang")
+	self.hasPlayTrialEffect = false
+	self.itemList = {}
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	self:createItem(self.goOpen)
+	self:createItem(self.goLock)
+	self:createItem(self.goSelected)
+	self:createItem(self.goUnSelect)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnClick, arg_2_0.onBtnClick, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnSure, arg_2_0.onBtnSure, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnCancel, arg_2_0.onBtnCancel, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.ResetTalent, arg_2_0._onResetTalent, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.ActiveTalent, arg_2_0._onActiveTalent, arg_2_0)
+function TowerAssistBossItem:addEvents()
+	self:addClickCb(self.btnClick, self.onBtnClick, self)
+	self:addClickCb(self.btnSure, self.onBtnSure, self)
+	self:addClickCb(self.btnCancel, self.onBtnCancel, self)
+	self:addEventCb(TowerController.instance, TowerEvent.ResetTalent, self._onResetTalent, self)
+	self:addEventCb(TowerController.instance, TowerEvent.ActiveTalent, self._onActiveTalent, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeClickCb(arg_3_0.btnClick)
-	arg_3_0:removeClickCb(arg_3_0.btnSure)
-	arg_3_0:removeClickCb(arg_3_0.btnCancel)
+function TowerAssistBossItem:removeEvents()
+	self:removeClickCb(self.btnClick)
+	self:removeClickCb(self.btnSure)
+	self:removeClickCb(self.btnCancel)
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function TowerAssistBossItem:_editableInitView()
 	return
 end
 
-function var_0_0._onResetTalent(arg_5_0, arg_5_1)
-	arg_5_0:refreshTalent()
+function TowerAssistBossItem:_onResetTalent(talentId)
+	self:refreshTalent()
 end
 
-function var_0_0._onActiveTalent(arg_6_0, arg_6_1)
-	arg_6_0:refreshTalent()
+function TowerAssistBossItem:_onActiveTalent(talentId)
+	self:refreshTalent()
 end
 
-function var_0_0.onBtnSure(arg_7_0)
-	if not arg_7_0._mo then
+function TowerAssistBossItem:onBtnSure()
+	if not self._mo then
 		return
 	end
 
-	if arg_7_0._mo.isLock == 1 and not arg_7_0.isLimitedTrial then
+	local isLock = self._mo.isLock == 1 and not self.isLimitedTrial
+
+	if isLock then
 		GameFacade.showToast(ToastEnum.TowerAssistBossLock)
 
 		return
 	end
 
-	local var_7_0 = TowerModel.instance:getRecordFightParam()
+	local param = TowerModel.instance:getRecordFightParam()
 
-	if var_7_0.isHeroGroupLock then
+	if param.isHeroGroupLock then
 		GameFacade.showToast(ToastEnum.TowerHeroGroupCantEdit)
 
 		return
 	end
 
-	if var_7_0.towerType == TowerEnum.TowerType.Boss then
+	local isBossTower = param.towerType == TowerEnum.TowerType.Boss
+
+	if isBossTower then
 		GameFacade.showToast(ToastEnum.TowerAssistBossCannotChange)
 
 		return
 	end
 
-	if TowerModel.instance:isBossBan(arg_7_0._mo.bossId) then
-		GameFacade.showToast(ToastEnum.TowerAssistBossBan, arg_7_0._mo.config.name)
+	if TowerModel.instance:isBossBan(self._mo.bossId) then
+		GameFacade.showToast(ToastEnum.TowerAssistBossBan, self._mo.config.name)
 
 		return
 	end
 
-	HeroGroupModel.instance:getCurGroupMO():setAssistBossId(arg_7_0._mo.bossId)
-	arg_7_0:saveGroup()
+	local heroGroupMO = HeroGroupModel.instance:getCurGroupMO()
+
+	heroGroupMO:setAssistBossId(self._mo.bossId)
+	self:saveGroup()
 end
 
-function var_0_0.onBtnCancel(arg_8_0)
-	local var_8_0 = TowerModel.instance:getRecordFightParam()
+function TowerAssistBossItem:onBtnCancel()
+	local param = TowerModel.instance:getRecordFightParam()
 
-	if var_8_0.isHeroGroupLock then
+	if param.isHeroGroupLock then
 		GameFacade.showToast(ToastEnum.TowerHeroGroupCantEdit)
 
 		return
 	end
 
-	if var_8_0.towerType == TowerEnum.TowerType.Boss then
+	local isBossTower = param.towerType == TowerEnum.TowerType.Boss
+
+	if isBossTower then
 		GameFacade.showToast(ToastEnum.TowerAssistBossCannotChange)
 
 		return
 	end
 
-	HeroGroupModel.instance:getCurGroupMO():setAssistBossId(0)
-	arg_8_0:saveGroup()
+	local heroGroupMO = HeroGroupModel.instance:getCurGroupMO()
+
+	heroGroupMO:setAssistBossId(0)
+	self:saveGroup()
 end
 
-function var_0_0.saveGroup(arg_9_0)
+function TowerAssistBossItem:saveGroup()
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
 	HeroGroupModel.instance:saveCurGroupData()
 end
 
-function var_0_0.onBtnClick(arg_10_0)
-	if not arg_10_0._mo then
+function TowerAssistBossItem:onBtnClick()
+	if not self._mo then
 		return
 	end
 
-	if arg_10_0._mo.isLock == 1 and not arg_10_0.isLimitedTrial then
+	local isLock = self._mo.isLock == 1 and not self.isLimitedTrial
+
+	if isLock then
 		GameFacade.showToast(ToastEnum.TowerAssistBossLock)
 
 		return
 	end
 
 	ViewMgr.instance:openView(ViewName.TowerAssistBossDetailView, {
-		bossId = arg_10_0._mo.bossId,
-		isFromHeroGroup = arg_10_0._mo.isFromHeroGroup
+		bossId = self._mo.bossId,
+		isFromHeroGroup = self._mo.isFromHeroGroup
 	})
 end
 
-function var_0_0.createItem(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0:getUserDataTb_()
+function TowerAssistBossItem:createItem(go)
+	local item = self:getUserDataTb_()
 
-	var_11_0.go = arg_11_1
-	var_11_0.txtName = gohelper.findChildTextMesh(arg_11_1, "name/#txt_name")
-	var_11_0.imgCareer = gohelper.findChildImage(arg_11_1, "career")
-	var_11_0.simageBoss = gohelper.findChildSingleImage(arg_11_1, "#simage_bossicon")
-	var_11_0.goTxtOpen = gohelper.findChild(arg_11_1, "toptips")
-	arg_11_0.itemList[arg_11_1] = var_11_0
+	item.go = go
+	item.txtName = gohelper.findChildTextMesh(go, "name/#txt_name")
+	item.imgCareer = gohelper.findChildImage(go, "career")
+	item.simageBoss = gohelper.findChildSingleImage(go, "#simage_bossicon")
+	item.goTxtOpen = gohelper.findChild(go, "toptips")
+	self.itemList[go] = item
 end
 
-function var_0_0.onUpdateMO(arg_12_0, arg_12_1)
-	arg_12_0._mo = arg_12_1
+function TowerAssistBossItem:onUpdateMO(mo)
+	self._mo = mo
 
-	local var_12_0 = TowerModel.instance:getCurTowerType() == TowerEnum.TowerType.Limited
-	local var_12_1 = arg_12_1.isLock == 1 and not var_12_0
-	local var_12_2 = arg_12_0.goOpen
+	local curTowerType = TowerModel.instance:getCurTowerType()
+	local islimitedTower = curTowerType == TowerEnum.TowerType.Limited
+	local isLock = mo.isLock == 1 and not islimitedTower
+	local activeGO = self.goOpen
 
-	if arg_12_1.isFromHeroGroup then
-		var_12_2 = arg_12_1.isSelect and arg_12_0.goSelected or arg_12_0.goUnSelect
+	if mo.isFromHeroGroup then
+		activeGO = mo.isSelect and self.goSelected or self.goUnSelect
 
-		gohelper.setActive(arg_12_0.btnSure, not arg_12_1.isSelect)
-		gohelper.setActive(arg_12_0.btnCancel, arg_12_1.isSelect)
+		gohelper.setActive(self.btnSure, not mo.isSelect)
+		gohelper.setActive(self.btnCancel, mo.isSelect)
 
-		local var_12_3 = arg_12_1.isBanOrder == 1 or var_12_1
+		local isGray = mo.isBanOrder == 1 or isLock
 
-		ZProj.UGUIHelper.SetGrayscale(arg_12_0.goSureBg, var_12_3)
+		ZProj.UGUIHelper.SetGrayscale(self.goSureBg, isGray)
 	else
-		gohelper.setActive(arg_12_0.btnSure, false)
-		gohelper.setActive(arg_12_0.btnCancel, false)
+		gohelper.setActive(self.btnSure, false)
+		gohelper.setActive(self.btnCancel, false)
 	end
 
-	if var_12_1 then
-		var_12_2 = arg_12_0.goLock
+	if isLock then
+		activeGO = self.goLock
 	end
 
-	for iter_12_0, iter_12_1 in pairs(arg_12_0.itemList) do
-		arg_12_0:updateItem(iter_12_1, var_12_2)
+	for k, v in pairs(self.itemList) do
+		self:updateItem(v, activeGO)
 	end
 
-	local var_12_4 = not var_12_1
+	local showLev = not isLock
 
-	gohelper.setActive(arg_12_0.goLevel, var_12_4)
+	gohelper.setActive(self.goLevel, showLev)
 
-	if var_12_4 then
-		local var_12_5 = 1
+	if showLev then
+		local curBossLevel = 1
 
-		if arg_12_0._mo.bossInfo and not arg_12_0._mo.bossInfo:getTempState() then
-			var_12_5 = arg_12_0._mo.bossInfo.level
+		if self._mo.bossInfo and not self._mo.bossInfo:getTempState() then
+			curBossLevel = self._mo.bossInfo.level
 
-			local var_12_6 = tonumber(TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.BalanceBossLevel))
+			local limitedTrialLevel = tonumber(TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.BalanceBossLevel))
 
-			arg_12_0.isLimitedTrial = var_12_0 and var_12_5 < var_12_6
+			self.isLimitedTrial = islimitedTower and curBossLevel < limitedTrialLevel
 
-			if arg_12_0.isLimitedTrial then
-				var_12_5 = var_12_6
+			if self.isLimitedTrial then
+				curBossLevel = limitedTrialLevel
 
-				TowerAssistBossModel.instance:setLimitedTrialBossInfo(arg_12_0._mo.bossInfo)
+				TowerAssistBossModel.instance:setLimitedTrialBossInfo(self._mo.bossInfo)
 			else
-				arg_12_0._mo.bossInfo:setTrialInfo(0, 0)
-				arg_12_0._mo.bossInfo:refreshTalent()
+				self._mo.bossInfo:setTrialInfo(0, 0)
+				self._mo.bossInfo:refreshTalent()
 			end
 		else
-			var_12_5 = tonumber(TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.BalanceBossLevel))
+			curBossLevel = tonumber(TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.BalanceBossLevel))
 
-			TowerAssistBossModel.instance:getTempUnlockTrialBossMO(arg_12_0._mo.id)
+			TowerAssistBossModel.instance:getTempUnlockTrialBossMO(self._mo.id)
 
-			arg_12_0.isLimitedTrial = true
+			self.isLimitedTrial = true
 		end
 
-		local var_12_7 = var_12_5
+		local bossLev = curBossLevel
 
-		arg_12_0.txtLevel.text = tostring(var_12_7)
+		self.txtLevel.text = tostring(bossLev)
 
-		SLFramework.UGUI.GuiHelper.SetColor(arg_12_0.txtLevel, arg_12_0.isLimitedTrial and "#81A8DC" or "#DCAE70")
+		SLFramework.UGUI.GuiHelper.SetColor(self.txtLevel, self.isLimitedTrial and "#81A8DC" or "#DCAE70")
 	end
 
-	gohelper.setActive(arg_12_0.goTrial, arg_12_0.isLimitedTrial)
-	gohelper.setActive(arg_12_0.goTrialEffect, false)
-	gohelper.setActive(arg_12_0.goTrialEffect, arg_12_0.isLimitedTrial and not arg_12_0.hasPlayTrialEffect)
+	gohelper.setActive(self.goTrial, self.isLimitedTrial)
+	gohelper.setActive(self.goTrialEffect, false)
+	gohelper.setActive(self.goTrialEffect, self.isLimitedTrial and not self.hasPlayTrialEffect)
 
-	arg_12_0.hasPlayTrialEffect = true
+	self.hasPlayTrialEffect = true
 
-	arg_12_0:refreshTalent()
+	self:refreshTalent()
 end
 
-function var_0_0.refreshTalent(arg_13_0)
-	gohelper.setActive(arg_13_0.goArrow, arg_13_0._mo.bossInfo and arg_13_0._mo.bossInfo:hasTalentCanActive() and not arg_13_0.isLimitedTrial or false)
+function TowerAssistBossItem:refreshTalent()
+	gohelper.setActive(self.goArrow, self._mo.bossInfo and self._mo.bossInfo:hasTalentCanActive() and not self.isLimitedTrial or false)
 end
 
-function var_0_0.updateItem(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = arg_14_1.go == arg_14_2
+function TowerAssistBossItem:updateItem(item, activeGO)
+	local isActive = item.go == activeGO
 
-	gohelper.setActive(arg_14_1.go, var_14_0)
+	gohelper.setActive(item.go, isActive)
 
-	if not var_14_0 then
+	if not isActive then
 		return
 	end
 
-	arg_14_1.txtName.text = arg_14_0._mo.config.name
+	item.txtName.text = self._mo.config.name
 
-	UISpriteSetMgr.instance:setCommonSprite(arg_14_1.imgCareer, string.format("lssx_%s", arg_14_0._mo.config.career))
-	arg_14_1.simageBoss:LoadImage(arg_14_0._mo.config.bossPic)
-	gohelper.setActive(arg_14_1.goTxtOpen, false)
+	UISpriteSetMgr.instance:setCommonSprite(item.imgCareer, string.format("lssx_%s", self._mo.config.career))
+	item.simageBoss:LoadImage(self._mo.config.bossPic)
+	gohelper.setActive(item.goTxtOpen, false)
 end
 
-function var_0_0.onDestroyView(arg_15_0)
-	for iter_15_0, iter_15_1 in pairs(arg_15_0.itemList) do
-		iter_15_1.simageBoss:UnLoadImage()
+function TowerAssistBossItem:onDestroyView()
+	for k, v in pairs(self.itemList) do
+		v.simageBoss:UnLoadImage()
 	end
 end
 
-return var_0_0
+return TowerAssistBossItem

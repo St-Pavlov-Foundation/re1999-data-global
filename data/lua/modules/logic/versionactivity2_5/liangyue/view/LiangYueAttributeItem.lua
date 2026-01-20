@@ -1,56 +1,58 @@
-﻿module("modules.logic.versionactivity2_5.liangyue.view.LiangYueAttributeItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/liangyue/view/LiangYueAttributeItem.lua
 
-local var_0_0 = class("LiangYueAttributeItem", LuaCompBase)
+module("modules.logic.versionactivity2_5.liangyue.view.LiangYueAttributeItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._go_Target1 = gohelper.findChild(arg_1_1, "#go_Target1")
-	arg_1_0._go_Target2 = gohelper.findChild(arg_1_1, "#go_Target2")
-	arg_1_0._go_Target3 = gohelper.findChild(arg_1_1, "#go_Target3")
+local LiangYueAttributeItem = class("LiangYueAttributeItem", LuaCompBase)
 
-	arg_1_0:initComp()
+function LiangYueAttributeItem:init(go)
+	self.go = go
+	self._go_Target1 = gohelper.findChild(go, "#go_Target1")
+	self._go_Target2 = gohelper.findChild(go, "#go_Target2")
+	self._go_Target3 = gohelper.findChild(go, "#go_Target3")
+
+	self:initComp()
 end
 
-function var_0_0.initComp(arg_2_0)
-	arg_2_0._descItemList = {}
-	arg_2_0._targetObjList = {
-		arg_2_0._go_Target1,
-		arg_2_0._go_Target2,
-		arg_2_0._go_Target3
+function LiangYueAttributeItem:initComp()
+	self._descItemList = {}
+	self._targetObjList = {
+		self._go_Target1,
+		self._go_Target2,
+		self._go_Target3
 	}
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0._targetObjList) do
-		local var_2_0 = LiangYueAttributeDescItem.New()
+	for _, obj in ipairs(self._targetObjList) do
+		local item = LiangYueAttributeDescItem.New()
 
-		var_2_0:init(iter_2_1)
-		table.insert(arg_2_0._descItemList, var_2_0)
+		item:init(obj)
+		table.insert(self._descItemList, item)
 	end
 end
 
-function var_0_0.setActive(arg_3_0, arg_3_1)
-	gohelper.setActive(arg_3_0.go, arg_3_1)
+function LiangYueAttributeItem:setActive(active)
+	gohelper.setActive(self.go, active)
 end
 
-function var_0_0.setInfo(arg_4_0, arg_4_1)
-	for iter_4_0, iter_4_1 in ipairs(arg_4_0._descItemList) do
-		if not arg_4_1[iter_4_0] then
-			iter_4_1:setActive(false)
+function LiangYueAttributeItem:setInfo(data)
+	for index, item in ipairs(self._descItemList) do
+		if not data[index] then
+			item:setActive(false)
 		else
-			local var_4_0 = arg_4_1[iter_4_0]
+			local attribute = data[index]
 
-			iter_4_1:setActive(true)
-			iter_4_1:setInfo(var_4_0[2], var_4_0[3])
+			item:setActive(true)
+			item:setInfo(attribute[2], attribute[3])
 		end
 	end
 end
 
-function var_0_0.setItemPos(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0.yPos = arg_5_1
-	arg_5_0.columnCount = arg_5_2
+function LiangYueAttributeItem:setItemPos(yPos, columnCount)
+	self.yPos = yPos
+	self.columnCount = columnCount
 end
 
-function var_0_0.onDestroy(arg_6_0)
+function LiangYueAttributeItem:onDestroy()
 	return
 end
 
-return var_0_0
+return LiangYueAttributeItem

@@ -1,12 +1,14 @@
-﻿module("modules.logic.fight.model.data.FightPlayerSkillInfoData", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightPlayerSkillInfoData.lua
 
-local var_0_0 = FightDataClass("FightPlayerSkillInfoData")
+module("modules.logic.fight.model.data.FightPlayerSkillInfoData", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1)
-	arg_1_0.skillId = arg_1_1.skillId
-	arg_1_0.cd = arg_1_1.cd
-	arg_1_0.needPower = arg_1_1.needPower
-	arg_1_0.type = arg_1_1.type
+local FightPlayerSkillInfoData = FightDataClass("FightPlayerSkillInfoData")
+
+function FightPlayerSkillInfoData:onConstructor(proto)
+	self.skillId = proto.skillId
+	self.cd = proto.cd
+	self.needPower = proto.needPower
+	self.type = proto.type
 end
 
-return var_0_0
+return FightPlayerSkillInfoData

@@ -1,172 +1,174 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotPlayCtrlView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/view/V1a6_CachotPlayCtrlView.lua
 
-local var_0_0 = class("V1a6_CachotPlayCtrlView", BaseView)
+module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotPlayCtrlView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goCtrl = gohelper.findChild(arg_1_0.viewGO, "#go_control")
-	arg_1_0._icon = gohelper.findChildImage(arg_1_0.viewGO, "#go_control/bg")
-	arg_1_0._iconCanvasGroup = gohelper.onceAddComponent(arg_1_0._icon, gohelper.Type_CanvasGroup)
-	arg_1_0._iconTrans = arg_1_0._icon.transform
+local V1a6_CachotPlayCtrlView = class("V1a6_CachotPlayCtrlView", BaseView)
 
-	local var_1_0 = gohelper.findChild(arg_1_0.viewGO, "#go_interact")
+function V1a6_CachotPlayCtrlView:onInitView()
+	self._goCtrl = gohelper.findChild(self.viewGO, "#go_control")
+	self._icon = gohelper.findChildImage(self.viewGO, "#go_control/bg")
+	self._iconCanvasGroup = gohelper.onceAddComponent(self._icon, gohelper.Type_CanvasGroup)
+	self._iconTrans = self._icon.transform
 
-	if var_1_0 then
-		arg_1_0._gouninteract = gohelper.findChild(var_1_0, "uninteract")
-		arg_1_0._gointeract = gohelper.findChild(var_1_0, "interactale")
-		arg_1_0._btninteract = gohelper.findChildButton(var_1_0, "#btn_interactclick")
-		arg_1_0._gointeractaleKey = gohelper.findChild(var_1_0, "#btn_interactclick/#go_interactaleKey")
+	local gointeract = gohelper.findChild(self.viewGO, "#go_interact")
 
-		local var_1_1 = GuideModel.instance:getById(16502)
-		local var_1_2 = (BootNativeUtil.isWindows() or SDKMgr.instance:isEmulator()) and var_1_1 ~= nil and var_1_1.isFinish
+	if gointeract then
+		self._gouninteract = gohelper.findChild(gointeract, "uninteract")
+		self._gointeract = gohelper.findChild(gointeract, "interactale")
+		self._btninteract = gohelper.findChildButton(gointeract, "#btn_interactclick")
+		self._gointeractaleKey = gohelper.findChild(gointeract, "#btn_interactclick/#go_interactaleKey")
 
-		gohelper.setActive(arg_1_0._gointeractaleKey, var_1_2)
+		local guideMO = GuideModel.instance:getById(16502)
+		local showInteractaleKey = (BootNativeUtil.isWindows() or SDKMgr.instance:isEmulator()) and guideMO ~= nil and guideMO.isFinish
+
+		gohelper.setActive(self._gointeractaleKey, showInteractaleKey)
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_2_0._goCtrl)
+function V1a6_CachotPlayCtrlView:addEvents()
+	self._drag = SLFramework.UGUI.UIDragListener.Get(self._goCtrl)
 
-	arg_2_0._drag:AddDragBeginListener(arg_2_0._onDragBegin, arg_2_0)
-	arg_2_0._drag:AddDragEndListener(arg_2_0._onDragEnd, arg_2_0)
-	arg_2_0._drag:AddDragListener(arg_2_0._onDrag, arg_2_0)
+	self._drag:AddDragBeginListener(self._onDragBegin, self)
+	self._drag:AddDragEndListener(self._onDragEnd, self)
+	self._drag:AddDragListener(self._onDrag, self)
 
-	if arg_2_0._btninteract then
-		arg_2_0._btninteract:AddClickListener(arg_2_0.onInteract, arg_2_0)
-		V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.NearEventMoChange, arg_2_0._onNearEventChange, arg_2_0)
-		V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.ClickNearEvent, arg_2_0.onInteract, arg_2_0)
+	if self._btninteract then
+		self._btninteract:AddClickListener(self.onInteract, self)
+		V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.NearEventMoChange, self._onNearEventChange, self)
+		V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.ClickNearEvent, self.onInteract, self)
 
 		if BootNativeUtil.isWindows() or SDKMgr.instance:isEmulator() then
-			TaskDispatcher.runRepeat(arg_2_0._checkInteract, arg_2_0, 0)
+			TaskDispatcher.runRepeat(self._checkInteract, self, 0)
 		end
 	end
 
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_2_0.cancelDrag, arg_2_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, self.cancelDrag, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._drag:RemoveDragBeginListener()
-	arg_3_0._drag:RemoveDragEndListener()
-	arg_3_0._drag:RemoveDragListener()
+function V1a6_CachotPlayCtrlView:removeEvents()
+	self._drag:RemoveDragBeginListener()
+	self._drag:RemoveDragEndListener()
+	self._drag:RemoveDragListener()
 
-	if arg_3_0._btninteract then
-		arg_3_0._btninteract:RemoveClickListener()
-		V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.NearEventMoChange, arg_3_0._onNearEventChange, arg_3_0)
-		V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.ClickNearEvent, arg_3_0.onInteract, arg_3_0)
-		TaskDispatcher.cancelTask(arg_3_0._checkInteract, arg_3_0, 0)
+	if self._btninteract then
+		self._btninteract:RemoveClickListener()
+		V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.NearEventMoChange, self._onNearEventChange, self)
+		V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.ClickNearEvent, self.onInteract, self)
+		TaskDispatcher.cancelTask(self._checkInteract, self, 0)
 	end
 
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, arg_3_0.cancelDrag, arg_3_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, self.cancelDrag, self)
 end
 
-function var_0_0.onOpen(arg_4_0)
-	arg_4_0:_onNearEventChange()
+function V1a6_CachotPlayCtrlView:onOpen()
+	self:_onNearEventChange()
 
-	arg_4_0._iconCanvasGroup.alpha = 0.5
+	self._iconCanvasGroup.alpha = 0.5
 
-	TaskDispatcher.runRepeat(arg_4_0._checkInput, arg_4_0, 0, -1)
+	TaskDispatcher.runRepeat(self._checkInput, self, 0, -1)
 end
 
-function var_0_0.onClose(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0._checkInput, arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0._delayTriggerEvent, arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0._checkInteract, arg_5_0, 0)
+function V1a6_CachotPlayCtrlView:onClose()
+	TaskDispatcher.cancelTask(self._checkInput, self)
+	TaskDispatcher.cancelTask(self._delayTriggerEvent, self)
+	TaskDispatcher.cancelTask(self._checkInteract, self, 0)
 	UIBlockMgr.instance:endBlock("BeginTriggerEvent")
 
 	V1a6_CachotRoomModel.instance.isLockPlayerMove = false
 end
 
-function var_0_0._onDragBegin(arg_6_0)
-	arg_6_0._beginDrag = true
-	arg_6_0._iconCanvasGroup.alpha = 1
+function V1a6_CachotPlayCtrlView:_onDragBegin()
+	self._beginDrag = true
+	self._iconCanvasGroup.alpha = 1
 end
 
-function var_0_0._onDragEnd(arg_7_0)
-	arg_7_0:cancelDrag()
+function V1a6_CachotPlayCtrlView:_onDragEnd()
+	self:cancelDrag()
 
-	arg_7_0._beginDrag = false
+	self._beginDrag = false
 end
 
-function var_0_0._onDrag(arg_8_0, arg_8_1, arg_8_2)
-	if not arg_8_0._beginDrag then
+function V1a6_CachotPlayCtrlView:_onDrag(param, pointerEventData)
+	if not self._beginDrag then
 		return
 	end
 
-	local var_8_0 = recthelper.screenPosToAnchorPos(arg_8_2.position, arg_8_0._goCtrl.transform)
-	local var_8_1 = Mathf.Clamp(var_8_0.x, -180, 180)
+	local pos = recthelper.screenPosToAnchorPos(pointerEventData.position, self._goCtrl.transform)
+	local val = Mathf.Clamp(pos.x, -180, 180)
 
-	recthelper.setAnchorX(arg_8_0._iconTrans, var_8_1)
+	recthelper.setAnchorX(self._iconTrans, val)
 
-	if var_8_1 <= 10 and var_8_1 >= -10 then
-		arg_8_0._dragValue = nil
+	if val <= 10 and val >= -10 then
+		self._dragValue = nil
 
 		return
 	end
 
-	arg_8_0._dragValue = var_8_1 > 0 and 1 or -1
+	self._dragValue = val > 0 and 1 or -1
 end
 
-function var_0_0._checkInput(arg_9_0)
-	local var_9_0 = 0
+function V1a6_CachotPlayCtrlView:_checkInput()
+	local value = 0
 
 	if UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftArrow) or UnityEngine.Input.GetKey(UnityEngine.KeyCode.A) then
-		var_9_0 = -1
+		value = -1
 	elseif UnityEngine.Input.GetKey(UnityEngine.KeyCode.RightArrow) or UnityEngine.Input.GetKey(UnityEngine.KeyCode.D) then
-		var_9_0 = 1
+		value = 1
 	end
 
-	if var_9_0 ~= 0 and not arg_9_0._beginDrag then
-		arg_9_0:onPlayerMove(var_9_0)
-	elseif arg_9_0._beginDrag and arg_9_0._dragValue then
-		arg_9_0:onPlayerMove(arg_9_0._dragValue)
+	if value ~= 0 and not self._beginDrag then
+		self:onPlayerMove(value)
+	elseif self._beginDrag and self._dragValue then
+		self:onPlayerMove(self._dragValue)
 	else
 		V1a6_CachotRoomModel.instance:setIsMoving(false)
 	end
 
 	if UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Return) then
-		arg_9_0:onInteract()
+		self:onInteract()
 	end
 end
 
-function var_0_0.onPlayerMove(arg_10_0, arg_10_1)
-	if not arg_10_0:canMove() then
+function V1a6_CachotPlayCtrlView:onPlayerMove(val)
+	if not self:canMove() then
 		V1a6_CachotRoomModel.instance:setIsMoving(false)
 
 		return
 	end
 
 	V1a6_CachotRoomModel.instance:setIsMoving(true)
-	V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.PlayerMove, arg_10_1)
+	V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.PlayerMove, val)
 end
 
-function var_0_0._onNearEventChange(arg_11_0)
-	if not arg_11_0._gouninteract then
+function V1a6_CachotPlayCtrlView:_onNearEventChange()
+	if not self._gouninteract then
 		return
 	end
 
-	local var_11_0 = V1a6_CachotRoomModel.instance:getNearEventMo()
+	local nowNearMo = V1a6_CachotRoomModel.instance:getNearEventMo()
 
-	gohelper.setActive(arg_11_0._gouninteract, not var_11_0)
-	gohelper.setActive(arg_11_0._gointeract, var_11_0)
+	gohelper.setActive(self._gouninteract, not nowNearMo)
+	gohelper.setActive(self._gointeract, nowNearMo)
 
-	if var_11_0 then
+	if nowNearMo then
 		V1a6_CachotCollectionController.instance:dispatchEvent(V1a6_CachotEvent.GuideNearEvent)
 	end
 end
 
-function var_0_0._checkInteract(arg_12_0)
-	if not arg_12_0:canMove() then
+function V1a6_CachotPlayCtrlView:_checkInteract()
+	if not self:canMove() then
 		return
 	end
 
 	if UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Space) then
-		arg_12_0:onInteract()
+		self:onInteract()
 	end
 end
 
-function var_0_0.onInteract(arg_13_0)
-	local var_13_0 = V1a6_CachotRoomModel.instance:getNearEventMo()
+function V1a6_CachotPlayCtrlView:onInteract()
+	local nowNearEventMo = V1a6_CachotRoomModel.instance:getNearEventMo()
 
-	if not var_13_0 then
+	if not nowNearEventMo then
 		return
 	end
 
@@ -175,17 +177,17 @@ function var_0_0.onInteract(arg_13_0)
 	end
 
 	UIBlockMgr.instance:startBlock("BeginTriggerEvent")
-	V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.BeginTriggerEvent, var_13_0)
+	V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.BeginTriggerEvent, nowNearEventMo)
 
 	V1a6_CachotRoomModel.instance.isLockPlayerMove = true
 
-	TaskDispatcher.runDelay(arg_13_0._delayTriggerEvent, arg_13_0, 1.067)
+	TaskDispatcher.runDelay(self._delayTriggerEvent, self, 1.067)
 end
 
-function var_0_0._delayTriggerEvent(arg_14_0)
-	local var_14_0 = V1a6_CachotRoomModel.instance:getNearEventMo()
+function V1a6_CachotPlayCtrlView:_delayTriggerEvent()
+	local nowNearEventMo = V1a6_CachotRoomModel.instance:getNearEventMo()
 
-	if not var_14_0 then
+	if not nowNearEventMo then
 		return
 	end
 
@@ -195,43 +197,43 @@ function var_0_0._delayTriggerEvent(arg_14_0)
 
 	V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.TriggerEvent)
 
-	local var_14_1 = V1a6_CachotRoomModel.instance:getNowBattleEventMo()
+	local battleEventMo = V1a6_CachotRoomModel.instance:getNowBattleEventMo()
 
-	if var_14_1 then
-		V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.PlayerTriggerInteract, var_14_1)
+	if battleEventMo then
+		V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.PlayerTriggerInteract, battleEventMo)
 	else
-		RogueRpc.instance:sendRogueEventStartRequest(V1a6_CachotEnum.ActivityId, var_14_0.eventId)
+		RogueRpc.instance:sendRogueEventStartRequest(V1a6_CachotEnum.ActivityId, nowNearEventMo.eventId)
 	end
 end
 
-function var_0_0.canMove(arg_15_0)
+function V1a6_CachotPlayCtrlView:canMove()
 	if V1a6_CachotRoomModel.instance.isLockPlayerMove then
 		return false
 	end
 
-	local var_15_0 = PopupController.instance:getPopupCount()
+	local count = PopupController.instance:getPopupCount()
 
-	if var_15_0 == 1 and ViewMgr.instance:isOpen(ViewName.GuideView) then
+	if count == 1 and ViewMgr.instance:isOpen(ViewName.GuideView) then
 		return true
 	end
 
-	if var_15_0 > 0 then
+	if count > 0 then
 		return false
 	end
 
 	return ViewHelper.instance:checkViewOnTheTop(ViewName.V1a6_CachotRoomView) or ViewHelper.instance:checkViewOnTheTop(ViewName.V1a6_CachotMainView)
 end
 
-function var_0_0.cancelDrag(arg_16_0)
-	if not arg_16_0._beginDrag then
+function V1a6_CachotPlayCtrlView:cancelDrag()
+	if not self._beginDrag then
 		return
 	end
 
-	arg_16_0._beginDrag = nil
-	arg_16_0._dragValue = nil
-	arg_16_0._iconCanvasGroup.alpha = 0.5
+	self._beginDrag = nil
+	self._dragValue = nil
+	self._iconCanvasGroup.alpha = 0.5
 
-	recthelper.setAnchorX(arg_16_0._iconTrans, 0)
+	recthelper.setAnchorX(self._iconTrans, 0)
 end
 
-return var_0_0
+return V1a6_CachotPlayCtrlView

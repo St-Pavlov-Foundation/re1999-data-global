@@ -1,122 +1,124 @@
-﻿module("modules.logic.scene.room.comp.entitymgr.RoomSceneCharacterEntityMgr", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/comp/entitymgr/RoomSceneCharacterEntityMgr.lua
 
-local var_0_0 = class("RoomSceneCharacterEntityMgr", BaseSceneUnitMgr)
+module("modules.logic.scene.room.comp.entitymgr.RoomSceneCharacterEntityMgr", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local RoomSceneCharacterEntityMgr = class("RoomSceneCharacterEntityMgr", BaseSceneUnitMgr)
+
+function RoomSceneCharacterEntityMgr:onInit()
 	return
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._scene = arg_2_0:getCurScene()
+function RoomSceneCharacterEntityMgr:init(sceneId, levelId)
+	self._scene = self:getCurScene()
 
 	if RoomController.instance:isEditMode() then
 		return
 	end
 
-	local var_2_0 = RoomCharacterModel.instance:getList()
+	local characterMOList = RoomCharacterModel.instance:getList()
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_0) do
-		arg_2_0:spawnRoomCharacter(iter_2_1)
+	for _, mo in ipairs(characterMOList) do
+		self:spawnRoomCharacter(mo)
 	end
 
-	if not arg_2_0:getUnit(SceneTag.Untagged, 1) then
-		arg_2_0:_spawnEffect(RoomEnum.EffectKey.CharacterFootPrintGOKey, RoomCharacterFootPrintEntity, 1)
+	if not self:getUnit(SceneTag.Untagged, 1) then
+		self:_spawnEffect(RoomEnum.EffectKey.CharacterFootPrintGOKey, RoomCharacterFootPrintEntity, 1)
 	end
 end
 
-function var_0_0.spawnRoomCharacter(arg_3_0, arg_3_1)
-	return arg_3_0:_spawnRoomCharacter(arg_3_1)
+function RoomSceneCharacterEntityMgr:spawnRoomCharacter(roomCharacterMO)
+	return self:_spawnRoomCharacter(roomCharacterMO)
 end
 
-function var_0_0._spawnRoomCharacter(arg_4_0, arg_4_1, arg_4_2)
+function RoomSceneCharacterEntityMgr:_spawnRoomCharacter(roomCharacterMO, isNotAdd)
 	if not RoomController.instance:isObMode() and not RoomController.instance:isVisitMode() then
 		return
 	end
 
-	local var_4_0 = arg_4_0._scene.go.characterRoot
-	local var_4_1 = arg_4_1.currentPosition
-	local var_4_2 = gohelper.create3d(var_4_0, string.format("%s", arg_4_1.id))
-	local var_4_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_4_2, RoomCharacterEntity, arg_4_1.id)
+	local characterRoot = self._scene.go.characterRoot
+	local currentPosition = roomCharacterMO.currentPosition
+	local characterGO = gohelper.create3d(characterRoot, string.format("%s", roomCharacterMO.id))
+	local characterEntity = MonoHelper.addNoUpdateLuaComOnceToGo(characterGO, RoomCharacterEntity, roomCharacterMO.id)
 
-	if arg_4_2 ~= true then
-		arg_4_0:addUnit(var_4_3)
+	if isNotAdd ~= true then
+		self:addUnit(characterEntity)
 	end
 
-	gohelper.addChild(var_4_0, var_4_2)
-	var_4_3:setLocalPos(var_4_1.x, var_4_1.y, var_4_1.z)
+	gohelper.addChild(characterRoot, characterGO)
+	characterEntity:setLocalPos(currentPosition.x, currentPosition.y, currentPosition.z)
 	RoomCharacterController.instance:dispatchEvent(RoomEvent.CharacterEntityChanged)
 
-	return var_4_3
+	return characterEntity
 end
 
-function var_0_0._spawnEffect(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	local var_5_0 = arg_5_0._scene.go.characterRoot
-	local var_5_1 = gohelper.create3d(var_5_0, arg_5_1)
-	local var_5_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_5_1, arg_5_2, arg_5_3)
+function RoomSceneCharacterEntityMgr:_spawnEffect(name, clsDefine, id)
+	local effectRoot = self._scene.go.characterRoot
+	local effectGO = gohelper.create3d(effectRoot, name)
+	local effectEntity = MonoHelper.addNoUpdateLuaComOnceToGo(effectGO, clsDefine, id)
 
-	gohelper.addChild(var_5_0, var_5_1)
-	arg_5_0:addUnit(var_5_2)
+	gohelper.addChild(effectRoot, effectGO)
+	self:addUnit(effectEntity)
 
-	return var_5_2
+	return effectEntity
 end
 
-function var_0_0.moveTo(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_1:setLocalPos(arg_6_2.x, arg_6_2.y, arg_6_2.z)
+function RoomSceneCharacterEntityMgr:moveTo(entity, position)
+	entity:setLocalPos(position.x, position.y, position.z)
 end
 
-function var_0_0.destroyCharacter(arg_7_0, arg_7_1)
-	arg_7_0:removeUnit(arg_7_1:getTag(), arg_7_1.id)
+function RoomSceneCharacterEntityMgr:destroyCharacter(entity)
+	self:removeUnit(entity:getTag(), entity.id)
 	RoomCharacterController.instance:dispatchEvent(RoomEvent.CharacterEntityChanged)
 end
 
-function var_0_0.getCharacterEntity(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = (not arg_8_2 or arg_8_2 == SceneTag.RoomCharacter) and arg_8_0:getTagUnitDict(SceneTag.RoomCharacter)
+function RoomSceneCharacterEntityMgr:getCharacterEntity(id, sceneTag)
+	local tagEntitys = (not sceneTag or sceneTag == SceneTag.RoomCharacter) and self:getTagUnitDict(SceneTag.RoomCharacter)
 
-	return var_8_0 and var_8_0[arg_8_1]
+	return tagEntitys and tagEntitys[id]
 end
 
-function var_0_0.spawnTempCharacterByMO(arg_9_0, arg_9_1)
-	if arg_9_0._tempCharacterEntity then
-		if arg_9_1 and arg_9_0._tempCharacterEntity.id == arg_9_1.id then
-			return arg_9_0._tempCharacterEntity
+function RoomSceneCharacterEntityMgr:spawnTempCharacterByMO(roomCharacterMO)
+	if self._tempCharacterEntity then
+		if roomCharacterMO and self._tempCharacterEntity.id == roomCharacterMO.id then
+			return self._tempCharacterEntity
 		end
 
-		local var_9_0 = arg_9_0._tempCharacterEntity
+		local unit = self._tempCharacterEntity
 
-		arg_9_0._tempCharacterEntity = nil
+		self._tempCharacterEntity = nil
 
-		arg_9_0:destroyUnit(var_9_0)
+		self:destroyUnit(unit)
 	end
 
-	if arg_9_1 then
-		arg_9_0._tempCharacterEntity = arg_9_0:_spawnRoomCharacter(arg_9_1, true)
+	if roomCharacterMO then
+		self._tempCharacterEntity = self:_spawnRoomCharacter(roomCharacterMO, true)
 	end
 
-	return arg_9_0._tempCharacterEntity
+	return self._tempCharacterEntity
 end
 
-function var_0_0.getTempCharacterEntity(arg_10_0)
-	return arg_10_0._tempCharacterEntity
+function RoomSceneCharacterEntityMgr:getTempCharacterEntity()
+	return self._tempCharacterEntity
 end
 
-function var_0_0.getRoomCharacterEntityDict(arg_11_0)
-	return arg_11_0._tagUnitDict[SceneTag.RoomCharacter] or {}
+function RoomSceneCharacterEntityMgr:getRoomCharacterEntityDict()
+	return self._tagUnitDict[SceneTag.RoomCharacter] or {}
 end
 
-function var_0_0._onUpdate(arg_12_0)
+function RoomSceneCharacterEntityMgr:_onUpdate()
 	return
 end
 
-function var_0_0.onSceneClose(arg_13_0)
-	var_0_0.super.onSceneClose(arg_13_0)
+function RoomSceneCharacterEntityMgr:onSceneClose()
+	RoomSceneCharacterEntityMgr.super.onSceneClose(self)
 
-	local var_13_0 = arg_13_0._tempCharacterEntity
+	local unit = self._tempCharacterEntity
 
-	if var_13_0 then
-		arg_13_0._tempCharacterEntity = nil
+	if unit then
+		self._tempCharacterEntity = nil
 
-		arg_13_0:destroyUnit(var_13_0)
+		self:destroyUnit(unit)
 	end
 end
 
-return var_0_0
+return RoomSceneCharacterEntityMgr

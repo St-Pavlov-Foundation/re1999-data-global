@@ -1,13 +1,15 @@
-﻿module("modules.logic.clickuiswitch.view.ClickUISwitchInfoViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/clickuiswitch/view/ClickUISwitchInfoViewContainer.lua
 
-local var_0_0 = class("ClickUISwitchInfoViewContainer", BaseViewContainer)
+module("modules.logic.clickuiswitch.view.ClickUISwitchInfoViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local ClickUISwitchInfoViewContainer = class("ClickUISwitchInfoViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, ClickUISwitchInfoView.New())
+function ClickUISwitchInfoViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, ClickUISwitchInfoView.New())
+
+	return views
 end
 
-return var_0_0
+return ClickUISwitchInfoViewContainer

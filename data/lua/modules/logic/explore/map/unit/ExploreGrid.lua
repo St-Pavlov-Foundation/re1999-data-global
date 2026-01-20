@@ -1,42 +1,44 @@
-﻿module("modules.logic.explore.map.unit.ExploreGrid", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/unit/ExploreGrid.lua
 
-local var_0_0 = class("ExploreGrid", ExploreBaseUnit)
+module("modules.logic.explore.map.unit.ExploreGrid", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._resLoader = PrefabInstantiate.Create(arg_1_0.go)
+local ExploreGrid = class("ExploreGrid", ExploreBaseUnit)
 
-	arg_1_0._resLoader:startLoad("explore/prefabs/unit/m_s10_dynamic_ground_01.prefab")
+function ExploreGrid:onInit()
+	self._resLoader = PrefabInstantiate.Create(self.go)
+
+	self._resLoader:startLoad("explore/prefabs/unit/m_s10_dynamic_ground_01.prefab")
 end
 
-function var_0_0.setName(arg_2_0, arg_2_1)
-	arg_2_0.go.name = arg_2_1
+function ExploreGrid:setName(name)
+	self.go.name = name
 end
 
-function var_0_0.setPos(arg_3_0, arg_3_1)
-	if gohelper.isNil(arg_3_0.go) == false then
-		arg_3_1.y = 10
+function ExploreGrid:setPos(pos)
+	if gohelper.isNil(self.go) == false then
+		pos.y = 10
 
-		local var_3_0, var_3_1 = UnityEngine.Physics.Raycast(arg_3_1, Vector3.down, nil, Mathf.Infinity, ExploreHelper.getNavigateMask())
+		local isHit, hitInfo = UnityEngine.Physics.Raycast(pos, Vector3.down, nil, Mathf.Infinity, ExploreHelper.getNavigateMask())
 
-		if var_3_0 then
-			arg_3_1.y = var_3_1.point.y
+		if isHit then
+			pos.y = hitInfo.point.y
 		else
-			arg_3_1.y = arg_3_0.trans.position.y
+			pos.y = self.trans.position.y
 		end
 
-		arg_3_0.position = arg_3_1
+		self.position = pos
 
-		transformhelper.setPos(arg_3_0.trans, arg_3_0.position.x, arg_3_0.position.y, arg_3_0.position.z)
+		transformhelper.setPos(self.trans, self.position.x, self.position.y, self.position.z)
 
-		local var_3_2 = ExploreHelper.posToTile(arg_3_1)
+		local node = ExploreHelper.posToTile(pos)
 
-		if var_3_2 ~= arg_3_0.nodePos then
-			local var_3_3 = arg_3_0.nodePos
+		if node ~= self.nodePos then
+			local preNode = self.nodePos
 
-			arg_3_0.nodePos = var_3_2
-			arg_3_0.nodeMO = ExploreMapModel.instance:getNode(ExploreHelper.getKey(arg_3_0.nodePos))
+			self.nodePos = node
+			self.nodeMO = ExploreMapModel.instance:getNode(ExploreHelper.getKey(self.nodePos))
 		end
 	end
 end
 
-return var_0_0
+return ExploreGrid

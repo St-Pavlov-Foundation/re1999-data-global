@@ -1,14 +1,16 @@
-﻿module("modules.logic.main.controller.work.MainAchievementToast", package.seeall)
+﻿-- chunkname: @modules/logic/main/controller/work/MainAchievementToast.lua
 
-local var_0_0 = class("MainAchievementToast", BaseWork)
+module("modules.logic.main.controller.work.MainAchievementToast", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
+local MainAchievementToast = class("MainAchievementToast", BaseWork)
+
+function MainAchievementToast:onStart(context)
 	AchievementToastController.instance:dispatchEvent(AchievementEvent.LoginShowToast)
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_2_0)
+function MainAchievementToast:clearWork()
 	return
 end
 
-return var_0_0
+return MainAchievementToast

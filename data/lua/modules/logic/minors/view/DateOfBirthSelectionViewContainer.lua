@@ -1,28 +1,32 @@
-﻿module("modules.logic.minors.view.DateOfBirthSelectionViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/minors/view/DateOfBirthSelectionViewContainer.lua
 
-local var_0_0 = class("DateOfBirthSelectionViewContainer", BaseViewContainer)
+module("modules.logic.minors.view.DateOfBirthSelectionViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = ListScrollParam.New()
-	local var_1_1 = DateOfBirthSelectionViewListModel.instance
+local DateOfBirthSelectionViewContainer = class("DateOfBirthSelectionViewContainer", BaseViewContainer)
 
-	var_1_0.cellClass = DateOfBirthSelectionViewItem
-	var_1_0.scrollGOPath = "#scroll_list"
-	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_0.prefabUrl = "#scroll_list/content/item"
-	var_1_0.scrollDir = ScrollEnum.ScrollDirH
-	var_1_0.lineCount = 1
-	var_1_0.cellWidth = 440
-	var_1_0.cellHeight = 112
-	var_1_0.cellSpaceH = 58
-	var_1_0.cellSpaceV = 0
-	var_1_0.startSpace = 0
-	var_1_0.endSpace = 0
+function DateOfBirthSelectionViewContainer:buildViews()
+	local scrollParam = ListScrollParam.New()
+	local scrollModel = DateOfBirthSelectionViewListModel.instance
 
-	return {
+	scrollParam.cellClass = DateOfBirthSelectionViewItem
+	scrollParam.scrollGOPath = "#scroll_list"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "#scroll_list/content/item"
+	scrollParam.scrollDir = ScrollEnum.ScrollDirH
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 440
+	scrollParam.cellHeight = 112
+	scrollParam.cellSpaceH = 58
+	scrollParam.cellSpaceV = 0
+	scrollParam.startSpace = 0
+	scrollParam.endSpace = 0
+
+	local views = {
 		DateOfBirthSelectionView.New(),
-		(LuaListScrollView.New(var_1_1, var_1_0))
+		(LuaListScrollView.New(scrollModel, scrollParam))
 	}
+
+	return views
 end
 
-return var_0_0
+return DateOfBirthSelectionViewContainer

@@ -1,114 +1,118 @@
-﻿module("modules.logic.versionactivity2_7.lengzhou6.model.entity.EnemyEntity", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/lengzhou6/model/entity/EnemyEntity.lua
 
-local var_0_0 = class("EnemyEntity", EntityBase)
+module("modules.logic.versionactivity2_7.lengzhou6.model.entity.EnemyEntity", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	var_0_0.super.ctor(arg_1_0)
+local EnemyEntity = class("EnemyEntity", EntityBase)
 
-	arg_1_0._action = EnemyActionData.New()
-	arg_1_0._camp = LengZhou6Enum.entityCamp.enemy
+function EnemyEntity:ctor()
+	EnemyEntity.super.ctor(self)
+
+	self._action = EnemyActionData.New()
+	self._camp = LengZhou6Enum.entityCamp.enemy
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	var_0_0.super.init(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+function EnemyEntity:init(configId, skillList, buffList)
+	EnemyEntity.super.init(self, configId, skillList, buffList)
 end
 
-function var_0_0.initByConfig(arg_3_0)
-	arg_3_0._config = LengZhou6Config.instance:getEliminateBattleEnemy(arg_3_0._configId)
+function EnemyEntity:initByConfig()
+	self._config = LengZhou6Config.instance:getEliminateBattleEnemy(self._configId)
 
-	if arg_3_0._config == nil then
-		logError("eliminate_battle_enemy config is nil" .. arg_3_0._configId)
+	if self._config == nil then
+		logError("eliminate_battle_enemy config is nil" .. self._configId)
 	end
 
-	arg_3_0._icon = arg_3_0._config.icon
-	arg_3_0._name = arg_3_0._config.name
+	self._icon = self._config.icon
+	self._name = self._config.name
 
-	arg_3_0:setHp(arg_3_0._config.hp)
-	arg_3_0:initAction()
+	self:setHp(self._config.hp)
+	self:initAction()
 
-	local var_3_0 = arg_3_0._config.loop
+	local loop = self._config.loop
 
-	if not string.nilorempty(var_3_0) then
-		local var_3_1 = string.splitToNumber(var_3_0, "#")
+	if not string.nilorempty(loop) then
+		local loopIndexList = string.splitToNumber(loop, "#")
 
-		arg_3_0._action:initLoopIndex(var_3_1[1], var_3_1[2])
-	end
-end
-
-function var_0_0.initAction(arg_4_0)
-	arg_4_0._action:init(arg_4_0._configId)
-end
-
-function var_0_0.setActionStepIndexAndRound(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_0._action ~= nil and arg_5_1 ~= nil and arg_5_2 ~= nil then
-		arg_5_0._action:setCurBehaviorId(arg_5_1)
-		arg_5_0._action:setCurRound(arg_5_2)
+		self._action:initLoopIndex(loopIndexList[1], loopIndexList[2])
 	end
 end
 
-function var_0_0.getCurSkillList(arg_6_0)
-	local var_6_0 = arg_6_0._action:getCurBehavior()
-
-	return var_6_0 and var_6_0:getSkillList() or nil
+function EnemyEntity:initAction()
+	self._action:init(self._configId)
 end
 
-function var_0_0.getAllCanUseSkillId(arg_7_0)
-	if arg_7_0._buffs ~= nil then
-		for iter_7_0 = 1, #arg_7_0._buffs do
-			local var_7_0 = arg_7_0._buffs[iter_7_0]
+function EnemyEntity:setActionStepIndexAndRound(index, round)
+	if self._action ~= nil and index ~= nil and round ~= nil then
+		self._action:setCurBehaviorId(index)
+		self._action:setCurRound(round)
+	end
+end
 
-			if var_7_0:getBuffEffect() == LengZhou6Enum.BuffEffect.petrify and var_7_0:execute(true) then
-				return nil, arg_7_0._action:calCurResidueCd()
+function EnemyEntity:getCurSkillList()
+	local curBehavior = self._action:getCurBehavior()
+
+	return curBehavior and curBehavior:getSkillList() or nil
+end
+
+function EnemyEntity:getAllCanUseSkillId()
+	if self._buffs ~= nil then
+		for i = 1, #self._buffs do
+			local buff = self._buffs[i]
+
+			if buff:getBuffEffect() == LengZhou6Enum.BuffEffect.petrify and buff:execute(true) then
+				return nil, self._action:calCurResidueCd()
 			end
 		end
 	end
 
-	arg_7_0:clearInvalidBuff()
+	self:clearInvalidBuff()
 
-	local var_7_1 = arg_7_0._action:getSkillList()
-	local var_7_2 = arg_7_0._action:calCurResidueCd()
+	local skillList = self._action:getSkillList()
+	local residueCd = self._action:calCurResidueCd()
 
-	if var_7_1 ~= nil then
-		for iter_7_1 = 1, #var_7_1 do
-			local var_7_3 = var_7_1[iter_7_1]
+	if skillList ~= nil then
+		for i = 1, #skillList do
+			local skill = skillList[i]
 
-			arg_7_0._skills[var_7_3._id] = var_7_3
+			self._skills[skill._id] = skill
 		end
 
-		var_7_2 = 0
+		residueCd = 0
 	end
 
-	return var_7_1, var_7_2
+	return skillList, residueCd
 end
 
-function var_0_0.clearInvalidBuff(arg_8_0)
-	local var_8_0 = {}
+function EnemyEntity:clearInvalidBuff()
+	local needRemoveIndex = {}
 
-	if arg_8_0._buffs ~= nil then
-		for iter_8_0 = 1, #arg_8_0._buffs do
-			if arg_8_0._buffs[iter_8_0]:getBuffEffect() == 0 then
-				table.insert(var_8_0, iter_8_0)
+	if self._buffs ~= nil then
+		for i = 1, #self._buffs do
+			local buff = self._buffs[i]
+
+			if buff:getBuffEffect() == 0 then
+				table.insert(needRemoveIndex, i)
 			end
 		end
 	end
 
-	for iter_8_1 = #var_8_0, 1, -1 do
-		local var_8_1 = var_8_0[iter_8_1]
+	for i = #needRemoveIndex, 1, -1 do
+		local index = needRemoveIndex[i]
 
-		if arg_8_0._buffs[var_8_1] ~= nil then
-			arg_8_0._buffs[var_8_1] = nil
+		if self._buffs[index] ~= nil then
+			self._buffs[index] = nil
 		end
 	end
 end
 
-function var_0_0.getAction(arg_9_0)
-	return arg_9_0._action
+function EnemyEntity:getAction()
+	return self._action
 end
 
-function var_0_0.havePoisonBuff(arg_10_0)
-	if arg_10_0._buffs then
-		for iter_10_0, iter_10_1 in ipairs(arg_10_0._buffs) do
-			if iter_10_1._configId == 1001 then
+function EnemyEntity:havePoisonBuff()
+	if self._buffs then
+		for _, buff in ipairs(self._buffs) do
+			if buff._configId == 1001 then
 				return true
 			end
 		end
@@ -117,12 +121,12 @@ function var_0_0.havePoisonBuff(arg_10_0)
 	return false
 end
 
-function var_0_0.useSkill(arg_11_0, arg_11_1)
-	if arg_11_0._skills[arg_11_1] ~= nil then
-		arg_11_0._skills[arg_11_1]:execute()
+function EnemyEntity:useSkill(skillId)
+	if self._skills[skillId] ~= nil then
+		self._skills[skillId]:execute()
 	end
 
-	arg_11_0._skills[arg_11_1] = nil
+	self._skills[skillId] = nil
 end
 
-return var_0_0
+return EnemyEntity

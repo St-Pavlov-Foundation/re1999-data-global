@@ -1,143 +1,142 @@
-﻿module("modules.logic.room.view.gift.RoomBlockGiftThemeItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/gift/RoomBlockGiftThemeItem.lua
 
-local var_0_0 = class("RoomBlockGiftThemeItem", LuaCompBase)
+module("modules.logic.room.view.gift.RoomBlockGiftThemeItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.gotitle = arg_1_1.gotitle
-	arg_1_0.goBlockItem = arg_1_1.goBlockItem
-	arg_1_0.goBuildingItem = arg_1_1.goBuildingItem
+local RoomBlockGiftThemeItem = class("RoomBlockGiftThemeItem", LuaCompBase)
+
+function RoomBlockGiftThemeItem:ctor(clonneGos)
+	self.gotitle = clonneGos.gotitle
+	self.goBlockItem = clonneGos.goBlockItem
+	self.goBuildingItem = clonneGos.goBuildingItem
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
-	arg_2_0.itemRoot = gohelper.findChild(arg_2_1, "item")
+function RoomBlockGiftThemeItem:init(go)
+	self.go = go
+	self.itemRoot = gohelper.findChild(go, "item")
 
-	local var_2_0 = gohelper.clone(arg_2_0.gotitle, arg_2_1)
+	local gotitle = gohelper.clone(self.gotitle, go)
 
-	arg_2_0.txttitle = gohelper.findChildText(var_2_0, "#txt_styleName")
-	arg_2_0.txttitleNum = gohelper.findChildText(var_2_0, "#txt_styleName/#txt_num")
+	self.txttitle = gohelper.findChildText(gotitle, "#txt_styleName")
+	self.txttitleNum = gohelper.findChildText(gotitle, "#txt_styleName/#txt_num")
 
-	gohelper.setSibling(var_2_0, 0)
-	gohelper.setActive(var_2_0, true)
+	gohelper.setSibling(gotitle, 0)
+	gohelper.setActive(gotitle, true)
 
-	arg_2_0._gridlayout = arg_2_0.itemRoot:GetComponent(typeof(UnityEngine.UI.GridLayoutGroup))
+	self._gridlayout = self.itemRoot:GetComponent(typeof(UnityEngine.UI.GridLayoutGroup))
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	arg_3_0:addEventCb(RoomBlockGiftController.instance, RoomBlockGiftEvent.OnSelect, arg_3_0._refreshSelect, arg_3_0)
+function RoomBlockGiftThemeItem:addEventListeners()
+	self:addEventCb(RoomBlockGiftController.instance, RoomBlockGiftEvent.OnSelect, self._refreshSelect, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	arg_4_0:removeEventCb(RoomBlockGiftController.instance, RoomBlockGiftEvent.OnSelect, arg_4_0._refreshSelect, arg_4_0)
+function RoomBlockGiftThemeItem:removeEventListeners()
+	self:removeEventCb(RoomBlockGiftController.instance, RoomBlockGiftEvent.OnSelect, self._refreshSelect, self)
 end
 
-function var_0_0.onUpdateMO(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = RoomConfig.instance:getThemeConfig(arg_5_1.themeId)
+function RoomBlockGiftThemeItem:onUpdateMO(mo, subType)
+	local themeCo = RoomConfig.instance:getThemeConfig(mo.themeId)
 
-	arg_5_0.moList = arg_5_1.moList
-	arg_5_0.subType = arg_5_2
+	self.moList = mo.moList
+	self.subType = subType
 
-	local var_5_1
-	local var_5_2
-	local var_5_3
-	local var_5_4
-	local var_5_5 = RoomBlockGiftEnum.SubTypeInfo[arg_5_2]
-	local var_5_6 = var_5_5.CellSize[1]
-	local var_5_7 = var_5_5.CellSize[2]
-	local var_5_8 = var_5_5.CellSpacing[1] - 15
-	local var_5_9 = var_5_5.CellSpacing[2]
+	local cellsizeX, cellsizeY, spacingX, spacingY
+	local subTypeInfo = RoomBlockGiftEnum.SubTypeInfo[subType]
 
-	arg_5_0._gridlayout.cellSize = Vector2(var_5_6, var_5_7)
-	arg_5_0._gridlayout.spacing = Vector2(var_5_8, var_5_9)
+	cellsizeX = subTypeInfo.CellSize[1]
+	cellsizeY = subTypeInfo.CellSize[2]
+	spacingX = subTypeInfo.CellSpacing[1] - 15
+	spacingY = subTypeInfo.CellSpacing[2]
+	self._gridlayout.cellSize = Vector2(cellsizeX, cellsizeY)
+	self._gridlayout.spacing = Vector2(spacingX, spacingY)
 
-	if arg_5_0.moList then
-		for iter_5_0, iter_5_1 in ipairs(arg_5_0.moList) do
-			local var_5_10 = arg_5_0:_isBuilding(arg_5_2) and arg_5_0:_getBuildingItem(iter_5_0) or arg_5_0:_getBlockItem(iter_5_0)
+	if self.moList then
+		for i, mo in ipairs(self.moList) do
+			local item = self:_isBuilding(subType) and self:_getBuildingItem(i) or self:_getBlockItem(i)
 
-			var_5_10:onUpdateMO(iter_5_1)
+			item:onUpdateMO(mo)
 
-			local var_5_11 = iter_5_1.isSelect
+			local isSelect = mo.isSelect
 
-			var_5_10:onSelect(var_5_11)
+			item:onSelect(isSelect)
 		end
 
-		if arg_5_0._blockItems then
-			for iter_5_2, iter_5_3 in ipairs(arg_5_0._blockItems) do
-				local var_5_12 = not arg_5_0:_isBuilding(arg_5_2) and iter_5_2 <= #arg_5_0.moList
+		if self._blockItems then
+			for i, item in ipairs(self._blockItems) do
+				local isActive = not self:_isBuilding(subType) and i <= #self.moList
 
-				iter_5_3:setActive(var_5_12)
+				item:setActive(isActive)
 			end
 		end
 
-		if arg_5_0._buildingItems then
-			for iter_5_4, iter_5_5 in ipairs(arg_5_0._buildingItems) do
-				local var_5_13 = arg_5_0:_isBuilding(arg_5_2) and iter_5_4 <= #arg_5_0.moList
+		if self._buildingItems then
+			for i, item in ipairs(self._buildingItems) do
+				local isActive = self:_isBuilding(subType) and i <= #self.moList
 
-				iter_5_5:setActive(var_5_13)
+				item:setActive(isActive)
 			end
 		end
 	end
 
-	arg_5_0.txttitle.text = var_5_0.name
+	self.txttitle.text = themeCo.name
 
-	local var_5_14 = arg_5_0.moList and RoomBlockBuildingGiftModel.instance:getThemeColloctCount(arg_5_0.moList) or 0
-	local var_5_15 = arg_5_0.moList and #arg_5_0.moList or 0
-	local var_5_16 = var_5_14 == var_5_15 and "roomblockgift_colloctcount2" or "roomblockgift_colloctcount1"
+	local colloctCount = self.moList and RoomBlockBuildingGiftModel.instance:getThemeColloctCount(self.moList) or 0
+	local totalCount = self.moList and #self.moList or 0
+	local format = colloctCount == totalCount and "roomblockgift_colloctcount2" or "roomblockgift_colloctcount1"
 
-	arg_5_0.txttitleNum.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang(var_5_16), var_5_14, var_5_15)
+	self.txttitleNum.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang(format), colloctCount, totalCount)
 end
 
-function var_0_0._isBuilding(arg_6_0, arg_6_1)
-	return arg_6_1 == RoomBlockGiftEnum.SubType[2]
+function RoomBlockGiftThemeItem:_isBuilding(subType)
+	return subType == RoomBlockGiftEnum.SubType[2]
 end
 
-function var_0_0._getBlockItem(arg_7_0, arg_7_1)
-	if not arg_7_0._blockItems then
-		arg_7_0._blockItems = arg_7_0:getUserDataTb_()
+function RoomBlockGiftThemeItem:_getBlockItem(index)
+	if not self._blockItems then
+		self._blockItems = self:getUserDataTb_()
 	end
 
-	local var_7_0 = arg_7_0._blockItems[arg_7_1]
+	local item = self._blockItems[index]
 
-	if not var_7_0 then
-		local var_7_1 = gohelper.clone(arg_7_0.goBlockItem, arg_7_0.itemRoot)
+	if not item then
+		local go = gohelper.clone(self.goBlockItem, self.itemRoot)
 
-		var_7_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_7_1, RoomBlockGiftPackageItem)
-		arg_7_0._blockItems[arg_7_1] = var_7_0
+		item = MonoHelper.addNoUpdateLuaComOnceToGo(go, RoomBlockGiftPackageItem)
+		self._blockItems[index] = item
 	end
 
-	return var_7_0
+	return item
 end
 
-function var_0_0._getBuildingItem(arg_8_0, arg_8_1)
-	if not arg_8_0._buildingItems then
-		arg_8_0._buildingItems = arg_8_0:getUserDataTb_()
+function RoomBlockGiftThemeItem:_getBuildingItem(index)
+	if not self._buildingItems then
+		self._buildingItems = self:getUserDataTb_()
 	end
 
-	local var_8_0 = arg_8_0._buildingItems[arg_8_1]
+	local item = self._buildingItems[index]
 
-	if not var_8_0 then
-		local var_8_1 = gohelper.clone(arg_8_0.goBuildingItem, arg_8_0.itemRoot)
+	if not item then
+		local go = gohelper.clone(self.goBuildingItem, self.itemRoot)
 
-		var_8_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_8_1, RoomBlockGiftBuildingItem)
-		arg_8_0._buildingItems[arg_8_1] = var_8_0
+		item = MonoHelper.addNoUpdateLuaComOnceToGo(go, RoomBlockGiftBuildingItem)
+		self._buildingItems[index] = item
 	end
 
-	return var_8_0
+	return item
 end
 
-function var_0_0._refreshSelect(arg_9_0)
-	if arg_9_0.moList then
-		for iter_9_0, iter_9_1 in ipairs(arg_9_0.moList) do
-			local var_9_0 = arg_9_0:_isBuilding(arg_9_0.subType) and arg_9_0:_getBuildingItem(iter_9_0) or arg_9_0:_getBlockItem(iter_9_0)
-			local var_9_1 = iter_9_1.isSelect
+function RoomBlockGiftThemeItem:_refreshSelect()
+	if self.moList then
+		for i, mo in ipairs(self.moList) do
+			local item = self:_isBuilding(self.subType) and self:_getBuildingItem(i) or self:_getBlockItem(i)
+			local isSelect = mo.isSelect
 
-			var_9_0:onSelect(var_9_1)
+			item:onSelect(isSelect)
 		end
 	end
 end
 
-function var_0_0.setActive(arg_10_0, arg_10_1)
-	gohelper.setActive(arg_10_0.go, arg_10_1)
+function RoomBlockGiftThemeItem:setActive(isActive)
+	gohelper.setActive(self.go, isActive)
 end
 
-return var_0_0
+return RoomBlockGiftThemeItem

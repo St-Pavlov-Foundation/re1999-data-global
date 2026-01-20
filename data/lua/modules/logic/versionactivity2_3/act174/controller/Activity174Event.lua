@@ -1,25 +1,27 @@
-﻿module("modules.logic.versionactivity2_3.act174.controller.Activity174Event", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/act174/controller/Activity174Event.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity2_3.act174.controller.Activity174Event", package.seeall)
 
-var_0_0.UpdateGameInfo = 1
-var_0_0.FreshShopReply = 2
-var_0_0.ChangeLocalTeam = 3
-var_0_0.BuyInShopReply = 4
-var_0_0.EndGame = 5
-var_0_0.ClickStartGame = 6
-var_0_0.EnterNextAct174FightReply = 7
-var_0_0.WareHouseTypeChange = 1001
-var_0_0.WareItemInstall = 1002
-var_0_0.WareItemRemove = 1003
-var_0_0.SwitchShopTeam = 1004
-var_0_0.SeasonChange = 1005
-var_0_0.UnEquipCollection = 1006
-var_0_0.UpdateBadgeMo = 1007
-var_0_0.FightReadyViewLevelCount = 9001
-var_0_0.SureEnterEndlessMode = 9002
-var_0_0.EnterGameStore = 9003
-var_0_0.ChooseRolePackage = 9004
-var_0_0.ChooseBuffPackage = 9005
+local Activity174Event = _M
 
-return var_0_0
+Activity174Event.UpdateGameInfo = 1
+Activity174Event.FreshShopReply = 2
+Activity174Event.ChangeLocalTeam = 3
+Activity174Event.BuyInShopReply = 4
+Activity174Event.EndGame = 5
+Activity174Event.ClickStartGame = 6
+Activity174Event.EnterNextAct174FightReply = 7
+Activity174Event.WareHouseTypeChange = 1001
+Activity174Event.WareItemInstall = 1002
+Activity174Event.WareItemRemove = 1003
+Activity174Event.SwitchShopTeam = 1004
+Activity174Event.SeasonChange = 1005
+Activity174Event.UnEquipCollection = 1006
+Activity174Event.UpdateBadgeMo = 1007
+Activity174Event.FightReadyViewLevelCount = 9001
+Activity174Event.SureEnterEndlessMode = 9002
+Activity174Event.EnterGameStore = 9003
+Activity174Event.ChooseRolePackage = 9004
+Activity174Event.ChooseBuffPackage = 9005
+
+return Activity174Event

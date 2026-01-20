@@ -1,32 +1,35 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.dungeon.category.Act183DungeonHardMainGroupItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/dungeon/category/Act183DungeonHardMainGroupItem.lua
 
-local var_0_0 = class("Act183DungeonHardMainGroupItem", Act183DungeonBaseGroupItem)
+module("modules.logic.versionactivity2_5.challenge.view.dungeon.category.Act183DungeonHardMainGroupItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	var_0_0.super.init(arg_1_0, arg_1_1)
+local Act183DungeonHardMainGroupItem = class("Act183DungeonHardMainGroupItem", Act183DungeonBaseGroupItem)
 
-	arg_1_0._animUnlock = gohelper.onceAddComponent(arg_1_0._golock, gohelper.Type_Animator)
+function Act183DungeonHardMainGroupItem:init(go)
+	Act183DungeonHardMainGroupItem.super.init(self, go)
 
-	arg_1_0:addEventCb(Act183Controller.instance, Act183Event.OnInitDungeonDone, arg_1_0._onInitDungeonDone, arg_1_0)
+	self._animUnlock = gohelper.onceAddComponent(self._golock, gohelper.Type_Animator)
+
+	self:addEventCb(Act183Controller.instance, Act183Event.OnInitDungeonDone, self._onInitDungeonDone, self)
 end
 
-function var_0_0._onInitDungeonDone(arg_2_0)
-	arg_2_0:_checkPlayNewUnlockAnim()
+function Act183DungeonHardMainGroupItem:_onInitDungeonDone()
+	self:_checkPlayNewUnlockAnim()
 end
 
-function var_0_0._checkPlayNewUnlockAnim(arg_3_0)
-	if arg_3_0._status ~= Act183Enum.GroupStatus.Unlocked then
+function Act183DungeonHardMainGroupItem:_checkPlayNewUnlockAnim()
+	if self._status ~= Act183Enum.GroupStatus.Unlocked then
 		return
 	end
 
-	local var_3_0 = Act183Model.instance:getActivityId()
+	local actId = Act183Model.instance:getActivityId()
+	local hasPlayUnlockAnim = Act183Helper.isGroupHasPlayUnlockAnim(actId, self._groupId)
 
-	if not Act183Helper.isGroupHasPlayUnlockAnim(var_3_0, arg_3_0._groupId) then
-		gohelper.setActive(arg_3_0._golock, true)
-		arg_3_0._animUnlock:Play("unlock", 0, 0)
+	if not hasPlayUnlockAnim then
+		gohelper.setActive(self._golock, true)
+		self._animUnlock:Play("unlock", 0, 0)
 		AudioMgr.instance:trigger(AudioEnum.UI.Act183_HardMainUnlock)
-		Act183Helper.savePlayUnlockAnimGroupIdInLocal(var_3_0, arg_3_0._groupId)
+		Act183Helper.savePlayUnlockAnimGroupIdInLocal(actId, self._groupId)
 	end
 end
 
-return var_0_0
+return Act183DungeonHardMainGroupItem

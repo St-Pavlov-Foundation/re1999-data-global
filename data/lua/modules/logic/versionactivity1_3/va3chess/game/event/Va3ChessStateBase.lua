@@ -1,26 +1,28 @@
-﻿module("modules.logic.versionactivity1_3.va3chess.game.event.Va3ChessStateBase", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/va3chess/game/event/Va3ChessStateBase.lua
 
-local var_0_0 = class("Va3ChessStateBase")
+module("modules.logic.versionactivity1_3.va3chess.game.event.Va3ChessStateBase", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._stateType = arg_1_1
-	arg_1_0.originData = arg_1_2
+local Va3ChessStateBase = class("Va3ChessStateBase")
+
+function Va3ChessStateBase:init(stateType, originData)
+	self._stateType = stateType
+	self.originData = originData
 end
 
-function var_0_0.start(arg_2_0)
-	arg_2_0._stateType = nil
+function Va3ChessStateBase:start()
+	self._stateType = nil
 end
 
-function var_0_0.onClickPos(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+function Va3ChessStateBase:onClickPos(x, y, manualClick)
 	return
 end
 
-function var_0_0.getStateType(arg_4_0)
-	return arg_4_0._stateType
+function Va3ChessStateBase:getStateType()
+	return self._stateType
 end
 
-function var_0_0.dispose(arg_5_0)
+function Va3ChessStateBase:dispose()
 	return
 end
 
-return var_0_0
+return Va3ChessStateBase

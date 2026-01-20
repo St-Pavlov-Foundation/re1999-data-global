@@ -1,130 +1,132 @@
-﻿module("modules.logic.room.view.critter.train.RoomCritterTrainEventResultView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/critter/train/RoomCritterTrainEventResultView.lua
 
-local var_0_0 = class("RoomCritterTrainEventResultView", BaseView)
+module("modules.logic.room.view.critter.train.RoomCritterTrainEventResultView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._golefttopbtns = gohelper.findChild(arg_1_0.viewGO, "#go_lefttopbtns")
-	arg_1_0._gospine = gohelper.findChild(arg_1_0.viewGO, "#go_spine")
-	arg_1_0._goexittips = gohelper.findChild(arg_1_0.viewGO, "#go_exittips")
-	arg_1_0._goattribute = gohelper.findChild(arg_1_0.viewGO, "#go_attribute")
-	arg_1_0._goattributeup = gohelper.findChild(arg_1_0.viewGO, "#go_attributeup")
-	arg_1_0._txtup = gohelper.findChildText(arg_1_0.viewGO, "#go_attributeup/attributeup/up/#txt_up")
-	arg_1_0._goattributeupitem = gohelper.findChild(arg_1_0.viewGO, "#go_attributeup/attributeup")
-	arg_1_0._goattributeupeffect = gohelper.findChild(arg_1_0.viewGO, "#attributeup_effect")
+local RoomCritterTrainEventResultView = class("RoomCritterTrainEventResultView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomCritterTrainEventResultView:onInitView()
+	self._golefttopbtns = gohelper.findChild(self.viewGO, "#go_lefttopbtns")
+	self._gospine = gohelper.findChild(self.viewGO, "#go_spine")
+	self._goexittips = gohelper.findChild(self.viewGO, "#go_exittips")
+	self._goattribute = gohelper.findChild(self.viewGO, "#go_attribute")
+	self._goattributeup = gohelper.findChild(self.viewGO, "#go_attributeup")
+	self._txtup = gohelper.findChildText(self.viewGO, "#go_attributeup/attributeup/up/#txt_up")
+	self._goattributeupitem = gohelper.findChild(self.viewGO, "#go_attributeup/attributeup")
+	self._goattributeupeffect = gohelper.findChild(self.viewGO, "#attributeup_effect")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RoomCritterTrainEventResultView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RoomCritterTrainEventResultView:removeEvents()
 	return
 end
 
-function var_0_0._onCloseFullView(arg_4_0, arg_4_1)
-	local var_4_0 = GameSceneMgr.instance:getScene(SceneType.Room):getSceneContainerGO()
+function RoomCritterTrainEventResultView:_onCloseFullView(viewName)
+	local sceneGO = GameSceneMgr.instance:getScene(SceneType.Room):getSceneContainerGO()
 
-	gohelper.setActive(var_4_0, true)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseFullView, arg_4_0._onCloseFullView, arg_4_0)
+	gohelper.setActive(sceneGO, true)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseFullView, self._onCloseFullView, self)
 end
 
-function var_0_0._addEvents(arg_5_0)
-	arg_5_0._exitBtn:AddClickListener(arg_5_0._onExitClick, arg_5_0)
+function RoomCritterTrainEventResultView:_addEvents()
+	self._exitBtn:AddClickListener(self._onExitClick, self)
 end
 
-function var_0_0._removeEvents(arg_6_0)
-	arg_6_0._exitBtn:RemoveClickListener()
+function RoomCritterTrainEventResultView:_removeEvents()
+	self._exitBtn:RemoveClickListener()
 end
 
-function var_0_0._onExitClick(arg_7_0)
-	arg_7_0:closeThis()
+function RoomCritterTrainEventResultView:_onExitClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0._selectItems = {}
-	arg_8_0._optionId = 1
-	arg_8_0._viewAnim = arg_8_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function RoomCritterTrainEventResultView:_editableInitView()
+	self._selectItems = {}
+	self._optionId = 1
+	self._viewAnim = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	local var_8_0 = arg_8_0:getResInst(RoomCritterTrainDetailItem.prefabPath, arg_8_0._goattribute)
+	local go = self:getResInst(RoomCritterTrainDetailItem.prefabPath, self._goattribute)
 
-	arg_8_0._attributeItem = MonoHelper.addNoUpdateLuaComOnceToGo(var_8_0, RoomCritterTrainDetailItem, arg_8_0)
-	arg_8_0._exitBtn = gohelper.getClick(arg_8_0._goexittips)
+	self._attributeItem = MonoHelper.addNoUpdateLuaComOnceToGo(go, RoomCritterTrainDetailItem, self)
+	self._exitBtn = gohelper.getClick(self._goexittips)
 
-	arg_8_0:_addEvents()
-	gohelper.setActive(arg_8_0._goattribute, false)
-	gohelper.setActive(arg_8_0._goconversation, false)
-	gohelper.setActive(arg_8_0._goexittips, false)
-	gohelper.setActive(arg_8_0._goattributeup, false)
-	gohelper.setActive(arg_8_0._goattributeupitem, false)
+	self:_addEvents()
+	gohelper.setActive(self._goattribute, false)
+	gohelper.setActive(self._goconversation, false)
+	gohelper.setActive(self._goexittips, false)
+	gohelper.setActive(self._goattributeup, false)
+	gohelper.setActive(self._goattributeupitem, false)
 end
 
-function var_0_0._startShowResult(arg_9_0, arg_9_1)
-	gohelper.setActive(arg_9_0._goexittips, true)
-	gohelper.setActive(arg_9_0._goattributeup, true)
-	gohelper.setActive(arg_9_0._goattribute, true)
-	gohelper.setActive(arg_9_0._goattributeupeffect, true)
+function RoomCritterTrainEventResultView:_startShowResult(attributeMOs)
+	gohelper.setActive(self._goexittips, true)
+	gohelper.setActive(self._goattributeup, true)
+	gohelper.setActive(self._goattribute, true)
+	gohelper.setActive(self._goattributeupeffect, true)
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_peixun)
-	arg_9_0._viewAnim:Play("open", 0, 0)
+	self._viewAnim:Play("open", 0, 0)
 
-	arg_9_0._attributeMOs = arg_9_1
+	self._attributeMOs = attributeMOs
 
-	arg_9_0._attributeItem:playLevelUp(arg_9_1, true)
+	self._attributeItem:playLevelUp(attributeMOs, true)
 
-	arg_9_0._repeatCount = 0
+	self._repeatCount = 0
 
-	TaskDispatcher.runRepeat(arg_9_0._showAttribute, arg_9_0, 0.3, #arg_9_1)
+	TaskDispatcher.runRepeat(self._showAttribute, self, 0.3, #attributeMOs)
 end
 
-function var_0_0._showAttribute(arg_10_0)
-	arg_10_0._repeatCount = arg_10_0._repeatCount + 1
+function RoomCritterTrainEventResultView:_showAttribute()
+	self._repeatCount = self._repeatCount + 1
 
-	if not arg_10_0._attributeMOs or arg_10_0._repeatCount > #arg_10_0._attributeMOs then
+	if not self._attributeMOs or self._repeatCount > #self._attributeMOs then
 		return
 	end
 
-	local var_10_0 = gohelper.findChild(arg_10_0._goattributeup, tostring(arg_10_0._repeatCount))
-	local var_10_1 = gohelper.clone(arg_10_0._goattributeupitem)
+	local parentGo = gohelper.findChild(self._goattributeup, tostring(self._repeatCount))
+	local go = gohelper.clone(self._goattributeupitem)
 
-	gohelper.addChild(var_10_0, var_10_1)
-	gohelper.setActive(var_10_1, true)
+	gohelper.addChild(parentGo, go)
+	gohelper.setActive(go, true)
 
-	local var_10_2 = gohelper.findChildText(var_10_1, "up/#txt_up")
-	local var_10_3 = arg_10_0._attributeMOs[arg_10_0._repeatCount]
-	local var_10_4 = CritterConfig.instance:getCritterAttributeCfg(var_10_3.attributeId).name
-	local var_10_5 = var_10_3.value
+	local txtattributeup = gohelper.findChildText(go, "up/#txt_up")
+	local attributeMO = self._attributeMOs[self._repeatCount]
+	local attName = CritterConfig.instance:getCritterAttributeCfg(attributeMO.attributeId).name
+	local attValue = attributeMO.value
 
-	var_10_2.text = string.format("%s + %s", var_10_4, var_10_5)
+	txtattributeup.text = string.format("%s + %s", attName, attValue)
 end
 
-function var_0_0.onOpen(arg_11_0)
-	arg_11_0._critterMO = arg_11_0.viewParam.critterMO
-	arg_11_0._addAttributeMOs = arg_11_0.viewParam.addAttributeMOs
+function RoomCritterTrainEventResultView:onOpen()
+	self._critterMO = self.viewParam.critterMO
+	self._addAttributeMOs = self.viewParam.addAttributeMOs
 
-	arg_11_0._attributeItem:onUpdateMO(arg_11_0._critterMO)
-	arg_11_0:_startShowResult(arg_11_0._addAttributeMOs)
+	self._attributeItem:onUpdateMO(self._critterMO)
+	self:_startShowResult(self._addAttributeMOs)
 end
 
-function var_0_0.onClose(arg_12_0)
+function RoomCritterTrainEventResultView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_13_0)
-	arg_13_0:_removeEvents()
-	TaskDispatcher.cancelTask(arg_13_0._showAttribute, arg_13_0)
+function RoomCritterTrainEventResultView:onDestroyView()
+	self:_removeEvents()
+	TaskDispatcher.cancelTask(self._showAttribute, self)
 
-	if arg_13_0._selectItems then
-		for iter_13_0, iter_13_1 in pairs(arg_13_0._selectItems) do
-			iter_13_1:destroy()
+	if self._selectItems then
+		for _, v in pairs(self._selectItems) do
+			v:destroy()
 		end
 
-		arg_13_0._selectItems = nil
+		self._selectItems = nil
 	end
 
-	arg_13_0._attributeItem:onDestroy()
+	self._attributeItem:onDestroy()
 end
 
-return var_0_0
+return RoomCritterTrainEventResultView

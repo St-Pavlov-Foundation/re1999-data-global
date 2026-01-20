@@ -1,42 +1,44 @@
-﻿module("modules.logic.sp01.odyssey.model.OdysseyHeroGroupEquipMo", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/model/OdysseyHeroGroupEquipMo.lua
 
-local var_0_0 = pureTable("OdysseyHeroGroupEquipMo")
+module("modules.logic.sp01.odyssey.model.OdysseyHeroGroupEquipMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.index = arg_1_1.position - 1
-	arg_1_0.equipUid = {}
+local OdysseyHeroGroupEquipMo = pureTable("OdysseyHeroGroupEquipMo")
 
-	local var_1_0 = 0
-	local var_1_1 = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.TrialHeroId)
-	local var_1_2
+function OdysseyHeroGroupEquipMo:init(info)
+	self.index = info.position - 1
+	self.equipUid = {}
 
-	if arg_1_1 and arg_1_1.trialId and arg_1_1.trialId > 0 and arg_1_1.trialId == tonumber(var_1_1.value) then
-		var_1_2 = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.MainHeroEquipCount)
+	local maxCount = 0
+	local mainHeroConstCo = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.TrialHeroId)
+	local mainCountConstCo
+
+	if info and info.trialId and info.trialId > 0 and info.trialId == tonumber(mainHeroConstCo.value) then
+		mainCountConstCo = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.MainHeroEquipCount)
 	else
-		var_1_2 = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.NormalHeroEquipCount)
+		mainCountConstCo = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.NormalHeroEquipCount)
 	end
 
-	local var_1_3 = tonumber(var_1_2.value)
+	maxCount = tonumber(mainCountConstCo.value)
 
-	for iter_1_0 = 1, var_1_3 do
-		table.insert(arg_1_0.equipUid, "0")
+	for i = 1, maxCount do
+		table.insert(self.equipUid, "0")
 	end
 
-	if not arg_1_1.equips then
+	if not info.equips then
 		return
 	end
 
-	for iter_1_1, iter_1_2 in ipairs(arg_1_1.equips) do
-		arg_1_0.equipUid[iter_1_2.slotId] = iter_1_2.equipUid
+	for i, v in ipairs(info.equips) do
+		self.equipUid[v.slotId] = v.equipUid
 	end
 end
 
-function var_0_0.getEquipUID(arg_2_0, arg_2_1)
-	if not arg_2_0.equipUid then
+function OdysseyHeroGroupEquipMo:getEquipUID(slot)
+	if not self.equipUid then
 		return nil
 	end
 
-	return arg_2_0.equipUid[arg_2_1]
+	return self.equipUid[slot]
 end
 
-return var_0_0
+return OdysseyHeroGroupEquipMo

@@ -1,9 +1,11 @@
-﻿module("modules.logic.fight.model.data.FightEmitterInfoData", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightEmitterInfoData.lua
 
-local var_0_0 = FightDataClass("FightEmitterInfoData")
+module("modules.logic.fight.model.data.FightEmitterInfoData", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1)
-	arg_1_0.energy = arg_1_1.energy
+local FightEmitterInfoData = FightDataClass("FightEmitterInfoData")
+
+function FightEmitterInfoData:onConstructor(proto)
+	self.energy = proto.energy
 end
 
-return var_0_0
+return FightEmitterInfoData

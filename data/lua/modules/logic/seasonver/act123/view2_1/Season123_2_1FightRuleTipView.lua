@@ -1,140 +1,142 @@
-﻿module("modules.logic.seasonver.act123.view2_1.Season123_2_1FightRuleTipView", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view2_1/Season123_2_1FightRuleTipView.lua
 
-local var_0_0 = class("Season123_2_1FightRuleTipView", BaseView)
+module("modules.logic.seasonver.act123.view2_1.Season123_2_1FightRuleTipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnClose1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_close1")
-	arg_1_0._btnClose2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_close2")
-	arg_1_0._goLabel = gohelper.findChild(arg_1_0.viewGO, "root/top/#btn_label")
-	arg_1_0._goCard = gohelper.findChild(arg_1_0.viewGO, "root/top/#btn_card")
-	arg_1_0._simageleftbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/bg/#simage_leftbg")
-	arg_1_0._simagerightbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/bg/#simage_rightbg")
+local Season123_2_1FightRuleTipView = class("Season123_2_1FightRuleTipView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Season123_2_1FightRuleTipView:onInitView()
+	self._btnClose1 = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_close1")
+	self._btnClose2 = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_close2")
+	self._goLabel = gohelper.findChild(self.viewGO, "root/top/#btn_label")
+	self._goCard = gohelper.findChild(self.viewGO, "root/top/#btn_card")
+	self._simageleftbg = gohelper.findChildSingleImage(self.viewGO, "root/bg/#simage_leftbg")
+	self._simagerightbg = gohelper.findChildSingleImage(self.viewGO, "root/bg/#simage_rightbg")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnClose1:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnClose2:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function Season123_2_1FightRuleTipView:addEvents()
+	self._btnClose1:AddClickListener(self._btncloseOnClick, self)
+	self._btnClose2:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnClose1:RemoveClickListener()
-	arg_3_0._btnClose2:RemoveClickListener()
+function Season123_2_1FightRuleTipView:removeEvents()
+	self._btnClose1:RemoveClickListener()
+	self._btnClose2:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0.labelTab = arg_4_0:createTab(arg_4_0._goLabel, Activity123Enum.RuleTab.Rule)
-	arg_4_0.cardTab = arg_4_0:createTab(arg_4_0._goCard, Activity123Enum.RuleTab.Card)
+function Season123_2_1FightRuleTipView:_editableInitView()
+	self.labelTab = self:createTab(self._goLabel, Activity123Enum.RuleTab.Rule)
+	self.cardTab = self:createTab(self._goCard, Activity123Enum.RuleTab.Card)
 
-	arg_4_0._simageleftbg:LoadImage(ResUrl.getSeasonIcon("img_bg_light2.png"))
-	arg_4_0._simagerightbg:LoadImage(ResUrl.getSeasonIcon("img_bg_light1.png"))
+	self._simageleftbg:LoadImage(ResUrl.getSeasonIcon("img_bg_light2.png"))
+	self._simagerightbg:LoadImage(ResUrl.getSeasonIcon("img_bg_light1.png"))
 end
 
-function var_0_0._btncloseOnClick(arg_5_0)
-	arg_5_0:_closeView()
+function Season123_2_1FightRuleTipView:_btncloseOnClick()
+	self:_closeView()
 end
 
-function var_0_0._closeView(arg_6_0)
-	arg_6_0:closeThis()
+function Season123_2_1FightRuleTipView:_closeView()
+	self:closeThis()
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0._ruleList = SeasonFightRuleView.getRuleList()
-	arg_7_0._cardList = Season123Model.instance:getFightCardDataList()
+function Season123_2_1FightRuleTipView:onOpen()
+	self._ruleList = SeasonFightRuleView.getRuleList()
+	self._cardList = Season123Model.instance:getFightCardDataList()
 
-	if #arg_7_0._ruleList > 0 then
-		arg_7_0:switchTab(Activity123Enum.RuleTab.Rule)
+	if #self._ruleList > 0 then
+		self:switchTab(Activity123Enum.RuleTab.Rule)
 	else
-		arg_7_0:switchTab(Activity123Enum.RuleTab.Card)
+		self:switchTab(Activity123Enum.RuleTab.Card)
 	end
 
-	NavigateMgr.instance:addEscape(arg_7_0.viewName, arg_7_0._btncloseOnClick, arg_7_0)
+	NavigateMgr.instance:addEscape(self.viewName, self._btncloseOnClick, self)
 end
 
-function var_0_0.createTab(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = arg_8_0:getUserDataTb_()
+function Season123_2_1FightRuleTipView:createTab(go, tabType)
+	local item = self:getUserDataTb_()
 
-	var_8_0.go = arg_8_1
-	var_8_0.tabType = arg_8_2
-	var_8_0.goUnSelect = gohelper.findChild(arg_8_1, "unselect")
-	var_8_0.goSelect = gohelper.findChild(arg_8_1, "selected")
-	var_8_0.btn = gohelper.findButtonWithAudio(arg_8_1)
+	item.go = go
+	item.tabType = tabType
+	item.goUnSelect = gohelper.findChild(go, "unselect")
+	item.goSelect = gohelper.findChild(go, "selected")
+	item.btn = gohelper.findButtonWithAudio(go)
 
-	var_8_0.btn:AddClickListener(arg_8_0.onClickTab, arg_8_0, var_8_0)
+	item.btn:AddClickListener(self.onClickTab, self, item)
 
-	return var_8_0
+	return item
 end
 
-function var_0_0.updateTab(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	if arg_9_2 then
-		local var_9_0 = arg_9_0.tabType == arg_9_1.tabType
+function Season123_2_1FightRuleTipView:updateTab(tab, active, tabNum)
+	if active then
+		local select = self.tabType == tab.tabType
 
-		gohelper.setActive(arg_9_1.go, true)
-		gohelper.setActive(arg_9_1.goSelect, var_9_0)
-		gohelper.setActive(arg_9_1.goUnSelect, not var_9_0)
+		gohelper.setActive(tab.go, true)
+		gohelper.setActive(tab.goSelect, select)
+		gohelper.setActive(tab.goUnSelect, not select)
 	else
-		gohelper.setActive(arg_9_1.go, false)
+		gohelper.setActive(tab.go, false)
 	end
 end
 
-function var_0_0.destroyTab(arg_10_0, arg_10_1)
-	if arg_10_1 then
-		arg_10_1.btn:RemoveClickListener()
+function Season123_2_1FightRuleTipView:destroyTab(item)
+	if item then
+		item.btn:RemoveClickListener()
 	end
 end
 
-function var_0_0.onClickTab(arg_11_0, arg_11_1)
-	if not arg_11_1 then
+function Season123_2_1FightRuleTipView:onClickTab(item)
+	if not item then
 		return
 	end
 
-	arg_11_0:switchTab(arg_11_1.tabType)
+	self:switchTab(item.tabType)
 end
 
-function var_0_0.switchTab(arg_12_0, arg_12_1)
-	if arg_12_0.tabType == arg_12_1 then
+function Season123_2_1FightRuleTipView:switchTab(type)
+	if self.tabType == type then
 		return
 	end
 
-	arg_12_0.tabType = arg_12_1
+	self.tabType = type
 
-	local var_12_0 = arg_12_0:getTabActive(arg_12_0.labelTab.tabType)
-	local var_12_1 = arg_12_0:getTabActive(arg_12_0.cardTab.tabType)
-	local var_12_2 = 0
+	local labelActive = self:getTabActive(self.labelTab.tabType)
+	local cardActive = self:getTabActive(self.cardTab.tabType)
+	local tabNum = 0
 
-	if var_12_0 then
-		var_12_2 = var_12_2 + 1
+	if labelActive then
+		tabNum = tabNum + 1
 	end
 
-	if var_12_1 then
-		var_12_2 = var_12_2 + 1
+	if cardActive then
+		tabNum = tabNum + 1
 	end
 
-	arg_12_0:updateTab(arg_12_0.labelTab, var_12_0, var_12_2)
-	arg_12_0:updateTab(arg_12_0.cardTab, var_12_1, var_12_2)
-	arg_12_0.viewContainer:switchTab(arg_12_1)
+	self:updateTab(self.labelTab, labelActive, tabNum)
+	self:updateTab(self.cardTab, cardActive, tabNum)
+	self.viewContainer:switchTab(type)
 end
 
-function var_0_0.getTabActive(arg_13_0, arg_13_1)
-	if arg_13_1 == Activity123Enum.RuleTab.Card then
-		return arg_13_0._cardList and #arg_13_0._cardList > 0
+function Season123_2_1FightRuleTipView:getTabActive(tabType)
+	if tabType == Activity123Enum.RuleTab.Card then
+		return self._cardList and #self._cardList > 0
 	end
 
-	return arg_13_0._ruleList and #arg_13_0._ruleList > 0
+	return self._ruleList and #self._ruleList > 0
 end
 
-function var_0_0.onClose(arg_14_0)
+function Season123_2_1FightRuleTipView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_15_0)
-	arg_15_0:destroyTab(arg_15_0.labelTab)
-	arg_15_0:destroyTab(arg_15_0.cardTab)
-	arg_15_0._simageleftbg:UnLoadImage()
-	arg_15_0._simagerightbg:UnLoadImage()
+function Season123_2_1FightRuleTipView:onDestroyView()
+	self:destroyTab(self.labelTab)
+	self:destroyTab(self.cardTab)
+	self._simageleftbg:UnLoadImage()
+	self._simagerightbg:UnLoadImage()
 end
 
-return var_0_0
+return Season123_2_1FightRuleTipView

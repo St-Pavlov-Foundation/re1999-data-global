@@ -1,133 +1,137 @@
-﻿module("modules.common.res.ResMgr", package.seeall)
+﻿-- chunkname: @modules/common/res/ResMgr.lua
 
-local var_0_0 = _M
-local var_0_1 = {}
-local var_0_2 = {}
-local var_0_3 = {}
-local var_0_4 = {}
-local var_0_5 = 0
-local var_0_6
+module("modules.common.res.ResMgr", package.seeall)
 
-function var_0_0.getAbAsset(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	if var_0_3[arg_1_3] then
-		local var_1_0 = var_0_3[arg_1_3].url
+local ResMgr = _M
+local _assetPool = {}
+local _moPool = {}
+local _callBackDic = {}
+local _callBackDicByUrl = {}
+local _id = 0
+local _cbPool
 
-		if arg_1_0 == var_1_0 then
-			return arg_1_3
+function ResMgr.getAbAsset(assetUrl, loadedCb, loadedObj, id)
+	if _callBackDic[id] then
+		local url = _callBackDic[id].url
+
+		if assetUrl == url then
+			return id
 		end
 
-		var_0_4[var_1_0][arg_1_3] = nil
+		_callBackDicByUrl[url][id] = nil
 
-		var_0_0._getCBPool():putObject(var_0_3[arg_1_3])
+		ResMgr._getCBPool():putObject(_callBackDic[id])
 
-		var_0_3[arg_1_3] = nil
+		_callBackDic[id] = nil
 	end
 
-	local var_1_1 = var_0_1[arg_1_0]
+	local assetMO = _assetPool[assetUrl]
 
-	if var_1_1 then
-		arg_1_1(arg_1_2, var_1_1)
+	if assetMO then
+		loadedCb(loadedObj, assetMO)
 	else
-		var_0_5 = var_0_5 + 1
+		_id = _id + 1
 
-		local var_1_2 = var_0_0._getCBPool():getObject()
+		local luaCb = ResMgr._getCBPool():getObject()
 
-		var_1_2.callback = arg_1_1
-		var_1_2.url = arg_1_0
-		var_1_2.id = var_0_5
+		luaCb.callback = loadedCb
+		luaCb.url = assetUrl
+		luaCb.id = _id
 
-		var_1_2:setCbObj(arg_1_2)
+		luaCb:setCbObj(loadedObj)
 
-		var_0_3[var_0_5] = var_1_2
+		_callBackDic[_id] = luaCb
 
-		if not var_0_4[arg_1_0] then
-			var_0_4[arg_1_0] = {}
+		if not _callBackDicByUrl[assetUrl] then
+			_callBackDicByUrl[assetUrl] = {}
 		end
 
-		var_0_4[arg_1_0][var_0_5] = var_1_2
+		_callBackDicByUrl[assetUrl][_id] = luaCb
 
-		loadAbAsset(arg_1_0, false, var_0_0._onLoadCallback)
+		loadAbAsset(assetUrl, false, ResMgr._onLoadCallback)
 
-		if not var_0_1[arg_1_0] then
-			return var_0_5
+		if not _assetPool[assetUrl] then
+			return _id
 		end
 	end
 end
 
-function var_0_0._getCBPool()
-	if not var_0_6 then
-		var_0_6 = LuaObjPool.New(200, LuaGeneralCallback._poolNew, LuaGeneralCallback._poolRelease, LuaGeneralCallback._poolReset)
+function ResMgr._getCBPool()
+	if not _cbPool then
+		_cbPool = LuaObjPool.New(200, LuaGeneralCallback._poolNew, LuaGeneralCallback._poolRelease, LuaGeneralCallback._poolReset)
 	end
 
-	return var_0_6
+	return _cbPool
 end
 
-function var_0_0.removeCallBack(arg_3_0)
-	if var_0_3[arg_3_0] then
-		local var_3_0 = var_0_3[arg_3_0].url
+function ResMgr.removeCallBack(id)
+	if _callBackDic[id] then
+		local url = _callBackDic[id].url
 
-		var_0_4[var_3_0][arg_3_0] = nil
+		_callBackDicByUrl[url][id] = nil
 
-		var_0_0._getCBPool():putObject(var_0_3[arg_3_0])
+		ResMgr._getCBPool():putObject(_callBackDic[id])
 
-		var_0_3[arg_3_0] = nil
+		_callBackDic[id] = nil
 	end
 end
 
-function var_0_0.removeAsset(arg_4_0)
-	var_0_1[arg_4_0:getUrl()] = nil
+function ResMgr.removeAsset(assetMO)
+	_assetPool[assetMO:getUrl()] = nil
 
-	table.insert(var_0_2, arg_4_0)
+	table.insert(_moPool, assetMO)
 end
 
-function var_0_0.ReleaseObj(arg_5_0)
-	if arg_5_0 and gohelper.isNil(arg_5_0) == false then
-		local var_5_0 = MonoHelper.getLuaComFromGo(arg_5_0, AssetInstanceComp)
+function ResMgr.ReleaseObj(obj)
+	if obj and gohelper.isNil(obj) == false then
+		local comp = MonoHelper.getLuaComFromGo(obj, AssetInstanceComp)
 
-		if var_5_0 then
-			var_5_0:onDestroy()
-			MonoHelper.removeLuaComFromGo(arg_5_0, AssetInstanceComp)
+		if comp then
+			comp:onDestroy()
+			MonoHelper.removeLuaComFromGo(obj, AssetInstanceComp)
 		end
 
-		gohelper.destroy(arg_5_0)
+		gohelper.destroy(obj)
 	end
 end
 
-function var_0_0._onLoadCallback(arg_6_0)
-	local var_6_0 = arg_6_0.AssetUrl
-	local var_6_1 = var_0_0._getAssetMO(arg_6_0, var_6_0)
-	local var_6_2 = var_0_4[var_6_0]
+function ResMgr._onLoadCallback(assetItem)
+	local url = assetItem.AssetUrl
+	local assetMO = ResMgr._getAssetMO(assetItem, url)
+	local callBackDic = _callBackDicByUrl[url]
 
-	if var_6_2 then
-		for iter_6_0, iter_6_1 in pairs(var_6_2) do
-			var_0_3[iter_6_0] = nil
+	if callBackDic then
+		for id, luaCb in pairs(callBackDic) do
+			_callBackDic[id] = nil
 
-			iter_6_1:invoke(var_6_1)
-			var_0_0._getCBPool():putObject(iter_6_1)
+			luaCb:invoke(assetMO)
+			ResMgr._getCBPool():putObject(luaCb)
 		end
 	end
 
-	var_0_4[var_6_0] = nil
+	_callBackDicByUrl[url] = nil
 end
 
-function var_0_0.getAssetPool()
-	return var_0_1
+function ResMgr.getAssetPool()
+	return _assetPool
 end
 
-function var_0_0._getAssetMO(arg_8_0, arg_8_1)
-	if var_0_1[arg_8_1] == nil then
-		local var_8_0 = table.remove(var_0_2)
+function ResMgr._getAssetMO(assetItem, url)
+	local assetMO = _assetPool[url]
 
-		if var_8_0 == nil then
-			var_8_0 = AssetMO.New(arg_8_0)
+	if assetMO == nil then
+		local assetMO = table.remove(_moPool)
+
+		if assetMO == nil then
+			assetMO = AssetMO.New(assetItem)
 		else
-			var_8_0:setAssetItem(arg_8_0)
+			assetMO:setAssetItem(assetItem)
 		end
 
-		var_0_1[arg_8_1] = var_8_0
+		_assetPool[url] = assetMO
 	end
 
-	return var_0_1[arg_8_1]
+	return _assetPool[url]
 end
 
-return var_0_0
+return ResMgr

@@ -1,47 +1,49 @@
-﻿module("modules.logic.chessgame.model.ChessGameNodeModel", package.seeall)
+﻿-- chunkname: @modules/logic/chessgame/model/ChessGameNodeModel.lua
 
-local var_0_0 = class("ChessGameNodeModel", BaseModel)
+module("modules.logic.chessgame.model.ChessGameNodeModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._nodes = {}
+local ChessGameNodeModel = class("ChessGameNodeModel", BaseModel)
+
+function ChessGameNodeModel:onInit()
+	self._nodes = {}
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clear()
+function ChessGameNodeModel:reInit()
+	self:clear()
 end
 
-function var_0_0.setNodeDatas(arg_3_0, arg_3_1)
-	arg_3_0._nodes = {}
+function ChessGameNodeModel:setNodeDatas(nodes)
+	self._nodes = {}
 
-	for iter_3_0, iter_3_1 in pairs(arg_3_1) do
-		local var_3_0 = ChessGameNodeMo.New()
+	for _, node in pairs(nodes) do
+		local nodeMo = ChessGameNodeMo.New()
 
-		var_3_0:setNode(iter_3_1)
+		nodeMo:setNode(node)
 
-		if not arg_3_0._nodes[iter_3_1.x] then
-			arg_3_0._nodes[iter_3_1.x] = {}
+		if not self._nodes[node.x] then
+			self._nodes[node.x] = {}
 		end
 
-		arg_3_0._nodes[iter_3_1.x][iter_3_1.y] = var_3_0
+		self._nodes[node.x][node.y] = nodeMo
 	end
 end
 
-function var_0_0.getNode(arg_4_0, arg_4_1, arg_4_2)
-	if not arg_4_0._nodes[arg_4_1] then
+function ChessGameNodeModel:getNode(x, y)
+	if not self._nodes[x] then
 		return
 	end
 
-	return arg_4_0._nodes[arg_4_1][arg_4_2]
+	return self._nodes[x][y]
 end
 
-function var_0_0.getAllNodes(arg_5_0)
-	return arg_5_0._nodes
+function ChessGameNodeModel:getAllNodes()
+	return self._nodes
 end
 
-function var_0_0.clear(arg_6_0)
-	arg_6_0._nodes = {}
+function ChessGameNodeModel:clear()
+	self._nodes = {}
 end
 
-var_0_0.instance = var_0_0.New()
+ChessGameNodeModel.instance = ChessGameNodeModel.New()
 
-return var_0_0
+return ChessGameNodeModel

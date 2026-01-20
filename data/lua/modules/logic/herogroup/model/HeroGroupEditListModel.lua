@@ -1,154 +1,160 @@
-﻿module("modules.logic.herogroup.model.HeroGroupEditListModel", package.seeall)
+﻿-- chunkname: @modules/logic/herogroup/model/HeroGroupEditListModel.lua
 
-local var_0_0 = class("HeroGroupEditListModel", ListScrollModel)
+module("modules.logic.herogroup.model.HeroGroupEditListModel", package.seeall)
 
-function var_0_0.setMoveHeroId(arg_1_0, arg_1_1)
-	arg_1_0._moveHeroId = arg_1_1
+local HeroGroupEditListModel = class("HeroGroupEditListModel", ListScrollModel)
+
+function HeroGroupEditListModel:setMoveHeroId(id)
+	self._moveHeroId = id
 end
 
-function var_0_0.getMoveHeroIndex(arg_2_0)
-	return arg_2_0._moveHeroIndex
+function HeroGroupEditListModel:getMoveHeroIndex()
+	return self._moveHeroIndex
 end
 
-function var_0_0.copyCharacterCardList(arg_3_0, arg_3_1)
-	local var_3_0
+function HeroGroupEditListModel:copyCharacterCardList(init)
+	local moList
 
 	if HeroGroupTrialModel.instance:isOnlyUseTrial() then
-		var_3_0 = {}
+		moList = {}
 	else
-		var_3_0 = CharacterBackpackCardListModel.instance:getCharacterCardList()
+		moList = CharacterBackpackCardListModel.instance:getCharacterCardList()
 	end
 
-	local var_3_1 = {}
-	local var_3_2 = {}
+	local newMOList = {}
+	local repeatHero = {}
 
-	arg_3_0._inTeamHeroUids = {}
+	self._inTeamHeroUids = {}
 
-	local var_3_3 = 1
-	local var_3_4 = 1
-	local var_3_5 = HeroSingleGroupModel.instance:getList()
+	local selectIndex = 1
+	local index = 1
+	local alreadyList = HeroSingleGroupModel.instance:getList()
 
-	for iter_3_0, iter_3_1 in ipairs(var_3_5) do
-		if iter_3_1.trial or not iter_3_1.aid and tonumber(iter_3_1.heroUid) > 0 and not var_3_2[iter_3_1.heroUid] then
-			if iter_3_1.trial then
-				table.insert(var_3_1, HeroGroupTrialModel.instance:getById(iter_3_1.heroUid))
+	for i, heroSingleGroupMO in ipairs(alreadyList) do
+		if heroSingleGroupMO.trial or not heroSingleGroupMO.aid and tonumber(heroSingleGroupMO.heroUid) > 0 and not repeatHero[heroSingleGroupMO.heroUid] then
+			if heroSingleGroupMO.trial then
+				table.insert(newMOList, HeroGroupTrialModel.instance:getById(heroSingleGroupMO.heroUid))
 			else
-				table.insert(var_3_1, HeroModel.instance:getById(iter_3_1.heroUid))
+				table.insert(newMOList, HeroModel.instance:getById(heroSingleGroupMO.heroUid))
 			end
 
-			if arg_3_0.specialHero == iter_3_1.heroUid then
-				arg_3_0._inTeamHeroUids[iter_3_1.heroUid] = 2
-				var_3_3 = var_3_4
+			if self.specialHero == heroSingleGroupMO.heroUid then
+				self._inTeamHeroUids[heroSingleGroupMO.heroUid] = 2
+				selectIndex = index
 			else
-				arg_3_0._inTeamHeroUids[iter_3_1.heroUid] = 1
-				var_3_4 = var_3_4 + 1
+				self._inTeamHeroUids[heroSingleGroupMO.heroUid] = 1
+				index = index + 1
 			end
 
-			var_3_2[iter_3_1.heroUid] = true
+			repeatHero[heroSingleGroupMO.heroUid] = true
 		end
 	end
 
-	local var_3_6 = CharacterModel.instance:getRankState()
-	local var_3_7 = CharacterModel.instance:getBtnTag(CharacterEnum.FilterType.HeroGroup)
+	local state = CharacterModel.instance:getRankState()
+	local tag = CharacterModel.instance:getBtnTag(CharacterEnum.FilterType.HeroGroup)
 
-	HeroGroupTrialModel.instance:sortByLevelAndRare(var_3_7 == 1, var_3_6[var_3_7] == 1)
+	HeroGroupTrialModel.instance:sortByLevelAndRare(tag == 1, state[tag] == 1)
 
-	local var_3_8 = HeroGroupTrialModel.instance:getFilterList()
+	local trialList = HeroGroupTrialModel.instance:getFilterList()
 
-	for iter_3_2, iter_3_3 in ipairs(var_3_8) do
-		if not var_3_2[iter_3_3.uid] then
-			table.insert(var_3_1, iter_3_3)
+	for i, heroMo in ipairs(trialList) do
+		if not repeatHero[heroMo.uid] then
+			table.insert(newMOList, heroMo)
 		end
 	end
 
-	for iter_3_4, iter_3_5 in ipairs(var_3_1) do
-		if arg_3_0._moveHeroId and iter_3_5.heroId == arg_3_0._moveHeroId then
-			arg_3_0._moveHeroId = nil
-			arg_3_0._moveHeroIndex = iter_3_4
+	for i, mo in ipairs(newMOList) do
+		if self._moveHeroId and mo.heroId == self._moveHeroId then
+			self._moveHeroId = nil
+			self._moveHeroIndex = i
 
 			break
 		end
 	end
 
-	local var_3_9 = #var_3_1
-	local var_3_10 = arg_3_0.isTowerBattle
-	local var_3_11 = arg_3_0.isWeekWalk_2
-	local var_3_12 = {}
+	local groupHeroNum = #newMOList
+	local isTowerBattle = self.isTowerBattle
+	local isWeekWalk_2 = self.isWeekWalk_2
+	local deathList = {}
 
-	if var_3_10 then
-		for iter_3_6 = #var_3_1, 1, -1 do
-			if TowerModel.instance:isHeroBan(var_3_1[iter_3_6].heroId) then
-				table.insert(var_3_12, var_3_1[iter_3_6])
-				table.remove(var_3_1, iter_3_6)
+	if isTowerBattle then
+		for i = #newMOList, 1, -1 do
+			if TowerModel.instance:isHeroBan(newMOList[i].heroId) then
+				table.insert(deathList, newMOList[i])
+				table.remove(newMOList, i)
 			end
 		end
 	end
 
-	for iter_3_7, iter_3_8 in ipairs(var_3_0) do
-		if not var_3_2[iter_3_8.uid] then
-			var_3_2[iter_3_8.uid] = true
+	for i, mo in ipairs(moList) do
+		if not repeatHero[mo.uid] then
+			repeatHero[mo.uid] = true
 
-			if arg_3_0.adventure then
-				if WeekWalkModel.instance:getCurMapHeroCd(iter_3_8.heroId) > 0 then
-					table.insert(var_3_12, iter_3_8)
-				else
-					table.insert(var_3_1, iter_3_8)
-				end
-			elseif var_3_11 then
-				if WeekWalk_2Model.instance:getCurMapHeroCd(iter_3_8.heroId) > 0 then
-					table.insert(var_3_12, iter_3_8)
-				else
-					table.insert(var_3_1, iter_3_8)
-				end
-			elseif var_3_10 then
-				if TowerModel.instance:isHeroBan(iter_3_8.heroId) then
-					table.insert(var_3_12, iter_3_8)
-				else
-					table.insert(var_3_1, iter_3_8)
-				end
-			elseif arg_3_0._moveHeroId and iter_3_8.heroId == arg_3_0._moveHeroId then
-				arg_3_0._moveHeroId = nil
-				arg_3_0._moveHeroIndex = var_3_9 + 1
+			if self.adventure then
+				local cd = WeekWalkModel.instance:getCurMapHeroCd(mo.heroId)
 
-				table.insert(var_3_1, arg_3_0._moveHeroIndex, iter_3_8)
+				if cd > 0 then
+					table.insert(deathList, mo)
+				else
+					table.insert(newMOList, mo)
+				end
+			elseif isWeekWalk_2 then
+				local cd = WeekWalk_2Model.instance:getCurMapHeroCd(mo.heroId)
+
+				if cd > 0 then
+					table.insert(deathList, mo)
+				else
+					table.insert(newMOList, mo)
+				end
+			elseif isTowerBattle then
+				if TowerModel.instance:isHeroBan(mo.heroId) then
+					table.insert(deathList, mo)
+				else
+					table.insert(newMOList, mo)
+				end
+			elseif self._moveHeroId and mo.heroId == self._moveHeroId then
+				self._moveHeroId = nil
+				self._moveHeroIndex = groupHeroNum + 1
+
+				table.insert(newMOList, self._moveHeroIndex, mo)
 			else
-				table.insert(var_3_1, iter_3_8)
+				table.insert(newMOList, mo)
 			end
 		end
 	end
 
-	if arg_3_0.adventure or var_3_10 or var_3_11 then
-		tabletool.addValues(var_3_1, var_3_12)
+	if self.adventure or isTowerBattle or isWeekWalk_2 then
+		tabletool.addValues(newMOList, deathList)
 	end
 
-	arg_3_0:setList(var_3_1)
+	self:setList(newMOList)
 
-	if arg_3_1 and #var_3_1 > 0 and var_3_3 > 0 and #arg_3_0._scrollViews > 0 then
-		for iter_3_9, iter_3_10 in ipairs(arg_3_0._scrollViews) do
-			iter_3_10:selectCell(var_3_3, true)
+	if init and #newMOList > 0 and selectIndex > 0 and #self._scrollViews > 0 then
+		for _, view in ipairs(self._scrollViews) do
+			view:selectCell(selectIndex, true)
 		end
 
-		if var_3_1[var_3_3] then
-			return var_3_1[var_3_3]
+		if newMOList[selectIndex] then
+			return newMOList[selectIndex]
 		end
 	end
 end
 
-function var_0_0.isRepeatHero(arg_4_0, arg_4_1, arg_4_2)
-	if not arg_4_0._inTeamHeroUids then
+function HeroGroupEditListModel:isRepeatHero(heroId, uid)
+	if not self._inTeamHeroUids then
 		return false
 	end
 
-	for iter_4_0 in pairs(arg_4_0._inTeamHeroUids) do
-		local var_4_0 = arg_4_0:getById(iter_4_0)
+	for inTeamUid in pairs(self._inTeamHeroUids) do
+		local mo = self:getById(inTeamUid)
 
-		if not var_4_0 then
-			logError("heroId:" .. arg_4_1 .. ", " .. "uid:" .. arg_4_2 .. "数据为空")
+		if not mo then
+			logError("heroId:" .. heroId .. ", " .. "uid:" .. uid .. "数据为空")
 
 			return false
 		end
 
-		if var_4_0.heroId == arg_4_1 and arg_4_2 ~= var_4_0.uid then
+		if mo.heroId == heroId and uid ~= mo.uid then
 			return true
 		end
 	end
@@ -156,45 +162,47 @@ function var_0_0.isRepeatHero(arg_4_0, arg_4_1, arg_4_2)
 	return false
 end
 
-function var_0_0.isTrialLimit(arg_5_0)
-	if not arg_5_0._inTeamHeroUids then
+function HeroGroupEditListModel:isTrialLimit()
+	if not self._inTeamHeroUids then
 		return false
 	end
 
-	local var_5_0 = 0
+	local curNum = 0
 
-	for iter_5_0 in pairs(arg_5_0._inTeamHeroUids) do
-		if arg_5_0:getById(iter_5_0):isTrial() then
-			var_5_0 = var_5_0 + 1
+	for inTeamUid in pairs(self._inTeamHeroUids) do
+		local mo = self:getById(inTeamUid)
+
+		if mo:isTrial() then
+			curNum = curNum + 1
 		end
 	end
 
-	return var_5_0 >= HeroGroupTrialModel.instance:getLimitNum()
+	return curNum >= HeroGroupTrialModel.instance:getLimitNum()
 end
 
-function var_0_0.cancelAllSelected(arg_6_0)
-	if arg_6_0._scrollViews then
-		for iter_6_0, iter_6_1 in ipairs(arg_6_0._scrollViews) do
-			local var_6_0 = iter_6_1:getFirstSelect()
-			local var_6_1 = arg_6_0:getIndex(var_6_0)
+function HeroGroupEditListModel:cancelAllSelected()
+	if self._scrollViews then
+		for _, view in ipairs(self._scrollViews) do
+			local mo = view:getFirstSelect()
+			local index = self:getIndex(mo)
 
-			iter_6_1:selectCell(var_6_1, false)
+			view:selectCell(index, false)
 		end
 	end
 end
 
-function var_0_0.isInTeamHero(arg_7_0, arg_7_1)
-	return arg_7_0._inTeamHeroUids and arg_7_0._inTeamHeroUids[arg_7_1]
+function HeroGroupEditListModel:isInTeamHero(uid)
+	return self._inTeamHeroUids and self._inTeamHeroUids[uid]
 end
 
-function var_0_0.setParam(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4)
-	arg_8_0.specialHero = arg_8_1
-	arg_8_0.adventure = arg_8_2
-	arg_8_0.isTowerBattle = arg_8_3
-	arg_8_0._groupType = arg_8_4
-	arg_8_0.isWeekWalk_2 = arg_8_4 == HeroGroupEnum.GroupType.WeekWalk_2
+function HeroGroupEditListModel:setParam(heroUid, adventure, isTowerBattle, groupType)
+	self.specialHero = heroUid
+	self.adventure = adventure
+	self.isTowerBattle = isTowerBattle
+	self._groupType = groupType
+	self.isWeekWalk_2 = groupType == HeroGroupEnum.GroupType.WeekWalk_2
 end
 
-var_0_0.instance = var_0_0.New()
+HeroGroupEditListModel.instance = HeroGroupEditListModel.New()
 
-return var_0_0
+return HeroGroupEditListModel

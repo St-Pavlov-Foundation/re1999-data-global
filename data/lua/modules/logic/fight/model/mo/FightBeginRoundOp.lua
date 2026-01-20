@@ -1,138 +1,143 @@
-﻿module("modules.logic.fight.model.mo.FightBeginRoundOp", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/mo/FightBeginRoundOp.lua
 
-local var_0_0 = pureTable("FightBeginRoundOp")
+module("modules.logic.fight.model.mo.FightBeginRoundOp", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.operType = nil
-	arg_1_0.param1 = nil
-	arg_1_0.param2 = nil
-	arg_1_0.toId = nil
-	arg_1_0.skillId = nil
-	arg_1_0.belongToEntityId = nil
-	arg_1_0.moveToIndex = nil
-	arg_1_0.costActPoint = 1
-	arg_1_0._needCopyCard = nil
-	arg_1_0.cardColor = FightEnum.CardColor.None
+local FightBeginRoundOp = pureTable("FightBeginRoundOp")
+
+function FightBeginRoundOp:ctor()
+	self.operType = nil
+	self.param1 = nil
+	self.param2 = nil
+	self.toId = nil
+	self.skillId = nil
+	self.belongToEntityId = nil
+	self.moveToIndex = nil
+	self.costActPoint = 1
+	self._needCopyCard = nil
+	self.cardColor = FightEnum.CardColor.None
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.operType = arg_2_1.operType
-	arg_2_0.param1 = arg_2_1.param1
-	arg_2_0.param2 = arg_2_1.param2
-	arg_2_0.toId = arg_2_1.toId
+function FightBeginRoundOp:init(oper)
+	self.operType = oper.operType
+	self.param1 = oper.param1
+	self.param2 = oper.param2
+	self.toId = oper.toId
 end
 
-function var_0_0.moveCard(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	arg_3_0.operType = FightEnum.CardOpType.MoveCard
-	arg_3_0.param1 = arg_3_1
-	arg_3_0.param2 = arg_3_2
-	arg_3_0.skillId = arg_3_3
-	arg_3_0.belongToEntityId = arg_3_4
-	arg_3_0.moveToIndex = arg_3_2
+function FightBeginRoundOp:moveCard(fromIndex, toIndex, skillId, belongToEntityId)
+	self.operType = FightEnum.CardOpType.MoveCard
+	self.param1 = fromIndex
+	self.param2 = toIndex
+	self.skillId = skillId
+	self.belongToEntityId = belongToEntityId
+	self.moveToIndex = toIndex
 end
 
-function var_0_0.moveUniversalCard(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4, arg_4_5)
-	arg_4_0.operType = FightEnum.CardOpType.MoveUniversal
-	arg_4_0.param1 = arg_4_1
-	arg_4_0.param2 = arg_4_2
-	arg_4_0.skillId = arg_4_3
-	arg_4_0.belongToEntityId = arg_4_4
-	arg_4_0.moveToIndex = arg_4_5
-	arg_4_0.costActPoint = 0
+function FightBeginRoundOp:moveUniversalCard(fromIndex, toIndex, skillId, belongToEntityId, moveToIndex)
+	self.operType = FightEnum.CardOpType.MoveUniversal
+	self.param1 = fromIndex
+	self.param2 = toIndex
+	self.skillId = skillId
+	self.belongToEntityId = belongToEntityId
+	self.moveToIndex = moveToIndex
+	self.costActPoint = 0
 end
 
-function var_0_0.playCard(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4, arg_5_5, arg_5_6)
-	arg_5_0.operType = FightEnum.CardOpType.PlayCard
-	arg_5_0.param1 = arg_5_1
-	arg_5_0.param2 = arg_5_6
-	arg_5_0.toId = arg_5_2
-	arg_5_0.skillId = arg_5_3
-	arg_5_0.belongToEntityId = arg_5_4
-	arg_5_0.costActPoint = FightCardDataHelper.playActCost(arg_5_5)
+function FightBeginRoundOp:playCard(cardIndex, uid, skillId, belongToEntityId, cardInfoMO, param2)
+	self.operType = FightEnum.CardOpType.PlayCard
+	self.param1 = cardIndex
+	self.param2 = param2
+	self.toId = uid
+	self.skillId = skillId
+	self.belongToEntityId = belongToEntityId
+	self.costActPoint = FightCardDataHelper.playActCost(cardInfoMO)
 
-	local var_5_0 = FightDataHelper.entityMgr:getById(arg_5_0.belongToEntityId)
-	local var_5_1 = FightBuffHelper.simulateBuffList(var_5_0)
+	local entityMO = FightDataHelper.entityMgr:getById(self.belongToEntityId)
+	local buffList = FightBuffHelper.simulateBuffList(entityMO)
 
-	arg_5_0.clientSimulateCanPlayCard = FightViewHandCardItemLock.canUseCardSkill(arg_5_0.belongToEntityId, arg_5_0.skillId, var_5_1)
-	arg_5_0.cardInfoMO = FightCardInfoMO.New()
+	self.clientSimulateCanPlayCard = FightViewHandCardItemLock.canUseCardSkill(self.belongToEntityId, self.skillId, buffList)
+	self.cardInfoMO = FightCardInfoMO.New()
 
-	arg_5_0.cardInfoMO:init(arg_5_5)
+	self.cardInfoMO:init(cardInfoMO)
 end
 
-function var_0_0.playAssistBossHandCard(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_0.operType = FightEnum.CardOpType.AssistBoss
-	arg_6_0.param1 = arg_6_1
-	arg_6_0.toId = arg_6_2
-	arg_6_0.skillId = arg_6_1
-	arg_6_0.belongToEntityId = FightDataHelper.entityMgr:getAssistBoss().id
-	arg_6_0.costActPoint = 0
+function FightBeginRoundOp:playAssistBossHandCard(skillId, toId)
+	self.operType = FightEnum.CardOpType.AssistBoss
+	self.param1 = skillId
+	self.toId = toId
+	self.skillId = skillId
+
+	local assistBoss = FightDataHelper.entityMgr:getAssistBoss()
+
+	self.belongToEntityId = assistBoss.id
+	self.costActPoint = 0
 end
 
-function var_0_0.playPlayerFinisherSkill(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_0.operType = FightEnum.CardOpType.PlayerFinisherSkill
-	arg_7_0.param1 = arg_7_1
-	arg_7_0.toId = arg_7_2
-	arg_7_0.skillId = arg_7_1
-	arg_7_0.costActPoint = 0
+function FightBeginRoundOp:playPlayerFinisherSkill(skillId, toId)
+	self.operType = FightEnum.CardOpType.PlayerFinisherSkill
+	self.param1 = skillId
+	self.toId = toId
+	self.skillId = skillId
+	self.costActPoint = 0
 end
 
-function var_0_0.playBloodPoolCard(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0.operType = FightEnum.CardOpType.BloodPool
-	arg_8_0.param1 = arg_8_1
-	arg_8_0.toId = arg_8_2 or 0
-	arg_8_0.skillId = arg_8_1
-	arg_8_0.belongToEntityId = FightEntityScene.MySideId
-	arg_8_0.costActPoint = 0
+function FightBeginRoundOp:playBloodPoolCard(skillId, toId)
+	self.operType = FightEnum.CardOpType.BloodPool
+	self.param1 = skillId
+	self.toId = toId or 0
+	self.skillId = skillId
+	self.belongToEntityId = FightEntityScene.MySideId
+	self.costActPoint = 0
 end
 
-function var_0_0.simulateDissolveCard(arg_9_0, arg_9_1)
-	arg_9_0.operType = FightEnum.CardOpType.SimulateDissolveCard
-	arg_9_0.dissolveIndex = arg_9_1
-	arg_9_0.costActPoint = 0
+function FightBeginRoundOp:simulateDissolveCard(index)
+	self.operType = FightEnum.CardOpType.SimulateDissolveCard
+	self.dissolveIndex = index
+	self.costActPoint = 0
 end
 
-function var_0_0.selectSkillTarget(arg_10_0, arg_10_1)
-	arg_10_0.toId = arg_10_1
+function FightBeginRoundOp:selectSkillTarget(uid)
+	self.toId = uid
 end
 
-function var_0_0.isMoveCard(arg_11_0)
-	return arg_11_0.operType == FightEnum.CardOpType.MoveCard
+function FightBeginRoundOp:isMoveCard()
+	return self.operType == FightEnum.CardOpType.MoveCard
 end
 
-function var_0_0.isMoveUniversal(arg_12_0)
-	return arg_12_0.operType == FightEnum.CardOpType.MoveUniversal
+function FightBeginRoundOp:isMoveUniversal()
+	return self.operType == FightEnum.CardOpType.MoveUniversal
 end
 
-function var_0_0.isPlayCard(arg_13_0)
-	return arg_13_0.operType == FightEnum.CardOpType.PlayCard
+function FightBeginRoundOp:isPlayCard()
+	return self.operType == FightEnum.CardOpType.PlayCard
 end
 
-function var_0_0.isAssistBossPlayCard(arg_14_0)
-	return arg_14_0.operType == FightEnum.CardOpType.AssistBoss
+function FightBeginRoundOp:isAssistBossPlayCard()
+	return self.operType == FightEnum.CardOpType.AssistBoss
 end
 
-function var_0_0.isPlayerFinisherSkill(arg_15_0)
-	return arg_15_0.operType == FightEnum.CardOpType.PlayerFinisherSkill
+function FightBeginRoundOp:isPlayerFinisherSkill()
+	return self.operType == FightEnum.CardOpType.PlayerFinisherSkill
 end
 
-function var_0_0.isBloodPoolSkill(arg_16_0)
-	return arg_16_0.operType == FightEnum.CardOpType.BloodPool
+function FightBeginRoundOp:isBloodPoolSkill()
+	return self.operType == FightEnum.CardOpType.BloodPool
 end
 
-function var_0_0.isSeason2ChangeHero(arg_17_0)
-	return arg_17_0.operType == FightEnum.CardOpType.Season2ChangeHero
+function FightBeginRoundOp:isSeason2ChangeHero()
+	return self.operType == FightEnum.CardOpType.Season2ChangeHero
 end
 
-function var_0_0.isSimulateDissolveCard(arg_18_0)
-	return arg_18_0.operType == FightEnum.CardOpType.SimulateDissolveCard
+function FightBeginRoundOp:isSimulateDissolveCard()
+	return self.operType == FightEnum.CardOpType.SimulateDissolveCard
 end
 
-function var_0_0.copyCard(arg_19_0)
-	arg_19_0._needCopyCard = 1
+function FightBeginRoundOp:copyCard()
+	self._needCopyCard = 1
 end
 
-function var_0_0.needCopyCard(arg_20_0)
-	return arg_20_0._needCopyCard == 1
+function FightBeginRoundOp:needCopyCard()
+	return self._needCopyCard == 1
 end
 
-return var_0_0
+return FightBeginRoundOp

@@ -1,0 +1,282 @@
+[
+  {
+    "id": 360001,
+    "name": "language_10017972",
+    "groupId": 1,
+    "heroId": 3066,
+    "isDefault": 1,
+    "defaultUse": 1,
+    "resource": "v3a2_306601_ytm/306601_ytm",
+    "colliderSize": "2#2",
+    "colliderOffset": "0#0",
+    "emojiPos": [
+      0.5,
+      1
+    ],
+    "imgParam": [
+      0,
+      0,
+      1
+    ],
+    "spineParam": [
+      -5,
+      40,
+      1.5
+    ],
+    "resourceParam": 1.3,
+    "outlineRes": "roleeffects/roleeffect_outline_ytm_atsea",
+    "orderLayer": 21
+  },
+  {
+    "id": 360002,
+    "name": "language_10017975",
+    "groupId": 3,
+    "heroId": 3079,
+    "isDefault": 1,
+    "defaultUse": 1,
+    "resource": "v3a2_307901_ytm/307901_ytm",
+    "colliderSize": "1.5#1.5",
+    "colliderOffset": "",
+    "emojiPos": [
+      0.5,
+      1.42
+    ],
+    "imgParam": [
+      0,
+      0,
+      1
+    ],
+    "spineParam": [
+      -5,
+      -55,
+      1.5
+    ],
+    "resourceParam": 0.9,
+    "outlineRes": "roleeffects/roleeffect_outline_ytm",
+    "orderLayer": 20
+  },
+  {
+    "id": 360003,
+    "name": "language_10010657",
+    "groupId": 2,
+    "heroId": 3083,
+    "isDefault": 1,
+    "defaultUse": 0,
+    "resource": "v3a2_308301_ytm/308301_ytm",
+    "colliderSize": "1.6#1.75",
+    "colliderOffset": "",
+    "emojiPos": [
+      0.75,
+      2.68
+    ],
+    "imgParam": [
+      0,
+      0,
+      1
+    ],
+    "spineParam": [
+      -5,
+      -50,
+      1.5
+    ],
+    "resourceParam": 1.6,
+    "outlineRes": "roleeffects/roleeffect_outline_ytm",
+    "orderLayer": 20
+  },
+  {
+    "id": 360004,
+    "name": "language_10034441",
+    "groupId": 3,
+    "heroId": 3081,
+    "isDefault": 1,
+    "defaultUse": 0,
+    "resource": "v3a2_308101_ytm/308101_ytm",
+    "colliderSize": "1.1#1.1",
+    "colliderOffset": "0#0.2",
+    "emojiPos": [
+      0.5,
+      1
+    ],
+    "imgParam": [
+      0,
+      0,
+      1
+    ],
+    "spineParam": [
+      -5,
+      -20,
+      2.2
+    ],
+    "resourceParam": 1.4,
+    "outlineRes": "roleeffects/roleeffect_outline_ytm",
+    "orderLayer": 20
+  },
+  {
+    "id": 360005,
+    "name": "language_10034438",
+    "groupId": 3,
+    "heroId": 3080,
+    "isDefault": 1,
+    "defaultUse": 0,
+    "resource": "v3a2_308001_ytm/308001_ytm",
+    "colliderSize": "1.4#1.4",
+    "colliderOffset": "",
+    "emojiPos": [
+      0.5,
+      1.4
+    ],
+    "imgParam": [
+      0,
+      40,
+      1
+    ],
+    "spineParam": [
+      -5,
+      -25,
+      1.5
+    ],
+    "resourceParam": 0.9,
+    "outlineRes": "roleeffects/roleeffect_outline_ytm",
+    "orderLayer": 20
+  },
+  {
+    "id": 360006,
+    "name": "language_10003434",
+    "groupId": 2,
+    "heroId": 3003,
+    "isDefault": 1,
+    "defaultUse": 0,
+    "resource": "v3a2_300301_ytm/300301_ytm",
+    "colliderSize": "",
+    "colliderOffset": "",
+    "emojiPos": [
+      0.5,
+      1.75
+    ],
+    "imgParam": [
+      0,
+      0,
+      1
+    ],
+    "spineParam": [
+      -5,
+      -55,
+      1.3
+    ],
+    "resourceParam": 0.9,
+    "outlineRes": "roleeffects/roleeffect_outline_ytm",
+    "orderLayer": 20
+  },
+  {
+    "id": 360007,
+    "name": "language_10005352",
+    "groupId": 2,
+    "heroId": 3025,
+    "isDefault": 1,
+    "defaultUse": 0,
+    "resource": "v3a2_302501_ytm/302501_ytm",
+    "colliderSize": "",
+    "colliderOffset": "",
+    "emojiPos": [
+      0.65,
+      2.2
+    ],
+    "imgParam": [
+      0,
+      0,
+      1
+    ],
+    "spineParam": [
+      -5,
+      -55,
+      1.3
+    ],
+    "resourceParam": 1.2,
+    "outlineRes": "roleeffects/roleeffect_outline_ytm",
+    "orderLayer": 20
+  },
+  {
+    "id": 360008,
+    "name": "language_10005348",
+    "groupId": 2,
+    "heroId": 3023,
+    "isDefault": 1,
+    "defaultUse": 0,
+    "resource": "v3a2_302301_ytm/302301_ytm",
+    "colliderSize": "0.8#1.2",
+    "colliderOffset": "0.03#0.6",
+    "emojiPos": [
+      0.66,
+      2.2
+    ],
+    "imgParam": [
+      0,
+      0,
+      1
+    ],
+    "spineParam": [
+      -5,
+      -55,
+      1.8
+    ],
+    "resourceParam": 1.5,
+    "outlineRes": "roleeffects/roleeffect_outline_ytm",
+    "orderLayer": 20
+  },
+  {
+    "id": 360009,
+    "name": "language_10005368",
+    "groupId": 1,
+    "heroId": 3041,
+    "isDefault": 1,
+    "defaultUse": 0,
+    "resource": "v3a2_304101_ytm/304101_ytm",
+    "colliderSize": "1#1",
+    "colliderOffset": "0#0.6",
+    "emojiPos": [
+      0.5,
+      1.1
+    ],
+    "imgParam": [
+      0,
+      0,
+      1
+    ],
+    "spineParam": [
+      -5,
+      -55,
+      1.5
+    ],
+    "resourceParam": 0.8,
+    "outlineRes": "roleeffects/roleeffect_outline_ytm_atsea",
+    "orderLayer": 21
+  },
+  {
+    "id": 360010,
+    "name": "language_10005339",
+    "groupId": 2,
+    "heroId": 3010,
+    "isDefault": 1,
+    "defaultUse": 0,
+    "resource": "v3a2_301001_ytm/301001_ytm",
+    "colliderSize": "1.8#2",
+    "colliderOffset": "",
+    "emojiPos": [
+      0.6,
+      1.25
+    ],
+    "imgParam": [
+      0,
+      15,
+      1
+    ],
+    "spineParam": [
+      -5,
+      -55,
+      1.5
+    ],
+    "resourceParam": 0.75,
+    "outlineRes": "roleeffects/roleeffect_outline_ytm",
+    "orderLayer": 20
+  }
+]

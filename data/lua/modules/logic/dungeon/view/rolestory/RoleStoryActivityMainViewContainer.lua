@@ -1,41 +1,43 @@
-﻿module("modules.logic.dungeon.view.rolestory.RoleStoryActivityMainViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/rolestory/RoleStoryActivityMainViewContainer.lua
 
-local var_0_0 = class("RoleStoryActivityMainViewContainer", BaseViewContainer)
+module("modules.logic.dungeon.view.rolestory.RoleStoryActivityMainViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoleStoryActivityMainViewContainer = class("RoleStoryActivityMainViewContainer", BaseViewContainer)
 
-	arg_1_0.actView = RoleStoryActivityView.New()
-	arg_1_0.challengeView = RoleStoryActivityChallengeView.New()
-	arg_1_0.mainView = RoleStoryActivityMainView.New()
+function RoleStoryActivityMainViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, RoleStoryActivityBgView.New())
-	table.insert(var_1_0, RoleStoryItemRewardView.New())
-	table.insert(var_1_0, arg_1_0.mainView)
-	table.insert(var_1_0, arg_1_0.actView)
-	table.insert(var_1_0, arg_1_0.challengeView)
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
-	table.insert(var_1_0, TabViewGroup.New(2, "#go_topright"))
+	self.actView = RoleStoryActivityView.New()
+	self.challengeView = RoleStoryActivityChallengeView.New()
+	self.mainView = RoleStoryActivityMainView.New()
 
-	return var_1_0
+	table.insert(views, RoleStoryActivityBgView.New())
+	table.insert(views, RoleStoryItemRewardView.New())
+	table.insert(views, self.mainView)
+	table.insert(views, self.actView)
+	table.insert(views, self.challengeView)
+	table.insert(views, TabViewGroup.New(1, "#go_topleft"))
+	table.insert(views, TabViewGroup.New(2, "#go_topright"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._navigateButtonsView = NavigateButtonsView.New({
+function RoleStoryActivityMainViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonsView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
-		arg_2_0._navigateButtonsView:setOverrideClose(arg_2_0.overrideClose, arg_2_0)
+		self._navigateButtonsView:setOverrideClose(self.overrideClose, self)
 
 		return {
-			arg_2_0._navigateButtonsView
+			self._navigateButtonsView
 		}
 	end
 
-	local var_2_0 = {
+	local currencyParam = {
 		{
 			isIcon = true,
 			type = MaterialEnum.MaterialType.Item,
@@ -43,66 +45,66 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 		}
 	}
 
-	arg_2_0.currencyView = CurrencyView.New(var_2_0)
-	arg_2_0.currencyView.foreHideBtn = true
+	self.currencyView = CurrencyView.New(currencyParam)
+	self.currencyView.foreHideBtn = true
 
 	return {
-		arg_2_0.currencyView
+		self.currencyView
 	}
 end
 
-function var_0_0.refreshCurrency(arg_3_0, arg_3_1)
-	arg_3_0.currencyView:setCurrencyType(arg_3_1)
+function RoleStoryActivityMainViewContainer:refreshCurrency(currencyTypeParam)
+	self.currencyView:setCurrencyType(currencyTypeParam)
 end
 
-function var_0_0.overrideClose(arg_4_0)
-	if not arg_4_0.mainView._showActView then
+function RoleStoryActivityMainViewContainer:overrideClose()
+	if not self.mainView._showActView then
 		RoleStoryController.instance:dispatchEvent(RoleStoryEvent.ChangeMainViewShow, true)
 
 		return
 	end
 
-	ViewMgr.instance:closeView(arg_4_0.viewName, nil, true)
+	ViewMgr.instance:closeView(self.viewName, nil, true)
 end
 
-function var_0_0.onContainerClose(arg_5_0)
-	if arg_5_0:isManualClose() and not ViewMgr.instance:isOpen(ViewName.MainView) then
+function RoleStoryActivityMainViewContainer:onContainerClose()
+	if self:isManualClose() and not ViewMgr.instance:isOpen(ViewName.MainView) then
 		MainController.instance:dispatchEvent(MainEvent.ManuallyOpenMainView)
 	end
 end
 
-function var_0_0.playAnim(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	local var_6_0 = arg_6_0:__getAnimatorPlayer()
+function RoleStoryActivityMainViewContainer:playAnim(animName, callback, callbackObj)
+	local animatorPlayer = self:__getAnimatorPlayer()
 
-	if not gohelper.isNil(var_6_0) then
-		var_6_0:Play(arg_6_1, arg_6_2, arg_6_3)
+	if not gohelper.isNil(animatorPlayer) then
+		animatorPlayer:Play(animName, callback, callbackObj)
 	end
 end
 
-function var_0_0.playOpenTransition(arg_7_0)
-	local var_7_0 = {}
+function RoleStoryActivityMainViewContainer:playOpenTransition()
+	local paramTable = {}
 
-	if arg_7_0.mainView._showActView then
-		var_7_0.anim = "open"
-		var_7_0.duration = 0.67
+	if self.mainView._showActView then
+		paramTable.anim = "open"
+		paramTable.duration = 0.67
 	else
-		var_7_0.anim = "challenge"
-		var_7_0.duration = 0.6
+		paramTable.anim = "challenge"
+		paramTable.duration = 0.6
 	end
 
-	var_0_0.super.playOpenTransition(arg_7_0, var_7_0)
+	RoleStoryActivityMainViewContainer.super.playOpenTransition(self, paramTable)
 end
 
-function var_0_0._setVisible(arg_8_0, arg_8_1)
-	var_0_0.super._setVisible(arg_8_0, arg_8_1)
+function RoleStoryActivityMainViewContainer:_setVisible(isVisible)
+	RoleStoryActivityMainViewContainer.super._setVisible(self, isVisible)
 
-	if arg_8_0.mainView then
-		arg_8_0.mainView:onSetVisible()
+	if self.mainView then
+		self.mainView:onSetVisible()
 	end
 end
 
-function var_0_0.getVisible(arg_9_0)
-	return arg_9_0._isVisible
+function RoleStoryActivityMainViewContainer:getVisible()
+	return self._isVisible
 end
 
-return var_0_0
+return RoleStoryActivityMainViewContainer

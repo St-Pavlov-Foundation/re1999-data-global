@@ -1,7 +1,9 @@
-﻿module("modules.logic.versionactivity2_7.lengzhou6.model.LocalEliminateChessModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/lengzhou6/model/LocalEliminateChessModel.lua
 
-local var_0_0 = class("LocalEliminateChessModel")
-local var_0_1 = {
+module("modules.logic.versionactivity2_7.lengzhou6.model.LocalEliminateChessModel", package.seeall)
+
+local LocalEliminateChessModel = class("LocalEliminateChessModel")
+local Direction = {
 	{
 		x = 1,
 		y = 0
@@ -11,7 +13,7 @@ local var_0_1 = {
 		y = 0
 	}
 }
-local var_0_2 = {
+local Direction2 = {
 	{
 		x = 0,
 		y = 1
@@ -22,10 +24,10 @@ local var_0_2 = {
 	}
 }
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._changePoints = {}
-	arg_1_0._tempEliminateCheckResults = {}
-	arg_1_0._weights = {
+function LocalEliminateChessModel:ctor()
+	self._changePoints = {}
+	self._tempEliminateCheckResults = {}
+	self._weights = {
 		1,
 		1,
 		1,
@@ -33,152 +35,151 @@ function var_0_0.ctor(arg_1_0)
 	}
 end
 
-function var_0_0.initByData(arg_2_0, arg_2_1)
+function LocalEliminateChessModel:initByData(data)
 	math.randomseed(os.time())
 
-	if arg_2_0.cells == nil then
-		arg_2_0.cells = {}
+	if self.cells == nil then
+		self.cells = {}
 	end
 
-	arg_2_0._row = #arg_2_1
+	self._row = #data
 
-	for iter_2_0 = 1, #arg_2_1 do
-		if arg_2_0.cells[iter_2_0] == nil then
-			arg_2_0.cells[iter_2_0] = {}
+	for i = 1, #data do
+		if self.cells[i] == nil then
+			self.cells[i] = {}
 		end
 
-		local var_2_0 = arg_2_1[iter_2_0]
+		local row = data[i]
 
-		arg_2_0._col = #var_2_0
+		self._col = #row
 
-		for iter_2_1 = 1, #var_2_0 do
-			local var_2_1 = arg_2_0.cells[iter_2_0][iter_2_1]
-			local var_2_2 = var_2_0[iter_2_1]
+		for j = 1, #row do
+			local cell = self.cells[i][j]
+			local id = row[j]
 
-			if var_2_1 == nil then
-				var_2_1 = arg_2_0:createNewCell(iter_2_0, iter_2_1, EliminateEnum_2_7.ChessState.Normal, var_2_2)
+			if cell == nil then
+				cell = self:createNewCell(i, j, EliminateEnum_2_7.ChessState.Normal, id)
 			else
-				arg_2_0:initCell(var_2_1, iter_2_0, iter_2_1, EliminateEnum_2_7.ChessState.Normal, var_2_2)
+				self:initCell(cell, i, j, EliminateEnum_2_7.ChessState.Normal, id)
 			end
 
-			var_2_1:setStartXY(iter_2_0, arg_2_0._col + 1)
-			var_2_1:setXY(iter_2_0, iter_2_1)
+			cell:setStartXY(i, self._col + 1)
+			cell:setXY(i, j)
 		end
 	end
 
-	arg_2_0._initData = arg_2_1
+	self._initData = data
 end
 
-function var_0_0.getInitData(arg_3_0)
-	return arg_3_0._initData
+function LocalEliminateChessModel:getInitData()
+	return self._initData
 end
 
-function var_0_0.getAllCell(arg_4_0)
-	return arg_4_0.cells
+function LocalEliminateChessModel:getAllCell()
+	return self.cells
 end
 
-function var_0_0.getCell(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_0.cells == nil or arg_5_0.cells[arg_5_1] == nil then
+function LocalEliminateChessModel:getCell(x, y)
+	if self.cells == nil or self.cells[x] == nil then
 		return nil
 	end
 
-	return arg_5_0.cells[arg_5_1][arg_5_2]
+	return self.cells[x][y]
 end
 
-function var_0_0.getCellRowAndCol(arg_6_0)
-	return arg_6_0._row, arg_6_0._col
+function LocalEliminateChessModel:getCellRowAndCol()
+	return self._row, self._col
 end
 
-function var_0_0.setEliminateDieEffect(arg_7_0, arg_7_1)
-	arg_7_0._dieEffect = arg_7_1
+function LocalEliminateChessModel:setEliminateDieEffect(dieEffect)
+	self._dieEffect = dieEffect
 end
 
-function var_0_0.getEliminateDieEffect(arg_8_0)
-	return arg_8_0._dieEffect
+function LocalEliminateChessModel:getEliminateDieEffect()
+	return self._dieEffect
 end
 
-function var_0_0.randomCell(arg_9_0)
+function LocalEliminateChessModel:randomCell()
 	if isDebugBuild then
-		arg_9_0:printInfo("打乱棋盘前:")
+		self:printInfo("打乱棋盘前:")
 	end
 
-	local var_9_0 = {}
-	local var_9_1 = {}
+	local changeData = {}
+	local tempData = {}
 
-	for iter_9_0 = 1, arg_9_0._col do
-		for iter_9_1 = 1, arg_9_0._row do
-			if arg_9_0:_canEx(iter_9_0, iter_9_1) then
-				table.insert(var_9_1, iter_9_0)
-				table.insert(var_9_1, iter_9_1)
+	for i = 1, self._col do
+		for j = 1, self._row do
+			if self:_canEx(i, j) then
+				table.insert(tempData, i)
+				table.insert(tempData, j)
 			end
 		end
 	end
 
-	local var_9_2 = math.floor(#var_9_1 / 2)
-	local var_9_3 = {}
-	local var_9_4
-	local var_9_5
+	local allIndex = math.floor(#tempData / 2)
+	local usedIndex = {}
+	local changeIndex1, changeIndex2
 
-	while var_9_2 > #var_9_3 do
-		local var_9_6 = math.random(1, var_9_2)
-		local var_9_7 = false
+	while allIndex > #usedIndex do
+		local index = math.random(1, allIndex)
+		local isUsed = false
 
-		for iter_9_2 = 1, #var_9_3 do
-			if var_9_3[iter_9_2] == var_9_6 then
-				var_9_7 = true
+		for i = 1, #usedIndex do
+			if usedIndex[i] == index then
+				isUsed = true
 
 				break
 			end
 		end
 
-		if not var_9_7 then
-			table.insert(var_9_3, var_9_6)
+		if not isUsed then
+			table.insert(usedIndex, index)
 
-			if var_9_4 == nil then
-				var_9_4 = var_9_6
-			elseif var_9_5 == nil then
-				var_9_5 = var_9_6
+			if changeIndex1 == nil then
+				changeIndex1 = index
+			elseif changeIndex2 == nil then
+				changeIndex2 = index
 			end
 
-			if var_9_5 ~= nil and var_9_4 ~= nil then
-				local var_9_8 = var_9_1[var_9_4 * 2 - 1]
-				local var_9_9 = var_9_1[var_9_4 * 2]
-				local var_9_10 = var_9_1[var_9_5 * 2 - 1]
-				local var_9_11 = var_9_1[var_9_5 * 2]
+			if changeIndex2 ~= nil and changeIndex1 ~= nil then
+				local x = tempData[changeIndex1 * 2 - 1]
+				local y = tempData[changeIndex1 * 2]
+				local changeX = tempData[changeIndex2 * 2 - 1]
+				local changeY = tempData[changeIndex2 * 2]
 
-				table.insert(var_9_0, var_9_8)
-				table.insert(var_9_0, var_9_9)
-				table.insert(var_9_0, var_9_10)
-				table.insert(var_9_0, var_9_11)
-				arg_9_0:addChangePoints(var_9_8, var_9_9)
-				arg_9_0:addChangePoints(var_9_10, var_9_11)
-				arg_9_0:_exchangeCell(var_9_8, var_9_9, var_9_10, var_9_11)
+				table.insert(changeData, x)
+				table.insert(changeData, y)
+				table.insert(changeData, changeX)
+				table.insert(changeData, changeY)
+				self:addChangePoints(x, y)
+				self:addChangePoints(changeX, changeY)
+				self:_exchangeCell(x, y, changeX, changeY)
 
-				var_9_4 = nil
-				var_9_5 = nil
+				changeIndex1 = nil
+				changeIndex2 = nil
 			end
 		end
 	end
 
 	if isDebugBuild then
-		arg_9_0:printInfo("打乱棋盘后:")
+		self:printInfo("打乱棋盘后:")
 	end
 
-	return var_9_0
+	return changeData
 end
 
-function var_0_0._canEx(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = arg_10_0.cells[arg_10_1][arg_10_2]
+function LocalEliminateChessModel:_canEx(x, y)
+	local cell = self.cells[x][y]
 
-	if var_10_0 == nil then
+	if cell == nil then
 		return false
 	end
 
-	return var_10_0.id ~= -1 and not var_10_0:haveStatus(EliminateEnum_2_7.ChessState.Frost) and var_10_0.id ~= EliminateEnum_2_7.ChessTypeToIndex.stone
+	return cell.id ~= -1 and not cell:haveStatus(EliminateEnum_2_7.ChessState.Frost) and cell.id ~= EliminateEnum_2_7.ChessTypeToIndex.stone
 end
 
-function var_0_0.resetCreateWeight(arg_11_0)
-	arg_11_0._weights = {
+function LocalEliminateChessModel:resetCreateWeight()
+	self._weights = {
 		1,
 		1,
 		1,
@@ -186,72 +187,76 @@ function var_0_0.resetCreateWeight(arg_11_0)
 	}
 end
 
-function var_0_0.changeCreateWeight(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0
+function LocalEliminateChessModel:changeCreateWeight(chessType, value)
+	local index
 
-	for iter_12_0 = 1, #EliminateEnum_2_7.AllChessType do
-		if EliminateEnum_2_7.AllChessType[iter_12_0] == arg_12_1 then
-			var_12_0 = iter_12_0
+	for i = 1, #EliminateEnum_2_7.AllChessType do
+		local value = EliminateEnum_2_7.AllChessType[i]
+
+		if value == chessType then
+			index = i
 		end
 	end
 
-	if var_12_0 ~= nil then
-		arg_12_0._weights[var_12_0] = arg_12_0._weights[var_12_0] * arg_12_2
+	if index ~= nil then
+		self._weights[index] = self._weights[index] * value
 	end
 end
 
-function var_0_0.changeCellState(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	if arg_13_0.cells == nil or arg_13_0.cells[arg_13_1] == nil or arg_13_0.cells[arg_13_1][arg_13_2] == nil then
+function LocalEliminateChessModel:changeCellState(x, y, status)
+	if self.cells == nil or self.cells[x] == nil or self.cells[x][y] == nil then
 		return
 	end
 
-	arg_13_0.cells[arg_13_1][arg_13_2]:addStatus(arg_13_3)
+	local cell = self.cells[x][y]
+
+	cell:addStatus(status)
 
 	if isDebugBuild then
-		arg_13_0:printInfo("改变状态: ")
+		self:printInfo("改变状态: ")
 	end
 end
 
-function var_0_0.changeCellId(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	if arg_14_0.cells == nil or arg_14_0.cells[arg_14_1][arg_14_2] == nil then
+function LocalEliminateChessModel:changeCellId(x, y, newEliminateId)
+	if self.cells == nil or self.cells[x][y] == nil then
 		return nil
 	end
 
-	local var_14_0 = arg_14_0.cells[arg_14_1][arg_14_2]
+	local cell = self.cells[x][y]
 
-	var_14_0:setChessId(arg_14_3)
-	var_14_0:setStatus(EliminateEnum_2_7.ChessState.Normal)
+	cell:setChessId(newEliminateId)
+	cell:setStatus(EliminateEnum_2_7.ChessState.Normal)
 
 	if isDebugBuild then
-		arg_14_0:printInfo("改变棋子类型：")
+		self:printInfo("改变棋子类型：")
 	end
 
-	return var_14_0
+	return cell
 end
 
-function var_0_0.exchangeCell(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5)
+function LocalEliminateChessModel:exchangeCell(pos1X, pos1Y, pos2X, pos2Y, isExchangeCell)
 	if isDebugBuild then
-		arg_15_0:printInfo("交换前: ")
+		self:printInfo("交换前: ")
 	end
 
-	if arg_15_5 then
-		arg_15_0:_exchangeCell(arg_15_1, arg_15_2, arg_15_3, arg_15_4)
+	if isExchangeCell then
+		self:_exchangeCell(pos1X, pos1Y, pos2X, pos2Y)
 	end
 
-	arg_15_0:addChangePoints(arg_15_1, arg_15_2)
-	arg_15_0:addChangePoints(arg_15_3, arg_15_4)
+	self:addChangePoints(pos1X, pos1Y)
+	self:addChangePoints(pos2X, pos2Y)
 
 	if isDebugBuild then
-		arg_15_0:printInfo("交换后")
+		self:printInfo("交换后")
 	end
 
-	if not arg_15_0:check(false, true) then
-		if arg_15_5 then
-			arg_15_0:_exchangeCell(arg_15_3, arg_15_4, arg_15_1, arg_15_2)
+	if not self:check(false, true) then
+		if isExchangeCell then
+			self:_exchangeCell(pos2X, pos2Y, pos1X, pos1Y)
 		end
 
 		if isDebugBuild then
-			arg_15_0:printInfo("还原")
+			self:printInfo("还原")
 		end
 
 		return false
@@ -260,339 +265,351 @@ function var_0_0.exchangeCell(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4, 
 	return true
 end
 
-function var_0_0.eliminateCross(arg_16_0, arg_16_1, arg_16_2)
-	local var_16_0 = {}
-	local var_16_1 = true
+function LocalEliminateChessModel:eliminateCross(x, y)
+	local eliminateSet = {}
+	local needAdd = true
 
-	local function var_16_2(arg_17_0, arg_17_1)
-		var_16_1 = true
+	local function addCheck(x1, y1)
+		needAdd = true
 
-		local var_17_0 = #var_16_0 / 2
+		local count = #eliminateSet / 2
 
-		for iter_17_0 = 1, var_17_0 do
-			local var_17_1 = var_16_0[iter_17_0 * 2 - 1]
-			local var_17_2 = var_16_0[iter_17_0 * 2]
+		for i = 1, count do
+			local tempX = eliminateSet[i * 2 - 1]
+			local tempY = eliminateSet[i * 2]
 
-			if var_17_1 == arg_17_0 and var_17_2 == arg_17_1 then
-				var_16_1 = false
+			if tempX == x1 and tempY == y1 then
+				needAdd = false
 
 				break
 			end
 		end
 
-		if var_16_1 then
-			table.insert(var_16_0, arg_17_0)
-			table.insert(var_16_0, arg_17_1)
+		if needAdd then
+			table.insert(eliminateSet, x1)
+			table.insert(eliminateSet, y1)
 		end
 	end
 
-	for iter_16_0 = 1, arg_16_0._row do
-		local var_16_3 = arg_16_0.cells[iter_16_0][arg_16_2]
+	for i = 1, self._row do
+		local cell = self.cells[i][y]
 
-		if var_16_3.id ~= EliminateEnum_2_7.InvalidId and var_16_3:getEliminateID() ~= EliminateEnum_2_7.ChessType.stone then
-			var_16_2(iter_16_0, arg_16_2)
+		if cell.id ~= EliminateEnum_2_7.InvalidId and cell:getEliminateID() ~= EliminateEnum_2_7.ChessType.stone then
+			addCheck(i, y)
 		end
 	end
 
-	for iter_16_1 = 1, arg_16_0._col do
-		local var_16_4 = arg_16_0.cells[arg_16_1][iter_16_1]
+	for i = 1, self._col do
+		local cell = self.cells[x][i]
 
-		if var_16_4.id ~= EliminateEnum_2_7.InvalidId and var_16_4:getEliminateID() ~= EliminateEnum_2_7.ChessType.stone then
-			var_16_2(arg_16_1, iter_16_1)
+		if cell.id ~= EliminateEnum_2_7.InvalidId and cell:getEliminateID() ~= EliminateEnum_2_7.ChessType.stone then
+			addCheck(x, i)
 		end
 	end
 
-	local var_16_5 = #var_16_0 / 2
+	local count = #eliminateSet / 2
 
-	for iter_16_2 = 1, var_16_5 do
-		local var_16_6 = var_16_0[iter_16_2 * 2 - 1]
-		local var_16_7 = var_16_0[iter_16_2 * 2]
-		local var_16_8 = {}
+	for i = 1, count do
+		local endX = eliminateSet[i * 2 - 1]
+		local endY = eliminateSet[i * 2]
+		local eliminatePoints = {}
 
-		table.insert(var_16_8, {
-			x = var_16_6,
-			y = var_16_7
+		table.insert(eliminatePoints, {
+			x = endX,
+			y = endY
 		})
 
-		local var_16_9 = {
-			eliminatePoints = var_16_8,
+		local result = {
+			eliminatePoints = eliminatePoints,
 			eliminateType = EliminateEnum_2_7.eliminateType.base,
-			eliminateX = arg_16_1,
-			eliminateY = arg_16_2,
+			eliminateX = x,
+			eliminateY = y,
 			skillEffect = LengZhou6Enum.SkillEffect.EliminationCross
 		}
 
-		table.insert(arg_16_0._tempEliminateCheckResults, var_16_9)
+		table.insert(self._tempEliminateCheckResults, result)
 	end
 
-	arg_16_0:setEliminateDieEffect(LengZhou6Enum.SkillEffect.EliminationCross)
+	self:setEliminateDieEffect(LengZhou6Enum.SkillEffect.EliminationCross)
 end
 
-function var_0_0.eliminateRange(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	arg_18_3 = (arg_18_3 - 1) / 2
+function LocalEliminateChessModel:eliminateRange(x, y, range)
+	range = (range - 1) / 2
 
-	for iter_18_0 = -arg_18_3, arg_18_3 do
-		for iter_18_1 = -arg_18_3, arg_18_3 do
-			local var_18_0 = arg_18_1 + iter_18_0
-			local var_18_1 = arg_18_2 + iter_18_1
+	for i = -range, range do
+		for j = -range, range do
+			local newX = x + i
+			local newY = y + j
 
-			if var_18_0 > 0 and var_18_0 <= arg_18_0._row and var_18_1 > 0 and var_18_1 <= arg_18_0._col and arg_18_0.cells[var_18_0][var_18_1].id ~= EliminateEnum_2_7.InvalidId then
-				local var_18_2 = {}
+			if newX > 0 and newX <= self._row and newY > 0 and newY <= self._col then
+				local cell = self.cells[newX][newY]
 
-				table.insert(var_18_2, {
-					x = var_18_0,
-					y = var_18_1
-				})
+				if cell.id ~= EliminateEnum_2_7.InvalidId then
+					local eliminatePoints = {}
 
-				local var_18_3 = {
-					eliminatePoints = var_18_2,
-					eliminateType = EliminateEnum_2_7.eliminateType.base,
-					eliminateX = arg_18_1,
-					eliminateY = arg_18_2,
-					skillEffect = LengZhou6Enum.SkillEffect.EliminationRange
-				}
+					table.insert(eliminatePoints, {
+						x = newX,
+						y = newY
+					})
 
-				table.insert(arg_18_0._tempEliminateCheckResults, var_18_3)
+					local result = {
+						eliminatePoints = eliminatePoints,
+						eliminateType = EliminateEnum_2_7.eliminateType.base,
+						eliminateX = x,
+						eliminateY = y,
+						skillEffect = LengZhou6Enum.SkillEffect.EliminationRange
+					}
+
+					table.insert(self._tempEliminateCheckResults, result)
+				end
 			end
 		end
 	end
 
-	arg_18_0:setEliminateDieEffect(LengZhou6Enum.SkillEffect.EliminationRange)
+	self:setEliminateDieEffect(LengZhou6Enum.SkillEffect.EliminationRange)
 end
 
-function var_0_0.checkEliminate(arg_19_0)
-	if arg_19_0._eliminateCount == nil then
-		arg_19_0:setEliminateCount(1)
+function LocalEliminateChessModel:checkEliminate()
+	if self._eliminateCount == nil then
+		self:setEliminateCount(1)
 	else
-		arg_19_0:setEliminateCount(arg_19_0._eliminateCount + 1)
+		self:setEliminateCount(self._eliminateCount + 1)
 	end
 
-	arg_19_0:AddEliminateRecord()
-	arg_19_0:eliminate()
+	self:AddEliminateRecord()
+	self:eliminate()
 
 	if isDebugBuild then
-		arg_19_0:printInfo("消除处理后")
+		self:printInfo("消除处理后")
 	end
 
-	arg_19_0:tidyUp()
+	self:tidyUp()
 
 	if isDebugBuild then
-		arg_19_0:printInfo("整理处理后")
+		self:printInfo("整理处理后")
 	end
 
-	arg_19_0:fill()
+	self:fill()
 
 	if isDebugBuild then
-		arg_19_0:printInfo("填充处理后")
-		arg_19_0:printInfo("消除次数：" .. arg_19_0._eliminateCount .. "次")
+		self:printInfo("填充处理后")
+		self:printInfo("消除次数：" .. self._eliminateCount .. "次")
 	end
 end
 
-function var_0_0.eliminate(arg_20_0)
-	if #arg_20_0._tempEliminateCheckResults <= 0 then
+function LocalEliminateChessModel:eliminate()
+	if #self._tempEliminateCheckResults <= 0 then
 		return
 	end
 
-	local var_20_0 = arg_20_0:getCurEliminateRecordData()
-	local var_20_1 = arg_20_0:getEliminateRecordShowData()
+	local recordData = self:getCurEliminateRecordData()
+	local recordShowData = self:getEliminateRecordShowData()
 
-	for iter_20_0 = 1, #arg_20_0._tempEliminateCheckResults do
-		local var_20_2 = arg_20_0._tempEliminateCheckResults[iter_20_0]
-		local var_20_3 = var_20_2.newCellStatus
-		local var_20_4 = var_20_2.eliminateX
-		local var_20_5 = var_20_2.eliminateY
-		local var_20_6 = var_20_2.eliminatePoints
-		local var_20_7 = var_20_2.eliminateType
-		local var_20_8 = var_20_2.skillEffect
-		local var_20_9 = false
-		local var_20_10 = arg_20_0.cells[var_20_4][var_20_5]:haveStatus(EliminateEnum_2_7.ChessState.SpecialSkill)
+	for i = 1, #self._tempEliminateCheckResults do
+		local result = self._tempEliminateCheckResults[i]
+		local newCellStatus = result.newCellStatus
+		local eliminateX = result.eliminateX
+		local eliminateY = result.eliminateY
+		local eliminatePoints = result.eliminatePoints
+		local eliminateType = result.eliminateType
+		local skillEffect = result.skillEffect
+		local spIsCreate = false
+		local eliminateCell = self.cells[eliminateX][eliminateY]
+		local haveSpState = eliminateCell:haveStatus(EliminateEnum_2_7.ChessState.SpecialSkill)
 
-		if var_20_6 ~= nil then
-			local var_20_11
-			local var_20_12 = 0
-			local var_20_13 = 0
+		if eliminatePoints ~= nil then
+			local eliminateId
+			local normalCellCount = 0
+			local specialCellCount = 0
 
-			for iter_20_1 = 1, #var_20_2.eliminatePoints do
-				local var_20_14 = var_20_2.eliminatePoints[iter_20_1].x
-				local var_20_15 = var_20_2.eliminatePoints[iter_20_1].y
-				local var_20_16 = arg_20_0.cells[var_20_14][var_20_15]
+			for j = 1, #result.eliminatePoints do
+				local x = result.eliminatePoints[j].x
+				local y = result.eliminatePoints[j].y
+				local cell = self.cells[x][y]
 
-				var_20_11 = var_20_16:getEliminateID()
+				eliminateId = cell:getEliminateID()
 
-				if var_20_16:haveStatus(EliminateEnum_2_7.ChessState.SpecialSkill) then
-					var_20_13 = var_20_13 + 1
+				if cell:haveStatus(EliminateEnum_2_7.ChessState.SpecialSkill) then
+					specialCellCount = specialCellCount + 1
 				end
 
-				var_20_12 = var_20_12 + 1
+				normalCellCount = normalCellCount + 1
 
-				if not var_20_16:haveStatus(EliminateEnum_2_7.ChessState.Frost) then
-					local var_20_17 = true
-					local var_20_18 = false
+				if not cell:haveStatus(EliminateEnum_2_7.ChessState.Frost) then
+					local needDie = true
+					local needSpCreate = false
 
-					if var_20_3 ~= nil and var_20_3 == EliminateEnum_2_7.ChessState.SpecialSkill and (not var_20_10 or var_20_4 ~= var_20_14 or var_20_15 ~= var_20_5) and not var_20_9 then
-						var_20_18 = true
-						var_20_17 = false
+					if newCellStatus ~= nil and newCellStatus == EliminateEnum_2_7.ChessState.SpecialSkill and (not haveSpState or eliminateX ~= x or y ~= eliminateY) and not spIsCreate then
+						needSpCreate = true
+						needDie = false
 					end
 
-					if var_20_18 and not var_20_9 then
-						var_20_16:addStatus(EliminateEnum_2_7.ChessState.SpecialSkill)
-						var_20_1:addChangeType(var_20_14, var_20_15, EliminateEnum_2_7.ChessState.Normal)
-						arg_20_0:addChangePoints(var_20_14, var_20_15)
+					if needSpCreate and not spIsCreate then
+						cell:addStatus(EliminateEnum_2_7.ChessState.SpecialSkill)
+						recordShowData:addChangeType(x, y, EliminateEnum_2_7.ChessState.Normal)
+						self:addChangePoints(x, y)
 
-						var_20_9 = true
+						spIsCreate = true
 					end
 
-					if var_20_17 then
-						var_20_16:setStatus(EliminateEnum_2_7.ChessState.Die)
-						var_20_16:setChessId(EliminateEnum_2_7.InvalidId)
-						var_20_1:addEliminate(var_20_14, var_20_15, var_20_8)
+					if needDie then
+						cell:setStatus(EliminateEnum_2_7.ChessState.Die)
+						cell:setChessId(EliminateEnum_2_7.InvalidId)
+						recordShowData:addEliminate(x, y, skillEffect)
 					end
 				else
-					var_20_16:setStatus(EliminateEnum_2_7.ChessState.Normal)
-					var_20_1:addChangeType(var_20_14, var_20_15, EliminateEnum_2_7.ChessState.Frost)
+					cell:setStatus(EliminateEnum_2_7.ChessState.Normal)
+					recordShowData:addChangeType(x, y, EliminateEnum_2_7.ChessState.Frost)
 				end
 			end
 
-			if var_20_11 ~= nil then
-				var_20_0:setEliminateType(var_20_11, var_20_7, var_20_12, var_20_13)
+			if eliminateId ~= nil then
+				recordData:setEliminateType(eliminateId, eliminateType, normalCellCount, specialCellCount)
 			end
 		end
 	end
 
-	tabletool.clear(arg_20_0._tempEliminateCheckResults)
+	tabletool.clear(self._tempEliminateCheckResults)
 end
 
-function var_0_0.tidyUp(arg_21_0)
-	local var_21_0 = arg_21_0:getEliminateRecordShowData()
+function LocalEliminateChessModel:tidyUp()
+	local recordShowData = self:getEliminateRecordShowData()
 
-	for iter_21_0 = 1, arg_21_0._row do
-		for iter_21_1 = 1, arg_21_0._col do
-			if arg_21_0.cells[iter_21_0][iter_21_1]:haveStatus(EliminateEnum_2_7.ChessState.Die) then
-				local var_21_1 = arg_21_0:findNextStartIndex(iter_21_1 + 1, iter_21_0, arg_21_0._row)
+	for i = 1, self._row do
+		for j = 1, self._col do
+			local cell = self.cells[i][j]
 
-				if var_21_1 ~= -1 then
-					arg_21_0:_exchangeCell(iter_21_0, iter_21_1, iter_21_0, var_21_1)
-					arg_21_0:addChangePoints(iter_21_0, iter_21_1)
-					arg_21_0:addChangePoints(iter_21_0, var_21_1)
-					var_21_0:addMove(iter_21_0, var_21_1, iter_21_0, iter_21_1)
+			if cell:haveStatus(EliminateEnum_2_7.ChessState.Die) then
+				local nextIndex = self:findNextStartIndex(j + 1, i, self._row)
+
+				if nextIndex ~= -1 then
+					self:_exchangeCell(i, j, i, nextIndex)
+					self:addChangePoints(i, j)
+					self:addChangePoints(i, nextIndex)
+					recordShowData:addMove(i, nextIndex, i, j)
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.findNextStartIndex(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
-	for iter_22_0 = arg_22_1, arg_22_3 do
-		local var_22_0 = arg_22_0.cells[arg_22_2][iter_22_0]
-		local var_22_1 = var_22_0 and var_22_0:getStatus()
+function LocalEliminateChessModel:findNextStartIndex(start, i, row)
+	for k = start, row do
+		local cell = self.cells[i][k]
+		local status = cell and cell:getStatus()
 
-		if var_22_1 and var_22_0:haveStatus(EliminateEnum_2_7.ChessState.Frost) then
+		if status and cell:haveStatus(EliminateEnum_2_7.ChessState.Frost) then
 			break
 		end
 
-		if var_22_1 and not var_22_0:haveStatus(EliminateEnum_2_7.ChessState.Frost) and not var_22_0:haveStatus(EliminateEnum_2_7.ChessState.Die) then
-			return iter_22_0
+		if status and not cell:haveStatus(EliminateEnum_2_7.ChessState.Frost) and not cell:haveStatus(EliminateEnum_2_7.ChessState.Die) then
+			return k
 		end
 	end
 
 	return -1
 end
 
-function var_0_0.fill(arg_23_0)
-	local var_23_0 = arg_23_0:getEliminateRecordShowData()
+function LocalEliminateChessModel:fill()
+	local recordShowData = self:getEliminateRecordShowData()
 
-	for iter_23_0 = 1, arg_23_0._row do
-		for iter_23_1 = 1, arg_23_0._col do
-			local var_23_1 = arg_23_0.cells[iter_23_0][iter_23_1]
-			local var_23_2
+	for i = 1, self._row do
+		for j = 1, self._col do
+			local cell = self.cells[i][j]
+			local status = cell and cell:getStatus()
 
-			var_23_2 = var_23_1 and var_23_1:getStatus()
+			if cell:haveStatus(EliminateEnum_2_7.ChessState.Die) then
+				local specialIndex = self:findNextSpecialIndex(j + 1, i, self._row)
 
-			if var_23_1:haveStatus(EliminateEnum_2_7.ChessState.Die) and arg_23_0:findNextSpecialIndex(iter_23_1 + 1, iter_23_0, arg_23_0._row) == -1 then
-				arg_23_0:createNewCell(iter_23_0, iter_23_1, EliminateEnum_2_7.ChessState.Normal):setStartXY(iter_23_0, arg_23_0._row + 1)
-				arg_23_0:addChangePoints(iter_23_0, iter_23_1)
-				var_23_0:addNew(iter_23_0, iter_23_1)
+				if specialIndex == -1 then
+					local model = self:createNewCell(i, j, EliminateEnum_2_7.ChessState.Normal)
+
+					model:setStartXY(i, self._row + 1)
+					self:addChangePoints(i, j)
+					recordShowData:addNew(i, j)
+				end
 			end
 		end
 	end
 end
 
-function var_0_0.findNextSpecialIndex(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
-	for iter_24_0 = arg_24_1, arg_24_3 do
-		local var_24_0 = arg_24_0.cells[arg_24_2][iter_24_0]
+function LocalEliminateChessModel:findNextSpecialIndex(start, i, row)
+	for k = start, row do
+		local cell = self.cells[i][k]
+		local status = cell and cell:getStatus()
 
-		if var_24_0 and var_24_0:getStatus() and var_24_0:haveStatus(EliminateEnum_2_7.ChessState.Frost) then
-			return iter_24_0
+		if status and cell:haveStatus(EliminateEnum_2_7.ChessState.Frost) then
+			return k
 		end
 	end
 
 	return -1
 end
 
-function var_0_0.check(arg_25_0, arg_25_1, arg_25_2)
-	if arg_25_0._changePoints ~= nil and #arg_25_0._changePoints > 0 then
-		local var_25_0 = {}
+function LocalEliminateChessModel:check(clearChangePoint, onlyCheck)
+	if self._changePoints ~= nil and #self._changePoints > 0 then
+		local tempSet = {}
 
-		for iter_25_0 = 1, #arg_25_0._changePoints / 2 do
-			local var_25_1 = arg_25_0._changePoints[iter_25_0 * 2 - 1]
-			local var_25_2 = arg_25_0._changePoints[iter_25_0 * 2]
-			local var_25_3 = arg_25_0:checkPoint(var_25_1, var_25_2)
+		for i = 1, #self._changePoints / 2 do
+			local x = self._changePoints[i * 2 - 1]
+			local y = self._changePoints[i * 2]
+			local result = self:checkPoint(x, y)
 
-			if var_25_3 and #var_25_3.eliminatePoints >= 3 then
-				var_25_0[var_25_1 .. "_" .. var_25_2] = var_25_3
+			if result and #result.eliminatePoints >= 3 then
+				tempSet[x .. "_" .. y] = result
 			end
 		end
 
-		local var_25_4 = {}
+		local needDelete = {}
 
-		for iter_25_1, iter_25_2 in pairs(var_25_0) do
-			for iter_25_3 = 1, #iter_25_2.eliminatePoints do
-				local var_25_5 = iter_25_2.eliminatePoints[iter_25_3].x
-				local var_25_6 = iter_25_2.eliminatePoints[iter_25_3].y
+		for key, data in pairs(tempSet) do
+			for i = 1, #data.eliminatePoints do
+				local x = data.eliminatePoints[i].x
+				local y = data.eliminatePoints[i].y
 
-				if var_25_5 ~= iter_25_2.eliminateX or var_25_6 ~= iter_25_2.eliminateY then
-					local var_25_7 = var_25_5 .. "_" .. var_25_6
-					local var_25_8 = false
+				if x ~= data.eliminateX or y ~= data.eliminateY then
+					local tempKey = x .. "_" .. y
+					local needSkip = false
 
-					for iter_25_4 = 1, #var_25_4 do
-						local var_25_9 = var_25_4[iter_25_4]
+					for j = 1, #needDelete do
+						local deleteKey = needDelete[j]
 
-						if var_25_7 == var_25_9 or iter_25_1 == var_25_9 then
-							var_25_8 = true
+						if tempKey == deleteKey or key == deleteKey then
+							needSkip = true
 
 							break
 						end
 					end
 
-					if not var_25_8 then
-						local var_25_10 = var_25_0[var_25_7]
+					if not needSkip then
+						local tempData = tempSet[tempKey]
 
-						if var_25_10 ~= nil and #var_25_10.eliminatePoints <= #iter_25_2.eliminatePoints then
-							table.insert(var_25_4, var_25_7)
+						if tempData ~= nil and #tempData.eliminatePoints <= #data.eliminatePoints then
+							table.insert(needDelete, tempKey)
 						end
 					end
 				end
 			end
 		end
 
-		for iter_25_5, iter_25_6 in pairs(var_25_4) do
-			var_25_0[iter_25_6] = nil
+		for _, v in pairs(needDelete) do
+			tempSet[v] = nil
 		end
 
-		for iter_25_7, iter_25_8 in pairs(var_25_0) do
-			if arg_25_0:canAddResult(iter_25_8) then
-				table.insert(arg_25_0._tempEliminateCheckResults, iter_25_8)
+		for _, result in pairs(tempSet) do
+			if self:canAddResult(result) then
+				table.insert(self._tempEliminateCheckResults, result)
 			end
 		end
 	end
 
-	if arg_25_1 then
-		tabletool.clear(arg_25_0._changePoints)
+	if clearChangePoint then
+		tabletool.clear(self._changePoints)
 	end
 
-	if #arg_25_0._tempEliminateCheckResults > 0 then
-		if arg_25_2 then
-			tabletool.clear(arg_25_0._tempEliminateCheckResults)
+	if #self._tempEliminateCheckResults > 0 then
+		if onlyCheck then
+			tabletool.clear(self._tempEliminateCheckResults)
 		end
 
 		return true
@@ -601,407 +618,412 @@ function var_0_0.check(arg_25_0, arg_25_1, arg_25_2)
 	return false
 end
 
-function var_0_0.canAddResult(arg_26_0, arg_26_1)
-	local var_26_0 = true
+function LocalEliminateChessModel:canAddResult(result)
+	local needAdd = true
 
-	for iter_26_0 = 1, #arg_26_0._tempEliminateCheckResults do
-		local var_26_1 = arg_26_0._tempEliminateCheckResults[iter_26_0].eliminatePoints
-		local var_26_2 = arg_26_1.eliminatePoints
+	for i = 1, #self._tempEliminateCheckResults do
+		local data = self._tempEliminateCheckResults[i]
+		local eliminatePoints = data.eliminatePoints
+		local resultPoints = result.eliminatePoints
 
-		if #var_26_1 == #var_26_2 then
-			local var_26_3 = true
+		if #eliminatePoints == #resultPoints then
+			local isSame = true
 
-			for iter_26_1 = 1, #var_26_1 do
-				local var_26_4 = var_26_1[iter_26_1]
-				local var_26_5 = var_26_2[iter_26_1]
+			for j = 1, #eliminatePoints do
+				local eliminatePoint = eliminatePoints[j]
+				local resultPoint = resultPoints[j]
 
-				if var_26_4.x ~= var_26_5.x or var_26_4.y ~= var_26_5.y then
-					var_26_3 = false
+				if eliminatePoint.x ~= resultPoint.x or eliminatePoint.y ~= resultPoint.y then
+					isSame = false
 
 					break
 				end
 			end
 
-			if var_26_3 then
-				var_26_0 = false
+			if isSame then
+				needAdd = false
 
 				break
 			end
 		end
 	end
 
-	return var_26_0
+	return needAdd
 end
 
-function var_0_0.createNewCell(arg_27_0, arg_27_1, arg_27_2, arg_27_3, arg_27_4)
-	local var_27_0 = EliminateChessCellMO.New()
+function LocalEliminateChessModel:createNewCell(posX, posY, status, id)
+	local model = EliminateChessCellMO.New()
 
-	arg_27_0:initCell(var_27_0, arg_27_1, arg_27_2, arg_27_3, arg_27_4)
+	self:initCell(model, posX, posY, status, id)
 
-	return var_27_0
+	return model
 end
 
-function var_0_0.initCell(arg_28_0, arg_28_1, arg_28_2, arg_28_3, arg_28_4, arg_28_5)
-	if arg_28_5 == nil then
-		arg_28_1:setChessId(arg_28_0:getRandomId())
+function LocalEliminateChessModel:initCell(model, posX, posY, status, id)
+	if id == nil then
+		model:setChessId(self:getRandomId())
 	else
-		arg_28_1:setChessId(arg_28_5)
+		model:setChessId(id)
 	end
 
-	arg_28_1:setXY(arg_28_2, arg_28_3)
-	arg_28_1:setStatus(arg_28_4 and arg_28_4 or EliminateEnum_2_7.ChessState.Normal)
+	model:setXY(posX, posY)
+	model:setStatus(status and status or EliminateEnum_2_7.ChessState.Normal)
 
-	arg_28_0.cells[arg_28_2][arg_28_3] = arg_28_1
+	self.cells[posX][posY] = model
 end
 
-function var_0_0.getRandomId(arg_29_0)
-	local var_29_0 = LocalEliminateChessUtils.getFixDropId()
+function LocalEliminateChessModel:getRandomId()
+	local fixId = LocalEliminateChessUtils.getFixDropId()
 
-	if var_29_0 ~= nil then
-		return var_29_0
+	if fixId ~= nil then
+		return fixId
 	end
 
-	arg_29_0._weights = arg_29_0._weights or {
+	self._weights = self._weights or {
 		1,
 		1,
 		1,
 		1
 	}
 
-	local var_29_1 = EliminateModelUtils.getRandomNumberByWeight(arg_29_0._weights)
+	local index = EliminateModelUtils.getRandomNumberByWeight(self._weights)
 
-	return EliminateEnum_2_7.AllChessID[var_29_1]
+	return EliminateEnum_2_7.AllChessID[index]
 end
 
-function var_0_0._exchangeCell(arg_30_0, arg_30_1, arg_30_2, arg_30_3, arg_30_4)
-	if arg_30_0.cells == nil or arg_30_0.cells[arg_30_1] == nil or arg_30_0.cells[arg_30_3] == nil then
+function LocalEliminateChessModel:_exchangeCell(pos1X, pos1Y, pos2X, pos2Y)
+	if self.cells == nil or self.cells[pos1X] == nil or self.cells[pos2X] == nil then
 		return
 	end
 
-	local var_30_0 = arg_30_0.cells[arg_30_1][arg_30_2]
+	local tmpModel = self.cells[pos1X][pos1Y]
 
-	arg_30_0.cells[arg_30_1][arg_30_2] = arg_30_0.cells[arg_30_3][arg_30_4]
+	self.cells[pos1X][pos1Y] = self.cells[pos2X][pos2Y]
 
-	arg_30_0.cells[arg_30_1][arg_30_2]:setXY(arg_30_1, arg_30_2)
-	arg_30_0.cells[arg_30_1][arg_30_2]:setStartXY(arg_30_3, arg_30_4)
+	self.cells[pos1X][pos1Y]:setXY(pos1X, pos1Y)
+	self.cells[pos1X][pos1Y]:setStartXY(pos2X, pos2Y)
 
-	arg_30_0.cells[arg_30_3][arg_30_4] = var_30_0
+	self.cells[pos2X][pos2Y] = tmpModel
 
-	arg_30_0.cells[arg_30_3][arg_30_4]:setXY(arg_30_3, arg_30_4)
-	arg_30_0.cells[arg_30_3][arg_30_4]:setStartXY(arg_30_1, arg_30_2)
+	self.cells[pos2X][pos2Y]:setXY(pos2X, pos2Y)
+	self.cells[pos2X][pos2Y]:setStartXY(pos1X, pos1Y)
 end
 
-function var_0_0.checkPoint(arg_31_0, arg_31_1, arg_31_2)
-	local var_31_0 = arg_31_0:checkWithDirection(arg_31_1, arg_31_2, var_0_1, arg_31_0._row, arg_31_0._col)
-	local var_31_1 = arg_31_0:checkWithDirection(arg_31_1, arg_31_2, var_0_2, arg_31_0._row, arg_31_0._col)
-	local var_31_2 = {}
-	local var_31_3
-	local var_31_4 = EliminateEnum_2_7.eliminateType.three
+function LocalEliminateChessModel:checkPoint(x, y)
+	local rowResult = self:checkWithDirection(x, y, Direction, self._row, self._col)
+	local colResult = self:checkWithDirection(x, y, Direction2, self._row, self._col)
+	local eliminatePoints = {}
+	local newCellStatus
+	local eliminateType = EliminateEnum_2_7.eliminateType.three
 
-	if #var_31_0 >= 5 or #var_31_1 >= 5 then
-		var_31_3 = EliminateEnum_2_7.ChessState.SpecialSkill
-		var_31_4 = EliminateEnum_2_7.eliminateType.five
-	elseif #var_31_0 >= 3 and #var_31_1 >= 3 then
-		var_31_3 = EliminateEnum_2_7.ChessState.SpecialSkill
-		var_31_4 = EliminateEnum_2_7.eliminateType.cross
-	elseif #var_31_0 >= 4 then
-		var_31_3 = EliminateEnum_2_7.ChessState.SpecialSkill
-		var_31_4 = EliminateEnum_2_7.eliminateType.four
-	elseif #var_31_1 >= 4 then
-		var_31_3 = EliminateEnum_2_7.ChessState.SpecialSkill
-		var_31_4 = EliminateEnum_2_7.eliminateType.four
+	if #rowResult >= 5 or #colResult >= 5 then
+		newCellStatus = EliminateEnum_2_7.ChessState.SpecialSkill
+		eliminateType = EliminateEnum_2_7.eliminateType.five
+	elseif #rowResult >= 3 and #colResult >= 3 then
+		newCellStatus = EliminateEnum_2_7.ChessState.SpecialSkill
+		eliminateType = EliminateEnum_2_7.eliminateType.cross
+	elseif #rowResult >= 4 then
+		newCellStatus = EliminateEnum_2_7.ChessState.SpecialSkill
+		eliminateType = EliminateEnum_2_7.eliminateType.four
+	elseif #colResult >= 4 then
+		newCellStatus = EliminateEnum_2_7.ChessState.SpecialSkill
+		eliminateType = EliminateEnum_2_7.eliminateType.four
 	end
 
-	if #var_31_0 >= 3 then
-		var_31_2 = var_31_0
+	if #rowResult >= 3 then
+		eliminatePoints = rowResult
 	end
 
-	if #var_31_1 >= 3 then
-		var_31_2 = EliminateModelUtils.mergePointArray(var_31_2, var_31_1)
+	if #colResult >= 3 then
+		eliminatePoints = EliminateModelUtils.mergePointArray(eliminatePoints, colResult)
 	end
 
-	return {
-		eliminatePoints = var_31_2,
-		newCellStatus = var_31_3,
-		oldCellStatus = arg_31_0.cells[arg_31_1][arg_31_2]:getStatus(),
-		eliminateX = arg_31_1,
-		eliminateY = arg_31_2,
-		eliminateType = var_31_4,
+	local result = {
+		eliminatePoints = eliminatePoints,
+		newCellStatus = newCellStatus,
+		oldCellStatus = self.cells[x][y]:getStatus(),
+		eliminateX = x,
+		eliminateY = y,
+		eliminateType = eliminateType,
 		skillEffect = LengZhou6Enum.NormalEliminateEffect
 	}
+
+	return result
 end
 
-function var_0_0.checkWithDirection(arg_32_0, arg_32_1, arg_32_2, arg_32_3, arg_32_4, arg_32_5)
-	local var_32_0 = {}
-	local var_32_1 = {
-		[arg_32_1 + arg_32_2 * arg_32_5] = true
-	}
+function LocalEliminateChessModel:checkWithDirection(x, y, direction, numRows, numCols)
+	local queue = {}
+	local vis = {}
 
-	table.insert(var_32_0, {
-		x = arg_32_1,
-		y = arg_32_2
+	vis[x + y * numCols] = true
+
+	table.insert(queue, {
+		x = x,
+		y = y
 	})
 
-	local var_32_2 = 1
+	local front = 1
 
-	while var_32_2 <= #var_32_0 do
-		local var_32_3 = var_32_0[var_32_2]
+	while front <= #queue do
+		local point = queue[front]
 
-		arg_32_1 = var_32_3.x
-		arg_32_2 = var_32_3.y
+		x = point.x
+		y = point.y
 
-		local var_32_4 = arg_32_0.cells[arg_32_1][arg_32_2]
+		local cellModel = self.cells[x][y]
 
-		var_32_2 = var_32_2 + 1
+		front = front + 1
 
-		if not var_32_4 then
+		if not cellModel then
 			-- block empty
 		else
-			for iter_32_0 = 1, #arg_32_3 do
-				local var_32_5 = arg_32_1 + arg_32_3[iter_32_0].x
-				local var_32_6 = arg_32_2 + arg_32_3[iter_32_0].y
+			for i = 1, #direction do
+				local tmpX = x + direction[i].x
+				local tmpY = y + direction[i].y
 
-				if var_32_5 < 1 or arg_32_4 < var_32_5 or var_32_6 < 1 or arg_32_5 < var_32_6 or var_32_1[var_32_5 + var_32_6 * arg_32_5] or arg_32_0.cells[var_32_5] == nil or arg_32_0.cells[var_32_5][var_32_6] == nil then
+				if tmpX < 1 or numRows < tmpX or tmpY < 1 or numCols < tmpY or vis[tmpX + tmpY * numCols] or self.cells[tmpX] == nil or self.cells[tmpX][tmpY] == nil then
 					-- block empty
-				elseif var_32_4.id == arg_32_0.cells[var_32_5][var_32_6].id and var_32_4.id ~= EliminateEnum_2_7.InvalidId and var_32_4.id ~= EliminateEnum_2_7.ChessTypeToIndex.stone then
-					var_32_1[var_32_5 + var_32_6 * arg_32_5] = true
+				elseif cellModel.id == self.cells[tmpX][tmpY].id and cellModel.id ~= EliminateEnum_2_7.InvalidId and cellModel.id ~= EliminateEnum_2_7.ChessTypeToIndex.stone then
+					vis[tmpX + tmpY * numCols] = true
 
-					table.insert(var_32_0, {
-						x = var_32_5,
-						y = var_32_6
+					table.insert(queue, {
+						x = tmpX,
+						y = tmpY
 					})
 				end
 			end
 		end
 	end
 
-	return var_32_0
+	return queue
 end
 
-function var_0_0.getAllEliminateIdPos(arg_33_0, arg_33_1)
-	local var_33_0 = {}
+function LocalEliminateChessModel:getAllEliminateIdPos(eliminateId)
+	local result = {}
 
-	for iter_33_0 = 1, arg_33_0._row do
-		for iter_33_1 = 1, arg_33_0._col do
-			if arg_33_0:getCell(iter_33_0, iter_33_1).id == arg_33_1 then
-				table.insert(var_33_0, {
-					x = iter_33_0,
-					y = iter_33_1
+	for i = 1, self._row do
+		for j = 1, self._col do
+			local cell = self:getCell(i, j)
+
+			if cell.id == eliminateId then
+				table.insert(result, {
+					x = i,
+					y = j
 				})
 			end
 		end
 	end
 
-	return var_33_0
+	return result
 end
 
-function var_0_0.canEliminate(arg_34_0)
-	if arg_34_0.cells == nil then
+function LocalEliminateChessModel:canEliminate()
+	if self.cells == nil then
 		return nil
 	end
 
-	return LocalEliminateChessUtils.instance.canEliminate(arg_34_0.cells, arg_34_0._row, arg_34_0._col)
+	return LocalEliminateChessUtils.instance.canEliminate(self.cells, self._row, self._col)
 end
 
-function var_0_0.createInitMoveState(arg_35_0)
-	local var_35_0 = LocalEliminateChessUtils.instance.generateUnsolvableBoard(EliminateEnum_2_7.MaxRow, EliminateEnum_2_7.MaxCol)
+function LocalEliminateChessModel:createInitMoveState()
+	local data = LocalEliminateChessUtils.instance.generateUnsolvableBoard(EliminateEnum_2_7.MaxRow, EliminateEnum_2_7.MaxCol)
 
-	arg_35_0:initByData(var_35_0)
+	self:initByData(data)
 end
 
-function var_0_0.addChangePoints(arg_36_0, arg_36_1, arg_36_2)
-	if arg_36_0._changePoints == nil then
-		arg_36_0._changePoints = {}
+function LocalEliminateChessModel:addChangePoints(x, y)
+	if self._changePoints == nil then
+		self._changePoints = {}
 	end
 
-	table.insert(arg_36_0._changePoints, arg_36_1)
-	table.insert(arg_36_0._changePoints, arg_36_2)
+	table.insert(self._changePoints, x)
+	table.insert(self._changePoints, y)
 end
 
-function var_0_0.printInfo(arg_37_0, arg_37_1)
+function LocalEliminateChessModel:printInfo(title)
 	if isDebugBuild then
-		local var_37_0 = "\n"
+		local info = "\n"
 
-		for iter_37_0 = arg_37_0._row, 1, -1 do
-			local var_37_1 = ""
+		for j = self._row, 1, -1 do
+			local printStr = ""
 
-			for iter_37_1 = 1, arg_37_0._col do
-				local var_37_2 = arg_37_0.cells[iter_37_1][iter_37_0]
-				local var_37_3 = var_37_2:getStatus()
-				local var_37_4 = 0
+			for i = 1, self._col do
+				local cell = self.cells[i][j]
+				local status = cell:getStatus()
+				local value = 0
 
-				for iter_37_2 = 1, #var_37_3 do
-					var_37_4 = var_37_4 + var_37_3[iter_37_2]
+				for k = 1, #status do
+					value = value + status[k]
 				end
 
-				var_37_1 = var_37_1 .. var_37_2.id .. "[" .. var_37_4 .. "]" .. " "
+				printStr = printStr .. cell.id .. "[" .. value .. "]" .. " "
 			end
 
-			var_37_0 = var_37_0 .. var_37_1 .. "\n"
+			info = info .. printStr .. "\n"
 		end
 
-		logNormal((arg_37_1 and arg_37_1 or "") .. var_37_0)
+		logNormal((title and title or "") .. info)
 	end
 end
 
-function var_0_0.recordSpEffect(arg_38_0, arg_38_1, arg_38_2, arg_38_3)
-	if arg_38_0._chessEffect == nil then
-		arg_38_0._chessEffect = {}
+function LocalEliminateChessModel:recordSpEffect(x, y, effect)
+	if self._chessEffect == nil then
+		self._chessEffect = {}
 	end
 
-	arg_38_0._chessEffect[arg_38_1 .. "_" .. arg_38_2] = arg_38_3
+	self._chessEffect[x .. "_" .. y] = effect
 
-	arg_38_0:addSpEffectCd(arg_38_1, arg_38_2, arg_38_3)
+	self:addSpEffectCd(x, y, effect)
 end
 
-function var_0_0.getSpEffect(arg_39_0, arg_39_1, arg_39_2)
-	if arg_39_0._chessEffect == nil then
+function LocalEliminateChessModel:getSpEffect(x, y)
+	if self._chessEffect == nil then
 		return nil
 	end
 
-	return arg_39_0._chessEffect[arg_39_1 .. "_" .. arg_39_2]
+	return self._chessEffect[x .. "_" .. y]
 end
 
-function var_0_0.clearAllEffect(arg_40_0)
-	if arg_40_0._chessEffect ~= nil then
-		tabletool.clear(arg_40_0._chessEffect)
+function LocalEliminateChessModel:clearAllEffect()
+	if self._chessEffect ~= nil then
+		tabletool.clear(self._chessEffect)
 	end
 
-	if arg_40_0._needChessCdEffect ~= nil then
-		tabletool.clear(arg_40_0._needChessCdEffect)
+	if self._needChessCdEffect ~= nil then
+		tabletool.clear(self._needChessCdEffect)
 	end
 end
 
-function var_0_0.addSpEffectCd(arg_41_0, arg_41_1, arg_41_2, arg_41_3)
-	if arg_41_0._needChessCdEffect == nil then
-		arg_41_0._needChessCdEffect = {}
+function LocalEliminateChessModel:addSpEffectCd(x, y, effect)
+	if self._needChessCdEffect == nil then
+		self._needChessCdEffect = {}
 	end
 
-	if arg_41_3 and arg_41_3 == EliminateEnum_2_7.ChessEffect.pollution then
-		local var_41_0 = LengZhou6Config.instance:getEliminateBattleCost(32)
+	if effect and effect == EliminateEnum_2_7.ChessEffect.pollution then
+		local value = LengZhou6Config.instance:getEliminateBattleCost(32)
 
-		table.insert(arg_41_0._needChessCdEffect, {
-			x = arg_41_1,
-			y = arg_41_2,
-			cd = var_41_0,
-			effect = arg_41_3
+		table.insert(self._needChessCdEffect, {
+			x = x,
+			y = y,
+			cd = value,
+			effect = effect
 		})
 	end
 end
 
-function var_0_0.updateSpEffectCd(arg_42_0)
-	if arg_42_0._needChessCdEffect == nil then
+function LocalEliminateChessModel:updateSpEffectCd()
+	if self._needChessCdEffect == nil then
 		return
 	end
 
-	local var_42_0 = {}
+	local needRemove = {}
 
-	for iter_42_0 = 1, #arg_42_0._needChessCdEffect do
-		local var_42_1 = arg_42_0._needChessCdEffect[iter_42_0]
+	for i = 1, #self._needChessCdEffect do
+		local data = self._needChessCdEffect[i]
 
-		if var_42_1.cd <= 0 then
-			local var_42_2 = var_42_1.x
-			local var_42_3 = var_42_1.y
-			local var_42_4 = var_42_1.effect
+		if data.cd <= 0 then
+			local x = data.x
+			local y = data.y
+			local effect = data.effect
 
-			LengZhou6EliminateController.instance:dispatchEvent(LengZhou6Event.HideEffect, var_42_2, var_42_3, var_42_4)
+			LengZhou6EliminateController.instance:dispatchEvent(LengZhou6Event.HideEffect, x, y, effect)
 
-			var_42_0[iter_42_0] = true
+			needRemove[i] = true
 		else
-			var_42_1.cd = var_42_1.cd - 1
-			arg_42_0._needChessCdEffect[iter_42_0] = var_42_1
+			data.cd = data.cd - 1
+			self._needChessCdEffect[i] = data
 		end
 	end
 
-	for iter_42_1 = #arg_42_0._needChessCdEffect, 1, -1 do
-		if var_42_0[iter_42_1] then
-			table.remove(arg_42_0._needChessCdEffect, iter_42_1)
+	for i = #self._needChessCdEffect, 1, -1 do
+		if needRemove[i] then
+			table.remove(self._needChessCdEffect, i)
 		end
 	end
 end
 
-function var_0_0.setEliminateCount(arg_43_0, arg_43_1)
-	arg_43_0._eliminateCount = arg_43_1
+function LocalEliminateChessModel:setEliminateCount(count)
+	self._eliminateCount = count
 end
 
-function var_0_0.roundDataClear(arg_44_0)
-	arg_44_0:setEliminateCount(nil)
+function LocalEliminateChessModel:roundDataClear()
+	self:setEliminateCount(nil)
 
-	if arg_44_0._allEliminateRecordData ~= nil then
-		tabletool.clear(arg_44_0._allEliminateRecordData)
+	if self._allEliminateRecordData ~= nil then
+		tabletool.clear(self._allEliminateRecordData)
 	end
 end
 
-function var_0_0.AddEliminateRecord(arg_45_0)
-	if arg_45_0._allEliminateRecordData == nil then
-		arg_45_0._allEliminateRecordData = {}
+function LocalEliminateChessModel:AddEliminateRecord()
+	if self._allEliminateRecordData == nil then
+		self._allEliminateRecordData = {}
 	end
 
-	local var_45_0 = EliminateRecordDataMO.New()
+	local data = EliminateRecordDataMO.New()
 
-	table.insert(arg_45_0._allEliminateRecordData, var_45_0)
+	table.insert(self._allEliminateRecordData, data)
 end
 
-function var_0_0.getCurEliminateRecordData(arg_46_0)
-	if arg_46_0._allEliminateRecordData == nil then
-		arg_46_0:AddEliminateRecord()
+function LocalEliminateChessModel:getCurEliminateRecordData()
+	if self._allEliminateRecordData == nil then
+		self:AddEliminateRecord()
 	end
 
-	return arg_46_0._allEliminateRecordData[#arg_46_0._allEliminateRecordData]
+	return self._allEliminateRecordData[#self._allEliminateRecordData]
 end
 
-function var_0_0.getAllEliminateRecordData(arg_47_0)
-	return arg_47_0._allEliminateRecordData
+function LocalEliminateChessModel:getAllEliminateRecordData()
+	return self._allEliminateRecordData
 end
 
-function var_0_0.getEliminateRecordShowData(arg_48_0)
-	if arg_48_0._eliminateRecordShowMo == nil then
-		arg_48_0._eliminateRecordShowMo = EliminateRecordShowMO.New()
+function LocalEliminateChessModel:getEliminateRecordShowData()
+	if self._eliminateRecordShowMo == nil then
+		self._eliminateRecordShowMo = EliminateRecordShowMO.New()
 	end
 
-	return arg_48_0._eliminateRecordShowMo
+	return self._eliminateRecordShowMo
 end
 
-function var_0_0.clear(arg_49_0)
-	arg_49_0._eliminateRecordShowMo = nil
-	arg_49_0._allEliminateRecordData = nil
-	arg_49_0.cells = nil
-	arg_49_0._weights = nil
-	arg_49_0._needChessCdEffect = nil
-	arg_49_0._chessEffect = nil
+function LocalEliminateChessModel:clear()
+	self._eliminateRecordShowMo = nil
+	self._allEliminateRecordData = nil
+	self.cells = nil
+	self._weights = nil
+	self._needChessCdEffect = nil
+	self._chessEffect = nil
 end
 
-function var_0_0.testRound(arg_50_0)
-	local var_50_0 = {}
+function LocalEliminateChessModel:testRound()
+	local allName = {}
 
-	for iter_50_0 = 1, 10000 do
-		local var_50_1 = arg_50_0:getRandomId()
-		local var_50_2 = EliminateEnum_2_7.ChessIndexToType[var_50_1]
+	for i = 1, 10000 do
+		local id = self:getRandomId()
+		local name = EliminateEnum_2_7.ChessIndexToType[id]
 
-		table.insert(var_50_0, var_50_2)
+		table.insert(allName, name)
 	end
 
-	local var_50_3 = {}
+	local count = {}
 
-	for iter_50_1 = 1, #var_50_0 do
-		local var_50_4 = var_50_0[iter_50_1]
+	for i = 1, #allName do
+		local name = allName[i]
 
-		if var_50_3[var_50_4] == nil then
-			var_50_3[var_50_4] = 1
+		if count[name] == nil then
+			count[name] = 1
 		else
-			var_50_3[var_50_4] = var_50_3[var_50_4] + 1
+			count[name] = count[name] + 1
 		end
 	end
 
-	local var_50_5 = ""
+	local str = ""
 
-	for iter_50_2, iter_50_3 in pairs(var_50_3) do
-		var_50_5 = var_50_5 .. iter_50_2 .. " : " .. iter_50_3 / 10000 * 100 .. "%\n"
+	for k, v in pairs(count) do
+		str = str .. k .. " : " .. v / 10000 * 100 .. "%\n"
 	end
 
-	logNormal(var_50_5)
+	logNormal(str)
 end
 
-var_0_0.instance = var_0_0.New()
+LocalEliminateChessModel.instance = LocalEliminateChessModel.New()
 
-return var_0_0
+return LocalEliminateChessModel

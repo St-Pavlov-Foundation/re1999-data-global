@@ -1,260 +1,270 @@
-﻿module("modules.logic.room.view.RoomViewUICharacterItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomViewUICharacterItem.lua
 
-local var_0_0 = class("RoomViewUICharacterItem", RoomViewUIBaseItem)
+module("modules.logic.room.view.RoomViewUICharacterItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0)
+local RoomViewUICharacterItem = class("RoomViewUICharacterItem", RoomViewUIBaseItem)
 
-	arg_1_0._heroId = arg_1_1
+function RoomViewUICharacterItem:ctor(heroId)
+	RoomViewUICharacterItem.super.ctor(self)
+
+	self._heroId = heroId
 end
 
-function var_0_0._customOnInit(arg_2_0)
-	arg_2_0._simageheroicon = gohelper.findChildImage(arg_2_0._gocontainer, "mask/simage_heroicon")
-	arg_2_0._gochat = gohelper.findChild(arg_2_0._gocontainer, "go_chat")
-	arg_2_0._btnchat = gohelper.findChildButton(arg_2_0._gocontainer, "go_chat/btn_chat")
-	arg_2_0._gofullfaith = gohelper.findChild(arg_2_0._gocontainer, "go_fullfaith")
-	arg_2_0._gogetfaith = gohelper.findChild(arg_2_0._gocontainer, "go_getfaith")
-	arg_2_0._btngetfaith = gohelper.findChildButton(arg_2_0._gocontainer, "go_getfaith/btn_getfaith")
-	arg_2_0._btnfull = gohelper.findChildButton(arg_2_0._gocontainer, "go_fullfaith/btn_full")
-	arg_2_0._gomaxfaith = gohelper.findChild(arg_2_0._gocontainer, "go_maxfaith")
-	arg_2_0._btnmax = gohelper.findChildButton(arg_2_0._gocontainer, "go_maxfaith/btn_max")
-	arg_2_0._imageprocess = gohelper.findChildImage(arg_2_0._gocontainer, "go_getfaith/process")
-	arg_2_0._goonbirthdayicon = gohelper.findChild(arg_2_0._gocontainer, "#image_onbirthday")
+function RoomViewUICharacterItem:_customOnInit()
+	self._simageheroicon = gohelper.findChildImage(self._gocontainer, "mask/simage_heroicon")
+	self._gochat = gohelper.findChild(self._gocontainer, "go_chat")
+	self._btnchat = gohelper.findChildButton(self._gocontainer, "go_chat/btn_chat")
+	self._gofullfaith = gohelper.findChild(self._gocontainer, "go_fullfaith")
+	self._gogetfaith = gohelper.findChild(self._gocontainer, "go_getfaith")
+	self._btngetfaith = gohelper.findChildButton(self._gocontainer, "go_getfaith/btn_getfaith")
+	self._btnfull = gohelper.findChildButton(self._gocontainer, "go_fullfaith/btn_full")
+	self._gomaxfaith = gohelper.findChild(self._gocontainer, "go_maxfaith")
+	self._btnmax = gohelper.findChildButton(self._gocontainer, "go_maxfaith/btn_max")
+	self._imageprocess = gohelper.findChildImage(self._gocontainer, "go_getfaith/process")
+	self._goonbirthdayicon = gohelper.findChild(self._gocontainer, "#image_onbirthday")
 end
 
-function var_0_0._customAddEventListeners(arg_3_0)
-	RoomCharacterController.instance:registerCallback(RoomEvent.CharacterPositionChanged, arg_3_0._characterPositionChanged, arg_3_0)
-	RoomCharacterController.instance:registerCallback(RoomEvent.RefreshFaithShow, arg_3_0._refreshBtnShow, arg_3_0)
-	CharacterController.instance:registerCallback(CharacterEvent.HeroUpdatePush, arg_3_0._refreshBtnShow, arg_3_0)
-	RoomCharacterController.instance:registerCallback(RoomEvent.UpdateCharacterInteractionUI, arg_3_0._refreshBtnShow, arg_3_0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_3_0._onDailyRefresh, arg_3_0)
-	arg_3_0:refreshUI(true)
+function RoomViewUICharacterItem:_customAddEventListeners()
+	RoomCharacterController.instance:registerCallback(RoomEvent.CharacterPositionChanged, self._characterPositionChanged, self)
+	RoomCharacterController.instance:registerCallback(RoomEvent.RefreshFaithShow, self._refreshBtnShow, self)
+	CharacterController.instance:registerCallback(CharacterEvent.HeroUpdatePush, self._refreshBtnShow, self)
+	RoomCharacterController.instance:registerCallback(RoomEvent.UpdateCharacterInteractionUI, self._refreshBtnShow, self)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self._onDailyRefresh, self)
+	self:refreshUI(true)
 end
 
-function var_0_0._customRemoveEventListeners(arg_4_0)
-	RoomCharacterController.instance:unregisterCallback(RoomEvent.CharacterPositionChanged, arg_4_0._characterPositionChanged, arg_4_0)
-	RoomCharacterController.instance:unregisterCallback(RoomEvent.RefreshFaithShow, arg_4_0._refreshBtnShow, arg_4_0)
-	CharacterController.instance:unregisterCallback(CharacterEvent.HeroUpdatePush, arg_4_0._refreshBtnShow, arg_4_0)
-	RoomCharacterController.instance:unregisterCallback(RoomEvent.UpdateCharacterInteractionUI, arg_4_0._refreshBtnShow, arg_4_0)
-	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, arg_4_0._onDailyRefresh, arg_4_0)
+function RoomViewUICharacterItem:_customRemoveEventListeners()
+	RoomCharacterController.instance:unregisterCallback(RoomEvent.CharacterPositionChanged, self._characterPositionChanged, self)
+	RoomCharacterController.instance:unregisterCallback(RoomEvent.RefreshFaithShow, self._refreshBtnShow, self)
+	CharacterController.instance:unregisterCallback(CharacterEvent.HeroUpdatePush, self._refreshBtnShow, self)
+	RoomCharacterController.instance:unregisterCallback(RoomEvent.UpdateCharacterInteractionUI, self._refreshBtnShow, self)
+	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, self._onDailyRefresh, self)
 end
 
-function var_0_0.refreshUI(arg_5_0, arg_5_1)
-	arg_5_0:_refreshCharacter()
-	arg_5_0:_refreshBtnShow()
-	arg_5_0:_refreshShow(arg_5_1)
-	arg_5_0:_refreshPosition()
-	arg_5_0:_refreshBirthday()
+function RoomViewUICharacterItem:refreshUI(isInit)
+	self:_refreshCharacter()
+	self:_refreshBtnShow()
+	self:_refreshShow(isInit)
+	self:_refreshPosition()
+	self:_refreshBirthday()
 end
 
-function var_0_0._characterPositionChanged(arg_6_0, arg_6_1)
-	if arg_6_0._heroId ~= arg_6_1 then
+function RoomViewUICharacterItem:_characterPositionChanged(heroId)
+	if self._heroId ~= heroId then
 		return
 	end
 
-	arg_6_0:_refreshPosition()
+	self:_refreshPosition()
 end
 
-function var_0_0._refreshCharacter(arg_7_0)
-	local var_7_0 = RoomCharacterModel.instance:getCharacterMOById(arg_7_0._heroId)
+function RoomViewUICharacterItem:_refreshCharacter()
+	local roomCharacterMO = RoomCharacterModel.instance:getCharacterMOById(self._heroId)
 
-	if not var_7_0 then
+	if not roomCharacterMO then
 		return
 	end
 
-	local var_7_1 = var_7_0.skinId
-	local var_7_2 = SkinConfig.instance:getSkinCo(var_7_1)
+	local skinId = roomCharacterMO.skinId
+	local skinConfig = SkinConfig.instance:getSkinCo(skinId)
 
-	gohelper.getSingleImage(arg_7_0._simageheroicon.gameObject):LoadImage(ResUrl.roomHeadIcon(var_7_2.headIcon))
+	gohelper.getSingleImage(self._simageheroicon.gameObject):LoadImage(ResUrl.roomHeadIcon(skinConfig.headIcon))
 end
 
-function var_0_0._refreshBtnShow(arg_8_0)
-	local var_8_0 = RoomCharacterModel.instance:getCharacterMOById(arg_8_0._heroId)
+function RoomViewUICharacterItem:_refreshBtnShow()
+	local roomCharacterMO = RoomCharacterModel.instance:getCharacterMOById(self._heroId)
 
-	if not var_8_0 or var_8_0:isTrainSourceState() then
+	if not roomCharacterMO or roomCharacterMO:isTrainSourceState() then
 		return
 	end
 
-	if arg_8_0._isPlayingGainAnim then
+	if self._isPlayingGainAnim then
 		return
 	end
 
-	TaskDispatcher.cancelTask(arg_8_0._gainCharacterFaithAnimEnd, arg_8_0)
+	TaskDispatcher.cancelTask(self._gainCharacterFaithAnimEnd, self)
 
-	if var_8_0:getCurrentInteractionId() and RoomController.instance:isObMode() then
-		gohelper.setActive(arg_8_0._gochat, true)
-		gohelper.setActive(arg_8_0._gofullfaith, false)
-		gohelper.setActive(arg_8_0._gogetfaith, false)
-		gohelper.setActive(arg_8_0._gomaxfaith, false)
+	local currentInteractionId = roomCharacterMO:getCurrentInteractionId()
 
-		return
-	end
-
-	gohelper.setActive(arg_8_0._gochat, false)
-
-	local var_8_1 = RoomCharacterController.instance:isCharacterFaithFull(var_8_0.heroId)
-
-	gohelper.setActive(arg_8_0._gofullfaith, var_8_1 and RoomController.instance:isObMode() and RoomCharacterModel.instance:isShowFaithFull(var_8_0.heroId))
-
-	if var_8_1 then
-		gohelper.setActive(arg_8_0._gogetfaith, false)
-		gohelper.setActive(arg_8_0._gomaxfaith, false)
+	if currentInteractionId and RoomController.instance:isObMode() then
+		gohelper.setActive(self._gochat, true)
+		gohelper.setActive(self._gofullfaith, false)
+		gohelper.setActive(self._gogetfaith, false)
+		gohelper.setActive(self._gomaxfaith, false)
 
 		return
 	end
 
-	local var_8_2 = RoomCharacterHelper.getCharacterFaithFill(var_8_0)
+	gohelper.setActive(self._gochat, false)
 
-	gohelper.setActive(arg_8_0._gogetfaith, var_8_2 > 0 and var_8_2 < 1)
-	gohelper.setActive(arg_8_0._gomaxfaith, var_8_2 >= 1)
+	local isFaithFull = RoomCharacterController.instance:isCharacterFaithFull(roomCharacterMO.heroId)
 
-	if var_8_2 > 0 and var_8_2 < 1 then
-		arg_8_0._imageprocess.fillAmount = var_8_2 * 0.55 + 0.2
+	gohelper.setActive(self._gofullfaith, isFaithFull and RoomController.instance:isObMode() and RoomCharacterModel.instance:isShowFaithFull(roomCharacterMO.heroId))
+
+	if isFaithFull then
+		gohelper.setActive(self._gogetfaith, false)
+		gohelper.setActive(self._gomaxfaith, false)
+
+		return
+	end
+
+	local faithFill = RoomCharacterHelper.getCharacterFaithFill(roomCharacterMO)
+
+	gohelper.setActive(self._gogetfaith, faithFill > 0 and faithFill < 1)
+	gohelper.setActive(self._gomaxfaith, faithFill >= 1)
+
+	if faithFill > 0 and faithFill < 1 then
+		self._imageprocess.fillAmount = faithFill * 0.55 + 0.2
 	end
 end
 
-function var_0_0._onDailyRefresh(arg_9_0)
-	arg_9_0:_refreshBirthday()
+function RoomViewUICharacterItem:_onDailyRefresh()
+	self:_refreshBirthday()
 end
 
-function var_0_0._refreshShow(arg_10_0, arg_10_1)
-	if not RoomCharacterModel.instance:getCharacterMOById(arg_10_0._heroId) then
-		arg_10_0:_setShow(false, true)
+function RoomViewUICharacterItem:_refreshShow(isInit)
+	local roomCharacterMO = RoomCharacterModel.instance:getCharacterMOById(self._heroId)
+
+	if not roomCharacterMO then
+		self:_setShow(false, true)
 
 		return
 	end
 
 	if RoomBuildingController.instance:isBuildingListShow() or RoomCharacterController.instance:isCharacterListShow() then
-		arg_10_0:_setShow(false, arg_10_1)
+		self:_setShow(false, isInit)
 
 		return
 	end
 
-	local var_10_0 = arg_10_0._scene.camera:getCameraState()
+	local cameraState = self._scene.camera:getCameraState()
 
-	if RoomEnum.CameraShowSpineMap[var_10_0] then
-		arg_10_0:_setShow(false, arg_10_1)
+	if RoomEnum.CameraShowSpineMap[cameraState] then
+		self:_setShow(false, isInit)
 
 		return
 	end
 
 	if RoomMapController.instance:isInRoomInitBuildingViewCamera() then
-		arg_10_0:_setShow(false, arg_10_1)
+		self:_setShow(false, isInit)
 
 		return
 	end
 
-	arg_10_0:_setShow(true, arg_10_1)
+	self:_setShow(true, isInit)
 end
 
-function var_0_0._refreshBirthday(arg_11_0)
-	local var_11_0 = RoomCharacterModel.instance:isOnBirthday(arg_11_0._heroId)
+function RoomViewUICharacterItem:_refreshBirthday()
+	local isOnBirthday = RoomCharacterModel.instance:isOnBirthday(self._heroId)
 
-	gohelper.setActive(arg_11_0._goonbirthdayicon, var_11_0)
+	gohelper.setActive(self._goonbirthdayicon, isOnBirthday)
 end
 
-function var_0_0.getUI3DPos(arg_12_0)
-	local var_12_0 = RoomCharacterModel.instance:getCharacterMOById(arg_12_0._heroId)
+function RoomViewUICharacterItem:getUI3DPos()
+	local roomCharacterMO = RoomCharacterModel.instance:getCharacterMOById(self._heroId)
 
-	if not var_12_0 then
+	if not roomCharacterMO then
 		return Vector3.zero
 	end
 
-	local var_12_1 = var_12_0.currentPosition
+	local movingPosition = roomCharacterMO.currentPosition
+	local worldPos = Vector3(movingPosition.x, movingPosition.y, movingPosition.z)
 
-	return (Vector3(var_12_1.x, var_12_1.y, var_12_1.z))
+	return worldPos
 end
 
-function var_0_0._gainCharacterFaith(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	if arg_13_2 ~= 0 then
-		arg_13_0._isPlayingGainAnim = false
+function RoomViewUICharacterItem:_gainCharacterFaith(cmd, resultCode, msg)
+	if resultCode ~= 0 then
+		self._isPlayingGainAnim = false
 
 		return
 	end
 
-	arg_13_0._baseAnimator:Play("room_task_lingqu", 0, 0)
-	TaskDispatcher.runDelay(arg_13_0._gainCharacterFaithAnimEnd, arg_13_0, 1.5)
+	self._baseAnimator:Play("room_task_lingqu", 0, 0)
+	TaskDispatcher.runDelay(self._gainCharacterFaithAnimEnd, self, 1.5)
 end
 
-function var_0_0._gainCharacterFaithAnimEnd(arg_14_0)
-	arg_14_0._isPlayingGainAnim = false
+function RoomViewUICharacterItem:_gainCharacterFaithAnimEnd()
+	self._isPlayingGainAnim = false
 
-	arg_14_0:_refreshBtnShow()
+	self:_refreshBtnShow()
 end
 
-function var_0_0._onClick(arg_15_0, arg_15_1, arg_15_2)
+function RoomViewUICharacterItem:_onClick(go, param)
 	if not RoomController.instance:isObMode() then
 		return
 	end
 
-	local var_15_0 = RoomCharacterModel.instance:getCharacterMOById(arg_15_0._heroId)
+	local roomCharacterMO = RoomCharacterModel.instance:getCharacterMOById(self._heroId)
 
-	if not var_15_0 then
+	if not roomCharacterMO then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Rolesback)
 
-	if arg_15_1.transform:IsChildOf(arg_15_0._btngetfaith.gameObject.transform) or arg_15_1.transform:IsChildOf(arg_15_0._btnmax.gameObject.transform) then
-		arg_15_0:_switchCamera(arg_15_0.gainCharacterFaith, arg_15_0)
+	if go.transform:IsChildOf(self._btngetfaith.gameObject.transform) or go.transform:IsChildOf(self._btnmax.gameObject.transform) then
+		self:_switchCamera(self.gainCharacterFaith, self)
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Rolesback)
-	elseif arg_15_1.transform:IsChildOf(arg_15_0._btnfull.gameObject.transform) then
-		RoomCharacterController.instance:setCharacterFullFaithChecked(var_15_0.heroId)
-		arg_15_0:_switchCamera()
+	elseif go.transform:IsChildOf(self._btnfull.gameObject.transform) then
+		RoomCharacterController.instance:setCharacterFullFaithChecked(roomCharacterMO.heroId)
+		self:_switchCamera()
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Rolesback)
-	elseif arg_15_1.transform:IsChildOf(arg_15_0._btnchat.gameObject.transform) then
-		arg_15_0:_switchCamera(arg_15_0.startInteraction, arg_15_0)
+	elseif go.transform:IsChildOf(self._btnchat.gameObject.transform) then
+		self:_switchCamera(self.startInteraction, self)
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Rolesback)
 	else
-		arg_15_0:_switchCamera()
+		self:_switchCamera()
 
-		if RoomCharacterModel.instance:isNeedShowBirthdayToastTip(arg_15_0._heroId) then
+		local needShowBirthDayToast = RoomCharacterModel.instance:isNeedShowBirthdayToastTip(self._heroId)
+
+		if needShowBirthDayToast then
 			GameFacade.showToast(ToastEnum.CharacterOnBirthday)
-			RoomCharacterModel.instance:setHasShowBirthdayToastTip(arg_15_0._heroId)
+			RoomCharacterModel.instance:setHasShowBirthdayToastTip(self._heroId)
 		end
 
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Rolesback)
 	end
 end
 
-function var_0_0._switchCamera(arg_16_0, arg_16_1, arg_16_2)
-	local var_16_0 = RoomCharacterModel.instance:getCharacterMOById(arg_16_0._heroId).currentPosition
+function RoomViewUICharacterItem:_switchCamera(callback, callbackObj)
+	local roomCharacterMO = RoomCharacterModel.instance:getCharacterMOById(self._heroId)
+	local pos = roomCharacterMO.currentPosition
 
-	arg_16_0._scene.camera:switchCameraState(RoomEnum.CameraState.Normal, {
-		focusX = var_16_0.x,
-		focusY = var_16_0.z
-	}, nil, arg_16_1, arg_16_2)
+	self._scene.camera:switchCameraState(RoomEnum.CameraState.Normal, {
+		focusX = pos.x,
+		focusY = pos.z
+	}, nil, callback, callbackObj)
 end
 
-function var_0_0.startInteraction(arg_17_0)
-	local var_17_0 = RoomCharacterModel.instance:getCharacterMOById(arg_17_0._heroId)
+function RoomViewUICharacterItem:startInteraction()
+	local roomCharacterMO = RoomCharacterModel.instance:getCharacterMOById(self._heroId)
 
-	if not var_17_0 then
+	if not roomCharacterMO then
 		return
 	end
 
-	RoomCharacterController.instance:startInteraction(var_17_0:getCurrentInteractionId(), true)
+	RoomCharacterController.instance:startInteraction(roomCharacterMO:getCurrentInteractionId(), true)
 end
 
-function var_0_0.gainCharacterFaith(arg_18_0)
+function RoomViewUICharacterItem:gainCharacterFaith()
 	if not RoomController.instance:isObMode() then
 		return
 	end
 
-	local var_18_0 = RoomCharacterModel.instance:getCharacterMOById(arg_18_0._heroId)
+	local roomCharacterMO = RoomCharacterModel.instance:getCharacterMOById(self._heroId)
 
-	if not var_18_0 then
+	if not roomCharacterMO then
 		return
 	end
 
 	RoomCharacterController.instance:gainCharacterFaith({
-		var_18_0.heroId
+		roomCharacterMO.heroId
 	})
 	AudioMgr.instance:trigger(AudioEnum.Room.ui_home_board_upgrade)
 end
 
-function var_0_0._customOnDestory(arg_19_0)
-	TaskDispatcher.cancelTask(arg_19_0._gainCharacterFaithAnimEnd, arg_19_0)
+function RoomViewUICharacterItem:_customOnDestory()
+	TaskDispatcher.cancelTask(self._gainCharacterFaithAnimEnd, self)
 end
 
-return var_0_0
+return RoomViewUICharacterItem

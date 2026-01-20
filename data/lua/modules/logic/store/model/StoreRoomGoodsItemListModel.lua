@@ -1,143 +1,146 @@
-﻿module("modules.logic.store.model.StoreRoomGoodsItemListModel", package.seeall)
+﻿-- chunkname: @modules/logic/store/model/StoreRoomGoodsItemListModel.lua
 
-local var_0_0 = class("StoreRoomGoodsItemListModel", TreeScrollModel)
+module("modules.logic.store.model.StoreRoomGoodsItemListModel", package.seeall)
 
-function var_0_0.setMOList(arg_1_0, arg_1_1)
-	arg_1_0:clear()
+local StoreRoomGoodsItemListModel = class("StoreRoomGoodsItemListModel", TreeScrollModel)
 
-	local var_1_0 = 24
-	local var_1_1 = 373 + var_1_0
+function StoreRoomGoodsItemListModel:setMOList(moList)
+	self:clear()
 
-	table.sort(arg_1_1, arg_1_0.sortFunction)
+	local rootSpace = 24
+	local rootLength = 373 + rootSpace
 
-	local var_1_2 = {}
+	table.sort(moList, self.sortFunction)
 
-	var_1_2.rootType = 1
-	var_1_2.rootLength = var_1_1
+	local treeRootParam = {}
 
-	for iter_1_0 = 1, #arg_1_1 do
-		if arg_1_1[iter_1_0].children then
-			local var_1_3 = math.ceil(#arg_1_1[iter_1_0].children / 4)
-			local var_1_4 = {}
+	treeRootParam.rootType = 1
+	treeRootParam.rootLength = rootLength
 
-			var_1_4.rootType = 1
-			var_1_4.rootLength = var_1_1
-			var_1_4.nodeType = var_1_3 + 1
-			var_1_4.nodeLength = 387 * var_1_3 + 30
-			var_1_4.nodeCountEachLine = 1
-			var_1_4.nodeStartSpace = 0
-			var_1_4.nodeEndSpace = 0
-			var_1_4.isExpanded = arg_1_1[iter_1_0].isExpand or false
-			arg_1_1[iter_1_0].treeRootParam = var_1_4
-			arg_1_1[iter_1_0].children.rootindex = iter_1_0
+	for i = 1, #moList do
+		if moList[i].children then
+			local lines = math.ceil(#moList[i].children / 4)
+			local treeRootParam = {}
 
-			arg_1_0:addRoot(arg_1_1[iter_1_0], var_1_4, iter_1_0)
-			arg_1_0:addNode(arg_1_1[iter_1_0].children, iter_1_0, 1)
+			treeRootParam.rootType = 1
+			treeRootParam.rootLength = rootLength
+			treeRootParam.nodeType = lines + 1
+			treeRootParam.nodeLength = 387 * lines + 30
+			treeRootParam.nodeCountEachLine = 1
+			treeRootParam.nodeStartSpace = 0
+			treeRootParam.nodeEndSpace = 0
+			treeRootParam.isExpanded = moList[i].isExpand or false
+			moList[i].treeRootParam = treeRootParam
+			moList[i].children.rootindex = i
+
+			self:addRoot(moList[i], treeRootParam, i)
+			self:addNode(moList[i].children, i, 1)
 		else
-			local var_1_5 = {}
+			local treeRootParam = {}
 
-			var_1_5.rootType = 1
-			var_1_5.rootLength = var_1_1
+			treeRootParam.rootType = 1
+			treeRootParam.rootLength = rootLength
 
-			arg_1_0:addRoot(arg_1_1[iter_1_0], var_1_5, iter_1_0)
+			self:addRoot(moList[i], treeRootParam, i)
 		end
 	end
 
-	for iter_1_1, iter_1_2 in pairs(arg_1_1) do
-		if iter_1_2.children then
-			table.sort(iter_1_2.children, arg_1_0.sortFunction)
+	for _, mo in pairs(moList) do
+		if mo.children then
+			table.sort(mo.children, self.sortFunction)
 		end
 	end
 
-	arg_1_0:addRoot({
+	self:addRoot({
 		update = true,
 		type = 0
-	}, var_1_2, #arg_1_1 + 1)
+	}, treeRootParam, #moList + 1)
 end
 
-function var_0_0.getInfoList(arg_2_0)
-	return var_0_0.super.getInfoList(arg_2_0)
+function StoreRoomGoodsItemListModel:getInfoList()
+	return StoreRoomGoodsItemListModel.super.getInfoList(self)
 end
 
-function var_0_0.sortFunction(arg_3_0, arg_3_1)
-	local var_3_0 = StoreConfig.instance:getGoodsConfig(arg_3_0.goodsId)
-	local var_3_1 = StoreConfig.instance:getGoodsConfig(arg_3_1.goodsId)
-	local var_3_2 = StoreNormalGoodsItemListModel._isStoreItemSoldOut(arg_3_0.goodsId)
-	local var_3_3 = StoreNormalGoodsItemListModel._isStoreItemSoldOut(arg_3_1.goodsId)
-	local var_3_4 = StoreNormalGoodsItemListModel._isStoreItemUnlock(arg_3_0.goodsId)
-	local var_3_5 = StoreNormalGoodsItemListModel._isStoreItemUnlock(arg_3_1.goodsId)
+function StoreRoomGoodsItemListModel.sortFunction(x, y)
+	local xConfig = StoreConfig.instance:getGoodsConfig(x.goodsId)
+	local yConfig = StoreConfig.instance:getGoodsConfig(y.goodsId)
+	local xSoldOut = StoreNormalGoodsItemListModel._isStoreItemSoldOut(x.goodsId)
+	local ySoldOut = StoreNormalGoodsItemListModel._isStoreItemSoldOut(y.goodsId)
+	local xUnlock = StoreNormalGoodsItemListModel._isStoreItemUnlock(x.goodsId)
+	local yUnlock = StoreNormalGoodsItemListModel._isStoreItemUnlock(y.goodsId)
 
-	if not var_3_2 and var_3_3 then
+	if not xSoldOut and ySoldOut then
 		return true
-	elseif var_3_2 and not var_3_3 then
+	elseif xSoldOut and not ySoldOut then
 		return false
 	end
 
-	if var_3_4 and not var_3_5 then
+	if xUnlock and not yUnlock then
 		return true
-	elseif not var_3_4 and var_3_5 then
+	elseif not xUnlock and yUnlock then
 		return false
 	end
 
-	local var_3_6 = arg_3_0:alreadyHas()
-	local var_3_7 = arg_3_1:alreadyHas()
+	local xHas = x:alreadyHas()
+	local yHas = y:alreadyHas()
 
-	if var_3_6 ~= var_3_7 then
-		return var_3_7
+	if xHas ~= yHas then
+		return yHas
 	end
 
-	local var_3_8 = var_3_0.maxBuyCount
-	local var_3_9 = var_3_1.maxBuyCount
+	local xMaxLimit = xConfig.maxBuyCount
+	local yMaxLimit = yConfig.maxBuyCount
 
-	if var_3_8 == 1 and var_3_6 then
-		var_3_2 = var_3_2 or true
+	if xMaxLimit == 1 and xHas then
+		xSoldOut = xSoldOut or true
 	end
 
-	if var_3_9 == 1 and var_3_7 then
-		var_3_3 = var_3_3 or true
+	if yMaxLimit == 1 and yHas then
+		ySoldOut = ySoldOut or true
 	end
 
-	if var_3_2 ~= var_3_3 then
-		return var_3_3
+	if xSoldOut ~= ySoldOut then
+		return ySoldOut
 	end
 
-	local var_3_10 = StoreNormalGoodsItemListModel.needWeekWalkLayerUnlock(arg_3_0.goodsId)
+	local xWeekWalkLock = StoreNormalGoodsItemListModel.needWeekWalkLayerUnlock(x.goodsId)
+	local yWeekWalkLock = StoreNormalGoodsItemListModel.needWeekWalkLayerUnlock(y.goodsId)
 
-	if var_3_10 ~= StoreNormalGoodsItemListModel.needWeekWalkLayerUnlock(arg_3_1.goodsId) then
-		if var_3_10 then
+	if xWeekWalkLock ~= yWeekWalkLock then
+		if xWeekWalkLock then
 			return false
 		end
 
 		return true
 	end
 
-	if var_3_0.order < var_3_1.order then
+	if xConfig.order < yConfig.order then
 		return true
-	elseif var_3_0.order > var_3_1.order then
+	elseif xConfig.order > yConfig.order then
 		return false
 	end
 
-	if var_3_0.id < var_3_1.id then
+	if xConfig.id < yConfig.id then
 		return true
-	elseif var_3_0.id > var_3_1.id then
+	elseif xConfig.id > yConfig.id then
 		return false
 	end
 end
 
-function var_0_0._isStoreItemUnlock(arg_4_0)
-	local var_4_0 = StoreConfig.instance:getGoodsConfig(arg_4_0).needEpisodeId
+function StoreRoomGoodsItemListModel._isStoreItemUnlock(goodsId)
+	local episodeId = StoreConfig.instance:getGoodsConfig(goodsId).needEpisodeId
 
-	if not var_4_0 or var_4_0 == 0 then
+	if not episodeId or episodeId == 0 then
 		return true
 	end
 
-	return DungeonModel.instance:hasPassLevelAndStory(var_4_0)
+	return DungeonModel.instance:hasPassLevelAndStory(episodeId)
 end
 
-function var_0_0.needWeekWalkLayerUnlock(arg_5_0)
-	local var_5_0 = StoreConfig.instance:getGoodsConfig(arg_5_0).needWeekwalkLayer
+function StoreRoomGoodsItemListModel.needWeekWalkLayerUnlock(goodsId)
+	local needWeekwalkLayer = StoreConfig.instance:getGoodsConfig(goodsId).needWeekwalkLayer
 
-	if var_5_0 <= 0 then
+	if needWeekwalkLayer <= 0 then
 		return false
 	end
 
@@ -145,13 +148,17 @@ function var_0_0.needWeekWalkLayerUnlock(arg_5_0)
 		return true
 	end
 
-	return var_5_0 > WeekWalkModel.instance:getMaxLayerId()
+	local maxLayer = WeekWalkModel.instance:getMaxLayerId()
+
+	return maxLayer < needWeekwalkLayer
 end
 
-function var_0_0._isStoreItemSoldOut(arg_6_0)
-	return StoreModel.instance:getGoodsMO(arg_6_0):isSoldOut()
+function StoreRoomGoodsItemListModel._isStoreItemSoldOut(goodsId)
+	local mo = StoreModel.instance:getGoodsMO(goodsId)
+
+	return mo:isSoldOut()
 end
 
-var_0_0.instance = var_0_0.New()
+StoreRoomGoodsItemListModel.instance = StoreRoomGoodsItemListModel.New()
 
-return var_0_0
+return StoreRoomGoodsItemListModel

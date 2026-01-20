@@ -1,318 +1,331 @@
-﻿module("modules.logic.herogroup.view.HeroGroupRecommendGroupItem", package.seeall)
+﻿-- chunkname: @modules/logic/herogroup/view/HeroGroupRecommendGroupItem.lua
 
-local var_0_0 = class("HeroGroupRecommendGroupItem", ListScrollCell)
+module("modules.logic.herogroup.view.HeroGroupRecommendGroupItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._txtrank = gohelper.findChildText(arg_1_1, "#go_info/rankhead/#txt_rank")
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_1, "#go_info/#txt_num")
-	arg_1_0._txtherogrouprate = gohelper.findChildText(arg_1_1, "#go_info/#txt_herogrouprate")
-	arg_1_0._goherogrouplist = gohelper.findChild(arg_1_1, "#go_info/herogrouplist")
-	arg_1_0._goheroitem = gohelper.findChild(arg_1_1, "#go_info/herogrouplist/#go_heroitem")
-	arg_1_0._simagecloth = gohelper.findChildSingleImage(arg_1_1, "#go_info/#simage_cloth")
-	arg_1_0._btnuse = gohelper.findChildButtonWithAudio(arg_1_1, "#go_info/#btn_use")
-	arg_1_0._goinfo = gohelper.findChild(arg_1_1, "#go_info")
-	arg_1_0._gonull = gohelper.findChild(arg_1_1, "#go_null")
-	arg_1_0._anim = arg_1_1:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_1, "#simage_bg")
-	arg_1_0._gobossItem = gohelper.findChild(arg_1_1, "#go_info/#go_bossitem")
-	arg_1_0._gobossEmpty = gohelper.findChild(arg_1_1, "#go_info/#go_bossitem/go_empty")
-	arg_1_0._gobossContainer = gohelper.findChild(arg_1_1, "#go_info/#go_bossitem/go_container")
-	arg_1_0._simageBossIcon = gohelper.findChildSingleImage(arg_1_1, "#go_info/#go_bossitem/go_container/simage_bossicon")
-	arg_1_0._imageBossCareer = gohelper.findChildImage(arg_1_1, "#go_info/#go_bossitem/go_container/image_career")
+local HeroGroupRecommendGroupItem = class("HeroGroupRecommendGroupItem", ListScrollCell)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function HeroGroupRecommendGroupItem:init(go)
+	self._txtrank = gohelper.findChildText(go, "#go_info/rankhead/#txt_rank")
+	self._txtnum = gohelper.findChildText(go, "#go_info/#txt_num")
+	self._txtherogrouprate = gohelper.findChildText(go, "#go_info/#txt_herogrouprate")
+	self._goherogrouplist = gohelper.findChild(go, "#go_info/herogrouplist")
+	self._goheroitem = gohelper.findChild(go, "#go_info/herogrouplist/#go_heroitem")
+	self._simagecloth = gohelper.findChildSingleImage(go, "#go_info/#simage_cloth")
+	self._btnuse = gohelper.findChildButtonWithAudio(go, "#go_info/#btn_use")
+	self._goinfo = gohelper.findChild(go, "#go_info")
+	self._gonull = gohelper.findChild(go, "#go_null")
+	self._anim = go:GetComponent(typeof(UnityEngine.Animator))
+	self._simagebg = gohelper.findChildSingleImage(go, "#simage_bg")
+	self._gobossItem = gohelper.findChild(go, "#go_info/#go_bossitem")
+	self._gobossEmpty = gohelper.findChild(go, "#go_info/#go_bossitem/go_empty")
+	self._gobossContainer = gohelper.findChild(go, "#go_info/#go_bossitem/go_container")
+	self._simageBossIcon = gohelper.findChildSingleImage(go, "#go_info/#go_bossitem/go_container/simage_bossicon")
+	self._imageBossCareer = gohelper.findChildImage(go, "#go_info/#go_bossitem/go_container/image_career")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._btnuse:AddClickListener(arg_2_0._btnuseOnClick, arg_2_0)
+function HeroGroupRecommendGroupItem:addEventListeners()
+	self._btnuse:AddClickListener(self._btnuseOnClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btnuse:RemoveClickListener()
+function HeroGroupRecommendGroupItem:removeEventListeners()
+	self._btnuse:RemoveClickListener()
 end
 
-function var_0_0._btnuseOnClick(arg_4_0)
+function HeroGroupRecommendGroupItem:_btnuseOnClick()
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnUseRecommendGroup)
 
-	local var_4_0 = arg_4_0._mo.heroDataList
-	local var_4_1 = {}
-	local var_4_2 = HeroGroupModel.instance.battleId
-	local var_4_3 = lua_battle.configDict[var_4_2]
-	local var_4_4 = {}
+	local heroDataList = self._mo.heroDataList
+	local uidList = {}
+	local battleId = HeroGroupModel.instance.battleId
+	local battleConfig = lua_battle.configDict[battleId]
+	local configAids = {}
 
-	if not string.nilorempty(var_4_3.aid) then
-		var_4_4 = string.splitToNumber(var_4_3.aid, "#")
+	if not string.nilorempty(battleConfig.aid) then
+		configAids = string.splitToNumber(battleConfig.aid, "#")
 	end
 
-	local var_4_5 = {}
-	local var_4_6 = HeroGroupHandler.getTrialHeros(HeroGroupModel.instance.episodeId)
+	local configTrial = {}
+	local curBattleTrialHeros = HeroGroupHandler.getTrialHeros(HeroGroupModel.instance.episodeId)
 
-	if not string.nilorempty(var_4_6) then
-		var_4_5 = GameUtil.splitString2(var_4_6, true)
+	if not string.nilorempty(curBattleTrialHeros) then
+		configTrial = GameUtil.splitString2(curBattleTrialHeros, true)
 	end
 
-	local var_4_7 = {}
+	local allUseTrialHeros = {}
 
-	for iter_4_0, iter_4_1 in pairs(var_4_5) do
-		if iter_4_1[3] then
-			var_4_7[lua_hero_trial.configDict[iter_4_1[1]][iter_4_1[2]].heroId] = true
+	for _, v in pairs(configTrial) do
+		if v[3] then
+			local co = lua_hero_trial.configDict[v[1]][v[2]]
+
+			allUseTrialHeros[co.heroId] = true
 		end
 	end
 
-	for iter_4_2 = 1, #var_4_0 do
-		local var_4_8 = var_4_0[iter_4_2].heroId
+	for i = 1, #heroDataList do
+		local heroId = heroDataList[i].heroId
 
-		if var_4_8 and var_4_8 > 0 then
-			local var_4_9 = HeroModel.instance:getByHeroId(var_4_8)
+		if heroId and heroId > 0 then
+			local heroMO = HeroModel.instance:getByHeroId(heroId)
 
 			if HeroGroupModel.instance:isAdventureOrWeekWalk() then
-				if WeekWalkModel.instance:getCurMapHeroCd(var_4_8) > 0 then
+				local cd = WeekWalkModel.instance:getCurMapHeroCd(heroId)
+
+				if cd > 0 then
 					GameFacade.showToast(ToastEnum.HeroGroupEdit)
 
-					var_4_9 = nil
+					heroMO = nil
 				end
-			elseif var_4_9 and HeroGroupModel.instance:isRestrict(var_4_9.uid) then
-				local var_4_10 = HeroGroupModel.instance:getCurrentBattleConfig()
-				local var_4_11 = var_4_10 and var_4_10.restrictReason
+			elseif heroMO and HeroGroupModel.instance:isRestrict(heroMO.uid) then
+				local battleCo = HeroGroupModel.instance:getCurrentBattleConfig()
+				local restrictReason = battleCo and battleCo.restrictReason
 
-				if not string.nilorempty(var_4_11) then
-					ToastController.instance:showToastWithString(var_4_11)
+				if not string.nilorempty(restrictReason) then
+					ToastController.instance:showToastWithString(restrictReason)
 				end
 
-				var_4_9 = nil
+				heroMO = nil
 			end
 
-			if var_4_7[var_4_8] then
-				var_4_9 = nil
+			if allUseTrialHeros[heroId] then
+				heroMO = nil
 			end
 
-			if var_4_9 then
-				table.insert(var_4_1, var_4_9.uid)
+			if heroMO then
+				table.insert(uidList, heroMO.uid)
 			else
-				table.insert(var_4_1, "0")
+				table.insert(uidList, "0")
 			end
 		else
-			table.insert(var_4_1, "0")
+			table.insert(uidList, "0")
 		end
 	end
 
-	local var_4_12 = HeroGroupModel.instance:getCurGroupMO()
-	local var_4_13 = 0
+	local heroGroupMO = HeroGroupModel.instance:getCurGroupMO()
+	local clothId = 0
 
-	if arg_4_0._mo.cloth and arg_4_0._mo.cloth ~= 0 and PlayerClothModel.instance:canUse(arg_4_0._mo.cloth) then
-		var_4_13 = arg_4_0._mo.cloth
+	if self._mo.cloth and self._mo.cloth ~= 0 and PlayerClothModel.instance:canUse(self._mo.cloth) then
+		clothId = self._mo.cloth
 	elseif OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.LeadRoleSkill) then
-		local var_4_14 = PlayerClothModel.instance:getList()
+		local list = PlayerClothModel.instance:getList()
 
-		for iter_4_3, iter_4_4 in ipairs(var_4_14) do
-			if PlayerClothModel.instance:hasCloth(iter_4_4.id) then
-				var_4_13 = iter_4_4.id
+		for _, clothMO in ipairs(list) do
+			if PlayerClothModel.instance:hasCloth(clothMO.id) then
+				clothId = clothMO.id
 
 				break
 			end
 		end
 	end
 
-	local var_4_15 = {
-		groupId = var_4_12.id,
-		name = var_4_12.name,
-		clothId = var_4_13,
-		heroList = var_4_1
+	local info = {
+		groupId = heroGroupMO.id,
+		name = heroGroupMO.name,
+		clothId = clothId,
+		heroList = uidList
 	}
 
 	if TowerModel.instance:isInTowerBattle() then
-		arg_4_0:onTowerUse(var_4_15, var_4_12, var_4_4, var_4_3.roleNum, var_4_3.playerMax, true, var_4_5)
+		self:onTowerUse(info, heroGroupMO, configAids, battleConfig.roleNum, battleConfig.playerMax, true, configTrial)
 
 		return
 	end
 
-	var_4_12:initWithBattle(var_4_15, var_4_4, var_4_3.roleNum, var_4_3.playerMax, true, var_4_5)
-	HeroSingleGroupModel.instance:setSingleGroup(var_4_12, true)
+	heroGroupMO:initWithBattle(info, configAids, battleConfig.roleNum, battleConfig.playerMax, true, configTrial)
+	HeroSingleGroupModel.instance:setSingleGroup(heroGroupMO, true)
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
 	HeroGroupModel.instance:saveCurGroupData()
 	ViewMgr.instance:closeView(ViewName.HeroGroupRecommendView)
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnUseRecommendGroupFinish)
 end
 
-function var_0_0.onTowerUse(arg_5_0, arg_5_1, arg_5_2, ...)
-	local var_5_0 = TowerModel.instance:getRecordFightParam()
+function HeroGroupRecommendGroupItem:onTowerUse(info, heroGroupMO, ...)
+	local towerFightParam = TowerModel.instance:getRecordFightParam()
 
-	if var_5_0 and var_5_0.isHeroGroupLock then
+	if towerFightParam and towerFightParam.isHeroGroupLock then
 		GameFacade.showToast(ToastEnum.TowerHeroGroupCantEdit)
 		ViewMgr.instance:closeView(ViewName.HeroGroupRecommendView)
 
 		return
 	end
 
-	local var_5_1 = arg_5_0._mo.assistBossId
+	local assistBossId = self._mo.assistBossId
 
-	if var_5_1 and var_5_1 > 0 and var_5_0 and not var_5_0.isHeroGroupLock and not TowerModel.instance:isBossBan(var_5_1) and not TowerModel.instance:isLimitTowerBossBan(var_5_0.towerType, var_5_0.towerId, var_5_1) and TowerAssistBossModel.instance:getById(var_5_1) and TowerController.instance:isBossTowerOpen() then
-		arg_5_1.assistBossId = var_5_1
-	end
+	if assistBossId and assistBossId > 0 and towerFightParam and not towerFightParam.isHeroGroupLock and not TowerModel.instance:isBossBan(assistBossId) and not TowerModel.instance:isLimitTowerBossBan(towerFightParam.towerType, towerFightParam.towerId, assistBossId) then
+		local bossMo = TowerAssistBossModel.instance:getById(assistBossId)
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_1.heroList) do
-		local var_5_2 = HeroModel.instance:getById(iter_5_1)
+		if bossMo then
+			local bossIsOpen = TowerController.instance:isBossTowerOpen()
 
-		if var_5_2 and TowerModel.instance:isHeroBan(var_5_2.heroId) then
-			arg_5_1.heroList[iter_5_0] = tostring(0)
+			if bossIsOpen then
+				info.assistBossId = assistBossId
+			end
 		end
 	end
 
-	arg_5_2:initWithBattle(arg_5_1, ...)
-	HeroSingleGroupModel.instance:setSingleGroup(arg_5_2, true)
+	for i, v in ipairs(info.heroList) do
+		local mo = HeroModel.instance:getById(v)
+
+		if mo and TowerModel.instance:isHeroBan(mo.heroId) then
+			info.heroList[i] = tostring(0)
+		end
+	end
+
+	heroGroupMO:initWithBattle(info, ...)
+	HeroSingleGroupModel.instance:setSingleGroup(heroGroupMO, true)
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
 	HeroGroupModel.instance:saveCurGroupData()
 	ViewMgr.instance:closeView(ViewName.HeroGroupRecommendView)
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	gohelper.setActive(arg_6_0._goheroitem, false)
+function HeroGroupRecommendGroupItem:_editableInitView()
+	gohelper.setActive(self._goheroitem, false)
 
-	arg_6_0._heroItemList = {}
+	self._heroItemList = {}
 
-	arg_6_0._simagebg:LoadImage(ResUrl.getHeroGroupBg("biandui_youdi"))
+	self._simagebg:LoadImage(ResUrl.getHeroGroupBg("biandui_youdi"))
 
-	arg_6_0._imagebg = arg_6_0._simagebg:GetComponent(gohelper.Type_Image)
-	arg_6_0._isFiveHeroEpisode = DungeonController.checkEpisodeFiveHero(HeroGroupModel.instance.episodeId)
+	self._imagebg = self._simagebg:GetComponent(gohelper.Type_Image)
+	self._isFiveHeroEpisode = DungeonController.checkEpisodeFiveHero(HeroGroupModel.instance.episodeId)
 
-	if arg_6_0._isFiveHeroEpisode then
-		recthelper.setAnchorX(arg_6_0._goherogrouplist.transform, -97.5)
+	if self._isFiveHeroEpisode then
+		recthelper.setAnchorX(self._goherogrouplist.transform, -97.5)
 
-		arg_6_0._goherogrouplist:GetComponent(gohelper.Type_HorizontalLayoutGroup).spacing = -40
+		local layoutGroup = self._goherogrouplist:GetComponent(gohelper.Type_HorizontalLayoutGroup)
+
+		layoutGroup.spacing = -40
 	end
 end
 
-function var_0_0.onUpdateMO(arg_7_0, arg_7_1)
-	arg_7_0._mo = arg_7_1
+function HeroGroupRecommendGroupItem:onUpdateMO(mo)
+	self._mo = mo
 
-	gohelper.setActive(arg_7_0._gonull, arg_7_0._mo.isEmpty)
-	gohelper.setActive(arg_7_0._goinfo, not arg_7_0._mo.isEmpty)
-	ZProj.UGUIHelper.SetColorAlpha(arg_7_0._imagebg, arg_7_0._mo.isEmpty and 0.5 or 1)
+	gohelper.setActive(self._gonull, self._mo.isEmpty)
+	gohelper.setActive(self._goinfo, not self._mo.isEmpty)
+	ZProj.UGUIHelper.SetColorAlpha(self._imagebg, self._mo.isEmpty and 0.5 or 1)
 
-	if arg_7_0._mo.isEmpty then
+	if self._mo.isEmpty then
 		return
 	end
 
-	arg_7_0._txtrank.text = string.format("%d", arg_7_0._index)
-	arg_7_0._txtherogrouprate.text = string.format("%s%%", math.floor(arg_7_0._mo.rate * 10000) / 100)
+	self._txtrank.text = string.format("%d", self._index)
+	self._txtherogrouprate.text = string.format("%s%%", math.floor(self._mo.rate * 10000) / 100)
 
-	local var_7_0 = arg_7_0._mo.cloth and arg_7_0._mo.cloth ~= 0 and lua_cloth.configDict[arg_7_0._mo.cloth]
+	local clothConfig = self._mo.cloth and self._mo.cloth ~= 0 and lua_cloth.configDict[self._mo.cloth]
 
-	gohelper.setActive(arg_7_0._simagecloth.gameObject, var_7_0)
+	gohelper.setActive(self._simagecloth.gameObject, clothConfig)
 
-	if var_7_0 then
-		arg_7_0._simagecloth:LoadImage(ResUrl.getPlayerClothIcon(var_7_0.icon))
+	if clothConfig then
+		self._simagecloth:LoadImage(ResUrl.getPlayerClothIcon(clothConfig.icon))
 	end
 
-	arg_7_0:_refreshHeroItem()
+	self:_refreshHeroItem()
 
-	arg_7_0._txtnum.text = GameUtil.getEnglishOrderNumber(arg_7_0._index)
+	self._txtnum.text = GameUtil.getEnglishOrderNumber(self._index)
 
-	arg_7_0:refreshTowerBossUI()
+	self:refreshTowerBossUI()
 end
 
-function var_0_0._refreshHeroItem(arg_8_0)
-	local var_8_0 = arg_8_0._mo.heroDataList
-	local var_8_1 = arg_8_0._isFiveHeroEpisode and ModuleEnum.FiveHeroEnum.MaxHeroNum or ModuleEnum.MaxHeroCountInGroup
+function HeroGroupRecommendGroupItem:_refreshHeroItem()
+	local heroDataList = self._mo.heroDataList
+	local num = self._isFiveHeroEpisode and ModuleEnum.FiveHeroEnum.MaxHeroNum or ModuleEnum.MaxHeroCountInGroup
 
-	for iter_8_0 = 1, var_8_1 do
-		local var_8_2 = var_8_0[iter_8_0]
-		local var_8_3 = arg_8_0._heroItemList[iter_8_0]
+	for i = 1, num do
+		local heroData = heroDataList[i]
+		local heroItem = self._heroItemList[i]
 
-		if not var_8_3 then
-			var_8_3 = arg_8_0:getUserDataTb_()
-			var_8_3.go = gohelper.cloneInPlace(arg_8_0._goheroitem, "item" .. iter_8_0)
-			var_8_3.gocontainer = gohelper.findChild(var_8_3.go, "go_container")
-			var_8_3.simageheroicon = gohelper.findChildSingleImage(var_8_3.go, "go_container/simage_heroicon")
-			var_8_3.imagecareer = gohelper.findChildImage(var_8_3.go, "go_container/image_career")
-			var_8_3.goaidtag = gohelper.findChild(var_8_3.go, "go_container/go_aidtag")
-			var_8_3.gostorytag = gohelper.findChild(var_8_3.go, "go_container/go_storytag")
-			var_8_3.imageinsight = gohelper.findChildImage(var_8_3.go, "go_container/level/layout/image_insight")
-			var_8_3.txtlevel = gohelper.findChildText(var_8_3.go, "go_container/level/layout/txt_level")
-			var_8_3.goempty = gohelper.findChild(var_8_3.go, "go_empty")
+		if not heroItem then
+			heroItem = self:getUserDataTb_()
+			heroItem.go = gohelper.cloneInPlace(self._goheroitem, "item" .. i)
+			heroItem.gocontainer = gohelper.findChild(heroItem.go, "go_container")
+			heroItem.simageheroicon = gohelper.findChildSingleImage(heroItem.go, "go_container/simage_heroicon")
+			heroItem.imagecareer = gohelper.findChildImage(heroItem.go, "go_container/image_career")
+			heroItem.goaidtag = gohelper.findChild(heroItem.go, "go_container/go_aidtag")
+			heroItem.gostorytag = gohelper.findChild(heroItem.go, "go_container/go_storytag")
+			heroItem.imageinsight = gohelper.findChildImage(heroItem.go, "go_container/level/layout/image_insight")
+			heroItem.txtlevel = gohelper.findChildText(heroItem.go, "go_container/level/layout/txt_level")
+			heroItem.goempty = gohelper.findChild(heroItem.go, "go_empty")
 
-			table.insert(arg_8_0._heroItemList, var_8_3)
+			table.insert(self._heroItemList, heroItem)
 		end
 
-		gohelper.setActive(var_8_3.gocontainer, var_8_2)
-		gohelper.setActive(var_8_3.goempty, not var_8_2)
+		gohelper.setActive(heroItem.gocontainer, heroData)
+		gohelper.setActive(heroItem.goempty, not heroData)
 
-		if var_8_2 then
-			gohelper.setActive(var_8_3.gostorytag, false)
-			gohelper.setActive(var_8_3.goaidtag, false)
+		if heroData then
+			gohelper.setActive(heroItem.gostorytag, false)
+			gohelper.setActive(heroItem.goaidtag, false)
 
-			local var_8_4 = var_8_2.heroId
-			local var_8_5, var_8_6 = HeroConfig.instance:getShowLevel(var_8_0[iter_8_0].level)
+			local heroId = heroData.heroId
+			local showLevel, rankLevel = HeroConfig.instance:getShowLevel(heroDataList[i].level)
 
-			var_8_3.txtlevel.text = arg_8_0:getShowLevelText(var_8_5)
+			heroItem.txtlevel.text = self:getShowLevelText(showLevel)
 
-			if var_8_6 > 1 then
-				UISpriteSetMgr.instance:setHeroGroupSprite(var_8_3.imageinsight, "biandui_dongxi_" .. tostring(var_8_6 - 1))
-				gohelper.setActive(var_8_3.imageinsight.gameObject, true)
+			if rankLevel > 1 then
+				UISpriteSetMgr.instance:setHeroGroupSprite(heroItem.imageinsight, "biandui_dongxi_" .. tostring(rankLevel - 1))
+				gohelper.setActive(heroItem.imageinsight.gameObject, true)
 			else
-				gohelper.setActive(var_8_3.imageinsight.gameObject, false)
+				gohelper.setActive(heroItem.imageinsight.gameObject, false)
 			end
 
-			local var_8_7 = HeroConfig.instance:getHeroCO(var_8_4)
-			local var_8_8 = SkinConfig.instance:getSkinCo(var_8_7.skinId)
+			local heroConfig = HeroConfig.instance:getHeroCO(heroId)
+			local skinConfig = SkinConfig.instance:getSkinCo(heroConfig.skinId)
 
-			var_8_3.simageheroicon:LoadImage(ResUrl.getHeadIconSmall(var_8_8.headIcon))
-			UISpriteSetMgr.instance:setCommonSprite(var_8_3.imagecareer, "lssx_" .. tostring(var_8_7.career))
+			heroItem.simageheroicon:LoadImage(ResUrl.getHeadIconSmall(skinConfig.headIcon))
+			UISpriteSetMgr.instance:setCommonSprite(heroItem.imagecareer, "lssx_" .. tostring(heroConfig.career))
 
-			local var_8_9 = HeroModel.instance:getByHeroId(var_8_4)
+			local heroMO = HeroModel.instance:getByHeroId(heroId)
 
-			ZProj.UGUIHelper.SetGrayscale(var_8_3.simageheroicon.gameObject, not var_8_9)
-			ZProj.UGUIHelper.SetGrayscale(var_8_3.imagecareer.gameObject, not var_8_9)
+			ZProj.UGUIHelper.SetGrayscale(heroItem.simageheroicon.gameObject, not heroMO)
+			ZProj.UGUIHelper.SetGrayscale(heroItem.imagecareer.gameObject, not heroMO)
 		end
 
-		gohelper.setActive(var_8_3.go, true)
+		gohelper.setActive(heroItem.go, true)
 	end
 end
 
-function var_0_0.refreshTowerBossUI(arg_9_0)
-	local var_9_0 = arg_9_0._mo.cloth and arg_9_0._mo.cloth ~= 0 and lua_cloth.configDict[arg_9_0._mo.cloth]
-	local var_9_1
+function HeroGroupRecommendGroupItem:refreshTowerBossUI()
+	local clothConfig = self._mo.cloth and self._mo.cloth ~= 0 and lua_cloth.configDict[self._mo.cloth]
+	local hasCloth = clothConfig ~= nil
+	local isInTowerBattle = TowerModel.instance:isInTowerBattle()
+	local bossId = self._mo.assistBossId
+	local hasAssistBoss = bossId and bossId > 0
 
-	var_9_1 = var_9_0 ~= nil
+	gohelper.setActive(self._simagecloth.gameObject, clothConfig and not isInTowerBattle)
+	gohelper.setActive(self._gobossItem, isInTowerBattle)
+	gohelper.setActive(self._gobossEmpty, isInTowerBattle and not hasAssistBoss)
+	gohelper.setActive(self._gobossContainer, isInTowerBattle and hasAssistBoss)
 
-	local var_9_2 = TowerModel.instance:isInTowerBattle()
-	local var_9_3 = arg_9_0._mo.assistBossId
-	local var_9_4 = var_9_3 and var_9_3 > 0
+	if isInTowerBattle and hasAssistBoss then
+		local bossConfig = TowerConfig.instance:getAssistBossConfig(bossId)
 
-	gohelper.setActive(arg_9_0._simagecloth.gameObject, var_9_0 and not var_9_2)
-	gohelper.setActive(arg_9_0._gobossItem, var_9_2)
-	gohelper.setActive(arg_9_0._gobossEmpty, var_9_2 and not var_9_4)
-	gohelper.setActive(arg_9_0._gobossContainer, var_9_2 and var_9_4)
+		UISpriteSetMgr.instance:setCommonSprite(self._imageBossCareer, string.format("lssx_%s", bossConfig.career))
 
-	if var_9_2 and var_9_4 then
-		local var_9_5 = TowerConfig.instance:getAssistBossConfig(var_9_3)
+		local skinConfig = FightConfig.instance:getSkinCO(bossConfig.skinId)
 
-		UISpriteSetMgr.instance:setCommonSprite(arg_9_0._imageBossCareer, string.format("lssx_%s", var_9_5.career))
-
-		local var_9_6 = FightConfig.instance:getSkinCO(var_9_5.skinId)
-
-		arg_9_0._simageBossIcon:LoadImage(ResUrl.monsterHeadIcon(var_9_6 and var_9_6.headIcon))
+		self._simageBossIcon:LoadImage(ResUrl.monsterHeadIcon(skinConfig and skinConfig.headIcon))
 	end
 end
 
-function var_0_0.getShowLevelText(arg_10_0, arg_10_1)
-	return "<size=12>Lv.</size>" .. tostring(arg_10_1)
+function HeroGroupRecommendGroupItem:getShowLevelText(showLevel)
+	return "<size=12>Lv.</size>" .. tostring(showLevel)
 end
 
-function var_0_0.getAnimator(arg_11_0)
-	return arg_11_0._anim
+function HeroGroupRecommendGroupItem:getAnimator()
+	return self._anim
 end
 
-function var_0_0.onDestroy(arg_12_0)
-	arg_12_0._simagecloth:UnLoadImage()
-	arg_12_0._simagebg:UnLoadImage()
-	arg_12_0._simageBossIcon:UnLoadImage()
+function HeroGroupRecommendGroupItem:onDestroy()
+	self._simagecloth:UnLoadImage()
+	self._simagebg:UnLoadImage()
+	self._simageBossIcon:UnLoadImage()
 
-	for iter_12_0, iter_12_1 in ipairs(arg_12_0._heroItemList) do
-		iter_12_1.simageheroicon:UnLoadImage()
+	for i, heroItem in ipairs(self._heroItemList) do
+		heroItem.simageheroicon:UnLoadImage()
 	end
 end
 
-return var_0_0
+return HeroGroupRecommendGroupItem

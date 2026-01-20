@@ -1,21 +1,23 @@
-﻿module("modules.logic.critter.model.info.CritterAttributeMO", package.seeall)
+﻿-- chunkname: @modules/logic/critter/model/info/CritterAttributeMO.lua
 
-local var_0_0 = pureTable("CritterAttributeMO")
-local var_0_1 = {}
+module("modules.logic.critter.model.info.CritterAttributeMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_1 = arg_1_1 or var_0_1
-	arg_1_0.attributeId = arg_1_1.attributeId or 0
-	arg_1_0.value = arg_1_1.value and math.floor(arg_1_1.value / 10000) or 0
+local CritterAttributeMO = pureTable("CritterAttributeMO")
+local _TEMP_EMPTY_TB = {}
+
+function CritterAttributeMO:init(info)
+	info = info or _TEMP_EMPTY_TB
+	self.attributeId = info.attributeId or 0
+	self.value = info.value and math.floor(info.value / 10000) or 0
 end
 
-function var_0_0.setAttr(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0.attributeId = arg_2_1
-	arg_2_0.value = arg_2_2
+function CritterAttributeMO:setAttr(attributeId, value)
+	self.attributeId = attributeId
+	self.value = value
 end
 
-function var_0_0.getValueNum(arg_3_0)
-	return arg_3_0.value
+function CritterAttributeMO:getValueNum()
+	return self.value
 end
 
-return var_0_0
+return CritterAttributeMO

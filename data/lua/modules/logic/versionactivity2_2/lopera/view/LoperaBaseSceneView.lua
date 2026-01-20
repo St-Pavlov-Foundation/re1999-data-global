@@ -1,67 +1,69 @@
-﻿module("modules.logic.versionactivity2_2.lopera.view.LoperaBaseSceneView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/lopera/view/LoperaBaseSceneView.lua
 
-local var_0_0 = class("LoperaBaseSceneView", BaseView)
+module("modules.logic.versionactivity2_2.lopera.view.LoperaBaseSceneView", package.seeall)
 
-function var_0_0.onOpen(arg_1_0)
-	local var_1_0 = CameraMgr.instance:getSceneRoot()
+local LoperaBaseSceneView = class("LoperaBaseSceneView", BaseView)
 
-	arg_1_0._sceneRoot = UnityEngine.GameObject.New(arg_1_0.__cname)
+function LoperaBaseSceneView:onOpen()
+	local sceneRoot = CameraMgr.instance:getSceneRoot()
 
-	arg_1_0:beforeLoadScene()
-	gohelper.addChild(var_1_0, arg_1_0._sceneRoot)
+	self._sceneRoot = UnityEngine.GameObject.New(self.__cname)
 
-	arg_1_0._loader = PrefabInstantiate.Create(arg_1_0._sceneRoot)
+	self:beforeLoadScene()
+	gohelper.addChild(sceneRoot, self._sceneRoot)
 
-	transformhelper.setLocalPos(arg_1_0._sceneRoot.transform, 0, 5, 0)
-	MainCameraMgr.instance:addView(arg_1_0.viewName, arg_1_0._initCamera, nil, arg_1_0)
-	arg_1_0._loader:startLoad(arg_1_0:getScenePath(), arg_1_0._onSceneLoadEnd, arg_1_0)
+	self._loader = PrefabInstantiate.Create(self._sceneRoot)
+
+	transformhelper.setLocalPos(self._sceneRoot.transform, 0, 5, 0)
+	MainCameraMgr.instance:addView(self.viewName, self._initCamera, nil, self)
+	self._loader:startLoad(self:getScenePath(), self._onSceneLoadEnd, self)
 end
 
-function var_0_0.beforeLoadScene(arg_2_0)
+function LoperaBaseSceneView:beforeLoadScene()
 	return
 end
 
-function var_0_0.getScenePath(arg_3_0)
+function LoperaBaseSceneView:getScenePath()
 	return ""
 end
 
-function var_0_0._onSceneLoadEnd(arg_4_0)
-	local var_4_0 = arg_4_0._loader:getInstGO()
+function LoperaBaseSceneView:_onSceneLoadEnd()
+	local go = self._loader:getInstGO()
 
-	var_4_0.name = "Scene"
+	go.name = "Scene"
 
-	transformhelper.setLocalPos(var_4_0.transform, 0, 0, 5)
-	arg_4_0:onSceneLoaded(var_4_0)
+	transformhelper.setLocalPos(go.transform, 0, 0, 5)
+	self:onSceneLoaded(go)
 end
 
-function var_0_0.onSceneLoaded(arg_5_0, arg_5_1)
+function LoperaBaseSceneView:onSceneLoaded(sceneGo)
 	return
 end
 
-function var_0_0._initCamera(arg_6_0)
-	local var_6_0 = CameraMgr.instance:getMainCamera()
-	local var_6_1 = GameUtil.getAdapterScale(true)
+function LoperaBaseSceneView:_initCamera()
+	local camera = CameraMgr.instance:getMainCamera()
+	local scale = GameUtil.getAdapterScale(true)
 
-	var_6_0.orthographic = true
-	var_6_0.orthographicSize = 5 * var_6_1
+	camera.orthographic = true
+	camera.orthographicSize = 5 * scale
 end
 
-function var_0_0.setSceneVisible(arg_7_0, arg_7_1)
-	gohelper.setActive(arg_7_0._sceneRoot, arg_7_1)
+function LoperaBaseSceneView:setSceneVisible(isVisible)
+	gohelper.setActive(self._sceneRoot, isVisible)
 end
 
-function var_0_0.onDestroyView(arg_8_0)
-	if arg_8_0._loader then
-		arg_8_0._loader:dispose()
+function LoperaBaseSceneView:onDestroyView()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_8_0._loader = nil
+		self._loader = nil
 	end
 
-	if arg_8_0._sceneRoot then
-		gohelper.destroy(arg_8_0._sceneRoot)
+	if self._sceneRoot then
+		gohelper.destroy(self._sceneRoot)
 
-		arg_8_0._sceneRoot = nil
+		self._sceneRoot = nil
 	end
 end
 
-return var_0_0
+return LoperaBaseSceneView

@@ -1,31 +1,33 @@
-﻿module("modules.logic.summon.view.luckybag.SummonLuckyBagDetailViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/summon/view/luckybag/SummonLuckyBagDetailViewContainer.lua
 
-local var_0_0 = class("SummonLuckyBagDetailViewContainer", BaseViewContainer)
+module("modules.logic.summon.view.luckybag.SummonLuckyBagDetailViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+local SummonLuckyBagDetailViewContainer = class("SummonLuckyBagDetailViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "category/#scroll_category"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_1.cellClass = SummonPoolDetailCategoryItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 1
-	var_1_1.cellWidth = 380
-	var_1_1.cellHeight = 116
-	var_1_1.cellSpaceH = 0
-	var_1_1.cellSpaceV = 4
+function SummonLuckyBagDetailViewContainer:buildViews()
+	local views = {}
+	local scrollParam = ListScrollParam.New()
 
-	table.insert(var_1_0, LuaListScrollView.New(SummonPoolDetailCategoryListModel.instance, var_1_1))
-	table.insert(var_1_0, SummonPoolDetailView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "info"))
+	scrollParam.scrollGOPath = "category/#scroll_category"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = SummonPoolDetailCategoryItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 380
+	scrollParam.cellHeight = 116
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 4
 
-	return var_1_0
+	table.insert(views, LuaListScrollView.New(SummonPoolDetailCategoryListModel.instance, scrollParam))
+	table.insert(views, SummonPoolDetailView.New())
+	table.insert(views, TabViewGroup.New(1, "info"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
+function SummonLuckyBagDetailViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
 		return {
 			MultiView.New({
 				SummonPoolDetailDescView.New(),
@@ -36,8 +38,8 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	end
 end
 
-function var_0_0.onContainerClickModalMask(arg_3_0)
-	arg_3_0:closeThis()
+function SummonLuckyBagDetailViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return SummonLuckyBagDetailViewContainer

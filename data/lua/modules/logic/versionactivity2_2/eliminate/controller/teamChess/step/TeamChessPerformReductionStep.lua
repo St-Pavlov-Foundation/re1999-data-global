@@ -1,40 +1,42 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.TeamChessPerformReductionStep", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/controller/teamChess/step/TeamChessPerformReductionStep.lua
 
-local var_0_0 = class("TeamChessPerformReductionStep", EliminateTeamChessStepBase)
+module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.TeamChessPerformReductionStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
+local TeamChessPerformReductionStep = class("TeamChessPerformReductionStep", EliminateTeamChessStepBase)
+
+function TeamChessPerformReductionStep:onStart()
 	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.StrongHoldPerformReduction)
 	TeamChessUnitEntityMgr.instance:restoreEntityShowMode()
 
-	local var_1_0 = EliminateTeamChessModel.instance:getStrongholds()
-	local var_1_1 = 0
+	local strongholds = EliminateTeamChessModel.instance:getStrongholds()
+	local playerSoliderCount = 0
 
-	for iter_1_0, iter_1_1 in pairs(var_1_0) do
-		var_1_1 = var_1_1 + iter_1_1:getPlayerSoliderCount()
+	for _, stronghold in pairs(strongholds) do
+		playerSoliderCount = playerSoliderCount + stronghold:getPlayerSoliderCount()
 	end
 
-	local var_1_2 = EliminateLevelModel.instance:getLevelId()
+	local levelId = EliminateLevelModel.instance:getLevelId()
 
-	if var_1_1 > 0 then
+	if playerSoliderCount > 0 then
 		EliminateLevelController.instance:dispatchEvent(EliminateChessEvent.TeamSettleEndAndIsHavePlayerSolider)
 	end
 
-	EliminateLevelController.instance:dispatchEvent(EliminateChessEvent.TeamSettleEndAndPlayerSoliderCount, string.format("%s_%s", var_1_2, var_1_1))
+	EliminateLevelController.instance:dispatchEvent(EliminateChessEvent.TeamSettleEndAndPlayerSoliderCount, string.format("%s_%s", levelId, playerSoliderCount))
 
 	if GuideModel.instance:isGuideRunning(22011) or GuideModel.instance:isGuideRunning(22012) then
-		GuideController.instance:registerCallback(GuideEvent.FinishGuideLastStep, arg_1_0._gudieEnd, arg_1_0)
+		GuideController.instance:registerCallback(GuideEvent.FinishGuideLastStep, self._gudieEnd, self)
 	else
-		TaskDispatcher.runDelay(arg_1_0._onDone, arg_1_0, EliminateTeamChessEnum.teamChessUpdateActiveMoveStepTime)
+		TaskDispatcher.runDelay(self._onDone, self, EliminateTeamChessEnum.teamChessUpdateActiveMoveStepTime)
 	end
 end
 
-function var_0_0._gudieEnd(arg_2_0, arg_2_1)
-	if arg_2_1 ~= 22011 and arg_2_1 ~= 22012 then
+function TeamChessPerformReductionStep:_gudieEnd(guideId)
+	if guideId ~= 22011 and guideId ~= 22012 then
 		return
 	end
 
-	GuideController.instance:unregisterCallback(GuideEvent.FinishGuideLastStep, arg_2_0._gudieEnd, arg_2_0)
-	arg_2_0:_onDone(true)
+	GuideController.instance:unregisterCallback(GuideEvent.FinishGuideLastStep, self._gudieEnd, self)
+	self:_onDone(true)
 end
 
-return var_0_0
+return TeamChessPerformReductionStep

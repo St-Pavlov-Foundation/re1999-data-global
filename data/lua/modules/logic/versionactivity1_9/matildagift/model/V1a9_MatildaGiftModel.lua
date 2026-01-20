@@ -1,50 +1,56 @@
-﻿module("modules.logic.versionactivity1_9.matildagift.model.V1a9_MatildaGiftModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/matildagift/model/V1a9_MatildaGiftModel.lua
 
-local var_0_0 = class("V1a9_MatildaGiftModel", BaseModel)
+module("modules.logic.versionactivity1_9.matildagift.model.V1a9_MatildaGiftModel", package.seeall)
 
-function var_0_0.getMatildagiftActId(arg_1_0)
+local V1a9_MatildaGiftModel = class("V1a9_MatildaGiftModel", BaseModel)
+
+function V1a9_MatildaGiftModel:getMatildagiftActId()
 	return ActivityEnum.Activity.V2a8_Matildagift
 end
 
-function var_0_0.isMatildaGiftOpen(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_0:getMatildagiftActId()
-	local var_2_1 = ActivityType101Model.instance:isOpen(var_2_0)
+function V1a9_MatildaGiftModel:isMatildaGiftOpen(notOpenToast)
+	local actId = self:getMatildagiftActId()
+	local result = ActivityType101Model.instance:isOpen(actId)
 
-	if not var_2_1 and arg_2_1 then
+	if not result and notOpenToast then
 		GameFacade.showToast(ToastEnum.BattlePass)
 	end
 
-	return var_2_1
+	return result
 end
 
-function var_0_0.isShowRedDot(arg_3_0)
-	local var_3_0 = false
+function V1a9_MatildaGiftModel:isShowRedDot()
+	local result = false
+	local isOpen = self:isMatildaGiftOpen()
 
-	if arg_3_0:isMatildaGiftOpen() then
-		local var_3_1 = arg_3_0:getMatildagiftActId()
+	if isOpen then
+		local actId = self:getMatildagiftActId()
 
-		var_3_0 = ActivityType101Model.instance:isType101RewardCouldGetAnyOne(var_3_1)
+		result = ActivityType101Model.instance:isType101RewardCouldGetAnyOne(actId)
 	end
 
-	return var_3_0
+	return result
 end
 
-function var_0_0.couldGet(arg_4_0)
-	local var_4_0 = arg_4_0:getMatildagiftActId()
+function V1a9_MatildaGiftModel:couldGet()
+	local actId = self:getMatildagiftActId()
+	local couldGet = ActivityType101Model.instance:isType101RewardCouldGet(actId, 1)
 
-	return (ActivityType101Model.instance:isType101RewardCouldGet(var_4_0, 1))
+	return couldGet
 end
 
-function var_0_0.onGetBonus(arg_5_0)
-	if arg_5_0:couldGet() then
-		local var_5_0 = arg_5_0:getMatildagiftActId()
+function V1a9_MatildaGiftModel:onGetBonus()
+	local couldGet = self:couldGet()
 
-		Activity101Rpc.instance:sendGet101BonusRequest(var_5_0, 1)
+	if couldGet then
+		local actId = self:getMatildagiftActId()
+
+		Activity101Rpc.instance:sendGet101BonusRequest(actId, 1)
 	else
 		GameFacade.showToast(ToastEnum.ActivityRewardHasReceive)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+V1a9_MatildaGiftModel.instance = V1a9_MatildaGiftModel.New()
 
-return var_0_0
+return V1a9_MatildaGiftModel

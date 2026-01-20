@@ -1,20 +1,22 @@
-﻿module("modules.configs.excel2json.lua_push_box_activity", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_push_box_activity.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_push_box_activity", package.seeall)
+
+local lua_push_box_activity = {}
+local fields = {
 	stageId = 2,
 	episodeIds = 3,
 	activityId = 1,
 	openDay = 4
 }
-local var_0_2 = {
+local primaryKey = {
 	"activityId",
 	"stageId"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_push_box_activity.onLoad(json)
+	lua_push_box_activity.configList, lua_push_box_activity.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_push_box_activity

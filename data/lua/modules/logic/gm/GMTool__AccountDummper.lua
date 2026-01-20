@@ -1,141 +1,146 @@
-﻿local var_0_0 = _G.getGlobal
-local var_0_1 = var_0_0("Partial_GMTool")
-local var_0_2 = string.format
-local var_0_3 = table.insert
-local var_0_4 = table.concat
-local var_0_5 = UnityEngine.Input
-local var_0_6 = UnityEngine.KeyCode
-local var_0_7 = _G.Time
-local var_0_8 = {}
+﻿-- chunkname: @modules/logic/gm/GMTool__AccountDummper.lua
 
-local function var_0_9()
-	local var_1_0 = ""
+local getGlobal = _G.getGlobal
+local GMTool = getGlobal("Partial_GMTool")
+local sf = string.format
+local ti = table.insert
+local tc = table.concat
+local Input = UnityEngine.Input
+local KeyCode = UnityEngine.KeyCode
+local Time = _G.Time
+local M = {}
+
+local function _getPlatformName()
+	local res = ""
 
 	if SLFramework.FrameworkSettings.IsEditor then
-		var_1_0 = "UnityEditor"
+		res = "UnityEditor"
 	elseif BootNativeUtil.isAndroid() then
-		var_1_0 = "Android"
+		res = "Android"
 	elseif BootNativeUtil.isIOS() then
-		var_1_0 = "iOS"
+		res = "iOS"
 	elseif BootNativeUtil.isWindows() then
-		var_1_0 = "Windows"
+		res = "Windows"
 	elseif BootNativeUtil.isMacOS() then
-		var_1_0 = "Mac OS"
+		res = "Mac OS"
 	end
 
-	return var_1_0
+	return res
 end
 
-local function var_0_10()
-	local var_2_0 = ServerTime.now()
-	local var_2_1 = ServerTime.GetUTCOffsetStr()
-	local var_2_2 = os.date("!*t", var_2_0 + ServerTime.serverUtcOffset())
+local function _getServerTimeStr()
+	local serverTs = ServerTime.now()
+	local utc = ServerTime.GetUTCOffsetStr()
+	local dt = os.date("!*t", serverTs + ServerTime.serverUtcOffset())
+	local serverTimeStr = sf("(%s) %04d-%02d-%02d %02d:%02d:%02d (%s)", serverTs, dt.year, dt.month, dt.day, dt.hour, dt.min, dt.sec, utc)
 
-	return (var_0_2("(%s) %04d-%02d-%02d %02d:%02d:%02d (%s)", var_2_0, var_2_2.year, var_2_2.month, var_2_2.day, var_2_2.hour, var_2_2.min, var_2_2.sec, var_2_1))
+	return serverTimeStr
 end
 
-local function var_0_11()
-	local var_3_0 = os.time()
-	local var_3_1 = os.date("!*t", os.time())
-	local var_3_2 = os.difftime(os.time(), os.time(var_3_1))
-	local var_3_3 = var_0_2("UTC%+d", var_3_2 / 3600)
+local function _getClientTimeStr()
+	local clientTs = os.time()
+	local dt = os.date("!*t", os.time())
+	local clientUtcOffset = os.difftime(os.time(), os.time(dt))
+	local utc = sf("UTC%+d", clientUtcOffset / 3600)
+	local clientTimeStr = sf("(%s) %s (%s)", clientTs, os.date("%Y-%m-%d %H:%M:%S", clientTs), utc)
 
-	return (var_0_2("(%s) %s (%s)", var_3_0, os.date("%Y-%m-%d %H:%M:%S", var_3_0), var_3_3))
+	return clientTimeStr
 end
 
-function var_0_8.onClear(arg_4_0)
-	arg_4_0._unscaledTime = 0
-	arg_4_0._keyCodeDownCount = 0
+function M:onClear()
+	self._unscaledTime = 0
+	self._keyCodeDownCount = 0
 
-	return arg_4_0
+	return self
 end
 
-local var_0_12 = 2
-local var_0_13 = 0.25
+local kNeedkeyCodeDownCount = 2
+local kInternal = 0.25
 
-function var_0_8.onUpdate(arg_5_0)
-	local var_5_0 = var_0_7.unscaledDeltaTime
+function M:onUpdate()
+	local unscaledDeltaTime = Time.unscaledDeltaTime
 
-	if var_0_5.GetKeyDown(var_0_6.LeftControl) then
-		local var_5_1 = arg_5_0._unscaledTime - var_5_0 < var_0_13
+	if Input.GetKeyDown(KeyCode.LeftControl) then
+		local delta = self._unscaledTime - unscaledDeltaTime
+		local ok = delta < kInternal
 
-		if var_5_1 then
-			arg_5_0._keyCodeDownCount = arg_5_0._keyCodeDownCount + 1
+		if ok then
+			self._keyCodeDownCount = self._keyCodeDownCount + 1
 		end
 
-		if arg_5_0._keyCodeDownCount >= var_0_12 then
-			arg_5_0:onClear()
-			arg_5_0:_work()
+		if self._keyCodeDownCount >= kNeedkeyCodeDownCount then
+			self:onClear()
+			self:_work()
 
 			return
 		end
 
-		if not var_5_1 then
-			arg_5_0:onClear()
+		if not ok then
+			self:onClear()
 
-			arg_5_0._keyCodeDownCount = 1
+			self._keyCodeDownCount = 1
 		end
 	end
 
-	arg_5_0._unscaledTime = arg_5_0._unscaledTime + var_5_0
+	self._unscaledTime = self._unscaledTime + unscaledDeltaTime
 end
 
-local var_0_14 = "#FFFF00"
-local var_0_15 = "#00FF00"
-local var_0_16 = "#FFFFFF"
+local kYellow = "#FFFF00"
+local kGreen = "#00FF00"
+local kWhite = "#FFFFFF"
 
-function var_0_8._work(arg_6_0)
-	local var_6_0 = var_0_0("PlayerModel") and PlayerModel.instance:getPlayinfo() or {}
-	local var_6_1 = var_0_1.util.setColorDesc(LoginModel.instance.channelUserId, var_0_14)
-	local var_6_2 = var_0_1.util.setColorDesc(var_6_0.userId, var_0_14)
-	local var_6_3 = var_0_1.util.setColorDesc(var_6_0.userName, var_0_14)
-	local var_6_4 = var_0_1.util.setColorDesc(LoginModel.instance.serverName, var_0_14)
-	local var_6_5 = var_0_1.util.setColorDesc(LoginModel.instance.serverId, var_0_14)
-	local var_6_6 = var_0_1.util.setColorDesc(var_0_9(), var_0_14)
-	local var_6_7 = var_0_1.util.setColorDesc(LangSettings.instance:getCurLangShortcut(), var_0_14)
-	local var_6_8 = var_0_1.util.setColorDesc(SettingsModel.instance:getRegionShortcut(), var_0_14)
-	local var_6_9 = var_0_1.util.setColorDesc(var_0_10(), var_0_14)
-	local var_6_10 = var_0_1.util.setColorDesc(var_0_11(), var_0_14)
-	local var_6_11 = var_0_1._input:_getOpeningViewNameList()
-	local var_6_12 = {}
+function M:_work()
+	local playerinfo = getGlobal("PlayerModel") and PlayerModel.instance:getPlayinfo() or {}
+	local account = GMTool.util.setColorDesc(LoginModel.instance.channelUserId, kYellow)
+	local uid = GMTool.util.setColorDesc(playerinfo.userId, kYellow)
+	local userName = GMTool.util.setColorDesc(playerinfo.userName, kYellow)
+	local serverName = GMTool.util.setColorDesc(LoginModel.instance.serverName, kYellow)
+	local serverId = GMTool.util.setColorDesc(LoginModel.instance.serverId, kYellow)
+	local platform = GMTool.util.setColorDesc(_getPlatformName(), kYellow)
+	local curLanguage = GMTool.util.setColorDesc(LangSettings.instance:getCurLangShortcut(), kYellow)
+	local curRegion = GMTool.util.setColorDesc(SettingsModel.instance:getRegionShortcut(), kYellow)
+	local serverTime = GMTool.util.setColorDesc(_getServerTimeStr(), kYellow)
+	local clientTime = GMTool.util.setColorDesc(_getClientTimeStr(), kYellow)
+	local viewNameList = GMTool._input:_getOpeningViewNameList()
+	local sb = {}
 
-	var_0_3(var_6_12, "=============== Player Info ================")
-	var_0_3(var_6_12, "account: " .. var_6_1)
-	var_0_3(var_6_12, "uid/userId/playerId/roleId: " .. var_6_2)
-	var_0_3(var_6_12, "serverName: " .. var_6_4)
-	var_0_3(var_6_12, "serverId: " .. var_6_5)
-	var_0_3(var_6_12, "userName: " .. var_6_3)
-	var_0_3(var_6_12, "platform: " .. var_6_6)
-	var_0_3(var_6_12, "curLanguage: " .. var_6_7)
-	var_0_3(var_6_12, "curRegion: " .. var_6_8)
-	var_0_3(var_6_12, "serverTime: " .. var_6_9)
-	var_0_3(var_6_12, "clientTime: " .. var_6_10)
+	ti(sb, "=============== Player Info ================")
+	ti(sb, "account: " .. account)
+	ti(sb, "uid/userId/playerId/roleId: " .. uid)
+	ti(sb, "serverName: " .. serverName)
+	ti(sb, "serverId: " .. serverId)
+	ti(sb, "userName: " .. userName)
+	ti(sb, "platform: " .. platform)
+	ti(sb, "curLanguage: " .. curLanguage)
+	ti(sb, "curRegion: " .. curRegion)
+	ti(sb, "serverTime: " .. serverTime)
+	ti(sb, "clientTime: " .. clientTime)
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_11 or {}) do
-		if iter_6_0 == 1 then
-			var_0_3(var_6_12, "dump view infos ========================= Begin")
+	for i, viewName in ipairs(viewNameList or {}) do
+		if i == 1 then
+			ti(sb, "dump view infos ========================= Begin")
 		end
 
-		local var_6_13 = ViewMgr.instance:getSetting(iter_6_1)
-		local var_6_14 = var_0_1.util.setColorDesc(iter_6_1 or "<Unknown>", var_0_14)
-		local var_6_15 = var_0_1.util.setColorDesc(var_6_13 and var_6_13.mainRes or "None", var_0_15)
-		local var_6_16 = "[" .. tostring(iter_6_0) .. "]"
+		local setting = ViewMgr.instance:getSetting(viewName)
+		local name = GMTool.util.setColorDesc(viewName or "<Unknown>", kYellow)
+		local path = GMTool.util.setColorDesc(setting and setting.mainRes or "None", kGreen)
+		local indexStr = "[" .. tostring(i) .. "]"
 
-		var_6_16 = iter_6_0 == 1 and var_0_1.util.setColorDesc(var_6_16, var_0_16) or var_6_16
+		indexStr = i == 1 and GMTool.util.setColorDesc(indexStr, kWhite) or indexStr
 
-		var_0_3(var_6_12, "\t" .. var_6_16 .. " " .. var_6_14 .. ": " .. var_6_15)
+		ti(sb, "\t" .. indexStr .. " " .. name .. ": " .. path)
 
-		if iter_6_0 == #var_6_11 then
-			var_0_3(var_6_12, "dump view infos ========================= End")
+		if i == #viewNameList then
+			ti(sb, "dump view infos ========================= End")
 		end
 	end
 
-	local var_6_17 = var_0_4(var_6_12, "\n")
+	local msg = tc(sb, "\n")
 
-	logError(var_6_17)
-	var_0_1.util.saveClipboard(var_6_17:gsub("%b<>", ""))
+	logError(msg)
+	GMTool.util.saveClipboard(msg:gsub("%b<>", ""))
 end
 
-var_0_1._accountDummper = var_0_8:onClear()
+GMTool._accountDummper = M:onClear()
 
 return {}

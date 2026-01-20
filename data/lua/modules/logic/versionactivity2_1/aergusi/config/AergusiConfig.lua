@@ -1,17 +1,19 @@
-﻿module("modules.logic.versionactivity2_1.aergusi.config.AergusiConfig", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_1/aergusi/config/AergusiConfig.lua
 
-local var_0_0 = class("AergusiConfig", BaseConfig)
+module("modules.logic.versionactivity2_1.aergusi.config.AergusiConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._episodeConfig = nil
-	arg_1_0._evidenceConfig = nil
-	arg_1_0._dialogConfig = nil
-	arg_1_0._bubbleConfig = nil
-	arg_1_0._clueConfig = nil
-	arg_1_0._taskConfig = nil
+local AergusiConfig = class("AergusiConfig", BaseConfig)
+
+function AergusiConfig:ctor()
+	self._episodeConfig = nil
+	self._evidenceConfig = nil
+	self._dialogConfig = nil
+	self._bubbleConfig = nil
+	self._clueConfig = nil
+	self._taskConfig = nil
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function AergusiConfig:reqConfigNames()
 	return {
 		"activity163_episode",
 		"activity163_evidence",
@@ -22,82 +24,82 @@ function var_0_0.reqConfigNames(arg_2_0)
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity163_episode" then
-		arg_3_0._episodeConfig = arg_3_2
-	elseif arg_3_1 == "activity163_evidence" then
-		arg_3_0._evidenceConfig = arg_3_2
-	elseif arg_3_1 == "activity163_dialog" then
-		arg_3_0._dialogConfig = arg_3_2
-	elseif arg_3_1 == "activity163_bubble" then
-		arg_3_0._bubbleConfig = arg_3_2
-	elseif arg_3_1 == "activity163_clue" then
-		arg_3_0._clueConfig = arg_3_2
-	elseif arg_3_1 == "activity163_task" then
-		arg_3_0._taskConfig = arg_3_2
+function AergusiConfig:onConfigLoaded(configName, configTable)
+	if configName == "activity163_episode" then
+		self._episodeConfig = configTable
+	elseif configName == "activity163_evidence" then
+		self._evidenceConfig = configTable
+	elseif configName == "activity163_dialog" then
+		self._dialogConfig = configTable
+	elseif configName == "activity163_bubble" then
+		self._bubbleConfig = configTable
+	elseif configName == "activity163_clue" then
+		self._clueConfig = configTable
+	elseif configName == "activity163_task" then
+		self._taskConfig = configTable
 	end
 end
 
-function var_0_0.getEpisodeConfigs(arg_4_0, arg_4_1)
-	arg_4_1 = arg_4_1 or VersionActivity2_1Enum.ActivityId.Aergusi
+function AergusiConfig:getEpisodeConfigs(actId)
+	actId = actId or VersionActivity2_1Enum.ActivityId.Aergusi
 
-	return arg_4_0._episodeConfig.configDict[arg_4_1]
+	return self._episodeConfig.configDict[actId]
 end
 
-function var_0_0.getEpisodeConfig(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_1 = arg_5_1 or VersionActivity2_1Enum.ActivityId.Aergusi
+function AergusiConfig:getEpisodeConfig(actId, episodeId)
+	actId = actId or VersionActivity2_1Enum.ActivityId.Aergusi
 
-	return arg_5_0._episodeConfig.configDict[arg_5_1][arg_5_2]
+	return self._episodeConfig.configDict[actId][episodeId]
 end
 
-function var_0_0.getEvidenceConfig(arg_6_0, arg_6_1)
-	return arg_6_0._evidenceConfig.configDict[arg_6_1]
+function AergusiConfig:getEvidenceConfig(evidenceId)
+	return self._evidenceConfig.configDict[evidenceId]
 end
 
-function var_0_0.getDialogConfigs(arg_7_0, arg_7_1)
-	return arg_7_0._dialogConfig.configDict[arg_7_1]
+function AergusiConfig:getDialogConfigs(evidenceId)
+	return self._dialogConfig.configDict[evidenceId]
 end
 
-function var_0_0.getDialogConfig(arg_8_0, arg_8_1, arg_8_2)
-	return arg_8_0._dialogConfig.configDict[arg_8_1][arg_8_2]
+function AergusiConfig:getDialogConfig(evidenceId, stepId)
+	return self._dialogConfig.configDict[evidenceId][stepId]
 end
 
-function var_0_0.getEvidenceDialogConfigs(arg_9_0, arg_9_1)
-	return arg_9_0._dialogConfig.configDict[arg_9_1]
+function AergusiConfig:getEvidenceDialogConfigs(evidenceId)
+	return self._dialogConfig.configDict[evidenceId]
 end
 
-function var_0_0.getBubbleConfigs(arg_10_0, arg_10_1)
-	return arg_10_0._bubbleConfig.configDict[arg_10_1]
+function AergusiConfig:getBubbleConfigs(tipId)
+	return self._bubbleConfig.configDict[tipId]
 end
 
-function var_0_0.getBubbleConfig(arg_11_0, arg_11_1, arg_11_2)
-	return arg_11_0._bubbleConfig.configDict[arg_11_1][arg_11_2]
+function AergusiConfig:getBubbleConfig(tipId, stepId)
+	return self._bubbleConfig.configDict[tipId][stepId]
 end
 
-function var_0_0.getClueConfigs(arg_12_0)
-	return arg_12_0._clueConfig.configDict
+function AergusiConfig:getClueConfigs()
+	return self._clueConfig.configDict
 end
 
-function var_0_0.getClueConfig(arg_13_0, arg_13_1)
-	return arg_13_0._clueConfig.configDict[arg_13_1]
+function AergusiConfig:getClueConfig(clueId)
+	return self._clueConfig.configDict[clueId]
 end
 
-function var_0_0.getTaskConfig(arg_14_0, arg_14_1)
-	return arg_14_0._taskConfig.configDict[arg_14_1]
+function AergusiConfig:getTaskConfig(taskId)
+	return self._taskConfig.configDict[taskId]
 end
 
-function var_0_0.getTaskByActId(arg_15_0, arg_15_1)
-	local var_15_0 = {}
+function AergusiConfig:getTaskByActId(actId)
+	local list = {}
 
-	for iter_15_0, iter_15_1 in pairs(arg_15_0._taskConfig.configList) do
-		if iter_15_1.activityId == arg_15_1 then
-			table.insert(var_15_0, iter_15_1)
+	for _, co in pairs(self._taskConfig.configList) do
+		if co.activityId == actId then
+			table.insert(list, co)
 		end
 	end
 
-	return var_15_0
+	return list
 end
 
-var_0_0.instance = var_0_0.New()
+AergusiConfig.instance = AergusiConfig.New()
 
-return var_0_0
+return AergusiConfig

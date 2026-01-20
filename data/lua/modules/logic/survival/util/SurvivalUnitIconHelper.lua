@@ -1,10 +1,12 @@
-﻿module("modules.logic.survival.util.SurvivalUnitIconHelper", package.seeall)
+﻿-- chunkname: @modules/logic/survival/util/SurvivalUnitIconHelper.lua
 
-local var_0_0 = class("SurvivalUnitIconHelper")
-local var_0_1 = "survival_map_icon_"
-local var_0_2 = "survival_map_bubble_"
-local var_0_3 = "survival_map_icon_arrow0"
-local var_0_4 = {
+module("modules.logic.survival.util.SurvivalUnitIconHelper", package.seeall)
+
+local SurvivalUnitIconHelper = class("SurvivalUnitIconHelper")
+local iconPref = "survival_map_icon_"
+local bgPref = "survival_map_bubble_"
+local arrowPref = "survival_map_icon_arrow0"
+local Icons = {
 	Exit = 22,
 	Shop = 15,
 	Door = 9,
@@ -23,7 +25,7 @@ local var_0_4 = {
 	NPC = 2,
 	Searched = 4
 }
-local var_0_5 = {
+local Colors = {
 	Gold = {
 		"gold",
 		"3"
@@ -41,85 +43,87 @@ local var_0_5 = {
 		"3"
 	}
 }
-local var_0_6 = {
-	[var_0_4.Task] = var_0_5.Green,
-	[var_0_4.NPC] = var_0_5.Green,
-	[var_0_4.Search] = var_0_5.Green,
-	[var_0_4.Searched] = var_0_5.Green,
-	[var_0_4.Treasure] = var_0_5.Green,
-	[var_0_4.Shop] = var_0_5.Green,
-	[var_0_4.Fight] = var_0_5.Red,
-	[var_0_4.Fight_Elite] = var_0_5.Red,
-	[var_0_4.Exit] = var_0_5.Gold,
-	[var_0_4.Door] = var_0_5.Yellow,
-	[var_0_4.Hero] = var_0_5.Green,
-	[var_0_4.Unknown] = var_0_5.Green,
-	[var_0_4.NPC_High] = var_0_5.Gold,
-	[var_0_4.Fight_Skip] = var_0_5.Green,
-	[var_0_4.Fight_Elite_Skip] = var_0_5.Green,
-	[var_0_4.Searched_High] = var_0_5.Gold,
-	[var_0_4.Search_High] = var_0_5.Gold
+local IconBgs = {
+	[Icons.Task] = Colors.Green,
+	[Icons.NPC] = Colors.Green,
+	[Icons.Search] = Colors.Green,
+	[Icons.Searched] = Colors.Green,
+	[Icons.Treasure] = Colors.Green,
+	[Icons.Shop] = Colors.Green,
+	[Icons.Fight] = Colors.Red,
+	[Icons.Fight_Elite] = Colors.Red,
+	[Icons.Exit] = Colors.Gold,
+	[Icons.Door] = Colors.Yellow,
+	[Icons.Hero] = Colors.Green,
+	[Icons.Unknown] = Colors.Green,
+	[Icons.NPC_High] = Colors.Gold,
+	[Icons.Fight_Skip] = Colors.Green,
+	[Icons.Fight_Elite_Skip] = Colors.Green,
+	[Icons.Searched_High] = Colors.Gold,
+	[Icons.Search_High] = Colors.Gold
 }
-local var_0_7 = {
-	[SurvivalEnum.UnitType.Task] = var_0_4.Task,
-	[SurvivalEnum.UnitType.NPC] = var_0_4.NPC,
-	[SurvivalEnum.UnitType.Treasure] = var_0_4.Treasure,
-	[SurvivalEnum.UnitType.Exit] = var_0_4.Exit,
-	[SurvivalEnum.UnitType.Door] = var_0_4.Door
+local unitTypeToIcon = {
+	[SurvivalEnum.UnitType.Task] = Icons.Task,
+	[SurvivalEnum.UnitType.NPC] = Icons.NPC,
+	[SurvivalEnum.UnitType.Treasure] = Icons.Treasure,
+	[SurvivalEnum.UnitType.Exit] = Icons.Exit,
+	[SurvivalEnum.UnitType.Door] = Icons.Door
 }
-local var_0_8 = {
-	[53] = var_0_4.NPC_High,
-	[SurvivalEnum.UnitSubType.Shop] = var_0_4.Shop
+local unitSubTypeToIcon = {
+	[53] = Icons.NPC_High,
+	[SurvivalEnum.UnitSubType.Shop] = Icons.Shop
 }
-local var_0_9 = {
+local RelationIcon = {
 	[SurvivalEnum.ReputationType.People] = "survival_map_icon_31",
 	[SurvivalEnum.ReputationType.Zeno] = "survival_map_icon_29",
 	[SurvivalEnum.ReputationType.Foundation] = "survival_map_icon_30",
 	[SurvivalEnum.ReputationType.Laplace] = "survival_map_icon_28"
 }
 
-function var_0_0.getUnitIconAndBg(arg_1_0, arg_1_1)
-	local var_1_0 = var_0_4.Unknown
+function SurvivalUnitIconHelper:getUnitIconAndBg(unitMo)
+	local icon = Icons.Unknown
 
-	if arg_1_1.visionVal ~= 8 then
-		local var_1_1 = arg_1_1.unitType
-		local var_1_2 = arg_1_1.co and arg_1_1.co.subType
+	if unitMo.visionVal ~= 8 then
+		local unitType = unitMo.unitType
+		local subType = unitMo.co and unitMo.co.subType
 
-		var_1_0 = var_0_7[var_1_1] or var_1_0
-		var_1_0 = var_0_8[var_1_2] or var_1_0
+		icon = unitTypeToIcon[unitType] or icon
+		icon = unitSubTypeToIcon[subType] or icon
 
-		if var_1_1 == SurvivalEnum.UnitType.Search then
-			local var_1_3 = arg_1_1:isSearched()
+		if unitType == SurvivalEnum.UnitType.Search then
+			local isSearched = unitMo:isSearched()
 
-			if var_1_2 == 392 then
-				var_1_0 = var_1_3 and var_0_4.Searched_High or var_0_4.Search_High
+			if subType == 392 then
+				icon = isSearched and Icons.Searched_High or Icons.Search_High
 			else
-				var_1_0 = var_1_3 and var_0_4.Searched or var_0_4.Search
+				icon = isSearched and Icons.Searched or Icons.Search
 			end
-		elseif var_1_1 == SurvivalEnum.UnitType.Battle then
-			local var_1_4 = var_1_2 == 41 or var_1_2 == 43
-			local var_1_5 = SurvivalShelterModel.instance:getWeekInfo():getAttr(SurvivalEnum.AttrType.HeroFightLevel)
-			local var_1_6 = arg_1_1.co.fightLevel
+		elseif unitType == SurvivalEnum.UnitType.Battle then
+			local isElite = subType == 41 or subType == 43
+			local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+			local teamLv = weekInfo:getAttr(SurvivalEnum.AttrType.HeroFightLevel)
+			local fightLv = unitMo.co.fightLevel
+			local canSkip = unitMo.co.skip == 1 and fightLv <= teamLv
 
-			if arg_1_1.co.skip == 1 and var_1_6 <= var_1_5 then
-				var_1_0 = var_1_4 and var_0_4.Fight_Elite_Skip or var_0_4.Fight_Skip
+			if canSkip then
+				icon = isElite and Icons.Fight_Elite_Skip or Icons.Fight_Skip
 			else
-				var_1_0 = var_1_4 and var_0_4.Fight_Elite or var_0_4.Fight
+				icon = isElite and Icons.Fight_Elite or Icons.Fight
 			end
 		end
 	end
 
-	return var_0_1 .. var_1_0, var_0_2 .. var_0_6[var_1_0][1], var_0_3 .. var_0_6[var_1_0][2]
+	return iconPref .. icon, bgPref .. IconBgs[icon][1], arrowPref .. IconBgs[icon][2]
 end
 
-function var_0_0.getRelationIcon(arg_2_0, arg_2_1)
-	return var_0_9[arg_2_1]
+function SurvivalUnitIconHelper:getRelationIcon(reputationType)
+	return RelationIcon[reputationType]
 end
 
-function var_0_0.setNpcIcon(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	arg_3_1:LoadImage(string.format("singlebg/chess/%s.png", arg_3_2), arg_3_3, arg_3_4)
+function SurvivalUnitIconHelper:setNpcIcon(singleImage, iconName, cb, cbobj)
+	singleImage:LoadImage(string.format("singlebg/chess/%s.png", iconName), cb, cbobj)
 end
 
-var_0_0.instance = var_0_0.New()
+SurvivalUnitIconHelper.instance = SurvivalUnitIconHelper.New()
 
-return var_0_0
+return SurvivalUnitIconHelper

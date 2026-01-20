@@ -1,112 +1,115 @@
-﻿module("modules.logic.sp01.library.AssassinLibraryModel", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/library/AssassinLibraryModel.lua
 
-local var_0_0 = class("AssassinLibraryModel", BaseModel)
+module("modules.logic.sp01.library.AssassinLibraryModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._statusMap = {}
-	arg_1_0._hasReadLibraryIdMap = {}
-	arg_1_0._hasReadLibraryIds = {}
-	arg_1_0._hasPlayUnlockAnimList = nil
-	arg_1_0._isLoadLocalData = false
+local AssassinLibraryModel = class("AssassinLibraryModel", BaseModel)
+
+function AssassinLibraryModel:onInit()
+	self._statusMap = {}
+	self._hasReadLibraryIdMap = {}
+	self._hasReadLibraryIds = {}
+	self._hasPlayUnlockAnimList = nil
+	self._isLoadLocalData = false
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:onInit()
+function AssassinLibraryModel:reInit()
+	self:onInit()
 end
 
-function var_0_0.loadHasReadLibraryIdsFromLocal(arg_3_0)
-	if arg_3_0._isLoadLocalData then
+function AssassinLibraryModel:loadHasReadLibraryIdsFromLocal()
+	if self._isLoadLocalData then
 		return
 	end
 
-	local var_3_0 = PlayerPrefsHelper.getString(arg_3_0:_getLibraryHasReadIdMapKey(), "")
-	local var_3_1 = string.splitToNumber(var_3_0, "#")
+	local hasReadLibraryIdStr = PlayerPrefsHelper.getString(self:_getLibraryHasReadIdMapKey(), "")
+	local hasReadLibraryIds = string.splitToNumber(hasReadLibraryIdStr, "#")
 
-	for iter_3_0, iter_3_1 in ipairs(var_3_1) do
-		arg_3_0:setLibraryStatus(iter_3_1, AssassinEnum.LibraryStatus.Unlocked)
+	for _, libraryId in ipairs(hasReadLibraryIds) do
+		self:setLibraryStatus(libraryId, AssassinEnum.LibraryStatus.Unlocked)
 	end
 
-	arg_3_0._isLoadLocalData = true
+	self._isLoadLocalData = true
 end
 
-function var_0_0.updateLibraryInfos(arg_4_0, arg_4_1)
-	arg_4_0:loadHasReadLibraryIdsFromLocal()
+function AssassinLibraryModel:updateLibraryInfos(unlockLibraryIds)
+	self:loadHasReadLibraryIdsFromLocal()
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
-		local var_4_0 = arg_4_0:getLibraryStatus(iter_4_1)
-		local var_4_1 = (var_4_0 == AssassinEnum.LibraryStatus.Locked or var_4_0 == AssassinEnum.LibraryStatus.New) and AssassinEnum.LibraryStatus.New or AssassinEnum.LibraryStatus.Unlocked
+	for _, libraryId in ipairs(unlockLibraryIds) do
+		local preStatus = self:getLibraryStatus(libraryId)
+		local isNew = preStatus == AssassinEnum.LibraryStatus.Locked or preStatus == AssassinEnum.LibraryStatus.New
+		local newStatus = isNew and AssassinEnum.LibraryStatus.New or AssassinEnum.LibraryStatus.Unlocked
 
-		arg_4_0:setLibraryStatus(iter_4_1, var_4_1)
+		self:setLibraryStatus(libraryId, newStatus)
 	end
 end
 
-function var_0_0.switch(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0._actId = arg_5_1
-	arg_5_0._libType = arg_5_2
+function AssassinLibraryModel:switch(actId, libType)
+	self._actId = actId
+	self._libType = libType
 end
 
-function var_0_0.getCurActId(arg_6_0)
-	return arg_6_0._actId
+function AssassinLibraryModel:getCurActId()
+	return self._actId
 end
 
-function var_0_0.getCurLibType(arg_7_0)
-	return arg_7_0._libType
+function AssassinLibraryModel:getCurLibType()
+	return self._libType
 end
 
-function var_0_0.getLibraryStatus(arg_8_0, arg_8_1)
-	return arg_8_0._statusMap[arg_8_1] or AssassinEnum.LibraryStatus.Locked
+function AssassinLibraryModel:getLibraryStatus(libraryId)
+	return self._statusMap[libraryId] or AssassinEnum.LibraryStatus.Locked
 end
 
-function var_0_0.setLibraryStatus(arg_9_0, arg_9_1, arg_9_2)
-	if arg_9_2 == AssassinEnum.LibraryStatus.Unlocked and not arg_9_0._hasReadLibraryIdMap[arg_9_1] then
-		arg_9_0._hasReadLibraryIdMap[arg_9_1] = true
+function AssassinLibraryModel:setLibraryStatus(libraryId, newStatus)
+	if newStatus == AssassinEnum.LibraryStatus.Unlocked and not self._hasReadLibraryIdMap[libraryId] then
+		self._hasReadLibraryIdMap[libraryId] = true
 
-		table.insert(arg_9_0._hasReadLibraryIds, arg_9_1)
+		table.insert(self._hasReadLibraryIds, libraryId)
 	end
 
-	arg_9_0._statusMap[arg_9_1] = arg_9_2
+	self._statusMap[libraryId] = newStatus
 end
 
-function var_0_0.readLibrary(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0:getLibraryStatus(arg_10_1)
+function AssassinLibraryModel:readLibrary(libraryId)
+	local status = self:getLibraryStatus(libraryId)
 
-	if var_10_0 == AssassinEnum.LibraryStatus.Locked then
+	if status == AssassinEnum.LibraryStatus.Locked then
 		return
 	end
 
-	arg_10_0:setLibraryStatus(arg_10_1, AssassinEnum.LibraryStatus.Unlocked)
+	self:setLibraryStatus(libraryId, AssassinEnum.LibraryStatus.Unlocked)
 
-	if var_10_0 == AssassinEnum.LibraryStatus.New then
-		arg_10_0:saveLocalHasReadLibraryIds()
+	if status == AssassinEnum.LibraryStatus.New then
+		self:saveLocalHasReadLibraryIds()
 		AssassinController.instance:dispatchEvent(AssassinEvent.UpdateLibraryReddot)
 	end
 end
 
-function var_0_0.readTypeLibrarys(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = AssassinConfig.instance:getLibraryConfigs(arg_11_1, arg_11_2)
+function AssassinLibraryModel:readTypeLibrarys(actId, libType)
+	local libraryCoList = AssassinConfig.instance:getLibraryConfigs(actId, libType)
 
-	if not var_11_0 then
+	if not libraryCoList then
 		return
 	end
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
-		arg_11_0:readLibrary(iter_11_1.id)
+	for _, libraryCo in ipairs(libraryCoList) do
+		self:readLibrary(libraryCo.id)
 	end
 end
 
-function var_0_0.saveLocalHasReadLibraryIds(arg_12_0)
-	local var_12_0 = table.concat(arg_12_0._hasReadLibraryIds, "#")
+function AssassinLibraryModel:saveLocalHasReadLibraryIds()
+	local hasReadLibraryIdStr = table.concat(self._hasReadLibraryIds, "#")
 
-	PlayerPrefsHelper.setString(arg_12_0:_getLibraryHasReadIdMapKey(), var_12_0)
+	PlayerPrefsHelper.setString(self:_getLibraryHasReadIdMapKey(), hasReadLibraryIdStr)
 end
 
-function var_0_0._getLibraryHasReadIdMapKey(arg_13_0)
+function AssassinLibraryModel:_getLibraryHasReadIdMapKey()
 	return PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.AssassinLibraryHasReadIdMap)
 end
 
-function var_0_0.isAnyLibraryNewUnlock(arg_14_0)
-	for iter_14_0, iter_14_1 in pairs(arg_14_0._statusMap) do
-		if iter_14_1 == AssassinEnum.LibraryStatus.New then
+function AssassinLibraryModel:isAnyLibraryNewUnlock()
+	for _, status in pairs(self._statusMap) do
+		if status == AssassinEnum.LibraryStatus.New then
 			return true
 		end
 	end
@@ -114,30 +117,32 @@ function var_0_0.isAnyLibraryNewUnlock(arg_14_0)
 	return false
 end
 
-function var_0_0.getNewUnlockLibraryIdMap(arg_15_0, arg_15_1)
-	local var_15_0 = {}
-	local var_15_1 = AssassinConfig.instance:getActLibraryConfigDict(arg_15_1)
+function AssassinLibraryModel:getNewUnlockLibraryIdMap(actId)
+	local type2ReddotMap = {}
+	local actLibraryDict = AssassinConfig.instance:getActLibraryConfigDict(actId)
 
-	for iter_15_0, iter_15_1 in pairs(var_15_1) do
-		var_15_0[iter_15_0] = false
+	for type, libraryList in pairs(actLibraryDict) do
+		type2ReddotMap[type] = false
 
-		for iter_15_2, iter_15_3 in ipairs(iter_15_1) do
-			if arg_15_0:getLibraryStatus(iter_15_3.id) == AssassinEnum.LibraryStatus.New then
-				var_15_0[iter_15_0] = true
+		for _, libraryCo in ipairs(libraryList) do
+			if self:getLibraryStatus(libraryCo.id) == AssassinEnum.LibraryStatus.New then
+				type2ReddotMap[type] = true
 
 				break
 			end
 		end
 	end
 
-	return var_15_0
+	return type2ReddotMap
 end
 
-function var_0_0.isUnlockAllLibrarys(arg_16_0, arg_16_1, arg_16_2)
-	local var_16_0 = AssassinConfig.instance:getLibraryConfigs(arg_16_1, arg_16_2)
+function AssassinLibraryModel:isUnlockAllLibrarys(actId, libraryType)
+	local libraryList = AssassinConfig.instance:getLibraryConfigs(actId, libraryType)
 
-	for iter_16_0, iter_16_1 in ipairs(var_16_0 or {}) do
-		if arg_16_0:getLibraryStatus(iter_16_1.id) == AssassinEnum.LibraryStatus.Locked then
+	for _, libraryCo in ipairs(libraryList or {}) do
+		local status = self:getLibraryStatus(libraryCo.id)
+
+		if status == AssassinEnum.LibraryStatus.Locked then
 			return false
 		end
 	end
@@ -145,36 +150,38 @@ function var_0_0.isUnlockAllLibrarys(arg_16_0, arg_16_1, arg_16_2)
 	return true
 end
 
-function var_0_0.isLibraryNeedPlayUnlockAnim(arg_17_0, arg_17_1)
-	if arg_17_0:getLibraryStatus(arg_17_1) == AssassinEnum.LibraryStatus.Locked then
+function AssassinLibraryModel:isLibraryNeedPlayUnlockAnim(libraryId)
+	local status = self:getLibraryStatus(libraryId)
+
+	if status == AssassinEnum.LibraryStatus.Locked then
 		return
 	end
 
-	return not arg_17_0:_isUnlockAnimMapContains(arg_17_1)
+	return not self:_isUnlockAnimMapContains(libraryId)
 end
 
-function var_0_0._isUnlockAnimMapContains(arg_18_0, arg_18_1)
-	if not arg_18_0._hasPlayUnlockAnimList then
-		local var_18_0 = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.AssassinLibraryHasPlayUnlockAnimIds)
-		local var_18_1 = PlayerPrefsHelper.getString(var_18_0, "")
+function AssassinLibraryModel:_isUnlockAnimMapContains(libraryId)
+	if not self._hasPlayUnlockAnimList then
+		local key = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.AssassinLibraryHasPlayUnlockAnimIds)
+		local saveStr = PlayerPrefsHelper.getString(key, "")
 
-		arg_18_0._hasPlayUnlockAnimList = string.splitToNumber(var_18_1, "#")
+		self._hasPlayUnlockAnimList = string.splitToNumber(saveStr, "#")
 	end
 
-	return tabletool.indexOf(arg_18_0._hasPlayUnlockAnimList, arg_18_1) ~= nil
+	return tabletool.indexOf(self._hasPlayUnlockAnimList, libraryId) ~= nil
 end
 
-function var_0_0.markLibraryHasPlayUnlockAnim(arg_19_0, arg_19_1)
-	if not arg_19_0:_isUnlockAnimMapContains(arg_19_1) then
-		table.insert(arg_19_0._hasPlayUnlockAnimList, arg_19_1)
+function AssassinLibraryModel:markLibraryHasPlayUnlockAnim(libraryId)
+	if not self:_isUnlockAnimMapContains(libraryId) then
+		table.insert(self._hasPlayUnlockAnimList, libraryId)
 
-		local var_19_0 = table.concat(arg_19_0._hasPlayUnlockAnimList, "#")
-		local var_19_1 = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.AssassinLibraryHasPlayUnlockAnimIds)
+		local unlockIdStr = table.concat(self._hasPlayUnlockAnimList, "#")
+		local key = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.AssassinLibraryHasPlayUnlockAnimIds)
 
-		PlayerPrefsHelper.setString(var_19_1, var_19_0)
+		PlayerPrefsHelper.setString(key, unlockIdStr)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+AssassinLibraryModel.instance = AssassinLibraryModel.New()
 
-return var_0_0
+return AssassinLibraryModel

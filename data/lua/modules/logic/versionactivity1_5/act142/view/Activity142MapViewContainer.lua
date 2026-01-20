@@ -1,62 +1,64 @@
-﻿module("modules.logic.versionactivity1_5.act142.view.Activity142MapViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/act142/view/Activity142MapViewContainer.lua
 
-local var_0_0 = class("Activity142MapViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_5.act142.view.Activity142MapViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Activity142MapViewContainer = class("Activity142MapViewContainer", BaseViewContainer)
 
-	arg_1_0._mapView = Activity142MapView.New()
-	var_1_0[#var_1_0 + 1] = arg_1_0._mapView
-	var_1_0[#var_1_0 + 1] = TabViewGroup.New(1, "#go_BackBtns")
+function Activity142MapViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	self._mapView = Activity142MapView.New()
+	views[#views + 1] = self._mapView
+	views[#views + 1] = TabViewGroup.New(1, "#go_BackBtns")
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		local var_2_0 = NavigateButtonsView.New({
+function Activity142MapViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		local navigateButtonsView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
-		var_2_0:setOverrideClose(arg_2_0._overrideCloseFunc, arg_2_0)
+		navigateButtonsView:setOverrideClose(self._overrideCloseFunc, self)
 
 		return {
-			var_2_0
+			navigateButtonsView
 		}
 	end
 end
 
-function var_0_0._overrideCloseFunc(arg_3_0)
-	arg_3_0._mapView:playViewAnimation(UIAnimationName.Close)
+function Activity142MapViewContainer:_overrideCloseFunc()
+	self._mapView:playViewAnimation(UIAnimationName.Close)
 	AudioMgr.instance:trigger(AudioEnum.ui_activity142.CloseMapView)
-	TaskDispatcher.runDelay(arg_3_0._onDelayCloseView, arg_3_0, Activity142Enum.CLOSE_MAP_VIEW_TIME)
+	TaskDispatcher.runDelay(self._onDelayCloseView, self, Activity142Enum.CLOSE_MAP_VIEW_TIME)
 end
 
-function var_0_0._onDelayCloseView(arg_4_0)
-	arg_4_0:closeThis()
+function Activity142MapViewContainer:_onDelayCloseView()
+	self:closeThis()
 end
 
-function var_0_0.onContainerInit(arg_5_0)
+function Activity142MapViewContainer:onContainerInit()
 	ActivityEnterMgr.instance:enterActivity(VersionActivity1_5Enum.ActivityId.Activity142)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
 		VersionActivity1_5Enum.ActivityId.Activity142
 	})
 end
 
-function var_0_0._setVisible(arg_6_0, arg_6_1)
-	BaseViewContainer._setVisible(arg_6_0, arg_6_1)
+function Activity142MapViewContainer:_setVisible(isVisible)
+	BaseViewContainer._setVisible(self, isVisible)
 
-	if not arg_6_0._mapView then
+	if not self._mapView then
 		return
 	end
 
-	arg_6_0._mapView:onSetVisible(arg_6_1)
+	self._mapView:onSetVisible(isVisible)
 
-	if arg_6_1 then
-		arg_6_0._mapView:playViewAnimation(UIAnimationName.Open)
+	if isVisible then
+		self._mapView:playViewAnimation(UIAnimationName.Open)
 	end
 end
 
-return var_0_0
+return Activity142MapViewContainer

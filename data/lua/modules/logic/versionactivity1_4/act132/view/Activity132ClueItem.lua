@@ -1,136 +1,138 @@
-﻿module("modules.logic.versionactivity1_4.act132.view.Activity132ClueItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act132/view/Activity132ClueItem.lua
 
-local var_0_0 = class("Activity132ClueItem", UserDataDispose)
+module("modules.logic.versionactivity1_4.act132.view.Activity132ClueItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0:__onInit()
+local Activity132ClueItem = class("Activity132ClueItem", UserDataDispose)
 
-	arg_1_0.index = arg_1_2
-	arg_1_0._viewGO = arg_1_1
-	arg_1_0._goRoot = gohelper.findChild(arg_1_1, "root")
-	arg_1_0._maskGO = gohelper.findChild(arg_1_0._goRoot, "mask")
-	arg_1_0._mask = arg_1_0._maskGO:GetComponent(typeof(Coffee.UISoftMask.SoftMask))
-	arg_1_0._txtNode = gohelper.findChildTextMesh(arg_1_0._goRoot, "#txt_note")
-	arg_1_0._goReddot = gohelper.findChild(arg_1_0._goRoot, "#go_reddot")
-	arg_1_0._btnClick = gohelper.findChildButtonWithAudio(arg_1_0._goRoot, "btn_click")
-	arg_1_0._rect = arg_1_1.transform
-	arg_1_0._redDot = RedDotController.instance:addRedDot(arg_1_0._goReddot, 1081, nil, arg_1_0.refreshRed, arg_1_0)
+function Activity132ClueItem:ctor(go, index)
+	self:__onInit()
 
-	arg_1_0:addClickCb(arg_1_0._btnClick, arg_1_0.onClickBtn, arg_1_0)
-	arg_1_0:addEventCb(Activity132Controller.instance, Activity132Event.OnContentUnlock, arg_1_0.onRefreshRed, arg_1_0)
+	self.index = index
+	self._viewGO = go
+	self._goRoot = gohelper.findChild(go, "root")
+	self._maskGO = gohelper.findChild(self._goRoot, "mask")
+	self._mask = self._maskGO:GetComponent(typeof(Coffee.UISoftMask.SoftMask))
+	self._txtNode = gohelper.findChildTextMesh(self._goRoot, "#txt_note")
+	self._goReddot = gohelper.findChild(self._goRoot, "#go_reddot")
+	self._btnClick = gohelper.findChildButtonWithAudio(self._goRoot, "btn_click")
+	self._rect = go.transform
+	self._redDot = RedDotController.instance:addRedDot(self._goReddot, 1081, nil, self.refreshRed, self)
+
+	self:addClickCb(self._btnClick, self.onClickBtn, self)
+	self:addEventCb(Activity132Controller.instance, Activity132Event.OnContentUnlock, self.onRefreshRed, self)
 end
 
-function var_0_0.refreshRed(arg_2_0)
-	if not arg_2_0.data then
+function Activity132ClueItem:refreshRed()
+	if not self.data then
 		return
 	end
 
-	local var_2_0 = Activity132Model.instance:checkClueRed(arg_2_0.data.activityId, arg_2_0.data.clueId)
+	local red = Activity132Model.instance:checkClueRed(self.data.activityId, self.data.clueId)
 
-	arg_2_0._redDot.show = var_2_0
+	self._redDot.show = red
 
-	arg_2_0._redDot:showRedDot(1)
+	self._redDot:showRedDot(1)
 end
 
-function var_0_0.onClickBtn(arg_3_0)
-	if not arg_3_0.data then
+function Activity132ClueItem:onClickBtn()
+	if not self.data then
 		return
 	end
 
-	Activity132Controller.instance:dispatchEvent(Activity132Event.OnForceClueItem, arg_3_0.index)
+	Activity132Controller.instance:dispatchEvent(Activity132Event.OnForceClueItem, self.index)
 end
 
-function var_0_0.resetMask(arg_4_0)
-	local var_4_0 = 0
-	local var_4_1 = 0
+function Activity132ClueItem:resetMask()
+	local offsetX = 0
+	local offsetY = 0
 
-	gohelper.addChild(arg_4_0._goRoot, arg_4_0._maskGO)
-	gohelper.setAsFirstSibling(arg_4_0._maskGO)
-	recthelper.setAnchor(arg_4_0._maskGO.transform, var_4_0, var_4_1)
-	transformhelper.setLocalScale(arg_4_0._maskGO.transform, 2, 2, 2)
+	gohelper.addChild(self._goRoot, self._maskGO)
+	gohelper.setAsFirstSibling(self._maskGO)
+	recthelper.setAnchor(self._maskGO.transform, offsetX, offsetY)
+	transformhelper.setLocalScale(self._maskGO.transform, 2, 2, 2)
 end
 
-function var_0_0.setData(arg_5_0, arg_5_1)
-	arg_5_0.data = arg_5_1
+function Activity132ClueItem:setData(data)
+	self.data = data
 
-	arg_5_0:resetMask()
+	self:resetMask()
 
-	if not arg_5_1 then
-		arg_5_0:setActive(false)
+	if not data then
+		self:setActive(false)
 
 		return
 	end
 
-	arg_5_0:setActive(false)
-	arg_5_0:setActive(true)
+	self:setActive(false)
+	self:setActive(true)
 
-	arg_5_0._txtNode.text = arg_5_0.data:getName()
+	self._txtNode.text = self.data:getName()
 
-	local var_5_0, var_5_1 = arg_5_0.data:getPos()
+	local posX, posY = self.data:getPos()
 
-	recthelper.setAnchor(arg_5_0._rect, var_5_0, var_5_1)
+	recthelper.setAnchor(self._rect, posX, posY)
 
-	arg_5_0.posX, arg_5_0.posY, arg_5_0.posZ = transformhelper.getPos(arg_5_0._rect)
+	self.posX, self.posY, self.posZ = transformhelper.getPos(self._rect)
 
-	arg_5_0._redDot:refreshDot()
+	self._redDot:refreshDot()
 
-	if arg_5_0._fadeTweenId then
-		ZProj.TweenHelper.KillById(arg_5_0._fadeTweenId)
+	if self._fadeTweenId then
+		ZProj.TweenHelper.KillById(self._fadeTweenId)
 
-		arg_5_0._fadeTweenId = nil
+		self._fadeTweenId = nil
 	end
 
-	arg_5_0._fadeTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.34, arg_5_0.fadeUpdateCallback, nil, arg_5_0)
+	self._fadeTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.34, self.fadeUpdateCallback, nil, self)
 end
 
-function var_0_0.fadeUpdateCallback(arg_6_0, arg_6_1)
-	arg_6_0._mask.alpha = arg_6_1
+function Activity132ClueItem:fadeUpdateCallback(val)
+	self._mask.alpha = val
 end
 
-function var_0_0.onRefreshRed(arg_7_0)
-	if not arg_7_0.data then
+function Activity132ClueItem:onRefreshRed()
+	if not self.data then
 		return
 	end
 
-	arg_7_0._redDot:refreshDot()
+	self._redDot:refreshDot()
 end
 
-function var_0_0.setActive(arg_8_0, arg_8_1)
-	if arg_8_0.isVisible == arg_8_1 then
+function Activity132ClueItem:setActive(isVisible)
+	if self.isVisible == isVisible then
 		return
 	end
 
-	arg_8_0.isVisible = arg_8_1
+	self.isVisible = isVisible
 
-	gohelper.setActive(arg_8_0._maskGO, arg_8_1)
-	gohelper.setActive(arg_8_0._viewGO, arg_8_1)
+	gohelper.setActive(self._maskGO, isVisible)
+	gohelper.setActive(self._viewGO, isVisible)
 end
 
-function var_0_0.setRootVisible(arg_9_0, arg_9_1)
-	gohelper.setActive(arg_9_0._goRoot, arg_9_1)
+function Activity132ClueItem:setRootVisible(isVisible)
+	gohelper.setActive(self._goRoot, isVisible)
 end
 
-function var_0_0.destroy(arg_10_0)
-	if arg_10_0._fadeTweenId then
-		ZProj.TweenHelper.KillById(arg_10_0._fadeTweenId)
+function Activity132ClueItem:destroy()
+	if self._fadeTweenId then
+		ZProj.TweenHelper.KillById(self._fadeTweenId)
 
-		arg_10_0._fadeTweenId = nil
+		self._fadeTweenId = nil
 	end
 
-	gohelper.destroy(arg_10_0._viewGO)
-	arg_10_0:__onDispose()
+	gohelper.destroy(self._viewGO)
+	self:__onDispose()
 end
 
-function var_0_0.getMask(arg_11_0)
-	return arg_11_0._maskGO
+function Activity132ClueItem:getMask()
+	return self._maskGO
 end
 
-function var_0_0.getPos(arg_12_0)
-	return arg_12_0.posX, arg_12_0.posY, arg_12_0.posZ
+function Activity132ClueItem:getPos()
+	return self.posX, self.posY, self.posZ
 end
 
-function var_0_0.getRealPos(arg_13_0)
-	return transformhelper.getPos(arg_13_0._rect)
+function Activity132ClueItem:getRealPos()
+	return transformhelper.getPos(self._rect)
 end
 
-return var_0_0
+return Activity132ClueItem

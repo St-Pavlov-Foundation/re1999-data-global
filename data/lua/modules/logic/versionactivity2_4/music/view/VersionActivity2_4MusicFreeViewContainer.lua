@@ -1,39 +1,41 @@
-﻿module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicFreeViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/music/view/VersionActivity2_4MusicFreeViewContainer.lua
 
-local var_0_0 = class("VersionActivity2_4MusicFreeViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicFreeViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local VersionActivity2_4MusicFreeViewContainer = class("VersionActivity2_4MusicFreeViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, VersionActivity2_4MusicFreeView.New())
-	table.insert(var_1_0, VersionActivity2_4MusicFreeNoteView.New())
-	table.insert(var_1_0, VersionActivity2_4MusicFreeTrackView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_left"))
+function VersionActivity2_4MusicFreeViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, VersionActivity2_4MusicFreeView.New())
+	table.insert(views, VersionActivity2_4MusicFreeNoteView.New())
+	table.insert(views, VersionActivity2_4MusicFreeTrackView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_left"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function VersionActivity2_4MusicFreeViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			true,
 			true
 		}, HelpEnum.HelpId.MusicGameFreeHelp)
 
-		arg_2_0.navigateView:setHomeCheck(arg_2_0._closeHomeCheckFunc, arg_2_0)
-		arg_2_0.navigateView:setCloseCheck(arg_2_0._closeThisCheckFunc, arg_2_0)
+		self.navigateView:setHomeCheck(self._closeHomeCheckFunc, self)
+		self.navigateView:setCloseCheck(self._closeThisCheckFunc, self)
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-function var_0_0._closeHomeCheckFunc(arg_3_0)
+function VersionActivity2_4MusicFreeViewContainer:_closeHomeCheckFunc()
 	if VersionActivity2_4MusicFreeModel.instance:isRecordStatus() then
 		GameFacade.showMessageBox(MessageBoxIdDefine.MusicFreeQuitConfirm, MsgBoxEnum.BoxType.Yes_No, function()
-			arg_3_0.navigateView:_reallyHome()
+			self.navigateView:_reallyHome()
 		end)
 
 		return false
@@ -42,10 +44,10 @@ function var_0_0._closeHomeCheckFunc(arg_3_0)
 	return true
 end
 
-function var_0_0._closeThisCheckFunc(arg_5_0)
+function VersionActivity2_4MusicFreeViewContainer:_closeThisCheckFunc()
 	if VersionActivity2_4MusicFreeModel.instance:isRecordStatus() then
 		GameFacade.showMessageBox(MessageBoxIdDefine.MusicFreeQuitConfirm, MsgBoxEnum.BoxType.Yes_No, function()
-			arg_5_0:closeThis()
+			self:closeThis()
 		end)
 
 		return false
@@ -54,12 +56,12 @@ function var_0_0._closeThisCheckFunc(arg_5_0)
 	return true
 end
 
-function var_0_0.onContainerInit(arg_7_0)
-	VersionActivity2_4MultiTouchController.instance:startMultiTouch(arg_7_0.viewName)
+function VersionActivity2_4MusicFreeViewContainer:onContainerInit()
+	VersionActivity2_4MultiTouchController.instance:startMultiTouch(self.viewName)
 end
 
-function var_0_0.onContainerDestroy(arg_8_0)
+function VersionActivity2_4MusicFreeViewContainer:onContainerDestroy()
 	VersionActivity2_4MultiTouchController.instance:endMultiTouch()
 end
 
-return var_0_0
+return VersionActivity2_4MusicFreeViewContainer

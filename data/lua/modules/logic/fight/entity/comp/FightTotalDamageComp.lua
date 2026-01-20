@@ -1,52 +1,54 @@
-﻿module("modules.logic.fight.entity.comp.FightTotalDamageComp", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/FightTotalDamageComp.lua
 
-local var_0_0 = class("FightTotalDamageComp", LuaCompBase)
+module("modules.logic.fight.entity.comp.FightTotalDamageComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.entity = arg_1_1
-	arg_1_0._damageDict = {}
+local FightTotalDamageComp = class("FightTotalDamageComp", LuaCompBase)
+
+function FightTotalDamageComp:ctor(entity)
+	self.entity = entity
+	self._damageDict = {}
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	FightController.instance:registerCallback(FightEvent.OnDamageTotal, arg_2_0._onDamageTotal, arg_2_0)
-	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, arg_2_0._onSkillPlayFinish, arg_2_0)
+function FightTotalDamageComp:init(go)
+	FightController.instance:registerCallback(FightEvent.OnDamageTotal, self._onDamageTotal, self)
+	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.OnDamageTotal, arg_3_0._onDamageTotal, arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, arg_3_0._onSkillPlayFinish, arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0._showTotalFloat, arg_3_0)
+function FightTotalDamageComp:removeEventListeners()
+	FightController.instance:unregisterCallback(FightEvent.OnDamageTotal, self._onDamageTotal, self)
+	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
+	TaskDispatcher.cancelTask(self._showTotalFloat, self)
 end
 
-function var_0_0._onDamageTotal(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
-	if arg_4_2 == arg_4_0.entity and arg_4_3 and arg_4_3 > 0 then
-		arg_4_0._damageDict[arg_4_1] = arg_4_0._damageDict[arg_4_1] or {}
+function FightTotalDamageComp:_onDamageTotal(fightStepData, defender, damage, isLastHit)
+	if defender == self.entity and damage and damage > 0 then
+		self._damageDict[fightStepData] = self._damageDict[fightStepData] or {}
 
-		table.insert(arg_4_0._damageDict[arg_4_1], arg_4_3)
+		table.insert(self._damageDict[fightStepData], damage)
 
-		if arg_4_4 then
-			arg_4_0._damageDict[arg_4_1].showTotal = true
-			arg_4_0._damageDict[arg_4_1].fromId = arg_4_1.fromId
+		if isLastHit then
+			self._damageDict[fightStepData].showTotal = true
+			self._damageDict[fightStepData].fromId = fightStepData.fromId
 
-			TaskDispatcher.runDelay(arg_4_0._showTotalFloat, arg_4_0, 0.6)
+			TaskDispatcher.runDelay(self._showTotalFloat, self, 0.6)
 		end
 	end
 end
 
-function var_0_0._onSkillPlayFinish(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	if arg_5_1 ~= arg_5_0.entity and arg_5_3.actType == FightEnum.ActType.SKILL then
-		TaskDispatcher.cancelTask(arg_5_0._showTotalFloat, arg_5_0)
+function FightTotalDamageComp:_onSkillPlayFinish(entity, skillId, fightStepData)
+	if entity ~= self.entity and fightStepData.actType == FightEnum.ActType.SKILL then
+		TaskDispatcher.cancelTask(self._showTotalFloat, self)
 
-		if arg_5_0._damageDict[arg_5_3] then
-			arg_5_0._damageDict[arg_5_3].showTotal = true
-			arg_5_0._damageDict[arg_5_3].fromId = arg_5_3.fromId
+		if self._damageDict[fightStepData] then
+			self._damageDict[fightStepData].showTotal = true
+			self._damageDict[fightStepData].fromId = fightStepData.fromId
 		end
 
-		arg_5_0:_showTotalFloat()
+		self:_showTotalFloat()
 	end
 end
 
-local var_0_1 = {
+local DMGTypes = {
 	[FightEnum.EffectType.DAMAGE] = true,
 	[FightEnum.EffectType.CRIT] = true,
 	[FightEnum.EffectType.ORIGINDAMAGE] = true,
@@ -54,57 +56,57 @@ local var_0_1 = {
 	[FightEnum.EffectType.ADDITIONALDAMAGE] = true,
 	[FightEnum.EffectType.ADDITIONALDAMAGECRIT] = true
 }
-local var_0_2 = {
+local ShieldTypes = {
 	[FightEnum.EffectType.SHIELD] = true,
 	[FightEnum.EffectType.SHIELDDEL] = true
 }
 
-function var_0_0._showTotalFloat(arg_6_0)
-	for iter_6_0, iter_6_1 in pairs(arg_6_0._damageDict) do
-		local var_6_0 = iter_6_1.showTotal and #iter_6_1 > 1
+function FightTotalDamageComp:_showTotalFloat()
+	for fightStepData, data in pairs(self._damageDict) do
+		local show = data.showTotal and #data > 1
 
-		if iter_6_0.forceShowDamageTotalFloat then
-			var_6_0 = true
+		if fightStepData.forceShowDamageTotalFloat then
+			show = true
 		end
 
-		if var_6_0 then
-			local var_6_1 = false
-			local var_6_2 = false
-			local var_6_3 = 0
+		if show then
+			local hasOrigin = false
+			local hasAssassinate = false
+			local floatNum = 0
 
-			for iter_6_2, iter_6_3 in ipairs(iter_6_0.actEffect) do
-				if iter_6_3.targetId == arg_6_0.entity.id then
-					local var_6_4 = iter_6_3.effectType
+			for _, actEffectData in ipairs(fightStepData.actEffect) do
+				if actEffectData.targetId == self.entity.id then
+					local et = actEffectData.effectType
 
-					if FightTLEventDefHit.originHitEffectType[var_6_4] then
-						var_6_1 = true
+					if FightTLEventDefHit.originHitEffectType[et] then
+						hasOrigin = true
 					end
 
-					if iter_6_3.effectNum1 == 1 then
-						var_6_2 = true
+					if actEffectData.effectNum1 == 1 then
+						hasAssassinate = true
 					end
 				end
 			end
 
-			for iter_6_4, iter_6_5 in ipairs(iter_6_0.actEffect) do
-				if iter_6_5.targetId == arg_6_0.entity.id then
-					local var_6_5 = iter_6_5.effectType
+			for _, actEffectData in ipairs(fightStepData.actEffect) do
+				if actEffectData.targetId == self.entity.id then
+					local et = actEffectData.effectType
 
-					if var_0_1[var_6_5] then
-						var_6_3 = var_6_3 + iter_6_5.effectNum
+					if DMGTypes[et] then
+						floatNum = floatNum + actEffectData.effectNum
 
-						if iter_6_5.effectNum1 == 1 then
-							var_6_2 = true
+						if actEffectData.effectNum1 == 1 then
+							hasAssassinate = true
 						end
-					elseif var_0_2[var_6_5] then
-						var_6_3 = 0
+					elseif ShieldTypes[et] then
+						floatNum = 0
 
-						for iter_6_6, iter_6_7 in ipairs(iter_6_1) do
-							var_6_3 = var_6_3 + iter_6_7
+						for _, damage in ipairs(data) do
+							floatNum = floatNum + damage
 						end
 
-						if iter_6_5.effectNum1 == 1 then
-							var_6_2 = true
+						if actEffectData.effectNum1 == 1 then
+							hasAssassinate = true
 						end
 
 						break
@@ -112,27 +114,27 @@ function var_0_0._showTotalFloat(arg_6_0)
 				end
 			end
 
-			if var_6_3 > 0 then
-				local var_6_6 = {
-					fromId = iter_6_1.fromId,
-					defenderId = arg_6_0.entity.id
-				}
+			if floatNum > 0 then
+				local param = {}
 
-				if arg_6_0._fixedPos then
-					var_6_6.pos_x = arg_6_0._fixedPos[1]
-					var_6_6.pos_y = arg_6_0._fixedPos[2]
+				param.fromId = data.fromId
+				param.defenderId = self.entity.id
+
+				if self._fixedPos then
+					param.pos_x = self._fixedPos[1]
+					param.pos_y = self._fixedPos[2]
 				end
 
-				local var_6_7 = var_6_1 and FightEnum.FloatType.total_origin or FightEnum.FloatType.total
+				local floatType = hasOrigin and FightEnum.FloatType.total_origin or FightEnum.FloatType.total
 
-				FightFloatMgr.instance:float(arg_6_0.entity.id, var_6_7, var_6_3, var_6_6, var_6_2)
+				FightFloatMgr.instance:float(self.entity.id, floatType, floatNum, param, hasAssassinate)
 			end
 		end
 
-		if iter_6_1.showTotal then
-			arg_6_0._damageDict[iter_6_0] = nil
+		if data.showTotal then
+			self._damageDict[fightStepData] = nil
 		end
 	end
 end
 
-return var_0_0
+return FightTotalDamageComp

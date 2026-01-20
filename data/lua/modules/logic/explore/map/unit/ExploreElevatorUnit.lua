@@ -1,150 +1,154 @@
-﻿module("modules.logic.explore.map.unit.ExploreElevatorUnit", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/unit/ExploreElevatorUnit.lua
 
-local var_0_0 = class("ExploreElevatorUnit", ExploreBaseDisplayUnit)
+module("modules.logic.explore.map.unit.ExploreElevatorUnit", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._stayUnitDic = {}
+local ExploreElevatorUnit = class("ExploreElevatorUnit", ExploreBaseDisplayUnit)
+
+function ExploreElevatorUnit:onInit()
+	self._stayUnitDic = {}
 end
 
-function var_0_0.setupMO(arg_2_0)
-	arg_2_0._useHeight1 = arg_2_0.mo:getInteractInfoMO().statusInfo.height == arg_2_0.mo.height2
+function ExploreElevatorUnit:setupMO()
+	self._useHeight1 = self.mo:getInteractInfoMO().statusInfo.height == self.mo.height2
 
-	arg_2_0:_elevatorKeep()
+	self:_elevatorKeep()
 end
 
-function var_0_0.onRoleEnter(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	if not arg_3_2 then
+function ExploreElevatorUnit:onRoleEnter(nowNode, preNode, role)
+	if not preNode then
 		return
 	end
 
 	if ExploreHeroCatchUnitFlow.instance:isInFlow() then
-		ExploreController.instance:registerCallback(ExploreEvent.HeroCarryEnd, arg_3_0._carryEnd, arg_3_0)
+		ExploreController.instance:registerCallback(ExploreEvent.HeroCarryEnd, self._carryEnd, self)
 
 		return
 	end
 
-	if arg_3_0._stayUnitDic[arg_3_3] == nil then
-		arg_3_0._useHeight1 = arg_3_0.position.y == arg_3_0.mo.height1
+	if self._stayUnitDic[role] == nil then
+		self._useHeight1 = self.position.y == self.mo.height1
 
-		arg_3_0:_elevatorMoving()
+		self:_elevatorMoving()
 	end
 
-	arg_3_0._stayUnitDic[arg_3_3] = arg_3_3.position.y - arg_3_0.position.y
+	self._stayUnitDic[role] = role.position.y - self.position.y
 
-	arg_3_3:clearTarget()
+	role:clearTarget()
 end
 
-function var_0_0._carryEnd(arg_4_0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.HeroCarryEnd, arg_4_0._carryEnd, arg_4_0)
-	arg_4_0:onRoleEnter(nil, true, ExploreController.instance:getMap():getHero())
+function ExploreElevatorUnit:_carryEnd()
+	ExploreController.instance:unregisterCallback(ExploreEvent.HeroCarryEnd, self._carryEnd, self)
+	self:onRoleEnter(nil, true, ExploreController.instance:getMap():getHero())
 end
 
-function var_0_0.onRoleLeave(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	arg_5_0._stayUnitDic[arg_5_3] = nil
+function ExploreElevatorUnit:onRoleLeave(nowNode, preNode, role)
+	self._stayUnitDic[role] = nil
 end
 
-function var_0_0.movingElevator(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_0.position.y ~= arg_6_1 then
-		arg_6_0.mo:updateNodeHeight(9999999)
+function ExploreElevatorUnit:movingElevator(height, time)
+	if self.position.y ~= height then
+		self.mo:updateNodeHeight(9999999)
 
-		local var_6_0 = arg_6_1
-		local var_6_1 = arg_6_0.position.y
+		local tarY = height
+		local startY = self.position.y
 
-		if arg_6_0._tweenId then
-			ZProj.TweenHelper.KillById(arg_6_0._tweenId)
+		if self._tweenId then
+			ZProj.TweenHelper.KillById(self._tweenId)
 		end
 
-		arg_6_0._tweenId = ZProj.TweenHelper.DOTweenFloat(var_6_1, var_6_0, arg_6_2, arg_6_0._setY, nil, arg_6_0, nil, EaseType.Linear)
-		arg_6_0._tarY = var_6_0
+		self._tweenId = ZProj.TweenHelper.DOTweenFloat(startY, tarY, time, self._setY, nil, self, nil, EaseType.Linear)
+		self._tarY = tarY
 
-		arg_6_0:setStatusActive(true)
-		TaskDispatcher.runDelay(arg_6_0.setNodeHeightByTarY, arg_6_0, arg_6_2)
+		self:setStatusActive(true)
+		TaskDispatcher.runDelay(self.setNodeHeightByTarY, self, time)
 	end
 end
 
-function var_0_0._elevatorKeep(arg_7_0)
-	arg_7_0:setStatusActive(false)
-	arg_7_0:setSpikeActive(arg_7_0._useHeight1 == false)
+function ExploreElevatorUnit:_elevatorKeep()
+	self:setStatusActive(false)
+	self:setSpikeActive(self._useHeight1 == false)
 
-	if string.nilorempty(arg_7_0.mo.keepTime) == false then
-		TaskDispatcher.runDelay(arg_7_0._elevatorMoving, arg_7_0, arg_7_0.mo.keepTime)
+	if string.nilorempty(self.mo.keepTime) == false then
+		TaskDispatcher.runDelay(self._elevatorMoving, self, self.mo.keepTime)
 	end
 end
 
-function var_0_0._elevatorMoving(arg_8_0)
-	arg_8_0.mo:updateNodeHeight(9999999)
+function ExploreElevatorUnit:_elevatorMoving()
+	self.mo:updateNodeHeight(9999999)
 
-	if string.nilorempty(arg_8_0.mo.intervalTime) == false then
-		local var_8_0 = arg_8_0._useHeight1 and arg_8_0.mo.height2 or arg_8_0.mo.height1
-		local var_8_1 = arg_8_0._useHeight1 and arg_8_0.mo.height1 or arg_8_0.mo.height2
+	if string.nilorempty(self.mo.intervalTime) == false then
+		local tarY = self._useHeight1 and self.mo.height2 or self.mo.height1
+		local startY = self._useHeight1 and self.mo.height1 or self.mo.height2
 
-		if arg_8_0._tweenId then
-			ZProj.TweenHelper.KillById(arg_8_0._tweenId)
+		if self._tweenId then
+			ZProj.TweenHelper.KillById(self._tweenId)
 		end
 
-		arg_8_0._tweenId = ZProj.TweenHelper.DOTweenFloat(var_8_1, var_8_0, arg_8_0.mo.intervalTime, arg_8_0._setY, nil, arg_8_0, nil, EaseType.Linear)
+		self._tweenId = ZProj.TweenHelper.DOTweenFloat(startY, tarY, self.mo.intervalTime, self._setY, nil, self, nil, EaseType.Linear)
 
-		TaskDispatcher.runDelay(arg_8_0._elevatorKeep, arg_8_0, arg_8_0.mo.intervalTime)
-		arg_8_0:setStatusActive(true)
+		TaskDispatcher.runDelay(self._elevatorKeep, self, self.mo.intervalTime)
+		self:setStatusActive(true)
 	else
-		arg_8_0:_elevatorKeep()
+		self:_elevatorKeep()
 	end
 end
 
-function var_0_0.setStatusActive(arg_9_0, arg_9_1)
-	arg_9_0.mo:getInteractInfoMO():setBitByIndex(ExploreEnum.InteractIndex.ActiveState, arg_9_1 and 1 or 0)
+function ExploreElevatorUnit:setStatusActive(isActive)
+	local interactInfoMO = self.mo:getInteractInfoMO()
+
+	interactInfoMO:setBitByIndex(ExploreEnum.InteractIndex.ActiveState, isActive and 1 or 0)
 end
 
-function var_0_0.setNodeHeightByTarY(arg_10_0)
-	ZProj.TweenHelper.KillByObj(arg_10_0.trans)
-	arg_10_0.mo:updateNodeHeight(arg_10_0._tarY)
-	arg_10_0:_setY(arg_10_0._tarY)
-	arg_10_0:setStatusActive(false)
+function ExploreElevatorUnit:setNodeHeightByTarY()
+	ZProj.TweenHelper.KillByObj(self.trans)
+	self.mo:updateNodeHeight(self._tarY)
+	self:_setY(self._tarY)
+	self:setStatusActive(false)
 end
 
-function var_0_0.setSpikeActive(arg_11_0, arg_11_1)
-	ZProj.TweenHelper.KillByObj(arg_11_0.trans)
+function ExploreElevatorUnit:setSpikeActive(v)
+	ZProj.TweenHelper.KillByObj(self.trans)
 
-	arg_11_0._useHeight1 = arg_11_1
+	self._useHeight1 = v
 
-	local var_11_0 = ExploreHelper.getKey(arg_11_0.nodePos)
-	local var_11_1
+	local nodeKey = ExploreHelper.getKey(self.nodePos)
+	local nodeHeight
 
-	if arg_11_1 then
-		var_11_1 = arg_11_0.mo.height1
+	if v then
+		nodeHeight = self.mo.height1
 	else
-		var_11_1 = arg_11_0.mo.height2
+		nodeHeight = self.mo.height2
 	end
 
-	arg_11_0.mo:updateNodeHeight(var_11_1)
-	arg_11_0:_setY(var_11_1)
+	self.mo:updateNodeHeight(nodeHeight)
+	self:_setY(nodeHeight)
 end
 
-function var_0_0._setY(arg_12_0, arg_12_1)
-	arg_12_0.position.y = arg_12_1
+function ExploreElevatorUnit:_setY(y)
+	self.position.y = y
 
-	transformhelper.setPos(arg_12_0.trans, arg_12_0.position.x, arg_12_0.position.y, arg_12_0.position.z)
-	arg_12_0:_updateUnitRoleY()
+	transformhelper.setPos(self.trans, self.position.x, self.position.y, self.position.z)
+	self:_updateUnitRoleY()
 end
 
-function var_0_0._updateUnitRoleY(arg_13_0)
-	for iter_13_0, iter_13_1 in pairs(arg_13_0._stayUnitDic) do
-		iter_13_0:updateSceneY(arg_13_0.position.y + iter_13_1)
+function ExploreElevatorUnit:_updateUnitRoleY()
+	for unit, offY in pairs(self._stayUnitDic) do
+		unit:updateSceneY(self.position.y + offY)
 	end
 end
 
-function var_0_0.onDestroy(arg_14_0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.HeroCarryEnd, arg_14_0._carryEnd, arg_14_0)
-	ZProj.TweenHelper.KillByObj(arg_14_0.trans)
+function ExploreElevatorUnit:onDestroy()
+	ExploreController.instance:unregisterCallback(ExploreEvent.HeroCarryEnd, self._carryEnd, self)
+	ZProj.TweenHelper.KillByObj(self.trans)
 
-	if arg_14_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_14_0._tweenId)
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 	end
 
-	TaskDispatcher.cancelTask(arg_14_0._elevatorMoving, arg_14_0)
-	TaskDispatcher.cancelTask(arg_14_0._elevatorKeep, arg_14_0)
-	TaskDispatcher.cancelTask(arg_14_0.setNodeHeightByTarY, arg_14_0)
-	var_0_0.super.onDestroy(arg_14_0)
+	TaskDispatcher.cancelTask(self._elevatorMoving, self)
+	TaskDispatcher.cancelTask(self._elevatorKeep, self)
+	TaskDispatcher.cancelTask(self.setNodeHeightByTarY, self)
+	ExploreElevatorUnit.super.onDestroy(self)
 end
 
-return var_0_0
+return ExploreElevatorUnit

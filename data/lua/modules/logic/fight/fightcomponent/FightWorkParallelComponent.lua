@@ -1,58 +1,60 @@
-﻿module("modules.logic.fight.fightcomponent.FightWorkParallelComponent", package.seeall)
+﻿-- chunkname: @modules/logic/fight/fightcomponent/FightWorkParallelComponent.lua
 
-local var_0_0 = class("FightWorkParallelComponent", FightBaseClass)
+module("modules.logic.fight.fightcomponent.FightWorkParallelComponent", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0.workParallel = {}
-	arg_1_0.callback = nil
-	arg_1_0.callbackHandle = nil
-	arg_1_0.finishCount = 0
+local FightWorkParallelComponent = class("FightWorkParallelComponent", FightBaseClass)
+
+function FightWorkParallelComponent:onConstructor()
+	self.workParallel = {}
+	self.callback = nil
+	self.callbackHandle = nil
+	self.finishCount = 0
 end
 
-function var_0_0.registFinishCallback(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0.callback = arg_2_1
-	arg_2_0.callbackHandle = arg_2_2
+function FightWorkParallelComponent:registFinishCallback(callback, handle)
+	self.callback = callback
+	self.callbackHandle = handle
 end
 
-function var_0_0.clearFinishCallback(arg_3_0)
-	arg_3_0.callback = nil
-	arg_3_0.callbackHandle = nil
+function FightWorkParallelComponent:clearFinishCallback()
+	self.callback = nil
+	self.callbackHandle = nil
 end
 
-function var_0_0.addWork(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0:addWorkList({
-		arg_4_1
-	}, arg_4_2)
+function FightWorkParallelComponent:addWork(work, context)
+	self:addWorkList({
+		work
+	}, context)
 end
 
-function var_0_0.addWorkList(arg_5_0, arg_5_1, arg_5_2)
-	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
-		iter_5_1:registFinishCallback(arg_5_0._onWorkFinish, arg_5_0)
-		table.insert(arg_5_0.workParallel, {
-			work = iter_5_1,
-			context = arg_5_2
+function FightWorkParallelComponent:addWorkList(workList, context)
+	for i, work in ipairs(workList) do
+		work:registFinishCallback(self._onWorkFinish, self)
+		table.insert(self.workParallel, {
+			work = work,
+			context = context
 		})
 	end
 
-	for iter_5_2, iter_5_3 in ipairs(arg_5_1) do
-		iter_5_3:start(arg_5_2)
+	for i, work in ipairs(workList) do
+		work:start(context)
 	end
 end
 
-function var_0_0._onWorkFinish(arg_6_0)
-	arg_6_0.finishCount = arg_6_0.finishCount + 1
+function FightWorkParallelComponent:_onWorkFinish()
+	self.finishCount = self.finishCount + 1
 
-	if arg_6_0.finishCount == #arg_6_0.workParallel and arg_6_0.callback then
-		arg_6_0.callback(arg_6_0.callbackHandle)
+	if self.finishCount == #self.workParallel and self.callback then
+		self.callback(self.callbackHandle)
 	end
 end
 
-function var_0_0.onDestructor(arg_7_0)
-	for iter_7_0 = #arg_7_0.workParallel, 1, -1 do
-		arg_7_0.workParallel[iter_7_0].work:disposeSelf()
+function FightWorkParallelComponent:onDestructor()
+	for i = #self.workParallel, 1, -1 do
+		self.workParallel[i].work:disposeSelf()
 	end
 
-	arg_7_0:clearFinishCallback()
+	self:clearFinishCallback()
 end
 
-return var_0_0
+return FightWorkParallelComponent

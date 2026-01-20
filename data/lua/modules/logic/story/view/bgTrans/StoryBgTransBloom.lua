@@ -1,81 +1,83 @@
-﻿module("modules.logic.story.view.bgTrans.StoryBgTransBloom", package.seeall)
+﻿-- chunkname: @modules/logic/story/view/bgTrans/StoryBgTransBloom.lua
 
-local var_0_0 = class("StoryBgTransBloom", StoryBgTransBase)
+module("modules.logic.story.view.bgTrans.StoryBgTransBloom", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	var_0_0.super.ctor(arg_1_0)
+local StoryBgTransBloom = class("StoryBgTransBloom", StoryBgTransBase)
+
+function StoryBgTransBloom:ctor()
+	StoryBgTransBloom.super.ctor(self)
 end
 
-local var_0_1 = 0.25
+local baseTime = 0.25
 
-function var_0_0.init(arg_2_0)
-	var_0_0.super.init(arg_2_0)
-	arg_2_0:setBgTransType(StoryEnum.BgTransType.Bloom1)
+function StoryBgTransBloom:init()
+	StoryBgTransBloom.super.init(self)
+	self:setBgTransType(StoryEnum.BgTransType.Bloom1)
 
-	arg_2_0._bloomAnimPath = "ui/animations/dynamic/story_bloomchange.controller"
+	self._bloomAnimPath = "ui/animations/dynamic/story_bloomchange.controller"
 
-	table.insert(arg_2_0._resList, arg_2_0._bloomAnimPath)
+	table.insert(self._resList, self._bloomAnimPath)
 end
 
-function var_0_0.setBgTransType(arg_3_0, arg_3_1)
-	arg_3_0._transType = arg_3_1
-	arg_3_0._transMo = StoryBgEffectTransModel.instance:getStoryBgEffectTransByType(arg_3_0._transType)
+function StoryBgTransBloom:setBgTransType(type)
+	self._transType = type
+	self._transMo = StoryBgEffectTransModel.instance:getStoryBgEffectTransByType(self._transType)
 end
 
-function var_0_0.start(arg_4_0, arg_4_1, arg_4_2)
-	var_0_0.super.start(arg_4_0)
+function StoryBgTransBloom:start(callback, callbackObj)
+	StoryBgTransBloom.super.start(self)
 
-	arg_4_0._finishedCallback = arg_4_1
-	arg_4_0._finishedCallbackObj = arg_4_2
+	self._finishedCallback = callback
+	self._finishedCallbackObj = callbackObj
 
-	arg_4_0:loadRes()
+	self:loadRes()
 	GameUtil.setActiveUIBlock("bgTrans", true, false)
 end
 
-function var_0_0.onLoadFinished(arg_5_0)
-	var_0_0.super.onLoadFinished(arg_5_0)
+function StoryBgTransBloom:onLoadFinished()
+	StoryBgTransBloom.super.onLoadFinished(self)
 	StoryTool.enablePostProcess(true)
 
-	local var_5_0 = arg_5_0._loader:getAssetItem(arg_5_0._bloomAnimPath):GetResource()
-	local var_5_1 = CameraMgr.instance:getUICameraGO()
+	local anim = self._loader:getAssetItem(self._bloomAnimPath):GetResource()
+	local cameraRoot = CameraMgr.instance:getUICameraGO()
 
-	arg_5_0._animRoot = gohelper.findChild(var_5_1, "PPUIVolume")
-	arg_5_0._bloomAnim = gohelper.onceAddComponent(arg_5_0._animRoot, typeof(UnityEngine.Animator))
-	arg_5_0._bloomAnim.runtimeAnimatorController = var_5_0
-	arg_5_0._bloomAnim.speed = arg_5_0._transMo.transTime > 0.01 and var_0_1 / arg_5_0._transMo.transTime or 1
+	self._animRoot = gohelper.findChild(cameraRoot, "PPUIVolume")
+	self._bloomAnim = gohelper.onceAddComponent(self._animRoot, typeof(UnityEngine.Animator))
+	self._bloomAnim.runtimeAnimatorController = anim
+	self._bloomAnim.speed = self._transMo.transTime > 0.01 and baseTime / self._transMo.transTime or 1
 
-	arg_5_0._bloomAnim:Play("trans", 0, 0)
-	TaskDispatcher.runDelay(arg_5_0.onSwitchBg, arg_5_0, arg_5_0._transMo.transTime)
+	self._bloomAnim:Play("trans", 0, 0)
+	TaskDispatcher.runDelay(self.onSwitchBg, self, self._transMo.transTime)
 end
 
-function var_0_0.onSwitchBg(arg_6_0)
-	var_0_0.super.onSwitchBg(arg_6_0)
-	TaskDispatcher.runDelay(arg_6_0.onTransFinished, arg_6_0, arg_6_0._transMo.transTime)
+function StoryBgTransBloom:onSwitchBg()
+	StoryBgTransBloom.super.onSwitchBg(self)
+	TaskDispatcher.runDelay(self.onTransFinished, self, self._transMo.transTime)
 end
 
-function var_0_0.onTransFinished(arg_7_0)
-	var_0_0.super.onTransFinished(arg_7_0)
+function StoryBgTransBloom:onTransFinished()
+	StoryBgTransBloom.super.onTransFinished(self)
 
-	if arg_7_0._finishedCallback then
-		arg_7_0._finishedCallback(arg_7_0._finishedCallbackObj)
+	if self._finishedCallback then
+		self._finishedCallback(self._finishedCallbackObj)
 	end
 
-	arg_7_0:_clearTrans()
+	self:_clearTrans()
 end
 
-function var_0_0._clearTrans(arg_8_0)
+function StoryBgTransBloom:_clearTrans()
 	GameUtil.setActiveUIBlock("bgTrans", false, false)
-	gohelper.removeComponent(arg_8_0._animRoot, typeof(UnityEngine.Animator))
+	gohelper.removeComponent(self._animRoot, typeof(UnityEngine.Animator))
 
-	arg_8_0._finishedCallback = nil
-	arg_8_0._finishedCallbackObj = nil
+	self._finishedCallback = nil
+	self._finishedCallbackObj = nil
 end
 
-function var_0_0.destroy(arg_9_0)
-	var_0_0.super.destroy(arg_9_0)
-	TaskDispatcher.cancelTask(arg_9_0.onSwitchBg, arg_9_0)
-	TaskDispatcher.cancelTask(arg_9_0.onTransFinished, arg_9_0)
-	arg_9_0:_clearTrans()
+function StoryBgTransBloom:destroy()
+	StoryBgTransBloom.super.destroy(self)
+	TaskDispatcher.cancelTask(self.onSwitchBg, self)
+	TaskDispatcher.cancelTask(self.onTransFinished, self)
+	self:_clearTrans()
 end
 
-return var_0_0
+return StoryBgTransBloom

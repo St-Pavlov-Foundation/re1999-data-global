@@ -1,33 +1,35 @@
-﻿module("modules.logic.seasonver.act166.view2_6.Season166_2_6TrainViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act166/view2_6/Season166_2_6TrainViewContainer.lua
 
-local var_0_0 = class("Season166_2_6TrainViewContainer", BaseViewContainer)
+module("modules.logic.seasonver.act166.view2_6.Season166_2_6TrainViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Season166_2_6TrainViewContainer = class("Season166_2_6TrainViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Season166TrainView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
-	table.insert(var_1_0, Season166WordEffectView.New())
+function Season166_2_6TrainViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Season166TrainView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_topleft"))
+	table.insert(views, Season166WordEffectView.New())
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function Season166_2_6TrainViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			true,
 			true
 		}, HelpEnum.HelpId.Season166TrainHelp)
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-function var_0_0.setOverrideCloseClick(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0.navigateView:setOverrideClose(arg_3_1, arg_3_2)
+function Season166_2_6TrainViewContainer:setOverrideCloseClick(overrideCloseFunc, overrideCloseObj)
+	self.navigateView:setOverrideClose(overrideCloseFunc, overrideCloseObj)
 end
 
-return var_0_0
+return Season166_2_6TrainViewContainer

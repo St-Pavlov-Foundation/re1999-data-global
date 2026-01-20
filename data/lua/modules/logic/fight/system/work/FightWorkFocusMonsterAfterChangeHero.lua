@@ -1,31 +1,33 @@
-﻿module("modules.logic.fight.system.work.FightWorkFocusMonsterAfterChangeHero", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkFocusMonsterAfterChangeHero.lua
 
-local var_0_0 = class("FightWorkFocusMonsterAfterChangeHero", FightWorkItem)
+module("modules.logic.fight.system.work.FightWorkFocusMonsterAfterChangeHero", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0._counter = 0
+local FightWorkFocusMonsterAfterChangeHero = class("FightWorkFocusMonsterAfterChangeHero", FightWorkItem)
+
+function FightWorkFocusMonsterAfterChangeHero:onConstructor()
+	self._counter = 0
 end
 
-function var_0_0.onStart(arg_2_0)
-	arg_2_0:cancelFightWorkSafeTimer()
+function FightWorkFocusMonsterAfterChangeHero:onStart()
+	self:cancelFightWorkSafeTimer()
 
-	local var_2_0, var_2_1 = FightWorkFocusMonster.getFocusEntityId()
+	local entityId, config = FightWorkFocusMonster.getFocusEntityId()
 
-	if var_2_0 and arg_2_0._counter < 5 then
-		arg_2_0._counter = arg_2_0._counter + 1
+	if entityId and self._counter < 5 then
+		self._counter = self._counter + 1
 
-		local var_2_2 = arg_2_0:com_registFlowSequence()
+		local flow = self:com_registFlowSequence()
 
-		var_2_2:addWork(Work2FightWork.New(FightWorkFocusMonster))
-		var_2_2:registFinishCallback(arg_2_0.onStart, arg_2_0)
-		var_2_2:start()
+		flow:addWork(Work2FightWork.New(FightWorkFocusMonster))
+		flow:registFinishCallback(self.onStart, self)
+		flow:start()
 	else
-		arg_2_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0.clearWork(arg_3_0)
+function FightWorkFocusMonsterAfterChangeHero:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkFocusMonsterAfterChangeHero

@@ -1,50 +1,52 @@
-﻿module("modules.logic.survival.view.bubble.SurvivalBubbleView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/bubble/SurvivalBubbleView.lua
 
-local var_0_0 = class("SurvivalBubbleView", BaseView)
+module("modules.logic.survival.view.bubble.SurvivalBubbleView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.root = gohelper.findChild(arg_1_0.viewGO, "bubbleview")
-	arg_1_0.res = gohelper.findChild(arg_1_0.root, "res")
-	arg_1_0.container = gohelper.findChild(arg_1_0.root, "container")
-	arg_1_0.bubbleItem = gohelper.findChild(arg_1_0.res, "bubbleItem")
-	arg_1_0.survivalBubbleComp = SurvivalMapHelper.instance:getSurvivalBubbleComp()
-	arg_1_0.bubbleDic = {}
+local SurvivalBubbleView = class("SurvivalBubbleView", BaseView)
+
+function SurvivalBubbleView:onInitView()
+	self.root = gohelper.findChild(self.viewGO, "bubbleview")
+	self.res = gohelper.findChild(self.root, "res")
+	self.container = gohelper.findChild(self.root, "container")
+	self.bubbleItem = gohelper.findChild(self.res, "bubbleItem")
+	self.survivalBubbleComp = SurvivalMapHelper.instance:getSurvivalBubbleComp()
+	self.bubbleDic = {}
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(arg_2_0.survivalBubbleComp, SurvivalEvent.OnShowBubble, arg_2_0.onShowBubble, arg_2_0)
-	arg_2_0:addEventCb(arg_2_0.survivalBubbleComp, SurvivalEvent.OnRemoveBubble, arg_2_0.onRemoveBubble, arg_2_0)
+function SurvivalBubbleView:addEvents()
+	self:addEventCb(self.survivalBubbleComp, SurvivalEvent.OnShowBubble, self.onShowBubble, self)
+	self:addEventCb(self.survivalBubbleComp, SurvivalEvent.OnRemoveBubble, self.onRemoveBubble, self)
 end
 
-function var_0_0.onOpen(arg_3_0)
+function SurvivalBubbleView:onOpen()
 	return
 end
 
-function var_0_0.onClose(arg_4_0)
+function SurvivalBubbleView:onClose()
 	return
 end
 
-function var_0_0.onShowBubble(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_1.id
-	local var_5_1 = arg_5_1.survivalBubble
-	local var_5_2 = gohelper.clone(arg_5_0.bubbleItem, arg_5_0.container)
-	local var_5_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_5_2, SurvivalDialogueItem)
+function SurvivalBubbleView:onShowBubble(param)
+	local id = param.id
+	local survivalBubble = param.survivalBubble
+	local go = gohelper.clone(self.bubbleItem, self.container)
+	local bubble = MonoHelper.addNoUpdateLuaComOnceToGo(go, SurvivalDialogueItem)
 
-	var_5_3:setData(var_5_0, var_5_1, arg_5_0.container)
+	bubble:setData(id, survivalBubble, self.container)
 
-	arg_5_0.bubbleDic[var_5_0] = var_5_3
+	self.bubbleDic[id] = bubble
 end
 
-function var_0_0.onRemoveBubble(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_1.id
+function SurvivalBubbleView:onRemoveBubble(param)
+	local id = param.id
 
-	gohelper.destroy(arg_6_0.bubbleDic[var_6_0].go)
+	gohelper.destroy(self.bubbleDic[id].go)
 
-	arg_6_0.bubbleDic[var_6_0] = nil
+	self.bubbleDic[id] = nil
 end
 
-function var_0_0.onDestroyView(arg_7_0)
+function SurvivalBubbleView:onDestroyView()
 	return
 end
 
-return var_0_0
+return SurvivalBubbleView

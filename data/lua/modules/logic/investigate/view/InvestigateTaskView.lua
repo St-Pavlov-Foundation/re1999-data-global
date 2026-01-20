@@ -1,72 +1,74 @@
-﻿module("modules.logic.investigate.view.InvestigateTaskView", package.seeall)
+﻿-- chunkname: @modules/logic/investigate/view/InvestigateTaskView.lua
 
-local var_0_0 = class("InvestigateTaskView", BaseView)
+module("modules.logic.investigate.view.InvestigateTaskView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local InvestigateTaskView = class("InvestigateTaskView", BaseView)
+
+function InvestigateTaskView:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function InvestigateTaskView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function InvestigateTaskView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function InvestigateTaskView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function InvestigateTaskView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_6_0.refreshRight, arg_6_0)
-	arg_6_0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_6_0.refreshRight, arg_6_0)
-	arg_6_0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_6_0.refreshRight, arg_6_0)
-	arg_6_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_6_0._onOpenViewFinish, arg_6_0)
+function InvestigateTaskView:onOpen()
+	self:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, self.refreshRight, self)
+	self:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, self.refreshRight, self)
+	self:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, self.refreshRight, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
 	AudioMgr.instance:trigger(AudioEnum.UI.Act1_6DungeonEnterTaskView)
-	arg_6_0:refreshLeft()
+	self:refreshLeft()
 	InvestigateTaskListModel.instance:clear()
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.Investigate
-	}, arg_6_0._oneClaimReward, arg_6_0)
+	}, self._oneClaimReward, self)
 end
 
-function var_0_0._oneClaimReward(arg_7_0)
-	arg_7_0:refreshRight()
+function InvestigateTaskView:_oneClaimReward()
+	self:refreshRight()
 end
 
-function var_0_0.refreshLeft(arg_8_0)
-	arg_8_0:refreshRemainTime()
+function InvestigateTaskView:refreshLeft()
+	self:refreshRemainTime()
 end
 
-function var_0_0.refreshRemainTime(arg_9_0)
+function InvestigateTaskView:refreshRemainTime()
 	return
 end
 
-function var_0_0.refreshRight(arg_10_0)
+function InvestigateTaskView:refreshRight()
 	InvestigateTaskListModel.instance:initTask()
 	InvestigateTaskListModel.instance:sortTaskMoList()
 	InvestigateTaskListModel.instance:refreshList()
 end
 
-function var_0_0._onOpenViewFinish(arg_11_0, arg_11_1)
-	if arg_11_1 == ViewName.InvestigateOpinionTabView then
-		arg_11_0:closeThis()
+function InvestigateTaskView:_onOpenViewFinish(viewName)
+	if viewName == ViewName.InvestigateOpinionTabView then
+		self:closeThis()
 	end
 end
 
-function var_0_0.onClose(arg_12_0)
+function InvestigateTaskView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_13_0)
+function InvestigateTaskView:onDestroyView()
 	return
 end
 
-return var_0_0
+return InvestigateTaskView

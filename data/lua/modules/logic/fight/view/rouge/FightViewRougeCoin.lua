@@ -1,100 +1,102 @@
-﻿module("modules.logic.fight.view.rouge.FightViewRougeCoin", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/rouge/FightViewRougeCoin.lua
 
-local var_0_0 = class("FightViewRougeCoin", BaseViewExtended)
+module("modules.logic.fight.view.rouge.FightViewRougeCoin", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._coinText = gohelper.findChildText(arg_1_0.viewGO, "#txt_num")
-	arg_1_0._addCoinEffect = gohelper.findChild(arg_1_0.viewGO, "obtain")
-	arg_1_0._minCoinEffect = gohelper.findChild(arg_1_0.viewGO, "without")
+local FightViewRougeCoin = class("FightViewRougeCoin", BaseViewExtended)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function FightViewRougeCoin:onInitView()
+	self._coinText = gohelper.findChildText(self.viewGO, "#txt_num")
+	self._addCoinEffect = gohelper.findChild(self.viewGO, "obtain")
+	self._minCoinEffect = gohelper.findChild(self.viewGO, "without")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.ResonanceLevel, arg_2_0._onResonanceLevel, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.PolarizationLevel, arg_2_0._onPolarizationLevel, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.RougeCoinChange, arg_2_0._onRougeCoinChange, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.RespBeginFight, arg_2_0._onRespBeginFight, arg_2_0)
+function FightViewRougeCoin:addEvents()
+	self:addEventCb(FightController.instance, FightEvent.ResonanceLevel, self._onResonanceLevel, self)
+	self:addEventCb(FightController.instance, FightEvent.PolarizationLevel, self._onPolarizationLevel, self)
+	self:addEventCb(FightController.instance, FightEvent.RougeCoinChange, self._onRougeCoinChange, self)
+	self:addEventCb(FightController.instance, FightEvent.RespBeginFight, self._onRespBeginFight, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function FightViewRougeCoin:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function FightViewRougeCoin:_editableInitView()
 	return
 end
 
-function var_0_0.onRefreshViewParam(arg_5_0)
+function FightViewRougeCoin:onRefreshViewParam()
 	return
 end
 
-function var_0_0._onRespBeginFight(arg_6_0)
-	arg_6_0:_refreshCoin()
+function FightViewRougeCoin:_onRespBeginFight()
+	self:_refreshCoin()
 end
 
-function var_0_0._onResonanceLevel(arg_7_0)
-	arg_7_0:_refreshCoin()
+function FightViewRougeCoin:_onResonanceLevel()
+	self:_refreshCoin()
 end
 
-function var_0_0._onPolarizationLevel(arg_8_0)
-	arg_8_0:_refreshCoin()
+function FightViewRougeCoin:_onPolarizationLevel()
+	self:_refreshCoin()
 end
 
-function var_0_0._cancelCoinTimer(arg_9_0)
-	TaskDispatcher.cancelTask(arg_9_0._hideCoinEffect, arg_9_0)
+function FightViewRougeCoin:_cancelCoinTimer()
+	TaskDispatcher.cancelTask(self._hideCoinEffect, self)
 end
 
-function var_0_0._hideCoinEffect(arg_10_0)
-	gohelper.setActive(arg_10_0._addCoinEffect, false)
-	gohelper.setActive(arg_10_0._minCoinEffect, false)
+function FightViewRougeCoin:_hideCoinEffect()
+	gohelper.setActive(self._addCoinEffect, false)
+	gohelper.setActive(self._minCoinEffect, false)
 end
 
-function var_0_0._onRougeCoinChange(arg_11_0, arg_11_1)
-	arg_11_0:_cancelCoinTimer()
-	arg_11_0:_refreshCoin()
-	TaskDispatcher.runDelay(arg_11_0._hideCoinEffect, arg_11_0, 0.6)
+function FightViewRougeCoin:_onRougeCoinChange(offset)
+	self:_cancelCoinTimer()
+	self:_refreshCoin()
+	TaskDispatcher.runDelay(self._hideCoinEffect, self, 0.6)
 
-	if arg_11_1 > 0 then
-		gohelper.setActive(arg_11_0._addCoinEffect, true)
-		gohelper.setActive(arg_11_0._minCoinEffect, false)
+	if offset > 0 then
+		gohelper.setActive(self._addCoinEffect, true)
+		gohelper.setActive(self._minCoinEffect, false)
 	else
-		gohelper.setActive(arg_11_0._addCoinEffect, false)
-		gohelper.setActive(arg_11_0._minCoinEffect, true)
+		gohelper.setActive(self._addCoinEffect, false)
+		gohelper.setActive(self._minCoinEffect, true)
 	end
 end
 
-function var_0_0.onOpen(arg_12_0)
-	arg_12_0:_refreshCoin()
+function FightViewRougeCoin:onOpen()
+	self:_refreshCoin()
 end
 
-function var_0_0._refreshData(arg_13_0)
-	arg_13_0:_refreshCoin()
+function FightViewRougeCoin:_refreshData()
+	self:_refreshCoin()
 end
 
-function var_0_0._refreshCoin(arg_14_0)
-	local var_14_0 = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
-	local var_14_1 = var_14_0 and var_14_0.type == DungeonEnum.EpisodeType.Rouge
+function FightViewRougeCoin:_refreshCoin()
+	local episode_config = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
+	local showCoin = episode_config and episode_config.type == DungeonEnum.EpisodeType.Rouge
 
-	gohelper.setActive(arg_14_0.viewGO, var_14_1)
+	gohelper.setActive(self.viewGO, showCoin)
 
-	arg_14_0._coinText.text = FightModel.instance:getRougeExData(FightEnum.ExIndexForRouge.Coin)
+	self._coinText.text = FightModel.instance:getRougeExData(FightEnum.ExIndexForRouge.Coin)
 
-	if var_14_1 then
+	if showCoin then
 		FightController.instance:dispatchEvent(FightEvent.RightElements_ShowElement, FightRightElementEnum.Elements.RougeCoin)
 	else
 		FightController.instance:dispatchEvent(FightEvent.RightElements_HideElement, FightRightElementEnum.Elements.RougeCoin)
 	end
 end
 
-function var_0_0.onClose(arg_15_0)
-	arg_15_0:_cancelCoinTimer()
+function FightViewRougeCoin:onClose()
+	self:_cancelCoinTimer()
 end
 
-function var_0_0.onDestroyView(arg_16_0)
+function FightViewRougeCoin:onDestroyView()
 	return
 end
 
-return var_0_0
+return FightViewRougeCoin

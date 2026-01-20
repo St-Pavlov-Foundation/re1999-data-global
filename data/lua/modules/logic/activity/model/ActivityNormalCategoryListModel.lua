@@ -1,16 +1,18 @@
-﻿module("modules.logic.activity.model.ActivityNormalCategoryListModel", package.seeall)
+﻿-- chunkname: @modules/logic/activity/model/ActivityNormalCategoryListModel.lua
 
-local var_0_0 = class("ActivityNormalCategoryListModel", ListScrollModel)
+module("modules.logic.activity.model.ActivityNormalCategoryListModel", package.seeall)
 
-function var_0_0.setCategoryList(arg_1_0, arg_1_1)
-	arg_1_0._moList = arg_1_1 and arg_1_1 or {}
+local ActivityNormalCategoryListModel = class("ActivityNormalCategoryListModel", ListScrollModel)
 
-	table.sort(arg_1_0._moList, function(arg_2_0, arg_2_1)
-		return arg_2_0.co.displayPriority < arg_2_1.co.displayPriority
+function ActivityNormalCategoryListModel:setCategoryList(Infos)
+	self._moList = Infos and Infos or {}
+
+	table.sort(self._moList, function(a, b)
+		return a.co.displayPriority < b.co.displayPriority
 	end)
-	arg_1_0:setList(arg_1_0._moList)
+	self:setList(self._moList)
 end
 
-var_0_0.instance = var_0_0.New()
+ActivityNormalCategoryListModel.instance = ActivityNormalCategoryListModel.New()
 
-return var_0_0
+return ActivityNormalCategoryListModel

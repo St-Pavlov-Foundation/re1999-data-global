@@ -1,77 +1,79 @@
-﻿module("modules.logic.mainuiswitch.view.MainUISwitchInfoHeroView", package.seeall)
+﻿-- chunkname: @modules/logic/mainuiswitch/view/MainUISwitchInfoHeroView.lua
 
-local var_0_0 = class("MainUISwitchInfoHeroView", BaseView)
+module("modules.logic.mainuiswitch.view.MainUISwitchInfoHeroView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gospinescaleroot = gohelper.findChild(arg_1_0.viewGO, "root/#go_spine_scale")
-	arg_1_0._gospineroot = gohelper.findChild(arg_1_0.viewGO, "root/#go_spine_scale/lightspine")
-	arg_1_0._gospine = gohelper.findChild(arg_1_0.viewGO, "root/#go_spine_scale/lightspine/#go_lightspine")
+local MainUISwitchInfoHeroView = class("MainUISwitchInfoHeroView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function MainUISwitchInfoHeroView:onInitView()
+	self._gospinescaleroot = gohelper.findChild(self.viewGO, "root/#go_spine_scale")
+	self._gospineroot = gohelper.findChild(self.viewGO, "root/#go_spine_scale/lightspine")
+	self._gospine = gohelper.findChild(self.viewGO, "root/#go_spine_scale/lightspine/#go_lightspine")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(MainUISwitchController.instance, MainUISwitchEvent.PreviewSwitchUIVisible, arg_2_0._onSwitchUIVisible, arg_2_0)
+function MainUISwitchInfoHeroView:addEvents()
+	self:addEventCb(MainUISwitchController.instance, MainUISwitchEvent.PreviewSwitchUIVisible, self._onSwitchUIVisible, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(MainUISwitchController.instance, MainUISwitchEvent.PreviewSwitchUIVisible, arg_3_0._onSwitchUIVisible, arg_3_0)
+function MainUISwitchInfoHeroView:removeEvents()
+	self:removeEventCb(MainUISwitchController.instance, MainUISwitchEvent.PreviewSwitchUIVisible, self._onSwitchUIVisible, self)
 end
 
-function var_0_0._onSwitchUIVisible(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_1 and MainUISwitchEnum.MainUIScale or 1
+function MainUISwitchInfoHeroView:_onSwitchUIVisible(visible)
+	local scale = visible and MainUISwitchEnum.MainUIScale or 1
 
-	transformhelper.setLocalScale(arg_4_0._gospinescaleroot.transform, var_4_0, var_4_0, 1)
+	transformhelper.setLocalScale(self._gospinescaleroot.transform, scale, scale, 1)
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	transformhelper.setLocalScale(arg_5_0._gospinescaleroot.transform, MainUISwitchEnum.MainUIScale, MainUISwitchEnum.MainUIScale, 1)
-	transformhelper.setLocalScale(arg_5_0._gospineroot.transform, 1, 1, 1)
-	recthelper.setAnchor(arg_5_0._gospineroot.transform, -200, -1174)
+function MainUISwitchInfoHeroView:_editableInitView()
+	transformhelper.setLocalScale(self._gospinescaleroot.transform, MainUISwitchEnum.MainUIScale, MainUISwitchEnum.MainUIScale, 1)
+	transformhelper.setLocalScale(self._gospineroot.transform, 1, 1, 1)
+	recthelper.setAnchor(self._gospineroot.transform, -200, -1174)
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0._heroId, arg_6_0._skinId = CharacterSwitchListModel.instance:getMainHero()
-	arg_6_0._heroSkinConfig = SkinConfig.instance:getSkinCo(arg_6_0._skinId)
+function MainUISwitchInfoHeroView:onOpen()
+	self._heroId, self._skinId = CharacterSwitchListModel.instance:getMainHero()
+	self._heroSkinConfig = SkinConfig.instance:getSkinCo(self._skinId)
 
-	arg_6_0:_updateHero()
+	self:_updateHero()
 
-	local var_6_0 = SkinConfig.instance:getSkinOffset(arg_6_0._heroSkinConfig.characterViewOffset)
-	local var_6_1 = tonumber(var_6_0[3])
+	local offsets = SkinConfig.instance:getSkinOffset(self._heroSkinConfig.characterViewOffset)
+	local scale = tonumber(offsets[3])
 
-	recthelper.setAnchor(arg_6_0._gospine.transform, tonumber(var_6_0[1]), tonumber(var_6_0[2]))
-	transformhelper.setLocalScale(arg_6_0._gospine.transform, var_6_1, var_6_1, var_6_1)
+	recthelper.setAnchor(self._gospine.transform, tonumber(offsets[1]), tonumber(offsets[2]))
+	transformhelper.setLocalScale(self._gospine.transform, scale, scale, scale)
 
-	local var_6_2 = WeatherController.instance:getSceneNode("s01_obj_a/Anim/Drawing/spine")
+	local spineMountPoint = WeatherController.instance:getSceneNode("s01_obj_a/Anim/Drawing/spine")
 
-	if var_6_2 then
-		gohelper.setActive(var_6_2, false)
+	if spineMountPoint then
+		gohelper.setActive(spineMountPoint, false)
 	end
 end
 
-function var_0_0._updateHero(arg_7_0)
-	arg_7_0._uiSpine = GuiModelAgent.Create(arg_7_0._gospine, true)
+function MainUISwitchInfoHeroView:_updateHero()
+	self._uiSpine = GuiModelAgent.Create(self._gospine, true)
 
-	arg_7_0._uiSpine:setShareRT(CharacterVoiceEnum.RTShareType.Normal, arg_7_0.viewName)
-	arg_7_0:_loadSpine()
+	self._uiSpine:setShareRT(CharacterVoiceEnum.RTShareType.Normal, self.viewName)
+	self:_loadSpine()
 end
 
-function var_0_0._loadSpine(arg_8_0)
-	arg_8_0._uiSpine:setResPath(arg_8_0._heroSkinConfig, arg_8_0._onSpineLoaded, arg_8_0)
+function MainUISwitchInfoHeroView:_loadSpine()
+	self._uiSpine:setResPath(self._heroSkinConfig, self._onSpineLoaded, self)
 end
 
-function var_0_0._onSpineLoaded(arg_9_0)
-	arg_9_0._spineLoaded = true
+function MainUISwitchInfoHeroView:_onSpineLoaded()
+	self._spineLoaded = true
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	if arg_10_0._uiSpine then
-		arg_10_0._uiSpine:onDestroy()
+function MainUISwitchInfoHeroView:onDestroyView()
+	if self._uiSpine then
+		self._uiSpine:onDestroy()
 
-		arg_10_0._uiSpine = nil
+		self._uiSpine = nil
 	end
 end
 
-return var_0_0
+return MainUISwitchInfoHeroView

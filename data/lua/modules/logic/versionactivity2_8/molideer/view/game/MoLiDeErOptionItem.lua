@@ -1,68 +1,70 @@
-﻿module("modules.logic.versionactivity2_8.molideer.view.game.MoLiDeErOptionItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/molideer/view/game/MoLiDeErOptionItem.lua
 
-local var_0_0 = class("MoLiDeErOptionItem", LuaCompBase)
+module("modules.logic.versionactivity2_8.molideer.view.game.MoLiDeErOptionItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0._goBG1 = gohelper.findChild(arg_1_0.viewGO, "#go_BG1")
-	arg_1_0._goBG2 = gohelper.findChild(arg_1_0.viewGO, "#go_BG2")
-	arg_1_0._goBG3 = gohelper.findChild(arg_1_0.viewGO, "#go_BG3")
-	arg_1_0._txtName = gohelper.findChildText(arg_1_0.viewGO, "#txt_Name")
-	arg_1_0._txtDescr = gohelper.findChildText(arg_1_0.viewGO, "#txt_Descr")
-	arg_1_0._txtNum = gohelper.findChildText(arg_1_0.viewGO, "#go_Cost/#txt_Num")
-	arg_1_0._btnSelect = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "")
-	arg_1_0._goCost = gohelper.findChild(arg_1_0.viewGO, "#go_Cost")
+local MoLiDeErOptionItem = class("MoLiDeErOptionItem", LuaCompBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function MoLiDeErOptionItem:init(go)
+	self.viewGO = go
+	self._goBG1 = gohelper.findChild(self.viewGO, "#go_BG1")
+	self._goBG2 = gohelper.findChild(self.viewGO, "#go_BG2")
+	self._goBG3 = gohelper.findChild(self.viewGO, "#go_BG3")
+	self._txtName = gohelper.findChildText(self.viewGO, "#txt_Name")
+	self._txtDescr = gohelper.findChildText(self.viewGO, "#txt_Descr")
+	self._txtNum = gohelper.findChildText(self.viewGO, "#go_Cost/#txt_Num")
+	self._btnSelect = gohelper.findChildButtonWithAudio(self.viewGO, "")
+	self._goCost = gohelper.findChild(self.viewGO, "#go_Cost")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._btnSelect:AddClickListener(arg_2_0.onItemClick, arg_2_0)
+function MoLiDeErOptionItem:addEventListeners()
+	self._btnSelect:AddClickListener(self.onItemClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btnSelect:RemoveClickListener()
+function MoLiDeErOptionItem:removeEventListeners()
+	self._btnSelect:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function MoLiDeErOptionItem:_editableInitView()
 	return
 end
 
-function var_0_0.setData(arg_5_0, arg_5_1)
-	arg_5_0.optionInfo = arg_5_1
-	arg_5_0.optionId = arg_5_1.optionId
-	arg_5_0.optionConfig = MoLiDeErConfig.instance:getOptionConfig(arg_5_1.optionId)
+function MoLiDeErOptionItem:setData(optionInfo)
+	self.optionInfo = optionInfo
+	self.optionId = optionInfo.optionId
+	self.optionConfig = MoLiDeErConfig.instance:getOptionConfig(optionInfo.optionId)
 
-	arg_5_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.setActive(arg_6_0, arg_6_1)
-	gohelper.setActive(arg_6_0.viewGO, arg_6_1)
+function MoLiDeErOptionItem:setActive(active)
+	gohelper.setActive(self.viewGO, active)
 end
 
-function var_0_0.onItemClick(arg_7_0)
-	local var_7_0 = arg_7_0.optionId
+function MoLiDeErOptionItem:onItemClick()
+	local optionId = self.optionId
 
-	if var_7_0 == MoLiDeErGameModel.instance:getSelectOptionId() then
+	if optionId == MoLiDeErGameModel.instance:getSelectOptionId() then
 		return
 	end
 
-	if not arg_7_0._canSelect then
-		local var_7_1 = MoLiDeErGameModel.instance:getCurGameInfo()
-		local var_7_2 = MoLiDeErGameModel.instance:getSelectEventId()
-		local var_7_3 = MoLiDeErHelper.getOptionItemCost(var_7_0)
+	if not self._canSelect then
+		local gameInfoMo = MoLiDeErGameModel.instance:getCurGameInfo()
+		local eventId = MoLiDeErGameModel.instance:getSelectEventId()
+		local itemCost = MoLiDeErHelper.getOptionItemCost(optionId)
 
-		if var_7_3 and var_7_3[1] then
-			for iter_7_0, iter_7_1 in ipairs(var_7_3) do
-				local var_7_4 = iter_7_1[3]
-				local var_7_5 = iter_7_1[2]
+		if itemCost and itemCost[1] then
+			for _, data in ipairs(itemCost) do
+				local itemId = data[3]
+				local num = data[2]
 
-				if var_7_4 and var_7_5 then
-					local var_7_6 = var_7_1:getEquipInfo(var_7_4)
+				if itemId and num then
+					local haveItem = gameInfoMo:getEquipInfo(itemId)
 
-					if var_7_6 == nil or var_7_6.quantity + var_7_5 < 0 then
+					if haveItem == nil or haveItem.quantity + num < 0 then
 						GameFacade.showToast(ToastEnum.Act194EquipCountNotEnough)
 
 						return
@@ -71,15 +73,15 @@ function var_0_0.onItemClick(arg_7_0)
 			end
 		end
 
-		local var_7_7 = MoLiDeErGameModel.instance:getExecutionCostById(var_7_2, var_7_0)
+		local cost = MoLiDeErGameModel.instance:getExecutionCostById(eventId, optionId)
 
-		if var_7_1:isAllActTimesNotMatch() then
+		if gameInfoMo:isAllActTimesNotMatch() then
 			GameFacade.showToast(ToastEnum.Act194AllTeamActTimesNotMatch)
 
 			return
 		end
 
-		if var_7_7 + var_7_1.leftRoundEnergy < 0 then
+		if cost + gameInfoMo.leftRoundEnergy < 0 then
 			GameFacade.showToast(ToastEnum.Act194ExecutionNotEnough)
 
 			return
@@ -90,68 +92,69 @@ function var_0_0.onItemClick(arg_7_0)
 		return
 	end
 
-	MoLiDeErGameModel.instance:setSelectOptionId(var_7_0)
+	MoLiDeErGameModel.instance:setSelectOptionId(optionId)
 end
 
-function var_0_0.refreshUI(arg_8_0)
-	local var_8_0 = arg_8_0.optionInfo
-	local var_8_1 = arg_8_0.optionConfig
+function MoLiDeErOptionItem:refreshUI()
+	local info = self.optionInfo
+	local optionConfig = self.optionConfig
 
-	arg_8_0._txtName.text = var_8_1.name
+	self._txtName.text = optionConfig.name
 
-	local var_8_2 = var_8_0.isEverChosen
-	local var_8_3 = arg_8_0.optionId
-	local var_8_4 = var_8_0.isChosable and MoLiDeErHelper.isOptionCanChose(var_8_3)
+	local haveSelected = info.isEverChosen
+	local optionId = self.optionId
+	local canSelect = info.isChosable and MoLiDeErHelper.isOptionCanChose(optionId)
 
-	arg_8_0._canSelect = var_8_4
+	self._canSelect = canSelect
 
-	local var_8_5 = var_8_2 and var_8_1.optionDesc or var_8_1.conditionDesc
-	local var_8_6
+	local descStr = haveSelected and optionConfig.optionDesc or optionConfig.conditionDesc
+	local teamId
+	local selectOptionId = MoLiDeErGameModel.instance:getSelectOptionId()
 
-	if MoLiDeErGameModel.instance:getSelectOptionId() == var_8_0.optionId then
-		var_8_6 = MoLiDeErGameModel.instance:getSelectTeamId()
+	if selectOptionId == info.optionId then
+		teamId = MoLiDeErGameModel.instance:getSelectTeamId()
 	end
 
-	local var_8_7 = {}
-	local var_8_8 = MoLiDeErHelper.getOptionRestrictionParamList(var_8_1.optionId)
+	local valueList = {}
+	local restrictionParamList = MoLiDeErHelper.getOptionRestrictionParamList(optionConfig.optionId)
 
-	tabletool.addValues(var_8_7, var_8_8)
+	tabletool.addValues(valueList, restrictionParamList)
 
-	local var_8_9 = MoLiDeErHelper.getOptionEffectParamList(var_8_1.optionId, var_8_6)
+	local optionEffectParamsList = MoLiDeErHelper.getOptionEffectParamList(optionConfig.optionId, teamId)
 
-	tabletool.addValues(var_8_7, var_8_9)
+	tabletool.addValues(valueList, optionEffectParamsList)
 
-	local var_8_10 = MoLiDeErHelper.getOptionResultEffectParamList(var_8_1.optionResultId, var_8_6)
+	local optionResultEffectParamsList = MoLiDeErHelper.getOptionResultEffectParamList(optionConfig.optionResultId, teamId)
 
-	tabletool.addValues(var_8_7, var_8_10)
+	tabletool.addValues(valueList, optionResultEffectParamsList)
 
-	arg_8_0._txtDescr.text = GameUtil.getSubPlaceholderLuaLang(var_8_5, var_8_7)
+	self._txtDescr.text = GameUtil.getSubPlaceholderLuaLang(descStr, valueList)
 
-	gohelper.setActive(arg_8_0._goBG1, var_8_4)
-	gohelper.setActive(arg_8_0._goBG2, false)
-	gohelper.setActive(arg_8_0._goBG3, not var_8_4)
+	gohelper.setActive(self._goBG1, canSelect)
+	gohelper.setActive(self._goBG2, false)
+	gohelper.setActive(self._goBG3, not canSelect)
 
-	local var_8_11 = MoLiDeErGameModel.instance:getSelectEventId()
-	local var_8_12 = MoLiDeErGameModel.instance:getExecutionCostById(var_8_11, var_8_3, var_8_6)
-	local var_8_13 = var_8_12 ~= 0
+	local eventId = MoLiDeErGameModel.instance:getSelectEventId()
+	local cost = MoLiDeErGameModel.instance:getExecutionCostById(eventId, optionId, teamId)
+	local showCost = cost ~= 0
 
-	gohelper.setActive(arg_8_0._goCost, var_8_13)
+	gohelper.setActive(self._goCost, showCost)
 
-	if var_8_13 then
-		arg_8_0._txtNum.text = tostring(var_8_12)
+	if showCost then
+		self._txtNum.text = tostring(cost)
 	end
 
-	local var_8_14 = MoLiDeErGameModel.instance:getSelectOptionId()
+	local selectId = MoLiDeErGameModel.instance:getSelectOptionId()
 
-	arg_8_0:setSelect(var_8_14)
+	self:setSelect(selectId)
 end
 
-function var_0_0.setSelect(arg_9_0, arg_9_1)
-	gohelper.setActive(arg_9_0._goBG2, arg_9_0.optionId == arg_9_1)
+function MoLiDeErOptionItem:setSelect(selectId)
+	gohelper.setActive(self._goBG2, self.optionId == selectId)
 end
 
-function var_0_0.onDestroy(arg_10_0)
+function MoLiDeErOptionItem:onDestroy()
 	return
 end
 
-return var_0_0
+return MoLiDeErOptionItem

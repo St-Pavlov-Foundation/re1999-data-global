@@ -1,106 +1,108 @@
-﻿module("modules.logic.dungeon.view.rolestory.RoleStoryTipView", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/rolestory/RoleStoryTipView.lua
 
-local var_0_0 = class("RoleStoryTipView", BaseView)
+module("modules.logic.dungeon.view.rolestory.RoleStoryTipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0.itemList = {}
-	arg_1_0.goItem = gohelper.findChild(arg_1_0.viewGO, "layout/item")
+local RoleStoryTipView = class("RoleStoryTipView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoleStoryTipView:onInitView()
+	self.btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self.itemList = {}
+	self.goItem = gohelper.findChild(self.viewGO, "layout/item")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0.btnClose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function RoleStoryTipView:addEvents()
+	self.btnClose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0.btnClose:RemoveClickListener()
+function RoleStoryTipView:removeEvents()
+	self.btnClose:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function RoleStoryTipView:_editableInitView()
 	return
 end
 
-function var_0_0._btncloseOnClick(arg_5_0)
-	arg_5_0:closeThis()
+function RoleStoryTipView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btntipsOnClick(arg_6_0)
-	gohelper.setActive(arg_6_0.goTips, false)
+function RoleStoryTipView:_btntipsOnClick()
+	gohelper.setActive(self.goTips, false)
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
-	arg_7_0:refreshView()
+function RoleStoryTipView:onUpdateParam()
+	self:refreshView()
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0:refreshView()
+function RoleStoryTipView:onOpen()
+	self:refreshView()
 end
 
-function var_0_0.onClose(arg_9_0)
+function RoleStoryTipView:onClose()
 	return
 end
 
-function var_0_0.refreshView(arg_10_0)
-	arg_10_0.storyId = RoleStoryModel.instance:getCurActStoryId()
+function RoleStoryTipView:refreshView()
+	self.storyId = RoleStoryModel.instance:getCurActStoryId()
 
-	local var_10_0 = RoleStoryConfig.instance:getScoreConfig(arg_10_0.storyId) or {}
+	local scoreList = RoleStoryConfig.instance:getScoreConfig(self.storyId) or {}
 
-	for iter_10_0 = 1, math.max(#arg_10_0.itemList, #var_10_0) do
-		local var_10_1 = arg_10_0.itemList[iter_10_0]
+	for i = 1, math.max(#self.itemList, #scoreList) do
+		local item = self.itemList[i]
 
-		if not var_10_1 then
-			var_10_1 = arg_10_0:createItem(iter_10_0)
-			arg_10_0.itemList[iter_10_0] = var_10_1
+		if not item then
+			item = self:createItem(i)
+			self.itemList[i] = item
 		end
 
-		arg_10_0:updateItem(var_10_1, var_10_0[iter_10_0], var_10_0[iter_10_0 - 1])
+		self:updateItem(item, scoreList[i], scoreList[i - 1])
 	end
 end
 
-function var_0_0.createItem(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0:getUserDataTb_()
+function RoleStoryTipView:createItem(index)
+	local item = self:getUserDataTb_()
 
-	var_11_0.index = arg_11_1
-	var_11_0.go = gohelper.cloneInPlace(arg_11_0.goItem)
-	var_11_0.txtNum = gohelper.findChildTextMesh(var_11_0.go, "#txt_num")
-	var_11_0.txtScore = gohelper.findChildTextMesh(var_11_0.go, "#txt_score")
-	var_11_0.goLine = gohelper.findChild(var_11_0.go, "line")
+	item.index = index
+	item.go = gohelper.cloneInPlace(self.goItem)
+	item.txtNum = gohelper.findChildTextMesh(item.go, "#txt_num")
+	item.txtScore = gohelper.findChildTextMesh(item.go, "#txt_score")
+	item.goLine = gohelper.findChild(item.go, "line")
 
-	gohelper.setActive(var_11_0.goLine, var_11_0.index ~= 1)
+	gohelper.setActive(item.goLine, item.index ~= 1)
 
-	return var_11_0
+	return item
 end
 
-function var_0_0.updateItem(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	if not arg_12_1 then
+function RoleStoryTipView:updateItem(item, data, lastData)
+	if not item then
 		return
 	end
 
-	arg_12_1.data = arg_12_2
+	item.data = data
 
-	if not arg_12_2 then
-		gohelper.setActive(arg_12_1.go, false)
+	if not data then
+		gohelper.setActive(item.go, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_12_1.go, true)
+	gohelper.setActive(item.go, true)
 
-	arg_12_1.txtScore.text = tostring(arg_12_2.score)
+	item.txtScore.text = tostring(data.score)
 
-	if arg_12_3 and arg_12_3.wave < arg_12_2.wave - 1 then
-		arg_12_1.txtNum.text = formatLuaLang("rolestoryactivitytips_wave", string.format("%s-%s", GameUtil.getNum2Chinese(arg_12_3.wave + 1), GameUtil.getNum2Chinese(arg_12_2.wave)))
+	if lastData and lastData.wave < data.wave - 1 then
+		item.txtNum.text = formatLuaLang("rolestoryactivitytips_wave", string.format("%s-%s", GameUtil.getNum2Chinese(lastData.wave + 1), GameUtil.getNum2Chinese(data.wave)))
 	else
-		arg_12_1.txtNum.text = formatLuaLang("rolestoryactivitytips_wave", GameUtil.getNum2Chinese(arg_12_2.wave))
+		item.txtNum.text = formatLuaLang("rolestoryactivitytips_wave", GameUtil.getNum2Chinese(data.wave))
 	end
 end
 
-function var_0_0.onDestroyView(arg_13_0)
+function RoleStoryTipView:onDestroyView()
 	return
 end
 
-return var_0_0
+return RoleStoryTipView

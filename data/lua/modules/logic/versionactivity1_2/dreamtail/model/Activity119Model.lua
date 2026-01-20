@@ -1,55 +1,57 @@
-﻿module("modules.logic.versionactivity1_2.dreamtail.model.Activity119Model", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/dreamtail/model/Activity119Model.lua
 
-local var_0_0 = class("Activity119Model", BaseModel)
+module("modules.logic.versionactivity1_2.dreamtail.model.Activity119Model", package.seeall)
 
-function var_0_0.reInit(arg_1_0)
-	arg_1_0.data = nil
-	arg_1_0.userData = nil
+local Activity119Model = class("Activity119Model", BaseModel)
+
+function Activity119Model:reInit()
+	self.data = nil
+	self.userData = nil
 end
 
-function var_0_0.getData(arg_2_0)
-	if not arg_2_0.data then
-		local var_2_0 = tostring(PlayerModel.instance:getMyUserId())
-		local var_2_1 = PlayerPrefsHelper.getString(PlayerPrefsKey.DreamTailKey, "")
+function Activity119Model:getData()
+	if not self.data then
+		local playerId = tostring(PlayerModel.instance:getMyUserId())
+		local str = PlayerPrefsHelper.getString(PlayerPrefsKey.DreamTailKey, "")
 
-		if not string.nilorempty(var_2_1) then
-			arg_2_0.data = cjson.decode(var_2_1)
-			arg_2_0.userData = arg_2_0.data[var_2_0]
+		if not string.nilorempty(str) then
+			self.data = cjson.decode(str)
+			self.userData = self.data[playerId]
 
-			if arg_2_0.data.activityId ~= VersionActivity1_2Enum.ActivityId.DreamTail then
-				arg_2_0.data = nil
-				arg_2_0.userData = nil
+			if self.data.activityId ~= VersionActivity1_2Enum.ActivityId.DreamTail then
+				self.data = nil
+				self.userData = nil
 			end
 		end
 
-		if not arg_2_0.data then
-			arg_2_0.data = {}
-			arg_2_0.data.activityId = VersionActivity1_2Enum.ActivityId.DreamTail
+		if not self.data then
+			self.data = {}
+			self.data.activityId = VersionActivity1_2Enum.ActivityId.DreamTail
 		end
 
-		if not arg_2_0.userData then
-			arg_2_0.userData = {}
-			arg_2_0.userData.unLockDay = 1
-			arg_2_0.userData.lastSelectDay = 1
-			arg_2_0.userData.lastSelectModel = 1
-			arg_2_0.userData.unLockHardList = {}
-			arg_2_0.data[var_2_0] = arg_2_0.userData
+		if not self.userData then
+			self.userData = {}
+			self.userData.unLockDay = 1
+			self.userData.lastSelectDay = 1
+			self.userData.lastSelectModel = 1
+			self.userData.unLockHardList = {}
+			self.data[playerId] = self.userData
 
-			arg_2_0:saveData()
+			self:saveData()
 		end
 	end
 
-	return arg_2_0.userData
+	return self.userData
 end
 
-function var_0_0.saveData(arg_3_0)
-	if not arg_3_0.data then
+function Activity119Model:saveData()
+	if not self.data then
 		return
 	end
 
-	PlayerPrefsHelper.setString(PlayerPrefsKey.DreamTailKey, cjson.encode(arg_3_0.data))
+	PlayerPrefsHelper.setString(PlayerPrefsKey.DreamTailKey, cjson.encode(self.data))
 end
 
-var_0_0.instance = var_0_0.New()
+Activity119Model.instance = Activity119Model.New()
 
-return var_0_0
+return Activity119Model

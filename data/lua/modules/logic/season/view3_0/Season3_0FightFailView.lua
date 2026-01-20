@@ -1,93 +1,96 @@
-﻿module("modules.logic.season.view3_0.Season3_0FightFailView", package.seeall)
+﻿-- chunkname: @modules/logic/season/view3_0/Season3_0FightFailView.lua
 
-local var_0_0 = class("Season3_0FightFailView", FightFailView)
+module("modules.logic.season.view3_0.Season3_0FightFailView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gopower = gohelper.findChild(arg_1_0.viewGO, "#go_power")
-	arg_1_0._btndata = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_power/#btn_data")
-	arg_1_0._gotips = gohelper.findChild(arg_1_0.viewGO, "scroll/Viewport/#go_tips")
-	arg_1_0._gorestrain = gohelper.findChild(arg_1_0.viewGO, "scroll/Viewport/#go_tips/#go_restrain")
-	arg_1_0._goherotipslist = gohelper.findChild(arg_1_0.viewGO, "scroll/Viewport/#go_tips/#go_restrain/#go_herotipslist")
-	arg_1_0._goconditions = gohelper.findChild(arg_1_0.viewGO, "scroll/Viewport/#go_tips/#go_conditions")
-	arg_1_0._goconditionitem = gohelper.findChild(arg_1_0.viewGO, "scroll/Viewport/#go_tips/#go_conditions/#go_item")
-	arg_1_0._txtextratips = gohelper.findChildText(arg_1_0.viewGO, "scroll/Viewport/#go_tips/#go_conditions/#go_item/#txt_extratips")
-	arg_1_0._gonormaltip = gohelper.findChild(arg_1_0.viewGO, "scroll/Viewport/#go_tips/#go_normaltip")
+local Season3_0FightFailView = class("Season3_0FightFailView", FightFailView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Season3_0FightFailView:onInitView()
+	self._gopower = gohelper.findChild(self.viewGO, "#go_power")
+	self._btndata = gohelper.findChildButtonWithAudio(self.viewGO, "#go_power/#btn_data")
+	self._gotips = gohelper.findChild(self.viewGO, "scroll/Viewport/#go_tips")
+	self._gorestrain = gohelper.findChild(self.viewGO, "scroll/Viewport/#go_tips/#go_restrain")
+	self._goherotipslist = gohelper.findChild(self.viewGO, "scroll/Viewport/#go_tips/#go_restrain/#go_herotipslist")
+	self._goconditions = gohelper.findChild(self.viewGO, "scroll/Viewport/#go_tips/#go_conditions")
+	self._goconditionitem = gohelper.findChild(self.viewGO, "scroll/Viewport/#go_tips/#go_conditions/#go_item")
+	self._txtextratips = gohelper.findChildText(self.viewGO, "scroll/Viewport/#go_tips/#go_conditions/#go_item/#txt_extratips")
+	self._gonormaltip = gohelper.findChild(self.viewGO, "scroll/Viewport/#go_tips/#go_normaltip")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._click:AddClickListener(arg_2_0._onClickClose, arg_2_0)
-	arg_2_0._btndata:AddClickListener(arg_2_0._onClickData, arg_2_0)
+function Season3_0FightFailView:addEvents()
+	self._click:AddClickListener(self._onClickClose, self)
+	self._btndata:AddClickListener(self._onClickData, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._click:RemoveClickListener()
-	arg_3_0._btndata:RemoveClickListener()
+function Season3_0FightFailView:removeEvents()
+	self._click:RemoveClickListener()
+	self._btndata:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._click = gohelper.getClick(arg_4_0.viewGO)
-	arg_4_0.restrainItem = gohelper.findChild(arg_4_0._goherotipslist, "item")
+function Season3_0FightFailView:_editableInitView()
+	self._click = gohelper.getClick(self.viewGO)
+	self.restrainItem = gohelper.findChild(self._goherotipslist, "item")
 
-	gohelper.setActive(arg_4_0.restrainItem, false)
-	gohelper.setActive(arg_4_0._goconditionitem, false)
-	gohelper.setActive(arg_4_0._gorestrain, false)
+	gohelper.setActive(self.restrainItem, false)
+	gohelper.setActive(self._goconditionitem, false)
+	gohelper.setActive(self._gorestrain, false)
 end
 
-function var_0_0.onOpen(arg_5_0)
+function Season3_0FightFailView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_settleaccounts_lose)
 	FightController.instance:checkFightQuitTipViewClose()
 
-	arg_5_0.fightParam = FightModel.instance:getFightParam()
-	arg_5_0._episodeId = arg_5_0.fightParam.episodeId
-	arg_5_0._chapterId = arg_5_0.fightParam.chapterId
-	arg_5_0.episodeCo = lua_episode.configDict[arg_5_0._episodeId]
-	arg_5_0.chapterCo = DungeonConfig.instance:getChapterCO(arg_5_0._chapterId)
-	arg_5_0.battleCo = DungeonConfig.instance:getBattleCo(nil, FightModel.instance:getBattleId())
+	self.fightParam = FightModel.instance:getFightParam()
+	self._episodeId = self.fightParam.episodeId
+	self._chapterId = self.fightParam.chapterId
+	self.episodeCo = lua_episode.configDict[self._episodeId]
+	self.chapterCo = DungeonConfig.instance:getChapterCO(self._chapterId)
+	self.battleCo = DungeonConfig.instance:getBattleCo(nil, FightModel.instance:getBattleId())
 
-	NavigateMgr.instance:addEscape(ViewName.FightFailView, arg_5_0._onClickClose, arg_5_0)
+	NavigateMgr.instance:addEscape(ViewName.FightFailView, self._onClickClose, self)
 
-	if arg_5_0:_hideActiveGo() and arg_5_0.episodeCo then
-		gohelper.setActive(arg_5_0._gopower, true)
+	if self:_hideActiveGo() and self.episodeCo then
+		gohelper.setActive(self._gopower, true)
 	end
 
-	arg_5_0:refreshTips()
+	self:refreshTips()
 end
 
-function var_0_0.refreshTips(arg_6_0)
-	local var_6_0, var_6_1 = FightHelper.detectAttributeCounter()
-	local var_6_2
+function Season3_0FightFailView:refreshTips()
+	local _, counter = FightHelper.detectAttributeCounter()
+	local showHeroCoList
 
-	if #var_6_1 ~= 0 then
-		var_6_2 = arg_6_0:getCounterHeroList(arg_6_0.fightParam:getAllHeroMoList(), var_6_1)
+	if #counter ~= 0 then
+		showHeroCoList = self:getCounterHeroList(self.fightParam:getAllHeroMoList(), counter)
 	end
 
-	if var_6_2 and #var_6_2 ~= 0 and arg_6_0.refreshRestrainContainer then
-		arg_6_0:refreshRestrainContainer(var_6_2)
+	if showHeroCoList and #showHeroCoList ~= 0 and self.refreshRestrainContainer then
+		self:refreshRestrainContainer(showHeroCoList)
 	end
 
-	local var_6_3 = arg_6_0:getShowConditionsCoList()
-	local var_6_4 = SeasonConfig.instance:filterRule(var_6_3)
+	local conditionCoList = self:getShowConditionsCoList()
 
-	if var_6_4 and #var_6_4 ~= 0 then
-		arg_6_0:refreshConditionsContainer(var_6_4)
+	conditionCoList = SeasonConfig.instance:filterRule(conditionCoList)
+
+	if conditionCoList and #conditionCoList ~= 0 then
+		self:refreshConditionsContainer(conditionCoList)
 	else
-		gohelper.setActive(arg_6_0._goconditions, false)
-		arg_6_0:refreshNormalContainer()
+		gohelper.setActive(self._goconditions, false)
+		self:refreshNormalContainer()
 	end
 
-	TaskDispatcher.runDelay(arg_6_0.rebuildLayout, arg_6_0, 0.01)
+	TaskDispatcher.runDelay(self.rebuildLayout, self, 0.01)
 end
 
-function var_0_0.onClose(arg_7_0)
-	var_0_0.super.onClose(arg_7_0)
+function Season3_0FightFailView:onClose()
+	Season3_0FightFailView.super.onClose(self)
 end
 
-function var_0_0.onDestroyView(arg_8_0)
-	var_0_0.super.onDestroyView(arg_8_0)
+function Season3_0FightFailView:onDestroyView()
+	Season3_0FightFailView.super.onDestroyView(self)
 end
 
-return var_0_0
+return Season3_0FightFailView

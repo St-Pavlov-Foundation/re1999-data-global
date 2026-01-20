@@ -1,10 +1,12 @@
-﻿module("modules.logic.explore.controller.steps.ExploreDialogueStep", package.seeall)
+﻿-- chunkname: @modules/logic/explore/controller/steps/ExploreDialogueStep.lua
 
-local var_0_0 = class("ExploreDialogueStep", ExploreStepBase)
+module("modules.logic.explore.controller.steps.ExploreDialogueStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	ViewMgr.instance:openView(ViewName.ExploreInteractView, arg_1_0._data)
-	arg_1_0:onDone()
+local ExploreDialogueStep = class("ExploreDialogueStep", ExploreStepBase)
+
+function ExploreDialogueStep:onStart()
+	ViewMgr.instance:openView(ViewName.ExploreInteractView, self._data)
+	self:onDone()
 end
 
-return var_0_0
+return ExploreDialogueStep

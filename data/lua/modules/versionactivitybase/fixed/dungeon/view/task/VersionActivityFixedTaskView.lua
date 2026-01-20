@@ -1,62 +1,65 @@
-﻿module("modules.versionactivitybase.fixed.dungeon.view.task.VersionActivityFixedTaskView", package.seeall)
+﻿-- chunkname: @modules/versionactivitybase/fixed/dungeon/view/task/VersionActivityFixedTaskView.lua
 
-local var_0_0 = class("VersionActivityFixedTaskView", BaseView)
+module("modules.versionactivitybase.fixed.dungeon.view.task.VersionActivityFixedTaskView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local VersionActivityFixedTaskView = class("VersionActivityFixedTaskView", BaseView)
+
+function VersionActivityFixedTaskView:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function VersionActivityFixedTaskView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function VersionActivityFixedTaskView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._bigVersion, arg_4_0._smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
-	arg_4_0._txtremaintime = gohelper.findChildText(arg_4_0.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_LimitTime")
+function VersionActivityFixedTaskView:_editableInitView()
+	self._bigVersion, self._smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
+	self._txtremaintime = gohelper.findChildText(self.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_LimitTime")
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function VersionActivityFixedTaskView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_6_0.refreshRight, arg_6_0)
-	arg_6_0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_6_0.refreshRight, arg_6_0)
-	arg_6_0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_6_0.refreshRight, arg_6_0)
+function VersionActivityFixedTaskView:onOpen()
+	self:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, self.refreshRight, self)
+	self:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, self.refreshRight, self)
+	self:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, self.refreshRight, self)
 	AudioMgr.instance:trigger(AudioEnum.UI.Act1_6DungeonEnterTaskView)
-	TaskDispatcher.runRepeat(arg_6_0.refreshRemainTime, arg_6_0, TimeUtil.OneMinuteSecond)
+	TaskDispatcher.runRepeat(self.refreshRemainTime, self, TimeUtil.OneMinuteSecond)
 	VersionActivityFixedTaskListModel.instance:initTask()
-	arg_6_0:refreshLeft()
-	arg_6_0:refreshRight()
+	self:refreshLeft()
+	self:refreshRight()
 end
 
-function var_0_0.refreshLeft(arg_7_0)
-	arg_7_0:refreshRemainTime()
+function VersionActivityFixedTaskView:refreshLeft()
+	self:refreshRemainTime()
 end
 
-function var_0_0.refreshRemainTime(arg_8_0)
-	local var_8_0 = ActivityModel.instance:getActivityInfo()[VersionActivityFixedHelper.getVersionActivityEnum(arg_8_0._bigVersion, arg_8_0._smallVersion).ActivityId.Dungeon]:getRealEndTimeStamp() - ServerTime.now()
+function VersionActivityFixedTaskView:refreshRemainTime()
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[VersionActivityFixedHelper.getVersionActivityEnum(self._bigVersion, self._smallVersion).ActivityId.Dungeon]
+	local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
 
-	arg_8_0._txtremaintime.text = TimeUtil.SecondToActivityTimeFormat(var_8_0)
+	self._txtremaintime.text = TimeUtil.SecondToActivityTimeFormat(offsetSecond)
 end
 
-function var_0_0.refreshRight(arg_9_0)
+function VersionActivityFixedTaskView:refreshRight()
 	VersionActivityFixedTaskListModel.instance:sortTaskMoList()
 	VersionActivityFixedTaskListModel.instance:refreshList()
 end
 
-function var_0_0.onClose(arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0.refreshRemainTime, arg_10_0)
+function VersionActivityFixedTaskView:onClose()
+	TaskDispatcher.cancelTask(self.refreshRemainTime, self)
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function VersionActivityFixedTaskView:onDestroyView()
 	return
 end
 
-return var_0_0
+return VersionActivityFixedTaskView

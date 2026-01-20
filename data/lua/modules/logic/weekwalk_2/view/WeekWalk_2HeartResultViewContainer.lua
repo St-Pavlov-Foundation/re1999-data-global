@@ -1,13 +1,15 @@
-﻿module("modules.logic.weekwalk_2.view.WeekWalk_2HeartResultViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk_2/view/WeekWalk_2HeartResultViewContainer.lua
 
-local var_0_0 = class("WeekWalk_2HeartResultViewContainer", BaseViewContainer)
+module("modules.logic.weekwalk_2.view.WeekWalk_2HeartResultViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local WeekWalk_2HeartResultViewContainer = class("WeekWalk_2HeartResultViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, WeekWalk_2HeartResultView.New())
+function WeekWalk_2HeartResultViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, WeekWalk_2HeartResultView.New())
+
+	return views
 end
 
-return var_0_0
+return WeekWalk_2HeartResultViewContainer

@@ -1,294 +1,319 @@
-﻿module("modules.logic.versionactivity3_1.gaosiniao.view.CorvusTaskItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/gaosiniao/view/CorvusTaskItem.lua
 
-local var_0_0 = class("CorvusTaskItem", ListScrollCellExtend)
+module("modules.logic.versionactivity3_1.gaosiniao.view.CorvusTaskItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "#go_normal")
-	arg_1_0._simagenormalbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_normal/#simage_normalbg")
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/progress/#txt_num")
-	arg_1_0._txttotal = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/progress/#txt_num/#txt_total")
-	arg_1_0._txttaskdes = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/#txt_taskdes")
-	arg_1_0._scrollrewards = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_normal/#scroll_rewards")
-	arg_1_0._gorewards = gohelper.findChild(arg_1_0.viewGO, "#go_normal/#scroll_rewards/Viewport/#go_rewards")
-	arg_1_0._btnnotfinishbg = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_normal/#btn_notfinishbg")
-	arg_1_0._btnfinishbg = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_normal/#btn_finishbg")
-	arg_1_0._goallfinish = gohelper.findChild(arg_1_0.viewGO, "#go_normal/#go_allfinish")
-	arg_1_0._gogetall = gohelper.findChild(arg_1_0.viewGO, "#go_getall")
-	arg_1_0._simagegetallbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_getall/#simage_getallbg")
-	arg_1_0._btngetall = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_getall/#btn_getall/#btn_getall", AudioEnum.UI.play_ui_task_slide)
+local CorvusTaskItem = class("CorvusTaskItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CorvusTaskItem:onInitView()
+	self._gonormal = gohelper.findChild(self.viewGO, "#go_normal")
+	self._simagenormalbg = gohelper.findChildSingleImage(self.viewGO, "#go_normal/#simage_normalbg")
+	self._txtnum = gohelper.findChildText(self.viewGO, "#go_normal/progress/#txt_num")
+	self._txttotal = gohelper.findChildText(self.viewGO, "#go_normal/progress/#txt_num/#txt_total")
+	self._txttaskdes = gohelper.findChildText(self.viewGO, "#go_normal/#txt_taskdes")
+	self._scrollrewards = gohelper.findChildScrollRect(self.viewGO, "#go_normal/#scroll_rewards")
+	self._gorewards = gohelper.findChild(self.viewGO, "#go_normal/#scroll_rewards/Viewport/#go_rewards")
+	self._btnnotfinishbg = gohelper.findChildButtonWithAudio(self.viewGO, "#go_normal/#btn_notfinishbg")
+	self._btnfinishbg = gohelper.findChildButtonWithAudio(self.viewGO, "#go_normal/#btn_finishbg")
+	self._goallfinish = gohelper.findChild(self.viewGO, "#go_normal/#go_allfinish")
+	self._gogetall = gohelper.findChild(self.viewGO, "#go_getall")
+	self._simagegetallbg = gohelper.findChildSingleImage(self.viewGO, "#go_getall/#simage_getallbg")
+	self._btngetall = gohelper.findChildButtonWithAudio(self.viewGO, "#go_getall/#btn_getall/#btn_getall", AudioEnum.UI.play_ui_task_slide)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnnotfinishbg:AddClickListener(arg_2_0._btnnotfinishbgOnClick, arg_2_0)
-	arg_2_0._btnfinishbg:AddClickListener(arg_2_0._btnfinishbgOnClick, arg_2_0)
+function CorvusTaskItem:addEvents()
+	self._btnnotfinishbg:AddClickListener(self._btnnotfinishbgOnClick, self)
+	self._btnfinishbg:AddClickListener(self._btnfinishbgOnClick, self)
 
-	if arg_2_0._btngetall then
-		arg_2_0._btngetall:AddClickListener(arg_2_0._btngetallOnClick, arg_2_0)
+	if self._btngetall then
+		self._btngetall:AddClickListener(self._btngetallOnClick, self)
 	end
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnnotfinishbg:RemoveClickListener()
-	arg_3_0._btnfinishbg:RemoveClickListener()
+function CorvusTaskItem:removeEvents()
+	self._btnnotfinishbg:RemoveClickListener()
+	self._btnfinishbg:RemoveClickListener()
 
-	if arg_3_0._btngetall then
-		arg_3_0._btngetall:RemoveClickListener()
+	if self._btngetall then
+		self._btngetall:RemoveClickListener()
 	end
 end
 
-local var_0_1 = 11235
+local kOneClickClaimRewardEvent = 11235
 
-function var_0_0.initInternal(arg_4_0, ...)
-	var_0_0.super.initInternal(arg_4_0, ...)
+function CorvusTaskItem:initInternal(...)
+	CorvusTaskItem.super.initInternal(self, ...)
 
-	arg_4_0.scrollReward = arg_4_0._scrollrewardsGo:GetComponent(typeof(ZProj.LimitedScrollRect))
-	arg_4_0.scrollReward.parentGameObject = arg_4_0._view._csListScroll.gameObject
+	self.scrollReward = self._scrollrewardsGo:GetComponent(typeof(ZProj.LimitedScrollRect))
+	self.scrollReward.parentGameObject = self._view._csListScroll.gameObject
 end
 
-function var_0_0._btnnotfinishbgOnClick(arg_5_0)
-	local var_5_0 = arg_5_0._mo.config.jumpId
+function CorvusTaskItem:_btnnotfinishbgOnClick()
+	local mo = self._mo
+	local config = mo.config
+	local jumpId = config.jumpId
 
-	if var_5_0 ~= 0 then
+	if jumpId ~= 0 then
 		AudioMgr.instance:trigger(AudioEnum.UI.UI_checkpoint_resources_open)
 
-		if GameFacade.jump(var_5_0) then
-			arg_5_0:_viewContainer():closeThis()
+		if GameFacade.jump(jumpId) then
+			local c = self:_viewContainer()
+
+			c:closeThis()
 		end
 	end
 end
 
-local var_0_2 = "CorvusTaskItem:_btnfinishbgOnClick()"
+local kBlock = "CorvusTaskItem:_btnfinishbgOnClick()"
 
-function var_0_0._btnfinishbgOnClick(arg_6_0)
-	arg_6_0:_startBlock()
+function CorvusTaskItem:_btnfinishbgOnClick()
+	self:_startBlock()
 
-	arg_6_0.animator.speed = 1
+	self.animator.speed = 1
 
-	arg_6_0.animatorPlayer:Play(UIAnimationName.Finish, arg_6_0._firstAnimationDone, arg_6_0)
+	self.animatorPlayer:Play(UIAnimationName.Finish, self._firstAnimationDone, self)
 end
 
-function var_0_0._btngetallOnClick(arg_7_0)
-	arg_7_0:_startBlock()
-	arg_7_0:_viewContainer():dispatchEvent(var_0_1, arg_7_0:_actId())
+function CorvusTaskItem:_btngetallOnClick()
+	self:_startBlock()
 
-	arg_7_0.animator.speed = 1
+	local c = self:_viewContainer()
 
-	arg_7_0.animatorPlayer:Play(UIAnimationName.Finish, arg_7_0._firstAnimationDone, arg_7_0)
+	c:dispatchEvent(kOneClickClaimRewardEvent, self:_actId())
+
+	self.animator.speed = 1
+
+	self.animatorPlayer:Play(UIAnimationName.Finish, self._firstAnimationDone, self)
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0._rewardItemList = {}
-	arg_8_0._btnnotfinishbgGo = arg_8_0._btnnotfinishbg.gameObject
-	arg_8_0._btnfinishbgGo = arg_8_0._btnfinishbg.gameObject
-	arg_8_0._goallfinishGo = arg_8_0._goallfinish.gameObject
-	arg_8_0._scrollrewardsGo = arg_8_0._scrollrewards.gameObject
-	arg_8_0._gorewardsContentFilter = gohelper.onceAddComponent(arg_8_0._gorewards, gohelper.Type_ContentSizeFitter)
-	arg_8_0.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_8_0.viewGO)
-	arg_8_0.animator = arg_8_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function CorvusTaskItem:_editableInitView()
+	self._rewardItemList = {}
+	self._btnnotfinishbgGo = self._btnnotfinishbg.gameObject
+	self._btnfinishbgGo = self._btnfinishbg.gameObject
+	self._goallfinishGo = self._goallfinish.gameObject
+	self._scrollrewardsGo = self._scrollrewards.gameObject
+	self._gorewardsContentFilter = gohelper.onceAddComponent(self._gorewards, gohelper.Type_ContentSizeFitter)
+	self.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(self.viewGO)
+	self.animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function var_0_0.onDestroyView(arg_9_0)
-	arg_9_0._simagenormalbg:UnLoadImage()
+function CorvusTaskItem:onDestroyView()
+	self._simagenormalbg:UnLoadImage()
 end
 
-function var_0_0._viewContainer(arg_10_0)
-	return arg_10_0._view.viewContainer
+function CorvusTaskItem:_viewContainer()
+	return self._view.viewContainer
 end
 
-function var_0_0.getAnimator(arg_11_0)
-	return arg_11_0.animator
+function CorvusTaskItem:getAnimator()
+	return self.animator
 end
 
-function var_0_0.onUpdateMO(arg_12_0, arg_12_1)
-	arg_12_0._mo = arg_12_1
+function CorvusTaskItem:onUpdateMO(mo)
+	self._mo = mo
 
-	gohelper.setActive(arg_12_0._gonormal, not arg_12_1.getAll)
-	gohelper.setActive(arg_12_0._gogetall, arg_12_1.getAll)
+	gohelper.setActive(self._gonormal, not mo.getAll)
+	gohelper.setActive(self._gogetall, mo.getAll)
 
-	if arg_12_1.getAll then
-		arg_12_0:_refreshGetAllUI()
+	if mo.getAll then
+		self:_refreshGetAllUI()
 	else
-		arg_12_0:_refreshNormalUI()
+		self:_refreshNormalUI()
 	end
 end
 
-function var_0_0._refreshGetAllUI(arg_13_0)
+function CorvusTaskItem:_refreshGetAllUI()
 	return
 end
 
-function var_0_0._isReadTask(arg_14_0)
-	return arg_14_0._mo.config.listenerType == "ReadTask"
+function CorvusTaskItem:_isReadTask()
+	local mo = self._mo
+	local CO = mo.config
+
+	return CO.listenerType == "ReadTask"
 end
 
-function var_0_0._refreshNormalUI(arg_15_0)
-	local var_15_0 = arg_15_0._mo
-	local var_15_1 = var_15_0.config
-	local var_15_2 = var_15_0.progress
-	local var_15_3 = var_15_1.maxProgress
+function CorvusTaskItem:_refreshNormalUI()
+	local mo = self._mo
+	local CO = mo.config
+	local progress = mo.progress
+	local maxProgress = CO.maxProgress
 
-	if arg_15_0:_isReadTask() then
-		var_15_2 = arg_15_0:_getProgressReadTask()
-		var_15_3 = arg_15_0:_getMaxProgressReadTask()
+	if self:_isReadTask() then
+		progress = self:_getProgressReadTask()
+		maxProgress = self:_getMaxProgressReadTask()
 	end
 
-	arg_15_0._txtnum.text = math.min(var_15_2, var_15_3)
-	arg_15_0._txttaskdes.text = var_15_1.desc
-	arg_15_0._txttotal.text = var_15_3
+	self._txtnum.text = math.min(progress, maxProgress)
+	self._txttaskdes.text = CO.desc
+	self._txttotal.text = maxProgress
 
-	gohelper.setActive(arg_15_0._btnnotfinishbgGo, var_15_0:isUnfinished())
-	gohelper.setActive(arg_15_0._goallfinishGo, var_15_0:isClaimed())
-	gohelper.setActive(arg_15_0._btnfinishbgGo, var_15_0:isClaimable())
-	arg_15_0:_refreshRewardItems()
+	gohelper.setActive(self._btnnotfinishbgGo, mo:isUnfinished())
+	gohelper.setActive(self._goallfinishGo, mo:isClaimed())
+	gohelper.setActive(self._btnfinishbgGo, mo:isClaimable())
+	self:_refreshRewardItems()
 end
 
-function var_0_0._refreshRewardItems(arg_16_0)
-	local var_16_0 = arg_16_0._mo.config.bonus
+function CorvusTaskItem:_refreshRewardItems()
+	local mo = self._mo
+	local CO = mo.config
+	local bonus = CO.bonus
 
-	if string.nilorempty(var_16_0) then
-		gohelper.setActive(arg_16_0.scrollReward.gameObject, false)
+	if string.nilorempty(bonus) then
+		gohelper.setActive(self.scrollReward.gameObject, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_16_0.scrollReward.gameObject, true)
+	gohelper.setActive(self.scrollReward.gameObject, true)
 
-	local var_16_1 = arg_16_0:_getRewardList()
+	local rewardList = self:_getRewardList()
 
-	arg_16_0._gorewardsContentFilter.enabled = #var_16_1 > 2
+	self._gorewardsContentFilter.enabled = #rewardList > 2
 
-	for iter_16_0, iter_16_1 in ipairs(var_16_1) do
-		local var_16_2 = iter_16_1[1]
-		local var_16_3 = iter_16_1[2]
-		local var_16_4 = iter_16_1[3]
-		local var_16_5 = arg_16_0._rewardItemList[iter_16_0]
+	for index, rewardArr in ipairs(rewardList) do
+		local type, id, quantity = rewardArr[1], rewardArr[2], rewardArr[3]
+		local rewardItem = self._rewardItemList[index]
 
-		if not var_16_5 then
-			var_16_5 = IconMgr.instance:getCommonPropItemIcon(arg_16_0._gorewards)
+		if not rewardItem then
+			rewardItem = IconMgr.instance:getCommonPropItemIcon(self._gorewards)
 
-			var_16_5:setMOValue(var_16_2, var_16_3, var_16_4, nil, true)
-			var_16_5:setCountFontSize(26)
-			var_16_5:showStackableNum2()
-			var_16_5:isShowEffect(true)
-			table.insert(arg_16_0._rewardItemList, var_16_5)
+			rewardItem:setMOValue(type, id, quantity, nil, true)
+			rewardItem:setCountFontSize(26)
+			rewardItem:showStackableNum2()
+			rewardItem:isShowEffect(true)
+			table.insert(self._rewardItemList, rewardItem)
 
-			local var_16_6 = var_16_5:getItemIcon()
+			local itemIcon = rewardItem:getItemIcon()
 
-			if var_16_6.getCountBg then
-				local var_16_7 = var_16_6:getCountBg()
+			if itemIcon.getCountBg then
+				local countBg = itemIcon:getCountBg()
 
-				transformhelper.setLocalScale(var_16_7.transform, 1, 1.5, 1)
+				transformhelper.setLocalScale(countBg.transform, 1, 1.5, 1)
 			end
 
-			if var_16_6.getCount then
-				local var_16_8 = var_16_6:getCount()
+			if itemIcon.getCount then
+				local count = itemIcon:getCount()
 
-				transformhelper.setLocalScale(var_16_8.transform, 1.5, 1.5, 1)
+				transformhelper.setLocalScale(count.transform, 1.5, 1.5, 1)
 			end
 		else
-			var_16_5:setMOValue(var_16_2, var_16_3, var_16_4, nil, true)
+			rewardItem:setMOValue(type, id, quantity, nil, true)
 		end
 
-		gohelper.setActive(var_16_5.go, true)
+		gohelper.setActive(rewardItem.go, true)
 	end
 
-	for iter_16_2 = #var_16_1 + 1, #arg_16_0._rewardItemList do
-		gohelper.setActive(arg_16_0._rewardItemList[iter_16_2].go, false)
+	for i = #rewardList + 1, #self._rewardItemList do
+		gohelper.setActive(self._rewardItemList[i].go, false)
 	end
 
-	arg_16_0.scrollReward.horizontalNormalizedPosition = 0
+	self.scrollReward.horizontalNormalizedPosition = 0
 end
 
-function var_0_0._firstAnimationDone(arg_17_0)
-	arg_17_0:_viewContainer():removeByIndex(arg_17_0._index, arg_17_0._secondAnimationDone, arg_17_0)
+function CorvusTaskItem:_firstAnimationDone()
+	local c = self:_viewContainer()
+
+	c:removeByIndex(self._index, self._secondAnimationDone, self)
 end
 
-function var_0_0._secondAnimationDone(arg_18_0)
-	local var_18_0 = arg_18_0:_viewContainer()
-	local var_18_1 = arg_18_0._mo
+function CorvusTaskItem:_secondAnimationDone()
+	local c = self:_viewContainer()
+	local mo = self._mo
 
-	arg_18_0.animatorPlayer:Play(UIAnimationName.Idle)
-	arg_18_0._endBlock()
+	self.animatorPlayer:Play(UIAnimationName.Idle)
+	self._endBlock()
 
-	if var_18_1.getAll then
-		var_18_0:sendFinishAllTaskRequest()
+	if mo.getAll then
+		c:sendFinishAllTaskRequest()
 	else
-		local var_18_2 = var_18_1.config.id
+		local CO = mo.config
+		local taskId = CO.id
 
-		var_18_0:sendFinishTaskRequest(var_18_2)
+		c:sendFinishTaskRequest(taskId)
 	end
 end
 
-function var_0_0._startBlock(arg_19_0)
-	UIBlockMgr.instance:startBlock(var_0_2)
+function CorvusTaskItem:_startBlock()
+	UIBlockMgr.instance:startBlock(kBlock)
 	UIBlockMgrExtend.setNeedCircleMv(false)
 end
 
-function var_0_0._endBlock(arg_20_0)
-	UIBlockMgr.instance:endBlock(var_0_2)
+function CorvusTaskItem:_endBlock()
+	UIBlockMgr.instance:endBlock(kBlock)
 	UIBlockMgrExtend.setNeedCircleMv(true)
 end
 
-function var_0_0.showAsGotState(arg_21_0)
-	gohelper.setActive(arg_21_0._btnnotfinishbgGo, false)
-	gohelper.setActive(arg_21_0._goallfinishGo, true)
-	gohelper.setActive(arg_21_0._btnfinishbgGo, false)
+function CorvusTaskItem:showAsGotState()
+	gohelper.setActive(self._btnnotfinishbgGo, false)
+	gohelper.setActive(self._goallfinishGo, true)
+	gohelper.setActive(self._btnfinishbgGo, false)
 end
 
-function var_0_0._getRewardList(arg_22_0)
-	local var_22_0 = arg_22_0._mo.config.bonus
+function CorvusTaskItem:_getRewardList()
+	local mo = self._mo
+	local CO = mo.config
+	local bonus = CO.bonus
 
-	if string.nilorempty(var_22_0) then
+	if string.nilorempty(bonus) then
 		return {}
 	end
 
-	return GameUtil.splitString2(var_22_0, true, "|", "#")
+	return GameUtil.splitString2(bonus, true, "|", "#")
 end
 
-function var_0_0._editableAddEvents(arg_23_0)
-	arg_23_0:_viewContainer():registerCallback(var_0_1, arg_23_0._onOneClickClaimReward, arg_23_0)
+function CorvusTaskItem:_editableAddEvents()
+	local c = self:_viewContainer()
+
+	c:registerCallback(kOneClickClaimRewardEvent, self._onOneClickClaimReward, self)
 end
 
-function var_0_0._editableRemoveEvents(arg_24_0)
-	arg_24_0:_viewContainer():unregisterCallback(var_0_1, arg_24_0._onOneClickClaimReward, arg_24_0)
+function CorvusTaskItem:_editableRemoveEvents()
+	local c = self:_viewContainer()
+
+	c:unregisterCallback(kOneClickClaimRewardEvent, self._onOneClickClaimReward, self)
 end
 
-function var_0_0._actId(arg_25_0)
-	return arg_25_0:_viewContainer():actId()
+function CorvusTaskItem:_actId()
+	local c = self:_viewContainer()
+
+	return c:actId()
 end
 
-function var_0_0._onOneClickClaimReward(arg_26_0, arg_26_1)
-	if arg_26_0:_actId() ~= arg_26_1 then
+function CorvusTaskItem:_onOneClickClaimReward(actId)
+	if self:_actId() ~= actId then
 		return
 	end
 
-	if arg_26_0._mo.getAll then
+	if self._mo.getAll then
 		return
 	end
 
-	arg_26_0.animator.speed = 1
+	self.animator.speed = 1
 
-	arg_26_0.animatorPlayer:Play(UIAnimationName.Finish, arg_26_0._onOneClickClaimRewardAnimFirstDone, arg_26_0)
+	self.animatorPlayer:Play(UIAnimationName.Finish, self._onOneClickClaimRewardAnimFirstDone, self)
 end
 
-function var_0_0._onOneClickClaimRewardAnimFirstDone(arg_27_0)
-	arg_27_0:_viewContainer():removeByIndex(arg_27_0._index, arg_27_0._getAllPlayAnimDone, arg_27_0)
+function CorvusTaskItem:_onOneClickClaimRewardAnimFirstDone()
+	local c = self:_viewContainer()
+
+	c:removeByIndex(self._index, self._getAllPlayAnimDone, self)
 end
 
-function var_0_0._getAllPlayAnimDone(arg_28_0)
-	arg_28_0.animatorPlayer:Play(UIAnimationName.Idle)
-	arg_28_0:showAsGotState()
+function CorvusTaskItem:_getAllPlayAnimDone()
+	self.animatorPlayer:Play(UIAnimationName.Idle)
+	self:showAsGotState()
 end
 
-function var_0_0._getProgressReadTask(arg_29_0)
+function CorvusTaskItem:_getProgressReadTask()
 	return 0
 end
 
-function var_0_0._getMaxProgressReadTask(arg_30_0)
+function CorvusTaskItem:_getMaxProgressReadTask()
 	return 1
 end
 
-return var_0_0
+return CorvusTaskItem

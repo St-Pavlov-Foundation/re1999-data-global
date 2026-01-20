@@ -1,18 +1,20 @@
-﻿module("modules.configs.excel2json.lua_trade_support_bonus", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_trade_support_bonus.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_trade_support_bonus", package.seeall)
+
+local lua_trade_support_bonus = {}
+local fields = {
 	id = 1,
 	needTask = 3,
 	bonus = 2
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_trade_support_bonus.onLoad(json)
+	lua_trade_support_bonus.configList, lua_trade_support_bonus.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_trade_support_bonus

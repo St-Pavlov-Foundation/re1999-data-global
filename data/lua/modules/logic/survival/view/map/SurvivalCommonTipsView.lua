@@ -1,73 +1,76 @@
-﻿module("modules.logic.survival.view.map.SurvivalCommonTipsView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/SurvivalCommonTipsView.lua
 
-local var_0_0 = class("SurvivalCommonTipsView", BaseView)
+module("modules.logic.survival.view.map.SurvivalCommonTipsView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.goclose = gohelper.findChild(arg_1_0.viewGO, "#go_close")
-	arg_1_0.goscrolltip = gohelper.findChild(arg_1_0.viewGO, "#scroll_tip")
-	arg_1_0.gocontent = gohelper.findChild(arg_1_0.viewGO, "#scroll_tip/Viewport/Content")
-	arg_1_0.gotipitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_tip/Viewport/Content/#go_tipitem")
+local SurvivalCommonTipsView = class("SurvivalCommonTipsView", BaseView)
+
+function SurvivalCommonTipsView:onInitView()
+	self.goclose = gohelper.findChild(self.viewGO, "#go_close")
+	self.goscrolltip = gohelper.findChild(self.viewGO, "#scroll_tip")
+	self.gocontent = gohelper.findChild(self.viewGO, "#scroll_tip/Viewport/Content")
+	self.gotipitem = gohelper.findChild(self.viewGO, "#scroll_tip/Viewport/Content/#go_tipitem")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0.closeClick = gohelper.getClickWithDefaultAudio(arg_2_0.goclose)
+function SurvivalCommonTipsView:addEvents()
+	self.closeClick = gohelper.getClickWithDefaultAudio(self.goclose)
 
-	arg_2_0.closeClick:AddClickListener(arg_2_0.closeThis, arg_2_0)
+	self.closeClick:AddClickListener(self.closeThis, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0.closeClick:RemoveClickListener()
+function SurvivalCommonTipsView:removeEvents()
+	self.closeClick:RemoveClickListener()
 
-	arg_3_0.closeClick = nil
+	self.closeClick = nil
 end
 
-function var_0_0.onOpen(arg_4_0)
-	arg_4_0.rectTrScrollTip = arg_4_0.goscrolltip:GetComponent(gohelper.Type_RectTransform)
-	arg_4_0.rectTrViewGo = arg_4_0.viewGO:GetComponent(gohelper.Type_RectTransform)
-	arg_4_0.rectTrContent = arg_4_0.gocontent:GetComponent(gohelper.Type_RectTransform)
+function SurvivalCommonTipsView:onOpen()
+	self.rectTrScrollTip = self.goscrolltip:GetComponent(gohelper.Type_RectTransform)
+	self.rectTrViewGo = self.viewGO:GetComponent(gohelper.Type_RectTransform)
+	self.rectTrContent = self.gocontent:GetComponent(gohelper.Type_RectTransform)
 
-	gohelper.setActive(arg_4_0.gotipitem, false)
+	gohelper.setActive(self.gotipitem, false)
 
-	arg_4_0.scrollTip = SLFramework.UGUI.ScrollRectWrap.Get(arg_4_0.goscrolltip)
-	arg_4_0.clickPosition = GamepadController.instance:getMousePosition()
+	self.scrollTip = SLFramework.UGUI.ScrollRectWrap.Get(self.goscrolltip)
+	self.clickPosition = GamepadController.instance:getMousePosition()
 
-	local var_4_0 = arg_4_0.viewParam.pivot or Vector2()
+	local pivot = self.viewParam.pivot or Vector2()
 
-	arg_4_0.rectTrScrollTip.pivot = var_4_0
+	self.rectTrScrollTip.pivot = pivot
 
-	local var_4_1, var_4_2 = recthelper.screenPosToAnchorPos2(arg_4_0.clickPosition, arg_4_0.rectTrViewGo)
+	local anchorPosX, anchorPosY = recthelper.screenPosToAnchorPos2(self.clickPosition, self.rectTrViewGo)
 
-	var_4_1 = var_4_0.x > 0 and var_4_1 - CommonBuffTipEnum.DefaultInterval or var_4_1 + CommonBuffTipEnum.DefaultInterval
-	var_4_2 = var_4_0.y > 0 and var_4_2 - CommonBuffTipEnum.DefaultInterval or var_4_2 + CommonBuffTipEnum.DefaultInterval
+	anchorPosX = pivot.x > 0 and anchorPosX - CommonBuffTipEnum.DefaultInterval or anchorPosX + CommonBuffTipEnum.DefaultInterval
+	anchorPosY = pivot.y > 0 and anchorPosY - CommonBuffTipEnum.DefaultInterval or anchorPosY + CommonBuffTipEnum.DefaultInterval
 
-	recthelper.setAnchor(arg_4_0.rectTrScrollTip, var_4_1, var_4_2)
+	recthelper.setAnchor(self.rectTrScrollTip, anchorPosX, anchorPosY)
 
-	local var_4_3 = recthelper.getHeight(arg_4_0.rectTrViewGo)
-	local var_4_4 = recthelper.getAnchorY(arg_4_0.rectTrScrollTip)
-	local var_4_5 = math.abs(var_4_4)
+	local viewHeight = recthelper.getHeight(self.rectTrViewGo)
+	local anchorY = recthelper.getAnchorY(self.rectTrScrollTip)
 
-	arg_4_0.maxHeight = var_4_3 / 2 + var_4_5 - CommonBuffTipEnum.BottomMargin
+	anchorY = math.abs(anchorY)
+	self.maxHeight = viewHeight / 2 + anchorY - CommonBuffTipEnum.BottomMargin
 
-	gohelper.CreateObjList(arg_4_0, arg_4_0._onCreateItem, arg_4_0.viewParam.list, nil, arg_4_0.gotipitem)
-	ZProj.UGUIHelper.RebuildLayout(arg_4_0.rectTrContent)
+	gohelper.CreateObjList(self, self._onCreateItem, self.viewParam.list, nil, self.gotipitem)
+	ZProj.UGUIHelper.RebuildLayout(self.rectTrContent)
 
-	local var_4_6 = recthelper.getHeight(arg_4_0.rectTrContent)
-	local var_4_7 = math.min(arg_4_0.maxHeight, var_4_6)
+	local height = recthelper.getHeight(self.rectTrContent)
 
-	recthelper.setHeight(arg_4_0.rectTrScrollTip, var_4_7)
+	height = math.min(self.maxHeight, height)
 
-	arg_4_0.scrollTip.verticalNormalizedPosition = 0
+	recthelper.setHeight(self.rectTrScrollTip, height)
+
+	self.scrollTip.verticalNormalizedPosition = 0
 end
 
-function var_0_0._onCreateItem(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	local var_5_0 = gohelper.findChildText(arg_5_1, "title/txt_name")
-	local var_5_1 = gohelper.findChildText(arg_5_1, "txt_desc")
-	local var_5_2 = gohelper.findChild(arg_5_1, "title/txt_name/go_tag")
+function SurvivalCommonTipsView:_onCreateItem(obj, data, index)
+	local txtName = gohelper.findChildText(obj, "title/txt_name")
+	local txtDesc = gohelper.findChildText(obj, "txt_desc")
+	local goTag = gohelper.findChild(obj, "title/txt_name/go_tag")
 
-	var_5_0.text = arg_5_2.title
-	var_5_1.text = arg_5_2.desc
+	txtName.text = data.title
+	txtDesc.text = data.desc
 
-	gohelper.setActive(var_5_2, false)
+	gohelper.setActive(goTag, false)
 end
 
-return var_0_0
+return SurvivalCommonTipsView

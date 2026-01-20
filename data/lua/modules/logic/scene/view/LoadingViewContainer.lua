@@ -1,11 +1,13 @@
-﻿module("modules.logic.scene.view.LoadingViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/scene/view/LoadingViewContainer.lua
 
-local var_0_0 = class("LoadingViewContainer", BaseViewContainer)
+module("modules.logic.scene.view.LoadingViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local LoadingViewContainer = class("LoadingViewContainer", BaseViewContainer)
+
+function LoadingViewContainer:buildViews()
 	return {
 		LoadingView.New()
 	}
 end
 
-return var_0_0
+return LoadingViewContainer

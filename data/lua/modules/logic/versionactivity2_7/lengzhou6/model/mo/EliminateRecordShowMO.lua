@@ -1,59 +1,61 @@
-﻿module("modules.logic.versionactivity2_7.lengzhou6.model.mo.EliminateRecordShowMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/lengzhou6/model/mo/EliminateRecordShowMO.lua
 
-local var_0_0 = class("EliminateRecordShowMO")
+module("modules.logic.versionactivity2_7.lengzhou6.model.mo.EliminateRecordShowMO", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._eliminateList = {}
-	arg_1_0._changeTypeList = {}
-	arg_1_0._moveList = {}
-	arg_1_0._newList = {}
+local EliminateRecordShowMO = class("EliminateRecordShowMO")
+
+function EliminateRecordShowMO:ctor()
+	self._eliminateList = {}
+	self._changeTypeList = {}
+	self._moveList = {}
+	self._newList = {}
 end
 
-function var_0_0.getEliminate(arg_2_0)
-	return arg_2_0._eliminateList
+function EliminateRecordShowMO:getEliminate()
+	return self._eliminateList
 end
 
-function var_0_0.getChangeType(arg_3_0)
-	return arg_3_0._changeTypeList
+function EliminateRecordShowMO:getChangeType()
+	return self._changeTypeList
 end
 
-function var_0_0.getMove(arg_4_0)
-	return arg_4_0._moveList
+function EliminateRecordShowMO:getMove()
+	return self._moveList
 end
 
-function var_0_0.getNew(arg_5_0)
-	return arg_5_0._newList
+function EliminateRecordShowMO:getNew()
+	return self._newList
 end
 
-function var_0_0.addEliminate(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	table.insert(arg_6_0._eliminateList, arg_6_1)
-	table.insert(arg_6_0._eliminateList, arg_6_2)
-	table.insert(arg_6_0._eliminateList, arg_6_3)
+function EliminateRecordShowMO:addEliminate(x, y, skillType)
+	table.insert(self._eliminateList, x)
+	table.insert(self._eliminateList, y)
+	table.insert(self._eliminateList, skillType)
 end
 
-function var_0_0.addChangeType(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	table.insert(arg_7_0._changeTypeList, arg_7_1)
-	table.insert(arg_7_0._changeTypeList, arg_7_2)
-	table.insert(arg_7_0._changeTypeList, arg_7_3)
+function EliminateRecordShowMO:addChangeType(x, y, type)
+	table.insert(self._changeTypeList, x)
+	table.insert(self._changeTypeList, y)
+	table.insert(self._changeTypeList, type)
 end
 
-function var_0_0.addMove(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4)
-	table.insert(arg_8_0._moveList, arg_8_1)
-	table.insert(arg_8_0._moveList, arg_8_2)
-	table.insert(arg_8_0._moveList, arg_8_3)
-	table.insert(arg_8_0._moveList, arg_8_4)
+function EliminateRecordShowMO:addMove(fromX, fromY, toX, toY)
+	table.insert(self._moveList, fromX)
+	table.insert(self._moveList, fromY)
+	table.insert(self._moveList, toX)
+	table.insert(self._moveList, toY)
 end
 
-function var_0_0.addNew(arg_9_0, arg_9_1, arg_9_2)
-	table.insert(arg_9_0._newList, arg_9_1)
-	table.insert(arg_9_0._newList, arg_9_2)
+function EliminateRecordShowMO:addNew(x, y)
+	table.insert(self._newList, x)
+	table.insert(self._newList, y)
 end
 
-function var_0_0.reset(arg_10_0)
-	tabletool.clear(arg_10_0._eliminateList)
-	tabletool.clear(arg_10_0._changeTypeList)
-	tabletool.clear(arg_10_0._moveList)
-	tabletool.clear(arg_10_0._newList)
+function EliminateRecordShowMO:reset()
+	tabletool.clear(self._eliminateList)
+	tabletool.clear(self._changeTypeList)
+	tabletool.clear(self._moveList)
+	tabletool.clear(self._newList)
 end
 
-return var_0_0
+return EliminateRecordShowMO

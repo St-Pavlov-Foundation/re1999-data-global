@@ -1,16 +1,18 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotTeamPreviewPresetItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/view/V1a6_CachotTeamPreviewPresetItem.lua
 
-local var_0_0 = class("V1a6_CachotTeamPreviewPresetItem", V1a6_CachotTeamItem)
+module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotTeamPreviewPresetItem", package.seeall)
 
-function var_0_0._getEquipMO(arg_1_0)
-	if arg_1_0._mo then
-		arg_1_0._equipMO = V1a6_CachotTeamPreviewPresetListModel.instance:getEquip(arg_1_0._mo)
+local V1a6_CachotTeamPreviewPresetItem = class("V1a6_CachotTeamPreviewPresetItem", V1a6_CachotTeamItem)
+
+function V1a6_CachotTeamPreviewPresetItem:_getEquipMO()
+	if self._mo then
+		self._equipMO = V1a6_CachotTeamPreviewPresetListModel.instance:getEquip(self._mo)
 	end
 end
 
-function var_0_0.onUpdateMO(arg_2_0, arg_2_1)
-	var_0_0.super.onUpdateMO(arg_2_0, arg_2_1)
-	arg_2_0:_updateHp()
+function V1a6_CachotTeamPreviewPresetItem:onUpdateMO(mo)
+	V1a6_CachotTeamPreviewPresetItem.super.onUpdateMO(self, mo)
+	self:_updateHp()
 end
 
-return var_0_0
+return V1a6_CachotTeamPreviewPresetItem

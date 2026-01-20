@@ -1,29 +1,31 @@
-﻿module("modules.logic.versionactivity2_5.act186.view.Activity186ViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/act186/view/Activity186ViewContainer.lua
 
-local var_0_0 = class("Activity186ViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_5.act186.view.Activity186ViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Activity186ViewContainer = class("Activity186ViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Activity186View.New())
-	table.insert(var_1_0, Activity186HeroView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
+function Activity186ViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Activity186View.New())
+	table.insert(views, Activity186HeroView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_topleft"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function Activity186ViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-return var_0_0
+return Activity186ViewContainer

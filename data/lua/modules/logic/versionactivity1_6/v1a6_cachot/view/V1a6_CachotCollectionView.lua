@@ -1,208 +1,212 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotCollectionView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/view/V1a6_CachotCollectionView.lua
 
-local var_0_0 = class("V1a6_CachotCollectionView", BaseView)
+module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotCollectionView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagelevelbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_levelbg")
-	arg_1_0._simagetitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "left/#simage_title")
-	arg_1_0._simagetitleicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "left/#simage_titleicon")
-	arg_1_0._scrollview = gohelper.findChildScrollRect(arg_1_0.viewGO, "left/#scroll_view")
-	arg_1_0._gocollectionitem = gohelper.findChild(arg_1_0.viewGO, "left/#scroll_view/Viewport/Content/#go_collectionitem")
-	arg_1_0._gocollectionsort = gohelper.findChild(arg_1_0.viewGO, "left/#go_collectionsort")
-	arg_1_0._btnall = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left/#go_collectionsort/#btn_all")
-	arg_1_0._btnhasget = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left/#go_collectionsort/#btn_hasget")
-	arg_1_0._btnunget = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left/#go_collectionsort/#btn_unget")
-	arg_1_0._simagecollection = gohelper.findChildSingleImage(arg_1_0.viewGO, "right/#go_collectioninfo/#simage_collection")
-	arg_1_0._golock = gohelper.findChild(arg_1_0.viewGO, "right/#go_collectioninfo/#go_lock")
-	arg_1_0._gounget = gohelper.findChild(arg_1_0.viewGO, "right/#go_collectioninfo/#go_unget")
-	arg_1_0._gohasget = gohelper.findChild(arg_1_0.viewGO, "right/#go_collectioninfo/#go_hasget")
-	arg_1_0._gogrid1 = gohelper.findChild(arg_1_0.viewGO, "right/#go_collectioninfo/#go_hasget/layout/#go_grid1")
-	arg_1_0._simageget1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "right/#go_collectioninfo/#go_hasget/layout/#go_grid1/#simage_get1")
-	arg_1_0._simageicon1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "right/#go_collectioninfo/#go_hasget/layout/#go_grid1/#simage_get1/#simage_icon1")
-	arg_1_0._gogrid2 = gohelper.findChild(arg_1_0.viewGO, "right/#go_collectioninfo/#go_hasget/layout/#go_grid2")
-	arg_1_0._simageget2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "right/#go_collectioninfo/#go_hasget/layout/#go_grid2/#simage_get2")
-	arg_1_0._simageicon2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "right/#go_collectioninfo/#go_hasget/layout/#go_grid2/#simage_get2/#simage_icon2")
-	arg_1_0._gounique = gohelper.findChild(arg_1_0.viewGO, "right/#go_collectioninfo/#go_hasget/#go_unique")
-	arg_1_0._txtuniquetips = gohelper.findChildText(arg_1_0.viewGO, "right/#go_collectioninfo/#go_hasget/#go_unique/#txt_uniquetips")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "right/#go_collectioninfo/#go_hasget/#scroll_effectcontainer/Viewport/Content/descontainer/#txt_desc")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "right/#go_collectioninfo/#txt_name")
-	arg_1_0._scrolleffectcontainer = gohelper.findChildScrollRect(arg_1_0.viewGO, "right/#go_collectioninfo/#go_hasget/#scroll_effectcontainer")
-	arg_1_0._goskillcontainer = gohelper.findChild(arg_1_0.viewGO, "right/#go_collectioninfo/#go_hasget/#scroll_effectcontainer/Viewport/Content/#go_skillcontainer")
-	arg_1_0._godescitem = gohelper.findChild(arg_1_0.viewGO, "right/#go_collectioninfo/#go_hasget/#scroll_effectcontainer/Viewport/Content/#go_skillcontainer/#go_descitem")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._txtunlocktask = gohelper.findChildText(arg_1_0.viewGO, "right/#go_collectioninfo/#go_lock/#txt_unlocktask")
-	arg_1_0._gocollectioninfo = gohelper.findChild(arg_1_0.viewGO, "right/#go_collectioninfo")
-	arg_1_0._goscrollempty = gohelper.findChild(arg_1_0.viewGO, "left/#go_scrollempty")
-	arg_1_0._gocollectionempty = gohelper.findChild(arg_1_0.viewGO, "right/#go_collectionempty")
+local V1a6_CachotCollectionView = class("V1a6_CachotCollectionView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V1a6_CachotCollectionView:onInitView()
+	self._simagelevelbg = gohelper.findChildSingleImage(self.viewGO, "#simage_levelbg")
+	self._simagetitle = gohelper.findChildSingleImage(self.viewGO, "left/#simage_title")
+	self._simagetitleicon = gohelper.findChildSingleImage(self.viewGO, "left/#simage_titleicon")
+	self._scrollview = gohelper.findChildScrollRect(self.viewGO, "left/#scroll_view")
+	self._gocollectionitem = gohelper.findChild(self.viewGO, "left/#scroll_view/Viewport/Content/#go_collectionitem")
+	self._gocollectionsort = gohelper.findChild(self.viewGO, "left/#go_collectionsort")
+	self._btnall = gohelper.findChildButtonWithAudio(self.viewGO, "left/#go_collectionsort/#btn_all")
+	self._btnhasget = gohelper.findChildButtonWithAudio(self.viewGO, "left/#go_collectionsort/#btn_hasget")
+	self._btnunget = gohelper.findChildButtonWithAudio(self.viewGO, "left/#go_collectionsort/#btn_unget")
+	self._simagecollection = gohelper.findChildSingleImage(self.viewGO, "right/#go_collectioninfo/#simage_collection")
+	self._golock = gohelper.findChild(self.viewGO, "right/#go_collectioninfo/#go_lock")
+	self._gounget = gohelper.findChild(self.viewGO, "right/#go_collectioninfo/#go_unget")
+	self._gohasget = gohelper.findChild(self.viewGO, "right/#go_collectioninfo/#go_hasget")
+	self._gogrid1 = gohelper.findChild(self.viewGO, "right/#go_collectioninfo/#go_hasget/layout/#go_grid1")
+	self._simageget1 = gohelper.findChildSingleImage(self.viewGO, "right/#go_collectioninfo/#go_hasget/layout/#go_grid1/#simage_get1")
+	self._simageicon1 = gohelper.findChildSingleImage(self.viewGO, "right/#go_collectioninfo/#go_hasget/layout/#go_grid1/#simage_get1/#simage_icon1")
+	self._gogrid2 = gohelper.findChild(self.viewGO, "right/#go_collectioninfo/#go_hasget/layout/#go_grid2")
+	self._simageget2 = gohelper.findChildSingleImage(self.viewGO, "right/#go_collectioninfo/#go_hasget/layout/#go_grid2/#simage_get2")
+	self._simageicon2 = gohelper.findChildSingleImage(self.viewGO, "right/#go_collectioninfo/#go_hasget/layout/#go_grid2/#simage_get2/#simage_icon2")
+	self._gounique = gohelper.findChild(self.viewGO, "right/#go_collectioninfo/#go_hasget/#go_unique")
+	self._txtuniquetips = gohelper.findChildText(self.viewGO, "right/#go_collectioninfo/#go_hasget/#go_unique/#txt_uniquetips")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "right/#go_collectioninfo/#go_hasget/#scroll_effectcontainer/Viewport/Content/descontainer/#txt_desc")
+	self._txtname = gohelper.findChildText(self.viewGO, "right/#go_collectioninfo/#txt_name")
+	self._scrolleffectcontainer = gohelper.findChildScrollRect(self.viewGO, "right/#go_collectioninfo/#go_hasget/#scroll_effectcontainer")
+	self._goskillcontainer = gohelper.findChild(self.viewGO, "right/#go_collectioninfo/#go_hasget/#scroll_effectcontainer/Viewport/Content/#go_skillcontainer")
+	self._godescitem = gohelper.findChild(self.viewGO, "right/#go_collectioninfo/#go_hasget/#scroll_effectcontainer/Viewport/Content/#go_skillcontainer/#go_descitem")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._txtunlocktask = gohelper.findChildText(self.viewGO, "right/#go_collectioninfo/#go_lock/#txt_unlocktask")
+	self._gocollectioninfo = gohelper.findChild(self.viewGO, "right/#go_collectioninfo")
+	self._goscrollempty = gohelper.findChild(self.viewGO, "left/#go_scrollempty")
+	self._gocollectionempty = gohelper.findChild(self.viewGO, "right/#go_collectionempty")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnall:AddClickListener(arg_2_0._btnallOnClick, arg_2_0)
-	arg_2_0._btnhasget:AddClickListener(arg_2_0._btnhasgetOnClick, arg_2_0)
-	arg_2_0._btnunget:AddClickListener(arg_2_0._btnungetOnClick, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function V1a6_CachotCollectionView:addEvents()
+	self._btnall:AddClickListener(self._btnallOnClick, self)
+	self._btnhasget:AddClickListener(self._btnhasgetOnClick, self)
+	self._btnunget:AddClickListener(self._btnungetOnClick, self)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnall:RemoveClickListener()
-	arg_3_0._btnhasget:RemoveClickListener()
-	arg_3_0._btnunget:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
+function V1a6_CachotCollectionView:removeEvents()
+	self._btnall:RemoveClickListener()
+	self._btnhasget:RemoveClickListener()
+	self._btnunget:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btnallOnClick(arg_4_0)
+function V1a6_CachotCollectionView:_btnallOnClick()
 	V1a6_CachotCollectionController.instance:onSwitchCategory(V1a6_CachotEnum.CollectionCategoryType.All)
 end
 
-function var_0_0._btnhasgetOnClick(arg_5_0)
+function V1a6_CachotCollectionView:_btnhasgetOnClick()
 	V1a6_CachotCollectionController.instance:onSwitchCategory(V1a6_CachotEnum.CollectionCategoryType.HasGet)
 end
 
-function var_0_0._btnungetOnClick(arg_6_0)
+function V1a6_CachotCollectionView:_btnungetOnClick()
 	V1a6_CachotCollectionController.instance:onSwitchCategory(V1a6_CachotEnum.CollectionCategoryType.UnGet)
 end
 
-function var_0_0._btncloseOnClick(arg_7_0)
-	arg_7_0:closeThis()
+function V1a6_CachotCollectionView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0:addEventCb(V1a6_CachotCollectionController.instance, V1a6_CachotEvent.OnSelectCollectionItem, arg_8_0.refreshCollectionInfo, arg_8_0)
-	arg_8_0:addEventCb(V1a6_CachotCollectionController.instance, V1a6_CachotEvent.OnSwitchCategory, arg_8_0.switchCategory, arg_8_0)
+function V1a6_CachotCollectionView:_editableInitView()
+	self:addEventCb(V1a6_CachotCollectionController.instance, V1a6_CachotEvent.OnSelectCollectionItem, self.refreshCollectionInfo, self)
+	self:addEventCb(V1a6_CachotCollectionController.instance, V1a6_CachotEvent.OnSwitchCategory, self.switchCategory, self)
 
-	arg_8_0._imagecollectionicon = gohelper.findChildImage(arg_8_0.viewGO, "right/#go_collectioninfo/#simage_collection")
+	self._imagecollectionicon = gohelper.findChildImage(self.viewGO, "right/#go_collectioninfo/#simage_collection")
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
+function V1a6_CachotCollectionView:onUpdateParam()
 	return
 end
 
-local var_0_1 = 4
+local maxCollectionNumSingleLine = 4
 
-function var_0_0.onOpen(arg_10_0)
-	V1a6_CachotCollectionController.instance:onOpenView(V1a6_CachotEnum.CollectionCategoryType.All, var_0_1)
+function V1a6_CachotCollectionView:onOpen()
+	V1a6_CachotCollectionController.instance:onOpenView(V1a6_CachotEnum.CollectionCategoryType.All, maxCollectionNumSingleLine)
 end
 
-var_0_0.IconUnLockColor = "#FFFFFF"
-var_0_0.IconLockColor = "#060606"
-var_0_0.IconUnLockAlpha = 1
-var_0_0.IconLockAlpha = 0.7
+V1a6_CachotCollectionView.IconUnLockColor = "#FFFFFF"
+V1a6_CachotCollectionView.IconLockColor = "#060606"
+V1a6_CachotCollectionView.IconUnLockAlpha = 1
+V1a6_CachotCollectionView.IconLockAlpha = 0.7
 
-function var_0_0.refreshCollectionInfo(arg_11_0)
-	local var_11_0 = V1a6_CachotCollectionListModel.instance:getCurSelectCollectionId()
+function V1a6_CachotCollectionView:refreshCollectionInfo()
+	local curSelectCollectionId = V1a6_CachotCollectionListModel.instance:getCurSelectCollectionId()
 
-	gohelper.setActive(arg_11_0._gocollectioninfo, var_11_0 ~= nil)
-	gohelper.setActive(arg_11_0._gocollectionempty, var_11_0 == nil)
-	gohelper.setActive(arg_11_0._goscrollempty, var_11_0 == nil)
+	gohelper.setActive(self._gocollectioninfo, curSelectCollectionId ~= nil)
+	gohelper.setActive(self._gocollectionempty, curSelectCollectionId == nil)
+	gohelper.setActive(self._goscrollempty, curSelectCollectionId == nil)
 
-	if var_11_0 then
-		local var_11_1 = V1a6_CachotCollectionListModel.instance:getCollectionState(var_11_0)
-		local var_11_2 = V1a6_CachotCollectionConfig.instance:getCollectionConfig(var_11_0)
+	if curSelectCollectionId then
+		local collectionState = V1a6_CachotCollectionListModel.instance:getCollectionState(curSelectCollectionId)
+		local collectionCfg = V1a6_CachotCollectionConfig.instance:getCollectionConfig(curSelectCollectionId)
 
-		gohelper.setActive(arg_11_0._gohasget, var_11_1 == V1a6_CachotEnum.CollectionState.HasGet or var_11_1 == V1a6_CachotEnum.CollectionState.New)
-		gohelper.setActive(arg_11_0._golock, var_11_1 == V1a6_CachotEnum.CollectionState.Locked)
-		gohelper.setActive(arg_11_0._gounget, var_11_1 == V1a6_CachotEnum.CollectionState.UnLocked)
-		gohelper.setActive(arg_11_0._txtname, var_11_1 ~= V1a6_CachotEnum.CollectionState.Locked)
+		gohelper.setActive(self._gohasget, collectionState == V1a6_CachotEnum.CollectionState.HasGet or collectionState == V1a6_CachotEnum.CollectionState.New)
+		gohelper.setActive(self._golock, collectionState == V1a6_CachotEnum.CollectionState.Locked)
+		gohelper.setActive(self._gounget, collectionState == V1a6_CachotEnum.CollectionState.UnLocked)
+		gohelper.setActive(self._txtname, collectionState ~= V1a6_CachotEnum.CollectionState.Locked)
 
-		if var_11_2 and var_11_1 then
-			local var_11_3 = var_0_0.IconUnLockColor
-			local var_11_4 = var_0_0.IconUnLockAlpha
+		if collectionCfg and collectionState then
+			local collectionIconColor = V1a6_CachotCollectionView.IconUnLockColor
+			local collectionIconAlpha = V1a6_CachotCollectionView.IconUnLockAlpha
 
-			if var_11_1 == V1a6_CachotEnum.CollectionState.Locked then
-				arg_11_0:onCollectionLockedState(var_11_2)
+			if collectionState == V1a6_CachotEnum.CollectionState.Locked then
+				self:onCollectionLockedState(collectionCfg)
 
-				var_11_3 = var_0_0.IconLockColor
-				var_11_4 = var_0_0.IconLockAlpha
-			elseif var_11_1 == V1a6_CachotEnum.CollectionState.UnLocked then
-				arg_11_0:onCollectionUnLockedState(var_11_2)
+				collectionIconColor = V1a6_CachotCollectionView.IconLockColor
+				collectionIconAlpha = V1a6_CachotCollectionView.IconLockAlpha
+			elseif collectionState == V1a6_CachotEnum.CollectionState.UnLocked then
+				self:onCollectionUnLockedState(collectionCfg)
 			else
-				arg_11_0:onCollectionHasGetState(var_11_2)
+				self:onCollectionHasGetState(collectionCfg)
 			end
 
-			arg_11_0._simagecollection:LoadImage(ResUrl.getV1a6CachotIcon("collection/" .. var_11_2.icon))
-			SLFramework.UGUI.GuiHelper.SetColor(arg_11_0._imagecollectionicon, var_11_3)
-			ZProj.UGUIHelper.SetColorAlpha(arg_11_0._imagecollectionicon, var_11_4)
+			self._simagecollection:LoadImage(ResUrl.getV1a6CachotIcon("collection/" .. collectionCfg.icon))
+			SLFramework.UGUI.GuiHelper.SetColor(self._imagecollectionicon, collectionIconColor)
+			ZProj.UGUIHelper.SetColorAlpha(self._imagecollectionicon, collectionIconAlpha)
 		end
 	end
 end
 
-function var_0_0.onCollectionLockedState(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_1.unlockTask
-	local var_12_1 = lua_rogue_collecion_unlock_task.configDict[var_12_0]
+function V1a6_CachotCollectionView:onCollectionLockedState(collectionCfg)
+	local unLockTaskId = collectionCfg.unlockTask
+	local unLockTaskCfg = lua_rogue_collecion_unlock_task.configDict[unLockTaskId]
 
-	arg_12_0._txtunlocktask.text = var_12_1 and var_12_1.desc or ""
+	self._txtunlocktask.text = unLockTaskCfg and unLockTaskCfg.desc or ""
 end
 
-function var_0_0.onCollectionUnLockedState(arg_13_0, arg_13_1)
-	arg_13_0._txtname.text = tostring(arg_13_1.name)
+function V1a6_CachotCollectionView:onCollectionUnLockedState(collectionCfg)
+	self._txtname.text = tostring(collectionCfg.name)
 end
 
-function var_0_0.onCollectionHasGetState(arg_14_0, arg_14_1)
-	gohelper.setActive(arg_14_0._gohasget, true)
+function V1a6_CachotCollectionView:onCollectionHasGetState(collectionCfg)
+	gohelper.setActive(self._gohasget, true)
 
-	arg_14_0._txtname.text = tostring(arg_14_1.name)
-	arg_14_0._txtdesc.text = tostring(arg_14_1.desc)
+	self._txtname.text = tostring(collectionCfg.name)
+	self._txtdesc.text = tostring(collectionCfg.desc)
 
-	gohelper.setActive(arg_14_0._gogrid1, arg_14_1.holeNum >= 1)
-	gohelper.setActive(arg_14_0._gogrid2, arg_14_1.holeNum >= 2)
-	V1a6_CachotCollectionHelper.refreshCollectionUniqueTip(arg_14_1, arg_14_0._txtuniquetips, arg_14_0._gounique)
-	V1a6_CachotCollectionHelper.refreshSkillDesc(arg_14_1, arg_14_0._goskillcontainer, arg_14_0._godescitem, arg_14_0._refreshSingleSkillDesc, arg_14_0._refreshSingleEffectDesc, arg_14_0)
+	gohelper.setActive(self._gogrid1, collectionCfg.holeNum >= 1)
+	gohelper.setActive(self._gogrid2, collectionCfg.holeNum >= 2)
+	V1a6_CachotCollectionHelper.refreshCollectionUniqueTip(collectionCfg, self._txtuniquetips, self._gounique)
+	V1a6_CachotCollectionHelper.refreshSkillDesc(collectionCfg, self._goskillcontainer, self._godescitem, self._refreshSingleSkillDesc, self._refreshSingleEffectDesc, self)
 end
 
-local var_0_2 = "#6F3C0F"
-local var_0_3 = "#2B4E6C"
+local effectPercentColor = "#6F3C0F"
+local effectBracketColor = "#2B4E6C"
 
-function var_0_0._refreshSingleSkillDesc(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	local var_15_0 = lua_rule.configDict[arg_15_2]
+function V1a6_CachotCollectionView:_refreshSingleSkillDesc(obj, skillId, index)
+	local skillCfg = lua_rule.configDict[skillId]
 
-	if var_15_0 then
-		gohelper.findChildText(arg_15_1, "txt_desc").text = HeroSkillModel.instance:skillDesToSpot(var_15_0.desc, var_0_2, var_0_3)
+	if skillCfg then
+		local txtEffectDesc = gohelper.findChildText(obj, "txt_desc")
+
+		txtEffectDesc.text = HeroSkillModel.instance:skillDesToSpot(skillCfg.desc, effectPercentColor, effectBracketColor)
 	end
 end
 
-function var_0_0._refreshSingleEffectDesc(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
-	local var_16_0 = SkillConfig.instance:getSkillEffectDescCo(arg_16_2)
+function V1a6_CachotCollectionView:_refreshSingleEffectDesc(obj, effectId, index)
+	local effectCfg = SkillConfig.instance:getSkillEffectDescCo(effectId)
 
-	if var_16_0 then
-		local var_16_1 = gohelper.findChildText(arg_16_1, "txt_desc")
-		local var_16_2 = string.format("[%s]:%s", var_16_0.name, var_16_0.desc)
+	if effectCfg then
+		local txtEffectDesc = gohelper.findChildText(obj, "txt_desc")
+		local info = string.format("[%s]:%s", effectCfg.name, effectCfg.desc)
 
-		var_16_1.text = HeroSkillModel.instance:skillDesToSpot(var_16_2, var_0_2, var_0_3)
+		txtEffectDesc.text = HeroSkillModel.instance:skillDesToSpot(info, effectPercentColor, effectBracketColor)
 	end
 end
 
-function var_0_0.switchCategory(arg_17_0)
-	local var_17_0 = V1a6_CachotCollectionListModel.instance:getCurCategory()
+function V1a6_CachotCollectionView:switchCategory()
+	local curCategory = V1a6_CachotCollectionListModel.instance:getCurCategory()
 
-	arg_17_0:refreshCategoryUI(arg_17_0._btnall.gameObject, var_17_0 == V1a6_CachotEnum.CollectionCategoryType.All)
-	arg_17_0:refreshCategoryUI(arg_17_0._btnhasget.gameObject, var_17_0 == V1a6_CachotEnum.CollectionCategoryType.HasGet)
-	arg_17_0:refreshCategoryUI(arg_17_0._btnunget.gameObject, var_17_0 == V1a6_CachotEnum.CollectionCategoryType.UnGet)
+	self:refreshCategoryUI(self._btnall.gameObject, curCategory == V1a6_CachotEnum.CollectionCategoryType.All)
+	self:refreshCategoryUI(self._btnhasget.gameObject, curCategory == V1a6_CachotEnum.CollectionCategoryType.HasGet)
+	self:refreshCategoryUI(self._btnunget.gameObject, curCategory == V1a6_CachotEnum.CollectionCategoryType.UnGet)
 
-	arg_17_0._scrollview.verticalNormalizedPosition = 1
+	self._scrollview.verticalNormalizedPosition = 1
 end
 
-function var_0_0.refreshCategoryUI(arg_18_0, arg_18_1, arg_18_2)
-	if arg_18_1 then
-		local var_18_0 = gohelper.findChild(arg_18_1, "btn1")
-		local var_18_1 = gohelper.findChild(arg_18_1, "btn2")
+function V1a6_CachotCollectionView:refreshCategoryUI(btn, isSelect)
+	if btn then
+		local unSelectUI = gohelper.findChild(btn, "btn1")
+		local selectUI = gohelper.findChild(btn, "btn2")
 
-		gohelper.setActive(var_18_1, arg_18_2)
-		gohelper.setActive(var_18_0, not arg_18_2)
+		gohelper.setActive(selectUI, isSelect)
+		gohelper.setActive(unSelectUI, not isSelect)
 	end
 end
 
-function var_0_0.onClose(arg_19_0)
-	arg_19_0:removeEventCb(V1a6_CachotCollectionController.instance, V1a6_CachotEvent.OnSelectCollectionItem, arg_19_0.refreshCollectionInfo, arg_19_0)
-	arg_19_0:removeEventCb(V1a6_CachotCollectionController.instance, V1a6_CachotEvent.OnSwitchCategory, arg_19_0.switchCategory, arg_19_0)
+function V1a6_CachotCollectionView:onClose()
+	self:removeEventCb(V1a6_CachotCollectionController.instance, V1a6_CachotEvent.OnSelectCollectionItem, self.refreshCollectionInfo, self)
+	self:removeEventCb(V1a6_CachotCollectionController.instance, V1a6_CachotEvent.OnSwitchCategory, self.switchCategory, self)
 	V1a6_CachotCollectionController.instance:onCloseView()
 end
 
-function var_0_0.onDestroyView(arg_20_0)
-	arg_20_0._simagecollection:UnLoadImage()
+function V1a6_CachotCollectionView:onDestroyView()
+	self._simagecollection:UnLoadImage()
 end
 
-return var_0_0
+return V1a6_CachotCollectionView

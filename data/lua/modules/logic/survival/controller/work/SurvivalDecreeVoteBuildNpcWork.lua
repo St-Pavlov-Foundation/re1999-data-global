@@ -1,94 +1,96 @@
-﻿module("modules.logic.survival.controller.work.SurvivalDecreeVoteBuildNpcWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/SurvivalDecreeVoteBuildNpcWork.lua
 
-local var_0_0 = class("SurvivalDecreeVoteBuildNpcWork", BaseWork)
+module("modules.logic.survival.controller.work.SurvivalDecreeVoteBuildNpcWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0:initParam(arg_1_1)
+local SurvivalDecreeVoteBuildNpcWork = class("SurvivalDecreeVoteBuildNpcWork", BaseWork)
+
+function SurvivalDecreeVoteBuildNpcWork:ctor(param)
+	self:initParam(param)
 end
 
-function var_0_0.initParam(arg_2_0, arg_2_1)
-	arg_2_0.npcDataList = arg_2_1.npcDataList
-	arg_2_0.votePercent = arg_2_1.votePercent
-	arg_2_0.goAgreeItem = arg_2_1.goAgreeItem
-	arg_2_0.goDisAgreeItem = arg_2_1.goDisAgreeItem
-	arg_2_0.mapCo = arg_2_1.mapCo
-	arg_2_0.unitComp = arg_2_1.unitComp
-	arg_2_0.bubbleList = arg_2_1.bubbleList or {}
-	arg_2_0.toastList = arg_2_1.toastList or {}
-	arg_2_0.npcList = {}
+function SurvivalDecreeVoteBuildNpcWork:initParam(param)
+	self.npcDataList = param.npcDataList
+	self.votePercent = param.votePercent
+	self.goAgreeItem = param.goAgreeItem
+	self.goDisAgreeItem = param.goDisAgreeItem
+	self.mapCo = param.mapCo
+	self.unitComp = param.unitComp
+	self.bubbleList = param.bubbleList or {}
+	self.toastList = param.toastList or {}
+	self.npcList = {}
 end
 
-function var_0_0.onStart(arg_3_0)
-	local var_3_0 = GameUtil.splitString2(arg_3_0.mapCo.npcPosition, true, "#", ",")
-	local var_3_1 = arg_3_0.unitComp:getUnitParentGO(SurvivalEnum.ShelterUnitType.VoteEntity)
-	local var_3_2 = #var_3_0
-	local var_3_3 = math.floor(var_3_2 * arg_3_0.votePercent)
-	local var_3_4 = var_3_2 - var_3_3
-	local var_3_5 = 1
+function SurvivalDecreeVoteBuildNpcWork:onStart()
+	local npcPosList = GameUtil.splitString2(self.mapCo.npcPosition, true, "#", ",")
+	local npcRoot = self.unitComp:getUnitParentGO(SurvivalEnum.ShelterUnitType.VoteEntity)
+	local posCount = #npcPosList
+	local agreeNpcCount = math.floor(posCount * self.votePercent)
+	local disAgreeNpcCount = posCount - agreeNpcCount
+	local posIndex = 1
 
-	for iter_3_0 = 1, math.min(var_3_3, #arg_3_0.npcDataList[1]) do
-		if var_3_2 < var_3_5 then
+	for i = 1, math.min(agreeNpcCount, #self.npcDataList[1]) do
+		if posCount < posIndex then
 			break
 		end
 
-		arg_3_0:createNpc(arg_3_0.npcDataList[1][iter_3_0], var_3_1, var_3_0[var_3_5])
+		self:createNpc(self.npcDataList[1][i], npcRoot, npcPosList[posIndex])
 
-		var_3_5 = var_3_5 + 1
+		posIndex = posIndex + 1
 	end
 
-	for iter_3_1 = 1, math.min(var_3_4, #arg_3_0.npcDataList[2]) do
-		if var_3_2 < var_3_5 then
+	for i = 1, math.min(disAgreeNpcCount, #self.npcDataList[2]) do
+		if posCount < posIndex then
 			break
 		end
 
-		arg_3_0:createNpc(arg_3_0.npcDataList[2][iter_3_1], var_3_1, var_3_0[var_3_5])
+		self:createNpc(self.npcDataList[2][i], npcRoot, npcPosList[posIndex])
 
-		var_3_5 = var_3_5 + 1
+		posIndex = posIndex + 1
 	end
 
-	arg_3_0:onBuildFinish()
+	self:onBuildFinish()
 end
 
-function var_0_0.createNpc(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
-	local var_4_0 = SurvivalDecreeVoteEntity.Create(arg_4_1.resource, arg_4_2, SurvivalHexNode.New(arg_4_3[1], arg_4_3[2]), arg_4_4)
+function SurvivalDecreeVoteBuildNpcWork:createNpc(data, root, pos, dir)
+	local npc = SurvivalDecreeVoteEntity.Create(data.resource, root, SurvivalHexNode.New(pos[1], pos[2]), dir)
 
-	table.insert(arg_4_0.npcList, var_4_0)
-	table.insert(arg_4_0.toastList, arg_4_1)
+	table.insert(self.npcList, npc)
+	table.insert(self.toastList, data)
 
-	if arg_4_1.isAgree then
-		arg_4_0:createBubbleItem(arg_4_0.goAgreeItem, var_4_0.go)
+	if data.isAgree then
+		self:createBubbleItem(self.goAgreeItem, npc.go)
 	else
-		arg_4_0:createBubbleItem(arg_4_0.goDisAgreeItem, var_4_0.go)
+		self:createBubbleItem(self.goDisAgreeItem, npc.go)
 	end
 end
 
-function var_0_0.clearNpc(arg_5_0)
-	if arg_5_0.npcList then
-		for iter_5_0, iter_5_1 in ipairs(arg_5_0.npcList) do
-			iter_5_1:dispose()
+function SurvivalDecreeVoteBuildNpcWork:clearNpc()
+	if self.npcList then
+		for i, v in ipairs(self.npcList) do
+			v:dispose()
 		end
 	end
 
-	arg_5_0.npcList = {}
+	self.npcList = {}
 end
 
-function var_0_0.createBubbleItem(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = gohelper.cloneInPlace(arg_6_1)
+function SurvivalDecreeVoteBuildNpcWork:createBubbleItem(go, followerGO)
+	local cloneGO = gohelper.cloneInPlace(go)
 
-	gohelper.setActive(var_6_0, false)
+	gohelper.setActive(cloneGO, false)
 
-	local var_6_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_6_0, SurvivalDecreeVoteUIItem, arg_6_2)
+	local bubble = MonoHelper.addNoUpdateLuaComOnceToGo(cloneGO, SurvivalDecreeVoteUIItem, followerGO)
 
-	table.insert(arg_6_0.bubbleList, var_6_1)
+	table.insert(self.bubbleList, bubble)
 end
 
-function var_0_0.onBuildFinish(arg_7_0)
-	arg_7_0:onDone(true)
+function SurvivalDecreeVoteBuildNpcWork:onBuildFinish()
+	self:onDone(true)
 end
 
-function var_0_0.onDestroy(arg_8_0)
-	arg_8_0:clearNpc()
-	var_0_0.super.onDestroy(arg_8_0)
+function SurvivalDecreeVoteBuildNpcWork:onDestroy()
+	self:clearNpc()
+	SurvivalDecreeVoteBuildNpcWork.super.onDestroy(self)
 end
 
-return var_0_0
+return SurvivalDecreeVoteBuildNpcWork

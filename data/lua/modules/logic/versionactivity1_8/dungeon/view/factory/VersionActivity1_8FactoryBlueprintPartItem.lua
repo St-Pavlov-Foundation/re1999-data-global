@@ -1,146 +1,157 @@
-﻿module("modules.logic.versionactivity1_8.dungeon.view.factory.VersionActivity1_8FactoryBlueprintPartItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_8/dungeon/view/factory/VersionActivity1_8FactoryBlueprintPartItem.lua
 
-local var_0_0 = class("VersionActivity1_8FactoryBlueprintPartItem", LuaCompBase)
-local var_0_1 = 0.87
+module("modules.logic.versionactivity1_8.dungeon.view.factory.VersionActivity1_8FactoryBlueprintPartItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.actId = Activity157Model.instance:getActId()
-	arg_1_0.componentId = arg_1_1
+local VersionActivity1_8FactoryBlueprintPartItem = class("VersionActivity1_8FactoryBlueprintPartItem", LuaCompBase)
+local UNLOCK_ANIM_TIME = 0.87
+
+function VersionActivity1_8FactoryBlueprintPartItem:ctor(componentId)
+	self.actId = Activity157Model.instance:getActId()
+	self.componentId = componentId
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
-	arg_2_0.trans = arg_2_0.go.transform
-	arg_2_0._statusAnimator = gohelper.findChildComponent(arg_2_0.go, "status", typeof(UnityEngine.Animator))
-	arg_2_0._golock = gohelper.findChild(arg_2_0.go, "status/#go_lock")
-	arg_2_0._golockicon = gohelper.findChild(arg_2_0.go, "status/#go_lock/#go_lockedicon")
-	arg_2_0._goberepaired = gohelper.findChild(arg_2_0.go, "status/#go_lock/#go_berepaired")
-	arg_2_0._btnrepair = gohelper.findChildClickWithDefaultAudio(arg_2_0.go, "status/#go_lock/#go_berepaired/#btn_repair")
-	arg_2_0._goberepairedreddot = gohelper.findChild(arg_2_0.go, "status/#go_lock/#go_berepaired/#go_reddot")
-	arg_2_0._txtrepairtip = gohelper.findChildText(arg_2_0.go, "status/#go_lock/#go_berepaired/bg/#txt_num")
-	arg_2_0._imagerepairicon = gohelper.findChildImage(arg_2_0.go, "status/#go_lock/#go_berepaired/bg/icon")
-	arg_2_0._gonormal = gohelper.findChild(arg_2_0.go, "status/#go_normal")
-	arg_2_0._btnpart = gohelper.findChildClickWithDefaultAudio(arg_2_0.go, "#btn_part")
-	arg_2_0._gobtnpart = arg_2_0._btnpart.gameObject
+function VersionActivity1_8FactoryBlueprintPartItem:init(go)
+	self.go = go
+	self.trans = self.go.transform
+	self._statusAnimator = gohelper.findChildComponent(self.go, "status", typeof(UnityEngine.Animator))
+	self._golock = gohelper.findChild(self.go, "status/#go_lock")
+	self._golockicon = gohelper.findChild(self.go, "status/#go_lock/#go_lockedicon")
+	self._goberepaired = gohelper.findChild(self.go, "status/#go_lock/#go_berepaired")
+	self._btnrepair = gohelper.findChildClickWithDefaultAudio(self.go, "status/#go_lock/#go_berepaired/#btn_repair")
+	self._goberepairedreddot = gohelper.findChild(self.go, "status/#go_lock/#go_berepaired/#go_reddot")
+	self._txtrepairtip = gohelper.findChildText(self.go, "status/#go_lock/#go_berepaired/bg/#txt_num")
+	self._imagerepairicon = gohelper.findChildImage(self.go, "status/#go_lock/#go_berepaired/bg/icon")
+	self._gonormal = gohelper.findChild(self.go, "status/#go_normal")
+	self._btnpart = gohelper.findChildClickWithDefaultAudio(self.go, "#btn_part")
+	self._gobtnpart = self._btnpart.gameObject
 
-	local var_2_0 = Activity157Config.instance:getAct157Const(arg_2_0.actId, Activity157Enum.ConstId.FactoryRepairPartItem)
-	local var_2_1 = var_2_0 and string.splitToNumber(var_2_0, "#")
+	local strPartItem = Activity157Config.instance:getAct157Const(self.actId, Activity157Enum.ConstId.FactoryRepairPartItem)
+	local partItemParam = strPartItem and string.splitToNumber(strPartItem, "#")
 
-	if var_2_1 then
-		local var_2_2 = CurrencyConfig.instance:getCurrencyCo(var_2_1[2])
-		local var_2_3 = var_2_2 and var_2_2.icon
+	if partItemParam then
+		local currencyCfg = CurrencyConfig.instance:getCurrencyCo(partItemParam[2])
+		local currencyIcon = currencyCfg and currencyCfg.icon
 
-		if var_2_3 then
-			UISpriteSetMgr.instance:setCurrencyItemSprite(arg_2_0._imagerepairicon, var_2_3 .. "_1", true)
+		if currencyIcon then
+			UISpriteSetMgr.instance:setCurrencyItemSprite(self._imagerepairicon, currencyIcon .. "_1", true)
 		end
 	end
 
-	RedDotController.instance:addRedDot(arg_2_0._goberepairedreddot, RedDotEnum.DotNode.V1a8DungeonFactoryCanRepair, arg_2_0.componentId)
+	RedDotController.instance:addRedDot(self._goberepairedreddot, RedDotEnum.DotNode.V1a8DungeonFactoryCanRepair, self.componentId)
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	arg_3_0._btnrepair:AddClickListener(arg_3_0._btnrepairOnClick, arg_3_0)
-	arg_3_0._btnpart:AddClickListener(arg_3_0._btnpartOnClick, arg_3_0)
-	arg_3_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_3_0._onCurrencyChange, arg_3_0)
+function VersionActivity1_8FactoryBlueprintPartItem:addEventListeners()
+	self._btnrepair:AddClickListener(self._btnrepairOnClick, self)
+	self._btnpart:AddClickListener(self._btnpartOnClick, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._onCurrencyChange, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	arg_4_0._btnrepair:RemoveClickListener()
-	arg_4_0._btnpart:RemoveClickListener()
-	arg_4_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_4_0._onCurrencyChange, arg_4_0)
+function VersionActivity1_8FactoryBlueprintPartItem:removeEventListeners()
+	self._btnrepair:RemoveClickListener()
+	self._btnpart:RemoveClickListener()
+	self:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._onCurrencyChange, self)
 end
 
-function var_0_0._btnrepairOnClick(arg_5_0)
-	if Activity157Model.instance:isCanRepairComponent(arg_5_0.componentId) then
-		Activity157Controller.instance:enterFactoryRepairGame(arg_5_0.componentId)
+function VersionActivity1_8FactoryBlueprintPartItem:_btnrepairOnClick()
+	local isCanRepair = Activity157Model.instance:isCanRepairComponent(self.componentId)
+
+	if isCanRepair then
+		Activity157Controller.instance:enterFactoryRepairGame(self.componentId)
 	else
 		GameFacade.showToast(ToastEnum.V1a8Activity157RepairNotEnoughItem)
 	end
 end
 
-function var_0_0._btnpartOnClick(arg_6_0)
-	if not Activity157Model.instance:isRepairComponent(arg_6_0.componentId) then
+function VersionActivity1_8FactoryBlueprintPartItem:_btnpartOnClick()
+	local isRepaired = Activity157Model.instance:isRepairComponent(self.componentId)
+
+	if not isRepaired then
 		GameFacade.showToast(ToastEnum.V1a8Activity157NotRepairPreComponent)
 	end
 end
 
-function var_0_0._onCurrencyChange(arg_7_0, arg_7_1)
-	if not arg_7_1[CurrencyEnum.CurrencyType.V1a8FactoryPart] then
+function VersionActivity1_8FactoryBlueprintPartItem:_onCurrencyChange(changeIds)
+	local partId = CurrencyEnum.CurrencyType.V1a8FactoryPart
+
+	if not changeIds[partId] then
 		return
 	end
 
-	arg_7_0:refreshRepairTip()
+	self:refreshRepairTip()
 end
 
-function var_0_0.refresh(arg_8_0)
-	if Activity157Model.instance:isRepairComponent(arg_8_0.componentId) then
-		local var_8_0 = VersionActivity1_8DungeonEnum.PlayerPrefsKey.IsPlayedFactoryComponentUnlockANim .. arg_8_0.componentId
+function VersionActivity1_8FactoryBlueprintPartItem:refresh()
+	local isRepaired = Activity157Model.instance:isRepairComponent(self.componentId)
 
-		if Activity157Model.instance:getHasPlayedAnim(var_8_0) then
-			arg_8_0:setUnlocked()
+	if isRepaired then
+		local prefsKey = VersionActivity1_8DungeonEnum.PlayerPrefsKey.IsPlayedFactoryComponentUnlockANim .. self.componentId
+		local hasPlayed = Activity157Model.instance:getHasPlayedAnim(prefsKey)
+
+		if hasPlayed then
+			self:setUnlocked()
 		else
-			arg_8_0:playUnlockAnim(var_8_0)
+			self:playUnlockAnim(prefsKey)
 		end
 	else
-		arg_8_0:refreshLockedStatus()
+		self:refreshLockedStatus()
 	end
 end
 
-function var_0_0.setUnlocked(arg_9_0)
-	gohelper.setActive(arg_9_0._gonormal, true)
-	gohelper.setActive(arg_9_0._golock, false)
-	gohelper.setActive(arg_9_0._gobtnpart, false)
+function VersionActivity1_8FactoryBlueprintPartItem:setUnlocked()
+	gohelper.setActive(self._gonormal, true)
+	gohelper.setActive(self._golock, false)
+	gohelper.setActive(self._gobtnpart, false)
 end
 
-function var_0_0.refreshLockedStatus(arg_10_0)
-	local var_10_0 = Activity157Model.instance:isPreComponentRepaired(arg_10_0.componentId)
+function VersionActivity1_8FactoryBlueprintPartItem:refreshLockedStatus()
+	local isPreComponentRepaired = Activity157Model.instance:isPreComponentRepaired(self.componentId)
 
-	gohelper.setActive(arg_10_0._gonormal, false)
-	gohelper.setActive(arg_10_0._golock, true)
-	gohelper.setActive(arg_10_0._golockicon, not var_10_0)
-	gohelper.setActive(arg_10_0._gobtnpart, not var_10_0)
-	gohelper.setActive(arg_10_0._goberepaired, var_10_0)
+	gohelper.setActive(self._gonormal, false)
+	gohelper.setActive(self._golock, true)
+	gohelper.setActive(self._golockicon, not isPreComponentRepaired)
+	gohelper.setActive(self._gobtnpart, not isPreComponentRepaired)
+	gohelper.setActive(self._goberepaired, isPreComponentRepaired)
 
-	if var_10_0 then
-		arg_10_0:refreshRepairTip()
+	if isPreComponentRepaired then
+		self:refreshRepairTip()
 	end
 end
 
-function var_0_0.refreshRepairTip(arg_11_0)
-	local var_11_0, var_11_1, var_11_2 = Activity157Config.instance:getComponentUnlockCondition(arg_11_0.actId, arg_11_0.componentId)
-	local var_11_3 = ItemModel.instance:getItemQuantity(var_11_0, var_11_1)
-	local var_11_4 = "#F5744D"
+function VersionActivity1_8FactoryBlueprintPartItem:refreshRepairTip()
+	local type, id, quantity = Activity157Config.instance:getComponentUnlockCondition(self.actId, self.componentId)
+	local curQuantity = ItemModel.instance:getItemQuantity(type, id)
+	local color = "#F5744D"
 
-	if var_11_2 and var_11_2 <= var_11_3 then
-		var_11_4 = "#88CB7F"
+	if quantity and quantity <= curQuantity then
+		color = "#88CB7F"
 
-		ZProj.UGUIHelper.SetGrayscale(arg_11_0._btnrepair.gameObject, false)
+		ZProj.UGUIHelper.SetGrayscale(self._btnrepair.gameObject, false)
 	else
-		ZProj.UGUIHelper.SetGrayscale(arg_11_0._btnrepair.gameObject, true)
+		ZProj.UGUIHelper.SetGrayscale(self._btnrepair.gameObject, true)
 	end
 
-	arg_11_0._txtrepairtip.text = string.format("<color=%s>%s</color>/%s", var_11_4, var_11_3, var_11_2 or 0)
+	self._txtrepairtip.text = string.format("<color=%s>%s</color>/%s", color, curQuantity, quantity or 0)
 end
 
-function var_0_0.playUnlockAnim(arg_12_0, arg_12_1)
-	if not arg_12_0.componentId then
+function VersionActivity1_8FactoryBlueprintPartItem:playUnlockAnim(prefsKey)
+	if not self.componentId then
 		return
 	end
 
-	arg_12_0:refreshLockedStatus()
-	arg_12_0._statusAnimator:Play("unlock", 0, 0)
-	Activity157Model.instance:setHasPlayedAnim(arg_12_1)
+	self:refreshLockedStatus()
+	self._statusAnimator:Play("unlock", 0, 0)
+	Activity157Model.instance:setHasPlayedAnim(prefsKey)
 	AudioMgr.instance:trigger(AudioEnum.UI.Act157UnlockFactoryComponent)
-	TaskDispatcher.cancelTask(arg_12_0.setUnlocked, arg_12_0)
-	TaskDispatcher.runDelay(arg_12_0.setUnlocked, arg_12_0, var_0_1)
+	TaskDispatcher.cancelTask(self.setUnlocked, self)
+	TaskDispatcher.runDelay(self.setUnlocked, self, UNLOCK_ANIM_TIME)
 end
 
-function var_0_0.destroy(arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0.setUnlocked, arg_13_0)
+function VersionActivity1_8FactoryBlueprintPartItem:destroy()
+	TaskDispatcher.cancelTask(self.setUnlocked, self)
 end
 
-function var_0_0.onDestroy(arg_14_0)
-	TaskDispatcher.cancelTask(arg_14_0.setUnlocked, arg_14_0)
+function VersionActivity1_8FactoryBlueprintPartItem:onDestroy()
+	TaskDispatcher.cancelTask(self.setUnlocked, self)
 end
 
-return var_0_0
+return VersionActivity1_8FactoryBlueprintPartItem

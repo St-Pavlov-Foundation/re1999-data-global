@@ -1,162 +1,164 @@
-﻿module("modules.logic.versionactivity2_4.enter.view.subview.V2a4_PinballEnterView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/enter/view/subview/V2a4_PinballEnterView.lua
 
-local var_0_0 = class("V2a4_PinballEnterView", VersionActivityEnterBaseSubView)
+module("modules.logic.versionactivity2_4.enter.view.subview.V2a4_PinballEnterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtLimitTime = gohelper.findChildTextMesh(arg_1_0.viewGO, "#simage_FullBG/image_LimitTimeBG/#txt_LimitTime")
-	arg_1_0._btnEnter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Enter")
-	arg_1_0._gored = gohelper.findChild(arg_1_0.viewGO, "Right/#btn_Enter/#go_reddot")
-	arg_1_0._txtlock = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/#btn_Locked/#txt_UnLocked")
-	arg_1_0._btnTask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_task")
-	arg_1_0._goTaskRed = gohelper.findChild(arg_1_0.viewGO, "Right/#btn_task/#go_reddotreward")
-	arg_1_0._btnReset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_reset")
-	arg_1_0._btnTrial = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#go_Try/image_TryBtn")
-	arg_1_0._txtmainlv = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/#go_main/#txt_lv")
-	arg_1_0._goslider1 = gohelper.findChildImage(arg_1_0.viewGO, "Right/#go_main/#go_slider/#go_slider1")
-	arg_1_0._goslider2 = gohelper.findChildImage(arg_1_0.viewGO, "Right/#go_main/#go_slider/#go_slider2")
-	arg_1_0._goslider3 = gohelper.findChildImage(arg_1_0.viewGO, "Right/#go_main/#go_slider/#go_slider3")
-	arg_1_0._txtmainnum = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/#go_main/#txt_num")
+local V2a4_PinballEnterView = class("V2a4_PinballEnterView", VersionActivityEnterBaseSubView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V2a4_PinballEnterView:onInitView()
+	self._txtLimitTime = gohelper.findChildTextMesh(self.viewGO, "#simage_FullBG/image_LimitTimeBG/#txt_LimitTime")
+	self._btnEnter = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_Enter")
+	self._gored = gohelper.findChild(self.viewGO, "Right/#btn_Enter/#go_reddot")
+	self._txtlock = gohelper.findChildTextMesh(self.viewGO, "Right/#btn_Locked/#txt_UnLocked")
+	self._btnTask = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_task")
+	self._goTaskRed = gohelper.findChild(self.viewGO, "Right/#btn_task/#go_reddotreward")
+	self._btnReset = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_reset")
+	self._btnTrial = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#go_Try/image_TryBtn")
+	self._txtmainlv = gohelper.findChildTextMesh(self.viewGO, "Right/#go_main/#txt_lv")
+	self._goslider1 = gohelper.findChildImage(self.viewGO, "Right/#go_main/#go_slider/#go_slider1")
+	self._goslider2 = gohelper.findChildImage(self.viewGO, "Right/#go_main/#go_slider/#go_slider2")
+	self._goslider3 = gohelper.findChildImage(self.viewGO, "Right/#go_main/#go_slider/#go_slider3")
+	self._txtmainnum = gohelper.findChildTextMesh(self.viewGO, "Right/#go_main/#txt_num")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnEnter:AddClickListener(arg_2_0._enterGame, arg_2_0)
-	arg_2_0._btnTrial:AddClickListener(arg_2_0._clickTrial, arg_2_0)
-	arg_2_0._btnTask:AddClickListener(arg_2_0._clickTask, arg_2_0)
-	arg_2_0._btnReset:AddClickListener(arg_2_0._clickReset, arg_2_0)
-	PinballController.instance:registerCallback(PinballEvent.OnCurrencyChange, arg_2_0._refreshMainLv, arg_2_0)
-	PinballController.instance:registerCallback(PinballEvent.DataInited, arg_2_0._refreshMainLv, arg_2_0)
-	PinballController.instance:registerCallback(PinballEvent.DataInited, arg_2_0._refreshResetShow, arg_2_0)
+function V2a4_PinballEnterView:addEvents()
+	self._btnEnter:AddClickListener(self._enterGame, self)
+	self._btnTrial:AddClickListener(self._clickTrial, self)
+	self._btnTask:AddClickListener(self._clickTask, self)
+	self._btnReset:AddClickListener(self._clickReset, self)
+	PinballController.instance:registerCallback(PinballEvent.OnCurrencyChange, self._refreshMainLv, self)
+	PinballController.instance:registerCallback(PinballEvent.DataInited, self._refreshMainLv, self)
+	PinballController.instance:registerCallback(PinballEvent.DataInited, self._refreshResetShow, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnEnter:RemoveClickListener()
-	arg_3_0._btnTrial:RemoveClickListener()
-	arg_3_0._btnTask:RemoveClickListener()
-	arg_3_0._btnReset:RemoveClickListener()
-	PinballController.instance:unregisterCallback(PinballEvent.OnCurrencyChange, arg_3_0._refreshMainLv, arg_3_0)
-	PinballController.instance:unregisterCallback(PinballEvent.DataInited, arg_3_0._refreshMainLv, arg_3_0)
-	PinballController.instance:unregisterCallback(PinballEvent.DataInited, arg_3_0._refreshResetShow, arg_3_0)
+function V2a4_PinballEnterView:removeEvents()
+	self._btnEnter:RemoveClickListener()
+	self._btnTrial:RemoveClickListener()
+	self._btnTask:RemoveClickListener()
+	self._btnReset:RemoveClickListener()
+	PinballController.instance:unregisterCallback(PinballEvent.OnCurrencyChange, self._refreshMainLv, self)
+	PinballController.instance:unregisterCallback(PinballEvent.DataInited, self._refreshMainLv, self)
+	PinballController.instance:unregisterCallback(PinballEvent.DataInited, self._refreshResetShow, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0.actCo = ActivityConfig.instance:getActivityCo(VersionActivity2_4Enum.ActivityId.Pinball)
+function V2a4_PinballEnterView:_editableInitView()
+	self.actCo = ActivityConfig.instance:getActivityCo(VersionActivity2_4Enum.ActivityId.Pinball)
 end
 
-function var_0_0.onOpen(arg_5_0)
-	var_0_0.super.onOpen(arg_5_0)
-	RedDotController.instance:addRedDot(arg_5_0._gored, RedDotEnum.DotNode.V2a4PinballTaskRed)
-	RedDotController.instance:addRedDot(arg_5_0._goTaskRed, RedDotEnum.DotNode.V2a4PinballTaskRed)
+function V2a4_PinballEnterView:onOpen()
+	V2a4_PinballEnterView.super.onOpen(self)
+	RedDotController.instance:addRedDot(self._gored, RedDotEnum.DotNode.V2a4PinballTaskRed)
+	RedDotController.instance:addRedDot(self._goTaskRed, RedDotEnum.DotNode.V2a4PinballTaskRed)
 
-	arg_5_0._isLock = true
+	self._isLock = true
 
-	arg_5_0:_refreshTime()
-	arg_5_0:_refreshMainLv()
-	arg_5_0:_refreshResetShow()
+	self:_refreshTime()
+	self:_refreshMainLv()
+	self:_refreshResetShow()
 end
 
-function var_0_0._enterGame(arg_6_0)
+function V2a4_PinballEnterView:_enterGame()
 	PinballController.instance:openMainView()
 end
 
-function var_0_0._clickLock(arg_7_0)
-	local var_7_0, var_7_1 = OpenHelper.getToastIdAndParam(arg_7_0.actCo.openId)
+function V2a4_PinballEnterView:_clickLock()
+	local toastId, toastParamList = OpenHelper.getToastIdAndParam(self.actCo.openId)
 
-	if var_7_0 and var_7_0 ~= 0 then
-		GameFacade.showToastWithTableParam(var_7_0, var_7_1)
+	if toastId and toastId ~= 0 then
+		GameFacade.showToastWithTableParam(toastId, toastParamList)
 	end
 end
 
-function var_0_0._clickTask(arg_8_0)
+function V2a4_PinballEnterView:_clickTask()
 	ViewMgr.instance:openView(ViewName.PinballTaskView)
 end
 
-function var_0_0._clickReset(arg_9_0)
-	MessageBoxController.instance:showMsgBox(MessageBoxIdDefine.PinballReset, MsgBoxEnum.BoxType.Yes_No, arg_9_0._realReset, nil, nil, arg_9_0)
+function V2a4_PinballEnterView:_clickReset()
+	MessageBoxController.instance:showMsgBox(MessageBoxIdDefine.PinballReset, MsgBoxEnum.BoxType.Yes_No, self._realReset, nil, nil, self)
 end
 
-function var_0_0._realReset(arg_10_0)
+function V2a4_PinballEnterView:_realReset()
 	PinballStatHelper.instance:sendResetCity()
 	Activity178Rpc.instance:sendAct178Reset(VersionActivity2_4Enum.ActivityId.Pinball)
 end
 
-function var_0_0._clickTrial(arg_11_0)
+function V2a4_PinballEnterView:_clickTrial()
 	if ActivityHelper.getActivityStatus(VersionActivity2_4Enum.ActivityId.Pinball) == ActivityEnum.ActivityStatus.Normal then
-		local var_11_0 = arg_11_0.actCo.tryoutEpisode
+		local episodeId = self.actCo.tryoutEpisode
 
-		if var_11_0 <= 0 then
+		if episodeId <= 0 then
 			logError("没有配置对应的试用关卡")
 
 			return
 		end
 
-		local var_11_1 = DungeonConfig.instance:getEpisodeCO(var_11_0)
+		local config = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-		DungeonFightController.instance:enterFight(var_11_1.chapterId, var_11_0)
+		DungeonFightController.instance:enterFight(config.chapterId, episodeId)
 	else
-		arg_11_0:_clickLock()
+		self:_clickLock()
 	end
 end
 
-function var_0_0.everySecondCall(arg_12_0)
-	arg_12_0:_refreshTime()
+function V2a4_PinballEnterView:everySecondCall()
+	self:_refreshTime()
 end
 
-function var_0_0._refreshTime(arg_13_0)
-	local var_13_0 = ActivityModel.instance:getActivityInfo()[VersionActivity2_4Enum.ActivityId.Pinball]
+function V2a4_PinballEnterView:_refreshTime()
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[VersionActivity2_4Enum.ActivityId.Pinball]
 
-	if var_13_0 then
-		local var_13_1 = var_13_0:getRealEndTimeStamp() - ServerTime.now()
+	if actInfoMo then
+		local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
 
-		gohelper.setActive(arg_13_0._txtLimitTime.gameObject, var_13_1 > 0)
+		gohelper.setActive(self._txtLimitTime.gameObject, offsetSecond > 0)
 
-		if var_13_1 > 0 then
-			local var_13_2 = TimeUtil.SecondToActivityTimeFormat(var_13_1)
+		if offsetSecond > 0 then
+			local dateStr = TimeUtil.SecondToActivityTimeFormat(offsetSecond)
 
-			arg_13_0._txtLimitTime.text = var_13_2
+			self._txtLimitTime.text = dateStr
 		end
 
-		local var_13_3 = ActivityHelper.getActivityStatus(VersionActivity2_4Enum.ActivityId.Pinball) ~= ActivityEnum.ActivityStatus.Normal
+		local isLock = ActivityHelper.getActivityStatus(VersionActivity2_4Enum.ActivityId.Pinball) ~= ActivityEnum.ActivityStatus.Normal
 
-		gohelper.setActive(arg_13_0._btnEnter, not var_13_3)
-		gohelper.setActive(arg_13_0._btnLocked, var_13_3)
-		gohelper.setActive(arg_13_0._btnTask, false)
-		gohelper.setActive(arg_13_0._btnTrial, not var_13_3)
+		gohelper.setActive(self._btnEnter, not isLock)
+		gohelper.setActive(self._btnLocked, isLock)
+		gohelper.setActive(self._btnTask, false)
+		gohelper.setActive(self._btnTrial, not isLock)
 
-		arg_13_0._isLock = var_13_3
+		self._isLock = isLock
 
-		arg_13_0:_refreshResetShow()
+		self:_refreshResetShow()
 
-		if var_13_3 then
-			local var_13_4 = OpenHelper.getActivityUnlockTxt(arg_13_0.actCo.openId)
+		if isLock then
+			local unlockTxt = OpenHelper.getActivityUnlockTxt(self.actCo.openId)
 
-			arg_13_0._txtlock.text = var_13_4
+			self._txtlock.text = unlockTxt
 		end
 	end
 end
 
-function var_0_0._refreshMainLv(arg_14_0)
-	local var_14_0, var_14_1, var_14_2 = PinballModel.instance:getScoreLevel()
-	local var_14_3, var_14_4 = PinballModel.instance:getResNum(PinballEnum.ResType.Score)
+function V2a4_PinballEnterView:_refreshMainLv()
+	local level, curScore, nextScore = PinballModel.instance:getScoreLevel()
+	local score, changeNum = PinballModel.instance:getResNum(PinballEnum.ResType.Score)
 
-	arg_14_0._txtmainlv.text = var_14_0
-	arg_14_0._goslider1.fillAmount = 0
+	self._txtmainlv.text = level
+	self._goslider1.fillAmount = 0
 
-	if var_14_2 == var_14_1 then
-		arg_14_0._goslider2.fillAmount = 1
+	if nextScore == curScore then
+		self._goslider2.fillAmount = 1
 	else
-		arg_14_0._goslider2.fillAmount = (var_14_3 - var_14_1) / (var_14_2 - var_14_1)
+		self._goslider2.fillAmount = (score - curScore) / (nextScore - curScore)
 	end
 
-	arg_14_0._goslider3.fillAmount = 0
-	arg_14_0._txtmainnum.text = string.format("%d/%d", var_14_3, var_14_2)
+	self._goslider3.fillAmount = 0
+	self._txtmainnum.text = string.format("%d/%d", score, nextScore)
 end
 
-function var_0_0._refreshResetShow(arg_15_0)
-	gohelper.setActive(arg_15_0._btnReset, not arg_15_0._isLock and PinballModel.instance.day >= PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.ResetDay))
+function V2a4_PinballEnterView:_refreshResetShow()
+	gohelper.setActive(self._btnReset, not self._isLock and PinballModel.instance.day >= PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.ResetDay))
 end
 
-return var_0_0
+return V2a4_PinballEnterView

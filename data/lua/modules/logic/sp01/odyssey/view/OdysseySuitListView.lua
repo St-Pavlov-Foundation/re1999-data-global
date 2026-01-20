@@ -1,111 +1,116 @@
-﻿module("modules.logic.sp01.odyssey.view.OdysseySuitListView", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/view/OdysseySuitListView.lua
 
-local var_0_0 = class("OdysseySuitListView", BaseView)
+module("modules.logic.sp01.odyssey.view.OdysseySuitListView", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._goRootPath = arg_1_1
+local OdysseySuitListView = class("OdysseySuitListView", BaseView)
+
+function OdysseySuitListView:ctor(goRootPath)
+	self._goRootPath = goRootPath
 end
 
-function var_0_0.onInitView(arg_2_0)
-	if arg_2_0._goRootPath then
-		arg_2_0.viewGO = gohelper.findChild(arg_2_0.viewGO, arg_2_0._goRootPath)
+function OdysseySuitListView:onInitView()
+	if self._goRootPath then
+		self.viewGO = gohelper.findChild(self.viewGO, self._goRootPath)
 	end
 
-	arg_2_0._scrollSuit = gohelper.findChildScrollRect(arg_2_0.viewGO, "#scroll_Suit")
-	arg_2_0._scrollSuitContent = gohelper.findChild(arg_2_0.viewGO, "#scroll_Suit/Viewport/Content")
-	arg_2_0._gosuit = gohelper.findChild(arg_2_0.viewGO, "#scroll_Suit/Viewport/Content/#go_suit")
+	self._scrollSuit = gohelper.findChildScrollRect(self.viewGO, "#scroll_Suit")
+	self._scrollSuitContent = gohelper.findChild(self.viewGO, "#scroll_Suit/Viewport/Content")
+	self._gosuit = gohelper.findChild(self.viewGO, "#scroll_Suit/Viewport/Content/#go_suit")
 
-	if arg_2_0._editableInitView then
-		arg_2_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0._editableInitView(arg_3_0)
-	arg_3_0._suitItemList = {}
+function OdysseySuitListView:_editableInitView()
+	self._suitItemList = {}
 
-	gohelper.setActive(arg_3_0._gosuit, false)
+	gohelper.setActive(self._gosuit, false)
 end
 
-function var_0_0.addEvents(arg_4_0)
-	arg_4_0:addEventCb(OdysseyHeroGroupController.instance, OdysseyEvent.OnHeroGroupUpdate, arg_4_0.refreshSuitInfo, arg_4_0)
+function OdysseySuitListView:addEvents()
+	self:addEventCb(OdysseyHeroGroupController.instance, OdysseyEvent.OnHeroGroupUpdate, self.refreshSuitInfo, self)
 end
 
-function var_0_0.removeEvents(arg_5_0)
-	arg_5_0:addEventCb(OdysseyHeroGroupController.instance, OdysseyEvent.OnHeroGroupUpdate, arg_5_0.refreshSuitInfo, arg_5_0)
+function OdysseySuitListView:removeEvents()
+	self:addEventCb(OdysseyHeroGroupController.instance, OdysseyEvent.OnHeroGroupUpdate, self.refreshSuitInfo, self)
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:refreshSuitInfo()
+function OdysseySuitListView:onOpen()
+	self:refreshSuitInfo()
 end
 
-function var_0_0.refreshSuitInfo(arg_7_0)
-	local var_7_0 = OdysseyConfig.instance:getEquipSuitConfigList()
-	local var_7_1 = var_7_0 ~= nil and var_7_0[1] ~= nil
+function OdysseySuitListView:refreshSuitInfo()
+	local allConfigList = OdysseyConfig.instance:getEquipSuitConfigList()
+	local haveSuit = allConfigList ~= nil and allConfigList[1] ~= nil
 
-	gohelper.setActive(arg_7_0._scrollSuit, var_7_1)
+	gohelper.setActive(self._scrollSuit, haveSuit)
 
-	if var_7_1 == false then
+	if haveSuit == false then
 		return
 	end
 
-	local var_7_2 = arg_7_0._suitItemList
-	local var_7_3 = 0
-	local var_7_4 = #var_7_2
-	local var_7_5 = {}
-	local var_7_6 = OdysseyHeroGroupModel.instance:getCurHeroGroup()
+	local suitItemList = self._suitItemList
+	local needSuitItemCount = 0
+	local haveSuitItemCount = #suitItemList
+	local tempSuitInfoList = {}
+	local curHeroGroupMo = OdysseyHeroGroupModel.instance:getCurHeroGroup()
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-		local var_7_7 = OdysseyConfig.instance:getEquipSuitAllEffect(iter_7_1.id)
+	for _, config in ipairs(allConfigList) do
+		local suitLevelList = OdysseyConfig.instance:getEquipSuitAllEffect(config.id)
 
-		if var_7_7 == nil or next(var_7_7) == nil then
-			logError(string.format("奥德赛 套装 id : %s 没有套装效果数据", tostring(iter_7_1.id)))
+		if suitLevelList == nil or next(suitLevelList) == nil then
+			logError(string.format("奥德赛 套装 id : %s 没有套装效果数据", tostring(config.id)))
 		else
-			local var_7_8 = var_7_6:getOdysseyEquipSuit(iter_7_1.id)
+			local suitInfo = curHeroGroupMo:getOdysseyEquipSuit(config.id)
 
-			if var_7_8 and var_7_8.count > 0 then
-				var_7_3 = var_7_3 + 1
+			if suitInfo and suitInfo.count > 0 then
+				needSuitItemCount = needSuitItemCount + 1
 
-				local var_7_9
+				local suitItem
 
-				if var_7_4 < var_7_3 then
-					local var_7_10 = gohelper.clone(arg_7_0._gosuit, arg_7_0._scrollSuitContent)
-					local var_7_11 = MonoHelper.addNoUpdateLuaComOnceToGo(var_7_10, OdysseySuitListItem)
+				if haveSuitItemCount < needSuitItemCount then
+					local suitItemGo = gohelper.clone(self._gosuit, self._scrollSuitContent)
 
-					table.insert(var_7_2, var_7_11)
+					suitItem = MonoHelper.addNoUpdateLuaComOnceToGo(suitItemGo, OdysseySuitListItem)
+
+					table.insert(suitItemList, suitItem)
 				else
-					local var_7_12 = var_7_2[var_7_3]
+					suitItem = suitItemList[needSuitItemCount]
 				end
 
-				table.insert(var_7_5, var_7_8)
+				table.insert(tempSuitInfoList, suitInfo)
 			end
 		end
 	end
 
-	table.sort(var_7_5, arg_7_0.sortSuit)
+	table.sort(tempSuitInfoList, self.sortSuit)
 
-	for iter_7_2 = 1, var_7_3 do
-		local var_7_13 = var_7_5[iter_7_2]
-		local var_7_14 = var_7_2[iter_7_2]
-		local var_7_15 = OdysseyConfig.instance:getEquipSuitConfig(var_7_13.suitId)
+	for i = 1, needSuitItemCount do
+		local suitInfo = tempSuitInfoList[i]
+		local suitItem = suitItemList[i]
+		local config = OdysseyConfig.instance:getEquipSuitConfig(suitInfo.suitId)
 
-		var_7_14:setActive(true)
-		var_7_14:setInfo(var_7_13.suitId, var_7_15)
-		var_7_14:refreshUI()
+		suitItem:setActive(true)
+		suitItem:setInfo(suitInfo.suitId, config)
+		suitItem:refreshUI()
 	end
 
-	if var_7_3 < var_7_4 then
-		for iter_7_3 = var_7_3 + 1, var_7_4 do
-			var_7_2[iter_7_3]:setActive(false)
+	if needSuitItemCount < haveSuitItemCount then
+		for i = needSuitItemCount + 1, haveSuitItemCount do
+			local item = suitItemList[i]
+
+			item:setActive(false)
 		end
 	end
 end
 
-function var_0_0.sortSuit(arg_8_0, arg_8_1)
-	if arg_8_0.level == arg_8_1.level then
-		return arg_8_0.count > arg_8_1.count
+function OdysseySuitListView.sortSuit(a, b)
+	if a.level == b.level then
+		return a.count > b.count
 	end
 
-	return arg_8_0.level > arg_8_1.level
+	return a.level > b.level
 end
 
-return var_0_0
+return OdysseySuitListView

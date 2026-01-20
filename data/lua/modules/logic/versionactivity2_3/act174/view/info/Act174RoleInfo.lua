@@ -1,55 +1,57 @@
-﻿module("modules.logic.versionactivity2_3.act174.view.info.Act174RoleInfo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/act174/view/info/Act174RoleInfo.lua
 
-local var_0_0 = class("Act174RoleInfo", BaseView)
+module("modules.logic.versionactivity2_3.act174.view.info.Act174RoleInfo", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local Act174RoleInfo = class("Act174RoleInfo", BaseView)
+
+function Act174RoleInfo:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function Act174RoleInfo:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Act174RoleInfo:removeEvents()
 	return
 end
 
-function var_0_0.onClickModalMask(arg_4_0)
-	arg_4_0:closeThis()
+function Act174RoleInfo:onClickModalMask()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0.goRoot = gohelper.findChild(arg_5_0.viewGO, "root")
+function Act174RoleInfo:_editableInitView()
+	self.goRoot = gohelper.findChild(self.viewGO, "root")
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function Act174RoleInfo:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	if arg_7_0.viewParam then
-		local var_7_0 = arg_7_0.viewParam.pos or Vector2.New(0, 0)
+function Act174RoleInfo:onOpen()
+	if self.viewParam then
+		local pos = self.viewParam.pos or Vector2.New(0, 0)
 
-		recthelper.setAnchor(arg_7_0.goRoot.transform, var_7_0.x, var_7_0.y)
+		recthelper.setAnchor(self.goRoot.transform, pos.x, pos.y)
 
-		local var_7_1 = Activity174Config.instance:getRoleCo(arg_7_0.viewParam.roleId)
+		local roleCo = Activity174Config.instance:getRoleCo(self.viewParam.roleId)
 
-		if not arg_7_0.characterItem then
-			arg_7_0.characterItem = MonoHelper.addNoUpdateLuaComOnceToGo(arg_7_0.goRoot, Act174CharacterInfo, arg_7_0)
+		if not self.characterItem then
+			self.characterItem = MonoHelper.addNoUpdateLuaComOnceToGo(self.goRoot, Act174CharacterInfo, self)
 		end
 
-		arg_7_0.characterItem:setData(var_7_1, arg_7_0.viewParam.itemId)
+		self.characterItem:setData(roleCo, self.viewParam.itemId)
 	end
 end
 
-function var_0_0.onClose(arg_8_0)
+function Act174RoleInfo:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
+function Act174RoleInfo:onDestroyView()
 	return
 end
 
-return var_0_0
+return Act174RoleInfo

@@ -1,38 +1,40 @@
-﻿module("modules.logic.scene.explore.comp.ExploreSceneSpineMat", package.seeall)
+﻿-- chunkname: @modules/logic/scene/explore/comp/ExploreSceneSpineMat.lua
 
-local var_0_0 = class("ExploreSceneSpineMat", BaseSceneComp)
+module("modules.logic.scene.explore.comp.ExploreSceneSpineMat", package.seeall)
 
-function var_0_0.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0:_setLevelCO(arg_1_2)
-	ExploreController.instance:registerCallback(ExploreEvent.OnSpineLoaded, arg_1_0._onSpineLoaded, arg_1_0)
+local ExploreSceneSpineMat = class("ExploreSceneSpineMat", BaseSceneComp)
+
+function ExploreSceneSpineMat:onSceneStart(sceneId, levelId)
+	self:_setLevelCO(levelId)
+	ExploreController.instance:registerCallback(ExploreEvent.OnSpineLoaded, self._onSpineLoaded, self)
 end
 
-function var_0_0.onScenePrepared(arg_2_0, arg_2_1, arg_2_2)
+function ExploreSceneSpineMat:onScenePrepared(sceneId, levelId)
 	return
 end
 
-function var_0_0.onSceneClose(arg_3_0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.OnSpineLoaded, arg_3_0._onSpineLoaded, arg_3_0)
+function ExploreSceneSpineMat:onSceneClose()
+	ExploreController.instance:unregisterCallback(ExploreEvent.OnSpineLoaded, self._onSpineLoaded, self)
 
-	arg_3_0._spineColor = nil
+	self._spineColor = nil
 end
 
-function var_0_0._onSpineLoaded(arg_4_0, arg_4_1)
-	if arg_4_0._spineColor and arg_4_1 then
-		local var_4_0 = arg_4_1.unitSpawn.spineRenderer:getReplaceMat()
+function ExploreSceneSpineMat:_onSpineLoaded(unitSpine)
+	if self._spineColor and unitSpine then
+		local mat = unitSpine.unitSpawn.spineRenderer:getReplaceMat()
 
-		MaterialUtil.setMainColor(var_4_0, arg_4_0._spineColor)
+		MaterialUtil.setMainColor(mat, self._spineColor)
 	end
 end
 
-function var_0_0._setLevelCO(arg_5_0, arg_5_1)
-	arg_5_0._spineColor = nil
+function ExploreSceneSpineMat:_setLevelCO(levelId)
+	self._spineColor = nil
 
-	local var_5_0 = lua_scene_level.configDict[arg_5_1]
+	local levelCO = lua_scene_level.configDict[levelId]
 
-	if var_5_0.spineR ~= 0 or var_5_0.spineG ~= 0 or var_5_0.spineB ~= 0 then
-		arg_5_0._spineColor = Color.New(var_5_0.spineR, var_5_0.spineG, var_5_0.spineB, 1)
+	if levelCO.spineR ~= 0 or levelCO.spineG ~= 0 or levelCO.spineB ~= 0 then
+		self._spineColor = Color.New(levelCO.spineR, levelCO.spineG, levelCO.spineB, 1)
 	end
 end
 
-return var_0_0
+return ExploreSceneSpineMat

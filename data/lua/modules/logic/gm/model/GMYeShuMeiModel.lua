@@ -1,145 +1,151 @@
-﻿module("modules.logic.gm.model.GMYeShuMeiModel", package.seeall)
+﻿-- chunkname: @modules/logic/gm/model/GMYeShuMeiModel.lua
 
-local var_0_0 = class("GMYeShuMeiModel", BaseModel)
+module("modules.logic.gm.model.GMYeShuMeiModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local GMYeShuMeiModel = class("GMYeShuMeiModel", BaseModel)
+
+function GMYeShuMeiModel:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clearData()
+function GMYeShuMeiModel:reInit()
+	self:clearData()
 end
 
-function var_0_0.getAllLevelData(arg_3_0)
-	arg_3_0._allLevelData = YeShuMeiConfig.instance:getYeShuMeiLevelData()
+function GMYeShuMeiModel:getAllLevelData()
+	self._allLevelData = YeShuMeiConfig.instance:getYeShuMeiLevelData()
 end
 
-function var_0_0.setCurLevelId(arg_4_0, arg_4_1)
-	arg_4_0:getAllLevelData()
+function GMYeShuMeiModel:setCurLevelId(levelId)
+	self:getAllLevelData()
 
-	arg_4_0._copyData = tabletool.copy(arg_4_0._allLevelData)
+	self._copyData = tabletool.copy(self._allLevelData)
 
-	local var_4_0
+	local levelData
 
-	for iter_4_0, iter_4_1 in pairs(arg_4_0._copyData) do
-		if iter_4_0 == arg_4_1 then
-			var_4_0 = iter_4_1
+	for id, data in pairs(self._copyData) do
+		if id == levelId then
+			levelData = data
 
 			break
 		end
 	end
 
-	if var_4_0 == nil then
-		arg_4_0._curLevelData = YeShuMeiLevelMo.New(arg_4_1)
-		arg_4_0._copyData[arg_4_1] = arg_4_0._curLevelData
+	if levelData == nil then
+		self._curLevelData = YeShuMeiLevelMo.New(levelId)
+		self._copyData[levelId] = self._curLevelData
 	else
-		arg_4_0._curLevelData = var_4_0
+		self._curLevelData = levelData
 	end
 
-	return arg_4_0._curLevelData
+	return self._curLevelData
 end
 
-function var_0_0.getCurLevelData(arg_5_0)
-	return arg_5_0._curLevelData
+function GMYeShuMeiModel:getCurLevelData()
+	return self._curLevelData
 end
 
-function var_0_0.addPoint(arg_6_0)
-	if arg_6_0._curLevelData == nil then
+function GMYeShuMeiModel:addPoint()
+	if self._curLevelData == nil then
 		return
 	end
 
-	local var_6_0 = 0
+	local id = 0
 
-	if arg_6_0._curLevelData.points == nil then
-		arg_6_0._curLevelData.points = {}
+	if self._curLevelData.points == nil then
+		self._curLevelData.points = {}
 	else
-		for iter_6_0 = 1, #arg_6_0._curLevelData.points do
-			local var_6_1 = arg_6_0._curLevelData.points[iter_6_0]
+		for i = 1, #self._curLevelData.points do
+			local data = self._curLevelData.points[i]
 
-			if var_6_0 < var_6_1.id then
-				var_6_0 = var_6_1.id
+			if id < data.id then
+				id = data.id
 			end
 		end
 
-		var_6_0 = var_6_0 + 1
+		id = id + 1
 	end
 
-	local var_6_2 = {}
+	local pointData = {}
 
-	if var_6_0 == 1 then
-		var_6_2 = GMYeShuMeiPointMo.New(3, var_6_0)
+	if id == 1 then
+		pointData = GMYeShuMeiPointMo.New(3, id)
 	else
-		var_6_2 = GMYeShuMeiPointMo.New(1, var_6_0)
+		pointData = GMYeShuMeiPointMo.New(1, id)
 	end
 
-	table.insert(arg_6_0._curLevelData.points, var_6_2)
+	table.insert(self._curLevelData.points, pointData)
 
-	return var_6_2
+	return pointData
 end
 
-function var_0_0.deletePoint(arg_7_0, arg_7_1)
-	if arg_7_0._curLevelData == nil then
+function GMYeShuMeiModel:deletePoint(id)
+	if self._curLevelData == nil then
 		return
 	end
 
-	if arg_7_0._curLevelData.points == nil then
+	if self._curLevelData.points == nil then
 		return
 	end
 
-	for iter_7_0 = 1, #arg_7_0._curLevelData.points do
-		if arg_7_0._curLevelData.points[iter_7_0].id == arg_7_1 then
-			table.remove(arg_7_0._curLevelData.points, iter_7_0)
+	for i = 1, #self._curLevelData.points do
+		local pointData = self._curLevelData.points[i]
+
+		if pointData.id == id then
+			table.remove(self._curLevelData.points, i)
 
 			break
 		end
 	end
 end
 
-function var_0_0.addLines(arg_8_0)
-	local var_8_0 = 0
+function GMYeShuMeiModel:addLines()
+	local id = 0
 
-	if arg_8_0._curLevelData.lines == nil then
-		arg_8_0._curLevelData.lines = {}
+	if self._curLevelData.lines == nil then
+		self._curLevelData.lines = {}
 	else
-		for iter_8_0 = 1, #arg_8_0._curLevelData.lines do
-			local var_8_1 = arg_8_0._curLevelData.lines[iter_8_0]
+		for i = 1, #self._curLevelData.lines do
+			local data = self._curLevelData.lines[i]
 
-			if var_8_0 < var_8_1.id then
-				var_8_0 = var_8_1.id
+			if id < data.id then
+				id = data.id
 			end
 		end
 
-		var_8_0 = var_8_0 + 1
+		id = id + 1
 	end
 
-	local var_8_2 = YeShuMeiLineMo.New(var_8_0)
+	local lineData = YeShuMeiLineMo.New(id)
 
-	table.insert(arg_8_0._curLevelData.lines, var_8_2)
+	table.insert(self._curLevelData.lines, lineData)
 
-	return var_8_2
+	return lineData
 end
 
-function var_0_0.deleteLines(arg_9_0, arg_9_1)
-	if arg_9_0._curLevelData == nil then
+function GMYeShuMeiModel:deleteLines(id)
+	if self._curLevelData == nil then
 		return
 	end
 
-	if arg_9_0._curLevelData.lines == nil then
+	if self._curLevelData.lines == nil then
 		return
 	end
 
-	for iter_9_0 = 1, #arg_9_0._curLevelData.lines do
-		if arg_9_0._curLevelData.lines[iter_9_0].id == arg_9_1 then
-			table.remove(arg_9_0._curLevelData.lines, iter_9_0)
+	for i = 1, #self._curLevelData.lines do
+		local lineData = self._curLevelData.lines[i]
+
+		if lineData.id == id then
+			table.remove(self._curLevelData.lines, i)
 
 			break
 		end
 	end
 end
 
-function var_0_0.checkLineExist(arg_10_0, arg_10_1, arg_10_2)
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0._curLevelData.lines) do
-		if iter_10_1:havePoint(arg_10_1, arg_10_2) then
+function GMYeShuMeiModel:checkLineExist(PointIdA, PointIdB)
+	for _, linemo in ipairs(self._curLevelData.lines) do
+		if linemo:havePoint(PointIdA, PointIdB) then
 			return true
 		end
 	end
@@ -147,17 +153,17 @@ function var_0_0.checkLineExist(arg_10_0, arg_10_1, arg_10_2)
 	return false
 end
 
-function var_0_0.addOrders(arg_11_0, arg_11_1)
-	if arg_11_0._curLevelData == nil then
+function GMYeShuMeiModel:addOrders(str)
+	if self._curLevelData == nil then
 		return
 	end
 
-	if arg_11_0._curLevelData.orders == nil then
-		arg_11_0._curLevelData.orders = {}
+	if self._curLevelData.orders == nil then
+		self._curLevelData.orders = {}
 	end
 
-	if not tabletool.indexOf(arg_11_0._curLevelData.orders, arg_11_1) then
-		table.insert(arg_11_0._curLevelData.orders, arg_11_1)
+	if not tabletool.indexOf(self._curLevelData.orders, str) then
+		table.insert(self._curLevelData.orders, str)
 
 		return true
 	end
@@ -165,83 +171,85 @@ function var_0_0.addOrders(arg_11_0, arg_11_1)
 	return false
 end
 
-function var_0_0.deleteOrders(arg_12_0, arg_12_1)
-	if arg_12_0._curLevelData == nil then
+function GMYeShuMeiModel:deleteOrders(str)
+	if self._curLevelData == nil then
 		return
 	end
 
-	if arg_12_0._curLevelData.orders == nil then
+	if self._curLevelData.orders == nil then
 		return
 	end
 
-	for iter_12_0, iter_12_1 in ipairs(arg_12_0._curLevelData.orders) do
-		if iter_12_1 == arg_12_1 then
-			table.remove(arg_12_0._curLevelData.orders, iter_12_0)
+	for index, value in ipairs(self._curLevelData.orders) do
+		if value == str then
+			table.remove(self._curLevelData.orders, index)
 
 			break
 		end
 	end
 end
 
-function var_0_0.setCurLevelOrder(arg_13_0, arg_13_1)
-	if arg_13_0._curLevelData == nil then
+function GMYeShuMeiModel:setCurLevelOrder(str)
+	if self._curLevelData == nil then
 		return
 	end
 
-	if arg_13_0._curLevelData.orders == nil then
+	if self._curLevelData.orders == nil then
 		return
 	end
 
-	arg_13_0._curLevelOrder = arg_13_1
+	self._curLevelOrder = str
 end
 
-function var_0_0.getCurLevelOrder(arg_14_0)
-	return arg_14_0._curLevelOrder
+function GMYeShuMeiModel:getCurLevelOrder()
+	return self._curLevelOrder
 end
 
-function var_0_0.saveAndExport(arg_15_0)
-	if arg_15_0._copyData == nil then
+function GMYeShuMeiModel:saveAndExport()
+	if self._copyData == nil then
 		return
 	end
 
-	for iter_15_0, iter_15_1 in pairs(arg_15_0._copyData) do
-		local var_15_0 = {}
+	for _, levelData in pairs(self._copyData) do
+		local replaceLineIds = {}
 
-		if iter_15_1.lines ~= nil then
-			local var_15_1 = {}
+		if levelData.lines ~= nil then
+			local lineMap = {}
 
-			for iter_15_2 = 1, #iter_15_1.lines do
-				local var_15_2 = iter_15_1.lines[iter_15_2]
-				local var_15_3 = var_15_2._beginPointId .. "_" .. var_15_2._endPointId
-				local var_15_4 = var_15_2._endPointId .. "_" .. var_15_2._beginPointId
+			for i = 1, #levelData.lines do
+				local line = levelData.lines[i]
+				local key1 = line._beginPointId .. "_" .. line._endPointId
+				local key2 = line._endPointId .. "_" .. line._beginPointId
 
-				if var_15_1[var_15_3] == nil or var_15_1[var_15_4] == nil then
-					var_15_1[var_15_3] = var_15_2
-					var_15_1[var_15_4] = var_15_2
+				if lineMap[key1] == nil or lineMap[key2] == nil then
+					lineMap[key1] = line
+					lineMap[key2] = line
 				else
-					local var_15_5 = {}
+					local value = {}
 
-					if var_15_0[var_15_3] == nil then
-						var_15_0[var_15_3] = {}
+					if replaceLineIds[key1] == nil then
+						replaceLineIds[key1] = {}
 					end
 
-					table.insert(var_15_0[var_15_3], var_15_2.id)
+					table.insert(replaceLineIds[key1], line.id)
 				end
 			end
 		end
 
-		for iter_15_3, iter_15_4 in pairs(var_15_0) do
-			if #iter_15_4 > 0 then
-				for iter_15_5 = 1, #iter_15_4 do
-					local var_15_6 = iter_15_4[iter_15_5]
+		for _, lineIds in pairs(replaceLineIds) do
+			if #lineIds > 0 then
+				for i = 1, #lineIds do
+					local lineId = lineIds[i]
 
-					if iter_15_1.lines == nil then
+					if levelData.lines == nil then
 						break
 					end
 
-					for iter_15_6 = 1, #iter_15_1.lines do
-						if iter_15_1.lines[iter_15_6].id == var_15_6 then
-							table.remove(iter_15_1.lines, iter_15_6)
+					for j = 1, #levelData.lines do
+						local line = levelData.lines[j]
+
+						if line.id == lineId then
+							table.remove(levelData.lines, j)
 
 							break
 						end
@@ -250,72 +258,76 @@ function var_0_0.saveAndExport(arg_15_0)
 			end
 		end
 
-		if iter_15_1.lines ~= nil then
-			for iter_15_7 = #iter_15_1.lines, -1 do
-				local var_15_7 = iter_15_1.lines[iter_15_7]
-				local var_15_8 = var_15_7._beginPointId
-				local var_15_9 = var_15_7._endPointId
-				local var_15_10 = false
-				local var_15_11 = false
+		if levelData.lines ~= nil then
+			local count = #levelData.lines
 
-				for iter_15_8 = 1, #iter_15_1.points do
-					local var_15_12 = iter_15_1.points[iter_15_8]
+			for i = count, -1 do
+				local data = levelData.lines[i]
+				local pointId1 = data._beginPointId
+				local pointId2 = data._endPointId
+				local havePoint1 = false
+				local havePoint2 = false
 
-					if var_15_8 and var_15_12.id == var_15_8 then
-						var_15_10 = true
+				for j = 1, #levelData.points do
+					local point = levelData.points[j]
+
+					if pointId1 and point.id == pointId1 then
+						havePoint1 = true
 					end
 
-					if var_15_9 and var_15_12.id == var_15_9 then
-						var_15_11 = true
+					if pointId2 and point.id == pointId2 then
+						havePoint2 = true
 					end
 				end
 
-				if var_15_8 == nil or var_15_9 == nil or not var_15_11 or not var_15_10 then
-					table.remove(iter_15_1.lines, iter_15_7)
+				if pointId1 == nil or pointId2 == nil or not havePoint2 or not havePoint1 then
+					table.remove(levelData.lines, i)
 				end
 			end
 		end
 
-		if iter_15_1.orders ~= nil then
-			for iter_15_9, iter_15_10 in ipairs(iter_15_1.orders) do
-				if string.nilorempty(iter_15_10) then
-					table.remove(iter_15_1.orders, iter_15_9)
+		if levelData.orders ~= nil then
+			for index, order in ipairs(levelData.orders) do
+				if string.nilorempty(order) then
+					table.remove(levelData.orders, index)
 				end
 			end
 		end
 	end
 
-	local var_15_13 = ""
-	local var_15_14 = "return { \n"
+	local str = ""
 
-	for iter_15_11, iter_15_12 in pairs(arg_15_0._copyData) do
-		var_15_14 = var_15_14 .. "{" .. iter_15_12:getStr() .. "},\n"
+	str = "return { \n"
+
+	for _, levelData in pairs(self._copyData) do
+		str = str .. "{" .. levelData:getStr() .. "},\n"
 	end
 
-	local var_15_15 = var_15_14 .. "}\n"
-	local var_15_16 = "Assets/ZProj/Scripts/Lua/modules/configs/yeshumei/" .. YeShuMeiConfig.instance._ActivityDataName .. ".lua"
+	str = str .. "}\n"
 
-	logNormal("GMYeShuMeiModel:saveAndExport:", var_15_15)
-	logNormal("GMYeShuMeiModel:saveAndExport Path: ", var_15_16)
+	local path = "Assets/ZProj/Scripts/Lua/modules/configs/yeshumei/" .. YeShuMeiConfig.instance._ActivityDataName .. ".lua"
+
+	logNormal("GMYeShuMeiModel:saveAndExport:", str)
+	logNormal("GMYeShuMeiModel:saveAndExport Path: ", path)
 	logError("保存成功~")
 
-	local var_15_17 = SLFramework.FileHelper
+	local fileHelper = SLFramework.FileHelper
 
-	var_15_17.EnsureDirForFile(var_15_16)
-	var_15_17.WriteTextToPath(var_15_16, var_15_15)
+	fileHelper.EnsureDirForFile(path)
+	fileHelper.WriteTextToPath(path, str)
 end
 
-function var_0_0.clearData(arg_16_0)
-	if arg_16_0._curLevelData and #arg_16_0._curLevelData.points > 0 then
-		for iter_16_0, iter_16_1 in ipairs(arg_16_0._curLevelData.points) do
-			iter_16_1 = nil
+function GMYeShuMeiModel:clearData()
+	if self._curLevelData and #self._curLevelData.points > 0 then
+		for index, value in ipairs(self._curLevelData.points) do
+			value = nil
 		end
 	end
 
-	arg_16_0._copyData = nil
-	arg_16_0._curLevelData = nil
+	self._copyData = nil
+	self._curLevelData = nil
 end
 
-var_0_0.instance = var_0_0.New()
+GMYeShuMeiModel.instance = GMYeShuMeiModel.New()
 
-return var_0_0
+return GMYeShuMeiModel

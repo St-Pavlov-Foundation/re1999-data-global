@@ -1,19 +1,21 @@
-﻿module("modules.logic.character.view.CharacterTalentTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterTalentTipViewContainer.lua
 
-local var_0_0 = class("CharacterTalentTipViewContainer", BaseViewContainer)
+module("modules.logic.character.view.CharacterTalentTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local CharacterTalentTipViewContainer = class("CharacterTalentTipViewContainer", BaseViewContainer)
+
+function CharacterTalentTipViewContainer:buildViews()
 	return {
 		CharacterTalentTipView.New()
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function CharacterTalentTipViewContainer:buildTabViews(tabContainerId)
 	return
 end
 
-function var_0_0.onContainerClickModalMask(arg_3_0)
-	arg_3_0:closeThis()
+function CharacterTalentTipViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return CharacterTalentTipViewContainer

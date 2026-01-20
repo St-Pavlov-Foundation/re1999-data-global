@@ -1,114 +1,117 @@
-﻿module("modules.logic.sp01.act205.view.card.Act205CardItem", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/act205/view/card/Act205CardItem.lua
 
-local var_0_0 = class("Act205CardItem", LuaCompBase)
+module("modules.logic.sp01.act205.view.card.Act205CardItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._goWeapon = gohelper.findChild(arg_1_0.go, "#go_Weapon")
-	arg_1_0._simageweapon = gohelper.findChildSingleImage(arg_1_0.go, "#go_Weapon/image_WeaponPic")
-	arg_1_0._txtWeaponName = gohelper.findChildText(arg_1_0.go, "#go_Weapon/#txt_WeaponName")
-	arg_1_0._goRole = gohelper.findChild(arg_1_0.go, "#go_Role")
-	arg_1_0._simagerole = gohelper.findChildSingleImage(arg_1_0.go, "#go_Role/image_RolePic")
-	arg_1_0._txtRoleName = gohelper.findChildText(arg_1_0.go, "#go_Role/#txt_RoleName")
-	arg_1_0._txtDescr = gohelper.findChildText(arg_1_0.go, "Scroll View/Viewport/#txt_Descr")
-	arg_1_0._btnclick = gohelper.findChildClickWithAudio(arg_1_0.go, "Scroll View/#btn_click")
-	arg_1_0._goSelected = gohelper.findChild(arg_1_0.go, "#go_Selected")
-	arg_1_0._animator = arg_1_0.go:GetComponent(typeof(UnityEngine.Animator))
+local Act205CardItem = class("Act205CardItem", LuaCompBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Act205CardItem:init(go)
+	self.go = go
+	self._goWeapon = gohelper.findChild(self.go, "#go_Weapon")
+	self._simageweapon = gohelper.findChildSingleImage(self.go, "#go_Weapon/image_WeaponPic")
+	self._txtWeaponName = gohelper.findChildText(self.go, "#go_Weapon/#txt_WeaponName")
+	self._goRole = gohelper.findChild(self.go, "#go_Role")
+	self._simagerole = gohelper.findChildSingleImage(self.go, "#go_Role/image_RolePic")
+	self._txtRoleName = gohelper.findChildText(self.go, "#go_Role/#txt_RoleName")
+	self._txtDescr = gohelper.findChildText(self.go, "Scroll View/Viewport/#txt_Descr")
+	self._btnclick = gohelper.findChildClickWithAudio(self.go, "Scroll View/#btn_click")
+	self._goSelected = gohelper.findChild(self.go, "#go_Selected")
+	self._animator = self.go:GetComponent(typeof(UnityEngine.Animator))
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._onClick, arg_2_0)
-	arg_2_0:addEventCb(Act205CardController.instance, Act205Event.PlayerSelectCard, arg_2_0._onSelectCard, arg_2_0)
+function Act205CardItem:addEventListeners()
+	self._btnclick:AddClickListener(self._onClick, self)
+	self:addEventCb(Act205CardController.instance, Act205Event.PlayerSelectCard, self._onSelectCard, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
-	arg_3_0:removeEventCb(Act205CardController.instance, Act205Event.PlayerSelectCard, arg_3_0._onSelectCard, arg_3_0)
+function Act205CardItem:removeEventListeners()
+	self._btnclick:RemoveClickListener()
+	self:removeEventCb(Act205CardController.instance, Act205Event.PlayerSelectCard, self._onSelectCard, self)
 end
 
-function var_0_0._onClick(arg_4_0)
-	if not arg_4_0._canClick then
+function Act205CardItem:_onClick()
+	if not self._canClick then
 		return
 	end
 
-	Act205CardController.instance:playerClickCard(arg_4_0._cardId)
+	Act205CardController.instance:playerClickCard(self._cardId)
 	AudioMgr.instance:trigger(AudioEnum2_9.Activity205.play_ui_common_click)
 end
 
-function var_0_0._onSelectCard(arg_5_0, arg_5_1)
-	if not arg_5_0._cardId or not arg_5_0._canClick then
+function Act205CardItem:_onSelectCard(carId)
+	if not self._cardId or not self._canClick then
 		return
 	end
 
-	arg_5_0:refreshSelected(arg_5_1 == arg_5_0._cardId)
+	self:refreshSelected(carId == self._cardId)
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0:setCanClick()
+function Act205CardItem:_editableInitView()
+	self:setCanClick()
 end
 
-function var_0_0.setData(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_0._cardId = arg_7_1
+function Act205CardItem:setData(cardId, canClick)
+	self._cardId = cardId
 
-	arg_7_0:_setCard()
-	arg_7_0:setCanClick(arg_7_2)
+	self:_setCard()
+	self:setCanClick(canClick)
 end
 
-function var_0_0._setCard(arg_8_0)
-	local var_8_0 = Act205Config.instance:getCardType(arg_8_0._cardId) == Act205Enum.CardType.Weapon
-	local var_8_1 = Act205Config.instance:getCardImg(arg_8_0._cardId)
-	local var_8_2 = ResUrl.getV2a9ActSingleBg("card_item_pic/" .. var_8_1)
+function Act205CardItem:_setCard()
+	local cardType = Act205Config.instance:getCardType(self._cardId)
+	local isWeapon = cardType == Act205Enum.CardType.Weapon
+	local img = Act205Config.instance:getCardImg(self._cardId)
+	local imgPath = ResUrl.getV2a9ActSingleBg("card_item_pic/" .. img)
 
-	if var_8_0 then
-		arg_8_0._simageweapon:LoadImage(var_8_2)
+	if isWeapon then
+		self._simageweapon:LoadImage(imgPath)
 	else
-		arg_8_0._simagerole:LoadImage(var_8_2)
+		self._simagerole:LoadImage(imgPath)
 	end
 
-	gohelper.setActive(arg_8_0._goWeapon, var_8_0)
-	gohelper.setActive(arg_8_0._goRole, not var_8_0)
+	gohelper.setActive(self._goWeapon, isWeapon)
+	gohelper.setActive(self._goRole, not isWeapon)
 
-	local var_8_3 = Act205Config.instance:getCardName(arg_8_0._cardId)
+	local name = Act205Config.instance:getCardName(self._cardId)
 
-	arg_8_0._txtWeaponName.text = var_8_3
-	arg_8_0._txtRoleName.text = var_8_3
+	self._txtWeaponName.text = name
+	self._txtRoleName.text = name
 
-	local var_8_4 = Act205Config.instance:getCardDesc(arg_8_0._cardId)
+	local desc = Act205Config.instance:getCardDesc(self._cardId)
 
-	arg_8_0._txtDescr.text = var_8_4
+	self._txtDescr.text = desc
 end
 
-function var_0_0.setCanClick(arg_9_0, arg_9_1)
-	arg_9_0._canClick = arg_9_1
+function Act205CardItem:setCanClick(isCanClick)
+	self._canClick = isCanClick
 
-	arg_9_0:refreshSelected()
+	self:refreshSelected()
 end
 
-function var_0_0.refreshSelected(arg_10_0, arg_10_1)
-	local var_10_0 = false
+function Act205CardItem:refreshSelected(needPlay)
+	local isSelected = false
 
-	if arg_10_0._canClick then
-		local var_10_1 = Act205CardModel.instance:isCardSelected(arg_10_0._cardId)
+	if self._canClick then
+		isSelected = Act205CardModel.instance:isCardSelected(self._cardId)
 
-		arg_10_0:playAnim(var_10_1 and "select" or "unselect", arg_10_1)
+		self:playAnim(isSelected and "select" or "unselect", needPlay)
 	end
 end
 
-function var_0_0.playAnim(arg_11_0, arg_11_1, arg_11_2)
-	if string.nilorempty(arg_11_1) or not arg_11_0._animator then
+function Act205CardItem:playAnim(animName, needPlay)
+	if string.nilorempty(animName) or not self._animator then
 		return
 	end
 
-	arg_11_0._animator:Play(arg_11_1, 0, arg_11_2 and 0 or 1)
+	self._animator:Play(animName, 0, needPlay and 0 or 1)
 end
 
-function var_0_0.onDestroy(arg_12_0)
-	arg_12_0._simageweapon:UnLoadImage()
-	arg_12_0._simagerole:UnLoadImage()
+function Act205CardItem:onDestroy()
+	self._simageweapon:UnLoadImage()
+	self._simagerole:UnLoadImage()
 end
 
-return var_0_0
+return Act205CardItem

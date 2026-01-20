@@ -1,161 +1,164 @@
-﻿module("modules.logic.playercard.view.PlayerCardLayoutView", package.seeall)
+﻿-- chunkname: @modules/logic/playercard/view/PlayerCardLayoutView.lua
 
-local var_0_0 = class("PlayerCardLayoutView", BaseView)
+module("modules.logic.playercard.view.PlayerCardLayoutView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.goCard = gohelper.findChild(arg_1_0.viewGO, "Card")
-	arg_1_0.goPlayerInfo = gohelper.findChild(arg_1_0.goCard, "#go_playerinfo")
-	arg_1_0.goAssit = gohelper.findChild(arg_1_0.goCard, "#go_assit")
-	arg_1_0.goChapter = gohelper.findChild(arg_1_0.goCard, "#go_chapter")
-	arg_1_0.goCardGroup = gohelper.findChild(arg_1_0.goCard, "#go_cardgroup")
-	arg_1_0.goAchievement = gohelper.findChild(arg_1_0.goCard, "#go_achievement")
+local PlayerCardLayoutView = class("PlayerCardLayoutView", BaseView)
 
-	arg_1_0:loadRight()
-	arg_1_0:initRightLayout()
+function PlayerCardLayoutView:onInitView()
+	self.goCard = gohelper.findChild(self.viewGO, "Card")
+	self.goPlayerInfo = gohelper.findChild(self.goCard, "#go_playerinfo")
+	self.goAssit = gohelper.findChild(self.goCard, "#go_assit")
+	self.goChapter = gohelper.findChild(self.goCard, "#go_chapter")
+	self.goCardGroup = gohelper.findChild(self.goCard, "#go_cardgroup")
+	self.goAchievement = gohelper.findChild(self.goCard, "#go_achievement")
 
-	arg_1_0.btnConfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_confirm")
-	arg_1_0.animator = SLFramework.AnimatorPlayer.Get(arg_1_0.viewGO)
+	self:loadRight()
+	self:initRightLayout()
+
+	self.btnConfirm = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_confirm")
+	self.animator = SLFramework.AnimatorPlayer.Get(self.viewGO)
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnConfirm, arg_2_0.onClicConfirm, arg_2_0)
+function PlayerCardLayoutView:addEvents()
+	self:addClickCb(self.btnConfirm, self.onClicConfirm, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function PlayerCardLayoutView:removeEvents()
 	return
 end
 
-function var_0_0.playCloseAnim(arg_4_0)
+function PlayerCardLayoutView:playCloseAnim()
 	PlayerCardController.instance:dispatchEvent(PlayerCardEvent.CloseLayout)
-	arg_4_0.animator:Play("close", arg_4_0.onCloseAnimDone, arg_4_0)
+	self.animator:Play("close", self.onCloseAnimDone, self)
 end
 
-function var_0_0.onCloseAnimDone(arg_5_0)
-	arg_5_0:closeThis()
+function PlayerCardLayoutView:onCloseAnimDone()
+	self:closeThis()
 end
 
-function var_0_0.onClicConfirm(arg_6_0)
-	local var_6_0 = arg_6_0.rightLayout:getLayoutData()
-	local var_6_1 = arg_6_0:getCardInfo()
+function PlayerCardLayoutView:onClicConfirm()
+	local data = self.rightLayout:getLayoutData()
+	local info = self:getCardInfo()
 
-	if var_6_1 then
-		local var_6_2 = var_6_1:getSetting({
-			[PlayerCardEnum.SettingKey.RightLayout] = var_6_0
+	if info then
+		local settings = info:getSetting({
+			[PlayerCardEnum.SettingKey.RightLayout] = data
 		})
 
-		PlayerCardRpc.instance:sendSetPlayerCardShowSettingRequest(var_6_2)
+		PlayerCardRpc.instance:sendSetPlayerCardShowSettingRequest(settings)
 	end
 
-	arg_6_0:playCloseAnim()
+	self:playCloseAnim()
 end
 
-function var_0_0.initRightLayout(arg_7_0)
-	arg_7_0.rightLayout = MonoHelper.addNoUpdateLuaComOnceToGo(arg_7_0.goCard, PlayerCardLayout)
+function PlayerCardLayoutView:initRightLayout()
+	self.rightLayout = MonoHelper.addNoUpdateLuaComOnceToGo(self.goCard, PlayerCardLayout)
 
-	local var_7_0 = {}
+	local layoutList = {}
 
-	table.insert(var_7_0, arg_7_0:getLayoutItem(arg_7_0.goAssit, PlayerCardEnum.RightLayout.Assit))
-	table.insert(var_7_0, arg_7_0:getLayoutItem(arg_7_0.goChapter, PlayerCardEnum.RightLayout.Chapter))
-	table.insert(var_7_0, arg_7_0:getLayoutItem(arg_7_0.goCardGroup, PlayerCardEnum.RightLayout.CardGroup, PlayerCardLayoutItemCardGroup, arg_7_0.cardGroupComp))
-	table.insert(var_7_0, arg_7_0:getLayoutItem(arg_7_0.goAchievement, PlayerCardEnum.RightLayout.Achievement))
-	arg_7_0.rightLayout:setLayoutList(var_7_0)
+	table.insert(layoutList, self:getLayoutItem(self.goAssit, PlayerCardEnum.RightLayout.Assit))
+	table.insert(layoutList, self:getLayoutItem(self.goChapter, PlayerCardEnum.RightLayout.Chapter))
+	table.insert(layoutList, self:getLayoutItem(self.goCardGroup, PlayerCardEnum.RightLayout.CardGroup, PlayerCardLayoutItemCardGroup, self.cardGroupComp))
+	table.insert(layoutList, self:getLayoutItem(self.goAchievement, PlayerCardEnum.RightLayout.Achievement))
+	self.rightLayout:setLayoutList(layoutList)
 end
 
-function var_0_0.getLayoutItem(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4)
-	local var_8_0 = {
-		layoutKey = arg_8_2,
-		viewRoot = arg_8_0.viewGO,
-		layout = arg_8_0.rightLayout,
-		cardComp = arg_8_4
+function PlayerCardLayoutView:getLayoutItem(go, layoutKey, layoutComp, cardComp)
+	local param = {}
+
+	param.layoutKey = layoutKey
+	param.viewRoot = self.viewGO
+	param.layout = self.rightLayout
+	param.cardComp = cardComp
+	layoutComp = layoutComp or PlayerCardLayoutItem
+
+	return MonoHelper.addNoUpdateLuaComOnceToGo(go, layoutComp, param)
+end
+
+function PlayerCardLayoutView:refreshLayout(info)
+	local layoutData = info:getLayoutData()
+
+	self.rightLayout:setEditMode(true)
+	self.rightLayout:setData(layoutData)
+end
+
+function PlayerCardLayoutView:loadRight()
+	self.compList = {}
+
+	local otherRes = self.viewContainer:getSetting().otherRes
+
+	self:loadGO(self.goPlayerInfo, PlayerCardPlayerInfo, otherRes.infoview)
+	self:loadGO(self.goAssit, PlayerCardAssit, otherRes.assitview)
+	self:loadGO(self.goChapter, PlayerCardChapter, otherRes.chapterview)
+
+	local achieveParam = {
+		itemRes = self.viewContainer:getRes(otherRes.achieveitem)
 	}
 
-	arg_8_3 = arg_8_3 or PlayerCardLayoutItem
+	self:loadGO(self.goAchievement, PlayerCardAchievement, otherRes.achieveview, achieveParam)
 
-	return MonoHelper.addNoUpdateLuaComOnceToGo(arg_8_1, arg_8_3, var_8_0)
-end
-
-function var_0_0.refreshLayout(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_1:getLayoutData()
-
-	arg_9_0.rightLayout:setEditMode(true)
-	arg_9_0.rightLayout:setData(var_9_0)
-end
-
-function var_0_0.loadRight(arg_10_0)
-	arg_10_0.compList = {}
-
-	local var_10_0 = arg_10_0.viewContainer:getSetting().otherRes
-
-	arg_10_0:loadGO(arg_10_0.goPlayerInfo, PlayerCardPlayerInfo, var_10_0.infoview)
-	arg_10_0:loadGO(arg_10_0.goAssit, PlayerCardAssit, var_10_0.assitview)
-	arg_10_0:loadGO(arg_10_0.goChapter, PlayerCardChapter, var_10_0.chapterview)
-
-	local var_10_1 = {
-		itemRes = arg_10_0.viewContainer:getRes(var_10_0.achieveitem)
+	local param = {
+		itemRes = self.viewContainer:getRes(otherRes.carditem)
 	}
 
-	arg_10_0:loadGO(arg_10_0.goAchievement, PlayerCardAchievement, var_10_0.achieveview, var_10_1)
-
-	local var_10_2 = {
-		itemRes = arg_10_0.viewContainer:getRes(var_10_0.carditem)
-	}
-
-	arg_10_0.cardGroupComp = arg_10_0:loadGO(arg_10_0.goCardGroup, PlayerCardCardGroup, var_10_0.groupview, var_10_2)
+	self.cardGroupComp = self:loadGO(self.goCardGroup, PlayerCardCardGroup, otherRes.groupview, param)
 end
 
-function var_0_0.loadGO(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4)
-	local var_11_0 = gohelper.findChild(arg_11_1, "card")
-	local var_11_1 = arg_11_0:getResInst(arg_11_3, var_11_0 or arg_11_1)
+function PlayerCardLayoutView:loadGO(go, cls, resPath, param)
+	local parent = gohelper.findChild(go, "card")
+	local resGO = self:getResInst(resPath, parent or go)
 
-	gohelper.setAsFirstSibling(var_11_1)
+	gohelper.setAsFirstSibling(resGO)
 
-	arg_11_4 = arg_11_4 or {}
-	arg_11_4.compType = PlayerCardEnum.CompType.Layout
+	param = param or {}
+	param.compType = PlayerCardEnum.CompType.Layout
 
-	local var_11_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_11_1, arg_11_2, arg_11_4)
+	local comp = MonoHelper.addNoUpdateLuaComOnceToGo(resGO, cls, param)
 
-	table.insert(arg_11_0.compList, var_11_2)
+	table.insert(self.compList, comp)
 
-	return var_11_2
+	return comp
 end
 
-function var_0_0.onOpen(arg_12_0)
-	arg_12_0:_updateParam()
-	arg_12_0:refreshView()
+function PlayerCardLayoutView:onOpen()
+	self:_updateParam()
+	self:refreshView()
 end
 
-function var_0_0.onUpdateParam(arg_13_0)
-	arg_13_0:_updateParam()
-	arg_13_0:refreshView()
+function PlayerCardLayoutView:onUpdateParam()
+	self:_updateParam()
+	self:refreshView()
 end
 
-function var_0_0._updateParam(arg_14_0)
-	arg_14_0.userId = arg_14_0.viewParam.userId
+function PlayerCardLayoutView:_updateParam()
+	local param = self.viewParam
+
+	self.userId = param.userId
 end
 
-function var_0_0.getCardInfo(arg_15_0)
-	return PlayerCardModel.instance:getCardInfo(arg_15_0.userId)
+function PlayerCardLayoutView:getCardInfo()
+	return PlayerCardModel.instance:getCardInfo(self.userId)
 end
 
-function var_0_0.refreshView(arg_16_0)
-	local var_16_0 = arg_16_0:getCardInfo()
+function PlayerCardLayoutView:refreshView()
+	local info = self:getCardInfo()
 
-	arg_16_0:refreshCompList(var_16_0)
-	arg_16_0:refreshLayout(var_16_0)
+	self:refreshCompList(info)
+	self:refreshLayout(info)
 end
 
-function var_0_0.refreshCompList(arg_17_0, arg_17_1)
-	if not arg_17_0.compList then
+function PlayerCardLayoutView:refreshCompList(info)
+	if not self.compList then
 		return
 	end
 
-	for iter_17_0, iter_17_1 in ipairs(arg_17_0.compList) do
-		iter_17_1:refreshView(arg_17_1)
+	for i, v in ipairs(self.compList) do
+		v:refreshView(info)
 	end
 end
 
-function var_0_0.onClose(arg_18_0)
+function PlayerCardLayoutView:onClose()
 	return
 end
 
-return var_0_0
+return PlayerCardLayoutView

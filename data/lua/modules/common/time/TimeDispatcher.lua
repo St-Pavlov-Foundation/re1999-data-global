@@ -1,121 +1,131 @@
-﻿module("modules.common.time.TimeDispatcher", package.seeall)
+﻿-- chunkname: @modules/common/time/TimeDispatcher.lua
 
-local var_0_0 = class("TimeDispatcher")
+module("modules.common.time.TimeDispatcher", package.seeall)
 
-var_0_0.OnHour = "OnHour"
-var_0_0.OnDay = "OnDay"
-var_0_0.OnWeek = "OnWeek"
-var_0_0.OnDailyRefresh = "OnDailyRefresh"
-var_0_0.CheckInterval = 5
-var_0_0.DailyRefreshTime = 5
-var_0_0.DailyRefreshSecond = var_0_0.DailyRefreshTime * 3600
+local TimeDispatcher = class("TimeDispatcher")
 
-function var_0_0.ctor(arg_1_0)
-	LuaEventSystem.addEventMechanism(arg_1_0)
+TimeDispatcher.OnHour = "OnHour"
+TimeDispatcher.OnDay = "OnDay"
+TimeDispatcher.OnWeek = "OnWeek"
+TimeDispatcher.OnDailyRefresh = "OnDailyRefresh"
+TimeDispatcher.CheckInterval = 5
+TimeDispatcher.DailyRefreshTime = 5
+TimeDispatcher.DailyRefreshSecond = TimeDispatcher.DailyRefreshTime * 3600
 
-	arg_1_0._lastCheckYear = -1
-	arg_1_0._lastCheckYDay = -1
-	arg_1_0._lastCheckHour = -1
-	arg_1_0._lastCheckWDay = -1
-	arg_1_0._lastCheckStamp = -1
-	arg_1_0._year = 0
-	arg_1_0._yday = 0
-	arg_1_0._wday = 0
-	arg_1_0._hour = 0
-	arg_1_0._stamp = 0
+function TimeDispatcher:ctor()
+	LuaEventSystem.addEventMechanism(self)
+
+	self._lastCheckYear = -1
+	self._lastCheckYDay = -1
+	self._lastCheckHour = -1
+	self._lastCheckWDay = -1
+	self._lastCheckStamp = -1
+	self._year = 0
+	self._yday = 0
+	self._wday = 0
+	self._hour = 0
+	self._stamp = 0
 end
 
-function var_0_0.startTick(arg_2_0)
-	arg_2_0:_check(true)
-	TaskDispatcher.runRepeat(arg_2_0._check, arg_2_0, var_0_0.CheckInterval)
+function TimeDispatcher:startTick()
+	self:_check(true)
+	TaskDispatcher.runRepeat(self._check, self, TimeDispatcher.CheckInterval)
 end
 
-function var_0_0.stopTick(arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0._check, arg_3_0)
+function TimeDispatcher:stopTick()
+	TaskDispatcher.cancelTask(self._check, self)
 
-	arg_3_0._lastCheckYear = -1
-	arg_3_0._lastCheckYDay = -1
-	arg_3_0._lastCheckHour = -1
-	arg_3_0._lastCheckWDay = -1
-	arg_3_0._lastCheckStamp = -1
+	self._lastCheckYear = -1
+	self._lastCheckYDay = -1
+	self._lastCheckHour = -1
+	self._lastCheckWDay = -1
+	self._lastCheckStamp = -1
 end
 
-function var_0_0._check(arg_4_0, arg_4_1)
-	arg_4_0._stamp = ServerTime.nowInLocal()
+function TimeDispatcher:_check(dontDispatch)
+	self._stamp = ServerTime.nowInLocal()
 
-	local var_4_0 = os.date("*t", arg_4_0._stamp)
+	local dTable = os.date("*t", self._stamp)
 
-	arg_4_0._year = var_4_0.year
-	arg_4_0._wday = var_4_0.wday
+	self._year = dTable.year
+	self._wday = dTable.wday
 
-	if arg_4_0._wday == 1 then
-		arg_4_0._wday = 8
+	if self._wday == 1 then
+		self._wday = 8
 	end
 
-	arg_4_0._yday = var_4_0.yday
-	arg_4_0._hour = var_4_0.hour
+	self._yday = dTable.yday
+	self._hour = dTable.hour
 
-	if arg_4_0:_checkHour() and not arg_4_1 then
-		arg_4_0:dispatchEvent(var_0_0.OnHour)
+	local isNewHour = self:_checkHour()
 
-		if arg_4_0:_checkRefreshTime() then
-			arg_4_0:dispatchEvent(var_0_0.OnDailyRefresh)
+	if isNewHour and not dontDispatch then
+		self:dispatchEvent(TimeDispatcher.OnHour)
+
+		local isNewRefreshTime = self:_checkRefreshTime()
+
+		if isNewRefreshTime then
+			self:dispatchEvent(TimeDispatcher.OnDailyRefresh)
 		end
 
-		if arg_4_0:_checkDay() then
-			arg_4_0:dispatchEvent(var_0_0.OnDay)
+		local isNewDay = self:_checkDay()
 
-			if arg_4_0:_checkWeek() then
-				arg_4_0:dispatchEvent(var_0_0.OnWeek)
+		if isNewDay then
+			self:dispatchEvent(TimeDispatcher.OnDay)
+
+			local isNewWeek = self:_checkWeek()
+
+			if isNewWeek then
+				self:dispatchEvent(TimeDispatcher.OnWeek)
 			end
 		end
 	end
 
-	arg_4_0._lastCheckYear = arg_4_0._year
-	arg_4_0._lastCheckYDay = arg_4_0._yday
-	arg_4_0._lastCheckHour = arg_4_0._hour
-	arg_4_0._lastCheckWDay = arg_4_0._wday
-	arg_4_0._lastCheckStamp = arg_4_0._stamp
+	self._lastCheckYear = self._year
+	self._lastCheckYDay = self._yday
+	self._lastCheckHour = self._hour
+	self._lastCheckWDay = self._wday
+	self._lastCheckStamp = self._stamp
 end
 
-function var_0_0._checkHour(arg_5_0)
-	if arg_5_0._lastCheckYear < 0 then
+function TimeDispatcher:_checkHour()
+	if self._lastCheckYear < 0 then
 		return false
-	elseif arg_5_0._lastCheckYear == arg_5_0._year and arg_5_0._lastCheckYDay == arg_5_0._yday and arg_5_0._lastCheckHour == arg_5_0._hour then
+	elseif self._lastCheckYear == self._year and self._lastCheckYDay == self._yday and self._lastCheckHour == self._hour then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0._checkRefreshTime(arg_6_0)
-	if arg_6_0._hour == var_0_0.DailyRefreshTime then
+function TimeDispatcher:_checkRefreshTime()
+	if self._hour == TimeDispatcher.DailyRefreshTime then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0._checkDay(arg_7_0)
-	if arg_7_0._lastCheckYear < 0 then
+function TimeDispatcher:_checkDay()
+	if self._lastCheckYear < 0 then
 		return false
-	elseif arg_7_0._lastCheckYear == arg_7_0._year and arg_7_0._lastCheckYDay == arg_7_0._yday then
-		return false
-	end
-
-	return true
-end
-
-function var_0_0._checkWeek(arg_8_0)
-	if arg_8_0._lastCheckStamp < 0 then
-		return false
-	elseif arg_8_0._stamp - arg_8_0._lastCheckStamp < 604800 and arg_8_0._wday >= arg_8_0._lastCheckWDay then
+	elseif self._lastCheckYear == self._year and self._lastCheckYDay == self._yday then
 		return false
 	end
 
 	return true
 end
 
-var_0_0.instance = var_0_0.New()
+function TimeDispatcher:_checkWeek()
+	if self._lastCheckStamp < 0 then
+		return false
+	elseif self._stamp - self._lastCheckStamp < 604800 and self._wday >= self._lastCheckWDay then
+		return false
+	end
 
-return var_0_0
+	return true
+end
+
+TimeDispatcher.instance = TimeDispatcher.New()
+
+return TimeDispatcher

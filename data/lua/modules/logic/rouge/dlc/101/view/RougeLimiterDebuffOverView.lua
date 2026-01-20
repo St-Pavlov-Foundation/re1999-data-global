@@ -1,68 +1,70 @@
-﻿module("modules.logic.rouge.dlc.101.view.RougeLimiterDebuffOverView", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/dlc/101/view/RougeLimiterDebuffOverView.lua
 
-local var_0_0 = class("RougeLimiterDebuffOverView", BaseView)
+module("modules.logic.rouge.dlc.101.view.RougeLimiterDebuffOverView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._scrollviews = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_views")
-	arg_1_0._godebuffitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_views/Viewport/Content/#go_debuffitem")
-	arg_1_0._imagedebufficon = gohelper.findChildImage(arg_1_0.viewGO, "#scroll_views/Viewport/Content/#go_debuffitem/#image_debufficon")
-	arg_1_0._txtbufflevel = gohelper.findChildText(arg_1_0.viewGO, "#scroll_views/Viewport/Content/#go_debuffitem/#txt_bufflevel")
-	arg_1_0._txtdec = gohelper.findChildText(arg_1_0.viewGO, "#scroll_views/Viewport/Content/#go_debuffitem/#txt_dec")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#scroll_views/Viewport/Content/#go_debuffitem/#txt_name")
+local RougeLimiterDebuffOverView = class("RougeLimiterDebuffOverView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeLimiterDebuffOverView:onInitView()
+	self._scrollviews = gohelper.findChildScrollRect(self.viewGO, "#scroll_views")
+	self._godebuffitem = gohelper.findChild(self.viewGO, "#scroll_views/Viewport/Content/#go_debuffitem")
+	self._imagedebufficon = gohelper.findChildImage(self.viewGO, "#scroll_views/Viewport/Content/#go_debuffitem/#image_debufficon")
+	self._txtbufflevel = gohelper.findChildText(self.viewGO, "#scroll_views/Viewport/Content/#go_debuffitem/#txt_bufflevel")
+	self._txtdec = gohelper.findChildText(self.viewGO, "#scroll_views/Viewport/Content/#go_debuffitem/#txt_dec")
+	self._txtname = gohelper.findChildText(self.viewGO, "#scroll_views/Viewport/Content/#go_debuffitem/#txt_name")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RougeLimiterDebuffOverView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RougeLimiterDebuffOverView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function RougeLimiterDebuffOverView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function RougeLimiterDebuffOverView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:initScroll()
+function RougeLimiterDebuffOverView:onOpen()
+	self:initScroll()
 end
 
-function var_0_0.initScroll(arg_7_0)
-	if not arg_7_0._scrollView then
-		local var_7_0 = ListScrollParam.New()
+function RougeLimiterDebuffOverView:initScroll()
+	if not self._scrollView then
+		local scrollParam = ListScrollParam.New()
 
-		var_7_0.scrollGOPath = "#scroll_views"
-		var_7_0.prefabType = ScrollEnum.ScrollPrefabFromView
-		var_7_0.prefabUrl = "#scroll_views/Viewport/Content/#go_debuffitem"
-		var_7_0.cellClass = RougeLimiterDebuffOverListItem
-		var_7_0.scrollDir = ScrollEnum.ScrollDirV
-		var_7_0.lineCount = 2
-		var_7_0.cellWidth = 756
-		var_7_0.cellHeight = 200
-		arg_7_0._scrollView = LuaListScrollView.New(RougeLimiterDebuffOverListModel.instance, var_7_0)
+		scrollParam.scrollGOPath = "#scroll_views"
+		scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+		scrollParam.prefabUrl = "#scroll_views/Viewport/Content/#go_debuffitem"
+		scrollParam.cellClass = RougeLimiterDebuffOverListItem
+		scrollParam.scrollDir = ScrollEnum.ScrollDirV
+		scrollParam.lineCount = 2
+		scrollParam.cellWidth = 756
+		scrollParam.cellHeight = 200
+		self._scrollView = LuaListScrollView.New(RougeLimiterDebuffOverListModel.instance, scrollParam)
 
-		arg_7_0:addChildView(arg_7_0._scrollView)
+		self:addChildView(self._scrollView)
 	end
 
-	local var_7_1 = arg_7_0.viewParam and arg_7_0.viewParam.limiterIds
+	local limiterIds = self.viewParam and self.viewParam.limiterIds
 
-	RougeLimiterDebuffOverListModel.instance:onInit(var_7_1)
+	RougeLimiterDebuffOverListModel.instance:onInit(limiterIds)
 end
 
-function var_0_0.onClose(arg_8_0)
+function RougeLimiterDebuffOverView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
+function RougeLimiterDebuffOverView:onDestroyView()
 	return
 end
 
-return var_0_0
+return RougeLimiterDebuffOverView

@@ -1,42 +1,44 @@
-﻿module("modules.logic.mainuiswitch.view.MainUISwitchInfoViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/mainuiswitch/view/MainUISwitchInfoViewContainer.lua
 
-local var_0_0 = class("MainUISwitchInfoViewContainer", BaseViewContainer)
+module("modules.logic.mainuiswitch.view.MainUISwitchInfoViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local MainUISwitchInfoViewContainer = class("MainUISwitchInfoViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, MainUISwitchInfoView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "middle/#go_mainUI"))
+function MainUISwitchInfoViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, MainUISwitchInfoView.New())
+	table.insert(views, TabViewGroup.New(1, "middle/#go_mainUI"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		local var_2_0 = {}
+function MainUISwitchInfoViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		local t = {}
 
-		arg_2_0:_addMainUI(var_2_0)
+		self:_addMainUI(t)
 
-		return var_2_0
+		return t
 	end
 end
 
-function var_0_0._addMainUI(arg_3_0, arg_3_1)
-	local var_3_0 = {}
+function MainUISwitchInfoViewContainer:_addMainUI(t)
+	local views = {}
 
-	table.insert(var_3_0, SwitchMainUIShowView.New())
-	table.insert(var_3_0, SwitchMainActivityEnterView.New())
-	table.insert(var_3_0, SwitchMainActExtraDisplay.New())
-	table.insert(var_3_0, SwitchMainUIView.New())
-	table.insert(var_3_0, SwitchMainUIEagleAnimView.New())
+	table.insert(views, SwitchMainUIShowView.New())
+	table.insert(views, SwitchMainActivityEnterView.New())
+	table.insert(views, SwitchMainActExtraDisplay.New())
+	table.insert(views, SwitchMainUIView.New())
+	table.insert(views, SwitchMainUIEagleAnimView.New())
 
-	arg_3_1[1] = MultiView.New(var_3_0)
+	t[1] = MultiView.New(views)
 
-	return arg_3_1[1]
+	return t[1]
 end
 
-function var_0_0.isInitMainFullView(arg_4_0)
+function MainUISwitchInfoViewContainer:isInitMainFullView()
 	return false
 end
 
-return var_0_0
+return MainUISwitchInfoViewContainer

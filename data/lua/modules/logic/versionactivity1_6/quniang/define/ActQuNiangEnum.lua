@@ -1,17 +1,19 @@
-﻿module("modules.logic.versionactivity1_6.quniang.define.ActQuNiangEnum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/quniang/define/ActQuNiangEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_6.quniang.define.ActQuNiangEnum", package.seeall)
 
-var_0_0.ActivityId = VersionActivity1_6Enum.ActivityId.Role1
-var_0_0.TaskMOAllFinishId = -100
-var_0_0.AnimatorTime = {
+local ActQuNiangEnum = _M
+
+ActQuNiangEnum.ActivityId = VersionActivity1_6Enum.ActivityId.Role1
+ActQuNiangEnum.TaskMOAllFinishId = -100
+ActQuNiangEnum.AnimatorTime = {
 	TaskReward = 0.5,
 	TaskRewardMoveUp = 0.15
 }
-var_0_0.AnimEvt = {
+ActQuNiangEnum.AnimEvt = {
 	OnGoStoryEnd = "goStoryEnd",
 	OnStoryOpenEnd = "storyOpenEnd",
 	OnFightOpenEnd = "fightOpenEnd"
 }
 
-return var_0_0
+return ActQuNiangEnum

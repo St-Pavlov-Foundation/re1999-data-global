@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity3_1.bpoper.view.V3a1_BpOperActShowViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/bpoper/view/V3a1_BpOperActShowViewContainer.lua
 
-local var_0_0 = class("V3a1_BpOperActShowViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity3_1.bpoper.view.V3a1_BpOperActShowViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local V3a1_BpOperActShowViewContainer = class("V3a1_BpOperActShowViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, V3a1_BpOperActShowView.New())
+function V3a1_BpOperActShowViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, V3a1_BpOperActShowView.New())
+
+	return views
 end
 
-return var_0_0
+return V3a1_BpOperActShowViewContainer

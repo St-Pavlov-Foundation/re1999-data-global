@@ -1,44 +1,54 @@
-﻿module("modules.logic.popup.model.PopupCacheModel", package.seeall)
+﻿-- chunkname: @modules/logic/popup/model/PopupCacheModel.lua
 
-local var_0_0 = class("PopupCacheModel", BaseModel)
+module("modules.logic.popup.model.PopupCacheModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:clear()
-	arg_1_0:clearData()
+local PopupCacheModel = class("PopupCacheModel", BaseModel)
+
+function PopupCacheModel:onInit()
+	self:clear()
+	self:clearData()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clearData()
+function PopupCacheModel:reInit()
+	self:clearData()
 end
 
-function var_0_0.clearData(arg_3_0)
-	arg_3_0._viewNameIgnoreGetProp = {}
+function PopupCacheModel:clearData()
+	self._viewNameIgnoreGetProp = {}
 end
 
-function var_0_0.recordCachePopupParam(arg_4_0, arg_4_1)
-	arg_4_0:addAtLast(arg_4_1)
+function PopupCacheModel:recordCachePopupParam(param)
+	self:addAtLast(param)
 end
 
-function var_0_0.popNextPopupParam(arg_5_0)
-	return (arg_5_0:removeFirst())
+function PopupCacheModel:popNextPopupParam()
+	local result = self:removeFirst()
+
+	return result
 end
 
-function var_0_0.setViewIgnoreGetPropView(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	if arg_6_2 then
-		arg_6_0._viewNameIgnoreGetProp[arg_6_1] = arg_6_3 or true
+function PopupCacheModel:setViewIgnoreGetPropView(viewName, isIgnore, getApproach)
+	if isIgnore then
+		self._viewNameIgnoreGetProp[viewName] = getApproach or true
 	else
-		arg_6_0._viewNameIgnoreGetProp[arg_6_1] = nil
+		self._viewNameIgnoreGetProp[viewName] = nil
 	end
 end
 
-function var_0_0.isIgnoreGetPropView(arg_7_0, arg_7_1)
-	for iter_7_0, iter_7_1 in pairs(arg_7_0._viewNameIgnoreGetProp) do
-		if ViewMgr.instance:isOpen(iter_7_0) and (type(iter_7_1) == "boolean" or iter_7_1 == arg_7_1) then
-			return true
+function PopupCacheModel:isIgnoreGetPropView(getApproach)
+	for viewName, ignoreData in pairs(self._viewNameIgnoreGetProp) do
+		local isOpen = ViewMgr.instance:isOpen(viewName)
+
+		if isOpen then
+			local ignoreType = type(ignoreData)
+
+			if ignoreType == "boolean" or ignoreData == getApproach then
+				return true
+			end
 		end
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+PopupCacheModel.instance = PopupCacheModel.New()
 
-return var_0_0
+return PopupCacheModel

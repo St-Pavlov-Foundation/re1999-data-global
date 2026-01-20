@@ -1,23 +1,25 @@
-﻿module("modules.logic.survival.controller.work.step.SurvivalAddExBlockWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/step/SurvivalAddExBlockWork.lua
 
-local var_0_0 = class("SurvivalAddExBlockWork", SurvivalStepBaseWork)
+module("modules.logic.survival.controller.work.step.SurvivalAddExBlockWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = SurvivalMapHelper.instance:getScene()
+local SurvivalAddExBlockWork = class("SurvivalAddExBlockWork", SurvivalStepBaseWork)
 
-	if var_1_0 then
-		for iter_1_0, iter_1_1 in ipairs(arg_1_0._stepMo.extraBlock) do
-			var_1_0.block:addExBlock(iter_1_1)
+function SurvivalAddExBlockWork:onStart(context)
+	local scene = SurvivalMapHelper.instance:getScene()
+
+	if scene then
+		for i, mo in ipairs(self._stepMo.extraBlock) do
+			scene.block:addExBlock(mo)
 		end
 	end
 
-	local var_1_1 = SurvivalMapModel.instance:getSceneMo()
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
 
-	if var_1_1 then
-		tabletool.addValues(var_1_1.extraBlock, arg_1_0._stepMo.extraBlock)
+	if sceneMo then
+		tabletool.addValues(sceneMo.extraBlock, self._stepMo.extraBlock)
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return SurvivalAddExBlockWork

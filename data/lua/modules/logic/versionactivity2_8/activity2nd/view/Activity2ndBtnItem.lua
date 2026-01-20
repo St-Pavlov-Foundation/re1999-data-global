@@ -1,58 +1,60 @@
-﻿module("modules.logic.versionactivity2_8.activity2nd.view.Activity2ndBtnItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/activity2nd/view/Activity2ndBtnItem.lua
 
-local var_0_0 = class("Activity2ndBtnItem", ActCenterItemBase)
+module("modules.logic.versionactivity2_8.activity2nd.view.Activity2ndBtnItem", package.seeall)
 
-function var_0_0.onOpen(arg_1_0)
-	arg_1_0:_addNotEventRedDot(arg_1_0._checkRed, arg_1_0)
+local Activity2ndBtnItem = class("Activity2ndBtnItem", ActCenterItemBase)
+
+function Activity2ndBtnItem:onOpen()
+	self:_addNotEventRedDot(self._checkRed, self)
 end
 
-function var_0_0.onInit(arg_2_0)
-	arg_2_0:refresh()
+function Activity2ndBtnItem:onInit()
+	self:refresh()
 end
 
-function var_0_0.onRefresh(arg_3_0)
-	local var_3_0 = ActivityModel.showActivityEffect()
-	local var_3_1 = ActivityConfig.instance:getMainActAtmosphereConfig()
-	local var_3_2 = var_3_0 and var_3_1.mainViewActBtnPrefix .. "icon_7" or "act_icon_7"
+function Activity2ndBtnItem:onRefresh()
+	local isShow = ActivityModel.showActivityEffect()
+	local atmoConfig = ActivityConfig.instance:getMainActAtmosphereConfig()
+	local spriteName = isShow and atmoConfig.mainViewActBtnPrefix .. "icon_7" or "act_icon_7"
 
-	if not var_3_0 then
-		local var_3_3 = ActivityConfig.instance:getMainActAtmosphereConfig()
+	if not isShow then
+		local config = ActivityConfig.instance:getMainActAtmosphereConfig()
 
-		if var_3_3 then
-			for iter_3_0, iter_3_1 in ipairs(var_3_3.mainViewActBtn) do
-				local var_3_4 = gohelper.findChild(arg_3_0.go, iter_3_1)
+		if config then
+			for _, path in ipairs(config.mainViewActBtn) do
+				local go = gohelper.findChild(self.go, path)
 
-				if var_3_4 then
-					gohelper.setActive(var_3_4, var_3_0)
+				if go then
+					gohelper.setActive(go, isShow)
 				end
 			end
 		end
 	end
 
-	arg_3_0:_setMainSprite(var_3_2)
+	self:_setMainSprite(spriteName)
 end
 
-function var_0_0.onAddEvent(arg_4_0)
-	RedDotController.instance:registerCallback(RedDotEvent.UpdateFriendInfoDot, arg_4_0.refreshDot, arg_4_0)
-	RedDotController.instance:registerCallback(RedDotEvent.UpdateActTag, arg_4_0.refreshDot, arg_4_0)
-	RedDotController.instance:registerCallback(RedDotEvent.UpdateRelateDotInfo, arg_4_0.refreshDot, arg_4_0)
-	ActivityController.instance:registerCallback(ActivityEvent.ChangeActivityStage, arg_4_0.refreshDot, arg_4_0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, arg_4_0.refreshDot, arg_4_0)
+function Activity2ndBtnItem:onAddEvent()
+	RedDotController.instance:registerCallback(RedDotEvent.UpdateFriendInfoDot, self.refreshDot, self)
+	RedDotController.instance:registerCallback(RedDotEvent.UpdateActTag, self.refreshDot, self)
+	RedDotController.instance:registerCallback(RedDotEvent.UpdateRelateDotInfo, self.refreshDot, self)
+	ActivityController.instance:registerCallback(ActivityEvent.ChangeActivityStage, self.refreshDot, self)
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, self.refreshDot, self)
 end
 
-function var_0_0.onRemoveEvent(arg_5_0)
-	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateFriendInfoDot, arg_5_0.refreshDot, arg_5_0)
-	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateActTag, arg_5_0.refreshDot, arg_5_0)
-	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateRelateDotInfo, arg_5_0.refreshDot, arg_5_0)
-	ActivityController.instance:unregisterCallback(ActivityEvent.ChangeActivityStage, arg_5_0.refreshDot, arg_5_0)
-	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, arg_5_0.refreshDot, arg_5_0)
+function Activity2ndBtnItem:onRemoveEvent()
+	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateFriendInfoDot, self.refreshDot, self)
+	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateActTag, self.refreshDot, self)
+	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateRelateDotInfo, self.refreshDot, self)
+	ActivityController.instance:unregisterCallback(ActivityEvent.ChangeActivityStage, self.refreshDot, self)
+	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, self.refreshDot, self)
 end
 
-function var_0_0.onClick(arg_6_0)
+function Activity2ndBtnItem:onClick()
 	Activity2ndController.instance:enterActivity2ndMainView()
 end
 
-function var_0_0._checkRed(arg_7_0)
+function Activity2ndBtnItem:_checkRed()
 	if RedDotModel.instance:isDotShow(RedDotEnum.DotNode.Activity2ndEnter, 0) then
 		return true
 	end
@@ -64,8 +66,8 @@ function var_0_0._checkRed(arg_7_0)
 	return false
 end
 
-function var_0_0.refreshDot(arg_8_0)
-	arg_8_0:_refreshRedDot()
+function Activity2ndBtnItem:refreshDot()
+	self:_refreshRedDot()
 end
 
-return var_0_0
+return Activity2ndBtnItem

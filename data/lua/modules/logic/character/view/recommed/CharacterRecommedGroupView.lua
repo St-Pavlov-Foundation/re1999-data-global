@@ -1,140 +1,142 @@
-﻿module("modules.logic.character.view.recommed.CharacterRecommedGroupView", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/recommed/CharacterRecommedGroupView.lua
 
-local var_0_0 = class("CharacterRecommedGroupView", BaseView)
+module("modules.logic.character.view.recommed.CharacterRecommedGroupView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gogroup = gohelper.findChild(arg_1_0.viewGO, "content/group")
-	arg_1_0._imagegroupicon = gohelper.findChildImage(arg_1_0.viewGO, "content/group/title/icon")
-	arg_1_0._scrollgroup = gohelper.findChildScrollRect(arg_1_0.viewGO, "content/group/#scroll_group")
-	arg_1_0._goequip = gohelper.findChild(arg_1_0.viewGO, "content/equip")
-	arg_1_0._imageequipicon = gohelper.findChildImage(arg_1_0.viewGO, "content/equip/title/icon")
-	arg_1_0._scrollequip = gohelper.findChildScrollRect(arg_1_0.viewGO, "content/equip/#scroll_equip")
+local CharacterRecommedGroupView = class("CharacterRecommedGroupView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CharacterRecommedGroupView:onInitView()
+	self._gogroup = gohelper.findChild(self.viewGO, "content/group")
+	self._imagegroupicon = gohelper.findChildImage(self.viewGO, "content/group/title/icon")
+	self._scrollgroup = gohelper.findChildScrollRect(self.viewGO, "content/group/#scroll_group")
+	self._goequip = gohelper.findChild(self.viewGO, "content/equip")
+	self._imageequipicon = gohelper.findChildImage(self.viewGO, "content/equip/title/icon")
+	self._scrollequip = gohelper.findChildScrollRect(self.viewGO, "content/equip/#scroll_equip")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(CharacterRecommedController.instance, CharacterRecommedEvent.OnCutHeroAnimCB, arg_2_0._refreshHero, arg_2_0)
+function CharacterRecommedGroupView:addEvents()
+	self:addEventCb(CharacterRecommedController.instance, CharacterRecommedEvent.OnCutHeroAnimCB, self._refreshHero, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(CharacterRecommedController.instance, CharacterRecommedEvent.OnCutHeroAnimCB, arg_3_0._refreshHero, arg_3_0)
+function CharacterRecommedGroupView:removeEvents()
+	self:removeEventCb(CharacterRecommedController.instance, CharacterRecommedEvent.OnCutHeroAnimCB, self._refreshHero, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function CharacterRecommedGroupView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function CharacterRecommedGroupView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:_refreshHero(arg_6_0.viewParam.heroId)
-	arg_6_0:playViewAnim(CharacterRecommedEnum.AnimName.Open, 0, 0)
+function CharacterRecommedGroupView:onOpen()
+	self:_refreshHero(self.viewParam.heroId)
+	self:playViewAnim(CharacterRecommedEnum.AnimName.Open, 0, 0)
 
-	if arg_6_0._groupItems then
-		for iter_6_0, iter_6_1 in ipairs(arg_6_0._groupItems) do
-			iter_6_1:playViewAnim(CharacterRecommedEnum.AnimName.Open, 0, 0)
+	if self._groupItems then
+		for _, item in ipairs(self._groupItems) do
+			item:playViewAnim(CharacterRecommedEnum.AnimName.Open, 0, 0)
 		end
 	end
 end
 
-function var_0_0._refreshHero(arg_7_0, arg_7_1)
-	if arg_7_0.heroId and arg_7_1 == arg_7_0.heroId then
+function CharacterRecommedGroupView:_refreshHero(heroId)
+	if self.heroId and heroId == self.heroId then
 		return
 	end
 
-	arg_7_0.heroId = arg_7_1
-	arg_7_0._heroRecommendMO = CharacterRecommedModel.instance:getHeroRecommendMo(arg_7_1)
+	self.heroId = heroId
+	self._heroRecommendMO = CharacterRecommedModel.instance:getHeroRecommendMo(heroId)
 
-	local var_7_0 = arg_7_0._heroRecommendMO:isShowTeam()
-	local var_7_1 = arg_7_0._heroRecommendMO:isShowEquip()
+	local isShowTeam = self._heroRecommendMO:isShowTeam()
+	local isShowEquip = self._heroRecommendMO:isShowEquip()
 
-	if var_7_0 then
-		arg_7_0:_refreshGroup()
+	if isShowTeam then
+		self:_refreshGroup()
 	end
 
-	if var_7_1 then
-		arg_7_0:_refreshEquip()
+	if isShowEquip then
+		self:_refreshEquip()
 	end
 
-	gohelper.setActive(arg_7_0._gogroup, var_7_0)
-	gohelper.setActive(arg_7_0._goequip, var_7_1)
+	gohelper.setActive(self._gogroup, isShowTeam)
+	gohelper.setActive(self._goequip, isShowEquip)
 end
 
-function var_0_0._refreshGroup(arg_8_0)
-	if not arg_8_0._heroRecommendMO then
+function CharacterRecommedGroupView:_refreshGroup()
+	if not self._heroRecommendMO then
 		return
 	end
 
-	local var_8_0 = arg_8_0._heroRecommendMO.teamRec
+	local moList = self._heroRecommendMO.teamRec
 
-	if var_8_0 then
-		if not arg_8_0._goGroupItem then
-			arg_8_0._goGroupItem = arg_8_0.viewContainer:getGroupItemRes()
+	if moList then
+		if not self._goGroupItem then
+			self._goGroupItem = self.viewContainer:getGroupItemRes()
 		end
 
-		arg_8_0._groupItems = {}
+		self._groupItems = {}
 
-		gohelper.CreateObjList(arg_8_0, arg_8_0._groupItemCB, var_8_0, arg_8_0._scrollgroup.content.gameObject, arg_8_0._goGroupItem, CharacterRecommedGroupItem)
+		gohelper.CreateObjList(self, self._groupItemCB, moList, self._scrollgroup.content.gameObject, self._goGroupItem, CharacterRecommedGroupItem)
 	end
 end
 
-function var_0_0._groupItemCB(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	arg_9_1:onUpdateMO(arg_9_2, arg_9_0.viewContainer, arg_9_0._heroRecommendMO)
-	arg_9_1:setIndex(arg_9_3)
+function CharacterRecommedGroupView:_groupItemCB(obj, data, index)
+	obj:onUpdateMO(data, self.viewContainer, self._heroRecommendMO)
+	obj:setIndex(index)
 
-	local var_9_0 = arg_9_0.viewParam.fromView and arg_9_0.viewParam.fromView == ViewName.CharacterView
+	local isFormCharacterView = self.viewParam.fromView and self.viewParam.fromView == ViewName.CharacterView
 
-	arg_9_1:showUseBtn(var_9_0)
+	obj:showUseBtn(isFormCharacterView)
 
-	arg_9_0._groupItems[arg_9_3] = arg_9_1
+	self._groupItems[index] = obj
 end
 
-function var_0_0._refreshEquip(arg_10_0)
-	if not arg_10_0._heroRecommendMO then
+function CharacterRecommedGroupView:_refreshEquip()
+	if not self._heroRecommendMO then
 		return
 	end
 
-	if not arg_10_0._goequipicon then
-		arg_10_0._goequipicon = arg_10_0.viewContainer:getEquipIconRes()
+	if not self._goequipicon then
+		self._goequipicon = self.viewContainer:getEquipIconRes()
 	end
 
-	local var_10_0 = arg_10_0._heroRecommendMO.equipRec
+	local moList = self._heroRecommendMO.equipRec
 
-	if var_10_0 then
-		gohelper.CreateObjList(arg_10_0, arg_10_0._equipItemCB, var_10_0, arg_10_0._scrollequip.content.gameObject, arg_10_0._goequipicon, CharacterRecommedEquipIcon)
+	if moList then
+		gohelper.CreateObjList(self, self._equipItemCB, moList, self._scrollequip.content.gameObject, self._goequipicon, CharacterRecommedEquipIcon)
 	end
 end
 
-function var_0_0._equipItemCB(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	arg_11_1:onUpdateMO(arg_11_2)
-	arg_11_1:setClickCallback(function()
+function CharacterRecommedGroupView:_equipItemCB(obj, data, index)
+	obj:onUpdateMO(data)
+	obj:setClickCallback(function()
 		EquipController.instance:openEquipView({
-			equipId = arg_11_2
+			equipId = data
 		})
-	end, arg_11_0)
+	end, self)
 end
 
-function var_0_0.playViewAnim(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	if not arg_13_0._viewAnim then
-		arg_13_0._viewAnim = arg_13_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function CharacterRecommedGroupView:playViewAnim(animName, layer, normalizedTime)
+	if not self._viewAnim then
+		self._viewAnim = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 	end
 
-	if arg_13_0._viewAnim then
-		arg_13_0._viewAnim:Play(arg_13_1, arg_13_2, arg_13_3)
+	if self._viewAnim then
+		self._viewAnim:Play(animName, layer, normalizedTime)
 	end
 end
 
-function var_0_0.onClose(arg_14_0)
+function CharacterRecommedGroupView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_15_0)
+function CharacterRecommedGroupView:onDestroyView()
 	return
 end
 
-return var_0_0
+return CharacterRecommedGroupView

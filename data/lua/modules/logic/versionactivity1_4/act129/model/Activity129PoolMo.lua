@@ -1,88 +1,92 @@
-﻿module("modules.logic.versionactivity1_4.act129.model.Activity129PoolMo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act129/model/Activity129PoolMo.lua
 
-local var_0_0 = class("Activity129PoolMo")
+module("modules.logic.versionactivity1_4.act129.model.Activity129PoolMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.activityId = arg_1_1.activityId
-	arg_1_0.poolId = arg_1_1.poolId
-	arg_1_0.poolType = arg_1_1.type
-	arg_1_0.count = 0
-	arg_1_0.rewardDict = {}
+local Activity129PoolMo = class("Activity129PoolMo")
+
+function Activity129PoolMo:ctor(poolCfg)
+	self.activityId = poolCfg.activityId
+	self.poolId = poolCfg.poolId
+	self.poolType = poolCfg.type
+	self.count = 0
+	self.rewardDict = {}
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.count = arg_2_1.count
-	arg_2_0.rewardDict = {}
+function Activity129PoolMo:init(info)
+	self.count = info.count
+	self.rewardDict = {}
 
-	for iter_2_0 = 1, #arg_2_1.rewards do
-		local var_2_0 = arg_2_1.rewards[iter_2_0]
-		local var_2_1 = arg_2_0:getRewardItem(var_2_0.rare, var_2_0.rewardType, var_2_0.rewardId)
+	for i = 1, #info.rewards do
+		local reward = info.rewards[i]
+		local item = self:getRewardItem(reward.rare, reward.rewardType, reward.rewardId)
 
-		var_2_1.num = var_2_1.num + var_2_0.num
-	end
-end
-
-function var_0_0.onLotterySuccess(arg_3_0, arg_3_1)
-	arg_3_0.count = arg_3_0.count + arg_3_1.num
-
-	for iter_3_0 = 1, #arg_3_1.rewards do
-		local var_3_0 = arg_3_1.rewards[iter_3_0]
-		local var_3_1 = arg_3_0:getRewardItem(var_3_0.rare, var_3_0.rewardType, var_3_0.rewardId)
-
-		var_3_1.num = var_3_1.num + var_3_0.num
+		item.num = item.num + reward.num
 	end
 end
 
-function var_0_0.getRewardItem(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	if not arg_4_0.rewardDict[arg_4_1] then
-		arg_4_0.rewardDict[arg_4_1] = {}
+function Activity129PoolMo:onLotterySuccess(info)
+	self.count = self.count + info.num
+
+	for i = 1, #info.rewards do
+		local reward = info.rewards[i]
+		local item = self:getRewardItem(reward.rare, reward.rewardType, reward.rewardId)
+
+		item.num = item.num + reward.num
+	end
+end
+
+function Activity129PoolMo:getRewardItem(rare, rewardType, rewardId)
+	if not self.rewardDict[rare] then
+		self.rewardDict[rare] = {}
 	end
 
-	if not arg_4_0.rewardDict[arg_4_1][arg_4_2] then
-		arg_4_0.rewardDict[arg_4_1][arg_4_2] = {}
+	if not self.rewardDict[rare][rewardType] then
+		self.rewardDict[rare][rewardType] = {}
 	end
 
-	if not arg_4_0.rewardDict[arg_4_1][arg_4_2][arg_4_3] then
-		arg_4_0.rewardDict[arg_4_1][arg_4_2][arg_4_3] = {
+	if not self.rewardDict[rare][rewardType][rewardId] then
+		self.rewardDict[rare][rewardType][rewardId] = {
 			num = 0,
-			rare = arg_4_1,
-			rewardType = arg_4_2,
-			rewardId = arg_4_3
+			rare = rare,
+			rewardType = rewardType,
+			rewardId = rewardId
 		}
 	end
 
-	return arg_4_0.rewardDict[arg_4_1][arg_4_2][arg_4_3]
+	return self.rewardDict[rare][rewardType][rewardId]
 end
 
-function var_0_0.getGoodsGetNum(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	return arg_5_0:getRewardItem(arg_5_1, arg_5_2, arg_5_3).num
+function Activity129PoolMo:getGoodsGetNum(rare, rewardType, rewardId)
+	local item = self:getRewardItem(rare, rewardType, rewardId)
+
+	return item.num
 end
 
-function var_0_0.checkPoolIsEmpty(arg_6_0)
-	local var_6_0, var_6_1 = arg_6_0:getPoolDrawCount()
+function Activity129PoolMo:checkPoolIsEmpty()
+	local drawCount, maxCount = self:getPoolDrawCount()
 
-	return var_6_1 ~= 0 and var_6_1 <= var_6_0
+	return maxCount ~= 0 and maxCount <= drawCount
 end
 
-function var_0_0.getPoolDrawCount(arg_7_0)
-	local var_7_0 = 0
-	local var_7_1 = 0
-	local var_7_2 = Activity129Config.instance:getGoodsDict(arg_7_0.poolId)
+function Activity129PoolMo:getPoolDrawCount()
+	local maxCount = 0
+	local drawCount = 0
+	local goodsDict = Activity129Config.instance:getGoodsDict(self.poolId)
 
-	for iter_7_0, iter_7_1 in pairs(var_7_2) do
-		local var_7_3 = GameUtil.splitString2(iter_7_1.goodsId, true)
+	for k, goods in pairs(goodsDict) do
+		local rewards = GameUtil.splitString2(goods.goodsId, true)
 
-		if var_7_3 then
-			for iter_7_2, iter_7_3 in ipairs(var_7_3) do
-				if iter_7_3[4] > 0 then
-					var_7_0 = var_7_0 + iter_7_3[4]
-					var_7_1 = var_7_1 + arg_7_0:getGoodsGetNum(iter_7_0, iter_7_3[1], iter_7_3[2])
+		if rewards then
+			for i, reward in ipairs(rewards) do
+				if reward[4] > 0 then
+					maxCount = maxCount + reward[4]
+					drawCount = drawCount + self:getGoodsGetNum(k, reward[1], reward[2])
 				end
 			end
 		end
 	end
 
-	return var_7_1, var_7_0
+	return drawCount, maxCount
 end
 
-return var_0_0
+return Activity129PoolMo

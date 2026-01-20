@@ -1,92 +1,96 @@
-﻿module("modules.logic.clickuiswitch.model.ClickUISwitchModel", package.seeall)
+﻿-- chunkname: @modules/logic/clickuiswitch/model/ClickUISwitchModel.lua
 
-local var_0_0 = class("ClickUISwitchModel", BaseModel)
+module("modules.logic.clickuiswitch.model.ClickUISwitchModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local ClickUISwitchModel = class("ClickUISwitchModel", BaseModel)
+
+function ClickUISwitchModel:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
+function ClickUISwitchModel:reInit()
 	return
 end
 
-function var_0_0.initConfig(arg_3_0)
-	arg_3_0:_defaultUseId()
+function ClickUISwitchModel:initConfig()
+	self:_defaultUseId()
 end
 
-function var_0_0.initClickUI(arg_4_0)
-	local var_4_0 = PlayerModel.instance:getSimpleProperty(PlayerEnum.SimpleProperty.ClickUISkin)
+function ClickUISwitchModel:initClickUI()
+	local value = PlayerModel.instance:getSimpleProperty(PlayerEnum.SimpleProperty.ClickUISkin)
 
-	if var_4_0 then
-		arg_4_0._curUseUI = tonumber(var_4_0) or arg_4_0:_getUseUIDefaultId()
+	if value then
+		self._curUseUI = tonumber(value) or self:_getUseUIDefaultId()
 	else
-		arg_4_0:_defaultUseId()
+		self:_defaultUseId()
 	end
 end
 
-function var_0_0._defaultUseId(arg_5_0)
-	arg_5_0._curUseUI = GameUtil.playerPrefsGetNumberByUserId(ClickUISwitchEnum.SaveClickUIPrefKey, arg_5_0:_getUseUIDefaultId())
+function ClickUISwitchModel:_defaultUseId()
+	self._curUseUI = GameUtil.playerPrefsGetNumberByUserId(ClickUISwitchEnum.SaveClickUIPrefKey, self:_getUseUIDefaultId())
 end
 
-function var_0_0.setCurUseUI(arg_6_0, arg_6_1)
-	arg_6_0._curUseUI = arg_6_1
+function ClickUISwitchModel:setCurUseUI(id)
+	self._curUseUI = id
 
-	GameUtil.playerPrefsSetNumberByUserId(ClickUISwitchEnum.SaveClickUIPrefKey, arg_6_1)
+	GameUtil.playerPrefsSetNumberByUserId(ClickUISwitchEnum.SaveClickUIPrefKey, id)
 end
 
-function var_0_0.getCurUseUI(arg_7_0)
-	return arg_7_0._curUseUI or arg_7_0:_getUseUIDefaultId()
+function ClickUISwitchModel:getCurUseUI()
+	return self._curUseUI or self:_getUseUIDefaultId()
 end
 
-function var_0_0.getCurUseUICo(arg_8_0)
-	return arg_8_0:getClickUICoById(arg_8_0:getCurUseUI())
+function ClickUISwitchModel:getCurUseUICo()
+	return self:getClickUICoById(self:getCurUseUI())
 end
 
-function var_0_0.getClickUICoById(arg_9_0, arg_9_1)
-	return lua_scene_click.configDict[arg_9_1]
+function ClickUISwitchModel:getClickUICoById(id)
+	return lua_scene_click.configDict[id]
 end
 
-function var_0_0._getUseUIDefaultId(arg_10_0)
+function ClickUISwitchModel:_getUseUIDefaultId()
 	if not lua_scene_click.configList then
 		return ClickUISwitchEnum.SkinParams[ClickUISwitchEnum.Skin.Normal].id
 	end
 
-	for iter_10_0, iter_10_1 in ipairs(lua_scene_click.configList) do
-		if iter_10_1.defaultUnlock == 1 then
-			return iter_10_1.id
+	for _, co in ipairs(lua_scene_click.configList) do
+		if co.defaultUnlock == 1 then
+			return co.id
 		end
 	end
 end
 
-function var_0_0.getUIStatus(arg_11_0)
-	local var_11_0 = lua_scene_click.configDict[arg_11_0]
+function ClickUISwitchModel.getUIStatus(id)
+	local config = lua_scene_click.configDict[id]
 
-	if not var_11_0 then
+	if not config then
 		return MainSceneSwitchEnum.SceneStutas.Lock
 	end
 
-	if var_11_0.defaultUnlock == 1 then
+	if config.defaultUnlock == 1 then
 		return MainSceneSwitchEnum.SceneStutas.Unlock
 	end
 
-	if ItemModel.instance:getItemCount(var_11_0.itemId) > 0 then
+	local num = ItemModel.instance:getItemCount(config.itemId)
+
+	if num > 0 then
 		return MainSceneSwitchEnum.SceneStutas.Unlock
 	end
 
-	if var_0_0.canJump(var_11_0.itemId) then
+	if ClickUISwitchModel.canJump(config.itemId) then
 		return MainSceneSwitchEnum.SceneStutas.LockCanGet
 	end
 
 	return MainSceneSwitchEnum.SceneStutas.Lock
 end
 
-function var_0_0.canJump(arg_12_0)
-	local var_12_0 = ClickUISwitchConfig.instance:getItemSource(arg_12_0)
+function ClickUISwitchModel.canJump(itemId)
+	local sourceTables = ClickUISwitchConfig.instance:getItemSource(itemId)
 
-	for iter_12_0, iter_12_1 in ipairs(var_12_0) do
-		local var_12_1, var_12_2 = MainSceneSwitchModel._getCantJump(iter_12_1)
+	for i, sourceTable in ipairs(sourceTables) do
+		local cantJumpTips, toastParamList = MainSceneSwitchModel._getCantJump(sourceTable)
 
-		if not var_12_1 then
+		if not cantJumpTips then
 			return true
 		end
 	end
@@ -94,28 +98,28 @@ function var_0_0.canJump(arg_12_0)
 	return false
 end
 
-function var_0_0.hasReddot(arg_13_0)
-	for iter_13_0, iter_13_1 in ipairs(lua_scene_click.configList) do
-		if iter_13_1.defaultUnlock ~= 1 and var_0_0.getUIStatus(iter_13_1.id) == MainSceneSwitchEnum.SceneStutas.Unlock then
-			local var_13_0 = ClickUISwitchEnum.SaveClickUIPrefKey .. iter_13_1.id
+function ClickUISwitchModel:hasReddot()
+	for _, co in ipairs(lua_scene_click.configList) do
+		if co.defaultUnlock ~= 1 and ClickUISwitchModel.getUIStatus(co.id) == MainSceneSwitchEnum.SceneStutas.Unlock then
+			local key = ClickUISwitchEnum.SaveClickUIPrefKey .. co.id
 
-			if GameUtil.playerPrefsGetNumberByUserId(var_13_0, 0) == 0 then
+			if GameUtil.playerPrefsGetNumberByUserId(key, 0) == 0 then
 				return true
 			end
 		end
 	end
 end
 
-function var_0_0.cancelReddot(arg_14_0)
-	for iter_14_0, iter_14_1 in ipairs(lua_scene_click.configList) do
-		if iter_14_1.defaultUnlock ~= 1 and var_0_0.getUIStatus(iter_14_1.id) == MainSceneSwitchEnum.SceneStutas.Unlock then
-			local var_14_0 = ClickUISwitchEnum.SaveClickUIPrefKey .. iter_14_1.id
+function ClickUISwitchModel:cancelReddot()
+	for _, co in ipairs(lua_scene_click.configList) do
+		if co.defaultUnlock ~= 1 and ClickUISwitchModel.getUIStatus(co.id) == MainSceneSwitchEnum.SceneStutas.Unlock then
+			local key = ClickUISwitchEnum.SaveClickUIPrefKey .. co.id
 
-			GameUtil.playerPrefsSetNumberByUserId(var_14_0, 1)
+			GameUtil.playerPrefsSetNumberByUserId(key, 1)
 		end
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+ClickUISwitchModel.instance = ClickUISwitchModel.New()
 
-return var_0_0
+return ClickUISwitchModel

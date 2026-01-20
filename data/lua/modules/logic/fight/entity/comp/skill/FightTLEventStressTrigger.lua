@@ -1,45 +1,47 @@
-﻿module("modules.logic.fight.entity.comp.skill.FightTLEventStressTrigger", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skill/FightTLEventStressTrigger.lua
 
-local var_0_0 = class("FightTLEventStressTrigger", FightTimelineTrackItem)
+module("modules.logic.fight.entity.comp.skill.FightTLEventStressTrigger", package.seeall)
 
-function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = arg_1_1.fromId
-	local var_1_1 = FightModel.instance:popNoHandledStressBehaviour(var_1_0)
+local FightTLEventStressTrigger = class("FightTLEventStressTrigger", FightTimelineTrackItem)
 
-	if not var_1_1 then
+function FightTLEventStressTrigger:onTrackStart(fightStepData, duration, paramsArr)
+	local entityId = fightStepData.fromId
+	local stressBehaviour = FightModel.instance:popNoHandledStressBehaviour(entityId)
+
+	if not stressBehaviour then
 		logError("压力触发技能动效帧, 但是没找到触发压力的effect")
 
 		return
 	end
 
-	local var_1_2 = var_1_1.effectNum
-	local var_1_3 = FightEnum.StressBehaviourConstId[var_1_2]
-	local var_1_4 = var_1_3 and lua_stress_const.configDict[var_1_3]
+	local behaviorId = stressBehaviour.effectNum
+	local constId = FightEnum.StressBehaviourConstId[behaviorId]
+	local constCo = constId and lua_stress_const.configDict[constId]
 
-	if not var_1_4 then
-		logError(string.format("压力行为 %s 的常量配置不存在", var_1_2))
+	if not constCo then
+		logError(string.format("压力行为 %s 的常量配置不存在", behaviorId))
 
 		return
 	end
 
-	local var_1_5 = tonumber(var_1_4.value)
-	local var_1_6 = var_1_4.value2
+	local type = tonumber(constCo.value)
+	local content = constCo.value2
 
-	FightFloatMgr.instance:float(var_1_0, FightEnum.FloatType.stress, var_1_6, var_1_5, false)
-	FightController.instance:dispatchEvent(FightEvent.TriggerStressBehaviour, var_1_0, var_1_2)
+	FightFloatMgr.instance:float(entityId, FightEnum.FloatType.stress, content, type, false)
+	FightController.instance:dispatchEvent(FightEvent.TriggerStressBehaviour, entityId, behaviorId)
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1.actEffect) do
-		if iter_1_1.effectType == FightEnum.EffectType.POWERCHANGE and iter_1_1.targetId == var_1_0 and iter_1_1.configEffect == FightEnum.PowerType.Stress then
-			local var_1_7 = FightDataHelper.entityMgr:getById(var_1_0)
-			local var_1_8 = var_1_7 and var_1_7:getPowerInfo(FightEnum.PowerType.Stress)
-			local var_1_9 = var_1_8 and var_1_8.num
+	for _, actEffectData in ipairs(fightStepData.actEffect) do
+		if actEffectData.effectType == FightEnum.EffectType.POWERCHANGE and actEffectData.targetId == entityId and actEffectData.configEffect == FightEnum.PowerType.Stress then
+			local entityMo = FightDataHelper.entityMgr:getById(entityId)
+			local powerData = entityMo and entityMo:getPowerInfo(FightEnum.PowerType.Stress)
+			local oldValue = powerData and powerData.num
 
-			FightDataHelper.playEffectData(iter_1_1)
+			FightDataHelper.playEffectData(actEffectData)
 
-			local var_1_10 = var_1_8 and var_1_8.num
+			local newValue = powerData and powerData.num
 
-			if var_1_9 and var_1_10 and var_1_9 ~= var_1_10 then
-				FightController.instance:dispatchEvent(FightEvent.PowerChange, var_1_0, FightEnum.PowerType.Stress, var_1_9, var_1_10)
+			if oldValue and newValue and oldValue ~= newValue then
+				FightController.instance:dispatchEvent(FightEvent.PowerChange, entityId, FightEnum.PowerType.Stress, oldValue, newValue)
 			end
 
 			break
@@ -47,12 +49,12 @@ function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	end
 end
 
-function var_0_0.onTrackEnd(arg_2_0)
+function FightTLEventStressTrigger:onTrackEnd()
 	return
 end
 
-function var_0_0.onDestructor(arg_3_0)
+function FightTLEventStressTrigger:onDestructor()
 	return
 end
 
-return var_0_0
+return FightTLEventStressTrigger

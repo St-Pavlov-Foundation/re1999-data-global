@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity2_6.dicehero.view.DiceHeroGameViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/dicehero/view/DiceHeroGameViewContainer.lua
 
-local var_0_0 = class("DiceHeroGameViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_6.dicehero.view.DiceHeroGameViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local DiceHeroGameViewContainer = class("DiceHeroGameViewContainer", BaseViewContainer)
+
+function DiceHeroGameViewContainer:buildViews()
 	DiceHeroStatHelper.instance:resetGameDt()
 
 	DiceHeroModel.instance.guideLevel = DiceHeroModel.instance.lastEnterLevelId
@@ -13,46 +15,46 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		local var_2_0 = NavigateButtonsView.New({
+function DiceHeroGameViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		local navView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
-		var_2_0:setOverrideClose(arg_2_0.defaultOverrideCloseClick, arg_2_0)
+		navView:setOverrideClose(self.defaultOverrideCloseClick, self)
 
 		return {
-			var_2_0
+			navView
 		}
 	end
 end
 
-function var_0_0.defaultOverrideCloseClick(arg_3_0)
+function DiceHeroGameViewContainer:defaultOverrideCloseClick()
 	if DiceHeroFightModel.instance.finishResult ~= DiceHeroEnum.GameStatu.None then
 		return
 	end
 
-	local var_3_0 = DiceHeroModel.instance.lastEnterLevelId
-	local var_3_1 = lua_dice_level.configDict[var_3_0]
+	local lastEnterLevelId = DiceHeroModel.instance.lastEnterLevelId
+	local co = lua_dice_level.configDict[lastEnterLevelId]
 
-	if var_3_1 then
-		local var_3_2 = DiceHeroModel.instance:getGameInfo(var_3_1.chapter)
+	if co then
+		local gameInfo = DiceHeroModel.instance:getGameInfo(co.chapter)
 
-		if var_3_2.currLevel ~= var_3_0 or var_3_2.allPass then
-			return arg_3_0:statAndClose()
+		if gameInfo.currLevel ~= lastEnterLevelId or gameInfo.allPass then
+			return self:statAndClose()
 		end
 	else
-		return arg_3_0:closeThis()
+		return self:closeThis()
 	end
 
-	MessageBoxController.instance:showMsgBox(MessageBoxIdDefine.DiceHeroExitFight, MsgBoxEnum.BoxType.Yes_No, arg_3_0.statAndClose, nil, nil, arg_3_0)
+	MessageBoxController.instance:showMsgBox(MessageBoxIdDefine.DiceHeroExitFight, MsgBoxEnum.BoxType.Yes_No, self.statAndClose, nil, nil, self)
 end
 
-function var_0_0.statAndClose(arg_4_0)
+function DiceHeroGameViewContainer:statAndClose()
 	DiceHeroStatHelper.instance:sendFightEnd(nil, nil)
-	arg_4_0:closeThis()
+	self:closeThis()
 end
 
-return var_0_0
+return DiceHeroGameViewContainer

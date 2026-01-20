@@ -1,25 +1,31 @@
-﻿module("modules.logic.explore.map.unit.ExploreBattleUnit", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/unit/ExploreBattleUnit.lua
 
-local var_0_0 = class("ExploreBattleUnit", ExploreBaseDisplayUnit)
+module("modules.logic.explore.map.unit.ExploreBattleUnit", package.seeall)
 
-function var_0_0.onResLoaded(arg_1_0)
-	var_0_0.super.onResLoaded(arg_1_0)
+local ExploreBattleUnit = class("ExploreBattleUnit", ExploreBaseDisplayUnit)
 
-	if arg_1_0.mo:getInteractInfoMO().statusInfo.success == 1 then
-		ExploreRpc.instance:sendExploreInteractRequest(arg_1_0.id)
+function ExploreBattleUnit:onResLoaded()
+	ExploreBattleUnit.super.onResLoaded(self)
+
+	local interactInfoMO = self.mo:getInteractInfoMO()
+
+	if interactInfoMO.statusInfo.success == 1 then
+		ExploreRpc.instance:sendExploreInteractRequest(self.id)
 	end
 end
 
-function var_0_0.canTrigger(arg_2_0)
-	if not arg_2_0.mo:isInteractActiveState() then
+function ExploreBattleUnit:canTrigger()
+	if not self.mo:isInteractActiveState() then
 		return false
 	end
 
-	if arg_2_0.mo:getInteractInfoMO().statusInfo.success == 1 then
+	local interactInfoMO = self.mo:getInteractInfoMO()
+
+	if interactInfoMO.statusInfo.success == 1 then
 		return false
 	end
 
-	return var_0_0.super.canTrigger(arg_2_0)
+	return ExploreBattleUnit.super.canTrigger(self)
 end
 
-return var_0_0
+return ExploreBattleUnit

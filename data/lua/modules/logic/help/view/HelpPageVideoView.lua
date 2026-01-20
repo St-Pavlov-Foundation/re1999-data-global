@@ -1,73 +1,75 @@
-﻿module("modules.logic.help.view.HelpPageVideoView", package.seeall)
+﻿-- chunkname: @modules/logic/help/view/HelpPageVideoView.lua
 
-local var_0_0 = class("HelpPageVideoView", BaseView)
+module("modules.logic.help.view.HelpPageVideoView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local HelpPageVideoView = class("HelpPageVideoView", BaseView)
+
+function HelpPageVideoView:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function HelpPageVideoView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function HelpPageVideoView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._voideItem = MonoHelper.addNoUpdateLuaComOnceToGo(arg_4_0.viewGO, HelpContentVideoItem, arg_4_0)
-	arg_4_0._voideItem._view = arg_4_0
+function HelpPageVideoView:_editableInitView()
+	self._voideItem = MonoHelper.addNoUpdateLuaComOnceToGo(self.viewGO, HelpContentVideoItem, self)
+	self._voideItem._view = self
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function HelpPageVideoView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	if arg_6_0.viewContainer then
-		arg_6_0:addEventCb(arg_6_0.viewContainer, HelpEvent.UIVoideFullScreenChange, arg_6_0._onVoideFullScreenChange, arg_6_0)
-		arg_6_0:addEventCb(arg_6_0.viewContainer, HelpEvent.UIPageTabSelectChange, arg_6_0._onUIPageTabSelectChange, arg_6_0)
+function HelpPageVideoView:onOpen()
+	if self.viewContainer then
+		self:addEventCb(self.viewContainer, HelpEvent.UIVoideFullScreenChange, self._onVoideFullScreenChange, self)
+		self:addEventCb(self.viewContainer, HelpEvent.UIPageTabSelectChange, self._onUIPageTabSelectChange, self)
 	end
 end
 
-function var_0_0.onClose(arg_7_0)
+function HelpPageVideoView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_8_0)
-	arg_8_0._voideItem:onDestroy()
+function HelpPageVideoView:onDestroyView()
+	self._voideItem:onDestroy()
 end
 
-function var_0_0._onVoideFullScreenChange(arg_9_0, arg_9_1)
-	if arg_9_0.viewContainer and arg_9_0.viewContainer.setVideoFullScreen then
-		arg_9_0.viewContainer:setVideoFullScreen(arg_9_0._voideItem:getIsFullScreen())
+function HelpPageVideoView:_onVoideFullScreenChange(isfull)
+	if self.viewContainer and self.viewContainer.setVideoFullScreen then
+		self.viewContainer:setVideoFullScreen(self._voideItem:getIsFullScreen())
 	end
 end
 
-function var_0_0._onUIPageTabSelectChange(arg_10_0, arg_10_1)
-	arg_10_0:setPageTabCfg(arg_10_1)
+function HelpPageVideoView:_onUIPageTabSelectChange(pageTabCfg)
+	self:setPageTabCfg(pageTabCfg)
 end
 
-function var_0_0.setPageTabCfg(arg_11_0, arg_11_1)
-	if not arg_11_1 then
+function HelpPageVideoView:setPageTabCfg(cfg)
+	if not cfg then
 		return
 	end
 
-	if arg_11_1.showType == HelpEnum.PageTabShowType.Video and arg_11_0._curShowHelpId ~= arg_11_1.helpId then
-		arg_11_0._curShowHelpId = arg_11_1.helpId
+	if cfg.showType == HelpEnum.PageTabShowType.Video and self._curShowHelpId ~= cfg.helpId then
+		self._curShowHelpId = cfg.helpId
 
-		local var_11_0 = HelpConfig.instance:getHelpVideoCO(arg_11_0._curShowHelpId)
+		local videoCfg = HelpConfig.instance:getHelpVideoCO(self._curShowHelpId)
 
-		if var_11_0 then
-			arg_11_0._voideItem:onUpdateMO(var_11_0)
+		if videoCfg then
+			self._voideItem:onUpdateMO(videoCfg)
 		else
-			logError(string.format("export_帮助视频表 can not find id : %s", arg_11_0._curShowHelpId))
+			logError(string.format("export_帮助视频表 can not find id : %s", self._curShowHelpId))
 		end
-	elseif arg_11_1.showType ~= HelpEnum.PageTabShowType.Video then
-		arg_11_0._voideItem:stop()
+	elseif cfg.showType ~= HelpEnum.PageTabShowType.Video then
+		self._voideItem:stop()
 	end
 end
 
-return var_0_0
+return HelpPageVideoView

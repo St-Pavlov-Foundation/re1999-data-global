@@ -1,3 +1,7 @@
-﻿module("modules.logic.fight.view.FightTotalView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightTotalView.lua
 
-return (class("FightTotalView", BaseView))
+module("modules.logic.fight.view.FightTotalView", package.seeall)
+
+local FightTotalView = class("FightTotalView", BaseView)
+
+return FightTotalView

@@ -1,15 +1,17 @@
-﻿module("modules.logic.rouge.dlc.101.view.RougeLimiterView", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/dlc/101/view/RougeLimiterView.lua
 
-local var_0_0 = class("RougeLimiterView", BaseView)
+module("modules.logic.rouge.dlc.101.view.RougeLimiterView", package.seeall)
 
-var_0_0.DefaultBackgroundImageName = "rouge_dlc1_fullbg1"
+local RougeLimiterView = class("RougeLimiterView", BaseView)
 
-local var_0_1 = {
+RougeLimiterView.DefaultBackgroundImageName = "rouge_dlc1_fullbg1"
+
+local LineStateName = {
 	Locked2Unlocked = "light",
 	Unlocked = "idle",
 	Locked = "idlegray"
 }
-local var_0_2 = {
+local BgAnimStateName = {
 	"idle",
 	"1to2",
 	"2to3",
@@ -17,50 +19,50 @@ local var_0_2 = {
 	Default = "idle",
 	[5] = "4to5"
 }
-local var_0_3 = {
+local BgAnimSpeed = {
 	Positive = 1,
 	Reverse = -1
 }
-local var_0_4 = {
-	[var_0_3.Positive] = 0,
-	[var_0_3.Reverse] = 1
+local BgAnimNormalizedTime = {
+	[BgAnimSpeed.Positive] = 0,
+	[BgAnimSpeed.Reverse] = 1
 }
-local var_0_5 = {
-	[var_0_2[1]] = AudioEnum.UI.LimiterStageChanged_1,
-	[var_0_2[2]] = AudioEnum.UI.LimiterStageChanged_2,
-	[var_0_2[3]] = AudioEnum.UI.LimiterStageChanged_3,
-	[var_0_2[4]] = AudioEnum.UI.LimiterStageChanged_4,
-	[var_0_2[5]] = AudioEnum.UI.LimiterStageChanged_5
+local BgSwitchAudio = {
+	[BgAnimStateName[1]] = AudioEnum.UI.LimiterStageChanged_1,
+	[BgAnimStateName[2]] = AudioEnum.UI.LimiterStageChanged_2,
+	[BgAnimStateName[3]] = AudioEnum.UI.LimiterStageChanged_3,
+	[BgAnimStateName[4]] = AudioEnum.UI.LimiterStageChanged_4,
+	[BgAnimStateName[5]] = AudioEnum.UI.LimiterStageChanged_5
 }
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gobuffdec = gohelper.findChild(arg_1_0.viewGO, "#go_buffdec")
-	arg_1_0._gochoosebuff = gohelper.findChild(arg_1_0.viewGO, "#go_choosebuff")
-	arg_1_0._gosmallbuffitem = gohelper.findChild(arg_1_0.viewGO, "#go_choosebuff/SmallBuffView/Viewport/Content/#go_smallbuffitem")
-	arg_1_0._golimiteritem = gohelper.findChild(arg_1_0.viewGO, "Right/#go_limiteritem")
-	arg_1_0._goRightTop = gohelper.findChild(arg_1_0.viewGO, "#go_RightTop")
-	arg_1_0._txtpoint = gohelper.findChildText(arg_1_0.viewGO, "#go_RightTop/point/#txt_point")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_RightTop/point/#btn_click")
-	arg_1_0._goLeftTop = gohelper.findChild(arg_1_0.viewGO, "#go_LeftTop")
-	arg_1_0._btnreset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_RightTop/#btn_reset")
+function RougeLimiterView:onInitView()
+	self._gobuffdec = gohelper.findChild(self.viewGO, "#go_buffdec")
+	self._gochoosebuff = gohelper.findChild(self.viewGO, "#go_choosebuff")
+	self._gosmallbuffitem = gohelper.findChild(self.viewGO, "#go_choosebuff/SmallBuffView/Viewport/Content/#go_smallbuffitem")
+	self._golimiteritem = gohelper.findChild(self.viewGO, "Right/#go_limiteritem")
+	self._goRightTop = gohelper.findChild(self.viewGO, "#go_RightTop")
+	self._txtpoint = gohelper.findChildText(self.viewGO, "#go_RightTop/point/#txt_point")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "#go_RightTop/point/#btn_click")
+	self._goLeftTop = gohelper.findChild(self.viewGO, "#go_LeftTop")
+	self._btnreset = gohelper.findChildButtonWithAudio(self.viewGO, "#go_RightTop/#btn_reset")
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnreset:AddClickListener(arg_2_0._btnresetOnClick, arg_2_0)
+function RougeLimiterView:addEvents()
+	self._btnreset:AddClickListener(self._btnresetOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnreset:RemoveClickListener()
+function RougeLimiterView:removeEvents()
+	self._btnreset:RemoveClickListener()
 end
 
-function var_0_0._btnresetOnClick(arg_4_0)
-	local var_4_0 = RougeDLCModel101.instance:getSelectLimiterGroupIds()
+function RougeLimiterView:_btnresetOnClick()
+	local limiterGroupIds = RougeDLCModel101.instance:getSelectLimiterGroupIds()
 
-	if not var_4_0 or #var_4_0 <= 0 then
+	if not limiterGroupIds or #limiterGroupIds <= 0 then
 		return
 	end
 
@@ -68,192 +70,200 @@ function var_0_0._btnresetOnClick(arg_4_0)
 	RougeDLCController101.instance:openRougeLimiterView()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	gohelper.addUIClickAudio(arg_5_0._btnreset.gameObject, AudioEnum.UI.ResetRougeLimiter)
-	arg_5_0:addEventCb(RougeDLCController101.instance, RougeDLCEvent101.UpdateLimitGroup, arg_5_0._onUpdateLimiterGroup, arg_5_0)
-	arg_5_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_5_0._onCloseViewCallBack, arg_5_0)
+function RougeLimiterView:_editableInitView()
+	gohelper.addUIClickAudio(self._btnreset.gameObject, AudioEnum.UI.ResetRougeLimiter)
+	self:addEventCb(RougeDLCController101.instance, RougeDLCEvent101.UpdateLimitGroup, self._onUpdateLimiterGroup, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseViewCallBack, self)
 
-	arg_5_0._godifficultybg = gohelper.findChild(arg_5_0.viewGO, "difficulty_bg")
-	arg_5_0._bgAnimator = gohelper.onceAddComponent(arg_5_0._godifficultybg, gohelper.Type_Animator)
+	self._godifficultybg = gohelper.findChild(self.viewGO, "difficulty_bg")
+	self._bgAnimator = gohelper.onceAddComponent(self._godifficultybg, gohelper.Type_Animator)
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:onInit()
+function RougeLimiterView:onOpen()
+	self:onInit()
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
-	arg_7_0:onInit()
+function RougeLimiterView:onUpdateParam()
+	self:onInit()
 end
 
-function var_0_0.onInit(arg_8_0)
-	arg_8_0:initDebuffs()
-	arg_8_0:initBuffEntry()
-	arg_8_0:refreshBackGroundBg()
+function RougeLimiterView:onInit()
+	self:initDebuffs()
+	self:initBuffEntry()
+	self:refreshBackGroundBg()
 end
 
-function var_0_0.initDebuffs(arg_9_0)
-	local var_9_0 = RougeModel.instance:getVersion()
-	local var_9_1 = RougeDLCConfig101.instance:getAllVersionLimiterGroupCos(var_9_0)
+function RougeLimiterView:initDebuffs()
+	local versions = RougeModel.instance:getVersion()
+	local allLimitGroupCos = RougeDLCConfig101.instance:getAllVersionLimiterGroupCos(versions)
 
-	if var_9_1 then
-		arg_9_0:initBuffIcons(var_9_1)
-		arg_9_0:initLines(var_9_1)
+	if allLimitGroupCos then
+		self:initBuffIcons(allLimitGroupCos)
+		self:initLines(allLimitGroupCos)
 	end
 
 	RougeDLCModel101.instance:resetLimiterGroupNewUnlockInfo()
 end
 
-function var_0_0.initBuffIcons(arg_10_0, arg_10_1)
-	for iter_10_0, iter_10_1 in ipairs(arg_10_1) do
-		arg_10_0:_getOrCreatelimiterGroupItem(iter_10_1.id):onUpdateMO(iter_10_1)
+function RougeLimiterView:initBuffIcons(allLimitGroupCos)
+	for index, limitGroupCo in ipairs(allLimitGroupCos) do
+		local limiterGroupItem = self:_getOrCreatelimiterGroupItem(limitGroupCo.id)
+
+		limiterGroupItem:onUpdateMO(limitGroupCo)
 	end
 end
 
-function var_0_0.refreshBackGroundBg(arg_11_0)
-	local var_11_0 = RougeDLCModel101.instance:getTotalRiskValue()
-	local var_11_1 = RougeDLCConfig101.instance:getRougeRiskCoByRiskValue(var_11_0)
+function RougeLimiterView:refreshBackGroundBg()
+	local totalRiskValue = RougeDLCModel101.instance:getTotalRiskValue()
+	local nextRiskCo = RougeDLCConfig101.instance:getRougeRiskCoByRiskValue(totalRiskValue)
 
-	if arg_11_0._riskCo == var_11_1 then
+	if self._riskCo == nextRiskCo then
 		return
 	end
 
-	local var_11_2, var_11_3, var_11_4 = arg_11_0:getTargetBgAnimStateInfo(arg_11_0._riskCo, var_11_1)
+	local animName, animSpeed, animNormalizedTime = self:getTargetBgAnimStateInfo(self._riskCo, nextRiskCo)
 
-	arg_11_0._bgAnimator:SetFloat("speed", var_11_3)
-	arg_11_0._bgAnimator:Play(var_11_2, 0, var_11_4)
+	self._bgAnimator:SetFloat("speed", animSpeed)
+	self._bgAnimator:Play(animName, 0, animNormalizedTime)
 
-	local var_11_5 = var_0_5[var_11_2]
+	local switchAuidoId = BgSwitchAudio[animName]
 
-	if var_11_5 then
-		AudioMgr.instance:trigger(var_11_5)
+	if switchAuidoId then
+		AudioMgr.instance:trigger(switchAuidoId)
 	end
 
-	arg_11_0._riskCo = var_11_1
+	self._riskCo = nextRiskCo
 end
 
-function var_0_0.getTargetBgAnimStateInfo(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = RougeDLCHelper101.isLimiterRisker(arg_12_1, arg_12_2)
-	local var_12_1 = RougeDLCHelper101.isNearLimiter(arg_12_1, arg_12_2)
-	local var_12_2 = ""
-	local var_12_3
+function RougeLimiterView:getTargetBgAnimStateInfo(preRiskCo, nextRiskCo)
+	local isRisker = RougeDLCHelper101.isLimiterRisker(preRiskCo, nextRiskCo)
+	local isNear = RougeDLCHelper101.isNearLimiter(preRiskCo, nextRiskCo)
+	local stateName = ""
+	local animSpeed
 
-	if var_12_0 or not var_12_1 then
-		local var_12_4 = arg_12_2 and arg_12_2.id or 0
+	if isRisker or not isNear then
+		local stateNameId = nextRiskCo and nextRiskCo.id or 0
 
-		var_12_2 = var_0_2[var_12_4] or var_0_2.Default
-		var_12_3 = var_0_3.Positive
+		stateName = BgAnimStateName[stateNameId] or BgAnimStateName.Default
+		animSpeed = BgAnimSpeed.Positive
 	else
-		local var_12_5 = arg_12_1 and arg_12_1.id or 0
+		local stateNameId = preRiskCo and preRiskCo.id or 0
 
-		var_12_2 = var_0_2[var_12_5] or var_0_2.Default
-		var_12_3 = var_0_3.Reverse
+		stateName = BgAnimStateName[stateNameId] or BgAnimStateName.Default
+		animSpeed = BgAnimSpeed.Reverse
 	end
 
-	local var_12_6 = var_0_4[var_12_3]
+	local animNormalizedTime = BgAnimNormalizedTime[animSpeed]
 
-	return var_12_2, var_12_3, var_12_6
+	return stateName, animSpeed, animNormalizedTime
 end
 
-function var_0_0._getOrCreatelimiterGroupItem(arg_13_0, arg_13_1)
-	arg_13_0._limiterGroupItemTab = arg_13_0._limiterGroupItemTab or arg_13_0:getUserDataTb_()
+function RougeLimiterView:_getOrCreatelimiterGroupItem(index)
+	self._limiterGroupItemTab = self._limiterGroupItemTab or self:getUserDataTb_()
 
-	local var_13_0 = arg_13_0._limiterGroupItemTab[arg_13_1]
+	local limiterGroupItem = self._limiterGroupItemTab[index]
 
-	if not var_13_0 then
-		local var_13_1 = "Left/BuffView/Viewport/Content/" .. arg_13_1
-		local var_13_2 = gohelper.findChild(arg_13_0.viewGO, var_13_1)
+	if not limiterGroupItem then
+		local goRootPath = "Left/BuffView/Viewport/Content/" .. index
+		local goRoot = gohelper.findChild(self.viewGO, goRootPath)
 
-		if gohelper.isNil(var_13_2) then
-			local var_13_3 = gohelper.findChild(arg_13_0.viewGO, "Left/BuffView/Viewport/Content")
+		if gohelper.isNil(goRoot) then
+			local goParent = gohelper.findChild(self.viewGO, "Left/BuffView/Viewport/Content")
 
-			var_13_2 = gohelper.create2d(var_13_3, arg_13_1)
+			goRoot = gohelper.create2d(goParent, index)
 
-			logError("无法找到指定的限制器组挂点,已创建临时节点代替。挂点路径:" .. var_13_1)
+			logError("无法找到指定的限制器组挂点,已创建临时节点代替。挂点路径:" .. goRootPath)
 		end
 
-		local var_13_4 = arg_13_0.viewContainer:getSetting().otherRes.LimiterGroupItem
-		local var_13_5 = arg_13_0:getResInst(var_13_4, var_13_2, "debuffitem_" .. arg_13_1)
+		local resUrl = self.viewContainer:getSetting().otherRes.LimiterGroupItem
+		local goDebuff = self:getResInst(resUrl, goRoot, "debuffitem_" .. index)
 
-		var_13_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_13_5, RougeLimiterGroupItem)
-		arg_13_0._limiterGroupItemTab[arg_13_1] = var_13_0
+		limiterGroupItem = MonoHelper.addNoUpdateLuaComOnceToGo(goDebuff, RougeLimiterGroupItem)
+		self._limiterGroupItemTab[index] = limiterGroupItem
 	end
 
-	return var_13_0
+	return limiterGroupItem
 end
 
-function var_0_0.initLines(arg_14_0, arg_14_1)
-	if not arg_14_1 then
+function RougeLimiterView:initLines(allLimitGroupCos)
+	if not allLimitGroupCos then
 		return
 	end
 
-	arg_14_0:initUnlockMap(arg_14_1)
+	self:initUnlockMap(allLimitGroupCos)
 
-	for iter_14_0, iter_14_1 in pairs(arg_14_0._unlockMap) do
-		for iter_14_2, iter_14_3 in pairs(iter_14_1) do
-			local var_14_0 = RougeDLCModel101.instance:getCurLimiterGroupState(iter_14_2) == RougeDLCEnum101.LimitState.Unlocked
-			local var_14_1 = gohelper.findChild(arg_14_0.viewGO, string.format("Left/BuffView/Viewport/Content/%s_%s", iter_14_0, iter_14_2))
+	for preGroupId, nextGroupIds in pairs(self._unlockMap) do
+		for nextGroupId, _ in pairs(nextGroupIds) do
+			local nextGroupState = RougeDLCModel101.instance:getCurLimiterGroupState(nextGroupId)
+			local isNextUnlocked = nextGroupState == RougeDLCEnum101.LimitState.Unlocked
+			local goTran = gohelper.findChild(self.viewGO, string.format("Left/BuffView/Viewport/Content/%s_%s", preGroupId, nextGroupId))
 
-			if not gohelper.isNil(var_14_1) then
-				gohelper.setActive(var_14_1, true)
+			if not gohelper.isNil(goTran) then
+				gohelper.setActive(goTran, true)
 
-				local var_14_2 = var_0_1.Locked
+				local animStateName = LineStateName.Locked
 
-				if var_14_0 then
-					var_14_2 = RougeDLCModel101.instance:isLimiterGroupNewUnlocked(iter_14_2) and var_0_1.Locked2Unlocked or var_0_1.Unlocked
+				if isNextUnlocked then
+					local isNewUnlocked = RougeDLCModel101.instance:isLimiterGroupNewUnlocked(nextGroupId)
+
+					animStateName = isNewUnlocked and LineStateName.Locked2Unlocked or LineStateName.Unlocked
 				end
 
-				gohelper.onceAddComponent(var_14_1, gohelper.Type_Animator):Play(var_14_2, 0, 0)
+				local lineAnimator = gohelper.onceAddComponent(goTran, gohelper.Type_Animator)
+
+				lineAnimator:Play(animStateName, 0, 0)
 			else
-				logError(string.format("缺少限制器连接线:%s ---> %s", iter_14_0, iter_14_2))
+				logError(string.format("缺少限制器连接线:%s ---> %s", preGroupId, nextGroupId))
 			end
 		end
 	end
 end
 
-function var_0_0.initUnlockMap(arg_15_0, arg_15_1)
-	arg_15_0._unlockMap = {}
+function RougeLimiterView:initUnlockMap(limiterGroupCos)
+	self._unlockMap = {}
 
-	for iter_15_0, iter_15_1 in ipairs(arg_15_1) do
-		local var_15_0 = iter_15_1.unlockCondition
-		local var_15_1, var_15_2 = string.match(var_15_0, "^(.*):(.+)$")
-		local var_15_3 = string.splitToNumber(var_15_2, "#")
+	for _, limiterGroupCo in ipairs(limiterGroupCos) do
+		local unlockCondition = limiterGroupCo.unlockCondition
+		local _, limiterGroupIds = string.match(unlockCondition, "^(.*):(.+)$")
 
-		if var_15_3 then
-			for iter_15_2, iter_15_3 in ipairs(var_15_3) do
-				arg_15_0._unlockMap[iter_15_3] = arg_15_0._unlockMap[iter_15_3] or {}
-				arg_15_0._unlockMap[iter_15_3][iter_15_1.id] = true
+		limiterGroupIds = string.splitToNumber(limiterGroupIds, "#")
+
+		if limiterGroupIds then
+			for _, limiterGroupId in ipairs(limiterGroupIds) do
+				self._unlockMap[limiterGroupId] = self._unlockMap[limiterGroupId] or {}
+				self._unlockMap[limiterGroupId][limiterGroupCo.id] = true
 			end
 		end
 	end
 end
 
-function var_0_0.initBuffEntry(arg_16_0)
-	if not arg_16_0._buffEntry then
-		local var_16_0 = arg_16_0.viewContainer:getSetting().otherRes.LimiterItem
+function RougeLimiterView:initBuffEntry()
+	if not self._buffEntry then
+		local resUrl = self.viewContainer:getSetting().otherRes.LimiterItem
 
-		arg_16_0._gobufficon = arg_16_0:getResInst(var_16_0, arg_16_0._golimiteritem, "#go_bufficon")
-		arg_16_0._buffEntry = MonoHelper.addNoUpdateLuaComOnceToGo(arg_16_0._gobufficon, RougeLimiterBuffEntry)
+		self._gobufficon = self:getResInst(resUrl, self._golimiteritem, "#go_bufficon")
+		self._buffEntry = MonoHelper.addNoUpdateLuaComOnceToGo(self._gobufficon, RougeLimiterBuffEntry)
 	end
 
-	arg_16_0._buffEntry:refreshUI(true)
+	self._buffEntry:refreshUI(true)
 end
 
-function var_0_0._onUpdateLimiterGroup(arg_17_0)
-	arg_17_0:refreshBackGroundBg()
+function RougeLimiterView:_onUpdateLimiterGroup()
+	self:refreshBackGroundBg()
 end
 
-function var_0_0._onCloseViewCallBack(arg_18_0, arg_18_1)
-	if arg_18_0._buffEntry then
-		arg_18_0._buffEntry:selectBuffEntry()
+function RougeLimiterView:_onCloseViewCallBack(viewName)
+	if self._buffEntry then
+		self._buffEntry:selectBuffEntry()
 	end
 end
 
-function var_0_0.onClose(arg_19_0)
+function RougeLimiterView:onClose()
 	RougeDLCController101.instance:try2SaveLimiterSetting()
 end
 
-function var_0_0.onDestroyView(arg_20_0)
+function RougeLimiterView:onDestroyView()
 	return
 end
 
-return var_0_0
+return RougeLimiterView

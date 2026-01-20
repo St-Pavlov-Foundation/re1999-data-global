@@ -1,23 +1,25 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotCollectionViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/view/V1a6_CachotCollectionViewContainer.lua
 
-local var_0_0 = class("V1a6_CachotCollectionViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotCollectionViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = MixScrollParam.New()
+local V1a6_CachotCollectionViewContainer = class("V1a6_CachotCollectionViewContainer", BaseViewContainer)
 
-	var_1_0.scrollGOPath = "left/#scroll_view"
-	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_0.prefabUrl = "left/#scroll_view/Viewport/Content/#go_collectionitem"
-	var_1_0.cellClass = V1a6_CachotCollectionLineItem
-	var_1_0.scrollDir = ScrollEnum.ScrollDirV
-	var_1_0.lineCount = 1
-	var_1_0.startSpace = 0
-	var_1_0.endSpace = 0
+function V1a6_CachotCollectionViewContainer:buildViews()
+	local scrollParam = MixScrollParam.New()
+
+	scrollParam.scrollGOPath = "left/#scroll_view"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "left/#scroll_view/Viewport/Content/#go_collectionitem"
+	scrollParam.cellClass = V1a6_CachotCollectionLineItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 1
+	scrollParam.startSpace = 0
+	scrollParam.endSpace = 0
 
 	return {
 		V1a6_CachotCollectionView.New(),
-		LuaMixScrollView.New(V1a6_CachotCollectionListModel.instance, var_1_0)
+		LuaMixScrollView.New(V1a6_CachotCollectionListModel.instance, scrollParam)
 	}
 end
 
-return var_0_0
+return V1a6_CachotCollectionViewContainer

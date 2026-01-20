@@ -1,77 +1,79 @@
-﻿module("modules.logic.handbook.view.HandbookSkinViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/handbook/view/HandbookSkinViewContainer.lua
 
-local var_0_0 = class("HandbookSkinViewContainer", BaseViewContainer)
-local var_0_1 = 0.01
+module("modules.logic.handbook.view.HandbookSkinViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local HandbookSkinViewContainer = class("HandbookSkinViewContainer", BaseViewContainer)
+local closeAniDuration = 0.01
 
-	arg_1_0._scene = HandbookSkinScene.New()
+function HandbookSkinViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, HandbookSkinView.New())
-	table.insert(var_1_0, arg_1_0._scene)
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
+	self._scene = HandbookSkinScene.New()
 
-	return var_1_0
+	table.insert(views, HandbookSkinView.New())
+	table.insert(views, self._scene)
+	table.insert(views, TabViewGroup.New(1, "#go_topleft"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function HandbookSkinViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
-		arg_2_0.navigateView:setOverrideClose(arg_2_0._overrideCloseFunc, arg_2_0)
+		self.navigateView:setOverrideClose(self._overrideCloseFunc, self)
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-function var_0_0._overrideCloseFunc(arg_3_0)
-	if arg_3_0._scene:isInTarotMode() then
-		arg_3_0._scene:exitTarotScene()
+function HandbookSkinViewContainer:_overrideCloseFunc()
+	if self._scene:isInTarotMode() then
+		self._scene:exitTarotScene()
 
 		return
 	end
 
-	TaskDispatcher.runDelay(arg_3_0.closeThis, arg_3_0, var_0_1)
+	TaskDispatcher.runDelay(self.closeThis, self, closeAniDuration)
 end
 
-function var_0_0.onClickHome(arg_4_0)
-	if arg_4_0._scene then
-		arg_4_0._scene:playCloseAni()
+function HandbookSkinViewContainer:onClickHome()
+	if self._scene then
+		self._scene:playCloseAni()
 	end
 
-	TaskDispatcher.runDelay(arg_4_0._doHomeAction, arg_4_0, var_0_1)
+	TaskDispatcher.runDelay(self._doHomeAction, self, closeAniDuration)
 end
 
-function var_0_0._doHomeAction(arg_5_0)
+function HandbookSkinViewContainer:_doHomeAction()
 	NavigateButtonsView.homeClick()
 end
 
-function var_0_0.onContainerClose(arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0.closeThis, arg_6_0)
+function HandbookSkinViewContainer:onContainerClose()
+	TaskDispatcher.cancelTask(self.closeThis, self)
 end
 
-function var_0_0.onContainerInit(arg_7_0)
+function HandbookSkinViewContainer:onContainerInit()
 	return
 end
 
-function var_0_0.onContainerOpenFinish(arg_8_0)
-	arg_8_0.navigateView:resetCloseBtnAudioId(AudioEnum.UI.Play_UI_CloseHouse)
-	arg_8_0.navigateView:resetHomeBtnAudioId(AudioEnum.UI.UI_checkpoint_story_close)
+function HandbookSkinViewContainer:onContainerOpenFinish()
+	self.navigateView:resetCloseBtnAudioId(AudioEnum.UI.Play_UI_CloseHouse)
+	self.navigateView:resetHomeBtnAudioId(AudioEnum.UI.UI_checkpoint_story_close)
 end
 
-function var_0_0._setVisible(arg_9_0, arg_9_1)
-	BaseViewContainer._setVisible(arg_9_0, arg_9_1)
+function HandbookSkinViewContainer:_setVisible(isVisible)
+	BaseViewContainer._setVisible(self, isVisible)
 
-	if arg_9_0._scene then
-		arg_9_0._scene.sceneVisible = arg_9_1
+	if self._scene then
+		self._scene.sceneVisible = isVisible
 	end
 end
 
-return var_0_0
+return HandbookSkinViewContainer

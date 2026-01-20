@@ -1,9 +1,11 @@
-﻿module("modules.logic.versionactivity2_7.towergift.controller.DestinyStoneGiftPickChoiceEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/towergift/controller/DestinyStoneGiftPickChoiceEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity2_7.towergift.controller.DestinyStoneGiftPickChoiceEvent", package.seeall)
 
-var_0_0.onCustomPickComplete = 1
-var_0_0.onCustomPickListChanged = 2
-var_0_0.hadStoneUp = 3
+local DestinyStoneGiftPickChoiceEvent = _M
 
-return var_0_0
+DestinyStoneGiftPickChoiceEvent.onCustomPickComplete = 1
+DestinyStoneGiftPickChoiceEvent.onCustomPickListChanged = 2
+DestinyStoneGiftPickChoiceEvent.hadStoneUp = 3
+
+return DestinyStoneGiftPickChoiceEvent

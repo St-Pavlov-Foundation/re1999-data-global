@@ -1,81 +1,83 @@
-﻿local var_0_0 = require("protobuf.protobuf")
+﻿-- chunkname: @modules/proto/DialogModule_pb.lua
+
+local require = require
+local protobuf = require("protobuf.protobuf")
 
 module("modules.proto.DialogModule_pb", package.seeall)
 
-local var_0_1 = {
-	RECORDDIALOGINFOREQUEST_MSG = var_0_0.Descriptor(),
-	RECORDDIALOGINFOREQUESTDIALOGIDFIELD = var_0_0.FieldDescriptor(),
-	GETDIALOGINFOREQUEST_MSG = var_0_0.Descriptor(),
-	RECORDDIALOGINFOREPLAY_MSG = var_0_0.Descriptor(),
-	RECORDDIALOGINFOREPLAYDIALOGIDFIELD = var_0_0.FieldDescriptor(),
-	GETDIALOGINFOREPLY_MSG = var_0_0.Descriptor(),
-	GETDIALOGINFOREPLYDIALOGIDSFIELD = var_0_0.FieldDescriptor()
-}
+local DialogModule_pb = {}
 
-var_0_1.RECORDDIALOGINFOREQUESTDIALOGIDFIELD.name = "dialogId"
-var_0_1.RECORDDIALOGINFOREQUESTDIALOGIDFIELD.full_name = ".RecordDialogInfoRequest.dialogId"
-var_0_1.RECORDDIALOGINFOREQUESTDIALOGIDFIELD.number = 1
-var_0_1.RECORDDIALOGINFOREQUESTDIALOGIDFIELD.index = 0
-var_0_1.RECORDDIALOGINFOREQUESTDIALOGIDFIELD.label = 1
-var_0_1.RECORDDIALOGINFOREQUESTDIALOGIDFIELD.has_default_value = false
-var_0_1.RECORDDIALOGINFOREQUESTDIALOGIDFIELD.default_value = 0
-var_0_1.RECORDDIALOGINFOREQUESTDIALOGIDFIELD.type = 5
-var_0_1.RECORDDIALOGINFOREQUESTDIALOGIDFIELD.cpp_type = 1
-var_0_1.RECORDDIALOGINFOREQUEST_MSG.name = "RecordDialogInfoRequest"
-var_0_1.RECORDDIALOGINFOREQUEST_MSG.full_name = ".RecordDialogInfoRequest"
-var_0_1.RECORDDIALOGINFOREQUEST_MSG.nested_types = {}
-var_0_1.RECORDDIALOGINFOREQUEST_MSG.enum_types = {}
-var_0_1.RECORDDIALOGINFOREQUEST_MSG.fields = {
-	var_0_1.RECORDDIALOGINFOREQUESTDIALOGIDFIELD
+DialogModule_pb.RECORDDIALOGINFOREQUEST_MSG = protobuf.Descriptor()
+DialogModule_pb.RECORDDIALOGINFOREQUESTDIALOGIDFIELD = protobuf.FieldDescriptor()
+DialogModule_pb.GETDIALOGINFOREQUEST_MSG = protobuf.Descriptor()
+DialogModule_pb.RECORDDIALOGINFOREPLAY_MSG = protobuf.Descriptor()
+DialogModule_pb.RECORDDIALOGINFOREPLAYDIALOGIDFIELD = protobuf.FieldDescriptor()
+DialogModule_pb.GETDIALOGINFOREPLY_MSG = protobuf.Descriptor()
+DialogModule_pb.GETDIALOGINFOREPLYDIALOGIDSFIELD = protobuf.FieldDescriptor()
+DialogModule_pb.RECORDDIALOGINFOREQUESTDIALOGIDFIELD.name = "dialogId"
+DialogModule_pb.RECORDDIALOGINFOREQUESTDIALOGIDFIELD.full_name = ".RecordDialogInfoRequest.dialogId"
+DialogModule_pb.RECORDDIALOGINFOREQUESTDIALOGIDFIELD.number = 1
+DialogModule_pb.RECORDDIALOGINFOREQUESTDIALOGIDFIELD.index = 0
+DialogModule_pb.RECORDDIALOGINFOREQUESTDIALOGIDFIELD.label = 1
+DialogModule_pb.RECORDDIALOGINFOREQUESTDIALOGIDFIELD.has_default_value = false
+DialogModule_pb.RECORDDIALOGINFOREQUESTDIALOGIDFIELD.default_value = 0
+DialogModule_pb.RECORDDIALOGINFOREQUESTDIALOGIDFIELD.type = 5
+DialogModule_pb.RECORDDIALOGINFOREQUESTDIALOGIDFIELD.cpp_type = 1
+DialogModule_pb.RECORDDIALOGINFOREQUEST_MSG.name = "RecordDialogInfoRequest"
+DialogModule_pb.RECORDDIALOGINFOREQUEST_MSG.full_name = ".RecordDialogInfoRequest"
+DialogModule_pb.RECORDDIALOGINFOREQUEST_MSG.nested_types = {}
+DialogModule_pb.RECORDDIALOGINFOREQUEST_MSG.enum_types = {}
+DialogModule_pb.RECORDDIALOGINFOREQUEST_MSG.fields = {
+	DialogModule_pb.RECORDDIALOGINFOREQUESTDIALOGIDFIELD
 }
-var_0_1.RECORDDIALOGINFOREQUEST_MSG.is_extendable = false
-var_0_1.RECORDDIALOGINFOREQUEST_MSG.extensions = {}
-var_0_1.GETDIALOGINFOREQUEST_MSG.name = "GetDialogInfoRequest"
-var_0_1.GETDIALOGINFOREQUEST_MSG.full_name = ".GetDialogInfoRequest"
-var_0_1.GETDIALOGINFOREQUEST_MSG.nested_types = {}
-var_0_1.GETDIALOGINFOREQUEST_MSG.enum_types = {}
-var_0_1.GETDIALOGINFOREQUEST_MSG.fields = {}
-var_0_1.GETDIALOGINFOREQUEST_MSG.is_extendable = false
-var_0_1.GETDIALOGINFOREQUEST_MSG.extensions = {}
-var_0_1.RECORDDIALOGINFOREPLAYDIALOGIDFIELD.name = "dialogId"
-var_0_1.RECORDDIALOGINFOREPLAYDIALOGIDFIELD.full_name = ".RecordDialogInfoReplay.dialogId"
-var_0_1.RECORDDIALOGINFOREPLAYDIALOGIDFIELD.number = 1
-var_0_1.RECORDDIALOGINFOREPLAYDIALOGIDFIELD.index = 0
-var_0_1.RECORDDIALOGINFOREPLAYDIALOGIDFIELD.label = 1
-var_0_1.RECORDDIALOGINFOREPLAYDIALOGIDFIELD.has_default_value = false
-var_0_1.RECORDDIALOGINFOREPLAYDIALOGIDFIELD.default_value = 0
-var_0_1.RECORDDIALOGINFOREPLAYDIALOGIDFIELD.type = 5
-var_0_1.RECORDDIALOGINFOREPLAYDIALOGIDFIELD.cpp_type = 1
-var_0_1.RECORDDIALOGINFOREPLAY_MSG.name = "RecordDialogInfoReplay"
-var_0_1.RECORDDIALOGINFOREPLAY_MSG.full_name = ".RecordDialogInfoReplay"
-var_0_1.RECORDDIALOGINFOREPLAY_MSG.nested_types = {}
-var_0_1.RECORDDIALOGINFOREPLAY_MSG.enum_types = {}
-var_0_1.RECORDDIALOGINFOREPLAY_MSG.fields = {
-	var_0_1.RECORDDIALOGINFOREPLAYDIALOGIDFIELD
+DialogModule_pb.RECORDDIALOGINFOREQUEST_MSG.is_extendable = false
+DialogModule_pb.RECORDDIALOGINFOREQUEST_MSG.extensions = {}
+DialogModule_pb.GETDIALOGINFOREQUEST_MSG.name = "GetDialogInfoRequest"
+DialogModule_pb.GETDIALOGINFOREQUEST_MSG.full_name = ".GetDialogInfoRequest"
+DialogModule_pb.GETDIALOGINFOREQUEST_MSG.nested_types = {}
+DialogModule_pb.GETDIALOGINFOREQUEST_MSG.enum_types = {}
+DialogModule_pb.GETDIALOGINFOREQUEST_MSG.fields = {}
+DialogModule_pb.GETDIALOGINFOREQUEST_MSG.is_extendable = false
+DialogModule_pb.GETDIALOGINFOREQUEST_MSG.extensions = {}
+DialogModule_pb.RECORDDIALOGINFOREPLAYDIALOGIDFIELD.name = "dialogId"
+DialogModule_pb.RECORDDIALOGINFOREPLAYDIALOGIDFIELD.full_name = ".RecordDialogInfoReplay.dialogId"
+DialogModule_pb.RECORDDIALOGINFOREPLAYDIALOGIDFIELD.number = 1
+DialogModule_pb.RECORDDIALOGINFOREPLAYDIALOGIDFIELD.index = 0
+DialogModule_pb.RECORDDIALOGINFOREPLAYDIALOGIDFIELD.label = 1
+DialogModule_pb.RECORDDIALOGINFOREPLAYDIALOGIDFIELD.has_default_value = false
+DialogModule_pb.RECORDDIALOGINFOREPLAYDIALOGIDFIELD.default_value = 0
+DialogModule_pb.RECORDDIALOGINFOREPLAYDIALOGIDFIELD.type = 5
+DialogModule_pb.RECORDDIALOGINFOREPLAYDIALOGIDFIELD.cpp_type = 1
+DialogModule_pb.RECORDDIALOGINFOREPLAY_MSG.name = "RecordDialogInfoReplay"
+DialogModule_pb.RECORDDIALOGINFOREPLAY_MSG.full_name = ".RecordDialogInfoReplay"
+DialogModule_pb.RECORDDIALOGINFOREPLAY_MSG.nested_types = {}
+DialogModule_pb.RECORDDIALOGINFOREPLAY_MSG.enum_types = {}
+DialogModule_pb.RECORDDIALOGINFOREPLAY_MSG.fields = {
+	DialogModule_pb.RECORDDIALOGINFOREPLAYDIALOGIDFIELD
 }
-var_0_1.RECORDDIALOGINFOREPLAY_MSG.is_extendable = false
-var_0_1.RECORDDIALOGINFOREPLAY_MSG.extensions = {}
-var_0_1.GETDIALOGINFOREPLYDIALOGIDSFIELD.name = "dialogIds"
-var_0_1.GETDIALOGINFOREPLYDIALOGIDSFIELD.full_name = ".GetDialogInfoReply.dialogIds"
-var_0_1.GETDIALOGINFOREPLYDIALOGIDSFIELD.number = 1
-var_0_1.GETDIALOGINFOREPLYDIALOGIDSFIELD.index = 0
-var_0_1.GETDIALOGINFOREPLYDIALOGIDSFIELD.label = 3
-var_0_1.GETDIALOGINFOREPLYDIALOGIDSFIELD.has_default_value = false
-var_0_1.GETDIALOGINFOREPLYDIALOGIDSFIELD.default_value = {}
-var_0_1.GETDIALOGINFOREPLYDIALOGIDSFIELD.type = 5
-var_0_1.GETDIALOGINFOREPLYDIALOGIDSFIELD.cpp_type = 1
-var_0_1.GETDIALOGINFOREPLY_MSG.name = "GetDialogInfoReply"
-var_0_1.GETDIALOGINFOREPLY_MSG.full_name = ".GetDialogInfoReply"
-var_0_1.GETDIALOGINFOREPLY_MSG.nested_types = {}
-var_0_1.GETDIALOGINFOREPLY_MSG.enum_types = {}
-var_0_1.GETDIALOGINFOREPLY_MSG.fields = {
-	var_0_1.GETDIALOGINFOREPLYDIALOGIDSFIELD
+DialogModule_pb.RECORDDIALOGINFOREPLAY_MSG.is_extendable = false
+DialogModule_pb.RECORDDIALOGINFOREPLAY_MSG.extensions = {}
+DialogModule_pb.GETDIALOGINFOREPLYDIALOGIDSFIELD.name = "dialogIds"
+DialogModule_pb.GETDIALOGINFOREPLYDIALOGIDSFIELD.full_name = ".GetDialogInfoReply.dialogIds"
+DialogModule_pb.GETDIALOGINFOREPLYDIALOGIDSFIELD.number = 1
+DialogModule_pb.GETDIALOGINFOREPLYDIALOGIDSFIELD.index = 0
+DialogModule_pb.GETDIALOGINFOREPLYDIALOGIDSFIELD.label = 3
+DialogModule_pb.GETDIALOGINFOREPLYDIALOGIDSFIELD.has_default_value = false
+DialogModule_pb.GETDIALOGINFOREPLYDIALOGIDSFIELD.default_value = {}
+DialogModule_pb.GETDIALOGINFOREPLYDIALOGIDSFIELD.type = 5
+DialogModule_pb.GETDIALOGINFOREPLYDIALOGIDSFIELD.cpp_type = 1
+DialogModule_pb.GETDIALOGINFOREPLY_MSG.name = "GetDialogInfoReply"
+DialogModule_pb.GETDIALOGINFOREPLY_MSG.full_name = ".GetDialogInfoReply"
+DialogModule_pb.GETDIALOGINFOREPLY_MSG.nested_types = {}
+DialogModule_pb.GETDIALOGINFOREPLY_MSG.enum_types = {}
+DialogModule_pb.GETDIALOGINFOREPLY_MSG.fields = {
+	DialogModule_pb.GETDIALOGINFOREPLYDIALOGIDSFIELD
 }
-var_0_1.GETDIALOGINFOREPLY_MSG.is_extendable = false
-var_0_1.GETDIALOGINFOREPLY_MSG.extensions = {}
-var_0_1.GetDialogInfoReply = var_0_0.Message(var_0_1.GETDIALOGINFOREPLY_MSG)
-var_0_1.GetDialogInfoRequest = var_0_0.Message(var_0_1.GETDIALOGINFOREQUEST_MSG)
-var_0_1.RecordDialogInfoReplay = var_0_0.Message(var_0_1.RECORDDIALOGINFOREPLAY_MSG)
-var_0_1.RecordDialogInfoRequest = var_0_0.Message(var_0_1.RECORDDIALOGINFOREQUEST_MSG)
+DialogModule_pb.GETDIALOGINFOREPLY_MSG.is_extendable = false
+DialogModule_pb.GETDIALOGINFOREPLY_MSG.extensions = {}
+DialogModule_pb.GetDialogInfoReply = protobuf.Message(DialogModule_pb.GETDIALOGINFOREPLY_MSG)
+DialogModule_pb.GetDialogInfoRequest = protobuf.Message(DialogModule_pb.GETDIALOGINFOREQUEST_MSG)
+DialogModule_pb.RecordDialogInfoReplay = protobuf.Message(DialogModule_pb.RECORDDIALOGINFOREPLAY_MSG)
+DialogModule_pb.RecordDialogInfoRequest = protobuf.Message(DialogModule_pb.RECORDDIALOGINFOREQUEST_MSG)
 
-return var_0_1
+return DialogModule_pb

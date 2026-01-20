@@ -1,33 +1,35 @@
-﻿module("modules.logic.guide.controller.trigger.GuideTriggerStoryStep", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/trigger/GuideTriggerStoryStep.lua
 
-local var_0_0 = class("GuideTriggerStoryStep", BaseGuideTrigger)
+module("modules.logic.guide.controller.trigger.GuideTriggerStoryStep", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0, arg_1_1)
-	StoryController.instance:registerCallback(StoryEvent.RefreshStep, arg_1_0._onStep, arg_1_0)
+local GuideTriggerStoryStep = class("GuideTriggerStoryStep", BaseGuideTrigger)
+
+function GuideTriggerStoryStep:ctor(triggerKey)
+	GuideTriggerStoryStep.super.ctor(self, triggerKey)
+	StoryController.instance:registerCallback(StoryEvent.RefreshStep, self._onStep, self)
 end
 
-function var_0_0.assertGuideSatisfy(arg_2_0, arg_2_1, arg_2_2)
-	local var_2_0 = string.splitToNumber(arg_2_2, "_")
+function GuideTriggerStoryStep:assertGuideSatisfy(param, configParam)
+	local _param = string.splitToNumber(configParam, "_")
 
-	if not arg_2_1 then
+	if not param then
 		return false
 	end
 
-	if #var_2_0 == 1 then
-		return var_2_0[1] == arg_2_1.storyId
-	elseif #var_2_0 > 1 then
-		return var_2_0[1] == arg_2_1.storyId and var_2_0[2] == arg_2_1.stepId
+	if #_param == 1 then
+		return _param[1] == param.storyId
+	elseif #_param > 1 then
+		return _param[1] == param.storyId and _param[2] == param.stepId
 	end
 end
 
-function var_0_0._onStep(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_1.storyId
-	local var_3_1 = arg_3_1.stepId
+function GuideTriggerStoryStep:_onStep(param)
+	local storyId = param.storyId
+	local stepId = param.stepId
 
-	if var_3_0 and var_3_1 then
-		arg_3_0:checkStartGuide(arg_3_1)
+	if storyId and stepId then
+		self:checkStartGuide(param)
 	end
 end
 
-return var_0_0
+return GuideTriggerStoryStep

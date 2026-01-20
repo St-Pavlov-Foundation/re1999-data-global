@@ -1,499 +1,519 @@
-﻿module("modules.logic.versionactivity2_4.warmup.view.V2a4_WarmUp", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/warmup/view/V2a4_WarmUp.lua
 
-local var_0_0 = class("V2a4_WarmUp", BaseView)
+module("modules.logic.versionactivity2_4.warmup.view.V2a4_WarmUp", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg")
-	arg_1_0._simageboxunopen = gohelper.findChildSingleImage(arg_1_0.viewGO, "Middle/#simage_box_unopen")
-	arg_1_0._simageboxopen = gohelper.findChildSingleImage(arg_1_0.viewGO, "Middle/#simage_box_open")
-	arg_1_0._simagelight = gohelper.findChildSingleImage(arg_1_0.viewGO, "Middle/#simage_light")
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "Middle/#image_icon")
-	arg_1_0._simageTitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "Right/#simage_Title")
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Right/LimitTime/#txt_LimitTime")
-	arg_1_0._scrollTaskTabList = gohelper.findChildScrollRect(arg_1_0.viewGO, "Right/TaskTab/#scroll_TaskTabList")
-	arg_1_0._goradiotaskitem = gohelper.findChild(arg_1_0.viewGO, "Right/TaskTab/#scroll_TaskTabList/Viewport/Content/#go_radiotaskitem")
-	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "Right/TaskTab/#scroll_TaskTabList/Viewport/Content/#go_radiotaskitem/#go_reddot")
-	arg_1_0._scrollTaskDesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "Right/TaskPanel/#scroll_TaskDesc")
-	arg_1_0._txtTaskContent = gohelper.findChildText(arg_1_0.viewGO, "Right/TaskPanel/#scroll_TaskDesc/Viewport/#txt_TaskContent")
-	arg_1_0._goWrongChannel = gohelper.findChild(arg_1_0.viewGO, "Right/TaskPanel/#go_WrongChannel")
-	arg_1_0._scrollReward = gohelper.findChildScrollRect(arg_1_0.viewGO, "Right/RawardPanel/#scroll_Reward")
-	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.viewGO, "Right/RawardPanel/#scroll_Reward/Viewport/Content/#go_rewarditem")
-	arg_1_0._btngetreward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/RawardPanel/#btn_getreward")
-	arg_1_0._btntask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_task")
-	arg_1_0._gotask_reddot = gohelper.findChild(arg_1_0.viewGO, "Right/#btn_task/#go_task_reddot")
-	arg_1_0._btnanswercall = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_answercall")
-	arg_1_0._btnplay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_play")
+local V2a4_WarmUp = class("V2a4_WarmUp", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V2a4_WarmUp:onInitView()
+	self._simagefullbg = gohelper.findChildSingleImage(self.viewGO, "#simage_fullbg")
+	self._simageboxunopen = gohelper.findChildSingleImage(self.viewGO, "Middle/#simage_box_unopen")
+	self._simageboxopen = gohelper.findChildSingleImage(self.viewGO, "Middle/#simage_box_open")
+	self._simagelight = gohelper.findChildSingleImage(self.viewGO, "Middle/#simage_light")
+	self._imageicon = gohelper.findChildImage(self.viewGO, "Middle/#image_icon")
+	self._simageTitle = gohelper.findChildSingleImage(self.viewGO, "Right/#simage_Title")
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "Right/LimitTime/#txt_LimitTime")
+	self._scrollTaskTabList = gohelper.findChildScrollRect(self.viewGO, "Right/TaskTab/#scroll_TaskTabList")
+	self._goradiotaskitem = gohelper.findChild(self.viewGO, "Right/TaskTab/#scroll_TaskTabList/Viewport/Content/#go_radiotaskitem")
+	self._goreddot = gohelper.findChild(self.viewGO, "Right/TaskTab/#scroll_TaskTabList/Viewport/Content/#go_radiotaskitem/#go_reddot")
+	self._scrollTaskDesc = gohelper.findChildScrollRect(self.viewGO, "Right/TaskPanel/#scroll_TaskDesc")
+	self._txtTaskContent = gohelper.findChildText(self.viewGO, "Right/TaskPanel/#scroll_TaskDesc/Viewport/#txt_TaskContent")
+	self._goWrongChannel = gohelper.findChild(self.viewGO, "Right/TaskPanel/#go_WrongChannel")
+	self._scrollReward = gohelper.findChildScrollRect(self.viewGO, "Right/RawardPanel/#scroll_Reward")
+	self._gorewarditem = gohelper.findChild(self.viewGO, "Right/RawardPanel/#scroll_Reward/Viewport/Content/#go_rewarditem")
+	self._btngetreward = gohelper.findChildButtonWithAudio(self.viewGO, "Right/RawardPanel/#btn_getreward")
+	self._btntask = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_task")
+	self._gotask_reddot = gohelper.findChild(self.viewGO, "Right/#btn_task/#go_task_reddot")
+	self._btnanswercall = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_answercall")
+	self._btnplay = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_play")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btngetreward:AddClickListener(arg_2_0._btngetrewardOnClick, arg_2_0)
-	arg_2_0._btntask:AddClickListener(arg_2_0._btntaskOnClick, arg_2_0)
-	arg_2_0._btnanswercall:AddClickListener(arg_2_0._btnanswercallOnClick, arg_2_0)
-	arg_2_0._btnplay:AddClickListener(arg_2_0._btnplaylOnClick, arg_2_0)
+function V2a4_WarmUp:addEvents()
+	self._btngetreward:AddClickListener(self._btngetrewardOnClick, self)
+	self._btntask:AddClickListener(self._btntaskOnClick, self)
+	self._btnanswercall:AddClickListener(self._btnanswercallOnClick, self)
+	self._btnplay:AddClickListener(self._btnplaylOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btngetreward:RemoveClickListener()
-	arg_3_0._btntask:RemoveClickListener()
-	arg_3_0._btnanswercall:RemoveClickListener()
-	arg_3_0._btnplay:RemoveClickListener()
+function V2a4_WarmUp:removeEvents()
+	self._btngetreward:RemoveClickListener()
+	self._btntask:RemoveClickListener()
+	self._btnanswercall:RemoveClickListener()
+	self._btnplay:RemoveClickListener()
 end
 
-local var_0_1 = string.format
-local var_0_2 = table.insert
-local var_0_3 = table.concat
-local var_0_4 = _G.Vector4
-local var_0_5 = string.splitToNumber
-local var_0_6 = string.split
-local var_0_7 = SLFramework.AnimatorPlayer
-local var_0_8 = "switch"
+local sf = string.format
+local ti = table.insert
+local tc = table.concat
+local Vector4 = _G.Vector4
+local splitToNumber = string.splitToNumber
+local split = string.split
+local csAnimatorPlayer = SLFramework.AnimatorPlayer
+local kAnimEvt = "switch"
 
-function var_0_0._btngetrewardOnClick(arg_4_0)
-	local var_4_0, var_4_1, var_4_2, var_4_3 = arg_4_0.viewContainer:getRLOCCur()
+function V2a4_WarmUp:_btngetrewardOnClick()
+	local _, _, _, canGetReward = self.viewContainer:getRLOCCur()
 
-	if not var_4_3 then
+	if not canGetReward then
 		return
 	end
 
 	UIBlockMgrExtend.setNeedCircleMv(true)
-	arg_4_0.viewContainer:sendFinishAct125EpisodeRequest()
+	self.viewContainer:sendFinishAct125EpisodeRequest()
 end
 
-function var_0_0._btntaskOnClick(arg_5_0)
+function V2a4_WarmUp:_btntaskOnClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.Stop_UI_Bus)
 	ViewMgr.instance:openView(ViewName.V2a4_WarmUp_TaskView)
 end
 
-function var_0_0._btnanswercallOnClick(arg_6_0)
+function V2a4_WarmUp:_btnanswercallOnClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.Stop_UI_Bus)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_diqiu_yure_click_20249044)
-	Activity125Controller.instance:sendGetTaskInfoRequest(arg_6_0._openV2a4_WarmUp_DialogueView, arg_6_0)
+	Activity125Controller.instance:sendGetTaskInfoRequest(self._openV2a4_WarmUp_DialogueView, self)
 end
 
-local var_0_9 = "https://re.bluepoch.com/event/ShowdowninChinatown/"
+local kHttpUrlRoot = "https://re.bluepoch.com/event/ShowdowninChinatown/"
 
-function var_0_0._btnplaylOnClick(arg_7_0)
+function V2a4_WarmUp:_btnplaylOnClick()
 	if SettingsModel.instance:isTwRegion() or SettingsModel.instance:isKrRegion() then
-		WebViewController.instance:openWebView(arg_7_0.viewContainer:getH5BaseUrl(), false, arg_7_0._onWebViewCb, arg_7_0)
+		WebViewController.instance:openWebView(self.viewContainer:getH5BaseUrl(), false, self._onWebViewCb, self)
 	else
-		WebViewController.instance:simpleOpenWebView(arg_7_0.viewContainer:getH5BaseUrl(), false, arg_7_0._onWebViewCb, arg_7_0)
+		WebViewController.instance:simpleOpenWebView(self.viewContainer:getH5BaseUrl(), false, self._onWebViewCb, self)
 	end
 end
 
-function var_0_0._onWebViewCb(arg_8_0, arg_8_1, arg_8_2)
-	if arg_8_1 == WebViewEnum.WebViewCBType.Cb and string.split(arg_8_2, "#")[1] == "webClose" then
-		ViewMgr.instance:closeView(ViewName.WebView)
+function V2a4_WarmUp:_onWebViewCb(errorType, msg)
+	if errorType == WebViewEnum.WebViewCBType.Cb then
+		local msgParamList = string.split(msg, "#")
+		local eventName = msgParamList[1]
+
+		if eventName == "webClose" then
+			ViewMgr.instance:closeView(ViewName.WebView)
+		end
 	end
 end
 
-function var_0_0._openV2a4_WarmUp_DialogueView(arg_9_0)
-	local var_9_0 = arg_9_0.viewContainer:getCurSelectedEpisode()
-	local var_9_1 = {
-		level = var_9_0
+function V2a4_WarmUp:_openV2a4_WarmUp_DialogueView()
+	local level = self.viewContainer:getCurSelectedEpisode()
+	local viewParam = {
+		level = level
 	}
 
 	AudioMgr.instance:trigger(AudioEnum.UI.Stop_UI_Bus)
-	ViewMgr.instance:openView(ViewName.V2a4_WarmUp_DialogueView, var_9_1)
+	ViewMgr.instance:openView(ViewName.V2a4_WarmUp_DialogueView, viewParam)
 end
 
-function var_0_0._editableInitView(arg_10_0)
-	local var_10_0 = arg_10_0._scrollTaskDesc.gameObject
-	local var_10_1 = gohelper.findChild(var_10_0, "Viewport")
-	local var_10_2 = gohelper.findChild(arg_10_0.viewGO, "Right/TaskTab/#scroll_TaskTabList")
-	local var_10_3 = gohelper.findChild(var_10_2, "Viewport/Content")
+function V2a4_WarmUp:_editableInitView()
+	local scroll_TaskDescGo = self._scrollTaskDesc.gameObject
+	local scroll_TaskDesc_ViewPort = gohelper.findChild(scroll_TaskDescGo, "Viewport")
+	local scroll_TaskTabList = gohelper.findChild(self.viewGO, "Right/TaskTab/#scroll_TaskTabList")
+	local scroll_TaskTabList_Content = gohelper.findChild(scroll_TaskTabList, "Viewport/Content")
 
-	arg_10_0._btngetrewardGo = arg_10_0._btngetreward.gameObject
-	arg_10_0._txtTaskContentTran = arg_10_0._txtTaskContent.transform
-	arg_10_0._scroll_TaskDescGo = var_10_0
-	arg_10_0._descScrollRect = var_10_0:GetComponent(gohelper.Type_ScrollRect)
-	arg_10_0._scrollCanvasGroup = gohelper.onceAddComponent(var_10_0, typeof(UnityEngine.CanvasGroup))
-	arg_10_0._taskDescViewportHeight = math.max(0, recthelper.getHeight(var_10_0.transform))
-	arg_10_0._taskDescMask = var_10_1:GetComponent(gohelper.Type_RectMask2D)
-	arg_10_0._goTaskContentTran = var_10_3.transform
-	arg_10_0._taskScrollViewportWidth = recthelper.getWidth(var_10_2.transform)
-	arg_10_0._animatorPlayer = var_0_7.Get(arg_10_0.viewGO)
-	arg_10_0._animSelf = arg_10_0._animatorPlayer.animator
-	arg_10_0._animEvent = gohelper.onceAddComponent(arg_10_0.viewGO, gohelper.Type_AnimationEventWrap)
+	self._btngetrewardGo = self._btngetreward.gameObject
+	self._txtTaskContentTran = self._txtTaskContent.transform
+	self._scroll_TaskDescGo = scroll_TaskDescGo
+	self._descScrollRect = scroll_TaskDescGo:GetComponent(gohelper.Type_ScrollRect)
+	self._scrollCanvasGroup = gohelper.onceAddComponent(scroll_TaskDescGo, typeof(UnityEngine.CanvasGroup))
+	self._taskDescViewportHeight = math.max(0, recthelper.getHeight(scroll_TaskDescGo.transform))
+	self._taskDescMask = scroll_TaskDesc_ViewPort:GetComponent(gohelper.Type_RectMask2D)
+	self._goTaskContentTran = scroll_TaskTabList_Content.transform
+	self._taskScrollViewportWidth = recthelper.getWidth(scroll_TaskTabList.transform)
+	self._animatorPlayer = csAnimatorPlayer.Get(self.viewGO)
+	self._animSelf = self._animatorPlayer.animator
+	self._animEvent = gohelper.onceAddComponent(self.viewGO, gohelper.Type_AnimationEventWrap)
 
-	arg_10_0._animEvent:AddEventListener(var_0_8, arg_10_0._onSwitch, arg_10_0)
-	arg_10_0:_resetTaskContentPos()
-	arg_10_0:_setActive_goWrongChannel(false)
+	self._animEvent:AddEventListener(kAnimEvt, self._onSwitch, self)
+	self:_resetTaskContentPos()
+	self:_setActive_goWrongChannel(false)
 
-	arg_10_0._phoneAnimation = arg_10_0._btnanswercall.gameObject:GetComponent(gohelper.Type_Animation)
-	arg_10_0._btnplayGo = arg_10_0._btnplay.gameObject
-	arg_10_0._txtLimitTime.text = ""
-	arg_10_0._descHeight = 0
-	arg_10_0._rewardCount = 0
-	arg_10_0._itemTabList = {}
-	arg_10_0._rewardItemList = {}
+	self._phoneAnimation = self._btnanswercall.gameObject:GetComponent(gohelper.Type_Animation)
+	self._btnplayGo = self._btnplay.gameObject
+	self._txtLimitTime.text = ""
+	self._descHeight = 0
+	self._rewardCount = 0
+	self._itemTabList = {}
+	self._rewardItemList = {}
 
-	RedDotController.instance:addRedDot(arg_10_0._gotask_reddot, RedDotEnum.DotNode.Activity125Task, 0)
+	RedDotController.instance:addRedDot(self._gotask_reddot, RedDotEnum.DotNode.Activity125Task, 0)
 end
 
-function var_0_0.onDataUpdateFirst(arg_11_0)
-	arg_11_0:_refreshOnce()
-	arg_11_0:_refreshPhoneAnim()
-	arg_11_0:_refreshActive_btnplay()
+function V2a4_WarmUp:onDataUpdateFirst()
+	self:_refreshOnce()
+	self:_refreshPhoneAnim()
+	self:_refreshActive_btnplay()
 end
 
-function var_0_0.onDataUpdate(arg_12_0)
-	arg_12_0:_refresh()
-	arg_12_0:_refreshPhoneAnim()
+function V2a4_WarmUp:onDataUpdate()
+	self:_refresh()
+	self:_refreshPhoneAnim()
 end
 
-function var_0_0.onSwitchEpisode(arg_13_0)
-	arg_13_0._descScrollRect:StopMovement()
-	arg_13_0:_resetTweenDescPos()
-	arg_13_0:_refresh()
-	arg_13_0.viewContainer:tryTweenDesc()
-	arg_13_0:_refreshPhoneAnim()
-	arg_13_0:_refreshActive_btnplay()
+function V2a4_WarmUp:onSwitchEpisode()
+	self._descScrollRect:StopMovement()
+	self:_resetTweenDescPos()
+	self:_refresh()
+	self.viewContainer:tryTweenDesc()
+	self:_refreshPhoneAnim()
+	self:_refreshActive_btnplay()
 end
 
-function var_0_0._refreshPhoneAnim(arg_14_0)
-	local var_14_0 = arg_14_0.viewContainer:getCurSelectedEpisode()
-	local var_14_1 = arg_14_0.viewContainer:isEpisodeFinished(var_14_0)
-	local var_14_2 = arg_14_0._phoneAnimation.clip.name
+function V2a4_WarmUp:_refreshPhoneAnim()
+	local curEpisodeId = self.viewContainer:getCurSelectedEpisode()
+	local isNotShaking = self.viewContainer:isEpisodeFinished(curEpisodeId)
+	local animClip = self._phoneAnimation.clip
+	local clipName = animClip.name
 
-	if var_14_1 then
-		arg_14_0._phoneAnimation:Stop(var_14_2)
-		arg_14_0._phoneAnimation:Play(var_14_2)
-		arg_14_0._phoneAnimation:Sample()
-		arg_14_0._phoneAnimation:Stop(var_14_2)
+	if isNotShaking then
+		self._phoneAnimation:Stop(clipName)
+		self._phoneAnimation:Play(clipName)
+		self._phoneAnimation:Sample()
+		self._phoneAnimation:Stop(clipName)
 		AudioMgr.instance:trigger(AudioEnum.UI.Stop_UI_Bus)
 	else
-		arg_14_0._phoneAnimation:Play(var_14_2)
+		self._phoneAnimation:Play(clipName)
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_diqiu_yure_ring_20249041)
 	end
 end
 
-function var_0_0.onUpdateParam(arg_15_0)
-	arg_15_0:_refreshOnce()
-	arg_15_0:_refresh()
+function V2a4_WarmUp:onUpdateParam()
+	self:_refreshOnce()
+	self:_refresh()
 end
 
-function var_0_0.onOpen(arg_16_0)
-	arg_16_0._lastSelectedIndex = nil
+function V2a4_WarmUp:onOpen()
+	self._lastSelectedIndex = nil
 
-	local var_16_0 = arg_16_0.viewParam.parent
+	local parentGO = self.viewParam.parent
 
-	gohelper.addChild(var_16_0, arg_16_0.viewGO)
+	gohelper.addChild(parentGO, self.viewGO)
 end
 
-function var_0_0.onClose(arg_17_0)
-	GameUtil.onDestroyViewMember_TweenId(arg_17_0, "_movetweenId")
-	GameUtil.onDestroyViewMember_TweenId(arg_17_0, "_tweenId")
-	arg_17_0._animEvent:RemoveEventListener(var_0_8)
-	TaskDispatcher.cancelTask(arg_17_0._showLeftTime, arg_17_0)
-	GameUtil.onDestroyViewMemberList(arg_17_0, "_itemTabList")
+function V2a4_WarmUp:onClose()
+	GameUtil.onDestroyViewMember_TweenId(self, "_movetweenId")
+	GameUtil.onDestroyViewMember_TweenId(self, "_tweenId")
+	self._animEvent:RemoveEventListener(kAnimEvt)
+	TaskDispatcher.cancelTask(self._showLeftTime, self)
+	GameUtil.onDestroyViewMemberList(self, "_itemTabList")
 end
 
-function var_0_0.onDestroyView(arg_18_0)
+function V2a4_WarmUp:onDestroyView()
 	return
 end
 
-function var_0_0._refreshOnce(arg_19_0)
-	arg_19_0:_showDeadline()
-	arg_19_0:_refreshTabList()
-	arg_19_0:_autoSelectTab()
+function V2a4_WarmUp:_refreshOnce()
+	self:_showDeadline()
+	self:_refreshTabList()
+	self:_autoSelectTab()
 end
 
-function var_0_0._refresh(arg_20_0)
-	arg_20_0:_refreshData()
-	arg_20_0:_refreshTabList()
-	arg_20_0:_refreshRewards()
-	arg_20_0:_refreshRightView()
+function V2a4_WarmUp:_refresh()
+	self:_refreshData()
+	self:_refreshTabList()
+	self:_refreshRewards()
+	self:_refreshRightView()
 end
 
-function var_0_0._refreshRightView(arg_21_0)
-	local var_21_0, var_21_1, var_21_2, var_21_3 = arg_21_0.viewContainer:getRLOCCur()
+function V2a4_WarmUp:_refreshRightView()
+	local isRecevied, localIsPlay, _, canGetReward = self.viewContainer:getRLOCCur()
 
-	gohelper.setActive(arg_21_0._btngetrewardGo, var_21_3)
+	gohelper.setActive(self._btngetrewardGo, canGetReward)
 
-	for iter_21_0, iter_21_1 in ipairs(arg_21_0._rewardItemList) do
-		iter_21_1:refresh()
+	for _, item in ipairs(self._rewardItemList) do
+		item:refresh()
 	end
 end
 
-function var_0_0._setActive_goWrongChannel(arg_22_0, arg_22_1)
-	gohelper.setActive(arg_22_0._goWrongChannel, arg_22_1)
-	gohelper.setActive(arg_22_0._scroll_TaskDescGo, not arg_22_1)
+function V2a4_WarmUp:_setActive_goWrongChannel(isBlockDesc)
+	gohelper.setActive(self._goWrongChannel, isBlockDesc)
+	gohelper.setActive(self._scroll_TaskDescGo, not isBlockDesc)
 
-	if arg_22_1 then
-		arg_22_0:_setMaskPaddingBottom(arg_22_0._taskDescViewportHeight)
+	if isBlockDesc then
+		self:_setMaskPaddingBottom(self._taskDescViewportHeight)
 	else
-		arg_22_0:_setMaskPaddingBottom(0)
+		self:_setMaskPaddingBottom(0)
 	end
 end
 
-function var_0_0._refreshData(arg_23_0)
-	local var_23_0 = arg_23_0.viewContainer:getEpisodeConfigCur()
+function V2a4_WarmUp:_refreshData()
+	local co = self.viewContainer:getEpisodeConfigCur()
 
-	arg_23_0.viewContainer:dispatchRedEvent()
+	self.viewContainer:dispatchRedEvent()
 
-	arg_23_0._txtTaskContent.text = var_23_0.text
-	arg_23_0._descHeight = arg_23_0._txtTaskContent.preferredHeight
+	self._txtTaskContent.text = co.text
+	self._descHeight = self._txtTaskContent.preferredHeight
 end
 
-function var_0_0._showDeadline(arg_24_0)
-	arg_24_0:_showLeftTime()
-	TaskDispatcher.cancelTask(arg_24_0._showLeftTime, arg_24_0)
-	TaskDispatcher.runRepeat(arg_24_0._showLeftTime, arg_24_0, 60)
+function V2a4_WarmUp:_showDeadline()
+	self:_showLeftTime()
+	TaskDispatcher.cancelTask(self._showLeftTime, self)
+	TaskDispatcher.runRepeat(self._showLeftTime, self, 60)
 end
 
-function var_0_0._showLeftTime(arg_25_0)
-	arg_25_0._txtLimitTime.text = arg_25_0.viewContainer:getActivityRemainTimeStr()
+function V2a4_WarmUp:_showLeftTime()
+	self._txtLimitTime.text = self.viewContainer:getActivityRemainTimeStr()
 end
 
-function var_0_0._refreshTabList(arg_26_0)
-	local var_26_0 = arg_26_0.viewContainer:getCurSelectedEpisode()
-	local var_26_1 = arg_26_0.viewContainer:getEpisodeCount()
+function V2a4_WarmUp:_refreshTabList()
+	local curEpisodeId = self.viewContainer:getCurSelectedEpisode()
+	local maxEpisodeCount = self.viewContainer:getEpisodeCount()
 
-	for iter_26_0 = 1, var_26_1 do
-		local var_26_2 = iter_26_0
-		local var_26_3 = var_26_2 == var_26_0
-		local var_26_4
+	for i = 1, maxEpisodeCount do
+		local episodeId = i
+		local isSelected = episodeId == curEpisodeId
+		local item
 
-		if iter_26_0 > #arg_26_0._itemTabList then
-			var_26_4 = arg_26_0:_create_V2a4_WarmUp_radiotaskitem(iter_26_0)
+		if i > #self._itemTabList then
+			item = self:_create_V2a4_WarmUp_radiotaskitem(i)
 
-			table.insert(arg_26_0._itemTabList, var_26_4)
+			table.insert(self._itemTabList, item)
 		else
-			var_26_4 = arg_26_0._itemTabList[iter_26_0]
+			item = self._itemTabList[i]
 		end
 
-		var_26_4:onUpdateMO(var_26_2)
-		var_26_4:setActive(true)
-		var_26_4:setSelected(var_26_3)
+		item:onUpdateMO(episodeId)
+		item:setActive(true)
+		item:setSelected(isSelected)
 	end
 
-	for iter_26_1 = var_26_1 + 1, #arg_26_0._itemTabList do
-		arg_26_0._itemTabList[iter_26_1]:setActive(false)
+	for i = maxEpisodeCount + 1, #self._itemTabList do
+		local item = self._itemTabList[i]
+
+		item:setActive(false)
 	end
 
-	ZProj.UGUIHelper.RebuildLayout(arg_26_0._goTaskContentTran)
+	ZProj.UGUIHelper.RebuildLayout(self._goTaskContentTran)
 end
 
-function var_0_0._setSelectIndex(arg_27_0, arg_27_1, arg_27_2)
-	if arg_27_1 == arg_27_0._lastSelectedIndex then
+function V2a4_WarmUp:_setSelectIndex(index, isFocus)
+	if index == self._lastSelectedIndex then
 		return
 	end
 
-	if arg_27_2 then
-		arg_27_0:_taskScrollToIndex(arg_27_1)
+	if isFocus then
+		self:_taskScrollToIndex(index)
 	else
-		arg_27_0:onClickTab(arg_27_0:index2EpisodeId(arg_27_0.viewContainer:getCurSelectedEpisode()) or 1)
+		self:onClickTab(self:index2EpisodeId(self.viewContainer:getCurSelectedEpisode()) or 1)
 	end
 end
 
-local var_0_10 = 166
+local kItemWidth_go_radiotaskitem = 166
 
-function var_0_0._taskScrollToIndex(arg_28_0, arg_28_1)
-	local var_28_0 = math.max(recthelper.getWidth(arg_28_0._goTaskContentTran) - arg_28_0._taskScrollViewportWidth, 0)
-	local var_28_1 = math.min((arg_28_1 - 1) * var_0_10, var_28_0)
+function V2a4_WarmUp:_taskScrollToIndex(index)
+	local maxScrollPosX = math.max(recthelper.getWidth(self._goTaskContentTran) - self._taskScrollViewportWidth, 0)
+	local posX = math.min((index - 1) * kItemWidth_go_radiotaskitem, maxScrollPosX)
 
-	recthelper.setAnchorX(arg_28_0._goTaskContentTran, -var_28_1)
+	recthelper.setAnchorX(self._goTaskContentTran, -posX)
 
-	arg_28_0._lastSelectedIndex = arg_28_1
+	self._lastSelectedIndex = index
 end
 
-function var_0_0.onClickTab(arg_29_0, arg_29_1)
-	local var_29_0 = arg_29_1
-	local var_29_1 = arg_29_0.viewContainer:getCurSelectedEpisode()
+function V2a4_WarmUp:onClickTab(mo)
+	local curEpisodeId = mo
+	local lastEpisodeId = self.viewContainer:getCurSelectedEpisode()
 
-	if var_29_1 == var_29_0 then
+	if lastEpisodeId == curEpisodeId then
 		return
 	end
 
-	arg_29_0._lastSelectedIndex = arg_29_0:episode2Index(var_29_0)
+	self._lastSelectedIndex = self:episode2Index(curEpisodeId)
 
-	arg_29_0.viewContainer:switchTabWithAnim(var_29_1, var_29_0)
+	self.viewContainer:switchTabWithAnim(lastEpisodeId, curEpisodeId)
 end
 
-function var_0_0._refreshRewards(arg_30_0)
-	local var_30_0 = arg_30_0.viewContainer:getEpisodeConfigCur().clientbonus or ""
-	local var_30_1 = var_0_6(var_30_0, "|")
-	local var_30_2 = #var_30_1
+function V2a4_WarmUp:_refreshRewards()
+	local co = self.viewContainer:getEpisodeConfigCur()
+	local rewardBonus = co.clientbonus or ""
+	local rewards = split(rewardBonus, "|")
+	local itemCount = #rewards
 
-	arg_30_0._rewardCount = var_30_2
+	self._rewardCount = itemCount
 
-	for iter_30_0 = 1, var_30_2 do
-		local var_30_3
-		local var_30_4 = var_0_5(var_30_1[iter_30_0], "#")
+	for i = 1, itemCount do
+		local item
+		local itemCo = splitToNumber(rewards[i], "#")
 
-		if iter_30_0 > #arg_30_0._rewardItemList then
-			var_30_3 = arg_30_0:_create_V2a4_WarmUp_rewarditem(iter_30_0)
+		if i > #self._rewardItemList then
+			item = self:_create_V2a4_WarmUp_rewarditem(i)
 
-			table.insert(arg_30_0._rewardItemList, var_30_3)
+			table.insert(self._rewardItemList, item)
 		else
-			var_30_3 = arg_30_0._rewardItemList[iter_30_0]
+			item = self._rewardItemList[i]
 		end
 
-		var_30_3:onUpdateMO(var_30_4)
-		var_30_3:setActive(true)
+		item:onUpdateMO(itemCo)
+		item:setActive(true)
 	end
 
-	for iter_30_1 = var_30_2 + 1, #arg_30_0._rewardItemList do
-		arg_30_0._rewardItemList[iter_30_1]:setActive(false)
+	for i = itemCount + 1, #self._rewardItemList do
+		local item = self._rewardItemList[i]
+
+		item:setActive(false)
 	end
 end
 
-function var_0_0.openDesc(arg_31_0, arg_31_1, arg_31_2)
-	local var_31_0, var_31_1 = arg_31_0.viewContainer:getRLOCCur()
+function V2a4_WarmUp:openDesc(cb, cbObj)
+	local isRecevied, localIsPlay = self.viewContainer:getRLOCCur()
 
-	if var_31_0 or var_31_1 then
-		if arg_31_1 then
-			arg_31_1(arg_31_2)
-		end
-
-		return
-	end
-
-	arg_31_0:_resetTweenDescPos()
-
-	local var_31_2 = arg_31_0.viewContainer:getEpisodeConfigCur()
-	local var_31_3 = math.max(var_31_2.time or 0, 1)
-
-	gohelper.setActive(arg_31_0._goWrongChannel, false)
-	gohelper.setActive(arg_31_0._scroll_TaskDescGo, true)
-
-	local function var_31_4()
-		if arg_31_1 then
-			arg_31_1(arg_31_2)
-		end
-	end
-
-	GameUtil.onDestroyViewMember_TweenId(arg_31_0, "_tweenId")
-
-	arg_31_0._tweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, var_31_3, arg_31_0._tweenDescUpdateCb, function()
-		arg_31_0:_tweenDescEndCb(var_31_3, var_31_4)
-	end, arg_31_0)
-end
-
-local var_0_11 = Mathf.Lerp
-
-function var_0_0._tweenDescUpdateCb(arg_34_0, arg_34_1)
-	local var_34_0 = var_0_11(0, arg_34_0._taskDescViewportHeight, arg_34_1)
-
-	arg_34_0:_setMaskPaddingBottom(var_34_0)
-end
-
-function var_0_0._tweenDescEndCb(arg_35_0, arg_35_1, arg_35_2, arg_35_3)
-	local var_35_0 = arg_35_0._descHeight - arg_35_0._taskDescViewportHeight
-
-	if var_35_0 <= 0 then
-		if arg_35_2 then
-			arg_35_2(arg_35_3)
+	if isRecevied or localIsPlay then
+		if cb then
+			cb(cbObj)
 		end
 
 		return
 	end
 
-	local var_35_1 = var_35_0 * (arg_35_1 / arg_35_0._taskDescViewportHeight)
+	self:_resetTweenDescPos()
 
-	GameUtil.onDestroyViewMember_TweenId(arg_35_0, "_movetweenId")
+	local co = self.viewContainer:getEpisodeConfigCur()
+	local duration = math.max(co.time or 0, 1)
 
-	arg_35_0._movetweenId = ZProj.TweenHelper.DOLocalMoveY(arg_35_0._txtTaskContentTran, var_35_0, var_35_1, arg_35_2, arg_35_3)
+	gohelper.setActive(self._goWrongChannel, false)
+	gohelper.setActive(self._scroll_TaskDescGo, true)
+
+	local function _tweenDescDoneCallBack()
+		if cb then
+			cb(cbObj)
+		end
+	end
+
+	GameUtil.onDestroyViewMember_TweenId(self, "_tweenId")
+
+	self._tweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, duration, self._tweenDescUpdateCb, function()
+		self:_tweenDescEndCb(duration, _tweenDescDoneCallBack)
+	end, self)
 end
 
-function var_0_0._resetTaskContentPos(arg_36_0)
-	recthelper.setAnchorY(arg_36_0._txtTaskContentTran, 0)
+local lerp = Mathf.Lerp
+
+function V2a4_WarmUp:_tweenDescUpdateCb(value)
+	local bottom = lerp(0, self._taskDescViewportHeight, value)
+
+	self:_setMaskPaddingBottom(bottom)
 end
 
-function var_0_0.episode2Index(arg_37_0, arg_37_1)
-	return arg_37_1
-end
+function V2a4_WarmUp:_tweenDescEndCb(maskDurationTime, cb, cbObj)
+	local toPosY = self._descHeight - self._taskDescViewportHeight
 
-function var_0_0.index2EpisodeId(arg_38_0, arg_38_1)
-	local var_38_0 = arg_38_0._itemTabList[arg_38_1]
+	if toPosY <= 0 then
+		if cb then
+			cb(cbObj)
+		end
 
-	if not var_38_0 then
 		return
 	end
 
-	return var_38_0._mo
+	local duration = toPosY * (maskDurationTime / self._taskDescViewportHeight)
+
+	GameUtil.onDestroyViewMember_TweenId(self, "_movetweenId")
+
+	self._movetweenId = ZProj.TweenHelper.DOLocalMoveY(self._txtTaskContentTran, toPosY, duration, cb, cbObj)
 end
 
-function var_0_0._setMaskPaddingBottom(arg_39_0, arg_39_1)
-	arg_39_0._taskDescMask.padding = var_0_4(0, arg_39_1, 0, 0)
+function V2a4_WarmUp:_resetTaskContentPos()
+	recthelper.setAnchorY(self._txtTaskContentTran, 0)
 end
 
-function var_0_0._autoSelectTab(arg_40_0)
-	local var_40_0 = arg_40_0.viewContainer:getCurSelectedEpisode() or arg_40_0.viewContainer:getFirstRewardEpisode()
-
-	arg_40_0.viewContainer:setCurSelectEpisodeIdSlient(var_40_0)
-	arg_40_0:_setSelectIndex(arg_40_0:episode2Index(var_40_0), true)
+function V2a4_WarmUp:episode2Index(episodeId)
+	return episodeId
 end
 
-function var_0_0._create_V2a4_WarmUp_radiotaskitem(arg_41_0, arg_41_1)
-	local var_41_0 = gohelper.cloneInPlace(arg_41_0._goradiotaskitem)
-	local var_41_1 = V2a4_WarmUp_radiotaskitem.New({
-		parent = arg_41_0,
-		baseViewContainer = arg_41_0.viewContainer
+function V2a4_WarmUp:index2EpisodeId(index)
+	local item = self._itemTabList[index]
+
+	if not item then
+		return
+	end
+
+	local episodeId = item._mo
+
+	return episodeId
+end
+
+function V2a4_WarmUp:_setMaskPaddingBottom(bottom)
+	self._taskDescMask.padding = Vector4(0, bottom, 0, 0)
+end
+
+function V2a4_WarmUp:_autoSelectTab()
+	local episodeId = self.viewContainer:getCurSelectedEpisode() or self.viewContainer:getFirstRewardEpisode()
+
+	self.viewContainer:setCurSelectEpisodeIdSlient(episodeId)
+	self:_setSelectIndex(self:episode2Index(episodeId), true)
+end
+
+function V2a4_WarmUp:_create_V2a4_WarmUp_radiotaskitem(index)
+	local go = gohelper.cloneInPlace(self._goradiotaskitem)
+	local item = V2a4_WarmUp_radiotaskitem.New({
+		parent = self,
+		baseViewContainer = self.viewContainer
 	})
 
-	var_41_1:setIndex(arg_41_1)
-	var_41_1:init(var_41_0)
+	item:setIndex(index)
+	item:init(go)
 
-	return var_41_1
+	return item
 end
 
-function var_0_0._create_V2a4_WarmUp_rewarditem(arg_42_0, arg_42_1)
-	local var_42_0 = gohelper.cloneInPlace(arg_42_0._gorewarditem)
-	local var_42_1 = V2a4_WarmUp_rewarditem.New({
-		parent = arg_42_0,
-		baseViewContainer = arg_42_0.viewContainer
+function V2a4_WarmUp:_create_V2a4_WarmUp_rewarditem(index)
+	local go = gohelper.cloneInPlace(self._gorewarditem)
+	local item = V2a4_WarmUp_rewarditem.New({
+		parent = self,
+		baseViewContainer = self.viewContainer
 	})
 
-	var_42_1:setIndex(arg_42_1)
-	var_42_1:init(var_42_0)
+	item:setIndex(index)
+	item:init(go)
 
-	return var_42_1
+	return item
 end
 
-function var_0_0._resetTweenDescPos(arg_43_0)
-	GameUtil.onDestroyViewMember_TweenId(arg_43_0, "_movetweenId")
-	GameUtil.onDestroyViewMember_TweenId(arg_43_0, "_tweenId")
-	arg_43_0:_resetTaskContentPos()
+function V2a4_WarmUp:_resetTweenDescPos()
+	GameUtil.onDestroyViewMember_TweenId(self, "_movetweenId")
+	GameUtil.onDestroyViewMember_TweenId(self, "_tweenId")
+	self:_resetTaskContentPos()
 end
 
-function var_0_0._playAnim(arg_44_0, arg_44_1, arg_44_2, arg_44_3)
-	arg_44_0._animatorPlayer:Play(arg_44_1, arg_44_2, arg_44_3)
+function V2a4_WarmUp:_playAnim(name, cb, cbObj)
+	self._animatorPlayer:Play(name, cb, cbObj)
 end
 
-function var_0_0.tweenSwitch(arg_45_0, arg_45_1, arg_45_2)
-	arg_45_0:_playAnim(UIAnimationName.Switch, arg_45_1, arg_45_2)
+function V2a4_WarmUp:tweenSwitch(cb, cbObj)
+	self:_playAnim(UIAnimationName.Switch, cb, cbObj)
 end
 
-function var_0_0._onSwitch(arg_46_0)
-	local var_46_0 = arg_46_0.viewContainer:getCurSelectedEpisode()
-	local var_46_1
+function V2a4_WarmUp:_onSwitch()
+	local lastEpisodeId = self.viewContainer:getCurSelectedEpisode()
+	local curEpisodeId
 
-	if arg_46_0._lastSelectedIndex then
-		var_46_1 = arg_46_0._itemTabList[arg_46_0._lastSelectedIndex]._mo
+	if self._lastSelectedIndex then
+		local item = self._itemTabList[self._lastSelectedIndex]
+		local mo = item._mo
+
+		curEpisodeId = mo
 	end
 
-	arg_46_0.viewContainer:switchTabNoAnim(var_46_0, var_46_1)
+	self.viewContainer:switchTabNoAnim(lastEpisodeId, curEpisodeId)
 end
 
-function var_0_0.playRewardItemsHasGetAnim(arg_47_0)
-	for iter_47_0 = 1, arg_47_0._rewardCount do
-		arg_47_0._rewardItemList[iter_47_0]:playAnim_hasget()
+function V2a4_WarmUp:playRewardItemsHasGetAnim()
+	for i = 1, self._rewardCount do
+		local item = self._rewardItemList[i]
+
+		item:playAnim_hasget()
 	end
 end
 
-function var_0_0.setBlock_scroll(arg_48_0, arg_48_1)
-	arg_48_0._scrollCanvasGroup.blocksRaycasts = not arg_48_1
+function V2a4_WarmUp:setBlock_scroll(isBlock)
+	self._scrollCanvasGroup.blocksRaycasts = not isBlock
 end
 
-function var_0_0._refreshActive_btnplay(arg_49_0)
-	local var_49_0 = arg_49_0.viewContainer:isTimeToActiveH5Btn()
+function V2a4_WarmUp:_refreshActive_btnplay()
+	local isActive = self.viewContainer:isTimeToActiveH5Btn()
 
-	gohelper.setActive(arg_49_0._btnplayGo, var_49_0)
+	gohelper.setActive(self._btnplayGo, isActive)
 end
 
-return var_0_0
+return V2a4_WarmUp

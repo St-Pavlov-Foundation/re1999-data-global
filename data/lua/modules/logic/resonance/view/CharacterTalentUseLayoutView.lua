@@ -1,487 +1,491 @@
-﻿module("modules.logic.resonance.view.CharacterTalentUseLayoutView", package.seeall)
+﻿-- chunkname: @modules/logic/resonance/view/CharacterTalentUseLayoutView.lua
 
-local var_0_0 = class("CharacterTalentUseLayoutView", BaseView)
+module("modules.logic.resonance.view.CharacterTalentUseLayoutView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txttip = gohelper.findChildText(arg_1_0.viewGO, "#txt_tip")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#txt_desc")
-	arg_1_0._gocubelayout = gohelper.findChild(arg_1_0.viewGO, "#go_cubelayout")
-	arg_1_0._gocurlayout = gohelper.findChild(arg_1_0.viewGO, "#go_cubelayout/#go_curlayout")
-	arg_1_0._gosharelayout = gohelper.findChild(arg_1_0.viewGO, "#go_cubelayout/#go_sharelayout")
-	arg_1_0._gomeshItem = gohelper.findChild(arg_1_0.viewGO, "#go_cubelayout/#go_meshItem")
-	arg_1_0._gochessitem = gohelper.findChild(arg_1_0.viewGO, "#go_cubelayout/#go_chessitem")
-	arg_1_0._goattr = gohelper.findChild(arg_1_0.viewGO, "#go_attr")
-	arg_1_0._gobg = gohelper.findChild(arg_1_0.viewGO, "#go_attr/panel/attributeItem/#go_bg")
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "#go_attr/panel/attributeItem/#image_icon")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#go_attr/panel/attributeItem/#txt_name")
-	arg_1_0._txtcur = gohelper.findChildText(arg_1_0.viewGO, "#go_attr/panel/attributeItem/#txt_cur")
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "#go_attr/panel/attributeItem/#txt_num")
-	arg_1_0._imagechange = gohelper.findChildImage(arg_1_0.viewGO, "#go_attr/panel/attributeItem/#txt_num/#image_change")
-	arg_1_0._btnyes = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_yes")
-	arg_1_0._btnno = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_no")
-	arg_1_0._btncheck = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_check")
-	arg_1_0._txtcube = gohelper.findChildText(arg_1_0.viewGO, "#btn_check/#txt_cube")
-	arg_1_0._txtattr = gohelper.findChildText(arg_1_0.viewGO, "#btn_check/#txt_attr")
+local CharacterTalentUseLayoutView = class("CharacterTalentUseLayoutView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CharacterTalentUseLayoutView:onInitView()
+	self._txttip = gohelper.findChildText(self.viewGO, "#txt_tip")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "#txt_desc")
+	self._gocubelayout = gohelper.findChild(self.viewGO, "#go_cubelayout")
+	self._gocurlayout = gohelper.findChild(self.viewGO, "#go_cubelayout/#go_curlayout")
+	self._gosharelayout = gohelper.findChild(self.viewGO, "#go_cubelayout/#go_sharelayout")
+	self._gomeshItem = gohelper.findChild(self.viewGO, "#go_cubelayout/#go_meshItem")
+	self._gochessitem = gohelper.findChild(self.viewGO, "#go_cubelayout/#go_chessitem")
+	self._goattr = gohelper.findChild(self.viewGO, "#go_attr")
+	self._gobg = gohelper.findChild(self.viewGO, "#go_attr/panel/attributeItem/#go_bg")
+	self._imageicon = gohelper.findChildImage(self.viewGO, "#go_attr/panel/attributeItem/#image_icon")
+	self._txtname = gohelper.findChildText(self.viewGO, "#go_attr/panel/attributeItem/#txt_name")
+	self._txtcur = gohelper.findChildText(self.viewGO, "#go_attr/panel/attributeItem/#txt_cur")
+	self._txtnum = gohelper.findChildText(self.viewGO, "#go_attr/panel/attributeItem/#txt_num")
+	self._imagechange = gohelper.findChildImage(self.viewGO, "#go_attr/panel/attributeItem/#txt_num/#image_change")
+	self._btnyes = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_yes")
+	self._btnno = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_no")
+	self._btncheck = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_check")
+	self._txtcube = gohelper.findChildText(self.viewGO, "#btn_check/#txt_cube")
+	self._txtattr = gohelper.findChildText(self.viewGO, "#btn_check/#txt_attr")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnyes:AddClickListener(arg_2_0._btnyesOnClick, arg_2_0)
-	arg_2_0._btnno:AddClickListener(arg_2_0._btnnoOnClick, arg_2_0)
-	arg_2_0._btncheck:AddClickListener(arg_2_0._btncheckOnClick, arg_2_0)
+function CharacterTalentUseLayoutView:addEvents()
+	self._btnyes:AddClickListener(self._btnyesOnClick, self)
+	self._btnno:AddClickListener(self._btnnoOnClick, self)
+	self._btncheck:AddClickListener(self._btncheckOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnyes:RemoveClickListener()
-	arg_3_0._btnno:RemoveClickListener()
-	arg_3_0._btncheck:RemoveClickListener()
+function CharacterTalentUseLayoutView:removeEvents()
+	self._btnyes:RemoveClickListener()
+	self._btnno:RemoveClickListener()
+	self._btncheck:RemoveClickListener()
 end
 
-function var_0_0._btnyesOnClick(arg_4_0)
-	if string.nilorempty(arg_4_0._code) then
+function CharacterTalentUseLayoutView:_btnyesOnClick()
+	if string.nilorempty(self._code) then
 		return
 	end
 
-	local var_4_0 = arg_4_0._heroMo.useTalentTemplateId
-	local var_4_1 = HeroResonaceModel.instance:_isUnlockTalentStyle(arg_4_0._heroMo.heroId, arg_4_0._shareStyle) and arg_4_0._shareStyle or 0
+	local templateId = self._heroMo.useTalentTemplateId
+	local isUnlock = HeroResonaceModel.instance:_isUnlockTalentStyle(self._heroMo.heroId, self._shareStyle)
+	local style = isUnlock and self._shareStyle or 0
 
-	HeroRpc.instance:setPutTalentCubeBatchRequest(arg_4_0._heroMo.heroId, arg_4_0._shareDataList, var_4_0, var_4_1)
+	HeroRpc.instance:setPutTalentCubeBatchRequest(self._heroMo.heroId, self._shareDataList, templateId, style)
 end
 
-function var_0_0._btnnoOnClick(arg_5_0)
-	arg_5_0:closeThis()
+function CharacterTalentUseLayoutView:_btnnoOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btncheckOnClick(arg_6_0)
-	arg_6_0:_activeAttrPanel(not arg_6_0._isShowAttrPanel)
+function CharacterTalentUseLayoutView:_btncheckOnClick()
+	self:_activeAttrPanel(not self._isShowAttrPanel)
 end
 
-function var_0_0._editableInitView(arg_7_0)
+function CharacterTalentUseLayoutView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
+function CharacterTalentUseLayoutView:onUpdateParam()
 	return
 end
 
-function var_0_0.onClickModalMask(arg_9_0)
-	arg_9_0:closeThis()
+function CharacterTalentUseLayoutView:onClickModalMask()
+	self:closeThis()
 end
 
-function var_0_0._addEvents(arg_10_0)
-	arg_10_0:addEventCb(HeroResonanceController.instance, HeroResonanceEvent.UseShareCode, arg_10_0._onUseShareCode, arg_10_0)
+function CharacterTalentUseLayoutView:_addEvents()
+	self:addEventCb(HeroResonanceController.instance, HeroResonanceEvent.UseShareCode, self._onUseShareCode, self)
 end
 
-function var_0_0._removeEvents(arg_11_0)
-	arg_11_0:removeEventCb(HeroResonanceController.instance, HeroResonanceEvent.UseShareCode, arg_11_0._onUseShareCode, arg_11_0)
+function CharacterTalentUseLayoutView:_removeEvents()
+	self:removeEventCb(HeroResonanceController.instance, HeroResonanceEvent.UseShareCode, self._onUseShareCode, self)
 end
 
-function var_0_0._onUseShareCode(arg_12_0)
-	local var_12_0 = HeroResonaceModel.instance:getSpecialCn(arg_12_0._heroMo)
+function CharacterTalentUseLayoutView:_onUseShareCode()
+	local typecn = HeroResonaceModel.instance:getSpecialCn(self._heroMo)
 
-	ToastController.instance:showToast(ToastEnum.CharacterTalentShareCodeSuccessPastedUse, var_12_0)
-	arg_12_0:closeThis()
+	ToastController.instance:showToast(ToastEnum.CharacterTalentShareCodeSuccessPastedUse, typecn)
+	self:closeThis()
 end
 
-function var_0_0.onOpen(arg_13_0)
-	arg_13_0:_addEvents()
-	gohelper.setActive(arg_13_0._txtdesc.gameObject, false)
+function CharacterTalentUseLayoutView:onOpen()
+	self:_addEvents()
+	gohelper.setActive(self._txtdesc.gameObject, false)
 
-	arg_13_0._code = arg_13_0.viewParam.code
-	arg_13_0._heroMo = arg_13_0.viewParam.heroMo
-	arg_13_0._defaultWidth = 56.2
-	arg_13_0._defaultSize = 6
+	self._code = self.viewParam.code
+	self._heroMo = self.viewParam.heroMo
+	self._defaultWidth = 56.2
+	self._defaultSize = 6
 
-	recthelper.setWidth(arg_13_0._gomeshItem.transform, arg_13_0._defaultWidth)
-	recthelper.setHeight(arg_13_0._gomeshItem.transform, arg_13_0._defaultWidth)
+	recthelper.setWidth(self._gomeshItem.transform, self._defaultWidth)
+	recthelper.setHeight(self._gomeshItem.transform, self._defaultWidth)
 
-	if not string.nilorempty(arg_13_0._code) then
-		arg_13_0:_showShareLayout()
-		arg_13_0:_showUseLayout()
+	if not string.nilorempty(self._code) then
+		self:_showShareLayout()
+		self:_showUseLayout()
 	end
 
-	arg_13_0._attrItems = arg_13_0:getUserDataTb_()
-	arg_13_0._attrItemPrefab = gohelper.findChild(arg_13_0.viewGO, "#go_attr/panel/attributeItem")
+	self._attrItems = self:getUserDataTb_()
+	self._attrItemPrefab = gohelper.findChild(self.viewGO, "#go_attr/panel/attributeItem")
 
-	arg_13_0:_initAttr()
+	self:_initAttr()
 
-	local var_13_0 = HeroResonaceModel.instance:getSpecialCn(arg_13_0._heroMo)
-	local var_13_1 = luaLang("p_charactertalentuselayoutview_txt_title")
+	local typecn = HeroResonaceModel.instance:getSpecialCn(self._heroMo)
+	local lang = luaLang("p_charactertalentuselayoutview_txt_title")
 
-	arg_13_0._txttip.text = GameUtil.getSubPlaceholderLuaLangOneParam(var_13_1, var_13_0)
+	self._txttip.text = GameUtil.getSubPlaceholderLuaLangOneParam(lang, typecn)
 end
 
-function var_0_0._showShareLayout(arg_14_0)
-	arg_14_0._shareDataList, arg_14_0._shareStyle = HeroResonaceModel.instance:decodeLayoutShareCode(arg_14_0._code)
+function CharacterTalentUseLayoutView:_showShareLayout()
+	self._shareDataList, self._shareStyle = HeroResonaceModel.instance:decodeLayoutShareCode(self._code)
 
-	if not arg_14_0._shareDataList then
+	if not self._shareDataList then
 		return
 	end
 
-	if not arg_14_0._shareCubeItems then
-		arg_14_0._shareCubeItems = arg_14_0:getUserDataTb_()
+	if not self._shareCubeItems then
+		self._shareCubeItems = self:getUserDataTb_()
 	end
 
-	if not arg_14_0._shareMeshItems then
-		arg_14_0._shareMeshItems = arg_14_0:getUserDataTb_()
+	if not self._shareMeshItems then
+		self._shareMeshItems = self:getUserDataTb_()
 	end
 
-	arg_14_0._sharemeshObj = gohelper.findChild(arg_14_0._gosharelayout, "mesh")
-	arg_14_0._sharecubeObj = gohelper.findChild(arg_14_0._gosharelayout, "cube")
+	self._sharemeshObj = gohelper.findChild(self._gosharelayout, "mesh")
+	self._sharecubeObj = gohelper.findChild(self._gosharelayout, "cube")
 
-	arg_14_0:_setMesh(1)
-	gohelper.CreateObjList(arg_14_0, arg_14_0._onShareCubeItemShow, arg_14_0._shareDataList, arg_14_0._sharecubeObj, arg_14_0._gochessitem)
-	arg_14_0:_refreshMeshLine(arg_14_0._shareMeshItems)
+	self:_setMesh(1)
+	gohelper.CreateObjList(self, self._onShareCubeItemShow, self._shareDataList, self._sharecubeObj, self._gochessitem)
+	self:_refreshMeshLine(self._shareMeshItems)
 end
 
-function var_0_0._showUseLayout(arg_15_0)
-	local var_15_0 = arg_15_0._heroMo.talentCubeInfos.data_list
+function CharacterTalentUseLayoutView:_showUseLayout()
+	local dataList = self._heroMo.talentCubeInfos.data_list
 
-	if not var_15_0 or not arg_15_0._heroMo then
+	if not dataList or not self._heroMo then
 		return
 	end
 
-	arg_15_0._usemeshObj = gohelper.findChild(arg_15_0._gocurlayout, "mesh")
-	arg_15_0._usecubeObj = gohelper.findChild(arg_15_0._gocurlayout, "cube")
+	self._usemeshObj = gohelper.findChild(self._gocurlayout, "mesh")
+	self._usecubeObj = gohelper.findChild(self._gocurlayout, "cube")
 
-	if not arg_15_0._useCubeItems then
-		arg_15_0._useCubeItems = arg_15_0:getUserDataTb_()
+	if not self._useCubeItems then
+		self._useCubeItems = self:getUserDataTb_()
 	end
 
-	if not arg_15_0._useMeshItems then
-		arg_15_0._useMeshItems = arg_15_0:getUserDataTb_()
+	if not self._useMeshItems then
+		self._useMeshItems = self:getUserDataTb_()
 	end
 
-	arg_15_0:_setMesh(2)
-	gohelper.CreateObjList(arg_15_0, arg_15_0._onUseCubeItemShow, var_15_0, arg_15_0._usecubeObj, arg_15_0._gochessitem)
-	arg_15_0:_refreshMeshLine(arg_15_0._useMeshItems)
+	self:_setMesh(2)
+	gohelper.CreateObjList(self, self._onUseCubeItemShow, dataList, self._usecubeObj, self._gochessitem)
+	self:_refreshMeshLine(self._useMeshItems)
 end
 
-function var_0_0._setMesh(arg_16_0, arg_16_1)
-	local var_16_0 = string.splitToNumber(HeroResonanceConfig.instance:getTalentAllShape(arg_16_0._heroMo.heroId, arg_16_0._heroMo.talent), ",")
-	local var_16_1 = var_16_0[1]
-	local var_16_2 = var_16_0[2]
-	local var_16_3 = arg_16_1 == 1 and arg_16_0._shareMeshItems or arg_16_0._useMeshItems
-	local var_16_4 = arg_16_1 == 1 and arg_16_0._sharemeshObj or arg_16_0._usemeshObj
+function CharacterTalentUseLayoutView:_setMesh(layoutType)
+	local x_y = string.splitToNumber(HeroResonanceConfig.instance:getTalentAllShape(self._heroMo.heroId, self._heroMo.talent), ",")
+	local sizeX = x_y[1]
+	local sizeY = x_y[2]
+	local itemList = layoutType == 1 and self._shareMeshItems or self._useMeshItems
+	local parent = layoutType == 1 and self._sharemeshObj or self._usemeshObj
+	local layoutParent = layoutType == 1 and self._gosharelayout or self._gocurlayout
 
-	if arg_16_1 ~= 1 or not arg_16_0._gosharelayout then
-		local var_16_5 = arg_16_0._gocurlayout
-	end
+	for y = 0, sizeY - 1 do
+		itemList[y] = self:getUserDataTb_()
 
-	for iter_16_0 = 0, var_16_2 - 1 do
-		var_16_3[iter_16_0] = arg_16_0:getUserDataTb_()
+		local meshItemList = itemList[y]
 
-		local var_16_6 = var_16_3[iter_16_0]
-
-		if not var_16_6 then
-			var_16_6 = arg_16_0:getUserDataTb_()
-			var_16_3[iter_16_0] = var_16_6
+		if not meshItemList then
+			meshItemList = self:getUserDataTb_()
+			itemList[y] = meshItemList
 		end
 
-		for iter_16_1 = 0, var_16_1 - 1 do
-			local var_16_7 = var_16_6[iter_16_1]
+		for x = 0, sizeX - 1 do
+			local meshItem = meshItemList[x]
 
-			if not var_16_7 then
-				var_16_7 = arg_16_0:getUserDataTb_()
+			if not meshItem then
+				meshItem = self:getUserDataTb_()
 
-				local var_16_8 = string.format("mesh_%s_%s", iter_16_1, iter_16_0)
-				local var_16_9 = gohelper.clone(arg_16_0._gomeshItem, var_16_4, var_16_8)
+				local name = string.format("mesh_%s_%s", x, y)
+				local go = gohelper.clone(self._gomeshItem, parent, name)
 
-				var_16_7.go = var_16_9
-				var_16_7.top = gohelper.findChild(var_16_9, "top")
-				var_16_7.bottom = gohelper.findChild(var_16_9, "bottom")
-				var_16_7.left = gohelper.findChild(var_16_9, "left")
-				var_16_7.right = gohelper.findChild(var_16_9, "right")
-				var_16_6[iter_16_1] = var_16_7
+				meshItem.go = go
+				meshItem.top = gohelper.findChild(go, "top")
+				meshItem.bottom = gohelper.findChild(go, "bottom")
+				meshItem.left = gohelper.findChild(go, "left")
+				meshItem.right = gohelper.findChild(go, "right")
+				meshItemList[x] = meshItem
 			end
 
-			local var_16_10 = iter_16_1 - (var_16_1 - 1) / 2
-			local var_16_11 = (var_16_2 - 1) / 2 - iter_16_0
+			local offset_x = x - (sizeX - 1) / 2
+			local offset_y = (sizeY - 1) / 2 - y
 
-			recthelper.setAnchor(var_16_7.go.transform, var_16_10 * arg_16_0._defaultWidth, var_16_11 * arg_16_0._defaultWidth)
-			gohelper.setActive(var_16_7.go, true)
+			recthelper.setAnchor(meshItem.go.transform, offset_x * self._defaultWidth, offset_y * self._defaultWidth)
+			gohelper.setActive(meshItem.go, true)
 		end
 	end
 end
 
-function var_0_0._onShareCubeItemShow(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	arg_17_0:_onCubeItemShow(arg_17_1, arg_17_2, arg_17_3, 1)
+function CharacterTalentUseLayoutView:_onShareCubeItemShow(obj, data, index)
+	self:_onCubeItemShow(obj, data, index, 1)
 
-	if arg_17_0._heroMo.talentCubeInfos.own_main_cube_id == arg_17_2.cubeId and arg_17_0._shareStyle and arg_17_0._shareStyle > 0 then
-		local var_17_0, var_17_1 = HeroResonaceModel.instance:_isUnlockTalentStyle(arg_17_0._heroMo.heroId, arg_17_0._shareStyle)
+	local mainCubeId = self._heroMo.talentCubeInfos.own_main_cube_id
 
-		if not var_17_0 then
-			local var_17_2 = TalentStyleModel.instance:getCubeMoByStyle(arg_17_0._heroMo.heroId, 0)
-			local var_17_3 = var_17_1 and var_17_1:getStyleTag()
-			local var_17_4 = var_17_2 and var_17_2:getStyleTag()
-			local var_17_5 = luaLang("character_copy_talentLayout_use_tip")
+	if mainCubeId == data.cubeId and self._shareStyle and self._shareStyle > 0 then
+		local isUnlock, cubeMo = HeroResonaceModel.instance:_isUnlockTalentStyle(self._heroMo.heroId, self._shareStyle)
 
-			arg_17_0._txtdesc.text = GameUtil.getSubPlaceholderLuaLangTwoParam(var_17_5, var_17_3, var_17_4)
+		if not isUnlock then
+			local defaultCubeMo = TalentStyleModel.instance:getCubeMoByStyle(self._heroMo.heroId, 0)
+			local styleCubeName = cubeMo and cubeMo:getStyleTag()
+			local defaultCubeName = defaultCubeMo and defaultCubeMo:getStyleTag()
+			local lang = luaLang("character_copy_talentLayout_use_tip")
+
+			self._txtdesc.text = GameUtil.getSubPlaceholderLuaLangTwoParam(lang, styleCubeName, defaultCubeName)
 		else
-			local var_17_6 = tonumber(arg_17_2.cubeId .. arg_17_0._shareStyle)
-			local var_17_7 = arg_17_0._shareCubeItems[arg_17_3]
+			local cubeId = tonumber(data.cubeId .. self._shareStyle)
+			local item = self._shareCubeItems[index]
 
-			arg_17_0:_showMainStyleCube(var_17_6, arg_17_2.cubeId, var_17_7)
+			self:_showMainStyleCube(cubeId, data.cubeId, item)
 		end
 
-		gohelper.setActive(arg_17_0._txtdesc.gameObject, not var_17_0)
+		gohelper.setActive(self._txtdesc.gameObject, not isUnlock)
 	end
 end
 
-function var_0_0._onUseCubeItemShow(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	arg_18_0:_onCubeItemShow(arg_18_1, arg_18_2, arg_18_3, 2)
+function CharacterTalentUseLayoutView:_onUseCubeItemShow(obj, data, index)
+	self:_onCubeItemShow(obj, data, index, 2)
 
-	local var_18_0 = arg_18_0._heroMo.talentCubeInfos.own_main_cube_id
-	local var_18_1 = arg_18_0._heroMo:getHeroUseStyleCubeId()
+	local mainCubeId = self._heroMo.talentCubeInfos.own_main_cube_id
+	local cubeId = self._heroMo:getHeroUseStyleCubeId()
 
-	if arg_18_2.cubeId == var_18_0 and var_18_1 ~= var_18_0 then
-		local var_18_2 = arg_18_0._useCubeItems[arg_18_3]
+	if data.cubeId == mainCubeId and cubeId ~= mainCubeId then
+		local item = self._useCubeItems[index]
 
-		arg_18_0:_showMainStyleCube(var_18_1, var_18_0, var_18_2)
+		self:_showMainStyleCube(cubeId, mainCubeId, item)
 	end
 end
 
-function var_0_0._showMainStyleCube(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
-	local var_19_0 = HeroResonanceConfig.instance:getCubeConfig(arg_19_1)
+function CharacterTalentUseLayoutView:_showMainStyleCube(cubeId, mainCubeId, item)
+	local co = HeroResonanceConfig.instance:getCubeConfig(cubeId)
 
-	if not var_19_0 then
+	if not co then
 		return
 	end
 
-	local var_19_1 = var_19_0.icon
+	local icon = co.icon
 
-	if not string.nilorempty(var_19_1) then
-		local var_19_2 = "ky_" .. var_19_1
-		local var_19_3 = "mk_" .. var_19_1
-		local var_19_4 = var_19_3
-		local var_19_5 = HeroResonanceConfig.instance:getCubeConfig(arg_19_2)
+	if not string.nilorempty(icon) then
+		local iconbg = "ky_" .. icon
+		local iconmk = "mk_" .. icon
+		local glowIcon = iconmk
+		local mainCubeCo = HeroResonanceConfig.instance:getCubeConfig(mainCubeId)
 
-		if arg_19_3 then
-			UISpriteSetMgr.instance:setCharacterTalentSprite(arg_19_3.image, var_19_2, true)
-			UISpriteSetMgr.instance:setCharacterTalentSprite(arg_19_3.icon, var_19_3, true)
-			UISpriteSetMgr.instance:setCharacterTalentSprite(arg_19_3.glow_icon, var_19_4, true)
+		if item then
+			UISpriteSetMgr.instance:setCharacterTalentSprite(item.image, iconbg, true)
+			UISpriteSetMgr.instance:setCharacterTalentSprite(item.icon, iconmk, true)
+			UISpriteSetMgr.instance:setCharacterTalentSprite(item.glow_icon, glowIcon, true)
 
-			local var_19_6 = var_19_5 and string.split(var_19_5.icon, "_")
+			local temp_attr = mainCubeCo and string.split(mainCubeCo.icon, "_")
 
-			if var_19_6 then
-				local var_19_7 = "gz_" .. var_19_6[#var_19_6]
+			if temp_attr then
+				local cell_bg = "gz_" .. temp_attr[#temp_attr]
 
-				UISpriteSetMgr.instance:setCharacterTalentSprite(arg_19_3.cell_icon, var_19_7, true)
-				gohelper.setActive(arg_19_3.cell_icon.gameObject, true)
+				UISpriteSetMgr.instance:setCharacterTalentSprite(item.cell_icon, cell_bg, true)
+				gohelper.setActive(item.cell_icon.gameObject, true)
 			end
 		end
 	end
 end
 
-function var_0_0._onCubeItemShow(arg_20_0, arg_20_1, arg_20_2, arg_20_3, arg_20_4)
-	local var_20_0 = arg_20_1.transform
-	local var_20_1 = var_20_0:GetComponent(gohelper.Type_Image)
-	local var_20_2 = gohelper.findChildImage(arg_20_1, "icon")
-	local var_20_3 = gohelper.findChildImage(arg_20_1, "glow")
-	local var_20_4 = gohelper.findChildImage(arg_20_1, "cell")
-	local var_20_5 = arg_20_4 == 1 and arg_20_0._shareCubeItems or arg_20_0._useCubeItems
-	local var_20_6 = arg_20_4 == 1 and arg_20_0._shareMeshItems or arg_20_0._useMeshItems
-	local var_20_7 = arg_20_2.cubeId
-	local var_20_8 = HeroResonanceConfig.instance:getCubeMatrix(var_20_7)
-	local var_20_9 = HeroResonanceConfig.instance:getCubeConfig(var_20_7).icon
+function CharacterTalentUseLayoutView:_onCubeItemShow(obj, data, index, layoutType)
+	local transform = obj.transform
+	local image = transform:GetComponent(gohelper.Type_Image)
+	local icon = gohelper.findChildImage(obj, "icon")
+	local glow_icon = gohelper.findChildImage(obj, "glow")
+	local cell_icon = gohelper.findChildImage(obj, "cell")
+	local itemList = layoutType == 1 and self._shareCubeItems or self._useCubeItems
+	local itemMeshList = layoutType == 1 and self._shareMeshItems or self._useMeshItems
+	local cubeId = data.cubeId
+	local origin_mat = HeroResonanceConfig.instance:getCubeMatrix(cubeId)
+	local iconSprite = HeroResonanceConfig.instance:getCubeConfig(cubeId).icon
 
-	UISpriteSetMgr.instance:setCharacterTalentSprite(var_20_1, "ky_" .. var_20_9, true)
-	UISpriteSetMgr.instance:setCharacterTalentSprite(var_20_2, var_20_9, true)
-	UISpriteSetMgr.instance:setCharacterTalentSprite(var_20_3, "glow_" .. var_20_9, true)
-	gohelper.setActive(var_20_4.gameObject, false)
+	UISpriteSetMgr.instance:setCharacterTalentSprite(image, "ky_" .. iconSprite, true)
+	UISpriteSetMgr.instance:setCharacterTalentSprite(icon, iconSprite, true)
+	UISpriteSetMgr.instance:setCharacterTalentSprite(glow_icon, "glow_" .. iconSprite, true)
+	gohelper.setActive(cell_icon.gameObject, false)
 
-	if not var_20_5[arg_20_3] then
-		var_20_5[arg_20_3] = arg_20_0:getUserDataTb_()
+	if not itemList[index] then
+		itemList[index] = self:getUserDataTb_()
 	end
 
-	local var_20_10 = arg_20_0:getUserDataTb_()
+	local item = self:getUserDataTb_()
 
-	var_20_10.go = arg_20_1
-	var_20_10.image = var_20_1
-	var_20_10.icon = var_20_2
-	var_20_10.glow_icon = var_20_3
-	var_20_10.cell_icon = var_20_4
-	var_20_5[arg_20_3] = var_20_10
+	item.go = obj
+	item.image = image
+	item.icon = icon
+	item.glow_icon = glow_icon
+	item.cell_icon = cell_icon
+	itemList[index] = item
 
-	local var_20_11 = var_20_6[arg_20_2.posY][arg_20_2.posX]
+	local meshItem = itemMeshList[data.posY][data.posX]
 
-	if var_20_11 then
-		local var_20_12 = var_20_11.go.transform.anchoredPosition.x
-		local var_20_13 = var_20_11.go.transform.anchoredPosition.y
+	if meshItem then
+		local pos_x = meshItem.go.transform.anchoredPosition.x
+		local pos_y = meshItem.go.transform.anchoredPosition.y
 
-		transformhelper.setLocalRotation(var_20_0, 0, 0, -arg_20_2.direction * 90)
+		transformhelper.setLocalRotation(transform, 0, 0, -data.direction * 90)
 
-		local var_20_14 = arg_20_0._defaultWidth * GameUtil.getTabLen(var_20_8[0])
-		local var_20_15 = arg_20_0._defaultWidth * GameUtil.getTabLen(var_20_8)
-		local var_20_16 = arg_20_2.direction % 2 == 0
-		local var_20_17 = var_20_12 + (var_20_16 and var_20_14 or var_20_15) / 2
-		local var_20_18 = var_20_13 + -(var_20_16 and var_20_15 or var_20_14) / 2
-		local var_20_19 = var_20_17 - arg_20_0._defaultWidth / 2
-		local var_20_20 = var_20_18 + arg_20_0._defaultWidth / 2
+		local temp_width = self._defaultWidth * GameUtil.getTabLen(origin_mat[0])
+		local temp_height = self._defaultWidth * GameUtil.getTabLen(origin_mat)
+		local not_rotational = data.direction % 2 == 0
 
-		recthelper.setAnchor(var_20_0, var_20_19, var_20_20)
+		pos_x = pos_x + (not_rotational and temp_width or temp_height) / 2
+		pos_y = pos_y + -(not_rotational and temp_height or temp_width) / 2
+		pos_x = pos_x - self._defaultWidth / 2
+		pos_y = pos_y + self._defaultWidth / 2
+
+		recthelper.setAnchor(transform, pos_x, pos_y)
 	end
 
-	local var_20_21 = HeroResonaceModel.instance:rotationMatrix(var_20_8, arg_20_2.direction)
+	local rotationMatrix = HeroResonaceModel.instance:rotationMatrix(origin_mat, data.direction)
 
-	for iter_20_0, iter_20_1 in pairs(var_20_21) do
-		for iter_20_2, iter_20_3 in pairs(iter_20_1) do
-			if iter_20_3 == 1 and var_20_6[arg_20_2.posY + iter_20_0] then
-				local var_20_22 = var_20_6[arg_20_2.posY + iter_20_0][arg_20_2.posX + iter_20_2]
+	for i, list in pairs(rotationMatrix) do
+		for j, v in pairs(list) do
+			if v == 1 and itemMeshList[data.posY + i] then
+				local _meshItem = itemMeshList[data.posY + i][data.posX + j]
 
-				if var_20_22 then
-					var_20_22.data = arg_20_2
+				if _meshItem then
+					_meshItem.data = data
 				end
 			end
 		end
 	end
 end
 
-function var_0_0._refreshMeshLine(arg_21_0, arg_21_1)
-	if not arg_21_1 then
+function CharacterTalentUseLayoutView:_refreshMeshLine(itemMeshList)
+	if not itemMeshList then
 		return
 	end
 
-	for iter_21_0, iter_21_1 in pairs(arg_21_1) do
-		for iter_21_2, iter_21_3 in pairs(iter_21_1) do
-			if not iter_21_3 then
+	for y, items in pairs(itemMeshList) do
+		for x, curCell in pairs(items) do
+			if not curCell then
 				return
 			end
 
-			local var_21_0 = arg_21_1[iter_21_0][iter_21_2 - 1]
+			local leftCell = itemMeshList[y][x - 1]
 
-			if var_21_0 and iter_21_3.data and iter_21_3.data == var_21_0.data then
-				gohelper.setActive(iter_21_3.left, false)
-				gohelper.setActive(var_21_0.right, false)
+			if leftCell and curCell.data and curCell.data == leftCell.data then
+				gohelper.setActive(curCell.left, false)
+				gohelper.setActive(leftCell.right, false)
 			end
 
-			local var_21_1 = arg_21_1[iter_21_0 - 1] and arg_21_1[iter_21_0 - 1][iter_21_2]
+			local topCell = itemMeshList[y - 1] and itemMeshList[y - 1][x]
 
-			if var_21_1 and iter_21_3.data and iter_21_3.data == var_21_1.data then
-				gohelper.setActive(iter_21_3.top, false)
-				gohelper.setActive(var_21_1.bottom, false)
+			if topCell and curCell.data and curCell.data == topCell.data then
+				gohelper.setActive(curCell.top, false)
+				gohelper.setActive(topCell.bottom, false)
 			end
 
-			local var_21_2 = arg_21_1[iter_21_0][iter_21_2 + 1]
+			local rightCell = itemMeshList[y][x + 1]
 
-			if var_21_2 and iter_21_3.data and iter_21_3.data == var_21_2.data then
-				gohelper.setActive(iter_21_3.right, false)
-				gohelper.setActive(var_21_2.left, false)
+			if rightCell and curCell.data and curCell.data == rightCell.data then
+				gohelper.setActive(curCell.right, false)
+				gohelper.setActive(rightCell.left, false)
 			end
 
-			local var_21_3 = arg_21_1[iter_21_0 + 1] and arg_21_1[iter_21_0 + 1][iter_21_2]
+			local bottomCell = itemMeshList[y + 1] and itemMeshList[y + 1][x]
 
-			if var_21_3 and iter_21_3.data and iter_21_3.data == var_21_3.data then
-				gohelper.setActive(iter_21_3.bottom, false)
-				gohelper.setActive(var_21_3.top, false)
+			if bottomCell and curCell.data and curCell.data == bottomCell.data then
+				gohelper.setActive(curCell.bottom, false)
+				gohelper.setActive(bottomCell.top, false)
 			end
 		end
 	end
 end
 
-function var_0_0._activeAttrPanel(arg_22_0, arg_22_1)
-	arg_22_0._isShowAttrPanel = arg_22_1
+function CharacterTalentUseLayoutView:_activeAttrPanel(isActive)
+	self._isShowAttrPanel = isActive
 
-	gohelper.setActive(arg_22_0._gocubelayout, not arg_22_1)
-	gohelper.setActive(arg_22_0._goattr, arg_22_1)
-	gohelper.setActive(arg_22_0._txtcube.gameObject, not arg_22_1)
-	gohelper.setActive(arg_22_0._txtattr.gameObject, arg_22_1)
+	gohelper.setActive(self._gocubelayout, not isActive)
+	gohelper.setActive(self._goattr, isActive)
+	gohelper.setActive(self._txtcube.gameObject, not isActive)
+	gohelper.setActive(self._txtattr.gameObject, isActive)
 end
 
-function var_0_0._initAttr(arg_23_0)
-	local var_23_0 = HeroResonaceModel.instance:getShareTalentAttrInfos(arg_23_0._heroMo, arg_23_0._shareDataList, arg_23_0._shareStyle)
-	local var_23_1 = math.ceil(#var_23_0 * 0.5)
-	local var_23_2 = var_23_1 > 5 and 120 + 20 * (var_23_1 - 5) or 120
-	local var_23_3 = math.min(var_23_2, 240)
+function CharacterTalentUseLayoutView:_initAttr()
+	local shareTalentAttrInfos = HeroResonaceModel.instance:getShareTalentAttrInfos(self._heroMo, self._shareDataList, self._shareStyle)
+	local line = math.ceil(#shareTalentAttrInfos * 0.5)
+	local offsetY = line > 5 and 120 + 20 * (line - 5) or 120
 
-	for iter_23_0, iter_23_1 in ipairs(var_23_0) do
-		local var_23_4 = arg_23_0:_getAttrItem(iter_23_0)
-		local var_23_5 = HeroConfig.instance:getHeroAttributeCO(HeroConfig.instance:getIDByAttrType(iter_23_1.key))
-		local var_23_6 = iter_23_1.value or 0
-		local var_23_7 = iter_23_1.shareValue or 0
+	offsetY = math.min(offsetY, 240)
 
-		if var_23_5.type ~= 1 then
-			var_23_6 = tonumber(string.format("%.3f", var_23_6 / 10)) .. "%"
-			var_23_7 = tonumber(string.format("%.3f", var_23_7 / 10)) .. "%"
+	for i, info in ipairs(shareTalentAttrInfos) do
+		local item = self:_getAttrItem(i)
+		local co = HeroConfig.instance:getHeroAttributeCO(HeroConfig.instance:getIDByAttrType(info.key))
+		local value = info.value or 0
+		local shareValue = info.shareValue or 0
+
+		if co.type ~= 1 then
+			value = tonumber(string.format("%.3f", value / 10)) .. "%"
+			shareValue = tonumber(string.format("%.3f", shareValue / 10)) .. "%"
 		else
-			var_23_6 = math.floor(var_23_6)
-			var_23_7 = math.floor(var_23_7)
+			value = math.floor(value)
+			shareValue = math.floor(shareValue)
 		end
 
-		var_23_4.txtname.text = var_23_5.name
-		var_23_4.txtcur.text = var_23_6
-		var_23_4.txtnum.text = var_23_7
+		item.txtname.text = co.name
+		item.txtcur.text = value
+		item.txtnum.text = shareValue
 
-		local var_23_8 = 0
-		local var_23_9 = math.floor(iter_23_1.value)
-		local var_23_10 = math.floor(iter_23_1.shareValue)
+		local changeIndex = 0
+		local _value = math.floor(info.value)
+		local _shareValue = math.floor(info.shareValue)
 
-		if var_23_10 < var_23_9 then
-			var_23_8 = 2
-		elseif var_23_9 < var_23_10 then
-			var_23_8 = 1
+		if _shareValue < _value then
+			changeIndex = 2
+		elseif _value < _shareValue then
+			changeIndex = 1
 		end
 
-		local var_23_11 = HeroResonanceEnum.AttrChange[var_23_8]
+		local change = HeroResonanceEnum.AttrChange[changeIndex]
 
-		var_23_4.txtnum.color = GameUtil.parseColor(var_23_11.NumColor)
+		item.txtnum.color = GameUtil.parseColor(change.NumColor)
 
-		local var_23_12 = not string.nilorempty(var_23_11.ChangeImage)
+		local isChangeImage = not string.nilorempty(change.ChangeImage)
 
-		if var_23_12 then
-			UISpriteSetMgr.instance:setUiCharacterSprite(var_23_4.imagechange, var_23_11.ChangeImage, true)
+		if isChangeImage then
+			UISpriteSetMgr.instance:setUiCharacterSprite(item.imagechange, change.ChangeImage, true)
 		end
 
-		gohelper.setActive(var_23_4.imagechange.gameObject, var_23_12)
-		UISpriteSetMgr.instance:setCommonSprite(var_23_4.imageicon, "icon_att_" .. var_23_5.id, true)
+		gohelper.setActive(item.imagechange.gameObject, isChangeImage)
+		UISpriteSetMgr.instance:setCommonSprite(item.imageicon, "icon_att_" .. co.id, true)
 
-		local var_23_13 = (iter_23_0 - 1) % var_23_1
+		local temp = (i - 1) % line
 
-		gohelper.setActive(var_23_4.goBg, var_23_13 % 2 == 1)
+		gohelper.setActive(item.goBg, temp % 2 == 1)
 
-		local var_23_14 = iter_23_0 <= var_23_1 and -360 or 360
-		local var_23_15 = var_23_3 - var_23_13 * 60
+		local anchorX = i <= line and -360 or 360
+		local anchorY = offsetY - temp * 60
 
-		recthelper.setAnchor(var_23_4.go.transform, var_23_14, var_23_15)
+		recthelper.setAnchor(item.go.transform, anchorX, anchorY)
 	end
 
-	for iter_23_2 = 1, #arg_23_0._attrItems do
-		gohelper.setActive(arg_23_0._attrItems[iter_23_2].go, iter_23_2 <= #var_23_0)
+	for i = 1, #self._attrItems do
+		gohelper.setActive(self._attrItems[i].go, i <= #shareTalentAttrInfos)
 	end
 
-	gohelper.setActive(arg_23_0._attrItemPrefab, false)
-	arg_23_0:_activeAttrPanel(false)
+	gohelper.setActive(self._attrItemPrefab, false)
+	self:_activeAttrPanel(false)
 end
 
-function var_0_0._getAttrItem(arg_24_0, arg_24_1)
-	local var_24_0 = arg_24_0._attrItems[arg_24_1]
+function CharacterTalentUseLayoutView:_getAttrItem(index)
+	local item = self._attrItems[index]
 
-	if not var_24_0 then
-		local var_24_1 = gohelper.cloneInPlace(arg_24_0._attrItemPrefab, "item_" .. arg_24_1)
+	if not item then
+		local go = gohelper.cloneInPlace(self._attrItemPrefab, "item_" .. index)
 
-		var_24_0 = arg_24_0:getUserDataTb_()
-		var_24_0.go = var_24_1
-		var_24_0.goBg = gohelper.findChild(var_24_1, "#go_bg")
-		var_24_0.imageicon = gohelper.findChildImage(var_24_1, "#image_icon")
-		var_24_0.txtname = gohelper.findChildText(var_24_1, "#txt_name")
-		var_24_0.txtcur = gohelper.findChildText(var_24_1, "#txt_cur")
-		var_24_0.txtnum = gohelper.findChildText(var_24_1, "#txt_num")
-		var_24_0.imagechange = gohelper.findChildImage(var_24_1, "#txt_num/#image_change")
-		arg_24_0._attrItems[arg_24_1] = var_24_0
+		item = self:getUserDataTb_()
+		item.go = go
+		item.goBg = gohelper.findChild(go, "#go_bg")
+		item.imageicon = gohelper.findChildImage(go, "#image_icon")
+		item.txtname = gohelper.findChildText(go, "#txt_name")
+		item.txtcur = gohelper.findChildText(go, "#txt_cur")
+		item.txtnum = gohelper.findChildText(go, "#txt_num")
+		item.imagechange = gohelper.findChildImage(go, "#txt_num/#image_change")
+		self._attrItems[index] = item
 	end
 
-	return var_24_0
+	return item
 end
 
-function var_0_0.onClose(arg_25_0)
+function CharacterTalentUseLayoutView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_26_0)
-	arg_26_0:_removeEvents()
+function CharacterTalentUseLayoutView:onDestroyView()
+	self:_removeEvents()
 end
 
-return var_0_0
+return CharacterTalentUseLayoutView

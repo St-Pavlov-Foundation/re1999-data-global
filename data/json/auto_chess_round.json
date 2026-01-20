@@ -382,5 +382,101 @@
     "maxdamage": 40,
     "assess": "1#5#10",
     "starReward": "1#2#3"
+  },
+  {
+    "activityId": 13211,
+    "round": 1,
+    "previewCost": 0,
+    "maxdamage": 5,
+    "assess": "1#5#10",
+    "starReward": "1#2#3"
+  },
+  {
+    "activityId": 13211,
+    "round": 2,
+    "previewCost": 0,
+    "maxdamage": 5,
+    "assess": "1#5#10",
+    "starReward": "1#2#3"
+  },
+  {
+    "activityId": 13211,
+    "round": 3,
+    "previewCost": 0,
+    "maxdamage": 5,
+    "assess": "1#5#10",
+    "starReward": "1#2#3"
+  },
+  {
+    "activityId": 13211,
+    "round": 4,
+    "previewCost": 0,
+    "maxdamage": 5,
+    "assess": "1#5#10",
+    "starReward": "1#2#3"
+  },
+  {
+    "activityId": 13211,
+    "round": 5,
+    "previewCost": 0,
+    "maxdamage": 10,
+    "assess": "1#5#10",
+    "starReward": "1#2#3"
+  },
+  {
+    "activityId": 13211,
+    "round": 6,
+    "previewCost": 0,
+    "maxdamage": 10,
+    "assess": "1#5#10",
+    "starReward": "1#2#3"
+  },
+  {
+    "activityId": 13211,
+    "round": 7,
+    "previewCost": 0,
+    "maxdamage": 15,
+    "assess": "1#5#10",
+    "starReward": "1#2#3"
+  },
+  {
+    "activityId": 13211,
+    "round": 8,
+    "previewCost": 0,
+    "maxdamage": 15,
+    "assess": "1#5#10",
+    "starReward": "1#2#3"
+  },
+  {
+    "activityId": 13211,
+    "round": 9,
+    "previewCost": 0,
+    "maxdamage": 15,
+    "assess": "1#5#10",
+    "starReward": "1#2#3"
+  },
+  {
+    "activityId": 13211,
+    "round": 10,
+    "previewCost": 0,
+    "maxdamage": 40,
+    "assess": "1#5#10",
+    "starReward": "1#2#3"
+  },
+  {
+    "activityId": 13211,
+    "round": 11,
+    "previewCost": 0,
+    "maxdamage": 40,
+    "assess": "1#5#10",
+    "starReward": "1#2#3"
+  },
+  {
+    "activityId": 13211,
+    "round": 12,
+    "previewCost": 0,
+    "maxdamage": 40,
+    "assess": "1#5#10",
+    "starReward": "1#2#3"
   }
 ]

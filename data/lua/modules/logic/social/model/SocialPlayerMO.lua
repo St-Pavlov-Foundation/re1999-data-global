@@ -1,33 +1,35 @@
-﻿module("modules.logic.social.model.SocialPlayerMO", package.seeall)
+﻿-- chunkname: @modules/logic/social/model/SocialPlayerMO.lua
 
-local var_0_0 = pureTable("SocialPlayerMO")
+module("modules.logic.social.model.SocialPlayerMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1.userId
-	arg_1_0.userId = arg_1_1.userId
-	arg_1_0.name = arg_1_1.name
-	arg_1_0.level = arg_1_1.level
-	arg_1_0.portrait = arg_1_1.portrait
-	arg_1_0.time = arg_1_1.time
-	arg_1_0.desc = arg_1_1.desc
-	arg_1_0.infos = arg_1_1.infos
-	arg_1_0.bg = arg_1_1.bg or 0
+local SocialPlayerMO = pureTable("SocialPlayerMO")
+
+function SocialPlayerMO:init(info)
+	self.id = info.userId
+	self.userId = info.userId
+	self.name = info.name
+	self.level = info.level
+	self.portrait = info.portrait
+	self.time = info.time
+	self.desc = info.desc
+	self.infos = info.infos
+	self.bg = info.bg or 0
 end
 
-function var_0_0.isSendAddFriend(arg_2_0)
-	return arg_2_0._isAdded or false
+function SocialPlayerMO:isSendAddFriend()
+	return self._isAdded or false
 end
 
-function var_0_0.setAddedFriend(arg_3_0)
-	arg_3_0._isAdded = true
+function SocialPlayerMO:setAddedFriend()
+	self._isAdded = true
 end
 
-function var_0_0.isMyFriend(arg_4_0)
-	return SocialModel.instance:isMyFriendByUserId(arg_4_0.userId)
+function SocialPlayerMO:isMyFriend()
+	return SocialModel.instance:isMyFriendByUserId(self.userId)
 end
 
-function var_0_0.isMyBlackList(arg_5_0)
-	return SocialModel.instance:isMyBlackListByUserId(arg_5_0.userId)
+function SocialPlayerMO:isMyBlackList()
+	return SocialModel.instance:isMyBlackListByUserId(self.userId)
 end
 
-return var_0_0
+return SocialPlayerMO

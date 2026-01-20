@@ -1,96 +1,99 @@
-﻿module("modules.logic.seasonver.act123.view2_1.Season123_2_1StoreView", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view2_1/Season123_2_1StoreView.lua
 
-local var_0_0 = class("Season123_2_1StoreView", BaseView)
+module("modules.logic.seasonver.act123.view2_1.Season123_2_1StoreView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "title/#txt_time")
-	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "mask/#scroll_store/Viewport/#go_Content")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._gorighttop = gohelper.findChild(arg_1_0.viewGO, "#go_righttop")
+local Season123_2_1StoreView = class("Season123_2_1StoreView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Season123_2_1StoreView:onInitView()
+	self._txttime = gohelper.findChildText(self.viewGO, "title/#txt_time")
+	self._goContent = gohelper.findChild(self.viewGO, "mask/#scroll_store/Viewport/#go_Content")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._gorighttop = gohelper.findChild(self.viewGO, "#go_righttop")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function Season123_2_1StoreView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Season123_2_1StoreView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0.storeItemList = arg_4_0:getUserDataTb_()
+function Season123_2_1StoreView:_editableInitView()
+	self.storeItemList = self:getUserDataTb_()
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function Season123_2_1StoreView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:addEventCb(VersionActivityController.instance, VersionActivityEvent.OnGet107GoodsInfo, arg_6_0._onGet107GoodsInfo, arg_6_0)
-	arg_6_0:addEventCb(VersionActivityController.instance, VersionActivityEvent.OnBuy107GoodsSuccess, arg_6_0._onBuyGoodsSuccess, arg_6_0)
+function Season123_2_1StoreView:onOpen()
+	self:addEventCb(VersionActivityController.instance, VersionActivityEvent.OnGet107GoodsInfo, self._onGet107GoodsInfo, self)
+	self:addEventCb(VersionActivityController.instance, VersionActivityEvent.OnBuy107GoodsSuccess, self._onBuyGoodsSuccess, self)
 
-	arg_6_0.actId = arg_6_0.viewParam.actId
+	self.actId = self.viewParam.actId
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_souvenir_open)
-	TaskDispatcher.runRepeat(arg_6_0.refreshTime, arg_6_0, TimeUtil.OneMinuteSecond)
-	arg_6_0:refreshTime()
-	arg_6_0:refreshStoreContent()
+	TaskDispatcher.runRepeat(self.refreshTime, self, TimeUtil.OneMinuteSecond)
+	self:refreshTime()
+	self:refreshStoreContent()
 end
 
-function var_0_0._onGet107GoodsInfo(arg_7_0, arg_7_1)
-	if arg_7_1 ~= arg_7_0.actId then
+function Season123_2_1StoreView:_onGet107GoodsInfo(actId)
+	if actId ~= self.actId then
 		return
 	end
 
-	arg_7_0:refreshStoreContent()
+	self:refreshStoreContent()
 end
 
-function var_0_0._onBuyGoodsSuccess(arg_8_0, arg_8_1)
-	if arg_8_1 ~= arg_8_0.actId then
+function Season123_2_1StoreView:_onBuyGoodsSuccess(actId)
+	if actId ~= self.actId then
 		return
 	end
 
-	arg_8_0:refreshStoreContent()
+	self:refreshStoreContent()
 end
 
-function var_0_0.refreshStoreContent(arg_9_0)
-	local var_9_0 = ActivityStoreConfig.instance:getActivityStoreGroupDict(arg_9_0.actId)
-	local var_9_1 = {}
+function Season123_2_1StoreView:refreshStoreContent()
+	local storeGroupDict = ActivityStoreConfig.instance:getActivityStoreGroupDict(self.actId)
+	local list = {}
 
-	if var_9_0 then
-		for iter_9_0, iter_9_1 in pairs(var_9_0) do
-			for iter_9_2, iter_9_3 in pairs(iter_9_1) do
-				table.insert(var_9_1, iter_9_3)
+	if storeGroupDict then
+		for _, storelist in pairs(storeGroupDict) do
+			for _, v in pairs(storelist) do
+				table.insert(list, v)
 			end
 		end
 	end
 
-	Season123StoreModel.instance:setStoreItemList(var_9_1)
+	Season123StoreModel.instance:setStoreItemList(list)
 end
 
-function var_0_0.refreshTime(arg_10_0)
-	local var_10_0 = ActivityModel.instance:getActMO(arg_10_0.actId):getRealEndTimeStamp() - ServerTime.now()
-	local var_10_1 = Mathf.Floor(var_10_0 / TimeUtil.OneDaySecond)
-	local var_10_2 = var_10_0 % TimeUtil.OneDaySecond
-	local var_10_3 = Mathf.Floor(var_10_2 / TimeUtil.OneHourSecond)
-	local var_10_4 = var_10_2 % TimeUtil.OneHourSecond
-	local var_10_5 = Mathf.Ceil(var_10_4 / TimeUtil.OneMinuteSecond)
+function Season123_2_1StoreView:refreshTime()
+	local actInfoMo = ActivityModel.instance:getActMO(self.actId)
+	local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
+	local day = Mathf.Floor(offsetSecond / TimeUtil.OneDaySecond)
+	local hourSecond = offsetSecond % TimeUtil.OneDaySecond
+	local hour = Mathf.Floor(hourSecond / TimeUtil.OneHourSecond)
+	local minuteSecond = hourSecond % TimeUtil.OneHourSecond
+	local minute = Mathf.Ceil(minuteSecond / TimeUtil.OneMinuteSecond)
 
-	arg_10_0._txttime.text = string.format(luaLang("versionactivitystoreview_remaintime"), var_10_1, var_10_3, var_10_5)
+	self._txttime.text = string.format(luaLang("versionactivitystoreview_remaintime"), day, hour, minute)
 end
 
-function var_0_0.onClose(arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0.refreshTime, arg_11_0)
-	arg_11_0:removeEventCb(VersionActivityController.instance, VersionActivityEvent.OnGet107GoodsInfo, arg_11_0._onGet107GoodsInfo, arg_11_0)
-	arg_11_0:removeEventCb(VersionActivityController.instance, VersionActivityEvent.OnBuy107GoodsSuccess, arg_11_0._onBuyGoodsSuccess, arg_11_0)
+function Season123_2_1StoreView:onClose()
+	TaskDispatcher.cancelTask(self.refreshTime, self)
+	self:removeEventCb(VersionActivityController.instance, VersionActivityEvent.OnGet107GoodsInfo, self._onGet107GoodsInfo, self)
+	self:removeEventCb(VersionActivityController.instance, VersionActivityEvent.OnBuy107GoodsSuccess, self._onBuyGoodsSuccess, self)
 end
 
-function var_0_0.onDestroyView(arg_12_0)
+function Season123_2_1StoreView:onDestroyView()
 	return
 end
 
-return var_0_0
+return Season123_2_1StoreView

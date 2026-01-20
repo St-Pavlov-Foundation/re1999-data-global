@@ -1,49 +1,51 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.model.Activity114FeaturesModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/model/Activity114FeaturesModel.lua
 
-local var_0_0 = class("Activity114FeaturesModel", ListScrollModel)
+module("modules.logic.versionactivity1_2.jiexika.model.Activity114FeaturesModel", package.seeall)
 
-function var_0_0.onFeatureListUpdate(arg_1_0, arg_1_1)
-	local var_1_0 = {}
+local Activity114FeaturesModel = class("Activity114FeaturesModel", ListScrollModel)
 
-	for iter_1_0 = 1, #arg_1_1 do
-		var_1_0[iter_1_0] = Activity114Config.instance:getFeatureCo(Activity114Model.instance.id, arg_1_1[iter_1_0])
+function Activity114FeaturesModel:onFeatureListUpdate(featureList)
+	local list = {}
+
+	for i = 1, #featureList do
+		list[i] = Activity114Config.instance:getFeatureCo(Activity114Model.instance.id, featureList[i])
 	end
 
-	arg_1_0:setList(var_1_0)
+	self:setList(list)
 end
 
-function var_0_0.getAllMaxLength(arg_2_0, arg_2_1)
-	local var_2_0 = Activity114Config.instance:getFeatureName(Activity114Model.instance.id)
-	local var_2_1 = 0
+function Activity114FeaturesModel:getAllMaxLength(txt)
+	local namelist = Activity114Config.instance:getFeatureName(Activity114Model.instance.id)
+	local max = 0
 
-	for iter_2_0, iter_2_1 in pairs(var_2_0) do
-		local var_2_2 = SLFramework.UGUI.GuiHelper.GetPreferredWidth(arg_2_1, iter_2_1)
+	for _, v in pairs(namelist) do
+		local prefer = SLFramework.UGUI.GuiHelper.GetPreferredWidth(txt, v)
 
-		var_2_1 = math.max(var_2_1, var_2_2)
+		max = math.max(max, prefer)
 	end
 
-	return Mathf.Clamp(var_2_1 + 20, 276, 420)
+	return Mathf.Clamp(max + 20, 276, 420)
 end
 
-function var_0_0.getFeaturePreferredLength(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	local var_3_0 = arg_3_0:getFeatureMaxLength(arg_3_1)
+function Activity114FeaturesModel:getFeaturePreferredLength(txt, min, max)
+	local maxlength = self:getFeatureMaxLength(txt)
 
-	return Mathf.Clamp(var_3_0 + 20, arg_3_2, arg_3_3)
+	return Mathf.Clamp(maxlength + 20, min, max)
 end
 
-function var_0_0.getFeatureMaxLength(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0:getList()
-	local var_4_1 = 0
+function Activity114FeaturesModel:getFeatureMaxLength(txt)
+	local list = self:getList()
+	local max = 0
 
-	for iter_4_0, iter_4_1 in pairs(var_4_0) do
-		local var_4_2 = SLFramework.UGUI.GuiHelper.GetPreferredWidth(arg_4_1, iter_4_1.features)
+	for _, v in pairs(list) do
+		local prefer = SLFramework.UGUI.GuiHelper.GetPreferredWidth(txt, v.features)
 
-		var_4_1 = math.max(var_4_1, var_4_2)
+		max = math.max(max, prefer)
 	end
 
-	return var_4_1
+	return max
 end
 
-var_0_0.instance = var_0_0.New()
+Activity114FeaturesModel.instance = Activity114FeaturesModel.New()
 
-return var_0_0
+return Activity114FeaturesModel

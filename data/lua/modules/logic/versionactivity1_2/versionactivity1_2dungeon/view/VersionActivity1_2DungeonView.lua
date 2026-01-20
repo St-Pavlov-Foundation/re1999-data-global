@@ -1,352 +1,354 @@
-﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity1_2DungeonView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/versionactivity1_2dungeon/view/VersionActivity1_2DungeonView.lua
 
-local var_0_0 = class("VersionActivity1_2DungeonView", BaseViewExtended)
+module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity1_2DungeonView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._imagehardModeIconTxtGo = gohelper.findChild(arg_1_0.viewGO, "#go_tasklist/#go_versionActivity/#go_hardmode/#image_hardModeIcon/txt")
-	arg_1_0._topLeftGo = gohelper.findChild(arg_1_0.viewGO, "top_left")
-	arg_1_0._topRight = gohelper.findChild(arg_1_0.viewGO, "topRight")
-	arg_1_0._topRightGo = gohelper.findChild(arg_1_0.viewGO, "#go_topright")
-	arg_1_0._topLeftElementGo = gohelper.findChild(arg_1_0.viewGO, "top_left_element")
-	arg_1_0._gotasklist = gohelper.findChild(arg_1_0.viewGO, "#go_tasklist")
-	arg_1_0._goversionactivity = gohelper.findChild(arg_1_0.viewGO, "#go_tasklist/#go_versionActivity")
-	arg_1_0._gomain = gohelper.findChild(arg_1_0.viewGO, "#go_main")
-	arg_1_0._gores = gohelper.findChild(arg_1_0.viewGO, "#go_res")
-	arg_1_0._gointeractiveroot = gohelper.findChild(arg_1_0.viewGO, "#go_interactive_root")
-	arg_1_0._txtstorenum = gohelper.findChildText(arg_1_0.viewGO, "#go_topright/#btn_activitystore/#txt_num")
-	arg_1_0._btn3 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_3")
-	arg_1_0._gohardmodelock = gohelper.findChild(arg_1_0.viewGO, "#go_tasklist/#go_versionActivity/#go_hardmode/#go_hardModeLock")
-	arg_1_0._txtunlocktime = gohelper.findChildText(arg_1_0.viewGO, "#go_tasklist/#go_versionActivity/#go_hardmode/#go_hardModeLock/#txt_unlockTime")
-	arg_1_0._hardBtnAni = gohelper.onceAddComponent(arg_1_0._gohardmodelock, typeof(UnityEngine.Animator))
-	arg_1_0._btnAni1 = gohelper.findChildComponent(arg_1_0.viewGO, "#go_tasklist/#go_versionActivity", typeof(UnityEngine.Animator))
-	arg_1_0._btnAni2 = gohelper.findChildComponent(arg_1_0.viewGO, "#go_tasklist/#go_taskitem", typeof(UnityEngine.Animator))
-	arg_1_0._btnAni3 = gohelper.findChildComponent(arg_1_0.viewGO, "#btn_3", typeof(UnityEngine.Animator))
-	arg_1_0._btnAni4 = gohelper.findChildComponent(arg_1_0.viewGO, "#btn_4", typeof(UnityEngine.Animator))
-	arg_1_0._rightBtnAni = gohelper.findChildComponent(arg_1_0.viewGO, "#go_topright", typeof(UnityEngine.Animator))
-	arg_1_0._currencyNum = gohelper.findChildText(arg_1_0.viewGO, "#btn_4/icon/cost/num")
-	arg_1_0._currencyNumLvHuEMen = gohelper.findChildText(arg_1_0.viewGO, "#go_topright/GameObject/#btn_1/node/num")
-	arg_1_0._focusBtnStateOff = gohelper.findChild(arg_1_0.viewGO, "#btn_4/icon/#go_off")
-	arg_1_0._focusBtnStateOn = gohelper.findChild(arg_1_0.viewGO, "#btn_4/icon/#go_on")
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_versionActivityBg/#simage_bg")
-	arg_1_0._simagebgeffect = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_versionActivityBg/#simage_bgeffect")
-	arg_1_0._simagehardbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_versionActivityBg/#simage_hardbg")
-	arg_1_0._btncloseview = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_closeview")
+local VersionActivity1_2DungeonView = class("VersionActivity1_2DungeonView", BaseViewExtended)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity1_2DungeonView:onInitView()
+	self._imagehardModeIconTxtGo = gohelper.findChild(self.viewGO, "#go_tasklist/#go_versionActivity/#go_hardmode/#image_hardModeIcon/txt")
+	self._topLeftGo = gohelper.findChild(self.viewGO, "top_left")
+	self._topRight = gohelper.findChild(self.viewGO, "topRight")
+	self._topRightGo = gohelper.findChild(self.viewGO, "#go_topright")
+	self._topLeftElementGo = gohelper.findChild(self.viewGO, "top_left_element")
+	self._gotasklist = gohelper.findChild(self.viewGO, "#go_tasklist")
+	self._goversionactivity = gohelper.findChild(self.viewGO, "#go_tasklist/#go_versionActivity")
+	self._gomain = gohelper.findChild(self.viewGO, "#go_main")
+	self._gores = gohelper.findChild(self.viewGO, "#go_res")
+	self._gointeractiveroot = gohelper.findChild(self.viewGO, "#go_interactive_root")
+	self._txtstorenum = gohelper.findChildText(self.viewGO, "#go_topright/#btn_activitystore/#txt_num")
+	self._btn3 = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_3")
+	self._gohardmodelock = gohelper.findChild(self.viewGO, "#go_tasklist/#go_versionActivity/#go_hardmode/#go_hardModeLock")
+	self._txtunlocktime = gohelper.findChildText(self.viewGO, "#go_tasklist/#go_versionActivity/#go_hardmode/#go_hardModeLock/#txt_unlockTime")
+	self._hardBtnAni = gohelper.onceAddComponent(self._gohardmodelock, typeof(UnityEngine.Animator))
+	self._btnAni1 = gohelper.findChildComponent(self.viewGO, "#go_tasklist/#go_versionActivity", typeof(UnityEngine.Animator))
+	self._btnAni2 = gohelper.findChildComponent(self.viewGO, "#go_tasklist/#go_taskitem", typeof(UnityEngine.Animator))
+	self._btnAni3 = gohelper.findChildComponent(self.viewGO, "#btn_3", typeof(UnityEngine.Animator))
+	self._btnAni4 = gohelper.findChildComponent(self.viewGO, "#btn_4", typeof(UnityEngine.Animator))
+	self._rightBtnAni = gohelper.findChildComponent(self.viewGO, "#go_topright", typeof(UnityEngine.Animator))
+	self._currencyNum = gohelper.findChildText(self.viewGO, "#btn_4/icon/cost/num")
+	self._currencyNumLvHuEMen = gohelper.findChildText(self.viewGO, "#go_topright/GameObject/#btn_1/node/num")
+	self._focusBtnStateOff = gohelper.findChild(self.viewGO, "#btn_4/icon/#go_off")
+	self._focusBtnStateOn = gohelper.findChild(self.viewGO, "#btn_4/icon/#go_on")
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#go_versionActivityBg/#simage_bg")
+	self._simagebgeffect = gohelper.findChildSingleImage(self.viewGO, "#go_versionActivityBg/#simage_bgeffect")
+	self._simagehardbg = gohelper.findChildSingleImage(self.viewGO, "#go_versionActivityBg/#simage_hardbg")
+	self._btncloseview = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_closeview")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_2_0._onOpenView, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_2_0._onCloseView, arg_2_0)
-	arg_2_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_2_0.refreshActivityCurrency, arg_2_0)
-	arg_2_0:addEventCb(DungeonController.instance, DungeonEvent.OnUpdateDungeonInfo, arg_2_0._onUpdateDungeonInfo, arg_2_0)
-	arg_2_0:addEventCb(DungeonController.instance, DungeonEvent.OnSetEpisodeListVisible, arg_2_0._onSetEpisodeListVisible, arg_2_0)
-	arg_2_0:addEventCb(VersionActivity1_2DungeonController.instance, VersionActivity1_2DungeonEvent.showNoteUnlock, arg_2_0._showNoteUnlock, arg_2_0)
-	arg_2_0:addEventCb(VersionActivity1_2DungeonController.instance, VersionActivity1_2DungeonEvent.onReceiveAct121UpdatePush, arg_2_0._onReceiveAct121UpdatePush, arg_2_0)
-	arg_2_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_2_0._onCurrencyChange, arg_2_0)
-	arg_2_0:addEventCb(DungeonController.instance, DungeonEvent.OnRemoveElement, arg_2_0._OnRemoveElement, arg_2_0)
-	arg_2_0._btn3:AddClickListener(arg_2_0._onClickBtn3, arg_2_0)
-	arg_2_0._storeBtn:AddClickListener(arg_2_0._onClickStoreBtn, arg_2_0)
-	arg_2_0._taskBtn:AddClickListener(arg_2_0._onClickTaskBtn, arg_2_0)
-	arg_2_0._btncloseview:AddClickListener(arg_2_0._btncloseviewOnClick, arg_2_0)
+function VersionActivity1_2DungeonView:addEvents()
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseView, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self.refreshActivityCurrency, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.OnUpdateDungeonInfo, self._onUpdateDungeonInfo, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.OnSetEpisodeListVisible, self._onSetEpisodeListVisible, self)
+	self:addEventCb(VersionActivity1_2DungeonController.instance, VersionActivity1_2DungeonEvent.showNoteUnlock, self._showNoteUnlock, self)
+	self:addEventCb(VersionActivity1_2DungeonController.instance, VersionActivity1_2DungeonEvent.onReceiveAct121UpdatePush, self._onReceiveAct121UpdatePush, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._onCurrencyChange, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.OnRemoveElement, self._OnRemoveElement, self)
+	self._btn3:AddClickListener(self._onClickBtn3, self)
+	self._storeBtn:AddClickListener(self._onClickStoreBtn, self)
+	self._taskBtn:AddClickListener(self._onClickTaskBtn, self)
+	self._btncloseview:AddClickListener(self._btncloseviewOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btn3:RemoveClickListener()
-	arg_3_0._storeBtn:RemoveClickListener()
-	arg_3_0._taskBtn:RemoveClickListener()
-	arg_3_0._btncloseview:RemoveClickListener()
+function VersionActivity1_2DungeonView:removeEvents()
+	self._btn3:RemoveClickListener()
+	self._storeBtn:RemoveClickListener()
+	self._taskBtn:RemoveClickListener()
+	self._btncloseview:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	gohelper.setActive(arg_4_0._gotasklist, true)
-	gohelper.setActive(arg_4_0._goversionactivity, true)
-	gohelper.setActive(arg_4_0._gomain, false)
-	gohelper.setActive(arg_4_0._gores, false)
+function VersionActivity1_2DungeonView:_editableInitView()
+	gohelper.setActive(self._gotasklist, true)
+	gohelper.setActive(self._goversionactivity, true)
+	gohelper.setActive(self._gomain, false)
+	gohelper.setActive(self._gores, false)
 
-	arg_4_0._storeBtn = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "#go_topright/GameObject/#btn_1")
-	arg_4_0._taskBtn = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "#go_topright/GameObject/#btn_2", AudioEnum.UI.play_ui_mission_open)
+	self._storeBtn = gohelper.findChildButtonWithAudio(self.viewGO, "#go_topright/GameObject/#btn_1")
+	self._taskBtn = gohelper.findChildButtonWithAudio(self.viewGO, "#go_topright/GameObject/#btn_2", AudioEnum.UI.play_ui_mission_open)
 
-	local var_4_0 = gohelper.findChild(arg_4_0._taskBtn.gameObject, "reddot")
+	local goTaskRedDot = gohelper.findChild(self._taskBtn.gameObject, "reddot")
 
-	RedDotController.instance:addRedDot(var_4_0, RedDotEnum.DotNode.LvHuEMenTask)
-	arg_4_0._simagebg:LoadImage(ResUrl.getVersionActivityDungeon_1_2("bj_zasehuahen"))
-	arg_4_0._simagebgeffect:LoadImage(ResUrl.getVersionActivityDungeon_1_2("bj_zasehuahen"))
-	arg_4_0._simagehardbg:LoadImage(ResUrl.getVersionActivityDungeon_1_2("lvjing_kunnan"))
-	gohelper.removeUIClickAudio(arg_4_0._btncloseview.gameObject)
+	RedDotController.instance:addRedDot(goTaskRedDot, RedDotEnum.DotNode.LvHuEMenTask)
+	self._simagebg:LoadImage(ResUrl.getVersionActivityDungeon_1_2("bj_zasehuahen"))
+	self._simagebgeffect:LoadImage(ResUrl.getVersionActivityDungeon_1_2("bj_zasehuahen"))
+	self._simagehardbg:LoadImage(ResUrl.getVersionActivityDungeon_1_2("lvjing_kunnan"))
+	gohelper.removeUIClickAudio(self._btncloseview.gameObject)
 
-	arg_4_0._scrollcontent = gohelper.findChildScrollRect(arg_4_0.viewGO, "#scroll_content")
-	arg_4_0._rectmask2D = arg_4_0._scrollcontent:GetComponent(typeof(UnityEngine.UI.RectMask2D))
+	self._scrollcontent = gohelper.findChildScrollRect(self.viewGO, "#scroll_content")
+	self._rectmask2D = self._scrollcontent:GetComponent(typeof(UnityEngine.UI.RectMask2D))
 
-	gohelper.setActive(arg_4_0._storeBtn, false)
-	gohelper.setActive(arg_4_0._taskBtn, false)
+	gohelper.setActive(self._storeBtn, false)
+	gohelper.setActive(self._taskBtn, false)
 end
 
-function var_0_0._btncloseviewOnClick(arg_5_0)
+function VersionActivity1_2DungeonView:_btncloseviewOnClick()
 	ViewMgr.instance:closeView(ViewName.VersionActivity1_2DungeonMapLevelView)
 end
 
-function var_0_0._onUpdateDungeonInfo(arg_6_0)
-	arg_6_0:_detectHardModel()
+function VersionActivity1_2DungeonView:_onUpdateDungeonInfo()
+	self:_detectHardModel()
 end
 
-function var_0_0._onClickStoreBtn(arg_7_0)
+function VersionActivity1_2DungeonView:_onClickStoreBtn()
 	ReactivityController.instance:openReactivityStoreView(VersionActivity1_2Enum.ActivityId.Dungeon)
 end
 
-function var_0_0._onClickTaskBtn(arg_8_0)
+function VersionActivity1_2DungeonView:_onClickTaskBtn()
 	ReactivityController.instance:openReactivityTaskView(VersionActivity1_2Enum.ActivityId.Dungeon)
 end
 
-function var_0_0._onClickBtn3(arg_9_0)
+function VersionActivity1_2DungeonView:_onClickBtn3()
 	ViewMgr.instance:openView(ViewName.VersionActivity_1_2_StoryCollectView)
 end
 
-function var_0_0.onUpdateParam(arg_10_0)
-	arg_10_0:refreshUI()
+function VersionActivity1_2DungeonView:onUpdateParam()
+	self:refreshUI()
 end
 
-function var_0_0._onEscBtnClick(arg_11_0)
-	if arg_11_0._interActiveItem then
-		local var_11_0 = arg_11_0._interActiveItem:getChildViews()
+function VersionActivity1_2DungeonView:_onEscBtnClick()
+	if self._interActiveItem then
+		local childViews = self._interActiveItem:getChildViews()
 
-		if var_11_0 and #var_11_0 > 0 then
+		if childViews and #childViews > 0 then
 			VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.closeChildElementView)
 
 			return
 		end
 	end
 
-	arg_11_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._dimBgm(arg_12_0, arg_12_1)
-	if arg_12_1 then
+function VersionActivity1_2DungeonView:_dimBgm(state)
+	if state then
 		AudioMgr.instance:trigger(AudioEnum.UI.set_state_bgm_decrease)
 	else
 		AudioMgr.instance:trigger(AudioEnum.UI.set_state_bgm_redecrease)
 	end
 end
 
-function var_0_0.onOpen(arg_13_0)
-	arg_13_0:refreshUI()
-	NavigateMgr.instance:addEscape(ViewName.VersionActivity1_2DungeonView, arg_13_0._onEscBtnClick, arg_13_0)
-	arg_13_0:_detectHardModel()
-	gohelper.setActive(arg_13_0._btn3.gameObject, DungeonMapModel.instance:elementIsFinished(12101103))
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_13_0.dailyRefresh, arg_13_0)
-	arg_13_0:_dimBgm(true)
-	arg_13_0:_showNoteRedPoint()
-	arg_13_0:_showClueTips()
-	arg_13_0:_showCurrencyNum()
+function VersionActivity1_2DungeonView:onOpen()
+	self:refreshUI()
+	NavigateMgr.instance:addEscape(ViewName.VersionActivity1_2DungeonView, self._onEscBtnClick, self)
+	self:_detectHardModel()
+	gohelper.setActive(self._btn3.gameObject, DungeonMapModel.instance:elementIsFinished(12101103))
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self.dailyRefresh, self)
+	self:_dimBgm(true)
+	self:_showNoteRedPoint()
+	self:_showClueTips()
+	self:_showCurrencyNum()
 
 	if DungeonMapModel.instance:getElementById(12101091) then
 		DungeonRpc.instance:sendMapElementRequest(12101091)
 	end
 end
 
-function var_0_0._onCurrencyChange(arg_14_0)
-	arg_14_0:_showCurrencyNum()
+function VersionActivity1_2DungeonView:_onCurrencyChange()
+	self:_showCurrencyNum()
 end
 
-function var_0_0._showCurrencyNum(arg_15_0)
-	local var_15_0 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.DryForest)
-	local var_15_1 = var_15_0 and var_15_0.quantity or 0
+function VersionActivity1_2DungeonView:_showCurrencyNum()
+	local currencyMO = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.DryForest)
+	local quantity = currencyMO and currencyMO.quantity or 0
 
-	arg_15_0._currencyNum.text = GameUtil.numberDisplay(var_15_1)
+	self._currencyNum.text = GameUtil.numberDisplay(quantity)
 
-	local var_15_2 = ReactivityModel.instance:getActivityCurrencyId(VersionActivity1_2Enum.ActivityId.Dungeon)
-	local var_15_3 = CurrencyModel.instance:getCurrency(var_15_2)
-	local var_15_4 = var_15_3 and var_15_3.quantity or 0
+	local currencyId = ReactivityModel.instance:getActivityCurrencyId(VersionActivity1_2Enum.ActivityId.Dungeon)
 
-	arg_15_0._currencyNumLvHuEMen.text = GameUtil.numberDisplay(var_15_4)
+	currencyMO = CurrencyModel.instance:getCurrency(currencyId)
+	quantity = currencyMO and currencyMO.quantity or 0
+	self._currencyNumLvHuEMen.text = GameUtil.numberDisplay(quantity)
 end
 
-function var_0_0.dailyRefresh(arg_16_0)
-	arg_16_0:_detectHardModel()
+function VersionActivity1_2DungeonView:dailyRefresh()
+	self:_detectHardModel()
 end
 
-function var_0_0._detectHardModel(arg_17_0)
-	local var_17_0 = VersionActivity1_2DungeonMapEpisodeView.hardModelIsOpen(arg_17_0)
+function VersionActivity1_2DungeonView:_detectHardModel()
+	local isOpen = VersionActivity1_2DungeonMapEpisodeView.hardModelIsOpen(self)
 
-	gohelper.setActive(arg_17_0._imagehardModeIconTxtGo, var_17_0)
-	gohelper.setActive(arg_17_0._gohardmodelock, not var_17_0)
+	gohelper.setActive(self._imagehardModeIconTxtGo, isOpen)
+	gohelper.setActive(self._gohardmodelock, not isOpen)
 
-	if not var_17_0 then
-		local var_17_1 = VersionActivity1_2DungeonEnum.DungeonChapterId.Activity1_2DungeonHard
+	if not isOpen then
+		local chapterId = VersionActivity1_2DungeonEnum.DungeonChapterId.Activity1_2DungeonHard
 
-		arg_17_0._hardBtnAni:Play("idle", 0, 0)
+		self._hardBtnAni:Play("idle", 0, 0)
 
-		local var_17_2 = VersionActivityConfig.instance:getAct113DungeonChapterOpenTimeStamp(var_17_1)
-		local var_17_3 = ServerTime.now()
+		local openTimeStamp = VersionActivityConfig.instance:getAct113DungeonChapterOpenTimeStamp(chapterId)
+		local serverTime = ServerTime.now()
 
-		if var_17_3 < var_17_2 then
-			local var_17_4 = var_17_2 - var_17_3
-			local var_17_5 = Mathf.Floor(var_17_4 / TimeUtil.OneDaySecond)
-			local var_17_6 = var_17_4 % TimeUtil.OneDaySecond
-			local var_17_7 = Mathf.Floor(var_17_6 / TimeUtil.OneHourSecond)
-			local var_17_8 = ActivityModel.instance:getActivityInfo()[VersionActivity1_2Enum.ActivityId.Dungeon]
+		if serverTime < openTimeStamp then
+			local timeStampOffset = openTimeStamp - serverTime
+			local day = Mathf.Floor(timeStampOffset / TimeUtil.OneDaySecond)
+			local hourSecond = timeStampOffset % TimeUtil.OneDaySecond
+			local hour = Mathf.Floor(hourSecond / TimeUtil.OneHourSecond)
+			local actInfoMo = ActivityModel.instance:getActivityInfo()[VersionActivity1_2Enum.ActivityId.Dungeon]
 
-			if var_17_5 > 0 then
-				local var_17_9 = var_17_8:getRemainTimeStr2(var_17_4)
+			if day > 0 then
+				local tempStr = actInfoMo:getRemainTimeStr2(timeStampOffset)
 
-				if var_17_7 > 0 then
-					var_17_9 = var_17_9 .. var_17_7 .. luaLang("time_hour2")
+				if hour > 0 then
+					tempStr = tempStr .. hour .. luaLang("time_hour2")
 				end
 
-				arg_17_0._txtunlocktime.text = string.format(luaLang("seasonmainview_timeopencondition"), var_17_9)
+				self._txtunlocktime.text = string.format(luaLang("seasonmainview_timeopencondition"), tempStr)
 			else
-				arg_17_0._txtunlocktime.text = string.format(luaLang("seasonmainview_timeopencondition"), var_17_8:getRemainTimeStr2(var_17_4))
+				self._txtunlocktime.text = string.format(luaLang("seasonmainview_timeopencondition"), actInfoMo:getRemainTimeStr2(timeStampOffset))
 			end
 
 			return
 		end
 
-		local var_17_10, var_17_11 = DungeonModel.instance:chapterIsUnLock(VersionActivity1_2DungeonEnum.DungeonChapterId.Activity1_2DungeonHard)
-		local var_17_12 = DungeonConfig.instance:getChapterCO(var_17_1)
+		local isOpen, unLockEpisodeId = DungeonModel.instance:chapterIsUnLock(VersionActivity1_2DungeonEnum.DungeonChapterId.Activity1_2DungeonHard)
+		local chapterConfig = DungeonConfig.instance:getChapterCO(chapterId)
 
-		arg_17_0._txtunlocktime.text = string.format(luaLang("dungeon_unlock_episode_mode"), var_17_12.chapterIndex .. "-" .. VersionActivity1_2DungeonConfig.instance:getEpisodeIndex(var_17_11))
-	elseif var_0_0.getHardModelUnlockAniFinish() == 0 then
-		gohelper.setActive(arg_17_0._gohardmodelock, true)
+		self._txtunlocktime.text = string.format(luaLang("dungeon_unlock_episode_mode"), chapterConfig.chapterIndex .. "-" .. VersionActivity1_2DungeonConfig.instance:getEpisodeIndex(unLockEpisodeId))
+	elseif VersionActivity1_2DungeonView.getHardModelUnlockAniFinish() == 0 then
+		gohelper.setActive(self._gohardmodelock, true)
 
-		arg_17_0._txtunlocktime.text = ""
+		self._txtunlocktime.text = ""
 
-		gohelper.setActive(gohelper.findChild(arg_17_0._gohardmodelock, "icon"), false)
-		var_0_0.setHardModelUnlockAniFinish()
-		arg_17_0._hardBtnAni:Play("unlock")
+		gohelper.setActive(gohelper.findChild(self._gohardmodelock, "icon"), false)
+		VersionActivity1_2DungeonView.setHardModelUnlockAniFinish()
+		self._hardBtnAni:Play("unlock")
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_unlock)
 	end
 end
 
-function var_0_0.getHardModelUnlockAniFinish()
+function VersionActivity1_2DungeonView.getHardModelUnlockAniFinish()
 	return PlayerPrefsHelper.getNumber(PlayerModel.instance:getMyUserId() .. PlayerPrefsKey.Fight1_2HardModelUnlockAniFinish, 0)
 end
 
-function var_0_0.setHardModelUnlockAniFinish()
+function VersionActivity1_2DungeonView.setHardModelUnlockAniFinish()
 	return PlayerPrefsHelper.setNumber(PlayerModel.instance:getMyUserId() .. PlayerPrefsKey.Fight1_2HardModelUnlockAniFinish, 1)
 end
 
-function var_0_0._onReceiveGet116InfosReply(arg_20_0)
+function VersionActivity1_2DungeonView:_onReceiveGet116InfosReply()
 	return
 end
 
-function var_0_0.refreshUI(arg_21_0)
-	local var_21_0 = arg_21_0.viewParam
+function VersionActivity1_2DungeonView:refreshUI()
+	local viewParam = self.viewParam
 
-	if var_21_0 and var_21_0.jumpParam then
-		if var_21_0.jumpParam == JumpEnum.Activity1_2DungeonJump.Shop then
+	if viewParam and viewParam.jumpParam then
+		if viewParam.jumpParam == JumpEnum.Activity1_2DungeonJump.Shop then
 			ReactivityController.instance:openReactivityStoreView(VersionActivity1_2Enum.ActivityId.Dungeon)
-		elseif var_21_0.jumpParam == JumpEnum.Activity1_2DungeonJump.Task then
+		elseif viewParam.jumpParam == JumpEnum.Activity1_2DungeonJump.Task then
 			ReactivityController.instance:openReactivityTaskView(VersionActivity1_2Enum.ActivityId.Dungeon)
 		end
 
-		var_21_0.jumpParam = nil
+		viewParam.jumpParam = nil
 	end
 end
 
-function var_0_0.refreshActivityCurrency(arg_22_0)
+function VersionActivity1_2DungeonView:refreshActivityCurrency()
 	return
 end
 
-function var_0_0._onReceiveAct121UpdatePush(arg_23_0)
-	arg_23_0:_showClueTips()
+function VersionActivity1_2DungeonView:_onReceiveAct121UpdatePush()
+	self:_showClueTips()
 end
 
-function var_0_0.openMapInteractiveItem(arg_24_0)
-	arg_24_0._interActiveItem = arg_24_0._interActiveItem or arg_24_0:openSubView(DungeonMapInteractive1_2Item, arg_24_0._gointeractiveroot)
+function VersionActivity1_2DungeonView:openMapInteractiveItem()
+	self._interActiveItem = self._interActiveItem or self:openSubView(DungeonMapInteractive1_2Item, self._gointeractiveroot)
 
 	DungeonController.instance:dispatchEvent(DungeonEvent.OnSetEpisodeListVisible, false)
 
-	return arg_24_0._interActiveItem
+	return self._interActiveItem
 end
 
-function var_0_0._onSetEpisodeListVisible(arg_25_0, arg_25_1)
-	arg_25_0:_setViewVisible(arg_25_1)
+function VersionActivity1_2DungeonView:_onSetEpisodeListVisible(state)
+	self:_setViewVisible(state)
 end
 
-function var_0_0._setViewVisible(arg_26_0, arg_26_1)
-	if arg_26_1 then
-		arg_26_0._btnAni1:Play("open")
-		arg_26_0._btnAni2:Play("taskitem_in")
-		arg_26_0._btnAni3:Play("open")
-		arg_26_0._btnAni4:Play("open")
-		arg_26_0._rightBtnAni:Play("open")
+function VersionActivity1_2DungeonView:_setViewVisible(open)
+	if open then
+		self._btnAni1:Play("open")
+		self._btnAni2:Play("taskitem_in")
+		self._btnAni3:Play("open")
+		self._btnAni4:Play("open")
+		self._rightBtnAni:Play("open")
 
-		arg_26_0._rectmask2D.padding = Vector4(0, 0, 0, 0)
+		self._rectmask2D.padding = Vector4(0, 0, 0, 0)
 	else
-		arg_26_0._btnAni1:Play("close")
-		arg_26_0._btnAni2:Play("taskitem_out")
-		arg_26_0._btnAni3:Play("close")
-		arg_26_0._btnAni4:Play("close")
-		arg_26_0._rightBtnAni:Play("close")
+		self._btnAni1:Play("close")
+		self._btnAni2:Play("taskitem_out")
+		self._btnAni3:Play("close")
+		self._btnAni4:Play("close")
+		self._rightBtnAni:Play("close")
 
-		arg_26_0._rectmask2D.padding = Vector4(0, 0, 600, 0)
+		self._rectmask2D.padding = Vector4(0, 0, 600, 0)
 	end
 
-	gohelper.setActive(arg_26_0._topLeftGo, arg_26_1)
-	gohelper.setActive(arg_26_0._topRight, arg_26_1)
-	gohelper.setActive(arg_26_0._btncloseview, not arg_26_1)
+	gohelper.setActive(self._topLeftGo, open)
+	gohelper.setActive(self._topRight, open)
+	gohelper.setActive(self._btncloseview, not open)
 end
 
-function var_0_0._onOpenView(arg_27_0, arg_27_1)
-	if arg_27_1 == ViewName.VersionActivity1_2DungeonMapLevelView then
-		arg_27_0:_setViewVisible()
-	end
-end
-
-function var_0_0._onCloseView(arg_28_0, arg_28_1)
-	if arg_28_1 == ViewName.VersionActivity1_2DungeonMapLevelView then
-		arg_28_0:_setViewVisible(true)
-	elseif arg_28_1 == ViewName.VersionActivity_1_2_StoryCollectView then
-		arg_28_0:_showNoteRedPoint()
-	elseif arg_28_1 == ViewName.CommonPropView and arg_28_0._needShowNoteUnlock then
-		arg_28_0._needShowNoteUnlock = false
-
-		gohelper.setActive(arg_28_0._btn3.gameObject, true)
-		gohelper.onceAddComponent(arg_28_0._btn3.gameObject, typeof(UnityEngine.Animator)):Play("unlock")
+function VersionActivity1_2DungeonView:_onOpenView(viewName)
+	if viewName == ViewName.VersionActivity1_2DungeonMapLevelView then
+		self:_setViewVisible()
 	end
 end
 
-function var_0_0._showNoteUnlock(arg_29_0)
-	arg_29_0._needShowNoteUnlock = true
+function VersionActivity1_2DungeonView:_onCloseView(viewName)
+	if viewName == ViewName.VersionActivity1_2DungeonMapLevelView then
+		self:_setViewVisible(true)
+	elseif viewName == ViewName.VersionActivity_1_2_StoryCollectView then
+		self:_showNoteRedPoint()
+	elseif viewName == ViewName.CommonPropView and self._needShowNoteUnlock then
+		self._needShowNoteUnlock = false
+
+		gohelper.setActive(self._btn3.gameObject, true)
+		gohelper.onceAddComponent(self._btn3.gameObject, typeof(UnityEngine.Animator)):Play("unlock")
+	end
 end
 
-function var_0_0._showNoteRedPoint(arg_30_0)
-	local var_30_0 = gohelper.findChild(arg_30_0._btn3.gameObject, "redPoint")
-
-	gohelper.setActive(var_30_0, VersionActivity_1_2_StoryCollectView.getRedPoint())
+function VersionActivity1_2DungeonView:_showNoteUnlock()
+	self._needShowNoteUnlock = true
 end
 
-function var_0_0._showClueTips(arg_31_0)
-	arg_31_0._clueTips = FlowSequence.New()
+function VersionActivity1_2DungeonView:_showNoteRedPoint()
+	local redPoint = gohelper.findChild(self._btn3.gameObject, "redPoint")
 
-	arg_31_0._clueTips:addWork(FightWork1_2ClueTips.New())
-	arg_31_0._clueTips:start()
+	gohelper.setActive(redPoint, VersionActivity_1_2_StoryCollectView.getRedPoint())
 end
 
-function var_0_0._OnRemoveElement(arg_32_0, arg_32_1)
-	if arg_32_1 == 12101091 then
+function VersionActivity1_2DungeonView:_showClueTips()
+	self._clueTips = FlowSequence.New()
+
+	self._clueTips:addWork(FightWork1_2ClueTips.New())
+	self._clueTips:start()
+end
+
+function VersionActivity1_2DungeonView:_OnRemoveElement(id)
+	if id == 12101091 then
 		VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.afterCollectLastShow)
 	end
 end
 
-function var_0_0.onClose(arg_33_0)
-	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, arg_33_0.dailyRefresh, arg_33_0)
-	UIBlockMgr.instance:endBlock(arg_33_0.viewName)
-	arg_33_0:_dimBgm(false)
+function VersionActivity1_2DungeonView:onClose()
+	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, self.dailyRefresh, self)
+	UIBlockMgr.instance:endBlock(self.viewName)
+	self:_dimBgm(false)
 
-	if arg_33_0._clueTips then
-		arg_33_0._clueTips:stop()
+	if self._clueTips then
+		self._clueTips:stop()
 
-		arg_33_0._clueTips = nil
+		self._clueTips = nil
 	end
 end
 
-function var_0_0.onDestroyView(arg_34_0)
-	arg_34_0._simagebg:UnLoadImage()
-	arg_34_0._simagebgeffect:UnLoadImage()
-	arg_34_0._simagehardbg:UnLoadImage()
+function VersionActivity1_2DungeonView:onDestroyView()
+	self._simagebg:UnLoadImage()
+	self._simagebgeffect:UnLoadImage()
+	self._simagehardbg:UnLoadImage()
 end
 
-return var_0_0
+return VersionActivity1_2DungeonView

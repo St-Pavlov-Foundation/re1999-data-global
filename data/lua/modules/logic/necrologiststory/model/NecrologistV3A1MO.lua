@@ -1,183 +1,197 @@
-﻿module("modules.logic.necrologiststory.model.NecrologistV3A1MO", package.seeall)
+﻿-- chunkname: @modules/logic/necrologiststory/model/NecrologistV3A1MO.lua
 
-local var_0_0 = class("NecrologistV3A1MO", NecrologistStoryGameBaseMO)
+module("modules.logic.necrologiststory.model.NecrologistV3A1MO", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local NecrologistV3A1MO = class("NecrologistV3A1MO", NecrologistStoryGameBaseMO)
+
+function NecrologistV3A1MO:onInit()
 	return
 end
 
-function var_0_0.onUpdateData(arg_2_0)
-	local var_2_0 = arg_2_0:getData()
-	local var_2_1 = NecrologistStoryV3A1Config.instance:getDefaultBaseId()
+function NecrologistV3A1MO:onUpdateData()
+	local data = self:getData()
+	local initBaseId = NecrologistStoryV3A1Config.instance:getDefaultBaseId()
 
-	arg_2_0.curBaseId = var_2_0.curBaseId or var_2_1
-	arg_2_0.curTime = var_2_0.curTime
-	arg_2_0.areaUnlockDict = {}
+	self.curBaseId = data.curBaseId or initBaseId
+	self.curTime = data.curTime
+	self.areaUnlockDict = {}
 
-	if var_2_0.areaUnlockList then
-		for iter_2_0, iter_2_1 in ipairs(var_2_0.areaUnlockList) do
-			arg_2_0.areaUnlockDict[iter_2_1] = true
+	if data.areaUnlockList then
+		for _, areaId in ipairs(data.areaUnlockList) do
+			self.areaUnlockDict[areaId] = true
 		end
 	end
 
-	local var_2_2 = NecrologistStoryV3A1Config.instance:getFugaorenBaseCo(arg_2_0.curBaseId)
+	local curBaseConfig = NecrologistStoryV3A1Config.instance:getFugaorenBaseCo(self.curBaseId)
 
-	arg_2_0.areaUnlockDict[var_2_2.areaId] = true
-	arg_2_0.hasEnterList = {}
+	self.areaUnlockDict[curBaseConfig.areaId] = true
+	self.hasEnterList = {}
 
-	if var_2_0.hasEnterList then
-		for iter_2_2, iter_2_3 in ipairs(var_2_0.hasEnterList) do
-			arg_2_0.hasEnterList[iter_2_3] = true
-		end
-	end
-end
-
-function var_0_0.onSaveData(arg_3_0)
-	local var_3_0 = arg_3_0:getData()
-
-	var_3_0.curBaseId = arg_3_0.curBaseId
-	var_3_0.curTime = arg_3_0.curTime
-	var_3_0.areaUnlockList = {}
-
-	for iter_3_0, iter_3_1 in pairs(arg_3_0.areaUnlockDict) do
-		table.insert(var_3_0.areaUnlockList, iter_3_0)
-	end
-
-	var_3_0.hasEnterList = {}
-
-	for iter_3_2, iter_3_3 in pairs(arg_3_0.hasEnterList) do
-		table.insert(var_3_0.hasEnterList, iter_3_2)
-	end
-end
-
-function var_0_0.setBaseEntered(arg_4_0, arg_4_1)
-	if arg_4_0:isBaseEntered(arg_4_1) then
-		return
-	end
-
-	NecrologistStoryRpc.instance:sendFinishNecrologistStoryModeRequest(arg_4_0.id, arg_4_1)
-
-	arg_4_0.hasEnterList[arg_4_1] = true
-
-	arg_4_0:setDataDirty()
-end
-
-function var_0_0.isBaseEntered(arg_5_0, arg_5_1)
-	return arg_5_0.hasEnterList[arg_5_1] ~= nil
-end
-
-function var_0_0.getCurBaseId(arg_6_0)
-	return arg_6_0.curBaseId
-end
-
-function var_0_0.setCurBaseId(arg_7_0, arg_7_1)
-	if arg_7_0:getCurBaseId() == arg_7_1 then
-		return
-	end
-
-	arg_7_0.curBaseId = arg_7_1
-
-	NecrologistStoryController.instance:dispatchEvent(NecrologistStoryEvent.V3A1_MoveToBase, arg_7_1)
-	arg_7_0:setDataDirty()
-end
-
-function var_0_0.getCurTime(arg_8_0)
-	local var_8_0 = arg_8_0.curTime
-
-	if var_8_0 == nil then
-		local var_8_1 = arg_8_0:getCurBaseId()
-
-		var_8_0 = NecrologistStoryV3A1Config.instance:getFugaorenBaseCo(var_8_1).startTime
-		arg_8_0.curTime = var_8_0
-	end
-
-	return var_8_0
-end
-
-function var_0_0.setTime(arg_9_0, arg_9_1)
-	if arg_9_1 == arg_9_0.curTime then
-		return
-	end
-
-	arg_9_0.curTime = arg_9_1
-
-	arg_9_0:setDataDirty()
-end
-
-function var_0_0.addTime(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0:getCurTime()
-
-	arg_10_0:setTime(var_10_0 + arg_10_1)
-end
-
-function var_0_0.isAreaUnlock(arg_11_0, arg_11_1)
-	return arg_11_0.areaUnlockDict[arg_11_1] ~= nil
-end
-
-function var_0_0.setAreaUnlock(arg_12_0, arg_12_1)
-	if arg_12_0:isAreaUnlock(arg_12_1) then
-		return
-	end
-
-	arg_12_0.areaUnlockDict[arg_12_1] = true
-
-	NecrologistStoryController.instance:dispatchEvent(NecrologistStoryEvent.V3A1_UnlockArea, arg_12_1)
-	arg_12_0:setDataDirty()
-end
-
-function var_0_0.onStoryStateChange(arg_13_0, arg_13_1, arg_13_2)
-	if arg_13_2 == NecrologistStoryEnum.StoryState.Finish then
-		local var_13_0 = NecrologistStoryV3A1Config.instance:getStoryConfig(arg_13_1)
-
-		arg_13_0:tryFinishBase(var_13_0.baseId)
-	end
-end
-
-function var_0_0.tryFinishBase(arg_14_0, arg_14_1)
-	if arg_14_0:isBaseAllStoryFinish(arg_14_1) then
-		local var_14_0 = NecrologistStoryV3A1Config.instance:getFugaorenBaseCo(arg_14_1)
-
-		if var_14_0.unlockAreaId > 0 then
-			arg_14_0:setAreaUnlock(var_14_0.unlockAreaId)
+	if data.hasEnterList then
+		for _, baseId in ipairs(data.hasEnterList) do
+			self.hasEnterList[baseId] = true
 		end
 	end
 end
 
-function var_0_0.isBaseCanFinish(arg_15_0, arg_15_1)
-	if arg_15_0:isBaseAllStoryFinish(arg_15_1) then
-		local var_15_0 = NecrologistStoryV3A1Config.instance:getFugaorenBaseCo(arg_15_1)
+function NecrologistV3A1MO:onSaveData()
+	local data = self:getData()
 
-		if var_15_0.unlockAreaId > 0 and arg_15_0:isAreaUnlock(var_15_0.unlockAreaId) then
+	data.curBaseId = self.curBaseId
+	data.curTime = self.curTime
+	data.areaUnlockList = {}
+
+	for areaId, _ in pairs(self.areaUnlockDict) do
+		table.insert(data.areaUnlockList, areaId)
+	end
+
+	data.hasEnterList = {}
+
+	for baseId, _ in pairs(self.hasEnterList) do
+		table.insert(data.hasEnterList, baseId)
+	end
+end
+
+function NecrologistV3A1MO:setBaseEntered(baseId)
+	if self:isBaseEntered(baseId) then
+		return
+	end
+
+	NecrologistStoryRpc.instance:sendFinishNecrologistStoryModeRequest(self.id, baseId)
+
+	self.hasEnterList[baseId] = true
+
+	self:setDataDirty()
+end
+
+function NecrologistV3A1MO:isBaseEntered(baseId)
+	return self.hasEnterList[baseId] ~= nil
+end
+
+function NecrologistV3A1MO:getCurBaseId()
+	return self.curBaseId
+end
+
+function NecrologistV3A1MO:setCurBaseId(baseId)
+	local curBaseId = self:getCurBaseId()
+
+	if curBaseId == baseId then
+		return
+	end
+
+	self.curBaseId = baseId
+
+	NecrologistStoryController.instance:dispatchEvent(NecrologistStoryEvent.V3A1_MoveToBase, baseId)
+	self:setDataDirty()
+end
+
+function NecrologistV3A1MO:getCurTime()
+	local time = self.curTime
+
+	if time == nil then
+		local curBaseId = self:getCurBaseId()
+		local config = NecrologistStoryV3A1Config.instance:getFugaorenBaseCo(curBaseId)
+
+		time = config.startTime
+		self.curTime = time
+	end
+
+	return time
+end
+
+function NecrologistV3A1MO:setTime(time)
+	if time == self.curTime then
+		return
+	end
+
+	self.curTime = time
+
+	self:setDataDirty()
+end
+
+function NecrologistV3A1MO:addTime(time)
+	local curTime = self:getCurTime()
+
+	self:setTime(curTime + time)
+end
+
+function NecrologistV3A1MO:isAreaUnlock(areaId)
+	return self.areaUnlockDict[areaId] ~= nil
+end
+
+function NecrologistV3A1MO:setAreaUnlock(areaId)
+	if self:isAreaUnlock(areaId) then
+		return
+	end
+
+	self.areaUnlockDict[areaId] = true
+
+	NecrologistStoryController.instance:dispatchEvent(NecrologistStoryEvent.V3A1_UnlockArea, areaId)
+	self:setDataDirty()
+end
+
+function NecrologistV3A1MO:onStoryStateChange(storyId, state)
+	if state == NecrologistStoryEnum.StoryState.Finish then
+		local storyCfg = NecrologistStoryV3A1Config.instance:getStoryConfig(storyId)
+
+		self:tryFinishBase(storyCfg.baseId)
+	end
+end
+
+function NecrologistV3A1MO:tryFinishBase(baseId)
+	local allStoryFinish = self:isBaseAllStoryFinish(baseId)
+
+	if allStoryFinish then
+		local config = NecrologistStoryV3A1Config.instance:getFugaorenBaseCo(baseId)
+
+		if config.unlockAreaId > 0 then
+			self:setAreaUnlock(config.unlockAreaId)
+		end
+	end
+end
+
+function NecrologistV3A1MO:isBaseCanFinish(baseId)
+	local allStoryFinish = self:isBaseAllStoryFinish(baseId)
+
+	if allStoryFinish then
+		local config = NecrologistStoryV3A1Config.instance:getFugaorenBaseCo(baseId)
+
+		if config.unlockAreaId > 0 and self:isAreaUnlock(config.unlockAreaId) then
 			return true
 		end
 	end
 end
 
-function var_0_0.isBaseFinish(arg_16_0, arg_16_1)
-	if NecrologistStoryV3A1Config.instance:getFugaorenBaseCo(arg_16_1).type == NecrologistStoryEnum.BaseType.InteractiveBase then
+function NecrologistV3A1MO:isBaseFinish(baseId)
+	local config = NecrologistStoryV3A1Config.instance:getFugaorenBaseCo(baseId)
+
+	if config.type == NecrologistStoryEnum.BaseType.InteractiveBase then
 		return false
 	end
 
-	return (arg_16_0:isBaseAllStoryFinish(arg_16_1))
+	local allStoryFinish = self:isBaseAllStoryFinish(baseId)
+
+	return allStoryFinish
 end
 
-function var_0_0.isBaseAllStoryFinish(arg_17_0, arg_17_1, arg_17_2)
-	if not arg_17_1 or arg_17_1 == 0 then
+function NecrologistV3A1MO:isBaseAllStoryFinish(baseId, notCheckEnd)
+	if not baseId or baseId == 0 then
 		return true
 	end
 
-	local var_17_0 = NecrologistStoryV3A1Config.instance:getDefaultBaseId()
-	local var_17_1 = NecrologistStoryV3A1Config.instance:getBaseStoryList(arg_17_1) or {}
-	local var_17_2 = arg_17_1 == var_17_0 and var_17_1[#var_17_1]
+	local initBaseId = NecrologistStoryV3A1Config.instance:getDefaultBaseId()
+	local storyList = NecrologistStoryV3A1Config.instance:getBaseStoryList(baseId) or {}
+	local isInitBase = baseId == initBaseId
+	local endStoryId = isInitBase and storyList[#storyList]
 
-	for iter_17_0, iter_17_1 in ipairs(var_17_1) do
-		local var_17_3 = arg_17_0:getStoryState(iter_17_1)
+	for _, storyId in ipairs(storyList) do
+		local storyState = self:getStoryState(storyId)
 
-		if iter_17_1 == var_17_2 and (arg_17_2 or not arg_17_0:isInEndBase()) then
-			var_17_3 = NecrologistStoryEnum.StoryState.Finish
+		if storyId == endStoryId and (notCheckEnd or not self:isInEndBase()) then
+			storyState = NecrologistStoryEnum.StoryState.Finish
 		end
 
-		if var_17_3 ~= NecrologistStoryEnum.StoryState.Finish then
+		if storyState ~= NecrologistStoryEnum.StoryState.Finish then
 			return false
 		end
 	end
@@ -185,86 +199,89 @@ function var_0_0.isBaseAllStoryFinish(arg_17_0, arg_17_1, arg_17_2)
 	return true
 end
 
-function var_0_0.getCurTargetData(arg_18_0)
-	if arg_18_0:isInEndBase() then
+function NecrologistV3A1MO:getCurTargetData()
+	if self:isInEndBase() then
 		return nil
 	end
 
-	local var_18_0 = NecrologistStoryV3A1Config.instance:getBaseTargetList()
-	local var_18_1 = arg_18_0:getCurBaseId()
-	local var_18_2 = arg_18_0:getCurTime()
-	local var_18_3
+	local targetList = NecrologistStoryV3A1Config.instance:getBaseTargetList()
+	local curBaseId = self:getCurBaseId()
+	local curTime = self:getCurTime()
+	local data
 
-	for iter_18_0, iter_18_1 in ipairs(var_18_0) do
-		if var_18_1 <= iter_18_1.id then
-			var_18_3 = {
-				isEnter = var_18_1 == iter_18_1.id
+	for _, config in ipairs(targetList) do
+		if curBaseId <= config.id then
+			data = {
+				isEnter = curBaseId == config.id
 			}
 
-			if var_18_3.isEnter then
-				var_18_3.isFail = var_18_2 ~= iter_18_1.endTime
+			if data.isEnter then
+				data.isFail = curTime ~= config.endTime
 			else
-				var_18_3.isFail = var_18_2 > iter_18_1.endTime
+				data.isFail = curTime > config.endTime
 			end
 
-			var_18_3.config = iter_18_1
+			data.config = config
 
 			break
 		end
 	end
 
-	return var_18_3
+	return data
 end
 
-function var_0_0.isInEndBase(arg_19_0)
-	if arg_19_0:getCurBaseId() ~= NecrologistStoryV3A1Config.instance:getDefaultBaseId() then
+function NecrologistV3A1MO:isInEndBase()
+	local curBaseId = self:getCurBaseId()
+	local initBaseId = NecrologistStoryV3A1Config.instance:getDefaultBaseId()
+
+	if curBaseId ~= initBaseId then
 		return false
 	end
 
-	return arg_19_0:isAreaUnlock(4)
+	return self:isAreaUnlock(4)
 end
 
-function var_0_0.getGameState(arg_20_0)
-	local var_20_0 = arg_20_0:getCurTargetData()
-	local var_20_1 = NecrologistStoryV3A1Config.instance:getDefaultBaseId()
+function NecrologistV3A1MO:getGameState()
+	local curTargetData = self:getCurTargetData()
+	local initBaseId = NecrologistStoryV3A1Config.instance:getDefaultBaseId()
 
-	if var_20_0 and var_20_0.isFail then
+	if curTargetData and curTargetData.isFail then
 		return NecrologistStoryEnum.GameState.Fail
 	end
 
-	local var_20_2 = arg_20_0:getCurBaseId()
+	local curBaseId = self:getCurBaseId()
 
-	if arg_20_0:isInEndBase() and arg_20_0:isBaseAllStoryFinish(var_20_2) then
+	if self:isInEndBase() and self:isBaseAllStoryFinish(curBaseId) then
 		return NecrologistStoryEnum.GameState.Win
 	end
 
 	return NecrologistStoryEnum.GameState.Normal
 end
 
-function var_0_0.resetProgressByFail(arg_21_0)
-	local var_21_0 = arg_21_0:getCurBaseId()
-	local var_21_1, var_21_2 = NecrologistStoryV3A1Config.instance:getCurStartTime(var_21_0)
+function NecrologistV3A1MO:resetProgressByFail()
+	local curBaseId = self:getCurBaseId()
+	local resetId, resetTime = NecrologistStoryV3A1Config.instance:getCurStartTime(curBaseId)
 
-	arg_21_0.curBaseId = var_21_1
-	arg_21_0.curTime = var_21_2
+	self.curBaseId = resetId
+	self.curTime = resetTime
 
-	arg_21_0:setDataDirty()
+	self:setDataDirty()
 	NecrologistStoryController.instance:dispatchEvent(NecrologistStoryEvent.V3A1_GameReset)
 end
 
-function var_0_0.canReset(arg_22_0)
-	local var_22_0 = arg_22_0:getCurBaseId()
-	local var_22_1, var_22_2 = NecrologistStoryV3A1Config.instance:getCurStartTime(var_22_0)
+function NecrologistV3A1MO:canReset()
+	local curBaseId = self:getCurBaseId()
+	local resetId, resetTime = NecrologistStoryV3A1Config.instance:getCurStartTime(curBaseId)
 
-	return arg_22_0.curBaseId ~= var_22_1 or arg_22_0.curTime ~= var_22_2
+	return self.curBaseId ~= resetId or self.curTime ~= resetTime
 end
 
-function var_0_0.setIsExitGame(arg_23_0, arg_23_1)
-	arg_23_0.isExitGame = arg_23_1
+function NecrologistV3A1MO:setIsExitGame(isExit)
+	self.isExitGame = isExit
 end
 
-function var_0_0.getIsExitGame(arg_24_0)
-	return arg_24_0.isExitGame
+function NecrologistV3A1MO:getIsExitGame()
+	return self.isExitGame
 end
 
-return var_0_0
+return NecrologistV3A1MO

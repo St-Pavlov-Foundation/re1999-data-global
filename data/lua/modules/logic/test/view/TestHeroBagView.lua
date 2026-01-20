@@ -1,30 +1,32 @@
-﻿module("modules.logic.test.view.TestHeroBagView", package.seeall)
+﻿-- chunkname: @modules/logic/test/view/TestHeroBagView.lua
 
-local var_0_0 = class("TestHeroBagView", BaseViewExtended)
+module("modules.logic.test.view.TestHeroBagView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._scrollcard = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_card")
+local TestHeroBagView = class("TestHeroBagView", BaseViewExtended)
+
+function TestHeroBagView:onInitView()
+	self._scrollcard = gohelper.findChildScrollRect(self.viewGO, "#scroll_card")
 end
 
-function var_0_0.addEvents(arg_2_0)
+function TestHeroBagView:addEvents()
 	return
 end
 
-function var_0_0.definePrefabUrl(arg_3_0)
-	arg_3_0.internal_pre_url = "ui/viewres/character/characterbackpackheroview.prefab"
+function TestHeroBagView:definePrefabUrl()
+	self.internal_pre_url = "ui/viewres/character/characterbackpackheroview.prefab"
 end
 
-function var_0_0.onOpen(arg_4_0)
-	local var_4_0 = HeroModel.instance:getList()
+function TestHeroBagView:onOpen()
+	local data = HeroModel.instance:getList()
 
-	arg_4_0._scroll_view = arg_4_0:com_registSimpleScrollView(arg_4_0._scrollcard.gameObject, ScrollEnum.ScrollDirV, 6)
+	self._scroll_view = self:com_registSimpleScrollView(self._scrollcard.gameObject, ScrollEnum.ScrollDirV, 6)
 
-	arg_4_0._scroll_view:setClass(TestHeroBagItemView)
-	arg_4_0._scroll_view:setData(var_4_0)
+	self._scroll_view:setClass(TestHeroBagItemView)
+	self._scroll_view:setData(data)
 end
 
-function var_0_0.onClose(arg_5_0)
+function TestHeroBagView:onClose()
 	return
 end
 
-return var_0_0
+return TestHeroBagView

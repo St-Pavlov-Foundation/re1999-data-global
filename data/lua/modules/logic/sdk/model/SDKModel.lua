@@ -1,106 +1,122 @@
-﻿module("modules.logic.sdk.model.SDKModel", package.seeall)
+﻿-- chunkname: @modules/logic/sdk/model/SDKModel.lua
 
-local var_0_0 = class("SDKModel", BaseModel)
+module("modules.logic.sdk.model.SDKModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local SDKModel = class("SDKModel", BaseModel)
 
-	local var_1_0 = SDKMgr.instance:getChannelId()
-	local var_1_1 = SDKMgr.instance:getSubChannelId()
+function SDKModel:onInit()
+	self:reInit()
 
-	arg_1_0._isDmm = var_1_0 == "301"
-	arg_1_0._isSteam_GL = var_1_1 == "6007"
-	arg_1_0._isSteam_JP = var_1_1 == "6008"
+	local channelId = SDKMgr.instance:getChannelId()
+	local subChannelId = SDKMgr.instance:getSubChannelId()
+
+	self._isDmm = channelId == "301"
+	self._isSteam_GL = subChannelId == "6007"
+	self._isSteam_JP = subChannelId == "6008"
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._baseProperties = {}
+function SDKModel:reInit()
+	self._baseProperties = {}
 
-	arg_2_0:_modifyTrackDefine()
+	self:_modifyTrackDefine()
 end
 
-function var_0_0.isDmm(arg_3_0)
-	return arg_3_0._isDmm
+function SDKModel:isDmm()
+	return self._isDmm
 end
 
-function var_0_0._updateBaseProperties(arg_4_0)
-	local var_4_0 = SDKDataTrackMgr.instance:getDataTrackProperties()
+function SDKModel:setNeedShowATTWithGetIDFA(v)
+	local key = string.format(PlayerPrefsKey.NeedShowATTWithGetIDFA, PlayerModel.instance:getMyUserId())
 
-	if string.nilorempty(var_4_0) then
-		var_4_0 = cjson.encode(StatEnum.DefaultBaseProperties)
+	PlayerPrefsHelper.setNumber(key, v ~= false and 1 or 0)
+end
+
+function SDKModel:getNeedShowATTWithGetIDFA()
+	local key = string.format(PlayerPrefsKey.NeedShowATTWithGetIDFA, PlayerModel.instance:getMyUserId())
+
+	return PlayerPrefsHelper.getNumber(key, 1) == 1
+end
+
+function SDKModel:_updateBaseProperties()
+	local basePropertiesStr = SDKDataTrackMgr.instance:getDataTrackProperties()
+
+	if string.nilorempty(basePropertiesStr) then
+		basePropertiesStr = cjson.encode(StatEnum.DefaultBaseProperties)
 	end
 
-	arg_4_0._baseProperties = cjson.decode(var_4_0)
+	self._baseProperties = cjson.decode(basePropertiesStr)
 
-	StatRpc.instance:sendUpdateClientStatBaseInfoRequest(var_4_0)
+	StatRpc.instance:sendUpdateClientStatBaseInfoRequest(basePropertiesStr)
 end
 
-function var_0_0.updateBaseProperties(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0:_updateBaseProperties()
-	SDKController.instance:dispatchEvent(SDKEvent.BasePropertiesChange, arg_5_1, arg_5_2)
+function SDKModel:updateBaseProperties(code, msg)
+	self:_updateBaseProperties()
+	SDKController.instance:dispatchEvent(SDKEvent.BasePropertiesChange, code, msg)
 end
 
-function var_0_0.isVistor(arg_6_0)
+function SDKModel:isVistor()
 	return SDKMgr.instance:getUserType() == SDKEnum.AccountType.Guest
 end
 
-function var_0_0.setAccountBindBonus(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0.accountBindBonus
+function SDKModel:setAccountBindBonus(accountBindBonus)
+	local last = self.accountBindBonus
 
-	arg_7_0.accountBindBonus = arg_7_1
+	self.accountBindBonus = accountBindBonus
 
-	if var_7_0 and var_7_0 ~= arg_7_1 then
-		SDKController.instance:dispatchEvent(SDKEvent.UpdateAccountBindBonus, var_7_0, arg_7_1)
+	if last and last ~= accountBindBonus then
+		SDKController.instance:dispatchEvent(SDKEvent.UpdateAccountBindBonus, last, accountBindBonus)
 	end
 end
 
-function var_0_0.getAccountBindBonus(arg_8_0)
-	return arg_8_0.accountBindBonus or SDKEnum.RewardType.None
+function SDKModel:getAccountBindBonus()
+	return self.accountBindBonus or SDKEnum.RewardType.None
 end
 
-function var_0_0._modifyTrackDefine(arg_9_0)
-	arg_9_0:_modifyTrackDefine_EventName()
-	arg_9_0:_modifyTrackDefine_EventProperties()
-	arg_9_0:_modifyTrackDefine_PropertyTypes()
+function SDKModel:_modifyTrackDefine()
+	self:_modifyTrackDefine_EventName()
+	self:_modifyTrackDefine_EventProperties()
+	self:_modifyTrackDefine_PropertyTypes()
 end
 
-function var_0_0._modifyTrackDefine_EventName(arg_10_0)
-	SDKDataTrackMgr.EventName.summon_client = "summon_client"
+function SDKModel:_modifyTrackDefine_EventName()
+	local e = SDKDataTrackMgr.EventName
+
+	e.summon_client = "summon_client"
 end
 
-function var_0_0._modifyTrackDefine_EventProperties(arg_11_0)
-	local var_11_0 = SDKDataTrackMgr.EventProperties
+function SDKModel:_modifyTrackDefine_EventProperties()
+	local e = SDKDataTrackMgr.EventProperties
 
-	var_11_0.poolid = "poolid"
-	var_11_0.entrance = "entrance"
-	var_11_0.position_list = "position_list"
+	e.poolid = "poolid"
+	e.entrance = "entrance"
+	e.position_list = "position_list"
 end
 
-function var_0_0._modifyTrackDefine_PropertyTypes(arg_12_0)
-	local var_12_0 = SDKDataTrackMgr.PropertyTypes
-	local var_12_1 = SDKDataTrackMgr.EventProperties
+function SDKModel:_modifyTrackDefine_PropertyTypes()
+	local e = SDKDataTrackMgr.PropertyTypes
+	local p = SDKDataTrackMgr.EventProperties
 
-	var_12_0[var_12_1.poolid] = "number"
-	var_12_0[var_12_1.entrance] = "string"
-	var_12_0[var_12_1.position_list] = "string"
+	e[p.poolid] = "number"
+	e[p.entrance] = "string"
+	e[p.position_list] = "string"
 end
 
-function var_0_0.isSteam_GL(arg_13_0)
-	return arg_13_0._isSteam_GL
+function SDKModel:isSteam_GL()
+	return self._isSteam_GL
 end
 
-function var_0_0.isSteam_JP(arg_14_0)
-	return arg_14_0._isSteam_JP
+function SDKModel:isSteam_JP()
+	return self._isSteam_JP
 end
 
-function var_0_0.isSteam(arg_15_0)
-	return arg_15_0:isSteam_GL() or arg_15_0:isSteam_JP()
+function SDKModel:isSteam()
+	return self:isSteam_GL() or self:isSteam_JP()
 end
 
-function var_0_0.isPC(arg_16_0)
-	return BootNativeUtil.isWindows() or arg_16_0:isDmm() or arg_16_0:isSteam()
+function SDKModel:isPC()
+	return BootNativeUtil.isWindows() or self:isDmm() or self:isSteam()
 end
 
-var_0_0.instance = var_0_0.New()
+SDKModel.instance = SDKModel.New()
 
-return var_0_0
+return SDKModel

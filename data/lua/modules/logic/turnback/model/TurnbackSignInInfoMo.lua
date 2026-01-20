@@ -1,23 +1,25 @@
-﻿module("modules.logic.turnback.model.TurnbackSignInInfoMo", package.seeall)
+﻿-- chunkname: @modules/logic/turnback/model/TurnbackSignInInfoMo.lua
 
-local var_0_0 = pureTable("TurnbackSignInInfoMo")
+module("modules.logic.turnback.model.TurnbackSignInInfoMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.turnbackId = 0
-	arg_1_0.id = 0
-	arg_1_0.state = 0
-	arg_1_0.config = nil
+local TurnbackSignInInfoMo = pureTable("TurnbackSignInInfoMo")
+
+function TurnbackSignInInfoMo:ctor()
+	self.turnbackId = 0
+	self.id = 0
+	self.state = 0
+	self.config = nil
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0.turnbackId = arg_2_2
-	arg_2_0.id = arg_2_1.id
-	arg_2_0.state = arg_2_1.state
-	arg_2_0.config = TurnbackConfig.instance:getTurnbackSignInDayCo(arg_2_0.turnbackId, arg_2_0.id)
+function TurnbackSignInInfoMo:init(info, turnbackId)
+	self.turnbackId = turnbackId
+	self.id = info.id
+	self.state = info.state
+	self.config = TurnbackConfig.instance:getTurnbackSignInDayCo(self.turnbackId, self.id)
 end
 
-function var_0_0.updateState(arg_3_0, arg_3_1)
-	arg_3_0.state = arg_3_1
+function TurnbackSignInInfoMo:updateState(state)
+	self.state = state
 end
 
-return var_0_0
+return TurnbackSignInInfoMo

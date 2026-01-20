@@ -1,198 +1,202 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.enter.Act183MainView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/enter/Act183MainView.lua
 
-local var_0_0 = class("Act183MainView", BaseView)
-local var_0_1 = 1
-local var_0_2 = 30
+module("modules.logic.versionactivity2_5.challenge.view.enter.Act183MainView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "root/#go_topleft")
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "root/left/#txt_time")
-	arg_1_0._btnreward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/left/#btn_reward")
-	arg_1_0._gotaskreddot = gohelper.findChild(arg_1_0.viewGO, "root/left/#btn_reward/#go_taskreddot")
-	arg_1_0._btnrecord = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/left/#btn_record")
-	arg_1_0._btnmedal = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/left/#btn_medal")
-	arg_1_0._gomedalreddot = gohelper.findChild(arg_1_0.viewGO, "root/left/#btn_medal/#go_medalreddot")
-	arg_1_0._gomain = gohelper.findChild(arg_1_0.viewGO, "root/middle/#go_main")
-	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "root/middle/#go_main/#go_normal")
-	arg_1_0._gohard = gohelper.findChild(arg_1_0.viewGO, "root/middle/#go_main/#go_hard")
-	arg_1_0._btnentermain = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/middle/#btn_entermain")
-	arg_1_0._scrolldaily = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/right/#scroll_daily")
-	arg_1_0._godailyitem = gohelper.findChild(arg_1_0.viewGO, "root/right/#scroll_daily/Viewport/Content/#go_dailyitem")
-	arg_1_0._simagelevelpic = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/middle/#simage_LevelPic")
+local Act183MainView = class("Act183MainView", BaseView)
+local UpdateActremainTimeInterval = 1
+local UpdateDailyGroupInterval = 30
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Act183MainView:onInitView()
+	self._gotopleft = gohelper.findChild(self.viewGO, "root/#go_topleft")
+	self._txttime = gohelper.findChildText(self.viewGO, "root/left/#txt_time")
+	self._btnreward = gohelper.findChildButtonWithAudio(self.viewGO, "root/left/#btn_reward")
+	self._gotaskreddot = gohelper.findChild(self.viewGO, "root/left/#btn_reward/#go_taskreddot")
+	self._btnrecord = gohelper.findChildButtonWithAudio(self.viewGO, "root/left/#btn_record")
+	self._btnmedal = gohelper.findChildButtonWithAudio(self.viewGO, "root/left/#btn_medal")
+	self._gomedalreddot = gohelper.findChild(self.viewGO, "root/left/#btn_medal/#go_medalreddot")
+	self._gomain = gohelper.findChild(self.viewGO, "root/middle/#go_main")
+	self._gonormal = gohelper.findChild(self.viewGO, "root/middle/#go_main/#go_normal")
+	self._gohard = gohelper.findChild(self.viewGO, "root/middle/#go_main/#go_hard")
+	self._btnentermain = gohelper.findChildButtonWithAudio(self.viewGO, "root/middle/#btn_entermain")
+	self._scrolldaily = gohelper.findChildScrollRect(self.viewGO, "root/right/#scroll_daily")
+	self._godailyitem = gohelper.findChild(self.viewGO, "root/right/#scroll_daily/Viewport/Content/#go_dailyitem")
+	self._simagelevelpic = gohelper.findChildSingleImage(self.viewGO, "root/middle/#simage_LevelPic")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnreward:AddClickListener(arg_2_0._btnrewardOnClick, arg_2_0)
-	arg_2_0._btnrecord:AddClickListener(arg_2_0._btnrecordOnClick, arg_2_0)
-	arg_2_0._btnmedal:AddClickListener(arg_2_0._btnmedalOnClick, arg_2_0)
-	arg_2_0._btnentermain:AddClickListener(arg_2_0._btnentermainOnClick, arg_2_0)
+function Act183MainView:addEvents()
+	self._btnreward:AddClickListener(self._btnrewardOnClick, self)
+	self._btnrecord:AddClickListener(self._btnrecordOnClick, self)
+	self._btnmedal:AddClickListener(self._btnmedalOnClick, self)
+	self._btnentermain:AddClickListener(self._btnentermainOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnreward:RemoveClickListener()
-	arg_3_0._btnrecord:RemoveClickListener()
-	arg_3_0._btnmedal:RemoveClickListener()
-	arg_3_0._btnentermain:RemoveClickListener()
+function Act183MainView:removeEvents()
+	self._btnreward:RemoveClickListener()
+	self._btnrecord:RemoveClickListener()
+	self._btnmedal:RemoveClickListener()
+	self._btnentermain:RemoveClickListener()
 end
 
-function var_0_0._btnrewardOnClick(arg_4_0)
+function Act183MainView:_btnrewardOnClick()
 	Act183Controller.instance:openAct183TaskView()
 end
 
-function var_0_0._btnrecordOnClick(arg_5_0)
+function Act183MainView:_btnrecordOnClick()
 	Act183Controller.instance:openAct183ReportView()
 end
 
-function var_0_0._btnmedalOnClick(arg_6_0)
+function Act183MainView:_btnmedalOnClick()
 	Act183Controller.instance:openAct183BadgeView()
 end
 
-function var_0_0._btnentermainOnClick(arg_7_0)
-	local var_7_0 = Act183Helper.getLastEnterMainGroupTypeInLocal(arg_7_0._actId, Act183Enum.GroupType.NormalMain)
-	local var_7_1 = arg_7_0._mainGroupEpisodeTab[var_7_0]
+function Act183MainView:_btnentermainOnClick()
+	local lastEnterGroupType = Act183Helper.getLastEnterMainGroupTypeInLocal(self._actId, Act183Enum.GroupType.NormalMain)
+	local groupEpisodeMo = self._mainGroupEpisodeTab[lastEnterGroupType]
 
-	if not var_7_1 then
+	if not groupEpisodeMo then
 		return
 	end
 
-	local var_7_2 = var_7_1:getStatus()
+	local status = groupEpisodeMo:getStatus()
+	local isLocked = status == Act183Enum.GroupStatus.Locked
 
-	if var_7_2 == Act183Enum.GroupStatus.Locked and var_7_0 ~= Act183Enum.GroupType.NormalMain then
-		logError(string.format("本地标记的上一次进入关卡组未解锁!!!, 保底进入普通日常关卡。lastEnterGroupType = %s, status = %s", var_7_0, var_7_2))
+	if isLocked and lastEnterGroupType ~= Act183Enum.GroupType.NormalMain then
+		logError(string.format("本地标记的上一次进入关卡组未解锁!!!, 保底进入普通日常关卡。lastEnterGroupType = %s, status = %s", lastEnterGroupType, status))
 
-		local var_7_3 = Act183Enum.GroupType.NormalMain
-
-		var_7_1 = arg_7_0._mainGroupEpisodeTab[var_7_3]
+		lastEnterGroupType = Act183Enum.GroupType.NormalMain
+		groupEpisodeMo = self._mainGroupEpisodeTab[lastEnterGroupType]
 	end
 
-	local var_7_4 = var_7_1 and var_7_1:getGroupId()
-	local var_7_5 = var_7_1 and var_7_1:getGroupType()
-	local var_7_6 = Act183Helper.generateDungeonViewParams(var_7_5, var_7_4)
+	local selectGroupId = groupEpisodeMo and groupEpisodeMo:getGroupId()
+	local selectGroupType = groupEpisodeMo and groupEpisodeMo:getGroupType()
+	local params = Act183Helper.generateDungeonViewParams(selectGroupType, selectGroupId)
 
-	Act183Controller.instance:openAct183DungeonView(var_7_6)
+	Act183Controller.instance:openAct183DungeonView(params)
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0._actId = Act183Model.instance:getActivityId()
-	arg_8_0._info = Act183Model.instance:getActInfo()
+function Act183MainView:_editableInitView()
+	self._actId = Act183Model.instance:getActivityId()
+	self._info = Act183Model.instance:getActInfo()
 
 	Act183Model.instance:initTaskStatusMap()
 
-	arg_8_0._rewardReddotAnim = gohelper.findChildComponent(arg_8_0._btnreward.gameObject, "ani", gohelper.Type_Animator)
+	self._rewardReddotAnim = gohelper.findChildComponent(self._btnreward.gameObject, "ani", gohelper.Type_Animator)
 
-	RedDotController.instance:addRedDot(arg_8_0._gotaskreddot, RedDotEnum.DotNode.V2a5_Act183Task, nil, arg_8_0._taskReddotFunc, arg_8_0)
-	arg_8_0:addEventCb(Act183Controller.instance, Act183Event.RefreshMedalReddot, arg_8_0.initOrRefreshMedalReddot, arg_8_0)
+	RedDotController.instance:addRedDot(self._gotaskreddot, RedDotEnum.DotNode.V2a5_Act183Task, nil, self._taskReddotFunc, self)
+	self:addEventCb(Act183Controller.instance, Act183Event.RefreshMedalReddot, self.initOrRefreshMedalReddot, self)
 
-	local var_8_0 = lua_challenge_const.configDict[Act183Enum.Const.MainBannerUrl]
-	local var_8_1 = var_8_0 and var_8_0.value2 or ""
+	local bannerIconNameCo = lua_challenge_const.configDict[Act183Enum.Const.MainBannerUrl]
+	local bannerIconName = bannerIconNameCo and bannerIconNameCo.value2 or ""
 
-	arg_8_0._simagelevelpic:LoadImage(ResUrl.getChallengeIcon(var_8_1))
+	self._simagelevelpic:LoadImage(ResUrl.getChallengeIcon(bannerIconName))
 end
 
-function var_0_0._taskReddotFunc(arg_9_0, arg_9_1)
-	arg_9_1:defaultRefreshDot()
-	arg_9_0._rewardReddotAnim:Play(arg_9_1.show and "loop" or "idle", 0, 0)
+function Act183MainView:_taskReddotFunc(reddotIcon)
+	reddotIcon:defaultRefreshDot()
+	self._rewardReddotAnim:Play(reddotIcon.show and "loop" or "idle", 0, 0)
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0:initRemainTime()
-	arg_10_0:initMainGroupEntranceList()
-	arg_10_0:initDailyGroupEntranceList()
-	arg_10_0:initOrRefreshMedalReddot()
+function Act183MainView:onOpen()
+	self:initRemainTime()
+	self:initMainGroupEntranceList()
+	self:initDailyGroupEntranceList()
+	self:initOrRefreshMedalReddot()
 end
 
-function var_0_0.initRemainTime(arg_11_0)
-	arg_11_0:showLeftTime()
-	TaskDispatcher.runRepeat(arg_11_0.showLeftTime, arg_11_0, var_0_1)
+function Act183MainView:initRemainTime()
+	self:showLeftTime()
+	TaskDispatcher.runRepeat(self.showLeftTime, self, UpdateActremainTimeInterval)
 end
 
-function var_0_0.showLeftTime(arg_12_0)
-	arg_12_0._txttime.text = ActivityHelper.getActivityRemainTimeStr(arg_12_0._actId)
+function Act183MainView:showLeftTime()
+	self._txttime.text = ActivityHelper.getActivityRemainTimeStr(self._actId)
 end
 
-function var_0_0.initMainGroupEntranceList(arg_13_0)
-	local var_13_0 = arg_13_0._info:getGroupEpisodeMos(Act183Enum.GroupType.NormalMain)
-	local var_13_1 = arg_13_0._info:getGroupEpisodeMos(Act183Enum.GroupType.HardMain)
-	local var_13_2 = var_13_0 and var_13_0[1]
-	local var_13_3 = var_13_1 and var_13_1[1]
+function Act183MainView:initMainGroupEntranceList()
+	local normalGroupEpisodes = self._info:getGroupEpisodeMos(Act183Enum.GroupType.NormalMain)
+	local hardGroupEpisodes = self._info:getGroupEpisodeMos(Act183Enum.GroupType.HardMain)
+	local normalGroupEpisode = normalGroupEpisodes and normalGroupEpisodes[1]
+	local hardGroupEpisode = hardGroupEpisodes and hardGroupEpisodes[1]
 
-	if not var_13_2 or not var_13_3 then
+	if not normalGroupEpisode or not hardGroupEpisode then
 		return
 	end
 
-	arg_13_0._mainGroupEpisodeTab = {
-		[Act183Enum.GroupType.NormalMain] = var_13_2,
-		[Act183Enum.GroupType.HardMain] = var_13_3
+	self._mainGroupEpisodeTab = {
+		[Act183Enum.GroupType.NormalMain] = normalGroupEpisode,
+		[Act183Enum.GroupType.HardMain] = hardGroupEpisode
 	}
 
-	for iter_13_0, iter_13_1 in pairs(arg_13_0._mainGroupEpisodeTab) do
-		Act183MainGroupEntranceItem.Get(arg_13_0.viewGO, iter_13_0):onUpdateMO(iter_13_1)
+	for groupType, groupMo in pairs(self._mainGroupEpisodeTab) do
+		local chapterItem = Act183MainGroupEntranceItem.Get(self.viewGO, groupType)
+
+		chapterItem:onUpdateMO(groupMo)
 	end
 end
 
-function var_0_0.initDailyGroupEntranceList(arg_14_0)
-	TaskDispatcher.cancelTask(arg_14_0.initDailyGroupEntranceList, arg_14_0)
+function Act183MainView:initDailyGroupEntranceList()
+	TaskDispatcher.cancelTask(self.initDailyGroupEntranceList, self)
 
-	arg_14_0._dailyGroupEpisodeMos = arg_14_0._info:getGroupEpisodeMos(Act183Enum.GroupType.Daily)
-	arg_14_0._dailyGroupEpisodeCount = arg_14_0._dailyGroupEpisodeMos and #arg_14_0._dailyGroupEpisodeMos or 0
+	self._dailyGroupEpisodeMos = self._info:getGroupEpisodeMos(Act183Enum.GroupType.Daily)
+	self._dailyGroupEpisodeCount = self._dailyGroupEpisodeMos and #self._dailyGroupEpisodeMos or 0
 
-	if not arg_14_0._dailyGroupEpisodeMos then
+	if not self._dailyGroupEpisodeMos then
 		return
 	end
 
-	local var_14_0 = false
+	local tickUp = false
 
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0._dailyGroupEpisodeMos) do
-		local var_14_1 = Act183DailyGroupEntranceItem.Get(arg_14_0.viewGO, arg_14_0._godailyitem, iter_14_1, iter_14_0)
-		local var_14_2 = iter_14_1:getStatus()
+	for index, dailyGroupMo in ipairs(self._dailyGroupEpisodeMos) do
+		local groupItem = Act183DailyGroupEntranceItem.Get(self.viewGO, self._godailyitem, dailyGroupMo, index)
+		local status = dailyGroupMo:getStatus()
 
-		var_14_1:onUpdateMO(iter_14_1)
+		groupItem:onUpdateMO(dailyGroupMo)
 
-		if var_14_2 == Act183Enum.GroupStatus.Locked and not var_14_0 then
-			var_14_1:showUnlockCountDown()
+		if status == Act183Enum.GroupStatus.Locked and not tickUp then
+			groupItem:showUnlockCountDown()
 
-			var_14_0 = true
+			tickUp = true
 		end
 	end
 
-	if var_14_0 then
-		TaskDispatcher.runDelay(arg_14_0.initDailyGroupEntranceList, arg_14_0, var_0_2)
+	if tickUp then
+		TaskDispatcher.runDelay(self.initDailyGroupEntranceList, self, UpdateDailyGroupInterval)
 	end
 end
 
-function var_0_0.initOrRefreshMedalReddot(arg_15_0)
-	if not arg_15_0._medatReddot then
-		arg_15_0._medatReddot = RedDotController.instance:addNotEventRedDot(arg_15_0._gomedalreddot, arg_15_0._checkMedalReddot, arg_15_0, RedDotEnum.Style.Normal)
+function Act183MainView:initOrRefreshMedalReddot()
+	if not self._medatReddot then
+		self._medatReddot = RedDotController.instance:addNotEventRedDot(self._gomedalreddot, self._checkMedalReddot, self, RedDotEnum.Style.Normal)
 	end
 
-	arg_15_0._medatReddot:refreshRedDot()
+	self._medatReddot:refreshRedDot()
 end
 
-function var_0_0._checkMedalReddot(arg_16_0)
-	local var_16_0 = Act183Helper.getHasReadUnlockSupportHeroIdsInLocal(arg_16_0._actId)
-	local var_16_1 = Act183Helper.listToMap(var_16_0)
-	local var_16_2 = arg_16_0._info:getUnlockSupportHeroIds()
+function Act183MainView:_checkMedalReddot()
+	local hasReadUnlockHeroIds = Act183Helper.getHasReadUnlockSupportHeroIdsInLocal(self._actId)
+	local hasReadUnlockHeroIdMap = Act183Helper.listToMap(hasReadUnlockHeroIds)
+	local unlockSupportHeroIds = self._info:getUnlockSupportHeroIds()
 
-	if var_16_2 then
-		for iter_16_0, iter_16_1 in ipairs(var_16_2) do
-			if not var_16_1[iter_16_1] then
+	if unlockSupportHeroIds then
+		for _, unlockHeroId in ipairs(unlockSupportHeroIds) do
+			if not hasReadUnlockHeroIdMap[unlockHeroId] then
 				return true
 			end
 		end
 	end
 end
 
-function var_0_0.onClose(arg_17_0)
-	TaskDispatcher.cancelTask(arg_17_0.showLeftTime, arg_17_0)
-	TaskDispatcher.cancelTask(arg_17_0.initDailyGroupEntranceList, arg_17_0)
+function Act183MainView:onClose()
+	TaskDispatcher.cancelTask(self.showLeftTime, self)
+	TaskDispatcher.cancelTask(self.initDailyGroupEntranceList, self)
 end
 
-function var_0_0.onDestroyView(arg_18_0)
-	arg_18_0._simagelevelpic:UnLoadImage()
+function Act183MainView:onDestroyView()
+	self._simagelevelpic:UnLoadImage()
 end
 
-return var_0_0
+return Act183MainView

@@ -1,62 +1,65 @@
-﻿module("modules.logic.explore.model.mo.unit.ExplorePipeMemoryMO", package.seeall)
+﻿-- chunkname: @modules/logic/explore/model/mo/unit/ExplorePipeMemoryMO.lua
 
-local var_0_0 = class("ExplorePipeMemoryMO", ExplorePipeBaseMO)
+module("modules.logic.explore.model.mo.unit.ExplorePipeMemoryMO", package.seeall)
 
-function var_0_0.initTypeData(arg_1_0)
-	arg_1_0._needColor = tonumber(arg_1_0.specialDatas[1])
-	arg_1_0._pipeOutDir = tonumber(arg_1_0.specialDatas[2])
+local ExplorePipeMemoryMO = class("ExplorePipeMemoryMO", ExplorePipeBaseMO)
+
+function ExplorePipeMemoryMO:initTypeData()
+	self._needColor = tonumber(self.specialDatas[1])
+	self._pipeOutDir = tonumber(self.specialDatas[2])
 end
 
-function var_0_0.setCacheColor(arg_2_0, arg_2_1)
-	arg_2_0._cacheColor = arg_2_1
+function ExplorePipeMemoryMO:setCacheColor(color)
+	self._cacheColor = color
 end
 
-function var_0_0.getColor(arg_3_0, arg_3_1)
-	if arg_3_1 == 0 then
-		local var_3_0 = ExploreController.instance:getMapPipe()
+function ExplorePipeMemoryMO:getColor(dir)
+	if dir == 0 then
+		local mapPipe = ExploreController.instance:getMapPipe()
 
-		if var_3_0 and var_3_0:isInitDone() then
-			local var_3_1 = ExploreHelper.dirToXY(arg_3_0.unitDir)
-			local var_3_2 = ExploreHelper.getKeyXY(arg_3_0.nodePos.x + var_3_1.x, arg_3_0.nodePos.y + var_3_1.y)
-			local var_3_3 = var_3_0._allPipeMos[var_3_2]
+		if mapPipe and mapPipe:isInitDone() then
+			local xy = ExploreHelper.dirToXY(self.unitDir)
+			local inKey = ExploreHelper.getKeyXY(self.nodePos.x + xy.x, self.nodePos.y + xy.y)
+			local inUnitMo = mapPipe._allPipeMos[inKey]
+			local nowColor = inUnitMo and mapPipe:getOutDirColor(nil, nil, ExploreHelper.getDir(self.unitDir + 180), inUnitMo.id, ExploreEnum.PipeDirMatchMode.Single)
 
-			return var_3_3 and var_3_0:getOutDirColor(nil, nil, ExploreHelper.getDir(arg_3_0.unitDir + 180), var_3_3.id, ExploreEnum.PipeDirMatchMode.Single) or ExploreEnum.PipeColor.None
+			return nowColor or ExploreEnum.PipeColor.None
 		end
 	end
 
-	if not arg_3_0._cacheColor then
-		arg_3_0._cacheColor = arg_3_0:getInteractInfoMO().statusInfo.color or ExploreEnum.PipeColor.None
+	if not self._cacheColor then
+		self._cacheColor = self:getInteractInfoMO().statusInfo.color or ExploreEnum.PipeColor.None
 	end
 
-	return arg_3_0._cacheColor
+	return self._cacheColor
 end
 
-function var_0_0.getPipeOutDir(arg_4_0)
-	if not arg_4_0._pipeOutDir then
+function ExplorePipeMemoryMO:getPipeOutDir()
+	if not self._pipeOutDir then
 		return
 	end
 
-	return ExploreHelper.getDir(arg_4_0._pipeOutDir + arg_4_0.unitDir)
+	return ExploreHelper.getDir(self._pipeOutDir + self.unitDir)
 end
 
-function var_0_0.isOutDir(arg_5_0, arg_5_1)
-	return ExploreHelper.getDir(arg_5_1 - arg_5_0.unitDir) == arg_5_0._pipeOutDir
+function ExplorePipeMemoryMO:isOutDir(dir)
+	return ExploreHelper.getDir(dir - self.unitDir) == self._pipeOutDir
 end
 
-function var_0_0.getDirType(arg_6_0, arg_6_1)
-	if arg_6_1 == 0 then
+function ExplorePipeMemoryMO:getDirType(dir)
+	if dir == 0 then
 		return ExploreEnum.PipeGoNode.Pipe1
-	elseif arg_6_1 == arg_6_0._pipeOutDir then
+	elseif dir == self._pipeOutDir then
 		return ExploreEnum.PipeGoNode.Pipe2
 	end
 end
 
-function var_0_0.getNeedColor(arg_7_0)
-	return arg_7_0._needColor
+function ExplorePipeMemoryMO:getNeedColor()
+	return self._needColor
 end
 
-function var_0_0.getUnitClass(arg_8_0)
+function ExplorePipeMemoryMO:getUnitClass()
 	return ExplorePipeMemoryUnit
 end
 
-return var_0_0
+return ExplorePipeMemoryMO

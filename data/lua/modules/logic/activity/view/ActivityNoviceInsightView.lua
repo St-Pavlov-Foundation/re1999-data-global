@@ -1,30 +1,32 @@
-﻿module("modules.logic.activity.view.ActivityNoviceInsightView", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/ActivityNoviceInsightView.lua
 
-local var_0_0 = class("ActivityNoviceInsightView", BaseView)
+module("modules.logic.activity.view.ActivityNoviceInsightView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtnamecn = gohelper.findChildText(arg_1_0.viewGO, "name/title/#txt_namecn")
-	arg_1_0._txtnameen = gohelper.findChildText(arg_1_0.viewGO, "name/title/#txt_nameen")
-	arg_1_0._gotime = gohelper.findChild(arg_1_0.viewGO, "time")
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "time/#txt_time")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#txt_desc")
-	arg_1_0._btnjump = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_jump")
+local ActivityNoviceInsightView = class("ActivityNoviceInsightView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ActivityNoviceInsightView:onInitView()
+	self._txtnamecn = gohelper.findChildText(self.viewGO, "name/title/#txt_namecn")
+	self._txtnameen = gohelper.findChildText(self.viewGO, "name/title/#txt_nameen")
+	self._gotime = gohelper.findChild(self.viewGO, "time")
+	self._txttime = gohelper.findChildText(self.viewGO, "time/#txt_time")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "#txt_desc")
+	self._btnjump = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_jump")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnjump:AddClickListener(arg_2_0._btnjumpOnClick, arg_2_0)
+function ActivityNoviceInsightView:addEvents()
+	self._btnjump:AddClickListener(self._btnjumpOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnjump:RemoveClickListener()
+function ActivityNoviceInsightView:removeEvents()
+	self._btnjump:RemoveClickListener()
 end
 
-function var_0_0._btnjumpOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function ActivityNoviceInsightView:_btnjumpOnClick()
+	self:closeThis()
 
 	if ViewMgr.instance:isOpen(ViewName.ActivityBeginnerView) then
 		ViewMgr.instance:closeView(ViewName.ActivityBeginnerView)
@@ -33,50 +35,50 @@ function var_0_0._btnjumpOnClick(arg_4_0)
 	GameFacade.jump(53)
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	gohelper.addUIClickAudio(arg_5_0._btnjump.gameObject, AudioEnum.UI.play_ui_activity_jump)
+function ActivityNoviceInsightView:_editableInitView()
+	gohelper.addUIClickAudio(self._btnjump.gameObject, AudioEnum.UI.play_ui_activity_jump)
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function ActivityNoviceInsightView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	local var_7_0 = arg_7_0.viewParam.parent
+function ActivityNoviceInsightView:onOpen()
+	local parentGO = self.viewParam.parent
 
-	gohelper.addChild(var_7_0, arg_7_0.viewGO)
+	gohelper.addChild(parentGO, self.viewGO)
 
-	local var_7_1 = ActivityConfig.instance:getActivityCo(ActivityEnum.Activity.NoviceInsight)
+	local co = ActivityConfig.instance:getActivityCo(ActivityEnum.Activity.NoviceInsight)
 
-	arg_7_0._txtnamecn.text = var_7_1.name
-	arg_7_0._txtnameen.text = var_7_1.nameEn
+	self._txtnamecn.text = co.name
+	self._txtnameen.text = co.nameEn
 
-	local var_7_2 = ActivityModel.instance:getActStartTime(ActivityEnum.Activity.NoviceInsight)
-	local var_7_3 = ActivityModel.instance:getActEndTime(ActivityEnum.Activity.NoviceInsight)
+	local actStartTime = ActivityModel.instance:getActStartTime(ActivityEnum.Activity.NoviceInsight)
+	local actEndTime = ActivityModel.instance:getActEndTime(ActivityEnum.Activity.NoviceInsight)
 
-	if type(var_7_1.endTime) == "number" then
-		gohelper.setActive(arg_7_0._gotime, true)
+	if type(co.endTime) == "number" then
+		gohelper.setActive(self._gotime, true)
 
-		local var_7_4 = type(var_7_2) == "number" and TimeUtil.timestampToString1(var_7_2 / 1000) or "   "
-		local var_7_5 = {
-			var_7_4,
-			TimeUtil.timestampToString1(var_7_3 / 1000)
+		local startTime = type(actStartTime) == "number" and TimeUtil.timestampToString1(actStartTime / 1000) or "   "
+		local tag = {
+			startTime,
+			TimeUtil.timestampToString1(actEndTime / 1000)
 		}
 
-		arg_7_0._txttime.text = GameUtil.getSubPlaceholderLuaLang(luaLang("activitynoviceinsightview_time"), var_7_5)
+		self._txttime.text = GameUtil.getSubPlaceholderLuaLang(luaLang("activitynoviceinsightview_time"), tag)
 	else
-		gohelper.setActive(arg_7_0._gotime, false)
+		gohelper.setActive(self._gotime, false)
 	end
 
-	arg_7_0._txtdesc.text = var_7_1.actTip
+	self._txtdesc.text = co.actTip
 end
 
-function var_0_0.onClose(arg_8_0)
+function ActivityNoviceInsightView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
+function ActivityNoviceInsightView:onDestroyView()
 	return
 end
 
-return var_0_0
+return ActivityNoviceInsightView

@@ -1,8 +1,10 @@
-﻿module("modules.logic.sp01.assassin2.define.AssassinEnum", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/define/AssassinEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.sp01.assassin2.define.AssassinEnum", package.seeall)
 
-var_0_0.ConstId = {
+local AssassinEnum = _M
+
+AssassinEnum.ConstId = {
 	DialogId_EyeGame = 9,
 	FocusEpisodeId = 17,
 	RequireAssassinHeroId = 4,
@@ -20,11 +22,11 @@ var_0_0.ConstId = {
 	DialogId_LineGame = 10,
 	EpisodeId_LineGame = 7
 }
-var_0_0.Const = {
+AssassinEnum.Const = {
 	EmptyAssassinItemType = 0,
 	MapQuestMaxProgress = 1
 }
-var_0_0.BlockKey = {
+AssassinEnum.BlockKey = {
 	FinishMission = "AssassinStealthGameFinishMission",
 	ClosingLoginView = "AssassinClosingLoginView",
 	SelectedEnemy = "AssassinStealthGameSelectEnemy",
@@ -37,27 +39,27 @@ var_0_0.BlockKey = {
 	TweenMapPos = "AssassinStealthGameTweenMapPos",
 	EnemyScanEffPlaying = "AssassinStealthGameEnemyScanEffPlaying"
 }
-var_0_0.MapStatus = {
+AssassinEnum.MapStatus = {
 	Finished = 3,
 	Locked = 1,
 	Unlocked = 2
 }
-var_0_0.QuestType = {
+AssassinEnum.QuestType = {
 	Fight = 1,
 	Stealth = 3,
 	Dialog = 2
 }
-var_0_0.PlayerCacheDataKey = {
+AssassinEnum.PlayerCacheDataKey = {
 	AssassinHeroGroupCache = "AssassinHeroGroupCache",
 	QuestItemOpenAnim = "ASSASSIN2_QUEST_HAS_PLAYED_OPEN_ANIM",
 	MapPlayUnlockAnim = "ASSASSIN2_MAP_HAS_PLAYED_UNLOCK_ANIM",
 	NewAssassinItem = "ASSASSIN2_NEW_ASSASSIN_ITEM",
 	QuestItemFinishAnim = "ASSASSIN2_QUEST_HAS_PLAYED_FINISH_ANIM"
 }
-var_0_0.StealthConstId = {
+AssassinEnum.StealthConstId = {
 	MaxRound = 1
 }
-var_0_0.StealthConst = {
+AssassinEnum.StealthConst = {
 	AdjacentDis = 1,
 	ConfigExposeRatePoint = 10000,
 	ShowExposeRatePoint = 100,
@@ -75,66 +77,66 @@ var_0_0.StealthConst = {
 	FirstStealthMap = 3011,
 	VerWallSign = 2
 }
-var_0_0.EffectId = {
+AssassinEnum.EffectId = {
 	GridFog = 18,
 	EnemyAttack = 21,
 	ScanEffectId = 3
 }
-var_0_0.StealthGameGridType = {
+AssassinEnum.StealthGameGridType = {
 	Water = 3,
 	Plain = 1,
 	Roof = 2
 }
-var_0_0.StealthGamePointType = {
+AssassinEnum.StealthGamePointType = {
 	HayStack = 1,
 	Garden = 2,
 	Tower = 3,
 	Empty = 0
 }
-var_0_0.EventType = {
+AssassinEnum.EventType = {
 	NotExpose = 5,
 	ChangExposeRate = 3
 }
-var_0_0.MissionType = {
+AssassinEnum.MissionType = {
 	TargetEnemy = 3,
 	TargetGrid2 = 5,
 	TargetGrid3 = 7,
 	TargetGrid1 = 4
 }
-var_0_0.ItemType = {
+AssassinEnum.ItemType = {
 	AirCraft = 5,
 	ThrowingKnife = 2,
 	PoisonKnife = 4
 }
-var_0_0.StealGameBuffType = {
+AssassinEnum.StealGameBuffType = {
 	Confuse = 1,
 	Petrifaction = 2
 }
-var_0_0.EnemyType = {
+AssassinEnum.EnemyType = {
 	Heavy = 3
 }
-var_0_0.EnemyMoveType = {
+AssassinEnum.EnemyMoveType = {
 	NotMove = 2,
 	Normal = 1
 }
-var_0_0.StealGameTrapType = {
+AssassinEnum.StealGameTrapType = {
 	Smog = 3,
 	Locked = 2,
 	Poison = 1
 }
-var_0_0.RoofEntranceDir = {
+AssassinEnum.RoofEntranceDir = {
 	Down = 2,
 	Up = 1,
 	Left = 3,
 	Right = 4
 }
-var_0_0.HeroStatus = {
+AssassinEnum.HeroStatus = {
 	Dead = 4,
 	Stealth = 1,
 	Hide = 3,
 	Expose = 2
 }
-var_0_0.HeroAct = {
+AssassinEnum.HeroAct = {
 	LeaveHide = 3,
 	ClimbTower = 9,
 	Hide = 2,
@@ -150,16 +152,16 @@ var_0_0.HeroAct = {
 	LeaveTower = 10,
 	Move = 1
 }
-var_0_0.StealthRes = {
+AssassinEnum.StealthRes = {
 	HeroEntity = "ui/viewres/sp01/assassin2/assassinstealthgameheroitem.prefab",
 	EnemyEntity = "ui/viewres/sp01/assassin2/assassinstealthgameemenyitem.prefab"
 }
-var_0_0.GameState = {
+AssassinEnum.GameState = {
 	Win = 1,
 	Fail = 2,
 	InProgress = 0
 }
-var_0_0.Skill = {
+AssassinEnum.Skill = {
 	Transfer = 11,
 	CureAll = 7,
 	LightGrid = 10,
@@ -167,122 +169,122 @@ var_0_0.Skill = {
 	Petrifaction = 8,
 	Cure = 6
 }
-var_0_0.SkillCostType = {
+AssassinEnum.SkillCostType = {
 	AP = "actionability"
 }
-var_0_0.SkillPropTargetType = {
+AssassinEnum.SkillPropTargetType = {
 	Grid = "grid",
 	Hero = "friend",
 	Enemy = "enemy",
 	None = ""
 }
-var_0_0.SkillPropTargetCheckType = {
+AssassinEnum.SkillPropTargetCheckType = {
 	GridType = 1,
 	EnemyRefreshPoint = 2
 }
-var_0_0.RangeType = {
+AssassinEnum.RangeType = {
 	StraightLine = "StraightLine"
 }
-var_0_0.TowerPointIndex = {
+AssassinEnum.TowerPointIndex = {
 	LeftTop = 13,
 	RightBottom = 1,
 	LeftBottom = 3,
 	RightTop = 11
 }
-var_0_0.TowerPointPos = {
-	[var_0_0.TowerPointIndex.RightBottom] = {
+AssassinEnum.TowerPointPos = {
+	[AssassinEnum.TowerPointIndex.RightBottom] = {
 		x = 12,
 		y = -12
 	},
-	[var_0_0.TowerPointIndex.RightTop] = {
+	[AssassinEnum.TowerPointIndex.RightTop] = {
 		x = 12,
 		y = 12
 	},
-	[var_0_0.TowerPointIndex.LeftBottom] = {
+	[AssassinEnum.TowerPointIndex.LeftBottom] = {
 		x = -12,
 		y = -12
 	},
-	[var_0_0.TowerPointIndex.LeftTop] = {
+	[AssassinEnum.TowerPointIndex.LeftTop] = {
 		x = -12,
 		y = 12
 	}
 }
-var_0_0.BuildingType = {
+AssassinEnum.BuildingType = {
 	Church = 5,
 	Guild = 4,
 	Barrack = 3,
 	Mansion = 1,
 	Hospital = 2
 }
-var_0_0.BuildingType2IconCls = {
-	[var_0_0.BuildingType.Mansion] = AssassinBuildingItemIcon,
-	[var_0_0.BuildingType.Hospital] = AssassinBuildingItemIcon,
-	[var_0_0.BuildingType.Barrack] = AssassinBuildingItemIcon,
-	[var_0_0.BuildingType.Guild] = AssassinBuildingItemIcon,
-	[var_0_0.BuildingType.Church] = AssassinBuildingItemIcon
+AssassinEnum.BuildingType2IconCls = {
+	[AssassinEnum.BuildingType.Mansion] = AssassinBuildingItemIcon,
+	[AssassinEnum.BuildingType.Hospital] = AssassinBuildingItemIcon,
+	[AssassinEnum.BuildingType.Barrack] = AssassinBuildingItemIcon,
+	[AssassinEnum.BuildingType.Guild] = AssassinBuildingItemIcon,
+	[AssassinEnum.BuildingType.Church] = AssassinBuildingItemIcon
 }
-var_0_0.NeedPlayOpenAnimBuildingCount = 4
-var_0_0.BuildingDelayOpenAnim = 0.06
-var_0_0.BuildingStatus = {
+AssassinEnum.NeedPlayOpenAnimBuildingCount = 4
+AssassinEnum.BuildingDelayOpenAnim = 0.06
+AssassinEnum.BuildingStatus = {
 	Unlocked = 2,
 	Locked = 1,
 	LevelUp = 3
 }
-var_0_0.LibraryType = {
+AssassinEnum.LibraryType = {
 	Geology = 2,
 	Hero = 1,
 	Culture = 3,
 	Video = 4
 }
-var_0_0.LibraryType2LangId = {
-	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Outside, var_0_0.LibraryType.Hero)] = "assassinlibrary_type_Hero_1",
-	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Outside, var_0_0.LibraryType.Geology)] = "assassinlibrary_type_Geology",
-	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Outside, var_0_0.LibraryType.Culture)] = "assassinlibrary_type_Culture",
-	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Outside, var_0_0.LibraryType.Video)] = "assassinlibrary_type_Video",
-	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Dungeon2, var_0_0.LibraryType.Hero)] = "assassinlibrary_type_Hero_2",
-	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Dungeon2, var_0_0.LibraryType.Geology)] = "assassinlibrary_type_Geology",
-	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Dungeon2, var_0_0.LibraryType.Culture)] = "assassinlibrary_type_Culture",
-	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Dungeon2, var_0_0.LibraryType.Video)] = "assassinlibrary_type_Video"
+AssassinEnum.LibraryType2LangId = {
+	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Outside, AssassinEnum.LibraryType.Hero)] = "assassinlibrary_type_Hero_1",
+	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Outside, AssassinEnum.LibraryType.Geology)] = "assassinlibrary_type_Geology",
+	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Outside, AssassinEnum.LibraryType.Culture)] = "assassinlibrary_type_Culture",
+	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Outside, AssassinEnum.LibraryType.Video)] = "assassinlibrary_type_Video",
+	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Dungeon2, AssassinEnum.LibraryType.Hero)] = "assassinlibrary_type_Hero_2",
+	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Dungeon2, AssassinEnum.LibraryType.Geology)] = "assassinlibrary_type_Geology",
+	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Dungeon2, AssassinEnum.LibraryType.Culture)] = "assassinlibrary_type_Culture",
+	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Dungeon2, AssassinEnum.LibraryType.Video)] = "assassinlibrary_type_Video"
 }
-var_0_0.LibraryStatus = {
+AssassinEnum.LibraryStatus = {
 	New = 2,
 	Locked = 1,
 	Unlocked = 3
 }
-var_0_0.LibraryInfoViewTabId = 2
-var_0_0.LibraryType2TabViewId = {
-	[var_0_0.LibraryType.Hero] = 1,
-	[var_0_0.LibraryType.Geology] = 2,
-	[var_0_0.LibraryType.Culture] = 2,
-	[var_0_0.LibraryType.Video] = 3
+AssassinEnum.LibraryInfoViewTabId = 2
+AssassinEnum.LibraryType2TabViewId = {
+	[AssassinEnum.LibraryType.Hero] = 1,
+	[AssassinEnum.LibraryType.Geology] = 2,
+	[AssassinEnum.LibraryType.Culture] = 2,
+	[AssassinEnum.LibraryType.Video] = 3
 }
-var_0_0.LibrarySubItemTweenDuration = 0.03
-var_0_0.LibraryReddotStyle = RedDotEnum.Style.Green
-var_0_0.LibraryToastPath = "ui/viewres/sp01/assassin2/assassinlibrarytoastitem.prefab"
-var_0_0.CurrencyToolPrefabPath = "ui/viewres/sp01/assassin2/assassincurrencyitem.prefab"
-var_0_0.LibraryCategoryCameraParams = {
+AssassinEnum.LibrarySubItemTweenDuration = 0.03
+AssassinEnum.LibraryReddotStyle = RedDotEnum.Style.Green
+AssassinEnum.LibraryToastPath = "ui/viewres/sp01/assassin2/assassinlibrarytoastitem.prefab"
+AssassinEnum.CurrencyToolPrefabPath = "ui/viewres/sp01/assassin2/assassincurrencyitem.prefab"
+AssassinEnum.LibraryCategoryCameraParams = {
 	perspFOV = 35,
 	cameraPos = Vector3(0, 0, -18.5)
 }
-var_0_0.ActId2LibraryInfoBgName = {
-	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Outside, var_0_0.LibraryType.Hero)] = "assassinlibrary_aitemempty",
-	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Outside, var_0_0.LibraryType.Geology)] = "assassinlibrary_citembg",
-	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Outside, var_0_0.LibraryType.Culture)] = "assassinlibrary_citembg",
-	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Outside, var_0_0.LibraryType.Video)] = "assassinlibrary_bitemempty",
-	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Dungeon2, var_0_0.LibraryType.Hero)] = "assassinlibrary_aitemempty2",
-	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Dungeon2, var_0_0.LibraryType.Geology)] = "assassinlibrary_citembg2",
-	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Dungeon2, var_0_0.LibraryType.Culture)] = "assassinlibrary_citembg2",
-	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Dungeon2, var_0_0.LibraryType.Video)] = "assassinlibrary_bitemempty2"
+AssassinEnum.ActId2LibraryInfoBgName = {
+	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Outside, AssassinEnum.LibraryType.Hero)] = "assassinlibrary_aitemempty",
+	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Outside, AssassinEnum.LibraryType.Geology)] = "assassinlibrary_citembg",
+	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Outside, AssassinEnum.LibraryType.Culture)] = "assassinlibrary_citembg",
+	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Outside, AssassinEnum.LibraryType.Video)] = "assassinlibrary_bitemempty",
+	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Dungeon2, AssassinEnum.LibraryType.Hero)] = "assassinlibrary_aitemempty2",
+	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Dungeon2, AssassinEnum.LibraryType.Geology)] = "assassinlibrary_citembg2",
+	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Dungeon2, AssassinEnum.LibraryType.Culture)] = "assassinlibrary_citembg2",
+	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Dungeon2, AssassinEnum.LibraryType.Video)] = "assassinlibrary_bitemempty2"
 }
-var_0_0.ActId2LibraryCategoryIconName = {
-	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Outside, var_0_0.LibraryType.Hero)] = "assassinlibrary_leftlisticon",
-	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Outside, var_0_0.LibraryType.Geology)] = "assassinlibrary_leftlisticon",
-	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Outside, var_0_0.LibraryType.Culture)] = "assassinlibrary_leftlisticon",
-	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Outside, var_0_0.LibraryType.Video)] = "assassinlibrary_leftlisticon",
-	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Dungeon2, var_0_0.LibraryType.Hero)] = "assassinlibrary_leftlisticon2",
-	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Dungeon2, var_0_0.LibraryType.Geology)] = "assassinlibrary_leftlisticon2",
-	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Dungeon2, var_0_0.LibraryType.Culture)] = "assassinlibrary_leftlisticon2",
-	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Dungeon2, var_0_0.LibraryType.Video)] = "assassinlibrary_leftlisticon2"
+AssassinEnum.ActId2LibraryCategoryIconName = {
+	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Outside, AssassinEnum.LibraryType.Hero)] = "assassinlibrary_leftlisticon",
+	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Outside, AssassinEnum.LibraryType.Geology)] = "assassinlibrary_leftlisticon",
+	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Outside, AssassinEnum.LibraryType.Culture)] = "assassinlibrary_leftlisticon",
+	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Outside, AssassinEnum.LibraryType.Video)] = "assassinlibrary_leftlisticon",
+	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Dungeon2, AssassinEnum.LibraryType.Hero)] = "assassinlibrary_leftlisticon2",
+	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Dungeon2, AssassinEnum.LibraryType.Geology)] = "assassinlibrary_leftlisticon2",
+	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Dungeon2, AssassinEnum.LibraryType.Culture)] = "assassinlibrary_leftlisticon2",
+	[AssassinHelper.multipleKeys2OneKey(VersionActivity2_9Enum.ActivityId.Dungeon2, AssassinEnum.LibraryType.Video)] = "assassinlibrary_leftlisticon2"
 }
 
-return var_0_0
+return AssassinEnum

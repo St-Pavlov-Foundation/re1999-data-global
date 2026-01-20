@@ -1,51 +1,53 @@
-﻿module("modules.logic.fight.entity.comp.buff.FightBuffStoredExPoint", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/buff/FightBuffStoredExPoint.lua
 
-local var_0_0 = class("FightBuffStoredExPoint")
+module("modules.logic.fight.entity.comp.buff.FightBuffStoredExPoint", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.type = nil
+local FightBuffStoredExPoint = class("FightBuffStoredExPoint")
+
+function FightBuffStoredExPoint:ctor()
+	self.type = nil
 end
 
-function var_0_0.onBuffStart(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0.entity = arg_2_1
+function FightBuffStoredExPoint:onBuffStart(entity, buffMO)
+	self.entity = entity
 
-	local var_2_0 = arg_2_1:getMO()
+	local entityMo = entity:getMO()
 
-	if var_2_0 then
-		local var_2_1 = var_2_0:getStoredExPoint()
+	if entityMo then
+		local oldValue = entityMo:getStoredExPoint()
 
-		var_2_0:updateStoredExPoint()
-		FightController.instance:dispatchEvent(FightEvent.OnStoreExPointChange, var_2_0.id, var_2_1)
+		entityMo:updateStoredExPoint()
+		FightController.instance:dispatchEvent(FightEvent.OnStoreExPointChange, entityMo.id, oldValue)
 	end
 end
 
-function var_0_0.onBuffEnd(arg_3_0)
-	if not arg_3_0.entity then
+function FightBuffStoredExPoint:onBuffEnd()
+	if not self.entity then
 		return
 	end
 
-	local var_3_0 = arg_3_0.entity:getMO()
+	local entityMo = self.entity:getMO()
 
-	if var_3_0 then
-		local var_3_1 = var_3_0:getStoredExPoint()
+	if entityMo then
+		local oldValue = entityMo:getStoredExPoint()
 
-		var_3_0:updateStoredExPoint()
-		FightController.instance:dispatchEvent(FightEvent.OnStoreExPointChange, var_3_0.id, var_3_1)
+		entityMo:updateStoredExPoint()
+		FightController.instance:dispatchEvent(FightEvent.OnStoreExPointChange, entityMo.id, oldValue)
 
-		local var_3_2 = FightLocalDataMgr.instance.entityMgr:getById(arg_3_0.entity.id)
+		local localEntityMo = FightLocalDataMgr.instance.entityMgr:getById(self.entity.id)
 
-		if var_3_2 then
-			var_3_2:updateStoredExPoint()
+		if localEntityMo then
+			localEntityMo:updateStoredExPoint()
 		end
 	end
 end
 
-function var_0_0.reset(arg_4_0)
-	arg_4_0.entity = nil
+function FightBuffStoredExPoint:reset()
+	self.entity = nil
 end
 
-function var_0_0.dispose(arg_5_0)
-	arg_5_0.entity = nil
+function FightBuffStoredExPoint:dispose()
+	self.entity = nil
 end
 
-return var_0_0
+return FightBuffStoredExPoint

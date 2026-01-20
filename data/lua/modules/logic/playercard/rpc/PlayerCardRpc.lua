@@ -1,110 +1,112 @@
-﻿module("modules.logic.playercard.rpc.PlayerCardRpc", package.seeall)
+﻿-- chunkname: @modules/logic/playercard/rpc/PlayerCardRpc.lua
 
-local var_0_0 = class("PlayerCardRpc", BaseRpc)
+module("modules.logic.playercard.rpc.PlayerCardRpc", package.seeall)
 
-function var_0_0.sendGetPlayerCardInfoRequest(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = PlayerCardModule_pb.GetPlayerCardInfoRequest()
+local PlayerCardRpc = class("PlayerCardRpc", BaseRpc)
 
-	return arg_1_0:sendMsg(var_1_0, arg_1_1, arg_1_2)
+function PlayerCardRpc:sendGetPlayerCardInfoRequest(callback, callbackObj)
+	local req = PlayerCardModule_pb.GetPlayerCardInfoRequest()
+
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveGetPlayerCardInfoReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 ~= 0 then
+function PlayerCardRpc:onReceiveGetPlayerCardInfoReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	PlayerCardModel.instance:updateCardInfo(arg_2_2.playerCardInfo)
+	PlayerCardModel.instance:updateCardInfo(msg.playerCardInfo)
 end
 
-function var_0_0.onReceivePlayerCardInfoPush(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 ~= 0 then
+function PlayerCardRpc:onReceivePlayerCardInfoPush(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	PlayerCardModel.instance:updateCardInfo(arg_3_2.playerCardInfo)
+	PlayerCardModel.instance:updateCardInfo(msg.playerCardInfo)
 end
 
-function var_0_0.sendGetOtherPlayerCardInfoRequest(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	local var_4_0 = PlayerCardModule_pb.GetOtherPlayerCardInfoRequest()
+function PlayerCardRpc:sendGetOtherPlayerCardInfoRequest(userId, callback, callbackObj)
+	local req = PlayerCardModule_pb.GetOtherPlayerCardInfoRequest()
 
-	var_4_0.userId = arg_4_1
+	req.userId = userId
 
-	return arg_4_0:sendMsg(var_4_0, arg_4_2, arg_4_3)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveGetOtherPlayerCardInfoReply(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_1 ~= 0 then
+function PlayerCardRpc:onReceiveGetOtherPlayerCardInfoReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	PlayerCardModel.instance:updateCardInfo(arg_5_2.playerCardInfo, arg_5_2.playerInfo)
+	PlayerCardModel.instance:updateCardInfo(msg.playerCardInfo, msg.playerInfo)
 end
 
-function var_0_0.sendSetPlayerCardShowSettingRequest(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	local var_6_0 = PlayerCardModule_pb.SetPlayerCardShowSettingRequest()
+function PlayerCardRpc:sendSetPlayerCardShowSettingRequest(showSettings, callback, callbackObj)
+	local req = PlayerCardModule_pb.SetPlayerCardShowSettingRequest()
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_1) do
-		table.insert(var_6_0.showSettings, iter_6_1)
+	for i, v in ipairs(showSettings) do
+		table.insert(req.showSettings, v)
 	end
 
-	return arg_6_0:sendMsg(var_6_0, arg_6_2, arg_6_3)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveSetPlayerCardShowSettingReply(arg_7_0, arg_7_1, arg_7_2)
-	if arg_7_1 ~= 0 then
+function PlayerCardRpc:onReceiveSetPlayerCardShowSettingReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	PlayerCardModel.instance:updateSetting(arg_7_2.showSettings)
+	PlayerCardModel.instance:updateSetting(msg.showSettings)
 end
 
-function var_0_0.sendSetPlayerCardHeroCoverRequest(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	local var_8_0 = PlayerCardModule_pb.SetPlayerCardHeroCoverRequest()
+function PlayerCardRpc:sendSetPlayerCardHeroCoverRequest(heroCover, callback, callbackObj)
+	local req = PlayerCardModule_pb.SetPlayerCardHeroCoverRequest()
 
-	var_8_0.heroCover = arg_8_1
+	req.heroCover = heroCover
 
-	return arg_8_0:sendMsg(var_8_0, arg_8_2, arg_8_3)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveSetPlayerCardHeroCoverReply(arg_9_0, arg_9_1, arg_9_2)
-	if arg_9_1 ~= 0 then
+function PlayerCardRpc:onReceiveSetPlayerCardHeroCoverReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	PlayerCardModel.instance:updateHeroCover(arg_9_2.heroCover)
+	PlayerCardModel.instance:updateHeroCover(msg.heroCover)
 end
 
-function var_0_0.sendSetPlayerCardThemeRequest(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	local var_10_0 = PlayerCardModule_pb.SetPlayerCardThemeRequest()
+function PlayerCardRpc:sendSetPlayerCardThemeRequest(themeId, callback, callbackObj)
+	local req = PlayerCardModule_pb.SetPlayerCardThemeRequest()
 
-	var_10_0.themeId = arg_10_1
+	req.themeId = themeId
 
-	return arg_10_0:sendMsg(var_10_0, arg_10_2, arg_10_3)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveSetPlayerCardThemeReply(arg_11_0, arg_11_1, arg_11_2)
-	if arg_11_1 ~= 0 then
+function PlayerCardRpc:onReceiveSetPlayerCardThemeReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	PlayerCardModel.instance:updateThemeId(arg_11_2.themeId)
-	PlayerCardController.instance:dispatchEvent(PlayerCardEvent.ChangeSkin, arg_11_2.themeId)
+	PlayerCardModel.instance:updateThemeId(msg.themeId)
+	PlayerCardController.instance:dispatchEvent(PlayerCardEvent.ChangeSkin, msg.themeId)
 end
 
-function var_0_0.sendSetPlayerCardShowAchievementRequest(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4)
-	local var_12_0 = PlayerCardModule_pb.SetPlayerCardShowAchievementRequest()
+function PlayerCardRpc:sendSetPlayerCardShowAchievementRequest(idList, groupId, callback, callbackObj)
+	local req = PlayerCardModule_pb.SetPlayerCardShowAchievementRequest()
 
-	for iter_12_0, iter_12_1 in ipairs(arg_12_1) do
-		var_12_0.ids:append(iter_12_1)
+	for i, id in ipairs(idList) do
+		req.ids:append(id)
 	end
 
-	var_12_0.groupId = arg_12_2
+	req.groupId = groupId
 
-	return arg_12_0:sendMsg(var_12_0, arg_12_3, arg_12_4)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveSetPlayerCardShowAchievementReply(arg_13_0, arg_13_1, arg_13_2)
-	if arg_13_1 ~= 0 then
+function PlayerCardRpc:onReceiveSetPlayerCardShowAchievementReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
@@ -113,61 +115,61 @@ function var_0_0.onReceiveSetPlayerCardShowAchievementReply(arg_13_0, arg_13_1, 
 	AchievementController.instance:dispatchEvent(AchievementEvent.AchievementSaveSucc)
 end
 
-function var_0_0.sendSetPlayerCardProgressSettingRequest(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	local var_14_0 = PlayerCardModule_pb.SetPlayerCardProgressSettingRequest()
+function PlayerCardRpc:sendSetPlayerCardProgressSettingRequest(progressSetting, callback, callbackObj)
+	local req = PlayerCardModule_pb.SetPlayerCardProgressSettingRequest()
 
-	var_14_0.progressSetting = arg_14_1
+	req.progressSetting = progressSetting
 
-	return arg_14_0:sendMsg(var_14_0, arg_14_2, arg_14_3)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveSetPlayerCardProgressSettingReply(arg_15_0, arg_15_1, arg_15_2)
-	if arg_15_1 ~= 0 then
+function PlayerCardRpc:onReceiveSetPlayerCardProgressSettingReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	PlayerCardModel.instance:updateProgressSetting(arg_15_2.progressSetting)
+	PlayerCardModel.instance:updateProgressSetting(msg.progressSetting)
 	PlayerCardController.instance:statSetProgress()
 end
 
-function var_0_0.sendSetPlayerCardBaseInfoSettingRequest(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
-	local var_16_0 = PlayerCardModule_pb.SetPlayerCardBaseSettingRequest()
+function PlayerCardRpc:sendSetPlayerCardBaseInfoSettingRequest(setting, callback, callbackObj)
+	local req = PlayerCardModule_pb.SetPlayerCardBaseSettingRequest()
 
-	var_16_0.baseSetting = arg_16_1
+	req.baseSetting = setting
 
-	return arg_16_0:sendMsg(var_16_0, arg_16_2, arg_16_3)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveSetPlayerCardBaseSettingReply(arg_17_0, arg_17_1, arg_17_2)
-	if arg_17_1 ~= 0 then
+function PlayerCardRpc:onReceiveSetPlayerCardBaseSettingReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	PlayerCardModel.instance:updateBaseInfoSetting(arg_17_2.baseSetting)
+	PlayerCardModel.instance:updateBaseInfoSetting(msg.baseSetting)
 	PlayerCardController.instance:statSetBaseInfo()
 end
 
-function var_0_0.sendSetPlayerCardCritterRequest(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	local var_18_0 = PlayerCardModule_pb.SetPlayerCardCritterRequest()
+function PlayerCardRpc:sendSetPlayerCardCritterRequest(critterUid, callback, callbackObj)
+	local req = PlayerCardModule_pb.SetPlayerCardCritterRequest()
 
-	var_18_0.critterUid = tonumber(arg_18_1)
+	req.critterUid = tonumber(critterUid)
 
-	return arg_18_0:sendMsg(var_18_0, arg_18_2, arg_18_3)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveSetPlayerCardCritterReply(arg_19_0, arg_19_1, arg_19_2)
-	if arg_19_1 ~= 0 then
+function PlayerCardRpc:onReceiveSetPlayerCardCritterReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_19_0 = CritterModel.instance:getCritterMOByUid(arg_19_2.critterUid)
+	local mo = CritterModel.instance:getCritterMOByUid(msg.critterUid)
 
-	PlayerCardModel.instance:setSelectCritterUid(arg_19_2.critterUid)
+	PlayerCardModel.instance:setSelectCritterUid(msg.critterUid)
 	PlayerCardController.instance:dispatchEvent(PlayerCardEvent.SelectCritter, {
-		uid = arg_19_2.critterUid
+		uid = msg.critterUid
 	})
 end
 
-var_0_0.instance = var_0_0.New()
+PlayerCardRpc.instance = PlayerCardRpc.New()
 
-return var_0_0
+return PlayerCardRpc

@@ -1,10 +1,12 @@
-﻿module("modules.logic.fight.model.data.FightHeroSpAttributeInfoData", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightHeroSpAttributeInfoData.lua
 
-local var_0_0 = FightDataClass("FightHeroSpAttributeInfoData")
+module("modules.logic.fight.model.data.FightHeroSpAttributeInfoData", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1)
-	arg_1_0.uid = arg_1_1.uid
-	arg_1_0.attribute = FightHeroSpAttributeData.New(arg_1_1.attribute)
+local FightHeroSpAttributeInfoData = FightDataClass("FightHeroSpAttributeInfoData")
+
+function FightHeroSpAttributeInfoData:onConstructor(proto)
+	self.uid = proto.uid
+	self.attribute = FightHeroSpAttributeData.New(proto.attribute)
 end
 
-return var_0_0
+return FightHeroSpAttributeInfoData

@@ -1,76 +1,78 @@
-﻿module("modules.logic.equip.view.EquipRefineItem", package.seeall)
+﻿-- chunkname: @modules/logic/equip/view/EquipRefineItem.lua
 
-local var_0_0 = class("EquipRefineItem", ListScrollCellExtend)
+module("modules.logic.equip.view.EquipRefineItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goequip = gohelper.findChild(arg_1_0.viewGO, "#go_equip")
-	arg_1_0._goreduce = gohelper.findChild(arg_1_0.viewGO, "#go_reduce")
+local EquipRefineItem = class("EquipRefineItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function EquipRefineItem:onInitView()
+	self._goequip = gohelper.findChild(self.viewGO, "#go_equip")
+	self._goreduce = gohelper.findChild(self.viewGO, "#go_reduce")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function EquipRefineItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function EquipRefineItem:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0.click = gohelper.getClick(arg_4_0.viewGO)
+function EquipRefineItem:_editableInitView()
+	self.click = gohelper.getClick(self.viewGO)
 
-	arg_4_0.click:AddClickListener(arg_4_0._onClick, arg_4_0)
+	self.click:AddClickListener(self._onClick, self)
 
-	arg_4_0._reduceClick = gohelper.getClick(arg_4_0._goreduce)
+	self._reduceClick = gohelper.getClick(self._goreduce)
 
-	arg_4_0._reduceClick:AddClickListener(arg_4_0._onReduceClick, arg_4_0)
+	self._reduceClick:AddClickListener(self._onReduceClick, self)
 
-	arg_4_0.animator = arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_4_0._commonEquipIcon = IconMgr.instance:getCommonEquipIcon(arg_4_0._goequip, 1)
+	self.animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._commonEquipIcon = IconMgr.instance:getCommonEquipIcon(self._goequip, 1)
 
-	arg_4_0._commonEquipIcon:_overrideLoadIconFunc(EquipHelper.getEquipIconLoadPath, arg_4_0._commonEquipIcon)
+	self._commonEquipIcon:_overrideLoadIconFunc(EquipHelper.getEquipIconLoadPath, self._commonEquipIcon)
 end
 
-function var_0_0._editableAddEvents(arg_5_0)
-	EquipController.instance:registerCallback(EquipEvent.OnRefineSelectedEquipChange, arg_5_0.updateSelected, arg_5_0)
-	EquipController.instance:registerCallback(EquipEvent.onEquipLockChange, arg_5_0.onEquipLockChange, arg_5_0)
+function EquipRefineItem:_editableAddEvents()
+	EquipController.instance:registerCallback(EquipEvent.OnRefineSelectedEquipChange, self.updateSelected, self)
+	EquipController.instance:registerCallback(EquipEvent.onEquipLockChange, self.onEquipLockChange, self)
 end
 
-function var_0_0._editableRemoveEvents(arg_6_0)
-	EquipController.instance:unregisterCallback(EquipEvent.OnRefineSelectedEquipChange, arg_6_0.updateSelected, arg_6_0)
-	EquipController.instance:unregisterCallback(EquipEvent.onEquipLockChange, arg_6_0.onEquipLockChange, arg_6_0)
+function EquipRefineItem:_editableRemoveEvents()
+	EquipController.instance:unregisterCallback(EquipEvent.OnRefineSelectedEquipChange, self.updateSelected, self)
+	EquipController.instance:unregisterCallback(EquipEvent.onEquipLockChange, self.onEquipLockChange, self)
 end
 
-function var_0_0.onEquipLockChange(arg_7_0, arg_7_1)
-	if arg_7_0._mo.id == tonumber(arg_7_1.uid) then
-		arg_7_0:refreshLockUI()
+function EquipRefineItem:onEquipLockChange(param)
+	if self._mo.id == tonumber(param.uid) then
+		self:refreshLockUI()
 
-		if arg_7_1.isLock then
-			EquipRefineListModel.instance:deselectEquip(arg_7_0._mo)
+		if param.isLock then
+			EquipRefineListModel.instance:deselectEquip(self._mo)
 		end
 	end
 end
 
-function var_0_0._onReduceClick(arg_8_0)
+function EquipRefineItem:_onReduceClick()
 	AudioMgr.instance:trigger(AudioEnum.HeroGroupUI.Play_UI_Inking_Forget)
-	EquipRefineListModel.instance:deselectEquip(arg_8_0._mo)
-	gohelper.setActive(arg_8_0._goreduce, false)
+	EquipRefineListModel.instance:deselectEquip(self._mo)
+	gohelper.setActive(self._goreduce, false)
 	ViewMgr.instance:closeView(ViewName.EquipInfoTipsView)
 end
 
-function var_0_0._onClick(arg_9_0)
+function EquipRefineItem:_onClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
-	arg_9_0.animator:Play(UIAnimationName.Click, 0, 0)
+	self.animator:Play(UIAnimationName.Click, 0, 0)
 
-	if arg_9_0._mo.isLock then
+	if self._mo.isLock then
 		GameFacade.showToast(ToastEnum.EquipChooseLock)
 
-		if EquipHelper.isNormalEquip(arg_9_0._mo.config) then
+		if EquipHelper.isNormalEquip(self._mo.config) then
 			ViewMgr.instance:openView(ViewName.EquipInfoTipsView, {
-				equipMo = arg_9_0._mo
+				equipMo = self._mo
 			})
 		end
 
@@ -79,37 +81,37 @@ function var_0_0._onClick(arg_9_0)
 
 	ViewMgr.instance:closeView(ViewName.EquipInfoTipsView)
 
-	local var_9_0 = EquipRefineListModel.instance:selectEquip(arg_9_0._mo)
+	local status = EquipRefineListModel.instance:selectEquip(self._mo)
 
-	if var_9_0 == EquipRefineListModel.SelectStatusEnum.OutMaxRefineLv then
+	if status == EquipRefineListModel.SelectStatusEnum.OutMaxRefineLv then
 		GameFacade.showToast(ToastEnum.EquipOutMaxRefineLv)
 
 		return
-	elseif var_9_0 == EquipRefineListModel.SelectStatusEnum.Selected then
+	elseif status == EquipRefineListModel.SelectStatusEnum.Selected then
 		return
 	end
 
-	gohelper.setActive(arg_9_0._goreduce, true)
+	gohelper.setActive(self._goreduce, true)
 end
 
-function var_0_0.refreshLockUI(arg_10_0)
-	arg_10_0._commonEquipIcon:refreshLock(arg_10_0._mo.isLock)
+function EquipRefineItem:refreshLockUI()
+	self._commonEquipIcon:refreshLock(self._mo.isLock)
 end
 
-function var_0_0.updateSelected(arg_11_0)
-	gohelper.setActive(arg_11_0._goreduce, EquipRefineListModel.instance:isSelected(arg_11_0._mo))
+function EquipRefineItem:updateSelected()
+	gohelper.setActive(self._goreduce, EquipRefineListModel.instance:isSelected(self._mo))
 end
 
-function var_0_0.onUpdateMO(arg_12_0, arg_12_1)
-	arg_12_0._mo = arg_12_1
+function EquipRefineItem:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_12_0._commonEquipIcon:setEquipMO(arg_12_1)
-	arg_12_0:updateSelected()
+	self._commonEquipIcon:setEquipMO(mo)
+	self:updateSelected()
 end
 
-function var_0_0.onDestroyView(arg_13_0)
-	arg_13_0.click:RemoveClickListener()
-	arg_13_0._reduceClick:RemoveClickListener()
+function EquipRefineItem:onDestroyView()
+	self.click:RemoveClickListener()
+	self._reduceClick:RemoveClickListener()
 end
 
-return var_0_0
+return EquipRefineItem

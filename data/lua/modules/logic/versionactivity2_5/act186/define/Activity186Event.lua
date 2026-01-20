@@ -1,18 +1,20 @@
-﻿module("modules.logic.versionactivity2_5.act186.define.Activity186Event", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/act186/define/Activity186Event.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity2_5.act186.define.Activity186Event", package.seeall)
 
-var_0_0.UpdateInfo = 1
-var_0_0.FinishTask = 2
-var_0_0.LocalKeyChange = 3
-var_0_0.FinishGame = 4
-var_0_0.GetDailyCollection = 5
-var_0_0.SpBonusStageChange = 6
-var_0_0.PlayGame = 7
-var_0_0.GetOnceBonus = 8
-var_0_0.GetMilestoneReward = 9
-var_0_0.PlayTalk = 10
-var_0_0.UpdateTask = 11
-var_0_0.RefreshRed = 12
+local Activity186Event = _M
 
-return var_0_0
+Activity186Event.UpdateInfo = 1
+Activity186Event.FinishTask = 2
+Activity186Event.LocalKeyChange = 3
+Activity186Event.FinishGame = 4
+Activity186Event.GetDailyCollection = 5
+Activity186Event.SpBonusStageChange = 6
+Activity186Event.PlayGame = 7
+Activity186Event.GetOnceBonus = 8
+Activity186Event.GetMilestoneReward = 9
+Activity186Event.PlayTalk = 10
+Activity186Event.UpdateTask = 11
+Activity186Event.RefreshRed = 12
+
+return Activity186Event

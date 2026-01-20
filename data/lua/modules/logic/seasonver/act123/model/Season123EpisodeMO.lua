@@ -1,67 +1,69 @@
-﻿module("modules.logic.seasonver.act123.model.Season123EpisodeMO", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/model/Season123EpisodeMO.lua
 
-local var_0_0 = pureTable("Season123EpisodeMO")
+module("modules.logic.seasonver.act123.model.Season123EpisodeMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.layer = arg_1_1.layer
-	arg_1_0.state = arg_1_1.state or 0
-	arg_1_0.round = arg_1_1.round or 0
-	arg_1_0.effectMainCelebrityEquipIds = arg_1_1.effectMainCelebrityEquipIds or {}
+local Season123EpisodeMO = pureTable("Season123EpisodeMO")
 
-	arg_1_0:initHeroes(arg_1_1.heroInfos)
+function Season123EpisodeMO:init(info)
+	self.layer = info.layer
+	self.state = info.state or 0
+	self.round = info.round or 0
+	self.effectMainCelebrityEquipIds = info.effectMainCelebrityEquipIds or {}
+
+	self:initHeroes(info.heroInfos)
 end
 
-function var_0_0.update(arg_2_0, arg_2_1)
-	arg_2_0.state = arg_2_1.state
-	arg_2_0.round = arg_2_1.round
-	arg_2_0.effectMainCelebrityEquipIds = arg_2_1.effectMainCelebrityEquipIds
+function Season123EpisodeMO:update(info)
+	self.state = info.state
+	self.round = info.round
+	self.effectMainCelebrityEquipIds = info.effectMainCelebrityEquipIds
 
-	arg_2_0:updateHeroes(arg_2_1.heroInfos)
+	self:updateHeroes(info.heroInfos)
 end
 
-function var_0_0.isFinished(arg_3_0)
-	return arg_3_0.state == 1
+function Season123EpisodeMO:isFinished()
+	return self.state == 1
 end
 
-function var_0_0.initHeroes(arg_4_0, arg_4_1)
-	arg_4_0.heroes = {}
-	arg_4_0.heroesMap = {}
+function Season123EpisodeMO:initHeroes(heroInfos)
+	self.heroes = {}
+	self.heroesMap = {}
 
-	if not arg_4_1 then
+	if not heroInfos then
 		return
 	end
 
-	for iter_4_0 = 1, #arg_4_1 do
-		local var_4_0 = arg_4_1[iter_4_0]
-		local var_4_1 = Season123HeroMO.New()
+	for i = 1, #heroInfos do
+		local heroInfo = heroInfos[i]
+		local heroMO = Season123HeroMO.New()
 
-		var_4_1:init(var_4_0)
-		table.insert(arg_4_0.heroes, var_4_1)
+		heroMO:init(heroInfo)
+		table.insert(self.heroes, heroMO)
 
-		arg_4_0.heroesMap[var_4_1.heroUid] = var_4_1
+		self.heroesMap[heroMO.heroUid] = heroMO
 	end
 end
 
-function var_0_0.updateHeroes(arg_5_0, arg_5_1)
-	if not arg_5_1 then
+function Season123EpisodeMO:updateHeroes(heroInfos)
+	if not heroInfos then
 		return
 	end
 
-	for iter_5_0 = 1, #arg_5_1 do
-		local var_5_0 = arg_5_1[iter_5_0]
-		local var_5_1 = arg_5_0.heroesMap[var_5_0.heroUid]
+	for i = 1, #heroInfos do
+		local heroInfo = heroInfos[i]
+		local heroMO = self.heroesMap[heroInfo.heroUid]
 
-		if not var_5_1 then
-			var_5_1 = Season123HeroMO.New()
+		if not heroMO then
+			heroMO = Season123HeroMO.New()
 
-			var_5_1:init(var_5_0)
-			table.insert(arg_5_0.heroes, var_5_1)
+			heroMO:init(heroInfo)
+			table.insert(self.heroes, heroMO)
 
-			arg_5_0.heroesMap[var_5_1.heroUid] = var_5_1
+			self.heroesMap[heroMO.heroUid] = heroMO
 		else
-			var_5_1:update(var_5_0)
+			heroMO:update(heroInfo)
 		end
 	end
 end
 
-return var_0_0
+return Season123EpisodeMO

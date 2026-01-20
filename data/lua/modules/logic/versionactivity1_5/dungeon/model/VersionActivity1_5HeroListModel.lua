@@ -1,199 +1,201 @@
-﻿module("modules.logic.versionactivity1_5.dungeon.model.VersionActivity1_5HeroListModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/dungeon/model/VersionActivity1_5HeroListModel.lua
 
-local var_0_0 = class("VersionActivity1_5HeroListModel", ListScrollModel)
+module("modules.logic.versionactivity1_5.dungeon.model.VersionActivity1_5HeroListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local VersionActivity1_5HeroListModel = class("VersionActivity1_5HeroListModel", ListScrollModel)
+
+function VersionActivity1_5HeroListModel:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function VersionActivity1_5HeroListModel:reInit()
 	return
 end
 
-function var_0_0.onOpenDispatchView(arg_3_0, arg_3_1)
-	arg_3_0:initHeroList()
-	arg_3_0:initSelectedHeroList(arg_3_1.id)
+function VersionActivity1_5HeroListModel:onOpenDispatchView(dispatchCo)
+	self:initHeroList()
+	self:initSelectedHeroList(dispatchCo.id)
 
-	arg_3_0.maxSelectCount = arg_3_1.maxCount
+	self.maxSelectCount = dispatchCo.maxCount
 end
 
-function var_0_0.resetSelectHeroList(arg_4_0)
-	arg_4_0.selectedHeroList = {}
-	arg_4_0.selectedHeroIndexDict = {}
+function VersionActivity1_5HeroListModel:resetSelectHeroList()
+	self.selectedHeroList = {}
+	self.selectedHeroIndexDict = {}
 end
 
-function var_0_0.onCloseDispatchView(arg_5_0)
-	arg_5_0:clearSelectedHeroList()
+function VersionActivity1_5HeroListModel:onCloseDispatchView()
+	self:clearSelectedHeroList()
 end
 
-function var_0_0.initHeroList(arg_6_0)
-	if arg_6_0.heroList then
+function VersionActivity1_5HeroListModel:initHeroList()
+	if self.heroList then
 		return
 	end
 
-	arg_6_0.heroList = {}
+	self.heroList = {}
 
-	for iter_6_0, iter_6_1 in ipairs(HeroModel.instance:getList()) do
-		local var_6_0 = VersionActivity1_5DispatchHeroMo.New()
+	for _, heroMo in ipairs(HeroModel.instance:getList()) do
+		local dispatchHeroMo = VersionActivity1_5DispatchHeroMo.New()
 
-		var_6_0:init(iter_6_1)
-		table.insert(arg_6_0.heroList, var_6_0)
+		dispatchHeroMo:init(heroMo)
+		table.insert(self.heroList, dispatchHeroMo)
 	end
 end
 
-function var_0_0.initSelectedHeroList(arg_7_0, arg_7_1)
-	arg_7_0.selectedHeroList = {}
-	arg_7_0.selectedHeroIndexDict = {}
+function VersionActivity1_5HeroListModel:initSelectedHeroList(dispatchId)
+	self.selectedHeroList = {}
+	self.selectedHeroIndexDict = {}
 
-	if arg_7_1 then
-		local var_7_0 = VersionActivity1_5DungeonModel.instance:getDispatchMo(arg_7_1)
+	if dispatchId then
+		local dispatchMo = VersionActivity1_5DungeonModel.instance:getDispatchMo(dispatchId)
 
-		if var_7_0 then
-			for iter_7_0, iter_7_1 in ipairs(var_7_0.heroIdList) do
-				local var_7_1 = arg_7_0:getDispatchHeroMo(iter_7_1)
+		if dispatchMo then
+			for index, heroId in ipairs(dispatchMo.heroIdList) do
+				local dispatchHeroMo = self:getDispatchHeroMo(heroId)
 
-				if var_7_1 then
-					table.insert(arg_7_0.selectedHeroList, var_7_1)
+				if dispatchHeroMo then
+					table.insert(self.selectedHeroList, dispatchHeroMo)
 
-					arg_7_0.selectedHeroIndexDict[var_7_1] = iter_7_0
+					self.selectedHeroIndexDict[dispatchHeroMo] = index
 				else
-					logError("not found dispatched hero id : " .. tostring(iter_7_1))
+					logError("not found dispatched hero id : " .. tostring(heroId))
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.getDispatchHeroMo(arg_8_0, arg_8_1)
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0.heroList) do
-		if iter_8_1.heroId == arg_8_1 then
-			return iter_8_1
+function VersionActivity1_5HeroListModel:getDispatchHeroMo(heroId)
+	for _, heroMo in ipairs(self.heroList) do
+		if heroMo.heroId == heroId then
+			return heroMo
 		end
 	end
 end
 
-function var_0_0.refreshHero(arg_9_0)
-	arg_9_0:resortHeroList()
-	arg_9_0:setList(arg_9_0.heroList)
+function VersionActivity1_5HeroListModel:refreshHero()
+	self:resortHeroList()
+	self:setList(self.heroList)
 end
 
-function var_0_0.resortHeroList(arg_10_0)
-	table.sort(arg_10_0.heroList, var_0_0._sortFunc)
+function VersionActivity1_5HeroListModel:resortHeroList()
+	table.sort(self.heroList, VersionActivity1_5HeroListModel._sortFunc)
 end
 
-function var_0_0._sortFunc(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0:isDispatched()
-	local var_11_1 = arg_11_1:isDispatched()
+function VersionActivity1_5HeroListModel._sortFunc(heroMo1, heroMo2)
+	local heroMo1Dispatched = heroMo1:isDispatched()
+	local heroMo2Dispatched = heroMo2:isDispatched()
 
-	if var_11_0 ~= var_11_1 then
-		return var_11_1
+	if heroMo1Dispatched ~= heroMo2Dispatched then
+		return heroMo2Dispatched
 	end
 
-	if arg_11_0.level ~= arg_11_1.level then
-		return arg_11_0.level > arg_11_1.level
+	if heroMo1.level ~= heroMo2.level then
+		return heroMo1.level > heroMo2.level
 	end
 
-	if arg_11_0.rare ~= arg_11_1.rare then
-		return arg_11_0.rare > arg_11_1.rare
+	if heroMo1.rare ~= heroMo2.rare then
+		return heroMo1.rare > heroMo2.rare
 	end
 
-	return arg_11_0.heroId > arg_11_1.heroId
+	return heroMo1.heroId > heroMo2.heroId
 end
 
-function var_0_0.canAddMo(arg_12_0)
-	return #arg_12_0.selectedHeroList < arg_12_0.maxSelectCount
+function VersionActivity1_5HeroListModel:canAddMo()
+	return #self.selectedHeroList < self.maxSelectCount
 end
 
-function var_0_0.canChangeHeroMo(arg_13_0)
-	return arg_13_0.dispatchViewStatus == VersionActivity1_5DungeonEnum.DispatchStatus.NotDispatch
+function VersionActivity1_5HeroListModel:canChangeHeroMo()
+	return self.dispatchViewStatus == VersionActivity1_5DungeonEnum.DispatchStatus.NotDispatch
 end
 
-function var_0_0.selectMo(arg_14_0, arg_14_1)
-	if not arg_14_1 then
+function VersionActivity1_5HeroListModel:selectMo(mo)
+	if not mo then
 		return
 	end
 
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0.selectedHeroList) do
-		if iter_14_1.heroId == arg_14_1.heroId then
+	for _, heroMo in ipairs(self.selectedHeroList) do
+		if heroMo.heroId == mo.heroId then
 			return
 		end
 	end
 
-	table.insert(arg_14_0.selectedHeroList, arg_14_1)
+	table.insert(self.selectedHeroList, mo)
 
-	arg_14_0.selectedHeroIndexDict[arg_14_1] = #arg_14_0.selectedHeroList
+	self.selectedHeroIndexDict[mo] = #self.selectedHeroList
 
 	VersionActivity1_5DungeonController.instance:dispatchEvent(VersionActivity1_5DungeonEvent.ChangeSelectedHero)
 end
 
-function var_0_0.deselectMo(arg_15_0, arg_15_1)
-	if not arg_15_1 then
+function VersionActivity1_5HeroListModel:deselectMo(mo)
+	if not mo then
 		return
 	end
 
-	local var_15_0 = 0
+	local deleteIndex = 0
 
-	for iter_15_0, iter_15_1 in ipairs(arg_15_0.selectedHeroList) do
-		if iter_15_1.heroId == arg_15_1.heroId then
-			var_15_0 = iter_15_0
+	for index, heroMo in ipairs(self.selectedHeroList) do
+		if heroMo.heroId == mo.heroId then
+			deleteIndex = index
 		end
 	end
 
-	if var_15_0 > 0 then
-		table.remove(arg_15_0.selectedHeroList, var_15_0)
+	if deleteIndex > 0 then
+		table.remove(self.selectedHeroList, deleteIndex)
 
-		arg_15_0.selectedHeroIndexDict[arg_15_1] = nil
+		self.selectedHeroIndexDict[mo] = nil
 
-		for iter_15_2, iter_15_3 in ipairs(arg_15_0.selectedHeroList) do
-			arg_15_0.selectedHeroIndexDict[iter_15_3] = iter_15_2
+		for index, heroMo in ipairs(self.selectedHeroList) do
+			self.selectedHeroIndexDict[heroMo] = index
 		end
 
 		VersionActivity1_5DungeonController.instance:dispatchEvent(VersionActivity1_5DungeonEvent.ChangeSelectedHero)
 	end
 end
 
-function var_0_0.getSelectedIndex(arg_16_0, arg_16_1)
-	return arg_16_0.selectedHeroIndexDict[arg_16_1]
+function VersionActivity1_5HeroListModel:getSelectedIndex(mo)
+	return self.selectedHeroIndexDict[mo]
 end
 
-function var_0_0.getSelectedMoByIndex(arg_17_0, arg_17_1)
-	return arg_17_0.selectedHeroList[arg_17_1]
+function VersionActivity1_5HeroListModel:getSelectedMoByIndex(index)
+	return self.selectedHeroList[index]
 end
 
-function var_0_0.getSelectedHeroCount(arg_18_0)
-	return #arg_18_0.selectedHeroList
+function VersionActivity1_5HeroListModel:getSelectedHeroCount()
+	return #self.selectedHeroList
 end
 
-function var_0_0.getSelectedHeroList(arg_19_0)
-	return arg_19_0.selectedHeroList
+function VersionActivity1_5HeroListModel:getSelectedHeroList()
+	return self.selectedHeroList
 end
 
-function var_0_0.getSelectedHeroIdList(arg_20_0)
-	local var_20_0 = {}
+function VersionActivity1_5HeroListModel:getSelectedHeroIdList()
+	local heroIdList = {}
 
-	for iter_20_0, iter_20_1 in ipairs(arg_20_0.selectedHeroList) do
-		table.insert(var_20_0, iter_20_1.heroId)
+	for _, heroMo in ipairs(self.selectedHeroList) do
+		table.insert(heroIdList, heroMo.heroId)
 	end
 
-	return var_20_0
+	return heroIdList
 end
 
-function var_0_0.setDispatchViewStatus(arg_21_0, arg_21_1)
-	arg_21_0.dispatchViewStatus = arg_21_1
+function VersionActivity1_5HeroListModel:setDispatchViewStatus(status)
+	self.dispatchViewStatus = status
 end
 
-function var_0_0.clearSelectedHeroList(arg_22_0)
-	arg_22_0.selectedHeroList = nil
-	arg_22_0.selectedHeroIndexDict = nil
-	arg_22_0.dispatchViewStatus = nil
+function VersionActivity1_5HeroListModel:clearSelectedHeroList()
+	self.selectedHeroList = nil
+	self.selectedHeroIndexDict = nil
+	self.dispatchViewStatus = nil
 end
 
-function var_0_0.clear(arg_23_0)
-	arg_23_0:clearSelectedHeroList()
+function VersionActivity1_5HeroListModel:clear()
+	self:clearSelectedHeroList()
 
-	arg_23_0.heroList = nil
+	self.heroList = nil
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity1_5HeroListModel.instance = VersionActivity1_5HeroListModel.New()
 
-return var_0_0
+return VersionActivity1_5HeroListModel

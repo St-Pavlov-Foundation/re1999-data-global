@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_actvity204_voice", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_actvity204_voice.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_actvity204_voice", package.seeall)
+
+local lua_actvity204_voice = {}
+local fields = {
 	jpmouth = 36,
 	name = 4,
 	frmotion = 24,
@@ -46,13 +48,13 @@ local var_0_1 = {
 	enmotion = 21,
 	viewEffect = 43
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_actvity204_voice.onLoad(json)
+	lua_actvity204_voice.configList, lua_actvity204_voice.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_actvity204_voice

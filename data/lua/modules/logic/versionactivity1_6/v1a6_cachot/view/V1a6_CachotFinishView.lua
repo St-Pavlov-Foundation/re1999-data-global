@@ -1,88 +1,90 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotFinishView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/view/V1a6_CachotFinishView.lua
 
-local var_0_0 = class("V1a6_CachotFinishView", BaseView)
+module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotFinishView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagelevelbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_levelbg")
-	arg_1_0._txtsuccesstips = gohelper.findChildText(arg_1_0.viewGO, "success/#txt_successtips")
-	arg_1_0._txtfailedtips = gohelper.findChildText(arg_1_0.viewGO, "failed/#txt_failedtips")
-	arg_1_0._gosuccess = gohelper.findChild(arg_1_0.viewGO, "#go_success")
-	arg_1_0._gofailed = gohelper.findChild(arg_1_0.viewGO, "#go_failed")
-	arg_1_0._btnjump = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_jump")
+local V1a6_CachotFinishView = class("V1a6_CachotFinishView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V1a6_CachotFinishView:onInitView()
+	self._simagelevelbg = gohelper.findChildSingleImage(self.viewGO, "#simage_levelbg")
+	self._txtsuccesstips = gohelper.findChildText(self.viewGO, "success/#txt_successtips")
+	self._txtfailedtips = gohelper.findChildText(self.viewGO, "failed/#txt_failedtips")
+	self._gosuccess = gohelper.findChild(self.viewGO, "#go_success")
+	self._gofailed = gohelper.findChild(self.viewGO, "#go_failed")
+	self._btnjump = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_jump")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnjump:AddClickListener(arg_2_0._btnjumpOnClick, arg_2_0)
+function V1a6_CachotFinishView:addEvents()
+	self._btnjump:AddClickListener(self._btnjumpOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnjump:RemoveClickListener()
+function V1a6_CachotFinishView:removeEvents()
+	self._btnjump:RemoveClickListener()
 end
 
-function var_0_0._btnjumpOnClick(arg_4_0)
-	if arg_4_0._isFinish then
-		local var_4_0 = arg_4_0._rogueEndingInfo and arg_4_0._rogueEndingInfo._ending
+function V1a6_CachotFinishView:_btnjumpOnClick()
+	if self._isFinish then
+		local endingId = self._rogueEndingInfo and self._rogueEndingInfo._ending
 
-		V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.OnFinishGame, var_4_0)
+		V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.OnFinishGame, endingId)
 	else
-		arg_4_0:_jump2ResultView()
+		self:_jump2ResultView()
 	end
 
-	arg_4_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function V1a6_CachotFinishView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function V1a6_CachotFinishView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	NavigateMgr.instance:addEscape(ViewName.V1a6_CachotFinishView, arg_7_0._btnjumpOnClick, arg_7_0)
+function V1a6_CachotFinishView:onOpen()
+	NavigateMgr.instance:addEscape(ViewName.V1a6_CachotFinishView, self._btnjumpOnClick, self)
 	RogueRpc.instance:sendRogueReadEndingRequest(V1a6_CachotEnum.ActivityId)
 
-	arg_7_0._rogueEndingInfo = V1a6_CachotModel.instance:getRogueEndingInfo()
-	arg_7_0._isFinish = false
+	self._rogueEndingInfo = V1a6_CachotModel.instance:getRogueEndingInfo()
+	self._isFinish = false
 
-	if arg_7_0._rogueEndingInfo then
-		arg_7_0._isFinish = arg_7_0._rogueEndingInfo._isFinish
+	if self._rogueEndingInfo then
+		self._isFinish = self._rogueEndingInfo._isFinish
 
-		arg_7_0._rogueEndingInfo:onEnterEndingFlow()
+		self._rogueEndingInfo:onEnterEndingFlow()
 	end
 
-	arg_7_0:refreshUI()
-	arg_7_0:playAudioEffect()
+	self:refreshUI()
+	self:playAudioEffect()
 end
 
-function var_0_0.refreshUI(arg_8_0)
-	gohelper.setActive(arg_8_0._gosuccess, arg_8_0._isFinish)
-	gohelper.setActive(arg_8_0._gofailed, not arg_8_0._isFinish)
+function V1a6_CachotFinishView:refreshUI()
+	gohelper.setActive(self._gosuccess, self._isFinish)
+	gohelper.setActive(self._gofailed, not self._isFinish)
 end
 
-function var_0_0._jump2ResultView(arg_9_0)
+function V1a6_CachotFinishView:_jump2ResultView()
 	V1a6_CachotController.instance:openV1a6_CachotResultView()
 end
 
-function var_0_0.playAudioEffect(arg_10_0)
-	if arg_10_0._isFinish then
+function V1a6_CachotFinishView:playAudioEffect()
+	if self._isFinish then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_dungeon_1_6_victory_open)
 	else
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_dungeon_1_6_fail_open)
 	end
 end
 
-function var_0_0.onClose(arg_11_0)
+function V1a6_CachotFinishView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_12_0)
-	arg_12_0._rogueEndingInfo = nil
+function V1a6_CachotFinishView:onDestroyView()
+	self._rogueEndingInfo = nil
 end
 
-return var_0_0
+return V1a6_CachotFinishView

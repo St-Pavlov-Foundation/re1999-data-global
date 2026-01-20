@@ -1,8 +1,10 @@
-﻿module("modules.logic.jump.defines.JumpEvent", package.seeall)
+﻿-- chunkname: @modules/logic/jump/defines/JumpEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.jump.defines.JumpEvent", package.seeall)
 
-var_0_0.JumpBtnClick = 1001
-var_0_0.BeforeJump = 1002
+local JumpEvent = _M
 
-return var_0_0
+JumpEvent.JumpBtnClick = 1001
+JumpEvent.BeforeJump = 1002
+
+return JumpEvent

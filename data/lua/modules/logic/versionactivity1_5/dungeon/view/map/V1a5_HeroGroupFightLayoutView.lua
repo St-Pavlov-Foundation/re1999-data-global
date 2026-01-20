@@ -1,9 +1,11 @@
-﻿module("modules.logic.versionactivity1_5.dungeon.view.map.V1a5_HeroGroupFightLayoutView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/dungeon/view/map/V1a5_HeroGroupFightLayoutView.lua
 
-local var_0_0 = class("V1a5_HeroGroupFightLayoutView", HeroGroupFightLayoutView)
+module("modules.logic.versionactivity1_5.dungeon.view.map.V1a5_HeroGroupFightLayoutView", package.seeall)
 
-function var_0_0.checkNeedSetOffset(arg_1_0)
+local V1a5_HeroGroupFightLayoutView = class("V1a5_HeroGroupFightLayoutView", HeroGroupFightLayoutView)
+
+function V1a5_HeroGroupFightLayoutView:checkNeedSetOffset()
 	return DungeonModel.instance:hasPassLevelAndStory(VersionActivity1_5DungeonConfig.instance.buildUnlockEpisodeId)
 end
 
-return var_0_0
+return V1a5_HeroGroupFightLayoutView

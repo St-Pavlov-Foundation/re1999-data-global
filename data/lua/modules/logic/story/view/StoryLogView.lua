@@ -1,55 +1,57 @@
-﻿module("modules.logic.story.view.StoryLogView", package.seeall)
+﻿-- chunkname: @modules/logic/story/view/StoryLogView.lua
 
-local var_0_0 = class("StoryLogView", BaseView)
+module("modules.logic.story.view.StoryLogView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_btns/#btn_close")
-	arg_1_0._scrolllog = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_log")
+local StoryLogView = class("StoryLogView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function StoryLogView:onInitView()
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#go_btns/#btn_close")
+	self._scrolllog = gohelper.findChildScrollRect(self.viewGO, "#scroll_log")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function StoryLogView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function StoryLogView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function StoryLogView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function StoryLogView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function StoryLogView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0:_refreshView()
+function StoryLogView:onOpen()
+	self:_refreshView()
 end
 
-function var_0_0._refreshView(arg_8_0)
-	local var_8_0 = StoryModel.instance:getLog()
+function StoryLogView:_refreshView()
+	local log = StoryModel.instance:getLog()
 
-	StoryLogListModel.instance:setLogList(var_8_0)
+	StoryLogListModel.instance:setLogList(log)
 
-	arg_8_0._scrolllog.verticalNormalizedPosition = 0
+	self._scrolllog.verticalNormalizedPosition = 0
 end
 
-function var_0_0.onClose(arg_9_0)
+function StoryLogView:onClose()
 	AudioEffectMgr.instance:stopAudio(StoryLogListModel.instance:getPlayingLogAudioId(), 0)
 end
 
-function var_0_0.onDestroyView(arg_10_0)
+function StoryLogView:onDestroyView()
 	return
 end
 
-return var_0_0
+return StoryLogView

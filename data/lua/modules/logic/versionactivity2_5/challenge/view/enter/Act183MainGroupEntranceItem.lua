@@ -1,65 +1,68 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.enter.Act183MainGroupEntranceItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/enter/Act183MainGroupEntranceItem.lua
 
-local var_0_0 = class("Act183MainGroupEntranceItem", Act183BaseGroupEntranceItem)
+module("modules.logic.versionactivity2_5.challenge.view.enter.Act183MainGroupEntranceItem", package.seeall)
 
-function var_0_0.Get(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = ""
+local Act183MainGroupEntranceItem = class("Act183MainGroupEntranceItem", Act183BaseGroupEntranceItem)
 
-	if arg_1_1 == Act183Enum.GroupType.NormalMain then
-		var_1_0 = "root/middle/#go_main/#go_normal"
-	elseif arg_1_1 == Act183Enum.GroupType.HardMain then
-		var_1_0 = "root/middle/#go_main/#go_hard"
+function Act183MainGroupEntranceItem.Get(goroot, groupType, index)
+	local gopath = ""
+
+	if groupType == Act183Enum.GroupType.NormalMain then
+		gopath = "root/middle/#go_main/#go_normal"
+	elseif groupType == Act183Enum.GroupType.HardMain then
+		gopath = "root/middle/#go_main/#go_hard"
 	end
 
-	local var_1_1 = gohelper.findChild(arg_1_0, var_1_0)
-	local var_1_2 = Act183Enum.GroupEntranceItemClsType[arg_1_1]
+	local go = gohelper.findChild(goroot, gopath)
+	local cls = Act183Enum.GroupEntranceItemClsType[groupType]
 
-	return MonoHelper.addNoUpdateLuaComOnceToGo(var_1_1, var_1_2, arg_1_2)
+	return MonoHelper.addNoUpdateLuaComOnceToGo(go, cls, index)
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	var_0_0.super.init(arg_2_0, arg_2_1)
+function Act183MainGroupEntranceItem:init(go)
+	Act183MainGroupEntranceItem.super.init(self, go)
 
-	arg_2_0._goresult = gohelper.findChild(arg_2_1, "go_result")
-	arg_2_0._txttitle = gohelper.findChildText(arg_2_1, "txt_title")
-	arg_2_0._txttotalprogress = gohelper.findChildText(arg_2_1, "go_result/txt_totalprogress")
-	arg_2_0._golock = gohelper.findChild(arg_2_1, "go_lock")
-	arg_2_0._animlock = gohelper.onceAddComponent(arg_2_0._golock, gohelper.Type_Animator)
+	self._goresult = gohelper.findChild(go, "go_result")
+	self._txttitle = gohelper.findChildText(go, "txt_title")
+	self._txttotalprogress = gohelper.findChildText(go, "go_result/txt_totalprogress")
+	self._golock = gohelper.findChild(go, "go_lock")
+	self._animlock = gohelper.onceAddComponent(self._golock, gohelper.Type_Animator)
 end
 
-function var_0_0.onUpdateMO(arg_3_0, arg_3_1)
-	var_0_0.super.onUpdateMO(arg_3_0, arg_3_1)
+function Act183MainGroupEntranceItem:onUpdateMO(groupMo)
+	Act183MainGroupEntranceItem.super.onUpdateMO(self, groupMo)
 
-	local var_3_0 = arg_3_1:getStatus() ~= Act183Enum.GroupStatus.Locked
+	local status = groupMo:getStatus()
+	local isUnlock = status ~= Act183Enum.GroupStatus.Locked
 
-	gohelper.setActive(arg_3_0._golock, not var_3_0)
-	gohelper.setActive(arg_3_0._goresult, var_3_0)
+	gohelper.setActive(self._golock, not isUnlock)
+	gohelper.setActive(self._goresult, isUnlock)
 
-	if var_3_0 then
-		local var_3_1 = arg_3_1:getGroupId()
-		local var_3_2, var_3_3 = Act183Helper.getGroupEpisodeTaskProgress(arg_3_0._actId, var_3_1)
+	if isUnlock then
+		local groupId = groupMo:getGroupId()
+		local allTaskCount, taskFinishCount = Act183Helper.getGroupEpisodeTaskProgress(self._actId, groupId)
 
-		arg_3_0._txttotalprogress.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("v2a5_challenge_mainview_finished"), var_3_3, var_3_2)
+		self._txttotalprogress.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("v2a5_challenge_mainview_finished"), taskFinishCount, allTaskCount)
 	end
 end
 
-function var_0_0.startPlayUnlockAnim(arg_4_0)
-	if arg_4_0._groupType == Act183Enum.GroupType.NormalMain or arg_4_0._hasPlayUnlockAnim then
+function Act183MainGroupEntranceItem:startPlayUnlockAnim()
+	if self._groupType == Act183Enum.GroupType.NormalMain or self._hasPlayUnlockAnim then
 		return
 	end
 
-	gohelper.setActive(arg_4_0._golock, true)
-	arg_4_0._animlock:Play("unlock", 0, 0)
+	gohelper.setActive(self._golock, true)
+	self._animlock:Play("unlock", 0, 0)
 
-	arg_4_0._hasPlayUnlockAnim = true
+	self._hasPlayUnlockAnim = true
 end
 
-function var_0_0.onDestroy(arg_5_0)
-	if arg_5_0._hasPlayUnlockAnim then
-		Act183Helper.savePlayUnlockAnimGroupIdInLocal(arg_5_0._actId, arg_5_0._groupId)
+function Act183MainGroupEntranceItem:onDestroy()
+	if self._hasPlayUnlockAnim then
+		Act183Helper.savePlayUnlockAnimGroupIdInLocal(self._actId, self._groupId)
 
-		arg_5_0._waitRecord = false
+		self._waitRecord = false
 	end
 end
 
-return var_0_0
+return Act183MainGroupEntranceItem

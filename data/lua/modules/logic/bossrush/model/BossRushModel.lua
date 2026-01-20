@@ -1,134 +1,157 @@
-﻿module("modules.logic.bossrush.model.BossRushModel", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/model/BossRushModel.lua
 
-local var_0_0 = class("BossRushModel", Activity128Model)
+module("modules.logic.bossrush.model.BossRushModel", package.seeall)
 
-function var_0_0.reInit(arg_1_0)
-	var_0_0.super.reInit(arg_1_0)
+local BossRushModel = class("BossRushModel", Activity128Model)
 
-	local var_1_0 = BossRushConfig.instance
-	local var_1_1 = var_1_0:getActivityId()
-
-	arg_1_0:_internal_set_config(var_1_0)
-	arg_1_0:_internal_set_activity(var_1_1)
-
-	arg_1_0._stage2LastTotalPoint = {}
-	arg_1_0._fightLastScore = 0
-	arg_1_0._fightCurScore = 0
-	arg_1_0._infiniteBossDeadSum = 0
-	arg_1_0._bossBloodCount = 0
-	arg_1_0._bossHP = 0
-	arg_1_0._bossIdList = nil
-	arg_1_0._fightScoreList = nil
+function BossRushModel:onInit()
+	BossRushModel.super.onInit(self)
+	V3a2_BossRushModel.instance:init()
 end
 
-function var_0_0.setFightScore(arg_2_0, arg_2_1)
-	arg_2_0._fightLastScore = arg_2_0:getFightScore()
-	arg_2_0._fightCurScore = arg_2_1
+function BossRushModel:reInit()
+	BossRushModel.super.reInit(self)
+
+	local config = BossRushConfig.instance
+	local activityId = config:getActivityId()
+
+	self:_internal_set_config(config)
+	self:_internal_set_activity(activityId)
+
+	self._stage2LastTotalPoint = {}
+	self._fightLastScore = 0
+	self._fightCurScore = 0
+	self._infiniteBossDeadSum = 0
+	self._bossBloodCount = 0
+	self._bossHP = 0
+	self._bossIdList = nil
+	self._fightScoreList = nil
 end
 
-function var_0_0.noticeFightScore(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_0._fightLastScore
+function BossRushModel:setFightScore(num)
+	local last = self:getFightScore()
 
-	arg_3_1 = arg_3_1 or arg_3_0._fightCurScore
-
-	BossRushController.instance:dispatchEvent(BossRushEvent.OnScoreChange, var_3_0, arg_3_1)
+	self._fightLastScore = last
+	self._fightCurScore = num
 end
 
-function var_0_0.getFightScore(arg_4_0)
-	return arg_4_0._fightCurScore or 0
+function BossRushModel:checkFightScore(extra)
+	local score = 0
+
+	if extra then
+		if extra.baseScore and extra.ruleScore then
+			score = extra.baseScore + extra.ruleScore
+		elseif not string.nilorempty(extra.score) then
+			score = tonumber(extra.score)
+		end
+	end
+
+	self:setFightScore(score)
 end
 
-function var_0_0.checkIsNewHighestPointRecord(arg_5_0, arg_5_1)
-	return arg_5_0:getFightScore() > arg_5_0:getHighestPoint(arg_5_1)
+function BossRushModel:noticeFightScore(num)
+	local last = self._fightLastScore
+
+	num = num or self._fightCurScore
+
+	BossRushController.instance:dispatchEvent(BossRushEvent.OnScoreChange, last, num)
 end
 
-function var_0_0.getBossCurHP(arg_6_0)
-	return arg_6_0._bossHP or 0
+function BossRushModel:getFightScore()
+	return self._fightCurScore or 0
 end
 
-function var_0_0.setInfiniteBossDeadSum(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0:getInfiniteBossDeadSum()
+function BossRushModel:checkIsNewHighestPointRecord(stage)
+	return self:getFightScore() > self:getHighestPoint(stage)
+end
 
-	arg_7_0._infiniteBossDeadSum = arg_7_1
+function BossRushModel:getBossCurHP()
+	return self._bossHP or 0
+end
 
-	if var_7_0 ~= arg_7_1 then
-		BossRushController.instance:dispatchEvent(BossRushEvent.OnBossDeadSumChange, var_7_0, arg_7_1)
+function BossRushModel:setInfiniteBossDeadSum(num)
+	local last = self:getInfiniteBossDeadSum()
+
+	self._infiniteBossDeadSum = num
+
+	if last ~= num then
+		BossRushController.instance:dispatchEvent(BossRushEvent.OnBossDeadSumChange, last, num)
 	end
 end
 
-function var_0_0.getInfiniteBossDeadSum(arg_8_0)
-	return arg_8_0._infiniteBossDeadSum or 0
+function BossRushModel:getInfiniteBossDeadSum()
+	return self._infiniteBossDeadSum or 0
 end
 
-function var_0_0.setBossBloodCount(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0:getBossBloodCount()
+function BossRushModel:setBossBloodCount(num)
+	local last = self:getBossBloodCount()
 
-	arg_9_0._bossBloodCount = arg_9_1
+	self._bossBloodCount = num
 
-	if var_9_0 ~= arg_9_1 then
-		BossRushController.instance:dispatchEvent(BossRushEvent.OnBloodCountChange, var_9_0, arg_9_1)
+	if last ~= num then
+		BossRushController.instance:dispatchEvent(BossRushEvent.OnBloodCountChange, last, num)
 	end
 end
 
-function var_0_0.getBossBloodCount(arg_10_0)
-	return arg_10_0._bossBloodCount or 0
+function BossRushModel:getBossBloodCount()
+	return self._bossBloodCount or 0
 end
 
-function var_0_0.setBossIdList(arg_11_0, arg_11_1)
-	arg_11_0._bossIdList = arg_11_1
+function BossRushModel:setBossIdList(bossIdList)
+	self._bossIdList = bossIdList
 end
 
-function var_0_0.getBossIdList(arg_12_0)
-	return arg_12_0._bossIdList
+function BossRushModel:getBossIdList()
+	return self._bossIdList
 end
 
-function var_0_0.getBossBloodMaxCount(arg_13_0)
-	if not arg_13_0._bossIdList then
+function BossRushModel:getBossBloodMaxCount()
+	if not self._bossIdList then
 		return 0
 	end
 
-	return #arg_13_0._bossIdList
+	return #self._bossIdList
 end
 
-function var_0_0.setBossCurHP(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_0._bossHP
+function BossRushModel:setBossCurHP(hp)
+	local last = self._bossHP
 
-	if arg_14_1 == var_14_0 then
+	if hp == last then
 		return
 	end
 
-	arg_14_0._bossHP = arg_14_1
+	self._bossHP = hp
 
-	BossRushController.instance:dispatchEvent(BossRushEvent.OnHpChange, var_14_0, arg_14_1)
+	BossRushController.instance:dispatchEvent(BossRushEvent.OnHpChange, last, hp)
 end
 
-function var_0_0.getBossCurMaxHP(arg_15_0)
-	local var_15_0 = arg_15_0:getBossEntityMO()
+function BossRushModel:getBossCurMaxHP()
+	local mo = self:getBossEntityMO()
 
-	if not var_15_0 then
+	if not mo then
 		return 0
 	end
 
-	return var_15_0.attrMO.hp
+	return mo.attrMO.hp
 end
 
-function var_0_0.subBossBlood(arg_16_0)
-	arg_16_0:setBossBloodCount(arg_16_0:getBossBloodCount() - 1)
+function BossRushModel:subBossBlood()
+	self:setBossBloodCount(self:getBossBloodCount() - 1)
 end
 
-function var_0_0.getCurBossIndex(arg_17_0)
-	return arg_17_0:getBossBloodMaxCount() - math.max(0, arg_17_0:getBossBloodCount())
+function BossRushModel:getCurBossIndex()
+	return self:getBossBloodMaxCount() - math.max(0, self:getBossBloodCount())
 end
 
-function var_0_0._isFightBossId(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_0:getBossIdList()
+function BossRushModel:_isFightBossId(monsterId)
+	local bossIdList = self:getBossIdList()
 
-	if not var_18_0 then
+	if not bossIdList then
 		return false
 	end
 
-	for iter_18_0, iter_18_1 in ipairs(var_18_0) do
-		if arg_18_1 == iter_18_1 then
+	for _, bossId in ipairs(bossIdList) do
+		if monsterId == bossId then
 			return true
 		end
 	end
@@ -136,438 +159,444 @@ function var_0_0._isFightBossId(arg_18_0, arg_18_1)
 	return false
 end
 
-function var_0_0.getBossEntityMO(arg_19_0)
-	local var_19_0 = FightDataHelper.entityMgr:getEnemyNormalList()
+function BossRushModel:getBossEntityMO()
+	local enemyEntityMOList = FightDataHelper.entityMgr:getEnemyNormalList()
 
-	for iter_19_0, iter_19_1 in ipairs(var_19_0) do
-		local var_19_1 = iter_19_1.modelId
+	for _, entityMO in ipairs(enemyEntityMOList) do
+		local monsterId = entityMO.modelId
 
-		if arg_19_0:_isFightBossId(var_19_1) then
-			return iter_19_1
+		if self:_isFightBossId(monsterId) then
+			return entityMO
 		end
 	end
 end
 
-function var_0_0.getBossEntityMOByCurBloodCount(arg_20_0)
-	if not arg_20_0._bossIdList then
-		return arg_20_0:getBossEntityMO()
+function BossRushModel:getBossEntityMOByCurBloodCount()
+	if not self._bossIdList then
+		return self:getBossEntityMO()
 	end
 
-	local var_20_0 = arg_20_0:getBossBloodMaxCount()
-	local var_20_1 = math.max(0, arg_20_0:getBossBloodCount())
-	local var_20_2 = var_20_0 - var_20_1
-	local var_20_3 = arg_20_0._bossIdList[var_20_2]
+	local max = self:getBossBloodMaxCount()
+	local cur = math.max(0, self:getBossBloodCount())
+	local index = max - cur
+	local bossId = self._bossIdList[index]
 
-	if not var_20_3 then
-		logError("[getBossEntityMOByCurBloodCount]: " .. string.format("max=%s, cur=%s, nowMax=%s", var_20_0, var_20_1, #arg_20_0._bossIdList))
+	if not bossId then
+		logError("[getBossEntityMOByCurBloodCount]: " .. string.format("max=%s, cur=%s, nowMax=%s", max, cur, #self._bossIdList))
 
-		return arg_20_0:getBossEntityMO()
+		return self:getBossEntityMO()
 	end
 
-	local var_20_4 = FightDataHelper.entityMgr:getEnemyNormalList()
+	local enemyEntityMOList = FightDataHelper.entityMgr:getEnemyNormalList()
 
-	for iter_20_0, iter_20_1 in ipairs(var_20_4) do
-		if var_20_3 == iter_20_1.modelId then
-			return iter_20_1
+	for _, entityMO in ipairs(enemyEntityMOList) do
+		local monsterId = entityMO.modelId
+
+		if bossId == monsterId then
+			return entityMO
 		end
 	end
 end
 
-function var_0_0.getMultiHpInfo(arg_21_0)
+function BossRushModel:getMultiHpInfo()
 	return {
-		multiHpIdx = arg_21_0:getBossBloodMaxCount() - arg_21_0:getBossBloodCount(),
-		multiHpNum = arg_21_0:getBossBloodMaxCount()
+		multiHpIdx = self:getBossBloodMaxCount() - self:getBossBloodCount(),
+		multiHpNum = self:getBossBloodMaxCount()
 	}
 end
 
-function var_0_0.inUnlimit(arg_22_0)
-	local var_22_0 = arg_22_0:getMultiHpInfo()
+function BossRushModel:inUnlimit()
+	local info = self:getMultiHpInfo()
 
-	return var_22_0.multiHpNum - var_22_0.multiHpIdx <= 1
+	return info.multiHpNum - info.multiHpIdx <= 1
 end
 
-function var_0_0.setBattleStageAndLayer(arg_23_0, arg_23_1, arg_23_2)
-	arg_23_0._battleStageTemp = arg_23_1
-	arg_23_0._battleLayerTemp = arg_23_2
+function BossRushModel:setBattleStageAndLayer(stage, layer)
+	self._battleStageTemp = stage
+	self._battleLayerTemp = layer
 end
 
-function var_0_0.getBattleStageAndLayer(arg_24_0)
-	local var_24_0 = DungeonModel.instance.curSendEpisodeId
+function BossRushModel:getBattleStageAndLayer()
+	local episodeId = DungeonModel.instance.curSendEpisodeId
 
-	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Fight or not var_24_0 then
-		arg_24_0:setBattleStageAndLayer(nil, nil)
+	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Fight or not episodeId then
+		self:setBattleStageAndLayer(nil, nil)
 
-		return
+		return 1, 1
 	end
 
-	local var_24_1 = arg_24_0:getConfig()
+	local config = self:getConfig()
 
-	if not arg_24_0._battleStageTemp then
-		arg_24_0:setBattleStageAndLayer(var_24_1:tryGetStageAndLayerByEpisodeId(var_24_0))
+	if not self._battleStageTemp then
+		self:setBattleStageAndLayer(config:tryGetStageAndLayerByEpisodeId(episodeId))
 	end
 
-	return arg_24_0._battleStageTemp, arg_24_0._battleLayerTemp
+	return self._battleStageTemp or 1, self._battleLayerTemp or 1
 end
 
-function var_0_0._onReceiveGet128InfosReply(arg_25_0, arg_25_1)
-	arg_25_0:_initStageLastTotalPoint()
+function BossRushModel:_onReceiveGet128InfosReply(msg)
+	self:_initStageLastTotalPoint()
 	BossRushRedModel.instance:refreshAllStageLayerUnlockState()
 	BossRushController.instance:dispatchEvent(BossRushEvent.OnReceiveGet128InfosReply)
 end
 
-function var_0_0._onReceiveAct128GetTotalRewardsReply(arg_26_0, arg_26_1)
+function BossRushModel:_onReceiveAct128GetTotalRewardsReply(msg)
 	BossRushController.instance:dispatchEvent(BossRushEvent.OnReceiveAct128GetTotalRewardsReply)
 end
 
-function var_0_0._onReceiveAct128DoublePointReply(arg_27_0, arg_27_1)
-	local var_27_0 = arg_27_1.doublePoint
-	local var_27_1 = arg_27_1.totalPoint
+function BossRushModel:_onReceiveAct128DoublePointReply(msg)
+	local doublePoint = msg.doublePoint
+	local totalPoint = msg.totalPoint
 
-	BossRushController.instance:dispatchEvent(BossRushEvent.OnReceiveAct128DoublePointRequestReply, var_27_1, var_27_0)
+	BossRushController.instance:dispatchEvent(BossRushEvent.OnReceiveAct128DoublePointRequestReply, totalPoint, doublePoint)
 end
 
-function var_0_0._onReceiveAct128InfoUpdatePush(arg_28_0, arg_28_1)
+function BossRushModel:_onReceiveAct128InfoUpdatePush(msg)
 	BossRushController.instance:dispatchEvent(BossRushEvent.OnReceiveAct128InfoUpdatePush)
 end
 
-function var_0_0.onEndDungeonExtraStr(arg_29_0, arg_29_1)
-	local var_29_0 = cjson.decode(arg_29_1)
-	local var_29_1 = var_29_0.evaluate
-	local var_29_2 = 0
+function BossRushModel:onEndDungeonExtraStr(extraStr)
+	local extra = cjson.decode(extraStr)
+	local evaluate = extra.evaluate
 
-	if not string.nilorempty(var_29_0.score) then
-		var_29_2 = tonumber(var_29_0.score)
-	end
-
-	arg_29_0:_setEvaluate(var_29_1)
-	arg_29_0:setFightScore(var_29_2)
+	V3a2_BossRushModel.instance:setScore(extra)
+	self:checkFightScore(extra)
+	self:_setEvaluate(evaluate)
 end
 
-function var_0_0._setEvaluate(arg_30_0, arg_30_1)
-	arg_30_0._evaluateList = {}
+function BossRushModel:_setEvaluate(extraStr)
+	self._evaluateList = {}
 
-	if not string.nilorempty(arg_30_1) then
-		local var_30_0 = string.split(arg_30_1, "#")
+	if not string.nilorempty(extraStr) then
+		local param = string.split(extraStr, "#")
 
-		for iter_30_0, iter_30_1 in pairs(var_30_0) do
-			table.insert(arg_30_0._evaluateList, tonumber(iter_30_1))
+		for _, v in pairs(param) do
+			table.insert(self._evaluateList, tonumber(v))
 		end
 	end
 
 	BossRushController.instance:dispatchEvent(BossRushEvent.OnReceiveGet128EvaluateReply)
 end
 
-function var_0_0._onReceiveAct128SingleRewardReply(arg_31_0, arg_31_1)
-	BossRushController.instance:dispatchEvent(BossRushEvent.OnReceiveGet128SingleRewardReply, arg_31_1)
+function BossRushModel:_onReceiveAct128SingleRewardReply(msg)
+	BossRushController.instance:dispatchEvent(BossRushEvent.OnReceiveGet128SingleRewardReply, msg)
 end
 
-function var_0_0.getActivityDurationInfo(arg_32_0)
+function BossRushModel:getActivityDurationInfo()
 	return {
-		st = arg_32_0:getRealStartTimeStamp(),
-		ed = arg_32_0:getRealEndTimeStamp()
+		st = self:getRealStartTimeStamp(),
+		ed = self:getRealEndTimeStamp()
 	}
 end
 
-function var_0_0.getStagePointInfo(arg_33_0, arg_33_1)
-	local var_33_0 = arg_33_0:getConfig():getStageCOMaxPoints(arg_33_1)
+function BossRushModel:getStagePointInfo(stage)
+	local config = self:getConfig()
+	local max = config:getStageCOMaxPoints(stage)
 
 	return {
-		cur = arg_33_0:getTotalPoint(arg_33_1),
-		max = var_33_0
+		cur = self:getTotalPoint(stage),
+		max = max
 	}
 end
 
-function var_0_0.getDoubleTimesInfo(arg_34_0, arg_34_1)
-	local var_34_0 = arg_34_0:getStageInfo(arg_34_1)
-	local var_34_1 = arg_34_0:getConfig():InfiniteDoubleMaxTimes()
+function BossRushModel:getDoubleTimesInfo(stage)
+	local info = self:getStageInfo(stage)
+	local config = self:getConfig()
+	local max = config:InfiniteDoubleMaxTimes()
 
 	return {
-		cur = var_34_0 and var_34_1 - var_34_0.doubleNum or 0,
-		max = var_34_1
+		cur = info and max - info.doubleNum or 0,
+		max = max
 	}
 end
 
-function var_0_0.getStagesInfo(arg_35_0)
-	local var_35_0 = {}
-	local var_35_1 = arg_35_0:getConfig():getStages()
+function BossRushModel:getStagesInfo()
+	local res = {}
+	local config = self:getConfig()
+	local stages = config:getStages()
 
-	for iter_35_0, iter_35_1 in pairs(var_35_1) do
-		local var_35_2 = iter_35_1.stage
+	for _, stageCO in pairs(stages) do
+		local stage = stageCO.stage
 
-		var_35_0[#var_35_0 + 1] = {
-			stage = var_35_2,
-			stageCO = iter_35_1
+		res[#res + 1] = {
+			stage = stage,
+			stageCO = stageCO
 		}
 	end
 
-	table.sort(var_35_0, function(arg_36_0, arg_36_1)
-		return arg_36_0.stage < arg_36_1.stage
+	table.sort(res, function(a, b)
+		return a.stage < b.stage
 	end)
 
-	return var_35_0
+	return res
 end
 
-function var_0_0.getStageLayerInfo(arg_37_0, arg_37_1, arg_37_2)
-	local var_37_0 = arg_37_0:getStagesInfo()
+function BossRushModel:getStageLayerInfo(stage, layer)
+	local infos = self:getStagesInfo()
 
-	for iter_37_0, iter_37_1 in ipairs(var_37_0) do
-		if iter_37_1.stage == arg_37_1 then
-			iter_37_1.selectedIndex = arg_37_0:layer2Index(arg_37_1, arg_37_2)
+	for _, v in ipairs(infos) do
+		if v.stage == stage then
+			v.selectedIndex = self:layer2Index(stage, layer)
 
-			return iter_37_1
+			return v
 		end
 	end
 end
 
-function var_0_0.getStageLayersInfo(arg_38_0, arg_38_1)
-	local var_38_0 = {}
-	local var_38_1 = arg_38_0:getConfig()
-	local var_38_2 = var_38_1:getEpisodeStages(arg_38_1)
+function BossRushModel:getStageLayersInfo(stage)
+	local res = {}
+	local config = self:getConfig()
+	local episodeStages = config:getEpisodeStages(stage)
 
-	for iter_38_0, iter_38_1 in pairs(var_38_2) do
-		local var_38_3 = iter_38_1.layer
+	for _, layerCO in pairs(episodeStages) do
+		local layer = layerCO.layer
 
-		var_38_0[#var_38_0 + 1] = {
-			layer = var_38_3,
-			layerCO = iter_38_1,
-			isInfinite = var_38_1:isInfinite(arg_38_1, var_38_3),
-			isOpen = arg_38_0:isBossLayerOpen(arg_38_1, var_38_3)
+		res[#res + 1] = {
+			layer = layer,
+			layerCO = layerCO,
+			isInfinite = config:isInfinite(stage, layer),
+			isOpen = self:isBossLayerOpen(stage, layer)
 		}
 	end
 
-	table.sort(var_38_0, function(arg_39_0, arg_39_1)
-		local var_39_0 = arg_39_0.layer
-		local var_39_1 = arg_39_1.layer
+	table.sort(res, function(a, b)
+		local a_layer = a.layer
+		local b_layer = b.layer
 
-		if var_39_0 ~= var_39_1 then
-			return var_39_0 < var_39_1
+		if a_layer ~= b_layer then
+			return a_layer < b_layer
 		end
 	end)
 
-	return var_38_0
+	return res
 end
 
-function var_0_0.getTaskMoListByStage(arg_40_0, arg_40_1)
-	local var_40_0 = arg_40_0:getConfig()
-	local var_40_1 = arg_40_0:getTaskMoList()
-	local var_40_2 = {}
+function BossRushModel:getTaskMoListByStage(stage)
+	local config = self:getConfig()
+	local taskMoList = self:getTaskMoList()
+	local res = {}
 
-	for iter_40_0, iter_40_1 in ipairs(var_40_1) do
-		local var_40_3 = iter_40_1.id
-		local var_40_4 = var_40_0:getTaskCO(var_40_3)
-		local var_40_5 = var_40_4.listenerParam
+	for _, taskMO in ipairs(taskMoList) do
+		local id = taskMO.id
+		local taskCO = config:getTaskCO(id)
+		local listenerParam = taskCO.listenerParam
 
-		if var_40_4.listenerType == BossRushEnum.TaskListenerType.highestPoint then
-			local var_40_6 = string.split(var_40_5, "#")
+		if taskCO.listenerType == BossRushEnum.TaskListenerType.highestPoint then
+			local tmp = string.split(listenerParam, "#")
+			local needStage = tonumber(tmp[1])
 
-			if arg_40_1 == tonumber(var_40_6[1]) then
-				var_40_2[#var_40_2 + 1] = iter_40_1
+			if stage == needStage then
+				res[#res + 1] = taskMO
 			end
 		end
 	end
 
-	return var_40_2
+	return res
 end
 
-function var_0_0.getLayer4RewardMoListByStage(arg_41_0, arg_41_1)
-	local var_41_0 = arg_41_0:getConfig()
-	local var_41_1 = arg_41_0:getTaskMoList()
-	local var_41_2 = {}
+function BossRushModel:getLayer4RewardMoListByStage(stage)
+	local config = self:getConfig()
+	local taskMoList = self:getTaskMoList()
+	local res = {}
 
-	for iter_41_0, iter_41_1 in ipairs(var_41_1) do
-		local var_41_3 = iter_41_1.id
-		local var_41_4 = var_41_0:getTaskCO(var_41_3)
-		local var_41_5 = var_41_4.listenerParam
+	for _, taskMO in ipairs(taskMoList) do
+		local id = taskMO.id
+		local taskCO = config:getTaskCO(id)
+		local listenerParam = taskCO.listenerParam
 
-		if var_41_4.listenerType == BossRushEnum.TaskListenerType.layer4Reward then
-			local var_41_6 = string.split(var_41_5, "#")
+		if taskCO.listenerType == BossRushEnum.TaskListenerType.layer4Reward then
+			local tmp = string.split(listenerParam, "#")
+			local needStage = tonumber(tmp[1])
 
-			if arg_41_1 == tonumber(var_41_6[1]) then
-				var_41_2[#var_41_2 + 1] = iter_41_1
+			if stage == needStage then
+				res[#res + 1] = taskMO
 			end
 		end
 	end
 
-	return var_41_2
+	return res
 end
 
-function var_0_0.getMoListByStageAndType(arg_42_0, arg_42_1, arg_42_2, arg_42_3)
-	local var_42_0 = arg_42_0:getConfig()
-	local var_42_1 = arg_42_0:getTaskMoList()
-	local var_42_2 = {}
+function BossRushModel:getMoListByStageAndType(stage, listenerType, scoreDesc)
+	local config = self:getConfig()
+	local taskMoList = self:getTaskMoList()
+	local res = {}
 
-	for iter_42_0, iter_42_1 in ipairs(var_42_1) do
-		local var_42_3 = iter_42_1.id
-		local var_42_4 = var_42_0:getTaskCO(var_42_3)
-		local var_42_5 = var_42_4.listenerParam
+	for _, taskMO in ipairs(taskMoList) do
+		local id = taskMO.id
+		local taskCO = config:getTaskCO(id)
+		local listenerParam = taskCO.listenerParam
 
-		iter_42_1.ScoreDesc = arg_42_3
+		taskMO.ScoreDesc = scoreDesc
 
-		if var_42_4.listenerType == arg_42_2 then
-			local var_42_6 = string.split(var_42_5, "#")
+		if taskCO.listenerType == listenerType then
+			local tmp = string.split(listenerParam, "#")
+			local needStage = tonumber(tmp[1])
 
-			if arg_42_1 == tonumber(var_42_6[1]) then
-				var_42_2[#var_42_2 + 1] = iter_42_1
+			if stage == needStage then
+				res[#res + 1] = taskMO
 			end
 		end
 	end
 
-	return var_42_2
+	return res
 end
 
-function var_0_0.getScheduleViewRewardList(arg_43_0, arg_43_1)
-	local var_43_0 = {}
-	local var_43_1 = BossRushConfig.instance:getStageRewardList(arg_43_1)
+function BossRushModel:getScheduleViewRewardList(stage)
+	local res = {}
+	local stageRewardList = BossRushConfig.instance:getStageRewardList(stage)
 
-	for iter_43_0, iter_43_1 in ipairs(var_43_1) do
-		local var_43_2 = iter_43_1.id
-		local var_43_3 = arg_43_0:hasGetBonusIds(arg_43_1, var_43_2)
+	for _, v in ipairs(stageRewardList) do
+		local id = v.id
+		local isGot = self:hasGetBonusIds(stage, id)
 
-		var_43_0[#var_43_0 + 1] = {
-			isGot = var_43_3,
-			stageRewardCO = iter_43_1
+		res[#res + 1] = {
+			isGot = isGot,
+			stageRewardCO = v
 		}
 	end
 
-	return var_43_0
+	return res
 end
 
-function var_0_0.getSpecialScheduleViewRewardList(arg_44_0, arg_44_1)
-	local var_44_0 = {}
-	local var_44_1 = BossRushConfig.instance:getActLayer4rewards(arg_44_1)
-	local var_44_2 = arg_44_0:getLayer4CurScore(arg_44_1)
+function BossRushModel:getSpecialScheduleViewRewardList(stage)
+	local res = {}
+	local stageRewardList = BossRushConfig.instance:getActLayer4rewards(stage)
+	local curScore = self:getLayer4CurScore(stage)
 
-	for iter_44_0, iter_44_1 in ipairs(var_44_1) do
-		local var_44_3 = var_44_2 >= iter_44_1.maxProgress
+	for _, v in ipairs(stageRewardList) do
+		local isGot = curScore >= v.maxProgress
 
-		var_44_0[#var_44_0 + 1] = {
-			isGot = var_44_3,
-			config = iter_44_1
+		res[#res + 1] = {
+			isGot = isGot,
+			config = v
 		}
 	end
 
-	return var_44_0
+	return res
 end
 
-function var_0_0.checkAnyRewardClaim(arg_45_0, arg_45_1)
-	local var_45_0 = arg_45_0:getStageInfo(arg_45_1)
-	local var_45_1 = var_45_0 and var_45_0.totalPoint or 0
+function BossRushModel:checkAnyRewardClaim(stage)
+	local info = self:getStageInfo(stage)
+	local totalPoint = info and info.totalPoint or 0
 
-	return arg_45_0:calcRewardClaim(arg_45_1, var_45_1, true)
+	return self:calcRewardClaim(stage, totalPoint, true)
 end
 
-function var_0_0.calcRewardClaim(arg_46_0, arg_46_1, arg_46_2, arg_46_3)
-	local var_46_0 = BossRushConfig.instance:getStageRewardList(arg_46_1)
-	local var_46_1 = false
-	local var_46_2 = 0
+function BossRushModel:calcRewardClaim(stage, pointNum, isFirst)
+	local stageRewardList = BossRushConfig.instance:getStageRewardList(stage)
+	local ok = false
+	local index = 0
 
-	for iter_46_0, iter_46_1 in ipairs(var_46_0) do
-		local var_46_3 = iter_46_1.id
-		local var_46_4 = iter_46_1.rewardPointNum
+	for i, stageRewardCO in ipairs(stageRewardList) do
+		local id = stageRewardCO.id
+		local rewardPointNum = stageRewardCO.rewardPointNum
+		local isGot = self:hasGetBonusIds(stage, id)
 
-		if arg_46_0:hasGetBonusIds(arg_46_1, var_46_3) then
-			var_46_2 = iter_46_0
-		elseif var_46_4 <= arg_46_2 then
-			var_46_1 = true
-			var_46_2 = iter_46_0
+		if isGot then
+			index = i
+		elseif rewardPointNum <= pointNum then
+			ok = true
+			index = i
 
-			if arg_46_3 then
+			if isFirst then
 				break
 			end
 		end
 	end
 
-	return var_46_1, var_46_2
+	return ok, index
 end
 
-function var_0_0.getScheduleViewRewardNoGotIndex(arg_47_0, arg_47_1)
-	local var_47_0 = BossRushConfig.instance:getStageRewardList(arg_47_1)
-	local var_47_1 = #var_47_0
+function BossRushModel:getScheduleViewRewardNoGotIndex(stage)
+	local stageRewardList = BossRushConfig.instance:getStageRewardList(stage)
+	local res = #stageRewardList
 
-	for iter_47_0, iter_47_1 in ipairs(var_47_0) do
-		local var_47_2 = iter_47_1.id
+	for i, stageRewardCO in ipairs(stageRewardList) do
+		local id = stageRewardCO.id
+		local isGot = self:hasGetBonusIds(stage, id)
 
-		if not arg_47_0:hasGetBonusIds(arg_47_1, var_47_2) then
-			return true, iter_47_0
+		if not isGot then
+			return true, i
 		end
 	end
 
-	return false, var_47_1
+	return false, res
 end
 
-function var_0_0.getResultPanelProgressBarPointList(arg_48_0, arg_48_1, arg_48_2)
-	arg_48_2 = arg_48_2 or 0
+function BossRushModel:getResultPanelProgressBarPointList(stage, score)
+	score = score or 0
 
-	local var_48_0 = BossRushConfig.instance:getStageRewardList(arg_48_1)
-	local var_48_1 = {}
+	local stageRewardList = BossRushConfig.instance:getStageRewardList(stage)
+	local res = {}
 
-	for iter_48_0, iter_48_1 in ipairs(var_48_0) do
-		local var_48_2 = arg_48_2 < iter_48_1.rewardPointNum
+	for _, stageRewardCO in ipairs(stageRewardList) do
+		local isGray = score < stageRewardCO.rewardPointNum
 
-		var_48_1[#var_48_1 + 1] = {
-			isGray = var_48_2,
-			stageRewardCO = iter_48_1
+		res[#res + 1] = {
+			isGray = isGray,
+			stageRewardCO = stageRewardCO
 		}
 	end
 
-	return var_48_1
+	return res
 end
 
-function var_0_0.clearStageScore(arg_49_0)
-	arg_49_0._fightScoreList = nil
+function BossRushModel:clearStageScore()
+	self._fightScoreList = nil
 end
 
-function var_0_0.snapShotFightScore(arg_50_0, arg_50_1)
-	if not arg_50_0._fightScoreList then
-		arg_50_0._fightScoreList = {}
+function BossRushModel:snapShotFightScore(score)
+	if not self._fightScoreList then
+		self._fightScoreList = {}
 	end
 
-	local var_50_0 = arg_50_0._fightScoreList
+	local list = self._fightScoreList
 
-	if arg_50_0:getBossBloodCount() <= 1 then
+	if self:getBossBloodCount() <= 1 then
 		return
 	end
 
-	table.insert(var_50_0, arg_50_1)
+	table.insert(list, score)
 end
 
-function var_0_0.getStageScore(arg_51_0)
-	if not arg_51_0._fightScoreList then
+function BossRushModel:getStageScore()
+	if not self._fightScoreList then
 		return {
-			arg_51_0:getFightScore()
+			self:getFightScore()
 		}
 	end
 
-	local var_51_0 = {}
-	local var_51_1 = arg_51_0._fightScoreList
-	local var_51_2 = arg_51_0:getBossBloodMaxCount()
-	local var_51_3 = 0
-	local var_51_4 = math.min(#var_51_1 + 1, var_51_2)
+	local res = {}
+	local list = self._fightScoreList
+	local maxBloodCount = self:getBossBloodMaxCount()
+	local sum = 0
+	local n = math.min(#list + 1, maxBloodCount)
 
-	for iter_51_0 = 1, var_51_4 - 1 do
-		local var_51_5 = var_51_1[iter_51_0] - (var_51_1[iter_51_0 - 1] or 0)
+	for i = 1, n - 1 do
+		local score = list[i] - (list[i - 1] or 0)
 
-		var_51_0[#var_51_0 + 1] = var_51_5
-		var_51_3 = var_51_3 + var_51_5
+		res[#res + 1] = score
+		sum = sum + score
 	end
 
-	if var_51_4 > 1 then
-		local var_51_6 = arg_51_0:getFightScore()
+	if n > 1 then
+		local finalScore = self:getFightScore()
 
-		var_51_0[#var_51_0 + 1] = var_51_6 - var_51_3
+		res[#res + 1] = finalScore - sum
 	end
 
-	if var_51_4 < var_51_2 then
-		for iter_51_1 = var_51_4 + 1, var_51_2 do
-			var_51_0[#var_51_0 + 1] = 0
+	if n < maxBloodCount then
+		for i = n + 1, maxBloodCount do
+			res[#res + 1] = 0
 		end
 	end
 
-	return var_51_0
+	return res
 end
 
-function var_0_0.getUnlimitedHpColor(arg_52_0)
-	return {
+function BossRushModel:getUnlimitedHpColor()
+	local color = {
 		[BossRushEnum.HpColor.Red] = "#B33E2D",
 		[BossRushEnum.HpColor.Orange] = "#D9852B",
 		[BossRushEnum.HpColor.Yellow] = "#B3A574",
@@ -575,198 +604,210 @@ function var_0_0.getUnlimitedHpColor(arg_52_0)
 		[BossRushEnum.HpColor.Blue] = "#4C8699",
 		[BossRushEnum.HpColor.Purple] = "#86568F"
 	}
+
+	return color
 end
 
-function var_0_0.getUnlimitedTopAndBotHpColor(arg_53_0, arg_53_1)
-	local var_53_0 = arg_53_0:getUnlimitedHpColor()
-	local var_53_1 = arg_53_1 % #var_53_0 + 1
-	local var_53_2 = var_53_1 + 1 > #var_53_0 and 1 or var_53_1 + 1
-	local var_53_3 = var_53_0[BossRushEnum.HpColor.Red]
-	local var_53_4 = var_53_0[var_53_1]
-	local var_53_5 = string.nilorempty(var_53_4) and var_53_3 or var_53_4
-	local var_53_6 = var_53_0[var_53_2]
-	local var_53_7 = string.nilorempty(var_53_6) and var_53_3 or var_53_6
-	local var_53_8 = string.nilorempty(var_53_4) and BossRushEnum.HpColor.Red or var_53_1
+function BossRushModel:getUnlimitedTopAndBotHpColor(num)
+	local colorTable = self:getUnlimitedHpColor()
+	local top = num % #colorTable + 1
+	local bot = top + 1 > #colorTable and 1 or top + 1
+	local red = colorTable[BossRushEnum.HpColor.Red]
+	local topCol = colorTable[top]
+	local topColor = string.nilorempty(topCol) and red or topCol
+	local botCol = colorTable[bot]
+	local botColor = string.nilorempty(botCol) and red or botCol
+	local col = string.nilorempty(topCol) and BossRushEnum.HpColor.Red or top
 
-	return var_53_5, var_53_7, var_53_8
+	return topColor, botColor, col
 end
 
-function var_0_0.syncUnlimitedHp(arg_54_0, arg_54_1, arg_54_2)
-	if not arg_54_0._unlimitHp then
-		arg_54_0._unlimitHp = {}
+function BossRushModel:syncUnlimitedHp(index, fillAmount)
+	if not self._unlimitHp then
+		self._unlimitHp = {}
 	end
 
-	arg_54_0._unlimitHp.fillAmount = arg_54_2
+	self._unlimitHp.fillAmount = fillAmount
 
-	if arg_54_1 then
-		arg_54_0._unlimitHp.index = arg_54_1
+	if index then
+		self._unlimitHp.index = index
 	end
 end
 
-function var_0_0.resetUnlimitedHp(arg_55_0)
-	arg_55_0._unlimitHp = nil
+function BossRushModel:resetUnlimitedHp()
+	self._unlimitHp = nil
 end
 
-function var_0_0.setStageLastTotalPoint(arg_56_0, arg_56_1, arg_56_2)
-	arg_56_0._stage2LastTotalPoint[arg_56_1] = tonumber(arg_56_2)
+function BossRushModel:setStageLastTotalPoint(stage, value)
+	self._stage2LastTotalPoint[stage] = tonumber(value)
 end
 
-function var_0_0._getStageLastTotalPoint(arg_57_0, arg_57_1)
-	return arg_57_0._stage2LastTotalPoint[arg_57_1] or 0
+function BossRushModel:_getStageLastTotalPoint(stage)
+	return self._stage2LastTotalPoint[stage] or 0
 end
 
-function var_0_0._initStageLastTotalPoint(arg_58_0)
-	if next(arg_58_0._stage2LastTotalPoint) then
+function BossRushModel:_initStageLastTotalPoint()
+	if next(self._stage2LastTotalPoint) then
 		return
 	end
 
-	local var_58_0 = BossRushConfig.instance:getStages()
+	local stages = BossRushConfig.instance:getStages()
 
-	for iter_58_0, iter_58_1 in pairs(var_58_0) do
-		local var_58_1 = iter_58_1.stage
-		local var_58_2 = arg_58_0:getStageInfo(var_58_1)
+	for _, v in pairs(stages) do
+		local stage = v.stage
+		local info = self:getStageInfo(stage)
 
-		arg_58_0:setStageLastTotalPoint(var_58_1, var_58_2 and var_58_2.totalPoint or 0)
+		self:setStageLastTotalPoint(stage, info and info.totalPoint or 0)
 	end
 end
 
-function var_0_0.getLastPointInfo(arg_59_0, arg_59_1)
-	local var_59_0 = arg_59_0:getStagePointInfo(arg_59_1)
+function BossRushModel:getLastPointInfo(stage)
+	local info = self:getStagePointInfo(stage)
 
-	var_59_0.last = arg_59_0:_getStageLastTotalPoint(arg_59_1)
+	info.last = self:_getStageLastTotalPoint(stage)
 
-	return var_59_0
+	return info
 end
 
-local var_0_1 = "Version1_4_BossRushSelectedLayer_"
+local kPlayerPrefsKey1 = "Version1_4_BossRushSelectedLayer_"
 
-function var_0_0.setLastMarkSelectedLayer(arg_60_0, arg_60_1, arg_60_2)
-	local var_60_0 = arg_60_0:_getSelectedLayerKey(arg_60_1)
+function BossRushModel:setLastMarkSelectedLayer(stage, level)
+	local key = self:_getSelectedLayerKey(stage)
 
-	if not tonumber(arg_60_2) then
+	if not tonumber(level) then
 		return
 	end
 
-	GameUtil.playerPrefsSetNumberByUserId(var_60_0, arg_60_2)
+	GameUtil.playerPrefsSetNumberByUserId(key, level)
 end
 
-function var_0_0.getLastMarkSelectedLayer(arg_61_0, arg_61_1)
-	local var_61_0 = arg_61_0:_getSelectedLayerKey(arg_61_1)
+function BossRushModel:getLastMarkSelectedLayer(stage)
+	local key = self:_getSelectedLayerKey(stage)
 
-	return GameUtil.playerPrefsGetNumberByUserId(var_61_0, 1)
+	return GameUtil.playerPrefsGetNumberByUserId(key, 1)
 end
 
-function var_0_0._getSelectedLayerKey(arg_62_0, arg_62_1)
-	return (string.format("%s_%s_%s", var_0_1, BossRushConfig.instance:getActivityId(), arg_62_1))
+function BossRushModel:_getSelectedLayerKey(stage)
+	local key = string.format("%s_%s_%s", kPlayerPrefsKey1, BossRushConfig.instance:getActivityId(), stage)
+
+	return key
 end
 
-function var_0_0.layer2Index(arg_63_0, arg_63_1, arg_63_2)
-	local var_63_0 = arg_63_0:getConfig():getEpisodeStages(arg_63_1)
+function BossRushModel:layer2Index(stage, layer)
+	local config = self:getConfig()
+	local episodeStages = config:getEpisodeStages(stage)
 
-	for iter_63_0, iter_63_1 in pairs(var_63_0) do
-		if arg_63_2 == iter_63_1.layer then
-			return iter_63_0
+	for i, layerCO in pairs(episodeStages) do
+		if layer == layerCO.layer then
+			return i
 		end
 	end
 
 	return 1
 end
 
-function var_0_0.getEvaluateList(arg_64_0)
-	return arg_64_0._evaluateList
+function BossRushModel:getEvaluateList()
+	return self._evaluateList
 end
 
-function var_0_0.getActivityMo(arg_65_0)
-	local var_65_0 = BossRushConfig.instance:getActivityId()
+function BossRushModel:getActivityMo()
+	local actId = BossRushConfig.instance:getActivityId()
 
-	if var_65_0 then
-		local var_65_1 = ActivityModel.instance:getActivityInfo()
+	if actId then
+		local infos = ActivityModel.instance:getActivityInfo()
 
-		return var_65_1 and var_65_1[var_65_0]
+		return infos and infos[actId]
 	end
 end
 
-function var_0_0.isSpecialActivity(arg_66_0)
-	local var_66_0 = BossRushConfig.instance:getStages()
+function BossRushModel:isSpecialActivity()
+	local stages = BossRushConfig.instance:getStages()
 
-	for iter_66_0, iter_66_1 in pairs(var_66_0) do
-		local var_66_1 = iter_66_1.stage
+	for _, v in pairs(stages) do
+		local stage = v.stage
+		local episodeStages = BossRushConfig.instance:getEpisodeStages(stage)
 
-		if #BossRushConfig.instance:getEpisodeStages(var_66_1) > 3 then
+		if #episodeStages > 3 then
 			return true
 		end
 	end
 end
 
-function var_0_0.isEnhanceRole(arg_67_0, arg_67_1, arg_67_2)
-	if not arg_67_1 or not arg_67_2 then
+function BossRushModel:isEnhanceRole(stage, layer)
+	if not stage or not layer then
 		return false
 	end
 
-	local var_67_0 = BossRushConfig.instance:getEpisodeCO(arg_67_1, arg_67_2)
+	local episodeCo = BossRushConfig.instance:getEpisodeCO(stage, layer)
 
-	if not var_67_0 then
+	if not episodeCo then
 		return false
 	end
 
-	return var_67_0.enhanceRole == 1
+	local isEnhanceRole = episodeCo.enhanceRole == 1
+
+	return isEnhanceRole
 end
 
-function var_0_0.getLayer4MaxRewardScore(arg_68_0, arg_68_1)
-	local var_68_0 = BossRushConfig.instance:getActLayer4rewards(arg_68_1)
-	local var_68_1 = 0
+function BossRushModel:getLayer4MaxRewardScore(stage)
+	local configs = BossRushConfig.instance:getActLayer4rewards(stage)
+	local max = 0
 
-	for iter_68_0, iter_68_1 in pairs(var_68_0) do
-		var_68_1 = iter_68_1.maxProgress
+	for _, co in pairs(configs) do
+		max = co.maxProgress
 	end
 
-	return var_68_1
+	return max
 end
 
-function var_0_0.isSpecialLayerCurBattle(arg_69_0)
-	if BossRushController.instance:isInBossRushFight() then
-		local var_69_0, var_69_1 = arg_69_0:getBattleStageAndLayer()
+function BossRushModel:isSpecialLayerCurBattle()
+	local isInBossRush = BossRushController.instance:isInBossRushFight()
 
-		return arg_69_0:isSpecialLayer(var_69_1)
+	if isInBossRush then
+		local _, layer = self:getBattleStageAndLayer()
+
+		return self:isSpecialLayer(layer)
 	end
 
 	return false
 end
 
-function var_0_0.isSpecialLayer(arg_70_0, arg_70_1)
-	return arg_70_1 and arg_70_1 == 4
+function BossRushModel:isSpecialLayer(layer)
+	return layer and layer == 4
 end
 
-function var_0_0.getActivityBonus(arg_71_0)
-	local var_71_0 = BossRushConfig.instance:getActivityId()
+function BossRushModel:getActivityBonus()
+	local actId = BossRushConfig.instance:getActivityId()
+	local bonusTab = BossRushEnum.BonusTab[actId] or BossRushEnum.BonusTab[BossRushEnum.DefaultAcitvityId]
 
-	return BossRushEnum.BonusTab[var_71_0] or BossRushEnum.BonusTab[BossRushEnum.DefaultAcitvityId]
+	return bonusTab
 end
 
-function var_0_0.getActivityMainView(arg_72_0)
-	local var_72_0 = BossRushConfig.instance:getActivityId()
+function BossRushModel:getActivityMainView()
+	local actId = BossRushConfig.instance:getActivityId()
+	local mainView = BossRushEnum.MainView[actId] or BossRushEnum.MainView[BossRushEnum.DefaultAcitvityId]
 
-	return BossRushEnum.MainView[var_72_0] or BossRushEnum.MainView[BossRushEnum.DefaultAcitvityId]
+	return mainView
 end
 
-function var_0_0.getActivityMainViewPath(arg_73_0)
-	local var_73_0 = arg_73_0:getActivityMainView()
+function BossRushModel:getActivityMainViewPath()
+	local mainView = self:getActivityMainView()
 
-	return var_73_0 and var_73_0.MainViewPath or BossRushEnum.ResPath.v1a4_bossrushmainview
+	return mainView and mainView.MainViewPath or BossRushEnum.ResPath.v1a4_bossrushmainview
 end
 
-function var_0_0.getActivityMainViewItemPath(arg_74_0)
-	local var_74_0 = arg_74_0:getActivityMainView()
+function BossRushModel:getActivityMainViewItemPath()
+	local mainView = self:getActivityMainView()
 
-	return var_74_0 and var_74_0.MainViewItemPath or BossRushEnum.ResPath.v1a4_bossrushmainitem
+	return mainView and mainView.MainViewItemPath or BossRushEnum.ResPath.v1a4_bossrushmainitem
 end
 
-function var_0_0.getActivityLevelDetailPath(arg_75_0)
-	local var_75_0 = arg_75_0:getActivityMainView()
+function BossRushModel:getActivityLevelDetailPath()
+	local mainView = self:getActivityMainView()
 
-	return var_75_0 and var_75_0.LeveldetailViewPath or BossRushEnum.ResPath.v1a4_bossrushleveldetail
+	return mainView and mainView.LeveldetailViewPath or BossRushEnum.ResPath.v1a4_bossrushleveldetail
 end
 
-var_0_0.instance = var_0_0.New()
+BossRushModel.instance = BossRushModel.New()
 
-return var_0_0
+return BossRushModel

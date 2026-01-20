@@ -1,8 +1,10 @@
-﻿module("modules.logic.seasonver.common.SeasonHeroGroupHandler", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/common/SeasonHeroGroupHandler.lua
 
-local var_0_0 = class("SeasonHeroGroupHandler")
+module("modules.logic.seasonver.common.SeasonHeroGroupHandler", package.seeall)
 
-var_0_0.SeasonEpisodeTypeList = {
+local SeasonHeroGroupHandler = class("SeasonHeroGroupHandler")
+
+SeasonHeroGroupHandler.SeasonEpisodeTypeList = {
 	DungeonEnum.EpisodeType.Season,
 	DungeonEnum.EpisodeType.SeasonRetail,
 	DungeonEnum.EpisodeType.SeasonSpecial,
@@ -13,7 +15,7 @@ var_0_0.SeasonEpisodeTypeList = {
 	DungeonEnum.EpisodeType.Season166Train,
 	DungeonEnum.EpisodeType.Season166Teach
 }
-var_0_0.SeasonTypeList = {
+SeasonHeroGroupHandler.SeasonTypeList = {
 	ModuleEnum.HeroGroupType.Season,
 	ModuleEnum.HeroGroupType.Season123,
 	ModuleEnum.HeroGroupType.Season123Retail,
@@ -22,212 +24,214 @@ var_0_0.SeasonTypeList = {
 	ModuleEnum.HeroGroupType.Season166Teach
 }
 
-function var_0_0.checkIsSeasonEpisodeType(arg_1_0)
-	return (tabletool.indexOf(var_0_0.SeasonEpisodeTypeList, arg_1_0))
+function SeasonHeroGroupHandler.checkIsSeasonEpisodeType(episodeType)
+	local isSeasonEpisodeType = tabletool.indexOf(SeasonHeroGroupHandler.SeasonEpisodeTypeList, episodeType)
+
+	return isSeasonEpisodeType
 end
 
-function var_0_0.checkIsSeasonTypeByEpisodeId(arg_2_0)
-	local var_2_0 = DungeonConfig.instance:getEpisodeCO(arg_2_0).type
+function SeasonHeroGroupHandler.checkIsSeasonTypeByEpisodeId(episodeId)
+	local episdoeConfig = DungeonConfig.instance:getEpisodeCO(episodeId)
+	local episodeType = episdoeConfig.type
 
-	return var_0_0.checkIsSeasonEpisodeType(var_2_0)
+	return SeasonHeroGroupHandler.checkIsSeasonEpisodeType(episodeType)
 end
 
-function var_0_0.checkIsSeasonHeroGroupType(arg_3_0)
-	return (tabletool.indexOf(var_0_0.SeasonTypeList, arg_3_0))
+function SeasonHeroGroupHandler.checkIsSeasonHeroGroupType(heroGroupType)
+	local isSeasonHeroGroupType = tabletool.indexOf(SeasonHeroGroupHandler.SeasonTypeList, heroGroupType)
+
+	return isSeasonHeroGroupType
 end
 
-function var_0_0.setSeasonSnapShot(arg_4_0)
-	local var_4_0 = ModuleEnum.HeroGroupSnapshotType.Season
-	local var_4_1 = 0
-	local var_4_2
-	local var_4_3
+function SeasonHeroGroupHandler.setSeasonSnapShot(paramTab)
+	local heroGroupSnapshotType = ModuleEnum.HeroGroupSnapshotType.Season
+	local snapshotSubId = 0
+	local heroGroupMO, seasonEquips
 
-	if arg_4_0.extendData then
-		var_4_1 = arg_4_0.extendData.groupIndex
-		var_4_2 = arg_4_0.extendData.heroGroup
+	if paramTab.extendData then
+		snapshotSubId = paramTab.extendData.groupIndex
+		heroGroupMO = paramTab.extendData.heroGroup
 	end
 
-	return var_4_0, var_4_1, var_4_2, var_4_3
+	return heroGroupSnapshotType, snapshotSubId, heroGroupMO, seasonEquips
 end
 
-function var_0_0.setSeason123SnapShot(arg_5_0)
-	local var_5_0 = ModuleEnum.HeroGroupSnapshotType.Season123
-	local var_5_1 = 0
-	local var_5_2
-	local var_5_3
+function SeasonHeroGroupHandler.setSeason123SnapShot(paramTab)
+	local heroGroupSnapshotType = ModuleEnum.HeroGroupSnapshotType.Season123
+	local snapshotSubId = 0
+	local heroGroupMO, seasonEquips
 
-	if arg_5_0.extendData then
-		var_5_1 = arg_5_0.extendData.groupIndex
-		var_5_2 = arg_5_0.extendData.heroGroup
+	if paramTab.extendData then
+		snapshotSubId = paramTab.extendData.groupIndex
+		heroGroupMO = paramTab.extendData.heroGroup
 	end
 
-	if var_5_2 then
-		var_5_3 = Season123HeroGroupUtils.getAllHeroActivity123Equips(var_5_2)
+	if heroGroupMO then
+		seasonEquips = Season123HeroGroupUtils.getAllHeroActivity123Equips(heroGroupMO)
 	end
 
-	return var_5_0, var_5_1, var_5_2, var_5_3
+	return heroGroupSnapshotType, snapshotSubId, heroGroupMO, seasonEquips
 end
 
-function var_0_0.setSeason123RetailSnapShot(arg_6_0)
-	local var_6_0 = ModuleEnum.HeroGroupSnapshotType.Season123Retail
-	local var_6_1 = 1
-	local var_6_2
-	local var_6_3
+function SeasonHeroGroupHandler.setSeason123RetailSnapShot(paramTab)
+	local heroGroupSnapshotType = ModuleEnum.HeroGroupSnapshotType.Season123Retail
+	local snapshotSubId = 1
+	local heroGroupMO, seasonEquips
 
-	if arg_6_0.extendData then
-		var_6_2 = arg_6_0.extendData.heroGroup
+	if paramTab.extendData then
+		heroGroupMO = paramTab.extendData.heroGroup
 	end
 
-	return var_6_0, var_6_1, var_6_2, var_6_3
+	return heroGroupSnapshotType, snapshotSubId, heroGroupMO, seasonEquips
 end
 
-function var_0_0.setSeason166BaseSpotSnapShot(arg_7_0)
-	local var_7_0 = ModuleEnum.HeroGroupSnapshotType.Season166Base
-	local var_7_1 = 0
-	local var_7_2
-	local var_7_3
+function SeasonHeroGroupHandler.setSeason166BaseSpotSnapShot(paramTab)
+	local heroGroupSnapshotType = ModuleEnum.HeroGroupSnapshotType.Season166Base
+	local snapshotSubId = 0
+	local heroGroupMO, seasonEquips
 
-	if arg_7_0.extendData then
-		var_7_2 = arg_7_0.extendData.heroGroup
-		var_7_1 = arg_7_0.extendData.snapshotSubId or 1
+	if paramTab.extendData then
+		heroGroupMO = paramTab.extendData.heroGroup
+		snapshotSubId = paramTab.extendData.snapshotSubId or 1
 	end
 
-	return var_7_0, var_7_1, var_7_2, var_7_3
+	return heroGroupSnapshotType, snapshotSubId, heroGroupMO, seasonEquips
 end
 
-function var_0_0.setSeason166TrainSpotSnapShot(arg_8_0)
-	local var_8_0 = ModuleEnum.HeroGroupSnapshotType.Season166Train
-	local var_8_1 = 1
-	local var_8_2
-	local var_8_3
+function SeasonHeroGroupHandler.setSeason166TrainSpotSnapShot(paramTab)
+	local heroGroupSnapshotType = ModuleEnum.HeroGroupSnapshotType.Season166Train
+	local snapshotSubId = 1
+	local heroGroupMO, seasonEquips
 
-	if arg_8_0.extendData then
-		var_8_2 = arg_8_0.extendData.heroGroup
+	if paramTab.extendData then
+		heroGroupMO = paramTab.extendData.heroGroup
 	end
 
-	return var_8_0, var_8_1, var_8_2, var_8_3
+	return heroGroupSnapshotType, snapshotSubId, heroGroupMO, seasonEquips
 end
 
-var_0_0.setSeasonSnapShotHandleFunc = {
-	[ModuleEnum.HeroGroupType.Season] = var_0_0.setSeasonSnapShot,
-	[ModuleEnum.HeroGroupType.Season123] = var_0_0.setSeason123SnapShot,
-	[ModuleEnum.HeroGroupType.Season123Retail] = var_0_0.setSeason123RetailSnapShot,
-	[ModuleEnum.HeroGroupType.Season166Base] = var_0_0.setSeason166BaseSpotSnapShot,
-	[ModuleEnum.HeroGroupType.Season166Train] = var_0_0.setSeason166TrainSpotSnapShot
+SeasonHeroGroupHandler.setSeasonSnapShotHandleFunc = {
+	[ModuleEnum.HeroGroupType.Season] = SeasonHeroGroupHandler.setSeasonSnapShot,
+	[ModuleEnum.HeroGroupType.Season123] = SeasonHeroGroupHandler.setSeason123SnapShot,
+	[ModuleEnum.HeroGroupType.Season123Retail] = SeasonHeroGroupHandler.setSeason123RetailSnapShot,
+	[ModuleEnum.HeroGroupType.Season166Base] = SeasonHeroGroupHandler.setSeason166BaseSpotSnapShot,
+	[ModuleEnum.HeroGroupType.Season166Train] = SeasonHeroGroupHandler.setSeason166TrainSpotSnapShot
 }
 
-function var_0_0.buildSeason(arg_9_0)
-	Activity104Model.instance:buildHeroGroup(arg_9_0.isReConnect)
+function SeasonHeroGroupHandler.buildSeason(paramTab)
+	Activity104Model.instance:buildHeroGroup(paramTab.isReConnect)
 
 	return ModuleEnum.HeroGroupType.Season
 end
 
-function var_0_0.buildSeason123(arg_10_0)
+function SeasonHeroGroupHandler.buildSeason123(paramTab)
 	Season123HeroGroupModel.instance:buildAidHeroGroup()
 
 	return ModuleEnum.HeroGroupType.Season123
 end
 
-function var_0_0.buildSeason123Retail(arg_11_0)
+function SeasonHeroGroupHandler.buildSeason123Retail(paramTab)
 	Season123HeroGroupModel.instance:buildAidHeroGroup()
 
 	return ModuleEnum.HeroGroupType.Season123Retail
 end
 
-function var_0_0.buildSeason166BaseSpot(arg_12_0)
+function SeasonHeroGroupHandler.buildSeason166BaseSpot(paramTab)
 	Season166HeroGroupModel.instance:buildAidHeroGroup()
 
 	return ModuleEnum.HeroGroupType.Season166Base
 end
 
-function var_0_0.buildSeason166Train(arg_13_0)
+function SeasonHeroGroupHandler.buildSeason166Train(paramTab)
 	Season166HeroGroupModel.instance:buildAidHeroGroup()
 
 	return ModuleEnum.HeroGroupType.Season166Train
 end
 
-function var_0_0.buildSeason166Teach(arg_14_0)
+function SeasonHeroGroupHandler.buildSeason166Teach(paramTab)
 	Season166HeroGroupModel.instance:buildAidHeroGroup()
 
 	return ModuleEnum.HeroGroupType.Season166Teach
 end
 
-var_0_0.buildSeasonHandleFunc = {
-	[DungeonEnum.EpisodeType.Season] = var_0_0.buildSeason,
-	[DungeonEnum.EpisodeType.SeasonRetail] = var_0_0.buildSeason,
-	[DungeonEnum.EpisodeType.SeasonSpecial] = var_0_0.buildSeason,
-	[DungeonEnum.EpisodeType.SeasonTrial] = var_0_0.buildSeason,
-	[DungeonEnum.EpisodeType.Season123] = var_0_0.buildSeason123,
-	[DungeonEnum.EpisodeType.Season123Retail] = var_0_0.buildSeason123Retail,
-	[DungeonEnum.EpisodeType.Season166Base] = var_0_0.buildSeason166BaseSpot,
-	[DungeonEnum.EpisodeType.Season166Train] = var_0_0.buildSeason166Train,
-	[DungeonEnum.EpisodeType.Season166Teach] = var_0_0.buildSeason166Teach
+SeasonHeroGroupHandler.buildSeasonHandleFunc = {
+	[DungeonEnum.EpisodeType.Season] = SeasonHeroGroupHandler.buildSeason,
+	[DungeonEnum.EpisodeType.SeasonRetail] = SeasonHeroGroupHandler.buildSeason,
+	[DungeonEnum.EpisodeType.SeasonSpecial] = SeasonHeroGroupHandler.buildSeason,
+	[DungeonEnum.EpisodeType.SeasonTrial] = SeasonHeroGroupHandler.buildSeason,
+	[DungeonEnum.EpisodeType.Season123] = SeasonHeroGroupHandler.buildSeason123,
+	[DungeonEnum.EpisodeType.Season123Retail] = SeasonHeroGroupHandler.buildSeason123Retail,
+	[DungeonEnum.EpisodeType.Season166Base] = SeasonHeroGroupHandler.buildSeason166BaseSpot,
+	[DungeonEnum.EpisodeType.Season166Train] = SeasonHeroGroupHandler.buildSeason166Train,
+	[DungeonEnum.EpisodeType.Season166Teach] = SeasonHeroGroupHandler.buildSeason166Teach
 }
 
-function var_0_0.getSeasonHeroGroupMO()
+function SeasonHeroGroupHandler.getSeasonHeroGroupMO()
 	return Activity104Model.instance:getSnapshotHeroGroupBySubId()
 end
 
-function var_0_0.getSeason123HeroGroupMO()
+function SeasonHeroGroupHandler.getSeason123HeroGroupMO()
 	return Season123HeroGroupModel.instance:getCurrentHeroGroup()
 end
 
-function var_0_0.getSeason166HeroGroupMO()
-	if Season166HeroGroupModel.instance:isHaveTrialCo() then
+function SeasonHeroGroupHandler.getSeason166HeroGroupMO()
+	local hasTrail = Season166HeroGroupModel.instance:isHaveTrialCo()
+
+	if hasTrail then
 		return Season166HeroGroupModel.instance:getTrailHeroGroupList()
 	else
 		return Season166HeroGroupModel.instance:getCurrentHeroGroup()
 	end
 end
 
-var_0_0.getSeasonCurrentHeroGroupMO = {
-	[ModuleEnum.HeroGroupType.Season] = var_0_0.getSeasonHeroGroupMO,
-	[ModuleEnum.HeroGroupType.Season123] = var_0_0.getSeason123HeroGroupMO,
-	[ModuleEnum.HeroGroupType.Season123Retail] = var_0_0.getSeason123HeroGroupMO,
-	[ModuleEnum.HeroGroupType.Season166Base] = var_0_0.getSeason166HeroGroupMO,
-	[ModuleEnum.HeroGroupType.Season166Train] = var_0_0.getSeason166HeroGroupMO,
-	[ModuleEnum.HeroGroupType.Season166Teach] = var_0_0.getSeason166HeroGroupMO
+SeasonHeroGroupHandler.getSeasonCurrentHeroGroupMO = {
+	[ModuleEnum.HeroGroupType.Season] = SeasonHeroGroupHandler.getSeasonHeroGroupMO,
+	[ModuleEnum.HeroGroupType.Season123] = SeasonHeroGroupHandler.getSeason123HeroGroupMO,
+	[ModuleEnum.HeroGroupType.Season123Retail] = SeasonHeroGroupHandler.getSeason123HeroGroupMO,
+	[ModuleEnum.HeroGroupType.Season166Base] = SeasonHeroGroupHandler.getSeason166HeroGroupMO,
+	[ModuleEnum.HeroGroupType.Season166Train] = SeasonHeroGroupHandler.getSeason166HeroGroupMO,
+	[ModuleEnum.HeroGroupType.Season166Teach] = SeasonHeroGroupHandler.getSeason166HeroGroupMO
 }
-var_0_0.NeedGetHeroCardSeason = {
+SeasonHeroGroupHandler.NeedGetHeroCardSeason = {
 	[ModuleEnum.HeroGroupType.Season] = true,
 	[ModuleEnum.HeroGroupType.Season123] = true
 }
-var_0_0.NormalSeason = {
+SeasonHeroGroupHandler.NormalSeason = {
 	[ModuleEnum.HeroGroupType.Season123Retail] = true
 }
-var_0_0.NormalSeason166 = {
+SeasonHeroGroupHandler.NormalSeason166 = {
 	[ModuleEnum.HeroGroupType.Season166Base] = true,
 	[ModuleEnum.HeroGroupType.Season166Train] = true
 }
 
-function var_0_0.setHeroGroupSnapshot(arg_18_0, arg_18_1, arg_18_2, arg_18_3, arg_18_4)
-	local var_18_0 = {}
+function SeasonHeroGroupHandler.setHeroGroupSnapshot(heroGroupMO, heroGroupType, episodeId, callback, callbackObj)
+	local extendData = {}
 
-	if var_0_0.NeedGetHeroCardSeason[arg_18_1] then
-		var_18_0.groupIndex = arg_18_0.groupId
-		var_18_0.heroGroup = arg_18_0
+	if SeasonHeroGroupHandler.NeedGetHeroCardSeason[heroGroupType] then
+		extendData.groupIndex = heroGroupMO.groupId
+		extendData.heroGroup = heroGroupMO
 
-		HeroGroupModel.instance:setHeroGroupSnapshot(arg_18_1, arg_18_2, true, var_18_0, arg_18_3, arg_18_4)
+		HeroGroupModel.instance:setHeroGroupSnapshot(heroGroupType, episodeId, true, extendData, callback, callbackObj)
 
 		return
 	end
 
-	if var_0_0.NormalSeason[arg_18_1] then
-		HeroGroupModel.instance:setHeroGroupSnapshot(arg_18_1, arg_18_2, true, nil, arg_18_3, arg_18_4)
+	if SeasonHeroGroupHandler.NormalSeason[heroGroupType] then
+		HeroGroupModel.instance:setHeroGroupSnapshot(heroGroupType, episodeId, true, nil, callback, callbackObj)
 	end
 
-	if var_0_0.NormalSeason166[arg_18_1] then
-		local var_18_1 = Season166Model.instance:getBattleContext()
+	if SeasonHeroGroupHandler.NormalSeason166[heroGroupType] then
+		local battleContext = Season166Model.instance:getBattleContext()
 
-		if not var_18_1 then
+		if not battleContext then
 			return
 		end
 
-		var_18_0.snapshotSubId = var_18_1.baseId or 1
-		var_18_0.heroGroup = arg_18_0
+		extendData.snapshotSubId = battleContext.baseId or 1
+		extendData.heroGroup = heroGroupMO
 
-		Season166HeroGroupModel.instance:setHeroGroupSnapshot(arg_18_1, arg_18_2, true, var_18_0, arg_18_3, arg_18_4)
+		Season166HeroGroupModel.instance:setHeroGroupSnapshot(heroGroupType, episodeId, true, extendData, callback, callbackObj)
 	end
 end
 
-return var_0_0
+return SeasonHeroGroupHandler

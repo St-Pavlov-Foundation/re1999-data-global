@@ -1,263 +1,269 @@
-﻿module("modules.logic.room.view.manufacture.RoomManufactureCritterItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/manufacture/RoomManufactureCritterItem.lua
 
-local var_0_0 = class("RoomManufactureCritterItem", ListScrollCellExtend)
-local var_0_1 = 0.5
-local var_0_2 = 99999
+module("modules.logic.room.view.manufacture.RoomManufactureCritterItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goicon = gohelper.findChild(arg_1_0.viewGO, "#go_icon")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#go_info/#txt_name")
-	arg_1_0._imageskill = gohelper.findChildImage(arg_1_0.viewGO, "#go_info/#go_skill/#image_skill")
-	arg_1_0._gosimageskill = arg_1_0._imageskill.gameObject
-	arg_1_0._txtefficiency = gohelper.findChildText(arg_1_0.viewGO, "#go_info/#go_layoutAttr/#go_efficiency/#txt_efficiency")
-	arg_1_0._txtmoodcostspeed = gohelper.findChildText(arg_1_0.viewGO, "#go_info/#go_layoutAttr/#go_moodCostSpeed/#txt_moodCostSpeed")
-	arg_1_0._txtcrirate = gohelper.findChildText(arg_1_0.viewGO, "#go_info/#go_layoutAttr/#go_criRate/#txt_criRate")
-	arg_1_0._goselected = gohelper.findChild(arg_1_0.viewGO, "#go_selected")
-	arg_1_0._gohighQuality = gohelper.findChild(arg_1_0.viewGO, "#go_highQuality")
-	arg_1_0._btnclick = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "#btn_click")
-	arg_1_0._goskillTabLayout = gohelper.findChild(arg_1_0.viewGO, "#go_info/#go_skillTabLayout")
-	arg_1_0._goskillTabItem = gohelper.findChild(arg_1_0.viewGO, "#go_info/#go_skillTabLayout/#go_skillTabItem")
-	arg_1_0._btnlongPrees = SLFramework.UGUI.UILongPressListener.Get(arg_1_0._btnclick.gameObject)
+local RoomManufactureCritterItem = class("RoomManufactureCritterItem", ListScrollCellExtend)
+local PRESS_TIME = 0.5
+local NEXT_PRESS_TIME = 99999
 
-	arg_1_0._btnlongPrees:SetLongPressTime({
-		var_0_1,
-		var_0_2
+function RoomManufactureCritterItem:onInitView()
+	self._goicon = gohelper.findChild(self.viewGO, "#go_icon")
+	self._txtname = gohelper.findChildText(self.viewGO, "#go_info/#txt_name")
+	self._imageskill = gohelper.findChildImage(self.viewGO, "#go_info/#go_skill/#image_skill")
+	self._gosimageskill = self._imageskill.gameObject
+	self._txtefficiency = gohelper.findChildText(self.viewGO, "#go_info/#go_layoutAttr/#go_efficiency/#txt_efficiency")
+	self._txtmoodcostspeed = gohelper.findChildText(self.viewGO, "#go_info/#go_layoutAttr/#go_moodCostSpeed/#txt_moodCostSpeed")
+	self._txtcrirate = gohelper.findChildText(self.viewGO, "#go_info/#go_layoutAttr/#go_criRate/#txt_criRate")
+	self._goselected = gohelper.findChild(self.viewGO, "#go_selected")
+	self._gohighQuality = gohelper.findChild(self.viewGO, "#go_highQuality")
+	self._btnclick = gohelper.findChildClickWithDefaultAudio(self.viewGO, "#btn_click")
+	self._goskillTabLayout = gohelper.findChild(self.viewGO, "#go_info/#go_skillTabLayout")
+	self._goskillTabItem = gohelper.findChild(self.viewGO, "#go_info/#go_skillTabLayout/#go_skillTabItem")
+	self._btnlongPrees = SLFramework.UGUI.UILongPressListener.Get(self._btnclick.gameObject)
+
+	self._btnlongPrees:SetLongPressTime({
+		PRESS_TIME,
+		NEXT_PRESS_TIME
 	})
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
-	arg_2_0._btnlongPrees:AddLongPressListener(arg_2_0._onLongPress, arg_2_0)
-	arg_2_0:addEventCb(ManufactureController.instance, ManufactureEvent.CritterWorkInfoChange, arg_2_0._onCritterWorkInfoChange, arg_2_0)
-	arg_2_0:addEventCb(RoomMapController.instance, RoomEvent.TransportCritterChanged, arg_2_0._onCritterWorkInfoChange, arg_2_0)
-	arg_2_0:addEventCb(CritterController.instance, CritterEvent.CritterUpdateAttrPreview, arg_2_0._onAttrPreviewUpdate, arg_2_0)
-	arg_2_0:addEventCb(CritterController.instance, CritterEvent.CritterRenameReply, arg_2_0._onCritterRenameReply, arg_2_0)
+function RoomManufactureCritterItem:addEvents()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
+	self._btnlongPrees:AddLongPressListener(self._onLongPress, self)
+	self:addEventCb(ManufactureController.instance, ManufactureEvent.CritterWorkInfoChange, self._onCritterWorkInfoChange, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.TransportCritterChanged, self._onCritterWorkInfoChange, self)
+	self:addEventCb(CritterController.instance, CritterEvent.CritterUpdateAttrPreview, self._onAttrPreviewUpdate, self)
+	self:addEventCb(CritterController.instance, CritterEvent.CritterRenameReply, self._onCritterRenameReply, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
-	arg_3_0._btnlongPrees:RemoveLongPressListener()
-	arg_3_0:removeEventCb(ManufactureController.instance, ManufactureEvent.CritterWorkInfoChange, arg_3_0._onCritterWorkInfoChange, arg_3_0)
-	arg_3_0:removeEventCb(RoomMapController.instance, RoomEvent.TransportCritterChanged, arg_3_0._onCritterWorkInfoChange, arg_3_0)
-	arg_3_0:removeEventCb(CritterController.instance, CritterEvent.CritterUpdateAttrPreview, arg_3_0._onAttrPreviewUpdate, arg_3_0)
-	arg_3_0:removeEventCb(CritterController.instance, CritterEvent.CritterRenameReply, arg_3_0._onCritterRenameReply, arg_3_0)
+function RoomManufactureCritterItem:removeEvents()
+	self._btnclick:RemoveClickListener()
+	self._btnlongPrees:RemoveLongPressListener()
+	self:removeEventCb(ManufactureController.instance, ManufactureEvent.CritterWorkInfoChange, self._onCritterWorkInfoChange, self)
+	self:removeEventCb(RoomMapController.instance, RoomEvent.TransportCritterChanged, self._onCritterWorkInfoChange, self)
+	self:removeEventCb(CritterController.instance, CritterEvent.CritterUpdateAttrPreview, self._onAttrPreviewUpdate, self)
+	self:removeEventCb(CritterController.instance, CritterEvent.CritterRenameReply, self._onCritterRenameReply, self)
 end
 
-function var_0_0._btnclickOnClick(arg_4_0)
-	local var_4_0 = arg_4_0:getCritterId()
+function RoomManufactureCritterItem:_btnclickOnClick()
+	local critterUid = self:getCritterId()
+	local pathId = self:getPathId()
 
-	if arg_4_0:getPathId() then
-		ManufactureController.instance:clickTransportCritterItem(var_4_0)
+	if pathId then
+		ManufactureController.instance:clickTransportCritterItem(critterUid)
 	else
-		ManufactureController.instance:clickCritterItem(var_4_0)
+		ManufactureController.instance:clickCritterItem(critterUid)
 	end
 end
 
-function var_0_0._onLongPress(arg_5_0)
-	local var_5_0 = arg_5_0._mo:isMaturity()
+function RoomManufactureCritterItem:_onLongPress()
+	local isMaturity = self._mo:isMaturity()
 
-	CritterController.instance:openRoomCritterDetailView(not var_5_0, arg_5_0._mo)
+	CritterController.instance:openRoomCritterDetailView(not isMaturity, self._mo)
 end
 
-function var_0_0._onCritterWorkInfoChange(arg_6_0)
-	arg_6_0:refreshSelected()
+function RoomManufactureCritterItem:_onCritterWorkInfoChange()
+	self:refreshSelected()
 end
 
-function var_0_0._onAttrPreviewUpdate(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0:getCritterId()
+function RoomManufactureCritterItem:_onAttrPreviewUpdate(critterUidDict)
+	local critterUid = self:getCritterId()
 
-	if var_7_0 and not arg_7_1[var_7_0] then
+	if critterUid and not critterUidDict[critterUid] then
 		return
 	end
 
-	arg_7_0:refreshPreviewAttr()
-	arg_7_0:refreshPreviewSkill()
+	self:refreshPreviewAttr()
+	self:refreshPreviewSkill()
 end
 
-function var_0_0._onCritterRenameReply(arg_8_0, arg_8_1)
-	if arg_8_0:getCritterId() == arg_8_1 then
-		arg_8_0:setCritter()
+function RoomManufactureCritterItem:_onCritterRenameReply(critterUid)
+	local curUid = self:getCritterId()
+
+	if curUid == critterUid then
+		self:setCritter()
 	end
 end
 
-function var_0_0._editableInitView(arg_9_0)
-	gohelper.setActive(arg_9_0._goskillTabItem, false)
+function RoomManufactureCritterItem:_editableInitView()
+	gohelper.setActive(self._goskillTabItem, false)
 end
 
-function var_0_0.getViewBuilding(arg_10_0)
-	local var_10_0, var_10_1, var_10_2 = arg_10_0._view.viewContainer:getContainerViewBuilding()
+function RoomManufactureCritterItem:getViewBuilding()
+	local viewBuildingUid, viewBuildingMO, viewBuildingId = self._view.viewContainer:getContainerViewBuilding()
 
-	return var_10_0, var_10_1, var_10_2
+	return viewBuildingUid, viewBuildingMO, viewBuildingId
 end
 
-function var_0_0.getPathId(arg_11_0)
-	return arg_11_0._view.viewContainer:getContainerPathId()
+function RoomManufactureCritterItem:getPathId()
+	return self._view.viewContainer:getContainerPathId()
 end
 
-function var_0_0.getCritterId(arg_12_0)
-	local var_12_0
-	local var_12_1
+function RoomManufactureCritterItem:getCritterId()
+	local critterUid, critterId
 
-	if arg_12_0._mo then
-		var_12_0 = arg_12_0._mo:getId()
-		var_12_1 = arg_12_0._mo:getDefineId()
+	if self._mo then
+		critterUid = self._mo:getId()
+		critterId = self._mo:getDefineId()
 	end
 
-	return var_12_0, var_12_1
+	return critterUid, critterId
 end
 
-function var_0_0.getPreviewAttrInfo(arg_13_0)
-	local var_13_0 = arg_13_0:getCritterId()
-	local var_13_1 = true
-	local var_13_2
+function RoomManufactureCritterItem:getPreviewAttrInfo()
+	local critterUid = self:getCritterId()
+	local isPreview = true
+	local buildingId
 
-	if not arg_13_0:getPathId() then
-		local var_13_3, var_13_4, var_13_5 = arg_13_0:getViewBuilding()
+	if not self:getPathId() then
+		local crurBuildingUid, buildingMO, curBuildingId = self:getViewBuilding()
 
-		if var_13_4 and var_13_4:isCritterInSeatSlot(var_13_0) then
-			var_13_2 = var_13_5
-			var_13_1 = false
+		if buildingMO and buildingMO:isCritterInSeatSlot(critterUid) then
+			buildingId = curBuildingId
+			isPreview = false
 		end
 	end
 
-	return ManufactureCritterListModel.instance:getPreviewAttrInfo(var_13_0, var_13_2, var_13_1)
+	return ManufactureCritterListModel.instance:getPreviewAttrInfo(critterUid, buildingId, isPreview)
 end
 
-function var_0_0.onUpdateMO(arg_14_0, arg_14_1)
-	arg_14_0._mo = arg_14_1
+function RoomManufactureCritterItem:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_14_0:setCritter()
-	arg_14_0:refresh()
+	self:setCritter()
+	self:refresh()
 
-	local var_14_0, var_14_1, var_14_2 = arg_14_0:getViewBuilding()
+	local _, _, curBuildingId = self:getViewBuilding()
 
-	CritterController.instance:getNextCritterPreviewAttr(var_14_2, arg_14_0._index)
+	CritterController.instance:getNextCritterPreviewAttr(curBuildingId, self._index)
 end
 
-function var_0_0.setCritter(arg_15_0)
-	local var_15_0, var_15_1 = arg_15_0:getCritterId()
+function RoomManufactureCritterItem:setCritter()
+	local critterUid, critterId = self:getCritterId()
 
-	if not arg_15_0.critterIcon then
-		arg_15_0.critterIcon = IconMgr.instance:getCommonCritterIcon(arg_15_0._goicon)
+	if not self.critterIcon then
+		self.critterIcon = IconMgr.instance:getCommonCritterIcon(self._goicon)
 	end
 
-	arg_15_0.critterIcon:setMOValue(var_15_0, var_15_1)
-	arg_15_0.critterIcon:showMood()
+	self.critterIcon:setMOValue(critterUid, critterId)
+	self.critterIcon:showMood()
 
-	arg_15_0._txtname.text = arg_15_0._mo and arg_15_0._mo:getName() or CritterConfig.instance:getCritterName(var_15_1)
+	self._txtname.text = self._mo and self._mo:getName() or CritterConfig.instance:getCritterName(critterId)
 
-	local var_15_2 = arg_15_0._mo and arg_15_0._mo:getSkillInfo()
+	local skillInfo = self._mo and self._mo:getSkillInfo()
 
-	if var_15_2 then
-		for iter_15_0, iter_15_1 in pairs(var_15_2) do
-			local var_15_3 = CritterConfig.instance:getCritterTagCfg(iter_15_1)
+	if skillInfo then
+		for _, tag in pairs(skillInfo) do
+			local tagCo = CritterConfig.instance:getCritterTagCfg(tag)
 
-			if var_15_3 and var_15_3.type == CritterEnum.TagType.Race then
-				UISpriteSetMgr.instance:setCritterSprite(arg_15_0._imageskill, var_15_3.skillIcon)
+			if tagCo and tagCo.type == CritterEnum.TagType.Race then
+				UISpriteSetMgr.instance:setCritterSprite(self._imageskill, tagCo.skillIcon)
 
 				break
 			end
 		end
 	end
 
-	local var_15_4 = arg_15_0._mo:getIsHighQuality()
+	local isHighQuality = self._mo:getIsHighQuality()
 
-	gohelper.setActive(arg_15_0._gohighQuality, var_15_4)
+	gohelper.setActive(self._gohighQuality, isHighQuality)
 end
 
-function var_0_0.refresh(arg_16_0)
-	arg_16_0:refreshSelected()
-	arg_16_0:refreshPreviewAttr()
-	arg_16_0:refreshPreviewSkill()
+function RoomManufactureCritterItem:refresh()
+	self:refreshSelected()
+	self:refreshPreviewAttr()
+	self:refreshPreviewSkill()
 end
 
-function var_0_0.refreshSelected(arg_17_0)
-	if not arg_17_0.critterIcon then
+function RoomManufactureCritterItem:refreshSelected()
+	if not self.critterIcon then
 		return
 	end
 
-	local var_17_0 = false
-	local var_17_1 = arg_17_0:getCritterId()
-	local var_17_2 = RoomMapTransportPathModel.instance:getTransportPathMOByCritterUid(var_17_1)
-	local var_17_3 = var_17_2 and var_17_2.id
-	local var_17_4 = ManufactureModel.instance:getCritterWorkingBuilding(var_17_1)
-	local var_17_5 = arg_17_0:getPathId()
+	local isSelected = false
+	local critterUid = self:getCritterId()
+	local workingPathMO = RoomMapTransportPathModel.instance:getTransportPathMOByCritterUid(critterUid)
+	local workingPathId = workingPathMO and workingPathMO.id
+	local workingBuildingUid = ManufactureModel.instance:getCritterWorkingBuilding(critterUid)
+	local pathId = self:getPathId()
 
-	if var_17_5 then
-		var_17_0 = var_17_3 == var_17_5
+	if pathId then
+		isSelected = workingPathId == pathId
 	else
-		var_17_0 = arg_17_0:getViewBuilding() == var_17_4
+		local curBuildingUid = self:getViewBuilding()
+
+		isSelected = curBuildingUid == workingBuildingUid
 	end
 
-	local var_17_6 = (var_17_3 or var_17_4) and not var_17_0
+	local isShowBuildingIcon = (workingPathId or workingBuildingUid) and not isSelected
 
-	arg_17_0.critterIcon:setIsShowBuildingIcon(var_17_6)
-	gohelper.setActive(arg_17_0._goselected, var_17_0)
+	self.critterIcon:setIsShowBuildingIcon(isShowBuildingIcon)
+	gohelper.setActive(self._goselected, isSelected)
 end
 
-function var_0_0.refreshPreviewAttr(arg_18_0)
-	local var_18_0 = arg_18_0:getPreviewAttrInfo()
+function RoomManufactureCritterItem:refreshPreviewAttr()
+	local attrInfo = self:getPreviewAttrInfo()
 
-	ZProj.UGUIHelper.SetGrayscale(arg_18_0._gosimageskill, not var_18_0.isSpSkillEffect)
+	ZProj.UGUIHelper.SetGrayscale(self._gosimageskill, not attrInfo.isSpSkillEffect)
 
-	arg_18_0._txtefficiency.text = var_18_0.efficiency or 0
-	arg_18_0._txtmoodcostspeed.text = GameUtil.getSubPlaceholderLuaLang(luaLang("critter_mood_cost_speed"), {
-		var_18_0.moodCostSpeed or 0
+	self._txtefficiency.text = attrInfo.efficiency or 0
+	self._txtmoodcostspeed.text = GameUtil.getSubPlaceholderLuaLang(luaLang("critter_mood_cost_speed"), {
+		attrInfo.moodCostSpeed or 0
 	})
-	arg_18_0._txtcrirate.text = string.format("%s%%", var_18_0.criRate or 0)
+	self._txtcrirate.text = string.format("%s%%", attrInfo.criRate or 0)
 end
 
-function var_0_0.refreshPreviewSkill(arg_19_0)
-	arg_19_0._skillTbList = arg_19_0._skillTbList or {}
+function RoomManufactureCritterItem:refreshPreviewSkill()
+	self._skillTbList = self._skillTbList or {}
 
-	local var_19_0 = arg_19_0._mo and arg_19_0._mo:getSkillInfo()
-	local var_19_1 = 0
+	local skillInfo = self._mo and self._mo:getSkillInfo()
+	local index = 0
 
-	if var_19_0 then
-		local var_19_2 = arg_19_0:getPreviewAttrInfo()
+	if skillInfo then
+		local attrInfo = self:getPreviewAttrInfo()
 
-		for iter_19_0, iter_19_1 in pairs(var_19_0) do
-			local var_19_3 = CritterConfig.instance:getCritterTagCfg(iter_19_1)
+		for _, tag in pairs(skillInfo) do
+			local tagCo = CritterConfig.instance:getCritterTagCfg(tag)
 
-			if var_19_3 and var_19_3.type == CritterEnum.SkilTagType.Common then
-				var_19_1 = var_19_1 + 1
+			if tagCo and tagCo.type == CritterEnum.SkilTagType.Common then
+				index = index + 1
 
-				local var_19_4 = arg_19_0._skillTbList[var_19_1]
+				local itemTb = self._skillTbList[index]
 
-				if not var_19_4 then
-					local var_19_5 = gohelper.cloneInPlace(arg_19_0._goskillTabItem)
+				if not itemTb then
+					local go = gohelper.cloneInPlace(self._goskillTabItem)
 
-					var_19_4 = arg_19_0:getUserDataTb_()
-					var_19_4.go = var_19_5
-					var_19_4.skillIcon = gohelper.findChildImage(var_19_5, "image_skillIcon")
-					var_19_4.goskillIcon = var_19_4.skillIcon.gameObject
-					arg_19_0._skillTbList[var_19_1] = var_19_4
+					itemTb = self:getUserDataTb_()
+					itemTb.go = go
+					itemTb.skillIcon = gohelper.findChildImage(go, "image_skillIcon")
+					itemTb.goskillIcon = itemTb.skillIcon.gameObject
+					self._skillTbList[index] = itemTb
 				end
 
-				UISpriteSetMgr.instance:setCritterSprite(var_19_4.skillIcon, var_19_3.skillIcon)
+				UISpriteSetMgr.instance:setCritterSprite(itemTb.skillIcon, tagCo.skillIcon)
 
-				local var_19_6 = true
+				local isGray = true
 
-				if var_19_2 and var_19_2.skillTags and tabletool.indexOf(var_19_2.skillTags, var_19_3.id) then
-					var_19_6 = false
+				if attrInfo and attrInfo.skillTags and tabletool.indexOf(attrInfo.skillTags, tagCo.id) then
+					isGray = false
 				end
 
-				ZProj.UGUIHelper.SetGrayscale(var_19_4.goskillIcon, var_19_6)
+				ZProj.UGUIHelper.SetGrayscale(itemTb.goskillIcon, isGray)
 			end
 		end
 	end
 
-	for iter_19_2 = 1, #arg_19_0._skillTbList do
-		gohelper.setActive(arg_19_0._skillTbList[iter_19_2].go, iter_19_2 <= var_19_1)
+	for i = 1, #self._skillTbList do
+		gohelper.setActive(self._skillTbList[i].go, i <= index)
 	end
 end
 
-function var_0_0.onDestroyView(arg_20_0)
+function RoomManufactureCritterItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return RoomManufactureCritterItem

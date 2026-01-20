@@ -1,11 +1,13 @@
-﻿module("modules.logic.achievement.view.AchievementLevelViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/achievement/view/AchievementLevelViewContainer.lua
 
-local var_0_0 = class("AchievementLevelViewContainer", BaseViewContainer)
+module("modules.logic.achievement.view.AchievementLevelViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local AchievementLevelViewContainer = class("AchievementLevelViewContainer", BaseViewContainer)
+
+function AchievementLevelViewContainer:buildViews()
 	return {
 		AchievementLevelView.New()
 	}
 end
 
-return var_0_0
+return AchievementLevelViewContainer

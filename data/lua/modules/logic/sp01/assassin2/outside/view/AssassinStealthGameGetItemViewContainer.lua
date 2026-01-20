@@ -1,17 +1,19 @@
-﻿module("modules.logic.sp01.assassin2.outside.view.AssassinStealthGameGetItemViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/outside/view/AssassinStealthGameGetItemViewContainer.lua
 
-local var_0_0 = class("AssassinStealthGameGetItemViewContainer", BaseViewContainer)
+module("modules.logic.sp01.assassin2.outside.view.AssassinStealthGameGetItemViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local AssassinStealthGameGetItemViewContainer = class("AssassinStealthGameGetItemViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, AssassinStealthGameGetItemView.New())
+function AssassinStealthGameGetItemViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, AssassinStealthGameGetItemView.New())
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	arg_2_0:closeThis()
+function AssassinStealthGameGetItemViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return AssassinStealthGameGetItemViewContainer

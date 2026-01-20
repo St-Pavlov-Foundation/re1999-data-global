@@ -1,80 +1,79 @@
-﻿module("modules.logic.versionactivity3_0.karong.view.comp.KaRongDrawLine", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/karong/view/comp/KaRongDrawLine.lua
 
-local var_0_0 = class("KaRongDrawLine", KaRongDrawBaseLine)
+module("modules.logic.versionactivity3_0.karong.view.comp.KaRongDrawLine", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	var_0_0.super.ctor(arg_1_0, arg_1_1)
+local KaRongDrawLine = class("KaRongDrawLine", KaRongDrawBaseLine)
 
-	arg_1_0._fillOrigin_left = arg_1_2
-	arg_1_0._fillOrigin_right = arg_1_3
-	arg_1_0._gomap = gohelper.findChild(arg_1_0.go, "#go_map")
-	arg_1_0._gopath = gohelper.findChild(arg_1_0.go, "#go_path")
-	arg_1_0.image = gohelper.findChildImage(arg_1_0.go, "#go_path/image_horizon")
-	arg_1_0.imageTf = arg_1_0.image.transform
+function KaRongDrawLine:ctor(go, fillOrigin_left, fillOrigin_right)
+	KaRongDrawLine.super.ctor(self, go)
 
-	gohelper.setActive(arg_1_0._gomap, false)
-	gohelper.setActive(arg_1_0._gopath, true)
+	self._fillOrigin_left = fillOrigin_left
+	self._fillOrigin_right = fillOrigin_right
+	self._gomap = gohelper.findChild(self.go, "#go_map")
+	self._gopath = gohelper.findChild(self.go, "#go_path")
+	self.image = gohelper.findChildImage(self.go, "#go_path/image_horizon")
+	self.imageTf = self.image.transform
+
+	gohelper.setActive(self._gomap, false)
+	gohelper.setActive(self._gopath, true)
 end
 
-function var_0_0.onInit(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
-	var_0_0.super.onInit(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
+function KaRongDrawLine:onInit(x1, y1, x2, y2)
+	KaRongDrawLine.super.onInit(self, x1, y1, x2, y2)
 
-	local var_2_0, var_2_1 = KaRongDrawModel.instance:getLineAnchor(arg_2_1, arg_2_2, arg_2_3, arg_2_4)
+	local anchorX, anchorY = KaRongDrawModel.instance:getLineAnchor(x1, y1, x2, y2)
 
-	recthelper.setAnchor(arg_2_0.go.transform, var_2_0, var_2_1)
+	recthelper.setAnchor(self.go.transform, anchorX, anchorY)
 end
 
-function var_0_0.onAlert(arg_3_0, arg_3_1)
+function KaRongDrawLine:onAlert(alertType)
 	return
 end
 
-function var_0_0.onCrossHalf(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_0.dir == nil and arg_4_1 ~= nil then
-		arg_4_0:setDir(arg_4_1)
+function KaRongDrawLine:onCrossHalf(dir, progress)
+	if self.dir == nil and dir ~= nil then
+		self:setDir(dir)
 	end
 
-	if arg_4_0.dir ~= nil then
-		if arg_4_0:isReverseDir(arg_4_0.dir) then
-			arg_4_2 = 1 - arg_4_2
+	if self.dir ~= nil then
+		if self:isReverseDir(self.dir) then
+			progress = 1 - progress
 		end
 
-		arg_4_0:setProgress(arg_4_2)
+		self:setProgress(progress)
 	end
 end
 
-function var_0_0.setProgress(arg_5_0, arg_5_1)
-	var_0_0.super.setProgress(arg_5_0, arg_5_1)
+function KaRongDrawLine:setProgress(progress)
+	KaRongDrawLine.super.setProgress(self, progress)
 
-	arg_5_0.image.fillAmount = arg_5_0:getProgress()
+	self.image.fillAmount = self:getProgress()
 end
 
-function var_0_0.setDir(arg_6_0, arg_6_1)
-	var_0_0.super.setDir(arg_6_0, arg_6_1)
-	arg_6_0:refreshLineDir()
+function KaRongDrawLine:setDir(dir)
+	KaRongDrawLine.super.setDir(self, dir)
+	self:refreshLineDir()
 end
 
-function var_0_0.refreshLineDir(arg_7_0)
-	local var_7_0 = 0
-	local var_7_1 = 0
-	local var_7_2 = 0
-	local var_7_3 = KaRongDrawEnum.mazeUILineHorizonUIWidth
+function KaRongDrawLine:refreshLineDir()
+	local rotationX, rotationY, rotationZ, width = 0, 0, 0, KaRongDrawEnum.mazeUILineHorizonUIWidth
 
-	arg_7_0.image.fillOrigin = arg_7_0._fillOrigin_left
+	self.image.fillOrigin = self._fillOrigin_left
 
-	if arg_7_0.dir == KaRongDrawEnum.dir.left then
-		var_7_2 = 180
-	elseif arg_7_0.dir == KaRongDrawEnum.dir.up then
-		var_7_2, var_7_3 = 90, KaRongDrawEnum.mazeUILineVerticalUIWidth
-	elseif arg_7_0.dir == KaRongDrawEnum.dir.down then
-		var_7_2, var_7_3 = -90, KaRongDrawEnum.mazeUILineVerticalUIWidth
+	if self.dir == KaRongDrawEnum.dir.left then
+		rotationZ = 180
+	elseif self.dir == KaRongDrawEnum.dir.up then
+		rotationZ, width = 90, KaRongDrawEnum.mazeUILineVerticalUIWidth
+	elseif self.dir == KaRongDrawEnum.dir.down then
+		rotationZ, width = -90, KaRongDrawEnum.mazeUILineVerticalUIWidth
 	end
 
-	transformhelper.setLocalRotation(arg_7_0.imageTf, var_7_0, var_7_1, var_7_2)
-	recthelper.setWidth(arg_7_0.imageTf, var_7_3)
+	transformhelper.setLocalRotation(self.imageTf, rotationX, rotationY, rotationZ)
+	recthelper.setWidth(self.imageTf, width)
 end
 
-function var_0_0.isReverseDir(arg_8_0, arg_8_1)
-	return arg_8_1 == KaRongDrawEnum.dir.left or arg_8_1 == KaRongDrawEnum.dir.down
+function KaRongDrawLine:isReverseDir(dir)
+	return dir == KaRongDrawEnum.dir.left or dir == KaRongDrawEnum.dir.down
 end
 
-return var_0_0
+return KaRongDrawLine

@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_copost_version_task", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_copost_version_task.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_copost_version_task", package.seeall)
+
+local lua_copost_version_task = {}
+local fields = {
 	jumpId = 10,
 	activityid = 9,
 	taskType = 3,
@@ -13,15 +15,15 @@ local var_0_1 = {
 	maxProgress = 5,
 	bonus = 8
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	desc = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_copost_version_task.onLoad(json)
+	lua_copost_version_task.configList, lua_copost_version_task.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_copost_version_task

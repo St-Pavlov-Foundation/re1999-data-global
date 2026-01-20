@@ -1,32 +1,34 @@
-﻿module("modules.logic.player.view.PlayerIdView", package.seeall)
+﻿-- chunkname: @modules/logic/player/view/PlayerIdView.lua
 
-local var_0_0 = class("PlayerIdView", BaseView)
+module("modules.logic.player.view.PlayerIdView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtDesc = gohelper.findChildText(arg_1_0.viewGO, "node/#txt_desc")
+local PlayerIdView = class("PlayerIdView", BaseView)
+
+function PlayerIdView:onInitView()
+	self._txtDesc = gohelper.findChildText(self.viewGO, "node/#txt_desc")
 end
 
-function var_0_0.onOpen(arg_2_0)
-	arg_2_0:addEventCb(PlayerController.instance, PlayerEvent.ShowPlayerId, arg_2_0._showId, arg_2_0)
-	arg_2_0:addEventCb(SettingsController.instance, SettingsEvent.OnChangeLangTxt, arg_2_0._updateText, arg_2_0)
-	arg_2_0:_updateText()
+function PlayerIdView:onOpen()
+	self:addEventCb(PlayerController.instance, PlayerEvent.ShowPlayerId, self._showId, self)
+	self:addEventCb(SettingsController.instance, SettingsEvent.OnChangeLangTxt, self._updateText, self)
+	self:_updateText()
 end
 
-function var_0_0.onUpdateParam(arg_3_0)
-	arg_3_0:_updateText()
+function PlayerIdView:onUpdateParam()
+	self:_updateText()
 end
 
-function var_0_0._updateText(arg_4_0)
-	arg_4_0._txtDesc.text = luaLang("ID_desc") .. " ID: " .. arg_4_0.viewParam.userId
+function PlayerIdView:_updateText()
+	self._txtDesc.text = luaLang("ID_desc") .. " ID: " .. self.viewParam.userId
 end
 
-function var_0_0.onClose(arg_5_0)
-	arg_5_0:removeEventCb(PlayerController.instance, PlayerEvent.ShowPlayerId, arg_5_0._showId, arg_5_0)
-	arg_5_0:removeEventCb(SettingsController.instance, SettingsEvent.OnChangeLangTxt, arg_5_0._updateText, arg_5_0)
+function PlayerIdView:onClose()
+	self:removeEventCb(PlayerController.instance, PlayerEvent.ShowPlayerId, self._showId, self)
+	self:removeEventCb(SettingsController.instance, SettingsEvent.OnChangeLangTxt, self._updateText, self)
 end
 
-function var_0_0._showId(arg_6_0, arg_6_1)
-	gohelper.setActive(arg_6_0.viewGO, arg_6_1)
+function PlayerIdView:_showId(v)
+	gohelper.setActive(self.viewGO, v)
 end
 
-return var_0_0
+return PlayerIdView

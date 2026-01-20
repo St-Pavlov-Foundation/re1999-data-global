@@ -1,16 +1,18 @@
-﻿module("modules.logic.scene.room.fsm.RoomTransitionCloseWaterReform", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/fsm/RoomTransitionCloseWaterReform.lua
 
-local var_0_0 = class("RoomTransitionCloseWaterReform", SimpleFSMBaseTransition)
+module("modules.logic.scene.room.fsm.RoomTransitionCloseWaterReform", package.seeall)
 
-function var_0_0.start(arg_1_0)
+local RoomTransitionCloseWaterReform = class("RoomTransitionCloseWaterReform", SimpleFSMBaseTransition)
+
+function RoomTransitionCloseWaterReform:start()
 	return
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	local var_2_0 = GameSceneMgr.instance:getCurScene()
+function RoomTransitionCloseWaterReform:onStart(param)
+	local scene = GameSceneMgr.instance:getCurScene()
 
-	if var_2_0 and var_2_0.inventorymgr then
-		var_2_0.inventorymgr:removeAllBlockEntity()
+	if scene and scene.inventorymgr then
+		scene.inventorymgr:removeAllBlockEntity()
 	end
 
 	RoomWaterReformListModel.instance:clear()
@@ -19,15 +21,15 @@ function var_0_0.onStart(arg_2_0, arg_2_1)
 	RoomWaterReformModel.instance:clear()
 	RoomWaterReformController.instance:refreshHighlightWaterBlock()
 	RoomMapController.instance:setRoomShowBlockList()
-	arg_2_0:onDone()
+	self:onDone()
 end
 
-function var_0_0.stop(arg_3_0)
+function RoomTransitionCloseWaterReform:stop()
 	return
 end
 
-function var_0_0.clear(arg_4_0)
+function RoomTransitionCloseWaterReform:clear()
 	return
 end
 
-return var_0_0
+return RoomTransitionCloseWaterReform

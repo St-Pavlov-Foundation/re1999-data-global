@@ -1,619 +1,626 @@
-﻿module("modules.logic.tower.view.TowerTaskView", package.seeall)
+﻿-- chunkname: @modules/logic/tower/view/TowerTaskView.lua
 
-local var_0_0 = class("TowerTaskView", BaseView)
+module("modules.logic.tower.view.TowerTaskView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._goFullBg2 = gohelper.findChild(arg_1_0.viewGO, "#simage_FullBG2")
-	arg_1_0._goLeft = gohelper.findChild(arg_1_0.viewGO, "Left")
-	arg_1_0._scrolltower = gohelper.findChildScrollRect(arg_1_0.viewGO, "Left/#scroll_tower")
-	arg_1_0._gotowerContent = gohelper.findChild(arg_1_0.viewGO, "Left/#scroll_tower/Viewport/#go_towerContent")
-	arg_1_0._gotowerItem = gohelper.findChild(arg_1_0.viewGO, "Left/#scroll_tower/Viewport/#go_towerContent/#go_towerItem")
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "Left/#scroll_tower/Viewport/#go_towerContent/#go_timeTowerItem/normal/time/#txt_time")
-	arg_1_0._goRight = gohelper.findChild(arg_1_0.viewGO, "Right")
-	arg_1_0._scrolltaskList = gohelper.findChildScrollRect(arg_1_0.viewGO, "Right/#scroll_taskList")
-	arg_1_0._gotaskContent = gohelper.findChild(arg_1_0.viewGO, "Right/#scroll_taskList/Viewport/#go_taskContent")
-	arg_1_0._gotips = gohelper.findChild(arg_1_0.viewGO, "Right/#go_tips")
-	arg_1_0._gotimeTowerScore = gohelper.findChild(arg_1_0.viewGO, "Right/#go_tips/#go_timeTowerScore")
-	arg_1_0._txttimeTowerScore = gohelper.findChildText(arg_1_0.viewGO, "Right/#go_tips/#go_timeTowerScore/#txt_timeTowerScore")
-	arg_1_0._txttimeTowerTime = gohelper.findChildText(arg_1_0.viewGO, "Right/#go_tips/#go_timeTowerScore/layout/#txt_timeTowerTime")
-	arg_1_0._gobossTowerTips = gohelper.findChild(arg_1_0.viewGO, "Right/#go_tips/#go_bossTowerTips")
-	arg_1_0._txtbossTowerTip = gohelper.findChildText(arg_1_0.viewGO, "Right/#go_tips/#go_bossTowerTips/#txt_bossTowerTip")
-	arg_1_0._txtbossTowerTime = gohelper.findChildText(arg_1_0.viewGO, "Right/#go_tips/#go_bossTowerTips/layout/#txt_bossTowerTime")
-	arg_1_0._golefttop = gohelper.findChild(arg_1_0.viewGO, "#go_lefttop")
-	arg_1_0._goactReward = gohelper.findChild(arg_1_0.viewGO, "Right/#go_actReward")
-	arg_1_0._simageRewardIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "Right/#go_actReward/#simage_rewardicon")
-	arg_1_0._btnShowRewardInfo = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#go_actReward/#btn_showRewardInfo")
-	arg_1_0._txtRewardCount = gohelper.findChildText(arg_1_0.viewGO, "Right/#go_actReward/#txt_rewardCount")
-	arg_1_0._txtactReward = gohelper.findChildText(arg_1_0.viewGO, "Right/#go_actReward/#txt_actReward")
-	arg_1_0._goactPointContent = gohelper.findChild(arg_1_0.viewGO, "Right/#go_actReward/#go_actPointContent")
-	arg_1_0._goactPointItem = gohelper.findChild(arg_1_0.viewGO, "Right/#go_actReward/#go_actPointContent/#go_actPointItem")
-	arg_1_0._btnactNormal = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#go_actReward/#btn_actNormal")
-	arg_1_0._btnCanget = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#go_actReward/#btn_actCanget")
-	arg_1_0._goactHasget = gohelper.findChild(arg_1_0.viewGO, "Right/#go_actReward/#go_actHasget")
-	arg_1_0._animActReward = arg_1_0._goactReward:GetComponent(gohelper.Type_Animator)
+local TowerTaskView = class("TowerTaskView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function TowerTaskView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._goFullBg2 = gohelper.findChild(self.viewGO, "#simage_FullBG2")
+	self._goLeft = gohelper.findChild(self.viewGO, "Left")
+	self._scrolltower = gohelper.findChildScrollRect(self.viewGO, "Left/#scroll_tower")
+	self._gotowerContent = gohelper.findChild(self.viewGO, "Left/#scroll_tower/Viewport/#go_towerContent")
+	self._gotowerItem = gohelper.findChild(self.viewGO, "Left/#scroll_tower/Viewport/#go_towerContent/#go_towerItem")
+	self._txttime = gohelper.findChildText(self.viewGO, "Left/#scroll_tower/Viewport/#go_towerContent/#go_timeTowerItem/normal/time/#txt_time")
+	self._goRight = gohelper.findChild(self.viewGO, "Right")
+	self._scrolltaskList = gohelper.findChildScrollRect(self.viewGO, "Right/#scroll_taskList")
+	self._gotaskContent = gohelper.findChild(self.viewGO, "Right/#scroll_taskList/Viewport/#go_taskContent")
+	self._gotips = gohelper.findChild(self.viewGO, "Right/#go_tips")
+	self._gotimeTowerScore = gohelper.findChild(self.viewGO, "Right/#go_tips/#go_timeTowerScore")
+	self._txttimeTowerScore = gohelper.findChildText(self.viewGO, "Right/#go_tips/#go_timeTowerScore/#txt_timeTowerScore")
+	self._txttimeTowerTime = gohelper.findChildText(self.viewGO, "Right/#go_tips/#go_timeTowerScore/layout/#txt_timeTowerTime")
+	self._gobossTowerTips = gohelper.findChild(self.viewGO, "Right/#go_tips/#go_bossTowerTips")
+	self._txtbossTowerTip = gohelper.findChildText(self.viewGO, "Right/#go_tips/#go_bossTowerTips/#txt_bossTowerTip")
+	self._txtbossTowerTime = gohelper.findChildText(self.viewGO, "Right/#go_tips/#go_bossTowerTips/layout/#txt_bossTowerTime")
+	self._golefttop = gohelper.findChild(self.viewGO, "#go_lefttop")
+	self._goactReward = gohelper.findChild(self.viewGO, "Right/#go_actReward")
+	self._simageRewardIcon = gohelper.findChildSingleImage(self.viewGO, "Right/#go_actReward/#simage_rewardicon")
+	self._btnShowRewardInfo = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#go_actReward/#btn_showRewardInfo")
+	self._txtRewardCount = gohelper.findChildText(self.viewGO, "Right/#go_actReward/#txt_rewardCount")
+	self._txtactReward = gohelper.findChildText(self.viewGO, "Right/#go_actReward/#txt_actReward")
+	self._goactPointContent = gohelper.findChild(self.viewGO, "Right/#go_actReward/#go_actPointContent")
+	self._goactPointItem = gohelper.findChild(self.viewGO, "Right/#go_actReward/#go_actPointContent/#go_actPointItem")
+	self._btnactNormal = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#go_actReward/#btn_actNormal")
+	self._btnCanget = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#go_actReward/#btn_actCanget")
+	self._goactHasget = gohelper.findChild(self.viewGO, "Right/#go_actReward/#go_actHasget")
+	self._animActReward = self._goactReward:GetComponent(gohelper.Type_Animator)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.OnTaskRewardGetFinish, arg_2_0._playGetRewardFinishAnim, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.TowerRefreshTask, arg_2_0.refreshTaskPos, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.TowerRefreshTask, arg_2_0.InitTowerItemData, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.TowerRefreshTask, arg_2_0.refreshLeftUI, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.TowerRefreshTask, arg_2_0.refreshActReward, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.OnTaskRewardGetFinish, arg_2_0.refreshActReward, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.DailyReresh, arg_2_0.refreshUI, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.TowerTaskUpdated, arg_2_0.refreshUI, arg_2_0)
-	arg_2_0._btnCanget:AddClickListener(arg_2_0._btnActCangetOnClick, arg_2_0)
-	arg_2_0._btnactNormal:AddClickListener(arg_2_0._btnActNormalOnClick, arg_2_0)
-	arg_2_0._btnShowRewardInfo:AddClickListener(arg_2_0._btnShowRewardInfoOnClick, arg_2_0)
+function TowerTaskView:addEvents()
+	self:addEventCb(TowerController.instance, TowerEvent.OnTaskRewardGetFinish, self._playGetRewardFinishAnim, self)
+	self:addEventCb(TowerController.instance, TowerEvent.TowerRefreshTask, self.refreshTaskPos, self)
+	self:addEventCb(TowerController.instance, TowerEvent.TowerRefreshTask, self.InitTowerItemData, self)
+	self:addEventCb(TowerController.instance, TowerEvent.TowerRefreshTask, self.refreshLeftUI, self)
+	self:addEventCb(TowerController.instance, TowerEvent.TowerRefreshTask, self.refreshActReward, self)
+	self:addEventCb(TowerController.instance, TowerEvent.OnTaskRewardGetFinish, self.refreshActReward, self)
+	self:addEventCb(TowerController.instance, TowerEvent.DailyReresh, self.refreshUI, self)
+	self:addEventCb(TowerController.instance, TowerEvent.TowerTaskUpdated, self.refreshUI, self)
+	self._btnCanget:AddClickListener(self._btnActCangetOnClick, self)
+	self._btnactNormal:AddClickListener(self._btnActNormalOnClick, self)
+	self._btnShowRewardInfo:AddClickListener(self._btnShowRewardInfoOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.OnTaskRewardGetFinish, arg_3_0._playGetRewardFinishAnim, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.TowerRefreshTask, arg_3_0.refreshTaskPos, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.TowerRefreshTask, arg_3_0.InitTowerItemData, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.TowerRefreshTask, arg_3_0.refreshLeftUI, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.TowerRefreshTask, arg_3_0.refreshActReward, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.OnTaskRewardGetFinish, arg_3_0.refreshActReward, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.DailyReresh, arg_3_0.refreshUI, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.TowerTaskUpdated, arg_3_0.refreshUI, arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0.refreshRemainTime, arg_3_0)
-	arg_3_0._btnCanget:RemoveClickListener()
-	arg_3_0._btnactNormal:RemoveClickListener()
-	arg_3_0._btnShowRewardInfo:RemoveClickListener()
+function TowerTaskView:removeEvents()
+	self:removeEventCb(TowerController.instance, TowerEvent.OnTaskRewardGetFinish, self._playGetRewardFinishAnim, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.TowerRefreshTask, self.refreshTaskPos, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.TowerRefreshTask, self.InitTowerItemData, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.TowerRefreshTask, self.refreshLeftUI, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.TowerRefreshTask, self.refreshActReward, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.OnTaskRewardGetFinish, self.refreshActReward, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.DailyReresh, self.refreshUI, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.TowerTaskUpdated, self.refreshUI, self)
+	TaskDispatcher.cancelTask(self.refreshRemainTime, self)
+	self._btnCanget:RemoveClickListener()
+	self._btnactNormal:RemoveClickListener()
+	self._btnShowRewardInfo:RemoveClickListener()
 end
 
-var_0_0.TaskMaskTime = 0.65
-var_0_0.TaskGetAnimTime = 0.567
-var_0_0.EnterViewAnimBlock = "playEnterTowerTaskViewAnim"
-var_0_0.MoreTaskPosY = 14
-var_0_0.NormalTaskPosY = 14
-var_0_0.NormalTaskCount = 4
-var_0_0.NormalTaskScrollHeight = 1044
-var_0_0.ActTaskScrollHeight = 860
+TowerTaskView.TaskMaskTime = 0.65
+TowerTaskView.TaskGetAnimTime = 0.567
+TowerTaskView.EnterViewAnimBlock = "playEnterTowerTaskViewAnim"
+TowerTaskView.MoreTaskPosY = 14
+TowerTaskView.NormalTaskPosY = 14
+TowerTaskView.NormalTaskCount = 4
+TowerTaskView.NormalTaskScrollHeight = 1044
+TowerTaskView.ActTaskScrollHeight = 860
 
-function var_0_0.onTowerItemClick(arg_4_0, arg_4_1)
-	if arg_4_1.select then
+function TowerTaskView:onTowerItemClick(towerItem)
+	if towerItem.select then
 		return
 	end
 
-	TowerTaskModel.instance:setCurSelectTowerTypeAndId(arg_4_1.data.type, arg_4_1.data.towerId)
-	arg_4_0:refreshSelectState()
-	arg_4_0:refreshRemainTime()
-	arg_4_0:refreshTaskPos()
-	arg_4_0:refreshReddot()
-	arg_4_0:refreshActReward()
+	TowerTaskModel.instance:setCurSelectTowerTypeAndId(towerItem.data.type, towerItem.data.towerId)
+	self:refreshSelectState()
+	self:refreshRemainTime()
+	self:refreshTaskPos()
+	self:refreshReddot()
+	self:refreshActReward()
 end
 
-function var_0_0._btnActCangetOnClick(arg_5_0)
-	local var_5_0 = arg_5_0.actRewardTaskMO.config.id
+function TowerTaskView:_btnActCangetOnClick()
+	local taskId = self.actRewardTaskMO.config.id
 
-	TaskRpc.instance:sendFinishTaskRequest(var_5_0)
-	arg_5_0._animActReward:Play(UIAnimationName.Finish, 0, 0)
+	TaskRpc.instance:sendFinishTaskRequest(taskId)
+	self._animActReward:Play(UIAnimationName.Finish, 0, 0)
 end
 
-function var_0_0._btnActNormalOnClick(arg_6_0)
-	if not arg_6_0.actRewardTaskMO then
+function TowerTaskView:_btnActNormalOnClick()
+	if not self.actRewardTaskMO then
 		return
 	end
 
-	GameFacade.showToast(ToastEnum.TowerTaskActRewardNormalClick, arg_6_0.actRewardTaskMO.config.desc)
+	GameFacade.showToast(ToastEnum.TowerTaskActRewardNormalClick, self.actRewardTaskMO.config.desc)
 end
 
-function var_0_0._btnShowRewardInfoOnClick(arg_7_0)
-	local var_7_0 = string.split(arg_7_0.actRewardTaskMO.config.bonus, "#")
+function TowerTaskView:_btnShowRewardInfoOnClick()
+	local rewardList = string.split(self.actRewardTaskMO.config.bonus, "#")
 
-	MaterialTipController.instance:showMaterialInfo(var_7_0[1], var_7_0[2])
+	MaterialTipController.instance:showMaterialInfo(rewardList[1], rewardList[2])
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0._taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(arg_8_0.viewContainer.scrollView)
+function TowerTaskView:_editableInitView()
+	self._taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(self.viewContainer.scrollView)
 
-	arg_8_0._taskAnimRemoveItem:setMoveInterval(0)
-	arg_8_0._taskAnimRemoveItem:setMoveAnimationTime(var_0_0.TaskMaskTime - var_0_0.TaskGetAnimTime)
+	self._taskAnimRemoveItem:setMoveInterval(0)
+	self._taskAnimRemoveItem:setMoveAnimationTime(TowerTaskView.TaskMaskTime - TowerTaskView.TaskGetAnimTime)
 
-	arg_8_0.towerItemTab = arg_8_0:getUserDataTb_()
-	arg_8_0.removeIndexTab = {}
+	self.towerItemTab = self:getUserDataTb_()
+	self.removeIndexTab = {}
 
-	gohelper.setActive(arg_8_0._gotowerItem, false)
+	gohelper.setActive(self._gotowerItem, false)
 
-	arg_8_0.showActRewardEnter = true
+	self.showActRewardEnter = true
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
+function TowerTaskView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_10_0)
+function TowerTaskView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.Tower.play_ui_fight_task_entry)
-	TaskDispatcher.runDelay(arg_10_0.endEnterAnimBlock, arg_10_0, 0.8)
-	UIBlockMgr.instance:startBlock(var_0_0.EnterViewAnimBlock)
-	arg_10_0:selectDefaultTaskCategory()
-	arg_10_0:refreshUI()
-	arg_10_0:saveLimitedActTaskNew()
+	TaskDispatcher.runDelay(self.endEnterAnimBlock, self, 0.8)
+	UIBlockMgr.instance:startBlock(TowerTaskView.EnterViewAnimBlock)
+	self:selectDefaultTaskCategory()
+	self:refreshUI()
+	self:saveLimitedActTaskNew()
 
-	arg_10_0.showActRewardEnter = false
+	self.showActRewardEnter = false
 end
 
-function var_0_0.selectDefaultTaskCategory(arg_11_0)
-	local var_11_0 = arg_11_0.viewParam.towerType
-	local var_11_1 = arg_11_0.viewParam.towerId
+function TowerTaskView:selectDefaultTaskCategory()
+	local defaultTowerType = self.viewParam.towerType
+	local defaultTowerId = self.viewParam.towerId
 
-	if not var_11_0 or not var_11_1 then
+	if not defaultTowerType or not defaultTowerId then
 		if #TowerTaskModel.instance.actTaskList > 0 then
-			local var_11_2 = TowerTaskModel.instance.actTaskList[1].config.activityId
-			local var_11_3 = ActivityModel.instance:getActivityInfo()[var_11_2]
+			local actTaskMO = TowerTaskModel.instance.actTaskList[1]
+			local actId = actTaskMO.config.activityId
+			local actInfoMo = ActivityModel.instance:getActivityInfo()[actId]
 
-			if var_11_3:isOpen() and not var_11_3:isExpired() then
-				var_11_0 = TowerEnum.ActTaskType
-				var_11_1 = var_11_2
+			if actInfoMo:isOpen() and not actInfoMo:isExpired() then
+				defaultTowerType = TowerEnum.ActTaskType
+				defaultTowerId = actId
 			end
 		else
-			local var_11_4 = TowerTimeLimitLevelModel.instance:getCurOpenTimeLimitTower()
+			local curOpenTimeLimitTowerMo = TowerTimeLimitLevelModel.instance:getCurOpenTimeLimitTower()
+			local timeLimitTowerId = curOpenTimeLimitTowerMo and curOpenTimeLimitTowerMo.towerId or 1
 
-			var_11_1, var_11_0 = var_11_4 and var_11_4.towerId or 1, TowerEnum.TowerType.Limited
+			defaultTowerType = TowerEnum.TowerType.Limited
+			defaultTowerId = timeLimitTowerId
 		end
 	end
 
-	TowerTaskModel.instance:setCurSelectTowerTypeAndId(var_11_0, var_11_1)
+	TowerTaskModel.instance:setCurSelectTowerTypeAndId(defaultTowerType, defaultTowerId)
 
-	arg_11_0.viewParam.towerType = nil
-	arg_11_0.viewParam.towerId = nil
+	self.viewParam.towerType = nil
+	self.viewParam.towerId = nil
 end
 
-function var_0_0.refreshUI(arg_12_0)
-	arg_12_0:InitTowerItemData()
-	arg_12_0:refreshSelectState()
-	arg_12_0:refreshRemainTime()
-	arg_12_0:refreshTaskPos()
-	arg_12_0:refreshLeftUI()
-	arg_12_0:refreshReddot()
-	arg_12_0:refreshActReward()
-	TaskDispatcher.cancelTask(arg_12_0.refreshRemainTime, arg_12_0)
-	TaskDispatcher.runRepeat(arg_12_0.refreshRemainTime, arg_12_0, 1)
+function TowerTaskView:refreshUI()
+	self:InitTowerItemData()
+	self:refreshSelectState()
+	self:refreshRemainTime()
+	self:refreshTaskPos()
+	self:refreshLeftUI()
+	self:refreshReddot()
+	self:refreshActReward()
+	TaskDispatcher.cancelTask(self.refreshRemainTime, self)
+	TaskDispatcher.runRepeat(self.refreshRemainTime, self, 1)
 end
 
-function var_0_0.saveLimitedActTaskNew(arg_13_0)
-	local var_13_0 = TowerTaskModel.instance.actTaskList
+function TowerTaskView:saveLimitedActTaskNew()
+	local actTaskList = TowerTaskModel.instance.actTaskList
 
-	if #var_13_0 > 0 then
-		TowerController.instance:setPlayerPrefs(TowerEnum.LocalPrefsKey.ReddotNewLimitedActTask, var_13_0[1].config.activityId)
+	if #actTaskList > 0 then
+		TowerController.instance:setPlayerPrefs(TowerEnum.LocalPrefsKey.ReddotNewLimitedActTask, actTaskList[1].config.activityId)
 	end
 end
 
-function var_0_0.InitTowerItemData(arg_14_0)
-	local var_14_0 = {}
-	local var_14_1 = TowerTaskModel.instance.limitTimeTaskList
-	local var_14_2 = TowerTaskModel.instance.actTaskList
-	local var_14_3 = {}
-	local var_14_4 = {}
+function TowerTaskView:InitTowerItemData()
+	local towerItemDataList = {}
+	local limitTimeTaskList = TowerTaskModel.instance.limitTimeTaskList
+	local actTaskList = TowerTaskModel.instance.actTaskList
+	local bossTaskList = {}
+	local keyList = {}
 
-	for iter_14_0 in pairs(TowerTaskModel.instance.bossTaskList) do
-		table.insert(var_14_4, iter_14_0)
+	for key in pairs(TowerTaskModel.instance.bossTaskList) do
+		table.insert(keyList, key)
 	end
 
-	table.sort(var_14_4)
+	table.sort(keyList)
 
-	for iter_14_1, iter_14_2 in ipairs(var_14_4) do
-		table.insert(var_14_3, TowerTaskModel.instance.bossTaskList[iter_14_2])
+	for _, key in ipairs(keyList) do
+		table.insert(bossTaskList, TowerTaskModel.instance.bossTaskList[key])
 	end
 
-	local var_14_5 = arg_14_0:buildTowerItemData(var_14_1, TowerEnum.TowerType.Limited)
+	local limitTimeTowerData = self:buildTowerItemData(limitTimeTaskList, TowerEnum.TowerType.Limited)
 
-	if var_14_5 then
-		table.insert(var_14_0, var_14_5)
+	if limitTimeTowerData then
+		table.insert(towerItemDataList, limitTimeTowerData)
 	end
 
-	for iter_14_3, iter_14_4 in ipairs(var_14_3) do
-		local var_14_6 = arg_14_0:buildTowerItemData(iter_14_4, TowerEnum.TowerType.Boss)
+	for _, bossTaskMoList in ipairs(bossTaskList) do
+		local bossTowerData = self:buildTowerItemData(bossTaskMoList, TowerEnum.TowerType.Boss)
 
-		if var_14_6 then
-			table.insert(var_14_0, var_14_6)
+		if bossTowerData then
+			table.insert(towerItemDataList, bossTowerData)
 		end
 	end
 
-	local var_14_7 = arg_14_0:buildTowerItemData(var_14_2, TowerEnum.ActTaskType)
+	local actTowerData = self:buildTowerItemData(actTaskList, TowerEnum.ActTaskType)
 
-	if var_14_7 then
-		table.insert(var_14_0, var_14_7)
+	if actTowerData then
+		table.insert(towerItemDataList, actTowerData)
 	end
 
-	arg_14_0:createOrRefreshTowerItem(var_14_0)
+	self:createOrRefreshTowerItem(towerItemDataList)
 end
 
-function var_0_0.buildTowerItemData(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0 = {}
+function TowerTaskView:buildTowerItemData(TaskMoList, type)
+	local towerData = {}
 
-	if not arg_15_1 or tabletool.len(arg_15_1) == 0 then
+	if not TaskMoList or tabletool.len(TaskMoList) == 0 then
 		return nil
 	end
 
-	var_15_0.taskList = arg_15_1
-	var_15_0.taskCount = #arg_15_1
-	var_15_0.finishCount = TowerTaskModel.instance:getTaskItemRewardCount(arg_15_1)
-	var_15_0.type = arg_15_2
+	towerData.taskList = TaskMoList
+	towerData.taskCount = #TaskMoList
+	towerData.finishCount = TowerTaskModel.instance:getTaskItemRewardCount(TaskMoList)
+	towerData.type = type
 
-	if arg_15_2 == TowerEnum.TowerType.Limited then
-		var_15_0.timeConfig = TowerConfig.instance:getTowerLimitedCoByTaskGroupId(arg_15_1[1].config.taskGroupId)
-		var_15_0.towerId = var_15_0.timeConfig.season
-	elseif arg_15_2 == TowerEnum.TowerType.Boss then
-		var_15_0.timeConfig = TowerConfig.instance:getTowerBossTimeCoByTaskGroupId(arg_15_1[1].config.taskGroupId)
-		var_15_0.towerId = var_15_0.timeConfig.towerId
-	elseif arg_15_2 == TowerEnum.ActTaskType then
-		var_15_0.towerId = arg_15_1[1].config.activityId
-		var_15_0.timeConfig = arg_15_1[1].config
+	if type == TowerEnum.TowerType.Limited then
+		towerData.timeConfig = TowerConfig.instance:getTowerLimitedCoByTaskGroupId(TaskMoList[1].config.taskGroupId)
+		towerData.towerId = towerData.timeConfig.season
+	elseif type == TowerEnum.TowerType.Boss then
+		towerData.timeConfig = TowerConfig.instance:getTowerBossTimeCoByTaskGroupId(TaskMoList[1].config.taskGroupId)
+		towerData.towerId = towerData.timeConfig.towerId
+	elseif type == TowerEnum.ActTaskType then
+		towerData.towerId = TaskMoList[1].config.activityId
+		towerData.timeConfig = TaskMoList[1].config
 	end
 
-	var_15_0.towerOpenMo = TowerModel.instance:getTowerOpenInfo(arg_15_2, var_15_0.towerId, TowerEnum.TowerStatus.Open)
+	towerData.towerOpenMo = TowerModel.instance:getTowerOpenInfo(type, towerData.towerId, TowerEnum.TowerStatus.Open)
 
-	return var_15_0
+	return towerData
 end
 
-function var_0_0.createOrRefreshTowerItem(arg_16_0, arg_16_1)
-	arg_16_0.towerItemList = arg_16_0:getUserDataTb_()
+function TowerTaskView:createOrRefreshTowerItem(towerItemDataList)
+	self.towerItemList = self:getUserDataTb_()
 
-	local var_16_0 = false
+	local hasExpired = false
 
-	for iter_16_0, iter_16_1 in ipairs(arg_16_1) do
-		if not arg_16_0.towerItemTab[iter_16_1.type] then
-			arg_16_0.towerItemTab[iter_16_1.type] = {}
+	for index, towerItemData in ipairs(towerItemDataList) do
+		if not self.towerItemTab[towerItemData.type] then
+			self.towerItemTab[towerItemData.type] = {}
 		end
 
-		if tabletool.len(arg_16_0.towerItemTab[iter_16_1.type]) > 0 then
-			for iter_16_2, iter_16_3 in pairs(arg_16_0.towerItemTab[iter_16_1.type]) do
-				local var_16_1 = iter_16_3.data
-				local var_16_2 = false
+		if tabletool.len(self.towerItemTab[towerItemData.type]) > 0 then
+			for _, towerItem in pairs(self.towerItemTab[towerItemData.type]) do
+				local data = towerItem.data
+				local hasItem = false
 
-				for iter_16_4, iter_16_5 in pairs(arg_16_1) do
-					if iter_16_5.towerId == var_16_1.towerId and iter_16_5.type == var_16_1.type then
-						var_16_2 = true
+				for _, towerData in pairs(towerItemDataList) do
+					if towerData.towerId == data.towerId and towerData.type == data.type then
+						hasItem = true
 					end
 				end
 
-				if not var_16_2 then
-					iter_16_3.btnClick:RemoveClickListener()
-					gohelper.destroy(iter_16_3.go)
+				if not hasItem then
+					towerItem.btnClick:RemoveClickListener()
+					gohelper.destroy(towerItem.go)
 
-					arg_16_0.towerItemTab[iter_16_1.type][var_16_1.towerId] = nil
-					var_16_0 = true
+					self.towerItemTab[towerItemData.type][data.towerId] = nil
+					hasExpired = true
 				end
 			end
 
-			if var_16_0 then
-				arg_16_0:selectDefaultTaskCategory()
+			if hasExpired then
+				self:selectDefaultTaskCategory()
 			end
 		end
 
-		local var_16_3 = arg_16_0.towerItemTab[iter_16_1.type][iter_16_1.towerId]
+		local towerItem = self.towerItemTab[towerItemData.type][towerItemData.towerId]
 
-		if not var_16_3 then
-			var_16_3 = arg_16_0:getUserDataTb_()
-			var_16_3.go = gohelper.clone(arg_16_0._gotowerItem, arg_16_0._gotowerContent, string.format("tower%s_%s", iter_16_1.type, iter_16_1.towerId))
-			var_16_3.goTimeTower = gohelper.findChild(var_16_3.go, "go_timeTowerItem")
-			var_16_3.goBossTower = gohelper.findChild(var_16_3.go, "go_bossTowerItem")
-			var_16_3.goActTower = gohelper.findChild(var_16_3.go, "go_actTowerItem")
-			var_16_3.btnClick = gohelper.findChildButtonWithAudio(var_16_3.go, "btn_click")
+		if not towerItem then
+			towerItem = self:getUserDataTb_()
+			towerItem.go = gohelper.clone(self._gotowerItem, self._gotowerContent, string.format("tower%s_%s", towerItemData.type, towerItemData.towerId))
+			towerItem.goTimeTower = gohelper.findChild(towerItem.go, "go_timeTowerItem")
+			towerItem.goBossTower = gohelper.findChild(towerItem.go, "go_bossTowerItem")
+			towerItem.goActTower = gohelper.findChild(towerItem.go, "go_actTowerItem")
+			towerItem.btnClick = gohelper.findChildButtonWithAudio(towerItem.go, "btn_click")
 
-			var_16_3.btnClick:AddClickListener(arg_16_0.onTowerItemClick, arg_16_0, var_16_3)
+			towerItem.btnClick:AddClickListener(self.onTowerItemClick, self, towerItem)
 
-			var_16_3.timeTowerUI = arg_16_0:findTowerItemUI(var_16_3.goTimeTower)
-			var_16_3.bossTowerUI = arg_16_0:findTowerItemUI(var_16_3.goBossTower)
-			var_16_3.actTowerUI = arg_16_0:findTowerItemUI(var_16_3.goActTower)
-			var_16_3.select = false
-			var_16_3.data = iter_16_1
-			arg_16_0.towerItemTab[iter_16_1.type][iter_16_1.towerId] = var_16_3
+			towerItem.timeTowerUI = self:findTowerItemUI(towerItem.goTimeTower)
+			towerItem.bossTowerUI = self:findTowerItemUI(towerItem.goBossTower)
+			towerItem.actTowerUI = self:findTowerItemUI(towerItem.goActTower)
+			towerItem.select = false
+			towerItem.data = towerItemData
+			self.towerItemTab[towerItemData.type][towerItemData.towerId] = towerItem
 
-			gohelper.setAsLastSibling(var_16_3.go)
+			gohelper.setAsLastSibling(towerItem.go)
 		end
 
-		if iter_16_1.type == TowerEnum.TowerType.Boss then
-			var_16_3.towerItemUI = var_16_3.bossTowerUI
-		elseif iter_16_1.type == TowerEnum.ActTaskType then
-			var_16_3.towerItemUI = var_16_3.actTowerUI
+		if towerItemData.type == TowerEnum.TowerType.Boss then
+			towerItem.towerItemUI = towerItem.bossTowerUI
+		elseif towerItemData.type == TowerEnum.ActTaskType then
+			towerItem.towerItemUI = towerItem.actTowerUI
 		else
-			var_16_3.towerItemUI = var_16_3.timeTowerUI
+			towerItem.towerItemUI = towerItem.timeTowerUI
 		end
 
-		arg_16_0:refreshTowerItem(var_16_3)
-		table.insert(arg_16_0.towerItemList, var_16_3)
+		self:refreshTowerItem(towerItem)
+		table.insert(self.towerItemList, towerItem)
 	end
 
-	for iter_16_6, iter_16_7 in pairs(arg_16_0.towerItemList) do
-		if iter_16_7.data.type == TowerEnum.TowerType.Limited then
-			gohelper.setAsFirstSibling(iter_16_7.go)
+	for index, towerItem in pairs(self.towerItemList) do
+		if towerItem.data.type == TowerEnum.TowerType.Limited then
+			gohelper.setAsFirstSibling(towerItem.go)
 
 			break
 		end
 	end
 
-	for iter_16_8, iter_16_9 in pairs(arg_16_0.towerItemList) do
-		if iter_16_9.data.type == TowerEnum.ActTaskType then
-			gohelper.setAsFirstSibling(iter_16_9.go)
+	for index, towerItem in pairs(self.towerItemList) do
+		if towerItem.data.type == TowerEnum.ActTaskType then
+			gohelper.setAsFirstSibling(towerItem.go)
 
 			break
 		end
 	end
 
-	for iter_16_10 = #arg_16_1 + 1, #arg_16_0.towerItemList do
-		gohelper.setActive(arg_16_0.towerItemList[iter_16_10].go, false)
+	for i = #towerItemDataList + 1, #self.towerItemList do
+		gohelper.setActive(self.towerItemList[i].go, false)
 	end
 end
 
-function var_0_0.refreshTowerItem(arg_17_0, arg_17_1)
-	local var_17_0 = TowerTaskModel.instance.curSelectTowerType
-	local var_17_1 = TowerTaskModel.instance.curSelectToweId
+function TowerTaskView:refreshTowerItem(towerItem)
+	local curSelectTowerType = TowerTaskModel.instance.curSelectTowerType
+	local curSelectToweId = TowerTaskModel.instance.curSelectToweId
 
-	arg_17_1.select = var_17_0 == arg_17_1.data.type and var_17_1 == arg_17_1.data.towerId
+	towerItem.select = curSelectTowerType == towerItem.data.type and curSelectToweId == towerItem.data.towerId
 
-	local var_17_2 = arg_17_1.data.type == TowerEnum.TowerType.Boss
-	local var_17_3 = arg_17_1.data.type == TowerEnum.ActTaskType
+	local isBossType = towerItem.data.type == TowerEnum.TowerType.Boss
+	local isActType = towerItem.data.type == TowerEnum.ActTaskType
 
-	gohelper.setActive(arg_17_1.go, true)
-	gohelper.setActive(arg_17_1.goTimeTower, not var_17_2 and not var_17_3)
-	gohelper.setActive(arg_17_1.goBossTower, var_17_2)
-	gohelper.setActive(arg_17_1.goActTower, var_17_3)
-	gohelper.setActive(arg_17_1.towerItemUI.normalGO, not arg_17_1.select)
-	gohelper.setActive(arg_17_1.towerItemUI.selectGO, arg_17_1.select)
-	gohelper.setActive(arg_17_1.towerItemUI.goNormalIconMask, var_17_2)
-	gohelper.setActive(arg_17_1.towerItemUI.goSelectIconMask, var_17_2)
-	gohelper.setActive(arg_17_1.towerItemUI.imageNormalIcon, not var_17_2)
-	gohelper.setActive(arg_17_1.towerItemUI.imageSelectIcon, not var_17_2)
+	gohelper.setActive(towerItem.go, true)
+	gohelper.setActive(towerItem.goTimeTower, not isBossType and not isActType)
+	gohelper.setActive(towerItem.goBossTower, isBossType)
+	gohelper.setActive(towerItem.goActTower, isActType)
+	gohelper.setActive(towerItem.towerItemUI.normalGO, not towerItem.select)
+	gohelper.setActive(towerItem.towerItemUI.selectGO, towerItem.select)
+	gohelper.setActive(towerItem.towerItemUI.goNormalIconMask, isBossType)
+	gohelper.setActive(towerItem.towerItemUI.goSelectIconMask, isBossType)
+	gohelper.setActive(towerItem.towerItemUI.imageNormalIcon, not isBossType)
+	gohelper.setActive(towerItem.towerItemUI.imageSelectIcon, not isBossType)
 
-	if var_17_2 then
-		local var_17_4 = TowerConfig.instance:getBossTowerConfig(arg_17_1.data.towerId)
-		local var_17_5 = TowerConfig.instance:getAssistBossConfig(var_17_4.bossId)
-		local var_17_6 = FightConfig.instance:getSkinCO(var_17_5.skinId)
+	if isBossType then
+		local bossTowerConfig = TowerConfig.instance:getBossTowerConfig(towerItem.data.towerId)
+		local assistBossConfig = TowerConfig.instance:getAssistBossConfig(bossTowerConfig.bossId)
+		local skinConfig = FightConfig.instance:getSkinCO(assistBossConfig.skinId)
 
-		arg_17_1.towerItemUI.simageNormalIcon:LoadImage(ResUrl.monsterHeadIcon(var_17_6 and var_17_6.headIcon))
-		arg_17_1.towerItemUI.simageSelectIcon:LoadImage(ResUrl.monsterHeadIcon(var_17_6 and var_17_6.headIcon))
+		towerItem.towerItemUI.simageNormalIcon:LoadImage(ResUrl.monsterHeadIcon(skinConfig and skinConfig.headIcon))
+		towerItem.towerItemUI.simageSelectIcon:LoadImage(ResUrl.monsterHeadIcon(skinConfig and skinConfig.headIcon))
 	else
-		UISpriteSetMgr.instance:setTowerSprite(arg_17_1.towerItemUI.imageNormalIcon, var_17_3 and "tower_tasktimeicon_2" or "tower_tasktimeicon_1")
-		UISpriteSetMgr.instance:setTowerSprite(arg_17_1.towerItemUI.imageSelectIcon, var_17_3 and "tower_tasktimeicon_2" or "tower_tasktimeicon_1")
+		UISpriteSetMgr.instance:setTowerSprite(towerItem.towerItemUI.imageNormalIcon, isActType and "tower_tasktimeicon_2" or "tower_tasktimeicon_1")
+		UISpriteSetMgr.instance:setTowerSprite(towerItem.towerItemUI.imageSelectIcon, isActType and "tower_tasktimeicon_2" or "tower_tasktimeicon_1")
 	end
 
-	local var_17_7 = TowerConfig.instance:getBossTowerConfig(arg_17_1.data.towerId)
+	local bossTowerConfig = TowerConfig.instance:getBossTowerConfig(towerItem.data.towerId)
 
-	arg_17_1.towerItemUI.txtNormalName.text = var_17_2 and var_17_7.name or var_17_3 and luaLang("towertask_act_name") or luaLang("towertask_timelimited_name")
-	arg_17_1.towerItemUI.txtSelectName.text = var_17_2 and var_17_7.name or var_17_3 and luaLang("towertask_act_name") or luaLang("towertask_timelimited_name")
-	arg_17_1.towerItemUI.txtNameEn.text = var_17_2 and var_17_7.nameEn or var_17_3 and luaLang("towertask_act_nameEn") or luaLang("towertask_timelimited_nameEn")
-	arg_17_1.towerItemUI.txtNormalTaskNum.text = string.format("%s/%s", arg_17_1.data.finishCount, #arg_17_1.data.taskList)
-	arg_17_1.towerItemUI.txtSelectTaskNum.text = string.format("%s/%s", arg_17_1.data.finishCount, #arg_17_1.data.taskList)
+	towerItem.towerItemUI.txtNormalName.text = isBossType and bossTowerConfig.name or isActType and luaLang("towertask_act_name") or luaLang("towertask_timelimited_name")
+	towerItem.towerItemUI.txtSelectName.text = isBossType and bossTowerConfig.name or isActType and luaLang("towertask_act_name") or luaLang("towertask_timelimited_name")
+	towerItem.towerItemUI.txtNameEn.text = isBossType and bossTowerConfig.nameEn or isActType and luaLang("towertask_act_nameEn") or luaLang("towertask_timelimited_nameEn")
+	towerItem.towerItemUI.txtNormalTaskNum.text = string.format("%s/%s", towerItem.data.finishCount, #towerItem.data.taskList)
+	towerItem.towerItemUI.txtSelectTaskNum.text = string.format("%s/%s", towerItem.data.finishCount, #towerItem.data.taskList)
 end
 
-function var_0_0.findTowerItemUI(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_0:getUserDataTb_()
+function TowerTaskView:findTowerItemUI(towerItemGO)
+	local towerItemUI = self:getUserDataTb_()
 
-	var_18_0.normalGO = gohelper.findChild(arg_18_1, "normal")
-	var_18_0.selectGO = gohelper.findChild(arg_18_1, "select")
-	var_18_0.imageNormalIcon = gohelper.findChildImage(var_18_0.normalGO, "image_icon")
-	var_18_0.imageSelectIcon = gohelper.findChildImage(var_18_0.selectGO, "image_icon")
-	var_18_0.goNormalIconMask = gohelper.findChild(var_18_0.normalGO, "Mask")
-	var_18_0.goSelectIconMask = gohelper.findChild(var_18_0.selectGO, "Mask")
-	var_18_0.simageNormalIcon = gohelper.findChildSingleImage(var_18_0.normalGO, "Mask/image_bossIcon")
-	var_18_0.simageSelectIcon = gohelper.findChildSingleImage(var_18_0.selectGO, "Mask/image_bossIcon")
-	var_18_0.txtNormalName = gohelper.findChildText(var_18_0.normalGO, "txt_name")
-	var_18_0.txtSelectName = gohelper.findChildText(var_18_0.selectGO, "txt_name")
-	var_18_0.txtNormalTaskNum = gohelper.findChildText(var_18_0.normalGO, "txt_taskNum")
-	var_18_0.txtSelectTaskNum = gohelper.findChildText(var_18_0.selectGO, "txt_taskNum")
-	var_18_0.goNormalReddot = gohelper.findChild(var_18_0.normalGO, "go_reddot")
-	var_18_0.goSelectReddot = gohelper.findChild(var_18_0.selectGO, "go_reddot")
-	var_18_0.txtTime = gohelper.findChildText(var_18_0.normalGO, "time/txt_time")
-	var_18_0.goSelectTime = gohelper.findChild(var_18_0.selectGO, "time")
-	var_18_0.txtSelectTime = gohelper.findChildText(var_18_0.selectGO, "time/txt_time")
-	var_18_0.txtNameEn = gohelper.findChildText(var_18_0.selectGO, "txt_en")
+	towerItemUI.normalGO = gohelper.findChild(towerItemGO, "normal")
+	towerItemUI.selectGO = gohelper.findChild(towerItemGO, "select")
+	towerItemUI.imageNormalIcon = gohelper.findChildImage(towerItemUI.normalGO, "image_icon")
+	towerItemUI.imageSelectIcon = gohelper.findChildImage(towerItemUI.selectGO, "image_icon")
+	towerItemUI.goNormalIconMask = gohelper.findChild(towerItemUI.normalGO, "Mask")
+	towerItemUI.goSelectIconMask = gohelper.findChild(towerItemUI.selectGO, "Mask")
+	towerItemUI.simageNormalIcon = gohelper.findChildSingleImage(towerItemUI.normalGO, "Mask/image_bossIcon")
+	towerItemUI.simageSelectIcon = gohelper.findChildSingleImage(towerItemUI.selectGO, "Mask/image_bossIcon")
+	towerItemUI.txtNormalName = gohelper.findChildText(towerItemUI.normalGO, "txt_name")
+	towerItemUI.txtSelectName = gohelper.findChildText(towerItemUI.selectGO, "txt_name")
+	towerItemUI.txtNormalTaskNum = gohelper.findChildText(towerItemUI.normalGO, "txt_taskNum")
+	towerItemUI.txtSelectTaskNum = gohelper.findChildText(towerItemUI.selectGO, "txt_taskNum")
+	towerItemUI.goNormalReddot = gohelper.findChild(towerItemUI.normalGO, "go_reddot")
+	towerItemUI.goSelectReddot = gohelper.findChild(towerItemUI.selectGO, "go_reddot")
+	towerItemUI.txtTime = gohelper.findChildText(towerItemUI.normalGO, "time/txt_time")
+	towerItemUI.goSelectTime = gohelper.findChild(towerItemUI.selectGO, "time")
+	towerItemUI.txtSelectTime = gohelper.findChildText(towerItemUI.selectGO, "time/txt_time")
+	towerItemUI.txtNameEn = gohelper.findChildText(towerItemUI.selectGO, "txt_en")
 
-	return var_18_0
+	return towerItemUI
 end
 
-function var_0_0.taskProgressShow(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
-	local var_19_0 = gohelper.findChild(arg_19_1, "go_light")
-	local var_19_1 = arg_19_2.finishCount
+function TowerTaskView:taskProgressShow(obj, data, index)
+	local light = gohelper.findChild(obj, "go_light")
+	local taskFinishCount = data.finishCount
 
-	gohelper.setActive(var_19_0, arg_19_3 <= var_19_1)
+	gohelper.setActive(light, index <= taskFinishCount)
 end
 
-function var_0_0.refreshSelectState(arg_20_0)
-	local var_20_0 = TowerTaskModel.instance.curSelectTowerType
-	local var_20_1 = TowerTaskModel.instance.curSelectToweId
+function TowerTaskView:refreshSelectState()
+	local curSelectTowerType = TowerTaskModel.instance.curSelectTowerType
+	local curSelectToweId = TowerTaskModel.instance.curSelectToweId
 
-	TowerTaskModel.instance:refreshList(var_20_0)
+	TowerTaskModel.instance:refreshList(curSelectTowerType)
 
-	for iter_20_0, iter_20_1 in ipairs(arg_20_0.towerItemList) do
-		iter_20_1.select = var_20_0 == iter_20_1.data.type and var_20_1 == iter_20_1.data.towerId
+	for _, towerItem in ipairs(self.towerItemList) do
+		towerItem.select = curSelectTowerType == towerItem.data.type and curSelectToweId == towerItem.data.towerId
 
-		gohelper.setActive(iter_20_1.towerItemUI.normalGO, not iter_20_1.select)
-		gohelper.setActive(iter_20_1.towerItemUI.selectGO, iter_20_1.select)
+		gohelper.setActive(towerItem.towerItemUI.normalGO, not towerItem.select)
+		gohelper.setActive(towerItem.towerItemUI.selectGO, towerItem.select)
 	end
 
-	gohelper.setActive(arg_20_0._gobossTowerTips, var_20_0 == TowerEnum.TowerType.Boss)
-	gohelper.setActive(arg_20_0._gotimeTowerScore, var_20_0 == TowerEnum.TowerType.Limited)
+	gohelper.setActive(self._gobossTowerTips, curSelectTowerType == TowerEnum.TowerType.Boss)
+	gohelper.setActive(self._gotimeTowerScore, curSelectTowerType == TowerEnum.TowerType.Limited)
 
-	local var_20_2 = TowerModel.instance:getTowerInfoById(var_20_0, var_20_1)
+	local towerMo = TowerModel.instance:getTowerInfoById(curSelectTowerType, curSelectToweId)
 
-	if var_20_0 == TowerEnum.TowerType.Boss then
-		local var_20_3 = TowerConfig.instance:getBossTowerConfig(var_20_1)
-		local var_20_4 = TowerAssistBossModel.instance:getById(var_20_3.bossId)
-		local var_20_5 = var_20_4 and var_20_4.level or 0
-		local var_20_6 = TowerConfig.instance:getAssistBossMaxLev(var_20_3.bossId)
+	if curSelectTowerType == TowerEnum.TowerType.Boss then
+		local towerConfig = TowerConfig.instance:getBossTowerConfig(curSelectToweId)
+		local bossMo = TowerAssistBossModel.instance:getById(towerConfig.bossId)
+		local bossLev = bossMo and bossMo.level or 0
+		local maxLev = TowerConfig.instance:getAssistBossMaxLev(towerConfig.bossId)
 
-		arg_20_0._txtbossTowerTip.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("towerbossepisodepasscount"), var_20_5, var_20_6)
-	elseif var_20_0 == TowerEnum.TowerType.Limited then
-		local var_20_7 = TowerTimeLimitLevelModel.instance:getHistoryHighScore()
-		local var_20_8 = TowerConfig.instance:getScoreToStarConfig(var_20_7)
+		self._txtbossTowerTip.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("towerbossepisodepasscount"), bossLev, maxLev)
+	elseif curSelectTowerType == TowerEnum.TowerType.Limited then
+		local maxScore = TowerTimeLimitLevelModel.instance:getHistoryHighScore()
+		local starLevel = TowerConfig.instance:getScoreToStarConfig(maxScore)
 
-		arg_20_0._txttimeTowerScore.text = GameUtil.getSubPlaceholderLuaLang(luaLang("towertask_currenthighscore_level"), {
-			var_20_8
+		self._txttimeTowerScore.text = GameUtil.getSubPlaceholderLuaLang(luaLang("towertask_currenthighscore_level"), {
+			starLevel
 		})
 	end
 end
 
-function var_0_0.refreshRemainTime(arg_21_0)
-	for iter_21_0, iter_21_1 in ipairs(arg_21_0.towerItemList) do
-		local var_21_0 = iter_21_1.data.towerOpenMo
-		local var_21_1 = var_21_0 and var_21_0.taskEndTime / 1000 - ServerTime.now() or 0
-		local var_21_2, var_21_3 = TimeUtil.secondToRoughTime2(var_21_1, true)
+function TowerTaskView:refreshRemainTime()
+	for _, towerItem in ipairs(self.towerItemList) do
+		local towerOpenMo = towerItem.data.towerOpenMo
+		local remainTimeStamp = towerOpenMo and towerOpenMo.taskEndTime / 1000 - ServerTime.now() or 0
+		local date, dateformate = TimeUtil.secondToRoughTime2(remainTimeStamp, true)
 
-		gohelper.setActive(iter_21_1.towerItemUI.goSelectTime, iter_21_1.data.type == TowerEnum.ActTaskType)
+		gohelper.setActive(towerItem.towerItemUI.goSelectTime, towerItem.data.type == TowerEnum.ActTaskType)
 
-		if iter_21_1.data.type == TowerEnum.ActTaskType then
-			local var_21_4 = iter_21_1.data.timeConfig.activityId
-			local var_21_5 = ActivityModel.instance:getActivityInfo()[var_21_4]
+		if towerItem.data.type == TowerEnum.ActTaskType then
+			local actId = towerItem.data.timeConfig.activityId
+			local actInfoMo = ActivityModel.instance:getActivityInfo()[actId]
 
-			if var_21_5 and var_21_5:isOpen() and not var_21_5:isExpired() then
-				local var_21_6 = var_21_5:getRealEndTimeStamp() - ServerTime.now()
-				local var_21_7 = TimeUtil.SecondToActivityTimeFormat(var_21_6, true)
+			if actInfoMo and actInfoMo:isOpen() and not actInfoMo:isExpired() then
+				local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
+				local data = TimeUtil.SecondToActivityTimeFormat(offsetSecond, true)
 
-				iter_21_1.towerItemUI.txtTime.text = var_21_6 > 0 and var_21_7 or ""
-				iter_21_1.towerItemUI.txtSelectTime.text = var_21_6 > 0 and var_21_7 or ""
+				towerItem.towerItemUI.txtTime.text = offsetSecond > 0 and data or ""
+				towerItem.towerItemUI.txtSelectTime.text = offsetSecond > 0 and data or ""
 
-				gohelper.setActive(iter_21_1.towerItemUI.txtTime.gameObject, var_21_6 > 0)
+				gohelper.setActive(towerItem.towerItemUI.txtTime.gameObject, offsetSecond > 0)
 			else
-				iter_21_1.towerItemUI.txtTime.text = ""
-				iter_21_1.towerItemUI.txtSelectTime.text = ""
+				towerItem.towerItemUI.txtTime.text = ""
+				towerItem.towerItemUI.txtSelectTime.text = ""
 
-				gohelper.setActive(iter_21_1.towerItemUI.txtTime.gameObject, false)
+				gohelper.setActive(towerItem.towerItemUI.txtTime.gameObject, false)
 			end
 		else
-			iter_21_1.towerItemUI.txtTime.text = var_21_1 > 0 and string.format("%s%s", var_21_2, var_21_3) or ""
-			iter_21_1.towerItemUI.txtSelectTime.text = var_21_1 > 0 and string.format("%s%s", var_21_2, var_21_3) or ""
+			towerItem.towerItemUI.txtTime.text = remainTimeStamp > 0 and string.format("%s%s", date, dateformate) or ""
+			towerItem.towerItemUI.txtSelectTime.text = remainTimeStamp > 0 and string.format("%s%s", date, dateformate) or ""
 
-			gohelper.setActive(iter_21_1.towerItemUI.txtTime.gameObject, var_21_1 > 0)
+			gohelper.setActive(towerItem.towerItemUI.txtTime.gameObject, remainTimeStamp > 0)
 		end
 	end
 
-	local var_21_8 = TowerTaskModel.instance.curSelectTowerType
-	local var_21_9 = TowerTaskModel.instance.curSelectToweId
-	local var_21_10 = TowerModel.instance:getTowerOpenInfo(var_21_8, var_21_9, TowerEnum.TowerStatus.Open)
-	local var_21_11 = var_21_10 and var_21_10.taskEndTime / 1000 - ServerTime.now() or 0
-	local var_21_12, var_21_13 = TimeUtil.secondToRoughTime2(var_21_11, true)
+	local curSelectTowerType = TowerTaskModel.instance.curSelectTowerType
+	local curSelectToweId = TowerTaskModel.instance.curSelectToweId
+	local towerOpenMo = TowerModel.instance:getTowerOpenInfo(curSelectTowerType, curSelectToweId, TowerEnum.TowerStatus.Open)
+	local remainTimeStamp = towerOpenMo and towerOpenMo.taskEndTime / 1000 - ServerTime.now() or 0
+	local date, dateformate = TimeUtil.secondToRoughTime2(remainTimeStamp, true)
 
-	if var_21_8 == TowerEnum.TowerType.Boss then
-		arg_21_0._txtbossTowerTime.text = var_21_11 > 0 and string.format("%s%s", var_21_12, var_21_13) or ""
+	if curSelectTowerType == TowerEnum.TowerType.Boss then
+		self._txtbossTowerTime.text = remainTimeStamp > 0 and string.format("%s%s", date, dateformate) or ""
 
-		gohelper.setActive(arg_21_0._txtbossTowerTime.gameObject, var_21_11 > 0)
-	elseif var_21_8 == TowerEnum.TowerType.Limited then
-		arg_21_0._txttimeTowerTime.text = var_21_11 > 0 and string.format("%s%s", var_21_12, var_21_13) or ""
+		gohelper.setActive(self._txtbossTowerTime.gameObject, remainTimeStamp > 0)
+	elseif curSelectTowerType == TowerEnum.TowerType.Limited then
+		self._txttimeTowerTime.text = remainTimeStamp > 0 and string.format("%s%s", date, dateformate) or ""
 
-		gohelper.setActive(arg_21_0._txttimeTowerTime.gameObject, var_21_11 > 0)
+		gohelper.setActive(self._txttimeTowerTime.gameObject, remainTimeStamp > 0)
 	end
 end
 
-function var_0_0.refreshTaskPos(arg_22_0)
-	arg_22_0._scrolltaskList.verticalNormalizedPosition = 1
+function TowerTaskView:refreshTaskPos()
+	self._scrolltaskList.verticalNormalizedPosition = 1
 
-	local var_22_0 = TowerTaskModel.instance:getCount()
+	local taskCount = TowerTaskModel.instance:getCount()
 
-	recthelper.setAnchorY(arg_22_0._goRight.transform, var_22_0 > var_0_0.NormalTaskCount and var_0_0.MoreTaskPosY or var_0_0.NormalTaskPosY)
+	recthelper.setAnchorY(self._goRight.transform, taskCount > TowerTaskView.NormalTaskCount and TowerTaskView.MoreTaskPosY or TowerTaskView.NormalTaskPosY)
 
-	local var_22_1 = TowerTaskModel.instance.curSelectTowerType == TowerEnum.ActTaskType
+	local curSelectTowerType = TowerTaskModel.instance.curSelectTowerType
+	local isSelectActType = curSelectTowerType == TowerEnum.ActTaskType
 
-	recthelper.setHeight(arg_22_0._scrolltaskList.gameObject.transform, var_22_1 and var_0_0.ActTaskScrollHeight or var_0_0.NormalTaskScrollHeight)
+	recthelper.setHeight(self._scrolltaskList.gameObject.transform, isSelectActType and TowerTaskView.ActTaskScrollHeight or TowerTaskView.NormalTaskScrollHeight)
 end
 
-function var_0_0.refreshLeftUI(arg_23_0)
-	local var_23_0 = TowerTaskModel.instance:checkHasBossTask()
+function TowerTaskView:refreshLeftUI()
+	local hasBossTask = TowerTaskModel.instance:checkHasBossTask()
 
-	gohelper.setActive(arg_23_0._simageFullBG.gameObject, var_23_0)
-	gohelper.setActive(arg_23_0._goLeft, var_23_0)
-	gohelper.setActive(arg_23_0._goFullBg2, not var_23_0)
+	gohelper.setActive(self._simageFullBG.gameObject, hasBossTask)
+	gohelper.setActive(self._goLeft, hasBossTask)
+	gohelper.setActive(self._goFullBg2, not hasBossTask)
 end
 
-function var_0_0.refreshReddot(arg_24_0)
-	for iter_24_0, iter_24_1 in pairs(arg_24_0.towerItemTab) do
-		for iter_24_2, iter_24_3 in pairs(iter_24_1) do
-			local var_24_0 = TowerTaskModel.instance:canShowReddot(iter_24_0, iter_24_2)
+function TowerTaskView:refreshReddot()
+	for type, towerItemTab in pairs(self.towerItemTab) do
+		for towerId, towerItem in pairs(towerItemTab) do
+			local canShowReddot = TowerTaskModel.instance:canShowReddot(type, towerId)
 
-			gohelper.setActive(iter_24_3.timeTowerUI.goNormalReddot, var_24_0 and iter_24_0 == TowerEnum.TowerType.Limited)
-			gohelper.setActive(iter_24_3.timeTowerUI.goSelectReddot, var_24_0 and iter_24_0 == TowerEnum.TowerType.Limited)
-			gohelper.setActive(iter_24_3.bossTowerUI.goNormalReddot, var_24_0 and iter_24_0 == TowerEnum.TowerType.Boss)
-			gohelper.setActive(iter_24_3.bossTowerUI.goSelectReddot, var_24_0 and iter_24_0 == TowerEnum.TowerType.Boss)
-			gohelper.setActive(iter_24_3.actTowerUI.goNormalReddot, var_24_0 and iter_24_0 == TowerEnum.ActTaskType)
-			gohelper.setActive(iter_24_3.actTowerUI.goSelectReddot, var_24_0 and iter_24_0 == TowerEnum.ActTaskType)
+			gohelper.setActive(towerItem.timeTowerUI.goNormalReddot, canShowReddot and type == TowerEnum.TowerType.Limited)
+			gohelper.setActive(towerItem.timeTowerUI.goSelectReddot, canShowReddot and type == TowerEnum.TowerType.Limited)
+			gohelper.setActive(towerItem.bossTowerUI.goNormalReddot, canShowReddot and type == TowerEnum.TowerType.Boss)
+			gohelper.setActive(towerItem.bossTowerUI.goSelectReddot, canShowReddot and type == TowerEnum.TowerType.Boss)
+			gohelper.setActive(towerItem.actTowerUI.goNormalReddot, canShowReddot and type == TowerEnum.ActTaskType)
+			gohelper.setActive(towerItem.actTowerUI.goSelectReddot, canShowReddot and type == TowerEnum.ActTaskType)
 		end
 	end
 end
 
-function var_0_0.refreshActReward(arg_25_0)
-	local var_25_0 = TowerTaskModel.instance.curSelectTowerType == TowerEnum.ActTaskType
+function TowerTaskView:refreshActReward()
+	local curSelectTowerType = TowerTaskModel.instance.curSelectTowerType
+	local isSelectActType = curSelectTowerType == TowerEnum.ActTaskType
 
-	arg_25_0.actRewardTaskMO = TowerTaskModel.instance:getActRewardTask()
+	self.actRewardTaskMO = TowerTaskModel.instance:getActRewardTask()
 
-	gohelper.setActive(arg_25_0._goactReward, var_25_0 and arg_25_0.actRewardTaskMO)
+	gohelper.setActive(self._goactReward, isSelectActType and self.actRewardTaskMO)
 
-	if not var_25_0 or not arg_25_0.actRewardTaskMO then
+	if not isSelectActType or not self.actRewardTaskMO then
 		return
 	end
 
-	if arg_25_0.showActRewardEnter then
-		arg_25_0._animActReward:Play(UIAnimationName.Open, 0, 0)
+	if self.showActRewardEnter then
+		self._animActReward:Play(UIAnimationName.Open, 0, 0)
 	else
-		arg_25_0._animActReward:Play(UIAnimationName.Idle, 0, 0)
+		self._animActReward:Play(UIAnimationName.Idle, 0, 0)
 	end
 
-	arg_25_0._txtactReward.text = arg_25_0.actRewardTaskMO.config.desc
+	self._txtactReward.text = self.actRewardTaskMO.config.desc
 
-	local var_25_1 = string.split(arg_25_0.actRewardTaskMO.config.bonus, "#")
-	local var_25_2, var_25_3 = ItemModel.instance:getItemConfigAndIcon(var_25_1[1], var_25_1[2])
+	local rewardList = string.split(self.actRewardTaskMO.config.bonus, "#")
+	local config, icon = ItemModel.instance:getItemConfigAndIcon(rewardList[1], rewardList[2])
 
-	arg_25_0._simageRewardIcon:LoadImage(var_25_3)
+	self._simageRewardIcon:LoadImage(icon)
 
-	arg_25_0._txtRewardCount.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("multi_num"), var_25_1[3])
+	self._txtRewardCount.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("multi_num"), rewardList[3])
 
-	local var_25_4 = {}
+	local actTaskFinishList = {}
 
-	for iter_25_0 = 1, arg_25_0.actRewardTaskMO.config.maxProgress do
-		table.insert(var_25_4, iter_25_0 <= arg_25_0.actRewardTaskMO.progress and 1 or 0)
+	for i = 1, self.actRewardTaskMO.config.maxProgress do
+		table.insert(actTaskFinishList, i <= self.actRewardTaskMO.progress and 1 or 0)
 	end
 
-	gohelper.setActive(arg_25_0._btnactNormal.gameObject, not TowerTaskModel.instance:isTaskFinished(arg_25_0.actRewardTaskMO) and not arg_25_0.actRewardTaskMO.hasFinished)
-	gohelper.setActive(arg_25_0._btnCanget.gameObject, arg_25_0.actRewardTaskMO.hasFinished)
-	gohelper.setActive(arg_25_0._goactHasget, TowerTaskModel.instance:isTaskFinished(arg_25_0.actRewardTaskMO) and not arg_25_0.actRewardTaskMO.hasFinished)
-	gohelper.CreateObjList(arg_25_0, arg_25_0.taskRewardProgressShow, var_25_4, arg_25_0._goactPointContent, arg_25_0._goactPointItem)
+	gohelper.setActive(self._btnactNormal.gameObject, not TowerTaskModel.instance:isTaskFinished(self.actRewardTaskMO) and not self.actRewardTaskMO.hasFinished)
+	gohelper.setActive(self._btnCanget.gameObject, self.actRewardTaskMO.hasFinished)
+	gohelper.setActive(self._goactHasget, TowerTaskModel.instance:isTaskFinished(self.actRewardTaskMO) and not self.actRewardTaskMO.hasFinished)
+	gohelper.CreateObjList(self, self.taskRewardProgressShow, actTaskFinishList, self._goactPointContent, self._goactPointItem)
 end
 
-function var_0_0.taskRewardProgressShow(arg_26_0, arg_26_1, arg_26_2, arg_26_3)
-	local var_26_0 = gohelper.findChild(arg_26_1, "go_light")
+function TowerTaskView:taskRewardProgressShow(obj, data, index)
+	local light = gohelper.findChild(obj, "go_light")
 
-	gohelper.setActive(var_26_0, arg_26_2 == 1)
+	gohelper.setActive(light, data == 1)
 end
 
-function var_0_0._playGetRewardFinishAnim(arg_27_0, arg_27_1)
-	if arg_27_1 then
-		arg_27_0.removeIndexTab = {
-			arg_27_1
+function TowerTaskView:_playGetRewardFinishAnim(index)
+	if index then
+		self.removeIndexTab = {
+			index
 		}
 	end
 
-	TaskDispatcher.runDelay(arg_27_0.delayPlayFinishAnim, arg_27_0, var_0_0.TaskGetAnimTime)
+	TaskDispatcher.runDelay(self.delayPlayFinishAnim, self, TowerTaskView.TaskGetAnimTime)
 end
 
-function var_0_0.delayPlayFinishAnim(arg_28_0)
-	arg_28_0._taskAnimRemoveItem:removeByIndexs(arg_28_0.removeIndexTab)
+function TowerTaskView:delayPlayFinishAnim()
+	self._taskAnimRemoveItem:removeByIndexs(self.removeIndexTab)
 end
 
-function var_0_0.endEnterAnimBlock(arg_29_0)
-	UIBlockMgr.instance:endBlock(var_0_0.EnterViewAnimBlock)
+function TowerTaskView:endEnterAnimBlock()
+	UIBlockMgr.instance:endBlock(TowerTaskView.EnterViewAnimBlock)
 end
 
-function var_0_0.onClose(arg_30_0)
-	for iter_30_0, iter_30_1 in ipairs(arg_30_0.towerItemList) do
-		iter_30_1.btnClick:RemoveClickListener()
-		iter_30_1.bossTowerUI.simageNormalIcon:UnLoadImage()
-		iter_30_1.bossTowerUI.simageSelectIcon:UnLoadImage()
+function TowerTaskView:onClose()
+	for _, towerItem in ipairs(self.towerItemList) do
+		towerItem.btnClick:RemoveClickListener()
+		towerItem.bossTowerUI.simageNormalIcon:UnLoadImage()
+		towerItem.bossTowerUI.simageSelectIcon:UnLoadImage()
 	end
 
-	UIBlockMgr.instance:endBlock(var_0_0.EnterViewAnimBlock)
-	TaskDispatcher.cancelTask(arg_30_0.endEnterAnimBlock, arg_30_0)
-	TaskDispatcher.cancelTask(arg_30_0.delayPlayFinishAnim, arg_30_0)
-	arg_30_0._simageRewardIcon:UnLoadImage()
+	UIBlockMgr.instance:endBlock(TowerTaskView.EnterViewAnimBlock)
+	TaskDispatcher.cancelTask(self.endEnterAnimBlock, self)
+	TaskDispatcher.cancelTask(self.delayPlayFinishAnim, self)
+	self._simageRewardIcon:UnLoadImage()
 end
 
-function var_0_0.onDestroyView(arg_31_0)
+function TowerTaskView:onDestroyView()
 	return
 end
 
-return var_0_0
+return TowerTaskView

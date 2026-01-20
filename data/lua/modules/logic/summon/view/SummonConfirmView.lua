@@ -1,167 +1,169 @@
-﻿module("modules.logic.summon.view.SummonConfirmView", package.seeall)
+﻿-- chunkname: @modules/logic/summon/view/SummonConfirmView.lua
 
-local var_0_0 = class("SummonConfirmView", BaseView)
+module("modules.logic.summon.view.SummonConfirmView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagehuawen1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/tipbg/#simage_huawen1")
-	arg_1_0._simagehuawen2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/tipbg/#simage_huawen2")
-	arg_1_0._simagebeforeicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "cost/before/#simage_beforeicon")
-	arg_1_0._txtbeforequantity = gohelper.findChildText(arg_1_0.viewGO, "cost/before/numbg/#txt_beforequantity")
-	arg_1_0._simageaftericon = gohelper.findChildSingleImage(arg_1_0.viewGO, "cost/after/#simage_aftericon")
-	arg_1_0._txtafterquantity = gohelper.findChildText(arg_1_0.viewGO, "cost/after/numbg/#txt_afterquantity")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#txt_desc")
-	arg_1_0._btnyes = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_yes")
-	arg_1_0._btnno = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_no")
-	arg_1_0._gotopright = gohelper.findChild(arg_1_0.viewGO, "#go_topright")
-	arg_1_0._toggleoption = gohelper.findChildToggle(arg_1_0.viewGO, "#toggle_option")
-	arg_1_0._txtoption = gohelper.findChildText(arg_1_0.viewGO, "#toggle_option/#txt_option")
+local SummonConfirmView = class("SummonConfirmView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SummonConfirmView:onInitView()
+	self._simagehuawen1 = gohelper.findChildSingleImage(self.viewGO, "bg/tipbg/#simage_huawen1")
+	self._simagehuawen2 = gohelper.findChildSingleImage(self.viewGO, "bg/tipbg/#simage_huawen2")
+	self._simagebeforeicon = gohelper.findChildSingleImage(self.viewGO, "cost/before/#simage_beforeicon")
+	self._txtbeforequantity = gohelper.findChildText(self.viewGO, "cost/before/numbg/#txt_beforequantity")
+	self._simageaftericon = gohelper.findChildSingleImage(self.viewGO, "cost/after/#simage_aftericon")
+	self._txtafterquantity = gohelper.findChildText(self.viewGO, "cost/after/numbg/#txt_afterquantity")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "#txt_desc")
+	self._btnyes = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_yes")
+	self._btnno = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_no")
+	self._gotopright = gohelper.findChild(self.viewGO, "#go_topright")
+	self._toggleoption = gohelper.findChildToggle(self.viewGO, "#toggle_option")
+	self._txtoption = gohelper.findChildText(self.viewGO, "#toggle_option/#txt_option")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnyes:AddClickListener(arg_2_0._btnyesOnClick, arg_2_0)
-	arg_2_0._btnno:AddClickListener(arg_2_0._btnnoOnClick, arg_2_0)
-	arg_2_0._toggleoption:AddOnValueChanged(arg_2_0._toggleOptionOnClick, arg_2_0)
+function SummonConfirmView:addEvents()
+	self._btnyes:AddClickListener(self._btnyesOnClick, self)
+	self._btnno:AddClickListener(self._btnnoOnClick, self)
+	self._toggleoption:AddOnValueChanged(self._toggleOptionOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnyes:RemoveClickListener()
-	arg_3_0._btnno:RemoveClickListener()
-	arg_3_0._toggleoption:RemoveOnValueChanged()
+function SummonConfirmView:removeEvents()
+	self._btnyes:RemoveClickListener()
+	self._btnno:RemoveClickListener()
+	self._toggleoption:RemoveOnValueChanged()
 end
 
-function var_0_0._btnyesOnClick(arg_4_0)
-	arg_4_0._yes = true
+function SummonConfirmView:_btnyesOnClick()
+	self._yes = true
 
-	SummonMainController.instance:checkFreeDiamondEnough(arg_4_0.viewParam)
+	SummonMainController.instance:checkFreeDiamondEnough(self.viewParam)
 
-	if arg_4_0._toggleoption.isOn then
-		arg_4_0:saveOptionData()
+	if self._toggleoption.isOn then
+		self:saveOptionData()
 	end
 
-	arg_4_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._btnnoOnClick(arg_5_0)
-	arg_5_0:closeThis()
+function SummonConfirmView:_btnnoOnClick()
+	self:closeThis()
 
-	if arg_5_0.viewParam.noCallback then
-		callWithCatch(arg_5_0.viewParam.noCallback, arg_5_0.viewParam.noCallbackObj)
+	if self.viewParam.noCallback then
+		callWithCatch(self.viewParam.noCallback, self.viewParam.noCallbackObj)
 	end
 end
 
-function var_0_0._callCheckWithParam(arg_6_0)
-	arg_6_0._callback(arg_6_0._callbackObj, arg_6_0.viewParam)
+function SummonConfirmView:_callCheckWithParam()
+	self._callback(self._callbackObj, self.viewParam)
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0._simagehuawen1:LoadImage(ResUrl.getMessageIcon("huawen1_002"))
-	arg_7_0._simagehuawen2:LoadImage(ResUrl.getMessageIcon("huawen2_003"))
-	gohelper.addUIClickAudio(arg_7_0._btnyes.gameObject, AudioEnum.UI.UI_Common_Click)
-	gohelper.addUIClickAudio(arg_7_0._btnno.gameObject, AudioEnum.UI.UI_Common_Click)
+function SummonConfirmView:_editableInitView()
+	self._simagehuawen1:LoadImage(ResUrl.getMessageIcon("huawen1_002"))
+	self._simagehuawen2:LoadImage(ResUrl.getMessageIcon("huawen2_003"))
+	gohelper.addUIClickAudio(self._btnyes.gameObject, AudioEnum.UI.UI_Common_Click)
+	gohelper.addUIClickAudio(self._btnno.gameObject, AudioEnum.UI.UI_Common_Click)
 
-	arg_7_0._toggleoption.isOn = false
+	self._toggleoption.isOn = false
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
-	arg_8_0:onOpen()
+function SummonConfirmView:onUpdateParam()
+	self:onOpen()
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0._type = arg_9_0.viewParam.type
-	arg_9_0._id = arg_9_0.viewParam.id
-	arg_9_0._quantity = arg_9_0.viewParam.quantity
-	arg_9_0._callback = arg_9_0.viewParam.callback
-	arg_9_0._callbackObj = arg_9_0.viewParam.callbackObj
-	arg_9_0._yes = false
-	arg_9_0.needTransform = arg_9_0.viewParam.needTransform
+function SummonConfirmView:onOpen()
+	self._type = self.viewParam.type
+	self._id = self.viewParam.id
+	self._quantity = self.viewParam.quantity
+	self._callback = self.viewParam.callback
+	self._callbackObj = self.viewParam.callbackObj
+	self._yes = false
+	self.needTransform = self.viewParam.needTransform
 
-	local var_9_0 = false
+	local isDiamond = false
 
-	if arg_9_0._type == MaterialEnum.MaterialType.Currency and (arg_9_0._id == CurrencyEnum.CurrencyType.Diamond or arg_9_0._id == CurrencyEnum.CurrencyType.FreeDiamondCoupon) then
-		var_9_0 = true
+	if self._type == MaterialEnum.MaterialType.Currency and (self._id == CurrencyEnum.CurrencyType.Diamond or self._id == CurrencyEnum.CurrencyType.FreeDiamondCoupon) then
+		isDiamond = true
 	end
 
-	local var_9_1, var_9_2 = ItemModel.instance:getItemConfigAndIcon(arg_9_0._type, arg_9_0._id)
+	local config, icon = ItemModel.instance:getItemConfigAndIcon(self._type, self._id)
 
-	arg_9_0._simageaftericon:LoadImage(var_9_2)
+	self._simageaftericon:LoadImage(icon)
 
-	if arg_9_0.needTransform then
-		local var_9_3, var_9_4 = ItemModel.instance:getItemConfigAndIcon(arg_9_0.viewParam.cost_type, arg_9_0.viewParam.cost_id)
+	if self.needTransform then
+		local afterConfig, afterIcon = ItemModel.instance:getItemConfigAndIcon(self.viewParam.cost_type, self.viewParam.cost_id)
 
-		arg_9_0._simagebeforeicon:LoadImage(var_9_4)
+		self._simagebeforeicon:LoadImage(afterIcon)
 
-		arg_9_0._txtbeforequantity.text = GameUtil.numberDisplay(arg_9_0.viewParam.cost_quantity)
-		arg_9_0._txtafterquantity.text = GameUtil.numberDisplay(arg_9_0.viewParam.miss_quantity)
+		self._txtbeforequantity.text = GameUtil.numberDisplay(self.viewParam.cost_quantity)
+		self._txtafterquantity.text = GameUtil.numberDisplay(self.viewParam.miss_quantity)
 
-		local var_9_5 = {
-			arg_9_0.viewParam.miss_quantity,
-			var_9_0 and luaLang("summon_confirm_quantifier1") or luaLang("summon_confirm_quantifier2"),
-			var_9_1.name,
-			arg_9_0.viewParam.cost_quantity,
-			var_9_3.name
+		local tag = {
+			self.viewParam.miss_quantity,
+			isDiamond and luaLang("summon_confirm_quantifier1") or luaLang("summon_confirm_quantifier2"),
+			config.name,
+			self.viewParam.cost_quantity,
+			afterConfig.name
 		}
 
-		arg_9_0._txtdesc.text = GameUtil.getSubPlaceholderLuaLang(luaLang("summon_transform_desc"), var_9_5)
+		self._txtdesc.text = GameUtil.getSubPlaceholderLuaLang(luaLang("summon_transform_desc"), tag)
 	else
-		arg_9_0._simagebeforeicon:LoadImage(var_9_2)
+		self._simagebeforeicon:LoadImage(icon)
 
-		local var_9_6 = ItemModel.instance:getItemQuantity(arg_9_0._type, arg_9_0._id)
+		local hasQuantity = ItemModel.instance:getItemQuantity(self._type, self._id)
 
-		arg_9_0._txtbeforequantity.text = GameUtil.numberDisplay(var_9_6)
-		arg_9_0._txtafterquantity.text = GameUtil.numberDisplay(var_9_6 - arg_9_0._quantity)
+		self._txtbeforequantity.text = GameUtil.numberDisplay(hasQuantity)
+		self._txtafterquantity.text = GameUtil.numberDisplay(hasQuantity - self._quantity)
 
-		local var_9_7 = {
-			arg_9_0._quantity,
-			var_9_0 and luaLang("summon_confirm_quantifier1") or luaLang("summon_confirm_quantifier2"),
-			var_9_1.name
+		local tag = {
+			self._quantity,
+			isDiamond and luaLang("summon_confirm_quantifier1") or luaLang("summon_confirm_quantifier2"),
+			config.name
 		}
 
-		arg_9_0._txtdesc.text = GameUtil.getSubPlaceholderLuaLang(luaLang("summon_confirm_desc"), var_9_7)
+		self._txtdesc.text = GameUtil.getSubPlaceholderLuaLang(luaLang("summon_confirm_desc"), tag)
 	end
 
-	arg_9_0:refreshOptionUI()
+	self:refreshOptionUI()
 end
 
-function var_0_0.refreshOptionUI(arg_10_0)
-	gohelper.setActive(arg_10_0._toggleoption.gameObject, true)
+function SummonConfirmView:refreshOptionUI()
+	gohelper.setActive(self._toggleoption.gameObject, true)
 
-	arg_10_0.optionType = MsgBoxEnum.optionType.Daily
-	arg_10_0._txtoption.text = luaLang("p_summonConfirmView_auto_option")
+	self.optionType = MsgBoxEnum.optionType.Daily
+	self._txtoption.text = luaLang("p_summonConfirmView_auto_option")
 end
 
-function var_0_0.saveOptionData(arg_11_0)
-	if arg_11_0.optionType <= 0 or not arg_11_0._toggleoption.isOn then
+function SummonConfirmView:saveOptionData()
+	if self.optionType <= 0 or not self._toggleoption.isOn then
 		return
 	end
 
-	local var_11_0 = SummonMainController.instance:getOptionLocalKey()
+	local key = SummonMainController.instance:getOptionLocalKey()
 
-	if arg_11_0.optionType == MsgBoxEnum.optionType.Daily then
-		TimeUtil.setDayFirstLoginRed(var_11_0)
+	if self.optionType == MsgBoxEnum.optionType.Daily then
+		TimeUtil.setDayFirstLoginRed(key)
 	end
 end
 
-function var_0_0._toggleOptionOnClick(arg_12_0)
+function SummonConfirmView:_toggleOptionOnClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 end
 
-function var_0_0.onClose(arg_13_0)
+function SummonConfirmView:onClose()
 	return
 end
 
-function var_0_0.onCloseFinish(arg_14_0)
+function SummonConfirmView:onCloseFinish()
 	return
 end
 
-function var_0_0.onDestroyView(arg_15_0)
-	arg_15_0._simagehuawen1:UnLoadImage()
-	arg_15_0._simagehuawen2:UnLoadImage()
-	arg_15_0._simagebeforeicon:UnLoadImage()
-	arg_15_0._simageaftericon:UnLoadImage()
+function SummonConfirmView:onDestroyView()
+	self._simagehuawen1:UnLoadImage()
+	self._simagehuawen2:UnLoadImage()
+	self._simagebeforeicon:UnLoadImage()
+	self._simageaftericon:UnLoadImage()
 end
 
-return var_0_0
+return SummonConfirmView

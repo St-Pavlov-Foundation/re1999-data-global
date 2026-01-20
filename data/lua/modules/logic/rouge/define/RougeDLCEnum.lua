@@ -1,11 +1,13 @@
-﻿module("modules.logic.rouge.define.RougeDLCEnum", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/define/RougeDLCEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.rouge.define.RougeDLCEnum", package.seeall)
 
-var_0_0.DLCEnum = {
+local RougeDLCEnum = _M
+
+RougeDLCEnum.DLCEnum = {
 	DLC_103 = 103,
 	DLC_102 = 102,
 	DLC_101 = 101
 }
 
-return var_0_0
+return RougeDLCEnum

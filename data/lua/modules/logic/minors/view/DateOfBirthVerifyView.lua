@@ -1,147 +1,143 @@
-﻿module("modules.logic.minors.view.DateOfBirthVerifyView", package.seeall)
+﻿-- chunkname: @modules/logic/minors/view/DateOfBirthVerifyView.lua
 
-local var_0_0 = class("DateOfBirthVerifyView", BaseView)
+module("modules.logic.minors.view.DateOfBirthVerifyView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageblur = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_blur")
-	arg_1_0._simagetop = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_top")
-	arg_1_0._simagebottom = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bottom")
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "middlebg/#txt_time")
-	arg_1_0._txtage = gohelper.findChildText(arg_1_0.viewGO, "middlebg/#txt_age")
-	arg_1_0._txtrestrict = gohelper.findChildText(arg_1_0.viewGO, "middlebg/#txt_restrict")
-	arg_1_0._btncancel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btns/btn1/#btn_cancel")
-	arg_1_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btns/btn2/#btn_confirm")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+local DateOfBirthVerifyView = class("DateOfBirthVerifyView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function DateOfBirthVerifyView:onInitView()
+	self._simageblur = gohelper.findChildSingleImage(self.viewGO, "#simage_blur")
+	self._simagetop = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_top")
+	self._simagebottom = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_bottom")
+	self._txttime = gohelper.findChildText(self.viewGO, "middlebg/#txt_time")
+	self._txtage = gohelper.findChildText(self.viewGO, "middlebg/#txt_age")
+	self._txtrestrict = gohelper.findChildText(self.viewGO, "middlebg/#txt_restrict")
+	self._btncancel = gohelper.findChildButtonWithAudio(self.viewGO, "btns/btn1/#btn_cancel")
+	self._btnconfirm = gohelper.findChildButtonWithAudio(self.viewGO, "btns/btn2/#btn_confirm")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btncancel:AddClickListener(arg_2_0._btncancelOnClick, arg_2_0)
-	arg_2_0._btnconfirm:AddClickListener(arg_2_0._btnconfirmOnClick, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function DateOfBirthVerifyView:addEvents()
+	self._btncancel:AddClickListener(self._btncancelOnClick, self)
+	self._btnconfirm:AddClickListener(self._btnconfirmOnClick, self)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btncancel:RemoveClickListener()
-	arg_3_0._btnconfirm:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
+function DateOfBirthVerifyView:removeEvents()
+	self._btncancel:RemoveClickListener()
+	self._btnconfirm:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
 end
 
-local var_0_1 = {
+local MinorAgeState = {
 	Kid = 3,
 	Age18 = 1,
 	Age16_18 = 2
 }
 
-function var_0_0._btncancelOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function DateOfBirthVerifyView:_btncancelOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btncloseOnClick(arg_5_0)
-	arg_5_0:closeThis()
+function DateOfBirthVerifyView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0.onClickModalMask(arg_6_0)
+function DateOfBirthVerifyView:onClickModalMask()
 	return
 end
 
-function var_0_0._btnconfirmOnClick(arg_7_0)
-	local var_7_0 = arg_7_0.viewParam
-	local var_7_1 = var_7_0.year
-	local var_7_2 = var_7_0.month
-	local var_7_3 = var_7_0.day
+function DateOfBirthVerifyView:_btnconfirmOnClick()
+	local viewParam = self.viewParam
+	local year, month, day = viewParam.year, viewParam.month, viewParam.day
 
-	MinorsController.instance:confirmDateOfBirthVerify(var_7_1, var_7_2, var_7_3)
+	MinorsController.instance:confirmDateOfBirthVerify(year, month, day)
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0._simagetop:LoadImage(ResUrl.getCommonIcon("bg_2"))
-	arg_8_0._simagebottom:LoadImage(ResUrl.getCommonIcon("bg_1"))
+function DateOfBirthVerifyView:_editableInitView()
+	self._simagetop:LoadImage(ResUrl.getCommonIcon("bg_2"))
+	self._simagebottom:LoadImage(ResUrl.getCommonIcon("bg_1"))
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
+function DateOfBirthVerifyView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_10_0)
-	local var_10_0 = arg_10_0.viewParam
-	local var_10_1 = var_10_0.year
-	local var_10_2 = var_10_0.month
-	local var_10_3 = var_10_0.day
-	local var_10_4 = arg_10_0:_checkMinorsState()
+function DateOfBirthVerifyView:onOpen()
+	local viewParam = self.viewParam
+	local year, month, day = viewParam.year, viewParam.month, viewParam.day
+	local state = self:_checkMinorsState()
 
-	if var_10_4 == var_0_1.Age18 then
-		arg_10_0._txtage.text = luaLang("minors_18+")
-		arg_10_0._txtrestrict.text = luaLang("minors_18+_limit")
-	elseif var_10_4 == var_0_1.Age16_18 then
-		arg_10_0._txtage.text = luaLang("minors_under_18")
-		arg_10_0._txtrestrict.text = luaLang("minors_under_18_limit")
+	if state == MinorAgeState.Age18 then
+		self._txtage.text = luaLang("minors_18+")
+		self._txtrestrict.text = luaLang("minors_18+_limit")
+	elseif state == MinorAgeState.Age16_18 then
+		self._txtage.text = luaLang("minors_under_18")
+		self._txtrestrict.text = luaLang("minors_under_18_limit")
 	else
-		arg_10_0._txtage.text = luaLang("minors_under_16")
-		arg_10_0._txtrestrict.text = luaLang("minors_under_16_limit")
+		self._txtage.text = luaLang("minors_under_16")
+		self._txtrestrict.text = luaLang("minors_under_16_limit")
 	end
 
-	arg_10_0._txttime.text = string.format(luaLang("minors_birth_format"), var_10_1, var_10_2, var_10_3)
+	self._txttime.text = string.format(luaLang("minors_birth_format"), year, month, day)
 
-	MinorsController.instance:registerCallback(MinorsEvent.PayLimitFlagUpdate, arg_10_0._onPayLimitFlagUpdate, arg_10_0)
+	MinorsController.instance:registerCallback(MinorsEvent.PayLimitFlagUpdate, self._onPayLimitFlagUpdate, self)
 end
 
-function var_0_0._checkMinorsState(arg_11_0)
-	local var_11_0 = arg_11_0.viewParam
-	local var_11_1 = var_11_0.year
-	local var_11_2 = var_11_0.month
-	local var_11_3 = var_11_0.day
-	local var_11_4 = ServerTime.nowDate()
-	local var_11_5 = var_11_4.year - var_11_1
-	local var_11_6 = var_11_4.month - var_11_2
-	local var_11_7 = var_11_4.day - var_11_3
+function DateOfBirthVerifyView:_checkMinorsState()
+	local viewParam = self.viewParam
+	local year, month, day = viewParam.year, viewParam.month, viewParam.day
+	local nowDt = ServerTime.nowDate()
+	local deltaYear = nowDt.year - year
+	local deltaMonth = nowDt.month - month
+	local deltaDay = nowDt.day - day
 
-	if var_11_5 > 18 then
-		return var_0_1.Age18
+	if deltaYear > 18 then
+		return MinorAgeState.Age18
 	end
 
-	if var_11_5 == 18 then
-		if var_11_6 > 0 then
-			return var_0_1.Age18
+	if deltaYear == 18 then
+		if deltaMonth > 0 then
+			return MinorAgeState.Age18
 		end
 
-		if var_11_6 == 0 and var_11_7 >= 0 then
-			return var_0_1.Age18
+		if deltaMonth == 0 and deltaDay >= 0 then
+			return MinorAgeState.Age18
 		end
 	end
 
-	if var_11_5 > 16 then
-		return var_0_1.Age16_18
+	if deltaYear > 16 then
+		return MinorAgeState.Age16_18
 	end
 
-	if var_11_5 == 16 then
-		if var_11_6 > 0 then
-			return var_0_1.Age16_18
+	if deltaYear == 16 then
+		if deltaMonth > 0 then
+			return MinorAgeState.Age16_18
 		end
 
-		if var_11_6 == 0 and var_11_7 >= 0 then
-			return var_0_1.Age16_18
+		if deltaMonth == 0 and deltaDay >= 0 then
+			return MinorAgeState.Age16_18
 		end
 	end
 
-	return var_0_1.Kid
+	return MinorAgeState.Kid
 end
 
-function var_0_0.onClose(arg_12_0)
-	MinorsController.instance:unregisterCallback(MinorsEvent.PayLimitFlagUpdate, arg_12_0._onPayLimitFlagUpdate, arg_12_0)
+function DateOfBirthVerifyView:onClose()
+	MinorsController.instance:unregisterCallback(MinorsEvent.PayLimitFlagUpdate, self._onPayLimitFlagUpdate, self)
 end
 
-function var_0_0.onDestroyView(arg_13_0)
-	arg_13_0._simagetop:UnLoadImage()
-	arg_13_0._simagebottom:UnLoadImage()
+function DateOfBirthVerifyView:onDestroyView()
+	self._simagetop:UnLoadImage()
+	self._simagebottom:UnLoadImage()
 end
 
-function var_0_0._onPayLimitFlagUpdate(arg_14_0)
+function DateOfBirthVerifyView:_onPayLimitFlagUpdate()
 	GameFacade.showToast(ToastEnum.MinorDateofBirthSettingSuc)
-	arg_14_0:closeThis()
+	self:closeThis()
 end
 
-return var_0_0
+return DateOfBirthVerifyView

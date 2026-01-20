@@ -1,17 +1,19 @@
-﻿module("modules.logic.versionactivity2_8.dungeon.controller.VersionActivity2_8DungeonController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/dungeon/controller/VersionActivity2_8DungeonController.lua
 
-local var_0_0 = class("VersionActivity2_8DungeonController", BaseController)
+module("modules.logic.versionactivity2_8.dungeon.controller.VersionActivity2_8DungeonController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local VersionActivity2_8DungeonController = class("VersionActivity2_8DungeonController", BaseController)
+
+function VersionActivity2_8DungeonController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function VersionActivity2_8DungeonController:reInit()
 	return
 end
 
-function var_0_0._getModuleConfig(arg_3_0)
-	arg_3_0._moduleConfig = arg_3_0._moduleConfig or {
+function VersionActivity2_8DungeonController:_getModuleConfig()
+	self._moduleConfig = self._moduleConfig or {
 		TaskViewRes = "ui/viewres/versionactivity_2_8/v2a8_dungeon/v2a8_taskview.prefab",
 		StoreViewRes = "ui/viewres/versionactivity_2_8/v2a8_dungeon/v2a8_storeview.prefab",
 		TaskItemRes = "ui/viewres/versionactivity_2_8/v2a8_dungeon/v2a8_taskitem.prefab",
@@ -24,23 +26,23 @@ function var_0_0._getModuleConfig(arg_3_0)
 		TaskCellClass = VersionActivity2_8TaskItem
 	}
 
-	return arg_3_0._moduleConfig
+	return self._moduleConfig
 end
 
-function var_0_0.openVersionActivityDungeonMapView(arg_4_0)
-	local var_4_0 = arg_4_0:_getModuleConfig()
+function VersionActivity2_8DungeonController:openVersionActivityDungeonMapView()
+	local moduleConfig = self:_getModuleConfig()
 
-	VersionActivity2_8DungeonTaskStoreController.instance:openVersionActivityDungeonMapView(var_4_0.EnterView, var_4_0.Dungeon, var_4_0.ChapterId)
+	VersionActivity2_8DungeonTaskStoreController.instance:openVersionActivityDungeonMapView(moduleConfig.EnterView, moduleConfig.Dungeon, moduleConfig.ChapterId)
 end
 
-function var_0_0.openTaskView(arg_5_0)
-	VersionActivity2_8DungeonTaskStoreController.instance:openTaskView(arg_5_0:_getModuleConfig())
+function VersionActivity2_8DungeonController:openTaskView()
+	VersionActivity2_8DungeonTaskStoreController.instance:openTaskView(self:_getModuleConfig())
 end
 
-function var_0_0.openStoreView(arg_6_0)
-	VersionActivity2_8DungeonTaskStoreController.instance:openStoreView(arg_6_0:_getModuleConfig())
+function VersionActivity2_8DungeonController:openStoreView()
+	VersionActivity2_8DungeonTaskStoreController.instance:openStoreView(self:_getModuleConfig())
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity2_8DungeonController.instance = VersionActivity2_8DungeonController.New()
 
-return var_0_0
+return VersionActivity2_8DungeonController

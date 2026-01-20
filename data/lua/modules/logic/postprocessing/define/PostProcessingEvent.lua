@@ -1,8 +1,10 @@
-﻿module("modules.logic.postprocessing.define.PostProcessingEvent", package.seeall)
+﻿-- chunkname: @modules/logic/postprocessing/define/PostProcessingEvent.lua
 
-local var_0_0 = {}
+module("modules.logic.postprocessing.define.PostProcessingEvent", package.seeall)
 
-var_0_0.onRefreshPopUpBlurNotBlur = 1
-var_0_0.onUnitCameraVisibleChange = 2
+local PostProcessingEvent = {}
 
-return var_0_0
+PostProcessingEvent.onRefreshPopUpBlurNotBlur = 1
+PostProcessingEvent.onUnitCameraVisibleChange = 2
+
+return PostProcessingEvent

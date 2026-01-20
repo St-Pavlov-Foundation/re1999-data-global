@@ -1,116 +1,118 @@
-﻿module("modules.logic.versionactivity2_1.aergusi.view.AergusiDialogRoleItemBase", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_1/aergusi/view/AergusiDialogRoleItemBase.lua
 
-local var_0_0 = class("AergusiDialogRoleItemBase", LuaCompBase)
-local var_0_1 = typeof(ZProj.TMPMark)
+module("modules.logic.versionactivity2_1.aergusi.view.AergusiDialogRoleItemBase", package.seeall)
 
-function var_0_0.ctor(arg_1_0, ...)
-	arg_1_0:__onInit()
+local AergusiDialogRoleItemBase = class("AergusiDialogRoleItemBase", LuaCompBase)
+local kType_TMPMark = typeof(ZProj.TMPMark)
 
-	arg_1_0.__txtCmpList = arg_1_0:getUserDataTb_()
-	arg_1_0.__txtmarktopList = arg_1_0:getUserDataTb_()
-	arg_1_0.__txtmarktopGoList = arg_1_0:getUserDataTb_()
-	arg_1_0.__txtConMarkList = arg_1_0:getUserDataTb_()
-	arg_1_0.__txtmarktopIndex = 0
-	arg_1_0.__fTimerList = {}
-	arg_1_0.__lineSpacing = {}
-	arg_1_0.__originalLineSpacing = {}
-	arg_1_0.__markTopListList = {}
+function AergusiDialogRoleItemBase:ctor(...)
+	self:__onInit()
+
+	self.__txtCmpList = self:getUserDataTb_()
+	self.__txtmarktopList = self:getUserDataTb_()
+	self.__txtmarktopGoList = self:getUserDataTb_()
+	self.__txtConMarkList = self:getUserDataTb_()
+	self.__txtmarktopIndex = 0
+	self.__fTimerList = {}
+	self.__lineSpacing = {}
+	self.__originalLineSpacing = {}
+	self.__markTopListList = {}
 end
 
-function var_0_0.setTopOffset(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	local var_2_0 = arg_2_0.__txtConMarkList[arg_2_1]
+function AergusiDialogRoleItemBase:setTopOffset(index, offsetX, offsetY)
+	local txtConMark = self.__txtConMarkList[index]
 
-	if not var_2_0 then
+	if not txtConMark then
 		return
 	end
 
-	var_2_0:SetTopOffset(arg_2_2 or 0, arg_2_3 or 0)
+	txtConMark:SetTopOffset(offsetX or 0, offsetY or 0)
 end
 
-function var_0_0.createMarktopCmp(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_0.__txtmarktopIndex + 1
+function AergusiDialogRoleItemBase:createMarktopCmp(textCmp)
+	local index = self.__txtmarktopIndex + 1
 
-	arg_3_0.__txtmarktopIndex = var_3_0
+	self.__txtmarktopIndex = index
 
-	local var_3_1 = arg_3_1.gameObject
-	local var_3_2 = IconMgr.instance:getCommonTextMarkTop(var_3_1)
-	local var_3_3 = var_3_2:GetComponent(gohelper.Type_TextMesh)
-	local var_3_4 = gohelper.onceAddComponent(var_3_1, var_0_1)
+	local textGo = textCmp.gameObject
+	local txtmarktopGo = IconMgr.instance:getCommonTextMarkTop(textGo)
+	local txtmarktop = txtmarktopGo:GetComponent(gohelper.Type_TextMesh)
+	local txtConMark = gohelper.onceAddComponent(textGo, kType_TMPMark)
 
-	arg_3_0.__txtCmpList[var_3_0] = arg_3_1
-	arg_3_0.__txtmarktopGoList[var_3_0] = var_3_2
-	arg_3_0.__txtmarktopList[var_3_0] = var_3_3
-	arg_3_0.__txtConMarkList[var_3_0] = var_3_4
-	arg_3_0.__originalLineSpacing[var_3_0] = arg_3_1.lineSpacing
+	self.__txtCmpList[index] = textCmp
+	self.__txtmarktopGoList[index] = txtmarktopGo
+	self.__txtmarktopList[index] = txtmarktop
+	self.__txtConMarkList[index] = txtConMark
+	self.__originalLineSpacing[index] = textCmp.lineSpacing
 
-	var_3_4:SetMarkTopGo(var_3_2)
+	txtConMark:SetMarkTopGo(txtmarktopGo)
 
-	return var_3_0
+	return index
 end
 
-function var_0_0.setTextWithMarktopByIndex(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0.__markTopListList[arg_4_1] = StoryTool.getMarkTopTextList(arg_4_2)
+function AergusiDialogRoleItemBase:setTextWithMarktopByIndex(index, str)
+	self.__markTopListList[index] = StoryTool.getMarkTopTextList(str)
 
-	arg_4_0:_setText(arg_4_1, StoryTool.filterMarkTop(arg_4_2))
-	arg_4_0:_unregftimer(arg_4_1)
+	self:_setText(index, StoryTool.filterMarkTop(str))
+	self:_unregftimer(index)
 
-	local var_4_0 = FrameTimerController.instance:register(function()
-		local var_5_0 = arg_4_0.__txtmarktopList[arg_4_1]
-		local var_5_1 = arg_4_0.__txtmarktopGoList[arg_4_1]
-		local var_5_2 = arg_4_0.__txtConMarkList[arg_4_1]
-		local var_5_3 = arg_4_0.__markTopListList[arg_4_1]
+	local fTimer = FrameTimerController.instance:register(function()
+		local txtmarktop = self.__txtmarktopList[index]
+		local txtmarktopGo = self.__txtmarktopGoList[index]
+		local txtConMark = self.__txtConMarkList[index]
+		local markTopList = self.__markTopListList[index]
 
-		if var_5_3 and var_5_0 and var_5_2 and not gohelper.isNil(var_5_1) then
-			var_5_2:SetMarksTop(var_5_3)
+		if markTopList and txtmarktop and txtConMark and not gohelper.isNil(txtmarktopGo) then
+			txtConMark:SetMarksTop(markTopList)
 		end
 	end, nil, 1)
 
-	arg_4_0.__fTimerList[arg_4_1] = var_4_0
+	self.__fTimerList[index] = fTimer
 
-	var_4_0:Start()
+	fTimer:Start()
 end
 
-function var_0_0._setText(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = arg_6_0.__txtCmpList[arg_6_1]
+function AergusiDialogRoleItemBase:_setText(index, str)
+	local textCmp = self.__txtCmpList[index]
 
-	if not var_6_0 then
+	if not textCmp then
 		return
 	end
 
-	var_6_0.lineSpacing = arg_6_0:getLineSpacing(arg_6_1)
-	var_6_0.text = arg_6_2
+	textCmp.lineSpacing = self:getLineSpacing(index)
+	textCmp.text = str
 end
 
-function var_0_0.setLineSpacing(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_0.__lineSpacing[arg_7_1] = arg_7_2 or 0
+function AergusiDialogRoleItemBase:setLineSpacing(index, lineSpacing)
+	self.__lineSpacing[index] = lineSpacing or 0
 end
 
-function var_0_0.getLineSpacing(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0.__markTopListList[arg_8_1]
-	local var_8_1 = arg_8_0.__lineSpacing[arg_8_1]
-	local var_8_2 = arg_8_0.__originalLineSpacing[arg_8_1]
+function AergusiDialogRoleItemBase:getLineSpacing(index)
+	local markTopList = self.__markTopListList[index]
+	local lineSpacing = self.__lineSpacing[index]
+	local original = self.__originalLineSpacing[index]
 
-	return var_8_0 and #var_8_0 > 0 and var_8_1 or var_8_2 or 0
+	return markTopList and #markTopList > 0 and lineSpacing or original or 0
 end
 
-function var_0_0._unregftimer(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0.__fTimerList[arg_9_1]
+function AergusiDialogRoleItemBase:_unregftimer(index)
+	local fTimer = self.__fTimerList[index]
 
-	if not var_9_0 then
+	if not fTimer then
 		return
 	end
 
-	FrameTimerController.instance:unregister(var_9_0)
+	FrameTimerController.instance:unregister(fTimer)
 
-	arg_9_0.__fTimerList[arg_9_1] = nil
+	self.__fTimerList[index] = nil
 end
 
-function var_0_0.destroy(arg_10_0)
-	for iter_10_0, iter_10_1 in pairs(arg_10_0.__fTimerList) do
-		arg_10_0:_unregftimer(iter_10_0)
+function AergusiDialogRoleItemBase:destroy()
+	for index, _ in pairs(self.__fTimerList) do
+		self:_unregftimer(index)
 	end
 
-	arg_10_0:__onDispose()
+	self:__onDispose()
 end
 
-return var_0_0
+return AergusiDialogRoleItemBase

@@ -1,55 +1,57 @@
-﻿module("modules.logic.equip.view.EquipTeamAttrItem", package.seeall)
+﻿-- chunkname: @modules/logic/equip/view/EquipTeamAttrItem.lua
 
-local var_0_0 = class("EquipTeamAttrItem", ListScrollCellExtend)
+module("modules.logic.equip.view.EquipTeamAttrItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtvalue1 = gohelper.findChildText(arg_1_0.viewGO, "#txt_value1")
-	arg_1_0._txtname1 = gohelper.findChildText(arg_1_0.viewGO, "#txt_name1")
-	arg_1_0._simageicon1 = gohelper.findChildImage(arg_1_0.viewGO, "#simage_icon1")
+local EquipTeamAttrItem = class("EquipTeamAttrItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function EquipTeamAttrItem:onInitView()
+	self._txtvalue1 = gohelper.findChildText(self.viewGO, "#txt_value1")
+	self._txtname1 = gohelper.findChildText(self.viewGO, "#txt_name1")
+	self._simageicon1 = gohelper.findChildImage(self.viewGO, "#simage_icon1")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function EquipTeamAttrItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function EquipTeamAttrItem:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function EquipTeamAttrItem:_editableInitView()
 	return
 end
 
-function var_0_0._editableAddEvents(arg_5_0)
+function EquipTeamAttrItem:_editableAddEvents()
 	return
 end
 
-function var_0_0._editableRemoveEvents(arg_6_0)
+function EquipTeamAttrItem:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_7_0, arg_7_1)
-	arg_7_0._mo = arg_7_1
+function EquipTeamAttrItem:onUpdateMO(mo)
+	self._mo = mo
 
-	local var_7_0 = arg_7_0._mo.attrId
-	local var_7_1 = HeroConfig.instance:getHeroAttributeCO(var_7_0)
+	local attrId = self._mo.attrId
+	local _attrCo = HeroConfig.instance:getHeroAttributeCO(attrId)
 
-	CharacterController.instance:SetAttriIcon(arg_7_0._simageicon1, var_7_0)
+	CharacterController.instance:SetAttriIcon(self._simageicon1, attrId)
 
-	arg_7_0._txtvalue1.text = EquipConfig.instance:getEquipValueStr(arg_7_0._mo)
-	arg_7_0._txtname1.text = var_7_1.name
+	self._txtvalue1.text = EquipConfig.instance:getEquipValueStr(self._mo)
+	self._txtname1.text = _attrCo.name
 end
 
-function var_0_0.onSelect(arg_8_0, arg_8_1)
+function EquipTeamAttrItem:onSelect(isSelect)
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
+function EquipTeamAttrItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return EquipTeamAttrItem

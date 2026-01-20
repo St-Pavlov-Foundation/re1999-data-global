@@ -1,30 +1,32 @@
-﻿module("modules.logic.turnback.view.new.view.TurnbackNewBeginnerView", package.seeall)
+﻿-- chunkname: @modules/logic/turnback/view/new/view/TurnbackNewBeginnerView.lua
 
-local var_0_0 = class("TurnbackNewBeginnerView", BaseView)
+module("modules.logic.turnback.view.new.view.TurnbackNewBeginnerView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gosubview = gohelper.findChild(arg_1_0.viewGO, "#go_subview")
-	arg_1_0._gocategory = gohelper.findChild(arg_1_0.viewGO, "#go_category")
-	arg_1_0._scrollcategoryitem = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_category/#scroll_categoryitem")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "lefttitle/#txt_time")
+local TurnbackNewBeginnerView = class("TurnbackNewBeginnerView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function TurnbackNewBeginnerView:onInitView()
+	self._gosubview = gohelper.findChild(self.viewGO, "#go_subview")
+	self._gocategory = gohelper.findChild(self.viewGO, "#go_category")
+	self._scrollcategoryitem = gohelper.findChildScrollRect(self.viewGO, "#go_category/#scroll_categoryitem")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._txttime = gohelper.findChildText(self.viewGO, "lefttitle/#txt_time")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshBeginner, arg_2_0.refreshView, arg_2_0)
-	arg_2_0:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshRemainTime, arg_2_0._refreshRemainTime, arg_2_0)
+function TurnbackNewBeginnerView:addEvents()
+	self:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshBeginner, self.refreshView, self)
+	self:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshRemainTime, self._refreshRemainTime, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(TurnbackController.instance, TurnbackEvent.RefreshBeginner, arg_3_0.refreshView, arg_3_0)
-	arg_3_0:removeEventCb(TurnbackController.instance, TurnbackEvent.RefreshRemainTime, arg_3_0._refreshRemainTime, arg_3_0)
+function TurnbackNewBeginnerView:removeEvents()
+	self:removeEventCb(TurnbackController.instance, TurnbackEvent.RefreshBeginner, self.refreshView, self)
+	self:removeEventCb(TurnbackController.instance, TurnbackEvent.RefreshRemainTime, self._refreshRemainTime, self)
 end
 
-local var_0_1 = {
+local turnbackSubViewDict = {
 	[TurnbackEnum.ActivityId.NewSignIn] = ViewName.TurnbackNewSignInView,
 	[TurnbackEnum.ActivityId.NewTaskView] = ViewName.TurnbackNewTaskView,
 	[TurnbackEnum.ActivityId.NewBenfitView] = ViewName.TurnbackNewBenfitView,
@@ -32,85 +34,85 @@ local var_0_1 = {
 	[TurnbackEnum.ActivityId.ReviewView] = ViewName.TurnbackReviewView
 }
 
-function var_0_0._editableInitView(arg_4_0)
+function TurnbackNewBeginnerView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function TurnbackNewBeginnerView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0.turnbackId = TurnbackModel.instance:getCurTurnbackId()
+function TurnbackNewBeginnerView:onOpen()
+	self.turnbackId = TurnbackModel.instance:getCurTurnbackId()
 
-	arg_6_0:refreshView()
+	self:refreshView()
 end
 
-function var_0_0.refreshView(arg_7_0)
-	arg_7_0.allActivityTab = TurnbackConfig.instance:getAllTurnbackSubModules(arg_7_0.turnbackId)
+function TurnbackNewBeginnerView:refreshView()
+	self.allActivityTab = TurnbackConfig.instance:getAllTurnbackSubModules(self.turnbackId)
 
-	if arg_7_0.allActivityTab == nil or GameUtil.getTabLen(arg_7_0.allActivityTab) == 0 then
-		arg_7_0:closeThis()
+	if self.allActivityTab == nil or GameUtil.getTabLen(self.allActivityTab) == 0 then
+		self:closeThis()
 	end
 
-	arg_7_0.allActivityTab = TurnbackModel.instance:removeUnExitCategory(arg_7_0.allActivityTab)
-	arg_7_0.subViewTab = {}
+	self.allActivityTab = TurnbackModel.instance:removeUnExitCategory(self.allActivityTab)
+	self.subViewTab = {}
 
-	for iter_7_0, iter_7_1 in pairs(arg_7_0.allActivityTab) do
-		local var_7_0 = {
-			id = iter_7_1,
-			order = iter_7_0,
-			config = TurnbackConfig.instance:getTurnbackSubModuleCo(iter_7_1)
-		}
+	for index, v in pairs(self.allActivityTab) do
+		local o = {}
 
-		table.insert(arg_7_0.subViewTab, var_7_0)
+		o.id = v
+		o.order = index
+		o.config = TurnbackConfig.instance:getTurnbackSubModuleCo(v)
+
+		table.insert(self.subViewTab, o)
 	end
 
 	TurnbackBeginnerCategoryListModel.instance:setOpenViewTime()
-	TurnbackBeginnerCategoryListModel.instance:setCategoryList(arg_7_0.subViewTab)
-	arg_7_0:openSubView()
-	arg_7_0:_refreshRemainTime()
+	TurnbackBeginnerCategoryListModel.instance:setCategoryList(self.subViewTab)
+	self:openSubView()
+	self:_refreshRemainTime()
 end
 
-function var_0_0.openSubView(arg_8_0)
-	if arg_8_0._viewName then
-		ViewMgr.instance:closeView(arg_8_0._viewName, true)
+function TurnbackNewBeginnerView:openSubView()
+	if self._viewName then
+		ViewMgr.instance:closeView(self._viewName, true)
 	end
 
-	local var_8_0 = TurnbackModel.instance:getTargetCategoryId(arg_8_0.turnbackId)
+	local actId = TurnbackModel.instance:getTargetCategoryId(self.turnbackId)
 
-	arg_8_0._viewName = var_0_1[var_8_0]
+	self._viewName = turnbackSubViewDict[actId]
 
-	if var_8_0 ~= 0 then
-		TurnbackModel.instance:setTargetCategoryId(var_8_0)
+	if actId ~= 0 then
+		TurnbackModel.instance:setTargetCategoryId(actId)
 	end
 
-	local var_8_1 = {
-		parent = arg_8_0._gosubview,
-		actId = var_8_0
+	local viewParam = {
+		parent = self._gosubview,
+		actId = actId
 	}
 
-	ViewMgr.instance:openView(arg_8_0._viewName, var_8_1, true)
+	ViewMgr.instance:openView(self._viewName, viewParam, true)
 
-	arg_8_0.viewParam = nil
+	self.viewParam = nil
 end
 
-function var_0_0._refreshRemainTime(arg_9_0)
-	arg_9_0._txttime.text = TurnbackController.instance:refreshRemainTime()
+function TurnbackNewBeginnerView:_refreshRemainTime()
+	self._txttime.text = TurnbackController.instance:refreshRemainTime()
 end
 
-function var_0_0.onClose(arg_10_0)
-	if arg_10_0._viewName then
-		ViewMgr.instance:closeView(arg_10_0._viewName, true)
+function TurnbackNewBeginnerView:onClose()
+	if self._viewName then
+		ViewMgr.instance:closeView(self._viewName, true)
 
-		arg_10_0._viewName = nil
+		self._viewName = nil
 	end
 
 	TurnbackModel.instance:setTargetCategoryId(0)
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function TurnbackNewBeginnerView:onDestroyView()
 	return
 end
 
-return var_0_0
+return TurnbackNewBeginnerView

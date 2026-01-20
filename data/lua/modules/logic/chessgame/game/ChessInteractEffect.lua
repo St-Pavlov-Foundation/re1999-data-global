@@ -1,95 +1,99 @@
-﻿module("modules.logic.chessgame.game.ChessInteractEffect", package.seeall)
+﻿-- chunkname: @modules/logic/chessgame/game/ChessInteractEffect.lua
 
-local var_0_0 = class("ChessInteractEffect")
+module("modules.logic.chessgame.game.ChessInteractEffect", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._target = arg_1_1
-	arg_1_0.effectGoDict = {}
-	arg_1_0.assetItemList = {}
-	arg_1_0.loadedEffectTypeList = {}
+local ChessInteractEffect = class("ChessInteractEffect")
+
+function ChessInteractEffect:ctor(interactObj)
+	self._target = interactObj
+	self.effectGoDict = {}
+	self.assetItemList = {}
+	self.loadedEffectTypeList = {}
 end
 
-function var_0_0.onAvatarLoaded(arg_2_0)
-	local var_2_0 = arg_2_0._target.avatar.loader
+function ChessInteractEffect:onAvatarLoaded()
+	local loader = self._target.avatar.loader
 
-	if not var_2_0 then
+	if not loader then
 		return
 	end
 
-	arg_2_0.effectGoContainer = var_2_0:getInstGO()
+	local avatarGO = loader:getInstGO()
+
+	self.effectGoContainer = avatarGO
 end
 
-function var_0_0.showEffect(arg_3_0, arg_3_1)
-	arg_3_0.showEffectType = arg_3_1
+function ChessInteractEffect:showEffect(effectType)
+	self.showEffectType = effectType
 
-	if not arg_3_0.effectGoDict[arg_3_0.showEffectType] then
-		arg_3_0:loadEffect()
+	if not self.effectGoDict[self.showEffectType] then
+		self:loadEffect()
 
 		return
 	end
 
-	arg_3_0:_realShowEffect()
+	self:_realShowEffect()
 end
 
-function var_0_0._realShowEffect(arg_4_0)
-	local var_4_0 = arg_4_0.effectGoDict[arg_4_0.showEffectType]
+function ChessInteractEffect:_realShowEffect()
+	local go = self.effectGoDict[self.showEffectType]
 
-	gohelper.setActive(var_4_0, false)
-	gohelper.setActive(var_4_0, true)
+	gohelper.setActive(go, false)
+	gohelper.setActive(go, true)
 end
 
-function var_0_0.loadEffect(arg_5_0)
-	local var_5_0 = arg_5_0.showEffectType
+function ChessInteractEffect:loadEffect()
+	local effectType = self.showEffectType
 
-	if tabletool.indexOf(arg_5_0.loadedEffectTypeList, var_5_0) then
+	if tabletool.indexOf(self.loadedEffectTypeList, effectType) then
 		return
 	end
 
-	table.insert(arg_5_0.loadedEffectTypeList, var_5_0)
+	table.insert(self.loadedEffectTypeList, effectType)
 
-	local var_5_1 = ChessGameEnum.EffectPath[var_5_0]
+	local path = ChessGameEnum.EffectPath[effectType]
 
-	loadAbAsset(var_5_1, true, arg_5_0._onLoadCallback, arg_5_0)
+	loadAbAsset(path, true, self._onLoadCallback, self)
 end
 
-function var_0_0._onLoadCallback(arg_6_0, arg_6_1)
-	if arg_6_1.IsLoadSuccess then
-		table.insert(arg_6_0.assetItemList, arg_6_1)
-		arg_6_1:Retain()
+function ChessInteractEffect:_onLoadCallback(assetItem)
+	if assetItem.IsLoadSuccess then
+		table.insert(self.assetItemList, assetItem)
+		assetItem:Retain()
 
-		local var_6_0 = gohelper.clone(arg_6_1:GetResource(), arg_6_0.effectGoContainer)
+		local effectGO = gohelper.clone(assetItem:GetResource(), self.effectGoContainer)
 
-		arg_6_0.effectGoDict[arg_6_0.showEffectType] = var_6_0
+		self.effectGoDict[self.showEffectType] = effectGO
 
-		gohelper.setActive(var_6_0, false)
-		arg_6_0:showEffect(arg_6_0.showEffectType)
+		gohelper.setActive(effectGO, false)
+		self:showEffect(self.showEffectType)
 	end
 end
 
-function var_0_0.dispose(arg_7_0)
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0.loadedEffectTypeList) do
-		removeAssetLoadCb(ChessGameEnum.EffectPath[iter_7_1], arg_7_0._onLoadCallback, arg_7_0)
+function ChessInteractEffect:dispose()
+	for _, effectType in ipairs(self.loadedEffectTypeList) do
+		removeAssetLoadCb(ChessGameEnum.EffectPath[effectType], self._onLoadCallback, self)
 	end
 
-	for iter_7_2, iter_7_3 in ipairs(arg_7_0.assetItemList) do
-		iter_7_3:Release()
+	for k, assetItem in ipairs(self.assetItemList) do
+		assetItem:Release()
 
-		arg_7_0.assetItemList[iter_7_2] = nil
+		self.assetItemList[k] = nil
 	end
 
-	arg_7_0.assetItemList = {}
+	self.assetItemList = {}
 
-	for iter_7_4, iter_7_5 in pairs(arg_7_0.effectGoDict) do
-		if not gohelper.isNil(iter_7_5) then
-			gohelper.destroy(iter_7_5)
+	for k, effectGO in pairs(self.effectGoDict) do
+		if not gohelper.isNil(effectGO) then
+			gohelper.destroy(effectGO)
 		end
 
-		arg_7_0.effectGoDict[iter_7_4] = nil
+		self.effectGoDict[k] = nil
 	end
 
-	arg_7_0.effectGoDict = {}
-	arg_7_0._target = nil
-	arg_7_0.effectGoContainer = nil
+	self.effectGoDict = {}
+	self._target = nil
+	self.effectGoContainer = nil
 end
 
-return var_0_0
+return ChessInteractEffect

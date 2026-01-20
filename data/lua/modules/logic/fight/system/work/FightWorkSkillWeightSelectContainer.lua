@@ -1,13 +1,15 @@
-﻿module("modules.logic.fight.system.work.FightWorkSkillWeightSelectContainer", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkSkillWeightSelectContainer.lua
 
-local var_0_0 = class("FightWorkSkillWeightSelectContainer", FightStepEffectFlow)
+module("modules.logic.fight.system.work.FightWorkSkillWeightSelectContainer", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0:playAdjacentParallelEffect(nil, true)
+local FightWorkSkillWeightSelectContainer = class("FightWorkSkillWeightSelectContainer", FightStepEffectFlow)
+
+function FightWorkSkillWeightSelectContainer:onStart()
+	self:playAdjacentParallelEffect(nil, true)
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkSkillWeightSelectContainer:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkSkillWeightSelectContainer

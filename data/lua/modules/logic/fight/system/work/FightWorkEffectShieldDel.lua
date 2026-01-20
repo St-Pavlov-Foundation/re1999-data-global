@@ -1,19 +1,21 @@
-﻿module("modules.logic.fight.system.work.FightWorkEffectShieldDel", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkEffectShieldDel.lua
 
-local var_0_0 = class("FightWorkEffectShieldDel", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkEffectShieldDel", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = FightHelper.getEntity(arg_1_0.actEffectData.targetId)
+local FightWorkEffectShieldDel = class("FightWorkEffectShieldDel", FightEffectBase)
 
-	if var_1_0 and var_1_0.nameUI then
-		var_1_0.nameUI:setShield(0)
+function FightWorkEffectShieldDel:onStart()
+	local entity = FightHelper.getEntity(self.actEffectData.targetId)
+
+	if entity and entity.nameUI then
+		entity.nameUI:setShield(0)
 	end
 
-	if var_1_0 then
-		FightController.instance:dispatchEvent(FightEvent.OnShieldChange, var_1_0, 0)
+	if entity then
+		FightController.instance:dispatchEvent(FightEvent.OnShieldChange, entity, 0)
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkEffectShieldDel

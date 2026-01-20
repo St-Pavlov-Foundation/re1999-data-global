@@ -1,153 +1,155 @@
-﻿module("modules.logic.versionactivity2_3.dudugu.view.ActDuDuGuLevelItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/dudugu/view/ActDuDuGuLevelItem.lua
 
-local var_0_0 = class("ActDuDuGuLevelItem", LuaCompBase)
+module("modules.logic.versionactivity2_3.dudugu.view.ActDuDuGuLevelItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._gogameicon = gohelper.findChild(arg_1_0.go, "unlock/#go_gameicon")
-	arg_1_0._imagegameicon = gohelper.findChildImage(arg_1_0.go, "unlock/#go_gameicon")
-	arg_1_0._gostagenormal = gohelper.findChild(arg_1_0.go, "unlock/#go_stagenormal")
-	arg_1_0._gostageunlock = gohelper.findChild(arg_1_0.go, "unlock/#go_stageunlock")
-	arg_1_0._gostagefinish = gohelper.findChild(arg_1_0.go, "unlock/#go_stagefinish")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.go, "unlock/#btn_click")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.go, "unlock/info/#txt_stagename")
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.go, "unlock/info/#txt_stageNum")
-	arg_1_0._txtstage = gohelper.findChildText(arg_1_0.go, "unlock/info/txt_stage")
-	arg_1_0._btnreview = gohelper.findChildButtonWithAudio(arg_1_0.go, "unlock/info/#btn_review")
-	arg_1_0._gostarno = gohelper.findChild(arg_1_0.go, "unlock/info/star1/no")
-	arg_1_0._imagestarno = gohelper.findChildImage(arg_1_0.go, "unlock/info/star1/no")
-	arg_1_0._gostar = gohelper.findChild(arg_1_0.go, "unlock/info/star1/#go_star")
-	arg_1_0._anim = arg_1_0.go:GetComponent(gohelper.Type_Animator)
-	arg_1_0._goimagestar = gohelper.findChild(arg_1_0._gostar, "#image_Star")
-	arg_1_0._animStar = arg_1_0._goimagestar:GetComponent(gohelper.Type_Animation)
+local ActDuDuGuLevelItem = class("ActDuDuGuLevelItem", LuaCompBase)
+
+function ActDuDuGuLevelItem:init(go)
+	self.go = go
+	self._gogameicon = gohelper.findChild(self.go, "unlock/#go_gameicon")
+	self._imagegameicon = gohelper.findChildImage(self.go, "unlock/#go_gameicon")
+	self._gostagenormal = gohelper.findChild(self.go, "unlock/#go_stagenormal")
+	self._gostageunlock = gohelper.findChild(self.go, "unlock/#go_stageunlock")
+	self._gostagefinish = gohelper.findChild(self.go, "unlock/#go_stagefinish")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.go, "unlock/#btn_click")
+	self._txtname = gohelper.findChildText(self.go, "unlock/info/#txt_stagename")
+	self._txtnum = gohelper.findChildText(self.go, "unlock/info/#txt_stageNum")
+	self._txtstage = gohelper.findChildText(self.go, "unlock/info/txt_stage")
+	self._btnreview = gohelper.findChildButtonWithAudio(self.go, "unlock/info/#btn_review")
+	self._gostarno = gohelper.findChild(self.go, "unlock/info/star1/no")
+	self._imagestarno = gohelper.findChildImage(self.go, "unlock/info/star1/no")
+	self._gostar = gohelper.findChild(self.go, "unlock/info/star1/#go_star")
+	self._anim = self.go:GetComponent(gohelper.Type_Animator)
+	self._goimagestar = gohelper.findChild(self._gostar, "#image_Star")
+	self._animStar = self._goimagestar:GetComponent(gohelper.Type_Animation)
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnOnClick, arg_2_0)
-	arg_2_0._btnreview:AddClickListener(arg_2_0._btnOnReview, arg_2_0)
+function ActDuDuGuLevelItem:addEventListeners()
+	self._btnclick:AddClickListener(self._btnOnClick, self)
+	self._btnreview:AddClickListener(self._btnOnReview, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
-	arg_3_0._btnreview:RemoveClickListener()
+function ActDuDuGuLevelItem:removeEventListeners()
+	self._btnclick:RemoveClickListener()
+	self._btnreview:RemoveClickListener()
 end
 
-function var_0_0.onDestroy(arg_4_0)
+function ActDuDuGuLevelItem:onDestroy()
 	return
 end
 
-function var_0_0._btnOnClick(arg_5_0)
-	if not arg_5_0._islvunlock then
+function ActDuDuGuLevelItem:_btnOnClick()
+	if not self._islvunlock then
 		GameFacade.showToast(ToastEnum.DungeonIsLockNormal)
 
 		return
 	end
 
-	ActDuDuGuModel.instance:setCurLvIndex(arg_5_0._index)
-	arg_5_0:_playBeforeStory()
+	ActDuDuGuModel.instance:setCurLvIndex(self._index)
+	self:_playBeforeStory()
 end
 
-function var_0_0._playBeforeStory(arg_6_0)
-	if arg_6_0._config.beforeStory > 0 then
-		local var_6_0 = {}
+function ActDuDuGuLevelItem:_playBeforeStory()
+	if self._config.beforeStory > 0 then
+		local param = {}
 
-		var_6_0.mark = true
-		var_6_0.episodeId = arg_6_0._config.id
+		param.mark = true
+		param.episodeId = self._config.id
 
-		if arg_6_0._config.battleId <= 0 then
-			DungeonRpc.instance:sendStartDungeonRequest(arg_6_0._config.chapterId, arg_6_0._config.id)
+		if self._config.battleId <= 0 then
+			DungeonRpc.instance:sendStartDungeonRequest(self._config.chapterId, self._config.id)
 		end
 
-		StoryController.instance:playStory(arg_6_0._config.beforeStory, var_6_0, arg_6_0._enterFight, arg_6_0)
+		StoryController.instance:playStory(self._config.beforeStory, param, self._enterFight, self)
 	else
-		arg_6_0:_enterFight()
+		self:_enterFight()
 	end
 end
 
-function var_0_0._enterFight(arg_7_0)
-	if arg_7_0._config.battleId and arg_7_0._config.battleId > 0 then
-		DungeonRpc.instance:sendStartDungeonRequest(arg_7_0._config.chapterId, arg_7_0._config.id)
-		DungeonFightController.instance:enterFightByBattleId(arg_7_0._config.chapterId, arg_7_0._config.id, arg_7_0._config.battleId)
+function ActDuDuGuLevelItem:_enterFight()
+	if self._config.battleId and self._config.battleId > 0 then
+		DungeonRpc.instance:sendStartDungeonRequest(self._config.chapterId, self._config.id)
+		DungeonFightController.instance:enterFightByBattleId(self._config.chapterId, self._config.id, self._config.battleId)
 	else
-		arg_7_0:_enterAfterStory()
+		self:_enterAfterStory()
 	end
 end
 
-function var_0_0._enterAfterStory(arg_8_0)
-	if arg_8_0._config.afterStory > 0 then
-		local var_8_0 = {}
+function ActDuDuGuLevelItem:_enterAfterStory()
+	if self._config.afterStory > 0 then
+		local param = {}
 
-		var_8_0.mark = true
-		var_8_0.episodeId = arg_8_0._config.id
+		param.mark = true
+		param.episodeId = self._config.id
 
-		StoryController.instance:playStory(arg_8_0._config.afterStory, var_8_0, arg_8_0._onLevelFinished, arg_8_0)
+		StoryController.instance:playStory(self._config.afterStory, param, self._onLevelFinished, self)
 	else
-		arg_8_0:_onLevelFinished()
+		self:_onLevelFinished()
 	end
 end
 
-function var_0_0._onLevelFinished(arg_9_0)
+function ActDuDuGuLevelItem:_onLevelFinished()
 	DungeonModel.instance.curSendEpisodeId = nil
 
-	DungeonModel.instance:setLastSendEpisodeId(arg_9_0._config.id)
+	DungeonModel.instance:setLastSendEpisodeId(self._config.id)
 	DungeonRpc.instance:sendEndDungeonRequest(false)
 end
 
-function var_0_0._btnOnReview(arg_10_0)
+function ActDuDuGuLevelItem:_btnOnReview()
 	return
 end
 
-function var_0_0.setParam(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	arg_11_0._config = arg_11_1
-	arg_11_0.id = arg_11_1.id
-	arg_11_0._episodeInfo = DungeonModel.instance:getEpisodeInfo(arg_11_0.id)
-	arg_11_0._actId = arg_11_3
-	arg_11_0._index = arg_11_2
+function ActDuDuGuLevelItem:setParam(co, index, actId)
+	self._config = co
+	self.id = co.id
+	self._episodeInfo = DungeonModel.instance:getEpisodeInfo(self.id)
+	self._actId = actId
+	self._index = index
 
-	arg_11_0:_refreshUI()
+	self:_refreshUI()
 end
 
-function var_0_0._refreshUI(arg_12_0)
-	arg_12_0._txtname.text = arg_12_0._config.name
-	arg_12_0._txtnum.text = "0" .. arg_12_0._index
+function ActDuDuGuLevelItem:_refreshUI()
+	self._txtname.text = self._config.name
+	self._txtnum.text = "0" .. self._index
 
-	gohelper.setActive(arg_12_0._gogameicon, arg_12_0._config.battleId > 0)
-	arg_12_0:refreshStatus()
+	gohelper.setActive(self._gogameicon, self._config.battleId > 0)
+	self:refreshStatus()
 end
 
-function var_0_0.refreshStatus(arg_13_0)
-	arg_13_0._islvunlock = ActDuDuGuModel.instance:isLevelUnlock(arg_13_0._actId, arg_13_0.id)
-	arg_13_0._islvpass = ActDuDuGuModel.instance:isLevelPass(arg_13_0._actId, arg_13_0.id)
+function ActDuDuGuLevelItem:refreshStatus()
+	self._islvunlock = ActDuDuGuModel.instance:isLevelUnlock(self._actId, self.id)
+	self._islvpass = ActDuDuGuModel.instance:isLevelPass(self._actId, self.id)
 
-	if arg_13_0._islvunlock then
-		local var_13_0 = arg_13_0._islvpass and "finishidle" or "normalidle"
+	if self._islvunlock then
+		local animName = self._islvpass and "finishidle" or "normalidle"
 
-		arg_13_0._anim:Play(var_13_0)
+		self._anim:Play(animName)
 	else
-		arg_13_0._anim:Play("lockidle")
+		self._anim:Play("lockidle")
 	end
 end
 
-function var_0_0.lockStatus(arg_14_0)
-	arg_14_0._anim:Play("finishidle")
+function ActDuDuGuLevelItem:lockStatus()
+	self._anim:Play("finishidle")
 end
 
-function var_0_0.isUnlock(arg_15_0)
-	return arg_15_0._islvunlock
+function ActDuDuGuLevelItem:isUnlock()
+	return self._islvunlock
 end
 
-function var_0_0.playFinish(arg_16_0)
-	arg_16_0._anim:Play("finish", 0, 0)
+function ActDuDuGuLevelItem:playFinish()
+	self._anim:Play("finish", 0, 0)
 end
 
-function var_0_0.playUnlock(arg_17_0)
+function ActDuDuGuLevelItem:playUnlock()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_level_difficulty)
-	arg_17_0._anim:Play("unlock", 0, 0)
+	self._anim:Play("unlock", 0, 0)
 end
 
-function var_0_0.playStarAnim(arg_18_0)
+function ActDuDuGuLevelItem:playStarAnim()
 	AudioMgr.instance:trigger(AudioEnum.RoleActivity.star_show)
-	arg_18_0._animStar:Play()
+	self._animStar:Play()
 end
 
-return var_0_0
+return ActDuDuGuLevelItem

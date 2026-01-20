@@ -1,17 +1,19 @@
-﻿module("modules.logic.explore.model.mo.unit.ExploreObstacleMO", package.seeall)
+﻿-- chunkname: @modules/logic/explore/model/mo/unit/ExploreObstacleMO.lua
 
-local var_0_0 = pureTable("ExploreObstacleMO", ExploreBaseUnitMO)
+module("modules.logic.explore.model.mo.unit.ExploreObstacleMO", package.seeall)
 
-function var_0_0.initTypeData(arg_1_0)
-	arg_1_0.triggerByClick = false
+local ExploreObstacleMO = pureTable("ExploreObstacleMO", ExploreBaseUnitMO)
+
+function ExploreObstacleMO:initTypeData()
+	self.triggerByClick = false
 end
 
-function var_0_0.getUnitClass(arg_2_0)
+function ExploreObstacleMO:getUnitClass()
 	return ExploreBaseDisplayUnit
 end
 
-function var_0_0.isWalkable(arg_3_0)
+function ExploreObstacleMO:isWalkable()
 	return false
 end
 
-return var_0_0
+return ExploreObstacleMO

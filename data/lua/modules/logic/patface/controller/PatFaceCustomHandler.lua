@@ -1,126 +1,144 @@
-﻿module("modules.logic.patface.controller.PatFaceCustomHandler", package.seeall)
+﻿-- chunkname: @modules/logic/patface/controller/PatFaceCustomHandler.lua
 
-local var_0_0 = {
-	activity142CheckCanPat = function(arg_1_0)
-		local var_1_0 = false
+module("modules.logic.patface.controller.PatFaceCustomHandler", package.seeall)
 
-		if Activity136Model.instance:isActivity136InOpen() then
-			var_1_0 = not Activity136Model.instance:hasReceivedCharacter()
-		end
+local PatFaceCustomHandler = {}
 
-		return var_1_0
-	end,
-	decalogPresentCheckCanPat = function(arg_2_0)
-		return DecalogPresentModel.instance:isShowRedDot()
-	end,
-	goldenMilletPresentCheckCanPat = function(arg_3_0)
-		return GoldenMilletPresentModel.instance:isShowRedDot()
-	end,
-	matildaGiftCheckCanPat = function(arg_4_0)
-		return V1a9_MatildaGiftModel.instance:isShowRedDot()
-	end,
-	semmelWeisGiftCheckCanPat = function(arg_5_0)
-		return SemmelWeisGiftModel.instance:isShowRedDot()
-	end,
-	bPSPViewCanPat = function(arg_6_0)
-		if BpModel.instance:isEnd() then
-			return false
-		end
+function PatFaceCustomHandler.activity142CheckCanPat(patFaceId)
+	local result = false
+	local isInOpen = Activity136Model.instance:isActivity136InOpen()
 
-		local var_6_0 = BpConfig.instance:getBpCO(BpModel.instance.id)
+	if isInOpen then
+		local hasReceive = Activity136Model.instance:hasReceivedCharacter()
 
-		if not var_6_0 or not var_6_0.isSp then
-			return false
-		end
-
-		if ActivityHelper.getActivityStatus(VersionActivity2_2Enum.ActivityId.BPSP, true) ~= ActivityEnum.ActivityStatus.Normal then
-			return false
-		end
-
-		return BpModel.instance.firstShowSp
-	end,
-	bPViewCanPat = function(arg_7_0)
-		if BpModel.instance:isEnd() then
-			return false
-		end
-
-		local var_7_0 = string.format("%s#%s#%s", PlayerPrefsKey.FirstShowPatFace, "BPFace", PlayerModel.instance:getPlayinfo().userId)
-		local var_7_1 = PlayerPrefsHelper.getString(var_7_0, "")
-
-		return BpModel.instance.firstShow and tonumber(var_7_1) ~= BpModel.instance.id
+		result = not hasReceive
 	end
-}
 
-function var_0_0.limitDecorateCanPat(arg_8_0)
-	if ActivityHelper.getActivityStatus(VersionActivity2_2Enum.ActivityId.LimitDecorate, true) == ActivityEnum.ActivityStatus.Normal then
-		return (var_0_0.checkIsFistShow(arg_8_0))
+	return result
+end
+
+function PatFaceCustomHandler.decalogPresentCheckCanPat(patFaceId)
+	return DecalogPresentModel.instance:isShowRedDot()
+end
+
+function PatFaceCustomHandler.goldenMilletPresentCheckCanPat(patFaceId)
+	return GoldenMilletPresentModel.instance:isShowRedDot()
+end
+
+function PatFaceCustomHandler.matildaGiftCheckCanPat(patFaceId)
+	return V1a9_MatildaGiftModel.instance:isShowRedDot()
+end
+
+function PatFaceCustomHandler.semmelWeisGiftCheckCanPat(patFaceId)
+	return SemmelWeisGiftModel.instance:isShowRedDot()
+end
+
+function PatFaceCustomHandler.bPSPViewCanPat(patFaceId)
+	if BpModel.instance:isEnd() then
+		return false
+	end
+
+	local bpCo = BpConfig.instance:getBpCO(BpModel.instance.id)
+
+	if not bpCo or not bpCo.isSp then
+		return false
+	end
+
+	local status = ActivityHelper.getActivityStatus(BpConfig.instance:getSpActId(), true)
+
+	if status ~= ActivityEnum.ActivityStatus.Normal then
+		return false
+	end
+
+	return BpModel.instance.firstShowSp
+end
+
+function PatFaceCustomHandler.bPViewCanPat(patFaceId)
+	if BpModel.instance:isEnd() then
+		return false
+	end
+
+	local key = string.format("%s#%s#%s", PlayerPrefsKey.FirstShowPatFace, "BPFace", PlayerModel.instance:getPlayinfo().userId)
+	local data = PlayerPrefsHelper.getString(key, "")
+
+	return BpModel.instance.firstShow and tonumber(data) ~= BpModel.instance.id
+end
+
+function PatFaceCustomHandler.limitDecorateCanPat(patFaceId)
+	local status = ActivityHelper.getActivityStatus(VersionActivity2_2Enum.ActivityId.LimitDecorate, true)
+	local isOnline = status == ActivityEnum.ActivityStatus.Normal
+
+	if isOnline then
+		local isFirstShow = PatFaceCustomHandler.checkIsFistShow(patFaceId)
+
+		return isFirstShow
 	end
 end
 
-function var_0_0.decalogPresentPat(arg_9_0)
-	local var_9_0 = PatFaceConfig.instance:getPatFaceViewName(arg_9_0)
+function PatFaceCustomHandler.decalogPresentPat(patFaceId)
+	local patViewName = PatFaceConfig.instance:getPatFaceViewName(patFaceId)
 
-	DecalogPresentController.instance:openDecalogPresentView(var_9_0)
+	DecalogPresentController.instance:openDecalogPresentView(patViewName)
 end
 
-function var_0_0.goldenMilletPresentPat(arg_10_0)
+function PatFaceCustomHandler.goldenMilletPresentPat(patFaceId)
 	GoldenMilletPresentController.instance:openGoldenMilletPresentView()
 end
 
-function var_0_0.matildaGiftPat(arg_11_0)
+function PatFaceCustomHandler.matildaGiftPat(patFaceId)
 	V1a9_MatildaGiftController.instance:openMatildaGiftView()
 end
 
-function var_0_0.semmelWeisGiftPat(arg_12_0)
+function PatFaceCustomHandler.semmelWeisGiftPat(patFaceId)
 	SemmelWeisGiftController.instance:openSemmelWeisGiftView()
 end
 
-function var_0_0.checkIsFistShow(arg_13_0)
-	local var_13_0 = string.format("%s#%s#%s", PlayerPrefsKey.FirstShowPatFace, arg_13_0, PlayerModel.instance:getPlayinfo().userId)
-	local var_13_1 = PlayerPrefsHelper.getString(var_13_0, "")
+function PatFaceCustomHandler.checkIsFistShow(patFaceId)
+	local key = string.format("%s#%s#%s", PlayerPrefsKey.FirstShowPatFace, patFaceId, PlayerModel.instance:getPlayinfo().userId)
+	local data = PlayerPrefsHelper.getString(key, "")
 
-	return string.nilorempty(var_13_1)
+	return string.nilorempty(data)
 end
 
-function var_0_0.setHasShow(arg_14_0)
-	local var_14_0 = string.format("%s#%s#%s", PlayerPrefsKey.FirstShowPatFace, arg_14_0, PlayerModel.instance:getPlayinfo().userId)
+function PatFaceCustomHandler.setHasShow(patFaceId)
+	local key = string.format("%s#%s#%s", PlayerPrefsKey.FirstShowPatFace, patFaceId, PlayerModel.instance:getPlayinfo().userId)
 
-	PlayerPrefsHelper.setString(var_14_0, "hasEnter")
+	PlayerPrefsHelper.setString(key, "hasEnter")
 end
 
-function var_0_0.V2a8_WuErLiXiGiftCheckCanPat(arg_15_0)
+function PatFaceCustomHandler.V2a8_WuErLiXiGiftCheckCanPat(patFaceId)
 	return V2a8_WuErLiXiGiftModel.instance:isShowRedDot()
 end
 
-function var_0_0.V2a8_WuErLiXiGiftPat(arg_16_0)
+function PatFaceCustomHandler.V2a8_WuErLiXiGiftPat(patFaceId)
 	V2a8_WuErLiXiGiftController.instance:openV2a8_WuErLiXiGiftView()
 end
 
-function var_0_0.V2a8_SelfSelectCharacterViewCheckCanPat(arg_17_0)
+function PatFaceCustomHandler.V2a8_SelfSelectCharacterViewCheckCanPat(patFaceId)
 	return Activity199Model.instance:isShowRedDot()
 end
 
-function var_0_0.V2a8_SelfSelectCharacterViewPat(arg_18_0)
+function PatFaceCustomHandler.V2a8_SelfSelectCharacterViewPat(patFaceId)
 	Activity199Controller.instance:openV2a8_SelfSelectCharacterView()
 end
 
-function var_0_0.V2a8_BPSkinFaceViewCanPat(arg_19_0)
-	local var_19_0 = BpModel.instance.payStatus
+function PatFaceCustomHandler.V2a8_BPSkinFaceViewCanPat(patFaceId)
+	local payStatus = BpModel.instance.payStatus
 
-	if var_19_0 ~= BpEnum.PayStatus.Pay1 and var_19_0 ~= BpEnum.PayStatus.Pay2 then
+	if payStatus ~= BpEnum.PayStatus.Pay1 and payStatus ~= BpEnum.PayStatus.Pay2 then
 		return false
 	end
 
-	local var_19_1 = CommonConfig.instance:getConstNum(ConstEnum.BPSkinFaceViewSkinId)
+	local skinId = CommonConfig.instance:getConstNum(ConstEnum.BPSkinFaceViewSkinId)
 
-	if not var_19_1 or var_19_1 == 0 or not lua_skin.configDict[var_19_1] then
+	if not skinId or skinId == 0 or not lua_skin.configDict[skinId] then
 		return false
 	end
 
-	if BpController.instance:isEmptySkinFaceViewStr(var_19_1) then
-		local var_19_2 = StoreClothesGoodsItemListModel.instance:findMOByProduct(MaterialEnum.MaterialType.HeroSkin, var_19_1)
+	if BpController.instance:isEmptySkinFaceViewStr(skinId) then
+		local stroeGoodsMO = StoreClothesGoodsItemListModel.instance:findMOByProduct(MaterialEnum.MaterialType.HeroSkin, skinId)
 
-		if var_19_2 and not var_19_2:alreadyHas() then
+		if stroeGoodsMO and not stroeGoodsMO:alreadyHas() then
 			return true
 		end
 	end
@@ -128,32 +146,36 @@ function var_0_0.V2a8_BPSkinFaceViewCanPat(arg_19_0)
 	return false
 end
 
-function var_0_0.V2a8_openBPSkinFaceViewPat()
-	local var_20_0 = CommonConfig.instance:getConstNum(ConstEnum.BPSkinFaceViewSkinId)
+function PatFaceCustomHandler.V2a8_openBPSkinFaceViewPat()
+	local skinId = CommonConfig.instance:getConstNum(ConstEnum.BPSkinFaceViewSkinId)
 
-	if var_20_0 ~= 0 then
+	if skinId ~= 0 then
 		ViewMgr.instance:openView(ViewName.BPSkinFaceView, {
-			skinId = var_20_0
+			skinId = skinId
 		})
 	end
 end
 
-function var_0_0.PowerMakerPatFaceViewCanPat(arg_21_0)
-	local var_21_0 = ItemPowerModel.instance:getPowerMakerInfo()
+function PatFaceCustomHandler.PowerMakerPatFaceViewCanPat(patFaceId)
+	local ofMakerInfo = ItemPowerModel.instance:getPowerMakerInfo()
 
-	if not var_21_0 or var_21_0.makeCount <= 0 then
+	if not ofMakerInfo or ofMakerInfo.makeCount <= 0 then
 		return
 	end
 
-	local var_21_1 = CommonConfig.instance:getConstStr(ConstEnum.PowerMakerPatFaceTime)
+	local logoutHourConst = CommonConfig.instance:getConstStr(ConstEnum.PowerMakerPatFaceTime)
 
-	if not string.nilorempty(var_21_1) and TimeUtil.secondToHMS(var_21_0.logoutSecond) >= tonumber(var_21_1) then
-		return true
+	if not string.nilorempty(logoutHourConst) then
+		local hour = TimeUtil.secondToHMS(ofMakerInfo.logoutSecond)
+
+		if hour >= tonumber(logoutHourConst) then
+			return true
+		end
 	end
 end
 
-function var_0_0.PowerMakerPatFaceViewPat()
+function PatFaceCustomHandler.PowerMakerPatFaceViewPat()
 	ViewMgr.instance:openView(ViewName.PowerMakerPatFaceView)
 end
 
-return var_0_0
+return PatFaceCustomHandler

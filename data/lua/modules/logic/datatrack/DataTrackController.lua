@@ -1,11 +1,13 @@
-﻿module("modules.logic.datatrack.DataTrackController", package.seeall)
+﻿-- chunkname: @modules/logic/datatrack/DataTrackController.lua
 
-local var_0_0 = class("DataTrackController", BaseController)
+module("modules.logic.datatrack.DataTrackController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local DataTrackController = class("DataTrackController", BaseController)
+
+function DataTrackController:onInit()
 	SDKDataTrackExt.activateExtend()
 end
 
-var_0_0.instance = var_0_0.New()
+DataTrackController.instance = DataTrackController.New()
 
-return var_0_0
+return DataTrackController

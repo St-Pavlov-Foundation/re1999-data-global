@@ -1,95 +1,97 @@
-﻿module("modules.logic.season.view3_0.Season3_0CelebrityCardGetItem", package.seeall)
+﻿-- chunkname: @modules/logic/season/view3_0/Season3_0CelebrityCardGetItem.lua
 
-local var_0_0 = class("Season3_0CelebrityCardGetItem", BaseViewExtended)
+module("modules.logic.season.view3_0.Season3_0CelebrityCardGetItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gorare1 = gohelper.findChild(arg_1_0.viewGO, "#go_rare1")
-	arg_1_0._gorare2 = gohelper.findChild(arg_1_0.viewGO, "#go_rare2")
-	arg_1_0._gorare3 = gohelper.findChild(arg_1_0.viewGO, "#go_rare3")
-	arg_1_0._gorare4 = gohelper.findChild(arg_1_0.viewGO, "#go_rare4")
-	arg_1_0._gorare5 = gohelper.findChild(arg_1_0.viewGO, "#go_rare5")
+local Season3_0CelebrityCardGetItem = class("Season3_0CelebrityCardGetItem", BaseViewExtended)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Season3_0CelebrityCardGetItem:onInitView()
+	self._gorare1 = gohelper.findChild(self.viewGO, "#go_rare1")
+	self._gorare2 = gohelper.findChild(self.viewGO, "#go_rare2")
+	self._gorare3 = gohelper.findChild(self.viewGO, "#go_rare3")
+	self._gorare4 = gohelper.findChild(self.viewGO, "#go_rare4")
+	self._gorare5 = gohelper.findChild(self.viewGO, "#go_rare5")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function Season3_0CelebrityCardGetItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Season3_0CelebrityCardGetItem:removeEvents()
 	return
 end
 
-function var_0_0.onRefreshViewParam(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	arg_4_0._uid = arg_4_1
-	arg_4_0._noClick = arg_4_2
-	arg_4_0._equipId = arg_4_3
+function Season3_0CelebrityCardGetItem:onRefreshViewParam(uid, noClick, equipId)
+	self._uid = uid
+	self._noClick = noClick
+	self._equipId = equipId
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0:refreshData(arg_5_0._uid)
+function Season3_0CelebrityCardGetItem:onOpen()
+	self:refreshData(self._uid)
 end
 
-function var_0_0.refreshData(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0:_getItemID(arg_6_1)
+function Season3_0CelebrityCardGetItem:refreshData(uid)
+	local item_id = self:_getItemID(uid)
 
-	arg_6_0._itemId = var_6_0
+	self._itemId = item_id
 
-	arg_6_0:_checkCreateIcon()
-	arg_6_0._icon:updateData(var_6_0)
+	self:_checkCreateIcon()
+	self._icon:updateData(item_id)
 end
 
-function var_0_0._checkCreateIcon(arg_7_0)
-	if not arg_7_0._icon then
-		arg_7_0._icon = MonoHelper.addNoUpdateLuaComOnceToGo(arg_7_0.viewGO, Season3_0CelebrityCardEquip)
+function Season3_0CelebrityCardGetItem:_checkCreateIcon()
+	if not self._icon then
+		self._icon = MonoHelper.addNoUpdateLuaComOnceToGo(self.viewGO, Season3_0CelebrityCardEquip)
 
-		arg_7_0._icon:setClickCall(arg_7_0.onBtnClick, arg_7_0)
+		self._icon:setClickCall(self.onBtnClick, self)
 
-		if arg_7_0._noClick then
-			local var_7_0 = gohelper.onceAddComponent(arg_7_0.viewGO, typeof(UnityEngine.CanvasGroup))
+		if self._noClick then
+			local canvasGroup = gohelper.onceAddComponent(self.viewGO, typeof(UnityEngine.CanvasGroup))
 
-			var_7_0.interactable = false
-			var_7_0.blocksRaycasts = false
+			canvasGroup.interactable = false
+			canvasGroup.blocksRaycasts = false
 		end
 	end
 end
 
-function var_0_0.onBtnClick(arg_8_0)
-	if arg_8_0._noClick then
+function Season3_0CelebrityCardGetItem:onBtnClick()
+	if self._noClick then
 		return
 	end
 
-	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.EquipCard, arg_8_0._itemId)
+	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.EquipCard, self._itemId)
 end
 
-function var_0_0._getItemID(arg_9_0, arg_9_1)
-	local var_9_0
-	local var_9_1 = arg_9_0:getParentView()
+function Season3_0CelebrityCardGetItem:_getItemID(uid)
+	local item_id
+	local parent_view = self:getParentView()
 
-	if var_9_1 and var_9_1.isItemID and var_9_1:isItemID() then
-		var_9_0 = arg_9_1
+	if parent_view and parent_view.isItemID and parent_view:isItemID() then
+		item_id = uid
 	else
-		local var_9_2 = Activity104Model.instance:getAllItemMo()
+		local tar_equip_104 = Activity104Model.instance:getAllItemMo()
 
-		var_9_0 = var_9_2[arg_9_1] and var_9_2[arg_9_1].itemId
+		item_id = tar_equip_104[uid] and tar_equip_104[uid].itemId
 	end
 
-	var_9_0 = arg_9_0._equipId or var_9_0
+	item_id = self._equipId or item_id
 
-	return var_9_0
+	return item_id
 end
 
-function var_0_0.onClose(arg_10_0)
+function Season3_0CelebrityCardGetItem:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	if arg_11_0._icon then
-		arg_11_0._icon:setClickCall(nil, nil)
-		arg_11_0._icon:disposeUI()
+function Season3_0CelebrityCardGetItem:onDestroyView()
+	if self._icon then
+		self._icon:setClickCall(nil, nil)
+		self._icon:disposeUI()
 	end
 end
 
-return var_0_0
+return Season3_0CelebrityCardGetItem

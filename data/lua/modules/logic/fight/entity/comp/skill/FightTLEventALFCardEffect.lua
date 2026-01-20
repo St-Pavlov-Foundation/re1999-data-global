@@ -1,13 +1,15 @@
-﻿module("modules.logic.fight.entity.comp.skill.FightTLEventALFCardEffect", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skill/FightTLEventALFCardEffect.lua
 
-local var_0_0 = class("FightTLEventALFCardEffect", FightTimelineTrackItem)
+module("modules.logic.fight.entity.comp.skill.FightTLEventALFCardEffect", package.seeall)
 
-function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+local FightTLEventALFCardEffect = class("FightTLEventALFCardEffect", FightTimelineTrackItem)
+
+function FightTLEventALFCardEffect:onTrackStart(fightStepData, duration, paramsArr)
 	return
 end
 
-function var_0_0.onTrackEnd(arg_2_0)
+function FightTLEventALFCardEffect:onTrackEnd()
 	return
 end
 
-return var_0_0
+return FightTLEventALFCardEffect

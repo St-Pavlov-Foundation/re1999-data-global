@@ -1,262 +1,269 @@
-﻿module("modules.logic.achievement.controller.AchievementToastController", package.seeall)
+﻿-- chunkname: @modules/logic/achievement/controller/AchievementToastController.lua
 
-local var_0_0 = class("AchievementToastController", BaseController)
+module("modules.logic.achievement.controller.AchievementToastController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local AchievementToastController = class("AchievementToastController", BaseController)
+
+function AchievementToastController:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function AchievementToastController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
-	arg_3_0:registerCallback(AchievementEvent.LoginShowToast, arg_3_0.handleLoginEnterMainScene, arg_3_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_3_0.checkToastTrigger, arg_3_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_3_0.checkToastWithOpenView, arg_3_0)
-	OpenController.instance:registerCallback(OpenEvent.NewFuncUnlock, arg_3_0.checkToastTrigger, arg_3_0)
+function AchievementToastController:addConstEvents()
+	self:registerCallback(AchievementEvent.LoginShowToast, self.handleLoginEnterMainScene, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self.checkToastTrigger, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, self.checkToastWithOpenView, self)
+	OpenController.instance:registerCallback(OpenEvent.NewFuncUnlock, self.checkToastTrigger, self)
 end
 
-function var_0_0.reInit(arg_4_0)
-	arg_4_0._isLoginScene = false
-	arg_4_0._isToastShowing = false
+function AchievementToastController:reInit()
+	self._isLoginScene = false
+	self._isToastShowing = false
 
-	if arg_4_0._toastLoader then
-		arg_4_0._toastLoader:dispose()
+	if self._toastLoader then
+		self._toastLoader:dispose()
 
-		arg_4_0._toastLoader = nil
+		self._toastLoader = nil
 	end
 
 	AchievementToastModel.instance:release()
 end
 
-function var_0_0.onUpdateAchievements(arg_5_0)
-	local var_5_0 = PlayerModel.instance:getPlayinfo()
+function AchievementToastController:onUpdateAchievements()
+	local playerInfo = PlayerModel.instance:getPlayinfo()
 
-	if not var_5_0 or var_5_0.userId == 0 then
+	if not playerInfo or playerInfo.userId == 0 then
 		return
 	end
 
-	if arg_5_0:canPopUpToast() then
-		arg_5_0:showNextToast()
+	if self:canPopUpToast() then
+		self:showNextToast()
 	end
 end
 
-function var_0_0.handleLoginEnterMainScene(arg_6_0)
-	arg_6_0._isLoginScene = true
+function AchievementToastController:handleLoginEnterMainScene()
+	self._isLoginScene = true
 
-	if arg_6_0:canPopUpToast() then
-		arg_6_0:showNextToast()
+	if self:canPopUpToast() then
+		self:showNextToast()
 	end
 end
 
-function var_0_0.checkToastTrigger(arg_7_0)
-	if arg_7_0:canPopUpToast() then
-		arg_7_0:showNextToast()
+function AchievementToastController:checkToastTrigger()
+	if self:canPopUpToast() then
+		self:showNextToast()
 	end
 end
 
-function var_0_0.checkToastWithOpenView(arg_8_0)
-	if arg_8_0:canPopUpToastWithOpenView() then
-		arg_8_0:showNextToast()
+function AchievementToastController:checkToastWithOpenView()
+	if self:canPopUpToastWithOpenView() then
+		self:showNextToast()
 	end
 end
 
-function var_0_0.canPopUpToastWithOpenView(arg_9_0)
+function AchievementToastController:canPopUpToastWithOpenView()
 	return ViewMgr.instance:isOpen(ViewName.TowerPermanentResultView) or ViewMgr.instance:isOpen(ViewName.TowerDeepResultView) or ViewMgr.instance:isOpen(ViewName.TowerDeepHeroGroupFightView)
 end
 
-function var_0_0.canPopUpToast(arg_10_0)
-	return arg_10_0._isLoginScene and not ViewMgr.instance:isOpen(ViewName.StoryView) and OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Achievement) and not ViewMgr.instance:isOpen(ViewName.AiZiLaGameView) and GameSceneMgr.instance:getCurSceneType() ~= SceneType.Fight or ViewMgr.instance:isOpen(ViewName.TowerDeepHeroGroupFightView)
+function AchievementToastController:canPopUpToast()
+	return self._isLoginScene and not ViewMgr.instance:isOpen(ViewName.StoryView) and OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Achievement) and not ViewMgr.instance:isOpen(ViewName.AiZiLaGameView) and GameSceneMgr.instance:getCurSceneType() ~= SceneType.Fight or ViewMgr.instance:isOpen(ViewName.TowerDeepHeroGroupFightView)
 end
 
-function var_0_0.showNextToast(arg_11_0)
-	local var_11_0 = AchievementToastModel.instance:getWaitToastList()
-	local var_11_1 = AchievementToastModel.instance:getWaitNamePlateToastList()
+function AchievementToastController:showNextToast()
+	local waitToastList = AchievementToastModel.instance:getWaitToastList()
+	local waitNamePlateToastList = AchievementToastModel.instance:getWaitNamePlateToastList()
 
-	if var_11_0 and #var_11_0 > 0 then
-		arg_11_0:tryShowToast(var_11_0)
+	if waitToastList and #waitToastList > 0 then
+		self:tryShowToast(waitToastList)
 		AchievementToastModel.instance:onToastFinished()
 	end
 
-	if var_11_1 and #var_11_1 > 0 then
-		arg_11_0:tryShowNamePlateToast(var_11_1)
+	if waitNamePlateToastList and #waitNamePlateToastList > 0 then
+		self:tryShowNamePlateToast(waitNamePlateToastList)
 		AchievementToastModel.instance:onToastFinished()
 	end
 end
 
-function var_0_0.tryShowNamePlateToast(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_1[1]
+function AchievementToastController:tryShowNamePlateToast(waitNamePlateToastList)
+	local taskCo = waitNamePlateToastList[1]
 
-	ViewMgr.instance:openView(ViewName.AchievementNamePlateUnlockView, var_12_0)
+	ViewMgr.instance:openView(ViewName.AchievementNamePlateUnlockView, taskCo)
 end
 
-function var_0_0.tryShowToast(arg_13_0, arg_13_1)
-	if arg_13_1 then
-		local var_13_0 = #arg_13_1
-		local var_13_1 = var_13_0 - AchievementEnum.ShowMaxToastCount + 1
+function AchievementToastController:tryShowToast(waitToastList)
+	if waitToastList then
+		local waitToastCount = #waitToastList
+		local startToastIndex = waitToastCount - AchievementEnum.ShowMaxToastCount + 1
 
-		for iter_13_0 = Mathf.Clamp(var_13_1, 1, var_13_0), var_13_0 do
-			local var_13_2 = arg_13_1[iter_13_0]
-			local var_13_3 = var_13_2.taskId
-			local var_13_4 = var_13_2.toastType
+		startToastIndex = Mathf.Clamp(startToastIndex, 1, waitToastCount)
 
-			arg_13_0:showToastByTaskId(var_13_3, var_13_4)
+		for i = startToastIndex, waitToastCount do
+			local toastMo = waitToastList[i]
+			local taskId = toastMo.taskId
+			local toastType = toastMo.toastType
+
+			self:showToastByTaskId(taskId, toastType)
 		end
 	end
 end
 
-function var_0_0.showToastByTaskId(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = AchievementConfig.instance:getTask(arg_14_1)
-	local var_14_1 = AchievementConfig.instance:getAchievement(var_14_0.achievementId)
-	local var_14_2 = arg_14_0:getToastShowFunction(arg_14_2)
-	local var_14_3 = false
+function AchievementToastController:showToastByTaskId(taskId, toastType)
+	local taskCfg = AchievementConfig.instance:getTask(taskId)
+	local achievementCfg = AchievementConfig.instance:getAchievement(taskCfg.achievementId)
+	local toastShowFunc = self:getToastShowFunction(toastType)
+	local isToastSucc = false
 
-	if var_14_2 then
-		var_14_3 = var_14_2(arg_14_0, var_14_0, var_14_1)
+	if toastShowFunc and AchievementUtils.isShowByAchievementCfg(achievementCfg) then
+		isToastSucc = toastShowFunc(self, taskCfg, achievementCfg)
 	end
 
-	return var_14_3
+	return isToastSucc
 end
 
-function var_0_0.getToastShowFunction(arg_15_0, arg_15_1)
-	return var_0_0.AchievementToastShowFuncTab[arg_15_1]
+function AchievementToastController:getToastShowFunction(toastType)
+	return AchievementToastController.AchievementToastShowFuncTab[toastType]
 end
 
-function var_0_0.onShowTaskFinishedToast(arg_16_0, arg_16_1, arg_16_2)
-	local var_16_0 = false
+function AchievementToastController:onShowTaskFinishedToast(taskCfg, achievementCfg)
+	local isToastSucc = false
 
-	if arg_16_1 then
-		local var_16_1 = formatLuaLang("achievementtoastitem_achievementcompleted", arg_16_0:getToastName(arg_16_2, arg_16_1.level))
-		local var_16_2 = ResUrl.getAchievementIcon("badgeicon/" .. arg_16_1.icon)
-		local var_16_3 = {
-			toastTip = var_16_1,
-			icon = var_16_2
+	if taskCfg then
+		local toastTip = formatLuaLang("achievementtoastitem_achievementcompleted", self:getToastName(achievementCfg, taskCfg.level))
+		local iconPath = ResUrl.getAchievementIcon("badgeicon/" .. taskCfg.icon)
+		local toastParam = {
+			toastTip = toastTip,
+			icon = iconPath
 		}
 
-		ToastController.instance:showToastWithCustomData(ToastEnum.AchievementCompleted, arg_16_0.fillToastObj, arg_16_0, var_16_3, var_16_1)
+		ToastController.instance:showToastWithCustomData(ToastEnum.AchievementCompleted, self.fillToastObj, self, toastParam, toastTip)
 
-		var_16_0 = true
+		isToastSucc = true
 	end
 
-	return var_16_0
+	return isToastSucc
 end
 
-function var_0_0.onShowGroupUnlockedToast(arg_17_0, arg_17_1, arg_17_2)
-	local var_17_0 = false
+function AchievementToastController:onShowGroupUnlockedToast(taskCfg, achievementCfg)
+	local isToastSucc = false
 
-	if arg_17_1 and arg_17_2 then
-		local var_17_1 = AchievementConfig.instance:getAchievement(arg_17_1.achievementId)
-		local var_17_2 = var_17_1 and var_17_1.groupId
+	if taskCfg and achievementCfg then
+		local achievementCfg = AchievementConfig.instance:getAchievement(taskCfg.achievementId)
+		local groupId = achievementCfg and achievementCfg.groupId
 
-		var_17_0 = arg_17_0:showToastByGroupId(var_17_2, ToastEnum.AchievementUnLockGroup)
+		isToastSucc = self:showToastByGroupId(groupId, ToastEnum.AchievementUnLockGroup)
 	end
 
-	return var_17_0
+	return isToastSucc
 end
 
-function var_0_0.onShowGroupUpgrade(arg_18_0, arg_18_1, arg_18_2)
-	local var_18_0 = AchievementConfig.instance:getGroup(arg_18_2.groupId)
-	local var_18_1 = false
+function AchievementToastController:onShowGroupUpgrade(taskCfg, achievementCfg)
+	local groupCfg = AchievementConfig.instance:getGroup(achievementCfg.groupId)
+	local isToastSucc = false
 
-	if var_18_0 then
-		local var_18_2 = formatLuaLang("achievementtoastitem_upgradegroup", var_18_0.name)
-		local var_18_3 = ResUrl.getAchievementIcon("badgeicon/achievementgroupicon")
-		local var_18_4 = {
-			toastTip = var_18_2,
-			icon = var_18_3
+	if groupCfg then
+		local toastTipInfo = formatLuaLang("achievementtoastitem_upgradegroup", groupCfg.name)
+		local iconPath = ResUrl.getAchievementIcon("badgeicon/achievementgroupicon")
+		local toastParam = {
+			toastTip = toastTipInfo,
+			icon = iconPath
 		}
 
-		ToastController.instance:showToastWithCustomData(ToastEnum.AchievementGroupUpGrade, arg_18_0.fillToastObj, arg_18_0, var_18_4, var_18_0.name)
+		ToastController.instance:showToastWithCustomData(ToastEnum.AchievementGroupUpGrade, self.fillToastObj, self, toastParam, groupCfg.name)
 
-		var_18_1 = true
+		isToastSucc = true
 	end
 
-	return var_18_1
+	return isToastSucc
 end
 
-function var_0_0.onShowGroupFinishedToast(arg_19_0, arg_19_1, arg_19_2)
-	local var_19_0 = arg_19_2 and arg_19_2.groupId
-	local var_19_1 = false
+function AchievementToastController:onShowGroupFinishedToast(taskCfg, achievementCfg)
+	local groupId = achievementCfg and achievementCfg.groupId
+	local isToastSucc = false
 
-	if var_19_0 ~= 0 then
-		var_19_1 = arg_19_0:showToastByGroupId(var_19_0, ToastEnum.AchievementGroupCollect)
+	if groupId ~= 0 then
+		isToastSucc = self:showToastByGroupId(groupId, ToastEnum.AchievementGroupCollect)
 	end
 
-	return var_19_1
+	return isToastSucc
 end
 
-function var_0_0.getToastName(arg_20_0, arg_20_1, arg_20_2)
-	local var_20_0 = AchievementModel.instance:getAchievementTaskCoList(arg_20_1.id)
+function AchievementToastController:getToastName(achievementCo, level)
+	local taskCoList = AchievementModel.instance:getAchievementTaskCoList(achievementCo.id)
 
-	if var_20_0 and #var_20_0 == 1 then
-		return arg_20_1.name
+	if taskCoList and #taskCoList == 1 then
+		return achievementCo.name
 	end
 
 	if LangSettings.instance:isEn() then
-		return string.format("%s %s", arg_20_1.name, GameUtil.getRomanNums(arg_20_2))
+		return string.format("%s %s", achievementCo.name, GameUtil.getRomanNums(level))
 	else
-		return string.format("%s%s", arg_20_1.name, GameUtil.getRomanNums(arg_20_2))
+		return string.format("%s%s", achievementCo.name, GameUtil.getRomanNums(level))
 	end
 end
 
-function var_0_0.fillToastObj(arg_21_0, arg_21_1, arg_21_2)
-	local var_21_0 = ToastCallbackGroup.New()
+function AchievementToastController:fillToastObj(toastObj, toastParam)
+	local callbackGroup = ToastCallbackGroup.New()
 
-	var_21_0.onClose = arg_21_0.onCloseWhenToastRemove
-	var_21_0.onCloseObj = arg_21_0
-	var_21_0.onCloseParam = arg_21_2
-	var_21_0.onOpen = arg_21_0.onOpenToast
-	var_21_0.onOpenObj = arg_21_0
-	var_21_0.onOpenParam = arg_21_2
-	arg_21_1.callbackGroup = var_21_0
+	callbackGroup.onClose = self.onCloseWhenToastRemove
+	callbackGroup.onCloseObj = self
+	callbackGroup.onCloseParam = toastParam
+	callbackGroup.onOpen = self.onOpenToast
+	callbackGroup.onOpenObj = self
+	callbackGroup.onOpenParam = toastParam
+	toastObj.callbackGroup = callbackGroup
 end
 
-function var_0_0.onOpenToast(arg_22_0, arg_22_1, arg_22_2)
-	arg_22_1.item = AchievementToastItem.New()
+function AchievementToastController:onOpenToast(toastParam, toastItem)
+	toastParam.item = AchievementToastItem.New()
 
-	arg_22_1.item:init(arg_22_2, arg_22_1)
+	toastParam.item:init(toastItem, toastParam)
 end
 
-function var_0_0.onCloseWhenToastRemove(arg_23_0, arg_23_1, arg_23_2)
-	if arg_23_1.item then
-		arg_23_1.item:dispose()
+function AchievementToastController:onCloseWhenToastRemove(toastParam, toastItem)
+	if toastParam.item then
+		toastParam.item:dispose()
 
-		arg_23_1.item = nil
+		toastParam.item = nil
 	end
 end
 
-function var_0_0.showToastByGroupId(arg_24_0, arg_24_1, arg_24_2)
-	local var_24_0 = AchievementConfig.instance:getGroup(arg_24_1)
+function AchievementToastController:showToastByGroupId(groupId, toastId)
+	local groupCfg = AchievementConfig.instance:getGroup(groupId)
 
-	if var_24_0 then
-		ToastController.instance:showToast(arg_24_2, var_24_0.name)
+	if groupCfg then
+		ToastController.instance:showToast(toastId, groupCfg.name)
 
 		return true
 	end
 end
 
-function var_0_0.tryGetToastAsset(arg_25_0)
-	if arg_25_0._toastLoader and not arg_25_0._toastLoader.isLoading then
-		return (arg_25_0._toastLoader:getAssetItem(AchievementEnum.AchievementToastPath):GetResource(AchievementEnum.AchievementToastPath))
+function AchievementToastController:tryGetToastAsset()
+	if self._toastLoader and not self._toastLoader.isLoading then
+		local assetItem = self._toastLoader:getAssetItem(AchievementEnum.AchievementToastPath)
+		local toastPrefab = assetItem:GetResource(AchievementEnum.AchievementToastPath)
+
+		return toastPrefab
 	end
 
-	if not arg_25_0._toastLoader then
-		arg_25_0._toastLoader = arg_25_0._toastLoader or MultiAbLoader.New()
+	if not self._toastLoader then
+		self._toastLoader = self._toastLoader or MultiAbLoader.New()
 
-		arg_25_0._toastLoader:addPath(AchievementEnum.AchievementToastPath)
-		arg_25_0._toastLoader:startLoad()
+		self._toastLoader:addPath(AchievementEnum.AchievementToastPath)
+		self._toastLoader:startLoad()
 	end
 
 	return nil
 end
 
-var_0_0.AchievementToastShowFuncTab = {
-	[AchievementEnum.ToastType.TaskFinished] = var_0_0.onShowTaskFinishedToast,
-	[AchievementEnum.ToastType.GroupUnlocked] = var_0_0.onShowGroupUnlockedToast,
-	[AchievementEnum.ToastType.GroupUpgrade] = var_0_0.onShowGroupUpgrade,
-	[AchievementEnum.ToastType.GroupFinished] = var_0_0.onShowGroupFinishedToast
+AchievementToastController.AchievementToastShowFuncTab = {
+	[AchievementEnum.ToastType.TaskFinished] = AchievementToastController.onShowTaskFinishedToast,
+	[AchievementEnum.ToastType.GroupUnlocked] = AchievementToastController.onShowGroupUnlockedToast,
+	[AchievementEnum.ToastType.GroupUpgrade] = AchievementToastController.onShowGroupUpgrade,
+	[AchievementEnum.ToastType.GroupFinished] = AchievementToastController.onShowGroupFinishedToast
 }
-var_0_0.instance = var_0_0.New()
+AchievementToastController.instance = AchievementToastController.New()
 
-return var_0_0
+return AchievementToastController

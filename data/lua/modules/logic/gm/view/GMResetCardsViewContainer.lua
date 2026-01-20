@@ -1,43 +1,45 @@
-﻿module("modules.logic.gm.view.GMResetCardsViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GMResetCardsViewContainer.lua
 
-local var_0_0 = class("GMResetCardsViewContainer", BaseViewContainer)
+module("modules.logic.gm.view.GMResetCardsViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = ListScrollParam.New()
+local GMResetCardsViewContainer = class("GMResetCardsViewContainer", BaseViewContainer)
 
-	var_1_0.scrollGOPath = "viewport1"
-	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_0.prefabUrl = "viewport1/item"
-	var_1_0.cellClass = GMResetCardsItem1
-	var_1_0.scrollDir = ScrollEnum.ScrollDirH
-	var_1_0.lineCount = 1
-	var_1_0.cellWidth = 170
-	var_1_0.cellHeight = 250
-	var_1_0.cellSpaceH = 0
-	var_1_0.cellSpaceV = 0
-	var_1_0.startSpace = 0
+function GMResetCardsViewContainer:buildViews()
+	local scrollParam1 = ListScrollParam.New()
 
-	local var_1_1 = ListScrollParam.New()
+	scrollParam1.scrollGOPath = "viewport1"
+	scrollParam1.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam1.prefabUrl = "viewport1/item"
+	scrollParam1.cellClass = GMResetCardsItem1
+	scrollParam1.scrollDir = ScrollEnum.ScrollDirH
+	scrollParam1.lineCount = 1
+	scrollParam1.cellWidth = 170
+	scrollParam1.cellHeight = 250
+	scrollParam1.cellSpaceH = 0
+	scrollParam1.cellSpaceV = 0
+	scrollParam1.startSpace = 0
 
-	var_1_1.scrollGOPath = "viewport2"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_1.prefabUrl = "viewport2/item"
-	var_1_1.cellClass = GMResetCardsItem2
-	var_1_1.scrollDir = ScrollEnum.ScrollDirH
-	var_1_1.lineCount = 2
-	var_1_1.cellWidth = 170
-	var_1_1.cellHeight = 250
-	var_1_1.cellSpaceH = 0
-	var_1_1.cellSpaceV = 20
-	var_1_1.startSpace = 0
+	local scrollParam2 = ListScrollParam.New()
 
-	local var_1_2 = {}
+	scrollParam2.scrollGOPath = "viewport2"
+	scrollParam2.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam2.prefabUrl = "viewport2/item"
+	scrollParam2.cellClass = GMResetCardsItem2
+	scrollParam2.scrollDir = ScrollEnum.ScrollDirH
+	scrollParam2.lineCount = 2
+	scrollParam2.cellWidth = 170
+	scrollParam2.cellHeight = 250
+	scrollParam2.cellSpaceH = 0
+	scrollParam2.cellSpaceV = 20
+	scrollParam2.startSpace = 0
 
-	table.insert(var_1_2, GMResetCardsView.New())
-	table.insert(var_1_2, LuaListScrollView.New(GMResetCardsModel.instance:getModel1(), var_1_0))
-	table.insert(var_1_2, LuaListScrollView.New(GMResetCardsModel.instance:getModel2(), var_1_1))
+	local views = {}
 
-	return var_1_2
+	table.insert(views, GMResetCardsView.New())
+	table.insert(views, LuaListScrollView.New(GMResetCardsModel.instance:getModel1(), scrollParam1))
+	table.insert(views, LuaListScrollView.New(GMResetCardsModel.instance:getModel2(), scrollParam2))
+
+	return views
 end
 
-return var_0_0
+return GMResetCardsViewContainer

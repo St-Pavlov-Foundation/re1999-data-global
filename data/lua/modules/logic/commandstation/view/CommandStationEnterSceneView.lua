@@ -1,101 +1,104 @@
-﻿module("modules.logic.commandstation.view.CommandStationEnterSceneView", package.seeall)
+﻿-- chunkname: @modules/logic/commandstation/view/CommandStationEnterSceneView.lua
 
-local var_0_0 = class("CommandStationEnterSceneView", BaseView)
+module("modules.logic.commandstation.view.CommandStationEnterSceneView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	local var_1_0 = CameraMgr.instance:getMainCameraTrs().parent
-	local var_1_1 = CameraMgr.instance:getSceneRoot()
+local CommandStationEnterSceneView = class("CommandStationEnterSceneView", BaseView)
 
-	arg_1_0._sceneRoot = UnityEngine.GameObject.New("CommandStationEnterScene")
+function CommandStationEnterSceneView:onInitView()
+	local mainTrans = CameraMgr.instance:getMainCameraTrs().parent
+	local sceneRoot = CameraMgr.instance:getSceneRoot()
 
-	local var_1_2, var_1_3, var_1_4 = transformhelper.getLocalPos(var_1_0)
+	self._sceneRoot = UnityEngine.GameObject.New("CommandStationEnterScene")
 
-	transformhelper.setLocalPos(arg_1_0._sceneRoot.transform, 0, var_1_3, 0)
-	gohelper.addChild(var_1_1, arg_1_0._sceneRoot)
+	local x, y, z = transformhelper.getLocalPos(mainTrans)
+
+	transformhelper.setLocalPos(self._sceneRoot.transform, 0, y, 0)
+	gohelper.addChild(sceneRoot, self._sceneRoot)
 end
 
-function var_0_0.onOpen(arg_2_0)
-	arg_2_0:loadMap()
+function CommandStationEnterSceneView:onOpen()
+	self:loadMap()
 end
 
-function var_0_0.loadMap(arg_3_0)
-	if arg_3_0._mapLoader then
-		if arg_3_0._mapLoader.isLoading then
-			arg_3_0._mapLoader:dispose()
+function CommandStationEnterSceneView:loadMap()
+	if self._mapLoader then
+		if self._mapLoader.isLoading then
+			self._mapLoader:dispose()
 		else
-			arg_3_0._oldMapLoader = arg_3_0._mapLoader
+			self._oldMapLoader = self._mapLoader
 		end
 	end
 
-	local var_3_0 = 1
-	local var_3_1 = var_3_0 == 1 and ToughBattleEnum.MapId_stage1 or ToughBattleEnum.MapId_stage2
+	local stage = 1
+	local mapId = stage == 1 and ToughBattleEnum.MapId_stage1 or ToughBattleEnum.MapId_stage2
 
-	arg_3_0._mapCfg = lua_chapter_map.configDict[var_3_1]
-	arg_3_0._mapLoader = MultiAbLoader.New()
+	self._mapCfg = lua_chapter_map.configDict[mapId]
+	self._mapLoader = MultiAbLoader.New()
 
-	local var_3_2 = {}
+	local allResPath = {}
 
-	arg_3_0:buildLoadRes(var_3_2, arg_3_0._mapCfg, var_3_0)
+	self:buildLoadRes(allResPath, self._mapCfg, stage)
 
-	arg_3_0._sceneUrl = var_3_2[1]
-	arg_3_0._mapLightUrl = var_3_2[2]
-	arg_3_0._mapEffectUrl = var_3_2[3]
+	self._sceneUrl = allResPath[1]
+	self._mapLightUrl = allResPath[2]
+	self._mapEffectUrl = allResPath[3]
 
-	arg_3_0._mapLoader:addPath(arg_3_0._sceneUrl)
-	arg_3_0._mapLoader:addPath(arg_3_0._mapLightUrl)
+	self._mapLoader:addPath(self._sceneUrl)
+	self._mapLoader:addPath(self._mapLightUrl)
 
-	if arg_3_0._mapEffectUrl then
-		arg_3_0._mapLoader:addPath(arg_3_0._mapEffectUrl)
+	if self._mapEffectUrl then
+		self._mapLoader:addPath(self._mapEffectUrl)
 	end
 
-	arg_3_0._mapLoader:startLoad(arg_3_0._loadSceneFinish, arg_3_0)
+	self._mapLoader:startLoad(self._loadSceneFinish, self)
 end
 
-function var_0_0.buildLoadRes(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	table.insert(arg_4_1, ResUrl.getDungeonMapRes(arg_4_2.res))
-	table.insert(arg_4_1, "scenes/m_s08_hddt/scene_prefab/m_s08_hddt_light.prefab")
+function CommandStationEnterSceneView:buildLoadRes(allResPath, mapCfg, stage)
+	table.insert(allResPath, ResUrl.getDungeonMapRes(mapCfg.res))
+	table.insert(allResPath, "scenes/m_s08_hddt/scene_prefab/m_s08_hddt_light.prefab")
 
-	if arg_4_3 == 2 then
-		table.insert(arg_4_1, "scenes/v1a9_m_s08_hddt/vx/prefab/vx_boss_effect3.prefab")
+	if stage == 2 then
+		table.insert(allResPath, "scenes/v1a9_m_s08_hddt/vx/prefab/vx_boss_effect3.prefab")
 	end
 end
 
-function var_0_0._loadSceneFinish(arg_5_0)
-	if arg_5_0._oldMapLoader then
-		arg_5_0._oldMapLoader:dispose()
+function CommandStationEnterSceneView:_loadSceneFinish()
+	if self._oldMapLoader then
+		self._oldMapLoader:dispose()
 
-		arg_5_0._oldMapLoader = nil
+		self._oldMapLoader = nil
 
-		gohelper.destroy(arg_5_0._sceneGo)
+		gohelper.destroy(self._sceneGo)
 	end
 
-	local var_5_0 = arg_5_0._sceneUrl
-	local var_5_1 = arg_5_0._mapLoader:getAssetItem(var_5_0):GetResource(var_5_0)
+	local assetUrl = self._sceneUrl
+	local assetItem = self._mapLoader:getAssetItem(assetUrl)
+	local mainPrefab = assetItem:GetResource(assetUrl)
 
-	arg_5_0._sceneGo = gohelper.clone(var_5_1, arg_5_0._sceneRoot, arg_5_0._mapCfg.id)
-	arg_5_0._sceneTrans = arg_5_0._sceneGo.transform
+	self._sceneGo = gohelper.clone(mainPrefab, self._sceneRoot, self._mapCfg.id)
+	self._sceneTrans = self._sceneGo.transform
 
-	transformhelper.setLocalPos(arg_5_0._sceneTrans, -40.33, 20.35, 3.6)
+	transformhelper.setLocalPos(self._sceneTrans, -40.33, 20.35, 3.6)
 end
 
-function var_0_0.setSceneVisible(arg_6_0, arg_6_1)
-	gohelper.setActive(arg_6_0._sceneRoot, arg_6_1)
+function CommandStationEnterSceneView:setSceneVisible(isVisible)
+	gohelper.setActive(self._sceneRoot, isVisible)
 end
 
-function var_0_0.onDestroyView(arg_7_0)
-	if arg_7_0._oldMapLoader then
-		arg_7_0._oldMapLoader:dispose()
+function CommandStationEnterSceneView:onDestroyView()
+	if self._oldMapLoader then
+		self._oldMapLoader:dispose()
 
-		arg_7_0._oldMapLoader = nil
+		self._oldMapLoader = nil
 	end
 
-	if arg_7_0._mapLoader then
-		arg_7_0._mapLoader:dispose()
+	if self._mapLoader then
+		self._mapLoader:dispose()
 
-		arg_7_0._mapLoader = nil
+		self._mapLoader = nil
 	end
 
-	gohelper.destroy(arg_7_0._sceneRoot)
+	gohelper.destroy(self._sceneRoot)
 end
 
-return var_0_0
+return CommandStationEnterSceneView

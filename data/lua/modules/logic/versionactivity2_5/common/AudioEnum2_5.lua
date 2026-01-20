@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity2_5.common.AudioEnum2_5", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/common/AudioEnum2_5.lua
 
-local var_0_0 = AudioEnum
+module("modules.logic.versionactivity2_5.common.AudioEnum2_5", package.seeall)
 
-var_0_0.VersionActivity2_5Enter = {
+local AudioEnum = AudioEnum
+
+AudioEnum.VersionActivity2_5Enter = {
 	play_ui_tangren_open1 = 20250002
 }
-var_0_0.AutoChess = {
+AudioEnum.AutoChess = {
 	play_ui_tangren_qishou_confirm = 20250405,
 	play_ui_tangren_battle_enter = 20250408,
 	play_ui_tangren_toycar_standby_loop = 20250404,
@@ -21,16 +23,16 @@ var_0_0.AutoChess = {
 	play_ui_tangren_award_get = 20250423,
 	play_ui_tangren_chess_move = 20250424
 }
-var_0_0.GoldenMillet = {
+AudioEnum.GoldenMillet = {
 	play_ui_tangren_songpifu_loop = 25251201,
 	stop_ui_tangren_songpifu_loop = 25251202
 }
 
-local var_0_1 = {
+local bgm = {
 	play_autochess = 3251821
 }
 
-var_0_0.FeiLinShiDuo = {
+AudioEnum.FeiLinShiDuo = {
 	play_ui_tangren_bounced = 20250809,
 	play_ui_tangren_scene_switch = 20250812,
 	play_ui_tangren_spikes_death = 20250810,
@@ -52,7 +54,7 @@ var_0_0.FeiLinShiDuo = {
 	play_ui_jinye_story_star = 20250818
 }
 
-local var_0_2 = {
+local UI = {
 	Act183_GroupFinished = 20251007,
 	Act183_OpenSettlementView = 20251005,
 	Act183_SwitchGroup = 20251006,
@@ -77,7 +79,7 @@ local var_0_2 = {
 	play_ui_shuori_qiyuan_unlock_2 = 25251109
 }
 
-var_0_0.LiangYueAudio = {
+AudioEnum.LiangYueAudio = {
 	play_ui_tangren_anzhu = 20250703,
 	play_ui_wulu_aizila_forward_paper = 20151006,
 	play_ui_tangren_pen2 = 20250707,
@@ -88,7 +90,7 @@ var_0_0.LiangYueAudio = {
 	play_ui_tangren_pen1 = 20250706,
 	play_ui_wangshi_argus_level_open = 20211503
 }
-var_0_0.Act186 = {
+AudioEnum.Act186 = {
 	play_ui_leimi_theft_open = 25251403,
 	play_ui_tangren_cookies_open = 25251414,
 	play_ui_mln_day_night = 25251406,
@@ -104,7 +106,7 @@ var_0_0.Act186 = {
 	play_ui_tangren_firework = 25251408,
 	play_ui_mln_page_turn = 25251404
 }
-var_0_0.Act187 = {
+AudioEnum.Act187 = {
 	play_ui_tangren_yuanxiao_pop = 25251502,
 	play_ui_tangren_yuanxiao_open = 25251501,
 	play_ui_tangren_yuanxiao_draw_loop = 25251504,
@@ -114,24 +116,24 @@ var_0_0.Act187 = {
 	play_ui_mln_page_turn = 25251507
 }
 
-for iter_0_0, iter_0_1 in pairs(var_0_1) do
-	if isDebugBuild and var_0_0.Bgm[iter_0_0] then
-		logError("AudioEnum.Bgm重复定义" .. iter_0_0)
+for key, value in pairs(bgm) do
+	if isDebugBuild and AudioEnum.Bgm[key] then
+		logError("AudioEnum.Bgm重复定义" .. key)
 	end
 
-	var_0_0.Bgm[iter_0_0] = iter_0_1
+	AudioEnum.Bgm[key] = value
 end
 
-for iter_0_2, iter_0_3 in pairs(var_0_2) do
-	if isDebugBuild and var_0_0.UI[iter_0_2] then
-		logError("AudioEnum.UI重复定义" .. iter_0_2)
+for key, value in pairs(UI) do
+	if isDebugBuild and AudioEnum.UI[key] then
+		logError("AudioEnum.UI重复定义" .. key)
 	end
 
-	var_0_0.UI[iter_0_2] = iter_0_3
+	AudioEnum.UI[key] = value
 end
 
-function var_0_0.activate()
+function AudioEnum.activate()
 	return
 end
 
-return var_0_0
+return AudioEnum

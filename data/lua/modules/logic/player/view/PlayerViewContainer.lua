@@ -1,31 +1,33 @@
-﻿module("modules.logic.player.view.PlayerViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/player/view/PlayerViewContainer.lua
 
-local var_0_0 = class("PlayerViewContainer", BaseViewContainer)
+module("modules.logic.player.view.PlayerViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local PlayerViewContainer = class("PlayerViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, PlayerView.New())
-	table.insert(var_1_0, PlayerViewAchievement.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
+function PlayerViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, PlayerView.New())
+	table.insert(views, PlayerViewAchievement.New())
+	table.insert(views, TabViewGroup.New(1, "#go_btns"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	arg_2_0.navigationView = NavigateButtonsView.New({
+function PlayerViewContainer:buildTabViews(tabContainerId)
+	self.navigationView = NavigateButtonsView.New({
 		true,
 		true,
 		false
 	})
 
 	return {
-		arg_2_0.navigationView
+		self.navigationView
 	}
 end
 
-function var_0_0.onContainerOpenFinish(arg_3_0)
-	arg_3_0.navigationView:resetCloseBtnAudioId(AudioEnum.UI.Play_UI_Player_Interface_Close)
+function PlayerViewContainer:onContainerOpenFinish()
+	self.navigationView:resetCloseBtnAudioId(AudioEnum.UI.Play_UI_Player_Interface_Close)
 end
 
-return var_0_0
+return PlayerViewContainer

@@ -1,36 +1,38 @@
-﻿module("modules.logic.store.view.StoreSkinGoodsView2Container", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/StoreSkinGoodsView2Container.lua
 
-local var_0_0 = class("StoreSkinGoodsView2Container", BaseViewContainer)
+module("modules.logic.store.view.StoreSkinGoodsView2Container", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local StoreSkinGoodsView2Container = class("StoreSkinGoodsView2Container", BaseViewContainer)
 
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topright"))
-	table.insert(var_1_0, StoreSkinGoodsView2.New())
+function StoreSkinGoodsView2Container:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, TabViewGroup.New(1, "#go_topright"))
+	table.insert(views, StoreSkinGoodsView2.New())
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
+function StoreSkinGoodsView2Container:onContainerClickModalMask()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	arg_2_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.buildTabViews(arg_3_0, arg_3_1)
-	if arg_3_1 == 1 then
-		arg_3_0._currencyView = CurrencyView.New({})
-		arg_3_0._currencyView.foreHideBtn = true
+function StoreSkinGoodsView2Container:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._currencyView = CurrencyView.New({})
+		self._currencyView.foreHideBtn = true
 
 		return {
-			arg_3_0._currencyView
+			self._currencyView
 		}
 	end
 end
 
-function var_0_0.setCurrencyType(arg_4_0, arg_4_1)
-	if arg_4_0._currencyView then
-		arg_4_0._currencyView:setCurrencyType(arg_4_1)
+function StoreSkinGoodsView2Container:setCurrencyType(currencyTypeParam)
+	if self._currencyView then
+		self._currencyView:setCurrencyType(currencyTypeParam)
 	end
 end
 
-return var_0_0
+return StoreSkinGoodsView2Container

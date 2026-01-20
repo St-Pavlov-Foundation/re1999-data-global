@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity2_8.molideer.view.game.MoLiDeErEventViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/molideer/view/game/MoLiDeErEventViewContainer.lua
 
-local var_0_0 = class("MoLiDeErEventViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_8.molideer.view.game.MoLiDeErEventViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local MoLiDeErEventViewContainer = class("MoLiDeErEventViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, MoLiDeErEventView.New())
+function MoLiDeErEventViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, MoLiDeErEventView.New())
+
+	return views
 end
 
-return var_0_0
+return MoLiDeErEventViewContainer

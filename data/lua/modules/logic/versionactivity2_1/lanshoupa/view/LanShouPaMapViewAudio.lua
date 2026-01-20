@@ -1,24 +1,26 @@
-﻿module("modules.logic.versionactivity2_1.lanshoupa.view.LanShouPaMapViewAudio", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_1/lanshoupa/view/LanShouPaMapViewAudio.lua
 
-local var_0_0 = class("LanShouPaMapViewAudio", BaseView)
+module("modules.logic.versionactivity2_1.lanshoupa.view.LanShouPaMapViewAudio", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local LanShouPaMapViewAudio = class("LanShouPaMapViewAudio", BaseView)
+
+function LanShouPaMapViewAudio:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0._editableInitView(arg_2_0)
+function LanShouPaMapViewAudio:_editableInitView()
 	return
 end
 
-function var_0_0._onCloseGameView(arg_3_0, arg_3_1)
-	if (arg_3_1 == ViewName.LanShouPaGameView or arg_3_1 == ViewName.StoryFrontView) and arg_3_0:_isCanPlayAmbient() then
-		arg_3_0:playAmbientAudio()
+function LanShouPaMapViewAudio:_onCloseGameView(viewName)
+	if (viewName == ViewName.LanShouPaGameView or viewName == ViewName.StoryFrontView) and self:_isCanPlayAmbient() then
+		self:playAmbientAudio()
 	end
 end
 
-function var_0_0._isCanPlayAmbient(arg_4_0)
+function LanShouPaMapViewAudio:_isCanPlayAmbient()
 	if ViewMgr.instance:isOpen(ViewName.LanShouPaGameView) or ViewMgr.instance:isOpen(ViewName.StoryFrontView) then
 		return false
 	end
@@ -26,32 +28,32 @@ function var_0_0._isCanPlayAmbient(arg_4_0)
 	return true
 end
 
-function var_0_0._onOpenGameView(arg_5_0, arg_5_1)
-	if arg_5_1 ~= ViewName.LanShouPaGameView and arg_5_1 == ViewName.StoryFrontView then
+function LanShouPaMapViewAudio:_onOpenGameView(viewName)
+	if viewName ~= ViewName.LanShouPaGameView and viewName == ViewName.StoryFrontView then
 		-- block empty
 	end
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:playAmbientAudio()
-	arg_6_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_6_0._onCloseGameView, arg_6_0)
-	arg_6_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_6_0._onOpenGameView, arg_6_0)
+function LanShouPaMapViewAudio:onOpen()
+	self:playAmbientAudio()
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseGameView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenGameView, self)
 end
 
-function var_0_0.playAmbientAudio(arg_7_0)
+function LanShouPaMapViewAudio:playAmbientAudio()
 	return
 end
 
-function var_0_0.closeAmbientSound(arg_8_0)
-	if arg_8_0._ambientAudioId then
-		AudioMgr.instance:stopPlayingID(arg_8_0._ambientAudioId)
+function LanShouPaMapViewAudio:closeAmbientSound()
+	if self._ambientAudioId then
+		AudioMgr.instance:stopPlayingID(self._ambientAudioId)
 
-		arg_8_0._ambientAudioId = nil
+		self._ambientAudioId = nil
 	end
 end
 
-function var_0_0.onClose(arg_9_0)
+function LanShouPaMapViewAudio:onClose()
 	return
 end
 
-return var_0_0
+return LanShouPaMapViewAudio

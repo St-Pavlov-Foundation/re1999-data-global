@@ -1,23 +1,25 @@
-﻿module("modules.logic.versionactivity2_7.towergift.controller.DestinyStoneGiftPickChoiceController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/towergift/controller/DestinyStoneGiftPickChoiceController.lua
 
-local var_0_0 = class("DestinyStoneGiftPickChoiceController", BaseController)
+module("modules.logic.versionactivity2_7.towergift.controller.DestinyStoneGiftPickChoiceController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local DestinyStoneGiftPickChoiceController = class("DestinyStoneGiftPickChoiceController", BaseController)
+
+function DestinyStoneGiftPickChoiceController:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function DestinyStoneGiftPickChoiceController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function DestinyStoneGiftPickChoiceController:addConstEvents()
 	return
 end
 
-function var_0_0.reInit(arg_4_0)
-	arg_4_0:onInit()
+function DestinyStoneGiftPickChoiceController:reInit()
+	self:onInit()
 end
 
-var_0_0.instance = var_0_0.New()
+DestinyStoneGiftPickChoiceController.instance = DestinyStoneGiftPickChoiceController.New()
 
-return var_0_0
+return DestinyStoneGiftPickChoiceController

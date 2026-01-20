@@ -1,25 +1,27 @@
-﻿module("modules.logic.defines.SDKChannelEventEnum", package.seeall)
+﻿-- chunkname: @modules/logic/defines/SDKChannelEventEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.defines.SDKChannelEventEnum", package.seeall)
 
-var_0_0.HeroGetEvent = {
+local SDKChannelEventEnum = _M
+
+SDKChannelEventEnum.HeroGetEvent = {
 	[3023] = SDKDataTrackMgr.ChannelEvent.stdhour1
 }
-var_0_0.PlayerLevelUpEvent = {
+SDKChannelEventEnum.PlayerLevelUpEvent = {
 	[5] = SDKDataTrackMgr.ChannelEvent.stdlevel
 }
-var_0_0.HeroRankUp = {
+SDKChannelEventEnum.HeroRankUp = {
 	SDKDataTrackMgr.ChannelEvent.stdrechargeprompt,
 	SDKDataTrackMgr.ChannelEvent.stdrecharge,
 	SDKDataTrackMgr.ChannelEvent.stdmonthly
 }
-var_0_0.ConsumeItem = {
+SDKChannelEventEnum.ConsumeItem = {
 	[140001] = {
 		100,
 		SDKDataTrackMgr.ChannelEvent.stdstaminapurchase
 	}
 }
-var_0_0.appReviewGuideId = 108
-var_0_0.appReviewGuideStep = 8
+SDKChannelEventEnum.appReviewGuideId = 108
+SDKChannelEventEnum.appReviewGuideStep = 8
 
-return var_0_0
+return SDKChannelEventEnum

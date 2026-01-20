@@ -1,91 +1,95 @@
-﻿module("modules.logic.sp01.library.AssassinLibraryController", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/library/AssassinLibraryController.lua
 
-local var_0_0 = class("AssassinLibraryController", BaseController)
+module("modules.logic.sp01.library.AssassinLibraryController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._waitLibraryIdList = {}
-	arg_1_0._waitLibraryIdMap = {}
-	arg_1_0._toastLibraryIdMap = {}
-	arg_1_0._isEnableToast = true
+local AssassinLibraryController = class("AssassinLibraryController", BaseController)
+
+function AssassinLibraryController:onInit()
+	self._waitLibraryIdList = {}
+	self._waitLibraryIdMap = {}
+	self._toastLibraryIdMap = {}
+	self._isEnableToast = true
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:onInit()
+function AssassinLibraryController:reInit()
+	self:onInit()
 end
 
-function var_0_0.addConstEvents(arg_3_0)
-	arg_3_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_3_0._onOpenViewFinish, arg_3_0)
-	arg_3_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_3_0._onCloseViewFinish, arg_3_0)
-	arg_3_0:addEventCb(AssassinController.instance, AssassinEvent.EnableLibraryToast, arg_3_0._onEnableLibraryToast, arg_3_0)
+function AssassinLibraryController:addConstEvents()
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	self:addEventCb(AssassinController.instance, AssassinEvent.EnableLibraryToast, self._onEnableLibraryToast, self)
 end
 
-function var_0_0._onOpenViewFinish(arg_4_0, arg_4_1)
-	arg_4_0:tryToast()
+function AssassinLibraryController:_onOpenViewFinish(viewName)
+	self:tryToast()
 end
 
-function var_0_0._onCloseViewFinish(arg_5_0, arg_5_1)
-	arg_5_0:tryToast()
+function AssassinLibraryController:_onCloseViewFinish(viewName)
+	self:tryToast()
 end
 
-function var_0_0.tryToast(arg_6_0)
-	if not arg_6_0:checkCanToast() then
+function AssassinLibraryController:tryToast()
+	local canToast = self:checkCanToast()
+
+	if not canToast then
 		return
 	end
 
-	local var_6_0 = arg_6_0._waitLibraryIdList and #arg_6_0._waitLibraryIdList or 0
+	local waitLibraryIdNum = self._waitLibraryIdList and #self._waitLibraryIdList or 0
 
-	if var_6_0 <= 0 then
+	if waitLibraryIdNum <= 0 then
 		return
 	end
 
-	local var_6_1 = {}
-	local var_6_2 = {}
+	local readyToastList = {}
+	local odysseyToastList = {}
 
-	for iter_6_0 = var_6_0, 1, -1 do
-		local var_6_3 = arg_6_0._waitLibraryIdList[iter_6_0]
-		local var_6_4 = AssassinConfig.instance:getLibrarConfig(var_6_3)
+	for i = waitLibraryIdNum, 1, -1 do
+		local libraryId = self._waitLibraryIdList[i]
+		local libraryCo = AssassinConfig.instance:getLibrarConfig(libraryId)
 
-		if var_6_4.activityId == VersionActivity2_9Enum.ActivityId.Outside then
-			table.insert(var_6_1, 1, var_6_3)
-		elseif var_6_4.activityId == VersionActivity2_9Enum.ActivityId.Dungeon2 then
-			table.insert(var_6_2, 1, var_6_3)
+		if libraryCo.activityId == VersionActivity2_9Enum.ActivityId.Outside then
+			table.insert(readyToastList, 1, libraryId)
+		elseif libraryCo.activityId == VersionActivity2_9Enum.ActivityId.Dungeon2 then
+			table.insert(odysseyToastList, 1, libraryId)
 		else
-			logError(string.format("资料库飘字未定义行为 libraryId = %s", var_6_3))
+			logError(string.format("资料库飘字未定义行为 libraryId = %s", libraryId))
 		end
 
-		arg_6_0:onLibraryToast(var_6_3)
+		self:onLibraryToast(libraryId)
 	end
 
-	if #var_6_2 > 0 then
-		ViewMgr.instance:openView(ViewName.OdysseyLibraryToastView, var_6_2)
+	if #odysseyToastList > 0 then
+		ViewMgr.instance:openView(ViewName.OdysseyLibraryToastView, odysseyToastList)
 
-		for iter_6_1, iter_6_2 in ipairs(var_6_2) do
-			if OdysseyConfig.instance:checkIsOptionDataBase(iter_6_2) then
-				AssassinController.instance:openAssassinLibraryDetailView(iter_6_2)
+		for _, libraryId in ipairs(odysseyToastList) do
+			if OdysseyConfig.instance:checkIsOptionDataBase(libraryId) then
+				AssassinController.instance:openAssassinLibraryDetailView(libraryId)
 
 				break
 			end
 		end
 	end
 
-	if #var_6_1 > 0 then
-		ViewMgr.instance:openView(ViewName.AssassinLibraryToastView, var_6_1)
+	if #readyToastList > 0 then
+		ViewMgr.instance:openView(ViewName.AssassinLibraryToastView, readyToastList)
 	end
 end
 
-function var_0_0.checkCanToast(arg_7_0)
-	if not arg_7_0._isEnableToast then
+function AssassinLibraryController:checkCanToast()
+	if not self._isEnableToast then
 		return
 	end
 
-	arg_7_0:_buildForbidenViewNameMap()
+	self:_buildForbidenViewNameMap()
 
-	local var_7_0 = ViewMgr.instance:getOpenViewNameList()
+	local viewNameList = ViewMgr.instance:getOpenViewNameList()
 
-	for iter_7_0 = #var_7_0, 1, -1 do
-		local var_7_1 = var_7_0[iter_7_0]
+	for i = #viewNameList, 1, -1 do
+		local viewName = viewNameList[i]
 
-		if arg_7_0._fobidenViewNameMap[var_7_1] then
+		if self._fobidenViewNameMap[viewName] then
 			return false
 		end
 
@@ -95,54 +99,54 @@ function var_0_0.checkCanToast(arg_7_0)
 	return true
 end
 
-function var_0_0._buildForbidenViewNameMap(arg_8_0)
-	if not arg_8_0._fobidenViewNameMap then
-		arg_8_0._fobidenViewNameMap = {}
+function AssassinLibraryController:_buildForbidenViewNameMap()
+	if not self._fobidenViewNameMap then
+		self._fobidenViewNameMap = {}
 	end
 end
 
-function var_0_0.addNeedToastLibraryIds(arg_9_0, arg_9_1)
-	arg_9_0._toastLibraryIdMap = arg_9_0._toastLibraryIdMap or {}
-	arg_9_0._waitLibraryIdList = arg_9_0._waitLibraryIdList or {}
-	arg_9_0._waitLibraryIdMap = arg_9_0._waitLibraryIdMap or {}
+function AssassinLibraryController:addNeedToastLibraryIds(libraryIds)
+	self._toastLibraryIdMap = self._toastLibraryIdMap or {}
+	self._waitLibraryIdList = self._waitLibraryIdList or {}
+	self._waitLibraryIdMap = self._waitLibraryIdMap or {}
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_1) do
-		if not arg_9_0._waitLibraryIdMap[iter_9_1] and not arg_9_0._toastLibraryIdMap[iter_9_1] then
-			arg_9_0._waitLibraryIdMap[iter_9_1] = true
+	for _, libraryId in ipairs(libraryIds) do
+		if not self._waitLibraryIdMap[libraryId] and not self._toastLibraryIdMap[libraryId] then
+			self._waitLibraryIdMap[libraryId] = true
 
-			table.insert(arg_9_0._waitLibraryIdList, iter_9_1)
+			table.insert(self._waitLibraryIdList, libraryId)
 		end
 	end
 
-	arg_9_0:tryToast()
+	self:tryToast()
 end
 
-function var_0_0.onLibraryToast(arg_10_0, arg_10_1)
-	if not arg_10_0._waitLibraryIdMap[arg_10_1] then
+function AssassinLibraryController:onLibraryToast(libraryId)
+	if not self._waitLibraryIdMap[libraryId] then
 		return
 	end
 
-	arg_10_0._toastLibraryIdMap[arg_10_1] = true
-	arg_10_0._waitLibraryIdMap[arg_10_1] = nil
+	self._toastLibraryIdMap[libraryId] = true
+	self._waitLibraryIdMap[libraryId] = nil
 
-	tabletool.removeValue(arg_10_0._waitLibraryIdList, arg_10_1)
+	tabletool.removeValue(self._waitLibraryIdList, libraryId)
 end
 
-function var_0_0.onUnlockLibraryIds(arg_11_0, arg_11_1)
-	arg_11_0:addNeedToastLibraryIds(arg_11_1)
-	AssassinLibraryModel.instance:updateLibraryInfos(arg_11_1)
-	AssassinController.instance:dispatchEvent(AssassinEvent.OnUnlockLibrarys, arg_11_1)
+function AssassinLibraryController:onUnlockLibraryIds(unlockLibraryIds)
+	self:addNeedToastLibraryIds(unlockLibraryIds)
+	AssassinLibraryModel.instance:updateLibraryInfos(unlockLibraryIds)
+	AssassinController.instance:dispatchEvent(AssassinEvent.OnUnlockLibrarys, unlockLibraryIds)
 	AssassinController.instance:dispatchEvent(AssassinEvent.UpdateLibraryReddot)
 end
 
-function var_0_0._onEnableLibraryToast(arg_12_0, arg_12_1)
-	arg_12_0._isEnableToast = arg_12_1
+function AssassinLibraryController:_onEnableLibraryToast(isEnable)
+	self._isEnableToast = isEnable
 
-	if arg_12_1 then
-		arg_12_0:tryToast()
+	if isEnable then
+		self:tryToast()
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+AssassinLibraryController.instance = AssassinLibraryController.New()
 
-return var_0_0
+return AssassinLibraryController

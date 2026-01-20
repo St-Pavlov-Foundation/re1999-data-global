@@ -1,20 +1,22 @@
-﻿module("modules.logic.rouge.model.RougeFavoriteCollectionEnchantListModel", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/model/RougeFavoriteCollectionEnchantListModel.lua
 
-local var_0_0 = class("RougeFavoriteCollectionEnchantListModel", ListScrollModel)
+module("modules.logic.rouge.model.RougeFavoriteCollectionEnchantListModel", package.seeall)
 
-function var_0_0.initData(arg_1_0, arg_1_1)
-	local var_1_0 = RougeCollectionListModel.instance:getEnchantList()
-	local var_1_1 = {}
+local RougeFavoriteCollectionEnchantListModel = class("RougeFavoriteCollectionEnchantListModel", ListScrollModel)
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
-		if iter_1_1 ~= arg_1_1 then
-			table.insert(var_1_1, iter_1_1)
+function RougeFavoriteCollectionEnchantListModel:initData(filterMo)
+	local list = RougeCollectionListModel.instance:getEnchantList()
+	local result = {}
+
+	for i, v in ipairs(list) do
+		if v ~= filterMo then
+			table.insert(result, v)
 		end
 	end
 
-	arg_1_0:setList(var_1_1)
+	self:setList(result)
 end
 
-var_0_0.instance = var_0_0.New()
+RougeFavoriteCollectionEnchantListModel.instance = RougeFavoriteCollectionEnchantListModel.New()
 
-return var_0_0
+return RougeFavoriteCollectionEnchantListModel

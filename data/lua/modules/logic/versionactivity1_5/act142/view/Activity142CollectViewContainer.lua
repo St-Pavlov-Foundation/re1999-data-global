@@ -1,18 +1,20 @@
-﻿module("modules.logic.versionactivity1_5.act142.view.Activity142CollectViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/act142/view/Activity142CollectViewContainer.lua
 
-local var_0_0 = class("Activity142CollectViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_5.act142.view.Activity142CollectViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Activity142CollectViewContainer = class("Activity142CollectViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Activity142CollectView.New())
+function Activity142CollectViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Activity142CollectView.New())
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
+function Activity142CollectViewContainer:onContainerClickModalMask()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	arg_2_0:closeThis()
+	self:closeThis()
 end
 
-return var_0_0
+return Activity142CollectViewContainer

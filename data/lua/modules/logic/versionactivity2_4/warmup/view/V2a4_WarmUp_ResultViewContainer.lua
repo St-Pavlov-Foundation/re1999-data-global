@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity2_4.warmup.view.V2a4_WarmUp_ResultViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/warmup/view/V2a4_WarmUp_ResultViewContainer.lua
 
-local var_0_0 = class("V2a4_WarmUp_ResultViewContainer", Activity125ViewBaseContainer)
+module("modules.logic.versionactivity2_4.warmup.view.V2a4_WarmUp_ResultViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local V2a4_WarmUp_ResultViewContainer = class("V2a4_WarmUp_ResultViewContainer", Activity125ViewBaseContainer)
+
+function V2a4_WarmUp_ResultViewContainer:buildViews()
 	return {
 		V2a4_WarmUp_ResultView.New()
 	}
 end
 
-return var_0_0
+return V2a4_WarmUp_ResultViewContainer

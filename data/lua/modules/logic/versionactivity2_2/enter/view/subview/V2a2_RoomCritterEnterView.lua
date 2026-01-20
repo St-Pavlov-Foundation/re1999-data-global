@@ -1,25 +1,27 @@
-﻿module("modules.logic.versionactivity2_2.enter.view.subview.V2a2_RoomCritterEnterView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/enter/view/subview/V2a2_RoomCritterEnterView.lua
 
-local var_0_0 = class("V2a2_RoomCritterEnterView", VersionActivityEnterBaseSubView)
+module("modules.logic.versionactivity2_2.enter.view.subview.V2a2_RoomCritterEnterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnstart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_start")
-	arg_1_0._imagereddot = gohelper.findChildImage(arg_1_0.viewGO, "#btn_start/#image_reddot")
+local V2a2_RoomCritterEnterView = class("V2a2_RoomCritterEnterView", VersionActivityEnterBaseSubView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V2a2_RoomCritterEnterView:onInitView()
+	self._btnstart = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_start")
+	self._imagereddot = gohelper.findChildImage(self.viewGO, "#btn_start/#image_reddot")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnstart:AddClickListener(arg_2_0._btnstartOnClick, arg_2_0)
+function V2a2_RoomCritterEnterView:addEvents()
+	self._btnstart:AddClickListener(self._btnstartOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnstart:RemoveClickListener()
+function V2a2_RoomCritterEnterView:removeEvents()
+	self._btnstart:RemoveClickListener()
 end
 
-function var_0_0._btnstartOnClick(arg_4_0)
+function V2a2_RoomCritterEnterView:_btnstartOnClick()
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Room) then
 		RoomController.instance:enterRoom(RoomEnum.GameMode.Ob)
 	else
@@ -27,14 +29,14 @@ function var_0_0._btnstartOnClick(arg_4_0)
 	end
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._txtdesc = gohelper.findChildText(arg_5_0.viewGO, "Right/txt_dec")
-	arg_5_0.actId = VersionActivity2_2Enum.ActivityId.RoomCritter
-	arg_5_0.actCo = ActivityConfig.instance:getActivityCo(arg_5_0.actId)
+function V2a2_RoomCritterEnterView:_editableInitView()
+	self._txtdesc = gohelper.findChildText(self.viewGO, "Right/txt_dec")
+	self.actId = VersionActivity2_2Enum.ActivityId.RoomCritter
+	self.actCo = ActivityConfig.instance:getActivityCo(self.actId)
 
-	if arg_5_0.actCo and arg_5_0._txtdesc then
-		arg_5_0._txtdesc.text = arg_5_0.actCo.actDesc
+	if self.actCo and self._txtdesc then
+		self._txtdesc.text = self.actCo.actDesc
 	end
 end
 
-return var_0_0
+return V2a2_RoomCritterEnterView

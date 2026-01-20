@@ -1,17 +1,19 @@
-﻿module("modules.logic.fight.system.work.FightWorkRougePowerLimitChange", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkRougePowerLimitChange.lua
 
-local var_0_0 = class("FightWorkRougePowerLimitChange", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkRougePowerLimitChange", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = FightModel.instance:getRougeExData(FightEnum.ExIndexForRouge.MagicLimit)
+local FightWorkRougePowerLimitChange = class("FightWorkRougePowerLimitChange", FightEffectBase)
 
-	FightModel.instance:setRougeExData(FightEnum.ExIndexForRouge.MagicLimit, var_1_0 + arg_1_0.actEffectData.effectNum)
+function FightWorkRougePowerLimitChange:onStart()
+	local value = FightModel.instance:getRougeExData(FightEnum.ExIndexForRouge.MagicLimit)
+
+	FightModel.instance:setRougeExData(FightEnum.ExIndexForRouge.MagicLimit, value + self.actEffectData.effectNum)
 	FightController.instance:dispatchEvent(FightEvent.RougeMagicLimitChange)
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkRougePowerLimitChange:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkRougePowerLimitChange

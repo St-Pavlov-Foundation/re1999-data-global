@@ -1,65 +1,68 @@
-﻿module("modules.logic.achievement.define.AchievementEnum", package.seeall)
+﻿-- chunkname: @modules/logic/achievement/define/AchievementEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.achievement.define.AchievementEnum", package.seeall)
 
-var_0_0.Type = {
+local AchievementEnum = _M
+
+AchievementEnum.Type = {
 	GamePlay = 3,
 	Activity = 4,
 	Story = 1,
+	GameCenter = 9999,
 	NamePlate = 5,
 	Normal = 2
 }
-var_0_0.AchievementType = {
+AchievementEnum.AchievementType = {
 	Group = 2,
 	Single = 1
 }
-var_0_0.ViewType = {
+AchievementEnum.ViewType = {
 	Tile = 2,
 	List = 1
 }
-var_0_0.SortType = {
+AchievementEnum.SortType = {
 	RareDown = 2,
 	RareUp = 1
 }
-var_0_0.SearchFilterType = {
+AchievementEnum.SearchFilterType = {
 	All = 1,
 	Unlocked = 2,
 	Locked = 3
 }
-var_0_0.AchievementState = {
+AchievementEnum.AchievementState = {
 	Online = 1,
 	Offline = 2
 }
-var_0_0.ToastType = {
+AchievementEnum.ToastType = {
 	GroupFinished = 4,
 	TaskFinished = 1,
 	GroupUnlocked = 2,
 	GroupUpgrade = 3
 }
-var_0_0.FilterTypeName = {
-	[var_0_0.SearchFilterType.All] = "achievementmainview_filterType_total",
-	[var_0_0.SearchFilterType.Unlocked] = "achievementmainview_filterType_unlocked",
-	[var_0_0.SearchFilterType.Locked] = "achievementmainview_filterType_locked"
+AchievementEnum.FilterTypeName = {
+	[AchievementEnum.SearchFilterType.All] = "achievementmainview_filterType_total",
+	[AchievementEnum.SearchFilterType.Unlocked] = "achievementmainview_filterType_unlocked",
+	[AchievementEnum.SearchFilterType.Locked] = "achievementmainview_filterType_locked"
 }
-var_0_0.TypeName = {
-	[var_0_0.Type.Normal] = "achievement_category_normal",
-	[var_0_0.Type.GamePlay] = "achievement_category_play",
-	[var_0_0.Type.Story] = "achievement_category_story",
-	[var_0_0.Type.Activity] = "achievement_category_action",
-	[var_0_0.Type.NamePlate] = "achievement_category_nameplate"
+AchievementEnum.TypeName = {
+	[AchievementEnum.Type.Normal] = "achievement_category_normal",
+	[AchievementEnum.Type.GamePlay] = "achievement_category_play",
+	[AchievementEnum.Type.Story] = "achievement_category_story",
+	[AchievementEnum.Type.Activity] = "achievement_category_action",
+	[AchievementEnum.Type.NamePlate] = "achievement_category_nameplate"
 }
-var_0_0.TypeNameEn = {
-	[var_0_0.Type.Normal] = "LOG",
-	[var_0_0.Type.GamePlay] = "CHALLENGE",
-	[var_0_0.Type.Story] = "REVIEW",
-	[var_0_0.Type.Activity] = "BROCHURE",
-	[var_0_0.Type.NamePlate] = "Plates"
+AchievementEnum.TypeNameEn = {
+	[AchievementEnum.Type.Normal] = "LOG",
+	[AchievementEnum.Type.GamePlay] = "CHALLENGE",
+	[AchievementEnum.Type.Story] = "REVIEW",
+	[AchievementEnum.Type.Activity] = "BROCHURE",
+	[AchievementEnum.Type.NamePlate] = "Plates"
 }
-var_0_0.GroupParamType = {
+AchievementEnum.GroupParamType = {
 	Player = 1,
 	List = 2
 }
-var_0_0.SpGroupType = {
+AchievementEnum.SpGroupType = {
 	Tower = 6,
 	Journey = 1,
 	Room = 3,
@@ -67,28 +70,31 @@ var_0_0.SpGroupType = {
 	Explore = 4,
 	WeekWalk = 2
 }
-var_0_0.SpGroupNameLangId = {
-	[var_0_0.SpGroupType.Journey] = "achievementmainview_spgroup_journey",
-	[var_0_0.SpGroupType.WeekWalk] = "achievementmainview_spgroup_weekwalk",
-	[var_0_0.SpGroupType.Room] = "achievementmainview_spgroup_room",
-	[var_0_0.SpGroupType.Explore] = "achievementmainview_spgroup_explore",
-	[var_0_0.SpGroupType.BossRush] = "achievementmainview_spgroup_bossrush",
-	[var_0_0.SpGroupType.Tower] = "achievementmainview_spgroup_tower"
+AchievementEnum.SpGroupNameLangId = {
+	[AchievementEnum.SpGroupType.Journey] = "achievementmainview_spgroup_journey",
+	[AchievementEnum.SpGroupType.WeekWalk] = "achievementmainview_spgroup_weekwalk",
+	[AchievementEnum.SpGroupType.Room] = "achievementmainview_spgroup_room",
+	[AchievementEnum.SpGroupType.Explore] = "achievementmainview_spgroup_explore",
+	[AchievementEnum.SpGroupType.BossRush] = "achievementmainview_spgroup_bossrush",
+	[AchievementEnum.SpGroupType.Tower] = "achievementmainview_spgroup_tower"
 }
-var_0_0.SourceType = {
+AchievementEnum.SourceType = {
 	Tower = 1
 }
-var_0_0.MainTileGroupItemHeight = 460
-var_0_0.MainTileLineItemHeight = 300
-var_0_0.SpGroupTitleBarHeight = 74
-var_0_0.MainSpGroupLineCount = 5
-var_0_0.MainListLineCount = 5
-var_0_0.ShowMaxSingleCount = 6
-var_0_0.ShowMaxGroupCount = 1
-var_0_0.ShowMaxNamePlateCount = 1
-var_0_0.ShowMaxToastCount = 10
-var_0_0.MainIconPath = "ui/viewres/achievement/achievementmainicon.prefab"
-var_0_0.AchievementToastPath = "ui/viewres/achievement/achievementtoastitem.prefab"
-var_0_0.AchievementPreViewPrefabPath = "ui/viewres/achievement/grouppreview"
+AchievementEnum.MainTileGroupItemHeight = 460
+AchievementEnum.MainTileLineItemHeight = 300
+AchievementEnum.SpGroupTitleBarHeight = 74
+AchievementEnum.MainSpGroupLineCount = 5
+AchievementEnum.MainListLineCount = 5
+AchievementEnum.ShowMaxSingleCount = 6
+AchievementEnum.ShowMaxGroupCount = 1
+AchievementEnum.ShowMaxNamePlateCount = 1
+AchievementEnum.ShowMaxToastCount = 10
+AchievementEnum.MainIconPath = "ui/viewres/achievement/achievementmainicon.prefab"
+AchievementEnum.AchievementToastPath = "ui/viewres/achievement/achievementtoastitem.prefab"
+AchievementEnum.AchievementPreViewPrefabPath = "ui/viewres/achievement/grouppreview"
+AchievementEnum.HideType = {
+	[AchievementEnum.Type.GameCenter] = true
+}
 
-return var_0_0
+return AchievementEnum

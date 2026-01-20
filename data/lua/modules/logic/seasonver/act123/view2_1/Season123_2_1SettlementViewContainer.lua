@@ -1,17 +1,19 @@
-﻿module("modules.logic.seasonver.act123.view2_1.Season123_2_1SettlementViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view2_1/Season123_2_1SettlementViewContainer.lua
 
-local var_0_0 = class("Season123_2_1SettlementViewContainer", BaseViewContainer)
+module("modules.logic.seasonver.act123.view2_1.Season123_2_1SettlementViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local Season123_2_1SettlementViewContainer = class("Season123_2_1SettlementViewContainer", BaseViewContainer)
+
+function Season123_2_1SettlementViewContainer:buildViews()
 	return {
 		Season123_2_1SettlementView.New()
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
+function Season123_2_1SettlementViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
 		-- block empty
 	end
 end
 
-return var_0_0
+return Season123_2_1SettlementViewContainer

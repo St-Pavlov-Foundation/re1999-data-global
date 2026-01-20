@@ -1,9 +1,11 @@
-﻿module("modules.logic.fight.entity.comp.specialskineffect.FightEntitySpecialSkinEffect307301", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/specialskineffect/FightEntitySpecialSkinEffect307301.lua
 
-local var_0_0 = class("FightEntitySpecialSkinEffect307301", FightEntitySpecialEffectBase)
+module("modules.logic.fight.entity.comp.specialskineffect.FightEntitySpecialSkinEffect307301", package.seeall)
 
-function var_0_0.initClass(arg_1_0)
-	arg_1_0:newClass(FightEntitySpecialSkinEffect307301_buff4150002)
+local FightEntitySpecialSkinEffect307301 = class("FightEntitySpecialSkinEffect307301", FightEntitySpecialEffectBase)
+
+function FightEntitySpecialSkinEffect307301:initClass()
+	self:newClass(FightEntitySpecialSkinEffect307301_buff4150002)
 end
 
-return var_0_0
+return FightEntitySpecialSkinEffect307301

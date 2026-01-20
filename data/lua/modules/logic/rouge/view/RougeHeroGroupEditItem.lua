@@ -1,289 +1,292 @@
-﻿module("modules.logic.rouge.view.RougeHeroGroupEditItem", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeHeroGroupEditItem.lua
 
-local var_0_0 = class("RougeHeroGroupEditItem", RougeLuaCompBase)
+module("modules.logic.rouge.view.RougeHeroGroupEditItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	var_0_0.super.init(arg_1_0, arg_1_1)
+local RougeHeroGroupEditItem = class("RougeHeroGroupEditItem", RougeLuaCompBase)
 
-	arg_1_0._go = arg_1_1
-	arg_1_0._heroGOParent = gohelper.findChild(arg_1_1, "hero")
-	arg_1_0._heroItem = IconMgr.instance:getCommonHeroItem(arg_1_0._heroGOParent)
+function RougeHeroGroupEditItem:init(go)
+	RougeHeroGroupEditItem.super.init(self, go)
 
-	arg_1_0._heroItem:addClickListener(arg_1_0._onItemClick, arg_1_0)
+	self._go = go
+	self._heroGOParent = gohelper.findChild(go, "hero")
+	self._heroItem = IconMgr.instance:getCommonHeroItem(self._heroGOParent)
 
-	arg_1_0._gohp = gohelper.findChild(arg_1_1, "#go_hp")
+	self._heroItem:addClickListener(self._onItemClick, self)
 
-	gohelper.setActive(arg_1_0._gohp, false)
+	self._gohp = gohelper.findChild(go, "#go_hp")
 
-	arg_1_0._goassit = gohelper.findChild(arg_1_1, "assit")
-	arg_1_0._sliderhp = gohelper.findChildSlider(arg_1_1, "#go_hp/#slider_hp")
-	arg_1_0._godead = gohelper.findChild(arg_1_1, "#go_dead")
-	arg_1_0._goframehp = gohelper.findChild(arg_1_1, "frame_hp")
-	arg_1_0._itemAnimator = gohelper.onceAddComponent(arg_1_1, gohelper.Type_Animator)
+	gohelper.setActive(self._gohp, false)
 
-	arg_1_0:_initCapacity()
-	arg_1_0:_initObj(arg_1_1)
+	self._goassit = gohelper.findChild(go, "assit")
+	self._sliderhp = gohelper.findChildSlider(go, "#go_hp/#slider_hp")
+	self._godead = gohelper.findChild(go, "#go_dead")
+	self._goframehp = gohelper.findChild(go, "frame_hp")
+	self._itemAnimator = gohelper.onceAddComponent(go, gohelper.Type_Animator)
+
+	self:_initCapacity()
+	self:_initObj(go)
 end
 
-function var_0_0._initCapacity(arg_2_0)
-	arg_2_0._gopoint = gohelper.findChild(arg_2_0._go, "volume/point")
+function RougeHeroGroupEditItem:_initCapacity()
+	self._gopoint = gohelper.findChild(self._go, "volume/point")
 
-	gohelper.setActive(arg_2_0._gopoint, false)
+	gohelper.setActive(self._gopoint, false)
 
-	arg_2_0._capacityComp = MonoHelper.addNoUpdateLuaComOnceToGo(arg_2_0._go, RougeCapacityComp)
+	self._capacityComp = MonoHelper.addNoUpdateLuaComOnceToGo(self._go, RougeCapacityComp)
 
-	arg_2_0._capacityComp:setSpriteType("rouge_team_volume_3", "rouge_team_volume_3")
-	arg_2_0._capacityComp:setPoint(arg_2_0._gopoint)
-	arg_2_0._capacityComp:initCapacity()
+	self._capacityComp:setSpriteType("rouge_team_volume_3", "rouge_team_volume_3")
+	self._capacityComp:setPoint(self._gopoint)
+	self._capacityComp:initCapacity()
 end
 
-function var_0_0._initObj(arg_3_0, arg_3_1)
-	arg_3_0._heroItem:_setTxtWidth("_nameCnTxt", 180)
+function RougeHeroGroupEditItem:_initObj(go)
+	self._heroItem:_setTxtWidth("_nameCnTxt", 180)
 
-	arg_3_0._animator = arg_3_0._heroItem.go:GetComponent(typeof(UnityEngine.Animator))
-	arg_3_0._isSelect = false
-	arg_3_0._enableDeselect = true
+	self._animator = self._heroItem.go:GetComponent(typeof(UnityEngine.Animator))
+	self._isSelect = false
+	self._enableDeselect = true
 
-	transformhelper.setLocalScale(arg_3_1.transform, 0.8, 0.8, 1)
+	transformhelper.setLocalScale(go.transform, 0.8, 0.8, 1)
 
-	arg_3_0._heroGroupEditListModel = RougeHeroGroupEditListModel.instance
-	arg_3_0._heroGroupQuickEditListModel = HeroGroupQuickEditListModel.instance
-	arg_3_0._heroSingleGroupModel = RougeHeroSingleGroupModel.instance
-	arg_3_0._heroGroupModel = RougeHeroGroupModel.instance
+	self._heroGroupEditListModel = RougeHeroGroupEditListModel.instance
+	self._heroGroupQuickEditListModel = HeroGroupQuickEditListModel.instance
+	self._heroSingleGroupModel = RougeHeroSingleGroupModel.instance
+	self._heroGroupModel = RougeHeroGroupModel.instance
 end
 
-function var_0_0.addEventListeners(arg_4_0)
-	arg_4_0:addEventCb(CharacterController.instance, CharacterEvent.successDressUpSkin, arg_4_0._onSkinChanged, arg_4_0)
-	arg_4_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnHeroEditItemSelectChange, arg_4_0.updateTrialRepeat, arg_4_0)
-	arg_4_0:addEventCb(RougeController.instance, RougeEvent.OnSwitchHeroGroupEditMode, arg_4_0._onSwitchHeroGroupEditMode, arg_4_0)
+function RougeHeroGroupEditItem:addEventListeners()
+	self:addEventCb(CharacterController.instance, CharacterEvent.successDressUpSkin, self._onSkinChanged, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnHeroEditItemSelectChange, self.updateTrialRepeat, self)
+	self:addEventCb(RougeController.instance, RougeEvent.OnSwitchHeroGroupEditMode, self._onSwitchHeroGroupEditMode, self)
 end
 
-function var_0_0.removeEventListeners(arg_5_0)
+function RougeHeroGroupEditItem:removeEventListeners()
 	return
 end
 
-function var_0_0._onSkinChanged(arg_6_0)
-	arg_6_0._heroItem:updateHero()
+function RougeHeroGroupEditItem:_onSkinChanged()
+	self._heroItem:updateHero()
 end
 
-function var_0_0.setAdventureBuff(arg_7_0, arg_7_1)
-	arg_7_0._heroItem:setAdventureBuff(arg_7_1)
+function RougeHeroGroupEditItem:setAdventureBuff(buffId)
+	self._heroItem:setAdventureBuff(buffId)
 end
 
-function var_0_0.updateLimitStatus(arg_8_0)
-	if arg_8_0._heroGroupQuickEditListModel.adventure then
-		gohelper.setActive(arg_8_0._gohp, false)
+function RougeHeroGroupEditItem:updateLimitStatus()
+	if self._heroGroupQuickEditListModel.adventure then
+		gohelper.setActive(self._gohp, false)
 
-		local var_8_0 = WeekWalkModel.instance:getCurMapHeroCd(arg_8_0._mo.config.id)
+		local cd = WeekWalkModel.instance:getCurMapHeroCd(self._mo.config.id)
 
-		arg_8_0._heroItem:setInjury(var_8_0 > 0)
+		self._heroItem:setInjury(cd > 0)
 	else
-		gohelper.setActive(arg_8_0._gohp, false)
+		gohelper.setActive(self._gohp, false)
 
-		if arg_8_0._heroGroupModel:isRestrict(arg_8_0._mo.uid) then
-			arg_8_0._heroItem:setRestrict(true)
+		if self._heroGroupModel:isRestrict(self._mo.uid) then
+			self._heroItem:setRestrict(true)
 		else
-			arg_8_0._heroItem:setRestrict(false)
+			self._heroItem:setRestrict(false)
 		end
 	end
 end
 
-function var_0_0._updateCapacity(arg_9_0, arg_9_1)
-	arg_9_0._capacity = RougeConfig1.instance:getRoleCapacity(arg_9_1.config.rare)
+function RougeHeroGroupEditItem:_updateCapacity(mo)
+	self._capacity = RougeConfig1.instance:getRoleCapacity(mo.config.rare)
 
-	if arg_9_0._heroGroupEditListModel:getHeroGroupEditType() == RougeEnum.HeroGroupEditType.FightAssit and RougeController.instance:useHalfCapacity() then
-		local var_9_0 = RougeConfig1.instance:getRoleHalfCapacity(arg_9_1.config.rare)
+	if self._heroGroupEditListModel:getHeroGroupEditType() == RougeEnum.HeroGroupEditType.FightAssit and RougeController.instance:useHalfCapacity() then
+		local halfCapacity = RougeConfig1.instance:getRoleHalfCapacity(mo.config.rare)
 
-		arg_9_0._capacityComp:updateMaxNumAndOpaqueNum(arg_9_0._capacity, var_9_0)
+		self._capacityComp:updateMaxNumAndOpaqueNum(self._capacity, halfCapacity)
 
-		arg_9_0._capacity = var_9_0
+		self._capacity = halfCapacity
 
 		return
 	end
 
-	arg_9_0._capacityComp:updateMaxNumAndOpaqueNum(arg_9_0._capacity, arg_9_0._capacity)
+	self._capacityComp:updateMaxNumAndOpaqueNum(self._capacity, self._capacity)
 end
 
-function var_0_0.onUpdateMO(arg_10_0, arg_10_1)
-	arg_10_0._mo = arg_10_1
+function RougeHeroGroupEditItem:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_10_0._heroItem:onUpdateMO(arg_10_1)
-	arg_10_0:_updateCapacity(arg_10_1)
+	self._heroItem:onUpdateMO(mo)
+	self:_updateCapacity(mo)
 
-	if not arg_10_1:isTrial() then
-		local var_10_0 = RougeHeroGroupBalanceHelper.getHeroBalanceLv(arg_10_1.heroId)
+	if not mo:isTrial() then
+		local lv = RougeHeroGroupBalanceHelper.getHeroBalanceLv(mo.heroId)
 
-		if var_10_0 > arg_10_1.level then
-			arg_10_0._heroItem:setBalanceLv(var_10_0)
+		if lv > mo.level then
+			self._heroItem:setBalanceLv(lv)
 		end
 	end
 
-	arg_10_0:updateTrialTag()
-	arg_10_0:updateTrialRepeat()
+	self:updateTrialTag()
+	self:updateTrialRepeat()
 
-	local var_10_1 = arg_10_0._heroGroupEditListModel:isInTeamHero(arg_10_0._mo.uid)
-	local var_10_2 = arg_10_0._heroGroupEditListModel:getTeamPosIndex(arg_10_0._mo.uid)
-	local var_10_3 = arg_10_0._heroGroupEditListModel:getHeroGroupEditType()
+	local inteam = self._heroGroupEditListModel:isInTeamHero(self._mo.uid)
+	local teamPosIndex = self._heroGroupEditListModel:getTeamPosIndex(self._mo.uid)
+	local heroGroupEditType = self._heroGroupEditListModel:getHeroGroupEditType()
 
-	if var_10_3 == RougeEnum.HeroGroupEditType.FightAssit or var_10_3 == RougeEnum.HeroGroupEditType.Fight then
-		local var_10_4 = var_10_1 == 1 and var_10_2 and var_10_2 > RougeEnum.FightTeamNormalHeroNum
+	if heroGroupEditType == RougeEnum.HeroGroupEditType.FightAssit or heroGroupEditType == RougeEnum.HeroGroupEditType.Fight then
+		local inAssit = inteam == 1 and teamPosIndex and teamPosIndex > RougeEnum.FightTeamNormalHeroNum
 
-		gohelper.setActive(arg_10_0._goassit, var_10_4)
+		gohelper.setActive(self._goassit, inAssit)
 
-		if var_10_4 then
-			var_10_1 = nil
+		if inAssit then
+			inteam = nil
 		end
 	else
-		gohelper.setActive(arg_10_0._goassit, false)
+		gohelper.setActive(self._goassit, false)
 	end
 
-	arg_10_0._heroItem:setNewShow(false)
-	arg_10_0._heroItem:setInteam(var_10_1)
-	arg_10_0:_updateHp()
-	arg_10_0:tickUpdateDLCs(arg_10_1)
+	self._heroItem:setNewShow(false)
+	self._heroItem:setInteam(inteam)
+	self:_updateHp()
+	self:tickUpdateDLCs(mo)
 end
 
-function var_0_0._isHideHp(arg_11_0)
-	if arg_11_0._heroGroupEditListModel:getHeroGroupEditType() == RougeEnum.HeroGroupEditType.Init or arg_11_0._heroGroupEditListModel:getHeroGroupEditType() == RougeEnum.HeroGroupEditType.SelectHero then
+function RougeHeroGroupEditItem:_isHideHp()
+	if self._heroGroupEditListModel:getHeroGroupEditType() == RougeEnum.HeroGroupEditType.Init or self._heroGroupEditListModel:getHeroGroupEditType() == RougeEnum.HeroGroupEditType.SelectHero then
 		return true
 	end
 end
 
-function var_0_0._updateHp(arg_12_0)
-	if arg_12_0:_isHideHp() then
+function RougeHeroGroupEditItem:_updateHp()
+	if self:_isHideHp() then
 		return
 	end
 
-	local var_12_0 = RougeModel.instance:getTeamInfo():getHeroHp(arg_12_0._mo.heroId)
+	local teamInfo = RougeModel.instance:getTeamInfo()
+	local hpInfo = teamInfo:getHeroHp(self._mo.heroId)
 
-	if not var_12_0 then
+	if not hpInfo then
 		return
 	end
 
-	local var_12_1 = var_12_0 and var_12_0.life or 0
+	local hpValue = hpInfo and hpInfo.life or 0
 
-	gohelper.setActive(arg_12_0._gohp, true)
-	arg_12_0._sliderhp:SetValue(var_12_1 / 1000)
+	gohelper.setActive(self._gohp, true)
+	self._sliderhp:SetValue(hpValue / 1000)
 
-	local var_12_2 = var_12_1 <= 0
+	local isDead = hpValue <= 0
 
-	gohelper.setActive(arg_12_0._godead, var_12_2)
-	arg_12_0._heroItem:setDamage(var_12_2)
+	gohelper.setActive(self._godead, isDead)
+	self._heroItem:setDamage(isDead)
 
-	arg_12_0._heroItem._isInjury = false
-	arg_12_0._isDead = var_12_2
+	self._heroItem._isInjury = false
+	self._isDead = isDead
 end
 
-function var_0_0.updateTrialTag(arg_13_0)
-	local var_13_0
+function RougeHeroGroupEditItem:updateTrialTag()
+	local txt
 
-	if arg_13_0._mo:isTrial() then
-		var_13_0 = luaLang("herogroup_trial_tag0")
+	if self._mo:isTrial() then
+		txt = luaLang("herogroup_trial_tag0")
 	end
 
-	arg_13_0._heroItem:setTrialTxt(var_13_0)
+	self._heroItem:setTrialTxt(txt)
 end
 
-function var_0_0.updateTrialRepeat(arg_14_0)
-	local var_14_0 = arg_14_0._heroSingleGroupModel:getById(arg_14_0._view.viewContainer.viewParam.singleGroupMOId)
+function RougeHeroGroupEditItem:updateTrialRepeat()
+	local singleGroupMO = self._heroSingleGroupModel:getById(self._view.viewContainer.viewParam.singleGroupMOId)
 
-	if var_14_0 and not var_14_0:isEmpty() and (var_14_0.trial and var_14_0:getTrialCO().heroId == arg_14_0._mo.heroId or not var_14_0.trial and (not var_14_0:getHeroCO() or var_14_0:getHeroCO().id == arg_14_0._mo.heroId)) then
-		if not var_14_0.trial and not var_14_0.aid and not var_14_0:getHeroCO() then
-			logError("编队界面角色不存在 uid：" .. tostring(var_14_0.id))
+	if singleGroupMO and not singleGroupMO:isEmpty() and (singleGroupMO.trial and singleGroupMO:getTrialCO().heroId == self._mo.heroId or not singleGroupMO.trial and (not singleGroupMO:getHeroCO() or singleGroupMO:getHeroCO().id == self._mo.heroId)) then
+		if not singleGroupMO.trial and not singleGroupMO.aid and not singleGroupMO:getHeroCO() then
+			logError("编队界面角色不存在 uid：" .. tostring(singleGroupMO.id))
 		end
 
-		arg_14_0._heroItem:setTrialRepeat(false)
+		self._heroItem:setTrialRepeat(false)
 
 		return
 	end
 
-	local var_14_1 = arg_14_0._heroGroupEditListModel:isRepeatHero(arg_14_0._mo.heroId, arg_14_0._mo.uid)
+	local isRepeat = self._heroGroupEditListModel:isRepeatHero(self._mo.heroId, self._mo.uid)
 
-	arg_14_0._heroItem:setTrialRepeat(var_14_1)
+	self._heroItem:setTrialRepeat(isRepeat)
 end
 
-function var_0_0.onSelect(arg_15_0, arg_15_1)
-	arg_15_0._isSelect = arg_15_1
+function RougeHeroGroupEditItem:onSelect(select)
+	self._isSelect = select
 
-	local var_15_0 = arg_15_0:_isHideHp()
+	local isHideHp = self:_isHideHp()
 
-	arg_15_0._heroItem:setSelect(arg_15_1 and var_15_0)
-	gohelper.setActive(arg_15_0._goframehp, arg_15_1 and not var_15_0)
+	self._heroItem:setSelect(select and isHideHp)
+	gohelper.setActive(self._goframehp, select and not isHideHp)
 
-	if arg_15_1 then
-		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickHeroEditItem, arg_15_0._mo)
+	if select then
+		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickHeroEditItem, self._mo)
 	end
 end
 
-function var_0_0._onItemClick(arg_16_0)
+function RougeHeroGroupEditItem:_onItemClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
 
-	if arg_16_0._isDead then
+	if self._isDead then
 		GameFacade.showToast(ToastEnum.V1a6CachotToast04)
 
 		return
 	end
 
-	if arg_16_0._heroItem:getIsRepeat() then
+	if self._heroItem:getIsRepeat() then
 		GameFacade.showToast(ToastEnum.TrialIsJoin)
 
 		return
 	end
 
-	if not arg_16_0._heroGroupEditListModel:canAddCapacity(arg_16_0._view.viewContainer.viewParam.singleGroupMOId, arg_16_0._mo) then
+	if not self._heroGroupEditListModel:canAddCapacity(self._view.viewContainer.viewParam.singleGroupMOId, self._mo) then
 		GameFacade.showToast(ToastEnum.RougeTeamCapacityFull)
 
 		return
 	end
 
-	local var_16_0 = arg_16_0._heroSingleGroupModel:getById(arg_16_0._view.viewContainer.viewParam.singleGroupMOId)
+	local singleGroupMO = self._heroSingleGroupModel:getById(self._view.viewContainer.viewParam.singleGroupMOId)
 
-	if arg_16_0._mo:isTrial() and not arg_16_0._heroSingleGroupModel:isInGroup(arg_16_0._mo.uid) and (var_16_0:isEmpty() or not var_16_0.trial) and arg_16_0._heroGroupEditListModel:isTrialLimit() then
+	if self._mo:isTrial() and not self._heroSingleGroupModel:isInGroup(self._mo.uid) and (singleGroupMO:isEmpty() or not singleGroupMO.trial) and self._heroGroupEditListModel:isTrialLimit() then
 		GameFacade.showToast(ToastEnum.TrialJoinLimit, HeroGroupTrialModel.instance:getLimitNum())
 
 		return
 	end
 
-	if arg_16_0._mo.isPosLock or not var_16_0:isEmpty() and var_16_0.trialPos then
+	if self._mo.isPosLock or not singleGroupMO:isEmpty() and singleGroupMO.trialPos then
 		GameFacade.showToast(ToastEnum.TrialCantTakeOff)
 
 		return
 	end
 
-	if arg_16_0._heroGroupModel:isRestrict(arg_16_0._mo.uid) then
-		local var_16_1 = arg_16_0._heroGroupModel:getCurrentBattleConfig()
-		local var_16_2 = var_16_1 and var_16_1.restrictReason
+	if self._heroGroupModel:isRestrict(self._mo.uid) then
+		local battleCo = self._heroGroupModel:getCurrentBattleConfig()
+		local restrictReason = battleCo and battleCo.restrictReason
 
-		if not string.nilorempty(var_16_2) then
-			ToastController.instance:showToastWithString(var_16_2)
+		if not string.nilorempty(restrictReason) then
+			ToastController.instance:showToastWithString(restrictReason)
 		end
 
 		return
 	end
 
-	if arg_16_0._isSelect and arg_16_0._enableDeselect and not arg_16_0._mo.isPosLock then
-		arg_16_0._view:selectCell(arg_16_0._index, false)
+	if self._isSelect and self._enableDeselect and not self._mo.isPosLock then
+		self._view:selectCell(self._index, false)
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickHeroEditItem)
 	else
-		arg_16_0._view:selectCell(arg_16_0._index, true)
+		self._view:selectCell(self._index, true)
 	end
 end
 
-function var_0_0.enableDeselect(arg_17_0, arg_17_1)
-	arg_17_0._enableDeselect = arg_17_1
+function RougeHeroGroupEditItem:enableDeselect(enable)
+	self._enableDeselect = enable
 end
 
-function var_0_0._onSwitchHeroGroupEditMode(arg_18_0)
-	arg_18_0._itemAnimator:Play("rougeherogroupedititem_open", 0, 0)
-	arg_18_0._animator:Play("open", 0, 0)
+function RougeHeroGroupEditItem:_onSwitchHeroGroupEditMode()
+	self._itemAnimator:Play("rougeherogroupedititem_open", 0, 0)
+	self._animator:Play("open", 0, 0)
 end
 
-function var_0_0.onDestroy(arg_19_0)
-	var_0_0.super.onDestroy(arg_19_0)
+function RougeHeroGroupEditItem:onDestroy()
+	RougeHeroGroupEditItem.super.onDestroy(self)
 end
 
-function var_0_0.getAnimator(arg_20_0)
-	return arg_20_0._animator
+function RougeHeroGroupEditItem:getAnimator()
+	return self._animator
 end
 
-return var_0_0
+return RougeHeroGroupEditItem

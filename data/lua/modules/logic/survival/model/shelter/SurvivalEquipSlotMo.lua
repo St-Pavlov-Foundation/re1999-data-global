@@ -1,66 +1,68 @@
-﻿module("modules.logic.survival.model.shelter.SurvivalEquipSlotMo", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/shelter/SurvivalEquipSlotMo.lua
 
-local var_0_0 = pureTable("SurvivalEquipSlotMo")
+module("modules.logic.survival.model.shelter.SurvivalEquipSlotMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.parent = arg_1_2 or arg_1_0.parent
-	arg_1_0.slotId = arg_1_1.slotId
-	arg_1_0.level = arg_1_1.level
-	arg_1_0.item = SurvivalBagItemMo.New()
+local SurvivalEquipSlotMo = pureTable("SurvivalEquipSlotMo")
 
-	arg_1_0.item:init(arg_1_1.item)
+function SurvivalEquipSlotMo:init(data, parent)
+	self.parent = parent or self.parent
+	self.slotId = data.slotId
+	self.level = data.level
+	self.item = SurvivalBagItemMo.New()
 
-	arg_1_0.item.source = SurvivalEnum.ItemSource.Equip
-	arg_1_0.item.slotMo = arg_1_0
-	arg_1_0.item.index = arg_1_0.slotId
-	arg_1_0.values = {}
+	self.item:init(data.item)
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1.values) do
-		arg_1_0.values[iter_1_1.id] = iter_1_1.value
+	self.item.source = SurvivalEnum.ItemSource.Equip
+	self.item.slotMo = self
+	self.item.index = self.slotId
+	self.values = {}
+
+	for _, v in ipairs(data.values) do
+		self.values[v.id] = v.value
 	end
 
-	arg_1_0.item.equipValues = arg_1_0.values
-	arg_1_0.unlock = arg_1_1.unlock
-	arg_1_0.newFlag = arg_1_1.newFlag
+	self.item.equipValues = self.values
+	self.unlock = data.unlock
+	self.newFlag = data.newFlag
 
-	local var_1_0 = 0
+	local exScore = 0
 
-	if arg_1_0.item.equipCo and not string.nilorempty(arg_1_0.item.equipCo.effect) then
-		local var_1_1 = string.splitToNumber(arg_1_0.item.equipCo.effect, "#")
+	if self.item.equipCo and not string.nilorempty(self.item.equipCo.effect) then
+		local arr = string.splitToNumber(self.item.equipCo.effect, "#")
 
-		for iter_1_2, iter_1_3 in ipairs(var_1_1) do
-			local var_1_2 = lua_survival_equip_effect.configDict[iter_1_3]
-			local var_1_3 = {}
+		for _, effectId in ipairs(arr) do
+			local effectCo = lua_survival_equip_effect.configDict[effectId]
+			local dictMax = {}
 
-			if var_1_2 and not string.nilorempty(var_1_2.effect_score) then
-				local var_1_4 = GameUtil.splitString2(var_1_2.effect_score, true)
+			if effectCo and not string.nilorempty(effectCo.effect_score) then
+				local dict = GameUtil.splitString2(effectCo.effect_score, true)
 
-				for iter_1_4, iter_1_5 in ipairs(var_1_4) do
-					local var_1_5 = iter_1_5[1] or 0
-					local var_1_6 = iter_1_5[2] or 0
-					local var_1_7 = iter_1_5[3] or 0
+				for _, v in ipairs(dict) do
+					local attrId = v[1] or 0
+					local needNum = v[2] or 0
+					local score = v[3] or 0
 
-					if arg_1_0.values[var_1_5] and var_1_6 <= arg_1_0.values[var_1_5] and (not var_1_3[var_1_5] or var_1_7 > var_1_3[var_1_5]) then
-						var_1_3[var_1_5] = var_1_7
+					if self.values[attrId] and needNum <= self.values[attrId] and (not dictMax[attrId] or score > dictMax[attrId]) then
+						dictMax[attrId] = score
 					end
 				end
 
-				for iter_1_6, iter_1_7 in pairs(var_1_3) do
-					var_1_0 = var_1_0 + iter_1_7
+				for _, score in pairs(dictMax) do
+					exScore = exScore + score
 				end
 			end
 		end
 	end
 
-	arg_1_0.item.exScore = var_1_0
+	self.item.exScore = exScore
 end
 
-function var_0_0.getScore(arg_2_0)
-	if not arg_2_0.item.equipCo then
+function SurvivalEquipSlotMo:getScore()
+	if not self.item.equipCo then
 		return 0
 	end
 
-	return arg_2_0.item.equipCo.score + arg_2_0.item.exScore
+	return self.item.equipCo.score + self.item.exScore
 end
 
-return var_0_0
+return SurvivalEquipSlotMo

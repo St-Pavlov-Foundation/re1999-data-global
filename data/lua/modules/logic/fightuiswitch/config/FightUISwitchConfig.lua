@@ -1,56 +1,58 @@
-﻿module("modules.logic.fightuiswitch.config.FightUISwitchConfig", package.seeall)
+﻿-- chunkname: @modules/logic/fightuiswitch/config/FightUISwitchConfig.lua
 
-local var_0_0 = class("FightUISwitchConfig", BaseConfig)
+module("modules.logic.fightuiswitch.config.FightUISwitchConfig", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local FightUISwitchConfig = class("FightUISwitchConfig", BaseConfig)
+
+function FightUISwitchConfig:reqConfigNames()
 	return {
 		"fight_ui_style",
 		"fight_ui_effect"
 	}
 end
 
-function var_0_0.onInit(arg_2_0)
+function FightUISwitchConfig:onInit()
 	return
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "fight_ui_style" then
-		arg_3_0._fight_ui_style = arg_3_2
+function FightUISwitchConfig:onConfigLoaded(configName, configTable)
+	if configName == "fight_ui_style" then
+		self._fight_ui_style = configTable
 
-		arg_3_0:_initFightUIStyleConfig()
-	elseif arg_3_1 == "fight_ui_effect" then
-		arg_3_0._fight_ui_effect = arg_3_2
+		self:_initFightUIStyleConfig()
+	elseif configName == "fight_ui_effect" then
+		self._fight_ui_effect = configTable
 	end
 end
 
-function var_0_0._initFightUIStyleConfig(arg_4_0)
-	arg_4_0._itemStyleCoList = {}
+function FightUISwitchConfig:_initFightUIStyleConfig()
+	self._itemStyleCoList = {}
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_0._fight_ui_style.configList) do
-		if not arg_4_0._itemStyleCoList[iter_4_1.itemId] then
-			arg_4_0._itemStyleCoList[iter_4_1.itemId] = {}
+	for _, config in ipairs(self._fight_ui_style.configList) do
+		if not self._itemStyleCoList[config.itemId] then
+			self._itemStyleCoList[config.itemId] = {}
 		end
 
-		table.insert(arg_4_0._itemStyleCoList[iter_4_1.itemId], iter_4_1)
+		table.insert(self._itemStyleCoList[config.itemId], config)
 	end
 end
 
-function var_0_0.getFightUIStyleCoById(arg_5_0, arg_5_1)
-	return arg_5_0._fight_ui_style.configDict[arg_5_1]
+function FightUISwitchConfig:getFightUIStyleCoById(id)
+	return self._fight_ui_style.configDict[id]
 end
 
-function var_0_0.getFightUIStyleCoList(arg_6_0)
-	return arg_6_0._fight_ui_style.configList
+function FightUISwitchConfig:getFightUIStyleCoList()
+	return self._fight_ui_style.configList
 end
 
-function var_0_0.getFightUIEffectConfigById(arg_7_0, arg_7_1)
-	return arg_7_0._fight_ui_effect.configDict[arg_7_1]
+function FightUISwitchConfig:getFightUIEffectConfigById(id)
+	return self._fight_ui_effect.configDict[id]
 end
 
-function var_0_0.getStyleCosByItemId(arg_8_0, arg_8_1)
-	return arg_8_0._itemStyleCoList[arg_8_1]
+function FightUISwitchConfig:getStyleCosByItemId(itemId)
+	return self._itemStyleCoList[itemId]
 end
 
-var_0_0.instance = var_0_0.New()
+FightUISwitchConfig.instance = FightUISwitchConfig.New()
 
-return var_0_0
+return FightUISwitchConfig

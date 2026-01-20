@@ -1,31 +1,33 @@
-﻿module("modules.logic.fight.system.work.FightWorkSkillDelay", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkSkillDelay.lua
 
-local var_0_0 = class("FightWorkSkillDelay", BaseWork)
+module("modules.logic.fight.system.work.FightWorkSkillDelay", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.fightStepData = arg_1_1
+local FightWorkSkillDelay = class("FightWorkSkillDelay", BaseWork)
+
+function FightWorkSkillDelay:ctor(fightStepData)
+	self.fightStepData = fightStepData
 end
 
-function var_0_0.onStart(arg_2_0)
-	local var_2_0 = lua_fight_skill_delay.configDict[arg_2_0.fightStepData.actId]
+function FightWorkSkillDelay:onStart()
+	local config = lua_fight_skill_delay.configDict[self.fightStepData.actId]
 
-	if var_2_0 then
+	if config then
 		if FightDataHelper.stateMgr.isReplay then
-			arg_2_0:onDone(true)
+			self:onDone(true)
 		else
-			TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, var_2_0.delay / 1000 / FightModel.instance:getSpeed())
+			TaskDispatcher.runDelay(self._delayDone, self, config.delay / 1000 / FightModel.instance:getSpeed())
 		end
 	else
-		arg_2_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._delayDone(arg_3_0)
-	arg_3_0:onDone(true)
+function FightWorkSkillDelay:_delayDone()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._delayDone, arg_4_0)
+function FightWorkSkillDelay:clearWork()
+	TaskDispatcher.cancelTask(self._delayDone, self)
 end
 
-return var_0_0
+return FightWorkSkillDelay

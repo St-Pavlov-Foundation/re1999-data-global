@@ -1,10 +1,12 @@
-﻿module("modules.logic.room.model.common.RoomThemeMO", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/common/RoomThemeMO.lua
 
-local var_0_0 = pureTable("RoomThemeMO")
+module("modules.logic.room.model.common.RoomThemeMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.id = arg_1_1
-	arg_1_0.config = arg_1_2 or RoomConfig.instance:getThemeConfig(arg_1_1)
+local RoomThemeMO = pureTable("RoomThemeMO")
+
+function RoomThemeMO:init(_id, cfg)
+	self.id = _id
+	self.config = cfg or RoomConfig.instance:getThemeConfig(_id)
 end
 
-return var_0_0
+return RoomThemeMO

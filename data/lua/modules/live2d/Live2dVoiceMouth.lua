@@ -1,65 +1,67 @@
-﻿module("modules.live2d.Live2dVoiceMouth", package.seeall)
+﻿-- chunkname: @modules/live2d/Live2dVoiceMouth.lua
 
-local var_0_0 = class("Live2dVoiceMouth", SpineVoiceMouth)
+module("modules.live2d.Live2dVoiceMouth", package.seeall)
 
-function var_0_0.removeTaskActions(arg_1_0)
-	var_0_0.super.removeTaskActions(arg_1_0)
-	TaskDispatcher.cancelTask(arg_1_0._delayPlayMouthActionList, arg_1_0)
+local Live2dVoiceMouth = class("Live2dVoiceMouth", SpineVoiceMouth)
+
+function Live2dVoiceMouth:removeTaskActions()
+	Live2dVoiceMouth.super.removeTaskActions(self)
+	TaskDispatcher.cancelTask(self._delayPlayMouthActionList, self)
 end
 
-function var_0_0._checkPlayMouthActionList(arg_2_0, arg_2_1)
-	TaskDispatcher.cancelTask(arg_2_0._delayPlayMouthActionList, arg_2_0)
+function Live2dVoiceMouth:_checkPlayMouthActionList(mouth)
+	TaskDispatcher.cancelTask(self._delayPlayMouthActionList, self)
 
-	arg_2_0._mouthConfig = arg_2_1
+	self._mouthConfig = mouth
 
-	if arg_2_0._stopTime and Time.time - arg_2_0._stopTime < 0.1 then
-		TaskDispatcher.runDelay(arg_2_0._delayPlayMouthActionList, arg_2_0, 0.1 - (Time.time - arg_2_0._stopTime))
+	if self._stopTime and Time.time - self._stopTime < 0.1 then
+		TaskDispatcher.runDelay(self._delayPlayMouthActionList, self, 0.1 - (Time.time - self._stopTime))
 
 		return
 	end
 
-	arg_2_0:_playMouthActionList(arg_2_1)
+	self:_playMouthActionList(mouth)
 end
 
-function var_0_0._delayPlayMouthActionList(arg_3_0)
-	arg_3_0:_playMouthActionList(arg_3_0._mouthConfig)
+function Live2dVoiceMouth:_delayPlayMouthActionList()
+	self:_playMouthActionList(self._mouthConfig)
 end
 
-function var_0_0.stopMouthCallback(arg_4_0, arg_4_1)
-	arg_4_0:stopMouth()
+function Live2dVoiceMouth:stopMouthCallback(force)
+	self:stopMouth()
 end
 
-function var_0_0._setBiZui(arg_5_0)
-	if arg_5_0._isVoiceStop and arg_5_0._pauseMouth and arg_5_0._pauseMouth ~= arg_5_0._spine:getCurMouth() then
-		arg_5_0._curMouth = "t_" .. arg_5_0._pauseMouth
-		arg_5_0._pauseMouth = nil
+function Live2dVoiceMouth:_setBiZui()
+	if self._isVoiceStop and self._pauseMouth and self._pauseMouth ~= self._spine:getCurMouth() then
+		self._curMouth = "t_" .. self._pauseMouth
+		self._pauseMouth = nil
 
-		arg_5_0._spine:setMouthAnimation(arg_5_0._curMouth, false, 0)
+		self._spine:setMouthAnimation(self._curMouth, false, 0)
 
 		return
 	end
 
-	if arg_5_0._spine:hasAnimation(StoryAnimName.T_BiZui) then
-		arg_5_0._curMouth = StoryAnimName.T_BiZui
+	if self._spine:hasAnimation(StoryAnimName.T_BiZui) then
+		self._curMouth = StoryAnimName.T_BiZui
 
-		arg_5_0._spine:setMouthAnimation(arg_5_0._curMouth, true, 0)
+		self._spine:setMouthAnimation(self._curMouth, true, 0)
 	else
 		logError("no animation:t_bizui")
 	end
 end
 
-function var_0_0.onVoiceStop(arg_6_0)
-	arg_6_0._isVoiceStop = true
-	arg_6_0._stopTime = Time.time
+function Live2dVoiceMouth:onVoiceStop()
+	self._isVoiceStop = true
+	self._stopTime = Time.time
 
-	arg_6_0:stopMouth()
-	arg_6_0:removeTaskActions()
+	self:stopMouth()
+	self:removeTaskActions()
 
-	arg_6_0._isVoiceStop = false
+	self._isVoiceStop = false
 end
 
-function var_0_0.suspend(arg_7_0)
-	arg_7_0:removeTaskActions()
+function Live2dVoiceMouth:suspend()
+	self:removeTaskActions()
 end
 
-return var_0_0
+return Live2dVoiceMouth

@@ -1,40 +1,42 @@
-﻿module("modules.logic.fight.view.cardeffect.FigthCardDistributeCorrectScale", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/cardeffect/FigthCardDistributeCorrectScale.lua
 
-local var_0_0 = class("FigthCardDistributeCorrectScale", BaseWork)
+module("modules.logic.fight.view.cardeffect.FigthCardDistributeCorrectScale", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_1.oldScale or FightCardDataHelper.getHandCardContainerScale()
-	local var_1_1 = arg_1_1.newScale or FightCardDataHelper.getHandCardContainerScale(nil, arg_1_1.cards)
+local FigthCardDistributeCorrectScale = class("FigthCardDistributeCorrectScale", BaseWork)
 
-	if var_1_0 ~= var_1_1 then
-		arg_1_0:_releaseTween()
+function FigthCardDistributeCorrectScale:onStart(context)
+	local oldScale = context.oldScale or FightCardDataHelper.getHandCardContainerScale()
+	local newScale = context.newScale or FightCardDataHelper.getHandCardContainerScale(nil, context.cards)
+
+	if oldScale ~= newScale then
+		self:_releaseTween()
 		FightController.instance:dispatchEvent(FightEvent.CancelVisibleViewScaleTween)
 
-		local var_1_2 = 0.2 / FightModel.instance:getUISpeed()
+		local time = 0.2 / FightModel.instance:getUISpeed()
 
-		arg_1_0._tweenId = ZProj.TweenHelper.DOScale(arg_1_1.handCardContainer.transform, var_1_1, var_1_1, var_1_1, var_1_2)
+		self._tweenId = ZProj.TweenHelper.DOScale(context.handCardContainer.transform, newScale, newScale, newScale, time)
 
-		TaskDispatcher.runDelay(arg_1_0._delayDone, arg_1_0, var_1_2)
+		TaskDispatcher.runDelay(self._delayDone, self, time)
 	else
-		arg_1_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._delayDone(arg_2_0)
-	arg_2_0:onDone(true)
+function FigthCardDistributeCorrectScale:_delayDone()
+	self:onDone(true)
 end
 
-function var_0_0._releaseTween(arg_3_0)
-	if arg_3_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_3_0._tweenId)
+function FigthCardDistributeCorrectScale:_releaseTween()
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_3_0._tweenId = nil
+		self._tweenId = nil
 	end
 end
 
-function var_0_0.clearWork(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._delayDone, arg_4_0)
-	arg_4_0:_releaseTween()
+function FigthCardDistributeCorrectScale:clearWork()
+	TaskDispatcher.cancelTask(self._delayDone, self)
+	self:_releaseTween()
 end
 
-return var_0_0
+return FigthCardDistributeCorrectScale

@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_camera", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_camera.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_camera", package.seeall)
+
+local lua_camera = {}
+local fields = {
 	focusZ = 6,
 	yaw = 2,
 	distance = 4,
@@ -10,13 +12,13 @@ local var_0_1 = {
 	fov = 5,
 	yOffset = 7
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_camera.onLoad(json)
+	lua_camera.configList, lua_camera.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_camera

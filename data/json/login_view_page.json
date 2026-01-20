@@ -1,0 +1,32 @@
+[
+  {
+    "id": 101,
+    "name": "language_10054300",
+    "prefab": "loginbgtype",
+    "bgimage": "",
+    "video": "",
+    "audioId": 3100201,
+    "stopAudioId": 3100202,
+    "episodeId": 0
+  },
+  {
+    "id": 201,
+    "name": "language_10054301",
+    "prefab": "loginbgtype1",
+    "bgimage": "",
+    "video": "",
+    "audioId": 3100201,
+    "stopAudioId": 3100202,
+    "episodeId": 10730
+  },
+  {
+    "id": 301,
+    "name": "language_10087619",
+    "prefab": "loginbgvideo",
+    "bgimage": "bg_denglubeijing_b02",
+    "video": "3.0login3k",
+    "audioId": 3309052,
+    "stopAudioId": 3309055,
+    "episodeId": 11025
+  }
+]

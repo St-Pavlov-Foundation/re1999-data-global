@@ -1,8 +1,10 @@
-﻿module("modules.logic.pay.define.PayEnum", package.seeall)
+﻿-- chunkname: @modules/logic/pay/define/PayEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.pay.define.PayEnum", package.seeall)
 
-var_0_0.PayResultCode = {
+local PayEnum = _M
+
+PayEnum.PayResultCode = {
 	PayCancel = 901,
 	PayOrderCancel = 904,
 	PayError = 903,
@@ -10,7 +12,7 @@ var_0_0.PayResultCode = {
 	PayFinish = 200,
 	PayChannelFail = 905
 }
-var_0_0.CurrencyCode = {
+PayEnum.CurrencyCode = {
 	DKK = "DKK",
 	CNY = "CNY",
 	GBP = "GBP",
@@ -56,19 +58,19 @@ var_0_0.CurrencyCode = {
 	CAD = "CAD",
 	PLN = "PLN"
 }
-var_0_0.CurrencySymbol = {
-	[var_0_0.CurrencyCode.USD] = "US$",
-	[var_0_0.CurrencyCode.KRW] = "₩",
-	[var_0_0.CurrencyCode.JPY] = "¥",
-	[var_0_0.CurrencyCode.EUR] = "€"
+PayEnum.CurrencySymbol = {
+	[PayEnum.CurrencyCode.USD] = "US$",
+	[PayEnum.CurrencyCode.KRW] = "₩",
+	[PayEnum.CurrencyCode.JPY] = "¥",
+	[PayEnum.CurrencyCode.EUR] = "€"
 }
-var_0_0.NoDecimalsCurrency = {
-	[var_0_0.CurrencyCode.JPY] = true,
-	[var_0_0.CurrencyCode.HKD] = true,
-	[var_0_0.CurrencyCode.TWD] = true,
-	[var_0_0.CurrencyCode.KRW] = true
+PayEnum.NoDecimalsCurrency = {
+	[PayEnum.CurrencyCode.JPY] = true,
+	[PayEnum.CurrencyCode.HKD] = true,
+	[PayEnum.CurrencyCode.TWD] = true,
+	[PayEnum.CurrencyCode.KRW] = true
 }
-var_0_0.CurrencyCode = {
+PayEnum.CurrencyCode = {
 	DKK = "DKK",
 	CNY = "CNY",
 	GBP = "GBP",
@@ -114,19 +116,19 @@ var_0_0.CurrencyCode = {
 	CAD = "CAD",
 	PLN = "PLN"
 }
-var_0_0.CurrencySymbol = {
-	[var_0_0.CurrencyCode.USD] = "US$",
-	[var_0_0.CurrencyCode.KRW] = "₩",
-	[var_0_0.CurrencyCode.JPY] = "¥",
-	[var_0_0.CurrencyCode.EUR] = "€",
-	[var_0_0.CurrencyCode.CNY] = "¥"
+PayEnum.CurrencySymbol = {
+	[PayEnum.CurrencyCode.USD] = "US$",
+	[PayEnum.CurrencyCode.KRW] = "₩",
+	[PayEnum.CurrencyCode.JPY] = "¥",
+	[PayEnum.CurrencyCode.EUR] = "€",
+	[PayEnum.CurrencyCode.CNY] = "¥"
 }
-var_0_0.NoDecimalsCurrency = {
-	[var_0_0.CurrencyCode.JPY] = true,
-	[var_0_0.CurrencyCode.HKD] = true,
-	[var_0_0.CurrencyCode.TWD] = true,
-	[var_0_0.CurrencyCode.KRW] = true,
-	[var_0_0.CurrencyCode.CNY] = true
+PayEnum.NoDecimalsCurrency = {
+	[PayEnum.CurrencyCode.JPY] = true,
+	[PayEnum.CurrencyCode.HKD] = true,
+	[PayEnum.CurrencyCode.TWD] = true,
+	[PayEnum.CurrencyCode.KRW] = true,
+	[PayEnum.CurrencyCode.CNY] = true
 }
 
-return var_0_0
+return PayEnum

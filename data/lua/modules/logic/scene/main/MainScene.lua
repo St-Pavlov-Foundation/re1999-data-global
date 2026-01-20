@@ -1,15 +1,17 @@
-﻿module("modules.logic.scene.main.MainScene", package.seeall)
+﻿-- chunkname: @modules/logic/scene/main/MainScene.lua
 
-local var_0_0 = class("MainScene", BaseScene)
+module("modules.logic.scene.main.MainScene", package.seeall)
 
-function var_0_0._createAllComps(arg_1_0)
-	arg_1_0:_addComp("director", MainSceneDirector)
-	arg_1_0:_addComp("level", MainSceneLevelComp)
-	arg_1_0:_addComp("camera", MainSceneCameraComp)
-	arg_1_0:_addComp("view", MainSceneViewComp)
-	arg_1_0:_addComp("gyro", MainSceneGyroComp)
-	arg_1_0:_addComp("bgm", CommonSceneBgmComp)
-	arg_1_0:_addComp("yearAnimation", MainSceneYearAnimationComp)
+local MainScene = class("MainScene", BaseScene)
+
+function MainScene:_createAllComps()
+	self:_addComp("director", MainSceneDirector)
+	self:_addComp("level", MainSceneLevelComp)
+	self:_addComp("camera", MainSceneCameraComp)
+	self:_addComp("view", MainSceneViewComp)
+	self:_addComp("gyro", MainSceneGyroComp)
+	self:_addComp("bgm", CommonSceneBgmComp)
+	self:_addComp("yearAnimation", MainSceneYearAnimationComp)
 end
 
-return var_0_0
+return MainScene

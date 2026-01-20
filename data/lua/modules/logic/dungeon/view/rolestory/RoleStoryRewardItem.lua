@@ -1,222 +1,223 @@
-﻿module("modules.logic.dungeon.view.rolestory.RoleStoryRewardItem", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/rolestory/RoleStoryRewardItem.lua
 
-local var_0_0 = class("RoleStoryRewardItem", ListScrollCellExtend)
+module("modules.logic.dungeon.view.rolestory.RoleStoryRewardItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._rectTransform = arg_1_0.viewGO.transform
-	arg_1_0._gospecial = gohelper.findChild(arg_1_0.viewGO, "#go_special")
-	arg_1_0.txtScore = gohelper.findChildTextMesh(arg_1_0.viewGO, "scorebg/#txt_score")
-	arg_1_0.normalbg = gohelper.findChild(arg_1_0.viewGO, "scorebg/normalbg")
-	arg_1_0.txtIndex = gohelper.findChildTextMesh(arg_1_0.viewGO, "#txt_index")
-	arg_1_0._imagepoint = gohelper.findChildImage(arg_1_0.viewGO, "#image_point")
-	arg_1_0._goRewardParent = gohelper.findChild(arg_1_0.viewGO, "#go_item")
-	arg_1_0._rectRewardParent = arg_1_0._goRewardParent.transform
-	arg_1_0._goRewardTemplate = gohelper.findChild(arg_1_0.viewGO, "#go_item/#go_rewarditem")
+local RoleStoryRewardItem = class("RoleStoryRewardItem", ListScrollCellExtend)
 
-	gohelper.setActive(arg_1_0._goRewardTemplate, false)
+function RoleStoryRewardItem:onInitView()
+	self._rectTransform = self.viewGO.transform
+	self._gospecial = gohelper.findChild(self.viewGO, "#go_special")
+	self.txtScore = gohelper.findChildTextMesh(self.viewGO, "scorebg/#txt_score")
+	self.normalbg = gohelper.findChild(self.viewGO, "scorebg/normalbg")
+	self.txtIndex = gohelper.findChildTextMesh(self.viewGO, "#txt_index")
+	self._imagepoint = gohelper.findChildImage(self.viewGO, "#image_point")
+	self._goRewardParent = gohelper.findChild(self.viewGO, "#go_item")
+	self._rectRewardParent = self._goRewardParent.transform
+	self._goRewardTemplate = gohelper.findChild(self.viewGO, "#go_item/#go_rewarditem")
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	gohelper.setActive(self._goRewardTemplate, false)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RoleStoryRewardItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RoleStoryRewardItem:removeEvents()
 	return
 end
 
-function var_0_0.refresh(arg_4_0, arg_4_1)
-	if arg_4_1 then
-		arg_4_0:onUpdateMO(arg_4_1)
-		gohelper.setActive(arg_4_0.viewGO, true)
+function RoleStoryRewardItem:refresh(data)
+	if data then
+		self:onUpdateMO(data)
+		gohelper.setActive(self.viewGO, true)
 	else
-		arg_4_0.data = nil
+		self.data = nil
 
-		gohelper.setActive(arg_4_0.viewGO, false)
+		gohelper.setActive(self.viewGO, false)
 	end
 end
 
-function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
-	arg_5_0.data = arg_5_1
+function RoleStoryRewardItem:onUpdateMO(data)
+	self.data = data
 
-	arg_5_0:refreshReward(arg_5_1)
-	arg_5_0:refreshChapter(arg_5_1)
+	self:refreshReward(data)
+	self:refreshChapter(data)
 end
 
-function var_0_0.refreshReward(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_1.config
-	local var_6_1 = GameUtil.splitString2(var_6_0.bonus, true) or {}
+function RoleStoryRewardItem:refreshReward(data)
+	local config = data.config
+	local rewardList = GameUtil.splitString2(config.bonus, true) or {}
 
-	if not arg_6_0._rewardItems then
-		arg_6_0._rewardItems = {}
+	if not self._rewardItems then
+		self._rewardItems = {}
 	end
 
-	for iter_6_0 = 1, math.max(#arg_6_0._rewardItems, #var_6_1) do
-		local var_6_2 = var_6_1[iter_6_0]
-		local var_6_3 = arg_6_0._rewardItems[iter_6_0]
+	for i = 1, math.max(#self._rewardItems, #rewardList) do
+		local reward = rewardList[i]
+		local item = self._rewardItems[i]
 
-		if not var_6_3 then
-			var_6_3 = arg_6_0:createRewardItem(iter_6_0)
-			arg_6_0._rewardItems[iter_6_0] = var_6_3
+		if not item then
+			item = self:createRewardItem(i)
+			self._rewardItems[i] = item
 		end
 
-		arg_6_0:refreshRewardItem(var_6_3, var_6_2)
+		self:refreshRewardItem(item, reward)
 	end
 end
 
-function var_0_0.createRewardItem(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0:getUserDataTb_()
-	local var_7_1 = gohelper.clone(arg_7_0._goRewardTemplate, arg_7_0._goRewardParent, "reward_" .. tostring(arg_7_1))
+function RoleStoryRewardItem:createRewardItem(index)
+	local item = self:getUserDataTb_()
+	local itemGo = gohelper.clone(self._goRewardTemplate, self._goRewardParent, "reward_" .. tostring(index))
 
-	var_7_0.go = var_7_1
-	var_7_0.imagebg = gohelper.findChildImage(var_7_1, "bg")
-	var_7_0.simagereward = gohelper.findChildSingleImage(var_7_1, "simage_reward")
-	var_7_0.imagereward = gohelper.findChildImage(var_7_1, "simage_reward")
-	var_7_0.txtrewardcount = gohelper.findChildText(var_7_1, "txt_rewardcount")
-	var_7_0.goalreadygot = gohelper.findChild(var_7_1, "go_hasget")
-	var_7_0.gocanget = gohelper.findChild(var_7_1, "go_canget")
-	var_7_0.btn = gohelper.findChildButtonWithAudio(var_7_1, "btn_click")
+	item.go = itemGo
+	item.imagebg = gohelper.findChildImage(itemGo, "bg")
+	item.simagereward = gohelper.findChildSingleImage(itemGo, "simage_reward")
+	item.imagereward = gohelper.findChildImage(itemGo, "simage_reward")
+	item.txtrewardcount = gohelper.findChildText(itemGo, "txt_rewardcount")
+	item.goalreadygot = gohelper.findChild(itemGo, "go_hasget")
+	item.gocanget = gohelper.findChild(itemGo, "go_canget")
+	item.btn = gohelper.findChildButtonWithAudio(itemGo, "btn_click")
 
-	var_7_0.btn:AddClickListener(arg_7_0.onClickItem, arg_7_0, var_7_0)
+	item.btn:AddClickListener(self.onClickItem, self, item)
 
-	var_7_0.rewardAnim = var_7_0.go:GetComponent(typeof(UnityEngine.Animator))
+	item.rewardAnim = item.go:GetComponent(typeof(UnityEngine.Animator))
 
-	function var_7_0.onLoadImageCallback(arg_8_0)
-		arg_8_0.imagereward:SetNativeSize()
+	function item.onLoadImageCallback(itemObj)
+		itemObj.imagereward:SetNativeSize()
 	end
 
-	return var_7_0
+	return item
 end
 
-local var_0_1 = Color.New(1, 1, 1, 1)
+local COLOR_REWARD_NORMAL = Color.New(1, 1, 1, 1)
 
-function var_0_0.refreshRewardItem(arg_9_0, arg_9_1, arg_9_2)
-	arg_9_1.data = arg_9_2
+function RoleStoryRewardItem:refreshRewardItem(item, data)
+	item.data = data
 
-	if not arg_9_2 then
-		gohelper.setActive(arg_9_1.go, false)
+	if not data then
+		gohelper.setActive(item.go, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_9_1.go, true)
+	gohelper.setActive(item.go, true)
 
-	local var_9_0 = arg_9_0.data.config
-	local var_9_1 = RoleStoryModel.instance:getRewardState(var_9_0.storyId, var_9_0.id, var_9_0.score)
-	local var_9_2, var_9_3 = ItemModel.instance:getItemConfigAndIcon(arg_9_2[1], arg_9_2[2])
+	local config = self.data.config
+	local state = RoleStoryModel.instance:getRewardState(config.storyId, config.id, config.score)
+	local itemCfg, iconPath = ItemModel.instance:getItemConfigAndIcon(data[1], data[2])
 
-	if var_9_2 then
-		UISpriteSetMgr.instance:setUiFBSprite(arg_9_1.imagebg, "bg_pinjidi_" .. var_9_2.rare)
+	if itemCfg then
+		UISpriteSetMgr.instance:setUiFBSprite(item.imagebg, "bg_pinjidi_" .. itemCfg.rare)
 	end
 
-	if arg_9_2[1] == MaterialEnum.MaterialType.Equip then
-		var_9_3 = ResUrl.getHeroDefaultEquipIcon(var_9_2.icon)
+	if data[1] == MaterialEnum.MaterialType.Equip then
+		iconPath = ResUrl.getHeroDefaultEquipIcon(itemCfg.icon)
 	end
 
-	if var_9_3 then
-		arg_9_1.simagereward:LoadImage(var_9_3, arg_9_1.onLoadImageCallback, arg_9_1)
+	if iconPath then
+		item.simagereward:LoadImage(iconPath, item.onLoadImageCallback, item)
 	end
 
-	arg_9_1.txtrewardcount.text = string.format("<size=25>x</size>%s", tostring(arg_9_2[3]))
+	item.txtrewardcount.text = string.format("<size=25>x</size>%s", tostring(data[3]))
 
-	gohelper.setActive(arg_9_1.goalreadygot, var_9_1 == 2)
-	gohelper.setActive(arg_9_1.gocanget, var_9_1 == 1)
+	gohelper.setActive(item.goalreadygot, state == 2)
+	gohelper.setActive(item.gocanget, state == 1)
 
-	if var_9_1 == 2 then
-		arg_9_1.rewardAnim.enabled = true
+	if state == 2 then
+		item.rewardAnim.enabled = true
 
-		arg_9_1.rewardAnim:Play("dungeoncumulativerewardsitem_receiveenter")
-	elseif var_9_1 == 1 then
-		arg_9_1.rewardAnim.enabled = true
+		item.rewardAnim:Play("dungeoncumulativerewardsitem_receiveenter")
+	elseif state == 1 then
+		item.rewardAnim.enabled = true
 
-		arg_9_1.rewardAnim:Play("dungeoncumulativerewardsitem_received")
+		item.rewardAnim:Play("dungeoncumulativerewardsitem_received")
 	else
-		arg_9_1.rewardAnim.enabled = false
-		arg_9_1.imagereward.color = var_0_1
-		arg_9_1.imagebg.color = var_0_1
+		item.rewardAnim.enabled = false
+		item.imagereward.color = COLOR_REWARD_NORMAL
+		item.imagebg.color = COLOR_REWARD_NORMAL
 	end
 end
 
-function var_0_0.onClickItem(arg_10_0, arg_10_1)
-	if not arg_10_0.data then
+function RoleStoryRewardItem:onClickItem(item)
+	if not self.data then
 		return
 	end
 
-	local var_10_0 = arg_10_0.data.config
+	local config = self.data.config
+	local state = RoleStoryModel.instance:getRewardState(config.storyId, config.id, config.score)
 
-	if RoleStoryModel.instance:getRewardState(var_10_0.storyId, var_10_0.id, var_10_0.score) == 1 then
-		local var_10_1 = {}
-		local var_10_2 = RoleStoryConfig.instance:getRewardList(var_10_0.storyId)
+	if state == 1 then
+		local list = {}
+		local rewardList = RoleStoryConfig.instance:getRewardList(config.storyId)
 
-		if var_10_2 then
-			for iter_10_0, iter_10_1 in ipairs(var_10_2) do
-				if RoleStoryModel.instance:getRewardState(iter_10_1.storyId, iter_10_1.id, iter_10_1.score) == 1 then
-					table.insert(var_10_1, iter_10_1.id)
+		if rewardList then
+			for i, v in ipairs(rewardList) do
+				if RoleStoryModel.instance:getRewardState(v.storyId, v.id, v.score) == 1 then
+					table.insert(list, v.id)
 				end
 			end
 		end
 
-		if #var_10_1 > 0 then
-			HeroStoryRpc.instance:sendGetScoreBonusRequest(var_10_1)
+		if #list > 0 then
+			HeroStoryRpc.instance:sendGetScoreBonusRequest(list)
 		end
-	elseif arg_10_1.data then
-		MaterialTipController.instance:showMaterialInfo(arg_10_1.data[1], arg_10_1.data[2])
+	elseif item.data then
+		MaterialTipController.instance:showMaterialInfo(item.data[1], item.data[2])
 	end
 end
 
-local var_0_2 = "#DB7D29"
-local var_0_3 = "#FFFFFF"
-local var_0_4 = 0.86
-local var_0_5 = 0.86
-local var_0_6 = "#DB7D29"
-local var_0_7 = "#8E8E8E"
+local finishIndexTxtColor = "#DB7D29"
+local unfinishIndexTxtColor = "#FFFFFF"
+local unfinishIndexTxtColorAlpha = 0.86
+local finishIndexTxtColorAlpha = 0.86
+local finishScroreTxtColor = "#DB7D29"
+local unfinishScoreTxtColor = "#8E8E8E"
 
-function var_0_0.refreshChapter(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0.data.config
-	local var_11_1 = RoleStoryModel.instance:getRewardState(var_11_0.storyId, var_11_0.id, var_11_0.score)
-	local var_11_2 = var_11_0.keyReward == 1
-	local var_11_3 = "v1a6_cachot_icon_pointdark"
-	local var_11_4 = var_0_3
-	local var_11_5 = var_0_4
-	local var_11_6 = var_0_7
+function RoleStoryRewardItem:refreshChapter(data)
+	local config = self.data.config
+	local state = RoleStoryModel.instance:getRewardState(config.storyId, config.id, config.score)
+	local isKeyReward = config.keyReward == 1
+	local pointIconName = "v1a6_cachot_icon_pointdark"
+	local indexTxtColor = unfinishIndexTxtColor
+	local indexTxtAlpha = unfinishIndexTxtColorAlpha
+	local scoreTxtColor = unfinishScoreTxtColor
 
-	if var_11_1 == 0 then
-		var_11_3 = var_11_2 and "v1a6_cachot_icon_pointdark2" or "v1a6_cachot_icon_pointdark"
+	if state == 0 then
+		pointIconName = isKeyReward and "v1a6_cachot_icon_pointdark2" or "v1a6_cachot_icon_pointdark"
 	else
-		var_11_3 = var_11_2 and "v1a6_cachot_icon_pointlight2" or "v1a6_cachot_icon_pointlight"
-
-		local var_11_7 = var_0_2
-
-		var_11_5 = var_0_5
-		var_11_6 = var_0_6
+		pointIconName = isKeyReward and "v1a6_cachot_icon_pointlight2" or "v1a6_cachot_icon_pointlight"
+		indexTxtColor = finishIndexTxtColor
+		indexTxtAlpha = finishIndexTxtColorAlpha
+		scoreTxtColor = finishScroreTxtColor
 	end
 
-	UISpriteSetMgr.instance:setV1a6CachotSprite(arg_11_0._imagepoint, var_11_3)
+	UISpriteSetMgr.instance:setV1a6CachotSprite(self._imagepoint, pointIconName)
 
-	arg_11_0.txtScore.text = string.format("<color=%s>%s</color>", var_11_6, var_11_0.score)
-	arg_11_0.txtIndex.text = string.format("<color=%s>%02d</color>", var_11_6, arg_11_0.data.index)
+	self.txtScore.text = string.format("<color=%s>%s</color>", scoreTxtColor, config.score)
+	self.txtIndex.text = string.format("<color=%s>%02d</color>", scoreTxtColor, self.data.index)
 
-	ZProj.UGUIHelper.SetColorAlpha(arg_11_0.txtIndex, var_11_5)
-	gohelper.setActive(arg_11_0._gospecial, var_11_2 and not arg_11_0.data.isTarget)
-	gohelper.setActive(arg_11_0.normalbg, var_11_2 and arg_11_0.data.isTarget)
+	ZProj.UGUIHelper.SetColorAlpha(self.txtIndex, indexTxtAlpha)
+	gohelper.setActive(self._gospecial, isKeyReward and not self.data.isTarget)
+	gohelper.setActive(self.normalbg, isKeyReward and self.data.isTarget)
 end
 
-function var_0_0._editableInitView(arg_12_0)
+function RoleStoryRewardItem:_editableInitView()
 	return
 end
 
-function var_0_0.onDestroyView(arg_13_0)
-	if arg_13_0._rewardItems then
-		for iter_13_0, iter_13_1 in pairs(arg_13_0._rewardItems) do
-			iter_13_1.btn:RemoveClickListener()
-			iter_13_1.simagereward:UnLoadImage()
+function RoleStoryRewardItem:onDestroyView()
+	if self._rewardItems then
+		for _, item in pairs(self._rewardItems) do
+			item.btn:RemoveClickListener()
+			item.simagereward:UnLoadImage()
 		end
 
-		arg_13_0._rewardItems = nil
+		self._rewardItems = nil
 	end
 end
 
-return var_0_0
+return RoleStoryRewardItem

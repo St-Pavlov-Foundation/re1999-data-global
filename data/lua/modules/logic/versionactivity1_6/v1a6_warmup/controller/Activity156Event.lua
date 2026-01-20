@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_warmup.controller.Activity156Event", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_warmup/controller/Activity156Event.lua
 
-local var_0_0 = {}
+module("modules.logic.versionactivity1_6.v1a6_warmup.controller.Activity156Event", package.seeall)
 
-var_0_0.DataUpdate = 101
-var_0_0.OnFMScrollValueChange = 102
-var_0_0.OnChannelSelected = 103
-var_0_0.OnChannelItemClick = 104
-var_0_0.EpisodeFinished = 105
+local Activity156Event = {}
 
-return var_0_0
+Activity156Event.DataUpdate = 101
+Activity156Event.OnFMScrollValueChange = 102
+Activity156Event.OnChannelSelected = 103
+Activity156Event.OnChannelItemClick = 104
+Activity156Event.EpisodeFinished = 105
+
+return Activity156Event

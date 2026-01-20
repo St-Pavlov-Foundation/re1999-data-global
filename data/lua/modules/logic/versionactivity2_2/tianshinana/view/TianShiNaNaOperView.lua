@@ -1,106 +1,108 @@
-﻿module("modules.logic.versionactivity2_2.tianshinana.view.TianShiNaNaOperView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/tianshinana/view/TianShiNaNaOperView.lua
 
-local var_0_0 = class("TianShiNaNaOperView", BaseView)
+module("modules.logic.versionactivity2_2.tianshinana.view.TianShiNaNaOperView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnBack = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_back")
-	arg_1_0._gofull = gohelper.findChild(arg_1_0.viewGO, "#go_full")
-	arg_1_0._clickFull = gohelper.findChildClick(arg_1_0.viewGO, "#go_full")
-	arg_1_0._btnEndRotate = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_endrotate")
+local TianShiNaNaOperView = class("TianShiNaNaOperView", BaseView)
+
+function TianShiNaNaOperView:onInitView()
+	self._btnBack = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_back")
+	self._gofull = gohelper.findChild(self.viewGO, "#go_full")
+	self._clickFull = gohelper.findChildClick(self.viewGO, "#go_full")
+	self._btnEndRotate = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_endrotate")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	TianShiNaNaController.instance:registerCallback(TianShiNaNaEvent.ResetScene, arg_2_0.onSceneReset, arg_2_0)
-	TianShiNaNaController.instance:registerCallback(TianShiNaNaEvent.LoadLevelFinish, arg_2_0.onLevelLoadFinish, arg_2_0)
-	TianShiNaNaController.instance:registerCallback(TianShiNaNaEvent.OnFlowEnd, arg_2_0.onFlowEnd, arg_2_0)
-	TianShiNaNaController.instance:registerCallback(TianShiNaNaEvent.RoundFail, arg_2_0.onRoundFail, arg_2_0)
-	TianShiNaNaController.instance:registerCallback(TianShiNaNaEvent.StatuChange, arg_2_0._onStatuChange, arg_2_0)
-	TianShiNaNaController.instance:registerCallback(TianShiNaNaEvent.RoundUpdate, arg_2_0._onRoundChange, arg_2_0)
-	TianShiNaNaController.instance:registerCallback(TianShiNaNaEvent.GuideClickNode, arg_2_0._onGuideClickNode, arg_2_0)
-	arg_2_0._btnBack:AddClickListener(arg_2_0._onBackClick, arg_2_0)
-	arg_2_0._clickFull:AddClickListener(arg_2_0._onClickFull, arg_2_0)
-	arg_2_0._btnEndRotate:AddClickListener(arg_2_0._onEndRotate, arg_2_0)
-	CommonDragHelper.instance:registerDragObj(arg_2_0._gofull, nil, arg_2_0._onDrag, arg_2_0._onEndDrag, arg_2_0._checkLockDrag, arg_2_0, nil, true)
+function TianShiNaNaOperView:addEvents()
+	TianShiNaNaController.instance:registerCallback(TianShiNaNaEvent.ResetScene, self.onSceneReset, self)
+	TianShiNaNaController.instance:registerCallback(TianShiNaNaEvent.LoadLevelFinish, self.onLevelLoadFinish, self)
+	TianShiNaNaController.instance:registerCallback(TianShiNaNaEvent.OnFlowEnd, self.onFlowEnd, self)
+	TianShiNaNaController.instance:registerCallback(TianShiNaNaEvent.RoundFail, self.onRoundFail, self)
+	TianShiNaNaController.instance:registerCallback(TianShiNaNaEvent.StatuChange, self._onStatuChange, self)
+	TianShiNaNaController.instance:registerCallback(TianShiNaNaEvent.RoundUpdate, self._onRoundChange, self)
+	TianShiNaNaController.instance:registerCallback(TianShiNaNaEvent.GuideClickNode, self._onGuideClickNode, self)
+	self._btnBack:AddClickListener(self._onBackClick, self)
+	self._clickFull:AddClickListener(self._onClickFull, self)
+	self._btnEndRotate:AddClickListener(self._onEndRotate, self)
+	CommonDragHelper.instance:registerDragObj(self._gofull, nil, self._onDrag, self._onEndDrag, self._checkLockDrag, self, nil, true)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	TianShiNaNaController.instance:unregisterCallback(TianShiNaNaEvent.ResetScene, arg_3_0.onSceneReset, arg_3_0)
-	TianShiNaNaController.instance:unregisterCallback(TianShiNaNaEvent.LoadLevelFinish, arg_3_0.onLevelLoadFinish, arg_3_0)
-	TianShiNaNaController.instance:unregisterCallback(TianShiNaNaEvent.OnFlowEnd, arg_3_0.onFlowEnd, arg_3_0)
-	TianShiNaNaController.instance:unregisterCallback(TianShiNaNaEvent.RoundFail, arg_3_0.onRoundFail, arg_3_0)
-	TianShiNaNaController.instance:unregisterCallback(TianShiNaNaEvent.StatuChange, arg_3_0._onStatuChange, arg_3_0)
-	TianShiNaNaController.instance:unregisterCallback(TianShiNaNaEvent.RoundUpdate, arg_3_0._onRoundChange, arg_3_0)
-	TianShiNaNaController.instance:unregisterCallback(TianShiNaNaEvent.GuideClickNode, arg_3_0._onGuideClickNode, arg_3_0)
-	arg_3_0._btnBack:RemoveClickListener()
-	arg_3_0._clickFull:RemoveClickListener()
-	arg_3_0._btnEndRotate:RemoveClickListener()
-	CommonDragHelper.instance:unregisterDragObj(arg_3_0._gofull)
+function TianShiNaNaOperView:removeEvents()
+	TianShiNaNaController.instance:unregisterCallback(TianShiNaNaEvent.ResetScene, self.onSceneReset, self)
+	TianShiNaNaController.instance:unregisterCallback(TianShiNaNaEvent.LoadLevelFinish, self.onLevelLoadFinish, self)
+	TianShiNaNaController.instance:unregisterCallback(TianShiNaNaEvent.OnFlowEnd, self.onFlowEnd, self)
+	TianShiNaNaController.instance:unregisterCallback(TianShiNaNaEvent.RoundFail, self.onRoundFail, self)
+	TianShiNaNaController.instance:unregisterCallback(TianShiNaNaEvent.StatuChange, self._onStatuChange, self)
+	TianShiNaNaController.instance:unregisterCallback(TianShiNaNaEvent.RoundUpdate, self._onRoundChange, self)
+	TianShiNaNaController.instance:unregisterCallback(TianShiNaNaEvent.GuideClickNode, self._onGuideClickNode, self)
+	self._btnBack:RemoveClickListener()
+	self._clickFull:RemoveClickListener()
+	self._btnEndRotate:RemoveClickListener()
+	CommonDragHelper.instance:unregisterDragObj(self._gofull)
 end
 
-function var_0_0.onLevelLoadFinish(arg_4_0, arg_4_1)
+function TianShiNaNaOperView:onLevelLoadFinish(sceneGo)
 	TianShiNaNaModel.instance.sceneLevelLoadFinish = true
-	arg_4_0._cubeContainer = gohelper.create3d(arg_4_1.transform.parent.gameObject, "CubeContainer")
-	arg_4_0._placeContainer = gohelper.create3d(arg_4_1.transform.parent.gameObject, "PlaceContainer")
-	arg_4_0._effectContainer = gohelper.create3d(arg_4_1.transform.parent.gameObject, "EffectContainer")
+	self._cubeContainer = gohelper.create3d(sceneGo.transform.parent.gameObject, "CubeContainer")
+	self._placeContainer = gohelper.create3d(sceneGo.transform.parent.gameObject, "PlaceContainer")
+	self._effectContainer = gohelper.create3d(sceneGo.transform.parent.gameObject, "EffectContainer")
 
-	TianShiNaNaEffectPool.instance:setRoot(arg_4_0._effectContainer)
+	TianShiNaNaEffectPool.instance:setRoot(self._effectContainer)
 
-	local var_4_0 = arg_4_0._cubeContainer.transform
+	local trans = self._cubeContainer.transform
 
-	transformhelper.setLocalPos(var_4_0, 0, 1.113595, -4.8425)
-	transformhelper.setLocalRotation(var_4_0, 152.637, 52.768, 31.166)
-	transformhelper.setLocalScale(var_4_0, 1.5, -1.5, -1.5)
+	transformhelper.setLocalPos(trans, 0, 1.113595, -4.8425)
+	transformhelper.setLocalRotation(trans, 152.637, 52.768, 31.166)
+	transformhelper.setLocalScale(trans, 1.5, -1.5, -1.5)
 
 	if TianShiNaNaModel.instance.waitStartFlow then
 		TianShiNaNaModel.instance:setState(TianShiNaNaEnum.CurState.DoStep)
 		TianShiNaNaController.instance:checkBeginFlow()
 	else
-		arg_4_0:beginSelectDir()
+		self:beginSelectDir()
 	end
 
 	TianShiNaNaController.instance:dispatchEvent(TianShiNaNaEvent.EnterMapAndInitDone, tostring(TianShiNaNaModel.instance.episodeCo.id))
 end
 
-function var_0_0.onSceneReset(arg_5_0)
+function TianShiNaNaOperView:onSceneReset()
 	if TianShiNaNaModel.instance.waitStartFlow then
-		arg_5_0:clearCubes()
+		self:clearCubes()
 		TianShiNaNaModel.instance:setState(TianShiNaNaEnum.CurState.DoStep)
 		TianShiNaNaController.instance:checkBeginFlow()
 
 		return
 	end
 
-	local var_5_0 = TianShiNaNaModel.instance.curOperList
+	local operList = TianShiNaNaModel.instance.curOperList
 
-	if #var_5_0 == 0 then
-		arg_5_0:beginSelectDir()
+	if #operList == 0 then
+		self:beginSelectDir()
 	else
-		arg_5_0:clearCubes()
+		self:clearCubes()
 
-		arg_5_0.cube = arg_5_0:_placeCubes(var_5_0[1], TianShiNaNaModel.instance:getNextCubeType())
+		self.cube = self:_placeCubes(operList[1], TianShiNaNaModel.instance:getNextCubeType())
 
-		arg_5_0:setCurOperCube(var_5_0[1], arg_5_0.cube)
+		self:setCurOperCube(operList[1], self.cube)
 
-		local var_5_1 = #var_5_0
+		local len = #operList
 
-		for iter_5_0 = 2, var_5_1 do
-			local var_5_2 = var_5_0[iter_5_0]
+		for i = 2, len do
+			local oper = operList[i]
 
-			arg_5_0.cube:doRotate(var_5_2)
-			arg_5_0:markOpers(var_5_2)
+			self.cube:doRotate(oper)
+			self:markOpers(oper)
 
-			if iter_5_0 == 4 and var_5_1 == 5 then
-				local var_5_3 = arg_5_0.cube:getOperDownIndex(var_5_0[5])
+			if i == 4 and len == 5 then
+				local downIndex = self.cube:getOperDownIndex(operList[5])
 
-				if not arg_5_0._finishIndex[7 - var_5_3] then
-					table.remove(var_5_0)
+				if not self._finishIndex[7 - downIndex] then
+					table.remove(operList)
 
 					break
 				end
 			end
 
-			if iter_5_0 == 5 and var_5_1 == 6 then
-				table.remove(var_5_0)
+			if i == 5 and len == 6 then
+				table.remove(operList)
 
 				break
 			end
@@ -108,157 +110,160 @@ function var_0_0.onSceneReset(arg_5_0)
 	end
 end
 
-function var_0_0._onStatuChange(arg_6_0, arg_6_1, arg_6_2)
-	gohelper.setActive(arg_6_0._btnEndRotate, arg_6_2 == TianShiNaNaEnum.CurState.Rotate)
+function TianShiNaNaOperView:_onStatuChange(preStatu, nowStatu)
+	gohelper.setActive(self._btnEndRotate, nowStatu == TianShiNaNaEnum.CurState.Rotate)
 
-	if arg_6_1 == TianShiNaNaEnum.CurState.SelectDir and arg_6_2 == TianShiNaNaEnum.CurState.DoStep then
-		arg_6_0:clearCubes()
+	if preStatu == TianShiNaNaEnum.CurState.SelectDir and nowStatu == TianShiNaNaEnum.CurState.DoStep then
+		self:clearCubes()
 	end
 end
 
-function var_0_0._onRoundChange(arg_7_0)
+function TianShiNaNaOperView:_onRoundChange()
 	if TianShiNaNaModel.instance:isWaitClick() then
-		arg_7_0:clearCubes(true)
-		gohelper.setActive(arg_7_0._btnEndRotate, true)
+		self:clearCubes(true)
+		gohelper.setActive(self._btnEndRotate, true)
 	end
 end
 
-function var_0_0._onBackClick(arg_8_0)
+function TianShiNaNaOperView:_onBackClick()
 	if TianShiNaNaHelper.isBanOper() then
 		return
 	end
 
-	local var_8_0 = TianShiNaNaModel.instance:getState()
+	local nowState = TianShiNaNaModel.instance:getState()
 
-	if var_8_0 == TianShiNaNaEnum.CurState.SelectDir or TianShiNaNaModel.instance:isWaitClick() then
+	if nowState == TianShiNaNaEnum.CurState.SelectDir or TianShiNaNaModel.instance:isWaitClick() then
 		Activity167Rpc.instance:sendAct167RollbackRequest(VersionActivity2_2Enum.ActivityId.TianShiNaNa, TianShiNaNaModel.instance.episodeCo.id)
-	elseif var_8_0 == TianShiNaNaEnum.CurState.Rotate then
-		if arg_8_0:_checkLockDrag() then
+	elseif nowState == TianShiNaNaEnum.CurState.Rotate then
+		if self:_checkLockDrag() then
 			return
 		end
 
-		local var_8_1 = TianShiNaNaModel.instance.curOperList
+		local operList = TianShiNaNaModel.instance.curOperList
 
-		if #var_8_1 <= 1 then
-			arg_8_0:beginSelectDir()
+		if #operList <= 1 then
+			self:beginSelectDir()
 		else
-			local var_8_2 = table.remove(var_8_1)
+			local operDir = table.remove(operList)
 
-			arg_8_0:rollbackOper(var_8_2)
+			self:rollbackOper(operDir)
 		end
 	end
 end
 
-function var_0_0.rollbackOper(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0.cube:getCurDownIndex()
+function TianShiNaNaOperView:rollbackOper(operDir)
+	local index = self.cube:getCurDownIndex()
 
-	arg_9_0.cube:revertPlane(var_9_0)
-	arg_9_0.cube:doRotate(-arg_9_1)
+	self.cube:revertPlane(index)
+	self.cube:doRotate(-operDir)
 
-	arg_9_0._isErrorOper = true
-	arg_9_0._dragValue = 1
-	arg_9_0._nowOper = arg_9_1
-	arg_9_0._finishIndex[var_9_0] = nil
+	self._isErrorOper = true
+	self._dragValue = 1
+	self._nowOper = operDir
+	self._finishIndex[index] = nil
 
-	arg_9_0:_doOperTween()
+	self:_doOperTween()
 end
 
-function var_0_0.beginSelectDir(arg_10_0)
-	arg_10_0:clearCubes()
+function TianShiNaNaOperView:beginSelectDir()
+	self:clearCubes()
 	TianShiNaNaModel.instance:setState(TianShiNaNaEnum.CurState.SelectDir)
 
-	local var_10_0 = TianShiNaNaModel.instance:getHeroMo()
-	local var_10_1 = TianShiNaNaModel.instance:getNextCubeType()
+	local heroPos = TianShiNaNaModel.instance:getHeroMo()
+	local cubeType = TianShiNaNaModel.instance:getNextCubeType()
 
-	if not var_10_1 then
+	if not cubeType then
 		logError("没有方块了？？？")
 
 		return
 	end
 
-	arg_10_0._nowCubeType = var_10_1
+	self._nowCubeType = cubeType
 
-	local var_10_2 = TianShiNaNaHelper.getCanOperDirs(var_10_0, var_10_1)
+	local canPlaceDirs = TianShiNaNaHelper.getCanOperDirs(heroPos, cubeType)
 
-	if not next(var_10_2) then
+	if not next(canPlaceDirs) then
 		TianShiNaNaModel.instance.curOperList = {}
-		arg_10_0._finishIndex = {}
+		self._finishIndex = {}
 
 		TianShiNaNaModel.instance:setState(TianShiNaNaEnum.CurState.Rotate)
 	else
-		arg_10_0._placeEntity = TianShiNaNaPlaceEntity.Create(var_10_0.x, var_10_0.y, var_10_2, var_10_1, arg_10_0._placeContainer)
+		self._placeEntity = TianShiNaNaPlaceEntity.Create(heroPos.x, heroPos.y, canPlaceDirs, cubeType, self._placeContainer)
 	end
 end
 
-function var_0_0._placeCubes(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = TianShiNaNaModel.instance:getHeroMo()
-	local var_11_1 = var_11_0.x
-	local var_11_2 = var_11_0.y
+function TianShiNaNaOperView:_placeCubes(dir, cubeType)
+	local heroPos = TianShiNaNaModel.instance:getHeroMo()
+	local placePosX = heroPos.x
+	local placePosY = heroPos.y
 
-	if arg_11_2 == TianShiNaNaEnum.CubeType.Type1 then
-		local var_11_3 = TianShiNaNaHelper.getOperOffset(arg_11_1)
+	if cubeType == TianShiNaNaEnum.CubeType.Type1 then
+		local offset = TianShiNaNaHelper.getOperOffset(dir)
 
-		var_11_1 = var_11_1 + var_11_3.x
-		var_11_2 = var_11_2 + var_11_3.y
+		placePosX = placePosX + offset.x
+		placePosY = placePosY + offset.y
 	end
 
-	local var_11_4 = TianShiNaNaCubeEntity.Create(var_11_1, var_11_2, arg_11_0._cubeContainer)
+	local cube = TianShiNaNaCubeEntity.Create(placePosX, placePosY, self._cubeContainer)
 
-	if arg_11_2 == TianShiNaNaEnum.CubeType.Type2 then
-		var_11_4:doRotate(arg_11_1)
+	if cubeType == TianShiNaNaEnum.CubeType.Type2 then
+		cube:doRotate(dir)
 	end
 
-	return var_11_4
+	return cube
 end
 
-function var_0_0._onClickFull(arg_12_0, arg_12_1)
-	local var_12_0 = TianShiNaNaModel.instance:getState()
+function TianShiNaNaOperView:_onClickFull(nodePos)
+	local nowState = TianShiNaNaModel.instance:getState()
 
-	if var_12_0 == TianShiNaNaEnum.CurState.SelectDir then
-		local var_12_1 = arg_12_1 or TianShiNaNaHelper.getClickNodePos()
-		local var_12_2 = arg_12_0._placeEntity:getClickDir(var_12_1)
+	if nowState == TianShiNaNaEnum.CurState.SelectDir then
+		local clickPos = nodePos or TianShiNaNaHelper.getClickNodePos()
+		local clickDir = self._placeEntity:getClickDir(clickPos)
 
-		if var_12_2 then
-			local var_12_3 = TianShiNaNaModel.instance:getNextCubeType()
-			local var_12_4 = arg_12_0:_placeCubes(var_12_2, var_12_3)
+		if clickDir then
+			local nextCubeType = TianShiNaNaModel.instance:getNextCubeType()
+			local cube = self:_placeCubes(clickDir, nextCubeType)
 
-			var_12_4:playOpenAnim(var_12_3)
-			arg_12_0:setCurOperCube(var_12_2, var_12_4)
+			cube:playOpenAnim(nextCubeType)
+			self:setCurOperCube(clickDir, cube)
 			AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2TianShiNaNa.play_ui_youyu_deploy)
 		end
-	elseif var_12_0 == TianShiNaNaEnum.CurState.Rotate and not arg_12_0._nowOper and not arg_12_0:_checkLockDrag() then
-		local var_12_5 = arg_12_1 or TianShiNaNaHelper.getClickNodePos()
+	elseif nowState == TianShiNaNaEnum.CurState.Rotate and not self._nowOper and not self:_checkLockDrag() then
+		local clickPos = nodePos or TianShiNaNaHelper.getClickNodePos()
 
-		for iter_12_0, iter_12_1 in pairs(TianShiNaNaEnum.OperDir) do
-			local var_12_6 = arg_12_0.cube:getOperGrids(iter_12_1)
-			local var_12_7 = arg_12_0.cube:getOperDownIndex(iter_12_1)
+		for _, operDir in pairs(TianShiNaNaEnum.OperDir) do
+			local points = self.cube:getOperGrids(operDir)
+			local operIndex = self.cube:getOperDownIndex(operDir)
 
-			if not arg_12_0._finishIndex[var_12_7] and TianShiNaNaHelper.havePos(var_12_6, var_12_5) and arg_12_0:checkCanOper(iter_12_1, var_12_6) then
-				arg_12_0._dragValue = 0
-				arg_12_0._nowOper = iter_12_1
+			if not self._finishIndex[operIndex] and TianShiNaNaHelper.havePos(points, clickPos) and self:checkCanOper(operDir, points) then
+				self._dragValue = 0
+				self._nowOper = operDir
 
-				if tabletool.len(arg_12_0._finishIndex) == 4 and not arg_12_0._finishIndex[7 - var_12_7] then
-					arg_12_0._hidePlanIndex = 7 - var_12_7
+				local len = tabletool.len(self._finishIndex)
 
-					local var_12_8 = arg_12_0.cube:getPlaneByIndex(arg_12_0._hidePlanIndex)
+				if len == 4 and not self._finishIndex[7 - operIndex] then
+					self._hidePlanIndex = 7 - operIndex
 
-					gohelper.setActive(var_12_8, false)
+					local plan = self.cube:getPlaneByIndex(self._hidePlanIndex)
+
+					gohelper.setActive(plan, false)
 				end
 
-				arg_12_0:_doOperTween(true)
+				self:_doOperTween(true)
 
 				return
-			elseif arg_12_0._finishIndex[var_12_7] and TianShiNaNaHelper.havePos(var_12_6, var_12_5) then
-				local var_12_9 = TianShiNaNaModel.instance.curOperList
+			elseif self._finishIndex[operIndex] and TianShiNaNaHelper.havePos(points, clickPos) then
+				local operList = TianShiNaNaModel.instance.curOperList
+				local leftOper = #operList > 1 and operList[#operList]
 
-				if (#var_12_9 > 1 and var_12_9[#var_12_9]) == -iter_12_1 then
-					arg_12_0._dragValue = 0
-					arg_12_0._nowOper = iter_12_1
+				if leftOper == -operDir then
+					self._dragValue = 0
+					self._nowOper = operDir
 
-					local var_12_10 = arg_12_0.cube:getCurDownIndex()
+					local nowDownIndex = self.cube:getCurDownIndex()
 
-					arg_12_0.cube:revertPlane(var_12_10)
-					arg_12_0:_doOperTween(true)
+					self.cube:revertPlane(nowDownIndex)
+					self:_doOperTween(true)
 
 					return
 				end
@@ -267,38 +272,38 @@ function var_0_0._onClickFull(arg_12_0, arg_12_1)
 	end
 end
 
-function var_0_0._onGuideClickNode(arg_13_0, arg_13_1)
-	local var_13_0 = string.splitToNumber(arg_13_1, ",")
-	local var_13_1 = {
-		x = var_13_0[1],
-		y = var_13_0[2]
+function TianShiNaNaOperView:_onGuideClickNode(posStr)
+	local arr = string.splitToNumber(posStr, ",")
+	local nodePos = {
+		x = arr[1],
+		y = arr[2]
 	}
 
-	arg_13_0:_onClickFull(var_13_1)
+	self:_onClickFull(nodePos)
 end
 
-function var_0_0.setCurOperCube(arg_14_0, arg_14_1, arg_14_2)
+function TianShiNaNaOperView:setCurOperCube(operDir, selectCube)
 	TianShiNaNaModel.instance.curOperList = {}
-	arg_14_0._finishIndex = {}
-	arg_14_0.cube = arg_14_2
+	self._finishIndex = {}
+	self.cube = selectCube
 
-	if arg_14_0._placeEntity then
-		arg_14_0._placeEntity:dispose()
+	if self._placeEntity then
+		self._placeEntity:dispose()
 
-		arg_14_0._placeEntity = nil
+		self._placeEntity = nil
 	end
 
 	TianShiNaNaModel.instance:setState(TianShiNaNaEnum.CurState.Rotate)
-	arg_14_0:markOpers(arg_14_1)
+	self:markOpers(operDir)
 end
 
-function var_0_0._onEndRotate(arg_15_0)
+function TianShiNaNaOperView:_onEndRotate()
 	if TianShiNaNaHelper.isBanOper() then
 		return
 	end
 
 	if TianShiNaNaModel.instance:isWaitClick() then
-		gohelper.setActive(arg_15_0._btnEndRotate, false)
+		gohelper.setActive(self._btnEndRotate, false)
 
 		TianShiNaNaModel.instance.waitClickJump = false
 
@@ -311,23 +316,23 @@ function var_0_0._onEndRotate(arg_15_0)
 		return
 	end
 
-	if arg_15_0._tweenId then
+	if self._tweenId then
 		return
 	end
 
-	if arg_15_0.cube then
-		local var_15_0 = arg_15_0.cube:getCurGrids()
-		local var_15_1 = 0
+	if self.cube then
+		local points = self.cube:getCurGrids()
+		local delay = 0
 
-		if tabletool.len(arg_15_0._finishIndex) == 6 then
-			var_15_1 = 0.2
+		if tabletool.len(self._finishIndex) == 6 then
+			delay = 0.2
 		end
 
-		for iter_15_0, iter_15_1 in pairs(var_15_0) do
-			TianShiNaNaEffectPool.instance:getFromPool(iter_15_1.x, iter_15_1.y, 1, var_15_1, 0.2)
+		for _, point in pairs(points) do
+			TianShiNaNaEffectPool.instance:getFromPool(point.x, point.y, 1, delay, 0.2)
 		end
 
-		arg_15_0.cube:hideOtherPlane()
+		self.cube:hideOtherPlane()
 	end
 
 	TianShiNaNaModel.instance:setState(TianShiNaNaEnum.CurState.DoStep)
@@ -336,185 +341,186 @@ function var_0_0._onEndRotate(arg_15_0)
 	TianShiNaNaModel.instance.curOperList = {}
 end
 
-function var_0_0.onFlowEnd(arg_16_0, arg_16_1)
-	if not arg_16_1 then
+function TianShiNaNaOperView:onFlowEnd(isSuccess)
+	if not isSuccess then
 		return
 	end
 
-	arg_16_0:beginSelectDir()
+	self:beginSelectDir()
 end
 
-function var_0_0.onRoundFail(arg_17_0)
-	arg_17_0:beginSelectDir()
+function TianShiNaNaOperView:onRoundFail()
+	self:beginSelectDir()
 end
 
-function var_0_0.clearCubes(arg_18_0, arg_18_1)
-	if not arg_18_1 then
+function TianShiNaNaOperView:clearCubes(noSetStatu)
+	if not noSetStatu then
 		TianShiNaNaModel.instance:setState(TianShiNaNaEnum.CurState.None)
 	end
 
-	if arg_18_0.cube then
-		gohelper.destroy(arg_18_0.cube.go)
+	if self.cube then
+		gohelper.destroy(self.cube.go)
 	end
 
-	if arg_18_0._placeEntity then
-		arg_18_0._placeEntity:dispose()
+	if self._placeEntity then
+		self._placeEntity:dispose()
 
-		arg_18_0._placeEntity = nil
+		self._placeEntity = nil
 	end
 end
 
-function var_0_0.onClose(arg_19_0)
+function TianShiNaNaOperView:onClose()
 	TianShiNaNaModel.instance.sceneLevelLoadFinish = false
 
-	arg_19_0:clearCubes()
+	self:clearCubes()
 
-	if arg_19_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_19_0._tweenId)
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_19_0._tweenId = nil
+		self._tweenId = nil
 	end
 
 	TianShiNaNaEffectPool.instance:clear()
 end
 
-function var_0_0._checkLockDrag(arg_20_0)
-	return arg_20_0._tweenId or not arg_20_0.cube or TianShiNaNaModel.instance:getState() ~= TianShiNaNaEnum.CurState.Rotate
+function TianShiNaNaOperView:_checkLockDrag()
+	return self._tweenId or not self.cube or TianShiNaNaModel.instance:getState() ~= TianShiNaNaEnum.CurState.Rotate
 end
 
-function var_0_0._onDrag(arg_21_0, arg_21_1, arg_21_2)
-	local var_21_0 = arg_21_2.position
-	local var_21_1 = arg_21_2.pressPosition
-	local var_21_2 = var_21_0.x - var_21_1.x
-	local var_21_3 = var_21_0.y - var_21_1.y
-	local var_21_4 = math.abs(var_21_2)
-	local var_21_5 = math.abs(var_21_3)
-	local var_21_6 = 0
+function TianShiNaNaOperView:_onDrag(_, pointerEventData)
+	local nowPos = pointerEventData.position
+	local pressPos = pointerEventData.pressPosition
+	local xDrag = nowPos.x - pressPos.x
+	local yDrag = nowPos.y - pressPos.y
+	local absXDrag = math.abs(xDrag)
+	local absYDrag = math.abs(yDrag)
+	local finalDragVal = 0
 
-	if not arg_21_0._nowOper and (var_21_4 > TianShiNaNaEnum.OperDragBegin or var_21_5 > TianShiNaNaEnum.OperDragBegin) then
-		arg_21_0._nowOper = TianShiNaNaHelper.getOperDir(var_21_2, var_21_3)
+	if not self._nowOper and (absXDrag > TianShiNaNaEnum.OperDragBegin or absYDrag > TianShiNaNaEnum.OperDragBegin) then
+		self._nowOper = TianShiNaNaHelper.getOperDir(xDrag, yDrag)
 
-		local var_21_7 = arg_21_0.cube:getOperDownIndex(arg_21_0._nowOper)
-		local var_21_8 = true
+		local downIndex = self.cube:getOperDownIndex(self._nowOper)
+		local canOper = true
 
-		arg_21_0._isErrorOper = false
+		self._isErrorOper = false
 
-		local var_21_9 = false
+		local isRevert = false
 
-		if arg_21_0._finishIndex[var_21_7] then
-			local var_21_10 = TianShiNaNaModel.instance.curOperList
+		if self._finishIndex[downIndex] then
+			local operList = TianShiNaNaModel.instance.curOperList
+			local leftOper = #operList > 1 and operList[#operList]
 
-			if (#var_21_10 > 1 and var_21_10[#var_21_10]) ~= -arg_21_0._nowOper then
-				var_21_8 = false
+			if leftOper ~= -self._nowOper then
+				canOper = false
 			else
-				local var_21_11 = arg_21_0.cube:getCurDownIndex()
+				local nowDownIndex = self.cube:getCurDownIndex()
 
-				arg_21_0.cube:revertPlane(var_21_11)
+				self.cube:revertPlane(nowDownIndex)
 
-				var_21_9 = true
+				isRevert = true
 			end
-		elseif not arg_21_0:checkCanOper(arg_21_0._nowOper) then
-			arg_21_0._isErrorOper = true
+		elseif not self:checkCanOper(self._nowOper) then
+			self._isErrorOper = true
 		end
 
-		if not var_21_8 then
-			arg_21_0._nowOper = nil
+		if not canOper then
+			self._nowOper = nil
 		else
-			local var_21_12 = tabletool.len(arg_21_0._finishIndex)
+			local len = tabletool.len(self._finishIndex)
 
-			if not var_21_9 and var_21_12 == 4 and not arg_21_0._finishIndex[7 - var_21_7] then
-				arg_21_0._hidePlanIndex = 7 - var_21_7
+			if not isRevert and len == 4 and not self._finishIndex[7 - downIndex] then
+				self._hidePlanIndex = 7 - downIndex
 
-				local var_21_13 = arg_21_0.cube:getPlaneByIndex(arg_21_0._hidePlanIndex)
+				local plan = self.cube:getPlaneByIndex(self._hidePlanIndex)
 
-				gohelper.setActive(var_21_13, false)
+				gohelper.setActive(plan, false)
 			end
 		end
-	elseif arg_21_0._nowOper and TianShiNaNaHelper.isRevertDir(arg_21_0._nowOper, var_21_2, var_21_3) then
-		var_21_4, var_21_5 = 0, 0
+	elseif self._nowOper and TianShiNaNaHelper.isRevertDir(self._nowOper, xDrag, yDrag) then
+		absXDrag, absYDrag = 0, 0
 	end
 
-	if arg_21_0._nowOper then
-		if arg_21_0._nowOper == TianShiNaNaEnum.OperDir.Left or arg_21_0._nowOper == TianShiNaNaEnum.OperDir.Right then
-			var_21_6 = var_21_4
+	if self._nowOper then
+		if self._nowOper == TianShiNaNaEnum.OperDir.Left or self._nowOper == TianShiNaNaEnum.OperDir.Right then
+			finalDragVal = absXDrag
 		else
-			var_21_6 = var_21_5
+			finalDragVal = absYDrag
 		end
 
-		arg_21_0._dragValue = Mathf.Clamp((var_21_6 - TianShiNaNaEnum.OperDragBegin) / TianShiNaNaEnum.OperDragMax, 0, 1)
+		self._dragValue = Mathf.Clamp((finalDragVal - TianShiNaNaEnum.OperDragBegin) / TianShiNaNaEnum.OperDragMax, 0, 1)
 
-		arg_21_0.cube:doCubeTween(arg_21_0._nowOper, arg_21_0._dragValue)
+		self.cube:doCubeTween(self._nowOper, self._dragValue)
 	end
 end
 
-function var_0_0._onEndDrag(arg_22_0)
-	arg_22_0:_doOperTween()
+function TianShiNaNaOperView:_onEndDrag()
+	self:_doOperTween()
 end
 
-function var_0_0._doOperTween(arg_23_0, arg_23_1)
-	if arg_23_0._nowOper and arg_23_0._dragValue then
+function TianShiNaNaOperView:_doOperTween(isForce)
+	if self._nowOper and self._dragValue then
 		AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2TianShiNaNa.play_ui_youyu_unfold)
 
-		if arg_23_0._dragValue > TianShiNaNaEnum.OperDragVaild and not arg_23_0._isErrorOper or arg_23_1 then
-			arg_23_0._tweenId = ZProj.TweenHelper.DOTweenFloat(arg_23_0._dragValue, 1, (1 - arg_23_0._dragValue) * 0.3, arg_23_0.onFrameDragCube, arg_23_0.onFinishDragCube, arg_23_0)
+		if self._dragValue > TianShiNaNaEnum.OperDragVaild and not self._isErrorOper or isForce then
+			self._tweenId = ZProj.TweenHelper.DOTweenFloat(self._dragValue, 1, (1 - self._dragValue) * 0.3, self.onFrameDragCube, self.onFinishDragCube, self)
 		else
-			arg_23_0._tweenId = ZProj.TweenHelper.DOTweenFloat(arg_23_0._dragValue, 0, arg_23_0._dragValue * 0.3, arg_23_0.onFrameDragCube, arg_23_0.onFinishDragCube2, arg_23_0)
+			self._tweenId = ZProj.TweenHelper.DOTweenFloat(self._dragValue, 0, self._dragValue * 0.3, self.onFrameDragCube, self.onFinishDragCube2, self)
 		end
 
-		arg_23_0._dragValue = nil
+		self._dragValue = nil
 	end
 end
 
-function var_0_0.onFrameDragCube(arg_24_0, arg_24_1)
-	arg_24_0.cube:doCubeTween(arg_24_0._nowOper, arg_24_1)
+function TianShiNaNaOperView:onFrameDragCube(value)
+	self.cube:doCubeTween(self._nowOper, value)
 end
 
-function var_0_0.onFinishDragCube(arg_25_0)
-	local var_25_0 = TianShiNaNaModel.instance.curOperList
-	local var_25_1 = #var_25_0 > 1 and var_25_0[#var_25_0]
+function TianShiNaNaOperView:onFinishDragCube()
+	local operList = TianShiNaNaModel.instance.curOperList
+	local leftOper = #operList > 1 and operList[#operList]
 
-	if var_25_1 == -arg_25_0._nowOper then
-		table.remove(var_25_0)
+	if leftOper == -self._nowOper then
+		table.remove(operList)
 
-		local var_25_2 = arg_25_0.cube:getCurDownIndex()
+		local index = self.cube:getCurDownIndex()
 
-		arg_25_0.cube:doRotate(-var_25_1)
+		self.cube:doRotate(-leftOper)
 
-		arg_25_0._finishIndex[var_25_2] = nil
+		self._finishIndex[index] = nil
 	else
-		local var_25_3 = arg_25_0.cube:getCurGrids()
+		local points = self.cube:getCurGrids()
 
-		for iter_25_0, iter_25_1 in pairs(var_25_3) do
-			TianShiNaNaEffectPool.instance:getFromPool(iter_25_1.x, iter_25_1.y, 1, 0, 0.2)
+		for _, point in pairs(points) do
+			TianShiNaNaEffectPool.instance:getFromPool(point.x, point.y, 1, 0, 0.2)
 		end
 
-		arg_25_0.cube:doRotate(arg_25_0._nowOper)
-		arg_25_0:markOpers(arg_25_0._nowOper)
+		self.cube:doRotate(self._nowOper)
+		self:markOpers(self._nowOper)
 	end
 
-	arg_25_0._nowOper = nil
-	arg_25_0._tweenId = nil
+	self._nowOper = nil
+	self._tweenId = nil
 
-	if arg_25_0._hidePlanIndex then
-		arg_25_0._finishIndex[arg_25_0._hidePlanIndex] = true
-		arg_25_0._hidePlanIndex = nil
+	if self._hidePlanIndex then
+		self._finishIndex[self._hidePlanIndex] = true
+		self._hidePlanIndex = nil
 	end
 
 	TianShiNaNaController.instance:dispatchEvent(TianShiNaNaEvent.OnWaitDragEnd)
 
-	if tabletool.len(arg_25_0._finishIndex) == 6 then
-		arg_25_0:_onEndRotate()
+	if tabletool.len(self._finishIndex) == 6 then
+		self:_onEndRotate()
 
 		return
 	end
 end
 
-function var_0_0.checkCanOper(arg_26_0, arg_26_1, arg_26_2)
-	local var_26_0 = arg_26_2 or arg_26_0.cube:getOperGrids(arg_26_1)
-	local var_26_1 = #var_26_0
+function TianShiNaNaOperView:checkCanOper(operDir, pointList)
+	local points = pointList or self.cube:getOperGrids(operDir)
+	local len = #points
 
-	for iter_26_0, iter_26_1 in pairs(var_26_0) do
-		if not TianShiNaNaModel.instance:isNodeCanPlace(iter_26_1.x, iter_26_1.y, var_26_1 == 1) then
+	for k, point in pairs(points) do
+		if not TianShiNaNaModel.instance:isNodeCanPlace(point.x, point.y, len == 1) then
 			return false
 		end
 	end
@@ -522,35 +528,36 @@ function var_0_0.checkCanOper(arg_26_0, arg_26_1, arg_26_2)
 	return true
 end
 
-function var_0_0.markOpers(arg_27_0, arg_27_1)
-	table.insert(TianShiNaNaModel.instance.curOperList, arg_27_1)
+function TianShiNaNaOperView:markOpers(operDir)
+	table.insert(TianShiNaNaModel.instance.curOperList, operDir)
 
-	local var_27_0 = arg_27_0.cube:getCurDownIndex()
+	local downIndex = self.cube:getCurDownIndex()
 
-	arg_27_0._finishIndex[var_27_0] = true
+	self._finishIndex[downIndex] = true
 
-	arg_27_0.cube:setPlaneParent(var_27_0, arg_27_0._cubeContainer.transform)
+	self.cube:setPlaneParent(downIndex, self._cubeContainer.transform)
 end
 
-function var_0_0.onFinishDragCube2(arg_28_0)
-	local var_28_0 = TianShiNaNaModel.instance.curOperList
+function TianShiNaNaOperView:onFinishDragCube2()
+	local operList = TianShiNaNaModel.instance.curOperList
+	local leftOper = #operList > 1 and operList[#operList]
 
-	if (#var_28_0 > 1 and var_28_0[#var_28_0]) == -arg_28_0._nowOper then
-		local var_28_1 = arg_28_0.cube:getCurDownIndex()
+	if leftOper == -self._nowOper then
+		local downIndex = self.cube:getCurDownIndex()
 
-		arg_28_0.cube:setPlaneParent(var_28_1, arg_28_0._cubeContainer.transform)
+		self.cube:setPlaneParent(downIndex, self._cubeContainer.transform)
 	end
 
-	arg_28_0._nowOper = nil
-	arg_28_0._tweenId = nil
+	self._nowOper = nil
+	self._tweenId = nil
 
-	if arg_28_0._hidePlanIndex then
-		local var_28_2 = arg_28_0.cube:getPlaneByIndex(arg_28_0._hidePlanIndex)
+	if self._hidePlanIndex then
+		local plan = self.cube:getPlaneByIndex(self._hidePlanIndex)
 
-		gohelper.setActive(var_28_2, true)
+		gohelper.setActive(plan, true)
 
-		arg_28_0._hidePlanIndex = nil
+		self._hidePlanIndex = nil
 	end
 end
 
-return var_0_0
+return TianShiNaNaOperView

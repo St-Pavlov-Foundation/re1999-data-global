@@ -1,217 +1,220 @@
-﻿module("modules.logic.versionactivity2_4.pinball.view.PinballUpgradeView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/pinball/view/PinballUpgradeView.lua
 
-local var_0_0 = class("PinballUpgradeView", BaseView)
+module("modules.logic.versionactivity2_4.pinball.view.PinballUpgradeView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._imageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#image_icon")
-	arg_1_0._txtname = gohelper.findChildTextMesh(arg_1_0.viewGO, "#txt_buildingname")
-	arg_1_0._txttitle = gohelper.findChildTextMesh(arg_1_0.viewGO, "#scroll_dec/Viewport/Content/#txt_title")
-	arg_1_0._txtdesc = gohelper.findChildTextMesh(arg_1_0.viewGO, "#scroll_dec/Viewport/Content/#txt_dec")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._btnremove = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_remove")
-	arg_1_0._goupgrade = gohelper.findChild(arg_1_0.viewGO, "#go_upgrade")
-	arg_1_0._btnupgrade = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_upgrade/#btn_upgrade")
-	arg_1_0._btnupgradeEffect = gohelper.findChild(arg_1_0.viewGO, "#go_upgrade/#btn_upgrade/vx_ink")
-	arg_1_0._txtnowlv = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_upgrade/#txt_nowLv")
-	arg_1_0._txtnextlv = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_upgrade/#txt_nextLv")
-	arg_1_0._gomax = gohelper.findChild(arg_1_0.viewGO, "#go_max")
-	arg_1_0._txtmaxlv = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_max/#txt_lv")
-	arg_1_0._gocostitem = gohelper.findChild(arg_1_0.viewGO, "#go_upgrade/#go_currency/go_item")
-	arg_1_0._gopreviewitem = gohelper.findChild(arg_1_0.viewGO, "#go_preview/#go_group/go_item")
-	arg_1_0._gopreviewtitle = gohelper.findChild(arg_1_0.viewGO, "#go_preview/txt_preview")
-	arg_1_0._topCurrencyRoot = gohelper.findChild(arg_1_0.viewGO, "#go_topright")
-	arg_1_0._goeffect = gohelper.findChild(arg_1_0.viewGO, "vx_upgrade")
+local PinballUpgradeView = class("PinballUpgradeView", BaseView)
+
+function PinballUpgradeView:onInitView()
+	self._imageicon = gohelper.findChildSingleImage(self.viewGO, "#image_icon")
+	self._txtname = gohelper.findChildTextMesh(self.viewGO, "#txt_buildingname")
+	self._txttitle = gohelper.findChildTextMesh(self.viewGO, "#scroll_dec/Viewport/Content/#txt_title")
+	self._txtdesc = gohelper.findChildTextMesh(self.viewGO, "#scroll_dec/Viewport/Content/#txt_dec")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._btnremove = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_remove")
+	self._goupgrade = gohelper.findChild(self.viewGO, "#go_upgrade")
+	self._btnupgrade = gohelper.findChildButtonWithAudio(self.viewGO, "#go_upgrade/#btn_upgrade")
+	self._btnupgradeEffect = gohelper.findChild(self.viewGO, "#go_upgrade/#btn_upgrade/vx_ink")
+	self._txtnowlv = gohelper.findChildTextMesh(self.viewGO, "#go_upgrade/#txt_nowLv")
+	self._txtnextlv = gohelper.findChildTextMesh(self.viewGO, "#go_upgrade/#txt_nextLv")
+	self._gomax = gohelper.findChild(self.viewGO, "#go_max")
+	self._txtmaxlv = gohelper.findChildTextMesh(self.viewGO, "#go_max/#txt_lv")
+	self._gocostitem = gohelper.findChild(self.viewGO, "#go_upgrade/#go_currency/go_item")
+	self._gopreviewitem = gohelper.findChild(self.viewGO, "#go_preview/#go_group/go_item")
+	self._gopreviewtitle = gohelper.findChild(self.viewGO, "#go_preview/txt_preview")
+	self._topCurrencyRoot = gohelper.findChild(self.viewGO, "#go_topright")
+	self._goeffect = gohelper.findChild(self.viewGO, "vx_upgrade")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0.closeThis, arg_2_0)
-	arg_2_0._btnremove:AddClickListener(arg_2_0.removeBuilding, arg_2_0)
-	arg_2_0._btnupgrade:AddClickListener(arg_2_0.upgradeBuilding, arg_2_0)
-	PinballController.instance:registerCallback(PinballEvent.UpgradeBuilding, arg_2_0._buildingUpdate, arg_2_0)
-	PinballController.instance:registerCallback(PinballEvent.RemoveBuilding, arg_2_0._buildingRemove, arg_2_0)
+function PinballUpgradeView:addEvents()
+	self._btnclose:AddClickListener(self.closeThis, self)
+	self._btnremove:AddClickListener(self.removeBuilding, self)
+	self._btnupgrade:AddClickListener(self.upgradeBuilding, self)
+	PinballController.instance:registerCallback(PinballEvent.UpgradeBuilding, self._buildingUpdate, self)
+	PinballController.instance:registerCallback(PinballEvent.RemoveBuilding, self._buildingRemove, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnremove:RemoveClickListener()
-	arg_3_0._btnupgrade:RemoveClickListener()
-	PinballController.instance:unregisterCallback(PinballEvent.UpgradeBuilding, arg_3_0._buildingUpdate, arg_3_0)
-	PinballController.instance:unregisterCallback(PinballEvent.RemoveBuilding, arg_3_0._buildingRemove, arg_3_0)
+function PinballUpgradeView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btnremove:RemoveClickListener()
+	self._btnupgrade:RemoveClickListener()
+	PinballController.instance:unregisterCallback(PinballEvent.UpgradeBuilding, self._buildingUpdate, self)
+	PinballController.instance:unregisterCallback(PinballEvent.RemoveBuilding, self._buildingRemove, self)
 end
 
-function var_0_0.onClickModalMask(arg_4_0)
-	arg_4_0:closeThis()
+function PinballUpgradeView:onClickModalMask()
+	self:closeThis()
 end
 
-function var_0_0.onOpen(arg_5_0)
+function PinballUpgradeView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.Act178.act178_audio3)
-	arg_5_0:createCurrencyItem()
-	arg_5_0:_refreshBuilding()
+	self:createCurrencyItem()
+	self:_refreshBuilding()
 end
 
-function var_0_0._refreshBuilding(arg_6_0)
-	local var_6_0 = PinballModel.instance:getBuildingInfo(arg_6_0.viewParam.index)
+function PinballUpgradeView:_refreshBuilding()
+	local buildingInfo = PinballModel.instance:getBuildingInfo(self.viewParam.index)
 
-	if not var_6_0 then
+	if not buildingInfo then
 		return
 	end
 
-	local var_6_1 = var_6_0.co
-	local var_6_2 = var_6_0.nextCo
+	local curCo = buildingInfo.co
+	local nextCo = buildingInfo.nextCo
 
-	arg_6_0._imageicon:LoadImage(string.format("singlebg/v2a4_tutushizi_singlebg/building/%s.png", var_6_0.baseCo.icon))
+	self._imageicon:LoadImage(string.format("singlebg/v2a4_tutushizi_singlebg/building/%s.png", buildingInfo.baseCo.icon))
 
-	arg_6_0._txtname.text = var_6_0.baseCo.name
-	arg_6_0._txttitle.text = var_6_0.baseCo.desc
-	arg_6_0._txtdesc.text = var_6_0.baseCo.desc2
+	self._txtname.text = buildingInfo.baseCo.name
+	self._txttitle.text = buildingInfo.baseCo.desc
+	self._txtdesc.text = buildingInfo.baseCo.desc2
 
-	gohelper.setActive(arg_6_0._gomax, not var_6_2)
-	gohelper.setActive(arg_6_0._goupgrade, var_6_2)
-	gohelper.setActive(arg_6_0._gopreviewtitle, var_6_2)
-	gohelper.setActive(arg_6_0._btnremove, var_6_1.destory)
+	gohelper.setActive(self._gomax, not nextCo)
+	gohelper.setActive(self._goupgrade, nextCo)
+	gohelper.setActive(self._gopreviewtitle, nextCo)
+	gohelper.setActive(self._btnremove, curCo.destory)
 
-	if var_6_2 then
-		arg_6_0._txtnowlv.text = var_6_1.level
-		arg_6_0._txtnextlv.text = var_6_2.level
+	if nextCo then
+		self._txtnowlv.text = curCo.level
+		self._txtnextlv.text = nextCo.level
 
-		arg_6_0:updateCost(var_6_2)
+		self:updateCost(nextCo)
 
-		local var_6_3 = arg_6_0._costNoEnough and true or arg_6_0:checkLock(var_6_2) or false
+		local isGray = self._costNoEnough and true or self:checkLock(nextCo) or false
 
-		ZProj.UGUIHelper.SetGrayscale(arg_6_0._btnupgrade.gameObject, var_6_3)
-		gohelper.setActive(arg_6_0._btnupgradeEffect, not var_6_3)
+		ZProj.UGUIHelper.SetGrayscale(self._btnupgrade.gameObject, isGray)
+		gohelper.setActive(self._btnupgradeEffect, not isGray)
 	else
-		arg_6_0._txtmaxlv.text = var_6_1.level
+		self._txtmaxlv.text = curCo.level
 	end
 
-	arg_6_0:updatePreview(var_6_1, var_6_2)
+	self:updatePreview(curCo, nextCo)
 end
 
-function var_0_0.createCurrencyItem(arg_7_0)
-	local var_7_0 = {
+function PinballUpgradeView:createCurrencyItem()
+	local topCurrency = {
 		PinballEnum.ResType.Wood,
 		PinballEnum.ResType.Mine,
 		PinballEnum.ResType.Stone
 	}
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-		local var_7_1 = arg_7_0:getResInst(arg_7_0.viewContainer._viewSetting.otherRes.currency, arg_7_0._topCurrencyRoot)
+	for _, currencyType in ipairs(topCurrency) do
+		local go = self:getResInst(self.viewContainer._viewSetting.otherRes.currency, self._topCurrencyRoot)
+		local comp = MonoHelper.addNoUpdateLuaComOnceToGo(go, PinballCurrencyItem)
 
-		MonoHelper.addNoUpdateLuaComOnceToGo(var_7_1, PinballCurrencyItem):setCurrencyType(iter_7_1)
+		comp:setCurrencyType(currencyType)
 	end
 end
 
-function var_0_0.updatePreview(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = {}
-	local var_8_1 = arg_8_1.effect
-	local var_8_2 = {}
+function PinballUpgradeView:updatePreview(curCo, nextCo)
+	local effectArr = {}
+	local effect = curCo.effect
+	local typeToIndex = {}
 
-	if not string.nilorempty(var_8_1) then
-		local var_8_3 = GameUtil.splitString2(var_8_1, true)
+	if not string.nilorempty(effect) then
+		local dict = GameUtil.splitString2(effect, true)
 
-		for iter_8_0, iter_8_1 in pairs(var_8_3) do
-			if iter_8_1[1] == PinballEnum.BuildingEffectType.AddScore then
-				table.insert(var_8_0, {
+		for _, arr in pairs(dict) do
+			if arr[1] == PinballEnum.BuildingEffectType.AddScore then
+				table.insert(effectArr, {
 					resType = PinballEnum.ResType.Score,
-					value = iter_8_1[2]
+					value = arr[2]
 				})
 
-				var_8_2[iter_8_1[1]] = #var_8_0
-			elseif iter_8_1[1] == PinballEnum.BuildingEffectType.AddFood then
-				table.insert(var_8_0, {
+				typeToIndex[arr[1]] = #effectArr
+			elseif arr[1] == PinballEnum.BuildingEffectType.AddFood then
+				table.insert(effectArr, {
 					resType = PinballEnum.ResType.Food,
-					value = iter_8_1[2]
+					value = arr[2]
 				})
 
-				var_8_2[iter_8_1[1]] = #var_8_0
-			elseif iter_8_1[1] == PinballEnum.BuildingEffectType.AddPlay then
-				table.insert(var_8_0, {
+				typeToIndex[arr[1]] = #effectArr
+			elseif arr[1] == PinballEnum.BuildingEffectType.AddPlay then
+				table.insert(effectArr, {
 					resType = PinballEnum.ResType.Play,
-					value = iter_8_1[2]
+					value = arr[2]
 				})
 
-				var_8_2[iter_8_1[1]] = #var_8_0
-			elseif iter_8_1[1] == PinballEnum.BuildingEffectType.CostFood then
-				table.insert(var_8_0, {
+				typeToIndex[arr[1]] = #effectArr
+			elseif arr[1] == PinballEnum.BuildingEffectType.CostFood then
+				table.insert(effectArr, {
 					resType = PinballEnum.ResType.Food,
-					value = iter_8_1[2],
+					value = arr[2],
 					text = luaLang("pinball_food_need")
 				})
 
-				var_8_2[iter_8_1[1]] = #var_8_0
-			elseif iter_8_1[1] == PinballEnum.BuildingEffectType.AddPlayDemand then
-				table.insert(var_8_0, {
+				typeToIndex[arr[1]] = #effectArr
+			elseif arr[1] == PinballEnum.BuildingEffectType.AddPlayDemand then
+				table.insert(effectArr, {
 					resType = PinballEnum.ResType.Play,
-					value = iter_8_1[2],
+					value = arr[2],
 					text = luaLang("pinball_play_need")
 				})
 
-				var_8_2[iter_8_1[1]] = #var_8_0
+				typeToIndex[arr[1]] = #effectArr
 			end
 		end
 	end
 
-	if arg_8_2 then
-		local var_8_4 = arg_8_2.effect
+	if nextCo then
+		effect = nextCo.effect
 
-		if not string.nilorempty(var_8_4) then
-			local var_8_5 = GameUtil.splitString2(var_8_4, true)
+		if not string.nilorempty(effect) then
+			local dict = GameUtil.splitString2(effect, true)
 
-			for iter_8_2, iter_8_3 in pairs(var_8_5) do
-				if iter_8_3[1] == PinballEnum.BuildingEffectType.AddScore then
-					local var_8_6 = var_8_2[iter_8_3[1]]
+			for _, arr in pairs(dict) do
+				if arr[1] == PinballEnum.BuildingEffectType.AddScore then
+					local index = typeToIndex[arr[1]]
 
-					if var_8_6 then
-						var_8_0[var_8_6].nextVal = iter_8_3[2]
+					if index then
+						effectArr[index].nextVal = arr[2]
 					else
-						table.insert(var_8_0, {
+						table.insert(effectArr, {
 							resType = PinballEnum.ResType.Score,
-							nextVal = iter_8_3[2]
+							nextVal = arr[2]
 						})
 					end
-				elseif iter_8_3[1] == PinballEnum.BuildingEffectType.AddFood then
-					local var_8_7 = var_8_2[iter_8_3[1]]
+				elseif arr[1] == PinballEnum.BuildingEffectType.AddFood then
+					local index = typeToIndex[arr[1]]
 
-					if var_8_7 then
-						var_8_0[var_8_7].nextVal = iter_8_3[2]
+					if index then
+						effectArr[index].nextVal = arr[2]
 					else
-						table.insert(var_8_0, {
+						table.insert(effectArr, {
 							resType = PinballEnum.ResType.Food,
-							nextVal = iter_8_3[2]
+							nextVal = arr[2]
 						})
 					end
-				elseif iter_8_3[1] == PinballEnum.BuildingEffectType.AddPlay then
-					local var_8_8 = var_8_2[iter_8_3[1]]
+				elseif arr[1] == PinballEnum.BuildingEffectType.AddPlay then
+					local index = typeToIndex[arr[1]]
 
-					if var_8_8 then
-						var_8_0[var_8_8].nextVal = iter_8_3[2]
+					if index then
+						effectArr[index].nextVal = arr[2]
 					else
-						table.insert(var_8_0, {
+						table.insert(effectArr, {
 							resType = PinballEnum.ResType.Play,
-							nextVal = iter_8_3[2]
+							nextVal = arr[2]
 						})
 					end
-				elseif iter_8_3[1] == PinballEnum.BuildingEffectType.CostFood then
-					local var_8_9 = var_8_2[iter_8_3[1]]
+				elseif arr[1] == PinballEnum.BuildingEffectType.CostFood then
+					local index = typeToIndex[arr[1]]
 
-					if var_8_9 then
-						var_8_0[var_8_9].nextVal = iter_8_3[2]
+					if index then
+						effectArr[index].nextVal = arr[2]
 					else
-						table.insert(var_8_0, {
+						table.insert(effectArr, {
 							resType = PinballEnum.ResType.Food,
-							nextVal = iter_8_3[2],
+							nextVal = arr[2],
 							text = luaLang("pinball_food_need")
 						})
 					end
-				elseif iter_8_3[1] == PinballEnum.BuildingEffectType.AddPlayDemand then
-					local var_8_10 = var_8_2[iter_8_3[1]]
+				elseif arr[1] == PinballEnum.BuildingEffectType.AddPlayDemand then
+					local index = typeToIndex[arr[1]]
 
-					if var_8_10 then
-						var_8_0[var_8_10].nextVal = iter_8_3[2]
+					if index then
+						effectArr[index].nextVal = arr[2]
 					else
-						table.insert(var_8_0, {
+						table.insert(effectArr, {
 							resType = PinballEnum.ResType.Play,
-							nextVal = iter_8_3[2],
+							nextVal = arr[2],
 							text = luaLang("pinball_play_need")
 						})
 					end
@@ -220,109 +223,109 @@ function var_0_0.updatePreview(arg_8_0, arg_8_1, arg_8_2)
 		end
 	end
 
-	for iter_8_4, iter_8_5 in pairs(var_8_0) do
-		iter_8_5.haveNext = arg_8_2
+	for _, data in pairs(effectArr) do
+		data.haveNext = nextCo
 	end
 
-	arg_8_0._goeffects = arg_8_0._goeffects or arg_8_0:getUserDataTb_()
+	self._goeffects = self._goeffects or self:getUserDataTb_()
 
-	tabletool.clear(arg_8_0._goeffects)
-	gohelper.CreateObjList(arg_8_0, arg_8_0._createEffectItem, var_8_0, nil, arg_8_0._gopreviewitem)
+	tabletool.clear(self._goeffects)
+	gohelper.CreateObjList(self, self._createEffectItem, effectArr, nil, self._gopreviewitem)
 end
 
-function var_0_0._createEffectItem(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	local var_9_0 = gohelper.findChildImage(arg_9_1, "#image_icon")
-	local var_9_1 = gohelper.findChildTextMesh(arg_9_1, "#txt_base")
-	local var_9_2 = gohelper.findChildTextMesh(arg_9_1, "#txt_curnum")
-	local var_9_3 = gohelper.findChildTextMesh(arg_9_1, "#txt_num")
-	local var_9_4 = gohelper.findChild(arg_9_1, "vx_eff")
+function PinballUpgradeView:_createEffectItem(obj, data, index)
+	local icon = gohelper.findChildImage(obj, "#image_icon")
+	local name = gohelper.findChildTextMesh(obj, "#txt_base")
+	local curNum = gohelper.findChildTextMesh(obj, "#txt_curnum")
+	local num = gohelper.findChildTextMesh(obj, "#txt_num")
+	local effect = gohelper.findChild(obj, "vx_eff")
 
-	table.insert(arg_9_0._goeffects, var_9_4)
+	table.insert(self._goeffects, effect)
 
-	local var_9_5 = lua_activity178_resource.configDict[VersionActivity2_4Enum.ActivityId.Pinball][arg_9_2.resType]
+	local resCo = lua_activity178_resource.configDict[VersionActivity2_4Enum.ActivityId.Pinball][data.resType]
 
-	if not var_9_5 then
-		logError("资源配置不存在" .. arg_9_2.resType)
+	if not resCo then
+		logError("资源配置不存在" .. data.resType)
 
 		return
 	end
 
-	UISpriteSetMgr.instance:setAct178Sprite(var_9_0, var_9_5.icon)
+	UISpriteSetMgr.instance:setAct178Sprite(icon, resCo.icon)
 
-	var_9_1.text = arg_9_2.text or var_9_5.name
+	name.text = data.text or resCo.name
 
-	if arg_9_2.haveNext then
-		var_9_2.text = string.format("%d", arg_9_2.value or 0)
+	if data.haveNext then
+		curNum.text = string.format("%d", data.value or 0)
 
-		local var_9_6 = (arg_9_2.nextVal or 0) - (arg_9_2.value or 0)
+		local add = (data.nextVal or 0) - (data.value or 0)
 
-		if var_9_6 >= 0 then
-			var_9_3.text = string.format("<color=#BCFF85>+%s", var_9_6)
+		if add >= 0 then
+			num.text = string.format("<color=#BCFF85>+%s", add)
 		else
-			var_9_3.text = string.format("<color=#FC8A6A>%s", var_9_6)
+			num.text = string.format("<color=#FC8A6A>%s", add)
 		end
 	else
-		var_9_2.text = ""
-		var_9_3.text = string.format("%d", arg_9_2.value)
+		curNum.text = ""
+		num.text = string.format("%d", data.value)
 	end
 end
 
-function var_0_0.updateCost(arg_10_0, arg_10_1)
-	local var_10_0 = {}
-	local var_10_1 = arg_10_1.cost
+function PinballUpgradeView:updateCost(data)
+	local costArr = {}
+	local cost = data.cost
 
-	if not string.nilorempty(var_10_1) then
-		local var_10_2 = GameUtil.splitString2(var_10_1, true)
+	if not string.nilorempty(cost) then
+		local dict = GameUtil.splitString2(cost, true)
 
-		for iter_10_0, iter_10_1 in pairs(var_10_2) do
-			table.insert(var_10_0, {
-				resType = iter_10_1[1],
-				value = iter_10_1[2]
+		for _, arr in pairs(dict) do
+			table.insert(costArr, {
+				resType = arr[1],
+				value = arr[2]
 			})
 		end
 	end
 
-	arg_10_0._costNoEnough = nil
+	self._costNoEnough = nil
 
-	gohelper.CreateObjList(arg_10_0, arg_10_0._createCostItem, var_10_0, nil, arg_10_0._gocostitem)
+	gohelper.CreateObjList(self, self._createCostItem, costArr, nil, self._gocostitem)
 end
 
-function var_0_0.checkLock(arg_11_0, arg_11_1, arg_11_2)
-	if not arg_11_1 then
+function PinballUpgradeView:checkLock(nextCo, isToast)
+	if not nextCo then
 		return
 	end
 
-	local var_11_0 = arg_11_1.condition
+	local condition = nextCo.condition
 
-	if string.nilorempty(var_11_0) then
+	if string.nilorempty(condition) then
 		return false
 	end
 
-	local var_11_1 = GameUtil.splitString2(var_11_0, true)
+	local dict = GameUtil.splitString2(condition, true)
 
-	for iter_11_0, iter_11_1 in pairs(var_11_1) do
-		local var_11_2 = iter_11_1[1]
+	for _, arr in pairs(dict) do
+		local type = arr[1]
 
-		if var_11_2 == PinballEnum.ConditionType.Talent then
-			local var_11_3 = iter_11_1[2]
+		if type == PinballEnum.ConditionType.Talent then
+			local talentId = arr[2]
 
-			if not PinballModel.instance:getTalentMo(var_11_3) then
-				if arg_11_2 then
-					local var_11_4 = lua_activity178_talent.configDict[VersionActivity2_4Enum.ActivityId.Pinball][var_11_3]
+			if not PinballModel.instance:getTalentMo(talentId) then
+				if isToast then
+					local talentCo = lua_activity178_talent.configDict[VersionActivity2_4Enum.ActivityId.Pinball][talentId]
 
-					GameFacade.showToast(ToastEnum.Act178TalentCondition, var_11_4.name)
+					GameFacade.showToast(ToastEnum.Act178TalentCondition, talentCo.name)
 				end
 
 				return true
 			end
-		elseif var_11_2 == PinballEnum.ConditionType.Score then
-			local var_11_5 = iter_11_1[2]
+		elseif type == PinballEnum.ConditionType.Score then
+			local value = arr[2]
 
-			if var_11_5 > PinballModel.instance.maxProsperity then
-				if arg_11_2 then
-					local var_11_6 = PinballConfig.instance:getScoreLevel(VersionActivity2_4Enum.ActivityId.Pinball, var_11_5)
+			if value > PinballModel.instance.maxProsperity then
+				if isToast then
+					local lv = PinballConfig.instance:getScoreLevel(VersionActivity2_4Enum.ActivityId.Pinball, value)
 
-					GameFacade.showToast(ToastEnum.Act178ScoreCondition, var_11_6)
+					GameFacade.showToast(ToastEnum.Act178ScoreCondition, lv)
 				end
 
 				return true
@@ -333,83 +336,83 @@ function var_0_0.checkLock(arg_11_0, arg_11_1, arg_11_2)
 	return false
 end
 
-function var_0_0._createCostItem(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	local var_12_0 = gohelper.findChildTextMesh(arg_12_1, "#txt_num")
-	local var_12_1 = gohelper.findChildImage(arg_12_1, "#txt_num/#image_icon")
-	local var_12_2 = lua_activity178_resource.configDict[VersionActivity2_4Enum.ActivityId.Pinball][arg_12_2.resType]
+function PinballUpgradeView:_createCostItem(obj, data, index)
+	local num = gohelper.findChildTextMesh(obj, "#txt_num")
+	local icon = gohelper.findChildImage(obj, "#txt_num/#image_icon")
+	local resCo = lua_activity178_resource.configDict[VersionActivity2_4Enum.ActivityId.Pinball][data.resType]
 
-	if not var_12_2 then
-		logError("资源配置不存在" .. arg_12_2.resType)
+	if not resCo then
+		logError("资源配置不存在" .. data.resType)
 
 		return
 	end
 
-	UISpriteSetMgr.instance:setAct178Sprite(var_12_1, var_12_2.icon)
+	UISpriteSetMgr.instance:setAct178Sprite(icon, resCo.icon)
 
-	local var_12_3 = ""
+	local color = ""
 
-	if arg_12_2.value > PinballModel.instance:getResNum(arg_12_2.resType) then
-		var_12_3 = "<color=#FC8A6A>"
-		arg_12_0._costNoEnough = arg_12_0._costNoEnough or var_12_2.name
+	if data.value > PinballModel.instance:getResNum(data.resType) then
+		color = "<color=#FC8A6A>"
+		self._costNoEnough = self._costNoEnough or resCo.name
 	end
 
-	var_12_0.text = string.format("%s-%d", var_12_3, arg_12_2.value)
+	num.text = string.format("%s-%d", color, data.value)
 end
 
-function var_0_0.removeBuilding(arg_13_0)
-	PinballController.instance:removeBuilding(arg_13_0.viewParam.index)
+function PinballUpgradeView:removeBuilding()
+	PinballController.instance:removeBuilding(self.viewParam.index)
 end
 
-function var_0_0.upgradeBuilding(arg_14_0)
-	local var_14_0 = PinballModel.instance:getBuildingInfo(arg_14_0.viewParam.index)
+function PinballUpgradeView:upgradeBuilding()
+	local buildingInfo = PinballModel.instance:getBuildingInfo(self.viewParam.index)
 
-	if not var_14_0 then
+	if not buildingInfo then
 		return
 	end
 
-	if arg_14_0._costNoEnough then
-		GameFacade.showToast(ToastEnum.DiamondBuy, arg_14_0._costNoEnough)
+	if self._costNoEnough then
+		GameFacade.showToast(ToastEnum.DiamondBuy, self._costNoEnough)
 
 		return
 	end
 
-	if arg_14_0:checkLock(var_14_0.nextCo, true) then
+	if self:checkLock(buildingInfo.nextCo, true) then
 		return
 	end
 
-	Activity178Rpc.instance:sendAct178Build(VersionActivity2_4Enum.ActivityId.Pinball, var_14_0.configId, PinballEnum.BuildingOperType.Upgrade, arg_14_0.viewParam.index)
+	Activity178Rpc.instance:sendAct178Build(VersionActivity2_4Enum.ActivityId.Pinball, buildingInfo.configId, PinballEnum.BuildingOperType.Upgrade, self.viewParam.index)
 end
 
-function var_0_0._buildingUpdate(arg_15_0, arg_15_1)
-	if arg_15_1 == arg_15_0.viewParam.index then
-		gohelper.setActive(arg_15_0._goeffect, false)
-		gohelper.setActive(arg_15_0._goeffect, true)
+function PinballUpgradeView:_buildingUpdate(index)
+	if index == self.viewParam.index then
+		gohelper.setActive(self._goeffect, false)
+		gohelper.setActive(self._goeffect, true)
 
-		for iter_15_0, iter_15_1 in pairs(arg_15_0._goeffects) do
-			gohelper.setActive(iter_15_1, false)
-			gohelper.setActive(iter_15_1, true)
+		for _, effect in pairs(self._goeffects) do
+			gohelper.setActive(effect, false)
+			gohelper.setActive(effect, true)
 		end
 
 		AudioMgr.instance:trigger(AudioEnum.Act178.act178_audio34)
 		UIBlockMgr.instance:startBlock("PinballUpgradeView_Effect")
-		TaskDispatcher.runDelay(arg_15_0._effectEnd, arg_15_0, 1)
+		TaskDispatcher.runDelay(self._effectEnd, self, 1)
 	end
 end
 
-function var_0_0._effectEnd(arg_16_0)
+function PinballUpgradeView:_effectEnd()
 	UIBlockMgr.instance:endBlock("PinballUpgradeView_Effect")
-	arg_16_0:_refreshBuilding()
+	self:_refreshBuilding()
 end
 
-function var_0_0.onClose(arg_17_0)
-	TaskDispatcher.cancelTask(arg_17_0._effectEnd, arg_17_0)
+function PinballUpgradeView:onClose()
+	TaskDispatcher.cancelTask(self._effectEnd, self)
 	UIBlockMgr.instance:endBlock("PinballUpgradeView_Effect")
 end
 
-function var_0_0._buildingRemove(arg_18_0, arg_18_1)
-	if arg_18_1 == arg_18_0.viewParam.index then
-		arg_18_0:closeThis()
+function PinballUpgradeView:_buildingRemove(index)
+	if index == self.viewParam.index then
+		self:closeThis()
 	end
 end
 
-return var_0_0
+return PinballUpgradeView

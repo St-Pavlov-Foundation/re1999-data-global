@@ -1,84 +1,204 @@
-﻿module("modules.logic.necrologiststory.view.item.NecrologistStoryMagicItem", package.seeall)
+﻿-- chunkname: @modules/logic/necrologiststory/view/item/NecrologistStoryMagicItem.lua
 
-local var_0_0 = class("NecrologistStoryMagicItem", NecrologistStoryControlItem)
+module("modules.logic.necrologiststory.view.item.NecrologistStoryMagicItem", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0.anim = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0.bg = gohelper.findChild(arg_1_0.viewGO, "root/image")
-	arg_1_0.simageMagic = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/#btn_zhouyu/simageMagic")
-	arg_1_0.btnMagic = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_zhouyu")
-	arg_1_0.goReddot = gohelper.findChild(arg_1_0.viewGO, "root/#btn_zhouyu/#reddot")
+local NecrologistStoryMagicItem = class("NecrologistStoryMagicItem", NecrologistStoryControlItem)
+
+function NecrologistStoryMagicItem:onInit()
+	self.anim = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self.bg = gohelper.findChild(self.viewGO, "root/image")
+	self.goMagic = gohelper.findChild(self.viewGO, "root/#btn_zhouyu/magic")
+	self.btnMagic = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_zhouyu")
+	self.goReddot = gohelper.findChild(self.viewGO, "root/#btn_zhouyu/#reddot")
+
+	self:initSkillIcon()
+
+	self.txtTime = gohelper.findChildTextMesh(self.viewGO, "root/#btn_zhouyu/#txt_time")
+	self.goProgress = gohelper.findChild(self.viewGO, "root/#go_progress")
+	self.imgFill = gohelper.findChildImage(self.goProgress, "fill")
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnMagic, arg_2_0.onClickMagic, arg_2_0)
+function NecrologistStoryMagicItem:addEventListeners()
+	self:addClickCb(self.btnMagic, self.onClickMagic, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0:removeClickCb(arg_3_0.btnMagic)
+function NecrologistStoryMagicItem:removeEventListeners()
+	self:removeClickCb(self.btnMagic)
 end
 
-function var_0_0.onClickMagic(arg_4_0)
-	if arg_4_0.isClicked then
+function NecrologistStoryMagicItem:onClickMagic()
+	if self.isClicked then
 		return
 	end
 
-	arg_4_0.anim:Play("click", 0, 0)
+	self.anim:Play("click", 0, 0)
 
-	local var_4_0 = string.split(arg_4_0._controlParam, "#")
-	local var_4_1 = tonumber(var_4_0[2])
+	local param = string.split(self._controlParam, "#")
+	local type = tonumber(param[2])
 
-	if var_4_1 == 1 then
-		local var_4_2 = tonumber(var_4_0[3])
+	if type == 1 then
+		local introduceId = tonumber(param[3])
 
-		NecrologistStoryController.instance:openTipView(var_4_2)
-	elseif var_4_1 == 2 then
-		local var_4_3 = var_4_0[3]
+		NecrologistStoryController.instance:openTipView(introduceId)
+	elseif type == 2 then
+		local picName = param[3]
 
-		NecrologistStoryController.instance:dispatchEvent(NecrologistStoryEvent.OnChangePic, var_4_3)
+		NecrologistStoryController.instance:dispatchEvent(NecrologistStoryEvent.OnChangePic, picName)
 	end
 
-	gohelper.setActive(arg_4_0.goReddot, false)
+	gohelper.setActive(self.goReddot, false)
 
-	arg_4_0.isClicked = true
+	self.isClicked = true
 
-	arg_4_0:onPlayFinish()
+	if self.leftTime and self.leftTime > 0 and self._tweenId then
+		local mo = NecrologistStoryModel.instance:getCurStoryMO()
+
+		if mo then
+			mo:markSpecial(self._storyId)
+		end
+
+		self.txtTime.text = ""
+
+		gohelper.setActive(self.goProgress, false)
+		self:killTweenId()
+	end
+
+	self:setSkillIcon(false)
+	self:onPlayFinish()
 end
 
-function var_0_0.onPlayStory(arg_5_0, arg_5_1)
-	arg_5_0.isClicked = false
-
-	gohelper.setActive(arg_5_0.goReddot, true)
-
-	local var_5_0 = string.split(arg_5_0._controlParam, "#")[1]
-
-	arg_5_0.simageMagic:LoadImage(string.format("singlebg_lang/txt_rolestory/magic/%s.png", var_5_0), arg_5_0.onMagicLoaded, arg_5_0)
-	NecrologistStoryController.instance:dispatchEvent(NecrologistStoryEvent.StartMagic)
+function NecrologistStoryMagicItem:onPlayStory(isSkip)
 	AudioMgr.instance:trigger(AudioEnum.NecrologistStory.play_ui_qiutu_award_all)
+
+	self.isClicked = false
+
+	gohelper.setActive(self.goReddot, true)
+
+	local param = string.split(self._controlParam, "#")
+
+	self.leftTime = param[5] and tonumber(param[5]) or 0
+
+	self:loadMagic(param)
+	self:setSkillIcon(true)
+	self:startCountDown()
+	NecrologistStoryController.instance:dispatchEvent(NecrologistStoryEvent.StartMagic)
 end
 
-function var_0_0.onMagicLoaded(arg_6_0)
-	ZProj.UGUIHelper.SetImageSize(arg_6_0.simageMagic.gameObject)
+function NecrologistStoryMagicItem:loadMagic(param)
+	local prefabRes = string.format("ui/viewres/dungeon/rolestory/magic/%s.prefab", param[1])
 
-	local var_6_0 = recthelper.getWidth(arg_6_0.simageMagic.transform)
+	self.magicLoader = PrefabInstantiate.Create(self.goMagic)
 
-	recthelper.setWidth(arg_6_0.bg.transform, var_6_0 + 140)
+	self.magicLoader:startLoad(prefabRes, self.onMagicLoaded, self)
 end
 
-function var_0_0.caleHeight(arg_7_0)
+function NecrologistStoryMagicItem:startCountDown()
+	self:killTweenId()
+
+	local hasCountDown = self.leftTime > 0
+
+	gohelper.setActive(self.goProgress, hasCountDown)
+
+	if self.leftTime <= 0 then
+		self.txtTime.text = ""
+
+		return
+	end
+
+	self._tweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, self.leftTime, self._onFadeInUpdate, self._onFadeInFinish, self, nil, EaseType.Linear)
+end
+
+function NecrologistStoryMagicItem:_onFadeInUpdate(value)
+	self.txtTime.text = string.format("%ss", math.ceil(value * self.leftTime))
+	self.imgFill.fillAmount = value
+end
+
+function NecrologistStoryMagicItem:_onFadeInFinish()
+	self.txtTime.text = ""
+
+	gohelper.setActive(self.goProgress, false)
+	self:killTweenId()
+	self:onClickMagic()
+
+	if not GuideController.instance:isForbidGuides() and not GuideModel.instance:isGuideFinish(GuideEnum.GuideId.NecrologistStoryMagic) then
+		GuideViewMgr.instance:onClickCallback(true)
+	end
+end
+
+function NecrologistStoryMagicItem:killTweenId()
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
+
+		self._tweenId = nil
+	end
+end
+
+function NecrologistStoryMagicItem:onMagicLoaded(loader)
+	self.goMaicInst = loader:getInstGO()
+
+	local goImage = gohelper.findChild(self.goMaicInst, "simageMagic")
+	local width = recthelper.getWidth(goImage.transform)
+
+	recthelper.setWidth(self.bg.transform, width + 140)
+end
+
+function NecrologistStoryMagicItem:initSkillIcon()
+	self.skilIconDict = {}
+
+	local goSkillRoot = gohelper.findChild(self.viewGO, "root/#btn_zhouyu/skillicon")
+	local rootTransform = goSkillRoot.transform
+	local childCount = rootTransform.childCount
+
+	for i = 1, childCount do
+		local child = rootTransform:GetChild(i - 1)
+		local childGO = child.gameObject
+
+		gohelper.setActive(childGO, false)
+
+		local childVersionId = tonumber(child.name)
+
+		if childVersionId then
+			self.skilIconDict[childVersionId] = self:createSkillItem(childGO, childVersionId)
+		end
+	end
+end
+
+function NecrologistStoryMagicItem:createSkillItem(go, versionId)
+	local item = self:getUserDataTb_()
+
+	item.go = go
+	item.versionId = versionId
+	item.goAble = gohelper.findChild(item.go, "able")
+	item.goUnable = gohelper.findChild(item.go, "unable")
+
+	return item
+end
+
+function NecrologistStoryMagicItem:setSkillIcon(isAble)
+	local versionId = NecrologistStoryHelper.getPlotRoleStoryId(self._storyId)
+	local item = self.skilIconDict[versionId]
+
+	if item then
+		gohelper.setActive(item.go, true)
+		gohelper.setActive(item.goAble, isAble)
+		gohelper.setActive(item.goUnable, not isAble)
+	end
+end
+
+function NecrologistStoryMagicItem:caleHeight()
 	return 100
 end
 
-function var_0_0.isDone(arg_8_0)
-	return arg_8_0.isClicked
+function NecrologistStoryMagicItem:isDone()
+	return self.isClicked
 end
 
-function var_0_0.onDestroy(arg_9_0)
-	arg_9_0.simageMagic:UnLoadImage()
+function NecrologistStoryMagicItem:onDestroy()
+	self:killTweenId()
 end
 
-function var_0_0.getResPath()
-	return "ui/viewres/dungeon/rolestory/necrologiststorymagicitem.prefab"
+function NecrologistStoryMagicItem.getResPath()
+	return "ui/viewres/dungeon/rolestory/item/necrologiststorymagicitem.prefab"
 end
 
-return var_0_0
+return NecrologistStoryMagicItem

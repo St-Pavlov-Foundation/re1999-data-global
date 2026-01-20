@@ -1,57 +1,59 @@
-﻿module("modules.logic.task.model.TaskMo", package.seeall)
+﻿-- chunkname: @modules/logic/task/model/TaskMo.lua
 
-local var_0_0 = pureTable("TaskMo")
+module("modules.logic.task.model.TaskMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.id = 0
-	arg_1_0.progress = 0
-	arg_1_0.hasFinished = false
-	arg_1_0.finishCount = 0
-	arg_1_0.config = nil
-	arg_1_0.type = 0
-	arg_1_0.expiryTime = 0
+local TaskMo = pureTable("TaskMo")
+
+function TaskMo:ctor()
+	self.id = 0
+	self.progress = 0
+	self.hasFinished = false
+	self.finishCount = 0
+	self.config = nil
+	self.type = 0
+	self.expiryTime = 0
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0.config = arg_2_2
+function TaskMo:init(info, config)
+	self.config = config
 
-	arg_2_0:update(arg_2_1)
+	self:update(info)
 end
 
-function var_0_0.update(arg_3_0, arg_3_1)
-	arg_3_0.id = arg_3_1.id
-	arg_3_0.progress = arg_3_1.progress
-	arg_3_0.hasFinished = arg_3_1.hasFinished
-	arg_3_0.finishCount = arg_3_1.finishCount
-	arg_3_0.type = arg_3_1.type
-	arg_3_0.expiryTime = arg_3_1.expiryTime
+function TaskMo:update(info)
+	self.id = info.id
+	self.progress = info.progress
+	self.hasFinished = info.hasFinished
+	self.finishCount = info.finishCount
+	self.type = info.type
+	self.expiryTime = info.expiryTime
 end
 
-function var_0_0.finishTask(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 == arg_4_0.id then
-		arg_4_0.finishCount = arg_4_2
-		arg_4_0.hasFinished = true
+function TaskMo:finishTask(id, finishCount)
+	if id == self.id then
+		self.finishCount = finishCount
+		self.hasFinished = true
 	end
 end
 
-function var_0_0.getMaxFinishCount(arg_5_0)
-	return arg_5_0.config and arg_5_0.config.maxFinishCount or 1
+function TaskMo:getMaxFinishCount()
+	return self.config and self.config.maxFinishCount or 1
 end
 
-function var_0_0.isClaimed(arg_6_0)
-	return arg_6_0.finishCount >= arg_6_0:getMaxFinishCount()
+function TaskMo:isClaimed()
+	return self.finishCount >= self:getMaxFinishCount()
 end
 
-function var_0_0.isClaimable(arg_7_0)
-	return not arg_7_0:isClaimed() and arg_7_0.hasFinished
+function TaskMo:isClaimable()
+	return not self:isClaimed() and self.hasFinished
 end
 
-function var_0_0.isFinished(arg_8_0)
-	return arg_8_0.hasFinished or arg_8_0:isClaimed()
+function TaskMo:isFinished()
+	return self.hasFinished or self:isClaimed()
 end
 
-function var_0_0.isUnfinished(arg_9_0)
-	return not arg_9_0:isClaimed() and not arg_9_0:isClaimable()
+function TaskMo:isUnfinished()
+	return not self:isClaimed() and not self:isClaimable()
 end
 
-return var_0_0
+return TaskMo

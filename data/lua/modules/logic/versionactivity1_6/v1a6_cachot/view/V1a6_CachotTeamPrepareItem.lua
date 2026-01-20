@@ -1,16 +1,18 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotTeamPrepareItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/view/V1a6_CachotTeamPrepareItem.lua
 
-local var_0_0 = class("V1a6_CachotTeamPrepareItem", V1a6_CachotTeamItem)
+module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotTeamPrepareItem", package.seeall)
 
-function var_0_0.showNone(arg_1_0)
-	gohelper.setActive(arg_1_0._gorole, false)
-	gohelper.setActive(arg_1_0._goheart, false)
+local V1a6_CachotTeamPrepareItem = class("V1a6_CachotTeamPrepareItem", V1a6_CachotTeamItem)
 
-	local var_1_0 = gohelper.findChild(arg_1_0.viewGO, "bg_normal")
-	local var_1_1 = gohelper.findChild(arg_1_0.viewGO, "bg_none")
+function V1a6_CachotTeamPrepareItem:showNone()
+	gohelper.setActive(self._gorole, false)
+	gohelper.setActive(self._goheart, false)
 
-	gohelper.setActive(var_1_0, false)
-	gohelper.setActive(var_1_1, true)
+	local bgNormal = gohelper.findChild(self.viewGO, "bg_normal")
+	local bgNone = gohelper.findChild(self.viewGO, "bg_none")
+
+	gohelper.setActive(bgNormal, false)
+	gohelper.setActive(bgNone, true)
 end
 
-return var_0_0
+return V1a6_CachotTeamPrepareItem

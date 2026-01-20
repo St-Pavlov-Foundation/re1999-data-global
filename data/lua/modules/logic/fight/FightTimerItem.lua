@@ -1,47 +1,49 @@
-﻿module("modules.logic.fight.FightTimerItem", package.seeall)
+﻿-- chunkname: @modules/logic/fight/FightTimerItem.lua
 
-local var_0_0 = class("FightTimerItem")
-local var_0_1 = xpcall
-local var_0_2 = __G__TRACKBACK__
+module("modules.logic.fight.FightTimerItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4, arg_1_5)
-	arg_1_0.time = arg_1_1
-	arg_1_0.originRepeatCount = arg_1_2
-	arg_1_0.repeatCount = arg_1_2
-	arg_1_0.callback = arg_1_3
-	arg_1_0.handle = arg_1_4
-	arg_1_0.param = arg_1_5
-	arg_1_0.updateTime = 0
+local FightTimerItem = class("FightTimerItem")
+local xpcall = xpcall
+local __G__TRACKBACK__ = __G__TRACKBACK__
+
+function FightTimerItem:ctor(time, repeatCount, callback, handle, param)
+	self.time = time
+	self.originRepeatCount = repeatCount
+	self.repeatCount = repeatCount
+	self.callback = callback
+	self.handle = handle
+	self.param = param
+	self.updateTime = 0
 end
 
-function var_0_0.restart(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	arg_2_0.updateTime = 0
-	arg_2_0.time = arg_2_1 or arg_2_0.time
-	arg_2_0.repeatCount = arg_2_2 or arg_2_0.originRepeatCount
-	arg_2_0.param = arg_2_3 or arg_2_0.param
-	arg_2_0.isDone = false
+function FightTimerItem:restart(time, repeatCount, param)
+	self.updateTime = 0
+	self.time = time or self.time
+	self.repeatCount = repeatCount or self.originRepeatCount
+	self.param = param or self.param
+	self.isDone = false
 end
 
-function var_0_0.update(arg_3_0, arg_3_1)
-	if arg_3_0.isDone then
+function FightTimerItem:update(deltaTime)
+	if self.isDone then
 		return
 	end
 
-	arg_3_0.updateTime = arg_3_0.updateTime + arg_3_1
+	self.updateTime = self.updateTime + deltaTime
 
-	if arg_3_0.updateTime >= arg_3_0.time then
-		arg_3_0.updateTime = 0
+	if self.updateTime >= self.time then
+		self.updateTime = 0
 
-		if arg_3_0.repeatCount ~= -1 then
-			arg_3_0.repeatCount = arg_3_0.repeatCount - 1
+		if self.repeatCount ~= -1 then
+			self.repeatCount = self.repeatCount - 1
 		end
 
-		var_0_1(arg_3_0.callback, var_0_2, arg_3_0.handle, arg_3_0.param)
+		xpcall(self.callback, __G__TRACKBACK__, self.handle, self.param)
 
-		if arg_3_0.repeatCount == 0 then
-			arg_3_0.isDone = true
+		if self.repeatCount == 0 then
+			self.isDone = true
 		end
 	end
 end
 
-return var_0_0
+return FightTimerItem

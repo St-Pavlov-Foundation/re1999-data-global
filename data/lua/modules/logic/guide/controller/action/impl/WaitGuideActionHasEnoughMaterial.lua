@@ -1,37 +1,41 @@
-﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionHasEnoughMaterial", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/WaitGuideActionHasEnoughMaterial.lua
 
-local var_0_0 = class("WaitGuideActionHasEnoughMaterial", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.WaitGuideActionHasEnoughMaterial", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
-	BackpackController.instance:registerCallback(BackpackEvent.UpdateItemList, arg_1_0._checkMaterials, arg_1_0)
+local WaitGuideActionHasEnoughMaterial = class("WaitGuideActionHasEnoughMaterial", BaseGuideAction)
 
-	arg_1_0._materials = GameUtil.splitString2(arg_1_0.actionParam, true, "|", "#")
+function WaitGuideActionHasEnoughMaterial:onStart(context)
+	WaitGuideActionHasEnoughMaterial.super.onStart(self, context)
+	BackpackController.instance:registerCallback(BackpackEvent.UpdateItemList, self._checkMaterials, self)
 
-	arg_1_0:_checkMaterials()
+	self._materials = GameUtil.splitString2(self.actionParam, true, "|", "#")
+
+	self:_checkMaterials()
 end
 
-function var_0_0._checkMaterials(arg_2_0)
-	local var_2_0 = true
+function WaitGuideActionHasEnoughMaterial:_checkMaterials()
+	local enough = true
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0._materials) do
-		local var_2_1 = iter_2_1[1]
-		local var_2_2 = iter_2_1[2]
+	for _, one in ipairs(self._materials) do
+		local type = one[1]
+		local id = one[2]
+		local quantity = one[3]
+		local hasQuantity = ItemModel.instance:getItemQuantity(type, id)
 
-		if iter_2_1[3] > ItemModel.instance:getItemQuantity(var_2_1, var_2_2) then
-			var_2_0 = false
+		if hasQuantity < quantity then
+			enough = false
 
 			break
 		end
 	end
 
-	if var_2_0 then
-		arg_2_0:onDone(true)
+	if enough then
+		self:onDone(true)
 	end
 end
 
-function var_0_0.clearWork(arg_3_0)
-	BackpackController.instance:unregisterCallback(BackpackEvent.UpdateItemList, arg_3_0._checkMaterials, arg_3_0)
+function WaitGuideActionHasEnoughMaterial:clearWork()
+	BackpackController.instance:unregisterCallback(BackpackEvent.UpdateItemList, self._checkMaterials, self)
 end
 
-return var_0_0
+return WaitGuideActionHasEnoughMaterial

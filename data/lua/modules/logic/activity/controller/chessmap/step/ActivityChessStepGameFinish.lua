@@ -1,48 +1,51 @@
-﻿module("modules.logic.activity.controller.chessmap.step.ActivityChessStepGameFinish", package.seeall)
+﻿-- chunkname: @modules/logic/activity/controller/chessmap/step/ActivityChessStepGameFinish.lua
 
-local var_0_0 = class("ActivityChessStepGameFinish", ActivityChessStepBase)
+module("modules.logic.activity.controller.chessmap.step.ActivityChessStepGameFinish", package.seeall)
 
-function var_0_0.start(arg_1_0)
-	arg_1_0:processSelectObj()
-	arg_1_0:processWinStatus()
+local ActivityChessStepGameFinish = class("ActivityChessStepGameFinish", ActivityChessStepBase)
+
+function ActivityChessStepGameFinish:start()
+	self:processSelectObj()
+	self:processWinStatus()
 end
 
-function var_0_0.processSelectObj(arg_2_0)
+function ActivityChessStepGameFinish:processSelectObj()
 	ActivityChessGameController.instance:setSelectObj(nil)
 end
 
-function var_0_0.processWinStatus(arg_3_0)
-	if arg_3_0.originData.win == true then
+function ActivityChessStepGameFinish:processWinStatus()
+	if self.originData.win == true then
 		logNormal("game clear!")
 		ActivityChessGameController.instance:gameClear()
 	else
 		logNormal("game over!")
 
-		if arg_3_0.originData.failReason == ActivityChessEnum.FailReason.FailInteract then
-			local var_3_0 = arg_3_0.originData.failCharacter
-			local var_3_1 = ActivityChessGameController.instance.interacts
+		if self.originData.failReason == ActivityChessEnum.FailReason.FailInteract then
+			local pawnId = self.originData.failCharacter
+			local interactMgr = ActivityChessGameController.instance.interacts
 
-			if var_3_0 ~= 0 and var_3_1 then
-				local var_3_2 = var_3_1:get(var_3_0).config
-				local var_3_3 = Activity109ChessModel.instance:getEpisodeId()
-				local var_3_4 = "OnChessFailPause" .. var_3_3 .. "_" .. (var_3_2 and var_3_2.id or "")
-				local var_3_5 = GuideEvent[var_3_4]
-				local var_3_6 = GuideEvent.OnChessFailContinue
-				local var_3_7 = var_0_0._gameOver
-				local var_3_8 = arg_3_0
+			if pawnId ~= 0 and interactMgr then
+				local interactObj = interactMgr:get(pawnId)
+				local interactCfg = interactObj.config
+				local episodeId = Activity109ChessModel.instance:getEpisodeId()
+				local v1 = "OnChessFailPause" .. episodeId .. "_" .. (interactCfg and interactCfg.id or "")
+				local v2 = GuideEvent[v1]
+				local v3 = GuideEvent.OnChessFailContinue
+				local v4 = ActivityChessStepGameFinish._gameOver
+				local v5 = self
 
-				GuideController.instance:GuideFlowPauseAndContinue(var_3_4, var_3_5, var_3_6, var_3_7, var_3_8)
+				GuideController.instance:GuideFlowPauseAndContinue(v1, v2, v3, v4, v5)
 
 				return
 			end
 		end
 
-		arg_3_0:_gameOver()
+		self:_gameOver()
 	end
 end
 
-function var_0_0._gameOver(arg_4_0)
+function ActivityChessStepGameFinish:_gameOver()
 	ActivityChessGameController.instance:gameOver()
 end
 
-return var_0_0
+return ActivityChessStepGameFinish

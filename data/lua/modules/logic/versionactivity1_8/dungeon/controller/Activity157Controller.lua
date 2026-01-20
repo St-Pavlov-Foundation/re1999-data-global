@@ -1,41 +1,44 @@
-﻿module("modules.logic.versionactivity1_8.dungeon.controller.Activity157Controller", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_8/dungeon/controller/Activity157Controller.lua
 
-local var_0_0 = class("Activity157Controller", BaseController)
+module("modules.logic.versionactivity1_8.dungeon.controller.Activity157Controller", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._openBlueprintAfterFactoryMapView = false
+local Activity157Controller = class("Activity157Controller", BaseController)
+
+function Activity157Controller:onInit()
+	self._openBlueprintAfterFactoryMapView = false
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:onInit()
+function Activity157Controller:reInit()
+	self:onInit()
 end
 
-function var_0_0.getAct157ActInfo(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	local var_3_0 = Activity157Model.instance:getActId()
+function Activity157Controller:getAct157ActInfo(isToast, failedDoCb, cb, cbObj)
+	local actId = Activity157Model.instance:getActId()
+	local isOnline = ActivityModel.instance:isActOnLine(actId)
 
-	if ActivityModel.instance:isActOnLine(var_3_0) then
-		Activity157Rpc.instance:sendGet157InfoRequest(var_3_0, arg_3_3, arg_3_4)
+	if isOnline then
+		Activity157Rpc.instance:sendGet157InfoRequest(actId, cb, cbObj)
 	else
-		if arg_3_1 then
+		if isToast then
 			GameFacade.showToast(ToastEnum.ActivityNotOpen)
 		end
 
-		if arg_3_2 and arg_3_3 then
-			arg_3_3(arg_3_4)
+		if failedDoCb and cb then
+			cb(cbObj)
 		end
 	end
 end
 
-function var_0_0.openFactoryMapView(arg_4_0, arg_4_1)
-	arg_4_0._openBlueprintAfterFactoryMapView = arg_4_1
+function Activity157Controller:openFactoryMapView(isOpenBlueprint)
+	self._openBlueprintAfterFactoryMapView = isOpenBlueprint
 
 	HandbookRpc.instance:sendGetHandbookInfoRequest()
-	arg_4_0:getAct157ActInfo(true, false, arg_4_0._openFactoryMapViewAfterRpc, arg_4_0)
+	self:getAct157ActInfo(true, false, self._openFactoryMapViewAfterRpc, self)
 end
 
-function var_0_0._openFactoryMapViewAfterRpc(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	if not arg_5_2 or arg_5_2 ~= 0 then
-		arg_5_0._openBlueprintAfterFactoryMapView = false
+function Activity157Controller:_openFactoryMapViewAfterRpc(cmd, resultCode, msg)
+	if not resultCode or resultCode ~= 0 then
+		self._openBlueprintAfterFactoryMapView = false
 
 		return
 	end
@@ -43,164 +46,171 @@ function var_0_0._openFactoryMapViewAfterRpc(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
 	ViewMgr.instance:openView(ViewName.VersionActivity1_8FactoryMapView)
 end
 
-function var_0_0.onFactoryMapViewOpen(arg_6_0)
-	if arg_6_0._openBlueprintAfterFactoryMapView then
-		arg_6_0:openFactoryBlueprintView()
+function Activity157Controller:onFactoryMapViewOpen()
+	if self._openBlueprintAfterFactoryMapView then
+		self:openFactoryBlueprintView()
 	end
 
-	arg_6_0._openBlueprintAfterFactoryMapView = false
+	self._openBlueprintAfterFactoryMapView = false
 end
 
-function var_0_0.openFactoryBlueprintView(arg_7_0)
-	if Activity157Model.instance:getIsUnlockFactoryBlueprint() then
+function Activity157Controller:openFactoryBlueprintView()
+	local isUnlockFactoryBlueprint = Activity157Model.instance:getIsUnlockFactoryBlueprint()
+
+	if isUnlockFactoryBlueprint then
 		ViewMgr.instance:openView(ViewName.VersionActivity1_8FactoryBlueprintView)
 	else
 		GameFacade.showToast(ToastEnum.V1a8Activity157LockedFactoryEntrance)
 	end
 end
 
-function var_0_0.getFactoryProduction(arg_8_0)
-	if not Activity157Model.instance:getIsUnlockFactoryBlueprint() then
+function Activity157Controller:getFactoryProduction()
+	local isUnlockFactoryBlueprint = Activity157Model.instance:getIsUnlockFactoryBlueprint()
+
+	if not isUnlockFactoryBlueprint then
 		GameFacade.showToast(ToastEnum.V1a8Activity157NotUnlockFactoryBlueprint)
 
 		return
 	end
 
-	local var_8_0 = Activity157Model.instance:getFactoryProductionNum() > 0
-	local var_8_1 = Activity157Model.instance:getFactoryNextRecoverCountdown()
-	local var_8_2 = string.nilorempty(var_8_1)
+	local canGetNum = Activity157Model.instance:getFactoryProductionNum()
+	local isCanGet = canGetNum > 0
+	local nextRecoverTime = Activity157Model.instance:getFactoryNextRecoverCountdown()
+	local isLastDay = string.nilorempty(nextRecoverTime)
+	local isFinished = not isCanGet and isLastDay
 
-	if not var_8_0 and var_8_2 then
+	if isFinished then
 		GameFacade.showToast(ToastEnum.V1a8Activity157FactoryProductFinish)
 
 		return
 	end
 
-	if not var_8_0 then
+	if not isCanGet then
 		GameFacade.showToast(ToastEnum.V1a8Activity157NoFactoryProduction)
 
 		return
 	end
 
-	local var_8_3 = Activity157Model.instance:getActId()
+	local actId = Activity157Model.instance:getActId()
 
-	Activity157Rpc.instance:sendAct157AcceptProductionRequest(var_8_3)
+	Activity157Rpc.instance:sendAct157AcceptProductionRequest(actId)
 end
 
-function var_0_0.openCompositeView(arg_9_0)
+function Activity157Controller:openCompositeView()
 	ViewMgr.instance:openView(ViewName.VersionActivity1_8FactoryCompositeView)
 end
 
-function var_0_0.enterFactoryRepairGame(arg_10_0, arg_10_1)
-	if not arg_10_1 then
+function Activity157Controller:enterFactoryRepairGame(componentId)
+	if not componentId then
 		return
 	end
 
-	if Activity157Model.instance:isRepairComponent(arg_10_1) then
+	local isRepaired = Activity157Model.instance:isRepairComponent(componentId)
+
+	if isRepaired then
 		GameFacade.showToast(ToastEnum.V1a8Activity157RepairComplete)
 
 		return
 	end
 
-	Activity157RepairGameModel.instance:setGameDataBeforeEnter(arg_10_1)
-	arg_10_0:initRule()
-	arg_10_0:refreshAllConnection()
-	arg_10_0:updateConnection()
+	Activity157RepairGameModel.instance:setGameDataBeforeEnter(componentId)
+	self:initRule()
+	self:refreshAllConnection()
+	self:updateConnection()
 	ViewMgr.instance:openView(ViewName.VersionActivity1_8FactoryRepairView)
 end
 
-function var_0_0.factoryComposite(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4)
-	if not arg_11_1 or not arg_11_2 then
+function Activity157Controller:factoryComposite(compositeCount, costItemCount, cb, cbObj)
+	if not compositeCount or not costItemCount then
 		return
 	end
 
-	local var_11_0 = Activity157Model.instance:getActId()
-	local var_11_1 = 0
-	local var_11_2 = Activity157Config.instance:getAct157Const(var_11_0, Activity157Enum.ConstId.FactoryCompositeCost)
-	local var_11_3 = var_11_2 and string.split(var_11_2, "#")
+	local actId = Activity157Model.instance:getActId()
+	local itemQuantity = 0
+	local strCost = Activity157Config.instance:getAct157Const(actId, Activity157Enum.ConstId.FactoryCompositeCost)
+	local param = strCost and string.split(strCost, "#")
 
-	if var_11_3 then
-		var_11_1 = ItemModel.instance:getItemQuantity(var_11_3[1], var_11_3[2])
+	if param then
+		itemQuantity = ItemModel.instance:getItemQuantity(param[1], param[2])
 	end
 
-	if var_11_1 < arg_11_2 then
+	if itemQuantity < costItemCount then
 		GameFacade.showToast(ToastEnum.V1a8Activity157NotEnoughMaterial)
 
 		return
 	end
 
-	Activity157Rpc.instance:sendAct157CompoundRequest(var_11_0, arg_11_1, arg_11_3, arg_11_4)
+	Activity157Rpc.instance:sendAct157CompoundRequest(actId, compositeCount, cb, cbObj)
 end
 
-function var_0_0.initRule(arg_12_0)
-	arg_12_0._rule = arg_12_0._rule or Activity157GameRule.New()
+function Activity157Controller:initRule()
+	self._rule = self._rule or Activity157GameRule.New()
 
-	local var_12_0, var_12_1 = Activity157RepairGameModel.instance:getGameSize()
+	local w, h = Activity157RepairGameModel.instance:getGameSize()
 
-	arg_12_0._rule:setGameSize(var_12_0, var_12_1)
+	self._rule:setGameSize(w, h)
 end
 
-function var_0_0.resetGame(arg_13_0)
+function Activity157Controller:resetGame()
 	Activity157RepairGameModel.instance:resetGameData()
-	arg_13_0:refreshAllConnection()
-	arg_13_0:updateConnection()
-	arg_13_0:dispatchEvent(ArmPuzzlePipeEvent.ResetGameRefresh)
+	self:refreshAllConnection()
+	self:updateConnection()
+	self:dispatchEvent(ArmPuzzlePipeEvent.ResetGameRefresh)
 end
 
-function var_0_0.refreshAllConnection(arg_14_0)
-	local var_14_0, var_14_1 = Activity157RepairGameModel.instance:getGameSize()
+function Activity157Controller:refreshAllConnection()
+	local w, h = Activity157RepairGameModel.instance:getGameSize()
 
-	for iter_14_0 = 1, var_14_0 do
-		for iter_14_1 = 1, var_14_1 do
-			local var_14_2 = Activity157RepairGameModel.instance:getData(iter_14_0, iter_14_1)
+	for x = 1, w do
+		for y = 1, h do
+			local mo = Activity157RepairGameModel.instance:getData(x, y)
 
-			arg_14_0:refreshConnection(var_14_2)
+			self:refreshConnection(mo)
 		end
 	end
 end
 
-local var_0_1 = ArmPuzzlePipeEnum.dir.left
-local var_0_2 = ArmPuzzlePipeEnum.dir.right
-local var_0_3 = ArmPuzzlePipeEnum.dir.down
-local var_0_4 = ArmPuzzlePipeEnum.dir.up
+local LEFT = ArmPuzzlePipeEnum.dir.left
+local RIGHT = ArmPuzzlePipeEnum.dir.right
+local DOWN = ArmPuzzlePipeEnum.dir.down
+local UP = ArmPuzzlePipeEnum.dir.up
 
-function var_0_0.refreshConnection(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_1.x
-	local var_15_1 = arg_15_1.y
+function Activity157Controller:refreshConnection(mo)
+	local x, y = mo.x, mo.y
 
-	arg_15_0._rule:setSingleConnection(var_15_0 - 1, var_15_1, var_0_2, var_0_1, arg_15_1)
-	arg_15_0._rule:setSingleConnection(var_15_0 + 1, var_15_1, var_0_1, var_0_2, arg_15_1)
-	arg_15_0._rule:setSingleConnection(var_15_0, var_15_1 + 1, var_0_3, var_0_4, arg_15_1)
-	arg_15_0._rule:setSingleConnection(var_15_0, var_15_1 - 1, var_0_4, var_0_3, arg_15_1)
+	self._rule:setSingleConnection(x - 1, y, RIGHT, LEFT, mo)
+	self._rule:setSingleConnection(x + 1, y, LEFT, RIGHT, mo)
+	self._rule:setSingleConnection(x, y + 1, DOWN, UP, mo)
+	self._rule:setSingleConnection(x, y - 1, UP, DOWN, mo)
 end
 
-function var_0_0.updateConnection(arg_16_0)
+function Activity157Controller:updateConnection()
 	Activity157RepairGameModel.instance:resetEntryConnect()
 
-	local var_16_0, var_16_1 = arg_16_0._rule:getReachTable()
+	local entryTable, resultTable = self._rule:getReachTable()
 
-	arg_16_0._rule:_mergeReachDir(var_16_0)
-	arg_16_0._rule:_unmarkBranch()
+	self._rule:_mergeReachDir(entryTable)
+	self._rule:_unmarkBranch()
 
-	local var_16_2 = arg_16_0._rule:isGameClear(var_16_1)
+	local result = self._rule:isGameClear(resultTable)
 
-	Activity157RepairGameModel.instance:setGameClear(var_16_2)
+	Activity157RepairGameModel.instance:setGameClear(result)
 end
 
-function var_0_0.changeDirection(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	local var_17_0 = arg_17_0._rule:changeDirection(arg_17_1, arg_17_2)
+function Activity157Controller:changeDirection(x, y, needRefresh)
+	local mo = self._rule:changeDirection(x, y)
 
-	if arg_17_3 then
-		arg_17_0:refreshConnection(var_17_0)
+	if needRefresh then
+		self:refreshConnection(mo)
 	end
 end
 
-function var_0_0.checkDispatchClear(arg_18_0)
+function Activity157Controller:checkDispatchClear()
 	if Activity157RepairGameModel.instance:getGameClear() then
-		arg_18_0:dispatchEvent(ArmPuzzlePipeEvent.PipeGameClear)
+		self:dispatchEvent(ArmPuzzlePipeEvent.PipeGameClear)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+Activity157Controller.instance = Activity157Controller.New()
 
-return var_0_0
+return Activity157Controller

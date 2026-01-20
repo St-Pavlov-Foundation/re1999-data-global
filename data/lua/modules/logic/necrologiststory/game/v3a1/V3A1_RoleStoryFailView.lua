@@ -1,60 +1,64 @@
-﻿module("modules.logic.necrologiststory.game.v3a1.V3A1_RoleStoryFailView", package.seeall)
+﻿-- chunkname: @modules/logic/necrologiststory/game/v3a1/V3A1_RoleStoryFailView.lua
 
-local var_0_0 = class("V3A1_RoleStoryFailView", BaseView)
+module("modules.logic.necrologiststory.game.v3a1.V3A1_RoleStoryFailView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.btnExit = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/btn/#btn_quitgame")
-	arg_1_0.btnReplay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/btn/#btn_restart")
+local V3A1_RoleStoryFailView = class("V3A1_RoleStoryFailView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V3A1_RoleStoryFailView:onInitView()
+	self.btnExit = gohelper.findChildButtonWithAudio(self.viewGO, "root/btn/#btn_quitgame")
+	self.btnReplay = gohelper.findChildButtonWithAudio(self.viewGO, "root/btn/#btn_restart")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnExit, arg_2_0.onClickBtnExit, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnReplay, arg_2_0.onClickBtnReplay, arg_2_0)
+function V3A1_RoleStoryFailView:addEvents()
+	self:addClickCb(self.btnExit, self.onClickBtnExit, self)
+	self:addClickCb(self.btnReplay, self.onClickBtnReplay, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeClickCb(arg_3_0.btnExit)
-	arg_3_0:removeClickCb(arg_3_0.btnReplay)
+function V3A1_RoleStoryFailView:removeEvents()
+	self:removeClickCb(self.btnExit)
+	self:removeClickCb(self.btnReplay)
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function V3A1_RoleStoryFailView:_editableInitView()
 	return
 end
 
-function var_0_0.onClickModalMask(arg_5_0)
+function V3A1_RoleStoryFailView:onClickModalMask()
 	return
 end
 
-function var_0_0.onClickBtnExit(arg_6_0)
-	local var_6_0 = arg_6_0.roleStoryId
+function V3A1_RoleStoryFailView:onClickBtnExit()
+	local storyId = self.roleStoryId
+	local gameMO = NecrologistStoryModel.instance:getGameMO(storyId)
 
-	NecrologistStoryModel.instance:getGameMO(var_6_0):setIsExitGame(true)
-	NecrologistStoryController.instance:closeGameView(arg_6_0.roleStoryId)
-	arg_6_0:closeThis()
+	gameMO:setIsExitGame(true)
+	NecrologistStoryController.instance:closeGameView(self.roleStoryId)
+	self:closeThis()
 end
 
-function var_0_0.onClickBtnReplay(arg_7_0)
-	arg_7_0:closeThis()
+function V3A1_RoleStoryFailView:onClickBtnReplay()
+	self:closeThis()
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0.roleStoryId = arg_8_0.viewParam.roleStoryId
+function V3A1_RoleStoryFailView:onOpen()
+	self.roleStoryId = self.viewParam.roleStoryId
 
-	arg_8_0:resetProgress()
+	self:resetProgress()
 end
 
-function var_0_0.resetProgress(arg_9_0)
-	local var_9_0 = arg_9_0.roleStoryId
+function V3A1_RoleStoryFailView:resetProgress()
+	local storyId = self.roleStoryId
+	local gameMO = NecrologistStoryModel.instance:getGameMO(storyId)
 
-	NecrologistStoryModel.instance:getGameMO(var_9_0):resetProgressByFail()
+	gameMO:resetProgressByFail()
 end
 
-function var_0_0.onDestroyView(arg_10_0)
+function V3A1_RoleStoryFailView:onDestroyView()
 	return
 end
 
-return var_0_0
+return V3A1_RoleStoryFailView

@@ -1,56 +1,60 @@
-﻿module("modules.logic.seasonver.act123.view2_0.Season123_2_0CardPackageViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view2_0/Season123_2_0CardPackageViewContainer.lua
 
-local var_0_0 = class("Season123_2_0CardPackageViewContainer", BaseViewContainer)
+module("modules.logic.seasonver.act123.view2_0.Season123_2_0CardPackageViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	arg_1_0:buildScrollViews()
+local Season123_2_0CardPackageViewContainer = class("Season123_2_0CardPackageViewContainer", BaseViewContainer)
+
+function Season123_2_0CardPackageViewContainer:buildViews()
+	self:buildScrollViews()
 
 	return {
 		Season123_2_0CardPackageView.New(),
-		arg_1_0.scrollView,
+		self.scrollView,
 		TabViewGroup.New(1, "#go_btns")
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		local var_2_0 = NavigateButtonsView.New({
+function Season123_2_0CardPackageViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		local navigateButtonsView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
-		var_2_0:setHelpId(HelpEnum.HelpId.Season2_0CardGetViewHelp)
-		var_2_0:hideHelpIcon()
+		navigateButtonsView:setHelpId(HelpEnum.HelpId.Season2_0CardGetViewHelp)
+		navigateButtonsView:hideHelpIcon()
 
 		return {
-			var_2_0
+			navigateButtonsView
 		}
 	end
 end
 
-function var_0_0.buildScrollViews(arg_3_0)
-	local var_3_0 = ListScrollParam.New()
+function Season123_2_0CardPackageViewContainer:buildScrollViews()
+	local scrollParam = ListScrollParam.New()
 
-	var_3_0.scrollGOPath = "#go_cardget/mask/#scroll_cardget"
-	var_3_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_3_0.prefabUrl = arg_3_0._viewSetting.otherRes[1]
-	var_3_0.cellClass = Season123_2_0CardPackageItem
-	var_3_0.scrollDir = ScrollEnum.ScrollDirV
-	var_3_0.lineCount = 5
-	var_3_0.cellWidth = 204
-	var_3_0.cellHeight = 290
-	var_3_0.cellSpaceH = 0
-	var_3_0.cellSpaceV = 50
-	var_3_0.frameUpdateMs = 100
+	scrollParam.scrollGOPath = "#go_cardget/mask/#scroll_cardget"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = Season123_2_0CardPackageItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 5
+	scrollParam.cellWidth = 204
+	scrollParam.cellHeight = 290
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 50
+	scrollParam.frameUpdateMs = 100
 
-	local var_3_1 = {}
+	local delayTimes = {}
 
-	for iter_3_0 = 1, 15 do
-		var_3_1[iter_3_0] = math.ceil(iter_3_0 / 5) * 0.06
+	for i = 1, 15 do
+		local delayTime = math.ceil(i / 5) * 0.06
+
+		delayTimes[i] = delayTime
 	end
 
-	arg_3_0.scrollView = LuaListScrollViewWithAnimator.New(Season123CardPackageModel.instance, var_3_0, var_3_1)
+	self.scrollView = LuaListScrollViewWithAnimator.New(Season123CardPackageModel.instance, scrollParam, delayTimes)
 end
 
-return var_0_0
+return Season123_2_0CardPackageViewContainer

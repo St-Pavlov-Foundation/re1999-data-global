@@ -1,42 +1,44 @@
-﻿module("modules.common.global.gamestate.GameStateMgr", package.seeall)
+﻿-- chunkname: @modules/common/global/gamestate/GameStateMgr.lua
 
-local var_0_0 = class("GameStateMgr")
+module("modules.common.global.gamestate.GameStateMgr", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	LuaEventSystem.addEventMechanism(arg_1_0)
+local GameStateMgr = class("GameStateMgr")
 
-	arg_1_0._hasLogLowMemory = nil
+function GameStateMgr:ctor()
+	LuaEventSystem.addEventMechanism(self)
+
+	self._hasLogLowMemory = nil
 end
 
-function var_0_0.init(arg_2_0)
-	SLFramework.GameState.Instance:SetApplicationPauseCallback(arg_2_0.onApplicationPause, arg_2_0)
-	SLFramework.GameState.Instance:SetApplicationLowMemoryCallback(arg_2_0.onApplicationLowMemory, arg_2_0)
+function GameStateMgr:init()
+	SLFramework.GameState.Instance:SetApplicationPauseCallback(self.onApplicationPause, self)
+	SLFramework.GameState.Instance:SetApplicationLowMemoryCallback(self.onApplicationLowMemory, self)
 
 	if SLFramework.FrameworkSettings.IsEditor then
-		arg_2_0:_addApplicationQuit()
+		self:_addApplicationQuit()
 	end
 end
 
-function var_0_0._addApplicationQuit(arg_3_0)
+function GameStateMgr:_addApplicationQuit()
 	setGlobal("OnApplicationQuit", function()
-		var_0_0.instance:dispatchEvent(GameStateEvent.OnApplicationQuit)
+		GameStateMgr.instance:dispatchEvent(GameStateEvent.OnApplicationQuit)
 	end)
 end
 
-function var_0_0.onApplicationPause(arg_5_0, arg_5_1)
-	var_0_0.instance:dispatchEvent(GameStateEvent.onApplicationPause, arg_5_1)
+function GameStateMgr:onApplicationPause(isFront)
+	GameStateMgr.instance:dispatchEvent(GameStateEvent.onApplicationPause, isFront)
 end
 
-function var_0_0.onApplicationLowMemory(arg_6_0)
-	if not arg_6_0._hasLogLowMemory then
-		arg_6_0._hasLogLowMemory = true
+function GameStateMgr:onApplicationLowMemory()
+	if not self._hasLogLowMemory then
+		self._hasLogLowMemory = true
 
 		logWarn("可用内存不足")
 	end
 
-	GameGCMgr.instance:dispatchEvent(GameGCEvent.FullGC, arg_6_0)
+	GameGCMgr.instance:dispatchEvent(GameGCEvent.FullGC, self)
 end
 
-var_0_0.instance = var_0_0.New()
+GameStateMgr.instance = GameStateMgr.New()
 
-return var_0_0
+return GameStateMgr

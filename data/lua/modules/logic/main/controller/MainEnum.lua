@@ -1,11 +1,14 @@
-﻿module("modules.logic.main.controller.MainEnum", package.seeall)
+﻿-- chunkname: @modules/logic/main/controller/MainEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.main.controller.MainEnum", package.seeall)
 
-var_0_0.SwitchType = {
+local MainEnum = _M
+
+MainEnum.SwitchType = {
 	FightUI = 3,
 	Scene = 2,
 	Character = 1
 }
+MainEnum.MaxLockCount = 10
 
-return var_0_0
+return MainEnum

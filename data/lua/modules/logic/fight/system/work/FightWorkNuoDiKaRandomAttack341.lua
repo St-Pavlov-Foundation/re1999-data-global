@@ -1,9 +1,11 @@
-﻿module("modules.logic.fight.system.work.FightWorkNuoDiKaRandomAttack341", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkNuoDiKaRandomAttack341.lua
 
-local var_0_0 = class("FightWorkNuoDiKaRandomAttack341", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkNuoDiKaRandomAttack341", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0:onDone(true)
+local FightWorkNuoDiKaRandomAttack341 = class("FightWorkNuoDiKaRandomAttack341", FightEffectBase)
+
+function FightWorkNuoDiKaRandomAttack341:onStart()
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkNuoDiKaRandomAttack341

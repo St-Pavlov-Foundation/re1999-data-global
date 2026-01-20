@@ -1,16 +1,18 @@
-﻿module("modules.logic.explore.controller.trigger.ExploreTriggerOpenArchiveView", package.seeall)
+﻿-- chunkname: @modules/logic/explore/controller/trigger/ExploreTriggerOpenArchiveView.lua
 
-local var_0_0 = class("ExploreTriggerOpenArchiveView", ExploreTriggerBase)
+module("modules.logic.explore.controller.trigger.ExploreTriggerOpenArchiveView", package.seeall)
 
-function var_0_0.handle(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = {
+local ExploreTriggerOpenArchiveView = class("ExploreTriggerOpenArchiveView", ExploreTriggerBase)
+
+function ExploreTriggerOpenArchiveView:handle(id, unit)
+	local stepData = {
 		stepType = ExploreEnum.StepType.ArchiveClient,
-		archiveId = arg_1_2.mo.archiveId
+		archiveId = unit.mo.archiveId
 	}
 
-	ExploreStepController.instance:insertClientStep(var_1_0, 1)
+	ExploreStepController.instance:insertClientStep(stepData, 1)
 	ExploreStepController.instance:startStep()
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return ExploreTriggerOpenArchiveView

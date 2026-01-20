@@ -1,41 +1,43 @@
-﻿module("modules.logic.versionactivity1_4.acttask.view.VersionActivity1_4TaskViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/acttask/view/VersionActivity1_4TaskViewContainer.lua
 
-local var_0_0 = class("VersionActivity1_4TaskViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_4.acttask.view.VersionActivity1_4TaskViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = ListScrollParam.New()
+local VersionActivity1_4TaskViewContainer = class("VersionActivity1_4TaskViewContainer", BaseViewContainer)
 
-	var_1_0.scrollGOPath = "Right/#scroll_TaskList"
-	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_0.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_0.cellClass = VersionActivity1_4TaskItem
-	var_1_0.scrollDir = ScrollEnum.ScrollDirV
-	var_1_0.lineCount = 1
-	var_1_0.cellWidth = 1160
-	var_1_0.cellHeight = 165
-	var_1_0.cellSpaceH = 0
-	var_1_0.cellSpaceV = 0
+function VersionActivity1_4TaskViewContainer:buildViews()
+	local scrollParam = ListScrollParam.New()
+
+	scrollParam.scrollGOPath = "Right/#scroll_TaskList"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = VersionActivity1_4TaskItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 1160
+	scrollParam.cellHeight = 165
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 0
 
 	if BootNativeUtil.isAndroid() then
-		arg_1_0._taskScrollView = LuaListScrollView.New(VersionActivity1_4TaskListModel.instance, var_1_0)
+		self._taskScrollView = LuaListScrollView.New(VersionActivity1_4TaskListModel.instance, scrollParam)
 	else
-		local var_1_1 = {}
+		local times = {}
 
-		for iter_1_0 = 1, 6 do
-			var_1_1[iter_1_0] = (iter_1_0 - 1) * 0.06
+		for i = 1, 6 do
+			times[i] = (i - 1) * 0.06
 		end
 
-		arg_1_0._taskScrollView = LuaListScrollViewWithAnimator.New(VersionActivity1_4TaskListModel.instance, var_1_0, var_1_1)
+		self._taskScrollView = LuaListScrollViewWithAnimator.New(VersionActivity1_4TaskListModel.instance, scrollParam, times)
 	end
 
 	return {
-		arg_1_0._taskScrollView,
+		self._taskScrollView,
 		VersionActivity1_4TaskView.New(),
 		TabViewGroup.New(1, "#go_topleft")
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function VersionActivity1_4TaskViewContainer:buildTabViews(tabContainerId)
 	return {
 		NavigateButtonsView.New({
 			true,
@@ -45,14 +47,14 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	}
 end
 
-function var_0_0.onContainerInit(arg_3_0)
-	arg_3_0.taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(arg_3_0._taskScrollView)
+function VersionActivity1_4TaskViewContainer:onContainerInit()
+	self.taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(self._taskScrollView)
 
-	arg_3_0.taskAnimRemoveItem:setMoveInterval(0)
+	self.taskAnimRemoveItem:setMoveInterval(0)
 end
 
-function var_0_0.getScrollView(arg_4_0)
-	return arg_4_0._taskScrollView
+function VersionActivity1_4TaskViewContainer:getScrollView()
+	return self._taskScrollView
 end
 
-return var_0_0
+return VersionActivity1_4TaskViewContainer

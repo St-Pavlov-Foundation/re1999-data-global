@@ -1,184 +1,190 @@
-﻿module("modules.logic.versionactivity1_5.peaceulu.view.PeaceUluMainView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/peaceulu/view/PeaceUluMainView.lua
 
-local var_0_0 = class("PeaceUluMainView", BaseView)
+module("modules.logic.versionactivity1_5.peaceulu.view.PeaceUluMainView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtremaintime = gohelper.findChildText(arg_1_0.viewGO, "left/remaintime/bg/#txt_remaintime")
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "left/#txt_title")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "left/#txt_desc")
-	arg_1_0._scrollview = gohelper.findChildScrollRect(arg_1_0.viewGO, "right/progress/#scroll_view")
-	arg_1_0._imgfill = gohelper.findChildImage(arg_1_0.viewGO, "right/progress/#scroll_view/Viewport/Content/fill/#go_fill")
-	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "right/progress/#scroll_view/Viewport/Content")
-	arg_1_0._goprogressitem = gohelper.findChild(arg_1_0.viewGO, "right/progress/#scroll_view/Viewport/Content/#go_progressitem")
-	arg_1_0._txtschedule = gohelper.findChildText(arg_1_0.viewGO, "right/progress/bg/#txt_schedule")
-	arg_1_0._animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0.bonusItemList = {}
+local PeaceUluMainView = class("PeaceUluMainView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function PeaceUluMainView:onInitView()
+	self._txtremaintime = gohelper.findChildText(self.viewGO, "left/remaintime/bg/#txt_remaintime")
+	self._txttitle = gohelper.findChildText(self.viewGO, "left/#txt_title")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "left/#txt_desc")
+	self._scrollview = gohelper.findChildScrollRect(self.viewGO, "right/progress/#scroll_view")
+	self._imgfill = gohelper.findChildImage(self.viewGO, "right/progress/#scroll_view/Viewport/Content/fill/#go_fill")
+	self._goContent = gohelper.findChild(self.viewGO, "right/progress/#scroll_view/Viewport/Content")
+	self._goprogressitem = gohelper.findChild(self.viewGO, "right/progress/#scroll_view/Viewport/Content/#go_progressitem")
+	self._txtschedule = gohelper.findChildText(self.viewGO, "right/progress/bg/#txt_schedule")
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self.bonusItemList = {}
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_2_0._updateUI, arg_2_0)
-	arg_2_0:addEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, arg_2_0._onDailyRefresh, arg_2_0)
-	arg_2_0:addEventCb(PeaceUluController.instance, PeaceUluEvent.OnUpdateInfo, arg_2_0._updateUI, arg_2_0)
-	arg_2_0:addEventCb(PeaceUluController.instance, PeaceUluEvent.onSwitchTab, arg_2_0._toSwitchTab, arg_2_0)
-	arg_2_0:addEventCb(arg_2_0.viewContainer, PeaceUluEvent.onFinishTask, arg_2_0.playFinishAnim, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0._onCloseViewFinish, arg_2_0)
+function PeaceUluMainView:addEvents()
+	self:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, self._updateUI, self)
+	self:addEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, self._onDailyRefresh, self)
+	self:addEventCb(PeaceUluController.instance, PeaceUluEvent.OnUpdateInfo, self._updateUI, self)
+	self:addEventCb(PeaceUluController.instance, PeaceUluEvent.onSwitchTab, self._toSwitchTab, self)
+	self:addEventCb(self.viewContainer, PeaceUluEvent.onFinishTask, self.playFinishAnim, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseViewFinish, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_3_0._updateUI, arg_3_0)
-	arg_3_0:addEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, arg_3_0._onDailyRefresh, arg_3_0)
-	arg_3_0:removeEventCb(PeaceUluController.instance, PeaceUluEvent.OnUpdateInfo, arg_3_0._updateUI, arg_3_0)
-	arg_3_0:removeEventCb(PeaceUluController.instance, PeaceUluEvent.onSwitchTab, arg_3_0._toSwitchTab, arg_3_0)
-	arg_3_0:removeEventCb(arg_3_0.viewContainer, PeaceUluEvent.onFinishTask, arg_3_0.playFinishAnim, arg_3_0)
-	arg_3_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0._onCloseViewFinish, arg_3_0)
+function PeaceUluMainView:removeEvents()
+	self:removeEventCb(TaskController.instance, TaskEvent.OnFinishTask, self._updateUI, self)
+	self:addEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, self._onDailyRefresh, self)
+	self:removeEventCb(PeaceUluController.instance, PeaceUluEvent.OnUpdateInfo, self._updateUI, self)
+	self:removeEventCb(PeaceUluController.instance, PeaceUluEvent.onSwitchTab, self._toSwitchTab, self)
+	self:removeEventCb(self.viewContainer, PeaceUluEvent.onFinishTask, self.playFinishAnim, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseViewFinish, self)
 end
 
-function var_0_0.onOpen(arg_4_0)
-	arg_4_0._animator:Play(UIAnimationName.Open, 0, 0)
-	arg_4_0._animator:Update(0)
-	arg_4_0:_initBonus()
-	arg_4_0:_initTaskMoList(true)
+function PeaceUluMainView:onOpen()
+	self._animator:Play(UIAnimationName.Open, 0, 0)
+	self._animator:Update(0)
+	self:_initBonus()
+	self:_initTaskMoList(true)
 
-	local var_4_0 = PeaceUluModel.instance:getLastGameRecord()
+	local lastGameRecord = PeaceUluModel.instance:getLastGameRecord()
 
-	if not string.nilorempty(var_4_0) then
-		GameFacade.showToast(ToastEnum.PeaceUluMainViewTips, var_4_0)
+	if not string.nilorempty(lastGameRecord) then
+		GameFacade.showToast(ToastEnum.PeaceUluMainViewTips, lastGameRecord)
 		PeaceUluRpc.instance:sendAct145ClearGameRecordRequest(VersionActivity1_5Enum.ActivityId.PeaceUlu)
 	end
 
-	arg_4_0:_refreshRemainTime()
-	arg_4_0:_checkCanGetReward()
-	arg_4_0:_refreshSchedule()
+	self:_refreshRemainTime()
+	self:_checkCanGetReward()
+	self:_refreshSchedule()
 end
 
-function var_0_0._refreshRemainTime(arg_5_0)
-	local var_5_0 = ActivityModel.instance:getActivityInfo()[VersionActivity1_5Enum.ActivityId.PeaceUlu]:getRemainTimeStr3()
+function PeaceUluMainView:_refreshRemainTime()
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[VersionActivity1_5Enum.ActivityId.PeaceUlu]
+	local timeStr = actInfoMo:getRemainTimeStr3()
 
-	arg_5_0._txtremaintime.text = formatLuaLang("remain", var_5_0)
+	self._txtremaintime.text = formatLuaLang("remain", timeStr)
 end
 
-function var_0_0._onCloseViewFinish(arg_6_0, arg_6_1)
-	if arg_6_1 == ViewName.CharacterBackpackView then
+function PeaceUluMainView:_onCloseViewFinish(viewName)
+	if viewName == ViewName.CharacterBackpackView then
 		PeaceUluRpc.instance:sendGet145InfosRequest(VersionActivity1_5Enum.ActivityId.PeaceUlu)
 	end
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	local var_7_0 = ListScrollParam.New()
+function PeaceUluMainView:_editableInitView()
+	local scrollParam = ListScrollParam.New()
 
-	var_7_0.scrollGOPath = "right/#scroll_task"
-	var_7_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_7_0.prefabUrl = arg_7_0.viewContainer:getSetting().otherRes[1]
-	var_7_0.cellClass = PeaceUluTaskItem
-	var_7_0.scrollDir = ScrollEnum.ScrollDirV
-	var_7_0.lineCount = 1
-	var_7_0.cellWidth = 1160
-	var_7_0.cellHeight = 160
-	var_7_0.cellSpaceV = 0
-	var_7_0.startSpace = 0
-	arg_7_0._csListView = SLFramework.UGUI.ListScrollView.Get(gohelper.findChild(arg_7_0.viewGO, "right/#scroll_task"))
-	arg_7_0._scrolltaskview = LuaListScrollView.New(PeaceUluTaskModel.instance, var_7_0)
+	scrollParam.scrollGOPath = "right/#scroll_task"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self.viewContainer:getSetting().otherRes[1]
+	scrollParam.cellClass = PeaceUluTaskItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 1160
+	scrollParam.cellHeight = 160
+	scrollParam.cellSpaceV = 0
+	scrollParam.startSpace = 0
+	self._csListView = SLFramework.UGUI.ListScrollView.Get(gohelper.findChild(self.viewGO, "right/#scroll_task"))
+	self._scrolltaskview = LuaListScrollView.New(PeaceUluTaskModel.instance, scrollParam)
 
-	arg_7_0:addChildView(arg_7_0._scrolltaskview)
+	self:addChildView(self._scrolltaskview)
 
-	arg_7_0._taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(arg_7_0._scrolltaskview)
+	self._taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(self._scrolltaskview)
 
-	arg_7_0._taskAnimRemoveItem:setMoveInterval(0)
-	arg_7_0._taskAnimRemoveItem:setMoveAnimationTime(PeaceUluEnum.TaskMaskTime - PeaceUluEnum.TaskGetAnimTime)
+	self._taskAnimRemoveItem:setMoveInterval(0)
+	self._taskAnimRemoveItem:setMoveAnimationTime(PeaceUluEnum.TaskMaskTime - PeaceUluEnum.TaskGetAnimTime)
 end
 
-function var_0_0.playFinishAnim(arg_8_0, arg_8_1)
-	if arg_8_1 then
-		arg_8_0._tweenIndexes = {
-			arg_8_1
+function PeaceUluMainView:playFinishAnim(index)
+	if index then
+		self._tweenIndexes = {
+			index
 		}
 	end
 
-	TaskDispatcher.runDelay(arg_8_0.delayPlayFinishAnim, arg_8_0, PeaceUluEnum.TaskGetAnimTime)
+	TaskDispatcher.runDelay(self.delayPlayFinishAnim, self, PeaceUluEnum.TaskGetAnimTime)
 end
 
-function var_0_0.delayPlayFinishAnim(arg_9_0)
-	arg_9_0._taskAnimRemoveItem:removeByIndexs(arg_9_0._tweenIndexes)
+function PeaceUluMainView:delayPlayFinishAnim()
+	self._taskAnimRemoveItem:removeByIndexs(self._tweenIndexes)
 end
 
-function var_0_0._initBonus(arg_10_0)
-	local var_10_0 = arg_10_0.viewContainer:getSetting().otherRes[2]
-	local var_10_1 = gohelper.findChild(arg_10_0._scrollview.gameObject, "Viewport/Content")
-	local var_10_2 = PeaceUluConfig.instance:getBonusCoList()
+function PeaceUluMainView:_initBonus()
+	local path = self.viewContainer:getSetting().otherRes[2]
+	local content = gohelper.findChild(self._scrollview.gameObject, "Viewport/Content")
+	local bonusCo = PeaceUluConfig.instance:getBonusCoList()
 
-	for iter_10_0, iter_10_1 in ipairs(var_10_2) do
-		local var_10_3 = arg_10_0.bonusItemList[iter_10_0]
+	for i, v in ipairs(bonusCo) do
+		local item = self.bonusItemList[i]
 
-		if not var_10_3 then
-			local var_10_4 = arg_10_0:getResInst(var_10_0, var_10_1, "bonus" .. iter_10_0)
+		if not item then
+			local child = self:getResInst(path, content, "bonus" .. i)
 
-			var_10_3 = PeaceUluProgressItem.New()
+			item = PeaceUluProgressItem.New()
 
-			var_10_3:init(var_10_4.gameObject)
-			var_10_3:initMo(iter_10_0, iter_10_1)
-			table.insert(arg_10_0.bonusItemList, var_10_3)
+			item:init(child.gameObject)
+			item:initMo(i, v)
+			table.insert(self.bonusItemList, item)
 		end
 
-		var_10_3:refreshProgress()
+		item:refreshProgress()
 	end
 end
 
-function var_0_0._updateUI(arg_11_0)
-	arg_11_0:_refreshSchedule()
-	arg_11_0:_checkCanGetReward()
-	arg_11_0:refreshBonusItem()
-	arg_11_0:_initTaskMoList()
-	arg_11_0:_refreshRemainTime()
+function PeaceUluMainView:_updateUI()
+	self:_refreshSchedule()
+	self:_checkCanGetReward()
+	self:refreshBonusItem()
+	self:_initTaskMoList()
+	self:_refreshRemainTime()
 end
 
-function var_0_0._refreshSchedule(arg_12_0)
-	arg_12_0._imgfill.fillAmount = PeaceUluModel.instance:getSchedule()
+function PeaceUluMainView:_refreshSchedule()
+	self._imgfill.fillAmount = PeaceUluModel.instance:getSchedule()
 
-	local var_12_0 = PeaceUluConfig.instance:getMaxProgress()
-	local var_12_1 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.Act145).quantity
+	local maxNum = PeaceUluConfig.instance:getMaxProgress()
+	local havenum = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.Act145).quantity
 
-	arg_12_0._txtschedule.text = var_12_1 .. "/" .. var_12_0
+	self._txtschedule.text = havenum .. "/" .. maxNum
 
-	local var_12_2 = arg_12_0:_getnextIndex() - 1
-	local var_12_3 = 40
-	local var_12_4 = (268 - var_12_3) * var_12_2 - (var_12_2 > 0 and 174 or 0)
+	local num = self:_getnextIndex() - 1
+	local space = 40
+	local progresswidth = 268
+	local width = (progresswidth - space) * num - (num > 0 and 174 or 0)
 
-	if arg_12_0._dotweenId then
-		ZProj.TweenHelper.KillById(arg_12_0._dotweenId)
+	if self._dotweenId then
+		ZProj.TweenHelper.KillById(self._dotweenId)
 
-		arg_12_0._dotweenId = nil
+		self._dotweenId = nil
 	end
 
-	arg_12_0._dotweenId = ZProj.TweenHelper.DOAnchorPosX(arg_12_0._goContent.transform, -var_12_4, 0.2)
+	self._dotweenId = ZProj.TweenHelper.DOAnchorPosX(self._goContent.transform, -width, 0.2)
 end
 
-function var_0_0._getnextIndex(arg_13_0)
-	local var_13_0 = PeaceUluConfig.instance:getBonusCoList()
-	local var_13_1 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.Act145).quantity
+function PeaceUluMainView:_getnextIndex()
+	local bonusCoList = PeaceUluConfig.instance:getBonusCoList()
+	local havenum = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.Act145).quantity
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
-		local var_13_2 = string.split(iter_13_1.needProgress, "#")[3]
+	for index, co in ipairs(bonusCoList) do
+		local needProgressCo = string.split(co.needProgress, "#")
+		local targetNum = needProgressCo[3]
 
-		if var_13_1 <= tonumber(var_13_2) then
-			return iter_13_0
+		if havenum <= tonumber(targetNum) then
+			return index
 		end
 	end
 
-	return #var_13_0
+	return #bonusCoList
 end
 
-function var_0_0._checkCanGetReward(arg_14_0)
-	local var_14_0 = PeaceUluConfig.instance:getBonusCoList()
-	local var_14_1 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.Act145).quantity
+function PeaceUluMainView:_checkCanGetReward()
+	local bonusCoList = PeaceUluConfig.instance:getBonusCoList()
+	local havenum = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.Act145).quantity
 
-	for iter_14_0, iter_14_1 in ipairs(var_14_0) do
-		local var_14_2 = string.split(iter_14_1.needProgress, "#")[3]
+	for index, co in ipairs(bonusCoList) do
+		local needProgressCo = string.split(co.needProgress, "#")
+		local targetNum = needProgressCo[3]
 
-		if var_14_1 >= tonumber(var_14_2) and not PeaceUluModel.instance:checkGetReward(iter_14_1.id) then
+		if havenum >= tonumber(targetNum) and not PeaceUluModel.instance:checkGetReward(co.id) then
 			PeaceUluRpc.instance:sendAct145GetRewardsRequest(VersionActivity1_5Enum.ActivityId.PeaceUlu)
 
 			break
@@ -186,32 +192,32 @@ function var_0_0._checkCanGetReward(arg_14_0)
 	end
 end
 
-function var_0_0._initTaskMoList(arg_15_0, arg_15_1)
-	PeaceUluTaskModel.instance:sortTaskMoList(arg_15_1)
+function PeaceUluMainView:_initTaskMoList(open)
+	PeaceUluTaskModel.instance:sortTaskMoList(open)
 end
 
-function var_0_0.refreshBonusItem(arg_16_0)
-	for iter_16_0, iter_16_1 in ipairs(arg_16_0.bonusItemList) do
-		iter_16_1:refreshProgress()
+function PeaceUluMainView:refreshBonusItem()
+	for _, item in ipairs(self.bonusItemList) do
+		item:refreshProgress()
 	end
 end
 
-function var_0_0._onDailyRefresh(arg_17_0)
+function PeaceUluMainView:_onDailyRefresh()
 	PeaceUluRpc.instance:sendGet145InfosRequest(VersionActivity1_5Enum.ActivityId.PeaceUlu)
 end
 
-function var_0_0._toSwitchTab(arg_18_0, arg_18_1)
-	arg_18_0.viewContainer:dispatchEvent(ViewEvent.ToSwitchTab, 2, arg_18_1)
+function PeaceUluMainView:_toSwitchTab(tabIndex)
+	self.viewContainer:dispatchEvent(ViewEvent.ToSwitchTab, 2, tabIndex)
 end
 
-function var_0_0.onClose(arg_19_0)
-	TaskDispatcher.cancelTask(arg_19_0.delayPlayFinishAnim, arg_19_0)
+function PeaceUluMainView:onClose()
+	TaskDispatcher.cancelTask(self.delayPlayFinishAnim, self)
 end
 
-function var_0_0.onDestroyView(arg_20_0)
-	for iter_20_0, iter_20_1 in ipairs(arg_20_0.bonusItemList) do
-		iter_20_1:onDestroyView()
+function PeaceUluMainView:onDestroyView()
+	for _, v in ipairs(self.bonusItemList) do
+		v:onDestroyView()
 	end
 end
 
-return var_0_0
+return PeaceUluMainView

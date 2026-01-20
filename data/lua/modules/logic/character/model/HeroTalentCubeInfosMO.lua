@@ -1,88 +1,90 @@
-﻿module("modules.logic.character.model.HeroTalentCubeInfosMO", package.seeall)
+﻿-- chunkname: @modules/logic/character/model/HeroTalentCubeInfosMO.lua
 
-local var_0_0 = pureTable("HeroTalentCubeInfosMO")
+module("modules.logic.character.model.HeroTalentCubeInfosMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.data_list = {}
+local HeroTalentCubeInfosMO = pureTable("HeroTalentCubeInfosMO")
 
-	for iter_1_0 = 1, #arg_1_1 do
-		arg_1_0.data_list[iter_1_0] = {}
-		arg_1_0.data_list[iter_1_0].cubeId = arg_1_1[iter_1_0].cubeId
-		arg_1_0.data_list[iter_1_0].direction = arg_1_1[iter_1_0].direction
-		arg_1_0.data_list[iter_1_0].posX = arg_1_1[iter_1_0].posX
-		arg_1_0.data_list[iter_1_0].posY = arg_1_1[iter_1_0].posY
+function HeroTalentCubeInfosMO:init(info)
+	self.data_list = {}
+
+	for i = 1, #info do
+		self.data_list[i] = {}
+		self.data_list[i].cubeId = info[i].cubeId
+		self.data_list[i].direction = info[i].direction
+		self.data_list[i].posX = info[i].posX
+		self.data_list[i].posY = info[i].posY
 	end
 end
 
-function var_0_0.clearData(arg_2_0)
-	arg_2_0.data_list = {}
+function HeroTalentCubeInfosMO:clearData()
+	self.data_list = {}
 end
 
-function var_0_0.setOwnData(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0.own_cube_dic = {}
-	arg_3_0.own_cube_list = {}
+function HeroTalentCubeInfosMO:setOwnData(hero_id, talent_level)
+	self.own_cube_dic = {}
+	self.own_cube_list = {}
 
-	local var_3_0 = HeroResonanceConfig.instance:getTalentConfig(arg_3_1, arg_3_2)
+	local talent_config = HeroResonanceConfig.instance:getTalentConfig(hero_id, talent_level)
 
-	if var_3_0 then
-		arg_3_0.own_cube_list = {}
+	if talent_config then
+		self.own_cube_list = {}
 
-		if var_3_0 then
-			arg_3_0.own_cube_dic = {}
+		if talent_config then
+			self.own_cube_dic = {}
 
-			local var_3_1 = string.splitToNumber(var_3_0.exclusive, "#")
+			local tab = string.splitToNumber(talent_config.exclusive, "#")
 
-			if var_3_1 and #var_3_1 > 0 then
-				arg_3_0.own_cube_dic[var_3_1[1]] = {
+			if tab and #tab > 0 then
+				self.own_cube_dic[tab[1]] = {
 					own = 1,
 					use = 0,
-					id = var_3_1[1],
-					level = var_3_1[2]
+					id = tab[1],
+					level = tab[2]
 				}
-				arg_3_0.own_main_cube_id = var_3_1[1]
+				self.own_main_cube_id = tab[1]
 			end
 		end
 
-		local var_3_2 = HeroResonanceConfig.instance:getTalentModelConfig(arg_3_1, arg_3_2)
+		local talent_model_config = HeroResonanceConfig.instance:getTalentModelConfig(hero_id, talent_level)
 
-		for iter_3_0 = 10, 20 do
-			local var_3_3 = string.splitToNumber(var_3_2["type" .. iter_3_0], "#")
+		for i = 10, 20 do
+			local tab = string.splitToNumber(talent_model_config["type" .. i], "#")
 
-			if var_3_3 and #var_3_3 > 0 then
-				if not arg_3_0.own_cube_dic[iter_3_0] then
-					arg_3_0.own_cube_dic[iter_3_0] = {}
+			if tab and #tab > 0 then
+				if not self.own_cube_dic[i] then
+					self.own_cube_dic[i] = {}
 				end
 
-				arg_3_0.own_cube_dic[iter_3_0].id = iter_3_0
-				arg_3_0.own_cube_dic[iter_3_0].own = var_3_3[1]
-				arg_3_0.own_cube_dic[iter_3_0].level = var_3_3[2]
-				arg_3_0.own_cube_dic[iter_3_0].use = 0
+				self.own_cube_dic[i].id = i
+				self.own_cube_dic[i].own = tab[1]
+				self.own_cube_dic[i].level = tab[2]
+				self.own_cube_dic[i].use = 0
 			end
 		end
 
-		for iter_3_1 = #arg_3_0.data_list, 1, -1 do
-			local var_3_4 = arg_3_0.data_list[iter_3_1]
+		for i = #self.data_list, 1, -1 do
+			local v = self.data_list[i]
 
-			if arg_3_0.own_cube_dic[var_3_4.cubeId] then
-				arg_3_0.own_cube_dic[var_3_4.cubeId].own = arg_3_0.own_cube_dic[var_3_4.cubeId].own - 1
-				arg_3_0.own_cube_dic[var_3_4.cubeId].use = arg_3_0.own_cube_dic[var_3_4.cubeId].use + 1
+			if self.own_cube_dic[v.cubeId] then
+				self.own_cube_dic[v.cubeId].own = self.own_cube_dic[v.cubeId].own - 1
+				self.own_cube_dic[v.cubeId].use = self.own_cube_dic[v.cubeId].use + 1
 			else
-				table.remove(arg_3_0.data_list, iter_3_1)
+				table.remove(self.data_list, i)
 			end
 		end
 
-		for iter_3_2, iter_3_3 in pairs(arg_3_0.own_cube_dic) do
-			if iter_3_3.own > 0 then
-				table.insert(arg_3_0.own_cube_list, iter_3_3)
+		for k, v in pairs(self.own_cube_dic) do
+			if v.own > 0 then
+				table.insert(self.own_cube_list, v)
 			end
 		end
 	end
 
-	return arg_3_0.own_cube_dic, arg_3_0.own_cube_list
+	return self.own_cube_dic, self.own_cube_list
 end
 
-function var_0_0.getMainCubeMo(arg_4_0)
-	return arg_4_0.own_cube_dic[arg_4_0.own_main_cube_id]
+function HeroTalentCubeInfosMO:getMainCubeMo()
+	return self.own_cube_dic[self.own_main_cube_id]
 end
 
-return var_0_0
+return HeroTalentCubeInfosMO

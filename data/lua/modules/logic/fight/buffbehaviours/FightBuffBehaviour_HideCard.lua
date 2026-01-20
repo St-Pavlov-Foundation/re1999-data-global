@@ -1,27 +1,29 @@
-﻿module("modules.logic.fight.buffbehaviours.FightBuffBehaviour_HideCard", package.seeall)
+﻿-- chunkname: @modules/logic/fight/buffbehaviours/FightBuffBehaviour_HideCard.lua
 
-local var_0_0 = class("FightBuffBehaviour_HideCard", FightBuffBehaviourBase)
+module("modules.logic.fight.buffbehaviours.FightBuffBehaviour_HideCard", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	var_0_0.super.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+local FightBuffBehaviour_HideCard = class("FightBuffBehaviour_HideCard", FightBuffBehaviourBase)
 
-	local var_1_0 = FightStrUtil.instance:getSplitCache(arg_1_0.co.param, "#")
+function FightBuffBehaviour_HideCard:init(viewGo, viewContainer, co)
+	FightBuffBehaviour_HideCard.super.init(self, viewGo, viewContainer, co)
 
-	arg_1_0.smallSkillIcon = var_1_0[1]
-	arg_1_0.bigSkillIcon = var_1_0[2]
+	local paramList = FightStrUtil.instance:getSplitCache(self.co.param, "#")
+
+	self.smallSkillIcon = paramList[1]
+	self.bigSkillIcon = paramList[2]
 end
 
-function var_0_0.onAddBuff(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	FightModel.instance:setSkillIcon(arg_2_0.smallSkillIcon, arg_2_0.bigSkillIcon)
+function FightBuffBehaviour_HideCard:onAddBuff(entityId, buffId, buffMo)
+	FightModel.instance:setSkillIcon(self.smallSkillIcon, self.bigSkillIcon)
 	FightModel.instance:setIsHideCard(true)
 	FightController.instance:dispatchEvent(FightEvent.OnAddHideCardBuff)
 	AudioMgr.instance:trigger(310005)
 end
 
-function var_0_0.onRemoveBuff(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+function FightBuffBehaviour_HideCard:onRemoveBuff(entityId, buffId, buffMo)
 	FightModel.instance:setSkillIcon(nil, nil)
 	FightModel.instance:setIsHideCard(false)
 	FightController.instance:dispatchEvent(FightEvent.OnRemoveHideCardBuff)
 end
 
-return var_0_0
+return FightBuffBehaviour_HideCard

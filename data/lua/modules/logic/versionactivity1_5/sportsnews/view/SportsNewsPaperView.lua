@@ -1,55 +1,57 @@
-﻿module("modules.logic.versionactivity1_5.sportsnews.view.SportsNewsPaperView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/sportsnews/view/SportsNewsPaperView.lua
 
-local var_0_0 = class("SportsNewsPaperView", BaseView)
+module("modules.logic.versionactivity1_5.sportsnews.view.SportsNewsPaperView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtcontent = gohelper.findChildText(arg_1_0.viewGO, "#txt_content")
-	arg_1_0._btnstartbtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_startbtn")
+local SportsNewsPaperView = class("SportsNewsPaperView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SportsNewsPaperView:onInitView()
+	self._txtcontent = gohelper.findChildText(self.viewGO, "#txt_content")
+	self._btnstartbtn = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_startbtn")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnstartbtn:AddClickListener(arg_2_0._btnstartbtnOnClick, arg_2_0)
+function SportsNewsPaperView:addEvents()
+	self._btnstartbtn:AddClickListener(self._btnstartbtnOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnstartbtn:RemoveClickListener()
+function SportsNewsPaperView:removeEvents()
+	self._btnstartbtn:RemoveClickListener()
 end
 
-function var_0_0._btnstartbtnOnClick(arg_4_0)
-	local var_4_0 = arg_4_0.viewParam.actId
-	local var_4_1 = SportsNewsModel.instance:getFirstHelpKey(var_4_0)
+function SportsNewsPaperView:_btnstartbtnOnClick()
+	local actId = self.viewParam.actId
+	local key = SportsNewsModel.instance:getFirstHelpKey(actId)
 
-	PlayerPrefsHelper.setString(var_4_1, "watched")
-	arg_4_0:closeThis()
+	PlayerPrefsHelper.setString(key, "watched")
+	self:closeThis()
 	HelpController.instance:showHelp(HelpEnum.HelpId.SportsNews)
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function SportsNewsPaperView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function SportsNewsPaperView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
+function SportsNewsPaperView:onOpen()
 	return
 end
 
-function var_0_0.onClose(arg_8_0)
+function SportsNewsPaperView:onClose()
 	return
 end
 
-function var_0_0.onClickModalMask(arg_9_0)
-	arg_9_0:closeThis()
+function SportsNewsPaperView:onClickModalMask()
+	self:closeThis()
 end
 
-function var_0_0.onDestroyView(arg_10_0)
+function SportsNewsPaperView:onDestroyView()
 	return
 end
 
-return var_0_0
+return SportsNewsPaperView

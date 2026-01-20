@@ -1,22 +1,24 @@
-﻿module("modules.logic.versionactivity2_4.dungeon.define.VersionActivity2_4DungeonEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/dungeon/define/VersionActivity2_4DungeonEvent.lua
 
-local var_0_0 = _M
-local var_0_1 = GameUtil.getUniqueTb()
+module("modules.logic.versionactivity2_4.dungeon.define.VersionActivity2_4DungeonEvent", package.seeall)
 
-var_0_0.OnMapPosChanged = var_0_1()
-var_0_0.OnClickElement = var_0_1()
-var_0_0.FocusElement = var_0_1()
-var_0_0.OnHideInteractUI = var_0_1()
-var_0_0.OnAddOneElement = var_0_1()
-var_0_0.OnRemoveElement = var_0_1()
-var_0_0.OnRecycleAllElement = var_0_1()
-var_0_0.ManualClickElement = var_0_1()
-var_0_0.GuideShowElement = var_0_1()
-var_0_0.SudokuSelectItem = var_0_1()
-var_0_0.SudokuSelectKeyboard = var_0_1()
-var_0_0.DoSudokuCmd = var_0_1()
-var_0_0.SudokuReset = var_0_1()
-var_0_0.SudokuViewAni = var_0_1()
-var_0_0.SudokuCompleted = var_0_1()
+local VersionActivity2_4DungeonEvent = _M
+local _get = GameUtil.getUniqueTb()
 
-return var_0_0
+VersionActivity2_4DungeonEvent.OnMapPosChanged = _get()
+VersionActivity2_4DungeonEvent.OnClickElement = _get()
+VersionActivity2_4DungeonEvent.FocusElement = _get()
+VersionActivity2_4DungeonEvent.OnHideInteractUI = _get()
+VersionActivity2_4DungeonEvent.OnAddOneElement = _get()
+VersionActivity2_4DungeonEvent.OnRemoveElement = _get()
+VersionActivity2_4DungeonEvent.OnRecycleAllElement = _get()
+VersionActivity2_4DungeonEvent.ManualClickElement = _get()
+VersionActivity2_4DungeonEvent.GuideShowElement = _get()
+VersionActivity2_4DungeonEvent.SudokuSelectItem = _get()
+VersionActivity2_4DungeonEvent.SudokuSelectKeyboard = _get()
+VersionActivity2_4DungeonEvent.DoSudokuCmd = _get()
+VersionActivity2_4DungeonEvent.SudokuReset = _get()
+VersionActivity2_4DungeonEvent.SudokuViewAni = _get()
+VersionActivity2_4DungeonEvent.SudokuCompleted = _get()
+
+return VersionActivity2_4DungeonEvent

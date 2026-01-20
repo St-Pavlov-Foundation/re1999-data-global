@@ -1,87 +1,91 @@
-﻿module("modules.logic.fight.view.FightEditorStateLastRoundLogView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightEditorStateLastRoundLogView.lua
 
-local var_0_0 = class("FightEditorStateLastRoundLogView", BaseViewExtended)
+module("modules.logic.fight.view.FightEditorStateLastRoundLogView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnListRoot = gohelper.findChild(arg_1_0.viewGO, "btnScrill/Viewport/Content")
-	arg_1_0._btnModel = gohelper.findChild(arg_1_0._btnListRoot, "btnModel")
-	arg_1_0._logText = gohelper.findChildText(arg_1_0.viewGO, "ScrollView/Viewport/Content/logText")
+local FightEditorStateLastRoundLogView = class("FightEditorStateLastRoundLogView", BaseViewExtended)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function FightEditorStateLastRoundLogView:onInitView()
+	self._btnListRoot = gohelper.findChild(self.viewGO, "btnScrill/Viewport/Content")
+	self._btnModel = gohelper.findChild(self._btnListRoot, "btnModel")
+	self._logText = gohelper.findChildText(self.viewGO, "ScrollView/Viewport/Content/logText")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function FightEditorStateLastRoundLogView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function FightEditorStateLastRoundLogView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function FightEditorStateLastRoundLogView:_editableInitView()
 	return
 end
 
-function var_0_0.onRefreshViewParam(arg_5_0)
+function FightEditorStateLastRoundLogView:onRefreshViewParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	local var_6_0 = {
+function FightEditorStateLastRoundLogView:onOpen()
+	local btnData = {
 		{
 			name = "复制"
 		}
 	}
 
-	arg_6_0:com_createObjList(arg_6_0._onBtnItemShow, var_6_0, arg_6_0._btnListRoot, arg_6_0._btnModel)
+	self:com_createObjList(self._onBtnItemShow, btnData, self._btnListRoot, self._btnModel)
 
-	local var_6_1 = FightDataHelper.protoCacheMgr:getLastRoundProto()
+	local lastRound = FightDataHelper.protoCacheMgr:getLastRoundProto()
 
-	if not var_6_1 then
-		arg_6_0._logText.text = "没有数据"
+	if not lastRound then
+		self._logText.text = "没有数据"
 
 		return
 	end
 
-	arg_6_0._strList = {}
+	self._strList = {}
 
-	local var_6_2 = FightDataHelper.protoCacheMgr:getLastRoundNum()
+	local roundNum = FightDataHelper.protoCacheMgr:getLastRoundNum()
 
-	if var_6_2 then
-		arg_6_0:addLog("回合" .. var_6_2)
+	if roundNum then
+		self:addLog("回合" .. roundNum)
 	end
 
-	arg_6_0:addLog(tostring(var_6_1))
+	self:addLog(tostring(lastRound))
 
-	local var_6_3 = table.concat(arg_6_0._strList, "\n")
+	local str = table.concat(self._strList, "\n")
 
-	arg_6_0._logText.text = FightEditorStateLogView.processStr(var_6_3)
+	self._logText.text = FightEditorStateLogView.processStr(str)
 end
 
-function var_0_0._onBtnItemShow(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	gohelper.findChildText(arg_7_1, "text").text = arg_7_2.name
+function FightEditorStateLastRoundLogView:_onBtnItemShow(obj, data, index)
+	local text = gohelper.findChildText(obj, "text")
 
-	local var_7_0 = gohelper.findChildClick(arg_7_1, "btn")
+	text.text = data.name
 
-	arg_7_0:addClickCb(var_7_0, arg_7_0["_onBtnClick" .. arg_7_3], arg_7_0)
+	local btn = gohelper.findChildClick(obj, "btn")
+
+	self:addClickCb(btn, self["_onBtnClick" .. index], self)
 end
 
-function var_0_0._onBtnClick1(arg_8_0)
-	ZProj.UGUIHelper.CopyText(arg_8_0._logText.text)
+function FightEditorStateLastRoundLogView:_onBtnClick1()
+	ZProj.UGUIHelper.CopyText(self._logText.text)
 end
 
-function var_0_0.addLog(arg_9_0, arg_9_1)
-	table.insert(arg_9_0._strList, arg_9_1)
+function FightEditorStateLastRoundLogView:addLog(str)
+	table.insert(self._strList, str)
 end
 
-function var_0_0.onClose(arg_10_0)
+function FightEditorStateLastRoundLogView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function FightEditorStateLastRoundLogView:onDestroyView()
 	return
 end
 
-return var_0_0
+return FightEditorStateLastRoundLogView

@@ -1,33 +1,35 @@
-﻿module("modules.logic.gm.view.GMToolViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GMToolViewContainer.lua
 
-local var_0_0 = class("GMToolViewContainer", BaseViewContainer)
+module("modules.logic.gm.view.GMToolViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = ListScrollParam.New()
+local GMToolViewContainer = class("GMToolViewContainer", BaseViewContainer)
 
-	var_1_0.scrollGOPath = "addItem/scroll"
-	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_0.prefabUrl = "addItem/scroll/item"
-	var_1_0.cellClass = GMAddItem
-	var_1_0.scrollDir = ScrollEnum.ScrollDirV
-	var_1_0.lineCount = 1
-	var_1_0.cellWidth = 794
-	var_1_0.cellHeight = 100
-	var_1_0.cellSpaceH = 0
-	var_1_0.cellSpaceV = 0
+function GMToolViewContainer:buildViews()
+	local gmAddItemListParam = ListScrollParam.New()
 
-	local var_1_1 = ListScrollParam.New()
+	gmAddItemListParam.scrollGOPath = "addItem/scroll"
+	gmAddItemListParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	gmAddItemListParam.prefabUrl = "addItem/scroll/item"
+	gmAddItemListParam.cellClass = GMAddItem
+	gmAddItemListParam.scrollDir = ScrollEnum.ScrollDirV
+	gmAddItemListParam.lineCount = 1
+	gmAddItemListParam.cellWidth = 794
+	gmAddItemListParam.cellHeight = 100
+	gmAddItemListParam.cellSpaceH = 0
+	gmAddItemListParam.cellSpaceV = 0
 
-	var_1_1.scrollGOPath = "gmcommand/img/scroll"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_1.prefabUrl = "gmcommand/img/scroll/item"
-	var_1_1.cellClass = GMCommandItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 1
-	var_1_1.cellWidth = 950
-	var_1_1.cellHeight = 100
-	var_1_1.cellSpaceH = 0
-	var_1_1.cellSpaceV = 5
+	local gmPresetListParam = ListScrollParam.New()
+
+	gmPresetListParam.scrollGOPath = "gmcommand/img/scroll"
+	gmPresetListParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	gmPresetListParam.prefabUrl = "gmcommand/img/scroll/item"
+	gmPresetListParam.cellClass = GMCommandItem
+	gmPresetListParam.scrollDir = ScrollEnum.ScrollDirV
+	gmPresetListParam.lineCount = 1
+	gmPresetListParam.cellWidth = 950
+	gmPresetListParam.cellHeight = 100
+	gmPresetListParam.cellSpaceH = 0
+	gmPresetListParam.cellSpaceV = 5
 
 	return {
 		GMToolView.New(),
@@ -38,12 +40,13 @@ function var_0_0.buildViews(arg_1_0)
 		GMToolFightView.New(),
 		GMAudioTool.New(),
 		GMRougeTool.New(),
-		LuaListScrollView.New(GMAddItemModel.instance, var_1_0),
-		LuaListScrollView.New(GMCommandModel.instance, var_1_1),
+		LuaListScrollView.New(GMAddItemModel.instance, gmAddItemListParam),
+		LuaListScrollView.New(GMCommandModel.instance, gmPresetListParam),
 		GMSubViewOldView.New(),
 		GMSubViewCommon.New(),
 		GMSubViewNewFightView.New(),
 		GMSubViewBattle.New(),
+		GMSubViewFightPlayback.New(),
 		GMSubViewAudio.New(),
 		GMSubViewGuide.New(),
 		GMSubViewActivity.New(),
@@ -51,6 +54,7 @@ function var_0_0.buildViews(arg_1_0)
 		GMSubViewRole.New(),
 		GMSubViewCode.New(),
 		GMSubViewRouge.New(),
+		GMSubViewRouge2.New(),
 		GMSubViewResource.New(),
 		GMSubViewProfiler.New(),
 		GMSubViewRoom.New(),
@@ -60,33 +64,33 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	ViewMgr.instance:closeView(arg_2_0.viewName)
+function GMToolViewContainer:onContainerClickModalMask()
+	ViewMgr.instance:closeView(self.viewName)
 end
 
-function var_0_0.addSubViewToggle(arg_3_0, arg_3_1)
-	arg_3_0.toggleList = arg_3_0.toggleList or arg_3_0:getUserDataTb_()
+function GMToolViewContainer:addSubViewToggle(toggle)
+	self.toggleList = self.toggleList or self:getUserDataTb_()
 
-	table.insert(arg_3_0.toggleList, arg_3_1)
+	table.insert(self.toggleList, toggle)
 end
 
-function var_0_0.selectToggle(arg_4_0, arg_4_1)
-	if arg_4_0.toggleList then
-		for iter_4_0, iter_4_1 in ipairs(arg_4_0.toggleList) do
-			if iter_4_1 == arg_4_1 then
-				PlayerPrefsHelper.setNumber("GMLastSelectIndexKey", iter_4_0)
+function GMToolViewContainer:selectToggle(toggle)
+	if self.toggleList then
+		for index, tog in ipairs(self.toggleList) do
+			if tog == toggle then
+				PlayerPrefsHelper.setNumber("GMLastSelectIndexKey", index)
 			end
 		end
 	end
 end
 
-function var_0_0.onContainerOpenFinish(arg_5_0)
-	local var_5_0 = PlayerPrefsHelper.getNumber("GMLastSelectIndexKey", 1)
-	local var_5_1 = arg_5_0.toggleList and arg_5_0.toggleList[var_5_0]
+function GMToolViewContainer:onContainerOpenFinish()
+	local lastSelectIndex = PlayerPrefsHelper.getNumber("GMLastSelectIndexKey", 1)
+	local toggle = self.toggleList and self.toggleList[lastSelectIndex]
 
-	if var_5_1 then
-		var_5_1.isOn = true
+	if toggle then
+		toggle.isOn = true
 	end
 end
 
-return var_0_0
+return GMToolViewContainer

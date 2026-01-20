@@ -1,19 +1,21 @@
-﻿module("modules.logic.mainsceneswitch.controller.MainSceneSwitchEvent", package.seeall)
+﻿-- chunkname: @modules/logic/mainsceneswitch/controller/MainSceneSwitchEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.mainsceneswitch.controller.MainSceneSwitchEvent", package.seeall)
 
-var_0_0.BeforeStartSwitchScene = GameUtil.getEventId()
-var_0_0.StartSwitchScene = GameUtil.getEventId()
-var_0_0.SwitchSceneFinish = GameUtil.getEventId()
-var_0_0.SwitchSceneInitFinish = GameUtil.getEventId()
-var_0_0.CloseSwitchSceneLoading = GameUtil.getEventId()
-var_0_0.SwitchSceneFinishStory = GameUtil.getEventId()
-var_0_0.ClickSwitchItem = GameUtil.getEventId()
-var_0_0.SwitchCategoryClick = GameUtil.getEventId()
-var_0_0.SceneSwitchUIVisible = GameUtil.getEventId()
-var_0_0.PreviewSceneSwitchUIVisible = GameUtil.getEventId()
-var_0_0.ShowSceneInfo = GameUtil.getEventId()
-var_0_0.ShowPreviewSceneInfo = GameUtil.getEventId()
-var_0_0.ForceShowSceneTab = GameUtil.getEventId()
+local MainSceneSwitchEvent = _M
 
-return var_0_0
+MainSceneSwitchEvent.BeforeStartSwitchScene = GameUtil.getEventId()
+MainSceneSwitchEvent.StartSwitchScene = GameUtil.getEventId()
+MainSceneSwitchEvent.SwitchSceneFinish = GameUtil.getEventId()
+MainSceneSwitchEvent.SwitchSceneInitFinish = GameUtil.getEventId()
+MainSceneSwitchEvent.CloseSwitchSceneLoading = GameUtil.getEventId()
+MainSceneSwitchEvent.SwitchSceneFinishStory = GameUtil.getEventId()
+MainSceneSwitchEvent.ClickSwitchItem = GameUtil.getEventId()
+MainSceneSwitchEvent.SwitchCategoryClick = GameUtil.getEventId()
+MainSceneSwitchEvent.SceneSwitchUIVisible = GameUtil.getEventId()
+MainSceneSwitchEvent.PreviewSceneSwitchUIVisible = GameUtil.getEventId()
+MainSceneSwitchEvent.ShowSceneInfo = GameUtil.getEventId()
+MainSceneSwitchEvent.ShowPreviewSceneInfo = GameUtil.getEventId()
+MainSceneSwitchEvent.ForceShowSceneTab = GameUtil.getEventId()
+
+return MainSceneSwitchEvent

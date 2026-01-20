@@ -1,31 +1,33 @@
-﻿module("modules.logic.versionactivity3_1.towerdeep.config.TowerDeepOperActConfig", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/towerdeep/config/TowerDeepOperActConfig.lua
 
-local var_0_0 = class("TowerDeepOperActConfig", BaseConfig)
+module("modules.logic.versionactivity3_1.towerdeep.config.TowerDeepOperActConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._taskConfig = nil
+local TowerDeepOperActConfig = class("TowerDeepOperActConfig", BaseConfig)
+
+function TowerDeepOperActConfig:ctor()
+	self._taskConfig = nil
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function TowerDeepOperActConfig:reqConfigNames()
 	return {
 		"activity209_task"
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity209_task" then
-		arg_3_0._taskConfig = arg_3_2
+function TowerDeepOperActConfig:onConfigLoaded(configName, configTable)
+	if configName == "activity209_task" then
+		self._taskConfig = configTable
 	end
 end
 
-function var_0_0.getTaskCO(arg_4_0, arg_4_1)
-	return arg_4_0._taskConfig.configDict[arg_4_1]
+function TowerDeepOperActConfig:getTaskCO(taskId)
+	return self._taskConfig.configDict[taskId]
 end
 
-function var_0_0.getTaskCos(arg_5_0)
-	return arg_5_0._taskConfig.configDict
+function TowerDeepOperActConfig:getTaskCos()
+	return self._taskConfig.configDict
 end
 
-var_0_0.instance = var_0_0.New()
+TowerDeepOperActConfig.instance = TowerDeepOperActConfig.New()
 
-return var_0_0
+return TowerDeepOperActConfig

@@ -1,12 +1,14 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotNormalStoreGoodsViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/view/V1a6_CachotNormalStoreGoodsViewContainer.lua
 
-local var_0_0 = class("V1a6_CachotNormalStoreGoodsViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotNormalStoreGoodsViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local V1a6_CachotNormalStoreGoodsViewContainer = class("V1a6_CachotNormalStoreGoodsViewContainer", BaseViewContainer)
+
+function V1a6_CachotNormalStoreGoodsViewContainer:buildViews()
 	return {
 		V1a6_CachotNormalStoreGoodsView.New(),
 		V1a6_CachotCurrencyView.New("top")
 	}
 end
 
-return var_0_0
+return V1a6_CachotNormalStoreGoodsViewContainer

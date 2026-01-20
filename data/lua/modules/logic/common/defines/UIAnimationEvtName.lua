@@ -1,6 +1,8 @@
-﻿module("modules.logic.common.defines.UIAnimationEvtName", package.seeall)
+﻿-- chunkname: @modules/logic/common/defines/UIAnimationEvtName.lua
 
-return {
+module("modules.logic.common.defines.UIAnimationEvtName", package.seeall)
+
+local UIAnimationEvtName = {
 	onOpenEnd = "onOpenEnd",
 	onFinishEnd = "onFinishEnd",
 	onCloseEnd = "onCloseEnd",
@@ -11,3 +13,5 @@ return {
 	onSelectedEnd = "onSelectedEnd",
 	onSwitchEnd = "onSwitchEnd"
 }
+
+return UIAnimationEvtName

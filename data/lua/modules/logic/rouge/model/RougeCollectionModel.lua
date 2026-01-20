@@ -1,605 +1,644 @@
-﻿module("modules.logic.rouge.model.RougeCollectionModel", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/model/RougeCollectionModel.lua
 
-local var_0_0 = class("RougeCollectionModel", BaseModel)
+module("modules.logic.rouge.model.RougeCollectionModel", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0:init()
+local RougeCollectionModel = class("RougeCollectionModel", BaseModel)
+
+function RougeCollectionModel:ctor()
+	self:init()
 end
 
-function var_0_0.init(arg_2_0)
-	arg_2_0._slotCellStateMap = {}
-	arg_2_0._collectionPlaceMap = {}
-	arg_2_0._collectionIdMap = {}
-	arg_2_0._collectionRareMap = {}
-	arg_2_0._enchants = {}
-	arg_2_0._curSlotAreaSize = nil
-	arg_2_0._slotCollections = BaseModel.New()
-	arg_2_0._bagCollections = BaseModel.New()
-	arg_2_0._allCollections = BaseModel.New()
-	arg_2_0._effectTriggerTab = {}
-	arg_2_0._tempCollectionAttrMap = nil
+function RougeCollectionModel:init()
+	self._slotCellStateMap = {}
+	self._collectionPlaceMap = {}
+	self._collectionIdMap = {}
+	self._collectionRareMap = {}
+	self._enchants = {}
+	self._curSlotAreaSize = nil
+	self._slotCollections = BaseModel.New()
+	self._bagCollections = BaseModel.New()
+	self._allCollections = BaseModel.New()
+	self._effectTriggerTab = {}
+	self._tempCollectionAttrMap = nil
 end
 
-function var_0_0.getAllCollections(arg_3_0)
-	return arg_3_0._allCollections:getList()
+function RougeCollectionModel:getAllCollections()
+	return self._allCollections:getList()
 end
 
-function var_0_0.getAllCollectionCount(arg_4_0)
-	return arg_4_0._allCollections:getCount()
+function RougeCollectionModel:getAllCollectionCount()
+	return self._allCollections:getCount()
 end
 
-function var_0_0.onReceiveNewInfo2Slot(arg_5_0, arg_5_1, arg_5_2)
-	if not arg_5_1 then
+function RougeCollectionModel:onReceiveNewInfo2Slot(serverMsg, reason)
+	if not serverMsg then
 		return
 	end
 
-	local var_5_0 = {}
+	local collectionIds = {}
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
-		local var_5_1 = RougeCollectionHelper.buildNewCollectionSlotMO(iter_5_1)
+	for _, info in ipairs(serverMsg) do
+		local collectionMO = RougeCollectionHelper.buildNewCollectionSlotMO(info)
 
-		table.insert(var_5_0, var_5_1.id)
-		arg_5_0:tryAddCollection2SlotArea(var_5_1)
+		table.insert(collectionIds, collectionMO.id)
+		self:tryAddCollection2SlotArea(collectionMO)
 	end
 
-	if RougeCollectionHelper.isNewGetCollection(arg_5_2) then
-		RougeCollectionChessController.instance:dispatchEvent(RougeEvent.GetNewCollections, var_5_0, arg_5_2, RougeEnum.CollectionPlaceArea.SlotArea)
-	end
-end
+	local isNewGetCollection = RougeCollectionHelper.isNewGetCollection(reason)
 
-function var_0_0.tryAddCollection2SlotArea(arg_6_0, arg_6_1)
-	if not arg_6_1 then
-		return
-	end
-
-	local var_6_0 = arg_6_1.id
-
-	if arg_6_0._slotCollections:getById(var_6_0) then
-		arg_6_0:tryRemoveSlotCollection(var_6_0)
-	end
-
-	arg_6_0._slotCollections:addAtLast(arg_6_1)
-	arg_6_0._allCollections:addAtLast(arg_6_1)
-	arg_6_0:markCollection2IdMap(arg_6_1)
-	arg_6_0:markCollection2RareMap(arg_6_1)
-	arg_6_0:markCollectionSlotArea(arg_6_1)
-	arg_6_0:tryMarkCollection2EnchantList(arg_6_1)
-	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.PlaceCollection2SlotArea, arg_6_1)
-	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.UpdateCollectionAttr, var_6_0)
-end
-
-function var_0_0.tryMarkCollection2EnchantList(arg_7_0, arg_7_1)
-	if not arg_7_1 then
-		return
-	end
-
-	local var_7_0 = arg_7_1.cfgId
-	local var_7_1 = RougeCollectionConfig.instance:getCollectionCfg(var_7_0)
-
-	if not var_7_1 then
-		return
-	end
-
-	if var_7_1.type == RougeEnum.CollectionType.Enchant then
-		table.insert(arg_7_0._enchants, arg_7_1)
+	if isNewGetCollection then
+		RougeCollectionChessController.instance:dispatchEvent(RougeEvent.GetNewCollections, collectionIds, reason, RougeEnum.CollectionPlaceArea.SlotArea)
 	end
 end
 
-function var_0_0.tryRemoveCollectionEnchantList(arg_8_0, arg_8_1)
-	if not arg_8_0._enchants then
+function RougeCollectionModel:tryAddCollection2SlotArea(collectionMO)
+	if not collectionMO then
 		return
 	end
 
-	for iter_8_0 = #arg_8_0._enchants, 1, -1 do
-		if arg_8_0._enchants[iter_8_0] and arg_8_0._enchants[iter_8_0].id == arg_8_1 then
-			arg_8_0._enchants[iter_8_0] = nil
+	local collectionId = collectionMO.id
+	local exitSameMO = self._slotCollections:getById(collectionId)
+
+	if exitSameMO then
+		self:tryRemoveSlotCollection(collectionId)
+	end
+
+	self._slotCollections:addAtLast(collectionMO)
+	self._allCollections:addAtLast(collectionMO)
+	self:markCollection2IdMap(collectionMO)
+	self:markCollection2RareMap(collectionMO)
+	self:markCollectionSlotArea(collectionMO)
+	self:tryMarkCollection2EnchantList(collectionMO)
+	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.PlaceCollection2SlotArea, collectionMO)
+	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.UpdateCollectionAttr, collectionId)
+end
+
+function RougeCollectionModel:tryMarkCollection2EnchantList(collectionMO)
+	if not collectionMO then
+		return
+	end
+
+	local collectionCfgId = collectionMO.cfgId
+	local collectionCfg = RougeCollectionConfig.instance:getCollectionCfg(collectionCfgId)
+
+	if not collectionCfg then
+		return
+	end
+
+	local isEnchant = collectionCfg.type == RougeEnum.CollectionType.Enchant
+
+	if isEnchant then
+		table.insert(self._enchants, collectionMO)
+	end
+end
+
+function RougeCollectionModel:tryRemoveCollectionEnchantList(collectionId)
+	if not self._enchants then
+		return
+	end
+
+	for i = #self._enchants, 1, -1 do
+		if self._enchants[i] and self._enchants[i].id == collectionId then
+			self._enchants[i] = nil
 
 			return
 		end
 	end
 end
 
-function var_0_0.markCollection2IdMap(arg_9_0, arg_9_1)
-	if not arg_9_1 then
+function RougeCollectionModel:markCollection2IdMap(collectionMO)
+	if not collectionMO then
 		return
 	end
 
-	local var_9_0 = arg_9_1.cfgId
+	local collectionCfgId = collectionMO.cfgId
 
-	if not arg_9_0._collectionIdMap[var_9_0] then
-		arg_9_0._collectionIdMap[var_9_0] = {}
+	if not self._collectionIdMap[collectionCfgId] then
+		self._collectionIdMap[collectionCfgId] = {}
 	end
 
-	table.insert(arg_9_0._collectionIdMap[var_9_0], arg_9_1)
+	table.insert(self._collectionIdMap[collectionCfgId], collectionMO)
 end
 
-function var_0_0.removeCollectionIdMap(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = arg_10_0._collectionIdMap[arg_10_2]
+function RougeCollectionModel:removeCollectionIdMap(collectionId, collectionCfgId)
+	local mos = self._collectionIdMap[collectionCfgId]
 
-	if not var_10_0 then
+	if not mos then
 		return
 	end
 
-	for iter_10_0, iter_10_1 in pairs(var_10_0) do
-		if iter_10_1.id == arg_10_1 then
-			table.remove(var_10_0, iter_10_0)
+	for index, mo in pairs(mos) do
+		if mo.id == collectionId then
+			table.remove(mos, index)
 
 			return
 		end
 	end
 end
 
-function var_0_0.markCollection2RareMap(arg_11_0, arg_11_1)
-	if not arg_11_1 then
+function RougeCollectionModel:markCollection2RareMap(collectionMO)
+	if not collectionMO then
 		return
 	end
 
-	local var_11_0 = arg_11_1.cfgId
-	local var_11_1 = RougeCollectionConfig.instance:getCollectionCfg(var_11_0)
-	local var_11_2 = var_11_1 and var_11_1.showRare or 0
+	local collectionCfgId = collectionMO.cfgId
+	local collectionCfg = RougeCollectionConfig.instance:getCollectionCfg(collectionCfgId)
+	local showRare = collectionCfg and collectionCfg.showRare or 0
 
-	if not arg_11_0._collectionRareMap[var_11_2] then
-		arg_11_0._collectionRareMap[var_11_2] = {}
+	if not self._collectionRareMap[showRare] then
+		self._collectionRareMap[showRare] = {}
 	end
 
-	local var_11_3 = arg_11_1.id
+	local collectionId = collectionMO.id
 
-	arg_11_0._collectionRareMap[var_11_2][var_11_3] = arg_11_1
+	self._collectionRareMap[showRare][collectionId] = collectionMO
 end
 
-function var_0_0.removeCollectionRareMap(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = RougeCollectionConfig.instance:getCollectionCfg(arg_12_2)
-	local var_12_1 = var_12_0 and var_12_0.showRare or 0
+function RougeCollectionModel:removeCollectionRareMap(collectionId, collectionCfgId)
+	local collectionCfg = RougeCollectionConfig.instance:getCollectionCfg(collectionCfgId)
+	local showRare = collectionCfg and collectionCfg.showRare or 0
+	local mos = self._collectionRareMap[showRare]
 
-	if not arg_12_0._collectionRareMap[var_12_1] then
+	if not mos then
 		return
 	end
 
-	arg_12_0._collectionRareMap[var_12_1][arg_12_1] = nil
+	self._collectionRareMap[showRare][collectionId] = nil
 end
 
-function var_0_0.getCollectionRareMap(arg_13_0)
-	return arg_13_0._collectionRareMap
+function RougeCollectionModel:getCollectionRareMap()
+	return self._collectionRareMap
 end
 
-function var_0_0.markCollectionSlotArea(arg_14_0, arg_14_1)
-	if not arg_14_1 then
+function RougeCollectionModel:markCollectionSlotArea(collectionMO)
+	if not collectionMO then
 		return
 	end
 
-	local var_14_0 = arg_14_1:getLeftTopPos()
-	local var_14_1 = arg_14_1:getRotation()
-	local var_14_2 = arg_14_1.id
-	local var_14_3 = RougeCollectionConfig.instance:getShapeMatrix(arg_14_1.cfgId, var_14_1)
+	local leftTopPos = collectionMO:getLeftTopPos()
+	local rotation = collectionMO:getRotation()
+	local collectionId = collectionMO.id
+	local shapeMatrix = RougeCollectionConfig.instance:getShapeMatrix(collectionMO.cfgId, rotation)
 
-	if var_14_3 then
-		for iter_14_0, iter_14_1 in ipairs(var_14_3) do
-			for iter_14_2, iter_14_3 in ipairs(iter_14_1) do
-				if iter_14_3 and iter_14_3 > 0 then
-					local var_14_4 = var_14_0.x + iter_14_2 - 1
-					local var_14_5 = var_14_0.y + iter_14_0 - 1
+	if shapeMatrix then
+		for row, rows in ipairs(shapeMatrix) do
+			for col, isExist in ipairs(rows) do
+				if isExist and isExist > 0 then
+					local posX = leftTopPos.x + col - 1
+					local posY = leftTopPos.y + row - 1
 
-					arg_14_0:markCollectionSlotCellState(var_14_2, var_14_4, var_14_5, true)
+					self:markCollectionSlotCellState(collectionId, posX, posY, true)
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.markCollectionSlotCellState(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4)
-	arg_15_0._slotCellStateMap = arg_15_0._slotCellStateMap or {}
-	arg_15_0._slotCellStateMap[arg_15_2] = arg_15_0._slotCellStateMap[arg_15_2] or {}
+function RougeCollectionModel:markCollectionSlotCellState(collectionId, posX, posY, isPlaced)
+	self._slotCellStateMap = self._slotCellStateMap or {}
+	self._slotCellStateMap[posX] = self._slotCellStateMap[posX] or {}
 
-	local var_15_0 = arg_15_0._slotCellStateMap[arg_15_2][arg_15_3]
+	local curPlaceCollectionId = self._slotCellStateMap[posX][posY]
 
-	if var_15_0 and var_15_0 > 0 and var_15_0 ~= arg_15_1 then
+	if curPlaceCollectionId and curPlaceCollectionId > 0 and curPlaceCollectionId ~= collectionId then
 		return
 	end
 
-	arg_15_0._slotCellStateMap[arg_15_2][arg_15_3] = arg_15_4 and arg_15_1 or 0
-	arg_15_0._collectionPlaceMap[arg_15_1] = arg_15_0._collectionPlaceMap[arg_15_1] or {}
-	arg_15_0._collectionPlaceMap[arg_15_1][arg_15_2] = arg_15_0._collectionPlaceMap[arg_15_1][arg_15_2] or {}
-	arg_15_0._collectionPlaceMap[arg_15_1][arg_15_2][arg_15_3] = arg_15_4
+	self._slotCellStateMap[posX][posY] = isPlaced and collectionId or 0
+	self._collectionPlaceMap[collectionId] = self._collectionPlaceMap[collectionId] or {}
+	self._collectionPlaceMap[collectionId][posX] = self._collectionPlaceMap[collectionId][posX] or {}
+	self._collectionPlaceMap[collectionId][posX][posY] = isPlaced
 end
 
-function var_0_0.tryRemoveSlotCollection(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_0._slotCollections:getById(arg_16_1)
+function RougeCollectionModel:tryRemoveSlotCollection(collectionId)
+	local collectionMO = self._slotCollections:getById(collectionId)
 
-	if not var_16_0 then
+	if not collectionMO then
 		return
 	end
 
-	arg_16_0._slotCollections:remove(var_16_0)
-	arg_16_0._allCollections:remove(var_16_0)
-	arg_16_0:removeCollectionIdMap(var_16_0.id, var_16_0.cfgId)
-	arg_16_0:removeCollectionRareMap(var_16_0.id, var_16_0.cfgId)
-	arg_16_0:tryRemoveCollectionEnchantList(var_16_0.id)
-	arg_16_0:releasePlaceCellState(arg_16_1)
-	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.DeleteSlotCollection, arg_16_1)
+	self._slotCollections:remove(collectionMO)
+	self._allCollections:remove(collectionMO)
+	self:removeCollectionIdMap(collectionMO.id, collectionMO.cfgId)
+	self:removeCollectionRareMap(collectionMO.id, collectionMO.cfgId)
+	self:tryRemoveCollectionEnchantList(collectionMO.id)
+	self:releasePlaceCellState(collectionId)
+	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.DeleteSlotCollection, collectionId)
 end
 
-function var_0_0.onReceiveNewInfo2Bag(arg_17_0, arg_17_1, arg_17_2)
-	if not arg_17_1 then
+function RougeCollectionModel:onReceiveNewInfo2Bag(serverMsg, reason)
+	if not serverMsg then
 		return
 	end
 
-	local var_17_0 = {}
+	local collectionIds = {}
 
-	for iter_17_0, iter_17_1 in ipairs(arg_17_1) do
-		local var_17_1 = RougeCollectionHelper.buildNewBagCollectionMO(iter_17_1)
+	for _, info in ipairs(serverMsg) do
+		local collectionMO = RougeCollectionHelper.buildNewBagCollectionMO(info)
 
-		table.insert(var_17_0, var_17_1.id)
-		arg_17_0:tryAddCollection2BagArea(var_17_1)
+		table.insert(collectionIds, collectionMO.id)
+		self:tryAddCollection2BagArea(collectionMO)
 	end
 
-	if RougeCollectionHelper.isNewGetCollection(arg_17_2) then
-		RougeCollectionChessController.instance:dispatchEvent(RougeEvent.GetNewCollections, var_17_0, arg_17_2, RougeEnum.CollectionPlaceArea.BagArea)
+	local isNewGetCollection = RougeCollectionHelper.isNewGetCollection(reason)
+
+	if isNewGetCollection then
+		RougeCollectionChessController.instance:dispatchEvent(RougeEvent.GetNewCollections, collectionIds, reason, RougeEnum.CollectionPlaceArea.BagArea)
 	end
 end
 
-function var_0_0.tryAddCollection2BagArea(arg_18_0, arg_18_1)
-	if not arg_18_1 then
+function RougeCollectionModel:tryAddCollection2BagArea(collectionMO)
+	if not collectionMO then
 		return
 	end
 
-	local var_18_0 = arg_18_1.id
+	local collectionId = collectionMO.id
 
-	arg_18_0:tryRemoveBagCollection(var_18_0)
-	arg_18_0._bagCollections:addAtLast(arg_18_1)
-	arg_18_0._allCollections:addAtLast(arg_18_1)
-	arg_18_0:markCollection2IdMap(arg_18_1)
-	arg_18_0:markCollection2RareMap(arg_18_1)
-	arg_18_0:tryMarkCollection2EnchantList(arg_18_1)
+	self:tryRemoveBagCollection(collectionId)
+	self._bagCollections:addAtLast(collectionMO)
+	self._allCollections:addAtLast(collectionMO)
+	self:markCollection2IdMap(collectionMO)
+	self:markCollection2RareMap(collectionMO)
+	self:tryMarkCollection2EnchantList(collectionMO)
 	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.UpdateCollectionBag)
-	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.UpdateCollectionAttr, var_18_0)
+	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.UpdateCollectionAttr, collectionId)
 end
 
-function var_0_0.tryRemoveBagCollection(arg_19_0, arg_19_1)
-	local var_19_0 = arg_19_0._allCollections:getById(arg_19_1)
+function RougeCollectionModel:tryRemoveBagCollection(collectionId)
+	local collectionMO = self._allCollections:getById(collectionId)
 
-	if not var_19_0 then
+	if not collectionMO then
 		return
 	end
 
-	if arg_19_0:isCollectionPlaceInSlotArea(arg_19_1) then
-		arg_19_0:tryRemoveSlotCollection(arg_19_1)
+	local isCollectionInSlot = self:isCollectionPlaceInSlotArea(collectionId)
+
+	if isCollectionInSlot then
+		self:tryRemoveSlotCollection(collectionId)
 	else
-		arg_19_0._bagCollections:remove(var_19_0)
+		self._bagCollections:remove(collectionMO)
 	end
 
-	arg_19_0._allCollections:remove(var_19_0)
-	arg_19_0:tryRemoveCollectionEnchantList(var_19_0.id)
-	arg_19_0:removeCollectionIdMap(var_19_0.id, var_19_0.cfgId)
-	arg_19_0:removeCollectionRareMap(var_19_0.id, var_19_0.cfgId)
+	self._allCollections:remove(collectionMO)
+	self:tryRemoveCollectionEnchantList(collectionMO.id)
+	self:removeCollectionIdMap(collectionMO.id, collectionMO.cfgId)
+	self:removeCollectionRareMap(collectionMO.id, collectionMO.cfgId)
 	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.UpdateCollectionBag)
 end
 
-function var_0_0.isSlotHasFilled(arg_20_0, arg_20_1, arg_20_2)
-	local var_20_0 = arg_20_0:getSlotFilledCollectionId(arg_20_1, arg_20_2)
+function RougeCollectionModel:isSlotHasFilled(slotPosX, slotPosY)
+	local filledCollectionId = self:getSlotFilledCollectionId(slotPosX, slotPosY)
 
-	return var_20_0 and var_20_0 > 0
+	return filledCollectionId and filledCollectionId > 0
 end
 
-function var_0_0.getSlotFilledCollectionId(arg_21_0, arg_21_1, arg_21_2)
-	local var_21_0 = arg_21_0._slotCellStateMap and arg_21_0._slotCellStateMap[arg_21_1]
-	local var_21_1 = 0
+function RougeCollectionModel:getSlotFilledCollectionId(slotPosX, slotPosY)
+	local col = self._slotCellStateMap and self._slotCellStateMap[slotPosX]
+	local filledCollectionId = 0
 
-	if var_21_0 and var_21_0[arg_21_2] then
-		var_21_1 = var_21_0[arg_21_2] or 0
+	if col and col[slotPosY] then
+		filledCollectionId = col[slotPosY] or 0
 	end
 
-	return var_21_1 or 0
+	return filledCollectionId or 0
 end
 
-function var_0_0.getCollectionByUid(arg_22_0, arg_22_1)
-	return (arg_22_0._allCollections:getById(arg_22_1))
+function RougeCollectionModel:getCollectionByUid(uid)
+	local mo = self._allCollections:getById(uid)
+
+	return mo
 end
 
-function var_0_0.getEnchants(arg_23_0)
-	return arg_23_0._enchants
+function RougeCollectionModel:getEnchants()
+	return self._enchants
 end
 
-function var_0_0.getSlotAreaCollection(arg_24_0)
-	return arg_24_0._slotCollections:getList()
+function RougeCollectionModel:getSlotAreaCollection()
+	return self._slotCollections:getList()
 end
 
-function var_0_0.getBagAreaCollection(arg_25_0)
-	return arg_25_0._bagCollections:getList()
+function RougeCollectionModel:getBagAreaCollection()
+	return self._bagCollections:getList()
 end
 
-function var_0_0.getBagAreaCollectionCount(arg_26_0)
-	if arg_26_0._bagCollections then
-		return arg_26_0._bagCollections:getCount()
-	end
-
-	return 0
-end
-
-function var_0_0.getSlotAreaCollectionCount(arg_27_0)
-	if arg_27_0._slotCollections then
-		return arg_27_0._slotCollections:getCount()
+function RougeCollectionModel:getBagAreaCollectionCount()
+	if self._bagCollections then
+		return self._bagCollections:getCount()
 	end
 
 	return 0
 end
 
-function var_0_0.releasePlaceCellState(arg_28_0, arg_28_1)
-	if arg_28_0._collectionPlaceMap[arg_28_1] then
-		for iter_28_0, iter_28_1 in pairs(arg_28_0._collectionPlaceMap[arg_28_1]) do
-			for iter_28_2, iter_28_3 in pairs(iter_28_1) do
-				arg_28_0:markCollectionSlotCellState(arg_28_1, iter_28_0, iter_28_2, false)
+function RougeCollectionModel:getSlotAreaCollectionCount()
+	if self._slotCollections then
+		return self._slotCollections:getCount()
+	end
+
+	return 0
+end
+
+function RougeCollectionModel:releasePlaceCellState(collectionId)
+	if self._collectionPlaceMap[collectionId] then
+		for slotPosX, slotPosYs in pairs(self._collectionPlaceMap[collectionId]) do
+			for slotPosY, isPlace in pairs(slotPosYs) do
+				self:markCollectionSlotCellState(collectionId, slotPosX, slotPosY, false)
 			end
 		end
 	end
 end
 
-function var_0_0.getCollectionCountById(arg_29_0, arg_29_1)
-	local var_29_0 = arg_29_0._collectionIdMap and arg_29_0._collectionIdMap[arg_29_1]
+function RougeCollectionModel:getCollectionCountById(collectionCfgId)
+	local collectionList = self._collectionIdMap and self._collectionIdMap[collectionCfgId]
+	local collectionCount = collectionList and tabletool.len(collectionList) or 0
 
-	return var_29_0 and tabletool.len(var_29_0) or 0
+	return collectionCount
 end
 
-function var_0_0.getCollectionByCfgId(arg_30_0, arg_30_1)
-	return arg_30_0._collectionIdMap and arg_30_0._collectionIdMap[arg_30_1]
+function RougeCollectionModel:getCollectionByCfgId(collectionCfgId)
+	return self._collectionIdMap and self._collectionIdMap[collectionCfgId]
 end
 
-function var_0_0.rougeInlay(arg_31_0, arg_31_1, arg_31_2, arg_31_3)
-	if not arg_31_1 then
+function RougeCollectionModel:rougeInlay(enchantCollectionInfo, preCollectionInfo, reason)
+	if not enchantCollectionInfo then
 		return
 	end
 
-	local var_31_0 = tonumber(arg_31_1.id)
+	local collectionId = tonumber(enchantCollectionInfo.id)
+	local originEnchantCollection = self:getCollectionByUid(collectionId)
 
-	arg_31_0:getCollectionByUid(var_31_0):updateInfo(arg_31_1)
+	originEnchantCollection:updateInfo(enchantCollectionInfo)
 
-	local var_31_1 = tonumber(arg_31_2.id)
+	local preCollectionId = tonumber(preCollectionInfo.id)
 
-	if var_31_1 > 0 then
-		arg_31_0:getCollectionByUid(var_31_1):updateInfo(arg_31_2)
+	if preCollectionId > 0 then
+		local originPreCollection = self:getCollectionByUid(preCollectionId)
+
+		originPreCollection:updateInfo(preCollectionInfo)
 	end
 
-	RougeCollectionEnchantController.instance:onRougeInlayInfoUpdate(var_31_0, var_31_1)
+	RougeCollectionEnchantController.instance:onRougeInlayInfoUpdate(collectionId, preCollectionId)
 end
 
-function var_0_0.rougeDemount(arg_32_0, arg_32_1, arg_32_2)
-	if not arg_32_1 then
+function RougeCollectionModel:rougeDemount(collectionInfo, reason)
+	if not collectionInfo then
 		return
 	end
 
-	local var_32_0 = tonumber(arg_32_1.id)
+	local collectionId = tonumber(collectionInfo.id)
+	local originEnchantCollection = self:getCollectionByUid(collectionId)
 
-	arg_32_0:getCollectionByUid(var_32_0):updateInfo(arg_32_1)
-	RougeCollectionEnchantController.instance:onRougeInlayInfoUpdate(var_32_0)
+	originEnchantCollection:updateInfo(collectionInfo)
+	RougeCollectionEnchantController.instance:onRougeInlayInfoUpdate(collectionId)
 end
 
-function var_0_0.deleteSomeCollectionFromWarehouse(arg_33_0, arg_33_1)
-	if not arg_33_1 then
+function RougeCollectionModel:deleteSomeCollectionFromWarehouse(collectionIds)
+	if not collectionIds then
 		return
 	end
 
-	for iter_33_0, iter_33_1 in ipairs(arg_33_1) do
-		iter_33_1 = tonumber(iter_33_1)
+	for _, collectioId in ipairs(collectionIds) do
+		collectioId = tonumber(collectioId)
 
-		arg_33_0:tryRemoveBagCollection(iter_33_1)
+		self:tryRemoveBagCollection(collectioId)
 	end
 end
 
-function var_0_0.deleteSomeCollectionFromSlot(arg_34_0, arg_34_1)
-	if not arg_34_1 then
+function RougeCollectionModel:deleteSomeCollectionFromSlot(collectionIds)
+	if not collectionIds then
 		return
 	end
 
-	for iter_34_0, iter_34_1 in ipairs(arg_34_1) do
-		iter_34_1 = tonumber(iter_34_1)
+	for _, collectioId in ipairs(collectionIds) do
+		collectioId = tonumber(collectioId)
 
-		arg_34_0:tryRemoveSlotCollection(iter_34_1)
+		self:tryRemoveSlotCollection(collectioId)
 	end
 end
 
-function var_0_0.isCollectionExist(arg_35_0, arg_35_1)
-	return arg_35_0._allCollections:getById(arg_35_1) ~= nil
+function RougeCollectionModel:isCollectionExist(collectionId)
+	local collectionMO = self._allCollections:getById(collectionId)
+
+	return collectionMO ~= nil
 end
 
-function var_0_0.isCollectionPlaceInBag(arg_36_0, arg_36_1)
-	return arg_36_0._bagCollections:getById(arg_36_1) ~= nil
+function RougeCollectionModel:isCollectionPlaceInBag(collectionId)
+	local collectionMO = self._bagCollections:getById(collectionId)
+
+	return collectionMO ~= nil
 end
 
-function var_0_0.isCollectionPlaceInSlotArea(arg_37_0, arg_37_1)
-	return arg_37_0._slotCollections:getById(arg_37_1) ~= nil
+function RougeCollectionModel:isCollectionPlaceInSlotArea(collectionId)
+	local collectionMO = self._slotCollections:getById(collectionId)
+
+	return collectionMO ~= nil
 end
 
-function var_0_0.getCollectionPlaceArea(arg_38_0, arg_38_1)
-	if arg_38_0:isCollectionPlaceInBag(arg_38_1) then
+function RougeCollectionModel:getCollectionPlaceArea(collectionId)
+	local inBag = self:isCollectionPlaceInBag(collectionId)
+
+	if inBag then
 		return RougeEnum.CollectionPlaceArea.BagArea
 	end
 
-	if arg_38_0:isCollectionPlaceInSlotArea(arg_38_1) then
+	local inSlot = self:isCollectionPlaceInSlotArea(collectionId)
+
+	if inSlot then
 		return RougeEnum.CollectionPlaceArea.SlotArea
 	end
 end
 
-function var_0_0.oneKeyPlace2SlotArea(arg_39_0, arg_39_1)
-	if not arg_39_1 then
+function RougeCollectionModel:oneKeyPlace2SlotArea(serverMsg)
+	if not serverMsg then
 		return
 	end
 
-	arg_39_0:onReceiveNewInfo2Slot(arg_39_1)
+	self:onReceiveNewInfo2Slot(serverMsg)
 	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.UpdateCollectionBag)
 end
 
-function var_0_0.onKeyClearSlotArea(arg_40_0)
-	if not arg_40_0._slotCollections then
+function RougeCollectionModel:onKeyClearSlotArea()
+	if not self._slotCollections then
 		return
 	end
 
-	local var_40_0 = arg_40_0._slotCollections:getList()
+	local slotCollections = self._slotCollections:getList()
 
-	for iter_40_0 = #var_40_0, 1, -1 do
-		local var_40_1 = var_40_0[iter_40_0].id
+	for i = #slotCollections, 1, -1 do
+		local collectionId = slotCollections[i].id
 
-		arg_40_0:tryRemoveSlotCollection(var_40_1)
+		self:tryRemoveSlotCollection(collectionId)
 	end
 
-	arg_40_0._slotCollections:clear()
+	self._slotCollections:clear()
 end
 
-function var_0_0.getCurSlotAreaSize(arg_41_0)
-	if not arg_41_0._curSlotAreaSize then
-		local var_41_0 = RougeController.instance:getStyleConfig()
-		local var_41_1 = var_41_0 and var_41_0.layoutId
-		local var_41_2 = RougeCollectionConfig.instance:getCollectionInitialBagSize(var_41_1)
-		local var_41_3 = var_41_2 and var_41_2.col
-		local var_41_4 = var_41_2 and var_41_2.row
+function RougeCollectionModel:getCurSlotAreaSize()
+	if not self._curSlotAreaSize then
+		local styleCfg = RougeController.instance:getStyleConfig()
+		local layoutId = styleCfg and styleCfg.layoutId
+		local bagSize = RougeCollectionConfig.instance:getCollectionInitialBagSize(layoutId)
+		local col = bagSize and bagSize.col
+		local row = bagSize and bagSize.row
 
-		arg_41_0._curSlotAreaSize = {
-			col = var_41_3,
-			row = var_41_4
+		self._curSlotAreaSize = {
+			col = col,
+			row = row
 		}
 	end
 
-	return arg_41_0._curSlotAreaSize
+	return self._curSlotAreaSize
 end
 
-function var_0_0.getCollectionActiveEffects(arg_42_0, arg_42_1)
-	local var_42_0 = arg_42_0:getCollectionByUid(arg_42_1)
+function RougeCollectionModel:getCollectionActiveEffects(collectionId)
+	local collectionMO = self:getCollectionByUid(collectionId)
 
-	if var_42_0 and arg_42_0:isCollectionPlaceInSlotArea(arg_42_1) then
-		return (var_42_0:getBaseEffects())
+	if collectionMO and self:isCollectionPlaceInSlotArea(collectionId) then
+		local baseEffects = collectionMO:getBaseEffects()
+
+		return baseEffects
 	end
 end
 
-function var_0_0.getCollectionActiveEffectMap(arg_43_0, arg_43_1)
-	local var_43_0 = arg_43_0:getCollectionActiveEffects(arg_43_1)
+function RougeCollectionModel:getCollectionActiveEffectMap(collectionId)
+	local baseEffects = self:getCollectionActiveEffects(collectionId)
 
-	if var_43_0 then
-		local var_43_1 = {}
+	if baseEffects then
+		local baseEffectMap = {}
 
-		for iter_43_0, iter_43_1 in ipairs(var_43_0) do
-			var_43_1[iter_43_1] = true
+		for _, effectId in ipairs(baseEffects) do
+			baseEffectMap[effectId] = true
 		end
 
-		return var_43_1
+		return baseEffectMap
 	end
 end
 
-function var_0_0.checkIsCanCompositeCollection(arg_44_0, arg_44_1)
-	local var_44_0 = RougeCollectionConfig.instance:getCollectionCompositeIds(arg_44_1)
+function RougeCollectionModel:checkIsCanCompositeCollection(synthesisCfgId)
+	local compositeIds = RougeCollectionConfig.instance:getCollectionCompositeIds(synthesisCfgId)
 
-	if not var_44_0 or #var_44_0 <= 0 then
+	if not compositeIds or #compositeIds <= 0 then
 		return false
 	end
 
-	local var_44_1 = {}
+	local markMap = {}
 
-	for iter_44_0, iter_44_1 in ipairs(var_44_0) do
-		local var_44_2 = arg_44_0:getCollectionCountById(iter_44_1)
-		local var_44_3 = var_44_1[iter_44_1] or 0
+	for _, compositeId in ipairs(compositeIds) do
+		local compositeCollectionCount = self:getCollectionCountById(compositeId)
+		local markCount = markMap[compositeId] or 0
 
-		if var_44_2 < var_44_3 + RougeEnum.CompositeCollectionCostCount then
+		if compositeCollectionCount < markCount + RougeEnum.CompositeCollectionCostCount then
 			return false
 		end
 
-		var_44_1[iter_44_1] = var_44_3 + RougeEnum.CompositeCollectionCostCount
+		markMap[compositeId] = markCount + RougeEnum.CompositeCollectionCostCount
 	end
 
 	return true
 end
 
-function var_0_0.saveTmpCollectionTriggerEffectInfo(arg_45_0, arg_45_1, arg_45_2, arg_45_3, arg_45_4, arg_45_5)
-	arg_45_0._effectTriggerMap = arg_45_0._effectTriggerMap or {}
+function RougeCollectionModel:saveTmpCollectionTriggerEffectInfo(trigger, removeCollections, add2SlotCollectionIds, add2BagCollectionIds, showType)
+	self._effectTriggerMap = self._effectTriggerMap or {}
 
-	if arg_45_0._effectTriggerMap[arg_45_1.id] then
-		for iter_45_0 = #arg_45_0._effectTriggerTab, 1, -1 do
-			if arg_45_0._effectTriggerTab[iter_45_0].id == arg_45_1.id then
-				arg_45_0._effectTriggerTab[iter_45_0] = nil
-				arg_45_0._effectTriggerMap[arg_45_1.id] = nil
+	if self._effectTriggerMap[trigger.id] then
+		for i = #self._effectTriggerTab, 1, -1 do
+			local effect = self._effectTriggerTab[i]
+
+			if effect.id == trigger.id then
+				self._effectTriggerTab[i] = nil
+				self._effectTriggerMap[trigger.id] = nil
 			end
 		end
 	end
 
-	local var_45_0 = {
-		trigger = arg_45_1,
-		removeCollections = arg_45_2,
-		add2SlotCollectionIds = arg_45_3,
-		add2BagCollectionIds = arg_45_4,
-		showType = arg_45_5,
+	local info = {
+		trigger = trigger,
+		removeCollections = removeCollections,
+		add2SlotCollectionIds = add2SlotCollectionIds,
+		add2BagCollectionIds = add2BagCollectionIds,
+		showType = showType,
 		removeCollectionMap = {}
 	}
 
-	if arg_45_2 then
-		for iter_45_1, iter_45_2 in ipairs(arg_45_2) do
-			var_45_0.removeCollectionMap[iter_45_2.id] = iter_45_2
+	if removeCollections then
+		for _, collection in ipairs(removeCollections) do
+			info.removeCollectionMap[collection.id] = collection
 		end
 	end
 
-	arg_45_0._effectTriggerMap[arg_45_1.id] = true
-	arg_45_0._effectTriggerTab = arg_45_0._effectTriggerTab or {}
+	self._effectTriggerMap[trigger.id] = true
+	self._effectTriggerTab = self._effectTriggerTab or {}
 
-	table.insert(arg_45_0._effectTriggerTab, var_45_0)
+	table.insert(self._effectTriggerTab, info)
 end
 
-function var_0_0.getTmpCollectionTriggerEffectInfo(arg_46_0)
-	return arg_46_0._effectTriggerTab
+function RougeCollectionModel:getTmpCollectionTriggerEffectInfo()
+	return self._effectTriggerTab
 end
 
-function var_0_0.clearTmpCollectionTriggerEffectInfo(arg_47_0)
-	if arg_47_0._effectTriggerTab then
-		tabletool.clear(arg_47_0._effectTriggerTab)
+function RougeCollectionModel:clearTmpCollectionTriggerEffectInfo()
+	if self._effectTriggerTab then
+		tabletool.clear(self._effectTriggerTab)
 	end
 end
 
-function var_0_0.checkHasTmpTriggerEffectInfo(arg_48_0)
-	return arg_48_0._effectTriggerTab and #arg_48_0._effectTriggerTab > 0
+function RougeCollectionModel:checkHasTmpTriggerEffectInfo()
+	return self._effectTriggerTab and #self._effectTriggerTab > 0
 end
 
-function var_0_0.updateCollectionItems(arg_49_0, arg_49_1)
-	if not arg_49_1 then
+function RougeCollectionModel:updateCollectionItems(itemInfo)
+	if not itemInfo then
 		return
 	end
 
-	for iter_49_0, iter_49_1 in ipairs(arg_49_1) do
-		local var_49_0 = tonumber(iter_49_1.id)
-		local var_49_1 = arg_49_0:getCollectionByUid(var_49_0)
+	for _, info in ipairs(itemInfo) do
+		local collectionId = tonumber(info.id)
+		local collectionMO = self:getCollectionByUid(collectionId)
+		local isInSlotArea = self:isCollectionPlaceInSlotArea(collectionId)
 
-		if arg_49_0:isCollectionPlaceInSlotArea(var_49_0) then
-			var_49_1:updateInfo(iter_49_1)
+		if isInSlotArea then
+			collectionMO:updateInfo(info)
 		else
-			local var_49_2 = RougeCollectionHelper.buildNewBagCollectionMO(iter_49_1)
+			local collectionMO = RougeCollectionHelper.buildNewBagCollectionMO(info)
 
-			arg_49_0:tryAddCollection2BagArea(var_49_2)
+			self:tryAddCollection2BagArea(collectionMO)
 		end
 	end
 end
 
-function var_0_0.switchCollectionInfoType(arg_50_0)
-	arg_50_0._curInfoType = arg_50_0:getCurCollectionInfoType() == RougeEnum.CollectionInfoType.Complex and RougeEnum.CollectionInfoType.Simple or RougeEnum.CollectionInfoType.Complex
+function RougeCollectionModel:switchCollectionInfoType()
+	local curInfoType = self:getCurCollectionInfoType()
+	local isCurComplex = curInfoType == RougeEnum.CollectionInfoType.Complex
+
+	self._curInfoType = isCurComplex and RougeEnum.CollectionInfoType.Simple or RougeEnum.CollectionInfoType.Complex
 
 	RougeController.instance:dispatchEvent(RougeEvent.SwitchCollectionInfoType)
-	arg_50_0:_saveCollectionInfoType(arg_50_0._curInfoType)
+	self:_saveCollectionInfoType(self._curInfoType)
 end
 
-function var_0_0.getCurCollectionInfoType(arg_51_0)
-	if not arg_51_0._curInfoType then
-		local var_51_0 = arg_51_0:_getCollectionInfoTypeSaveKey()
+function RougeCollectionModel:getCurCollectionInfoType()
+	if not self._curInfoType then
+		local key = self:_getCollectionInfoTypeSaveKey()
 
-		arg_51_0._curInfoType = tonumber(PlayerPrefsHelper.getNumber(var_51_0, RougeEnum.DefaultCollectionInfoType))
+		self._curInfoType = tonumber(PlayerPrefsHelper.getNumber(key, RougeEnum.DefaultCollectionInfoType))
 	end
 
-	return arg_51_0._curInfoType
+	return self._curInfoType
 end
 
-function var_0_0._saveCollectionInfoType(arg_52_0, arg_52_1)
-	arg_52_1 = arg_52_1 or RougeEnum.DefaultCollectionInfoType
+function RougeCollectionModel:_saveCollectionInfoType(infoType)
+	infoType = infoType or RougeEnum.DefaultCollectionInfoType
 
-	local var_52_0 = arg_52_0:_getCollectionInfoTypeSaveKey()
+	local key = self:_getCollectionInfoTypeSaveKey()
 
-	PlayerPrefsHelper.setNumber(var_52_0, arg_52_1)
+	PlayerPrefsHelper.setNumber(key, infoType)
 end
 
-function var_0_0._getCollectionInfoTypeSaveKey(arg_53_0)
-	return (string.format("%s_%s", PlayerModel.instance:getMyUserId(), PlayerPrefsKey.RougeCollectionInfoType))
+function RougeCollectionModel:_getCollectionInfoTypeSaveKey()
+	local key = string.format("%s_%s", PlayerModel.instance:getMyUserId(), PlayerPrefsKey.RougeCollectionInfoType)
+
+	return key
 end
 
-var_0_0.instance = var_0_0.New()
+RougeCollectionModel.instance = RougeCollectionModel.New()
 
-return var_0_0
+return RougeCollectionModel

@@ -1,47 +1,51 @@
-﻿module("modules.logic.fight.system.work.FightWorkBuildSubEntityAfterChangeHero", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkBuildSubEntityAfterChangeHero.lua
 
-local var_0_0 = class("FightWorkBuildSubEntityAfterChangeHero", FightWorkItem)
+module("modules.logic.fight.system.work.FightWorkBuildSubEntityAfterChangeHero", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0.SAFETIME = 10
+local FightWorkBuildSubEntityAfterChangeHero = class("FightWorkBuildSubEntityAfterChangeHero", FightWorkItem)
+
+function FightWorkBuildSubEntityAfterChangeHero:onConstructor()
+	self.SAFETIME = 10
 end
 
-function var_0_0.onStart(arg_2_0)
-	if not FightHelper.getSubEntity(FightEnum.EntitySide.MySide) then
-		local var_2_0 = FightDataHelper.entityMgr:getMySubList()
+function FightWorkBuildSubEntityAfterChangeHero:onStart()
+	local entity = FightHelper.getSubEntity(FightEnum.EntitySide.MySide)
 
-		table.sort(var_2_0, FightEntityDataHelper.sortSubEntityList)
+	if not entity then
+		local subList = FightDataHelper.entityMgr:getMySubList()
 
-		local var_2_1 = var_2_0[1]
+		table.sort(subList, FightEntityDataHelper.sortSubEntityList)
 
-		if var_2_1 then
-			arg_2_0._entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
-			arg_2_0._entityId = var_2_1.id
+		local nextSubEntityMO = subList[1]
 
-			arg_2_0:com_registFightEvent(FightEvent.OnSpineLoaded, arg_2_0._onNextSubSpineLoaded)
-			arg_2_0._entityMgr:buildSubSpine(var_2_1)
+		if nextSubEntityMO then
+			self._entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+			self._entityId = nextSubEntityMO.id
+
+			self:com_registFightEvent(FightEvent.OnSpineLoaded, self._onNextSubSpineLoaded)
+			self._entityMgr:buildSubSpine(nextSubEntityMO)
 
 			return
 		end
 	end
 
-	arg_2_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0._onNextSubSpineLoaded(arg_3_0, arg_3_1)
-	if arg_3_1.unitSpawn.id == arg_3_0._entityId then
-		arg_3_0:com_registTimer(arg_3_0.finishWork, 5)
+function FightWorkBuildSubEntityAfterChangeHero:_onNextSubSpineLoaded(unitSpine)
+	if unitSpine.unitSpawn.id == self._entityId then
+		self:com_registTimer(self.finishWork, 5)
 
-		local var_3_0 = arg_3_0._entityMgr:getEntity(arg_3_0._entityId)
-		local var_3_1 = arg_3_0:com_registWork(Work2FightWork, FightWorkStartBornNormal, var_3_0, true)
+		local sub_entity = self._entityMgr:getEntity(self._entityId)
+		local work = self:com_registWork(Work2FightWork, FightWorkStartBornNormal, sub_entity, true)
 
-		var_3_1:registFinishCallback(arg_3_0.finishWork, arg_3_0)
-		var_3_1:start()
+		work:registFinishCallback(self.finishWork, self)
+		work:start()
 	end
 end
 
-function var_0_0.clearWork(arg_4_0)
+function FightWorkBuildSubEntityAfterChangeHero:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkBuildSubEntityAfterChangeHero

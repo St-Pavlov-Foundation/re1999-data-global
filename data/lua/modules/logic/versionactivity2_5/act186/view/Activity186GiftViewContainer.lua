@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity2_5.act186.view.Activity186GiftViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/act186/view/Activity186GiftViewContainer.lua
 
-local var_0_0 = class("Activity186GiftViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_5.act186.view.Activity186GiftViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local Activity186GiftViewContainer = class("Activity186GiftViewContainer", BaseViewContainer)
+
+function Activity186GiftViewContainer:buildViews()
 	return {
 		Activity186GiftView.New()
 	}
 end
 
-return var_0_0
+return Activity186GiftViewContainer

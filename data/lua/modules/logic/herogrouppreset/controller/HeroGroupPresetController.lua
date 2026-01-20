@@ -1,67 +1,69 @@
-﻿module("modules.logic.herogrouppreset.controller.HeroGroupPresetController", package.seeall)
+﻿-- chunkname: @modules/logic/herogrouppreset/controller/HeroGroupPresetController.lua
 
-local var_0_0 = class("HeroGroupPresetController", BaseController)
+module("modules.logic.herogrouppreset.controller.HeroGroupPresetController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local HeroGroupPresetController = class("HeroGroupPresetController", BaseController)
+
+function HeroGroupPresetController:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function HeroGroupPresetController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function HeroGroupPresetController:addConstEvents()
 	return
 end
 
-function var_0_0.reInit(arg_4_0)
+function HeroGroupPresetController:reInit()
 	return
 end
 
-function var_0_0.updateFightHeroGroup(arg_5_0)
-	if arg_5_0:isFightScene() then
+function HeroGroupPresetController:updateFightHeroGroup()
+	if self:isFightScene() then
 		HeroGroupModel.instance:_setSingleGroup()
 	end
 end
 
-function var_0_0.isFightScene(arg_6_0)
+function HeroGroupPresetController:isFightScene()
 	return GameSceneMgr.instance:isFightScene()
 end
 
-function var_0_0.isFightShowType(arg_7_0)
-	return arg_7_0._showType == HeroGroupPresetEnum.ShowType.Fight
+function HeroGroupPresetController:isFightShowType()
+	return self._showType == HeroGroupPresetEnum.ShowType.Fight
 end
 
-function var_0_0.useTrial(arg_8_0)
+function HeroGroupPresetController:useTrial()
 	return GameSceneMgr.instance:isFightScene()
 end
 
-function var_0_0.getHeroGroupTypeList(arg_9_0)
-	return arg_9_0._heroGroupTypeList
+function HeroGroupPresetController:getHeroGroupTypeList()
+	return self._heroGroupTypeList
 end
 
-function var_0_0.getSelectedSubId(arg_10_0)
-	return arg_10_0._subId
+function HeroGroupPresetController:getSelectedSubId()
+	return self._subId
 end
 
-function var_0_0.snapshotUsePreset(arg_11_0)
-	if not arg_11_0 then
+function HeroGroupPresetController.snapshotUsePreset(snapshotType)
+	if not snapshotType then
 		return
 	end
 
-	for iter_11_0, iter_11_1 in pairs(HeroGroupPresetEnum.HeroGroupType2SnapshotType) do
-		if arg_11_0 == iter_11_1 then
-			return HeroGroupPresetEnum.HeroGroupSnapshotTypeOpen[iter_11_0]
+	for k, v in pairs(HeroGroupPresetEnum.HeroGroupType2SnapshotType) do
+		if snapshotType == v then
+			return HeroGroupPresetEnum.HeroGroupSnapshotTypeOpen[k]
 		end
 	end
 end
 
-function var_0_0.openHeroGroupPresetTeamView(arg_12_0, arg_12_1, arg_12_2)
-	arg_12_0._showType = arg_12_1 and arg_12_1.showType or HeroGroupPresetEnum.ShowType.Normal
-	arg_12_0._heroGroupTypeList = arg_12_1 and arg_12_1.heroGroupTypeList
-	arg_12_0._subId = arg_12_1 and arg_12_1.subId
+function HeroGroupPresetController:openHeroGroupPresetTeamView(param, isImmediate)
+	self._showType = param and param.showType or HeroGroupPresetEnum.ShowType.Normal
+	self._heroGroupTypeList = param and param.heroGroupTypeList
+	self._subId = param and param.subId
 
-	if not arg_12_0:isFightScene() then
+	if not self:isFightScene() then
 		HeroGroupModel.instance.episodeId = nil
 
 		HeroGroupModel.instance:initRestrictHeroData()
@@ -71,178 +73,182 @@ function var_0_0.openHeroGroupPresetTeamView(arg_12_0, arg_12_1, arg_12_2)
 	end
 
 	ViewMgr.instance:closeView(ViewName.HeroGroupPresetTeamView)
-	var_0_0.instance:closeHeroGroupPresetEditView()
-	ViewMgr.instance:openView(ViewName.HeroGroupPresetTeamView, arg_12_1, arg_12_2)
+	HeroGroupPresetController.instance:closeHeroGroupPresetEditView()
+	ViewMgr.instance:openView(ViewName.HeroGroupPresetTeamView, param, isImmediate)
 end
 
-function var_0_0.closeHeroGroupPresetEditView(arg_13_0)
+function HeroGroupPresetController:closeHeroGroupPresetEditView()
 	ViewMgr.instance:closeView(ViewName.HeroGroupPresetEditView)
 end
 
-function var_0_0.openHeroGroupPresetEditView(arg_14_0, arg_14_1, arg_14_2)
-	var_0_0.instance:closeHeroGroupPresetEditView()
-	ViewMgr.instance:openView(ViewName.HeroGroupPresetEditView, arg_14_1, arg_14_2)
+function HeroGroupPresetController:openHeroGroupPresetEditView(param, isImmediate)
+	HeroGroupPresetController.instance:closeHeroGroupPresetEditView()
+	ViewMgr.instance:openView(ViewName.HeroGroupPresetEditView, param, isImmediate)
 end
 
-function var_0_0.openHeroGroupPresetModifyNameView(arg_15_0, arg_15_1, arg_15_2)
-	ViewMgr.instance:openView(ViewName.HeroGroupPresetModifyNameView, arg_15_1, arg_15_2)
+function HeroGroupPresetController:openHeroGroupPresetModifyNameView(param, isImmediate)
+	ViewMgr.instance:openView(ViewName.HeroGroupPresetModifyNameView, param, isImmediate)
 end
 
-function var_0_0.initCopyHeroGroupList(arg_16_0)
-	if not arg_16_0:isFightScene() then
+function HeroGroupPresetController:initCopyHeroGroupList()
+	if not self:isFightScene() then
 		return
 	end
 
-	local var_16_0 = HeroGroupModel.instance:getPresetHeroGroupType()
+	local heroGroupType = HeroGroupModel.instance:getPresetHeroGroupType()
 
-	if not var_16_0 then
+	if not heroGroupType then
 		return
 	end
 
-	arg_16_0._copyList = {}
+	self._copyList = {}
 
-	local var_16_1 = HeroGroupPresetHeroGroupChangeController.instance:getHeroGroupList(var_16_0)
+	local list = HeroGroupPresetHeroGroupChangeController.instance:getHeroGroupList(heroGroupType)
 
-	if var_16_1 then
-		for iter_16_0, iter_16_1 in pairs(var_16_1) do
-			local var_16_2 = HeroGroupMO.New()
+	if list then
+		for _, v in pairs(list) do
+			local heroGroupMO = HeroGroupMO.New()
 
-			var_16_2:init(iter_16_1)
-			table.insert(arg_16_0._copyList, var_16_2)
+			heroGroupMO:init(v)
+			table.insert(self._copyList, heroGroupMO)
 		end
 	end
 end
 
-function var_0_0.getHeroGroupCopyList(arg_17_0, arg_17_1)
-	if arg_17_0:isFightScene() and HeroGroupModel.instance:getPresetHeroGroupType() == arg_17_1 and arg_17_0._copyList then
-		local var_17_0 = {}
+function HeroGroupPresetController:getHeroGroupCopyList(heroGroupType)
+	if self:isFightScene() and HeroGroupModel.instance:getPresetHeroGroupType() == heroGroupType and self._copyList then
+		local list = {}
 
-		for iter_17_0, iter_17_1 in pairs(arg_17_0._copyList) do
-			local var_17_1 = HeroGroupMO.New()
+		for _, v in pairs(self._copyList) do
+			local heroGroupMO = HeroGroupMO.New()
 
-			var_17_1:init(iter_17_1)
-			table.insert(var_17_0, var_17_1)
+			heroGroupMO:init(v)
+			table.insert(list, heroGroupMO)
 		end
 
-		return var_17_0
+		return list
 	end
 end
 
-function var_0_0.deleteHeroGroupCopy(arg_18_0, arg_18_1, arg_18_2)
-	if not arg_18_0:isFightScene() then
+function HeroGroupPresetController:deleteHeroGroupCopy(snapshotId, snapshotSubId)
+	if not self:isFightScene() then
 		return
 	end
 
-	if not arg_18_0._copyList then
+	if not self._copyList then
 		return
 	end
 
-	local var_18_0 = HeroGroupModel.instance:getPresetHeroGroupType()
+	local heroGroupType = HeroGroupModel.instance:getPresetHeroGroupType()
 
-	if not var_18_0 then
+	if not heroGroupType then
 		return
 	end
 
-	local var_18_1 = HeroGroupPresetEnum.HeroGroupType2SnapshotAllType[var_18_0]
+	local heroGroupSnapShotId = HeroGroupPresetEnum.HeroGroupType2SnapshotAllType[heroGroupType]
 
-	if var_18_1 ~= arg_18_1 then
-		logError(string.format("HeroGroupPresetController:deleteHeroGroupCopy error heroGroupSnapShotId:%s,snapshotId:%s", var_18_1, arg_18_1))
+	if heroGroupSnapShotId ~= snapshotId then
+		logError(string.format("HeroGroupPresetController:deleteHeroGroupCopy error heroGroupSnapShotId:%s,snapshotId:%s", heroGroupSnapShotId, snapshotId))
 
 		return
 	end
 
-	for iter_18_0, iter_18_1 in ipairs(arg_18_0._copyList) do
-		if iter_18_1.groupId == arg_18_2 then
-			table.remove(arg_18_0._copyList, iter_18_0)
+	for i, v in ipairs(self._copyList) do
+		if v.groupId == snapshotSubId then
+			table.remove(self._copyList, i)
 
 			return
 		end
 	end
 
-	logError(string.format("HeroGroupPresetController:deleteHeroGroupCopy error heroGroupSnapShotId:%s,snapshotSubId:%s", var_18_1, arg_18_2))
+	logError(string.format("HeroGroupPresetController:deleteHeroGroupCopy error heroGroupSnapShotId:%s,snapshotSubId:%s", heroGroupSnapShotId, snapshotSubId))
 end
 
-function var_0_0.addHeroGroupCopy(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
-	if not arg_19_0:isFightScene() then
+function HeroGroupPresetController:addHeroGroupCopy(snapshotId, snapshotSubId, heroGroupMo)
+	if not self:isFightScene() then
 		return
 	end
 
-	if not arg_19_0._copyList then
+	if not self._copyList then
 		return
 	end
 
-	local var_19_0 = HeroGroupModel.instance:getPresetHeroGroupType()
+	local heroGroupType = HeroGroupModel.instance:getPresetHeroGroupType()
 
-	if not var_19_0 then
+	if not heroGroupType then
 		return
 	end
 
-	local var_19_1 = HeroGroupPresetEnum.HeroGroupType2SnapshotAllType[var_19_0]
+	local heroGroupSnapShotId = HeroGroupPresetEnum.HeroGroupType2SnapshotAllType[heroGroupType]
 
-	if var_19_1 ~= arg_19_1 then
-		logError(string.format("HeroGroupPresetController:addHeroGroupCopy error heroGroupSnapShotId:%s,snapshotId:%s", var_19_1, arg_19_1))
+	if heroGroupSnapShotId ~= snapshotId then
+		logError(string.format("HeroGroupPresetController:addHeroGroupCopy error heroGroupSnapShotId:%s,snapshotId:%s", heroGroupSnapShotId, snapshotId))
 
 		return
 	end
 
-	for iter_19_0, iter_19_1 in ipairs(arg_19_0._copyList) do
-		if iter_19_1.groupId == arg_19_2 then
-			table.remove(arg_19_0._copyList, iter_19_0)
-			logError(string.format("HeroGroupPresetController:addHeroGroupCopy remove error heroGroupSnapShotId:%s,snapshotSubId:%s", var_19_1, arg_19_2))
+	for i, v in ipairs(self._copyList) do
+		if v.groupId == snapshotSubId then
+			table.remove(self._copyList, i)
+			logError(string.format("HeroGroupPresetController:addHeroGroupCopy remove error heroGroupSnapShotId:%s,snapshotSubId:%s", heroGroupSnapShotId, snapshotSubId))
 
 			break
 		end
 	end
 
-	table.insert(arg_19_0._copyList, arg_19_3)
+	table.insert(self._copyList, heroGroupMo)
 end
 
-function var_0_0.revertCurHeroGroup(arg_20_0)
-	if not arg_20_0:isFightScene() then
+function HeroGroupPresetController:revertCurHeroGroup()
+	if not self:isFightScene() then
 		return
 	end
 
-	if not arg_20_0._copyList then
+	if not self._copyList then
 		return
 	end
 
-	local var_20_0 = HeroGroupModel.instance:getPresetHeroGroupType()
+	local presetHeroGroupType = HeroGroupModel.instance:getPresetHeroGroupType()
 
-	if not var_20_0 then
+	if not presetHeroGroupType then
 		return
 	end
 
-	local var_20_1 = HeroGroupModel.instance.heroGroupType
+	local heroGroupType = HeroGroupModel.instance.heroGroupType
 
-	if var_20_1 == ModuleEnum.HeroGroupType.Temp or var_20_1 == ModuleEnum.HeroGroupType.Trial then
+	if heroGroupType == ModuleEnum.HeroGroupType.Temp or heroGroupType == ModuleEnum.HeroGroupType.Trial then
 		return
 	end
 
-	local var_20_2 = HeroGroupModel.instance:getCurGroupMO()
+	local curHeroGroup = HeroGroupModel.instance:getCurGroupMO()
 
-	if not var_20_2 or not var_20_2.groupId then
+	if not curHeroGroup or not curHeroGroup.groupId then
 		return
 	end
 
-	local var_20_3 = ""
+	local copyListStr = ""
 
-	for iter_20_0, iter_20_1 in ipairs(arg_20_0._copyList) do
-		var_20_3 = string.format("%s#%s", var_20_3, iter_20_1.groupId)
+	for i, v in ipairs(self._copyList) do
+		copyListStr = string.format("%s#%s", copyListStr, v.groupId)
 
-		if iter_20_1.groupId == var_20_2.groupId then
-			var_20_2.name = var_20_2.name, var_20_2:init(iter_20_1)
+		if v.groupId == curHeroGroup.groupId then
+			local name = curHeroGroup.name
+
+			curHeroGroup:init(v)
+
+			curHeroGroup.name = name
 
 			return
 		end
 	end
 
-	logError(string.format("HeroGroupPresetController:revertCurHeroGroup error presetHeroGroupType:%s,heroGroupType:%s,snapshotSubId:%s,copyList:%s", var_20_0, var_20_1, var_20_2.groupId, var_20_3))
+	logError(string.format("HeroGroupPresetController:revertCurHeroGroup error presetHeroGroupType:%s,heroGroupType:%s,snapshotSubId:%s,copyList:%s", presetHeroGroupType, heroGroupType, curHeroGroup.groupId, copyListStr))
 end
 
-function var_0_0.clearCopyList(arg_21_0)
-	arg_21_0._copyList = nil
+function HeroGroupPresetController:clearCopyList()
+	self._copyList = nil
 end
 
-var_0_0.instance = var_0_0.New()
+HeroGroupPresetController.instance = HeroGroupPresetController.New()
 
-return var_0_0
+return HeroGroupPresetController

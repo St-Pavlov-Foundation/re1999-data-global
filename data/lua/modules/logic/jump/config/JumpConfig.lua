@@ -1,76 +1,78 @@
-﻿module("modules.logic.jump.config.JumpConfig", package.seeall)
+﻿-- chunkname: @modules/logic/jump/config/JumpConfig.lua
 
-local var_0_0 = class("JumpConfig", BaseConfig)
+module("modules.logic.jump.config.JumpConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._jumpConfig = nil
+local JumpConfig = class("JumpConfig", BaseConfig)
+
+function JumpConfig:ctor()
+	self._jumpConfig = nil
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function JumpConfig:reqConfigNames()
 	return {
 		"jump"
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "jump" then
-		arg_3_0._jumpConfig = arg_3_2
+function JumpConfig:onConfigLoaded(configName, configTable)
+	if configName == "jump" then
+		self._jumpConfig = configTable
 	end
 end
 
-function var_0_0.getJumpConfig(arg_4_0, arg_4_1)
-	arg_4_1 = tonumber(arg_4_1)
+function JumpConfig:getJumpConfig(jumpId)
+	jumpId = tonumber(jumpId)
 
-	if not arg_4_1 or arg_4_1 == 0 then
+	if not jumpId or jumpId == 0 then
 		logError("jumpId为空")
 
 		return nil
 	end
 
-	local var_4_0 = arg_4_0._jumpConfig.configDict[arg_4_1]
+	local config = self._jumpConfig.configDict[jumpId]
 
-	if not var_4_0 then
-		logError("没有找到跳转配置, jumpId: " .. tostring(arg_4_1))
+	if not config then
+		logError("没有找到跳转配置, jumpId: " .. tostring(jumpId))
 	end
 
-	return var_4_0
+	return config
 end
 
-function var_0_0.getJumpName(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = arg_5_0:getJumpConfig(arg_5_1)
+function JumpConfig:getJumpName(jumpId, replaceColor)
+	local config = self:getJumpConfig(jumpId)
 
-	if var_5_0 then
-		local var_5_1 = var_5_0.param
+	if config then
+		local jumpParam = config.param
 
-		if string.nilorempty(var_5_1) then
+		if string.nilorempty(jumpParam) then
 			logError("跳转参数为空")
 
 			return ""
 		end
 
-		local var_5_2 = arg_5_2 or "#3f485f"
-		local var_5_3 = string.split(var_5_1, "#")
-		local var_5_4 = tonumber(var_5_3[1])
+		local color = replaceColor or "#3f485f"
+		local jumps = string.split(jumpParam, "#")
+		local jumpView = tonumber(jumps[1])
 
-		if var_5_4 == JumpEnum.JumpView.DungeonViewWithEpisode then
-			local var_5_5 = tonumber(var_5_3[2])
+		if jumpView == JumpEnum.JumpView.DungeonViewWithEpisode then
+			local episodeId = tonumber(jumps[2])
 
-			return arg_5_0:getEpisodeNameAndIndex(var_5_5)
-		elseif var_5_4 == JumpEnum.JumpView.DungeonViewWithChapter then
-			local var_5_6 = tonumber(var_5_3[2])
-			local var_5_7 = DungeonConfig.instance:getChapterCO(var_5_6)
-			local var_5_8 = var_5_7.chapterIndex
+			return self:getEpisodeNameAndIndex(episodeId)
+		elseif jumpView == JumpEnum.JumpView.DungeonViewWithChapter then
+			local chapterId = tonumber(jumps[2])
+			local chapterConfig = DungeonConfig.instance:getChapterCO(chapterId)
+			local chapterIndex = chapterConfig.chapterIndex
 
-			if var_5_7 then
-				return string.format("<color=%s><size=32>%s</size></color>", var_5_2, var_5_0.name), ""
+			if chapterConfig then
+				return string.format("<color=%s><size=32>%s</size></color>", color, config.name), ""
 			end
-		elseif var_5_4 == JumpEnum.JumpView.Show then
-			return var_5_0.name or ""
+		elseif jumpView == JumpEnum.JumpView.Show then
+			return config.name or ""
 		else
-			return string.format("<color=%s><size=32>%s</size></color>", var_5_2, var_5_0.name) or ""
+			return string.format("<color=%s><size=32>%s</size></color>", color, config.name) or ""
 		end
 
-		logError("跳转参数错误: " .. var_5_1)
+		logError("跳转参数错误: " .. jumpParam)
 
 		return ""
 	end
@@ -78,77 +80,81 @@ function var_0_0.getJumpName(arg_5_0, arg_5_1, arg_5_2)
 	return ""
 end
 
-function var_0_0.getEpisodeNameAndIndex(arg_6_0, arg_6_1)
-	local var_6_0 = DungeonConfig.instance:getEpisodeCO(arg_6_1)
-	local var_6_1 = DungeonConfig.instance:getChapterCO(var_6_0.chapterId)
+function JumpConfig:getEpisodeNameAndIndex(episodeId)
+	local episodeConfig = DungeonConfig.instance:getEpisodeCO(episodeId)
+	local chapterConfig = DungeonConfig.instance:getChapterCO(episodeConfig.chapterId)
 
-	if var_6_1 and var_6_1.type == DungeonEnum.ChapterType.Hard then
-		var_6_0 = DungeonConfig.instance:getEpisodeCO(var_6_0.preEpisode)
-		var_6_1 = DungeonConfig.instance:getChapterCO(var_6_0.chapterId)
+	if chapterConfig and chapterConfig.type == DungeonEnum.ChapterType.Hard then
+		episodeConfig = DungeonConfig.instance:getEpisodeCO(episodeConfig.preEpisode)
+		chapterConfig = DungeonConfig.instance:getChapterCO(episodeConfig.chapterId)
 	end
 
-	if var_6_0 and var_6_1 then
-		local var_6_2 = var_6_1.chapterIndex
-		local var_6_3, var_6_4 = DungeonConfig.instance:getChapterEpisodeIndexWithSP(var_6_1.id, var_6_0.id)
+	if episodeConfig and chapterConfig then
+		local chapterIndex = chapterConfig.chapterIndex
+		local episodeIndex, type = DungeonConfig.instance:getChapterEpisodeIndexWithSP(chapterConfig.id, episodeConfig.id)
 
-		if var_6_4 == DungeonEnum.EpisodeType.Sp then
-			var_6_2 = "SP"
+		if type == DungeonEnum.EpisodeType.Sp then
+			chapterIndex = "SP"
 		end
 
-		return string.format("<color=#3f485f><size=32>%s</size></color>", var_6_0.name), string.format("%s-%s", var_6_2, var_6_3)
+		return string.format("<color=#3f485f><size=32>%s</size></color>", episodeConfig.name), string.format("%s-%s", chapterIndex, episodeIndex)
 	end
 end
 
-function var_0_0.getJumpEpisodeId(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0:getJumpConfig(arg_7_1).param
-	local var_7_1 = string.split(var_7_0, "#")
+function JumpConfig:getJumpEpisodeId(jumpId)
+	local jumpConfig = self:getJumpConfig(jumpId)
+	local jumpParam = jumpConfig.param
+	local jumps = string.split(jumpParam, "#")
+	local jumpView = tonumber(jumps[1])
 
-	if tonumber(var_7_1[1]) == JumpEnum.JumpView.DungeonViewWithEpisode then
-		return tonumber(var_7_1[2])
+	if jumpView == JumpEnum.JumpView.DungeonViewWithEpisode then
+		return tonumber(jumps[2])
 	end
 end
 
-function var_0_0.getJumpView(arg_8_0, arg_8_1)
-	if not arg_8_1 then
+function JumpConfig:getJumpView(jumpId)
+	if not jumpId then
 		return nil
 	end
 
-	local var_8_0 = arg_8_0:getJumpConfig(arg_8_1).param
-	local var_8_1 = string.split(var_8_0, "#")
+	local jumpConfig = self:getJumpConfig(jumpId)
+	local jumpParam = jumpConfig.param
+	local jumps = string.split(jumpParam, "#")
 
-	return tonumber(var_8_1[1])
+	return tonumber(jumps[1])
 end
 
-function var_0_0.isJumpHardDungeon(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_1 and DungeonConfig.instance:getEpisodeCO(arg_9_1)
-	local var_9_1 = var_9_0 and DungeonConfig.instance:getChapterCO(var_9_0.chapterId)
+function JumpConfig:isJumpHardDungeon(episodeId)
+	local episodeConfig = episodeId and DungeonConfig.instance:getEpisodeCO(episodeId)
+	local chapterConfig = episodeConfig and DungeonConfig.instance:getChapterCO(episodeConfig.chapterId)
 
-	return var_9_1 and var_9_1.type == DungeonEnum.ChapterType.Hard
+	return chapterConfig and chapterConfig.type == DungeonEnum.ChapterType.Hard
 end
 
-function var_0_0.isOpenJumpId(arg_10_0, arg_10_1)
+function JumpConfig:isOpenJumpId(jumpId)
 	if VersionValidator.instance:isInReviewing() ~= true then
 		return true
 	end
 
-	local var_10_0 = arg_10_0:getJumpConfig(arg_10_1).param
-	local var_10_1 = string.split(var_10_0, "#")
-	local var_10_2 = tonumber(var_10_1[1])
+	local jumpConfig = self:getJumpConfig(jumpId)
+	local jumpParam = jumpConfig.param
+	local jumps = string.split(jumpParam, "#")
+	local jumpView = tonumber(jumps[1])
 
-	if var_10_2 == JumpEnum.JumpView.DungeonViewWithEpisode then
-		local var_10_3 = tonumber(var_10_1[2])
-		local var_10_4 = var_10_3 and DungeonConfig.instance:getEpisodeCO(var_10_3)
+	if jumpView == JumpEnum.JumpView.DungeonViewWithEpisode then
+		local episodeId = tonumber(jumps[2])
+		local episodeConfig = episodeId and DungeonConfig.instance:getEpisodeCO(episodeId)
 
-		if var_10_4 then
-			return ResSplitConfig.instance:isSaveChapter(var_10_4.chapterId)
+		if episodeConfig then
+			return ResSplitConfig.instance:isSaveChapter(episodeConfig.chapterId)
 		end
-	elseif var_10_2 == JumpEnum.JumpView.NoticeView then
+	elseif jumpView == JumpEnum.JumpView.NoticeView then
 		return OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Notice)
 	end
 
 	return true
 end
 
-var_0_0.instance = var_0_0.New()
+JumpConfig.instance = JumpConfig.New()
 
-return var_0_0
+return JumpConfig

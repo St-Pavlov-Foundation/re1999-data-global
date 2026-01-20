@@ -1,57 +1,63 @@
-﻿module("modules.logic.versionactivity1_2.trade.model.Activity117RewardMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/trade/model/Activity117RewardMO.lua
 
-local var_0_0 = pureTable("Activity117RewardMO")
+module("modules.logic.versionactivity1_2.trade.model.Activity117RewardMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.actId = arg_1_1.activityId
-	arg_1_0.id = arg_1_1.id
-	arg_1_0.needScore = arg_1_1.needScore
-	arg_1_0.co = arg_1_1
-	arg_1_0.rewardItems = arg_1_0:getRewardItems()
+local Activity117RewardMO = pureTable("Activity117RewardMO")
 
-	arg_1_0:resetData()
+function Activity117RewardMO:init(co)
+	self.actId = co.activityId
+	self.id = co.id
+	self.needScore = co.needScore
+	self.co = co
+	self.rewardItems = self:getRewardItems()
+
+	self:resetData()
 end
 
-function var_0_0.resetData(arg_2_0)
-	arg_2_0.alreadyGot = false
+function Activity117RewardMO:resetData()
+	self.alreadyGot = false
 end
 
-function var_0_0.updateServerData(arg_3_0, arg_3_1)
-	arg_3_0.alreadyGot = arg_3_1
+function Activity117RewardMO:updateServerData(alreadyGot)
+	self.alreadyGot = alreadyGot
 end
 
-function var_0_0.getRewardItems(arg_4_0)
-	local var_4_0 = {}
-	local var_4_1 = string.split(arg_4_0.co.bonus, "|")
+function Activity117RewardMO:getRewardItems()
+	local list = {}
+	local rewards = string.split(self.co.bonus, "|")
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_1) do
-		var_4_0[iter_4_0] = string.splitToNumber(iter_4_1, "#")
+	for i, v in ipairs(rewards) do
+		local itemMo = string.splitToNumber(v, "#")
+
+		list[i] = itemMo
 	end
 
-	return var_4_0
+	return list
 end
 
-function var_0_0.getStatus(arg_5_0)
-	if arg_5_0.alreadyGot then
+function Activity117RewardMO:getStatus()
+	if self.alreadyGot then
 		return Activity117Enum.Status.AlreadyGot
 	end
 
-	if Activity117Model.instance:getCurrentScore(arg_5_0.actId) >= arg_5_0.needScore then
+	local score = Activity117Model.instance:getCurrentScore(self.actId)
+
+	if score >= self.needScore then
 		return Activity117Enum.Status.CanGet
 	end
 
 	return Activity117Enum.Status.NotEnough
 end
 
-function var_0_0.sortFunc(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0:getStatus()
-	local var_6_1 = arg_6_1:getStatus()
+function Activity117RewardMO.sortFunc(a, b)
+	local astatus = a:getStatus()
+	local bstatus = b:getStatus()
 
-	if var_6_0 ~= var_6_1 then
-		return var_6_0 < var_6_1
+	if astatus ~= bstatus then
+		return astatus < bstatus
 	end
 
-	return arg_6_0.id < arg_6_1.id
+	return a.id < b.id
 end
 
-return var_0_0
+return Activity117RewardMO

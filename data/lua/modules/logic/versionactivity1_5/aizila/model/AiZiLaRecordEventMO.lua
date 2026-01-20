@@ -1,30 +1,32 @@
-﻿module("modules.logic.versionactivity1_5.aizila.model.AiZiLaRecordEventMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/aizila/model/AiZiLaRecordEventMO.lua
 
-local var_0_0 = pureTable("AiZiLaRecordEventMO")
+module("modules.logic.versionactivity1_5.aizila.model.AiZiLaRecordEventMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1.eventId
-	arg_1_0.eventId = arg_1_1.eventId
-	arg_1_0.config = arg_1_1
-	arg_1_0._actId = arg_1_1.activityId
+local AiZiLaRecordEventMO = pureTable("AiZiLaRecordEventMO")
 
-	if arg_1_1 and not string.nilorempty(arg_1_1.optionIds) then
-		arg_1_0._optionIds = string.splitToNumber(arg_1_1.optionIds, "|")
+function AiZiLaRecordEventMO:init(eventCfg)
+	self.id = eventCfg.eventId
+	self.eventId = eventCfg.eventId
+	self.config = eventCfg
+	self._actId = eventCfg.activityId
+
+	if eventCfg and not string.nilorempty(eventCfg.optionIds) then
+		self._optionIds = string.splitToNumber(eventCfg.optionIds, "|")
 	end
 
-	arg_1_0._optionIds = arg_1_0._optionIds or {}
-	arg_1_0._redPointKey = AiZiLaHelper.getRedKey(RedDotEnum.DotNode.V1a5AiZiLaRecordEventNew, arg_1_0.eventId)
+	self._optionIds = self._optionIds or {}
+	self._redPointKey = AiZiLaHelper.getRedKey(RedDotEnum.DotNode.V1a5AiZiLaRecordEventNew, self.eventId)
 end
 
-function var_0_0.isFinished(arg_2_0)
-	local var_2_0 = AiZiLaModel.instance
+function AiZiLaRecordEventMO:isFinished()
+	local tAiZiLaModel = AiZiLaModel.instance
 
-	if not var_2_0:isSelectEventId(arg_2_0.eventId) then
+	if not tAiZiLaModel:isSelectEventId(self.eventId) then
 		return false
 	end
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0._optionIds) do
-		if var_2_0:isSelectOptionId(iter_2_1) then
+	for _, optionId in ipairs(self._optionIds) do
+		if tAiZiLaModel:isSelectOptionId(optionId) then
 			return true
 		end
 	end
@@ -32,35 +34,35 @@ function var_0_0.isFinished(arg_2_0)
 	return false
 end
 
-function var_0_0.getSelectOptionCfg(arg_3_0)
-	local var_3_0 = AiZiLaModel.instance
-	local var_3_1 = AiZiLaConfig.instance
+function AiZiLaRecordEventMO:getSelectOptionCfg()
+	local tAiZiLaModel = AiZiLaModel.instance
+	local tAiZiLaConfig = AiZiLaConfig.instance
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0._optionIds) do
-		if var_3_0:isSelectOptionId(iter_3_1) then
-			local var_3_2 = var_3_1:getOptionCo(arg_3_0._actId, iter_3_1)
+	for _, optionId in ipairs(self._optionIds) do
+		if tAiZiLaModel:isSelectOptionId(optionId) then
+			local optionCfg = tAiZiLaConfig:getOptionCo(self._actId, optionId)
 
-			if var_3_2 then
-				return var_3_2
+			if optionCfg then
+				return optionCfg
 			end
 		end
 	end
 end
 
-function var_0_0.isHasRed(arg_4_0)
-	if arg_4_0:isFinished() and not AiZiLaHelper.isFinishRed(arg_4_0._redPointKey) then
+function AiZiLaRecordEventMO:isHasRed()
+	if self:isFinished() and not AiZiLaHelper.isFinishRed(self._redPointKey) then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.finishRed(arg_5_0)
-	AiZiLaHelper.finishRed(arg_5_0._redPointKey, true)
+function AiZiLaRecordEventMO:finishRed()
+	AiZiLaHelper.finishRed(self._redPointKey, true)
 end
 
-function var_0_0.getRedUid(arg_6_0)
-	return arg_6_0.eventId
+function AiZiLaRecordEventMO:getRedUid()
+	return self.eventId
 end
 
-return var_0_0
+return AiZiLaRecordEventMO

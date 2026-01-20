@@ -1,17 +1,19 @@
-﻿module("modules.logic.bossrush.view.v1a6.V1a6_BossRush_ResultPanelContainer", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/view/v1a6/V1a6_BossRush_ResultPanelContainer.lua
 
-local var_0_0 = class("V1a6_BossRush_ResultPanelContainer", BaseViewContainer)
+module("modules.logic.bossrush.view.v1a6.V1a6_BossRush_ResultPanelContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {
+local V1a6_BossRush_ResultPanelContainer = class("V1a6_BossRush_ResultPanelContainer", BaseViewContainer)
+
+function V1a6_BossRush_ResultPanelContainer:buildViews()
+	local views = {
 		V1a6_BossRush_ResultPanel.New()
 	}
 
 	if isDebugBuild and GMBattleModel.instance.enableGMFightRecord then
-		table.insert(var_1_0, FightGMRecordView.New())
+		table.insert(views, FightGMRecordView.New())
 	end
 
-	return var_1_0
+	return views
 end
 
-return var_0_0
+return V1a6_BossRush_ResultPanelContainer

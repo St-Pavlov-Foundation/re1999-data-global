@@ -1,19 +1,21 @@
-﻿module("modules.logic.fight.entity.comp.skill.FightTLEventMarkSceneDefaultRoot", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skill/FightTLEventMarkSceneDefaultRoot.lua
 
-local var_0_0 = class("FightTLEventMarkSceneDefaultRoot", FightTimelineTrackItem)
+module("modules.logic.fight.entity.comp.skill.FightTLEventMarkSceneDefaultRoot", package.seeall)
 
-function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	var_0_0.sceneId = GameSceneMgr.instance:getCurSceneId()
-	var_0_0.levelId = GameSceneMgr.instance:getCurLevelId()
-	var_0_0.rootName = arg_1_3[1]
+local FightTLEventMarkSceneDefaultRoot = class("FightTLEventMarkSceneDefaultRoot", FightTimelineTrackItem)
+
+function FightTLEventMarkSceneDefaultRoot:onTrackStart(fightStepData, duration, paramsArr)
+	FightTLEventMarkSceneDefaultRoot.sceneId = GameSceneMgr.instance:getCurSceneId()
+	FightTLEventMarkSceneDefaultRoot.levelId = GameSceneMgr.instance:getCurLevelId()
+	FightTLEventMarkSceneDefaultRoot.rootName = paramsArr[1]
 end
 
-function var_0_0.onTrackEnd(arg_2_0)
+function FightTLEventMarkSceneDefaultRoot:onTrackEnd()
 	return
 end
 
-function var_0_0.onDestructor(arg_3_0)
+function FightTLEventMarkSceneDefaultRoot:onDestructor()
 	return
 end
 
-return var_0_0
+return FightTLEventMarkSceneDefaultRoot

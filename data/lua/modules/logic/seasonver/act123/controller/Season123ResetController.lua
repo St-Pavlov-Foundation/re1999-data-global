@@ -1,194 +1,204 @@
-﻿module("modules.logic.seasonver.act123.controller.Season123ResetController", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/controller/Season123ResetController.lua
 
-local var_0_0 = class("Season123ResetController", BaseController)
+module("modules.logic.seasonver.act123.controller.Season123ResetController", package.seeall)
 
-function var_0_0.onOpenView(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	Season123Controller.instance:registerCallback(Season123Event.GetActInfo, arg_1_0.handleGetActInfo, arg_1_0)
-	Season123Controller.instance:registerCallback(Season123Event.StageInfoChanged, arg_1_0.handleStageInfoChange, arg_1_0)
-	Season123ResetModel.instance:init(arg_1_1, arg_1_2, arg_1_3)
+local Season123ResetController = class("Season123ResetController", BaseController)
+
+function Season123ResetController:onOpenView(actId, stage, layer)
+	Season123Controller.instance:registerCallback(Season123Event.GetActInfo, self.handleGetActInfo, self)
+	Season123Controller.instance:registerCallback(Season123Event.StageInfoChanged, self.handleStageInfoChange, self)
+	Season123ResetModel.instance:init(actId, stage, layer)
 	Season123Controller.instance:checkAndHandleEffectEquip({
-		actId = arg_1_1,
-		stage = arg_1_2,
-		layer = arg_1_3
+		actId = actId,
+		stage = stage,
+		layer = layer
 	})
 end
 
-function var_0_0.onCloseView(arg_2_0)
-	Season123Controller.instance:unregisterCallback(Season123Event.GetActInfo, arg_2_0.handleGetActInfo, arg_2_0)
-	Season123Controller.instance:unregisterCallback(Season123Event.StageInfoChanged, arg_2_0.handleStageInfoChange, arg_2_0)
+function Season123ResetController:onCloseView()
+	Season123Controller.instance:unregisterCallback(Season123Event.GetActInfo, self.handleGetActInfo, self)
+	Season123Controller.instance:unregisterCallback(Season123Event.StageInfoChanged, self.handleStageInfoChange, self)
 	Season123ResetModel.instance:release()
 end
 
-function var_0_0.selectLayer(arg_3_0, arg_3_1)
-	if arg_3_1 == Season123ResetModel.instance.layer then
+function Season123ResetController:selectLayer(layer)
+	if layer == Season123ResetModel.instance.layer then
 		return
 	end
 
-	if arg_3_1 == nil then
+	if layer == nil then
 		Season123ResetModel.instance.layer = nil
-	elseif arg_3_1 == Season123ResetModel.EmptySelect then
-		Season123ResetModel.instance.layer = arg_3_1
-	elseif Season123ResetModel.instance:getById(arg_3_1).isFinished then
-		Season123ResetModel.instance.layer = arg_3_1
+	elseif layer == Season123ResetModel.EmptySelect then
+		Season123ResetModel.instance.layer = layer
 	else
-		return
+		local layerMO = Season123ResetModel.instance:getById(layer)
+
+		if layerMO.isFinished then
+			Season123ResetModel.instance.layer = layer
+		else
+			return
+		end
 	end
 
 	Season123ResetModel.instance:updateHeroList()
-	arg_3_0:notifyView()
+	self:notifyView()
 
 	return true
 end
 
-function var_0_0.tryReset(arg_4_0)
+function Season123ResetController:tryReset()
 	if Season123ResetModel.instance.layer then
 		if Season123ResetModel.instance.layer ~= Season123ResetModel.EmptySelect then
-			arg_4_0:trySendResetLayer()
+			self:trySendResetLayer()
 		end
 	else
-		arg_4_0:trySendResetStage()
+		self:trySendResetStage()
 	end
 end
 
-function var_0_0.trySendResetStage(arg_5_0)
-	GameFacade.showMessageBox(MessageBoxIdDefine.Season123ResetConfirm, MsgBoxEnum.BoxType.Yes_No, arg_5_0.receiveResetStage, nil, nil, arg_5_0)
+function Season123ResetController:trySendResetStage()
+	GameFacade.showMessageBox(MessageBoxIdDefine.Season123ResetConfirm, MsgBoxEnum.BoxType.Yes_No, self.receiveResetStage, nil, nil, self)
 end
 
-function var_0_0.receiveResetStage(arg_6_0)
-	Activity123Rpc.instance:sendAct123EndStageRequest(Season123ResetModel.instance.activityId, Season123ResetModel.instance.stage, arg_6_0.receiveResetFinish, arg_6_0)
+function Season123ResetController:receiveResetStage()
+	Activity123Rpc.instance:sendAct123EndStageRequest(Season123ResetModel.instance.activityId, Season123ResetModel.instance.stage, self.receiveResetFinish, self)
 end
 
-function var_0_0.trySendResetLayer(arg_7_0)
-	local var_7_0 = Season123ResetModel.instance.stage
+function Season123ResetController:trySendResetLayer()
+	local stage = Season123ResetModel.instance.stage
 
-	if arg_7_0:isStageNeedClean(var_7_0) then
-		GameFacade.showMessageBox(MessageBoxIdDefine.Season123WarningCleanStage, MsgBoxEnum.BoxType.Yes_No, arg_7_0.checkCleanNextLayers, nil, nil, arg_7_0, nil, nil)
+	if self:isStageNeedClean(stage) then
+		GameFacade.showMessageBox(MessageBoxIdDefine.Season123WarningCleanStage, MsgBoxEnum.BoxType.Yes_No, self.checkCleanNextLayers, nil, nil, self, nil, nil)
 
 		return
 	end
 
-	arg_7_0:checkCleanNextLayers()
+	self:checkCleanNextLayers()
 end
 
-function var_0_0.checkCleanNextLayers(arg_8_0)
-	local var_8_0 = Season123ResetModel.instance.layer
+function Season123ResetController:checkCleanNextLayers()
+	local layer = Season123ResetModel.instance.layer
 
-	if arg_8_0:isNextLayersNeedClean(var_8_0) then
-		GameFacade.showMessageBox(MessageBoxIdDefine.Season123WarningCleanLayer, MsgBoxEnum.BoxType.Yes_No, arg_8_0.startSendResetLayer, nil, nil, arg_8_0, nil, nil)
+	if self:isNextLayersNeedClean(layer) then
+		GameFacade.showMessageBox(MessageBoxIdDefine.Season123WarningCleanLayer, MsgBoxEnum.BoxType.Yes_No, self.startSendResetLayer, nil, nil, self, nil, nil)
 
 		return
 	end
 
-	arg_8_0:startSendResetLayer()
+	self:startSendResetLayer()
 end
 
-function var_0_0.startSendResetLayer(arg_9_0)
-	local var_9_0 = Season123ResetModel.instance.activityId
-	local var_9_1 = Season123ResetModel.instance.stage
-	local var_9_2 = Season123ResetModel.instance.layer
+function Season123ResetController:startSendResetLayer()
+	local actId = Season123ResetModel.instance.activityId
+	local stage = Season123ResetModel.instance.stage
+	local layer = Season123ResetModel.instance.layer
 
-	if arg_9_0:isStageNeedClean(var_9_1) then
-		Activity123Rpc.instance:sendAct123ResetOtherStageRequest(var_9_0, var_9_1, arg_9_0.receiveResetOtherStage, arg_9_0)
+	if self:isStageNeedClean(stage) then
+		Activity123Rpc.instance:sendAct123ResetOtherStageRequest(actId, stage, self.receiveResetOtherStage, self)
 
 		return
 	end
 
-	arg_9_0:handleResetOtherStage()
+	self:handleResetOtherStage()
 end
 
-function var_0_0.receiveResetOtherStage(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	if arg_10_2 == 0 then
-		arg_10_0:handleResetOtherStage()
+function Season123ResetController:receiveResetOtherStage(cmd, resultCode, msg)
+	if resultCode == 0 then
+		self:handleResetOtherStage()
 	end
 end
 
-function var_0_0.handleResetOtherStage(arg_11_0)
-	local var_11_0 = Season123ResetModel.instance.activityId
-	local var_11_1 = Season123ResetModel.instance.stage
-	local var_11_2 = Season123ResetModel.instance.layer
-	local var_11_3 = Season123Model.instance:getActInfo(var_11_0)
+function Season123ResetController:handleResetOtherStage()
+	local actId = Season123ResetModel.instance.activityId
+	local stage = Season123ResetModel.instance.stage
+	local layer = Season123ResetModel.instance.layer
+	local seasonMO = Season123Model.instance:getActInfo(actId)
 
-	if not var_11_3 then
+	if not seasonMO then
 		return
 	end
 
-	local var_11_4 = var_11_3:getStageMO(var_11_1)
+	local stageMO = seasonMO:getStageMO(stage)
 
-	if not var_11_4 then
+	if not stageMO then
 		return
 	end
 
-	if var_11_4.episodeMap[var_11_2] and var_11_4.episodeMap[var_11_2]:isFinished() then
-		Activity123Rpc.instance:sendAct123ResetHighLayerRequest(var_11_0, var_11_1, var_11_2, arg_11_0.receiveResetFinish, arg_11_0)
+	if stageMO.episodeMap[layer] and stageMO.episodeMap[layer]:isFinished() then
+		Activity123Rpc.instance:sendAct123ResetHighLayerRequest(actId, stage, layer, self.receiveResetFinish, self)
 
 		return
 	end
 
-	arg_11_0:notifyResetFinish()
+	self:notifyResetFinish()
 end
 
-function var_0_0.receiveResetFinish(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	if arg_12_2 == 0 then
-		arg_12_0:notifyResetFinish()
+function Season123ResetController:receiveResetFinish(cmd, resultCode, msg)
+	if resultCode == 0 then
+		self:notifyResetFinish()
 	end
 end
 
-function var_0_0.notifyResetFinish(arg_13_0)
+function Season123ResetController:notifyResetFinish()
 	GameFacade.showToast(ToastEnum.WeekwalkResetLayer)
 	Activity123Rpc.instance:sendGet123InfosRequest(Season123ResetModel.instance.activityId)
 	Season123Controller.instance:dispatchEvent(Season123Event.OnResetSucc)
 end
 
-function var_0_0.handleGetActInfo(arg_14_0)
-	arg_14_0:updateModel()
+function Season123ResetController:handleGetActInfo()
+	self:updateModel()
 end
 
-function var_0_0.handleStageInfoChange(arg_15_0)
-	arg_15_0:updateModel()
+function Season123ResetController:handleStageInfoChange()
+	self:updateModel()
 end
 
-function var_0_0.updateModel(arg_16_0)
-	local var_16_0 = Season123ResetModel.instance.layer
+function Season123ResetController:updateModel()
+	local layer = Season123ResetModel.instance.layer
 
 	Season123ResetModel.instance:initEpisodeList()
 
-	if var_16_0 and not Season123ResetModel.instance:getById(var_16_0).isFinished then
-		Season123ResetModel.instance.layer = Season123ResetModel.instance:getCurrentChallengeLayer()
+	if layer then
+		local layerMO = Season123ResetModel.instance:getById(layer)
+
+		if not layerMO.isFinished then
+			Season123ResetModel.instance.layer = Season123ResetModel.instance:getCurrentChallengeLayer()
+		end
 	end
 
 	Season123ResetModel.instance:updateHeroList()
-	arg_16_0:notifyView()
+	self:notifyView()
 end
 
-function var_0_0.isStageNeedClean(arg_17_0, arg_17_1)
-	local var_17_0 = Season123ResetModel.instance.activityId
-	local var_17_1 = Season123ResetModel.instance.stage
-	local var_17_2 = Season123Model.instance:getActInfo(var_17_0)
+function Season123ResetController:isStageNeedClean(curStage)
+	local actId = Season123ResetModel.instance.activityId
+	local stage = Season123ResetModel.instance.stage
+	local seasonMO = Season123Model.instance:getActInfo(actId)
 
-	if not var_17_2 then
+	if not seasonMO then
 		return false
 	end
 
-	return var_17_2.stage ~= 0 and var_17_2.stage ~= arg_17_1
+	return seasonMO.stage ~= 0 and seasonMO.stage ~= curStage
 end
 
-function var_0_0.isNextLayersNeedClean(arg_18_0, arg_18_1)
-	local var_18_0 = Season123ResetModel.instance.activityId
-	local var_18_1 = Season123ResetModel.instance.stage
-	local var_18_2 = Season123Model.instance:getActInfo(var_18_0)
+function Season123ResetController:isNextLayersNeedClean(curLayer)
+	local actId = Season123ResetModel.instance.activityId
+	local stage = Season123ResetModel.instance.stage
+	local seasonMO = Season123Model.instance:getActInfo(actId)
 
-	if not var_18_2 then
+	if not seasonMO then
 		return false
 	end
 
-	local var_18_3 = var_18_2.stageMap[var_18_1]
+	local stageMO = seasonMO.stageMap[stage]
 
-	if not var_18_3 or not var_18_3.episodeMap then
+	if not stageMO or not stageMO.episodeMap then
 		return false
 	end
 
-	for iter_18_0, iter_18_1 in pairs(var_18_3.episodeMap) do
-		if arg_18_1 <= iter_18_1.layer and iter_18_1:isFinished() then
+	for layer, episodeMO in pairs(stageMO.episodeMap) do
+		if curLayer <= episodeMO.layer and episodeMO:isFinished() then
 			return true
 		end
 	end
@@ -196,10 +206,10 @@ function var_0_0.isNextLayersNeedClean(arg_18_0, arg_18_1)
 	return false
 end
 
-function var_0_0.notifyView(arg_19_0)
+function Season123ResetController:notifyView()
 	Season123Controller.instance:dispatchEvent(Season123Event.RefreshResetView)
 end
 
-var_0_0.instance = var_0_0.New()
+Season123ResetController.instance = Season123ResetController.New()
 
-return var_0_0
+return Season123ResetController

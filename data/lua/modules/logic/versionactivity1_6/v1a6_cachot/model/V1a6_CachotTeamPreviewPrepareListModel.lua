@@ -1,27 +1,32 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotTeamPreviewPrepareListModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/model/V1a6_CachotTeamPreviewPrepareListModel.lua
 
-local var_0_0 = class("V1a6_CachotTeamPreviewPrepareListModel", ListScrollModel)
+module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotTeamPreviewPrepareListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local V1a6_CachotTeamPreviewPrepareListModel = class("V1a6_CachotTeamPreviewPrepareListModel", ListScrollModel)
+
+function V1a6_CachotTeamPreviewPrepareListModel:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:onInit()
+function V1a6_CachotTeamPreviewPrepareListModel:reInit()
+	self:onInit()
 end
 
-function var_0_0.initList(arg_3_0)
-	local var_3_0 = V1a6_CachotModel.instance:getRogueInfo().teamInfo:getSupportHeros()
-	local var_3_1 = math.ceil(#var_3_0 / 4)
-	local var_3_2 = math.max(var_3_1, 1)
+function V1a6_CachotTeamPreviewPrepareListModel:initList()
+	local rogueInfo = V1a6_CachotModel.instance:getRogueInfo()
+	local teamInfo = rogueInfo.teamInfo
+	local heroList = teamInfo:getSupportHeros()
+	local pageNum = math.ceil(#heroList / 4)
 
-	for iter_3_0 = #var_3_0 + 1, var_3_2 * 4 do
-		table.insert(var_3_0, HeroSingleGroupMO.New())
+	pageNum = math.max(pageNum, 1)
+
+	for i = #heroList + 1, pageNum * 4 do
+		table.insert(heroList, HeroSingleGroupMO.New())
 	end
 
-	arg_3_0:setList(var_3_0)
+	self:setList(heroList)
 end
 
-var_0_0.instance = var_0_0.New()
+V1a6_CachotTeamPreviewPrepareListModel.instance = V1a6_CachotTeamPreviewPrepareListModel.New()
 
-return var_0_0
+return V1a6_CachotTeamPreviewPrepareListModel

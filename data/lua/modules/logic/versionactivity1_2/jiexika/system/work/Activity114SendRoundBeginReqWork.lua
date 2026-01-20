@@ -1,36 +1,40 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114SendRoundBeginReqWork", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/system/work/Activity114SendRoundBeginReqWork.lua
 
-local var_0_0 = class("Activity114SendRoundBeginReqWork", Activity114ReqBaseWork)
+module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114SendRoundBeginReqWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	if Activity114Model.instance.serverData.day ~= arg_1_0.context.day or Activity114Model.instance.serverData.round ~= arg_1_0.context.round then
-		arg_1_0:onDone(true)
+local Activity114SendRoundBeginReqWork = class("Activity114SendRoundBeginReqWork", Activity114ReqBaseWork)
+
+function Activity114SendRoundBeginReqWork:onStart()
+	if Activity114Model.instance.serverData.day ~= self.context.day or Activity114Model.instance.serverData.round ~= self.context.round then
+		self:onDone(true)
 
 		return
 	end
 
-	Activity114Rpc.instance:markRoundStory(Activity114Model.instance.id, arg_1_0.onReply, arg_1_0)
+	Activity114Rpc.instance:markRoundStory(Activity114Model.instance.id, self.onReply, self)
 end
 
-function var_0_0.onReply(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	if arg_2_2 == 0 then
-		local var_2_0 = Activity114Config.instance:getRoundCo(Activity114Model.instance.id, arg_2_0.context.day, arg_2_0.context.round)
+function Activity114SendRoundBeginReqWork:onReply(cmd, resultCode, msg)
+	if resultCode == 0 then
+		local roundCo = Activity114Config.instance:getRoundCo(Activity114Model.instance.id, self.context.day, self.context.round)
 
-		if var_2_0 and var_2_0.isSkip == 1 then
-			local var_2_1 = Activity114Config.instance:getRoundCo(Activity114Model.instance.id, arg_2_0.context.day, arg_2_0.context.round + 1) or Activity114Config.instance:getRoundCo(Activity114Model.instance.id, arg_2_0.context.day + 1, 1)
+		if roundCo and roundCo.isSkip == 1 then
+			local newRoundCo = Activity114Config.instance:getRoundCo(Activity114Model.instance.id, self.context.day, self.context.round + 1)
 
-			if var_2_1 then
-				Activity114Model.instance.serverData.day = var_2_1.day
-				Activity114Model.instance.serverData.round = var_2_1.id
+			newRoundCo = newRoundCo or Activity114Config.instance:getRoundCo(Activity114Model.instance.id, self.context.day + 1, 1)
+
+			if newRoundCo then
+				Activity114Model.instance.serverData.day = newRoundCo.day
+				Activity114Model.instance.serverData.round = newRoundCo.id
 			else
-				logError("没有下回合配置？" .. arg_2_0.context.day .. "  #  " .. arg_2_0.context.round)
+				logError("没有下回合配置？" .. self.context.day .. "  #  " .. self.context.round)
 			end
 		else
 			Activity114Model.instance.serverData.isReadRoundStory = true
 		end
 	end
 
-	var_0_0.super.onReply(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	Activity114SendRoundBeginReqWork.super.onReply(self, cmd, resultCode, msg)
 end
 
-return var_0_0
+return Activity114SendRoundBeginReqWork

@@ -1,86 +1,90 @@
-﻿module("modules.logic.fight.view.cardeffect.FightCardDisplayEffect", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/cardeffect/FightCardDisplayEffect.lua
 
-local var_0_0 = class("FightCardDisplayEffect", BaseWork)
-local var_0_1 = 1
-local var_0_2 = var_0_1 * 0.033
+module("modules.logic.fight.view.cardeffect.FightCardDisplayEffect", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+local FightCardDisplayEffect = class("FightCardDisplayEffect", BaseWork)
+local TimeFactor = 1
+local dt = TimeFactor * 0.033
 
-	arg_1_0._dt = var_0_2 / FightModel.instance:getUISpeed()
+function FightCardDisplayEffect:onStart(context)
+	FightCardDisplayEffect.super.onStart(self, context)
 
-	gohelper.setActive(arg_1_1.skillTipsGO, true)
+	self._dt = dt / FightModel.instance:getUISpeed()
 
-	local var_1_0 = arg_1_1.skillTipsGO.transform
-	local var_1_1 = recthelper.getWidth(var_1_0)
-	local var_1_2 = arg_1_1.skillItemGO.transform.parent
-	local var_1_3 = recthelper.getAnchorX(var_1_2) - recthelper.getWidth(var_1_2) * 0.5
+	gohelper.setActive(context.skillTipsGO, true)
 
-	recthelper.setAnchorX(var_1_0, 1100 + var_1_1)
+	local tipsTr = context.skillTipsGO.transform
+	local tipsWidth = recthelper.getWidth(tipsTr)
+	local cardTr = context.skillItemGO.transform.parent
+	local itemPosX = recthelper.getAnchorX(cardTr)
+	local itemWidth = recthelper.getWidth(cardTr)
+	local tipsPosX = itemPosX - itemWidth * 0.5
 
-	local var_1_4 = FlowSequence.New()
+	recthelper.setAnchorX(tipsTr, 1100 + tipsWidth)
 
-	var_1_4:addWork(TweenWork.New({
+	local tipsSequence = FlowSequence.New()
+
+	tipsSequence:addWork(TweenWork.New({
 		type = "DOAnchorPosX",
-		tr = var_1_0,
-		to = var_1_3 - 47.5,
-		t = arg_1_0._dt * 7
+		tr = tipsTr,
+		to = tipsPosX - 47.5,
+		t = self._dt * 7
 	}))
-	var_1_4:addWork(TweenWork.New({
+	tipsSequence:addWork(TweenWork.New({
 		type = "DOAnchorPosX",
-		tr = var_1_0,
-		to = var_1_3 - 34.2,
-		t = arg_1_0._dt * 3
+		tr = tipsTr,
+		to = tipsPosX - 34.2,
+		t = self._dt * 3
 	}))
 
-	local var_1_5 = arg_1_1.skillItemGO.transform
-	local var_1_6 = FlowSequence.New()
+	local itemTr = context.skillItemGO.transform
+	local itemAnchorSequence = FlowSequence.New()
 
-	var_1_6:addWork(TweenWork.New({
+	itemAnchorSequence:addWork(TweenWork.New({
 		type = "DOAnchorPos",
 		tox = -15,
 		toy = 22,
-		tr = var_1_5,
-		t = arg_1_0._dt * 6
+		tr = itemTr,
+		t = self._dt * 6
 	}))
 
-	local var_1_7 = FlowSequence.New()
+	local itemScaleSequence = FlowSequence.New()
 
-	var_1_7:addWork(TweenWork.New({
+	itemScaleSequence:addWork(TweenWork.New({
 		to = 0.922,
 		type = "DOScale",
-		tr = var_1_5,
-		t = arg_1_0._dt * 3
+		tr = itemTr,
+		t = self._dt * 3
 	}))
-	var_1_7:addWork(TweenWork.New({
+	itemScaleSequence:addWork(TweenWork.New({
 		to = 1.2,
 		type = "DOScale",
-		tr = var_1_5,
-		t = arg_1_0._dt * 3
+		tr = itemTr,
+		t = self._dt * 3
 	}))
 
-	arg_1_0._flow = FlowParallel.New()
+	self._flow = FlowParallel.New()
 
-	arg_1_0._flow:addWork(var_1_4)
-	arg_1_0._flow:addWork(var_1_6)
-	arg_1_0._flow:addWork(var_1_7)
-	arg_1_0._flow:registerDoneListener(arg_1_0._onWorkDone, arg_1_0)
-	arg_1_0._flow:start()
+	self._flow:addWork(tipsSequence)
+	self._flow:addWork(itemAnchorSequence)
+	self._flow:addWork(itemScaleSequence)
+	self._flow:registerDoneListener(self._onWorkDone, self)
+	self._flow:start()
 end
 
-function var_0_0.onStop(arg_2_0)
-	var_0_0.super.onStop(arg_2_0)
+function FightCardDisplayEffect:onStop()
+	FightCardDisplayEffect.super.onStop(self)
 
-	if arg_2_0._flow then
-		arg_2_0._flow:unregisterDoneListener(arg_2_0._onWorkDone, arg_2_0)
-		arg_2_0._flow:stop()
+	if self._flow then
+		self._flow:unregisterDoneListener(self._onWorkDone, self)
+		self._flow:stop()
 
-		arg_2_0._flow = nil
+		self._flow = nil
 	end
 end
 
-function var_0_0._onWorkDone(arg_3_0)
-	arg_3_0:onDone(true)
+function FightCardDisplayEffect:_onWorkDone()
+	self:onDone(true)
 end
 
-return var_0_0
+return FightCardDisplayEffect

@@ -1,31 +1,33 @@
-﻿module("modules.logic.act189.view.ShortenAct_35days", package.seeall)
+﻿-- chunkname: @modules/logic/act189/view/ShortenAct_35days.lua
 
-local var_0_0 = class("ShortenAct_35days", ShortenActStyleItem_impl)
+module("modules.logic.act189.view.ShortenAct_35days", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local ShortenAct_35days = class("ShortenAct_35days", ShortenActStyleItem_impl)
+
+function ShortenAct_35days:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function ShortenAct_35days:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function ShortenAct_35days:removeEvents()
 	return
 end
 
-function var_0_0.ctor(arg_4_0, ...)
-	var_0_0.super.ctor(arg_4_0, ...)
+function ShortenAct_35days:ctor(...)
+	ShortenAct_35days.super.ctor(self, ...)
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	var_0_0.super._editableInitView(arg_5_0)
+function ShortenAct_35days:_editableInitView()
+	ShortenAct_35days.super._editableInitView(self)
 end
 
-function var_0_0.onDestroyView(arg_6_0)
-	var_0_0.super.onDestroyView(arg_6_0)
+function ShortenAct_35days:onDestroyView()
+	ShortenAct_35days.super.onDestroyView(self)
 end
 
-return var_0_0
+return ShortenAct_35days

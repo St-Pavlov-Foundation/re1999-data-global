@@ -1,11 +1,13 @@
-﻿module("modules.logic.weather.controller.WeatherEvent", package.seeall)
+﻿-- chunkname: @modules/logic/weather/controller/WeatherEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.weather.controller.WeatherEvent", package.seeall)
 
-var_0_0.PlayVoice = 1
-var_0_0.LoadPhotoFrameBg = 2
-var_0_0.OnRoleBlend = 3
-var_0_0.WeatherChanged = 10
-var_0_0.MainViewHideTimeUpdate = 11
+local WeatherEvent = _M
 
-return var_0_0
+WeatherEvent.PlayVoice = 1
+WeatherEvent.LoadPhotoFrameBg = 2
+WeatherEvent.OnRoleBlend = 3
+WeatherEvent.WeatherChanged = 10
+WeatherEvent.MainViewHideTimeUpdate = 11
+
+return WeatherEvent

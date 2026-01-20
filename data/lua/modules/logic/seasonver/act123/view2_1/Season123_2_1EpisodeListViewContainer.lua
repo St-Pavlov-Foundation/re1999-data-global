@@ -1,47 +1,49 @@
-﻿module("modules.logic.seasonver.act123.view2_1.Season123_2_1EpisodeListViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view2_1/Season123_2_1EpisodeListViewContainer.lua
 
-local var_0_0 = class("Season123_2_1EpisodeListViewContainer", BaseViewContainer)
+module("modules.logic.seasonver.act123.view2_1.Season123_2_1EpisodeListViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Season123_2_1EpisodeListViewContainer = class("Season123_2_1EpisodeListViewContainer", BaseViewContainer)
 
-	arg_1_0.episodeListView = Season123_2_1EpisodeListView.New()
+function Season123_2_1EpisodeListViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, Season123_2_1CheckCloseView.New())
-	table.insert(var_1_0, arg_1_0.episodeListView)
-	table.insert(var_1_0, TabViewGroup.New(1, "top_left"))
+	self.episodeListView = Season123_2_1EpisodeListView.New()
 
-	return var_1_0
+	table.insert(views, Season123_2_1CheckCloseView.New())
+	table.insert(views, self.episodeListView)
+	table.insert(views, TabViewGroup.New(1, "top_left"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._navigateButtonView = NavigateButtonsView.New({
+function Season123_2_1EpisodeListViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
-		arg_2_0._navigateButtonView:setOverrideClose(arg_2_0._overrideCloseFunc, arg_2_0)
+		self._navigateButtonView:setOverrideClose(self._overrideCloseFunc, self)
 
 		return {
-			arg_2_0._navigateButtonView
+			self._navigateButtonView
 		}
 	end
 end
 
-function var_0_0._overrideCloseFunc(arg_3_0)
-	arg_3_0.episodeListView._viewAnimator:Play(UIAnimationName.Close, 0, 0)
+function Season123_2_1EpisodeListViewContainer:_overrideCloseFunc()
+	self.episodeListView._viewAnimator:Play(UIAnimationName.Close, 0, 0)
 	Season123Controller.instance:dispatchEvent(Season123Event.EnterEpiosdeList, false)
-	TaskDispatcher.runDelay(arg_3_0._doClose, arg_3_0, 0.17)
+	TaskDispatcher.runDelay(self._doClose, self, 0.17)
 end
 
-function var_0_0._doClose(arg_4_0)
-	arg_4_0:closeThis()
+function Season123_2_1EpisodeListViewContainer:_doClose()
+	self:closeThis()
 end
 
-function var_0_0.onContainerDestroy(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0._doClose, arg_5_0)
+function Season123_2_1EpisodeListViewContainer:onContainerDestroy()
+	TaskDispatcher.cancelTask(self._doClose, self)
 end
 
-return var_0_0
+return Season123_2_1EpisodeListViewContainer

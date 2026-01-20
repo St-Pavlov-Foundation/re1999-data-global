@@ -1,58 +1,64 @@
-﻿module("modules.logic.equip.view.EquipTeamShowView", package.seeall)
+﻿-- chunkname: @modules/logic/equip/view/EquipTeamShowView.lua
 
-local var_0_0 = class("EquipTeamShowView", BaseView)
+module("modules.logic.equip.view.EquipTeamShowView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+local EquipTeamShowView = class("EquipTeamShowView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function EquipTeamShowView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnCloseEquipTeamShowView, arg_2_0._closeThisView, arg_2_0)
+function EquipTeamShowView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnCloseEquipTeamShowView, self._closeThisView, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function EquipTeamShowView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0._targetEquipUid, arg_4_0._inTeam = EquipTeamListModel.instance:getTeamEquip()[1], true
+function EquipTeamShowView:_btncloseOnClick()
+	local equipList = EquipTeamListModel.instance:getTeamEquip()
+	local equipUid = equipList[1]
 
-	arg_4_0:_refreshUI()
+	self._inTeam = true
+	self._targetEquipUid = equipUid
+
+	self:_refreshUI()
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnCompareEquip, false)
 end
 
-function var_0_0._closeThisView(arg_5_0)
-	arg_5_0:closeThis()
+function EquipTeamShowView:_closeThisView()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_6_0)
+function EquipTeamShowView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
-	arg_7_0._targetEquipUid = arg_7_0.viewParam[1]
-	arg_7_0._inTeam = arg_7_0.viewParam[2]
+function EquipTeamShowView:onUpdateParam()
+	self._targetEquipUid = self.viewParam[1]
+	self._inTeam = self.viewParam[2]
 
-	arg_7_0:_refreshUI()
+	self:_refreshUI()
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0._showHideItem2 = false
-	arg_8_0._lastItem2Uid = nil
-	arg_8_0._itemList = arg_8_0._itemList or arg_8_0:getUserDataTb_()
-	arg_8_0._itemTipList = arg_8_0._itemTipList or arg_8_0:getUserDataTb_()
-	arg_8_0._targetEquipUid = arg_8_0.viewParam[1]
-	arg_8_0._inTeam = arg_8_0.viewParam[2]
+function EquipTeamShowView:onOpen()
+	self._showHideItem2 = false
+	self._lastItem2Uid = nil
+	self._itemList = self._itemList or self:getUserDataTb_()
+	self._itemTipList = self._itemTipList or self:getUserDataTb_()
+	self._targetEquipUid = self.viewParam[1]
+	self._inTeam = self.viewParam[2]
 
-	arg_8_0:_refreshUI()
+	self:_refreshUI()
 end
 
-var_0_0.TeamShowItemPosList = {
+EquipTeamShowView.TeamShowItemPosList = {
 	{
 		-134.1,
 		23.4
@@ -63,104 +69,104 @@ var_0_0.TeamShowItemPosList = {
 	}
 }
 
-function var_0_0._refreshUI(arg_9_0)
-	local var_9_0 = EquipTeamListModel.instance:getHero()
+function EquipTeamShowView:_refreshUI()
+	local heroMO = EquipTeamListModel.instance:getHero()
 
-	arg_9_0._heroId = var_9_0 and var_9_0.heroId
-	arg_9_0._showHideItem2 = false
+	self._heroId = heroMO and heroMO.heroId
+	self._showHideItem2 = false
 
-	local var_9_1 = 2
+	local targetPosIndex = 2
 
-	if arg_9_0._inTeam then
-		arg_9_0:addItem(var_0_0.TeamShowItemPosList[var_9_1][1], var_0_0.TeamShowItemPosList[var_9_1][2], arg_9_0._targetEquipUid, true, nil, 1)
+	if self._inTeam then
+		self:addItem(EquipTeamShowView.TeamShowItemPosList[targetPosIndex][1], EquipTeamShowView.TeamShowItemPosList[targetPosIndex][2], self._targetEquipUid, true, nil, 1)
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnCompareEquip, false)
 
 		return
 	end
 
-	local var_9_2 = EquipTeamListModel.instance:getTeamEquip()[1]
-	local var_9_3 = var_0_0.TeamShowItemPosList[var_9_1]
+	local equipList = EquipTeamListModel.instance:getTeamEquip()
+	local equipUid = equipList[1]
+	local targetPos = EquipTeamShowView.TeamShowItemPosList[targetPosIndex]
 
-	if var_9_2 and EquipModel.instance:getEquip(var_9_2) then
-		arg_9_0._showHideItem2 = true
+	if equipUid and EquipModel.instance:getEquip(equipUid) then
+		self._showHideItem2 = true
 
-		arg_9_0:addItem(var_9_3[1], var_9_3[2], arg_9_0._targetEquipUid, false, true, 1)
+		self:addItem(targetPos[1], targetPos[2], self._targetEquipUid, false, true, 1)
 
-		var_9_1 = var_9_1 - 1
+		targetPosIndex = targetPosIndex - 1
+		targetPos = EquipTeamShowView.TeamShowItemPosList[targetPosIndex]
 
-		local var_9_4 = var_0_0.TeamShowItemPosList[var_9_1]
-
-		arg_9_0:addItem(var_9_4[1], var_9_4[2], var_9_2, true, true, 2)
+		self:addItem(targetPos[1], targetPos[2], equipUid, true, true, 2)
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnCompareEquip, true)
 	else
-		arg_9_0:addItem(var_0_0.TeamShowItemPosList[var_9_1][1], var_0_0.TeamShowItemPosList[var_9_1][2], arg_9_0._targetEquipUid, false, false, 1)
+		self:addItem(EquipTeamShowView.TeamShowItemPosList[targetPosIndex][1], EquipTeamShowView.TeamShowItemPosList[targetPosIndex][2], self._targetEquipUid, false, false, 1)
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnCompareEquip, false)
 	end
 
-	if arg_9_0.viewContainer.animBgUpdate then
-		arg_9_0.viewContainer:animBgUpdate()
+	if self.viewContainer.animBgUpdate then
+		self.viewContainer:animBgUpdate()
 	end
 end
 
-function var_0_0.addItem(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4, arg_10_5, arg_10_6)
-	local var_10_0 = arg_10_0.viewContainer:getSetting().otherRes[1]
-	local var_10_1 = arg_10_0._itemTipList[arg_10_6]
+function EquipTeamShowView:addItem(x, y, uid, inTeam, compare, index)
+	local path = self.viewContainer:getSetting().otherRes[1]
+	local child = self._itemTipList[index]
 
-	if not var_10_1 then
-		var_10_1 = arg_10_0:getResInst(var_10_0, arg_10_0.viewGO, "item" .. arg_10_6)
+	if not child then
+		child = self:getResInst(path, self.viewGO, "item" .. index)
 
-		table.insert(arg_10_0._itemTipList, arg_10_6, var_10_1)
+		table.insert(self._itemTipList, index, child)
 	end
 
-	if arg_10_0._itemTipList[2] then
-		gohelper.setActive(arg_10_0._itemTipList[2], arg_10_0._showHideItem2)
+	if self._itemTipList[2] then
+		gohelper.setActive(self._itemTipList[2], self._showHideItem2)
 
-		if arg_10_6 == 2 and arg_10_0._lastItem2Uid ~= arg_10_3 then
-			gohelper.setActive(arg_10_0._itemTipList[2], false)
+		if index == 2 and self._lastItem2Uid ~= uid then
+			gohelper.setActive(self._itemTipList[2], false)
 
-			arg_10_0._lastItem2Uid = arg_10_3
+			self._lastItem2Uid = uid
 		end
 	end
 
-	gohelper.setActive(var_10_1, true)
-	recthelper.setAnchor(var_10_1.transform, arg_10_1, arg_10_2)
+	gohelper.setActive(child, true)
+	recthelper.setAnchor(child.transform, x, y)
 
-	local var_10_2 = arg_10_0._itemList[arg_10_6]
+	local item = self._itemList[index]
 
-	if not var_10_2 then
-		var_10_2 = EquipTeamShowItem.New()
+	if not item then
+		item = EquipTeamShowItem.New()
 
-		table.insert(arg_10_0._itemList, arg_10_6, var_10_2)
-		var_10_2:initView(var_10_1, {
-			arg_10_3,
-			arg_10_4,
-			arg_10_5,
-			arg_10_0,
-			arg_10_0._heroId,
-			arg_10_6
+		table.insert(self._itemList, index, item)
+		item:initView(child, {
+			uid,
+			inTeam,
+			compare,
+			self,
+			self._heroId,
+			index
 		})
 	else
-		var_10_2.viewParam = {
-			arg_10_3,
-			arg_10_4,
-			arg_10_5,
-			arg_10_0,
-			arg_10_0._heroId,
-			arg_10_6
+		item.viewParam = {
+			uid,
+			inTeam,
+			compare,
+			self,
+			self._heroId,
+			index
 		}
 
-		var_10_2:onUpdateParam()
+		item:onUpdateParam()
 	end
 end
 
-function var_0_0.onClose(arg_11_0)
+function EquipTeamShowView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_12_0)
-	for iter_12_0, iter_12_1 in pairs(arg_12_0._itemList) do
-		iter_12_1:destroyView()
+function EquipTeamShowView:onDestroyView()
+	for i, v in pairs(self._itemList) do
+		v:destroyView()
 	end
 end
 
-return var_0_0
+return EquipTeamShowView

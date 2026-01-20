@@ -1,27 +1,29 @@
-﻿module("modules.logic.activitywelfare.config.Activity160Config", package.seeall)
+﻿-- chunkname: @modules/logic/activitywelfare/config/Activity160Config.lua
 
-local var_0_0 = class("Activity160Config", BaseConfig)
+module("modules.logic.activitywelfare.config.Activity160Config", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local Activity160Config = class("Activity160Config", BaseConfig)
+
+function Activity160Config:ctor()
 	return
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function Activity160Config:reqConfigNames()
 	return {
 		"activity160_mission"
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity160_mission" then
-		arg_3_0._missionConfig = arg_3_2
+function Activity160Config:onConfigLoaded(configName, configTable)
+	if configName == "activity160_mission" then
+		self._missionConfig = configTable
 	end
 end
 
-function var_0_0.getActivityMissions(arg_4_0, arg_4_1)
-	return arg_4_0._missionConfig.configDict[arg_4_1]
+function Activity160Config:getActivityMissions(actId)
+	return self._missionConfig.configDict[actId]
 end
 
-var_0_0.instance = var_0_0.New()
+Activity160Config.instance = Activity160Config.New()
 
-return var_0_0
+return Activity160Config

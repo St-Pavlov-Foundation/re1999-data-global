@@ -1,582 +1,592 @@
-﻿module("modules.logic.versionactivity1_8.dungeon.view.map.scene.VersionActivity1_8DungeonMapScene", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_8/dungeon/view/map/scene/VersionActivity1_8DungeonMapScene.lua
 
-local var_0_0 = class("VersionActivity1_8DungeonMapScene", BaseView)
+module("modules.logic.versionactivity1_8.dungeon.view.map.scene.VersionActivity1_8DungeonMapScene", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gofullscreen = gohelper.findChild(arg_1_0.viewGO, "#go_fullscreen")
-	arg_1_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_1_0._gofullscreen)
+local VersionActivity1_8DungeonMapScene = class("VersionActivity1_8DungeonMapScene", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity1_8DungeonMapScene:onInitView()
+	self._gofullscreen = gohelper.findChild(self.viewGO, "#go_fullscreen")
+	self._drag = SLFramework.UGUI.UIDragListener.Get(self._gofullscreen)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_2_0._onOpenView, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0._onCloseView, arg_2_0)
-	arg_2_0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_2_0._onScreenResize, arg_2_0)
-	arg_2_0:addEventCb(VersionActivityDungeonBaseController.instance, VersionActivityDungeonEvent.OnModeChange, arg_2_0.onModeChange, arg_2_0)
-	arg_2_0:addEventCb(VersionActivityDungeonBaseController.instance, VersionActivityDungeonEvent.OnActivityDungeonMoChange, arg_2_0.onActivityDungeonMoChange, arg_2_0)
-	arg_2_0:addEventCb(VersionActivity1_8DungeonController.instance, VersionActivity1_8DungeonEvent.OnClickElement, arg_2_0.onClickElement, arg_2_0)
-	arg_2_0:addEventCb(VersionActivity1_8DungeonController.instance, VersionActivity1_8DungeonEvent.FocusElement, arg_2_0.onFocusElement, arg_2_0)
-	arg_2_0:addEventCb(VersionActivity1_8DungeonController.instance, VersionActivity1_8DungeonEvent.ManualClickElement, arg_2_0.manualClickElement, arg_2_0)
+function VersionActivity1_8DungeonMapScene:addEvents()
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
+	self:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, self._onScreenResize, self)
+	self:addEventCb(VersionActivityDungeonBaseController.instance, VersionActivityDungeonEvent.OnModeChange, self.onModeChange, self)
+	self:addEventCb(VersionActivityDungeonBaseController.instance, VersionActivityDungeonEvent.OnActivityDungeonMoChange, self.onActivityDungeonMoChange, self)
+	self:addEventCb(VersionActivity1_8DungeonController.instance, VersionActivity1_8DungeonEvent.OnClickElement, self.onClickElement, self)
+	self:addEventCb(VersionActivity1_8DungeonController.instance, VersionActivity1_8DungeonEvent.FocusElement, self.onFocusElement, self)
+	self:addEventCb(VersionActivity1_8DungeonController.instance, VersionActivity1_8DungeonEvent.ManualClickElement, self.manualClickElement, self)
 
-	if arg_2_0._drag then
-		arg_2_0._drag:AddDragBeginListener(arg_2_0._onDragBegin, arg_2_0)
-		arg_2_0._drag:AddDragEndListener(arg_2_0._onDragEnd, arg_2_0)
-		arg_2_0._drag:AddDragListener(arg_2_0._onDrag, arg_2_0)
+	if self._drag then
+		self._drag:AddDragBeginListener(self._onDragBegin, self)
+		self._drag:AddDragEndListener(self._onDragEnd, self)
+		self._drag:AddDragListener(self._onDrag, self)
 	end
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_3_0._onOpenView, arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0._onCloseView, arg_3_0)
-	arg_3_0:removeEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_3_0._onScreenResize, arg_3_0)
-	arg_3_0:removeEventCb(VersionActivityDungeonBaseController.instance, VersionActivityDungeonEvent.OnModeChange, arg_3_0.onModeChange, arg_3_0)
-	arg_3_0:removeEventCb(VersionActivityDungeonBaseController.instance, VersionActivityDungeonEvent.OnActivityDungeonMoChange, arg_3_0.onActivityDungeonMoChange, arg_3_0)
-	arg_3_0:removeEventCb(VersionActivity1_8DungeonController.instance, VersionActivity1_8DungeonEvent.OnClickElement, arg_3_0.onClickElement, arg_3_0)
-	arg_3_0:removeEventCb(VersionActivity1_8DungeonController.instance, VersionActivity1_8DungeonEvent.FocusElement, arg_3_0.onFocusElement, arg_3_0)
-	arg_3_0:removeEventCb(VersionActivity1_8DungeonController.instance, VersionActivity1_8DungeonEvent.ManualClickElement, arg_3_0.manualClickElement, arg_3_0)
+function VersionActivity1_8DungeonMapScene:removeEvents()
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
+	self:removeEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, self._onScreenResize, self)
+	self:removeEventCb(VersionActivityDungeonBaseController.instance, VersionActivityDungeonEvent.OnModeChange, self.onModeChange, self)
+	self:removeEventCb(VersionActivityDungeonBaseController.instance, VersionActivityDungeonEvent.OnActivityDungeonMoChange, self.onActivityDungeonMoChange, self)
+	self:removeEventCb(VersionActivity1_8DungeonController.instance, VersionActivity1_8DungeonEvent.OnClickElement, self.onClickElement, self)
+	self:removeEventCb(VersionActivity1_8DungeonController.instance, VersionActivity1_8DungeonEvent.FocusElement, self.onFocusElement, self)
+	self:removeEventCb(VersionActivity1_8DungeonController.instance, VersionActivity1_8DungeonEvent.ManualClickElement, self.manualClickElement, self)
 
-	if arg_3_0._drag then
-		arg_3_0._drag:RemoveDragBeginListener()
-		arg_3_0._drag:RemoveDragListener()
-		arg_3_0._drag:RemoveDragEndListener()
+	if self._drag then
+		self._drag:RemoveDragBeginListener()
+		self._drag:RemoveDragListener()
+		self._drag:RemoveDragEndListener()
 	end
 end
 
-function var_0_0._onOpenView(arg_4_0, arg_4_1)
-	if arg_4_1 == ViewName.StoryView then
-		arg_4_0:_disposeScene()
-		GameGCMgr.instance:dispatchEvent(GameGCEvent.DelayFullGC, 0, arg_4_0)
+function VersionActivity1_8DungeonMapScene:_onOpenView(viewName)
+	if viewName == ViewName.StoryView then
+		self:_disposeScene()
+		GameGCMgr.instance:dispatchEvent(GameGCEvent.DelayFullGC, 0, self)
 	end
 end
 
-function var_0_0._onCloseView(arg_5_0, arg_5_1)
-	if arg_5_1 == ViewName.StoryView then
-		arg_5_0:_rebuildScene()
+function VersionActivity1_8DungeonMapScene:_onCloseView(viewName)
+	if viewName == ViewName.StoryView then
+		self:_rebuildScene()
 	end
 end
 
-function var_0_0._rebuildScene(arg_6_0)
-	arg_6_0:loadMap(arg_6_0._tempMapCfg)
+function VersionActivity1_8DungeonMapScene:_rebuildScene()
+	self:loadMap(self._tempMapCfg)
 
-	arg_6_0._tempMapCfg = nil
+	self._tempMapCfg = nil
 end
 
-function var_0_0._onScreenResize(arg_7_0)
-	if arg_7_0._sceneGo then
-		local var_7_0 = CameraMgr.instance:getMainCamera()
-		local var_7_1 = GameUtil.getAdapterScale()
+function VersionActivity1_8DungeonMapScene:_onScreenResize()
+	if self._sceneGo then
+		local camera = CameraMgr.instance:getMainCamera()
+		local scale = GameUtil.getAdapterScale()
 
-		var_7_0.orthographicSize = VersionActivity1_8DungeonEnum.DungeonMapCameraSize * var_7_1
+		camera.orthographicSize = VersionActivity1_8DungeonEnum.DungeonMapCameraSize * scale
 
-		arg_7_0:_initScene()
+		self:_initScene()
 	end
 end
 
-function var_0_0.onModeChange(arg_8_0)
-	arg_8_0:refreshMap()
+function VersionActivity1_8DungeonMapScene:onModeChange()
+	self:refreshMap()
 end
 
-function var_0_0.onActivityDungeonMoChange(arg_9_0)
-	arg_9_0:refreshMap(true)
+function VersionActivity1_8DungeonMapScene:onActivityDungeonMoChange()
+	self:refreshMap(true)
 end
 
-function var_0_0.onClickElement(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0.mapSceneElementsView:getElementComp(arg_10_1)
+function VersionActivity1_8DungeonMapScene:onClickElement(elementId)
+	local elementComp = self.mapSceneElementsView:getElementComp(elementId)
 
-	if var_10_0 then
-		local var_10_1 = var_10_0:getConfig()
+	if elementComp then
+		local config = elementComp:getConfig()
 
-		arg_10_0:focusElementByCo(var_10_1)
+		self:focusElementByCo(config)
 	end
 end
 
-function var_0_0.onFocusElement(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = arg_11_0.mapSceneElementsView:getElementComp(arg_11_1)
+function VersionActivity1_8DungeonMapScene:onFocusElement(elementId, isForce)
+	local elementComp = self.mapSceneElementsView:getElementComp(elementId)
 
-	if var_11_0 or arg_11_2 then
-		local var_11_1
+	if elementComp or isForce then
+		local config
 
-		if var_11_0 then
-			var_11_1 = var_11_0:getConfig()
+		if elementComp then
+			config = elementComp:getConfig()
 		else
-			var_11_1 = DungeonConfig.instance:getChapterMapElement(arg_11_1)
+			config = DungeonConfig.instance:getChapterMapElement(elementId)
 		end
 
-		if var_11_1 then
-			arg_11_0:focusElementByCo(var_11_1)
+		if config then
+			self:focusElementByCo(config)
 		end
 	else
-		arg_11_0:changeToElementEpisode(arg_11_1)
+		self:changeToElementEpisode(elementId)
 	end
 end
 
-function var_0_0.changeToElementEpisode(arg_12_0, arg_12_1)
-	local var_12_0 = lua_chapter_map_element.configDict[arg_12_1]
+function VersionActivity1_8DungeonMapScene:changeToElementEpisode(elementId)
+	local config = lua_chapter_map_element.configDict[elementId]
 
-	if not var_12_0 then
+	if not config then
 		return
 	end
 
-	local var_12_1 = var_12_0.mapId
+	local mapId = config.mapId
 
-	arg_12_0._mapCfg = lua_chapter_map.configDict[var_12_1]
+	self._mapCfg = lua_chapter_map.configDict[mapId]
 
-	local var_12_2 = string.splitToNumber(var_12_0.pos, "#")
+	local pos = string.splitToNumber(config.pos, "#")
 
-	arg_12_0.tempInitPosX = -var_12_2[1] or 0
-	arg_12_0.tempInitPosY = -var_12_2[2] or 0
+	self.tempInitPosX = -pos[1] or 0
+	self.tempInitPosY = -pos[2] or 0
 
-	local var_12_3 = DungeonConfig.instance:getEpisodeIdByMapCo(arg_12_0._mapCfg)
+	local episodeId = DungeonConfig.instance:getEpisodeIdByMapCo(self._mapCfg)
 
-	if VersionActivityDungeonBaseEnum.DungeonMode.Story ~= arg_12_0.activityDungeonMo.mode then
-		arg_12_0.activityDungeonMo:changeMode(VersionActivityDungeonBaseEnum.DungeonMode.Story)
+	if VersionActivityDungeonBaseEnum.DungeonMode.Story ~= self.activityDungeonMo.mode then
+		self.activityDungeonMo:changeMode(VersionActivityDungeonBaseEnum.DungeonMode.Story)
 	end
 
-	arg_12_0.activityDungeonMo:changeEpisode(var_12_3)
+	self.activityDungeonMo:changeEpisode(episodeId)
 end
 
-function var_0_0.focusElementByCo(arg_13_0, arg_13_1)
-	local var_13_0 = string.splitToNumber(arg_13_1.pos, "#")
-	local var_13_1 = -var_13_0[1] or 0
-	local var_13_2 = -var_13_0[2] or 0
+function VersionActivity1_8DungeonMapScene:focusElementByCo(elementCo)
+	local pos = string.splitToNumber(elementCo.pos, "#")
+	local x = -pos[1] or 0
+	local x, y = x, -pos[2] or 0
 
-	arg_13_0._tempVector:Set(var_13_1, var_13_2, 0)
-	arg_13_0:tweenSetScenePos(arg_13_0._tempVector)
+	self._tempVector:Set(x, y, 0)
+	self:tweenSetScenePos(self._tempVector)
 end
 
-function var_0_0.manualClickElement(arg_14_0, arg_14_1)
-	if arg_14_0.mapSceneElementsView:getElementComp(arg_14_1) then
-		arg_14_0.mapSceneElementsView:manualClickElement(arg_14_1)
+function VersionActivity1_8DungeonMapScene:manualClickElement(elementId)
+	local elementComp = self.mapSceneElementsView:getElementComp(elementId)
+
+	if elementComp then
+		self.mapSceneElementsView:manualClickElement(elementId)
 	else
-		arg_14_0.mapSceneElementsView:setInitClickElement(arg_14_1)
-		arg_14_0:changeToElementEpisode(arg_14_1)
+		self.mapSceneElementsView:setInitClickElement(elementId)
+		self:changeToElementEpisode(elementId)
 	end
 end
 
-function var_0_0._onDragBegin(arg_15_0, arg_15_1, arg_15_2)
-	arg_15_0._dragBeginPos = arg_15_0:getDragWorldPos(arg_15_2)
+function VersionActivity1_8DungeonMapScene:_onDragBegin(param, pointerEventData)
+	self._dragBeginPos = self:getDragWorldPos(pointerEventData)
 
 	DungeonController.instance:dispatchEvent(DungeonEvent.OnBeginDragMap)
 end
 
-function var_0_0._onDragEnd(arg_16_0, arg_16_1, arg_16_2)
-	arg_16_0._dragBeginPos = nil
+function VersionActivity1_8DungeonMapScene:_onDragEnd(param, pointerEventData)
+	self._dragBeginPos = nil
 end
 
-function var_0_0._onDrag(arg_17_0, arg_17_1, arg_17_2)
-	if not arg_17_0._dragBeginPos then
+function VersionActivity1_8DungeonMapScene:_onDrag(param, pointerEventData)
+	if not self._dragBeginPos then
 		return
 	end
 
-	local var_17_0 = arg_17_0:getDragWorldPos(arg_17_2)
-	local var_17_1 = var_17_0 - arg_17_0._dragBeginPos
+	local pos = self:getDragWorldPos(pointerEventData)
+	local deltaPos = pos - self._dragBeginPos
 
-	arg_17_0._dragBeginPos = var_17_0
+	self._dragBeginPos = pos
 
-	arg_17_0._tempVector:Set(arg_17_0._scenePos.x + var_17_1.x, arg_17_0._scenePos.y + var_17_1.y)
-	arg_17_0:directSetScenePos(arg_17_0._tempVector)
+	self._tempVector:Set(self._scenePos.x + deltaPos.x, self._scenePos.y + deltaPos.y)
+	self:directSetScenePos(self._tempVector)
 end
 
-function var_0_0.getDragWorldPos(arg_18_0, arg_18_1)
-	local var_18_0 = CameraMgr.instance:getMainCamera()
-	local var_18_1 = arg_18_0._gofullscreen.transform.position
+function VersionActivity1_8DungeonMapScene:getDragWorldPos(pointerEventData)
+	local mainCamera = CameraMgr.instance:getMainCamera()
+	local refPos = self._gofullscreen.transform.position
+	local worldPos = SLFramework.UGUI.RectTrHelper.ScreenPosToWorldPos(pointerEventData.position, mainCamera, refPos)
 
-	return (SLFramework.UGUI.RectTrHelper.ScreenPosToWorldPos(arg_18_1.position, var_18_0, var_18_1))
+	return worldPos
 end
 
-function var_0_0._editableInitView(arg_19_0)
-	arg_19_0.mapSceneElementsView = arg_19_0.viewContainer.mapSceneElements
+function VersionActivity1_8DungeonMapScene:_editableInitView()
+	self.mapSceneElementsView = self.viewContainer.mapSceneElements
 
 	if ViewMgr.instance:isOpen(ViewName.MainThumbnailView) then
 		MainThumbnailHeroView.setCameraIdle()
 	end
 
-	arg_19_0._tempVector = Vector3()
-	arg_19_0._dragDeltaPos = Vector3()
-	arg_19_0._scenePos = Vector3()
+	self._tempVector = Vector3()
+	self._dragDeltaPos = Vector3()
+	self._scenePos = Vector3()
 
-	arg_19_0:_initMapRootNode()
+	self:_initMapRootNode()
 end
 
-function var_0_0._initMapRootNode(arg_20_0)
-	arg_20_0._sceneRoot = UnityEngine.GameObject.New(VersionActivity1_8DungeonEnum.SceneRootName)
+function VersionActivity1_8DungeonMapScene:_initMapRootNode()
+	self._sceneRoot = UnityEngine.GameObject.New(VersionActivity1_8DungeonEnum.SceneRootName)
 
-	local var_20_0 = CameraMgr.instance:getMainCameraTrs().parent
-	local var_20_1, var_20_2, var_20_3 = transformhelper.getLocalPos(var_20_0)
+	local mainTrans = CameraMgr.instance:getMainCameraTrs().parent
+	local _, y, _ = transformhelper.getLocalPos(mainTrans)
 
-	transformhelper.setLocalPos(arg_20_0._sceneRoot.transform, 0, var_20_2, 0)
+	transformhelper.setLocalPos(self._sceneRoot.transform, 0, y, 0)
 
-	local var_20_4 = CameraMgr.instance:getSceneRoot()
+	local sceneRoot = CameraMgr.instance:getSceneRoot()
 
-	gohelper.addChild(var_20_4, arg_20_0._sceneRoot)
-	DungeonController.instance:dispatchEvent(DungeonEvent.OnCreateMapRootGoDone, arg_20_0._sceneRoot)
+	gohelper.addChild(sceneRoot, self._sceneRoot)
+	DungeonController.instance:dispatchEvent(DungeonEvent.OnCreateMapRootGoDone, self._sceneRoot)
 end
 
-function var_0_0.onUpdateParam(arg_21_0)
-	arg_21_0:refreshMap()
+function VersionActivity1_8DungeonMapScene:onUpdateParam()
+	self:refreshMap()
 end
 
-function var_0_0.onOpen(arg_22_0)
-	MainCameraMgr.instance:addView(arg_22_0.viewName, arg_22_0._initCamera, nil, arg_22_0)
-	arg_22_0:refreshMap()
+function VersionActivity1_8DungeonMapScene:onOpen()
+	MainCameraMgr.instance:addView(self.viewName, self._initCamera, nil, self)
+	self:refreshMap()
 end
 
-function var_0_0._initCamera(arg_23_0)
-	local var_23_0 = CameraMgr.instance:getMainCamera()
+function VersionActivity1_8DungeonMapScene:_initCamera()
+	local camera = CameraMgr.instance:getMainCamera()
 
-	var_23_0.orthographic = true
+	camera.orthographic = true
 
-	local var_23_1 = GameUtil.getAdapterScale()
+	local scale = GameUtil.getAdapterScale()
 
-	var_23_0.orthographicSize = VersionActivity1_8DungeonEnum.DungeonMapCameraSize * var_23_1
+	camera.orthographicSize = VersionActivity1_8DungeonEnum.DungeonMapCameraSize * scale
 end
 
-function var_0_0.refreshMap(arg_24_0, arg_24_1)
-	arg_24_0._mapCfg = VersionActivity1_8DungeonConfig.instance:getEpisodeMapConfig(arg_24_0.activityDungeonMo.episodeId)
+function VersionActivity1_8DungeonMapScene:refreshMap(needTween)
+	self._mapCfg = VersionActivity1_8DungeonConfig.instance:getEpisodeMapConfig(self.activityDungeonMo.episodeId)
 
-	if arg_24_0._mapCfg.id == arg_24_0._lastLoadMapId then
-		arg_24_0:_initElements()
+	if self._mapCfg.id == self._lastLoadMapId then
+		self:_initElements()
 	else
-		arg_24_0.needTween = arg_24_1
-		arg_24_0._lastLoadMapId = arg_24_0._mapCfg.id
+		self.needTween = needTween
+		self._lastLoadMapId = self._mapCfg.id
 
-		arg_24_0:loadMap()
+		self:loadMap()
 	end
 end
 
-function var_0_0._initElements(arg_25_0)
+function VersionActivity1_8DungeonMapScene:_initElements()
 	DungeonController.instance:dispatchEvent(DungeonMapElementEvent.OnInitElements)
 end
 
-function var_0_0.loadMap(arg_26_0)
+function VersionActivity1_8DungeonMapScene:loadMap()
 	DungeonController.instance:dispatchEvent(DungeonMapElementEvent.OnChangeMap)
 
-	if arg_26_0.loadedDone then
-		arg_26_0._oldMapLoader = arg_26_0._mapLoader
-		arg_26_0._oldSceneGo = arg_26_0._sceneGo
-		arg_26_0._mapLoader = nil
+	if self.loadedDone then
+		self._oldMapLoader = self._mapLoader
+		self._oldSceneGo = self._sceneGo
+		self._mapLoader = nil
 	end
 
-	if arg_26_0._mapLoader then
-		arg_26_0._mapLoader:dispose()
+	if self._mapLoader then
+		self._mapLoader:dispose()
 
-		arg_26_0._mapLoader = nil
+		self._mapLoader = nil
 	end
 
-	arg_26_0._tempMapCfg = nil
-	arg_26_0.loadedDone = false
-	arg_26_0._mapLoader = MultiAbLoader.New()
+	self._tempMapCfg = nil
+	self.loadedDone = false
+	self._mapLoader = MultiAbLoader.New()
 
-	local var_26_0 = {}
+	local allResPath = {}
 
-	arg_26_0:buildLoadRes(var_26_0, arg_26_0._mapCfg)
+	self:buildLoadRes(allResPath, self._mapCfg)
 
-	arg_26_0._sceneUrl = var_26_0[1]
-	arg_26_0._mapLightUrl = var_26_0[2]
-	arg_26_0._mapAudioUrl = var_26_0[3]
+	self._sceneUrl = allResPath[1]
+	self._mapLightUrl = allResPath[2]
+	self._mapAudioUrl = allResPath[3]
 
-	arg_26_0._mapLoader:addPath(arg_26_0._sceneUrl)
-	arg_26_0._mapLoader:addPath(arg_26_0._mapLightUrl)
-	arg_26_0._mapLoader:addPath(arg_26_0._mapAudioUrl)
-	arg_26_0._mapLoader:startLoad(arg_26_0._loadSceneFinish, arg_26_0)
+	self._mapLoader:addPath(self._sceneUrl)
+	self._mapLoader:addPath(self._mapLightUrl)
+	self._mapLoader:addPath(self._mapAudioUrl)
+	self._mapLoader:startLoad(self._loadSceneFinish, self)
 end
 
-function var_0_0.buildLoadRes(arg_27_0, arg_27_1, arg_27_2)
-	table.insert(arg_27_1, ResUrl.getDungeonMapRes(arg_27_2.res))
-	table.insert(arg_27_1, "scenes/m_s08_hddt/scene_prefab/m_s08_hddt_light.prefab")
+function VersionActivity1_8DungeonMapScene:buildLoadRes(allResPath, mapCfg)
+	table.insert(allResPath, ResUrl.getDungeonMapRes(mapCfg.res))
+	table.insert(allResPath, "scenes/m_s08_hddt/scene_prefab/m_s08_hddt_light.prefab")
 end
 
-function var_0_0._loadSceneFinish(arg_28_0)
-	arg_28_0.loadedDone = true
+function VersionActivity1_8DungeonMapScene:_loadSceneFinish()
+	self.loadedDone = true
 
-	arg_28_0:disposeOldMap()
+	self:disposeOldMap()
 
-	local var_28_0 = arg_28_0._sceneUrl
-	local var_28_1 = arg_28_0._mapLoader:getAssetItem(var_28_0):GetResource(var_28_0)
+	local assetUrl = self._sceneUrl
+	local assetItem = self._mapLoader:getAssetItem(assetUrl)
+	local mainPrefab = assetItem:GetResource(assetUrl)
 
-	arg_28_0._sceneGo = gohelper.clone(var_28_1, arg_28_0._sceneRoot, arg_28_0._mapCfg.id)
-	arg_28_0._sceneTrans = arg_28_0._sceneGo.transform
+	self._sceneGo = gohelper.clone(mainPrefab, self._sceneRoot, self._mapCfg.id)
+	self._sceneTrans = self._sceneGo.transform
 
 	DungeonController.instance:dispatchEvent(DungeonMapElementEvent.OnLoadSceneFinish, {
-		mapConfig = arg_28_0._mapCfg,
-		mapSceneGo = arg_28_0._sceneGo
+		mapConfig = self._mapCfg,
+		mapSceneGo = self._sceneGo
 	})
-	arg_28_0:_initScene()
-	arg_28_0:_setMapPos()
-	arg_28_0:_addMapLight()
-	arg_28_0:_initElements()
-	arg_28_0:_addMapAudio()
+	self:_initScene()
+	self:_setMapPos()
+	self:_addMapLight()
+	self:_initElements()
+	self:_addMapAudio()
 end
 
-function var_0_0.disposeOldMap(arg_29_0)
-	if arg_29_0._sceneTrans then
-		arg_29_0._oldScenePos = arg_29_0._scenePos
+function VersionActivity1_8DungeonMapScene:disposeOldMap()
+	if self._sceneTrans then
+		self._oldScenePos = self._scenePos
 	else
-		arg_29_0._oldScenePos = nil
+		self._oldScenePos = nil
 	end
 
-	DungeonController.instance:dispatchEvent(DungeonMapElementEvent.OnDisposeOldMap, arg_29_0.viewName)
+	DungeonController.instance:dispatchEvent(DungeonMapElementEvent.OnDisposeOldMap, self.viewName)
 
-	if arg_29_0._oldSceneGo then
-		gohelper.destroy(arg_29_0._oldSceneGo)
+	if self._oldSceneGo then
+		gohelper.destroy(self._oldSceneGo)
 
-		arg_29_0._oldSceneGo = nil
+		self._oldSceneGo = nil
 	end
 
-	if arg_29_0._mapAudioGo then
-		arg_29_0._mapAudioGo = nil
+	if self._mapAudioGo then
+		self._mapAudioGo = nil
 
 		AudioMgr.instance:trigger(AudioEnum.UI.stop_ui_noise_allarea)
 	end
 
-	if arg_29_0._oldMapLoader then
-		arg_29_0._oldMapLoader:dispose()
+	if self._oldMapLoader then
+		self._oldMapLoader:dispose()
 
-		arg_29_0._oldMapLoader = nil
+		self._oldMapLoader = nil
 	end
 end
 
-function var_0_0._initScene(arg_30_0)
-	arg_30_0._mapSize = gohelper.findChild(arg_30_0._sceneGo, "root/size"):GetComponentInChildren(typeof(UnityEngine.BoxCollider)).size
+function VersionActivity1_8DungeonMapScene:_initScene()
+	local sizeGo = gohelper.findChild(self._sceneGo, "root/size")
+	local box = sizeGo:GetComponentInChildren(typeof(UnityEngine.BoxCollider))
 
-	local var_30_0
-	local var_30_1 = GameUtil.getAdapterScale()
+	self._mapSize = box.size
 
-	if var_30_1 ~= 1 then
-		var_30_0 = ViewMgr.instance:getUILayer(UILayerName.Hud)
+	local canvasGo
+	local scale = GameUtil.getAdapterScale()
+
+	if scale ~= 1 then
+		canvasGo = ViewMgr.instance:getUILayer(UILayerName.Hud)
 	else
-		var_30_0 = ViewMgr.instance:getUIRoot()
+		canvasGo = ViewMgr.instance:getUIRoot()
 	end
 
-	local var_30_2 = var_30_0.transform:GetWorldCorners()
-	local var_30_3 = CameraMgr.instance:getUICamera()
-	local var_30_4 = var_30_3 and var_30_3.orthographicSize or 5
-	local var_30_5 = VersionActivity1_8DungeonEnum.DungeonMapCameraSize / var_30_4
-	local var_30_6 = var_30_2[1] * var_30_1 * var_30_5
-	local var_30_7 = var_30_2[3] * var_30_1 * var_30_5
+	local worldcorners = canvasGo.transform:GetWorldCorners()
+	local uiCamera = CameraMgr.instance:getUICamera()
+	local uiCameraSize = uiCamera and uiCamera.orthographicSize or 5
+	local cameraSizeRate = VersionActivity1_8DungeonEnum.DungeonMapCameraSize / uiCameraSize
+	local posTL = worldcorners[1] * scale * cameraSizeRate
+	local posBR = worldcorners[3] * scale * cameraSizeRate
 
-	arg_30_0._viewWidth = math.abs(var_30_7.x - var_30_6.x)
-	arg_30_0._viewHeight = math.abs(var_30_7.y - var_30_6.y)
-	arg_30_0._mapMinX = var_30_6.x - (arg_30_0._mapSize.x - arg_30_0._viewWidth)
-	arg_30_0._mapMaxX = var_30_6.x
-	arg_30_0._mapMinY = var_30_6.y
-	arg_30_0._mapMaxY = var_30_6.y + (arg_30_0._mapSize.y - arg_30_0._viewHeight)
+	self._viewWidth = math.abs(posBR.x - posTL.x)
+	self._viewHeight = math.abs(posBR.y - posTL.y)
+	self._mapMinX = posTL.x - (self._mapSize.x - self._viewWidth)
+	self._mapMaxX = posTL.x
+	self._mapMinY = posTL.y
+	self._mapMaxY = posTL.y + (self._mapSize.y - self._viewHeight)
 end
 
-function var_0_0._setMapPos(arg_31_0)
-	if arg_31_0.tempInitPosX then
-		arg_31_0._tempVector:Set(arg_31_0.tempInitPosX, arg_31_0.tempInitPosY, 0)
+function VersionActivity1_8DungeonMapScene:_setMapPos()
+	if self.tempInitPosX then
+		self._tempVector:Set(self.tempInitPosX, self.tempInitPosY, 0)
 
-		arg_31_0.tempInitPosX = nil
-		arg_31_0.tempInitPosY = nil
+		self.tempInitPosX = nil
+		self.tempInitPosY = nil
 	else
-		local var_31_0 = arg_31_0._mapCfg.initPos
-		local var_31_1 = string.splitToNumber(var_31_0, "#")
+		local pos = self._mapCfg.initPos
+		local posParam = string.splitToNumber(pos, "#")
 
-		arg_31_0._tempVector:Set(var_31_1[1], var_31_1[2], 0)
+		self._tempVector:Set(posParam[1], posParam[2], 0)
 	end
 
-	if arg_31_0.needTween then
-		arg_31_0:tweenSetScenePos(arg_31_0._tempVector, arg_31_0._oldScenePos)
+	if self.needTween then
+		self:tweenSetScenePos(self._tempVector, self._oldScenePos)
 
-		arg_31_0.needTween = nil
+		self.needTween = nil
 	else
-		arg_31_0:directSetScenePos(arg_31_0._tempVector)
+		self:directSetScenePos(self._tempVector)
 	end
 end
 
-function var_0_0._addMapLight(arg_32_0)
-	local var_32_0 = arg_32_0._mapLightUrl
-	local var_32_1 = arg_32_0._mapLoader:getAssetItem(var_32_0):GetResource(var_32_0)
+function VersionActivity1_8DungeonMapScene:_addMapLight()
+	local assetUrl = self._mapLightUrl
+	local assetItem = self._mapLoader:getAssetItem(assetUrl)
+	local mainPrefab = assetItem:GetResource(assetUrl)
 
-	gohelper.clone(var_32_1, arg_32_0._sceneGo)
+	gohelper.clone(mainPrefab, self._sceneGo)
 end
 
-function var_0_0._addMapAudio(arg_33_0)
-	if not arg_33_0._mapAudioUrl then
+function VersionActivity1_8DungeonMapScene:_addMapAudio()
+	if not self._mapAudioUrl then
 		return
 	end
 
-	local var_33_0 = arg_33_0._mapAudioUrl
-	local var_33_1 = arg_33_0._mapLoader:getAssetItem(var_33_0):GetResource(var_33_0)
+	local assetUrl = self._mapAudioUrl
+	local assetItem = self._mapLoader:getAssetItem(assetUrl)
+	local mainPrefab = assetItem:GetResource(assetUrl)
 
-	arg_33_0._mapAudioGo = gohelper.clone(var_33_1, arg_33_0._sceneGo, "audio")
+	self._mapAudioGo = gohelper.clone(mainPrefab, self._sceneGo, "audio")
 
-	gohelper.addChild(arg_33_0._sceneGo, arg_33_0._mapAudioGo)
-	gohelper.setActive(arg_33_0._mapAudioGo, true)
-	transformhelper.setLocalPos(arg_33_0._mapAudioGo.transform, 0, 0, 0)
+	gohelper.addChild(self._sceneGo, self._mapAudioGo)
+	gohelper.setActive(self._mapAudioGo, true)
+	transformhelper.setLocalPos(self._mapAudioGo.transform, 0, 0, 0)
 
-	local var_33_2 = arg_33_0._mapCfg.areaAudio
+	local areaAudio = self._mapCfg.areaAudio
 
-	if string.nilorempty(var_33_2) then
+	if string.nilorempty(areaAudio) then
 		return
 	end
 
-	local var_33_3 = gohelper.findChild(arg_33_0._mapAudioGo, "audio")
+	local audioGo = gohelper.findChild(self._mapAudioGo, "audio")
 
-	if var_33_2 == "all" then
-		local var_33_4 = var_33_3.transform
-		local var_33_5 = var_33_4.childCount
+	if areaAudio == "all" then
+		local transform = audioGo.transform
+		local itemCount = transform.childCount
 
-		for iter_33_0 = 1, var_33_5 do
-			local var_33_6 = var_33_4:GetChild(iter_33_0 - 1)
+		for i = 1, itemCount do
+			local child = transform:GetChild(i - 1)
 
-			gohelper.setActive(var_33_6.gameObject, true)
+			gohelper.setActive(child.gameObject, true)
 		end
 
 		return
 	end
 
-	local var_33_7 = string.split(var_33_2, "#")
+	local areaList = string.split(areaAudio, "#")
 
-	for iter_33_1, iter_33_2 in ipairs(var_33_7) do
-		local var_33_8 = gohelper.findChild(var_33_3, iter_33_2)
+	for i, areaName in ipairs(areaList) do
+		local areaGo = gohelper.findChild(audioGo, areaName)
 
-		gohelper.setActive(var_33_8, true)
+		gohelper.setActive(areaGo, true)
 	end
 end
 
-function var_0_0.tweenSetScenePos(arg_34_0, arg_34_1, arg_34_2)
-	arg_34_0._tweenTargetPosX, arg_34_0._tweenTargetPosY = arg_34_0:getTargetPos(arg_34_1)
-	arg_34_0._tweenStartPosX, arg_34_0._tweenStartPosY = arg_34_0:getTargetPos(arg_34_2 or arg_34_0._scenePos)
+function VersionActivity1_8DungeonMapScene:tweenSetScenePos(targetPos, srcPos)
+	self._tweenTargetPosX, self._tweenTargetPosY = self:getTargetPos(targetPos)
+	self._tweenStartPosX, self._tweenStartPosY = self:getTargetPos(srcPos or self._scenePos)
 
-	arg_34_0:killTween()
+	self:killTween()
 
-	arg_34_0.tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, DungeonEnum.DefaultTweenMapTime, arg_34_0.tweenFrameCallback, arg_34_0.tweenFinishCallback, arg_34_0)
+	self.tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, DungeonEnum.DefaultTweenMapTime, self.tweenFrameCallback, self.tweenFinishCallback, self)
 
-	arg_34_0:tweenFrameCallback(0)
+	self:tweenFrameCallback(0)
 end
 
-function var_0_0.getTargetPos(arg_35_0, arg_35_1)
-	local var_35_0 = arg_35_1.x
-	local var_35_1 = arg_35_1.y
+function VersionActivity1_8DungeonMapScene:getTargetPos(targetPos)
+	local x, y = targetPos.x, targetPos.y
 
-	if not arg_35_0._mapMinX or not arg_35_0._mapMaxX or not arg_35_0._mapMinY or not arg_35_0._mapMaxY then
-		local var_35_2 = arg_35_0._mapCfg and arg_35_0._mapCfg.initPos
-		local var_35_3 = string.splitToNumber(var_35_2, "#")
+	if not self._mapMinX or not self._mapMaxX or not self._mapMinY or not self._mapMaxY then
+		local pos = self._mapCfg and self._mapCfg.initPos
+		local posParam = string.splitToNumber(pos, "#")
 
-		var_35_0 = var_35_3[1] or 0
-		var_35_1 = var_35_3[2] or 0
+		x = posParam[1] or 0
+		y = posParam[2] or 0
 	else
-		if var_35_0 < arg_35_0._mapMinX then
-			var_35_0 = arg_35_0._mapMinX
-		elseif var_35_0 > arg_35_0._mapMaxX then
-			var_35_0 = arg_35_0._mapMaxX
+		if x < self._mapMinX then
+			x = self._mapMinX
+		elseif x > self._mapMaxX then
+			x = self._mapMaxX
 		end
 
-		if var_35_1 < arg_35_0._mapMinY then
-			var_35_1 = arg_35_0._mapMinY
-		elseif var_35_1 > arg_35_0._mapMaxY then
-			var_35_1 = arg_35_0._mapMaxY
+		if y < self._mapMinY then
+			y = self._mapMinY
+		elseif y > self._mapMaxY then
+			y = self._mapMaxY
 		end
 	end
 
-	return var_35_0, var_35_1
+	return x, y
 end
 
-function var_0_0.tweenFrameCallback(arg_36_0, arg_36_1)
-	local var_36_0 = Mathf.Lerp(arg_36_0._tweenStartPosX, arg_36_0._tweenTargetPosX, arg_36_1)
-	local var_36_1 = Mathf.Lerp(arg_36_0._tweenStartPosY, arg_36_0._tweenTargetPosY, arg_36_1)
+function VersionActivity1_8DungeonMapScene:tweenFrameCallback(value)
+	local x = Mathf.Lerp(self._tweenStartPosX, self._tweenTargetPosX, value)
+	local y = Mathf.Lerp(self._tweenStartPosY, self._tweenTargetPosY, value)
 
-	arg_36_0._tempVector:Set(var_36_0, var_36_1, 0)
-	arg_36_0:directSetScenePos(arg_36_0._tempVector)
+	self._tempVector:Set(x, y, 0)
+	self:directSetScenePos(self._tempVector)
 end
 
-function var_0_0.tweenFinishCallback(arg_37_0)
-	arg_37_0._tempVector:Set(arg_37_0._tweenTargetPosX, arg_37_0._tweenTargetPosY, 0)
-	arg_37_0:directSetScenePos(arg_37_0._tempVector)
+function VersionActivity1_8DungeonMapScene:tweenFinishCallback()
+	self._tempVector:Set(self._tweenTargetPosX, self._tweenTargetPosY, 0)
+	self:directSetScenePos(self._tempVector)
 end
 
-function var_0_0.directSetScenePos(arg_38_0, arg_38_1)
-	local var_38_0, var_38_1 = arg_38_0:getTargetPos(arg_38_1)
+function VersionActivity1_8DungeonMapScene:directSetScenePos(targetPos)
+	local x, y = self:getTargetPos(targetPos)
 
-	arg_38_0._scenePos.x = var_38_0
-	arg_38_0._scenePos.y = var_38_1
+	self._scenePos.x = x
+	self._scenePos.y = y
 
-	if not arg_38_0._sceneTrans or gohelper.isNil(arg_38_0._sceneTrans) then
+	if not self._sceneTrans or gohelper.isNil(self._sceneTrans) then
 		return
 	end
 
-	transformhelper.setLocalPos(arg_38_0._sceneTrans, arg_38_0._scenePos.x, arg_38_0._scenePos.y, 0)
+	transformhelper.setLocalPos(self._sceneTrans, self._scenePos.x, self._scenePos.y, 0)
 	VersionActivity1_8DungeonController.instance:dispatchEvent(VersionActivity1_8DungeonEvent.OnMapPosChanged)
-	arg_38_0:_updateElementArrow()
+	self:_updateElementArrow()
 end
 
-function var_0_0._updateElementArrow(arg_39_0)
+function VersionActivity1_8DungeonMapScene:_updateElementArrow()
 	DungeonController.instance:dispatchEvent(DungeonMapElementEvent.OnUpdateElementArrow)
 end
 
-function var_0_0.setVisible(arg_40_0, arg_40_1)
-	gohelper.setActive(arg_40_0._sceneRoot, arg_40_1)
+function VersionActivity1_8DungeonMapScene:setVisible(isVisible)
+	gohelper.setActive(self._sceneRoot, isVisible)
 
-	if arg_40_1 then
-		arg_40_0:_initCamera()
+	if isVisible then
+		self:_initCamera()
 	end
 end
 
-function var_0_0.getSceneGo(arg_41_0)
-	return arg_41_0._sceneGo
+function VersionActivity1_8DungeonMapScene:getSceneGo()
+	return self._sceneGo
 end
 
-function var_0_0.onClose(arg_42_0)
-	arg_42_0:killTween()
-	arg_42_0:_resetCamera()
+function VersionActivity1_8DungeonMapScene:onClose()
+	self:killTween()
+	self:_resetCamera()
 end
 
-function var_0_0.killTween(arg_43_0)
-	if arg_43_0.tweenId then
-		ZProj.TweenHelper.KillById(arg_43_0.tweenId)
+function VersionActivity1_8DungeonMapScene:killTween()
+	if self.tweenId then
+		ZProj.TweenHelper.KillById(self.tweenId)
 	end
 end
 
-function var_0_0._resetCamera(arg_44_0)
-	local var_44_0 = CameraMgr.instance:getMainCamera()
+function VersionActivity1_8DungeonMapScene:_resetCamera()
+	local camera = CameraMgr.instance:getMainCamera()
 
-	var_44_0.orthographicSize = 5
-	var_44_0.orthographic = false
+	camera.orthographicSize = 5
+	camera.orthographic = false
 end
 
-function var_0_0.onDestroyView(arg_45_0)
-	gohelper.destroy(arg_45_0._sceneRoot)
-	arg_45_0:disposeOldMap()
-	arg_45_0:_disposeScene()
+function VersionActivity1_8DungeonMapScene:onDestroyView()
+	gohelper.destroy(self._sceneRoot)
+	self:disposeOldMap()
+	self:_disposeScene()
 
-	if arg_45_0._mapLoader then
-		arg_45_0._mapLoader:dispose()
+	if self._mapLoader then
+		self._mapLoader:dispose()
 	end
 end
 
-function var_0_0._disposeScene(arg_46_0)
-	arg_46_0._oldScenePos = arg_46_0._scenePos
-	arg_46_0._tempMapCfg = arg_46_0._mapCfg
+function VersionActivity1_8DungeonMapScene:_disposeScene()
+	self._oldScenePos = self._scenePos
+	self._tempMapCfg = self._mapCfg
 
 	DungeonController.instance:dispatchEvent(DungeonMapElementEvent.OnDisposeScene)
 
-	if arg_46_0._mapAudioGo then
-		arg_46_0._mapAudioGo = nil
+	if self._mapAudioGo then
+		self._mapAudioGo = nil
 
 		AudioMgr.instance:trigger(AudioEnum.UI.stop_ui_noise_allarea)
 	end
 
-	if arg_46_0._sceneGo then
-		gohelper.destroy(arg_46_0._sceneGo)
+	if self._sceneGo then
+		gohelper.destroy(self._sceneGo)
 
-		arg_46_0._sceneGo = nil
+		self._sceneGo = nil
 	end
 
-	arg_46_0._sceneTrans = nil
-	arg_46_0._elementRoot = nil
+	self._sceneTrans = nil
+	self._elementRoot = nil
 
-	if arg_46_0._mapLoader then
-		arg_46_0._mapLoader:dispose()
+	if self._mapLoader then
+		self._mapLoader:dispose()
 
-		arg_46_0._mapLoader = nil
+		self._mapLoader = nil
 	end
 
-	arg_46_0._mapAudioGo = nil
+	self._mapAudioGo = nil
 end
 
-return var_0_0
+return VersionActivity1_8DungeonMapScene

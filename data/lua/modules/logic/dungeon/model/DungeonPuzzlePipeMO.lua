@@ -1,53 +1,55 @@
-﻿module("modules.logic.dungeon.model.DungeonPuzzlePipeMO", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/model/DungeonPuzzlePipeMO.lua
 
-local var_0_0 = pureTable("DungeonPuzzlePipeMO")
+module("modules.logic.dungeon.model.DungeonPuzzlePipeMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.x = arg_1_1
-	arg_1_0.y = arg_1_2
-	arg_1_0.value = 0
-	arg_1_0.connectSet = {}
-	arg_1_0.entryConnect = {}
-	arg_1_0.entryCount = 0
+local DungeonPuzzlePipeMO = pureTable("DungeonPuzzlePipeMO")
+
+function DungeonPuzzlePipeMO:init(x, y)
+	self.x = x
+	self.y = y
+	self.value = 0
+	self.connectSet = {}
+	self.entryConnect = {}
+	self.entryCount = 0
 end
 
-local var_0_1 = {}
+local _cacheTable = {}
 
-function var_0_0.getConnectValue(arg_2_0)
-	local var_2_0 = 0
-	local var_2_1 = 0
+function DungeonPuzzlePipeMO:getConnectValue()
+	local len = 0
+	local result = 0
 
-	if arg_2_0.entryConnect then
-		for iter_2_0, iter_2_1 in pairs(arg_2_0.entryConnect) do
-			table.insert(var_0_1, iter_2_0)
+	if self.entryConnect then
+		for k, v in pairs(self.entryConnect) do
+			table.insert(_cacheTable, k)
 
-			var_2_0 = var_2_0 + 1
+			len = len + 1
 		end
 
-		table.sort(var_0_1)
+		table.sort(_cacheTable)
 
-		for iter_2_2, iter_2_3 in ipairs(var_0_1) do
-			var_2_1 = var_2_1 * 10 + iter_2_3
+		for _, v in ipairs(_cacheTable) do
+			result = result * 10 + v
 		end
 
-		for iter_2_4 = 1, var_2_0 do
-			var_0_1[iter_2_4] = nil
+		for i = 1, len do
+			_cacheTable[i] = nil
 		end
 	end
 
-	return var_2_1
+	return result
 end
 
-function var_0_0.cleanEntrySet(arg_3_0)
-	for iter_3_0, iter_3_1 in pairs(arg_3_0.entryConnect) do
-		arg_3_0.entryConnect[iter_3_0] = nil
+function DungeonPuzzlePipeMO:cleanEntrySet()
+	for k, v in pairs(self.entryConnect) do
+		self.entryConnect[k] = nil
 	end
 
-	arg_3_0.entryCount = 0
+	self.entryCount = 0
 end
 
-function var_0_0.isEntry(arg_4_0)
-	return DungeonPuzzlePipeModel.constEntry == arg_4_0.value
+function DungeonPuzzlePipeMO:isEntry()
+	return DungeonPuzzlePipeModel.constEntry == self.value
 end
 
-return var_0_0
+return DungeonPuzzlePipeMO

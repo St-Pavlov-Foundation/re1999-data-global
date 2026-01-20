@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity1_5.sportsnews.define.SportsNewsEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/sportsnews/define/SportsNewsEvent.lua
 
-local var_0_0 = {}
+module("modules.logic.versionactivity1_5.sportsnews.define.SportsNewsEvent", package.seeall)
 
-var_0_0.OnReadEnd = 101
-var_0_0.OnCutTab = 102
+local SportsNewsEvent = {}
 
-return var_0_0
+SportsNewsEvent.OnReadEnd = 101
+SportsNewsEvent.OnCutTab = 102
+
+return SportsNewsEvent

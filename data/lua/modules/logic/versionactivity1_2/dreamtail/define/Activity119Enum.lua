@@ -1,12 +1,14 @@
-﻿module("modules.logic.versionactivity1_2.dreamtail.define.Activity119Enum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/dreamtail/define/Activity119Enum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_2.dreamtail.define.Activity119Enum", package.seeall)
 
-var_0_0.TaskStatus = {
+local Activity119Enum = _M
+
+Activity119Enum.TaskStatus = {
 	Finished = 2,
 	GotReward = 3,
 	Unfinished = 1
 }
-var_0_0.buffCurrencyId = 1302
+Activity119Enum.buffCurrencyId = 1302
 
-return var_0_0
+return Activity119Enum

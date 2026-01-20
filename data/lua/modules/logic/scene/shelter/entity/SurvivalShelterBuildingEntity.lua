@@ -1,236 +1,242 @@
-﻿module("modules.logic.scene.shelter.entity.SurvivalShelterBuildingEntity", package.seeall)
+﻿-- chunkname: @modules/logic/scene/shelter/entity/SurvivalShelterBuildingEntity.lua
 
-local var_0_0 = class("SurvivalShelterBuildingEntity", SurvivalShelterUnitEntity)
+module("modules.logic.scene.shelter.entity.SurvivalShelterBuildingEntity", package.seeall)
 
-function var_0_0.Create(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = SurvivalConfig.instance:getShelterMapCo():getBuildingById(arg_1_1)
-	local var_1_1 = gohelper.create3d(arg_1_2, tostring(var_1_0.pos))
-	local var_1_2, var_1_3, var_1_4 = SurvivalHelper.instance:hexPointToWorldPoint(var_1_0.pos.q, var_1_0.pos.r)
-	local var_1_5 = var_1_1.transform
+local SurvivalShelterBuildingEntity = class("SurvivalShelterBuildingEntity", SurvivalShelterUnitEntity)
 
-	transformhelper.setLocalPos(var_1_5, var_1_2, var_1_3, var_1_4)
-	transformhelper.setLocalRotation(var_1_5, 0, var_1_0.dir * 60, 0)
+function SurvivalShelterBuildingEntity.Create(unitType, unitId, root)
+	local mapCo = SurvivalConfig.instance:getShelterMapCo()
+	local buildingCo = mapCo:getBuildingById(unitId)
+	local go = gohelper.create3d(root, tostring(buildingCo.pos))
+	local x, y, z = SurvivalHelper.instance:hexPointToWorldPoint(buildingCo.pos.q, buildingCo.pos.r)
+	local rootTrans = go.transform
 
-	local var_1_6 = {
-		unitType = arg_1_0,
-		unitId = arg_1_1,
-		buildingCo = var_1_0
+	transformhelper.setLocalPos(rootTrans, x, y, z)
+	transformhelper.setLocalRotation(rootTrans, 0, buildingCo.dir * 60, 0)
+
+	local param = {
+		unitType = unitType,
+		unitId = unitId,
+		buildingCo = buildingCo
 	}
 
-	return MonoHelper.addNoUpdateLuaComOnceToGo(var_1_1, var_0_0, var_1_6)
+	return MonoHelper.addNoUpdateLuaComOnceToGo(go, SurvivalShelterBuildingEntity, param)
 end
 
-function var_0_0.onCtor(arg_2_0, arg_2_1)
-	arg_2_0.buildingCo = arg_2_1.buildingCo
-	arg_2_0.pos = arg_2_0.buildingCo.pos
+function SurvivalShelterBuildingEntity:onCtor(param)
+	self.buildingCo = param.buildingCo
+	self.pos = self.buildingCo.pos
 end
 
-function var_0_0.onStart(arg_3_0)
-	arg_3_0.go:GetComponent(typeof(SLFramework.LuaMonobehavier)).enabled = false
+function SurvivalShelterBuildingEntity:onStart()
+	self.go:GetComponent(typeof(SLFramework.LuaMonobehavier)).enabled = false
 end
 
-function var_0_0.onInit(arg_4_0)
-	arg_4_0:showModel()
+function SurvivalShelterBuildingEntity:onInit()
+	self:showModel()
 end
 
-function var_0_0.showModel(arg_5_0)
-	if not gohelper.isNil(arg_5_0.goModel) then
+function SurvivalShelterBuildingEntity:showModel()
+	if not gohelper.isNil(self.goModel) then
 		return
 	end
 
-	if arg_5_0._loader then
+	if self._loader then
 		return
 	end
 
-	arg_5_0._loader = MultiAbLoader.New()
+	self._loader = MultiAbLoader.New()
 
-	local var_5_0, var_5_1 = arg_5_0:getResPath()
+	local path, ruinsPath = self:getResPath()
 
-	arg_5_0._loader:addPath(var_5_0)
+	self._loader:addPath(path)
 
-	if var_5_1 then
-		arg_5_0._loader:addPath(var_5_1)
+	if ruinsPath then
+		self._loader:addPath(ruinsPath)
 	end
 
-	arg_5_0._loader:startLoad(arg_5_0._onResLoadEnd, arg_5_0)
+	self._loader:startLoad(self._onResLoadEnd, self)
 end
 
-function var_0_0.getResPath(arg_6_0)
-	local var_6_0 = SurvivalConfig.instance:getBuildingConfig(arg_6_0.buildingCo.cfgId, 1)
+function SurvivalShelterBuildingEntity:getResPath()
+	local buildingConfig = SurvivalConfig.instance:getBuildingConfig(self.buildingCo.cfgId, 1)
 
-	return arg_6_0.buildingCo.assetPath, not string.nilorempty(var_6_0.ruins) and string.format("survival/buiding/v2a8/%s.prefab", var_6_0.ruins)
+	return self.buildingCo.assetPath, not string.nilorempty(buildingConfig.ruins) and string.format("survival/buiding/v2a8/%s.prefab", buildingConfig.ruins)
 end
 
-function var_0_0._onResLoadEnd(arg_7_0)
-	local var_7_0, var_7_1 = arg_7_0:getResPath()
-	local var_7_2 = arg_7_0._loader:getAssetItem(var_7_0)
+function SurvivalShelterBuildingEntity:_onResLoadEnd()
+	local path, ruinsPath = self:getResPath()
+	local assetItem = self._loader:getAssetItem(path)
 
-	if var_7_2 then
-		local var_7_3 = var_7_2:GetResource(var_7_0)
+	if assetItem then
+		local obj = assetItem:GetResource(path)
 
-		arg_7_0.goModel = gohelper.clone(var_7_3, arg_7_0.go, "model")
+		self.goModel = gohelper.clone(obj, self.go, "model")
 
-		arg_7_0:initTrans(arg_7_0.goModel.transform)
+		self:initTrans(self.goModel.transform)
 	end
 
-	if var_7_1 then
-		local var_7_4 = arg_7_0._loader:getAssetItem(var_7_1)
+	if ruinsPath then
+		assetItem = self._loader:getAssetItem(ruinsPath)
 
-		if var_7_4 then
-			local var_7_5 = var_7_4:GetResource(var_7_1)
+		if assetItem then
+			local obj = assetItem:GetResource(ruinsPath)
 
-			arg_7_0.goRuins = gohelper.clone(var_7_5, arg_7_0.go, "ruins")
+			self.goRuins = gohelper.clone(obj, self.go, "ruins")
 
-			arg_7_0:initTrans(arg_7_0.goRuins.transform)
+			self:initTrans(self.goRuins.transform)
 		end
 	end
 
-	arg_7_0:onLoadedEnd()
+	self:onLoadedEnd()
 end
 
-function var_0_0.initTrans(arg_8_0, arg_8_1)
-	transformhelper.setLocalPos(arg_8_1, 0, 0, 0)
-	transformhelper.setLocalRotation(arg_8_1, 0, 0, 0)
-	transformhelper.setLocalScale(arg_8_1, 1, 1, 1)
+function SurvivalShelterBuildingEntity:initTrans(trans)
+	transformhelper.setLocalPos(trans, 0, 0, 0)
+	transformhelper.setLocalRotation(trans, 0, 0, 0)
+	transformhelper.setLocalScale(trans, 1, 1, 1)
 end
 
-function var_0_0.canShow(arg_9_0)
-	local var_9_0 = SurvivalShelterModel.instance:getWeekInfo():getBuildingInfo(arg_9_0.unitId)
+function SurvivalShelterBuildingEntity:canShow()
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local buildingInfo = weekInfo:getBuildingInfo(self.unitId)
+	local isShow = buildingInfo and buildingInfo:isBuild() or false
 
-	return var_9_0 and var_9_0:isBuild() or false
+	return isShow
 end
 
-function var_0_0.setVisible(arg_10_0, arg_10_1, arg_10_2)
-	if arg_10_0._isVisible == arg_10_1 and not arg_10_2 then
+function SurvivalShelterBuildingEntity:setVisible(isVisible, force)
+	if self._isVisible == isVisible and not force then
 		return
 	end
 
-	arg_10_0._isVisible = arg_10_1
+	self._isVisible = isVisible
 
-	gohelper.setActive(arg_10_0.goModel, arg_10_0._isVisible)
-	gohelper.setActive(arg_10_0.goRuins, not arg_10_0._isVisible)
-	arg_10_0:onChangeEntity()
+	gohelper.setActive(self.goModel, self._isVisible)
+	gohelper.setActive(self.goRuins, not self._isVisible)
+	self:onChangeEntity()
 end
 
-function var_0_0.checkClick(arg_11_0, arg_11_1)
-	return arg_11_0.buildingCo:isInRange(arg_11_1)
+function SurvivalShelterBuildingEntity:checkClick(hexPoint)
+	return self.buildingCo:isInRange(hexPoint)
 end
 
-function var_0_0.needUI(arg_12_0)
+function SurvivalShelterBuildingEntity:needUI()
 	return true
 end
 
-function var_0_0.getCenterPos(arg_13_0)
-	local var_13_0 = arg_13_0.buildingCo.ponitRange
-	local var_13_1 = 0
-	local var_13_2 = 0
-	local var_13_3 = 0
-	local var_13_4 = 0
+function SurvivalShelterBuildingEntity:getCenterPos()
+	local ponitRange = self.buildingCo.ponitRange
+	local sumX, sumY, sumZ = 0, 0, 0
+	local count = 0
 
-	for iter_13_0, iter_13_1 in pairs(var_13_0) do
-		for iter_13_2, iter_13_3 in pairs(iter_13_1) do
-			local var_13_5, var_13_6, var_13_7 = SurvivalHelper.instance:hexPointToWorldPoint(iter_13_3.q, iter_13_3.r)
+	for q, vv in pairs(ponitRange) do
+		for r, ponit in pairs(vv) do
+			local x, y, z = SurvivalHelper.instance:hexPointToWorldPoint(ponit.q, ponit.r)
 
-			var_13_1 = var_13_1 + var_13_5
-			var_13_2 = var_13_2 + var_13_6
-			var_13_3 = var_13_3 + var_13_7
-			var_13_4 = var_13_4 + 1
+			sumX = sumX + x
+			sumY = sumY + y
+			sumZ = sumZ + z
+			count = count + 1
 		end
 	end
 
-	if var_13_4 > 0 then
-		local var_13_8 = var_13_1 / var_13_4
-		local var_13_9 = var_13_2 / var_13_4
-		local var_13_10 = var_13_3 / var_13_4
+	if count > 0 then
+		local averageX = sumX / count
+		local averageY = sumY / count
+		local averageZ = sumZ / count
 
-		return var_13_8, var_13_9, var_13_10
+		return averageX, averageY, averageZ
 	end
 
 	return 0, 0, 0
 end
 
-function var_0_0.showBuildEffect(arg_14_0)
+function SurvivalShelterBuildingEntity:showBuildEffect()
 	ViewMgr.instance:closeAllPopupViews()
 
-	local var_14_0, var_14_1, var_14_2 = arg_14_0:getCenterPos()
+	local x, y, z = self:getCenterPos()
 
-	SurvivalController.instance:dispatchEvent(SurvivalEvent.TweenCameraFocus, Vector3(var_14_0, var_14_1, var_14_2), 0.5, arg_14_0._showBuildEffect, arg_14_0)
+	SurvivalController.instance:dispatchEvent(SurvivalEvent.TweenCameraFocus, Vector3(x, y, z), 0.5, self._showBuildEffect, self)
 end
 
-function var_0_0._showBuildEffect(arg_15_0)
-	local var_15_0 = SurvivalShelterModel.instance:getWeekInfo():getBuildingInfo(arg_15_0.unitId)
+function SurvivalShelterBuildingEntity:_showBuildEffect()
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local buildingInfo = weekInfo:getBuildingInfo(self.unitId)
 
-	if not var_15_0 then
+	if not buildingInfo then
 		return
 	end
 
-	local var_15_1 = var_15_0.level > 1
+	local isLevup = buildingInfo.level > 1
 
-	arg_15_0._effectDelayTime = 1
-	arg_15_0._effectAudioId = var_15_1 and AudioEnum2_8.Survival.play_ui_fuleyuan_tansuo_transmit or AudioEnum2_8.Survival.play_ui_fuleyuan_tansuo_build
+	self._effectDelayTime = 1
+	self._effectAudioId = isLevup and AudioEnum2_8.Survival.play_ui_fuleyuan_tansuo_transmit or AudioEnum2_8.Survival.play_ui_fuleyuan_tansuo_build
 
-	local var_15_2 = var_15_1 and SurvivalConst.UnitEffectPath.Transfer2 or SurvivalConst.UnitEffectPath.CreateUnit
+	local effectPath = isLevup and SurvivalConst.UnitEffectPath.Transfer2 or SurvivalConst.UnitEffectPath.CreateUnit
 
-	arg_15_0:loadEffect(var_15_2)
+	self:loadEffect(effectPath)
 end
 
-function var_0_0.loadEffect(arg_16_0, arg_16_1)
-	if not arg_16_0.buildEffect then
-		local var_16_0, var_16_1, var_16_2 = arg_16_0:getCenterPos()
-		local var_16_3 = gohelper.create3d(arg_16_0.go, "effect")
+function SurvivalShelterBuildingEntity:loadEffect(effectPath)
+	if not self.buildEffect then
+		local x, y, z = self:getCenterPos()
+		local go = gohelper.create3d(self.go, "effect")
 
-		transformhelper.setPos(var_16_3.transform, var_16_0, 0, var_16_2)
-		transformhelper.setEulerAngles(var_16_3.transform, 0, 0, 0)
+		transformhelper.setPos(go.transform, x, 0, z)
+		transformhelper.setEulerAngles(go.transform, 0, 0, 0)
 
-		arg_16_0.buildEffect = PrefabInstantiate.Create(var_16_3)
+		local loader = PrefabInstantiate.Create(go)
+
+		self.buildEffect = loader
 	else
-		arg_16_0.buildEffect:dispose()
+		self.buildEffect:dispose()
 	end
 
-	arg_16_0.buildEffect:startLoad(arg_16_1, arg_16_0._onBuildEffectLoaded, arg_16_0)
+	self.buildEffect:startLoad(effectPath, self._onBuildEffectLoaded, self)
 end
 
-function var_0_0._onBuildEffectLoaded(arg_17_0)
-	if arg_17_0._effectAudioId then
-		AudioMgr.instance:trigger(arg_17_0._effectAudioId)
+function SurvivalShelterBuildingEntity:_onBuildEffectLoaded()
+	if self._effectAudioId then
+		AudioMgr.instance:trigger(self._effectAudioId)
 	end
 
-	if arg_17_0._effectDelayTime then
-		TaskDispatcher.runDelay(arg_17_0._onBuildEffectPlayFinish, arg_17_0, arg_17_0._effectDelayTime)
+	if self._effectDelayTime then
+		TaskDispatcher.runDelay(self._onBuildEffectPlayFinish, self, self._effectDelayTime)
 	else
-		arg_17_0:_onBuildEffectPlayFinish()
+		self:_onBuildEffectPlayFinish()
 	end
 end
 
-function var_0_0._onBuildEffectPlayFinish(arg_18_0)
-	arg_18_0._effectDelayTime = nil
+function SurvivalShelterBuildingEntity:_onBuildEffectPlayFinish()
+	self._effectDelayTime = nil
 
-	if arg_18_0.buildEffect then
-		arg_18_0.buildEffect:dispose()
+	if self.buildEffect then
+		self.buildEffect:dispose()
 	end
 
-	arg_18_0:updateEntity(true)
+	self:updateEntity(true)
 end
 
-function var_0_0.updateEntity(arg_19_0, arg_19_1)
-	if arg_19_0._effectDelayTime then
+function SurvivalShelterBuildingEntity:updateEntity(updateAll)
+	if self._effectDelayTime then
 		return
 	end
 
-	var_0_0.super.updateEntity(arg_19_0, arg_19_1)
+	SurvivalShelterBuildingEntity.super.updateEntity(self, updateAll)
 end
 
-function var_0_0.onDestroy(arg_20_0)
-	if arg_20_0._loader then
-		arg_20_0._loader:dispose()
+function SurvivalShelterBuildingEntity:onDestroy()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_20_0._loader = nil
+		self._loader = nil
 	end
 
-	arg_20_0._effectDelayTime = nil
+	self._effectDelayTime = nil
 
-	TaskDispatcher.cancelTask(arg_20_0._onBuildEffectPlayFinish, arg_20_0)
-	var_0_0.super.onDestroy(arg_20_0)
+	TaskDispatcher.cancelTask(self._onBuildEffectPlayFinish, self)
+	SurvivalShelterBuildingEntity.super.onDestroy(self)
 end
 
-return var_0_0
+return SurvivalShelterBuildingEntity

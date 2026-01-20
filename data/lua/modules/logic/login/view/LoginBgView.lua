@@ -1,69 +1,67 @@
-﻿module("modules.logic.login.view.LoginBgView", package.seeall)
+﻿-- chunkname: @modules/logic/login/view/LoginBgView.lua
 
-local var_0_0 = class("LoginBgView", BaseView)
+module("modules.logic.login.view.LoginBgView", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0)
+local LoginBgView = class("LoginBgView", BaseView)
 
-	arg_1_0._containerPath = arg_1_1
+function LoginBgView:ctor(containerPath)
+	LoginBgView.super.ctor(self)
+
+	self._containerPath = containerPath
 end
 
-function var_0_0.onInitView(arg_2_0)
-	arg_2_0._goBgRoot = gohelper.findChild(arg_2_0.viewGO, arg_2_0._containerPath)
+function LoginBgView:onInitView()
+	self._goBgRoot = gohelper.findChild(self.viewGO, self._containerPath)
 end
 
-function var_0_0.onOpen(arg_3_0)
-	arg_3_0._isShowVideo = LoginController.instance:isShowLoginVideo()
-	arg_3_0._goSpine = gohelper.findChild(ViewMgr.instance:getContainer(ViewName.LoginView).viewGO, "spine")
+function LoginBgView:onOpen()
+	self._curCfg = LoginPageController.instance:getCurPageCfg()
+	self._goSpine = gohelper.findChild(ViewMgr.instance:getContainer(ViewName.LoginView).viewGO, "spine")
 
-	arg_3_0:_showBgType()
+	self:_showBgType()
 end
 
-function var_0_0._showBgType(arg_4_0)
-	if arg_4_0._isShowVideo then
-		AudioMgr.instance:trigger(AudioEnum3_0.Bgm.play_login_interface_music_3_0)
-	else
-		AudioMgr.instance:trigger(AudioEnum.UI.Play_Login_interface_nosie)
+function LoginBgView:_showBgType()
+	if self._curCfg and self._curCfg.audioId and self._curCfg.audioId ~= 0 then
+		AudioMgr.instance:trigger(self._curCfg.audioId)
 	end
 
-	gohelper.setActive(arg_4_0._goSpine, false)
+	gohelper.setActive(self._goSpine, false)
 
-	if not arg_4_0._goBg then
-		arg_4_0._goBg = arg_4_0.viewContainer:getResInst(arg_4_0.viewContainer._viewSetting.otherRes[1], arg_4_0._goBgRoot, "bgview2")
-		arg_4_0._imgBg = gohelper.findChildSingleImage(arg_4_0._goBg, "background")
+	if not self._goBg then
+		self._goBg = self.viewContainer:getResInst(self.viewContainer._viewSetting.otherRes[1], self._goBgRoot, "bgview2")
+		self._imgBg = gohelper.findChildSingleImage(self._goBg, "background")
 	end
 
-	local var_4_0 = 0.1
+	local delay = 0.1
 
-	if arg_4_0._imgBg and arg_4_0.viewContainer._viewSetting.otherRes[2] then
-		var_4_0 = 2
+	if self._imgBg and self.viewContainer._viewSetting.otherRes[2] then
+		delay = 2
 
-		arg_4_0._imgBg:LoadImage(arg_4_0.viewContainer._viewSetting.otherRes[2], arg_4_0._bgHasLoaded, arg_4_0)
+		self._imgBg:LoadImage(self.viewContainer._viewSetting.otherRes[2], self._bgHasLoaded, self)
 	end
 
-	TaskDispatcher.runDelay(arg_4_0._bgHasLoaded, arg_4_0, var_4_0)
+	TaskDispatcher.runDelay(self._bgHasLoaded, self, delay)
 end
 
-function var_0_0._bgHasLoaded(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0._bgHasLoaded, arg_5_0)
+function LoginBgView:_bgHasLoaded()
+	TaskDispatcher.cancelTask(self._bgHasLoaded, self)
 	LoginController.instance:dispatchEvent(LoginEvent.OnLoginBgLoaded)
 end
 
-function var_0_0.onClose(arg_6_0)
+function LoginBgView:onClose()
 	AudioMgr.instance:trigger(AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
-	TaskDispatcher.cancelTask(arg_6_0._bgHasLoaded, arg_6_0)
+	TaskDispatcher.cancelTask(self._bgHasLoaded, self)
 
-	if arg_6_0._isShowVideo then
-		AudioMgr.instance:trigger(AudioEnum.Bgm.stop_login_interface_music_3_0)
-	else
-		AudioMgr.instance:trigger(AudioEnum.UI.Stop_Login_interface_noise)
+	if self._curCfg and self._curCfg.stopAudioId and self._curCfg.stopAudioId ~= 0 then
+		AudioMgr.instance:trigger(self._curCfg.stopAudioId)
 	end
 end
 
-function var_0_0.onDestroyView(arg_7_0)
-	if arg_7_0._imgBg then
-		arg_7_0._imgBg:UnLoadImage()
+function LoginBgView:onDestroyView()
+	if self._imgBg then
+		self._imgBg:UnLoadImage()
 	end
 end
 
-return var_0_0
+return LoginBgView

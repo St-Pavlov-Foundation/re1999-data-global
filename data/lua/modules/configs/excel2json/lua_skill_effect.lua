@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_skill_effect", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_skill_effect.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_skill_effect", package.seeall)
+
+local lua_skill_effect = {}
+local fields = {
 	behavior9 = 67,
 	limit15 = 105,
 	condition8 = 59,
@@ -139,15 +141,15 @@ local var_0_1 = {
 	behavior7 = 55,
 	behavior6 = 49
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	desc = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_skill_effect.onLoad(json)
+	lua_skill_effect.configList, lua_skill_effect.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_skill_effect

@@ -1,228 +1,231 @@
-﻿module("modules.logic.fight.view.FightLYWaitAreaCard", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightLYWaitAreaCard.lua
 
-local var_0_0 = class("FightLYWaitAreaCard", UserDataDispose)
+module("modules.logic.fight.view.FightLYWaitAreaCard", package.seeall)
 
-var_0_0.LY_CardPath = "ui/viewres/fight/fight_liangyuecardview.prefab"
-var_0_0.LY_MAXPoint = 6
+local FightLYWaitAreaCard = class("FightLYWaitAreaCard", UserDataDispose)
 
-function var_0_0.Create(arg_1_0)
-	local var_1_0 = var_0_0.New()
+FightLYWaitAreaCard.LY_CardPath = "ui/viewres/fight/fight_liangyuecardview.prefab"
+FightLYWaitAreaCard.LY_MAXPoint = 6
 
-	var_1_0:init(arg_1_0)
+function FightLYWaitAreaCard.Create(go)
+	local card = FightLYWaitAreaCard.New()
 
-	return var_1_0
+	card:init(go)
+
+	return card
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0:__onInit()
+function FightLYWaitAreaCard:init(go)
+	self:__onInit()
 
-	arg_2_0.loaded = false
-	arg_2_0.goContainer = arg_2_1
-	arg_2_0.LYLoader = PrefabInstantiate.Create(arg_2_0.goContainer)
+	self.loaded = false
+	self.goContainer = go
+	self.LYLoader = PrefabInstantiate.Create(self.goContainer)
 
-	arg_2_0.LYLoader:startLoad(var_0_0.LY_CardPath, arg_2_0.onLoadLYCardDone, arg_2_0)
+	self.LYLoader:startLoad(FightLYWaitAreaCard.LY_CardPath, self.onLoadLYCardDone, self)
 end
 
-function var_0_0.onLoadLYCardDone(arg_3_0, arg_3_1)
-	arg_3_0.loaded = true
-	arg_3_0.LY_instanceGo = arg_3_0.LYLoader:getInstGO()
-	arg_3_0.rectTr = arg_3_0.LY_instanceGo:GetComponent(gohelper.Type_RectTransform)
-	arg_3_0.animator = gohelper.findChildComponent(arg_3_0.LY_instanceGo, "current", gohelper.Type_Animator)
-	arg_3_0.LY_goCardBack = gohelper.findChild(arg_3_0.LY_instanceGo, "current/back")
+function FightLYWaitAreaCard:onLoadLYCardDone(loader)
+	self.loaded = true
+	self.LY_instanceGo = self.LYLoader:getInstGO()
+	self.rectTr = self.LY_instanceGo:GetComponent(gohelper.Type_RectTransform)
+	self.animator = gohelper.findChildComponent(self.LY_instanceGo, "current", gohelper.Type_Animator)
+	self.LY_goCardBack = gohelper.findChild(self.LY_instanceGo, "current/back")
 
-	gohelper.setActive(arg_3_0.LY_goCardBack, true)
+	gohelper.setActive(self.LY_goCardBack, true)
 
-	arg_3_0.goSkillList = arg_3_0:getUserDataTb_()
+	self.goSkillList = self:getUserDataTb_()
 
-	for iter_3_0 = 1, 3 do
-		table.insert(arg_3_0.goSkillList, gohelper.findChild(arg_3_0.LY_goCardBack, tostring(iter_3_0)))
+	for i = 1, 3 do
+		table.insert(self.goSkillList, gohelper.findChild(self.LY_goCardBack, tostring(i)))
 	end
 
-	arg_3_0.LY_pointItemList = {}
+	self.LY_pointItemList = {}
 
-	for iter_3_1 = 1, var_0_0.LY_MAXPoint do
-		local var_3_0 = arg_3_0:getUserDataTb_()
+	for i = 1, FightLYWaitAreaCard.LY_MAXPoint do
+		local pointItem = self:getUserDataTb_()
 
-		var_3_0.go = gohelper.findChild(arg_3_0.LY_instanceGo, "current/font/energy/" .. iter_3_1)
-		var_3_0.goRed = gohelper.findChild(var_3_0.go, "red")
-		var_3_0.goBlue = gohelper.findChild(var_3_0.go, "green")
-		var_3_0.goBoth = gohelper.findChild(var_3_0.go, "both")
-		var_3_0.animator = var_3_0.go:GetComponent(gohelper.Type_Animator)
+		pointItem.go = gohelper.findChild(self.LY_instanceGo, "current/font/energy/" .. i)
+		pointItem.goRed = gohelper.findChild(pointItem.go, "red")
+		pointItem.goBlue = gohelper.findChild(pointItem.go, "green")
+		pointItem.goBoth = gohelper.findChild(pointItem.go, "both")
+		pointItem.animator = pointItem.go:GetComponent(gohelper.Type_Animator)
 
-		table.insert(arg_3_0.LY_pointItemList, var_3_0)
+		table.insert(self.LY_pointItemList, pointItem)
 	end
 
-	arg_3_0:refreshLYCard()
-	arg_3_0:setAnchorX(arg_3_0.recordAnchorX)
-	arg_3_0:setScale(arg_3_0.scale)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.LY_HadRedAndBluePointChange, arg_3_0.onPointChange, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.LY_PointAreaSizeChange, arg_3_0.refreshLYCard, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.LY_TriggerCountSkill, arg_3_0.onTriggerSkill, arg_3_0)
+	self:refreshLYCard()
+	self:setAnchorX(self.recordAnchorX)
+	self:setScale(self.scale)
+	self:addEventCb(FightController.instance, FightEvent.LY_HadRedAndBluePointChange, self.onPointChange, self)
+	self:addEventCb(FightController.instance, FightEvent.LY_PointAreaSizeChange, self.refreshLYCard, self)
+	self:addEventCb(FightController.instance, FightEvent.LY_TriggerCountSkill, self.onTriggerSkill, self)
 end
 
-function var_0_0.onPointChange(arg_4_0, arg_4_1, arg_4_2)
-	if not arg_4_0.loaded then
+function FightLYWaitAreaCard:onPointChange(pointList, preLen)
+	if not self.loaded then
 		return
 	end
 
-	local var_4_0 = FightDataHelper.LYDataMgr:getPointList()
+	local serverPointList = FightDataHelper.LYDataMgr:getPointList()
 
-	if not var_4_0 then
-		gohelper.setActive(arg_4_0.goContainer, false)
+	if not serverPointList then
+		gohelper.setActive(self.goContainer, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_4_0.goContainer, true)
+	gohelper.setActive(self.goContainer, true)
 
-	local var_4_1 = FightDataHelper.LYDataMgr.LYPointAreaSize
+	local areaSize = FightDataHelper.LYDataMgr.LYPointAreaSize
 
-	arg_4_0:resetAllPoint()
+	self:resetAllPoint()
 
-	local var_4_2 = math.min(math.max(0, var_4_1), var_0_0.LY_MAXPoint)
-	local var_4_3 = FightViewRedAndBlueArea.PointIndexList[var_4_2 + 1] or {}
+	areaSize = math.min(math.max(0, areaSize), FightLYWaitAreaCard.LY_MAXPoint)
 
-	for iter_4_0 = 1, var_4_2 do
-		local var_4_4 = var_4_3[iter_4_0]
-		local var_4_5 = var_4_4 and arg_4_0.LY_pointItemList[var_4_4]
+	local pointIndexList = FightViewRedAndBlueArea.PointIndexList[areaSize + 1] or {}
 
-		gohelper.setActive(var_4_5.go, true)
+	for i = 1, areaSize do
+		local index = pointIndexList[i]
+		local pointItem = index and self.LY_pointItemList[index]
 
-		local var_4_6 = var_4_0[iter_4_0]
+		gohelper.setActive(pointItem.go, true)
 
-		gohelper.setActive(var_4_5.goRed, var_4_6 == FightEnum.CardColor.Red)
-		gohelper.setActive(var_4_5.goBlue, var_4_6 == FightEnum.CardColor.Blue)
-		gohelper.setActive(var_4_5.goBoth, var_4_6 == FightEnum.CardColor.Both)
+		local color = serverPointList[i]
 
-		if arg_4_2 < iter_4_0 and var_4_6 and var_4_6 ~= FightEnum.CardColor.None then
-			var_4_5.animator:Play("active", 0, 0)
+		gohelper.setActive(pointItem.goRed, color == FightEnum.CardColor.Red)
+		gohelper.setActive(pointItem.goBlue, color == FightEnum.CardColor.Blue)
+		gohelper.setActive(pointItem.goBoth, color == FightEnum.CardColor.Both)
+
+		if preLen < i and color and color ~= FightEnum.CardColor.None then
+			pointItem.animator:Play("active", 0, 0)
 		else
-			var_4_5.animator:Play("empty", 0, 0)
+			pointItem.animator:Play("empty", 0, 0)
 		end
 	end
 
-	arg_4_0.animator:Play("rotate_02", 0, 1)
+	self.animator:Play("rotate_02", 0, 1)
 end
 
-function var_0_0.resetAllPoint(arg_5_0)
-	for iter_5_0 = 1, var_0_0.LY_MAXPoint do
-		local var_5_0 = arg_5_0.LY_pointItemList[iter_5_0]
+function FightLYWaitAreaCard:resetAllPoint()
+	for i = 1, FightLYWaitAreaCard.LY_MAXPoint do
+		local pointItem = self.LY_pointItemList[i]
 
-		gohelper.setActive(var_5_0.go, false)
+		gohelper.setActive(pointItem.go, false)
 	end
 end
 
-function var_0_0.onSkillPlayFinish(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_0.waitSkillId == arg_6_2 then
+function FightLYWaitAreaCard:onSkillPlayFinish(entity, skillId)
+	if self.waitSkillId == skillId then
 		FightDataHelper.LYDataMgr:refreshPointList(true)
-		arg_6_0:removeEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, arg_6_0.onSkillPlayFinish, arg_6_0)
+		self:removeEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, self.onSkillPlayFinish, self)
 
-		arg_6_0.waitSkillId = nil
+		self.waitSkillId = nil
 
-		if arg_6_0.loaded then
-			arg_6_0:refreshLYCard()
+		if self.loaded then
+			self:refreshLYCard()
 			AudioMgr.instance:trigger(20250501)
-			arg_6_0.animator:Play("rotate_02", 0, 0)
+			self.animator:Play("rotate_02", 0, 0)
 		end
 	end
 end
 
-function var_0_0.onTriggerSkill(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	arg_7_0.waitSkillId = arg_7_3
+function FightLYWaitAreaCard:onTriggerSkill(redPoint, bluePoint, skillId)
+	self.waitSkillId = skillId
 
-	arg_7_0:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, arg_7_0.onSkillPlayFinish, arg_7_0)
+	self:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, self.onSkillPlayFinish, self)
 
-	if not arg_7_0.loaded then
+	if not self.loaded then
 		return
 	end
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0.goSkillList) do
-		gohelper.setActive(iter_7_1, false)
+	for _, go in ipairs(self.goSkillList) do
+		gohelper.setActive(go, false)
 	end
 
-	if arg_7_1 == arg_7_2 then
-		gohelper.setActive(arg_7_0.goSkillList[1], true)
-	elseif arg_7_1 < arg_7_2 then
-		gohelper.setActive(arg_7_0.goSkillList[2], true)
+	if redPoint == bluePoint then
+		gohelper.setActive(self.goSkillList[1], true)
+	elseif redPoint < bluePoint then
+		gohelper.setActive(self.goSkillList[2], true)
 	else
-		gohelper.setActive(arg_7_0.goSkillList[3], true)
+		gohelper.setActive(self.goSkillList[3], true)
 	end
 
-	arg_7_0.animator:Play("rotate_01", 0, 0)
+	self.animator:Play("rotate_01", 0, 0)
 	AudioMgr.instance:trigger(20250500)
 end
 
-function var_0_0.refreshLYCard(arg_8_0)
-	if not arg_8_0.loaded then
+function FightLYWaitAreaCard:refreshLYCard()
+	if not self.loaded then
 		return
 	end
 
-	local var_8_0 = FightDataHelper.LYDataMgr:getPointList()
+	local serverPointList = FightDataHelper.LYDataMgr:getPointList()
 
-	if not var_8_0 then
-		gohelper.setActive(arg_8_0.goContainer, false)
+	if not serverPointList then
+		gohelper.setActive(self.goContainer, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_8_0.goContainer, true)
+	gohelper.setActive(self.goContainer, true)
 
-	local var_8_1 = FightDataHelper.LYDataMgr.LYPointAreaSize
+	local areaSize = FightDataHelper.LYDataMgr.LYPointAreaSize
 
-	for iter_8_0 = 1, var_0_0.LY_MAXPoint do
-		local var_8_2 = arg_8_0.LY_pointItemList[iter_8_0]
+	for i = 1, FightLYWaitAreaCard.LY_MAXPoint do
+		local pointItem = self.LY_pointItemList[i]
 
-		if var_8_1 < iter_8_0 then
-			gohelper.setActive(var_8_2.go, false)
+		if areaSize < i then
+			gohelper.setActive(pointItem.go, false)
 
 			break
 		end
 
-		local var_8_3 = var_8_0[iter_8_0]
+		local color = serverPointList[i]
 
-		gohelper.setActive(var_8_2.go, true)
-		gohelper.setActive(var_8_2.goRed, var_8_3 == FightEnum.CardColor.Red)
-		gohelper.setActive(var_8_2.goBlue, var_8_3 == FightEnum.CardColor.Blue)
-		gohelper.setActive(var_8_2.goBoth, var_8_3 == FightEnum.CardColor.Both)
+		gohelper.setActive(pointItem.go, true)
+		gohelper.setActive(pointItem.goRed, color == FightEnum.CardColor.Red)
+		gohelper.setActive(pointItem.goBlue, color == FightEnum.CardColor.Blue)
+		gohelper.setActive(pointItem.goBoth, color == FightEnum.CardColor.Both)
 	end
 end
 
-function var_0_0.resetState(arg_9_0)
-	arg_9_0.animator:Play("rotate_02", 0, 1)
+function FightLYWaitAreaCard:resetState()
+	self.animator:Play("rotate_02", 0, 1)
 end
 
-function var_0_0.playAnim(arg_10_0, arg_10_1)
-	arg_10_0.animator:Play(arg_10_1, 0, 0)
+function FightLYWaitAreaCard:playAnim(animName)
+	self.animator:Play(animName, 0, 0)
 end
 
-function var_0_0.setAnchorX(arg_11_0, arg_11_1)
-	arg_11_0.recordAnchorX = arg_11_1 or 0
+function FightLYWaitAreaCard:setAnchorX(anchorX)
+	self.recordAnchorX = anchorX or 0
 
-	if not arg_11_0.loaded then
+	if not self.loaded then
 		return
 	end
 
-	recthelper.setAnchorX(arg_11_0.rectTr, arg_11_0.recordAnchorX)
+	recthelper.setAnchorX(self.rectTr, self.recordAnchorX)
 end
 
-function var_0_0.setScale(arg_12_0, arg_12_1)
-	arg_12_0.scale = arg_12_1 or 1
+function FightLYWaitAreaCard:setScale(scale)
+	self.scale = scale or 1
 
-	if not arg_12_0.loaded then
+	if not self.loaded then
 		return
 	end
 
-	transformhelper.setLocalScale(arg_12_0.rectTr, arg_12_0.scale, arg_12_0.scale, arg_12_0.scale)
+	transformhelper.setLocalScale(self.rectTr, self.scale, self.scale, self.scale)
 end
 
-function var_0_0.dispose(arg_13_0)
-	if arg_13_0.LYLoader then
-		arg_13_0.LYLoader:dispose()
+function FightLYWaitAreaCard:dispose()
+	if self.LYLoader then
+		self.LYLoader:dispose()
 
-		arg_13_0.LYLoader = nil
+		self.LYLoader = nil
 	end
 
-	arg_13_0:__onDispose()
+	self:__onDispose()
 end
 
-return var_0_0
+return FightLYWaitAreaCard

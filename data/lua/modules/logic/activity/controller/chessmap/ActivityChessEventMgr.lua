@@ -1,16 +1,18 @@
-﻿module("modules.logic.activity.controller.chessmap.ActivityChessEventMgr", package.seeall)
+﻿-- chunkname: @modules/logic/activity/controller/chessmap/ActivityChessEventMgr.lua
 
-local var_0_0 = class("ActivityChessEventMgr")
+module("modules.logic.activity.controller.chessmap.ActivityChessEventMgr", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._stepList = {}
-	arg_1_0._stepPool = nil
-	arg_1_0._curStep = nil
-	arg_1_0._curEventData = nil
-	arg_1_0._curEvent = nil
+local ActivityChessEventMgr = class("ActivityChessEventMgr")
+
+function ActivityChessEventMgr:ctor()
+	self._stepList = {}
+	self._stepPool = nil
+	self._curStep = nil
+	self._curEventData = nil
+	self._curEvent = nil
 end
 
-var_0_0.EventClzMap = {
+ActivityChessEventMgr.EventClzMap = {
 	[ActivityChessEnum.GameEventType.Lock] = ActivityChessStateLock,
 	[ActivityChessEnum.GameEventType.Normal] = ActivityChessStateNormal,
 	[ActivityChessEnum.GameEventType.Battle] = ActivityChessStateBattle,
@@ -18,98 +20,98 @@ var_0_0.EventClzMap = {
 	[ActivityChessEnum.GameEventType.FinishEvent] = ActivityChessStateFinishEvent
 }
 
-function var_0_0.setCurEvent(arg_2_0, arg_2_1)
-	if arg_2_1 ~= nil and not string.nilorempty(arg_2_1.param) then
-		arg_2_0._curEventData = cjson.decode(arg_2_1.param)
+function ActivityChessEventMgr:setCurEvent(serverEvt)
+	if serverEvt ~= nil and not string.nilorempty(serverEvt.param) then
+		self._curEventData = cjson.decode(serverEvt.param)
 	else
-		arg_2_0._curEventData = nil
+		self._curEventData = nil
 	end
 
-	arg_2_0:buildEventState()
+	self:buildEventState()
 end
 
-function var_0_0.setCurEventByObj(arg_3_0, arg_3_1)
-	if arg_3_1 then
-		arg_3_0._curEventData = arg_3_1
+function ActivityChessEventMgr:setCurEventByObj(obj)
+	if obj then
+		self._curEventData = obj
 	else
-		arg_3_0._curEventData = nil
+		self._curEventData = nil
 	end
 
-	arg_3_0:buildEventState()
+	self:buildEventState()
 end
 
-function var_0_0.buildEventState(arg_4_0)
-	local var_4_0
+function ActivityChessEventMgr:buildEventState()
+	local eventType
 
-	if not arg_4_0._curEventData then
-		var_4_0 = ActivityChessEnum.GameEventType.Normal
+	if not self._curEventData then
+		eventType = ActivityChessEnum.GameEventType.Normal
 	else
-		var_4_0 = arg_4_0._curEventData.eventType
+		eventType = self._curEventData.eventType
 	end
 
-	if arg_4_0._curEvent and arg_4_0._curEvent:getStateType() == var_4_0 then
+	if self._curEvent and self._curEvent:getStateType() == eventType then
 		return
 	end
 
-	local var_4_1 = var_0_0.EventClzMap[var_4_0]
+	local clz = ActivityChessEventMgr.EventClzMap[eventType]
 
-	if var_4_1 then
-		arg_4_0:disposeEventState()
+	if clz then
+		self:disposeEventState()
 
-		arg_4_0._curEvent = var_4_1.New()
+		self._curEvent = clz.New()
 
-		arg_4_0._curEvent:init(var_4_0, arg_4_0._curEventData)
-		arg_4_0._curEvent:start()
+		self._curEvent:init(eventType, self._curEventData)
+		self._curEvent:start()
 	end
 end
 
-function var_0_0.setLockEvent(arg_5_0)
-	arg_5_0:disposeEventState()
+function ActivityChessEventMgr:setLockEvent()
+	self:disposeEventState()
 
-	arg_5_0._curEventData = nil
-	arg_5_0._curEvent = ActivityChessStateLock.New()
+	self._curEventData = nil
+	self._curEvent = ActivityChessStateLock.New()
 
-	arg_5_0._curEvent:init()
-	arg_5_0._curEvent:start()
+	self._curEvent:init()
+	self._curEvent:start()
 end
 
-function var_0_0.disposeEventState(arg_6_0)
-	if arg_6_0._curEvent ~= nil then
-		arg_6_0._curEvent:dispose()
+function ActivityChessEventMgr:disposeEventState()
+	if self._curEvent ~= nil then
+		self._curEvent:dispose()
 
-		arg_6_0._curEvent = nil
+		self._curEvent = nil
 	end
 end
 
-function var_0_0.getCurEvent(arg_7_0)
-	return arg_7_0._curEvent
+function ActivityChessEventMgr:getCurEvent()
+	return self._curEvent
 end
 
-function var_0_0.insertStepList(arg_8_0, arg_8_1)
-	local var_8_0 = #arg_8_1
+function ActivityChessEventMgr:insertStepList(serverData)
+	local len = #serverData
 
-	for iter_8_0 = 1, var_8_0 do
-		local var_8_1 = arg_8_1[iter_8_0]
+	for i = 1, len do
+		local stepData = serverData[i]
 
-		arg_8_0:insertStep(var_8_1)
+		self:insertStep(stepData)
 	end
 end
 
-function var_0_0.insertStep(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0:buildStep(arg_9_1)
+function ActivityChessEventMgr:insertStep(serverData)
+	local step = self:buildStep(serverData)
 
-	if var_9_0 then
-		arg_9_0._stepList = arg_9_0._stepList or {}
+	if step then
+		self._stepList = self._stepList or {}
 
-		table.insert(arg_9_0._stepList, var_9_0)
+		table.insert(self._stepList, step)
 	end
 
-	if arg_9_0._curStep == nil then
-		arg_9_0:nextStep()
+	if self._curStep == nil then
+		self:nextStep()
 	end
 end
 
-var_0_0.StepClzMap = {
+ActivityChessEventMgr.StepClzMap = {
 	[ActivityChessEnum.GameStepType.GameFinish] = ActivityChessStepGameFinish,
 	[ActivityChessEnum.GameStepType.Move] = ActivityChessStepMove,
 	[ActivityChessEnum.GameStepType.NextRound] = ActivityChessStepNextRound,
@@ -121,84 +123,84 @@ var_0_0.StepClzMap = {
 	[ActivityChessEnum.GameStepType.SyncInteractObj] = ActivityChessStepSyncObject
 }
 
-function var_0_0.buildStep(arg_10_0, arg_10_1)
-	local var_10_0 = cjson.decode(arg_10_1.param)
-	local var_10_1 = var_0_0.StepClzMap[var_10_0.stepType]
+function ActivityChessEventMgr:buildStep(serverData)
+	local data = cjson.decode(serverData.param)
+	local stepClz = ActivityChessEventMgr.StepClzMap[data.stepType]
 
-	if var_10_1 then
-		local var_10_2
+	if stepClz then
+		local stepObj
 
-		arg_10_0._stepPool = arg_10_0._stepPool or {}
+		self._stepPool = self._stepPool or {}
 
-		if arg_10_0._stepPool[var_10_1] ~= nil and #arg_10_0._stepPool[var_10_1] >= 1 then
-			local var_10_3 = #arg_10_0._stepPool[var_10_1]
+		if self._stepPool[stepClz] ~= nil and #self._stepPool[stepClz] >= 1 then
+			local len = #self._stepPool[stepClz]
 
-			var_10_2 = arg_10_0._stepPool[var_10_1][var_10_3]
-			arg_10_0._stepPool[var_10_1][var_10_3] = nil
+			stepObj = self._stepPool[stepClz][len]
+			self._stepPool[stepClz][len] = nil
 		else
-			var_10_2 = var_10_1.New()
+			stepObj = stepClz.New()
 		end
 
-		var_10_2:init(var_10_0)
+		stepObj:init(data)
 
-		return var_10_2
+		return stepObj
 	end
 end
 
-function var_0_0.nextStep(arg_11_0)
-	arg_11_0:recycleCurStep()
+function ActivityChessEventMgr:nextStep()
+	self:recycleCurStep()
 
-	if not arg_11_0._isStepStarting then
-		arg_11_0._isStepStarting = true
+	if not self._isStepStarting then
+		self._isStepStarting = true
 
-		while arg_11_0._stepList and #arg_11_0._stepList > 0 and arg_11_0._curStep == nil do
-			arg_11_0._curStep = arg_11_0._stepList[1]
+		while self._stepList and #self._stepList > 0 and self._curStep == nil do
+			self._curStep = self._stepList[1]
 
-			table.remove(arg_11_0._stepList, 1)
-			arg_11_0._curStep:start()
+			table.remove(self._stepList, 1)
+			self._curStep:start()
 		end
 
-		arg_11_0._isStepStarting = false
+		self._isStepStarting = false
 	end
 end
 
-function var_0_0.recycleCurStep(arg_12_0)
-	if arg_12_0._curStep then
-		arg_12_0._curStep:dispose()
+function ActivityChessEventMgr:recycleCurStep()
+	if self._curStep then
+		self._curStep:dispose()
 
-		arg_12_0._stepPool[arg_12_0._curStep.class] = arg_12_0._stepPool[arg_12_0._curStep.class] or {}
+		self._stepPool[self._curStep.class] = self._stepPool[self._curStep.class] or {}
 
-		table.insert(arg_12_0._stepPool[arg_12_0._curStep.class], arg_12_0._curStep)
+		table.insert(self._stepPool[self._curStep.class], self._curStep)
 
-		arg_12_0._curStep = nil
+		self._curStep = nil
 	end
 end
 
-function var_0_0.disposeAllStep(arg_13_0)
-	if arg_13_0._curStep then
-		arg_13_0._curStep:dispose()
+function ActivityChessEventMgr:disposeAllStep()
+	if self._curStep then
+		self._curStep:dispose()
 
-		arg_13_0._curStep = nil
+		self._curStep = nil
 	end
 
-	if arg_13_0._stepList then
-		for iter_13_0, iter_13_1 in pairs(arg_13_0._stepList) do
-			iter_13_1:dispose()
+	if self._stepList then
+		for _, step in pairs(self._stepList) do
+			step:dispose()
 		end
 
-		arg_13_0._stepList = nil
+		self._stepList = nil
 	end
 
-	arg_13_0._stepPool = nil
-	arg_13_0._isStepStarting = false
+	self._stepPool = nil
+	self._isStepStarting = false
 end
 
-function var_0_0.removeAll(arg_14_0)
-	arg_14_0._stepList = nil
-	arg_14_0._curStep = nil
+function ActivityChessEventMgr:removeAll()
+	self._stepList = nil
+	self._curStep = nil
 
-	arg_14_0:disposeAllStep()
-	arg_14_0:disposeEventState()
+	self:disposeAllStep()
+	self:disposeEventState()
 end
 
-return var_0_0
+return ActivityChessEventMgr

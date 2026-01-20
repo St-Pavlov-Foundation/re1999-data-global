@@ -1,21 +1,25 @@
-﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionEnterPassedEpisode", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/WaitGuideActionEnterPassedEpisode.lua
 
-local var_0_0 = class("WaitGuideActionEnterPassedEpisode", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.WaitGuideActionEnterPassedEpisode", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
-	FightController.instance:registerCallback(FightEvent.OnStartSequenceFinish, arg_1_0._onRoundStart, arg_1_0)
+local WaitGuideActionEnterPassedEpisode = class("WaitGuideActionEnterPassedEpisode", BaseGuideAction)
+
+function WaitGuideActionEnterPassedEpisode:onStart(context)
+	WaitGuideActionEnterPassedEpisode.super.onStart(self, context)
+	FightController.instance:registerCallback(FightEvent.OnStartSequenceFinish, self._onRoundStart, self)
 end
 
-function var_0_0._onRoundStart(arg_2_0)
+function WaitGuideActionEnterPassedEpisode:_onRoundStart()
 	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.DistributeCard) or FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Operate then
-		local var_2_0 = FightModel.instance:getFightParam()
+		local fightParam = FightModel.instance:getFightParam()
 
-		if not DungeonModel.instance:hasPassLevel(var_2_0.episodeId) then
+		if not DungeonModel.instance:hasPassLevel(fightParam.episodeId) then
 			return
 		end
 
-		if GuideModel.instance:getDoingGuideId() then
+		local doingGuideId = GuideModel.instance:getDoingGuideId()
+
+		if doingGuideId then
 			return
 		end
 
@@ -27,12 +31,12 @@ function var_0_0._onRoundStart(arg_2_0)
 			return
 		end
 
-		arg_2_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0.clearWork(arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.OnStartSequenceFinish, arg_3_0._onRoundStart, arg_3_0)
+function WaitGuideActionEnterPassedEpisode:clearWork()
+	FightController.instance:unregisterCallback(FightEvent.OnStartSequenceFinish, self._onRoundStart, self)
 end
 
-return var_0_0
+return WaitGuideActionEnterPassedEpisode

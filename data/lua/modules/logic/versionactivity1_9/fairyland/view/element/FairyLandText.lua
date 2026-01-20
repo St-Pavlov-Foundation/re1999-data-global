@@ -1,34 +1,36 @@
-﻿module("modules.logic.versionactivity1_9.fairyland.view.element.FairyLandText", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/fairyland/view/element/FairyLandText.lua
 
-local var_0_0 = class("FairyLandText", FairyLandElementBase)
+module("modules.logic.versionactivity1_9.fairyland.view.element.FairyLandText", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.itemGO = gohelper.findChild(arg_1_0._go, "item")
-	arg_1_0.wordComp = MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0.itemGO, FairyLandWordComp, {
-		co = arg_1_0._config.config,
-		res1 = arg_1_0._elements.wordRes1,
-		res2 = arg_1_0._elements.wordRes2
+local FairyLandText = class("FairyLandText", FairyLandElementBase)
+
+function FairyLandText:onInitView()
+	self.itemGO = gohelper.findChild(self._go, "item")
+	self.wordComp = MonoHelper.addNoUpdateLuaComOnceToGo(self.itemGO, FairyLandWordComp, {
+		co = self._config.config,
+		res1 = self._elements.wordRes1,
+		res2 = self._elements.wordRes2
 	})
 end
 
-function var_0_0.onRefresh(arg_2_0)
+function FairyLandText:onRefresh()
 	return
 end
 
-function var_0_0.updatePos(arg_3_0)
-	local var_3_0 = -100
-	local var_3_1 = -120
-	local var_3_2 = 244
-	local var_3_3 = 73
-	local var_3_4 = arg_3_0:getPos()
-	local var_3_5 = var_3_0 + var_3_4 * var_3_2
-	local var_3_6 = var_3_1 - var_3_4 * var_3_3
+function FairyLandText:updatePos()
+	local startPosX = -100
+	local startPosY = -120
+	local spaceX = 244
+	local spaceY = 73
+	local pos = self:getPos()
+	local x = startPosX + pos * spaceX
+	local y = startPosY - pos * spaceY
 
-	recthelper.setAnchor(arg_3_0._transform, var_3_5, var_3_6)
+	recthelper.setAnchor(self._transform, x, y)
 end
 
-function var_0_0.onDestroyElement(arg_4_0)
+function FairyLandText:onDestroyElement()
 	return
 end
 
-return var_0_0
+return FairyLandText

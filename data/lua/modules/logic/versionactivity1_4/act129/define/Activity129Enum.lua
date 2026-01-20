@@ -1,17 +1,19 @@
-﻿module("modules.logic.versionactivity1_4.act129.define.Activity129Enum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act129/define/Activity129Enum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_4.act129.define.Activity129Enum", package.seeall)
 
-var_0_0.PoolType = {
+local Activity129Enum = _M
+
+Activity129Enum.PoolType = {
 	Limite = 1,
 	Unlimite = 2
 }
-var_0_0.ConstEnum = {
+Activity129Enum.ConstEnum = {
 	OnceCost = 1,
 	MaxMoreDraw = 2,
 	CostId = 3
 }
-var_0_0.VoiceType = {
+Activity129Enum.VoiceType = {
 	ClickHero = 2,
 	ClickEmptyPool = 4,
 	DrawGoosById = 6,
@@ -20,4 +22,4 @@ var_0_0.VoiceType = {
 	ClickPool = 3
 }
 
-return var_0_0
+return Activity129Enum

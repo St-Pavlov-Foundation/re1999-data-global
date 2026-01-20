@@ -1,56 +1,58 @@
-﻿module("modules.logic.scene.summon.comp.SummonSceneViewComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/summon/comp/SummonSceneViewComp.lua
 
-local var_0_0 = class("SummonSceneViewComp", BaseSceneComp)
+module("modules.logic.scene.summon.comp.SummonSceneViewComp", package.seeall)
 
-function var_0_0.openView(arg_1_0)
-	arg_1_0._param = SummonController.instance.summonViewParam
-	arg_1_0._viewOpenFromEnterScene = false
+local SummonSceneViewComp = class("SummonSceneViewComp", BaseSceneComp)
 
-	arg_1_0:startOpenMainView()
+function SummonSceneViewComp:openView()
+	self._param = SummonController.instance.summonViewParam
+	self._viewOpenFromEnterScene = false
+
+	self:startOpenMainView()
 end
 
-function var_0_0.needWaitForViewOpen(arg_2_0)
+function SummonSceneViewComp:needWaitForViewOpen()
 	return not SummonController.instance:isInSummonGuide()
 end
 
-function var_0_0.startOpenMainView(arg_3_0)
-	if arg_3_0:needWaitForViewOpen() then
+function SummonSceneViewComp:startOpenMainView()
+	if self:needWaitForViewOpen() then
 		if not ViewMgr.instance:isOpen(ViewName.SummonADView) then
-			ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_3_0.onViewOpened, arg_3_0)
+			ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, self.onViewOpened, self)
 
-			arg_3_0._viewOpenFromEnterScene = true
+			self._viewOpenFromEnterScene = true
 
-			SummonMainController.instance:openSummonView(arg_3_0._param, true)
+			SummonMainController.instance:openSummonView(self._param, true)
 		else
-			TaskDispatcher.runDelay(arg_3_0.delayDispatchOpenViewFinish, arg_3_0, 0.001)
+			TaskDispatcher.runDelay(self.delayDispatchOpenViewFinish, self, 0.001)
 		end
 	else
-		TaskDispatcher.runDelay(arg_3_0.delayDispatchOpenViewFinish, arg_3_0, 0.001)
+		TaskDispatcher.runDelay(self.delayDispatchOpenViewFinish, self, 0.001)
 	end
 end
 
-function var_0_0.delayDispatchOpenViewFinish(arg_4_0)
-	arg_4_0:dispatchEvent(SummonSceneEvent.OnViewFinish)
+function SummonSceneViewComp:delayDispatchOpenViewFinish()
+	self:dispatchEvent(SummonSceneEvent.OnViewFinish)
 end
 
-function var_0_0.onViewOpened(arg_5_0, arg_5_1)
-	if arg_5_1 == ViewName.SummonADView then
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_5_0.onViewOpened, arg_5_0)
-		arg_5_0:dispatchEvent(SummonSceneEvent.OnViewFinish)
+function SummonSceneViewComp:onViewOpened(viewName)
+	if viewName == ViewName.SummonADView then
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, self.onViewOpened, self)
+		self:dispatchEvent(SummonSceneEvent.OnViewFinish)
 	end
 end
 
-function var_0_0.onScenePrepared(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_0._viewOpenFromEnterScene then
+function SummonSceneViewComp:onScenePrepared(sceneId, levelId)
+	if self._viewOpenFromEnterScene then
 		-- block empty
 	end
 end
 
-function var_0_0.onSceneClose(arg_7_0)
-	arg_7_0._viewOpenFromEnterScene = false
+function SummonSceneViewComp:onSceneClose()
+	self._viewOpenFromEnterScene = false
 
-	TaskDispatcher.cancelTask(arg_7_0.delayDispatchOpenViewFinish, arg_7_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_7_0.onViewOpened, arg_7_0)
+	TaskDispatcher.cancelTask(self.delayDispatchOpenViewFinish, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, self.onViewOpened, self)
 	ViewMgr.instance:closeView(ViewName.SummonView)
 
 	if SummonController.instance:isInSummonGuide() then
@@ -58,8 +60,8 @@ function var_0_0.onSceneClose(arg_7_0)
 	end
 end
 
-function var_0_0.onSceneHide(arg_8_0)
-	arg_8_0:onSceneClose()
+function SummonSceneViewComp:onSceneHide()
+	self:onSceneClose()
 end
 
-return var_0_0
+return SummonSceneViewComp

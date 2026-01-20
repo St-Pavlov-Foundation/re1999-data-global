@@ -1,144 +1,146 @@
-﻿module("modules.logic.gm.view.GM_V3a1_GaoSiNiao_LevelView", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GM_V3a1_GaoSiNiao_LevelView.lua
 
-local var_0_0 = class("GM_V3a1_GaoSiNiao_LevelView", BaseView)
-local var_0_1 = string.format
-local var_0_2 = "#FFFF00"
-local var_0_3 = "#FF0000"
-local var_0_4 = "#00FF00"
-local var_0_5 = "#0000FF"
+module("modules.logic.gm.view.GM_V3a1_GaoSiNiao_LevelView", package.seeall)
 
-function var_0_0.register()
-	var_0_0.V3a1_GaoSiNiao_LevelView_register(V3a1_GaoSiNiao_LevelView)
-	var_0_0.V3a1_GaoSiNiao_LevelViewStageItem_register(V3a1_GaoSiNiao_LevelViewStageItem)
+local GM_V3a1_GaoSiNiao_LevelView = class("GM_V3a1_GaoSiNiao_LevelView", BaseView)
+local sf = string.format
+local kYellow = "#FFFF00"
+local kRed = "#FF0000"
+local kGreen = "#00FF00"
+local kBlue = "#0000FF"
+
+function GM_V3a1_GaoSiNiao_LevelView.register()
+	GM_V3a1_GaoSiNiao_LevelView.V3a1_GaoSiNiao_LevelView_register(V3a1_GaoSiNiao_LevelView)
+	GM_V3a1_GaoSiNiao_LevelView.V3a1_GaoSiNiao_LevelViewStageItem_register(V3a1_GaoSiNiao_LevelViewStageItem)
 end
 
-function var_0_0.V3a1_GaoSiNiao_LevelView_register(arg_2_0)
-	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "_editableInitView")
-	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "addEvents")
-	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "removeEvents")
+function GM_V3a1_GaoSiNiao_LevelView.V3a1_GaoSiNiao_LevelView_register(T)
+	GMMinusModel.instance:saveOriginalFunc(T, "_editableInitView")
+	GMMinusModel.instance:saveOriginalFunc(T, "addEvents")
+	GMMinusModel.instance:saveOriginalFunc(T, "removeEvents")
 
-	function arg_2_0._editableInitView(arg_3_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_3_0, "_editableInitView", ...)
-		GMMinusModel.instance:addBtnGM(arg_3_0)
+	function T:_editableInitView(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "_editableInitView", ...)
+		GMMinusModel.instance:addBtnGM(self)
 
-		arg_3_0._gm_txt_Endless = gohelper.findChildText(arg_3_0._btnEndlessGo, "txt_Endless")
+		self._gm_txt_Endless = gohelper.findChildText(self._btnEndlessGo, "txt_Endless")
 	end
 
-	function arg_2_0.addEvents(arg_4_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_4_0, "addEvents", ...)
-		GMMinusModel.instance:btnGM_AddClickListener(arg_4_0)
-		GM_V3a1_GaoSiNiao_LevelViewContainer.addEvents(arg_4_0)
+	function T:addEvents(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "addEvents", ...)
+		GMMinusModel.instance:btnGM_AddClickListener(self)
+		GM_V3a1_GaoSiNiao_LevelViewContainer.addEvents(self)
 	end
 
-	function arg_2_0.removeEvents(arg_5_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_5_0, "removeEvents", ...)
-		GMMinusModel.instance:btnGM_RemoveClickListener(arg_5_0)
-		GM_V3a1_GaoSiNiao_LevelViewContainer.removeEvents(arg_5_0)
+	function T:removeEvents(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "removeEvents", ...)
+		GMMinusModel.instance:btnGM_RemoveClickListener(self)
+		GM_V3a1_GaoSiNiao_LevelViewContainer.removeEvents(self)
 	end
 
-	function arg_2_0._gm_showAllTabIdUpdate(arg_6_0)
-		arg_6_0._gm_txt_Endless.text = luaLang("p_v3a1_gaosiniao_level_txt_Endless")
+	function T._gm_showAllTabIdUpdate(selfObj)
+		selfObj._gm_txt_Endless.text = luaLang("p_v3a1_gaosiniao_level_txt_Endless")
 
-		arg_6_0:_refresh()
+		selfObj:_refresh()
 
-		if not var_0_0.s_ShowAllTabId then
+		if not GM_V3a1_GaoSiNiao_LevelView.s_ShowAllTabId then
 			return
 		end
 
-		local var_6_0 = arg_6_0:_spCO()
+		local episodeCO = selfObj:_spCO()
 
-		if var_6_0 then
-			local var_6_1 = var_6_0.episodeId
+		if episodeCO then
+			local episodeId = episodeCO.episodeId
 
-			arg_6_0._gm_txt_Endless.text = gohelper.getRichColorText(var_6_1, var_0_2)
+			selfObj._gm_txt_Endless.text = gohelper.getRichColorText(episodeId, kYellow)
 		end
 	end
 
-	function arg_2_0._gm_enableEditModeOnSelect(arg_7_0, arg_7_1)
-		GM_V3a1_GaoSiNiao_GameView.s_isEditMode = arg_7_1 and true or false
+	function T._gm_enableEditModeOnSelect(selfObj, isOn)
+		GM_V3a1_GaoSiNiao_GameView.s_isEditMode = isOn and true or false
 	end
 end
 
-function var_0_0.V3a1_GaoSiNiao_LevelViewStageItem_register(arg_8_0)
-	GMMinusModel.instance:saveOriginalFunc(arg_8_0, "setData")
+function GM_V3a1_GaoSiNiao_LevelView.V3a1_GaoSiNiao_LevelViewStageItem_register(T)
+	GMMinusModel.instance:saveOriginalFunc(T, "setData")
 
-	function arg_8_0.setData(arg_9_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_9_0, "setData", ...)
+	function T.setData(selfObj, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(selfObj, "setData", ...)
 
-		if not var_0_0.s_ShowAllTabId then
+		if not GM_V3a1_GaoSiNiao_LevelView.s_ShowAllTabId then
 			return
 		end
 
-		arg_9_0._txtstagename.text = gohelper.getRichColorText(arg_9_0:episodeId(), var_0_2)
+		selfObj._txtstagename.text = gohelper.getRichColorText(selfObj:episodeId(), kYellow)
 	end
 end
 
-function var_0_0.onInitView(arg_10_0)
-	arg_10_0._btnClose = gohelper.findChildButtonWithAudio(arg_10_0.viewGO, "btnClose")
-	arg_10_0._item1Toggle = gohelper.findChildToggle(arg_10_0.viewGO, "viewport/content/item1/Toggle")
-	arg_10_0._item2Toggle = gohelper.findChildToggle(arg_10_0.viewGO, "viewport/content/item2/Toggle")
+function GM_V3a1_GaoSiNiao_LevelView:onInitView()
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "btnClose")
+	self._item1Toggle = gohelper.findChildToggle(self.viewGO, "viewport/content/item1/Toggle")
+	self._item2Toggle = gohelper.findChildToggle(self.viewGO, "viewport/content/item2/Toggle")
 end
 
-function var_0_0.addEvents(arg_11_0)
-	arg_11_0._btnClose:AddClickListener(arg_11_0.closeThis, arg_11_0)
-	arg_11_0._item1Toggle:AddOnValueChanged(arg_11_0._onItem1ToggleValueChanged, arg_11_0)
-	arg_11_0._item2Toggle:AddOnValueChanged(arg_11_0._onItem2ToggleValueChanged, arg_11_0)
+function GM_V3a1_GaoSiNiao_LevelView:addEvents()
+	self._btnClose:AddClickListener(self.closeThis, self)
+	self._item1Toggle:AddOnValueChanged(self._onItem1ToggleValueChanged, self)
+	self._item2Toggle:AddOnValueChanged(self._onItem2ToggleValueChanged, self)
 end
 
-function var_0_0.removeEvents(arg_12_0)
-	arg_12_0._btnClose:RemoveClickListener()
-	arg_12_0._item1Toggle:RemoveOnValueChanged()
-	arg_12_0._item2Toggle:RemoveOnValueChanged()
+function GM_V3a1_GaoSiNiao_LevelView:removeEvents()
+	self._btnClose:RemoveClickListener()
+	self._item1Toggle:RemoveOnValueChanged()
+	self._item2Toggle:RemoveOnValueChanged()
 end
 
-function var_0_0.onUpdateParam(arg_13_0)
-	arg_13_0:refresh()
+function GM_V3a1_GaoSiNiao_LevelView:onUpdateParam()
+	self:refresh()
 end
 
-function var_0_0.onOpen(arg_14_0)
-	arg_14_0:onUpdateParam()
+function GM_V3a1_GaoSiNiao_LevelView:onOpen()
+	self:onUpdateParam()
 end
 
-function var_0_0.refresh(arg_15_0)
-	arg_15_0:_refreshItem1()
-	arg_15_0:_refreshItem2()
+function GM_V3a1_GaoSiNiao_LevelView:refresh()
+	self:_refreshItem1()
+	self:_refreshItem2()
 end
 
-function var_0_0.onDestroyView(arg_16_0)
+function GM_V3a1_GaoSiNiao_LevelView:onDestroyView()
 	return
 end
 
-var_0_0.s_ShowAllTabId = false
+GM_V3a1_GaoSiNiao_LevelView.s_ShowAllTabId = false
 
-function var_0_0._refreshItem1(arg_17_0)
-	local var_17_0 = var_0_0.s_ShowAllTabId
+function GM_V3a1_GaoSiNiao_LevelView:_refreshItem1()
+	local isOn = GM_V3a1_GaoSiNiao_LevelView.s_ShowAllTabId
 
-	arg_17_0._item1Toggle.isOn = var_17_0
+	self._item1Toggle.isOn = isOn
 end
 
-function var_0_0._onItem1ToggleValueChanged(arg_18_0)
-	local var_18_0 = arg_18_0._item1Toggle.isOn
+function GM_V3a1_GaoSiNiao_LevelView:_onItem1ToggleValueChanged()
+	local isOn = self._item1Toggle.isOn
 
-	var_0_0.s_ShowAllTabId = var_18_0
+	GM_V3a1_GaoSiNiao_LevelView.s_ShowAllTabId = isOn
 
-	GMController.instance:dispatchEvent(GMEvent.V3a1_GaoSiNiao_LevelView_ShowAllTabIdUpdate, var_18_0)
+	GMController.instance:dispatchEvent(GMEvent.V3a1_GaoSiNiao_LevelView_ShowAllTabIdUpdate, isOn)
 end
 
-var_0_0.s_EnableEditModeOnSelect = false
+GM_V3a1_GaoSiNiao_LevelView.s_EnableEditModeOnSelect = false
 
-function var_0_0._refreshItem2(arg_19_0)
-	local var_19_0 = var_0_0.s_EnableEditModeOnSelect
+function GM_V3a1_GaoSiNiao_LevelView:_refreshItem2()
+	local isOn = GM_V3a1_GaoSiNiao_LevelView.s_EnableEditModeOnSelect
 
-	GM_V3a1_GaoSiNiao_GameView.s_isEditMode = var_19_0 and true or false
-	arg_19_0._item2Toggle.isOn = var_19_0
+	GM_V3a1_GaoSiNiao_GameView.s_isEditMode = isOn and true or false
+	self._item2Toggle.isOn = isOn
 end
 
-function var_0_0._onItem2ToggleValueChanged(arg_20_0)
-	local var_20_0 = arg_20_0._item2Toggle.isOn
+function GM_V3a1_GaoSiNiao_LevelView:_onItem2ToggleValueChanged()
+	local isOn = self._item2Toggle.isOn
 
-	var_0_0.s_EnableEditModeOnSelect = var_20_0
+	GM_V3a1_GaoSiNiao_LevelView.s_EnableEditModeOnSelect = isOn
 
-	GMController.instance:dispatchEvent(GMEvent.V3a1_GaoSiNiao_LevelView_EnableEditModeOnSelect, var_20_0)
+	GMController.instance:dispatchEvent(GMEvent.V3a1_GaoSiNiao_LevelView_EnableEditModeOnSelect, isOn)
 end
 
-return var_0_0
+return GM_V3a1_GaoSiNiao_LevelView

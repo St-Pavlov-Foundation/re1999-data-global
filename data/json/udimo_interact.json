@@ -1,0 +1,67 @@
+[
+  {
+    "belongBG": 370001,
+    "interactId": 1,
+    "groupIds": [
+      2,
+      3
+    ],
+    "isLeft": false,
+    "emoji": "107",
+    "orderLayer": 21
+  },
+  {
+    "belongBG": 370001,
+    "interactId": 2,
+    "groupIds": [
+      1
+    ],
+    "isLeft": true,
+    "emoji": "107",
+    "orderLayer": 21
+  },
+  {
+    "belongBG": 370001,
+    "interactId": 3,
+    "groupIds": [
+      2,
+      3
+    ],
+    "isLeft": false,
+    "emoji": "101",
+    "orderLayer": 20
+  },
+  {
+    "belongBG": 370001,
+    "interactId": 4,
+    "groupIds": [
+      2,
+      3
+    ],
+    "isLeft": true,
+    "emoji": "108",
+    "orderLayer": 20
+  },
+  {
+    "belongBG": 370001,
+    "interactId": 5,
+    "groupIds": [
+      2,
+      3
+    ],
+    "isLeft": false,
+    "emoji": "102#103",
+    "orderLayer": 20
+  },
+  {
+    "belongBG": 370001,
+    "interactId": 6,
+    "groupIds": [
+      2,
+      3
+    ],
+    "isLeft": true,
+    "emoji": "102#103",
+    "orderLayer": 20
+  }
+]

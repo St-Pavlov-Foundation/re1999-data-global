@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_weekwalk_dialog", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_weekwalk_dialog.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_weekwalk_dialog", package.seeall)
+
+local lua_weekwalk_dialog = {}
+local fields = {
 	param = 4,
 	single = 6,
 	option_param = 5,
@@ -11,17 +13,17 @@ local var_0_1 = {
 	content = 8,
 	speaker = 7
 }
-local var_0_2 = {
+local primaryKey = {
 	"id",
 	"stepId"
 }
-local var_0_3 = {
+local mlStringKey = {
 	speaker = 1,
 	content = 2
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_weekwalk_dialog.onLoad(json)
+	lua_weekwalk_dialog.configList, lua_weekwalk_dialog.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_weekwalk_dialog

@@ -1,11 +1,13 @@
-﻿module("modules.logic.share.view.ShareTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/share/view/ShareTipViewContainer.lua
 
-local var_0_0 = class("ShareTipViewContainer", BaseViewContainer)
+module("modules.logic.share.view.ShareTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local ShareTipViewContainer = class("ShareTipViewContainer", BaseViewContainer)
+
+function ShareTipViewContainer:buildViews()
 	return {
 		ShareTipView.New()
 	}
 end
 
-return var_0_0
+return ShareTipViewContainer

@@ -1,22 +1,24 @@
-﻿module("modules.logic.fight.system.work.FightWorkWaitAllOperateDone", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkWaitAllOperateDone.lua
 
-local var_0_0 = class("FightWorkWaitAllOperateDone", FightWorkItem)
+module("modules.logic.fight.system.work.FightWorkWaitAllOperateDone", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = FightGameMgr.operateMgr.workComp
-	local var_1_1 = arg_1_0:com_registWork(FightWorkFlowSequence)
+local FightWorkWaitAllOperateDone = class("FightWorkWaitAllOperateDone", FightWorkItem)
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_0.workList) do
-		if iter_1_1.class.__cname ~= "FightWorkRequestAutoFight" then
-			var_1_1:registWork(FightWorkListen2WorkDone, iter_1_1)
+function FightWorkWaitAllOperateDone:onStart()
+	local operateWorkComp = FightGameMgr.operateMgr.workComp
+	local flow = self:com_registWork(FightWorkFlowSequence)
+
+	for i, work in ipairs(operateWorkComp.workList) do
+		if work.class.__cname ~= "FightWorkRequestAutoFight" then
+			flow:registWork(FightWorkListen2WorkDone, work)
 		end
 	end
 
-	arg_1_0:playWorkAndDone(var_1_1)
+	self:playWorkAndDone(flow)
 end
 
-function var_0_0.onDestructor(arg_2_0)
+function FightWorkWaitAllOperateDone:onDestructor()
 	return
 end
 
-return var_0_0
+return FightWorkWaitAllOperateDone

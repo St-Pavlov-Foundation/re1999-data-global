@@ -1,13 +1,15 @@
-﻿module("modules.logic.room.entity.comp.RoomCharacterFollowPathComp", package.seeall)
+﻿-- chunkname: @modules/logic/room/entity/comp/RoomCharacterFollowPathComp.lua
 
-local var_0_0 = class("RoomCharacterFollowPathComp", RoomBaseFollowPathComp)
+module("modules.logic.room.entity.comp.RoomCharacterFollowPathComp", package.seeall)
 
-function var_0_0.onStopMove(arg_1_0)
+local RoomCharacterFollowPathComp = class("RoomCharacterFollowPathComp", RoomBaseFollowPathComp)
+
+function RoomCharacterFollowPathComp:onStopMove()
 	return
 end
 
-function var_0_0.onStartMove(arg_2_0)
+function RoomCharacterFollowPathComp:onStartMove()
 	return
 end
 
-return var_0_0
+return RoomCharacterFollowPathComp

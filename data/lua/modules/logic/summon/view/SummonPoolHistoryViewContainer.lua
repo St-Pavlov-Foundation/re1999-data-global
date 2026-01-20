@@ -1,43 +1,47 @@
-﻿module("modules.logic.summon.view.SummonPoolHistoryViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/summon/view/SummonPoolHistoryViewContainer.lua
 
-local var_0_0 = class("SummonPoolHistoryViewContainer", BaseViewContainer)
+module("modules.logic.summon.view.SummonPoolHistoryViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local SummonPoolHistoryViewContainer = class("SummonPoolHistoryViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, SummonPoolHistoryView.New())
-	table.insert(var_1_0, arg_1_0:_createScrollView())
+function SummonPoolHistoryViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, SummonPoolHistoryView.New())
+	table.insert(views, self:_createScrollView())
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
+function SummonPoolHistoryViewContainer:onContainerClickModalMask()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	arg_2_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._createScrollView(arg_3_0)
-	local var_3_0 = ListScrollParam.New()
+function SummonPoolHistoryViewContainer:_createScrollView()
+	local scrollParam = ListScrollParam.New()
 
-	var_3_0.scrollGOPath = "allbg/left/scroll_pooltype"
-	var_3_0.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_3_0.prefabUrl = "allbg/left/pooltypeitem"
-	var_3_0.cellClass = SummonPoolHistoryTypeItem
-	var_3_0.scrollDir = ScrollEnum.ScrollDirV
-	var_3_0.lineCount = 1
-	var_3_0.cellWidth = 380
-	var_3_0.cellHeight = 116
-	var_3_0.cellSpaceH = 0
-	var_3_0.cellSpaceV = 8
-	var_3_0.startSpace = 0
+	scrollParam.scrollGOPath = "allbg/left/scroll_pooltype"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "allbg/left/pooltypeitem"
+	scrollParam.cellClass = SummonPoolHistoryTypeItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 380
+	scrollParam.cellHeight = 116
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 8
+	scrollParam.startSpace = 0
 
-	local var_3_1 = {}
+	local animationDelayTimes = {}
 
-	for iter_3_0 = 1, 10 do
-		var_3_1[iter_3_0] = (iter_3_0 - 1) * 0.03
+	for i = 1, 10 do
+		local delayTime = (i - 1) * 0.03
+
+		animationDelayTimes[i] = delayTime
 	end
 
-	return LuaListScrollViewWithAnimator.New(SummonPoolHistoryTypeListModel.instance, var_3_0, var_3_1)
+	return LuaListScrollViewWithAnimator.New(SummonPoolHistoryTypeListModel.instance, scrollParam, animationDelayTimes)
 end
 
-return var_0_0
+return SummonPoolHistoryViewContainer

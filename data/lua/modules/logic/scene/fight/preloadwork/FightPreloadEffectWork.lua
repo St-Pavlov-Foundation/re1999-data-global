@@ -1,162 +1,164 @@
-﻿module("modules.logic.scene.fight.preloadwork.FightPreloadEffectWork", package.seeall)
+﻿-- chunkname: @modules/logic/scene/fight/preloadwork/FightPreloadEffectWork.lua
 
-local var_0_0 = class("FightPreloadEffectWork", BaseWork)
+module("modules.logic.scene.fight.preloadwork.FightPreloadEffectWork", package.seeall)
 
-var_0_0.buff_chuchang = "buff/buff_chuchang"
-var_0_0.buff_siwang = "buff/buff_siwang_role"
-var_0_0.buff_siwang_monster = "buff/buff_siwang_monster"
-var_0_0.buff_zhunbeigongji = "buff/buff_zhunbeigongji"
-var_0_0.scene_mask_default = "buff/scene_mask_default"
+local FightPreloadEffectWork = class("FightPreloadEffectWork", BaseWork)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
+FightPreloadEffectWork.buff_chuchang = "buff/buff_chuchang"
+FightPreloadEffectWork.buff_siwang = "buff/buff_siwang_role"
+FightPreloadEffectWork.buff_siwang_monster = "buff/buff_siwang_monster"
+FightPreloadEffectWork.buff_zhunbeigongji = "buff/buff_zhunbeigongji"
+FightPreloadEffectWork.scene_mask_default = "buff/scene_mask_default"
+
+function FightPreloadEffectWork:onStart(context)
 	if FightEffectPool.isForbidEffect then
-		arg_1_0:onDone(true)
+		self:onDone(true)
 
 		return
 	end
 
-	arg_1_0._concurrentCount = 10
-	arg_1_0._loadingCount = 0
-	arg_1_0._effectWrapList = {}
-	arg_1_0._needPreloadList = {}
+	self._concurrentCount = 10
+	self._loadingCount = 0
+	self._effectWrapList = {}
+	self._needPreloadList = {}
 
-	arg_1_0:_addPreloadEffect(FightHelper.getEffectUrlWithLod(var_0_0.buff_chuchang))
-	arg_1_0:_addPreloadEffect(FightHelper.getEffectUrlWithLod(var_0_0.buff_siwang))
-	arg_1_0:_addPreloadEffect(FightHelper.getEffectUrlWithLod(var_0_0.buff_siwang_monster))
-	arg_1_0:_addPreloadEffect(FightHelper.getEffectUrlWithLod(var_0_0.buff_zhunbeigongji))
-	arg_1_0:_addPreloadEffect(FightHelper.getEffectUrlWithLod(var_0_0.scene_mask_default))
+	self:_addPreloadEffect(FightHelper.getEffectUrlWithLod(FightPreloadEffectWork.buff_chuchang))
+	self:_addPreloadEffect(FightHelper.getEffectUrlWithLod(FightPreloadEffectWork.buff_siwang))
+	self:_addPreloadEffect(FightHelper.getEffectUrlWithLod(FightPreloadEffectWork.buff_siwang_monster))
+	self:_addPreloadEffect(FightHelper.getEffectUrlWithLod(FightPreloadEffectWork.buff_zhunbeigongji))
+	self:_addPreloadEffect(FightHelper.getEffectUrlWithLod(FightPreloadEffectWork.scene_mask_default))
 
-	local var_1_0 = FightDataHelper.entityMgr:getMyNormalList()
+	local mySideMOList = FightDataHelper.entityMgr:getMyNormalList()
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
-		local var_1_1 = iter_1_1.skin
-		local var_1_2 = var_1_1 and lua_skin_spine_action.configDict[var_1_1]
+	for _, entityMO in ipairs(mySideMOList) do
+		local skin = entityMO.skin
+		local spineActionDict = skin and lua_skin_spine_action.configDict[skin]
 
-		if var_1_2 then
-			local var_1_3 = var_1_2[SpineAnimState.born]
+		if spineActionDict then
+			local born = spineActionDict[SpineAnimState.born]
 
-			if var_1_3 and not string.nilorempty(var_1_3.effect) then
-				local var_1_4 = string.split(var_1_3.effect, "#")
+			if born and not string.nilorempty(born.effect) then
+				local effectList = string.split(born.effect, "#")
 
-				for iter_1_2, iter_1_3 in ipairs(var_1_4) do
-					arg_1_0:_addPreloadEffect(FightHelper.getEffectUrlWithLod(iter_1_3))
+				for index, effectPath in ipairs(effectList) do
+					self:_addPreloadEffect(FightHelper.getEffectUrlWithLod(effectPath))
 				end
 			end
 		end
 
-		local var_1_5 = lua_fight_luxi_skin_effect.configDict[var_1_1]
-		local var_1_6 = var_1_5 and var_1_5[SpineAnimState.born]
+		local luXiCo = lua_fight_luxi_skin_effect.configDict[skin]
+		local bornCo = luXiCo and luXiCo[SpineAnimState.born]
 
-		if var_1_6 then
-			local var_1_7 = string.split(var_1_6.effect, "#")
+		if bornCo then
+			local effectList = string.split(bornCo.effect, "#")
 
-			for iter_1_4, iter_1_5 in ipairs(var_1_7) do
-				arg_1_0:_addPreloadEffect(FightHelper.getEffectUrlWithLod(iter_1_5))
+			for _, effectPath in ipairs(effectList) do
+				self:_addPreloadEffect(FightHelper.getEffectUrlWithLod(effectPath))
 			end
 		end
 	end
 
-	local var_1_8 = FightDataHelper.entityMgr:getEnemyNormalList()
+	local enemySideMOList = FightDataHelper.entityMgr:getEnemyNormalList()
 
-	for iter_1_6, iter_1_7 in ipairs(var_1_8) do
-		local var_1_9 = FightConfig.instance:getSkinCO(iter_1_7.skin)
+	for _, entityMO in ipairs(enemySideMOList) do
+		local skinCO = FightConfig.instance:getSkinCO(entityMO.skin)
 
-		if var_1_9 and not string.nilorempty(var_1_9.effect) then
-			local var_1_10 = string.split(var_1_9.effect, "#")
+		if skinCO and not string.nilorempty(skinCO.effect) then
+			local effectArr = string.split(skinCO.effect, "#")
 
-			for iter_1_8, iter_1_9 in ipairs(var_1_10) do
-				local var_1_11 = FightHelper.getEffectUrlWithLod(iter_1_9)
+			for i, v in ipairs(effectArr) do
+				local a = FightHelper.getEffectUrlWithLod(v)
 
-				arg_1_0:_addPreloadEffect(FightHelper.getEffectUrlWithLod(iter_1_9))
+				self:_addPreloadEffect(FightHelper.getEffectUrlWithLod(v))
 			end
 		end
 
-		local var_1_12 = lua_monster.configDict[iter_1_7.modelId]
+		local monsterCO = lua_monster.configDict[entityMO.modelId]
 
-		if var_1_12 and not string.nilorempty(var_1_12.effect) then
-			local var_1_13 = string.split(var_1_12.effect, "#")
+		if monsterCO and not string.nilorempty(monsterCO.effect) then
+			local effectArr = string.split(monsterCO.effect, "#")
 
-			for iter_1_10, iter_1_11 in ipairs(var_1_13) do
-				local var_1_14 = FightHelper.getEffectUrlWithLod(iter_1_11)
+			for i, v in ipairs(effectArr) do
+				local a = FightHelper.getEffectUrlWithLod(v)
 
-				arg_1_0:_addPreloadEffect(FightHelper.getEffectUrlWithLod(iter_1_11))
+				self:_addPreloadEffect(FightHelper.getEffectUrlWithLod(v))
 			end
 		end
 	end
 
-	arg_1_0:_startPreload()
+	self:_startPreload()
 end
 
-function var_0_0._addPreloadEffect(arg_2_0, arg_2_1, arg_2_2)
-	if (isDebugBuild or SLFramework.FrameworkSettings.IsEditor) and not string.match(arg_2_1, "^effects/prefabs/buff/") then
-		logError(arg_2_1 .. " 预加载资源需要放在 Assets/ZResourcesLib/effects/prefabs/buff 目录下。")
+function FightPreloadEffectWork:_addPreloadEffect(path, side)
+	if (isDebugBuild or SLFramework.FrameworkSettings.IsEditor) and not string.match(path, "^effects/prefabs/buff/") then
+		logError(path .. " 预加载资源需要放在 Assets/ZResourcesLib/effects/prefabs/buff 目录下。")
 	end
 
-	if FightEffectPool.hasLoaded(arg_2_1) then
+	if FightEffectPool.hasLoaded(path) then
 		return
 	end
 
-	if arg_2_2 == nil then
-		table.insert(arg_2_0._needPreloadList, {
-			path = arg_2_1,
+	if side == nil then
+		table.insert(self._needPreloadList, {
+			path = path,
 			side = FightEnum.EntitySide.BothSide
 		})
 	end
 
-	if arg_2_2 == FightEnum.EntitySide.MySide or arg_2_2 == FightEnum.EntitySide.BothSide then
-		table.insert(arg_2_0._needPreloadList, {
-			path = arg_2_1,
+	if side == FightEnum.EntitySide.MySide or side == FightEnum.EntitySide.BothSide then
+		table.insert(self._needPreloadList, {
+			path = path,
 			side = FightEnum.EntitySide.MySide
 		})
 	end
 
-	if arg_2_2 == FightEnum.EntitySide.EnemySide or arg_2_2 == FightEnum.EntitySide.BothSide then
-		table.insert(arg_2_0._needPreloadList, {
-			path = arg_2_1,
+	if side == FightEnum.EntitySide.EnemySide or side == FightEnum.EntitySide.BothSide then
+		table.insert(self._needPreloadList, {
+			path = path,
 			side = FightEnum.EntitySide.EnemySide
 		})
 	end
 end
 
-function var_0_0._startPreload(arg_3_0)
-	arg_3_0._loadingCount = math.min(arg_3_0._concurrentCount, #arg_3_0._needPreloadList)
+function FightPreloadEffectWork:_startPreload()
+	self._loadingCount = math.min(self._concurrentCount, #self._needPreloadList)
 
-	if arg_3_0._loadingCount > 0 then
-		for iter_3_0 = 1, arg_3_0._loadingCount do
-			local var_3_0 = table.remove(arg_3_0._needPreloadList, #arg_3_0._needPreloadList)
-			local var_3_1 = FightEffectPool.getEffect(var_3_0.path, var_3_0.side, arg_3_0._onPreloadOneFinish, arg_3_0, nil, true)
+	if self._loadingCount > 0 then
+		for i = 1, self._loadingCount do
+			local last = table.remove(self._needPreloadList, #self._needPreloadList)
+			local effect = FightEffectPool.getEffect(last.path, last.side, self._onPreloadOneFinish, self, nil, true)
 
-			table.insert(arg_3_0._effectWrapList, var_3_1)
+			table.insert(self._effectWrapList, effect)
 		end
 	else
-		arg_3_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._onPreloadOneFinish(arg_4_0, arg_4_1, arg_4_2)
-	if not arg_4_2 then
-		logError("战斗特效加载失败：" .. arg_4_1.path)
+function FightPreloadEffectWork:_onPreloadOneFinish(effectWrap, success)
+	if not success then
+		logError("战斗特效加载失败：" .. effectWrap.path)
 	end
 
-	arg_4_0._loadingCount = arg_4_0._loadingCount - 1
+	self._loadingCount = self._loadingCount - 1
 
-	FightEffectPool.returnEffect(arg_4_1)
+	FightEffectPool.returnEffect(effectWrap)
 
-	if arg_4_0._loadingCount <= 0 then
-		TaskDispatcher.runDelay(arg_4_0._startPreload, arg_4_0, 0.01)
+	if self._loadingCount <= 0 then
+		TaskDispatcher.runDelay(self._startPreload, self, 0.01)
 	end
 end
 
-function var_0_0.clearWork(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0._startPreload, arg_5_0, 0.01)
+function FightPreloadEffectWork:clearWork()
+	TaskDispatcher.cancelTask(self._startPreload, self, 0.01)
 
-	if arg_5_0._effectWrapList then
-		for iter_5_0, iter_5_1 in ipairs(arg_5_0._effectWrapList) do
-			iter_5_1:setCallback(nil, nil)
+	if self._effectWrapList then
+		for _, effectWrap in ipairs(self._effectWrapList) do
+			effectWrap:setCallback(nil, nil)
 		end
 	end
 
-	arg_5_0._effectWrapList = nil
+	self._effectWrapList = nil
 end
 
-return var_0_0
+return FightPreloadEffectWork

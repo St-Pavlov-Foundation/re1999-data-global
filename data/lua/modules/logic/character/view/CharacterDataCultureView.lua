@@ -1,284 +1,286 @@
-﻿module("modules.logic.character.view.CharacterDataCultureView", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterDataCultureView.lua
 
-local var_0_0 = class("CharacterDataCultureView", BaseView)
+module("modules.logic.character.view.CharacterDataCultureView", package.seeall)
 
-function var_0_0._getFormatStr_overseas(arg_1_0, arg_1_1)
-	if string.nilorempty(arg_1_1) then
+local CharacterDataCultureView = class("CharacterDataCultureView", BaseView)
+
+function CharacterDataCultureView:_getFormatStr_overseas(content)
+	if string.nilorempty(content) then
 		return "", ""
 	end
 
-	local var_1_0 = LangSettings.instance:isZh() or LangSettings.instance:isTw()
+	local isShowFirst = LangSettings.instance:isZh() or LangSettings.instance:isTw()
 
-	GameUtil.setActive01(arg_1_0._gofirstTran, var_1_0)
+	GameUtil.setActive01(self._gofirstTran, isShowFirst)
 
-	if var_1_0 then
-		return arg_1_0:_getFormatStr(arg_1_1)
+	if isShowFirst then
+		return self:_getFormatStr(content)
 	else
-		local var_1_1, var_1_2 = arg_1_0:SwitchLangTab()
-		local var_1_3 = string.rep(" ", var_1_1)
-		local var_1_4 = "\n" .. var_1_3
+		local tab1, tab2 = self:SwitchLangTab()
+		local tab = string.rep(" ", tab1)
+		local tabOffset = "\n" .. tab
 
-		arg_1_1 = var_1_3 .. string.gsub(arg_1_1, "\n", var_1_4)
+		content = tab .. string.gsub(content, "\n", tabOffset)
 
-		return "", arg_1_1
+		return "", content
 	end
 end
 
-function var_0_0.onInitView(arg_2_0)
-	arg_2_0._simagebg = gohelper.findChildSingleImage(arg_2_0.viewGO, "bg/#simage_bg")
-	arg_2_0._simagecentericon = gohelper.findChildSingleImage(arg_2_0.viewGO, "bg/#simage_centericon")
-	arg_2_0._simagelefticon = gohelper.findChildSingleImage(arg_2_0.viewGO, "bg/#simage_lefticon")
-	arg_2_0._simagerighticon = gohelper.findChildSingleImage(arg_2_0.viewGO, "bg/#simage_righticon")
-	arg_2_0._simagerighticon2 = gohelper.findChildSingleImage(arg_2_0.viewGO, "bg/#simage_righticon2")
-	arg_2_0._simagemask = gohelper.findChildSingleImage(arg_2_0.viewGO, "bg/#simage_mask")
-	arg_2_0._gocontent = gohelper.findChild(arg_2_0.viewGO, "content/scrollview/viewport/content/#go_content")
-	arg_2_0._goconversation = gohelper.findChild(arg_2_0.viewGO, "content/scrollview/viewport/content/#go_conversation")
-	arg_2_0._gofirst = gohelper.findChild(arg_2_0.viewGO, "content/scrollview/viewport/content/#go_first")
-	arg_2_0._txtfirst = gohelper.findChildText(arg_2_0.viewGO, "content/scrollview/viewport/content/#go_first/bg/#txt_first")
-	arg_2_0._txtindenthelper = gohelper.findChildText(arg_2_0.viewGO, "content/scrollview/viewport/content/#txt_indenthelper")
-	arg_2_0._scrollview = gohelper.findChildScrollRect(arg_2_0.viewGO, "content/scrollview")
-	arg_2_0._txttitle1 = gohelper.findChildText(arg_2_0.viewGO, "content/#txt_title1")
-	arg_2_0._txttitle2 = gohelper.findChildText(arg_2_0.viewGO, "content/#txt_title2")
-	arg_2_0._txttitleen1 = gohelper.findChildText(arg_2_0.viewGO, "content/#txt_titleen1")
-	arg_2_0._txttitleen3 = gohelper.findChildText(arg_2_0.viewGO, "content/#txt_titleen3")
-	arg_2_0._simagepic = gohelper.findChildSingleImage(arg_2_0.viewGO, "content/#simage_pic")
-	arg_2_0._btnnext = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "content/pageicon/#btn_next")
-	arg_2_0._btnprevious = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "content/pageicon/#btn_previous")
-	arg_2_0._gomask = gohelper.findChild(arg_2_0.viewGO, "content/#go_mask")
-	arg_2_0._goCustomRedIcon = gohelper.findChild(arg_2_0.viewGO, "content/scrollview/viewport/content/#go_customredicon")
-	arg_2_0._txtCustomContent = gohelper.findChildText(arg_2_0.viewGO, "content/scrollview/viewport/content/#txt_customcontent")
+function CharacterDataCultureView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_bg")
+	self._simagecentericon = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_centericon")
+	self._simagelefticon = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_lefticon")
+	self._simagerighticon = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_righticon")
+	self._simagerighticon2 = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_righticon2")
+	self._simagemask = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_mask")
+	self._gocontent = gohelper.findChild(self.viewGO, "content/scrollview/viewport/content/#go_content")
+	self._goconversation = gohelper.findChild(self.viewGO, "content/scrollview/viewport/content/#go_conversation")
+	self._gofirst = gohelper.findChild(self.viewGO, "content/scrollview/viewport/content/#go_first")
+	self._txtfirst = gohelper.findChildText(self.viewGO, "content/scrollview/viewport/content/#go_first/bg/#txt_first")
+	self._txtindenthelper = gohelper.findChildText(self.viewGO, "content/scrollview/viewport/content/#txt_indenthelper")
+	self._scrollview = gohelper.findChildScrollRect(self.viewGO, "content/scrollview")
+	self._txttitle1 = gohelper.findChildText(self.viewGO, "content/#txt_title1")
+	self._txttitle2 = gohelper.findChildText(self.viewGO, "content/#txt_title2")
+	self._txttitleen1 = gohelper.findChildText(self.viewGO, "content/#txt_titleen1")
+	self._txttitleen3 = gohelper.findChildText(self.viewGO, "content/#txt_titleen3")
+	self._simagepic = gohelper.findChildSingleImage(self.viewGO, "content/#simage_pic")
+	self._btnnext = gohelper.findChildButtonWithAudio(self.viewGO, "content/pageicon/#btn_next")
+	self._btnprevious = gohelper.findChildButtonWithAudio(self.viewGO, "content/pageicon/#btn_previous")
+	self._gomask = gohelper.findChild(self.viewGO, "content/#go_mask")
+	self._goCustomRedIcon = gohelper.findChild(self.viewGO, "content/scrollview/viewport/content/#go_customredicon")
+	self._txtCustomContent = gohelper.findChildText(self.viewGO, "content/scrollview/viewport/content/#txt_customcontent")
 
-	if arg_2_0._editableInitView then
-		arg_2_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_3_0)
-	arg_3_0._btnnext:AddClickListener(arg_3_0._btnnextOnClick, arg_3_0)
-	arg_3_0._btnprevious:AddClickListener(arg_3_0._btnpreviousOnClick, arg_3_0)
-	arg_3_0._scrollview:AddOnValueChanged(arg_3_0._onContentScrollValueChanged, arg_3_0)
+function CharacterDataCultureView:addEvents()
+	self._btnnext:AddClickListener(self._btnnextOnClick, self)
+	self._btnprevious:AddClickListener(self._btnpreviousOnClick, self)
+	self._scrollview:AddOnValueChanged(self._onContentScrollValueChanged, self)
 end
 
-function var_0_0.removeEvents(arg_4_0)
-	arg_4_0._btnnext:RemoveClickListener()
-	arg_4_0._btnprevious:RemoveClickListener()
-	arg_4_0._scrollview:RemoveOnValueChanged()
+function CharacterDataCultureView:removeEvents()
+	self._btnnext:RemoveClickListener()
+	self._btnprevious:RemoveClickListener()
+	self._scrollview:RemoveOnValueChanged()
 end
 
-function var_0_0._btnnextOnClick(arg_5_0)
-	if arg_5_0._selectIndex and arg_5_0._selectIndex ~= 0 then
-		arg_5_0:_itemOnClick(math.max(1, math.min(3, arg_5_0._selectIndex + 1)))
+function CharacterDataCultureView:_btnnextOnClick()
+	if self._selectIndex and self._selectIndex ~= 0 then
+		self:_itemOnClick(math.max(1, math.min(3, self._selectIndex + 1)))
 	end
 end
 
-function var_0_0._btnpreviousOnClick(arg_6_0)
-	if arg_6_0._selectIndex and arg_6_0._selectIndex ~= 0 then
-		arg_6_0:_itemOnClick(math.max(1, math.min(3, arg_6_0._selectIndex - 1)))
+function CharacterDataCultureView:_btnpreviousOnClick()
+	if self._selectIndex and self._selectIndex ~= 0 then
+		self:_itemOnClick(math.max(1, math.min(3, self._selectIndex - 1)))
 	end
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0._simagebg:LoadImage(ResUrl.getCommonIcon("full/bg_fmand2"))
-	arg_7_0._simagecentericon:LoadImage(ResUrl.getCharacterDataIcon("bg_fm_circle.png"))
-	arg_7_0._simagelefticon:LoadImage(ResUrl.getCommonIcon("bg_leftdown"))
-	arg_7_0._simagerighticon:LoadImage(ResUrl.getCommonIcon("bg_rightdown"))
-	arg_7_0._simagerighticon2:LoadImage(ResUrl.getCommonIcon("bg_rightup"))
-	arg_7_0._simagemask:LoadImage(ResUrl.getCommonIcon("full/bg_noise2"))
+function CharacterDataCultureView:_editableInitView()
+	self._simagebg:LoadImage(ResUrl.getCommonIcon("full/bg_fmand2"))
+	self._simagecentericon:LoadImage(ResUrl.getCharacterDataIcon("bg_fm_circle.png"))
+	self._simagelefticon:LoadImage(ResUrl.getCommonIcon("bg_leftdown"))
+	self._simagerighticon:LoadImage(ResUrl.getCommonIcon("bg_rightdown"))
+	self._simagerighticon2:LoadImage(ResUrl.getCommonIcon("bg_rightup"))
+	self._simagemask:LoadImage(ResUrl.getCommonIcon("full/bg_noise2"))
 
-	arg_7_0._scrollcontent = gohelper.findChild(arg_7_0._scrollview.gameObject, "viewport/content")
-	arg_7_0._items = {}
+	self._scrollcontent = gohelper.findChild(self._scrollview.gameObject, "viewport/content")
+	self._items = {}
 
-	for iter_7_0 = 1, 3 do
-		local var_7_0 = arg_7_0:getUserDataTb_()
+	for i = 1, 3 do
+		local item = self:getUserDataTb_()
 
-		var_7_0.go = gohelper.findChild(arg_7_0.viewGO, "content/container/go_item" .. iter_7_0)
-		var_7_0.index = iter_7_0
-		var_7_0.gochapteron = gohelper.findChild(var_7_0.go, "go_chapteron")
-		var_7_0.gochapteroff = gohelper.findChild(var_7_0.go, "go_chapteroff")
-		var_7_0.gotreasurebox = gohelper.findChild(var_7_0.go, "go_treasurebox")
-		var_7_0.gochapterunlock = gohelper.findChild(var_7_0.go, "go_chapterunlock")
-		var_7_0.txtunlockconditine = gohelper.findChildText(var_7_0.go, "go_chapterunlock/txt_unlockconditine")
-		var_7_0.btn = SLFramework.UGUI.UIClickListener.Get(var_7_0.go)
+		item.go = gohelper.findChild(self.viewGO, "content/container/go_item" .. i)
+		item.index = i
+		item.gochapteron = gohelper.findChild(item.go, "go_chapteron")
+		item.gochapteroff = gohelper.findChild(item.go, "go_chapteroff")
+		item.gotreasurebox = gohelper.findChild(item.go, "go_treasurebox")
+		item.gochapterunlock = gohelper.findChild(item.go, "go_chapterunlock")
+		item.txtunlockconditine = gohelper.findChildText(item.go, "go_chapterunlock/txt_unlockconditine")
+		item.btn = SLFramework.UGUI.UIClickListener.Get(item.go)
 
-		var_7_0.btn:AddClickListener(arg_7_0._itemOnClick, arg_7_0, var_7_0.index)
-		table.insert(arg_7_0._items, var_7_0)
+		item.btn:AddClickListener(self._itemOnClick, self, item.index)
+		table.insert(self._items, item)
 	end
 
-	arg_7_0._txtcontent = arg_7_0._gocontent:GetComponent(typeof(ZProj.CustomTMP))
+	self._txtcontent = self._gocontent:GetComponent(typeof(ZProj.CustomTMP))
 
-	arg_7_0._txtcontent:SetOffset(0, -13, false, true)
-	arg_7_0._txtcontent:SetSize(5)
-	arg_7_0._txtcontent:SetAlignment(0, -2)
+	self._txtcontent:SetOffset(0, -13, false, true)
+	self._txtcontent:SetSize(5)
+	self._txtcontent:SetAlignment(0, -2)
 
-	arg_7_0._txtconversation = arg_7_0._goconversation:GetComponent(typeof(ZProj.CustomTMP))
+	self._txtconversation = self._goconversation:GetComponent(typeof(ZProj.CustomTMP))
 
-	arg_7_0._txtconversation:SetOffset(0, -13, false, true)
-	arg_7_0._txtconversation:SetSize(5)
-	arg_7_0._txtconversation:SetAlignment(0, -2)
+	self._txtconversation:SetOffset(0, -13, false, true)
+	self._txtconversation:SetSize(5)
+	self._txtconversation:SetAlignment(0, -2)
 
-	arg_7_0._scrollHeight = recthelper.getHeight(arg_7_0._scrollview.transform)
+	self._scrollHeight = recthelper.getHeight(self._scrollview.transform)
 
-	CharacterController.instance:registerCallback(CharacterEvent.HeroDataAddUnlockItemFail, arg_7_0._unlockItemCallbackFail, arg_7_0)
+	CharacterController.instance:registerCallback(CharacterEvent.HeroDataAddUnlockItemFail, self._unlockItemCallbackFail, self)
 
-	arg_7_0._gofirstTran = arg_7_0._gofirst.transform
-	arg_7_0._gofirstPosX, arg_7_0._gofirstPosY = recthelper.getAnchor(arg_7_0._gofirstTran)
+	self._gofirstTran = self._gofirst.transform
+	self._gofirstPosX, self._gofirstPosY = recthelper.getAnchor(self._gofirstTran)
 
-	CharacterController.instance:registerCallback(CharacterEvent.HeroDataAddUnlockItem, arg_7_0._unlockItemCallback, arg_7_0)
+	CharacterController.instance:registerCallback(CharacterEvent.HeroDataAddUnlockItem, self._unlockItemCallback, self)
 end
 
-function var_0_0._itemOnClick(arg_8_0, arg_8_1)
-	if arg_8_0._selectIndex == arg_8_1 then
+function CharacterDataCultureView:_itemOnClick(index)
+	if self._selectIndex == index then
 		return
 	end
 
-	local var_8_0 = CharacterDataConfig.instance:getCharacterDataCO(arg_8_0._heroId, CharacterDataConfig.DefaultSkinDataKey, CharacterEnum.CharacterDataItemType.Culture, arg_8_1)
+	local config = CharacterDataConfig.instance:getCharacterDataCO(self._heroId, CharacterDataConfig.DefaultSkinDataKey, CharacterEnum.CharacterDataItemType.Culture, index)
 
-	if arg_8_0._items[arg_8_1]._lock then
-		local var_8_1 = string.splitToNumber(var_8_0.unlockConditine, "#")
-		local var_8_2 = ""
+	if self._items[index]._lock then
+		local unlockitems = string.splitToNumber(config.unlockConditine, "#")
+		local tag = ""
 
-		if var_8_1[1] == CharacterDataConfig.unlockConditionEpisodeID then
-			var_8_2 = DungeonConfig.instance:getEpisodeCO(var_8_1[2]).name
-		elseif var_8_1[1] == CharacterDataConfig.unlockConditionRankID then
-			var_8_2 = {
-				var_8_1[2] - 1
+		if unlockitems[1] == CharacterDataConfig.unlockConditionEpisodeID then
+			tag = DungeonConfig.instance:getEpisodeCO(unlockitems[2]).name
+		elseif unlockitems[1] == CharacterDataConfig.unlockConditionRankID then
+			tag = {
+				unlockitems[2] - 1
 			}
 		else
-			var_8_2 = var_8_1[2]
+			tag = unlockitems[2]
 		end
 
-		GameFacade.showToast(var_8_0.lockText, var_8_2)
+		GameFacade.showToast(config.lockText, tag)
 	else
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_Ui_Role_Story_Switch)
-		arg_8_0:_refreshSelect(arg_8_1)
-		arg_8_0:_refreshDesc(arg_8_1)
+		self:_refreshSelect(index)
+		self:_refreshDesc(index)
 
-		arg_8_0._selectIndex = arg_8_1
+		self._selectIndex = index
 	end
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
-	arg_9_0:_refreshUI()
+function CharacterDataCultureView:onUpdateParam()
+	self:_refreshUI()
 end
 
-function var_0_0.onOpen(arg_10_0)
-	gohelper.setActive(arg_10_0.viewGO, true)
-	arg_10_0:_refreshUI()
+function CharacterDataCultureView:onOpen()
+	gohelper.setActive(self.viewGO, true)
+	self:_refreshUI()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_role_culture_open)
 end
 
-function var_0_0._unlockItemCallback(arg_11_0, arg_11_1, arg_11_2)
+function CharacterDataCultureView:_unlockItemCallback(heroId, itemId)
 	UIBlockMgr.instance:endBlock("playRewardsAnimtion")
 	UIBlockMgrExtend.setNeedCircleMv(true)
 
-	if arg_11_2 >= 5 then
-		arg_11_0:_refreshSelect(arg_11_0._selectIndex)
+	if itemId >= 5 then
+		self:_refreshSelect(self._selectIndex)
 	end
 end
 
-function var_0_0._unlockItemCallbackFail(arg_12_0)
+function CharacterDataCultureView:_unlockItemCallbackFail()
 	UIBlockMgr.instance:endBlock("playRewardsAnimtion")
 	UIBlockMgrExtend.setNeedCircleMv(true)
 end
 
-function var_0_0._refreshUI(arg_13_0)
-	if arg_13_0._heroId and arg_13_0._heroId == CharacterDataModel.instance:getCurHeroId() then
-		arg_13_0:_statEnd()
-		arg_13_0:_statStart()
+function CharacterDataCultureView:_refreshUI()
+	if self._heroId and self._heroId == CharacterDataModel.instance:getCurHeroId() then
+		self:_statEnd()
+		self:_statStart()
 
 		return
 	end
 
-	arg_13_0._heroId = CharacterDataModel.instance:getCurHeroId()
-	arg_13_0.heroMo = HeroModel.instance:getByHeroId(arg_13_0._heroId)
+	self._heroId = CharacterDataModel.instance:getCurHeroId()
+	self.heroMo = HeroModel.instance:getByHeroId(self._heroId)
 
-	arg_13_0:_initInfo()
+	self:_initInfo()
 end
 
-function var_0_0._initInfo(arg_14_0)
-	arg_14_0._selectIndex = 0
+function CharacterDataCultureView:_initInfo()
+	self._selectIndex = 0
 
-	for iter_14_0 = 1, 3 do
-		local var_14_0 = CharacterDataConfig.instance:getCharacterDataCO(arg_14_0._heroId, CharacterDataConfig.DefaultSkinDataKey, CharacterEnum.CharacterDataItemType.Culture, iter_14_0)
-		local var_14_1 = CharacterDataConfig.instance:checkLockCondition(var_14_0)
+	for i = 1, 3 do
+		local config = CharacterDataConfig.instance:getCharacterDataCO(self._heroId, CharacterDataConfig.DefaultSkinDataKey, CharacterEnum.CharacterDataItemType.Culture, i)
+		local lock = CharacterDataConfig.instance:checkLockCondition(config)
 
-		gohelper.setActive(arg_14_0._items[iter_14_0].golock, var_14_1)
+		gohelper.setActive(self._items[i].golock, lock)
 
-		arg_14_0._items[iter_14_0]._lock = var_14_1
+		self._items[i]._lock = lock
 
-		if var_14_1 then
-			local var_14_2 = string.splitToNumber(var_14_0.unlockConditine, "#")
-			local var_14_3 = {}
+		if lock then
+			local unlockitems = string.splitToNumber(config.unlockConditine, "#")
+			local tag = {}
 
-			if var_14_2[1] == CharacterDataConfig.unlockConditionEpisodeID then
-				var_14_3 = {
-					DungeonConfig.instance:getEpisodeCO(var_14_2[2]).name
+			if unlockitems[1] == CharacterDataConfig.unlockConditionEpisodeID then
+				tag = {
+					DungeonConfig.instance:getEpisodeCO(unlockitems[2]).name
 				}
-			elseif var_14_2[1] == CharacterDataConfig.unlockConditionRankID then
-				var_14_3 = {
-					var_14_2[2] - 1
+			elseif unlockitems[1] == CharacterDataConfig.unlockConditionRankID then
+				tag = {
+					unlockitems[2] - 1
 				}
 			else
-				var_14_3 = {
-					var_14_2[2]
+				tag = {
+					unlockitems[2]
 				}
 			end
 
-			local var_14_4 = ToastConfig.instance:getToastCO(var_14_0.lockText).tips
-			local var_14_5 = GameUtil.getSubPlaceholderLuaLang(var_14_4, var_14_3)
+			local tip = ToastConfig.instance:getToastCO(config.lockText).tips
 
-			arg_14_0._items[iter_14_0].txtunlockconditine.text = var_14_5
-		elseif arg_14_0._selectIndex == 0 then
-			arg_14_0._selectIndex = iter_14_0
+			tip = GameUtil.getSubPlaceholderLuaLang(tip, tag)
+			self._items[i].txtunlockconditine.text = tip
+		elseif self._selectIndex == 0 then
+			self._selectIndex = i
 		end
 	end
 
-	gohelper.setActive(arg_14_0._btnnext.gameObject, arg_14_0._selectIndex and arg_14_0._selectIndex ~= 3)
-	gohelper.setActive(arg_14_0._btnprevious.gameObject, arg_14_0._selectIndex and arg_14_0._selectIndex ~= 1)
-	arg_14_0:_refreshSelect(arg_14_0._selectIndex)
-	arg_14_0:_refreshDesc(arg_14_0._selectIndex)
+	gohelper.setActive(self._btnnext.gameObject, self._selectIndex and self._selectIndex ~= 3)
+	gohelper.setActive(self._btnprevious.gameObject, self._selectIndex and self._selectIndex ~= 1)
+	self:_refreshSelect(self._selectIndex)
+	self:_refreshDesc(self._selectIndex)
 end
 
-function var_0_0._refreshDesc(arg_15_0, arg_15_1)
-	arg_15_0:_statEnd()
-	arg_15_0:_statStart()
+function CharacterDataCultureView:_refreshDesc(index)
+	self:_statEnd()
+	self:_statStart()
 
-	if arg_15_1 == 0 then
-		gohelper.setActive(arg_15_0._scrollview.gameObject, false)
-		gohelper.setActive(arg_15_0._txttitle1.gameObject, false)
-		gohelper.setActive(arg_15_0._txttitle2.gameObject, false)
-		gohelper.setActive(arg_15_0._txttitleen1.gameObject, false)
-		gohelper.setActive(arg_15_0._txttitleen3.gameObject, false)
-		gohelper.setActive(arg_15_0._txttitleen4.gameObject, false)
-		gohelper.setActive(arg_15_0._simagepic.gameObject, false)
+	if index == 0 then
+		gohelper.setActive(self._scrollview.gameObject, false)
+		gohelper.setActive(self._txttitle1.gameObject, false)
+		gohelper.setActive(self._txttitle2.gameObject, false)
+		gohelper.setActive(self._txttitleen1.gameObject, false)
+		gohelper.setActive(self._txttitleen3.gameObject, false)
+		gohelper.setActive(self._txttitleen4.gameObject, false)
+		gohelper.setActive(self._simagepic.gameObject, false)
 
 		return
 	end
 
-	if arg_15_0._items[arg_15_1]._lock then
+	if self._items[index]._lock then
 		return
 	end
 
-	arg_15_0._config = CharacterDataConfig.instance:getCharacterDataCO(arg_15_0._heroId, arg_15_0.heroMo.skin, CharacterEnum.CharacterDataItemType.Culture, arg_15_1)
+	self._config = CharacterDataConfig.instance:getCharacterDataCO(self._heroId, self.heroMo.skin, CharacterEnum.CharacterDataItemType.Culture, index)
 
-	local var_15_0 = arg_15_0._config.title
-	local var_15_1 = not string.nilorempty(var_15_0) and string.split(var_15_0, "\n") or {}
+	local titles = self._config.title
+	local titleList = not string.nilorempty(titles) and string.split(titles, "\n") or {}
 
-	arg_15_0._txttitle1.text = var_15_1[1] or ""
-	arg_15_0._txttitle2.text = var_15_1[2] or ""
+	self._txttitle1.text = titleList[1] or ""
+	self._txttitle2.text = titleList[2] or ""
 
-	gohelper.setActive(arg_15_0._txttitleen1.gameObject, arg_15_1 ~= 3 and GameLanguageMgr.instance:getLanguageTypeStoryIndex() == LanguageEnum.LanguageStoryType.CN)
-	gohelper.setActive(arg_15_0._txttitleen3.gameObject, arg_15_1 == 3)
+	gohelper.setActive(self._txttitleen1.gameObject, index ~= 3 and GameLanguageMgr.instance:getLanguageTypeStoryIndex() == LanguageEnum.LanguageStoryType.CN)
+	gohelper.setActive(self._txttitleen3.gameObject, index == 3)
 
-	if arg_15_1 == 3 then
-		local var_15_2 = HeroConfig.instance:getHeroCO(arg_15_0._heroId)
+	if index == 3 then
+		local heroConfig = HeroConfig.instance:getHeroCO(self._heroId)
 
-		arg_15_0._txttitleen3.text = "[UTTU" .. luaLang("multiple") .. tostring(var_15_2.name) .. "]"
+		self._txttitleen3.text = "[UTTU" .. luaLang("multiple") .. tostring(heroConfig.name) .. "]"
 	else
-		arg_15_0._txttitleen1.text = arg_15_0._config.titleEn
+		self._txttitleen1.text = self._config.titleEn
 	end
 
-	local var_15_3 = var_15_1[2] and {
+	local title1Pos = titleList[2] and {
 		-282.6,
 		-134.5
 	} or {
@@ -286,292 +288,306 @@ function var_0_0._refreshDesc(arg_15_0, arg_15_1)
 		-151.3
 	}
 
-	recthelper.setAnchor(arg_15_0._txttitle1.transform, var_15_3[1], var_15_3[2])
-	recthelper.setAnchorY(arg_15_0._txttitleen1.transform, var_15_1[2] and -216.5 or -181.5)
-	gohelper.setActive(arg_15_0._gocontent, arg_15_1 ~= 3 and arg_15_0._config.isCustom ~= 1)
-	gohelper.setActive(arg_15_0._gofirst, arg_15_1 ~= 3 and arg_15_0._config.isCustom ~= 1)
-	gohelper.setActive(arg_15_0._txtCustomContent.gameObject, arg_15_0._config.isCustom == 1)
-	gohelper.setActive(arg_15_0._goconversation, arg_15_1 == 3 and arg_15_0._config.isCustom ~= 1)
-	gohelper.setActive(arg_15_0._goCustomRedIcon, false)
+	recthelper.setAnchor(self._txttitle1.transform, title1Pos[1], title1Pos[2])
+	recthelper.setAnchorY(self._txttitleen1.transform, titleList[2] and -216.5 or -181.5)
+	gohelper.setActive(self._gocontent, index ~= 3 and self._config.isCustom ~= 1)
+	gohelper.setActive(self._gofirst, index ~= 3 and self._config.isCustom ~= 1)
+	gohelper.setActive(self._txtCustomContent.gameObject, self._config.isCustom == 1)
+	gohelper.setActive(self._goconversation, index == 3 and self._config.isCustom ~= 1)
+	gohelper.setActive(self._goCustomRedIcon, false)
 
-	local var_15_4 = arg_15_0._config.text
+	local content = self._config.text
 
-	if arg_15_1 == 3 then
-		local var_15_5 = arg_15_0:_getAfterContent(var_15_4)
-		local var_15_6 = GameUtil.getMarkText(var_15_5)
-		local var_15_7 = GameUtil.getMarkIndexList(var_15_5)
+	if index == 3 then
+		local afterContent = self:_getAfterContent(content)
+		local markText = GameUtil.getMarkText(afterContent)
+		local markIndexList = GameUtil.getMarkIndexList(afterContent)
 
-		arg_15_0._txtconversation:SetText(var_15_6, var_15_7)
-	elseif arg_15_0._config.isCustom == 1 then
-		arg_15_0._txtCustomContent.text = var_15_4
+		self._txtconversation:SetText(markText, markIndexList)
+	elseif self._config.isCustom == 1 then
+		self._txtCustomContent.text = content
 
-		TaskDispatcher.runDelay(arg_15_0._setCustomRedIconPos, arg_15_0, 0.01)
+		TaskDispatcher.runDelay(self._setCustomRedIconPos, self, 0.01)
 	else
-		local var_15_8, var_15_9 = arg_15_0:_getFormatStr_overseas(var_15_4)
-		local var_15_10 = GameUtil.getMarkText(var_15_9)
-		local var_15_11 = GameUtil.getMarkIndexList(var_15_9)
-		local var_15_12 = arg_15_0:_getFirstOffsetByLang()
+		local first, remain = self:_getFormatStr_overseas(content)
+		local markText = GameUtil.getMarkText(remain)
+		local markIndexList = GameUtil.getMarkIndexList(remain)
+		local firstOffset = self:_getFirstOffsetByLang()
 
-		recthelper.setAnchor(arg_15_0._gofirstTran, arg_15_0._gofirstPosX + var_15_12.x, arg_15_0._gofirstPosY + var_15_12.y)
+		recthelper.setAnchor(self._gofirstTran, self._gofirstPosX + firstOffset.x, self._gofirstPosY + firstOffset.y)
 
-		arg_15_0._txtfirst.text = var_15_8
+		self._txtfirst.text = first
 
-		arg_15_0._txtfirst:ForceMeshUpdate(true, true)
-		arg_15_0._txtfirst:GetRenderedValues()
-		arg_15_0._txtcontent:SetText(var_15_10, var_15_11)
+		self._txtfirst:ForceMeshUpdate(true, true)
+		self._txtfirst:GetRenderedValues()
+		self._txtcontent:SetText(markText, markIndexList)
 	end
 
-	arg_15_0._scrollview.verticalNormalizedPosition = 1
+	self._scrollview.verticalNormalizedPosition = 1
 
-	if arg_15_1 == 1 then
-		arg_15_0._simagepic:LoadImage(ResUrl.getCharacterDataIcon("tu1.png"))
-	elseif arg_15_1 == 2 then
-		arg_15_0._simagepic:LoadImage(ResUrl.getCharacterDataIcon("tu2.png"))
+	if index == 1 then
+		self._simagepic:LoadImage(ResUrl.getCharacterDataIcon("tu1.png"))
+	elseif index == 2 then
+		self._simagepic:LoadImage(ResUrl.getCharacterDataIcon("tu2.png"))
 	else
-		arg_15_0._simagepic:LoadImage(ResUrl.getCharacterDataIcon("tu3.png"))
+		self._simagepic:LoadImage(ResUrl.getCharacterDataIcon("tu3.png"))
 	end
 
-	gohelper.setActive(arg_15_0._scrollview.gameObject, true)
-	gohelper.setActive(arg_15_0._txttitle1.gameObject, true)
-	gohelper.setActive(arg_15_0._txttitle2.gameObject, true)
-	gohelper.setActive(arg_15_0._simagepic.gameObject, true)
-	ZProj.UGUIHelper.RebuildLayout(arg_15_0._scrollcontent.transform)
+	gohelper.setActive(self._scrollview.gameObject, true)
+	gohelper.setActive(self._txttitle1.gameObject, true)
+	gohelper.setActive(self._txttitle2.gameObject, true)
+	gohelper.setActive(self._simagepic.gameObject, true)
+	ZProj.UGUIHelper.RebuildLayout(self._scrollcontent.transform)
 
-	arg_15_0._couldScroll = recthelper.getHeight(arg_15_0._scrollcontent.transform) > arg_15_0._scrollHeight and true or false
+	local contentHeight = recthelper.getHeight(self._scrollcontent.transform)
 
-	gohelper.setActive(arg_15_0._gomask, arg_15_0._couldScroll)
+	self._couldScroll = contentHeight > self._scrollHeight and true or false
+
+	gohelper.setActive(self._gomask, self._couldScroll)
 end
 
-function var_0_0._setCustomRedIconPos(arg_16_0)
-	gohelper.setActive(arg_16_0._goCustomRedIcon, true)
+function CharacterDataCultureView:_setCustomRedIconPos()
+	gohelper.setActive(self._goCustomRedIcon, true)
 
-	local var_16_0 = arg_16_0._txtCustomContent:GetTextInfo(arg_16_0._config.text)
-	local var_16_1 = var_16_0.characterInfo[var_16_0.lineInfo[0].firstVisibleCharacterIndex]
-	local var_16_2 = var_16_1.bottomLeft
-	local var_16_3 = var_16_1.topLeft
-	local var_16_4 = var_16_1.bottomRight
-	local var_16_5 = var_16_1.topRight
-	local var_16_6 = (var_16_2.x + var_16_4.x) * 0.5
-	local var_16_7 = (var_16_2.y + var_16_3.y) * 0.5
-	local var_16_8 = arg_16_0._txtCustomContent.transform:TransformPoint(var_16_6, var_16_7, 0)
+	local tempTextInfo = self._txtCustomContent:GetTextInfo(self._config.text)
+	local characterInfoList = tempTextInfo.characterInfo
+	local firstLineInfo = tempTextInfo.lineInfo[0]
+	local markWord = characterInfoList[firstLineInfo.firstVisibleCharacterIndex]
+	local bl = markWord.bottomLeft
+	local tl = markWord.topLeft
+	local br = markWord.bottomRight
+	local tr = markWord.topRight
+	local centerX = (bl.x + br.x) * 0.5
+	local centerY = (bl.y + tl.y) * 0.5
+	local redIconWorldSpace = self._txtCustomContent.transform:TransformPoint(centerX, centerY, 0)
 
-	arg_16_0._goCustomRedIcon.transform.position = var_16_8
+	self._goCustomRedIcon.transform.position = redIconWorldSpace
 end
 
-function var_0_0._refreshSelect(arg_17_0, arg_17_1)
-	for iter_17_0 = 1, 3 do
-		gohelper.setActive(arg_17_0._items[iter_17_0].gochapteron, false)
-		gohelper.setActive(arg_17_0._items[iter_17_0].gochapteroff, false)
-		gohelper.setActive(arg_17_0._items[iter_17_0].gotreasurebox, false)
-		gohelper.setActive(arg_17_0._items[iter_17_0].gochapterunlock, false)
+function CharacterDataCultureView:_refreshSelect(index)
+	for i = 1, 3 do
+		gohelper.setActive(self._items[i].gochapteron, false)
+		gohelper.setActive(self._items[i].gochapteroff, false)
+		gohelper.setActive(self._items[i].gotreasurebox, false)
+		gohelper.setActive(self._items[i].gochapterunlock, false)
 
-		local var_17_0 = CharacterDataConfig.instance:getCharacterDataCO(arg_17_0._heroId, arg_17_0.heroMo.skin, CharacterEnum.CharacterDataItemType.Culture, iter_17_0)
-		local var_17_1 = iter_17_0 == 3 and 4 + iter_17_0 or 5 + iter_17_0
-		local var_17_2 = iter_17_0 == arg_17_1
-		local var_17_3 = CharacterDataConfig.instance:checkLockCondition(var_17_0)
-		local var_17_4 = HeroModel.instance:checkGetRewards(arg_17_0._heroId, var_17_1)
-		local var_17_5 = HeroModel.instance:checkGetRewards(arg_17_0._heroId, 4 + iter_17_0)
+		local config = CharacterDataConfig.instance:getCharacterDataCO(self._heroId, self.heroMo.skin, CharacterEnum.CharacterDataItemType.Culture, i)
+		local nextnum = i == 3 and 4 + i or 5 + i
+		local selected = i == index
+		local lock = CharacterDataConfig.instance:checkLockCondition(config)
+		local nextIsGetRewards = HeroModel.instance:checkGetRewards(self._heroId, nextnum)
+		local isGetRewards = HeroModel.instance:checkGetRewards(self._heroId, 4 + i)
 
-		if var_17_2 then
-			gohelper.setActive(arg_17_0._items[iter_17_0].gochapteron, true)
-			gohelper.setActive(arg_17_0._btnnext.gameObject, arg_17_1 ~= 3 and var_17_4)
-			gohelper.setActive(arg_17_0._btnprevious.gameObject, arg_17_1 ~= 1)
+		if selected then
+			gohelper.setActive(self._items[i].gochapteron, true)
+			gohelper.setActive(self._btnnext.gameObject, index ~= 3 and nextIsGetRewards)
+			gohelper.setActive(self._btnprevious.gameObject, index ~= 1)
 
-			if not var_17_5 and not string.nilorempty(var_17_0.unlockRewards) then
-				if var_17_3 then
-					local var_17_6 = string.splitToNumber(var_17_0.unlockConditine, "#")
-					local var_17_7 = ""
+			if not isGetRewards and not string.nilorempty(config.unlockRewards) then
+				if lock then
+					local unlockitems = string.splitToNumber(config.unlockConditine, "#")
+					local tag = ""
 
-					if var_17_6[1] == CharacterDataConfig.unlockConditionEpisodeID then
-						var_17_7 = DungeonConfig.instance:getEpisodeCO(var_17_6[2]).name
-					elseif var_17_6[1] == CharacterDataConfig.unlockConditionRankID then
-						var_17_7 = var_17_6[2] - 1
+					if unlockitems[1] == CharacterDataConfig.unlockConditionEpisodeID then
+						tag = DungeonConfig.instance:getEpisodeCO(unlockitems[2]).name
+					elseif unlockitems[1] == CharacterDataConfig.unlockConditionRankID then
+						tag = unlockitems[2] - 1
 					else
-						var_17_7 = var_17_6[2]
+						tag = unlockitems[2]
 					end
 
-					GameFacade.showToast(var_17_0.lockText, var_17_7)
-				elseif not var_17_5 then
+					GameFacade.showToast(config.lockText, tag)
+				elseif not isGetRewards then
 					UIBlockMgr.instance:startBlock("playRewardsAnimtion")
 					UIBlockMgrExtend.setNeedCircleMv(false)
-					HeroRpc.instance:sendItemUnlockRequest(arg_17_0._heroId, var_17_0.id)
+					HeroRpc.instance:sendItemUnlockRequest(self._heroId, config.id)
 				end
 			end
-		elseif var_17_3 then
-			gohelper.setActive(arg_17_0._items[iter_17_0].gochapterunlock, true)
-		elseif var_17_5 or string.nilorempty(var_17_0.unlockRewards) then
-			gohelper.setActive(arg_17_0._items[iter_17_0].gochapteroff, true)
+		elseif lock then
+			gohelper.setActive(self._items[i].gochapterunlock, true)
+		elseif isGetRewards or string.nilorempty(config.unlockRewards) then
+			gohelper.setActive(self._items[i].gochapteroff, true)
 		else
-			gohelper.setActive(arg_17_0._items[iter_17_0].gotreasurebox, true)
+			gohelper.setActive(self._items[i].gotreasurebox, true)
 		end
 	end
 end
 
-function var_0_0.onClose(arg_18_0)
-	gohelper.setActive(arg_18_0.viewGO, false)
-	arg_18_0:_statEnd()
+function CharacterDataCultureView:onClose()
+	gohelper.setActive(self.viewGO, false)
+	self:_statEnd()
 end
 
-function var_0_0.onDestroyView(arg_19_0)
-	arg_19_0._simagebg:UnLoadImage()
-	arg_19_0._simagecentericon:UnLoadImage()
-	arg_19_0._simagelefticon:UnLoadImage()
-	arg_19_0._simagerighticon:UnLoadImage()
-	arg_19_0._simagerighticon2:UnLoadImage()
-	arg_19_0._simagemask:UnLoadImage()
+function CharacterDataCultureView:onDestroyView()
+	self._simagebg:UnLoadImage()
+	self._simagecentericon:UnLoadImage()
+	self._simagelefticon:UnLoadImage()
+	self._simagerighticon:UnLoadImage()
+	self._simagerighticon2:UnLoadImage()
+	self._simagemask:UnLoadImage()
 
-	for iter_19_0 = 1, 3 do
-		arg_19_0._items[iter_19_0].btn:RemoveClickListener()
+	for i = 1, 3 do
+		self._items[i].btn:RemoveClickListener()
 	end
 
-	arg_19_0._simagepic:UnLoadImage()
-	CharacterController.instance:unregisterCallback(CharacterEvent.HeroDataAddUnlockItemFail, arg_19_0._unlockItemCallbackFail, arg_19_0)
-	CharacterController.instance:unregisterCallback(CharacterEvent.HeroDataAddUnlockItem, arg_19_0._unlockItemCallback, arg_19_0)
-	TaskDispatcher.cancelTask(arg_19_0._setCustomRedIconPos, arg_19_0)
+	self._simagepic:UnLoadImage()
+	CharacterController.instance:unregisterCallback(CharacterEvent.HeroDataAddUnlockItemFail, self._unlockItemCallbackFail, self)
+	CharacterController.instance:unregisterCallback(CharacterEvent.HeroDataAddUnlockItem, self._unlockItemCallback, self)
+	TaskDispatcher.cancelTask(self._setCustomRedIconPos, self)
 end
 
-function var_0_0._getFormatStr(arg_20_0, arg_20_1)
-	if string.nilorempty(arg_20_1) then
+function CharacterDataCultureView:_getFormatStr(content)
+	if string.nilorempty(content) then
 		return "", ""
 	end
 
-	local var_20_0, var_20_1 = arg_20_0.SwitchLangTab()
-	local var_20_2 = "\n" .. string.rep(" ", var_20_0)
-	local var_20_3 = arg_20_1
-	local var_20_4 = string.gsub(var_20_3, "<.->", "")
-	local var_20_5 = string.trim(var_20_4)
-	local var_20_6 = utf8.next(var_20_5, 1)
-	local var_20_7 = var_20_5:sub(1, var_20_6 - 1)
-	local var_20_8 = string.gsub(arg_20_1, var_20_7, "", 1)
+	local tab1, tab2 = self.SwitchLangTab()
+	local tabOffset = "\n" .. string.rep(" ", tab1)
+	local newContent = content
 
-	return var_20_7, string.format("<size=28><space=%fem></size> %s", var_20_1, var_20_8)
+	newContent = string.gsub(newContent, "<.->", "")
+	newContent = string.trim(newContent)
+
+	local firstEndIndex = utf8.next(newContent, 1)
+	local first = newContent:sub(1, firstEndIndex - 1)
+	local remain = string.gsub(content, first, "", 1)
+
+	return first, string.format("<size=28><space=%fem></size> %s", tab2, remain)
 end
 
-function var_0_0.SwitchLangTab(arg_21_0)
-	local var_21_0
-	local var_21_1
-	local var_21_2 = ({
+function CharacterDataCultureView:SwitchLangTab()
+	local tab1, tab2
+	local langOffset = {
 		cn = function()
-			var_21_0 = 6
-			var_21_1 = 2.75
+			tab1 = 6
+			tab2 = 2.75
 		end,
 		en = function()
-			var_21_0 = 6
-			var_21_1 = 1.83
+			tab1 = 6
+			tab2 = 1.83
 		end,
 		jp = function()
-			var_21_0 = 4
-			var_21_1 = 1.63
+			tab1 = 4
+			tab2 = 1.63
 		end,
 		kr = function()
-			var_21_0 = 3
-			var_21_1 = 1.63
+			tab1 = 3
+			tab2 = 1.63
 		end
-	})[LangSettings.instance:getCurLangShortcut()]
+	}
+	local lang = langOffset[LangSettings.instance:getCurLangShortcut()]
 
-	if var_21_2 then
-		var_21_2()
+	if lang then
+		lang()
 
-		return var_21_0, var_21_1
+		return tab1, tab2
 	else
 		return 6, 2.75
 	end
 end
 
-function var_0_0._getFirstOffsetByLang(arg_26_0)
-	return ({
+function CharacterDataCultureView:_getFirstOffsetByLang()
+	local kFirstOffset = {
 		kr = {
 			x = -31,
 			y = 0
 		}
-	})[LangSettings.instance:getCurLangShortcut()] or {
+	}
+	local offset = kFirstOffset[LangSettings.instance:getCurLangShortcut()]
+
+	return offset or {
 		x = 0,
 		y = 0
 	}
 end
 
-function var_0_0._getAfterContent(arg_27_0, arg_27_1)
-	arg_27_1 = string.gsub(arg_27_1, "：", ":")
+function CharacterDataCultureView:_getAfterContent(content)
+	content = string.gsub(content, "：", ":")
 
-	local var_27_0 = {}
-	local var_27_1
+	local nameList = {}
+	local nameSplit
 
-	for iter_27_0, iter_27_1 in ipairs(string.split(arg_27_1, "\n")) do
-		local var_27_2 = string.split(iter_27_1, ":")
+	for _, line in ipairs(string.split(content, "\n")) do
+		nameSplit = string.split(line, ":")
 
-		if var_27_2 and #var_27_2 >= 2 and not tabletool.indexOf(var_27_0, var_27_2[1]) then
-			local var_27_3 = var_27_2[1]
-			local var_27_4 = string.gsub(var_27_3, "%-", "%%-")
+		if nameSplit and #nameSplit >= 2 and not tabletool.indexOf(nameList, nameSplit[1]) then
+			local roleName = nameSplit[1]
 
-			table.insert(var_27_0, var_27_4)
+			roleName = string.gsub(roleName, "%-", "%%-")
+
+			table.insert(nameList, roleName)
 		end
 	end
 
-	local var_27_5 = 0
-	local var_27_6
+	local nameIndent = 0
+	local indent
 
-	for iter_27_2, iter_27_3 in ipairs(var_27_0) do
-		local var_27_7 = string.gsub(iter_27_3, "<[^<>][^<>]->", "")
-		local var_27_8 = SLFramework.UGUI.GuiHelper.GetPreferredWidth(arg_27_0._txtindenthelper, var_27_7)
+	for _, name in ipairs(nameList) do
+		local ignoreRichColorName = string.gsub(name, "<[^<>][^<>]->", "")
 
-		if var_27_5 < var_27_8 then
-			var_27_5 = var_27_8
+		indent = SLFramework.UGUI.GuiHelper.GetPreferredWidth(self._txtindenthelper, ignoreRichColorName)
+
+		if nameIndent < indent then
+			nameIndent = indent
 		end
 	end
 
-	local var_27_9 = HeroConfig.instance:getHeroCO(arg_27_0._heroId)
-	local var_27_10 = SLFramework.UGUI.GuiHelper.GetPreferredWidth(arg_27_0._txtindenthelper, var_27_9.name)
-	local var_27_11 = GameLanguageMgr.instance:getLanguageTypeStoryIndex() == LanguageEnum.LanguageStoryType.JP and 3.5 or 5
-	local var_27_12 = math.max(var_27_5, var_27_10) / 28 * var_27_11 + 3
-	local var_27_13 = {}
-	local var_27_14 = {}
-	local var_27_15 = GameLanguageMgr.instance:getLanguageTypeStoryIndex() == LanguageEnum.LanguageStoryType.JP and -7 or 0
-	local var_27_16 = var_27_9.name
-	local var_27_17 = string.gsub(var_27_16, "%-", "%%-")
+	local heroConfig = HeroConfig.instance:getHeroCO(self._heroId)
+	local heroNameIndent = SLFramework.UGUI.GuiHelper.GetPreferredWidth(self._txtindenthelper, heroConfig.name)
+	local tempOffest = GameLanguageMgr.instance:getLanguageTypeStoryIndex() == LanguageEnum.LanguageStoryType.JP and 3.5 or 5
 
-	table.insert(var_27_13, var_27_17 .. ":")
-	table.insert(var_27_14, string.format("<indent=0%%%%><color=#943308><b><cspace=%d>%s</cspace></b></color>：</indent><indent=%d%%%%>", var_27_15, var_27_9.name, var_27_12))
+	indent = math.max(nameIndent, heroNameIndent) / 28 * tempOffest + 3
 
-	for iter_27_4, iter_27_5 in ipairs(var_27_0) do
-		table.insert(var_27_13, iter_27_5 .. ":")
-		table.insert(var_27_14, string.format("<indent=0%%%%><color=#352725><b><cspace=%d>%s</cspace></b></color>:</indent><indent=%d%%%%>", var_27_15, iter_27_5, var_27_12))
+	local patternList = {}
+	local replList = {}
+	local charSpacing = GameLanguageMgr.instance:getLanguageTypeStoryIndex() == LanguageEnum.LanguageStoryType.JP and -7 or 0
+	local heroName = heroConfig.name
+
+	heroName = string.gsub(heroName, "%-", "%%-")
+
+	table.insert(patternList, heroName .. ":")
+	table.insert(replList, string.format("<indent=0%%%%><color=#943308><b><cspace=%d>%s</cspace></b></color>：</indent><indent=%d%%%%>", charSpacing, heroConfig.name, indent))
+
+	for i, name in ipairs(nameList) do
+		table.insert(patternList, name .. ":")
+		table.insert(replList, string.format("<indent=0%%%%><color=#352725><b><cspace=%d>%s</cspace></b></color>:</indent><indent=%d%%%%>", charSpacing, name, indent))
 	end
 
-	for iter_27_6 = 1, #var_27_13 do
-		arg_27_1 = string.gsub(arg_27_1, var_27_13[iter_27_6], var_27_14[iter_27_6])
+	for i = 1, #patternList do
+		content = string.gsub(content, patternList[i], replList[i])
 	end
 
 	if GameConfig:GetCurLangType() == LangSettings.jp then
-		arg_27_1 = string.gsub(arg_27_1, ":", "")
-		arg_27_1 = string.gsub(arg_27_1, "：", "")
+		content = string.gsub(content, ":", "")
+		content = string.gsub(content, "：", "")
 	elseif GameConfig:GetCurLangType() == LangSettings.en then
-		arg_27_1 = string.gsub(arg_27_1, "：", ":")
+		content = string.gsub(content, "：", ":")
 	end
 
-	return arg_27_1
+	return content
 end
 
-function var_0_0._statStart(arg_28_0)
-	arg_28_0._viewTime = ServerTime.now()
+function CharacterDataCultureView:_statStart()
+	self._viewTime = ServerTime.now()
 end
 
-function var_0_0._statEnd(arg_29_0)
-	if not arg_29_0._heroId then
+function CharacterDataCultureView:_statEnd()
+	if not self._heroId then
 		return
 	end
 
-	if arg_29_0._viewTime then
-		local var_29_0 = ServerTime.now() - arg_29_0._viewTime
-		local var_29_1 = arg_29_0.viewParam and type(arg_29_0.viewParam) == "table" and arg_29_0.viewParam.fromHandbookView
+	if self._viewTime then
+		local duration = ServerTime.now() - self._viewTime
+		local isHandbook = self.viewParam and type(self.viewParam) == "table" and self.viewParam.fromHandbookView
 
-		CharacterController.instance:statCharacterData(StatEnum.EventName.ReadHeroCulture, arg_29_0._heroId, arg_29_0._config and arg_29_0._config.id, var_29_0, var_29_1)
+		CharacterController.instance:statCharacterData(StatEnum.EventName.ReadHeroCulture, self._heroId, self._config and self._config.id, duration, isHandbook)
 	end
 
-	arg_29_0._viewTime = nil
+	self._viewTime = nil
 end
 
-function var_0_0._onContentScrollValueChanged(arg_30_0, arg_30_1)
-	gohelper.setActive(arg_30_0._gomask, arg_30_0._couldScroll and not (gohelper.getRemindFourNumberFloat(arg_30_0._scrollview.verticalNormalizedPosition) <= 0))
+function CharacterDataCultureView:_onContentScrollValueChanged(value)
+	gohelper.setActive(self._gomask, self._couldScroll and not (gohelper.getRemindFourNumberFloat(self._scrollview.verticalNormalizedPosition) <= 0))
 end
 
-return var_0_0
+return CharacterDataCultureView

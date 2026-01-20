@@ -1,12 +1,14 @@
-﻿module("modules.logic.weekwalk.model.WeekWalkTarotListModel", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk/model/WeekWalkTarotListModel.lua
 
-local var_0_0 = class("WeekWalkTarotListModel", ListScrollModel)
+module("modules.logic.weekwalk.model.WeekWalkTarotListModel", package.seeall)
 
-function var_0_0.setTarotList(arg_1_0, arg_1_1)
-	arg_1_0:clear()
-	arg_1_0:setList(arg_1_1)
+local WeekWalkTarotListModel = class("WeekWalkTarotListModel", ListScrollModel)
+
+function WeekWalkTarotListModel:setTarotList(list)
+	self:clear()
+	self:setList(list)
 end
 
-var_0_0.instance = var_0_0.New()
+WeekWalkTarotListModel.instance = WeekWalkTarotListModel.New()
 
-return var_0_0
+return WeekWalkTarotListModel

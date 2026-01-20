@@ -1,64 +1,66 @@
-﻿module("modules.logic.summon.model.SummonLuckyBagMO", package.seeall)
+﻿-- chunkname: @modules/logic/summon/model/SummonLuckyBagMO.lua
 
-local var_0_0 = pureTable("SummonLuckyBagMO")
+module("modules.logic.summon.model.SummonLuckyBagMO", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.luckyBagIdUseDic = {}
-	arg_1_0.luckyBagIdGotDic = {}
-	arg_1_0.summonTimes = 0
-	arg_1_0.openedTimes = 0
-	arg_1_0.getTimes = 0
-	arg_1_0.notSSRCount = 0
+local SummonLuckyBagMO = pureTable("SummonLuckyBagMO")
+
+function SummonLuckyBagMO:ctor()
+	self.luckyBagIdUseDic = {}
+	self.luckyBagIdGotDic = {}
+	self.summonTimes = 0
+	self.openedTimes = 0
+	self.getTimes = 0
+	self.notSSRCount = 0
 end
 
-function var_0_0.update(arg_2_0, arg_2_1)
-	local var_2_0 = 0
-	local var_2_1 = 0
+function SummonLuckyBagMO:update(info)
+	local openedTimes = 0
+	local getTimes = 0
 
-	if arg_2_1.singleBagInfos and #arg_2_1.singleBagInfos > 0 then
-		for iter_2_0, iter_2_1 in ipairs(arg_2_1.singleBagInfos) do
-			if iter_2_1.isOpen then
-				var_2_0 = var_2_0 + 1
+	if info.singleBagInfos and #info.singleBagInfos > 0 then
+		for _, singleBagInfo in ipairs(info.singleBagInfos) do
+			if singleBagInfo.isOpen then
+				openedTimes = openedTimes + 1
 			end
 
-			var_2_1 = var_2_1 + 1
-			arg_2_0.luckyBagIdGotDic[iter_2_1.bagId] = iter_2_1.bagId
-			arg_2_0.luckyBagIdUseDic[iter_2_1.bagId] = iter_2_1.isOpen
+			getTimes = getTimes + 1
+			self.luckyBagIdGotDic[singleBagInfo.bagId] = singleBagInfo.bagId
+			self.luckyBagIdUseDic[singleBagInfo.bagId] = singleBagInfo.isOpen
 		end
 	end
 
-	arg_2_0.openedTimes = var_2_0
-	arg_2_0.getTimes = var_2_1
-	arg_2_0.summonTimes = arg_2_1.count or 0
-	arg_2_0.notSSRCount = arg_2_1.notSSRCount or 0
+	self.openedTimes = openedTimes
+	self.getTimes = getTimes
+	self.summonTimes = info.count or 0
+	self.notSSRCount = info.notSSRCount or 0
 end
 
-function var_0_0.isGot(arg_3_0, arg_3_1)
-	if arg_3_1 == nil then
-		return arg_3_0.getTimes > 0
+function SummonLuckyBagMO:isGot(luckyBagId)
+	if luckyBagId == nil then
+		return self.getTimes > 0
 	else
-		if arg_3_0.luckyBagIdGotDic == nil then
+		if self.luckyBagIdGotDic == nil then
 			return false
 		end
 
-		return arg_3_0.luckyBagIdGotDic[arg_3_1] ~= nil
+		return self.luckyBagIdGotDic[luckyBagId] ~= nil
 	end
 end
 
-function var_0_0.isOpened(arg_4_0, arg_4_1)
-	if arg_4_1 == nil then
-		return arg_4_0:isGot() and arg_4_0.getTimes <= arg_4_0.openedTimes
+function SummonLuckyBagMO:isOpened(luckyBagId)
+	if luckyBagId == nil then
+		return self:isGot() and self.getTimes <= self.openedTimes
 	else
-		if arg_4_0.luckyBagIdUseDic == nil then
+		if self.luckyBagIdUseDic == nil then
 			return false
 		end
 
-		return arg_4_0.luckyBagIdUseDic[arg_4_1]
+		return self.luckyBagIdUseDic[luckyBagId]
 	end
 end
 
-function var_0_0.getOpenTimes(arg_5_0)
-	return arg_5_0.openedTimes or 0
+function SummonLuckyBagMO:getOpenTimes()
+	return self.openedTimes or 0
 end
 
-return var_0_0
+return SummonLuckyBagMO

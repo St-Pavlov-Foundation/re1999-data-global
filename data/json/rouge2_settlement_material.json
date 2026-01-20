@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "score": 500,
+    "materialNum": 2,
+    "materialGroup": "1000#10"
+  },
+  {
+    "id": 2,
+    "score": 1000,
+    "materialNum": 1,
+    "materialGroup": "1001#30|1008#10"
+  },
+  {
+    "id": 3,
+    "score": 2000,
+    "materialNum": 1,
+    "materialGroup": "1104#20|1105#10|1108#10|1110#10"
+  },
+  {
+    "id": 4,
+    "score": 4000,
+    "materialNum": 1,
+    "materialGroup": "1005#10|1008#10"
+  },
+  {
+    "id": 5,
+    "score": 5000,
+    "materialNum": 1,
+    "materialGroup": "1104#15|1105#15|1108#15|1110#15|1101#10|1102#10|1103#10|1106#10"
+  },
+  {
+    "id": 6,
+    "score": 6000,
+    "materialNum": 1,
+    "materialGroup": "1003#20|1007#20|1002#10|1004#10|1006#10"
+  },
+  {
+    "id": 7,
+    "score": 8000,
+    "materialNum": 1,
+    "materialGroup": "1101#10|1102#10|1103#10|1106#10|1107#10|1109#10"
+  },
+  {
+    "id": 8,
+    "score": 10000,
+    "materialNum": 1,
+    "materialGroup": "1002#10|1004#10|1006#10"
+  }
+]

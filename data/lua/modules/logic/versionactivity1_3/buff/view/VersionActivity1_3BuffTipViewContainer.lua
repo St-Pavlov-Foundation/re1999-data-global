@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity1_3.buff.view.VersionActivity1_3BuffTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/buff/view/VersionActivity1_3BuffTipViewContainer.lua
 
-local var_0_0 = class("VersionActivity1_3BuffTipViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_3.buff.view.VersionActivity1_3BuffTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	arg_1_0.buffTipView = VersionActivity1_3BuffTipView.New()
+local VersionActivity1_3BuffTipViewContainer = class("VersionActivity1_3BuffTipViewContainer", BaseViewContainer)
+
+function VersionActivity1_3BuffTipViewContainer:buildViews()
+	self.buffTipView = VersionActivity1_3BuffTipView.New()
 
 	return {
-		arg_1_0.buffTipView
+		self.buffTipView
 	}
 end
 
-return var_0_0
+return VersionActivity1_3BuffTipViewContainer

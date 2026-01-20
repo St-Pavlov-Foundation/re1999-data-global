@@ -1,170 +1,174 @@
-﻿module("modules.logic.survival.model.map.SurvivalMapModel", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/map/SurvivalMapModel.lua
 
-local var_0_0 = class("SurvivalMapModel", BaseModel)
+module("modules.logic.survival.model.map.SurvivalMapModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0.showToastList = {}
-	arg_1_0._targetPos = nil
-	arg_1_0._showTargetPos = nil
-	arg_1_0._sceneMo = nil
-	arg_1_0.curUseItem = nil
-	arg_1_0.result = SurvivalEnum.MapResult.None
-	arg_1_0.showCostTime = 0
-	arg_1_0.searchChangeItems = nil
-	arg_1_0.resultData = SurvivalResultMo.New()
-	arg_1_0._initGroupMo = SurvivalInitGroupModel.New()
-	arg_1_0.isSearchRemove = false
-	arg_1_0.save_mapScale = 1 - (SurvivalConst.MapCameraParams.DefaultDis - SurvivalConst.MapCameraParams.MinDis) / (SurvivalConst.MapCameraParams.MaxDis - SurvivalConst.MapCameraParams.MinDis)
-	arg_1_0.isFightEnter = false
-	arg_1_0.guideSpBlockPos = nil
-	arg_1_0._cacheHexPoints = {}
+local SurvivalMapModel = class("SurvivalMapModel", BaseModel)
+
+function SurvivalMapModel:onInit()
+	self.showToastList = {}
+	self._targetPos = nil
+	self._showTargetPos = nil
+	self._sceneMo = nil
+	self.curUseItem = nil
+	self.result = SurvivalEnum.MapResult.None
+	self.showCostTime = 0
+	self.searchChangeItems = nil
+	self.resultData = SurvivalResultMo.New()
+	self._initGroupMo = SurvivalInitGroupModel.New()
+	self.isSearchRemove = false
+	self.save_mapScale = 1 - (SurvivalConst.MapCameraParams.DefaultDis - SurvivalConst.MapCameraParams.MinDis) / (SurvivalConst.MapCameraParams.MaxDis - SurvivalConst.MapCameraParams.MinDis)
+	self.isFightEnter = false
+	self.guideSpBlockPos = nil
+	self._cacheHexPoints = {}
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:onInit()
+function SurvivalMapModel:reInit()
+	self:onInit()
 end
 
-function var_0_0.getCacheHexNode(arg_3_0, arg_3_1)
-	arg_3_1 = arg_3_1 or 1
+function SurvivalMapModel:getCacheHexNode(index)
+	index = index or 1
 
-	if not arg_3_0._cacheHexPoints[arg_3_1] then
-		arg_3_0._cacheHexPoints[arg_3_1] = SurvivalHexNode.New()
+	if not self._cacheHexPoints[index] then
+		self._cacheHexPoints[index] = SurvivalHexNode.New()
 	end
 
-	return arg_3_0._cacheHexPoints[arg_3_1]
+	return self._cacheHexPoints[index]
 end
 
-function var_0_0.getInitGroup(arg_4_0)
-	return arg_4_0._initGroupMo
+function SurvivalMapModel:getInitGroup()
+	return self._initGroupMo
 end
 
-function var_0_0.getCurMapCo(arg_5_0)
-	return arg_5_0._sceneMo.sceneCo
+function SurvivalMapModel:getCurMapCo()
+	return self._sceneMo.sceneCo
 end
 
-function var_0_0.getCurMapId(arg_6_0)
-	return arg_6_0._sceneMo.mapId
+function SurvivalMapModel:getCurMapId()
+	return self._sceneMo.mapId
 end
 
-function var_0_0.setSceneData(arg_7_0, arg_7_1)
-	arg_7_0.showToastList = {}
-	arg_7_0._targetPos = nil
-	arg_7_0._showTargetPos = nil
-	arg_7_0.curUseItem = nil
-	arg_7_0.showCostTime = 0
-	arg_7_0.isSearchRemove = false
-	arg_7_0.result = SurvivalEnum.MapResult.None
+function SurvivalMapModel:setSceneData(scene)
+	self.showToastList = {}
+	self._targetPos = nil
+	self._showTargetPos = nil
+	self.curUseItem = nil
+	self.showCostTime = 0
+	self.isSearchRemove = false
+	self.result = SurvivalEnum.MapResult.None
 
-	if not arg_7_0._sceneMo then
-		arg_7_0._sceneMo = SurvivalSceneMo.New()
+	if not self._sceneMo then
+		self._sceneMo = SurvivalSceneMo.New()
 	end
 
-	arg_7_0._sceneMo:init(arg_7_1)
+	self._sceneMo:init(scene)
 
-	local var_7_0 = arg_7_0._sceneMo.teamInfo.heros
-	local var_7_1 = arg_7_0._sceneMo.teamInfo.npcId
-	local var_7_2 = table.concat(var_7_0, "#") .. "|" .. table.concat(var_7_1, "#")
+	local heroUids = self._sceneMo.teamInfo.heros
+	local npcIds = self._sceneMo.teamInfo.npcId
+	local str = table.concat(heroUids, "#") .. "|" .. table.concat(npcIds, "#")
 
-	GameUtil.playerPrefsSetStringByUserId(PlayerPrefsKey.SurvivalTeamSave, var_7_2)
+	GameUtil.playerPrefsSetStringByUserId(PlayerPrefsKey.SurvivalTeamSave, str)
 	SurvivalEquipRedDotHelper.instance:checkRed()
 end
 
-function var_0_0.getSceneMo(arg_8_0)
-	return arg_8_0._sceneMo
+function SurvivalMapModel:getSceneMo()
+	return self._sceneMo
 end
 
-function var_0_0.isInFog(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0._sceneMo.player
+function SurvivalMapModel:isInFog(node)
+	local player = self._sceneMo.player
 
-	return not SurvivalHelper.instance:isHaveNode(var_9_0.explored, arg_9_1)
+	return not SurvivalHelper.instance:isHaveNode(player.explored, node)
 end
 
-function var_0_0.addExploredPoint(arg_10_0, arg_10_1)
-	if not arg_10_0._sceneMo then
+function SurvivalMapModel:addExploredPoint(points)
+	if not self._sceneMo then
 		return
 	end
 
-	local var_10_0 = arg_10_0._sceneMo.player
+	local player = self._sceneMo.player
 
-	for iter_10_0, iter_10_1 in ipairs(arg_10_1) do
-		SurvivalHelper.instance:addNodeToDict(var_10_0.explored, iter_10_1)
+	for i, v in ipairs(points) do
+		SurvivalHelper.instance:addNodeToDict(player.explored, v)
 	end
 end
 
-function var_0_0.removeExploredPoint(arg_11_0, arg_11_1)
-	if not arg_11_0._sceneMo then
+function SurvivalMapModel:removeExploredPoint(points)
+	if not self._sceneMo then
 		return
 	end
 
-	local var_11_0 = arg_11_0._sceneMo.player
+	local player = self._sceneMo.player
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_1) do
-		SurvivalHelper.instance:removeNodeToDict(var_11_0.explored, iter_11_1)
+	for i, v in ipairs(points) do
+		SurvivalHelper.instance:removeNodeToDict(player.explored, v)
 	end
 end
 
-function var_0_0.isInFog2(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0._sceneMo.player
+function SurvivalMapModel:isInFog2(node)
+	local player = self._sceneMo.player
 
-	return not SurvivalHelper.instance:isHaveNode(var_12_0.canExplored, arg_12_1)
+	return not SurvivalHelper.instance:isHaveNode(player.canExplored, node)
 end
 
-function var_0_0.addExploredPoint2(arg_13_0, arg_13_1)
-	if not arg_13_0._sceneMo then
+function SurvivalMapModel:addExploredPoint2(points)
+	if not self._sceneMo then
 		return
 	end
 
-	local var_13_0 = arg_13_0._sceneMo.player
-	local var_13_1 = {}
+	local player = self._sceneMo.player
+	local addPoints = {}
 
-	for iter_13_0, iter_13_1 in ipairs(arg_13_1) do
-		if not SurvivalHelper.instance:isHaveNode(var_13_0.canExplored, iter_13_1) then
-			SurvivalHelper.instance:addNodeToDict(var_13_0.canExplored, iter_13_1)
-			table.insert(var_13_1, iter_13_1)
+	for i, v in ipairs(points) do
+		if not SurvivalHelper.instance:isHaveNode(player.canExplored, v) then
+			SurvivalHelper.instance:addNodeToDict(player.canExplored, v)
+			table.insert(addPoints, v)
 		end
 	end
 
-	SurvivalMapHelper.instance:updateCloudShow(true, var_13_1, true)
+	SurvivalMapHelper.instance:updateCloudShow(true, addPoints, true)
 end
 
-function var_0_0.removeExploredPoint2(arg_14_0, arg_14_1)
-	if not arg_14_0._sceneMo then
+function SurvivalMapModel:removeExploredPoint2(points)
+	if not self._sceneMo then
 		return
 	end
 
-	local var_14_0 = arg_14_0._sceneMo.player
-	local var_14_1 = {}
+	local player = self._sceneMo.player
+	local removePoints = {}
 
-	for iter_14_0, iter_14_1 in ipairs(arg_14_1) do
-		if SurvivalHelper.instance:isHaveNode(var_14_0.canExplored, iter_14_1) then
-			SurvivalHelper.instance:removeNodeToDict(var_14_0.canExplored, iter_14_1)
-			table.insert(var_14_1, iter_14_1)
+	for i, v in ipairs(points) do
+		if SurvivalHelper.instance:isHaveNode(player.canExplored, v) then
+			SurvivalHelper.instance:removeNodeToDict(player.canExplored, v)
+			table.insert(removePoints, v)
 		end
 	end
 
-	SurvivalMapHelper.instance:updateCloudShow(true, var_14_1, false)
+	SurvivalMapHelper.instance:updateCloudShow(true, removePoints, false)
 end
 
-function var_0_0.isInMiasma(arg_15_0)
-	if not arg_15_0._sceneMo then
+function SurvivalMapModel:isInMiasma()
+	if not self._sceneMo then
 		return false
 	end
 
-	local var_15_0 = SurvivalShelterModel.instance:getWeekInfo()
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local subType = self._sceneMo:getBlockTypeByPos(self._sceneMo.player.pos)
+	local isInMiasma = subType == SurvivalEnum.UnitSubType.Miasma and weekInfo:getAttr(SurvivalEnum.AttrType.Vehicle_Miasma) == 0
 
-	return arg_15_0._sceneMo:getBlockTypeByPos(arg_15_0._sceneMo.player.pos) == SurvivalEnum.UnitSubType.Miasma and var_15_0:getAttr(SurvivalEnum.AttrType.Vehicle_Miasma) == 0
+	return isInMiasma
 end
 
-function var_0_0.setMoveToTarget(arg_16_0, arg_16_1, arg_16_2)
-	arg_16_0._targetPos = arg_16_1
-	arg_16_0._targetPath = arg_16_2
+function SurvivalMapModel:setMoveToTarget(targetPos, path)
+	self._targetPos = targetPos
+	self._targetPath = path
 end
 
-function var_0_0.setShowTarget(arg_17_0, arg_17_1, arg_17_2)
-	arg_17_0._showTargetPos = arg_17_1
+function SurvivalMapModel:setShowTarget(targetPos, isDelayHide)
+	self._showTargetPos = targetPos
 
-	if not arg_17_1 then
-		if arg_17_2 then
+	if not targetPos then
+		if isDelayHide then
 			SurvivalMapHelper.instance:getScene().path:setDelayHide()
 		else
 			SurvivalMapHelper.instance:getScene().path:setPathListShow()
@@ -172,16 +176,16 @@ function var_0_0.setShowTarget(arg_17_0, arg_17_1, arg_17_2)
 	end
 end
 
-function var_0_0.canWalk(arg_18_0, arg_18_1)
-	if arg_18_0.result ~= SurvivalEnum.MapResult.None then
+function SurvivalMapModel:canWalk(isTips)
+	if self.result ~= SurvivalEnum.MapResult.None then
 		return false
 	end
 
-	if arg_18_0._sceneMo.panel then
-		if arg_18_1 and ViewHelper.instance:checkViewOnTheTop(ViewName.SurvivalMapMainView, {
+	if self._sceneMo.panel then
+		if isTips and ViewHelper.instance:checkViewOnTheTop(ViewName.SurvivalMapMainView, {
 			ViewName.SurvivalToastView
 		}) then
-			arg_18_0._sceneMo.panel = nil
+			self._sceneMo.panel = nil
 
 			logError("当前面板缓存异常，自动清空！！！")
 
@@ -191,10 +195,11 @@ function var_0_0.canWalk(arg_18_0, arg_18_1)
 		return false
 	end
 
-	local var_18_0 = SurvivalShelterModel.instance:getWeekInfo():getBag(SurvivalEnum.ItemSource.Map)
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local bagMo = weekInfo:getBag(SurvivalEnum.ItemSource.Map)
 
-	if var_18_0.totalMass > var_18_0.maxWeightLimit + SurvivalShelterModel.instance:getWeekInfo():getAttr(SurvivalEnum.AttrType.AttrWeight) then
-		if arg_18_1 then
+	if bagMo.totalMass > bagMo.maxWeightLimit + SurvivalShelterModel.instance:getWeekInfo():getAttr(SurvivalEnum.AttrType.AttrWeight) then
+		if isTips then
 			GameFacade.showToast(ToastEnum.SurvivalNoMoveWeight)
 		end
 
@@ -204,29 +209,30 @@ function var_0_0.canWalk(arg_18_0, arg_18_1)
 	return true
 end
 
-function var_0_0.getTargetPos(arg_19_0)
-	if not arg_19_0:canWalk() then
+function SurvivalMapModel:getTargetPos()
+	if not self:canWalk() then
 		return
 	end
 
-	return arg_19_0._targetPos, arg_19_0._targetPath
+	return self._targetPos, self._targetPath
 end
 
-function var_0_0.getShowTargetPos(arg_20_0)
-	if not arg_20_0:canWalk() then
+function SurvivalMapModel:getShowTargetPos()
+	if not self:canWalk() then
 		return
 	end
 
-	return arg_20_0._showTargetPos
+	return self._showTargetPos
 end
 
-function var_0_0.getSelectMapId(arg_21_0)
-	local var_21_0 = SurvivalShelterModel.instance:getWeekInfo()
-	local var_21_1 = var_0_0.instance:getInitGroup()
+function SurvivalMapModel:getSelectMapId()
+	local weekMo = SurvivalShelterModel.instance:getWeekInfo()
+	local survivalInitGroupModel = SurvivalMapModel.instance:getInitGroup()
+	local mapInfo = weekMo.mapInfos[survivalInitGroupModel.selectMapIndex + 1]
 
-	return var_21_0.mapInfos[var_21_1.selectMapIndex + 1].mapId
+	return mapInfo.mapId
 end
 
-var_0_0.instance = var_0_0.New()
+SurvivalMapModel.instance = SurvivalMapModel.New()
 
-return var_0_0
+return SurvivalMapModel

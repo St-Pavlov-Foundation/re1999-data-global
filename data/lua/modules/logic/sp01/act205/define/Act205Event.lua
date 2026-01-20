@@ -1,11 +1,13 @@
-﻿module("modules.logic.sp01.act205.define.Act205Event", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/act205/define/Act205Event.lua
 
-local var_0_0 = _M
-local var_0_1 = GameUtil.getUniqueTb()
+module("modules.logic.sp01.act205.define.Act205Event", package.seeall)
 
-var_0_0.OnInfoUpdate = var_0_1()
-var_0_0.OnDailyRefresh = var_0_1()
-var_0_0.OnFinishGame = var_0_1()
-var_0_0.PlayerSelectCard = var_0_1()
+local Act205Event = _M
+local _get = GameUtil.getUniqueTb()
 
-return var_0_0
+Act205Event.OnInfoUpdate = _get()
+Act205Event.OnDailyRefresh = _get()
+Act205Event.OnFinishGame = _get()
+Act205Event.PlayerSelectCard = _get()
+
+return Act205Event

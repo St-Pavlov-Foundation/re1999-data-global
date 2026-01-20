@@ -1,41 +1,45 @@
-﻿module("modules.logic.fight.system.work.FightWorkDistributeCard", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkDistributeCard.lua
 
-local var_0_0 = class("FightWorkDistributeCard", FightWorkItem)
+module("modules.logic.fight.system.work.FightWorkDistributeCard", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1)
-	arg_1_0.isEnterDistribute = arg_1_1
+local FightWorkDistributeCard = class("FightWorkDistributeCard", FightWorkItem)
+
+function FightWorkDistributeCard:onConstructor(isEnterDistribute)
+	self.isEnterDistribute = isEnterDistribute
 end
 
-function var_0_0.onStart(arg_2_0)
-	if not FightDataHelper.roundMgr:getRoundData() then
-		arg_2_0:onDone(false)
+function FightWorkDistributeCard:onStart()
+	local roundData = FightDataHelper.roundMgr:getRoundData()
+
+	if not roundData then
+		self:onDone(false)
 
 		return
 	end
 
-	arg_2_0:cancelFightWorkSafeTimer()
+	self:cancelFightWorkSafeTimer()
 	FightDataHelper.stageMgr:enterFightState(FightStageMgr.FightStateType.DistributeCard)
-	FightController.instance:GuideFlowPauseAndContinue("OnGuideDistributePause", FightEvent.OnGuideDistributePause, FightEvent.OnGuideDistributeContinue, arg_2_0._distrubute, arg_2_0)
+	FightController.instance:GuideFlowPauseAndContinue("OnGuideDistributePause", FightEvent.OnGuideDistributePause, FightEvent.OnGuideDistributeContinue, self._distrubute, self)
 end
 
-function var_0_0._distrubute(arg_3_0)
+function FightWorkDistributeCard:_distrubute()
 	FightViewPartVisible.set(false, true, false, false, false)
-	FightController.instance:registerCallback(FightEvent.OnDistributeCards, arg_3_0._done, arg_3_0)
+	FightController.instance:registerCallback(FightEvent.OnDistributeCards, self._done, self)
 
-	local var_3_0 = FightDataHelper.handCardMgr.beforeCards1
-	local var_3_1 = FightDataHelper.handCardMgr.teamACards1
+	local beforeCards = FightDataHelper.handCardMgr.beforeCards1
+	local teamAcards = FightDataHelper.handCardMgr.teamACards1
 
-	FightController.instance:dispatchEvent(FightEvent.DistributeCards, var_3_0, var_3_1, arg_3_0.isEnterDistribute)
+	FightController.instance:dispatchEvent(FightEvent.DistributeCards, beforeCards, teamAcards, self.isEnterDistribute)
 end
 
-function var_0_0._done(arg_4_0)
-	FightController.instance:unregisterCallback(FightEvent.OnDistributeCards, arg_4_0._done, arg_4_0)
-	arg_4_0:onDone(true)
+function FightWorkDistributeCard:_done()
+	FightController.instance:unregisterCallback(FightEvent.OnDistributeCards, self._done, self)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_5_0)
+function FightWorkDistributeCard:clearWork()
 	FightDataHelper.stageMgr:exitFightState(FightStageMgr.FightStateType.DistributeCard)
-	FightController.instance:unregisterCallback(FightEvent.OnDistributeCards, arg_5_0._done, arg_5_0)
+	FightController.instance:unregisterCallback(FightEvent.OnDistributeCards, self._done, self)
 end
 
-return var_0_0
+return FightWorkDistributeCard

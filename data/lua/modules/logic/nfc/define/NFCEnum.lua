@@ -1,16 +1,18 @@
-﻿module("modules.logic.nfc.define.NFCEnum", package.seeall)
+﻿-- chunkname: @modules/logic/nfc/define/NFCEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.nfc.define.NFCEnum", package.seeall)
 
-var_0_0.NFCVersion = {
+local NFCEnum = _M
+
+NFCEnum.NFCVersion = {
 	OpenFunction = 1
 }
-var_0_0.NFCVersionDic = {
-	[var_0_0.NFCVersion.OpenFunction] = 1
+NFCEnum.NFCVersionDic = {
+	[NFCEnum.NFCVersion.OpenFunction] = 1
 }
-var_0_0.NFCVFunctionType = {
+NFCEnum.NFCVFunctionType = {
 	PlayerCard = 81,
 	BGMSwitch = 76
 }
 
-return var_0_0
+return NFCEnum

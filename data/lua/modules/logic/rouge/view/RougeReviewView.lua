@@ -1,225 +1,227 @@
-﻿module("modules.logic.rouge.view.RougeReviewView", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeReviewView.lua
 
-local var_0_0 = class("RougeReviewView", BaseView)
+module("modules.logic.rouge.view.RougeReviewView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._scrollview = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_view")
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#scroll_view/Viewport/#go_content")
-	arg_1_0._goMask = gohelper.findChild(arg_1_0.viewGO, "#go_Mask")
-	arg_1_0._simageMask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_Mask/#simage_Mask")
-	arg_1_0._txtTips = gohelper.findChildText(arg_1_0.viewGO, "#go_Mask/#txt_Tips")
-	arg_1_0._goLeftTop = gohelper.findChild(arg_1_0.viewGO, "#go_LeftTop")
+local RougeReviewView = class("RougeReviewView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeReviewView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._scrollview = gohelper.findChildScrollRect(self.viewGO, "#scroll_view")
+	self._gocontent = gohelper.findChild(self.viewGO, "#scroll_view/Viewport/#go_content")
+	self._goMask = gohelper.findChild(self.viewGO, "#go_Mask")
+	self._simageMask = gohelper.findChildSingleImage(self.viewGO, "#go_Mask/#simage_Mask")
+	self._txtTips = gohelper.findChildText(self.viewGO, "#go_Mask/#txt_Tips")
+	self._goLeftTop = gohelper.findChild(self.viewGO, "#go_LeftTop")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RougeReviewView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RougeReviewView:removeEvents()
 	return
 end
 
-function var_0_0._initStoryStatus(arg_4_0)
-	arg_4_0._unlockStageId = 0
+function RougeReviewView:_initStoryStatus()
+	self._unlockStageId = 0
 
-	local var_4_0 = RougeFavoriteConfig.instance:getStoryList()
+	local storyList = RougeFavoriteConfig.instance:getStoryList()
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_0) do
-		if arg_4_0:_sotryListIsPass(iter_4_1.storyIdList) then
-			arg_4_0._unlockStageId = iter_4_1.config.stageId
+	for i, v in ipairs(storyList) do
+		if self:_sotryListIsPass(v.storyIdList) then
+			self._unlockStageId = v.config.stageId
 		end
 	end
 end
 
-function var_0_0._sotryListIsPass(arg_5_0, arg_5_1)
-	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
-		if RougeOutsideModel.instance:storyIsPass(iter_5_1) then
+function RougeReviewView:_sotryListIsPass(list)
+	for i, storyId in ipairs(list) do
+		if RougeOutsideModel.instance:storyIsPass(storyId) then
 			return true
 		end
 	end
 end
 
-function var_0_0._initStoryItems(arg_6_0)
-	local var_6_0 = RougeFavoriteConfig.instance:getStoryList()
+function RougeReviewView:_initStoryItems()
+	local storyList = RougeFavoriteConfig.instance:getStoryList()
 
-	arg_6_0.storyList = var_6_0
+	self.storyList = storyList
 
-	local var_6_1 = arg_6_0.viewContainer:getSetting().otherRes[1]
-	local var_6_2 = false
-	local var_6_3 = arg_6_0:_splitStorysToStageList(var_6_0)
-	local var_6_4 = var_6_3 and #var_6_3 or 0
+	local path = self.viewContainer:getSetting().otherRes[1]
+	local isEnd = false
+	local stageList = self:_splitStorysToStageList(storyList)
+	local stageCount = stageList and #stageList or 0
 
-	arg_6_0._unlockStageCount = 0
+	self._unlockStageCount = 0
 
-	for iter_6_0 = 1, var_6_4 - 1 do
-		local var_6_5 = var_6_3[iter_6_0][1]
-		local var_6_6 = arg_6_0:_getStoryItem(iter_6_0, var_6_1)
-		local var_6_7 = var_6_3[iter_6_0 + 1]
+	for i = 1, stageCount - 1 do
+		local storyMo = stageList[i][1]
+		local storyItemGO = self:_getStoryItem(i, path)
+		local stageStoryList = stageList[i + 1]
 
-		var_6_2 = iter_6_0 >= var_6_4 - 1
+		isEnd = i >= stageCount - 1
 
-		var_6_6.item:setMaxUnlockStateId(arg_6_0._unlockStageId)
-		var_6_6.item:onUpdateMO(var_6_5, var_6_2, arg_6_0, var_6_7, var_6_1)
+		storyItemGO.item:setMaxUnlockStateId(self._unlockStageId)
+		storyItemGO.item:onUpdateMO(storyMo, isEnd, self, stageStoryList, path)
 
-		if not var_6_6.item:isUnlock() then
-			var_6_2 = false
+		if not storyItemGO.item:isUnlock() then
+			isEnd = false
 
 			break
 		end
 
-		arg_6_0._unlockStageCount = arg_6_0._unlockStageCount + 1
+		self._unlockStageCount = self._unlockStageCount + 1
 	end
 
-	gohelper.setActive(arg_6_0._goMask, not var_6_2)
+	gohelper.setActive(self._goMask, not isEnd)
 
-	arg_6_0._isEnd = var_6_2
+	self._isEnd = isEnd
 end
 
-function var_0_0._getStoryItem(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = arg_7_0._storyItemList[arg_7_1]
+function RougeReviewView:_getStoryItem(i, path)
+	local storyItemGO = self._storyItemList[i]
 
-	if not var_7_0 then
-		var_7_0 = {
-			go = arg_7_0:getResInst(arg_7_2, arg_7_0._gocontent, "item" .. arg_7_1)
+	if not storyItemGO then
+		storyItemGO = {
+			go = self:getResInst(path, self._gocontent, "item" .. i)
 		}
-		var_7_0.item = MonoHelper.addNoUpdateLuaComOnceToGo(var_7_0.go, RougeReviewItem)
+		storyItemGO.item = MonoHelper.addNoUpdateLuaComOnceToGo(storyItemGO.go, RougeReviewItem)
 
-		var_7_0.item:setIndex(arg_7_1)
-		table.insert(arg_7_0._storyItemList, var_7_0)
+		storyItemGO.item:setIndex(i)
+		table.insert(self._storyItemList, storyItemGO)
 	end
 
-	return var_7_0
+	return storyItemGO
 end
 
-function var_0_0._splitStorysToStageList(arg_8_0, arg_8_1)
-	local var_8_0 = {}
-	local var_8_1 = 1
-	local var_8_2 = #arg_8_1
+function RougeReviewView:_splitStorysToStageList(storyList)
+	local stageList = {}
+	local curCheckIndex = 1
+	local storyListCount = #storyList
 
-	while var_8_1 <= var_8_2 do
-		local var_8_3, var_8_4 = arg_8_0:_findNextSameStageStory(var_8_1, arg_8_1)
+	while curCheckIndex <= storyListCount do
+		local maxCheckIndex, stages = self:_findNextSameStageStory(curCheckIndex, storyList)
 
-		var_8_1 = var_8_3 + 1
+		curCheckIndex = maxCheckIndex + 1
 
-		table.insert(var_8_0, var_8_4)
+		table.insert(stageList, stages)
 	end
 
-	return var_8_0
+	return stageList
 end
 
-function var_0_0._findNextSameStageStory(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = arg_9_2 and #arg_9_2 or 0
-	local var_9_1
-	local var_9_2
+function RougeReviewView:_findNextSameStageStory(curCheckIndex, storyList)
+	local storyCount = storyList and #storyList or 0
+	local stageStoryList, preStageId
 
-	for iter_9_0 = arg_9_1, var_9_0 do
-		local var_9_3 = arg_9_2[iter_9_0].config.stageId
+	for i = curCheckIndex, storyCount do
+		local curStageId = storyList[i].config.stageId
 
-		if var_9_2 and var_9_2 ~= var_9_3 then
+		if preStageId and preStageId ~= curStageId then
 			break
 		end
 
-		var_9_2 = var_9_3
-		var_9_1 = var_9_1 or {}
+		preStageId = curStageId
+		stageStoryList = stageStoryList or {}
 
-		table.insert(var_9_1, arg_9_2[iter_9_0])
+		table.insert(stageStoryList, storyList[i])
 	end
 
-	local var_9_4 = var_9_1 and #var_9_1 or 0
-	local var_9_5 = arg_9_1 + var_9_4 - 1
+	local stageStoryCount = stageStoryList and #stageStoryList or 0
+	local maxCheckIndex = curCheckIndex + stageStoryCount - 1
 
-	if not var_9_4 or var_9_4 <= 0 then
-		var_9_5 = var_9_5 + 1
+	if not stageStoryCount or stageStoryCount <= 0 then
+		maxCheckIndex = maxCheckIndex + 1
 	end
 
-	return var_9_5, var_9_1
+	return maxCheckIndex, stageStoryList
 end
 
-function var_0_0._editableInitView(arg_10_0)
-	arg_10_0._initX = 220
-	arg_10_0._initY = -450
-	arg_10_0._itemContentWidth = 700
-	arg_10_0._itemIconWidth = 400
-	arg_10_0._storyItemList = arg_10_0:getUserDataTb_()
-	arg_10_0._horizontalLayoutGroup = arg_10_0._gocontent:GetComponent(gohelper.Type_HorizontalLayoutGroup)
+function RougeReviewView:_editableInitView()
+	self._initX = 220
+	self._initY = -450
+	self._itemContentWidth = 700
+	self._itemIconWidth = 400
+	self._storyItemList = self:getUserDataTb_()
+	self._horizontalLayoutGroup = self._gocontent:GetComponent(gohelper.Type_HorizontalLayoutGroup)
 end
 
-function var_0_0._resetPos(arg_11_0)
-	arg_11_0._rootWidth = recthelper.getWidth(arg_11_0.viewGO.transform)
-	arg_11_0._viewportWidth = recthelper.getWidth(arg_11_0._scrollview.transform)
-	arg_11_0._curViewportWidth = arg_11_0._viewportWidth
+function RougeReviewView:_resetPos()
+	self._rootWidth = recthelper.getWidth(self.viewGO.transform)
+	self._viewportWidth = recthelper.getWidth(self._scrollview.transform)
+	self._curViewportWidth = self._viewportWidth
 
-	local var_11_0 = (arg_11_0._unlockStageCount - 1) * arg_11_0._itemContentWidth + arg_11_0._itemIconWidth
-	local var_11_1 = math.max(arg_11_0._viewportWidth - var_11_0, 0)
-	local var_11_2 = var_11_0 + var_11_1
+	local contentWidth = (self._unlockStageCount - 1) * self._itemContentWidth + self._itemIconWidth
+	local offsetX = math.max(self._viewportWidth - contentWidth, 0)
 
-	if arg_11_0._isEnd then
-		var_11_2 = var_11_2 + arg_11_0._itemContentWidth + arg_11_0._itemIconWidth
+	contentWidth = contentWidth + offsetX
+
+	if self._isEnd then
+		contentWidth = contentWidth + self._itemContentWidth + self._itemIconWidth
 	end
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0._storyItemList) do
-		local var_11_3 = iter_11_1.go
+	for i, v in ipairs(self._storyItemList) do
+		local go = v.go
 
-		recthelper.setAnchor(var_11_3.transform, (iter_11_0 - 1) * arg_11_0._itemContentWidth + arg_11_0._initX + var_11_1, arg_11_0._initY)
+		recthelper.setAnchor(go.transform, (i - 1) * self._itemContentWidth + self._initX + offsetX, self._initY)
 	end
 
-	recthelper.setWidth(arg_11_0._gocontent.transform, var_11_2)
+	recthelper.setWidth(self._gocontent.transform, contentWidth)
 end
 
-function var_0_0.onUpdateParam(arg_12_0)
+function RougeReviewView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_13_0)
-	arg_13_0:_initStoryStatus()
-	arg_13_0:_initStoryItems()
+function RougeReviewView:onOpen()
+	self:_initStoryStatus()
+	self:_initStoryItems()
 
-	if not arg_13_0._isEnd then
-		local var_13_0 = arg_13_0._scrollview.transform.offsetMax
+	if not self._isEnd then
+		local offsetMax = self._scrollview.transform.offsetMax
 
-		var_13_0.x = -670
-		arg_13_0._scrollview.transform.offsetMax = var_13_0
+		offsetMax.x = -670
+		self._scrollview.transform.offsetMax = offsetMax
 	end
 
-	arg_13_0:_resetPos()
+	self:_resetPos()
 
-	arg_13_0._scrollview.horizontalNormalizedPosition = 1
-	arg_13_0._scrollX = 1
+	self._scrollview.horizontalNormalizedPosition = 1
+	self._scrollX = 1
 
 	AudioMgr.instance:trigger(AudioEnum.UI.RougeFavoriteAudio2)
-	arg_13_0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_13_0._onScreenSizeChange, arg_13_0)
-	arg_13_0._scrollview:AddOnValueChanged(arg_13_0._onScrollRectValueChanged, arg_13_0)
+	self:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, self._onScreenSizeChange, self)
+	self._scrollview:AddOnValueChanged(self._onScrollRectValueChanged, self)
 end
 
-function var_0_0._onScrollRectValueChanged(arg_14_0, arg_14_1, arg_14_2)
-	if arg_14_0._curViewportWidth == recthelper.getWidth(arg_14_0._scrollview.transform) then
-		arg_14_0._scrollX = arg_14_1
+function RougeReviewView:_onScrollRectValueChanged(scrollX, scrollY)
+	if self._curViewportWidth == recthelper.getWidth(self._scrollview.transform) then
+		self._scrollX = scrollX
 	end
 end
 
-function var_0_0._onScreenSizeChange(arg_15_0)
-	arg_15_0:_resetPos()
+function RougeReviewView:_onScreenSizeChange()
+	self:_resetPos()
 
-	arg_15_0._scrollview.horizontalNormalizedPosition = arg_15_0._scrollX
+	self._scrollview.horizontalNormalizedPosition = self._scrollX
 end
 
-function var_0_0.onClose(arg_16_0)
+function RougeReviewView:onClose()
 	if RougeFavoriteModel.instance:getReddotNum(RougeEnum.FavoriteType.Story) > 0 then
-		local var_16_0 = RougeOutsideModel.instance:season()
+		local season = RougeOutsideModel.instance:season()
 
-		RougeOutsideRpc.instance:sendRougeMarkNewReddotRequest(var_16_0, RougeEnum.FavoriteType.Story, 0)
+		RougeOutsideRpc.instance:sendRougeMarkNewReddotRequest(season, RougeEnum.FavoriteType.Story, 0)
 	end
 
-	arg_16_0._scrollview:RemoveOnValueChanged()
+	self._scrollview:RemoveOnValueChanged()
 end
 
-function var_0_0.onDestroyView(arg_17_0)
+function RougeReviewView:onDestroyView()
 	return
 end
 
-return var_0_0
+return RougeReviewView

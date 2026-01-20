@@ -1,209 +1,211 @@
-﻿module("modules.logic.room.view.critter.RoomCritterTrainViewDetail", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/critter/RoomCritterTrainViewDetail.lua
 
-local var_0_0 = class("RoomCritterTrainViewDetail", BaseView)
+module("modules.logic.room.view.critter.RoomCritterTrainViewDetail", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gotrainingdetail = gohelper.findChild(arg_1_0.viewGO, "bottom/#go_trainingdetail")
+local RoomCritterTrainViewDetail = class("RoomCritterTrainViewDetail", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomCritterTrainViewDetail:onInitView()
+	self._gotrainingdetail = gohelper.findChild(self.viewGO, "bottom/#go_trainingdetail")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btntrainevent:AddClickListener(arg_2_0._btntraineventOnClick, arg_2_0)
+function RoomCritterTrainViewDetail:addEvents()
+	self._btntrainevent:AddClickListener(self._btntraineventOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btntrainevent:RemoveClickListener()
+function RoomCritterTrainViewDetail:removeEvents()
+	self._btntrainevent:RemoveClickListener()
 end
 
-function var_0_0._btntrainfinishOnClick(arg_4_0)
-	local var_4_0 = arg_4_0._slotMO and arg_4_0._slotMO.critterMO
+function RoomCritterTrainViewDetail:_btntrainfinishOnClick()
+	local critterMO = self._slotMO and self._slotMO.critterMO
 
-	if var_4_0 and var_4_0.trainInfo then
-		if var_4_0.trainInfo:isFinishAllEvent() then
-			RoomCritterController.instance:sendFinishTrainCritter(var_4_0.id)
+	if critterMO and critterMO.trainInfo then
+		if critterMO.trainInfo:isFinishAllEvent() then
+			RoomCritterController.instance:sendFinishTrainCritter(critterMO.id)
 		else
-			RoomCritterController.instance:openTrainEventView(var_4_0.id)
+			RoomCritterController.instance:openTrainEventView(critterMO.id)
 		end
 	end
 end
 
-function var_0_0._btntraineventOnClick(arg_5_0)
-	if arg_5_0:_isHasEventTrigger() then
-		RoomCritterController.instance:openTrainEventView(arg_5_0._critterMO.id)
+function RoomCritterTrainViewDetail:_btntraineventOnClick()
+	if self:_isHasEventTrigger() then
+		RoomCritterController.instance:openTrainEventView(self._critterMO.id)
 	end
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	local var_6_0 = arg_6_0:getResInst(RoomCritterTrainDetailItem.prefabPath, arg_6_0._gotrainingdetail)
+function RoomCritterTrainViewDetail:_editableInitView()
+	local go = self:getResInst(RoomCritterTrainDetailItem.prefabPath, self._gotrainingdetail)
 
-	arg_6_0.detailItem = MonoHelper.addNoUpdateLuaComOnceToGo(var_6_0, RoomCritterTrainDetailItem, arg_6_0)
-	arg_6_0._gomapui = gohelper.findChild(arg_6_0.viewGO, "#go_mapui")
-	arg_6_0._goeventicon = gohelper.findChild(arg_6_0.viewGO, "#go_mapui/go_eventicon")
-	arg_6_0._btntrainevent = gohelper.findChildButtonWithAudio(arg_6_0.viewGO, "#go_mapui/go_eventicon/btn_trainevent")
-	arg_6_0._goeventiconTrs = arg_6_0._goeventicon.transform
-	arg_6_0._gomapuiTrs = arg_6_0._gomapui.transform
+	self.detailItem = MonoHelper.addNoUpdateLuaComOnceToGo(go, RoomCritterTrainDetailItem, self)
+	self._gomapui = gohelper.findChild(self.viewGO, "#go_mapui")
+	self._goeventicon = gohelper.findChild(self.viewGO, "#go_mapui/go_eventicon")
+	self._btntrainevent = gohelper.findChildButtonWithAudio(self.viewGO, "#go_mapui/go_eventicon/btn_trainevent")
+	self._goeventiconTrs = self._goeventicon.transform
+	self._gomapuiTrs = self._gomapui.transform
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function RoomCritterTrainViewDetail:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0._scene = RoomCameraController.instance:getRoomScene()
+function RoomCritterTrainViewDetail:onOpen()
+	self._scene = RoomCameraController.instance:getRoomScene()
 
-	arg_8_0:addEventCb(CritterController.instance, CritterEvent.TrainStartTrainCritterReply, arg_8_0._onTrainStartTrainCritterReply, arg_8_0)
-	arg_8_0:addEventCb(CritterController.instance, CritterEvent.CritterInfoPushUpdate, arg_8_0._onCritterInfoChanged, arg_8_0)
-	arg_8_0:addEventCb(CritterController.instance, CritterEvent.TrainSelectEventOptionReply, arg_8_0._onTrainSelectEventOptionReply, arg_8_0)
+	self:addEventCb(CritterController.instance, CritterEvent.TrainStartTrainCritterReply, self._onTrainStartTrainCritterReply, self)
+	self:addEventCb(CritterController.instance, CritterEvent.CritterInfoPushUpdate, self._onCritterInfoChanged, self)
+	self:addEventCb(CritterController.instance, CritterEvent.TrainSelectEventOptionReply, self._onTrainSelectEventOptionReply, self)
 
-	if arg_8_0.viewContainer then
-		arg_8_0:addEventCb(arg_8_0.viewContainer, CritterEvent.UITrainSelectSlot, arg_8_0._onSelectSlotItem, arg_8_0)
-		arg_8_0:addEventCb(arg_8_0.viewContainer, CritterEvent.UITrainCdTime, arg_8_0._opTranCdTimeUpdate, arg_8_0)
+	if self.viewContainer then
+		self:addEventCb(self.viewContainer, CritterEvent.UITrainSelectSlot, self._onSelectSlotItem, self)
+		self:addEventCb(self.viewContainer, CritterEvent.UITrainCdTime, self._opTranCdTimeUpdate, self)
 	end
 
-	arg_8_0:addEventCb(RoomMapController.instance, RoomEvent.CameraTransformUpdate, arg_8_0._refreshPosition, arg_8_0)
-	arg_8_0.detailItem:setCritterChanageCallback(arg_8_0._critterChangeCallblck, arg_8_0)
+	self:addEventCb(RoomMapController.instance, RoomEvent.CameraTransformUpdate, self._refreshPosition, self)
+	self.detailItem:setCritterChanageCallback(self._critterChangeCallblck, self)
 end
 
-function var_0_0.onClose(arg_9_0)
+function RoomCritterTrainViewDetail:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	arg_10_0.detailItem:onDestroy()
-	TaskDispatcher.cancelTask(arg_10_0._playLevelUp, arg_10_0)
+function RoomCritterTrainViewDetail:onDestroyView()
+	self.detailItem:onDestroy()
+	TaskDispatcher.cancelTask(self._playLevelUp, self)
 
-	arg_10_0._specialEventIds = nil
+	self._specialEventIds = nil
 end
 
-function var_0_0._critterChangeCallblck(arg_11_0)
-	arg_11_0.viewContainer:dispatchEvent(CritterEvent.UIChangeTrainCritter, arg_11_0._slotMO)
+function RoomCritterTrainViewDetail:_critterChangeCallblck()
+	self.viewContainer:dispatchEvent(CritterEvent.UIChangeTrainCritter, self._slotMO)
 end
 
-function var_0_0._onSelectSlotItem(arg_12_0, arg_12_1)
-	arg_12_0._slotMO = arg_12_1
-	arg_12_0._critterMO = arg_12_1.critterMO
-	arg_12_0._critterUid = arg_12_0._critterMO and arg_12_0._critterMO.id
+function RoomCritterTrainViewDetail:_onSelectSlotItem(mo)
+	self._slotMO = mo
+	self._critterMO = mo.critterMO
+	self._critterUid = self._critterMO and self._critterMO.id
 
-	arg_12_0.detailItem:onUpdateMO(arg_12_1.critterMO)
-	arg_12_0:_refreshUI()
+	self.detailItem:onUpdateMO(mo.critterMO)
+	self:_refreshUI()
 end
 
-function var_0_0._opTranCdTimeUpdate(arg_13_0)
-	if not arg_13_0._specialEventIds or #arg_13_0._specialEventIds < 1 then
-		arg_13_0.detailItem:tranCdTimeUpdate()
+function RoomCritterTrainViewDetail:_opTranCdTimeUpdate()
+	if not self._specialEventIds or #self._specialEventIds < 1 then
+		self.detailItem:tranCdTimeUpdate()
 	end
 
-	arg_13_0:_refreshUI()
+	self:_refreshUI()
 end
 
-function var_0_0._refreshUI(arg_14_0)
-	local var_14_0 = arg_14_0:_isHasEventTrigger()
+function RoomCritterTrainViewDetail:_refreshUI()
+	local isHas = self:_isHasEventTrigger()
 
-	if arg_14_0._isLastHasTrigger ~= var_14_0 then
-		arg_14_0._isLastHasTrigger = var_14_0
+	if self._isLastHasTrigger ~= isHas then
+		self._isLastHasTrigger = isHas
 
-		gohelper.setActive(arg_14_0._goeventicon, var_14_0)
-		arg_14_0:_refreshPosition()
+		gohelper.setActive(self._goeventicon, isHas)
+		self:_refreshPosition()
 	end
 end
 
-function var_0_0._onTrainStartTrainCritterReply(arg_15_0, arg_15_1, arg_15_2)
-	arg_15_0.detailItem:refreshUI()
+function RoomCritterTrainViewDetail:_onTrainStartTrainCritterReply(critterUid, heroId)
+	self.detailItem:refreshUI()
 end
 
-function var_0_0._onTrainSelectEventOptionReply(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
-	local var_16_0 = CritterConfig.instance:getCritterTrainEventCfg(arg_16_2)
+function RoomCritterTrainViewDetail:_onTrainSelectEventOptionReply(critterUid, eventId, option)
+	local eventCfg = CritterConfig.instance:getCritterTrainEventCfg(eventId)
 
-	if var_16_0 and var_16_0.type == CritterEnum.EventType.Special then
-		arg_16_0._specialEventIds = arg_16_0._specialEventIds or {}
+	if eventCfg and eventCfg.type == CritterEnum.EventType.Special then
+		self._specialEventIds = self._specialEventIds or {}
 
-		if #arg_16_0._specialEventIds < 1 then
-			TaskDispatcher.runDelay(arg_16_0._playLevelUp, arg_16_0, 0.1)
+		if #self._specialEventIds < 1 then
+			TaskDispatcher.runDelay(self._playLevelUp, self, 0.1)
 		end
 
-		table.insert(arg_16_0._specialEventIds, arg_16_2)
+		table.insert(self._specialEventIds, eventId)
 	end
 end
 
-function var_0_0._onCritterInfoChanged(arg_17_0)
-	arg_17_0._critterMO = CritterModel.instance:getCritterMOByUid(arg_17_0._critterUid)
+function RoomCritterTrainViewDetail:_onCritterInfoChanged()
+	self._critterMO = CritterModel.instance:getCritterMOByUid(self._critterUid)
 
-	arg_17_0.detailItem:onUpdateMO(arg_17_0._critterMO)
+	self.detailItem:onUpdateMO(self._critterMO)
 end
 
-function var_0_0._isHasEventTrigger(arg_18_0)
-	if arg_18_0._critterMO and arg_18_0._critterMO.trainInfo:isHasEventTrigger() then
+function RoomCritterTrainViewDetail:_isHasEventTrigger()
+	if self._critterMO and self._critterMO.trainInfo:isHasEventTrigger() then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0._playLevelUp(arg_19_0)
-	local var_19_0 = arg_19_0._specialEventIds
+function RoomCritterTrainViewDetail:_playLevelUp()
+	local eventIds = self._specialEventIds
 
-	arg_19_0._specialEventIds = nil
+	self._specialEventIds = nil
 
-	local var_19_1 = arg_19_0._critterMO
+	local critterMO = self._critterMO
 
-	if var_19_0 and var_19_1 and var_19_1:isCultivating() then
-		local var_19_2 = {}
-		local var_19_3 = var_19_1.trainInfo.events
+	if eventIds and critterMO and critterMO:isCultivating() then
+		local addAttributeMOs = {}
+		local eventMOList = critterMO.trainInfo.events
 
-		for iter_19_0 = 1, #var_19_3 do
-			local var_19_4 = var_19_3[iter_19_0]
+		for i = 1, #eventMOList do
+			local eventMO = eventMOList[i]
 
-			if tabletool.indexOf(var_19_0, var_19_4.eventId) then
-				tabletool.addValues(var_19_2, var_19_4.addAttributes)
+			if tabletool.indexOf(eventIds, eventMO.eventId) then
+				tabletool.addValues(addAttributeMOs, eventMO.addAttributes)
 			end
 		end
 
 		ViewMgr.instance:openView(ViewName.RoomCritterTrainEventResultView, {
-			critterMO = var_19_1,
-			addAttributeMOs = var_19_2
+			critterMO = critterMO,
+			addAttributeMOs = addAttributeMOs
 		})
 	end
 end
 
-function var_0_0._refreshPosition(arg_20_0)
-	if not arg_20_0._isLastHasTrigger then
+function RoomCritterTrainViewDetail:_refreshPosition()
+	if not self._isLastHasTrigger then
 		return
 	end
 
-	local var_20_0 = arg_20_0:_getCritterEntity()
+	local critterEntity = self:_getCritterEntity()
 
-	if not var_20_0 then
+	if not critterEntity then
 		return
 	end
 
-	local var_20_1 = var_20_0.critterspine:getMountheadGOTrs() or var_20_0.goTrs
+	local trs = critterEntity.critterspine:getMountheadGOTrs() or critterEntity.goTrs
 
-	if not var_20_1 then
+	if not trs then
 		return
 	end
 
-	local var_20_2, var_20_3, var_20_4 = transformhelper.getPos(var_20_1)
-	local var_20_5 = RoomBendingHelper.worldToBendingSimple(Vector3(var_20_2, var_20_3, var_20_4))
-	local var_20_6 = RoomBendingHelper.worldPosToAnchorPos(var_20_5, arg_20_0._gomapuiTrs)
+	local px, py, pz = transformhelper.getPos(trs)
+	local bendingPos = RoomBendingHelper.worldToBendingSimple(Vector3(px, py, pz))
+	local anchorPos = RoomBendingHelper.worldPosToAnchorPos(bendingPos, self._gomapuiTrs)
 
-	if var_20_6 then
-		recthelper.setAnchor(arg_20_0._goeventiconTrs, var_20_6.x, var_20_6.y)
+	if anchorPos then
+		recthelper.setAnchor(self._goeventiconTrs, anchorPos.x, anchorPos.y)
 	end
 end
 
-function var_0_0._getCritterEntity(arg_21_0)
-	if not arg_21_0._scene then
+function RoomCritterTrainViewDetail:_getCritterEntity()
+	if not self._scene then
 		return nil
 	end
 
-	if arg_21_0._scene.cameraFollow:isFollowing() then
-		return arg_21_0._scene.crittermgr:getCritterEntity(arg_21_0._critterUid, SceneTag.RoomCharacter)
+	if self._scene.cameraFollow:isFollowing() then
+		return self._scene.crittermgr:getCritterEntity(self._critterUid, SceneTag.RoomCharacter)
 	end
 
-	return arg_21_0._scene.crittermgr:getTempCritterEntity()
+	return self._scene.crittermgr:getTempCritterEntity()
 end
 
-return var_0_0
+return RoomCritterTrainViewDetail

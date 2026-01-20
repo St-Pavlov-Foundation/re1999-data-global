@@ -1,11 +1,13 @@
-﻿module("modules.logic.weekwalk.view.WeekWalkShallowSettlementViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk/view/WeekWalkShallowSettlementViewContainer.lua
 
-local var_0_0 = class("WeekWalkShallowSettlementViewContainer", BaseViewContainer)
+module("modules.logic.weekwalk.view.WeekWalkShallowSettlementViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local WeekWalkShallowSettlementViewContainer = class("WeekWalkShallowSettlementViewContainer", BaseViewContainer)
+
+function WeekWalkShallowSettlementViewContainer:buildViews()
 	return {
 		WeekWalkShallowSettlementView.New()
 	}
 end
 
-return var_0_0
+return WeekWalkShallowSettlementViewContainer

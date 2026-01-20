@@ -1,375 +1,404 @@
-﻿module("modules.logic.language.LangSettings", package.seeall)
+﻿-- chunkname: @modules/logic/language/LangSettings.lua
 
-local var_0_0 = class("LangSettings", BaseConfig)
+module("modules.logic.language.LangSettings", package.seeall)
 
-var_0_0.zh = 1
-var_0_0.tw = 2
-var_0_0.en = 4
-var_0_0.kr = 8
-var_0_0.jp = 16
-var_0_0.de = 32
-var_0_0.fr = 64
-var_0_0.thai = 128
-var_0_0.shortcutTab = {
-	[var_0_0.zh] = "zh",
-	[var_0_0.tw] = "tw",
-	[var_0_0.en] = "en",
-	[var_0_0.kr] = "kr",
-	[var_0_0.jp] = "jp",
-	[var_0_0.de] = "de",
-	[var_0_0.fr] = "fr",
-	[var_0_0.thai] = "thai"
+local LangSettings = class("LangSettings", BaseConfig)
+
+LangSettings.zh = 1
+LangSettings.tw = 2
+LangSettings.en = 4
+LangSettings.kr = 8
+LangSettings.jp = 16
+LangSettings.de = 32
+LangSettings.fr = 64
+LangSettings.thai = 128
+LangSettings.shortcutTab = {
+	[LangSettings.zh] = "zh",
+	[LangSettings.tw] = "tw",
+	[LangSettings.en] = "en",
+	[LangSettings.kr] = "kr",
+	[LangSettings.jp] = "jp",
+	[LangSettings.de] = "de",
+	[LangSettings.fr] = "fr",
+	[LangSettings.thai] = "thai"
 }
-var_0_0.shortCut2LangIdxTab = {
-	zh = var_0_0.zh,
-	tw = var_0_0.tw,
-	en = var_0_0.en,
-	kr = var_0_0.kr,
-	jp = var_0_0.jp,
-	de = var_0_0.de,
-	fr = var_0_0.fr,
-	thai = var_0_0.thai
+LangSettings.shortCut2LangIdxTab = {
+	zh = LangSettings.zh,
+	tw = LangSettings.tw,
+	en = LangSettings.en,
+	kr = LangSettings.kr,
+	jp = LangSettings.jp,
+	de = LangSettings.de,
+	fr = LangSettings.fr,
+	thai = LangSettings.thai
 }
-var_0_0.aihelpKey = {
-	[var_0_0.zh] = "zh-CN",
-	[var_0_0.tw] = "zh-TW",
-	[var_0_0.en] = "en",
-	[var_0_0.kr] = "ko",
-	[var_0_0.jp] = "ja",
-	[var_0_0.de] = "de",
-	[var_0_0.fr] = "fr",
-	[var_0_0.thai] = "th"
+LangSettings.aihelpKey = {
+	[LangSettings.zh] = "zh-CN",
+	[LangSettings.tw] = "zh-TW",
+	[LangSettings.en] = "en",
+	[LangSettings.kr] = "ko",
+	[LangSettings.jp] = "ja",
+	[LangSettings.de] = "de",
+	[LangSettings.fr] = "fr",
+	[LangSettings.thai] = "th"
 }
-var_0_0._captionsSetting = {
-	[var_0_0.zh] = true,
-	[var_0_0.tw] = true,
-	[var_0_0.en] = false,
-	[var_0_0.kr] = false,
-	[var_0_0.jp] = false
+LangSettings._captionsSetting = {
+	[LangSettings.zh] = true,
+	[LangSettings.tw] = true,
+	[LangSettings.en] = false,
+	[LangSettings.kr] = false,
+	[LangSettings.jp] = false
 }
-var_0_0.pcWindowsTitle = {
-	[var_0_0.zh] = "重返未来：1999",
-	[var_0_0.tw] = "重返未來：1999",
-	[var_0_0.en] = "Reverse: 1999",
-	[var_0_0.kr] = "리버스: 1999",
-	[var_0_0.jp] = "リバース：1999",
-	[var_0_0.de] = "reverse:1999",
-	[var_0_0.fr] = "reverse:1999",
-	[var_0_0.thai] = "reverse:1999"
+LangSettings.pcWindowsTitle = {
+	[LangSettings.zh] = "重返未来：1999",
+	[LangSettings.tw] = "重返未來：1999",
+	[LangSettings.en] = "Reverse: 1999",
+	[LangSettings.kr] = "리버스: 1999",
+	[LangSettings.jp] = "リバース：1999",
+	[LangSettings.de] = "reverse:1999",
+	[LangSettings.fr] = "reverse:1999",
+	[LangSettings.thai] = "reverse:1999"
 }
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._curLang = GameConfig:GetCurLangType()
-	arg_1_0._defaultLang = GameConfig:GetDefaultLangType()
-	arg_1_0._curLangShortcut = var_0_0.shortcutTab[arg_1_0._curLang]
-	arg_1_0._captionsActive = var_0_0._captionsSetting[arg_1_0._curLang] ~= false
-	arg_1_0._supportedLangs = {}
+function LangSettings:ctor()
+	self._curLang = GameConfig:GetCurLangType()
+	self._defaultLang = GameConfig:GetDefaultLangType()
+	self._curLangShortcut = LangSettings.shortcutTab[self._curLang]
+	self._captionsActive = LangSettings._captionsSetting[self._curLang] ~= false
+	self._supportedLangs = {}
 
-	local var_1_0 = GameConfig:GetSupportedLangs()
-	local var_1_1 = var_1_0.Length
+	local cSharpArr = GameConfig:GetSupportedLangs()
+	local length = cSharpArr.Length
 
-	for iter_1_0 = 0, var_1_1 - 1 do
-		arg_1_0._supportedLangs[var_1_0[iter_1_0]] = true
+	for i = 0, length - 1 do
+		self._supportedLangs[cSharpArr[i]] = true
 	end
 
-	local var_1_2 = var_0_0.aihelpKey[arg_1_0._curLang]
+	local aihelpKey = LangSettings.aihelpKey[self._curLang]
 
-	if var_1_2 then
-		SDKMgr.instance:setLanguage(var_1_2)
+	if aihelpKey then
+		SDKMgr.instance:setLanguage(aihelpKey)
 	else
-		logError("aihelpKey miss :" .. arg_1_0._curLang)
+		logError("aihelpKey miss :" .. self._curLang)
 	end
 
-	local var_1_3
+	cSharpArr = nil
 end
 
-function var_0_0.loadLangConfig(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._onLoadedCallback = arg_2_1
-	arg_2_0._onLoadedCallbackObj = arg_2_2
+function LangSettings:loadLangConfig(callback, callbackObj)
+	self._onLoadedCallback = callback
+	self._onLoadedCallbackObj = callbackObj
 
 	if GameResMgr.IsFromEditorDir then
-		local var_2_0 = "configs/language/json_language_" .. arg_2_0._curLangShortcut .. ".json"
+		local configPath = "configs/language/json_language_" .. self._curLangShortcut .. ".json"
 
-		loadNonAbAsset(var_2_0, SLFramework.AssetType.TEXT, arg_2_0._onConfigAbCallback, arg_2_0)
+		loadNonAbAsset(configPath, SLFramework.AssetType.TEXT, self._onConfigAbCallback, self)
 
-		local var_2_1 = "configs/language/json_language_server_" .. arg_2_0._curLangShortcut .. ".json"
+		configPath = "configs/language/json_language_server_" .. self._curLangShortcut .. ".json"
 
-		loadNonAbAsset(var_2_1, SLFramework.AssetType.TEXT, arg_2_0._onServerConfigAbCallback, arg_2_0)
+		loadNonAbAsset(configPath, SLFramework.AssetType.TEXT, self._onServerConfigAbCallback, self)
 	else
-		local var_2_2 = "configs/language/json_language_" .. arg_2_0._curLangShortcut .. ".json.dat"
+		local abPath = "configs/language/json_language_" .. self._curLangShortcut .. ".json.dat"
 
-		loadNonAbAsset(var_2_2, SLFramework.AssetType.DATA, arg_2_0._onConfigAbCallback, arg_2_0)
+		loadNonAbAsset(abPath, SLFramework.AssetType.DATA, self._onConfigAbCallback, self)
 
-		local var_2_3 = "configs/language/json_language_server_" .. arg_2_0._curLangShortcut .. ".json.dat"
+		abPath = "configs/language/json_language_server_" .. self._curLangShortcut .. ".json.dat"
 
-		loadNonAbAsset(var_2_3, SLFramework.AssetType.DATA, arg_2_0._onServerConfigAbCallback, arg_2_0)
+		loadNonAbAsset(abPath, SLFramework.AssetType.DATA, self._onServerConfigAbCallback, self)
 	end
 end
 
-function var_0_0._onServerConfigAbCallback(arg_3_0, arg_3_1)
-	local var_3_0
+function LangSettings:_onServerConfigAbCallback(assetItem)
+	local jsonString
 
 	if GameResMgr.IsFromEditorDir then
-		var_3_0 = arg_3_1.TextAsset
+		jsonString = assetItem.TextAsset
 	else
-		var_3_0 = arg_3_1:GetNonAbTextAsset(true)
+		jsonString = assetItem:GetNonAbTextAsset(true)
 	end
 
-	local var_3_1 = cjson.decode(var_3_0)
-	local var_3_2 = var_3_1[1]
-	local var_3_3 = var_3_1[2]
+	if not GameResMgr.IsFromEditorDir and isDebugBuild and GameConfig.UseDebugLuaFile then
+		local configName = SLFramework.FileHelper.GetFileName(assetItem.ResPath, false)
+		local filePath = UnityEngine.Application.persistentDataPath .. string.format("/lua/%s", configName)
+		local text = SLFramework.FileHelper.ReadText(filePath)
 
-	LangConfig.instance:updateServerLanguage(var_3_3)
-end
+		if not string.nilorempty(text) then
+			logNormal("替换了外部目录的json配置表：" .. configName)
 
-function var_0_0._onConfigAbCallback(arg_4_0, arg_4_1)
-	local var_4_0
-
-	if GameResMgr.IsFromEditorDir then
-		var_4_0 = arg_4_1.TextAsset
-	else
-		var_4_0 = arg_4_1:GetNonAbTextAsset(true)
-	end
-
-	local var_4_1 = cjson.decode(var_4_0)
-	local var_4_2 = var_4_1[1]
-	local var_4_3 = var_4_1[2]
-
-	LangConfig.instance:updateLanguage(var_4_3)
-
-	if arg_4_0._onLoadedCallback then
-		if arg_4_0._onLoadedCallbackObj then
-			arg_4_0._onLoadedCallback(arg_4_0._onLoadedCallbackObj)
-		else
-			arg_4_0._onLoadedCallback()
+			jsonString = text
 		end
 	end
 
-	ZProj.MaterialPropsTMPCtrl.useSubMesh = arg_4_0._curLang == var_0_0.jp
-	arg_4_0._onLoadedCallback = nil
-	arg_4_0._onLoadedCallbackObj = nil
+	local json = cjson.decode(jsonString)
+	local configName = json[1]
+	local configText = json[2]
+
+	LangConfig.instance:updateServerLanguage(configText)
 end
 
-function var_0_0.init(arg_5_0)
-	GameLanguageMgr.instance:setStoryIndexByShortCut(arg_5_0._curLangShortcut)
+function LangSettings:_onConfigAbCallback(assetItem)
+	local jsonString
+
+	if GameResMgr.IsFromEditorDir then
+		jsonString = assetItem.TextAsset
+	else
+		jsonString = assetItem:GetNonAbTextAsset(true)
+	end
+
+	if not GameResMgr.IsFromEditorDir and isDebugBuild and GameConfig.UseDebugLuaFile then
+		local configName = SLFramework.FileHelper.GetFileName(assetItem.ResPath, false)
+		local filePath = UnityEngine.Application.persistentDataPath .. string.format("/lua/%s", configName)
+		local text = SLFramework.FileHelper.ReadText(filePath)
+
+		if not string.nilorempty(text) then
+			logNormal("替换了外部目录的json配置表：" .. configName)
+
+			jsonString = text
+		end
+	end
+
+	local json = cjson.decode(jsonString)
+	local configName = json[1]
+	local configText = json[2]
+
+	LangConfig.instance:updateLanguage(configText)
+
+	if self._onLoadedCallback then
+		if self._onLoadedCallbackObj then
+			self._onLoadedCallback(self._onLoadedCallbackObj)
+		else
+			self._onLoadedCallback()
+		end
+	end
+
+	ZProj.MaterialPropsTMPCtrl.useSubMesh = self._curLang == LangSettings.jp
+	self._onLoadedCallback = nil
+	self._onLoadedCallbackObj = nil
+end
+
+function LangSettings:init()
+	GameLanguageMgr.instance:setStoryIndexByShortCut(self._curLangShortcut)
 
 	if BootNativeUtil.isWindows() then
-		local var_5_0 = PlayerPrefsHelper.getString(PlayerPrefsKey.WindowsTitle, nil)
+		local preTitle = PlayerPrefsHelper.getString(PlayerPrefsKey.WindowsTitle, nil)
 
-		if not string.nilorempty(var_5_0) then
+		if not string.nilorempty(preTitle) then
 			return
 		end
 
-		local var_5_1 = var_0_0.pcWindowsTitle[arg_5_0._curLang]
+		local curTitle = LangSettings.pcWindowsTitle[self._curLang]
 
-		if not var_5_1 then
-			logError("can not get windows title for cur lang = " .. arg_5_0._curLangShortcut)
+		if not curTitle then
+			logError("can not get windows title for cur lang = " .. self._curLangShortcut)
 
 			return
 		end
 
-		ZProj.WindowsHelper.Instance:SetWindowsTitle(var_5_1)
-		PlayerPrefsHelper.setString(PlayerPrefsKey.WindowsTitle, var_5_1)
+		ZProj.WindowsHelper.Instance:SetWindowsTitle(curTitle)
+		PlayerPrefsHelper.setString(PlayerPrefsKey.WindowsTitle, curTitle)
 	end
 end
 
-function var_0_0.getCostumerServiceName(arg_6_0)
+function LangSettings:getCostumerServiceName()
 	if SettingsModel.instance:isZhRegion() then
 		return "深蓝互动"
 	end
 
-	local var_6_0 = var_0_0.pcWindowsTitle[arg_6_0._curLang]
+	local curTitle = LangSettings.pcWindowsTitle[self._curLang]
 
-	if not var_6_0 then
-		logError("can not get windows title for cur lang = " .. arg_6_0._curLangShortcut)
+	if not curTitle then
+		logError("can not get windows title for cur lang = " .. self._curLangShortcut)
 
 		return ""
 	end
 
-	return var_6_0
+	return curTitle
 end
 
-function var_0_0.supportLang(arg_7_0, arg_7_1)
-	return arg_7_0._supportedLangs[arg_7_1] ~= nil
+function LangSettings:supportLang(lang)
+	return self._supportedLangs[lang] ~= nil
 end
 
-function var_0_0.langCaptionsActive(arg_8_0)
-	return arg_8_0._captionsActive
+function LangSettings:langCaptionsActive()
+	return self._captionsActive
 end
 
-function var_0_0.getCurLang(arg_9_0)
-	return arg_9_0._curLang
+function LangSettings:getCurLang()
+	return self._curLang
 end
 
-function var_0_0.getDefaultLang(arg_10_0)
-	return arg_10_0._defaultLang
+function LangSettings:getDefaultLang()
+	return self._defaultLang
 end
 
-function var_0_0.getCurLangShortcut(arg_11_0)
-	return var_0_0.shortcutTab[arg_11_0._curLang]
+function LangSettings:getCurLangShortcut()
+	return LangSettings.shortcutTab[self._curLang]
 end
 
-function var_0_0.getDefaultLangShortcut(arg_12_0)
-	return var_0_0.shortcutTab[arg_12_0._defaultLang]
+function LangSettings:getDefaultLangShortcut()
+	return LangSettings.shortcutTab[self._defaultLang]
 end
 
-function var_0_0.getCurLangKeyByShortCut(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0:getCurLangShortcut()
+function LangSettings:getCurLangKeyByShortCut(ignoreChannel)
+	local curLang = self:getCurLangShortcut()
 
-	if not arg_13_1 and GameChannelConfig.isEfun() then
-		return LanguageEnum.Lang2KeyEFun[var_13_0] or var_13_0
+	if not ignoreChannel and GameChannelConfig.isEfun() then
+		return LanguageEnum.Lang2KeyEFun[curLang] or curLang
 	end
 
-	return LanguageEnum.Lang2KeyGlobal[var_13_0] or var_13_0
+	return LanguageEnum.Lang2KeyGlobal[curLang] or curLang
 end
 
-function var_0_0.SetCurLangType(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	for iter_14_0, iter_14_1 in pairs(var_0_0.shortcutTab) do
-		if iter_14_1 == arg_14_1 then
-			arg_14_0._curLang = iter_14_0
+function LangSettings:SetCurLangType(curLang, callback, callbackObj)
+	for langType, shortcut in pairs(LangSettings.shortcutTab) do
+		if shortcut == curLang then
+			self._curLang = langType
 
 			break
 		end
 	end
 
-	arg_14_0._curLangShortcut = arg_14_1
-	arg_14_0._captionsActive = var_0_0._captionsSetting[arg_14_0._curLang] ~= false
+	self._curLangShortcut = curLang
+	self._captionsActive = LangSettings._captionsSetting[self._curLang] ~= false
 
-	SLFramework.LanguageMgr.Instance:SetCurLangType(arg_14_1)
-	GameLanguageMgr.instance:setStoryIndexByShortCut(arg_14_1)
-	arg_14_0:loadLangConfig(arg_14_2, arg_14_3)
+	SLFramework.LanguageMgr.Instance:SetCurLangType(curLang)
+	GameLanguageMgr.instance:setStoryIndexByShortCut(curLang)
+	self:loadLangConfig(callback, callbackObj)
 end
 
-function var_0_0._lang(arg_15_0, arg_15_1)
-	return LangConfig.instance:getLangTxt(arg_15_0._curLangShortcut, arg_15_1)
+function LangSettings:_lang(id)
+	return LangConfig.instance:getLangTxt(self._curLangShortcut, id)
 end
 
-function var_0_0._serverLang(arg_16_0, arg_16_1)
-	return LangConfig.instance:getServerLangTxt(arg_16_0._curLangShortcut, arg_16_1)
+function LangSettings:_serverLang(id)
+	return LangConfig.instance:getServerLangTxt(self._curLangShortcut, id)
 end
 
-function var_0_0._luaLang(arg_17_0, arg_17_1)
-	return LangConfig.instance:getLangTxtFromeKey(arg_17_0._curLangShortcut, arg_17_1)
+function LangSettings:_luaLang(key)
+	return LangConfig.instance:getLangTxtFromeKey(self._curLangShortcut, key)
 end
 
-var_0_0.empty = ""
+LangSettings.empty = ""
 
-function var_0_0._formatLuaLang(arg_18_0, ...)
-	if ... == nil then
+function LangSettings:_formatLuaLang(...)
+	local args = ...
+
+	if args == nil then
 		logError("LangSettings._formatLuaLang args can not be nil!")
 
-		return var_0_0.empty
+		return LangSettings.empty
 	end
 
-	local var_18_0 = {
+	args = {
 		...
 	}
-	local var_18_1 = var_18_0[1]
 
-	if var_18_1 == nil then
+	local key = args[1]
+
+	if key == nil then
 		logError("LangSettings._formatLuaLang key can not be nil!")
 
-		return var_0_0.empty
+		return LangSettings.empty
 	end
 
-	local var_18_2 = arg_18_0:_luaLang(var_18_1)
+	local moudle = self:_luaLang(key)
 
-	return string.format(var_18_2, unpack(var_18_0, 2))
+	return string.format(moudle, unpack(args, 2))
 end
 
-function var_0_0._langVideoUrl(arg_19_0, arg_19_1)
-	local var_19_0 = video_lang.configDict[arg_19_1]
-	local var_19_1 = GameConfig:GetCurVoiceShortcut()
-	local var_19_2 = GameConfig:GetDefaultVoiceShortcut()
+function LangSettings:_langVideoUrl(videoName)
+	local info = video_lang.configDict[videoName]
+	local curLang = GameConfig:GetCurVoiceShortcut()
+	local defaultLang = GameConfig:GetDefaultVoiceShortcut()
 
-	if var_19_0 then
-		if tabletool.indexOf(var_19_0.supportLang, var_19_1) then
-			local var_19_3 = string.format("%s/%s", var_19_1, arg_19_1)
+	if info then
+		if tabletool.indexOf(info.supportLang, curLang) then
+			local langVideoName = string.format("%s/%s", curLang, videoName)
 
-			return ResUrl.getVideo(var_19_3)
-		elseif tabletool.indexOf(var_19_0.supportLang, var_19_2) then
-			local var_19_4 = string.format("%s/%s", var_19_2, arg_19_1)
+			return ResUrl.getVideo(langVideoName)
+		elseif tabletool.indexOf(info.supportLang, defaultLang) then
+			local langVideoName = string.format("%s/%s", defaultLang, videoName)
 
-			return ResUrl.getVideo(var_19_4)
+			return ResUrl.getVideo(langVideoName)
 		end
 	end
 
-	return ResUrl.getVideo(arg_19_1)
+	return ResUrl.getVideo(videoName)
 end
 
-var_0_0.instance = var_0_0.New()
+LangSettings.instance = LangSettings.New()
 
-function lang(arg_20_0)
-	return var_0_0.instance:_lang(arg_20_0)
+function lang(id)
+	return LangSettings.instance:_lang(id)
 end
 
-function serverLang(arg_21_0)
-	return var_0_0.instance:_serverLang(arg_21_0)
+function serverLang(id)
+	return LangSettings.instance:_serverLang(id)
 end
 
-function luaLang(arg_22_0)
-	return var_0_0.instance:_luaLang(arg_22_0)
+function luaLang(key)
+	return LangSettings.instance:_luaLang(key)
 end
 
 function formatLuaLang(...)
-	return var_0_0.instance:_formatLuaLang(...)
+	return LangSettings.instance:_formatLuaLang(...)
 end
 
-function luaLangUTC(arg_24_0)
-	local var_24_0 = luaLang(arg_24_0)
+function luaLangUTC(key)
+	local str = luaLang(key)
 
-	if var_0_0.instance:isOverseas() then
-		var_24_0 = ServerTime.ReplaceUTCStr(var_24_0)
+	if LangSettings.instance:isOverseas() then
+		str = ServerTime.ReplaceUTCStr(str)
 	else
-		var_24_0 = string.gsub(var_24_0, "%(UTC%+8%)", "")
-		var_24_0 = string.gsub(var_24_0, "（UTC%+8）", "")
+		str = string.gsub(str, "%(UTC%+8%)", "")
+		str = string.gsub(str, "（UTC%+8）", "")
 	end
 
-	return var_24_0
+	return str
 end
 
-function var_0_0.isOverseas(arg_25_0)
+function LangSettings:isOverseas()
 	return true
 end
 
-function var_0_0.isZh(arg_26_0)
-	return arg_26_0:getCurLang() == var_0_0.zh
+function LangSettings:isZh()
+	return self:getCurLang() == LangSettings.zh
 end
 
-function var_0_0.isTw(arg_27_0)
-	return arg_27_0:getCurLang() == var_0_0.tw
+function LangSettings:isTw()
+	return self:getCurLang() == LangSettings.tw
 end
 
-function var_0_0.isEn(arg_28_0)
-	return arg_28_0:getCurLang() == var_0_0.en
+function LangSettings:isEn()
+	return self:getCurLang() == LangSettings.en
 end
 
-function var_0_0.isKr(arg_29_0)
-	return arg_29_0:getCurLang() == var_0_0.kr
+function LangSettings:isKr()
+	return self:getCurLang() == LangSettings.kr
 end
 
-function var_0_0.isJp(arg_30_0)
-	return arg_30_0:getCurLang() == var_0_0.jp
+function LangSettings:isJp()
+	return self:getCurLang() == LangSettings.jp
 end
 
-function var_0_0.isDe(arg_31_0)
-	return arg_31_0:getCurLang() == var_0_0.de
+function LangSettings:isDe()
+	return self:getCurLang() == LangSettings.de
 end
 
-function var_0_0.isFr(arg_32_0)
-	return arg_32_0:getCurLang() == var_0_0.fr
+function LangSettings:isFr()
+	return self:getCurLang() == LangSettings.fr
 end
 
-function var_0_0.isThai(arg_33_0)
-	return arg_33_0:getCurLang() == var_0_0.thai
+function LangSettings:isThai()
+	return self:getCurLang() == LangSettings.thai
 end
 
-function var_0_0.isCn(arg_34_0)
-	return arg_34_0:isZh() or arg_34_0:isTw()
+function LangSettings:isCn()
+	return self:isZh() or self:isTw()
 end
 
-function langVideoUrl(arg_35_0)
-	return var_0_0.instance:_langVideoUrl(arg_35_0)
+function langVideoUrl(videoName)
+	return LangSettings.instance:_langVideoUrl(videoName)
 end
 
 setGlobal("lang", lang)
@@ -379,4 +408,4 @@ setGlobal("formatLuaLang", formatLuaLang)
 setGlobal("langVideoUrl", langVideoUrl)
 setGlobal("luaLangUTC", luaLangUTC)
 
-return var_0_0
+return LangSettings

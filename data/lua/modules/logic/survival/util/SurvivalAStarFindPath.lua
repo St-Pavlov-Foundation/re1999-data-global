@@ -1,88 +1,91 @@
-﻿module("modules.logic.survival.util.SurvivalAStarFindPath", package.seeall)
+﻿-- chunkname: @modules/logic/survival/util/SurvivalAStarFindPath.lua
 
-local var_0_0 = class("SurvivalAStarFindPath")
+module("modules.logic.survival.util.SurvivalAStarFindPath", package.seeall)
 
-function var_0_0.retracePath(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = {}
-	local var_1_1 = arg_1_2
+local SurvivalAStarFindPath = class("SurvivalAStarFindPath")
 
-	while var_1_1 ~= arg_1_1 do
-		table.insert(var_1_0, 1, var_1_1)
+function SurvivalAStarFindPath:retracePath(startNode, endNode)
+	local path = {}
+	local currentNode = endNode
 
-		var_1_1 = var_1_1.parent
+	while currentNode ~= startNode do
+		table.insert(path, 1, currentNode)
+
+		currentNode = currentNode.parent
 	end
 
-	return var_1_0
+	return path
 end
 
-function var_0_0.findPath(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
-	if arg_2_1 == arg_2_2 or not SurvivalHelper.instance:getValueFromDict(arg_2_3, arg_2_1) then
+function SurvivalAStarFindPath:findPath(startNode, targetNode, walkableNodes, isMoveNear)
+	if startNode == targetNode or not SurvivalHelper.instance:getValueFromDict(walkableNodes, startNode) then
 		return nil
 	end
 
-	local var_2_0 = {}
-	local var_2_1 = {}
-	local var_2_2 = arg_2_1
-	local var_2_3 = SurvivalHelper.instance:getDistance(arg_2_1, arg_2_2)
+	local openSet = {}
+	local closedSet = {}
+	local closestNode = startNode
+	local closestDistance = SurvivalHelper.instance:getDistance(startNode, targetNode)
 
-	if SurvivalHelper.instance:getValueFromDict(arg_2_3, arg_2_2) then
-		var_2_2 = arg_2_2
-		var_2_3 = 0
+	if SurvivalHelper.instance:getValueFromDict(walkableNodes, targetNode) then
+		closestNode = targetNode
+		closestDistance = 0
 	end
 
-	SurvivalHelper.instance:addNodeToDict(var_2_0, arg_2_1)
+	SurvivalHelper.instance:addNodeToDict(openSet, startNode)
 
 	while true do
-		local var_2_4
+		local currentNode
 
-		for iter_2_0, iter_2_1 in pairs(var_2_0) do
-			for iter_2_2, iter_2_3 in pairs(iter_2_1) do
-				if not var_2_4 then
-					var_2_4 = iter_2_3
-				elseif iter_2_3:fCost() < var_2_4:fCost() or iter_2_3:fCost() == var_2_4:fCost() and iter_2_3.hCost < var_2_4.hCost then
-					var_2_4 = iter_2_3
+		for _, dict in pairs(openSet) do
+			for _, node in pairs(dict) do
+				if not currentNode then
+					currentNode = node
+				elseif node:fCost() < currentNode:fCost() or node:fCost() == currentNode:fCost() and node.hCost < currentNode.hCost then
+					currentNode = node
 				end
 			end
 		end
 
-		if not var_2_4 then
-			if var_2_2 == arg_2_1 or not arg_2_4 then
+		if not currentNode then
+			if closestNode == startNode or not isMoveNear then
 				return nil
 			else
-				return arg_2_0:retracePath(arg_2_1, var_2_2)
+				return self:retracePath(startNode, closestNode)
 			end
 		end
 
-		SurvivalHelper.instance:removeNodeToDict(var_2_0, var_2_4)
-		SurvivalHelper.instance:addNodeToDict(var_2_1, var_2_4)
+		SurvivalHelper.instance:removeNodeToDict(openSet, currentNode)
+		SurvivalHelper.instance:addNodeToDict(closedSet, currentNode)
 
-		local var_2_5 = SurvivalHelper.instance:getDistance(var_2_4, arg_2_2)
+		local currentDistance = SurvivalHelper.instance:getDistance(currentNode, targetNode)
 
-		if var_2_5 < var_2_3 then
-			var_2_2 = var_2_4
-			var_2_3 = var_2_5
+		if currentDistance < closestDistance then
+			closestNode = currentNode
+			closestDistance = currentDistance
 		end
 
-		if var_2_4 == arg_2_2 then
-			return arg_2_0:retracePath(arg_2_1, var_2_4)
+		if currentNode == targetNode then
+			return self:retracePath(startNode, currentNode)
 		end
 
-		for iter_2_4, iter_2_5 in pairs(SurvivalEnum.DirToPos) do
-			local var_2_6 = var_2_4 + iter_2_5
+		for _, direction in pairs(SurvivalEnum.DirToPos) do
+			local neighborCoords = currentNode + direction
+			local isWalkable = SurvivalHelper.instance:getValueFromDict(walkableNodes, neighborCoords)
 
-			if SurvivalHelper.instance:getValueFromDict(arg_2_3, var_2_6) then
-				local var_2_7 = var_2_4.gCost + 1
-				local var_2_8 = SurvivalHelper.instance:getValueFromDict(var_2_0, var_2_6)
-				local var_2_9 = not var_2_8
-				local var_2_10 = not SurvivalHelper.instance:getValueFromDict(var_2_1, var_2_6)
+			if isWalkable then
+				local newMovementCostToNeighbor = currentNode.gCost + 1
+				local openNode = SurvivalHelper.instance:getValueFromDict(openSet, neighborCoords)
+				local isNotInOpenSet = not openNode
+				local isNotInCloseSet = not SurvivalHelper.instance:getValueFromDict(closedSet, neighborCoords)
 
-				if var_2_8 and var_2_7 < var_2_8.gCost or var_2_9 and var_2_10 then
-					var_2_6.gCost = var_2_7
-					var_2_6.hCost = SurvivalHelper.instance:getDistance(var_2_6, arg_2_2)
-					var_2_6.parent = var_2_4
+				if openNode and newMovementCostToNeighbor < openNode.gCost or isNotInOpenSet and isNotInCloseSet then
+					neighborCoords.gCost = newMovementCostToNeighbor
+					neighborCoords.hCost = SurvivalHelper.instance:getDistance(neighborCoords, targetNode)
+					neighborCoords.parent = currentNode
 
-					if var_2_9 or var_2_7 < var_2_8.gCost then
-						SurvivalHelper.instance:addNodeToDict(var_2_0, var_2_6)
+					if isNotInOpenSet or newMovementCostToNeighbor < openNode.gCost then
+						SurvivalHelper.instance:addNodeToDict(openSet, neighborCoords)
 					end
 				end
 			end
@@ -90,32 +93,32 @@ function var_0_0.findPath(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
 	end
 end
 
-function var_0_0.findNearestPath(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	if not arg_3_1 or not arg_3_2 or #arg_3_2 == 0 then
+function SurvivalAStarFindPath:findNearestPath(startNode, targetNodes, walkableNodes, isMoveNear)
+	if not startNode or not targetNodes or #targetNodes == 0 then
 		return nil
 	end
 
-	local var_3_0
-	local var_3_1 = math.huge
+	local nearestPath
+	local minDistance = math.huge
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_2) do
-		local var_3_2 = arg_3_0:findPath(arg_3_1, iter_3_1, arg_3_3, arg_3_4)
+	for _, targetNode in ipairs(targetNodes) do
+		local path = self:findPath(startNode, targetNode, walkableNodes, isMoveNear)
 
-		if var_3_2 then
-			local var_3_3 = SurvivalHelper.instance:getDistance(arg_3_1, iter_3_1)
+		if path then
+			local distance = SurvivalHelper.instance:getDistance(startNode, targetNode)
 
-			if var_3_3 < var_3_1 then
-				var_3_1 = var_3_3
-				var_3_0 = var_3_2
+			if distance < minDistance then
+				minDistance = distance
+				nearestPath = path
 			end
 		else
 			return nil
 		end
 	end
 
-	return var_3_0
+	return nearestPath
 end
 
-var_0_0.instance = var_0_0.New()
+SurvivalAStarFindPath.instance = SurvivalAStarFindPath.New()
 
-return var_0_0
+return SurvivalAStarFindPath

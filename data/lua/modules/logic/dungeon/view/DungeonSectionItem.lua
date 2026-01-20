@@ -1,265 +1,270 @@
-﻿module("modules.logic.dungeon.view.DungeonSectionItem", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/DungeonSectionItem.lua
 
-local var_0_0 = class("DungeonSectionItem", ListScrollCellExtend)
+module("modules.logic.dungeon.view.DungeonSectionItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagechapterIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "anim/#simage_chapterIcon")
-	arg_1_0._gotip = gohelper.findChild(arg_1_0.viewGO, "anim/#go_tip")
-	arg_1_0._btntip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "anim/#go_tip/#btn_tip")
-	arg_1_0._btnplay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "anim/#btn_play")
-	arg_1_0._goplayFinished = gohelper.findChild(arg_1_0.viewGO, "anim/#btn_play/played")
-	arg_1_0._goplayNotFinished = gohelper.findChild(arg_1_0.viewGO, "anim/#btn_play/unplay")
-	arg_1_0._goarrow = gohelper.findChild(arg_1_0.viewGO, "anim/#go_arrow")
-	arg_1_0._golight = gohelper.findChild(arg_1_0.viewGO, "anim/light")
-	arg_1_0._txttipnameen = gohelper.findChildText(arg_1_0.viewGO, "anim/#go_tip/#txt_tipname_en")
-	arg_1_0._txttipname = gohelper.findChildText(arg_1_0.viewGO, "anim/#go_tip/#txt_tipname")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "anim/#txt_name")
-	arg_1_0._txtnameen = gohelper.findChildText(arg_1_0.viewGO, "anim/#txt_name_en")
-	arg_1_0._btncommandstation = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "anim/#btn_commandstation")
-	arg_1_0._gostorytrace = gohelper.findChild(arg_1_0.viewGO, "anim/#go_trace")
+local DungeonSectionItem = class("DungeonSectionItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function DungeonSectionItem:onInitView()
+	self._simagechapterIcon = gohelper.findChildSingleImage(self.viewGO, "anim/#simage_chapterIcon")
+	self._gotip = gohelper.findChild(self.viewGO, "anim/#go_tip")
+	self._btntip = gohelper.findChildButtonWithAudio(self.viewGO, "anim/#go_tip/#btn_tip")
+	self._btnplay = gohelper.findChildButtonWithAudio(self.viewGO, "anim/#btn_play")
+	self._goplayFinished = gohelper.findChild(self.viewGO, "anim/#btn_play/played")
+	self._goplayNotFinished = gohelper.findChild(self.viewGO, "anim/#btn_play/unplay")
+	self._goarrow = gohelper.findChild(self.viewGO, "anim/#go_arrow")
+	self._golight = gohelper.findChild(self.viewGO, "anim/light")
+	self._txttipnameen = gohelper.findChildText(self.viewGO, "anim/#go_tip/#txt_tipname_en")
+	self._txttipname = gohelper.findChildText(self.viewGO, "anim/#go_tip/#txt_tipname")
+	self._txtname = gohelper.findChildText(self.viewGO, "anim/#txt_name")
+	self._txtnameen = gohelper.findChildText(self.viewGO, "anim/#txt_name_en")
+	self._btncommandstation = gohelper.findChildButtonWithAudio(self.viewGO, "anim/#btn_commandstation")
+	self._gostorytrace = gohelper.findChild(self.viewGO, "anim/#go_trace")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btntip:AddClickListener(arg_2_0._btntipOnClick, arg_2_0)
-	arg_2_0._btnplay:AddClickListener(arg_2_0._btnplayOnClick, arg_2_0)
-	arg_2_0._btncommandstation:AddClickListener(arg_2_0._btncommandstationOnClick, arg_2_0)
-	arg_2_0:addEventCb(CharacterRecommedController.instance, CharacterRecommedEvent.OnRefreshTraced, arg_2_0._refreshTraced, arg_2_0)
+function DungeonSectionItem:addEvents()
+	self._btntip:AddClickListener(self._btntipOnClick, self)
+	self._btnplay:AddClickListener(self._btnplayOnClick, self)
+	self._btncommandstation:AddClickListener(self._btncommandstationOnClick, self)
+	self:addEventCb(CharacterRecommedController.instance, CharacterRecommedEvent.OnRefreshTraced, self._refreshTraced, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btntip:RemoveClickListener()
-	arg_3_0._btnplay:RemoveClickListener()
-	arg_3_0._btncommandstation:RemoveClickListener()
-	arg_3_0:removeEventCb(CharacterRecommedController.instance, CharacterRecommedEvent.OnRefreshTraced, arg_3_0._refreshTraced, arg_3_0)
+function DungeonSectionItem:removeEvents()
+	self._btntip:RemoveClickListener()
+	self._btnplay:RemoveClickListener()
+	self._btncommandstation:RemoveClickListener()
+	self:removeEventCb(CharacterRecommedController.instance, CharacterRecommedEvent.OnRefreshTraced, self._refreshTraced, self)
 end
 
-function var_0_0._btncommandstationOnClick(arg_4_0)
+function DungeonSectionItem:_btncommandstationOnClick()
 	CommandStationController.instance:openCommandStationEnterView({
 		fromDungeonSectionItem = true
 	})
 end
 
-function var_0_0.setTipVisible(arg_5_0, arg_5_1)
-	arg_5_0._showTip = arg_5_1
+function DungeonSectionItem:setTipVisible(visible)
+	self._showTip = visible
 
-	gohelper.setActive(arg_5_0._gotip, arg_5_1)
+	gohelper.setActive(self._gotip, visible)
 end
 
-function var_0_0._btnplayOnClick(arg_6_0)
-	StoryController.instance:playStory(arg_6_0._mo.storyId, {
+function DungeonSectionItem:_btnplayOnClick()
+	StoryController.instance:playStory(self._mo.storyId, {
 		mark = true,
 		isVersionActivityPV = true
-	}, arg_6_0._updatePreviouslyOnStatus, arg_6_0)
+	}, self._updatePreviouslyOnStatus, self)
 end
 
-function var_0_0.externalClickTip(arg_7_0)
-	arg_7_0:_btntipOnClick()
+function DungeonSectionItem:externalClickTip()
+	self:_btntipOnClick()
 end
 
-function var_0_0._btntipOnClick(arg_8_0)
+function DungeonSectionItem:_btntipOnClick()
 	AudioMgr.instance:trigger(AudioEnum2_8.MainStory.play_ui_player_interface_close)
-	DungeonMainStoryModel.instance:setSectionSelected(not arg_8_0._isSelected and arg_8_0._mo.sectionId or nil, true)
+	DungeonMainStoryModel.instance:setSectionSelected(not self._isSelected and self._mo.sectionId or nil, true)
 	DungeonController.instance:dispatchEvent(DungeonEvent.SelectMainStorySection)
 end
 
-function var_0_0._btncategoryOnClick(arg_9_0)
-	if arg_9_0._isSelected then
+function DungeonSectionItem:_btncategoryOnClick()
+	if self._isSelected then
 		AudioMgr.instance:trigger(AudioEnum2_8.MainStory.play_ui_player_interface_close)
 	else
 		AudioMgr.instance:trigger(AudioEnum2_8.MainStory.play_ui_player_interface_open)
 	end
 
-	DungeonMainStoryModel.instance:setSectionSelected(not arg_9_0._isSelected and arg_9_0._mo.sectionId or nil, true)
+	DungeonMainStoryModel.instance:setSectionSelected(not self._isSelected and self._mo.sectionId or nil, true)
 	DungeonController.instance:dispatchEvent(DungeonEvent.SelectMainStorySection)
 end
 
-function var_0_0._editableInitView(arg_10_0)
-	gohelper.addUIClickAudio(arg_10_0._btntip.gameObject, 0)
+function DungeonSectionItem:_editableInitView()
+	gohelper.addUIClickAudio(self._btntip.gameObject, 0)
 
-	arg_10_0._click = SLFramework.UGUI.UIClickListener.Get(arg_10_0.viewGO)
+	self._click = SLFramework.UGUI.UIClickListener.Get(self.viewGO)
 
-	local var_10_0 = gohelper.findChild(arg_10_0.viewGO, "anim")
+	local animGo = gohelper.findChild(self.viewGO, "anim")
 
-	arg_10_0._anim = SLFramework.AnimatorPlayer.Get(var_10_0)
-	arg_10_0._simagechapterIcon0 = gohelper.findChildSingleImage(arg_10_0.viewGO, "anim/#simage_chapterIcon/font")
-	arg_10_0._simagebg = gohelper.findChildSingleImage(arg_10_0.viewGO, "anim/#simage_chapterIcon/bg")
-	arg_10_0._simagelight = gohelper.findChildSingleImage(arg_10_0.viewGO, "anim/#simage_chapterIcon/#simage_light")
+	self._anim = SLFramework.AnimatorPlayer.Get(animGo)
+	self._simagechapterIcon0 = gohelper.findChildSingleImage(self.viewGO, "anim/#simage_chapterIcon/font")
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "anim/#simage_chapterIcon/bg")
+	self._simagelight = gohelper.findChildSingleImage(self.viewGO, "anim/#simage_chapterIcon/#simage_light")
 
-	gohelper.setActive(arg_10_0._btnplay, false)
-	gohelper.setActive(arg_10_0._btncommandstation, false)
+	gohelper.setActive(self._btnplay, false)
+	gohelper.setActive(self._btncommandstation, false)
 end
 
-function var_0_0.playOpenAnim(arg_11_0)
-	if arg_11_0._hasPlayOpenAnim then
+function DungeonSectionItem:playOpenAnim()
+	if self._hasPlayOpenAnim then
 		return
 	end
 
-	arg_11_0._hasPlayOpenAnim = true
+	self._hasPlayOpenAnim = true
 
-	arg_11_0:playAnimName("open")
+	self:playAnimName("open")
 end
 
-function var_0_0.playAnimName(arg_12_0, arg_12_1)
-	arg_12_0._anim:Play(arg_12_1, arg_12_0._animDone, arg_12_0)
+function DungeonSectionItem:playAnimName(name)
+	self._anim:Play(name, self._animDone, self)
 end
 
-function var_0_0._animDone(arg_13_0)
+function DungeonSectionItem:_animDone()
 	return
 end
 
-function var_0_0._editableAddEvents(arg_14_0)
-	arg_14_0._click:AddClickListener(arg_14_0._btncategoryOnClick, arg_14_0)
-	StoryController.instance:registerCallback(StoryEvent.Start, arg_14_0._onStart, arg_14_0)
-	StoryController.instance:registerCallback(StoryEvent.Finish, arg_14_0._onFinish, arg_14_0)
-	OpenController.instance:registerCallback(OpenEvent.NewFuncUnlock, arg_14_0._newFuncUnlock, arg_14_0)
+function DungeonSectionItem:_editableAddEvents()
+	self._click:AddClickListener(self._btncategoryOnClick, self)
+	StoryController.instance:registerCallback(StoryEvent.Start, self._onStart, self)
+	StoryController.instance:registerCallback(StoryEvent.Finish, self._onFinish, self)
+	OpenController.instance:registerCallback(OpenEvent.NewFuncUnlock, self._newFuncUnlock, self)
 end
 
-function var_0_0._editableRemoveEvents(arg_15_0)
-	arg_15_0._click:RemoveClickListener()
-	StoryController.instance:unregisterCallback(StoryEvent.Start, arg_15_0._onStart, arg_15_0)
-	StoryController.instance:unregisterCallback(StoryEvent.Finish, arg_15_0._onFinish, arg_15_0)
-	OpenController.instance:unregisterCallback(OpenEvent.NewFuncUnlock, arg_15_0._newFuncUnlock, arg_15_0)
+function DungeonSectionItem:_editableRemoveEvents()
+	self._click:RemoveClickListener()
+	StoryController.instance:unregisterCallback(StoryEvent.Start, self._onStart, self)
+	StoryController.instance:unregisterCallback(StoryEvent.Finish, self._onFinish, self)
+	OpenController.instance:unregisterCallback(OpenEvent.NewFuncUnlock, self._newFuncUnlock, self)
 end
 
-function var_0_0._onStart(arg_16_0, arg_16_1)
+function DungeonSectionItem:_onStart(storyId)
 	if ViewMgr.instance:isOpen(ViewName.DungeonMapView) then
-		arg_16_0._simagechapterIcon0:UnLoadImage()
-		arg_16_0._simagebg:UnLoadImage()
-		arg_16_0._simagelight:UnLoadImage()
+		self._simagechapterIcon0:UnLoadImage()
+		self._simagebg:UnLoadImage()
+		self._simagelight:UnLoadImage()
 	end
 end
 
-function var_0_0._onFinish(arg_17_0, arg_17_1)
+function DungeonSectionItem:_onFinish(storyId)
 	if ViewMgr.instance:isOpen(ViewName.DungeonMapView) then
-		arg_17_0:_loadImgs()
+		self:_loadImgs()
 	end
 end
 
-function var_0_0._newFuncUnlock(arg_18_0)
-	arg_18_0:_updateCommandStationStatus()
+function DungeonSectionItem:_newFuncUnlock()
+	self:_updateCommandStationStatus()
 end
 
-function var_0_0._loadImgs(arg_19_0)
-	arg_19_0._simagechapterIcon0:LoadImage(arg_19_0._mo.resPage)
-	arg_19_0._simagebg:LoadImage(string.format("singlebg/dungeon/pic_section_backbg_%s.png", arg_19_0._mo.sectionId))
-	arg_19_0._simagelight:LoadImage(string.format("singlebg/dungeon/pic_section_light_%s.png", arg_19_0._mo.sectionId))
+function DungeonSectionItem:_loadImgs()
+	self._simagechapterIcon0:LoadImage(self._mo.resPage)
+	self._simagebg:LoadImage(string.format("singlebg/dungeon/pic_section_backbg_%s.png", self._mo.sectionId))
+	self._simagelight:LoadImage(string.format("singlebg/dungeon/pic_section_light_%s.png", self._mo.sectionId))
 end
 
-function var_0_0.onUpdateMO(arg_20_0, arg_20_1)
-	arg_20_0._mo = arg_20_1
-	arg_20_0._isSelected = DungeonMainStoryModel.instance:sectionIsSelected(arg_20_0._mo.sectionId)
-	arg_20_0._txtname.text = arg_20_0._mo.name
-	arg_20_0._txttipname.text = arg_20_0._mo.name
-	arg_20_0._txtnameen.text = arg_20_0._mo.nameEn
-	arg_20_0._txttipnameen.text = arg_20_0._mo.nameEn
+function DungeonSectionItem:onUpdateMO(mo)
+	self._mo = mo
+	self._isSelected = DungeonMainStoryModel.instance:sectionIsSelected(self._mo.sectionId)
+	self._txtname.text = self._mo.name
+	self._txttipname.text = self._mo.name
+	self._txtnameen.text = self._mo.nameEn
+	self._txttipnameen.text = self._mo.nameEn
 
-	gohelper.setActive(arg_20_0._txtname, not arg_20_0._isSelected)
+	gohelper.setActive(self._txtname, not self._isSelected)
 
 	if LangSettings.instance:isCn() then
-		gohelper.setActive(arg_20_0._txtnameen, not arg_20_0._isSelected)
+		gohelper.setActive(self._txtnameen, not self._isSelected)
 	else
-		gohelper.setActive(arg_20_0._txtnameen, false)
+		gohelper.setActive(self._txtnameen, false)
 	end
 
-	arg_20_0._showTip = arg_20_0._isSelected
+	self._showTip = self._isSelected
 
-	gohelper.setActive(arg_20_0._gotip, false)
+	gohelper.setActive(self._gotip, false)
 
-	if not arg_20_0._isSetIcon then
-		arg_20_0._isSetIcon = true
+	if not self._isSetIcon then
+		self._isSetIcon = true
 
-		arg_20_0:_loadImgs()
+		self:_loadImgs()
 	end
 
-	if arg_20_0._isSelected then
-		arg_20_0:_calcTipLineWidth()
+	if self._isSelected then
+		self:_calcTipLineWidth()
 	end
 
-	arg_20_0:_updatePreviouslyOnStatus()
-	arg_20_0:_updateCommandStationStatus()
-	gohelper.setActive(arg_20_0._goarrow, arg_20_0._isSelected)
-	gohelper.setActive(arg_20_0._simagelight, not arg_20_0._isSelected)
-	TaskDispatcher.cancelTask(arg_20_0._delayShowTip, arg_20_0)
+	self:_updatePreviouslyOnStatus()
+	self:_updateCommandStationStatus()
+	gohelper.setActive(self._goarrow, self._isSelected)
+	gohelper.setActive(self._simagelight, not self._isSelected)
+	TaskDispatcher.cancelTask(self._delayShowTip, self)
 
-	if arg_20_0._showTip then
-		TaskDispatcher.runDelay(arg_20_0._delayShowTip, arg_20_0, 0.1)
+	if self._showTip then
+		TaskDispatcher.runDelay(self._delayShowTip, self, 0.1)
 	end
 
-	arg_20_0:_initLight()
-	arg_20_0:_refreshTraced()
+	self:_initLight()
+	self:_refreshTraced()
 end
 
-function var_0_0._initLight(arg_21_0)
-	local var_21_0 = arg_21_0._golight.transform
-	local var_21_1 = var_21_0.childCount
+function DungeonSectionItem:_initLight()
+	local transform = self._golight.transform
+	local itemCount = transform.childCount
 
-	for iter_21_0 = 1, var_21_1 do
-		local var_21_2 = var_21_0:GetChild(iter_21_0 - 1)
+	for i = 1, itemCount do
+		local child = transform:GetChild(i - 1)
 
-		gohelper.setActive(var_21_2.gameObject, iter_21_0 == arg_21_0._mo.sectionId)
+		gohelper.setActive(child.gameObject, i == self._mo.sectionId)
 	end
 end
 
-function var_0_0._delayShowTip(arg_22_0)
-	arg_22_0:setTipVisible(arg_22_0._showTip)
+function DungeonSectionItem:_delayShowTip()
+	self:setTipVisible(self._showTip)
 end
 
-function var_0_0._updatePreviouslyOnStatus(arg_23_0)
-	local var_23_0 = arg_23_0._mo.storyId ~= 0 and DungeonModel.instance:chapterIsPass(DungeonEnum.ChapterId.Main1_1)
+function DungeonSectionItem:_updatePreviouslyOnStatus()
+	local show = self._mo.storyId ~= 0 and DungeonModel.instance:chapterIsPass(DungeonEnum.ChapterId.Main1_1)
 
-	gohelper.setActive(arg_23_0._btnplay, var_23_0)
+	gohelper.setActive(self._btnplay, show)
 
-	if not var_23_0 then
+	if not show then
 		return
 	end
 
-	local var_23_1 = StoryModel.instance:isStoryFinished(arg_23_0._mo.storyId)
+	local isFinished = StoryModel.instance:isStoryFinished(self._mo.storyId)
 
-	gohelper.setActive(arg_23_0._goplayNotFinished, not var_23_1)
-	gohelper.setActive(arg_23_0._goplayFinished, var_23_1)
+	gohelper.setActive(self._goplayNotFinished, not isFinished)
+	gohelper.setActive(self._goplayFinished, isFinished)
 end
 
-function var_0_0._updateCommandStationStatus(arg_24_0)
-	local var_24_0 = arg_24_0._mo.sectionId == 3 and OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.CommandStation)
+function DungeonSectionItem:_updateCommandStationStatus()
+	local showCommandStation = self._mo.sectionId == 3 and OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.CommandStation)
 
-	gohelper.setActive(arg_24_0._btncommandstation, var_24_0)
+	gohelper.setActive(self._btncommandstation, showCommandStation)
 end
 
-function var_0_0._addChapterIcon(arg_25_0)
-	if arg_25_0._hasAddChapterIcon then
+function DungeonSectionItem:_addChapterIcon()
+	if self._hasAddChapterIcon then
 		return
 	end
 
-	arg_25_0._hasAddChapterIcon = true
-	arg_25_0._simagechapterIcon1 = gohelper.findChildSingleImage(arg_25_0.viewGO, "anim/#simage_chapterIcon/1")
-	arg_25_0._simagechapterIcon2 = gohelper.findChildSingleImage(arg_25_0.viewGO, "anim/#simage_chapterIcon/2")
-	arg_25_0._simagechapterIcon3 = gohelper.findChildSingleImage(arg_25_0.viewGO, "anim/#simage_chapterIcon/3")
+	self._hasAddChapterIcon = true
+	self._simagechapterIcon1 = gohelper.findChildSingleImage(self.viewGO, "anim/#simage_chapterIcon/1")
+	self._simagechapterIcon2 = gohelper.findChildSingleImage(self.viewGO, "anim/#simage_chapterIcon/2")
+	self._simagechapterIcon3 = gohelper.findChildSingleImage(self.viewGO, "anim/#simage_chapterIcon/3")
 
-	local var_25_0 = DungeonMainStoryModel.instance:getChapterList(arg_25_0._mo.sectionId)
-	local var_25_1 = 1
+	local chapterList = DungeonMainStoryModel.instance:getChapterList(self._mo.sectionId)
+	local index = 1
 
-	for iter_25_0 = #var_25_0, 1, -1 do
-		local var_25_2 = var_25_0[iter_25_0]
+	for i = #chapterList, 1, -1 do
+		local chapterConfig = chapterList[i]
+		local isSpecialMainPlot = DungeonModel.instance:isSpecialMainPlot(chapterConfig.id)
 
-		if not DungeonModel.instance:isSpecialMainPlot(var_25_2.id) then
-			local var_25_3 = arg_25_0["_simagechapterIcon" .. var_25_1]
+		if not isSpecialMainPlot then
+			local icon = self["_simagechapterIcon" .. index]
 
-			if var_25_3 then
-				var_25_3:LoadImage(ResUrl.getDungeonIcon(var_25_2.chapterpic))
+			if icon then
+				icon:LoadImage(ResUrl.getDungeonIcon(chapterConfig.chapterpic))
 
-				var_25_1 = var_25_1 + 1
+				index = index + 1
 			else
 				break
 			end
 		end
 	end
 
-	for iter_25_1 = var_25_1, 3 do
-		if arg_25_0["_simagechapterIcon" .. var_25_1] then
+	for i = index, 3 do
+		local icon = self["_simagechapterIcon" .. index]
+
+		if icon then
 			-- block empty
 		else
 			break
@@ -267,111 +272,117 @@ function var_0_0._addChapterIcon(arg_25_0)
 	end
 end
 
-function var_0_0._calcTipLineWidth(arg_26_0)
-	local var_26_0 = arg_26_0._mo.sectionId
-	local var_26_1 = DungeonMainStoryModel.instance:getChapterList(var_26_0)
-	local var_26_2 = DungeonMainStoryEnum.ChapterWidth.Section + DungeonMainStoryEnum.ChapterStartPosX + DungeonMainStoryEnum.TipLineWidthOffsetX
+function DungeonSectionItem:_calcTipLineWidth()
+	local sectionId = self._mo.sectionId
+	local chapterList = DungeonMainStoryModel.instance:getChapterList(sectionId)
+	local width = DungeonMainStoryEnum.ChapterWidth.Section + DungeonMainStoryEnum.ChapterStartPosX + DungeonMainStoryEnum.TipLineWidthOffsetX
 
-	for iter_26_0, iter_26_1 in ipairs(var_26_1) do
-		var_26_2 = var_26_2 + (DungeonModel.instance:isSpecialMainPlot(iter_26_1.id) and DungeonMainStoryEnum.ChapterWidth.Special or DungeonMainStoryEnum.ChapterWidth.Normal)
+	for i, v in ipairs(chapterList) do
+		local isSpecialMainPlot = DungeonModel.instance:isSpecialMainPlot(v.id)
+
+		width = width + (isSpecialMainPlot and DungeonMainStoryEnum.ChapterWidth.Special or DungeonMainStoryEnum.ChapterWidth.Normal)
 	end
 
-	recthelper.setWidth(arg_26_0._btntip.transform, var_26_2)
+	recthelper.setWidth(self._btntip.transform, width)
 
-	arg_26_0._lineWidth = var_26_2
+	self._lineWidth = width
 end
 
-function var_0_0.getLineWidth(arg_27_0)
-	return arg_27_0._lineWidth
+function DungeonSectionItem:getLineWidth()
+	return self._lineWidth
 end
 
-function var_0_0.getSectionId(arg_28_0)
-	return arg_28_0._mo.sectionId
+function DungeonSectionItem:getSectionId()
+	return self._mo.sectionId
 end
 
-function var_0_0.getSectionName(arg_29_0)
-	return arg_29_0._mo.name
+function DungeonSectionItem:getSectionName()
+	return self._mo.name
 end
 
-function var_0_0.getSectionNameEn(arg_30_0)
-	return arg_30_0._mo.nameEn
+function DungeonSectionItem:getSectionNameEn()
+	return self._mo.nameEn
 end
 
-function var_0_0.setPosX(arg_31_0, arg_31_1)
-	arg_31_0._posX = arg_31_1
+function DungeonSectionItem:setPosX(posX)
+	self._posX = posX
 end
 
-function var_0_0.getPosX(arg_32_0)
-	return arg_32_0._posX
+function DungeonSectionItem:getPosX()
+	return self._posX
 end
 
-function var_0_0.setUnFoldPosX(arg_33_0, arg_33_1)
-	arg_33_0._unfoldPosX = arg_33_1
+function DungeonSectionItem:setUnFoldPosX(posX)
+	self._unfoldPosX = posX
 end
 
-function var_0_0.getUnFoldPosX(arg_34_0)
-	return arg_34_0._unfoldPosX
+function DungeonSectionItem:getUnFoldPosX()
+	return self._unfoldPosX
 end
 
-function var_0_0.moveToUnFoldPosX(arg_35_0)
-	arg_35_0:_clearTween()
+function DungeonSectionItem:moveToUnFoldPosX()
+	self:_clearTween()
 
-	if recthelper.getAnchorX(arg_35_0.viewGO.transform.parent) ~= arg_35_0._unfoldPosX then
-		arg_35_0._tweenPosX = ZProj.TweenHelper.DOAnchorPosX(arg_35_0.viewGO.transform.parent, arg_35_0._unfoldPosX, DungeonMainStoryEnum.SectionAnimTime)
-	end
-end
+	local posX = recthelper.getAnchorX(self.viewGO.transform.parent)
 
-function var_0_0.moveToPosX(arg_36_0)
-	arg_36_0:_clearTween()
-
-	if recthelper.getAnchorX(arg_36_0.viewGO.transform.parent) ~= arg_36_0._posX then
-		arg_36_0._tweenPosX = ZProj.TweenHelper.DOAnchorPosX(arg_36_0.viewGO.transform.parent, arg_36_0._posX, DungeonMainStoryEnum.SectionAnimTime)
+	if posX ~= self._unfoldPosX then
+		self._tweenPosX = ZProj.TweenHelper.DOAnchorPosX(self.viewGO.transform.parent, self._unfoldPosX, DungeonMainStoryEnum.SectionAnimTime)
 	end
 end
 
-function var_0_0._clearTween(arg_37_0)
-	if arg_37_0._tweenPosX then
-		ZProj.TweenHelper.KillById(arg_37_0._tweenPosX)
+function DungeonSectionItem:moveToPosX()
+	self:_clearTween()
 
-		arg_37_0._tweenPosX = nil
+	local posX = recthelper.getAnchorX(self.viewGO.transform.parent)
+
+	if posX ~= self._posX then
+		self._tweenPosX = ZProj.TweenHelper.DOAnchorPosX(self.viewGO.transform.parent, self._posX, DungeonMainStoryEnum.SectionAnimTime)
 	end
 end
 
-function var_0_0.onSelect(arg_38_0, arg_38_1)
+function DungeonSectionItem:_clearTween()
+	if self._tweenPosX then
+		ZProj.TweenHelper.KillById(self._tweenPosX)
+
+		self._tweenPosX = nil
+	end
+end
+
+function DungeonSectionItem:onSelect(isSelect)
 	return
 end
 
-function var_0_0.onDestroyView(arg_39_0)
-	arg_39_0:_clearTween()
-	TaskDispatcher.cancelTask(arg_39_0._delayShowTip, arg_39_0)
+function DungeonSectionItem:onDestroyView()
+	self:_clearTween()
+	TaskDispatcher.cancelTask(self._delayShowTip, self)
 end
 
-function var_0_0._refreshTraced(arg_40_0)
-	arg_40_0:_refreshTracedIcon()
+function DungeonSectionItem:_refreshTraced()
+	self:_refreshTracedIcon()
 end
 
-function var_0_0._refreshTracedIcon(arg_41_0)
-	if not arg_41_0._mo then
+function DungeonSectionItem:_refreshTracedIcon()
+	if not self._mo then
 		return
 	end
 
-	local var_41_0 = CharacterRecommedModel.instance:isTradeSection(arg_41_0._mo.sectionId)
+	local isTrade = CharacterRecommedModel.instance:isTradeSection(self._mo.sectionId)
 
-	if var_41_0 then
-		local var_41_1 = CharacterRecommedController.instance:getTradeIcon()
+	if isTrade then
+		local tradeIconPrefab = CharacterRecommedController.instance:getTradeIcon()
 
-		if not var_41_1 then
+		if not tradeIconPrefab then
 			return
 		end
 
-		if not arg_41_0._tracedIcon then
-			arg_41_0._tracedIcon = gohelper.clone(var_41_1, arg_41_0._gostorytrace)
+		if not self._tracedIcon then
+			self._tracedIcon = gohelper.clone(tradeIconPrefab, self._gostorytrace)
 		end
 	end
 
-	if arg_41_0._tracedIcon then
-		gohelper.setActive(arg_41_0._tracedIcon, var_41_0)
+	if self._tracedIcon then
+		gohelper.setActive(self._tracedIcon, isTrade)
 	end
 end
 
-return var_0_0
+return DungeonSectionItem

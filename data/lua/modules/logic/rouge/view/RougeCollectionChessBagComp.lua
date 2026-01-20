@@ -1,396 +1,401 @@
-﻿module("modules.logic.rouge.view.RougeCollectionChessBagComp", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeCollectionChessBagComp.lua
 
-local var_0_0 = class("RougeCollectionChessBagComp", BaseView)
+module("modules.logic.rouge.view.RougeCollectionChessBagComp", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._golistbag = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_listbag")
-	arg_1_0._golistbagitem = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_listbag/#go_listbagitem")
-	arg_1_0._btnnext = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_pagearea/#btn_next")
-	arg_1_0._btnlast = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_pagearea/#btn_last")
-	arg_1_0._txtcurpage = gohelper.findChildText(arg_1_0.viewGO, "#go_pagearea/#txt_curpage")
-	arg_1_0._gosizebag = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_sizebag")
-	arg_1_0._gosizeitem = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_sizebag/#go_sizecollections/#go_sizeitem")
-	arg_1_0._btnlayout = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_layout")
-	arg_1_0._btnfilter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_filter")
-	arg_1_0._gosizecellcontainer = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_sizebag/#go_sizecellcontainer")
-	arg_1_0._gosizecell = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_sizebag/#go_sizecellcontainer/#go_sizecell")
-	arg_1_0._gosizecollections = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_sizebag/#go_sizecellcontainer/#go_sizecollections")
-	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_empty")
+local RougeCollectionChessBagComp = class("RougeCollectionChessBagComp", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeCollectionChessBagComp:onInitView()
+	self._golistbag = gohelper.findChild(self.viewGO, "chessboard/#go_listbag")
+	self._golistbagitem = gohelper.findChild(self.viewGO, "chessboard/#go_listbag/#go_listbagitem")
+	self._btnnext = gohelper.findChildButtonWithAudio(self.viewGO, "#go_pagearea/#btn_next")
+	self._btnlast = gohelper.findChildButtonWithAudio(self.viewGO, "#go_pagearea/#btn_last")
+	self._txtcurpage = gohelper.findChildText(self.viewGO, "#go_pagearea/#txt_curpage")
+	self._gosizebag = gohelper.findChild(self.viewGO, "chessboard/#go_sizebag")
+	self._gosizeitem = gohelper.findChild(self.viewGO, "chessboard/#go_sizebag/#go_sizecollections/#go_sizeitem")
+	self._btnlayout = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_layout")
+	self._btnfilter = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_filter")
+	self._gosizecellcontainer = gohelper.findChild(self.viewGO, "chessboard/#go_sizebag/#go_sizecellcontainer")
+	self._gosizecell = gohelper.findChild(self.viewGO, "chessboard/#go_sizebag/#go_sizecellcontainer/#go_sizecell")
+	self._gosizecollections = gohelper.findChild(self.viewGO, "chessboard/#go_sizebag/#go_sizecellcontainer/#go_sizecollections")
+	self._goempty = gohelper.findChild(self.viewGO, "chessboard/#go_empty")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnnext:AddClickListener(arg_2_0._btnnextOnClick, arg_2_0)
-	arg_2_0._btnlast:AddClickListener(arg_2_0._btnlastOnClick, arg_2_0)
-	arg_2_0._btnlayout:AddClickListener(arg_2_0._btnlayoutOnClick, arg_2_0)
-	arg_2_0._btnfilter:AddClickListener(arg_2_0._btnfilterOnClick, arg_2_0)
+function RougeCollectionChessBagComp:addEvents()
+	self._btnnext:AddClickListener(self._btnnextOnClick, self)
+	self._btnlast:AddClickListener(self._btnlastOnClick, self)
+	self._btnlayout:AddClickListener(self._btnlayoutOnClick, self)
+	self._btnfilter:AddClickListener(self._btnfilterOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnnext:RemoveClickListener()
-	arg_3_0._btnlast:RemoveClickListener()
-	arg_3_0._btnlayout:RemoveClickListener()
-	arg_3_0._btnfilter:RemoveClickListener()
+function RougeCollectionChessBagComp:removeEvents()
+	self._btnnext:RemoveClickListener()
+	self._btnlast:RemoveClickListener()
+	self._btnlayout:RemoveClickListener()
+	self._btnfilter:RemoveClickListener()
 end
 
-function var_0_0._btnnextOnClick(arg_4_0)
-	arg_4_0:switchPage(true)
+function RougeCollectionChessBagComp:_btnnextOnClick()
+	self:switchPage(true)
 end
 
-function var_0_0._btnlastOnClick(arg_5_0)
-	arg_5_0:switchPage(false)
+function RougeCollectionChessBagComp:_btnlastOnClick()
+	self:switchPage(false)
 end
 
-function var_0_0._btnlayoutOnClick(arg_6_0)
-	arg_6_0:onSwitchLayoutType(not arg_6_0._isListLayout)
-	arg_6_0:playSwitchLayoutAnim()
+function RougeCollectionChessBagComp:_btnlayoutOnClick()
+	self:onSwitchLayoutType(not self._isListLayout)
+	self:playSwitchLayoutAnim()
 	RougeCollectionChessController.instance:closeCollectionTipView()
 end
 
-function var_0_0._btnfilterOnClick(arg_7_0)
+function RougeCollectionChessBagComp:_btnfilterOnClick()
 	RougeCollectionChessController.instance:closeCollectionTipView()
 
-	local var_7_0 = {
-		confirmCallback = arg_7_0.onConfirmTagFilterCallback,
-		confirmCallbackObj = arg_7_0,
-		baseSelectMap = arg_7_0._baseTagSelectMap,
-		extraSelectMap = arg_7_0._extraTagSelectMap
+	local params = {
+		confirmCallback = self.onConfirmTagFilterCallback,
+		confirmCallbackObj = self,
+		baseSelectMap = self._baseTagSelectMap,
+		extraSelectMap = self._extraTagSelectMap
 	}
 
-	RougeController.instance:openRougeCollectionFilterView(var_7_0)
+	RougeController.instance:openRougeCollectionFilterView(params)
 end
 
-function var_0_0.onConfirmTagFilterCallback(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0:onFilterCollectionBag(arg_8_1, arg_8_2)
-	arg_8_0:refreshFilterButtonUI()
+function RougeCollectionChessBagComp:onConfirmTagFilterCallback(baseTagMap, extraTagMap)
+	self:onFilterCollectionBag(baseTagMap, extraTagMap)
+	self:refreshFilterButtonUI()
 end
 
-function var_0_0._editableInitView(arg_9_0)
-	arg_9_0._sizeCollections = {}
-	arg_9_0._sizePlaceCollectionCache = {}
-	arg_9_0._listCollections = {}
-	arg_9_0._isListLayout = true
-	arg_9_0._baseTagSelectMap = {}
-	arg_9_0._extraTagSelectMap = {}
+function RougeCollectionChessBagComp:_editableInitView()
+	self._sizeCollections = {}
+	self._sizePlaceCollectionCache = {}
+	self._listCollections = {}
+	self._isListLayout = true
+	self._baseTagSelectMap = {}
+	self._extraTagSelectMap = {}
 
-	arg_9_0:addEventCb(RougeCollectionChessController.instance, RougeEvent.UpdateCollectionBag, arg_9_0.updateCollectionBag, arg_9_0)
+	self:addEventCb(RougeCollectionChessController.instance, RougeEvent.UpdateCollectionBag, self.updateCollectionBag, self)
 
-	arg_9_0._animator = gohelper.onceAddComponent(arg_9_0.viewGO, gohelper.Type_Animator)
+	self._animator = gohelper.onceAddComponent(self.viewGO, gohelper.Type_Animator)
 
-	gohelper.setActive(arg_9_0._golistbagitem, false)
-	gohelper.setActive(arg_9_0._gosizeitem, false)
+	gohelper.setActive(self._golistbagitem, false)
+	gohelper.setActive(self._gosizeitem, false)
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0._curPageIndex = 1
+function RougeCollectionChessBagComp:onOpen()
+	self._curPageIndex = 1
 
-	arg_10_0:buildCollectionSizeBagPlaceInfo()
-	arg_10_0:onSwitchLayoutType(true)
+	self:buildCollectionSizeBagPlaceInfo()
+	self:onSwitchLayoutType(true)
 end
 
-local var_0_1 = 4
+local listCountPerPage = 4
 
-function var_0_0.updateBagList(arg_11_0, arg_11_1, arg_11_2)
-	arg_11_1 = arg_11_1 or 0
-	arg_11_2 = arg_11_2 or 0
+function RougeCollectionChessBagComp:updateBagList(pageIndex, totalPageCount)
+	pageIndex = pageIndex or 0
+	totalPageCount = totalPageCount or 0
 
-	local var_11_0 = RougeCollectionBagListModel.instance:getList()
-	local var_11_1 = var_11_0 and #var_11_0
-	local var_11_2 = {}
+	local collections = RougeCollectionBagListModel.instance:getList()
+	local collectionCount = collections and #collections
+	local useMap = {}
 
-	if var_11_1 > 0 then
-		local var_11_3 = (arg_11_1 - 1) * var_0_1 + 1
-		local var_11_4 = arg_11_1 * var_0_1
+	if collectionCount > 0 then
+		local startIndex = (pageIndex - 1) * listCountPerPage + 1
+		local endIndex = pageIndex * listCountPerPage
 
-		var_11_4 = var_11_1 < var_11_4 and var_11_1 or var_11_4
+		endIndex = collectionCount < endIndex and collectionCount or endIndex
 
-		if var_11_3 <= var_11_4 then
-			for iter_11_0 = var_11_3, var_11_4 do
-				local var_11_5 = RougeCollectionBagListModel.instance:getByIndex(iter_11_0)
-				local var_11_6 = iter_11_0 - var_11_3 + 1
-				local var_11_7 = arg_11_0._listCollections[var_11_6]
+		if startIndex <= endIndex then
+			for i = startIndex, endIndex do
+				local collectionMO = RougeCollectionBagListModel.instance:getByIndex(i)
+				local useItemIndex = i - startIndex + 1
+				local collectionItem = self._listCollections[useItemIndex]
 
-				if not var_11_7 then
-					local var_11_8 = gohelper.cloneInPlace(arg_11_0._golistbagitem, "bagItem_" .. var_11_6)
+				if not collectionItem then
+					local collectionGO = gohelper.cloneInPlace(self._golistbagitem, "bagItem_" .. useItemIndex)
 
-					var_11_7 = RougeCollectionBagItem.New()
+					collectionItem = RougeCollectionBagItem.New()
 
-					var_11_7:onInitView(arg_11_0, var_11_8)
+					collectionItem:onInitView(self, collectionGO)
 
-					arg_11_0._listCollections[var_11_6] = var_11_7
+					self._listCollections[useItemIndex] = collectionItem
 				end
 
-				var_11_7:reset()
-				var_11_7:onUpdateMO(var_11_5)
+				collectionItem:reset()
+				collectionItem:onUpdateMO(collectionMO)
 
-				var_11_2[var_11_7] = true
+				useMap[collectionItem] = true
 			end
 		end
 	end
 
-	if var_11_2 and arg_11_0._listCollections then
-		for iter_11_1, iter_11_2 in pairs(arg_11_0._listCollections) do
-			if not var_11_2[iter_11_2] then
-				iter_11_2:reset()
+	if useMap and self._listCollections then
+		for _, collectionItem in pairs(self._listCollections) do
+			if not useMap[collectionItem] then
+				collectionItem:reset()
 			end
 		end
 	end
 
-	arg_11_0._curPageIndex = arg_11_1
-	arg_11_0._txtcurpage.text = string.format("%s / %s", arg_11_1, arg_11_2)
+	self._curPageIndex = pageIndex
+	self._txtcurpage.text = string.format("%s / %s", pageIndex, totalPageCount)
 end
 
-function var_0_0.switchPage(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_1 and arg_12_0._curPageIndex + 1 or arg_12_0._curPageIndex - 1
-	local var_12_1 = arg_12_0:getTotalPageCount()
-	local var_12_2 = var_12_1 > 0 and 1 or 0
-	local var_12_3 = Mathf.Clamp(var_12_0, var_12_2, var_12_1)
+function RougeCollectionChessBagComp:switchPage(isNext)
+	local targetPageIndex = isNext and self._curPageIndex + 1 or self._curPageIndex - 1
+	local totalPageCount = self:getTotalPageCount()
+	local minPageIndex = totalPageCount > 0 and 1 or 0
 
-	if var_12_3 == arg_12_0._curPageIndex then
+	targetPageIndex = Mathf.Clamp(targetPageIndex, minPageIndex, totalPageCount)
+
+	if targetPageIndex == self._curPageIndex then
 		return
 	end
 
-	if arg_12_0._isListLayout then
-		arg_12_0:updateBagList(var_12_3, var_12_1)
+	if self._isListLayout then
+		self:updateBagList(targetPageIndex, totalPageCount)
 	else
-		arg_12_0:updateSizeList(var_12_3, var_12_1)
+		self:updateSizeList(targetPageIndex, totalPageCount)
 	end
 
-	arg_12_0:refreshButtonUI(var_12_3, var_12_2, var_12_1)
-	arg_12_0:playSwitchLayoutAnim()
+	self:refreshButtonUI(targetPageIndex, minPageIndex, totalPageCount)
+	self:playSwitchLayoutAnim()
 	RougeCollectionChessController.instance:closeCollectionTipView()
 end
 
-function var_0_0.getTotalPageCount(arg_13_0)
-	local var_13_0 = 0
+function RougeCollectionChessBagComp:getTotalPageCount()
+	local totalPageCount = 0
 
-	if arg_13_0._isListLayout then
-		var_13_0 = math.ceil(RougeCollectionBagListModel.instance:getCount() / var_0_1)
+	if self._isListLayout then
+		totalPageCount = math.ceil(RougeCollectionBagListModel.instance:getCount() / listCountPerPage)
 	else
-		var_13_0 = tabletool.len(arg_13_0._sizePlaceCollectionCache)
+		totalPageCount = tabletool.len(self._sizePlaceCollectionCache)
 	end
 
-	return var_13_0
+	return totalPageCount
 end
 
-function var_0_0.updateSizeList(arg_14_0, arg_14_1, arg_14_2)
-	arg_14_0._curPageIndex = arg_14_1
+function RougeCollectionChessBagComp:updateSizeList(pageIndex, totalPageCount)
+	self._curPageIndex = pageIndex
 
-	arg_14_0:placeCollection2SizeBag(arg_14_1)
+	self:placeCollection2SizeBag(pageIndex)
 
-	arg_14_0._txtcurpage.text = string.format("%s / %s", arg_14_1, arg_14_2)
+	self._txtcurpage.text = string.format("%s / %s", pageIndex, totalPageCount)
 end
 
-function var_0_0.buildCollectionSizeBagPlaceInfo(arg_15_0)
-	local var_15_0 = RougeCollectionBagListModel.instance:getList()
+function RougeCollectionChessBagComp:buildCollectionSizeBagPlaceInfo()
+	local originCollections = RougeCollectionBagListModel.instance:getList()
 
-	arg_15_0._unplaceCollections = tabletool.copy(var_15_0)
+	self._unplaceCollections = tabletool.copy(originCollections)
 
-	table.sort(arg_15_0._unplaceCollections, arg_15_0.sortCollectionByRare)
+	table.sort(self._unplaceCollections, self.sortCollectionByRare)
 
-	local var_15_1 = 1
+	local pageIndex = 1
 
-	arg_15_0._sizePlaceCollectionCache = {}
+	self._sizePlaceCollectionCache = {}
 
-	local var_15_2 = 200
-	local var_15_3 = Vector2(0, 0)
+	local errorBreakCount = 200
+	local startPlacePos = Vector2(0, 0)
 
-	while #arg_15_0._unplaceCollections > 0 and var_15_2 > 0 do
-		arg_15_0:buildPlaceCollectionInfo(var_15_3, RougeEnum.MaxCollectionBagSize, arg_15_0._unplaceCollections, var_15_1)
+	while #self._unplaceCollections > 0 and errorBreakCount > 0 do
+		self:buildPlaceCollectionInfo(startPlacePos, RougeEnum.MaxCollectionBagSize, self._unplaceCollections, pageIndex)
 
-		var_15_1 = var_15_1 + 1
-		var_15_2 = var_15_2 - 1
+		pageIndex = pageIndex + 1
+		errorBreakCount = errorBreakCount - 1
 	end
 
-	if var_15_2 <= 0 then
-		logError("构建肉鸽造物背包摆放数据时循环执行超过< %s >次,请检查!!!", var_15_2)
+	if errorBreakCount <= 0 then
+		logError("构建肉鸽造物背包摆放数据时循环执行超过< %s >次,请检查!!!", errorBreakCount)
 	end
 end
 
-function var_0_0.buildPlaceCollectionInfo(arg_16_0, arg_16_1, arg_16_2, arg_16_3, arg_16_4, arg_16_5)
-	arg_16_5 = arg_16_5 or 1
+function RougeCollectionChessBagComp:buildPlaceCollectionInfo(startPlacePos, bagSize, collections, pageIndex, index)
+	index = index or 1
 
-	if not arg_16_3 or not arg_16_3[arg_16_5] or not (arg_16_2.x >= 1) or not (arg_16_2.y >= 1) then
+	if not collections or not collections[index] or not (bagSize.x >= 1) or not (bagSize.y >= 1) then
 		return
 	end
 
-	local var_16_0 = arg_16_3[arg_16_5]
-	local var_16_1, var_16_2 = RougeCollectionConfig.instance:getShapeSize(var_16_0.cfgId)
+	local readyPlaceCollection = collections[index]
+	local collectionWidth, collectionHeight = RougeCollectionConfig.instance:getShapeSize(readyPlaceCollection.cfgId)
 
-	if var_16_1 <= 0 or var_16_2 <= 0 then
-		table.remove(arg_16_3, arg_16_5)
-		logError("获取造物形状范围不可小于0, id = " .. tostring(var_16_0.cfgId))
+	if collectionWidth <= 0 or collectionHeight <= 0 then
+		table.remove(collections, index)
+		logError("获取造物形状范围不可小于0, id = " .. tostring(readyPlaceCollection.cfgId))
 
 		return
 	end
 
-	if var_16_1 > arg_16_2.x or var_16_2 > arg_16_2.y then
-		return arg_16_0:buildPlaceCollectionInfo(arg_16_1, arg_16_2, arg_16_3, arg_16_4, arg_16_5 + 1)
+	if collectionWidth > bagSize.x or collectionHeight > bagSize.y then
+		return self:buildPlaceCollectionInfo(startPlacePos, bagSize, collections, pageIndex, index + 1)
 	end
 
-	table.remove(arg_16_3, arg_16_5)
+	table.remove(collections, index)
 
-	arg_16_0._sizePlaceCollectionCache[arg_16_4] = arg_16_0._sizePlaceCollectionCache[arg_16_4] or {}
+	self._sizePlaceCollectionCache[pageIndex] = self._sizePlaceCollectionCache[pageIndex] or {}
 
-	table.insert(arg_16_0._sizePlaceCollectionCache[arg_16_4], {
-		id = var_16_0.id,
-		startPlacePos = arg_16_1
+	table.insert(self._sizePlaceCollectionCache[pageIndex], {
+		id = readyPlaceCollection.id,
+		startPlacePos = startPlacePos
 	})
 
-	local var_16_3 = arg_16_2.y - var_16_2
-	local var_16_4 = arg_16_2.x - var_16_1
-	local var_16_5 = Vector2(var_16_4, var_16_2)
-	local var_16_6 = Vector2(arg_16_2.x, var_16_3)
-	local var_16_7 = arg_16_1 + Vector2(var_16_1, 0)
-	local var_16_8 = arg_16_1 + Vector2(0, var_16_2)
+	local splitY = bagSize.y - collectionHeight
+	local splitX = bagSize.x - collectionWidth
+	local newBagSizeA = Vector2(splitX, collectionHeight)
+	local newBagSizeB = Vector2(bagSize.x, splitY)
+	local newBagStartPlacePosA = startPlacePos + Vector2(collectionWidth, 0)
+	local newBagStartPlacePosB = startPlacePos + Vector2(0, collectionHeight)
 
-	arg_16_0:buildPlaceCollectionInfo(var_16_7, var_16_5, arg_16_3, arg_16_4)
-	arg_16_0:buildPlaceCollectionInfo(var_16_8, var_16_6, arg_16_3, arg_16_4)
+	self:buildPlaceCollectionInfo(newBagStartPlacePosA, newBagSizeA, collections, pageIndex)
+	self:buildPlaceCollectionInfo(newBagStartPlacePosB, newBagSizeB, collections, pageIndex)
 end
 
-local var_0_2 = Vector2(104, 104)
+local realSlotCellSize = Vector2(104, 104)
 
-function var_0_0.placeCollection2SizeBag(arg_17_0, arg_17_1)
-	local var_17_0 = arg_17_0._sizePlaceCollectionCache and arg_17_0._sizePlaceCollectionCache[arg_17_1]
-	local var_17_1 = {}
+function RougeCollectionChessBagComp:placeCollection2SizeBag(pageIndex)
+	local infos = self._sizePlaceCollectionCache and self._sizePlaceCollectionCache[pageIndex]
+	local useMap = {}
 
-	if var_17_0 then
-		for iter_17_0 = 1, #var_17_0 do
-			local var_17_2 = arg_17_0._sizeCollections[iter_17_0]
+	if infos then
+		for index = 1, #infos do
+			local collectionItem = self._sizeCollections[index]
 
-			if not var_17_2 then
-				var_17_2 = arg_17_0.viewContainer:getRougePoolComp():getCollectionItem(RougeCollectionSizeBagItem.__cname)
+			if not collectionItem then
+				local luaObjPool = self.viewContainer:getRougePoolComp()
 
-				local var_17_3 = gohelper.cloneInPlace(arg_17_0._gosizeitem, "item_" .. iter_17_0)
+				collectionItem = luaObjPool:getCollectionItem(RougeCollectionSizeBagItem.__cname)
 
-				var_17_2:onInit(var_17_3)
+				local collectionGO = gohelper.cloneInPlace(self._gosizeitem, "item_" .. index)
 
-				arg_17_0._sizeCollections[iter_17_0] = var_17_2
+				collectionItem:onInit(collectionGO)
+
+				self._sizeCollections[index] = collectionItem
 			end
 
-			var_17_1[var_17_2] = true
+			useMap[collectionItem] = true
 
-			local var_17_4 = RougeCollectionModel.instance:getCollectionByUid(var_17_0[iter_17_0].id)
+			local collectionMO = RougeCollectionModel.instance:getCollectionByUid(infos[index].id)
 
-			var_17_2:reset()
-			var_17_2:setPerCellWidthAndHeight(var_0_2.x, var_0_2.y)
-			var_17_2:onUpdateMO(var_17_4)
+			collectionItem:reset()
+			collectionItem:setPerCellWidthAndHeight(realSlotCellSize.x, realSlotCellSize.y)
+			collectionItem:onUpdateMO(collectionMO)
 
-			local var_17_5 = var_17_0[iter_17_0].startPlacePos
+			local startPlacePos = infos[index].startPlacePos
 
-			recthelper.setAnchor(var_17_2.viewGO.transform, var_17_5.x * var_0_2.x, -var_17_5.y * var_0_2.y)
+			recthelper.setAnchor(collectionItem.viewGO.transform, startPlacePos.x * realSlotCellSize.x, -startPlacePos.y * realSlotCellSize.y)
 		end
 	end
 
-	if var_17_1 and arg_17_0._sizeCollections then
-		for iter_17_1, iter_17_2 in pairs(arg_17_0._sizeCollections) do
-			if not var_17_1[iter_17_2] then
-				iter_17_2:reset()
+	if useMap and self._sizeCollections then
+		for _, collectionItem in pairs(self._sizeCollections) do
+			if not useMap[collectionItem] then
+				collectionItem:reset()
 			end
 		end
 	end
 end
 
-function var_0_0.onSwitchLayoutType(arg_18_0, arg_18_1)
-	arg_18_0._isListLayout = arg_18_1
+function RougeCollectionChessBagComp:onSwitchLayoutType(isListLayout)
+	self._isListLayout = isListLayout
 
-	local var_18_0 = arg_18_0:getTotalPageCount()
-	local var_18_1 = var_18_0 > 0 and 1 or 0
+	local totalPageCount = self:getTotalPageCount()
+	local minPageIndex = totalPageCount > 0 and 1 or 0
 
-	gohelper.setActive(arg_18_0._golistbag, arg_18_0._isListLayout)
-	gohelper.setActive(arg_18_0._gosizebag, not arg_18_0._isListLayout)
-	gohelper.setActive(arg_18_0._goempty, var_18_0 <= 0)
+	gohelper.setActive(self._golistbag, self._isListLayout)
+	gohelper.setActive(self._gosizebag, not self._isListLayout)
+	gohelper.setActive(self._goempty, totalPageCount <= 0)
 
-	arg_18_0._curPageIndex = Mathf.Clamp(arg_18_0._curPageIndex, var_18_1, var_18_0)
+	self._curPageIndex = Mathf.Clamp(self._curPageIndex, minPageIndex, totalPageCount)
 
-	if arg_18_0._isListLayout then
-		arg_18_0:updateBagList(arg_18_0._curPageIndex, var_18_0)
+	if self._isListLayout then
+		self:updateBagList(self._curPageIndex, totalPageCount)
 	else
-		arg_18_0:updateSizeList(arg_18_0._curPageIndex, var_18_0)
+		self:updateSizeList(self._curPageIndex, totalPageCount)
 	end
 
-	arg_18_0:refreshButtonUI(arg_18_0._curPageIndex, var_18_1, var_18_0)
-	arg_18_0:refreshLayoutButtonUI()
+	self:refreshButtonUI(self._curPageIndex, minPageIndex, totalPageCount)
+	self:refreshLayoutButtonUI()
 end
 
-function var_0_0.refreshButtonUI(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
-	local var_19_0 = gohelper.findChild(arg_19_0._btnnext.gameObject, "light")
-	local var_19_1 = gohelper.findChild(arg_19_0._btnnext.gameObject, "dark")
-	local var_19_2 = gohelper.findChild(arg_19_0._btnlast.gameObject, "light")
-	local var_19_3 = gohelper.findChild(arg_19_0._btnlast.gameObject, "dark")
-	local var_19_4 = arg_19_3 >= arg_19_1 + 1
-	local var_19_5 = arg_19_2 <= arg_19_1 - 1
+function RougeCollectionChessBagComp:refreshButtonUI(curPageIndex, minPageIndex, maxPageIndex)
+	local nextLightBtn = gohelper.findChild(self._btnnext.gameObject, "light")
+	local nextLightDark = gohelper.findChild(self._btnnext.gameObject, "dark")
+	local lastLightBtn = gohelper.findChild(self._btnlast.gameObject, "light")
+	local lastLightDark = gohelper.findChild(self._btnlast.gameObject, "dark")
+	local isCanNext = maxPageIndex >= curPageIndex + 1
+	local isCanLast = minPageIndex <= curPageIndex - 1
 
-	gohelper.setActive(var_19_0, var_19_4)
-	gohelper.setActive(var_19_1, not var_19_4)
-	gohelper.setActive(var_19_2, var_19_5)
-	gohelper.setActive(var_19_3, not var_19_5)
+	gohelper.setActive(nextLightBtn, isCanNext)
+	gohelper.setActive(nextLightDark, not isCanNext)
+	gohelper.setActive(lastLightBtn, isCanLast)
+	gohelper.setActive(lastLightDark, not isCanLast)
 end
 
-function var_0_0.playSwitchLayoutAnim(arg_20_0)
-	local var_20_0 = arg_20_0._isListLayout and "switch_listbg" or "switch_sizebag"
+function RougeCollectionChessBagComp:playSwitchLayoutAnim()
+	local animStateName = self._isListLayout and "switch_listbg" or "switch_sizebag"
 
-	arg_20_0._animator:Play(var_20_0, 0, 0)
+	self._animator:Play(animStateName, 0, 0)
 end
 
-function var_0_0.sortCollectionByRare(arg_21_0, arg_21_1)
-	local var_21_0 = RougeCollectionConfig.instance:getCollectionCfg(arg_21_0.cfgId)
-	local var_21_1 = RougeCollectionConfig.instance:getCollectionCfg(arg_21_1.cfgId)
+function RougeCollectionChessBagComp.sortCollectionByRare(a, b)
+	local aCfg = RougeCollectionConfig.instance:getCollectionCfg(a.cfgId)
+	local bCfg = RougeCollectionConfig.instance:getCollectionCfg(b.cfgId)
 
-	if var_21_0.showRare ~= var_21_1.showRare then
-		return var_21_0.showRare > var_21_1.showRare
+	if aCfg.showRare ~= bCfg.showRare then
+		return aCfg.showRare > bCfg.showRare
 	end
 
-	return var_21_0.id < var_21_1.id
+	return aCfg.id < bCfg.id
 end
 
-function var_0_0.onFilterCollectionBag(arg_22_0, arg_22_1, arg_22_2)
-	RougeCollectionBagListModel.instance:onInitData(arg_22_1, arg_22_2)
-	arg_22_0:updateCollectionBag()
+function RougeCollectionChessBagComp:onFilterCollectionBag(baseTagMap, extraTagMap)
+	RougeCollectionBagListModel.instance:onInitData(baseTagMap, extraTagMap)
+	self:updateCollectionBag()
 end
 
-function var_0_0.updateCollectionBag(arg_23_0)
+function RougeCollectionChessBagComp:updateCollectionBag()
 	RougeCollectionBagListModel.instance:filterCollection()
-	arg_23_0:buildCollectionSizeBagPlaceInfo()
-	arg_23_0:onSwitchLayoutType(arg_23_0._isListLayout)
+	self:buildCollectionSizeBagPlaceInfo()
+	self:onSwitchLayoutType(self._isListLayout)
 end
 
-function var_0_0.refreshFilterButtonUI(arg_24_0)
-	local var_24_0 = RougeCollectionBagListModel.instance:isFiltering()
-	local var_24_1 = gohelper.findChild(arg_24_0._btnfilter.gameObject, "unselect")
-	local var_24_2 = gohelper.findChild(arg_24_0._btnfilter.gameObject, "select")
+function RougeCollectionChessBagComp:refreshFilterButtonUI()
+	local isFiltering = RougeCollectionBagListModel.instance:isFiltering()
+	local goUnselect = gohelper.findChild(self._btnfilter.gameObject, "unselect")
+	local goSelect = gohelper.findChild(self._btnfilter.gameObject, "select")
 
-	gohelper.setActive(var_24_2, var_24_0)
-	gohelper.setActive(var_24_1, not var_24_0)
+	gohelper.setActive(goSelect, isFiltering)
+	gohelper.setActive(goUnselect, not isFiltering)
 end
 
-function var_0_0.refreshLayoutButtonUI(arg_25_0)
-	local var_25_0 = gohelper.findChild(arg_25_0._btnlayout.gameObject, "unselect")
-	local var_25_1 = gohelper.findChild(arg_25_0._btnlayout.gameObject, "select")
+function RougeCollectionChessBagComp:refreshLayoutButtonUI()
+	local goUnselect = gohelper.findChild(self._btnlayout.gameObject, "unselect")
+	local goSelect = gohelper.findChild(self._btnlayout.gameObject, "select")
 
-	gohelper.setActive(var_25_1, not arg_25_0._isListLayout)
-	gohelper.setActive(var_25_0, arg_25_0._isListLayout)
+	gohelper.setActive(goSelect, not self._isListLayout)
+	gohelper.setActive(goUnselect, self._isListLayout)
 end
 
-function var_0_0.onClose(arg_26_0)
+function RougeCollectionChessBagComp:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_27_0)
-	if arg_27_0._listCollections then
-		for iter_27_0, iter_27_1 in pairs(arg_27_0._listCollections) do
-			iter_27_1:destroy()
+function RougeCollectionChessBagComp:onDestroyView()
+	if self._listCollections then
+		for _, list in pairs(self._listCollections) do
+			list:destroy()
 		end
 	end
 
-	if arg_27_0._sizeCollections then
-		for iter_27_2, iter_27_3 in pairs(arg_27_0._sizeCollections) do
-			iter_27_3:destroy()
+	if self._sizeCollections then
+		for _, list in pairs(self._sizeCollections) do
+			list:destroy()
 		end
 	end
 end
 
-return var_0_0
+return RougeCollectionChessBagComp

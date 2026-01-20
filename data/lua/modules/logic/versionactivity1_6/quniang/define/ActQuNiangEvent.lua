@@ -1,10 +1,12 @@
-﻿module("modules.logic.versionactivity1_6.quniang.define.ActQuNiangEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/quniang/define/ActQuNiangEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_6.quniang.define.ActQuNiangEvent", package.seeall)
 
-var_0_0.OneClickClaimReward = 1
-var_0_0.StoryItemClick = 2
-var_0_0.FightItemClick = 3
-var_0_0.TabSwitch = 4
+local ActQuNiangEvent = _M
 
-return var_0_0
+ActQuNiangEvent.OneClickClaimReward = 1
+ActQuNiangEvent.StoryItemClick = 2
+ActQuNiangEvent.FightItemClick = 3
+ActQuNiangEvent.TabSwitch = 4
+
+return ActQuNiangEvent

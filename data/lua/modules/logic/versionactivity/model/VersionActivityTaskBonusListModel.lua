@@ -1,45 +1,49 @@
-﻿module("modules.logic.versionactivity.model.VersionActivityTaskBonusListModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity/model/VersionActivityTaskBonusListModel.lua
 
-local var_0_0 = class("VersionActivityTaskBonusListModel", ListScrollModel)
+module("modules.logic.versionactivity.model.VersionActivityTaskBonusListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local VersionActivityTaskBonusListModel = class("VersionActivityTaskBonusListModel", ListScrollModel)
+
+function VersionActivityTaskBonusListModel:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0.taskActivityMo = nil
+function VersionActivityTaskBonusListModel:reInit()
+	self.taskActivityMo = nil
 end
 
-function var_0_0.initTaskBonusList(arg_3_0)
+function VersionActivityTaskBonusListModel:initTaskBonusList()
 	return
 end
 
-function var_0_0.refreshList(arg_4_0)
-	arg_4_0:setList(TaskConfig.instance:getTaskActivityBonusConfig(TaskEnum.TaskType.ActivityDungeon))
+function VersionActivityTaskBonusListModel:refreshList()
+	self:setList(TaskConfig.instance:getTaskActivityBonusConfig(TaskEnum.TaskType.ActivityDungeon))
 end
 
-function var_0_0.getTaskActivityMo(arg_5_0)
-	if not arg_5_0.taskActivityMo then
-		arg_5_0.taskActivityMo = TaskModel.instance:getTaskActivityMO(TaskEnum.TaskType.ActivityDungeon)
+function VersionActivityTaskBonusListModel:getTaskActivityMo()
+	if not self.taskActivityMo then
+		self.taskActivityMo = TaskModel.instance:getTaskActivityMO(TaskEnum.TaskType.ActivityDungeon)
 	end
 
-	return arg_5_0.taskActivityMo
+	return self.taskActivityMo
 end
 
-function var_0_0.recordPrefixActivityPointCount(arg_6_0)
-	arg_6_0.prefixActivityPointCount = arg_6_0:getTaskActivityMo().value
+function VersionActivityTaskBonusListModel:recordPrefixActivityPointCount()
+	local taskActivityMo = self:getTaskActivityMo()
+
+	self.prefixActivityPointCount = taskActivityMo.value
 end
 
-function var_0_0.checkActivityPointCountHasChange(arg_7_0)
-	return arg_7_0.prefixActivityPointCount ~= arg_7_0:getTaskActivityMo().value
+function VersionActivityTaskBonusListModel:checkActivityPointCountHasChange()
+	return self.prefixActivityPointCount ~= self:getTaskActivityMo().value
 end
 
-function var_0_0.checkNeedPlayEffect(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = TaskConfig.instance:getTaskBonusValue(TaskEnum.TaskType.ActivityDungeon, arg_8_1, arg_8_2)
+function VersionActivityTaskBonusListModel:checkNeedPlayEffect(defineId, pointCount)
+	local pointValue = TaskConfig.instance:getTaskBonusValue(TaskEnum.TaskType.ActivityDungeon, defineId, pointCount)
 
-	return var_8_0 > arg_8_0.prefixActivityPointCount and var_8_0 <= arg_8_0:getTaskActivityMo().value
+	return pointValue > self.prefixActivityPointCount and pointValue <= self:getTaskActivityMo().value
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivityTaskBonusListModel.instance = VersionActivityTaskBonusListModel.New()
 
-return var_0_0
+return VersionActivityTaskBonusListModel

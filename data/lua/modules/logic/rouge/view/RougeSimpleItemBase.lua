@@ -1,227 +1,233 @@
-﻿module("modules.logic.rouge.view.RougeSimpleItemBase", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeSimpleItemBase.lua
 
-local var_0_0 = class("RougeSimpleItemBase", ListScrollCellExtend)
-local var_0_1 = table.insert
-local var_0_2 = ZProj.UGUIHelper
+module("modules.logic.rouge.view.RougeSimpleItemBase", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0, arg_1_1)
+local RougeSimpleItemBase = class("RougeSimpleItemBase", ListScrollCellExtend)
+local table_insert = table.insert
+local UGUIHelper = ZProj.UGUIHelper
 
-	arg_1_0._staticData = {}
+function RougeSimpleItemBase:ctor(ctorParam)
+	RougeSimpleItemBase.super.ctor(self, ctorParam)
 
-	if arg_1_1 then
-		arg_1_0._staticData.baseViewContainer = arg_1_1.baseViewContainer
-		arg_1_0._staticData.parent = arg_1_1.parent
+	self._staticData = {}
+
+	if ctorParam then
+		self._staticData.baseViewContainer = ctorParam.baseViewContainer
+		self._staticData.parent = ctorParam.parent
 	end
 end
 
-function var_0_0.init(arg_2_0, ...)
-	var_0_0.super.init(arg_2_0, ...)
-	arg_2_0:addEventListeners()
+function RougeSimpleItemBase:init(...)
+	RougeSimpleItemBase.super.init(self, ...)
+	self:addEventListeners()
 end
 
-function var_0_0.onInitView(arg_3_0)
-	arg_3_0:_editableInitView()
+function RougeSimpleItemBase:onInitView()
+	self:_editableInitView()
 end
 
-function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
-	arg_4_0:setData(arg_4_1)
+function RougeSimpleItemBase:onUpdateMO(mo)
+	self:setData(mo)
 end
 
-function var_0_0.parent(arg_5_0)
-	return arg_5_0._staticData.parent
+function RougeSimpleItemBase:parent()
+	return self._staticData.parent
 end
 
-function var_0_0.baseViewContainer(arg_6_0)
-	return arg_6_0._staticData.baseViewContainer
+function RougeSimpleItemBase:baseViewContainer()
+	return self._staticData.baseViewContainer
 end
 
-function var_0_0._assetGetViewContainer(arg_7_0)
-	return assert(arg_7_0:baseViewContainer(), "please assign baseViewContainer by ctorParam on ctor")
+function RougeSimpleItemBase:_assetGetViewContainer()
+	return assert(self:baseViewContainer(), "please assign baseViewContainer by ctorParam on ctor")
 end
 
-function var_0_0._assetGetParent(arg_8_0)
-	return assert(arg_8_0:parent(), "please assign parent by ctorParam on ctor")
+function RougeSimpleItemBase:_assetGetParent()
+	return assert(self:parent(), "please assign parent by ctorParam on ctor")
 end
 
-function var_0_0.regEvent(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	if not arg_9_0._parent then
+function RougeSimpleItemBase:regEvent(evtId, cb, cbObj)
+	if not self._parent then
 		logWarn("regEvent")
 
 		return
 	end
 
-	arg_9_0:_assetGetViewContainer():registerCallback(arg_9_1, arg_9_2, arg_9_3)
+	local c = self:_assetGetViewContainer()
+
+	c:registerCallback(evtId, cb, cbObj)
 end
 
-function var_0_0.unregEvent(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	if not arg_10_0._parent then
+function RougeSimpleItemBase:unregEvent(evtId, cb, cbObj)
+	if not self._parent then
 		logWarn("unregEvent")
 
 		return
 	end
 
-	arg_10_0:_assetGetViewContainer():unregisterCallback(arg_10_1, arg_10_2, arg_10_3)
+	local c = self:_assetGetViewContainer()
+
+	c:unregisterCallback(evtId, cb, cbObj)
 end
 
-function var_0_0.dispatchEvent(arg_11_0, arg_11_1, ...)
-	local var_11_0 = arg_11_0:baseViewContainer()
+function RougeSimpleItemBase:dispatchEvent(evtName, ...)
+	local c = self:baseViewContainer()
 
-	if not var_11_0 then
+	if not c then
 		return
 	end
 
-	var_11_0:dispatchEvent(arg_11_1, ...)
+	c:dispatchEvent(evtName, ...)
 end
 
-function var_0_0.isSelected(arg_12_0)
-	return arg_12_0._staticData.isSelected
+function RougeSimpleItemBase:isSelected()
+	return self._staticData.isSelected
 end
 
-function var_0_0.setSelected(arg_13_0, arg_13_1)
-	if arg_13_0:isSelected() == arg_13_1 then
+function RougeSimpleItemBase:setSelected(isSelect)
+	if self:isSelected() == isSelect then
 		return
 	end
 
-	arg_13_0:onSelect(arg_13_1)
+	self:onSelect(isSelect)
 end
 
-function var_0_0.setIndex(arg_14_0, arg_14_1)
-	arg_14_0._index = arg_14_1
+function RougeSimpleItemBase:setIndex(index)
+	self._index = index
 end
 
-function var_0_0.index(arg_15_0)
-	return arg_15_0._index
+function RougeSimpleItemBase:index()
+	return self._index
 end
 
-function var_0_0.setActive(arg_16_0, arg_16_1)
-	gohelper.setActive(arg_16_0.viewGO, arg_16_1)
+function RougeSimpleItemBase:setActive(isActive)
+	gohelper.setActive(self.viewGO, isActive)
 end
 
-function var_0_0.posX(arg_17_0)
-	return recthelper.getAnchorX(arg_17_0._trans)
+function RougeSimpleItemBase:posX()
+	return recthelper.getAnchorX(self._trans)
 end
 
-function var_0_0.posY(arg_18_0)
-	return recthelper.getAnchorY(arg_18_0._trans)
+function RougeSimpleItemBase:posY()
+	return recthelper.getAnchorY(self._trans)
 end
 
-function var_0_0.transform(arg_19_0)
-	return arg_19_0._trans
+function RougeSimpleItemBase:transform()
+	return self._trans
 end
 
-function var_0_0.pivot(arg_20_0)
-	return arg_20_0._trans.pivot
+function RougeSimpleItemBase:pivot()
+	return self._trans.pivot
 end
 
-function var_0_0.rect(arg_21_0)
-	return arg_21_0._trans.rect
+function RougeSimpleItemBase:rect()
+	return self._trans.rect
 end
 
-function var_0_0.setAsLastSibling(arg_22_0)
-	arg_22_0._trans:SetAsLastSibling()
+function RougeSimpleItemBase:setAsLastSibling()
+	self._trans:SetAsLastSibling()
 end
 
-function var_0_0.setAsFirstSibling(arg_23_0)
-	arg_23_0._trans:SetAsFirstSibling()
+function RougeSimpleItemBase:setAsFirstSibling()
+	self._trans:SetAsFirstSibling()
 end
 
-function var_0_0.setSiblingIndex(arg_24_0, arg_24_1)
-	arg_24_0._trans:SetSiblingIndex(arg_24_1)
+function RougeSimpleItemBase:setSiblingIndex(index)
+	self._trans:SetSiblingIndex(index)
 end
 
-function var_0_0.setParent(arg_25_0, arg_25_1, arg_25_2)
-	arg_25_0._trans:SetParent(arg_25_1, arg_25_2 and true or false)
+function RougeSimpleItemBase:setParent(newParentTrans, worldPositionStays)
+	self._trans:SetParent(newParentTrans, worldPositionStays and true or false)
 end
 
-function var_0_0.setParentAndResetPosZero(arg_26_0, arg_26_1)
-	arg_26_0:setParent(arg_26_1, false)
+function RougeSimpleItemBase:setParentAndResetPosZero(newParentTrans)
+	self:setParent(newParentTrans, false)
 end
 
-function var_0_0.localRotateZ(arg_27_0, arg_27_1, arg_27_2)
-	transformhelper.setLocalRotation(arg_27_2 or arg_27_0._trans, 0, 0, arg_27_1)
+function RougeSimpleItemBase:localRotateZ(zDegree, targetTransform)
+	transformhelper.setLocalRotation(targetTransform or self._trans, 0, 0, zDegree)
 end
 
-function var_0_0._onSetScrollParentGameObject(arg_28_0, arg_28_1)
-	if gohelper.isNil(arg_28_1) then
+function RougeSimpleItemBase:_onSetScrollParentGameObject(limitScrollRectCmp)
+	if gohelper.isNil(limitScrollRectCmp) then
 		return
 	end
 
-	local var_28_0 = arg_28_0:baseViewContainer()
+	local c = self:baseViewContainer()
 
-	if not var_28_0 then
+	if not c then
 		return
 	end
 
-	local var_28_1 = var_28_0:getScrollViewGo()
+	local go = c:getScrollViewGo()
 
-	if gohelper.isNil(var_28_1) then
+	if gohelper.isNil(go) then
 		return
 	end
 
-	arg_28_1.parentGameObject = var_28_1
+	limitScrollRectCmp.parentGameObject = go
 end
 
-function var_0_0._fillUserDataTb(arg_29_0, arg_29_1, arg_29_2, arg_29_3)
-	local var_29_0 = 1
-	local var_29_1 = arg_29_0[arg_29_1 .. var_29_0]
+function RougeSimpleItemBase:_fillUserDataTb(prefixStr, outGoList, outCmpList)
+	local i = 1
+	local cmp = self[prefixStr .. i]
 
-	while not gohelper.isNil(var_29_1) do
-		if arg_29_2 then
-			var_0_1(arg_29_2, var_29_1.gameObject)
+	while not gohelper.isNil(cmp) do
+		if outGoList then
+			table_insert(outGoList, cmp.gameObject)
 		end
 
-		if arg_29_3 then
-			var_0_1(arg_29_3, var_29_1)
+		if outCmpList then
+			table_insert(outCmpList, cmp)
 		end
 
-		var_29_0 = var_29_0 + 1
-		var_29_1 = arg_29_0[arg_29_1 .. var_29_0]
+		i = i + 1
+		cmp = self[prefixStr .. i]
 	end
 end
 
-function var_0_0._getRef_ctorParam(arg_30_0)
-	if not arg_30_0.__child_ctorParam then
-		arg_30_0.__child_ctorParam = {
-			parent = arg_30_0,
-			baseViewContainer = arg_30_0:baseViewContainer()
+function RougeSimpleItemBase:_getRef_ctorParam()
+	if not self.__child_ctorParam then
+		self.__child_ctorParam = {
+			parent = self,
+			baseViewContainer = self:baseViewContainer()
 		}
 	end
 
-	return arg_30_0.__child_ctorParam
+	return self.__child_ctorParam
 end
 
-function var_0_0.newObject(arg_31_0, arg_31_1)
+function RougeSimpleItemBase:newObject(luaClass)
 	if isDebugBuild then
-		assert(isTypeOf(arg_31_1, var_0_0), debug.traceback())
+		assert(isTypeOf(luaClass, RougeSimpleItemBase), debug.traceback())
 	end
 
-	return arg_31_1.New(arg_31_0:_getRef_ctorParam())
+	return luaClass.New(self:_getRef_ctorParam())
 end
 
-function var_0_0.childCount(arg_32_0)
-	return arg_32_0._trans and arg_32_0._trans.childCount or 0
+function RougeSimpleItemBase:childCount()
+	return self._trans and self._trans.childCount or 0
 end
 
-function var_0_0._editableInitView(arg_33_0)
-	arg_33_0._trans = arg_33_0.viewGO.transform
+function RougeSimpleItemBase:_editableInitView()
+	self._trans = self.viewGO.transform
 end
 
-function var_0_0.setData(arg_34_0, arg_34_1)
-	arg_34_0._mo = arg_34_1
+function RougeSimpleItemBase:setData(mo)
+	self._mo = mo
 end
 
-function var_0_0.refresh(arg_35_0)
-	arg_35_0:onUpdateMO(arg_35_0._mo)
+function RougeSimpleItemBase:refresh()
+	self:onUpdateMO(self._mo)
 end
 
-function var_0_0.onDestroyView(arg_36_0)
-	arg_36_0:removeEventListeners()
-	var_0_0.super.onDestroyView(arg_36_0)
+function RougeSimpleItemBase:onDestroyView()
+	self:removeEventListeners()
+	RougeSimpleItemBase.super.onDestroyView(self)
 end
 
-function var_0_0.setGrayscale(arg_37_0, arg_37_1, arg_37_2)
-	var_0_2.SetGrayscale(arg_37_1, arg_37_2)
+function RougeSimpleItemBase:setGrayscale(go, isGray)
+	UGUIHelper.SetGrayscale(go, isGray)
 end
 
-return var_0_0
+return RougeSimpleItemBase

@@ -1,201 +1,206 @@
-﻿module("modules.logic.dungeon.view.DungeonEquipEntryView", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/DungeonEquipEntryView.lua
 
-local var_0_0 = class("DungeonEquipEntryView", BaseView)
+module("modules.logic.dungeon.view.DungeonEquipEntryView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goscroll = gohelper.findChild(arg_1_0.viewGO, "#go_scroll")
-	arg_1_0._goslider = gohelper.findChild(arg_1_0.viewGO, "#go_slider")
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#go_content")
-	arg_1_0._btnright = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_right")
-	arg_1_0._btnleft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_left")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
+local DungeonEquipEntryView = class("DungeonEquipEntryView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function DungeonEquipEntryView:onInitView()
+	self._goscroll = gohelper.findChild(self.viewGO, "#go_scroll")
+	self._goslider = gohelper.findChild(self.viewGO, "#go_slider")
+	self._gocontent = gohelper.findChild(self.viewGO, "#go_content")
+	self._btnright = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_right")
+	self._btnleft = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_left")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnright:AddClickListener(arg_2_0._btnrightOnClick, arg_2_0)
-	arg_2_0._btnleft:AddClickListener(arg_2_0._btnleftOnClick, arg_2_0)
+function DungeonEquipEntryView:addEvents()
+	self._btnright:AddClickListener(self._btnrightOnClick, self)
+	self._btnleft:AddClickListener(self._btnleftOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnright:RemoveClickListener()
-	arg_3_0._btnleft:RemoveClickListener()
+function DungeonEquipEntryView:removeEvents()
+	self._btnright:RemoveClickListener()
+	self._btnleft:RemoveClickListener()
 end
 
-function var_0_0.playBtnLeftOrRightAudio(arg_4_0)
+function DungeonEquipEntryView:playBtnLeftOrRightAudio()
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_help_switch)
 end
 
-function var_0_0.setTargetPageIndex(arg_5_0, arg_5_1)
-	arg_5_0._pageIndex = arg_5_1
+function DungeonEquipEntryView:setTargetPageIndex(index)
+	self._pageIndex = index
 end
 
-function var_0_0.getTargetPageIndex(arg_6_0)
-	return arg_6_0._pageIndex
+function DungeonEquipEntryView:getTargetPageIndex()
+	return self._pageIndex
 end
 
-function var_0_0._btnleftOnClick(arg_7_0)
-	arg_7_0:setTargetPageIndex(arg_7_0:getTargetPageIndex() - 1)
-	arg_7_0:selectHelpItem()
+function DungeonEquipEntryView:_btnleftOnClick()
+	self:setTargetPageIndex(self:getTargetPageIndex() - 1)
+	self:selectHelpItem()
 end
 
-function var_0_0._btnrightOnClick(arg_8_0)
-	arg_8_0:setTargetPageIndex(arg_8_0:getTargetPageIndex() + 1)
-	arg_8_0:selectHelpItem()
+function DungeonEquipEntryView:_btnrightOnClick()
+	self:setTargetPageIndex(self:getTargetPageIndex() + 1)
+	self:selectHelpItem()
 end
 
-function var_0_0._editableInitView(arg_9_0)
-	gohelper.addUIClickAudio(arg_9_0._btnleft.gameObject, AudioEnum.UI.Play_UI_help_switch)
-	gohelper.addUIClickAudio(arg_9_0._btnright.gameObject, AudioEnum.UI.Play_UI_help_switch)
+function DungeonEquipEntryView:_editableInitView()
+	gohelper.addUIClickAudio(self._btnleft.gameObject, AudioEnum.UI.Play_UI_help_switch)
+	gohelper.addUIClickAudio(self._btnright.gameObject, AudioEnum.UI.Play_UI_help_switch)
 
-	arg_9_0._selectItems = arg_9_0:getUserDataTb_()
-	arg_9_0._helpItems = arg_9_0:getUserDataTb_()
-	arg_9_0._space = recthelper.getWidth(arg_9_0.viewGO.transform) + 400
-	arg_9_0._scroll = SLFramework.UGUI.UIDragListener.Get(arg_9_0._goscroll)
+	self._selectItems = self:getUserDataTb_()
+	self._helpItems = self:getUserDataTb_()
 
-	arg_9_0._scroll:AddDragBeginListener(arg_9_0._onScrollDragBegin, arg_9_0)
-	arg_9_0._scroll:AddDragEndListener(arg_9_0._onScrollDragEnd, arg_9_0)
+	local parentWidth = recthelper.getWidth(self.viewGO.transform)
+
+	self._space = parentWidth + 400
+	self._scroll = SLFramework.UGUI.UIDragListener.Get(self._goscroll)
+
+	self._scroll:AddDragBeginListener(self._onScrollDragBegin, self)
+	self._scroll:AddDragEndListener(self._onScrollDragEnd, self)
 end
 
-function var_0_0._onScrollDragBegin(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_0._scrollStartPos = arg_10_2.position
+function DungeonEquipEntryView:_onScrollDragBegin(param, eventData)
+	self._scrollStartPos = eventData.position
 end
 
-function var_0_0._onScrollDragEnd(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = arg_11_2.position
-	local var_11_1 = var_11_0.x - arg_11_0._scrollStartPos.x
-	local var_11_2 = var_11_0.y - arg_11_0._scrollStartPos.y
+function DungeonEquipEntryView:_onScrollDragEnd(param, eventData)
+	local scrollEndPos = eventData.position
+	local deltaX = scrollEndPos.x - self._scrollStartPos.x
+	local deltaY = scrollEndPos.y - self._scrollStartPos.y
 
-	if math.abs(var_11_1) < math.abs(var_11_2) then
+	if math.abs(deltaX) < math.abs(deltaY) then
 		return
 	end
 
-	if var_11_1 > 100 and arg_11_0._btnleft.gameObject.activeInHierarchy then
+	if deltaX > 100 and self._btnleft.gameObject.activeInHierarchy then
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_help_switch)
-		arg_11_0:setTargetPageIndex(arg_11_0:getTargetPageIndex() - 1)
-		arg_11_0:selectHelpItem()
-	elseif var_11_1 < -100 and arg_11_0._btnright.gameObject.activeInHierarchy then
+		self:setTargetPageIndex(self:getTargetPageIndex() - 1)
+		self:selectHelpItem()
+	elseif deltaX < -100 and self._btnright.gameObject.activeInHierarchy then
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_help_switch)
-		arg_11_0:setTargetPageIndex(arg_11_0:getTargetPageIndex() + 1)
-		arg_11_0:selectHelpItem()
+		self:setTargetPageIndex(self:getTargetPageIndex() + 1)
+		self:selectHelpItem()
 	end
 end
 
-function var_0_0.onUpdateParam(arg_12_0)
+function DungeonEquipEntryView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_13_0)
-	arg_13_0._chapterId = arg_13_0.viewParam
-	arg_13_0._pagesCo = {}
+function DungeonEquipEntryView:onOpen()
+	self._chapterId = self.viewParam
+	self._pagesCo = {}
 
-	local var_13_0 = DungeonConfig.instance:getChapterEpisodeCOList(arg_13_0._chapterId)
+	local list = DungeonConfig.instance:getChapterEpisodeCOList(self._chapterId)
 
-	arg_13_0._episodeCount = #var_13_0
+	self._episodeCount = #list
 
-	local var_13_1 = 0
+	local index = 0
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
-		table.insert(arg_13_0._pagesCo, iter_13_1.id)
+	for i, v in ipairs(list) do
+		table.insert(self._pagesCo, v.id)
 
-		local var_13_2 = DungeonModel.instance:getEpisodeInfo(iter_13_1.id)
+		local info = DungeonModel.instance:getEpisodeInfo(v.id)
 
-		if DungeonModel.instance:hasPassLevel(iter_13_1.id) and var_13_2.challengeCount == 1 then
-			var_13_1 = var_13_1 + 1
+		if DungeonModel.instance:hasPassLevel(v.id) and info.challengeCount == 1 then
+			index = index + 1
 		else
-			arg_13_0._readyChapterId = iter_13_1.id
+			self._readyChapterId = v.id
 
 			break
 		end
 	end
 
-	arg_13_0:setTargetPageIndex(var_13_1 + 1)
-	arg_13_0:setSelectItem()
-	arg_13_0:setHelpItem()
-	arg_13_0:setBtnItem()
-	arg_13_0:selectHelpItem(true)
-	NavigateMgr.instance:addEscape(ViewName.DungeonEquipEntryView, arg_13_0.closeThis, arg_13_0)
+	self:setTargetPageIndex(index + 1)
+	self:setSelectItem()
+	self:setHelpItem()
+	self:setBtnItem()
+	self:selectHelpItem(true)
+	NavigateMgr.instance:addEscape(ViewName.DungeonEquipEntryView, self.closeThis, self)
 end
 
-function var_0_0.setSelectItem(arg_14_0)
-	local var_14_0 = arg_14_0.viewContainer:getSetting().otherRes[1]
+function DungeonEquipEntryView:setSelectItem()
+	local path = self.viewContainer:getSetting().otherRes[1]
 
-	for iter_14_0 = 1, #arg_14_0._pagesCo do
-		local var_14_1 = arg_14_0:getResInst(var_14_0, arg_14_0._goslider, "DungeonEquipEntryViewSelectItem")
-		local var_14_2 = DungeonEquipEntryViewSelectItem.New()
+	for i = 1, #self._pagesCo do
+		local child = self:getResInst(path, self._goslider, "DungeonEquipEntryViewSelectItem")
+		local selectItem = DungeonEquipEntryViewSelectItem.New()
 
-		var_14_2:init({
-			go = var_14_1,
-			index = iter_14_0,
-			config = arg_14_0._pagesCo[iter_14_0],
-			pos = 55 * (iter_14_0 - 0.5 * (#arg_14_0._pagesCo + 1))
+		selectItem:init({
+			go = child,
+			index = i,
+			config = self._pagesCo[i],
+			pos = 55 * (i - 0.5 * (#self._pagesCo + 1))
 		})
-		var_14_2:updateItem(arg_14_0:getTargetPageIndex())
-		table.insert(arg_14_0._selectItems, var_14_2)
+		selectItem:updateItem(self:getTargetPageIndex())
+		table.insert(self._selectItems, selectItem)
 	end
 end
 
-function var_0_0.setHelpItem(arg_15_0)
-	local var_15_0 = arg_15_0.viewContainer:getSetting().otherRes[2]
+function DungeonEquipEntryView:setHelpItem()
+	local path = self.viewContainer:getSetting().otherRes[2]
 
-	for iter_15_0 = 1, #arg_15_0._pagesCo do
-		local var_15_1 = arg_15_0:getResInst(var_15_0, arg_15_0._gocontent, "DungeonEquipEntryItem")
-		local var_15_2 = arg_15_0._space * (iter_15_0 - 1)
+	for i = 1, #self._pagesCo do
+		local child = self:getResInst(path, self._gocontent, "DungeonEquipEntryItem")
+		local pos = self._space * (i - 1)
 
-		transformhelper.setLocalPos(var_15_1.transform, var_15_2, 0, 0)
+		transformhelper.setLocalPos(child.transform, pos, 0, 0)
 
-		local var_15_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_15_1, DungeonEquipEntryItem, {
-			iter_15_0,
-			arg_15_0._episodeCount,
-			arg_15_0._pagesCo[iter_15_0],
-			#arg_15_0._pagesCo
+		local contentItem = MonoHelper.addNoUpdateLuaComOnceToGo(child, DungeonEquipEntryItem, {
+			i,
+			self._episodeCount,
+			self._pagesCo[i],
+			#self._pagesCo
 		})
 
-		table.insert(arg_15_0._helpItems, var_15_3)
+		table.insert(self._helpItems, contentItem)
 	end
 end
 
-function var_0_0.setBtnItem(arg_16_0)
-	local var_16_0 = arg_16_0:getTargetPageIndex()
+function DungeonEquipEntryView:setBtnItem()
+	local index = self:getTargetPageIndex()
 
-	gohelper.setActive(arg_16_0._btnright.gameObject, var_16_0 < #arg_16_0._pagesCo)
-	gohelper.setActive(arg_16_0._btnleft.gameObject, var_16_0 > 1)
+	gohelper.setActive(self._btnright.gameObject, index < #self._pagesCo)
+	gohelper.setActive(self._btnleft.gameObject, index > 1)
 end
 
-function var_0_0.selectHelpItem(arg_17_0, arg_17_1)
-	for iter_17_0, iter_17_1 in pairs(arg_17_0._selectItems) do
-		iter_17_1:updateItem(arg_17_0:getTargetPageIndex())
+function DungeonEquipEntryView:selectHelpItem(skipTween)
+	for _, v in pairs(self._selectItems) do
+		v:updateItem(self:getTargetPageIndex())
 	end
 
-	local var_17_0 = (1 - arg_17_0:getTargetPageIndex()) * arg_17_0._space
+	local x = (1 - self:getTargetPageIndex()) * self._space
 
-	if arg_17_1 then
-		recthelper.setAnchorX(arg_17_0._gocontent.transform, var_17_0)
+	if skipTween then
+		recthelper.setAnchorX(self._gocontent.transform, x)
 	else
-		ZProj.TweenHelper.DOAnchorPosX(arg_17_0._gocontent.transform, var_17_0, 0.25)
+		ZProj.TweenHelper.DOAnchorPosX(self._gocontent.transform, x, 0.25)
 	end
 
-	arg_17_0:setBtnItem()
+	self:setBtnItem()
 end
 
-function var_0_0.onClose(arg_18_0)
+function DungeonEquipEntryView:onClose()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_help_close)
 end
 
-function var_0_0.onDestroyView(arg_19_0)
-	if arg_19_0._selectItems then
-		for iter_19_0, iter_19_1 in pairs(arg_19_0._selectItems) do
-			iter_19_1:destroy()
+function DungeonEquipEntryView:onDestroyView()
+	if self._selectItems then
+		for _, v in pairs(self._selectItems) do
+			v:destroy()
 		end
 
-		arg_19_0._selectItems = nil
+		self._selectItems = nil
 	end
 
-	arg_19_0._scroll:RemoveDragBeginListener()
-	arg_19_0._scroll:RemoveDragEndListener()
+	self._scroll:RemoveDragBeginListener()
+	self._scroll:RemoveDragEndListener()
 end
 
-return var_0_0
+return DungeonEquipEntryView

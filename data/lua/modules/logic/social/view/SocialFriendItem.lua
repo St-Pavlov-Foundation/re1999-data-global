@@ -1,205 +1,214 @@
-﻿module("modules.logic.social.view.SocialFriendItem", package.seeall)
+﻿-- chunkname: @modules/logic/social/view/SocialFriendItem.lua
 
-local var_0_0 = class("SocialFriendItem", ListScrollCellExtend)
+module("modules.logic.social.view.SocialFriendItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "#go_normal")
-	arg_1_0._goskinbg = gohelper.findChild(arg_1_0.viewGO, "#go_skinbg")
-	arg_1_0._gobg = gohelper.findChild(arg_1_0.viewGO, "#go_normal/#go_bg")
-	arg_1_0._imagegobg = gohelper.findChildImage(arg_1_0.viewGO, "#go_normal/#go_bg")
-	arg_1_0._gobgselect = gohelper.findChild(arg_1_0.viewGO, "#go_normal/#go_bgselect")
-	arg_1_0._imagegoselectbg = gohelper.findChildImage(arg_1_0.viewGO, "#go_normal/#go_bgselect")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_click")
-	arg_1_0._goplayericon = gohelper.findChild(arg_1_0.viewGO, "#go_playericon")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "name/#txt_name")
-	arg_1_0._txtnameoffline = gohelper.findChildText(arg_1_0.viewGO, "name/#txt_nameoffline")
-	arg_1_0._txtstatus = gohelper.findChildText(arg_1_0.viewGO, "status/#txt_status")
-	arg_1_0._txtofflinetime = gohelper.findChildText(arg_1_0.viewGO, "status/#txt_offlinetime")
-	arg_1_0._friendreddot = gohelper.findChild(arg_1_0.viewGO, "#go_friendreddot")
-	arg_1_0._goarrow = gohelper.findChild(arg_1_0.viewGO, "#go_arrow")
+local SocialFriendItem = class("SocialFriendItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SocialFriendItem:onInitView()
+	self._gonormal = gohelper.findChild(self.viewGO, "#go_normal")
+	self._goskinbg = gohelper.findChild(self.viewGO, "#go_skinbg")
+	self._gobg = gohelper.findChild(self.viewGO, "#go_normal/#go_bg")
+	self._imagegobg = gohelper.findChildImage(self.viewGO, "#go_normal/#go_bg")
+	self._gobgselect = gohelper.findChild(self.viewGO, "#go_normal/#go_bgselect")
+	self._imagegoselectbg = gohelper.findChildImage(self.viewGO, "#go_normal/#go_bgselect")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_click")
+	self._goplayericon = gohelper.findChild(self.viewGO, "#go_playericon")
+	self._txtname = gohelper.findChildText(self.viewGO, "name/#txt_name")
+	self._txtnameoffline = gohelper.findChildText(self.viewGO, "name/#txt_nameoffline")
+	self._txtstatus = gohelper.findChildText(self.viewGO, "status/#txt_status")
+	self._txtofflinetime = gohelper.findChildText(self.viewGO, "status/#txt_offlinetime")
+	self._friendreddot = gohelper.findChild(self.viewGO, "#go_friendreddot")
+	self._goarrow = gohelper.findChild(self.viewGO, "#go_arrow")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+function SocialFriendItem:addEvents()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
+function SocialFriendItem:removeEvents()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0._btnclickOnClick(arg_4_0)
-	SocialModel.instance:setSelectFriend(arg_4_0._mo.userId)
+function SocialFriendItem:_btnclickOnClick()
+	SocialModel.instance:setSelectFriend(self._mo.userId)
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._playericon = IconMgr.instance:getCommonPlayerIcon(arg_5_0._goplayericon)
+function SocialFriendItem:_editableInitView()
+	self._playericon = IconMgr.instance:getCommonPlayerIcon(self._goplayericon)
 
-	arg_5_0:addEventCb(SocialController.instance, SocialEvent.SelectFriend, arg_5_0._onFriendSelect, arg_5_0)
-	arg_5_0:addEventCb(SocialController.instance, SocialEvent.FriendDescChange, arg_5_0.updateName, arg_5_0)
+	self:addEventCb(SocialController.instance, SocialEvent.SelectFriend, self._onFriendSelect, self)
+	self:addEventCb(SocialController.instance, SocialEvent.FriendDescChange, self.updateName, self)
 end
 
-function var_0_0._refreshUI(arg_6_0)
-	arg_6_0._playericon:onUpdateMO(arg_6_0._mo)
-	arg_6_0._playericon:setShowLevel(true)
+function SocialFriendItem:_refreshUI()
+	self._playericon:onUpdateMO(self._mo)
+	self._playericon:setShowLevel(true)
 
-	local var_6_0 = arg_6_0:_isSelectFriend()
+	local isSelect = self:_isSelectFriend()
 
-	arg_6_0._playericon:isSelectInFriend(var_6_0)
+	self._playericon:isSelectInFriend(isSelect)
 
-	if RedDotModel.instance:getDotInfo(RedDotEnum.DotNode.FriendInfoDetail, tonumber(arg_6_0._mo.userId)) then
-		RedDotController.instance:addRedDot(arg_6_0._friendreddot, RedDotEnum.DotNode.FriendInfoDetail, tonumber(arg_6_0._mo.userId))
+	if RedDotModel.instance:getDotInfo(RedDotEnum.DotNode.FriendInfoDetail, tonumber(self._mo.userId)) then
+		RedDotController.instance:addRedDot(self._friendreddot, RedDotEnum.DotNode.FriendInfoDetail, tonumber(self._mo.userId))
 	end
 
-	gohelper.setActive(arg_6_0._txtstatus.gameObject, tonumber(arg_6_0._mo.time) == 0)
-	gohelper.setActive(arg_6_0._txtofflinetime.gameObject, tonumber(arg_6_0._mo.time) ~= 0)
-	gohelper.setActive(arg_6_0._txtname.gameObject, tonumber(arg_6_0._mo.time) == 0)
-	gohelper.setActive(arg_6_0._txtnameoffline.gameObject, tonumber(arg_6_0._mo.time) ~= 0)
-	arg_6_0._playericon:setPlayerIconGray(tonumber(arg_6_0._mo.time) ~= 0)
+	gohelper.setActive(self._txtstatus.gameObject, tonumber(self._mo.time) == 0)
+	gohelper.setActive(self._txtofflinetime.gameObject, tonumber(self._mo.time) ~= 0)
+	gohelper.setActive(self._txtname.gameObject, tonumber(self._mo.time) == 0)
+	gohelper.setActive(self._txtnameoffline.gameObject, tonumber(self._mo.time) ~= 0)
+	self._playericon:setPlayerIconGray(tonumber(self._mo.time) ~= 0)
 
-	if tonumber(arg_6_0._mo.time) ~= 0 then
-		arg_6_0._txtofflinetime.text = SocialConfig.instance:getStatusText(arg_6_0._mo.time)
+	if tonumber(self._mo.time) ~= 0 then
+		self._txtofflinetime.text = SocialConfig.instance:getStatusText(self._mo.time)
 	end
 
-	arg_6_0:updateName()
+	self:updateName()
 
-	arg_6_0._txtstatus.text = luaLang("social_online")
+	self._txtstatus.text = luaLang("social_online")
 
-	arg_6_0:_loadBg(arg_6_0._mo.bg)
-	arg_6_0:_onFriendSelect()
+	self:_loadBg(self._mo.bg)
+	self:_onFriendSelect()
 end
 
-function var_0_0._loadBg(arg_7_0, arg_7_1)
-	if not arg_7_1 or arg_7_1 == 0 then
-		arg_7_0._hasSkin = false
+function SocialFriendItem:_loadBg(skinId)
+	if not skinId or skinId == 0 then
+		self._hasSkin = false
 	else
-		arg_7_0._hasSkin = true
+		self._hasSkin = true
 
-		if not arg_7_0.lastskinId or arg_7_0.lastskinId ~= arg_7_1 then
-			arg_7_0._skinPath = string.format("ui/viewres/social/socialfrienditem_bg_%s.prefab", arg_7_1)
+		if not self.lastskinId or self.lastskinId ~= skinId then
+			self._skinPath = string.format("ui/viewres/social/socialfrienditem_bg_%s.prefab", skinId)
 
-			arg_7_0:_disposeBg()
+			self:_disposeBg()
 
-			arg_7_0._loader = MultiAbLoader.New()
+			self._loader = MultiAbLoader.New()
 
-			arg_7_0._loader:addPath(arg_7_0._skinPath)
-			arg_7_0._loader:startLoad(arg_7_0._onLoadFinish, arg_7_0)
+			self._loader:addPath(self._skinPath)
+			self._loader:startLoad(self._onLoadFinish, self)
 		end
 	end
 
-	gohelper.setActive(arg_7_0._gonormal, not arg_7_0._hasSkin)
-	gohelper.setActive(arg_7_0._goskinbg, arg_7_0._hasSkin)
+	gohelper.setActive(self._gonormal, not self._hasSkin)
+	gohelper.setActive(self._goskinbg, self._hasSkin)
 end
 
-function var_0_0._disposeBg(arg_8_0)
-	if arg_8_0._loader then
-		arg_8_0._loader:dispose()
+function SocialFriendItem:_disposeBg()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_8_0._loader = nil
+		self._loader = nil
 	end
 
-	if arg_8_0._goskinEffect then
-		gohelper.destroy(arg_8_0._goskinEffect)
+	if self._goskinEffect then
+		gohelper.destroy(self._goskinEffect)
 
-		arg_8_0._goskinEffect = nil
+		self._goskinEffect = nil
 	end
 end
 
-function var_0_0._onLoadFinish(arg_9_0)
-	local var_9_0 = arg_9_0._loader:getAssetItem(arg_9_0._skinPath):GetResource(arg_9_0._skinPath)
+function SocialFriendItem:_onLoadFinish()
+	local assetItem = self._loader:getAssetItem(self._skinPath)
+	local viewPrefab = assetItem:GetResource(self._skinPath)
 
-	arg_9_0._goskinEffect = gohelper.clone(var_9_0, arg_9_0._goskinbg)
-	arg_9_0.lastskinId = arg_9_0._mo.bg
+	self._goskinEffect = gohelper.clone(viewPrefab, self._goskinbg)
+	self.lastskinId = self._mo.bg
 end
 
-function var_0_0.setBgState(arg_10_0, arg_10_1)
-	local var_10_0 = gohelper.findChild(arg_10_1, "online")
-	local var_10_1 = gohelper.findChild(arg_10_1, "offline")
+function SocialFriendItem:setBgState(gobg)
+	local online = gohelper.findChild(gobg, "online")
+	local offline = gohelper.findChild(gobg, "offline")
 
-	if not arg_10_0._isplaycard then
-		local var_10_2 = arg_10_0:_isSelectFriend()
+	if not self._isplaycard then
+		local isSelect = self:_isSelectFriend()
 
-		gohelper.setActive(var_10_1, not var_10_2)
-		gohelper.setActive(var_10_0, var_10_2)
+		gohelper.setActive(offline, not isSelect)
+		gohelper.setActive(online, isSelect)
 	else
-		gohelper.setActive(var_10_1, false)
-		gohelper.setActive(var_10_0, true)
+		gohelper.setActive(offline, false)
+		gohelper.setActive(online, true)
 	end
 end
 
-function var_0_0.selectSkin(arg_11_0, arg_11_1)
-	arg_11_0._isplaycard = true
+function SocialFriendItem:selectSkin(skinid)
+	self._isplaycard = true
 
-	arg_11_0:_loadBg(arg_11_1)
+	self:_loadBg(skinid)
 end
 
-function var_0_0.updateName(arg_12_0, arg_12_1)
-	if arg_12_1 and arg_12_1 ~= arg_12_0._mo.id then
+function SocialFriendItem:updateName(id)
+	if id and id ~= self._mo.id then
 		return
 	end
 
-	local var_12_0 = arg_12_0._mo and arg_12_0._mo.name or ""
+	local name = self._mo and self._mo.name or ""
 
-	if arg_12_0:_isSelectFriend() then
-		if not string.nilorempty(arg_12_0._mo.desc) then
-			arg_12_0._txtname.text = "<size=32><color=#c66030>" .. var_12_0 .. "<color=#5c574d>(" .. arg_12_0._mo.desc .. ")"
-			arg_12_0._txtnameoffline.text = "<size=32><color=#c66030>" .. var_12_0 .. "<color=#5c574d>(" .. arg_12_0._mo.desc .. ")"
+	if self:_isSelectFriend() then
+		if not string.nilorempty(self._mo.desc) then
+			self._txtname.text = "<size=32><color=#c66030>" .. name .. "<color=#5c574d>(" .. self._mo.desc .. ")"
+			self._txtnameoffline.text = "<size=32><color=#c66030>" .. name .. "<color=#5c574d>(" .. self._mo.desc .. ")"
 		else
-			arg_12_0._txtname.text = "<size=38><color=#c66030>" .. var_12_0
-			arg_12_0._txtnameoffline.text = "<size=38><color=#222222>" .. var_12_0
+			self._txtname.text = "<size=38><color=#c66030>" .. name
+			self._txtnameoffline.text = "<size=38><color=#222222>" .. name
 		end
 
-		arg_12_0._txtstatus.text = "<color=#56A165>" .. arg_12_0._txtstatus.text
+		self._txtstatus.text = "<color=#56A165>" .. self._txtstatus.text
 	else
-		if not string.nilorempty(arg_12_0._mo.desc) then
-			arg_12_0._txtname.text = "<size=32><color=#404040>" .. var_12_0 .. "<color=#5c574d>(" .. arg_12_0._mo.desc .. ")"
-			arg_12_0._txtnameoffline.text = "<size=32><color=#222222>" .. var_12_0 .. "<color=#5c574d>(" .. arg_12_0._mo.desc .. ")"
+		if not string.nilorempty(self._mo.desc) then
+			self._txtname.text = "<size=32><color=#404040>" .. name .. "<color=#5c574d>(" .. self._mo.desc .. ")"
+			self._txtnameoffline.text = "<size=32><color=#222222>" .. name .. "<color=#5c574d>(" .. self._mo.desc .. ")"
 		else
-			arg_12_0._txtname.text = "<size=38><color=#404040>" .. var_12_0
-			arg_12_0._txtnameoffline.text = "<size=38><color=#222222>" .. var_12_0
+			self._txtname.text = "<size=38><color=#404040>" .. name
+			self._txtnameoffline.text = "<size=38><color=#222222>" .. name
 		end
 
-		arg_12_0._txtstatus.text = "<color=#4E7656>" .. arg_12_0._txtstatus.text
+		self._txtstatus.text = "<color=#4E7656>" .. self._txtstatus.text
 	end
 end
 
-function var_0_0.onUpdateMO(arg_13_0, arg_13_1)
-	arg_13_0._mo = arg_13_1
+function SocialFriendItem:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_13_0:_refreshUI()
+	self:_refreshUI()
 end
 
-local var_0_1 = Color.New(1, 1, 1, 1)
-local var_0_2 = Color.New(1, 1, 1, 0.7)
+local ColorSelect = Color.New(1, 1, 1, 1)
+local ColorUnSelect = Color.New(1, 1, 1, 0.7)
 
-function var_0_0._onFriendSelect(arg_14_0)
-	local var_14_0 = SocialModel.instance:getSelectFriend()
-	local var_14_1 = arg_14_0._mo.userId == var_14_0
+function SocialFriendItem:_onFriendSelect()
+	local selectFriend = SocialModel.instance:getSelectFriend()
+	local isSelect = self._mo.userId == selectFriend
 
-	gohelper.setActive(arg_14_0._gobg, not var_14_1)
-	gohelper.setActive(arg_14_0._gobgselect, var_14_1)
-	gohelper.setActive(arg_14_0._goarrow, var_14_1)
-	arg_14_0._playericon:isSelectInFriend(arg_14_0:_isSelectFriend())
-	arg_14_0:updateName()
-	arg_14_0:setBgState(arg_14_0._goskinEffect)
+	gohelper.setActive(self._gobg, not isSelect)
+	gohelper.setActive(self._gobgselect, isSelect)
+	gohelper.setActive(self._goarrow, isSelect)
+	self._playericon:isSelectInFriend(self:_isSelectFriend())
+	self:updateName()
+	self:setBgState(self._goskinEffect)
 end
 
-function var_0_0._isSelectFriend(arg_15_0)
-	local var_15_0 = SocialModel.instance:getSelectFriend()
+function SocialFriendItem:_isSelectFriend()
+	local selectFriend = SocialModel.instance:getSelectFriend()
 
-	if arg_15_0._mo.userId == var_15_0 then
+	if self._mo.userId == selectFriend then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.onDestroy(arg_16_0)
-	arg_16_0:removeEventCb(SocialController.instance, SocialEvent.SelectFriend, arg_16_0._onFriendSelect, arg_16_0)
-	arg_16_0:removeEventCb(SocialController.instance, SocialEvent.FriendDescChange, arg_16_0.updateName, arg_16_0)
+function SocialFriendItem:onDestroy()
+	if self._playericon then
+		self._playericon:onDestroy()
+
+		self._playericon = nil
+	end
+
+	self:removeEventCb(SocialController.instance, SocialEvent.SelectFriend, self._onFriendSelect, self)
+	self:removeEventCb(SocialController.instance, SocialEvent.FriendDescChange, self.updateName, self)
 end
 
-return var_0_0
+return SocialFriendItem

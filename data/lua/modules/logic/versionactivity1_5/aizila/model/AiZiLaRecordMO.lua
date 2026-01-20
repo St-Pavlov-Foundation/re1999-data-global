@@ -1,50 +1,52 @@
-﻿module("modules.logic.versionactivity1_5.aizila.model.AiZiLaRecordMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/aizila/model/AiZiLaRecordMO.lua
 
-local var_0_0 = pureTable("AiZiLaRecordMO")
+module("modules.logic.versionactivity1_5.aizila.model.AiZiLaRecordMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1.recordId
-	arg_1_0.config = arg_1_1
-	arg_1_0._groupMOList = {}
-	arg_1_0._actId = arg_1_1.activityId
-	arg_1_0._recordId = arg_1_1.recordId
-	arg_1_0._eventMOList = {}
+local AiZiLaRecordMO = pureTable("AiZiLaRecordMO")
 
-	local var_1_0 = string.split(arg_1_1.unLockDesc, "|") or {}
-	local var_1_1 = GameUtil.splitString2(arg_1_1.eventIds, true) or {}
-	local var_1_2 = AiZiLaConfig.instance
+function AiZiLaRecordMO:init(recordCfg)
+	self.id = recordCfg.recordId
+	self.config = recordCfg
+	self._groupMOList = {}
+	self._actId = recordCfg.activityId
+	self._recordId = recordCfg.recordId
+	self._eventMOList = {}
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_1) do
-		local var_1_3 = AiZiLaRecordEventGroupMO.New()
+	local unLockDesc = string.split(recordCfg.unLockDesc, "|") or {}
+	local eventIdGroups = GameUtil.splitString2(recordCfg.eventIds, true) or {}
+	local tAiZiLaConfig = AiZiLaConfig.instance
 
-		var_1_3:init(iter_1_0, var_1_0[iter_1_0], arg_1_1)
-		table.insert(arg_1_0._groupMOList, var_1_3)
+	for i, eventIds in ipairs(eventIdGroups) do
+		local groupMO = AiZiLaRecordEventGroupMO.New()
 
-		for iter_1_2, iter_1_3 in ipairs(iter_1_1) do
-			local var_1_4 = var_1_2:getEventCo(arg_1_0._actId, iter_1_3)
+		groupMO:init(i, unLockDesc[i], recordCfg)
+		table.insert(self._groupMOList, groupMO)
 
-			if var_1_4 then
-				local var_1_5 = AiZiLaRecordEventMO.New()
+		for _, eventId in ipairs(eventIds) do
+			local eventCfg = tAiZiLaConfig:getEventCo(self._actId, eventId)
 
-				var_1_5:init(var_1_4)
-				var_1_3:addEventMO(var_1_5)
-				table.insert(arg_1_0._eventMOList, var_1_5)
+			if eventCfg then
+				local eventMO = AiZiLaRecordEventMO.New()
+
+				eventMO:init(eventCfg)
+				groupMO:addEventMO(eventMO)
+				table.insert(self._eventMOList, eventMO)
 			else
-				logError(string.format("export_事件记录 activity:%s,eventId:%s 找不到", arg_1_0._actId, iter_1_3))
+				logError(string.format("export_事件记录 activity:%s,eventId:%s 找不到", self._actId, eventId))
 			end
 		end
 	end
 
-	local var_1_6 = #var_1_1 - #var_1_0
+	local num = #eventIdGroups - #unLockDesc
 
-	if var_1_6 > 0 then
-		logError(string.format("export_事件记录 activity:%s,recordId:%s unLockDesc数量少：%s", arg_1_0._actId, arg_1_0._recordId, var_1_6))
+	if num > 0 then
+		logError(string.format("export_事件记录 activity:%s,recordId:%s unLockDesc数量少：%s", self._actId, self._recordId, num))
 	end
 end
 
-function var_0_0.isUnLock(arg_2_0)
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0._groupMOList) do
-		if iter_2_1:isUnLock() then
+function AiZiLaRecordMO:isUnLock()
+	for i, groupMO in ipairs(self._groupMOList) do
+		if groupMO:isUnLock() then
 			return true
 		end
 	end
@@ -52,9 +54,9 @@ function var_0_0.isUnLock(arg_2_0)
 	return false
 end
 
-function var_0_0.isHasRed(arg_3_0)
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0._groupMOList) do
-		if iter_3_1:isHasRed() then
+function AiZiLaRecordMO:isHasRed()
+	for i, groupMO in ipairs(self._groupMOList) do
+		if groupMO:isHasRed() then
 			return true
 		end
 	end
@@ -62,22 +64,22 @@ function var_0_0.isHasRed(arg_3_0)
 	return false
 end
 
-function var_0_0.finishRed(arg_4_0)
-	for iter_4_0, iter_4_1 in ipairs(arg_4_0._groupMOList) do
-		iter_4_1:finishRed()
+function AiZiLaRecordMO:finishRed()
+	for i, groupMO in ipairs(self._groupMOList) do
+		groupMO:finishRed()
 	end
 end
 
-function var_0_0.getRedUid(arg_5_0)
-	return arg_5_0.id
+function AiZiLaRecordMO:getRedUid()
+	return self.id
 end
 
-function var_0_0.getRroupMOList(arg_6_0)
-	return arg_6_0._groupMOList
+function AiZiLaRecordMO:getRroupMOList()
+	return self._groupMOList
 end
 
-function var_0_0.getEventMOList(arg_7_0)
-	return arg_7_0._eventMOList
+function AiZiLaRecordMO:getEventMOList()
+	return self._eventMOList
 end
 
-return var_0_0
+return AiZiLaRecordMO

@@ -1,127 +1,131 @@
-﻿module("modules.logic.room.model.layout.RoomLayoutItemListModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/layout/RoomLayoutItemListModel.lua
 
-local var_0_0 = class("RoomLayoutItemListModel", ListScrollModel)
+module("modules.logic.room.model.layout.RoomLayoutItemListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:clear()
+local RoomLayoutItemListModel = class("RoomLayoutItemListModel", ListScrollModel)
+
+function RoomLayoutItemListModel:onInit()
+	self:clear()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clear()
+function RoomLayoutItemListModel:reInit()
+	self:clear()
 end
 
-function var_0_0.init(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	local var_3_0 = {}
+function RoomLayoutItemListModel:init(blockInfos, buildingInfos, isBirthdayBlock)
+	local list = {}
 
-	arg_3_0._isBirthdayBlock = arg_3_3 and true or false
+	self._isBirthdayBlock = isBirthdayBlock and true or false
 
-	local var_3_1, var_3_2 = arg_3_0:_findBlockInfos(arg_3_1)
-	local var_3_3 = arg_3_0:_findbuildingInfos(arg_3_2)
+	local packageDict, roleBirthdayList = self:_findBlockInfos(blockInfos)
+	local buildingDict = self:_findbuildingInfos(buildingInfos)
 
-	for iter_3_0, iter_3_1 in pairs(var_3_1) do
-		local var_3_4 = RoomLayoutItemMO.New()
+	for packageId, blockNum in pairs(packageDict) do
+		local mo = RoomLayoutItemMO.New()
 
-		var_3_4:init(#var_3_0 + 1, iter_3_0, MaterialEnum.MaterialType.BlockPackage, iter_3_1)
-		table.insert(var_3_0, var_3_4)
+		mo:init(#list + 1, packageId, MaterialEnum.MaterialType.BlockPackage, blockNum)
+		table.insert(list, mo)
 	end
 
-	for iter_3_2, iter_3_3 in ipairs(var_3_2) do
-		local var_3_5 = RoomLayoutItemMO.New()
+	for i, blockId in ipairs(roleBirthdayList) do
+		local mo = RoomLayoutItemMO.New()
 
-		var_3_5:init(#var_3_0 + 1, iter_3_3, MaterialEnum.MaterialType.SpecialBlock, 1)
-		table.insert(var_3_0, var_3_5)
+		mo:init(#list + 1, blockId, MaterialEnum.MaterialType.SpecialBlock, 1)
+		table.insert(list, mo)
 	end
 
-	for iter_3_4, iter_3_5 in pairs(var_3_3) do
-		for iter_3_6 = 1, iter_3_5 do
-			local var_3_6 = RoomLayoutItemMO.New()
+	for buildingId, num in pairs(buildingDict) do
+		for itemIndex = 1, num do
+			local mo = RoomLayoutItemMO.New()
 
-			var_3_6:init(#var_3_0 + 1, iter_3_4, MaterialEnum.MaterialType.Building, 1)
+			mo:init(#list + 1, buildingId, MaterialEnum.MaterialType.Building, 1)
 
-			var_3_6.itemIndex = iter_3_6
+			mo.itemIndex = itemIndex
 
-			table.insert(var_3_0, var_3_6)
+			table.insert(list, mo)
 		end
 	end
 
-	table.sort(var_3_0, var_0_0.sortFuc)
-	arg_3_0:setList(var_3_0)
+	table.sort(list, RoomLayoutItemListModel.sortFuc)
+	self:setList(list)
 end
 
-function var_0_0.resortList(arg_4_0)
-	local var_4_0 = arg_4_0:getList()
+function RoomLayoutItemListModel:resortList()
+	local list = self:getList()
 
-	table.sort(var_4_0, var_0_0.sortFuc)
-	arg_4_0:setList(var_4_0)
+	table.sort(list, RoomLayoutItemListModel.sortFuc)
+	self:setList(list)
 end
 
-function var_0_0._findBlockInfos(arg_5_0, arg_5_1)
-	local var_5_0, var_5_1 = RoomLayoutHelper.findBlockInfos(arg_5_1, arg_5_0._isBirthdayBlock)
+function RoomLayoutItemListModel:_findBlockInfos(blockInfos)
+	local packageDict, roleBirthdayList = RoomLayoutHelper.findBlockInfos(blockInfos, self._isBirthdayBlock)
 
-	return var_5_0, var_5_1
+	return packageDict, roleBirthdayList
 end
 
-function var_0_0._findbuildingInfos(arg_6_0, arg_6_1)
-	return (RoomLayoutHelper.findbuildingInfos(arg_6_1))
+function RoomLayoutItemListModel:_findbuildingInfos(buildingInfos)
+	local buildingDict = RoomLayoutHelper.findbuildingInfos(buildingInfos)
+
+	return buildingDict
 end
 
-function var_0_0.sortFuc(arg_7_0, arg_7_1)
-	local var_7_0 = var_0_0._getLackOrder(arg_7_0)
-	local var_7_1 = var_0_0._getLackOrder(arg_7_1)
+function RoomLayoutItemListModel.sortFuc(a, b)
+	local aLackOrder = RoomLayoutItemListModel._getLackOrder(a)
+	local bLackOrder = RoomLayoutItemListModel._getLackOrder(b)
 
-	if var_7_0 ~= var_7_1 then
-		return var_7_0 < var_7_1
+	if aLackOrder ~= bLackOrder then
+		return aLackOrder < bLackOrder
 	end
 
-	local var_7_2 = var_0_0._getItemTypeOrder(arg_7_0)
-	local var_7_3 = var_0_0._getItemTypeOrder(arg_7_1)
+	local aTypeOrder = RoomLayoutItemListModel._getItemTypeOrder(a)
+	local bTypeOrder = RoomLayoutItemListModel._getItemTypeOrder(b)
 
-	if var_7_2 ~= var_7_3 then
-		return var_7_2 < var_7_3
+	if aTypeOrder ~= bTypeOrder then
+		return aTypeOrder < bTypeOrder
 	end
 
-	local var_7_4 = arg_7_0:getItemConfig()
-	local var_7_5 = arg_7_1:getItemConfig()
-	local var_7_6 = var_7_4.rare or 0
-	local var_7_7 = var_7_5.rare or 0
+	local aCfg = a:getItemConfig()
+	local bCfg = b:getItemConfig()
+	local aRare = aCfg.rare or 0
+	local bRare = bCfg.rare or 0
 
-	if var_7_6 ~= var_7_7 then
-		return var_7_7 < var_7_6
+	if aRare ~= bRare then
+		return bRare < aRare
 	end
 
-	if arg_7_0:isBlockPackage() and arg_7_1:isBlockPackage() and arg_7_0.itemNum ~= arg_7_1.itemNum then
-		return arg_7_0.itemNum > arg_7_1.itemNum
+	if a:isBlockPackage() and b:isBlockPackage() and a.itemNum ~= b.itemNum then
+		return a.itemNum > b.itemNum
 	end
 
-	if arg_7_0:isBuilding() and arg_7_1:isBuilding() and var_7_4.buildDegree ~= var_7_5.buildDegree then
-		return var_7_4.buildDegree > var_7_5.buildDegree
+	if a:isBuilding() and b:isBuilding() and aCfg.buildDegree ~= bCfg.buildDegree then
+		return aCfg.buildDegree > bCfg.buildDegree
 	end
 
-	if arg_7_0.itemId ~= arg_7_1.itemId then
-		return arg_7_0.itemId < arg_7_1.itemId
+	if a.itemId ~= b.itemId then
+		return a.itemId < b.itemId
 	end
 end
 
-function var_0_0._getLackOrder(arg_8_0)
-	if arg_8_0:isLack() then
+function RoomLayoutItemListModel._getLackOrder(a)
+	if a:isLack() then
 		return 1
 	end
 
 	return 2
 end
 
-function var_0_0._getItemTypeOrder(arg_9_0)
-	if arg_9_0:isBlockPackage() then
+function RoomLayoutItemListModel._getItemTypeOrder(a)
+	if a:isBlockPackage() then
 		return 1
-	elseif arg_9_0:isSpecialBlock() then
+	elseif a:isSpecialBlock() then
 		return 2
-	elseif arg_9_0:isBuilding() then
+	elseif a:isBuilding() then
 		return 3
 	end
 
 	return 100
 end
 
-var_0_0.instance = var_0_0.New()
+RoomLayoutItemListModel.instance = RoomLayoutItemListModel.New()
 
-return var_0_0
+return RoomLayoutItemListModel

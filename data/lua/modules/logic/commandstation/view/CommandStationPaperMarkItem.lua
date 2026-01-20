@@ -1,77 +1,79 @@
-﻿module("modules.logic.commandstation.view.CommandStationPaperMarkItem", package.seeall)
+﻿-- chunkname: @modules/logic/commandstation/view/CommandStationPaperMarkItem.lua
 
-local var_0_0 = class("CommandStationPaperMarkItem", LuaCompBase)
+module("modules.logic.commandstation.view.CommandStationPaperMarkItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.isAfter = arg_1_1.after
-	arg_1_0.style = arg_1_1.style
+local CommandStationPaperMarkItem = class("CommandStationPaperMarkItem", LuaCompBase)
+
+function CommandStationPaperMarkItem:ctor(param)
+	self.isAfter = param.after
+	self.style = param.style
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
-	arg_2_0.transform = arg_2_1.transform
-	arg_2_0._loader = PrefabInstantiate.Create(arg_2_1)
+function CommandStationPaperMarkItem:init(go)
+	self.go = go
+	self.transform = go.transform
+	self._loader = PrefabInstantiate.Create(go)
 
-	arg_2_0._loader:startLoad(arg_2_0:getResPath(), arg_2_0._onLoadedFinish, arg_2_0)
+	self._loader:startLoad(self:getResPath(), self._onLoadedFinish, self)
 end
 
-function var_0_0.getResPath(arg_3_0)
-	if arg_3_0.isAfter then
-		return string.format("ui/viewres/commandstation/stickeritem/aftermarkitem_stk%s.prefab", arg_3_0.style)
+function CommandStationPaperMarkItem:getResPath()
+	if self.isAfter then
+		return string.format("ui/viewres/commandstation/stickeritem/aftermarkitem_stk%s.prefab", self.style)
 	else
-		return string.format("ui/viewres/commandstation/stickeritem/beforemarkitem_tuhei%s.prefab", arg_3_0.style)
+		return string.format("ui/viewres/commandstation/stickeritem/beforemarkitem_tuhei%s.prefab", self.style)
 	end
 end
 
-function var_0_0._onLoadedFinish(arg_4_0)
-	local var_4_0 = arg_4_0._loader:getInstGO()
+function CommandStationPaperMarkItem:_onLoadedFinish()
+	local go = self._loader:getInstGO()
 
-	arg_4_0._anim = gohelper.findChildAnim(var_4_0, "")
-	arg_4_0._anim.keepAnimatorControllerStateOnDisable = true
+	self._anim = gohelper.findChildAnim(go, "")
+	self._anim.keepAnimatorStateOnDisable = true
 
-	arg_4_0:playAnim(arg_4_0._animType)
+	self:playAnim(self._animType)
 end
 
-function var_0_0.playAnim(arg_5_0, arg_5_1)
-	if not arg_5_1 then
+function CommandStationPaperMarkItem:playAnim(type)
+	if not type then
 		return
 	end
 
-	arg_5_0._animType = arg_5_1
+	self._animType = type
 
-	local var_5_0 = arg_5_0._anim
+	local anim = self._anim
 
-	if not var_5_0 then
+	if not anim then
 		return
 	end
 
-	if arg_5_0.isAfter then
-		if arg_5_0._animType == 1 then
-			var_5_0:Play("in", 0, 0)
+	if self.isAfter then
+		if self._animType == 1 then
+			anim:Play("in", 0, 0)
 
-			var_5_0.speed = 0
-		elseif arg_5_0._animType == 2 then
-			var_5_0:Play("in", 0, 0)
+			anim.speed = 0
+		elseif self._animType == 2 then
+			anim:Play("in", 0, 0)
 
-			var_5_0.speed = 1
+			anim.speed = 1
 		else
-			var_5_0:Play("idle", 0, 0)
+			anim:Play("idle", 0, 0)
 		end
-	elseif arg_5_0._animType == 1 then
-		var_5_0:Play("idle", 0, 0)
-	elseif arg_5_0._animType == 2 then
-		var_5_0:Play("out", 0, 0)
+	elseif self._animType == 1 then
+		anim:Play("idle", 0, 0)
+	elseif self._animType == 2 then
+		anim:Play("out", 0, 0)
 	else
-		var_5_0:Play("out", 0, 1)
+		anim:Play("out", 0, 1)
 	end
 end
 
-function var_0_0.destroy(arg_6_0)
-	if arg_6_0._loader then
-		arg_6_0._loader:dispose()
+function CommandStationPaperMarkItem:destroy()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_6_0._loader = nil
+		self._loader = nil
 	end
 end
 
-return var_0_0
+return CommandStationPaperMarkItem

@@ -1,129 +1,133 @@
-﻿module("modules.logic.versionactivity1_3.va3chess.game.effect.Va3ChessSleepMonsterEffect", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/va3chess/game/effect/Va3ChessSleepMonsterEffect.lua
 
-local var_0_0 = class("Va3ChessSleepMonsterEffect", Va3ChessEffectBase)
+module("modules.logic.versionactivity1_3.va3chess.game.effect.Va3ChessSleepMonsterEffect", package.seeall)
 
-function var_0_0.refreshEffect(arg_1_0)
+local Va3ChessSleepMonsterEffect = class("Va3ChessSleepMonsterEffect", Va3ChessEffectBase)
+
+function Va3ChessSleepMonsterEffect:refreshEffect()
 	return
 end
 
-function var_0_0.onDispose(arg_2_0)
+function Va3ChessSleepMonsterEffect:onDispose()
 	return
 end
 
-function var_0_0.setSleep(arg_3_0, arg_3_1)
-	arg_3_0:_setSleepAnim(arg_3_1, true)
+function Va3ChessSleepMonsterEffect:setSleep(num)
+	self:_setSleepAnim(num, true)
 end
 
-function var_0_0._setSleepAnim(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_0.isLoadFinish and arg_4_0._target.avatar then
-		local var_4_0 = arg_4_0._target.avatar
-		local var_4_1 = arg_4_1 <= 0
+function Va3ChessSleepMonsterEffect:_setSleepAnim(num, isPlayAnim)
+	if self.isLoadFinish and self._target.avatar then
+		local avatar = self._target.avatar
+		local isZero = num <= 0
 
-		if arg_4_0._lastIsZreo ~= var_4_1 then
-			arg_4_0._lastIsZreo = var_4_1
+		if self._lastIsZreo ~= isZero then
+			self._lastIsZreo = isZero
 
-			gohelper.setActive(var_4_0.goNumber, not var_4_1)
-			gohelper.setActive(var_4_0.goSleepB, not var_4_1)
-			gohelper.setActive(var_4_0.goSleepA, var_4_1)
-			gohelper.setActive(var_4_0.goTanhao, var_4_1)
+			gohelper.setActive(avatar.goNumber, not isZero)
+			gohelper.setActive(avatar.goSleepB, not isZero)
+			gohelper.setActive(avatar.goSleepA, isZero)
+			gohelper.setActive(avatar.goTanhao, isZero)
 
-			if arg_4_2 then
-				var_4_0.animatorSleep:Play(var_4_1 and "big" or "little")
+			if isPlayAnim then
+				avatar.animatorSleep:Play(isZero and "big" or "little")
 			end
 
-			if arg_4_2 and var_4_1 then
+			if isPlayAnim and isZero then
 				AudioMgr.instance:trigger(AudioEnum.Va3Aact120.play_ui_molu_monster_awake)
 			end
 		end
 
-		if not var_4_1 then
-			local var_4_2 = Mathf.Floor(arg_4_1 / 10) % 10
-			local var_4_3 = arg_4_1 % 10
+		if not isZero then
+			local num1 = Mathf.Floor(num / 10) % 10
+			local num2 = num % 10
 
-			if arg_4_1 < 10 then
-				var_4_2 = var_4_3
-				var_4_3 = 0
+			if num < 10 then
+				num1 = num2
+				num2 = 0
 			end
 
-			gohelper.setActive(var_4_0.meshEffNum2, arg_4_1 >= 10)
+			gohelper.setActive(avatar.meshEffNum2, num >= 10)
 
-			if arg_4_0._lastNum1 ~= var_4_2 then
-				arg_4_0._lastNum1 = var_4_2
+			if self._lastNum1 ~= num1 then
+				self._lastNum1 = num1
 
-				arg_4_0:_setMeshNum(var_4_0.meshEffNum1, var_4_0.numPropertyBlock, var_4_2)
+				self:_setMeshNum(avatar.meshEffNum1, avatar.numPropertyBlock, num1)
 			end
 
-			if arg_4_0._lastNum2 ~= var_4_3 then
-				arg_4_0._lastNum2 = var_4_3
+			if self._lastNum2 ~= num2 then
+				self._lastNum2 = num2
 
-				arg_4_0:_setMeshNum(var_4_0.meshEffNum2, var_4_0.numPropertyBlock, var_4_3)
+				self:_setMeshNum(avatar.meshEffNum2, avatar.numPropertyBlock, num2)
 			end
 		end
 
-		arg_4_0._target:getHandler():setAlertActive(var_4_1)
+		local handler = self._target:getHandler()
+
+		handler:setAlertActive(isZero)
 	end
 end
 
-function var_0_0._getOffsetByNum(arg_5_0, arg_5_1)
-	if arg_5_1 >= 0 and arg_5_1 <= 9 then
-		return arg_5_1 * 0.1
+function Va3ChessSleepMonsterEffect:_getOffsetByNum(num)
+	if num >= 0 and num <= 9 then
+		return num * 0.1
 	end
 
 	return 1
 end
 
-function var_0_0._setMeshNum(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	local var_6_0 = arg_6_0:_getOffsetByNum(arg_6_3 - 1)
+function Va3ChessSleepMonsterEffect:_setMeshNum(meshRenderer, propertyBlock, num)
+	local offsetX = self:_getOffsetByNum(num - 1)
 
-	arg_6_2:Clear()
-	arg_6_2:SetVector("_MainTex_ST", Vector4.New(0.1, 1, var_6_0, 0))
-	arg_6_1:SetPropertyBlock(arg_6_2)
+	propertyBlock:Clear()
+	propertyBlock:SetVector("_MainTex_ST", Vector4.New(0.1, 1, offsetX, 0))
+	meshRenderer:SetPropertyBlock(propertyBlock)
 end
 
-function var_0_0.onAvatarLoaded(arg_7_0)
-	local var_7_0 = arg_7_0._loader
+function Va3ChessSleepMonsterEffect:onAvatarLoaded()
+	local loader = self._loader
 
-	if not arg_7_0._loader then
+	if not self._loader then
 		return
 	end
 
-	local var_7_1 = var_7_0:getInstGO()
+	local go = loader:getInstGO()
 
-	if not gohelper.isNil(var_7_1) then
-		local var_7_2 = arg_7_0._target.avatar
-		local var_7_3 = gohelper.findChild(var_7_1, "vx_tracked")
-		local var_7_4 = gohelper.findChild(var_7_1, "vx_number")
-		local var_7_5 = gohelper.findChild(var_7_1, "icon_tanhao")
+	if not gohelper.isNil(go) then
+		local avatar = self._target.avatar
+		local goTrack = gohelper.findChild(go, "vx_tracked")
+		local goNumber = gohelper.findChild(go, "vx_number")
+		local goTanhao = gohelper.findChild(go, "icon_tanhao")
 
-		var_7_2.meshEffNum1 = gohelper.findChild(var_7_1, "vx_number/1"):GetComponent(Va3ChessEnum.ComponentType.MeshRenderer)
-		var_7_2.meshEffNum2 = gohelper.findChild(var_7_1, "vx_number/2"):GetComponent(Va3ChessEnum.ComponentType.MeshRenderer)
-		var_7_2.meshEffNum1.material = UnityEngine.Material.New(var_7_2.meshEffNum1.material)
-		var_7_2.meshEffNum2.material = UnityEngine.Material.New(var_7_2.meshEffNum2.material)
+		avatar.meshEffNum1 = gohelper.findChild(go, "vx_number/1"):GetComponent(Va3ChessEnum.ComponentType.MeshRenderer)
+		avatar.meshEffNum2 = gohelper.findChild(go, "vx_number/2"):GetComponent(Va3ChessEnum.ComponentType.MeshRenderer)
+		avatar.meshEffNum1.material = UnityEngine.Material.New(avatar.meshEffNum1.material)
+		avatar.meshEffNum2.material = UnityEngine.Material.New(avatar.meshEffNum2.material)
 
-		gohelper.setActive(var_7_2.goTrack, false)
-		gohelper.setActive(var_7_3, false)
-		gohelper.setActive(var_7_4, false)
+		gohelper.setActive(avatar.goTrack, false)
+		gohelper.setActive(goTrack, false)
+		gohelper.setActive(goNumber, false)
 
-		var_7_2.goTrack = var_7_3
-		var_7_2.goNumber = var_7_4
-		var_7_2.goTanhao = var_7_5
-		var_7_2.numPropertyBlock = UnityEngine.MaterialPropertyBlock.New()
+		avatar.goTrack = goTrack
+		avatar.goNumber = goNumber
+		avatar.goTanhao = goTanhao
+		avatar.numPropertyBlock = UnityEngine.MaterialPropertyBlock.New()
 
-		local var_7_6 = var_7_2.loader:getInstGO()
+		local goAvatar = avatar.loader:getInstGO()
 
-		var_7_2.goSleepA = gohelper.findChild(var_7_6, "a")
-		var_7_2.goSleepB = gohelper.findChild(var_7_6, "b")
-		var_7_2.animatorSleep = var_7_6:GetComponent(Va3ChessEnum.ComponentType.Animator)
+		avatar.goSleepA = gohelper.findChild(goAvatar, "a")
+		avatar.goSleepB = gohelper.findChild(goAvatar, "b")
+		avatar.animatorSleep = goAvatar:GetComponent(Va3ChessEnum.ComponentType.Animator)
 
-		gohelper.setActive(var_7_2.goSleepA, false)
+		gohelper.setActive(avatar.goSleepA, false)
 
-		local var_7_7 = Va3ChessGameModel.instance:getObjectDataById(arg_7_0._target.id)
-		local var_7_8 = var_7_7 and var_7_7.data
+		local mo = Va3ChessGameModel.instance:getObjectDataById(self._target.id)
+		local data = mo and mo.data
 
-		if var_7_8 and var_7_8.attributes and var_7_8.attributes.sleep then
-			arg_7_0:_setSleepAnim(var_7_8.attributes.sleep)
+		if data and data.attributes and data.attributes.sleep then
+			self:_setSleepAnim(data.attributes.sleep)
 		end
 	end
 end
 
-return var_0_0
+return Va3ChessSleepMonsterEffect

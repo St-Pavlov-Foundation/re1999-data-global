@@ -1,48 +1,50 @@
-﻿module("modules.logic.versionactivity3_1.enter.view.subview.V3a1_v2a4_ReactivityEnterview", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/enter/view/subview/V3a1_v2a4_ReactivityEnterview.lua
 
-local var_0_0 = class("V3a1_v2a4_ReactivityEnterview", ReactivityEnterview)
+module("modules.logic.versionactivity3_1.enter.view.subview.V3a1_v2a4_ReactivityEnterview", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "img/#simage_bg")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "logo/#txt_dec")
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "logo/actbg/#txt_time")
-	arg_1_0._btnEnter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "entrance/#btn_enter")
-	arg_1_0._btnEnd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "entrance/#btn_Finished")
-	arg_1_0._btnLock = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "entrance/#btn_Locked")
-	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "entrance/#btn_enter/#go_reddot")
-	arg_1_0._txtlockedtips = gohelper.findChildText(arg_1_0.viewGO, "entrance/#btn_enter/locked/#txt_lockedtips")
-	arg_1_0._btnstore = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "entrance/#btn_store")
-	arg_1_0._txtNum = gohelper.findChildText(arg_1_0.viewGO, "entrance/#btn_store/normal/#txt_num")
-	arg_1_0._gotime = gohelper.findChild(arg_1_0.viewGO, "entrance/#btn_store/#go_time")
-	arg_1_0._txtstoretime = gohelper.findChildText(arg_1_0.viewGO, "entrance/#btn_store/#go_time/#txt_time")
-	arg_1_0._btnExchange = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "entrance/#btn_Exchange")
-	arg_1_0.rewardItems = {}
+local V3a1_v2a4_ReactivityEnterview = class("V3a1_v2a4_ReactivityEnterview", ReactivityEnterview)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V3a1_v2a4_ReactivityEnterview:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "img/#simage_bg")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "logo/#txt_dec")
+	self._txttime = gohelper.findChildText(self.viewGO, "logo/actbg/#txt_time")
+	self._btnEnter = gohelper.findChildButtonWithAudio(self.viewGO, "entrance/#btn_enter")
+	self._btnEnd = gohelper.findChildButtonWithAudio(self.viewGO, "entrance/#btn_Finished")
+	self._btnLock = gohelper.findChildButtonWithAudio(self.viewGO, "entrance/#btn_Locked")
+	self._goreddot = gohelper.findChild(self.viewGO, "entrance/#btn_enter/#go_reddot")
+	self._txtlockedtips = gohelper.findChildText(self.viewGO, "entrance/#btn_enter/locked/#txt_lockedtips")
+	self._btnstore = gohelper.findChildButtonWithAudio(self.viewGO, "entrance/#btn_store")
+	self._txtNum = gohelper.findChildText(self.viewGO, "entrance/#btn_store/normal/#txt_num")
+	self._gotime = gohelper.findChild(self.viewGO, "entrance/#btn_store/#go_time")
+	self._txtstoretime = gohelper.findChildText(self.viewGO, "entrance/#btn_store/#go_time/#txt_time")
+	self._btnExchange = gohelper.findChildButtonWithAudio(self.viewGO, "entrance/#btn_Exchange")
+	self.rewardItems = {}
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnstore:AddClickListener(arg_2_0._onClickStoreBtn, arg_2_0)
-	arg_2_0._btnEnter:AddClickListener(arg_2_0._onClickEnter, arg_2_0)
-	arg_2_0._btnExchange:AddClickListener(arg_2_0._onClickExchange, arg_2_0)
-	arg_2_0._btnEnd:AddClickListener(arg_2_0._onClickEnter, arg_2_0)
+function V3a1_v2a4_ReactivityEnterview:addEvents()
+	self._btnstore:AddClickListener(self._onClickStoreBtn, self)
+	self._btnEnter:AddClickListener(self._onClickEnter, self)
+	self._btnExchange:AddClickListener(self._onClickExchange, self)
+	self._btnEnd:AddClickListener(self._onClickEnter, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnstore:RemoveClickListener()
-	arg_3_0._btnEnter:RemoveClickListener()
-	arg_3_0._btnExchange:RemoveClickListener()
-	arg_3_0._btnEnd:RemoveClickListener()
+function V3a1_v2a4_ReactivityEnterview:removeEvents()
+	self._btnstore:RemoveClickListener()
+	self._btnEnter:RemoveClickListener()
+	self._btnExchange:RemoveClickListener()
+	self._btnEnd:RemoveClickListener()
 end
 
-function var_0_0._onClickEnter(arg_4_0)
-	local var_4_0, var_4_1, var_4_2 = ActivityHelper.getActivityStatusAndToast(arg_4_0.actId)
+function V3a1_v2a4_ReactivityEnterview:_onClickEnter()
+	local status, toastId, paramList = ActivityHelper.getActivityStatusAndToast(self.actId)
 
-	if var_4_0 ~= ActivityEnum.ActivityStatus.Normal then
-		if var_4_1 then
-			GameFacade.showToastWithTableParam(var_4_1, var_4_2)
+	if status ~= ActivityEnum.ActivityStatus.Normal then
+		if toastId then
+			GameFacade.showToastWithTableParam(toastId, paramList)
 		end
 
 		return
@@ -51,16 +53,16 @@ function var_0_0._onClickEnter(arg_4_0)
 	VersionActivity2_4DungeonController.instance:openVersionActivityDungeonMapView()
 end
 
-function var_0_0.initRedDot(arg_5_0)
-	if arg_5_0.actId then
+function V3a1_v2a4_ReactivityEnterview:initRedDot()
+	if self.actId then
 		return
 	end
 
-	arg_5_0.actId = VersionActivity3_1Enum.ActivityId.Reactivity
+	self.actId = VersionActivity3_1Enum.ActivityId.Reactivity
 
-	local var_5_0 = ActivityConfig.instance:getActivityCo(arg_5_0.actId)
+	local actCo = ActivityConfig.instance:getActivityCo(self.actId)
 
-	RedDotController.instance:addRedDot(arg_5_0._goreddot, var_5_0.redDotId)
+	RedDotController.instance:addRedDot(self._goreddot, actCo.redDotId)
 end
 
-return var_0_0
+return V3a1_v2a4_ReactivityEnterview

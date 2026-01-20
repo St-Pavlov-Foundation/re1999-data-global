@@ -1,9 +1,11 @@
-﻿module("modules.logic.ressplit.work.ResSplitExportWork", package.seeall)
+﻿-- chunkname: @modules/logic/ressplit/work/ResSplitExportWork.lua
 
-local var_0_0 = class("ResSplitExportWork", BaseWork)
+module("modules.logic.ressplit.work.ResSplitExportWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	arg_1_0.result = {}
+local ResSplitExportWork = class("ResSplitExportWork", BaseWork)
+
+function ResSplitExportWork:onStart(context)
+	self.result = {}
 
 	ResSplitModel.instance:setExclude(ResSplitEnum.Folder, "explore/", true)
 	ResSplitModel.instance:setExclude(ResSplitEnum.Folder, "atlassrc/ui_modules/explore/", true)
@@ -11,49 +13,51 @@ function var_0_0.onStart(arg_1_0, arg_1_1)
 	ResSplitModel.instance:setExclude(ResSplitEnum.Folder, "singlebg/explore/", true)
 	ResSplitModel.instance:setExclude(ResSplitEnum.Folder, "atlassrc/ui_spriteset/explore/", true)
 	ResSplitModel.instance:setExclude(ResSplitEnum.Folder, "effects/prefabs", false)
-	arg_1_0:_filter(ResSplitEnum.Path)
-	arg_1_0:_filter(ResSplitEnum.Folder)
-	arg_1_0:_filter(ResSplitEnum.SinglebgFolder)
-	arg_1_0:_filter(ResSplitEnum.AudioBank)
-	arg_1_0:_filter(ResSplitEnum.CommonAudioBank)
-	arg_1_0:_filter(ResSplitEnum.Video)
-	arg_1_0:_filter(ResSplitEnum.AudioWem)
-	arg_1_0:_filter(ResSplitEnum.InnerAudioWem)
-	arg_1_0:_filter(ResSplitEnum.InnerRoomAB)
-	arg_1_0:_filter(ResSplitEnum.OutRoomAB)
-	arg_1_0:_filter(ResSplitEnum.OutSceneAB)
-	arg_1_0:_filter(ResSplitEnum.InnerSceneAB)
+	self:_filter(ResSplitEnum.Path)
+	self:_filter(ResSplitEnum.Folder)
+	self:_filter(ResSplitEnum.SinglebgFolder)
+	self:_filter(ResSplitEnum.AudioBank)
+	self:_filter(ResSplitEnum.CommonAudioBank)
+	self:_filter(ResSplitEnum.Video)
+	self:_filter(ResSplitEnum.AudioWem)
+	self:_filter(ResSplitEnum.InnerAudioWem)
+	self:_filter(ResSplitEnum.InnerRoomAB)
+	self:_filter(ResSplitEnum.OutRoomAB)
+	self:_filter(ResSplitEnum.OutSceneAB)
+	self:_filter(ResSplitEnum.InnerSceneAB)
 
-	local var_1_0 = cjson.encode(arg_1_0.result)
-	local var_1_1 = string.gsub(var_1_0, "\\/", "/")
-	local var_1_2 = io.open(ResSplitEnum.ExportConfigPath, "w")
+	local resultJson = cjson.encode(self.result)
 
-	var_1_2:write(tostring(var_1_1))
-	var_1_2:close()
-	arg_1_0:onDone(true)
+	resultJson = string.gsub(resultJson, "\\/", "/")
+
+	local file = io.open(ResSplitEnum.ExportConfigPath, "w")
+
+	file:write(tostring(resultJson))
+	file:close()
+	self:onDone(true)
 	logNormal("ResSplit Done!")
 end
 
-function var_0_0._filter(arg_2_0, arg_2_1)
-	local var_2_0 = {}
-	local var_2_1 = ResSplitModel.instance:getExcludeDic(arg_2_1)
+function ResSplitExportWork:_filter(type)
+	local dic = {}
+	local excludeDic = ResSplitModel.instance:getExcludeDic(type)
 
-	if var_2_1 then
-		for iter_2_0, iter_2_1 in pairs(var_2_1) do
-			if iter_2_1 == true then
-				local var_2_2 = SLFramework.FileHelper.GetFileName(iter_2_0, true)
-				local var_2_3 = string.find(var_2_2, "%.")
+	if excludeDic then
+		for i, v in pairs(excludeDic) do
+			if v == true then
+				local fileName = SLFramework.FileHelper.GetFileName(i, true)
+				local index = string.find(fileName, "%.")
 
-				if iter_2_0 == "" or not var_2_3 or var_2_3 > 1 then
-					var_2_0[iter_2_0] = true
+				if i == "" or not index or index > 1 then
+					dic[i] = true
 				end
 			end
 		end
 
-		arg_2_0.result[arg_2_1] = var_2_0
+		self.result[type] = dic
 	end
 
-	logNormal(arg_2_1, tabletool.len(var_2_0))
+	logNormal(type, tabletool.len(dic))
 end
 
-return var_0_0
+return ResSplitExportWork

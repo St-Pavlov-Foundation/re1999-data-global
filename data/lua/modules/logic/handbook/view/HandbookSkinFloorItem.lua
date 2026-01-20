@@ -1,150 +1,154 @@
-﻿module("modules.logic.handbook.view.HandbookSkinFloorItem", package.seeall)
+﻿-- chunkname: @modules/logic/handbook/view/HandbookSkinFloorItem.lua
 
-local var_0_0 = class("HandbookSkinFloorItem", ListScrollCellExtend)
+module("modules.logic.handbook.view.HandbookSkinFloorItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	gohelper.setActive(arg_1_0.viewGO, true)
+local HandbookSkinFloorItem = class("HandbookSkinFloorItem", ListScrollCellExtend)
 
-	arg_1_0._goSelectedState = gohelper.findChild(arg_1_0.viewGO, "#select")
-	arg_1_0._goUnSelectedState = gohelper.findChild(arg_1_0.viewGO, "#unclick")
-	arg_1_0._txtSelectedFloorName = gohelper.findChildText(arg_1_0._goSelectedState, "#name")
-	arg_1_0._txtUnSelectedFloorName = gohelper.findChildText(arg_1_0._goUnSelectedState, "#name")
-	arg_1_0._txtSelectedFloorNameEn = gohelper.findChildText(arg_1_0._goSelectedState, "#name/#name_en")
-	arg_1_0._txtUnSelectedFloorNameEn = gohelper.findChildText(arg_1_0._goUnSelectedState, "#name/#name_en")
-	arg_1_0._txtSelectedCurSuitIdx = gohelper.findChildText(arg_1_0._goSelectedState, "#num")
-	arg_1_0._txtUnSelectedCurSuitIdx = gohelper.findChildText(arg_1_0._goUnSelectedState, "#num")
-	arg_1_0._txtSelectedCurFloorIdx = gohelper.findChildText(arg_1_0._goSelectedState, "#xulie")
-	arg_1_0._txtUnSelectedCurFloorIdx = gohelper.findChildText(arg_1_0._goUnSelectedState, "#xulie")
-	arg_1_0._selectTabRedDot = gohelper.findChild(arg_1_0.viewGO, "#unclick/#goRedDot")
-	arg_1_0._unSelectTabRedDot = gohelper.findChild(arg_1_0.viewGO, "#select/#goRedDot")
-	arg_1_0._click = gohelper.findChildClickWithAudio(arg_1_0.viewGO, "#unclick/btn_click")
+function HandbookSkinFloorItem:onInitView()
+	gohelper.setActive(self.viewGO, true)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	self._goSelectedState = gohelper.findChild(self.viewGO, "#select")
+	self._goUnSelectedState = gohelper.findChild(self.viewGO, "#unclick")
+	self._txtSelectedFloorName = gohelper.findChildText(self._goSelectedState, "#name")
+	self._txtUnSelectedFloorName = gohelper.findChildText(self._goUnSelectedState, "#name")
+	self._txtSelectedFloorNameEn = gohelper.findChildText(self._goSelectedState, "#name/#name_en")
+	self._txtUnSelectedFloorNameEn = gohelper.findChildText(self._goUnSelectedState, "#name/#name_en")
+	self._txtSelectedCurSuitIdx = gohelper.findChildText(self._goSelectedState, "#num")
+	self._txtUnSelectedCurSuitIdx = gohelper.findChildText(self._goUnSelectedState, "#num")
+	self._txtSelectedCurFloorIdx = gohelper.findChildText(self._goSelectedState, "#xulie")
+	self._txtUnSelectedCurFloorIdx = gohelper.findChildText(self._goUnSelectedState, "#xulie")
+	self._selectTabRedDot = gohelper.findChild(self.viewGO, "#unclick/#goRedDot")
+	self._unSelectTabRedDot = gohelper.findChild(self.viewGO, "#select/#goRedDot")
+	self._click = gohelper.findChildClickWithAudio(self.viewGO, "#unclick/btn_click")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._click:AddClickListener(arg_2_0.onClick, arg_2_0)
+function HandbookSkinFloorItem:addEvents()
+	self._click:AddClickListener(self.onClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._click:RemoveClickListener()
+function HandbookSkinFloorItem:removeEvents()
+	self._click:RemoveClickListener()
 end
 
-function var_0_0.onClick(arg_4_0)
-	if arg_4_0._onClickAction then
-		arg_4_0._onClickAction(arg_4_0._clickActionObj, arg_4_0)
+function HandbookSkinFloorItem:onClick()
+	if self._onClickAction then
+		self._onClickAction(self._clickActionObj, self)
 	end
 end
 
-function var_0_0.setClickAction(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0._onClickAction = arg_5_1
-	arg_5_0._clickActionObj = arg_5_2
+function HandbookSkinFloorItem:setClickAction(clickAction, clickActionObj)
+	self._onClickAction = clickAction
+	self._clickActionObj = clickActionObj
 end
 
-function var_0_0._editableInitView(arg_6_0)
+function HandbookSkinFloorItem:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateData(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_0._suitGroupCfg = arg_7_1
-	arg_7_0._idx = arg_7_2
-	arg_7_0._suitList = HandbookConfig.instance:getSkinSuitCfgListInGroup(arg_7_1.id) or {}
-	arg_7_0._suitCount = #arg_7_0._suitList
-	arg_7_0._curSuitIdx = 1
-	arg_7_0._skinIdList = {}
+function HandbookSkinFloorItem:onUpdateData(cfg, index)
+	self._suitGroupCfg = cfg
+	self._idx = index
+	self._suitList = HandbookConfig.instance:getSkinSuitCfgListInGroup(cfg.id) or {}
+	self._suitCount = #self._suitList
+	self._curSuitIdx = 1
+	self._skinIdList = {}
 
-	for iter_7_0 = 1, #arg_7_0._suitList do
-		local var_7_0 = arg_7_0._suitList[iter_7_0]
+	for i = 1, #self._suitList do
+		local suitCfg = self._suitList[i]
 
-		tabletool.addValues(arg_7_0._skinIdList, HandbookConfig.instance:getSkinIdListBySuitId(var_7_0.id))
+		tabletool.addValues(self._skinIdList, HandbookConfig.instance:getSkinIdListBySuitId(suitCfg.id))
 	end
 
-	arg_7_0._skinCount = #arg_7_0._skinIdList
+	self._skinCount = #self._skinIdList
 end
 
-function var_0_0.getHasSkinCount(arg_8_0)
-	local var_8_0 = arg_8_0._skinIdList
+function HandbookSkinFloorItem:getHasSkinCount()
+	local skinIdList = self._skinIdList
 
-	if not var_8_0 or #var_8_0 < 1 then
+	if not skinIdList or #skinIdList < 1 then
 		return 0
 	end
 
-	local var_8_1 = 0
-	local var_8_2 = HeroModel.instance
+	local hasCount = 0
+	local tHeroModel = HeroModel.instance
 
-	for iter_8_0 = 0, #var_8_0 do
-		if var_8_2:checkHasSkin(var_8_0[iter_8_0]) then
-			var_8_1 = var_8_1 + 1
+	for i = 0, #skinIdList do
+		if tHeroModel:checkHasSkin(skinIdList[i]) then
+			hasCount = hasCount + 1
 		end
 	end
 
-	return var_8_1
+	return hasCount
 end
 
-function var_0_0.getIdx(arg_9_0)
-	return arg_9_0._idx
+function HandbookSkinFloorItem:getIdx()
+	return self._idx
 end
 
-function var_0_0.refreshFloorView(arg_10_0)
-	arg_10_0._txtSelectedFloorName.text = arg_10_0._suitGroupCfg.name
-	arg_10_0._txtUnSelectedFloorName.text = arg_10_0._suitGroupCfg.name
-	arg_10_0._txtSelectedFloorNameEn.text = arg_10_0._suitGroupCfg.nameEn
-	arg_10_0._txtUnSelectedFloorNameEn.text = arg_10_0._suitGroupCfg.nameEn
-	arg_10_0._txtSelectedCurFloorIdx.text = arg_10_0._idx
-	arg_10_0._txtUnSelectedCurFloorIdx.text = arg_10_0._idx
+function HandbookSkinFloorItem:refreshFloorView()
+	self._txtSelectedFloorName.text = self._suitGroupCfg.name
+	self._txtUnSelectedFloorName.text = self._suitGroupCfg.name
+	self._txtSelectedFloorNameEn.text = self._suitGroupCfg.nameEn
+	self._txtUnSelectedFloorNameEn.text = self._suitGroupCfg.nameEn
+	self._txtSelectedCurFloorIdx.text = self._idx
+	self._txtUnSelectedCurFloorIdx.text = self._idx
 end
 
-function var_0_0.refreshCurSuitIdx(arg_11_0)
-	local var_11_0 = arg_11_0._skinIdList and #arg_11_0._skinIdList or 0
-	local var_11_1 = arg_11_0:getHasSkinCount() .. "/" .. var_11_0
+function HandbookSkinFloorItem:refreshCurSuitIdx()
+	local skinNum = self._skinIdList and #self._skinIdList or 0
+	local hasSkinCount = self:getHasSkinCount()
+	local str = hasSkinCount .. "/" .. skinNum
 
-	arg_11_0._txtSelectedCurSuitIdx.text = var_11_1
-	arg_11_0._txtUnSelectedCurSuitIdx.text = var_11_1
+	self._txtSelectedCurSuitIdx.text = str
+	self._txtUnSelectedCurSuitIdx.text = str
 end
 
-function var_0_0.refreshSelectState(arg_12_0, arg_12_1)
-	arg_12_0._isSelected = arg_12_1
+function HandbookSkinFloorItem:refreshSelectState(selected)
+	self._isSelected = selected
 
-	if arg_12_0._isSelected then
-		if arg_12_0._showRedDot then
-			local var_12_0 = arg_12_0._suitGroupCfg.id
+	if self._isSelected then
+		if self._showRedDot then
+			local groupId = self._suitGroupCfg.id
 
-			HandbookController.instance:markHandbookSkinRedDotShow(var_12_0)
-			arg_12_0:refreshRedDot()
+			HandbookController.instance:markHandbookSkinRedDotShow(groupId)
+			self:refreshRedDot()
 		end
 
-		gohelper.setActive(arg_12_0._goSelectedState, true)
-		gohelper.setActive(arg_12_0._goUnSelectedState, false)
+		gohelper.setActive(self._goSelectedState, true)
+		gohelper.setActive(self._goUnSelectedState, false)
 	else
-		gohelper.setActive(arg_12_0._goSelectedState, false)
-		gohelper.setActive(arg_12_0._goUnSelectedState, true)
+		gohelper.setActive(self._goSelectedState, false)
+		gohelper.setActive(self._goUnSelectedState, true)
 	end
 end
 
-function var_0_0.refreshRedDot(arg_13_0)
-	local var_13_0 = arg_13_0._suitGroupCfg.id
+function HandbookSkinFloorItem:refreshRedDot()
+	local groupId = self._suitGroupCfg.id
+	local needRedDot = HandbookEnum.HandbookSkinShowRedDotMap[groupId]
 
-	if not HandbookEnum.HandbookSkinShowRedDotMap[var_13_0] then
-		gohelper.setActive(arg_13_0._selectTabRedDot, false)
-		gohelper.setActive(arg_13_0._unSelectTabRedDot, false)
+	if not needRedDot then
+		gohelper.setActive(self._selectTabRedDot, false)
+		gohelper.setActive(self._unSelectTabRedDot, false)
 
 		return
 	end
 
-	arg_13_0._showRedDot = HandbookController.instance:isHandbookSkinRedDotShow(var_13_0)
+	self._showRedDot = HandbookController.instance:isHandbookSkinRedDotShow(groupId)
 
-	gohelper.setActive(arg_13_0._selectTabRedDot, arg_13_0._showRedDot)
-	gohelper.setActive(arg_13_0._unSelectTabRedDot, arg_13_0._showRedDot)
+	gohelper.setActive(self._selectTabRedDot, self._showRedDot)
+	gohelper.setActive(self._unSelectTabRedDot, self._showRedDot)
 end
 
-function var_0_0.hasRedDot(arg_14_0)
-	return arg_14_0._showRedDot
+function HandbookSkinFloorItem:hasRedDot()
+	return self._showRedDot
 end
 
-function var_0_0.onDestroyView(arg_15_0)
+function HandbookSkinFloorItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return HandbookSkinFloorItem

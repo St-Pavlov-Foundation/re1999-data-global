@@ -1,79 +1,81 @@
-﻿module("modules.logic.versionactivity2_7.lengzhou6.model.mo.RecordServerDataMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/lengzhou6/model/mo/RecordServerDataMO.lua
 
-local var_0_0 = class("RecordServerDataMO")
-local var_0_1 = {}
+module("modules.logic.versionactivity2_7.lengzhou6.model.mo.RecordServerDataMO", package.seeall)
 
-var_0_1.endLessBattleProgress = nil
-var_0_1.round = nil
-var_0_1.endLessLayer = nil
-var_0_1.playerId = nil
-var_0_1.playerHp = nil
-var_0_1.playerSkillList = {}
-var_0_1.enemyConfigId = nil
-var_0_1.enemyHp = nil
-var_0_1.curActionStepIndex = nil
-var_0_1.skillRound = nil
-var_0_1.chessData = {}
+local RecordServerDataMO = class("RecordServerDataMO")
+local data = {}
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._data = var_0_1
+data.endLessBattleProgress = nil
+data.round = nil
+data.endLessLayer = nil
+data.playerId = nil
+data.playerHp = nil
+data.playerSkillList = {}
+data.enemyConfigId = nil
+data.enemyHp = nil
+data.curActionStepIndex = nil
+data.skillRound = nil
+data.chessData = {}
+
+function RecordServerDataMO:ctor()
+	self._data = data
 end
 
-function var_0_0.initFormJson(arg_2_0, arg_2_1)
-	arg_2_0:_fromJson(arg_2_1)
+function RecordServerDataMO:initFormJson(jsonStr)
+	self:_fromJson(jsonStr)
 end
 
-function var_0_0.toJson(arg_3_0)
-	return cjson.encode(arg_3_0._data)
+function RecordServerDataMO:toJson()
+	return cjson.encode(self._data)
 end
 
-function var_0_0._fromJson(arg_4_0, arg_4_1)
-	arg_4_0._data = cjson.decode(arg_4_1)
+function RecordServerDataMO:_fromJson(jsonStr)
+	self._data = cjson.decode(jsonStr)
 end
 
-function var_0_0.getRecordData(arg_5_0)
-	return arg_5_0:toJson()
+function RecordServerDataMO:getRecordData()
+	return self:toJson()
 end
 
-function var_0_0.record(arg_6_0, arg_6_1)
-	tabletool.clear(arg_6_0._data)
+function RecordServerDataMO:record(chessData)
+	tabletool.clear(self._data)
 
-	if arg_6_0._data ~= nil then
-		arg_6_0._data.chessData = arg_6_1
+	if self._data ~= nil then
+		self._data.chessData = chessData
 
-		local var_6_0 = LengZhou6GameModel.instance:getEndLessBattleProgress()
+		local endLessBattleProgress = LengZhou6GameModel.instance:getEndLessBattleProgress()
 
-		arg_6_0._data.endLessBattleProgress = var_6_0
-		arg_6_0._data.round = LengZhou6GameModel.instance:getCurRound()
-		arg_6_0._data.endLessLayer = LengZhou6GameModel.instance:getEndLessModelLayer()
+		self._data.endLessBattleProgress = endLessBattleProgress
+		self._data.round = LengZhou6GameModel.instance:getCurRound()
+		self._data.endLessLayer = LengZhou6GameModel.instance:getEndLessModelLayer()
 
-		local var_6_1 = LengZhou6GameModel.instance:getPlayer()
+		local player = LengZhou6GameModel.instance:getPlayer()
 
-		arg_6_0._data.playerId = var_6_1:getConfigId()
+		self._data.playerId = player:getConfigId()
 
-		local var_6_2 = LengZhou6GameModel.instance:getEnemy()
+		local enemy = LengZhou6GameModel.instance:getEnemy()
 
-		arg_6_0._data.enemyConfigId = var_6_2:getConfigId()
-		arg_6_0._data.curActionStepIndex = var_6_2:getAction() and var_6_2:getAction():getCurBehaviorId()
-		arg_6_0._data.skillRound = var_6_2:getAction() and var_6_2:getAction():getCurRound()
+		self._data.enemyConfigId = enemy:getConfigId()
+		self._data.curActionStepIndex = enemy:getAction() and enemy:getAction():getCurBehaviorId()
+		self._data.skillRound = enemy:getAction() and enemy:getAction():getCurRound()
 
-		local var_6_3 = var_6_1:getActiveSkills()
-		local var_6_4 = {}
+		local allActiveSkill = player:getActiveSkills()
+		local selectSkillIds = {}
 
-		for iter_6_0 = 1, #var_6_3 do
-			local var_6_5 = var_6_3[iter_6_0]
+		for i = 1, #allActiveSkill do
+			local skill = allActiveSkill[i]
 
-			table.insert(var_6_4, var_6_5:getConfig().id)
+			table.insert(selectSkillIds, skill:getConfig().id)
 		end
 
-		arg_6_0._data.playerSkillList = var_6_4
-		arg_6_0._data.playerHp = var_6_1:getHp()
-		arg_6_0._data.enemyHp = var_6_2:getHp()
+		self._data.playerSkillList = selectSkillIds
+		self._data.playerHp = player:getHp()
+		self._data.enemyHp = enemy:getHp()
 	end
 end
 
-function var_0_0.getData(arg_7_0)
-	return arg_7_0._data
+function RecordServerDataMO:getData()
+	return self._data
 end
 
-return var_0_0
+return RecordServerDataMO

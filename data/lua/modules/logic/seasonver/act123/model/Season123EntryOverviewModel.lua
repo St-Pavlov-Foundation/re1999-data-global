@@ -1,41 +1,43 @@
-﻿module("modules.logic.seasonver.act123.model.Season123EntryOverviewModel", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/model/Season123EntryOverviewModel.lua
 
-local var_0_0 = class("Season123EntryOverviewModel", BaseModel)
+module("modules.logic.seasonver.act123.model.Season123EntryOverviewModel", package.seeall)
 
-function var_0_0.release(arg_1_0)
+local Season123EntryOverviewModel = class("Season123EntryOverviewModel", BaseModel)
+
+function Season123EntryOverviewModel:release()
 	return
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.activityId = arg_2_1
+function Season123EntryOverviewModel:init(actId)
+	self.activityId = actId
 end
 
-function var_0_0.getActId(arg_3_0)
-	return arg_3_0.activityId
+function Season123EntryOverviewModel:getActId()
+	return self.activityId
 end
 
-function var_0_0.getStageMO(arg_4_0, arg_4_1)
-	local var_4_0 = Season123Model.instance:getActInfo(arg_4_0.activityId)
+function Season123EntryOverviewModel:getStageMO(stage)
+	local seasonMO = Season123Model.instance:getActInfo(self.activityId)
 
-	if not var_4_0 then
+	if not seasonMO then
 		return nil
 	end
 
-	return var_4_0:getStageMO(arg_4_1)
+	return seasonMO:getStageMO(stage)
 end
 
-function var_0_0.stageIsPassed(arg_5_0, arg_5_1)
-	local var_5_0 = Season123Model.instance:getActInfo(arg_5_0.activityId)
+function Season123EntryOverviewModel:stageIsPassed(stage)
+	local seasonMO = Season123Model.instance:getActInfo(self.activityId)
 
-	if not var_5_0 then
+	if not seasonMO then
 		return false
 	end
 
-	local var_5_1 = var_5_0.stageMap[arg_5_1]
+	local stageMO = seasonMO.stageMap[stage]
 
-	return var_5_1 and var_5_1.isPass
+	return stageMO and stageMO.isPass
 end
 
-var_0_0.instance = var_0_0.New()
+Season123EntryOverviewModel.instance = Season123EntryOverviewModel.New()
 
-return var_0_0
+return Season123EntryOverviewModel

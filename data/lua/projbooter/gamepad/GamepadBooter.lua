@@ -1,8 +1,10 @@
-﻿module("projbooter.hotupdate.GamepadBooter", package.seeall)
+﻿-- chunkname: @projbooter/gamepad/GamepadBooter.lua
 
-local var_0_0 = class("GamepadBooter")
+module("projbooter.hotupdate.GamepadBooter", package.seeall)
 
-function var_0_0.init(arg_1_0)
+local GamepadBooter = class("GamepadBooter")
+
+function GamepadBooter:init()
 	addGlobalModule("projbooter.gamepad.define.GamepadEnum", "GamepadEnum")
 	addGlobalModule("projbooter.gamepad.define.GamepadEvent", "GamepadEvent")
 	addGlobalModule("projbooter.gamepad.define.GamepadXBoxKey_Android", "GamepadXBoxKey_Android")
@@ -10,74 +12,74 @@ function var_0_0.init(arg_1_0)
 	addGlobalModule("projbooter.gamepad.define.GamepadKeyMapEnum", "GamepadKeyMapEnum")
 end
 
-function var_0_0.setBootMsgBoxClick(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
-	arg_2_0.onClickRightCallBack = arg_2_1
-	arg_2_0.onClickRightCallBackObj = arg_2_2
-	arg_2_0.onClickLeftCallBack = arg_2_3
-	arg_2_0.onClickLeftCallBackObj = arg_2_4
+function GamepadBooter:setBootMsgBoxClick(onClickRightCallBack, onClickRightCallBackObj, onClickLeftCallBack, onClickLeftCallBackObj)
+	self.onClickRightCallBack = onClickRightCallBack
+	self.onClickRightCallBackObj = onClickRightCallBackObj
+	self.onClickLeftCallBack = onClickLeftCallBack
+	self.onClickLeftCallBackObj = onClickLeftCallBackObj
 
-	arg_2_0:_checkGamepadModel()
+	self:_checkGamepadModel()
 
-	if arg_2_0._isOpen == false then
+	if self._isOpen == false then
 		return
 	end
 
-	local var_2_0 = {}
+	local keys = {}
 
-	for iter_2_0, iter_2_1 in pairs(arg_2_0._useKeyType.JoystickKeys) do
-		table.insert(var_2_0, iter_2_0)
+	for i, v in pairs(self._useKeyType.JoystickKeys) do
+		table.insert(keys, i)
 	end
 
-	local var_2_1 = {}
+	local axiskeys = {}
 
-	for iter_2_2, iter_2_3 in pairs(arg_2_0._useKeyType.AxisKeys) do
-		table.insert(var_2_1, iter_2_2)
+	for i, v in pairs(self._useKeyType.AxisKeys) do
+		table.insert(axiskeys, i)
 	end
 
-	arg_2_0._mgrInst = ZProj.GamepadManager.Instance
-	arg_2_0._eventMgrInst = ZProj.GamepadEvent.Instance
-	arg_2_0._eventMgr = ZProj.GamepadEvent
+	self._mgrInst = ZProj.GamepadManager.Instance
+	self._eventMgrInst = ZProj.GamepadEvent.Instance
+	self._eventMgr = ZProj.GamepadEvent
 
-	arg_2_0._mgrInst:SetKeyListLua(var_2_0, var_2_1)
-	arg_2_0._eventMgrInst:AddLuaLisenter(arg_2_0._eventMgr.UpKey, arg_2_0._onClickKey, arg_2_0)
+	self._mgrInst:SetKeyListLua(keys, axiskeys)
+	self._eventMgrInst:AddLuaLisenter(self._eventMgr.UpKey, self._onClickKey, self)
 
-	arg_2_0._buttonHandleFunc = {
+	self._buttonHandleFunc = {
 		[GamepadEnum.KeyCode.A] = {
-			arg_2_0._onClickA
+			self._onClickA
 		},
 		[GamepadEnum.KeyCode.B] = {
-			arg_2_0._onClickB
+			self._onClickB
 		}
 	}
 end
 
-function var_0_0._checkGamepadModel(arg_3_0)
-	arg_3_0._isOpen = SDKNativeUtil.isGamePad()
+function GamepadBooter:_checkGamepadModel()
+	self._isOpen = SDKNativeUtil.isGamePad()
 
-	if arg_3_0._isOpen then
-		local var_3_0 = UnityEngine.Input.GetJoystickNames()
-		local var_3_1 = false
+	if self._isOpen then
+		local joystickNames = UnityEngine.Input.GetJoystickNames()
+		local matchGamepadType = false
 
-		if var_3_0 and var_3_0.Length > 0 then
-			for iter_3_0 = 0, var_3_0.Length - 1 do
-				if var_3_1 then
+		if joystickNames and joystickNames.Length > 0 then
+			for i = 0, joystickNames.Length - 1 do
+				if matchGamepadType then
 					break
 				end
 
-				local var_3_2 = var_3_0[iter_3_0]
+				local name = joystickNames[i]
 
-				for iter_3_1, iter_3_2 in pairs(GamepadKeyMapEnum.KeyMap) do
-					if string.find(var_3_2, iter_3_1) then
-						var_3_1 = true
+				for key, mapType in pairs(GamepadKeyMapEnum.KeyMap) do
+					if string.find(name, key) then
+						matchGamepadType = true
 
 						if BootNativeUtil.isAndroid() then
-							arg_3_0._useKeyType = iter_3_2[2]
+							self._useKeyType = mapType[2]
 
 							break
 						end
 
 						if BootNativeUtil.isWindows() or SLFramework.FrameworkSettings.IsEditor then
-							arg_3_0._useKeyType = iter_3_2[1]
+							self._useKeyType = mapType[1]
 						end
 
 						break
@@ -86,54 +88,54 @@ function var_0_0._checkGamepadModel(arg_3_0)
 			end
 		end
 
-		if var_3_1 == false then
+		if matchGamepadType == false then
 			if BootNativeUtil.isAndroid() then
-				arg_3_0._useKeyType = GamepadKeyMapEnum.KeyMap.XIAOM[2]
+				self._useKeyType = GamepadKeyMapEnum.KeyMap.XIAOM[2]
 			elseif BootNativeUtil.isWindows() or SLFramework.FrameworkSettings.IsEditor then
-				arg_3_0._useKeyType = GamepadKeyMapEnum.KeyMap.XIAOM[1]
+				self._useKeyType = GamepadKeyMapEnum.KeyMap.XIAOM[1]
 			end
 		end
 	end
 end
 
-function var_0_0._onClickKey(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0._useKeyType.JoystickKeys[arg_4_1]
-	local var_4_1 = arg_4_0._buttonHandleFunc[var_4_0][1]
+function GamepadBooter:_onClickKey(keyCode)
+	local key = self._useKeyType.JoystickKeys[keyCode]
+	local func = self._buttonHandleFunc[key][1]
 
-	if var_4_1 then
-		var_4_1(arg_4_0)
+	if func then
+		func(self)
 	end
 end
 
-function var_0_0._onClickA(arg_5_0)
-	if arg_5_0.onClickRightCallBack then
-		arg_5_0.onClickRightCallBack(arg_5_0.onClickRightCallBackObj)
+function GamepadBooter:_onClickA()
+	if self.onClickRightCallBack then
+		self.onClickRightCallBack(self.onClickRightCallBackObj)
 	end
 end
 
-function var_0_0._onClickB(arg_6_0)
-	if arg_6_0.onClickLeftCallBack then
-		arg_6_0.onClickLeftCallBack(arg_6_0.onClickLeftCallBackObj)
+function GamepadBooter:_onClickB()
+	if self.onClickLeftCallBack then
+		self.onClickLeftCallBack(self.onClickLeftCallBackObj)
 	end
 end
 
-function var_0_0.dispose(arg_7_0)
-	arg_7_0.onClickRightCallBack = nil
-	arg_7_0.onClickRightCallBackObj = nil
-	arg_7_0.onClickLeftCallBack = nil
-	arg_7_0.onClickLeftCallBackObj = nil
-	arg_7_0._mgrInst = nil
-	arg_7_0._eventMgrInst = nil
-	arg_7_0._eventMgr = nil
+function GamepadBooter:dispose()
+	self.onClickRightCallBack = nil
+	self.onClickRightCallBackObj = nil
+	self.onClickLeftCallBack = nil
+	self.onClickLeftCallBackObj = nil
+	self._mgrInst = nil
+	self._eventMgrInst = nil
+	self._eventMgr = nil
 
-	for iter_7_0, iter_7_1 in pairs(arg_7_0) do
-		if type(iter_7_1) == "userdata" then
-			rawset(arg_7_0, iter_7_0, nil)
-			logNormal("key = " .. tostring(iter_7_0) .. " value = " .. tostring(iter_7_1))
+	for key, value in pairs(self) do
+		if type(value) == "userdata" then
+			rawset(self, key, nil)
+			logNormal("key = " .. tostring(key) .. " value = " .. tostring(value))
 		end
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+GamepadBooter.instance = GamepadBooter.New()
 
-return var_0_0
+return GamepadBooter

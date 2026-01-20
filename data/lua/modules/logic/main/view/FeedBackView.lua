@@ -1,164 +1,166 @@
-﻿module("modules.logic.main.view.FeedBackView", package.seeall)
+﻿-- chunkname: @modules/logic/main/view/FeedBackView.lua
 
-local var_0_0 = class("FeedBackView", BaseView)
+module("modules.logic.main.view.FeedBackView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._browserGo = gohelper.findChild(arg_1_0.viewGO, "browser")
-	arg_1_0._rootGo = gohelper.findChild(arg_1_0.viewGO, "root")
-	arg_1_0._gosuretip = gohelper.findChild(arg_1_0.viewGO, "root/bottom/#go_suretip")
-	arg_1_0._txtsuretip = gohelper.findChildText(arg_1_0.viewGO, "root/bottom/#go_suretip")
-	arg_1_0._btnsure = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/bottom/#btn_sure")
-	arg_1_0._inputfeedback = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "root/message/#input_feedback")
-	arg_1_0._inputtitle = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "root/#input_title")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_close")
+local FeedBackView = class("FeedBackView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function FeedBackView:onInitView()
+	self._browserGo = gohelper.findChild(self.viewGO, "browser")
+	self._rootGo = gohelper.findChild(self.viewGO, "root")
+	self._gosuretip = gohelper.findChild(self.viewGO, "root/bottom/#go_suretip")
+	self._txtsuretip = gohelper.findChildText(self.viewGO, "root/bottom/#go_suretip")
+	self._btnsure = gohelper.findChildButtonWithAudio(self.viewGO, "root/bottom/#btn_sure")
+	self._inputfeedback = gohelper.findChildTextMeshInputField(self.viewGO, "root/message/#input_feedback")
+	self._inputtitle = gohelper.findChildTextMeshInputField(self.viewGO, "root/#input_title")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_close")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnsure:AddClickListener(arg_2_0._btnsureOnClick, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._inputfeedback:AddOnValueChanged(arg_2_0._onContentValueChanged, arg_2_0)
-	arg_2_0._inputtitle:AddOnValueChanged(arg_2_0._onTitleValueChanged, arg_2_0)
+function FeedBackView:addEvents()
+	self._btnsure:AddClickListener(self._btnsureOnClick, self)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._inputfeedback:AddOnValueChanged(self._onContentValueChanged, self)
+	self._inputtitle:AddOnValueChanged(self._onTitleValueChanged, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnsure:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._inputfeedback:RemoveOnValueChanged()
-	arg_3_0._inputtitle:RemoveOnValueChanged()
+function FeedBackView:removeEvents()
+	self._btnsure:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
+	self._inputfeedback:RemoveOnValueChanged()
+	self._inputtitle:RemoveOnValueChanged()
 end
 
-var_0_0.commitInterval = 30
-var_0_0.maxTitleLength = 20
-var_0_0.maxContentLength = 300
-var_0_0.nilTitleToastId = 124
-var_0_0.nilContentToastId = 125
-var_0_0.maxTitleToastId = 126
-var_0_0.maxContentToastId = 127
+FeedBackView.commitInterval = 30
+FeedBackView.maxTitleLength = 20
+FeedBackView.maxContentLength = 300
+FeedBackView.nilTitleToastId = 124
+FeedBackView.nilContentToastId = 125
+FeedBackView.maxTitleToastId = 126
+FeedBackView.maxContentToastId = 127
 
-function var_0_0._btnsureOnClick(arg_4_0)
-	local var_4_0 = arg_4_0._inputtitle:GetText()
-	local var_4_1 = arg_4_0._inputfeedback:GetText()
+function FeedBackView:_btnsureOnClick()
+	local titleText = self._inputtitle:GetText()
+	local contentText = self._inputfeedback:GetText()
 
-	if string.nilorempty(var_4_0) and string.nilorempty(var_4_1) then
+	if string.nilorempty(titleText) and string.nilorempty(contentText) then
 		return
 	end
 
-	if string.nilorempty(var_4_0) then
-		GameFacade.showToast(var_0_0.nilTitleToastId)
-
-		return
-	end
-
-	if string.nilorempty(var_4_1) then
-		GameFacade.showToast(var_0_0.nilContentToastId)
+	if string.nilorempty(titleText) then
+		GameFacade.showToast(FeedBackView.nilTitleToastId)
 
 		return
 	end
 
-	TaskDispatcher.cancelTask(arg_4_0.hideSureTip, arg_4_0)
+	if string.nilorempty(contentText) then
+		GameFacade.showToast(FeedBackView.nilContentToastId)
 
-	local var_4_2 = PlayerModel.instance:getPreFeedBackTime()
+		return
+	end
 
-	if var_4_2 == -1 or Time.time - var_4_2 > var_0_0.commitInterval then
-		arg_4_0:sendRequest(var_4_0, var_4_1)
+	TaskDispatcher.cancelTask(self.hideSureTip, self)
+
+	local preCommitTime = PlayerModel.instance:getPreFeedBackTime()
+
+	if preCommitTime == -1 or Time.time - preCommitTime > FeedBackView.commitInterval then
+		self:sendRequest(titleText, contentText)
 		PlayerModel.instance:setPreFeedBackTime()
 	else
-		arg_4_0._txtsuretip.text = luaLang("frequently_commit")
+		self._txtsuretip.text = luaLang("frequently_commit")
 
-		gohelper.setActive(arg_4_0._gosuretip, true)
-		TaskDispatcher.runDelay(arg_4_0.hideSureTip, arg_4_0, 3)
+		gohelper.setActive(self._gosuretip, true)
+		TaskDispatcher.runDelay(self.hideSureTip, self, 3)
 	end
 end
 
-function var_0_0._btncloseOnClick(arg_5_0)
-	arg_5_0:closeThis()
+function FeedBackView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0.sendRequest(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = GameUrlConfig.getCurConfig().feedBack
-	local var_6_1 = {}
+function FeedBackView:sendRequest(title, content)
+	local feedbackUrl = GameUrlConfig.getCurConfig().feedBack
+	local data = {}
 
-	table.insert(var_6_1, string.format("userId=%s", PlayerModel.instance:getMyUserId()))
-	table.insert(var_6_1, string.format("title=%s", arg_6_1))
-	table.insert(var_6_1, string.format("content=%s", arg_6_2))
+	table.insert(data, string.format("userId=%s", PlayerModel.instance:getMyUserId()))
+	table.insert(data, string.format("title=%s", title))
+	table.insert(data, string.format("content=%s", content))
 
-	local var_6_2 = var_6_0 .. "?" .. table.concat(var_6_1, "&")
+	feedbackUrl = feedbackUrl .. "?" .. table.concat(data, "&")
 
-	logWarn(var_6_2)
-	SLFramework.SLWebRequest.Instance:Get(var_6_2, arg_6_0.receiveResponse, arg_6_0)
+	logWarn(feedbackUrl)
+	SLFramework.SLWebRequestClient.Instance:Get(feedbackUrl, self.receiveResponse, self)
 end
 
-function var_0_0.receiveResponse(arg_7_0, arg_7_1, arg_7_2)
-	if arg_7_2 == "fail" then
-		arg_7_0._txtsuretip.text = luaLang("frequently_commit")
+function FeedBackView:receiveResponse(isSuccess, msg)
+	if msg == "fail" then
+		self._txtsuretip.text = luaLang("frequently_commit")
 	else
-		arg_7_0._txtsuretip.text = luaLang("thanks_feedback")
+		self._txtsuretip.text = luaLang("thanks_feedback")
 
-		arg_7_0._inputfeedback:SetText("")
-		arg_7_0._inputtitle:SetText("")
+		self._inputfeedback:SetText("")
+		self._inputtitle:SetText("")
 	end
 
-	gohelper.setActive(arg_7_0._gosuretip, true)
-	TaskDispatcher.runDelay(arg_7_0.hideSureTip, arg_7_0, 3)
+	gohelper.setActive(self._gosuretip, true)
+	TaskDispatcher.runDelay(self.hideSureTip, self, 3)
 end
 
-function var_0_0._onContentValueChanged(arg_8_0)
-	local var_8_0 = arg_8_0._inputfeedback:GetText()
+function FeedBackView:_onContentValueChanged()
+	local contentText = self._inputfeedback:GetText()
 
-	if string.utf8len(var_8_0) > var_0_0.maxContentLength then
-		local var_8_1 = GameUtil.utf8sub(var_8_0, 1, var_0_0.maxContentLength)
+	if string.utf8len(contentText) > FeedBackView.maxContentLength then
+		contentText = GameUtil.utf8sub(contentText, 1, FeedBackView.maxContentLength)
 
-		arg_8_0._inputfeedback:SetText(var_8_1)
-		GameFacade.showToast(var_0_0.maxContentToastId, var_0_0.maxContentLength)
-	end
-end
-
-function var_0_0._onTitleValueChanged(arg_9_0)
-	local var_9_0 = arg_9_0._inputtitle:GetText()
-
-	if string.utf8len(var_9_0) > var_0_0.maxTitleLength then
-		local var_9_1 = GameUtil.utf8sub(var_9_0, 1, var_0_0.maxTitleLength)
-
-		arg_9_0._inputtitle:SetText(var_9_1)
-		GameFacade.showToast(var_0_0.maxTitleToastId, var_0_0.maxTitleLength)
+		self._inputfeedback:SetText(contentText)
+		GameFacade.showToast(FeedBackView.maxContentToastId, FeedBackView.maxContentLength)
 	end
 end
 
-function var_0_0.hideSureTip(arg_10_0)
-	gohelper.setActive(arg_10_0._gosuretip, false)
+function FeedBackView:_onTitleValueChanged()
+	local titleText = self._inputtitle:GetText()
+
+	if string.utf8len(titleText) > FeedBackView.maxTitleLength then
+		titleText = GameUtil.utf8sub(titleText, 1, FeedBackView.maxTitleLength)
+
+		self._inputtitle:SetText(titleText)
+		GameFacade.showToast(FeedBackView.maxTitleToastId, FeedBackView.maxTitleLength)
+	end
 end
 
-function var_0_0._editableInitView(arg_11_0)
-	gohelper.addUIClickAudio(arg_11_0._btnclose.gameObject, AudioEnum.UI.play_ui_feedback_close)
+function FeedBackView:hideSureTip()
+	gohelper.setActive(self._gosuretip, false)
 end
 
-function var_0_0.onUpdateParam(arg_12_0)
+function FeedBackView:_editableInitView()
+	gohelper.addUIClickAudio(self._btnclose.gameObject, AudioEnum.UI.play_ui_feedback_close)
+end
+
+function FeedBackView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_13_0)
+function FeedBackView:onOpen()
 	if GameChannelConfig.isSlsdk() then
-		arg_13_0:hideSureTip()
-		gohelper.setActive(arg_13_0._browserGo, false)
-		gohelper.setActive(arg_13_0._rootGo, true)
+		self:hideSureTip()
+		gohelper.setActive(self._browserGo, false)
+		gohelper.setActive(self._rootGo, true)
 	else
-		gohelper.setActive(arg_13_0._browserGo, true)
-		gohelper.setActive(arg_13_0._rootGo, false)
+		gohelper.setActive(self._browserGo, true)
+		gohelper.setActive(self._rootGo, false)
 	end
 
-	NavigateMgr.instance:addEscape(ViewName.FeedBackView, arg_13_0._btncloseOnClick, arg_13_0)
+	NavigateMgr.instance:addEscape(ViewName.FeedBackView, self._btncloseOnClick, self)
 end
 
-function var_0_0.onClose(arg_14_0)
+function FeedBackView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_15_0)
+function FeedBackView:onDestroyView()
 	return
 end
 
-return var_0_0
+return FeedBackView

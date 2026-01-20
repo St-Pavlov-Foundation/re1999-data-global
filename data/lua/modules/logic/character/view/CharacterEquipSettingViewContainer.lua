@@ -1,31 +1,33 @@
-﻿module("modules.logic.character.view.CharacterEquipSettingViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterEquipSettingViewContainer.lua
 
-local var_0_0 = class("CharacterEquipSettingViewContainer", BaseViewContainer)
+module("modules.logic.character.view.CharacterEquipSettingViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+local CharacterEquipSettingViewContainer = class("CharacterEquipSettingViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "#scroll_equip"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_1.cellClass = CharacterEquipSettingItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 3
-	var_1_1.cellWidth = 228
-	var_1_1.cellHeight = 218
-	var_1_1.cellSpaceH = 0
-	var_1_1.cellSpaceV = 2.22
-	var_1_1.startSpace = 0
+function CharacterEquipSettingViewContainer:buildViews()
+	local views = {}
+	local equipScrollParam = ListScrollParam.New()
 
-	table.insert(var_1_0, CharacterEquipSettingView.New())
-	table.insert(var_1_0, LuaListScrollView.New(CharacterEquipSettingListModel.instance, var_1_1))
+	equipScrollParam.scrollGOPath = "#scroll_equip"
+	equipScrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	equipScrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	equipScrollParam.cellClass = CharacterEquipSettingItem
+	equipScrollParam.scrollDir = ScrollEnum.ScrollDirV
+	equipScrollParam.lineCount = 3
+	equipScrollParam.cellWidth = 228
+	equipScrollParam.cellHeight = 218
+	equipScrollParam.cellSpaceH = 0
+	equipScrollParam.cellSpaceV = 2.22
+	equipScrollParam.startSpace = 0
 
-	return var_1_0
+	table.insert(views, CharacterEquipSettingView.New())
+	table.insert(views, LuaListScrollView.New(CharacterEquipSettingListModel.instance, equipScrollParam))
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	arg_2_0:closeThis()
+function CharacterEquipSettingViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return CharacterEquipSettingViewContainer

@@ -1,83 +1,85 @@
-﻿module("modules.logic.versionactivity3_1.yeshumei.view.YeShuMeiLineItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/yeshumei/view/YeShuMeiLineItem.lua
 
-local var_0_0 = class("YeShuMeiLineItem", LuaCompBase)
+module("modules.logic.versionactivity3_1.yeshumei.view.YeShuMeiLineItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._tr = arg_1_1.transform
+local YeShuMeiLineItem = class("YeShuMeiLineItem", LuaCompBase)
 
-	gohelper.setActive(arg_1_0.go, false)
+function YeShuMeiLineItem:init(go)
+	self.go = go
+	self._tr = go.transform
 
-	arg_1_0._godisturb = gohelper.findChild(arg_1_1, "#go_disturb")
-	arg_1_0._goconnected = gohelper.findChild(arg_1_1, "#go_connected")
+	gohelper.setActive(self.go, false)
+
+	self._godisturb = gohelper.findChild(go, "#go_disturb")
+	self._goconnected = gohelper.findChild(go, "#go_connected")
 end
 
-function var_0_0.addEventListeners(arg_2_0)
+function YeShuMeiLineItem:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
+function YeShuMeiLineItem:removeEventListeners()
 	return
 end
 
-function var_0_0.initData(arg_4_0, arg_4_1)
-	arg_4_0._mo = arg_4_1
-	arg_4_0.id = arg_4_1.id
+function YeShuMeiLineItem:initData(data)
+	self._mo = data
+	self.id = data.id
 
-	arg_4_0:updateUI()
+	self:updateUI()
 end
 
-function var_0_0.updateUI(arg_5_0)
-	local var_5_0 = arg_5_0._mo:getState() ~= YeShuMeiEnum.StateType.Noraml
+function YeShuMeiLineItem:updateUI()
+	local iswrong = self._mo:getState() ~= YeShuMeiEnum.StateType.Noraml
 
-	gohelper.setActive(arg_5_0._goconnected, not var_5_0)
-	gohelper.setActive(arg_5_0._godisturb, var_5_0)
+	gohelper.setActive(self._goconnected, not iswrong)
+	gohelper.setActive(self._godisturb, iswrong)
 end
 
-function var_0_0.updatePoint(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_0._point1 = arg_6_1
-	arg_6_0._point2 = arg_6_2
+function YeShuMeiLineItem:updatePoint(point1, point2)
+	self._point1 = point1
+	self._point2 = point2
 
-	arg_6_0:updateByPoint()
+	self:updateByPoint()
 end
 
-function var_0_0.addPoint(arg_7_0, arg_7_1)
-	if arg_7_0._point1 == nil then
-		arg_7_0._point1 = arg_7_1
+function YeShuMeiLineItem:addPoint(point)
+	if self._point1 == nil then
+		self._point1 = point
 	end
 
-	if arg_7_0._point2 == nil and arg_7_0._point1.id ~= arg_7_1.id then
-		arg_7_0._point2 = arg_7_1
+	if self._point2 == nil and self._point1.id ~= point.id then
+		self._point2 = point
 	end
 
-	arg_7_0:updateByPoint()
+	self:updateByPoint()
 end
 
-function var_0_0.updateByPoint(arg_8_0)
-	if arg_8_0._point1 ~= nil and arg_8_0._point2 ~= nil then
-		local var_8_0, var_8_1 = arg_8_0._point1:getLocalPos()
-		local var_8_2, var_8_3 = arg_8_0._point2:getLocalPos()
+function YeShuMeiLineItem:updateByPoint()
+	if self._point1 ~= nil and self._point2 ~= nil then
+		local pos1X, pos1Y = self._point1:getLocalPos()
+		local pos2X, pos2Y = self._point2:getLocalPos()
 
-		arg_8_0:updateItem(var_8_0, var_8_1, var_8_2, var_8_3)
-		arg_8_0._mo:updatePos(var_8_0, var_8_1, var_8_2, var_8_3)
-		arg_8_0._mo:updatePoint(arg_8_0._point1.id, arg_8_0._point2.id)
+		self:updateItem(pos1X, pos1Y, pos2X, pos2Y)
+		self._mo:updatePos(pos1X, pos1Y, pos2X, pos2Y)
+		self._mo:updatePoint(self._point1.id, self._point2.id)
 	end
 end
 
-function var_0_0.updateItem(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
-	transformhelper.setLocalPosXY(arg_9_0._tr, arg_9_1, arg_9_2)
+function YeShuMeiLineItem:updateItem(beginX, beginY, endX, endY)
+	transformhelper.setLocalPosXY(self._tr, beginX, beginY)
 
-	local var_9_0 = MathUtil.vec2_length(arg_9_1, arg_9_2, arg_9_3, arg_9_4)
+	local width = MathUtil.vec2_length(beginX, beginY, endX, endY)
 
-	recthelper.setWidth(arg_9_0._tr, var_9_0)
+	recthelper.setWidth(self._tr, width)
 
-	local var_9_1 = MathUtil.calculateV2Angle(arg_9_3, arg_9_4, arg_9_1, arg_9_2)
+	local angle = MathUtil.calculateV2Angle(endX, endY, beginX, beginY)
 
-	transformhelper.setEulerAngles(arg_9_0._tr, 0, 0, var_9_1)
+	transformhelper.setEulerAngles(self._tr, 0, 0, angle)
 end
 
-function var_0_0.onDestroy(arg_10_0)
-	gohelper.destroy(arg_10_0.go)
+function YeShuMeiLineItem:onDestroy()
+	gohelper.destroy(self.go)
 end
 
-return var_0_0
+return YeShuMeiLineItem

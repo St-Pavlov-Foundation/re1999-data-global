@@ -1,12 +1,14 @@
-﻿module("modules.logic.fight.model.data.FightLockOperateDataMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightLockOperateDataMgr.lua
 
-local var_0_0 = FightDataClass("FightLockOperateDataMgr", FightDataMgrBase)
+module("modules.logic.fight.model.data.FightLockOperateDataMgr", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
+local FightLockOperateDataMgr = FightDataClass("FightLockOperateDataMgr", FightDataMgrBase)
+
+function FightLockOperateDataMgr:onConstructor()
 	return
 end
 
-function var_0_0.isLock(arg_2_0)
+function FightLockOperateDataMgr:isLock()
 	if FightDataHelper.stateMgr:getIsAuto() then
 		return true
 	end
@@ -26,4 +28,4 @@ function var_0_0.isLock(arg_2_0)
 	return false
 end
 
-return var_0_0
+return FightLockOperateDataMgr

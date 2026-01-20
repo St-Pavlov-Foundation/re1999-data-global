@@ -1,3 +1,7 @@
-﻿module("modules.logic.mainswitchclassify.controller.MainSwitchClassifyEvent", package.seeall)
+﻿-- chunkname: @modules/logic/mainswitchclassify/controller/MainSwitchClassifyEvent.lua
 
-return _M
+module("modules.logic.mainswitchclassify.controller.MainSwitchClassifyEvent", package.seeall)
+
+local MainSwitchClassifyEvent = _M
+
+return MainSwitchClassifyEvent

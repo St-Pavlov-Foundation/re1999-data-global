@@ -1,35 +1,37 @@
-﻿module("modules.logic.activity.controller.ActivityController", package.seeall)
+﻿-- chunkname: @modules/logic/activity/controller/ActivityController.lua
 
-local var_0_0 = class("ActivityController", BaseController)
+module("modules.logic.activity.controller.ActivityController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local ActivityController = class("ActivityController", BaseController)
+
+function ActivityController:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._getGroupSuccess = false
-	arg_2_0._getActSuccess = false
+function ActivityController:reInit()
+	self._getGroupSuccess = false
+	self._getActSuccess = false
 end
 
-function var_0_0.addConstEvents(arg_3_0)
-	HeroGroupController.instance:registerCallback(HeroGroupEvent.OnGetHeroGroupList, arg_3_0._onGetHeroGroupSuccess, arg_3_0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_3_0._onDailyRefresh, arg_3_0)
+function ActivityController:addConstEvents()
+	HeroGroupController.instance:registerCallback(HeroGroupEvent.OnGetHeroGroupList, self._onGetHeroGroupSuccess, self)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self._onDailyRefresh, self)
 end
 
-function var_0_0._onGetHeroGroupSuccess(arg_4_0)
-	arg_4_0._getGroupSuccess = true
+function ActivityController:_onGetHeroGroupSuccess()
+	self._getGroupSuccess = true
 
-	local var_4_0 = Activity104Model.instance:getCurSeasonId()
+	local seasonId = Activity104Model.instance:getCurSeasonId()
 
-	if arg_4_0._getActSuccess and ActivityModel.instance:isActOnLine(var_4_0) then
-		Activity104Rpc.instance:sendGet104InfosRequest(var_4_0)
+	if self._getActSuccess and ActivityModel.instance:isActOnLine(seasonId) then
+		Activity104Rpc.instance:sendGet104InfosRequest(seasonId)
 		TaskRpc.instance:sendGetTaskInfoRequest({
 			TaskEnum.TaskType.Season
 		})
 	end
 end
 
-function var_0_0.openActivityNormalView(arg_5_0)
+function ActivityController:openActivityNormalView()
 	if next(ActivityModel.instance:getCenterActivities(ActivityEnum.ActivityType.Normal)) then
 		ViewMgr.instance:openView(ViewName.ActivityNormalView)
 	else
@@ -37,19 +39,19 @@ function var_0_0.openActivityNormalView(arg_5_0)
 	end
 end
 
-function var_0_0.openActivityBeginnerView(arg_6_0, arg_6_1)
+function ActivityController:openActivityBeginnerView(param)
 	if next(ActivityModel.instance:getCenterActivities(ActivityEnum.ActivityType.Beginner)) then
 		TaskRpc.instance:sendGetTaskInfoRequest({
 			TaskEnum.TaskType.ActivityShow
 		}, function()
-			ViewMgr.instance:openView(ViewName.ActivityBeginnerView, arg_6_1)
+			ViewMgr.instance:openView(ViewName.ActivityBeginnerView, param)
 		end)
 	else
 		GameFacade.showToast(ToastEnum.ActivityNormalView)
 	end
 end
 
-function var_0_0.openActivityWelfareView(arg_8_0)
+function ActivityController:openActivityWelfareView()
 	if next(ActivityModel.instance:getCenterActivities(ActivityEnum.ActivityType.Welfare)) then
 		ViewMgr.instance:openView(ViewName.ActivityWelfareView)
 	else
@@ -57,7 +59,7 @@ function var_0_0.openActivityWelfareView(arg_8_0)
 	end
 end
 
-local var_0_1 = {
+local kAct101RedList = {
 	ActivityEnum.Activity.HarvestSeasonView_1_5,
 	ActivityEnum.Activity.V2a2_SpringFestival,
 	ActivityEnum.Activity.V3a0_SummerSign,
@@ -110,9 +112,10 @@ local var_0_1 = {
 	ActivityEnum.Activity.V2a9_VersionSummon_Part2,
 	ActivityEnum.Activity.V2a9_FreeMonthCard,
 	ActivityEnum.Activity.V3a0_SummerSign,
-	ActivityEnum.Activity.V3a1_AutumnSign
+	ActivityEnum.Activity.V3a1_AutumnSign,
+	ActivityEnum.Activity.V3a2_ActivityCollect
 }
-local var_0_2 = {
+local kAct125List = {
 	ActivityEnum.Activity.V3a0_WarmUp,
 	ActivityEnum.Activity.VersionActivity1_3Radio,
 	ActivityEnum.Activity.Activity1_6WarmUp,
@@ -128,25 +131,25 @@ local var_0_2 = {
 	ActivityEnum.Activity.V2a7_WarmUp
 }
 
-function var_0_0.checkGetActivityInfo(arg_9_0)
-	local var_9_0 = ActivityConfig.instance:typeId2ActivityCOList(ActivityEnum.ActivityTypeID.Act125)
+function ActivityController:checkGetActivityInfo()
+	local COListAct125 = ActivityConfig.instance:typeId2ActivityCOList(ActivityEnum.ActivityTypeID.Act125)
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
-		local var_9_1 = iter_9_1.id
+	for _, CO in ipairs(COListAct125) do
+		local actId = CO.id
 
-		Activity125Controller.instance:getAct125InfoFromServer(var_9_1)
+		Activity125Controller.instance:getAct125InfoFromServer(actId)
 	end
 
 	if ActivityModel.instance:isActOnLine(ActivityEnum.Activity.Activity1_5WarmUp) then
 		Activity146Controller.instance:getAct146InfoFromServer(ActivityEnum.Activity.Activity1_5WarmUp)
 	end
 
-	arg_9_0._getActSuccess = true
+	self._getActSuccess = true
 
-	local var_9_2 = Activity104Model.instance:getCurSeasonId()
+	local seasonId = Activity104Model.instance:getCurSeasonId()
 
-	if arg_9_0._getGroupSuccess and ActivityModel.instance:isActOnLine(var_9_2) then
-		Activity104Rpc.instance:sendGet104InfosRequest(var_9_2)
+	if self._getGroupSuccess and ActivityModel.instance:isActOnLine(seasonId) then
+		Activity104Rpc.instance:sendGet104InfosRequest(seasonId)
 		TaskRpc.instance:sendGetTaskInfoRequest({
 			TaskEnum.TaskType.Season
 		})
@@ -172,135 +175,144 @@ function var_0_0.checkGetActivityInfo(arg_9_0)
 		})
 	end
 
-	arg_9_0:requestAct186Info()
-	arg_9_0:requestAct165Info()
+	self:requestAct186Info()
+	self:requestAct165Info()
+	self:requestRouge2Info()
 end
 
-function var_0_0.requestAct186Info(arg_10_0)
-	local var_10_0 = Activity186Model.instance:getActId()
+function ActivityController:requestAct186Info()
+	local act186Id = Activity186Model.instance:getActId()
 
-	if var_10_0 and ActivityModel.instance:isActOnLine(var_10_0) then
-		Activity186Rpc.instance:sendGetAct186InfoRequest(var_10_0)
+	if act186Id and ActivityModel.instance:isActOnLine(act186Id) then
+		Activity186Rpc.instance:sendGetAct186InfoRequest(act186Id)
 	end
 
-	if ActivityModel.instance:isActOnLine(ActivityEnum.Activity.V2a5_Act186Sign) and var_10_0 then
-		Activity101Rpc.instance:sendGetAct186SpBonusInfoRequest(ActivityEnum.Activity.V2a5_Act186Sign, var_10_0)
+	if ActivityModel.instance:isActOnLine(ActivityEnum.Activity.V2a5_Act186Sign) and act186Id then
+		Activity101Rpc.instance:sendGetAct186SpBonusInfoRequest(ActivityEnum.Activity.V2a5_Act186Sign, act186Id)
 	end
 end
 
-function var_0_0.updateAct101Infos(arg_11_0, arg_11_1)
-	arg_11_0:_initRoleSign_kAct101RedList()
-	arg_11_0:_initSpecialSign_kAct101RedList()
-	arg_11_0:_initLinkageActivity_kAct101RedList()
-	arg_11_0:_initDoubleDan_kAct101RedList()
+function ActivityController:requestRouge2Info()
+	if not Rouge2_Controller:isFirstGetInfo() and Rouge2_Controller.instance:checkIsOpen(false) then
+		Rouge2OutsideRpc.instance:sendGetRouge2OutsideInfoRequest()
+		Rouge2OutsideRpc.instance:sendRouge2GetUnlockCollectionsRequest()
+		Rouge2_Rpc.instance:sendGetRouge2InfoRequest()
+	end
+end
 
-	if not arg_11_1 then
-		for iter_11_0, iter_11_1 in ipairs(var_0_1) do
-			if ActivityType101Model.instance:isOpen(iter_11_1) then
-				Activity101Rpc.instance:sendGet101InfosRequest(iter_11_1)
+function ActivityController:updateAct101Infos(targetActId)
+	self:_initRoleSign_kAct101RedList()
+	self:_initSpecialSign_kAct101RedList()
+	self:_initLinkageActivity_kAct101RedList()
+	self:_initVersionSummon_kAct101RedList()
+
+	if not targetActId then
+		for _, actId in ipairs(kAct101RedList) do
+			if ActivityType101Model.instance:isOpen(actId) then
+				Activity101Rpc.instance:sendGet101InfosRequest(actId)
 			end
 		end
 
 		return
 	end
 
-	for iter_11_2, iter_11_3 in ipairs(var_0_1) do
-		if arg_11_1 == iter_11_3 then
-			Activity101Rpc.instance:sendGet101InfosRequest(iter_11_3)
+	for _, actId in ipairs(kAct101RedList) do
+		if targetActId == actId then
+			Activity101Rpc.instance:sendGet101InfosRequest(actId)
 
 			return
 		end
 	end
 end
 
-function var_0_0._onDailyRefresh(arg_12_0)
-	arg_12_0:updateAct101Infos()
+function ActivityController:_onDailyRefresh()
+	self:updateAct101Infos()
 end
 
-local var_0_3 = false
+local s_RoleSign = false
 
-function var_0_0._initRoleSign_kAct101RedList(arg_13_0)
-	if var_0_3 then
+function ActivityController:_initRoleSign_kAct101RedList()
+	if s_RoleSign then
 		return
 	end
 
-	var_0_3 = true
+	s_RoleSign = true
 
-	local var_13_0 = ActivityType101Model.instance:getRoleSignActIdList()
+	local roleSignActIdList = ActivityType101Config.instance:getRoleSignActIdList()
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
-		table.insert(var_0_1, iter_13_1)
+	for _, actId in ipairs(roleSignActIdList) do
+		table.insert(kAct101RedList, actId)
 	end
 end
 
-function var_0_0.onModuleViews(arg_14_0, arg_14_1, arg_14_2)
-	ActivityType101Model.instance:onModuleViews(arg_14_1, arg_14_2)
+function ActivityController:onModuleViews(versionFullInfo, module_views)
+	ActivityType101Model.instance:onModuleViews(versionFullInfo, module_views)
 end
 
-local var_0_4 = false
+local s_SpecialSign = false
 
-function var_0_0._initSpecialSign_kAct101RedList(arg_15_0)
-	if var_0_4 then
+function ActivityController:_initSpecialSign_kAct101RedList()
+	if s_SpecialSign then
 		return
 	end
 
-	var_0_4 = true
+	s_SpecialSign = true
 
-	local var_15_0 = GameBranchMgr.instance:Vxax_ActId("Special", ActivityEnum.Activity.V2a3_Special)
+	local actId = GameBranchMgr.instance:Vxax_ActId("Special", ActivityEnum.Activity.V2a3_Special)
 
-	table.insert(var_0_1, var_15_0)
+	table.insert(kAct101RedList, actId)
 end
 
-local var_0_5 = false
+local s_LinkageActivity = false
 
-function var_0_0._initLinkageActivity_kAct101RedList(arg_16_0)
-	if var_0_5 then
+function ActivityController:_initLinkageActivity_kAct101RedList()
+	if s_LinkageActivity then
 		return
 	end
 
-	var_0_5 = true
+	s_LinkageActivity = true
 
-	local var_16_0 = GameBranchMgr.instance:Vxax_ActId("LinkageActivity", ActivityEnum.Activity.LinkageActivity_FullView)
+	local actId = GameBranchMgr.instance:Vxax_ActId("LinkageActivity", ActivityEnum.Activity.LinkageActivity_FullView)
 
-	table.insert(var_0_1, var_16_0)
+	table.insert(kAct101RedList, actId)
 end
 
-function var_0_0.requestAct165Info(arg_17_0)
+function ActivityController:requestAct165Info()
 	Activity165Model.instance:onInitInfo()
 end
 
-local var_0_6 = false
+local s_VersionSummon = false
 
-function var_0_0._initVersionSummon_kAct101RedList(arg_18_0)
-	if var_0_6 then
+function ActivityController:_initVersionSummon_kAct101RedList()
+	if s_VersionSummon then
 		return
 	end
 
-	var_0_6 = true
+	s_VersionSummon = true
 
-	local var_18_0 = ActivityType101Config.instance:getVersionSummonActIdList()
+	local actIdList = ActivityType101Config.instance:getVersionSummonActIdList()
 
-	for iter_18_0, iter_18_1 in ipairs(var_18_0) do
-		table.insert(var_0_1, iter_18_1)
+	for _, actId in ipairs(actIdList) do
+		table.insert(kAct101RedList, actId)
 	end
 end
 
-local var_0_7 = false
+local s_DoubleDan = false
 
-function var_0_0._initDoubleDan_kAct101RedList(arg_19_0)
-	if var_0_7 then
+function ActivityController:_initDoubleDan_kAct101RedList()
+	if s_DoubleDan then
 		return
 	end
 
-	var_0_7 = true
+	s_DoubleDan = true
 
-	local var_19_0 = GameBranchMgr.instance:Vxax_ActId("DoubleDan", ActivityType101Config.instance:getDoubleDanActId())
+	local actId = GameBranchMgr.instance:Vxax_ActId("DoubleDan", ActivityType101Config.instance:getDoubleDanActId())
 
-	if var_19_0 then
-		table.insert(var_0_1, var_19_0)
+	if actId then
+		table.insert(kAct101RedList, actId)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+ActivityController.instance = ActivityController.New()
 
-return var_0_0
+return ActivityController

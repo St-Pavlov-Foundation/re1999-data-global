@@ -1,79 +1,83 @@
-﻿module("modules.logic.scene.room.comp.RoomSceneWaterComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/comp/RoomSceneWaterComp.lua
 
-local var_0_0 = class("RoomSceneWaterComp", BaseSceneComp)
+module("modules.logic.scene.room.comp.RoomSceneWaterComp", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local RoomSceneWaterComp = class("RoomSceneWaterComp", BaseSceneComp)
+
+function RoomSceneWaterComp:onInit()
 	return
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._scene = arg_2_0:getCurScene()
-	arg_2_0._waterGODict = {}
-	arg_2_0._waterRes = RoomResHelper.getWaterPath()
-	arg_2_0._waterRoot = arg_2_0._scene.go.waterRoot
+function RoomSceneWaterComp:init(sceneId, levelId)
+	self._scene = self:getCurScene()
+	self._waterGODict = {}
+	self._waterRes = RoomResHelper.getWaterPath()
+	self._waterRoot = self._scene.go.waterRoot
 
-	RoomMapController.instance:registerCallback(RoomEvent.UpdateWater, arg_2_0._updateWater, arg_2_0)
-	arg_2_0:_refreshWaterGO()
+	RoomMapController.instance:registerCallback(RoomEvent.UpdateWater, self._updateWater, self)
+	self:_refreshWaterGO()
 end
 
-function var_0_0._updateWater(arg_3_0)
-	arg_3_0:_refreshWaterGO()
+function RoomSceneWaterComp:_updateWater()
+	self:_refreshWaterGO()
 end
 
-function var_0_0._refreshWaterGO(arg_4_0)
-	local var_4_0 = RoomMapBlockModel.instance:getConvexHull()
-	local var_4_1 = RoomMapBlockModel.instance:getConvexHexPointDict()
+function RoomSceneWaterComp:_refreshWaterGO()
+	local convexHull = RoomMapBlockModel.instance:getConvexHull()
+	local hexPointDict = RoomMapBlockModel.instance:getConvexHexPointDict()
 
-	for iter_4_0, iter_4_1 in pairs(var_4_1) do
-		for iter_4_2, iter_4_3 in pairs(iter_4_1) do
-			if RoomMapBlockModel.instance:getBlockMO(iter_4_0, iter_4_2) then
-				var_4_1[iter_4_0][iter_4_2] = nil
+	for x, dict in pairs(hexPointDict) do
+		for y, _ in pairs(dict) do
+			local blockMO = RoomMapBlockModel.instance:getBlockMO(x, y)
+
+			if blockMO then
+				hexPointDict[x][y] = nil
 			end
 		end
 	end
 
-	for iter_4_4, iter_4_5 in pairs(var_4_1) do
-		for iter_4_6, iter_4_7 in pairs(iter_4_5) do
-			if not arg_4_0._waterGODict[iter_4_4] or not arg_4_0._waterGODict[iter_4_4][iter_4_6] then
-				arg_4_0._waterGODict[iter_4_4] = arg_4_0._waterGODict[iter_4_4] or {}
+	for x, dict in pairs(hexPointDict) do
+		for y, _ in pairs(dict) do
+			if not self._waterGODict[x] or not self._waterGODict[x][y] then
+				self._waterGODict[x] = self._waterGODict[x] or {}
 
-				local var_4_2 = HexPoint(iter_4_4, iter_4_6)
-				local var_4_3 = RoomGOPool.getInstance(arg_4_0._waterRes, arg_4_0._waterRoot, RoomResHelper.getBlockName(var_4_2))
+				local hexPoint = HexPoint(x, y)
+				local waterGO = RoomGOPool.getInstance(self._waterRes, self._waterRoot, RoomResHelper.getBlockName(hexPoint))
 
-				if var_4_3 then
-					local var_4_4 = HexMath.hexToPosition(var_4_2, RoomBlockEnum.BlockSize)
+				if waterGO then
+					local position = HexMath.hexToPosition(hexPoint, RoomBlockEnum.BlockSize)
 
-					transformhelper.setLocalPos(var_4_3.transform, var_4_4.x, 0, var_4_4.y)
+					transformhelper.setLocalPos(waterGO.transform, position.x, 0, position.y)
 
-					arg_4_0._waterGODict[iter_4_4][iter_4_6] = var_4_3
+					self._waterGODict[x][y] = waterGO
 				end
 			end
 		end
 	end
 
-	for iter_4_8, iter_4_9 in pairs(arg_4_0._waterGODict) do
-		for iter_4_10, iter_4_11 in pairs(iter_4_9) do
-			if not var_4_1[iter_4_8] or not var_4_1[iter_4_8][iter_4_10] then
-				RoomGOPool.returnInstance(arg_4_0._waterRes, iter_4_11)
+	for x, dict in pairs(self._waterGODict) do
+		for y, waterGO in pairs(dict) do
+			if not hexPointDict[x] or not hexPointDict[x][y] then
+				RoomGOPool.returnInstance(self._waterRes, waterGO)
 
-				arg_4_0._waterGODict[iter_4_8][iter_4_10] = nil
+				self._waterGODict[x][y] = nil
 			end
 		end
 	end
 end
 
-function var_0_0.onSceneClose(arg_5_0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.UpdateWater, arg_5_0._updateWater, arg_5_0)
+function RoomSceneWaterComp:onSceneClose()
+	RoomMapController.instance:unregisterCallback(RoomEvent.UpdateWater, self._updateWater, self)
 
-	for iter_5_0, iter_5_1 in pairs(arg_5_0._waterGODict) do
-		for iter_5_2, iter_5_3 in pairs(iter_5_1) do
-			RoomGOPool.returnInstance(arg_5_0._waterRes, iter_5_3)
+	for x, dict in pairs(self._waterGODict) do
+		for y, waterGO in pairs(dict) do
+			RoomGOPool.returnInstance(self._waterRes, waterGO)
 		end
 	end
 
-	arg_5_0._waterGODict = nil
-	arg_5_0._prefab = nil
-	arg_5_0._waterRoot = nil
+	self._waterGODict = nil
+	self._prefab = nil
+	self._waterRoot = nil
 end
 
-return var_0_0
+return RoomSceneWaterComp

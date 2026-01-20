@@ -1,36 +1,38 @@
-﻿module("modules.logic.versionactivity1_5.aizila.view.game.AiZiLaGamePackViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/aizila/view/game/AiZiLaGamePackViewContainer.lua
 
-local var_0_0 = class("AiZiLaGamePackViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_5.aizila.view.game.AiZiLaGamePackViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+local AiZiLaGamePackViewContainer = class("AiZiLaGamePackViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "#scroll_Items"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = AiZiLaGoodsItem.prefabPath
-	var_1_1.cellClass = AiZiLaGoodsItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 5
-	var_1_1.cellWidth = 270
-	var_1_1.cellHeight = 250
-	var_1_1.cellSpaceH = 0
-	var_1_1.cellSpaceV = 0
-	var_1_1.startSpace = 0
+function AiZiLaGamePackViewContainer:buildViews()
+	local views = {}
+	local scrollParam = ListScrollParam.New()
 
-	table.insert(var_1_0, LuaListScrollView.New(AiZiLaGamePackListModel.instance, var_1_1))
-	table.insert(var_1_0, AiZiLaGamePackView.New())
+	scrollParam.scrollGOPath = "#scroll_Items"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = AiZiLaGoodsItem.prefabPath
+	scrollParam.cellClass = AiZiLaGoodsItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 5
+	scrollParam.cellWidth = 270
+	scrollParam.cellHeight = 250
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 0
+	scrollParam.startSpace = 0
 
-	return var_1_0
+	table.insert(views, LuaListScrollView.New(AiZiLaGamePackListModel.instance, scrollParam))
+	table.insert(views, AiZiLaGamePackView.New())
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
+function AiZiLaGamePackViewContainer:onContainerClickModalMask()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	arg_2_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.buildTabViews(arg_3_0, arg_3_1)
-	if arg_3_1 == 1 then
+function AiZiLaGamePackViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -41,4 +43,4 @@ function var_0_0.buildTabViews(arg_3_0, arg_3_1)
 	end
 end
 
-return var_0_0
+return AiZiLaGamePackViewContainer

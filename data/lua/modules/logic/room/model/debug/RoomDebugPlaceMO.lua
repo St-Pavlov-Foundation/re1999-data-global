@@ -1,12 +1,14 @@
-﻿module("modules.logic.room.model.debug.RoomDebugPlaceMO", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/debug/RoomDebugPlaceMO.lua
 
-local var_0_0 = pureTable("RoomDebugPlaceMO")
+module("modules.logic.room.model.debug.RoomDebugPlaceMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1.id
-	arg_1_0.defineId = arg_1_1.id
-	arg_1_0.blockId = arg_1_1.blockId
-	arg_1_0.config = RoomConfig.instance:getBlockDefineConfig(arg_1_0.defineId)
+local RoomDebugPlaceMO = pureTable("RoomDebugPlaceMO")
+
+function RoomDebugPlaceMO:init(info)
+	self.id = info.id
+	self.defineId = info.id
+	self.blockId = info.blockId
+	self.config = RoomConfig.instance:getBlockDefineConfig(self.defineId)
 end
 
-return var_0_0
+return RoomDebugPlaceMO

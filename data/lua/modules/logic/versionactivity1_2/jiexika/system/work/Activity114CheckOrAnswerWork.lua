@@ -1,20 +1,22 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114CheckOrAnswerWork", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/system/work/Activity114CheckOrAnswerWork.lua
 
-local var_0_0 = class("Activity114CheckOrAnswerWork", Activity114BaseWork)
+module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114CheckOrAnswerWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_0.context.eventCo
+local Activity114CheckOrAnswerWork = class("Activity114CheckOrAnswerWork", Activity114BaseWork)
 
-	if var_1_0.config.testId > 0 then
-		arg_1_0:getFlow():addWork(Activity114AnswerWork.New())
-	elseif var_1_0.config.isCheckEvent == 1 then
-		arg_1_0:getFlow():addWork(Activity114DiceViewWork.New())
+function Activity114CheckOrAnswerWork:onStart(context)
+	local eventCo = self.context.eventCo
+
+	if eventCo.config.testId > 0 then
+		self:getFlow():addWork(Activity114AnswerWork.New())
+	elseif eventCo.config.isCheckEvent == 1 then
+		self:getFlow():addWork(Activity114DiceViewWork.New())
 	else
-		arg_1_0.context.result = Activity114Enum.Result.Success
+		self.context.result = Activity114Enum.Result.Success
 	end
 
-	arg_1_0:getFlow():addWork(Activity114CheckResultWork.New())
-	arg_1_0:startFlow()
+	self:getFlow():addWork(Activity114CheckResultWork.New())
+	self:startFlow()
 end
 
-return var_0_0
+return Activity114CheckOrAnswerWork

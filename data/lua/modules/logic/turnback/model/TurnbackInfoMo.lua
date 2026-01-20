@@ -1,116 +1,136 @@
-﻿module("modules.logic.turnback.model.TurnbackInfoMo", package.seeall)
+﻿-- chunkname: @modules/logic/turnback/model/TurnbackInfoMo.lua
 
-local var_0_0 = pureTable("TurnbackInfoMo")
+module("modules.logic.turnback.model.TurnbackInfoMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.id = 0
-	arg_1_0.tasks = {}
-	arg_1_0.bonusPoint = 0
-	arg_1_0.firstShow = true
-	arg_1_0.hasGetTaskBonus = {}
-	arg_1_0.signInDay = 0
-	arg_1_0.signInInfos = {}
-	arg_1_0.onceBonus = false
-	arg_1_0.endTime = 0
-	arg_1_0.startTime = 0
-	arg_1_0.remainAdditionCount = 0
-	arg_1_0.leaveTime = 0
-	arg_1_0.monthCardAddedBuyCount = 0
-	arg_1_0.newType = true
-	arg_1_0.hasBuyDoubleBonus = false
-	arg_1_0.config = nil
-	arg_1_0.dropinfos = {}
+local TurnbackInfoMo = pureTable("TurnbackInfoMo")
+
+function TurnbackInfoMo:ctor()
+	self.id = 0
+	self.tasks = {}
+	self.bonusPoint = 0
+	self.firstShow = true
+	self.hasGetTaskBonus = {}
+	self.signInDay = 0
+	self.signInInfos = {}
+	self.onceBonus = false
+	self.endTime = 0
+	self.startTime = 0
+	self.remainAdditionCount = 0
+	self.leaveTime = 0
+	self.monthCardAddedBuyCount = 0
+	self.newType = true
+	self.hasBuyDoubleBonus = false
+	self.config = nil
+	self.dropinfos = {}
+	self.getDailyBonus = nil
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.id = arg_2_1.id
-	arg_2_0.tasks = arg_2_1.tasks
-	arg_2_0.bonusPoint = arg_2_1.bonusPoint
-	arg_2_0.firstShow = arg_2_1.firstShow
-	arg_2_0.hasGetTaskBonus = arg_2_1.hasGetTaskBonus
-	arg_2_0.signInDay = arg_2_1.signInDay
-	arg_2_0.signInInfos = arg_2_1.signInInfos
-	arg_2_0.onceBonus = arg_2_1.onceBonus
-	arg_2_0.startTime = tonumber(arg_2_1.startTime)
-	arg_2_0.endTime = tonumber(arg_2_1.endTime)
-	arg_2_0.leaveTime = tonumber(arg_2_1.leaveTime)
-	arg_2_0.monthCardAddedBuyCount = tonumber(arg_2_1.monthCardAddedBuyCount)
+function TurnbackInfoMo:init(info)
+	self.id = info.id
+	self.tasks = info.tasks
+	self.bonusPoint = info.bonusPoint
+	self.firstShow = info.firstShow
+	self.hasGetTaskBonus = info.hasGetTaskBonus
+	self.signInDay = info.signInDay
+	self.signInInfos = info.signInInfos
+	self.onceBonus = info.onceBonus
+	self.startTime = tonumber(info.startTime)
+	self.endTime = tonumber(info.endTime)
+	self.leaveTime = tonumber(info.leaveTime)
+	self.monthCardAddedBuyCount = tonumber(info.monthCardAddedBuyCount)
 
-	arg_2_0:setRemainAdditionCount(arg_2_1.remainAdditionCount, true)
+	self:setRemainAdditionCount(info.remainAdditionCount, true)
 
-	arg_2_0.newType = arg_2_1.version == TurnbackEnum.type.New and true or false
-	arg_2_0.hasBuyDoubleBonus = arg_2_1.buyDoubleBonus
-	arg_2_0.config = TurnbackConfig.instance:getTurnbackCo(arg_2_0.id)
-	arg_2_0.dropinfos = arg_2_1.dropInfos
+	self.newType = info.version == TurnbackEnum.type.New and true or false
+	self.hasBuyDoubleBonus = info.buyDoubleBonus
+	self.config = TurnbackConfig.instance:getTurnbackCo(self.id)
+	self.dropinfos = info.dropInfos
+	self.dailyBonus = info.getDailyBonus
 end
 
-function var_0_0.isStart(arg_3_0)
-	return ServerTime.now() - arg_3_0.startTime >= 0
+function TurnbackInfoMo:isStart()
+	return ServerTime.now() - self.startTime >= 0
 end
 
-function var_0_0.isEnd(arg_4_0)
-	return ServerTime.now() - arg_4_0.endTime > 0
+function TurnbackInfoMo:isEnd()
+	return ServerTime.now() - self.endTime > 0
 end
 
-function var_0_0.isInReommendTime(arg_5_0)
-	return arg_5_0.leaveTime > 0 and ServerTime.now() - arg_5_0.leaveTime >= 0
+function TurnbackInfoMo:isInReommendTime()
+	return self.leaveTime > 0 and ServerTime.now() - self.leaveTime >= 0
 end
 
-function var_0_0.isInOpenTime(arg_6_0)
-	local var_6_0 = arg_6_0:isStart()
-	local var_6_1 = arg_6_0:isEnd()
+function TurnbackInfoMo:isInOpenTime()
+	local isStart = self:isStart()
+	local isEnd = self:isEnd()
 
-	return var_6_0 and not var_6_1
+	return isStart and not isEnd
 end
 
-function var_0_0.isNewType(arg_7_0)
-	return arg_7_0.newType
+function TurnbackInfoMo:isNewType()
+	return self.newType
 end
 
-function var_0_0.updateHasGetTaskBonus(arg_8_0, arg_8_1)
-	arg_8_0.hasGetTaskBonus = arg_8_1
+function TurnbackInfoMo:updateHasGetTaskBonus(hasGetTaskBonus)
+	self.hasGetTaskBonus = hasGetTaskBonus
 end
 
-function var_0_0.setRemainAdditionCount(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = 0
+function TurnbackInfoMo:setRemainAdditionCount(newCount, isInit)
+	local tmpNewCount = 0
 
-	if arg_9_1 and arg_9_1 > 0 then
-		var_9_0 = arg_9_1
+	if newCount and newCount > 0 then
+		tmpNewCount = newCount
 	end
 
-	local var_9_1 = arg_9_0.remainAdditionCount ~= var_9_0
+	local isChange = self.remainAdditionCount ~= tmpNewCount
 
-	arg_9_0.remainAdditionCount = var_9_0
+	self.remainAdditionCount = tmpNewCount
 
-	if var_9_1 and not arg_9_2 then
-		TurnbackController.instance:dispatchEvent(TurnbackEvent.AdditionCountChange, arg_9_0.id)
+	if isChange and not isInit then
+		TurnbackController.instance:dispatchEvent(TurnbackEvent.AdditionCountChange, self.id)
 	end
 end
 
-function var_0_0.isRemainAdditionCount(arg_10_0)
-	return arg_10_0:getRemainAdditionCount() > 0
+function TurnbackInfoMo:isRemainAdditionCount()
+	local remainCount = self:getRemainAdditionCount()
+
+	return remainCount > 0
 end
 
-function var_0_0.isAdditionInOpenTime(arg_11_0)
-	local var_11_0 = TurnbackConfig.instance:getAdditionDurationDays(arg_11_0.id)
+function TurnbackInfoMo:isAdditionInOpenTime()
+	local additionDurationDays = TurnbackConfig.instance:getAdditionDurationDays(self.id)
+	local turnbackElapsedTime = ServerTime.now() - self.startTime
+	local result = turnbackElapsedTime < additionDurationDays * TimeUtil.OneDaySecond
 
-	return ServerTime.now() - arg_11_0.startTime < var_11_0 * TimeUtil.OneDaySecond
+	return result
 end
 
-function var_0_0.isAdditionValid(arg_12_0)
-	local var_12_0 = arg_12_0:isInOpenTime()
-	local var_12_1 = arg_12_0:isAdditionInOpenTime()
-	local var_12_2 = arg_12_0:isRemainAdditionCount()
+function TurnbackInfoMo:isAdditionValid()
+	local isInOpenTime = self:isInOpenTime()
+	local isAdditionInOpenTime = self:isAdditionInOpenTime()
+	local isRemainCount = self:isRemainAdditionCount()
 
-	return var_12_0 and var_12_1 and var_12_2
+	return isInOpenTime and isAdditionInOpenTime and isRemainCount
 end
 
-function var_0_0.getRemainAdditionCount(arg_13_0)
-	return arg_13_0.remainAdditionCount
+function TurnbackInfoMo:getRemainAdditionCount()
+	return self.remainAdditionCount
 end
 
-function var_0_0.getBuyDoubleBonus(arg_14_0)
-	return arg_14_0.hasBuyDoubleBonus
+function TurnbackInfoMo:getBuyDoubleBonus()
+	return self.hasBuyDoubleBonus
 end
 
-return var_0_0
+function TurnbackInfoMo:setDailyBonus(getDailyBonus)
+	self.dailyBonus = getDailyBonus
+end
+
+function TurnbackInfoMo:isClaimedDailyBonus(day)
+	day = day - 1
+
+	local bits = Bitwise["<<"](1, day)
+
+	return Bitwise.has(self.dailyBonus, bits)
+end
+
+return TurnbackInfoMo

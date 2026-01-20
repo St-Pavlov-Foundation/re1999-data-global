@@ -1,90 +1,92 @@
-﻿module("modules.logic.versionactivity2_4.wuerlixi.model.WuErLiXiModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/wuerlixi/model/WuErLiXiModel.lua
 
-local var_0_0 = class("WuErLiXiModel", BaseModel)
+module("modules.logic.versionactivity2_4.wuerlixi.model.WuErLiXiModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local WuErLiXiModel = class("WuErLiXiModel", BaseModel)
+
+function WuErLiXiModel:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._episodeInfos = {}
-	arg_2_0._curEpisodeIndex = 0
+function WuErLiXiModel:reInit()
+	self._episodeInfos = {}
+	self._curEpisodeIndex = 0
 end
 
-function var_0_0.initInfos(arg_3_0, arg_3_1)
-	arg_3_0._episodeInfos = {}
+function WuErLiXiModel:initInfos(infos)
+	self._episodeInfos = {}
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
-		if not arg_3_0._episodeInfos[iter_3_1.episodeId] then
-			arg_3_0._episodeInfos[iter_3_1.episodeId] = WuErLiXiEpisodeMo.New()
+	for _, info in ipairs(infos) do
+		if not self._episodeInfos[info.episodeId] then
+			self._episodeInfos[info.episodeId] = WuErLiXiEpisodeMo.New()
 
-			arg_3_0._episodeInfos[iter_3_1.episodeId]:init(iter_3_1)
+			self._episodeInfos[info.episodeId]:init(info)
 		else
-			arg_3_0._episodeInfos[iter_3_1.episodeId]:update(iter_3_1)
+			self._episodeInfos[info.episodeId]:update(info)
 		end
 	end
 end
 
-function var_0_0.updateEpisodeInfo(arg_4_0, arg_4_1)
-	arg_4_0._episodeInfos[arg_4_1.episodeId]:update(arg_4_1)
+function WuErLiXiModel:updateEpisodeInfo(info)
+	self._episodeInfos[info.episodeId]:update(info)
 end
 
-function var_0_0.updateInfos(arg_5_0, arg_5_1)
-	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
-		if not arg_5_0._episodeInfos[iter_5_1.episodeId] then
-			arg_5_0._episodeInfos[iter_5_1.episodeId] = WuErLiXiEpisodeMo.New()
+function WuErLiXiModel:updateInfos(infos)
+	for _, info in ipairs(infos) do
+		if not self._episodeInfos[info.episodeId] then
+			self._episodeInfos[info.episodeId] = WuErLiXiEpisodeMo.New()
 
-			arg_5_0._episodeInfos[iter_5_1.episodeId]:init(iter_5_1)
+			self._episodeInfos[info.episodeId]:init(info)
 		else
-			arg_5_0._episodeInfos[iter_5_1.episodeId]:update(iter_5_1)
+			self._episodeInfos[info.episodeId]:update(info)
 		end
 	end
 end
 
-function var_0_0.updateEpisodeGameString(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_0._episodeInfos[arg_6_1]:updateGameString(arg_6_2)
+function WuErLiXiModel:updateEpisodeGameString(episodeId, str)
+	self._episodeInfos[episodeId]:updateGameString(str)
 end
 
-function var_0_0.getCurGameProcess(arg_7_0, arg_7_1)
-	return arg_7_0._episodeInfos[arg_7_1].gameString
+function WuErLiXiModel:getCurGameProcess(episodeId)
+	return self._episodeInfos[episodeId].gameString
 end
 
-function var_0_0.getEpisodeStatus(arg_8_0, arg_8_1)
-	return arg_8_0._episodeInfos[arg_8_1].status
+function WuErLiXiModel:getEpisodeStatus(episodeId)
+	return self._episodeInfos[episodeId].status
 end
 
-function var_0_0.setCurEpisodeIndex(arg_9_0, arg_9_1)
-	arg_9_0._curEpisodeIndex = arg_9_1
+function WuErLiXiModel:setCurEpisodeIndex(index)
+	self._curEpisodeIndex = index
 end
 
-function var_0_0.getCurEpisodeIndex(arg_10_0)
-	return arg_10_0._curEpisodeIndex or 0
+function WuErLiXiModel:getCurEpisodeIndex()
+	return self._curEpisodeIndex or 0
 end
 
-function var_0_0.isEpisodeUnlock(arg_11_0, arg_11_1)
-	return arg_11_0._episodeInfos[arg_11_1]
+function WuErLiXiModel:isEpisodeUnlock(episodeId)
+	return self._episodeInfos[episodeId]
 end
 
-function var_0_0.isEpisodePass(arg_12_0, arg_12_1)
-	if not arg_12_0._episodeInfos[arg_12_1] then
+function WuErLiXiModel:isEpisodePass(episodeId)
+	if not self._episodeInfos[episodeId] then
 		return false
 	end
 
-	return arg_12_0._episodeInfos[arg_12_1].isFinished
+	return self._episodeInfos[episodeId].isFinished
 end
 
-function var_0_0.getNewFinishEpisode(arg_13_0)
-	return arg_13_0._newFinishEpisode or 0
+function WuErLiXiModel:getNewFinishEpisode()
+	return self._newFinishEpisode or 0
 end
 
-function var_0_0.setNewFinishEpisode(arg_14_0, arg_14_1)
-	arg_14_0._newFinishEpisode = arg_14_1
+function WuErLiXiModel:setNewFinishEpisode(episodeId)
+	self._newFinishEpisode = episodeId
 end
 
-function var_0_0.clearFinishEpisode(arg_15_0)
-	arg_15_0._newFinishEpisode = 0
+function WuErLiXiModel:clearFinishEpisode()
+	self._newFinishEpisode = 0
 end
 
-var_0_0.instance = var_0_0.New()
+WuErLiXiModel.instance = WuErLiXiModel.New()
 
-return var_0_0
+return WuErLiXiModel

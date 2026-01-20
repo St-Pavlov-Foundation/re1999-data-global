@@ -1,112 +1,114 @@
-﻿module("modules.logic.prototest.view.ProtoTestCaseItem", package.seeall)
+﻿-- chunkname: @modules/logic/prototest/view/ProtoTestCaseItem.lua
 
-local var_0_0 = class("ProtoTestCaseItem", MixScrollCell)
+module("modules.logic.prototest.view.ProtoTestCaseItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._go = arg_1_1
-	arg_1_0._tr = arg_1_1.transform
-	arg_1_0._txtId = gohelper.findChildText(arg_1_1, "Txt_id")
-	arg_1_0._txtFields = {
-		gohelper.findChildText(arg_1_1, "Txt_field")
+local ProtoTestCaseItem = class("ProtoTestCaseItem", MixScrollCell)
+
+function ProtoTestCaseItem:init(go)
+	self._go = go
+	self._tr = go.transform
+	self._txtId = gohelper.findChildText(go, "Txt_id")
+	self._txtFields = {
+		gohelper.findChildText(go, "Txt_field")
 	}
-	arg_1_0._btnRemove = gohelper.findChildButtonWithAudio(arg_1_1, "Btn_remove")
-	arg_1_0._btnCopy = gohelper.findChildButtonWithAudio(arg_1_1, "Btn_copy")
-	arg_1_0._btnSend = gohelper.findChildButtonWithAudio(arg_1_1, "Btn_send")
+	self._btnRemove = gohelper.findChildButtonWithAudio(go, "Btn_remove")
+	self._btnCopy = gohelper.findChildButtonWithAudio(go, "Btn_copy")
+	self._btnSend = gohelper.findChildButtonWithAudio(go, "Btn_send")
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._btnRemove:AddClickListener(arg_2_0._onClickRemove, arg_2_0)
-	arg_2_0._btnCopy:AddClickListener(arg_2_0._onClickCopy, arg_2_0)
-	arg_2_0._btnSend:AddClickListener(arg_2_0._onClickSend, arg_2_0)
-	gohelper.getClick(arg_2_0._go):AddClickListener(arg_2_0._onClickItem, arg_2_0)
+function ProtoTestCaseItem:addEventListeners()
+	self._btnRemove:AddClickListener(self._onClickRemove, self)
+	self._btnCopy:AddClickListener(self._onClickCopy, self)
+	self._btnSend:AddClickListener(self._onClickSend, self)
+	gohelper.getClick(self._go):AddClickListener(self._onClickItem, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btnRemove:RemoveClickListener()
-	arg_3_0._btnCopy:RemoveClickListener()
-	arg_3_0._btnSend:RemoveClickListener()
-	gohelper.getClick(arg_3_0._go):RemoveClickListener()
+function ProtoTestCaseItem:removeEventListeners()
+	self._btnRemove:RemoveClickListener()
+	self._btnCopy:RemoveClickListener()
+	self._btnSend:RemoveClickListener()
+	gohelper.getClick(self._go):RemoveClickListener()
 
-	for iter_3_0 = 1, #arg_3_0._txtFields do
-		local var_3_0 = arg_3_0._txtFields[iter_3_0]
+	for i = 1, #self._txtFields do
+		local txtField = self._txtFields[i]
 
-		gohelper.getClick(var_3_0.gameObject):RemoveClickListener()
+		gohelper.getClick(txtField.gameObject):RemoveClickListener()
 	end
 end
 
-function var_0_0.onUpdateMO(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	recthelper.setHeight(arg_4_0._tr, arg_4_3)
+function ProtoTestCaseItem:onUpdateMO(mo, mixType, param)
+	recthelper.setHeight(self._tr, param)
 
-	arg_4_0._mo = arg_4_1
-	arg_4_0._txtId.text = arg_4_0._mo.id .. ". " .. arg_4_0._mo.struct
+	self._mo = mo
+	self._txtId.text = self._mo.id .. ". " .. self._mo.struct
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_0._mo.value) do
-		local var_4_0 = arg_4_0._txtFields[1].gameObject
-		local var_4_1 = arg_4_0._txtFields[iter_4_0]
+	for i, paramMO in ipairs(self._mo.value) do
+		local txt1GO = self._txtFields[1].gameObject
+		local txtField = self._txtFields[i]
 
-		if not var_4_1 then
-			local var_4_2 = gohelper.clone(var_4_0, var_4_0.transform.parent.gameObject, var_4_0.name .. iter_4_0)
+		if not txtField then
+			local goTxtField = gohelper.clone(txt1GO, txt1GO.transform.parent.gameObject, txt1GO.name .. i)
 
-			var_4_1 = var_4_2:GetComponent(gohelper.Type_Text)
-			var_4_1 = var_4_1 or var_4_2:GetComponent(gohelper.Type_TextMesh)
+			txtField = goTxtField:GetComponent(gohelper.Type_Text)
+			txtField = txtField or goTxtField:GetComponent(gohelper.Type_TextMesh)
 
-			recthelper.setAnchorY(var_4_1.transform, recthelper.getAnchorY(var_4_0.transform) - 28 * (iter_4_0 - 1))
-			table.insert(arg_4_0._txtFields, var_4_1)
+			recthelper.setAnchorY(txtField.transform, recthelper.getAnchorY(txt1GO.transform) - 28 * (i - 1))
+			table.insert(self._txtFields, txtField)
 		end
 
-		var_4_1.text = iter_4_1:getParamDescLine()
+		txtField.text = paramMO:getParamDescLine()
 
-		gohelper.setActive(var_4_1.gameObject, true)
-		gohelper.getClick(var_4_1.gameObject):AddClickListener(arg_4_0._onClickParam, arg_4_0, iter_4_0)
+		gohelper.setActive(txtField.gameObject, true)
+		gohelper.getClick(txtField.gameObject):AddClickListener(self._onClickParam, self, i)
 	end
 
-	for iter_4_2 = #arg_4_0._mo.value + 1, #arg_4_0._txtFields do
-		gohelper.setActive(arg_4_0._txtFields[iter_4_2].gameObject, false)
+	for i = #self._mo.value + 1, #self._txtFields do
+		gohelper.setActive(self._txtFields[i].gameObject, false)
 	end
 end
 
-function var_0_0._onClickItem(arg_5_0)
+function ProtoTestCaseItem:_onClickItem()
 	ViewMgr.instance:openView(ViewName.ProtoModifyView, {
-		protoMO = arg_5_0._mo
+		protoMO = self._mo
 	})
 end
 
-function var_0_0._onClickParam(arg_6_0, arg_6_1)
+function ProtoTestCaseItem:_onClickParam(id)
 	ViewMgr.instance:openView(ViewName.ProtoModifyView, {
-		protoMO = arg_6_0._mo,
-		paramId = arg_6_1
+		protoMO = self._mo,
+		paramId = id
 	})
 end
 
-function var_0_0._onClickRemove(arg_7_0)
-	ProtoTestCaseModel.instance:remove(arg_7_0._mo)
+function ProtoTestCaseItem:_onClickRemove()
+	ProtoTestCaseModel.instance:remove(self._mo)
 
-	local var_7_0 = ProtoTestCaseModel.instance:getList()
+	local list = ProtoTestCaseModel.instance:getList()
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-		iter_7_1.id = iter_7_0
+	for i, mo in ipairs(list) do
+		mo.id = i
 	end
 
-	ProtoTestCaseModel.instance:setList(var_7_0)
+	ProtoTestCaseModel.instance:setList(list)
 end
 
-function var_0_0._onClickCopy(arg_8_0)
-	local var_8_0 = arg_8_0._mo:clone()
-	local var_8_1 = ProtoTestCaseModel.instance:getList()
+function ProtoTestCaseItem:_onClickCopy()
+	local cloneMO = self._mo:clone()
+	local list = ProtoTestCaseModel.instance:getList()
 
-	table.insert(var_8_1, var_8_0)
+	table.insert(list, cloneMO)
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_1) do
-		iter_8_1.id = iter_8_0
+	for i, mo in ipairs(list) do
+		mo.id = i
 	end
 
-	ProtoTestCaseModel.instance:setList(var_8_1)
+	ProtoTestCaseModel.instance:setList(list)
 end
 
-function var_0_0._onClickSend(arg_9_0)
-	local var_9_0 = arg_9_0._mo:buildProtoMsg()
+function ProtoTestCaseItem:_onClickSend()
+	local protobuf = self._mo:buildProtoMsg()
 
-	LuaSocketMgr.instance:sendMsg(var_9_0)
+	LuaSocketMgr.instance:sendMsg(protobuf)
 end
 
-return var_0_0
+return ProtoTestCaseItem

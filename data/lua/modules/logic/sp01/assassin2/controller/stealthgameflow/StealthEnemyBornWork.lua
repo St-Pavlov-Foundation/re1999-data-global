@@ -1,27 +1,29 @@
-﻿module("modules.logic.sp01.assassin2.controller.stealthgameflow.StealthEnemyBornWork", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/controller/stealthgameflow/StealthEnemyBornWork.lua
 
-local var_0_0 = class("StealthEnemyBornWork", BaseWork)
-local var_0_1 = 0.5
+module("modules.logic.sp01.assassin2.controller.stealthgameflow.StealthEnemyBornWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = AssassinStealthGameModel.instance:getEnemyOperationData()
-	local var_1_1 = var_1_0 and var_1_0.summons
+local StealthEnemyBornWork = class("StealthEnemyBornWork", BaseWork)
+local WAIT_TIME = 0.5
 
-	if var_1_1 and #var_1_1 > 0 then
-		AssassinStealthGameController.instance:enemyBornByList(var_1_1)
-		TaskDispatcher.cancelTask(arg_1_0._bornEnemyFinished, arg_1_0)
-		TaskDispatcher.runDelay(arg_1_0._bornEnemyFinished, arg_1_0, var_0_1)
+function StealthEnemyBornWork:onStart(context)
+	local enemyOperationData = AssassinStealthGameModel.instance:getEnemyOperationData()
+	local newEnemyDataList = enemyOperationData and enemyOperationData.summons
+
+	if newEnemyDataList and #newEnemyDataList > 0 then
+		AssassinStealthGameController.instance:enemyBornByList(newEnemyDataList)
+		TaskDispatcher.cancelTask(self._bornEnemyFinished, self)
+		TaskDispatcher.runDelay(self._bornEnemyFinished, self, WAIT_TIME)
 	else
-		arg_1_0:_bornEnemyFinished()
+		self:_bornEnemyFinished()
 	end
 end
 
-function var_0_0._bornEnemyFinished(arg_2_0)
-	arg_2_0:onDone(true)
+function StealthEnemyBornWork:_bornEnemyFinished()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0._bornEnemyFinished, arg_3_0)
+function StealthEnemyBornWork:clearWork()
+	TaskDispatcher.cancelTask(self._bornEnemyFinished, self)
 end
 
-return var_0_0
+return StealthEnemyBornWork

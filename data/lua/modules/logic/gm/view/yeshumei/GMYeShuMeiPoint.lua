@@ -1,202 +1,205 @@
-﻿module("modules.logic.gm.view.yeshumei.GMYeShuMeiPoint", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/yeshumei/GMYeShuMeiPoint.lua
 
-local var_0_0 = class("GMYeShuMeiPoint", LuaCompBase)
+module("modules.logic.gm.view.yeshumei.GMYeShuMeiPoint", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._tr = arg_1_1.transform
+local GMYeShuMeiPoint = class("GMYeShuMeiPoint", LuaCompBase)
 
-	arg_1_0:initPos(0, 0)
-	gohelper.setActive(arg_1_0.go, true)
+function GMYeShuMeiPoint:init(go)
+	self.go = go
+	self._tr = go.transform
 
-	arg_1_0._dropdown = gohelper.findChildDropdown(arg_1_1, "Dropdown")
-	arg_1_0._btndelete = gohelper.findChildButton(arg_1_1, "btn/btn_delete")
-	arg_1_0._txtpos = gohelper.findChildText(arg_1_1, "#txt_pos")
-	arg_1_0._txtindex = gohelper.findChildText(arg_1_1, "#txt_index")
-	arg_1_0._gostart = gohelper.findChild(arg_1_1, "#go_start")
-	arg_1_0._gonormal = gohelper.findChild(arg_1_1, "#go_normal")
-	arg_1_0._godisturb = gohelper.findChild(arg_1_1, "#go_disturb")
+	self:initPos(0, 0)
+	gohelper.setActive(self.go, true)
 
-	CommonDragHelper.instance:registerDragObj(arg_1_0.go, arg_1_0._beginDrag, arg_1_0._onDrag, arg_1_0._endDrag, arg_1_0._checkDrag, arg_1_0, nil, true)
+	self._dropdown = gohelper.findChildDropdown(go, "Dropdown")
+	self._btndelete = gohelper.findChildButton(go, "btn/btn_delete")
+	self._txtpos = gohelper.findChildText(go, "#txt_pos")
+	self._txtindex = gohelper.findChildText(go, "#txt_index")
+	self._gostart = gohelper.findChild(go, "#go_start")
+	self._gonormal = gohelper.findChild(go, "#go_normal")
+	self._godisturb = gohelper.findChild(go, "#go_disturb")
+
+	CommonDragHelper.instance:registerDragObj(self.go, self._beginDrag, self._onDrag, self._endDrag, self._checkDrag, self, nil, true)
 end
 
-function var_0_0.initPos(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._localPosX = arg_2_1
-	arg_2_0._localPosY = arg_2_2
+function GMYeShuMeiPoint:initPos(posX, posY)
+	self._localPosX = posX
+	self._localPosY = posY
 
-	transformhelper.setLocalPosXY(arg_2_0._tr, arg_2_1, arg_2_2)
+	transformhelper.setLocalPosXY(self._tr, posX, posY)
 end
 
-function var_0_0.getLocalPos(arg_3_0)
-	return arg_3_0._localPosX, arg_3_0._localPosY
+function GMYeShuMeiPoint:getLocalPos()
+	return self._localPosX, self._localPosY
 end
 
-function var_0_0.updateInfo(arg_4_0, arg_4_1)
-	if not arg_4_1 then
+function GMYeShuMeiPoint:updateInfo(mo)
+	if not mo then
 		return
 	end
 
-	arg_4_0._mo = arg_4_1
-	arg_4_0.id = arg_4_1.id
-	arg_4_0.typeId = arg_4_1.typeId
-	arg_4_0.posX = arg_4_1.posX
-	arg_4_0.posY = arg_4_1.posY
+	self._mo = mo
+	self.id = mo.id
+	self.typeId = mo.typeId
+	self.posX = mo.posX
+	self.posY = mo.posY
 
-	arg_4_0:initPos(arg_4_0.posX, arg_4_0.posY)
+	self:initPos(self.posX, self.posY)
 
-	arg_4_0._txtpos.text = string.format("(%.1f, %.1f)", arg_4_0.posX, arg_4_0.posY)
-	arg_4_0._txtindex.text = arg_4_0.id
+	self._txtpos.text = string.format("(%.1f, %.1f)", self.posX, self.posY)
+	self._txtindex.text = self.id
 
-	arg_4_0:_initTypeDropdown()
-	arg_4_0:_updateType(arg_4_0.typeId)
+	self:_initTypeDropdown()
+	self:_updateType(self.typeId)
 end
 
-function var_0_0.clearPoint(arg_5_0)
-	arg_5_0.id = 0
-	arg_5_0.typeId = 1
-	arg_5_0.posX = 0
-	arg_5_0.posY = 0
+function GMYeShuMeiPoint:clearPoint()
+	self.id = 0
+	self.typeId = 1
+	self.posX = 0
+	self.posY = 0
 
-	arg_5_0:initPos(arg_5_0.posX, arg_5_0.posY)
-	gohelper.setActive(arg_5_0.go, false)
+	self:initPos(self.posX, self.posY)
+	gohelper.setActive(self.go, false)
 end
 
-function var_0_0.addEventListeners(arg_6_0)
-	arg_6_0._dropdown:AddOnValueChanged(arg_6_0._dropdownChange, arg_6_0)
-	arg_6_0._btndelete:AddClickListener(arg_6_0._onClickBtnDelete, arg_6_0)
+function GMYeShuMeiPoint:addEventListeners()
+	self._dropdown:AddOnValueChanged(self._dropdownChange, self)
+	self._btndelete:AddClickListener(self._onClickBtnDelete, self)
 end
 
-function var_0_0.removeEventListeners(arg_7_0)
-	arg_7_0._dropdown:RemoveOnValueChanged()
-	arg_7_0._btndelete:RemoveClickListener()
-	CommonDragHelper.instance:unregisterDragObj(arg_7_0.go)
+function GMYeShuMeiPoint:removeEventListeners()
+	self._dropdown:RemoveOnValueChanged()
+	self._btndelete:RemoveClickListener()
+	CommonDragHelper.instance:unregisterDragObj(self.go)
 end
 
-function var_0_0._initTypeDropdown(arg_8_0)
-	arg_8_0._typeNameIdList = {}
+function GMYeShuMeiPoint:_initTypeDropdown()
+	self._typeNameIdList = {}
 
-	if arg_8_0._dropdown then
-		local var_8_0 = YeShuMeiEnum.PointTypeName
+	if self._dropdown then
+		local typeNameList = YeShuMeiEnum.PointTypeName
 
-		for iter_8_0, iter_8_1 in ipairs(var_8_0) do
-			table.insert(arg_8_0._typeNameIdList, iter_8_0)
+		for typeId, name in ipairs(typeNameList) do
+			table.insert(self._typeNameIdList, typeId)
 		end
 
-		arg_8_0._dropdown:ClearOptions()
-		arg_8_0._dropdown:AddOptions(var_8_0)
+		self._dropdown:ClearOptions()
+		self._dropdown:AddOptions(typeNameList)
 
-		local var_8_1 = 0
-		local var_8_2 = 1
+		local index = 0
+		local typeId = 1
 
-		for iter_8_2 = 1, #arg_8_0._typeNameIdList do
-			if arg_8_0._mo.typeId ~= 0 and arg_8_0._typeNameIdList[iter_8_2] == arg_8_0._mo.typeId then
-				var_8_1 = iter_8_2 - 1
-				var_8_2 = arg_8_0._mo.typeId
+		for i = 1, #self._typeNameIdList do
+			if self._mo.typeId ~= 0 and self._typeNameIdList[i] == self._mo.typeId then
+				index = i - 1
+				typeId = self._mo.typeId
 			end
 		end
 
-		arg_8_0._dropdown:SetValue(var_8_1)
+		self._dropdown:SetValue(index)
 
-		arg_8_0.typeId = var_8_2
+		self.typeId = typeId
 	end
 end
 
-function var_0_0._dropdownChange(arg_9_0, arg_9_1)
-	if arg_9_0.isDraging then
+function GMYeShuMeiPoint:_dropdownChange(idx)
+	if self.isDraging then
 		return
 	end
 
-	local var_9_0
-	local var_9_1 = (arg_9_1 + 1 ~= 1 or nil) and arg_9_0._typeNameIdList[arg_9_1 + 1]
+	local typeId
 
-	if var_9_1 ~= arg_9_0.typeId then
-		arg_9_0.typeId = var_9_1
+	typeId = (idx + 1 ~= 1 or nil) and self._typeNameIdList[idx + 1]
 
-		arg_9_0._mo:updateTypeId(arg_9_0.typeId)
+	if typeId ~= self.typeId then
+		self.typeId = typeId
+
+		self._mo:updateTypeId(self.typeId)
 	end
 
-	arg_9_0:_updateType(arg_9_0.typeId)
+	self:_updateType(self.typeId)
 end
 
-function var_0_0._beginDrag(arg_10_0)
-	arg_10_0.isDraging = true
+function GMYeShuMeiPoint:_beginDrag()
+	self.isDraging = true
 end
 
-function var_0_0._onDrag(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = arg_11_2.position
-	local var_11_1 = recthelper.screenPosToAnchorPos(var_11_0, arg_11_0._tr.parent)
+function GMYeShuMeiPoint:_onDrag(_, pointerEventData)
+	local position = pointerEventData.position
+	local anchorPos = recthelper.screenPosToAnchorPos(position, self._tr.parent)
 
-	recthelper.setAnchor(arg_11_0._tr, var_11_1.x, var_11_1.y)
-	arg_11_0:updateLocalPos()
+	recthelper.setAnchor(self._tr, anchorPos.x, anchorPos.y)
+	self:updateLocalPos()
 end
 
-function var_0_0.updateLocalPos(arg_12_0)
-	local var_12_0, var_12_1 = transformhelper.getLocalPos(arg_12_0._tr)
+function GMYeShuMeiPoint:updateLocalPos()
+	local x, y = transformhelper.getLocalPos(self._tr)
 
-	arg_12_0._localPosX = var_12_0
-	arg_12_0._localPosY = var_12_1
+	self._localPosX = x
+	self._localPosY = y
 
-	arg_12_0._mo:updatePos(arg_12_0._localPosX, arg_12_0._localPosY)
+	self._mo:updatePos(self._localPosX, self._localPosY)
 
-	arg_12_0._txtpos.text = string.format("(%.1f, %.1f)", arg_12_0._localPosX, arg_12_0._localPosY)
+	self._txtpos.text = string.format("(%.1f, %.1f)", self._localPosX, self._localPosY)
 
-	arg_12_0._refreshLineCb(arg_12_0._refreshLineObj)
+	self._refreshLineCb(self._refreshLineObj)
 end
 
-function var_0_0._endDrag(arg_13_0)
-	arg_13_0.isDraging = false
+function GMYeShuMeiPoint:_endDrag()
+	self.isDraging = false
 end
 
-function var_0_0.checkPointId(arg_14_0, arg_14_1)
-	return arg_14_1 == arg_14_0.id
+function GMYeShuMeiPoint:checkPointId(id)
+	return id == self.id
 end
 
-function var_0_0._onClickBtnDelete(arg_15_0)
-	if arg_15_0._deleteCb ~= nil then
-		arg_15_0._deleteCb(arg_15_0._deleteObj, arg_15_0.id)
+function GMYeShuMeiPoint:_onClickBtnDelete()
+	if self._deleteCb ~= nil then
+		self._deleteCb(self._deleteObj, self.id)
 	end
 end
 
-function var_0_0._onClick(arg_16_0)
-	local var_16_0 = GMYeShuMeiModel.instance:getCurLine()
+function GMYeShuMeiPoint:_onClick()
+	local line = GMYeShuMeiModel.instance:getCurLine()
 
-	if var_16_0 == nil then
+	if line == nil then
 		return
 	end
 
-	var_16_0:addPoint(arg_16_0)
+	line:addPoint(self)
 end
 
-function var_0_0.addDeleteCb(arg_17_0, arg_17_1, arg_17_2)
-	arg_17_0._deleteCb = arg_17_1
-	arg_17_0._deleteObj = arg_17_2
+function GMYeShuMeiPoint:addDeleteCb(cb, obj)
+	self._deleteCb = cb
+	self._deleteObj = obj
 end
 
-function var_0_0.addRefreshLineCb(arg_18_0, arg_18_1, arg_18_2)
-	arg_18_0._refreshLineCb = arg_18_1
-	arg_18_0._refreshLineObj = arg_18_2
+function GMYeShuMeiPoint:addRefreshLineCb(cb, obj)
+	self._refreshLineCb = cb
+	self._refreshLineObj = obj
 end
 
-function var_0_0._updateType(arg_19_0, arg_19_1)
-	if arg_19_1 == YeShuMeiEnum.PointType.Start then
-		gohelper.setActive(arg_19_0._gostart, true)
-		gohelper.setActive(arg_19_0._gonormal, false)
-		gohelper.setActive(arg_19_0._godisturb, false)
-	elseif arg_19_1 == YeShuMeiEnum.PointType.Disturb then
-		gohelper.setActive(arg_19_0._gostart, false)
-		gohelper.setActive(arg_19_0._gonormal, false)
-		gohelper.setActive(arg_19_0._godisturb, true)
+function GMYeShuMeiPoint:_updateType(typeId)
+	if typeId == YeShuMeiEnum.PointType.Start then
+		gohelper.setActive(self._gostart, true)
+		gohelper.setActive(self._gonormal, false)
+		gohelper.setActive(self._godisturb, false)
+	elseif typeId == YeShuMeiEnum.PointType.Disturb then
+		gohelper.setActive(self._gostart, false)
+		gohelper.setActive(self._gonormal, false)
+		gohelper.setActive(self._godisturb, true)
 	else
-		gohelper.setActive(arg_19_0._gostart, false)
-		gohelper.setActive(arg_19_0._gonormal, true)
-		gohelper.setActive(arg_19_0._godisturb, false)
+		gohelper.setActive(self._gostart, false)
+		gohelper.setActive(self._gonormal, true)
+		gohelper.setActive(self._godisturb, false)
 	end
 end
 
-function var_0_0.onDestroy(arg_20_0)
-	arg_20_0:clearPoint()
-	arg_20_0:removeEventListeners()
-	gohelper.destroy(arg_20_0.go)
+function GMYeShuMeiPoint:onDestroy()
+	self:clearPoint()
+	self:removeEventListeners()
+	gohelper.destroy(self.go)
 end
 
-return var_0_0
+return GMYeShuMeiPoint

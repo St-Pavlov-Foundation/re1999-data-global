@@ -1,22 +1,24 @@
-﻿module("modules.logic.character.model.CharacterBtnListModel", package.seeall)
+﻿-- chunkname: @modules/logic/character/model/CharacterBtnListModel.lua
 
-local var_0_0 = class("CharacterBtnListModel", ListScrollModel)
+module("modules.logic.character.model.CharacterBtnListModel", package.seeall)
 
-function var_0_0.setCharacterBtnList(arg_1_0, arg_1_1)
-	local var_1_0 = {}
+local CharacterBtnListModel = class("CharacterBtnListModel", ListScrollModel)
 
-	if arg_1_1 then
-		for iter_1_0, iter_1_1 in LuaUtil.pairsByKeys(arg_1_1) do
-			local var_1_1 = CharacterBtnMo.New()
+function CharacterBtnListModel:setCharacterBtnList(Infos)
+	local moList = {}
 
-			var_1_1:init(iter_1_1)
-			table.insert(var_1_0, var_1_1)
+	if Infos then
+		for _, v in LuaUtil.pairsByKeys(Infos) do
+			local btnMo = CharacterBtnMo.New()
+
+			btnMo:init(v)
+			table.insert(moList, btnMo)
 		end
 	end
 
-	arg_1_0:setList(var_1_0)
+	self:setList(moList)
 end
 
-var_0_0.instance = var_0_0.New()
+CharacterBtnListModel.instance = CharacterBtnListModel.New()
 
-return var_0_0
+return CharacterBtnListModel

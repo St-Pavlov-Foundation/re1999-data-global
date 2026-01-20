@@ -1,68 +1,71 @@
-﻿module("modules.logic.versionactivity2_4.pinball.view.PinballCurrencyItem2", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/pinball/view/PinballCurrencyItem2.lua
 
-local var_0_0 = class("PinballCurrencyItem2", PinballCurrencyItem)
+module("modules.logic.versionactivity2_4.pinball.view.PinballCurrencyItem2", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._txtNum = gohelper.findChildTextMesh(arg_1_1, "#txt_num")
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_1, "#image_icon")
-	arg_1_0._btn = gohelper.findButtonWithAudio(arg_1_1)
-	arg_1_0._anim = gohelper.findChildAnim(arg_1_1, "")
+local PinballCurrencyItem2 = class("PinballCurrencyItem2", PinballCurrencyItem)
+
+function PinballCurrencyItem2:init(go)
+	self._txtNum = gohelper.findChildTextMesh(go, "#txt_num")
+	self._imageicon = gohelper.findChildImage(go, "#image_icon")
+	self._btn = gohelper.findButtonWithAudio(go)
+	self._anim = gohelper.findChildAnim(go, "")
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	var_0_0.super.addEventListeners(arg_2_0)
-	PinballController.instance:registerCallback(PinballEvent.OperBuilding, arg_2_0._refreshUI, arg_2_0)
-	PinballController.instance:registerCallback(PinballEvent.LearnTalent, arg_2_0._refreshUI, arg_2_0)
+function PinballCurrencyItem2:addEventListeners()
+	PinballCurrencyItem2.super.addEventListeners(self)
+	PinballController.instance:registerCallback(PinballEvent.OperBuilding, self._refreshUI, self)
+	PinballController.instance:registerCallback(PinballEvent.LearnTalent, self._refreshUI, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	var_0_0.super.removeEventListeners(arg_3_0)
-	PinballController.instance:unregisterCallback(PinballEvent.OperBuilding, arg_3_0._refreshUI, arg_3_0)
-	PinballController.instance:unregisterCallback(PinballEvent.LearnTalent, arg_3_0._refreshUI, arg_3_0)
+function PinballCurrencyItem2:removeEventListeners()
+	PinballCurrencyItem2.super.removeEventListeners(self)
+	PinballController.instance:unregisterCallback(PinballEvent.OperBuilding, self._refreshUI, self)
+	PinballController.instance:unregisterCallback(PinballEvent.LearnTalent, self._refreshUI, self)
 end
 
-function var_0_0._refreshUI(arg_4_0)
-	local var_4_0 = PinballModel.instance:getResNum(arg_4_0._currencyType)
-	local var_4_1 = arg_4_0._currencyType == PinballEnum.ResType.Food and PinballModel.instance:getTotalFoodCost() or arg_4_0._currencyType == PinballEnum.ResType.Play and PinballModel.instance:getTotalPlayDemand() or 0
-	local var_4_2 = math.max(var_4_1, 0)
+function PinballCurrencyItem2:_refreshUI()
+	local num = PinballModel.instance:getResNum(self._currencyType)
+	local max = self._currencyType == PinballEnum.ResType.Food and PinballModel.instance:getTotalFoodCost() or self._currencyType == PinballEnum.ResType.Play and PinballModel.instance:getTotalPlayDemand() or 0
 
-	if arg_4_0._cacheNum and (arg_4_0._cacheNum ~= var_4_0 or arg_4_0._cacheMaxNum ~= var_4_2) then
-		arg_4_0._anim:Play("refresh", 0, 0)
+	max = math.max(max, 0)
+
+	if self._cacheNum and (self._cacheNum ~= num or self._cacheMaxNum ~= max) then
+		self._anim:Play("refresh", 0, 0)
 	end
 
-	arg_4_0._cacheNum = var_4_0
-	arg_4_0._cacheMaxNum = var_4_2
+	self._cacheNum = num
+	self._cacheMaxNum = max
 
-	if var_4_2 <= var_4_0 then
-		arg_4_0._txtNum.text = GameUtil.numberDisplay(var_4_0) .. "/" .. GameUtil.numberDisplay(var_4_2)
+	if max <= num then
+		self._txtNum.text = GameUtil.numberDisplay(num) .. "/" .. GameUtil.numberDisplay(max)
 	else
-		arg_4_0._txtNum.text = "<color=#9F342C>" .. GameUtil.numberDisplay(var_4_0) .. "</color>/" .. GameUtil.numberDisplay(var_4_2)
+		self._txtNum.text = "<color=#9F342C>" .. GameUtil.numberDisplay(num) .. "</color>/" .. GameUtil.numberDisplay(max)
 	end
 
-	local var_4_3 = lua_activity178_resource.configDict[VersionActivity2_4Enum.ActivityId.Pinball][arg_4_0._currencyType]
+	local resCo = lua_activity178_resource.configDict[VersionActivity2_4Enum.ActivityId.Pinball][self._currencyType]
 
-	if not var_4_3 then
+	if not resCo then
 		return
 	end
 
-	UISpriteSetMgr.instance:setAct178Sprite(arg_4_0._imageicon, var_4_3.icon)
+	UISpriteSetMgr.instance:setAct178Sprite(self._imageicon, resCo.icon)
 end
 
-function var_0_0._openTips(arg_5_0)
-	local var_5_0 = arg_5_0._imageicon.transform
-	local var_5_1 = var_5_0.lossyScale
-	local var_5_2 = var_5_0.position
-	local var_5_3 = recthelper.getWidth(var_5_0)
-	local var_5_4 = recthelper.getHeight(var_5_0)
+function PinballCurrencyItem2:_openTips()
+	local trans = self._imageicon.transform
+	local scale = trans.lossyScale
+	local pos = trans.position
+	local width = recthelper.getWidth(trans)
+	local height = recthelper.getHeight(trans)
 
-	var_5_2.x = var_5_2.x - var_5_3 / 2 * var_5_1.x
-	var_5_2.y = var_5_2.y + var_5_4 / 2 * var_5_1.y
+	pos.x = pos.x - width / 2 * scale.x
+	pos.y = pos.y + height / 2 * scale.y
 
 	ViewMgr.instance:openView(ViewName.PinballCurrencyTipView, {
 		arrow = "TR",
-		type = arg_5_0._currencyType,
-		pos = var_5_2
+		type = self._currencyType,
+		pos = pos
 	})
 end
 
-return var_0_0
+return PinballCurrencyItem2

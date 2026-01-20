@@ -1,39 +1,41 @@
-﻿module("modules.logic.versionactivity2_3.zhixinquaner.maze.view.PuzzleMazeDrawViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/zhixinquaner/maze/view/PuzzleMazeDrawViewContainer.lua
 
-local var_0_0 = class("PuzzleMazeDrawViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_3.zhixinquaner.maze.view.PuzzleMazeDrawViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	arg_1_0._view = PuzzleMazeDrawView.New()
+local PuzzleMazeDrawViewContainer = class("PuzzleMazeDrawViewContainer", BaseViewContainer)
+
+function PuzzleMazeDrawViewContainer:buildViews()
+	self._view = PuzzleMazeDrawView.New()
 
 	return {
 		TabViewGroup.New(1, "#go_btns"),
-		arg_1_0._view,
+		self._view,
 		PuzzleMazeSimulatePlaneComp.New(),
 		ZhiXinQuanErTalkView.New()
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	local var_2_0 = NavigateButtonsView.New({
+function PuzzleMazeDrawViewContainer:buildTabViews(tabContainerId)
+	local navigateButtonsView = NavigateButtonsView.New({
 		true,
 		false,
 		false
 	})
 
-	var_2_0:setOverrideClose(arg_2_0._onNavigateCloseCallBack, arg_2_0)
+	navigateButtonsView:setOverrideClose(self._onNavigateCloseCallBack, self)
 
 	return {
-		var_2_0
+		navigateButtonsView
 	}
 end
 
-function var_0_0._onNavigateCloseCallBack(arg_3_0)
-	GameFacade.showMessageBox(MessageBoxIdDefine.Act176PuzzleMazeQuitGame, MsgBoxEnum.BoxType.Yes_No, arg_3_0._closeView, nil, nil, arg_3_0)
+function PuzzleMazeDrawViewContainer:_onNavigateCloseCallBack()
+	GameFacade.showMessageBox(MessageBoxIdDefine.Act176PuzzleMazeQuitGame, MsgBoxEnum.BoxType.Yes_No, self._closeView, nil, nil, self)
 end
 
-function var_0_0._closeView(arg_4_0)
-	arg_4_0._view:stat(PuzzleEnum.GameResult.Abort)
-	arg_4_0:closeThis()
+function PuzzleMazeDrawViewContainer:_closeView()
+	self._view:stat(PuzzleEnum.GameResult.Abort)
+	self:closeThis()
 end
 
-return var_0_0
+return PuzzleMazeDrawViewContainer

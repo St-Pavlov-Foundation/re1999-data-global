@@ -1,190 +1,198 @@
-﻿module("modules.logic.seasonver.act166.view.talent.Season166TalentView", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act166/view/talent/Season166TalentView.lua
 
-local var_0_0 = class("Season166TalentView", BaseView)
+module("modules.logic.seasonver.act166.view.talent.Season166TalentView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
+local Season166TalentView = class("Season166TalentView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Season166TalentView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._gotopleft = gohelper.findChild(self.viewGO, "#go_topleft")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0._onCloseView, arg_2_0)
-	arg_2_0:addEventCb(Season166Controller.instance, Season166Event.SetTalentSkill, arg_2_0._refreshTalentSlot, arg_2_0)
+function Season166TalentView:addEvents()
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
+	self:addEventCb(Season166Controller.instance, Season166Event.SetTalentSkill, self._refreshTalentSlot, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0._onCloseView, arg_3_0)
-	arg_3_0:addEventCb(Season166Controller.instance, Season166Event.SetTalentSkill, arg_3_0._refreshTalentSlot, arg_3_0)
+function Season166TalentView:removeEvents()
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
+	self:addEventCb(Season166Controller.instance, Season166Event.SetTalentSkill, self._refreshTalentSlot, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._actId = Season166Model.instance:getCurSeasonId()
+function Season166TalentView:_editableInitView()
+	self._actId = Season166Model.instance:getCurSeasonId()
 
-	arg_4_0:_initTalent()
+	self:_initTalent()
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function Season166TalentView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0.actId = Season166Model.instance:getCurSeasonId()
+function Season166TalentView:onOpen()
+	self.actId = Season166Model.instance:getCurSeasonId()
 
-	arg_6_0:_refreshUI()
-	arg_6_0:refreshReddot()
+	self:_refreshUI()
+	self:refreshReddot()
 end
 
-function var_0_0._initTalent(arg_7_0)
-	local var_7_0 = {}
-	local var_7_1 = lua_activity166_talent.configList
+function Season166TalentView:_initTalent()
+	local talentCfgList = {}
+	local talentList = lua_activity166_talent.configList
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_1) do
-		if iter_7_1.activityId == arg_7_0._actId then
-			var_7_0[#var_7_0 + 1] = iter_7_1
+	for _, cfg in ipairs(talentList) do
+		if cfg.activityId == self._actId then
+			talentCfgList[#talentCfgList + 1] = cfg
 		end
 	end
 
-	arg_7_0.talentItemDic = {}
+	self.talentItemDic = {}
 
-	for iter_7_2 = 1, #var_7_0 do
-		local var_7_2 = gohelper.findChild(arg_7_0.viewGO, "root/talents/talent" .. iter_7_2)
+	for i = 1, #talentCfgList do
+		local go = gohelper.findChild(self.viewGO, "root/talents/talent" .. i)
 
-		if not gohelper.isNil(var_7_2) then
-			local var_7_3 = arg_7_0:getUserDataTb_()
+		if not gohelper.isNil(go) then
+			local talentItem = self:getUserDataTb_()
 
-			var_7_3.config = var_7_0[iter_7_2]
+			talentItem.config = talentCfgList[i]
 
-			local var_7_4 = var_7_3.config.talentId
-			local var_7_5 = gohelper.findChildButtonWithAudio(var_7_2, "up")
+			local talentId = talentItem.config.talentId
+			local btnClick = gohelper.findChildButtonWithAudio(go, "up")
+			local txtName = gohelper.findChildText(go, "up/txt_talentName")
 
-			gohelper.findChildText(var_7_2, "up/txt_talentName").text = var_7_3.config.name
-			gohelper.findChildText(var_7_2, "up/en").text = var_7_3.config.nameEn
-			var_7_3.goEquip = gohelper.findChild(var_7_2, "go_Equip")
-			var_7_3.btnEquip = gohelper.findChildButtonWithAudio(var_7_2, "go_Equip/btn_equip")
-			var_7_3.btnLock = gohelper.findChildButtonWithAudio(var_7_2, "go_Equip/locked")
-			var_7_3.goequiping = gohelper.findChild(var_7_2, "go_Equip/go_equiping")
-			var_7_3.reddotGO = gohelper.findChild(var_7_2, "reddot")
-			var_7_3.goslot1 = gohelper.findChild(var_7_2, "equipslot/1")
-			var_7_3.goslotLight1 = gohelper.findChild(var_7_2, "equipslot/1/light")
-			var_7_3.goslot2 = gohelper.findChild(var_7_2, "equipslot/2")
-			var_7_3.goslotLight2 = gohelper.findChild(var_7_2, "equipslot/2/light")
-			var_7_3.goslot3 = gohelper.findChild(var_7_2, "equipslot/3")
-			var_7_3.goslotLight3 = gohelper.findChild(var_7_2, "equipslot/3/light")
-			var_7_3.anim = var_7_2:GetComponent(gohelper.Type_Animator)
+			txtName.text = talentItem.config.name
 
-			arg_7_0:addClickCb(var_7_5, arg_7_0._clickTalent, arg_7_0, var_7_4)
-			arg_7_0:addClickCb(var_7_3.btnEquip, arg_7_0._clickEquip, arg_7_0, var_7_4)
-			arg_7_0:addClickCb(var_7_3.btnLock, arg_7_0._clickLock, arg_7_0)
+			local txtNameEn = gohelper.findChildText(go, "up/en")
 
-			arg_7_0.talentItemDic[var_7_4] = var_7_3
+			txtNameEn.text = talentItem.config.nameEn
+			talentItem.goEquip = gohelper.findChild(go, "go_Equip")
+			talentItem.btnEquip = gohelper.findChildButtonWithAudio(go, "go_Equip/btn_equip")
+			talentItem.btnLock = gohelper.findChildButtonWithAudio(go, "go_Equip/locked")
+			talentItem.goequiping = gohelper.findChild(go, "go_Equip/go_equiping")
+			talentItem.reddotGO = gohelper.findChild(go, "reddot")
+			talentItem.goslot1 = gohelper.findChild(go, "equipslot/1")
+			talentItem.goslotLight1 = gohelper.findChild(go, "equipslot/1/light")
+			talentItem.goslot2 = gohelper.findChild(go, "equipslot/2")
+			talentItem.goslotLight2 = gohelper.findChild(go, "equipslot/2/light")
+			talentItem.goslot3 = gohelper.findChild(go, "equipslot/3")
+			talentItem.goslotLight3 = gohelper.findChild(go, "equipslot/3/light")
+			talentItem.anim = go:GetComponent(gohelper.Type_Animator)
+
+			self:addClickCb(btnClick, self._clickTalent, self, talentId)
+			self:addClickCb(talentItem.btnEquip, self._clickEquip, self, talentId)
+			self:addClickCb(talentItem.btnLock, self._clickLock, self)
+
+			self.talentItemDic[talentId] = talentItem
 		end
 	end
 end
 
-function var_0_0._clickTalent(arg_8_0, arg_8_1)
+function Season166TalentView:_clickTalent(talentId)
 	ViewMgr.instance:openView(ViewName.Season166TalentSelectView, {
-		talentId = arg_8_1
+		talentId = talentId
 	})
 end
 
-function var_0_0._clickEquip(arg_9_0, arg_9_1)
-	if Season166Model.getPrefsTalent() == arg_9_1 then
+function Season166TalentView:_clickEquip(talentId)
+	local selectTalentId = Season166Model.getPrefsTalent()
+
+	if selectTalentId == talentId then
 		return
 	end
 
-	Season166Model.setPrefsTalent(arg_9_1)
-	Season166Controller.instance:dispatchEvent(Season166Event.SetTalentId, arg_9_1)
-	arg_9_0:_refreshEquipBtn()
+	Season166Model.setPrefsTalent(talentId)
+	Season166Controller.instance:dispatchEvent(Season166Event.SetTalentId, talentId)
+	self:_refreshEquipBtn()
 end
 
-function var_0_0._clickLock(arg_10_0)
+function Season166TalentView:_clickLock()
 	GameFacade.showToast(ToastEnum.Season166TalentLock)
 end
 
-function var_0_0._refreshUI(arg_11_0)
-	arg_11_0:_refreshTalentSlot()
+function Season166TalentView:_refreshUI()
+	self:_refreshTalentSlot()
 
-	local var_11_0 = arg_11_0.viewParam and arg_11_0.viewParam.showEquip
+	local canEquip = self.viewParam and self.viewParam.showEquip
 
-	if var_11_0 then
-		arg_11_0:_refreshEquipBtn()
+	if canEquip then
+		self:_refreshEquipBtn()
 	end
 
-	for iter_11_0, iter_11_1 in pairs(arg_11_0.talentItemDic) do
-		gohelper.setActive(iter_11_1.goEquip, var_11_0)
+	for _, talentItem in pairs(self.talentItemDic) do
+		gohelper.setActive(talentItem.goEquip, canEquip)
 	end
 end
 
-function var_0_0._refreshEquipBtn(arg_12_0)
-	local var_12_0 = arg_12_0.viewParam.talentId or Season166Model.getPrefsTalent()
+function Season166TalentView:_refreshEquipBtn()
+	local talentId = self.viewParam.talentId or Season166Model.getPrefsTalent()
 
-	for iter_12_0, iter_12_1 in pairs(arg_12_0.talentItemDic) do
-		if arg_12_0.viewParam.talentId then
-			gohelper.setActive(iter_12_1.btnEquip, false)
-			gohelper.setActive(iter_12_1.goequiping, iter_12_0 == var_12_0)
-			gohelper.setActive(iter_12_1.btnLock, iter_12_0 ~= var_12_0)
+	for id, talentItem in pairs(self.talentItemDic) do
+		if self.viewParam.talentId then
+			gohelper.setActive(talentItem.btnEquip, false)
+			gohelper.setActive(talentItem.goequiping, id == talentId)
+			gohelper.setActive(talentItem.btnLock, id ~= talentId)
 		else
-			gohelper.setActive(iter_12_1.btnEquip, iter_12_0 ~= var_12_0)
-			gohelper.setActive(iter_12_1.goequiping, iter_12_0 == var_12_0)
-			gohelper.setActive(iter_12_1.btnLock, false)
+			gohelper.setActive(talentItem.btnEquip, id ~= talentId)
+			gohelper.setActive(talentItem.goequiping, id == talentId)
+			gohelper.setActive(talentItem.btnLock, false)
 		end
 
-		local var_12_1 = iter_12_0 == var_12_0 and "start" or "idle"
+		local animName = id == talentId and "start" or "idle"
 
-		iter_12_1.anim:Play(var_12_1)
+		talentItem.anim:Play(animName)
 	end
 end
 
-function var_0_0._refreshTalentSlot(arg_13_0)
-	for iter_13_0, iter_13_1 in pairs(arg_13_0.talentItemDic) do
-		local var_13_0 = Season166Model.instance:getTalentInfo(arg_13_0.actId, iter_13_0)
-		local var_13_1 = var_13_0.config.slot
-		local var_13_2 = var_13_0.skillIds
+function Season166TalentView:_refreshTalentSlot()
+	for talentId, talentItem in pairs(self.talentItemDic) do
+		local talentInfo = Season166Model.instance:getTalentInfo(self.actId, talentId)
+		local slotNum = talentInfo.config.slot
+		local skillIds = talentInfo.skillIds
 
-		for iter_13_2 = 1, 3 do
-			local var_13_3 = "goslot" .. iter_13_2
+		for i = 1, 3 do
+			local key = "goslot" .. i
 
-			gohelper.setActive(iter_13_1[var_13_3], iter_13_2 <= var_13_1)
+			gohelper.setActive(talentItem[key], i <= slotNum)
 
-			if iter_13_2 <= var_13_1 then
-				local var_13_4 = "goslotLight" .. iter_13_2
+			if i <= slotNum then
+				local lightKey = "goslotLight" .. i
 
-				gohelper.setActive(iter_13_1[var_13_4], iter_13_2 <= #var_13_2)
+				gohelper.setActive(talentItem[lightKey], i <= #skillIds)
 			end
 		end
 	end
 end
 
-function var_0_0.refreshReddot(arg_14_0)
-	local var_14_0 = lua_activity166_talent.configDict[arg_14_0._actId]
+function Season166TalentView:refreshReddot()
+	local talentConfigList = lua_activity166_talent.configDict[self._actId]
 
-	for iter_14_0, iter_14_1 in pairs(var_14_0) do
-		local var_14_1 = arg_14_0.talentItemDic[iter_14_1.talentId].reddotGO
+	for _, talentCo in pairs(talentConfigList) do
+		local reddotGO = self.talentItemDic[talentCo.talentId].reddotGO
 
-		gohelper.setActive(var_14_1, Season166Model.instance:checkHasNewTalent(iter_14_1.talentId))
+		gohelper.setActive(reddotGO, Season166Model.instance:checkHasNewTalent(talentCo.talentId))
 	end
 end
 
-function var_0_0.checkTalentReddotShow(arg_15_0, arg_15_1)
-	arg_15_1:defaultRefreshDot()
+function Season166TalentView:checkTalentReddotShow(redDotIcon)
+	redDotIcon:defaultRefreshDot()
 
-	local var_15_0 = arg_15_1.infoDict[RedDotEnum.DotNode.Season166Talent]
+	local talentId = redDotIcon.infoDict[RedDotEnum.DotNode.Season166Talent]
 
-	arg_15_1.show = Season166Model.instance:checkHasNewTalent(var_15_0)
+	redDotIcon.show = Season166Model.instance:checkHasNewTalent(talentId)
 
-	if arg_15_1.show then
-		arg_15_1:showRedDot(RedDotEnum.Style.Green)
+	if redDotIcon.show then
+		redDotIcon:showRedDot(RedDotEnum.Style.Green)
 	end
 end
 
-function var_0_0._onCloseView(arg_16_0, arg_16_1)
-	if arg_16_1 == ViewName.Season166TalentSelectView then
-		arg_16_0:refreshReddot()
+function Season166TalentView:_onCloseView(viewName)
+	if viewName == ViewName.Season166TalentSelectView then
+		self:refreshReddot()
 	end
 end
 
-return var_0_0
+return Season166TalentView

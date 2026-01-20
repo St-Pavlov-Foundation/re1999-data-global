@@ -1,137 +1,141 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.dungeon.Act183DungeonView_Animation", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/dungeon/Act183DungeonView_Animation.lua
 
-local var_0_0 = class("Act183DungeonView_Animation", BaseView)
-local var_0_1 = 0.667
-local var_0_2 = 1.167
+module("modules.logic.versionactivity2_5.challenge.view.dungeon.Act183DungeonView_Animation", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gomiddle = gohelper.findChild(arg_1_0.viewGO, "root/middle")
-	arg_1_0._goline1 = gohelper.findChild(arg_1_0.viewGO, "root/#go_line1")
-	arg_1_0._goline2 = gohelper.findChild(arg_1_0.viewGO, "root/#go_line2")
-	arg_1_0._goline3 = gohelper.findChild(arg_1_0.viewGO, "root/#go_line3")
-	arg_1_0._gocompleted = gohelper.findChild(arg_1_0.viewGO, "root/middle/#go_Completed")
-	arg_1_0._godailycompleted = gohelper.findChild(arg_1_0.viewGO, "root/middle/#go_DailyCompleted")
+local Act183DungeonView_Animation = class("Act183DungeonView_Animation", BaseView)
+local FinishAnimDuration = 0.667
+local RepressAnimDuration = 1.167
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Act183DungeonView_Animation:onInitView()
+	self._gomiddle = gohelper.findChild(self.viewGO, "root/middle")
+	self._goline1 = gohelper.findChild(self.viewGO, "root/#go_line1")
+	self._goline2 = gohelper.findChild(self.viewGO, "root/#go_line2")
+	self._goline3 = gohelper.findChild(self.viewGO, "root/#go_line3")
+	self._gocompleted = gohelper.findChild(self.viewGO, "root/middle/#go_Completed")
+	self._godailycompleted = gohelper.findChild(self.viewGO, "root/middle/#go_DailyCompleted")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(Act183Controller.instance, Act183Event.OnUpdateRepressInfo, arg_2_0._onUpdateRepressInfo, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_2_0._onCloseViewFinish, arg_2_0)
-	arg_2_0:addEventCb(Act183Controller.instance, Act183Event.FightBossIfSubUnfinish, arg_2_0._onFightBossIfSubUnfinish, arg_2_0)
+function Act183DungeonView_Animation:addEvents()
+	self:addEventCb(Act183Controller.instance, Act183Event.OnUpdateRepressInfo, self._onUpdateRepressInfo, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	self:addEventCb(Act183Controller.instance, Act183Event.FightBossIfSubUnfinish, self._onFightBossIfSubUnfinish, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Act183DungeonView_Animation:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._lineEffectPool = arg_4_0:getUserDataTb_()
-	arg_4_0._useLineEffectPool = arg_4_0:getUserDataTb_()
-	arg_4_0._animcompleted = gohelper.onceAddComponent(arg_4_0._gocompleted, gohelper.Type_Animator)
-	arg_4_0._animdailycompleted = gohelper.onceAddComponent(arg_4_0._godailycompleted, gohelper.Type_Animator)
+function Act183DungeonView_Animation:_editableInitView()
+	self._lineEffectPool = self:getUserDataTb_()
+	self._useLineEffectPool = self:getUserDataTb_()
+	self._animcompleted = gohelper.onceAddComponent(self._gocompleted, gohelper.Type_Animator)
+	self._animdailycompleted = gohelper.onceAddComponent(self._godailycompleted, gohelper.Type_Animator)
 
-	arg_4_0:_buildConfigToOrderAnimTypeMap()
-	arg_4_0:_buildConfigToTemplateMap()
+	self:_buildConfigToOrderAnimTypeMap()
+	self:_buildConfigToTemplateMap()
 end
 
-function var_0_0._buildConfigToOrderAnimTypeMap(arg_5_0)
-	arg_5_0._orderToAnimTypeMap = {}
+function Act183DungeonView_Animation:_buildConfigToOrderAnimTypeMap()
+	self._orderToAnimTypeMap = {}
 
-	arg_5_0:_addConfigToOrderAnimTypeMap(1, 2, Act183Enum.RuleEscapeAnimType.Left2Right)
-	arg_5_0:_addConfigToOrderAnimTypeMap(2, 1, Act183Enum.RuleEscapeAnimType.Right2Left)
-	arg_5_0:_addConfigToOrderAnimTypeMap(1, 3, Act183Enum.RuleEscapeAnimType.Top2Bottom)
-	arg_5_0:_addConfigToOrderAnimTypeMap(3, 1, Act183Enum.RuleEscapeAnimType.Bottom2Top)
-	arg_5_0:_addConfigToOrderAnimTypeMap(1, 4, Act183Enum.RuleEscapeAnimType.LeftTop2RightBottom)
-	arg_5_0:_addConfigToOrderAnimTypeMap(4, 1, Act183Enum.RuleEscapeAnimType.RightBottom2LeftTop)
-	arg_5_0:_addConfigToOrderAnimTypeMap(2, 3, Act183Enum.RuleEscapeAnimType.RightTop2LeftBottom)
-	arg_5_0:_addConfigToOrderAnimTypeMap(3, 2, Act183Enum.RuleEscapeAnimType.LeftBottom2RightTop)
-	arg_5_0:_addConfigToOrderAnimTypeMap(3, 4, Act183Enum.RuleEscapeAnimType.Left2Right)
-	arg_5_0:_addConfigToOrderAnimTypeMap(4, 3, Act183Enum.RuleEscapeAnimType.Right2Left)
-	arg_5_0:_addConfigToOrderAnimTypeMap(2, 4, Act183Enum.RuleEscapeAnimType.Top2Bottom)
-	arg_5_0:_addConfigToOrderAnimTypeMap(4, 2, Act183Enum.RuleEscapeAnimType.Bottom2Top)
-	arg_5_0:_addConfigToOrderAnimTypeMap(1, 101, Act183Enum.RuleEscapeAnimType.LeftTop2Center)
-	arg_5_0:_addConfigToOrderAnimTypeMap(2, 101, Act183Enum.RuleEscapeAnimType.RightTop2Center)
-	arg_5_0:_addConfigToOrderAnimTypeMap(3, 101, Act183Enum.RuleEscapeAnimType.LeftBottom2Center)
-	arg_5_0:_addConfigToOrderAnimTypeMap(4, 101, Act183Enum.RuleEscapeAnimType.RightBottom2Center)
+	self:_addConfigToOrderAnimTypeMap(1, 2, Act183Enum.RuleEscapeAnimType.Left2Right)
+	self:_addConfigToOrderAnimTypeMap(2, 1, Act183Enum.RuleEscapeAnimType.Right2Left)
+	self:_addConfigToOrderAnimTypeMap(1, 3, Act183Enum.RuleEscapeAnimType.Top2Bottom)
+	self:_addConfigToOrderAnimTypeMap(3, 1, Act183Enum.RuleEscapeAnimType.Bottom2Top)
+	self:_addConfigToOrderAnimTypeMap(1, 4, Act183Enum.RuleEscapeAnimType.LeftTop2RightBottom)
+	self:_addConfigToOrderAnimTypeMap(4, 1, Act183Enum.RuleEscapeAnimType.RightBottom2LeftTop)
+	self:_addConfigToOrderAnimTypeMap(2, 3, Act183Enum.RuleEscapeAnimType.RightTop2LeftBottom)
+	self:_addConfigToOrderAnimTypeMap(3, 2, Act183Enum.RuleEscapeAnimType.LeftBottom2RightTop)
+	self:_addConfigToOrderAnimTypeMap(3, 4, Act183Enum.RuleEscapeAnimType.Left2Right)
+	self:_addConfigToOrderAnimTypeMap(4, 3, Act183Enum.RuleEscapeAnimType.Right2Left)
+	self:_addConfigToOrderAnimTypeMap(2, 4, Act183Enum.RuleEscapeAnimType.Top2Bottom)
+	self:_addConfigToOrderAnimTypeMap(4, 2, Act183Enum.RuleEscapeAnimType.Bottom2Top)
+	self:_addConfigToOrderAnimTypeMap(1, 101, Act183Enum.RuleEscapeAnimType.LeftTop2Center)
+	self:_addConfigToOrderAnimTypeMap(2, 101, Act183Enum.RuleEscapeAnimType.RightTop2Center)
+	self:_addConfigToOrderAnimTypeMap(3, 101, Act183Enum.RuleEscapeAnimType.LeftBottom2Center)
+	self:_addConfigToOrderAnimTypeMap(4, 101, Act183Enum.RuleEscapeAnimType.RightBottom2Center)
 end
 
-function var_0_0._buildConfigToTemplateMap(arg_6_0)
-	arg_6_0._lineTemplateMap = arg_6_0:getUserDataTb_()
+function Act183DungeonView_Animation:_buildConfigToTemplateMap()
+	self._lineTemplateMap = self:getUserDataTb_()
 
-	arg_6_0:_addConfigToTemplateMap(Act183Enum.RuleEscapeAnimType.Top2Bottom, arg_6_0._goline1)
-	arg_6_0:_addConfigToTemplateMap(Act183Enum.RuleEscapeAnimType.Bottom2Top, arg_6_0._goline1)
-	arg_6_0:_addConfigToTemplateMap(Act183Enum.RuleEscapeAnimType.Left2Right, arg_6_0._goline2)
-	arg_6_0:_addConfigToTemplateMap(Act183Enum.RuleEscapeAnimType.Right2Left, arg_6_0._goline2)
-	arg_6_0:_addConfigToTemplateMap(Act183Enum.RuleEscapeAnimType.LeftTop2RightBottom, arg_6_0._goline3)
-	arg_6_0:_addConfigToTemplateMap(Act183Enum.RuleEscapeAnimType.RightTop2LeftBottom, arg_6_0._goline3)
-	arg_6_0:_addConfigToTemplateMap(Act183Enum.RuleEscapeAnimType.LeftBottom2RightTop, arg_6_0._goline3)
-	arg_6_0:_addConfigToTemplateMap(Act183Enum.RuleEscapeAnimType.RightBottom2LeftTop, arg_6_0._goline3)
-	arg_6_0:_addConfigToTemplateMap(Act183Enum.RuleEscapeAnimType.LeftTop2Center, arg_6_0._goline1)
-	arg_6_0:_addConfigToTemplateMap(Act183Enum.RuleEscapeAnimType.RightTop2Center, arg_6_0._goline1)
-	arg_6_0:_addConfigToTemplateMap(Act183Enum.RuleEscapeAnimType.LeftBottom2Center, arg_6_0._goline1)
-	arg_6_0:_addConfigToTemplateMap(Act183Enum.RuleEscapeAnimType.RightBottom2Center, arg_6_0._goline1)
+	self:_addConfigToTemplateMap(Act183Enum.RuleEscapeAnimType.Top2Bottom, self._goline1)
+	self:_addConfigToTemplateMap(Act183Enum.RuleEscapeAnimType.Bottom2Top, self._goline1)
+	self:_addConfigToTemplateMap(Act183Enum.RuleEscapeAnimType.Left2Right, self._goline2)
+	self:_addConfigToTemplateMap(Act183Enum.RuleEscapeAnimType.Right2Left, self._goline2)
+	self:_addConfigToTemplateMap(Act183Enum.RuleEscapeAnimType.LeftTop2RightBottom, self._goline3)
+	self:_addConfigToTemplateMap(Act183Enum.RuleEscapeAnimType.RightTop2LeftBottom, self._goline3)
+	self:_addConfigToTemplateMap(Act183Enum.RuleEscapeAnimType.LeftBottom2RightTop, self._goline3)
+	self:_addConfigToTemplateMap(Act183Enum.RuleEscapeAnimType.RightBottom2LeftTop, self._goline3)
+	self:_addConfigToTemplateMap(Act183Enum.RuleEscapeAnimType.LeftTop2Center, self._goline1)
+	self:_addConfigToTemplateMap(Act183Enum.RuleEscapeAnimType.RightTop2Center, self._goline1)
+	self:_addConfigToTemplateMap(Act183Enum.RuleEscapeAnimType.LeftBottom2Center, self._goline1)
+	self:_addConfigToTemplateMap(Act183Enum.RuleEscapeAnimType.RightBottom2Center, self._goline1)
 end
 
-function var_0_0._addConfigToTemplateMap(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_0._lineTemplateMap[arg_7_1] = arg_7_0:getUserDataTb_()
+function Act183DungeonView_Animation:_addConfigToTemplateMap(animType, goline)
+	self._lineTemplateMap[animType] = self:getUserDataTb_()
 
-	table.insert(arg_7_0._lineTemplateMap[arg_7_1], arg_7_2)
+	table.insert(self._lineTemplateMap[animType], goline)
 end
 
-function var_0_0._addConfigToOrderAnimTypeMap(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	local var_8_0 = string.format("%s_%s", arg_8_1, arg_8_2)
+function Act183DungeonView_Animation:_addConfigToOrderAnimTypeMap(startOrder, endOrder, animType)
+	local key = string.format("%s_%s", startOrder, endOrder)
 
-	arg_8_0._orderToAnimTypeMap[var_8_0] = arg_8_3
+	self._orderToAnimTypeMap[key] = animType
 end
 
-function var_0_0.checkIfNeedPlayEffect(arg_9_0)
-	if not ViewHelper.instance:checkViewOnTheTop(arg_9_0.viewName) or arg_9_0:isRunningEffectFlow() then
+function Act183DungeonView_Animation:checkIfNeedPlayEffect()
+	local isTop = ViewHelper.instance:checkViewOnTheTop(self.viewName)
+
+	if not isTop or self:isRunningEffectFlow() then
 		return
 	end
 
-	local var_9_0 = Act183Model.instance:getNewFinishEpisodeId()
-	local var_9_1 = var_9_0 ~= nil and var_0_1 or 0
+	local finishedEpisodeId = Act183Model.instance:getNewFinishEpisodeId()
+	local waitSeconds = finishedEpisodeId ~= nil and FinishAnimDuration or 0
 
-	arg_9_0:destroyFlow()
+	self:destroyFlow()
 
-	arg_9_0._flow = FlowSequence.New()
+	self._flow = FlowSequence.New()
 
-	arg_9_0._flow:addWork(FunctionWork.New(arg_9_0._lockScreen, arg_9_0, true))
-	arg_9_0._flow:addWork(FunctionWork.New(arg_9_0.checkIfNeedPlayFinishEffect, arg_9_0))
-	arg_9_0._flow:addWork(FunctionWork.New(arg_9_0.checkIfNeedPlayGroupFinishEffect, arg_9_0))
-	arg_9_0._flow:addWork(FunctionWork.New(arg_9_0.checkIfNeedPlayGroupCategoryFinishAnim, arg_9_0))
-	arg_9_0._flow:addWork(WorkWaitSeconds.New(var_9_1))
-	arg_9_0._flow:addWork(FunctionWork.New(arg_9_0.checkIfNeedPlayRepressEffect, arg_9_0))
-	arg_9_0._flow:addWork(WorkWaitSeconds.New(var_0_2))
-	arg_9_0._flow:addWork(FunctionWork.New(arg_9_0._recycleLines, arg_9_0))
-	arg_9_0._flow:addWork(FunctionWork.New(arg_9_0._lockScreen, arg_9_0, false))
-	arg_9_0._flow:registerDoneListener(arg_9_0._onPlayEffectDone, arg_9_0)
-	arg_9_0._flow:start({
-		episodeId = var_9_0
+	self._flow:addWork(FunctionWork.New(self._lockScreen, self, true))
+	self._flow:addWork(FunctionWork.New(self.checkIfNeedPlayFinishEffect, self))
+	self._flow:addWork(FunctionWork.New(self.checkIfNeedPlayGroupFinishEffect, self))
+	self._flow:addWork(FunctionWork.New(self.checkIfNeedPlayGroupCategoryFinishAnim, self))
+	self._flow:addWork(WorkWaitSeconds.New(waitSeconds))
+	self._flow:addWork(FunctionWork.New(self.checkIfNeedPlayRepressEffect, self))
+	self._flow:addWork(WorkWaitSeconds.New(RepressAnimDuration))
+	self._flow:addWork(FunctionWork.New(self._recycleLines, self))
+	self._flow:addWork(FunctionWork.New(self._lockScreen, self, false))
+	self._flow:registerDoneListener(self._onPlayEffectDone, self)
+	self._flow:start({
+		episodeId = finishedEpisodeId
 	})
 end
 
-function var_0_0.isRunningEffectFlow(arg_10_0)
-	return arg_10_0._flow and arg_10_0._flow.status == WorkStatus.Running
+function Act183DungeonView_Animation:isRunningEffectFlow()
+	return self._flow and self._flow.status == WorkStatus.Running
 end
 
-function var_0_0._onPlayEffectDone(arg_11_0)
+function Act183DungeonView_Animation:_onPlayEffectDone()
 	Act183Model.instance:clearBattleFinishedInfo()
 end
 
-function var_0_0.destroyFlow(arg_12_0)
-	if arg_12_0._flow then
-		arg_12_0._flow:destroy()
+function Act183DungeonView_Animation:destroyFlow()
+	if self._flow then
+		self._flow:destroy()
 
-		arg_12_0._flow = nil
+		self._flow = nil
 	end
 end
 
-function var_0_0._lockScreen(arg_13_0, arg_13_1)
-	if arg_13_1 then
+function Act183DungeonView_Animation:_lockScreen(lock)
+	if lock then
 		UIBlockMgrExtend.setNeedCircleMv(false)
 		UIBlockMgr.instance:startBlock("Act183DungeonView_Animation_PlayAnim")
 	else
@@ -140,285 +144,291 @@ function var_0_0._lockScreen(arg_13_0, arg_13_1)
 	end
 end
 
-function var_0_0.checkIfNeedPlayRepressEffect(arg_14_0)
-	local var_14_0 = Act183Model.instance:getRecordLastRepressEpisodeId()
+function Act183DungeonView_Animation:checkIfNeedPlayRepressEffect()
+	local repressEpisodeId = Act183Model.instance:getRecordLastRepressEpisodeId()
 
-	if not var_14_0 or var_14_0 == 0 then
+	if not repressEpisodeId or repressEpisodeId == 0 then
 		return
 	end
 
-	local var_14_1 = Act183Model.instance:getEpisodeMoById(var_14_0)
+	local repressEpisodeMo = Act183Model.instance:getEpisodeMoById(repressEpisodeId)
 
-	arg_14_0:_playRuleRepressEffect(var_14_1)
+	self:_playRuleRepressEffect(repressEpisodeMo)
 	Act183Model.instance:clearRecordLastRepressEpisodeId()
 end
 
-function var_0_0.checkIfNeedPlayGroupFinishEffect(arg_15_0)
-	local var_15_0 = Act183Model.instance:getNewFinishGroupId()
+function Act183DungeonView_Animation:checkIfNeedPlayGroupFinishEffect()
+	local newFinishGroupId = Act183Model.instance:getNewFinishGroupId()
 
-	if not var_15_0 or arg_15_0._lastFinishGroupId == var_15_0 then
+	if not newFinishGroupId or self._lastFinishGroupId == newFinishGroupId then
 		return
 	end
 
-	local var_15_1 = Act183Model.instance:getGroupEpisodeMo(var_15_0)
+	local newFinishGroupMo = Act183Model.instance:getGroupEpisodeMo(newFinishGroupId)
+	local groupType = newFinishGroupMo and newFinishGroupMo:getGroupType()
 
-	if (var_15_1 and var_15_1:getGroupType()) == Act183Enum.GroupType.Daily then
-		gohelper.setActive(arg_15_0._godailycompleted, true)
-		arg_15_0._animdailycompleted:Play("in", 0, 0)
+	if groupType == Act183Enum.GroupType.Daily then
+		gohelper.setActive(self._godailycompleted, true)
+		self._animdailycompleted:Play("in", 0, 0)
 	else
-		gohelper.setActive(arg_15_0._gocompleted, true)
-		arg_15_0._animcompleted:Play("in", 0, 0)
+		gohelper.setActive(self._gocompleted, true)
+		self._animcompleted:Play("in", 0, 0)
 	end
 
-	arg_15_0._lastFinishGroupId = var_15_0
+	self._lastFinishGroupId = newFinishGroupId
 
 	AudioMgr.instance:trigger(AudioEnum.UI.Act183_GroupFinished)
 end
 
-function var_0_0.checkIfNeedPlayFinishEffect(arg_16_0)
-	local var_16_0 = Act183Model.instance:getNewFinishEpisodeId()
+function Act183DungeonView_Animation:checkIfNeedPlayFinishEffect()
+	local episodeId = Act183Model.instance:getNewFinishEpisodeId()
 
-	if not var_16_0 or arg_16_0._lastFinishEpisodeId == var_16_0 then
+	if not episodeId or self._lastFinishEpisodeId == episodeId then
 		return
 	end
 
-	Act183Controller.instance:dispatchEvent(Act183Event.EpisodeStartPlayFinishAnim, var_16_0)
+	Act183Controller.instance:dispatchEvent(Act183Event.EpisodeStartPlayFinishAnim, episodeId)
 
-	arg_16_0._lastFinishEpisodeId = var_16_0
+	self._lastFinishEpisodeId = episodeId
 end
 
-function var_0_0._onUpdateRepressInfo(arg_17_0, arg_17_1, arg_17_2)
-	arg_17_0:checkIfNeedPlayEffect()
+function Act183DungeonView_Animation:_onUpdateRepressInfo(episodeId, episodeMo)
+	self:checkIfNeedPlayEffect()
 end
 
-function var_0_0._playRuleRepressEffect(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_1:getGroupId()
-	local var_18_1 = Act183Model.instance:getGroupEpisodeMo(var_18_0)
+function Act183DungeonView_Animation:_playRuleRepressEffect(repressEpisodeMo)
+	local groupId = repressEpisodeMo:getGroupId()
+	local groupMo = Act183Model.instance:getGroupEpisodeMo(groupId)
 
-	if not var_18_1 then
+	if not groupMo then
 		return
 	end
 
-	local var_18_2 = arg_18_0:_getUnfinishEpisodes(var_18_1)
+	local unfinishEpisodes = self:_getUnfinishEpisodes(groupMo)
+	local unfinishEpisodeCount = unfinishEpisodes and #unfinishEpisodes or 0
 
-	if (var_18_2 and #var_18_2 or 0) <= 0 then
+	if unfinishEpisodeCount <= 0 then
 		return
 	end
 
-	local var_18_3 = arg_18_1:getConfigOrder()
+	local startOrder = repressEpisodeMo:getConfigOrder()
 
-	for iter_18_0, iter_18_1 in ipairs(var_18_2) do
-		local var_18_4 = iter_18_1:getConfigOrder()
+	for _, unfinishEpisodeMo in ipairs(unfinishEpisodes) do
+		local endOrder = unfinishEpisodeMo:getConfigOrder()
 
-		arg_18_0:_showRepressEffect(arg_18_1, var_18_3, var_18_4)
+		self:_showRepressEffect(repressEpisodeMo, startOrder, endOrder)
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.Act183_EscapeRuleLineEffect)
 end
 
-function var_0_0._showRepressEffect(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
-	local var_19_0 = string.format("%s_%s", arg_19_2, arg_19_3)
-	local var_19_1 = arg_19_0._orderToAnimTypeMap[var_19_0]
+function Act183DungeonView_Animation:_showRepressEffect(episodeMo, startOrder, endOrder)
+	local key = string.format("%s_%s", startOrder, endOrder)
+	local animType = self._orderToAnimTypeMap[key]
 
-	if not var_19_1 then
-		logError(string.format("镇压连线动画类型不存在 episodeId = %s, startOrder = %s, endOrder = %s", arg_19_1:getEpisodeId(), arg_19_2, arg_19_3))
+	if not animType then
+		logError(string.format("镇压连线动画类型不存在 episodeId = %s, startOrder = %s, endOrder = %s", episodeMo:getEpisodeId(), startOrder, endOrder))
 
 		return
 	end
 
-	local var_19_2 = arg_19_0:_getOrCreateLine(var_19_1)
+	local goline = self:_getOrCreateLine(animType)
 
-	var_19_2.name = var_19_0
-	arg_19_0._useLineEffectPool[var_19_1] = arg_19_0._useLineEffectPool[var_19_1] or arg_19_0:getUserDataTb_()
+	goline.name = key
+	self._useLineEffectPool[animType] = self._useLineEffectPool[animType] or self:getUserDataTb_()
 
-	table.insert(arg_19_0._useLineEffectPool[var_19_1], var_19_2)
-	arg_19_0:_setLinePosAndRotation(arg_19_2, arg_19_3, var_19_2)
+	table.insert(self._useLineEffectPool[animType], goline)
+	self:_setLinePosAndRotation(startOrder, endOrder, goline)
 
-	local var_19_3 = gohelper.findChild(var_19_2, "line1")
-	local var_19_4 = gohelper.findChild(var_19_2, "line2")
+	local line1 = gohelper.findChild(goline, "line1")
+	local line2 = gohelper.findChild(goline, "line2")
 
-	gohelper.setActive(var_19_3, arg_19_1:getRuleStatus(1) ~= Act183Enum.RuleStatus.Repress)
-	gohelper.setActive(var_19_4, arg_19_1:getRuleStatus(2) ~= Act183Enum.RuleStatus.Repress)
+	gohelper.setActive(line1, episodeMo:getRuleStatus(1) ~= Act183Enum.RuleStatus.Repress)
+	gohelper.setActive(line2, episodeMo:getRuleStatus(2) ~= Act183Enum.RuleStatus.Repress)
 end
 
-function var_0_0._setLinePosAndRotation(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
-	local var_20_0 = arg_20_0:getEpisodeItemTab()
-	local var_20_1 = var_20_0 and var_20_0[arg_20_1]
-	local var_20_2 = var_20_0 and var_20_0[arg_20_2]
+function Act183DungeonView_Animation:_setLinePosAndRotation(startOrder, endOrder, goline)
+	local episodeItamTab = self:getEpisodeItemTab()
+	local fromEpisodeItem = episodeItamTab and episodeItamTab[startOrder]
+	local toEpisodeItem = episodeItamTab and episodeItamTab[endOrder]
 
-	if not var_20_1 or not var_20_2 then
+	if not fromEpisodeItem or not toEpisodeItem then
 		return
 	end
 
-	local var_20_3 = var_20_1:getIconTran()
-	local var_20_4 = recthelper.rectToRelativeAnchorPos(var_20_3.position, arg_20_0._gomiddle.transform)
-	local var_20_5 = var_20_2:getIconTran()
-	local var_20_6 = recthelper.rectToRelativeAnchorPos(var_20_5.position, arg_20_0._gomiddle.transform)
+	local fromIconTran = fromEpisodeItem:getIconTran()
+	local fromPosition = recthelper.rectToRelativeAnchorPos(fromIconTran.position, self._gomiddle.transform)
+	local toIconTran = toEpisodeItem:getIconTran()
+	local toPosition = recthelper.rectToRelativeAnchorPos(toIconTran.position, self._gomiddle.transform)
 
-	gohelper.setActive(arg_20_3, true)
-	recthelper.setAnchor(arg_20_3.transform, var_20_6.x, var_20_6.y)
+	gohelper.setActive(goline, true)
+	recthelper.setAnchor(goline.transform, toPosition.x, toPosition.y)
 
-	local var_20_7, var_20_8, var_20_9 = arg_20_0:_calcLineRotation(var_20_4, var_20_6)
+	local rotationX, rotationY, rotationZ = self:_calcLineRotation(fromPosition, toPosition)
 
-	transformhelper.setLocalRotation(arg_20_3.transform, var_20_7, var_20_8, var_20_9)
+	transformhelper.setLocalRotation(goline.transform, rotationX, rotationY, rotationZ)
 end
 
-function var_0_0._calcLineRotation(arg_21_0, arg_21_1, arg_21_2)
-	local var_21_0 = arg_21_2 - arg_21_1
-	local var_21_1 = Mathf.Atan2(var_21_0.y, var_21_0.x) * Mathf.Rad2Deg
+function Act183DungeonView_Animation:_calcLineRotation(fromPosition, toPosition)
+	local dir = toPosition - fromPosition
+	local angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg
 
-	var_21_1 = var_21_1 < 0 and var_21_1 + 360 or var_21_1
+	angle = angle < 0 and angle + 360 or angle
 
-	return 0, 0, var_21_1
+	return 0, 0, angle
 end
 
-function var_0_0._getUnfinishEpisodes(arg_22_0, arg_22_1)
-	local var_22_0 = {}
-	local var_22_1 = arg_22_1:getEpisodeMos()
+function Act183DungeonView_Animation:_getUnfinishEpisodes(groupMo)
+	local unfinishSubEpisodes = {}
+	local episodeList = groupMo:getEpisodeMos()
 
-	for iter_22_0, iter_22_1 in ipairs(var_22_1) do
-		if not iter_22_1:isFinished() then
-			table.insert(var_22_0, iter_22_1)
+	for _, mo in ipairs(episodeList) do
+		local isFinished = mo:isFinished()
+
+		if not isFinished then
+			table.insert(unfinishSubEpisodes, mo)
 		end
 	end
 
-	return var_22_0
+	return unfinishSubEpisodes
 end
 
-function var_0_0._getOrCreateLine(arg_23_0, arg_23_1)
-	local var_23_0 = arg_23_0._lineEffectPool[arg_23_1]
+function Act183DungeonView_Animation:_getOrCreateLine(animType)
+	local lineEffects = self._lineEffectPool[animType]
 
-	if not var_23_0 then
-		var_23_0 = arg_23_0:getUserDataTb_()
-		arg_23_0._lineEffectPool[arg_23_1] = var_23_0
+	if not lineEffects then
+		lineEffects = self:getUserDataTb_()
+		self._lineEffectPool[animType] = lineEffects
 	end
 
-	local var_23_1 = table.remove(var_23_0, 1)
+	local goline = table.remove(lineEffects, 1)
 
-	if not var_23_1 then
-		local var_23_2 = arg_23_0._lineTemplateMap[arg_23_1]
+	if not goline then
+		local gotemplate = self._lineTemplateMap[animType]
 
-		var_23_1 = gohelper.clone(var_23_2[1], arg_23_0._gomiddle, "line_" .. arg_23_1)
+		goline = gohelper.clone(gotemplate[1], self._gomiddle, "line_" .. animType)
 	end
 
-	return var_23_1
+	return goline
 end
 
-function var_0_0._recycleLines(arg_24_0)
-	if arg_24_0._useLineEffectPool then
-		for iter_24_0, iter_24_1 in pairs(arg_24_0._useLineEffectPool) do
-			for iter_24_2 = #iter_24_1, 1, -1 do
-				local var_24_0 = table.remove(iter_24_1, iter_24_2)
+function Act183DungeonView_Animation:_recycleLines()
+	if self._useLineEffectPool then
+		for animType, lineList in pairs(self._useLineEffectPool) do
+			for i = #lineList, 1, -1 do
+				local goline = table.remove(lineList, i)
 
-				gohelper.setActive(var_24_0, false)
+				gohelper.setActive(goline, false)
 
-				arg_24_0._lineEffectPool[iter_24_0] = arg_24_0._lineEffectPool[iter_24_0] or arg_24_0:getUserDataTb_()
+				self._lineEffectPool[animType] = self._lineEffectPool[animType] or self:getUserDataTb_()
 
-				table.insert(arg_24_0._lineEffectPool[iter_24_0], var_24_0)
+				table.insert(self._lineEffectPool[animType], goline)
 			end
 		end
 	end
 end
 
-function var_0_0._onCloseViewFinish(arg_25_0, arg_25_1)
-	if arg_25_1 == arg_25_0.viewName then
+function Act183DungeonView_Animation:_onCloseViewFinish(viewName)
+	if viewName == self.viewName then
 		return
 	end
 
-	arg_25_0:checkIfNeedPlayEffect()
+	self:checkIfNeedPlayEffect()
 end
 
-function var_0_0.checkIfNeedPlayGroupCategoryFinishAnim(arg_26_0)
-	local var_26_0 = Act183Model.instance:getUnfinishTaskMap()
+function Act183DungeonView_Animation:checkIfNeedPlayGroupCategoryFinishAnim()
+	local originUnfinishTaskMap = Act183Model.instance:getUnfinishTaskMap()
 
-	if var_26_0 then
-		for iter_26_0, iter_26_1 in pairs(var_26_0) do
-			for iter_26_2 = #iter_26_1, 1, -1 do
-				if Act183Helper.isTaskFinished(iter_26_1[iter_26_2]) then
-					table.remove(iter_26_1, iter_26_2)
+	if originUnfinishTaskMap then
+		for groupId, groupTaskIds in pairs(originUnfinishTaskMap) do
+			for i = #groupTaskIds, 1, -1 do
+				local isTaskFinished = Act183Helper.isTaskFinished(groupTaskIds[i])
+
+				if isTaskFinished then
+					table.remove(groupTaskIds, i)
 				end
 			end
 
-			if #iter_26_1 <= 0 then
-				var_26_0[iter_26_0] = nil
+			if #groupTaskIds <= 0 then
+				originUnfinishTaskMap[groupId] = nil
 
-				Act183Controller.instance:dispatchEvent(Act183Event.OnGroupAllTaskFinished, iter_26_0)
+				Act183Controller.instance:dispatchEvent(Act183Event.OnGroupAllTaskFinished, groupId)
 			end
 		end
 	end
 end
 
-function var_0_0._onFightBossIfSubUnfinish(arg_27_0, arg_27_1)
-	local var_27_0 = Act183Model.instance:getEpisodeMoById(arg_27_1)
+function Act183DungeonView_Animation:_onFightBossIfSubUnfinish(episodeId)
+	local episdoeMo = Act183Model.instance:getEpisodeMoById(episodeId)
 
-	if not var_27_0 then
+	if not episdoeMo then
 		return
 	end
 
-	arg_27_0:destroyFlow()
+	self:destroyFlow()
 
-	arg_27_0._flow = FlowSequence.New()
+	self._flow = FlowSequence.New()
 
-	arg_27_0._flow:addWork(FunctionWork.New(arg_27_0._lockScreen, arg_27_0, true))
-	arg_27_0._flow:addWork(FunctionWork.New(arg_27_0._playRuleRepressEffect2BossEpisode, arg_27_0, var_27_0))
-	arg_27_0._flow:addWork(WorkWaitSeconds.New(var_0_2))
-	arg_27_0._flow:addWork(FunctionWork.New(arg_27_0._recycleLines, arg_27_0))
-	arg_27_0._flow:addWork(FunctionWork.New(arg_27_0._lockScreen, arg_27_0, false))
-	arg_27_0._flow:addWork(FunctionWork.New(arg_27_0._onPlayFightBossEffectDone, arg_27_0, arg_27_1))
-	arg_27_0._flow:start()
+	self._flow:addWork(FunctionWork.New(self._lockScreen, self, true))
+	self._flow:addWork(FunctionWork.New(self._playRuleRepressEffect2BossEpisode, self, episdoeMo))
+	self._flow:addWork(WorkWaitSeconds.New(RepressAnimDuration))
+	self._flow:addWork(FunctionWork.New(self._recycleLines, self))
+	self._flow:addWork(FunctionWork.New(self._lockScreen, self, false))
+	self._flow:addWork(FunctionWork.New(self._onPlayFightBossEffectDone, self, episodeId))
+	self._flow:start()
 end
 
-function var_0_0._playRuleRepressEffect2BossEpisode(arg_28_0, arg_28_1)
-	local var_28_0 = Act183Model.instance:getGroupEpisodeMo(arg_28_1:getGroupId())
+function Act183DungeonView_Animation:_playRuleRepressEffect2BossEpisode(episdoeMo)
+	local groupMo = Act183Model.instance:getGroupEpisodeMo(episdoeMo:getGroupId())
 
-	if not var_28_0 then
+	if not groupMo then
 		return
 	end
 
-	local var_28_1 = var_28_0:getTargetTypeAndStatusEpisodes(Act183Enum.EpisodeType.Sub, Act183Enum.EpisodeStatus.Unlocked)
-	local var_28_2 = var_28_0:getTargetTypeAndStatusEpisodes(Act183Enum.EpisodeType.Sub, Act183Enum.EpisodeStatus.Locked)
-	local var_28_3 = {}
+	local unlockSubEpisodeList = groupMo:getTargetTypeAndStatusEpisodes(Act183Enum.EpisodeType.Sub, Act183Enum.EpisodeStatus.Unlocked)
+	local lockSubEpisodeList = groupMo:getTargetTypeAndStatusEpisodes(Act183Enum.EpisodeType.Sub, Act183Enum.EpisodeStatus.Locked)
+	local unfinishSubEpisodeList = {}
 
-	tabletool.addValues(var_28_3, var_28_1)
-	tabletool.addValues(var_28_3, var_28_2)
+	tabletool.addValues(unfinishSubEpisodeList, unlockSubEpisodeList)
+	tabletool.addValues(unfinishSubEpisodeList, lockSubEpisodeList)
 
-	local var_28_4 = arg_28_1:getConfigOrder()
+	local endOrder = episdoeMo:getConfigOrder()
 
-	for iter_28_0, iter_28_1 in ipairs(var_28_3) do
-		local var_28_5 = iter_28_1:getConfigOrder()
+	for _, subEpisodeMo in ipairs(unfinishSubEpisodeList) do
+		local startOrder = subEpisodeMo:getConfigOrder()
 
-		arg_28_0:_showRepressEffect(iter_28_1, var_28_5, var_28_4)
-		arg_28_0:_showEscapeEffect(var_28_5)
+		self:_showRepressEffect(subEpisodeMo, startOrder, endOrder)
+		self:_showEscapeEffect(startOrder)
 	end
 end
 
-function var_0_0._showEscapeEffect(arg_29_0, arg_29_1)
-	local var_29_0 = arg_29_0:getEpisodeItemTab()
-	local var_29_1 = var_29_0 and var_29_0[arg_29_1]
+function Act183DungeonView_Animation:_showEscapeEffect(episodeOrder)
+	local episodeItemTab = self:getEpisodeItemTab()
+	local episodeItem = episodeItemTab and episodeItemTab[episodeOrder]
 
-	if not var_29_1 then
+	if not episodeItem then
 		return
 	end
 
-	if var_29_1.playFakeRepressAnim then
-		var_29_1:playFakeRepressAnim()
+	if episodeItem.playFakeRepressAnim then
+		episodeItem:playFakeRepressAnim()
 	end
 end
 
-function var_0_0._onPlayFightBossEffectDone(arg_30_0, arg_30_1)
-	Act183Controller.instance:dispatchEvent(Act183Event.OnPlayEffectDoneIfSubUnfinish, arg_30_1)
+function Act183DungeonView_Animation:_onPlayFightBossEffectDone(episodeId)
+	Act183Controller.instance:dispatchEvent(Act183Event.OnPlayEffectDoneIfSubUnfinish, episodeId)
 end
 
-function var_0_0.getEpisodeItemTab(arg_31_0)
-	local var_31_0 = arg_31_0.viewContainer:getMainView()
+function Act183DungeonView_Animation:getEpisodeItemTab()
+	local mainView = self.viewContainer:getMainView()
 
-	return var_31_0 and var_31_0:getEpisodeItemTab()
+	return mainView and mainView:getEpisodeItemTab()
 end
 
-function var_0_0.onClose(arg_32_0)
-	arg_32_0:destroyFlow()
-	arg_32_0:_lockScreen(false)
+function Act183DungeonView_Animation:onClose()
+	self:destroyFlow()
+	self:_lockScreen(false)
 	Act183Model.instance:clearBattleFinishedInfo()
 end
 
-return var_0_0
+return Act183DungeonView_Animation

@@ -1,41 +1,43 @@
-﻿module("modules.logic.versionactivity2_7.act191.model.Activity191Model", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/act191/model/Activity191Model.lua
 
-local var_0_0 = class("Activity191Model", BaseModel)
+module("modules.logic.versionactivity2_7.act191.model.Activity191Model", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local Activity191Model = class("Activity191Model", BaseModel)
+
+function Activity191Model:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0.actMoDic = {}
+function Activity191Model:reInit()
+	self.actMoDic = {}
 end
 
-function var_0_0.setActInfo(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0.curActId = arg_3_1
+function Activity191Model:setActInfo(activityId, actInfo)
+	self.curActId = activityId
 
-	if not arg_3_0.actMoDic[arg_3_1] then
-		arg_3_0.actMoDic[arg_3_1] = Act191MO.New()
+	if not self.actMoDic[activityId] then
+		self.actMoDic[activityId] = Act191MO.New()
 	end
 
-	arg_3_0.actMoDic[arg_3_1]:initBadgeInfo(arg_3_1)
-	arg_3_0.actMoDic[arg_3_1]:init(arg_3_2)
-	Act191StatController.instance:setActInfo(arg_3_1, arg_3_0.actMoDic[arg_3_1])
+	self.actMoDic[activityId]:initBadgeInfo(activityId)
+	self.actMoDic[activityId]:init(actInfo)
+	Act191StatController.instance:setActInfo(activityId, self.actMoDic[activityId])
 end
 
-function var_0_0.getCurActId(arg_4_0)
-	return arg_4_0.curActId
+function Activity191Model:getCurActId()
+	return self.curActId
 end
 
-function var_0_0.getActInfo(arg_5_0, arg_5_1)
-	arg_5_1 = arg_5_1 or arg_5_0.curActId
+function Activity191Model:getActInfo(activityId)
+	activityId = activityId or self.curActId
 
-	return arg_5_0.actMoDic[arg_5_1]
+	return self.actMoDic[activityId]
 end
 
-function var_0_0.setGameEndInfo(arg_6_0, arg_6_1)
-	arg_6_0.endInfo = arg_6_1
+function Activity191Model:setGameEndInfo(info)
+	self.endInfo = info
 end
 
-var_0_0.instance = var_0_0.New()
+Activity191Model.instance = Activity191Model.New()
 
-return var_0_0
+return Activity191Model

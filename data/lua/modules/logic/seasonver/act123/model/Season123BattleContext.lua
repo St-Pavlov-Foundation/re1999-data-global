@@ -1,12 +1,14 @@
-﻿module("modules.logic.seasonver.act123.model.Season123BattleContext", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/model/Season123BattleContext.lua
 
-local var_0_0 = pureTable("Season123BattleContext")
+module("modules.logic.seasonver.act123.model.Season123BattleContext", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	arg_1_0.actId = arg_1_1
-	arg_1_0.stage = arg_1_2
-	arg_1_0.layer = arg_1_3
-	arg_1_0.episodeId = arg_1_4
+local Season123BattleContext = pureTable("Season123BattleContext")
+
+function Season123BattleContext:init(actId, stage, layer, episodeId)
+	self.actId = actId
+	self.stage = stage
+	self.layer = layer
+	self.episodeId = episodeId
 end
 
-return var_0_0
+return Season123BattleContext

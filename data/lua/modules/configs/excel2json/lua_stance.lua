@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_stance", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_stance.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_stance", package.seeall)
+
+local lua_stance = {}
+local fields = {
 	pos8 = 9,
 	pos1 = 2,
 	subPos1 = 10,
@@ -17,13 +19,13 @@ local var_0_1 = {
 	id = 1,
 	pos6 = 7
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_stance.onLoad(json)
+	lua_stance.configList, lua_stance.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_stance

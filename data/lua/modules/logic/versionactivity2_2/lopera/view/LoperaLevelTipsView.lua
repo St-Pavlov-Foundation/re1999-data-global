@@ -1,134 +1,139 @@
-﻿module("modules.logic.versionactivity2_2.lopera.view.LoperaLevelTipsView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/lopera/view/LoperaLevelTipsView.lua
 
-local var_0_0 = class("LoperaLevelTipsView", BaseView)
-local var_0_1 = LoperaEnum.MapCfgIdx
-local var_0_2 = VersionActivity2_2Enum.ActivityId.Lopera
-local var_0_3 = 3
+module("modules.logic.versionactivity2_2.lopera.view.LoperaLevelTipsView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._text = gohelper.findChildText(arg_1_0.viewGO, "Bg/#text")
-	arg_1_0._viewAnimator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+local LoperaLevelTipsView = class("LoperaLevelTipsView", BaseView)
+local mapCfgIdx = LoperaEnum.MapCfgIdx
+local loperaActId = VersionActivity2_2Enum.ActivityId.Lopera
+local tipsDuration = 3
+
+function LoperaLevelTipsView:onInitView()
+	self._text = gohelper.findChildText(self.viewGO, "Bg/#text")
+	self._viewAnimator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function var_0_0.onOpen(arg_2_0)
+function LoperaLevelTipsView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2Lopera.play_ui_min_day_night)
-	arg_2_0:addEventCb(LoperaController.instance, LoperaEvent.EpisodeFinish, arg_2_0._onGetToDestination, arg_2_0)
-	arg_2_0:addEventCb(LoperaController.instance, LoperaEvent.EpisodeMove, arg_2_0._onMoveInEpisode, arg_2_0)
-	arg_2_0:addEventCb(LoperaController.instance, LoperaEvent.ExitGame, arg_2_0.onExitGame, arg_2_0)
+	self:addEventCb(LoperaController.instance, LoperaEvent.EpisodeFinish, self._onGetToDestination, self)
+	self:addEventCb(LoperaController.instance, LoperaEvent.EpisodeMove, self._onMoveInEpisode, self)
+	self:addEventCb(LoperaController.instance, LoperaEvent.ExitGame, self.onExitGame, self)
 
-	local var_2_0 = arg_2_0.viewParam
-	local var_2_1 = var_2_0.isBeginning
+	local params = self.viewParam
+	local isBeginningTips = params.isBeginning
 
-	arg_2_0._isFinishTips = var_2_0.isFinished
+	self._isFinishTips = params.isFinished
 
-	local var_2_2 = var_2_0.isEndLess
-	local var_2_3 = var_2_0.mapId
+	local isEndLess = params.isEndLess
+	local mapId = params.mapId
 
-	if var_2_2 then
-		local var_2_4 = Activity168Model.instance:getCurEpisodeId()
-		local var_2_5 = Activity168Config.instance:getConstCfg(var_0_2, var_2_4).value2
+	if isEndLess then
+		local episodeId = Activity168Model.instance:getCurEpisodeId()
+		local contentCfg = Activity168Config.instance:getConstCfg(loperaActId, episodeId)
+		local contentStr = contentCfg.value2
 
-		arg_2_0._text.text = var_2_5
+		self._text.text = contentStr
 
-		arg_2_0:_delayClose()
-	elseif var_2_1 or arg_2_0._isFinishTips then
-		local var_2_6 = Activity168Config.instance:getConstValueCfg(var_0_2, var_2_3)
-		local var_2_7 = string.split(var_2_6.value2, "|")[var_2_1 and 1 or 2]
+		self:_delayClose()
+	elseif isBeginningTips or self._isFinishTips then
+		local contentCfg = Activity168Config.instance:getConstValueCfg(loperaActId, mapId)
+		local contentArray = string.split(contentCfg.value2, "|")
+		local contentStr = contentArray[isBeginningTips and 1 or 2]
 
-		arg_2_0._text.text = var_2_7
+		self._text.text = contentStr
 
-		arg_2_0:_delayClose()
+		self:_delayClose()
 	else
-		local var_2_8 = var_2_0.cellIdx - 1
-		local var_2_9 = Activity168Config.instance:getMapEndCell()
-		local var_2_10 = Activity168Config.instance:getMapCell(var_2_8)[var_0_1.coord]
-		local var_2_11 = var_2_9[var_0_1.coord]
-		local var_2_12 = math.abs(var_2_10[1] - var_2_11[1]) + math.abs(var_2_10[2] - var_2_11[2])
-		local var_2_13 = Activity168Config.instance:getConstCfg(var_0_2, 1).mlValue
-		local var_2_14 = string.split(var_2_13, "|")
-		local var_2_15 = {}
+		local curCellId = params.cellIdx - 1
+		local endCellData = Activity168Config.instance:getMapEndCell()
+		local curCellData = Activity168Config.instance:getMapCell(curCellId)
+		local curCoord = curCellData[mapCfgIdx.coord]
+		local endCellCoord = endCellData[mapCfgIdx.coord]
+		local distance = math.abs(curCoord[1] - endCellCoord[1]) + math.abs(curCoord[2] - endCellCoord[2])
+		local distanceCfgStr = Activity168Config.instance:getConstCfg(loperaActId, 1).mlValue
+		local distanceParamArr = string.split(distanceCfgStr, "|")
+		local distanceParams = {}
 
-		for iter_2_0, iter_2_1 in ipairs(var_2_14) do
-			local var_2_16 = string.split(iter_2_1, "#")
-			local var_2_17 = var_2_16[1]
-			local var_2_18 = var_2_16[2]
+		for _, distanceStr in ipairs(distanceParamArr) do
+			local distanceStrArr = string.split(distanceStr, "#")
+			local distanceNum = distanceStrArr[1]
+			local distanceDesc = distanceStrArr[2]
 
-			var_2_15[tonumber(var_2_17)] = var_2_18
+			distanceParams[tonumber(distanceNum)] = distanceDesc
 		end
 
-		local var_2_19 = ""
+		local descStr = ""
 
-		for iter_2_2, iter_2_3 in pairs(var_2_15) do
-			if iter_2_2 <= var_2_12 then
-				var_2_19 = iter_2_3
+		for distanceValue, desc in pairs(distanceParams) do
+			if distanceValue <= distance then
+				descStr = desc
 			else
 				break
 			end
 		end
 
-		local var_2_20 = var_2_10[1] < var_2_11[1] and luaLang("text_dir_east") or var_2_10[1] > var_2_11[1] and luaLang("text_dir_west") or ""
-		local var_2_21 = var_2_10[2] < var_2_11[2] and luaLang("text_dir_north") or var_2_10[2] > var_2_11[2] and luaLang("text_dir_south") or ""
-		local var_2_22 = var_2_0.mapId
-		local var_2_23 = Activity168Config.instance:getConstValueCfg(var_0_2, var_2_22).mlValue
-		local var_2_24
+		local dirStrEW = curCoord[1] < endCellCoord[1] and luaLang("text_dir_east") or curCoord[1] > endCellCoord[1] and luaLang("text_dir_west") or ""
+		local dirStrNS = curCoord[2] < endCellCoord[2] and luaLang("text_dir_north") or curCoord[2] > endCellCoord[2] and luaLang("text_dir_south") or ""
+		local mapId = params.mapId
+		local contentCfgStr = Activity168Config.instance:getConstValueCfg(loperaActId, mapId).mlValue
+		local contentParams
 
 		if LangSettings.instance:isEn() then
-			if string.nilorempty(var_2_21) then
-				var_2_24 = {
-					var_2_19,
-					var_2_20
+			if string.nilorempty(dirStrNS) then
+				contentParams = {
+					descStr,
+					dirStrEW
 				}
 			else
-				var_2_24 = {
-					var_2_19,
-					var_2_20 .. "-" .. var_2_21
+				contentParams = {
+					descStr,
+					dirStrEW .. "-" .. dirStrNS
 				}
 			end
 		else
-			var_2_24 = {
-				var_2_19,
-				var_2_20 .. var_2_21
+			contentParams = {
+				descStr,
+				dirStrEW .. dirStrNS
 			}
 		end
 
-		arg_2_0._text.text = GameUtil.getSubPlaceholderLuaLang(var_2_23, var_2_24)
+		self._text.text = GameUtil.getSubPlaceholderLuaLang(contentCfgStr, contentParams)
 	end
 end
 
-function var_0_0._delayClose(arg_3_0)
-	TaskDispatcher.runDelay(arg_3_0._doCloseAction, arg_3_0, var_0_3)
+function LoperaLevelTipsView:_delayClose()
+	TaskDispatcher.runDelay(self._doCloseAction, self, tipsDuration)
 end
 
-function var_0_0._doCloseAction(arg_4_0)
-	arg_4_0._viewAnimator:Play("out", 0, 0)
-	TaskDispatcher.runDelay(arg_4_0.closeThis, arg_4_0, 0.25)
+function LoperaLevelTipsView:_doCloseAction()
+	self._viewAnimator:Play("out", 0, 0)
+	TaskDispatcher.runDelay(self.closeThis, self, 0.25)
 end
 
-function var_0_0._onGetToDestination(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_1.settleReason
+function LoperaLevelTipsView:_onGetToDestination(resultData)
+	local reason = resultData.settleReason
 
-	if LoperaEnum.ResultEnum.Quit == var_5_0 or LoperaEnum.ResultEnum.PowerUseup == var_5_0 then
-		arg_5_0:_doCloseAction()
+	if LoperaEnum.ResultEnum.Quit == reason or LoperaEnum.ResultEnum.PowerUseup == reason then
+		self:_doCloseAction()
 	end
 end
 
-function var_0_0._onMoveInEpisode(arg_6_0)
-	if not arg_6_0._isFinishTips then
-		arg_6_0:_doCloseAction()
+function LoperaLevelTipsView:_onMoveInEpisode()
+	if not self._isFinishTips then
+		self:_doCloseAction()
 	end
 end
 
-function var_0_0.onExitGame(arg_7_0)
-	arg_7_0:closeThis()
+function LoperaLevelTipsView:onExitGame()
+	self:closeThis()
 end
 
-function var_0_0.onClose(arg_8_0)
+function LoperaLevelTipsView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
-	TaskDispatcher.cancelTask(arg_9_0.closeThis, arg_9_0)
-	TaskDispatcher.cancelTask(arg_9_0._doCloseAction, arg_9_0)
+function LoperaLevelTipsView:onDestroyView()
+	TaskDispatcher.cancelTask(self.closeThis, self)
+	TaskDispatcher.cancelTask(self._doCloseAction, self)
 end
 
-return var_0_0
+return LoperaLevelTipsView

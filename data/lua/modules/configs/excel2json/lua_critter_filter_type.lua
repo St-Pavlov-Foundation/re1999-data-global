@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_critter_filter_type", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_critter_filter_type.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_critter_filter_type", package.seeall)
+
+local lua_critter_filter_type = {}
+local fields = {
 	tabIcon = 6,
 	name = 2,
 	tabName = 5,
@@ -9,16 +11,16 @@ local var_0_1 = {
 	filterTab = 4,
 	nameEn = 3
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	tabName = 2,
 	name = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_critter_filter_type.onLoad(json)
+	lua_critter_filter_type.configList, lua_critter_filter_type.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_critter_filter_type

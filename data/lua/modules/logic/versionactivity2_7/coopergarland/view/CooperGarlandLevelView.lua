@@ -1,312 +1,324 @@
-﻿module("modules.logic.versionactivity2_7.coopergarland.view.CooperGarlandLevelView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/coopergarland/view/CooperGarlandLevelView.lua
 
-local var_0_0 = class("CooperGarlandLevelView", BaseView)
-local var_0_1 = -300
-local var_0_2 = 0.15
+module("modules.logic.versionactivity2_7.coopergarland.view.CooperGarlandLevelView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._gostoryPath = gohelper.findChild(arg_1_0.viewGO, "#go_storyPath")
-	arg_1_0._gostoryScroll = gohelper.findChild(arg_1_0.viewGO, "#go_storyPath/#go_storyScroll")
-	arg_1_0._gostoryStages = gohelper.findChild(arg_1_0.viewGO, "#go_storyPath/#go_storyScroll/#go_storyStages")
-	arg_1_0._goTitle = gohelper.findChild(arg_1_0.viewGO, "#go_Title")
-	arg_1_0._simagetitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_Title/#simage_title")
-	arg_1_0._gotime = gohelper.findChild(arg_1_0.viewGO, "#go_Title/#go_time")
-	arg_1_0._txtlimittime = gohelper.findChildText(arg_1_0.viewGO, "#go_Title/#go_time/#txt_limittime")
-	arg_1_0._btnTask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Task")
-	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "#btn_Task/#go_reddot")
-	arg_1_0._btnExtraEpisode = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_ChallengeBtn")
+local CooperGarlandLevelView = class("CooperGarlandLevelView", BaseView)
+local RIGHT_OFFSET = -300
+local PATH_ANIM_TIME = 0.15
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CooperGarlandLevelView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._gostoryPath = gohelper.findChild(self.viewGO, "#go_storyPath")
+	self._gostoryScroll = gohelper.findChild(self.viewGO, "#go_storyPath/#go_storyScroll")
+	self._gostoryStages = gohelper.findChild(self.viewGO, "#go_storyPath/#go_storyScroll/#go_storyStages")
+	self._goTitle = gohelper.findChild(self.viewGO, "#go_Title")
+	self._simagetitle = gohelper.findChildSingleImage(self.viewGO, "#go_Title/#simage_title")
+	self._gotime = gohelper.findChild(self.viewGO, "#go_Title/#go_time")
+	self._txtlimittime = gohelper.findChildText(self.viewGO, "#go_Title/#go_time/#txt_limittime")
+	self._btnTask = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Task")
+	self._goreddot = gohelper.findChild(self.viewGO, "#btn_Task/#go_reddot")
+	self._btnExtraEpisode = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_ChallengeBtn")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnTask:AddClickListener(arg_2_0._btnTaskOnClick, arg_2_0)
-	arg_2_0._btnExtraEpisode:AddClickListener(arg_2_0._btnExtraEpisodeOnClick, arg_2_0)
-	arg_2_0._drag:AddDragBeginListener(arg_2_0._onDragBegin, arg_2_0)
-	arg_2_0._drag:AddDragEndListener(arg_2_0._onDragEnd, arg_2_0)
-	arg_2_0._touch:AddClickDownListener(arg_2_0._onClickDown, arg_2_0)
-	arg_2_0:addEventCb(CooperGarlandController.instance, CooperGarlandEvent.OnAct192InfoUpdate, arg_2_0._onInfoUpdate, arg_2_0)
-	arg_2_0:addEventCb(CooperGarlandController.instance, CooperGarlandEvent.OnClickEpisode, arg_2_0._onClickEpisode, arg_2_0)
-	arg_2_0:addEventCb(CooperGarlandController.instance, CooperGarlandEvent.FirstFinishEpisode, arg_2_0._onFirstFinishEpisode, arg_2_0)
+function CooperGarlandLevelView:addEvents()
+	self._btnTask:AddClickListener(self._btnTaskOnClick, self)
+	self._btnExtraEpisode:AddClickListener(self._btnExtraEpisodeOnClick, self)
+	self._drag:AddDragBeginListener(self._onDragBegin, self)
+	self._drag:AddDragEndListener(self._onDragEnd, self)
+	self._touch:AddClickDownListener(self._onClickDown, self)
+	self:addEventCb(CooperGarlandController.instance, CooperGarlandEvent.OnAct192InfoUpdate, self._onInfoUpdate, self)
+	self:addEventCb(CooperGarlandController.instance, CooperGarlandEvent.OnClickEpisode, self._onClickEpisode, self)
+	self:addEventCb(CooperGarlandController.instance, CooperGarlandEvent.FirstFinishEpisode, self._onFirstFinishEpisode, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnTask:RemoveClickListener()
-	arg_3_0._btnExtraEpisode:RemoveClickListener()
-	arg_3_0._drag:RemoveDragBeginListener()
-	arg_3_0._drag:RemoveDragEndListener()
-	arg_3_0._touch:RemoveClickDownListener()
-	arg_3_0:removeEventCb(CooperGarlandController.instance, CooperGarlandEvent.OnAct192InfoUpdate, arg_3_0._onInfoUpdate, arg_3_0)
-	arg_3_0:removeEventCb(CooperGarlandController.instance, CooperGarlandEvent.OnClickEpisode, arg_3_0._onClickEpisode, arg_3_0)
-	arg_3_0:removeEventCb(CooperGarlandController.instance, CooperGarlandEvent.FirstFinishEpisode, arg_3_0._onFirstFinishEpisode, arg_3_0)
+function CooperGarlandLevelView:removeEvents()
+	self._btnTask:RemoveClickListener()
+	self._btnExtraEpisode:RemoveClickListener()
+	self._drag:RemoveDragBeginListener()
+	self._drag:RemoveDragEndListener()
+	self._touch:RemoveClickDownListener()
+	self:removeEventCb(CooperGarlandController.instance, CooperGarlandEvent.OnAct192InfoUpdate, self._onInfoUpdate, self)
+	self:removeEventCb(CooperGarlandController.instance, CooperGarlandEvent.OnClickEpisode, self._onClickEpisode, self)
+	self:removeEventCb(CooperGarlandController.instance, CooperGarlandEvent.FirstFinishEpisode, self._onFirstFinishEpisode, self)
 end
 
-function var_0_0._btnTaskOnClick(arg_4_0)
+function CooperGarlandLevelView:_btnTaskOnClick()
 	CooperGarlandController.instance:openTaskView()
 end
 
-function var_0_0._btnExtraEpisodeOnClick(arg_5_0)
-	local var_5_0 = CooperGarlandConfig.instance:getExtraEpisode(arg_5_0.actId, true)
+function CooperGarlandLevelView:_btnExtraEpisodeOnClick()
+	local extraEpisodeId = CooperGarlandConfig.instance:getExtraEpisode(self.actId, true)
+	local isUnlock = CooperGarlandModel.instance:isUnlockEpisode(self.actId, extraEpisodeId)
 
-	if CooperGarlandModel.instance:isUnlockEpisode(arg_5_0.actId, var_5_0) then
-		CooperGarlandController.instance:clickEpisode(arg_5_0.actId, var_5_0)
+	if isUnlock then
+		CooperGarlandController.instance:clickEpisode(self.actId, extraEpisodeId)
 	end
 end
 
-function var_0_0._onDragBegin(arg_6_0)
-	arg_6_0._audioScroll:onDragBegin()
+function CooperGarlandLevelView:_onDragBegin()
+	self._audioScroll:onDragBegin()
 end
 
-function var_0_0._onDragEnd(arg_7_0)
-	arg_7_0._audioScroll:onDragEnd()
+function CooperGarlandLevelView:_onDragEnd()
+	self._audioScroll:onDragEnd()
 end
 
-function var_0_0._onClickDown(arg_8_0)
-	arg_8_0._audioScroll:onClickDown()
+function CooperGarlandLevelView:_onClickDown()
+	self._audioScroll:onClickDown()
 end
 
-function var_0_0._onInfoUpdate(arg_9_0)
-	arg_9_0:refreshExtraEpisode()
+function CooperGarlandLevelView:_onInfoUpdate()
+	self:refreshExtraEpisode()
 end
 
-function var_0_0._onClickEpisode(arg_10_0, arg_10_1, arg_10_2)
-	if arg_10_0.actId ~= arg_10_1 then
+function CooperGarlandLevelView:_onClickEpisode(actId, episodeId)
+	if self.actId ~= actId then
 		return
 	end
 
-	arg_10_0:onFocusEnd(arg_10_2)
+	self:onFocusEnd(episodeId)
 end
 
-function var_0_0._onFirstFinishEpisode(arg_11_0, arg_11_1, arg_11_2)
-	if arg_11_0.actId ~= arg_11_1 then
+function CooperGarlandLevelView:_onFirstFinishEpisode(actId, episodeId)
+	if self.actId ~= actId then
 		return
 	end
 
-	arg_11_0:focusNewestLevelItem()
+	self:focusNewestLevelItem()
 
-	arg_11_0._waitFinishAnimEpisode = arg_11_2
+	self._waitFinishAnimEpisode = episodeId
 
-	arg_11_0:playEpisodeFinishAnim()
+	self:playEpisodeFinishAnim()
 end
 
-function var_0_0._editableInitView(arg_12_0)
-	arg_12_0.actId = CooperGarlandModel.instance:getAct192Id()
-	arg_12_0._taskAnimator = gohelper.findChild(arg_12_0.viewGO, "#btn_Task/ani"):GetComponentInChildren(typeof(UnityEngine.Animator))
-	arg_12_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_12_0._gostoryPath)
-	arg_12_0._touch = SLFramework.UGUI.UIClickListener.Get(arg_12_0._gostoryPath)
-	arg_12_0._scrollStory = arg_12_0._gostoryPath:GetComponent(gohelper.Type_ScrollRect)
-	arg_12_0._audioScroll = MonoHelper.addLuaComOnceToGo(arg_12_0._gostoryPath, DungeonMapEpisodeAudio, arg_12_0._scrollStory)
-	arg_12_0._transstoryScroll = arg_12_0._gostoryScroll.transform
-	arg_12_0._pathAnimator = gohelper.findChildAnim(arg_12_0.viewGO, "#go_storyPath/#go_storyScroll/path/path_2")
-	arg_12_0.openAnimComplete = nil
-	arg_12_0._waitFinishAnimEpisode = nil
-	arg_12_0._finishEpisodeIndex = nil
+function CooperGarlandLevelView:_editableInitView()
+	self.actId = CooperGarlandModel.instance:getAct192Id()
 
-	local var_12_0 = recthelper.getWidth(ViewMgr.instance:getUIRoot().transform)
+	local goTaskAnim = gohelper.findChild(self.viewGO, "#btn_Task/ani")
 
-	arg_12_0._offsetX = (var_12_0 - var_0_1) / 2
-	arg_12_0.minContentAnchorX = -recthelper.getWidth(arg_12_0._transstoryScroll) + var_12_0
+	self._taskAnimator = goTaskAnim:GetComponentInChildren(typeof(UnityEngine.Animator))
+	self._drag = SLFramework.UGUI.UIDragListener.Get(self._gostoryPath)
+	self._touch = SLFramework.UGUI.UIClickListener.Get(self._gostoryPath)
+	self._scrollStory = self._gostoryPath:GetComponent(gohelper.Type_ScrollRect)
+	self._audioScroll = MonoHelper.addLuaComOnceToGo(self._gostoryPath, DungeonMapEpisodeAudio, self._scrollStory)
+	self._transstoryScroll = self._gostoryScroll.transform
+	self._pathAnimator = gohelper.findChildAnim(self.viewGO, "#go_storyPath/#go_storyScroll/path/path_2")
+	self.openAnimComplete = nil
+	self._waitFinishAnimEpisode = nil
+	self._finishEpisodeIndex = nil
 
-	arg_12_0:_initLevelItem()
-	RedDotController.instance:addRedDot(arg_12_0._goreddot, RedDotEnum.DotNode.V2a7CooperGarlandTask, nil, arg_12_0._refreshRedDot, arg_12_0)
+	local width = recthelper.getWidth(ViewMgr.instance:getUIRoot().transform)
+
+	self._offsetX = (width - RIGHT_OFFSET) / 2
+
+	local scrollWidth = recthelper.getWidth(self._transstoryScroll)
+
+	self.minContentAnchorX = -scrollWidth + width
+
+	self:_initLevelItem()
+	RedDotController.instance:addRedDot(self._goreddot, RedDotEnum.DotNode.V2a7CooperGarlandTask, nil, self._refreshRedDot, self)
 end
 
-function var_0_0._initLevelItem(arg_13_0)
-	if arg_13_0._levelItemList then
+function CooperGarlandLevelView:_initLevelItem()
+	if self._levelItemList then
 		return
 	end
 
-	arg_13_0._levelItemList = {}
+	self._levelItemList = {}
 
-	local var_13_0 = arg_13_0.viewContainer:getSetting().otherRes[1]
-	local var_13_1 = CooperGarlandConfig.instance:getEpisodeIdList(arg_13_0.actId, true)
-	local var_13_2 = #var_13_1
-	local var_13_3 = arg_13_0._gostoryStages.transform
-	local var_13_4 = var_13_3.childCount
+	local levelItemPath = self.viewContainer:getSetting().otherRes[1]
+	local levelList = CooperGarlandConfig.instance:getEpisodeIdList(self.actId, true)
+	local levelCount = #levelList
+	local transStages = self._gostoryStages.transform
+	local levelNodeCount = transStages.childCount
 
-	if var_13_4 < var_13_2 then
-		logError(string.format("CooperGarlandLevelView:_initLevelItem error, level node not enough, has:%s, need:%s", var_13_4, var_13_2))
+	if levelNodeCount < levelCount then
+		logError(string.format("CooperGarlandLevelView:_initLevelItem error, level node not enough, has:%s, need:%s", levelNodeCount, levelCount))
 	end
 
-	local var_13_5 = 1
+	local gameIndex = 1
 
-	for iter_13_0 = 1, var_13_4 do
-		local var_13_6 = var_13_1[iter_13_0]
+	for i = 1, levelNodeCount do
+		local episodeId = levelList[i]
 
-		if var_13_6 then
-			local var_13_7 = var_13_3:GetChild(iter_13_0 - 1)
-			local var_13_8 = string.format("levelItem_%s", iter_13_0)
-			local var_13_9 = arg_13_0:getResInst(var_13_0, var_13_7.gameObject, var_13_8)
-			local var_13_10 = MonoHelper.addNoUpdateLuaComOnceToGo(var_13_9, CooperGarlandLevelItem)
+		if episodeId then
+			local levelItemNode = transStages:GetChild(i - 1)
+			local name = string.format("levelItem_%s", i)
+			local go = self:getResInst(levelItemPath, levelItemNode.gameObject, name)
+			local levelItem = MonoHelper.addNoUpdateLuaComOnceToGo(go, CooperGarlandLevelItem)
+			local hasGame = CooperGarlandConfig.instance:isGameEpisode(self.actId, episodeId)
 
-			if CooperGarlandConfig.instance:isGameEpisode(arg_13_0.actId, var_13_6) then
-				var_13_10:setData(arg_13_0.actId, var_13_6, iter_13_0, var_13_5)
+			if hasGame then
+				levelItem:setData(self.actId, episodeId, i, gameIndex)
 
-				var_13_5 = var_13_5 + 1
+				gameIndex = gameIndex + 1
 			else
-				var_13_10:setData(arg_13_0.actId, var_13_6, iter_13_0)
+				levelItem:setData(self.actId, episodeId, i)
 			end
 
-			table.insert(arg_13_0._levelItemList, var_13_10)
+			table.insert(self._levelItemList, levelItem)
 		end
 	end
 end
 
-function var_0_0.onUpdateParam(arg_14_0)
+function CooperGarlandLevelView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_15_0)
-	arg_15_0:refreshUI()
-	TaskDispatcher.runRepeat(arg_15_0.refreshTime, arg_15_0, TimeUtil.OneMinuteSecond)
-	arg_15_0:focusNewestLevelItem()
+function CooperGarlandLevelView:onOpen()
+	self:refreshUI()
+	TaskDispatcher.runRepeat(self.refreshTime, self, TimeUtil.OneMinuteSecond)
+	self:focusNewestLevelItem()
 
-	local var_15_0 = 0
+	local pathIndex = 0
 
-	for iter_15_0, iter_15_1 in ipairs(arg_15_0._levelItemList) do
-		if CooperGarlandModel.instance:isFinishedEpisode(arg_15_0.actId, iter_15_1.episodeId) then
-			var_15_0 = iter_15_1.index
+	for _, episodeItem in ipairs(self._levelItemList) do
+		local isFinished = CooperGarlandModel.instance:isFinishedEpisode(self.actId, episodeItem.episodeId)
+
+		if isFinished then
+			pathIndex = episodeItem.index
 		end
 	end
 
-	arg_15_0:_playPathAnim(var_15_0, false)
+	self:_playPathAnim(pathIndex, false)
 end
 
-function var_0_0.getNewestLevelItem(arg_16_0)
-	local var_16_0 = arg_16_0._levelItemList[1]
-	local var_16_1 = CooperGarlandModel.instance:getNewestEpisodeId(arg_16_0.actId)
+function CooperGarlandLevelView:getNewestLevelItem()
+	local result = self._levelItemList[1]
+	local newestEpisodeId = CooperGarlandModel.instance:getNewestEpisodeId(self.actId)
 
-	for iter_16_0, iter_16_1 in ipairs(arg_16_0._levelItemList) do
-		if iter_16_1.episodeId == var_16_1 then
-			var_16_0 = iter_16_1
+	for _, episodeItem in ipairs(self._levelItemList) do
+		if episodeItem.episodeId == newestEpisodeId then
+			result = episodeItem
 
 			break
 		end
 	end
 
-	return var_16_0
+	return result
 end
 
-function var_0_0.refreshUI(arg_17_0)
-	arg_17_0:refreshTime()
-	arg_17_0:refreshExtraEpisode()
+function CooperGarlandLevelView:refreshUI()
+	self:refreshTime()
+	self:refreshExtraEpisode()
 end
 
-function var_0_0.refreshTime(arg_18_0)
-	local var_18_0, var_18_1 = CooperGarlandModel.instance:getAct192RemainTimeStr(arg_18_0.actId)
+function CooperGarlandLevelView:refreshTime()
+	local timeStr, isEnd = CooperGarlandModel.instance:getAct192RemainTimeStr(self.actId)
 
-	arg_18_0._txtlimittime.text = var_18_0
+	self._txtlimittime.text = timeStr
 
-	if var_18_1 then
-		TaskDispatcher.cancelTask(arg_18_0.refreshTime, arg_18_0)
+	if isEnd then
+		TaskDispatcher.cancelTask(self.refreshTime, self)
 	end
 end
 
-function var_0_0.refreshExtraEpisode(arg_19_0)
-	local var_19_0 = CooperGarlandConfig.instance:getExtraEpisode(arg_19_0.actId, true)
-	local var_19_1 = CooperGarlandModel.instance:isUnlockEpisode(arg_19_0.actId, var_19_0)
+function CooperGarlandLevelView:refreshExtraEpisode()
+	local extraEpisodeId = CooperGarlandConfig.instance:getExtraEpisode(self.actId, true)
+	local isUnlock = CooperGarlandModel.instance:isUnlockEpisode(self.actId, extraEpisodeId)
 
-	gohelper.setActive(arg_19_0._btnExtraEpisode, var_19_1)
+	gohelper.setActive(self._btnExtraEpisode, isUnlock)
 end
 
-function var_0_0._refreshRedDot(arg_20_0, arg_20_1)
-	arg_20_1:defaultRefreshDot()
+function CooperGarlandLevelView:_refreshRedDot(reddot)
+	reddot:defaultRefreshDot()
 
-	local var_20_0 = arg_20_1.show
+	local showRedDot = reddot.show
 
-	arg_20_0._taskAnimator:Play(var_20_0 and "loop" or "idle")
+	self._taskAnimator:Play(showRedDot and "loop" or "idle")
 end
 
-function var_0_0.focusNewestLevelItem(arg_21_0, arg_21_1)
-	local var_21_0 = arg_21_0:getNewestLevelItem()
+function CooperGarlandLevelView:focusNewestLevelItem(moveTime)
+	local levelItem = self:getNewestLevelItem()
 
-	if not var_21_0 then
+	if not levelItem then
 		return
 	end
 
-	local var_21_1 = recthelper.getAnchorX(var_21_0._go.transform.parent)
-	local var_21_2 = arg_21_0._offsetX - var_21_1
+	local contentAnchorX = recthelper.getAnchorX(levelItem._go.transform.parent)
+	local offsetX = self._offsetX - contentAnchorX
 
-	if var_21_2 > 0 then
-		var_21_2 = 0
-	elseif var_21_2 < arg_21_0.minContentAnchorX then
-		var_21_2 = arg_21_0.minContentAnchorX
+	if offsetX > 0 then
+		offsetX = 0
+	elseif offsetX < self.minContentAnchorX then
+		offsetX = self.minContentAnchorX
 	end
 
-	ZProj.TweenHelper.DOAnchorPosX(arg_21_0._transstoryScroll, var_21_2, arg_21_1 or 0, arg_21_0.onFocusEnd, arg_21_0)
+	ZProj.TweenHelper.DOAnchorPosX(self._transstoryScroll, offsetX, moveTime or 0, self.onFocusEnd, self)
 end
 
-function var_0_0.onFocusEnd(arg_22_0, arg_22_1)
-	if not arg_22_1 then
+function CooperGarlandLevelView:onFocusEnd(episodeId)
+	if not episodeId then
 		return
 	end
 
-	CooperGarlandController.instance:afterClickEpisode(arg_22_0.actId, arg_22_1)
+	CooperGarlandController.instance:afterClickEpisode(self.actId, episodeId)
 end
 
-function var_0_0.playEpisodeFinishAnim(arg_23_0)
-	if not arg_23_0.openAnimComplete or not arg_23_0._waitFinishAnimEpisode then
+function CooperGarlandLevelView:playEpisodeFinishAnim()
+	if not self.openAnimComplete or not self._waitFinishAnimEpisode then
 		return
 	end
 
-	for iter_23_0, iter_23_1 in ipairs(arg_23_0._levelItemList) do
-		if iter_23_1.episodeId == arg_23_0._waitFinishAnimEpisode then
-			arg_23_0._finishEpisodeIndex = iter_23_0
+	for i, episodeItem in ipairs(self._levelItemList) do
+		if episodeItem.episodeId == self._waitFinishAnimEpisode then
+			self._finishEpisodeIndex = i
 
-			iter_23_1:refreshUI("finish")
+			episodeItem:refreshUI("finish")
 			AudioMgr.instance:trigger(AudioEnum2_7.CooperGarland.play_ui_yuzhou_level_lit)
-			arg_23_0:_playPathAnim(arg_23_0._finishEpisodeIndex, true)
-			TaskDispatcher.runDelay(arg_23_0._playEpisodeUnlockAnim, arg_23_0, var_0_2)
+			self:_playPathAnim(self._finishEpisodeIndex, true)
+			TaskDispatcher.runDelay(self._playEpisodeUnlockAnim, self, PATH_ANIM_TIME)
 		end
 	end
 
-	arg_23_0.openAnimComplete = nil
-	arg_23_0._waitFinishAnimEpisode = nil
+	self.openAnimComplete = nil
+	self._waitFinishAnimEpisode = nil
 end
 
-function var_0_0._playPathAnim(arg_24_0, arg_24_1, arg_24_2)
-	if arg_24_1 > 0 then
-		arg_24_0._pathAnimator.speed = 1
+function CooperGarlandLevelView:_playPathAnim(index, needPlay)
+	if index > 0 then
+		self._pathAnimator.speed = 1
 
-		local var_24_0 = string.format("go%s", Mathf.Clamp(arg_24_1, 1, #arg_24_0._levelItemList))
+		local animName = string.format("go%s", Mathf.Clamp(index, 1, #self._levelItemList))
 
-		arg_24_0._pathAnimator:Play(var_24_0, 0, arg_24_2 and 0 or 1)
+		self._pathAnimator:Play(animName, 0, needPlay and 0 or 1)
 	else
-		arg_24_0._pathAnimator.speed = 0
+		self._pathAnimator.speed = 0
 
-		arg_24_0._pathAnimator:Play("go1", -1, 0)
+		self._pathAnimator:Play("go1", -1, 0)
 	end
 end
 
-function var_0_0._playEpisodeUnlockAnim(arg_25_0)
-	if not arg_25_0._finishEpisodeIndex then
+function CooperGarlandLevelView:_playEpisodeUnlockAnim()
+	if not self._finishEpisodeIndex then
 		return
 	end
 
-	local var_25_0 = arg_25_0._levelItemList[arg_25_0._finishEpisodeIndex + 1]
+	local nextEpisodeItem = self._levelItemList[self._finishEpisodeIndex + 1]
 
-	if var_25_0 then
-		var_25_0:refreshUI("unlock")
+	if nextEpisodeItem then
+		nextEpisodeItem:refreshUI("unlock")
 		AudioMgr.instance:trigger(AudioEnum2_7.CooperGarland.play_ui_yuzhou_level_unlock)
 	end
 
-	arg_25_0._finishEpisodeIndex = nil
+	self._finishEpisodeIndex = nil
 end
 
-function var_0_0.onClose(arg_26_0)
-	arg_26_0.openAnimComplete = nil
-	arg_26_0._waitFinishAnimEpisode = nil
-	arg_26_0._finishEpisodeIndex = nil
+function CooperGarlandLevelView:onClose()
+	self.openAnimComplete = nil
+	self._waitFinishAnimEpisode = nil
+	self._finishEpisodeIndex = nil
 
-	TaskDispatcher.cancelTask(arg_26_0.refreshTime, arg_26_0)
-	TaskDispatcher.cancelTask(arg_26_0._playEpisodeUnlockAnim, arg_26_0)
+	TaskDispatcher.cancelTask(self.refreshTime, self)
+	TaskDispatcher.cancelTask(self._playEpisodeUnlockAnim, self)
 end
 
-function var_0_0.onDestroyView(arg_27_0)
+function CooperGarlandLevelView:onDestroyView()
 	return
 end
 
-return var_0_0
+return CooperGarlandLevelView

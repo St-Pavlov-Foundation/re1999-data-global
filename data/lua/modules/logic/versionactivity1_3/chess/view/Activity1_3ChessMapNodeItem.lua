@@ -1,299 +1,306 @@
-﻿module("modules.logic.versionactivity1_3.chess.view.Activity1_3ChessMapNodeItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/chess/view/Activity1_3ChessMapNodeItem.lua
 
-local var_0_0 = class("Activity1_3ChessMapNodeItem", LuaCompBase)
+module("modules.logic.versionactivity1_3.chess.view.Activity1_3ChessMapNodeItem", package.seeall)
 
-var_0_0.prefabPath = "ui/viewres/versionactivity_1_3/v1a3_role2/v1a3_role2_mapviewstageitem.prefab"
+local Activity1_3ChessMapNodeItem = class("Activity1_3ChessMapNodeItem", LuaCompBase)
 
-local var_0_1 = {
+Activity1_3ChessMapNodeItem.prefabPath = "ui/viewres/versionactivity_1_3/v1a3_role2/v1a3_role2_mapviewstageitem.prefab"
+
+local nodeItemState = {
 	open = 2,
 	passIncompletly = 3,
 	lock = 1,
 	pass = 4
 }
-local var_0_2 = "#E3C479"
-local var_0_3 = "#FFFFFF"
+local unLockNodeColor = "#E3C479"
+local lockNodeColor = "#FFFFFF"
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._go = arg_1_1
-	arg_1_0._goRoot = gohelper.findChild(arg_1_1, "Root")
-	arg_1_0._imagePoint = gohelper.findChildImage(arg_1_1, "Root/#image_Point")
-	arg_1_0._imageStageFinishedBG = gohelper.findChildImage(arg_1_1, "Root/unlock/#image_StageFinishedBG")
-	arg_1_0._txtStageName = gohelper.findChildText(arg_1_1, "Root/unlock/Info/#txt_StageName")
-	arg_1_0._txtStageNum = gohelper.findChildText(arg_1_1, "Root/unlock/Info/#txt_StageName/#txt_StageNum")
-	arg_1_0._imageNoStar = gohelper.findChildImage(arg_1_1, "Root/unlock/Info/#txt_StageName/#image_NoStar")
-	arg_1_0._imageHasStar = gohelper.findChildImage(arg_1_1, "Root/unlock/Info/#txt_StageName/#image_Star")
-	arg_1_0._btnClick = gohelper.findChildClick(arg_1_1, "Root/unlock/#btn_Click")
-	arg_1_0._btnReview = gohelper.findChildButtonWithAudio(arg_1_1, "Root/unlock/Info/#txt_StageName/#btn_Review")
-	arg_1_0._goUnLock = gohelper.findChild(arg_1_1, "Root/unlock")
-	arg_1_0._goChess = gohelper.findChild(arg_1_1, "Root/unlock/image_chess")
+function Activity1_3ChessMapNodeItem:init(go)
+	self._go = go
+	self._goRoot = gohelper.findChild(go, "Root")
+	self._imagePoint = gohelper.findChildImage(go, "Root/#image_Point")
+	self._imageStageFinishedBG = gohelper.findChildImage(go, "Root/unlock/#image_StageFinishedBG")
+	self._txtStageName = gohelper.findChildText(go, "Root/unlock/Info/#txt_StageName")
+	self._txtStageNum = gohelper.findChildText(go, "Root/unlock/Info/#txt_StageName/#txt_StageNum")
+	self._imageNoStar = gohelper.findChildImage(go, "Root/unlock/Info/#txt_StageName/#image_NoStar")
+	self._imageHasStar = gohelper.findChildImage(go, "Root/unlock/Info/#txt_StageName/#image_Star")
+	self._btnClick = gohelper.findChildClick(go, "Root/unlock/#btn_Click")
+	self._btnReview = gohelper.findChildButtonWithAudio(go, "Root/unlock/Info/#txt_StageName/#btn_Review")
+	self._goUnLock = gohelper.findChild(go, "Root/unlock")
+	self._goChess = gohelper.findChild(go, "Root/unlock/image_chess")
 
-	local var_1_0 = gohelper.findChild(arg_1_1, "Root/unlock/image_chess/ani")
-	local var_1_1 = typeof(UnityEngine.Animator)
+	local gochessAni = gohelper.findChild(go, "Root/unlock/image_chess/ani")
+	local animatorType = typeof(UnityEngine.Animator)
 
-	arg_1_0._nodeItemAnimator = arg_1_1:GetComponent(var_1_1)
-	arg_1_0._chessAnimator = var_1_0:GetComponent(var_1_1)
+	self._nodeItemAnimator = go:GetComponent(animatorType)
+	self._chessAnimator = gochessAni:GetComponent(animatorType)
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._btnClick:AddClickListener(arg_2_0._btnClickOnClick, arg_2_0)
-	arg_2_0._btnReview:AddClickListener(arg_2_0._btnReviewOnClick, arg_2_0)
+function Activity1_3ChessMapNodeItem:addEventListeners()
+	self._btnClick:AddClickListener(self._btnClickOnClick, self)
+	self._btnReview:AddClickListener(self._btnReviewOnClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	if arg_3_0._btnClick then
-		arg_3_0._btnClick:RemoveClickListener()
-		arg_3_0._btnReview:RemoveClickListener()
+function Activity1_3ChessMapNodeItem:removeEventListeners()
+	if self._btnClick then
+		self._btnClick:RemoveClickListener()
+		self._btnReview:RemoveClickListener()
 	end
 end
 
-function var_0_0._btnClickOnClick(arg_4_0)
-	if not arg_4_0._config then
+function Activity1_3ChessMapNodeItem:_btnClickOnClick()
+	if not self._config then
 		return
 	end
 
-	if not arg_4_0._clickCallback then
+	if not self._clickCallback then
 		return
 	end
 
-	arg_4_0._clickCallback(arg_4_0._clickCbObj, arg_4_0._config.id)
+	self._clickCallback(self._clickCbObj, self._config.id)
 end
 
-function var_0_0._btnReviewOnClick(arg_5_0)
-	if arg_5_0._config then
-		Activity1_3ChessController.instance:openStoryView(arg_5_0._config.id)
+function Activity1_3ChessMapNodeItem:_btnReviewOnClick()
+	if self._config then
+		Activity1_3ChessController.instance:openStoryView(self._config.id)
 	end
 end
 
-function var_0_0.onUpdateMO(arg_6_0, arg_6_1)
+function Activity1_3ChessMapNodeItem:onUpdateMO(mo)
 	return
 end
 
-function var_0_0.onSelect(arg_7_0, arg_7_1)
+function Activity1_3ChessMapNodeItem:onSelect(isSelect)
 	return
 end
 
-function var_0_0.setCfg(arg_8_0, arg_8_1)
-	arg_8_0._config = arg_8_1
-	arg_8_0._isLock = true
+function Activity1_3ChessMapNodeItem:setCfg(cfg)
+	self._config = cfg
+	self._isLock = true
 end
 
-function var_0_0.setClickCallback(arg_9_0, arg_9_1, arg_9_2)
-	arg_9_0._clickCallback = arg_9_1
-	arg_9_0._clickCbObj = arg_9_2
+function Activity1_3ChessMapNodeItem:setClickCallback(callback, obj)
+	self._clickCallback = callback
+	self._clickCbObj = obj
 end
 
-function var_0_0._checkNodeItemState(arg_10_0)
-	local var_10_0 = Activity122Model.instance:getEpisodeData(arg_10_0._config.id)
+function Activity1_3ChessMapNodeItem:_checkNodeItemState()
+	local episodeData = Activity122Model.instance:getEpisodeData(self._config.id)
 
-	if var_10_0 then
-		if var_10_0.star == 2 then
-			return var_0_1.pass
-		elseif var_10_0.star == 1 then
-			return var_0_1.passIncompletly
+	if episodeData then
+		if episodeData.star == 2 then
+			return nodeItemState.pass
+		elseif episodeData.star == 1 then
+			return nodeItemState.passIncompletly
 		else
-			return var_0_1.open
+			return nodeItemState.open
 		end
 	end
 
-	if arg_10_0._config.preEpisode == 0 or Activity122Model.instance:isEpisodeClear(arg_10_0._config.preEpisode) and Activity1_3ChessController.isOpenDay(arg_10_0._config.id) then
-		return var_0_1.open
+	if self._config.preEpisode == 0 or Activity122Model.instance:isEpisodeClear(self._config.preEpisode) and Activity1_3ChessController.isOpenDay(self._config.id) then
+		return nodeItemState.open
 	else
-		return var_0_1.lock
+		return nodeItemState.lock
 	end
 end
 
-function var_0_0.refreshUI(arg_11_0)
-	if not arg_11_0._config then
-		gohelper.setActive(arg_11_0._goRoot, false)
+function Activity1_3ChessMapNodeItem:refreshUI()
+	if not self._config then
+		gohelper.setActive(self._goRoot, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_11_0._goRoot, true)
+	gohelper.setActive(self._goRoot, true)
 
-	local var_11_0 = arg_11_0:_checkNodeItemState()
+	local nodeState = self:_checkNodeItemState()
 
-	arg_11_0:_refreshNodeStateView(var_11_0)
+	self:_refreshNodeStateView(nodeState)
 
-	arg_11_0._txtStageName.text = arg_11_0._config.name
-	arg_11_0._txtStageNum.text = arg_11_0._config.orderId
+	self._txtStageName.text = self._config.name
+	self._txtStageNum.text = self._config.orderId
 
-	arg_11_0:_refreshChess()
+	self:_refreshChess()
 end
 
-function var_0_0._refreshNodeStateView(arg_12_0, arg_12_1)
-	if arg_12_0._nodeStateViewAction == nil then
-		arg_12_0._nodeStateViewAction = {
-			[var_0_1.lock] = arg_12_0._lockUI,
-			[var_0_1.open] = arg_12_0._unLockUI,
-			[var_0_1.passIncompletly] = arg_12_0._refreshPassIncompletlyView,
-			[var_0_1.pass] = arg_12_0._refreshPassView
+function Activity1_3ChessMapNodeItem:_refreshNodeStateView(state)
+	if self._nodeStateViewAction == nil then
+		self._nodeStateViewAction = {
+			[nodeItemState.lock] = self._lockUI,
+			[nodeItemState.open] = self._unLockUI,
+			[nodeItemState.passIncompletly] = self._refreshPassIncompletlyView,
+			[nodeItemState.pass] = self._refreshPassView
 		}
 	end
 
-	arg_12_0._nodeStateViewAction[arg_12_1](arg_12_0)
-	UISpriteSetMgr.instance:setActivity1_3ChessSprite(arg_12_0._imagePoint, arg_12_0:_getNodePointSprite(arg_12_1))
+	self._nodeStateViewAction[state](self)
+	UISpriteSetMgr.instance:setActivity1_3ChessSprite(self._imagePoint, self:_getNodePointSprite(state))
 
-	if arg_12_1 == var_0_1.lock then
+	if state == nodeItemState.lock then
 		return
 	end
 
-	local var_12_0 = Activity122Model.instance:getPlayerCacheData()
-	local var_12_1 = arg_12_1 == var_0_1.open and not var_12_0["isEpisodeUnlock_" .. arg_12_0._config.id]
+	local playerCacheData = Activity122Model.instance:getPlayerCacheData()
+	local needShowUnlockAni = state == nodeItemState.open and not playerCacheData["isEpisodeUnlock_" .. self._config.id]
+	local needShowPassAni = (state == nodeItemState.pass or state == nodeItemState.passIncompletly) and not playerCacheData["isEpisodePass_" .. self._config.id]
 
-	if (arg_12_1 == var_0_1.pass or arg_12_1 == var_0_1.passIncompletly) and not var_12_0["isEpisodePass_" .. arg_12_0._config.id] then
+	if needShowPassAni then
 		Activity1_3ChessController.instance:dispatchEvent(Activity1_3ChessEvent.SetNodePathEffectToPassNode)
-		arg_12_0:delayPlayNodePassAni(0.8)
+		self:delayPlayNodePassAni(0.8)
 	end
 
-	if var_12_1 then
-		gohelper.setActive(arg_12_0._goRoot, false)
-		arg_12_0:delayPlayNodeUnlockAni(1.5)
+	if needShowUnlockAni then
+		gohelper.setActive(self._goRoot, false)
+		self:delayPlayNodeUnlockAni(1.5)
 	end
 end
 
-function var_0_0._getNodePointSprite(arg_13_0, arg_13_1, arg_13_2)
-	if arg_13_0._nodeState2SpriteMap == nil then
-		arg_13_0._nodeState2SpriteMap = {
-			[var_0_1.lock] = JiaLaBoNaEnum.StatgePiontSpriteName.UnFinished,
-			[var_0_1.open] = Activity1_3ChessEnum.SpriteName.NodeUnFinished,
-			[var_0_1.passIncompletly] = Activity1_3ChessEnum.SpriteName.NodeFinished,
-			[var_0_1.pass] = Activity1_3ChessEnum.SpriteName.NodeFinished
+function Activity1_3ChessMapNodeItem:_getNodePointSprite(state, forceSelect)
+	if self._nodeState2SpriteMap == nil then
+		self._nodeState2SpriteMap = {
+			[nodeItemState.lock] = JiaLaBoNaEnum.StatgePiontSpriteName.UnFinished,
+			[nodeItemState.open] = Activity1_3ChessEnum.SpriteName.NodeUnFinished,
+			[nodeItemState.passIncompletly] = Activity1_3ChessEnum.SpriteName.NodeFinished,
+			[nodeItemState.pass] = Activity1_3ChessEnum.SpriteName.NodeFinished
 		}
 	end
 
-	local var_13_0 = arg_13_0._nodeState2SpriteMap[arg_13_1]
-	local var_13_1 = Activity122Model.instance:getCurEpisodeId()
-	local var_13_2 = arg_13_0._config.id == var_13_1 or arg_13_2
+	local spriteName = self._nodeState2SpriteMap[state]
+	local lastEpisodeId = Activity122Model.instance:getCurEpisodeId()
+	local isCurSelectedNode = self._config.id == lastEpisodeId or forceSelect
 
-	if arg_13_2 ~= nil then
-		var_13_2 = arg_13_2
+	if forceSelect ~= nil then
+		isCurSelectedNode = forceSelect
 	end
 
-	var_13_0 = var_13_2 and Activity1_3ChessEnum.SpriteName.NodeCurrent or var_13_0
+	spriteName = isCurSelectedNode and Activity1_3ChessEnum.SpriteName.NodeCurrent or spriteName
 
-	return var_13_0
+	return spriteName
 end
 
-function var_0_0._refreshPassView(arg_14_0)
-	gohelper.setActive(arg_14_0._goUnLock, true)
-	gohelper.setActive(arg_14_0._btnReview.gameObject, true)
-	gohelper.setActive(arg_14_0._imageStageFinishedBG, true)
-	SLFramework.UGUI.GuiHelper.SetColor(arg_14_0._imagePoint, var_0_2)
-	arg_14_0:_refreshStarState(true)
+function Activity1_3ChessMapNodeItem:_refreshPassView()
+	gohelper.setActive(self._goUnLock, true)
+	gohelper.setActive(self._btnReview.gameObject, true)
+	gohelper.setActive(self._imageStageFinishedBG, true)
+	SLFramework.UGUI.GuiHelper.SetColor(self._imagePoint, unLockNodeColor)
+	self:_refreshStarState(true)
 end
 
-function var_0_0._refreshPassIncompletlyView(arg_15_0)
-	gohelper.setActive(arg_15_0._goUnLock, true)
-	gohelper.setActive(arg_15_0._imageStageFinishedBG, true)
-	gohelper.setActive(arg_15_0._btnReview.gameObject, true)
-	SLFramework.UGUI.GuiHelper.SetColor(arg_15_0._imagePoint, var_0_2)
-	arg_15_0:_refreshStarState(false)
+function Activity1_3ChessMapNodeItem:_refreshPassIncompletlyView()
+	gohelper.setActive(self._goUnLock, true)
+	gohelper.setActive(self._imageStageFinishedBG, true)
+	gohelper.setActive(self._btnReview.gameObject, true)
+	SLFramework.UGUI.GuiHelper.SetColor(self._imagePoint, unLockNodeColor)
+	self:_refreshStarState(false)
 end
 
-function var_0_0._lockUI(arg_16_0)
-	gohelper.setActive(arg_16_0._goUnLock, false)
-	gohelper.setActive(arg_16_0._btnReview.gameObject, false)
-	SLFramework.UGUI.GuiHelper.SetColor(arg_16_0._imagePoint, var_0_3)
+function Activity1_3ChessMapNodeItem:_lockUI()
+	gohelper.setActive(self._goUnLock, false)
+	gohelper.setActive(self._btnReview.gameObject, false)
+	SLFramework.UGUI.GuiHelper.SetColor(self._imagePoint, lockNodeColor)
 end
 
-function var_0_0._unLockUI(arg_17_0)
-	gohelper.setActive(arg_17_0._goUnLock, true)
-	gohelper.setActive(arg_17_0._imageStageFinishedBG, false)
-	gohelper.setActive(arg_17_0._btnReview.gameObject, false)
-	SLFramework.UGUI.GuiHelper.SetColor(arg_17_0._imagePoint, var_0_2)
-	arg_17_0:_refreshStarState(false)
+function Activity1_3ChessMapNodeItem:_unLockUI()
+	gohelper.setActive(self._goUnLock, true)
+	gohelper.setActive(self._imageStageFinishedBG, false)
+	gohelper.setActive(self._btnReview.gameObject, false)
+	SLFramework.UGUI.GuiHelper.SetColor(self._imagePoint, unLockNodeColor)
+	self:_refreshStarState(false)
 end
 
-function var_0_0._refreshStarState(arg_18_0, arg_18_1)
-	gohelper.setActive(arg_18_0._imageNoStar.gameObject, not arg_18_1)
-	gohelper.setActive(arg_18_0._imageHasStar.gameObject, arg_18_1)
+function Activity1_3ChessMapNodeItem:_refreshStarState(star)
+	gohelper.setActive(self._imageNoStar.gameObject, not star)
+	gohelper.setActive(self._imageHasStar.gameObject, star)
 end
 
-function var_0_0._refreshChess(arg_19_0)
-	local var_19_0 = Activity122Model.instance:getCurEpisodeId()
+function Activity1_3ChessMapNodeItem:_refreshChess()
+	local lastEpisodeId = Activity122Model.instance:getCurEpisodeId()
 
-	if var_19_0 == 0 then
-		gohelper.setActive(arg_19_0._goChess, arg_19_0._config.id == 1)
+	if lastEpisodeId == 0 then
+		gohelper.setActive(self._goChess, self._config.id == 1)
 	else
-		gohelper.setActive(arg_19_0._goChess, arg_19_0._config.id == var_19_0)
+		gohelper.setActive(self._goChess, self._config.id == lastEpisodeId)
 	end
 end
 
-function var_0_0.delayPlayNodePassAni(arg_20_0, arg_20_1)
-	arg_20_0._nodeStateViewAction[var_0_1.open](arg_20_0)
+function Activity1_3ChessMapNodeItem:delayPlayNodePassAni(delay)
+	self._nodeStateViewAction[nodeItemState.open](self)
 
-	arg_20_1 = arg_20_1 or 0.5
+	delay = delay or 0.5
 
-	TaskDispatcher.runDelay(arg_20_0.playNodePassAni, arg_20_0, arg_20_1)
+	TaskDispatcher.runDelay(self.playNodePassAni, self, delay)
 end
 
-function var_0_0.delayPlayNodeUnlockAni(arg_21_0, arg_21_1)
-	gohelper.setActive(arg_21_0._goRoot, false)
+function Activity1_3ChessMapNodeItem:delayPlayNodeUnlockAni(delay)
+	gohelper.setActive(self._goRoot, false)
 
-	arg_21_1 = arg_21_1 or 0.5
+	delay = delay or 0.5
 
-	TaskDispatcher.runDelay(arg_21_0.playNodeUnlockAni, arg_21_0, arg_21_1)
+	TaskDispatcher.runDelay(self.playNodeUnlockAni, self, delay)
 end
 
-function var_0_0.playNodePassAni(arg_22_0)
-	Activity122Model.instance:getPlayerCacheData()["isEpisodePass_" .. arg_22_0._config.id] = true
+function Activity1_3ChessMapNodeItem:playNodePassAni()
+	local playerCacheData = Activity122Model.instance:getPlayerCacheData()
+
+	playerCacheData["isEpisodePass_" .. self._config.id] = true
 
 	Activity122Model.instance:saveCacheData()
-	gohelper.setActive(arg_22_0._imageStageFinishedBG.gameObject, true)
+	gohelper.setActive(self._imageStageFinishedBG.gameObject, true)
 
-	local var_22_0 = arg_22_0:_checkNodeItemState()
+	local nodeState = self:_checkNodeItemState()
 
-	arg_22_0:_refreshStarState(var_22_0 == var_0_1.pass)
-	arg_22_0._nodeItemAnimator:Play("finish")
+	self:_refreshStarState(nodeState == nodeItemState.pass)
+	self._nodeItemAnimator:Play("finish")
 	Activity1_3ChessController.instance:dispatchEvent(Activity1_3ChessEvent.ShowPassEpisodeEffect)
-	TaskDispatcher.runDelay(arg_22_0.refreshUI, arg_22_0, 0.8)
+	TaskDispatcher.runDelay(self.refreshUI, self, 0.8)
 	AudioMgr.instance:trigger(AudioEnum.Va3Aact120.play_ui_molu_jlbn_level_pass)
 end
 
-function var_0_0.playNodeUnlockAni(arg_23_0)
-	Activity122Model.instance:getPlayerCacheData()["isEpisodeUnlock_" .. arg_23_0._config.id] = true
+function Activity1_3ChessMapNodeItem:playNodeUnlockAni()
+	local playerCacheData = Activity122Model.instance:getPlayerCacheData()
+
+	playerCacheData["isEpisodeUnlock_" .. self._config.id] = true
 
 	Activity122Model.instance:saveCacheData()
-	gohelper.setActive(arg_23_0._goRoot, true)
-	arg_23_0._nodeItemAnimator:Play("unlock")
+	gohelper.setActive(self._goRoot, true)
+	self._nodeItemAnimator:Play("unlock")
 	AudioMgr.instance:trigger(AudioEnum.RoleChessGame1_3Common.NewEpisodeUnlock)
 end
 
-function var_0_0.playAppearAni(arg_24_0, arg_24_1)
-	gohelper.setActive(arg_24_0._goChess, true)
+function Activity1_3ChessMapNodeItem:playAppearAni(fromId)
+	gohelper.setActive(self._goChess, true)
 
-	local var_24_0 = Activity122Model.instance:getCurEpisodeId()
-	local var_24_1 = arg_24_1 < arg_24_0._config.id and "open_right" or "open_left"
+	local curId = Activity122Model.instance:getCurEpisodeId()
+	local aniName = fromId < self._config.id and "open_right" or "open_left"
 
-	arg_24_0._chessAnimator:Play(var_24_1)
+	self._chessAnimator:Play(aniName)
 
-	local var_24_2 = arg_24_0:_checkNodeItemState()
+	local nodeState = self:_checkNodeItemState()
 
-	UISpriteSetMgr.instance:setActivity1_3ChessSprite(arg_24_0._imagePoint, arg_24_0:_getNodePointSprite(var_24_2, true))
+	UISpriteSetMgr.instance:setActivity1_3ChessSprite(self._imagePoint, self:_getNodePointSprite(nodeState, true))
 end
 
-function var_0_0.playDisAppearAni(arg_25_0, arg_25_1)
-	gohelper.setActive(arg_25_0._goChess, true)
+function Activity1_3ChessMapNodeItem:playDisAppearAni(targetId)
+	gohelper.setActive(self._goChess, true)
 
-	local var_25_0 = Activity122Model.instance:getCurEpisodeId()
-	local var_25_1 = arg_25_1 > arg_25_0._config.id and "close_right" or "close_left"
+	local curId = Activity122Model.instance:getCurEpisodeId()
+	local aniName = targetId > self._config.id and "close_right" or "close_left"
 
-	arg_25_0._chessAnimator:Play(var_25_1)
+	self._chessAnimator:Play(aniName)
 
-	local var_25_2 = arg_25_0:_checkNodeItemState()
+	local nodeState = self:_checkNodeItemState()
 
-	UISpriteSetMgr.instance:setActivity1_3ChessSprite(arg_25_0._imagePoint, arg_25_0:_getNodePointSprite(var_25_2, false))
+	UISpriteSetMgr.instance:setActivity1_3ChessSprite(self._imagePoint, self:_getNodePointSprite(nodeState, false))
 end
 
-function var_0_0.onDestroyView(arg_26_0)
-	arg_26_0._clickCallback = nil
-	arg_26_0._clickCbObj = nil
+function Activity1_3ChessMapNodeItem:onDestroyView()
+	self._clickCallback = nil
+	self._clickCbObj = nil
 
-	arg_26_0:removeEventListeners()
-	TaskDispatcher.cancelTask(arg_26_0.playNodePassAni, arg_26_0)
-	TaskDispatcher.cancelTask(arg_26_0.playNodeUnlockAni, arg_26_0)
-	TaskDispatcher.cancelTask(arg_26_0.refreshUI, arg_26_0)
+	self:removeEventListeners()
+	TaskDispatcher.cancelTask(self.playNodePassAni, self)
+	TaskDispatcher.cancelTask(self.playNodeUnlockAni, self)
+	TaskDispatcher.cancelTask(self.refreshUI, self)
 end
 
-return var_0_0
+return Activity1_3ChessMapNodeItem

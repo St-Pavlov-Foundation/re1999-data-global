@@ -1,19 +1,21 @@
-﻿module("modules.logic.versionactivity1_9.common.AudioEnum1_9", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/common/AudioEnum1_9.lua
 
-local var_0_0 = AudioEnum
+module("modules.logic.versionactivity1_9.common.AudioEnum1_9", package.seeall)
 
-var_0_0.VersionActivity1_9Store = {
+local AudioEnum = AudioEnum
+
+AudioEnum.VersionActivity1_9Store = {
 	play_ui_jinye_chess_talk = 20170010,
 	play_ui_jinye_click_stage = 20170011,
 	stop_ui_jinye_chess_talk = 20170012,
 	play_ui_jinye_chess_enter = 20170009
 }
-var_0_0.VersionActivity1_9Enter = {
+AudioEnum.VersionActivity1_9Enter = {
 	play_ui_jinye_open = 20190004,
 	play_ui_jinye_unfold = 20190021
 }
 
-local var_0_1 = {
+local bgm = {
 	ToughBattle = 3200140,
 	role_activity_kakania = 3200139,
 	Act1_9DungeonBgm = 3200137,
@@ -24,7 +26,7 @@ local var_0_1 = {
 	RougeMain = 3200143,
 	FairyLand = 3200063
 }
-local var_0_2 = {
+local UI = {
 	OpenRewardNoticeView = 20190380,
 	AddRougeDLC = 25002406,
 	LossCollectionViewOpen = 20190340,
@@ -164,24 +166,24 @@ local var_0_2 = {
 	EquipedNormalLimiterBuff = 20211707
 }
 
-for iter_0_0, iter_0_1 in pairs(var_0_1) do
-	if isDebugBuild and var_0_0.Bgm[iter_0_0] then
-		logError("AudioEnum.Bgm重复定义" .. iter_0_0)
+for key, value in pairs(bgm) do
+	if isDebugBuild and AudioEnum.Bgm[key] then
+		logError("AudioEnum.Bgm重复定义" .. key)
 	end
 
-	var_0_0.Bgm[iter_0_0] = iter_0_1
+	AudioEnum.Bgm[key] = value
 end
 
-for iter_0_2, iter_0_3 in pairs(var_0_2) do
-	if isDebugBuild and var_0_0.UI[iter_0_2] then
-		logError("AudioEnum.UI重复定义" .. iter_0_2)
+for key, value in pairs(UI) do
+	if isDebugBuild and AudioEnum.UI[key] then
+		logError("AudioEnum.UI重复定义" .. key)
 	end
 
-	var_0_0.UI[iter_0_2] = iter_0_3
+	AudioEnum.UI[key] = value
 end
 
-function var_0_0.activate()
+function AudioEnum.activate()
 	return
 end
 
-return var_0_0
+return AudioEnum

@@ -1,296 +1,303 @@
-﻿module("modules.logic.rouge.view.RougeCollectionEnchantView", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeCollectionEnchantView.lua
 
-local var_0_0 = class("RougeCollectionEnchantView", BaseView)
+module("modules.logic.rouge.view.RougeCollectionEnchantView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gotips = gohelper.findChild(arg_1_0.viewGO, "left/#go_tips")
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "left/#go_tips/#simage_icon")
-	arg_1_0._txtcollectionname = gohelper.findChildText(arg_1_0.viewGO, "left/#go_tips/#txt_collectionname")
-	arg_1_0._gocollectiondesccontent = gohelper.findChild(arg_1_0.viewGO, "left/#go_tips/#scroll_collectiondesc/Viewport/#go_collectiondesccontent")
-	arg_1_0._gocollectiondescitem = gohelper.findChild(arg_1_0.viewGO, "left/#go_tips/#scroll_collectiondesc/Viewport/#go_collectiondesccontent/#go_collectiondescitem")
-	arg_1_0._gotags = gohelper.findChild(arg_1_0.viewGO, "left/#go_tips/#go_tags")
-	arg_1_0._gotagitem = gohelper.findChild(arg_1_0.viewGO, "left/#go_tips/#go_tags/#go_tagitem")
-	arg_1_0._goholetool = gohelper.findChild(arg_1_0.viewGO, "left/#go_tips/#go_holetool")
-	arg_1_0._goholeitem = gohelper.findChild(arg_1_0.viewGO, "left/#go_tips/#go_holetool/#go_holeitem")
-	arg_1_0._btnlast = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left/#go_tips/#btn_last")
-	arg_1_0._btnnext = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left/#go_tips/#btn_next")
-	arg_1_0._goshapecontainer = gohelper.findChild(arg_1_0.viewGO, "left/#go_tips/#go_shapecontainer")
-	arg_1_0._goshapecell = gohelper.findChild(arg_1_0.viewGO, "left/#go_tips/#go_shapecontainer/#go_shapecell")
-	arg_1_0._gounselected = gohelper.findChild(arg_1_0.viewGO, "middle/#go_unselected")
-	arg_1_0._goenchantempty = gohelper.findChild(arg_1_0.viewGO, "right/#go_enchantempty")
-	arg_1_0._scrolldesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "middle/#scroll_desc")
-	arg_1_0._simageenchanticon = gohelper.findChildSingleImage(arg_1_0.viewGO, "middle/#simage_enchanticon")
-	arg_1_0._goenchantcontent = gohelper.findChild(arg_1_0.viewGO, "middle/#scroll_desc/Viewport/#go_enchantcontent")
-	arg_1_0._txtenchantdesc = gohelper.findChildText(arg_1_0.viewGO, "middle/#scroll_desc/Viewport/#go_enchantcontent/#txt_enchantdesc")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "middle/#txt_name")
-	arg_1_0._gotagcontents = gohelper.findChild(arg_1_0.viewGO, "left/#go_tips/#go_tagcontents")
-	arg_1_0._gotagnameitem = gohelper.findChild(arg_1_0.viewGO, "left/#go_tips/#go_tagcontents/#go_tagnameitem")
+local RougeCollectionEnchantView = class("RougeCollectionEnchantView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeCollectionEnchantView:onInitView()
+	self._gotips = gohelper.findChild(self.viewGO, "left/#go_tips")
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "left/#go_tips/#simage_icon")
+	self._txtcollectionname = gohelper.findChildText(self.viewGO, "left/#go_tips/#txt_collectionname")
+	self._gocollectiondesccontent = gohelper.findChild(self.viewGO, "left/#go_tips/#scroll_collectiondesc/Viewport/#go_collectiondesccontent")
+	self._gocollectiondescitem = gohelper.findChild(self.viewGO, "left/#go_tips/#scroll_collectiondesc/Viewport/#go_collectiondesccontent/#go_collectiondescitem")
+	self._gotags = gohelper.findChild(self.viewGO, "left/#go_tips/#go_tags")
+	self._gotagitem = gohelper.findChild(self.viewGO, "left/#go_tips/#go_tags/#go_tagitem")
+	self._goholetool = gohelper.findChild(self.viewGO, "left/#go_tips/#go_holetool")
+	self._goholeitem = gohelper.findChild(self.viewGO, "left/#go_tips/#go_holetool/#go_holeitem")
+	self._btnlast = gohelper.findChildButtonWithAudio(self.viewGO, "left/#go_tips/#btn_last")
+	self._btnnext = gohelper.findChildButtonWithAudio(self.viewGO, "left/#go_tips/#btn_next")
+	self._goshapecontainer = gohelper.findChild(self.viewGO, "left/#go_tips/#go_shapecontainer")
+	self._goshapecell = gohelper.findChild(self.viewGO, "left/#go_tips/#go_shapecontainer/#go_shapecell")
+	self._gounselected = gohelper.findChild(self.viewGO, "middle/#go_unselected")
+	self._goenchantempty = gohelper.findChild(self.viewGO, "right/#go_enchantempty")
+	self._scrolldesc = gohelper.findChildScrollRect(self.viewGO, "middle/#scroll_desc")
+	self._simageenchanticon = gohelper.findChildSingleImage(self.viewGO, "middle/#simage_enchanticon")
+	self._goenchantcontent = gohelper.findChild(self.viewGO, "middle/#scroll_desc/Viewport/#go_enchantcontent")
+	self._txtenchantdesc = gohelper.findChildText(self.viewGO, "middle/#scroll_desc/Viewport/#go_enchantcontent/#txt_enchantdesc")
+	self._txtname = gohelper.findChildText(self.viewGO, "middle/#txt_name")
+	self._gotagcontents = gohelper.findChild(self.viewGO, "left/#go_tips/#go_tagcontents")
+	self._gotagnameitem = gohelper.findChild(self.viewGO, "left/#go_tips/#go_tagcontents/#go_tagnameitem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnlast:AddClickListener(arg_2_0._btnlastOnClick, arg_2_0)
-	arg_2_0._btnnext:AddClickListener(arg_2_0._btnnextOnClick, arg_2_0)
+function RougeCollectionEnchantView:addEvents()
+	self._btnlast:AddClickListener(self._btnlastOnClick, self)
+	self._btnnext:AddClickListener(self._btnnextOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnlast:RemoveClickListener()
-	arg_3_0._btnnext:RemoveClickListener()
+function RougeCollectionEnchantView:removeEvents()
+	self._btnlast:RemoveClickListener()
+	self._btnnext:RemoveClickListener()
 end
 
-local var_0_1 = 0.3
-local var_0_2 = 1
+local disInteractableBtnAlpha = 0.3
+local interactableBtnAlpha = 1
 
-function var_0_0._btnlastOnClick(arg_4_0)
+function RougeCollectionEnchantView:_btnlastOnClick()
 	RougeCollectionEnchantController.instance:switchCollection(false)
-	arg_4_0:updateSwitchBtnState()
-	arg_4_0:delay2RefreshInfo(var_0_0.DelayRefreshInfoTime)
-	arg_4_0._tipAnimator:Play("switch", 0, 0)
+	self:updateSwitchBtnState()
+	self:delay2RefreshInfo(RougeCollectionEnchantView.DelayRefreshInfoTime)
+	self._tipAnimator:Play("switch", 0, 0)
 end
 
-function var_0_0._btnnextOnClick(arg_5_0)
+function RougeCollectionEnchantView:_btnnextOnClick()
 	RougeCollectionEnchantController.instance:switchCollection(true)
-	arg_5_0:updateSwitchBtnState()
-	arg_5_0:delay2RefreshInfo(var_0_0.DelayRefreshInfoTime)
-	arg_5_0._tipAnimator:Play("switch", 0, 0)
+	self:updateSwitchBtnState()
+	self:delay2RefreshInfo(RougeCollectionEnchantView.DelayRefreshInfoTime)
+	self._tipAnimator:Play("switch", 0, 0)
 end
 
-function var_0_0.updateSwitchBtnState(arg_6_0)
-	local var_6_0 = RougeCollectionUnEnchantListModel.instance:getCurSelectIndex()
-	local var_6_1 = RougeCollectionUnEnchantListModel.instance:getCount()
-	local var_6_2 = gohelper.onceAddComponent(arg_6_0._btnlast, typeof(UnityEngine.CanvasGroup))
-	local var_6_3 = var_6_0 <= 1
+function RougeCollectionEnchantView:updateSwitchBtnState()
+	local curSelectIndex = RougeCollectionUnEnchantListModel.instance:getCurSelectIndex()
+	local totalCollectionCount = RougeCollectionUnEnchantListModel.instance:getCount()
+	local lastbtnCanvasGroup = gohelper.onceAddComponent(self._btnlast, typeof(UnityEngine.CanvasGroup))
+	local isCurFirstCollection = curSelectIndex <= 1
 
-	var_6_2.alpha = var_6_3 and var_0_1 or var_0_2
-	var_6_2.interactable = not var_6_3
-	var_6_2.blocksRaycasts = not var_6_3
+	lastbtnCanvasGroup.alpha = isCurFirstCollection and disInteractableBtnAlpha or interactableBtnAlpha
+	lastbtnCanvasGroup.interactable = not isCurFirstCollection
+	lastbtnCanvasGroup.blocksRaycasts = not isCurFirstCollection
 
-	local var_6_4 = gohelper.onceAddComponent(arg_6_0._btnnext, typeof(UnityEngine.CanvasGroup))
-	local var_6_5 = var_6_1 <= var_6_0
+	local nextBtnCanvasGroup = gohelper.onceAddComponent(self._btnnext, typeof(UnityEngine.CanvasGroup))
+	local isCurLastCollection = totalCollectionCount <= curSelectIndex
 
-	var_6_4.alpha = var_6_5 and var_0_1 or var_0_2
-	var_6_4.interactable = not var_6_5
-	var_6_4.blocksRaycasts = not var_6_5
+	nextBtnCanvasGroup.alpha = isCurLastCollection and disInteractableBtnAlpha or interactableBtnAlpha
+	nextBtnCanvasGroup.interactable = not isCurLastCollection
+	nextBtnCanvasGroup.blocksRaycasts = not isCurLastCollection
 end
 
-function var_0_0._btndetailsOnClick(arg_7_0)
+function RougeCollectionEnchantView:_btndetailsOnClick()
 	RougeCollectionModel.instance:switchCollectionInfoType()
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0:addEventCb(RougeCollectionEnchantController.instance, RougeEvent.UpdateCollectionEnchant, arg_8_0.updateCollectionEnchantInfo, arg_8_0)
-	arg_8_0:addEventCb(RougeController.instance, RougeEvent.SwitchCollectionInfoType, arg_8_0._onSwitchCollectionInfoType, arg_8_0)
+function RougeCollectionEnchantView:_editableInitView()
+	self:addEventCb(RougeCollectionEnchantController.instance, RougeEvent.UpdateCollectionEnchant, self.updateCollectionEnchantInfo, self)
+	self:addEventCb(RougeController.instance, RougeEvent.SwitchCollectionInfoType, self._onSwitchCollectionInfoType, self)
 
-	arg_8_0._cellModelTab = arg_8_0:getUserDataTb_()
-	arg_8_0._animator = gohelper.onceAddComponent(arg_8_0.viewGO, gohelper.Type_Animator)
-	arg_8_0._tipAnimator = gohelper.onceAddComponent(arg_8_0._gotips, gohelper.Type_Animator)
-	arg_8_0._itemInstTab = arg_8_0:getUserDataTb_()
+	self._cellModelTab = self:getUserDataTb_()
+	self._animator = gohelper.onceAddComponent(self.viewGO, gohelper.Type_Animator)
+	self._tipAnimator = gohelper.onceAddComponent(self._gotips, gohelper.Type_Animator)
+	self._itemInstTab = self:getUserDataTb_()
 end
 
-function var_0_0.onOpen(arg_9_0)
-	local var_9_0 = arg_9_0.viewParam and arg_9_0.viewParam.collectionId
-	local var_9_1 = arg_9_0.viewParam and arg_9_0.viewParam.collectionIds
-	local var_9_2 = arg_9_0.viewParam and arg_9_0.viewParam.selectHoleIndex
+function RougeCollectionEnchantView:onOpen()
+	local selectCollectionId = self.viewParam and self.viewParam.collectionId
+	local collectionIds = self.viewParam and self.viewParam.collectionIds
+	local selectHoleIndex = self.viewParam and self.viewParam.selectHoleIndex
 
-	RougeCollectionEnchantController.instance:onOpenView(var_9_0, var_9_1, var_9_2)
-	arg_9_0:refreshCollectionTips()
-	arg_9_0:updateSwitchBtnState()
+	RougeCollectionEnchantController.instance:onOpenView(selectCollectionId, collectionIds, selectHoleIndex)
+	self:refreshCollectionTips()
+	self:updateSwitchBtnState()
 end
 
-function var_0_0.refreshCollectionTips(arg_10_0)
-	local var_10_0 = RougeCollectionUnEnchantListModel.instance:getCurSelectCollectionId()
+function RougeCollectionEnchantView:refreshCollectionTips()
+	local collectionId = RougeCollectionUnEnchantListModel.instance:getCurSelectCollectionId()
 
-	arg_10_0:refresh(var_10_0)
+	self:refresh(collectionId)
 end
 
-function var_0_0.refresh(arg_11_0, arg_11_1)
-	arg_11_1 = arg_11_1 or RougeCollectionUnEnchantListModel.instance:getCurSelectCollectionId()
+function RougeCollectionEnchantView:refresh(collectionId)
+	collectionId = collectionId or RougeCollectionUnEnchantListModel.instance:getCurSelectCollectionId()
 
-	local var_11_0 = RougeCollectionModel.instance:getCollectionByUid(arg_11_1)
+	local collectionMO = RougeCollectionModel.instance:getCollectionByUid(collectionId)
 
-	if not var_11_0 then
-		logError("cannot find collection, id = " .. tostring(arg_11_1))
+	if not collectionMO then
+		logError("cannot find collection, id = " .. tostring(collectionId))
 
 		return
 	end
 
-	local var_11_1 = var_11_0.cfgId
-	local var_11_2 = RougeCollectionConfig.instance:getCollectionCfg(var_11_1)
+	local collectionCfgId = collectionMO.cfgId
+	local collectionCfg = RougeCollectionConfig.instance:getCollectionCfg(collectionCfgId)
 
-	arg_11_0:refreshCollectionBaseInfo(var_11_0)
+	self:refreshCollectionBaseInfo(collectionMO)
 
-	local var_11_3 = var_11_0:getAllEnchantCfgId()
+	local enchantCfgIds = collectionMO:getAllEnchantCfgId()
 
-	RougeCollectionHelper.loadCollectionAndEnchantTags(var_11_1, var_11_3, arg_11_0._gotags, arg_11_0._gotagitem)
-	RougeCollectionHelper.loadCollectionAndEnchantTagNames(var_11_1, var_11_3, arg_11_0._gotagcontents, arg_11_0._gotagnameitem, RougeCollectionHelper._loadCollectionTagNameCallBack, RougeCollectionHelper)
-	RougeCollectionHelper.loadShapeGrid(var_11_0.cfgId, arg_11_0._goshapecontainer, arg_11_0._goshapecell, arg_11_0._cellModelTab, false)
-	arg_11_0:refreshCollectionHoles(var_11_2, var_11_0)
-	arg_11_0:checkIsSelectEnchant()
+	RougeCollectionHelper.loadCollectionAndEnchantTags(collectionCfgId, enchantCfgIds, self._gotags, self._gotagitem)
+	RougeCollectionHelper.loadCollectionAndEnchantTagNames(collectionCfgId, enchantCfgIds, self._gotagcontents, self._gotagnameitem, RougeCollectionHelper._loadCollectionTagNameCallBack, RougeCollectionHelper)
+	RougeCollectionHelper.loadShapeGrid(collectionMO.cfgId, self._goshapecontainer, self._goshapecell, self._cellModelTab, false)
+	self:refreshCollectionHoles(collectionCfg, collectionMO)
+	self:checkIsSelectEnchant()
 end
 
-function var_0_0.refreshCollectionBaseInfo(arg_12_0, arg_12_1)
-	if not arg_12_1 then
+function RougeCollectionEnchantView:refreshCollectionBaseInfo(collectionMO)
+	if not collectionMO then
 		return
 	end
 
-	local var_12_0 = arg_12_1:getAllEnchantCfgId()
+	local enchantCfgIds = collectionMO:getAllEnchantCfgId()
 
-	arg_12_0._txtcollectionname.text = RougeCollectionConfig.instance:getCollectionName(arg_12_1.cfgId, var_12_0)
+	self._txtcollectionname.text = RougeCollectionConfig.instance:getCollectionName(collectionMO.cfgId, enchantCfgIds)
 
-	RougeCollectionDescHelper.setCollectionDescInfos(arg_12_1.id, arg_12_0._gocollectiondesccontent, arg_12_0._itemInstTab)
+	RougeCollectionDescHelper.setCollectionDescInfos(collectionMO.id, self._gocollectiondesccontent, self._itemInstTab)
 
-	local var_12_1 = RougeCollectionHelper.getCollectionIconUrl(arg_12_1.cfgId)
+	local iconUrl = RougeCollectionHelper.getCollectionIconUrl(collectionMO.cfgId)
 
-	arg_12_0._simageicon:LoadImage(var_12_1)
+	self._simageicon:LoadImage(iconUrl)
 end
 
-local var_0_3 = 3
+local maxHoleNum = 3
 
-function var_0_0.refreshCollectionHoles(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0 = arg_13_1.holeNum or 0
+function RougeCollectionEnchantView:refreshCollectionHoles(collectionCfg, collectionMO)
+	local holeNum = collectionCfg.holeNum or 0
 
-	gohelper.setActive(arg_13_0._goholetool, var_13_0 > 0)
+	gohelper.setActive(self._goholetool, holeNum > 0)
 
-	local var_13_1 = RougeCollectionUnEnchantListModel.instance:getCurSelectHoleIndex()
+	local curSelectHoleIndex = RougeCollectionUnEnchantListModel.instance:getCurSelectHoleIndex()
 
-	for iter_13_0 = 1, var_0_3 do
-		local var_13_2 = arg_13_0:getOrCreateHole(iter_13_0)
-		local var_13_3, var_13_4 = arg_13_2:getEnchantIdAndCfgId(iter_13_0)
-		local var_13_5 = var_13_3 and var_13_3 > 0
+	for i = 1, maxHoleNum do
+		local collectionItem = self:getOrCreateHole(i)
+		local enchantId, enchantCfgId = collectionMO:getEnchantIdAndCfgId(i)
+		local isEnchant = enchantId and enchantId > 0
 
-		gohelper.setActive(var_13_2.viewGO, true)
-		gohelper.setActive(var_13_2.golock, var_13_0 < iter_13_0)
-		gohelper.setActive(var_13_2.goenchant, iter_13_0 <= var_13_0 and var_13_5)
-		gohelper.setActive(var_13_2.goselect, iter_13_0 == var_13_1)
-		gohelper.setActive(var_13_2.btnclick.gameObject, iter_13_0 <= var_13_0)
-		gohelper.setActive(var_13_2.goadd, iter_13_0 <= var_13_0 and not var_13_5)
+		gohelper.setActive(collectionItem.viewGO, true)
+		gohelper.setActive(collectionItem.golock, holeNum < i)
+		gohelper.setActive(collectionItem.goenchant, i <= holeNum and isEnchant)
+		gohelper.setActive(collectionItem.goselect, i == curSelectHoleIndex)
+		gohelper.setActive(collectionItem.btnclick.gameObject, i <= holeNum)
+		gohelper.setActive(collectionItem.goadd, i <= holeNum and not isEnchant)
 
-		if var_13_5 then
-			var_13_2.icon:LoadImage(RougeCollectionHelper.getCollectionIconUrl(var_13_4))
+		if isEnchant then
+			collectionItem.icon:LoadImage(RougeCollectionHelper.getCollectionIconUrl(enchantCfgId))
 		end
 	end
 end
 
-function var_0_0.getOrCreateHole(arg_14_0, arg_14_1)
-	arg_14_0._holeTab = arg_14_0._holeTab or arg_14_0:getUserDataTb_()
+function RougeCollectionEnchantView:getOrCreateHole(index)
+	self._holeTab = self._holeTab or self:getUserDataTb_()
 
-	local var_14_0 = arg_14_0._holeTab[arg_14_1]
+	local hole = self._holeTab[index]
 
-	if not var_14_0 then
-		var_14_0 = arg_14_0:getUserDataTb_()
-		var_14_0.viewGO = gohelper.cloneInPlace(arg_14_0._goholeitem, "hole_" .. arg_14_1)
-		var_14_0.golock = gohelper.findChild(var_14_0.viewGO, "go_lock")
-		var_14_0.goenchant = gohelper.findChild(var_14_0.viewGO, "go_enchant")
-		var_14_0.btnremove = gohelper.findChildButtonWithAudio(var_14_0.viewGO, "go_enchant/btn_remove")
+	if not hole then
+		hole = self:getUserDataTb_()
+		hole.viewGO = gohelper.cloneInPlace(self._goholeitem, "hole_" .. index)
+		hole.golock = gohelper.findChild(hole.viewGO, "go_lock")
+		hole.goenchant = gohelper.findChild(hole.viewGO, "go_enchant")
+		hole.btnremove = gohelper.findChildButtonWithAudio(hole.viewGO, "go_enchant/btn_remove")
 
-		var_14_0.btnremove:AddClickListener(arg_14_0._btnremoveEnchantOnClick, arg_14_0, arg_14_1)
+		hole.btnremove:AddClickListener(self._btnremoveEnchantOnClick, self, index)
 
-		var_14_0.goselect = gohelper.findChild(var_14_0.viewGO, "go_select")
-		var_14_0.goadd = gohelper.findChild(var_14_0.viewGO, "go_add")
-		var_14_0.btnclick = gohelper.findChildButtonWithAudio(var_14_0.viewGO, "btn_click")
+		hole.goselect = gohelper.findChild(hole.viewGO, "go_select")
+		hole.goadd = gohelper.findChild(hole.viewGO, "go_add")
+		hole.btnclick = gohelper.findChildButtonWithAudio(hole.viewGO, "btn_click")
 
-		var_14_0.btnclick:AddClickListener(arg_14_0._btnclickHoleOnClick, arg_14_0, arg_14_1)
+		hole.btnclick:AddClickListener(self._btnclickHoleOnClick, self, index)
 
-		var_14_0.icon = gohelper.findChildSingleImage(var_14_0.viewGO, "go_enchant/simage_icon")
-		arg_14_0._holeTab[arg_14_1] = var_14_0
+		hole.icon = gohelper.findChildSingleImage(hole.viewGO, "go_enchant/simage_icon")
+		self._holeTab[index] = hole
 	end
 
-	return var_14_0
+	return hole
 end
 
-function var_0_0._btnremoveEnchantOnClick(arg_15_0, arg_15_1)
-	local var_15_0 = RougeCollectionUnEnchantListModel.instance:getCurSelectCollectionId()
+function RougeCollectionEnchantView:_btnremoveEnchantOnClick(holeIndex)
+	local curSelectCollectionId = RougeCollectionUnEnchantListModel.instance:getCurSelectCollectionId()
 
-	RougeCollectionEnchantController.instance:removeEnchant(var_15_0, arg_15_1)
+	RougeCollectionEnchantController.instance:removeEnchant(curSelectCollectionId, holeIndex)
 end
 
-function var_0_0._btnclickHoleOnClick(arg_16_0, arg_16_1)
-	if arg_16_0._holeTab and arg_16_0._holeTab[arg_16_1] then
-		for iter_16_0, iter_16_1 in pairs(arg_16_0._holeTab) do
-			gohelper.setActive(iter_16_1.goselect, iter_16_0 == arg_16_1)
+function RougeCollectionEnchantView:_btnclickHoleOnClick(holeIndex)
+	local hole = self._holeTab and self._holeTab[holeIndex]
+
+	if hole then
+		for index, hole in pairs(self._holeTab) do
+			gohelper.setActive(hole.goselect, index == holeIndex)
 		end
 
-		RougeCollectionEnchantController.instance:onSelectHoleGrid(arg_16_1)
+		RougeCollectionEnchantController.instance:onSelectHoleGrid(holeIndex)
 	end
 end
 
-function var_0_0.updateCollectionEnchantInfo(arg_17_0, arg_17_1)
+function RougeCollectionEnchantView:updateCollectionEnchantInfo(collectionId)
 	RougeCollectionEnchantListModel.instance:onInitData(false)
 	RougeCollectionEnchantListModel.instance:onModelUpdate()
 
-	if arg_17_1 ~= RougeCollectionUnEnchantListModel.instance:getCurSelectCollectionId() then
+	local curSelectCollectionId = RougeCollectionUnEnchantListModel.instance:getCurSelectCollectionId()
+
+	if collectionId ~= curSelectCollectionId then
 		return
 	end
 
-	if arg_17_0._isInitDone then
-		arg_17_0._animator:Play("switch", 0, 0)
-		arg_17_0:delay2RefreshInfo(var_0_0.DelayRefreshInfoTime)
+	if self._isInitDone then
+		self._animator:Play("switch", 0, 0)
+		self:delay2RefreshInfo(RougeCollectionEnchantView.DelayRefreshInfoTime)
 	else
-		arg_17_0:refresh()
+		self:refresh()
 
-		arg_17_0._isInitDone = true
+		self._isInitDone = true
 	end
 end
 
-var_0_0.DelayRefreshInfoTime = 0.16
+RougeCollectionEnchantView.DelayRefreshInfoTime = 0.16
 
-function var_0_0.delay2RefreshInfo(arg_18_0, arg_18_1)
-	TaskDispatcher.cancelTask(arg_18_0.refresh, arg_18_0)
-	TaskDispatcher.runDelay(arg_18_0.refresh, arg_18_0, arg_18_1 or 0)
+function RougeCollectionEnchantView:delay2RefreshInfo(delayTime)
+	TaskDispatcher.cancelTask(self.refresh, self)
+	TaskDispatcher.runDelay(self.refresh, self, delayTime or 0)
 end
 
-function var_0_0.checkIsSelectEnchant(arg_19_0)
-	local var_19_0 = RougeCollectionEnchantListModel.instance:getCount()
-	local var_19_1 = RougeCollectionEnchantListModel.instance:getCurSelectEnchantId()
-	local var_19_2 = RougeCollectionEnchantListModel.instance:getById(var_19_1)
-	local var_19_3 = var_19_2 ~= nil
+function RougeCollectionEnchantView:checkIsSelectEnchant()
+	local enchantCount = RougeCollectionEnchantListModel.instance:getCount()
+	local curSelectEnchantId = RougeCollectionEnchantListModel.instance:getCurSelectEnchantId()
+	local enchantMO = RougeCollectionEnchantListModel.instance:getById(curSelectEnchantId)
+	local hasSelectEnchant = enchantMO ~= nil
 
-	gohelper.setActive(arg_19_0._gounselected, not var_19_3)
-	gohelper.setActive(arg_19_0._scrolldesc.gameObject, var_19_3)
-	gohelper.setActive(arg_19_0._simageenchanticon.gameObject, var_19_3)
-	gohelper.setActive(arg_19_0._txtname.gameObject, var_19_3)
-	gohelper.setActive(arg_19_0._goenchantempty, var_19_0 <= 0)
+	gohelper.setActive(self._gounselected, not hasSelectEnchant)
+	gohelper.setActive(self._scrolldesc.gameObject, hasSelectEnchant)
+	gohelper.setActive(self._simageenchanticon.gameObject, hasSelectEnchant)
+	gohelper.setActive(self._txtname.gameObject, hasSelectEnchant)
+	gohelper.setActive(self._goenchantempty, enchantCount <= 0)
 
-	if var_19_3 then
-		local var_19_4 = var_19_2 and var_19_2.cfgId
+	if hasSelectEnchant then
+		local enchantCfgId = enchantMO and enchantMO.cfgId
+		local enchantCfg = RougeCollectionConfig.instance:getCollectionCfg(enchantCfgId)
 
-		if RougeCollectionConfig.instance:getCollectionCfg(var_19_4) then
-			arg_19_0._txtname.text = RougeCollectionConfig.instance:getCollectionName(var_19_4)
+		if enchantCfg then
+			self._txtname.text = RougeCollectionConfig.instance:getCollectionName(enchantCfgId)
 
-			arg_19_0._simageenchanticon:LoadImage(RougeCollectionHelper.getCollectionIconUrl(var_19_4))
+			self._simageenchanticon:LoadImage(RougeCollectionHelper.getCollectionIconUrl(enchantCfgId))
 
-			local var_19_5 = RougeCollectionDescHelper.getShowDescTypesWithoutText()
+			local showTypes = RougeCollectionDescHelper.getShowDescTypesWithoutText()
 
-			RougeCollectionDescHelper.setCollectionDescInfos3(var_19_4, nil, arg_19_0._txtenchantdesc, var_19_5)
+			RougeCollectionDescHelper.setCollectionDescInfos3(enchantCfgId, nil, self._txtenchantdesc, showTypes)
 		end
 	end
 end
 
-function var_0_0._onSwitchCollectionInfoType(arg_20_0)
-	arg_20_0:refreshCollectionTips()
+function RougeCollectionEnchantView:_onSwitchCollectionInfoType()
+	self:refreshCollectionTips()
 end
 
-function var_0_0.removeAllHoleClicks(arg_21_0)
-	if arg_21_0._holeTab then
-		for iter_21_0, iter_21_1 in pairs(arg_21_0._holeTab) do
-			iter_21_1.btnremove:RemoveClickListener()
-			iter_21_1.btnclick:RemoveClickListener()
-			iter_21_1.icon:UnLoadImage()
+function RougeCollectionEnchantView:removeAllHoleClicks()
+	if self._holeTab then
+		for _, hole in pairs(self._holeTab) do
+			hole.btnremove:RemoveClickListener()
+			hole.btnclick:RemoveClickListener()
+			hole.icon:UnLoadImage()
 		end
 	end
 end
 
-function var_0_0.onClose(arg_22_0)
-	arg_22_0:removeAllHoleClicks()
+function RougeCollectionEnchantView:onClose()
+	self:removeAllHoleClicks()
 end
 
-function var_0_0.onDestroyView(arg_23_0)
-	arg_23_0._simageicon:UnLoadImage()
-	arg_23_0._simageenchanticon:UnLoadImage()
-	TaskDispatcher.cancelTask(arg_23_0.refresh, arg_23_0)
+function RougeCollectionEnchantView:onDestroyView()
+	self._simageicon:UnLoadImage()
+	self._simageenchanticon:UnLoadImage()
+	TaskDispatcher.cancelTask(self.refresh, self)
 end
 
-return var_0_0
+return RougeCollectionEnchantView

@@ -1,168 +1,180 @@
-﻿module("modules.logic.room.controller.ManufactureController", package.seeall)
+﻿-- chunkname: @modules/logic/room/controller/ManufactureController.lua
 
-local var_0_0 = class("ManufactureController", BaseController)
-local var_0_1 = 0.2
+module("modules.logic.room.controller.ManufactureController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local ManufactureController = class("ManufactureController", BaseController)
+local OPEN_VIEW_DELAY = 0.2
+
+function ManufactureController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function ManufactureController:reInit()
 	return
 end
 
-function var_0_0.clear(arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0._realOpenManufactureBuildingView, arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0._realOpenCritterBuildingView, arg_3_0)
+function ManufactureController:clear()
+	TaskDispatcher.cancelTask(self._realOpenManufactureBuildingView, self)
+	TaskDispatcher.cancelTask(self._realOpenCritterBuildingView, self)
 end
 
-function var_0_0.addConstEvents(arg_4_0)
+function ManufactureController:addConstEvents()
 	return
 end
 
-function var_0_0.checkManufactureInfoUpdate(arg_5_0)
-	local var_5_0 = false
-	local var_5_1 = ManufactureModel.instance:getAllPlacedManufactureBuilding()
+function ManufactureController:checkManufactureInfoUpdate()
+	local needUpdate = false
+	local allPlacedManufactureBuildingList = ManufactureModel.instance:getAllPlacedManufactureBuilding()
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_1) do
-		local var_5_2 = iter_5_1:getSlotIdInProgress()
+	for _, buildingMO in ipairs(allPlacedManufactureBuildingList) do
+		local progressSlotId = buildingMO:getSlotIdInProgress()
+		local progress = buildingMO:getSlotProgress(progressSlotId)
 
-		if iter_5_1:getSlotProgress(var_5_2) >= 1 then
-			var_5_0 = true
+		if progress >= 1 then
+			needUpdate = true
 
 			break
 		end
 	end
 
-	if var_5_0 then
-		arg_5_0:getManufactureServerInfo()
+	if needUpdate then
+		self:getManufactureServerInfo()
 	end
 end
 
-function var_0_0.updateTraceNeedItemDict(arg_6_0)
-	local var_6_0 = RoomController.instance:isRoomScene()
-	local var_6_1 = RoomTradeModel.instance:isGetOrderInfo()
+function ManufactureController:updateTraceNeedItemDict()
+	local isRoomScene = RoomController.instance:isRoomScene()
+	local isGetOrderInfo = RoomTradeModel.instance:isGetOrderInfo()
 
-	if var_6_0 and var_6_1 then
+	if isRoomScene and isGetOrderInfo then
 		RoomTradeModel.instance:calTracedItemDict()
 	end
 end
 
-function var_0_0.getManufactureServerInfo(arg_7_0)
-	if not ManufactureModel.instance:isManufactureUnlock() then
+function ManufactureController:getManufactureServerInfo()
+	local isUnlock = ManufactureModel.instance:isManufactureUnlock()
+
+	if not isUnlock then
 		return
 	end
 
 	RoomRpc.instance:sendGetManufactureInfoRequest()
 end
 
-function var_0_0.setManufactureItems(arg_8_0, arg_8_1, arg_8_2)
-	RoomRpc.instance:sendSelectSlotProductionPlanRequest(arg_8_1, arg_8_2)
+function ManufactureController:setManufactureItems(buildingUid, slotOperationInfoList)
+	RoomRpc.instance:sendSelectSlotProductionPlanRequest(buildingUid, slotOperationInfoList)
 end
 
-function var_0_0.upgradeManufactureBuilding(arg_9_0, arg_9_1)
-	RoomRpc.instance:sendManuBuildingUpgradeRequest(arg_9_1)
+function ManufactureController:upgradeManufactureBuilding(buildingUid)
+	RoomRpc.instance:sendManuBuildingUpgradeRequest(buildingUid)
 end
 
-function var_0_0.allocateCritter(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	RoomRpc.instance:sendDispatchCritterRequest(arg_10_1, arg_10_2, arg_10_3)
+function ManufactureController:allocateCritter(buildingUid, critterUid, critterSlotId)
+	RoomRpc.instance:sendDispatchCritterRequest(buildingUid, critterUid, critterSlotId)
 end
 
-function var_0_0.useAccelerateItem(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4)
-	if not arg_11_4 then
+function ManufactureController:useAccelerateItem(buildingUid, itemId, itemCount, slotId)
+	if not slotId then
 		logError("ManufactureController:useAccelerateItem error, slotId is nil")
 
 		return
 	end
 
-	arg_11_0:clearSelectedSlotItem()
+	self:clearSelectedSlotItem()
 
-	local var_11_0 = {
+	local accelerateItem = {
 		type = MaterialEnum.MaterialType.Item,
-		id = arg_11_2,
-		quantity = arg_11_3
+		id = itemId,
+		quantity = itemCount
 	}
 
-	RoomRpc.instance:sendManufactureAccelerateRequest(arg_11_1, var_11_0, arg_11_4)
+	RoomRpc.instance:sendManufactureAccelerateRequest(buildingUid, accelerateItem, slotId)
 end
 
-function var_0_0.gainCompleteManufactureItem(arg_12_0, arg_12_1)
-	arg_12_1 = arg_12_1 or RoomManufactureEnum.InvalidBuildingUid
+function ManufactureController:gainCompleteManufactureItem(buildingUid)
+	buildingUid = buildingUid or RoomManufactureEnum.InvalidBuildingUid
 
-	RoomRpc.instance:sendReapFinishSlotRequest(arg_12_1)
+	RoomRpc.instance:sendReapFinishSlotRequest(buildingUid)
 end
 
-function var_0_0.updateManufactureInfo(arg_13_0, arg_13_1)
+function ManufactureController:updateManufactureInfo(manufactureInfo)
 	ManufactureModel.instance:resetDataBeforeSetInfo()
 
-	if arg_13_1 then
-		ManufactureModel.instance:setManufactureInfo(arg_13_1)
+	if manufactureInfo then
+		ManufactureModel.instance:setManufactureInfo(manufactureInfo)
 		RoomCritterModel.instance:initStayBuildingCritters()
 	end
 
-	arg_13_0:dispatchEvent(ManufactureEvent.ManufactureInfoUpdate)
+	self:dispatchEvent(ManufactureEvent.ManufactureInfoUpdate)
 end
 
-function var_0_0.updateTradeLevel(arg_14_0, arg_14_1)
-	ManufactureModel.instance:setTradeLevel(arg_14_1)
-	arg_14_0:dispatchEvent(ManufactureEvent.TradeLevelChange)
+function ManufactureController:updateTradeLevel(tradeLevel)
+	ManufactureModel.instance:setTradeLevel(tradeLevel)
+	self:dispatchEvent(ManufactureEvent.TradeLevelChange)
 end
 
-function var_0_0.updateManuBuildingInfoList(arg_15_0, arg_15_1, arg_15_2)
-	if not arg_15_1 then
+function ManufactureController:updateManuBuildingInfoList(manuBuildingInfos, isCalAllFrozen)
+	if not manuBuildingInfos then
 		return
 	end
 
-	ManufactureModel.instance:setManuBuildingInfoList(arg_15_1)
+	ManufactureModel.instance:setManuBuildingInfoList(manuBuildingInfos)
 
-	local var_15_0 = {}
+	local updateBuildingDict = {}
 
-	for iter_15_0, iter_15_1 in ipairs(arg_15_1) do
-		var_15_0[iter_15_1.buildingUid] = true
+	for _, manuBuildingInfo in ipairs(manuBuildingInfos) do
+		updateBuildingDict[manuBuildingInfo.buildingUid] = true
 	end
 
 	RoomCritterModel.instance:initStayBuildingCritters()
 
-	if arg_15_2 then
+	if isCalAllFrozen then
 		ManufactureModel.instance:clientCalAllFrozenItemDict()
 	end
 
-	arg_15_0:dispatchEvent(ManufactureEvent.ManufactureBuildingInfoChange, var_15_0)
+	self:dispatchEvent(ManufactureEvent.ManufactureBuildingInfoChange, updateBuildingDict)
 end
 
-function var_0_0.updateManuBuildingInfo(arg_16_0, arg_16_1)
-	if not arg_16_1 then
+function ManufactureController:updateManuBuildingInfo(manuBuildingInfo)
+	if not manuBuildingInfo then
 		return
 	end
 
-	ManufactureModel.instance:setManuBuildingInfo(arg_16_1, true)
+	ManufactureModel.instance:setManuBuildingInfo(manuBuildingInfo, true)
 	RoomCritterModel.instance:initStayBuildingCritters()
-	arg_16_0:dispatchEvent(ManufactureEvent.ManufactureBuildingInfoChange, {
-		[arg_16_1.buildingUid] = true
+	self:dispatchEvent(ManufactureEvent.ManufactureBuildingInfoChange, {
+		[manuBuildingInfo.buildingUid] = true
 	})
 end
 
-function var_0_0.updateWorkCritterInfo(arg_17_0, arg_17_1)
-	arg_17_0:dispatchEvent(ManufactureEvent.CritterWorkInfoChange, arg_17_1)
+function ManufactureController:updateWorkCritterInfo(buildingUid)
+	self:dispatchEvent(ManufactureEvent.CritterWorkInfoChange, buildingUid)
 end
 
-function var_0_0.updateFrozenItem(arg_18_0, arg_18_1)
-	ManufactureModel.instance:setFrozenItemDict(arg_18_1)
+function ManufactureController:updateFrozenItem(frozenItemInfo)
+	ManufactureModel.instance:setFrozenItemDict(frozenItemInfo)
 end
 
-function var_0_0.jumpToManufactureBuildingLevelUpView(arg_19_0, arg_19_1)
-	local var_19_0 = false
+function ManufactureController:jumpToManufactureBuildingLevelUpView(buildingUid)
+	local result = false
+	local isUnlock = ManufactureModel.instance:isManufactureUnlock(true)
 
-	if ManufactureModel.instance:isManufactureUnlock(true) then
-		local var_19_1 = RoomMapBuildingModel.instance:getBuildingMOById(arg_19_1)
+	if isUnlock then
+		local buildingMO = RoomMapBuildingModel.instance:getBuildingMOById(buildingUid)
 
-		if var_19_1 then
-			if ManufactureConfig.instance:isManufactureBuilding(var_19_1.buildingId) then
-				if ViewMgr.instance:isOpen(ViewName.RoomCritterBuildingView) then
-					arg_19_0:closeCritterBuildingView(true)
+		if buildingMO then
+			local isManufacture = ManufactureConfig.instance:isManufactureBuilding(buildingMO.buildingId)
+
+			if isManufacture then
+				local isOpenCritterBuildingView = ViewMgr.instance:isOpen(ViewName.RoomCritterBuildingView)
+
+				if isOpenCritterBuildingView then
+					self:closeCritterBuildingView(true)
 				end
 
-				if ViewMgr.instance:isOpen(ViewName.RoomTradeView) then
+				local isOpenTradeView = ViewMgr.instance:isOpen(ViewName.RoomTradeView)
+
+				if isOpenTradeView then
 					ViewMgr.instance:closeView(ViewName.RoomTradeView, false)
 				end
 
@@ -170,115 +182,119 @@ function var_0_0.jumpToManufactureBuildingLevelUpView(arg_19_0, arg_19_1)
 					ViewName.RoomTradeView
 				})
 
-				local var_19_2 = false
-				local var_19_3, var_19_4 = ManufactureModel.instance:getCameraRecord()
+				local notUpdateCameraRecord = false
+				local recordCameraState, recordCameraParam = ManufactureModel.instance:getCameraRecord()
 
-				if var_19_3 or var_19_4 then
-					var_19_2 = true
+				if recordCameraState or recordCameraParam then
+					notUpdateCameraRecord = true
 				end
 
-				arg_19_0:openManufactureBuildingViewByBuilding(var_19_1, var_19_2, true)
+				self:openManufactureBuildingViewByBuilding(buildingMO, notUpdateCameraRecord, true)
 
-				var_19_0 = true
+				result = true
 			else
-				logError(string.format("ManufactureController:jumpToManufactureBuildingLevelUpView error, not manufacture building, buildingUid:%s", arg_19_1))
+				logError(string.format("ManufactureController:jumpToManufactureBuildingLevelUpView error, not manufacture building, buildingUid:%s", buildingUid))
 			end
 		else
-			logError(string.format("ManufactureController:jumpToManufactureBuildingLevelUpView error, not find building, buildingUid:%s", arg_19_1))
+			logError(string.format("ManufactureController:jumpToManufactureBuildingLevelUpView error, not find building, buildingUid:%s", buildingUid))
 		end
 	end
 
-	return var_19_0
+	return result
 end
 
-function var_0_0.openManufactureBuildingViewByBuilding(arg_20_0, arg_20_1, arg_20_2, arg_20_3, arg_20_4)
-	if not ManufactureModel.instance:isManufactureUnlock(true) then
+function ManufactureController:openManufactureBuildingViewByBuilding(buildingMO, notUpdateCameraRecord, jump2Upgrade, addManuItem)
+	local isUnlock = ManufactureModel.instance:isManufactureUnlock(true)
+
+	if not isUnlock then
 		return
 	end
 
-	if not arg_20_1 then
+	if not buildingMO then
 		return
 	end
 
-	local var_20_0 = RoomConfig.instance:getBuildingType(arg_20_1.buildingId)
+	local buildingType = RoomConfig.instance:getBuildingType(buildingMO.buildingId)
 
-	arg_20_0:openManufactureBuildingViewByType(var_20_0, arg_20_1.uid, arg_20_2, arg_20_3, arg_20_4)
+	self:openManufactureBuildingViewByType(buildingType, buildingMO.uid, notUpdateCameraRecord, jump2Upgrade, addManuItem)
 end
 
-function var_0_0.openManufactureBuildingViewByType(arg_21_0, arg_21_1, arg_21_2, arg_21_3, arg_21_4, arg_21_5)
-	if not ManufactureModel.instance:isManufactureUnlock(true) then
+function ManufactureController:openManufactureBuildingViewByType(buildingType, defaultBuildingUid, notUpdateCameraRecord, jump2Upgrade, addManuItem)
+	local isUnlock = ManufactureModel.instance:isManufactureUnlock(true)
+
+	if not isUnlock then
 		return
 	end
 
-	if arg_21_1 ~= RoomBuildingEnum.BuildingType.Collect and arg_21_1 ~= RoomBuildingEnum.BuildingType.Process and arg_21_1 ~= RoomBuildingEnum.BuildingType.Manufacture then
+	if buildingType ~= RoomBuildingEnum.BuildingType.Collect and buildingType ~= RoomBuildingEnum.BuildingType.Process and buildingType ~= RoomBuildingEnum.BuildingType.Manufacture then
 		return
 	end
 
-	local var_21_0 = RoomMapBuildingModel.instance:getBuildingListByType(arg_21_1)
+	local buildingList = RoomMapBuildingModel.instance:getBuildingListByType(buildingType)
 
-	if not var_21_0 or #var_21_0 <= 0 then
+	if not buildingList or #buildingList <= 0 then
 		GameFacade.showToast(ToastEnum.RoomNoPlaceManufactureBuilding)
 
 		return
 	end
 
-	local var_21_1
-	local var_21_2 = false
+	local curBuildingMO
+	local isDefaultBuildingValid = false
 
-	if arg_21_2 then
-		var_21_1 = RoomMapBuildingModel.instance:getBuildingMOById(arg_21_2)
+	if defaultBuildingUid then
+		curBuildingMO = RoomMapBuildingModel.instance:getBuildingMOById(defaultBuildingUid)
 
-		if var_21_1 and var_21_1.config and var_21_1.config.buildingType == arg_21_1 then
-			var_21_2 = true
+		if curBuildingMO and curBuildingMO.config and curBuildingMO.config.buildingType == buildingType then
+			isDefaultBuildingValid = true
 		end
 	end
 
-	if not var_21_2 then
-		var_21_1 = var_21_0[1]
-		arg_21_2 = var_21_0[1].buildingUid
+	if not isDefaultBuildingValid then
+		curBuildingMO = buildingList[1]
+		defaultBuildingUid = buildingList[1].buildingUid
 	end
 
-	arg_21_0._tmpManuBuildingViewParam = {
-		buildingType = arg_21_1,
-		defaultBuildingUid = arg_21_2,
-		addManuItem = arg_21_5
+	self._tmpManuBuildingViewParam = {
+		buildingType = buildingType,
+		defaultBuildingUid = defaultBuildingUid,
+		addManuItem = addManuItem
 	}
-	arg_21_0._tmpJumpLvUpBuildingUid = arg_21_4 and arg_21_2 or nil
+	self._tmpJumpLvUpBuildingUid = jump2Upgrade and defaultBuildingUid or nil
 
-	local var_21_3 = var_21_1.buildingId
-	local var_21_4 = ManufactureConfig.instance:getBuildingCameraIdByIndex(var_21_3)
-	local var_21_5 = RoomCameraController.instance:getRoomCamera()
+	local curBuildingId = curBuildingMO.buildingId
+	local firstCamera = ManufactureConfig.instance:getBuildingCameraIdByIndex(curBuildingId)
+	local roomCamera = RoomCameraController.instance:getRoomCamera()
 
-	if var_21_5 and var_21_4 then
-		if not arg_21_3 then
-			local var_21_6 = var_21_5:getCameraState()
-			local var_21_7 = var_21_5:getCameraParam()
-			local var_21_8 = LuaUtil.deepCopy(var_21_7)
+	if roomCamera and firstCamera then
+		if not notUpdateCameraRecord then
+			local cameraState = roomCamera:getCameraState()
+			local cameraParam = roomCamera:getCameraParam()
+			local recordCameraParam = LuaUtil.deepCopy(cameraParam)
 
-			ManufactureModel.instance:setCameraRecord(var_21_6, var_21_8)
+			ManufactureModel.instance:setCameraRecord(cameraState, recordCameraParam)
 		end
 
-		RoomCameraController.instance:tweenCameraFocusBuildingUseCameraId(arg_21_2, var_21_4)
-		TaskDispatcher.cancelTask(arg_21_0._realOpenManufactureBuildingView, arg_21_0)
-		TaskDispatcher.runDelay(arg_21_0._realOpenManufactureBuildingView, arg_21_0, var_0_1)
+		RoomCameraController.instance:tweenCameraFocusBuildingUseCameraId(defaultBuildingUid, firstCamera)
+		TaskDispatcher.cancelTask(self._realOpenManufactureBuildingView, self)
+		TaskDispatcher.runDelay(self._realOpenManufactureBuildingView, self, OPEN_VIEW_DELAY)
 	else
-		arg_21_0:_realOpenManufactureBuildingView()
+		self:_realOpenManufactureBuildingView()
 	end
 
-	arg_21_0:dispatchEvent(ManufactureEvent.OnEnterManufactureBuildingView)
-	arg_21_0:dispatchEvent(ManufactureEvent.ManufactureBuildingViewChange, {
+	self:dispatchEvent(ManufactureEvent.OnEnterManufactureBuildingView)
+	self:dispatchEvent(ManufactureEvent.ManufactureBuildingViewChange, {
 		inManufactureBuildingView = true
 	})
 end
 
-function var_0_0.openRoomManufactureBuildingDetailView(arg_22_0, arg_22_1, arg_22_2)
-	local var_22_0 = RoomMapBuildingModel.instance:getBuildingMOById(arg_22_1)
+function ManufactureController:openRoomManufactureBuildingDetailView(buildingUid, isRight)
+	local buildingMO = RoomMapBuildingModel.instance:getBuildingMOById(buildingUid)
 
-	if var_22_0 and (var_22_0:checkSameType(RoomBuildingEnum.BuildingType.Collect) or var_22_0:checkSameType(RoomBuildingEnum.BuildingType.Process) or var_22_0:checkSameType(RoomBuildingEnum.BuildingType.Manufacture)) then
+	if buildingMO and (buildingMO:checkSameType(RoomBuildingEnum.BuildingType.Collect) or buildingMO:checkSameType(RoomBuildingEnum.BuildingType.Process) or buildingMO:checkSameType(RoomBuildingEnum.BuildingType.Manufacture)) then
 		ViewMgr.instance:openView(ViewName.RoomManufactureBuildingDetailView, {
-			buildingUid = arg_22_1,
-			buildingMO = var_22_0,
-			showIsRight = arg_22_2
+			buildingUid = buildingUid,
+			buildingMO = buildingMO,
+			showIsRight = isRight
 		})
 
 		return true
@@ -287,135 +303,147 @@ function var_0_0.openRoomManufactureBuildingDetailView(arg_22_0, arg_22_1, arg_2
 	return false
 end
 
-function var_0_0._realOpenManufactureBuildingView(arg_23_0)
-	if not ManufactureModel.instance:isManufactureUnlock(true) then
+function ManufactureController:_realOpenManufactureBuildingView()
+	local isUnlock = ManufactureModel.instance:isManufactureUnlock(true)
+
+	if not isUnlock then
 		return
 	end
 
-	if not (arg_23_0._tmpManuBuildingViewParam and arg_23_0._tmpManuBuildingViewParam.buildingType) then
+	local buildingType = self._tmpManuBuildingViewParam and self._tmpManuBuildingViewParam.buildingType
+
+	if not buildingType then
 		return
 	end
 
-	ViewMgr.instance:openView(ViewName.RoomManufactureBuildingView, arg_23_0._tmpManuBuildingViewParam)
+	ViewMgr.instance:openView(ViewName.RoomManufactureBuildingView, self._tmpManuBuildingViewParam)
 
-	arg_23_0._tmpManuBuildingViewParam = nil
+	self._tmpManuBuildingViewParam = nil
 
-	arg_23_0:jump2ManufactureUpgradeView()
+	self:jump2ManufactureUpgradeView()
 end
 
-function var_0_0.jump2ManufactureUpgradeView(arg_24_0, arg_24_1)
-	if not arg_24_0._tmpJumpLvUpBuildingUid and not arg_24_1 then
+function ManufactureController:jump2ManufactureUpgradeView(jumpBuildingUid)
+	if not self._tmpJumpLvUpBuildingUid and not jumpBuildingUid then
 		return
 	end
 
-	arg_24_0:openManufactureBuildingLevelUpView(arg_24_1 or arg_24_0._tmpJumpLvUpBuildingUid)
+	self:openManufactureBuildingLevelUpView(jumpBuildingUid or self._tmpJumpLvUpBuildingUid)
 
-	arg_24_0._tmpJumpLvUpBuildingUid = nil
+	self._tmpJumpLvUpBuildingUid = nil
 end
 
-function var_0_0.openManufactureBuildingLevelUpView(arg_25_0, arg_25_1)
-	if ManufactureModel.instance:isMaxLevel(arg_25_1) then
+function ManufactureController:openManufactureBuildingLevelUpView(buildingUid)
+	local isMaxLevel = ManufactureModel.instance:isMaxLevel(buildingUid)
+
+	if isMaxLevel then
 		return
 	end
 
-	local var_25_0 = RoomMapBuildingModel.instance:getBuildingMOById(arg_25_1)
+	local buildingMO = RoomMapBuildingModel.instance:getBuildingMOById(buildingUid)
+	local upgradeGroup = ManufactureConfig.instance:getBuildingUpgradeGroup(buildingMO.buildingId)
 
-	if ManufactureConfig.instance:getBuildingUpgradeGroup(var_25_0.buildingId) == 0 then
+	if upgradeGroup == 0 then
 		return
 	end
 
-	local var_25_1 = ManufactureModel.instance:getManufactureLevelUpParam(arg_25_1)
+	local viewParam = ManufactureModel.instance:getManufactureLevelUpParam(buildingUid)
 
-	ViewMgr.instance:openView(ViewName.RoomBuildingLevelUpView, var_25_1)
+	ViewMgr.instance:openView(ViewName.RoomBuildingLevelUpView, viewParam)
 end
 
-function var_0_0.openManufactureAccelerateView(arg_26_0, arg_26_1)
-	local var_26_0 = RoomMapBuildingModel.instance:getBuildingMOById(arg_26_1)
+function ManufactureController:openManufactureAccelerateView(buildingUid)
+	local buildingMO = RoomMapBuildingModel.instance:getBuildingMOById(buildingUid)
+	local state = buildingMO and buildingMO:getManufactureState()
 
-	if (var_26_0 and var_26_0:getManufactureState()) ~= RoomManufactureEnum.ManufactureState.Running then
+	if state ~= RoomManufactureEnum.ManufactureState.Running then
 		return
 	end
 
 	ViewMgr.instance:openView(ViewName.RoomManufactureAccelerateView, {
-		buildingUid = arg_26_1
+		buildingUid = buildingUid
 	})
 end
 
-function var_0_0.openRoomRecordView(arg_27_0, arg_27_1)
-	arg_27_1 = arg_27_1 or RoomRecordEnum.View.Task
+function ManufactureController:openRoomRecordView(tab)
+	tab = tab or RoomRecordEnum.View.Task
 
-	if arg_27_1 == RoomRecordEnum.View.Task then
+	if tab == RoomRecordEnum.View.Task then
 		RoomRpc.instance:sendGetTradeTaskInfoRequest(function()
-			arg_27_0:_reallyOpenRoomRecordView(arg_27_1)
-		end, arg_27_0)
+			self:_reallyOpenRoomRecordView(tab)
+		end, self)
 	else
-		arg_27_0:_reallyOpenRoomRecordView(arg_27_1)
+		self:_reallyOpenRoomRecordView(tab)
 	end
 end
 
-function var_0_0._reallyOpenRoomRecordView(arg_29_0, arg_29_1)
-	ViewMgr.instance:openView(ViewName.RoomRecordView, arg_29_1)
+function ManufactureController:_reallyOpenRoomRecordView(tab)
+	ViewMgr.instance:openView(ViewName.RoomRecordView, tab)
 end
 
-function var_0_0.openCritterBuildingView(arg_30_0, arg_30_1, arg_30_2, arg_30_3)
-	if not CritterModel.instance:isCritterUnlock(true) then
+function ManufactureController:openCritterBuildingView(buildingUid, defaultTab, critterUid)
+	local isCritterUnlock = CritterModel.instance:isCritterUnlock(true)
+
+	if not isCritterUnlock then
 		return
 	end
 
-	local var_30_0 = ManufactureModel.instance:getCritterBuildingListInOrder()
+	local buildingList = ManufactureModel.instance:getCritterBuildingListInOrder()
 
-	if not var_30_0 or #var_30_0 <= 0 then
+	if not buildingList or #buildingList <= 0 then
 		GameFacade.showToast(ToastEnum.RoomNoPlaceCritterBuilding)
 
 		return
 	end
 
-	local var_30_1
+	local curBuildingMO
 
-	if not arg_30_1 then
-		var_30_1 = var_30_0[1]
-		arg_30_1 = var_30_0[1].buildingUid
+	if not buildingUid then
+		curBuildingMO = buildingList[1]
+		buildingUid = buildingList[1].buildingUid
 	else
-		var_30_1 = RoomMapBuildingModel.instance:getBuildingMOById(arg_30_1)
+		curBuildingMO = RoomMapBuildingModel.instance:getBuildingMOById(buildingUid)
 	end
 
-	if (var_30_1 and var_30_1.config.buildingType) ~= RoomBuildingEnum.BuildingType.Rest then
+	local curBuildingType = curBuildingMO and curBuildingMO.config.buildingType
+
+	if curBuildingType ~= RoomBuildingEnum.BuildingType.Rest then
 		return
 	end
 
-	local var_30_2 = var_30_1.buildingId
-	local var_30_3 = ManufactureConfig.instance:getBuildingCameraIdByIndex(var_30_2, arg_30_2)
-	local var_30_4 = RoomCameraController.instance:getRoomCamera()
+	local curBuildingId = curBuildingMO.buildingId
+	local firstCamera = ManufactureConfig.instance:getBuildingCameraIdByIndex(curBuildingId, defaultTab)
+	local roomCamera = RoomCameraController.instance:getRoomCamera()
 
-	if var_30_4 and var_30_3 then
-		local var_30_5 = var_30_4:getCameraState()
-		local var_30_6 = var_30_4:getCameraParam()
-		local var_30_7 = LuaUtil.deepCopy(var_30_6)
+	if roomCamera and firstCamera then
+		local cameraState = roomCamera:getCameraState()
+		local cameraParam = roomCamera:getCameraParam()
+		local recordCameraParam = LuaUtil.deepCopy(cameraParam)
 
-		ManufactureModel.instance:setCameraRecord(var_30_5, var_30_7)
+		ManufactureModel.instance:setCameraRecord(cameraState, recordCameraParam)
 
-		arg_30_0._tmpCritterBuildingUid = arg_30_1
-		arg_30_0._tmpCritterDefaultTab = arg_30_2
-		arg_30_0._tmpCritterUid = arg_30_3
+		self._tmpCritterBuildingUid = buildingUid
+		self._tmpCritterDefaultTab = defaultTab
+		self._tmpCritterUid = critterUid
 
-		local var_30_8 = false
+		local isCultivating = false
 
-		if arg_30_2 == RoomCritterBuildingViewContainer.SubViewTabId.Training and arg_30_3 then
-			local var_30_9 = CritterModel.instance:getCritterMOByUid(arg_30_3)
+		if defaultTab == RoomCritterBuildingViewContainer.SubViewTabId.Training and critterUid then
+			local critterMO = CritterModel.instance:getCritterMOByUid(critterUid)
 
-			var_30_8 = var_30_9 and var_30_9:isCultivating()
+			isCultivating = critterMO and critterMO:isCultivating()
 		end
 
-		TaskDispatcher.cancelTask(arg_30_0._realOpenCritterBuildingView, arg_30_0)
+		TaskDispatcher.cancelTask(self._realOpenCritterBuildingView, self)
 
-		if var_30_8 then
-			arg_30_0:_realOpenCritterBuildingView(arg_30_1, arg_30_2, arg_30_3)
+		if isCultivating then
+			self:_realOpenCritterBuildingView(buildingUid, defaultTab, critterUid)
 		else
-			RoomCameraController.instance:tweenCameraFocusBuildingUseCameraId(arg_30_1, var_30_3, arg_30_0._openCritterBuildingViewCameraTweenFinish, arg_30_0)
-			TaskDispatcher.runDelay(arg_30_0._realOpenCritterBuildingView, arg_30_0, var_0_1)
+			RoomCameraController.instance:tweenCameraFocusBuildingUseCameraId(buildingUid, firstCamera, self._openCritterBuildingViewCameraTweenFinish, self)
+			TaskDispatcher.runDelay(self._realOpenCritterBuildingView, self, OPEN_VIEW_DELAY)
 		end
 	else
-		arg_30_0:_realOpenCritterBuildingView(arg_30_1, arg_30_2, arg_30_3)
+		self:_realOpenCritterBuildingView(buildingUid, defaultTab, critterUid)
 	end
 
 	CritterController.instance:dispatchEvent(CritterEvent.onEnterCritterBuildingView)
@@ -426,75 +454,79 @@ function var_0_0.openCritterBuildingView(arg_30_0, arg_30_1, arg_30_2, arg_30_3)
 	return true
 end
 
-function var_0_0._realOpenCritterBuildingView(arg_31_0, arg_31_1, arg_31_2, arg_31_3)
-	arg_31_1 = arg_31_1 or arg_31_0._tmpCritterBuildingUid
-	arg_31_2 = arg_31_2 or arg_31_0._tmpCritterDefaultTab
-	arg_31_3 = arg_31_3 or arg_31_0._tmpCritterUid
+function ManufactureController:_realOpenCritterBuildingView(buildingUid, defaultTab, critterUid)
+	buildingUid = buildingUid or self._tmpCritterBuildingUid
+	defaultTab = defaultTab or self._tmpCritterDefaultTab
+	critterUid = critterUid or self._tmpCritterUid
 
-	if not arg_31_1 then
+	if not buildingUid then
 		return
 	end
 
 	ViewMgr.instance:openView(ViewName.RoomCritterBuildingView, {
-		buildingUid = arg_31_1,
-		defaultTab = arg_31_2,
-		critterUid = arg_31_3
+		buildingUid = buildingUid,
+		defaultTab = defaultTab,
+		critterUid = critterUid
 	})
-	arg_31_0:dispatchEvent(ManufactureEvent.PlayCritterBuildingBgm, 0, true)
+	self:dispatchEvent(ManufactureEvent.PlayCritterBuildingBgm, 0, true)
 end
 
-function var_0_0.closeCritterBuildingView(arg_32_0, arg_32_1)
-	if arg_32_1 then
-		arg_32_0:dispatchEvent(ManufactureEvent.PlayCritterBuildingBgm, RoomManufactureEnum.AudioDelayTime, false)
+function ManufactureController:closeCritterBuildingView(isDelayAudio)
+	if isDelayAudio then
+		self:dispatchEvent(ManufactureEvent.PlayCritterBuildingBgm, RoomManufactureEnum.AudioDelayTime, false)
 	end
 
 	ViewMgr.instance:closeView(ViewName.RoomCritterBuildingView)
 end
 
-function var_0_0._openCritterBuildingViewCameraTweenFinish(arg_33_0)
-	arg_33_0._tmpCritterBuildingUid = nil
-	arg_33_0._tmpCritterDefaultTab = nil
-	arg_33_0._tmpCritterUid = nil
+function ManufactureController:_openCritterBuildingViewCameraTweenFinish()
+	self._tmpCritterBuildingUid = nil
+	self._tmpCritterDefaultTab = nil
+	self._tmpCritterUid = nil
 
-	CritterController.instance:dispatchEvent(CritterEvent.CritterBuildingCameraTweenFinish, arg_33_0._tmpCritterDefaultTab)
+	CritterController.instance:dispatchEvent(CritterEvent.CritterBuildingCameraTweenFinish, self._tmpCritterDefaultTab)
 end
 
-function var_0_0.openCritterPlaceView(arg_34_0, arg_34_1)
+function ManufactureController:openCritterPlaceView(buildingUid)
 	ViewMgr.instance:openView(ViewName.RoomCritterPlaceView, {
-		buildingUid = arg_34_1
+		buildingUid = buildingUid
 	})
 end
 
-function var_0_0.openOverView(arg_35_0, arg_35_1)
-	if not ManufactureModel.instance:isManufactureUnlock(true) then
+function ManufactureController:openOverView(openFromRest)
+	local isUnlock = ManufactureModel.instance:isManufactureUnlock(true)
+
+	if not isUnlock then
 		return
 	end
 
-	local var_35_0 = ManufactureModel.instance:getAllPlacedManufactureBuilding()
+	local allPlacedManufactureBuildingList = ManufactureModel.instance:getAllPlacedManufactureBuilding()
 
-	if not var_35_0 or #var_35_0 <= 0 then
+	if not allPlacedManufactureBuildingList or #allPlacedManufactureBuildingList <= 0 then
 		GameFacade.showToast(ToastEnum.RoomNoPlaceManufactureBuilding)
 
 		return
 	end
 
 	ViewMgr.instance:openView(ViewName.RoomOverView, {
-		openFromRest = arg_35_1
+		openFromRest = openFromRest
 	})
 
 	return true
 end
 
-function var_0_0.openRoomTradeView(arg_36_0, arg_36_1, arg_36_2)
-	if RoomTradeTaskModel.instance:getOpenOrderLevel() > ManufactureModel.instance:getTradeLevel() then
+function ManufactureController:openRoomTradeView(buildingUid, defaultTab)
+	local unlockLevel = RoomTradeTaskModel.instance:getOpenOrderLevel()
+
+	if unlockLevel > ManufactureModel.instance:getTradeLevel() then
 		GameFacade.showToast(RoomEnum.Toast.RoomTradeLowLevel)
 
 		return
 	end
 
-	local var_36_0 = ManufactureModel.instance:getTradeBuildingListInOrder()
+	local buildingList = ManufactureModel.instance:getTradeBuildingListInOrder()
 
-	if not var_36_0 or #var_36_0 <= 0 then
+	if not buildingList or #buildingList <= 0 then
 		GameFacade.showToast(ToastEnum.RoomNoTradeBuilding)
 
 		return
@@ -502,34 +534,36 @@ function var_0_0.openRoomTradeView(arg_36_0, arg_36_1, arg_36_2)
 
 	RoomRpc.instance:sendGetFrozenItemInfoRequest()
 
-	arg_36_1 = arg_36_1 or var_36_0[1].buildingUid
+	buildingUid = buildingUid or buildingList[1].buildingUid
 
-	local var_36_1 = RoomCameraController.instance:getRoomCamera()
+	local roomCamera = RoomCameraController.instance:getRoomCamera()
 
-	local function var_36_2()
-		arg_36_2 = arg_36_2 or 1
+	local function openViewFunc()
+		defaultTab = defaultTab or 1
 
 		ViewMgr.instance:openView(ViewName.RoomTradeView, {
-			defaultTab = arg_36_2
+			defaultTab = defaultTab
 		})
 	end
 
-	if var_36_1 and arg_36_1 then
-		local var_36_3 = var_36_1:getCameraState()
-		local var_36_4 = var_36_1:getCameraParam()
-		local var_36_5 = LuaUtil.deepCopy(var_36_4)
+	if roomCamera and buildingUid then
+		local cameraState = roomCamera:getCameraState()
+		local cameraParam = roomCamera:getCameraParam()
+		local recordCameraParam = LuaUtil.deepCopy(cameraParam)
 
-		ManufactureModel.instance:setCameraRecord(var_36_3, var_36_5)
-		RoomCameraController.instance:tweenCameraFocusBuildingUseCameraId(arg_36_1, RoomTradeEnum.CameraId, var_36_2)
+		ManufactureModel.instance:setCameraRecord(cameraState, recordCameraParam)
+		RoomCameraController.instance:tweenCameraFocusBuildingUseCameraId(buildingUid, RoomTradeEnum.CameraId, openViewFunc)
 	else
-		var_36_2()
+		openViewFunc()
 	end
 
 	return true
 end
 
-function var_0_0.openRoomBackpackView(arg_38_0)
-	if not ManufactureModel.instance:isManufactureUnlock(true) then
+function ManufactureController:openRoomBackpackView()
+	local isUnlock = ManufactureModel.instance:isManufactureUnlock(true)
+
+	if not isUnlock then
 		return
 	end
 
@@ -538,18 +572,22 @@ function var_0_0.openRoomBackpackView(arg_38_0)
 	return true
 end
 
-function var_0_0.jump2PlaceManufactureBuildingView(arg_39_0)
-	if RoomController.instance:isEditMode() then
+function ManufactureController:jump2PlaceManufactureBuildingView()
+	local isEditMode = RoomController.instance:isEditMode()
+
+	if isEditMode then
 		GameFacade.showToast(RoomEnum.Toast.TaskAlreadyInEditMode)
 	else
-		if ViewMgr.instance:isOpen(ViewName.RoomTradeView) then
+		local isOpenTradeView = ViewMgr.instance:isOpen(ViewName.RoomTradeView)
+
+		if isOpenTradeView then
 			RoomTradeController.instance:dispatchEvent(RoomTradeEvent.PlayCloseTVAnim)
 		end
 
-		local var_39_0 = ViewMgr.instance:isOpen(ViewName.RoomBackpackView)
-		local var_39_1 = ViewMgr.instance:isOpen(ViewName.RoomOverView)
+		local isOpenRoomBackpackView = ViewMgr.instance:isOpen(ViewName.RoomBackpackView)
+		local isOpenOverView = ViewMgr.instance:isOpen(ViewName.RoomOverView)
 
-		if var_39_0 or var_39_1 then
+		if isOpenRoomBackpackView or isOpenOverView then
 			AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_state_normal)
 		end
 
@@ -559,60 +597,68 @@ function var_0_0.jump2PlaceManufactureBuildingView(arg_39_0)
 	end
 end
 
-function var_0_0.clickWrongBtn(arg_40_0, arg_40_1, arg_40_2)
-	if ViewMgr.instance:isOpen(ViewName.RoomManufactureWrongTipView) and arg_40_0._lastWrongBuildingUid == arg_40_1 then
-		arg_40_0:closeWrongTipView()
+function ManufactureController:clickWrongBtn(buildingUid, isRight)
+	local isShowing = ViewMgr.instance:isOpen(ViewName.RoomManufactureWrongTipView)
+
+	if isShowing and self._lastWrongBuildingUid == buildingUid then
+		self:closeWrongTipView()
 	else
-		arg_40_0:clearSelectedSlotItem()
-		arg_40_0:clearSelectCritterSlotItem()
+		self:clearSelectedSlotItem()
+		self:clearSelectCritterSlotItem()
 		ViewMgr.instance:openView(ViewName.RoomManufactureWrongTipView, {
-			buildingUid = arg_40_1,
-			isRight = arg_40_2
+			buildingUid = buildingUid,
+			isRight = isRight
 		})
 
-		arg_40_0._lastWrongBuildingUid = arg_40_1
+		self._lastWrongBuildingUid = buildingUid
 	end
 end
 
-function var_0_0.clickWrongJump(arg_41_0, arg_41_1, arg_41_2, arg_41_3, arg_41_4)
-	if not arg_41_1 then
+function ManufactureController:clickWrongJump(wrongType, manufactureItem, buildingType, param)
+	if not wrongType then
 		return
 	end
 
-	local var_41_0 = RoomManufactureEnum.WrongTypeHandlerFunc[arg_41_1]
+	local handlerFunc = RoomManufactureEnum.WrongTypeHandlerFunc[wrongType]
 
-	if not var_41_0 then
+	if not handlerFunc then
 		return
 	end
 
-	if var_41_0(arg_41_0, arg_41_2, arg_41_3, arg_41_4) then
-		arg_41_0:closeWrongTipView()
+	local result = handlerFunc(self, manufactureItem, buildingType, param)
+
+	if result then
+		self:closeWrongTipView()
 	end
 end
 
-function var_0_0._addPreMat(arg_42_0, arg_42_1, arg_42_2, arg_42_3)
-	local var_42_0
-	local var_42_1 = arg_42_3.isOverView
-	local var_42_2 = arg_42_2 == RoomBuildingEnum.BuildingType.Collect
-	local var_42_3 = RoomMapBuildingModel.instance:getBuildingListByType(arg_42_2, true)
+function ManufactureController:_addPreMat(manufactureItem, buildingType, param)
+	local targetBuildingMO
+	local isOverView = param.isOverView
+	local isCollect = buildingType == RoomBuildingEnum.BuildingType.Collect
+	local buildingMOList = RoomMapBuildingModel.instance:getBuildingListByType(buildingType, true)
 
-	if var_42_3 and #var_42_3 > 0 then
-		if var_42_2 then
-			for iter_42_0, iter_42_1 in ipairs(var_42_3) do
-				if arg_42_0:getNextEmptySlot(iter_42_1.id) then
-					var_42_0 = iter_42_1
+	if buildingMOList and #buildingMOList > 0 then
+		if isCollect then
+			for _, buildingMO in ipairs(buildingMOList) do
+				local nextEmptySlotId = self:getNextEmptySlot(buildingMO.id)
+
+				if nextEmptySlotId then
+					targetBuildingMO = buildingMO
 
 					break
 				end
 			end
 
-			if not var_42_0 then
-				var_42_0 = var_42_3[1]
+			if not targetBuildingMO then
+				targetBuildingMO = buildingMOList[1]
 			end
 		else
-			for iter_42_2, iter_42_3 in ipairs(var_42_3) do
-				if ManufactureConfig.instance:isManufactureItemBelongBuilding(iter_42_3.buildingId, arg_42_1) then
-					var_42_0 = iter_42_3
+			for _, buildingMO in ipairs(buildingMOList) do
+				local isBelong = ManufactureConfig.instance:isManufactureItemBelongBuilding(buildingMO.buildingId, manufactureItem)
+
+				if isBelong then
+					targetBuildingMO = buildingMO
 
 					break
 				end
@@ -620,68 +666,77 @@ function var_0_0._addPreMat(arg_42_0, arg_42_1, arg_42_2, arg_42_3)
 		end
 	end
 
-	if not var_42_0 then
+	if not targetBuildingMO then
 		return false
 	end
 
-	if var_42_1 then
-		arg_42_0:dispatchEvent(ManufactureEvent.ManufactureOverViewFocusAddPop, var_42_0.id, arg_42_1)
+	if isOverView then
+		self:dispatchEvent(ManufactureEvent.ManufactureOverViewFocusAddPop, targetBuildingMO.id, manufactureItem)
 	else
-		arg_42_0:openManufactureBuildingViewByBuilding(var_42_0, true, false, arg_42_1)
+		self:openManufactureBuildingViewByBuilding(targetBuildingMO, true, false, manufactureItem)
 	end
 
 	return true
 end
 
-function var_0_0._lvUpBuilding(arg_43_0, arg_43_1, arg_43_2, arg_43_3)
-	local var_43_0
-	local var_43_1 = 0
-	local var_43_2 = RoomMapBuildingModel.instance:getBuildingListByType(arg_43_2, true)
+function ManufactureController:_lvUpBuilding(manufactureItem, buildingType, param)
+	local targetBuildingMO
+	local tmpTargetLv = 0
+	local buildingMOList = RoomMapBuildingModel.instance:getBuildingListByType(buildingType, true)
 
-	if var_43_2 and #var_43_2 > 0 then
-		for iter_43_0, iter_43_1 in ipairs(var_43_2) do
-			local var_43_3 = iter_43_1.id
+	if buildingMOList and #buildingMOList > 0 then
+		for _, buildingMO in ipairs(buildingMOList) do
+			local buildingUid = buildingMO.id
+			local isBelong = ManufactureConfig.instance:isManufactureItemBelongBuilding(buildingMO.buildingId, manufactureItem)
 
-			if ManufactureConfig.instance:isManufactureItemBelongBuilding(iter_43_1.buildingId, arg_43_1) then
-				local var_43_4 = ManufactureModel.instance:isMaxLevel(var_43_3)
-				local var_43_5 = iter_43_1.level
+			if isBelong then
+				local isMaxLevel = ManufactureModel.instance:isMaxLevel(buildingUid)
+				local buildingLevel = buildingMO.level
 
-				if not var_43_4 and var_43_1 < var_43_5 then
-					var_43_0 = iter_43_1
-					var_43_1 = var_43_5
+				if not isMaxLevel and tmpTargetLv < buildingLevel then
+					targetBuildingMO = buildingMO
+					tmpTargetLv = buildingLevel
 				end
 			end
 		end
 	end
 
-	if not var_43_0 then
+	if not targetBuildingMO then
 		return false
 	end
 
-	arg_43_0:jumpToManufactureBuildingLevelUpView(var_43_0.id)
+	self:jumpToManufactureBuildingLevelUpView(targetBuildingMO.id)
 
 	return true
 end
 
-function var_0_0._linPath(arg_44_0, arg_44_1, arg_44_2, arg_44_3)
-	if ManufactureModel.instance:getTradeLevel() >= ManufactureConfig.instance:getUnlockSystemTradeLevel(RoomTradeEnum.LevelUnlock.TransportSystemOpen) then
-		local var_44_0 = RoomMapTransportPathModel.instance:getTransportPathMOBy2Type(arg_44_2, arg_44_3.pathToType)
-		local var_44_1 = var_44_0 and var_44_0:isLinkFinish()
-		local var_44_2 = var_44_0 and var_44_0:hasCritterWorking()
+function ManufactureController:_linPath(manufactureItem, buildingType, param)
+	local tradeLv = ManufactureModel.instance:getTradeLevel()
+	local unlockLv = ManufactureConfig.instance:getUnlockSystemTradeLevel(RoomTradeEnum.LevelUnlock.TransportSystemOpen)
+	local isOpen = unlockLv <= tradeLv
 
-		if var_44_1 and not var_44_2 then
-			arg_44_0:closeWrongTipView()
+	if isOpen then
+		local pathMO = RoomMapTransportPathModel.instance:getTransportPathMOBy2Type(buildingType, param.pathToType)
+		local isLinkFinish = pathMO and pathMO:isLinkFinish()
+		local hasCritterWork = pathMO and pathMO:hasCritterWorking()
+
+		if isLinkFinish and not hasCritterWork then
+			self:closeWrongTipView()
 			ViewMgr.instance:closeView(ViewName.RoomOverView, true)
 
-			local var_44_3 = RoomTransportHelper.fromTo2SiteType(arg_44_2, arg_44_3.pathToType)
+			local siteType = RoomTransportHelper.fromTo2SiteType(buildingType, param.pathToType)
 
-			RoomTransportController.instance:openTransportSiteView(var_44_3, RoomEnum.CameraState.Overlook)
+			RoomTransportController.instance:openTransportSiteView(siteType, RoomEnum.CameraState.Overlook)
 
-			if ViewMgr.instance:isOpen(ViewName.RoomCritterBuildingView) then
-				arg_44_0:closeCritterBuildingView(true)
+			local isOpenCritterBuildingView = ViewMgr.instance:isOpen(ViewName.RoomCritterBuildingView)
+
+			if isOpenCritterBuildingView then
+				self:closeCritterBuildingView(true)
 			end
 
-			if ViewMgr.instance:isOpen(ViewName.RoomManufactureBuildingView) then
+			local isOpenManufactureBuildingView = ViewMgr.instance:isOpen(ViewName.RoomManufactureBuildingView)
+
+			if isOpenManufactureBuildingView then
 				ViewMgr.instance:closeView(ViewName.RoomManufactureBuildingView)
 				ManufactureModel.instance:setCameraRecord()
 			end
@@ -693,250 +748,262 @@ function var_0_0._linPath(arg_44_0, arg_44_1, arg_44_2, arg_44_3)
 	end
 end
 
-function var_0_0.closeWrongTipView(arg_45_0)
+function ManufactureController:closeWrongTipView()
 	ViewMgr.instance:closeView(ViewName.RoomManufactureWrongTipView)
 end
 
-function var_0_0.clickSlotItem(arg_46_0, arg_46_1, arg_46_2, arg_46_3, arg_46_4, arg_46_5, arg_46_6)
-	if not arg_46_4 then
-		local var_46_0 = RoomManufactureEnum.SlotState.Locked
-		local var_46_1 = RoomMapBuildingModel.instance:getBuildingMOById(arg_46_1)
+function ManufactureController:clickSlotItem(buildingUid, slotId, isOverView, clickProductBtn, slotIndex, highLightManufactureItem)
+	if not clickProductBtn then
+		local slotState = RoomManufactureEnum.SlotState.Locked
+		local buildingMO = RoomMapBuildingModel.instance:getBuildingMOById(buildingUid)
 
-		if var_46_1 then
-			var_46_0 = var_46_1:getSlotState(arg_46_2)
+		if buildingMO then
+			slotState = buildingMO:getSlotState(slotId)
 		end
 
-		if var_46_0 == RoomManufactureEnum.SlotState.Locked then
-			local var_46_2 = ManufactureConfig.instance:getBuildingUpgradeGroup(var_46_1.buildingId)
-			local var_46_3 = ManufactureConfig.instance:getSlotUnlockNeedLevel(var_46_2, arg_46_5)
+		if slotState == RoomManufactureEnum.SlotState.Locked then
+			local upgradeGroup = ManufactureConfig.instance:getBuildingUpgradeGroup(buildingMO.buildingId)
+			local unlockLevel = ManufactureConfig.instance:getSlotUnlockNeedLevel(upgradeGroup, slotIndex)
 
-			GameFacade.showToast(ToastEnum.RoomSlotLocked, var_46_3)
+			GameFacade.showToast(ToastEnum.RoomSlotLocked, unlockLevel)
 
 			return
 		end
 
-		if var_46_0 == RoomManufactureEnum.SlotState.Complete then
-			if arg_46_3 then
-				arg_46_0:gainCompleteManufactureItem()
+		if slotState == RoomManufactureEnum.SlotState.Complete then
+			if isOverView then
+				self:gainCompleteManufactureItem()
 			else
-				arg_46_0:gainCompleteManufactureItem(arg_46_1)
+				self:gainCompleteManufactureItem(buildingUid)
 			end
 
 			return
 		end
 	end
 
-	local var_46_4 = ManufactureModel.instance:getSelectedSlot()
+	local selectedBuildingUid = ManufactureModel.instance:getSelectedSlot()
+	local isShowAddPop = ViewMgr.instance:isOpen(ViewName.RoomManufactureAddPopView)
 
-	if ViewMgr.instance:isOpen(ViewName.RoomManufactureAddPopView) and var_46_4 == arg_46_1 then
-		arg_46_0:clearSelectedSlotItem()
+	if isShowAddPop and selectedBuildingUid == buildingUid then
+		self:clearSelectedSlotItem()
 	else
-		arg_46_0:refreshSelectedSlotId(arg_46_1, true)
-		arg_46_0:clearSelectCritterSlotItem()
-		arg_46_0:closeWrongTipView()
-		ManufactureModel.instance:setReadNewManufactureFormula(arg_46_1)
+		self:refreshSelectedSlotId(buildingUid, true)
+		self:clearSelectCritterSlotItem()
+		self:closeWrongTipView()
+		ManufactureModel.instance:setReadNewManufactureFormula(buildingUid)
 		ViewMgr.instance:openView(ViewName.RoomManufactureAddPopView, {
-			inRight = arg_46_3,
-			highLightManufactureItem = arg_46_6
+			inRight = isOverView,
+			highLightManufactureItem = highLightManufactureItem
 		})
-		arg_46_0:dispatchEvent(ManufactureEvent.ManufactureReadNewFormula)
+		self:dispatchEvent(ManufactureEvent.ManufactureReadNewFormula)
 	end
 end
 
-function var_0_0.refreshSelectedSlotId(arg_47_0, arg_47_1, arg_47_2)
-	if not arg_47_2 and not ViewMgr.instance:isOpen(ViewName.RoomManufactureAddPopView) then
-		arg_47_0:clearSelectedSlotItem()
+function ManufactureController:refreshSelectedSlotId(buildingUid, forceSet)
+	if not forceSet then
+		local isShowAddPop = ViewMgr.instance:isOpen(ViewName.RoomManufactureAddPopView)
 
-		return
+		if not isShowAddPop then
+			self:clearSelectedSlotItem()
+
+			return
+		end
 	end
 
-	local var_47_0 = arg_47_0:getNextEmptySlot(arg_47_1)
+	local nextEmptySlotId = self:getNextEmptySlot(buildingUid)
 
-	ManufactureModel.instance:setSelectedSlot(arg_47_1, var_47_0)
-	arg_47_0:dispatchEvent(ManufactureEvent.ChangeSelectedSlotItem)
+	ManufactureModel.instance:setSelectedSlot(buildingUid, nextEmptySlotId)
+	self:dispatchEvent(ManufactureEvent.ChangeSelectedSlotItem)
 end
 
-function var_0_0.clearSelectedSlotItem(arg_48_0)
+function ManufactureController:clearSelectedSlotItem()
 	ViewMgr.instance:closeView(ViewName.RoomManufactureAddPopView)
 	ManufactureModel.instance:setSelectedSlot()
-	arg_48_0:dispatchEvent(ManufactureEvent.ChangeSelectedSlotItem)
+	self:dispatchEvent(ManufactureEvent.ChangeSelectedSlotItem)
 end
 
-function var_0_0.setManufactureFormulaItemList(arg_49_0, arg_49_1)
-	if RoomTradeModel.instance:isGetOrderInfo() then
-		ManufactureFormulaListModel.instance:setManufactureFormulaItemList(arg_49_1)
+function ManufactureController:setManufactureFormulaItemList(buildingUid)
+	local isGetOrderInfo = RoomTradeModel.instance:isGetOrderInfo()
+
+	if isGetOrderInfo then
+		ManufactureFormulaListModel.instance:setManufactureFormulaItemList(buildingUid)
 	else
 		RoomRpc.instance:sendGetOrderInfoRequest(function()
-			ManufactureFormulaListModel.instance:setManufactureFormulaItemList(arg_49_1)
-		end, arg_49_0)
+			ManufactureFormulaListModel.instance:setManufactureFormulaItemList(buildingUid)
+		end, self)
 	end
 end
 
-function var_0_0.clickFormulaItem(arg_51_0, arg_51_1)
-	local var_51_0, var_51_1 = ManufactureModel.instance:getSelectedSlot()
+function ManufactureController:clickFormulaItem(manufactureItemId)
+	local selectedBuildingUid, selectedSlot = ManufactureModel.instance:getSelectedSlot()
 
-	if not var_51_0 or not var_51_1 then
+	if not selectedBuildingUid or not selectedSlot then
 		GameFacade.showToast(ToastEnum.RoomNotSelectedSlot)
 
 		return
 	end
 
-	local var_51_2 = RoomMapBuildingModel.instance:getBuildingMOById(var_51_0)
-	local var_51_3 = var_51_2 and var_51_2:getSlotState(var_51_1)
+	local buildingMO = RoomMapBuildingModel.instance:getBuildingMOById(selectedBuildingUid)
+	local slotState = buildingMO and buildingMO:getSlotState(selectedSlot)
 
-	if not var_51_3 or var_51_3 ~= RoomManufactureEnum.SlotState.None then
-		logError(string.format("ManufactureController:clickFormulaItem error, slot not empty, buildingUid:%s slotId:%s slotState:%s", var_51_0, var_51_1, var_51_3))
+	if not slotState or slotState ~= RoomManufactureEnum.SlotState.None then
+		logError(string.format("ManufactureController:clickFormulaItem error, slot not empty, buildingUid:%s slotId:%s slotState:%s", selectedBuildingUid, selectedSlot, slotState))
 
 		return
 	end
 
-	local var_51_4 = {
+	local slotOperationInfo = {
 		priority = -1,
-		slotId = var_51_1,
+		slotId = selectedSlot,
 		operation = RoomManufactureEnum.SlotOperation.Add,
-		productionId = arg_51_1
+		productionId = manufactureItemId
 	}
 
-	arg_51_0:setManufactureItems(var_51_0, {
-		var_51_4
+	self:setManufactureItems(selectedBuildingUid, {
+		slotOperationInfo
 	})
 end
 
-function var_0_0.clickRemoveSlotManufactureItem(arg_52_0, arg_52_1, arg_52_2)
-	local var_52_0 = RoomMapBuildingModel.instance:getBuildingMOById(arg_52_1)
-	local var_52_1 = var_52_0 and var_52_0:getSlotManufactureItemId(arg_52_2)
+function ManufactureController:clickRemoveSlotManufactureItem(buildingUid, slotId)
+	local buildingMO = RoomMapBuildingModel.instance:getBuildingMOById(buildingUid)
+	local manufactureItemId = buildingMO and buildingMO:getSlotManufactureItemId(slotId)
 
-	if not var_52_1 or var_52_1 == 0 then
+	if not manufactureItemId or manufactureItemId == 0 then
 		return
 	end
 
-	local var_52_2 = {
+	local slotOperationInfo = {
 		priority = -1,
-		slotId = arg_52_2,
+		slotId = slotId,
 		operation = RoomManufactureEnum.SlotOperation.Cancel,
-		productionId = var_52_1
+		productionId = manufactureItemId
 	}
-	local var_52_3 = var_52_0 and var_52_0:getSlotState(arg_52_2, true)
+	local slotState = buildingMO and buildingMO:getSlotState(slotId, true)
 
-	if var_52_3 == RoomManufactureEnum.SlotState.Stop or var_52_3 == RoomManufactureEnum.SlotState.Running then
+	if slotState == RoomManufactureEnum.SlotState.Stop or slotState == RoomManufactureEnum.SlotState.Running then
 		GameFacade.showMessageBox(MessageBoxIdDefine.RoomRemoveHasProgressManufactureItem, MsgBoxEnum.BoxType.Yes_No, function()
-			arg_52_0:setManufactureItems(arg_52_1, {
-				var_52_2
+			self:setManufactureItems(buildingUid, {
+				slotOperationInfo
 			})
 		end)
 	else
-		arg_52_0:setManufactureItems(arg_52_1, {
-			var_52_2
+		self:setManufactureItems(buildingUid, {
+			slotOperationInfo
 		})
 	end
 end
 
-function var_0_0.moveManufactureItem(arg_54_0, arg_54_1, arg_54_2, arg_54_3)
-	local var_54_0 = RoomMapBuildingModel.instance:getBuildingMOById(arg_54_1)
-	local var_54_1 = var_54_0 and var_54_0:getSlotManufactureItemId(arg_54_2)
+function ManufactureController:moveManufactureItem(buildingUid, slotId, isDown)
+	local buildingMO = RoomMapBuildingModel.instance:getBuildingMOById(buildingUid)
+	local manufactureItemId = buildingMO and buildingMO:getSlotManufactureItemId(slotId)
 
-	if not var_54_1 or var_54_1 == 0 then
+	if not manufactureItemId or manufactureItemId == 0 then
 		return
 	end
 
-	local var_54_2 = var_54_0 and var_54_0:getSlotState(arg_54_2, true)
-	local var_54_3 = var_54_2 == RoomManufactureEnum.SlotState.Running
-	local var_54_4 = var_54_2 == RoomManufactureEnum.SlotState.Stop
-	local var_54_5 = var_54_2 == RoomManufactureEnum.SlotState.Wait
+	local slotState = buildingMO and buildingMO:getSlotState(slotId, true)
+	local isRunning = slotState == RoomManufactureEnum.SlotState.Running
+	local isStop = slotState == RoomManufactureEnum.SlotState.Stop
+	local isWait = slotState == RoomManufactureEnum.SlotState.Wait
 
-	if var_54_3 or var_54_4 or var_54_5 then
-		local var_54_6 = var_54_0:getSlotPriority(arg_54_2) == RoomManufactureEnum.FirstSlotPriority
+	if isRunning or isStop or isWait then
+		local priority = buildingMO:getSlotPriority(slotId)
+		local isFirst = priority == RoomManufactureEnum.FirstSlotPriority
+		local isValid = isFirst and isDown or not isFirst and not isDown
 
-		if var_54_6 and arg_54_3 or not var_54_6 and not arg_54_3 then
-			local var_54_7 = {
+		if isValid then
+			local slotOperationInfo = {
 				productionId = 0,
 				priority = -1,
-				slotId = arg_54_2,
-				operation = arg_54_3 and RoomManufactureEnum.SlotOperation.MoveBottom or RoomManufactureEnum.SlotOperation.MoveTop
+				slotId = slotId,
+				operation = isDown and RoomManufactureEnum.SlotOperation.MoveBottom or RoomManufactureEnum.SlotOperation.MoveTop
 			}
 
-			arg_54_0:setManufactureItems(arg_54_1, {
-				var_54_7
+			self:setManufactureItems(buildingUid, {
+				slotOperationInfo
 			})
 		end
 	end
 end
 
-function var_0_0.getFormatTime(arg_55_0, arg_55_1, arg_55_2)
-	local var_55_0 = ""
-	local var_55_1 = arg_55_2 and TimeUtil.DateEnFormat.Day or luaLang("time_day")
-	local var_55_2 = arg_55_2 and TimeUtil.DateEnFormat.Hour or luaLang("time_hour2")
-	local var_55_3 = arg_55_2 and TimeUtil.DateEnFormat.Minute or luaLang("time_minute2")
-	local var_55_4, var_55_5, var_55_6, var_55_7 = TimeUtil.secondsToDDHHMMSS(arg_55_1)
+function ManufactureController:getFormatTime(timeSecond, useEn)
+	local result = ""
+	local daySuffix = useEn and TimeUtil.DateEnFormat.Day or luaLang("time_day")
+	local hourSuffix = useEn and TimeUtil.DateEnFormat.Hour or luaLang("time_hour2")
+	local minuteSuffix = useEn and TimeUtil.DateEnFormat.Minute or luaLang("time_minute2")
+	local day, hour, min, sec = TimeUtil.secondsToDDHHMMSS(timeSecond)
 
-	if var_55_4 > 0 then
-		var_55_0 = string.format("%s%s%s%s", var_55_4, var_55_1, var_55_5, var_55_2)
-	elseif var_55_5 > 0 then
-		if var_55_6 > 0 then
-			var_55_0 = string.format("%s%s%s%s", var_55_5, var_55_2, var_55_6, var_55_3)
+	if day > 0 then
+		result = string.format("%s%s%s%s", day, daySuffix, hour, hourSuffix)
+	elseif hour > 0 then
+		if min > 0 then
+			result = string.format("%s%s%s%s", hour, hourSuffix, min, minuteSuffix)
 		else
-			var_55_0 = string.format("%s%s", var_55_5, var_55_2)
+			result = string.format("%s%s", hour, hourSuffix)
 		end
 	else
-		if var_55_6 <= 0 then
-			var_55_6 = "<1"
+		if min <= 0 then
+			min = "<1"
 		end
 
-		var_55_0 = string.format("%s%s", var_55_6, var_55_3)
+		result = string.format("%s%s", min, minuteSuffix)
 	end
 
-	return var_55_0
+	return result
 end
 
-function var_0_0.getNextEmptySlot(arg_56_0, arg_56_1)
-	local var_56_0
-	local var_56_1 = ManufactureModel.instance:getManufactureMOById(arg_56_1)
+function ManufactureController:getNextEmptySlot(buildingUid)
+	local result
+	local manufactureInfo = ManufactureModel.instance:getManufactureMOById(buildingUid)
 
-	if var_56_1 then
-		var_56_0 = var_56_1:getNextEmptySlot()
+	if manufactureInfo then
+		result = manufactureInfo:getNextEmptySlot()
 	end
 
-	return var_56_0
+	return result
 end
 
-function var_0_0.checkPlaceProduceBuilding(arg_57_0, arg_57_1)
-	local var_57_0 = false
-	local var_57_1 = ManufactureConfig.instance:getManufactureItemBelongBuildingType(arg_57_1)
-	local var_57_2 = RoomMapBuildingModel.instance:getBuildingListByType(var_57_1)
+function ManufactureController:checkPlaceProduceBuilding(manufactureItemId)
+	local result = false
+	local manufactureBuildingType = ManufactureConfig.instance:getManufactureItemBelongBuildingType(manufactureItemId)
+	local placedManufactureBuildingList = RoomMapBuildingModel.instance:getBuildingListByType(manufactureBuildingType)
 
-	if var_57_2 and #var_57_2 > 0 then
-		for iter_57_0, iter_57_1 in ipairs(var_57_2) do
-			if ManufactureConfig.instance:isManufactureItemBelongBuilding(iter_57_1.buildingId, arg_57_1) then
-				var_57_0 = true
+	if placedManufactureBuildingList and #placedManufactureBuildingList > 0 then
+		for _, buildingMO in ipairs(placedManufactureBuildingList) do
+			local isBelong = ManufactureConfig.instance:isManufactureItemBelongBuilding(buildingMO.buildingId, manufactureItemId)
+
+			if isBelong then
+				result = true
 
 				break
 			end
 		end
 	end
 
-	return var_57_0
+	return result
 end
 
-function var_0_0.checkProduceBuildingLevel(arg_58_0, arg_58_1)
-	local var_58_0
-	local var_58_1 = true
-	local var_58_2 = 0
-	local var_58_3 = ManufactureConfig.instance:getManufactureItemBelongBuildingType(arg_58_1)
-	local var_58_4 = RoomMapBuildingModel.instance:getBuildingListByType(var_58_3)
+function ManufactureController:checkProduceBuildingLevel(manufactureItemId)
+	local buildingUid
+	local needUpgrade = true
+	local needLevel = 0
+	local manufactureBuildingType = ManufactureConfig.instance:getManufactureItemBelongBuildingType(manufactureItemId)
+	local placedManufactureBuildingList = RoomMapBuildingModel.instance:getBuildingListByType(manufactureBuildingType)
 
-	if var_58_4 and #var_58_4 > 0 then
-		for iter_58_0, iter_58_1 in ipairs(var_58_4) do
-			local var_58_5 = iter_58_1.buildingId
+	if placedManufactureBuildingList and #placedManufactureBuildingList > 0 then
+		for _, buildingMO in ipairs(placedManufactureBuildingList) do
+			local buildingId = buildingMO.buildingId
+			local isBelong = ManufactureConfig.instance:isManufactureItemBelongBuilding(buildingId, manufactureItemId)
 
-			if ManufactureConfig.instance:isManufactureItemBelongBuilding(var_58_5, arg_58_1) then
-				var_58_0 = iter_58_1.id
+			if isBelong then
+				buildingUid = buildingMO.id
 
-				local var_58_6 = iter_58_1:getLevel()
+				local buildingLevel = buildingMO:getLevel()
 
-				var_58_2 = ManufactureConfig.instance:getManufactureItemNeedLevel(var_58_5, arg_58_1)
+				needLevel = ManufactureConfig.instance:getManufactureItemNeedLevel(buildingId, manufactureItemId)
 
-				if var_58_2 <= var_58_6 then
-					var_58_1 = false
+				if needLevel <= buildingLevel then
+					needUpgrade = false
 
 					break
 				end
@@ -944,449 +1011,457 @@ function var_0_0.checkProduceBuildingLevel(arg_58_0, arg_58_1)
 		end
 	end
 
-	return var_58_1, var_58_0, var_58_2
+	return needUpgrade, buildingUid, needLevel
 end
 
-function var_0_0.oneKeySelectCustomManufactureItem(arg_59_0, arg_59_1, arg_59_2, arg_59_3)
-	local var_59_0, var_59_1 = OneKeyAddPopListModel.instance:getSelectedManufactureItem()
+function ManufactureController:oneKeySelectCustomManufactureItem(manufactureItemId, count, forceSet)
+	local curManufactureItem, curCount = OneKeyAddPopListModel.instance:getSelectedManufactureItem()
 
-	if not arg_59_3 and var_59_0 == arg_59_1 and arg_59_2 == var_59_1 then
+	if not forceSet and curManufactureItem == manufactureItemId and count == curCount then
 		return
 	end
 
-	OneKeyAddPopListModel.instance:setSelectedManufactureItem(arg_59_1, arg_59_2)
-	arg_59_0:dispatchEvent(ManufactureEvent.OneKeySelectCustomManufactureItem)
+	OneKeyAddPopListModel.instance:setSelectedManufactureItem(manufactureItemId, count)
+	self:dispatchEvent(ManufactureEvent.OneKeySelectCustomManufactureItem)
 end
 
-function var_0_0.clickCritterSlotItem(arg_60_0, arg_60_1, arg_60_2)
-	local var_60_0 = false
-	local var_60_1 = RoomMapBuildingModel.instance:getBuildingMOById(arg_60_1)
+function ManufactureController:clickCritterSlotItem(buildingUid, critterSlotId)
+	local isUnlock = false
+	local buildingMO = RoomMapBuildingModel.instance:getBuildingMOById(buildingUid)
 
-	if var_60_1 and var_60_1:getCanPlaceCritterCount() >= arg_60_2 + 1 then
-		var_60_0 = true
+	if buildingMO then
+		local critterCount = buildingMO:getCanPlaceCritterCount()
+
+		if critterCount >= critterSlotId + 1 then
+			isUnlock = true
+		end
 	end
 
-	if not var_60_0 then
+	if not isUnlock then
 		return
 	end
 
-	local var_60_2 = ViewMgr.instance:isOpen(ViewName.RoomCritterListView)
-	local var_60_3 = ManufactureModel.instance:getSelectedCritterSlot()
+	local isShowCritterListView = ViewMgr.instance:isOpen(ViewName.RoomCritterListView)
+	local lastSelectedBuildingUid = ManufactureModel.instance:getSelectedCritterSlot()
 
-	if var_60_2 and var_60_3 == arg_60_1 then
-		arg_60_0:clearSelectCritterSlotItem()
+	if isShowCritterListView and lastSelectedBuildingUid == buildingUid then
+		self:clearSelectCritterSlotItem()
 	else
-		arg_60_0:clearSelectedSlotItem()
-		arg_60_0:closeWrongTipView()
-		arg_60_0:refreshSelectedCritterSlotId(arg_60_1, true)
+		self:clearSelectedSlotItem()
+		self:closeWrongTipView()
+		self:refreshSelectedCritterSlotId(buildingUid, true)
 		ViewMgr.instance:openView(ViewName.RoomCritterListView, {
-			buildingUid = arg_60_1
+			buildingUid = buildingUid
 		})
 	end
 end
 
-function var_0_0.refreshSelectedCritterSlotId(arg_61_0, arg_61_1, arg_61_2)
-	if not arg_61_2 and not ViewMgr.instance:isOpen(ViewName.RoomCritterListView) then
-		arg_61_0:clearSelectCritterSlotItem()
+function ManufactureController:refreshSelectedCritterSlotId(buildingUid, forceSet)
+	if not forceSet then
+		local isShowCritterListView = ViewMgr.instance:isOpen(ViewName.RoomCritterListView)
 
-		return
+		if not isShowCritterListView then
+			self:clearSelectCritterSlotItem()
+
+			return
+		end
 	end
 
-	local var_61_0 = arg_61_0:getNextEmptyCritterSlot(arg_61_1)
+	local nextEmptyCritterSlotId = self:getNextEmptyCritterSlot(buildingUid)
 
-	ManufactureModel.instance:setSelectedCritterSlot(arg_61_1, var_61_0)
-	arg_61_0:dispatchEvent(ManufactureEvent.ChangeSelectedCritterSlotItem)
+	ManufactureModel.instance:setSelectedCritterSlot(buildingUid, nextEmptyCritterSlotId)
+	self:dispatchEvent(ManufactureEvent.ChangeSelectedCritterSlotItem)
 end
 
-function var_0_0.getNextEmptyCritterSlot(arg_62_0, arg_62_1)
-	local var_62_0
-	local var_62_1 = ManufactureModel.instance:getManufactureMOById(arg_62_1)
+function ManufactureController:getNextEmptyCritterSlot(buildingUid)
+	local result
+	local manufactureInfo = ManufactureModel.instance:getManufactureMOById(buildingUid)
 
-	if var_62_1 then
-		var_62_0 = var_62_1:getNextEmptyCritterSlot()
+	if manufactureInfo then
+		result = manufactureInfo:getNextEmptyCritterSlot()
 	end
 
-	return var_62_0
+	return result
 end
 
-function var_0_0.clearSelectCritterSlotItem(arg_63_0)
+function ManufactureController:clearSelectCritterSlotItem()
 	ViewMgr.instance:closeView(ViewName.RoomCritterListView)
 	ManufactureModel.instance:setSelectedCritterSlot()
-	arg_63_0:dispatchEvent(ManufactureEvent.ChangeSelectedCritterSlotItem)
+	self:dispatchEvent(ManufactureEvent.ChangeSelectedCritterSlotItem)
 end
 
-function var_0_0.clickCritterItem(arg_64_0, arg_64_1)
-	local var_64_0, var_64_1 = ManufactureModel.instance:getSelectedCritterSlot()
+function ManufactureController:clickCritterItem(critterUid)
+	local selectedBuildingUid, selectedCritterSlot = ManufactureModel.instance:getSelectedCritterSlot()
 
-	if not var_64_0 then
+	if not selectedBuildingUid then
 		logError(string.format("ManufactureController:clickCritterItem error, not select building"))
 
 		return
 	end
 
-	local var_64_2 = ManufactureModel.instance:getCritterWorkingBuilding(arg_64_1)
+	local workingBuildingUid = ManufactureModel.instance:getCritterWorkingBuilding(critterUid)
+	local isWorkInSelectBuilding = workingBuildingUid == selectedBuildingUid
 
-	if var_64_2 == var_64_0 then
-		local var_64_3 = RoomMapBuildingModel.instance:getBuildingMOById(var_64_2)
-		local var_64_4 = var_64_3 and var_64_3:getCritterWorkSlot(arg_64_1)
+	if isWorkInSelectBuilding then
+		local workingBuildingMO = RoomMapBuildingModel.instance:getBuildingMOById(workingBuildingUid)
+		local workSlotId = workingBuildingMO and workingBuildingMO:getCritterWorkSlot(critterUid)
 
-		arg_64_0:allocateCritter(var_64_2, CritterEnum.InvalidCritterUid, var_64_4)
+		self:allocateCritter(workingBuildingUid, CritterEnum.InvalidCritterUid, workSlotId)
 	else
-		local var_64_5 = false
-		local var_64_6 = false
-		local var_64_7 = RoomMapBuildingModel.instance:getBuildingMOById(var_64_0)
+		local isUnlock = false
+		local isReplace = false
+		local buildingMO = RoomMapBuildingModel.instance:getBuildingMOById(selectedBuildingUid)
 
-		if not var_64_7 then
-			logError(string.format("ManufactureController:clickCritterItem error, can not find buildingUId:%s", var_64_0))
+		if not buildingMO then
+			logError(string.format("ManufactureController:clickCritterItem error, can not find buildingUId:%s", selectedBuildingUid))
 
 			return
 		end
 
-		local var_64_8 = var_64_7:getCanPlaceCritterCount()
+		local critterCount = buildingMO:getCanPlaceCritterCount()
 
-		if var_64_8 == 1 then
-			var_64_1 = 0
-			var_64_6 = true
+		if critterCount == 1 then
+			selectedCritterSlot = 0
+			isReplace = true
 		end
 
-		if not var_64_1 then
+		if not selectedCritterSlot then
 			GameFacade.showToast(ToastEnum.RoomNotSelectedCritterSlot)
 
 			return
 		end
 
-		if var_64_8 >= var_64_1 + 1 then
-			var_64_5 = true
+		if critterCount >= selectedCritterSlot + 1 then
+			isUnlock = true
 		end
 
-		if not var_64_5 then
-			logError(string.format("ManufactureController:clickCritterItem error, critter slot not unlock, buildingUid:%s critterSlotId:%s", var_64_0, var_64_1))
+		if not isUnlock then
+			logError(string.format("ManufactureController:clickCritterItem error, critter slot not unlock, buildingUid:%s critterSlotId:%s", selectedBuildingUid, selectedCritterSlot))
 
 			return
 		end
 
-		local var_64_9 = var_64_7:getWorkingCritter(var_64_1)
+		local oldCritterUid = buildingMO:getWorkingCritter(selectedCritterSlot)
 
-		if var_64_9 and not var_64_6 then
-			logError(string.format("ManufactureController:clickCritterItem error, slot has critter, buildingUid:%s critterSlotId:%s", var_64_0, var_64_1))
+		if oldCritterUid and not isReplace then
+			logError(string.format("ManufactureController:clickCritterItem error, slot has critter, buildingUid:%s critterSlotId:%s", selectedBuildingUid, selectedCritterSlot))
 
 			return
 		end
 
-		local var_64_10 = 0
-		local var_64_11 = CritterModel.instance:getCritterMOByUid(arg_64_1)
+		local critterMood = 0
+		local critterMO = CritterModel.instance:getCritterMOByUid(critterUid)
 
-		if var_64_11 then
-			var_64_10 = var_64_11:getMoodValue()
+		if critterMO then
+			critterMood = critterMO:getMoodValue()
 		end
 
-		if var_64_10 <= 0 then
+		if critterMood <= 0 then
 			GameFacade.showToast(ToastEnum.RoomCritterNoMoodWork)
 
 			return
 		end
 
-		if var_64_9 and var_64_6 then
-			arg_64_0:allocateCritter(var_64_0, CritterEnum.InvalidCritterUid, var_64_1)
+		if oldCritterUid and isReplace then
+			self:allocateCritter(selectedBuildingUid, CritterEnum.InvalidCritterUid, selectedCritterSlot)
 		end
 
-		arg_64_0:allocateCritter(var_64_0, arg_64_1, var_64_1)
+		self:allocateCritter(selectedBuildingUid, critterUid, selectedCritterSlot)
 	end
 end
 
-function var_0_0.clickTransportCritterSlotItem(arg_65_0, arg_65_1)
-	local var_65_0 = ViewMgr.instance:isOpen(ViewName.RoomCritterListView)
-	local var_65_1 = ManufactureModel.instance:getSelectedTransportPath()
+function ManufactureController:clickTransportCritterSlotItem(pathId)
+	local isShowCritterListView = ViewMgr.instance:isOpen(ViewName.RoomCritterListView)
+	local lastSelectedPath = ManufactureModel.instance:getSelectedTransportPath()
 
-	if var_65_0 and var_65_1 == arg_65_1 then
-		arg_65_0:clearSelectTransportPath()
+	if isShowCritterListView and lastSelectedPath == pathId then
+		self:clearSelectTransportPath()
 	else
-		ManufactureModel.instance:setSelectedTransportPath(arg_65_1)
+		ManufactureModel.instance:setSelectedTransportPath(pathId)
 		ViewMgr.instance:openView(ViewName.RoomCritterListView, {
-			pathId = arg_65_1
+			pathId = pathId
 		})
-		arg_65_0:dispatchEvent(ManufactureEvent.ChangeSelectedTransportPath)
+		self:dispatchEvent(ManufactureEvent.ChangeSelectedTransportPath)
 	end
 end
 
-function var_0_0.clearSelectTransportPath(arg_66_0)
+function ManufactureController:clearSelectTransportPath()
 	ViewMgr.instance:closeView(ViewName.RoomCritterListView)
 	ManufactureModel.instance:setSelectedTransportPath()
-	arg_66_0:dispatchEvent(ManufactureEvent.ChangeSelectedTransportPath)
+	self:dispatchEvent(ManufactureEvent.ChangeSelectedTransportPath)
 end
 
-function var_0_0.clickTransportCritterItem(arg_67_0, arg_67_1)
-	local var_67_0 = ManufactureModel.instance:getSelectedTransportPath()
+function ManufactureController:clickTransportCritterItem(critterUid)
+	local allotPathId = ManufactureModel.instance:getSelectedTransportPath()
 
-	if not var_67_0 then
+	if not allotPathId then
 		logError(string.format("ManufactureController:clickTransportCritterItem error, not select transport path"))
 
 		return
 	end
 
-	local var_67_1
-	local var_67_2 = RoomMapTransportPathModel.instance:getTransportPathMOByCritterUid(arg_67_1)
+	local allotCritterUid
+	local workingPathMO = RoomMapTransportPathModel.instance:getTransportPathMOByCritterUid(critterUid)
+	local workingPathId = workingPathMO and workingPathMO.id
+	local isWorkingInCurPath = workingPathId == allotPathId
 
-	if (var_67_2 and var_67_2.id) == var_67_0 then
-		var_67_1 = CritterEnum.InvalidCritterUid
+	if isWorkingInCurPath then
+		allotCritterUid = CritterEnum.InvalidCritterUid
 	else
-		local var_67_3 = RoomMapTransportPathModel.instance:getTransportPathMO(var_67_0)
-		local var_67_4 = var_67_3 and var_67_3.critterUid
+		local allotPathMO = RoomMapTransportPathModel.instance:getTransportPathMO(allotPathId)
+		local pathCritterUid = allotPathMO and allotPathMO.critterUid
 
-		if not var_67_3 or var_67_4 and var_67_4 ~= CritterEnum.InvalidCritterUid and var_67_4 ~= tonumber(CritterEnum.InvalidCritterUid) then
+		if not allotPathMO or pathCritterUid and pathCritterUid ~= CritterEnum.InvalidCritterUid and pathCritterUid ~= tonumber(CritterEnum.InvalidCritterUid) then
 			GameFacade.showToast(ToastEnum.RoomNotSelectedCritterSlot)
 
 			return
 		end
 
-		local var_67_5 = 0
-		local var_67_6 = CritterModel.instance:getCritterMOByUid(arg_67_1)
+		local critterMood = 0
+		local critterMO = CritterModel.instance:getCritterMOByUid(critterUid)
 
-		if var_67_6 then
-			var_67_5 = var_67_6:getMoodValue()
+		if critterMO then
+			critterMood = critterMO:getMoodValue()
 		end
 
-		if var_67_5 <= 0 then
+		if critterMood <= 0 then
 			GameFacade.showToast(ToastEnum.RoomCritterNoMoodWork)
 
 			return
 		end
 
-		var_67_1 = arg_67_1
+		allotCritterUid = critterUid
 	end
 
-	if var_67_0 and var_67_1 then
-		RoomRpc.instance:sendAllotCritterRequestt(var_67_0, var_67_1)
+	if allotPathId and allotCritterUid then
+		RoomRpc.instance:sendAllotCritterRequestt(allotPathId, allotCritterUid)
 	end
 end
 
-function var_0_0.checkTradeLevelCondition(arg_68_0, arg_68_1)
-	local var_68_0 = false
-	local var_68_1
-	local var_68_2
-	local var_68_3
-	local var_68_4 = RoomMapBuildingModel.instance:getBuildingMOById(arg_68_1)
-	local var_68_5 = ManufactureConfig.instance:getBuildingUpgradeGroup(var_68_4 and var_68_4.buildingId)
+function ManufactureController:checkTradeLevelCondition(buildingUid)
+	local result = false
+	local failToast, needDesc, needTradeLevel
+	local buildingMO = RoomMapBuildingModel.instance:getBuildingMOById(buildingUid)
+	local upgradeGroup = ManufactureConfig.instance:getBuildingUpgradeGroup(buildingMO and buildingMO.buildingId)
 
-	if var_68_5 ~= 0 then
-		local var_68_6 = ManufactureModel.instance:getTradeLevel()
+	if upgradeGroup ~= 0 then
+		local tradeLevel = ManufactureModel.instance:getTradeLevel()
 
-		var_68_3 = ManufactureConfig.instance:getNeedTradeLevel(var_68_5, var_68_4.level + 1)
+		needTradeLevel = ManufactureConfig.instance:getNeedTradeLevel(upgradeGroup, buildingMO.level + 1)
 
-		if var_68_3 then
-			var_68_0 = var_68_3 <= var_68_6
+		if needTradeLevel then
+			result = needTradeLevel <= tradeLevel
 		end
 	end
 
-	if not var_68_0 then
-		var_68_1 = ToastEnum.RoomUpgradeFailByTradeLevel
+	if not result then
+		failToast = ToastEnum.RoomUpgradeFailByTradeLevel
 
-		local var_68_7 = luaLang("room_manufacutre_building_level_up_need_trade_level")
-		local var_68_8 = ManufactureConfig.instance:getTradeLevelCfg(var_68_3)
+		local lang = luaLang("room_manufacutre_building_level_up_need_trade_level")
+		local cfg = ManufactureConfig.instance:getTradeLevelCfg(needTradeLevel)
 
-		var_68_2 = GameUtil.getSubPlaceholderLuaLangTwoParam(var_68_7, var_68_8.dimension, var_68_8.job)
+		needDesc = GameUtil.getSubPlaceholderLuaLangTwoParam(lang, cfg.dimension, cfg.job)
 	end
 
-	return var_68_0, var_68_1, var_68_2
+	return result, failToast, needDesc
 end
 
-function var_0_0.oneKeyManufactureItem(arg_69_0, arg_69_1)
-	if not arg_69_0:checkCanFill(arg_69_1) then
+function ManufactureController:oneKeyManufactureItem(oneKeyType)
+	local isCanFill = self:checkCanFill(oneKeyType)
+
+	if not isCanFill then
 		return
 	end
 
-	local var_69_0
-	local var_69_1
-	local var_69_2
-	local var_69_3
+	local buildingType, buildingId, itemId, quantity
 
-	if arg_69_1 == RoomManufactureEnum.OneKeyType.Customize then
+	if oneKeyType == RoomManufactureEnum.OneKeyType.Customize then
 		OneKeyAddPopListModel.instance:recordSelectManufactureItem()
 
-		local var_69_4, var_69_5 = OneKeyAddPopListModel.instance:getSelectedManufactureItem()
+		local curManufactureItem, curCount = OneKeyAddPopListModel.instance:getSelectedManufactureItem()
 
-		var_69_0 = ManufactureConfig.instance:getManufactureItemBelongBuildingType(var_69_4)
+		buildingType = ManufactureConfig.instance:getManufactureItemBelongBuildingType(curManufactureItem)
 
-		if var_69_0 ~= RoomBuildingEnum.BuildingType.Collect then
-			local var_69_6 = ManufactureConfig.instance:getManufactureItemBelongBuildingList(var_69_4)
+		if buildingType ~= RoomBuildingEnum.BuildingType.Collect then
+			local produceBuildingList = ManufactureConfig.instance:getManufactureItemBelongBuildingList(curManufactureItem)
 
-			var_69_1 = var_69_6 and var_69_6[1]
+			buildingId = produceBuildingList and produceBuildingList[1]
 		end
 
-		var_69_2 = ManufactureConfig.instance:getItemId(var_69_4)
+		itemId = ManufactureConfig.instance:getItemId(curManufactureItem)
 
-		local var_69_7, var_69_8 = ManufactureConfig.instance:getManufactureItemUnitCountRange(var_69_4)
+		local _, minUnitCount = ManufactureConfig.instance:getManufactureItemUnitCountRange(curManufactureItem)
 
-		var_69_3 = var_69_8 * var_69_5
+		quantity = minUnitCount * curCount
 	end
 
-	ManufactureModel.instance:setRecordOneKeyType(arg_69_1)
-	RoomStatController.instance:oneKeyDispatch(false, arg_69_1)
-	RoomRpc.instance:sendBatchAddProctionsRequest(arg_69_1, var_69_0, var_69_1, var_69_2, var_69_3)
+	ManufactureModel.instance:setRecordOneKeyType(oneKeyType)
+	RoomStatController.instance:oneKeyDispatch(false, oneKeyType)
+	RoomRpc.instance:sendBatchAddProctionsRequest(oneKeyType, buildingType, buildingId, itemId, quantity)
 	ViewMgr.instance:closeView(ViewName.RoomOneKeyView)
 end
 
-function var_0_0.checkCanFill(arg_70_0, arg_70_1)
-	local var_70_0 = true
+function ManufactureController:checkCanFill(oneKeyType)
+	local result = true
 
-	if arg_70_1 == RoomManufactureEnum.OneKeyType.TracedOrder then
-		local var_70_1 = false
-		local var_70_2 = RoomTradeModel.instance:getDailyOrders()
+	if oneKeyType == RoomManufactureEnum.OneKeyType.TracedOrder then
+		local hasTraceOrder = false
+		local orders = RoomTradeModel.instance:getDailyOrders()
 
-		for iter_70_0, iter_70_1 in ipairs(var_70_2) do
-			if iter_70_1.isTraced then
-				var_70_1 = true
+		for i, orderMO in ipairs(orders) do
+			if orderMO.isTraced then
+				hasTraceOrder = true
 
 				break
 			end
 		end
 
-		if not var_70_1 then
+		if not hasTraceOrder then
 			GameFacade.showToast(ToastEnum.RoomTraceOrderIsEnough)
 
-			var_70_0 = false
+			result = false
 		end
-	elseif arg_70_1 == RoomManufactureEnum.OneKeyType.Customize then
-		local var_70_3 = OneKeyAddPopListModel.instance:getSelectedManufactureItem()
+	elseif oneKeyType == RoomManufactureEnum.OneKeyType.Customize then
+		local curManufactureItem = OneKeyAddPopListModel.instance:getSelectedManufactureItem()
 
-		if var_70_3 then
-			local var_70_4, var_70_5 = ManufactureModel.instance:getMaxCanProductCount(var_70_3)
+		if curManufactureItem then
+			local _, noEmptySlot = ManufactureModel.instance:getMaxCanProductCount(curManufactureItem)
 
-			if var_70_5 then
+			if noEmptySlot then
 				GameFacade.showToast(ToastEnum.RoomNoEmptyManufactureSlot)
 
-				var_70_0 = false
+				result = false
 			end
 		else
 			GameFacade.showToast(ToastEnum.RoomNotSelectedManufactureItem)
 
-			var_70_0 = false
+			result = false
 		end
 	end
 
-	return var_70_0
+	return result
 end
 
-function var_0_0.oneKeyCritter(arg_71_0, arg_71_1)
-	local var_71_0 = arg_71_1 and CritterEnum.OneKeyType.Transport or CritterEnum.OneKeyType.Manufacture
+function ManufactureController:oneKeyCritter(isTransport)
+	local type = isTransport and CritterEnum.OneKeyType.Transport or CritterEnum.OneKeyType.Manufacture
 
-	RoomStatController.instance:oneKeyDispatch(true, var_71_0)
-	RoomRpc.instance:sendBatchDispatchCrittersRequest(var_71_0)
+	RoomStatController.instance:oneKeyDispatch(true, type)
+	RoomRpc.instance:sendBatchDispatchCrittersRequest(type)
 end
 
-function var_0_0.openRouseCritterView(arg_72_0, arg_72_1)
-	local var_72_0 = {}
+function ManufactureController:openRouseCritterView(msg)
+	local infoList = {}
 
-	for iter_72_0, iter_72_1 in ipairs(arg_72_1.infos) do
-		local var_72_1 = {
-			buildingUid = iter_72_1.buildingUid,
-			roadId = iter_72_1.roadId,
+	for _, batchDispatchInfo in ipairs(msg.infos) do
+		local info = {
+			buildingUid = batchDispatchInfo.buildingUid,
+			roadId = batchDispatchInfo.roadId,
 			critterUids = {}
 		}
 
-		for iter_72_2, iter_72_3 in ipairs(iter_72_1.critterUids) do
-			table.insert(var_72_1.critterUids, iter_72_3)
+		for _, critterUid in ipairs(batchDispatchInfo.critterUids) do
+			table.insert(info.critterUids, critterUid)
 		end
 
-		table.insert(var_72_0, var_72_1)
+		table.insert(infoList, info)
 	end
 
-	if #var_72_0 <= 0 then
+	if #infoList <= 0 then
 		GameFacade.showToast(ToastEnum.NoCritterCanWork)
 
 		return
 	end
 
 	ViewMgr.instance:openView(ViewName.RoomCritterOneKeyView, {
-		type = arg_72_1.type,
-		infoList = var_72_0
+		type = msg.type,
+		infoList = infoList
 	})
 end
 
-function var_0_0.sendRouseCritter(arg_73_0, arg_73_1, arg_73_2)
-	RoomRpc.instance:sendRouseCrittersRequest(arg_73_1, arg_73_2)
+function ManufactureController:sendRouseCritter(type, infoList)
+	RoomRpc.instance:sendRouseCrittersRequest(type, infoList)
 end
 
-function var_0_0.removeRestingCritterList(arg_74_0, arg_74_1)
-	if not arg_74_1 then
+function ManufactureController:removeRestingCritterList(critterList)
+	if not critterList then
 		return
 	end
 
-	local var_74_0 = false
+	local hasChangeRest = false
 
-	for iter_74_0, iter_74_1 in ipairs(arg_74_1) do
-		local var_74_1 = ManufactureModel.instance:getCritterRestingBuilding(iter_74_1)
-		local var_74_2 = ManufactureModel.instance:getCritterBuildingMOById(var_74_1)
+	for _, critterUid in ipairs(critterList) do
+		local restBuildingUid = ManufactureModel.instance:getCritterRestingBuilding(critterUid)
+		local critterBuildingInfo = ManufactureModel.instance:getCritterBuildingMOById(restBuildingUid)
 
-		if var_74_2 then
-			var_74_2:removeRestingCritter(iter_74_1)
+		if critterBuildingInfo then
+			critterBuildingInfo:removeRestingCritter(critterUid)
 
-			var_74_0 = true
+			hasChangeRest = true
 		end
 	end
 
-	if var_74_0 then
+	if hasChangeRest then
 		RoomCritterModel.instance:initStayBuildingCritters()
 		CritterController.instance:dispatchEvent(CritterEvent.CritterBuildingChangeRestingCritter)
 	end
 end
 
-function var_0_0.removeRestingCritter(arg_75_0, arg_75_1)
-	local var_75_0 = false
-	local var_75_1 = ManufactureModel.instance:getCritterRestingBuilding(arg_75_1)
-	local var_75_2 = ManufactureModel.instance:getCritterBuildingMOById(var_75_1)
+function ManufactureController:removeRestingCritter(critterUid)
+	local hasChangeRest = false
+	local restBuildingUid = ManufactureModel.instance:getCritterRestingBuilding(critterUid)
+	local critterBuildingInfo = ManufactureModel.instance:getCritterBuildingMOById(restBuildingUid)
 
-	if var_75_2 then
-		var_75_2:removeRestingCritter(arg_75_1)
+	if critterBuildingInfo then
+		critterBuildingInfo:removeRestingCritter(critterUid)
 
-		var_75_0 = true
+		hasChangeRest = true
 	end
 
-	if var_75_0 then
+	if hasChangeRest then
 		RoomCritterModel.instance:initStayBuildingCritters()
 		CritterController.instance:dispatchEvent(CritterEvent.CritterBuildingChangeRestingCritter)
 	end
 end
 
-function var_0_0.resetCameraOnCloseView(arg_76_0)
-	local var_76_0 = RoomCameraController.instance:getRoomScene()
-	local var_76_1, var_76_2 = ManufactureModel.instance:getCameraRecord()
+function ManufactureController:resetCameraOnCloseView()
+	local roomScene = RoomCameraController.instance:getRoomScene()
+	local recordCameraState, recordCameraParam = ManufactureModel.instance:getCameraRecord()
 
-	if var_76_0 and var_76_1 and var_76_2 then
-		var_76_0.camera:switchCameraState(var_76_1, var_76_2)
+	if roomScene and recordCameraState and recordCameraParam then
+		roomScene.camera:switchCameraState(recordCameraState, recordCameraParam)
 	end
 
 	ManufactureModel.instance:setCameraRecord()
 end
 
-function var_0_0.getPlayAddEffDict(arg_77_0, arg_77_1)
-	if not arg_77_1 then
+function ManufactureController:getPlayAddEffDict(manuBuildingInfos)
+	if not manuBuildingInfos then
 		return
 	end
 
-	local var_77_0 = {}
+	local playAddEffDict = {}
 
-	for iter_77_0, iter_77_1 in ipairs(arg_77_1) do
-		local var_77_1 = iter_77_1.buildingUid
-		local var_77_2 = ManufactureModel.instance:getManufactureMOById(var_77_1)
+	for _, manuBuildingInfo in ipairs(manuBuildingInfos) do
+		local buildingUid = manuBuildingInfo.buildingUid
+		local manufactureInfo = ManufactureModel.instance:getManufactureMOById(buildingUid)
 
-		if var_77_2 then
-			for iter_77_2, iter_77_3 in ipairs(iter_77_1.slotInfos) do
-				local var_77_3 = iter_77_3.slotId
-				local var_77_4 = var_77_2:getSlotMO(var_77_3)
-				local var_77_5 = var_77_4 and var_77_4:getSlotManufactureItemId()
+		if manufactureInfo then
+			for _, slotInfo in ipairs(manuBuildingInfo.slotInfos) do
+				local slotId = slotInfo.slotId
+				local oldSlotMO = manufactureInfo:getSlotMO(slotId)
+				local oldManufactureItemId = oldSlotMO and oldSlotMO:getSlotManufactureItemId()
 
-				if (not var_77_5 or var_77_5 == 0) and iter_77_3.productionId and iter_77_3.productionId ~= 0 then
-					var_77_0[var_77_1] = var_77_0[var_77_1] or {}
-					var_77_0[var_77_1][var_77_3] = true
+				if (not oldManufactureItemId or oldManufactureItemId == 0) and slotInfo.productionId and slotInfo.productionId ~= 0 then
+					playAddEffDict[buildingUid] = playAddEffDict[buildingUid] or {}
+					playAddEffDict[buildingUid][slotId] = true
 				end
 			end
 		end
 	end
 
-	return var_77_0
+	return playAddEffDict
 end
 
-var_0_0.instance = var_0_0.New()
+ManufactureController.instance = ManufactureController.New()
 
-return var_0_0
+return ManufactureController

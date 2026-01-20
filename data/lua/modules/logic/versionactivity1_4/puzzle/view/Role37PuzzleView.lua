@@ -1,621 +1,627 @@
-﻿module("modules.logic.versionactivity1_4.puzzle.view.Role37PuzzleView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/puzzle/view/Role37PuzzleView.lua
 
-local var_0_0 = class("Role37PuzzleView", BaseView)
+module("modules.logic.versionactivity1_4.puzzle.view.Role37PuzzleView", package.seeall)
 
-var_0_0.AudioInterval = 0.85
-var_0_0.StartDealy = 1.04
-var_0_0.ResumeWaitDealy = 0.2
+local Role37PuzzleView = class("Role37PuzzleView", BaseView)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtStageName = gohelper.findChildText(arg_1_0.viewGO, "left/image_StageBG/#txt_StageName")
-	arg_1_0._txtStageEn = gohelper.findChildText(arg_1_0.viewGO, "left/image_StageBG/#txt_StageEn")
-	arg_1_0._txtround = gohelper.findChildText(arg_1_0.viewGO, "left/#txt_round")
-	arg_1_0._txtTargetDesc = gohelper.findChildText(arg_1_0.viewGO, "left/TargetList/Target1/#txt_TargetDesc")
-	arg_1_0._imageTargetFinish = gohelper.findChildImage(arg_1_0.viewGO, "left/TargetList/Target1/#txt_TargetDesc/#image_TargetFinish")
-	arg_1_0._imageTargetNotFinish = gohelper.findChildImage(arg_1_0.viewGO, "left/TargetList/Target1/#txt_TargetDesc/#image_TargetNotFinish")
-	arg_1_0._goQuestion = gohelper.findChild(arg_1_0.viewGO, "QuestionPanelCommon/#go_Question")
-	arg_1_0._txtQuestion = gohelper.findChildText(arg_1_0.viewGO, "QuestionPanelCommon/#go_Question/#txt_Question")
-	arg_1_0._btnTips = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "QuestionPanelCommon/#btn_Tips")
-	arg_1_0._goBaseQuestionPanel = gohelper.findChild(arg_1_0.viewGO, "#go_BaseQuestionPanel")
-	arg_1_0._scrollAreaList1 = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_BaseQuestionPanel/PutArea/put/#scroll_AreaList1")
-	arg_1_0._gostepframes1 = gohelper.findChild(arg_1_0.viewGO, "#go_BaseQuestionPanel/PutArea/put/#scroll_AreaList1/Viewport/#go_stepframes1")
-	arg_1_0._gosteps1 = gohelper.findChild(arg_1_0.viewGO, "#go_BaseQuestionPanel/PutArea/put/#scroll_AreaList1/Viewport/#go_steps1")
-	arg_1_0._btnLeftArrow = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_BaseQuestionPanel/PutArea/put/#btn_LeftArrow")
-	arg_1_0._btnRightArrow = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_BaseQuestionPanel/PutArea/put/#btn_RightArrow")
-	arg_1_0._gobaseoper = gohelper.findChild(arg_1_0.viewGO, "#go_BaseQuestionPanel/OperArea/#go_baseoper")
-	arg_1_0._goFinalQuestionPanel = gohelper.findChild(arg_1_0.viewGO, "#go_FinalQuestionPanel")
-	arg_1_0._scrollAreaList2 = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_FinalQuestionPanel/PutArea/put/#scroll_AreaList2")
-	arg_1_0._gostepframes2 = gohelper.findChild(arg_1_0.viewGO, "#go_FinalQuestionPanel/PutArea/put/#scroll_AreaList2/Viewport/#go_stepframes2")
-	arg_1_0._gosteps2 = gohelper.findChild(arg_1_0.viewGO, "#go_FinalQuestionPanel/PutArea/put/#scroll_AreaList2/Viewport/#go_steps2")
-	arg_1_0._btnLeftArrowFinal = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_FinalQuestionPanel/PutArea/put/#btn_LeftArrowFinal")
-	arg_1_0._btnRightArrowFinal = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_FinalQuestionPanel/PutArea/put/#btn_RightArrowFinal")
-	arg_1_0._goprogress = gohelper.findChild(arg_1_0.viewGO, "#go_FinalQuestionPanel/PutArea/put/#go_progress")
-	arg_1_0._btnStop = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_FinalQuestionPanel/PutArea/put/#btn_Stop")
-	arg_1_0._btnPlay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_FinalQuestionPanel/PutArea/put/#btn_Play")
-	arg_1_0._btnpause = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_FinalQuestionPanel/PutArea/put/#btn_pause")
-	arg_1_0._gofinaloper = gohelper.findChild(arg_1_0.viewGO, "#go_FinalQuestionPanel/OperArea/#go_finaloper")
-	arg_1_0._btnSearch = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Record/Title/#btn_Search")
-	arg_1_0._goRecordEmpty = gohelper.findChild(arg_1_0.viewGO, "Record/#go_RecordEmpty")
-	arg_1_0._scrollrecord = gohelper.findChildScrollRect(arg_1_0.viewGO, "Record/#scroll_record")
-	arg_1_0._btnrollback = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "top_right/#btn_rollback")
-	arg_1_0._btnreset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "top_right/#btn_reset")
-	arg_1_0._goprotectArea = gohelper.findChild(arg_1_0.viewGO, "#go_protectArea")
-	arg_1_0._goRecordItem = gohelper.findChild(arg_1_0.viewGO, "Record/#scroll_record/Viewport/Content/RecordItem")
+Role37PuzzleView.AudioInterval = 0.85
+Role37PuzzleView.StartDealy = 1.04
+Role37PuzzleView.ResumeWaitDealy = 0.2
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Role37PuzzleView:onInitView()
+	self._txtStageName = gohelper.findChildText(self.viewGO, "left/image_StageBG/#txt_StageName")
+	self._txtStageEn = gohelper.findChildText(self.viewGO, "left/image_StageBG/#txt_StageEn")
+	self._txtround = gohelper.findChildText(self.viewGO, "left/#txt_round")
+	self._txtTargetDesc = gohelper.findChildText(self.viewGO, "left/TargetList/Target1/#txt_TargetDesc")
+	self._imageTargetFinish = gohelper.findChildImage(self.viewGO, "left/TargetList/Target1/#txt_TargetDesc/#image_TargetFinish")
+	self._imageTargetNotFinish = gohelper.findChildImage(self.viewGO, "left/TargetList/Target1/#txt_TargetDesc/#image_TargetNotFinish")
+	self._goQuestion = gohelper.findChild(self.viewGO, "QuestionPanelCommon/#go_Question")
+	self._txtQuestion = gohelper.findChildText(self.viewGO, "QuestionPanelCommon/#go_Question/#txt_Question")
+	self._btnTips = gohelper.findChildButtonWithAudio(self.viewGO, "QuestionPanelCommon/#btn_Tips")
+	self._goBaseQuestionPanel = gohelper.findChild(self.viewGO, "#go_BaseQuestionPanel")
+	self._scrollAreaList1 = gohelper.findChildScrollRect(self.viewGO, "#go_BaseQuestionPanel/PutArea/put/#scroll_AreaList1")
+	self._gostepframes1 = gohelper.findChild(self.viewGO, "#go_BaseQuestionPanel/PutArea/put/#scroll_AreaList1/Viewport/#go_stepframes1")
+	self._gosteps1 = gohelper.findChild(self.viewGO, "#go_BaseQuestionPanel/PutArea/put/#scroll_AreaList1/Viewport/#go_steps1")
+	self._btnLeftArrow = gohelper.findChildButtonWithAudio(self.viewGO, "#go_BaseQuestionPanel/PutArea/put/#btn_LeftArrow")
+	self._btnRightArrow = gohelper.findChildButtonWithAudio(self.viewGO, "#go_BaseQuestionPanel/PutArea/put/#btn_RightArrow")
+	self._gobaseoper = gohelper.findChild(self.viewGO, "#go_BaseQuestionPanel/OperArea/#go_baseoper")
+	self._goFinalQuestionPanel = gohelper.findChild(self.viewGO, "#go_FinalQuestionPanel")
+	self._scrollAreaList2 = gohelper.findChildScrollRect(self.viewGO, "#go_FinalQuestionPanel/PutArea/put/#scroll_AreaList2")
+	self._gostepframes2 = gohelper.findChild(self.viewGO, "#go_FinalQuestionPanel/PutArea/put/#scroll_AreaList2/Viewport/#go_stepframes2")
+	self._gosteps2 = gohelper.findChild(self.viewGO, "#go_FinalQuestionPanel/PutArea/put/#scroll_AreaList2/Viewport/#go_steps2")
+	self._btnLeftArrowFinal = gohelper.findChildButtonWithAudio(self.viewGO, "#go_FinalQuestionPanel/PutArea/put/#btn_LeftArrowFinal")
+	self._btnRightArrowFinal = gohelper.findChildButtonWithAudio(self.viewGO, "#go_FinalQuestionPanel/PutArea/put/#btn_RightArrowFinal")
+	self._goprogress = gohelper.findChild(self.viewGO, "#go_FinalQuestionPanel/PutArea/put/#go_progress")
+	self._btnStop = gohelper.findChildButtonWithAudio(self.viewGO, "#go_FinalQuestionPanel/PutArea/put/#btn_Stop")
+	self._btnPlay = gohelper.findChildButtonWithAudio(self.viewGO, "#go_FinalQuestionPanel/PutArea/put/#btn_Play")
+	self._btnpause = gohelper.findChildButtonWithAudio(self.viewGO, "#go_FinalQuestionPanel/PutArea/put/#btn_pause")
+	self._gofinaloper = gohelper.findChild(self.viewGO, "#go_FinalQuestionPanel/OperArea/#go_finaloper")
+	self._btnSearch = gohelper.findChildButtonWithAudio(self.viewGO, "Record/Title/#btn_Search")
+	self._goRecordEmpty = gohelper.findChild(self.viewGO, "Record/#go_RecordEmpty")
+	self._scrollrecord = gohelper.findChildScrollRect(self.viewGO, "Record/#scroll_record")
+	self._btnrollback = gohelper.findChildButtonWithAudio(self.viewGO, "top_right/#btn_rollback")
+	self._btnreset = gohelper.findChildButtonWithAudio(self.viewGO, "top_right/#btn_reset")
+	self._goprotectArea = gohelper.findChild(self.viewGO, "#go_protectArea")
+	self._goRecordItem = gohelper.findChild(self.viewGO, "Record/#scroll_record/Viewport/Content/RecordItem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnTips:AddClickListener(arg_2_0._btnTipsOnClick, arg_2_0)
-	arg_2_0._btnLeftArrow:AddClickListener(arg_2_0._btnLeftArrowOnClick, arg_2_0)
-	arg_2_0._btnRightArrow:AddClickListener(arg_2_0._btnRightArrowOnClick, arg_2_0)
-	arg_2_0._btnLeftArrowFinal:AddClickListener(arg_2_0._btnLeftArrowFinalOnClick, arg_2_0)
-	arg_2_0._btnRightArrowFinal:AddClickListener(arg_2_0._btnRightArrowFinalOnClick, arg_2_0)
-	arg_2_0._btnStop:AddClickListener(arg_2_0._btnStopOnClick, arg_2_0)
-	arg_2_0._btnPlay:AddClickListener(arg_2_0._btnPlayOnClick, arg_2_0)
-	arg_2_0._btnpause:AddClickListener(arg_2_0._btnpauseOnClick, arg_2_0)
-	arg_2_0._btnSearch:AddClickListener(arg_2_0._btnSearchOnClick, arg_2_0)
-	arg_2_0._btnrollback:AddClickListener(arg_2_0._btnrollbackOnClick, arg_2_0)
-	arg_2_0._btnreset:AddClickListener(arg_2_0._btnresetOnClick, arg_2_0)
+function Role37PuzzleView:addEvents()
+	self._btnTips:AddClickListener(self._btnTipsOnClick, self)
+	self._btnLeftArrow:AddClickListener(self._btnLeftArrowOnClick, self)
+	self._btnRightArrow:AddClickListener(self._btnRightArrowOnClick, self)
+	self._btnLeftArrowFinal:AddClickListener(self._btnLeftArrowFinalOnClick, self)
+	self._btnRightArrowFinal:AddClickListener(self._btnRightArrowFinalOnClick, self)
+	self._btnStop:AddClickListener(self._btnStopOnClick, self)
+	self._btnPlay:AddClickListener(self._btnPlayOnClick, self)
+	self._btnpause:AddClickListener(self._btnpauseOnClick, self)
+	self._btnSearch:AddClickListener(self._btnSearchOnClick, self)
+	self._btnrollback:AddClickListener(self._btnrollbackOnClick, self)
+	self._btnreset:AddClickListener(self._btnresetOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnTips:RemoveClickListener()
-	arg_3_0._btnLeftArrow:RemoveClickListener()
-	arg_3_0._btnRightArrow:RemoveClickListener()
-	arg_3_0._btnLeftArrowFinal:RemoveClickListener()
-	arg_3_0._btnRightArrowFinal:RemoveClickListener()
-	arg_3_0._btnStop:RemoveClickListener()
-	arg_3_0._btnPlay:RemoveClickListener()
-	arg_3_0._btnpause:RemoveClickListener()
-	arg_3_0._btnSearch:RemoveClickListener()
-	arg_3_0._btnrollback:RemoveClickListener()
-	arg_3_0._btnreset:RemoveClickListener()
+function Role37PuzzleView:removeEvents()
+	self._btnTips:RemoveClickListener()
+	self._btnLeftArrow:RemoveClickListener()
+	self._btnRightArrow:RemoveClickListener()
+	self._btnLeftArrowFinal:RemoveClickListener()
+	self._btnRightArrowFinal:RemoveClickListener()
+	self._btnStop:RemoveClickListener()
+	self._btnPlay:RemoveClickListener()
+	self._btnpause:RemoveClickListener()
+	self._btnSearch:RemoveClickListener()
+	self._btnrollback:RemoveClickListener()
+	self._btnreset:RemoveClickListener()
 end
 
-function var_0_0._btnTipsOnClick(arg_4_0)
-	local var_4_0 = VersionActivity1_4Enum.ActivityId.Role37
-	local var_4_1 = arg_4_0.puzzleCfg.puzzleId
-	local var_4_2 = Activity130Config.instance:getActivity130DecryptCo(var_4_0, var_4_1).puzzleTip
+function Role37PuzzleView:_btnTipsOnClick()
+	local actId = VersionActivity1_4Enum.ActivityId.Role37
+	local decryptId = self.puzzleCfg.puzzleId
+	local dialogParam = Activity130Config.instance:getActivity130DecryptCo(actId, decryptId).puzzleTip
 
-	Activity130Controller.instance:dispatchEvent(Activity130Event.ShowTipDialog, var_4_2)
+	Activity130Controller.instance:dispatchEvent(Activity130Event.ShowTipDialog, dialogParam)
 end
 
-function var_0_0._btnStopOnClick(arg_5_0)
-	if arg_5_0._scrollTweenId then
-		ZProj.TweenHelper.KillById(arg_5_0._scrollTweenId)
+function Role37PuzzleView:_btnStopOnClick()
+	if self._scrollTweenId then
+		ZProj.TweenHelper.KillById(self._scrollTweenId)
 
-		arg_5_0._scrollTweenId = nil
+		self._scrollTweenId = nil
 	end
 
-	gohelper.setActive(arg_5_0._btnpause, false)
-	gohelper.setActive(arg_5_0._btnPlay, true)
-	gohelper.setActive(arg_5_0._goprotectArea, false)
-	arg_5_0:_stopAudio()
-	arg_5_0._progressAnimation:Play("go_progress_close")
-	TaskDispatcher.runDelay(function(arg_6_0)
-		gohelper.setActive(arg_6_0._goprogress, false)
-	end, arg_5_0, 0.3)
+	gohelper.setActive(self._btnpause, false)
+	gohelper.setActive(self._btnPlay, true)
+	gohelper.setActive(self._goprotectArea, false)
+	self:_stopAudio()
+	self._progressAnimation:Play("go_progress_close")
+	TaskDispatcher.runDelay(function(self)
+		gohelper.setActive(self._goprogress, false)
+	end, self, 0.3)
 end
 
-function var_0_0._btnPlayOnClick(arg_7_0)
-	arg_7_0.recordScrollValue = nil
-	arg_7_0.lastStepsX = nil
+function Role37PuzzleView:_btnPlayOnClick()
+	self.recordScrollValue = nil
+	self.lastStepsX = nil
 
-	if arg_7_0._goprogress.activeInHierarchy then
-		if not arg_7_0.curKey then
+	if self._goprogress.activeInHierarchy then
+		if not self.curKey then
 			return
 		else
-			arg_7_0:_resumeProgressAnim()
-			arg_7_0:_resumeScrollPos()
-			arg_7_0:_resumeAudio()
+			self:_resumeProgressAnim()
+			self:_resumeScrollPos()
+			self:_resumeAudio()
 		end
 	else
-		arg_7_0.maxKey = 0
+		self.maxKey = 0
 
-		for iter_7_0, iter_7_1 in pairs(arg_7_0.operList) do
-			if iter_7_0 > arg_7_0.maxKey then
-				arg_7_0.maxKey = iter_7_0
+		for k, _ in pairs(self.operList) do
+			if k > self.maxKey then
+				self.maxKey = k
 			end
 		end
 
-		if arg_7_0.maxKey == 0 then
+		if self.maxKey == 0 then
 			return
 		else
-			gohelper.setActive(arg_7_0._goprogress, true)
+			gohelper.setActive(self._goprogress, true)
 
-			arg_7_0._progressAnim.speed = 1
+			self._progressAnim.speed = 1
 
-			arg_7_0:_playAudio()
+			self:_playAudio()
 
-			arg_7_0._scrollAreaList2.horizontalNormalizedPosition = 0
+			self._scrollAreaList2.horizontalNormalizedPosition = 0
 		end
 	end
 
-	gohelper.setActive(arg_7_0._btnPlay, false)
-	gohelper.setActive(arg_7_0._btnpause, true)
-	gohelper.setActive(arg_7_0._goprotectArea, true)
+	gohelper.setActive(self._btnPlay, false)
+	gohelper.setActive(self._btnpause, true)
+	gohelper.setActive(self._goprotectArea, true)
 end
 
-function var_0_0._btnpauseOnClick(arg_8_0)
-	if arg_8_0._scrollTweenId then
-		ZProj.TweenHelper.KillById(arg_8_0._scrollTweenId)
+function Role37PuzzleView:_btnpauseOnClick()
+	if self._scrollTweenId then
+		ZProj.TweenHelper.KillById(self._scrollTweenId)
 
-		arg_8_0._scrollTweenId = nil
+		self._scrollTweenId = nil
 	end
 
-	gohelper.setActive(arg_8_0._btnpause, false)
-	gohelper.setActive(arg_8_0._btnPlay, true)
-	gohelper.setActive(arg_8_0._goprotectArea, false)
-	arg_8_0:_pauseAudio()
+	gohelper.setActive(self._btnpause, false)
+	gohelper.setActive(self._btnPlay, true)
+	gohelper.setActive(self._goprotectArea, false)
+	self:_pauseAudio()
 
-	arg_8_0._progressAnim.speed = 0
-	arg_8_0.lastStepsX = recthelper.getAnchorX(arg_8_0._gosteps.transform)
+	self._progressAnim.speed = 0
+	self.lastStepsX = recthelper.getAnchorX(self._gosteps.transform)
 end
 
-function var_0_0._btnLeftArrowOnClick(arg_9_0)
-	local var_9_0 = arg_9_0._scrollAreaList1.horizontalNormalizedPosition
+function Role37PuzzleView:_btnLeftArrowOnClick()
+	local value = self._scrollAreaList1.horizontalNormalizedPosition
 
-	if var_9_0 ~= 0 then
-		local var_9_1 = var_9_0 - 0.2
+	if value ~= 0 then
+		value = value - 0.2
 
-		if var_9_1 < 0 then
-			var_9_1 = 0
+		if value < 0 then
+			value = 0
 		end
 
-		arg_9_0._scrollAreaList1.horizontalNormalizedPosition = var_9_1
+		self._scrollAreaList1.horizontalNormalizedPosition = value
 	end
 end
 
-function var_0_0._btnRightArrowOnClick(arg_10_0)
-	local var_10_0 = arg_10_0._scrollAreaList1.horizontalNormalizedPosition
+function Role37PuzzleView:_btnRightArrowOnClick()
+	local value = self._scrollAreaList1.horizontalNormalizedPosition
 
-	if var_10_0 ~= 1 then
-		local var_10_1 = var_10_0 + 0.2
+	if value ~= 1 then
+		value = value + 0.2
 
-		if var_10_1 > 1 then
-			var_10_1 = 1
+		if value > 1 then
+			value = 1
 		end
 
-		arg_10_0._scrollAreaList1.horizontalNormalizedPosition = var_10_1
+		self._scrollAreaList1.horizontalNormalizedPosition = value
 	end
 end
 
-function var_0_0._btnLeftArrowFinalOnClick(arg_11_0)
-	local var_11_0 = arg_11_0._scrollAreaList2.horizontalNormalizedPosition
+function Role37PuzzleView:_btnLeftArrowFinalOnClick()
+	local value = self._scrollAreaList2.horizontalNormalizedPosition
 
-	if var_11_0 ~= 0 then
-		local var_11_1 = var_11_0 - 0.2
+	if value ~= 0 then
+		value = value - 0.2
 
-		if var_11_1 < 0 then
-			var_11_1 = 0
+		if value < 0 then
+			value = 0
 		end
 
-		arg_11_0._scrollAreaList2.horizontalNormalizedPosition = var_11_1
+		self._scrollAreaList2.horizontalNormalizedPosition = value
 	end
 end
 
-function var_0_0._btnRightArrowFinalOnClick(arg_12_0)
-	local var_12_0 = arg_12_0._scrollAreaList2.horizontalNormalizedPosition
+function Role37PuzzleView:_btnRightArrowFinalOnClick()
+	local value = self._scrollAreaList2.horizontalNormalizedPosition
 
-	if var_12_0 ~= 1 then
-		local var_12_1 = var_12_0 + 0.2
+	if value ~= 1 then
+		value = value + 0.2
 
-		if var_12_1 > 1 then
-			var_12_1 = 1
+		if value > 1 then
+			value = 1
 		end
 
-		arg_12_0._scrollAreaList2.horizontalNormalizedPosition = var_12_1
+		self._scrollAreaList2.horizontalNormalizedPosition = value
 	end
 end
 
-function var_0_0._btnSearchOnClick(arg_13_0)
+function Role37PuzzleView:_btnSearchOnClick()
 	ViewMgr.instance:openView(ViewName.Role37PuzzleRecordView)
 end
 
-function var_0_0._btnrollbackOnClick(arg_14_0)
+function Role37PuzzleView:_btnrollbackOnClick()
 	Role37PuzzleModel.instance:rollBack()
 end
 
-function var_0_0._btnresetOnClick(arg_15_0)
+function Role37PuzzleView:_btnresetOnClick()
 	GameFacade.showMessageBox(MessageBoxIdDefine.Activity130GameRestart, MsgBoxEnum.BoxType.Yes_No, function()
 		Activity130Rpc.instance:addGameChallengeNum(Activity130Model.instance:getCurEpisodeId())
 		Role37PuzzleModel.instance:reset()
 	end)
 end
 
-function var_0_0._editableInitView(arg_17_0)
-	arg_17_0:_editableAddEvents()
+function Role37PuzzleView:_editableInitView()
+	self:_editableAddEvents()
 
-	arg_17_0.transform = arg_17_0.viewGO.transform
+	self.transform = self.viewGO.transform
 
-	arg_17_0:initViewCfg()
-	gohelper.setActive(arg_17_0._btnTips, not arg_17_0.isFinal)
-	arg_17_0:_playFinalSound()
-	arg_17_0._scrollAreaList:AddOnValueChanged(arg_17_0._onScrollValueChanged, arg_17_0)
+	self:initViewCfg()
+	gohelper.setActive(self._btnTips, not self.isFinal)
+	self:_playFinalSound()
+	self._scrollAreaList:AddOnValueChanged(self._onScrollValueChanged, self)
 
-	arg_17_0.answerPrefab = gohelper.findChild(arg_17_0._gosteps, "answeritem")
+	self.answerPrefab = gohelper.findChild(self._gosteps, "answeritem")
 
-	gohelper.setActive(arg_17_0.answerPrefab, false)
+	gohelper.setActive(self.answerPrefab, false)
 
-	arg_17_0.dragGo = gohelper.clone(arg_17_0.answerPrefab, arg_17_0.viewGO, "dragItem")
-	arg_17_0.dragImgDesc = gohelper.findChildImage(arg_17_0.dragGo, "img_ItemIcon")
-	arg_17_0.dragImgyyDesc = gohelper.findChildImage(arg_17_0.dragGo, "img_ItemIcon_yy")
-	arg_17_0.dragAnim = arg_17_0.dragGo:GetComponent(typeof(UnityEngine.Animator))
-	arg_17_0._goComplete = gohelper.findChild(arg_17_0.viewGO, "QuestionPanelCommon/anim_Completed")
-	arg_17_0._goVxprogress = gohelper.findChild(arg_17_0._goprogress, "vx_progress")
-	arg_17_0._progressAnimation = arg_17_0._goprogress:GetComponent(typeof(UnityEngine.Animation))
-	arg_17_0._progressAnim = arg_17_0._goVxprogress:GetComponent(typeof(UnityEngine.Animator))
-	arg_17_0.answerList = {}
-	arg_17_0.frameItemList = {}
-	arg_17_0.optionItemList = {}
-	arg_17_0.recordItemList = {}
+	self.dragGo = gohelper.clone(self.answerPrefab, self.viewGO, "dragItem")
+	self.dragImgDesc = gohelper.findChildImage(self.dragGo, "img_ItemIcon")
+	self.dragImgyyDesc = gohelper.findChildImage(self.dragGo, "img_ItemIcon_yy")
+	self.dragAnim = self.dragGo:GetComponent(typeof(UnityEngine.Animator))
+	self._goComplete = gohelper.findChild(self.viewGO, "QuestionPanelCommon/anim_Completed")
+	self._goVxprogress = gohelper.findChild(self._goprogress, "vx_progress")
+	self._progressAnimation = self._goprogress:GetComponent(typeof(UnityEngine.Animation))
+	self._progressAnim = self._goVxprogress:GetComponent(typeof(UnityEngine.Animator))
+	self.answerList = {}
+	self.frameItemList = {}
+	self.optionItemList = {}
+	self.recordItemList = {}
 
-	arg_17_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.initViewCfg(arg_18_0)
-	arg_18_0.puzzleCfg = Role37PuzzleModel.instance:getPuzzleCfg()
-	arg_18_0.puzzleId = arg_18_0.puzzleCfg.puzzleId
-	arg_18_0.maxOper = arg_18_0.puzzleCfg.maxOper
-	arg_18_0.operGroupCfg = Role37PuzzleModel.instance:getOperGroupCfg()
-	arg_18_0.operList = Role37PuzzleModel.instance:getOperList()
+function Role37PuzzleView:initViewCfg()
+	self.puzzleCfg = Role37PuzzleModel.instance:getPuzzleCfg()
+	self.puzzleId = self.puzzleCfg.puzzleId
+	self.maxOper = self.puzzleCfg.maxOper
+	self.operGroupCfg = Role37PuzzleModel.instance:getOperGroupCfg()
+	self.operList = Role37PuzzleModel.instance:getOperList()
 
-	if arg_18_0.puzzleId ~= Role37PuzzleEnum.PuzzleId.Final then
-		arg_18_0.isFinal = false
-		arg_18_0.realOper = arg_18_0._gobaseoper
-		arg_18_0._gostepframes = arg_18_0._gostepframes1
-		arg_18_0._gosteps = arg_18_0._gosteps1
-		arg_18_0._scrollAreaList = arg_18_0._scrollAreaList1
-		arg_18_0.goLeftArrow = arg_18_0._btnLeftArrow
-		arg_18_0.goRightArrow = arg_18_0._btnRightArrow
+	if self.puzzleId ~= Role37PuzzleEnum.PuzzleId.Final then
+		self.isFinal = false
+		self.realOper = self._gobaseoper
+		self._gostepframes = self._gostepframes1
+		self._gosteps = self._gosteps1
+		self._scrollAreaList = self._scrollAreaList1
+		self.goLeftArrow = self._btnLeftArrow
+		self.goRightArrow = self._btnRightArrow
 	else
-		arg_18_0.isFinal = true
-		arg_18_0.realOper = arg_18_0._gofinaloper
-		arg_18_0._gostepframes = arg_18_0._gostepframes2
-		arg_18_0._gosteps = arg_18_0._gosteps2
-		arg_18_0._scrollAreaList = arg_18_0._scrollAreaList2
-		arg_18_0.goLeftArrow = arg_18_0._btnLeftArrowFinal
-		arg_18_0.goRightArrow = arg_18_0._btnRightArrowFinal
+		self.isFinal = true
+		self.realOper = self._gofinaloper
+		self._gostepframes = self._gostepframes2
+		self._gosteps = self._gosteps2
+		self._scrollAreaList = self._scrollAreaList2
+		self.goLeftArrow = self._btnLeftArrowFinal
+		self.goRightArrow = self._btnRightArrowFinal
 	end
 end
 
-function var_0_0.refreshUI(arg_19_0)
-	local var_19_0 = Activity130Model.instance:getCurEpisodeId()
-	local var_19_1 = Activity130Config.instance:getActivity130EpisodeCo(Activity130Enum.ActivityId.Act130, var_19_0)
+function Role37PuzzleView:refreshUI()
+	local episodeId = Activity130Model.instance:getCurEpisodeId()
+	local episodeCfg = Activity130Config.instance:getActivity130EpisodeCo(Activity130Enum.ActivityId.Act130, episodeId)
 
-	if var_19_1 then
-		arg_19_0._txtStageEn.text = var_19_1.episodetag
-		arg_19_0._txtStageName.text = var_19_1.name
-		arg_19_0._txtTargetDesc.text = var_19_1.conditionStr
+	if episodeCfg then
+		self._txtStageEn.text = episodeCfg.episodetag
+		self._txtStageName.text = episodeCfg.name
+		self._txtTargetDesc.text = episodeCfg.conditionStr
 	end
 
-	arg_19_0._txtQuestion.text = arg_19_0.puzzleCfg.puzzleTxt
+	self._txtQuestion.text = self.puzzleCfg.puzzleTxt
 
-	gohelper.setActive(arg_19_0._goBaseQuestionPanel, not arg_19_0.isFinal)
-	gohelper.setActive(arg_19_0._goFinalQuestionPanel, arg_19_0.isFinal)
+	gohelper.setActive(self._goBaseQuestionPanel, not self.isFinal)
+	gohelper.setActive(self._goFinalQuestionPanel, self.isFinal)
 
-	local var_19_2 = PuzzleRecordListModel.instance:getCount()
+	local cnt = PuzzleRecordListModel.instance:getCount()
 
-	arg_19_0:onRecordChange(var_19_2)
-	arg_19_0:_initPutArea()
-	arg_19_0:_initOptionItem()
+	self:onRecordChange(cnt)
+	self:_initPutArea()
+	self:_initOptionItem()
 end
 
-function var_0_0._initOptionItem(arg_20_0)
-	for iter_20_0 = 1, 6 do
-		arg_20_0:_creatOptionItem(iter_20_0)
+function Role37PuzzleView:_initOptionItem()
+	for i = 1, 6 do
+		self:_creatOptionItem(i)
 	end
 
-	local var_20_0 = Role37PuzzleModel.instance:getOperGroupList()
+	local operGroupList = Role37PuzzleModel.instance:getOperGroupList()
 
-	for iter_20_1 = 1, #var_20_0 do
-		local var_20_1 = var_20_0[iter_20_1].operType
-		local var_20_2 = arg_20_0.optionItemList[iter_20_1]
+	for i = 1, #operGroupList do
+		local operType = operGroupList[i].operType
+		local optionItem = self.optionItemList[i]
 
-		if not var_20_2 then
-			var_20_2 = arg_20_0:_creatOptionItem(iter_20_1)
+		if not optionItem then
+			optionItem = self:_creatOptionItem(i)
 
-			gohelper.setActive(var_20_2.go, true)
+			gohelper.setActive(optionItem.go, true)
 		end
 
-		var_20_2.button = gohelper.findChildButton(var_20_2.go, "")
+		optionItem.button = gohelper.findChildButton(optionItem.go, "")
 
-		var_20_2.button:AddClickListener(arg_20_0._optionClick, arg_20_0, var_20_1)
+		optionItem.button:AddClickListener(self._optionClick, self, operType)
 
-		var_20_2.uidrag = SLFramework.UGUI.UIDragListener.Get(var_20_2.go)
+		optionItem.uidrag = SLFramework.UGUI.UIDragListener.Get(optionItem.go)
 
-		var_20_2.uidrag:AddDragBeginListener(arg_20_0._optionDragBegin, arg_20_0, var_20_1)
-		var_20_2.uidrag:AddDragListener(arg_20_0._optionDrag, arg_20_0)
-		var_20_2.uidrag:AddDragEndListener(arg_20_0._optionDragEnd, arg_20_0, var_20_1)
+		optionItem.uidrag:AddDragBeginListener(self._optionDragBegin, self, operType)
+		optionItem.uidrag:AddDragListener(self._optionDrag, self)
+		optionItem.uidrag:AddDragEndListener(self._optionDragEnd, self, operType)
 
-		if not arg_20_0.isFinal then
-			local var_20_3 = gohelper.findChildImage(var_20_2.go, "image_Empty")
+		if not self.isFinal then
+			local imgEmpty = gohelper.findChildImage(optionItem.go, "image_Empty")
 
-			gohelper.setActive(var_20_3, false)
+			gohelper.setActive(imgEmpty, false)
 
-			local var_20_4 = gohelper.findChildImage(var_20_2.go, "image_Icon")
-			local var_20_5 = gohelper.findChildText(var_20_2.go, "txt_tip")
+			local imgDesc = gohelper.findChildImage(optionItem.go, "image_Icon")
+			local txtDesc = gohelper.findChildText(optionItem.go, "txt_tip")
 
-			UISpriteSetMgr.instance:setV1a4Role37Sprite(var_20_4, var_20_0[iter_20_1].shapeImg)
+			UISpriteSetMgr.instance:setV1a4Role37Sprite(imgDesc, operGroupList[i].shapeImg)
 
-			var_20_5.text = var_20_0[iter_20_1].operDesc
-			gohelper.findChildText(var_20_2.go, "txt_Type").text = var_20_0[iter_20_1].name
+			txtDesc.text = operGroupList[i].operDesc
 
-			gohelper.setActive(var_20_4, true)
-			gohelper.setActive(var_20_5, true)
+			local nameDesc = gohelper.findChildText(optionItem.go, "txt_Type")
+
+			nameDesc.text = operGroupList[i].name
+
+			gohelper.setActive(imgDesc, true)
+			gohelper.setActive(txtDesc, true)
 		end
 	end
 end
 
-function var_0_0._creatOptionItem(arg_21_0, arg_21_1)
-	local var_21_0 = arg_21_0:getUserDataTb_()
+function Role37PuzzleView:_creatOptionItem(index)
+	local optionItem = self:getUserDataTb_()
 
-	var_21_0.go = gohelper.findChild(arg_21_0.realOper, "option" .. arg_21_1)
-	arg_21_0.optionItemList[arg_21_1] = var_21_0
+	optionItem.go = gohelper.findChild(self.realOper, "option" .. index)
+	self.optionItemList[index] = optionItem
 
-	return var_21_0
+	return optionItem
 end
 
-function var_0_0._initPutArea(arg_22_0)
-	local var_22_0 = gohelper.findChild(arg_22_0._gostepframes, "stepframe")
+function Role37PuzzleView:_initPutArea()
+	local stepPrefab = gohelper.findChild(self._gostepframes, "stepframe")
 
-	for iter_22_0 = 1, arg_22_0.maxOper do
-		local var_22_1 = arg_22_0:getUserDataTb_()
+	for i = 1, self.maxOper do
+		local frameItem = self:getUserDataTb_()
 
-		var_22_1.go = gohelper.cloneInPlace(var_22_0, "stepframe" .. iter_22_0)
-		var_22_1.notPutImage = gohelper.findChildImage(var_22_1.go, "noPut")
-		var_22_1.putImage = gohelper.findChildImage(var_22_1.go, "put")
-		arg_22_0.frameItemList[iter_22_0] = var_22_1
+		frameItem.go = gohelper.cloneInPlace(stepPrefab, "stepframe" .. i)
+		frameItem.notPutImage = gohelper.findChildImage(frameItem.go, "noPut")
+		frameItem.putImage = gohelper.findChildImage(frameItem.go, "put")
+		self.frameItemList[i] = frameItem
 	end
 
-	gohelper.setActive(var_22_0, false)
+	gohelper.setActive(stepPrefab, false)
 end
 
-function var_0_0._editableAddEvents(arg_23_0)
-	arg_23_0:addEventCb(Role37PuzzleController.instance, Role37PuzzleEvent.AddOption, arg_23_0.onAddOption, arg_23_0)
-	arg_23_0:addEventCb(Role37PuzzleController.instance, Role37PuzzleEvent.RemoveOption, arg_23_0.onRemoveOption, arg_23_0)
-	arg_23_0:addEventCb(Role37PuzzleController.instance, Role37PuzzleEvent.ExchangeOption, arg_23_0.onExchangeOption, arg_23_0)
-	arg_23_0:addEventCb(Role37PuzzleController.instance, Role37PuzzleEvent.RepleaceOption, arg_23_0.onRepleaceOption, arg_23_0)
-	arg_23_0:addEventCb(Role37PuzzleController.instance, Role37PuzzleEvent.MoveOption, arg_23_0.onMoveOption, arg_23_0)
-	arg_23_0:addEventCb(Role37PuzzleController.instance, Role37PuzzleEvent.Reset, arg_23_0.onReset, arg_23_0)
-	arg_23_0:addEventCb(Role37PuzzleController.instance, Role37PuzzleEvent.PuzzleResult, arg_23_0.onPuzzleFinish, arg_23_0)
-	arg_23_0:addEventCb(Role37PuzzleController.instance, Role37PuzzleEvent.RecordCntChange, arg_23_0.onRecordChange, arg_23_0)
-	arg_23_0:addEventCb(Role37PuzzleController.instance, Role37PuzzleEvent.ErrorOperChange, arg_23_0.onErrorOper, arg_23_0)
+function Role37PuzzleView:_editableAddEvents()
+	self:addEventCb(Role37PuzzleController.instance, Role37PuzzleEvent.AddOption, self.onAddOption, self)
+	self:addEventCb(Role37PuzzleController.instance, Role37PuzzleEvent.RemoveOption, self.onRemoveOption, self)
+	self:addEventCb(Role37PuzzleController.instance, Role37PuzzleEvent.ExchangeOption, self.onExchangeOption, self)
+	self:addEventCb(Role37PuzzleController.instance, Role37PuzzleEvent.RepleaceOption, self.onRepleaceOption, self)
+	self:addEventCb(Role37PuzzleController.instance, Role37PuzzleEvent.MoveOption, self.onMoveOption, self)
+	self:addEventCb(Role37PuzzleController.instance, Role37PuzzleEvent.Reset, self.onReset, self)
+	self:addEventCb(Role37PuzzleController.instance, Role37PuzzleEvent.PuzzleResult, self.onPuzzleFinish, self)
+	self:addEventCb(Role37PuzzleController.instance, Role37PuzzleEvent.RecordCntChange, self.onRecordChange, self)
+	self:addEventCb(Role37PuzzleController.instance, Role37PuzzleEvent.ErrorOperChange, self.onErrorOper, self)
 end
 
-function var_0_0._editableRemoveEvents(arg_24_0)
-	arg_24_0:removeEventCb(Role37PuzzleController.instance, Role37PuzzleEvent.AddOption, arg_24_0.onAddOption, arg_24_0)
-	arg_24_0:removeEventCb(Role37PuzzleController.instance, Role37PuzzleEvent.RemoveOption, arg_24_0.onRemoveOption, arg_24_0)
-	arg_24_0:removeEventCb(Role37PuzzleController.instance, Role37PuzzleEvent.ExchangeOption, arg_24_0.onExchangeOption, arg_24_0)
-	arg_24_0:removeEventCb(Role37PuzzleController.instance, Role37PuzzleEvent.RepleaceOption, arg_24_0.onRepleaceOption, arg_24_0)
-	arg_24_0:removeEventCb(Role37PuzzleController.instance, Role37PuzzleEvent.MoveOption, arg_24_0.onMoveOption, arg_24_0)
-	arg_24_0:removeEventCb(Role37PuzzleController.instance, Role37PuzzleEvent.Reset, arg_24_0.onReset, arg_24_0)
-	arg_24_0:removeEventCb(Role37PuzzleController.instance, Role37PuzzleEvent.PuzzleResult, arg_24_0.onPuzzleFinish, arg_24_0)
-	arg_24_0:removeEventCb(Role37PuzzleController.instance, Role37PuzzleEvent.RecordCntChange, arg_24_0.onRecordChange, arg_24_0)
-	arg_24_0:removeEventCb(Role37PuzzleController.instance, Role37PuzzleEvent.ErrorOperChange, arg_24_0.onErrorOper, arg_24_0)
+function Role37PuzzleView:_editableRemoveEvents()
+	self:removeEventCb(Role37PuzzleController.instance, Role37PuzzleEvent.AddOption, self.onAddOption, self)
+	self:removeEventCb(Role37PuzzleController.instance, Role37PuzzleEvent.RemoveOption, self.onRemoveOption, self)
+	self:removeEventCb(Role37PuzzleController.instance, Role37PuzzleEvent.ExchangeOption, self.onExchangeOption, self)
+	self:removeEventCb(Role37PuzzleController.instance, Role37PuzzleEvent.RepleaceOption, self.onRepleaceOption, self)
+	self:removeEventCb(Role37PuzzleController.instance, Role37PuzzleEvent.MoveOption, self.onMoveOption, self)
+	self:removeEventCb(Role37PuzzleController.instance, Role37PuzzleEvent.Reset, self.onReset, self)
+	self:removeEventCb(Role37PuzzleController.instance, Role37PuzzleEvent.PuzzleResult, self.onPuzzleFinish, self)
+	self:removeEventCb(Role37PuzzleController.instance, Role37PuzzleEvent.RecordCntChange, self.onRecordChange, self)
+	self:removeEventCb(Role37PuzzleController.instance, Role37PuzzleEvent.ErrorOperChange, self.onErrorOper, self)
 end
 
-function var_0_0.onDestroyView(arg_25_0)
-	arg_25_0._scrollAreaList:RemoveOnValueChanged()
+function Role37PuzzleView:onDestroyView()
+	self._scrollAreaList:RemoveOnValueChanged()
 
-	for iter_25_0 = 1, tabletool.len(arg_25_0.operGroupCfg) do
-		local var_25_0 = arg_25_0.optionItemList[iter_25_0]
+	for i = 1, tabletool.len(self.operGroupCfg) do
+		local optionItem = self.optionItemList[i]
 
-		var_25_0.button:RemoveClickListener()
-		var_25_0.uidrag:RemoveDragBeginListener()
-		var_25_0.uidrag:RemoveDragListener()
-		var_25_0.uidrag:RemoveDragEndListener()
+		optionItem.button:RemoveClickListener()
+		optionItem.uidrag:RemoveDragBeginListener()
+		optionItem.uidrag:RemoveDragListener()
+		optionItem.uidrag:RemoveDragEndListener()
 	end
 
-	arg_25_0:_editableRemoveEvents()
-	TaskDispatcher.cancelTask(arg_25_0._playAudioLoop, arg_25_0)
+	self:_editableRemoveEvents()
+	TaskDispatcher.cancelTask(self._playAudioLoop, self)
 	AudioMgr.instance:trigger(AudioEnum.UI.resume_plotmusic_sound)
-	arg_25_0:_closeFinalSound()
+	self:_closeFinalSound()
 end
 
-function var_0_0._optionClick(arg_26_0, arg_26_1)
-	if arg_26_0.optionDrag then
+function Role37PuzzleView:_optionClick(option)
+	if self.optionDrag then
 		return
 	end
 
-	local var_26_0 = Role37PuzzleModel.instance:getFirstGapIndex()
+	local index = Role37PuzzleModel.instance:getFirstGapIndex()
 
-	Role37PuzzleModel.instance:addOption(arg_26_1, var_26_0)
+	Role37PuzzleModel.instance:addOption(option, index)
 
-	local var_26_1 = Role37PuzzleModel.instance:getOperAudioId(arg_26_1)
+	local audioId = Role37PuzzleModel.instance:getOperAudioId(option)
 
-	AudioMgr.instance:trigger(var_26_1)
+	AudioMgr.instance:trigger(audioId)
 end
 
-function var_0_0._optionDragBegin(arg_27_0, arg_27_1, arg_27_2)
-	arg_27_0.optionDrag = true
+function Role37PuzzleView:_optionDragBegin(option, pointerEventData)
+	self.optionDrag = true
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_activity_hero37_checkpoint_graph_drag)
 
-	local var_27_0 = recthelper.screenPosToAnchorPos(arg_27_2.position, arg_27_0.transform)
+	local pos = recthelper.screenPosToAnchorPos(pointerEventData.position, self.transform)
 
-	UISpriteSetMgr.instance:setV1a4Role37Sprite(arg_27_0.dragImgDesc, arg_27_0.operGroupCfg[arg_27_1].shapeImg)
-	UISpriteSetMgr.instance:setV1a4Role37Sprite(arg_27_0.dragImgyyDesc, arg_27_0.operGroupCfg[arg_27_1].shapeImg .. "_yy")
-	gohelper.setActive(arg_27_0.dragGo, true)
-	arg_27_0.dragAnim:Play("in", 0, 0)
-	recthelper.setAnchor(arg_27_0.dragGo.transform, var_27_0.x, var_27_0.y)
+	UISpriteSetMgr.instance:setV1a4Role37Sprite(self.dragImgDesc, self.operGroupCfg[option].shapeImg)
+	UISpriteSetMgr.instance:setV1a4Role37Sprite(self.dragImgyyDesc, self.operGroupCfg[option].shapeImg .. "_yy")
+	gohelper.setActive(self.dragGo, true)
+	self.dragAnim:Play("in", 0, 0)
+	recthelper.setAnchor(self.dragGo.transform, pos.x, pos.y)
 end
 
-function var_0_0._optionDrag(arg_28_0, arg_28_1, arg_28_2)
-	local var_28_0 = recthelper.screenPosToAnchorPos(arg_28_2.position, arg_28_0.transform)
+function Role37PuzzleView:_optionDrag(param, pointerEventData)
+	local pos = recthelper.screenPosToAnchorPos(pointerEventData.position, self.transform)
 
-	if arg_28_0.optionDrag then
-		recthelper.setAnchor(arg_28_0.dragGo.transform, var_28_0.x, var_28_0.y)
+	if self.optionDrag then
+		recthelper.setAnchor(self.dragGo.transform, pos.x, pos.y)
 	end
 end
 
-function var_0_0._optionDragEnd(arg_29_0, arg_29_1, arg_29_2)
-	if not arg_29_0.optionDrag then
+function Role37PuzzleView:_optionDragEnd(option, pointerEventData)
+	if not self.optionDrag then
 		return
 	end
 
-	arg_29_0.optionDrag = false
+	self.optionDrag = false
 
-	arg_29_0.dragAnim:Play("put", 0, 0)
+	self.dragAnim:Play("put", 0, 0)
 
-	local var_29_0 = recthelper.screenPosToAnchorPos(arg_29_2.position, arg_29_0.transform)
-	local var_29_1
+	local anchorPos = recthelper.screenPosToAnchorPos(pointerEventData.position, self.transform)
+	local pos
 
-	for iter_29_0 = 1, arg_29_0.maxOper do
-		local var_29_2 = recthelper.uiPosToScreenPos(arg_29_0.frameItemList[iter_29_0].go.transform)
-		local var_29_3 = recthelper.screenPosToAnchorPos(var_29_2, arg_29_0.transform)
+	for i = 1, self.maxOper do
+		local screenPos = recthelper.uiPosToScreenPos(self.frameItemList[i].go.transform)
+		local uiPos = recthelper.screenPosToAnchorPos(screenPos, self.transform)
 
-		if math.abs(var_29_3.x - var_29_0.x) < 75 and math.abs(var_29_3.y - var_29_0.y) < 75 then
-			var_29_1 = iter_29_0
+		if math.abs(uiPos.x - anchorPos.x) < 75 and math.abs(uiPos.y - anchorPos.y) < 75 then
+			pos = i
 
 			break
 		end
 	end
 
-	if var_29_1 then
-		Role37PuzzleModel.instance:addOption(arg_29_1, var_29_1)
-		arg_29_0:_playDragEndAudio(arg_29_1)
+	if pos then
+		Role37PuzzleModel.instance:addOption(option, pos)
+		self:_playDragEndAudio(option)
 	end
 
-	gohelper.setActive(arg_29_0.dragGo, false)
+	gohelper.setActive(self.dragGo, false)
 end
 
-function var_0_0._onScrollValueChanged(arg_30_0, arg_30_1)
-	local var_30_0 = recthelper.getAnchorX(arg_30_0._gostepframes.transform)
+function Role37PuzzleView:_onScrollValueChanged(value)
+	local anchorX = recthelper.getAnchorX(self._gostepframes.transform)
 
-	recthelper.setAnchorX(arg_30_0._gosteps.transform, var_30_0)
+	recthelper.setAnchorX(self._gosteps.transform, anchorX)
 
-	if arg_30_0.lastStepsX then
-		if not arg_30_0.recordScrollValue then
-			arg_30_0.recordScrollValue = arg_30_0._progressAnim:GetCurrentAnimatorStateInfo(0).normalizedTime
+	if self.lastStepsX then
+		if not self.recordScrollValue then
+			self.recordScrollValue = self._progressAnim:GetCurrentAnimatorStateInfo(0).normalizedTime
 		end
 
-		local var_30_1 = 0.000748 * (var_30_0 - arg_30_0.lastStepsX)
+		local dis = anchorX - self.lastStepsX
+		local disMove = 0.000748 * dis
 
-		arg_30_0.recordScrollValue = arg_30_0.recordScrollValue + var_30_1
+		self.recordScrollValue = self.recordScrollValue + disMove
 
-		local var_30_2 = arg_30_0.recordScrollValue
+		local animTime = self.recordScrollValue
 
-		if var_30_2 > 1 then
-			var_30_2 = 1
-		elseif var_30_2 < 0 then
-			var_30_2 = 0
+		if animTime > 1 then
+			animTime = 1
+		elseif animTime < 0 then
+			animTime = 0
 		end
 
-		arg_30_0._progressAnim:Play("play", 0, var_30_2)
+		self._progressAnim:Play("play", 0, animTime)
 
-		arg_30_0.lastStepsX = var_30_0
+		self.lastStepsX = anchorX
 	end
 
-	if arg_30_1 <= 0.01 then
-		gohelper.setActive(arg_30_0.goLeftArrow, false)
-		gohelper.setActive(arg_30_0.goRightArrow, true)
-	elseif arg_30_1 >= 0.99 then
-		gohelper.setActive(arg_30_0.goLeftArrow, true)
-		gohelper.setActive(arg_30_0.goRightArrow, false)
+	if value <= 0.01 then
+		gohelper.setActive(self.goLeftArrow, false)
+		gohelper.setActive(self.goRightArrow, true)
+	elseif value >= 0.99 then
+		gohelper.setActive(self.goLeftArrow, true)
+		gohelper.setActive(self.goRightArrow, false)
 	else
-		gohelper.setActive(arg_30_0.goLeftArrow, true)
-		gohelper.setActive(arg_30_0.goRightArrow, true)
+		gohelper.setActive(self.goLeftArrow, true)
+		gohelper.setActive(self.goRightArrow, true)
 	end
 end
 
-function var_0_0.onAddOption(arg_31_0, arg_31_1)
-	local var_31_0 = gohelper.cloneInPlace(arg_31_0.answerPrefab)
+function Role37PuzzleView:onAddOption(pos)
+	local go = gohelper.cloneInPlace(self.answerPrefab)
 
-	gohelper.setActive(var_31_0, true)
+	gohelper.setActive(go, true)
 
-	var_31_0.name = "answerItem" .. arg_31_1
-	arg_31_0.answerList[arg_31_1] = MonoHelper.addNoUpdateLuaComOnceToGo(var_31_0, OptionItem)
+	go.name = "answerItem" .. pos
+	self.answerList[pos] = MonoHelper.addNoUpdateLuaComOnceToGo(go, OptionItem)
 
-	arg_31_0.answerList[arg_31_1]:initParam(arg_31_1, arg_31_0.frameItemList, arg_31_0.viewGO, arg_31_0.isFinal)
-	arg_31_0:_skipToPos(arg_31_1, arg_31_0.maxOper)
-	arg_31_0:refreshNum()
-	arg_31_0:setFramePut(arg_31_1, true)
+	self.answerList[pos]:initParam(pos, self.frameItemList, self.viewGO, self.isFinal)
+	self:_skipToPos(pos, self.maxOper)
+	self:refreshNum()
+	self:setFramePut(pos, true)
 end
 
-function var_0_0.onRemoveOption(arg_32_0, arg_32_1)
-	gohelper.destroy(arg_32_0.answerList[arg_32_1].go)
+function Role37PuzzleView:onRemoveOption(pos)
+	gohelper.destroy(self.answerList[pos].go)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_activity_hero37_checkpoint_delete)
 
-	arg_32_0.answerList[arg_32_1] = nil
+	self.answerList[pos] = nil
 
-	arg_32_0:refreshNum()
-	arg_32_0:setFramePut(arg_32_1, false)
+	self:refreshNum()
+	self:setFramePut(pos, false)
 end
 
-function var_0_0.onExchangeOption(arg_33_0, arg_33_1, arg_33_2)
-	local var_33_0 = arg_33_0.answerList[arg_33_1]
+function Role37PuzzleView:onExchangeOption(from, to)
+	local temp = self.answerList[from]
 
-	arg_33_0.answerList[arg_33_1] = arg_33_0.answerList[arg_33_2]
-	arg_33_0.answerList[arg_33_2] = var_33_0
+	self.answerList[from] = self.answerList[to]
+	self.answerList[to] = temp
 
-	arg_33_0.answerList[arg_33_1]:updateIndex(arg_33_1)
-	arg_33_0.answerList[arg_33_2]:updateIndex(arg_33_2)
-	arg_33_0.answerList[arg_33_1]:calculateDefalutPos()
-	arg_33_0.answerList[arg_33_2]:calculateDefalutPos()
-	arg_33_0.answerList[arg_33_1]:_setDefalutPos(true)
-	arg_33_0.answerList[arg_33_2]:_setDefalutPos(true)
-	arg_33_0:refreshNum()
-	arg_33_0:refreshErrorOper()
+	self.answerList[from]:updateIndex(from)
+	self.answerList[to]:updateIndex(to)
+	self.answerList[from]:calculateDefalutPos()
+	self.answerList[to]:calculateDefalutPos()
+	self.answerList[from]:_setDefalutPos(true)
+	self.answerList[to]:_setDefalutPos(true)
+	self:refreshNum()
+	self:refreshErrorOper()
 end
 
-function var_0_0.onMoveOption(arg_34_0, arg_34_1, arg_34_2)
-	arg_34_0.answerList[arg_34_2] = arg_34_0.answerList[arg_34_1]
-	arg_34_0.answerList[arg_34_1] = nil
+function Role37PuzzleView:onMoveOption(from, to)
+	self.answerList[to] = self.answerList[from]
+	self.answerList[from] = nil
 
-	arg_34_0.answerList[arg_34_2]:updateIndex(arg_34_2)
-	arg_34_0.answerList[arg_34_2]:calculateDefalutPos()
-	arg_34_0.answerList[arg_34_2]:_setDefalutPos(true)
-	arg_34_0:refreshNum()
-	arg_34_0:setFramePut(arg_34_1, false)
-	arg_34_0:setFramePut(arg_34_2, true)
+	self.answerList[to]:updateIndex(to)
+	self.answerList[to]:calculateDefalutPos()
+	self.answerList[to]:_setDefalutPos(true)
+	self:refreshNum()
+	self:setFramePut(from, false)
+	self:setFramePut(to, true)
 end
 
-function var_0_0.onRepleaceOption(arg_35_0, arg_35_1, arg_35_2)
-	arg_35_0.answerList[arg_35_2]:updateIndex(arg_35_2)
-	arg_35_0.answerList[arg_35_2]:refreshSprite()
-	arg_35_0:refreshNum()
+function Role37PuzzleView:onRepleaceOption(option, pos)
+	self.answerList[pos]:updateIndex(pos)
+	self.answerList[pos]:refreshSprite()
+	self:refreshNum()
 end
 
-function var_0_0.onReset(arg_36_0)
-	for iter_36_0, iter_36_1 in pairs(arg_36_0.answerList) do
-		gohelper.destroy(iter_36_1.go)
-		arg_36_0:setFramePut(iter_36_0, false)
+function Role37PuzzleView:onReset()
+	for k, v in pairs(self.answerList) do
+		gohelper.destroy(v.go)
+		self:setFramePut(k, false)
 	end
 
-	arg_36_0.answerList = {}
-	arg_36_0.operList = Role37PuzzleModel.instance:getOperList()
-	arg_36_0._scrollAreaList.horizontalNormalizedPosition = 0
+	self.answerList = {}
+	self.operList = Role37PuzzleModel.instance:getOperList()
+	self._scrollAreaList.horizontalNormalizedPosition = 0
 end
 
-function var_0_0.onPuzzleFinish(arg_37_0, arg_37_1)
-	if arg_37_1 then
+function Role37PuzzleView:onPuzzleFinish(isSucess)
+	if isSucess then
 		StatActivity130Controller.instance:statSuccess()
 	else
 		StatActivity130Controller.instance:statFail()
 	end
 
-	gohelper.setActive(arg_37_0._imageTargetFinish, arg_37_1)
-	gohelper.setActive(arg_37_0._imageTargetNotFinish, not arg_37_1)
+	gohelper.setActive(self._imageTargetFinish, isSucess)
+	gohelper.setActive(self._imageTargetNotFinish, not isSucess)
 
-	if arg_37_1 then
+	if isSucess then
 		UIBlockMgrExtend.setNeedCircleMv(false)
-		gohelper.setActive(arg_37_0._goQuestion, false)
-		gohelper.setActive(arg_37_0._goComplete, true)
+		gohelper.setActive(self._goQuestion, false)
+		gohelper.setActive(self._goComplete, true)
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_activity_hero37_checkpoint_completed_writing)
 		UIBlockMgr.instance:startBlock("puzzleFinish")
-		TaskDispatcher.runDelay(arg_37_0.onAnimFinish, arg_37_0, 2)
+		TaskDispatcher.runDelay(self.onAnimFinish, self, 2)
 	else
 		Role37PuzzleController.instance:openPuzzleResultView()
 	end
 end
 
-function var_0_0.onAnimFinish(arg_38_0)
-	if arg_38_0.isFinal then
-		arg_38_0:_btnPlayOnClick()
+function Role37PuzzleView:onAnimFinish()
+	if self.isFinal then
+		self:_btnPlayOnClick()
 		TaskDispatcher.runDelay(function()
 			UIBlockMgr.instance:endBlock("puzzleFinish")
 			Role37PuzzleController.instance:openPuzzleResultView()
@@ -626,280 +632,291 @@ function var_0_0.onAnimFinish(arg_38_0)
 	end
 end
 
-function var_0_0.onRecordChange(arg_40_0, arg_40_1)
-	arg_40_0._txtround.text = string.format(luaLang("v1a4_role37_puzzle_round"), arg_40_1)
+function Role37PuzzleView:onRecordChange(cnt)
+	self._txtround.text = string.format(luaLang("v1a4_role37_puzzle_round"), cnt)
 
-	gohelper.setActive(arg_40_0._goRecordEmpty, arg_40_1 <= 0)
-	arg_40_0:refreshRecord(arg_40_1)
-	ZProj.UGUIHelper.RebuildLayout(arg_40_0._scrollrecord.content)
+	gohelper.setActive(self._goRecordEmpty, cnt <= 0)
+	self:refreshRecord(cnt)
+	ZProj.UGUIHelper.RebuildLayout(self._scrollrecord.content)
 
-	arg_40_0._scrollrecord.verticalNormalizedPosition = 0
+	self._scrollrecord.verticalNormalizedPosition = 0
 end
 
-function var_0_0.refreshRecord(arg_41_0, arg_41_1)
-	local var_41_0 = #arg_41_0.recordItemList
+function Role37PuzzleView:refreshRecord(cnt)
+	local itemCount = #self.recordItemList
 
-	if var_41_0 <= arg_41_1 then
-		for iter_41_0 = 1, arg_41_1 do
-			local var_41_1 = arg_41_0:getRecordItem(iter_41_0)
-			local var_41_2 = Role37PuzzleModel.instance:getRecordMo(iter_41_0)
+	if itemCount <= cnt then
+		for i = 1, cnt do
+			local item = self:getRecordItem(i)
+			local mo = Role37PuzzleModel.instance:getRecordMo(i)
 
-			var_41_1.comp:onUpdateMO(var_41_2)
-			gohelper.setActive(var_41_1.go, true)
+			item.comp:onUpdateMO(mo)
+			gohelper.setActive(item.go, true)
 		end
 	else
-		for iter_41_1 = 1, var_41_0 do
-			local var_41_3 = arg_41_0:getRecordItem(iter_41_1)
+		for i = 1, itemCount do
+			local item = self:getRecordItem(i)
 
-			if iter_41_1 <= arg_41_1 then
-				local var_41_4 = Role37PuzzleModel.instance:getRecordMo(iter_41_1)
+			if i <= cnt then
+				local mo = Role37PuzzleModel.instance:getRecordMo(i)
 
-				var_41_3.comp:onUpdateMO(var_41_4)
-				gohelper.setActive(var_41_3.go, true)
+				item.comp:onUpdateMO(mo)
+				gohelper.setActive(item.go, true)
 			else
-				gohelper.setActive(var_41_3.go, false)
+				gohelper.setActive(item.go, false)
 			end
 		end
 	end
 end
 
-function var_0_0.getRecordItem(arg_42_0, arg_42_1)
-	local var_42_0 = arg_42_0.recordItemList[arg_42_1]
+function Role37PuzzleView:getRecordItem(index)
+	local item = self.recordItemList[index]
 
-	if not var_42_0 then
-		var_42_0 = {}
+	if not item then
+		item = {}
 
-		local var_42_1 = gohelper.cloneInPlace(arg_42_0._goRecordItem, "record_" .. arg_42_1)
+		local go = gohelper.cloneInPlace(self._goRecordItem, "record_" .. index)
 
-		var_42_0.go = var_42_1
-		var_42_0.comp = MonoHelper.addNoUpdateLuaComOnceToGo(var_42_1, PuzzleRecordItem)
+		item.go = go
+		item.comp = MonoHelper.addNoUpdateLuaComOnceToGo(go, PuzzleRecordItem)
 
-		table.insert(arg_42_0.recordItemList, var_42_0)
+		table.insert(self.recordItemList, item)
 	end
 
-	return var_42_0
+	return item
 end
 
-function var_0_0._skipToPos(arg_43_0, arg_43_1, arg_43_2)
-	local var_43_0
-	local var_43_1
+function Role37PuzzleView:_skipToPos(pos, maxOper)
+	local distance, width
 
-	if arg_43_0.isFinal then
-		local var_43_2 = arg_43_1 - 9
+	if self.isFinal then
+		local difPos = pos - 9
 
-		if var_43_2 < 0 then
-			arg_43_0._scrollAreaList2.horizontalNormalizedPosition = 0
+		if difPos < 0 then
+			self._scrollAreaList2.horizontalNormalizedPosition = 0
 
 			return
 		end
 
-		local var_43_3 = 0.015 + var_43_2 * 0.01971
+		local base = 0.015
+		local dis = 0.01971
+		local value = base + difPos * dis
 
-		if var_43_3 > 1 then
-			var_43_3 = 1
+		if value > 1 then
+			value = 1
 		end
 
-		arg_43_0._scrollAreaList2.horizontalNormalizedPosition = var_43_3
+		self._scrollAreaList2.horizontalNormalizedPosition = value
 	else
-		local var_43_4 = arg_43_1 - 6
+		local difPos = pos - 6
 
-		if var_43_4 < 0 then
-			arg_43_0._scrollAreaList1.horizontalNormalizedPosition = 0
+		if difPos < 0 then
+			self._scrollAreaList1.horizontalNormalizedPosition = 0
 
 			return
 		end
 
-		local var_43_5 = 200 * arg_43_2 + 10 * (arg_43_2 - 1) + 5
-		local var_43_6 = (var_43_5 - 1380) / var_43_5 * arg_43_2
-		local var_43_7, var_43_8 = math.modf(var_43_6)
-		local var_43_9 = 1 / var_43_6 * (var_43_8 + var_43_4)
+		width = 200 * maxOper + 10 * (maxOper - 1) + 5
+		distance = width - 1380
 
-		if var_43_9 > 1 then
-			var_43_9 = 1
+		local percent = distance / width * maxOper
+		local x, basePercent = math.modf(percent)
+		local perDis = 1 / percent
+		local value = perDis * (basePercent + difPos)
+
+		if value > 1 then
+			value = 1
 		end
 
-		arg_43_0._scrollAreaList1.horizontalNormalizedPosition = var_43_9
+		self._scrollAreaList1.horizontalNormalizedPosition = value
 	end
 end
 
-function var_0_0.onErrorOper(arg_44_0, arg_44_1)
-	if Role37PuzzleModel.instance:getErrorCnt() == 1 and arg_44_1 ~= 0 then
-		local var_44_0 = VersionActivity1_4Enum.ActivityId.Role37
-		local var_44_1 = arg_44_0.puzzleCfg.puzzleId
-		local var_44_2 = Activity130Config.instance:getActivity130DecryptCo(var_44_0, var_44_1).errorTip
+function Role37PuzzleView:onErrorOper(errorIndex)
+	local errorCnt = Role37PuzzleModel.instance:getErrorCnt()
 
-		Activity130Controller.instance:dispatchEvent(Activity130Event.ShowTipDialog, var_44_2)
+	if errorCnt == 1 and errorIndex ~= 0 then
+		local actId = VersionActivity1_4Enum.ActivityId.Role37
+		local decryptId = self.puzzleCfg.puzzleId
+		local dialogParam = Activity130Config.instance:getActivity130DecryptCo(actId, decryptId).errorTip
+
+		Activity130Controller.instance:dispatchEvent(Activity130Event.ShowTipDialog, dialogParam)
 	end
 
-	arg_44_0:refreshErrorOper()
+	self:refreshErrorOper()
 end
 
-function var_0_0.refreshErrorOper(arg_45_0)
-	local var_45_0 = Role37PuzzleModel.instance:getCurErrorIndex()
+function Role37PuzzleView:refreshErrorOper()
+	local errorIndex = Role37PuzzleModel.instance:getCurErrorIndex()
 
-	if var_45_0 == 0 then
-		var_45_0 = 9999
+	if errorIndex == 0 then
+		errorIndex = 9999
 	end
 
-	for iter_45_0, iter_45_1 in pairs(arg_45_0.answerList) do
-		iter_45_1:setError(var_45_0 <= iter_45_0)
+	for pos, optionItem in pairs(self.answerList) do
+		optionItem:setError(errorIndex <= pos)
 	end
 end
 
-function var_0_0._playAudio(arg_46_0)
+function Role37PuzzleView:_playAudio()
 	AudioMgr.instance:trigger(AudioEnum.UI.pause_plotmusic_sound)
 
-	arg_46_0.curKey = 1
+	self.curKey = 1
 
-	TaskDispatcher.runDelay(arg_46_0._playAudioLoop, arg_46_0, var_0_0.StartDealy)
+	TaskDispatcher.runDelay(self._playAudioLoop, self, Role37PuzzleView.StartDealy)
 end
 
-function var_0_0._pauseAudio(arg_47_0)
-	TaskDispatcher.cancelTask(arg_47_0._playAudioLoop, arg_47_0)
+function Role37PuzzleView:_pauseAudio()
+	TaskDispatcher.cancelTask(self._playAudioLoop, self)
 end
 
-function var_0_0._resumeAudio(arg_48_0)
-	for iter_48_0, iter_48_1 in pairs(arg_48_0.operList) do
-		if iter_48_0 > arg_48_0.maxKey then
-			arg_48_0.maxKey = iter_48_0
+function Role37PuzzleView:_resumeAudio()
+	for k, _ in pairs(self.operList) do
+		if k > self.maxKey then
+			self.maxKey = k
 		end
 	end
 
-	arg_48_0:_playAudioLoop()
-	TaskDispatcher.runRepeat(arg_48_0._playAudioLoop, arg_48_0, var_0_0.AudioInterval)
+	self:_playAudioLoop()
+	TaskDispatcher.runRepeat(self._playAudioLoop, self, Role37PuzzleView.AudioInterval)
 end
 
-function var_0_0._stopAudio(arg_49_0)
+function Role37PuzzleView:_stopAudio()
 	AudioMgr.instance:trigger(AudioEnum.UI.resume_plotmusic_sound)
-	TaskDispatcher.cancelTask(arg_49_0._playAudioLoop, arg_49_0)
+	TaskDispatcher.cancelTask(self._playAudioLoop, self)
 
-	arg_49_0.curAudioId = nil
-	arg_49_0.curKey = nil
+	self.curAudioId = nil
+	self.curKey = nil
 end
 
-function var_0_0._playAudioLoop(arg_50_0)
-	if arg_50_0.curKey then
-		if arg_50_0.curKey == 1 then
-			TaskDispatcher.runRepeat(arg_50_0._playAudioLoop, arg_50_0, var_0_0.AudioInterval)
+function Role37PuzzleView:_playAudioLoop()
+	if self.curKey then
+		if self.curKey == 1 then
+			TaskDispatcher.runRepeat(self._playAudioLoop, self, Role37PuzzleView.AudioInterval)
 		end
 
-		if arg_50_0.curKey >= 8 then
-			arg_50_0._progressAnim.speed = 0
+		if self.curKey >= 8 then
+			self._progressAnim.speed = 0
 		end
 
-		arg_50_0:_tweenToScrollPos(arg_50_0.curKey)
+		self:_tweenToScrollPos(self.curKey)
 
-		local var_50_0 = arg_50_0.operList[arg_50_0.curKey]
+		local operType = self.operList[self.curKey]
 
-		if var_50_0 then
-			arg_50_0.curAudioId = arg_50_0.operGroupCfg[var_50_0].audioId
+		if operType then
+			self.curAudioId = self.operGroupCfg[operType].audioId
 
-			AudioMgr.instance:trigger(arg_50_0.curAudioId)
+			AudioMgr.instance:trigger(self.curAudioId)
 		else
-			arg_50_0:_playEmptyAudio()
+			self:_playEmptyAudio()
 		end
 
-		arg_50_0.curKey = arg_50_0.curKey + 1
+		self.curKey = self.curKey + 1
 
-		if arg_50_0.curKey > arg_50_0.maxKey then
-			TaskDispatcher.runDelay(arg_50_0._btnStopOnClick, arg_50_0, var_0_0.AudioInterval / 2 - 0.1)
+		if self.curKey > self.maxKey then
+			TaskDispatcher.runDelay(self._btnStopOnClick, self, Role37PuzzleView.AudioInterval / 2 - 0.1)
 		end
 	end
 end
 
-function var_0_0._playEmptyAudio(arg_51_0)
+function Role37PuzzleView:_playEmptyAudio()
 	return
 end
 
-function var_0_0._resumeProgressAnim(arg_52_0)
-	if arg_52_0.curKey > 8 then
-		arg_52_0._progressAnim:Play("play", 0, 0.82188)
+function Role37PuzzleView:_resumeProgressAnim()
+	if self.curKey > 8 then
+		self._progressAnim:Play("play", 0, 0.82188)
 
-		arg_52_0._progressAnim.speed = 1
+		self._progressAnim.speed = 1
 	else
-		local var_52_0 = 0.9
-		local var_52_1 = 0.867
-		local var_52_2 = var_52_0 + (arg_52_0.curKey - 1) * var_52_1
+		local base = 0.9
+		local dis = 0.867
+		local time = base + (self.curKey - 1) * dis
 
-		arg_52_0._progressAnim:CrossFadeInFixedTime("play", 0, 0, var_52_2)
+		self._progressAnim:CrossFadeInFixedTime("play", 0, 0, time)
 
-		arg_52_0._progressAnim.speed = 1
+		self._progressAnim.speed = 1
 	end
 end
 
-function var_0_0._resumeScrollPos(arg_53_0)
-	if arg_53_0.curKey > 8 then
-		local var_53_0 = 0.01971
+function Role37PuzzleView:_resumeScrollPos()
+	if self.curKey > 8 then
+		local dis = 0.01971
 
-		arg_53_0._scrollAreaList2.horizontalNormalizedPosition = (arg_53_0.curKey - 8) * var_53_0
+		self._scrollAreaList2.horizontalNormalizedPosition = (self.curKey - 8) * dis
 	else
-		arg_53_0._scrollAreaList2.horizontalNormalizedPosition = 0
+		self._scrollAreaList2.horizontalNormalizedPosition = 0
 	end
 end
 
-function var_0_0._tweenToScrollPos(arg_54_0, arg_54_1)
-	if arg_54_1 - 8 < 0 then
+function Role37PuzzleView:_tweenToScrollPos(pos)
+	local difPos = pos - 8
+
+	if difPos < 0 then
 		return
 	end
 
-	local var_54_0 = arg_54_0._scrollAreaList2.horizontalNormalizedPosition
-	local var_54_1 = var_54_0 + 0.01971
+	local fromValue = self._scrollAreaList2.horizontalNormalizedPosition
+	local dis = 0.01971
+	local toValue = fromValue + dis
 
-	if var_54_1 > 1 then
-		var_54_1 = 1
+	if toValue > 1 then
+		toValue = 1
 	end
 
-	arg_54_0._scrollTweenId = ZProj.TweenHelper.DOTweenFloat(var_54_0, var_54_1, var_0_0.AudioInterval, arg_54_0.setScrollValue, nil, arg_54_0, nil, EaseType.Linear)
+	self._scrollTweenId = ZProj.TweenHelper.DOTweenFloat(fromValue, toValue, Role37PuzzleView.AudioInterval, self.setScrollValue, nil, self, nil, EaseType.Linear)
 end
 
-function var_0_0.setScrollValue(arg_55_0, arg_55_1)
-	arg_55_0._scrollAreaList2.horizontalNormalizedPosition = arg_55_1
+function Role37PuzzleView:setScrollValue(value)
+	self._scrollAreaList2.horizontalNormalizedPosition = value
 end
 
-function var_0_0.refreshNum(arg_56_0)
-	local var_56_0 = 0
+function Role37PuzzleView:refreshNum()
+	local offset = 0
 
-	for iter_56_0 = 1, tabletool.len(arg_56_0.answerList) do
-		local var_56_1 = arg_56_0.answerList[iter_56_0 + var_56_0]
+	for i = 1, tabletool.len(self.answerList) do
+		local optionItem = self.answerList[i + offset]
 
-		while var_56_1 == nil do
-			var_56_0 = var_56_0 + 1
-			var_56_1 = arg_56_0.answerList[iter_56_0 + var_56_0]
+		while optionItem == nil do
+			offset = offset + 1
+			optionItem = self.answerList[i + offset]
 		end
 
-		var_56_1:setNum(iter_56_0)
+		optionItem:setNum(i)
 	end
 end
 
-function var_0_0.setFramePut(arg_57_0, arg_57_1, arg_57_2)
-	gohelper.setActive(arg_57_0.frameItemList[arg_57_1].notPutImage, not arg_57_2)
-	gohelper.setActive(arg_57_0.frameItemList[arg_57_1].putImage, arg_57_2)
+function Role37PuzzleView:setFramePut(pos, isPut)
+	gohelper.setActive(self.frameItemList[pos].notPutImage, not isPut)
+	gohelper.setActive(self.frameItemList[pos].putImage, isPut)
 end
 
-function var_0_0._playFinalSound(arg_58_0)
-	if arg_58_0.isFinal then
-		arg_58_0:_closeFinalSound()
+function Role37PuzzleView:_playFinalSound()
+	if self.isFinal then
+		self:_closeFinalSound()
 
-		arg_58_0._finalSoundId = AudioMgr.instance:trigger(AudioEnum.UI.set_activityvolume_on)
+		self._finalSoundId = AudioMgr.instance:trigger(AudioEnum.UI.set_activityvolume_on)
 	end
 end
 
-function var_0_0._closeFinalSound(arg_59_0)
-	if arg_59_0._finalSoundId then
+function Role37PuzzleView:_closeFinalSound()
+	if self._finalSoundId then
 		AudioMgr.instance:trigger(AudioEnum.UI.set_activityvolume_off)
 
-		arg_59_0._finalSoundId = nil
+		self._finalSoundId = nil
 	end
 end
 
-function var_0_0._playDragEndAudio(arg_60_0, arg_60_1)
-	if Activity130Model.instance:getCurEpisodeId() == 7 then
-		local var_60_0 = Role37PuzzleModel.instance:getOperAudioId(arg_60_1)
+function Role37PuzzleView:_playDragEndAudio(operType)
+	local curLevelId = Activity130Model.instance:getCurEpisodeId()
 
-		AudioMgr.instance:trigger(var_60_0)
+	if curLevelId == 7 then
+		local audioId = Role37PuzzleModel.instance:getOperAudioId(operType)
+
+		AudioMgr.instance:trigger(audioId)
 	else
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_activity_hero37_checkpoint_graph_put)
 	end
 end
 
-return var_0_0
+return Role37PuzzleView

@@ -1,111 +1,113 @@
-﻿module("modules.logic.sp01.assassin2.outside.model.AssassinQuestMapMO", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/outside/model/AssassinQuestMapMO.lua
 
-local var_0_0 = class("AssassinQuestMapMO")
+module("modules.logic.sp01.assassin2.outside.model.AssassinQuestMapMO", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1
+local AssassinQuestMapMO = class("AssassinQuestMapMO")
 
-	arg_1_0:clearQuestData()
+function AssassinQuestMapMO:ctor(mapId)
+	self.id = mapId
+
+	self:clearQuestData()
 end
 
-function var_0_0.clearQuestData(arg_2_0)
-	arg_2_0._finishQuestDict = {}
-	arg_2_0._unlockQuestDict = {}
+function AssassinQuestMapMO:clearQuestData()
+	self._finishQuestDict = {}
+	self._unlockQuestDict = {}
 end
 
-function var_0_0.unlockQuest(arg_3_0, arg_3_1)
-	arg_3_0._unlockQuestDict[arg_3_1] = true
+function AssassinQuestMapMO:unlockQuest(questId)
+	self._unlockQuestDict[questId] = true
 end
 
-function var_0_0.finishQuest(arg_4_0, arg_4_1)
-	arg_4_0._finishQuestDict[arg_4_1] = true
-	arg_4_0._unlockQuestDict[arg_4_1] = nil
+function AssassinQuestMapMO:finishQuest(questId)
+	self._finishQuestDict[questId] = true
+	self._unlockQuestDict[questId] = nil
 end
 
-function var_0_0.getStatus(arg_5_0)
-	local var_5_0 = arg_5_0:getProgress()
-	local var_5_1 = AssassinEnum.MapStatus.Unlocked
+function AssassinQuestMapMO:getStatus()
+	local progress = self:getProgress()
+	local status = AssassinEnum.MapStatus.Unlocked
 
-	if var_5_0 >= AssassinEnum.Const.MapQuestMaxProgress then
-		var_5_1 = AssassinEnum.MapStatus.Finished
+	if progress >= AssassinEnum.Const.MapQuestMaxProgress then
+		status = AssassinEnum.MapStatus.Finished
 	end
 
-	return var_5_1
+	return status
 end
 
-function var_0_0.getProgress(arg_6_0)
-	local var_6_0 = 0
-	local var_6_1 = AssassinConfig.instance:getQuestListInMap(arg_6_0.id)
+function AssassinQuestMapMO:getProgress()
+	local allQuestCount = 0
+	local allQuest = AssassinConfig.instance:getQuestListInMap(self.id)
 
-	if var_6_1 then
-		var_6_0 = #var_6_1
+	if allQuest then
+		allQuestCount = #allQuest
 	end
 
-	local var_6_2 = 0
+	local finishQuestCount = 0
 
-	for iter_6_0, iter_6_1 in pairs(arg_6_0._finishQuestDict) do
-		var_6_2 = var_6_2 + 1
+	for _, _ in pairs(self._finishQuestDict) do
+		finishQuestCount = finishQuestCount + 1
 	end
 
-	local var_6_3 = Mathf.Clamp(var_6_2 / var_6_0, 0, 1)
+	local progress = Mathf.Clamp(finishQuestCount / allQuestCount, 0, 1)
 
-	return tonumber(string.format("%.2f", var_6_3))
+	return tonumber(string.format("%.2f", progress))
 end
 
-function var_0_0.getFinishQuestCount(arg_7_0, arg_7_1)
-	local var_7_0 = 0
+function AssassinQuestMapMO:getFinishQuestCount(targetQuestType)
+	local result = 0
 
-	for iter_7_0, iter_7_1 in pairs(arg_7_0._finishQuestDict) do
-		local var_7_1 = AssassinConfig.instance:getQuestType(iter_7_0)
+	for questId, _ in pairs(self._finishQuestDict) do
+		local questType = AssassinConfig.instance:getQuestType(questId)
 
-		if not arg_7_1 or arg_7_1 == var_7_1 then
-			var_7_0 = var_7_0 + 1
+		if not targetQuestType or targetQuestType == questType then
+			result = result + 1
 		end
 	end
 
-	return var_7_0
+	return result
 end
 
-function var_0_0.getAllUnlockQuestCount(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0:getFinishQuestCount(arg_8_1)
+function AssassinQuestMapMO:getAllUnlockQuestCount(targetQuestType)
+	local result = self:getFinishQuestCount(targetQuestType)
 
-	for iter_8_0, iter_8_1 in pairs(arg_8_0._unlockQuestDict) do
-		local var_8_1 = AssassinConfig.instance:getQuestType(iter_8_0)
+	for questId, _ in pairs(self._unlockQuestDict) do
+		local questType = AssassinConfig.instance:getQuestType(questId)
 
-		if not arg_8_1 or arg_8_1 == var_8_1 then
-			var_8_0 = var_8_0 + 1
+		if not targetQuestType or targetQuestType == questType then
+			result = result + 1
 		end
 	end
 
-	return var_8_0
+	return result
 end
 
-function var_0_0.getMapUnlockQuestIdList(arg_9_0)
-	local var_9_0 = {}
+function AssassinQuestMapMO:getMapUnlockQuestIdList()
+	local result = {}
 
-	for iter_9_0, iter_9_1 in pairs(arg_9_0._unlockQuestDict) do
-		var_9_0[#var_9_0 + 1] = iter_9_0
+	for questId, _ in pairs(self._unlockQuestDict) do
+		result[#result + 1] = questId
 	end
 
-	return var_9_0
+	return result
 end
 
-function var_0_0.getMapFinishQuestIdList(arg_10_0)
-	local var_10_0 = {}
+function AssassinQuestMapMO:getMapFinishQuestIdList()
+	local result = {}
 
-	for iter_10_0, iter_10_1 in pairs(arg_10_0._finishQuestDict) do
-		var_10_0[#var_10_0 + 1] = iter_10_0
+	for questId, _ in pairs(self._finishQuestDict) do
+		result[#result + 1] = questId
 	end
 
-	return var_10_0
+	return result
 end
 
-function var_0_0.isUnlockQuest(arg_11_0, arg_11_1)
-	return arg_11_0._unlockQuestDict[arg_11_1] and true or false
+function AssassinQuestMapMO:isUnlockQuest(questId)
+	return self._unlockQuestDict[questId] and true or false
 end
 
-function var_0_0.isFinishQuest(arg_12_0, arg_12_1)
-	return arg_12_0._finishQuestDict[arg_12_1] and true or false
+function AssassinQuestMapMO:isFinishQuest(questId)
+	return self._finishQuestDict[questId] and true or false
 end
 
-return var_0_0
+return AssassinQuestMapMO

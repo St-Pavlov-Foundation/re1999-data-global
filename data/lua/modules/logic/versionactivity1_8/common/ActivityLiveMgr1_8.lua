@@ -1,12 +1,14 @@
-﻿module("modules.logic.versionactivity1_8.common.ActivityLiveMgr1_8", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_8/common/ActivityLiveMgr1_8.lua
 
-local var_0_0 = class("ActivityLiveMgr1_8")
+module("modules.logic.versionactivity1_8.common.ActivityLiveMgr1_8", package.seeall)
 
-function var_0_0.init(arg_1_0)
+local ActivityLiveMgr1_8 = class("ActivityLiveMgr1_8")
+
+function ActivityLiveMgr1_8:init()
 	return
 end
 
-function var_0_0.getActId2ViewList(arg_2_0)
+function ActivityLiveMgr1_8:getActId2ViewList()
 	return {
 		[VersionActivity1_8Enum.ActivityId.EnterView] = {
 			ViewName.VersionActivity1_8EnterView
@@ -33,6 +35,6 @@ function var_0_0.getActId2ViewList(arg_2_0)
 	}
 end
 
-var_0_0.instance = var_0_0.New()
+ActivityLiveMgr1_8.instance = ActivityLiveMgr1_8.New()
 
-return var_0_0
+return ActivityLiveMgr1_8

@@ -1,54 +1,56 @@
-﻿module("modules.logic.activity.view.V2a8_DragonBoat_FullView", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/V2a8_DragonBoat_FullView.lua
 
-local var_0_0 = class("V2a8_DragonBoat_FullView", V2a8_DragonBoat_ViewImpl)
+module("modules.logic.activity.view.V2a8_DragonBoat_FullView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._imagetitle = gohelper.findChildImage(arg_1_0.viewGO, "#image_title")
-	arg_1_0._imagelogo = gohelper.findChildImage(arg_1_0.viewGO, "#image_logo")
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "timebg/#txt_LimitTime")
-	arg_1_0._btnstart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_start")
-	arg_1_0._scrollItemList = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_ItemList")
+local V2a8_DragonBoat_FullView = class("V2a8_DragonBoat_FullView", V2a8_DragonBoat_ViewImpl)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V2a8_DragonBoat_FullView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._imagetitle = gohelper.findChildImage(self.viewGO, "#image_title")
+	self._imagelogo = gohelper.findChildImage(self.viewGO, "#image_logo")
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "timebg/#txt_LimitTime")
+	self._btnstart = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_start")
+	self._scrollItemList = gohelper.findChildScrollRect(self.viewGO, "#scroll_ItemList")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	var_0_0.super.addEvents(arg_2_0)
-	arg_2_0._btnstart:AddClickListener(arg_2_0._btnstartOnClick, arg_2_0)
-	arg_2_0._btnnormal:AddClickListener(arg_2_0._onItemClick, arg_2_0)
-	arg_2_0._btncanget:AddClickListener(arg_2_0._onItemClick, arg_2_0)
-	arg_2_0._btnhasget:AddClickListener(arg_2_0._onItemClick, arg_2_0)
+function V2a8_DragonBoat_FullView:addEvents()
+	V2a8_DragonBoat_FullView.super.addEvents(self)
+	self._btnstart:AddClickListener(self._btnstartOnClick, self)
+	self._btnnormal:AddClickListener(self._onItemClick, self)
+	self._btncanget:AddClickListener(self._onItemClick, self)
+	self._btnhasget:AddClickListener(self._onItemClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	var_0_0.super.removeEvents(arg_3_0)
-	arg_3_0._btnstart:RemoveClickListener()
-	arg_3_0._btnnormal:RemoveClickListener()
-	arg_3_0._btncanget:RemoveClickListener()
-	arg_3_0._btnhasget:RemoveClickListener()
+function V2a8_DragonBoat_FullView:removeEvents()
+	V2a8_DragonBoat_FullView.super.removeEvents(self)
+	self._btnstart:RemoveClickListener()
+	self._btnnormal:RemoveClickListener()
+	self._btncanget:RemoveClickListener()
+	self._btnhasget:RemoveClickListener()
 end
 
-function var_0_0._btnstartOnClick(arg_4_0)
-	arg_4_0:_onClickMedicinalBath()
+function V2a8_DragonBoat_FullView:_btnstartOnClick()
+	self:_onClickMedicinalBath()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._normalGo = gohelper.findChild(arg_5_0.viewGO, "reward/normal")
-	arg_5_0._cangetGo = gohelper.findChild(arg_5_0.viewGO, "reward/canget")
-	arg_5_0._hasgetGo = gohelper.findChild(arg_5_0.viewGO, "reward/hasget")
-	arg_5_0._txt_dec = gohelper.findChildText(arg_5_0._normalGo, "tips/txt_dec")
-	arg_5_0._leftGo = gohelper.findChild(arg_5_0.viewGO, "Left")
-	arg_5_0._btnstartGO = arg_5_0._btnstart.gameObject
-	arg_5_0._scrollItemListGo = arg_5_0._scrollItemList.gameObject
-	arg_5_0._btnnormal = gohelper.getClickWithDefaultAudio(arg_5_0._normalGo)
-	arg_5_0._btncanget = gohelper.getClickWithDefaultAudio(arg_5_0._cangetGo)
-	arg_5_0._btnhasget = gohelper.getClickWithDefaultAudio(arg_5_0._hasgetGo)
+function V2a8_DragonBoat_FullView:_editableInitView()
+	self._normalGo = gohelper.findChild(self.viewGO, "reward/normal")
+	self._cangetGo = gohelper.findChild(self.viewGO, "reward/canget")
+	self._hasgetGo = gohelper.findChild(self.viewGO, "reward/hasget")
+	self._txt_dec = gohelper.findChildText(self._normalGo, "tips/txt_dec")
+	self._leftGo = gohelper.findChild(self.viewGO, "Left")
+	self._btnstartGO = self._btnstart.gameObject
+	self._scrollItemListGo = self._scrollItemList.gameObject
+	self._btnnormal = gohelper.getClickWithDefaultAudio(self._normalGo)
+	self._btncanget = gohelper.getClickWithDefaultAudio(self._cangetGo)
+	self._btnhasget = gohelper.getClickWithDefaultAudio(self._hasgetGo)
 
-	arg_5_0:internal_set_openMode(Activity101SignViewBase.eOpenMode.ActivityBeginnerView)
-	var_0_0.super._editableInitView(arg_5_0)
+	self:internal_set_openMode(Activity101SignViewBase.eOpenMode.ActivityBeginnerView)
+	V2a8_DragonBoat_FullView.super._editableInitView(self)
 end
 
-return var_0_0
+return V2a8_DragonBoat_FullView

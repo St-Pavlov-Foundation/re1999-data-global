@@ -1,123 +1,125 @@
-﻿module("modules.logic.summon.model.SummonPoolDetailCategoryListModel", package.seeall)
+﻿-- chunkname: @modules/logic/summon/model/SummonPoolDetailCategoryListModel.lua
 
-local var_0_0 = class("SummonPoolDetailCategoryListModel", ListScrollModel)
+module("modules.logic.summon.model.SummonPoolDetailCategoryListModel", package.seeall)
 
-function var_0_0.initCategory(arg_1_0)
-	local var_1_0 = {}
+local SummonPoolDetailCategoryListModel = class("SummonPoolDetailCategoryListModel", ListScrollModel)
 
-	for iter_1_0 = 1, 2 do
-		table.insert(var_1_0, arg_1_0:packMo(var_0_0.getName(iter_1_0), var_0_0.getNameEn(iter_1_0), iter_1_0))
+function SummonPoolDetailCategoryListModel:initCategory()
+	local data = {}
+
+	for i = 1, 2 do
+		table.insert(data, self:packMo(SummonPoolDetailCategoryListModel.getName(i), SummonPoolDetailCategoryListModel.getNameEn(i), i))
 	end
 
-	arg_1_0:setList(var_1_0)
+	self:setList(data)
 end
 
-function var_0_0.packMo(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	arg_2_0._moList = arg_2_0._moList or {}
+function SummonPoolDetailCategoryListModel:packMo(cnName, enName, index)
+	self._moList = self._moList or {}
 
-	local var_2_0 = arg_2_0._moList[arg_2_3]
+	local t = self._moList[index]
 
-	if not var_2_0 then
-		var_2_0 = {}
-		arg_2_0._moList[arg_2_3] = var_2_0
-		var_2_0.enName = arg_2_2
-		var_2_0.resIndex = arg_2_3
+	if not t then
+		t = {}
+		self._moList[index] = t
+		t.enName = enName
+		t.resIndex = index
 	end
 
-	var_2_0.cnName = arg_2_1
+	t.cnName = cnName
 
-	return var_2_0
+	return t
 end
 
-function var_0_0.setJumpLuckyBag(arg_3_0, arg_3_1)
-	arg_3_0._jumpLuckyBagId = arg_3_1
+function SummonPoolDetailCategoryListModel:setJumpLuckyBag(luckyBagId)
+	self._jumpLuckyBagId = luckyBagId
 end
 
-function var_0_0.getJumpLuckyBag(arg_4_0)
-	return arg_4_0._jumpLuckyBagId
+function SummonPoolDetailCategoryListModel:getJumpLuckyBag()
+	return self._jumpLuckyBagId
 end
 
-function var_0_0.getName(arg_5_0)
-	if not var_0_0.nameDict then
-		var_0_0.nameDict = {
+function SummonPoolDetailCategoryListModel.getName(index)
+	if not SummonPoolDetailCategoryListModel.nameDict then
+		SummonPoolDetailCategoryListModel.nameDict = {
 			[1] = "p_summon_pool_detail",
 			[2] = "p_summon_pool_probability"
 		}
 	end
 
-	return luaLang(var_0_0.nameDict[arg_5_0])
+	return luaLang(SummonPoolDetailCategoryListModel.nameDict[index])
 end
 
-function var_0_0.getNameEn(arg_6_0)
-	if not var_0_0.nameEnDict then
-		var_0_0.nameEnDict = {
+function SummonPoolDetailCategoryListModel.getNameEn(index)
+	if not SummonPoolDetailCategoryListModel.nameEnDict then
+		SummonPoolDetailCategoryListModel.nameEnDict = {
 			[1] = "p_summon_pool_detailEn",
 			[2] = "p_summon_pool_probabilityEn"
 		}
 	end
 
-	return luaLang(var_0_0.nameEnDict[arg_6_0])
+	return luaLang(SummonPoolDetailCategoryListModel.nameEnDict[index])
 end
 
-function var_0_0.buildProbUpDict(arg_7_0)
-	local var_7_0 = SummonConfig.instance:getSummonPool(arg_7_0)
-	local var_7_1 = {
+function SummonPoolDetailCategoryListModel.buildProbUpDict(poolId)
+	local poolCo = SummonConfig.instance:getSummonPool(poolId)
+	local index2Rare = {
 		5,
 		4
 	}
-	local var_7_2 = {}
-	local var_7_3 = {}
-	local var_7_4 = false
+	local result = {}
+	local totalResult = {}
+	local hasUpItem = false
 
-	if not string.nilorempty(var_7_0.upWeight) then
-		local var_7_5 = string.split(var_7_0.upWeight, "|")
+	if not string.nilorempty(poolCo.upWeight) then
+		local strArr = string.split(poolCo.upWeight, "|")
 
-		for iter_7_0, iter_7_1 in ipairs(var_7_5) do
-			local var_7_6 = var_7_1[iter_7_0]
-			local var_7_7 = string.splitToNumber(iter_7_1, "#")
+		for index, str in ipairs(strArr) do
+			local rare = index2Rare[index]
+			local idArr = string.splitToNumber(str, "#")
 
-			var_7_2[var_7_6] = var_7_7
+			result[rare] = idArr
 
-			tabletool.addValues(var_7_3, var_7_7)
+			tabletool.addValues(totalResult, idArr)
 
-			var_7_4 = true
+			hasUpItem = true
 		end
 	end
 
-	return var_7_2, var_7_3, var_7_4
+	return result, totalResult, hasUpItem
 end
 
-function var_0_0.buildLuckyBagDict(arg_8_0)
-	local var_8_0 = SummonConfig.instance:getSummonPool(arg_8_0)
-	local var_8_1 = SummonConfig.instance:getSummonLuckyBag(arg_8_0)
-	local var_8_2 = {}
-	local var_8_3 = {}
+function SummonPoolDetailCategoryListModel.buildLuckyBagDict(poolId)
+	local poolCo = SummonConfig.instance:getSummonPool(poolId)
+	local luckyBagIds = SummonConfig.instance:getSummonLuckyBag(poolId)
+	local resultIds = {}
+	local resultArrs = {}
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_1) do
-		table.insert(var_8_2, iter_8_1)
-		table.insert(var_8_3, SummonConfig.instance:getLuckyBagHeroIds(arg_8_0, iter_8_1))
+	for _, luckyBagId in ipairs(luckyBagIds) do
+		table.insert(resultIds, luckyBagId)
+		table.insert(resultArrs, SummonConfig.instance:getLuckyBagHeroIds(poolId, luckyBagId))
 	end
 
-	return var_8_2, var_8_3
+	return resultIds, resultArrs
 end
 
-function var_0_0.buildCustomPickDict(arg_9_0)
-	local var_9_0 = {}
-	local var_9_1 = SummonMainModel.instance:getPoolServerMO(arg_9_0)
+function SummonPoolDetailCategoryListModel.buildCustomPickDict(poolId)
+	local result = {}
+	local summonServerMO = SummonMainModel.instance:getPoolServerMO(poolId)
 
-	if var_9_1 and var_9_1.customPickMO and var_9_1.customPickMO.pickHeroIds then
-		local var_9_2 = #var_9_1.customPickMO.pickHeroIds
+	if summonServerMO and summonServerMO.customPickMO and summonServerMO.customPickMO.pickHeroIds then
+		local len = #summonServerMO.customPickMO.pickHeroIds
 
-		for iter_9_0 = 1, var_9_2 do
-			local var_9_3 = var_9_1.customPickMO.pickHeroIds[iter_9_0]
+		for i = 1, len do
+			local heroId = summonServerMO.customPickMO.pickHeroIds[i]
 
-			table.insert(var_9_0, var_9_3)
+			table.insert(result, heroId)
 		end
 	end
 
-	return var_9_0
+	return result
 end
 
-var_0_0.instance = var_0_0.New()
+SummonPoolDetailCategoryListModel.instance = SummonPoolDetailCategoryListModel.New()
 
-return var_0_0
+return SummonPoolDetailCategoryListModel

@@ -1,77 +1,81 @@
-﻿module("modules.logic.fight.entity.comp.specialskineffect.FightEntitySpecialSkinEffect307301_buff4150002", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/specialskineffect/FightEntitySpecialSkinEffect307301_buff4150002.lua
 
-local var_0_0 = class("FightEntitySpecialSkinEffect307301_buff4150002", FightEntitySpecialEffectBase)
+module("modules.logic.fight.entity.comp.specialskineffect.FightEntitySpecialSkinEffect307301_buff4150002", package.seeall)
 
-function var_0_0.initClass(arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.SetEntityAlpha, arg_1_0._onSetEntityAlpha, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.SetBuffEffectVisible, arg_1_0._onSetBuffEffectVisible, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, arg_1_0._onBuffUpdate, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.BeforeEnterStepBehaviour, arg_1_0._onBeforeEnterStepBehaviour, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.BeforeDeadEffect, arg_1_0._onBeforeDeadEffect, arg_1_0)
+local FightEntitySpecialSkinEffect307301_buff4150002 = class("FightEntitySpecialSkinEffect307301_buff4150002", FightEntitySpecialEffectBase)
+
+function FightEntitySpecialSkinEffect307301_buff4150002:initClass()
+	self:addEventCb(FightController.instance, FightEvent.SetEntityAlpha, self._onSetEntityAlpha, self)
+	self:addEventCb(FightController.instance, FightEvent.SetBuffEffectVisible, self._onSetBuffEffectVisible, self)
+	self:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, self._onBuffUpdate, self)
+	self:addEventCb(FightController.instance, FightEvent.BeforeEnterStepBehaviour, self._onBeforeEnterStepBehaviour, self)
+	self:addEventCb(FightController.instance, FightEvent.BeforeDeadEffect, self._onBeforeDeadEffect, self)
 end
 
-function var_0_0._releaseEffect(arg_2_0)
-	if arg_2_0._effectWrap then
-		arg_2_0._entity.effect:removeEffect(arg_2_0._effectWrap)
-		FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_2_0._entity.id, arg_2_0._effectWrap)
+function FightEntitySpecialSkinEffect307301_buff4150002:_releaseEffect()
+	if self._effectWrap then
+		self._entity.effect:removeEffect(self._effectWrap)
+		FightRenderOrderMgr.instance:onRemoveEffectWrap(self._entity.id, self._effectWrap)
 
-		arg_2_0._effectWrap = nil
+		self._effectWrap = nil
 	end
 end
 
-local var_0_1 = "v1a5_kerandian/kerandian_innate_1"
+local effectName = "v1a5_kerandian/kerandian_innate_1"
 
-function var_0_0._createEffect(arg_3_0)
-	arg_3_0._effectWrap = arg_3_0._effectWrap or arg_3_0._entity.effect:addHangEffect(var_0_1, ModuleEnum.SpineHangPoint.mountweapon)
+function FightEntitySpecialSkinEffect307301_buff4150002:_createEffect()
+	self._effectWrap = self._effectWrap or self._entity.effect:addHangEffect(effectName, ModuleEnum.SpineHangPoint.mountweapon)
 
-	FightRenderOrderMgr.instance:onAddEffectWrap(arg_3_0._entity.id, arg_3_0._effectWrap)
-	arg_3_0._effectWrap:setLocalPos(0, 0, 0)
+	FightRenderOrderMgr.instance:onAddEffectWrap(self._entity.id, self._effectWrap)
+	self._effectWrap:setLocalPos(0, 0, 0)
 end
 
-function var_0_0._onBuffUpdate(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
-	if arg_4_1 ~= arg_4_0._entity.id then
+function FightEntitySpecialSkinEffect307301_buff4150002:_onBuffUpdate(targetId, effectType, buffId, buffUid)
+	if targetId ~= self._entity.id then
 		return
 	end
 
-	if arg_4_3 == 4150002 then
-		if arg_4_0._entity.buff and arg_4_0._entity.buff:haveBuffId(arg_4_3) then
-			arg_4_0:_createEffect()
+	if buffId == 4150002 then
+		local hasBuff = self._entity.buff and self._entity.buff:haveBuffId(buffId)
+
+		if hasBuff then
+			self:_createEffect()
 		else
-			arg_4_0:_releaseEffect()
+			self:_releaseEffect()
 		end
 	end
 end
 
-function var_0_0._onBeforeEnterStepBehaviour(arg_5_0)
-	local var_5_0 = arg_5_0._entity:getMO()
+function FightEntitySpecialSkinEffect307301_buff4150002:_onBeforeEnterStepBehaviour()
+	local entityMO = self._entity:getMO()
 
-	if var_5_0 then
-		local var_5_1 = var_5_0:getBuffDic()
+	if entityMO then
+		local buffDic = entityMO:getBuffDic()
 
-		for iter_5_0, iter_5_1 in pairs(var_5_1) do
-			arg_5_0:_onBuffUpdate(arg_5_0._entity.id, FightEnum.EffectType.BUFFADD, iter_5_1.buffId, iter_5_1.uid)
+		for i, v in pairs(buffDic) do
+			self:_onBuffUpdate(self._entity.id, FightEnum.EffectType.BUFFADD, v.buffId, v.uid)
 		end
 	end
 end
 
-function var_0_0._onSetEntityAlpha(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_0:_onSetBuffEffectVisible(arg_6_1, arg_6_2, "_onSetEntityAlpha")
+function FightEntitySpecialSkinEffect307301_buff4150002:_onSetEntityAlpha(entityId, state)
+	self:_onSetBuffEffectVisible(entityId, state, "_onSetEntityAlpha")
 end
 
-function var_0_0._onSetBuffEffectVisible(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	if arg_7_0._entity.id == arg_7_1 and arg_7_0._effectWrap then
-		arg_7_0._effectWrap:setActive(arg_7_2, arg_7_3 or "FightEntitySpecialSkinEffect307301_buff4150002")
+function FightEntitySpecialSkinEffect307301_buff4150002:_onSetBuffEffectVisible(entityId, state, sign)
+	if self._entity.id == entityId and self._effectWrap then
+		self._effectWrap:setActive(state, sign or "FightEntitySpecialSkinEffect307301_buff4150002")
 	end
 end
 
-function var_0_0._onBeforeDeadEffect(arg_8_0, arg_8_1)
-	if arg_8_1 == arg_8_0._entity.id then
-		arg_8_0:_releaseEffect()
+function FightEntitySpecialSkinEffect307301_buff4150002:_onBeforeDeadEffect(entityId)
+	if entityId == self._entity.id then
+		self:_releaseEffect()
 	end
 end
 
-function var_0_0.releaseSelf(arg_9_0)
-	arg_9_0:_releaseEffect()
+function FightEntitySpecialSkinEffect307301_buff4150002:releaseSelf()
+	self:_releaseEffect()
 end
 
-return var_0_0
+return FightEntitySpecialSkinEffect307301_buff4150002

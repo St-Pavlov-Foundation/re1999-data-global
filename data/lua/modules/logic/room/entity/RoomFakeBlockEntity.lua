@@ -1,33 +1,35 @@
-﻿module("modules.logic.room.entity.RoomFakeBlockEntity", package.seeall)
+﻿-- chunkname: @modules/logic/room/entity/RoomFakeBlockEntity.lua
 
-local var_0_0 = class("RoomFakeBlockEntity", RoomBaseBlockEntity)
+module("modules.logic.room.entity.RoomFakeBlockEntity", package.seeall)
 
-function var_0_0.getTag(arg_1_0)
+local RoomFakeBlockEntity = class("RoomFakeBlockEntity", RoomBaseBlockEntity)
+
+function RoomFakeBlockEntity:getTag()
 	return SceneTag.RoomFakeBlock
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	var_0_0.super.init(arg_2_0, arg_2_1)
+function RoomFakeBlockEntity:init(go)
+	RoomFakeBlockEntity.super.init(self, go)
 end
 
-function var_0_0.initComponents(arg_3_0)
-	var_0_0.super.initComponents(arg_3_0)
+function RoomFakeBlockEntity:initComponents()
+	RoomFakeBlockEntity.super.initComponents(self)
 end
 
-function var_0_0.refreshLand(arg_4_0)
-	var_0_0.super.refreshLand(arg_4_0)
-	arg_4_0.effect:changeParams({
+function RoomFakeBlockEntity:refreshLand()
+	RoomFakeBlockEntity.super.refreshLand(self)
+	self.effect:changeParams({
 		landGO = {
 			shadow = false,
 			batch = false,
 			layer = UnityLayer.SceneOrthogonalOpaque
 		}
 	})
-	arg_4_0.effect:refreshEffect()
+	self.effect:refreshEffect()
 end
 
-function var_0_0.getMO(arg_5_0)
-	return RoomInventoryBlockModel.instance:getFakeBlockMOById(arg_5_0.id)
+function RoomFakeBlockEntity:getMO()
+	return RoomInventoryBlockModel.instance:getFakeBlockMOById(self.id)
 end
 
-return var_0_0
+return RoomFakeBlockEntity

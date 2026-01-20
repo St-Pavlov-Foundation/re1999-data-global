@@ -1,3 +1,7 @@
-﻿module("modules.logic.fightuiswitch.view.FightUISkinMaterialTipView", package.seeall)
+﻿-- chunkname: @modules/logic/fightuiswitch/view/FightUISkinMaterialTipView.lua
 
-return (class("FightUISkinMaterialTipView", MainSceneSkinMaterialTipView))
+module("modules.logic.fightuiswitch.view.FightUISkinMaterialTipView", package.seeall)
+
+local FightUISkinMaterialTipView = class("FightUISkinMaterialTipView", MainSceneSkinMaterialTipView)
+
+return FightUISkinMaterialTipView

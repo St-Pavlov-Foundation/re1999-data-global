@@ -1,241 +1,240 @@
-﻿module("modules.logic.equip.view.EquipInfoTipsView", package.seeall)
+﻿-- chunkname: @modules/logic/equip/view/EquipInfoTipsView.lua
 
-local var_0_0 = class("EquipInfoTipsView", BaseView)
+module("modules.logic.equip.view.EquipInfoTipsView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._gocontainer = gohelper.findChild(arg_1_0.viewGO, "#go_container")
-	arg_1_0._simageframe = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_container/#simage_frame")
-	arg_1_0._txtlv = gohelper.findChildText(arg_1_0.viewGO, "#go_container/top/name/lv/#txt_lv")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#go_container/top/name/#txt_name")
-	arg_1_0._goequipitem = gohelper.findChild(arg_1_0.viewGO, "#go_container/top/#go_equipitem")
-	arg_1_0._simageequipicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_container/top/#go_equipitem/#simage_equipicon")
-	arg_1_0._imagelock = gohelper.findChildImage(arg_1_0.viewGO, "#go_container/top/#image_lock")
-	arg_1_0._golockicon = gohelper.findChild(arg_1_0.viewGO, "#go_container/top/#image_lock/#go_lockicon")
-	arg_1_0._gostrengthenattr = gohelper.findChild(arg_1_0.viewGO, "#go_container/scroll_view/Viewport/center/attribute/#go_strengthenattr")
-	arg_1_0._gobreakeffect = gohelper.findChild(arg_1_0.viewGO, "#go_container/scroll_view/Viewport/center/attribute/#go_breakeffect")
-	arg_1_0._gosuitattribute = gohelper.findChild(arg_1_0.viewGO, "#go_container/scroll_view/Viewport/center/#go_suitattribute")
-	arg_1_0._txtattributelv = gohelper.findChildText(arg_1_0.viewGO, "#go_container/scroll_view/Viewport/center/#go_suitattribute/attributename/#txt_attributelv")
-	arg_1_0._gosuiteffect = gohelper.findChild(arg_1_0.viewGO, "#go_container/scroll_view/Viewport/center/#go_suitattribute/#go_suiteffect")
-	arg_1_0._gobaseskill = gohelper.findChild(arg_1_0.viewGO, "#go_container/scroll_view/Viewport/center/#go_suitattribute/#go_suiteffect/#go_baseskill")
-	arg_1_0._txtsuiteffect2 = gohelper.findChildText(arg_1_0.viewGO, "#go_container/scroll_view/Viewport/center/#go_suitattribute/#go_suiteffect/#go_baseskill/suiteffect2/#txt_suiteffect2")
-	arg_1_0._goskillpos = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_skillpos")
+local EquipInfoTipsView = class("EquipInfoTipsView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function EquipInfoTipsView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._gocontainer = gohelper.findChild(self.viewGO, "#go_container")
+	self._simageframe = gohelper.findChildSingleImage(self.viewGO, "#go_container/#simage_frame")
+	self._txtlv = gohelper.findChildText(self.viewGO, "#go_container/top/name/lv/#txt_lv")
+	self._txtname = gohelper.findChildText(self.viewGO, "#go_container/top/name/#txt_name")
+	self._goequipitem = gohelper.findChild(self.viewGO, "#go_container/top/#go_equipitem")
+	self._simageequipicon = gohelper.findChildSingleImage(self.viewGO, "#go_container/top/#go_equipitem/#simage_equipicon")
+	self._imagelock = gohelper.findChildImage(self.viewGO, "#go_container/top/#image_lock")
+	self._golockicon = gohelper.findChild(self.viewGO, "#go_container/top/#image_lock/#go_lockicon")
+	self._gostrengthenattr = gohelper.findChild(self.viewGO, "#go_container/scroll_view/Viewport/center/attribute/#go_strengthenattr")
+	self._gobreakeffect = gohelper.findChild(self.viewGO, "#go_container/scroll_view/Viewport/center/attribute/#go_breakeffect")
+	self._gosuitattribute = gohelper.findChild(self.viewGO, "#go_container/scroll_view/Viewport/center/#go_suitattribute")
+	self._txtattributelv = gohelper.findChildText(self.viewGO, "#go_container/scroll_view/Viewport/center/#go_suitattribute/attributename/#txt_attributelv")
+	self._gosuiteffect = gohelper.findChild(self.viewGO, "#go_container/scroll_view/Viewport/center/#go_suitattribute/#go_suiteffect")
+	self._gobaseskill = gohelper.findChild(self.viewGO, "#go_container/scroll_view/Viewport/center/#go_suitattribute/#go_suiteffect/#go_baseskill")
+	self._txtsuiteffect2 = gohelper.findChildText(self.viewGO, "#go_container/scroll_view/Viewport/center/#go_suitattribute/#go_suiteffect/#go_baseskill/suiteffect2/#txt_suiteffect2")
+	self._goskillpos = gohelper.findChild(self.viewGO, "#go_container/#go_skillpos")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function EquipInfoTipsView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function EquipInfoTipsView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function EquipInfoTipsView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0.onLockClick(arg_5_0)
-	arg_5_0.isLock = not arg_5_0.isLock
+function EquipInfoTipsView:onLockClick()
+	self.isLock = not self.isLock
 
-	if arg_5_0.isLock then
+	if self.isLock then
 		AudioMgr.instance:trigger(AudioEnum.HeroGroupUI.Play_UI_Inking_Lock)
 	else
 		AudioMgr.instance:trigger(AudioEnum.HeroGroupUI.Play_UI_Inking_Unlock)
 	end
 
-	EquipRpc.instance:sendEquipLockRequest(arg_5_0.equipMo.id, arg_5_0.isLock)
+	EquipRpc.instance:sendEquipLockRequest(self.equipMo.id, self.isLock)
 end
 
-function var_0_0.onLockChangeReply(arg_6_0)
-	arg_6_0:refreshLockUI()
+function EquipInfoTipsView:onLockChangeReply()
+	self:refreshLockUI()
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0._goSuitEffectItem = gohelper.findChild(arg_7_0.viewGO, "#go_container/scroll_view/Viewport/center/#go_suitattribute/#go_suiteffect/#go_advanceskill/suiteffect")
-	arg_7_0._goBaseSkillCanvasGroup = arg_7_0._gobaseskill:GetComponent(gohelper.Type_CanvasGroup)
+function EquipInfoTipsView:_editableInitView()
+	self._goSuitEffectItem = gohelper.findChild(self.viewGO, "#go_container/scroll_view/Viewport/center/#go_suitattribute/#go_suiteffect/#go_advanceskill/suiteffect")
+	self._goBaseSkillCanvasGroup = self._gobaseskill:GetComponent(gohelper.Type_CanvasGroup)
 
-	gohelper.setActive(arg_7_0._gostrengthenattr, false)
-	gohelper.setActive(arg_7_0._txtsuiteffect2.gameObject, false)
-	arg_7_0:changeViewGoPosition()
+	gohelper.setActive(self._gostrengthenattr, false)
+	gohelper.setActive(self._txtsuiteffect2.gameObject, false)
+	self:changeViewGoPosition()
 
-	arg_7_0.lockClick = gohelper.getClick(arg_7_0._golockicon)
+	self.lockClick = gohelper.getClick(self._golockicon)
 
-	arg_7_0.lockClick:AddClickListener(arg_7_0.onLockClick, arg_7_0)
+	self.lockClick:AddClickListener(self.onLockClick, self)
 
-	arg_7_0.attrGoList = {}
-	arg_7_0._txtDescList = {}
-	arg_7_0.imageBreakIcon = gohelper.findChildImage(arg_7_0._gobreakeffect, "image_icon")
-	arg_7_0.txtBreakAttrName = gohelper.findChildText(arg_7_0._gobreakeffect, "txt_name")
-	arg_7_0.txtBreakValue = gohelper.findChildText(arg_7_0._gobreakeffect, "txt_value")
+	self.attrGoList = {}
+	self._txtDescList = {}
+	self.imageBreakIcon = gohelper.findChildImage(self._gobreakeffect, "image_icon")
+	self.txtBreakAttrName = gohelper.findChildText(self._gobreakeffect, "txt_name")
+	self.txtBreakValue = gohelper.findChildText(self._gobreakeffect, "txt_value")
 
-	arg_7_0:addEventCb(EquipController.instance, EquipEvent.onEquipLockChange, arg_7_0.onLockChangeReply, arg_7_0)
-	arg_7_0._simageframe:LoadImage(ResUrl.getEquipBg("bg_tips.png"))
+	self:addEventCb(EquipController.instance, EquipEvent.onEquipLockChange, self.onLockChangeReply, self)
+	self._simageframe:LoadImage(ResUrl.getEquipBg("bg_tips.png"))
 
-	arg_7_0.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_7_0.viewGO)
+	self.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(self.viewGO)
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
-	if arg_8_0.viewParam.equipMo.id == arg_8_0.equipMo.id then
+function EquipInfoTipsView:onUpdateParam()
+	if self.viewParam.equipMo.id == self.equipMo.id then
 		return
 	end
 
-	arg_8_0.animatorPlayer:Play(UIAnimationName.Close, function(arg_9_0)
-		arg_9_0:onOpen()
-		arg_9_0.animatorPlayer:Play(UIAnimationName.Open)
-	end, arg_8_0)
+	self.animatorPlayer:Play(UIAnimationName.Close, function(self)
+		self:onOpen()
+		self.animatorPlayer:Play(UIAnimationName.Open)
+	end, self)
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0.equipMo = arg_10_0.viewParam.equipMo
-	arg_10_0.isLock = arg_10_0.equipMo.isLock
-	arg_10_0.heroCo = arg_10_0.viewParam.heroCo
+function EquipInfoTipsView:onOpen()
+	self.equipMo = self.viewParam.equipMo
+	self.isLock = self.equipMo.isLock
+	self.heroCo = self.viewParam.heroCo
 
-	arg_10_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_11_0)
-	arg_11_0._txtname.text = arg_11_0.equipMo.config.name
-	arg_11_0._txtlv.text = arg_11_0.equipMo.level
+function EquipInfoTipsView:refreshUI()
+	self._txtname.text = self.equipMo.config.name
+	self._txtlv.text = self.equipMo.level
 
-	arg_11_0._simageequipicon:LoadImage(ResUrl.getEquipSuit(arg_11_0.equipMo.config.icon))
-	arg_11_0:refreshLockUI()
-	arg_11_0:refreshAttributeInfo()
+	self._simageequipicon:LoadImage(ResUrl.getEquipSuit(self.equipMo.config.icon))
+	self:refreshLockUI()
+	self:refreshAttributeInfo()
 
-	if arg_11_0.equipMo.config.rare > EquipConfig.instance:getNotShowRefineRare() then
-		gohelper.setActive(arg_11_0._gosuitattribute, true)
-		arg_11_0:refreshSkillInfo()
+	if self.equipMo.config.rare > EquipConfig.instance:getNotShowRefineRare() then
+		gohelper.setActive(self._gosuitattribute, true)
+		self:refreshSkillInfo()
 	else
-		gohelper.setActive(arg_11_0._gosuitattribute, false)
+		gohelper.setActive(self._gosuitattribute, false)
 	end
 end
 
-function var_0_0.refreshLockUI(arg_12_0)
-	if arg_12_0.viewParam.notShowLockIcon or EquipHelper.isSpRefineEquip(arg_12_0.equipMo.config) then
-		gohelper.setActive(arg_12_0._imagelock.gameObject, false)
+function EquipInfoTipsView:refreshLockUI()
+	if self.viewParam.notShowLockIcon or EquipHelper.isSpRefineEquip(self.equipMo.config) then
+		gohelper.setActive(self._imagelock.gameObject, false)
 
 		return
 	end
 
-	UISpriteSetMgr.instance:setEquipSprite(arg_12_0._imagelock, arg_12_0.isLock and "bg_tips_suo" or "bg_tips_jiesuo", false)
+	UISpriteSetMgr.instance:setEquipSprite(self._imagelock, self.isLock and "bg_tips_suo" or "bg_tips_jiesuo", false)
 end
 
-function var_0_0.refreshAttributeInfo(arg_13_0)
-	local var_13_0, var_13_1 = EquipConfig.instance:getEquipNormalAttr(arg_13_0.equipMo.config.id, arg_13_0.equipMo.level, HeroConfig.sortAttrForEquipView)
-	local var_13_2
+function EquipInfoTipsView:refreshAttributeInfo()
+	local attr_dic, attr_list = EquipConfig.instance:getEquipNormalAttr(self.equipMo.config.id, self.equipMo.level, HeroConfig.sortAttrForEquipView)
+	local attrGo
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_1) do
-		local var_13_3 = arg_13_0.attrGoList[iter_13_0]
+	for i, attr in ipairs(attr_list) do
+		attrGo = self.attrGoList[i]
 
-		if not var_13_3 then
-			var_13_3 = arg_13_0:getUserDataTb_()
+		if not attrGo then
+			attrGo = self:getUserDataTb_()
 
-			local var_13_4 = gohelper.cloneInPlace(arg_13_0._gostrengthenattr, "attr" .. iter_13_0)
-			local var_13_5 = gohelper.findChild(var_13_4, "bg")
-			local var_13_6 = gohelper.findChildImage(var_13_4, "image_icon")
-			local var_13_7 = gohelper.findChildText(var_13_4, "txt_name")
-			local var_13_8 = gohelper.findChildText(var_13_4, "txt_value")
+			local go = gohelper.cloneInPlace(self._gostrengthenattr, "attr" .. i)
+			local bg = gohelper.findChild(go, "bg")
+			local icon = gohelper.findChildImage(go, "image_icon")
+			local name = gohelper.findChildText(go, "txt_name")
+			local attr_value = gohelper.findChildText(go, "txt_value")
 
-			var_13_3.go = var_13_4
-			var_13_3.bg = var_13_5
-			var_13_3.icon = var_13_6
-			var_13_3.name = var_13_7
-			var_13_3.attr_value = var_13_8
+			attrGo.go = go
+			attrGo.bg = bg
+			attrGo.icon = icon
+			attrGo.name = name
+			attrGo.attr_value = attr_value
 
-			table.insert(arg_13_0.attrGoList, var_13_3)
+			table.insert(self.attrGoList, attrGo)
 		end
 
-		local var_13_9 = HeroConfig.instance:getHeroAttributeCO(HeroConfig.instance:getIDByAttrType(iter_13_1.attrType))
+		local attrConfig = HeroConfig.instance:getHeroAttributeCO(HeroConfig.instance:getIDByAttrType(attr.attrType))
 
-		UISpriteSetMgr.instance:setCommonSprite(var_13_3.icon, "icon_att_" .. var_13_9.id)
-		gohelper.setActive(var_13_3.bg, iter_13_0 % 2 == 0)
+		UISpriteSetMgr.instance:setCommonSprite(attrGo.icon, "icon_att_" .. attrConfig.id)
+		gohelper.setActive(attrGo.bg, i % 2 == 0)
 
-		var_13_3.name.text = var_13_9.name
-		var_13_3.attr_value.text = iter_13_1.value
+		attrGo.name.text = attrConfig.name
+		attrGo.attr_value.text = attr.value
 
-		gohelper.setActive(var_13_3.go, true)
+		gohelper.setActive(attrGo.go, true)
 	end
 
-	for iter_13_2 = #var_13_1 + 1, #arg_13_0.attrGoList do
-		gohelper.setActive(arg_13_0.attrGoList[iter_13_2].go, false)
+	for i = #attr_list + 1, #self.attrGoList do
+		gohelper.setActive(self.attrGoList[i].go, false)
 	end
 
-	local var_13_10, var_13_11 = EquipConfig.instance:getEquipCurrentBreakLvAttrEffect(arg_13_0.equipMo.config, arg_13_0.equipMo.breakLv)
+	local attrId, value = EquipConfig.instance:getEquipCurrentBreakLvAttrEffect(self.equipMo.config, self.equipMo.breakLv)
 
-	if var_13_10 then
-		gohelper.setActive(arg_13_0._gobreakeffect, true)
-		UISpriteSetMgr.instance:setCommonSprite(arg_13_0.imageBreakIcon, "icon_att_" .. var_13_10)
+	if attrId then
+		gohelper.setActive(self._gobreakeffect, true)
+		UISpriteSetMgr.instance:setCommonSprite(self.imageBreakIcon, "icon_att_" .. attrId)
 
-		arg_13_0.txtBreakAttrName.text = EquipHelper.getAttrBreakText(var_13_10)
-		arg_13_0.txtBreakValue.text = EquipHelper.getAttrPercentValueStr(var_13_11)
+		self.txtBreakAttrName.text = EquipHelper.getAttrBreakText(attrId)
+		self.txtBreakValue.text = EquipHelper.getAttrPercentValueStr(value)
 
-		gohelper.setAsLastSibling(arg_13_0._gobreakeffect)
+		gohelper.setAsLastSibling(self._gobreakeffect)
 	else
-		gohelper.setActive(arg_13_0._gobreakeffect, false)
+		gohelper.setActive(self._gobreakeffect, false)
 	end
 end
 
-function var_0_0.refreshSkillInfo(arg_14_0)
-	local var_14_0 = EquipHelper.getEquipSkillDescList(arg_14_0.equipMo.config.id, arg_14_0.equipMo.refineLv, "#975129")
+function EquipInfoTipsView:refreshSkillInfo()
+	local skillBaseDesList = EquipHelper.getEquipSkillDescList(self.equipMo.config.id, self.equipMo.refineLv, "#975129")
 
-	if #var_14_0 == 0 then
-		gohelper.setActive(arg_14_0._gobaseskill, false)
+	if #skillBaseDesList == 0 then
+		gohelper.setActive(self._gobaseskill, false)
 	else
-		arg_14_0._txtattributelv.text = arg_14_0.equipMo.refineLv
+		self._txtattributelv.text = self.equipMo.refineLv
 
-		gohelper.setActive(arg_14_0._gobaseskill, true)
+		gohelper.setActive(self._gobaseskill, true)
 
-		local var_14_1
-		local var_14_2
-		local var_14_3
+		local cell, iteminfo, itemGo
 
-		for iter_14_0, iter_14_1 in ipairs(var_14_0) do
-			local var_14_4 = arg_14_0._txtDescList[iter_14_0]
+		for index, desc in ipairs(skillBaseDesList) do
+			cell = self._txtDescList[index]
 
-			if not var_14_4 then
-				local var_14_5 = arg_14_0:getUserDataTb_()
-				local var_14_6 = gohelper.cloneInPlace(arg_14_0._txtsuiteffect2.gameObject, "item_" .. iter_14_0)
+			if not cell then
+				iteminfo = self:getUserDataTb_()
+				itemGo = gohelper.cloneInPlace(self._txtsuiteffect2.gameObject, "item_" .. index)
+				iteminfo.itemGo = itemGo
+				iteminfo.txt = itemGo:GetComponent(gohelper.Type_TextMesh)
+				iteminfo.imagepoint = gohelper.findChildImage(itemGo, "#image_point")
+				cell = iteminfo
 
-				var_14_5.itemGo = var_14_6
-				var_14_5.txt = var_14_6:GetComponent(gohelper.Type_TextMesh)
-				var_14_5.imagepoint = gohelper.findChildImage(var_14_6, "#image_point")
-				var_14_4 = var_14_5
-
-				table.insert(arg_14_0._txtDescList, var_14_4)
+				table.insert(self._txtDescList, cell)
 			end
 
-			var_14_4.txt.text = iter_14_1
+			cell.txt.text = desc
 
-			gohelper.setActive(var_14_4.itemGo, true)
+			gohelper.setActive(cell.itemGo, true)
 		end
 
-		for iter_14_2 = #var_14_0 + 1, #arg_14_0._txtDescList do
-			gohelper.setActive(arg_14_0._txtDescList[iter_14_2].itemGo, false)
+		for i = #skillBaseDesList + 1, #self._txtDescList do
+			gohelper.setActive(self._txtDescList[i].itemGo, false)
 		end
 	end
 end
 
-function var_0_0.changeViewGoPosition(arg_15_0)
-	local var_15_0 = recthelper.getWidth(arg_15_0.viewGO.transform.parent)
+function EquipInfoTipsView:changeViewGoPosition()
+	local parentViewGoWeight = recthelper.getWidth(self.viewGO.transform.parent)
 
-	recthelper.setWidth(arg_15_0.viewGO.transform, var_15_0 / 2 - 100)
+	recthelper.setWidth(self.viewGO.transform, parentViewGoWeight / 2 - 100)
 
-	arg_15_0.viewGO.transform.anchorMin = Vector2(1, 0.5)
-	arg_15_0.viewGO.transform.anchorMax = Vector2(1, 0.5)
+	self.viewGO.transform.anchorMin = Vector2(1, 0.5)
+	self.viewGO.transform.anchorMax = Vector2(1, 0.5)
 
-	recthelper.setAnchor(arg_15_0.viewGO.transform, 0, 0)
+	recthelper.setAnchor(self.viewGO.transform, 0, 0)
 end
 
-function var_0_0.onClose(arg_16_0)
-	arg_16_0.lockClick:RemoveClickListener()
+function EquipInfoTipsView:onClose()
+	self.lockClick:RemoveClickListener()
 end
 
-function var_0_0.onDestroyView(arg_17_0)
-	arg_17_0._simageframe:UnLoadImage()
-	arg_17_0._simageequipicon:UnLoadImage()
+function EquipInfoTipsView:onDestroyView()
+	self._simageframe:UnLoadImage()
+	self._simageequipicon:UnLoadImage()
 end
 
-return var_0_0
+return EquipInfoTipsView

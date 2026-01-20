@@ -1,7 +1,9 @@
-﻿module("modules.logic.messagebox.controller.MessageBoxEvent", package.seeall)
+﻿-- chunkname: @modules/logic/messagebox/controller/MessageBoxEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.messagebox.controller.MessageBoxEvent", package.seeall)
 
-var_0_0.CloseSpecificMessageBoxView = 1
+local MessageBoxEvent = _M
 
-return var_0_0
+MessageBoxEvent.CloseSpecificMessageBoxView = 1
+
+return MessageBoxEvent

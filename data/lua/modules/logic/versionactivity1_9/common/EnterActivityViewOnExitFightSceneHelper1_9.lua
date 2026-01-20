@@ -1,179 +1,184 @@
-﻿module("modules.logic.versionactivity1_9.common.EnterActivityViewOnExitFightSceneHelper1_9", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/common/EnterActivityViewOnExitFightSceneHelper1_9.lua
 
-local var_0_0 = EnterActivityViewOnExitFightSceneHelper
+module("modules.logic.versionactivity1_9.common.EnterActivityViewOnExitFightSceneHelper1_9", package.seeall)
 
-function var_0_0.activate()
+local EnterActivityViewOnExitFightSceneHelper = EnterActivityViewOnExitFightSceneHelper
+
+function EnterActivityViewOnExitFightSceneHelper.activate()
 	return
 end
 
-function var_0_0.enterActivity11906(arg_2_0, arg_2_1)
-	var_0_0.enterVersionActivityDungeonCommon(var_0_0._enterActivityDungeonAterFight11906, arg_2_0, arg_2_1)
+function EnterActivityViewOnExitFightSceneHelper.enterActivity11906(forceStarting, exitFightGroup)
+	EnterActivityViewOnExitFightSceneHelper.enterVersionActivityDungeonCommon(EnterActivityViewOnExitFightSceneHelper._enterActivityDungeonAterFight11906, forceStarting, exitFightGroup)
 end
 
-local function var_0_1()
-	local var_3_0 = DungeonModel.instance.curSendEpisodeId
+local function checkSeason123BattleDatas()
+	local episodeId = DungeonModel.instance.curSendEpisodeId
 
-	if not var_3_0 then
+	if not episodeId then
 		return
 	end
 
-	local var_3_1 = DungeonConfig.instance:getEpisodeCO(var_3_0)
+	local episodeCo = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-	if not var_3_1 then
+	if not episodeCo then
 		return false
 	end
 
-	local var_3_2 = Season123Model.instance:getBattleContext()
+	local context = Season123Model.instance:getBattleContext()
 
-	if not var_3_2 then
+	if not context then
 		logNormal("Season123 checkSeason123BattleDatas no context found!")
 
 		return false
 	end
 
-	return true, var_3_0, var_3_1, var_3_2
+	return true, episodeId, episodeCo, context
 end
 
-function var_0_0._enterActivityDungeonAterFight11906(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_1.episodeId
-	local var_4_1 = arg_4_1.exitFightGroup
+function EnterActivityViewOnExitFightSceneHelper._enterActivityDungeonAterFight11906(tarClass, param)
+	local episodeId = param.episodeId
+	local exitFightGroup = param.exitFightGroup
 
-	if not var_4_0 then
+	if not episodeId then
 		return
 	end
 
-	local var_4_2 = Season123Model.instance:getBattleContext()
+	local context = Season123Model.instance:getBattleContext()
 
-	if not var_4_2 then
+	if not context then
 		logNormal("Season123 checkSeason123BattleDatas no context found!")
 
 		return false
 	end
 
-	local var_4_3 = var_4_2.layer
-	local var_4_4 = var_4_2.stage
-	local var_4_5 = var_4_2.actId
-	local var_4_6 = var_0_0.recordMO and var_0_0.recordMO.fightResult
-	local var_4_7 = DungeonConfig.instance:getEpisodeCO(var_4_0)
-	local var_4_8 = var_4_7 and var_4_7.type
-	local var_4_9
-	local var_4_10
+	local layer = context.layer
+	local stage = context.stage
+	local actId = context.actId
+	local fightResult = EnterActivityViewOnExitFightSceneHelper.recordMO and EnterActivityViewOnExitFightSceneHelper.recordMO.fightResult
+	local episodeCo = DungeonConfig.instance:getEpisodeCO(episodeId)
+	local episodeType = episodeCo and episodeCo.type
+	local jumpId, jumpParam
 
-	if var_4_7 then
-		if not var_4_6 or var_4_6 == -1 or var_4_6 == 0 then
-			if var_4_8 == DungeonEnum.EpisodeType.Season123 then
-				var_4_9 = Activity123Enum.JumpId.MarketNoResult
-				var_4_10 = {
-					tarLayer = var_4_3
+	if episodeCo then
+		if not fightResult or fightResult == -1 or fightResult == 0 then
+			if episodeType == DungeonEnum.EpisodeType.Season123 then
+				jumpId = Activity123Enum.JumpId.MarketNoResult
+				jumpParam = {
+					tarLayer = layer
 				}
-			elseif var_4_8 == DungeonEnum.EpisodeType.Season123Retail then
-				var_4_9 = Activity123Enum.JumpId.Retail
+			elseif episodeType == DungeonEnum.EpisodeType.Season123Retail then
+				jumpId = Activity123Enum.JumpId.Retail
 			end
-		elseif var_4_6 == 1 and (not GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.SeasonUTTU) or not GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.SeasonDiscount)) then
-			if var_4_8 == DungeonEnum.EpisodeType.Season123 then
-				local var_4_11 = var_4_3 + 1
+		elseif fightResult == 1 and (not GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.SeasonUTTU) or not GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.SeasonDiscount)) then
+			if episodeType == DungeonEnum.EpisodeType.Season123 then
+				local curLayer = layer + 1
+				local next_config = Season123Config.instance:getSeasonEpisodeCo(actId, stage, curLayer)
 
-				if Season123Config.instance:getSeasonEpisodeCo(var_4_5, var_4_4, var_4_11) then
-					var_4_9 = Activity123Enum.JumpId.Market
-					var_4_10 = {
-						tarLayer = var_4_11
+				if next_config then
+					jumpId = Activity123Enum.JumpId.Market
+					jumpParam = {
+						tarLayer = curLayer
 					}
 				else
-					var_4_9 = Activity123Enum.JumpId.MarketStageFinish
-					var_4_10 = {
-						stage = var_4_4
+					jumpId = Activity123Enum.JumpId.MarketStageFinish
+					jumpParam = {
+						stage = stage
 					}
 				end
-			elseif var_4_8 == DungeonEnum.EpisodeType.Season123Retail then
-				var_4_9 = Activity123Enum.JumpId.Retail
-				var_4_10 = {
+			elseif episodeType == DungeonEnum.EpisodeType.Season123Retail then
+				jumpId = Activity123Enum.JumpId.Retail
+				jumpParam = {
 					needRandom = true
 				}
 			end
 		end
 	else
-		logError(string.format("找不到对应关卡表,id:%s", var_4_0))
+		logError(string.format("找不到对应关卡表,id:%s", episodeId))
 	end
 
 	VersionActivity1_9EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
 		Season123Controller.instance:openSeasonEntry({
-			actId = var_4_5,
-			jumpId = var_4_9,
-			jumpParam = var_4_10
+			actId = actId,
+			jumpId = jumpId,
+			jumpParam = jumpParam
 		})
 	end, nil, VersionActivity1_9Enum.ActivityId.Season)
 end
 
-function var_0_0.checkFightAfterStory11906(arg_6_0, arg_6_1, arg_6_2)
-	if (var_0_0.recordMO and var_0_0.recordMO.fightResult) ~= 1 then
+function EnterActivityViewOnExitFightSceneHelper.checkFightAfterStory11906(callback, target, param)
+	local fightResult = EnterActivityViewOnExitFightSceneHelper.recordMO and EnterActivityViewOnExitFightSceneHelper.recordMO.fightResult
+
+	if fightResult ~= 1 then
 		return
 	end
 
-	local var_6_0, var_6_1, var_6_2, var_6_3 = var_0_1()
+	local rs, episodeId, episodeCo, context = checkSeason123BattleDatas()
 
-	if not var_6_0 or var_6_2.type ~= DungeonEnum.EpisodeType.Season123 then
+	if not rs or episodeCo.type ~= DungeonEnum.EpisodeType.Season123 then
 		return
 	end
 
-	local var_6_4 = var_6_3.layer
-	local var_6_5 = var_6_3.actId
-	local var_6_6 = var_6_3.stage
+	local layer = context.layer
+	local actId = context.actId
+	local stage = context.stage
 
-	if Season123Model.instance:isEpisodeAfterStory(var_6_5, var_6_6, var_6_4) then
+	if Season123Model.instance:isEpisodeAfterStory(actId, stage, layer) then
 		return
 	end
 
-	local var_6_7 = Season123Config.instance:getSeasonEpisodeCo(var_6_5, var_6_6, var_6_4)
+	local layerCo = Season123Config.instance:getSeasonEpisodeCo(actId, stage, layer)
 
-	if not var_6_7 or var_6_7.afterStoryId == nil or var_6_7.afterStoryId == 0 then
+	if not layerCo or layerCo.afterStoryId == nil or layerCo.afterStoryId == 0 then
 		return
 	end
 
-	StoryController.instance:playStory(var_6_7.afterStoryId, nil, arg_6_0, arg_6_1, arg_6_2)
+	StoryController.instance:playStory(layerCo.afterStoryId, nil, callback, target, param)
 
 	return true
 end
 
-function var_0_0.enterFightAgain11906()
-	local var_7_0, var_7_1, var_7_2, var_7_3 = var_0_1()
+function EnterActivityViewOnExitFightSceneHelper.enterFightAgain11906()
+	local rs, episodeId, episodeCo, context = checkSeason123BattleDatas()
 
-	if not var_7_0 or var_7_2.type == DungeonEnum.EpisodeType.Season123Retail then
+	if not rs or episodeCo.type == DungeonEnum.EpisodeType.Season123Retail then
 		return false
 	end
 
-	local var_7_4 = var_7_3.layer
-	local var_7_5 = var_7_3.stage
-	local var_7_6 = var_7_3.actId
+	local layer = context.layer
+	local stage = context.stage
+	local actId = context.actId
+	local isReplay = FightController.instance:isReplayMode(episodeId)
 
-	if FightController.instance:isReplayMode(var_7_1) and not var_7_4 then
-		if var_7_2.type == DungeonEnum.EpisodeType.Season123 then
-			local var_7_7 = Season123Config.instance:getSeasonEpisodeStageCos(var_7_6, var_7_5)
+	if isReplay and not layer then
+		if episodeCo.type == DungeonEnum.EpisodeType.Season123 then
+			local coList = Season123Config.instance:getSeasonEpisodeStageCos(actId, stage)
 
-			if not var_7_7 then
+			if not coList then
 				return false
 			end
 
-			for iter_7_0, iter_7_1 in pairs(var_7_7) do
-				if iter_7_1.episodeId == var_7_1 then
-					var_7_4 = iter_7_1.layer
+			for _, v in pairs(coList) do
+				if v.episodeId == episodeId then
+					layer = v.layer
 
 					break
 				end
 			end
-		elseif var_7_2.type == DungeonEnum.EpisodeType.Season123Retail then
-			var_7_4 = 0
+		elseif episodeCo.type == DungeonEnum.EpisodeType.Season123Retail then
+			layer = 0
 		end
 	end
 
 	GameSceneMgr.instance:closeScene(nil, nil, nil, true)
-	Season123EpisodeDetailController.instance:startBattle(var_7_6, var_7_5, var_7_4, var_7_1)
+	Season123EpisodeDetailController.instance:startBattle(actId, stage, layer, episodeId)
 
 	return true
 end
 
-function var_0_0.enterActivity11908(arg_8_0, arg_8_1)
+function EnterActivityViewOnExitFightSceneHelper.enterActivity11908(forceStarting, exitFightGroup)
 	DungeonModel.instance:resetSendChapterEpisodeId()
-	MainController.instance:enterMainScene(arg_8_0)
+	MainController.instance:enterMainScene(forceStarting)
 	SceneHelper.instance:waitSceneDone(SceneType.Main, function()
 		PermanentController.instance:jump2Activity(VersionActivity1_9Enum.ActivityId.EnterView)
 		RoleActivityController.instance:openLevelView({
@@ -183,9 +188,9 @@ function var_0_0.enterActivity11908(arg_8_0, arg_8_1)
 	end)
 end
 
-function var_0_0.enterActivity11909(arg_10_0, arg_10_1)
+function EnterActivityViewOnExitFightSceneHelper.enterActivity11909(forceStarting, exitFightGroup)
 	DungeonModel.instance:resetSendChapterEpisodeId()
-	MainController.instance:enterMainScene(arg_10_0)
+	MainController.instance:enterMainScene(forceStarting)
 	SceneHelper.instance:waitSceneDone(SceneType.Main, function()
 		PermanentController.instance:jump2Activity(VersionActivity1_9Enum.ActivityId.EnterView)
 		RoleActivityController.instance:openLevelView({
@@ -195,23 +200,23 @@ function var_0_0.enterActivity11909(arg_10_0, arg_10_1)
 	end)
 end
 
-function var_0_0.enterActivity11910(arg_12_0, arg_12_1)
-	local var_12_0 = DungeonModel.instance.curSendEpisodeId
-	local var_12_1, var_12_2 = BossRushConfig.instance:tryGetStageAndLayerByEpisodeId(var_12_0)
+function EnterActivityViewOnExitFightSceneHelper.enterActivity11910(forceStarting, exitFightGroup)
+	local episodeId = DungeonModel.instance.curSendEpisodeId
+	local stage, layer = BossRushConfig.instance:tryGetStageAndLayerByEpisodeId(episodeId)
 
 	DungeonModel.instance.curSendEpisodeId = nil
 
-	MainController.instance:enterMainScene(arg_12_0)
+	MainController.instance:enterMainScene(forceStarting)
 	SceneHelper.instance:waitSceneDone(SceneType.Main, function()
 		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.V1a4_BossRushMainView)
 		VersionActivity1_9EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
 			BossRushController.instance:openMainView({
 				isOpenLevelDetail = true,
-				stage = var_12_1,
-				layer = var_12_2
+				stage = stage,
+				layer = layer
 			})
 		end, nil, BossRushConfig.instance:getActivityId())
 	end)
 end
 
-return var_0_0
+return EnterActivityViewOnExitFightSceneHelper

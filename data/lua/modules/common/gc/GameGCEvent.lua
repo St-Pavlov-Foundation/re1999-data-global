@@ -1,16 +1,18 @@
-﻿module("modules.common.gc.GameGCEvent", package.seeall)
+﻿-- chunkname: @modules/common/gc/GameGCEvent.lua
 
-local var_0_0 = {}
+module("modules.common.gc.GameGCEvent", package.seeall)
 
-var_0_0.FullGC = 1
-var_0_0.DelayFullGC = 2
-var_0_0.ResGC = 3
-var_0_0.CancelDelayFullGC = 4
-var_0_0.StoryGC = 5
-var_0_0.AudioGC = 6
-var_0_0.DelayAudioGC = 7
-var_0_0.CancelDelayAudioGC = 8
-var_0_0.OnFullGC = 11
-var_0_0.SetBanGc = 21
+local GameGCEvent = {}
 
-return var_0_0
+GameGCEvent.FullGC = 1
+GameGCEvent.DelayFullGC = 2
+GameGCEvent.ResGC = 3
+GameGCEvent.CancelDelayFullGC = 4
+GameGCEvent.StoryGC = 5
+GameGCEvent.AudioGC = 6
+GameGCEvent.DelayAudioGC = 7
+GameGCEvent.CancelDelayAudioGC = 8
+GameGCEvent.OnFullGC = 11
+GameGCEvent.SetBanGc = 21
+
+return GameGCEvent

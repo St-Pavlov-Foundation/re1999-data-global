@@ -1,36 +1,39 @@
-﻿module("modules.logic.seasonver.act123.model.Season123StoreModel", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/model/Season123StoreModel.lua
 
-local var_0_0 = class("Season123StoreModel", ListScrollModel)
+module("modules.logic.seasonver.act123.model.Season123StoreModel", package.seeall)
 
-function var_0_0.OnInit(arg_1_0)
-	arg_1_0:reInit()
+local Season123StoreModel = class("Season123StoreModel", ListScrollModel)
+
+function Season123StoreModel:OnInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0.storeItemList = {}
+function Season123StoreModel:reInit()
+	self.storeItemList = {}
 end
 
-function var_0_0.setStoreItemList(arg_3_0, arg_3_1)
-	arg_3_0.storeItemList = tabletool.copy(arg_3_1)
+function Season123StoreModel:setStoreItemList(itemList)
+	self.storeItemList = tabletool.copy(itemList)
 
-	table.sort(arg_3_0.storeItemList, var_0_0.sortGoods)
-	arg_3_0:setList(arg_3_0.storeItemList)
+	table.sort(self.storeItemList, Season123StoreModel.sortGoods)
+	self:setList(self.storeItemList)
 end
 
-function var_0_0.sortGoods(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0.maxBuyCount ~= 0 and arg_4_0.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(arg_4_0.activityId, arg_4_0.id) <= 0
+function Season123StoreModel.sortGoods(goodCo1, goodCo2)
+	local goods1SellOut = goodCo1.maxBuyCount ~= 0 and goodCo1.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(goodCo1.activityId, goodCo1.id) <= 0
+	local goods2SellOut = goodCo2.maxBuyCount ~= 0 and goodCo2.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(goodCo2.activityId, goodCo2.id) <= 0
 
-	if var_4_0 ~= (arg_4_1.maxBuyCount ~= 0 and arg_4_1.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(arg_4_1.activityId, arg_4_1.id) <= 0) then
-		if var_4_0 then
+	if goods1SellOut ~= goods2SellOut then
+		if goods1SellOut then
 			return false
 		end
 
 		return true
 	end
 
-	return arg_4_0.id < arg_4_1.id
+	return goodCo1.id < goodCo2.id
 end
 
-var_0_0.instance = var_0_0.New()
+Season123StoreModel.instance = Season123StoreModel.New()
 
-return var_0_0
+return Season123StoreModel

@@ -1,167 +1,169 @@
-﻿module("modules.logic.versionactivity3_0.maLiAnNaAct201.view.entity.MaLiAnNaBulletEntity", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/maLiAnNaAct201/view/entity/MaLiAnNaBulletEntity.lua
 
-local var_0_0 = class("MaLiAnNaBulletEntity", LuaCompBase)
+module("modules.logic.versionactivity3_0.maLiAnNaAct201.view.entity.MaLiAnNaBulletEntity", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._go = arg_1_1
-	arg_1_0._tr = arg_1_1.transform
+local MaLiAnNaBulletEntity = class("MaLiAnNaBulletEntity", LuaCompBase)
+
+function MaLiAnNaBulletEntity:init(go)
+	self._go = go
+	self._tr = go.transform
 end
 
-function var_0_0.setOnlyId(arg_2_0, arg_2_1)
-	arg_2_0.bulletId = arg_2_1
+function MaLiAnNaBulletEntity:setOnlyId(bulletId)
+	self.bulletId = bulletId
 end
 
-function var_0_0.getOnlyId(arg_3_0)
-	return arg_3_0.bulletId
+function MaLiAnNaBulletEntity:getOnlyId()
+	return self.bulletId
 end
 
-function var_0_0.setInfo(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4, arg_4_5, arg_4_6)
-	arg_4_0:_updateTrPos(arg_4_1, arg_4_2)
+function MaLiAnNaBulletEntity:setInfo(startX, startY, soliderId, speed, bulletPathId, isFollow)
+	self:_updateTrPos(startX, startY)
 
-	arg_4_0._startX = arg_4_1
-	arg_4_0._startY = arg_4_2
-	arg_4_0._targetSoliderId = arg_4_3
-	arg_4_0._speed = arg_4_4 or 0
-	arg_4_0._isFollow = arg_4_6 or false
-	arg_4_0._bulletPathId = arg_4_5 or 1
+	self._startX = startX
+	self._startY = startY
+	self._targetSoliderId = soliderId
+	self._speed = speed or 0
+	self._isFollow = isFollow or false
+	self._bulletPathId = bulletPathId or 1
 
-	arg_4_0:_updateTargetPos()
-	arg_4_0:showModel()
-	arg_4_0:setVisible(true)
+	self:_updateTargetPos()
+	self:showModel()
+	self:setVisible(true)
 end
 
-function var_0_0.onUpdate(arg_5_0)
-	local var_5_0 = Time.deltaTime
+function MaLiAnNaBulletEntity:onUpdate()
+	local delta = Time.deltaTime
 
-	if not arg_5_0._isVisible or Activity201MaLiAnNaGameController.instance:getPause() then
+	if not self._isVisible or Activity201MaLiAnNaGameController.instance:getPause() then
 		return
 	end
 
-	arg_5_0:updateLocalPos(var_5_0)
+	self:updateLocalPos(delta)
 end
 
-function var_0_0.updateLocalPos(arg_6_0, arg_6_1)
-	if arg_6_0._tr == nil then
+function MaLiAnNaBulletEntity:updateLocalPos(deltaTime)
+	if self._tr == nil then
 		return
 	end
 
-	if arg_6_0._isFollow then
-		arg_6_0:_updateTargetPos(arg_6_1)
+	if self._isFollow then
+		self:_updateTargetPos(deltaTime)
 	end
 
-	if arg_6_1 == nil then
+	if deltaTime == nil then
 		return
 	end
 
-	local var_6_0 = arg_6_0._speed * arg_6_1
+	local speed = self._speed * deltaTime
 
-	arg_6_0._posX = arg_6_0._posX + arg_6_0._moveDirX * var_6_0
-	arg_6_0._posY = arg_6_0._posY + arg_6_0._moveDirY * var_6_0
+	self._posX = self._posX + self._moveDirX * speed
+	self._posY = self._posY + self._moveDirY * speed
 
-	arg_6_0:_updateTrPos(arg_6_0._posX, arg_6_0._posY)
+	self:_updateTrPos(self._posX, self._posY)
 
-	if MathUtil.hasPassedPoint(arg_6_0._posX, arg_6_0._posY, arg_6_0._endPosX, arg_6_0._endPosY, arg_6_0._moveDirX, arg_6_0._moveDirY) or MathUtil.vec2_lengthSqr(arg_6_0._posX, arg_6_0._posY, arg_6_0._startX, arg_6_0._startY) > 1000000 then
-		arg_6_0:setVisible(false)
-		Activity201MaLiAnNaGameController.instance:consumeSoliderHp(arg_6_0._targetSoliderId, -Activity201MaLiAnNaEnum.bulletDamage)
-		MaliAnNaBulletEntityMgr.instance:releaseBulletEffectEntity(arg_6_0)
+	if MathUtil.hasPassedPoint(self._posX, self._posY, self._endPosX, self._endPosY, self._moveDirX, self._moveDirY) or MathUtil.vec2_lengthSqr(self._posX, self._posY, self._startX, self._startY) > 1000000 then
+		self:setVisible(false)
+		Activity201MaLiAnNaGameController.instance:consumeSoliderHp(self._targetSoliderId, -Activity201MaLiAnNaEnum.bulletDamage)
+		MaliAnNaBulletEntityMgr.instance:releaseBulletEffectEntity(self)
 	end
 end
 
-function var_0_0._updateTrPos(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_0._posX = arg_7_1
-	arg_7_0._posY = arg_7_2
+function MaLiAnNaBulletEntity:_updateTrPos(x, y)
+	self._posX = x
+	self._posY = y
 
-	if arg_7_0._posX ~= nil and arg_7_0._posY ~= nil then
-		transformhelper.setLocalPosXY(arg_7_0._tr, arg_7_1, arg_7_2)
+	if self._posX ~= nil and self._posY ~= nil then
+		transformhelper.setLocalPosXY(self._tr, x, y)
 	end
 end
 
-function var_0_0._updateTargetPos(arg_8_0, arg_8_1)
-	local var_8_0 = MaLiAnNaLaSoliderMoUtil.instance:getSoliderMoById(arg_8_0._targetSoliderId)
+function MaLiAnNaBulletEntity:_updateTargetPos(deltaTime)
+	local soliderMo = MaLiAnNaLaSoliderMoUtil.instance:getSoliderMoById(self._targetSoliderId)
 
-	if var_8_0 ~= nil then
-		local var_8_1, var_8_2 = var_8_0:getLocalPos()
+	if soliderMo ~= nil then
+		local endX, endY = soliderMo:getLocalPos()
 
-		arg_8_0._moveDirX, arg_8_0._moveDirY = MathUtil.vec2_normalize(var_8_1 - arg_8_0._posX, var_8_2 - arg_8_0._posY)
-		arg_8_0._endPosX = var_8_1
-		arg_8_0._endPosY = var_8_2
+		self._moveDirX, self._moveDirY = MathUtil.vec2_normalize(endX - self._posX, endY - self._posY)
+		self._endPosX = endX
+		self._endPosY = endY
 
-		local var_8_3 = MathUtil.calculateV2Angle(arg_8_0._posX, arg_8_0._posY, var_8_1, var_8_2)
+		local angle = MathUtil.calculateV2Angle(self._posX, self._posY, endX, endY)
 
-		transformhelper.setLocalRotation(arg_8_0._tr, 0, 0, var_8_3)
+		transformhelper.setLocalRotation(self._tr, 0, 0, angle)
 	end
 end
 
-function var_0_0.getResPath(arg_9_0)
-	return Activity201MaLiAnNaEnum.BulletEffect[arg_9_0._bulletPathId]
+function MaLiAnNaBulletEntity:getResPath()
+	return Activity201MaLiAnNaEnum.BulletEffect[self._bulletPathId]
 end
 
-function var_0_0.setVisible(arg_10_0, arg_10_1, arg_10_2)
-	if arg_10_0._isVisible == arg_10_1 and not arg_10_2 then
+function MaLiAnNaBulletEntity:setVisible(isVisible, force)
+	if self._isVisible == isVisible and not force then
 		return
 	end
 
-	if arg_10_0.goSpine == nil then
+	if self.goSpine == nil then
 		return
 	end
 
-	arg_10_0._isVisible = arg_10_1
+	self._isVisible = isVisible
 
-	gohelper.setActive(arg_10_0.goSpine, arg_10_0._isVisible)
-	gohelper.setActive(arg_10_0._go, arg_10_0._isVisible)
+	gohelper.setActive(self.goSpine, self._isVisible)
+	gohelper.setActive(self._go, self._isVisible)
 end
 
-function var_0_0.showModel(arg_11_0)
-	if not gohelper.isNil(arg_11_0.goSpine) then
+function MaLiAnNaBulletEntity:showModel()
+	if not gohelper.isNil(self.goSpine) then
 		return
 	end
 
-	if arg_11_0._loader then
+	if self._loader then
 		return
 	end
 
-	arg_11_0._loader = PrefabInstantiate.Create(arg_11_0._go)
+	self._loader = PrefabInstantiate.Create(self._go)
 
-	local var_11_0 = arg_11_0:getResPath()
+	local path = self:getResPath()
 
-	if string.nilorempty(var_11_0) then
+	if string.nilorempty(path) then
 		return
 	end
 
-	arg_11_0._loader:startLoad(var_11_0, arg_11_0._onResLoadEnd, arg_11_0)
+	self._loader:startLoad(path, self._onResLoadEnd, self)
 end
 
-function var_0_0._onResLoadEnd(arg_12_0)
-	local var_12_0 = arg_12_0._loader:getInstGO()
-	local var_12_1 = var_12_0.transform
+function MaLiAnNaBulletEntity:_onResLoadEnd()
+	local go = self._loader:getInstGO()
+	local trans = go.transform
 
-	arg_12_0.goSpine = var_12_0
+	self.goSpine = go
 
-	local var_12_2 = arg_12_0:getScale()
+	local scale = self:getScale()
 
-	transformhelper.setLocalScale(var_12_1, var_12_2, var_12_2, var_12_2)
-	gohelper.addChild(arg_12_0._tr.gameObject, arg_12_0.goSpine)
-	transformhelper.setLocalPos(var_12_1, 0, 0, 0)
-	transformhelper.setLocalRotation(var_12_1, 0, 0, 0)
-	arg_12_0:setVisible(true)
+	transformhelper.setLocalScale(trans, scale, scale, scale)
+	gohelper.addChild(self._tr.gameObject, self.goSpine)
+	transformhelper.setLocalPos(trans, 0, 0, 0)
+	transformhelper.setLocalRotation(trans, 0, 0, 0)
+	self:setVisible(true)
 end
 
-function var_0_0.getScale(arg_13_0)
+function MaLiAnNaBulletEntity:getScale()
 	return 0.5
 end
 
-function var_0_0.onDestroy(arg_14_0)
-	if arg_14_0._loader ~= nil then
-		arg_14_0._loader:onDestroy()
+function MaLiAnNaBulletEntity:onDestroy()
+	if self._loader ~= nil then
+		self._loader:onDestroy()
 
-		arg_14_0._loader = nil
+		self._loader = nil
 	end
 
-	if arg_14_0._go then
-		gohelper.destroy(arg_14_0._go)
+	if self._go then
+		gohelper.destroy(self._go)
 
-		arg_14_0._go = nil
+		self._go = nil
 	end
 end
 
-return var_0_0
+return MaLiAnNaBulletEntity

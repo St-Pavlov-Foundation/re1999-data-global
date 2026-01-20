@@ -1,253 +1,255 @@
-﻿module("modules.logic.season.view3_0.Season3_0HeroGroupHeroItem", package.seeall)
+﻿-- chunkname: @modules/logic/season/view3_0/Season3_0HeroGroupHeroItem.lua
 
-local var_0_0 = class("Season3_0HeroGroupHeroItem", LuaCompBase)
+module("modules.logic.season.view3_0.Season3_0HeroGroupHeroItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._Season3_0HeroGroupListView = arg_1_1
+local Season3_0HeroGroupHeroItem = class("Season3_0HeroGroupHeroItem", LuaCompBase)
+
+function Season3_0HeroGroupHeroItem:ctor(Season3_0HeroGroupListView)
+	self._Season3_0HeroGroupListView = Season3_0HeroGroupListView
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
-	arg_2_0._goheroitem = gohelper.findChild(arg_2_1, "heroitemani")
-	arg_2_0.anim = arg_2_0._goheroitem:GetComponent(typeof(UnityEngine.Animator))
-	arg_2_0._tagTr = gohelper.findChildComponent(arg_2_1, "heroitemani/tags", typeof(UnityEngine.Transform))
-	arg_2_0._subGO = gohelper.findChild(arg_2_1, "heroitemani/tags/aidtag")
-	arg_2_0._aidGO = gohelper.findChild(arg_2_1, "heroitemani/tags/storytag")
-	arg_2_0._trialTagGO = gohelper.findChild(arg_2_1, "heroitemani/tags/trialtag")
-	arg_2_0._gonone = gohelper.findChild(arg_2_1, "heroitemani/none")
-	arg_2_0._goadd = gohelper.findChild(arg_2_1, "heroitemani/none/add")
-	arg_2_0._imageAdd = gohelper.findChildImage(arg_2_1, "heroitemani/none/add")
-	arg_2_0._golock = gohelper.findChild(arg_2_1, "heroitemani/none/lock")
-	arg_2_0._gohero = gohelper.findChild(arg_2_1, "heroitemani/hero")
-	arg_2_0._simagecharactericon = gohelper.findChild(arg_2_1, "heroitemani/hero/charactericon")
-	arg_2_0._imagecareericon = gohelper.findChildImage(arg_2_1, "heroitemani/hero/career")
-	arg_2_0._goblackmask = gohelper.findChild(arg_2_1, "heroitemani/hero/blackmask")
-	arg_2_0._gostarroot = gohelper.findChild(arg_2_1, "heroitemani/equipcard/#go_starList")
-	arg_2_0._gostars = arg_2_0:getUserDataTb_()
+function Season3_0HeroGroupHeroItem:init(go)
+	self.go = go
+	self._goheroitem = gohelper.findChild(go, "heroitemani")
+	self.anim = self._goheroitem:GetComponent(typeof(UnityEngine.Animator))
+	self._tagTr = gohelper.findChildComponent(go, "heroitemani/tags", typeof(UnityEngine.Transform))
+	self._subGO = gohelper.findChild(go, "heroitemani/tags/aidtag")
+	self._aidGO = gohelper.findChild(go, "heroitemani/tags/storytag")
+	self._trialTagGO = gohelper.findChild(go, "heroitemani/tags/trialtag")
+	self._gonone = gohelper.findChild(go, "heroitemani/none")
+	self._goadd = gohelper.findChild(go, "heroitemani/none/add")
+	self._imageAdd = gohelper.findChildImage(go, "heroitemani/none/add")
+	self._golock = gohelper.findChild(go, "heroitemani/none/lock")
+	self._gohero = gohelper.findChild(go, "heroitemani/hero")
+	self._simagecharactericon = gohelper.findChild(go, "heroitemani/hero/charactericon")
+	self._imagecareericon = gohelper.findChildImage(go, "heroitemani/hero/career")
+	self._goblackmask = gohelper.findChild(go, "heroitemani/hero/blackmask")
+	self._gostarroot = gohelper.findChild(go, "heroitemani/equipcard/#go_starList")
+	self._gostars = self:getUserDataTb_()
 
-	for iter_2_0 = 1, 6 do
-		arg_2_0._gostars[iter_2_0] = gohelper.findChild(arg_2_1, "heroitemani/equipcard/#go_starList/star" .. iter_2_0)
+	for i = 1, 6 do
+		self._gostars[i] = gohelper.findChild(go, "heroitemani/equipcard/#go_starList/star" .. i)
 	end
 
-	arg_2_0._txtlvnum = gohelper.findChildText(arg_2_1, "heroitemani/equipcard/vertical/layout/lv/lvnum")
-	arg_2_0._goranks = arg_2_0:getUserDataTb_()
+	self._txtlvnum = gohelper.findChildText(go, "heroitemani/equipcard/vertical/layout/lv/lvnum")
+	self._goranks = self:getUserDataTb_()
 
-	for iter_2_1 = 1, 3 do
-		arg_2_0._goranks[iter_2_1] = gohelper.findChild(arg_2_1, "heroitemani/equipcard/vertical/layout/rankobj/rank" .. iter_2_1)
+	for i = 1, 3 do
+		self._goranks[i] = gohelper.findChild(go, "heroitemani/equipcard/vertical/layout/rankobj/rank" .. i)
 	end
 
-	arg_2_0._goequipcard = gohelper.findChild(arg_2_1, "heroitemani/equipcard")
-	arg_2_0._goequip = gohelper.findChild(arg_2_1, "heroitemani/equipcard/vertical/equip")
-	arg_2_0._btnclickequip = gohelper.getClick(arg_2_0._goequip)
-	arg_2_0._gofakeequip = gohelper.findChild(arg_2_1, "heroitemani/equipcard/vertical/fakeequip")
-	arg_2_0._goreplayready = gohelper.findChild(arg_2_1, "heroitemani/hero/replayready")
-	arg_2_0._goclick = gohelper.findChild(arg_2_1, "heroitemani/click")
-	arg_2_0._btnclickitem = gohelper.getClick(arg_2_0._goclick)
-	arg_2_0._goselectdebuff = gohelper.findChild(arg_2_1, "heroitemani/selectedeffect")
-	arg_2_0._goselected = gohelper.findChild(arg_2_1, "heroitemani/selectedeffect/xuanzhong")
-	arg_2_0._gofinished = gohelper.findChild(arg_2_1, "heroitemani/selectedeffect/wancheng")
-	arg_2_0._goroleequip = gohelper.findChild(arg_2_1, "heroitemani/roleequip")
-	arg_2_0._droproleequipleft = gohelper.findChildDropdown(arg_2_1, "heroitemani/roleequip/left")
-	arg_2_0._droproleequipright = gohelper.findChildDropdown(arg_2_1, "heroitemani/roleequip/right")
-	arg_2_0._heroGO = gohelper.findChild(arg_2_1, "heroitemani/hero")
-	arg_2_0._goflags = gohelper.findChild(arg_2_1, "heroitemani/hero/go_flags")
-	arg_2_0._gorecommended = gohelper.findChild(arg_2_1, "heroitemani/hero/go_flags/go_recommended")
-	arg_2_0._gocounter = gohelper.findChild(arg_2_1, "heroitemani/hero/go_flags/go_counter")
-	arg_2_0._goseason = gohelper.findChild(arg_2_1, "heroitemani/equipcard")
-	arg_2_0._goboth = gohelper.findChild(arg_2_1, "heroitemani/equipcard/go_both")
-	arg_2_0._gosingle = gohelper.findChild(arg_2_1, "heroitemani/equipcard/go_single")
-	arg_2_0._gocardlist = gohelper.findChild(arg_2_1, "heroitemani/equipcard/cardlist")
-	arg_2_0._gocarditem1 = gohelper.findChild(arg_2_1, "heroitemani/equipcard/cardlist/carditem1")
-	arg_2_0._cardItem1 = Season3_0HeroGroupCardItem.New(arg_2_0._gocarditem1, arg_2_0, {
+	self._goequipcard = gohelper.findChild(go, "heroitemani/equipcard")
+	self._goequip = gohelper.findChild(go, "heroitemani/equipcard/vertical/equip")
+	self._btnclickequip = gohelper.getClick(self._goequip)
+	self._gofakeequip = gohelper.findChild(go, "heroitemani/equipcard/vertical/fakeequip")
+	self._goreplayready = gohelper.findChild(go, "heroitemani/hero/replayready")
+	self._goclick = gohelper.findChild(go, "heroitemani/click")
+	self._btnclickitem = gohelper.getClick(self._goclick)
+	self._goselectdebuff = gohelper.findChild(go, "heroitemani/selectedeffect")
+	self._goselected = gohelper.findChild(go, "heroitemani/selectedeffect/xuanzhong")
+	self._gofinished = gohelper.findChild(go, "heroitemani/selectedeffect/wancheng")
+	self._goroleequip = gohelper.findChild(go, "heroitemani/roleequip")
+	self._droproleequipleft = gohelper.findChildDropdown(go, "heroitemani/roleequip/left")
+	self._droproleequipright = gohelper.findChildDropdown(go, "heroitemani/roleequip/right")
+	self._heroGO = gohelper.findChild(go, "heroitemani/hero")
+	self._goflags = gohelper.findChild(go, "heroitemani/hero/go_flags")
+	self._gorecommended = gohelper.findChild(go, "heroitemani/hero/go_flags/go_recommended")
+	self._gocounter = gohelper.findChild(go, "heroitemani/hero/go_flags/go_counter")
+	self._goseason = gohelper.findChild(go, "heroitemani/equipcard")
+	self._goboth = gohelper.findChild(go, "heroitemani/equipcard/go_both")
+	self._gosingle = gohelper.findChild(go, "heroitemani/equipcard/go_single")
+	self._gocardlist = gohelper.findChild(go, "heroitemani/equipcard/cardlist")
+	self._gocarditem1 = gohelper.findChild(go, "heroitemani/equipcard/cardlist/carditem1")
+	self._cardItem1 = Season3_0HeroGroupCardItem.New(self._gocarditem1, self, {
 		slot = 1
 	})
-	arg_2_0._gocarditem2 = gohelper.findChild(arg_2_1, "heroitemani/equipcard/cardlist/carditem2")
-	arg_2_0._cardItem2 = Season3_0HeroGroupCardItem.New(arg_2_0._gocarditem2, arg_2_0, {
+	self._gocarditem2 = gohelper.findChild(go, "heroitemani/equipcard/cardlist/carditem2")
+	self._cardItem2 = Season3_0HeroGroupCardItem.New(self._gocarditem2, self, {
 		slot = 2
 	})
-	arg_2_0._goherolvLayout = gohelper.findChild(arg_2_1, "heroitemani/equipcard/vertical/layout")
-	arg_2_0._commonHeroCard = CommonHeroCard.create(arg_2_0._simagecharactericon, arg_2_0.__cname)
+	self._goherolvLayout = gohelper.findChild(go, "heroitemani/equipcard/vertical/layout")
+	self._commonHeroCard = CommonHeroCard.create(self._simagecharactericon, self.__cname)
 
-	arg_2_0:_initData()
-	arg_2_0:_addEvents()
+	self:_initData()
+	self:_addEvents()
 end
 
-function var_0_0.onUpdateMO(arg_3_0, arg_3_1)
-	arg_3_0.mo = arg_3_1
-	arg_3_0._heroMO = arg_3_1:getHeroMO()
-	arg_3_0._monsterCo = arg_3_1:getMonsterCO()
-	arg_3_0.trialCO = arg_3_1:getTrialCO()
-	arg_3_0._posIndex = arg_3_0.mo.id - 1
+function Season3_0HeroGroupHeroItem:onUpdateMO(mo)
+	self.mo = mo
+	self._heroMO = mo:getHeroMO()
+	self._monsterCo = mo:getMonsterCO()
+	self.trialCO = mo:getTrialCO()
+	self._posIndex = self.mo.id - 1
 
-	arg_3_0._commonHeroCard:setGrayScale(false)
+	self._commonHeroCard:setGrayScale(false)
 
-	local var_3_0 = HeroGroupModel.instance:getCurGroupMO()
+	local curHeroGroupMo = HeroGroupModel.instance:getCurGroupMO()
 
-	gohelper.setActive(arg_3_0._goreplayready, var_3_0.isReplay)
+	gohelper.setActive(self._goreplayready, curHeroGroupMo.isReplay)
 
-	if arg_3_0._heroMO then
-		local var_3_1 = var_3_0.isReplay and var_3_0.replay_hero_data[arg_3_0.mo.heroUid] or nil
-		local var_3_2, var_3_3 = HeroConfig.instance:getShowLevel(var_3_1 and var_3_1.level or arg_3_0._heroMO.level)
+	if self._heroMO then
+		local replay_data = curHeroGroupMo.isReplay and curHeroGroupMo.replay_hero_data[self.mo.heroUid] or nil
+		local level, rank = HeroConfig.instance:getShowLevel(replay_data and replay_data.level or self._heroMO.level)
 
-		arg_3_0._txtlvnum.text = var_3_2
+		self._txtlvnum.text = level
 
-		local var_3_4 = FightConfig.instance:getSkinCO(var_3_1 and var_3_1.skin or arg_3_0._heroMO.skin)
+		local skinConfig = FightConfig.instance:getSkinCO(replay_data and replay_data.skin or self._heroMO.skin)
 
-		arg_3_0._commonHeroCard:onUpdateMO(var_3_4)
-		UISpriteSetMgr.instance:setCommonSprite(arg_3_0._imagecareericon, "lssx_" .. tostring(arg_3_0._heroMO.config.career))
+		self._commonHeroCard:onUpdateMO(skinConfig)
+		UISpriteSetMgr.instance:setCommonSprite(self._imagecareericon, "lssx_" .. tostring(self._heroMO.config.career))
 
-		for iter_3_0 = 1, 3 do
-			gohelper.setActive(arg_3_0._goranks[iter_3_0], iter_3_0 == var_3_3 - 1)
+		for i = 1, 3 do
+			gohelper.setActive(self._goranks[i], i == rank - 1)
 		end
 
-		for iter_3_1 = 1, 6 do
-			gohelper.setActive(arg_3_0._gostars[iter_3_1], iter_3_1 <= CharacterEnum.Star[arg_3_0._heroMO.config.rare])
+		for i = 1, 6 do
+			gohelper.setActive(self._gostars[i], i <= CharacterEnum.Star[self._heroMO.config.rare])
 		end
-	elseif arg_3_0._monsterCo then
-		local var_3_5 = FightConfig.instance:getSkinCO(arg_3_0._monsterCo.skinId)
-		local var_3_6 = lua_character.configDict[var_3_5.characterId]
+	elseif self._monsterCo then
+		local skinConfig = FightConfig.instance:getSkinCO(self._monsterCo.skinId)
+		local characterCfg = lua_character.configDict[skinConfig.characterId]
 
-		arg_3_0._commonHeroCard:onUpdateMO(var_3_5)
-		UISpriteSetMgr.instance:setCommonSprite(arg_3_0._imagecareericon, "lssx_" .. tostring(arg_3_0._monsterCo.career))
+		self._commonHeroCard:onUpdateMO(skinConfig)
+		UISpriteSetMgr.instance:setCommonSprite(self._imagecareericon, "lssx_" .. tostring(self._monsterCo.career))
 
-		local var_3_7, var_3_8 = HeroConfig.instance:getShowLevel(arg_3_0._monsterCo.level)
+		local level, rank = HeroConfig.instance:getShowLevel(self._monsterCo.level)
 
-		arg_3_0._txtlvnum.text = var_3_7
+		self._txtlvnum.text = level
 
-		for iter_3_2 = 1, 3 do
-			gohelper.setActive(arg_3_0._goranks[iter_3_2], iter_3_2 == var_3_8 - 1)
+		for i = 1, 3 do
+			gohelper.setActive(self._goranks[i], i == rank - 1)
 		end
 
-		for iter_3_3 = 1, 6 do
-			gohelper.setActive(arg_3_0._gostars[iter_3_3], iter_3_3 <= CharacterEnum.Star[var_3_6.rare])
+		for i = 1, 6 do
+			gohelper.setActive(self._gostars[i], i <= CharacterEnum.Star[characterCfg.rare])
 		end
-	elseif arg_3_0.trialCO then
-		local var_3_9 = HeroConfig.instance:getHeroCO(arg_3_0.trialCO.heroId)
-		local var_3_10
+	elseif self.trialCO then
+		local heroCo = HeroConfig.instance:getHeroCO(self.trialCO.heroId)
+		local skinConfig
 
-		if arg_3_0.trialCO.skin > 0 then
-			var_3_10 = SkinConfig.instance:getSkinCo(arg_3_0.trialCO.skin)
+		if self.trialCO.skin > 0 then
+			skinConfig = SkinConfig.instance:getSkinCo(self.trialCO.skin)
 		else
-			var_3_10 = SkinConfig.instance:getSkinCo(var_3_9.skinId)
+			skinConfig = SkinConfig.instance:getSkinCo(heroCo.skinId)
 		end
 
-		arg_3_0._commonHeroCard:onUpdateMO(var_3_10)
-		UISpriteSetMgr.instance:setCommonSprite(arg_3_0._imagecareericon, "lssx_" .. tostring(var_3_9.career))
+		self._commonHeroCard:onUpdateMO(skinConfig)
+		UISpriteSetMgr.instance:setCommonSprite(self._imagecareericon, "lssx_" .. tostring(heroCo.career))
 
-		local var_3_11, var_3_12 = HeroConfig.instance:getShowLevel(arg_3_0.trialCO.level)
+		local showLevel, rank = HeroConfig.instance:getShowLevel(self.trialCO.level)
 
-		arg_3_0._txtlvnum.text = var_3_11
+		self._txtlvnum.text = showLevel
 
-		for iter_3_4 = 1, 3 do
-			gohelper.setActive(arg_3_0._goranks[iter_3_4], iter_3_4 == var_3_12 - 1)
+		for i = 1, 3 do
+			gohelper.setActive(self._goranks[i], i == rank - 1)
 		end
 
-		for iter_3_5 = 1, 6 do
-			gohelper.setActive(arg_3_0._gostars[iter_3_5], iter_3_5 <= CharacterEnum.Star[var_3_9.rare])
+		for i = 1, 6 do
+			gohelper.setActive(self._gostars[i], i <= CharacterEnum.Star[heroCo.rare])
 		end
 	end
 
-	arg_3_0.isLock = not HeroGroupModel.instance:isPositionOpen(arg_3_0.mo.id)
-	arg_3_0.isAidLock = arg_3_0.mo.aid and arg_3_0.mo.aid == -1
-	arg_3_0.isTrialLock = (arg_3_0.mo.trial and arg_3_0.mo.trialPos) ~= nil
-	arg_3_0.isAid = arg_3_0.mo.aid ~= nil
+	self.isLock = not HeroGroupModel.instance:isPositionOpen(self.mo.id)
+	self.isAidLock = self.mo.aid and self.mo.aid == -1
+	self.isTrialLock = (self.mo.trial and self.mo.trialPos) ~= nil
+	self.isAid = self.mo.aid ~= nil
 
-	local var_3_13 = HeroGroupModel.instance:getBattleRoleNum()
+	local roleNum = HeroGroupModel.instance:getBattleRoleNum()
 
-	arg_3_0.isRoleNumLock = var_3_13 and var_3_13 < arg_3_0.mo.id
-	arg_3_0.isEmpty = arg_3_1:isEmpty()
+	self.isRoleNumLock = roleNum and roleNum < self.mo.id
+	self.isEmpty = mo:isEmpty()
 
-	local var_3_14 = (arg_3_0._heroMO or arg_3_0._monsterCo or arg_3_0.trialCO) and not arg_3_0.isLock and not arg_3_0.isRoleNumLock
+	local isHeroShow = (self._heroMO or self._monsterCo or self.trialCO) and not self.isLock and not self.isRoleNumLock
 
-	gohelper.setActive(arg_3_0._gohero, var_3_14)
-	gohelper.setActive(arg_3_0._gostarroot, var_3_14)
-	gohelper.setActive(arg_3_0._goherolvLayout, var_3_14)
+	gohelper.setActive(self._gohero, isHeroShow)
+	gohelper.setActive(self._gostarroot, isHeroShow)
+	gohelper.setActive(self._goherolvLayout, isHeroShow)
 
-	local var_3_15 = not arg_3_0._heroMO and not arg_3_0._monsterCo and not arg_3_0.trialCO or arg_3_0.isLock or arg_3_0.isAidLock or arg_3_0.isRoleNumLock
+	local isNoneShow = not self._heroMO and not self._monsterCo and not self.trialCO or self.isLock or self.isAidLock or self.isRoleNumLock
 
-	gohelper.setActive(arg_3_0._gonone, var_3_15)
+	gohelper.setActive(self._gonone, isNoneShow)
 
-	local var_3_16 = not arg_3_0._heroMO and not arg_3_0._monsterCo and not arg_3_0.trialCO and not arg_3_0.isLock and not arg_3_0.isAidLock and not arg_3_0.isRoleNumLock
+	local isAddShow = not self._heroMO and not self._monsterCo and not self.trialCO and not self.isLock and not self.isAidLock and not self.isRoleNumLock
 
-	gohelper.setActive(arg_3_0._goadd, var_3_16)
-	gohelper.setActive(arg_3_0._golock, arg_3_0.isLock or arg_3_0.isAidLock or arg_3_0.isRoleNumLock)
-	gohelper.setActive(arg_3_0._aidGO, arg_3_0.mo.aid and arg_3_0.mo.aid ~= -1)
-	gohelper.setActive(arg_3_0._trialTagGO, arg_3_0.trialCO ~= nil)
-	recthelper.setAnchor(arg_3_0._tagTr, -62.5, arg_3_0._subGO.activeSelf and -98.9 or -51.3)
+	gohelper.setActive(self._goadd, isAddShow)
+	gohelper.setActive(self._golock, self.isLock or self.isAidLock or self.isRoleNumLock)
+	gohelper.setActive(self._aidGO, self.mo.aid and self.mo.aid ~= -1)
+	gohelper.setActive(self._trialTagGO, self.trialCO ~= nil)
+	recthelper.setAnchor(self._tagTr, -62.5, self._subGO.activeSelf and -98.9 or -51.3)
 
-	if not HeroSingleGroupModel.instance:isTemp() and arg_3_0.isRoleNumLock and arg_3_0._heroMO ~= nil and arg_3_0._monsterCo == nil then
-		HeroSingleGroupModel.instance:remove(arg_3_0._heroMO.id)
+	if not HeroSingleGroupModel.instance:isTemp() and self.isRoleNumLock and self._heroMO ~= nil and self._monsterCo == nil then
+		HeroSingleGroupModel.instance:remove(self._heroMO.id)
 	end
 
-	gohelper.setActive(arg_3_0._subGO, arg_3_0:checkSubGoVisable())
-	arg_3_0:_updateSeasonEquips()
-	arg_3_0:showCounterSign()
+	gohelper.setActive(self._subGO, self:checkSubGoVisable())
+	self:_updateSeasonEquips()
+	self:showCounterSign()
 
-	if arg_3_0._playDeathAnim then
-		arg_3_0._playDeathAnim = nil
+	if self._playDeathAnim then
+		self._playDeathAnim = nil
 
-		arg_3_0.anim:Play("open", 0, 0)
+		self.anim:Play("open", 0, 0)
 	end
 end
 
-function var_0_0.checkSubGoVisable(arg_4_0)
-	if arg_4_0.isLock then
+function Season3_0HeroGroupHeroItem:checkSubGoVisable()
+	if self.isLock then
 		return false
 	end
 
-	if arg_4_0.isAidLock then
+	if self.isAidLock then
 		return false
 	end
 
-	if arg_4_0.isRoleNumLock then
+	if self.isRoleNumLock then
 		return false
 	end
 
-	local var_4_0 = HeroGroupModel.instance.battleId
-	local var_4_1 = var_4_0 and lua_battle.configDict[var_4_0]
+	local battleId = HeroGroupModel.instance.battleId
+	local battleCO = battleId and lua_battle.configDict[battleId]
 
-	if var_4_1 then
-		return arg_4_0.mo.id > var_4_1.playerMax
+	if battleCO then
+		return self.mo.id > battleCO.playerMax
 	end
 
-	return arg_4_0.mo.id == ModuleEnum.MaxHeroCountInGroup
+	return self.mo.id == ModuleEnum.MaxHeroCountInGroup
 end
 
-function var_0_0._initData(arg_5_0)
-	arg_5_0._firstEnter = true
+function Season3_0HeroGroupHeroItem:_initData()
+	self._firstEnter = true
 
-	gohelper.setActive(arg_5_0._goselectdebuff, false)
+	gohelper.setActive(self._goselectdebuff, false)
 end
 
-function var_0_0._addEvents(arg_6_0)
-	arg_6_0._btnclickitem:AddClickListener(arg_6_0._onClickHeroItem, arg_6_0)
-	arg_6_0._btnclickitem:AddClickDownListener(arg_6_0._onClickThisDown, arg_6_0)
-	arg_6_0._btnclickitem:AddClickUpListener(arg_6_0._onClickThisUp, arg_6_0)
-	arg_6_0._btnclickequip:AddClickListener(arg_6_0._onClickEquip, arg_6_0)
-	arg_6_0:addEventCb(Activity104EquipController.instance, Activity104EquipEvent.EquipUpdate, arg_6_0._updateAct104Equips, arg_6_0)
-	arg_6_0:addEventCb(Activity104Controller.instance, Activity104Event.SwitchSnapshotSubId, arg_6_0._updateAct104Equips, arg_6_0)
-	arg_6_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.setHeroGroupEquipEffect, arg_6_0.setHeroGroupEquipEffect, arg_6_0)
-	arg_6_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.PlayHeroGroupHeroEffect, arg_6_0.playHeroGroupHeroEffect, arg_6_0)
-	arg_6_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.ChangeEquip, arg_6_0._updateSeasonEquips, arg_6_0)
-	arg_6_0:addEventCb(EquipController.instance, EquipEvent.onDeleteEquip, arg_6_0._updateSeasonEquips, arg_6_0)
-	arg_6_0:addEventCb(EquipController.instance, EquipEvent.onBreakSuccess, arg_6_0._updateSeasonEquips, arg_6_0)
-	arg_6_0:addEventCb(EquipController.instance, EquipEvent.onEquipStrengthenReply, arg_6_0._updateSeasonEquips, arg_6_0)
-	arg_6_0:addEventCb(EquipController.instance, EquipEvent.onEquipRefineReply, arg_6_0._updateSeasonEquips, arg_6_0)
-	arg_6_0:addEventCb(EquipController.instance, EquipEvent.onUpdateEquip, arg_6_0._updateSeasonEquips, arg_6_0)
+function Season3_0HeroGroupHeroItem:_addEvents()
+	self._btnclickitem:AddClickListener(self._onClickHeroItem, self)
+	self._btnclickitem:AddClickDownListener(self._onClickThisDown, self)
+	self._btnclickitem:AddClickUpListener(self._onClickThisUp, self)
+	self._btnclickequip:AddClickListener(self._onClickEquip, self)
+	self:addEventCb(Activity104EquipController.instance, Activity104EquipEvent.EquipUpdate, self._updateAct104Equips, self)
+	self:addEventCb(Activity104Controller.instance, Activity104Event.SwitchSnapshotSubId, self._updateAct104Equips, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.setHeroGroupEquipEffect, self.setHeroGroupEquipEffect, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.PlayHeroGroupHeroEffect, self.playHeroGroupHeroEffect, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.ChangeEquip, self._updateSeasonEquips, self)
+	self:addEventCb(EquipController.instance, EquipEvent.onDeleteEquip, self._updateSeasonEquips, self)
+	self:addEventCb(EquipController.instance, EquipEvent.onBreakSuccess, self._updateSeasonEquips, self)
+	self:addEventCb(EquipController.instance, EquipEvent.onEquipStrengthenReply, self._updateSeasonEquips, self)
+	self:addEventCb(EquipController.instance, EquipEvent.onEquipRefineReply, self._updateSeasonEquips, self)
+	self:addEventCb(EquipController.instance, EquipEvent.onUpdateEquip, self._updateSeasonEquips, self)
 end
 
-function var_0_0._updateSeasonEquips(arg_7_0)
-	arg_7_0:_updateEquips()
-	arg_7_0:_updateAct104Equips()
+function Season3_0HeroGroupHeroItem:_updateSeasonEquips()
+	self:_updateEquips()
+	self:_updateAct104Equips()
 end
 
-function var_0_0._onClickHeroItem(arg_8_0)
+function Season3_0HeroGroupHeroItem:_onClickHeroItem()
 	if HeroGroupModel.instance:getCurGroupMO().isReplay then
 		return
 	end
 
-	if arg_8_0.mo.aid or arg_8_0.isRoleNumLock then
-		if arg_8_0.mo.aid == -1 or arg_8_0.isRoleNumLock then
+	if self.mo.aid or self.isRoleNumLock then
+		if self.mo.aid == -1 or self.isRoleNumLock then
 			GameFacade.showToast(ToastEnum.IsRoleNumLock)
 		else
 			GameFacade.showToast(ToastEnum.IsRoleNumUnLock)
@@ -256,208 +258,209 @@ function var_0_0._onClickHeroItem(arg_8_0)
 		return
 	end
 
-	if arg_8_0.isLock then
-		local var_8_0, var_8_1 = HeroGroupModel.instance:getPositionLockDesc(arg_8_0.mo.id)
+	if self.isLock then
+		local lockDesc, param = HeroGroupModel.instance:getPositionLockDesc(self.mo.id)
 
-		GameFacade.showToast(var_8_0, var_8_1)
+		GameFacade.showToast(lockDesc, param)
 	else
 		AudioMgr.instance:trigger(AudioEnum.HeroGroupUI.Play_UI_Team_Open)
-		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickHeroGroupItem, arg_8_0.mo.id)
+		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickHeroGroupItem, self.mo.id)
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.HideAllGroupHeroItemEffect)
 	end
 end
 
-function var_0_0._onClickThisDown(arg_9_0)
-	arg_9_0:_setHeroItemPressState(true)
+function Season3_0HeroGroupHeroItem:_onClickThisDown()
+	self:_setHeroItemPressState(true)
 end
 
-function var_0_0._onClickThisUp(arg_10_0)
-	arg_10_0:_setHeroItemPressState(false)
+function Season3_0HeroGroupHeroItem:_onClickThisUp()
+	self:_setHeroItemPressState(false)
 end
 
-function var_0_0._onClickEquip(arg_11_0)
+function Season3_0HeroGroupHeroItem:_onClickEquip()
 	if HeroGroupModel.instance:getCurGroupMO().isReplay then
 		return
 	end
 
-	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Equip) or arg_11_0.trialCO then
+	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Equip) or self.trialCO then
 		AudioMgr.instance:trigger(AudioEnum.HeroGroupUI.Play_UI_Inking_Addmood)
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.HideAllGroupHeroItemEffect)
 
-		local var_11_0 = {
-			heroMo = arg_11_0._heroMO,
-			equipMo = arg_11_0._equipMO,
-			posIndex = arg_11_0._posIndex,
+		local param = {
+			heroMo = self._heroMO,
+			equipMo = self._equipMO,
+			posIndex = self._posIndex,
 			fromView = EquipEnum.FromViewEnum.FromSeasonFightView
 		}
 
-		if arg_11_0.trialCO then
-			var_11_0.heroMo = HeroGroupTrialModel.instance:getHeroMo(arg_11_0.trialCO)
+		if self.trialCO then
+			param.heroMo = HeroGroupTrialModel.instance:getHeroMo(self.trialCO)
 
-			if arg_11_0.trialCO.equipId > 0 then
-				var_11_0.equipMo = var_11_0.heroMo.trialEquipMo
+			if self.trialCO.equipId > 0 then
+				param.equipMo = param.heroMo.trialEquipMo
 			end
 		end
 
-		EquipController.instance:openEquipInfoTeamView(var_11_0)
+		EquipController.instance:openEquipInfoTeamView(param)
 	else
 		GameFacade.showToast(OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.Equip))
 	end
 end
 
-function var_0_0._updateEquips(arg_12_0)
-	arg_12_0._equipType = -1
+function Season3_0HeroGroupHeroItem:_updateEquips()
+	self._equipType = -1
 
-	if arg_12_0.isLock or arg_12_0.isAid or arg_12_0.isRoleNumLock or not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Equip) and not arg_12_0.trialCO and not HeroGroupTrialModel.instance:haveTrialEquip() then
-		gohelper.setActive(arg_12_0._goequip, false)
-		gohelper.setActive(arg_12_0._gofakeequip, false)
-		gohelper.setActive(arg_12_0._goemptyequip, false)
+	if self.isLock or self.isAid or self.isRoleNumLock or not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Equip) and not self.trialCO and not HeroGroupTrialModel.instance:haveTrialEquip() then
+		gohelper.setActive(self._goequip, false)
+		gohelper.setActive(self._gofakeequip, false)
+		gohelper.setActive(self._goemptyequip, false)
 	else
-		gohelper.setActive(arg_12_0._gofakeequip, true)
-		gohelper.setActive(arg_12_0._goemptyequip, true)
-		gohelper.setActive(arg_12_0._goequip, true)
+		gohelper.setActive(self._gofakeequip, true)
+		gohelper.setActive(self._goemptyequip, true)
+		gohelper.setActive(self._goequip, true)
 
-		if not arg_12_0._equip then
-			arg_12_0._equip = arg_12_0:getUserDataTb_()
-			arg_12_0._equip.moveParent = gohelper.findChild(arg_12_0._goequip, "moveParent")
-			arg_12_0._equip.moveContainer = gohelper.findChild(arg_12_0._equip.moveParent, "moveContainer")
-			arg_12_0._equip.moveContainerTrs = arg_12_0._equip.moveContainer.transform
-			arg_12_0._equip.equipIcon = gohelper.findChildImage(arg_12_0._equip.moveParent, "moveContainer/equipIcon")
-			arg_12_0._equip.equipRare = gohelper.findChildImage(arg_12_0._equip.moveParent, "moveContainer/equiprare")
-			arg_12_0._equip.equiptxtlv = gohelper.findChildText(arg_12_0._equip.moveParent, "moveContainer/equiplv/txtequiplv")
-			arg_12_0._equip.equipGolv = gohelper.findChild(arg_12_0._equip.moveParent, "moveContainer/equiplv")
+		if not self._equip then
+			self._equip = self:getUserDataTb_()
+			self._equip.moveParent = gohelper.findChild(self._goequip, "moveParent")
+			self._equip.moveContainer = gohelper.findChild(self._equip.moveParent, "moveContainer")
+			self._equip.moveContainerTrs = self._equip.moveContainer.transform
+			self._equip.equipIcon = gohelper.findChildImage(self._equip.moveParent, "moveContainer/equipIcon")
+			self._equip.equipRare = gohelper.findChildImage(self._equip.moveParent, "moveContainer/equiprare")
+			self._equip.equiptxtlv = gohelper.findChildText(self._equip.moveParent, "moveContainer/equiplv/txtequiplv")
+			self._equip.equipGolv = gohelper.findChild(self._equip.moveParent, "moveContainer/equiplv")
 
-			arg_12_0:_equipIconAddDrag(arg_12_0._equip.equipIcon.gameObject)
+			self:_equipIconAddDrag(self._equip.equipIcon.gameObject)
 		end
 
-		local var_12_0 = HeroGroupModel.instance:getCurGroupMO()
-		local var_12_1 = var_12_0:getPosEquips(arg_12_0.mo.id - 1).equipUid[1]
+		local curGroupMO = HeroGroupModel.instance:getCurGroupMO()
+		local equips = curGroupMO:getPosEquips(self.mo.id - 1).equipUid
+		local equipId = equips[1]
 
-		arg_12_0._equipMO = EquipModel.instance:getEquip(var_12_1) or HeroGroupTrialModel.instance:getEquipMo(var_12_1)
+		self._equipMO = EquipModel.instance:getEquip(equipId) or HeroGroupTrialModel.instance:getEquipMo(equipId)
 
-		if var_12_0.isReplay then
-			arg_12_0._equipMO = nil
+		if curGroupMO.isReplay then
+			self._equipMO = nil
 
-			local var_12_2 = var_12_0.replay_equip_data[arg_12_0.mo.heroUid]
+			local equip_data = curGroupMO.replay_equip_data[self.mo.heroUid]
 
-			if var_12_2 then
-				local var_12_3 = EquipConfig.instance:getEquipCo(var_12_2.equipId)
+			if equip_data then
+				local tar_config = EquipConfig.instance:getEquipCo(equip_data.equipId)
 
-				if var_12_3 then
-					arg_12_0._equipMO = {}
-					arg_12_0._equipMO.config = var_12_3
-					arg_12_0._equipMO.refineLv = var_12_2.refineLv
-					arg_12_0._equipMO.level = var_12_2.equipLv
+				if tar_config then
+					self._equipMO = {}
+					self._equipMO.config = tar_config
+					self._equipMO.refineLv = equip_data.refineLv
+					self._equipMO.level = equip_data.equipLv
 				end
 			end
 		end
 
-		local var_12_4
+		local trialEquipCO
 
-		if arg_12_0.trialCO and arg_12_0.trialCO.equipId > 0 then
-			var_12_4 = EquipConfig.instance:getEquipCo(arg_12_0.trialCO.equipId)
+		if self.trialCO and self.trialCO.equipId > 0 then
+			trialEquipCO = EquipConfig.instance:getEquipCo(self.trialCO.equipId)
 		end
 
-		if arg_12_0._equipMO then
-			arg_12_0._equipType = arg_12_0._equipMO.config.rare - 2
-		elseif var_12_4 then
-			arg_12_0._equipType = var_12_4.rare - 2
+		if self._equipMO then
+			self._equipType = self._equipMO.config.rare - 2
+		elseif trialEquipCO then
+			self._equipType = trialEquipCO.rare - 2
 		end
 
-		gohelper.setActive(arg_12_0._equip.equipIcon.gameObject, arg_12_0._equipMO or var_12_4)
-		gohelper.setActive(arg_12_0._equip.equipRare.gameObject, arg_12_0._equipMO or var_12_4)
-		gohelper.setActive(arg_12_0._equip.equipGolv, arg_12_0._equipMO or var_12_4)
+		gohelper.setActive(self._equip.equipIcon.gameObject, self._equipMO or trialEquipCO)
+		gohelper.setActive(self._equip.equipRare.gameObject, self._equipMO or trialEquipCO)
+		gohelper.setActive(self._equip.equipGolv, self._equipMO or trialEquipCO)
 
-		if arg_12_0._equipMO then
-			UISpriteSetMgr.instance:setHerogroupEquipIconSprite(arg_12_0._equip.equipIcon, arg_12_0._equipMO.config.icon)
+		if self._equipMO then
+			UISpriteSetMgr.instance:setHerogroupEquipIconSprite(self._equip.equipIcon, self._equipMO.config.icon)
 
-			arg_12_0._equip.equiptxtlv.text = "LV." .. arg_12_0._equipMO.level
+			self._equip.equiptxtlv.text = "LV." .. self._equipMO.level
 
-			UISpriteSetMgr.instance:setHeroGroupSprite(arg_12_0._equip.equipRare, "bianduixingxian_" .. arg_12_0._equipMO.config.rare)
-		elseif var_12_4 then
-			UISpriteSetMgr.instance:setHerogroupEquipIconSprite(arg_12_0._equip.equipIcon, var_12_4.icon)
+			UISpriteSetMgr.instance:setHeroGroupSprite(self._equip.equipRare, "bianduixingxian_" .. self._equipMO.config.rare)
+		elseif trialEquipCO then
+			UISpriteSetMgr.instance:setHerogroupEquipIconSprite(self._equip.equipIcon, trialEquipCO.icon)
 
-			arg_12_0._equip.equiptxtlv.text = "LV." .. arg_12_0.trialCO.equipLv
+			self._equip.equiptxtlv.text = "LV." .. self.trialCO.equipLv
 
-			UISpriteSetMgr.instance:setHeroGroupSprite(arg_12_0._equip.equipRare, "bianduixingxian_" .. var_12_4.rare)
+			UISpriteSetMgr.instance:setHeroGroupSprite(self._equip.equipRare, "bianduixingxian_" .. trialEquipCO.rare)
 		end
 	end
 
-	arg_12_0.last_equip = arg_12_0._equipMO and arg_12_0._equipMO.uid
-	arg_12_0.last_hero = arg_12_0._heroMO and arg_12_0._heroMO.heroId or 0
-	arg_12_0._firstEnter = false
+	self.last_equip = self._equipMO and self._equipMO.uid
+	self.last_hero = self._heroMO and self._heroMO.heroId or 0
+	self._firstEnter = false
 end
 
-var_0_0.NonCardSlotBlackMaskHeight = 362
-var_0_0.HasCardSlotBlackMashHeight = 200
-var_0_0.SingleSlotCardItem1Pos = Vector2.New(-3.8, 24.9)
-var_0_0.TwoSlotCardItem1Pos = Vector2.New(-51.6, 28.2)
+Season3_0HeroGroupHeroItem.NonCardSlotBlackMaskHeight = 362
+Season3_0HeroGroupHeroItem.HasCardSlotBlackMashHeight = 200
+Season3_0HeroGroupHeroItem.SingleSlotCardItem1Pos = Vector2.New(-3.8, 24.9)
+Season3_0HeroGroupHeroItem.TwoSlotCardItem1Pos = Vector2.New(-51.6, 28.2)
 
-function var_0_0._updateAct104Equips(arg_13_0)
-	local var_13_0 = HeroGroupModel.instance:getCurGroupMO()
-	local var_13_1
-	local var_13_2
-	local var_13_3
-	local var_13_4
-	local var_13_5 = false
+function Season3_0HeroGroupHeroItem:_updateAct104Equips()
+	local curGroupMO = HeroGroupModel.instance:getCurGroupMO()
+	local equipUid1, equipUid2, equipId1, equipId2
+	local hasTrialEquip = false
 
-	if var_13_0.isReplay then
-		local var_13_6 = var_13_0.replay_activity104Equip_data[arg_13_0.mo.heroUid]
+	if curGroupMO.isReplay then
+		local equipdata = curGroupMO.replay_activity104Equip_data[self.mo.heroUid]
 
-		var_13_3 = var_13_6 and var_13_6[1] and var_13_6[1].equipId or 0
-		var_13_4 = var_13_6 and var_13_6[2] and var_13_6[2].equipId or 0
+		equipId1 = equipdata and equipdata[1] and equipdata[1].equipId or 0
+		equipId2 = equipdata and equipdata[2] and equipdata[2].equipId or 0
 	else
-		local var_13_7 = var_13_0:getAct104PosEquips(arg_13_0.mo.id - 1).equipUid or {}
+		local equips = curGroupMO:getAct104PosEquips(self.mo.id - 1).equipUid or {}
 
-		var_13_5 = arg_13_0.trialCO and (arg_13_0.trialCO.act104EquipId1 > 0 or arg_13_0.trialCO.act104EquipId2 > 0)
+		hasTrialEquip = self.trialCO and (self.trialCO.act104EquipId1 > 0 or self.trialCO.act104EquipId2 > 0)
 
-		if arg_13_0.trialCO and arg_13_0.trialCO.act104EquipId1 > 0 then
-			var_13_3 = arg_13_0.trialCO.act104EquipId1
+		if self.trialCO and self.trialCO.act104EquipId1 > 0 then
+			equipId1 = self.trialCO.act104EquipId1
 		else
-			var_13_1 = var_13_7[1]
-			var_13_3 = Activity104Model.instance:getItemIdByUid(var_13_1)
+			equipUid1 = equips[1]
+			equipId1 = Activity104Model.instance:getItemIdByUid(equipUid1)
 		end
 
-		if arg_13_0.trialCO and arg_13_0.trialCO.act104EquipId2 > 0 then
-			var_13_4 = arg_13_0.trialCO.act104EquipId2
+		if self.trialCO and self.trialCO.act104EquipId2 > 0 then
+			equipId2 = self.trialCO.act104EquipId2
 		else
-			var_13_2 = var_13_7[2]
-			var_13_4 = Activity104Model.instance:getItemIdByUid(var_13_2)
+			equipUid2 = equips[2]
+			equipId2 = Activity104Model.instance:getItemIdByUid(equipUid2)
 		end
 	end
 
-	arg_13_0._cardItem1:setData(arg_13_0.mo, var_13_3, var_13_1, var_13_5)
-	arg_13_0._cardItem2:setData(arg_13_0.mo, var_13_4, var_13_2, var_13_5)
+	self._cardItem1:setData(self.mo, equipId1, equipUid1, hasTrialEquip)
+	self._cardItem2:setData(self.mo, equipId2, equipUid2, hasTrialEquip)
 
-	arg_13_0._hasUseSeasonEquipCard = arg_13_0._cardItem1:hasUseSeasonEquipCard() or arg_13_0._cardItem2:hasUseSeasonEquipCard()
+	self._hasUseSeasonEquipCard = self._cardItem1:hasUseSeasonEquipCard() or self._cardItem2:hasUseSeasonEquipCard()
 
-	local var_13_8 = not arg_13_0.isAid and (arg_13_0._cardItem1.slotUnlock or arg_13_0._cardItem2.slotUnlock)
-	local var_13_9 = var_13_8 and var_0_0.NonCardSlotBlackMaskHeight or var_0_0.HasCardSlotBlackMashHeight
+	local hasShowCardSlot = not self.isAid and (self._cardItem1.slotUnlock or self._cardItem2.slotUnlock)
+	local targetBlackMaskHeight = hasShowCardSlot and Season3_0HeroGroupHeroItem.NonCardSlotBlackMaskHeight or Season3_0HeroGroupHeroItem.HasCardSlotBlackMashHeight
 
-	recthelper.setHeight(arg_13_0._goblackmask.transform, var_13_9)
-	gohelper.setActive(arg_13_0._gocardlist, var_13_8)
-	arg_13_0._cardItem1:setActive(var_13_8)
-	arg_13_0._cardItem2:setActive(var_13_8)
+	recthelper.setHeight(self._goblackmask.transform, targetBlackMaskHeight)
+	gohelper.setActive(self._gocardlist, hasShowCardSlot)
+	self._cardItem1:setActive(hasShowCardSlot)
+	self._cardItem2:setActive(hasShowCardSlot)
 
-	local var_13_10 = arg_13_0._cardItem1.slotUnlock and arg_13_0._cardItem2.slotUnlock and var_0_0.TwoSlotCardItem1Pos or var_0_0.SingleSlotCardItem1Pos
+	local hasAllSlotUnlock = self._cardItem1.slotUnlock and self._cardItem2.slotUnlock
+	local targetSlot1Pos = hasAllSlotUnlock and Season3_0HeroGroupHeroItem.TwoSlotCardItem1Pos or Season3_0HeroGroupHeroItem.SingleSlotCardItem1Pos
 
-	recthelper.setAnchor(arg_13_0._cardItem1.transform, var_13_10.x, var_13_10.y)
+	recthelper.setAnchor(self._cardItem1.transform, targetSlot1Pos.x, targetSlot1Pos.y)
 end
 
-function var_0_0._equipIconAddDrag(arg_14_0, arg_14_1)
-	if arg_14_0._drag then
+function Season3_0HeroGroupHeroItem:_equipIconAddDrag(go)
+	if self._drag then
 		return
 	end
 
-	arg_14_1:GetComponent(gohelper.Type_Image).raycastTarget = true
-	arg_14_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_14_1)
+	local image = go:GetComponent(gohelper.Type_Image)
 
-	arg_14_0._drag:AddDragBeginListener(arg_14_0._onBeginDrag, arg_14_0, arg_14_1.transform)
-	arg_14_0._drag:AddDragListener(arg_14_0._onDrag, arg_14_0)
-	arg_14_0._drag:AddDragEndListener(arg_14_0._onEndDrag, arg_14_0, arg_14_1.transform)
+	image.raycastTarget = true
+	self._drag = SLFramework.UGUI.UIDragListener.Get(go)
+
+	self._drag:AddDragBeginListener(self._onBeginDrag, self, go.transform)
+	self._drag:AddDragListener(self._onDrag, self)
+	self._drag:AddDragEndListener(self._onEndDrag, self, go.transform)
 end
 
-function var_0_0._onBeginDrag(arg_15_0, arg_15_1, arg_15_2)
+function Season3_0HeroGroupHeroItem:_onBeginDrag(equipTransform, pointerEventData)
 	if UnityEngine.Input.touchCount > 1 then
 		return
 	end
@@ -466,37 +469,37 @@ function var_0_0._onBeginDrag(arg_15_0, arg_15_1, arg_15_2)
 		return
 	end
 
-	if arg_15_0.trialCO and arg_15_0.trialCO.equipId > 0 then
+	if self.trialCO and self.trialCO.equipId > 0 then
 		GameFacade.showToast(ToastEnum.TrialCantEditEquip)
 
 		return
 	end
 
-	gohelper.setAsLastSibling(arg_15_0.go)
+	gohelper.setAsLastSibling(self.go)
 
-	local var_15_0 = arg_15_0:getDragTransform()
+	local dragTransform = self:getDragTransform()
 
-	arg_15_0:topDragTransformOrder()
+	self:topDragTransformOrder()
 
-	local var_15_1 = arg_15_2.position
-	local var_15_2 = HeroGroupHeroItem.EquipDragOtherScale
+	local pos = pointerEventData.position
+	local scale = HeroGroupHeroItem.EquipDragOtherScale
 
 	if GameUtil.isMobilePlayerAndNotEmulator() then
-		var_15_2 = HeroGroupHeroItem.EquipDragMobileScale
-		var_15_1 = var_15_1 + HeroGroupHeroItem.EquipDragOffset
+		scale = HeroGroupHeroItem.EquipDragMobileScale
+		pos = pos + HeroGroupHeroItem.EquipDragOffset
 	end
 
-	local var_15_3 = recthelper.screenPosToAnchorPos(var_15_1, var_15_0.parent)
+	local anchorPos = recthelper.screenPosToAnchorPos(pos, dragTransform.parent)
 
-	arg_15_0:_tweenToPos(var_15_0, var_15_3)
+	self:_tweenToPos(dragTransform, anchorPos)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_hero_card_property)
-	gohelper.setActive(arg_15_0._equip.equipGolv, false)
-	arg_15_0:killEquipTweenId()
+	gohelper.setActive(self._equip.equipGolv, false)
+	self:killEquipTweenId()
 
-	arg_15_0.equipTweenId = ZProj.TweenHelper.DOScale(arg_15_1.parent, var_15_2, var_15_2, var_15_2, HeroGroupHeroItem.EquipTweenDuration)
+	self.equipTweenId = ZProj.TweenHelper.DOScale(equipTransform.parent, scale, scale, scale, HeroGroupHeroItem.EquipTweenDuration)
 end
 
-function var_0_0._onDrag(arg_16_0, arg_16_1, arg_16_2)
+function Season3_0HeroGroupHeroItem:_onDrag(param, pointerEventData)
 	if UnityEngine.Input.touchCount > 1 then
 		return
 	end
@@ -505,205 +508,207 @@ function var_0_0._onDrag(arg_16_0, arg_16_1, arg_16_2)
 		return
 	end
 
-	if arg_16_0.trialCO and arg_16_0.trialCO.equipId > 0 then
+	if self.trialCO and self.trialCO.equipId > 0 then
 		return
 	end
 
-	local var_16_0 = arg_16_2.position
+	local pos = pointerEventData.position
 
 	if GameUtil.isMobilePlayerAndNotEmulator() then
-		var_16_0 = var_16_0 + HeroGroupHeroItem.EquipDragOffset
+		pos = pos + HeroGroupHeroItem.EquipDragOffset
 	end
 
-	local var_16_1 = arg_16_0:getDragTransform()
-	local var_16_2 = recthelper.screenPosToAnchorPos(var_16_0, var_16_1.parent)
+	local dragTransform = self:getDragTransform()
+	local anchorPos = recthelper.screenPosToAnchorPos(pos, dragTransform.parent)
 
-	arg_16_0:_tweenToPos(var_16_1, var_16_2)
+	self:_tweenToPos(dragTransform, anchorPos)
 end
 
-function var_0_0._onEndDrag(arg_17_0, arg_17_1, arg_17_2)
+function Season3_0HeroGroupHeroItem:_onEndDrag(equipTransform, pointerEventData)
 	if UnityEngine.Input.touchCount > 1 then
 		return
 	end
 
-	arg_17_0:killEquipTweenId()
+	self:killEquipTweenId()
 
-	arg_17_0.equipTweenId = ZProj.TweenHelper.DOScale(arg_17_1.parent, 1, 1, 1, HeroGroupHeroItem.EquipTweenDuration)
+	self.equipTweenId = ZProj.TweenHelper.DOScale(equipTransform.parent, 1, 1, 1, HeroGroupHeroItem.EquipTweenDuration)
 
 	if HeroGroupModel.instance:getCurGroupMO().isReplay then
 		return
 	end
 
-	if arg_17_0.trialCO and arg_17_0.trialCO.equipId > 0 then
+	if self.trialCO and self.trialCO.equipId > 0 then
 		return
 	end
 
-	local var_17_0 = arg_17_2.position
+	local pos = pointerEventData.position
 
 	if GameUtil.isMobilePlayerAndNotEmulator() then
-		var_17_0 = var_17_0 + HeroGroupHeroItem.EquipDragOffset
+		pos = pos + HeroGroupHeroItem.EquipDragOffset
 	end
 
-	local var_17_1 = arg_17_0:_moveToTarget(var_17_0)
+	local targetHeroItem = self:_moveToTarget(pos)
 
-	arg_17_0:_setEquipDragEnabled(false)
+	self:_setEquipDragEnabled(false)
 
-	local var_17_2 = arg_17_0:getDragTransform()
-	local var_17_3 = arg_17_0:getOrignDragPos()
-	local var_17_4 = var_17_1 and var_17_1.trialCO and var_17_1.trialCO.equipId > 0
+	local dragTransform = self:getDragTransform()
+	local orignPos = self:getOrignDragPos()
+	local isTrialDefaultEquip = targetHeroItem and targetHeroItem.trialCO and targetHeroItem.trialCO.equipId > 0
 
-	if not var_17_1 or var_17_1 == arg_17_0 or var_17_1.mo.aid or var_17_4 then
-		if var_17_4 then
+	if not targetHeroItem or targetHeroItem == self or targetHeroItem.mo.aid or isTrialDefaultEquip then
+		if isTrialDefaultEquip then
 			GameFacade.showToast(ToastEnum.TrialCantEditEquip)
 		end
 
-		local var_17_5 = recthelper.rectToRelativeAnchorPos(var_17_3, var_17_2.parent)
+		local anchorPos = recthelper.rectToRelativeAnchorPos(orignPos, dragTransform.parent)
 
-		arg_17_0:_setToPos(var_17_2, var_17_5, true, arg_17_0.onDragEndFail, arg_17_0)
+		self:_setToPos(dragTransform, anchorPos, true, self.onDragEndFail, self)
 
 		return
 	end
 
-	arg_17_0:_playDragEndAudio(var_17_1)
+	self:_playDragEndAudio(targetHeroItem)
 
-	local var_17_6 = var_17_1:getDragTransform()
+	local targetDragTransform = targetHeroItem:getDragTransform()
 
-	var_17_1:topDragTransformOrder()
+	targetHeroItem:topDragTransformOrder()
 
-	local var_17_7 = var_17_1:getOrignDragPos()
-	local var_17_8 = recthelper.rectToRelativeAnchorPos(var_17_3, var_17_6.parent)
+	local targetOrignPos = targetHeroItem:getOrignDragPos()
+	local anotherAnchorPos = recthelper.rectToRelativeAnchorPos(orignPos, targetDragTransform.parent)
 
-	arg_17_0._tweenId = arg_17_0:_setToPos(var_17_6, var_17_8, true)
+	self._tweenId = self:_setToPos(targetDragTransform, anotherAnchorPos, true)
 
-	local var_17_9 = recthelper.rectToRelativeAnchorPos(var_17_7, var_17_2.parent)
+	local anchorPos = recthelper.rectToRelativeAnchorPos(targetOrignPos, dragTransform.parent)
 
-	arg_17_0:_setToPos(var_17_2, var_17_9, true, arg_17_0.onDragEndSuccess, arg_17_0, var_17_1)
+	self:_setToPos(dragTransform, anchorPos, true, self.onDragEndSuccess, self, targetHeroItem)
 end
 
-function var_0_0.topDragTransformOrder(arg_18_0)
-	local var_18_0 = arg_18_0:getDragTransform()
+function Season3_0HeroGroupHeroItem:topDragTransformOrder()
+	local dragTransform = self:getDragTransform()
 
-	gohelper.addChildPosStay(arg_18_0.currentParent, var_18_0.gameObject)
+	gohelper.addChildPosStay(self.currentParent, dragTransform.gameObject)
 end
 
-function var_0_0.resetDragTransformOrder(arg_19_0)
-	local var_19_0 = arg_19_0:getDragTransform()
+function Season3_0HeroGroupHeroItem:resetDragTransformOrder()
+	local dragTransform = self:getDragTransform()
 
-	gohelper.addChildPosStay(arg_19_0._equip.moveParent, var_19_0.gameObject)
+	gohelper.addChildPosStay(self._equip.moveParent, dragTransform.gameObject)
 end
 
-function var_0_0.getDragTransform(arg_20_0)
-	return arg_20_0._equip.moveContainerTrs
+function Season3_0HeroGroupHeroItem:getDragTransform()
+	return self._equip.moveContainerTrs
 end
 
-function var_0_0.getOrignDragPos(arg_21_0)
-	return arg_21_0._equip.moveParent.transform.position
+function Season3_0HeroGroupHeroItem:getOrignDragPos()
+	return self._equip.moveParent.transform.position
 end
 
-function var_0_0.onDragEndFail(arg_22_0)
-	arg_22_0:resetDragTransformOrder()
-	gohelper.setActive(arg_22_0._gorootequipeffect1, false)
-	gohelper.setActive(arg_22_0._equip.equipGolv, true)
-	arg_22_0:_setEquipDragEnabled(true)
+function Season3_0HeroGroupHeroItem:onDragEndFail()
+	self:resetDragTransformOrder()
+	gohelper.setActive(self._gorootequipeffect1, false)
+	gohelper.setActive(self._equip.equipGolv, true)
+	self:_setEquipDragEnabled(true)
 end
 
-function var_0_0.onDragEndSuccess(arg_23_0, arg_23_1)
-	EquipTeamListModel.instance:openTeamEquip(arg_23_0.mo.id - 1, arg_23_0._heroMO, HeroGroupModel.instance:getCurGroupMO())
+function Season3_0HeroGroupHeroItem:onDragEndSuccess(targetHeroItem)
+	EquipTeamListModel.instance:openTeamEquip(self.mo.id - 1, self._heroMO, HeroGroupModel.instance:getCurGroupMO())
 
-	if arg_23_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_23_0._tweenId)
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_23_0._tweenId = nil
+		self._tweenId = nil
 	end
 
-	arg_23_0:resetDragTransformOrder()
-	arg_23_1:resetDragTransformOrder()
+	self:resetDragTransformOrder()
+	targetHeroItem:resetDragTransformOrder()
 
-	local var_23_0 = arg_23_0:getDragTransform()
-	local var_23_1 = arg_23_1:getDragTransform()
+	local dragTransform = self:getDragTransform()
+	local targetDragTransform = targetHeroItem:getDragTransform()
 
-	arg_23_0:_setToPos(var_23_0, Vector2())
-	arg_23_0:_setToPos(var_23_1, Vector2())
-	gohelper.setActive(arg_23_0._gorootequipeffect1, false)
-	gohelper.setActive(arg_23_0._equip.equipGolv, true)
-	arg_23_0:_setEquipDragEnabled(true)
+	self:_setToPos(dragTransform, Vector2())
+	self:_setToPos(targetDragTransform, Vector2())
+	gohelper.setActive(self._gorootequipeffect1, false)
+	gohelper.setActive(self._equip.equipGolv, true)
+	self:_setEquipDragEnabled(true)
 
-	local var_23_2 = arg_23_0.mo.id - 1
-	local var_23_3 = arg_23_1.mo.id - 1
-	local var_23_4 = EquipTeamListModel.instance:getTeamEquip(var_23_2)[1]
+	local srcPos = self.mo.id - 1
+	local targetPos = targetHeroItem.mo.id - 1
+	local srcEquipId = EquipTeamListModel.instance:getTeamEquip(srcPos)[1]
 
-	var_23_4 = EquipModel.instance:getEquip(var_23_4) and var_23_4 or nil
+	srcEquipId = EquipModel.instance:getEquip(srcEquipId) and srcEquipId or nil
 
-	if var_23_4 then
-		EquipTeamShowItem.removeEquip(var_23_2, true)
+	if srcEquipId then
+		EquipTeamShowItem.removeEquip(srcPos, true)
 	end
 
-	local var_23_5 = EquipTeamListModel.instance:getTeamEquip(var_23_3)[1]
+	local targetEquipId = EquipTeamListModel.instance:getTeamEquip(targetPos)[1]
 
-	var_23_5 = EquipModel.instance:getEquip(var_23_5) and var_23_5 or nil
+	targetEquipId = EquipModel.instance:getEquip(targetEquipId) and targetEquipId or nil
 
-	if var_23_5 then
-		EquipTeamShowItem.removeEquip(var_23_3, true)
+	if targetEquipId then
+		EquipTeamShowItem.removeEquip(targetPos, true)
 	end
 
-	if var_23_4 then
-		EquipTeamShowItem.replaceEquip(var_23_3, var_23_4, true)
+	if srcEquipId then
+		EquipTeamShowItem.replaceEquip(targetPos, srcEquipId, true)
 	end
 
-	if var_23_5 then
-		EquipTeamShowItem.replaceEquip(var_23_2, var_23_5, true)
+	if targetEquipId then
+		EquipTeamShowItem.replaceEquip(srcPos, targetEquipId, true)
 	end
 
 	HeroGroupModel.instance:saveCurGroupData()
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.ChangeEquip)
 end
 
-function var_0_0._playDragEndAudio(arg_24_0, arg_24_1)
-	if not arg_24_0._equipMO or arg_24_0._equipMO.config.id <= 0 then
+function Season3_0HeroGroupHeroItem:_playDragEndAudio(targetHeroItem)
+	if not self._equipMO or self._equipMO.config.id <= 0 then
 		return
 	end
 
-	local var_24_0, var_24_1, var_24_2 = EquipHelper.getSkillBaseDescAndIcon(arg_24_0._equipMO.config.id, arg_24_0._equipMO.refineLv)
+	local skillDesList, _, _ = EquipHelper.getSkillBaseDescAndIcon(self._equipMO.config.id, self._equipMO.refineLv)
+	local hasSkill = #skillDesList > 0
+	local showEffect = hasSkill and EquipHelper.detectEquipSkillSuited(targetHeroItem._heroMO and targetHeroItem._heroMO.heroId, self._equipMO.config.skillType, self._equipMO.refineLv)
 
-	if #var_24_0 > 0 and EquipHelper.detectEquipSkillSuited(arg_24_1._heroMO and arg_24_1._heroMO.heroId, arg_24_0._equipMO.config.skillType, arg_24_0._equipMO.refineLv) then
+	if showEffect then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_inking_success)
 	else
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_inking_fail)
 	end
 end
 
-function var_0_0._tweenToPos(arg_25_0, arg_25_1, arg_25_2)
-	local var_25_0, var_25_1 = recthelper.getAnchor(arg_25_1)
+function Season3_0HeroGroupHeroItem:_tweenToPos(transform, anchorPos)
+	local curAnchorX, curAnchorY = recthelper.getAnchor(transform)
 
-	if math.abs(var_25_0 - arg_25_2.x) > 10 or math.abs(var_25_1 - arg_25_2.y) > 10 then
-		return ZProj.TweenHelper.DOAnchorPos(arg_25_1, arg_25_2.x, arg_25_2.y, 0.2)
+	if math.abs(curAnchorX - anchorPos.x) > 10 or math.abs(curAnchorY - anchorPos.y) > 10 then
+		return ZProj.TweenHelper.DOAnchorPos(transform, anchorPos.x, anchorPos.y, 0.2)
 	else
-		recthelper.setAnchor(arg_25_1, arg_25_2.x, arg_25_2.y)
+		recthelper.setAnchor(transform, anchorPos.x, anchorPos.y)
 	end
 end
 
-function var_0_0._setToPos(arg_26_0, arg_26_1, arg_26_2, arg_26_3, arg_26_4, arg_26_5, arg_26_6)
-	local var_26_0, var_26_1 = recthelper.getAnchor(arg_26_1)
+function Season3_0HeroGroupHeroItem:_setToPos(transform, anchorPos, tween, callback, callbackObj, param)
+	local curAnchorX, curAnchorY = recthelper.getAnchor(transform)
 
-	if arg_26_3 then
-		return ZProj.TweenHelper.DOAnchorPos(arg_26_1, arg_26_2.x, arg_26_2.y, 0.2, arg_26_4, arg_26_5, arg_26_6)
+	if tween then
+		return ZProj.TweenHelper.DOAnchorPos(transform, anchorPos.x, anchorPos.y, 0.2, callback, callbackObj, param)
 	else
-		recthelper.setAnchor(arg_26_1, arg_26_2.x, arg_26_2.y)
+		recthelper.setAnchor(transform, anchorPos.x, anchorPos.y)
 
-		if arg_26_4 then
-			arg_26_4(arg_26_5)
+		if callback then
+			callback(callbackObj)
 		end
 	end
 end
 
-function var_0_0._moveToTarget(arg_27_0, arg_27_1)
-	for iter_27_0, iter_27_1 in ipairs(arg_27_0._Season3_0HeroGroupListView.heroPosTrList) do
-		if arg_27_0._Season3_0HeroGroupListView._heroItemList[iter_27_0] ~= arg_27_0 then
-			local var_27_0 = iter_27_1.parent
-			local var_27_1 = recthelper.screenPosToAnchorPos(arg_27_1, var_27_0)
+function Season3_0HeroGroupHeroItem:_moveToTarget(position)
+	for i, v in ipairs(self._Season3_0HeroGroupListView.heroPosTrList) do
+		if self._Season3_0HeroGroupListView._heroItemList[i] ~= self then
+			local posTr = v.parent
+			local anchorPos = recthelper.screenPosToAnchorPos(position, posTr)
 
-			if math.abs(var_27_1.x) * 2 < recthelper.getWidth(var_27_0) and math.abs(var_27_1.y) * 2 < recthelper.getHeight(var_27_0) then
-				return arg_27_0._Season3_0HeroGroupListView._heroItemList[iter_27_0]
+			if math.abs(anchorPos.x) * 2 < recthelper.getWidth(posTr) and math.abs(anchorPos.y) * 2 < recthelper.getHeight(posTr) then
+				return self._Season3_0HeroGroupListView._heroItemList[i]
 			end
 		end
 	end
@@ -711,240 +716,245 @@ function var_0_0._moveToTarget(arg_27_0, arg_27_1)
 	return nil
 end
 
-function var_0_0._setEquipDragEnabled(arg_28_0, arg_28_1)
-	for iter_28_0, iter_28_1 in ipairs(arg_28_0._Season3_0HeroGroupListView._heroItemList) do
-		if iter_28_1._drag then
-			iter_28_1._drag.enabled = arg_28_1
+function Season3_0HeroGroupHeroItem:_setEquipDragEnabled(isEnabled)
+	for i, heroItem in ipairs(self._Season3_0HeroGroupListView._heroItemList) do
+		if heroItem._drag then
+			heroItem._drag.enabled = isEnabled
 		end
 	end
 end
 
-function var_0_0.playHeroGroupHeroEffect(arg_29_0, arg_29_1)
-	arg_29_0.anim:Play(arg_29_1, 0, 0)
+function Season3_0HeroGroupHeroItem:playHeroGroupHeroEffect(state)
+	self.anim:Play(state, 0, 0)
 
-	arg_29_0.last_equip = nil
-	arg_29_0.last_hero = nil
-	arg_29_0._firstEnter = true
+	self.last_equip = nil
+	self.last_hero = nil
+	self._firstEnter = true
 end
 
-function var_0_0.playRestrictAnimation(arg_30_0, arg_30_1)
-	if arg_30_0._heroMO and arg_30_1[arg_30_0._heroMO.uid] then
-		arg_30_0._playDeathAnim = true
+function Season3_0HeroGroupHeroItem:playRestrictAnimation(needRestrictHeroUidDict)
+	if self._heroMO and needRestrictHeroUidDict[self._heroMO.uid] then
+		self._playDeathAnim = true
 
-		arg_30_0.anim:Play("herogroup_hero_deal", 0, 0)
+		self.anim:Play("herogroup_hero_deal", 0, 0)
 
-		arg_30_0.tweenid = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.5, arg_30_0.setGrayFactor, nil, arg_30_0)
+		self.tweenid = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.5, self.setGrayFactor, nil, self)
 	end
 end
 
-function var_0_0.setGrayFactor(arg_31_0, arg_31_1)
-	arg_31_0._commonHeroCard:setGrayFactor(arg_31_1)
+function Season3_0HeroGroupHeroItem:setGrayFactor(value)
+	self._commonHeroCard:setGrayFactor(value)
 end
 
-local var_0_1 = Vector2.New(0, -4)
-local var_0_2 = Vector2.New(0, -30)
+local restrainTagPosUnUseSeasonCard = Vector2.New(0, -4)
+local restrainTagPosUseSeasonCard = Vector2.New(0, -30)
 
-function var_0_0.showCounterSign(arg_32_0)
-	local var_32_0
+function Season3_0HeroGroupHeroItem:showCounterSign()
+	local career
 
-	if arg_32_0._heroMO then
-		var_32_0 = lua_character.configDict[arg_32_0._heroMO.heroId].career
-	elseif arg_32_0.monsterCO then
-		var_32_0 = arg_32_0.monsterCO.career
-	elseif arg_32_0.trialCO then
-		local var_32_1 = lua_character.configDict[arg_32_0.trialCO.heroId]
+	if self._heroMO then
+		local hero_config = lua_character.configDict[self._heroMO.heroId]
 
-		var_32_0 = var_32_1 and var_32_1.career
+		career = hero_config.career
+	elseif self.monsterCO then
+		career = self.monsterCO.career
+	elseif self.trialCO then
+		local hero_config = lua_character.configDict[self.trialCO.heroId]
+
+		career = hero_config and hero_config.career
 	end
 
-	local var_32_2, var_32_3 = FightHelper.detectAttributeCounter()
-	local var_32_4 = tabletool.indexOf(var_32_2, var_32_0)
-	local var_32_5 = tabletool.indexOf(var_32_3, var_32_0)
+	local recommended, counter = FightHelper.detectAttributeCounter()
+	local isRecommended = tabletool.indexOf(recommended, career)
+	local isCounter = tabletool.indexOf(counter, career)
 
-	gohelper.setActive(arg_32_0._gorecommended, var_32_4)
-	gohelper.setActive(arg_32_0._gocounter, var_32_5)
+	gohelper.setActive(self._gorecommended, isRecommended)
+	gohelper.setActive(self._gocounter, isCounter)
 
-	if var_32_4 or var_32_5 then
-		local var_32_6 = arg_32_0._hasUseSeasonEquipCard and var_0_2 or var_0_1
+	if isRecommended or isCounter then
+		local targetPos = self._hasUseSeasonEquipCard and restrainTagPosUseSeasonCard or restrainTagPosUnUseSeasonCard
 
-		recthelper.setAnchor(arg_32_0._goflags.transform, var_32_6.x, var_32_6.y)
+		recthelper.setAnchor(self._goflags.transform, targetPos.x, targetPos.y)
 	end
 end
 
-function var_0_0.onItemBeginDrag(arg_33_0, arg_33_1)
-	if arg_33_1 == arg_33_0.mo.id then
-		ZProj.TweenHelper.DOScale(arg_33_0.go.transform, 1.1, 1.1, 1, 0.2, nil, nil, nil, EaseType.Linear)
-		gohelper.setActive(arg_33_0._goselectdebuff, true)
-		gohelper.setActive(arg_33_0._goselected, true)
-		gohelper.setActive(arg_33_0._gofinished, false)
+function Season3_0HeroGroupHeroItem:onItemBeginDrag(index)
+	if index == self.mo.id then
+		ZProj.TweenHelper.DOScale(self.go.transform, 1.1, 1.1, 1, 0.2, nil, nil, nil, EaseType.Linear)
+		gohelper.setActive(self._goselectdebuff, true)
+		gohelper.setActive(self._goselected, true)
+		gohelper.setActive(self._gofinished, false)
 	end
 
-	gohelper.setActive(arg_33_0._goclick, false)
+	gohelper.setActive(self._goclick, false)
 end
 
-function var_0_0.onItemEndDrag(arg_34_0, arg_34_1, arg_34_2)
-	ZProj.TweenHelper.DOScale(arg_34_0.go.transform, 1, 1, 1, 0.2, nil, nil, nil, EaseType.Linear)
-	arg_34_0:_setHeroItemPressState(false)
+function Season3_0HeroGroupHeroItem:onItemEndDrag(index, dragToIndex)
+	ZProj.TweenHelper.DOScale(self.go.transform, 1, 1, 1, 0.2, nil, nil, nil, EaseType.Linear)
+	self:_setHeroItemPressState(false)
 end
 
-function var_0_0.onItemCompleteDrag(arg_35_0, arg_35_1, arg_35_2, arg_35_3)
-	if arg_35_2 == arg_35_0.mo.id and arg_35_1 ~= arg_35_2 then
-		if arg_35_3 then
-			gohelper.setActive(arg_35_0._goselectdebuff, true)
-			gohelper.setActive(arg_35_0._goselected, false)
-			gohelper.setActive(arg_35_0._gofinished, false)
-			gohelper.setActive(arg_35_0._gofinished, true)
-			TaskDispatcher.cancelTask(arg_35_0.hideDragEffect, arg_35_0)
-			TaskDispatcher.runDelay(arg_35_0.hideDragEffect, arg_35_0, 0.833)
+function Season3_0HeroGroupHeroItem:onItemCompleteDrag(index, dragToIndex, complete)
+	if dragToIndex == self.mo.id and index ~= dragToIndex then
+		if complete then
+			gohelper.setActive(self._goselectdebuff, true)
+			gohelper.setActive(self._goselected, false)
+			gohelper.setActive(self._gofinished, false)
+			gohelper.setActive(self._gofinished, true)
+			TaskDispatcher.cancelTask(self.hideDragEffect, self)
+			TaskDispatcher.runDelay(self.hideDragEffect, self, 0.833)
 		end
 	else
-		gohelper.setActive(arg_35_0._goselectdebuff, false)
+		gohelper.setActive(self._goselectdebuff, false)
 	end
 
-	gohelper.setActive(arg_35_0._gorootequipeffect2, false)
-	gohelper.setActive(arg_35_0._goclick, true)
+	gohelper.setActive(self._gorootequipeffect2, false)
+	gohelper.setActive(self._goclick, true)
 end
 
-function var_0_0.hideDragEffect(arg_36_0)
-	gohelper.setActive(arg_36_0._goselectdebuff, false)
+function Season3_0HeroGroupHeroItem:hideDragEffect()
+	gohelper.setActive(self._goselectdebuff, false)
 end
 
-function var_0_0.setHeroGroupEquipEffect(arg_37_0, arg_37_1)
-	arg_37_0._canPlayEffect = arg_37_1
+function Season3_0HeroGroupHeroItem:setHeroGroupEquipEffect(show)
+	self._canPlayEffect = show
 end
 
-function var_0_0.setParent(arg_38_0, arg_38_1)
-	arg_38_0.currentParent = arg_38_1
+function Season3_0HeroGroupHeroItem:setParent(transform)
+	self.currentParent = transform
 
-	gohelper.addChildPosStay(arg_38_1.gameObject, arg_38_0._subGO)
+	gohelper.addChildPosStay(transform.gameObject, self._subGO)
 end
 
-function var_0_0.flowOriginParent(arg_39_0)
+function Season3_0HeroGroupHeroItem:flowOriginParent()
 	return
 end
 
-function var_0_0.flowCurrentParent(arg_40_0)
+function Season3_0HeroGroupHeroItem:flowCurrentParent()
 	return
 end
 
-function var_0_0.getHeroItemList(arg_41_0)
-	return arg_41_0._Season3_0HeroGroupListView:getHeroItemList()
+function Season3_0HeroGroupHeroItem:getHeroItemList()
+	return self._Season3_0HeroGroupListView:getHeroItemList()
 end
 
-function var_0_0.killEquipTweenId(arg_42_0)
-	if arg_42_0.equipTweenId then
-		ZProj.TweenHelper.KillById(arg_42_0.equipTweenId)
+function Season3_0HeroGroupHeroItem:killEquipTweenId()
+	if self.equipTweenId then
+		ZProj.TweenHelper.KillById(self.equipTweenId)
 
-		arg_42_0.equipTweenId = nil
+		self.equipTweenId = nil
 	end
 end
 
-function var_0_0._removeEvents(arg_43_0)
-	arg_43_0._btnclickitem:RemoveClickListener()
-	arg_43_0._btnclickitem:RemoveClickUpListener()
-	arg_43_0._btnclickitem:RemoveClickDownListener()
-	arg_43_0._btnclickequip:RemoveClickListener()
+function Season3_0HeroGroupHeroItem:_removeEvents()
+	self._btnclickitem:RemoveClickListener()
+	self._btnclickitem:RemoveClickUpListener()
+	self._btnclickitem:RemoveClickDownListener()
+	self._btnclickequip:RemoveClickListener()
 end
 
-function var_0_0._setHeroItemPressState(arg_44_0, arg_44_1)
-	if not arg_44_0._heroItemContainer then
-		arg_44_0._heroItemContainer = arg_44_0:getUserDataTb_()
+function Season3_0HeroGroupHeroItem:_setHeroItemPressState(press)
+	if not self._heroItemContainer then
+		self._heroItemContainer = self:getUserDataTb_()
 
-		local var_44_0 = arg_44_0._heroGO:GetComponentsInChildren(gohelper.Type_Image, true)
+		local images = self._heroGO:GetComponentsInChildren(gohelper.Type_Image, true)
 
-		arg_44_0._heroItemContainer.images = var_44_0
+		self._heroItemContainer.images = images
 
-		local var_44_1 = arg_44_0._heroGO:GetComponentsInChildren(gohelper.Type_TextMesh, true)
+		local tmps = self._heroGO:GetComponentsInChildren(gohelper.Type_TextMesh, true)
 
-		arg_44_0._heroItemContainer.tmps = var_44_1
-		arg_44_0._heroItemContainer.compColor = {}
+		self._heroItemContainer.tmps = tmps
+		self._heroItemContainer.compColor = {}
 
-		local var_44_2 = var_44_0:GetEnumerator()
+		local iter = images:GetEnumerator()
 
-		while var_44_2:MoveNext() do
-			arg_44_0._heroItemContainer.compColor[var_44_2.Current] = var_44_2.Current.color
+		while iter:MoveNext() do
+			self._heroItemContainer.compColor[iter.Current] = iter.Current.color
 		end
 
-		local var_44_3 = var_44_1:GetEnumerator()
+		iter = tmps:GetEnumerator()
 
-		while var_44_3:MoveNext() do
-			arg_44_0._heroItemContainer.compColor[var_44_3.Current] = var_44_3.Current.color
+		while iter:MoveNext() do
+			self._heroItemContainer.compColor[iter.Current] = iter.Current.color
 		end
 	end
 
-	local var_44_4 = arg_44_0._heroGO:GetComponentsInChildren(GuiSpine.TypeSkeletonGraphic, true)
+	local spines = self._heroGO:GetComponentsInChildren(GuiSpine.TypeSkeletonGraphic, true)
 
-	arg_44_0._heroItemContainer.spines = var_44_4
+	self._heroItemContainer.spines = spines
 
-	if arg_44_0._heroItemContainer then
-		arg_44_0:_setUIPressState(arg_44_0._heroItemContainer.images, arg_44_1, arg_44_0._heroItemContainer.compColor)
-		arg_44_0:_setUIPressState(arg_44_0._heroItemContainer.tmps, arg_44_1, arg_44_0._heroItemContainer.compColor)
-		arg_44_0:_setUIPressState(arg_44_0._heroItemContainer.spines, arg_44_1)
+	if self._heroItemContainer then
+		self:_setUIPressState(self._heroItemContainer.images, press, self._heroItemContainer.compColor)
+		self:_setUIPressState(self._heroItemContainer.tmps, press, self._heroItemContainer.compColor)
+		self:_setUIPressState(self._heroItemContainer.spines, press)
 	end
 
-	if arg_44_0._imageAdd then
-		local var_44_5 = arg_44_1 and HeroGroupHeroItem.PressColor or Color.white
+	if self._imageAdd then
+		local color = press and HeroGroupHeroItem.PressColor or Color.white
 
-		arg_44_0._imageAdd.color = var_44_5
+		self._imageAdd.color = color
 	end
 end
 
-function var_0_0._setUIPressState(arg_45_0, arg_45_1, arg_45_2, arg_45_3)
-	if not arg_45_1 then
+function Season3_0HeroGroupHeroItem:_setUIPressState(graphicCompArr, isPress, oriColorMap)
+	if not graphicCompArr then
 		return
 	end
 
-	local var_45_0 = arg_45_1:GetEnumerator()
+	local iter = graphicCompArr:GetEnumerator()
 
-	while var_45_0:MoveNext() do
-		local var_45_1
+	while iter:MoveNext() do
+		local color
 
-		if arg_45_2 then
-			var_45_1 = arg_45_3 and arg_45_3[var_45_0.Current] * 0.7 or HeroGroupHeroItem.PressColor
-			var_45_1.a = var_45_0.Current.color.a
+		if isPress then
+			color = oriColorMap and oriColorMap[iter.Current] * 0.7 or HeroGroupHeroItem.PressColor
+
+			local alpha = iter.Current.color.a
+
+			color.a = alpha
 		else
-			var_45_1 = arg_45_3 and arg_45_3[var_45_0.Current] or Color.white
+			color = oriColorMap and oriColorMap[iter.Current] or Color.white
 		end
 
-		var_45_0.Current.color = var_45_1
+		iter.Current.color = color
 	end
 end
 
-function var_0_0.onDestroy(arg_46_0)
-	arg_46_0:_removeEvents()
-	arg_46_0:killEquipTweenId()
+function Season3_0HeroGroupHeroItem:onDestroy()
+	self:_removeEvents()
+	self:killEquipTweenId()
 
-	if arg_46_0._leftSeasonCardItem then
-		arg_46_0._leftSeasonCardItem:destroy()
+	if self._leftSeasonCardItem then
+		self._leftSeasonCardItem:destroy()
 
-		arg_46_0._leftSeasonCardItem = nil
+		self._leftSeasonCardItem = nil
 	end
 
-	if arg_46_0._rightSeasonCardItem then
-		arg_46_0._rightSeasonCardItem:destroy()
+	if self._rightSeasonCardItem then
+		self._rightSeasonCardItem:destroy()
 
-		arg_46_0._rightSeasonCardItem = nil
+		self._rightSeasonCardItem = nil
 	end
 
-	if arg_46_0._drag then
-		arg_46_0._drag:RemoveDragBeginListener()
-		arg_46_0._drag:RemoveDragListener()
-		arg_46_0._drag:RemoveDragEndListener()
+	if self._drag then
+		self._drag:RemoveDragBeginListener()
+		self._drag:RemoveDragListener()
+		self._drag:RemoveDragEndListener()
 	end
 
-	if arg_46_0._cardItem1 then
-		arg_46_0._cardItem1:destory()
+	if self._cardItem1 then
+		self._cardItem1:destory()
 
-		arg_46_0._cardItem1 = nil
+		self._cardItem1 = nil
 	end
 
-	if arg_46_0._cardItem2 then
-		arg_46_0._cardItem2:destory()
+	if self._cardItem2 then
+		self._cardItem2:destory()
 
-		arg_46_0._cardItem2 = nil
+		self._cardItem2 = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_46_0.hideDragEffect, arg_46_0)
+	TaskDispatcher.cancelTask(self.hideDragEffect, self)
 end
 
-return var_0_0
+return Season3_0HeroGroupHeroItem

@@ -1,103 +1,107 @@
-﻿module("modules.logic.social.view.InformPlayerTipView", package.seeall)
+﻿-- chunkname: @modules/logic/social/view/InformPlayerTipView.lua
 
-local var_0_0 = class("InformPlayerTipView", BaseView)
+module("modules.logic.social.view.InformPlayerTipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagerightbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_rightbg")
-	arg_1_0._simageleftbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_leftbg")
-	arg_1_0._txtinfotarget = gohelper.findChildText(arg_1_0.viewGO, "inform/#txt_infotarget")
-	arg_1_0._goinformContent = gohelper.findChild(arg_1_0.viewGO, "scroll_inform/Viewport/#go_informContent")
-	arg_1_0._goinformItem = gohelper.findChild(arg_1_0.viewGO, "scroll_inform/Viewport/#go_informContent/#go_informItem")
-	arg_1_0._inputinformReason = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "informreason/#input_informReason")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btn/#btn_close")
-	arg_1_0._btninform = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btn/#btn_inform")
+local InformPlayerTipView = class("InformPlayerTipView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function InformPlayerTipView:onInitView()
+	self._simagerightbg = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_rightbg")
+	self._simageleftbg = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_leftbg")
+	self._txtinfotarget = gohelper.findChildText(self.viewGO, "inform/#txt_infotarget")
+	self._goinformContent = gohelper.findChild(self.viewGO, "scroll_inform/Viewport/#go_informContent")
+	self._goinformItem = gohelper.findChild(self.viewGO, "scroll_inform/Viewport/#go_informContent/#go_informItem")
+	self._inputinformReason = gohelper.findChildTextMeshInputField(self.viewGO, "informreason/#input_informReason")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "btn/#btn_close")
+	self._btninform = gohelper.findChildButtonWithAudio(self.viewGO, "btn/#btn_inform")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btninform:AddClickListener(arg_2_0._btninformOnClick, arg_2_0)
+function InformPlayerTipView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btninform:AddClickListener(self._btninformOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btninform:RemoveClickListener()
+function InformPlayerTipView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btninform:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function InformPlayerTipView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btninformOnClick(arg_5_0)
-	if arg_5_0.informIng then
+function InformPlayerTipView:_btninformOnClick()
+	if self.informIng then
 		return
 	end
 
-	local var_5_0 = ReportTypeListModel.instance:getSelectReportId()
+	local reportId = ReportTypeListModel.instance:getSelectReportId()
 
-	if not var_5_0 then
+	if not reportId then
 		GameFacade.showToast(ToastEnum.ClickInformPlayer)
 
 		return
 	end
 
-	arg_5_0.informIng = true
+	self.informIng = true
 
-	ChatRpc.instance:sendReportRequest(arg_5_0.socialPlayerMO.userId, var_5_0, arg_5_0._inputinformReason:GetText())
+	ChatRpc.instance:sendReportRequest(self.socialPlayerMO.userId, reportId, self._inputinformReason:GetText())
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._simageleftbg:LoadImage(ResUrl.getCommonIcon("bg_1"))
-	arg_6_0._simagerightbg:LoadImage(ResUrl.getCommonIcon("bg_2"))
-	arg_6_0._inputinformReason:AddOnValueChanged(arg_6_0.onReasonTextValueChanged, arg_6_0)
+function InformPlayerTipView:_editableInitView()
+	self._simageleftbg:LoadImage(ResUrl.getCommonIcon("bg_1"))
+	self._simagerightbg:LoadImage(ResUrl.getCommonIcon("bg_2"))
+	self._inputinformReason:AddOnValueChanged(self.onReasonTextValueChanged, self)
 end
 
-function var_0_0.onReasonTextValueChanged(arg_7_0, arg_7_1)
-	if GameUtil.utf8len(arg_7_1) > CommonConfig.instance:getConstNum(ConstEnum.InformPlayerCharLen) then
+function InformPlayerTipView:onReasonTextValueChanged(text)
+	local len = GameUtil.utf8len(text)
+
+	if len > CommonConfig.instance:getConstNum(ConstEnum.InformPlayerCharLen) then
 		GameFacade.showToast(ToastEnum.InformPlayerCharLen)
-		arg_7_0._inputinformReason:SetText(GameUtil.utf8sub(arg_7_1, 1, CommonConfig.instance:getConstNum(ConstEnum.InformPlayerCharLen)))
+		self._inputinformReason:SetText(GameUtil.utf8sub(text, 1, CommonConfig.instance:getConstNum(ConstEnum.InformPlayerCharLen)))
 	end
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
+function InformPlayerTipView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0.socialPlayerMO = arg_9_0.viewParam
-	arg_9_0._txtinfotarget.text = arg_9_0.socialPlayerMO.name
+function InformPlayerTipView:onOpen()
+	self.socialPlayerMO = self.viewParam
+	self._txtinfotarget.text = self.socialPlayerMO.name
 
-	arg_9_0:refreshReportType()
-	arg_9_0:addEventCb(SocialController.instance, SocialEvent.InformSuccessReply, arg_9_0.onInformSuccess, arg_9_0)
-	arg_9_0:addEventCb(SocialController.instance, SocialEvent.InformFailReply, arg_9_0.onInformFail, arg_9_0)
+	self:refreshReportType()
+	self:addEventCb(SocialController.instance, SocialEvent.InformSuccessReply, self.onInformSuccess, self)
+	self:addEventCb(SocialController.instance, SocialEvent.InformFailReply, self.onInformFail, self)
 end
 
-function var_0_0.refreshReportType(arg_10_0)
+function InformPlayerTipView:refreshReportType()
 	ReportTypeListModel.instance:refreshData()
 end
 
-function var_0_0.onInformSuccess(arg_11_0)
+function InformPlayerTipView:onInformSuccess()
 	GameFacade.showToast(ToastEnum.OnInformSuccess)
-	arg_11_0:onInformFail()
+	self:onInformFail()
 end
 
-function var_0_0.onInformFail(arg_12_0)
-	arg_12_0.informIng = false
+function InformPlayerTipView:onInformFail()
+	self.informIng = false
 
-	arg_12_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.onClose(arg_13_0)
+function InformPlayerTipView:onClose()
 	ReportTypeListModel.instance:clearSelectReportItem()
 end
 
-function var_0_0.onDestroyView(arg_14_0)
-	arg_14_0._simageleftbg:UnLoadImage()
-	arg_14_0._simagerightbg:UnLoadImage()
-	arg_14_0._inputinformReason:RemoveOnValueChanged()
+function InformPlayerTipView:onDestroyView()
+	self._simageleftbg:UnLoadImage()
+	self._simagerightbg:UnLoadImage()
+	self._inputinformReason:RemoveOnValueChanged()
 end
 
-return var_0_0
+return InformPlayerTipView

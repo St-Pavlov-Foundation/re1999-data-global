@@ -1,37 +1,39 @@
-﻿module("modules.logic.versionactivity2_4.pinball.view.PinballCityViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/pinball/view/PinballCityViewContainer.lua
 
-local var_0_0 = class("PinballCityViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_4.pinball.view.PinballCityViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	arg_1_0._mapViewScene = PinballCitySceneView.New()
+local PinballCityViewContainer = class("PinballCityViewContainer", BaseViewContainer)
+
+function PinballCityViewContainer:buildViews()
+	self._mapViewScene = PinballCitySceneView.New()
 
 	return {
-		arg_1_0._mapViewScene,
+		self._mapViewScene,
 		PinballCityView.New(),
 		TabViewGroup.New(1, "#go_topleft")
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		local var_2_0 = NavigateButtonsView.New({
+function PinballCityViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		local navView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			var_2_0
+			navView
 		}
 	end
 end
 
-function var_0_0.setVisibleInternal(arg_3_0, arg_3_1)
-	if arg_3_0._mapViewScene then
-		arg_3_0._mapViewScene:setSceneVisible(arg_3_1)
+function PinballCityViewContainer:setVisibleInternal(isVisible)
+	if self._mapViewScene then
+		self._mapViewScene:setSceneVisible(isVisible)
 	end
 
-	var_0_0.super.setVisibleInternal(arg_3_0, arg_3_1)
+	PinballCityViewContainer.super.setVisibleInternal(self, isVisible)
 end
 
-return var_0_0
+return PinballCityViewContainer

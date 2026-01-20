@@ -1,19 +1,21 @@
-﻿module("modules.logic.critter.model.info.CritterSkillInfoMO", package.seeall)
+﻿-- chunkname: @modules/logic/critter/model/info/CritterSkillInfoMO.lua
 
-local var_0_0 = pureTable("CritterSkillInfoMO")
+module("modules.logic.critter.model.info.CritterSkillInfoMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	if not arg_1_0.tags or #arg_1_0.tags > 0 then
-		arg_1_0.tags = {}
+local CritterSkillInfoMO = pureTable("CritterSkillInfoMO")
+
+function CritterSkillInfoMO:init(info)
+	if not self.tags or #self.tags > 0 then
+		self.tags = {}
 	end
 
-	if arg_1_1 and arg_1_1.tags then
-		tabletool.addValues(arg_1_0.tags, arg_1_1.tags)
+	if info and info.tags then
+		tabletool.addValues(self.tags, info.tags)
 	end
 end
 
-function var_0_0.getTags(arg_2_0)
-	return arg_2_0.tags
+function CritterSkillInfoMO:getTags()
+	return self.tags
 end
 
-return var_0_0
+return CritterSkillInfoMO

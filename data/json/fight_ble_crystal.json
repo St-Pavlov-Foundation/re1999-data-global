@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "language_10098741",
+    "icon": "beilier_selectcrystal_crystal_02",
+    "iconBg": "beilier_selectcrystal_slot_02",
+    "smallIcon": "beilimeier_burn_gem2",
+    "nameColor": "6ba6fa",
+    "cardTimeline": "beilier_313401_card_b",
+    "skill3Timeline": "beilier_313401_skill3_b"
+  },
+  {
+    "id": 2,
+    "name": "language_10098742",
+    "icon": "beilier_selectcrystal_crystal_03",
+    "iconBg": "beilier_selectcrystal_slot_03",
+    "smallIcon": "beilimeier_burn_gem3",
+    "nameColor": "b95be5",
+    "cardTimeline": "beilier_313401_card_r",
+    "skill3Timeline": "beilier_313401_skill3_r"
+  },
+  {
+    "id": 3,
+    "name": "language_10098743",
+    "icon": "beilier_selectcrystal_crystal_01",
+    "iconBg": "beilier_selectcrystal_slot_01",
+    "smallIcon": "beilimeier_burn_gem1",
+    "nameColor": "56b058",
+    "cardTimeline": "beilier_313401_card_g",
+    "skill3Timeline": "beilier_313401_skill3_g"
+  }
+]

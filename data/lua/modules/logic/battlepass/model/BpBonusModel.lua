@@ -1,93 +1,95 @@
-﻿module("modules.logic.battlepass.model.BpBonusModel", package.seeall)
+﻿-- chunkname: @modules/logic/battlepass/model/BpBonusModel.lua
 
-local var_0_0 = class("BpBonusModel", ListScrollModel)
+module("modules.logic.battlepass.model.BpBonusModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._getBonus = {}
-	arg_1_0.serverBonusModel = BaseModel.New()
+local BpBonusModel = class("BpBonusModel", ListScrollModel)
+
+function BpBonusModel:onInit()
+	self._getBonus = {}
+	self.serverBonusModel = BaseModel.New()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._getBonus = {}
+function BpBonusModel:reInit()
+	self._getBonus = {}
 
-	arg_2_0.serverBonusModel:clear()
+	self.serverBonusModel:clear()
 end
 
-function var_0_0.onGetInfo(arg_3_0, arg_3_1)
-	local var_3_0 = {}
+function BpBonusModel:onGetInfo(bonusInfoList)
+	local list = {}
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
-		local var_3_1 = BpBonusMO.New()
+	for _, info in ipairs(bonusInfoList) do
+		local mo = BpBonusMO.New()
 
-		var_3_1:init(iter_3_1)
-		table.insert(var_3_0, var_3_1)
+		mo:init(info)
+		table.insert(list, mo)
 	end
 
-	arg_3_0.serverBonusModel:setList(var_3_0)
+	self.serverBonusModel:setList(list)
 end
 
-function var_0_0.initGetSelectBonus(arg_4_0, arg_4_1)
-	arg_4_0._getBonus = {}
+function BpBonusModel:initGetSelectBonus(getBonus)
+	self._getBonus = {}
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
-		arg_4_0._getBonus[iter_4_1.level] = iter_4_1.index + 1
+	for i, v in ipairs(getBonus) do
+		self._getBonus[v.level] = v.index + 1
 	end
 end
 
-function var_0_0.markSelectBonus(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0._getBonus[arg_5_1] = arg_5_2 + 1
+function BpBonusModel:markSelectBonus(level, index)
+	self._getBonus[level] = index + 1
 end
 
-function var_0_0.isGetSelectBonus(arg_6_0, arg_6_1)
-	return arg_6_0._getBonus[arg_6_1] or nil
+function BpBonusModel:isGetSelectBonus(level)
+	return self._getBonus[level] or nil
 end
 
-function var_0_0.updateInfo(arg_7_0, arg_7_1)
-	for iter_7_0, iter_7_1 in ipairs(arg_7_1) do
-		local var_7_0 = arg_7_0.serverBonusModel:getById(iter_7_1.level)
+function BpBonusModel:updateInfo(bonusInfoList)
+	for _, info in ipairs(bonusInfoList) do
+		local mo = self.serverBonusModel:getById(info.level)
 
-		if var_7_0 then
-			var_7_0:updateServerInfo(iter_7_1)
+		if mo then
+			mo:updateServerInfo(info)
 		else
-			local var_7_1 = BpBonusMO.New()
+			local mo = BpBonusMO.New()
 
-			var_7_1:init(iter_7_1)
-			arg_7_0.serverBonusModel:addAtLast(var_7_1)
+			mo:init(info)
+			self.serverBonusModel:addAtLast(mo)
 		end
 	end
 end
 
-function var_0_0.refreshListView(arg_8_0)
-	local var_8_0 = {}
-	local var_8_1 = BpConfig.instance:getBonusCOList(BpModel.instance.id)
+function BpBonusModel:refreshListView()
+	local list = {}
+	local coList = BpConfig.instance:getBonusCOList(BpModel.instance.id)
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_1) do
-		local var_8_2 = arg_8_0.serverBonusModel:getById(iter_8_1.level)
+	for _, co in ipairs(coList) do
+		local serverMO = self.serverBonusModel:getById(co.level)
 
-		if var_8_2 then
-			table.insert(var_8_0, var_8_2)
+		if serverMO then
+			table.insert(list, serverMO)
 		else
-			local var_8_3 = arg_8_0:getById(iter_8_1.level)
+			local bpBonusMO = self:getById(co.level)
 
-			if not var_8_3 then
-				var_8_3 = BpBonusMO.New()
+			if not bpBonusMO then
+				bpBonusMO = BpBonusMO.New()
 
-				var_8_3:init({
+				bpBonusMO:init({
 					hasGetfreeBonus = false,
 					hasGetPayBonus = false,
 					hasGetSpPayBonus = false,
 					hasGetSpfreeBonus = false,
-					level = iter_8_1.level
+					level = co.level
 				})
 			end
 
-			table.insert(var_8_0, var_8_3)
+			table.insert(list, bpBonusMO)
 		end
 	end
 
-	arg_8_0:setList(var_8_0)
+	self:setList(list)
 end
 
-var_0_0.instance = var_0_0.New()
+BpBonusModel.instance = BpBonusModel.New()
 
-return var_0_0
+return BpBonusModel

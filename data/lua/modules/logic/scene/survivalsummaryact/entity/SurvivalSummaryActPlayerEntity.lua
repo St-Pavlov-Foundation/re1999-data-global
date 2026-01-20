@@ -1,51 +1,54 @@
-﻿module("modules.logic.scene.survivalsummaryact.entity.SurvivalSummaryActPlayerEntity", package.seeall)
+﻿-- chunkname: @modules/logic/scene/survivalsummaryact/entity/SurvivalSummaryActPlayerEntity.lua
 
-local var_0_0 = class("SurvivalSummaryActPlayerEntity", LuaCompBase)
+module("modules.logic.scene.survivalsummaryact.entity.SurvivalSummaryActPlayerEntity", package.seeall)
 
-function var_0_0.Create(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = gohelper.create3d(arg_1_2, tostring(arg_1_0))
-	local var_1_1 = {
-		pos = arg_1_0,
-		dir = arg_1_1
+local SurvivalSummaryActPlayerEntity = class("SurvivalSummaryActPlayerEntity", LuaCompBase)
+
+function SurvivalSummaryActPlayerEntity.Create(pos, dir, root)
+	local go = gohelper.create3d(root, tostring(pos))
+	local param = {
+		pos = pos,
+		dir = dir
 	}
 
-	return MonoHelper.addNoUpdateLuaComOnceToGo(var_1_0, var_0_0, var_1_1)
+	return MonoHelper.addNoUpdateLuaComOnceToGo(go, SurvivalSummaryActPlayerEntity, param)
 end
 
-function var_0_0.ctor(arg_2_0, arg_2_1)
-	arg_2_0.pos = arg_2_1.pos
-	arg_2_0.dir = arg_2_1.dir
+function SurvivalSummaryActPlayerEntity:ctor(param)
+	self.pos = param.pos
+	self.dir = param.dir
 end
 
-function var_0_0.init(arg_3_0, arg_3_1)
-	arg_3_0.go = arg_3_1
-	arg_3_0.trans = arg_3_1.transform
+function SurvivalSummaryActPlayerEntity:init(go)
+	self.go = go
+	self.trans = go.transform
 
-	local var_3_0 = SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.PlayerRes)
-	local var_3_1 = SurvivalMapHelper.instance:getScene().preloader:getRes(var_3_0)
+	local path = SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.PlayerRes)
+	local scene = SurvivalMapHelper.instance:getScene()
+	local asset = scene.preloader:getRes(path)
 
-	arg_3_0.goModel = gohelper.clone(var_3_1, arg_3_1)
+	self.goModel = gohelper.clone(asset, go)
 
-	arg_3_0:_onResLoadEnd()
+	self:_onResLoadEnd()
 end
 
-function var_0_0._onResLoadEnd(arg_4_0)
-	arg_4_0._anim = gohelper.findChildAnim(arg_4_0.go, "")
+function SurvivalSummaryActPlayerEntity:_onResLoadEnd()
+	self._anim = gohelper.findChildAnim(self.go, "")
 
-	arg_4_0:playAnim("idle")
+	self:playAnim("idle")
 
-	local var_4_0, var_4_1, var_4_2 = SurvivalHelper.instance:hexPointToWorldPoint(arg_4_0.pos.q, arg_4_0.pos.r)
+	local x, y, z = SurvivalHelper.instance:hexPointToWorldPoint(self.pos.q, self.pos.r)
 
-	transformhelper.setLocalPos(arg_4_0.trans, var_4_0, var_4_1, var_4_2)
-	transformhelper.setLocalRotation(arg_4_0.trans, 0, arg_4_0.dir * 60, 0)
+	transformhelper.setLocalPos(self.trans, x, y, z)
+	transformhelper.setLocalRotation(self.trans, 0, self.dir * 60, 0)
 end
 
-function var_0_0.playAnim(arg_5_0, arg_5_1)
-	arg_5_0._curAnimName = arg_5_1
+function SurvivalSummaryActPlayerEntity:playAnim(animName)
+	self._curAnimName = animName
 
-	if arg_5_0._anim and arg_5_0._anim.isActiveAndEnabled then
-		arg_5_0._anim:Play(arg_5_1, 0, 0)
+	if self._anim and self._anim.isActiveAndEnabled then
+		self._anim:Play(animName, 0, 0)
 	end
 end
 
-return var_0_0
+return SurvivalSummaryActPlayerEntity

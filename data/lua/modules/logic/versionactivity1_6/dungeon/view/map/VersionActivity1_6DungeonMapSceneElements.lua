@@ -1,78 +1,80 @@
-﻿module("modules.logic.versionactivity1_6.dungeon.view.map.VersionActivity1_6DungeonMapSceneElements", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/dungeon/view/map/VersionActivity1_6DungeonMapSceneElements.lua
 
-local var_0_0 = class("VersionActivity1_6DungeonMapSceneElements", BaseView)
+module("modules.logic.versionactivity1_6.dungeon.view.map.VersionActivity1_6DungeonMapSceneElements", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gofullscreen = gohelper.findChild(arg_1_0.viewGO, "#go_fullscreen")
-	arg_1_0._goarrow = gohelper.findChild(arg_1_0.viewGO, "#go_arrow")
+local VersionActivity1_6DungeonMapSceneElements = class("VersionActivity1_6DungeonMapSceneElements", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity1_6DungeonMapSceneElements:onInitView()
+	self._gofullscreen = gohelper.findChild(self.viewGO, "#go_fullscreen")
+	self._goarrow = gohelper.findChild(self.viewGO, "#go_arrow")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function VersionActivity1_6DungeonMapSceneElements:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function VersionActivity1_6DungeonMapSceneElements:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._elementCompDict = {}
-	arg_4_0._elementCompPoolDict = {}
-	arg_4_0._click = SLFramework.UGUI.UIClickListener.Get(arg_4_0._gofullscreen)
+function VersionActivity1_6DungeonMapSceneElements:_editableInitView()
+	self._elementCompDict = {}
+	self._elementCompPoolDict = {}
+	self._click = SLFramework.UGUI.UIClickListener.Get(self._gofullscreen)
 
-	arg_4_0._click:AddClickDownListener(arg_4_0.onClickDown, arg_4_0)
-	arg_4_0._click:AddClickUpListener(arg_4_0.onClickUp, arg_4_0)
-	arg_4_0:customAddEvent()
+	self._click:AddClickDownListener(self.onClickDown, self)
+	self._click:AddClickUpListener(self.onClickUp, self)
+	self:customAddEvent()
 end
 
-function var_0_0.onOpen(arg_5_0)
+function VersionActivity1_6DungeonMapSceneElements:onOpen()
 	return
 end
 
-function var_0_0.onClose(arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0.everySecondCall, arg_6_0)
+function VersionActivity1_6DungeonMapSceneElements:onClose()
+	TaskDispatcher.cancelTask(self.everySecondCall, self)
 end
 
-function var_0_0.onDestroyView(arg_7_0)
-	arg_7_0:clearElements()
-	arg_7_0._click:RemoveClickDownListener()
-	arg_7_0._click:RemoveClickUpListener()
+function VersionActivity1_6DungeonMapSceneElements:onDestroyView()
+	self:clearElements()
+	self._click:RemoveClickDownListener()
+	self._click:RemoveClickUpListener()
 end
 
-function var_0_0.customAddEvent(arg_8_0)
+function VersionActivity1_6DungeonMapSceneElements:customAddEvent()
 	if GamepadController.instance:isOpen() then
-		arg_8_0:addEventCb(GamepadController.instance, GamepadEvent.KeyDown, arg_8_0.onGamepadKeyDown, arg_8_0)
+		self:addEventCb(GamepadController.instance, GamepadEvent.KeyDown, self.onGamepadKeyDown, self)
 	end
 
-	arg_8_0:addEventCb(DungeonController.instance, DungeonEvent.BeginShowRewardView, arg_8_0.beginShowRewardView, arg_8_0)
-	arg_8_0:addEventCb(DungeonController.instance, DungeonEvent.EndShowRewardView, arg_8_0.endShowRewardView, arg_8_0)
-	arg_8_0:addEventCb(DungeonController.instance, DungeonEvent.OnRemoveElement, arg_8_0.onRemoveElement, arg_8_0)
-	arg_8_0:addEventCb(DungeonController.instance, DungeonEvent.GuideClickElement, arg_8_0.manualClickElement, arg_8_0)
-	arg_8_0:addEventCb(VersionActivity1_6DungeonController.instance, DungeonEvent.OnBeginDragMap, arg_8_0.onBeginDragMap, arg_8_0)
-	arg_8_0:addEventCb(VersionActivity1_6DungeonController.instance, DungeonEvent.OnCreateMapRootGoDone, arg_8_0.onCreateMapRootGoDone, arg_8_0)
-	arg_8_0:addEventCb(VersionActivity1_6DungeonController.instance, DungeonMapElementEvent.OnLoadSceneFinish, arg_8_0.loadSceneFinish, arg_8_0)
-	arg_8_0:addEventCb(VersionActivity1_6DungeonController.instance, DungeonMapElementEvent.OnInitElements, arg_8_0.showElements, arg_8_0)
-	arg_8_0:addEventCb(VersionActivity1_6DungeonController.instance, DungeonMapElementEvent.OnDisposeOldMap, arg_8_0.onDisposeOldMap, arg_8_0)
-	arg_8_0:addEventCb(VersionActivity1_6DungeonController.instance, DungeonMapElementEvent.OnDisposeScene, arg_8_0.onDisposeScene, arg_8_0)
-	arg_8_0:addEventCb(VersionActivity1_6DungeonController.instance, DungeonMapElementEvent.OnChangeMap, arg_8_0.onChangeMap, arg_8_0)
+	self:addEventCb(DungeonController.instance, DungeonEvent.BeginShowRewardView, self.beginShowRewardView, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.EndShowRewardView, self.endShowRewardView, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.OnRemoveElement, self.onRemoveElement, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.GuideClickElement, self.manualClickElement, self)
+	self:addEventCb(VersionActivity1_6DungeonController.instance, DungeonEvent.OnBeginDragMap, self.onBeginDragMap, self)
+	self:addEventCb(VersionActivity1_6DungeonController.instance, DungeonEvent.OnCreateMapRootGoDone, self.onCreateMapRootGoDone, self)
+	self:addEventCb(VersionActivity1_6DungeonController.instance, DungeonMapElementEvent.OnLoadSceneFinish, self.loadSceneFinish, self)
+	self:addEventCb(VersionActivity1_6DungeonController.instance, DungeonMapElementEvent.OnInitElements, self.showElements, self)
+	self:addEventCb(VersionActivity1_6DungeonController.instance, DungeonMapElementEvent.OnDisposeOldMap, self.onDisposeOldMap, self)
+	self:addEventCb(VersionActivity1_6DungeonController.instance, DungeonMapElementEvent.OnDisposeScene, self.onDisposeScene, self)
+	self:addEventCb(VersionActivity1_6DungeonController.instance, DungeonMapElementEvent.OnChangeMap, self.onChangeMap, self)
 end
 
-function var_0_0.onGamepadKeyDown(arg_9_0, arg_9_1)
-	if arg_9_1 == GamepadEnum.KeyCode.A then
-		local var_9_0 = CameraMgr.instance:getMainCamera():ScreenPointToRay(GamepadController.instance:getScreenPos())
-		local var_9_1 = UnityEngine.Physics2D.RaycastAll(var_9_0.origin, var_9_0.direction)
-		local var_9_2 = var_9_1.Length - 1
+function VersionActivity1_6DungeonMapSceneElements:onGamepadKeyDown(key)
+	if key == GamepadEnum.KeyCode.A then
+		local ray = CameraMgr.instance:getMainCamera():ScreenPointToRay(GamepadController.instance:getScreenPos())
+		local allRaycastHit = UnityEngine.Physics2D.RaycastAll(ray.origin, ray.direction)
+		local maxIndex = allRaycastHit.Length - 1
 
-		for iter_9_0 = 0, var_9_2 do
-			local var_9_3 = var_9_1[iter_9_0]
-			local var_9_4 = MonoHelper.getLuaComFromGo(var_9_3.transform.parent.gameObject, VersionActivity1_6DungeonMapElement)
+		for i = 0, maxIndex do
+			local hitInfo = allRaycastHit[i]
+			local comp = MonoHelper.getLuaComFromGo(hitInfo.transform.parent.gameObject, VersionActivity1_6DungeonMapElement)
 
-			if var_9_4 then
-				var_9_4:_onClickDown()
+			if comp then
+				comp:_onClickDown()
 
 				return
 			end
@@ -80,242 +82,242 @@ function var_0_0.onGamepadKeyDown(arg_9_0, arg_9_1)
 	end
 end
 
-function var_0_0.setMouseElementDown(arg_10_0, arg_10_1)
-	arg_10_0.mouseDownElement = arg_10_1
+function VersionActivity1_6DungeonMapSceneElements:setMouseElementDown(elementComp)
+	self.mouseDownElement = elementComp
 end
 
-function var_0_0.onBeginDragMap(arg_11_0)
-	arg_11_0._clickDown = false
+function VersionActivity1_6DungeonMapSceneElements:onBeginDragMap()
+	self._clickDown = false
 end
 
-function var_0_0.onClickDown(arg_12_0)
-	arg_12_0._clickDown = true
+function VersionActivity1_6DungeonMapSceneElements:onClickDown()
+	self._clickDown = true
 end
 
-function var_0_0.onClickUp(arg_13_0)
-	local var_13_0 = arg_13_0.mouseDownElement
+function VersionActivity1_6DungeonMapSceneElements:onClickUp()
+	local element = self.mouseDownElement
 
-	arg_13_0.mouseDownElement = nil
+	self.mouseDownElement = nil
 
-	if not arg_13_0._clickDown then
+	if not self._clickDown then
 		return
 	end
 
-	if not var_13_0 then
+	if not element then
 		return
 	end
 
-	local var_13_1 = var_13_0:getElementId()
+	local id = element:getElementId()
 
-	if DungeonMapModel.instance:elementIsFinished(var_13_1) then
+	if DungeonMapModel.instance:elementIsFinished(id) then
 		return
 	end
 
-	if not var_13_0:isValid() then
+	if not element:isValid() then
 		return
 	end
 
-	var_13_0:onClick()
+	element:onClick()
 end
 
-function var_0_0.manualClickElement(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_0:getElementComp(tonumber(arg_14_1))
+function VersionActivity1_6DungeonMapSceneElements:manualClickElement(id)
+	local mapElement = self:getElementComp(tonumber(id))
 
-	if not var_14_0 then
+	if not mapElement then
 		return
 	end
 
-	if not var_14_0:isValid() then
+	if not mapElement:isValid() then
 		return
 	end
 
-	var_14_0:onClick()
+	mapElement:onClick()
 end
 
-function var_0_0.onClickElement(arg_15_0, arg_15_1)
-	arg_15_0:hideTimeContainer()
-	arg_15_0:hideAllElements()
+function VersionActivity1_6DungeonMapSceneElements:onClickElement(elementComp)
+	self:hideTimeContainer()
+	self:hideAllElements()
 end
 
-function var_0_0.onHideInteractUI(arg_16_0)
-	arg_16_0:showTimeContainer()
-	arg_16_0:showAllElements()
+function VersionActivity1_6DungeonMapSceneElements:onHideInteractUI()
+	self:showTimeContainer()
+	self:showAllElements()
 end
 
-function var_0_0.onCreateMapRootGoDone(arg_17_0, arg_17_1)
-	if arg_17_0.elementPoolRoot then
+function VersionActivity1_6DungeonMapSceneElements:onCreateMapRootGoDone(sceneRoot)
+	if self.elementPoolRoot then
 		return
 	end
 
-	arg_17_0.elementPoolRoot = UnityEngine.GameObject.New("elementPoolRoot")
+	self.elementPoolRoot = UnityEngine.GameObject.New("elementPoolRoot")
 
-	gohelper.addChild(arg_17_1, arg_17_0.elementPoolRoot)
-	gohelper.setActive(arg_17_0.elementPoolRoot, false)
-	transformhelper.setLocalPos(arg_17_0.elementPoolRoot.transform, 0, 0, 0)
+	gohelper.addChild(sceneRoot, self.elementPoolRoot)
+	gohelper.setActive(self.elementPoolRoot, false)
+	transformhelper.setLocalPos(self.elementPoolRoot.transform, 0, 0, 0)
 end
 
-function var_0_0.loadSceneFinish(arg_18_0, arg_18_1)
-	arg_18_0._mapCfg = arg_18_1.mapConfig
-	arg_18_0._sceneGo = arg_18_1.mapSceneGo
-	arg_18_0._elementRoot = UnityEngine.GameObject.New("elementRoot")
+function VersionActivity1_6DungeonMapSceneElements:loadSceneFinish(param)
+	self._mapCfg = param.mapConfig
+	self._sceneGo = param.mapSceneGo
+	self._elementRoot = UnityEngine.GameObject.New("elementRoot")
 
-	gohelper.addChild(arg_18_0._sceneGo, arg_18_0._elementRoot)
+	gohelper.addChild(self._sceneGo, self._elementRoot)
 end
 
-function var_0_0.onDisposeScene(arg_19_0)
-	arg_19_0:clearElements()
+function VersionActivity1_6DungeonMapSceneElements:onDisposeScene()
+	self:clearElements()
 end
 
-function var_0_0.onDisposeOldMap(arg_20_0, arg_20_1)
-	arg_20_0:recycleAllElements()
+function VersionActivity1_6DungeonMapSceneElements:onDisposeOldMap(viewName)
+	self:recycleAllElements()
 
-	arg_20_0._elementRoot = nil
+	self._elementRoot = nil
 end
 
-function var_0_0.hideAllElements(arg_21_0)
-	for iter_21_0, iter_21_1 in pairs(arg_21_0._elementCompDict) do
-		iter_21_1:hideElement()
+function VersionActivity1_6DungeonMapSceneElements:hideAllElements()
+	for _, elementComp in pairs(self._elementCompDict) do
+		elementComp:hideElement()
 	end
 end
 
-function var_0_0.showAllElements(arg_22_0)
-	for iter_22_0, iter_22_1 in pairs(arg_22_0._elementCompDict) do
-		iter_22_1:showElement()
+function VersionActivity1_6DungeonMapSceneElements:showAllElements()
+	for _, elementComp in pairs(self._elementCompDict) do
+		elementComp:showElement()
 	end
 end
 
-function var_0_0.clearElements(arg_23_0)
-	if arg_23_0._elementCompDict then
-		for iter_23_0, iter_23_1 in pairs(arg_23_0._elementCompDict) do
-			iter_23_1:onDestroy()
+function VersionActivity1_6DungeonMapSceneElements:clearElements()
+	if self._elementCompDict then
+		for _, v in pairs(self._elementCompDict) do
+			v:onDestroy()
 		end
 	end
 
-	if arg_23_0._elementCompPoolDict then
-		for iter_23_2, iter_23_3 in pairs(arg_23_0._elementCompPoolDict) do
-			iter_23_3:onDestroy()
+	if self._elementCompPoolDict then
+		for _, v in pairs(self._elementCompPoolDict) do
+			v:onDestroy()
 		end
 	end
 
-	arg_23_0._elementRoot = nil
+	self._elementRoot = nil
 
-	tabletool.clear(arg_23_0._elementCompDict)
-	tabletool.clear(arg_23_0._elementCompPoolDict)
+	tabletool.clear(self._elementCompDict)
+	tabletool.clear(self._elementCompPoolDict)
 end
 
-function var_0_0.recycleAllElements(arg_24_0)
-	if arg_24_0._elementCompDict then
-		for iter_24_0, iter_24_1 in pairs(arg_24_0._elementCompDict) do
-			arg_24_0._elementCompPoolDict[iter_24_1:getElementId()] = iter_24_1
+function VersionActivity1_6DungeonMapSceneElements:recycleAllElements()
+	if self._elementCompDict then
+		for _, elementComp in pairs(self._elementCompDict) do
+			self._elementCompPoolDict[elementComp:getElementId()] = elementComp
 
-			gohelper.addChild(arg_24_0.elementPoolRoot, iter_24_1._go)
+			gohelper.addChild(self.elementPoolRoot, elementComp._go)
 		end
 
-		tabletool.clear(arg_24_0._elementCompDict)
+		tabletool.clear(self._elementCompDict)
 	end
 
 	VersionActivity1_6DungeonController.instance:dispatchEvent(VersionActivity1_6DungeonEvent.OnRecycleAllElement)
 end
 
-function var_0_0.showElements(arg_25_0)
-	if arg_25_0.activityDungeonMo:isHardMode() then
-		arg_25_0:recycleAllElements()
+function VersionActivity1_6DungeonMapSceneElements:showElements()
+	if self.activityDungeonMo:isHardMode() then
+		self:recycleAllElements()
 
 		return
 	end
 
-	local var_25_0 = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Act_60102)
+	local isBossUnlock = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Act_60102)
 
-	if arg_25_0._mapCfg and var_25_0 then
-		local var_25_1 = Activity149Config.instance:getAct149BossMapElementByMapId(arg_25_0._mapCfg.id)
+	if self._mapCfg and isBossUnlock then
+		local bossMapElement = Activity149Config.instance:getAct149BossMapElementByMapId(self._mapCfg.id)
 
-		if var_25_1 then
-			local var_25_2 = VersionActivity1_6DungeonEnum.DungeonBossElementHideObjPaths
+		if bossMapElement then
+			local hideObjPaths = VersionActivity1_6DungeonEnum.DungeonBossElementHideObjPaths
 
-			for iter_25_0, iter_25_1 in ipairs(var_25_2) do
-				local var_25_3 = gohelper.findChild(arg_25_0._sceneGo, iter_25_1)
+			for i, path in ipairs(hideObjPaths) do
+				local hideGo = gohelper.findChild(self._sceneGo, path)
 
-				gohelper.setActive(var_25_3, false)
+				gohelper.setActive(hideGo, false)
 			end
 
-			arg_25_0:_addElement(var_25_1)
+			self:_addElement(bossMapElement)
 		end
 	end
 end
 
-function var_0_0._addElement(arg_26_0, arg_26_1)
-	if arg_26_0._elementCompDict[arg_26_1.id] then
+function VersionActivity1_6DungeonMapSceneElements:_addElement(elementConfig)
+	if self._elementCompDict[elementConfig.id] then
 		return
 	end
 
-	local var_26_0 = arg_26_0._elementCompPoolDict[arg_26_1.id]
+	local elementComp = self._elementCompPoolDict[elementConfig.id]
 
-	if var_26_0 then
-		arg_26_0._elementCompPoolDict[arg_26_1.id] = nil
+	if elementComp then
+		self._elementCompPoolDict[elementConfig.id] = nil
 
-		gohelper.addChild(arg_26_0._elementRoot, var_26_0._go)
-		var_26_0:updatePos()
+		gohelper.addChild(self._elementRoot, elementComp._go)
+		elementComp:updatePos()
 	else
-		local var_26_1 = UnityEngine.GameObject.New(tostring(arg_26_1.id))
+		local go = UnityEngine.GameObject.New(tostring(elementConfig.id))
 
-		gohelper.addChild(arg_26_0._elementRoot, var_26_1)
+		gohelper.addChild(self._elementRoot, go)
 
-		var_26_0 = MonoHelper.addLuaComOnceToGo(var_26_1, VersionActivity1_6DungeonMapElement, {
-			arg_26_1,
-			arg_26_0
+		elementComp = MonoHelper.addLuaComOnceToGo(go, VersionActivity1_6DungeonMapElement, {
+			elementConfig,
+			self
 		})
 	end
 
-	arg_26_0._elementCompDict[arg_26_1.id] = var_26_0
+	self._elementCompDict[elementConfig.id] = elementComp
 
-	VersionActivity1_6DungeonController.instance:dispatchEvent(VersionActivity1_6DungeonEvent.OnAddOneElement, var_26_0)
+	VersionActivity1_6DungeonController.instance:dispatchEvent(VersionActivity1_6DungeonEvent.OnAddOneElement, elementComp)
 end
 
-function var_0_0._removeElement(arg_27_0, arg_27_1)
-	local var_27_0 = arg_27_0._elementCompDict[arg_27_1]
+function VersionActivity1_6DungeonMapSceneElements:_removeElement(id)
+	local elementComp = self._elementCompDict[id]
 
-	var_27_0:setFinish()
+	elementComp:setFinish()
 
-	arg_27_0._elementCompDict[arg_27_1] = nil
-	arg_27_0._elementCompPoolDict[arg_27_1] = var_27_0
+	self._elementCompDict[id] = nil
+	self._elementCompPoolDict[id] = elementComp
 
-	VersionActivity1_6DungeonController.instance:dispatchEvent(VersionActivity1_6DungeonEvent.OnRemoveElement, var_27_0)
+	VersionActivity1_6DungeonController.instance:dispatchEvent(VersionActivity1_6DungeonEvent.OnRemoveElement, elementComp)
 end
 
-function var_0_0._addElementById(arg_28_0, arg_28_1)
-	local var_28_0 = lua_chapter_map_element.configDict[arg_28_1]
+function VersionActivity1_6DungeonMapSceneElements:_addElementById(id)
+	local config = lua_chapter_map_element.configDict[id]
 
-	arg_28_0:_addElement(var_28_0)
+	self:_addElement(config)
 end
 
-function var_0_0.onRemoveElement(arg_29_0, arg_29_1)
-	if not arg_29_0._showRewardView then
-		arg_29_0:_removeElement(arg_29_1)
+function VersionActivity1_6DungeonMapSceneElements:onRemoveElement(id)
+	if not self._showRewardView then
+		self:_removeElement(id)
 	else
-		arg_29_0._needRemoveElementId = arg_29_1
+		self._needRemoveElementId = id
 	end
 end
 
-function var_0_0.getElementComp(arg_30_0, arg_30_1)
-	return arg_30_0._elementCompDict[arg_30_1]
+function VersionActivity1_6DungeonMapSceneElements:getElementComp(elementId)
+	return self._elementCompDict[elementId]
 end
 
-function var_0_0.beginShowRewardView(arg_31_0)
-	arg_31_0._showRewardView = true
+function VersionActivity1_6DungeonMapSceneElements:beginShowRewardView()
+	self._showRewardView = true
 end
 
-function var_0_0.endShowRewardView(arg_32_0)
-	arg_32_0._showRewardView = false
+function VersionActivity1_6DungeonMapSceneElements:endShowRewardView()
+	self._showRewardView = false
 
-	if arg_32_0._needRemoveElementId then
-		arg_32_0:_removeElement(arg_32_0._needRemoveElementId)
+	if self._needRemoveElementId then
+		self:_removeElement(self._needRemoveElementId)
 
-		arg_32_0._needRemoveElementId = nil
+		self._needRemoveElementId = nil
 	end
 end
 
-function var_0_0.onChangeMap(arg_33_0)
+function VersionActivity1_6DungeonMapSceneElements:onChangeMap()
 	return
 end
 
-return var_0_0
+return VersionActivity1_6DungeonMapSceneElements

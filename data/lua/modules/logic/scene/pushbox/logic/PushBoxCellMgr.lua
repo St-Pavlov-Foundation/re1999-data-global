@@ -1,314 +1,318 @@
-﻿module("modules.logic.scene.pushbox.logic.PushBoxCellMgr", package.seeall)
+﻿-- chunkname: @modules/logic/scene/pushbox/logic/PushBoxCellMgr.lua
 
-local var_0_0 = class("PushBoxCellMgr", UserDataDispose)
+module("modules.logic.scene.pushbox.logic.PushBoxCellMgr", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+local PushBoxCellMgr = class("PushBoxCellMgr", UserDataDispose)
 
-	arg_1_0._game_mgr = arg_1_1
-	arg_1_0._scene = arg_1_1._scene
-	arg_1_0._scene_root = arg_1_1._scene_root
+function PushBoxCellMgr:ctor(game_mgr)
+	self:__onInit()
+
+	self._game_mgr = game_mgr
+	self._scene = game_mgr._scene
+	self._scene_root = game_mgr._scene_root
 end
 
-function var_0_0.getCell(arg_2_0, arg_2_1, arg_2_2)
-	return arg_2_0._cell_data[arg_2_2] and arg_2_0._cell_data[arg_2_2][arg_2_1]
+function PushBoxCellMgr:getCell(pos_x, pos_y)
+	return self._cell_data[pos_y] and self._cell_data[pos_y][pos_x]
 end
 
-function var_0_0.getElement(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0._element_logic[arg_3_1]) do
-		if iter_3_1:getPosX() == arg_3_2 and iter_3_1:getPosY() == arg_3_3 then
-			return iter_3_1
+function PushBoxCellMgr:getElement(element_type, pos_x, pos_y)
+	for i, v in ipairs(self._element_logic[element_type]) do
+		if v:getPosX() == pos_x and v:getPosY() == pos_y then
+			return v
 		end
 	end
 end
 
-function var_0_0._refreshBoxRender(arg_4_0)
-	arg_4_0._cur_push_box.transform:GetChild(0):GetComponent("MeshRenderer").sortingOrder = arg_4_0._box_final_render_index + 3
+function PushBoxCellMgr:_refreshBoxRender()
+	self._cur_push_box.transform:GetChild(0):GetComponent("MeshRenderer").sortingOrder = self._box_final_render_index + 3
 
-	arg_4_0:refreshBoxLight()
+	self:refreshBoxLight()
 end
 
-function var_0_0.refreshBoxLight(arg_5_0)
-	local var_5_0 = arg_5_0._game_mgr:getElementLogicList(PushBoxGameMgr.ElementType.Box)
+function PushBoxCellMgr:refreshBoxLight()
+	local list = self._game_mgr:getElementLogicList(PushBoxGameMgr.ElementType.Box)
 
-	if var_5_0 then
-		for iter_5_0, iter_5_1 in ipairs(var_5_0) do
-			if iter_5_1:getObj() == arg_5_0._cur_push_box then
-				iter_5_1:refreshLightRenderer(arg_5_0._box_final_render_index)
+	if list then
+		for i, v in ipairs(list) do
+			if v:getObj() == self._cur_push_box then
+				v:refreshLightRenderer(self._box_final_render_index)
 			end
 		end
 	end
 end
 
-function var_0_0.pushBox(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
-	arg_6_0:_releaseBoxTween()
+function PushBoxCellMgr:pushBox(from_x, from_y, to_x, to_y)
+	self:_releaseBoxTween()
 
-	local var_6_0 = gohelper.findChild(arg_6_0._scene_root, "Root/ElementRoot/Box" .. arg_6_2 .. "_" .. arg_6_1)
-	local var_6_1 = arg_6_0:getCell(arg_6_1, arg_6_2)
-	local var_6_2 = arg_6_0:getCell(arg_6_3, arg_6_4)
-	local var_6_3 = var_6_2:getTransform().position
-	local var_6_4 = var_6_1:getRendererIndex()
-	local var_6_5 = var_6_2:getRendererIndex()
+	local box_obj = gohelper.findChild(self._scene_root, "Root/ElementRoot/Box" .. from_y .. "_" .. from_x)
+	local from_cell = self:getCell(from_x, from_y)
+	local to_cell = self:getCell(to_x, to_y)
+	local tar_pos = to_cell:getTransform().position
+	local from_render_index = from_cell:getRendererIndex()
+	local to_render_index = to_cell:getRendererIndex()
 
-	arg_6_0._box_final_render_index = var_6_5
-	arg_6_0._cur_push_box = var_6_0
+	self._box_final_render_index = to_render_index
+	self._cur_push_box = box_obj
 
-	local var_6_6 = (var_6_5 <= var_6_4 and var_6_4 or var_6_5) + 3
+	local temp_renderer_index = (to_render_index <= from_render_index and from_render_index or to_render_index) + 3
 
-	var_6_0.transform:GetChild(0):GetComponent("MeshRenderer").sortingOrder = var_6_6
-	arg_6_0._box_tween = ZProj.TweenHelper.DOMove(var_6_0.transform, var_6_3.x, var_6_3.y, var_6_3.z, 0.2)
+	box_obj.transform:GetChild(0):GetComponent("MeshRenderer").sortingOrder = temp_renderer_index
+	self._box_tween = ZProj.TweenHelper.DOMove(box_obj.transform, tar_pos.x, tar_pos.y, tar_pos.z, 0.2)
 
-	TaskDispatcher.runDelay(arg_6_0._refreshBoxRender, arg_6_0, 0.2)
-	var_6_2:setBox(true)
-	var_6_1:setBox(false)
+	TaskDispatcher.runDelay(self._refreshBoxRender, self, 0.2)
+	to_cell:setBox(true)
+	from_cell:setBox(false)
 
-	var_6_0.name = "Box" .. arg_6_4 .. "_" .. arg_6_3
+	box_obj.name = "Box" .. to_y .. "_" .. to_x
 
-	arg_6_0:detectCellData()
+	self:detectCellData()
 
-	local var_6_7
+	local smoke
 
-	if arg_6_1 < arg_6_3 then
-		var_6_7 = gohelper.findChild(var_6_0, "#smoke_box_right")
-	elseif arg_6_3 < arg_6_1 then
-		var_6_7 = gohelper.findChild(var_6_0, "#smoke_box_left")
+	if from_x < to_x then
+		smoke = gohelper.findChild(box_obj, "#smoke_box_right")
+	elseif to_x < from_x then
+		smoke = gohelper.findChild(box_obj, "#smoke_box_left")
 	end
 
-	if arg_6_2 < arg_6_4 then
-		var_6_7 = gohelper.findChild(var_6_0, "#smoke_box_top")
-	elseif arg_6_4 < arg_6_2 then
-		var_6_7 = gohelper.findChild(var_6_0, "#smoke_box_down")
+	if from_y < to_y then
+		smoke = gohelper.findChild(box_obj, "#smoke_box_top")
+	elseif to_y < from_y then
+		smoke = gohelper.findChild(box_obj, "#smoke_box_down")
 	end
 
-	arg_6_0:_hideBoxSmoke()
+	self:_hideBoxSmoke()
 
-	local var_6_8 = var_6_7:GetComponentsInChildren(typeof(UnityEngine.ParticleSystem))
+	local particle = smoke:GetComponentsInChildren(typeof(UnityEngine.ParticleSystem))
 
-	for iter_6_0 = 0, var_6_8.Length - 1 do
-		ZProj.ParticleSystemHelper.SetSortingOrder(var_6_8[iter_6_0], var_6_6)
+	for i = 0, particle.Length - 1 do
+		ZProj.ParticleSystemHelper.SetSortingOrder(particle[i], temp_renderer_index)
 	end
 
-	gohelper.setActive(var_6_7, true)
-	TaskDispatcher.cancelTask(arg_6_0._hideBoxSmoke, arg_6_0)
-	TaskDispatcher.runDelay(arg_6_0._hideBoxSmoke, arg_6_0, 0.8)
+	gohelper.setActive(smoke, true)
+	TaskDispatcher.cancelTask(self._hideBoxSmoke, self)
+	TaskDispatcher.runDelay(self._hideBoxSmoke, self, 0.8)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_activity_box_push)
 end
 
-function var_0_0._hideBoxSmoke(arg_7_0)
-	if arg_7_0._cur_push_box then
-		gohelper.setActive(gohelper.findChild(arg_7_0._cur_push_box, "#smoke_box_left"), false)
-		gohelper.setActive(gohelper.findChild(arg_7_0._cur_push_box, "#smoke_box_right"), false)
-		gohelper.setActive(gohelper.findChild(arg_7_0._cur_push_box, "#smoke_box_top"), false)
-		gohelper.setActive(gohelper.findChild(arg_7_0._cur_push_box, "#smoke_box_down"), false)
+function PushBoxCellMgr:_hideBoxSmoke()
+	if self._cur_push_box then
+		gohelper.setActive(gohelper.findChild(self._cur_push_box, "#smoke_box_left"), false)
+		gohelper.setActive(gohelper.findChild(self._cur_push_box, "#smoke_box_right"), false)
+		gohelper.setActive(gohelper.findChild(self._cur_push_box, "#smoke_box_top"), false)
+		gohelper.setActive(gohelper.findChild(self._cur_push_box, "#smoke_box_down"), false)
 	end
 end
 
-function var_0_0.detectCellData(arg_8_0)
-	if arg_8_0._element_cell_dic and arg_8_0._element_cell_dic[PushBoxGameMgr.ElementType.Mechanics] then
-		local var_8_0 = 0
+function PushBoxCellMgr:detectCellData()
+	if self._element_cell_dic and self._element_cell_dic[PushBoxGameMgr.ElementType.Mechanics] then
+		local count = 0
 
-		for iter_8_0, iter_8_1 in ipairs(arg_8_0._element_cell_dic[PushBoxGameMgr.ElementType.Mechanics]) do
-			local var_8_1 = false
+		for i, v in ipairs(self._element_cell_dic[PushBoxGameMgr.ElementType.Mechanics]) do
+			local has_box = false
 
-			if iter_8_1:getBox() then
-				var_8_0 = var_8_0 + 1
-				var_8_1 = true or var_8_1
+			if v:getBox() then
+				count = count + 1
+				has_box = true or has_box
 			end
 
-			iter_8_1:getElementLogic():refreshMechanicsState(var_8_1)
+			v:getElementLogic():refreshMechanicsState(has_box)
 		end
 
-		local var_8_2 = var_8_0 == #arg_8_0._element_cell_dic[PushBoxGameMgr.ElementType.Mechanics]
+		local open_door = count == #self._element_cell_dic[PushBoxGameMgr.ElementType.Mechanics]
 
-		for iter_8_2, iter_8_3 in ipairs(arg_8_0._cell_list) do
-			if arg_8_0._game_mgr:typeIsDoor(iter_8_3:getCellType()) then
-				if var_8_2 and iter_8_3.door_is_opened ~= var_8_2 then
+		for i, v in ipairs(self._cell_list) do
+			if self._game_mgr:typeIsDoor(v:getCellType()) then
+				if open_door and v.door_is_opened ~= open_door then
 					AudioMgr.instance:trigger(AudioEnum.UI.play_ui_activity_door_open)
 				end
 
-				iter_8_3.door_is_opened = var_8_2
+				v.door_is_opened = open_door
 
-				iter_8_3:getElementLogic():refreshDoorState(var_8_2)
+				v:getElementLogic():refreshDoorState(open_door)
 			end
 		end
 	end
 end
 
-function var_0_0._releaseBoxTween(arg_9_0)
-	if arg_9_0._box_tween then
-		ZProj.TweenHelper.KillById(arg_9_0._box_tween)
+function PushBoxCellMgr:_releaseBoxTween()
+	if self._box_tween then
+		ZProj.TweenHelper.KillById(self._box_tween)
 	end
 
-	arg_9_0._box_tween = nil
+	self._box_tween = nil
 end
 
-function var_0_0.init(arg_10_0)
-	arg_10_0._floor_root = gohelper.findChild(arg_10_0._scene_root, "Root/FloorRoot")
+function PushBoxCellMgr:init()
+	self._floor_root = gohelper.findChild(self._scene_root, "Root/FloorRoot")
 
-	local var_10_0 = arg_10_0._game_mgr:getConfig()
-	local var_10_1 = var_10_0.wall
-	local var_10_2 = GameUtil.splitString2(var_10_0.layout, true)
-	local var_10_3 = GameUtil.splitString2(var_10_1)
+	local episode_config = self._game_mgr:getConfig()
+	local wall_map = episode_config.wall
+	local data = GameUtil.splitString2(episode_config.layout, true)
+	local wall_data = GameUtil.splitString2(wall_map)
 
-	arg_10_0._cell_data = {}
-	arg_10_0._cell_list = {}
-	arg_10_0._element_cell_dic = {}
-	arg_10_0._element_logic = {}
+	self._cell_data = {}
+	self._cell_list = {}
+	self._element_cell_dic = {}
+	self._element_logic = {}
 
-	local var_10_4 = 0
+	local sorder_index = 0
 
-	for iter_10_0 = 1, #var_10_2 do
-		for iter_10_1 = 1, #var_10_2[iter_10_0] do
-			local var_10_5 = var_10_2[iter_10_0][iter_10_1]
+	for y = 1, #data do
+		for x = 1, #data[y] do
+			local cell_type = data[y][x]
 
-			arg_10_0._cell_data[iter_10_0] = arg_10_0._cell_data[iter_10_0] or {}
+			self._cell_data[y] = self._cell_data[y] or {}
 
-			local var_10_6 = arg_10_0:_cloneCellObj(iter_10_1, iter_10_0)
+			local tar_obj = self:_cloneCellObj(x, y)
 
-			var_10_6.name = iter_10_0 .. "_" .. iter_10_1
+			tar_obj.name = y .. "_" .. x
 
-			if var_10_5 == PushBoxGameMgr.ElementType.Empty then
-				gohelper.setActive(var_10_6, false)
+			if cell_type == PushBoxGameMgr.ElementType.Empty then
+				gohelper.setActive(tar_obj, false)
 			end
 
-			local var_10_7 = iter_10_1 - 4.5
-			local var_10_8 = 2.5 - iter_10_0
+			local offset_x = x - 4.5
+			local offset_y = 2.5 - y
 
-			transformhelper.setLocalPos(var_10_6.transform, var_10_7 * 2.5, var_10_8 * 1.54, 0)
+			transformhelper.setLocalPos(tar_obj.transform, offset_x * 2.5, offset_y * 1.54, 0)
 
-			var_10_6.transform:GetChild(0):GetComponent("MeshRenderer").sortingOrder = var_10_4
+			local meshRenderer = tar_obj.transform:GetChild(0):GetComponent("MeshRenderer")
 
-			local var_10_9 = PushBoxCellItem.New(arg_10_0, arg_10_0._scene:getSceneContainerGO(), var_10_6)
+			meshRenderer.sortingOrder = sorder_index
 
-			arg_10_0._cell_data[iter_10_0][iter_10_1] = var_10_9
+			local cell_item = PushBoxCellItem.New(self, self._scene:getSceneContainerGO(), tar_obj)
 
-			var_10_9:initData(var_10_5, iter_10_1, iter_10_0)
+			self._cell_data[y][x] = cell_item
 
-			local var_10_10 = var_10_9:getCellType()
-			local var_10_11 = var_10_9:initElement(var_10_5)
+			cell_item:initData(cell_type, x, y)
 
-			arg_10_0._element_logic[var_10_10] = arg_10_0._element_logic[var_10_10] or {}
+			local cell_real_type = cell_item:getCellType()
+			local element_logic = cell_item:initElement(cell_type)
 
-			if var_10_11 then
-				table.insert(arg_10_0._element_logic[var_10_10], var_10_11)
+			self._element_logic[cell_real_type] = self._element_logic[cell_real_type] or {}
 
-				if var_10_9:getBox() then
-					arg_10_0._element_logic[var_10_5] = arg_10_0._element_logic[var_10_5] or {}
+			if element_logic then
+				table.insert(self._element_logic[cell_real_type], element_logic)
 
-					table.insert(arg_10_0._element_logic[var_10_5], var_10_11)
+				if cell_item:getBox() then
+					self._element_logic[cell_type] = self._element_logic[cell_type] or {}
+
+					table.insert(self._element_logic[cell_type], element_logic)
 				end
 			end
 
-			arg_10_0._element_cell_dic[var_10_10] = arg_10_0._element_cell_dic[var_10_10] or {}
+			self._element_cell_dic[cell_real_type] = self._element_cell_dic[cell_real_type] or {}
 
-			table.insert(arg_10_0._element_cell_dic[var_10_10], var_10_9)
-			table.insert(arg_10_0._cell_list, var_10_9)
+			table.insert(self._element_cell_dic[cell_real_type], cell_item)
+			table.insert(self._cell_list, cell_item)
 
-			if var_10_5 == PushBoxGameMgr.ElementType.Character then
-				arg_10_0._game_mgr:setCharacterPos(iter_10_1, iter_10_0, PushBoxGameMgr.Direction.Down)
+			if cell_type == PushBoxGameMgr.ElementType.Character then
+				self._game_mgr:setCharacterPos(x, y, PushBoxGameMgr.Direction.Down)
 			end
 
-			local var_10_12 = var_10_3[iter_10_0][iter_10_1]
-			local var_10_13 = string.splitToNumber(var_10_12, "_")
-			local var_10_14 = var_10_5 == PushBoxGameMgr.ElementType.Goal
+			local wall_str = wall_data[y][x]
+			local wall_arr = string.splitToNumber(wall_str, "_")
+			local cur_cell_is_door = cell_type == PushBoxGameMgr.ElementType.Goal
 
-			for iter_10_2, iter_10_3 in ipairs(var_10_13) do
-				if iter_10_3 ~= 0 then
-					arg_10_0:_setWallRenderer(iter_10_3, var_10_6, var_10_4, var_10_14)
+			for wall_index, wall_value in ipairs(wall_arr) do
+				if wall_value ~= 0 then
+					self:_setWallRenderer(wall_value, tar_obj, sorder_index, cur_cell_is_door)
 				end
 			end
 
-			var_10_4 = var_10_4 + 100
+			sorder_index = sorder_index + 100
 		end
 	end
 end
 
-function var_0_0._cloneCellObj(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0
+function PushBoxCellMgr:_cloneCellObj(x, y)
+	local tar_obj
 
-	if arg_11_1 % 2 ~= 0 then
-		if arg_11_2 % 2 ~= 0 then
-			var_11_0 = gohelper.clone(gohelper.findChild(arg_11_0._scene_root, "Root/OriginElement/" .. PushBoxGameMgr.ElementType.Road), arg_11_0._floor_root)
+	if x % 2 ~= 0 then
+		if y % 2 ~= 0 then
+			tar_obj = gohelper.clone(gohelper.findChild(self._scene_root, "Root/OriginElement/" .. PushBoxGameMgr.ElementType.Road), self._floor_root)
 		else
-			var_11_0 = gohelper.clone(gohelper.findChild(arg_11_0._scene_root, "Root/OriginElement/diban_b"), arg_11_0._floor_root)
+			tar_obj = gohelper.clone(gohelper.findChild(self._scene_root, "Root/OriginElement/diban_b"), self._floor_root)
 		end
-	elseif arg_11_2 % 2 ~= 0 then
-		var_11_0 = gohelper.clone(gohelper.findChild(arg_11_0._scene_root, "Root/OriginElement/diban_c"), arg_11_0._floor_root)
+	elseif y % 2 ~= 0 then
+		tar_obj = gohelper.clone(gohelper.findChild(self._scene_root, "Root/OriginElement/diban_c"), self._floor_root)
 	else
-		var_11_0 = gohelper.clone(gohelper.findChild(arg_11_0._scene_root, "Root/OriginElement/diban_d"), arg_11_0._floor_root)
+		tar_obj = gohelper.clone(gohelper.findChild(self._scene_root, "Root/OriginElement/diban_d"), self._floor_root)
 	end
 
-	return var_11_0
+	return tar_obj
 end
 
-function var_0_0._setWallRenderer(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4)
-	local var_12_0 = gohelper.clone(gohelper.findChild(arg_12_0._scene_root, "Root/OriginElement/" .. arg_12_1), arg_12_0._floor_root, "Wall")
-	local var_12_1 = arg_12_2.transform.position
+function PushBoxCellMgr:_setWallRenderer(wall_value, tar_obj, sorder_index, cur_cell_is_door)
+	local wall_obj = gohelper.clone(gohelper.findChild(self._scene_root, "Root/OriginElement/" .. wall_value), self._floor_root, "Wall")
+	local temp_pos = tar_obj.transform.position
 
-	transformhelper.setPos(var_12_0.transform, var_12_1.x, var_12_1.y, var_12_1.z)
+	transformhelper.setPos(wall_obj.transform, temp_pos.x, temp_pos.y, temp_pos.z)
 
-	local var_12_2 = arg_12_3 + 10000
-	local var_12_3 = var_12_0.transform:GetChild(0):GetComponent("MeshRenderer")
-	local var_12_4 = var_12_2
+	local wall_sorder_index = sorder_index + 10000
+	local wallMeshRenderer = wall_obj.transform:GetChild(0):GetComponent("MeshRenderer")
+	local finalOrder = wall_sorder_index
 
-	if arg_12_4 then
-		var_12_4 = var_12_2 + 2
+	if cur_cell_is_door then
+		finalOrder = wall_sorder_index + 2
 	end
 
-	if arg_12_1 == PushBoxGameMgr.ElementType.WallLeft then
-		var_12_4 = var_12_2 + 2
-	elseif arg_12_1 == PushBoxGameMgr.ElementType.WallCornerTopLeft then
-		var_12_4 = var_12_2 + 5 + 10000
-	elseif arg_12_1 == PushBoxGameMgr.ElementType.WallCornerTopRight then
-		var_12_4 = var_12_2 + 5 + 10000
-	elseif arg_12_1 == PushBoxGameMgr.ElementType.WallCornerBottomLeft then
-		var_12_4 = var_12_2 + 5 + 10000
-	elseif arg_12_1 == PushBoxGameMgr.ElementType.WallCornerBottomRight then
-		var_12_4 = var_12_2 + 5 + 10000
+	if wall_value == PushBoxGameMgr.ElementType.WallLeft then
+		finalOrder = wall_sorder_index + 2
+	elseif wall_value == PushBoxGameMgr.ElementType.WallCornerTopLeft then
+		finalOrder = wall_sorder_index + 5 + 10000
+	elseif wall_value == PushBoxGameMgr.ElementType.WallCornerTopRight then
+		finalOrder = wall_sorder_index + 5 + 10000
+	elseif wall_value == PushBoxGameMgr.ElementType.WallCornerBottomLeft then
+		finalOrder = wall_sorder_index + 5 + 10000
+	elseif wall_value == PushBoxGameMgr.ElementType.WallCornerBottomRight then
+		finalOrder = wall_sorder_index + 5 + 10000
 	end
 
-	var_12_3.sortingOrder = var_12_4
+	wallMeshRenderer.sortingOrder = finalOrder
 end
 
-function var_0_0.releaseBoxLight(arg_13_0)
-	local var_13_0 = arg_13_0._game_mgr:getElementLogicList(PushBoxGameMgr.ElementType.Box)
+function PushBoxCellMgr:releaseBoxLight()
+	local list = self._game_mgr:getElementLogicList(PushBoxGameMgr.ElementType.Box)
 
-	if var_13_0 then
-		for iter_13_0, iter_13_1 in ipairs(var_13_0) do
-			iter_13_1:hideLight()
+	if list then
+		for i, v in ipairs(list) do
+			v:hideLight()
 		end
 	end
 end
 
-function var_0_0._releaseCell(arg_14_0)
-	if arg_14_0._cell_list then
-		for iter_14_0, iter_14_1 in ipairs(arg_14_0._cell_list) do
-			iter_14_1:releaseSelf()
+function PushBoxCellMgr:_releaseCell()
+	if self._cell_list then
+		for i, v in ipairs(self._cell_list) do
+			v:releaseSelf()
 		end
 
-		arg_14_0._cell_list = nil
+		self._cell_list = nil
 	end
 
-	if arg_14_0._element_logic then
-		for iter_14_2, iter_14_3 in pairs(arg_14_0._element_logic) do
-			for iter_14_4, iter_14_5 in ipairs(iter_14_3) do
-				iter_14_5:releaseSelf()
+	if self._element_logic then
+		for k, v in pairs(self._element_logic) do
+			for i, element in ipairs(v) do
+				element:releaseSelf()
 			end
 		end
 
-		arg_14_0._element_logic = nil
+		self._element_logic = nil
 	end
 
-	gohelper.destroyAllChildren(arg_14_0._floor_root)
-	gohelper.destroyAllChildren(gohelper.findChild(arg_14_0._scene_root, "Root/ElementRoot"))
+	gohelper.destroyAllChildren(self._floor_root)
+	gohelper.destroyAllChildren(gohelper.findChild(self._scene_root, "Root/ElementRoot"))
 end
 
-function var_0_0.releaseSelf(arg_15_0)
-	TaskDispatcher.cancelTask(arg_15_0._refreshBoxRender, arg_15_0)
-	TaskDispatcher.cancelTask(arg_15_0._hideBoxSmoke, arg_15_0)
-	arg_15_0:_releaseCell()
-	arg_15_0:_releaseBoxTween()
-	arg_15_0:__onDispose()
+function PushBoxCellMgr:releaseSelf()
+	TaskDispatcher.cancelTask(self._refreshBoxRender, self)
+	TaskDispatcher.cancelTask(self._hideBoxSmoke, self)
+	self:_releaseCell()
+	self:_releaseBoxTween()
+	self:__onDispose()
 end
 
-return var_0_0
+return PushBoxCellMgr

@@ -1,67 +1,69 @@
-﻿module("modules.logic.notice.model.NoticeContentListModel", package.seeall)
+﻿-- chunkname: @modules/logic/notice/model/NoticeContentListModel.lua
 
-local var_0_0 = class("NoticeContentListModel", MixScrollModel)
+module("modules.logic.notice.model.NoticeContentListModel", package.seeall)
 
-function var_0_0.setNoticeMO(arg_1_0, arg_1_1)
-	arg_1_0.noticeMO = arg_1_1
+local NoticeContentListModel = class("NoticeContentListModel", MixScrollModel)
 
-	if arg_1_0.noticeMO then
-		local var_1_0 = arg_1_0:_convertContentUrl(arg_1_0.noticeMO:getContent())
-		local var_1_1 = not string.nilorempty(var_1_0) and cjson.decode(var_1_0) or {}
+function NoticeContentListModel:setNoticeMO(noticeMO)
+	self.noticeMO = noticeMO
 
-		arg_1_0:setList(var_1_1)
+	if self.noticeMO then
+		local content = self:_convertContentUrl(self.noticeMO:getContent())
+		local data = not string.nilorempty(content) and cjson.decode(content) or {}
+
+		self:setList(data)
 	else
-		arg_1_0:clear()
+		self:clear()
 	end
 end
 
-function var_0_0._convertContentUrl(arg_2_0, arg_2_1)
-	local var_2_0 = string.gsub(arg_2_1, "[<>]", "|")
-	local var_2_1 = string.split(var_2_0, "|")
-	local var_2_2 = arg_2_1
+function NoticeContentListModel:_convertContentUrl(content)
+	local conrep = string.gsub(content, "[<>]", "|")
+	local res = string.split(conrep, "|")
+	local result = content
 
-	table.sort(var_2_1, function(arg_3_0, arg_3_1)
-		return #arg_3_0 > #arg_3_1
+	table.sort(res, function(a, b)
+		return #a > #b
 	end)
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_1) do
-		if string.find(iter_2_1, "link=2#") then
-			local var_2_3 = string.urldecode(string.gsub(iter_2_1, "link=2#", ""))
-			local var_2_4 = NoticeModel.instance:getNextUrlId()
+	for _, v in ipairs(res) do
+		if string.find(v, "link=2#") then
+			local url = string.urldecode(string.gsub(v, "link=2#", ""))
+			local urlId = NoticeModel.instance:getNextUrlId()
 
-			var_2_2 = string.gsub(var_2_2, var_2_3, tostring(var_2_4))
+			result = string.gsub(result, url, tostring(urlId))
 
-			NoticeModel.instance:setNoticeUrl(var_2_4, var_2_3)
+			NoticeModel.instance:setNoticeUrl(urlId, url)
 		end
 	end
 
-	return var_2_2
+	return result
 end
 
-function var_0_0.convertUrl(arg_4_0, arg_4_1)
-	local var_4_0 = string.gsub(arg_4_1, "?", "@")
+function NoticeContentListModel:convertUrl(url)
+	local result = string.gsub(url, "?", "@")
 
-	return string.gsub(var_4_0, "-", "!")
+	return string.gsub(result, "-", "!")
 end
 
-function var_0_0.decodeUrl(arg_5_0, arg_5_1)
-	local var_5_0 = string.gsub(arg_5_1, "@", "?")
+function NoticeContentListModel:decodeUrl(url)
+	local res = string.gsub(url, "@", "?")
 
-	return string.gsub(var_5_0, "!", "-")
+	return string.gsub(res, "!", "-")
 end
 
-function var_0_0.decodeToJson(arg_6_0)
-	if arg_6_0.noticeMO then
-		local var_6_0 = arg_6_0:getList()
+function NoticeContentListModel:decodeToJson()
+	if self.noticeMO then
+		local list = self:getList()
 
-		arg_6_0.noticeMO:setContent(cjson.encode(var_6_0))
+		self.noticeMO:setContent(cjson.encode(list))
 	end
 end
 
-function var_0_0.hasTitle(arg_7_0)
-	if arg_7_0.noticeMO then
-		for iter_7_0, iter_7_1 in ipairs(arg_7_0:getList()) do
-			if iter_7_1.type == NoticeContentType.TxtTopTitle then
+function NoticeContentListModel:hasTitle()
+	if self.noticeMO then
+		for _, contentMo in ipairs(self:getList()) do
+			if contentMo.type == NoticeContentType.TxtTopTitle then
 				return true
 			end
 		end
@@ -70,84 +72,84 @@ function var_0_0.hasTitle(arg_7_0)
 	return false
 end
 
-function var_0_0.getCurSelectNoticeTitle(arg_8_0)
-	return arg_8_0.noticeMO and arg_8_0.noticeMO:getTitle() or ""
+function NoticeContentListModel:getCurSelectNoticeTitle()
+	return self.noticeMO and self.noticeMO:getTitle() or ""
 end
 
-function var_0_0.getCurSelectNoticeTypeStr(arg_9_0)
-	return arg_9_0.noticeMO and NoticeController.instance:getNoticeTypeStr(arg_9_0.noticeMO) or ""
+function NoticeContentListModel:getCurSelectNoticeTypeStr()
+	return self.noticeMO and NoticeController.instance:getNoticeTypeStr(self.noticeMO) or ""
 end
 
-var_0_0.ContentTileHeight = 97
-var_0_0.TxtSpaceVertical = 7
-var_0_0.ImgSpaceVertical = 0
-var_0_0.ImgTitleSpaceVertical = 21
+NoticeContentListModel.ContentTileHeight = 97
+NoticeContentListModel.TxtSpaceVertical = 7
+NoticeContentListModel.ImgSpaceVertical = 0
+NoticeContentListModel.ImgTitleSpaceVertical = 21
 
-function var_0_0.getInfoList(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0:getList()
+function NoticeContentListModel:getInfoList(scrollGO)
+	local list = self:getList()
 
-	if not var_10_0 or #var_10_0 <= 0 then
+	if not list or #list <= 0 then
 		return {}
 	end
 
-	local var_10_1 = gohelper.findChildComponent(arg_10_1, "#txt_content", typeof(TMPro.TextMeshProUGUI))
-	local var_10_2 = {}
+	local txtContent = gohelper.findChildComponent(scrollGO, "#txt_content", typeof(TMPro.TextMeshProUGUI))
+	local mixCellInfos = {}
 
-	for iter_10_0, iter_10_1 in ipairs(var_10_0) do
-		if not iter_10_1.type then
-			logError("notice content type is nil, noticeId = " .. arg_10_0.noticeMO.id)
+	for _, mo in ipairs(list) do
+		if not mo.type then
+			logError("notice content type is nil, noticeId = " .. self.noticeMO.id)
 
 			return
 		end
 
-		if iter_10_1.type == NoticeContentType.TxtTopTitle then
-			local var_10_3
+		if mo.type == NoticeContentType.TxtTopTitle then
+			local mixCellInfo
 
-			if not iter_10_1.content or string.nilorempty(string.gsub(iter_10_1.content, "<.->", "")) then
-				var_10_3 = SLFramework.UGUI.MixCellInfo.New(iter_10_1.type, 0, nil)
+			if not mo.content or string.nilorempty(string.gsub(mo.content, "<.->", "")) then
+				mixCellInfo = SLFramework.UGUI.MixCellInfo.New(mo.type, 0, nil)
 			else
-				var_10_3 = SLFramework.UGUI.MixCellInfo.New(iter_10_1.type, var_0_0.ContentTileHeight, nil)
+				mixCellInfo = SLFramework.UGUI.MixCellInfo.New(mo.type, NoticeContentListModel.ContentTileHeight, nil)
 			end
 
-			table.insert(var_10_2, var_10_3)
-		elseif iter_10_1.type == NoticeContentType.TxtContent then
-			local var_10_4 = iter_10_1 and iter_10_1.height
+			table.insert(mixCellInfos, mixCellInfo)
+		elseif mo.type == NoticeContentType.TxtContent then
+			local height = mo and mo.height
 
-			var_10_4 = var_10_4 or GameUtil.getPreferredHeight(var_10_1, iter_10_1.content)
+			height = height or GameUtil.getPreferredHeight(txtContent, mo.content)
 
-			local var_10_5 = SLFramework.UGUI.MixCellInfo.New(iter_10_1.type, var_10_4 + var_0_0.TxtSpaceVertical, nil)
+			local mixCellInfo = SLFramework.UGUI.MixCellInfo.New(mo.type, height + NoticeContentListModel.TxtSpaceVertical, nil)
 
-			table.insert(var_10_2, var_10_5)
-		elseif iter_10_1.type == NoticeContentType.ImgInner then
-			if not iter_10_1.height then
-				local var_10_6 = SLFramework.FileHelper.GetFileName(string.gsub(arg_10_0:decodeUrl(iter_10_1.content), "?.*", ""), true)
+			table.insert(mixCellInfos, mixCellInfo)
+		elseif mo.type == NoticeContentType.ImgInner then
+			if not mo.height then
+				local filename = SLFramework.FileHelper.GetFileName(string.gsub(self:decodeUrl(mo.content), "?.*", ""), true)
 
-				iter_10_1.width, iter_10_1.height = NoticeModel.instance:getSpriteCacheDefaultSize(var_10_6)
+				mo.width, mo.height = NoticeModel.instance:getSpriteCacheDefaultSize(filename)
 			end
 
-			local var_10_7 = SLFramework.UGUI.MixCellInfo.New(iter_10_1.type, (iter_10_1.height or 100) + var_0_0.ImgSpaceVertical, nil)
+			local mixCellInfo = SLFramework.UGUI.MixCellInfo.New(mo.type, (mo.height or 100) + NoticeContentListModel.ImgSpaceVertical, nil)
 
-			table.insert(var_10_2, var_10_7)
-		elseif iter_10_1.type == NoticeContentType.ImgTitle then
-			if not iter_10_1.height then
-				local var_10_8 = SLFramework.FileHelper.GetFileName(string.gsub(arg_10_0:decodeUrl(iter_10_1.content), "?.*", ""), true)
+			table.insert(mixCellInfos, mixCellInfo)
+		elseif mo.type == NoticeContentType.ImgTitle then
+			if not mo.height then
+				local filename = SLFramework.FileHelper.GetFileName(string.gsub(self:decodeUrl(mo.content), "?.*", ""), true)
 
-				iter_10_1.width, iter_10_1.height = NoticeModel.instance:getSpriteCacheDefaultSize(var_10_8)
+				mo.width, mo.height = NoticeModel.instance:getSpriteCacheDefaultSize(filename)
 			end
 
-			local var_10_9 = SLFramework.UGUI.MixCellInfo.New(iter_10_1.type, (iter_10_1.height or 100) + var_0_0.ImgTitleSpaceVertical, nil)
+			local mixCellInfo = SLFramework.UGUI.MixCellInfo.New(mo.type, (mo.height or 100) + NoticeContentListModel.ImgTitleSpaceVertical, nil)
 
-			table.insert(var_10_2, var_10_9)
-		elseif iter_10_1.type == NoticeContentType.LangType then
+			table.insert(mixCellInfos, mixCellInfo)
+		elseif mo.type == NoticeContentType.LangType then
 			-- block empty
 		else
-			logError("notice content type not implement: " .. iter_10_1.type)
+			logError("notice content type not implement: " .. mo.type)
 		end
 	end
 
-	return var_10_2
+	return mixCellInfos
 end
 
-var_0_0.instance = var_0_0.New()
+NoticeContentListModel.instance = NoticeContentListModel.New()
 
-return var_0_0
+return NoticeContentListModel

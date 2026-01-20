@@ -1,10 +1,12 @@
-﻿module("modules.logic.versionactivity2_6.dicehero.controller.effect.DiceHeroDiceBoxFullWork", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/dicehero/controller/effect/DiceHeroDiceBoxFullWork.lua
 
-local var_0_0 = class("DiceHeroDiceBoxFullWork", DiceHeroBaseEffectWork)
+module("modules.logic.versionactivity2_6.dicehero.controller.effect.DiceHeroDiceBoxFullWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
+local DiceHeroDiceBoxFullWork = class("DiceHeroDiceBoxFullWork", DiceHeroBaseEffectWork)
+
+function DiceHeroDiceBoxFullWork:onStart(context)
 	GameFacade.showToast(ToastEnum.DiceHeroDiceBoxFull)
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return DiceHeroDiceBoxFullWork

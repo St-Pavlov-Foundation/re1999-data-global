@@ -1,39 +1,43 @@
-﻿module("modules.logic.fight.model.data.FightCounterDataMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightCounterDataMgr.lua
 
-local var_0_0 = FightDataClass("FightCounterDataMgr", FightDataMgrBase)
+module("modules.logic.fight.model.data.FightCounterDataMgr", package.seeall)
 
-var_0_0.CounterType = {}
+local FightCounterDataMgr = FightDataClass("FightCounterDataMgr", FightDataMgrBase)
 
-local var_0_1 = {}
+FightCounterDataMgr.CounterType = {}
 
-for iter_0_0, iter_0_1 in pairs(var_0_0.CounterType) do
-	var_0_1[iter_0_1] = iter_0_0
+local id2Name = {}
+
+for k, v in pairs(FightCounterDataMgr.CounterType) do
+	id2Name[v] = k
 end
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0.counterDic = {}
+function FightCounterDataMgr:onConstructor()
+	self.counterDic = {}
 end
 
-function var_0_0.getCounter(arg_2_0, arg_2_1)
-	return arg_2_0.counterDic[arg_2_1] or 0
+function FightCounterDataMgr:getCounter(counterType)
+	local counter = self.counterDic[counterType] or 0
+
+	return counter
 end
 
-function var_0_0.addCounter(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_0.counterDic[arg_3_1] or 0
+function FightCounterDataMgr:addCounter(counterType)
+	local counter = self.counterDic[counterType] or 0
 
-	arg_3_0.counterDic[arg_3_1] = var_3_0 + 1
+	self.counterDic[counterType] = counter + 1
 end
 
-function var_0_0.removeCounter(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0.counterDic[arg_4_1] or 0
+function FightCounterDataMgr:removeCounter(counterType)
+	local counter = self.counterDic[counterType] or 0
 
-	arg_4_0.counterDic[arg_4_1] = var_4_0 - 1
+	self.counterDic[counterType] = counter - 1
 end
 
-function var_0_0.printCounterInfo(arg_5_0)
-	for iter_5_0, iter_5_1 in pairs(arg_5_0.counterDic) do
-		logError("计数器 key = " .. var_0_1[iter_5_0] .. ", value = " .. iter_5_1)
+function FightCounterDataMgr:printCounterInfo()
+	for k, v in pairs(self.counterDic) do
+		logError("计数器 key = " .. id2Name[k] .. ", value = " .. v)
 	end
 end
 
-return var_0_0
+return FightCounterDataMgr

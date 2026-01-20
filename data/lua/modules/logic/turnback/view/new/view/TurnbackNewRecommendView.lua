@@ -1,338 +1,341 @@
-﻿module("modules.logic.turnback.view.new.view.TurnbackNewRecommendView", package.seeall)
+﻿-- chunkname: @modules/logic/turnback/view/new/view/TurnbackNewRecommendView.lua
 
-local var_0_0 = class("TurnbackNewRecommendView", BaseView)
+module("modules.logic.turnback.view.new.view.TurnbackNewRecommendView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#txt_desc")
-	arg_1_0._gobanner = gohelper.findChild(arg_1_0.viewGO, "#go_banner")
-	arg_1_0._gobannercontent = gohelper.findChild(arg_1_0.viewGO, "#go_banner/#go_bannercontent")
-	arg_1_0._gobannerIcon = gohelper.findChild(arg_1_0.viewGO, "#go_banner/#go_bannercontent/#go_bannerIcon")
-	arg_1_0._goslider = gohelper.findChild(arg_1_0.viewGO, "#go_banner/#go_slider")
-	arg_1_0._goindexItem = gohelper.findChild(arg_1_0.viewGO, "#go_banner/#go_slider/#go_indexItem")
-	arg_1_0._gobannerscroll = gohelper.findChild(arg_1_0.viewGO, "#go_banner/#go_bannerscroll")
-	arg_1_0._btnjump = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_jump")
-	arg_1_0._btnleftArrow = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_leftArrow")
-	arg_1_0._btnrightArrow = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_rightArrow")
+local TurnbackNewRecommendView = class("TurnbackNewRecommendView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function TurnbackNewRecommendView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "#txt_desc")
+	self._gobanner = gohelper.findChild(self.viewGO, "#go_banner")
+	self._gobannercontent = gohelper.findChild(self.viewGO, "#go_banner/#go_bannercontent")
+	self._gobannerIcon = gohelper.findChild(self.viewGO, "#go_banner/#go_bannercontent/#go_bannerIcon")
+	self._goslider = gohelper.findChild(self.viewGO, "#go_banner/#go_slider")
+	self._goindexItem = gohelper.findChild(self.viewGO, "#go_banner/#go_slider/#go_indexItem")
+	self._gobannerscroll = gohelper.findChild(self.viewGO, "#go_banner/#go_bannerscroll")
+	self._btnjump = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_jump")
+	self._btnleftArrow = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_leftArrow")
+	self._btnrightArrow = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_rightArrow")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnbanner:AddClickListener(arg_2_0._btnjumpOnClick, arg_2_0)
-	arg_2_0._btnjump:AddClickListener(arg_2_0._btnjumpOnClick, arg_2_0)
-	arg_2_0._btnleftArrow:AddClickListener(arg_2_0._btnleftArrowOnClick, arg_2_0)
-	arg_2_0._btnrightArrow:AddClickListener(arg_2_0._btnrightArrowOnClick, arg_2_0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_2_0.dailyResetData, arg_2_0)
-	arg_2_0:addEventCb(MainController.instance, MainEvent.OnFuncUnlockRefresh, arg_2_0.dailyResetData, arg_2_0)
+function TurnbackNewRecommendView:addEvents()
+	self._btnbanner:AddClickListener(self._btnjumpOnClick, self)
+	self._btnjump:AddClickListener(self._btnjumpOnClick, self)
+	self._btnleftArrow:AddClickListener(self._btnleftArrowOnClick, self)
+	self._btnrightArrow:AddClickListener(self._btnrightArrowOnClick, self)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self.dailyResetData, self)
+	self:addEventCb(MainController.instance, MainEvent.OnFuncUnlockRefresh, self.dailyResetData, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnbanner:RemoveClickListener()
-	arg_3_0._btnjump:RemoveClickListener()
-	arg_3_0._btnleftArrow:RemoveClickListener()
-	arg_3_0._btnrightArrow:RemoveClickListener()
-	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, arg_3_0.dailyResetData, arg_3_0)
-	arg_3_0:removeEventCb(MainController.instance, MainEvent.OnFuncUnlockRefresh, arg_3_0.dailyResetData, arg_3_0)
+function TurnbackNewRecommendView:removeEvents()
+	self._btnbanner:RemoveClickListener()
+	self._btnjump:RemoveClickListener()
+	self._btnleftArrow:RemoveClickListener()
+	self._btnrightArrow:RemoveClickListener()
+	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, self.dailyResetData, self)
+	self:removeEventCb(MainController.instance, MainEvent.OnFuncUnlockRefresh, self.dailyResetData, self)
 end
 
-var_0_0.bannerWidth = 1332
-var_0_0.moveDistance = 100
+TurnbackNewRecommendView.bannerWidth = 1332
+TurnbackNewRecommendView.moveDistance = 100
 
-function var_0_0._btnjumpOnClick(arg_4_0)
-	if arg_4_0.scrollStartPos then
+function TurnbackNewRecommendView:_btnjumpOnClick()
+	if self.scrollStartPos then
 		return
 	end
 
-	local var_4_0 = {
-		config = arg_4_0.bannerConfigTab[arg_4_0.targetIndex]
+	local param = {
+		config = self.bannerConfigTab[self.targetIndex]
 	}
 
-	arg_4_0:onBannerClick(var_4_0)
+	self:onBannerClick(param)
 end
 
-function var_0_0._btnleftArrowOnClick(arg_5_0)
-	if arg_5_0.configCount == 1 then
+function TurnbackNewRecommendView:_btnleftArrowOnClick()
+	if self.configCount == 1 then
 		return
 	end
 
-	arg_5_0:slidePre()
+	self:slidePre()
 end
 
-function var_0_0._btnrightArrowOnClick(arg_6_0)
-	if arg_6_0.configCount == 1 then
+function TurnbackNewRecommendView:_btnrightArrowOnClick()
+	if self.configCount == 1 then
 		return
 	end
 
-	arg_6_0:slideNext()
+	self:slideNext()
 end
 
-function var_0_0.slideNext(arg_7_0)
-	if arg_7_0.configCount == 1 then
+function TurnbackNewRecommendView:slideNext()
+	if self.configCount == 1 then
 		return
 	end
 
-	if arg_7_0.targetIndex >= arg_7_0.configCount then
-		arg_7_0.targetIndex = 1
+	if self.targetIndex >= self.configCount then
+		self.targetIndex = 1
 	else
-		arg_7_0.targetIndex = arg_7_0.targetIndex + 1
+		self.targetIndex = self.targetIndex + 1
 	end
 
-	arg_7_0:setBannerPos(true)
-	arg_7_0:autoMoveBanner()
+	self:setBannerPos(true)
+	self:autoMoveBanner()
 end
 
-function var_0_0.slidePre(arg_8_0)
-	if arg_8_0.configCount == 1 then
+function TurnbackNewRecommendView:slidePre()
+	if self.configCount == 1 then
 		return
 	end
 
-	if arg_8_0.targetIndex <= 1 then
-		arg_8_0.targetIndex = arg_8_0.configCount
+	if self.targetIndex <= 1 then
+		self.targetIndex = self.configCount
 	else
-		arg_8_0.targetIndex = arg_8_0.targetIndex - 1
+		self.targetIndex = self.targetIndex - 1
 	end
 
-	arg_8_0:setBannerPos(false)
-	arg_8_0:autoMoveBanner()
+	self:setBannerPos(false)
+	self:autoMoveBanner()
 end
 
-function var_0_0._onScrollDragBegin(arg_9_0, arg_9_1, arg_9_2)
-	arg_9_0.scrollStartPos = arg_9_2.position
+function TurnbackNewRecommendView:_onScrollDragBegin(param, eventData)
+	self.scrollStartPos = eventData.position
 end
 
-function var_0_0._onScrollDragEnd(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = arg_10_2.position - arg_10_0.scrollStartPos
-	local var_10_1 = Mathf.Abs(var_10_0.x) - var_0_0.moveDistance >= 0
+function TurnbackNewRecommendView:_onScrollDragEnd(param, eventData)
+	local moveOffset = eventData.position - self.scrollStartPos
+	local canMove = Mathf.Abs(moveOffset.x) - TurnbackNewRecommendView.moveDistance >= 0
 
-	if var_10_0.x > 0 and var_10_1 then
-		arg_10_0:slidePre()
-	elseif var_10_0.x < 0 and var_10_1 then
-		arg_10_0:slideNext()
+	if moveOffset.x > 0 and canMove then
+		self:slidePre()
+	elseif moveOffset.x < 0 and canMove then
+		self:slideNext()
 	end
 
-	arg_10_0.scrollStartPos = nil
+	self.scrollStartPos = nil
 
-	arg_10_0:autoMoveBanner()
+	self:autoMoveBanner()
 end
 
-function var_0_0._editableInitView(arg_11_0)
-	arg_11_0.turnbackId = TurnbackModel.instance:getCurTurnbackId()
+function TurnbackNewRecommendView:_editableInitView()
+	self.turnbackId = TurnbackModel.instance:getCurTurnbackId()
 
-	TurnbackRecommendModel.instance:initReommendShowState(arg_11_0.turnbackId)
+	TurnbackRecommendModel.instance:initReommendShowState(self.turnbackId)
 
-	arg_11_0.bannerConfigTab = {}
-	arg_11_0.indexItemTab = arg_11_0:getUserDataTb_()
-	arg_11_0.bannerTab = arg_11_0:getUserDataTb_()
+	self.bannerConfigTab = {}
+	self.indexItemTab = self:getUserDataTb_()
+	self.bannerTab = self:getUserDataTb_()
 
-	gohelper.setActive(arg_11_0._gobannerIcon, false)
-	gohelper.setActive(arg_11_0._goindexItem, false)
+	gohelper.setActive(self._gobannerIcon, false)
+	gohelper.setActive(self._goindexItem, false)
 
-	arg_11_0.targetIndex = 1
-	arg_11_0.configCount = 0
-	arg_11_0.layoutGroup = arg_11_0._gobannercontent:GetComponent(typeof(UnityEngine.UI.HorizontalLayoutGroup))
-	arg_11_0.bannerContentTrans = arg_11_0._gobannercontent:GetComponent(gohelper.Type_RectTransform)
-	arg_11_0._btnbanner = gohelper.getClickWithAudio(arg_11_0._gobannerscroll)
-	arg_11_0._scroll = SLFramework.UGUI.UIDragListener.Get(arg_11_0._gobannerscroll)
+	self.targetIndex = 1
+	self.configCount = 0
+	self.layoutGroup = self._gobannercontent:GetComponent(typeof(UnityEngine.UI.HorizontalLayoutGroup))
+	self.bannerContentTrans = self._gobannercontent:GetComponent(gohelper.Type_RectTransform)
+	self._btnbanner = gohelper.getClickWithAudio(self._gobannerscroll)
+	self._scroll = SLFramework.UGUI.UIDragListener.Get(self._gobannerscroll)
 
-	arg_11_0._scroll:AddDragBeginListener(arg_11_0._onScrollDragBegin, arg_11_0)
-	arg_11_0._scroll:AddDragEndListener(arg_11_0._onScrollDragEnd, arg_11_0)
+	self._scroll:AddDragBeginListener(self._onScrollDragBegin, self)
+	self._scroll:AddDragEndListener(self._onScrollDragEnd, self)
 
-	arg_11_0.isMoving = false
+	self.isMoving = false
 end
 
-function var_0_0.onUpdateParam(arg_12_0)
+function TurnbackNewRecommendView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_13_0)
-	local var_13_0 = arg_13_0.viewParam.parent
+function TurnbackNewRecommendView:onOpen()
+	local parentGO = self.viewParam.parent
 
-	arg_13_0.actId = arg_13_0.viewParam.actId
+	self.actId = self.viewParam.actId
 
-	gohelper.addChild(var_13_0, arg_13_0.viewGO)
-	arg_13_0:refreshUI()
-	arg_13_0:initBannerItem()
-	arg_13_0:autoMoveBanner()
+	gohelper.addChild(parentGO, self.viewGO)
+	self:refreshUI()
+	self:initBannerItem()
+	self:autoMoveBanner()
 end
 
-function var_0_0.refreshUI(arg_14_0)
-	arg_14_0:creatAndRefreshIndexItem()
+function TurnbackNewRecommendView:refreshUI()
+	self:creatAndRefreshIndexItem()
 
-	local var_14_0 = TurnbackConfig.instance:getTurnbackSubModuleCo(arg_14_0.actId)
+	local actConfig = TurnbackConfig.instance:getTurnbackSubModuleCo(self.actId)
 
-	arg_14_0._txtdesc.text = var_14_0.actDesc
+	self._txtdesc.text = actConfig.actDesc
 
-	arg_14_0:refreshIndexItem()
-	gohelper.setActive(arg_14_0._btnleftArrow.gameObject, arg_14_0.configCount > 1)
-	gohelper.setActive(arg_14_0._btnrightArrow.gameObject, arg_14_0.configCount > 1)
+	self:refreshIndexItem()
+	gohelper.setActive(self._btnleftArrow.gameObject, self.configCount > 1)
+	gohelper.setActive(self._btnrightArrow.gameObject, self.configCount > 1)
 end
 
-function var_0_0.initBannerItem(arg_15_0)
-	if GameUtil.getTabLen(arg_15_0.bannerConfigTab) == 0 then
+function TurnbackNewRecommendView:initBannerItem()
+	if GameUtil.getTabLen(self.bannerConfigTab) == 0 then
 		return
 	end
 
-	for iter_15_0 = 1, 2 do
-		if not arg_15_0.bannerTab[iter_15_0] then
-			local var_15_0 = {
-				go = gohelper.clone(arg_15_0._gobannerIcon, arg_15_0._gobannercontent, "banner" .. iter_15_0)
+	for i = 1, 2 do
+		local bannerItem = self.bannerTab[i]
+
+		if not bannerItem then
+			bannerItem = {
+				go = gohelper.clone(self._gobannerIcon, self._gobannercontent, "banner" .. i)
 			}
+			bannerItem.simage = gohelper.findChildSingleImage(bannerItem.go, "simage_bannerIcon")
+			bannerItem.trans = bannerItem.go:GetComponent(gohelper.Type_RectTransform)
 
-			var_15_0.simage = gohelper.findChildSingleImage(var_15_0.go, "simage_bannerIcon")
-			var_15_0.trans = var_15_0.go:GetComponent(gohelper.Type_RectTransform)
+			gohelper.setActive(bannerItem.go, true)
 
-			gohelper.setActive(var_15_0.go, true)
-
-			arg_15_0.bannerTab[iter_15_0] = var_15_0
+			self.bannerTab[i] = bannerItem
 		end
 	end
 
-	arg_15_0.mainBanner = arg_15_0.bannerTab[1]
-	arg_15_0.helpBanner = arg_15_0.bannerTab[2]
-	arg_15_0.centerBannerPosX = 0
-	arg_15_0.leftBannerPosX = -(var_0_0.bannerWidth + arg_15_0.layoutGroup.spacing)
-	arg_15_0.rightBannerPosX = var_0_0.bannerWidth + arg_15_0.layoutGroup.spacing
+	self.mainBanner = self.bannerTab[1]
+	self.helpBanner = self.bannerTab[2]
+	self.centerBannerPosX = 0
+	self.leftBannerPosX = -(TurnbackNewRecommendView.bannerWidth + self.layoutGroup.spacing)
+	self.rightBannerPosX = TurnbackNewRecommendView.bannerWidth + self.layoutGroup.spacing
 
-	recthelper.setAnchorX(arg_15_0.mainBanner.trans, arg_15_0.centerBannerPosX)
-	recthelper.setAnchorX(arg_15_0.helpBanner.trans, arg_15_0.rightBannerPosX)
-	arg_15_0.mainBanner.simage:LoadImage(SLFramework.LanguageMgr.Instance:GetLangPathFromAssetPath(ResUrl.getTurnbackRecommendLangPath(arg_15_0.bannerConfigTab[arg_15_0.targetIndex].icon)))
+	recthelper.setAnchorX(self.mainBanner.trans, self.centerBannerPosX)
+	recthelper.setAnchorX(self.helpBanner.trans, self.rightBannerPosX)
+	self.mainBanner.simage:LoadImage(SLFramework.LanguageMgr.Instance:GetLangPathFromAssetPath(ResUrl.getTurnbackRecommendLangPath(self.bannerConfigTab[self.targetIndex].icon)))
 end
 
-function var_0_0.creatAndRefreshIndexItem(arg_16_0)
-	local var_16_0 = TurnbackRecommendModel.instance:getCanShowRecommendList() or {}
-	local var_16_1 = TurnbackConfig.instance:getAllRecommendList(arg_16_0.turnbackId)[1].limitCount
+function TurnbackNewRecommendView:creatAndRefreshIndexItem()
+	local canShowRecommends = TurnbackRecommendModel.instance:getCanShowRecommendList() or {}
+	local limitCount = TurnbackConfig.instance:getAllRecommendList(self.turnbackId)[1].limitCount
 
-	arg_16_0.configCount = Mathf.Min(var_16_1, #var_16_0)
+	self.configCount = Mathf.Min(limitCount, #canShowRecommends)
 
-	table.sort(var_16_0, var_0_0.sortRecommend)
+	table.sort(canShowRecommends, TurnbackNewRecommendView.sortRecommend)
 
-	for iter_16_0 = 1, arg_16_0.configCount do
-		arg_16_0.bannerConfigTab[iter_16_0] = var_16_0[iter_16_0]
+	for i = 1, self.configCount do
+		self.bannerConfigTab[i] = canShowRecommends[i]
 
-		local var_16_2 = arg_16_0.indexItemTab[iter_16_0]
+		local indexItem = self.indexItemTab[i]
 
-		if not var_16_2 then
-			var_16_2 = {
-				go = gohelper.clone(arg_16_0._goindexItem, arg_16_0._goslider, "index" .. iter_16_0)
+		if not indexItem then
+			indexItem = {
+				go = gohelper.clone(self._goindexItem, self._goslider, "index" .. i)
 			}
-			var_16_2.nomalstar = gohelper.findChild(var_16_2.go, "go_nomalstar")
-			var_16_2.lightstar = gohelper.findChild(var_16_2.go, "go_lightstar")
-			arg_16_0.indexItemTab[iter_16_0] = var_16_2
+			indexItem.nomalstar = gohelper.findChild(indexItem.go, "go_nomalstar")
+			indexItem.lightstar = gohelper.findChild(indexItem.go, "go_lightstar")
+			self.indexItemTab[i] = indexItem
 		end
 
-		gohelper.setActive(var_16_2.go, true)
+		gohelper.setActive(indexItem.go, true)
 	end
 
-	for iter_16_1 = arg_16_0.configCount + 1, #arg_16_0.indexItemTab do
-		gohelper.setActive(arg_16_0.indexItemTab[iter_16_1].go, false)
+	for i = self.configCount + 1, #self.indexItemTab do
+		gohelper.setActive(self.indexItemTab[i].go, false)
 	end
 end
 
-function var_0_0.onBannerClick(arg_17_0, arg_17_1)
-	if arg_17_1.config and arg_17_1.config.jumpId > 0 then
+function TurnbackNewRecommendView:onBannerClick(param)
+	if param.config and param.config.jumpId > 0 then
 		StatController.instance:track(StatEnum.EventName.ClickRecommendPage, {
 			[StatEnum.EventProperties.RecommendPageType] = StatEnum.RecommendType.Return,
-			[StatEnum.EventProperties.RecommendPageId] = tostring(arg_17_1.config.id),
+			[StatEnum.EventProperties.RecommendPageId] = tostring(param.config.id),
 			[StatEnum.EventProperties.RecommendPageName] = ""
 		})
-		GameFacade.jump(arg_17_1.config.jumpId)
+		GameFacade.jump(param.config.jumpId)
 	end
 end
 
-function var_0_0.sortRecommend(arg_18_0, arg_18_1)
-	return arg_18_0.order < arg_18_1.order
+function TurnbackNewRecommendView.sortRecommend(a, b)
+	return a.order < b.order
 end
 
-function var_0_0.autoMoveBanner(arg_19_0)
-	TaskDispatcher.cancelTask(arg_19_0.autoSwitch, arg_19_0)
-	TaskDispatcher.runRepeat(arg_19_0.autoSwitch, arg_19_0, 5)
+function TurnbackNewRecommendView:autoMoveBanner()
+	TaskDispatcher.cancelTask(self.autoSwitch, self)
+	TaskDispatcher.runRepeat(self.autoSwitch, self, 5)
 end
 
-function var_0_0.autoSwitch(arg_20_0)
-	arg_20_0:slideNext()
+function TurnbackNewRecommendView:autoSwitch()
+	self:slideNext()
 
-	if ViewHelper.instance:checkViewOnTheTop(arg_20_0.viewName) then
+	if ViewHelper.instance:checkViewOnTheTop(self.viewName) then
 		-- block empty
 	end
 end
 
-function var_0_0.setBannerPos(arg_21_0, arg_21_1)
-	if GameUtil.getTabLen(arg_21_0.bannerConfigTab) == 0 or arg_21_0.configCount <= 1 then
+function TurnbackNewRecommendView:setBannerPos(isShowNext)
+	if GameUtil.getTabLen(self.bannerConfigTab) == 0 or self.configCount <= 1 then
 		return
 	end
 
-	recthelper.setAnchorX(arg_21_0.mainBanner.trans, arg_21_0.centerBannerPosX)
+	recthelper.setAnchorX(self.mainBanner.trans, self.centerBannerPosX)
 
-	local var_21_0 = arg_21_0.bannerConfigTab[arg_21_0.targetIndex]
+	local targetConfig = self.bannerConfigTab[self.targetIndex]
 
-	arg_21_0:refreshIndexItem()
+	self:refreshIndexItem()
 
-	if arg_21_0.isMoving then
-		arg_21_0:killMoveTween()
-		arg_21_0:changeBanner()
-		recthelper.setAnchorX(arg_21_0.mainBanner.trans, arg_21_0.centerBannerPosX)
-		recthelper.setAnchorX(arg_21_0.helpBanner.trans, arg_21_1 and arg_21_0.rightBannerPosX or arg_21_0.leftBannerPosX)
+	if self.isMoving then
+		self:killMoveTween()
+		self:changeBanner()
+		recthelper.setAnchorX(self.mainBanner.trans, self.centerBannerPosX)
+		recthelper.setAnchorX(self.helpBanner.trans, isShowNext and self.rightBannerPosX or self.leftBannerPosX)
 	end
 
-	arg_21_0.helpBanner.simage:LoadImage(SLFramework.LanguageMgr.Instance:GetLangPathFromAssetPath(ResUrl.getTurnbackRecommendLangPath(var_21_0.icon)))
-	recthelper.setAnchorX(arg_21_0.helpBanner.trans, arg_21_1 and arg_21_0.rightBannerPosX or arg_21_0.leftBannerPosX)
+	self.helpBanner.simage:LoadImage(SLFramework.LanguageMgr.Instance:GetLangPathFromAssetPath(ResUrl.getTurnbackRecommendLangPath(targetConfig.icon)))
+	recthelper.setAnchorX(self.helpBanner.trans, isShowNext and self.rightBannerPosX or self.leftBannerPosX)
 
-	arg_21_0.helpBannerMoveTweenId = ZProj.TweenHelper.DOAnchorPosX(arg_21_0.helpBanner.trans, arg_21_0.centerBannerPosX, 0.5, arg_21_0.changeBanner, arg_21_0)
-	arg_21_0.mainBannerMoveTweenId = ZProj.TweenHelper.DOAnchorPosX(arg_21_0.mainBanner.trans, arg_21_1 and arg_21_0.leftBannerPosX or arg_21_0.rightBannerPosX, 0.5)
-	arg_21_0.isMoving = true
+	self.helpBannerMoveTweenId = ZProj.TweenHelper.DOAnchorPosX(self.helpBanner.trans, self.centerBannerPosX, 0.5, self.changeBanner, self)
+	self.mainBannerMoveTweenId = ZProj.TweenHelper.DOAnchorPosX(self.mainBanner.trans, isShowNext and self.leftBannerPosX or self.rightBannerPosX, 0.5)
+	self.isMoving = true
 end
 
-function var_0_0.refreshIndexItem(arg_22_0)
-	for iter_22_0, iter_22_1 in ipairs(arg_22_0.indexItemTab) do
-		gohelper.setActive(iter_22_1.nomalstar, iter_22_0 ~= arg_22_0.targetIndex)
-		gohelper.setActive(iter_22_1.lightstar, iter_22_0 == arg_22_0.targetIndex)
+function TurnbackNewRecommendView:refreshIndexItem()
+	for index, item in ipairs(self.indexItemTab) do
+		gohelper.setActive(item.nomalstar, index ~= self.targetIndex)
+		gohelper.setActive(item.lightstar, index == self.targetIndex)
 	end
 
-	local var_22_0 = arg_22_0.bannerConfigTab[arg_22_0.targetIndex]
+	local targetConfig = self.bannerConfigTab[self.targetIndex]
 
-	gohelper.setActive(arg_22_0._btnjump.gameObject, var_22_0 and var_22_0.jumpId > 0)
+	gohelper.setActive(self._btnjump.gameObject, targetConfig and targetConfig.jumpId > 0)
 end
 
-function var_0_0.changeBanner(arg_23_0)
-	arg_23_0.mainBanner, arg_23_0.helpBanner = arg_23_0.helpBanner, arg_23_0.mainBanner
-	arg_23_0.isMoving = false
+function TurnbackNewRecommendView:changeBanner()
+	self.mainBanner, self.helpBanner = self.helpBanner, self.mainBanner
+	self.isMoving = false
 end
 
-function var_0_0.dailyResetData(arg_24_0)
-	arg_24_0.targetIndex = 1
+function TurnbackNewRecommendView:dailyResetData()
+	self.targetIndex = 1
 
-	TurnbackRecommendModel.instance:initReommendShowState(arg_24_0.turnbackId)
-	arg_24_0:refreshUI()
-	arg_24_0:initBannerItem()
-	arg_24_0:setBannerPos(true)
-	arg_24_0:autoMoveBanner()
+	TurnbackRecommendModel.instance:initReommendShowState(self.turnbackId)
+	self:refreshUI()
+	self:initBannerItem()
+	self:setBannerPos(true)
+	self:autoMoveBanner()
 end
 
-function var_0_0.killMoveTween(arg_25_0)
-	if arg_25_0.mainBannerMoveTweenId then
-		ZProj.TweenHelper.KillById(arg_25_0.mainBannerMoveTweenId)
+function TurnbackNewRecommendView:killMoveTween()
+	if self.mainBannerMoveTweenId then
+		ZProj.TweenHelper.KillById(self.mainBannerMoveTweenId)
 	end
 
-	if arg_25_0.helpBannerMoveTweenId then
-		ZProj.TweenHelper.KillById(arg_25_0.helpBannerMoveTweenId)
+	if self.helpBannerMoveTweenId then
+		ZProj.TweenHelper.KillById(self.helpBannerMoveTweenId)
 	end
 end
 
-function var_0_0.onClose(arg_26_0)
-	arg_26_0._scroll:RemoveDragBeginListener()
-	arg_26_0._scroll:RemoveDragEndListener()
-	TaskDispatcher.cancelTask(arg_26_0.autoSwitch, arg_26_0)
+function TurnbackNewRecommendView:onClose()
+	self._scroll:RemoveDragBeginListener()
+	self._scroll:RemoveDragEndListener()
+	TaskDispatcher.cancelTask(self.autoSwitch, self)
 end
 
-function var_0_0.onDestroyView(arg_27_0)
-	for iter_27_0, iter_27_1 in pairs(arg_27_0.bannerTab) do
-		iter_27_1.simage:UnLoadImage()
+function TurnbackNewRecommendView:onDestroyView()
+	for _, v in pairs(self.bannerTab) do
+		v.simage:UnLoadImage()
 	end
 
-	arg_27_0:killMoveTween()
+	self:killMoveTween()
 end
 
-return var_0_0
+return TurnbackNewRecommendView

@@ -1,162 +1,164 @@
-﻿module("modules.logic.versionactivity2_2.warmup.view.V2a2_WarmUpLeftView_Day1", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/warmup/view/V2a2_WarmUpLeftView_Day1.lua
 
-local var_0_0 = require("modules.logic.versionactivity2_2.warmup.view.V2a2_WarmUpLeftView_DayBase")
-local var_0_1 = class("V2a2_WarmUpLeftView_Day1", var_0_0)
+module("modules.logic.versionactivity2_2.warmup.view.V2a2_WarmUpLeftView_Day1", package.seeall)
 
-function var_0_1.onInitView(arg_1_0)
-	arg_1_0._btn1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "before/#btn_1")
-	arg_1_0._simageicon1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "before/#simage_icon1")
-	arg_1_0._simageicon2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "after/#simage_icon2")
+local Base = require("modules.logic.versionactivity2_2.warmup.view.V2a2_WarmUpLeftView_DayBase")
+local V2a2_WarmUpLeftView_Day1 = class("V2a2_WarmUpLeftView_Day1", Base)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V2a2_WarmUpLeftView_Day1:onInitView()
+	self._btn1 = gohelper.findChildButtonWithAudio(self.viewGO, "before/#btn_1")
+	self._simageicon1 = gohelper.findChildSingleImage(self.viewGO, "before/#simage_icon1")
+	self._simageicon2 = gohelper.findChildSingleImage(self.viewGO, "after/#simage_icon2")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_1.addEvents(arg_2_0)
-	arg_2_0._btn1:AddClickListener(arg_2_0._btn1OnClick, arg_2_0)
+function V2a2_WarmUpLeftView_Day1:addEvents()
+	self._btn1:AddClickListener(self._btn1OnClick, self)
 end
 
-function var_0_1.removeEvents(arg_3_0)
-	arg_3_0._btn1:RemoveClickListener()
+function V2a2_WarmUpLeftView_Day1:removeEvents()
+	self._btn1:RemoveClickListener()
 end
 
-local var_0_2 = {
+local States = {
 	Clicked = 1
 }
 
-function var_0_1._btn1OnClick(arg_4_0)
-	arg_4_0:_setActive_guide(false)
+function V2a2_WarmUpLeftView_Day1:_btn1OnClick()
+	self:_setActive_guide(false)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_common_click_20220215)
 end
 
-function var_0_1.ctor(arg_5_0, arg_5_1)
-	var_0_0.ctor(arg_5_0, arg_5_1)
+function V2a2_WarmUpLeftView_Day1:ctor(ctorParam)
+	Base.ctor(self, ctorParam)
 
-	arg_5_0._dragEnabled = false
-	arg_5_0._needWaitCount = 0
-	arg_5_0._drag = UIDragListenerHelper.New()
+	self._dragEnabled = false
+	self._needWaitCount = 0
+	self._drag = UIDragListenerHelper.New()
 end
 
-function var_0_1._editableInitView(arg_6_0)
-	var_0_0._editableInitView(arg_6_0)
+function V2a2_WarmUpLeftView_Day1:_editableInitView()
+	Base._editableInitView(self)
 
-	arg_6_0._guideGo = gohelper.findChild(arg_6_0.viewGO, "guide_day1")
-	arg_6_0._startGo = arg_6_0._btn1.gameObject
-	arg_6_0._startTrans = arg_6_0._startGo.transform
-	arg_6_0._startX, arg_6_0._startY = recthelper.getAnchor(arg_6_0._startTrans)
-	arg_6_0._endGo = gohelper.findChild(arg_6_0.viewGO, "before/img_xieqian1")
-	arg_6_0._endTrans = gohelper.findChild(arg_6_0.viewGO, "before/#go_dragEnd").transform
-	arg_6_0._towardDir = Vector3.Normalize(arg_6_0._endTrans.position - arg_6_0._startTrans.position)
+	self._guideGo = gohelper.findChild(self.viewGO, "guide_day1")
+	self._startGo = self._btn1.gameObject
+	self._startTrans = self._startGo.transform
+	self._startX, self._startY = recthelper.getAnchor(self._startTrans)
+	self._endGo = gohelper.findChild(self.viewGO, "before/img_xieqian1")
+	self._endTrans = gohelper.findChild(self.viewGO, "before/#go_dragEnd").transform
+	self._towardDir = Vector3.Normalize(self._endTrans.position - self._startTrans.position)
 
-	arg_6_0._drag:create(arg_6_0._startGo)
-	arg_6_0._drag:registerCallback(arg_6_0._drag.EventBegin, arg_6_0._onBeginDrag, arg_6_0)
-	arg_6_0._drag:registerCallback(arg_6_0._drag.EventDragging, arg_6_0._onDrag, arg_6_0)
-	arg_6_0._drag:registerCallback(arg_6_0._drag.EventEnd, arg_6_0._onEndDrag, arg_6_0)
+	self._drag:create(self._startGo)
+	self._drag:registerCallback(self._drag.EventBegin, self._onBeginDrag, self)
+	self._drag:registerCallback(self._drag.EventDragging, self._onDrag, self)
+	self._drag:registerCallback(self._drag.EventEnd, self._onEndDrag, self)
 end
 
-function var_0_1._checkCanDrag(arg_7_0)
-	return not arg_7_0:_canDrag()
+function V2a2_WarmUpLeftView_Day1:_checkCanDrag()
+	return not self:_canDrag()
 end
 
-function var_0_1._canDrag(arg_8_0)
-	return arg_8_0._dragEnabled
+function V2a2_WarmUpLeftView_Day1:_canDrag()
+	return self._dragEnabled
 end
 
-function var_0_1._onBeginDrag(arg_9_0)
-	if not arg_9_0:_canDrag() then
+function V2a2_WarmUpLeftView_Day1:_onBeginDrag()
+	if not self:_canDrag() then
 		return
 	end
 
-	var_0_0._onDragBegin(arg_9_0)
-	arg_9_0:playAnimRaw_before_click(0, 0)
+	Base._onDragBegin(self)
+	self:playAnimRaw_before_click(0, 0)
 end
 
-function var_0_1._onDrag(arg_10_0, arg_10_1)
-	if not arg_10_0:_canDrag() then
+function V2a2_WarmUpLeftView_Day1:_onDrag(dragObj)
+	if not self:_canDrag() then
 		return
 	end
 
-	arg_10_1:tweenToMousePosWithConstrainedDirV2(arg_10_0._towardDir, arg_10_0._endTrans)
+	dragObj:tweenToMousePosWithConstrainedDirV2(self._towardDir, self._endTrans)
 
-	local var_10_0 = recthelper.uiPosToScreenPos(arg_10_1:transform())
+	local screenPosV2 = recthelper.uiPosToScreenPos(dragObj:transform())
 
-	if gohelper.isMouseOverGo(arg_10_0._endTrans, var_10_0) then
-		arg_10_0._dragEnabled = false
+	if gohelper.isMouseOverGo(self._endTrans, screenPosV2) then
+		self._dragEnabled = false
 
-		arg_10_0:saveState(var_0_2.Clicked)
-		arg_10_0:setPosToEnd(arg_10_0._endTrans, arg_10_1:transform(), true, nil, arg_10_0._onStateClicked, arg_10_0)
+		self:saveState(States.Clicked)
+		self:setPosToEnd(self._endTrans, dragObj:transform(), true, nil, self._onStateClicked, self)
 	end
 end
 
-function var_0_1._onStateClicked(arg_11_0)
-	arg_11_0:playAnim_before_finish(arg_11_0._finish_before_doneCb, arg_11_0)
+function V2a2_WarmUpLeftView_Day1:_onStateClicked()
+	self:playAnim_before_finish(self._finish_before_doneCb, self)
 end
 
-function var_0_1._finish_before_doneCb(arg_12_0)
+function V2a2_WarmUpLeftView_Day1:_finish_before_doneCb()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_youyu_yure_release_20220216)
 
-	arg_12_0._needWaitCount = 2
+	self._needWaitCount = 2
 
-	arg_12_0:playAnim_before_out(arg_12_0._onAfterDone, arg_12_0)
-	arg_12_0:playAnim_after_in(arg_12_0._onAfterDone, arg_12_0)
+	self:playAnim_before_out(self._onAfterDone, self)
+	self:playAnim_after_in(self._onAfterDone, self)
 end
 
-function var_0_1._onAfterDone(arg_13_0)
-	arg_13_0._needWaitCount = arg_13_0._needWaitCount - 1
+function V2a2_WarmUpLeftView_Day1:_onAfterDone()
+	self._needWaitCount = self._needWaitCount - 1
 
-	if arg_13_0._needWaitCount > 0 then
+	if self._needWaitCount > 0 then
 		return
 	end
 
-	arg_13_0:markIsFinishedInteractive(true)
-	arg_13_0:saveStateDone(true)
-	arg_13_0:setActive_before(false)
-	arg_13_0:setActive_after(true)
-	arg_13_0:openDesc()
+	self:markIsFinishedInteractive(true)
+	self:saveStateDone(true)
+	self:setActive_before(false)
+	self:setActive_after(true)
+	self:openDesc()
 end
 
-function var_0_1._onEndDrag(arg_14_0)
-	if not arg_14_0:_canDrag() then
+function V2a2_WarmUpLeftView_Day1:_onEndDrag()
+	if not self:_canDrag() then
 		return
 	end
 
-	arg_14_0:playAnimRaw_before_click_r(0, 0)
-	arg_14_0:tweenAnchorPos(arg_14_0._startTrans, arg_14_0._startX, arg_14_0._startY)
+	self:playAnimRaw_before_click_r(0, 0)
+	self:tweenAnchorPos(self._startTrans, self._startX, self._startY)
 end
 
-function var_0_1.onDestroyView(arg_15_0)
-	GameUtil.onDestroyViewMember(arg_15_0, "_drag")
-	var_0_0.onDestroyView(arg_15_0)
+function V2a2_WarmUpLeftView_Day1:onDestroyView()
+	GameUtil.onDestroyViewMember(self, "_drag")
+	Base.onDestroyView(self)
 end
 
-function var_0_1.setData(arg_16_0)
-	var_0_0.setData(arg_16_0)
+function V2a2_WarmUpLeftView_Day1:setData()
+	Base.setData(self)
 
-	local var_16_0 = arg_16_0:checkIsDone()
+	local isDone = self:checkIsDone()
 
-	arg_16_0:setActive_before(not var_16_0)
-	arg_16_0:setActive_after(var_16_0)
+	self:setActive_before(not isDone)
+	self:setActive_after(isDone)
 
-	if var_16_0 then
-		arg_16_0._dragEnabled = false
+	if isDone then
+		self._dragEnabled = false
 	else
-		local var_16_1 = arg_16_0:getState()
+		local state = self:getState()
 
-		if var_16_1 == 0 then
-			arg_16_0._dragEnabled = true
+		if state == 0 then
+			self._dragEnabled = true
 
-			recthelper.setAnchor(arg_16_0._startTrans, arg_16_0._startX, arg_16_0._startY)
-			arg_16_0:playAnimRaw_before_idle(0, 1)
-		elseif var_0_2.Clicked == var_16_1 then
-			arg_16_0._dragEnabled = false
+			recthelper.setAnchor(self._startTrans, self._startX, self._startY)
+			self:playAnimRaw_before_idle(0, 1)
+		elseif States.Clicked == state then
+			self._dragEnabled = false
 
-			arg_16_0:setPosToEnd(arg_16_0._endTrans, arg_16_0._startTrans)
-			arg_16_0:_onStateClicked()
+			self:setPosToEnd(self._endTrans, self._startTrans)
+			self:_onStateClicked()
 		else
-			logError("[V2a2_WarmUpLeftView_Day1] invalid state:" .. var_16_1)
+			logError("[V2a2_WarmUpLeftView_Day1] invalid state:" .. state)
 		end
 	end
 end
 
-return var_0_1
+return V2a2_WarmUpLeftView_Day1

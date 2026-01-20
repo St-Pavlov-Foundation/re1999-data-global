@@ -1,67 +1,71 @@
-﻿module("modules.logic.versionactivity2_5.enter.view.subview.VersionActivity2_5AutoChessEnterView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/enter/view/subview/VersionActivity2_5AutoChessEnterView.lua
 
-local var_0_0 = class("VersionActivity2_5AutoChessEnterView", BaseView)
+module("modules.logic.versionactivity2_5.enter.view.subview.VersionActivity2_5AutoChessEnterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "LimitTime/#txt_LimitTime")
-	arg_1_0._txtDesc = gohelper.findChildText(arg_1_0.viewGO, "#txt_Desc")
-	arg_1_0._btnEnter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Enter")
-	arg_1_0._btnAchievement = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Achievement")
-	arg_1_0._goTip = gohelper.findChild(arg_1_0.viewGO, "#go_Tip")
-	arg_1_0._txtTip = gohelper.findChildText(arg_1_0.viewGO, "#go_Tip/#txt_Tip")
+local VersionActivity2_5AutoChessEnterView = class("VersionActivity2_5AutoChessEnterView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity2_5AutoChessEnterView:onInitView()
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "LimitTime/#txt_LimitTime")
+	self._txtDesc = gohelper.findChildText(self.viewGO, "#txt_Desc")
+	self._btnEnter = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Enter")
+	self._btnAchievement = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Achievement")
+	self._goTip = gohelper.findChild(self.viewGO, "#go_Tip")
+	self._txtTip = gohelper.findChildText(self.viewGO, "#go_Tip/#txt_Tip")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnEnter:AddClickListener(arg_2_0._btnEnterOnClick, arg_2_0)
-	arg_2_0._btnAchievement:AddClickListener(arg_2_0._btnAchievementOnClick, arg_2_0)
+function VersionActivity2_5AutoChessEnterView:addEvents()
+	self._btnEnter:AddClickListener(self._btnEnterOnClick, self)
+	self._btnAchievement:AddClickListener(self._btnAchievementOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnEnter:RemoveClickListener()
-	arg_3_0._btnAchievement:RemoveClickListener()
+function VersionActivity2_5AutoChessEnterView:removeEvents()
+	self._btnEnter:RemoveClickListener()
+	self._btnAchievement:RemoveClickListener()
 end
 
-function var_0_0._btnEnterOnClick(arg_4_0)
-	if not Activity182Model.instance:getActMo() then
+function VersionActivity2_5AutoChessEnterView:_btnEnterOnClick()
+	local actMo = Activity182Model.instance:getActMo()
+
+	if not actMo then
 		return
 	end
 
 	AutoChessController.instance:openMainView()
 end
 
-function var_0_0._btnAchievementOnClick(arg_5_0)
-	local var_5_0 = arg_5_0.config.achievementJumpId
+function VersionActivity2_5AutoChessEnterView:_btnAchievementOnClick()
+	local jumpId = self.config.achievementJumpId
 
-	JumpController.instance:jump(var_5_0)
+	JumpController.instance:jump(jumpId)
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0.actId = arg_6_0.viewContainer.activityId
-	arg_6_0.config = ActivityConfig.instance:getActivityCo(arg_6_0.actId)
-	arg_6_0.animComp = VersionActivity2_5SubAnimatorComp.get(arg_6_0.viewGO, arg_6_0)
+function VersionActivity2_5AutoChessEnterView:_editableInitView()
+	self.actId = self.viewContainer.activityId
+	self.config = ActivityConfig.instance:getActivityCo(self.actId)
+	self.animComp = VersionActivity2_5SubAnimatorComp.get(self.viewGO, self)
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0.animComp:playOpenAnim()
+function VersionActivity2_5AutoChessEnterView:onOpen()
+	self.animComp:playOpenAnim()
 
-	arg_7_0._txtDesc.text = arg_7_0.config.actDesc
+	self._txtDesc.text = self.config.actDesc
 
-	arg_7_0:_showLeftTime()
-	TaskDispatcher.runRepeat(arg_7_0._showLeftTime, arg_7_0, 1)
-	Activity182Rpc.instance:sendGetAct182InfoRequest(arg_7_0.actId)
+	self:_showLeftTime()
+	TaskDispatcher.runRepeat(self._showLeftTime, self, 1)
+	Activity182Rpc.instance:sendGetAct182InfoRequest(self.actId)
 end
 
-function var_0_0.onDestroyView(arg_8_0)
-	arg_8_0.animComp:destroy()
-	TaskDispatcher.cancelTask(arg_8_0._showLeftTime, arg_8_0)
+function VersionActivity2_5AutoChessEnterView:onDestroyView()
+	self.animComp:destroy()
+	TaskDispatcher.cancelTask(self._showLeftTime, self)
 end
 
-function var_0_0._showLeftTime(arg_9_0)
-	arg_9_0._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(arg_9_0.actId)
+function VersionActivity2_5AutoChessEnterView:_showLeftTime()
+	self._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(self.actId)
 end
 
-return var_0_0
+return VersionActivity2_5AutoChessEnterView

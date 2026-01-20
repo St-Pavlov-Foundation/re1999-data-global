@@ -1,61 +1,64 @@
-﻿module("modules.logic.versionactivity1_4.dailyallowance.DailyAllowanceView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/dailyallowance/DailyAllowanceView.lua
 
-local var_0_0 = class("DailyAllowanceView", BaseView)
+module("modules.logic.versionactivity1_4.dailyallowance.DailyAllowanceView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._simagePresent = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_Present")
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "LimitTime/#txt_LimitTime")
-	arg_1_0._txtDescr = gohelper.findChildText(arg_1_0.viewGO, "#txt_Descr")
+local DailyAllowanceView = class("DailyAllowanceView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function DailyAllowanceView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._simagePresent = gohelper.findChildSingleImage(self.viewGO, "#simage_Present")
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "LimitTime/#txt_LimitTime")
+	self._txtDescr = gohelper.findChildText(self.viewGO, "#txt_Descr")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function DailyAllowanceView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function DailyAllowanceView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._simageFullBG:LoadImage(ResUrl.getV1Aa4DailyAllowanceIcon("v1a4_gold_fullbg"))
-	arg_4_0._simagePresent:LoadImage(ResUrl.getV1Aa4DailyAllowanceIcon("v1a4_gold_present"))
+function DailyAllowanceView:_editableInitView()
+	self._simageFullBG:LoadImage(ResUrl.getV1Aa4DailyAllowanceIcon("v1a4_gold_fullbg"))
+	self._simagePresent:LoadImage(ResUrl.getV1Aa4DailyAllowanceIcon("v1a4_gold_present"))
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
-	arg_5_0:_refreshUI()
+function DailyAllowanceView:onUpdateParam()
+	self:_refreshUI()
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0._actId = arg_6_0.viewParam.actId
+function DailyAllowanceView:onOpen()
+	self._actId = self.viewParam.actId
 
-	local var_6_0 = arg_6_0.viewParam.parent
+	local parentGO = self.viewParam.parent
 
-	gohelper.addChild(var_6_0, arg_6_0.viewGO)
-	arg_6_0:_refreshUI()
+	gohelper.addChild(parentGO, self.viewGO)
+	self:_refreshUI()
 end
 
-function var_0_0._refreshUI(arg_7_0)
-	local var_7_0 = ActivityModel.instance:getActivityInfo()[arg_7_0._actId]:getRealEndTimeStamp() - ServerTime.now()
-	local var_7_1 = Mathf.Floor(var_7_0 / TimeUtil.OneDaySecond)
-	local var_7_2 = var_7_0 % TimeUtil.OneDaySecond
-	local var_7_3 = Mathf.Floor(var_7_2 / TimeUtil.OneHourSecond)
-	local var_7_4 = var_7_1 .. luaLang("time_day") .. var_7_3 .. luaLang("time_hour2")
+function DailyAllowanceView:_refreshUI()
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[self._actId]
+	local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
+	local day = Mathf.Floor(offsetSecond / TimeUtil.OneDaySecond)
+	local hourSecond = offsetSecond % TimeUtil.OneDaySecond
+	local hour = Mathf.Floor(hourSecond / TimeUtil.OneHourSecond)
+	local remainTime = day .. luaLang("time_day") .. hour .. luaLang("time_hour2")
 
-	arg_7_0._txtLimitTime.text = string.format(luaLang("remain"), var_7_4)
+	self._txtLimitTime.text = string.format(luaLang("remain"), remainTime)
 end
 
-function var_0_0.onClose(arg_8_0)
+function DailyAllowanceView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
-	arg_9_0._simageFullBG:UnLoadImage()
-	arg_9_0._simagePresent:UnLoadImage()
+function DailyAllowanceView:onDestroyView()
+	self._simageFullBG:UnLoadImage()
+	self._simagePresent:UnLoadImage()
 end
 
-return var_0_0
+return DailyAllowanceView

@@ -1,174 +1,178 @@
-﻿module("modules.logic.dungeon.model.DungeonAssistHeroMO", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/model/DungeonAssistHeroMO.lua
 
-local var_0_0 = pureTable("DungeonAssistHeroMO")
+module("modules.logic.dungeon.model.DungeonAssistHeroMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	if not arg_1_1 or not arg_1_2 then
+local DungeonAssistHeroMO = pureTable("DungeonAssistHeroMO")
+
+function DungeonAssistHeroMO:init(assistType, heroInfo)
+	if not assistType or not heroInfo then
 		return false
 	end
 
-	arg_1_0.assistType = arg_1_1
-	arg_1_0.heroUid = arg_1_2.heroUid
-	arg_1_0.userId = arg_1_2.userId
-	arg_1_0.name = arg_1_2.name
-	arg_1_0.userLevel = arg_1_2.userLevel
-	arg_1_0.portrait = arg_1_2.portrait
-	arg_1_0.bg = arg_1_2.bg
-	arg_1_0.isFriend = arg_1_2.isFriend
-	arg_1_0.heroId = arg_1_2.heroId
-	arg_1_0.level = arg_1_2.level
-	arg_1_0.rank = arg_1_2.rank
-	arg_1_0.skin = arg_1_2.skin
-	arg_1_0.passiveSkillLevel = arg_1_2.passiveSkillLevel
-	arg_1_0.exSkillLevel = arg_1_2.exSkillLevel
-	arg_1_0.talent = arg_1_2.talent
-	arg_1_0.balanceLevel = arg_1_2.balanceLevel
-	arg_1_0.isOpenTalent = arg_1_2.isOpenTalent
-	arg_1_0.style = arg_1_2.style
-	arg_1_0.originalTalentCubeInfos = nil
+	self.assistType = assistType
+	self.heroUid = heroInfo.heroUid
+	self.userId = heroInfo.userId
+	self.name = heroInfo.name
+	self.userLevel = heroInfo.userLevel
+	self.portrait = heroInfo.portrait
+	self.bg = heroInfo.bg
+	self.isFriend = heroInfo.isFriend
+	self.heroId = heroInfo.heroId
+	self.level = heroInfo.level
+	self.rank = heroInfo.rank
+	self.skin = heroInfo.skin
+	self.passiveSkillLevel = heroInfo.passiveSkillLevel
+	self.exSkillLevel = heroInfo.exSkillLevel
+	self.talent = heroInfo.talent
+	self.balanceLevel = heroInfo.balanceLevel
+	self.isOpenTalent = heroInfo.isOpenTalent
+	self.style = heroInfo.style
+	self.originalTalentCubeInfos = nil
 
-	if arg_1_2.talentCubeInfos then
-		arg_1_0.talentCubeInfos = HeroTalentCubeInfosMO.New()
+	if heroInfo.talentCubeInfos then
+		self.talentCubeInfos = HeroTalentCubeInfosMO.New()
 
-		arg_1_0.talentCubeInfos:init(arg_1_2.talentCubeInfos)
-		arg_1_0.talentCubeInfos:setOwnData(arg_1_0.heroId, arg_1_0.talent)
+		self.talentCubeInfos:init(heroInfo.talentCubeInfos)
+		self.talentCubeInfos:setOwnData(self.heroId, self.talent)
 
-		arg_1_0.originalTalentCubeInfos = {}
+		self.originalTalentCubeInfos = {}
 
-		for iter_1_0, iter_1_1 in ipairs(arg_1_2.talentCubeInfos) do
-			arg_1_0.originalTalentCubeInfos[iter_1_0] = {}
-			arg_1_0.originalTalentCubeInfos[iter_1_0].cubeId = iter_1_1.cubeId
-			arg_1_0.originalTalentCubeInfos[iter_1_0].direction = iter_1_1.direction
-			arg_1_0.originalTalentCubeInfos[iter_1_0].posX = iter_1_1.posX
-			arg_1_0.originalTalentCubeInfos[iter_1_0].posY = iter_1_1.posY
+		for i, cubeInfo in ipairs(heroInfo.talentCubeInfos) do
+			self.originalTalentCubeInfos[i] = {}
+			self.originalTalentCubeInfos[i].cubeId = cubeInfo.cubeId
+			self.originalTalentCubeInfos[i].direction = cubeInfo.direction
+			self.originalTalentCubeInfos[i].posX = cubeInfo.posX
+			self.originalTalentCubeInfos[i].posY = cubeInfo.posY
 		end
 	end
 
-	arg_1_0.destinyRank = arg_1_2.destinyRank
-	arg_1_0.destinyLevel = arg_1_2.destinyLevel
-	arg_1_0.destinyStone = arg_1_2.destinyStone
-	arg_1_0.extraStr = arg_1_2.extraStr
+	self.destinyRank = heroInfo.destinyRank
+	self.destinyLevel = heroInfo.destinyLevel
+	self.destinyStone = heroInfo.destinyStone
+	self.extraStr = heroInfo.extraStr
 
 	return true
 end
 
-function var_0_0.getHeroInfo(arg_2_0)
-	return {
-		heroUid = arg_2_0:getHeroUid(),
-		userId = arg_2_0:getUserId(),
-		name = arg_2_0:getName(),
-		userLevel = arg_2_0:getUserLevel(),
-		portrait = arg_2_0:getPortrait(),
-		bg = arg_2_0:getBg(),
-		isFriend = arg_2_0:getIsFriend(),
-		heroId = arg_2_0:getHeroId(),
-		level = arg_2_0:getLevel(),
-		rank = arg_2_0:getRank(),
-		skin = arg_2_0:getSkin(),
-		passiveSkillLevel = arg_2_0:getPassiveSkillLevel(),
-		exSkillLevel = arg_2_0:getExSkillLevel(),
-		talent = arg_2_0:getTalent(),
-		talentCubeInfos = arg_2_0:getOriginalTalentCubeInfos(),
-		balanceLevel = arg_2_0:getBalanceLevel(),
-		isOpenTalent = arg_2_0:getIsOpenTalent(),
-		style = arg_2_0:getTalentStyle(),
-		destinyRank = arg_2_0:getDestinyRank(),
-		destinyLevel = arg_2_0:getDestinyLevel(),
-		destinyStone = arg_2_0:getDestinyStone(),
-		extraStr = arg_2_0:getExtraStr()
+function DungeonAssistHeroMO:getHeroInfo()
+	local info = {
+		heroUid = self:getHeroUid(),
+		userId = self:getUserId(),
+		name = self:getName(),
+		userLevel = self:getUserLevel(),
+		portrait = self:getPortrait(),
+		bg = self:getBg(),
+		isFriend = self:getIsFriend(),
+		heroId = self:getHeroId(),
+		level = self:getLevel(),
+		rank = self:getRank(),
+		skin = self:getSkin(),
+		passiveSkillLevel = self:getPassiveSkillLevel(),
+		exSkillLevel = self:getExSkillLevel(),
+		talent = self:getTalent(),
+		talentCubeInfos = self:getOriginalTalentCubeInfos(),
+		balanceLevel = self:getBalanceLevel(),
+		isOpenTalent = self:getIsOpenTalent(),
+		style = self:getTalentStyle(),
+		destinyRank = self:getDestinyRank(),
+		destinyLevel = self:getDestinyLevel(),
+		destinyStone = self:getDestinyStone(),
+		extraStr = self:getExtraStr()
 	}
+
+	return info
 end
 
-function var_0_0.getHeroUid(arg_3_0)
-	return arg_3_0.heroUid
+function DungeonAssistHeroMO:getHeroUid()
+	return self.heroUid
 end
 
-function var_0_0.getUserId(arg_4_0)
-	return arg_4_0.userId
+function DungeonAssistHeroMO:getUserId()
+	return self.userId
 end
 
-function var_0_0.getName(arg_5_0)
-	return arg_5_0.name
+function DungeonAssistHeroMO:getName()
+	return self.name
 end
 
-function var_0_0.getUserLevel(arg_6_0)
-	return arg_6_0.userLevel or 0
+function DungeonAssistHeroMO:getUserLevel()
+	return self.userLevel or 0
 end
 
-function var_0_0.getPortrait(arg_7_0)
-	return arg_7_0.portrait
+function DungeonAssistHeroMO:getPortrait()
+	return self.portrait
 end
 
-function var_0_0.getBg(arg_8_0)
-	return arg_8_0.bg
+function DungeonAssistHeroMO:getBg()
+	return self.bg
 end
 
-function var_0_0.getIsFriend(arg_9_0)
-	return arg_9_0.isFriend
+function DungeonAssistHeroMO:getIsFriend()
+	return self.isFriend
 end
 
-function var_0_0.getHeroId(arg_10_0)
-	return arg_10_0.heroId
+function DungeonAssistHeroMO:getHeroId()
+	return self.heroId
 end
 
-function var_0_0.getLevel(arg_11_0)
-	return arg_11_0.level or 0
+function DungeonAssistHeroMO:getLevel()
+	return self.level or 0
 end
 
-function var_0_0.getRank(arg_12_0)
-	return arg_12_0.rank
+function DungeonAssistHeroMO:getRank()
+	return self.rank
 end
 
-function var_0_0.getSkin(arg_13_0)
-	return arg_13_0.skin
+function DungeonAssistHeroMO:getSkin()
+	return self.skin
 end
 
-function var_0_0.getPassiveSkillLevel(arg_14_0)
-	return arg_14_0.passiveSkillLevel
+function DungeonAssistHeroMO:getPassiveSkillLevel()
+	return self.passiveSkillLevel
 end
 
-function var_0_0.getExSkillLevel(arg_15_0)
-	return arg_15_0.exSkillLevel
+function DungeonAssistHeroMO:getExSkillLevel()
+	return self.exSkillLevel
 end
 
-function var_0_0.getTalent(arg_16_0)
-	return arg_16_0.talent
+function DungeonAssistHeroMO:getTalent()
+	return self.talent
 end
 
-function var_0_0.getOriginalTalentCubeInfos(arg_17_0)
-	return arg_17_0.originalTalentCubeInfos
+function DungeonAssistHeroMO:getOriginalTalentCubeInfos()
+	return self.originalTalentCubeInfos
 end
 
-function var_0_0.getTalentCubeInfos(arg_18_0)
-	return arg_18_0.talentCubeInfos
+function DungeonAssistHeroMO:getTalentCubeInfos()
+	return self.talentCubeInfos
 end
 
-function var_0_0.getBalanceLevel(arg_19_0)
-	return arg_19_0.balanceLevel or 0
+function DungeonAssistHeroMO:getBalanceLevel()
+	return self.balanceLevel or 0
 end
 
-function var_0_0.getIsOpenTalent(arg_20_0)
-	return arg_20_0.isOpenTalent
+function DungeonAssistHeroMO:getIsOpenTalent()
+	return self.isOpenTalent
 end
 
-function var_0_0.getTalentStyle(arg_21_0)
-	return arg_21_0.style
+function DungeonAssistHeroMO:getTalentStyle()
+	return self.style
 end
 
-function var_0_0.getDestinyRank(arg_22_0)
-	return arg_22_0.destinyRank
+function DungeonAssistHeroMO:getDestinyRank()
+	return self.destinyRank
 end
 
-function var_0_0.getDestinyLevel(arg_23_0)
-	return arg_23_0.destinyLevel
+function DungeonAssistHeroMO:getDestinyLevel()
+	return self.destinyLevel
 end
 
-function var_0_0.getDestinyStone(arg_24_0)
-	return arg_24_0.destinyStone
+function DungeonAssistHeroMO:getDestinyStone()
+	return self.destinyStone
 end
 
-function var_0_0.getExtraStr(arg_25_0)
-	return arg_25_0.extraStr
+function DungeonAssistHeroMO:getExtraStr()
+	return self.extraStr
 end
 
-return var_0_0
+return DungeonAssistHeroMO

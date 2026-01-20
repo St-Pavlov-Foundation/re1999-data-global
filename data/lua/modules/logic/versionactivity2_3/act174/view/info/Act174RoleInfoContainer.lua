@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity2_3.act174.view.info.Act174RoleInfoContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/act174/view/info/Act174RoleInfoContainer.lua
 
-local var_0_0 = class("Act174RoleInfoContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_3.act174.view.info.Act174RoleInfoContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Act174RoleInfoContainer = class("Act174RoleInfoContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Act174RoleInfo.New())
+function Act174RoleInfoContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Act174RoleInfo.New())
+
+	return views
 end
 
-return var_0_0
+return Act174RoleInfoContainer

@@ -1,135 +1,142 @@
-﻿module("modules.logic.handbook.view.HandbookCGItem", package.seeall)
+﻿-- chunkname: @modules/logic/handbook/view/HandbookCGItem.lua
 
-local var_0_0 = class("HandbookCGItem", ListScrollCellExtend)
+module("modules.logic.handbook.view.HandbookCGItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gotitle = gohelper.findChild(arg_1_0.viewGO, "#go_title")
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "#go_title/#txt_time")
-	arg_1_0._txtmessycodetime = gohelper.findChildText(arg_1_0.viewGO, "#go_title/#txt_messycodetime")
-	arg_1_0._txttitleName = gohelper.findChildText(arg_1_0.viewGO, "#go_title/#txt_titleName")
-	arg_1_0._txttitleNameEN = gohelper.findChildText(arg_1_0.viewGO, "#go_title/#txt_titleNameEN")
-	arg_1_0._gocg = gohelper.findChild(arg_1_0.viewGO, "#go_cg")
+local HandbookCGItem = class("HandbookCGItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function HandbookCGItem:onInitView()
+	self._gotitle = gohelper.findChild(self.viewGO, "#go_title")
+	self._txttime = gohelper.findChildText(self.viewGO, "#go_title/#txt_time")
+	self._txtmessycodetime = gohelper.findChildText(self.viewGO, "#go_title/#txt_messycodetime")
+	self._txttitleName = gohelper.findChildText(self.viewGO, "#go_title/#txt_titleName")
+	self._txttitleNameEN = gohelper.findChildText(self.viewGO, "#go_title/#txt_titleNameEN")
+	self._gocg = gohelper.findChild(self.viewGO, "#go_cg")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function HandbookCGItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function HandbookCGItem:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0:addEventCb(HandbookController.instance, HandbookEvent.OnReadInfoChanged, arg_4_0._onReadInfoChanged, arg_4_0)
+function HandbookCGItem:_editableInitView()
+	self:addEventCb(HandbookController.instance, HandbookEvent.OnReadInfoChanged, self._onReadInfoChanged, self)
 
-	arg_4_0._cgItemList = {}
+	self._cgItemList = {}
 
-	for iter_4_0 = 1, 3 do
-		local var_4_0 = arg_4_0:getUserDataTb_()
+	for i = 1, 3 do
+		local cgItem = self:getUserDataTb_()
 
-		var_4_0.go = gohelper.findChild(arg_4_0._gocg, "go_cg" .. iter_4_0)
-		var_4_0.simagecgicon = gohelper.findChildSingleImage(var_4_0.go, "mask/simage_cgicon")
-		var_4_0.gonew = gohelper.findChild(var_4_0.go, "go_new")
-		var_4_0.btnclick = gohelper.findChildButtonWithAudio(var_4_0.go, "btn_click", AudioEnum.UI.play_ui_screenplay_photo_open)
+		cgItem.go = gohelper.findChild(self._gocg, "go_cg" .. i)
+		cgItem.simagecgicon = gohelper.findChildSingleImage(cgItem.go, "mask/simage_cgicon")
+		cgItem.gonew = gohelper.findChild(cgItem.go, "go_new")
+		cgItem.btnclick = gohelper.findChildButtonWithAudio(cgItem.go, "btn_click", AudioEnum.UI.play_ui_screenplay_photo_open)
 
-		var_4_0.btnclick:AddClickListener(arg_4_0._btnclickOnClick, arg_4_0, iter_4_0)
-		table.insert(arg_4_0._cgItemList, var_4_0)
+		cgItem.btnclick:AddClickListener(self._btnclickOnClick, self, i)
+		table.insert(self._cgItemList, cgItem)
 	end
 end
 
-function var_0_0._btnclickOnClick(arg_5_0, arg_5_1)
-	if arg_5_0._mo.isTitle then
+function HandbookCGItem:_btnclickOnClick(index)
+	local isTitle = self._mo.isTitle
+
+	if isTitle then
 		return
 	end
 
-	local var_5_0 = arg_5_0._mo.cgList[arg_5_1]
+	local cgList = self._mo.cgList
+	local config = cgList[index]
 
-	if not var_5_0 then
+	if not config then
 		return
 	end
 
 	HandbookController.instance:openCGDetailView({
-		id = var_5_0.id,
-		cgType = arg_5_0._cgType
+		id = config.id,
+		cgType = self._cgType
 	})
 
-	local var_5_1 = arg_5_0._cgItemList[arg_5_1]
+	local cgItem = self._cgItemList[index]
 
-	gohelper.setActive(var_5_1.gonew, false)
+	gohelper.setActive(cgItem.gonew, false)
 end
 
-function var_0_0._refreshUI(arg_6_0)
-	gohelper.setActive(arg_6_0._gotitle, arg_6_0._mo.isTitle)
-	gohelper.setActive(arg_6_0._gocg, not arg_6_0._mo.isTitle)
+function HandbookCGItem:_refreshUI()
+	gohelper.setActive(self._gotitle, self._mo.isTitle)
+	gohelper.setActive(self._gocg, not self._mo.isTitle)
 
-	if arg_6_0._mo.isTitle then
-		local var_6_0 = arg_6_0._mo.storyChapterId
-		local var_6_1 = HandbookConfig.instance:getStoryChapterConfig(var_6_0)
+	if self._mo.isTitle then
+		local storyChapterId = self._mo.storyChapterId
+		local storyChapterConfig = HandbookConfig.instance:getStoryChapterConfig(storyChapterId)
 
-		arg_6_0._txttitleName.text = var_6_1.name
-		arg_6_0._txttitleNameEN.text = var_6_1.nameEn
+		self._txttitleName.text = storyChapterConfig.name
+		self._txttitleNameEN.text = storyChapterConfig.nameEn
 
-		local var_6_2 = GameUtil.utf8isnum(var_6_1.year)
+		local isnum = GameUtil.utf8isnum(storyChapterConfig.year)
 
-		gohelper.setActive(arg_6_0._txttime.gameObject, var_6_2)
-		gohelper.setActive(arg_6_0._txtmessycodetime.gameObject, not var_6_2)
+		gohelper.setActive(self._txttime.gameObject, isnum)
+		gohelper.setActive(self._txtmessycodetime.gameObject, not isnum)
 
-		arg_6_0._txttime.text = var_6_2 and var_6_1.year or ""
-		arg_6_0._txtmessycodetime.text = var_6_2 and "" or var_6_1.year
+		self._txttime.text = isnum and storyChapterConfig.year or ""
+		self._txtmessycodetime.text = isnum and "" or storyChapterConfig.year
 	else
-		local var_6_3 = arg_6_0._mo.cgList
+		local cgList = self._mo.cgList
 
-		for iter_6_0, iter_6_1 in ipairs(var_6_3) do
-			local var_6_4 = arg_6_0._cgItemList[iter_6_0]
+		for i, config in ipairs(cgList) do
+			local cgItem = self._cgItemList[i]
 
-			var_6_4.simagecgicon:LoadImage(ResUrl.getStorySmallBg(iter_6_1.image))
+			cgItem.simagecgicon:LoadImage(ResUrl.getStorySmallBg(config.image))
 
-			local var_6_5 = HandbookModel.instance:isRead(HandbookEnum.Type.CG, iter_6_1.id)
+			local isRead = HandbookModel.instance:isRead(HandbookEnum.Type.CG, config.id)
 
-			gohelper.setActive(var_6_4.gonew, not var_6_5)
-			gohelper.setActive(var_6_4.go, true)
+			gohelper.setActive(cgItem.gonew, not isRead)
+			gohelper.setActive(cgItem.go, true)
 		end
 
-		for iter_6_2 = #var_6_3 + 1, 3 do
-			local var_6_6 = arg_6_0._cgItemList[iter_6_2]
+		for i = #cgList + 1, 3 do
+			local cgItem = self._cgItemList[i]
 
-			gohelper.setActive(var_6_6.go, false)
+			gohelper.setActive(cgItem.go, false)
 		end
 	end
 end
 
-function var_0_0._onReadInfoChanged(arg_7_0, arg_7_1)
-	if arg_7_0._mo.isTitle then
+function HandbookCGItem:_onReadInfoChanged(info)
+	local isTitle = self._mo.isTitle
+
+	if isTitle then
 		return
 	end
 
-	local var_7_0 = arg_7_0._mo.cgList
+	local cgList = self._mo.cgList
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-		if iter_7_1.id == arg_7_1.id and arg_7_1.type == HandbookEnum.Type.CG then
-			local var_7_1 = arg_7_0._cgItemList[iter_7_0]
+	for i, config in ipairs(cgList) do
+		if config.id == info.id and info.type == HandbookEnum.Type.CG then
+			local cgItem = self._cgItemList[i]
 
-			gohelper.setActive(var_7_1.gonew, not arg_7_1.isRead)
+			gohelper.setActive(cgItem.gonew, not info.isRead)
 		end
 	end
 end
 
-function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
-	arg_8_0._mo = arg_8_1
-	arg_8_0._cgType = arg_8_1.cgType
+function HandbookCGItem:onUpdateMO(mo)
+	self._mo = mo
+	self._cgType = mo.cgType
 
-	arg_8_0:_refreshUI()
+	self:_refreshUI()
 end
 
-function var_0_0.onDestroy(arg_9_0)
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0._cgItemList) do
-		iter_9_1.simagecgicon:UnLoadImage()
-		iter_9_1.btnclick:RemoveClickListener()
+function HandbookCGItem:onDestroy()
+	for i, cgItem in ipairs(self._cgItemList) do
+		cgItem.simagecgicon:UnLoadImage()
+		cgItem.btnclick:RemoveClickListener()
 	end
 end
 
-return var_0_0
+return HandbookCGItem

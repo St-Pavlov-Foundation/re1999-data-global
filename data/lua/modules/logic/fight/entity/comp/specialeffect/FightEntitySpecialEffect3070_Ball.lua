@@ -1,24 +1,26 @@
-﻿module("modules.logic.fight.entity.comp.specialeffect.FightEntitySpecialEffect3070_Ball", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/specialeffect/FightEntitySpecialEffect3070_Ball.lua
 
-local var_0_0 = class("FightEntitySpecialEffect3070_Ball", FightEntitySpecialEffectBase)
+module("modules.logic.fight.entity.comp.specialeffect.FightEntitySpecialEffect3070_Ball", package.seeall)
 
-function var_0_0.initClass(arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.SetBuffEffectVisible, arg_1_0._onSetBuffEffectVisible, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, arg_1_0._onBuffUpdate, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.OnSkillPlayStart, arg_1_0._onSkillPlayStart, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, arg_1_0._onSkillPlayFinish, arg_1_0, LuaEventSystem.High)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.BeforeEnterStepBehaviour, arg_1_0._onBeforeEnterStepBehaviour, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.BeforeDeadEffect, arg_1_0._onBeforeDeadEffect, arg_1_0)
+local FightEntitySpecialEffect3070_Ball = class("FightEntitySpecialEffect3070_Ball", FightEntitySpecialEffectBase)
 
-	arg_1_0._ballEffectList = {}
-	arg_1_0._ballEffectUid = {}
-	arg_1_0._buffUid2Effect = arg_1_0:getUserDataTb_()
-	arg_1_0._ballDestroyPath = {}
-	arg_1_0._ballLine = {}
-	arg_1_0._uid2BallTween = {}
+function FightEntitySpecialEffect3070_Ball:initClass()
+	self:addEventCb(FightController.instance, FightEvent.SetBuffEffectVisible, self._onSetBuffEffectVisible, self)
+	self:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, self._onBuffUpdate, self)
+	self:addEventCb(FightController.instance, FightEvent.OnSkillPlayStart, self._onSkillPlayStart, self)
+	self:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self, LuaEventSystem.High)
+	self:addEventCb(FightController.instance, FightEvent.BeforeEnterStepBehaviour, self._onBeforeEnterStepBehaviour, self)
+	self:addEventCb(FightController.instance, FightEvent.BeforeDeadEffect, self._onBeforeDeadEffect, self)
+
+	self._ballEffectList = {}
+	self._ballEffectUid = {}
+	self._buffUid2Effect = self:getUserDataTb_()
+	self._ballDestroyPath = {}
+	self._ballLine = {}
+	self._uid2BallTween = {}
 end
 
-var_0_0.BallPositionLimit3 = {
+FightEntitySpecialEffect3070_Ball.BallPositionLimit3 = {
 	{
 		0.54,
 		0.39,
@@ -35,7 +37,7 @@ var_0_0.BallPositionLimit3 = {
 		0
 	}
 }
-var_0_0.BallPositionLimit4 = {
+FightEntitySpecialEffect3070_Ball.BallPositionLimit4 = {
 	{
 		0.54,
 		0.39,
@@ -58,10 +60,10 @@ var_0_0.BallPositionLimit4 = {
 	}
 }
 
-local var_0_1 = "default"
-local var_0_2 = {
+local defaultEffect = "default"
+local _ballEffectPath = {
 	{
-		[var_0_1] = {
+		[defaultEffect] = {
 			"v1a3_jialabona/jianabona_bd_r_01",
 			"v1a3_jialabona/jianabona_bd_01",
 			"v1a3_jialabona/jianabona_bd_r_02"
@@ -73,7 +75,7 @@ local var_0_2 = {
 		}
 	},
 	{
-		[var_0_1] = {
+		[defaultEffect] = {
 			"v1a3_jialabona/jianabona_bd_h_01",
 			"v1a3_jialabona/jianabona_bd_01",
 			"v1a3_jialabona/jianabona_bd_h_02"
@@ -85,7 +87,7 @@ local var_0_2 = {
 		}
 	},
 	{
-		[var_0_1] = {
+		[defaultEffect] = {
 			"v1a3_jialabona/jianabona_bd_b_01",
 			"v1a3_jialabona/jianabona_bd_01",
 			"v1a3_jialabona/jianabona_bd_b_02"
@@ -97,12 +99,12 @@ local var_0_2 = {
 		}
 	}
 }
-local var_0_3 = {
+local _lineEffect = {
 	[307003] = "v2a0_jialabona/jialabona_bd_x_01",
-	[var_0_1] = "v1a3_jialabona/jianabona_bd_x_01"
+	[defaultEffect] = "v1a3_jialabona/jianabona_bd_x_01"
 }
-local var_0_4 = {
-	[var_0_1] = {
+local _audioId = {
+	[defaultEffect] = {
 		destroy = 4307043,
 		create = 4307041,
 		move = 4307042
@@ -113,416 +115,436 @@ local var_0_4 = {
 		move = 430700342
 	}
 }
-local var_0_5 = 4.5
-local var_0_6 = 0.25
-local var_0_7 = 0
-local var_0_8 = 0.1
-local var_0_9 = 0
-local var_0_10 = 0.8
+local _ballSpeed = 4.5
+local _waitDestroyEffectDelay = 0.25
+local _beforeCreateBallDelay = 0
+local _beforeBallMoveDelay = 0.1
+local _beforeShowLineDelay = 0
+local _effectScale = 0.8
 
-var_0_0.buffTypeId2EffectPath = {
-	[307001211] = var_0_2[1],
-	[307001212] = var_0_2[1],
-	[307001111] = var_0_2[2],
-	[307001112] = var_0_2[2],
-	[307001311] = var_0_2[3],
-	[307001312] = var_0_2[3]
+FightEntitySpecialEffect3070_Ball.buffTypeId2EffectPath = {
+	[307001211] = _ballEffectPath[1],
+	[307001212] = _ballEffectPath[1],
+	[307001111] = _ballEffectPath[2],
+	[307001112] = _ballEffectPath[2],
+	[307001311] = _ballEffectPath[3],
+	[307001312] = _ballEffectPath[3]
 }
 
-local var_0_11 = Vector3.Distance(Vector3.New(-1.2, 1, 0), Vector3.zero) * 1.1
-local var_0_12 = 1
+local _lineLenght = Vector3.Distance(Vector3.New(-1.2, 1, 0), Vector3.zero) * 1.1
+local _temporaryEffectDuration = 1
 
-function var_0_0._getPosArr(arg_2_0)
-	return arg_2_0._ballPosition
+function FightEntitySpecialEffect3070_Ball:_getPosArr()
+	return self._ballPosition
 end
 
-function var_0_0._initPosArr(arg_3_0, arg_3_1)
-	if not arg_3_0._ballPosition then
-		local var_3_0 = lua_skill_buff.configDict[arg_3_1]
-		local var_3_1 = lua_skill_bufftype.configDict[var_3_0.typeId]
-		local var_3_2 = string.split(var_3_1.includeTypes, "#")[2]
+function FightEntitySpecialEffect3070_Ball:_initPosArr(buffId)
+	if not self._ballPosition then
+		local buffConfig = lua_skill_buff.configDict[buffId]
+		local buffTypeConfig = lua_skill_bufftype.configDict[buffConfig.typeId]
+		local limitNum = string.split(buffTypeConfig.includeTypes, "#")[2]
 
-		arg_3_0._ballPosition = LuaUtil.deepCopy(var_0_0["BallPositionLimit" .. var_3_2])
+		self._ballPosition = LuaUtil.deepCopy(FightEntitySpecialEffect3070_Ball["BallPositionLimit" .. limitNum])
 
-		if arg_3_0._entity:isEnemySide() then
-			for iter_3_0, iter_3_1 in ipairs(arg_3_0._ballPosition) do
-				arg_3_0._ballPosition[iter_3_0][1] = -arg_3_0._ballPosition[iter_3_0][1]
+		if self._entity:isEnemySide() then
+			for i, v in ipairs(self._ballPosition) do
+				self._ballPosition[i][1] = -self._ballPosition[i][1]
 			end
 		end
 
-		return arg_3_0._ballPosition
+		return self._ballPosition
 	end
 end
 
-function var_0_0._getFirstPos(arg_4_0)
-	if arg_4_0._firstPos then
-		return arg_4_0._firstPos
+function FightEntitySpecialEffect3070_Ball:_getFirstPos()
+	if self._firstPos then
+		return self._firstPos
 	end
 
-	arg_4_0._firstPos = Vector3.New(arg_4_0:_getPosArr()[1][1], arg_4_0:_getPosArr()[1][2], arg_4_0:_getPosArr()[1][3])
+	self._firstPos = Vector3.New(self:_getPosArr()[1][1], self:_getPosArr()[1][2], self:_getPosArr()[1][3])
 
-	return arg_4_0._firstPos
+	return self._firstPos
 end
 
-function var_0_0._ballShowEffect(arg_5_0)
-	if arg_5_0._showEffectWrap then
-		arg_5_0._showEffectWrap:setActive(false)
-		arg_5_0._showEffectWrap:setActive(true)
+function FightEntitySpecialEffect3070_Ball:_ballShowEffect()
+	if self._showEffectWrap then
+		self._showEffectWrap:setActive(false)
+		self._showEffectWrap:setActive(true)
 	else
-		arg_5_0._showEffectWrap = arg_5_0._entity.effect:addGlobalEffect(arg_5_0._curEffectPath[2])
+		self._showEffectWrap = self._entity.effect:addGlobalEffect(self._curEffectPath[2])
 
-		FightRenderOrderMgr.instance:onAddEffectWrap(arg_5_0._entity.id, arg_5_0._showEffectWrap)
-		arg_5_0._showEffectWrap:setEffectScale(var_0_10)
+		FightRenderOrderMgr.instance:onAddEffectWrap(self._entity.id, self._showEffectWrap)
+		self._showEffectWrap:setEffectScale(_effectScale)
 	end
 
-	local var_5_0, var_5_1, var_5_2 = FightHelper.getEntityStandPos(arg_5_0._entity:getMO())
+	local x, y, z = FightHelper.getEntityStandPos(self._entity:getMO())
 
-	arg_5_0._showEffectWrap:setLocalPos(var_5_0 + arg_5_0:_getPosArr()[1][1], var_5_1 + arg_5_0:_getPosArr()[1][2], var_5_2 + arg_5_0:_getPosArr()[1][3])
+	self._showEffectWrap:setLocalPos(x + self:_getPosArr()[1][1], y + self:_getPosArr()[1][2], z + self:_getPosArr()[1][3])
 end
 
-function var_0_0._ballDestroyEffect(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = arg_6_0._entity.effect:addGlobalEffect(arg_6_1, nil, var_0_12)
-	local var_6_1 = arg_6_0._buffUid2Effect[arg_6_2]
-	local var_6_2, var_6_3, var_6_4 = transformhelper.getPos(var_6_1.containerTr)
+function FightEntitySpecialEffect3070_Ball:_ballDestroyEffect(effectPath, buffUid)
+	local destroyEffectWrap = self._entity.effect:addGlobalEffect(effectPath, nil, _temporaryEffectDuration)
+	local tarEffect = self._buffUid2Effect[buffUid]
+	local tarPosX, tarPosY, tarPosZ = transformhelper.getPos(tarEffect.containerTr)
 
-	var_6_0:setWorldPos(var_6_2, var_6_3, var_6_4)
-	var_6_0:setEffectScale(var_0_10)
-	FightRenderOrderMgr.instance:onAddEffectWrap(arg_6_0._entity.id, var_6_0)
+	destroyEffectWrap:setWorldPos(tarPosX, tarPosY, tarPosZ)
+	destroyEffectWrap:setEffectScale(_effectScale)
+	FightRenderOrderMgr.instance:onAddEffectWrap(self._entity.id, destroyEffectWrap)
 end
 
-function var_0_0._hideBallLineEffect(arg_7_0)
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0._ballLine) do
-		arg_7_0._ballLine[iter_7_0]:setActive(false, "FightEntitySpecialEffect3070_Ball_ball")
+function FightEntitySpecialEffect3070_Ball:_hideBallLineEffect()
+	for i, v in ipairs(self._ballLine) do
+		local lineEffect = self._ballLine[i]
+
+		lineEffect:setActive(false, "FightEntitySpecialEffect3070_Ball_ball")
 	end
 end
 
-function var_0_0._createNewBallLine(arg_8_0)
-	local var_8_0 = arg_8_0._entity:getMO()
+function FightEntitySpecialEffect3070_Ball:_createNewBallLine()
+	local entityMO = self._entity:getMO()
 
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0._ballEffectList) do
-		if not arg_8_0._ballLine[iter_8_0] then
-			local var_8_1 = arg_8_0:_getPosArr()[iter_8_0]
-			local var_8_2 = arg_8_0:_getPosArr()[iter_8_0 + 1]
-			local var_8_3 = var_8_0 and var_0_3[var_8_0.skin] or var_0_3[var_0_1]
-			local var_8_4 = arg_8_0._entity.effect:addHangEffect(var_8_3, ModuleEnum.SpineHangPointRoot, nil, nil, arg_8_0:_getFirstPos())
+	for i, effectWrap in ipairs(self._ballEffectList) do
+		local lineEffect = self._ballLine[i]
 
-			arg_8_0._ballLine[iter_8_0] = var_8_4
+		if not lineEffect then
+			local curBallPos = self:_getPosArr()[i]
+			local nextBallPos = self:_getPosArr()[i + 1]
+			local lineEffectPath = entityMO and lua_fight_jia_la_bo_na_line.configDict[entityMO.skin].lineEffect
 
-			if iter_8_0 == 1 then
-				FightRenderOrderMgr.instance:onAddEffectWrap(arg_8_0._entity.id, var_8_4)
+			lineEffect = self._entity.effect:addHangEffect(lineEffectPath, ModuleEnum.SpineHangPointRoot, nil, nil, self:_getFirstPos())
+			self._ballLine[i] = lineEffect
+
+			if i == 1 then
+				FightRenderOrderMgr.instance:onAddEffectWrap(self._entity.id, lineEffect)
 			else
-				var_8_4:setRenderOrder(FightRenderOrderMgr.MinSpecialOrder * FightEnum.OrderRegion + 9)
+				lineEffect:setRenderOrder(FightRenderOrderMgr.MinSpecialOrder * FightEnum.OrderRegion + 9)
 			end
 
-			if var_8_2 then
-				local var_8_5 = Vector3.Distance(Vector3.New(var_8_1[1], var_8_1[2], var_8_1[3]), Vector3.New(var_8_2[1], var_8_2[2], var_8_2[3]))
+			if nextBallPos then
+				local _distance = Vector3.Distance(Vector3.New(curBallPos[1], curBallPos[2], curBallPos[3]), Vector3.New(nextBallPos[1], nextBallPos[2], nextBallPos[3]))
 
-				transformhelper.setLocalScale(var_8_4.containerTr, var_8_5 / var_0_11, 1, 1)
+				transformhelper.setLocalScale(lineEffect.containerTr, _distance / _lineLenght, 1, 1)
 			end
 		end
 	end
 end
 
-function var_0_0._showBallLineEffect(arg_9_0)
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0._ballEffectList) do
-		local var_9_0 = arg_9_0:_getPosArr()[iter_9_0]
-		local var_9_1 = arg_9_0:_getPosArr()[iter_9_0 + 1]
-		local var_9_2 = arg_9_0._ballLine[iter_9_0]
+function FightEntitySpecialEffect3070_Ball:_showBallLineEffect()
+	for i, effectWrap in ipairs(self._ballEffectList) do
+		local curBallPos = self:_getPosArr()[i]
+		local nextBallPos = self:_getPosArr()[i + 1]
+		local lineEffect = self._ballLine[i]
+		local nextEffectWrap = self._ballEffectList[i + 1]
 
-		if arg_9_0._ballEffectList[iter_9_0 + 1] then
-			var_9_2:setActive(true, "FightEntitySpecialEffect3070_Ball_ball")
+		if nextEffectWrap then
+			lineEffect:setActive(true, "FightEntitySpecialEffect3070_Ball_ball")
 
-			local var_9_3 = var_9_1[1] - var_9_0[1]
-			local var_9_4 = var_9_1[2] - var_9_0[2]
-			local var_9_5 = var_9_1[3] - var_9_0[3]
+			local offsetX = nextBallPos[1] - curBallPos[1]
+			local offsetY = nextBallPos[2] - curBallPos[2]
+			local offsetZ = nextBallPos[3] - curBallPos[3]
 
-			var_9_2:setLocalPos(var_9_0[1] + var_9_3 / 2, var_9_0[2] + var_9_4 / 2, var_9_0[3] + var_9_5 / 2)
+			lineEffect:setLocalPos(curBallPos[1] + offsetX / 2, curBallPos[2] + offsetY / 2, curBallPos[3] + offsetZ / 2)
 
-			local var_9_6 = Vector3.New(var_9_3, var_9_4, 0)
-			local var_9_7 = Quaternion.FromToRotation(Vector3.left, var_9_6).eulerAngles.z
+			local offset_pos = Vector3.New(offsetX, offsetY, 0)
+			local rotation = Quaternion.FromToRotation(Vector3.left, offset_pos).eulerAngles.z
 
-			transformhelper.setLocalRotation(var_9_2.containerTr, 0, 0, var_9_7)
+			transformhelper.setLocalRotation(lineEffect.containerTr, 0, 0, rotation)
 		else
-			var_9_2:setActive(false, "FightEntitySpecialEffect3070_Ball_ball")
+			lineEffect:setActive(false, "FightEntitySpecialEffect3070_Ball_ball")
 		end
 	end
 end
 
-function var_0_0._createNewball(arg_10_0)
-	local var_10_0 = arg_10_0._entity.effect:addHangEffect(arg_10_0._curEffectPath[1], ModuleEnum.SpineHangPointRoot, nil, nil, arg_10_0:_getFirstPos())
-	local var_10_1 = arg_10_0:_getFirstPos()
+function FightEntitySpecialEffect3070_Ball:_createNewball()
+	local effectWrap = self._entity.effect:addHangEffect(self._curEffectPath[1], ModuleEnum.SpineHangPointRoot, nil, nil, self:_getFirstPos())
+	local tarPos = self:_getFirstPos()
 
-	var_10_0:setLocalPos(var_10_1.x, var_10_1.y, var_10_1.z)
-	FightRenderOrderMgr.instance:onAddEffectWrap(arg_10_0._entity.id, var_10_0)
-	table.insert(arg_10_0._ballEffectList, 1, var_10_0)
-	table.insert(arg_10_0._ballEffectUid, 1, arg_10_0._curBuffUid)
+	effectWrap:setLocalPos(tarPos.x, tarPos.y, tarPos.z)
+	FightRenderOrderMgr.instance:onAddEffectWrap(self._entity.id, effectWrap)
+	table.insert(self._ballEffectList, 1, effectWrap)
+	table.insert(self._ballEffectUid, 1, self._curBuffUid)
 
-	arg_10_0._buffUid2Effect[arg_10_0._curBuffUid] = var_10_0
-	arg_10_0._ballDestroyPath[var_10_0.uniqueId] = arg_10_0._curEffectPath[3]
+	self._buffUid2Effect[self._curBuffUid] = effectWrap
+	self._ballDestroyPath[effectWrap.uniqueId] = self._curEffectPath[3]
 
-	var_10_0:setEffectScale(var_0_10)
+	effectWrap:setEffectScale(_effectScale)
 
-	local var_10_2 = arg_10_0._entity:getMO()
-	local var_10_3 = var_10_2 and var_0_4[var_10_2.skin] or var_0_4[var_0_1]
+	local entityMO = self._entity:getMO()
+	local audio = entityMO and lua_fight_jia_la_bo_na_ball_audio.configDict[entityMO.skin].createBallAudio
 
-	FightAudioMgr.instance:playAudio(var_10_3.create)
+	FightAudioMgr.instance:playAudio(audio)
 
-	return var_10_0
+	return effectWrap
 end
 
-function var_0_0._showNewball(arg_11_0)
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0._ballEffectList) do
-		iter_11_1:setActive(true, "FightEntitySpecialEffect3070_Ball_NewBall")
+function FightEntitySpecialEffect3070_Ball:_showNewball()
+	for i, v in ipairs(self._ballEffectList) do
+		v:setActive(true, "FightEntitySpecialEffect3070_Ball_NewBall")
 	end
 end
 
-function var_0_0._onBuffUpdate(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4)
-	if arg_12_1 ~= arg_12_0._entity.id then
+function FightEntitySpecialEffect3070_Ball:_onBuffUpdate(targetId, effectType, buffId, buffUid)
+	if targetId ~= self._entity.id then
 		return
 	end
 
-	local var_12_0 = lua_skill_buff.configDict[arg_12_3]
-	local var_12_1 = var_0_0.buffTypeId2EffectPath[var_12_0.typeId]
+	local buffConfig = lua_skill_buff.configDict[buffId]
+	local entityMO = self._entity:getMO()
 
-	if var_12_1 then
-		local var_12_2 = arg_12_0._entity:getMO()
+	if not entityMO then
+		return
+	end
 
-		var_12_1 = var_12_2 and var_12_1[var_12_2.skin] or var_12_1[var_0_1]
+	local ballConfig = lua_fight_jia_la_bo_na_ball.configDict[entityMO.skin]
 
-		if arg_12_2 == FightEnum.EffectType.BUFFADD then
-			arg_12_0._curBuffUid = arg_12_4
-			arg_12_0._curEffectPath = var_12_1
+	if not ballConfig then
+		return
+	end
 
-			arg_12_0:_initPosArr(arg_12_3)
-			arg_12_0:_releaseBallTween()
+	ballConfig = ballConfig[buffConfig.typeId]
 
-			arg_12_0._newBall = arg_12_0:_createNewball()
+	if not ballConfig then
+		return
+	end
 
-			arg_12_0._newBall:setActive(false, "FightEntitySpecialEffect3070_Ball_NewBall")
-			arg_12_0:_createNewBallLine()
+	if effectType == FightEnum.EffectType.BUFFADD then
+		self._curBuffUid = buffUid
+		self._curEffectPath = {
+			ballConfig.ballEffect,
+			ballConfig.createBallEffect,
+			ballConfig.destroyBallEffect
+		}
 
-			arg_12_0._aniFlow = FlowSequence.New()
+		self:_initPosArr(buffId)
+		self:_releaseBallTween()
 
-			arg_12_0._aniFlow:addWork(FunctionWork.New(arg_12_0._hideBallLineEffect, arg_12_0))
+		self._newBall = self:_createNewball()
 
-			if arg_12_0._resetPlayingDestroyEffect then
-				arg_12_0._aniFlow:addWork(WorkWaitSeconds.New(var_0_6 / FightModel.instance:getSpeed()))
+		self._newBall:setActive(false, "FightEntitySpecialEffect3070_Ball_NewBall")
+		self:_createNewBallLine()
+
+		self._aniFlow = FlowSequence.New()
+
+		self._aniFlow:addWork(FunctionWork.New(self._hideBallLineEffect, self))
+
+		if self._resetPlayingDestroyEffect then
+			self._aniFlow:addWork(WorkWaitSeconds.New(_waitDestroyEffectDelay / FightModel.instance:getSpeed()))
+		end
+
+		self._resetPlayingDestroyEffect = nil
+
+		self._aniFlow:addWork(WorkWaitSeconds.New(_beforeCreateBallDelay / FightModel.instance:getSpeed()))
+		self._aniFlow:addWork(FunctionWork.New(self._ballShowEffect, self))
+		self._aniFlow:addWork(FunctionWork.New(self._showNewball, self))
+		self._aniFlow:addWork(WorkWaitSeconds.New(_beforeBallMoveDelay / FightModel.instance:getSpeed()))
+
+		local ballMoveFlow = FlowParallel.New()
+
+		for i = 1, #self._ballEffectList do
+			local effectWrap = self._ballEffectList[i]
+
+			if effectWrap and i > 1 then
+				local pos = self:_getPosArr()[i]
+				local transform = effectWrap.containerTr
+				local startX, startY = transformhelper.getLocalPos(transform)
+				local dis = Mathf.Sqrt(Mathf.Pow(startX - pos[1], 2) + Mathf.Pow(startY - pos[2], 2))
+				local flyTime = dis / _ballSpeed / FightModel.instance:getSpeed()
+				local buffUid = self._ballEffectUid[i]
+
+				self._uid2BallTween[buffUid] = self._uid2BallTween[buffUid] or {}
+
+				local data = self:getUserDataTb_()
+
+				data.transform = transform
+				data.flyTime = flyTime
+				data.x = pos[1]
+				data.y = pos[2]
+				data.index = i
+				data.effectWrap = effectWrap
+
+				table.insert(self._uid2BallTween[buffUid], data)
+			end
+		end
+
+		for k, list in pairs(self._uid2BallTween) do
+			local sequence = FlowSequence.New()
+
+			for index, data in ipairs(list) do
+				local flow = FlowParallel.New()
+				local tempTab = self:getUserDataTb_()
+
+				table.insert(tempTab, data.effectWrap)
+				table.insert(tempTab, data.index)
+				flow:addWork(FunctionWork.New(self._refreshBallOrder, self, tempTab))
+				flow:addWork(TweenWork.New({
+					type = "DOLocalMoveX",
+					tr = data.transform,
+					to = data.x,
+					t = data.flyTime,
+					ease = EaseType.OutQuart
+				}))
+				flow:addWork(TweenWork.New({
+					type = "DOLocalMoveY",
+					tr = data.transform,
+					to = data.y,
+					t = data.flyTime,
+					ease = EaseType.OutQuart
+				}))
+				sequence:addWork(flow)
 			end
 
-			arg_12_0._resetPlayingDestroyEffect = nil
+			ballMoveFlow:addWork(sequence)
+		end
 
-			arg_12_0._aniFlow:addWork(WorkWaitSeconds.New(var_0_7 / FightModel.instance:getSpeed()))
-			arg_12_0._aniFlow:addWork(FunctionWork.New(arg_12_0._ballShowEffect, arg_12_0))
-			arg_12_0._aniFlow:addWork(FunctionWork.New(arg_12_0._showNewball, arg_12_0))
-			arg_12_0._aniFlow:addWork(WorkWaitSeconds.New(var_0_8 / FightModel.instance:getSpeed()))
+		self._aniFlow:addWork(ballMoveFlow)
+		self._aniFlow:addWork(WorkWaitSeconds.New(_beforeShowLineDelay / FightModel.instance:getSpeed()))
+		self._aniFlow:addWork(FunctionWork.New(self._showBallLineEffect, self))
+		self._aniFlow:addWork(FunctionWork.New(self._clearBallTweenData, self))
+		self._aniFlow:start()
+	elseif effectType == FightEnum.EffectType.BUFFDEL then
+		for i = #self._ballEffectUid, 1, -1 do
+			if self._ballEffectUid[i] == buffUid then
+				self._uid2BallTween[buffUid] = nil
 
-			local var_12_3 = FlowParallel.New()
+				local effect = table.remove(self._ballEffectList, i)
 
-			for iter_12_0 = 1, #arg_12_0._ballEffectList do
-				local var_12_4 = arg_12_0._ballEffectList[iter_12_0]
+				table.remove(self._ballEffectUid, i)
+				self._entity.effect:removeEffect(effect)
+				self:_ballDestroyEffect(self._ballDestroyPath[effect.uniqueId], buffUid)
 
-				if var_12_4 and iter_12_0 > 1 then
-					local var_12_5 = arg_12_0:_getPosArr()[iter_12_0]
-					local var_12_6 = var_12_4.containerTr
-					local var_12_7, var_12_8 = transformhelper.getLocalPos(var_12_6)
-					local var_12_9 = Mathf.Sqrt(Mathf.Pow(var_12_7 - var_12_5[1], 2) + Mathf.Pow(var_12_8 - var_12_5[2], 2)) / var_0_5 / FightModel.instance:getSpeed()
-					local var_12_10 = arg_12_0._ballEffectUid[iter_12_0]
+				self._playingDestroyEffect = true
 
-					arg_12_0._uid2BallTween[var_12_10] = arg_12_0._uid2BallTween[var_12_10] or {}
+				TaskDispatcher.runDelay(self._resetPlayingDestroyEffect, self, 0.3)
 
-					local var_12_11 = arg_12_0:getUserDataTb_()
+				local audio = entityMO and lua_fight_jia_la_bo_na_ball_audio.configDict[entityMO.skin].destroyBallAudio
 
-					var_12_11.transform = var_12_6
-					var_12_11.flyTime = var_12_9
-					var_12_11.x = var_12_5[1]
-					var_12_11.y = var_12_5[2]
-					var_12_11.index = iter_12_0
-					var_12_11.effectWrap = var_12_4
+				FightAudioMgr.instance:playAudio(audio)
 
-					table.insert(arg_12_0._uid2BallTween[var_12_10], var_12_11)
-				end
-			end
-
-			for iter_12_1, iter_12_2 in pairs(arg_12_0._uid2BallTween) do
-				local var_12_12 = FlowSequence.New()
-
-				for iter_12_3, iter_12_4 in ipairs(iter_12_2) do
-					local var_12_13 = FlowParallel.New()
-					local var_12_14 = arg_12_0:getUserDataTb_()
-
-					table.insert(var_12_14, iter_12_4.effectWrap)
-					table.insert(var_12_14, iter_12_4.index)
-					var_12_13:addWork(FunctionWork.New(arg_12_0._refreshBallOrder, arg_12_0, var_12_14))
-					var_12_13:addWork(TweenWork.New({
-						type = "DOLocalMoveX",
-						tr = iter_12_4.transform,
-						to = iter_12_4.x,
-						t = iter_12_4.flyTime,
-						ease = EaseType.OutQuart
-					}))
-					var_12_13:addWork(TweenWork.New({
-						type = "DOLocalMoveY",
-						tr = iter_12_4.transform,
-						to = iter_12_4.y,
-						t = iter_12_4.flyTime,
-						ease = EaseType.OutQuart
-					}))
-					var_12_12:addWork(var_12_13)
-				end
-
-				var_12_3:addWork(var_12_12)
-			end
-
-			arg_12_0._aniFlow:addWork(var_12_3)
-			arg_12_0._aniFlow:addWork(WorkWaitSeconds.New(var_0_9 / FightModel.instance:getSpeed()))
-			arg_12_0._aniFlow:addWork(FunctionWork.New(arg_12_0._showBallLineEffect, arg_12_0))
-			arg_12_0._aniFlow:addWork(FunctionWork.New(arg_12_0._clearBallTweenData, arg_12_0))
-			arg_12_0._aniFlow:start()
-		elseif arg_12_2 == FightEnum.EffectType.BUFFDEL then
-			for iter_12_5 = #arg_12_0._ballEffectUid, 1, -1 do
-				if arg_12_0._ballEffectUid[iter_12_5] == arg_12_4 then
-					arg_12_0._uid2BallTween[arg_12_4] = nil
-
-					local var_12_15 = table.remove(arg_12_0._ballEffectList, iter_12_5)
-
-					table.remove(arg_12_0._ballEffectUid, iter_12_5)
-					arg_12_0._entity.effect:removeEffect(var_12_15)
-					arg_12_0:_ballDestroyEffect(arg_12_0._ballDestroyPath[var_12_15.uniqueId], arg_12_4)
-
-					arg_12_0._playingDestroyEffect = true
-
-					TaskDispatcher.runDelay(arg_12_0._resetPlayingDestroyEffect, arg_12_0, 0.3)
-
-					local var_12_16 = var_12_2 and var_0_4[var_12_2.skin] or var_0_4[var_0_1]
-
-					FightAudioMgr.instance:playAudio(var_12_16.destroy)
-
-					break
-				end
+				break
 			end
 		end
 	end
 end
 
-function var_0_0._refreshBallOrder(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_1[1]
-	local var_13_1 = arg_13_1[2]
+function FightEntitySpecialEffect3070_Ball:_refreshBallOrder(data)
+	local effectWrap = data[1]
+	local index = data[2]
 
-	FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_13_0._entity.id, var_13_0)
+	FightRenderOrderMgr.instance:onRemoveEffectWrap(self._entity.id, effectWrap)
 
-	if var_13_1 <= 2 then
-		FightRenderOrderMgr.instance:onAddEffectWrap(arg_13_0._entity.id, var_13_0)
+	if index <= 2 then
+		FightRenderOrderMgr.instance:onAddEffectWrap(self._entity.id, effectWrap)
 	else
-		var_13_0:setRenderOrder(FightRenderOrderMgr.MinSpecialOrder * FightEnum.OrderRegion + 10)
+		effectWrap:setRenderOrder(FightRenderOrderMgr.MinSpecialOrder * FightEnum.OrderRegion + 10)
 	end
 end
 
-function var_0_0._clearBallTweenData(arg_14_0)
-	arg_14_0._uid2BallTween = {}
+function FightEntitySpecialEffect3070_Ball:_clearBallTweenData()
+	self._uid2BallTween = {}
 end
 
-function var_0_0._resetPlayingDestroyEffect(arg_15_0)
-	arg_15_0._playingDestroyEffect = nil
+function FightEntitySpecialEffect3070_Ball:_resetPlayingDestroyEffect()
+	self._playingDestroyEffect = nil
 end
 
-function var_0_0._onBeforeEnterStepBehaviour(arg_16_0)
-	local var_16_0 = arg_16_0._entity:getMO()
+function FightEntitySpecialEffect3070_Ball:_onBeforeEnterStepBehaviour()
+	local entityMO = self._entity:getMO()
 
-	if var_16_0 then
-		local var_16_1 = var_16_0:getBuffDic()
+	if entityMO then
+		local buffDic = entityMO:getBuffDic()
 
-		for iter_16_0, iter_16_1 in pairs(var_16_1) do
-			arg_16_0:_onBuffUpdate(arg_16_0._entity.id, FightEnum.EffectType.BUFFADD, iter_16_1.buffId, iter_16_1.uid)
+		for i, v in pairs(buffDic) do
+			self:_onBuffUpdate(self._entity.id, FightEnum.EffectType.BUFFADD, v.buffId, v.uid)
 		end
 	end
 end
 
-function var_0_0._onSetBuffEffectVisible(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	if arg_17_0._entity.id == arg_17_1 then
-		if arg_17_0._ballEffectList then
-			for iter_17_0, iter_17_1 in ipairs(arg_17_0._ballEffectList) do
-				iter_17_1:setActive(arg_17_2, arg_17_3 or "FightEntitySpecialEffect3070_Ball")
+function FightEntitySpecialEffect3070_Ball:_onSetBuffEffectVisible(entityId, state, sign)
+	if self._entity.id == entityId then
+		if self._ballEffectList then
+			for i, v in ipairs(self._ballEffectList) do
+				v:setActive(state, sign or "FightEntitySpecialEffect3070_Ball")
 			end
 		end
 
-		if arg_17_0._ballLine then
-			for iter_17_2, iter_17_3 in ipairs(arg_17_0._ballLine) do
-				iter_17_3:setActive(arg_17_2, arg_17_3 or "FightEntitySpecialEffect3070_Ball")
+		if self._ballLine then
+			for i, v in ipairs(self._ballLine) do
+				v:setActive(state, sign or "FightEntitySpecialEffect3070_Ball")
 			end
 		end
 	end
 end
 
-function var_0_0._playMoveAudio(arg_18_0)
-	if tabletool.len(arg_18_0._uid2BallTween) > 0 then
-		local var_18_0 = arg_18_0._entity:getMO()
-		local var_18_1 = var_18_0 and var_0_4[var_18_0.skin] or var_0_4[var_0_1]
+function FightEntitySpecialEffect3070_Ball:_playMoveAudio()
+	if tabletool.len(self._uid2BallTween) > 0 then
+		local entityMO = self._entity:getMO()
+		local audio = entityMO and lua_fight_jia_la_bo_na_ball_audio.configDict[entityMO.skin].moveBallAudio
 
-		FightAudioMgr.instance:playAudio(var_18_1.move)
+		FightAudioMgr.instance:playAudio(audio)
 	end
 end
 
-function var_0_0._onSkillPlayStart(arg_19_0, arg_19_1)
-	arg_19_0:_onSetBuffEffectVisible(arg_19_1.id, false, "FightEntitySpecialEffect3070_Ball_PlaySkill")
+function FightEntitySpecialEffect3070_Ball:_onSkillPlayStart(entity)
+	self:_onSetBuffEffectVisible(entity.id, false, "FightEntitySpecialEffect3070_Ball_PlaySkill")
 end
 
-function var_0_0._onSkillPlayFinish(arg_20_0, arg_20_1)
-	arg_20_0:_onSetBuffEffectVisible(arg_20_1.id, true, "FightEntitySpecialEffect3070_Ball_PlaySkill")
+function FightEntitySpecialEffect3070_Ball:_onSkillPlayFinish(entity)
+	self:_onSetBuffEffectVisible(entity.id, true, "FightEntitySpecialEffect3070_Ball_PlaySkill")
 end
 
-function var_0_0._releaseBallTween(arg_21_0)
-	if arg_21_0._aniFlow then
-		arg_21_0._aniFlow:stop()
+function FightEntitySpecialEffect3070_Ball:_releaseBallTween()
+	if self._aniFlow then
+		self._aniFlow:stop()
 
-		arg_21_0._aniFlow = nil
+		self._aniFlow = nil
 	end
 end
 
-function var_0_0._releaseBallEffect(arg_22_0)
-	if arg_22_0._ballEffectList then
-		for iter_22_0, iter_22_1 in pairs(arg_22_0._ballEffectList) do
-			arg_22_0._entity.effect:removeEffect(iter_22_1)
-			FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_22_0._entity.id, iter_22_1)
+function FightEntitySpecialEffect3070_Ball:_releaseBallEffect()
+	if self._ballEffectList then
+		for k, v in pairs(self._ballEffectList) do
+			self._entity.effect:removeEffect(v)
+			FightRenderOrderMgr.instance:onRemoveEffectWrap(self._entity.id, v)
 		end
 	end
 
-	arg_22_0._ballEffectList = nil
-	arg_22_0._ballEffectUid = nil
+	self._ballEffectList = nil
+	self._ballEffectUid = nil
 
-	if arg_22_0._showEffectWrap then
-		arg_22_0._entity.effect:removeEffect(arg_22_0._showEffectWrap)
-		FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_22_0._entity.id, arg_22_0._showEffectWrap)
+	if self._showEffectWrap then
+		self._entity.effect:removeEffect(self._showEffectWrap)
+		FightRenderOrderMgr.instance:onRemoveEffectWrap(self._entity.id, self._showEffectWrap)
 
-		arg_22_0._showEffectWrap = nil
+		self._showEffectWrap = nil
 	end
 end
 
-function var_0_0._releaseBallLineEffect(arg_23_0)
-	if arg_23_0._ballLine then
-		for iter_23_0, iter_23_1 in pairs(arg_23_0._ballLine) do
-			arg_23_0._entity.effect:removeEffect(iter_23_1)
-			FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_23_0._entity.id, iter_23_1)
+function FightEntitySpecialEffect3070_Ball:_releaseBallLineEffect()
+	if self._ballLine then
+		for k, v in pairs(self._ballLine) do
+			self._entity.effect:removeEffect(v)
+			FightRenderOrderMgr.instance:onRemoveEffectWrap(self._entity.id, v)
 		end
 	end
 
-	arg_23_0._ballLine = nil
+	self._ballLine = nil
 end
 
-function var_0_0._onBeforeDeadEffect(arg_24_0, arg_24_1)
-	if arg_24_1 == arg_24_0._entity.id then
-		arg_24_0:_releaseEffect()
+function FightEntitySpecialEffect3070_Ball:_onBeforeDeadEffect(entityId)
+	if entityId == self._entity.id then
+		self:_releaseEffect()
 	end
 end
 
-function var_0_0._releaseEffect(arg_25_0)
-	arg_25_0:_releaseBallTween()
-	arg_25_0:_releaseBallEffect()
-	arg_25_0:_releaseBallLineEffect()
+function FightEntitySpecialEffect3070_Ball:_releaseEffect()
+	self:_releaseBallTween()
+	self:_releaseBallEffect()
+	self:_releaseBallLineEffect()
 end
 
-function var_0_0.releaseSelf(arg_26_0)
-	TaskDispatcher.cancelTask(arg_26_0._resetPlayingDestroyEffect, arg_26_0)
-	arg_26_0:_releaseEffect()
+function FightEntitySpecialEffect3070_Ball:releaseSelf()
+	TaskDispatcher.cancelTask(self._resetPlayingDestroyEffect, self)
+	self:_releaseEffect()
 end
 
-return var_0_0
+return FightEntitySpecialEffect3070_Ball

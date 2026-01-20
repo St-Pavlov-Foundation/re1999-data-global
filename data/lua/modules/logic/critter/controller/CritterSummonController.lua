@@ -1,103 +1,105 @@
-﻿module("modules.logic.critter.controller.CritterSummonController", package.seeall)
+﻿-- chunkname: @modules/logic/critter/controller/CritterSummonController.lua
 
-local var_0_0 = class("CritterSummonController", BaseController)
+module("modules.logic.critter.controller.CritterSummonController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local CritterSummonController = class("CritterSummonController", BaseController)
+
+function CritterSummonController:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function CritterSummonController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function CritterSummonController:addConstEvents()
 	return
 end
 
-function var_0_0.reInit(arg_4_0)
+function CritterSummonController:reInit()
 	return
 end
 
-function var_0_0.summonCritterInfoReply(arg_5_0, arg_5_1)
-	CritterSummonModel.instance:initSummonPools(arg_5_1.poolInfos)
+function CritterSummonController:summonCritterInfoReply(msg)
+	CritterSummonModel.instance:initSummonPools(msg.poolInfos)
 end
 
-function var_0_0.summonCritterReply(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_1.critterInfos
-	local var_6_1 = {}
+function CritterSummonController:summonCritterReply(msg)
+	local critterInfos = msg.critterInfos
+	local critterMOList = {}
 
-	if var_6_0 then
-		for iter_6_0, iter_6_1 in ipairs(var_6_0) do
-			local var_6_2 = CritterModel.instance:addCritter(iter_6_1)
+	if critterInfos then
+		for i, critterInfo in ipairs(critterInfos) do
+			local critterMo = CritterModel.instance:addCritter(critterInfo)
 
-			table.insert(var_6_1, var_6_2)
+			table.insert(critterMOList, critterMo)
 		end
 	end
 
-	if var_6_1 and #var_6_1 > 0 then
-		CritterSummonModel.instance:onSummon(arg_6_1.poolId, arg_6_1.hasSummonCritter)
+	if critterMOList and #critterMOList > 0 then
+		CritterSummonModel.instance:onSummon(msg.poolId, msg.hasSummonCritter)
 
-		local var_6_3 = {
+		local param = {
 			mode = RoomSummonEnum.SummonType.Summon,
-			poolId = arg_6_1.poolId,
-			critterMo = var_6_1[1],
-			critterMOList = var_6_1
+			poolId = msg.poolId,
+			critterMo = critterMOList[1],
+			critterMOList = critterMOList
 		}
 
-		arg_6_0:dispatchEvent(CritterSummonEvent.onStartSummon, var_6_3)
+		self:dispatchEvent(CritterSummonEvent.onStartSummon, param)
 	end
 end
 
-function var_0_0.resetSummonCritterPoolReply(arg_7_0, arg_7_1)
-	arg_7_0:dispatchEvent(CritterSummonEvent.onResetSummon, arg_7_1.poolId, arg_7_1.poolId)
+function CritterSummonController:resetSummonCritterPoolReply(msg)
+	self:dispatchEvent(CritterSummonEvent.onResetSummon, msg.poolId, msg.poolId)
 end
 
-function var_0_0.refreshSummon(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	CritterRpc.instance:sendSummonCritterInfoRequest(arg_8_2, arg_8_3)
+function CritterSummonController:refreshSummon(poolId, callback, callbackObj)
+	CritterRpc.instance:sendSummonCritterInfoRequest(callback, callbackObj)
 end
 
-function var_0_0.openSummonRuleTipView(arg_9_0, arg_9_1)
+function CritterSummonController:openSummonRuleTipView(type)
 	ViewMgr.instance:openView(ViewName.RoomCritterSummonRuleTipsView, {
-		type = arg_9_1
+		type = type
 	})
 end
 
-function var_0_0.openSummonView(arg_10_0, arg_10_1, arg_10_2)
-	if arg_10_1 and arg_10_2 then
-		local var_10_0 = RoomSummonEnum.SummonMode[arg_10_2.mode].CameraId
+function CritterSummonController:openSummonView(buildingUid, param)
+	if buildingUid and param then
+		local cameraId = RoomSummonEnum.SummonMode[param.mode].CameraId
 
-		RoomCameraController.instance:tweenCameraFocusBuildingUseCameraId(arg_10_1, var_10_0, function()
-			arg_10_0:_reallyOpenSummonView(arg_10_2)
+		RoomCameraController.instance:tweenCameraFocusBuildingUseCameraId(buildingUid, cameraId, function()
+			self:_reallyOpenSummonView(param)
 		end)
 	else
-		arg_10_0:_reallyOpenSummonView(arg_10_2)
+		self:_reallyOpenSummonView(param)
 	end
 end
 
-function var_0_0._reallyOpenSummonView(arg_12_0, arg_12_1)
-	arg_12_0:dispatchEvent(CritterSummonEvent.onStartSummonAnim, arg_12_1)
-	ViewMgr.instance:openView(ViewName.RoomCritterSummonSkipView, arg_12_1)
+function CritterSummonController:_reallyOpenSummonView(param)
+	self:dispatchEvent(CritterSummonEvent.onStartSummonAnim, param)
+	ViewMgr.instance:openView(ViewName.RoomCritterSummonSkipView, param)
 end
 
-function var_0_0.openSummonGetCritterView(arg_13_0, arg_13_1, arg_13_2)
-	arg_13_1 = arg_13_1 or {}
-	arg_13_1.isSkip = arg_13_2
+function CritterSummonController:openSummonGetCritterView(param, isSkip)
+	param = param or {}
+	param.isSkip = isSkip
 
-	ViewMgr.instance:openView(ViewName.RoomGetCritterView, arg_13_1)
+	ViewMgr.instance:openView(ViewName.RoomGetCritterView, param)
 end
 
-function var_0_0.onCanDrag(arg_14_0)
-	arg_14_0:dispatchEvent(CritterSummonEvent.onCanDrag)
+function CritterSummonController:onCanDrag()
+	self:dispatchEvent(CritterSummonEvent.onCanDrag)
 end
 
-function var_0_0.onSummonDragEnd(arg_15_0, arg_15_1, arg_15_2)
-	arg_15_0:dispatchEvent(CritterSummonEvent.onDragEnd, arg_15_1, arg_15_2)
+function CritterSummonController:onSummonDragEnd(mode, rare)
+	self:dispatchEvent(CritterSummonEvent.onDragEnd, mode, rare)
 end
 
-function var_0_0.onFinishSummonAnim(arg_16_0, arg_16_1)
-	arg_16_0:dispatchEvent(CritterSummonEvent.onEndSummon, arg_16_1)
+function CritterSummonController:onFinishSummonAnim(mode)
+	self:dispatchEvent(CritterSummonEvent.onEndSummon, mode)
 end
 
-var_0_0.instance = var_0_0.New()
+CritterSummonController.instance = CritterSummonController.New()
 
-return var_0_0
+return CritterSummonController

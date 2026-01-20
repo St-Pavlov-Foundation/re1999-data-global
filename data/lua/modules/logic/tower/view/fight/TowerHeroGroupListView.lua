@@ -1,70 +1,72 @@
-﻿module("modules.logic.tower.view.fight.TowerHeroGroupListView", package.seeall)
+﻿-- chunkname: @modules/logic/tower/view/fight/TowerHeroGroupListView.lua
 
-local var_0_0 = class("TowerHeroGroupListView", HeroGroupListView)
+module("modules.logic.tower.view.fight.TowerHeroGroupListView", package.seeall)
 
-function var_0_0.addEvents(arg_1_0)
-	var_0_0.super.addEvents(arg_1_0)
-	arg_1_0:addEventCb(TowerController.instance, TowerEvent.OnLoadTeamSuccess, arg_1_0._checkRestrictHero, arg_1_0)
+local TowerHeroGroupListView = class("TowerHeroGroupListView", HeroGroupListView)
+
+function TowerHeroGroupListView:addEvents()
+	TowerHeroGroupListView.super.addEvents(self)
+	self:addEventCb(TowerController.instance, TowerEvent.OnLoadTeamSuccess, self._checkRestrictHero, self)
 end
 
-function var_0_0.removeEvents(arg_2_0)
-	var_0_0.super.removeEvents(arg_2_0)
-	arg_2_0:removeEventCb(TowerController.instance, TowerEvent.OnLoadTeamSuccess, arg_2_0._checkRestrictHero, arg_2_0)
+function TowerHeroGroupListView:removeEvents()
+	TowerHeroGroupListView.super.removeEvents(self)
+	self:removeEventCb(TowerController.instance, TowerEvent.OnLoadTeamSuccess, self._checkRestrictHero, self)
 end
 
-function var_0_0._getHeroItemCls(arg_3_0)
+function TowerHeroGroupListView:_getHeroItemCls()
 	return TowerHeroGroupHeroItem
 end
 
-function var_0_0.onOpen(arg_4_0)
-	arg_4_0:checkReplaceHeroList()
-	var_0_0.super.onOpen(arg_4_0)
+function TowerHeroGroupListView:onOpen()
+	self:checkReplaceHeroList()
+	TowerHeroGroupListView.super.onOpen(self)
 end
 
-function var_0_0.checkReplaceHeroList(arg_5_0)
-	local var_5_0 = TowerModel.instance:getRecordFightParam()
+function TowerHeroGroupListView:checkReplaceHeroList()
+	local param = TowerModel.instance:getRecordFightParam()
 
-	if var_5_0.isHeroGroupLock then
-		local var_5_1 = var_5_0.heros or {}
-		local var_5_2 = var_5_0.equipUids or {}
-		local var_5_3 = var_5_0.assistBoss
-		local var_5_4 = var_5_0.trialHeros or {}
-		local var_5_5 = {}
+	if param.isHeroGroupLock then
+		local heroIds = param.heros or {}
+		local equipUids = param.equipUids or {}
+		local assistBoss = param.assistBoss
+		local trialHeros = param.trialHeros or {}
+		local heroList = {}
 
-		for iter_5_0 = 1, #var_5_1 do
-			local var_5_6 = HeroModel.instance:getByHeroId(var_5_1[iter_5_0] or 0)
+		for i = 1, #heroIds do
+			local heroMo = HeroModel.instance:getByHeroId(heroIds[i] or 0)
 
-			if var_5_6 then
-				local var_5_7 = var_5_4[iter_5_0]
+			if heroMo then
+				local trialId = trialHeros[i]
 
-				if var_5_7 and var_5_7 > 0 then
-					local var_5_8 = lua_hero_trial.configDict[var_5_7][0]
-					local var_5_9 = tostring(tonumber(var_5_8.id .. "." .. var_5_8.trialTemplate) - 1099511627776)
+				if trialId and trialId > 0 then
+					local trialCo = lua_hero_trial.configDict[trialId][0]
+					local heroId = tostring(tonumber(trialCo.id .. "." .. trialCo.trialTemplate) - 1099511627776)
 
-					table.insert(var_5_5, {
-						heroUid = var_5_9,
+					table.insert(heroList, {
+						heroUid = heroId,
 						equipUid = {
-							tostring(var_5_8.equipId)
+							tostring(trialCo.equipId)
 						}
 					})
 				else
-					table.insert(var_5_5, {
-						heroUid = var_5_6.uid,
-						equipUid = var_5_2[iter_5_0]
+					table.insert(heroList, {
+						heroUid = heroMo.uid,
+						equipUid = equipUids[i]
 					})
 				end
 			else
-				for iter_5_1, iter_5_2 in ipairs(var_5_4) do
-					if iter_5_2 > 0 then
-						local var_5_10 = lua_hero_trial.configDict[iter_5_2][0]
+				for _, trialHeroId in ipairs(trialHeros) do
+					if trialHeroId > 0 then
+						local trialCo = lua_hero_trial.configDict[trialHeroId][0]
 
-						if var_5_10 and var_5_10.heroId == var_5_1[iter_5_0] then
-							local var_5_11 = tostring(tonumber(var_5_10.id .. "." .. var_5_10.trialTemplate) - 1099511627776)
+						if trialCo and trialCo.heroId == heroIds[i] then
+							local heroId = tostring(tonumber(trialCo.id .. "." .. trialCo.trialTemplate) - 1099511627776)
 
-							table.insert(var_5_5, {
-								heroUid = var_5_11,
+							table.insert(heroList, {
+								heroUid = heroId,
 								equipUid = {
-									tostring(var_5_10.equipId)
+									tostring(trialCo.equipId)
 								}
 							})
 
@@ -75,75 +77,77 @@ function var_0_0.checkReplaceHeroList(arg_5_0)
 			end
 		end
 
-		local var_5_12 = HeroGroupModel.instance:getCurGroupMO()
+		local groupMO = HeroGroupModel.instance:getCurGroupMO()
 
-		var_5_12:replaceTowerHeroList(var_5_5)
-		var_5_12:setAssistBossId(var_5_3)
-		HeroSingleGroupModel.instance:setSingleGroup(var_5_12, #var_5_5 > 0)
+		groupMO:replaceTowerHeroList(heroList)
+		groupMO:setAssistBossId(assistBoss)
+		HeroSingleGroupModel.instance:setSingleGroup(groupMO, #heroList > 0)
 	end
 end
 
-function var_0_0._checkRestrictHero(arg_6_0)
-	if TowerModel.instance:getRecordFightParam().isHeroGroupLock then
+function TowerHeroGroupListView:_checkRestrictHero()
+	local param = TowerModel.instance:getRecordFightParam()
+
+	if param.isHeroGroupLock then
 		return
 	end
 
-	local var_6_0 = {}
+	local list = {}
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0._heroItemList) do
-		local var_6_1 = iter_6_1:checkTower()
+	for i, heroItem in ipairs(self._heroItemList) do
+		local id = heroItem:checkTower()
 
-		if var_6_1 then
-			table.insert(var_6_0, var_6_1)
+		if id then
+			table.insert(list, id)
 		end
 	end
 
-	if #var_6_0 == 0 then
+	if #list == 0 then
 		return
 	end
 
 	UIBlockMgr.instance:startBlock("removeTowerHero")
 
-	arg_6_0._heroInCdList = var_6_0
+	self._heroInCdList = list
 
-	TaskDispatcher.runDelay(arg_6_0._removeTowerHero, arg_6_0, 1.5)
+	TaskDispatcher.runDelay(self._removeTowerHero, self, 1.5)
 end
 
-function var_0_0._removeTowerHero(arg_7_0)
+function TowerHeroGroupListView:_removeTowerHero()
 	UIBlockMgr.instance:endBlock("removeTowerHero")
 
-	if not arg_7_0._heroInCdList then
+	if not self._heroInCdList then
 		return
 	end
 
-	local var_7_0 = arg_7_0._heroInCdList
+	local list = self._heroInCdList
 
-	arg_7_0._heroInCdList = nil
+	self._heroInCdList = nil
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-		HeroSingleGroupModel.instance:remove(iter_7_1)
+	for i, id in ipairs(list) do
+		HeroSingleGroupModel.instance:remove(id)
 	end
 
-	for iter_7_2, iter_7_3 in ipairs(arg_7_0._heroItemList) do
-		iter_7_3:resetGrayFactor()
+	for _, heroItem in ipairs(self._heroItemList) do
+		heroItem:resetGrayFactor()
 	end
 
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
 	HeroGroupModel.instance:replaceSingleGroup()
 end
 
-function var_0_0.canDrag(arg_8_0, arg_8_1, arg_8_2)
-	if not var_0_0.super.canDrag(arg_8_0, arg_8_1, arg_8_2) then
+function TowerHeroGroupListView:canDrag(param, isWrap)
+	if not TowerHeroGroupListView.super.canDrag(self, param, isWrap) then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0.onDestroyView(arg_9_0)
+function TowerHeroGroupListView:onDestroyView()
 	UIBlockMgr.instance:endBlock("removeTowerHero")
-	TaskDispatcher.cancelTask(arg_9_0._removeTowerHero, arg_9_0)
-	var_0_0.super.onDestroyView(arg_9_0)
+	TaskDispatcher.cancelTask(self._removeTowerHero, self)
+	TowerHeroGroupListView.super.onDestroyView(self)
 end
 
-return var_0_0
+return TowerHeroGroupListView

@@ -1,210 +1,213 @@
-﻿module("modules.logic.fight.view.FightViewASFDEnergy", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightViewASFDEnergy.lua
 
-local var_0_0 = class("FightViewASFDEnergy", BaseView)
+module("modules.logic.fight.view.FightViewASFDEnergy", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.goASFD = gohelper.findChild(arg_1_0.viewGO, "root/asfd_container")
-	arg_1_0.txtASFDEnergy = gohelper.findChildText(arg_1_0.viewGO, "root/asfd_container/asfd_icon/#txt_Num")
-	arg_1_0.goClick = gohelper.findChild(arg_1_0.viewGO, "root/asfd_container/asfd_icon/#click")
-	arg_1_0.goFlyContainer = gohelper.findChild(arg_1_0.viewGO, "root/asfd_container/asfd_icon/#go_fly_container")
-	arg_1_0.goFlyItem = gohelper.findChild(arg_1_0.viewGO, "root/asfd_container/asfd_icon/#go_fly_container/#go_fly_item")
+local FightViewASFDEnergy = class("FightViewASFDEnergy", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function FightViewASFDEnergy:onInitView()
+	self.goASFD = gohelper.findChild(self.viewGO, "root/asfd_container")
+	self.txtASFDEnergy = gohelper.findChildText(self.viewGO, "root/asfd_container/asfd_icon/#txt_Num")
+	self.goClick = gohelper.findChild(self.viewGO, "root/asfd_container/asfd_icon/#click")
+	self.goFlyContainer = gohelper.findChild(self.viewGO, "root/asfd_container/asfd_icon/#go_fly_container")
+	self.goFlyItem = gohelper.findChild(self.viewGO, "root/asfd_container/asfd_icon/#go_fly_container/#go_fly_item")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function FightViewASFDEnergy:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function FightViewASFDEnergy:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	local var_4_0 = arg_4_0.viewContainer.rightBottomElementLayoutView:getElementContainer(FightRightBottomElementEnum.Elements.ASFD)
+function FightViewASFDEnergy:_editableInitView()
+	local goContainer = self.viewContainer.rightBottomElementLayoutView:getElementContainer(FightRightBottomElementEnum.Elements.ASFD)
 
-	gohelper.addChild(var_4_0, arg_4_0.goASFD)
+	gohelper.addChild(goContainer, self.goASFD)
 
-	local var_4_1 = arg_4_0.goASFD:GetComponent(gohelper.Type_RectTransform)
+	local rectTr = self.goASFD:GetComponent(gohelper.Type_RectTransform)
 
-	recthelper.setAnchor(var_4_1, 0, 0)
+	recthelper.setAnchor(rectTr, 0, 0)
 
-	arg_4_0.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_4_0.goASFD)
+	self.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(self.goASFD)
 
-	arg_4_0:_hideASFD()
+	self:_hideASFD()
 
-	arg_4_0.flyItemList = {}
+	self.flyItemList = {}
 
-	table.insert(arg_4_0.flyItemList, arg_4_0:createFlyItem(arg_4_0.goFlyItem))
-	gohelper.setActive(arg_4_0.goFlyItem, false)
-	gohelper.setActive(arg_4_0.goClick, false)
-	gohelper.setActive(arg_4_0.goFlyContainer, false)
+	table.insert(self.flyItemList, self:createFlyItem(self.goFlyItem))
+	gohelper.setActive(self.goFlyItem, false)
+	gohelper.setActive(self.goClick, false)
+	gohelper.setActive(self.goFlyContainer, false)
 
-	arg_4_0.rectFlyContainer = arg_4_0.goFlyContainer:GetComponent(gohelper.Type_RectTransform)
+	self.rectFlyContainer = self.goFlyContainer:GetComponent(gohelper.Type_RectTransform)
 
-	arg_4_0:addEventCb(FightController.instance, FightEvent.ASFD_TeamEnergyChange, arg_4_0.onTeamEnergyChange, arg_4_0)
-	arg_4_0:addEventCb(FightController.instance, FightEvent.StageChanged, arg_4_0.stageChange, arg_4_0)
-	arg_4_0:addEventCb(FightController.instance, FightEvent.ASFD_StartAllocateCardEnergy, arg_4_0.startAllocateCardEnergy, arg_4_0)
+	self:addEventCb(FightController.instance, FightEvent.ASFD_TeamEnergyChange, self.onTeamEnergyChange, self)
+	self:addEventCb(FightController.instance, FightEvent.StageChanged, self.stageChange, self)
+	self:addEventCb(FightController.instance, FightEvent.ASFD_StartAllocateCardEnergy, self.startAllocateCardEnergy, self)
 
-	arg_4_0.handCardView = arg_4_0.viewContainer.fightViewHandCard
-	arg_4_0.tweenIdList = {}
+	self.handCardView = self.viewContainer.fightViewHandCard
+	self.tweenIdList = {}
 end
 
-var_0_0.FlyDuration = 0.3
+FightViewASFDEnergy.FlyDuration = 0.3
 
-function var_0_0.startAllocateCardEnergy(arg_5_0)
-	local var_5_0 = FightDataHelper.handCardMgr.handCard
+function FightViewASFDEnergy:startAllocateCardEnergy()
+	local cardList = FightDataHelper.handCardMgr.handCard
 
-	tabletool.clear(arg_5_0.tweenIdList)
+	tabletool.clear(self.tweenIdList)
 
-	arg_5_0.flyCount = 0
-	arg_5_0.arrivedCount = 0
-	arg_5_0.tempVector2 = arg_5_0.tempVector2 or Vector2()
+	self.flyCount = 0
+	self.arrivedCount = 0
+	self.tempVector2 = self.tempVector2 or Vector2()
 
-	gohelper.setActive(arg_5_0.goFlyContainer, true)
+	gohelper.setActive(self.goFlyContainer, true)
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_0) do
-		if iter_5_1.energy and iter_5_1.energy > 0 then
-			local var_5_1 = arg_5_0.handCardView:getHandCardItem(iter_5_0)
+	for index, cardMo in ipairs(cardList) do
+		if cardMo.energy and cardMo.energy > 0 then
+			local handCardItem = self.handCardView:getHandCardItem(index)
 
-			if var_5_1 then
-				arg_5_0.flyCount = arg_5_0.flyCount + 1
+			if handCardItem then
+				self.flyCount = self.flyCount + 1
 
-				local var_5_2, var_5_3 = var_5_1:getASFDScreenPos()
+				local screenPosX, screenPosY = handCardItem:getASFDScreenPos()
 
-				arg_5_0.tempVector2:Set(var_5_2, var_5_3)
+				self.tempVector2:Set(screenPosX, screenPosY)
 
-				local var_5_4, var_5_5 = recthelper.screenPosToAnchorPos2(arg_5_0.tempVector2, arg_5_0.rectFlyContainer)
-				local var_5_6 = arg_5_0:getFlyItem(arg_5_0.flyCount)
+				local targetAnchorX, targetAnchorY = recthelper.screenPosToAnchorPos2(self.tempVector2, self.rectFlyContainer)
+				local flyItem = self:getFlyItem(self.flyCount)
 
-				recthelper.setAnchor(var_5_6.rectTr, 0, 0)
+				recthelper.setAnchor(flyItem.rectTr, 0, 0)
 
-				local var_5_7 = ZProj.TweenHelper.DOAnchorPos(var_5_6.rectTr, var_5_4, var_5_5, var_0_0.FlyDuration / FightModel.instance:getUISpeed(), arg_5_0.onFlyDone, arg_5_0)
+				local tweenId = ZProj.TweenHelper.DOAnchorPos(flyItem.rectTr, targetAnchorX, targetAnchorY, FightViewASFDEnergy.FlyDuration / FightModel.instance:getUISpeed(), self.onFlyDone, self)
 
-				table.insert(arg_5_0.tweenIdList, var_5_7)
+				table.insert(self.tweenIdList, tweenId)
 			end
 		end
 	end
 
-	arg_5_0.animatorPlayer:Play("close", arg_5_0._hideASFD, arg_5_0)
+	self.animatorPlayer:Play("close", self._hideASFD, self)
 
-	if arg_5_0.flyCount < 1 then
+	if self.flyCount < 1 then
 		FightController.instance:dispatchEvent(FightEvent.ASFD_AllocateCardEnergyDone)
 	end
 end
 
-function var_0_0.onFlyDone(arg_6_0)
-	arg_6_0.arrivedCount = arg_6_0.arrivedCount + 1
+function FightViewASFDEnergy:onFlyDone()
+	self.arrivedCount = self.arrivedCount + 1
 
-	if arg_6_0.arrivedCount < arg_6_0.flyCount then
+	if self.arrivedCount < self.flyCount then
 		return
 	end
 
 	AudioMgr.instance:trigger(20248002)
-	tabletool.clear(arg_6_0.tweenIdList)
+	tabletool.clear(self.tweenIdList)
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0.flyItemList) do
-		arg_6_0:resetFlyItem(iter_6_1)
+	for _, flyItem in ipairs(self.flyItemList) do
+		self:resetFlyItem(flyItem)
 	end
 
-	gohelper.setActive(arg_6_0.goFlyContainer, false)
+	gohelper.setActive(self.goFlyContainer, false)
 	FightController.instance:dispatchEvent(FightEvent.ASFD_AllocateCardEnergyDone)
 end
 
-function var_0_0.onTeamEnergyChange(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	if arg_7_1 ~= FightEnum.EntitySide.MySide then
+function FightViewASFDEnergy:onTeamEnergyChange(side, beforeEnergy, curEnergy)
+	if side ~= FightEnum.EntitySide.MySide then
 		return
 	end
 
-	if arg_7_3 <= 0 then
-		return arg_7_0:showASFD()
+	if curEnergy <= 0 then
+		return self:showASFD()
 	end
 
 	AudioMgr.instance:trigger(20248001)
 
-	if arg_7_0.goASFD.activeInHierarchy then
-		arg_7_0:playClickAnim()
+	if self.goASFD.activeInHierarchy then
+		self:playClickAnim()
 	else
-		arg_7_0:showASFD()
+		self:showASFD()
 	end
 
-	arg_7_0.txtASFDEnergy.text = arg_7_3
+	self.txtASFDEnergy.text = curEnergy
 end
 
-function var_0_0.playClickAnim(arg_8_0)
-	gohelper.setActive(arg_8_0.goClick, false)
-	gohelper.setActive(arg_8_0.goClick, true)
+function FightViewASFDEnergy:playClickAnim()
+	gohelper.setActive(self.goClick, false)
+	gohelper.setActive(self.goClick, true)
 end
 
-function var_0_0.hideASFD(arg_9_0)
-	if arg_9_0.goASFD.activeInHierarchy then
-		gohelper.setActive(arg_9_0.goASFD, false)
-		arg_9_0.animatorPlayer:Play("close", arg_9_0._hideASFD, arg_9_0)
+function FightViewASFDEnergy:hideASFD()
+	if self.goASFD.activeInHierarchy then
+		gohelper.setActive(self.goASFD, false)
+		self.animatorPlayer:Play("close", self._hideASFD, self)
 	end
 end
 
-function var_0_0._hideASFD(arg_10_0)
-	gohelper.setActive(arg_10_0.goASFD, false)
+function FightViewASFDEnergy:_hideASFD()
+	gohelper.setActive(self.goASFD, false)
 	FightController.instance:dispatchEvent(FightEvent.RightBottomElements_HideElement, FightRightBottomElementEnum.Elements.ASFD)
 end
 
-function var_0_0.showASFD(arg_11_0)
-	gohelper.setActive(arg_11_0.goASFD, true)
+function FightViewASFDEnergy:showASFD()
+	gohelper.setActive(self.goASFD, true)
 	FightController.instance:dispatchEvent(FightEvent.RightBottomElements_ShowElement, FightRightBottomElementEnum.Elements.ASFD)
 end
 
-function var_0_0.stageChange(arg_12_0)
-	local var_12_0 = FightDataHelper.stageMgr:getCurStage()
+function FightViewASFDEnergy:stageChange()
+	local curStage = FightDataHelper.stageMgr:getCurStage()
 
-	if var_12_0 ~= FightStageMgr.StageType.Enter and var_12_0 ~= FightStageMgr.StageType.Play then
-		arg_12_0:hideASFD()
+	if curStage ~= FightStageMgr.StageType.Enter and curStage ~= FightStageMgr.StageType.Play then
+		self:hideASFD()
 	end
 end
 
-function var_0_0.createFlyItem(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0:getUserDataTb_()
+function FightViewASFDEnergy:createFlyItem(go)
+	local item = self:getUserDataTb_()
 
-	var_13_0.go = arg_13_1
-	var_13_0.rectTr = arg_13_1:GetComponent(gohelper.Type_RectTransform)
+	item.go = go
+	item.rectTr = go:GetComponent(gohelper.Type_RectTransform)
 
-	return var_13_0
+	return item
 end
 
-function var_0_0.getFlyItem(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_0.flyItemList[arg_14_1]
+function FightViewASFDEnergy:getFlyItem(index)
+	local flyItem = self.flyItemList[index]
 
-	if var_14_0 then
-		gohelper.setActive(var_14_0.go, true)
+	if flyItem then
+		gohelper.setActive(flyItem.go, true)
 
-		return var_14_0
+		return flyItem
 	end
 
-	local var_14_1 = gohelper.cloneInPlace(arg_14_0.goFlyItem)
-	local var_14_2 = arg_14_0:createFlyItem(var_14_1)
+	local flyGo = gohelper.cloneInPlace(self.goFlyItem)
 
-	gohelper.setActive(var_14_2.go, true)
-	table.insert(arg_14_0.flyItemList, var_14_2)
+	flyItem = self:createFlyItem(flyGo)
 
-	return var_14_2
+	gohelper.setActive(flyItem.go, true)
+	table.insert(self.flyItemList, flyItem)
+
+	return flyItem
 end
 
-function var_0_0.resetFlyItem(arg_15_0, arg_15_1)
-	recthelper.setAnchor(arg_15_1.rectTr, 0, 0)
-	gohelper.setActive(arg_15_1.go, false)
+function FightViewASFDEnergy:resetFlyItem(flyItem)
+	recthelper.setAnchor(flyItem.rectTr, 0, 0)
+	gohelper.setActive(flyItem.go, false)
 end
 
-function var_0_0.onUpdateParam(arg_16_0)
-	arg_16_0:hideASFD()
+function FightViewASFDEnergy:onUpdateParam()
+	self:hideASFD()
 end
 
-function var_0_0.onDestroyView(arg_17_0)
-	for iter_17_0, iter_17_1 in ipairs(arg_17_0.tweenIdList) do
-		ZProj.TweenHelper.KillById(iter_17_1)
+function FightViewASFDEnergy:onDestroyView()
+	for _, tweenId in ipairs(self.tweenIdList) do
+		ZProj.TweenHelper.KillById(tweenId)
 	end
 
-	tabletool.clear(arg_17_0.tweenIdList)
+	tabletool.clear(self.tweenIdList)
 end
 
-return var_0_0
+return FightViewASFDEnergy

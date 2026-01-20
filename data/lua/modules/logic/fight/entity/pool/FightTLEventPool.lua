@@ -1,69 +1,71 @@
-﻿module("modules.logic.fight.entity.pool.FightTLEventPool", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/pool/FightTLEventPool.lua
 
-local var_0_0 = class("FightTLEventPool")
-local var_0_1 = {}
+module("modules.logic.fight.entity.pool.FightTLEventPool", package.seeall)
 
-function var_0_0.getHandlerInst(arg_1_0, arg_1_1)
-	local var_1_0 = var_0_1[arg_1_0]
+local FightTLEventPool = class("FightTLEventPool")
+local _poolDict = {}
 
-	if not var_1_0 then
-		var_1_0 = LuaObjPool.New(32, function()
-			if arg_1_1 then
-				if arg_1_1.New then
-					return arg_1_1.New()
+function FightTLEventPool.getHandlerInst(type, typeCls)
+	local pool = _poolDict[type]
+
+	if not pool then
+		pool = LuaObjPool.New(32, function()
+			if typeCls then
+				if typeCls.New then
+					return typeCls.New()
 				else
-					logError("FightTLEvent class.ctor is nil: " .. arg_1_0)
+					logError("FightTLEvent class.ctor is nil: " .. type)
 				end
 			else
-				logError("FightTLEvent class is nil: " .. arg_1_0)
+				logError("FightTLEvent class is nil: " .. type)
 			end
 
 			return FightTLEvent.New()
-		end, var_0_0._releaseFunc, var_0_0._resetFunc)
-		var_0_1[arg_1_0] = var_1_0
+		end, FightTLEventPool._releaseFunc, FightTLEventPool._resetFunc)
+		_poolDict[type] = pool
 	end
 
-	local var_1_1 = var_1_0:getObject()
+	local handlerInst = pool:getObject()
 
-	var_1_1.type = arg_1_0
+	handlerInst.type = type
 
-	return var_1_1
+	return handlerInst
 end
 
-function var_0_0.dispose()
-	for iter_3_0, iter_3_1 in pairs(var_0_1) do
-		iter_3_1:dispose()
+function FightTLEventPool.dispose()
+	for _, pool in pairs(_poolDict) do
+		pool:dispose()
 	end
 
-	var_0_1 = {}
+	_poolDict = {}
 end
 
-function var_0_0.putHandlerInst(arg_4_0)
-	local var_4_0 = var_0_1[arg_4_0.type]
+function FightTLEventPool.putHandlerInst(handlerInst)
+	local pool = _poolDict[handlerInst.type]
 
-	if var_4_0 then
-		var_4_0:putObject(arg_4_0)
+	if pool then
+		pool:putObject(handlerInst)
 	else
-		if arg_4_0.reset then
-			arg_4_0:reset()
+		if handlerInst.reset then
+			handlerInst:reset()
 		end
 
-		if arg_4_0.dispose then
-			arg_4_0:dispose()
+		if handlerInst.dispose then
+			handlerInst:dispose()
 		end
 	end
 end
 
-function var_0_0._releaseFunc(arg_5_0)
-	if arg_5_0.dispose then
-		arg_5_0:dispose()
+function FightTLEventPool._releaseFunc(inst)
+	if inst.dispose then
+		inst:dispose()
 	end
 end
 
-function var_0_0._resetFunc(arg_6_0)
-	if arg_6_0.reset then
-		arg_6_0:reset()
+function FightTLEventPool._resetFunc(inst)
+	if inst.reset then
+		inst:reset()
 	end
 end
 
-return var_0_0
+return FightTLEventPool

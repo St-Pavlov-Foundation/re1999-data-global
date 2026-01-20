@@ -1,19 +1,21 @@
-﻿module("modules.logic.character.view.CharacterTalentModifyNameViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterTalentModifyNameViewContainer.lua
 
-local var_0_0 = class("CharacterTalentModifyNameViewContainer", BaseViewContainer)
+module("modules.logic.character.view.CharacterTalentModifyNameViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local CharacterTalentModifyNameViewContainer = class("CharacterTalentModifyNameViewContainer", BaseViewContainer)
+
+function CharacterTalentModifyNameViewContainer:buildViews()
 	return {
 		CharacterTalentModifyNameView.New()
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	arg_2_0:closeThis()
+function CharacterTalentModifyNameViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-function var_0_0.playOpenTransition(arg_3_0)
-	arg_3_0:onPlayOpenTransitionFinish()
+function CharacterTalentModifyNameViewContainer:playOpenTransition()
+	self:onPlayOpenTransitionFinish()
 end
 
-return var_0_0
+return CharacterTalentModifyNameViewContainer

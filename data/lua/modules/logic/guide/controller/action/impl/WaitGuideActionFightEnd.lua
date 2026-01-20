@@ -1,41 +1,43 @@
-﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionFightEnd", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/WaitGuideActionFightEnd.lua
 
-local var_0_0 = class("WaitGuideActionFightEnd", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.WaitGuideActionFightEnd", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+local WaitGuideActionFightEnd = class("WaitGuideActionFightEnd", BaseGuideAction)
 
-	if string.find(arg_1_0.actionParam, ",") then
-		arg_1_0._episodeIdList = string.splitToNumber(arg_1_0.actionParam, ",")
+function WaitGuideActionFightEnd:onStart(context)
+	WaitGuideActionFightEnd.super.onStart(self, context)
+
+	if string.find(self.actionParam, ",") then
+		self._episodeIdList = string.splitToNumber(self.actionParam, ",")
 	else
-		arg_1_0._episodeId = tonumber(arg_1_0.actionParam)
+		self._episodeId = tonumber(self.actionParam)
 	end
 
-	FightController.instance:registerCallback(FightEvent.PushEndFight, arg_1_0._endFight, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.PushEndFight, self._endFight, self)
 end
 
-function var_0_0._endFight(arg_2_0)
-	if arg_2_0._episodeId then
-		local var_2_0 = DungeonModel.instance:getEpisodeInfo(arg_2_0._episodeId)
+function WaitGuideActionFightEnd:_endFight()
+	if self._episodeId then
+		local episodeInfo = DungeonModel.instance:getEpisodeInfo(self._episodeId)
 
-		if var_2_0 and var_2_0.star > DungeonEnum.StarType.None then
-			arg_2_0:onDone(true)
+		if episodeInfo and episodeInfo.star > DungeonEnum.StarType.None then
+			self:onDone(true)
 		end
-	elseif arg_2_0._episodeIdList then
-		for iter_2_0, iter_2_1 in ipairs(arg_2_0._episodeIdList) do
-			local var_2_1 = DungeonModel.instance:getEpisodeInfo(iter_2_1)
+	elseif self._episodeIdList then
+		for i, episodeId in ipairs(self._episodeIdList) do
+			local episodeInfo = DungeonModel.instance:getEpisodeInfo(episodeId)
 
-			if var_2_1 and var_2_1.star > DungeonEnum.StarType.None then
-				arg_2_0:onDone(true)
+			if episodeInfo and episodeInfo.star > DungeonEnum.StarType.None then
+				self:onDone(true)
 			end
 		end
 	else
-		arg_2_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0.clearWork(arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.PushEndFight, arg_3_0._endFight, arg_3_0)
+function WaitGuideActionFightEnd:clearWork()
+	FightController.instance:unregisterCallback(FightEvent.PushEndFight, self._endFight, self)
 end
 
-return var_0_0
+return WaitGuideActionFightEnd

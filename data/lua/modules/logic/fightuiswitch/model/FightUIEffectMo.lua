@@ -1,15 +1,17 @@
-﻿module("modules.logic.fightuiswitch.model.FightUIEffectMo", package.seeall)
+﻿-- chunkname: @modules/logic/fightuiswitch/model/FightUIEffectMo.lua
 
-local var_0_0 = class("FightUIEffectMo")
+module("modules.logic.fightuiswitch.model.FightUIEffectMo", package.seeall)
 
-function var_0_0.initMo(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.id = arg_1_1
-	arg_1_0.classify = arg_1_2
-	arg_1_0.co = FightUISwitchConfig.instance:getFightUIEffectConfigById(arg_1_1)
+local FightUIEffectMo = class("FightUIEffectMo")
+
+function FightUIEffectMo:initMo(id, classify)
+	self.id = id
+	self.classify = classify
+	self.co = FightUISwitchConfig.instance:getFightUIEffectConfigById(id)
 end
 
-function var_0_0.getName(arg_2_0)
-	return arg_2_0.co and arg_2_0.co.name or ""
+function FightUIEffectMo:getName()
+	return self.co and self.co.name or ""
 end
 
-return var_0_0
+return FightUIEffectMo

@@ -1,47 +1,49 @@
-﻿module("modules.logic.sp01.act208.rpc.Act208Rpc", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/act208/rpc/Act208Rpc.lua
 
-local var_0_0 = class("Act208Rpc", BaseRpc)
+module("modules.logic.sp01.act208.rpc.Act208Rpc", package.seeall)
 
-function var_0_0.sendGetAct208InfoRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	local var_1_0 = Activity208Module_pb.GetAct208InfoRequest()
+local Act208Rpc = class("Act208Rpc", BaseRpc)
 
-	var_1_0.activityId = arg_1_1
-	var_1_0.id = arg_1_2
+function Act208Rpc:sendGetAct208InfoRequest(activityId, id, callback, callbackObj)
+	local req = Activity208Module_pb.GetAct208InfoRequest()
 
-	arg_1_0:sendMsg(var_1_0, arg_1_3, arg_1_4)
+	req.activityId = activityId
+	req.id = id
+
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveGetAct208InfoReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 ~= 0 then
+function Act208Rpc:onReceiveGetAct208InfoReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_2_0 = arg_2_2.activityId
-	local var_2_1 = arg_2_2.bonus
+	local activityId = msg.activityId
+	local bonus = msg.bonus
 
-	Act208Model.instance:onGetInfo(var_2_0, var_2_1)
+	Act208Model.instance:onGetInfo(activityId, bonus)
 end
 
-function var_0_0.sendAct208ReceiveBonusRequest(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	local var_3_0 = Activity208Module_pb.Act208ReceiveBonusRequest()
+function Act208Rpc:sendAct208ReceiveBonusRequest(activityId, id, callback, callbackObj)
+	local req = Activity208Module_pb.Act208ReceiveBonusRequest()
 
-	var_3_0.activityId = arg_3_1
-	var_3_0.id = arg_3_2
+	req.activityId = activityId
+	req.id = id
 
-	arg_3_0:sendMsg(var_3_0, arg_3_3, arg_3_4)
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveAct208ReceiveBonusReply(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 ~= 0 then
+function Act208Rpc:onReceiveAct208ReceiveBonusReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_4_0 = arg_4_2.activityId
-	local var_4_1 = arg_4_2.id
+	local activityId = msg.activityId
+	local id = msg.id
 
-	Act208Model.instance:onGetBonus(var_4_0, var_4_1)
+	Act208Model.instance:onGetBonus(activityId, id)
 end
 
-var_0_0.instance = var_0_0.New()
+Act208Rpc.instance = Act208Rpc.New()
 
-return var_0_0
+return Act208Rpc

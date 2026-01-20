@@ -1,50 +1,52 @@
-﻿module("modules.logic.fight.entity.comp.skill.FightTLEventSetSpinePos", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skill/FightTLEventSetSpinePos.lua
 
-local var_0_0 = class("FightTLEventSetSpinePos", FightTimelineTrackItem)
+module("modules.logic.fight.entity.comp.skill.FightTLEventSetSpinePos", package.seeall)
 
-function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = arg_1_3[1]
-	local var_1_1
+local FightTLEventSetSpinePos = class("FightTLEventSetSpinePos", FightTimelineTrackItem)
 
-	if var_1_0 == "1" then
-		var_1_1 = {}
+function FightTLEventSetSpinePos:onTrackStart(fightStepData, duration, paramsArr)
+	local targetType = paramsArr[1]
+	local targetEntitys
 
-		table.insert(var_1_1, FightHelper.getEntity(arg_1_1.fromId))
-	elseif var_1_0 == "2" then
-		var_1_1 = FightHelper.getSkillTargetEntitys(arg_1_1)
-	elseif var_1_0 == "3" then
-		local var_1_2 = FightHelper.getEntity(arg_1_1.fromId)
+	if targetType == "1" then
+		targetEntitys = {}
 
-		var_1_1 = FightHelper.getAllSideEntitys(var_1_2:getSide())
-	elseif var_1_0 == "4" then
-		local var_1_3 = FightDataHelper.entityMgr:getById(arg_1_1.toId)
+		table.insert(targetEntitys, FightHelper.getEntity(fightStepData.fromId))
+	elseif targetType == "2" then
+		targetEntitys = FightHelper.getSkillTargetEntitys(fightStepData)
+	elseif targetType == "3" then
+		local from_entity = FightHelper.getEntity(fightStepData.fromId)
 
-		var_1_1 = var_1_3 and FightHelper.getAllSideEntitys(var_1_3.side) or {}
-	elseif var_1_0 == "5" then
-		local var_1_4 = FightHelper.getEntity(arg_1_1.fromId)
+		targetEntitys = FightHelper.getAllSideEntitys(from_entity:getSide())
+	elseif targetType == "4" then
+		local entityData = FightDataHelper.entityMgr:getById(fightStepData.toId)
 
-		var_1_1 = FightHelper.getAllSideEntitys(var_1_4:getSide())
+		targetEntitys = entityData and FightHelper.getAllSideEntitys(entityData.side) or {}
+	elseif targetType == "5" then
+		local from_entity = FightHelper.getEntity(fightStepData.fromId)
 
-		for iter_1_0, iter_1_1 in ipairs(var_1_1) do
-			if iter_1_1.id == arg_1_1.fromId then
-				table.remove(var_1_1, iter_1_0)
+		targetEntitys = FightHelper.getAllSideEntitys(from_entity:getSide())
+
+		for i, v in ipairs(targetEntitys) do
+			if v.id == fightStepData.fromId then
+				table.remove(targetEntitys, i)
 
 				break
 			end
 		end
-	elseif var_1_0 == "6" then
-		local var_1_5 = FightHelper.getEntity(arg_1_1.toId)
+	elseif targetType == "6" then
+		local from_entity = FightHelper.getEntity(fightStepData.toId)
 
-		var_1_1 = FightHelper.getAllSideEntitys(var_1_5:getSide())
+		targetEntitys = FightHelper.getAllSideEntitys(from_entity:getSide())
 
-		for iter_1_2, iter_1_3 in ipairs(var_1_1) do
-			if iter_1_3.id == arg_1_1.toId then
-				table.remove(var_1_1, iter_1_2)
+		for i, v in ipairs(targetEntitys) do
+			if v.id == fightStepData.toId then
+				table.remove(targetEntitys, i)
 
-				if FightHelper.isAssembledMonster(iter_1_3) then
-					for iter_1_4 = #var_1_1, 1, -1 do
-						if FightHelper.isAssembledMonster(var_1_1[iter_1_4]) then
-							table.remove(var_1_1, iter_1_4)
+				if FightHelper.isAssembledMonster(v) then
+					for index = #targetEntitys, 1, -1 do
+						if FightHelper.isAssembledMonster(targetEntitys[index]) then
+							table.remove(targetEntitys, index)
 						end
 					end
 				end
@@ -54,45 +56,45 @@ function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 		end
 	end
 
-	if not string.nilorempty(arg_1_3[4]) then
-		local var_1_6 = arg_1_0:com_sendMsg(FightMsgId.GetDeadEntityMgr)
+	if not string.nilorempty(paramsArr[4]) then
+		local deadEntityMgr = self:com_sendMsg(FightMsgId.GetDeadEntityMgr)
 
-		var_1_1 = {}
+		targetEntitys = {}
 
-		local var_1_7 = string.splitToNumber(arg_1_3[4], "#")
+		local arr = string.splitToNumber(paramsArr[4], "#")
 
-		for iter_1_5, iter_1_6 in pairs(var_1_6.entityDic) do
-			local var_1_8 = iter_1_6:getMO()
+		for k, v in pairs(deadEntityMgr.entityDic) do
+			local entityMO = v:getMO()
 
-			if var_1_8 and tabletool.indexOf(var_1_7, var_1_8.skin) then
-				table.insert(var_1_1, iter_1_6)
+			if entityMO and tabletool.indexOf(arr, entityMO.skin) then
+				table.insert(targetEntitys, v)
 			end
 		end
 	end
 
-	local var_1_9 = string.splitToNumber(arg_1_3[2], "#")
-	local var_1_10 = arg_1_3[3] == "1"
+	local pos = string.splitToNumber(paramsArr[2], "#")
+	local revert = paramsArr[3] == "1"
 
-	if #var_1_1 > 0 then
-		for iter_1_7, iter_1_8 in ipairs(var_1_1) do
-			local var_1_11 = iter_1_8.spine
-			local var_1_12 = var_1_11 and var_1_11:getSpineTr()
+	if #targetEntitys > 0 then
+		for _, entity in ipairs(targetEntitys) do
+			local spine = entity.spine
+			local transform = spine and spine:getSpineTr()
 
-			if var_1_12 then
-				if var_1_10 then
-					transformhelper.setLocalPos(var_1_12, 0, 0, 0)
-					FightController.instance:dispatchEvent(FightEvent.SetSpinePosByTimeline, iter_1_8.id, 0, 0, 0)
+			if transform then
+				if revert then
+					transformhelper.setLocalPos(transform, 0, 0, 0)
+					FightController.instance:dispatchEvent(FightEvent.SetSpinePosByTimeline, entity.id, 0, 0, 0)
 				else
-					transformhelper.setLocalPos(var_1_12, var_1_9[1] or 0, var_1_9[2] or 0, var_1_9[3] or 0)
-					FightController.instance:dispatchEvent(FightEvent.SetSpinePosByTimeline, iter_1_8.id, var_1_9[1] or 0, var_1_9[2] or 0, var_1_9[3] or 0)
+					transformhelper.setLocalPos(transform, pos[1] or 0, pos[2] or 0, pos[3] or 0)
+					FightController.instance:dispatchEvent(FightEvent.SetSpinePosByTimeline, entity.id, pos[1] or 0, pos[2] or 0, pos[3] or 0)
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.onTrackEnd(arg_2_0)
+function FightTLEventSetSpinePos:onTrackEnd()
 	return
 end
 
-return var_0_0
+return FightTLEventSetSpinePos

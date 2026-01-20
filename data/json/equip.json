@@ -16,7 +16,8 @@
     "useDesc": "language_10024791",
     "sources": "",
     "canShowHandbook": "1",
-    "upperLimit": 0
+    "upperLimit": 0,
+    "characterId": ""
   },
   {
     "id": 1002,
@@ -35,7 +36,8 @@
     "useDesc": "language_10024795",
     "sources": "",
     "canShowHandbook": "1",
-    "upperLimit": 0
+    "upperLimit": 0,
+    "characterId": ""
   },
   {
     "id": 1003,
@@ -54,7 +56,8 @@
     "useDesc": "language_10024798",
     "sources": "",
     "canShowHandbook": "1",
-    "upperLimit": 0
+    "upperLimit": 0,
+    "characterId": ""
   },
   {
     "id": 1004,
@@ -73,7 +76,8 @@
     "useDesc": "language_10024801",
     "sources": "",
     "canShowHandbook": "1",
-    "upperLimit": 0
+    "upperLimit": 0,
+    "characterId": ""
   },
   {
     "id": 1005,
@@ -92,7 +96,8 @@
     "useDesc": "language_10024804",
     "sources": "",
     "canShowHandbook": "1",
-    "upperLimit": 0
+    "upperLimit": 0,
+    "characterId": ""
   },
   {
     "id": 1501,
@@ -111,7 +116,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 0
+    "upperLimit": 0,
+    "characterId": ""
   },
   {
     "id": 1502,
@@ -130,7 +136,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 0
+    "upperLimit": 0,
+    "characterId": ""
   },
   {
     "id": 1503,
@@ -149,7 +156,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 0
+    "upperLimit": 0,
+    "characterId": ""
   },
   {
     "id": 1504,
@@ -168,7 +176,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 0
+    "upperLimit": 0,
+    "characterId": ""
   },
   {
     "id": 1507,
@@ -187,7 +196,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 0
+    "upperLimit": 0,
+    "characterId": ""
   },
   {
     "id": 1508,
@@ -206,7 +216,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 0
+    "upperLimit": 0,
+    "characterId": ""
   },
   {
     "id": 1510,
@@ -225,7 +236,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 0
+    "upperLimit": 0,
+    "characterId": ""
   },
   {
     "id": 1509,
@@ -244,7 +256,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3062"
   },
   {
     "id": 1511,
@@ -263,7 +276,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3053"
   },
   {
     "id": 1401,
@@ -282,7 +296,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 0
+    "upperLimit": 0,
+    "characterId": ""
   },
   {
     "id": 1402,
@@ -301,7 +316,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 0
+    "upperLimit": 0,
+    "characterId": ""
   },
   {
     "id": 1404,
@@ -320,7 +336,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 0
+    "upperLimit": 0,
+    "characterId": ""
   },
   {
     "id": 1405,
@@ -339,7 +356,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 0
+    "upperLimit": 0,
+    "characterId": ""
   },
   {
     "id": 1407,
@@ -358,7 +376,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 0
+    "upperLimit": 0,
+    "characterId": ""
   },
   {
     "id": 1411,
@@ -377,7 +396,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 0
+    "upperLimit": 0,
+    "characterId": ""
   },
   {
     "id": 4103,
@@ -396,7 +416,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 0
+    "upperLimit": 0,
+    "characterId": ""
   },
   {
     "id": 4104,
@@ -415,7 +436,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 0
+    "upperLimit": 0,
+    "characterId": ""
   },
   {
     "id": 1306,
@@ -434,7 +456,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 0
+    "upperLimit": 0,
+    "characterId": ""
   },
   {
     "id": 1307,
@@ -453,7 +476,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 0
+    "upperLimit": 0,
+    "characterId": ""
   },
   {
     "id": 1308,
@@ -472,7 +496,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 0
+    "upperLimit": 0,
+    "characterId": ""
   },
   {
     "id": 1309,
@@ -491,7 +516,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 0
+    "upperLimit": 0,
+    "characterId": ""
   },
   {
     "id": 1310,
@@ -510,7 +536,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 0
+    "upperLimit": 0,
+    "characterId": ""
   },
   {
     "id": 1201,
@@ -529,7 +556,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 0
+    "upperLimit": 0,
+    "characterId": ""
   },
   {
     "id": 1202,
@@ -548,7 +576,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 0
+    "upperLimit": 0,
+    "characterId": ""
   },
   {
     "id": 1203,
@@ -567,7 +596,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 0
+    "upperLimit": 0,
+    "characterId": ""
   },
   {
     "id": 1204,
@@ -586,7 +616,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 0
+    "upperLimit": 0,
+    "characterId": ""
   },
   {
     "id": 1205,
@@ -605,7 +636,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 0
+    "upperLimit": 0,
+    "characterId": ""
   },
   {
     "id": 1206,
@@ -624,7 +656,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 0
+    "upperLimit": 0,
+    "characterId": ""
   },
   {
     "id": 10000,
@@ -643,7 +676,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "1",
-    "upperLimit": 0
+    "upperLimit": 0,
+    "characterId": ""
   },
   {
     "id": 1512,
@@ -662,7 +696,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3072"
   },
   {
     "id": 1001,
@@ -681,7 +716,8 @@
     "useDesc": "language_10024881",
     "sources": "",
     "canShowHandbook": "1",
-    "upperLimit": 0
+    "upperLimit": 0,
+    "characterId": ""
   },
   {
     "id": 1513,
@@ -700,7 +736,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3066#3070#3052#3004"
   },
   {
     "id": 1514,
@@ -719,7 +756,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3079#3007"
   },
   {
     "id": 1413,
@@ -738,7 +776,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3051#3017#3015"
   },
   {
     "id": 1414,
@@ -757,7 +796,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3052#3043#3018"
   },
   {
     "id": 1515,
@@ -776,7 +816,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3073#3039"
   },
   {
     "id": 1420,
@@ -795,7 +836,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": ""
   },
   {
     "id": 1421,
@@ -814,7 +856,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": ""
   },
   {
     "id": 1521,
@@ -833,7 +876,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3083#3004"
   },
   {
     "id": 1522,
@@ -852,7 +896,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3084"
   },
   {
     "id": 1422,
@@ -871,7 +916,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": ""
   },
   {
     "id": 1423,
@@ -890,7 +936,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": ""
   },
   {
     "id": 999,
@@ -909,7 +956,8 @@
     "useDesc": "language_10024906",
     "sources": "",
     "canShowHandbook": "1",
-    "upperLimit": 0
+    "upperLimit": 0,
+    "characterId": ""
   },
   {
     "id": 1523,
@@ -928,7 +976,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3081"
   },
   {
     "id": 1524,
@@ -947,7 +996,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3065"
   },
   {
     "id": 1424,
@@ -966,7 +1016,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": ""
   },
   {
     "id": 1425,
@@ -985,7 +1036,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": ""
   },
   {
     "id": 1525,
@@ -1004,7 +1056,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3087"
   },
   {
     "id": 1526,
@@ -1023,7 +1076,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3077#3004"
   },
   {
     "id": 1426,
@@ -1042,7 +1096,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3051"
   },
   {
     "id": 1427,
@@ -1061,7 +1116,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": ""
   },
   {
     "id": 1527,
@@ -1080,7 +1136,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3086"
   },
   {
     "id": 1528,
@@ -1099,7 +1156,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3080"
   },
   {
     "id": 1529,
@@ -1118,7 +1176,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 0
+    "upperLimit": 0,
+    "characterId": ""
   },
   {
     "id": 1428,
@@ -1137,7 +1196,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3088"
   },
   {
     "id": 1429,
@@ -1156,7 +1216,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3006"
   },
   {
     "id": 10001,
@@ -1175,7 +1236,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "1",
-    "upperLimit": 0
+    "upperLimit": 0,
+    "characterId": ""
   },
   {
     "id": 10002,
@@ -1194,7 +1256,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "1",
-    "upperLimit": 0
+    "upperLimit": 0,
+    "characterId": ""
   },
   {
     "id": 1530,
@@ -1213,7 +1276,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3088"
   },
   {
     "id": 1531,
@@ -1232,7 +1296,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3094"
   },
   {
     "id": 1532,
@@ -1251,7 +1316,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3095"
   },
   {
     "id": 1430,
@@ -1270,7 +1336,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3009"
   },
   {
     "id": 1431,
@@ -1289,7 +1356,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3047#3030"
   },
   {
     "id": 1533,
@@ -1308,7 +1376,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3098"
   },
   {
     "id": 1534,
@@ -1327,7 +1396,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3097"
   },
   {
     "id": 1432,
@@ -1346,7 +1416,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3060"
   },
   {
     "id": 1433,
@@ -1365,7 +1436,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3064"
   },
   {
     "id": 1536,
@@ -1384,7 +1456,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3100"
   },
   {
     "id": 1537,
@@ -1403,7 +1476,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3102"
   },
   {
     "id": 1434,
@@ -1422,7 +1496,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3066"
   },
   {
     "id": 1435,
@@ -1441,7 +1516,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3057"
   },
   {
     "id": 1535,
@@ -1460,7 +1536,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": ""
   },
   {
     "id": 1538,
@@ -1479,7 +1556,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3104"
   },
   {
     "id": 1539,
@@ -1498,7 +1576,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3105"
   },
   {
     "id": 1436,
@@ -1517,7 +1596,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3095"
   },
   {
     "id": 1540,
@@ -1536,7 +1616,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3108"
   },
   {
     "id": 1541,
@@ -1555,7 +1636,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3109"
   },
   {
     "id": 1437,
@@ -1574,7 +1656,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3025"
   },
   {
     "id": 1542,
@@ -1593,7 +1676,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3110"
   },
   {
     "id": 1543,
@@ -1612,7 +1696,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3111"
   },
   {
     "id": 1438,
@@ -1631,7 +1716,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3115#3039"
   },
   {
     "id": 1544,
@@ -1650,7 +1736,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3114"
   },
   {
     "id": 1545,
@@ -1669,7 +1756,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3113"
   },
   {
     "id": 1439,
@@ -1688,7 +1776,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3052#3045"
   },
   {
     "id": 1546,
@@ -1707,7 +1796,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3116"
   },
   {
     "id": 1547,
@@ -1726,7 +1816,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3117"
   },
   {
     "id": 1440,
@@ -1745,7 +1836,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": ""
   },
   {
     "id": 1548,
@@ -1764,7 +1856,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3120"
   },
   {
     "id": 1549,
@@ -1783,7 +1876,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3121"
   },
   {
     "id": 1550,
@@ -1802,7 +1896,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3107"
   },
   {
     "id": 1441,
@@ -1821,7 +1916,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": ""
   },
   {
     "id": 1553,
@@ -1840,7 +1936,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3126"
   },
   {
     "id": 1554,
@@ -1859,7 +1956,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3128"
   },
   {
     "id": 1442,
@@ -1878,7 +1976,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": ""
   },
   {
     "id": 1551,
@@ -1897,7 +1996,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3123"
   },
   {
     "id": 1552,
@@ -1916,7 +2016,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3124"
   },
   {
     "id": 1555,
@@ -1935,7 +2036,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": ""
   },
   {
     "id": 1556,
@@ -1954,7 +2056,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3125"
   },
   {
     "id": 1557,
@@ -1973,7 +2076,8 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": "3132"
   },
   {
     "id": 1443,
@@ -1992,6 +2096,87 @@
     "useDesc": "",
     "sources": "",
     "canShowHandbook": "",
-    "upperLimit": 1
+    "upperLimit": 1,
+    "characterId": ""
+  },
+  {
+    "id": 1558,
+    "name": "language_10104093",
+    "name_en": "The Thousandfold Fate",
+    "skillName": "",
+    "icon": "1558",
+    "rare": 5,
+    "skillType": 1558,
+    "strengthType": 1558,
+    "tag": "1#2",
+    "isExpEquip": 0,
+    "isSpRefine": 0,
+    "useSpRefine": "",
+    "desc": "language_10104094",
+    "useDesc": "",
+    "sources": "",
+    "canShowHandbook": "",
+    "upperLimit": 1,
+    "characterId": ""
+  },
+  {
+    "id": 1559,
+    "name": "language_10104095",
+    "name_en": "Her Willful Leap",
+    "skillName": "",
+    "icon": "1559",
+    "rare": 5,
+    "skillType": 1559,
+    "strengthType": 1559,
+    "tag": "1#5",
+    "isExpEquip": 0,
+    "isSpRefine": 0,
+    "useSpRefine": "",
+    "desc": "language_10104096",
+    "useDesc": "",
+    "sources": "",
+    "canShowHandbook": "",
+    "upperLimit": 1,
+    "characterId": ""
+  },
+  {
+    "id": 1560,
+    "name": "language_10104097",
+    "name_en": "Shadows in the Subconscious",
+    "skillName": "",
+    "icon": "1560",
+    "rare": 5,
+    "skillType": 1560,
+    "strengthType": 1560,
+    "tag": "1#5",
+    "isExpEquip": 0,
+    "isSpRefine": 0,
+    "useSpRefine": "",
+    "desc": "language_10104098",
+    "useDesc": "",
+    "sources": "",
+    "canShowHandbook": "",
+    "upperLimit": 1,
+    "characterId": ""
+  },
+  {
+    "id": 1444,
+    "name": "language_10104099",
+    "name_en": "In Their Figures",
+    "skillName": "",
+    "icon": "1444",
+    "rare": 4,
+    "skillType": 1444,
+    "strengthType": 1444,
+    "tag": "5",
+    "isExpEquip": 0,
+    "isSpRefine": 0,
+    "useSpRefine": "1001",
+    "desc": "language_10104100",
+    "useDesc": "",
+    "sources": "",
+    "canShowHandbook": "",
+    "upperLimit": 1,
+    "characterId": ""
   }
 ]

@@ -1,146 +1,148 @@
-﻿module("modules.logic.versionactivity2_4.wuerlixi.model.WuErLiXiMapNodeMo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/wuerlixi/model/WuErLiXiMapNodeMo.lua
 
-local var_0_0 = pureTable("WuErLiXiMapNodeMo")
+module("modules.logic.versionactivity2_4.wuerlixi.model.WuErLiXiMapNodeMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.x = arg_1_1[1]
-	arg_1_0.y = arg_1_1[2]
-	arg_1_0.id = 100 * arg_1_0.x + arg_1_0.y
-	arg_1_0.nodeType = arg_1_1[3]
-	arg_1_0.unit = nil
-	arg_1_0.ray = nil
-	arg_1_0.initUnit = 0
+local WuErLiXiMapNodeMo = pureTable("WuErLiXiMapNodeMo")
+
+function WuErLiXiMapNodeMo:init(node)
+	self.x = node[1]
+	self.y = node[2]
+	self.id = 100 * self.x + self.y
+	self.nodeType = node[3]
+	self.unit = nil
+	self.ray = nil
+	self.initUnit = 0
 end
 
-function var_0_0.hasActUnit(arg_2_0)
-	return arg_2_0.initUnit == 0 and arg_2_0.unit
+function WuErLiXiMapNodeMo:hasActUnit()
+	return self.initUnit == 0 and self.unit
 end
 
-function var_0_0.setUnit(arg_3_0, arg_3_1)
-	if not arg_3_0.unit then
-		arg_3_0.unit = WuErLiXiMapUnitMo.New()
+function WuErLiXiMapNodeMo:setUnit(unitCo)
+	if not self.unit then
+		self.unit = WuErLiXiMapUnitMo.New()
 	end
 
-	arg_3_0.unit:init(arg_3_1)
+	self.unit:init(unitCo)
 
-	arg_3_0.initUnit = arg_3_0.unit.id
+	self.initUnit = self.unit.id
 end
 
-function var_0_0.setUnitByUnitMo(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	if not arg_4_0.unit then
-		arg_4_0.unit = WuErLiXiMapUnitMo.New()
+function WuErLiXiMapNodeMo:setUnitByUnitMo(unitMo, x, y)
+	if not self.unit then
+		self.unit = WuErLiXiMapUnitMo.New()
 	end
 
-	arg_4_0.unit:initByUnitMo(arg_4_1, arg_4_2, arg_4_3)
+	self.unit:initByUnitMo(unitMo, x, y)
 end
 
-function var_0_0.getNodeUnit(arg_5_0)
-	return arg_5_0.unit
+function WuErLiXiMapNodeMo:getNodeUnit()
+	return self.unit
 end
 
-function var_0_0.setUnitActive(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	if not arg_6_0.unit then
+function WuErLiXiMapNodeMo:setUnitActive(active, signalType, inDir)
+	if not self.unit then
 		return
 	end
 
-	arg_6_0.unit:setUnitActive(arg_6_1, arg_6_2, arg_6_3)
+	self.unit:setUnitActive(active, signalType, inDir)
 end
 
-function var_0_0.setDir(arg_7_0, arg_7_1, arg_7_2)
-	if not arg_7_0.unit then
+function WuErLiXiMapNodeMo:setDir(dir, rayDir)
+	if not self.unit then
 		return
 	end
 
-	arg_7_0.unit:setDir(arg_7_1)
+	self.unit:setDir(dir)
 
-	if not arg_7_2 then
+	if not rayDir then
 		return
 	end
 
-	arg_7_0:setUnitOutDirByRayDir(arg_7_2)
+	self:setUnitOutDirByRayDir(rayDir)
 end
 
-function var_0_0.setUnitOutDirByRayDir(arg_8_0, arg_8_1)
-	if not arg_8_0.unit or not arg_8_1 then
+function WuErLiXiMapNodeMo:setUnitOutDirByRayDir(rayDir)
+	if not self.unit or not rayDir then
 		return
 	end
 
-	arg_8_0.unit:setUnitOutDirByRayDir(arg_8_1)
+	self.unit:setUnitOutDirByRayDir(rayDir)
 end
 
-function var_0_0.isUnitActive(arg_9_0, arg_9_1)
-	if not arg_9_0.unit then
+function WuErLiXiMapNodeMo:isUnitActive(rayDir)
+	if not self.unit then
 		return false
 	end
 
-	return arg_9_0.unit:isUnitActive(arg_9_1)
+	return self.unit:isUnitActive(rayDir)
 end
 
-function var_0_0.clearUnit(arg_10_0)
-	arg_10_0.unit = nil
+function WuErLiXiMapNodeMo:clearUnit()
+	self.unit = nil
 end
 
-function var_0_0.isNodeShowActive(arg_11_0)
-	if not arg_11_0.unit then
+function WuErLiXiMapNodeMo:isNodeShowActive()
+	if not self.unit then
 		return false
 	end
 
-	if arg_11_0.unit.unitType == WuErLiXiEnum.UnitType.SignalEnd then
-		return arg_11_0.ray
-	elseif arg_11_0.unit.unitType == WuErLiXiEnum.UnitType.Obstacle then
-		return arg_11_0.initUnit == 0
+	if self.unit.unitType == WuErLiXiEnum.UnitType.SignalEnd then
+		return self.ray
+	elseif self.unit.unitType == WuErLiXiEnum.UnitType.Obstacle then
+		return self.initUnit == 0
 	end
 
-	return arg_11_0.unit:isUnitActive()
+	return self.unit:isUnitActive()
 end
 
-function var_0_0.isRayEmitterNode(arg_12_0)
-	if not arg_12_0.unit then
+function WuErLiXiMapNodeMo:isRayEmitterNode()
+	if not self.unit then
 		return false
 	end
 
-	return arg_12_0.unit:isRayEmitterUnit()
+	return self.unit:isRayEmitterUnit()
 end
 
-function var_0_0.setUnitByActUnitMo(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	if not arg_13_0.unit then
-		arg_13_0.unit = WuErLiXiMapUnitMo.New()
+function WuErLiXiMapNodeMo:setUnitByActUnitMo(actUnitMo, x, y)
+	if not self.unit then
+		self.unit = WuErLiXiMapUnitMo.New()
 	end
 
-	arg_13_0.unit:initByActUnitMo(arg_13_1, arg_13_2, arg_13_3)
+	self.unit:initByActUnitMo(actUnitMo, x, y)
 end
 
-function var_0_0.getUnitSignalOutDir(arg_14_0)
-	if not arg_14_0.unit then
+function WuErLiXiMapNodeMo:getUnitSignalOutDir()
+	if not self.unit then
 		return
 	end
 
-	return arg_14_0.unit:getUnitSignalOutDir()
+	return self.unit:getUnitSignalOutDir()
 end
 
-function var_0_0.setUnitOutDirByRayDir(arg_15_0, arg_15_1)
-	if not arg_15_0.unit then
+function WuErLiXiMapNodeMo:setUnitOutDirByRayDir(rayDir)
+	if not self.unit then
 		return
 	end
 
-	return arg_15_0.unit:setUnitOutDirByRayDir(arg_15_1)
+	return self.unit:setUnitOutDirByRayDir(rayDir)
 end
 
-function var_0_0.isUnitFreeType(arg_16_0)
-	if not arg_16_0.unit then
+function WuErLiXiMapNodeMo:isUnitFreeType()
+	if not self.unit then
 		return false
 	end
 
-	return arg_16_0.initUnit ~= 0
+	return self.initUnit ~= 0
 end
 
-function var_0_0.couldSetRay(arg_17_0, arg_17_1)
-	if arg_17_0.unit then
-		if arg_17_0.x ~= arg_17_0.unit.x or arg_17_0.y ~= arg_17_0.unit.y then
+function WuErLiXiMapNodeMo:couldSetRay(rayType)
+	if self.unit then
+		if self.x ~= self.unit.x or self.y ~= self.unit.y then
 			return false
 		end
 
-		if not arg_17_0.unit:couldSetRay(arg_17_1) then
+		if not self.unit:couldSetRay(rayType) then
 			return false
 		end
 	end
@@ -148,32 +150,32 @@ function var_0_0.couldSetRay(arg_17_0, arg_17_1)
 	return true
 end
 
-function var_0_0.setNodeRay(arg_18_0, arg_18_1, arg_18_2, arg_18_3, arg_18_4)
-	if arg_18_0.unit and not arg_18_0.unit:couldSetRay(arg_18_2) then
-		arg_18_0.ray = nil
+function WuErLiXiMapNodeMo:setNodeRay(rayId, rayType, rayDir, rayParent)
+	if self.unit and not self.unit:couldSetRay(rayType) then
+		self.ray = nil
 
 		return
 	end
 
-	if not arg_18_0.ray then
-		arg_18_0.ray = WuErLiXiMapRayMo.New()
+	if not self.ray then
+		self.ray = WuErLiXiMapRayMo.New()
 
-		arg_18_0.ray:init(arg_18_1, arg_18_2, arg_18_3, arg_18_4)
+		self.ray:init(rayId, rayType, rayDir, rayParent)
 	else
-		arg_18_0.ray:reset(arg_18_1, arg_18_2, arg_18_3, arg_18_4)
+		self.ray:reset(rayId, rayType, rayDir, rayParent)
 	end
 end
 
-function var_0_0.getNodeRay(arg_19_0)
-	return arg_19_0.ray
+function WuErLiXiMapNodeMo:getNodeRay()
+	return self.ray
 end
 
-function var_0_0.clearNodeRay(arg_20_0, arg_20_1)
-	if not arg_20_0.ray or arg_20_0.ray.rayId ~= arg_20_1 then
+function WuErLiXiMapNodeMo:clearNodeRay(rayId)
+	if not self.ray or self.ray.rayId ~= rayId then
 		return
 	end
 
-	arg_20_0.ray = nil
+	self.ray = nil
 end
 
-return var_0_0
+return WuErLiXiMapNodeMo

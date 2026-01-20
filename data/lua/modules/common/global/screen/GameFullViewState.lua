@@ -1,143 +1,147 @@
-﻿module("modules.common.global.screen.GameFullViewState", package.seeall)
+﻿-- chunkname: @modules/common/global/screen/GameFullViewState.lua
 
-local var_0_0 = class("GameFullViewState")
+module("modules.common.global.screen.GameFullViewState", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0:addConstEvents()
+local GameFullViewState = class("GameFullViewState")
 
-	arg_1_0._sceneRootGO = nil
-	arg_1_0._ignoreViewNames = {}
-	arg_1_0._ignoreViewNames[ViewName.SettingsView] = true
-	arg_1_0._ignoreViewNames[ViewName.GMPostProcessView] = true
-	arg_1_0._ignoreViewNames[ViewName.StoryBackgroundView] = true
-	arg_1_0._ignoreViewNames[ViewName.V1a6_CachotCollectionSelectView] = true
-	arg_1_0._ignoreSceneTypes = {}
-	arg_1_0._ignoreSceneTypes[SceneType.Summon] = true
-	arg_1_0._ignoreSceneTypes[SceneType.Explore] = true
-	arg_1_0._callGCViews = {}
-	arg_1_0._banGcKey = {}
+function GameFullViewState:ctor()
+	self:addConstEvents()
+
+	self._sceneRootGO = nil
+	self._ignoreViewNames = {}
+	self._ignoreViewNames[ViewName.SettingsView] = true
+	self._ignoreViewNames[ViewName.GMPostProcessView] = true
+	self._ignoreViewNames[ViewName.StoryBackgroundView] = true
+	self._ignoreViewNames[ViewName.V1a6_CachotCollectionSelectView] = true
+	self._ignoreSceneTypes = {}
+	self._ignoreSceneTypes[SceneType.Summon] = true
+	self._ignoreSceneTypes[SceneType.Explore] = true
+	self._callGCViews = {}
+	self._banGcKey = {}
 end
 
-function var_0_0.addConstEvents(arg_2_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenFullViewFinish, arg_2_0._onOpenFullView, arg_2_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseFullView, arg_2_0._onCloseFullView, arg_2_0)
-	ViewMgr.instance:registerCallback(ViewEvent.ReOpenWhileOpen, arg_2_0._reOpenWhileOpen, arg_2_0)
-	ViewMgr.instance:registerCallback(ViewEvent.DestroyFullViewFinish, arg_2_0._onFullViewDestroy, arg_2_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_2_0._onPlayViewAnim, arg_2_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_2_0._onPlayViewAnim, arg_2_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_2_0._onPlayViewAnimFinish, arg_2_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_2_0._onPlayViewAnimFinish, arg_2_0)
-	GameGCMgr.instance:registerCallback(GameGCEvent.OnFullGC, arg_2_0._onFullGC, arg_2_0)
-	GameGCMgr.instance:registerCallback(GameGCEvent.SetBanGc, arg_2_0._onSetBanGC, arg_2_0)
+function GameFullViewState:addConstEvents()
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenFullViewFinish, self._onOpenFullView, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseFullView, self._onCloseFullView, self)
+	ViewMgr.instance:registerCallback(ViewEvent.ReOpenWhileOpen, self._reOpenWhileOpen, self)
+	ViewMgr.instance:registerCallback(ViewEvent.DestroyFullViewFinish, self._onFullViewDestroy, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, self._onPlayViewAnim, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, self._onPlayViewAnim, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, self._onPlayViewAnimFinish, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onPlayViewAnimFinish, self)
+	GameGCMgr.instance:registerCallback(GameGCEvent.OnFullGC, self._onFullGC, self)
+	GameGCMgr.instance:registerCallback(GameGCEvent.SetBanGc, self._onSetBanGC, self)
 end
 
-function var_0_0._onFullViewDestroy(arg_3_0, arg_3_1)
-	arg_3_0._callGCViews[arg_3_1] = true
+function GameFullViewState:_onFullViewDestroy(viewName)
+	self._callGCViews[viewName] = true
 
-	arg_3_0:_delayGC()
+	self:_delayGC()
 end
 
-function var_0_0._onPlayViewAnim(arg_4_0, arg_4_1)
-	arg_4_0._callGCViews[arg_4_1] = nil
+function GameFullViewState:_onPlayViewAnim(viewName)
+	self._callGCViews[viewName] = nil
 
-	arg_4_0:_cancelGCTask()
+	self:_cancelGCTask()
 end
 
-function var_0_0._onPlayViewAnimFinish(arg_5_0)
-	if arg_5_0:_needGC() then
-		arg_5_0:_delayGC()
+function GameFullViewState:_onPlayViewAnimFinish()
+	if self:_needGC() then
+		self:_delayGC()
 	end
 end
 
-function var_0_0._onFullGC(arg_6_0)
-	tabletool.clear(arg_6_0._callGCViews)
-	arg_6_0:_cancelGCTask()
+function GameFullViewState:_onFullGC()
+	tabletool.clear(self._callGCViews)
+	self:_cancelGCTask()
 end
 
-function var_0_0._onSetBanGC(arg_7_0, arg_7_1, arg_7_2)
-	if arg_7_2 then
-		arg_7_0._banGcKey[arg_7_1] = true
+function GameFullViewState:_onSetBanGC(key, isBan)
+	if isBan then
+		self._banGcKey[key] = true
 	else
-		arg_7_0._banGcKey[arg_7_1] = nil
+		self._banGcKey[key] = nil
 	end
 end
 
-function var_0_0._delayGC(arg_8_0)
-	arg_8_0:_cancelGCTask()
-	TaskDispatcher.runDelay(arg_8_0._gc, arg_8_0, 1.5)
+function GameFullViewState:_delayGC()
+	self:_cancelGCTask()
+	TaskDispatcher.runDelay(self._gc, self, 1.5)
 end
 
-function var_0_0._cancelGCTask(arg_9_0)
-	TaskDispatcher.cancelTask(arg_9_0._gc, arg_9_0)
+function GameFullViewState:_cancelGCTask()
+	TaskDispatcher.cancelTask(self._gc, self)
 end
 
-function var_0_0._gc(arg_10_0)
-	if next(arg_10_0._banGcKey) then
+function GameFullViewState:_gc()
+	if next(self._banGcKey) then
 		return
 	end
 
-	GameGCMgr.instance:dispatchEvent(GameGCEvent.FullGC, arg_10_0)
+	GameGCMgr.instance:dispatchEvent(GameGCEvent.FullGC, self)
 end
 
-function var_0_0._needGC(arg_11_0)
-	for iter_11_0, iter_11_1 in pairs(arg_11_0._callGCViews) do
+function GameFullViewState:_needGC()
+	for _, _ in pairs(self._callGCViews) do
 		return true
 	end
 end
 
-function var_0_0._onOpenFullView(arg_12_0, arg_12_1)
-	if arg_12_0._ignoreViewNames[arg_12_1] then
+function GameFullViewState:_onOpenFullView(viewName)
+	if self._ignoreViewNames[viewName] then
 		return
 	end
 
-	local var_12_0 = GameSceneMgr.instance:getCurScene()
+	local curScene = GameSceneMgr.instance:getCurScene()
 
-	if not var_12_0 then
+	if not curScene then
 		return
 	end
 
-	local var_12_1 = GameSceneMgr.instance:getCurSceneType()
+	local curSceneType = GameSceneMgr.instance:getCurSceneType()
 
-	if not var_12_1 or arg_12_0._ignoreSceneTypes[var_12_1] then
+	if not curSceneType or self._ignoreSceneTypes[curSceneType] then
 		return
 	end
 
-	local var_12_2 = var_12_0:getSceneContainerGO()
+	local curSceneRootGO = curScene:getSceneContainerGO()
 
-	if arg_12_0._sceneRootGO and var_12_2 ~= arg_12_0._sceneRootGO then
-		gohelper.setActive(arg_12_0._sceneRootGO, true)
+	if self._sceneRootGO and curSceneRootGO ~= self._sceneRootGO then
+		gohelper.setActive(self._sceneRootGO, true)
 	end
 
-	arg_12_0._sceneRootGO = var_12_2
+	self._sceneRootGO = curSceneRootGO
 
-	gohelper.setActive(arg_12_0._sceneRootGO, false)
+	gohelper.setActive(self._sceneRootGO, false)
 	CameraMgr.instance:setSceneCameraActive(false, "fullviewstate")
 
-	if var_12_1 == SceneType.Fight then
+	if curSceneType == SceneType.Fight then
 		CameraMgr.instance:setVirtualCameraChildActive(false, "light")
 	end
 
 	GameSceneMgr.instance:dispatchEvent(SceneEventName.SceneGoChangeVisible, false)
 end
 
-function var_0_0.forceSceneCameraActive(arg_13_0, arg_13_1)
-	local var_13_0 = GameSceneMgr.instance:getCurScene()
-	local var_13_1 = var_13_0 and var_13_0:getSceneContainerGO()
+function GameFullViewState:forceSceneCameraActive(active)
+	local curScene = GameSceneMgr.instance:getCurScene()
+	local curSceneRootGO = curScene and curScene:getSceneContainerGO()
 
-	gohelper.setActive(var_13_1, arg_13_1)
-	CameraMgr.instance:setSceneCameraActive(arg_13_1, "fullviewstate")
+	gohelper.setActive(curSceneRootGO, active)
+	CameraMgr.instance:setSceneCameraActive(active, "fullviewstate")
 end
 
-function var_0_0._onCloseFullView(arg_14_0, arg_14_1)
-	if arg_14_0._ignoreViewNames[arg_14_1] then
+function GameFullViewState:_onCloseFullView(viewName)
+	if self._ignoreViewNames[viewName] then
 		return
 	end
 
-	if not arg_14_0:_hasOpenFullView() then
-		gohelper.setActive(arg_14_0._sceneRootGO, true)
+	if not self:_hasOpenFullView() then
+		gohelper.setActive(self._sceneRootGO, true)
 		CameraMgr.instance:setSceneCameraActive(true, "fullviewstate")
 
-		if GameSceneMgr.instance:getCurSceneType() == SceneType.Fight then
+		local curSceneType = GameSceneMgr.instance:getCurSceneType()
+
+		if curSceneType == SceneType.Fight then
 			CameraMgr.instance:setVirtualCameraChildActive(true, "light")
 		end
 
@@ -145,14 +149,14 @@ function var_0_0._onCloseFullView(arg_14_0, arg_14_1)
 	end
 end
 
-function var_0_0._hasOpenFullView(arg_15_0)
-	local var_15_0 = ViewMgr.instance:getOpenViewNameList()
+function GameFullViewState:_hasOpenFullView()
+	local openViewNameList = ViewMgr.instance:getOpenViewNameList()
 
-	for iter_15_0, iter_15_1 in ipairs(var_15_0) do
-		if ViewMgr.instance:isFull(iter_15_1) and not arg_15_0._ignoreViewNames[iter_15_1] then
-			local var_15_1 = ViewMgr.instance:getContainer(iter_15_1)
+	for _, viewName in ipairs(openViewNameList) do
+		if ViewMgr.instance:isFull(viewName) and not self._ignoreViewNames[viewName] then
+			local viewContainer = ViewMgr.instance:getContainer(viewName)
 
-			if var_15_1 and var_15_1:isOpenFinish() then
+			if viewContainer and viewContainer:isOpenFinish() then
 				return true
 			end
 		end
@@ -161,23 +165,23 @@ function var_0_0._hasOpenFullView(arg_15_0)
 	return false
 end
 
-function var_0_0.getOpenFullViewNames(arg_16_0)
-	local var_16_0 = ""
-	local var_16_1 = ViewMgr.instance:getOpenViewNameList()
+function GameFullViewState:getOpenFullViewNames()
+	local nameList = ""
+	local openViewNameList = ViewMgr.instance:getOpenViewNameList()
 
-	for iter_16_0, iter_16_1 in ipairs(var_16_1) do
-		if ViewMgr.instance:isFull(iter_16_1) and not arg_16_0._ignoreViewNames[iter_16_1] then
-			var_16_0 = var_16_0 .. iter_16_1 .. ","
+	for _, viewName in ipairs(openViewNameList) do
+		if ViewMgr.instance:isFull(viewName) and not self._ignoreViewNames[viewName] then
+			nameList = nameList .. viewName .. ","
 		end
 	end
 
-	return var_16_0
+	return nameList
 end
 
-function var_0_0._reOpenWhileOpen(arg_17_0, arg_17_1)
-	if ViewMgr.instance:isFull(arg_17_1) then
-		arg_17_0:_onOpenFullView(arg_17_1)
+function GameFullViewState:_reOpenWhileOpen(viewName)
+	if ViewMgr.instance:isFull(viewName) then
+		self:_onOpenFullView(viewName)
 	end
 end
 
-return var_0_0
+return GameFullViewState

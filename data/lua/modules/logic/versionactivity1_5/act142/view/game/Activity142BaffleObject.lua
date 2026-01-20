@@ -1,82 +1,84 @@
-﻿module("modules.logic.versionactivity1_5.act142.view.game.Activity142BaffleObject", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/act142/view/game/Activity142BaffleObject.lua
 
-local var_0_0 = class("Activity142BaffleObject", UserDataDispose)
+module("modules.logic.versionactivity1_5.act142.view.game.Activity142BaffleObject", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+local Activity142BaffleObject = class("Activity142BaffleObject", UserDataDispose)
 
-	arg_1_0.baffleContainerTr = arg_1_1
+function Activity142BaffleObject:ctor(baffleContainerTr)
+	self:__onInit()
+
+	self.baffleContainerTr = baffleContainerTr
 end
 
-function var_0_0.init(arg_2_0)
-	arg_2_0:createSceneNode()
+function Activity142BaffleObject:init()
+	self:createSceneNode()
 end
 
-function var_0_0.createSceneNode(arg_3_0)
-	arg_3_0.viewGO = UnityEngine.GameObject.New("baffle_item")
-	arg_3_0.transform = arg_3_0.viewGO.transform
+function Activity142BaffleObject:createSceneNode()
+	self.viewGO = UnityEngine.GameObject.New("baffle_item")
+	self.transform = self.viewGO.transform
 
-	arg_3_0.transform:SetParent(arg_3_0.baffleContainerTr, false)
+	self.transform:SetParent(self.baffleContainerTr, false)
 end
 
-function var_0_0.updatePos(arg_4_0, arg_4_1)
-	arg_4_0.baffleCo = arg_4_1
+function Activity142BaffleObject:updatePos(baffleCo)
+	self.baffleCo = baffleCo
 
-	local var_4_0, var_4_1, var_4_2 = Activity142Helper.calBafflePosInScene(arg_4_0.baffleCo.x, arg_4_0.baffleCo.y, arg_4_0.baffleCo.direction)
+	local x, y, z = Activity142Helper.calBafflePosInScene(self.baffleCo.x, self.baffleCo.y, self.baffleCo.direction)
 
-	transformhelper.setLocalPos(arg_4_0.transform, var_4_0, var_4_1, var_4_2)
-	gohelper.setActive(arg_4_0.viewGO, true)
-	arg_4_0:loadAvatar()
+	transformhelper.setLocalPos(self.transform, x, y, z)
+	gohelper.setActive(self.viewGO, true)
+	self:loadAvatar()
 end
 
-function var_0_0.loadAvatar(arg_5_0)
-	if not gohelper.isNil(arg_5_0.baffleGo) then
-		gohelper.destroy(arg_5_0.baffleGo)
+function Activity142BaffleObject:loadAvatar()
+	if not gohelper.isNil(self.baffleGo) then
+		gohelper.destroy(self.baffleGo)
 	end
 
-	arg_5_0.loader = PrefabInstantiate.Create(arg_5_0.viewGO)
+	self.loader = PrefabInstantiate.Create(self.viewGO)
 
-	local var_5_0 = arg_5_0:getBaffleResPath()
+	local path = self:getBaffleResPath()
 
-	arg_5_0.loader:startLoad(var_5_0, arg_5_0.onSceneObjectLoadFinish, arg_5_0)
+	self.loader:startLoad(path, self.onSceneObjectLoadFinish, self)
 end
 
-function var_0_0.getBaffleResPath(arg_6_0)
-	return Activity142Helper.getBaffleResPath(arg_6_0.baffleCo)
+function Activity142BaffleObject:getBaffleResPath()
+	return Activity142Helper.getBaffleResPath(self.baffleCo)
 end
 
-function var_0_0.onSceneObjectLoadFinish(arg_7_0)
-	arg_7_0.baffleGo = arg_7_0.loader:getInstGO()
+function Activity142BaffleObject:onSceneObjectLoadFinish()
+	self.baffleGo = self.loader:getInstGO()
 
-	if not gohelper.isNil(arg_7_0.baffleGo) then
-		local var_7_0 = gohelper.findChild(arg_7_0.baffleGo, "Canvas")
+	if not gohelper.isNil(self.baffleGo) then
+		local canvasGo = gohelper.findChild(self.baffleGo, "Canvas")
 
-		if var_7_0 then
-			local var_7_1 = var_7_0:GetComponent(typeof(UnityEngine.Canvas))
+		if canvasGo then
+			local canvas = canvasGo:GetComponent(typeof(UnityEngine.Canvas))
 
-			if var_7_1 then
-				var_7_1.worldCamera = CameraMgr.instance:getMainCamera()
+			if canvas then
+				canvas.worldCamera = CameraMgr.instance:getMainCamera()
 			end
 		end
 	end
 
-	gohelper.setLayer(arg_7_0.viewGO, UnityLayer.Scene, true)
+	gohelper.setLayer(self.viewGO, UnityLayer.Scene, true)
 end
 
-function var_0_0.recycle(arg_8_0)
-	gohelper.setActive(arg_8_0.viewGO, false)
+function Activity142BaffleObject:recycle()
+	gohelper.setActive(self.viewGO, false)
 end
 
-function var_0_0.dispose(arg_9_0)
-	if arg_9_0.loader then
-		arg_9_0.loader:dispose()
+function Activity142BaffleObject:dispose()
+	if self.loader then
+		self.loader:dispose()
 
-		arg_9_0.loader = nil
+		self.loader = nil
 	end
 
-	gohelper.setActive(arg_9_0.viewGO, true)
-	gohelper.destroy(arg_9_0.viewGO)
-	arg_9_0:__onDispose()
+	gohelper.setActive(self.viewGO, true)
+	gohelper.destroy(self.viewGO)
+	self:__onDispose()
 end
 
-return var_0_0
+return Activity142BaffleObject

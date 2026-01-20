@@ -1,102 +1,104 @@
-﻿module("modules.logic.dungeon.model.DungeonPuzzleQuestionModel", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/model/DungeonPuzzleQuestionModel.lua
 
-local var_0_0 = class("DungeonPuzzleQuestionModel", BaseModel)
+module("modules.logic.dungeon.model.DungeonPuzzleQuestionModel", package.seeall)
 
-function var_0_0.reInit(arg_1_0)
-	arg_1_0:release()
+local DungeonPuzzleQuestionModel = class("DungeonPuzzleQuestionModel", BaseModel)
+
+function DungeonPuzzleQuestionModel:reInit()
+	self:release()
 end
 
-function var_0_0.initByElementCo(arg_2_0, arg_2_1)
-	arg_2_0._cfgElement = arg_2_1
+function DungeonPuzzleQuestionModel:initByElementCo(elementCo)
+	self._cfgElement = elementCo
 
-	if arg_2_0._cfgElement and arg_2_0._cfgElement.param then
-		arg_2_0._cfgQuestion = DungeonConfig.instance:getPuzzleQuestionCo(tonumber(arg_2_0._cfgElement.param))
+	if self._cfgElement and self._cfgElement.param then
+		self._cfgQuestion = DungeonConfig.instance:getPuzzleQuestionCo(tonumber(self._cfgElement.param))
 
-		if arg_2_0._cfgQuestion then
-			local var_2_0 = "#"
+		if self._cfgQuestion then
+			local splitKey = "#"
 
-			arg_2_0._answer = string.split(arg_2_0._cfgQuestion.answer, var_2_0)
-			arg_2_0._desc = string.split(arg_2_0._cfgQuestion.desc, var_2_0)
-			arg_2_0._descEn = string.split(arg_2_0._cfgQuestion.descEn, var_2_0)
-			arg_2_0._title = string.split(arg_2_0._cfgQuestion.title, var_2_0)
-			arg_2_0._titleEn = string.split(arg_2_0._cfgQuestion.titleEn, var_2_0)
-			arg_2_0._question = string.split(arg_2_0._cfgQuestion.question, var_2_0)
-			arg_2_0._questionCount = #arg_2_0._question
+			self._answer = string.split(self._cfgQuestion.answer, splitKey)
+			self._desc = string.split(self._cfgQuestion.desc, splitKey)
+			self._descEn = string.split(self._cfgQuestion.descEn, splitKey)
+			self._title = string.split(self._cfgQuestion.title, splitKey)
+			self._titleEn = string.split(self._cfgQuestion.titleEn, splitKey)
+			self._question = string.split(self._cfgQuestion.question, splitKey)
+			self._questionCount = #self._question
 
-			if arg_2_0:CheckConfigAvailable() then
-				arg_2_0._isReady = true
+			if self:CheckConfigAvailable() then
+				self._isReady = true
 
-				arg_2_0:initAnswer()
+				self:initAnswer()
 			else
-				logError("DungeonPuzzleQuestion confg error, id = " .. tostring(arg_2_0._cfgQuestion.id))
+				logError("DungeonPuzzleQuestion confg error, id = " .. tostring(self._cfgQuestion.id))
 			end
 		else
-			logError("DungeonPuzzleQuestion confg not found, element id = " .. tostring(arg_2_0._cfgElement.id))
+			logError("DungeonPuzzleQuestion confg not found, element id = " .. tostring(self._cfgElement.id))
 		end
 	end
 end
 
-function var_0_0.initAnswer(arg_3_0)
-	local var_3_0 = "|"
-	local var_3_1 = {}
+function DungeonPuzzleQuestionModel:initAnswer()
+	local secSplitKey = "|"
+	local result = {}
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0._answer) do
-		local var_3_2 = string.split(iter_3_1, var_3_0)
-		local var_3_3 = {}
+	for i, originStr in ipairs(self._answer) do
+		local answerList = string.split(originStr, secSplitKey)
+		local resultSet = {}
 
-		for iter_3_2, iter_3_3 in ipairs(var_3_2) do
-			var_3_3[iter_3_3] = true
+		for j, answerStr in ipairs(answerList) do
+			resultSet[answerStr] = true
 		end
 
-		var_3_1[iter_3_0] = var_3_3
+		result[i] = resultSet
 	end
 
-	arg_3_0._answer = var_3_1
+	self._answer = result
 end
 
-function var_0_0.CheckConfigAvailable(arg_4_0)
-	return #arg_4_0._desc == DungeonPuzzleEnum.hintCount and #arg_4_0._descEn == DungeonPuzzleEnum.hintCount and #arg_4_0._title == DungeonPuzzleEnum.hintCount and #arg_4_0._titleEn == DungeonPuzzleEnum.hintCount and #arg_4_0._question == #arg_4_0._answer
+function DungeonPuzzleQuestionModel:CheckConfigAvailable()
+	return #self._desc == DungeonPuzzleEnum.hintCount and #self._descEn == DungeonPuzzleEnum.hintCount and #self._title == DungeonPuzzleEnum.hintCount and #self._titleEn == DungeonPuzzleEnum.hintCount and #self._question == #self._answer
 end
 
-function var_0_0.getHint(arg_5_0, arg_5_1)
-	return arg_5_0._title[arg_5_1], arg_5_0._titleEn[arg_5_1], arg_5_0._desc[arg_5_1], arg_5_0._descEn[arg_5_1]
+function DungeonPuzzleQuestionModel:getHint(index)
+	return self._title[index], self._titleEn[index], self._desc[index], self._descEn[index]
 end
 
-function var_0_0.getQuestion(arg_6_0, arg_6_1)
-	return arg_6_0._question[arg_6_1]
+function DungeonPuzzleQuestionModel:getQuestion(index)
+	return self._question[index]
 end
 
-function var_0_0.getQuestionTitle(arg_7_0)
-	return arg_7_0._cfgQuestion.questionTitle, arg_7_0._cfgQuestion.questionTitleEn
+function DungeonPuzzleQuestionModel:getQuestionTitle()
+	return self._cfgQuestion.questionTitle, self._cfgQuestion.questionTitleEn
 end
 
-function var_0_0.getQuestionCount(arg_8_0)
-	return arg_8_0._questionCount
+function DungeonPuzzleQuestionModel:getQuestionCount()
+	return self._questionCount
 end
 
-function var_0_0.getIsReady(arg_9_0)
-	return arg_9_0._isReady
+function DungeonPuzzleQuestionModel:getIsReady()
+	return self._isReady
 end
 
-function var_0_0.release(arg_10_0)
-	arg_10_0._cfgElement = nil
-	arg_10_0._cfgQuestion = nil
-	arg_10_0._answer = nil
-	arg_10_0._desc = nil
-	arg_10_0._descEn = nil
-	arg_10_0._question = nil
-	arg_10_0._questionEn = nil
-	arg_10_0._isReady = false
+function DungeonPuzzleQuestionModel:release()
+	self._cfgElement = nil
+	self._cfgQuestion = nil
+	self._answer = nil
+	self._desc = nil
+	self._descEn = nil
+	self._question = nil
+	self._questionEn = nil
+	self._isReady = false
 end
 
-function var_0_0.getAnswers(arg_11_0, arg_11_1)
-	return arg_11_0._answer[arg_11_1]
+function DungeonPuzzleQuestionModel:getAnswers(index)
+	return self._answer[index]
 end
 
-function var_0_0.getElementCo(arg_12_0)
-	return arg_12_0._cfgElement
+function DungeonPuzzleQuestionModel:getElementCo()
+	return self._cfgElement
 end
 
-var_0_0.instance = var_0_0.New()
+DungeonPuzzleQuestionModel.instance = DungeonPuzzleQuestionModel.New()
 
-return var_0_0
+return DungeonPuzzleQuestionModel

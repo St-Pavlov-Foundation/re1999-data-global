@@ -1,51 +1,55 @@
-﻿module("modules.logic.fight.mgr.FightRestartMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/mgr/FightRestartMgr.lua
 
-local var_0_0 = class("FightRestartMgr", FightBaseClass)
+module("modules.logic.fight.mgr.FightRestartMgr", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
+local FightRestartMgr = class("FightRestartMgr", FightBaseClass)
+
+function FightRestartMgr:onConstructor()
 	return
 end
 
-function var_0_0.restart(arg_2_0)
+function FightRestartMgr:restart()
 	FightSystem.instance.restarting = true
 
-	local var_2_0 = arg_2_0:com_registFlowSequence()
+	local flow = self:com_registFlowSequence()
 
-	var_2_0:registWork(FightRestartSequence)
-	var_2_0:registFinishCallback(arg_2_0.onRestartFinish)
-	var_2_0:start()
+	flow:registWork(FightRestartSequence)
+	flow:registFinishCallback(self.onRestartFinish)
+	flow:start()
 end
 
-function var_0_0.onRestartFinish(arg_3_0)
+function FightRestartMgr:onRestartFinish()
 	FightSystem.instance.restarting = false
 end
 
-function var_0_0.cancelRestart(arg_4_0)
+function FightRestartMgr:cancelRestart()
 	FightSystem.instance.restarting = false
 end
 
-function var_0_0.restartFightFail(arg_5_0)
+function FightRestartMgr:restartFightFail()
 	ToastController.instance:showToast(-80)
-	arg_5_0:cancelRestart()
+	self:cancelRestart()
 	FightController.instance:exitFightScene()
 end
 
-function var_0_0.directStartNewFight(arg_6_0)
-	arg_6_0:com_registWork(FightWorkDirectStartNewFightAfterEndFight):start()
+function FightRestartMgr:directStartNewFight()
+	local work = self:com_registWork(FightWorkDirectStartNewFightAfterEndFight)
+
+	work:start()
 end
 
-function var_0_0.fastRestart(arg_7_0)
+function FightRestartMgr:fastRestart()
 	FightSystem.instance.restarting = true
 
-	local var_7_0 = arg_7_0:com_registFlowSequence()
+	local flow = self:com_registFlowSequence()
 
-	var_7_0:registWork(FightRestartSequence)
-	var_7_0:registFinishCallback(arg_7_0.onRestartFinish)
-	var_7_0:start()
+	flow:registWork(FightFastRestartSequence)
+	flow:registFinishCallback(self.onRestartFinish)
+	flow:start()
 end
 
-function var_0_0.onDestructor(arg_8_0)
+function FightRestartMgr:onDestructor()
 	FightSystem.instance.restarting = false
 end
 
-return var_0_0
+return FightRestartMgr

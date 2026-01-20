@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity2_8.activity2nd.view.Activity2ndMailViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/activity2nd/view/Activity2ndMailViewContainer.lua
 
-local var_0_0 = class("Activity2ndMailViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_8.activity2nd.view.Activity2ndMailViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Activity2ndMailViewContainer = class("Activity2ndMailViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Activity2ndMailView.New())
+function Activity2ndMailViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Activity2ndMailView.New())
+
+	return views
 end
 
-return var_0_0
+return Activity2ndMailViewContainer

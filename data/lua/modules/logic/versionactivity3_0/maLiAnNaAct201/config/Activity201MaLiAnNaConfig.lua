@@ -1,10 +1,12 @@
-﻿module("modules.logic.versionactivity3_0.maLiAnNaAct201.config.Activity201MaLiAnNaConfig", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/maLiAnNaAct201/config/Activity201MaLiAnNaConfig.lua
 
-local var_0_0 = class("Activity201MaLiAnNaConfig", BaseConfig)
+module("modules.logic.versionactivity3_0.maLiAnNaAct201.config.Activity201MaLiAnNaConfig", package.seeall)
 
-var_0_0._ActivityDataName = "T_lua_MaLiAnNa_ActivityData"
+local Activity201MaLiAnNaConfig = class("Activity201MaLiAnNaConfig", BaseConfig)
 
-function var_0_0.reqConfigNames(arg_1_0)
+Activity201MaLiAnNaConfig._ActivityDataName = "T_lua_MaLiAnNa_ActivityData"
+
+function Activity201MaLiAnNaConfig:reqConfigNames()
 	return {
 		"activity203_const",
 		"activity203_episode",
@@ -19,318 +21,318 @@ function var_0_0.reqConfigNames(arg_1_0)
 	}
 end
 
-function var_0_0.onInit(arg_2_0)
-	arg_2_0.triggerList = {}
-	arg_2_0._taskDict = {}
+function Activity201MaLiAnNaConfig:onInit()
+	self.triggerList = {}
+	self._taskDict = {}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+function Activity201MaLiAnNaConfig:onConfigLoaded(configName, configTable)
 	return
 end
 
-function var_0_0._initMaLiAnNaLevelData(arg_4_0)
-	arg_4_0._maLiAnNaLevelData = {}
+function Activity201MaLiAnNaConfig:_initMaLiAnNaLevelData()
+	self._maLiAnNaLevelData = {}
 
-	if _G[arg_4_0._ActivityDataName] == nil then
+	if _G[self._ActivityDataName] == nil then
 		return
 	end
 
-	for iter_4_0 = 1, #T_lua_MaLiAnNa_ActivityData do
-		local var_4_0 = _G[arg_4_0._ActivityDataName][iter_4_0]
-		local var_4_1 = MaLiAnNaLaLevelMo.New()
+	for i = 1, #T_lua_MaLiAnNa_ActivityData do
+		local data = _G[self._ActivityDataName][i]
+		local levelDataMo = MaLiAnNaLaLevelMo.New()
 
-		var_4_1:init(var_4_0)
+		levelDataMo:init(data)
 
-		arg_4_0._maLiAnNaLevelData[var_4_0.id] = var_4_1
+		self._maLiAnNaLevelData[data.id] = levelDataMo
 	end
 end
 
-function var_0_0.getMaLiAnNaLevelData(arg_5_0)
-	if arg_5_0._maLiAnNaLevelData == nil then
-		arg_5_0:_initMaLiAnNaLevelData()
+function Activity201MaLiAnNaConfig:getMaLiAnNaLevelData()
+	if self._maLiAnNaLevelData == nil then
+		self:_initMaLiAnNaLevelData()
 	end
 
-	return arg_5_0._maLiAnNaLevelData
+	return self._maLiAnNaLevelData
 end
 
-function var_0_0.getMaLiAnNaLevelDataByLevelId(arg_6_0, arg_6_1)
-	if arg_6_0._maLiAnNaLevelData == nil then
-		arg_6_0:_initMaLiAnNaLevelData()
+function Activity201MaLiAnNaConfig:getMaLiAnNaLevelDataByLevelId(id)
+	if self._maLiAnNaLevelData == nil then
+		self:_initMaLiAnNaLevelData()
 	end
 
-	return arg_6_0._maLiAnNaLevelData[arg_6_1]
+	return self._maLiAnNaLevelData[id]
 end
 
-function var_0_0.getSlotConfigById(arg_7_0, arg_7_1)
-	local var_7_0 = lua_activity203_base.configDict[arg_7_1]
+function Activity201MaLiAnNaConfig:getSlotConfigById(id)
+	local slotConfig = lua_activity203_base.configDict[id]
 
-	if var_7_0 == nil then
-		logError("activity203_base 没有找到对应的配置 id = " .. arg_7_1)
+	if slotConfig == nil then
+		logError("activity203_base 没有找到对应的配置 id = " .. id)
 	end
 
-	return var_7_0
+	return slotConfig
 end
 
-function var_0_0.getGameConfigById(arg_8_0, arg_8_1)
-	local var_8_0 = lua_activity203_game.configDict[arg_8_1]
+function Activity201MaLiAnNaConfig:getGameConfigById(id)
+	local gameConfig = lua_activity203_game.configDict[id]
 
-	if var_8_0 == nil then
-		logError("activity203_game 没有找到对应的配置 id = " .. arg_8_1)
+	if gameConfig == nil then
+		logError("activity203_game 没有找到对应的配置 id = " .. id)
 	end
 
-	return var_8_0
+	return gameConfig
 end
 
-function var_0_0.getWinConditionById(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0:getGameConfigById(arg_9_1)
-	local var_9_1 = {}
+function Activity201MaLiAnNaConfig:getWinConditionById(id)
+	local gameConfig = self:getGameConfigById(id)
+	local winConditions = {}
 
-	if var_9_0 ~= nil then
-		local var_9_2 = var_9_0.gameTarget
+	if gameConfig ~= nil then
+		local loseTargetStr = gameConfig.gameTarget
 
-		if not string.nilorempty(var_9_2) then
-			local var_9_3 = string.split(var_9_2, "|")
+		if not string.nilorempty(loseTargetStr) then
+			local allCondition = string.split(loseTargetStr, "|")
 
-			for iter_9_0 = 1, #var_9_3 do
-				local var_9_4 = string.splitToNumber(var_9_3[iter_9_0], "#")
+			for i = 1, #allCondition do
+				local condition = string.splitToNumber(allCondition[i], "#")
 
-				table.insert(var_9_1, var_9_4)
+				table.insert(winConditions, condition)
 			end
 		end
 	end
 
-	return var_9_1
+	return winConditions
 end
 
-function var_0_0.getLoseConditionById(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0:getGameConfigById(arg_10_1)
-	local var_10_1 = {}
+function Activity201MaLiAnNaConfig:getLoseConditionById(id)
+	local gameConfig = self:getGameConfigById(id)
+	local loseConditions = {}
 
-	if var_10_0 ~= nil then
-		local var_10_2 = var_10_0.loseTarget
+	if gameConfig ~= nil then
+		local loseTargetStr = gameConfig.loseTarget
 
-		if not string.nilorempty(var_10_2) then
-			local var_10_3 = string.split(var_10_2, "|")
+		if not string.nilorempty(loseTargetStr) then
+			local allCondition = string.split(loseTargetStr, "|")
 
-			for iter_10_0 = 1, #var_10_3 do
-				local var_10_4 = string.splitToNumber(var_10_3[iter_10_0], "#")
+			for i = 1, #allCondition do
+				local condition = string.splitToNumber(allCondition[i], "#")
 
-				table.insert(var_10_1, var_10_4)
+				table.insert(loseConditions, condition)
 			end
 		end
 	end
 
-	return var_10_1
+	return loseConditions
 end
 
-function var_0_0.getSoldierById(arg_11_0, arg_11_1)
-	local var_11_0 = lua_activity203_soldier.configDict[arg_11_1]
+function Activity201MaLiAnNaConfig:getSoldierById(id)
+	local soliderConfig = lua_activity203_soldier.configDict[id]
 
-	if var_11_0 == nil then
-		logError("activity203_soldier 没有找到对应的配置 id = " .. arg_11_1)
+	if soliderConfig == nil then
+		logError("activity203_soldier 没有找到对应的配置 id = " .. id)
 	end
 
-	return var_11_0
+	return soliderConfig
 end
 
-function var_0_0.getConstValueNumber(arg_12_0, arg_12_1)
-	local var_12_0 = VersionActivity3_0Enum.ActivityId.MaLiAnNa
-	local var_12_1 = lua_activity203_const.configDict[var_12_0]
+function Activity201MaLiAnNaConfig:getConstValueNumber(id)
+	local activityId = VersionActivity3_0Enum.ActivityId.MaLiAnNa
+	local activityConstConfig = lua_activity203_const.configDict[activityId]
 
-	if var_12_1 == nil then
-		logError("activity203_const 没有找到对应的配置 activityId = " .. var_12_0)
+	if activityConstConfig == nil then
+		logError("activity203_const 没有找到对应的配置 activityId = " .. activityId)
 
 		return nil
 	end
 
-	local var_12_2 = var_12_1[arg_12_1]
+	local constConfig = activityConstConfig[id]
 
-	if var_12_2 == nil then
-		logError("activity203_const 没有找到对应的配置 id = " .. arg_12_1)
+	if constConfig == nil then
+		logError("activity203_const 没有找到对应的配置 id = " .. id)
 
 		return nil
 	end
 
-	return tonumber(var_12_2.value)
+	return tonumber(constConfig.value)
 end
 
-function var_0_0.getConstValue(arg_13_0, arg_13_1)
-	local var_13_0 = VersionActivity3_0Enum.ActivityId.MaLiAnNa
-	local var_13_1 = lua_activity203_const.configDict[var_13_0]
+function Activity201MaLiAnNaConfig:getConstValue(id)
+	local activityId = VersionActivity3_0Enum.ActivityId.MaLiAnNa
+	local activityConstConfig = lua_activity203_const.configDict[activityId]
 
-	if var_13_1 == nil then
-		logError("activity203_const 没有找到对应的配置 id = " .. arg_13_1)
+	if activityConstConfig == nil then
+		logError("activity203_const 没有找到对应的配置 id = " .. id)
 	end
 
-	local var_13_2 = var_13_1[arg_13_1]
+	local constConfig = activityConstConfig[id]
 
-	return var_13_2.value, var_13_2.value2
+	return constConfig.value, constConfig.value2
 end
 
-function var_0_0.getAllHeroConfig(arg_14_0)
-	local var_14_0 = {}
+function Activity201MaLiAnNaConfig:getAllHeroConfig()
+	local heroConfig = {}
 
-	for iter_14_0 = 1, #lua_activity203_soldier.configList do
-		local var_14_1 = lua_activity203_soldier.configList[iter_14_0]
+	for i = 1, #lua_activity203_soldier.configList do
+		local data = lua_activity203_soldier.configList[i]
 
-		if var_14_1.type == Activity201MaLiAnNaEnum.SoldierType.hero then
-			table.insert(var_14_0, var_14_1)
+		if data.type == Activity201MaLiAnNaEnum.SoldierType.hero then
+			table.insert(heroConfig, data)
 		end
 	end
 
-	return var_14_0
+	return heroConfig
 end
 
-function var_0_0.getAllSlot(arg_15_0)
+function Activity201MaLiAnNaConfig:getAllSlot()
 	return lua_activity203_base.configList
 end
 
-function var_0_0.getActiveSkillConfig(arg_16_0, arg_16_1)
-	return lua_activity203_skill.configDict[arg_16_1]
+function Activity201MaLiAnNaConfig:getActiveSkillConfig(configId)
+	return lua_activity203_skill.configDict[configId]
 end
 
-function var_0_0.getPassiveSkillConfig(arg_17_0, arg_17_1)
-	return lua_activity203_passiveskill.configDict[arg_17_1]
+function Activity201MaLiAnNaConfig:getPassiveSkillConfig(configId)
+	return lua_activity203_passiveskill.configDict[configId]
 end
 
-function var_0_0._initSlotConstValue(arg_18_0)
-	if arg_18_0._slotConstList == nil then
-		arg_18_0._slotConstList = {}
+function Activity201MaLiAnNaConfig:_initSlotConstValue()
+	if self._slotConstList == nil then
+		self._slotConstList = {}
 	end
 
-	local var_18_0 = 3
-	local var_18_1 = 10
+	local startIndex = 3
+	local endIndex = 10
 
-	for iter_18_0 = var_18_0, var_18_1 do
-		local var_18_2, var_18_3 = arg_18_0:getConstValue(iter_18_0)
+	for i = startIndex, endIndex do
+		local _, str = self:getConstValue(i)
 
-		if not string.nilorempty(var_18_3) then
-			local var_18_4 = string.split(var_18_3, "|")
-			local var_18_5 = var_18_4[1]
-			local var_18_6 = var_18_4[2]
-			local var_18_7 = string.splitToNumber(var_18_6, "#")
+		if not string.nilorempty(str) then
+			local constValue = string.split(str, "|")
+			local key = constValue[1]
+			local value = constValue[2]
+			local allValueList = string.splitToNumber(value, "#")
 
-			if #var_18_7 == 4 then
-				arg_18_0._slotConstList[var_18_5] = var_18_7
+			if #allValueList == 4 then
+				self._slotConstList[key] = allValueList
 			end
 		end
 	end
 end
 
-function var_0_0.getSlotConstValue(arg_19_0, arg_19_1)
-	if arg_19_0._slotConstList == nil then
-		arg_19_0:_initSlotConstValue()
+function Activity201MaLiAnNaConfig:getSlotConstValue(slotConfigId)
+	if self._slotConstList == nil then
+		self:_initSlotConstValue()
 	end
 
-	local var_19_0 = arg_19_0:getSlotConfigById(arg_19_1)
+	local slotConfig = self:getSlotConfigById(slotConfigId)
 
-	if var_19_0 == nil then
-		logError("activity203_base 没有找到对应的配置 id = " .. arg_19_1)
+	if slotConfig == nil then
+		logError("activity203_base 没有找到对应的配置 id = " .. slotConfigId)
 
 		return 0, 0, 0, 0
 	end
 
-	local var_19_1 = var_19_0.picture
-	local var_19_2 = arg_19_0._slotConstList[var_19_1]
-	local var_19_3 = Activity201MaLiAnNaEnum.defaultDragRange
-	local var_19_4 = Activity201MaLiAnNaEnum.defaultHideRange
-	local var_19_5 = Activity201MaLiAnNaEnum.defaultOffsetX
-	local var_19_6 = Activity201MaLiAnNaEnum.defaultOffsetY
+	local key = slotConfig.picture
+	local value = self._slotConstList[key]
+	local dragSureRange = Activity201MaLiAnNaEnum.defaultDragRange
+	local hideRange = Activity201MaLiAnNaEnum.defaultHideRange
+	local offsetX = Activity201MaLiAnNaEnum.defaultOffsetX
+	local offsetY = Activity201MaLiAnNaEnum.defaultOffsetY
 
-	if var_19_2 ~= nil then
-		var_19_3 = var_19_2[1] or Activity201MaLiAnNaEnum.defaultDragRange
-		var_19_4 = var_19_2[2] or Activity201MaLiAnNaEnum.defaultHideRange
-		var_19_5 = var_19_2[3] or Activity201MaLiAnNaEnum.defaultOffsetX
-		var_19_6 = var_19_2[4] or Activity201MaLiAnNaEnum.defaultOffsetY
+	if value ~= nil then
+		dragSureRange = value[1] or Activity201MaLiAnNaEnum.defaultDragRange
+		hideRange = value[2] or Activity201MaLiAnNaEnum.defaultHideRange
+		offsetX = value[3] or Activity201MaLiAnNaEnum.defaultOffsetX
+		offsetY = value[4] or Activity201MaLiAnNaEnum.defaultOffsetY
 	end
 
-	return var_19_3, var_19_4, var_19_5, var_19_6
+	return dragSureRange, hideRange, offsetX, offsetY
 end
 
-function var_0_0.getEpisodeCoList(arg_20_0, arg_20_1)
-	if not arg_20_0._episodeDict then
-		arg_20_0._episodeDict = {}
+function Activity201MaLiAnNaConfig:getEpisodeCoList(activityId)
+	if not self._episodeDict then
+		self._episodeDict = {}
 
-		for iter_20_0, iter_20_1 in ipairs(lua_activity203_episode.configList) do
-			if not arg_20_0._episodeDict[iter_20_1.activityId] then
-				arg_20_0._episodeDict[iter_20_1.activityId] = {}
+		for _, v in ipairs(lua_activity203_episode.configList) do
+			if not self._episodeDict[v.activityId] then
+				self._episodeDict[v.activityId] = {}
 			end
 
-			table.insert(arg_20_0._episodeDict[iter_20_1.activityId], iter_20_1)
+			table.insert(self._episodeDict[v.activityId], v)
 		end
 	end
 
-	return arg_20_0._episodeDict[arg_20_1] or {}
+	return self._episodeDict[activityId] or {}
 end
 
-function var_0_0.getLevelDialogConfig(arg_21_0, arg_21_1)
-	local var_21_0 = lua_activity203_dialog.configDict[arg_21_1]
+function Activity201MaLiAnNaConfig:getLevelDialogConfig(gameId)
+	local levelDialog = lua_activity203_dialog.configDict[gameId]
 
-	if var_21_0 == nil then
-		var_21_0 = {}
+	if levelDialog == nil then
+		levelDialog = {}
 	end
 
-	return var_21_0
+	return levelDialog
 end
 
-function var_0_0.getTriggerList(arg_22_0, arg_22_1)
-	if arg_22_0.triggerList == nil then
-		arg_22_0.triggerList = {}
+function Activity201MaLiAnNaConfig:getTriggerList(trigger)
+	if self.triggerList == nil then
+		self.triggerList = {}
 	end
 
-	if arg_22_1 then
-		if not arg_22_0.triggerList[arg_22_1] then
-			local var_22_0 = string.splitToNumber(arg_22_1, "#")
+	if trigger then
+		if not self.triggerList[trigger] then
+			local triggerList = string.splitToNumber(trigger, "#")
 
-			arg_22_0.triggerList[arg_22_1] = var_22_0
+			self.triggerList[trigger] = triggerList
 		end
 
-		return arg_22_0.triggerList[arg_22_1]
+		return self.triggerList[trigger]
 	end
 
 	return nil
 end
 
-function var_0_0.getEpisodeCo(arg_23_0, arg_23_1, arg_23_2)
-	local var_23_0 = arg_23_0:getEpisodeCoList(arg_23_1)
+function Activity201MaLiAnNaConfig:getEpisodeCo(activityId, episodeId)
+	local episodeCos = self:getEpisodeCoList(activityId)
 
-	for iter_23_0, iter_23_1 in pairs(var_23_0) do
-		if iter_23_1.episodeId == arg_23_2 then
-			return iter_23_1
+	for _, v in pairs(episodeCos) do
+		if v.episodeId == episodeId then
+			return v
 		end
 	end
 end
 
-function var_0_0.getTaskByActId(arg_24_0, arg_24_1)
-	local var_24_0 = arg_24_0._taskDict[arg_24_1]
+function Activity201MaLiAnNaConfig:getTaskByActId(activityId)
+	local list = self._taskDict[activityId]
 
-	if not var_24_0 then
-		var_24_0 = {}
+	if not list then
+		list = {}
 
-		for iter_24_0, iter_24_1 in ipairs(lua_activity203_task.configList) do
-			if iter_24_1.activityId == arg_24_1 then
-				table.insert(var_24_0, iter_24_1)
+		for _, co in ipairs(lua_activity203_task.configList) do
+			if co.activityId == activityId then
+				table.insert(list, co)
 			end
 		end
 
-		arg_24_0._taskDict[arg_24_1] = var_24_0
+		self._taskDict[activityId] = list
 	end
 
-	return var_24_0
+	return list
 end
 
-function var_0_0.getStoryBefore(arg_25_0, arg_25_1, arg_25_2)
-	local var_25_0 = arg_25_0:getEpisodeCo(arg_25_1, arg_25_2)
+function Activity201MaLiAnNaConfig:getStoryBefore(actId, episodeId)
+	local cfg = self:getEpisodeCo(actId, episodeId)
 
-	return var_25_0 and var_25_0.storyBefore
+	return cfg and cfg.storyBefore
 end
 
-function var_0_0.getStoryClear(arg_26_0, arg_26_1, arg_26_2)
-	local var_26_0 = arg_26_0:getEpisodeCo(arg_26_1, arg_26_2)
+function Activity201MaLiAnNaConfig:getStoryClear(actId, episodeId)
+	local cfg = self:getEpisodeCo(actId, episodeId)
 
-	return var_26_0 and var_26_0.storyClear
+	return cfg and cfg.storyClear
 end
 
-var_0_0.instance = var_0_0.New()
+Activity201MaLiAnNaConfig.instance = Activity201MaLiAnNaConfig.New()
 
-return var_0_0
+return Activity201MaLiAnNaConfig

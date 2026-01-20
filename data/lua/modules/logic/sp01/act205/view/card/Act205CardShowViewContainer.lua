@@ -1,13 +1,15 @@
-﻿module("modules.logic.sp01.act205.view.card.Act205CardShowViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/act205/view/card/Act205CardShowViewContainer.lua
 
-local var_0_0 = class("Act205CardShowViewContainer", BaseViewContainer)
+module("modules.logic.sp01.act205.view.card.Act205CardShowViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Act205CardShowViewContainer = class("Act205CardShowViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Act205CardShowView.New())
+function Act205CardShowViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Act205CardShowView.New())
+
+	return views
 end
 
-return var_0_0
+return Act205CardShowViewContainer

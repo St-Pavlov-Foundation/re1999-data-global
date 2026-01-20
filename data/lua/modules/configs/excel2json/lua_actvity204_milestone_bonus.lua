@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_actvity204_milestone_bonus", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_actvity204_milestone_bonus.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_actvity204_milestone_bonus", package.seeall)
+
+local lua_actvity204_milestone_bonus = {}
+local fields = {
 	loopBonusIntervalNum = 5,
 	isSpBonus = 7,
 	coinNum = 3,
@@ -10,14 +12,14 @@ local var_0_1 = {
 	activityId = 1,
 	isLoopBonus = 4
 }
-local var_0_2 = {
+local primaryKey = {
 	"activityId",
 	"rewardId"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_actvity204_milestone_bonus.onLoad(json)
+	lua_actvity204_milestone_bonus.configList, lua_actvity204_milestone_bonus.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_actvity204_milestone_bonus

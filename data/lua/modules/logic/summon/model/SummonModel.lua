@@ -1,48 +1,50 @@
-﻿module("modules.logic.summon.model.SummonModel", package.seeall)
+﻿-- chunkname: @modules/logic/summon/model/SummonModel.lua
 
-local var_0_0 = class("SummonModel", BaseModel)
+module("modules.logic.summon.model.SummonModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._summonResult = nil
-	arg_1_0._orderedSummonResult = nil
-	arg_1_0._duplicateCountList = nil
-	arg_1_0._freeEquipSummon = nil
-	arg_1_0._isEquipSendFree = nil
+local SummonModel = class("SummonModel", BaseModel)
 
-	arg_1_0:setIsDrawing(false)
+function SummonModel:onInit()
+	self._summonResult = nil
+	self._orderedSummonResult = nil
+	self._duplicateCountList = nil
+	self._freeEquipSummon = nil
+	self._isEquipSendFree = nil
+
+	self:setIsDrawing(false)
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._summonResult = nil
-	arg_2_0._orderedSummonResult = nil
-	arg_2_0._duplicateCountList = nil
-	arg_2_0._freeEquipSummon = nil
-	arg_2_0._isEquipSendFree = nil
+function SummonModel:reInit()
+	self._summonResult = nil
+	self._orderedSummonResult = nil
+	self._duplicateCountList = nil
+	self._freeEquipSummon = nil
+	self._isEquipSendFree = nil
 
-	arg_2_0:setIsDrawing(false)
+	self:setIsDrawing(false)
 end
 
-function var_0_0.updateSummonResult(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0._summonResult = {}
-	arg_3_0._orderedSummonResult = {}
-	arg_3_0._duplicateCountList = {}
+function SummonModel:updateSummonResult(summonResult, poolId)
+	self._summonResult = {}
+	self._orderedSummonResult = {}
+	self._duplicateCountList = {}
 
-	if arg_3_1 and #arg_3_1 > 0 then
-		for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
-			local var_3_0 = SummonResultMO.New()
+	if summonResult and #summonResult > 0 then
+		for i, result in ipairs(summonResult) do
+			local summonResultMO = SummonResultMO.New()
 
-			var_3_0:init(iter_3_1)
+			summonResultMO:init(result)
 
-			if iter_3_1.heroId and iter_3_1.heroId ~= 0 then
-				arg_3_0._duplicateCountList[iter_3_1.heroId] = arg_3_0._duplicateCountList[iter_3_1.heroId] or {}
+			if result.heroId and result.heroId ~= 0 then
+				self._duplicateCountList[result.heroId] = self._duplicateCountList[result.heroId] or {}
 
-				table.insert(arg_3_0._duplicateCountList[iter_3_1.heroId], iter_3_1.duplicateCount or 0)
+				table.insert(self._duplicateCountList[result.heroId], result.duplicateCount or 0)
 			end
 
-			table.insert(arg_3_0._summonResult, var_3_0)
+			table.insert(self._summonResult, summonResultMO)
 		end
 
-		local var_3_1 = {
+		local order = {
 			1,
 			10,
 			2,
@@ -54,76 +56,76 @@ function var_0_0.updateSummonResult(arg_3_0, arg_3_1, arg_3_2)
 			5,
 			6
 		}
-		local var_3_2 = {}
+		local tempSummonResult = {}
 
-		for iter_3_2 = 1, #arg_3_0._summonResult do
-			table.insert(var_3_2, arg_3_0._summonResult[iter_3_2])
+		for i = 1, #self._summonResult do
+			table.insert(tempSummonResult, self._summonResult[i])
 		end
 
-		var_0_0.sortResult(var_3_2, arg_3_2)
+		SummonModel.sortResult(tempSummonResult, poolId)
 
-		arg_3_0._orderedSummonResult = {}
+		self._orderedSummonResult = {}
 
-		for iter_3_3 = 1, #var_3_2 do
-			arg_3_0._orderedSummonResult[var_3_1[iter_3_3]] = var_3_2[iter_3_3]
+		for i = 1, #tempSummonResult do
+			self._orderedSummonResult[order[i]] = tempSummonResult[i]
 		end
 	end
 end
 
-function var_0_0.sortResult(arg_4_0, arg_4_1)
-	if SummonConfig.poolIsLuckyBag(arg_4_1) then
-		table.sort(arg_4_0, var_0_0.sortResultLuckyBag)
+function SummonModel.sortResult(list, poolId)
+	if SummonConfig.poolIsLuckyBag(poolId) then
+		table.sort(list, SummonModel.sortResultLuckyBag)
 	else
-		table.sort(arg_4_0, var_0_0.sortResultByRare)
+		table.sort(list, SummonModel.sortResultByRare)
 	end
 end
 
-function var_0_0.sortResultByRare(arg_5_0, arg_5_1)
-	if arg_5_0.heroId ~= 0 and arg_5_1.heroId ~= 0 then
-		local var_5_0 = HeroConfig.instance:getHeroCO(arg_5_0.heroId)
-		local var_5_1 = HeroConfig.instance:getHeroCO(arg_5_1.heroId)
+function SummonModel.sortResultByRare(x, y)
+	if x.heroId ~= 0 and y.heroId ~= 0 then
+		local xCO = HeroConfig.instance:getHeroCO(x.heroId)
+		local yCO = HeroConfig.instance:getHeroCO(y.heroId)
 
-		if var_5_0.rare ~= var_5_1.rare then
-			return var_5_0.rare > var_5_1.rare
+		if xCO.rare ~= yCO.rare then
+			return xCO.rare > yCO.rare
 		else
-			return var_5_0.id > var_5_1.id
-		end
-	else
-		local var_5_2 = EquipConfig.instance:getEquipCo(arg_5_0.equipId)
-		local var_5_3 = EquipConfig.instance:getEquipCo(arg_5_1.equipId)
-
-		if var_5_2.rare ~= var_5_3.rare then
-			return var_5_2.rare > var_5_3.rare
-		else
-			return var_5_2.id > var_5_3.id
-		end
-	end
-end
-
-function var_0_0.sortHeroIsResultByRare(arg_6_0, arg_6_1)
-	if arg_6_0 ~= 0 and arg_6_1 ~= 0 then
-		local var_6_0 = HeroConfig.instance:getHeroCO(arg_6_0)
-		local var_6_1 = HeroConfig.instance:getHeroCO(arg_6_1)
-
-		if var_6_0.rare ~= var_6_1.rare then
-			return var_6_0.rare > var_6_1.rare
-		else
-			return var_6_0.id > var_6_1.id
+			return xCO.id > yCO.id
 		end
 	else
-		local var_6_2 = EquipConfig.instance:getEquipCo(arg_6_0)
-		local var_6_3 = EquipConfig.instance:getEquipCo(arg_6_1)
+		local xCO = EquipConfig.instance:getEquipCo(x.equipId)
+		local yCO = EquipConfig.instance:getEquipCo(y.equipId)
 
-		if var_6_2.rare ~= var_6_3.rare then
-			return var_6_2.rare > var_6_3.rare
+		if xCO.rare ~= yCO.rare then
+			return xCO.rare > yCO.rare
 		else
-			return var_6_2.id > var_6_3.id
+			return xCO.id > yCO.id
 		end
 	end
 end
 
-function var_0_0.sortResultByHeroIds(arg_7_0)
-	local var_7_0 = {
+function SummonModel.sortHeroIsResultByRare(x, y)
+	if x ~= 0 and y ~= 0 then
+		local xCO = HeroConfig.instance:getHeroCO(x)
+		local yCO = HeroConfig.instance:getHeroCO(y)
+
+		if xCO.rare ~= yCO.rare then
+			return xCO.rare > yCO.rare
+		else
+			return xCO.id > yCO.id
+		end
+	else
+		local xCO = EquipConfig.instance:getEquipCo(x)
+		local yCO = EquipConfig.instance:getEquipCo(y)
+
+		if xCO.rare ~= yCO.rare then
+			return xCO.rare > yCO.rare
+		else
+			return xCO.id > yCO.id
+		end
+	end
+end
+
+function SummonModel.sortResultByHeroIds(heroIds)
+	local order = {
 		1,
 		10,
 		2,
@@ -135,90 +137,91 @@ function var_0_0.sortResultByHeroIds(arg_7_0)
 		5,
 		6
 	}
-	local var_7_1 = {}
+	local tempSummonResult = {}
 
-	for iter_7_0 = 1, #arg_7_0 do
-		table.insert(var_7_1, arg_7_0[iter_7_0])
+	for i = 1, #heroIds do
+		table.insert(tempSummonResult, heroIds[i])
 	end
 
-	table.sort(arg_7_0, var_0_0.sortHeroIsResultByRare)
+	table.sort(heroIds, SummonModel.sortHeroIsResultByRare)
 
-	arg_7_0 = {}
+	heroIds = {}
 
-	for iter_7_1 = 1, #var_7_1 do
-		arg_7_0[var_7_0[iter_7_1]] = var_7_1[iter_7_1]
+	for i = 1, #tempSummonResult do
+		heroIds[order[i]] = tempSummonResult[i]
 	end
 end
 
-function var_0_0.sortResultLuckyBag(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0:isLuckyBag()
+function SummonModel.sortResultLuckyBag(a, b)
+	local aIsLuckyBag = a:isLuckyBag()
+	local bIsLuckyBag = b:isLuckyBag()
 
-	if var_8_0 ~= arg_8_1:isLuckyBag() then
-		return var_8_0
-	elseif var_8_0 then
-		return arg_8_0.luckyBagId < arg_8_1.luckyBagId
+	if aIsLuckyBag ~= bIsLuckyBag then
+		return aIsLuckyBag
+	elseif aIsLuckyBag then
+		return a.luckyBagId < b.luckyBagId
 	else
-		return var_0_0.sortResultByRare(arg_8_0, arg_8_1)
+		return SummonModel.sortResultByRare(a, b)
 	end
 end
 
-function var_0_0.getSummonResult(arg_9_0, arg_9_1)
-	if arg_9_1 then
-		return arg_9_0._orderedSummonResult
+function SummonModel:getSummonResult(sort)
+	if sort then
+		return self._orderedSummonResult
 	else
-		return arg_9_0._summonResult
+		return self._summonResult
 	end
 end
 
-function var_0_0.openSummonResult(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0:getSummonResult(true)
+function SummonModel:openSummonResult(index)
+	local orderedSummonResult = self:getSummonResult(true)
 
-	if var_10_0 and var_10_0[arg_10_1] and not var_10_0[arg_10_1]:isOpened() then
-		local var_10_1 = var_10_0[arg_10_1]
+	if orderedSummonResult and orderedSummonResult[index] and not orderedSummonResult[index]:isOpened() then
+		local summonResultMO = orderedSummonResult[index]
 
-		var_10_1:setOpen()
+		summonResultMO:setOpen()
 
-		local var_10_2 = -1
-		local var_10_3 = 0
+		local duplicateCount = -1
+		local minIndex = 0
 
-		if not var_10_1:isLuckyBag() then
-			local var_10_4 = arg_10_0._duplicateCountList[var_10_1.heroId] or {}
+		if not summonResultMO:isLuckyBag() then
+			local duplicateCountList = self._duplicateCountList[summonResultMO.heroId] or {}
 
-			for iter_10_0 = 1, #var_10_4 do
-				if var_10_2 > var_10_4[iter_10_0] or var_10_2 < 0 then
-					var_10_2 = var_10_4[iter_10_0]
-					var_10_3 = iter_10_0
+			for i = 1, #duplicateCountList do
+				if duplicateCount > duplicateCountList[i] or duplicateCount < 0 then
+					duplicateCount = duplicateCountList[i]
+					minIndex = i
 				end
 			end
 
-			if var_10_3 > 0 then
-				table.remove(var_10_4, var_10_3)
+			if minIndex > 0 then
+				table.remove(duplicateCountList, minIndex)
 			end
 		end
 
-		return var_10_1, var_10_2
+		return summonResultMO, duplicateCount
 	end
 end
 
-function var_0_0.openSummonEquipResult(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0:getSummonResult(true)
+function SummonModel:openSummonEquipResult(index)
+	local orderedSummonResult = self:getSummonResult(true)
 
-	if var_11_0 and var_11_0[arg_11_1] and not var_11_0[arg_11_1]:isOpened() then
-		local var_11_1 = var_11_0[arg_11_1]
+	if orderedSummonResult and orderedSummonResult[index] and not orderedSummonResult[index]:isOpened() then
+		local summonResultMO = orderedSummonResult[index]
 
-		var_11_1:setOpen()
+		summonResultMO:setOpen()
 
-		return var_11_1, var_11_1.isNew
+		return summonResultMO, summonResultMO.isNew
 	end
 end
 
-function var_0_0.isAllOpened(arg_12_0)
-	if not arg_12_0._summonResult or #arg_12_0._summonResult <= 0 then
+function SummonModel:isAllOpened()
+	if not self._summonResult or #self._summonResult <= 0 then
 		return true
 	end
 
-	for iter_12_0, iter_12_1 in ipairs(arg_12_0._summonResult) do
-		if not iter_12_1:isOpened() then
+	for i, summonResultMO in ipairs(self._summonResult) do
+		if not summonResultMO:isOpened() then
 			return false
 		end
 	end
@@ -226,224 +229,233 @@ function var_0_0.isAllOpened(arg_12_0)
 	return true
 end
 
-function var_0_0.setFreeEquipSummon(arg_13_0, arg_13_1)
-	arg_13_0._freeEquipSummon = arg_13_1
+function SummonModel:setFreeEquipSummon(val)
+	self._freeEquipSummon = val
 end
 
-function var_0_0.getFreeEquipSummon(arg_14_0)
-	return arg_14_0._freeEquipSummon
+function SummonModel:getFreeEquipSummon()
+	return self._freeEquipSummon
 end
 
-function var_0_0.setSendEquipFreeSummon(arg_15_0, arg_15_1)
-	arg_15_0._isEquipSendFree = arg_15_1
+function SummonModel:setSendEquipFreeSummon(val)
+	self._isEquipSendFree = val
 end
 
-function var_0_0.getSendEquipFreeSummon(arg_16_0)
-	return arg_16_0._isEquipSendFree
+function SummonModel:getSendEquipFreeSummon()
+	return self._isEquipSendFree
 end
 
-function var_0_0.getBestRare(arg_17_0)
-	local var_17_0 = 2
+function SummonModel.getBestRare(summonResult)
+	local bestRare = 2
 
-	if not arg_17_0 then
-		return var_17_0
+	if not summonResult then
+		return bestRare
 	end
 
-	for iter_17_0, iter_17_1 in pairs(arg_17_0) do
-		local var_17_1 = 2
+	for i, result in pairs(summonResult) do
+		local rare = 2
 
-		if iter_17_1.heroId and iter_17_1.heroId ~= 0 then
-			var_17_1 = HeroConfig.instance:getHeroCO(iter_17_1.heroId).rare
-		elseif iter_17_1.equipId and iter_17_1.equipId ~= 0 then
-			var_17_1 = EquipConfig.instance:getEquipCo(iter_17_1.equipId).rare
-		elseif iter_17_1.luckyBagId and iter_17_1.luckyBagId ~= 0 then
-			var_17_1 = SummonEnum.LuckyBagRare
+		if result.heroId and result.heroId ~= 0 then
+			local heroConfig = HeroConfig.instance:getHeroCO(result.heroId)
+
+			rare = heroConfig.rare
+		elseif result.equipId and result.equipId ~= 0 then
+			local equipCo = EquipConfig.instance:getEquipCo(result.equipId)
+
+			rare = equipCo.rare
+		elseif result.luckyBagId and result.luckyBagId ~= 0 then
+			rare = SummonEnum.LuckyBagRare
 		end
 
-		var_17_0 = math.max(var_17_0, var_17_1)
+		bestRare = math.max(bestRare, rare)
 	end
 
-	return var_17_0
+	return bestRare
 end
 
-function var_0_0.getRewardList(arg_18_0, arg_18_1)
-	local var_18_0 = {}
-	local var_18_1 = {}
+function SummonModel.getRewardList(summonResultList, showNewHero)
+	local rewards = {}
+	local rewardTypeDict = {}
 
-	for iter_18_0 = 1, #arg_18_0 do
-		local var_18_2 = arg_18_0[iter_18_0]
-		local var_18_3
+	for i = 1, #summonResultList do
+		local summonReward = summonResultList[i]
+		local rewardItems
 
-		if var_18_2.heroId ~= 0 then
-			var_18_3 = SummonConfig.instance:getRewardItems(var_18_2.heroId, var_18_2.duplicateCount, arg_18_1)
+		if summonReward.heroId ~= 0 then
+			rewardItems = SummonConfig.instance:getRewardItems(summonReward.heroId, summonReward.duplicateCount, showNewHero)
 		else
-			var_18_3 = var_0_0.getEquipRewardItem(var_18_2)
+			rewardItems = SummonModel.getEquipRewardItem(summonReward)
 		end
 
-		for iter_18_1 = 1, #var_18_3 do
-			local var_18_4 = var_18_3[iter_18_1]
+		for j = 1, #rewardItems do
+			local rewardItem = rewardItems[j]
 
-			var_18_1[var_18_4.type] = var_18_1[var_18_4.type] or {}
-			var_18_1[var_18_4.type][var_18_4.id] = (var_18_1[var_18_4.type][var_18_4.id] or 0) + var_18_4.quantity
-		end
-	end
-
-	for iter_18_2, iter_18_3 in pairs(var_18_1) do
-		for iter_18_4, iter_18_5 in pairs(iter_18_3) do
-			local var_18_5 = MaterialDataMO.New()
-
-			var_18_5:initValue(iter_18_2, iter_18_4, iter_18_5)
-
-			var_18_5.config = ItemModel.instance:getItemConfig(iter_18_2, iter_18_4)
-
-			table.insert(var_18_0, var_18_5)
+			rewardTypeDict[rewardItem.type] = rewardTypeDict[rewardItem.type] or {}
+			rewardTypeDict[rewardItem.type][rewardItem.id] = (rewardTypeDict[rewardItem.type][rewardItem.id] or 0) + rewardItem.quantity
 		end
 	end
 
-	return var_18_0
+	for type, rewardIdDict in pairs(rewardTypeDict) do
+		for id, quantity in pairs(rewardIdDict) do
+			local mo = MaterialDataMO.New()
+
+			mo:initValue(type, id, quantity)
+
+			mo.config = ItemModel.instance:getItemConfig(type, id)
+
+			table.insert(rewards, mo)
+		end
+	end
+
+	return rewards
 end
 
-function var_0_0.appendRewardTicket(arg_19_0, arg_19_1, arg_19_2)
-	local var_19_0 = #arg_19_0
+function SummonModel.appendRewardTicket(summonResultList, rewards, ticketId, ticketCount)
+	local len = #summonResultList
 
-	if var_19_0 > 0 then
-		local var_19_1 = MaterialDataMO.New()
+	if len > 0 then
+		local mo = MaterialDataMO.New()
 
-		var_19_1:initValue(MaterialEnum.MaterialType.Item, arg_19_2, var_19_0)
+		mo:initValue(MaterialEnum.MaterialType.Item, ticketId, ticketCount * len)
 
-		var_19_1.config = ItemModel.instance:getItemConfig(MaterialEnum.MaterialType.Item, arg_19_2)
+		mo.config = ItemModel.instance:getItemConfig(MaterialEnum.MaterialType.Item, ticketId)
 
-		table.insert(arg_19_1, var_19_1)
+		table.insert(rewards, mo)
 	end
 end
 
-function var_0_0.getEquipRewardItem(arg_20_0)
-	local var_20_0 = {}
+function SummonModel.getEquipRewardItem(summonReward)
+	local rewardItems = {}
 
-	if arg_20_0.returnMaterials then
-		for iter_20_0, iter_20_1 in ipairs(arg_20_0.returnMaterials) do
-			table.insert(var_20_0, {
-				type = iter_20_1.materilType,
-				id = iter_20_1.materilId,
-				quantity = iter_20_1.quantity
+	if summonReward.returnMaterials then
+		for _, matMO in ipairs(summonReward.returnMaterials) do
+			table.insert(rewardItems, {
+				type = matMO.materilType,
+				id = matMO.materilId,
+				quantity = matMO.quantity
 			})
 		end
 	end
 
-	return var_20_0
+	return rewardItems
 end
 
-function var_0_0.sortRewards(arg_21_0, arg_21_1)
-	local var_21_0
+function SummonModel.sortRewards(x, y)
+	local result
 
-	if arg_21_0.config.rare == arg_21_1.config.rare then
+	if x.config.rare == y.config.rare then
 		return nil
 	else
-		var_21_0 = arg_21_0.config.rare > arg_21_1.config.rare
+		result = x.config.rare > y.config.rare
 	end
 
-	if var_21_0 ~= nil then
-		return var_21_0
+	if result ~= nil then
+		return result
 	end
 
-	local var_21_1 = (arg_21_0.materilType ~= arg_21_1.materilType or nil) and arg_21_0.materilType > arg_21_1.materilType
+	result = (x.materilType ~= y.materilType or nil) and x.materilType > y.materilType
 
-	if var_21_1 ~= nil then
-		return var_21_1
+	if result ~= nil then
+		return result
 	end
 
-	return (arg_21_0.materilId ~= arg_21_1.materilId or nil) and arg_21_0.materilId > arg_21_1.materilId
+	result = (x.materilId ~= y.materilId or nil) and x.materilId > y.materilId
+
+	return result
 end
 
-function var_0_0.formatRemainTime(arg_22_0)
-	if arg_22_0 <= 0 then
+function SummonModel.formatRemainTime(sec)
+	if sec <= 0 then
 		return string.format(luaLang("summonmain_deadline_time_min"), 0, 0)
 	end
 
-	arg_22_0 = math.floor(arg_22_0)
+	sec = math.floor(sec)
 
-	local var_22_0 = math.floor(arg_22_0 / 86400)
-	local var_22_1 = math.floor(arg_22_0 % 86400 / 3600)
-	local var_22_2 = math.floor(arg_22_0 % 3600 / 60)
+	local day = math.floor(sec / 86400)
+	local hour = math.floor(sec % 86400 / 3600)
+	local min = math.floor(sec % 3600 / 60)
 
-	if var_22_0 > 0 then
-		local var_22_3 = {
-			var_22_0,
-			var_22_1,
-			var_22_2
+	if day > 0 then
+		local tag = {
+			day,
+			hour,
+			min
 		}
 
-		return GameUtil.getSubPlaceholderLuaLang(luaLang("summonmain_deadline_time_day"), var_22_3)
-	elseif var_22_1 < 1 and var_22_2 < 1 then
+		return GameUtil.getSubPlaceholderLuaLang(luaLang("summonmain_deadline_time_day"), tag)
+	elseif hour < 1 and min < 1 then
 		return luaLang("summonmain_deadline_time_min")
 	else
-		local var_22_4 = {
-			var_22_1,
-			var_22_2
+		local tag = {
+			hour,
+			min
 		}
 
-		return GameUtil.getSubPlaceholderLuaLang(luaLang("summonmain_deadline_time"), var_22_4)
+		return GameUtil.getSubPlaceholderLuaLang(luaLang("summonmain_deadline_time"), tag)
 	end
 end
 
-function var_0_0.setIsDrawing(arg_23_0, arg_23_1)
-	arg_23_0._isDrawing = arg_23_1
+function SummonModel:setIsDrawing(isDrawing)
+	self._isDrawing = isDrawing
 end
 
-function var_0_0.getIsDrawing(arg_24_0)
-	return arg_24_0._isDrawing
+function SummonModel:getIsDrawing()
+	return self._isDrawing
 end
 
-function var_0_0.getSummonFullExSkillHero(arg_25_0, arg_25_1, arg_25_2)
-	local var_25_0 = SummonConfig.instance:getSummonPool(arg_25_1)
-	local var_25_1 = {}
+function SummonModel:getSummonFullExSkillHero(poolId, heroIds)
+	local poolCo = SummonConfig.instance:getSummonPool(poolId)
+	local _checkHeroIds = {}
 
-	if var_25_0 and not string.nilorempty(var_25_0.upWeight) then
-		local var_25_2 = string.split(var_25_0.upWeight, "|")
+	if poolCo and not string.nilorempty(poolCo.upWeight) then
+		local heroIds = string.split(poolCo.upWeight, "|")
 
-		table.insert(var_25_1, tonumber(var_25_2[1]))
+		table.insert(_checkHeroIds, tonumber(heroIds[1]))
 	end
 
-	if arg_25_2 ~= nil and #arg_25_2 > 0 then
-		var_25_1 = arg_25_2
+	if heroIds ~= nil and #heroIds > 0 then
+		_checkHeroIds = heroIds
 	end
 
-	for iter_25_0 = 1, #var_25_1 do
-		local var_25_3 = var_25_1[iter_25_0]
-		local var_25_4 = 0
-		local var_25_5 = HeroModel.instance:getByHeroId(var_25_3)
+	for i = 1, #_checkHeroIds do
+		local checkHeroId = _checkHeroIds[i]
+		local level = 0
+		local mo = HeroModel.instance:getByHeroId(checkHeroId)
 
-		if var_25_5 then
-			var_25_4 = var_25_5.exSkillLevel
+		if mo then
+			level = mo.exSkillLevel
 
-			if var_25_4 >= 5 then
-				return var_25_3
+			if level >= 5 then
+				return checkHeroId
 			end
 		end
 
-		local var_25_6 = SkillConfig.instance:getheroexskillco(var_25_3)
+		local exCo = SkillConfig.instance:getheroexskillco(checkHeroId)
 
-		if var_25_6 then
-			local var_25_7 = 0
-			local var_25_8
-			local var_25_9
+		if exCo then
+			local needCount = 0
+			local needItemId, needItemType
 
-			for iter_25_1 = 1, #var_25_6 do
-				if var_25_4 < iter_25_1 then
-					local var_25_10 = var_25_6[iter_25_1]
+			for j = 1, #exCo do
+				if level < j then
+					local co = exCo[j]
 
-					if var_25_10 then
-						local var_25_11 = string.splitToNumber(var_25_10.consume, "#")
+					if co then
+						local itemco = string.splitToNumber(co.consume, "#")
 
-						var_25_9 = var_25_11[1]
-						var_25_8 = var_25_11[2]
-						var_25_7 = var_25_11[3] + var_25_7
+						needItemType = itemco[1]
+						needItemId = itemco[2]
+						needCount = itemco[3] + needCount
 					end
 				end
 			end
 
-			if var_25_8 and var_25_9 and var_25_7 <= ItemModel.instance:getItemQuantity(var_25_9, var_25_8) then
-				return var_25_3
+			if needItemId and needItemType then
+				local haveCount = ItemModel.instance:getItemQuantity(needItemType, needItemId)
+
+				if needCount <= haveCount then
+					return checkHeroId
+				end
 			end
 		end
 	end
@@ -451,26 +463,34 @@ function var_0_0.getSummonFullExSkillHero(arg_25_0, arg_25_1, arg_25_2)
 	return nil
 end
 
-function var_0_0.cacheReward(arg_26_0, arg_26_1)
-	if arg_26_0._cacheReward == nil then
-		arg_26_0._cacheReward = {}
+function SummonModel:cacheReward(rewardList)
+	if self._cacheReward == nil then
+		self._cacheReward = {}
 	end
 
-	if arg_26_1 ~= nil then
-		tabletool.addValues(arg_26_0._cacheReward, arg_26_1)
+	if self.cacheRewardCount == nil then
+		self.cacheRewardCount = 0
 	end
-end
 
-function var_0_0.getCacheReward(arg_27_0)
-	return arg_27_0._cacheReward
-end
+	if rewardList ~= nil then
+		tabletool.addValues(self._cacheReward, rewardList)
 
-function var_0_0.clearCacheReward(arg_28_0)
-	if arg_28_0._cacheReward then
-		tabletool.clear(arg_28_0._cacheReward)
+		self.cacheRewardCount = self.cacheRewardCount + 1
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+function SummonModel:getCacheReward()
+	return self._cacheReward, self.cacheRewardCount
+end
 
-return var_0_0
+function SummonModel:clearCacheReward()
+	if self._cacheReward then
+		tabletool.clear(self._cacheReward)
+
+		self.cacheRewardCount = nil
+	end
+end
+
+SummonModel.instance = SummonModel.New()
+
+return SummonModel

@@ -1,8 +1,10 @@
-﻿module("modules.logic.seasonver.act123.view2_0.Season123_2_0ResetViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view2_0/Season123_2_0ResetViewContainer.lua
 
-local var_0_0 = class("Season123_2_0ResetViewContainer", BaseViewContainer)
+module("modules.logic.seasonver.act123.view2_0.Season123_2_0ResetViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local Season123_2_0ResetViewContainer = class("Season123_2_0ResetViewContainer", BaseViewContainer)
+
+function Season123_2_0ResetViewContainer:buildViews()
 	return {
 		Season123_2_0CheckCloseView.New(),
 		Season123_2_0ResetView.New(),
@@ -10,21 +12,21 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._navigateButtonView = NavigateButtonsView.New({
+function Season123_2_0ResetViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
-		arg_2_0._navigateButtonView:setHelpId(HelpEnum.HelpId.Season2_0ResetViewHelp)
-		arg_2_0._navigateButtonView:hideHelpIcon()
+		self._navigateButtonView:setHelpId(HelpEnum.HelpId.Season2_0ResetViewHelp)
+		self._navigateButtonView:hideHelpIcon()
 
 		return {
-			arg_2_0._navigateButtonView
+			self._navigateButtonView
 		}
 	end
 end
 
-return var_0_0
+return Season123_2_0ResetViewContainer

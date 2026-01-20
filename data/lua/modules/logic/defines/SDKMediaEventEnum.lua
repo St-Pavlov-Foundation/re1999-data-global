@@ -1,15 +1,17 @@
-﻿module("modules.logic.defines.SDKMediaEventEnum", package.seeall)
+﻿-- chunkname: @modules/logic/defines/SDKMediaEventEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.defines.SDKMediaEventEnum", package.seeall)
 
-var_0_0.GoodsIdMediaEvent = {
+local SDKMediaEventEnum = _M
+
+SDKMediaEventEnum.GoodsIdMediaEvent = {
 	[6100012] = SDKDataTrackMgr.MediaEvent.purchase_level5pack,
 	[6100002] = SDKDataTrackMgr.MediaEvent.purchase_level10pack
 }
-var_0_0.HeroGetEvent = {
+SDKMediaEventEnum.HeroGetEvent = {
 	[3023] = SDKDataTrackMgr.MediaEvent.game_summon_01
 }
-var_0_0.PurchaseIdMediaEvent = {
+SDKMediaEventEnum.PurchaseIdMediaEvent = {
 	[811314] = "purchase_furniture",
 	[811324] = "purchase_v1.1_01_15.99pack",
 	[811316] = "purchase_v1.1_49.99pack",
@@ -35,31 +37,33 @@ var_0_0.PurchaseIdMediaEvent = {
 	[610004] = SDKDataTrackMgr.MediaEvent.purchase_firstGachaPack,
 	[610006] = SDKDataTrackMgr.MediaEvent.purchase_monthlyGachaPack
 }
-var_0_0.TotalChargeAmount = {
+SDKMediaEventEnum.TotalChargeAmount = {
 	[9999] = "purchase_re100",
 	[99] = "purchase_re1",
 	[2999] = "purchase_re30"
 }
-var_0_0.JP_TotalChargeAmount = {
+SDKMediaEventEnum.JP_TotalChargeAmount = {
 	[15000] = "purchase_re150",
 	[450000] = "purchase_re4500",
 	[1500000] = "purchase_re15000"
 }
-var_0_0.TrackEpisodePassMediaEvent = {
+SDKMediaEventEnum.TrackEpisodePassMediaEvent = {
 	[10101] = SDKDataTrackMgr.MediaEvent.plot_progress_1_1,
 	[10103] = SDKDataTrackMgr.MediaEvent.plot_progress_1_4,
+	[10108] = SDKDataTrackMgr.MediaEvent.plot_progress_1_9,
+	[10110] = SDKDataTrackMgr.MediaEvent.plot_progress_1_11,
 	[10314] = SDKDataTrackMgr.MediaEvent.plot_progress_3_14,
 	[10315] = SDKDataTrackMgr.MediaEvent.plot_progress_3_15,
 	[10115] = SDKDataTrackMgr.MediaEvent.chapter_progress_1,
 	[10215] = SDKDataTrackMgr.MediaEvent.chapter_progress_2,
 	[10316] = SDKDataTrackMgr.MediaEvent.chapter_progress_3
 }
-var_0_0.PlayerLevelUpMediaEvent = {
+SDKMediaEventEnum.PlayerLevelUpMediaEvent = {
 	[5] = SDKDataTrackMgr.MediaEvent.roleLevel_5_achieve,
 	[10] = SDKDataTrackMgr.MediaEvent.roleLevel_10_achieve,
 	[15] = SDKDataTrackMgr.MediaEvent.roleLevel_15_achieve,
 	[20] = SDKDataTrackMgr.MediaEvent.roleLevel_20_achieve
 }
-var_0_0.FirstStoryId = 100101
+SDKMediaEventEnum.FirstStoryId = 100101
 
-return var_0_0
+return SDKMediaEventEnum

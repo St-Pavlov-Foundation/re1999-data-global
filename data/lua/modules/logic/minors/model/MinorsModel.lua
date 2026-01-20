@@ -1,7 +1,9 @@
-﻿module("modules.logic.minors.model.MinorsModel", package.seeall)
+﻿-- chunkname: @modules/logic/minors/model/MinorsModel.lua
 
-local var_0_0 = class("MinorsModel", ListScrollModel)
+module("modules.logic.minors.model.MinorsModel", package.seeall)
 
-var_0_0.instance = var_0_0.New()
+local MinorsModel = class("MinorsModel", ListScrollModel)
 
-return var_0_0
+MinorsModel.instance = MinorsModel.New()
+
+return MinorsModel

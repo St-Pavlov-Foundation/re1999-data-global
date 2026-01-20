@@ -1,38 +1,40 @@
-﻿module("modules.logic.versionactivity1_2.yaxian.model.YaXianMapMo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/yaxian/model/YaXianMapMo.lua
 
-local var_0_0 = pureTable("YaXianMapMo")
+module("modules.logic.versionactivity1_2.yaxian.model.YaXianMapMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.actId = arg_1_1
+local YaXianMapMo = pureTable("YaXianMapMo")
 
-	arg_1_0:updateMO(arg_1_2)
+function YaXianMapMo:init(actId, serverData)
+	self.actId = actId
+
+	self:updateMO(serverData)
 end
 
-function var_0_0.updateMO(arg_2_0, arg_2_1)
-	arg_2_0.episodeId = arg_2_1.id
-	arg_2_0.currentRound = arg_2_1.currentRound
-	arg_2_0.currentEvent = arg_2_1.currentEvent
+function YaXianMapMo:updateMO(serverData)
+	self.episodeId = serverData.id
+	self.currentRound = serverData.currentRound
+	self.currentEvent = serverData.currentEvent
 
-	arg_2_0:updateInteractObjects(arg_2_1.interactObjects)
-	arg_2_0:updateFinishInteracts(arg_2_1.finishInteracts)
+	self:updateInteractObjects(serverData.interactObjects)
+	self:updateFinishInteracts(serverData.finishInteracts)
 
-	arg_2_0.episodeCo = YaXianConfig.instance:getEpisodeConfig(arg_2_0.actId, arg_2_0.episodeId)
-	arg_2_0.mapId = arg_2_0.episodeCo.mapId
+	self.episodeCo = YaXianConfig.instance:getEpisodeConfig(self.actId, self.episodeId)
+	self.mapId = self.episodeCo.mapId
 end
 
-function var_0_0.updateInteractObjects(arg_3_0, arg_3_1)
-	arg_3_0.interactObjs = {}
+function YaXianMapMo:updateInteractObjects(interactObjs)
+	self.interactObjs = {}
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
-		local var_3_0 = YaXianGameInteractMO.New()
+	for _, interactObj in ipairs(interactObjs) do
+		local mo = YaXianGameInteractMO.New()
 
-		var_3_0:init(arg_3_0.actId, iter_3_1)
-		table.insert(arg_3_0.interactObjs, var_3_0)
+		mo:init(self.actId, interactObj)
+		table.insert(self.interactObjs, mo)
 	end
 end
 
-function var_0_0.updateFinishInteracts(arg_4_0, arg_4_1)
-	arg_4_0.finishInteracts = arg_4_1
+function YaXianMapMo:updateFinishInteracts(finishInteracts)
+	self.finishInteracts = finishInteracts
 end
 
-return var_0_0
+return YaXianMapMo

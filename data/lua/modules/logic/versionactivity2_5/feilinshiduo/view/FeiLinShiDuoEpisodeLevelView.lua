@@ -1,208 +1,213 @@
-﻿module("modules.logic.versionactivity2_5.feilinshiduo.view.FeiLinShiDuoEpisodeLevelView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/feilinshiduo/view/FeiLinShiDuoEpisodeLevelView.lua
 
-local var_0_0 = class("FeiLinShiDuoEpisodeLevelView", BaseView)
+module("modules.logic.versionactivity2_5.feilinshiduo.view.FeiLinShiDuoEpisodeLevelView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._simageFullBG1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG1")
-	arg_1_0._gostoryPath = gohelper.findChild(arg_1_0.viewGO, "#go_storyPath")
-	arg_1_0._gostoryScroll = gohelper.findChild(arg_1_0.viewGO, "#go_storyPath/#go_storyScroll")
-	arg_1_0._gostoryStages = gohelper.findChild(arg_1_0.viewGO, "#go_storyPath/#go_storyScroll/#go_storyStages")
-	arg_1_0._goTitle = gohelper.findChild(arg_1_0.viewGO, "#go_Title")
-	arg_1_0._simagetitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_Title/#simage_title")
-	arg_1_0._gotime = gohelper.findChild(arg_1_0.viewGO, "#go_Title/#go_time")
-	arg_1_0._txtlimittime = gohelper.findChildText(arg_1_0.viewGO, "#go_Title/#go_time/#txt_limittime")
-	arg_1_0._btnPlayBtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_Title/#btn_PlayBtn")
-	arg_1_0._btnTask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Task")
-	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "#btn_Task/#go_reddot")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._scrollStory = gohelper.findChildScrollRect(arg_1_0._gostoryPath, "")
-	arg_1_0._goPath = gohelper.findChild(arg_1_0.viewGO, "#go_storyPath/#go_storyScroll/path/path_2")
-	arg_1_0._animPath = arg_1_0._goPath:GetComponent(gohelper.Type_Animator)
-	arg_1_0._animPlayer = SLFramework.AnimatorPlayer.Get(arg_1_0.viewGO)
+local FeiLinShiDuoEpisodeLevelView = class("FeiLinShiDuoEpisodeLevelView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function FeiLinShiDuoEpisodeLevelView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._simageFullBG1 = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG1")
+	self._gostoryPath = gohelper.findChild(self.viewGO, "#go_storyPath")
+	self._gostoryScroll = gohelper.findChild(self.viewGO, "#go_storyPath/#go_storyScroll")
+	self._gostoryStages = gohelper.findChild(self.viewGO, "#go_storyPath/#go_storyScroll/#go_storyStages")
+	self._goTitle = gohelper.findChild(self.viewGO, "#go_Title")
+	self._simagetitle = gohelper.findChildSingleImage(self.viewGO, "#go_Title/#simage_title")
+	self._gotime = gohelper.findChild(self.viewGO, "#go_Title/#go_time")
+	self._txtlimittime = gohelper.findChildText(self.viewGO, "#go_Title/#go_time/#txt_limittime")
+	self._btnPlayBtn = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Title/#btn_PlayBtn")
+	self._btnTask = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Task")
+	self._goreddot = gohelper.findChild(self.viewGO, "#btn_Task/#go_reddot")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._scrollStory = gohelper.findChildScrollRect(self._gostoryPath, "")
+	self._goPath = gohelper.findChild(self.viewGO, "#go_storyPath/#go_storyScroll/path/path_2")
+	self._animPath = self._goPath:GetComponent(gohelper.Type_Animator)
+	self._animPlayer = SLFramework.AnimatorPlayer.Get(self.viewGO)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnPlayBtn:AddClickListener(arg_2_0._btnPlayBtnOnClick, arg_2_0)
-	arg_2_0._btnTask:AddClickListener(arg_2_0._btnTaskOnClick, arg_2_0)
-	arg_2_0._drag:AddDragBeginListener(arg_2_0._onDragBegin, arg_2_0)
-	arg_2_0._drag:AddDragEndListener(arg_2_0._onDragEnd, arg_2_0)
-	arg_2_0._touch:AddClickDownListener(arg_2_0._onClickDown, arg_2_0)
-	arg_2_0._scrollStory:AddOnValueChanged(arg_2_0._onScrollValueChanged, arg_2_0)
-	arg_2_0:addEventCb(FeiLinShiDuoGameController.instance, FeiLinShiDuoEvent.SelectEpisode, arg_2_0.onSelectEpisode, arg_2_0)
-	arg_2_0:addEventCb(FeiLinShiDuoGameController.instance, FeiLinShiDuoEvent.NextEpisodePlayUnlockAnim, arg_2_0.playEpisodeUnlockAnim, arg_2_0)
-	arg_2_0:addEventCb(FeiLinShiDuoGameController.instance, FeiLinShiDuoEvent.SwitchBG, arg_2_0.switchBG, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_2_0.onCloseViewFinish, arg_2_0, LuaEventSystem.Low)
+function FeiLinShiDuoEpisodeLevelView:addEvents()
+	self._btnPlayBtn:AddClickListener(self._btnPlayBtnOnClick, self)
+	self._btnTask:AddClickListener(self._btnTaskOnClick, self)
+	self._drag:AddDragBeginListener(self._onDragBegin, self)
+	self._drag:AddDragEndListener(self._onDragEnd, self)
+	self._touch:AddClickDownListener(self._onClickDown, self)
+	self._scrollStory:AddOnValueChanged(self._onScrollValueChanged, self)
+	self:addEventCb(FeiLinShiDuoGameController.instance, FeiLinShiDuoEvent.SelectEpisode, self.onSelectEpisode, self)
+	self:addEventCb(FeiLinShiDuoGameController.instance, FeiLinShiDuoEvent.NextEpisodePlayUnlockAnim, self.playEpisodeUnlockAnim, self)
+	self:addEventCb(FeiLinShiDuoGameController.instance, FeiLinShiDuoEvent.SwitchBG, self.switchBG, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self.onCloseViewFinish, self, LuaEventSystem.Low)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnPlayBtn:RemoveClickListener()
-	arg_3_0._btnTask:RemoveClickListener()
-	arg_3_0._drag:RemoveDragBeginListener()
-	arg_3_0._drag:RemoveDragEndListener()
-	arg_3_0._touch:RemoveClickDownListener()
-	arg_3_0._scrollStory:RemoveOnValueChanged()
-	arg_3_0:removeEventCb(FeiLinShiDuoGameController.instance, FeiLinShiDuoEvent.SelectEpisode, arg_3_0.onSelectEpisode, arg_3_0)
-	arg_3_0:removeEventCb(FeiLinShiDuoGameController.instance, FeiLinShiDuoEvent.NextEpisodePlayUnlockAnim, arg_3_0.playEpisodeUnlockAnim, arg_3_0)
-	arg_3_0:removeEventCb(FeiLinShiDuoGameController.instance, FeiLinShiDuoEvent.SwitchBG, arg_3_0.switchBG, arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_3_0.onCloseViewFinish, arg_3_0)
+function FeiLinShiDuoEpisodeLevelView:removeEvents()
+	self._btnPlayBtn:RemoveClickListener()
+	self._btnTask:RemoveClickListener()
+	self._drag:RemoveDragBeginListener()
+	self._drag:RemoveDragEndListener()
+	self._touch:RemoveClickDownListener()
+	self._scrollStory:RemoveOnValueChanged()
+	self:removeEventCb(FeiLinShiDuoGameController.instance, FeiLinShiDuoEvent.SelectEpisode, self.onSelectEpisode, self)
+	self:removeEventCb(FeiLinShiDuoGameController.instance, FeiLinShiDuoEvent.NextEpisodePlayUnlockAnim, self.playEpisodeUnlockAnim, self)
+	self:removeEventCb(FeiLinShiDuoGameController.instance, FeiLinShiDuoEvent.SwitchBG, self.switchBG, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self.onCloseViewFinish, self)
 end
 
-function var_0_0._btnPlayBtnOnClick(arg_4_0)
-	local var_4_0 = ActivityModel.instance:getActMO(arg_4_0.activityId)
-	local var_4_1 = var_4_0 and var_4_0.config and var_4_0.config.storyId
+function FeiLinShiDuoEpisodeLevelView:_btnPlayBtnOnClick()
+	local activityMo = ActivityModel.instance:getActMO(self.activityId)
+	local storyId = activityMo and activityMo.config and activityMo.config.storyId
 
-	StoryController.instance:playStory(var_4_1)
+	StoryController.instance:playStory(storyId)
 end
 
-function var_0_0._btnTaskOnClick(arg_5_0)
-	local var_5_0 = {
-		activityId = arg_5_0.activityId
-	}
+function FeiLinShiDuoEpisodeLevelView:_btnTaskOnClick()
+	local param = {}
 
-	FeiLinShiDuoGameController.instance:openTaskView(var_5_0)
+	param.activityId = self.activityId
+
+	FeiLinShiDuoGameController.instance:openTaskView(param)
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._taskAnimator = arg_6_0._btnTask.gameObject:GetComponentInChildren(typeof(UnityEngine.Animator))
+function FeiLinShiDuoEpisodeLevelView:_editableInitView()
+	self._taskAnimator = self._btnTask.gameObject:GetComponentInChildren(typeof(UnityEngine.Animator))
 
-	RedDotController.instance:addRedDot(arg_6_0._goreddot, RedDotEnum.DotNode.V2a5_Act185Task, nil, arg_6_0.refreshReddot, arg_6_0)
+	RedDotController.instance:addRedDot(self._goreddot, RedDotEnum.DotNode.V2a5_Act185Task, nil, self.refreshReddot, self)
 
-	arg_6_0.activityId = VersionActivity2_5Enum.ActivityId.FeiLinShiDuo
+	self.activityId = VersionActivity2_5Enum.ActivityId.FeiLinShiDuo
 
-	arg_6_0:initEpisodeItem()
+	self:initEpisodeItem()
 
-	local var_6_0 = recthelper.getWidth(ViewMgr.instance:getUIRoot().transform)
+	local width = recthelper.getWidth(ViewMgr.instance:getUIRoot().transform)
+	local rightOffsetX = -300
 
-	arg_6_0._offsetX = (var_6_0 - -300) / 2
-	arg_6_0.minContentAnchorX = -4760 + var_6_0
-	arg_6_0._bgWidth = recthelper.getWidth(arg_6_0._simageFullBG1.transform)
-	arg_6_0._minBgPositionX = BootNativeUtil.getDisplayResolution() - arg_6_0._bgWidth
-	arg_6_0._maxBgPositionX = 0
-	arg_6_0._bgPositonMaxOffsetX = math.abs(arg_6_0._maxBgPositionX - arg_6_0._minBgPositionX)
-	arg_6_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_6_0._gostoryPath)
-	arg_6_0._touch = SLFramework.UGUI.UIClickListener.Get(arg_6_0._gostoryPath)
-	arg_6_0._audioScroll = MonoHelper.addLuaComOnceToGo(arg_6_0._gostoryPath, DungeonMapEpisodeAudio, arg_6_0._scrollStory)
+	self._offsetX = (width - rightOffsetX) / 2
+	self.minContentAnchorX = -4760 + width
+	self._bgWidth = recthelper.getWidth(self._simageFullBG1.transform)
+	self._minBgPositionX = BootNativeUtil.getDisplayResolution() - self._bgWidth
+	self._maxBgPositionX = 0
+	self._bgPositonMaxOffsetX = math.abs(self._maxBgPositionX - self._minBgPositionX)
+	self._drag = SLFramework.UGUI.UIDragListener.Get(self._gostoryPath)
+	self._touch = SLFramework.UGUI.UIClickListener.Get(self._gostoryPath)
+	self._audioScroll = MonoHelper.addLuaComOnceToGo(self._gostoryPath, DungeonMapEpisodeAudio, self._scrollStory)
 end
 
-function var_0_0.initEpisodeItem(arg_7_0)
-	arg_7_0.episodeItemList = arg_7_0:getUserDataTb_()
+function FeiLinShiDuoEpisodeLevelView:initEpisodeItem()
+	self.episodeItemList = self:getUserDataTb_()
 
-	local var_7_0 = arg_7_0._gostoryStages.transform
+	local parentTran = self._gostoryStages.transform
 
-	arg_7_0.stageCount = var_7_0.childCount
+	self.stageCount = parentTran.childCount
 
-	for iter_7_0 = 1, arg_7_0.stageCount do
-		local var_7_1 = var_7_0:GetChild(iter_7_0 - 1)
-		local var_7_2 = string.format("item_%s", iter_7_0)
-		local var_7_3 = arg_7_0:getResInst(arg_7_0.viewContainer._viewSetting.otherRes[1], var_7_1.gameObject, var_7_2)
-		local var_7_4 = MonoHelper.addLuaComOnceToGo(var_7_3, FeiLinShiDuoEpisodeItem)
+	for i = 1, self.stageCount do
+		local itemParent = parentTran:GetChild(i - 1)
+		local name = string.format("item_%s", i)
+		local itemObj = self:getResInst(self.viewContainer._viewSetting.otherRes[1], itemParent.gameObject, name)
+		local item = MonoHelper.addLuaComOnceToGo(itemObj, FeiLinShiDuoEpisodeItem)
 
-		var_7_4:onInit(var_7_3)
-		table.insert(arg_7_0.episodeItemList, var_7_4)
+		item:onInit(itemObj)
+		table.insert(self.episodeItemList, item)
 	end
 end
 
-function var_0_0._onDragBegin(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0._audioScroll:onDragBegin()
+function FeiLinShiDuoEpisodeLevelView:_onDragBegin(param, pointerEventData)
+	self._audioScroll:onDragBegin()
 end
 
-function var_0_0._onDragEnd(arg_9_0, arg_9_1, arg_9_2)
-	arg_9_0._audioScroll:onDragEnd()
+function FeiLinShiDuoEpisodeLevelView:_onDragEnd(param, pointerEventData)
+	self._audioScroll:onDragEnd()
 end
 
-function var_0_0._onScrollValueChanged(arg_10_0)
+function FeiLinShiDuoEpisodeLevelView:_onScrollValueChanged()
 	return
 end
 
-function var_0_0._onClickDown(arg_11_0)
-	arg_11_0._audioScroll:onClickDown()
+function FeiLinShiDuoEpisodeLevelView:_onClickDown()
+	self._audioScroll:onClickDown()
 end
 
-function var_0_0.onOpen(arg_12_0)
-	arg_12_0:refreshTime()
-	arg_12_0:refreshUI()
-	TaskDispatcher.runRepeat(arg_12_0.refreshTime, arg_12_0, TimeUtil.OneMinuteSecond)
+function FeiLinShiDuoEpisodeLevelView:onOpen()
+	self:refreshTime()
+	self:refreshUI()
+	TaskDispatcher.runRepeat(self.refreshTime, self, TimeUtil.OneMinuteSecond)
 
-	local var_12_0 = arg_12_0:getCurEpisodeIndex()
+	local index = self:getCurEpisodeIndex()
 
-	arg_12_0:focusEpisodeItem(var_12_0, arg_12_0.curEpisodeId, false, false)
+	self:focusEpisodeItem(index, self.curEpisodeId, false, false)
 end
 
-function var_0_0.getCurEpisodeIndex(arg_13_0)
-	local var_13_0 = FeiLinShiDuoConfig.instance:getEpisodeConfig(arg_13_0.activityId, arg_13_0.curEpisodeId)
-	local var_13_1 = var_13_0.mapId > 0 and var_13_0.preEpisodeId or var_13_0.episodeId
+function FeiLinShiDuoEpisodeLevelView:getCurEpisodeIndex()
+	local config = FeiLinShiDuoConfig.instance:getEpisodeConfig(self.activityId, self.curEpisodeId)
+	local checkEpisodeId = config.mapId > 0 and config.preEpisodeId or config.episodeId
 
-	for iter_13_0, iter_13_1 in ipairs(arg_13_0.episodeItemList) do
-		if iter_13_1.episodeId == var_13_1 then
-			return iter_13_0
+	for index, episodeItem in ipairs(self.episodeItemList) do
+		if episodeItem.episodeId == checkEpisodeId then
+			return index
 		end
 	end
 
 	return 1
 end
 
-function var_0_0.refreshUI(arg_14_0)
-	arg_14_0:refreshTaskInfo()
-	arg_14_0:refreshEpisode()
-	arg_14_0:refreshEpisodeItem()
+function FeiLinShiDuoEpisodeLevelView:refreshUI()
+	self:refreshTaskInfo()
+	self:refreshEpisode()
+	self:refreshEpisodeItem()
 end
 
-function var_0_0.refreshTaskInfo(arg_15_0)
-	FeiLinShiDuoTaskListModel.instance:init(arg_15_0.activityId)
+function FeiLinShiDuoEpisodeLevelView:refreshTaskInfo()
+	FeiLinShiDuoTaskListModel.instance:init(self.activityId)
 end
 
-function var_0_0.refreshEpisode(arg_16_0)
-	arg_16_0.curEpisodeId = FeiLinShiDuoModel.instance:getCurEpisodeId()
+function FeiLinShiDuoEpisodeLevelView:refreshEpisode()
+	local episodeId = FeiLinShiDuoModel.instance:getCurEpisodeId()
 
-	local var_16_0 = FeiLinShiDuoModel.instance:getFinishStageIndex()
+	self.curEpisodeId = episodeId
 
-	if var_16_0 == 0 then
-		gohelper.setActive(arg_16_0._goPath, false)
+	local curFinishStage = FeiLinShiDuoModel.instance:getFinishStageIndex()
+
+	if curFinishStage == 0 then
+		gohelper.setActive(self._goPath, false)
 	else
-		gohelper.setActive(arg_16_0._goPath, true)
+		gohelper.setActive(self._goPath, true)
 
-		arg_16_0._animPath.speed = 1
+		self._animPath.speed = 1
 
-		arg_16_0._animPath:Play("go" .. var_16_0, 0, 1)
+		self._animPath:Play("go" .. curFinishStage, 0, 1)
 	end
 
-	if var_16_0 < arg_16_0.stageCount then
-		if var_16_0 + 1 == arg_16_0.stageCount then
-			local var_16_1 = FeiLinShiDuoConfig.instance:getStageEpisodes(arg_16_0.stageCount)
+	if curFinishStage < self.stageCount then
+		if curFinishStage + 1 == self.stageCount then
+			local stageEpisodes = FeiLinShiDuoConfig.instance:getStageEpisodes(self.stageCount)
 
-			for iter_16_0, iter_16_1 in pairs(var_16_1) do
-				if not FeiLinShiDuoModel.instance.episodeFinishMap[iter_16_1.episodeId] and iter_16_1.storyId > 0 then
-					arg_16_0._simageFullBG:LoadImage(ResUrl.getV2a5FeiLinShiDuoBg("v2a5_feilinshiduo_stage_fullbg" .. arg_16_0.stageCount - 1))
-					arg_16_0._simageFullBG1:LoadImage(ResUrl.getV2a5FeiLinShiDuoBg("v2a5_feilinshiduo_stage_fullbg" .. arg_16_0.stageCount))
+			for _, episodeCo in pairs(stageEpisodes) do
+				if not FeiLinShiDuoModel.instance.episodeFinishMap[episodeCo.episodeId] and episodeCo.storyId > 0 then
+					self._simageFullBG:LoadImage(ResUrl.getV2a5FeiLinShiDuoBg("v2a5_feilinshiduo_stage_fullbg" .. self.stageCount - 1))
+					self._simageFullBG1:LoadImage(ResUrl.getV2a5FeiLinShiDuoBg("v2a5_feilinshiduo_stage_fullbg" .. self.stageCount))
 
 					break
 				else
-					arg_16_0._simageFullBG:LoadImage(ResUrl.getV2a5FeiLinShiDuoBg("v2a5_feilinshiduo_stage_fullbg" .. arg_16_0.stageCount))
-					arg_16_0._simageFullBG1:LoadImage(ResUrl.getV2a5FeiLinShiDuoBg("v2a5_feilinshiduo_stage_fullbg0"))
+					self._simageFullBG:LoadImage(ResUrl.getV2a5FeiLinShiDuoBg("v2a5_feilinshiduo_stage_fullbg" .. self.stageCount))
+					self._simageFullBG1:LoadImage(ResUrl.getV2a5FeiLinShiDuoBg("v2a5_feilinshiduo_stage_fullbg0"))
 
 					break
 				end
 			end
 		else
-			arg_16_0._simageFullBG:LoadImage(ResUrl.getV2a5FeiLinShiDuoBg("v2a5_feilinshiduo_stage_fullbg" .. var_16_0))
-			arg_16_0._simageFullBG1:LoadImage(ResUrl.getV2a5FeiLinShiDuoBg("v2a5_feilinshiduo_stage_fullbg" .. var_16_0 + 1))
+			self._simageFullBG:LoadImage(ResUrl.getV2a5FeiLinShiDuoBg("v2a5_feilinshiduo_stage_fullbg" .. curFinishStage))
+			self._simageFullBG1:LoadImage(ResUrl.getV2a5FeiLinShiDuoBg("v2a5_feilinshiduo_stage_fullbg" .. curFinishStage + 1))
 		end
 	else
-		arg_16_0._simageFullBG:LoadImage(ResUrl.getV2a5FeiLinShiDuoBg("v2a5_feilinshiduo_stage_fullbg" .. arg_16_0.stageCount))
-		arg_16_0._simageFullBG1:LoadImage(ResUrl.getV2a5FeiLinShiDuoBg("v2a5_feilinshiduo_stage_fullbg0"))
+		self._simageFullBG:LoadImage(ResUrl.getV2a5FeiLinShiDuoBg("v2a5_feilinshiduo_stage_fullbg" .. self.stageCount))
+		self._simageFullBG1:LoadImage(ResUrl.getV2a5FeiLinShiDuoBg("v2a5_feilinshiduo_stage_fullbg0"))
 	end
 end
 
-function var_0_0.isAllEpisodeFinish(arg_17_0)
-	local var_17_0 = FeiLinShiDuoConfig.instance:getEpisodeConfigList()
+function FeiLinShiDuoEpisodeLevelView:isAllEpisodeFinish()
+	local episodeConfigList = FeiLinShiDuoConfig.instance:getEpisodeConfigList()
 
-	for iter_17_0, iter_17_1 in ipairs(var_17_0) do
-		if not FeiLinShiDuoModel.instance.episodeFinishMap[iter_17_1.episodeId] then
+	for index, episodeCo in ipairs(episodeConfigList) do
+		if not FeiLinShiDuoModel.instance.episodeFinishMap[episodeCo.episodeId] then
 			return false
 		end
 	end
@@ -210,179 +215,179 @@ function var_0_0.isAllEpisodeFinish(arg_17_0)
 	return true
 end
 
-function var_0_0.refreshEpisodeItem(arg_18_0)
-	local var_18_0 = FeiLinShiDuoConfig.instance:getNoGameEpisodeList(arg_18_0.activityId)
+function FeiLinShiDuoEpisodeLevelView:refreshEpisodeItem()
+	local noGameEpisodeList = FeiLinShiDuoConfig.instance:getNoGameEpisodeList(self.activityId)
 
-	if #var_18_0 > #arg_18_0.episodeItemList then
+	if #noGameEpisodeList > #self.episodeItemList then
 		logError("配置关卡数量不匹配，请检查")
 
 		return
 	end
 
-	for iter_18_0, iter_18_1 in ipairs(arg_18_0.episodeItemList) do
-		if iter_18_0 > #var_18_0 then
-			iter_18_1:isShowItem(false)
+	for index, item in ipairs(self.episodeItemList) do
+		if index > #noGameEpisodeList then
+			item:isShowItem(false)
 		else
-			local var_18_1 = var_18_0[iter_18_0]
+			local config = noGameEpisodeList[index]
 
-			iter_18_1:setInfo(iter_18_0, var_18_1)
+			item:setInfo(index, config)
 		end
 	end
 end
 
-function var_0_0.onSelectEpisode(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
-	arg_19_0.curEpisodeId = arg_19_2
+function FeiLinShiDuoEpisodeLevelView:onSelectEpisode(index, episodeId, isGame)
+	self.curEpisodeId = episodeId
 
-	arg_19_0:focusEpisodeItem(arg_19_1, arg_19_2, arg_19_3, true)
+	self:focusEpisodeItem(index, episodeId, isGame, true)
 end
 
-function var_0_0.focusEpisodeItem(arg_20_0, arg_20_1, arg_20_2, arg_20_3, arg_20_4, arg_20_5)
-	local var_20_0 = arg_20_0.episodeItemList[arg_20_1]
-	local var_20_1 = recthelper.getAnchorX(var_20_0._go.transform.parent)
-	local var_20_2 = arg_20_0._offsetX - var_20_1
+function FeiLinShiDuoEpisodeLevelView:focusEpisodeItem(index, episodeId, isGame, needPlay, justMove)
+	local item = self.episodeItemList[index]
+	local contentAnchorX = recthelper.getAnchorX(item._go.transform.parent)
+	local offsetX = self._offsetX - contentAnchorX
 
-	if var_20_2 > 0 then
-		var_20_2 = 0
-	elseif var_20_2 < arg_20_0.minContentAnchorX then
-		var_20_2 = arg_20_0.minContentAnchorX
+	if offsetX > 0 then
+		offsetX = 0
+	elseif offsetX < self.minContentAnchorX then
+		offsetX = self.minContentAnchorX
 	end
 
-	if arg_20_4 then
-		if arg_20_5 then
-			ZProj.TweenHelper.DOAnchorPosX(arg_20_0._gostoryScroll.transform, var_20_2, 0.26)
+	if needPlay then
+		if justMove then
+			ZProj.TweenHelper.DOAnchorPosX(self._gostoryScroll.transform, offsetX, 0.26)
 		else
-			ZProj.TweenHelper.DOAnchorPosX(arg_20_0._gostoryScroll.transform, var_20_2, 0.26, arg_20_0.onFocusEnd, arg_20_0, {
-				arg_20_2,
-				arg_20_3
+			ZProj.TweenHelper.DOAnchorPosX(self._gostoryScroll.transform, offsetX, 0.26, self.onFocusEnd, self, {
+				episodeId,
+				isGame
 			})
 		end
 	else
-		ZProj.TweenHelper.DOAnchorPosX(arg_20_0._gostoryScroll.transform, var_20_2, 0)
+		ZProj.TweenHelper.DOAnchorPosX(self._gostoryScroll.transform, offsetX, 0)
 	end
 end
 
-function var_0_0.onFocusEnd(arg_21_0, arg_21_1)
-	arg_21_0.curEpisodeId = arg_21_1[1]
-	arg_21_0.isGame = arg_21_1[2]
+function FeiLinShiDuoEpisodeLevelView:onFocusEnd(param)
+	self.curEpisodeId = param[1]
+	self.isGame = param[2]
 
-	if arg_21_0.isGame then
-		local var_21_0 = FeiLinShiDuoConfig.instance:getGameEpisode(arg_21_0.curEpisodeId)
+	if self.isGame then
+		local gameEpisodeConfig = FeiLinShiDuoConfig.instance:getGameEpisode(self.curEpisodeId)
 
-		if var_21_0 and var_21_0.mapId > 0 then
-			local var_21_1 = {
-				mapId = var_21_0.mapId,
-				gameConfig = var_21_0
+		if gameEpisodeConfig and gameEpisodeConfig.mapId > 0 then
+			local viewParam = {
+				mapId = gameEpisodeConfig.mapId,
+				gameConfig = gameEpisodeConfig
 			}
 
-			FeiLinShiDuoGameController.instance:openGameView(var_21_1)
+			FeiLinShiDuoGameController.instance:openGameView(viewParam)
 		else
-			logError(arg_21_0.curEpisodeId .. " 该关卡没有对应的游戏关卡")
+			logError(self.curEpisodeId .. " 该关卡没有对应的游戏关卡")
 		end
 	else
-		local var_21_2 = FeiLinShiDuoConfig.instance:getEpisodeConfig(arg_21_0.activityId, arg_21_0.curEpisodeId)
-		local var_21_3 = var_21_2 and var_21_2.storyId
+		local config = FeiLinShiDuoConfig.instance:getEpisodeConfig(self.activityId, self.curEpisodeId)
+		local storyId = config and config.storyId
 
-		if not var_21_3 then
-			logError("剧情关卡没有配置剧情， 请检查：" .. arg_21_0.curEpisodeId)
-
-			return
-		end
-
-		if FeiLinShiDuoModel.instance:getEpisodeFinishState(arg_21_0.curEpisodeId) then
-			StoryController.instance:playStory(var_21_3)
+		if not storyId then
+			logError("剧情关卡没有配置剧情， 请检查：" .. self.curEpisodeId)
 
 			return
 		end
 
-		local var_21_4 = {}
+		if FeiLinShiDuoModel.instance:getEpisodeFinishState(self.curEpisodeId) then
+			StoryController.instance:playStory(storyId)
 
-		var_21_4.mark = true
-		var_21_4.episodeId = arg_21_0.curEpisodeId
+			return
+		end
 
-		StoryController.instance:playStory(var_21_3, var_21_4, arg_21_0.onStoryFinished, arg_21_0)
+		local param = {}
+
+		param.mark = true
+		param.episodeId = self.curEpisodeId
+
+		StoryController.instance:playStory(storyId, param, self.onStoryFinished, self)
 	end
 end
 
-function var_0_0.onStoryFinished(arg_22_0)
-	FeiLinShiDuoGameController.instance:finishEpisode(arg_22_0.activityId, arg_22_0.curEpisodeId)
+function FeiLinShiDuoEpisodeLevelView:onStoryFinished()
+	FeiLinShiDuoGameController.instance:finishEpisode(self.activityId, self.curEpisodeId)
 end
 
-function var_0_0.onCloseViewFinish(arg_23_0, arg_23_1)
-	if arg_23_1 == ViewName.FeiLinShiDuoResultView or arg_23_1 == ViewName.StoryFrontView then
-		arg_23_0:onEpisodeFinish(arg_23_1)
+function FeiLinShiDuoEpisodeLevelView:onCloseViewFinish(viewName)
+	if viewName == ViewName.FeiLinShiDuoResultView or viewName == ViewName.StoryFrontView then
+		self:onEpisodeFinish(viewName)
 	end
 end
 
-function var_0_0.onEpisodeFinish(arg_24_0, arg_24_1)
-	if arg_24_1 == ViewName.StoryFrontView then
+function FeiLinShiDuoEpisodeLevelView:onEpisodeFinish(viewName)
+	if viewName == ViewName.StoryFrontView then
 		FeiLinShiDuoStatHelper.instance:sendDungeonFinish()
 	end
 
-	local var_24_0 = FeiLinShiDuoModel.instance:getCurFinishEpisodeId()
+	local curFinishEpisodeId = FeiLinShiDuoModel.instance:getCurFinishEpisodeId()
 
-	if var_24_0 and var_24_0 > 0 then
-		FeiLinShiDuoGameController.instance:dispatchEvent(FeiLinShiDuoEvent.EpisodeItemPlayFinishAnim, var_24_0)
+	if curFinishEpisodeId and curFinishEpisodeId > 0 then
+		FeiLinShiDuoGameController.instance:dispatchEvent(FeiLinShiDuoEvent.EpisodeItemPlayFinishAnim, curFinishEpisodeId)
 	end
 
 	FeiLinShiDuoModel.instance:setCurFinishEpisodeId(0)
 end
 
-function var_0_0.playEpisodeUnlockAnim(arg_25_0, arg_25_1)
-	arg_25_0.curEpisodeId = arg_25_1
+function FeiLinShiDuoEpisodeLevelView:playEpisodeUnlockAnim(episodeId)
+	self.curEpisodeId = episodeId
 
-	local var_25_0 = arg_25_0:getCurEpisodeIndex()
+	local index = self:getCurEpisodeIndex()
 
-	arg_25_0:focusEpisodeItem(var_25_0, arg_25_0.curEpisodeId, false, true, true)
-	arg_25_0:switchBG()
+	self:focusEpisodeItem(index, self.curEpisodeId, false, true, true)
+	self:switchBG()
 end
 
-function var_0_0.switchBG(arg_26_0, arg_26_1)
-	arg_26_0:refreshEpisode()
+function FeiLinShiDuoEpisodeLevelView:switchBG(needSwitchAnim)
+	self:refreshEpisode()
 
-	if arg_26_1 then
-		arg_26_0._animPlayer:Play("switch", arg_26_0.switchBGFinish, arg_26_0)
+	if needSwitchAnim then
+		self._animPlayer:Play("switch", self.switchBGFinish, self)
 	end
 end
 
-function var_0_0.switchBGFinish(arg_27_0)
+function FeiLinShiDuoEpisodeLevelView:switchBGFinish()
 	return
 end
 
-function var_0_0.refreshReddot(arg_28_0, arg_28_1)
-	arg_28_1:defaultRefreshDot()
+function FeiLinShiDuoEpisodeLevelView:refreshReddot(reddot)
+	reddot:defaultRefreshDot()
 
-	local var_28_0 = arg_28_1.show
+	local showRedDot = reddot.show
 
-	arg_28_0._taskAnimator:Play(var_28_0 and "loop" or "idle")
+	self._taskAnimator:Play(showRedDot and "loop" or "idle")
 end
 
-function var_0_0.refreshTime(arg_29_0)
-	local var_29_0 = ActivityModel.instance:getActivityInfo()[arg_29_0.activityId]
+function FeiLinShiDuoEpisodeLevelView:refreshTime()
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[self.activityId]
 
-	if var_29_0 then
-		local var_29_1 = var_29_0:getRealEndTimeStamp() - ServerTime.now()
+	if actInfoMo then
+		local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
 
-		if var_29_1 > 0 then
-			local var_29_2 = TimeUtil.SecondToActivityTimeFormat(var_29_1)
+		if offsetSecond > 0 then
+			local dateStr = TimeUtil.SecondToActivityTimeFormat(offsetSecond)
 
-			arg_29_0._txtlimittime.text = var_29_2
+			self._txtlimittime.text = dateStr
 
 			return
 		end
 	end
 
-	TaskDispatcher.cancelTask(arg_29_0.refreshTime, arg_29_0)
+	TaskDispatcher.cancelTask(self.refreshTime, self)
 end
 
-function var_0_0.onClose(arg_30_0)
-	TaskDispatcher.cancelTask(arg_30_0.refreshTime, arg_30_0)
+function FeiLinShiDuoEpisodeLevelView:onClose()
+	TaskDispatcher.cancelTask(self.refreshTime, self)
 	FeiLinShiDuoModel.instance:setCurEpisodeId(0)
 end
 
-function var_0_0.onDestroyView(arg_31_0)
-	arg_31_0._simageFullBG:UnLoadImage()
-	arg_31_0._simageFullBG1:UnLoadImage()
+function FeiLinShiDuoEpisodeLevelView:onDestroyView()
+	self._simageFullBG:UnLoadImage()
+	self._simageFullBG1:UnLoadImage()
 	FeiLinShiDuoModel.instance:reInit()
 end
 
-return var_0_0
+return FeiLinShiDuoEpisodeLevelView

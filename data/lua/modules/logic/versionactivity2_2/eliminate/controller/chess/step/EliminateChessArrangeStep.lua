@@ -1,24 +1,26 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.controller.chess.step.EliminateChessArrangeStep", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/controller/chess/step/EliminateChessArrangeStep.lua
 
-local var_0_0 = class("EliminateChessArrangeStep", EliminateChessStepBase)
+module("modules.logic.versionactivity2_2.eliminate.controller.chess.step.EliminateChessArrangeStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	if arg_1_0._data == nil or #arg_1_0._data < 1 then
-		arg_1_0:onDone(true)
+local EliminateChessArrangeStep = class("EliminateChessArrangeStep", EliminateChessStepBase)
+
+function EliminateChessArrangeStep:onStart()
+	if self._data == nil or #self._data < 1 then
+		self:onDone(true)
 
 		return
 	end
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_0._data) do
-		local var_1_0 = iter_1_1.model
-		local var_1_1 = iter_1_1.viewItem
+	for _, value in ipairs(self._data) do
+		local model = value.model
+		local viewItem = value.viewItem
 
-		if var_1_0 and var_1_1 then
-			EliminateChessItemController.instance:updateChessItem(var_1_0.x, var_1_0.y, var_1_1)
+		if model and viewItem then
+			EliminateChessItemController.instance:updateChessItem(model.x, model.y, viewItem)
 		end
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return EliminateChessArrangeStep

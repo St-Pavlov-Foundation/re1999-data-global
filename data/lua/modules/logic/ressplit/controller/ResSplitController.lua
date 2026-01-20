@@ -1,33 +1,36 @@
-﻿module("modules.logic.ressplit.controller.ResSplitController", package.seeall)
+﻿-- chunkname: @modules/logic/ressplit/controller/ResSplitController.lua
 
-local var_0_0 = class("ResSplitController", BaseController)
+module("modules.logic.ressplit.controller.ResSplitController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._versionResSplitHandler = VersionResSplitHandler.New()
+local ResSplitController = class("ResSplitController", BaseController)
+
+function ResSplitController:onInit()
+	self._versionResSplitHandler = VersionResSplitHandler.New()
 
 	ResSplitHelper.init()
+	ResSplitSaveHelper.init()
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function ResSplitController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function ResSplitController:addConstEvents()
 	return
 end
 
-function var_0_0.reInit(arg_4_0)
+function ResSplitController:reInit()
 	return
 end
 
-function var_0_0.generateResSplitCfg(arg_5_0)
-	arg_5_0._versionResSplitHandler:generateResSplitCfg()
+function ResSplitController:generateResSplitCfg()
+	self._versionResSplitHandler:generateResSplitCfg()
 end
 
-function var_0_0.staticVersionResSplitAction()
-	var_0_0.instance:generateResSplitCfg()
+function ResSplitController.staticVersionResSplitAction()
+	ResSplitController.instance:generateResSplitCfg()
 end
 
-var_0_0.instance = var_0_0.New()
+ResSplitController.instance = ResSplitController.New()
 
-return var_0_0
+return ResSplitController

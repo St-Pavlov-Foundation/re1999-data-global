@@ -1,69 +1,71 @@
-﻿module("modules.logic.enemyinfo.view.EnemyInfoTipView", package.seeall)
+﻿-- chunkname: @modules/logic/enemyinfo/view/EnemyInfoTipView.lua
 
-local var_0_0 = class("EnemyInfoTipView", BaseViewExtended)
+module("modules.logic.enemyinfo.view.EnemyInfoTipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gotipconatiner = gohelper.findChild(arg_1_0.viewGO, "#go_tip_container")
-	arg_1_0._goruletip = gohelper.findChild(arg_1_0.viewGO, "#go_tip_container/#go_ruletip")
+local EnemyInfoTipView = class("EnemyInfoTipView", BaseViewExtended)
 
-	gohelper.setActive(arg_1_0._goruletip, false)
+function EnemyInfoTipView:onInitView()
+	self._gotipconatiner = gohelper.findChild(self.viewGO, "#go_tip_container")
+	self._goruletip = gohelper.findChild(self.viewGO, "#go_tip_container/#go_ruletip")
 
-	arg_1_0._gobufftip = gohelper.findChild(arg_1_0.viewGO, "#go_tip_container/#go_bufftip")
+	gohelper.setActive(self._goruletip, false)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	self._gobufftip = gohelper.findChild(self.viewGO, "#go_tip_container/#go_bufftip")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function EnemyInfoTipView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function EnemyInfoTipView:removeEvents()
 	return
 end
 
-function var_0_0.onClickCloseTip(arg_4_0)
-	arg_4_0.showTip = nil
+function EnemyInfoTipView:onClickCloseTip()
+	self.showTip = nil
 
-	arg_4_0:hideAllTip()
+	self:hideAllTip()
 	EnemyInfoController.instance:dispatchEvent(EnemyInfoEvent.HideTip)
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0.closeTipClick = gohelper.findChildClickWithDefaultAudio(arg_5_0._gotipconatiner, "#go_tipclose")
+function EnemyInfoTipView:_editableInitView()
+	self.closeTipClick = gohelper.findChildClickWithDefaultAudio(self._gotipconatiner, "#go_tipclose")
 
-	arg_5_0.closeTipClick:AddClickListener(arg_5_0.onClickCloseTip, arg_5_0)
-	arg_5_0:addEventCb(EnemyInfoController.instance, EnemyInfoEvent.ShowTip, arg_5_0.onShowTip, arg_5_0)
+	self.closeTipClick:AddClickListener(self.onClickCloseTip, self)
+	self:addEventCb(EnemyInfoController.instance, EnemyInfoEvent.ShowTip, self.onShowTip, self)
 end
 
-function var_0_0.onShowTip(arg_6_0, arg_6_1)
-	gohelper.setActive(arg_6_0._gotipconatiner, true)
+function EnemyInfoTipView:onShowTip(tipEnum)
+	gohelper.setActive(self._gotipconatiner, true)
 
-	if arg_6_0.showTip == arg_6_1 then
+	if self.showTip == tipEnum then
 		return
 	end
 
-	arg_6_0.showTip = arg_6_1
+	self.showTip = tipEnum
 
-	gohelper.setActive(arg_6_0._gobufftip, arg_6_0.showTip == EnemyInfoEnum.Tip.BuffTip)
+	gohelper.setActive(self._gobufftip, self.showTip == EnemyInfoEnum.Tip.BuffTip)
 end
 
-function var_0_0.hideAllTip(arg_7_0)
-	gohelper.setActive(arg_7_0._gotipconatiner, false)
-	gohelper.setActive(arg_7_0._gobufftip, false)
+function EnemyInfoTipView:hideAllTip()
+	gohelper.setActive(self._gotipconatiner, false)
+	gohelper.setActive(self._gobufftip, false)
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0:hideAllTip()
+function EnemyInfoTipView:onOpen()
+	self:hideAllTip()
 end
 
-function var_0_0.onClose(arg_9_0)
+function EnemyInfoTipView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	arg_10_0.closeTipClick:RemoveClickListener()
+function EnemyInfoTipView:onDestroyView()
+	self.closeTipClick:RemoveClickListener()
 end
 
-return var_0_0
+return EnemyInfoTipView

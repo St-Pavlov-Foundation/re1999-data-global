@@ -1,123 +1,125 @@
-﻿module("modules.logic.versionactivity2_7.act191.view.Act191CharacterDestinyView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/act191/view/Act191CharacterDestinyView.lua
 
-local var_0_0 = class("Act191CharacterDestinyView", BaseView)
+module("modules.logic.versionactivity2_7.act191.view.Act191CharacterDestinyView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "root/#image_icon")
-	arg_1_0._txtstonename = gohelper.findChildText(arg_1_0.viewGO, "root/#txt_stonename")
-	arg_1_0._simagestone = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/go_stone/#simage_stone")
-	arg_1_0._goprestone = gohelper.findChild(arg_1_0.viewGO, "root/#go_prestone")
-	arg_1_0._btnprestone = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#go_prestone/#btn_prestone")
-	arg_1_0._gonextstone = gohelper.findChild(arg_1_0.viewGO, "root/#go_nextstone")
-	arg_1_0._btnnextstone = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#go_nextstone/#btn_nextstone")
-	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "root/btn/#go_select")
-	arg_1_0._btnselect = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/btn/#go_select/#btn_select")
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
+local Act191CharacterDestinyView = class("Act191CharacterDestinyView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Act191CharacterDestinyView:onInitView()
+	self._imageicon = gohelper.findChildImage(self.viewGO, "root/#image_icon")
+	self._txtstonename = gohelper.findChildText(self.viewGO, "root/#txt_stonename")
+	self._simagestone = gohelper.findChildSingleImage(self.viewGO, "root/go_stone/#simage_stone")
+	self._goprestone = gohelper.findChild(self.viewGO, "root/#go_prestone")
+	self._btnprestone = gohelper.findChildButtonWithAudio(self.viewGO, "root/#go_prestone/#btn_prestone")
+	self._gonextstone = gohelper.findChild(self.viewGO, "root/#go_nextstone")
+	self._btnnextstone = gohelper.findChildButtonWithAudio(self.viewGO, "root/#go_nextstone/#btn_nextstone")
+	self._goselect = gohelper.findChild(self.viewGO, "root/btn/#go_select")
+	self._btnselect = gohelper.findChildButtonWithAudio(self.viewGO, "root/btn/#go_select/#btn_select")
+	self._gotopleft = gohelper.findChild(self.viewGO, "#go_topleft")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnprestone:AddClickListener(arg_2_0._btnprestoneOnClick, arg_2_0)
-	arg_2_0._btnnextstone:AddClickListener(arg_2_0._btnnextstoneOnClick, arg_2_0)
-	arg_2_0._btnselect:AddClickListener(arg_2_0._btnselectOnClick, arg_2_0)
+function Act191CharacterDestinyView:addEvents()
+	self._btnprestone:AddClickListener(self._btnprestoneOnClick, self)
+	self._btnnextstone:AddClickListener(self._btnnextstoneOnClick, self)
+	self._btnselect:AddClickListener(self._btnselectOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnprestone:RemoveClickListener()
-	arg_3_0._btnnextstone:RemoveClickListener()
-	arg_3_0._btnselect:RemoveClickListener()
+function Act191CharacterDestinyView:removeEvents()
+	self._btnprestone:RemoveClickListener()
+	self._btnnextstone:RemoveClickListener()
+	self._btnselect:RemoveClickListener()
 end
 
-function var_0_0._btnprestoneOnClick(arg_4_0)
-	if arg_4_0.selectIndex > 1 then
-		arg_4_0.selectIndex = arg_4_0.selectIndex - 1
+function Act191CharacterDestinyView:_btnprestoneOnClick()
+	if self.selectIndex > 1 then
+		self.selectIndex = self.selectIndex - 1
 	end
 
-	arg_4_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0._btnnextstoneOnClick(arg_5_0)
-	if arg_5_0.selectIndex < #arg_5_0.stoneIds then
-		arg_5_0.selectIndex = arg_5_0.selectIndex + 1
+function Act191CharacterDestinyView:_btnnextstoneOnClick()
+	if self.selectIndex < #self.stoneIds then
+		self.selectIndex = self.selectIndex + 1
 	end
 
-	arg_5_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0._btnselectOnClick(arg_6_0)
-	Activity191Rpc.instance:sendSelect191UseHeroFacetsIdRequest(arg_6_0.actId, arg_6_0.config.roleId, arg_6_0.stoneId, arg_6_0.onSwitchStone, arg_6_0)
+function Act191CharacterDestinyView:_btnselectOnClick()
+	Activity191Rpc.instance:sendSelect191UseHeroFacetsIdRequest(self.actId, self.config.roleId, self.stoneId, self.onSwitchStone, self)
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0.actId = Activity191Model.instance:getCurActId()
-	arg_7_0._goeffect = gohelper.findChild(arg_7_0.viewGO, "root/effectItem")
+function Act191CharacterDestinyView:_editableInitView()
+	self.actId = Activity191Model.instance:getCurActId()
+	self._goeffect = gohelper.findChild(self.viewGO, "root/effectItem")
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0.config = arg_8_0.viewParam
-	arg_8_0.stoneIds = string.splitToNumber(arg_8_0.config.facetsId, "#")
-	arg_8_0.gameInfo = Activity191Model.instance:getActInfo():getGameInfo()
-	arg_8_0.equippingStoneId = arg_8_0.gameInfo:getStoneId(arg_8_0.config)
-	arg_8_0.selectIndex = tabletool.indexOf(arg_8_0.stoneIds, arg_8_0.equippingStoneId)
+function Act191CharacterDestinyView:onOpen()
+	self.config = self.viewParam
+	self.stoneIds = string.splitToNumber(self.config.facetsId, "#")
+	self.gameInfo = Activity191Model.instance:getActInfo():getGameInfo()
+	self.equippingStoneId = self.gameInfo:getStoneId(self.config)
+	self.selectIndex = tabletool.indexOf(self.stoneIds, self.equippingStoneId)
 
-	arg_8_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_9_0)
-	arg_9_0.stoneId = arg_9_0.stoneIds[arg_9_0.selectIndex]
+function Act191CharacterDestinyView:refreshUI()
+	self.stoneId = self.stoneIds[self.selectIndex]
 
-	gohelper.setActive(arg_9_0._goprestone, arg_9_0.selectIndex > 1)
-	gohelper.setActive(arg_9_0._gonextstone, arg_9_0.selectIndex < #arg_9_0.stoneIds)
-	gohelper.setActive(arg_9_0._goselect, arg_9_0.stoneId ~= arg_9_0.equippingStoneId)
+	gohelper.setActive(self._goprestone, self.selectIndex > 1)
+	gohelper.setActive(self._gonextstone, self.selectIndex < #self.stoneIds)
+	gohelper.setActive(self._goselect, self.stoneId ~= self.equippingStoneId)
 
-	arg_9_0._levelCos = CharacterDestinyConfig.instance:getDestinyFacetCo(arg_9_0.stoneId)
-	arg_9_0.conusmeCo = CharacterDestinyConfig.instance:getDestinyFacetConsumeCo(arg_9_0.stoneId)
-	arg_9_0._effectItems = arg_9_0:getUserDataTb_()
+	self._levelCos = CharacterDestinyConfig.instance:getDestinyFacetCo(self.stoneId)
+	self.conusmeCo = CharacterDestinyConfig.instance:getDestinyFacetConsumeCo(self.stoneId)
+	self._effectItems = self:getUserDataTb_()
 
-	for iter_9_0 = 1, CharacterDestinyEnum.EffectItemCount do
-		local var_9_0 = gohelper.findChild(arg_9_0._goeffect, iter_9_0)
-		local var_9_1 = arg_9_0:getUserDataTb_()
+	for i = 1, CharacterDestinyEnum.EffectItemCount do
+		local go = gohelper.findChild(self._goeffect, i)
+		local item = self:getUserDataTb_()
 
-		var_9_1.go = var_9_0
-		var_9_1.txt = gohelper.findChildText(var_9_0, "txt_dec")
-		var_9_1.canvasgroup = var_9_0:GetComponent(typeof(UnityEngine.CanvasGroup))
-		arg_9_0._effectItems[iter_9_0] = var_9_1
+		item.go = go
+		item.txt = gohelper.findChildText(go, "txt_dec")
+		item.canvasgroup = go:GetComponent(typeof(UnityEngine.CanvasGroup))
+		self._effectItems[i] = item
 	end
 
-	arg_9_0:_refreshStoneItem()
+	self:_refreshStoneItem()
 end
 
-function var_0_0._refreshStoneItem(arg_10_0)
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0._effectItems) do
-		local var_10_0 = arg_10_0._levelCos[iter_10_0]
+function Act191CharacterDestinyView:_refreshStoneItem()
+	for i, item in ipairs(self._effectItems) do
+		local co = self._levelCos[i]
 
-		iter_10_1.skillDesc = MonoHelper.addNoUpdateLuaComOnceToGo(iter_10_1.txt.gameObject, Act191SkillDescComp)
+		item.skillDesc = MonoHelper.addNoUpdateLuaComOnceToGo(item.txt.gameObject, Act191SkillDescComp)
 
-		iter_10_1.skillDesc:updateInfo(iter_10_1.txt, var_10_0.desc, arg_10_0.config)
-		iter_10_1.skillDesc:setTipParam(0, Vector2(300, 100))
+		item.skillDesc:updateInfo(item.txt, co.desc, self.config)
+		item.skillDesc:setTipParam(0, Vector2(300, 100))
 	end
 
-	arg_10_0._txtstonename.text = arg_10_0.conusmeCo.name
+	self._txtstonename.text = self.conusmeCo.name
 
-	local var_10_1 = ResUrl.getDestinyIcon(arg_10_0.conusmeCo.icon)
+	local iconPath = ResUrl.getDestinyIcon(self.conusmeCo.icon)
 
-	arg_10_0._simagestone:LoadImage(var_10_1)
+	self._simagestone:LoadImage(iconPath)
 
-	local var_10_2 = CharacterDestinyEnum.SlotTend[arg_10_0.conusmeCo.tend]
-	local var_10_3 = var_10_2.TitleIconName
+	local tenp = CharacterDestinyEnum.SlotTend[self.conusmeCo.tend]
+	local tendIcon = tenp.TitleIconName
 
-	UISpriteSetMgr.instance:setUiCharacterSprite(arg_10_0._imageicon, var_10_3)
+	UISpriteSetMgr.instance:setUiCharacterSprite(self._imageicon, tendIcon)
 
-	arg_10_0._txtstonename.color = GameUtil.parseColor(var_10_2.TitleColor)
+	self._txtstonename.color = GameUtil.parseColor(tenp.TitleColor)
 end
 
-function var_0_0.onSwitchStone(arg_11_0)
-	arg_11_0.equippingStoneId = arg_11_0.gameInfo:getStoneId(arg_11_0.config)
+function Act191CharacterDestinyView:onSwitchStone()
+	self.equippingStoneId = self.gameInfo:getStoneId(self.config)
 
-	arg_11_0:refreshUI()
+	self:refreshUI()
 end
 
-return var_0_0
+return Act191CharacterDestinyView

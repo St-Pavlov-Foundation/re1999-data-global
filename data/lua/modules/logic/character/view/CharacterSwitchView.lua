@@ -1,233 +1,235 @@
-﻿module("modules.logic.character.view.CharacterSwitchView", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterSwitchView.lua
 
-local var_0_0 = class("CharacterSwitchView", BaseView)
+module("modules.logic.character.view.CharacterSwitchView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnchange = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/start/#btn_change")
-	arg_1_0._goshowing = gohelper.findChild(arg_1_0.viewGO, "right/start/#go_showing")
-	arg_1_0._scrollcard = gohelper.findChildScrollRect(arg_1_0.viewGO, "right/mask/#scroll_card")
-	arg_1_0._btntimerank = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#btn_timerank")
-	arg_1_0._btnrarerank = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#btn_rarerank")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._gospinescale = gohelper.findChild(arg_1_0.viewGO, "#go_spine_scale")
-	arg_1_0._golightspine = gohelper.findChild(arg_1_0.viewGO, "#go_spine_scale/lightspine/#go_lightspine")
-	arg_1_0._goinfo = gohelper.findChild(arg_1_0.viewGO, "left/#go_info")
-	arg_1_0._simagesignature = gohelper.findChildSingleImage(arg_1_0.viewGO, "left/#go_info/#simage_signature")
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "left/#go_info/date/#txt_time")
-	arg_1_0._goheroskin = gohelper.findChild(arg_1_0.viewGO, "left/#go_heroskin")
-	arg_1_0._gobgbottom = gohelper.findChild(arg_1_0.viewGO, "left/#go_heroskin/#go_bgbottom")
-	arg_1_0._scrollskin = gohelper.findChildScrollRect(arg_1_0.viewGO, "left/#go_heroskin/#scroll_skin")
-	arg_1_0._goheroskinItem = gohelper.findChild(arg_1_0.viewGO, "left/#go_heroskin/#scroll_skin/Viewport/Content/#go_heroskinItem")
+local CharacterSwitchView = class("CharacterSwitchView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CharacterSwitchView:onInitView()
+	self._btnchange = gohelper.findChildButtonWithAudio(self.viewGO, "right/start/#btn_change")
+	self._goshowing = gohelper.findChild(self.viewGO, "right/start/#go_showing")
+	self._scrollcard = gohelper.findChildScrollRect(self.viewGO, "right/mask/#scroll_card")
+	self._btntimerank = gohelper.findChildButtonWithAudio(self.viewGO, "right/#btn_timerank")
+	self._btnrarerank = gohelper.findChildButtonWithAudio(self.viewGO, "right/#btn_rarerank")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._gospinescale = gohelper.findChild(self.viewGO, "#go_spine_scale")
+	self._golightspine = gohelper.findChild(self.viewGO, "#go_spine_scale/lightspine/#go_lightspine")
+	self._goinfo = gohelper.findChild(self.viewGO, "left/#go_info")
+	self._simagesignature = gohelper.findChildSingleImage(self.viewGO, "left/#go_info/#simage_signature")
+	self._txttime = gohelper.findChildText(self.viewGO, "left/#go_info/date/#txt_time")
+	self._goheroskin = gohelper.findChild(self.viewGO, "left/#go_heroskin")
+	self._gobgbottom = gohelper.findChild(self.viewGO, "left/#go_heroskin/#go_bgbottom")
+	self._scrollskin = gohelper.findChildScrollRect(self.viewGO, "left/#go_heroskin/#scroll_skin")
+	self._goheroskinItem = gohelper.findChild(self.viewGO, "left/#go_heroskin/#scroll_skin/Viewport/Content/#go_heroskinItem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnchange:AddClickListener(arg_2_0._btnchangeOnClick, arg_2_0)
-	arg_2_0._btntimerank:AddClickListener(arg_2_0._btntimerankOnClick, arg_2_0)
-	arg_2_0._btnrarerank:AddClickListener(arg_2_0._btnrarerankOnClick, arg_2_0)
+function CharacterSwitchView:addEvents()
+	self._btnchange:AddClickListener(self._btnchangeOnClick, self)
+	self._btntimerank:AddClickListener(self._btntimerankOnClick, self)
+	self._btnrarerank:AddClickListener(self._btnrarerankOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnchange:RemoveClickListener()
-	arg_3_0._btntimerank:RemoveClickListener()
-	arg_3_0._btnrarerank:RemoveClickListener()
+function CharacterSwitchView:removeEvents()
+	self._btnchange:RemoveClickListener()
+	self._btntimerank:RemoveClickListener()
+	self._btnrarerank:RemoveClickListener()
 end
 
-function var_0_0._btnchangeOnClick(arg_4_0)
-	if not arg_4_0._isRandom then
-		arg_4_0._curHeroId = arg_4_0._heroId
-		arg_4_0._curSkinId = arg_4_0._skinId
+function CharacterSwitchView:_btnchangeOnClick()
+	if not self._isRandom then
+		self._curHeroId = self._heroId
+		self._curSkinId = self._skinId
 	end
 
-	arg_4_0._curRandom = arg_4_0._isRandom
+	self._curRandom = self._isRandom
 
-	CharacterSwitchListModel.instance:changeMainHero(arg_4_0._curHeroId, arg_4_0._curSkinId, arg_4_0._isRandom)
-	CharacterController.instance:dispatchEvent(CharacterEvent.MainThumbnailSignature, arg_4_0._heroId)
+	CharacterSwitchListModel.instance:changeMainHero(self._curHeroId, self._curSkinId, self._isRandom)
+	CharacterController.instance:dispatchEvent(CharacterEvent.MainThumbnailSignature, self._heroId)
 
-	local var_4_0 = LimitedRoleController.instance:getNeedPlayLimitedCO()
+	local limitedCO = LimitedRoleController.instance:getNeedPlayLimitedCO()
 
-	if var_4_0 and SettingsModel.instance.limitedRoleMO:isAuto() then
-		LimitedRoleController.instance:play(LimitedRoleEnum.Stage.SwitchRole, var_4_0)
+	if limitedCO and SettingsModel.instance.limitedRoleMO:isAuto() then
+		LimitedRoleController.instance:play(LimitedRoleEnum.Stage.SwitchRole, limitedCO)
 	end
 
-	arg_4_0:showTip()
+	self:showTip()
 end
 
-function var_0_0._btntimerankOnClick(arg_5_0)
-	if arg_5_0._sortIndex ~= 1 then
-		arg_5_0._sortIndex = 1
+function CharacterSwitchView:_btntimerankOnClick()
+	if self._sortIndex ~= 1 then
+		self._sortIndex = 1
 	else
-		arg_5_0._asceTime = not arg_5_0._asceTime
+		self._asceTime = not self._asceTime
 	end
 
-	arg_5_0._asceRare = false
+	self._asceRare = false
 
-	arg_5_0:_refreshBtnIcon()
+	self:_refreshBtnIcon()
 end
 
-function var_0_0._btnrarerankOnClick(arg_6_0)
-	if arg_6_0._sortIndex ~= 2 then
-		arg_6_0._sortIndex = 2
+function CharacterSwitchView:_btnrarerankOnClick()
+	if self._sortIndex ~= 2 then
+		self._sortIndex = 2
 	else
-		arg_6_0._asceRare = not arg_6_0._asceRare
+		self._asceRare = not self._asceRare
 	end
 
-	arg_6_0._asceTime = false
+	self._asceTime = false
 
-	arg_6_0:_refreshBtnIcon()
+	self:_refreshBtnIcon()
 end
 
-function var_0_0._refreshBtnIcon(arg_7_0)
-	local var_7_0 = arg_7_0._sortIndex
+function CharacterSwitchView:_refreshBtnIcon()
+	local tag = self._sortIndex
 
-	if var_7_0 == 1 then
-		CharacterSwitchListModel.instance:sortByTime(arg_7_0._asceTime)
+	if tag == 1 then
+		CharacterSwitchListModel.instance:sortByTime(self._asceTime)
 	else
-		CharacterSwitchListModel.instance:sortByRare(arg_7_0._asceRare)
+		CharacterSwitchListModel.instance:sortByRare(self._asceRare)
 	end
 
-	gohelper.setActive(arg_7_0._timeBtns[1], var_7_0 ~= 1)
-	gohelper.setActive(arg_7_0._timeBtns[2], var_7_0 == 1)
-	gohelper.setActive(arg_7_0._rareBtns[1], var_7_0 ~= 2)
-	gohelper.setActive(arg_7_0._rareBtns[2], var_7_0 == 2)
+	gohelper.setActive(self._timeBtns[1], tag ~= 1)
+	gohelper.setActive(self._timeBtns[2], tag == 1)
+	gohelper.setActive(self._rareBtns[1], tag ~= 2)
+	gohelper.setActive(self._rareBtns[2], tag == 2)
 
-	local var_7_1 = arg_7_0._asceTime and -1 or 1
-	local var_7_2 = arg_7_0._asceRare and -1 or 1
+	local scaleTime = self._asceTime and -1 or 1
+	local scaleRare = self._asceRare and -1 or 1
 
-	transformhelper.setLocalScale(arg_7_0._timeArrow[1], 1, var_7_1, 1)
-	transformhelper.setLocalScale(arg_7_0._timeArrow[2], 1, var_7_1, 1)
-	transformhelper.setLocalScale(arg_7_0._rareArrow[1], 1, var_7_2, 1)
-	transformhelper.setLocalScale(arg_7_0._rareArrow[2], 1, var_7_2, 1)
+	transformhelper.setLocalScale(self._timeArrow[1], 1, scaleTime, 1)
+	transformhelper.setLocalScale(self._timeArrow[2], 1, scaleTime, 1)
+	transformhelper.setLocalScale(self._rareArrow[1], 1, scaleRare, 1)
+	transformhelper.setLocalScale(self._rareArrow[2], 1, scaleRare, 1)
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0._rootAnimator = arg_8_0.viewGO:GetComponent("Animator")
-	arg_8_0._heroIdSet = {}
-	arg_8_0._showItemList = arg_8_0:getUserDataTb_()
-	arg_8_0._cacheItemList = arg_8_0:getUserDataTb_()
+function CharacterSwitchView:_editableInitView()
+	self._rootAnimator = self.viewGO:GetComponent("Animator")
+	self._heroIdSet = {}
+	self._showItemList = self:getUserDataTb_()
+	self._cacheItemList = self:getUserDataTb_()
 
-	arg_8_0._goinfo:SetActive(false)
+	self._goinfo:SetActive(false)
 
-	arg_8_0._timeBtns = arg_8_0:getUserDataTb_()
-	arg_8_0._timeArrow = arg_8_0:getUserDataTb_()
-	arg_8_0._rareBtns = arg_8_0:getUserDataTb_()
-	arg_8_0._rareArrow = arg_8_0:getUserDataTb_()
+	self._timeBtns = self:getUserDataTb_()
+	self._timeArrow = self:getUserDataTb_()
+	self._rareBtns = self:getUserDataTb_()
+	self._rareArrow = self:getUserDataTb_()
 
-	for iter_8_0 = 1, 2 do
-		arg_8_0._timeBtns[iter_8_0] = gohelper.findChild(arg_8_0._btntimerank.gameObject, "btn" .. tostring(iter_8_0))
-		arg_8_0._timeArrow[iter_8_0] = gohelper.findChild(arg_8_0._timeBtns[iter_8_0], "txt/arrow").transform
-		arg_8_0._rareBtns[iter_8_0] = gohelper.findChild(arg_8_0._btnrarerank.gameObject, "btn" .. tostring(iter_8_0))
-		arg_8_0._rareArrow[iter_8_0] = gohelper.findChild(arg_8_0._rareBtns[iter_8_0], "txt/arrow").transform
+	for i = 1, 2 do
+		self._timeBtns[i] = gohelper.findChild(self._btntimerank.gameObject, "btn" .. tostring(i))
+		self._timeArrow[i] = gohelper.findChild(self._timeBtns[i], "txt/arrow").transform
+		self._rareBtns[i] = gohelper.findChild(self._btnrarerank.gameObject, "btn" .. tostring(i))
+		self._rareArrow[i] = gohelper.findChild(self._rareBtns[i], "txt/arrow").transform
 	end
 
-	arg_8_0._sortIndex = 2
-	arg_8_0._asceTime = false
-	arg_8_0._asceRare = false
-	arg_8_0._golightspineParent = gohelper.findChild(arg_8_0.viewGO, "#go_spine_scale/lightspine")
+	self._sortIndex = 2
+	self._asceTime = false
+	self._asceRare = false
+	self._golightspineParent = gohelper.findChild(self.viewGO, "#go_spine_scale/lightspine")
 
-	gohelper.addUIClickAudio(arg_8_0._btnchange.gameObject, AudioEnum.UI.Store_Good_Click)
+	gohelper.addUIClickAudio(self._btnchange.gameObject, AudioEnum.UI.Store_Good_Click)
 	CharacterSwitchListModel.instance:initHeroList()
-	arg_8_0:_showMainHero(true)
-	arg_8_0:_refreshSelect()
-	arg_8_0:_refreshBtnIcon()
-	MainHeroView.setSpineScale(arg_8_0._gospinescale)
+	self:_showMainHero(true)
+	self:_refreshSelect()
+	self:_refreshBtnIcon()
+	MainHeroView.setSpineScale(self._gospinescale)
 end
 
-function var_0_0._onScreenResize(arg_9_0)
-	MainHeroView.setSpineScale(arg_9_0._gospinescale)
+function CharacterSwitchView:_onScreenResize()
+	MainHeroView.setSpineScale(self._gospinescale)
 end
 
-function var_0_0._showMainHero(arg_10_0, arg_10_1)
-	arg_10_0._curHeroId, arg_10_0._curSkinId, arg_10_0._curRandom = CharacterSwitchListModel.instance:getMainHero()
+function CharacterSwitchView:_showMainHero(updateSelect)
+	self._curHeroId, self._curSkinId, self._curRandom = CharacterSwitchListModel.instance:getMainHero()
 
-	arg_10_0:changeHero(arg_10_0._curHeroId)
+	self:changeHero(self._curHeroId)
 
-	if arg_10_0._curHeroId and arg_10_0._curSkinId then
-		arg_10_0:_switchHero(arg_10_0._curHeroId, arg_10_0._curSkinId, arg_10_0._curRandom)
+	if self._curHeroId and self._curSkinId then
+		self:_switchHero(self._curHeroId, self._curSkinId, self._curRandom)
 
-		if arg_10_1 then
-			arg_10_0:_refreshSelect()
+		if updateSelect then
+			self:_refreshSelect()
 		end
 	end
 end
 
-function var_0_0._refreshSelect(arg_11_0)
-	local var_11_0 = not arg_11_0._isRandom and arg_11_0._heroId
-	local var_11_1 = CharacterSwitchListModel.instance:getMoByHeroId(var_11_0)
-	local var_11_2 = arg_11_0.viewContainer:getCharacterScrollView()
+function CharacterSwitchView:_refreshSelect()
+	local heroId = not self._isRandom and self._heroId
+	local mo = CharacterSwitchListModel.instance:getMoByHeroId(heroId)
+	local scrollView = self.viewContainer:getCharacterScrollView()
 
-	if var_11_1 then
-		var_11_2:setSelect(var_11_1)
+	if mo then
+		scrollView:setSelect(mo)
 	end
 end
 
-function var_0_0.changeHero(arg_12_0, arg_12_1)
-	CharacterSwitchListModel.instance.curHeroId = arg_12_1
+function CharacterSwitchView:changeHero(id)
+	CharacterSwitchListModel.instance.curHeroId = id
 end
 
-function var_0_0._updateHero(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	if gohelper.isNil(arg_13_0._golightspine) then
+function CharacterSwitchView:_updateHero(heroId, skinId, isRandom)
+	if gohelper.isNil(self._golightspine) then
 		return
 	end
 
-	if arg_13_3 then
-		arg_13_0:changeHero(nil)
+	if isRandom then
+		self:changeHero(nil)
 	else
-		arg_13_0:changeHero(arg_13_1)
+		self:changeHero(heroId)
 	end
 
-	if not arg_13_3 then
-		arg_13_0:_modifySkinState(arg_13_1, arg_13_2)
+	if not isRandom then
+		self:_modifySkinState(heroId, skinId)
 	end
 
-	local var_13_0 = arg_13_0._skinId
+	local prevSkinId = self._skinId
 
-	arg_13_0._heroId = arg_13_1
-	arg_13_0._skinId = arg_13_2
-	arg_13_0._isRandom = arg_13_3
+	self._heroId = heroId
+	self._skinId = skinId
+	self._isRandom = isRandom
 
-	arg_13_0:showTip()
+	self:showTip()
 
-	local var_13_1 = HeroModel.instance:getByHeroId(arg_13_0._heroId)
-	local var_13_2 = SkinConfig.instance:getSkinCo(arg_13_0._skinId or var_13_1 and var_13_1.skin)
+	local hero = HeroModel.instance:getByHeroId(self._heroId)
+	local skinCo = SkinConfig.instance:getSkinCo(self._skinId or hero and hero.skin)
 
-	if not var_13_2 then
+	if not skinCo then
 		return
 	end
 
-	arg_13_0._hero = var_13_1
-	arg_13_0._heroSkinConfig = var_13_2
+	self._hero = hero
+	self._heroSkinConfig = skinCo
 
-	if not arg_13_0._lightSpine then
-		arg_13_0:_getLightSpine()
+	if not self._lightSpine then
+		self:_getLightSpine()
 
-		arg_13_0._lightSpine = LightModelAgent.Create(arg_13_0._golightspine, true)
-	elseif var_13_0 ~= arg_13_0._skinId or not LimitedRoleController.instance:isPlayingAction() then
-		arg_13_0._lightSpine:stopVoice()
+		self._lightSpine = LightModelAgent.Create(self._golightspine, true)
+	elseif prevSkinId ~= self._skinId or not LimitedRoleController.instance:isPlayingAction() then
+		self._lightSpine:stopVoice()
 	end
 
-	arg_13_0:_setOffset()
-	TaskDispatcher.cancelTask(arg_13_0._delayInitLightSpine, arg_13_0)
-	arg_13_0._lightSpine:setResPath(var_13_2, arg_13_0._onLightSpineLoaded, arg_13_0)
-	arg_13_0._simagesignature:UnLoadImage()
-	arg_13_0._simagesignature:LoadImage(ResUrl.getSignature(arg_13_0._hero.config.signature))
+	self:_setOffset()
+	TaskDispatcher.cancelTask(self._delayInitLightSpine, self)
+	self._lightSpine:setResPath(skinCo, self._onLightSpineLoaded, self)
+	self._simagesignature:UnLoadImage()
+	self._simagesignature:LoadImage(ResUrl.getSignature(self._hero.config.signature))
 end
 
-function var_0_0._setOffset(arg_14_0)
-	local var_14_0 = SkinConfig.instance:getSkinOffset(arg_14_0._heroSkinConfig.mainViewOffset)
-	local var_14_1 = arg_14_0._golightspine.transform
+function CharacterSwitchView:_setOffset()
+	local offsetParam = SkinConfig.instance:getSkinOffset(self._heroSkinConfig.mainViewOffset)
+	local transform = self._golightspine.transform
 
-	recthelper.setAnchor(var_14_1, tonumber(var_14_0[1]), tonumber(var_14_0[2]))
+	recthelper.setAnchor(transform, tonumber(offsetParam[1]), tonumber(offsetParam[2]))
 
-	local var_14_2 = tonumber(var_14_0[3])
+	local scale = tonumber(offsetParam[3])
 
-	transformhelper.setLocalScale(var_14_1, var_14_2, var_14_2, var_14_2)
+	transformhelper.setLocalScale(transform, scale, scale, scale)
 end
 
-function var_0_0._getLightSpine(arg_15_0)
+function CharacterSwitchView:_getLightSpine()
 	if ViewMgr.instance:isOpen(ViewName.SkinOffsetAdjustView) then
 		return
 	end
@@ -236,268 +238,270 @@ function var_0_0._getLightSpine(arg_15_0)
 		return
 	end
 
-	local var_15_0 = ViewMgr.instance:getContainer(ViewName.MainThumbnailView)
+	local viewContains = ViewMgr.instance:getContainer(ViewName.MainThumbnailView)
 
-	if not var_15_0 then
+	if not viewContains then
 		return
 	end
 
-	local var_15_1 = var_15_0:getLightSpineGo()
+	local shareLightSpineGo = viewContains:getLightSpineGo()
 
-	gohelper.addChildPosStay(arg_15_0._golightspine.transform.parent.gameObject, var_15_1)
-	gohelper.destroy(arg_15_0._golightspine)
+	gohelper.addChildPosStay(self._golightspine.transform.parent.gameObject, shareLightSpineGo)
+	gohelper.destroy(self._golightspine)
 
-	arg_15_0._golightspine = var_15_1
+	self._golightspine = shareLightSpineGo
 end
 
-function var_0_0.showTip(arg_16_0)
-	local var_16_0 = arg_16_0._curHeroId == arg_16_0._heroId and arg_16_0._curSkinId == arg_16_0._skinId and arg_16_0._curRandom == arg_16_0._isRandom
+function CharacterSwitchView:showTip()
+	local showCurHero = self._curHeroId == self._heroId and self._curSkinId == self._skinId and self._curRandom == self._isRandom
 
-	if arg_16_0._isRandom and arg_16_0._curRandom then
-		var_16_0 = true
+	if self._isRandom and self._curRandom then
+		showCurHero = true
 	end
 
-	gohelper.setActive(arg_16_0._btnchange.gameObject, not var_16_0)
-	gohelper.setActive(arg_16_0._goshowing.gameObject, var_16_0)
+	gohelper.setActive(self._btnchange.gameObject, not showCurHero)
+	gohelper.setActive(self._goshowing.gameObject, showCurHero)
 end
 
-function var_0_0._needDelay(arg_17_0)
-	return arg_17_0._heroSkinConfig.id == 301601 or arg_17_0._heroSkinConfig.id == 301602
+function CharacterSwitchView:_needDelay()
+	return self._heroSkinConfig.id == 301601 or self._heroSkinConfig.id == 301602
 end
 
-function var_0_0._onLightSpineLoaded(arg_18_0)
-	if not arg_18_0:_needDelay() then
-		arg_18_0:_delayInitLightSpine()
+function CharacterSwitchView:_onLightSpineLoaded()
+	if not self:_needDelay() then
+		self:_delayInitLightSpine()
 
 		return
 	end
 
-	TaskDispatcher.runDelay(arg_18_0._delayInitLightSpine, arg_18_0, 0.1)
+	TaskDispatcher.runDelay(self._delayInitLightSpine, self, 0.1)
 end
 
-function var_0_0._delayInitLightSpine(arg_19_0)
-	if gohelper.isNil(arg_19_0.viewGO) then
+function CharacterSwitchView:_delayInitLightSpine()
+	if gohelper.isNil(self.viewGO) then
 		return
 	end
 
-	local var_19_0 = arg_19_0._lightSpine:getRenderer()
+	local renderer = self._lightSpine:getRenderer()
 
-	WeatherController.instance:setLightModel(arg_19_0._lightSpine)
+	WeatherController.instance:setLightModel(self._lightSpine)
 
-	local var_19_1 = {
-		roleGo = arg_19_0._lightSpine:getSpineGo(),
-		heroId = arg_19_0._heroId,
-		sharedMaterial = var_19_0.sharedMaterial,
-		skinId = arg_19_0._skinId
+	local param = {
+		roleGo = self._lightSpine:getSpineGo(),
+		heroId = self._heroId,
+		sharedMaterial = renderer.sharedMaterial,
+		skinId = self._skinId
 	}
 
-	WeatherController.instance:changeRoleGo(var_19_1)
-	arg_19_0._goinfo:SetActive(true)
+	WeatherController.instance:changeRoleGo(param)
+	self._goinfo:SetActive(true)
 
-	local var_19_2 = ServerTime.formatTimeInLocal(arg_19_0._hero.createTime / 1000, "%Y / %m / %d")
+	local timeStr = ServerTime.formatTimeInLocal(self._hero.createTime / 1000, "%Y / %m / %d")
 
-	if not var_19_2 then
+	if not timeStr then
 		return
 	end
 
-	arg_19_0._txttime.text = var_19_2
+	self._txttime.text = timeStr
 end
 
-function var_0_0.onUpdateParam(arg_20_0)
+function CharacterSwitchView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_21_0)
-	arg_21_0:addEventCb(CharacterController.instance, CharacterEvent.SwitchHero, arg_21_0._onSwitchHero, arg_21_0)
-	arg_21_0:addEventCb(CharacterController.instance, CharacterEvent.SwitchHeroSkin, arg_21_0._switchHeroSkin, arg_21_0)
-	arg_21_0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_21_0._onScreenResize, arg_21_0)
-	arg_21_0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.SwitchSceneFinishStory, arg_21_0._onSwitchSceneFinishStory, arg_21_0)
+function CharacterSwitchView:onOpen()
+	self:addEventCb(CharacterController.instance, CharacterEvent.SwitchHero, self._onSwitchHero, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.SwitchHeroSkin, self._switchHeroSkin, self)
+	self:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, self._onScreenResize, self)
+	self:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.SwitchSceneFinishStory, self._onSwitchSceneFinishStory, self)
 end
 
-function var_0_0.onClose(arg_22_0)
-	gohelper.setActive(arg_22_0._golightspine, true)
-	arg_22_0:_showMainHero()
-	TaskDispatcher.cancelTask(arg_22_0._delayInitLightSpine, arg_22_0)
+function CharacterSwitchView:onClose()
+	gohelper.setActive(self._golightspine, true)
+	self:_showMainHero()
+	TaskDispatcher.cancelTask(self._delayInitLightSpine, self)
 end
 
-function var_0_0._onSwitchSceneFinishStory(arg_23_0)
-	arg_23_0._switchSceneFinishStory = true
+function CharacterSwitchView:_onSwitchSceneFinishStory()
+	self._switchSceneFinishStory = true
 end
 
-function var_0_0._checkSpineAnim(arg_24_0)
-	if arg_24_0._switchSceneFinishStory and arg_24_0._lightSpine then
-		arg_24_0._lightSpine:play(StoryAnimName.B_IDLE, true)
+function CharacterSwitchView:_checkSpineAnim()
+	if self._switchSceneFinishStory and self._lightSpine then
+		self._lightSpine:play(StoryAnimName.B_IDLE, true)
 	end
 
-	arg_24_0._switchSceneFinishStory = false
+	self._switchSceneFinishStory = false
 end
 
-function var_0_0.onTabSwitchOpen(arg_25_0)
-	gohelper.setActive(arg_25_0._golightspine, true)
-	arg_25_0._rootAnimator:Play("open", 0, 0)
-	arg_25_0:_checkSpineAnim()
-	arg_25_0:_setOffset()
+function CharacterSwitchView:onTabSwitchOpen()
+	gohelper.setActive(self._golightspine, true)
+	self._rootAnimator:Play("open", 0, 0)
+	self:_checkSpineAnim()
+	self:_setOffset()
 end
 
-function var_0_0.onTabSwitchClose(arg_26_0, arg_26_1)
-	if not arg_26_1 then
-		arg_26_0._lightSpine:stopVoice()
-		gohelper.setActive(arg_26_0._golightspine, false)
+function CharacterSwitchView:onTabSwitchClose(isClosing)
+	if not isClosing then
+		self._lightSpine:stopVoice()
+		gohelper.setActive(self._golightspine, false)
 	end
 end
 
-function var_0_0.onCloseFinish(arg_27_0)
-	local var_27_0 = UnityEngine.GameObject.Find("UIRoot/POPUP_TOP/MainThumbnailView/#go_spine_scale/lightspine")
+function CharacterSwitchView:onCloseFinish()
+	local go = UnityEngine.GameObject.Find("UIRoot/POPUP_TOP/MainThumbnailView/#go_spine_scale/lightspine")
 
-	if gohelper.isNil(var_27_0) or gohelper.isNil(arg_27_0._golightspine) then
+	if gohelper.isNil(go) or gohelper.isNil(self._golightspine) then
 		return
 	end
 
-	gohelper.addChildPosStay(var_27_0, arg_27_0._golightspine)
-	arg_27_0:_checkSpineAnim()
+	gohelper.addChildPosStay(go, self._golightspine)
+	self:_checkSpineAnim()
 end
 
-function var_0_0._switchHeroSkin(arg_28_0, arg_28_1, arg_28_2)
-	arg_28_0:_updateHero(arg_28_1, arg_28_2, false)
+function CharacterSwitchView:_switchHeroSkin(heroId, skinId)
+	self:_updateHero(heroId, skinId, false)
 end
 
-function var_0_0._onSwitchHero(arg_29_0, arg_29_1)
-	arg_29_0:_switchHero(arg_29_1[1], arg_29_1[2], arg_29_1[3])
+function CharacterSwitchView:_onSwitchHero(param)
+	self:_switchHero(param[1], param[2], param[3])
 end
 
-function var_0_0._modifySkinState(arg_30_0, arg_30_1, arg_30_2)
-	if arg_30_2 ~= CharacterVoiceEnum.LuxiSkin2 then
+function CharacterSwitchView:_modifySkinState(heroId, skinId)
+	if skinId ~= CharacterVoiceEnum.LuxiSkin2 then
 		return
 	end
 
-	if PlayerModel.instance:getPropKeyValue(PlayerEnum.SimpleProperty.SkinState, arg_30_2, 0) ~= 0 then
+	local skinState = PlayerModel.instance:getPropKeyValue(PlayerEnum.SimpleProperty.SkinState, skinId, 0)
+
+	if skinState ~= 0 then
 		return
 	end
 
-	local var_30_0 = CharacterVoiceEnum.LuxiState.HumanFace
+	local value = CharacterVoiceEnum.LuxiState.HumanFace
 
-	PlayerModel.instance:setPropKeyValue(PlayerEnum.SimpleProperty.SkinState, arg_30_2, var_30_0)
-	PlayerModel.instance:setPropKeyValue(PlayerEnum.SimpleProperty.SkinState, arg_30_1, var_30_0)
+	PlayerModel.instance:setPropKeyValue(PlayerEnum.SimpleProperty.SkinState, skinId, value)
+	PlayerModel.instance:setPropKeyValue(PlayerEnum.SimpleProperty.SkinState, heroId, value)
 
-	local var_30_1 = PlayerModel.instance:getPropKeyValueString(PlayerEnum.SimpleProperty.SkinState)
+	local propertyStr = PlayerModel.instance:getPropKeyValueString(PlayerEnum.SimpleProperty.SkinState)
 
-	PlayerRpc.instance:sendSetSimplePropertyRequest(PlayerEnum.SimpleProperty.SkinState, var_30_1)
+	PlayerRpc.instance:sendSetSimplePropertyRequest(PlayerEnum.SimpleProperty.SkinState, propertyStr)
 end
 
-function var_0_0._switchHero(arg_31_0, arg_31_1, arg_31_2, arg_31_3)
-	if arg_31_3 then
-		arg_31_0:_updateHero(arg_31_0._curHeroId, arg_31_0._curSkinId, arg_31_3)
+function CharacterSwitchView:_switchHero(heroId, skinId, isRandom)
+	if isRandom then
+		self:_updateHero(self._curHeroId, self._curSkinId, isRandom)
 	else
-		arg_31_0:_updateHero(arg_31_1, arg_31_2, arg_31_3)
+		self:_updateHero(heroId, skinId, isRandom)
 	end
 
-	gohelper.setActive(arg_31_0._goheroskin, not arg_31_3)
-	arg_31_0:_showSkinList(arg_31_1, arg_31_2)
+	gohelper.setActive(self._goheroskin, not isRandom)
+	self:_showSkinList(heroId, skinId)
 
-	if arg_31_1 then
-		arg_31_0._heroIdSet[arg_31_1] = true
+	if heroId then
+		self._heroIdSet[heroId] = true
 
-		if tabletool.len(arg_31_0._heroIdSet) >= 5 then
-			arg_31_0._heroIdSet = {}
+		if tabletool.len(self._heroIdSet) >= 5 then
+			self._heroIdSet = {}
 
-			GameGCMgr.instance:dispatchEvent(GameGCEvent.DelayFullGC, 0.5, arg_31_0)
+			GameGCMgr.instance:dispatchEvent(GameGCEvent.DelayFullGC, 0.5, self)
 		end
 	end
 end
 
-function var_0_0._sort(arg_32_0, arg_32_1)
-	return arg_32_0.skin < arg_32_1.skin
+function CharacterSwitchView._sort(a, b)
+	return a.skin < b.skin
 end
 
-local var_0_1 = {
+local yOffset = {
 	149.2,
 	-64.3,
 	-151.4
 }
 
-function var_0_0._showSkinList(arg_33_0, arg_33_1, arg_33_2)
-	if not arg_33_1 then
+function CharacterSwitchView:_showSkinList(heroId, showSkinId)
+	if not heroId then
 		return
 	end
 
-	local var_33_0 = HeroModel.instance:getByHeroId(arg_33_1)
-	local var_33_1 = tabletool.copy(var_33_0.skinInfoList)
+	local heroMO = HeroModel.instance:getByHeroId(heroId)
+	local skinInfoList = tabletool.copy(heroMO.skinInfoList)
 
-	table.sort(var_33_1, var_0_0._sort)
+	table.sort(skinInfoList, CharacterSwitchView._sort)
 
-	local var_33_2 = SkinInfoMO.New()
+	local skinInfoMO = SkinInfoMO.New()
 
-	var_33_2:init({
+	skinInfoMO:init({
 		expireSec = 0,
-		skin = var_33_0.config.skinId
+		skin = heroMO.config.skinId
 	})
-	table.insert(var_33_1, 1, var_33_2)
+	table.insert(skinInfoList, 1, skinInfoMO)
 
-	local var_33_3 = arg_33_0:removeDuplicates(var_33_1)
+	skinInfoList = self:removeDuplicates(skinInfoList)
 
-	arg_33_0:_hideAllItems()
+	self:_hideAllItems()
 
-	for iter_33_0, iter_33_1 in ipairs(var_33_3) do
-		local var_33_4 = iter_33_1.skin
+	for _, skinInfo in ipairs(skinInfoList) do
+		local skinId = skinInfo.skin
 
-		arg_33_0:_showSkinItem(arg_33_1, var_33_4, var_33_4 == arg_33_2)
+		self:_showSkinItem(heroId, skinId, skinId == showSkinId)
 	end
 
-	local var_33_5 = math.min(#var_33_3, #var_0_1)
+	local offsetIndex = math.min(#skinInfoList, #yOffset)
 
-	recthelper.setAnchorY(arg_33_0._gobgbottom.transform, var_0_1[var_33_5])
+	recthelper.setAnchorY(self._gobgbottom.transform, yOffset[offsetIndex])
 end
 
-function var_0_0.removeDuplicates(arg_34_0, arg_34_1)
-	local var_34_0 = {}
-	local var_34_1 = {}
+function CharacterSwitchView:removeDuplicates(skinInfoList)
+	local checkDict = {}
+	local newArray = {}
 
-	for iter_34_0, iter_34_1 in ipairs(arg_34_1) do
-		if not var_34_0[iter_34_1.skin] then
-			var_34_0[iter_34_1.skin] = true
+	for _, skinInfo in ipairs(skinInfoList) do
+		if not checkDict[skinInfo.skin] then
+			checkDict[skinInfo.skin] = true
 
-			table.insert(var_34_1, iter_34_1)
+			table.insert(newArray, skinInfo)
 		end
 	end
 
-	return var_34_1
+	return newArray
 end
 
-function var_0_0._hideAllItems(arg_35_0)
-	local var_35_0 = #arg_35_0._showItemList
+function CharacterSwitchView:_hideAllItems()
+	local count = #self._showItemList
 
-	for iter_35_0 = 1, var_35_0 do
-		local var_35_1 = arg_35_0._showItemList[iter_35_0]
+	for i = 1, count do
+		local item = self._showItemList[i]
 
-		gohelper.setActive(var_35_1.viewGO, false)
-		table.insert(arg_35_0._cacheItemList, var_35_1)
+		gohelper.setActive(item.viewGO, false)
+		table.insert(self._cacheItemList, item)
 
-		arg_35_0._showItemList[iter_35_0] = nil
+		self._showItemList[i] = nil
 	end
 end
 
-function var_0_0._showSkinItem(arg_36_0, arg_36_1, arg_36_2, arg_36_3)
-	local var_36_0 = table.remove(arg_36_0._cacheItemList)
+function CharacterSwitchView:_showSkinItem(heroId, skinId, selected)
+	local item = table.remove(self._cacheItemList)
 
-	if not var_36_0 then
-		local var_36_1 = gohelper.cloneInPlace(arg_36_0._goheroskinItem)
+	if not item then
+		local go = gohelper.cloneInPlace(self._goheroskinItem)
 
-		var_36_0 = MonoHelper.addLuaComOnceToGo(var_36_1, CharacterSwitchSkinItem)
+		item = MonoHelper.addLuaComOnceToGo(go, CharacterSwitchSkinItem)
 	end
 
-	gohelper.setAsLastSibling(var_36_0.viewGO)
-	table.insert(arg_36_0._showItemList, var_36_0)
-	var_36_0:showSkin(arg_36_1, arg_36_2)
-	var_36_0:setSelected(arg_36_3)
+	gohelper.setAsLastSibling(item.viewGO)
+	table.insert(self._showItemList, item)
+	item:showSkin(heroId, skinId)
+	item:setSelected(selected)
 end
 
-function var_0_0.getLightSpineGo(arg_37_0)
-	return arg_37_0._golightspine, arg_37_0._golightspineParent
+function CharacterSwitchView:getLightSpineGo()
+	return self._golightspine, self._golightspineParent
 end
 
-function var_0_0.onDestroyView(arg_38_0)
-	arg_38_0._simagesignature:UnLoadImage()
-	GameGCMgr.instance:dispatchEvent(GameGCEvent.DelayFullGC, 1, arg_38_0)
+function CharacterSwitchView:onDestroyView()
+	self._simagesignature:UnLoadImage()
+	GameGCMgr.instance:dispatchEvent(GameGCEvent.DelayFullGC, 1, self)
 end
 
-return var_0_0
+return CharacterSwitchView

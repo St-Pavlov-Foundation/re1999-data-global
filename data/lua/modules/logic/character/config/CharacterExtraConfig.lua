@@ -1,8 +1,10 @@
-﻿module("modules.logic.character.config.CharacterExtraConfig", package.seeall)
+﻿-- chunkname: @modules/logic/character/config/CharacterExtraConfig.lua
 
-local var_0_0 = class("CharacterExtraConfig")
+module("modules.logic.character.config.CharacterExtraConfig", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local CharacterExtraConfig = class("CharacterExtraConfig")
+
+function CharacterExtraConfig:reqConfigNames()
 	return {
 		"hero3124_skill_talent",
 		"fight_eziozhuangbei",
@@ -10,94 +12,94 @@ function var_0_0.reqConfigNames(arg_1_0)
 	}
 end
 
-function var_0_0.onInit(arg_2_0)
+function CharacterExtraConfig:onInit()
 	return
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "hero3124_skill_talent" then
-		arg_3_0:_initSkillTalentConfig(arg_3_2)
-	elseif arg_3_1 == "fight_eziozhuangbei" then
-		arg_3_0._ezioWeaponGroupConfig = arg_3_2
-	elseif arg_3_1 == "fight_eziozhuangbei_icon" then
-		arg_3_0:_initEzioWeaponConfig(arg_3_2)
+function CharacterExtraConfig:onConfigLoaded(configName, configTable)
+	if configName == "hero3124_skill_talent" then
+		self:_initSkillTalentConfig(configTable)
+	elseif configName == "fight_eziozhuangbei" then
+		self._ezioWeaponGroupConfig = configTable
+	elseif configName == "fight_eziozhuangbei_icon" then
+		self:_initEzioWeaponConfig(configTable)
 	end
 end
 
-function var_0_0._initSkillTalentConfig(arg_4_0, arg_4_1)
-	arg_4_0._skillTalentCo = {}
+function CharacterExtraConfig:_initSkillTalentConfig(configTable)
+	self._skillTalentCo = {}
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_1.configList) do
-		if not arg_4_0._skillTalentCo[iter_4_1.sub] then
-			arg_4_0._skillTalentCo[iter_4_1.sub] = {}
+	for _, co in ipairs(configTable.configList) do
+		if not self._skillTalentCo[co.sub] then
+			self._skillTalentCo[co.sub] = {}
 		end
 
-		arg_4_0._skillTalentCo[iter_4_1.sub][iter_4_1.level] = iter_4_1
+		self._skillTalentCo[co.sub][co.level] = co
 	end
 end
 
-function var_0_0.getSkillTalentCoBySubLevel(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = arg_5_0._skillTalentCo[arg_5_1]
+function CharacterExtraConfig:getSkillTalentCoBySubLevel(sub, level)
+	local cos = self._skillTalentCo[sub]
 
-	return var_5_0 and var_5_0[arg_5_2]
+	return cos and cos[level]
 end
 
-function var_0_0.getSkillTalentCoById(arg_6_0, arg_6_1)
-	return lua_hero3124_skill_talent.configDict[arg_6_1]
+function CharacterExtraConfig:getSkillTalentCoById(id)
+	return lua_hero3124_skill_talent.configDict[id]
 end
 
-function var_0_0.getSkillTalentCos(arg_7_0)
-	return arg_7_0._skillTalentCo
+function CharacterExtraConfig:getSkillTalentCos()
+	return self._skillTalentCo
 end
 
-function var_0_0.getEzioWeaponGroupConfigTable(arg_8_0)
-	return arg_8_0._ezioWeaponGroupConfig
+function CharacterExtraConfig:getEzioWeaponGroupConfigTable()
+	return self._ezioWeaponGroupConfig
 end
 
-function var_0_0.getEzioWeaponGroupCos(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	if not arg_9_0._ezioWeaponGroupConfig then
+function CharacterExtraConfig:getEzioWeaponGroupCos(mainId, subId, exSkillLevel)
+	if not self._ezioWeaponGroupConfig then
 		return
 	end
 
-	local var_9_0 = arg_9_0._ezioWeaponGroupConfig.configDict[arg_9_1]
+	local mainCos = self._ezioWeaponGroupConfig.configDict[mainId]
 
-	if not var_9_0 then
+	if not mainCos then
 		return
 	end
 
-	local var_9_1 = var_9_0[arg_9_2]
+	local subCos = mainCos[subId]
 
-	if not var_9_1 then
+	if not subCos then
 		return
 	end
 
-	return var_9_1[arg_9_3]
+	return subCos[exSkillLevel]
 end
 
-function var_0_0._initEzioWeaponConfig(arg_10_0, arg_10_1)
-	arg_10_0._ezioWeaponConfig = {}
+function CharacterExtraConfig:_initEzioWeaponConfig(configTable)
+	self._ezioWeaponConfig = {}
 
-	for iter_10_0, iter_10_1 in ipairs(arg_10_1.configList) do
-		if not arg_10_0._ezioWeaponConfig[iter_10_1.type] then
-			arg_10_0._ezioWeaponConfig[iter_10_1.type] = {}
+	for _, co in ipairs(configTable.configList) do
+		if not self._ezioWeaponConfig[co.type] then
+			self._ezioWeaponConfig[co.type] = {}
 		end
 
-		table.insert(arg_10_0._ezioWeaponConfig[iter_10_1.type], iter_10_1)
+		table.insert(self._ezioWeaponConfig[co.type], co)
 	end
 end
 
-function var_0_0.getEzioWeaponCosByType(arg_11_0, arg_11_1)
-	return arg_11_0._ezioWeaponConfig[arg_11_1]
+function CharacterExtraConfig:getEzioWeaponCosByType(type)
+	return self._ezioWeaponConfig[type]
 end
 
-function var_0_0.getEzioWeaponCoById(arg_12_0, arg_12_1)
-	return lua_fight_eziozhuangbei_icon.configDict[arg_12_1]
+function CharacterExtraConfig:getEzioWeaponCoById(id)
+	return lua_fight_eziozhuangbei_icon.configDict[id]
 end
 
-function var_0_0.getEzioWeaponConfigs(arg_13_0)
-	return arg_13_0._ezioWeaponConfig
+function CharacterExtraConfig:getEzioWeaponConfigs()
+	return self._ezioWeaponConfig
 end
 
-var_0_0.instance = var_0_0.New()
+CharacterExtraConfig.instance = CharacterExtraConfig.New()
 
-return var_0_0
+return CharacterExtraConfig

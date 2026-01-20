@@ -1,19 +1,21 @@
-﻿module("modules.logic.activity.view.Role_SignItem_SignViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/Role_SignItem_SignViewContainer.lua
 
-local var_0_0 = class("Role_SignItem_SignViewContainer", Activity101SignViewBaseContainer)
+module("modules.logic.activity.view.Role_SignItem_SignViewContainer", package.seeall)
 
-function var_0_0.onModifyListScrollParam(arg_1_0, arg_1_1)
-	arg_1_1.cellClass = Role_SignItem
-	arg_1_1.scrollGOPath = "Root/#scroll_ItemList"
-	arg_1_1.cellWidth = 220
-	arg_1_1.cellHeight = 600
-	arg_1_1.cellSpaceH = -12
+local Role_SignItem_SignViewContainer = class("Role_SignItem_SignViewContainer", Activity101SignViewBaseContainer)
+
+function Role_SignItem_SignViewContainer:onModifyListScrollParam(refListScrollParam)
+	refListScrollParam.cellClass = Role_SignItem
+	refListScrollParam.scrollGOPath = "Root/#scroll_ItemList"
+	refListScrollParam.cellWidth = 220
+	refListScrollParam.cellHeight = 600
+	refListScrollParam.cellSpaceH = -12
 end
 
-function var_0_0.onBuildViews(arg_2_0)
+function Role_SignItem_SignViewContainer:onBuildViews()
 	return {
-		(arg_2_0:getMainView())
+		(self:getMainView())
 	}
 end
 
-return var_0_0
+return Role_SignItem_SignViewContainer

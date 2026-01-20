@@ -1,110 +1,112 @@
-﻿module("modules.logic.versionactivity1_5.aizila.view.AiZiLaGoodsItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/aizila/view/AiZiLaGoodsItem.lua
 
-local var_0_0 = class("AiZiLaGoodsItem", ListScrollCellExtend)
+module("modules.logic.versionactivity1_5.aizila.view.AiZiLaGoodsItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._imagerare = gohelper.findChildImage(arg_1_0.viewGO, "#image_rare")
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "#image_icon")
-	arg_1_0._imageselected = gohelper.findChildImage(arg_1_0.viewGO, "#image_selected")
-	arg_1_0._gocount = gohelper.findChild(arg_1_0.viewGO, "#go_count")
-	arg_1_0._txtcount = gohelper.findChildText(arg_1_0.viewGO, "#go_count/#txt_count")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_click")
-	arg_1_0._goredPoint = gohelper.findChild(arg_1_0.viewGO, "#go_redPiont")
-	arg_1_0._imagecountBG = gohelper.findChildImage(arg_1_0.viewGO, "#go_count")
-	arg_1_0._singleicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#image_icon")
+local AiZiLaGoodsItem = class("AiZiLaGoodsItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function AiZiLaGoodsItem:onInitView()
+	self._imagerare = gohelper.findChildImage(self.viewGO, "#image_rare")
+	self._imageicon = gohelper.findChildImage(self.viewGO, "#image_icon")
+	self._imageselected = gohelper.findChildImage(self.viewGO, "#image_selected")
+	self._gocount = gohelper.findChild(self.viewGO, "#go_count")
+	self._txtcount = gohelper.findChildText(self.viewGO, "#go_count/#txt_count")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_click")
+	self._goredPoint = gohelper.findChild(self.viewGO, "#go_redPiont")
+	self._imagecountBG = gohelper.findChildImage(self.viewGO, "#go_count")
+	self._singleicon = gohelper.findChildSingleImage(self.viewGO, "#image_icon")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+function AiZiLaGoodsItem:addEvents()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
+function AiZiLaGoodsItem:removeEvents()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0._btnclickOnClick(arg_4_0)
-	if arg_4_0._itemId then
-		MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.V1a5AiZiLa, arg_4_0._itemId)
+function AiZiLaGoodsItem:_btnclickOnClick()
+	if self._itemId then
+		MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.V1a5AiZiLa, self._itemId)
 	end
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	gohelper.setActive(arg_5_0._imageselected, false)
-	arg_5_0:setShowCount(true)
+function AiZiLaGoodsItem:_editableInitView()
+	gohelper.setActive(self._imageselected, false)
+	self:setShowCount(true)
 end
 
-function var_0_0._editableAddEvents(arg_6_0)
+function AiZiLaGoodsItem:_editableAddEvents()
 	return
 end
 
-function var_0_0._editableRemoveEvents(arg_7_0)
+function AiZiLaGoodsItem:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
-	arg_8_0._mo = arg_8_1
+function AiZiLaGoodsItem:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_8_0:setItemId(arg_8_1.itemId)
+	self:setItemId(mo.itemId)
 
-	if arg_8_1.quantity or arg_8_1.getQuantity then
-		local var_8_0 = arg_8_1.quantity or arg_8_1:getQuantity()
+	if mo.quantity or mo.getQuantity then
+		local quantity = mo.quantity or mo:getQuantity()
 
-		arg_8_0:setCountStr(var_8_0)
+		self:setCountStr(quantity)
 	end
 end
 
-function var_0_0.onSelect(arg_9_0, arg_9_1)
-	gohelper.setActive(arg_9_0._imageselected, arg_9_1)
+function AiZiLaGoodsItem:onSelect(isSelect)
+	gohelper.setActive(self._imageselected, isSelect)
 end
 
-function var_0_0.setItemId(arg_10_0, arg_10_1)
-	arg_10_0._itemId = arg_10_1
+function AiZiLaGoodsItem:setItemId(itemId)
+	self._itemId = itemId
 
-	arg_10_0:_refreshIcon(arg_10_1)
+	self:_refreshIcon(itemId)
 end
 
-function var_0_0.setShowCount(arg_11_0, arg_11_1, arg_11_2)
-	if arg_11_0._isShow ~= arg_11_1 then
-		arg_11_0._isShow = arg_11_1
+function AiZiLaGoodsItem:setShowCount(isShow, bgEnabled)
+	if self._isShow ~= isShow then
+		self._isShow = isShow
 
-		gohelper.setActive(arg_11_0._gocount, arg_11_1)
+		gohelper.setActive(self._gocount, isShow)
 	end
 
-	if arg_11_2 == true then
-		arg_11_0._imagecountBG.enabled = true
-	elseif arg_11_2 == false then
-		arg_11_0._imagecountBG.enabled = false
+	if bgEnabled == true then
+		self._imagecountBG.enabled = true
+	elseif bgEnabled == false then
+		self._imagecountBG.enabled = false
 	end
 end
 
-function var_0_0.setCountStr(arg_12_0, arg_12_1)
-	arg_12_0._txtcount.text = arg_12_1
+function AiZiLaGoodsItem:setCountStr(countStr)
+	self._txtcount.text = countStr
 end
 
-function var_0_0._refreshIcon(arg_13_0, arg_13_1)
-	arg_13_1 = arg_13_1 or arg_13_0._itemId
+function AiZiLaGoodsItem:_refreshIcon(itemId)
+	itemId = itemId or self._itemId
 
-	if arg_13_1 ~= arg_13_0._lastItemId then
-		local var_13_0 = AiZiLaConfig.instance:getItemCo(arg_13_1)
+	if itemId ~= self._lastItemId then
+		local cfg = AiZiLaConfig.instance:getItemCo(itemId)
 
-		if var_13_0 then
-			arg_13_0._lastItemId = arg_13_1
+		if cfg then
+			self._lastItemId = itemId
 
-			arg_13_0._singleicon:LoadImage(ResUrl.getV1a5AiZiLaItemIcon(var_13_0.icon))
-			UISpriteSetMgr.instance:setV1a5AiZiLaSprite(arg_13_0._imagerare, AiZiLaEnum.RareIcon[var_13_0.rare])
+			self._singleicon:LoadImage(ResUrl.getV1a5AiZiLaItemIcon(cfg.icon))
+			UISpriteSetMgr.instance:setV1a5AiZiLaSprite(self._imagerare, AiZiLaEnum.RareIcon[cfg.rare])
 		end
 	end
 end
 
-function var_0_0.onDestroyView(arg_14_0)
-	arg_14_0._singleicon:UnLoadImage()
+function AiZiLaGoodsItem:onDestroyView()
+	self._singleicon:UnLoadImage()
 end
 
-var_0_0.prefabPath = "ui/viewres/versionactivity_1_5/v1a5_aizila/v1a5_aizila_goodsitem.prefab"
-var_0_0.prefabPath2 = "ui/viewres/versionactivity_1_5/v1a5_aizila/v1a5_aizila_goodsitem2.prefab"
+AiZiLaGoodsItem.prefabPath = "ui/viewres/versionactivity_1_5/v1a5_aizila/v1a5_aizila_goodsitem.prefab"
+AiZiLaGoodsItem.prefabPath2 = "ui/viewres/versionactivity_1_5/v1a5_aizila/v1a5_aizila_goodsitem2.prefab"
 
-return var_0_0
+return AiZiLaGoodsItem

@@ -1,55 +1,57 @@
-﻿module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicTouchComp", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/music/view/VersionActivity2_4MusicTouchComp.lua
 
-local var_0_0 = class("VersionActivity2_4MusicTouchComp", LuaCompBase)
+module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicTouchComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._callback = arg_1_1.callback
-	arg_1_0._callbackTarget = arg_1_1.callbackTarget
-	arg_1_0._isCanTouch = true
+local VersionActivity2_4MusicTouchComp = class("VersionActivity2_4MusicTouchComp", LuaCompBase)
+
+function VersionActivity2_4MusicTouchComp:ctor(param)
+	self._callback = param.callback
+	self._callbackTarget = param.callbackTarget
+	self._isCanTouch = true
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
+function VersionActivity2_4MusicTouchComp:init(go)
+	self.go = go
 
 	if VersionActivity2_4MultiTouchController.isMobilePlayer() then
-		VersionActivity2_4MultiTouchController.instance:addTouch(arg_2_0)
+		VersionActivity2_4MultiTouchController.instance:addTouch(self)
 	else
-		arg_2_0._uiclick = SLFramework.UGUI.UIClickListener.Get(arg_2_0.go)
+		self._uiclick = SLFramework.UGUI.UIClickListener.Get(self.go)
 
-		arg_2_0._uiclick:AddClickDownListener(arg_2_0._onClickDown, arg_2_0)
+		self._uiclick:AddClickDownListener(self._onClickDown, self)
 	end
 end
 
-function var_0_0.canTouch(arg_3_0)
-	return arg_3_0._isCanTouch
+function VersionActivity2_4MusicTouchComp:canTouch()
+	return self._isCanTouch
 end
 
-function var_0_0.setTouchEnabled(arg_4_0, arg_4_1)
-	arg_4_0._isCanTouch = arg_4_1
+function VersionActivity2_4MusicTouchComp:setTouchEnabled(value)
+	self._isCanTouch = value
 end
 
-function var_0_0._onClickDown(arg_5_0)
-	arg_5_0:touchDown()
+function VersionActivity2_4MusicTouchComp:_onClickDown()
+	self:touchDown()
 end
 
-function var_0_0.touchDown(arg_6_0)
-	arg_6_0.touchDownFrame = Time.frameCount
+function VersionActivity2_4MusicTouchComp:touchDown()
+	self.touchDownFrame = Time.frameCount
 
-	if arg_6_0._callback then
-		arg_6_0._callback(arg_6_0._callbackTarget)
+	if self._callback then
+		self._callback(self._callbackTarget)
 	end
 end
 
-function var_0_0.onDestroy(arg_7_0)
-	if arg_7_0._uiclick then
-		arg_7_0._uiclick:RemoveClickDownListener()
+function VersionActivity2_4MusicTouchComp:onDestroy()
+	if self._uiclick then
+		self._uiclick:RemoveClickDownListener()
 
-		arg_7_0._uiclick = nil
+		self._uiclick = nil
 	end
 
-	arg_7_0.go = nil
-	arg_7_0._callback = nil
-	arg_7_0._callbackTarget = nil
+	self.go = nil
+	self._callback = nil
+	self._callbackTarget = nil
 end
 
-return var_0_0
+return VersionActivity2_4MusicTouchComp

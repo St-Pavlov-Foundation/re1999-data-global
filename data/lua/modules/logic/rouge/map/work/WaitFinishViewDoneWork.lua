@@ -1,28 +1,30 @@
-﻿module("modules.logic.rouge.map.work.WaitFinishViewDoneWork", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/work/WaitFinishViewDoneWork.lua
 
-local var_0_0 = class("WaitFinishViewDoneWork", BaseWork)
+module("modules.logic.rouge.map.work.WaitFinishViewDoneWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.rougeFinish = arg_1_1
+local WaitFinishViewDoneWork = class("WaitFinishViewDoneWork", BaseWork)
+
+function WaitFinishViewDoneWork:ctor(rougeFinish)
+	self.rougeFinish = rougeFinish
 end
 
-function var_0_0.onStart(arg_2_0)
-	if arg_2_0.rougeFinish then
+function WaitFinishViewDoneWork:onStart()
+	if self.rougeFinish then
 		RougeMapController.instance:openRougeFinishView()
 	else
 		RougeMapController.instance:openRougeFailView()
 	end
 
-	RougeMapController.instance:registerCallback(RougeMapEvent.onFinishViewDone, arg_2_0.onFinishViewDone, arg_2_0)
+	RougeMapController.instance:registerCallback(RougeMapEvent.onFinishViewDone, self.onFinishViewDone, self)
 end
 
-function var_0_0.onFinishViewDone(arg_3_0)
-	RougeMapController.instance:unregisterCallback(RougeMapEvent.onFinishViewDone, arg_3_0.onFinishViewDone, arg_3_0)
-	arg_3_0:onDone(true)
+function WaitFinishViewDoneWork:onFinishViewDone()
+	RougeMapController.instance:unregisterCallback(RougeMapEvent.onFinishViewDone, self.onFinishViewDone, self)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	RougeMapController.instance:unregisterCallback(RougeMapEvent.onFinishViewDone, arg_4_0.onFinishViewDone, arg_4_0)
+function WaitFinishViewDoneWork:clearWork()
+	RougeMapController.instance:unregisterCallback(RougeMapEvent.onFinishViewDone, self.onFinishViewDone, self)
 end
 
-return var_0_0
+return WaitFinishViewDoneWork

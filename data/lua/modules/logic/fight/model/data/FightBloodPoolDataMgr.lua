@@ -1,27 +1,29 @@
-﻿module("modules.logic.fight.model.data.FightBloodPoolDataMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightBloodPoolDataMgr.lua
 
-local var_0_0 = FightDataClass("FightBloodPoolDataMgr", FightDataMgrBase)
+module("modules.logic.fight.model.data.FightBloodPoolDataMgr", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0.playedSkill = false
+local FightBloodPoolDataMgr = FightDataClass("FightBloodPoolDataMgr", FightDataMgrBase)
+
+function FightBloodPoolDataMgr:onConstructor()
+	self.playedSkill = false
 end
 
-function var_0_0.onCancelOperation(arg_2_0)
-	if arg_2_0.playedSkill then
-		arg_2_0.playedSkill = false
+function FightBloodPoolDataMgr:onCancelOperation()
+	if self.playedSkill then
+		self.playedSkill = false
 	end
 
 	FightController.instance:dispatchEvent(FightEvent.BloodPool_OnCancelPlayCard)
 end
 
-function var_0_0.playBloodPoolCard(arg_3_0)
-	arg_3_0.playedSkill = true
+function FightBloodPoolDataMgr:playBloodPoolCard()
+	self.playedSkill = true
 
 	FightController.instance:dispatchEvent(FightEvent.BloodPool_OnPlayCard)
 end
 
-function var_0_0.checkPlayedCard(arg_4_0)
-	return arg_4_0.playedSkill
+function FightBloodPoolDataMgr:checkPlayedCard()
+	return self.playedSkill
 end
 
-return var_0_0
+return FightBloodPoolDataMgr

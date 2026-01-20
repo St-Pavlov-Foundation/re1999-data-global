@@ -1,13 +1,15 @@
-﻿module("modules.logic.scene.pushbox.PushBoxScene", package.seeall)
+﻿-- chunkname: @modules/logic/scene/pushbox/PushBoxScene.lua
 
-local var_0_0 = class("PushBoxScene", BaseScene)
+module("modules.logic.scene.pushbox.PushBoxScene", package.seeall)
 
-function var_0_0._createAllComps(arg_1_0)
-	arg_1_0:_addComp("director", PushBoxSceneDirector)
-	arg_1_0:_addComp("preloader", PushBoxScenePreloader)
-	arg_1_0:_addComp("camera", PushBoxSceneCameraComp)
-	arg_1_0:_addComp("gameMgr", PushBoxGameMgr)
-	arg_1_0:_addComp("view", PushBoxSceneViewComp)
+local PushBoxScene = class("PushBoxScene", BaseScene)
+
+function PushBoxScene:_createAllComps()
+	self:_addComp("director", PushBoxSceneDirector)
+	self:_addComp("preloader", PushBoxScenePreloader)
+	self:_addComp("camera", PushBoxSceneCameraComp)
+	self:_addComp("gameMgr", PushBoxGameMgr)
+	self:_addComp("view", PushBoxSceneViewComp)
 end
 
-return var_0_0
+return PushBoxScene

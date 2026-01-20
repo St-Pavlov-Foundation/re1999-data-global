@@ -1,23 +1,25 @@
-﻿module("modules.logic.guide.controller.action.GuideActionFlow", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/GuideActionFlow.lua
 
-local var_0_0 = class("GuideActionFlow", FlowSequence)
+module("modules.logic.guide.controller.action.GuideActionFlow", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.guideId = arg_1_1
-	arg_1_0.stepId = arg_1_2
-	arg_1_0.againGuideId = arg_1_3
+local GuideActionFlow = class("GuideActionFlow", FlowSequence)
 
-	var_0_0.super.ctor(arg_1_0)
+function GuideActionFlow:ctor(guideId, stepId, againGuideId)
+	self.guideId = guideId
+	self.stepId = stepId
+	self.againGuideId = againGuideId
+
+	GuideActionFlow.super.ctor(self)
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	var_0_0.super.onStart(arg_2_1)
-	GuideController.instance:startStep(arg_2_0.guideId, arg_2_0.stepId, arg_2_0.againGuideId)
+function GuideActionFlow:onStart(context)
+	GuideActionFlow.super.onStart(context)
+	GuideController.instance:startStep(self.guideId, self.stepId, self.againGuideId)
 end
 
-function var_0_0.onDone(arg_3_0, arg_3_1)
-	var_0_0.super.onDone(arg_3_0, arg_3_1)
-	GuideController.instance:finishStep(arg_3_0.guideId, arg_3_0.stepId, false, false, arg_3_0.againGuideId)
+function GuideActionFlow:onDone(result)
+	GuideActionFlow.super.onDone(self, result)
+	GuideController.instance:finishStep(self.guideId, self.stepId, false, false, self.againGuideId)
 end
 
-return var_0_0
+return GuideActionFlow

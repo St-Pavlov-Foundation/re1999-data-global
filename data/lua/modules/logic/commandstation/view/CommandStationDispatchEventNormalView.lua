@@ -1,112 +1,114 @@
-﻿module("modules.logic.commandstation.view.CommandStationDispatchEventNormalView", package.seeall)
+﻿-- chunkname: @modules/logic/commandstation/view/CommandStationDispatchEventNormalView.lua
 
-local var_0_0 = class("CommandStationDispatchEventNormalView", BaseView)
+module("modules.logic.commandstation.view.CommandStationDispatchEventNormalView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goDispatchEvent = gohelper.findChild(arg_1_0.viewGO, "#go_DispatchEvent")
-	arg_1_0._goDispatchDetail = gohelper.findChild(arg_1_0.viewGO, "#go_DispatchEvent/#go_DispatchDetail")
-	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "#go_DispatchEvent/#go_DispatchDetail/#txt_Title")
-	arg_1_0._txtDescr = gohelper.findChildText(arg_1_0.viewGO, "#go_DispatchEvent/#go_DispatchDetail/Scroll View/Viewport/#txt_Descr")
-	arg_1_0._btnDispatch = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_DispatchEvent/#go_DispatchDetail/#btn_Dispatch")
-	arg_1_0._btnHaveDispatch = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_DispatchEvent/#go_DispatchDetail/#btn_HaveDispatch")
-	arg_1_0._simagehero = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_DispatchEvent/#go_DispatchDetail/Role/#simage_hero")
-	arg_1_0._golefttop = gohelper.findChild(arg_1_0.viewGO, "#go_lefttop")
+local CommandStationDispatchEventNormalView = class("CommandStationDispatchEventNormalView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CommandStationDispatchEventNormalView:onInitView()
+	self._goDispatchEvent = gohelper.findChild(self.viewGO, "#go_DispatchEvent")
+	self._goDispatchDetail = gohelper.findChild(self.viewGO, "#go_DispatchEvent/#go_DispatchDetail")
+	self._txtTitle = gohelper.findChildText(self.viewGO, "#go_DispatchEvent/#go_DispatchDetail/#txt_Title")
+	self._txtDescr = gohelper.findChildText(self.viewGO, "#go_DispatchEvent/#go_DispatchDetail/Scroll View/Viewport/#txt_Descr")
+	self._btnDispatch = gohelper.findChildButtonWithAudio(self.viewGO, "#go_DispatchEvent/#go_DispatchDetail/#btn_Dispatch")
+	self._btnHaveDispatch = gohelper.findChildButtonWithAudio(self.viewGO, "#go_DispatchEvent/#go_DispatchDetail/#btn_HaveDispatch")
+	self._simagehero = gohelper.findChildSingleImage(self.viewGO, "#go_DispatchEvent/#go_DispatchDetail/Role/#simage_hero")
+	self._golefttop = gohelper.findChild(self.viewGO, "#go_lefttop")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnDispatch:AddClickListener(arg_2_0._btnDispatchOnClick, arg_2_0)
-	arg_2_0._btnHaveDispatch:AddClickListener(arg_2_0._btnHaveDispatchOnClick, arg_2_0)
+function CommandStationDispatchEventNormalView:addEvents()
+	self._btnDispatch:AddClickListener(self._btnDispatchOnClick, self)
+	self._btnHaveDispatch:AddClickListener(self._btnHaveDispatchOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnDispatch:RemoveClickListener()
-	arg_3_0._btnHaveDispatch:RemoveClickListener()
+function CommandStationDispatchEventNormalView:removeEvents()
+	self._btnDispatch:RemoveClickListener()
+	self._btnHaveDispatch:RemoveClickListener()
 end
 
-function var_0_0._btnDispatchOnClick(arg_4_0)
+function CommandStationDispatchEventNormalView:_btnDispatchOnClick()
 	CommandStationController.instance:dispatchEvent(CommandStationEvent.ClickDispatch)
 end
 
-function var_0_0._btnHaveDispatchOnClick(arg_5_0)
+function CommandStationDispatchEventNormalView:_btnHaveDispatchOnClick()
 	return
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	gohelper.setActive(arg_6_0._btnHaveDispatch, false)
+function CommandStationDispatchEventNormalView:_editableInitView()
+	gohelper.setActive(self._btnHaveDispatch, false)
 
-	arg_6_0._animator = arg_6_0.viewGO:GetComponent("Animator")
+	self._animator = self.viewGO:GetComponent("Animator")
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function CommandStationDispatchEventNormalView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0:addEventCb(CommandStationController.instance, CommandStationEvent.DispatchChangeTab, arg_8_0._onDispatchChangeTab, arg_8_0)
+function CommandStationDispatchEventNormalView:onOpen()
+	self:addEventCb(CommandStationController.instance, CommandStationEvent.DispatchChangeTab, self._onDispatchChangeTab, self)
 end
 
-function var_0_0._onDispatchChangeTab(arg_9_0, arg_9_1, arg_9_2)
-	if arg_9_0._isShow and not arg_9_1 and arg_9_2 ~= nil then
-		if not arg_9_0._oldEventConfig then
+function CommandStationDispatchEventNormalView:_onDispatchChangeTab(isChange, isToLeft)
+	if self._isShow and not isChange and isToLeft ~= nil then
+		if not self._oldEventConfig then
 			return
 		end
 
-		arg_9_0:_updateEventInfo(arg_9_0._oldEventConfig)
-		arg_9_0._animator:Play(arg_9_2 and "switchleft" or "switchright", 0, 0)
-		TaskDispatcher.cancelTask(arg_9_0._afterSwitchUpdateEventInfo, arg_9_0)
-		TaskDispatcher.runDelay(arg_9_0._afterSwitchUpdateEventInfo, arg_9_0, 0.167)
+		self:_updateEventInfo(self._oldEventConfig)
+		self._animator:Play(isToLeft and "switchleft" or "switchright", 0, 0)
+		TaskDispatcher.cancelTask(self._afterSwitchUpdateEventInfo, self)
+		TaskDispatcher.runDelay(self._afterSwitchUpdateEventInfo, self, 0.167)
 	end
 end
 
-function var_0_0._afterSwitchUpdateEventInfo(arg_10_0)
-	arg_10_0:_updateEventInfo(arg_10_0._eventConfig)
+function CommandStationDispatchEventNormalView:_afterSwitchUpdateEventInfo()
+	self:_updateEventInfo(self._eventConfig)
 end
 
-function var_0_0.onTabSwitchOpen(arg_11_0)
-	if not arg_11_0._isShow then
-		arg_11_0._animator:Play("open", 0, 0)
+function CommandStationDispatchEventNormalView:onTabSwitchOpen()
+	if not self._isShow then
+		self._animator:Play("open", 0, 0)
 	end
 
-	arg_11_0._isShow = true
-	arg_11_0._oldEventConfig = arg_11_0._eventConfig
-	arg_11_0._eventConfig = arg_11_0.viewContainer:getCurrentEventConfig()
+	self._isShow = true
+	self._oldEventConfig = self._eventConfig
+	self._eventConfig = self.viewContainer:getCurrentEventConfig()
 
-	arg_11_0:_updateEventInfo(arg_11_0._eventConfig)
+	self:_updateEventInfo(self._eventConfig)
 end
 
-function var_0_0.onTabSwitchClose(arg_12_0)
-	arg_12_0._isShow = false
+function CommandStationDispatchEventNormalView:onTabSwitchClose()
+	self._isShow = false
 end
 
-function var_0_0._updateEventInfo(arg_13_0, arg_13_1)
-	local var_13_0 = string.splitToNumber(arg_13_1.eventTextId, "#")
-	local var_13_1 = arg_13_1.id
-	local var_13_2 = CommandStationModel.instance:getDispatchEventInfo(var_13_1)
-	local var_13_3 = var_13_2 and var_13_2:hasGetReward()
+function CommandStationDispatchEventNormalView:_updateEventInfo(eventConfig)
+	local textList = string.splitToNumber(eventConfig.eventTextId, "#")
+	local eventId = eventConfig.id
+	local eventInfo = CommandStationModel.instance:getDispatchEventInfo(eventId)
+	local getRewarded = eventInfo and eventInfo:hasGetReward()
 
-	gohelper.setActive(arg_13_0._btnHaveDispatch, var_13_3)
-	gohelper.setActive(arg_13_0._btnDispatch, not var_13_3)
+	gohelper.setActive(self._btnHaveDispatch, getRewarded)
+	gohelper.setActive(self._btnDispatch, not getRewarded)
 
-	local var_13_4 = var_13_3 and var_13_0[2] or var_13_0[1]
-	local var_13_5 = var_13_4 and lua_copost_event_text.configDict[var_13_4]
+	local eventTextId = getRewarded and textList[2] or textList[1]
+	local eventTxtConfig = eventTextId and lua_copost_event_text.configDict[eventTextId]
 
-	arg_13_0._txtDescr.text = var_13_5 and var_13_5.text
-	arg_13_0._txtTitle.text = arg_13_1.eventTitleId
+	self._txtDescr.text = eventTxtConfig and eventTxtConfig.text
+	self._txtTitle.text = eventConfig.eventTitleId
 
-	arg_13_0._simagehero:LoadImage(ResUrl.getHeadIconSmall(arg_13_1.charaProfile))
+	self._simagehero:LoadImage(ResUrl.getHeadIconSmall(eventConfig.charaProfile))
 end
 
-function var_0_0.onClose(arg_14_0)
-	arg_14_0._animator:Play("close", 0, 0)
-	TaskDispatcher.cancelTask(arg_14_0._afterSwitchUpdateEventInfo, arg_14_0)
+function CommandStationDispatchEventNormalView:onClose()
+	self._animator:Play("close", 0, 0)
+	TaskDispatcher.cancelTask(self._afterSwitchUpdateEventInfo, self)
 end
 
-function var_0_0.onDestroyView(arg_15_0)
+function CommandStationDispatchEventNormalView:onDestroyView()
 	return
 end
 
-return var_0_0
+return CommandStationDispatchEventNormalView

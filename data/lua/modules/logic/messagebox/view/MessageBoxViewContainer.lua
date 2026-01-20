@@ -1,11 +1,30 @@
-﻿module("modules.logic.messagebox.view.MessageBoxViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/messagebox/view/MessageBoxViewContainer.lua
 
-local var_0_0 = class("MessageBoxViewContainer", BaseViewContainer)
+module("modules.logic.messagebox.view.MessageBoxViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local MessageBoxViewContainer = class("MessageBoxViewContainer", BaseViewContainer)
+
+function MessageBoxViewContainer:buildViews()
 	return {
-		MessageBoxView.New()
+		MessageBoxView.New(),
+		TabViewGroup.New(1, "#go_topright")
 	}
 end
 
-return var_0_0
+function MessageBoxViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._currencyView = CurrencyView.New({})
+
+		return {
+			self._currencyView
+		}
+	end
+end
+
+function MessageBoxViewContainer:setCurrencyByParams(showCostParams)
+	if self._currencyView then
+		self._currencyView:setCurrencyType(showCostParams)
+	end
+end
+
+return MessageBoxViewContainer

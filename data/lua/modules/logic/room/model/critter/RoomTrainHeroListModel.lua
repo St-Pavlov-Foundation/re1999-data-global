@@ -1,92 +1,96 @@
-﻿module("modules.logic.room.model.critter.RoomTrainHeroListModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/critter/RoomTrainHeroListModel.lua
 
-local var_0_0 = class("RoomTrainHeroListModel", ListScrollModel)
+module("modules.logic.room.model.critter.RoomTrainHeroListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:_clearData()
+local RoomTrainHeroListModel = class("RoomTrainHeroListModel", ListScrollModel)
+
+function RoomTrainHeroListModel:onInit()
+	self:_clearData()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:_clearData()
+function RoomTrainHeroListModel:reInit()
+	self:_clearData()
 end
 
-function var_0_0.clear(arg_3_0)
-	var_0_0.super.clear(arg_3_0)
-	arg_3_0:_clearData()
+function RoomTrainHeroListModel:clear()
+	RoomTrainHeroListModel.super.clear(self)
+	self:_clearData()
 end
 
-function var_0_0._clearData(arg_4_0)
-	arg_4_0:clearData()
-	arg_4_0:clearFilterData()
+function RoomTrainHeroListModel:_clearData()
+	self:clearData()
+	self:clearFilterData()
 end
 
-function var_0_0.clearData(arg_5_0)
-	var_0_0.super.clear(arg_5_0)
+function RoomTrainHeroListModel:clearData()
+	RoomTrainHeroListModel.super.clear(self)
 
-	arg_5_0._selectHeroId = nil
+	self._selectHeroId = nil
 end
 
-function var_0_0.clearFilterData(arg_6_0)
-	arg_6_0._order = RoomCharacterEnum.CharacterOrderType.RareDown
+function RoomTrainHeroListModel:clearFilterData()
+	self._order = RoomCharacterEnum.CharacterOrderType.RareDown
 end
 
-function var_0_0.setHeroList(arg_7_0, arg_7_1)
-	arg_7_0.critterFilterMO = arg_7_1
+function RoomTrainHeroListModel:setHeroList(critterFilterMO)
+	self.critterFilterMO = critterFilterMO
 
-	arg_7_0:updateHeroList()
+	self:updateHeroList()
 end
 
-function var_0_0.updateHeroList(arg_8_0, arg_8_1)
-	local var_8_0 = CritterModel.instance:getCultivatingCritters()
-	local var_8_1 = {}
+function RoomTrainHeroListModel:updateHeroList(needShowHeroId)
+	local critterMOList = CritterModel.instance:getCultivatingCritters()
+	local trainHeroIdMap = {}
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_0) do
-		if arg_8_1 ~= iter_8_1.trainInfo.heroId then
-			var_8_1[iter_8_1.trainInfo.heroId] = true
+	for _, critterMO in ipairs(critterMOList) do
+		if needShowHeroId ~= critterMO.trainInfo.heroId then
+			trainHeroIdMap[critterMO.trainInfo.heroId] = true
 		end
 	end
 
-	local var_8_2 = {}
+	local moList = {}
 
-	arg_8_0._trainHeroMODict = arg_8_0._trainHeroMODict or {}
+	self._trainHeroMODict = self._trainHeroMODict or {}
 
-	local var_8_3 = HeroModel.instance:getList()
-	local var_8_4 = CritterConfig.instance
-	local var_8_5 = arg_8_0:_isHasFilterType(CritterEnum.FilterType.Race)
+	local heroMOList = HeroModel.instance:getList()
+	local tCritterConfig = CritterConfig.instance
+	local isRaceFilter = self:_isHasFilterType(CritterEnum.FilterType.Race)
 
-	for iter_8_2, iter_8_3 in ipairs(var_8_3) do
-		if var_8_4:getCritterHeroPreferenceCfg(iter_8_3.heroId) ~= nil then
-			local var_8_6 = arg_8_0:getById(iter_8_3.heroId)
+	for i, heroMO in ipairs(heroMOList) do
+		local cfg = tCritterConfig:getCritterHeroPreferenceCfg(heroMO.heroId)
 
-			if var_8_6 == nil then
-				var_8_6 = RoomTrainHeroMO.New()
+		if cfg ~= nil then
+			local culitvateHeroMO = self:getById(heroMO.heroId)
 
-				var_8_6:initHeroMO(iter_8_3)
+			if culitvateHeroMO == nil then
+				culitvateHeroMO = RoomTrainHeroMO.New()
 
-				arg_8_0._trainHeroMODict[iter_8_3.heroId] = var_8_6
+				culitvateHeroMO:initHeroMO(heroMO)
+
+				self._trainHeroMODict[heroMO.heroId] = culitvateHeroMO
 			else
-				var_8_6:updateSkinId(iter_8_3.skin)
+				culitvateHeroMO:updateSkinId(heroMO.skin)
 			end
 
-			if var_8_1[iter_8_3.heroId] or var_8_5 and not arg_8_0:_checkFilterisPass(var_8_6) then
+			if trainHeroIdMap[heroMO.heroId] or isRaceFilter and not self:_checkFilterisPass(culitvateHeroMO) then
 				-- block empty
 			else
-				table.insert(var_8_2, var_8_6)
+				table.insert(moList, culitvateHeroMO)
 			end
 		end
 	end
 
-	table.sort(var_8_2, arg_8_0:_getSortFunction())
-	arg_8_0:setList(var_8_2)
-	arg_8_0:_refreshSelect()
+	table.sort(moList, self:_getSortFunction())
+	self:setList(moList)
+	self:_refreshSelect()
 end
 
-function var_0_0._isHasFilterType(arg_9_0, arg_9_1)
-	if arg_9_0.critterFilterMO then
-		local var_9_0 = arg_9_0.critterFilterMO:getFilterCategoryDict()
-		local var_9_1 = var_9_0 and var_9_0[arg_9_1]
+function RoomTrainHeroListModel:_isHasFilterType(filteType)
+	if self.critterFilterMO then
+		local filterDict = self.critterFilterMO:getFilterCategoryDict()
+		local filterTabList = filterDict and filterDict[filteType]
 
-		if var_9_1 and #var_9_1 > 0 then
+		if filterTabList and #filterTabList > 0 then
 			return true
 		end
 	end
@@ -94,23 +98,23 @@ function var_0_0._isHasFilterType(arg_9_0, arg_9_1)
 	return false
 end
 
-function var_0_0._checkFilterisPass(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_1:getPrefernectType()
-	local var_10_1 = arg_10_1:getPrefernectIds()
+function RoomTrainHeroListModel:_checkFilterisPass(trainHeroMO)
+	local pType = trainHeroMO:getPrefernectType()
+	local pids = trainHeroMO:getPrefernectIds()
 
-	if var_10_0 == CritterEnum.PreferenceType.All then
+	if pType == CritterEnum.PreferenceType.All then
 		return true
-	elseif var_10_0 == CritterEnum.PreferenceType.Catalogue then
-		for iter_10_0 = 1, #var_10_1 do
-			if arg_10_0.critterFilterMO:checkRaceByCatalogueId(var_10_1[var_10_1]) then
+	elseif pType == CritterEnum.PreferenceType.Catalogue then
+		for i = 1, #pids do
+			if self.critterFilterMO:checkRaceByCatalogueId(pids[pids]) then
 				return true
 			end
 		end
-	elseif var_10_0 == CritterEnum.PreferenceType.Critter then
-		for iter_10_1 = 1, #var_10_1 do
-			local var_10_2 = CritterConfig.instance:getCritterCatalogue(var_10_1[iter_10_1])
+	elseif pType == CritterEnum.PreferenceType.Critter then
+		for i = 1, #pids do
+			local catalogueId = CritterConfig.instance:getCritterCatalogue(pids[i])
 
-			if arg_10_0.critterFilterMO:checkRaceByCatalogueId(var_10_2) then
+			if self.critterFilterMO:checkRaceByCatalogueId(catalogueId) then
 				return true
 			end
 		end
@@ -119,75 +123,77 @@ function var_0_0._checkFilterisPass(arg_10_0, arg_10_1)
 	return false
 end
 
-function var_0_0.sortByAttrId(arg_11_0, arg_11_1, arg_11_2)
-	if arg_11_1 ~= nil then
-		arg_11_0._sortAttrId = arg_11_1
+function RoomTrainHeroListModel:sortByAttrId(attrId, isHightToLow)
+	if attrId ~= nil then
+		self._sortAttrId = attrId
 	end
 
-	if arg_11_2 ~= nil then
-		arg_11_0._isSortHightToLow = arg_11_2
+	if isHightToLow ~= nil then
+		self._isSortHightToLow = isHightToLow
 	end
 
-	arg_11_0:sort(arg_11_0:_getSortFunction())
+	self:sort(self:_getSortFunction())
 end
 
-function var_0_0._getSortFunction(arg_12_0)
-	arg_12_0._critterMO = RoomTrainCritterListModel.instance:getById(RoomTrainCritterListModel.instance:getSelectId())
+function RoomTrainHeroListModel:_getSortFunction()
+	self._critterMO = RoomTrainCritterListModel.instance:getById(RoomTrainCritterListModel.instance:getSelectId())
 
-	if arg_12_0._sortFunc then
-		return arg_12_0._sortFunc
+	if self._sortFunc then
+		return self._sortFunc
 	end
 
-	function arg_12_0._sortFunc(arg_13_0, arg_13_1)
-		if arg_12_0._critterMO then
-			local var_13_0 = arg_12_0:_getCritterValue(arg_13_0, arg_12_0._critterMO)
-			local var_13_1 = arg_12_0:_getCritterValue(arg_13_1, arg_12_0._critterMO)
+	function self._sortFunc(a, b)
+		if self._critterMO then
+			local aCt = self:_getCritterValue(a, self._critterMO)
+			local bCt = self:_getCritterValue(b, self._critterMO)
 
-			if var_13_0 ~= var_13_1 then
-				return var_13_1 < var_13_0
+			if aCt ~= bCt then
+				return bCt < aCt
 			end
 		end
 
-		local var_13_2 = arg_12_0:_getAttrValue(arg_13_0, arg_12_0._sortAttrId)
-		local var_13_3 = arg_12_0:_getAttrValue(arg_13_1, arg_12_0._sortAttrId)
+		local aValue = self:_getAttrValue(a, self._sortAttrId)
+		local bValue = self:_getAttrValue(b, self._sortAttrId)
 
-		if var_13_2 ~= var_13_3 then
-			if arg_12_0._isSortHightToLow then
-				return var_13_3 < var_13_2
+		if aValue ~= bValue then
+			if self._isSortHightToLow then
+				return bValue < aValue
 			end
 
-			return var_13_2 < var_13_3
+			return aValue < bValue
 		end
 
-		if arg_13_0.heroConfig.rare ~= arg_13_1.heroConfig.rare then
-			return arg_13_0.heroConfig.rare > arg_13_1.heroConfig.rare
+		if a.heroConfig.rare ~= b.heroConfig.rare then
+			return a.heroConfig.rare > b.heroConfig.rare
 		end
 
-		if arg_13_0.heroId ~= arg_13_1.heroId then
-			return arg_13_0.heroId > arg_13_1.heroId
+		if a.heroId ~= b.heroId then
+			return a.heroId > b.heroId
 		end
 	end
 
-	return arg_12_0._sortFunc
+	return self._sortFunc
 end
 
-function var_0_0._getAttrValue(arg_14_0, arg_14_1, arg_14_2)
-	if arg_14_1:getAttributeInfoMO().attributeId == arg_14_2 then
+function RoomTrainHeroListModel:_getAttrValue(a, attrId)
+	local aAttr = a:getAttributeInfoMO()
+
+	if aAttr.attributeId == attrId then
 		return 100
 	end
 
 	return 0
 end
 
-function var_0_0._getCritterValue(arg_15_0, arg_15_1, arg_15_2)
-	if arg_15_1:chcekPrefernectCritterId(arg_15_2:getDefineId()) then
-		local var_15_0 = arg_15_1:getPrefernectType()
+function RoomTrainHeroListModel:_getCritterValue(a, critterMO)
+	if a:chcekPrefernectCritterId(critterMO:getDefineId()) then
+		local pfType = a:getPrefernectType()
 
-		if var_15_0 == CritterEnum.PreferenceType.All then
+		if pfType == CritterEnum.PreferenceType.All then
 			return 110
-		elseif var_15_0 == CritterEnum.PreferenceType.Catalogue then
+		elseif pfType == CritterEnum.PreferenceType.Catalogue then
 			return 120
-		elseif var_15_0 == CritterEnum.PreferenceType.Critter then
+		elseif pfType == CritterEnum.PreferenceType.Critter then
 			return 130
 		end
 
@@ -197,52 +203,54 @@ function var_0_0._getCritterValue(arg_15_0, arg_15_1, arg_15_2)
 	return 0
 end
 
-function var_0_0.setOrder(arg_16_0, arg_16_1)
-	arg_16_0._order = arg_16_1
+function RoomTrainHeroListModel:setOrder(order)
+	self._order = order
 end
 
-function var_0_0.getOrder(arg_17_0)
-	return arg_17_0._order
+function RoomTrainHeroListModel:getOrder()
+	return self._order
 end
 
-function var_0_0.getById(arg_18_0, arg_18_1)
-	return var_0_0.super.getById(arg_18_0, arg_18_1) or arg_18_0._trainHeroMODict and arg_18_0._trainHeroMODict[arg_18_1]
+function RoomTrainHeroListModel:getById(id)
+	local mo = RoomTrainHeroListModel.super.getById(self, id)
+
+	return mo or self._trainHeroMODict and self._trainHeroMODict[id]
 end
 
-function var_0_0.clearSelect(arg_19_0)
-	for iter_19_0, iter_19_1 in ipairs(arg_19_0._scrollViews) do
-		iter_19_1:setSelect(nil)
+function RoomTrainHeroListModel:clearSelect()
+	for i, view in ipairs(self._scrollViews) do
+		view:setSelect(nil)
 	end
 
-	arg_19_0._selectHeroId = nil
+	self._selectHeroId = nil
 end
 
-function var_0_0._refreshSelect(arg_20_0)
-	local var_20_0 = arg_20_0:getById(arg_20_0._selectHeroId)
+function RoomTrainHeroListModel:_refreshSelect()
+	local selectMO = self:getById(self._selectHeroId)
 
-	for iter_20_0, iter_20_1 in ipairs(arg_20_0._scrollViews) do
-		iter_20_1:setSelect(var_20_0)
+	for i, view in ipairs(self._scrollViews) do
+		view:setSelect(selectMO)
 	end
 end
 
-function var_0_0.getSelectId(arg_21_0)
-	return arg_21_0._selectHeroId
+function RoomTrainHeroListModel:getSelectId()
+	return self._selectHeroId
 end
 
-function var_0_0.setSelect(arg_22_0, arg_22_1)
-	arg_22_0._selectHeroId = arg_22_1
+function RoomTrainHeroListModel:setSelect(characterUid)
+	self._selectHeroId = characterUid
 
-	arg_22_0:_refreshSelect()
+	self:_refreshSelect()
 end
 
-function var_0_0.initFilter(arg_23_0)
-	arg_23_0:setFilterCareer()
+function RoomTrainHeroListModel:initFilter()
+	self:setFilterCareer()
 end
 
-function var_0_0.initOrder(arg_24_0)
-	arg_24_0._order = RoomCharacterEnum.CharacterOrderType.RareDown
+function RoomTrainHeroListModel:initOrder()
+	self._order = RoomCharacterEnum.CharacterOrderType.RareDown
 end
 
-var_0_0.instance = var_0_0.New()
+RoomTrainHeroListModel.instance = RoomTrainHeroListModel.New()
 
-return var_0_0
+return RoomTrainHeroListModel

@@ -1,55 +1,57 @@
-﻿module("modules.logic.explore.map.tree.ExploreMapTree", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/tree/ExploreMapTree.lua
 
-local var_0_0 = class("ExploreMapTree")
+module("modules.logic.explore.map.tree.ExploreMapTree", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.root = nil
-	arg_1_0.checkMode = ExploreEnum.SceneCheckMode.Planes
+local ExploreMapTree = class("ExploreMapTree")
+
+function ExploreMapTree:ctor()
+	self.root = nil
+	self.checkMode = ExploreEnum.SceneCheckMode.Planes
 
 	if SLFramework.FrameworkSettings.IsEditor then
 		ZProj.ExploreHelper.InitDrawBound()
-		TaskDispatcher.runRepeat(arg_1_0.drawBound, arg_1_0, 1e-05)
+		TaskDispatcher.runRepeat(self.drawBound, self, 1e-05)
 	end
 end
 
-function var_0_0.setup(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0.root = ExploreMapTreeNode.New(arg_2_1, arg_2_2)
-	arg_2_0.camera = CameraMgr.instance:getMainCamera()
+function ExploreMapTree:setup(config, preloadComp)
+	self.root = ExploreMapTreeNode.New(config, preloadComp)
+	self.camera = CameraMgr.instance:getMainCamera()
 end
 
-function var_0_0.triggerMove(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_0.checkMode == ExploreEnum.SceneCheckMode.Planes then
-		local var_3_0 = arg_3_0.camera.fieldOfView + 2
-		local var_3_1 = arg_3_0.camera.aspect
-		local var_3_2 = 25
-		local var_3_3 = 0.01
+function ExploreMapTree:triggerMove(showRage, showIdDict)
+	if self.checkMode == ExploreEnum.SceneCheckMode.Planes then
+		local fov = self.camera.fieldOfView + 2
+		local asp = self.camera.aspect
+		local farClipPlane = 25
+		local nearClipPlane = 0.01
 
-		ZProj.ExploreHelper.RebuildFrustumPlanes(arg_3_0.camera, var_3_2, var_3_3, var_3_0, var_3_1)
+		ZProj.ExploreHelper.RebuildFrustumPlanes(self.camera, farClipPlane, nearClipPlane, fov, asp)
 	end
 
-	if arg_3_0.checkMode ~= ExploreEnum.SceneCheckMode.Rage then
-		arg_3_1.z = 6
-		arg_3_1.w = 6
+	if self.checkMode ~= ExploreEnum.SceneCheckMode.Rage then
+		showRage.z = 6
+		showRage.w = 6
 	end
 
-	arg_3_0.root:triggerMove(arg_3_1, arg_3_0.camera, arg_3_0.checkMode, arg_3_2)
+	self.root:triggerMove(showRage, self.camera, self.checkMode, showIdDict)
 end
 
-function var_0_0.drawBound(arg_4_0)
+function ExploreMapTree:drawBound()
 	ZProj.ExploreHelper.ResetBoundsList()
-	arg_4_0.root:drawBound()
+	self.root:drawBound()
 end
 
-function var_0_0.onDestroy(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0.drawBound, arg_5_0)
+function ExploreMapTree:onDestroy()
+	TaskDispatcher.cancelTask(self.drawBound, self)
 
-	if arg_5_0.root then
-		arg_5_0.root:onDestroy()
+	if self.root then
+		self.root:onDestroy()
 
-		arg_5_0.root = nil
+		self.root = nil
 	end
 
-	arg_5_0.camera = nil
+	self.camera = nil
 end
 
-return var_0_0
+return ExploreMapTree

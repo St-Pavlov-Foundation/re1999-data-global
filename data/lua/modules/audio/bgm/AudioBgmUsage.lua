@@ -1,32 +1,34 @@
-﻿module("modules.audio.bgm.AudioBgmUsage", package.seeall)
+﻿-- chunkname: @modules/audio/bgm/AudioBgmUsage.lua
 
-local var_0_0 = class("AudioBgmUsage")
+module("modules.audio.bgm.AudioBgmUsage", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.layerList = nil
-	arg_1_0.type = nil
-	arg_1_0.typeParam = nil
-	arg_1_0.queryFunc = nil
-	arg_1_0.queryFuncTarget = nil
-	arg_1_0.clearPauseBgm = nil
+local AudioBgmUsage = class("AudioBgmUsage")
+
+function AudioBgmUsage:ctor()
+	self.layerList = nil
+	self.type = nil
+	self.typeParam = nil
+	self.queryFunc = nil
+	self.queryFuncTarget = nil
+	self.clearPauseBgm = nil
 end
 
-function var_0_0.containBgm(arg_2_0, arg_2_1)
-	return tabletool.indexOf(arg_2_0.layerList, arg_2_1)
+function AudioBgmUsage:containBgm(layer)
+	return tabletool.indexOf(self.layerList, layer)
 end
 
-function var_0_0.setClearPauseBgm(arg_3_0, arg_3_1)
-	arg_3_0.clearPauseBgm = arg_3_1
+function AudioBgmUsage:setClearPauseBgm(value)
+	self.clearPauseBgm = value
 end
 
-function var_0_0.getBgmLayer(arg_4_0)
-	if #arg_4_0.layerList == 1 then
-		return arg_4_0.layerList[1]
+function AudioBgmUsage:getBgmLayer()
+	if #self.layerList == 1 then
+		return self.layerList[1]
 	end
 
-	if arg_4_0.queryFunc then
-		return arg_4_0.queryFunc(arg_4_0.queryFuncTarget, arg_4_0)
+	if self.queryFunc then
+		return self.queryFunc(self.queryFuncTarget, self)
 	end
 end
 
-return var_0_0
+return AudioBgmUsage

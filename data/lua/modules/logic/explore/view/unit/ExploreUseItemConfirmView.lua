@@ -1,82 +1,86 @@
-﻿module("modules.logic.explore.view.unit.ExploreUseItemConfirmView", package.seeall)
+﻿-- chunkname: @modules/logic/explore/view/unit/ExploreUseItemConfirmView.lua
 
-local var_0_0 = class("ExploreUseItemConfirmView")
+module("modules.logic.explore.view.unit.ExploreUseItemConfirmView", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._containerGO = gohelper.create2d(GameSceneMgr.instance:getCurScene().view:getRoot(), "ExploreUseItemConfirmView")
-	arg_1_0._uiLoader = PrefabInstantiate.Create(arg_1_0._containerGO)
+local ExploreUseItemConfirmView = class("ExploreUseItemConfirmView")
 
-	arg_1_0._uiLoader:startLoad("ui/viewres/explore/exploreconfirmview.prefab", arg_1_0._onLoaded, arg_1_0)
+function ExploreUseItemConfirmView:ctor()
+	self._containerGO = gohelper.create2d(GameSceneMgr.instance:getCurScene().view:getRoot(), "ExploreUseItemConfirmView")
+	self._uiLoader = PrefabInstantiate.Create(self._containerGO)
 
-	local var_1_0 = CameraMgr.instance:getMainCamera()
-	local var_1_1 = CameraMgr.instance:getUICamera()
-	local var_1_2 = ViewMgr.instance:getUIRoot().transform
+	self._uiLoader:startLoad("ui/viewres/explore/exploreconfirmview.prefab", self._onLoaded, self)
 
-	arg_1_0._uiFollower = gohelper.onceAddComponent(arg_1_0._containerGO, typeof(ZProj.UIFollower))
+	local mainCamera = CameraMgr.instance:getMainCamera()
+	local uiCamera = CameraMgr.instance:getUICamera()
+	local plane = ViewMgr.instance:getUIRoot().transform
 
-	arg_1_0._uiFollower:Set(var_1_0, var_1_1, var_1_2, arg_1_0._containerGO.transform, 0, 0, 0, 0, 0)
-	arg_1_0._uiFollower:SetEnable(false)
-	gohelper.setActive(arg_1_0._containerGO, false)
+	self._uiFollower = gohelper.onceAddComponent(self._containerGO, typeof(ZProj.UIFollower))
+
+	self._uiFollower:Set(mainCamera, uiCamera, plane, self._containerGO.transform, 0, 0, 0, 0, 0)
+	self._uiFollower:SetEnable(false)
+	gohelper.setActive(self._containerGO, false)
 end
 
-function var_0_0.setTarget(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._targetPos = arg_2_2
+function ExploreUseItemConfirmView:setTarget(targetGo, pos)
+	self._targetPos = pos
 
-	if arg_2_1 then
-		arg_2_0._uiFollower:SetTarget3d(arg_2_1.transform)
-		arg_2_0._uiFollower:SetEnable(true)
-		gohelper.setActive(arg_2_0._containerGO, true)
+	if targetGo then
+		self._uiFollower:SetTarget3d(targetGo.transform)
+		self._uiFollower:SetEnable(true)
+		gohelper.setActive(self._containerGO, true)
 	else
-		arg_2_0._uiFollower:SetEnable(false)
-		gohelper.setActive(arg_2_0._containerGO, false)
+		self._uiFollower:SetEnable(false)
+		gohelper.setActive(self._containerGO, false)
 	end
 end
 
-function var_0_0._onLoaded(arg_3_0)
-	arg_3_0.viewGO = arg_3_0._uiLoader:getInstGO()
-	arg_3_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_3_0.viewGO, "go_confirm/go_container/btn_confirm")
-	arg_3_0._btncancle = gohelper.findChildButtonWithAudio(arg_3_0.viewGO, "go_confirm/go_container/btn_cancel")
+function ExploreUseItemConfirmView:_onLoaded()
+	self.viewGO = self._uiLoader:getInstGO()
+	self._btnconfirm = gohelper.findChildButtonWithAudio(self.viewGO, "go_confirm/go_container/btn_confirm")
+	self._btncancle = gohelper.findChildButtonWithAudio(self.viewGO, "go_confirm/go_container/btn_cancel")
 
-	arg_3_0._btnconfirm:AddClickListener(arg_3_0.onConfirm, arg_3_0)
-	arg_3_0._btncancle:AddClickListener(arg_3_0.onCancel, arg_3_0)
+	self._btnconfirm:AddClickListener(self.onConfirm, self)
+	self._btncancle:AddClickListener(self.onCancel, self)
 end
 
-function var_0_0.onCancel(arg_4_0)
-	ExploreController.instance:getMap():getCompByType(ExploreEnum.MapStatus.UseItem):onCancel(arg_4_0._targetPos)
-	arg_4_0:setTarget()
+function ExploreUseItemConfirmView:onCancel()
+	local map = ExploreController.instance:getMap()
+
+	map:getCompByType(ExploreEnum.MapStatus.UseItem):onCancel(self._targetPos)
+	self:setTarget()
 end
 
-function var_0_0.onConfirm(arg_5_0)
-	local var_5_0 = ExploreController.instance:getMap()
-	local var_5_1 = var_5_0:getCompByType(ExploreEnum.MapStatus.UseItem):getCurItemMo()
-	local var_5_2 = arg_5_0._targetPos
-	local var_5_3 = var_5_0:getHero()
+function ExploreUseItemConfirmView:onConfirm()
+	local map = ExploreController.instance:getMap()
+	local mo = map:getCompByType(ExploreEnum.MapStatus.UseItem):getCurItemMo()
+	local pos = self._targetPos
+	local hero = map:getHero()
 
-	var_5_3:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.CreateUnit, true, true)
-	var_5_3:onCheckDir(var_5_3.nodePos, var_5_2)
-	ExploreRpc.instance:sendExploreUseItemRequest(var_5_1.id, var_5_2.x, var_5_2.y)
-	var_5_0:setMapStatus(ExploreEnum.MapStatus.Normal)
+	hero:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.CreateUnit, true, true)
+	hero:onCheckDir(hero.nodePos, pos)
+	ExploreRpc.instance:sendExploreUseItemRequest(mo.id, pos.x, pos.y)
+	map:setMapStatus(ExploreEnum.MapStatus.Normal)
 end
 
-function var_0_0.dispose(arg_6_0)
-	if arg_6_0.viewGO then
-		arg_6_0._btnconfirm:RemoveClickListener()
-		arg_6_0._btncancle:RemoveClickListener()
+function ExploreUseItemConfirmView:dispose()
+	if self.viewGO then
+		self._btnconfirm:RemoveClickListener()
+		self._btncancle:RemoveClickListener()
 
-		arg_6_0._btnconfirm = nil
-		arg_6_0._btncancle = nil
-		arg_6_0.viewGO = nil
+		self._btnconfirm = nil
+		self._btncancle = nil
+		self.viewGO = nil
 	end
 
-	arg_6_0._targetPos = nil
+	self._targetPos = nil
 
-	arg_6_0._uiLoader:dispose()
+	self._uiLoader:dispose()
 
-	arg_6_0._uiLoader = nil
+	self._uiLoader = nil
 
-	gohelper.destroy(arg_6_0._containerGO)
+	gohelper.destroy(self._containerGO)
 
-	arg_6_0._containerGO = nil
+	self._containerGO = nil
 end
 
-return var_0_0
+return ExploreUseItemConfirmView

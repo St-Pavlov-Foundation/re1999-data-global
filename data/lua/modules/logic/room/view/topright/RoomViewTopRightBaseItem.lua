@@ -1,86 +1,88 @@
-﻿module("modules.logic.room.view.topright.RoomViewTopRightBaseItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/topright/RoomViewTopRightBaseItem.lua
 
-local var_0_0 = class("RoomViewTopRightBaseItem", LuaCompBase)
+module("modules.logic.room.view.topright.RoomViewTopRightBaseItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0)
+local RoomViewTopRightBaseItem = class("RoomViewTopRightBaseItem", LuaCompBase)
 
-	arg_1_0._param = arg_1_1
-	arg_1_0._parent = arg_1_0._param.parent
-	arg_1_0._index = arg_1_0._param.index
+function RoomViewTopRightBaseItem:ctor(param)
+	RoomViewTopRightBaseItem.super.ctor(self)
+
+	self._param = param
+	self._parent = self._param.parent
+	self._index = self._param.index
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0._bgType = 2
-	arg_2_0.go = arg_2_1
-	arg_2_0._resourceItem = arg_2_0:getUserDataTb_()
-	arg_2_0._resourceItem.go = arg_2_0.go
-	arg_2_0._resourceItem.canvasGroup = arg_2_0._resourceItem.go:GetComponent(typeof(UnityEngine.CanvasGroup))
+function RoomViewTopRightBaseItem:init(go)
+	self._bgType = 2
+	self.go = go
+	self._resourceItem = self:getUserDataTb_()
+	self._resourceItem.go = self.go
+	self._resourceItem.canvasGroup = self._resourceItem.go:GetComponent(typeof(UnityEngine.CanvasGroup))
 
-	for iter_2_0 = 1, 2 do
-		local var_2_0 = gohelper.findChild(arg_2_0._resourceItem.go, "bg" .. iter_2_0)
+	for i = 1, 2 do
+		local bgGO = gohelper.findChild(self._resourceItem.go, "bg" .. i)
 
-		gohelper.setActive(var_2_0, iter_2_0 == arg_2_0._bgType)
+		gohelper.setActive(bgGO, i == self._bgType)
 	end
 
-	arg_2_0._resourceItem.txtquantity = gohelper.findChildText(arg_2_0._resourceItem.go, "txt_quantity")
-	arg_2_0._resourceItem.txtaddNum = gohelper.findChildText(arg_2_0._resourceItem.go, "txt_quantity/txt_addNum")
-	arg_2_0._resourceItem.btnclick = gohelper.findChildButtonWithAudio(arg_2_0._resourceItem.go, "btn_click")
-	arg_2_0._resourceItem.goflypos = gohelper.findChild(arg_2_0._resourceItem.go, "go_flypos")
-	arg_2_0._resourceItem.goeffect = gohelper.findChild(arg_2_0._resourceItem.go, "go_flypos/#flyvx")
+	self._resourceItem.txtquantity = gohelper.findChildText(self._resourceItem.go, "txt_quantity")
+	self._resourceItem.txtaddNum = gohelper.findChildText(self._resourceItem.go, "txt_quantity/txt_addNum")
+	self._resourceItem.btnclick = gohelper.findChildButtonWithAudio(self._resourceItem.go, "btn_click")
+	self._resourceItem.goflypos = gohelper.findChild(self._resourceItem.go, "go_flypos")
+	self._resourceItem.goeffect = gohelper.findChild(self._resourceItem.go, "go_flypos/#flyvx")
 
-	arg_2_0._resourceItem.btnclick:AddClickListener(arg_2_0._onClick, arg_2_0)
-	gohelper.setActive(arg_2_0._resourceItem.go, true)
-	gohelper.setActive(arg_2_0._resourceItem.goflypos, true)
-	gohelper.setActive(arg_2_0._resourceItem.goeffect, false)
-	gohelper.setActive(arg_2_0._resourceItem.txtaddNum, false)
+	self._resourceItem.btnclick:AddClickListener(self._onClick, self)
+	gohelper.setActive(self._resourceItem.go, true)
+	gohelper.setActive(self._resourceItem.goflypos, true)
+	gohelper.setActive(self._resourceItem.goeffect, false)
+	gohelper.setActive(self._resourceItem.txtaddNum, false)
 
-	arg_2_0._canvasGroup = arg_2_0.go:GetComponent(typeof(UnityEngine.CanvasGroup))
+	self._canvasGroup = self.go:GetComponent(typeof(UnityEngine.CanvasGroup))
 
-	if arg_2_0._customOnInit then
-		arg_2_0:_customOnInit()
+	if self._customOnInit then
+		self:_customOnInit()
 	end
 
-	arg_2_0:_refreshUI()
+	self:_refreshUI()
 end
 
-function var_0_0._setShow(arg_3_0, arg_3_1)
-	gohelper.setActive(arg_3_0.go, arg_3_1)
+function RoomViewTopRightBaseItem:_setShow(isShow)
+	gohelper.setActive(self.go, isShow)
 
-	arg_3_0._canvasGroup.alpha = arg_3_1 and 1 or 0
-	arg_3_0._canvasGroup.blocksRaycasts = arg_3_1
+	self._canvasGroup.alpha = isShow and 1 or 0
+	self._canvasGroup.blocksRaycasts = isShow
 end
 
-function var_0_0._customOnInit(arg_4_0)
+function RoomViewTopRightBaseItem:_customOnInit()
 	return
 end
 
-function var_0_0._onClick(arg_5_0)
+function RoomViewTopRightBaseItem:_onClick()
 	return
 end
 
-function var_0_0.addEventListeners(arg_6_0)
+function RoomViewTopRightBaseItem:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_7_0)
+function RoomViewTopRightBaseItem:removeEventListeners()
 	return
 end
 
-function var_0_0._refreshUI(arg_8_0)
+function RoomViewTopRightBaseItem:_refreshUI()
 	return
 end
 
-function var_0_0.onDestroy(arg_9_0)
-	arg_9_0._resourceItem.btnclick:RemoveClickListener()
+function RoomViewTopRightBaseItem:onDestroy()
+	self._resourceItem.btnclick:RemoveClickListener()
 
-	if arg_9_0._customOnDestory then
-		arg_9_0:_customOnDestory()
+	if self._customOnDestory then
+		self:_customOnDestory()
 	end
 end
 
-function var_0_0._customOnDestory(arg_10_0)
+function RoomViewTopRightBaseItem:_customOnDestory()
 	return
 end
 
-return var_0_0
+return RoomViewTopRightBaseItem

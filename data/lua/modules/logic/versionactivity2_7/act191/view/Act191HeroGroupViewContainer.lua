@@ -1,38 +1,40 @@
-﻿module("modules.logic.versionactivity2_7.act191.view.Act191HeroGroupViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/act191/view/Act191HeroGroupViewContainer.lua
 
-local var_0_0 = class("Act191HeroGroupViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_7.act191.view.Act191HeroGroupViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Act191HeroGroupViewContainer = class("Act191HeroGroupViewContainer", BaseViewContainer)
 
-	arg_1_0.groupView = Act191HeroGroupView.New()
+function Act191HeroGroupViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, arg_1_0.groupView)
+	self.groupView = Act191HeroGroupView.New()
 
-	arg_1_0.groupListView = Act191HeroGroupListView.New()
+	table.insert(views, self.groupView)
 
-	table.insert(var_1_0, arg_1_0.groupListView)
-	table.insert(var_1_0, CheckActivityEndView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
+	self.groupListView = Act191HeroGroupListView.New()
 
-	return var_1_0
+	table.insert(views, self.groupListView)
+	table.insert(views, CheckActivityEndView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_topleft"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function Act191HeroGroupViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
-		}, nil, arg_2_0._closeCallback, nil, nil, arg_2_0)
+		}, nil, self._closeCallback, nil, nil, self)
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-function var_0_0._closeCallback(arg_3_0)
+function Act191HeroGroupViewContainer:_closeCallback()
 	DungeonModel.instance:resetSendChapterEpisodeId()
 	MainController.instance:enterMainScene(true)
 	SceneHelper.instance:waitSceneDone(SceneType.Main, function()
@@ -43,21 +45,21 @@ function var_0_0._closeCallback(arg_3_0)
 	end)
 end
 
-function var_0_0.playOpenTransition(arg_6_0)
-	arg_6_0.groupView.anim:Play("open", 0, 0)
-	arg_6_0.groupListView.animSwitch:Play("open", 0, 0)
-	TaskDispatcher.runDelay(arg_6_0.onPlayOpenTransitionFinish, arg_6_0, 0.33)
+function Act191HeroGroupViewContainer:playOpenTransition()
+	self.groupView.anim:Play("open", 0, 0)
+	self.groupListView.animSwitch:Play("open", 0, 0)
+	TaskDispatcher.runDelay(self.onPlayOpenTransitionFinish, self, 0.33)
 end
 
-function var_0_0.playCloseTransition(arg_7_0)
-	arg_7_0.groupView.anim:Play("close", 0, 0)
-	arg_7_0.groupListView.animSwitch:Play("close", 0, 0)
-	TaskDispatcher.runDelay(arg_7_0.onPlayCloseTransitionFinish, arg_7_0, 0.16)
+function Act191HeroGroupViewContainer:playCloseTransition()
+	self.groupView.anim:Play("close", 0, 0)
+	self.groupListView.animSwitch:Play("close", 0, 0)
+	TaskDispatcher.runDelay(self.onPlayCloseTransitionFinish, self, 0.16)
 end
 
-function var_0_0.onContainerDestroy(arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0.onPlayOpenTransitionFinish, arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0.onPlayCloseTransitionFinish, arg_8_0)
+function Act191HeroGroupViewContainer:onContainerDestroy()
+	TaskDispatcher.cancelTask(self.onPlayOpenTransitionFinish, self)
+	TaskDispatcher.cancelTask(self.onPlayCloseTransitionFinish, self)
 end
 
-return var_0_0
+return Act191HeroGroupViewContainer

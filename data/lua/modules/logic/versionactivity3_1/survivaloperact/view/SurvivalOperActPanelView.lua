@@ -1,118 +1,122 @@
-﻿module("modules.logic.versionactivity3_1.survivaloperact.view.SurvivalOperActPanelView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/survivaloperact/view/SurvivalOperActPanelView.lua
 
-local var_0_0 = class("SurvivalOperActPanelView", Activity101SignViewBase)
+module("modules.logic.versionactivity3_1.survivaloperact.view.SurvivalOperActPanelView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagePanelBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_PanelBG")
-	arg_1_0._simageRightPanelBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/Right/#simage_RightPanelBG")
-	arg_1_0._btnreward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/Right/#btn_reward")
-	arg_1_0._btnEnter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/Right/#btn_Enter")
-	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "Root/Right/#btn_Enter/#go_reddot")
-	arg_1_0._simageLeftPanelBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/Left/#simage_LeftPanelBG")
-	arg_1_0._simageRole = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/Left/#simage_Role")
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Root/Left/image_LimitTimeBG/#txt_LimitTime")
-	arg_1_0._simageTitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/Left/#simage_Title")
-	arg_1_0._goicon = gohelper.findChild(arg_1_0.viewGO, "Root/Left/Reward/image_dec")
-	arg_1_0._gocanget = gohelper.findChild(arg_1_0.viewGO, "Root/Left/Reward/go_canget")
-	arg_1_0._btnClaim = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/Left/Reward/go_canget/#btn_Claim")
-	arg_1_0._goreceive = gohelper.findChild(arg_1_0.viewGO, "Root/Left/Reward/go_receive")
-	arg_1_0._gohasget = gohelper.findChild(arg_1_0.viewGO, "Root/Left/Reward/go_receive/go_hasget")
-	arg_1_0._goItem = gohelper.findChild(arg_1_0.viewGO, "Root/Left/Scroll View/Viewport/Content/#go_Item")
-	arg_1_0._txtItem = gohelper.findChildText(arg_1_0.viewGO, "Root/Left/Scroll View/Viewport/Content/#go_Item/#txt_Item")
-	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/#btn_Close")
+local SurvivalOperActPanelView = class("SurvivalOperActPanelView", Activity101SignViewBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SurvivalOperActPanelView:onInitView()
+	self._simagePanelBG = gohelper.findChildSingleImage(self.viewGO, "Root/#simage_PanelBG")
+	self._simageRightPanelBG = gohelper.findChildSingleImage(self.viewGO, "Root/Right/#simage_RightPanelBG")
+	self._btnreward = gohelper.findChildButtonWithAudio(self.viewGO, "Root/Right/#btn_reward")
+	self._btnEnter = gohelper.findChildButtonWithAudio(self.viewGO, "Root/Right/#btn_Enter")
+	self._goreddot = gohelper.findChild(self.viewGO, "Root/Right/#btn_Enter/#go_reddot")
+	self._simageLeftPanelBG = gohelper.findChildSingleImage(self.viewGO, "Root/Left/#simage_LeftPanelBG")
+	self._simageRole = gohelper.findChildSingleImage(self.viewGO, "Root/Left/#simage_Role")
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "Root/Left/image_LimitTimeBG/#txt_LimitTime")
+	self._simageTitle = gohelper.findChildSingleImage(self.viewGO, "Root/Left/#simage_Title")
+	self._goicon = gohelper.findChild(self.viewGO, "Root/Left/Reward/image_dec")
+	self._gocanget = gohelper.findChild(self.viewGO, "Root/Left/Reward/go_canget")
+	self._btnClaim = gohelper.findChildButtonWithAudio(self.viewGO, "Root/Left/Reward/go_canget/#btn_Claim")
+	self._goreceive = gohelper.findChild(self.viewGO, "Root/Left/Reward/go_receive")
+	self._gohasget = gohelper.findChild(self.viewGO, "Root/Left/Reward/go_receive/go_hasget")
+	self._goItem = gohelper.findChild(self.viewGO, "Root/Left/Scroll View/Viewport/Content/#go_Item")
+	self._txtItem = gohelper.findChildText(self.viewGO, "Root/Left/Scroll View/Viewport/Content/#go_Item/#txt_Item")
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "Root/#btn_Close")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnreward:AddClickListener(arg_2_0._btnrewardOnClick, arg_2_0)
-	arg_2_0._btnEnter:AddClickListener(arg_2_0._btnEnterOnClick, arg_2_0)
-	arg_2_0._btnClaim:AddClickListener(arg_2_0._btnClaimOnClick, arg_2_0)
-	arg_2_0._btnClose:AddClickListener(arg_2_0._btnCloseOnClick, arg_2_0)
+function SurvivalOperActPanelView:addEvents()
+	self._btnreward:AddClickListener(self._btnrewardOnClick, self)
+	self._btnEnter:AddClickListener(self._btnEnterOnClick, self)
+	self._btnClaim:AddClickListener(self._btnClaimOnClick, self)
+	self._btnClose:AddClickListener(self._btnCloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnreward:RemoveClickListener()
-	arg_3_0._btnEnter:RemoveClickListener()
-	arg_3_0._btnClaim:RemoveClickListener()
-	arg_3_0._btnClose:RemoveClickListener()
+function SurvivalOperActPanelView:removeEvents()
+	self._btnreward:RemoveClickListener()
+	self._btnEnter:RemoveClickListener()
+	self._btnClaim:RemoveClickListener()
+	self._btnClose:RemoveClickListener()
 end
 
-function var_0_0._btnrewardOnClick(arg_4_0)
-	local var_4_0 = CommonConfig.instance:getConstNum(ConstEnum.SurvivalOperActItem)
+function SurvivalOperActPanelView:_btnrewardOnClick()
+	local itemId = CommonConfig.instance:getConstNum(ConstEnum.SurvivalOperActItem)
 
-	MaterialTipController.instance:showMaterialInfo(1, var_4_0)
+	MaterialTipController.instance:showMaterialInfo(1, itemId)
 end
 
-function var_0_0._btnEnterOnClick(arg_5_0)
+function SurvivalOperActPanelView:_btnEnterOnClick()
 	GameFacade.jump(JumpEnum.JumpView.SurvivalHandbook)
 end
 
-function var_0_0._btnClaimOnClick(arg_6_0)
-	if not ActivityType101Model.instance:isType101RewardCouldGet(arg_6_0._actId, 1) then
+function SurvivalOperActPanelView:_btnClaimOnClick()
+	local couldGet = ActivityType101Model.instance:isType101RewardCouldGet(self._actId, 1)
+
+	if not couldGet then
 		return
 	end
 
-	arg_6_0._anim:Play("open", 0, 0)
-	TaskDispatcher.runDelay(arg_6_0._startGetReward, arg_6_0, 1)
+	self._anim:Play("open", 0, 0)
+	TaskDispatcher.runDelay(self._startGetReward, self, 1)
 end
 
-function var_0_0._startGetReward(arg_7_0)
-	gohelper.setActive(arg_7_0._gocanget, false)
-	gohelper.setActive(arg_7_0._goreceive, true)
-	Activity101Rpc.instance:sendGet101BonusRequest(arg_7_0._actId, 1, arg_7_0._refreshUI, arg_7_0)
+function SurvivalOperActPanelView:_startGetReward()
+	gohelper.setActive(self._gocanget, false)
+	gohelper.setActive(self._goreceive, true)
+	Activity101Rpc.instance:sendGet101BonusRequest(self._actId, 1, self._refreshUI, self)
 end
 
-function var_0_0._btnCloseOnClick(arg_8_0)
-	arg_8_0:closeThis()
+function SurvivalOperActPanelView:_btnCloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_9_0)
-	arg_9_0._txtLimitTime.text = ""
+function SurvivalOperActPanelView:_editableInitView()
+	self._txtLimitTime.text = ""
 end
 
-function var_0_0.onOpen(arg_10_0)
+function SurvivalOperActPanelView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum3_1.SurvivalOperAct.play_ui_diqiu_jinru)
 
-	arg_10_0._actId = VersionActivity3_1Enum.ActivityId.SurvivalOperAct
-	arg_10_0._anim = arg_10_0._gohasget:GetComponent(typeof(UnityEngine.Animator))
+	self._actId = VersionActivity3_1Enum.ActivityId.SurvivalOperAct
+	self._anim = self._gohasget:GetComponent(typeof(UnityEngine.Animator))
 
-	arg_10_0:_refreshUI()
-	arg_10_0:_clearTimeTick()
-	TaskDispatcher.runRepeat(arg_10_0._refreshTimeTick, arg_10_0, 1)
-	TaskDispatcher.runRepeat(arg_10_0._playClick, arg_10_0, 1)
+	self:_refreshUI()
+	self:_clearTimeTick()
+	TaskDispatcher.runRepeat(self._refreshTimeTick, self, 1)
+	TaskDispatcher.runRepeat(self._playClick, self, 1)
 end
 
-function var_0_0._playClick(arg_11_0)
+function SurvivalOperActPanelView:_playClick()
 	return
 end
 
-function var_0_0.onClose(arg_12_0)
+function SurvivalOperActPanelView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0._startGetReward, arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0._playClick, arg_13_0)
-	arg_13_0:_clearTimeTick()
+function SurvivalOperActPanelView:onDestroyView()
+	TaskDispatcher.cancelTask(self._startGetReward, self)
+	TaskDispatcher.cancelTask(self._playClick, self)
+	self:_clearTimeTick()
 end
 
-function var_0_0._clearTimeTick(arg_14_0)
-	TaskDispatcher.cancelTask(arg_14_0._refreshTimeTick, arg_14_0)
+function SurvivalOperActPanelView:_clearTimeTick()
+	TaskDispatcher.cancelTask(self._refreshTimeTick, self)
 end
 
-function var_0_0._refreshUI(arg_15_0)
-	local var_15_0 = ActivityType101Model.instance:isType101RewardCouldGet(arg_15_0._actId, 1)
+function SurvivalOperActPanelView:_refreshUI()
+	local couldGet = ActivityType101Model.instance:isType101RewardCouldGet(self._actId, 1)
 
-	gohelper.setActive(arg_15_0._gocanget, var_15_0)
-	gohelper.setActive(arg_15_0._goreceive, not var_15_0)
-	gohelper.setActive(arg_15_0._goicon, var_15_0)
+	gohelper.setActive(self._gocanget, couldGet)
+	gohelper.setActive(self._goreceive, not couldGet)
+	gohelper.setActive(self._goicon, couldGet)
 end
 
-function var_0_0._refreshTimeTick(arg_16_0)
-	arg_16_0._txtLimitTime.text = arg_16_0:getRemainTimeStr()
+function SurvivalOperActPanelView:_refreshTimeTick()
+	self._txtLimitTime.text = self:getRemainTimeStr()
 end
 
-return var_0_0
+return SurvivalOperActPanelView

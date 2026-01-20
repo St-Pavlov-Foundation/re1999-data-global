@@ -1,8 +1,10 @@
-﻿module("modules.logic.toast.controller.ToastEvent", package.seeall)
+﻿-- chunkname: @modules/logic/toast/controller/ToastEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.toast.controller.ToastEvent", package.seeall)
 
-var_0_0.ShowToast = 1
-var_0_0.RecycleToast = 2
+local ToastEvent = _M
 
-return var_0_0
+ToastEvent.ShowToast = 1
+ToastEvent.RecycleToast = 2
+
+return ToastEvent

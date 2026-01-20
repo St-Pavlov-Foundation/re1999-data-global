@@ -1,167 +1,169 @@
-﻿module("modules.logic.versionactivity1_5.aizila.model.AiZiLaGameModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/aizila/model/AiZiLaGameModel.lua
 
-local var_0_0 = class("AiZiLaGameModel", BaseModel)
+module("modules.logic.versionactivity1_5.aizila.model.AiZiLaGameModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:_clearData()
+local AiZiLaGameModel = class("AiZiLaGameModel", BaseModel)
+
+function AiZiLaGameModel:onInit()
+	self:_clearData()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:_clearData()
+function AiZiLaGameModel:reInit()
+	self:_clearData()
 end
 
-function var_0_0.clear(arg_3_0)
-	var_0_0.super.clear(arg_3_0)
-	arg_3_0:_clearData()
+function AiZiLaGameModel:clear()
+	AiZiLaGameModel.super.clear(self)
+	self:_clearData()
 end
 
-function var_0_0._clearData(arg_4_0)
-	arg_4_0._curEpisodeId = 0
-	arg_4_0._roundCount = 0
-	arg_4_0._elevation = 0
-	arg_4_0._isSafe = false
-	arg_4_0._isFirstPass = false
-	arg_4_0._curActivityId = VersionActivity1_5Enum.ActivityId.AiZiLa
-	arg_4_0._itemModel = arg_4_0:_clearOrCreateModel(arg_4_0._itemModel)
-	arg_4_0._resultItemModel = arg_4_0:_clearOrCreateModel(arg_4_0._resultItemModel)
-	arg_4_0._equipModel = arg_4_0:_clearOrCreateModel(arg_4_0._equipModel)
-	arg_4_0._curEpisodeMO = arg_4_0._curEpisodeMO or AiZiLaEpsiodeMO.New()
+function AiZiLaGameModel:_clearData()
+	self._curEpisodeId = 0
+	self._roundCount = 0
+	self._elevation = 0
+	self._isSafe = false
+	self._isFirstPass = false
+	self._curActivityId = VersionActivity1_5Enum.ActivityId.AiZiLa
+	self._itemModel = self:_clearOrCreateModel(self._itemModel)
+	self._resultItemModel = self:_clearOrCreateModel(self._resultItemModel)
+	self._equipModel = self:_clearOrCreateModel(self._equipModel)
+	self._curEpisodeMO = self._curEpisodeMO or AiZiLaEpsiodeMO.New()
 end
 
-function var_0_0._clearOrCreateModel(arg_5_0, arg_5_1)
-	return AiZiLaHelper.clearOrCreateModel(arg_5_1)
+function AiZiLaGameModel:_clearOrCreateModel(model)
+	return AiZiLaHelper.clearOrCreateModel(model)
 end
 
-function var_0_0._updateMOModel(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
-	return AiZiLaHelper.updateMOModel(arg_6_1, arg_6_2, arg_6_3, arg_6_4)
+function AiZiLaGameModel:_updateMOModel(clsMO, model, moId, info)
+	return AiZiLaHelper.updateMOModel(clsMO, model, moId, info)
 end
 
-function var_0_0._updateItemModel(arg_7_0, arg_7_1)
-	return arg_7_0:_updateMOModel(AiZiLaItemMO, arg_7_0._itemModel, arg_7_1.itemId, arg_7_1)
+function AiZiLaGameModel:_updateItemModel(itemInfo)
+	return self:_updateMOModel(AiZiLaItemMO, self._itemModel, itemInfo.itemId, itemInfo)
 end
 
-function var_0_0.setEpisodeId(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0._curEpisodeId = arg_8_1
-	arg_8_0._curEpisodeMO = AiZiLaEpsiodeMO.New()
+function AiZiLaGameModel:setEpisodeId(episodeId, actId)
+	self._curEpisodeId = episodeId
+	self._curEpisodeMO = AiZiLaEpsiodeMO.New()
 
-	arg_8_0._curEpisodeMO:init(arg_8_1)
+	self._curEpisodeMO:init(episodeId)
 
-	local var_8_0 = VersionActivity1_5Enum.ActivityId.AiZiLa
+	local actId = VersionActivity1_5Enum.ActivityId.AiZiLa
 
-	arg_8_0._episodeCfg = AiZiLaConfig.instance:getEpisodeCo(var_8_0, arg_8_1)
+	self._episodeCfg = AiZiLaConfig.instance:getEpisodeCo(actId, episodeId)
 end
 
-function var_0_0.getEpisodeId(arg_9_0)
-	return arg_9_0._curEpisodeId
+function AiZiLaGameModel:getEpisodeId()
+	return self._curEpisodeId
 end
 
-function var_0_0.getActivityID(arg_10_0)
-	return arg_10_0._curActivityId
+function AiZiLaGameModel:getActivityID()
+	return self._curActivityId
 end
 
-function var_0_0.getItemList(arg_11_0)
-	return arg_11_0._itemModel:getList()
+function AiZiLaGameModel:getItemList()
+	return self._itemModel:getList()
 end
 
-function var_0_0.getItemQuantity(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0._itemModel:getById(arg_12_1)
+function AiZiLaGameModel:getItemQuantity(itemId)
+	local itemMO = self._itemModel:getById(itemId)
 
-	return var_12_0 and var_12_0:getQuantity() or 0
+	return itemMO and itemMO:getQuantity() or 0
 end
 
-function var_0_0.getResultItemList(arg_13_0, arg_13_1)
-	return arg_13_0._resultItemModel:getList()
+function AiZiLaGameModel:getResultItemList(eventId)
+	return self._resultItemModel:getList()
 end
 
-function var_0_0.setIsSafe(arg_14_0, arg_14_1)
-	arg_14_0._isSafe = arg_14_1
+function AiZiLaGameModel:setIsSafe(isSafe)
+	self._isSafe = isSafe
 end
 
-function var_0_0.getIsSafe(arg_15_0)
-	return arg_15_0._isSafe
+function AiZiLaGameModel:getIsSafe()
+	return self._isSafe
 end
 
-function var_0_0.isPass(arg_16_0)
-	return arg_16_0._curEpisodeMO and arg_16_0._curEpisodeMO:isPass() or false
+function AiZiLaGameModel:isPass()
+	return self._curEpisodeMO and self._curEpisodeMO:isPass() or false
 end
 
-function var_0_0.getIsFirstPass(arg_17_0)
-	return arg_17_0._isFirstPass
+function AiZiLaGameModel:getIsFirstPass()
+	return self._isFirstPass
 end
 
-function var_0_0.getEventId(arg_18_0)
-	return arg_18_0._curEpisodeMO and arg_18_0._curEpisodeMO.eventId or 0
+function AiZiLaGameModel:getEventId()
+	return self._curEpisodeMO and self._curEpisodeMO.eventId or 0
 end
 
-function var_0_0.getBuffIdList(arg_19_0)
-	return arg_19_0._curEpisodeMO and arg_19_0._curEpisodeMO.buffIds
+function AiZiLaGameModel:getBuffIdList()
+	return self._curEpisodeMO and self._curEpisodeMO.buffIds
 end
 
-function var_0_0.getElevation(arg_20_0)
-	return arg_20_0._curEpisodeMO and arg_20_0._curEpisodeMO.altitude or 0
+function AiZiLaGameModel:getElevation()
+	return self._curEpisodeMO and self._curEpisodeMO.altitude or 0
 end
 
-function var_0_0.getRoundCount(arg_21_0)
-	return arg_21_0._curEpisodeMO and arg_21_0._curEpisodeMO.day
+function AiZiLaGameModel:getRoundCount()
+	return self._curEpisodeMO and self._curEpisodeMO.day
 end
 
-function var_0_0.getEpisodeMO(arg_22_0)
-	return arg_22_0._curEpisodeMO
+function AiZiLaGameModel:getEpisodeMO()
+	return self._curEpisodeMO
 end
 
-function var_0_0.updateEpisode(arg_23_0, arg_23_1)
-	arg_23_0._curEpisodeMO:updateInfo(arg_23_1)
+function AiZiLaGameModel:updateEpisode(info)
+	self._curEpisodeMO:updateInfo(info)
 end
 
-function var_0_0.addAct144Items(arg_24_0, arg_24_1)
-	arg_24_0:_addModelAct144Items(arg_24_0._itemModel, arg_24_1)
+function AiZiLaGameModel:addAct144Items(tempAct144Items)
+	self:_addModelAct144Items(self._itemModel, tempAct144Items)
 end
 
-function var_0_0.setAct144Items(arg_25_0, arg_25_1)
-	arg_25_0._itemModel = arg_25_0:_clearOrCreateModel(arg_25_0._itemModel)
+function AiZiLaGameModel:setAct144Items(tempAct144Items)
+	self._itemModel = self:_clearOrCreateModel(self._itemModel)
 
-	arg_25_0:_addModelAct144Items(arg_25_0._itemModel, arg_25_1)
+	self:_addModelAct144Items(self._itemModel, tempAct144Items)
 end
 
-function var_0_0._addModelAct144Items(arg_26_0, arg_26_1, arg_26_2)
-	for iter_26_0, iter_26_1 in ipairs(arg_26_2) do
-		local var_26_0 = arg_26_1:getById(iter_26_1.itemId)
+function AiZiLaGameModel:_addModelAct144Items(model, tempAct144Items)
+	for i, itemInfo in ipairs(tempAct144Items) do
+		local itemMO = model:getById(itemInfo.itemId)
 
-		if var_26_0 then
-			var_26_0:addInfo(iter_26_1)
+		if itemMO then
+			itemMO:addInfo(itemInfo)
 		else
-			local var_26_1 = AiZiLaItemMO.New()
+			itemMO = AiZiLaItemMO.New()
 
-			var_26_1:init(iter_26_1.itemId, iter_26_1.itemId, iter_26_1.quantity)
-			arg_26_1:addAtLast(var_26_1)
+			itemMO:init(itemInfo.itemId, itemInfo.itemId, itemInfo.quantity)
+			model:addAtLast(itemMO)
 		end
 	end
 end
 
-function var_0_0.setAct144ResultItems(arg_27_0, arg_27_1)
-	arg_27_0._resultItemModel = arg_27_0:_clearOrCreateModel(arg_27_0._resultItemModel)
+function AiZiLaGameModel:setAct144ResultItems(tempAct144Items)
+	self._resultItemModel = self:_clearOrCreateModel(self._resultItemModel)
 
-	arg_27_0:_addModelAct144Items(arg_27_0._resultItemModel, arg_27_1)
+	self:_addModelAct144Items(self._resultItemModel, tempAct144Items)
 end
 
-function var_0_0.settlePush(arg_28_0, arg_28_1)
-	arg_28_0._isSafe = arg_28_1.isSafe
-	arg_28_0._isFirstPass = arg_28_1.isFirstPass
+function AiZiLaGameModel:settlePush(msg)
+	self._isSafe = msg.isSafe
+	self._isFirstPass = msg.isFirstPass
 
-	local var_28_0 = arg_28_1.tempAct144Items or {}
+	local tempAct144Items = msg.tempAct144Items or {}
 
-	arg_28_0:setAct144ResultItems(var_28_0)
-	arg_28_0:updateEpisode(arg_28_1)
+	self:setAct144ResultItems(tempAct144Items)
+	self:updateEpisode(msg)
 end
 
-function var_0_0.settleEpisodeReply(arg_29_0, arg_29_1)
-	local var_29_0 = arg_29_1.act144Episode
-	local var_29_1 = var_29_0 and var_29_0.tempAct144Items or {}
+function AiZiLaGameModel:settleEpisodeReply(msg)
+	local act144Episode = msg.act144Episode
+	local tempAct144Items = act144Episode and act144Episode.tempAct144Items or {}
 
-	arg_29_0:setAct144ResultItems(var_29_1)
-	arg_29_0:updateEpisode(var_29_0)
+	self:setAct144ResultItems(tempAct144Items)
+	self:updateEpisode(act144Episode)
 end
 
-var_0_0.instance = var_0_0.New()
+AiZiLaGameModel.instance = AiZiLaGameModel.New()
 
-return var_0_0
+return AiZiLaGameModel

@@ -1,7 +1,9 @@
-﻿module("modules.logic.versionactivity1_3.act119.controller.Activity1_3_119Event", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/act119/controller/Activity1_3_119Event.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_3.act119.controller.Activity1_3_119Event", package.seeall)
 
-var_0_0.TabChange = 1
+local Activity1_3_119Event = _M
 
-return var_0_0
+Activity1_3_119Event.TabChange = 1
+
+return Activity1_3_119Event

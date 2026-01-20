@@ -1,326 +1,332 @@
-﻿module("modules.logic.fight.view.cardeffect.FightCardEndEffect", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/cardeffect/FightCardEndEffect.lua
 
-local var_0_0 = class("FightCardEndEffect", BaseWork)
-local var_0_1 = 1
-local var_0_2 = var_0_1 * 0.033
+module("modules.logic.fight.view.cardeffect.FightCardEndEffect", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local FightCardEndEffect = class("FightCardEndEffect", BaseWork)
+local TimeFactor = 1
+local dt = TimeFactor * 0.033
+
+function FightCardEndEffect:ctor()
 	return
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	var_0_0.super.onStart(arg_2_0, arg_2_1)
+function FightCardEndEffect:onStart(context)
+	FightCardEndEffect.super.onStart(self, context)
 
-	arg_2_0._dt = var_0_2 / FightModel.instance:getUISpeed()
+	self._dt = dt / FightModel.instance:getUISpeed()
 
-	local var_2_0 = FightDataHelper.operationDataMgr:getOpList()
+	local ops = FightDataHelper.operationDataMgr:getOpList()
 
-	arg_2_0._playCardCount = 0
+	self._playCardCount = 0
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_0) do
-		if FightCardDataHelper.checkOpAsPlayCardHandle(iter_2_1) then
-			arg_2_0._playCardCount = arg_2_0._playCardCount + 1
+	for _, op in ipairs(ops) do
+		if FightCardDataHelper.checkOpAsPlayCardHandle(op) then
+			self._playCardCount = self._playCardCount + 1
 		end
 	end
 
 	FightViewPartVisible.set(true, true, true, false, false)
 
-	arg_2_0._flow = FlowParallel.New()
+	self._flow = FlowParallel.New()
 
-	arg_2_0._flow:addWork(arg_2_0:_handCardFlow())
-	arg_2_0._flow:addWork(arg_2_0:_playCardFlow())
-	arg_2_0._flow:registerDoneListener(arg_2_0._onWorkDone, arg_2_0)
-	arg_2_0._flow:start()
+	self._flow:addWork(self:_handCardFlow())
+	self._flow:addWork(self:_playCardFlow())
+	self._flow:registerDoneListener(self._onWorkDone, self)
+	self._flow:start()
 end
 
-function var_0_0.onStop(arg_3_0)
-	if arg_3_0._flow then
-		arg_3_0._flow:stop()
+function FightCardEndEffect:onStop()
+	if self._flow then
+		self._flow:stop()
 
-		if arg_3_0._cloneItemGOs then
-			for iter_3_0, iter_3_1 in ipairs(arg_3_0._cloneItemGOs) do
-				gohelper.destroy(iter_3_1)
+		if self._cloneItemGOs then
+			for _, go in ipairs(self._cloneItemGOs) do
+				gohelper.destroy(go)
 			end
 
-			arg_3_0._cloneItemGOs = nil
+			self._cloneItemGOs = nil
 		end
 	end
 
-	var_0_0.super.onStop(arg_3_0)
+	FightCardEndEffect.super.onStop(self)
 end
 
-function var_0_0._handCardFlow(arg_4_0)
-	local var_4_0 = FlowParallel.New()
+function FightCardEndEffect:_handCardFlow()
+	local flow = FlowParallel.New()
 
-	arg_4_0._handCardItemGOs = {}
+	self._handCardItemGOs = {}
 
-	if arg_4_0._playCardCount > 0 then
-		local var_4_1 = arg_4_0.context.handCardContainer
-		local var_4_2 = var_4_1.transform.childCount
-		local var_4_3 = 1
+	if self._playCardCount > 0 then
+		local handCardGO = self.context.handCardContainer
+		local childCount = handCardGO.transform.childCount
+		local count = 1
 
-		for iter_4_0 = var_4_2, 1, -1 do
-			local var_4_4 = gohelper.findChild(var_4_1, "cardItem" .. iter_4_0)
+		for i = childCount, 1, -1 do
+			local cardItemGO = gohelper.findChild(handCardGO, "cardItem" .. i)
 
-			if var_4_4 and var_4_4.activeInHierarchy then
-				local var_4_5 = FlowSequence.New()
+			if cardItemGO and cardItemGO.activeInHierarchy then
+				local sequence = FlowSequence.New()
 
-				var_4_5:addWork(WorkWaitSeconds.New(arg_4_0._dt * var_4_3 * 2))
-				var_4_5:addWork(TweenWork.New({
+				sequence:addWork(WorkWaitSeconds.New(self._dt * count * 2))
+				sequence:addWork(TweenWork.New({
 					type = "DOAnchorPosY",
 					to = 18,
-					tr = var_4_4.transform,
-					t = arg_4_0._dt * 6,
+					tr = cardItemGO.transform,
+					t = self._dt * 6,
 					ease = EaseType.InOutSine
 				}))
-				var_4_5:addWork(TweenWork.New({
+				sequence:addWork(TweenWork.New({
 					type = "DOAnchorPosY",
 					to = -400,
-					tr = var_4_4.transform,
-					t = arg_4_0._dt * 8,
+					tr = cardItemGO.transform,
+					t = self._dt * 8,
 					ease = EaseType.InOutSine
 				}))
-				var_4_0:addWork(var_4_5)
+				flow:addWork(sequence)
 
-				var_4_3 = var_4_3 + 1
+				count = count + 1
 
-				table.insert(arg_4_0._handCardItemGOs, var_4_4)
+				table.insert(self._handCardItemGOs, cardItemGO)
 			end
 		end
 	else
-		local var_4_6 = FightViewHandCard.handCardContainer
-		local var_4_7 = FightWorkEffectDistributeCard.handCardScale
-		local var_4_8 = FightWorkEffectDistributeCard.getHandCardScaleTime()
+		local handCardContainer = FightViewHandCard.handCardContainer
+		local scale = FightWorkEffectDistributeCard.handCardScale
+		local time = FightWorkEffectDistributeCard.getHandCardScaleTime()
 
-		ZProj.TweenHelper.DOScale(var_4_6.transform, var_4_7, var_4_7, var_4_7, var_4_8)
+		ZProj.TweenHelper.DOScale(handCardContainer.transform, scale, scale, scale, time)
 	end
 
-	return var_4_0
+	return flow
 end
 
-function var_0_0._playCardFlow(arg_5_0)
-	local var_5_0 = FlowSequence.New()
+function FightCardEndEffect:_playCardFlow()
+	local main_sequence = FlowSequence.New()
+	local playItemCount = FightViewPlayCard.getMaxItemCountIncludeExtraMoveAct()
 
-	if FightViewPlayCard.getMaxItemCount() > FightViewPlayCard.VisibleCount then
-		var_5_0:addWork(TweenWork.New({
+	if playItemCount > FightViewPlayCard.VisibleCount then
+		main_sequence:addWork(TweenWork.New({
 			from = 1,
 			type = "DOFadeCanvasGroup",
 			to = 0,
-			go = arg_5_0.context.playCardContainer,
-			t = arg_5_0._dt * 15
+			go = self.context.playCardContainer,
+			t = self._dt * 15
 		}))
 
-		return var_5_0
+		return main_sequence
 	end
 
-	var_5_0:addWork(WorkWaitSeconds.New(0.2))
+	main_sequence:addWork(WorkWaitSeconds.New(0.2))
 
-	local var_5_1 = FlowParallel.New()
-	local var_5_2 = gohelper.findChild(arg_5_0.context.playCardContainer, "#scroll_cards/Viewport/Content")
-	local var_5_3 = var_5_2.transform.childCount
+	local flow = FlowParallel.New()
+	local playCardGO = gohelper.findChild(self.context.playCardContainer, "#scroll_cards/Viewport/Content")
+	local playCardTr = playCardGO.transform
+	local childCount = playCardTr.childCount
 
-	arg_5_0._playCardItemGOs = {}
-	arg_5_0._cloneItemGOs = {}
-	arg_5_0._cloneOperateItemList = {}
+	self._playCardItemGOs = {}
+	self._cloneItemGOs = {}
+	self._cloneOperateItemList = {}
 
-	local var_5_4 = {}
-	local var_5_5 = FightDataHelper.operationDataMgr:getOpList()
-	local var_5_6 = ViewMgr.instance:getContainer(ViewName.FightView)
+	local clone_index = {}
+	local ops = FightDataHelper.operationDataMgr:getOpList()
+	local fightView = ViewMgr.instance:getContainer(ViewName.FightView)
 
-	if var_5_6 then
-		local var_5_7 = var_5_6.fightViewPlayCard
+	if fightView then
+		local fightViewPlayCard = fightView.fightViewPlayCard
 
-		if var_5_7 then
-			for iter_5_0, iter_5_1 in ipairs(var_5_5) do
-				if FightCardDataHelper.checkOpAsPlayCardHandle(iter_5_1) then
-					local var_5_8 = var_5_7:getShowIndex(iter_5_1)
+		if fightViewPlayCard then
+			for _, op in ipairs(ops) do
+				if FightCardDataHelper.checkOpAsPlayCardHandle(op) then
+					local temp_index = fightViewPlayCard:getShowIndex(op)
 
-					if var_5_8 then
-						var_5_4[var_5_8] = {
-							skillId = iter_5_1.skillId,
-							entityId = iter_5_1.belongToEntityId
+					if temp_index then
+						clone_index[temp_index] = {
+							skillId = op.skillId,
+							entityId = op.belongToEntityId
 						}
 
-						if iter_5_1:needCopyCard() then
-							var_5_4[var_5_8 + 1] = {
-								skillId = iter_5_1.skillId,
-								entityId = iter_5_1.belongToEntityId
+						if op:needCopyCard() then
+							clone_index[temp_index + 1] = {
+								skillId = op.skillId,
+								entityId = op.belongToEntityId
 							}
 						end
 					else
-						local var_5_9 = {}
+						local temp_tab = {}
 
-						for iter_5_2, iter_5_3 in ipairs(var_5_5) do
-							table.insert(var_5_9, string.format("{operType : %s, toId : %s, skillId : %s, belongToEntityId : %s, costActPoint: %s}", iter_5_3.operType, iter_5_3.toId, iter_5_3.skillId, iter_5_3.belongToEntityId, iter_5_3.costActPoint))
+						for _, _op in ipairs(ops) do
+							table.insert(temp_tab, string.format("{operType : %s, toId : %s, skillId : %s, belongToEntityId : %s, costActPoint: %s}", _op.operType, _op.toId, _op.skillId, _op.belongToEntityId, _op.costActPoint))
 						end
 
-						local var_5_10 = table.concat(var_5_9, "\n")
+						local ops_str = table.concat(temp_tab, "\n")
 
-						tabletool.clear(var_5_9)
+						tabletool.clear(temp_tab)
 
-						for iter_5_4, iter_5_5 in ipairs(var_5_7._begin_round_ops) do
-							table.insert(var_5_9, string.format("{operType : %s, toId : %s, skillId : %s, belongToEntityId : %s, costActPoint: %s}", iter_5_5.operType, iter_5_5.toId, iter_5_5.skillId, iter_5_5.belongToEntityId, iter_5_5.costActPoint))
+						for _, _op in ipairs(fightViewPlayCard._begin_round_ops) do
+							table.insert(temp_tab, string.format("{operType : %s, toId : %s, skillId : %s, belongToEntityId : %s, costActPoint: %s}", _op.operType, _op.toId, _op.skillId, _op.belongToEntityId, _op.costActPoint))
 						end
 
-						local var_5_11 = table.concat(var_5_9, "\n")
+						local begin_round_ops_str = table.concat(temp_tab, "\n")
 
-						logError(string.format("get temp_index fail : %s, \n ops : {%s},\n begin_round_ops : {%s}", tostring(var_5_8), var_5_10, var_5_11))
+						logError(string.format("get temp_index fail : %s, \n ops : {%s},\n begin_round_ops : {%s}", tostring(temp_index), ops_str, begin_round_ops_str))
 					end
 				end
 			end
 		end
 	end
 
-	for iter_5_6 = 1, var_5_3 do
-		if var_5_4[iter_5_6] then
-			local var_5_12 = gohelper.findChild(var_5_2, "cardItem" .. iter_5_6)
+	for i = 1, childCount do
+		if clone_index[i] then
+			local cardItemGO = gohelper.findChild(playCardGO, "cardItem" .. i)
 
-			if var_5_12 then
-				local var_5_13 = gohelper.findChild(var_5_12, "card")
+			if cardItemGO then
+				local cardGO = gohelper.findChild(cardItemGO, "card")
 
-				gohelper.setActive(gohelper.findChild(var_5_12, "#go_Grade"), false)
-				table.insert(arg_5_0._playCardItemGOs, var_5_13)
+				gohelper.setActive(gohelper.findChild(cardItemGO, "#go_Grade"), false)
+				table.insert(self._playCardItemGOs, cardGO)
 
-				local var_5_14 = gohelper.cloneInPlace(var_5_12)
+				local cloneItemGO = gohelper.cloneInPlace(cardItemGO)
 
-				table.insert(arg_5_0._cloneItemGOs, var_5_14)
-				var_5_14.transform:SetParent(arg_5_0.context.handCardContainer.transform, true)
-				gohelper.setActive(gohelper.findChild(var_5_14, "effect1"), false)
-				gohelper.setActive(gohelper.findChild(var_5_14, "effect2"), false)
-				gohelper.setActive(gohelper.findChild(var_5_12, "lock"), false)
+				table.insert(self._cloneItemGOs, cloneItemGO)
+				cloneItemGO.transform:SetParent(self.context.handCardContainer.transform, true)
+				gohelper.setActive(gohelper.findChild(cloneItemGO, "effect1"), false)
+				gohelper.setActive(gohelper.findChild(cloneItemGO, "effect2"), false)
+				gohelper.setActive(gohelper.findChild(cardItemGO, "lock"), false)
 
-				local var_5_15 = FightViewTempOperateCardItem.New()
+				local item = FightViewTempOperateCardItem.New()
 
-				var_5_15:init(var_5_14, var_5_4[iter_5_6].skillId, var_5_4[iter_5_6].entityId)
-				table.insert(arg_5_0._cloneOperateItemList, var_5_15)
+				item:init(cloneItemGO, clone_index[i].skillId, clone_index[i].entityId)
+				table.insert(self._cloneOperateItemList, item)
 			end
 		end
 	end
 
-	FightController.instance:dispatchEvent(FightEvent.FixWaitingAreaItemCount, #arg_5_0._playCardItemGOs)
+	FightController.instance:dispatchEvent(FightEvent.FixWaitingAreaItemCount, #self._playCardItemGOs)
 
-	local var_5_16 = FightModel.instance:getVersion()
+	local version = FightModel.instance:getVersion()
 
-	for iter_5_7, iter_5_8 in ipairs(arg_5_0._playCardItemGOs) do
-		local var_5_17 = arg_5_0._cloneItemGOs[iter_5_7].transform
-		local var_5_18 = gohelper.findChild(arg_5_0.context.waitCardContainer, "cardItem" .. #arg_5_0._playCardItemGOs - iter_5_7 + 1)
+	for i, itemGO in ipairs(self._playCardItemGOs) do
+		local itemTr = self._cloneItemGOs[i].transform
+		local waitItemGO = gohelper.findChild(self.context.waitCardContainer, "cardItem" .. #self._playCardItemGOs - i + 1)
 
-		if var_5_16 >= 1 then
-			var_5_18 = gohelper.findChild(arg_5_0.context.waitCardContainer, "cardItem" .. iter_5_7)
+		if version >= 1 then
+			waitItemGO = gohelper.findChild(self.context.waitCardContainer, "cardItem" .. i)
 		end
 
-		local var_5_19 = recthelper.rectToRelativeAnchorPos(var_5_18.transform.position, var_5_17.parent)
-		local var_5_20 = FlowSequence.New()
-		local var_5_21 = 2
+		local pos = recthelper.rectToRelativeAnchorPos(waitItemGO.transform.position, itemTr.parent)
+		local sequence = FlowSequence.New()
+		local delay_frame = 2
 
-		var_5_20:addWork(WorkWaitSeconds.New(arg_5_0._dt * var_5_21 * iter_5_7))
-		var_5_20:addWork(FunctionWork.New(function()
-			gohelper.setActive(iter_5_8, false)
+		sequence:addWork(WorkWaitSeconds.New(self._dt * delay_frame * i))
+		sequence:addWork(FunctionWork.New(function()
+			gohelper.setActive(itemGO, false)
 		end))
 
-		local var_5_22 = FlowParallel.New()
-		local var_5_23 = 1.32
+		local flyFlow1 = FlowParallel.New()
+		local tar_scale = 1.32
 
-		var_5_22:addWork(TweenWork.New({
+		flyFlow1:addWork(TweenWork.New({
 			type = "DOScale",
-			tr = var_5_17,
-			to = var_5_23,
-			t = arg_5_0._dt * 5,
+			tr = itemTr,
+			to = tar_scale,
+			t = self._dt * 5,
 			ease = EaseType.easeOutQuad
 		}))
 
-		local var_5_24 = 15
+		local rotate = 15
 
-		var_5_22:addWork(TweenWork.New({
+		flyFlow1:addWork(TweenWork.New({
 			type = "DORotate",
 			tox = 0,
 			toy = 0,
-			tr = var_5_17,
-			toz = var_5_24,
-			t = arg_5_0._dt * 5,
+			tr = itemTr,
+			toz = rotate,
+			t = self._dt * 5,
 			ease = EaseType.easeOutQuad
 		}))
-		var_5_20:addWork(var_5_22)
+		sequence:addWork(flyFlow1)
 
-		local var_5_25 = FlowParallel.New()
-		local var_5_26 = -107
+		local flyFlow2 = FlowParallel.New()
+		local offset_y = -107
 
-		var_5_25:addWork(TweenWork.New({
+		flyFlow2:addWork(TweenWork.New({
 			type = "DOAnchorPos",
-			tr = var_5_17,
-			tox = var_5_19.x,
-			toy = var_5_19.y + var_5_26,
-			t = arg_5_0._dt * 10,
+			tr = itemTr,
+			tox = pos.x,
+			toy = pos.y + offset_y,
+			t = self._dt * 10,
 			ease = EaseType.OutCubic
 		}))
-		var_5_25:addWork(TweenWork.New({
+		flyFlow2:addWork(TweenWork.New({
 			toz = 0,
 			type = "DORotate",
 			tox = 0,
 			toy = 0,
-			tr = var_5_17,
-			t = arg_5_0._dt * 10,
+			tr = itemTr,
+			t = self._dt * 10,
 			ease = EaseType.OutCubic
 		}))
-		var_5_20:addWork(var_5_25)
-		var_5_1:addWork(var_5_20)
+		sequence:addWork(flyFlow2)
+		flow:addWork(sequence)
 	end
 
 	if GMFightShowState.cards then
-		var_5_1:addWork(TweenWork.New({
+		flow:addWork(TweenWork.New({
 			from = 1,
 			type = "DOFadeCanvasGroup",
 			to = 0,
-			go = arg_5_0.context.playCardContainer,
-			t = arg_5_0._dt * 15
+			go = self.context.playCardContainer,
+			t = self._dt * 15
 		}))
 	end
 
-	var_5_0:addWork(var_5_1)
-	var_5_0:addWork(FightWork2Work.New(FightWorkDetectUseCardSkillId))
-	var_5_0:addWork(FightWork2Work.New(FightWorkPlayHideCardCloseAnim, arg_5_0))
+	main_sequence:addWork(flow)
+	main_sequence:addWork(FightWork2Work.New(FightWorkDetectUseCardSkillId))
+	main_sequence:addWork(FightWork2Work.New(FightWorkPlayHideCardCloseAnim, self))
 
-	return var_5_0
+	return main_sequence
 end
 
-function var_0_0._onWorkDone(arg_7_0)
-	arg_7_0._flow:unregisterDoneListener(arg_7_0._onWorkDone, arg_7_0)
-	gohelper.setActive(arg_7_0.context.playCardContainer, false)
-	gohelper.setActive(arg_7_0.context.waitCardContainer, true)
+function FightCardEndEffect:_onWorkDone()
+	self._flow:unregisterDoneListener(self._onWorkDone, self)
+	gohelper.setActive(self.context.playCardContainer, false)
+	gohelper.setActive(self.context.waitCardContainer, true)
 
 	if GMFightShowState.cards then
-		gohelper.onceAddComponent(arg_7_0.context.playCardContainer, typeof(UnityEngine.CanvasGroup)).alpha = 1
+		local canvasGroup = gohelper.onceAddComponent(self.context.playCardContainer, typeof(UnityEngine.CanvasGroup))
+
+		canvasGroup.alpha = 1
 	end
 
 	FightViewPartVisible.set(false, false, false, false, true)
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0._handCardItemGOs) do
-		recthelper.setAnchorY(iter_7_1.transform, 0)
+	for _, go in ipairs(self._handCardItemGOs) do
+		recthelper.setAnchorY(go.transform, 0)
 	end
 
-	if arg_7_0._playCardItemGOs then
-		for iter_7_2, iter_7_3 in ipairs(arg_7_0._playCardItemGOs) do
-			recthelper.setAnchor(iter_7_3.transform, 0, 0)
+	if self._playCardItemGOs then
+		for _, go in ipairs(self._playCardItemGOs) do
+			recthelper.setAnchor(go.transform, 0, 0)
 		end
 	end
 
-	if arg_7_0._cloneItemGOs then
-		for iter_7_4, iter_7_5 in ipairs(arg_7_0._cloneItemGOs) do
-			gohelper.destroy(iter_7_5)
+	if self._cloneItemGOs then
+		for _, go in ipairs(self._cloneItemGOs) do
+			gohelper.destroy(go)
 		end
 	end
 
-	if arg_7_0._cloneOperateItemList then
-		for iter_7_6, iter_7_7 in ipairs(arg_7_0._cloneOperateItemList) do
-			iter_7_7:onDispose()
+	if self._cloneOperateItemList then
+		for _, item in ipairs(self._cloneOperateItemList) do
+			item:onDispose()
 		end
 	end
 
-	arg_7_0._playCardItemGOs = nil
-	arg_7_0._cloneItemGOs = nil
-	arg_7_0._cloneOperateItemList = nil
+	self._playCardItemGOs = nil
+	self._cloneItemGOs = nil
+	self._cloneOperateItemList = nil
 
-	arg_7_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return FightCardEndEffect

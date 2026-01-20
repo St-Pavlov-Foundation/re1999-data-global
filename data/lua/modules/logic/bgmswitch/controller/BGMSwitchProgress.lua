@@ -1,107 +1,110 @@
-﻿module("modules.logic.bgmswitch.controller.BGMSwitchProgress", package.seeall)
+﻿-- chunkname: @modules/logic/bgmswitch/controller/BGMSwitchProgress.lua
 
-local var_0_0 = class("BGMSwitchProgress")
-local var_0_1 = 0.03
+module("modules.logic.bgmswitch.controller.BGMSwitchProgress", package.seeall)
 
-function var_0_0.playMainBgm(arg_1_0, arg_1_1)
-	arg_1_0._bgmCO = BGMSwitchConfig.instance:getBGMSwitchCoByAudioId(arg_1_1)
+local BGMSwitchProgress = class("BGMSwitchProgress")
+local TickInterval = 0.03
 
-	if not arg_1_0._bgmCO then
-		arg_1_0._progressTimeSec = 0
+function BGMSwitchProgress:playMainBgm(audioId)
+	self._bgmCO = BGMSwitchConfig.instance:getBGMSwitchCoByAudioId(audioId)
 
-		WeatherController.instance:unregisterCallback(WeatherEvent.WeatherChanged, arg_1_0._onWeatherChange, arg_1_0)
-		AudioMgr.instance:unregisterCallback(AudioMgr.Evt_Trigger, arg_1_0._onTriggerEvent, arg_1_0)
-		TaskDispatcher.cancelTask(arg_1_0._onTick, arg_1_0)
+	if not self._bgmCO then
+		self._progressTimeSec = 0
+
+		WeatherController.instance:unregisterCallback(WeatherEvent.WeatherChanged, self._onWeatherChange, self)
+		AudioMgr.instance:unregisterCallback(AudioMgr.Evt_Trigger, self._onTriggerEvent, self)
+		TaskDispatcher.cancelTask(self._onTick, self)
 
 		return
 	end
 
-	WeatherController.instance:registerCallback(WeatherEvent.WeatherChanged, arg_1_0._onWeatherChange, arg_1_0)
-	AudioMgr.instance:registerCallback(AudioMgr.Evt_Trigger, arg_1_0._onTriggerEvent, arg_1_0)
-	TaskDispatcher.runRepeat(arg_1_0._onTick, arg_1_0, var_0_1)
+	WeatherController.instance:registerCallback(WeatherEvent.WeatherChanged, self._onWeatherChange, self)
+	AudioMgr.instance:registerCallback(AudioMgr.Evt_Trigger, self._onTriggerEvent, self)
+	TaskDispatcher.runRepeat(self._onTick, self, TickInterval)
 
-	arg_1_0._bgmAudioLength = BGMSwitchModel.instance:getReportBgmAudioLength(arg_1_0._bgmCO)
-	arg_1_0._progressTimeSec = 0
+	self._bgmAudioLength = BGMSwitchModel.instance:getReportBgmAudioLength(self._bgmCO)
+	self._progressTimeSec = 0
 
-	arg_1_0:_updateGMProgress()
+	self:_updateGMProgress()
 end
 
-function var_0_0.stopMainBgm(arg_2_0)
-	WeatherController.instance:unregisterCallback(WeatherEvent.WeatherChanged, arg_2_0._onWeatherChange, arg_2_0)
-	AudioMgr.instance:unregisterCallback(AudioMgr.Evt_Trigger, arg_2_0._onTriggerEvent, arg_2_0)
-	TaskDispatcher.cancelTask(arg_2_0._onTick, arg_2_0)
+function BGMSwitchProgress:stopMainBgm()
+	WeatherController.instance:unregisterCallback(WeatherEvent.WeatherChanged, self._onWeatherChange, self)
+	AudioMgr.instance:unregisterCallback(AudioMgr.Evt_Trigger, self._onTriggerEvent, self)
+	TaskDispatcher.cancelTask(self._onTick, self)
 
-	arg_2_0._progressTimeSec = 0
+	self._progressTimeSec = 0
 
-	arg_2_0:_updateGMProgress()
+	self:_updateGMProgress()
 end
 
-function var_0_0.getProgress(arg_3_0)
-	return arg_3_0._progressTimeSec
+function BGMSwitchProgress:getProgress()
+	return self._progressTimeSec
 end
 
-function var_0_0._onWeatherChange(arg_4_0)
-	if arg_4_0._bgmCO and arg_4_0._bgmCO.isReport == 1 then
-		local var_4_0 = WeatherController.instance:getPrevLightMode()
-		local var_4_1 = WeatherController.instance:getCurLightMode()
+function BGMSwitchProgress:_onWeatherChange()
+	if self._bgmCO and self._bgmCO.isReport == 1 then
+		local preLightMode = WeatherController.instance:getPrevLightMode()
+		local curLightMode = WeatherController.instance:getCurLightMode()
 
-		if var_4_0 and var_4_1 and var_4_0 ~= var_4_1 then
-			arg_4_0._bgmAudioLength = BGMSwitchModel.instance:getReportBgmAudioLength(arg_4_0._bgmCO)
-			arg_4_0._progressTimeSec = 0
+		if preLightMode and curLightMode and preLightMode ~= curLightMode then
+			self._bgmAudioLength = BGMSwitchModel.instance:getReportBgmAudioLength(self._bgmCO)
+			self._progressTimeSec = 0
 		end
 	end
 end
 
-function var_0_0._onTriggerEvent(arg_5_0, arg_5_1)
-	if arg_5_1 == AudioEnum.UI.Pause_MainMusic then
-		TaskDispatcher.cancelTask(arg_5_0._onTick, arg_5_0)
-		arg_5_0:_updateGMProgress()
-	elseif arg_5_1 == AudioEnum.UI.Resume_MainMusic then
-		TaskDispatcher.runRepeat(arg_5_0._onTick, arg_5_0, var_0_1)
-		arg_5_0:_updateGMProgress()
+function BGMSwitchProgress:_onTriggerEvent(audioId)
+	if audioId == AudioEnum.UI.Pause_MainMusic then
+		TaskDispatcher.cancelTask(self._onTick, self)
+		self:_updateGMProgress()
+	elseif audioId == AudioEnum.UI.Resume_MainMusic then
+		TaskDispatcher.runRepeat(self._onTick, self, TickInterval)
+		self:_updateGMProgress()
 	end
 end
 
-function var_0_0._onTick(arg_6_0)
-	local var_6_0 = BGMSwitchController.instance:getPlayingId()
+function BGMSwitchProgress:_onTick()
+	local playingId = BGMSwitchController.instance:getPlayingId()
 
-	if not var_6_0 then
+	if not playingId then
 		return
 	end
 
-	local var_6_1 = AudioMgr.instance:getSourcePlayPosition(var_6_0) / 1000
+	local progressFromSource = AudioMgr.instance:getSourcePlayPosition(playingId) / 1000
 
-	if var_6_1 < 0 then
+	if progressFromSource < 0 then
 		return
 	end
 
-	local var_6_2 = arg_6_0._bgmAudioLength and arg_6_0._bgmAudioLength > 0 and arg_6_0._bgmAudioLength or 10
+	local audioLength = self._bgmAudioLength and self._bgmAudioLength > 0 and self._bgmAudioLength or 10
+	local needChange = progressFromSource < self._progressTimeSec and self._progressTimeSec - progressFromSource > audioLength * 0.5
 
-	if var_6_1 < arg_6_0._progressTimeSec and arg_6_0._progressTimeSec - var_6_1 > var_6_2 * 0.5 or var_6_2 <= var_6_1 then
-		local var_6_3 = BGMSwitchModel.instance:getUsedBgmIdFromServer() == BGMSwitchModel.RandomBgmId
-		local var_6_4 = ViewMgr.instance:isOpen(ViewName.BGMSwitchView)
+	if needChange or audioLength <= progressFromSource then
+		local isServerRandom = BGMSwitchModel.instance:getUsedBgmIdFromServer() == BGMSwitchModel.RandomBgmId
+		local hasOpenBGMView = ViewMgr.instance:isOpen(ViewName.BGMSwitchView)
 
-		arg_6_0._progressTimeSec = 0
+		self._progressTimeSec = 0
 
-		if var_6_3 and not var_6_4 then
+		if isServerRandom and not hasOpenBGMView then
 			BGMSwitchController.instance:checkStartMainBGM(false)
 		end
 
 		BGMSwitchController.instance:dispatchEvent(BGMSwitchEvent.BgmProgressEnd)
 	else
-		arg_6_0._progressTimeSec = var_6_1
+		self._progressTimeSec = progressFromSource
 	end
 
-	arg_6_0:_updateGMProgress()
+	self:_updateGMProgress()
 end
 
-var_0_0.WeatherLight = {
+BGMSwitchProgress.WeatherLight = {
 	"白天",
 	"阴天",
 	"黄昏",
 	"夜晚"
 }
-var_0_0.WeatherEffect = {
+BGMSwitchProgress.WeatherEffect = {
 	"天气无",
 	"阳光明媚",
 	"小雨",
@@ -115,55 +118,55 @@ var_0_0.WeatherEffect = {
 	"夜晚闪电"
 }
 
-function var_0_0._updateGMProgress(arg_7_0)
+function BGMSwitchProgress:_updateGMProgress()
 	if not isDebugBuild then
 		return
 	end
 
 	if PlayerPrefsHelper.getNumber(PlayerPrefsKey.GMToolViewBGMProgress, 0) == 0 then
-		gohelper.setActive(arg_7_0._progressGO, false)
+		gohelper.setActive(self._progressGO, false)
 
 		return
 	end
 
-	if not arg_7_0._progressText then
-		arg_7_0._progressGO = GMController.instance:getGMNode("mainview", ViewMgr.instance:getUILayer(UILayerName.Top))
-		arg_7_0._progressGO.name = "bgm_progress"
+	if not self._progressText then
+		self._progressGO = GMController.instance:getGMNode("mainview", ViewMgr.instance:getUILayer(UILayerName.Top))
+		self._progressGO.name = "bgm_progress"
 
-		if arg_7_0._progressGO then
-			local var_7_0 = gohelper.findChildImage(arg_7_0._progressGO, "#btn_gm")
+		if self._progressGO then
+			local img = gohelper.findChildImage(self._progressGO, "#btn_gm")
 
-			var_7_0.raycastTarget = false
-			var_7_0.color = Color.New(1, 1, 1, 0.3)
+			img.raycastTarget = false
+			img.color = Color.New(1, 1, 1, 0.3)
 
-			recthelper.setWidth(var_7_0.transform, 500)
+			recthelper.setWidth(img.transform, 500)
 
-			arg_7_0._progressText = gohelper.findChildText(arg_7_0._progressGO, "#btn_gm/Text")
+			self._progressText = gohelper.findChildText(self._progressGO, "#btn_gm/Text")
 		end
 	end
 
-	local var_7_1 = arg_7_0._progressTimeSec ~= nil
+	local showUI = self._progressTimeSec ~= nil
 
-	gohelper.setActive(arg_7_0._progressGO, var_7_1)
+	gohelper.setActive(self._progressGO, showUI)
 
-	if var_7_1 and arg_7_0._progressText and arg_7_0._bgmCO then
-		local var_7_2 = ""
+	if showUI and self._progressText and self._bgmCO then
+		local reportStr = ""
 
-		if arg_7_0._bgmCO.id == 1001 then
-			local var_7_3 = WeatherController.instance:getCurrReport()
-			local var_7_4 = var_7_3 and var_7_3.lightMode or 1
-			local var_7_5 = var_7_3 and var_7_3.effect or 1
-			local var_7_6 = var_0_0.WeatherLight[var_7_4] or var_7_4
-			local var_7_7 = var_0_0.WeatherEffect[var_7_5] or var_7_5
+		if self._bgmCO.id == 1001 then
+			local curReport = WeatherController.instance:getCurrReport()
+			local lightMode = curReport and curReport.lightMode or 1
+			local effect = curReport and curReport.effect or 1
+			local lightName = BGMSwitchProgress.WeatherLight[lightMode] or lightMode
+			local effectName = BGMSwitchProgress.WeatherEffect[effect] or effect
 
-			var_7_2 = var_7_6 .. "-" .. var_7_7
+			reportStr = lightName .. "-" .. effectName
 		end
 
-		local var_7_8 = arg_7_0._progressTimeSec > 0 and arg_7_0._progressTimeSec or 0
-		local var_7_9 = arg_7_0._bgmAudioLength
+		local progress = self._progressTimeSec > 0 and self._progressTimeSec or 0
+		local length = self._bgmAudioLength
 
-		arg_7_0._progressText.text = string.format("bgm:%s %s\n%.1f/%.1f s", arg_7_0._bgmCO.audioName, var_7_2, var_7_8, var_7_9)
+		self._progressText.text = string.format("bgm:%s %s\n%.1f/%.1f s", self._bgmCO.audioName, reportStr, progress, length)
 	end
 end
 
-return var_0_0
+return BGMSwitchProgress

@@ -1,30 +1,34 @@
-﻿module("modules.logic.versionactivity.view.VersionActivityNormalStoreGoodsViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity/view/VersionActivityNormalStoreGoodsViewContainer.lua
 
-local var_0_0 = class("VersionActivityNormalStoreGoodsViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity.view.VersionActivityNormalStoreGoodsViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local VersionActivityNormalStoreGoodsViewContainer = class("VersionActivityNormalStoreGoodsViewContainer", BaseViewContainer)
+
+function VersionActivityNormalStoreGoodsViewContainer:buildViews()
 	return {
 		TabViewGroup.New(1, "#go_topright"),
 		VersionActivityNormalStoreGoodsView.New()
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	local var_2_0 = CurrencyEnum.CurrencyType.LeiMiTeBei
+function VersionActivityNormalStoreGoodsViewContainer:buildTabViews(tabContainerId)
+	local costId = CurrencyEnum.CurrencyType.LeiMiTeBei
 
-	if arg_2_0.viewParam then
-		var_2_0 = string.splitToNumber(arg_2_0.viewParam.cost, "#")[2]
+	if self.viewParam then
+		local itemParam = string.splitToNumber(self.viewParam.cost, "#")
+
+		costId = itemParam[2]
 	end
 
 	return {
 		CurrencyView.New({
-			var_2_0
+			costId
 		})
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_3_0)
-	arg_3_0:closeThis()
+function VersionActivityNormalStoreGoodsViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return VersionActivityNormalStoreGoodsViewContainer

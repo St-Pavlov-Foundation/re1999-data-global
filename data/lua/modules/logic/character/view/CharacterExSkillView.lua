@@ -1,501 +1,548 @@
-﻿module("modules.logic.character.view.CharacterExSkillView", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterExSkillView.lua
 
-local var_0_0 = class("CharacterExSkillView", BaseView)
+module("modules.logic.character.view.CharacterExSkillView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebgimg = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bgimg")
-	arg_1_0._simagelefticon = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_lefticon")
-	arg_1_0._simagerighticon = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_righticon")
-	arg_1_0._simagerighticon2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_righticon2")
-	arg_1_0._simagemask = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_mask")
-	arg_1_0._goglowcontainer = gohelper.findChild(arg_1_0.viewGO, "bg/#go_glowcontainer")
-	arg_1_0._golvProgress = gohelper.findChild(arg_1_0.viewGO, "#go_lvProgress")
-	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "materialCost/#go_item")
-	arg_1_0._txtcostnum = gohelper.findChildText(arg_1_0.viewGO, "materialCost/#txt_costnum")
-	arg_1_0._btnup = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_up")
-	arg_1_0._golevelupeffect = gohelper.findChild(arg_1_0.viewGO, "#btn_up/#go_levelupbeffect")
-	arg_1_0._gobtn = gohelper.findChild(arg_1_0.viewGO, "#go_btn")
-	arg_1_0._goskillDetailTipView = gohelper.findChild(arg_1_0.viewGO, "#go_skillDetailTipView")
-	arg_1_0._goarrow = gohelper.findChild(arg_1_0.viewGO, "#go_skillDetailTipView/tipViewBg/#go_arrow")
-	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "#go_skillDetailTipView/skillDetailTipScroll/Viewport/#go_Content")
-	arg_1_0._godescripteList = gohelper.findChild(arg_1_0.viewGO, "#go_skillDetailTipView/skillDetailTipScroll/Viewport/#go_Content/#go_descripteList")
-	arg_1_0._godescitem = gohelper.findChild(arg_1_0.viewGO, "#go_skillDetailTipView/skillDetailTipScroll/Viewport/#go_Content/#go_descripteList/descripteitem")
-	arg_1_0._goBuffContainer = gohelper.findChild(arg_1_0.viewGO, "#go_buffContainer")
-	arg_1_0._goJumpAnimationMask = gohelper.findChild(arg_1_0.viewGO, "#go_jumpAnimationMask")
-	arg_1_0._gotrialtip = gohelper.findChild(arg_1_0.viewGO, "#go_trialtip")
+local CharacterExSkillView = class("CharacterExSkillView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CharacterExSkillView:onInitView()
+	self._simagebgimg = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_bgimg")
+	self._simagelefticon = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_lefticon")
+	self._simagerighticon = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_righticon")
+	self._simagerighticon2 = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_righticon2")
+	self._simagemask = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_mask")
+	self._goglowcontainer = gohelper.findChild(self.viewGO, "bg/#go_glowcontainer")
+	self._golvProgress = gohelper.findChild(self.viewGO, "#go_lvProgress")
+	self._goitem = gohelper.findChild(self.viewGO, "materialCost/#go_item")
+	self._txtcostnum = gohelper.findChildText(self.viewGO, "materialCost/#txt_costnum")
+	self._btnup = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_up")
+	self._golevelupeffect = gohelper.findChild(self.viewGO, "#btn_up/#go_levelupbeffect")
+	self._gobtn = gohelper.findChild(self.viewGO, "#go_btn")
+	self._goskillDetailTipView = gohelper.findChild(self.viewGO, "#go_skillDetailTipView")
+	self._goarrow = gohelper.findChild(self.viewGO, "#go_skillDetailTipView/tipViewBg/#go_arrow")
+	self._goContent = gohelper.findChild(self.viewGO, "#go_skillDetailTipView/skillDetailTipScroll/Viewport/#go_Content")
+	self._godescripteList = gohelper.findChild(self.viewGO, "#go_skillDetailTipView/skillDetailTipScroll/Viewport/#go_Content/#go_descripteList")
+	self._godescitem = gohelper.findChild(self.viewGO, "#go_skillDetailTipView/skillDetailTipScroll/Viewport/#go_Content/#go_descripteList/descripteitem")
+	self._goBuffContainer = gohelper.findChild(self.viewGO, "#go_buffContainer")
+	self._goJumpAnimationMask = gohelper.findChild(self.viewGO, "#go_jumpAnimationMask")
+	self._gotrialtip = gohelper.findChild(self.viewGO, "#go_trialtip")
+	self._gonewdestiny = gohelper.findChild(self.viewGO, "#go_skillDetailTipView/#btn_newdestiny")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnup:AddClickListener(arg_2_0._btnupOnClick, arg_2_0)
+function CharacterExSkillView:addEvents()
+	self._btnup:AddClickListener(self._btnupOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnup:RemoveClickListener()
+function CharacterExSkillView:removeEvents()
+	self._btnup:RemoveClickListener()
 end
 
-var_0_0.NormalDescColor = "#b1b1b1"
-var_0_0.NotHaveDescColor = "#b1b1b1"
-var_0_0.NormalDescColorA = 1
-var_0_0.NotHaveDescColorA = 0.4
+function CharacterExSkillView:_showReshape(isShow)
+	local posY = 0
+	local tarY = 0
 
-function var_0_0._btnupOnClick(arg_4_0)
-	if arg_4_0._enoughCost then
-		HeroRpc.instance:sendHeroUpgradeSkillRequest(arg_4_0.heroId, 3, 1)
+	for i = 1, CharacterEnum.MaxSkillExLevel do
+		local item = self:getDescItem(i)
+		local itemHeight = item:_showReshape(isShow)
+
+		if i == self.exSkillLevel then
+			tarY = posY
+		end
+
+		posY = posY + itemHeight
+	end
+
+	self:rebuildLayout()
+	recthelper.setAnchorY(self._goContent.transform, tarY)
+end
+
+CharacterExSkillView.NormalDescColor = "#b1b1b1"
+CharacterExSkillView.NotHaveDescColor = "#b1b1b1"
+CharacterExSkillView.NormalDescColorA = 1
+CharacterExSkillView.NotHaveDescColorA = 0.4
+
+function CharacterExSkillView:_btnupOnClick()
+	if self._enoughCost then
+		HeroRpc.instance:sendHeroUpgradeSkillRequest(self.heroId, 3, 1)
 	else
 		GameFacade.showToast(ToastEnum.CharacterExSkill)
 	end
 end
 
-function var_0_0._onEscapeBtnClick(arg_5_0)
-	arg_5_0:closeThis()
+function CharacterExSkillView:_onEscapeBtnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0.goCircleNormal1 = gohelper.findChild(arg_6_0.viewGO, "go_skills/#simage_circleup")
-	arg_6_0.goCircleNormal2 = gohelper.findChild(arg_6_0.viewGO, "go_skills/#simage_circledown")
-	arg_6_0.goCircleMax1 = gohelper.findChild(arg_6_0.viewGO, "go_skills/#simage_maxup")
-	arg_6_0.goCircleMax2 = gohelper.findChild(arg_6_0.viewGO, "go_skills/#simage_maxdown")
-	arg_6_0._gocircle1 = gohelper.findChild(arg_6_0.viewGO, "go_skills/decoration/#go_circle1")
-	arg_6_0._gocircle5 = gohelper.findChild(arg_6_0.viewGO, "go_skills/decoration/#go_circle5")
-	arg_6_0._gosignature = gohelper.findChild(arg_6_0.viewGO, "go_skills/signature")
-	arg_6_0._goclickani = gohelper.findChild(arg_6_0.viewGO, "go_skills/click/ani")
-	arg_6_0._gomaxani = gohelper.findChild(arg_6_0.viewGO, "go_skills/max/ani")
-	arg_6_0._simagefulllevel = gohelper.findChildSingleImage(arg_6_0.viewGO, "go_skills/decoration/#simage_fulllevel")
-	arg_6_0._scrollskillDetailTipScroll = gohelper.findChildScrollRect(arg_6_0.viewGO, "#go_skillDetailTipView/skillDetailTipScroll")
+function CharacterExSkillView:_editableInitView()
+	self.goCircleNormal1 = gohelper.findChild(self.viewGO, "go_skills/#simage_circleup")
+	self.goCircleNormal2 = gohelper.findChild(self.viewGO, "go_skills/#simage_circledown")
+	self.goCircleMax1 = gohelper.findChild(self.viewGO, "go_skills/#simage_maxup")
+	self.goCircleMax2 = gohelper.findChild(self.viewGO, "go_skills/#simage_maxdown")
+	self._gocircle1 = gohelper.findChild(self.viewGO, "go_skills/decoration/#go_circle1")
+	self._gocircle5 = gohelper.findChild(self.viewGO, "go_skills/decoration/#go_circle5")
+	self._gosignature = gohelper.findChild(self.viewGO, "go_skills/signature")
+	self._goclickani = gohelper.findChild(self.viewGO, "go_skills/click/ani")
+	self._gomaxani = gohelper.findChild(self.viewGO, "go_skills/max/ani")
+	self._simagefulllevel = gohelper.findChildSingleImage(self.viewGO, "go_skills/decoration/#simage_fulllevel")
+	self._scrollskillDetailTipScroll = gohelper.findChildScrollRect(self.viewGO, "#go_skillDetailTipView/skillDetailTipScroll")
 
-	arg_6_0._scrollskillDetailTipScroll:AddOnValueChanged(arg_6_0._refreshArrow, arg_6_0)
+	self._scrollskillDetailTipScroll:AddOnValueChanged(self._refreshArrow, self)
 
-	arg_6_0.goMaterialCost = gohelper.findChild(arg_6_0.viewGO, "materialCost")
+	self.goMaterialCost = gohelper.findChild(self.viewGO, "materialCost")
 
-	arg_6_0._simagebgimg:LoadImage(ResUrl.getCommonIcon("full/bg_fmand2"))
-	arg_6_0._simagelefticon:LoadImage(ResUrl.getCommonIcon("bg_leftdown"))
-	arg_6_0._simagerighticon:LoadImage(ResUrl.getCommonIcon("bg_rightdown"))
-	arg_6_0._simagerighticon2:LoadImage(ResUrl.getCommonIcon("bg_rightup"))
-	arg_6_0._simagemask:LoadImage(ResUrl.getCommonIcon("full/bg_noise2"))
-	arg_6_0._simagefulllevel:LoadImage(ResUrl.getCharacterExskill("zs_02"))
+	self._simagebgimg:LoadImage(ResUrl.getCommonIcon("full/bg_fmand2"))
+	self._simagelefticon:LoadImage(ResUrl.getCommonIcon("bg_leftdown"))
+	self._simagerighticon:LoadImage(ResUrl.getCommonIcon("bg_rightdown"))
+	self._simagerighticon2:LoadImage(ResUrl.getCommonIcon("bg_rightup"))
+	self._simagemask:LoadImage(ResUrl.getCommonIcon("full/bg_noise2"))
+	self._simagefulllevel:LoadImage(ResUrl.getCharacterExskill("zs_02"))
 
-	arg_6_0.skillContainerGo = gohelper.findChild(arg_6_0.viewGO, "go_skills")
-	arg_6_0.skillCardGoDict = arg_6_0:getUserDataTb_()
+	self.skillContainerGo = gohelper.findChild(self.viewGO, "go_skills")
+	self.skillCardGoDict = self:getUserDataTb_()
 
-	for iter_6_0 = 1, 3 do
-		local var_6_0 = arg_6_0:getUserDataTb_()
-		local var_6_1 = gohelper.findChild(arg_6_0.skillContainerGo, "skillicon" .. iter_6_0)
+	for i = 1, 3 do
+		local skillCardGo = self:getUserDataTb_()
+		local go = gohelper.findChild(self.skillContainerGo, "skillicon" .. i)
 
-		var_6_0.go = var_6_1
-		var_6_0.icon = gohelper.findChildSingleImage(var_6_1, "ani/imgIcon")
-		var_6_0.tagIcon = gohelper.findChildSingleImage(var_6_1, "ani/tag/tagIcon")
-		arg_6_0.skillCardGoDict[iter_6_0] = var_6_0
+		skillCardGo.go = go
+		skillCardGo.icon = gohelper.findChildSingleImage(go, "ani/imgIcon")
+		skillCardGo.tagIcon = gohelper.findChildSingleImage(go, "ani/tag/tagIcon")
+		self.skillCardGoDict[i] = skillCardGo
 	end
 
-	arg_6_0._buffBg = gohelper.findChild(arg_6_0.viewGO, "#go_buffContainer/buff_bg")
-	arg_6_0._buffBgClick = gohelper.getClick(arg_6_0._buffBg)
+	self._buffBg = gohelper.findChild(self.viewGO, "#go_buffContainer/buff_bg")
+	self._buffBgClick = gohelper.getClick(self._buffBg)
 
-	arg_6_0._buffBgClick:AddClickDownListener(arg_6_0.hideBuffContainer, arg_6_0)
+	self._buffBgClick:AddClickDownListener(self.hideBuffContainer, self)
 
-	arg_6_0._jumpAnimationClick = gohelper.getClick(arg_6_0._goJumpAnimationMask)
+	self._jumpAnimationClick = gohelper.getClick(self._goJumpAnimationMask)
 
-	arg_6_0._jumpAnimationClick:AddClickListener(arg_6_0.onJumpAnimationClick, arg_6_0)
+	self._jumpAnimationClick:AddClickListener(self.onJumpAnimationClick, self)
 
-	arg_6_0._goBuffItem = gohelper.findChild(arg_6_0.viewGO, "#go_buffContainer/#go_buffitem")
-	arg_6_0._txtBuffName = gohelper.findChildText(arg_6_0.viewGO, "#go_buffContainer/#go_buffitem/title/txt_name")
-	arg_6_0._goBuffTag = gohelper.findChild(arg_6_0.viewGO, "#go_buffContainer/#go_buffitem/title/txt_name/go_tag")
-	arg_6_0._txtBuffTagName = gohelper.findChildText(arg_6_0.viewGO, "#go_buffContainer/#go_buffitem/title/txt_name/go_tag/bg/txt_tagname")
-	arg_6_0._txtBuffDesc = gohelper.findChildText(arg_6_0.viewGO, "#go_buffContainer/#go_buffitem/txt_desc")
-	arg_6_0.golvList = arg_6_0:getUserDataTb_()
+	self._goBuffItem = gohelper.findChild(self.viewGO, "#go_buffContainer/#go_buffitem")
+	self._txtBuffName = gohelper.findChildText(self.viewGO, "#go_buffContainer/#go_buffitem/title/txt_name")
+	self._goBuffTag = gohelper.findChild(self.viewGO, "#go_buffContainer/#go_buffitem/title/txt_name/go_tag")
+	self._txtBuffTagName = gohelper.findChildText(self.viewGO, "#go_buffContainer/#go_buffitem/title/txt_name/go_tag/bg/txt_tagname")
+	self._txtBuffDesc = gohelper.findChildText(self.viewGO, "#go_buffContainer/#go_buffitem/txt_desc")
+	self.golvList = self:getUserDataTb_()
 
-	for iter_6_1 = 1, CharacterEnum.MaxSkillExLevel do
-		table.insert(arg_6_0.golvList, gohelper.findChild(arg_6_0.viewGO, "#go_lvProgress/#go_lv" .. iter_6_1))
+	for i = 1, CharacterEnum.MaxSkillExLevel do
+		table.insert(self.golvList, gohelper.findChild(self.viewGO, "#go_lvProgress/#go_lv" .. i))
 	end
 
-	gohelper.setActive(arg_6_0._goBuffContainer, false)
-	gohelper.setActive(arg_6_0._godescitem, false)
-	gohelper.setActive(arg_6_0._gosignature, false)
-	gohelper.setActive(arg_6_0._goJumpAnimationMask, false)
+	gohelper.setActive(self._goBuffContainer, false)
+	gohelper.setActive(self._godescitem, false)
+	gohelper.setActive(self._gosignature, false)
+	gohelper.setActive(self._goJumpAnimationMask, false)
 
-	arg_6_0.goSignatureAnimator = arg_6_0._gosignature:GetComponent(typeof(UnityEngine.Animator))
-	arg_6_0.viewGoAnimator = arg_6_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_6_0.viewGoAniEventWrap = arg_6_0.viewGO:GetComponent(typeof(ZProj.AnimationEventWrap))
+	self.goSignatureAnimator = self._gosignature:GetComponent(typeof(UnityEngine.Animator))
+	self.viewGoAnimator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self.viewGoAniEventWrap = self.viewGO:GetComponent(typeof(ZProj.AnimationEventWrap))
 
-	arg_6_0.viewGoAniEventWrap:AddEventListener("end", arg_6_0.onAniEnd, arg_6_0)
-	arg_6_0.viewGoAniEventWrap:AddEventListener("refreshUI", arg_6_0.onAniRefreshUI, arg_6_0)
-	arg_6_0.viewGoAniEventWrap:AddEventListener("onJumpTargetFrame", arg_6_0.onJumpTargetFrame, arg_6_0)
+	self.viewGoAniEventWrap:AddEventListener("end", self.onAniEnd, self)
+	self.viewGoAniEventWrap:AddEventListener("refreshUI", self.onAniRefreshUI, self)
+	self.viewGoAniEventWrap:AddEventListener("onJumpTargetFrame", self.onJumpTargetFrame, self)
 
-	arg_6_0.goClickAnimation = arg_6_0._goclickani:GetComponent(typeof(UnityEngine.Animation))
-	arg_6_0.maxBuffContainerWidth = 570
+	self.goClickAnimation = self._goclickani:GetComponent(typeof(UnityEngine.Animation))
+	self.maxBuffContainerWidth = 570
 end
 
-function var_0_0.initViewParam(arg_7_0)
-	arg_7_0.heroId = arg_7_0.viewParam.heroId
-	arg_7_0._config = HeroConfig.instance:getHeroCO(arg_7_0.heroId)
-	arg_7_0.showAttributeOption = arg_7_0.viewParam.showAttributeOption
-	arg_7_0.fromHeroDetailView = arg_7_0.viewParam.fromHeroDetailView
+function CharacterExSkillView:initViewParam()
+	self.heroId = self.viewParam.heroId
+	self._config = HeroConfig.instance:getHeroCO(self.heroId)
+	self.showAttributeOption = self.viewParam.showAttributeOption
+	self.fromHeroDetailView = self.viewParam.fromHeroDetailView
 
-	if arg_7_0.showAttributeOption == CharacterEnum.showAttributeOption.ShowMin then
-		arg_7_0.exSkillLevel = 0
-	elseif arg_7_0.showAttributeOption == CharacterEnum.showAttributeOption.ShowMax then
-		arg_7_0.exSkillLevel = CharacterEnum.MaxSkillExLevel
+	if self.showAttributeOption == CharacterEnum.showAttributeOption.ShowMin then
+		self.exSkillLevel = 0
+	elseif self.showAttributeOption == CharacterEnum.showAttributeOption.ShowMax then
+		self.exSkillLevel = CharacterEnum.MaxSkillExLevel
 	else
-		arg_7_0.exSkillLevel = (arg_7_0.viewParam.heroMo or HeroModel.instance:getByHeroId(arg_7_0.heroId)).exSkillLevel
+		local heroMo = self.viewParam.heroMo or HeroModel.instance:getByHeroId(self.heroId)
+
+		self.exSkillLevel = heroMo.exSkillLevel
 	end
 
-	arg_7_0._isOwnHero = arg_7_0.viewParam.isOwnHero
-	arg_7_0._hideTrialTip = arg_7_0.viewParam.hideTrialTip
+	self._isOwnHero = self.viewParam.isOwnHero
+	self._hideTrialTip = self.viewParam.hideTrialTip
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0:initViewParam()
-	arg_8_0:_refreshUI()
+function CharacterExSkillView:onOpen()
+	self:initViewParam()
+	self:_refreshUI()
 
-	if arg_8_0:_isSkillLevelTop() then
-		gohelper.setActive(arg_8_0._gosignature, true)
-		arg_8_0.goSignatureAnimator:Play(UIAnimationName.Open)
+	if self:_isSkillLevelTop() then
+		gohelper.setActive(self._gosignature, true)
+		self.goSignatureAnimator:Play(UIAnimationName.Open)
 	end
 
-	if arg_8_0.fromHeroDetailView then
-		arg_8_0.viewContainer:hideHomeBtn()
+	if self.fromHeroDetailView then
+		self.viewContainer:hideHomeBtn()
 	end
 
-	if arg_8_0:_isSkillLevelTop() then
+	if self:_isSkillLevelTop() then
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_ui_mould_opengeneral)
 	else
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_ui_mould_open)
 	end
 
-	arg_8_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_8_0._onHeroExSkillUp, arg_8_0)
-	NavigateMgr.instance:addEscape(ViewName.CharacterExSkillView, arg_8_0._onEscapeBtnClick, arg_8_0)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, self._onHeroExSkillUp, self)
+	NavigateMgr.instance:addEscape(ViewName.CharacterExSkillView, self._onEscapeBtnClick, self)
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
-	arg_9_0:initViewParam()
-	arg_9_0:_refreshUI()
-	gohelper.setActive(arg_9_0._gosignature, arg_9_0:_isSkillLevelTop())
+function CharacterExSkillView:onUpdateParam()
+	self:initViewParam()
+	self:_refreshUI()
+	gohelper.setActive(self._gosignature, self:_isSkillLevelTop())
 end
 
-function var_0_0._refreshUI(arg_10_0)
-	arg_10_0:refreshCircleAnimation()
-	arg_10_0:refreshSkillCardInfo()
-	arg_10_0:refreshExLevel()
-	arg_10_0:showSkillDetail()
+function CharacterExSkillView:_refreshUI()
+	self:refreshCircleAnimation()
+	self:refreshSkillCardInfo()
+	self:refreshExLevel()
+	self:showSkillDetail()
+	self:_refreshReshape()
 
-	local var_10_0 = true
+	local isOwnHero = true
 
-	if arg_10_0.viewParam.heroMo then
-		var_10_0 = arg_10_0.viewParam.heroMo:isOwnHero()
+	if self.viewParam.heroMo then
+		isOwnHero = self.viewParam.heroMo:isOwnHero()
 	end
 
-	if arg_10_0._isOwnHero ~= nil then
-		var_10_0 = arg_10_0._isOwnHero
+	if self._isOwnHero ~= nil then
+		isOwnHero = self._isOwnHero
 	end
 
-	arg_10_0:setSkillLevelTop(arg_10_0:_isSkillLevelTop() and var_10_0)
-	gohelper.setActive(arg_10_0._gotrialtip, not var_10_0 and not arg_10_0._hideTrialTip)
+	self:setSkillLevelTop(self:_isSkillLevelTop() and isOwnHero)
+	gohelper.setActive(self._gotrialtip, not isOwnHero and not self._hideTrialTip)
 
-	if arg_10_0:_isSkillLevelTop() or arg_10_0.fromHeroDetailView or not var_10_0 then
-		arg_10_0:hideItemAndBtn()
+	if self:_isSkillLevelTop() or self.fromHeroDetailView or not isOwnHero then
+		self:hideItemAndBtn()
 	else
-		arg_10_0:showItemAndBtn()
-		arg_10_0:refreshItem()
+		self:showItemAndBtn()
+		self:refreshItem()
 	end
 end
 
-function var_0_0.refreshCircleAnimation(arg_11_0)
-	local var_11_0 = arg_11_0:_isSkillLevelTop()
+function CharacterExSkillView:refreshCircleAnimation()
+	local isTop = self:_isSkillLevelTop()
 
-	gohelper.setActive(arg_11_0.goCircleNormal1, not var_11_0)
-	gohelper.setActive(arg_11_0.goCircleNormal2, not var_11_0)
-	gohelper.setActive(arg_11_0.goCircleMax1, var_11_0)
-	gohelper.setActive(arg_11_0.goCircleMax2, var_11_0)
+	gohelper.setActive(self.goCircleNormal1, not isTop)
+	gohelper.setActive(self.goCircleNormal2, not isTop)
+	gohelper.setActive(self.goCircleMax1, isTop)
+	gohelper.setActive(self.goCircleMax2, isTop)
 end
 
-function var_0_0.refreshSkillCardInfo(arg_12_0)
-	local var_12_0 = SkillConfig.instance:getHeroBaseSkillIdDict(arg_12_0._config.id, true)
-	local var_12_1
-	local var_12_2
+function CharacterExSkillView:refreshSkillCardInfo()
+	local skillIdDict = SkillConfig.instance:getHeroBaseSkillIdDict(self._config.id, true)
+	local skillCo, skillId
 
-	for iter_12_0 = 1, 3 do
-		local var_12_3 = var_12_0[iter_12_0]
+	for i = 1, 3 do
+		skillId = skillIdDict[i]
 
-		if var_12_3 ~= 0 then
-			local var_12_4 = lua_skill.configDict[var_12_3]
+		if skillId ~= 0 then
+			skillCo = lua_skill.configDict[skillId]
 
-			if not var_12_4 then
-				logError(string.format("heroID : %s, skillId not found : %s", arg_12_0._config.id, var_12_3))
+			if not skillCo then
+				logError(string.format("heroID : %s, skillId not found : %s", self._config.id, skillId))
 			end
 
-			arg_12_0.skillCardGoDict[iter_12_0].icon:LoadImage(ResUrl.getSkillIcon(var_12_4.icon))
-			arg_12_0.skillCardGoDict[iter_12_0].tagIcon:LoadImage(ResUrl.getAttributeIcon("attribute_" .. var_12_4.showTag))
+			self.skillCardGoDict[i].icon:LoadImage(ResUrl.getSkillIcon(skillCo.icon))
+			self.skillCardGoDict[i].tagIcon:LoadImage(ResUrl.getAttributeIcon("attribute_" .. skillCo.showTag))
 		end
 
-		gohelper.setActive(arg_12_0.skillCardGoDict[iter_12_0].go.gameObject, var_12_3 ~= 0)
+		gohelper.setActive(self.skillCardGoDict[i].go.gameObject, skillId ~= 0)
 	end
 end
 
-function var_0_0.refreshExLevel(arg_13_0)
-	for iter_13_0 = 1, arg_13_0.exSkillLevel do
-		gohelper.setActive(arg_13_0.golvList[iter_13_0], true)
+function CharacterExSkillView:refreshExLevel()
+	for i = 1, self.exSkillLevel do
+		gohelper.setActive(self.golvList[i], true)
 	end
 
-	for iter_13_1 = arg_13_0.exSkillLevel + 1, CharacterEnum.MaxSkillExLevel do
-		gohelper.setActive(arg_13_0.golvList[iter_13_1], false)
+	for i = self.exSkillLevel + 1, CharacterEnum.MaxSkillExLevel do
+		gohelper.setActive(self.golvList[i], false)
 	end
 end
 
-function var_0_0.setSkillLevelTop(arg_14_0, arg_14_1)
-	if arg_14_1 or arg_14_0.fromHeroDetailView then
-		recthelper.setHeight(arg_14_0._scrollskillDetailTipScroll.transform, 638)
+function CharacterExSkillView:setSkillLevelTop(isTopLevel)
+	if isTopLevel or self.fromHeroDetailView then
+		recthelper.setHeight(self._scrollskillDetailTipScroll.transform, 638)
 	else
-		recthelper.setHeight(arg_14_0._scrollskillDetailTipScroll.transform, 480)
+		recthelper.setHeight(self._scrollskillDetailTipScroll.transform, 480)
 	end
 
-	gohelper.setActive(arg_14_0._simagefulllevel.gameObject, arg_14_1)
-	gohelper.setActive(arg_14_0._gocircle5, arg_14_1)
-	gohelper.setActive(arg_14_0._gocircle1, arg_14_1 == false)
+	gohelper.setActive(self._simagefulllevel.gameObject, isTopLevel)
+	gohelper.setActive(self._gocircle5, isTopLevel)
+	gohelper.setActive(self._gocircle1, isTopLevel == false)
 end
 
-function var_0_0.hideItemAndBtn(arg_15_0)
-	gohelper.setActive(arg_15_0.goMaterialCost, false)
-	gohelper.setActive(arg_15_0._btnup.gameObject, false)
+function CharacterExSkillView:hideItemAndBtn()
+	gohelper.setActive(self.goMaterialCost, false)
+	gohelper.setActive(self._btnup.gameObject, false)
 end
 
-function var_0_0.showItemAndBtn(arg_16_0)
-	gohelper.setActive(arg_16_0.goMaterialCost, true)
-	gohelper.setActive(arg_16_0._btnup.gameObject, true)
+function CharacterExSkillView:showItemAndBtn()
+	gohelper.setActive(self.goMaterialCost, true)
+	gohelper.setActive(self._btnup.gameObject, true)
 end
 
-function var_0_0.refreshItem(arg_17_0)
-	if arg_17_0:_isSkillLevelTop() then
-		gohelper.setActive(arg_17_0.goMaterialCost, false)
+function CharacterExSkillView:refreshItem()
+	if self:_isSkillLevelTop() then
+		gohelper.setActive(self.goMaterialCost, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_17_0.goMaterialCost, true)
+	gohelper.setActive(self.goMaterialCost, true)
 
-	local var_17_0 = SkillConfig.instance:getherolevelexskillCO(arg_17_0.heroId, arg_17_0.exSkillLevel + 1)
+	local exCo = SkillConfig.instance:getherolevelexskillCO(self.heroId, self.exSkillLevel + 1)
 
-	if not arg_17_0._itemIcon then
-		arg_17_0._itemIcon = IconMgr.instance:getCommonItemIcon(arg_17_0._goitem)
+	if not self._itemIcon then
+		self._itemIcon = IconMgr.instance:getCommonItemIcon(self._goitem)
 	end
 
-	local var_17_1 = string.splitToNumber(var_17_0.consume, "#")
+	local itemco = string.splitToNumber(exCo.consume, "#")
 
-	arg_17_0._itemIcon:setMOValue(var_17_1[1], var_17_1[2], var_17_1[3])
-	arg_17_0._itemIcon:isShowCount(false)
+	self._itemIcon:setMOValue(itemco[1], itemco[2], itemco[3])
+	self._itemIcon:isShowCount(false)
 
-	local var_17_2 = ItemModel.instance:getItemQuantity(var_17_1[1], var_17_1[2])
+	local count = ItemModel.instance:getItemQuantity(itemco[1], itemco[2])
 
-	arg_17_0._enoughCost = var_17_2 >= var_17_1[3]
+	self._enoughCost = count >= itemco[3]
 
-	if arg_17_0._enoughCost then
-		arg_17_0._txtcostnum.text = string.format("%s/%s", var_17_2, var_17_1[3])
+	if self._enoughCost then
+		self._txtcostnum.text = string.format("%s/%s", count, itemco[3])
 	else
-		arg_17_0._txtcostnum.text = string.format("<color=#ce4949>%s</color>/%s", var_17_2, var_17_1[3])
+		self._txtcostnum.text = string.format("<color=#ce4949>%s</color>/%s", count, itemco[3])
 	end
 
-	gohelper.setActive(arg_17_0._golevelupeffect, arg_17_0._enoughCost)
+	gohelper.setActive(self._golevelupeffect, self._enoughCost)
 end
 
-function var_0_0._refreshArrow(arg_18_0)
-	if arg_18_0._scrollskillDetailTipScroll.verticalNormalizedPosition > 0.01 then
-		gohelper.setActive(arg_18_0._goarrow, true)
+function CharacterExSkillView:_refreshArrow()
+	if self._scrollskillDetailTipScroll.verticalNormalizedPosition > 0.01 then
+		gohelper.setActive(self._goarrow, true)
 	else
-		gohelper.setActive(arg_18_0._goarrow, false)
+		gohelper.setActive(self._goarrow, false)
 	end
 end
 
-function var_0_0._isSkillLevelTop(arg_19_0)
-	return arg_19_0.exSkillLevel == CharacterEnum.MaxSkillExLevel
+function CharacterExSkillView:_isSkillLevelTop()
+	return self.exSkillLevel == CharacterEnum.MaxSkillExLevel
 end
 
-function var_0_0._onHeroExSkillUp(arg_20_0)
-	arg_20_0.exSkillLevel = (arg_20_0.viewParam.heroMo or HeroModel.instance:getByHeroId(arg_20_0.heroId)).exSkillLevel
+function CharacterExSkillView:_onHeroExSkillUp()
+	local heroMo = self.viewParam.heroMo or HeroModel.instance:getByHeroId(self.heroId)
 
-	arg_20_0:resetJumpValue()
-	gohelper.setActive(arg_20_0._goJumpAnimationMask, true)
+	self.exSkillLevel = heroMo.exSkillLevel
 
-	if arg_20_0:_isSkillLevelTop() then
+	self:resetJumpValue()
+	gohelper.setActive(self._goJumpAnimationMask, true)
+
+	if self:_isSkillLevelTop() then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_mould_succeedspecial)
-		arg_20_0.viewGoAnimator:Play("max", 0, 0)
-		gohelper.setActive(arg_20_0._gosignature, true)
-		arg_20_0.goSignatureAnimator:Play("max", 0, 0)
+		self.viewGoAnimator:Play("max", 0, 0)
+		gohelper.setActive(self._gosignature, true)
+		self.goSignatureAnimator:Play("max", 0, 0)
 	else
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_mould_succeedgeneral)
-		arg_20_0.viewGoAnimator:Play("nomal", 0, 0)
+		self.viewGoAnimator:Play("nomal", 0, 0)
 	end
 
-	gohelper.setActive(arg_20_0.golvList[arg_20_0.exSkillLevel], true)
+	gohelper.setActive(self.golvList[self.exSkillLevel], true)
 
-	arg_20_0.lvAnimator = arg_20_0.golvList[arg_20_0.exSkillLevel]:GetComponent(typeof(UnityEngine.Animator))
+	self.lvAnimator = self.golvList[self.exSkillLevel]:GetComponent(typeof(UnityEngine.Animator))
 
-	arg_20_0.lvAnimator:Play(UIAnimationName.Click, 0, 0)
-	arg_20_0._descList[arg_20_0.exSkillLevel]:playHeroExSkillUPAnimation()
+	self.lvAnimator:Play(UIAnimationName.Click, 0, 0)
+	self._descList[self.exSkillLevel]:playHeroExSkillUPAnimation()
 end
 
-function var_0_0.onAniEnd(arg_21_0)
-	gohelper.setActive(arg_21_0._goJumpAnimationMask, false)
-	gohelper.setActive(arg_21_0._goclickani, true)
-	gohelper.setActive(arg_21_0._gomaxani, true)
+function CharacterExSkillView:onAniEnd()
+	gohelper.setActive(self._goJumpAnimationMask, false)
+	gohelper.setActive(self._goclickani, true)
+	gohelper.setActive(self._gomaxani, true)
 end
 
-function var_0_0.onAniRefreshUI(arg_22_0)
-	arg_22_0:_refreshUI()
+function CharacterExSkillView:onAniRefreshUI()
+	self:_refreshUI()
 end
 
-function var_0_0.onJumpTargetFrame(arg_23_0)
-	arg_23_0.inPreTargetFrame = false
+function CharacterExSkillView:onJumpTargetFrame()
+	self.inPreTargetFrame = false
 end
 
-function var_0_0.resetJumpValue(arg_24_0)
-	arg_24_0.inPreTargetFrame = true
-	arg_24_0.jumped = false
+function CharacterExSkillView:resetJumpValue()
+	self.inPreTargetFrame = true
+	self.jumped = false
 end
 
-function var_0_0.getExSkillTipInfo(arg_25_0, arg_25_1, arg_25_2)
-	local var_25_0 = SkillConfig.instance:getherolevelexskillCO(arg_25_1, arg_25_2)
+function CharacterExSkillView:getExSkillTipInfo(heroId, exSkillLevel)
+	local co = SkillConfig.instance:getherolevelexskillCO(heroId, exSkillLevel)
 
-	if not var_25_0 then
+	if not co then
 		return
 	end
 
-	local var_25_1 = var_25_0.skillEx
-	local var_25_2 = lua_skill.configDict[var_25_1]
+	local exskillid = co.skillEx
+	local skillinfo = lua_skill.configDict[exskillid]
 
-	return var_25_2.name, var_25_2.desc, var_25_2.icon, var_25_2.desc_art
+	return skillinfo.name, skillinfo.desc, skillinfo.icon, skillinfo.desc_art
 end
 
-function var_0_0.showSkillDetail(arg_26_0)
-	local var_26_0 = 0
-	local var_26_1 = 0
+function CharacterExSkillView:showSkillDetail()
+	local posY = 0
+	local tarY = 0
 
-	for iter_26_0 = 1, CharacterEnum.MaxSkillExLevel do
-		local var_26_2 = SkillConfig.instance:getherolevelexskillCO(arg_26_0.heroId, iter_26_0)
-		local var_26_3 = arg_26_0:addDescItem(iter_26_0, var_26_2)
+	for i = 1, CharacterEnum.MaxSkillExLevel do
+		local item = self:getDescItem(i)
+		local itemHeight = item:updateInfo(self, self.heroId, i, self.exSkillLevel, self.fromHeroDetailView, self._isShowReshape)
 
-		if iter_26_0 == arg_26_0.exSkillLevel then
-			var_26_1 = var_26_0
+		if i == self.exSkillLevel then
+			tarY = posY
 		end
 
-		var_26_0 = var_26_0 + var_26_3
+		posY = posY + itemHeight
 	end
 
-	arg_26_0._goContent:SetActive(true)
-	arg_26_0:rebuildLayout()
-	recthelper.setAnchorY(arg_26_0._goContent.transform, var_26_1)
+	self._goContent:SetActive(true)
+	self:rebuildLayout()
+	recthelper.setAnchorY(self._goContent.transform, tarY)
 end
 
-function var_0_0.rebuildLayout(arg_27_0)
-	ZProj.UGUIHelper.RebuildLayout(arg_27_0._godescripteList.transform)
-	arg_27_0:_refreshArrow()
+function CharacterExSkillView:rebuildLayout()
+	ZProj.UGUIHelper.RebuildLayout(self._godescripteList.transform)
+	self:_refreshArrow()
 end
 
-function var_0_0.addDescItem(arg_28_0, arg_28_1, arg_28_2)
-	arg_28_0._descList = arg_28_0._descList or arg_28_0:getUserDataTb_()
+function CharacterExSkillView:getDescItem(level)
+	self._descList = self._descList or self:getUserDataTb_()
 
-	local var_28_0 = arg_28_0._descList[arg_28_1]
+	local item = self._descList[level]
 
-	if not var_28_0 then
-		var_28_0 = CharacterSkillDescripteNew.New()
+	if not item then
+		item = CharacterSkillDescripteNew.New()
 
-		local var_28_1 = gohelper.clone(arg_28_0._godescitem, arg_28_0._godescripteList)
+		local itemGo = gohelper.clone(self._godescitem, self._godescripteList)
 
-		var_28_1:SetActive(true)
-		var_28_0:initView(var_28_1)
+		itemGo:SetActive(true)
+		item:initView(itemGo)
 
-		arg_28_0._descList[arg_28_1] = var_28_0
+		self._descList[level] = item
 	end
 
-	return (var_28_0:updateInfo(arg_28_0, arg_28_0.heroId, arg_28_1, arg_28_0.exSkillLevel, arg_28_0.fromHeroDetailView))
+	return item
 end
 
-function var_0_0.showBuffContainer(arg_29_0, arg_29_1, arg_29_2, arg_29_3)
-	gohelper.setActive(arg_29_0._goBuffContainer, true)
+function CharacterExSkillView:showBuffContainer(skillName, skillDesc, clickPosition)
+	gohelper.setActive(self._goBuffContainer, true)
 
-	arg_29_0.buffItemWidth = GameUtil.getTextWidthByLine(arg_29_0._txtBuffDesc, arg_29_2, 24)
-	arg_29_0.buffItemWidth = arg_29_0.buffItemWidth + 70
+	self.buffItemWidth = GameUtil.getTextWidthByLine(self._txtBuffDesc, skillDesc, 24)
+	self.buffItemWidth = self.buffItemWidth + 70
 
-	if arg_29_0.buffItemWidth > arg_29_0.maxBuffContainerWidth then
-		arg_29_0.buffItemWidth = arg_29_0.maxBuffContainerWidth
+	if self.buffItemWidth > self.maxBuffContainerWidth then
+		self.buffItemWidth = self.maxBuffContainerWidth
 	end
 
-	arg_29_0._txtBuffName.text = arg_29_1
-	arg_29_0._txtBuffDesc.text = arg_29_2
+	self._txtBuffName.text = skillName
+	self._txtBuffDesc.text = skillDesc
 
-	local var_29_0 = FightConfig.instance:getBuffTag(arg_29_1)
+	local buffTagName = FightConfig.instance:getBuffTag(skillName)
 
-	gohelper.setActive(arg_29_0._goBuffTag, not string.nilorempty(var_29_0))
+	gohelper.setActive(self._goBuffTag, not string.nilorempty(buffTagName))
 
-	arg_29_0._txtBuffTagName.text = var_29_0
+	self._txtBuffTagName.text = buffTagName
 
-	local var_29_1 = recthelper.screenPosToAnchorPos(arg_29_3, arg_29_0.viewGO.transform)
+	local reallyClickPosition = recthelper.screenPosToAnchorPos(clickPosition, self.viewGO.transform)
 
-	recthelper.setAnchor(arg_29_0._goBuffItem.transform, var_29_1.x - 20, var_29_1.y)
+	recthelper.setAnchor(self._goBuffItem.transform, reallyClickPosition.x - 20, reallyClickPosition.y)
 end
 
-function var_0_0.hideBuffContainer(arg_30_0)
-	gohelper.setActive(arg_30_0._goBuffContainer, false)
+function CharacterExSkillView:hideBuffContainer()
+	gohelper.setActive(self._goBuffContainer, false)
 end
 
-function var_0_0.getShowAttributeOption(arg_31_0)
-	return arg_31_0.showAttributeOption
+function CharacterExSkillView:getShowAttributeOption()
+	return self.showAttributeOption
 end
 
-function var_0_0.onJumpAnimationClick(arg_32_0)
-	if arg_32_0.jumped then
+function CharacterExSkillView:onJumpAnimationClick()
+	if self.jumped then
 		return
 	end
 
-	if not arg_32_0.inPreTargetFrame then
+	if not self.inPreTargetFrame then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.stop_ui_mould)
 
-	arg_32_0.jumped = true
+	self.jumped = true
 
-	if arg_32_0:_isSkillLevelTop() then
-		arg_32_0.viewGoAnimator:Play("max", 0, 0.7913043478260869)
-		arg_32_0.goSignatureAnimator:Play("max", 0, 0.9479166666666666)
+	if self:_isSkillLevelTop() then
+		self.viewGoAnimator:Play("max", 0, 0.7913043478260869)
+		self.goSignatureAnimator:Play("max", 0, 0.9479166666666666)
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_mould_skipspecial)
 	else
-		arg_32_0.viewGoAnimator:Play("nomal", 0, 0.7913043478260869)
+		self.viewGoAnimator:Play("nomal", 0, 0.7913043478260869)
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_mould_skipgeneral)
 	end
 
-	arg_32_0.goClickAnimation:Stop()
-	gohelper.setActive(arg_32_0._goclickani, false)
-	gohelper.setActive(arg_32_0._gomaxani, false)
-	gohelper.setActive(arg_32_0.golvList[arg_32_0.exSkillLevel], true)
-	arg_32_0.lvAnimator:Play(UIAnimationName.Click, 0, 1)
-	arg_32_0._descList[arg_32_0.exSkillLevel]:jumpAnimation()
-	gohelper.setActive(arg_32_0._goJumpAnimationMask, false)
+	self.goClickAnimation:Stop()
+	gohelper.setActive(self._goclickani, false)
+	gohelper.setActive(self._gomaxani, false)
+	gohelper.setActive(self.golvList[self.exSkillLevel], true)
+	self.lvAnimator:Play(UIAnimationName.Click, 0, 1)
+	self._descList[self.exSkillLevel]:jumpAnimation()
+	gohelper.setActive(self._goJumpAnimationMask, false)
 end
 
-function var_0_0.onClose(arg_33_0)
-	for iter_33_0, iter_33_1 in ipairs(arg_33_0._descList) do
-		iter_33_1:onClose()
+function CharacterExSkillView:_refreshReshape()
+	local heroMo = self.viewParam.heroMo
+	local isEquipReshapeAttr = false
+
+	if heroMo and heroMo.destinyStoneMo then
+		local stoneCo = heroMo.destinyStoneMo:getEquipReshapeStoneCo()
+
+		if stoneCo ~= nil then
+			isEquipReshapeAttr = true
+		end
+	end
+
+	local rot = isEquipReshapeAttr and 180 or 0
+	local y = isEquipReshapeAttr and -300 or -156.6
+
+	self:_showReshape(isEquipReshapeAttr)
+	gohelper.setActive(self._gonewdestiny.gameObject, isEquipReshapeAttr)
+	transformhelper.setLocalRotation(self._golvProgress.transform, rot, 0, 0)
+	recthelper.setAnchorY(self._golvProgress.transform, y)
+end
+
+function CharacterExSkillView:onClose()
+	for _, descItem in ipairs(self._descList) do
+		descItem:onClose()
 	end
 end
 
-function var_0_0.onDestroyView(arg_34_0)
-	arg_34_0._buffBgClick:RemoveClickDownListener()
-	arg_34_0._jumpAnimationClick:RemoveClickListener()
-	arg_34_0._scrollskillDetailTipScroll:RemoveOnValueChanged()
-	arg_34_0._simagebgimg:UnLoadImage()
-	arg_34_0._simagelefticon:UnLoadImage()
-	arg_34_0._simagerighticon:UnLoadImage()
-	arg_34_0._simagerighticon2:UnLoadImage()
-	arg_34_0._simagemask:UnLoadImage()
-	arg_34_0._simagefulllevel:UnLoadImage()
-	arg_34_0.viewGoAniEventWrap:RemoveAllEventListener()
+function CharacterExSkillView:onDestroyView()
+	self._buffBgClick:RemoveClickDownListener()
+	self._jumpAnimationClick:RemoveClickListener()
+	self._scrollskillDetailTipScroll:RemoveOnValueChanged()
+	self._simagebgimg:UnLoadImage()
+	self._simagelefticon:UnLoadImage()
+	self._simagerighticon:UnLoadImage()
+	self._simagerighticon2:UnLoadImage()
+	self._simagemask:UnLoadImage()
+	self._simagefulllevel:UnLoadImage()
+	self.viewGoAniEventWrap:RemoveAllEventListener()
 
-	for iter_34_0, iter_34_1 in pairs(arg_34_0.skillCardGoDict) do
-		iter_34_1.icon:UnLoadImage()
-		iter_34_1.tagIcon:UnLoadImage()
+	for _, skillCardGo in pairs(self.skillCardGoDict) do
+		skillCardGo.icon:UnLoadImage()
+		skillCardGo.tagIcon:UnLoadImage()
 	end
 end
 
-return var_0_0
+return CharacterExSkillView

@@ -1,69 +1,71 @@
-﻿module("modules.logic.versionactivity2_2.act169.view.SummonNewCustomPickChoiceView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/act169/view/SummonNewCustomPickChoiceView.lua
 
-local var_0_0 = class("SummonNewCustomPickChoiceView", BaseView)
+module("modules.logic.versionactivity2_2.act169.view.SummonNewCustomPickChoiceView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg")
-	arg_1_0._simagedecbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg/#simage_decbg")
-	arg_1_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_confirm")
-	arg_1_0._btncancel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_cancel")
-	arg_1_0._scrollrule = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_rule")
-	arg_1_0._goexskill = gohelper.findChild(arg_1_0.viewGO, "#scroll_rule/Viewport/content/selfselectsixchoiceitem/role/#go_exskill")
-	arg_1_0._imageexskill = gohelper.findChildImage(arg_1_0.viewGO, "#scroll_rule/Viewport/content/selfselectsixchoiceitem/role/#go_exskill/#image_exskill")
-	arg_1_0._goclick = gohelper.findChild(arg_1_0.viewGO, "#scroll_rule/Viewport/content/selfselectsixchoiceitem/select/#go_click")
+local SummonNewCustomPickChoiceView = class("SummonNewCustomPickChoiceView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SummonNewCustomPickChoiceView:onInitView()
+	self._simagefullbg = gohelper.findChildSingleImage(self.viewGO, "#simage_fullbg")
+	self._simagedecbg = gohelper.findChildSingleImage(self.viewGO, "#simage_fullbg/#simage_decbg")
+	self._btnconfirm = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_confirm")
+	self._btncancel = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_cancel")
+	self._scrollrule = gohelper.findChildScrollRect(self.viewGO, "#scroll_rule")
+	self._goexskill = gohelper.findChild(self.viewGO, "#scroll_rule/Viewport/content/selfselectsixchoiceitem/role/#go_exskill")
+	self._imageexskill = gohelper.findChildImage(self.viewGO, "#scroll_rule/Viewport/content/selfselectsixchoiceitem/role/#go_exskill/#image_exskill")
+	self._goclick = gohelper.findChild(self.viewGO, "#scroll_rule/Viewport/content/selfselectsixchoiceitem/select/#go_click")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnconfirm:AddClickListener(arg_2_0._btnconfirmOnClick, arg_2_0)
-	arg_2_0._btncancel:AddClickListener(arg_2_0._btncancelOnClick, arg_2_0)
-	arg_2_0:addEventCb(SummonNewCustomPickViewController.instance, SummonNewCustomPickEvent.OnGetReward, arg_2_0.handleCusomPickCompleted, arg_2_0)
-	arg_2_0:addEventCb(SummonNewCustomPickChoiceController.instance, SummonNewCustomPickEvent.OnCustomPickListChanged, arg_2_0.refreshUI, arg_2_0)
+function SummonNewCustomPickChoiceView:addEvents()
+	self._btnconfirm:AddClickListener(self._btnconfirmOnClick, self)
+	self._btncancel:AddClickListener(self._btncancelOnClick, self)
+	self:addEventCb(SummonNewCustomPickViewController.instance, SummonNewCustomPickEvent.OnGetReward, self.handleCusomPickCompleted, self)
+	self:addEventCb(SummonNewCustomPickChoiceController.instance, SummonNewCustomPickEvent.OnCustomPickListChanged, self.refreshUI, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnconfirm:RemoveClickListener()
-	arg_3_0._btncancel:RemoveClickListener()
-	arg_3_0:removeEventCb(SummonNewCustomPickViewController.instance, SummonNewCustomPickEvent.OnGetReward, arg_3_0.handleCusomPickCompleted, arg_3_0)
-	arg_3_0:removeEventCb(SummonNewCustomPickChoiceController.instance, SummonNewCustomPickEvent.OnCustomPickListChanged, arg_3_0.refreshUI, arg_3_0)
+function SummonNewCustomPickChoiceView:removeEvents()
+	self._btnconfirm:RemoveClickListener()
+	self._btncancel:RemoveClickListener()
+	self:removeEventCb(SummonNewCustomPickViewController.instance, SummonNewCustomPickEvent.OnGetReward, self.handleCusomPickCompleted, self)
+	self:removeEventCb(SummonNewCustomPickChoiceController.instance, SummonNewCustomPickEvent.OnCustomPickListChanged, self.refreshUI, self)
 end
 
-function var_0_0._btnconfirmOnClick(arg_4_0)
+function SummonNewCustomPickChoiceView:_btnconfirmOnClick()
 	SummonNewCustomPickChoiceController.instance:trySendChoice()
 end
 
-function var_0_0._btncancelOnClick(arg_5_0)
-	arg_5_0:closeThis()
+function SummonNewCustomPickChoiceView:_btncancelOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_6_0)
+function SummonNewCustomPickChoiceView:_editableInitView()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0:refreshUI()
+function SummonNewCustomPickChoiceView:onOpen()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_8_0)
-	local var_8_0 = SummonNewCustomPickChoiceListModel.instance:getSelectCount()
-	local var_8_1 = SummonNewCustomPickChoiceListModel.instance:getMaxSelectCount()
+function SummonNewCustomPickChoiceView:refreshUI()
+	local selectCount = SummonNewCustomPickChoiceListModel.instance:getSelectCount()
+	local maxCount = SummonNewCustomPickChoiceListModel.instance:getMaxSelectCount()
 
-	ZProj.UGUIHelper.SetGrayscale(arg_8_0._btnconfirm.gameObject, var_8_0 ~= var_8_1)
+	ZProj.UGUIHelper.SetGrayscale(self._btnconfirm.gameObject, selectCount ~= maxCount)
 end
 
-function var_0_0.onClose(arg_9_0)
+function SummonNewCustomPickChoiceView:onClose()
 	SummonNewCustomPickChoiceListModel.instance:clearSelectIds()
 end
 
-function var_0_0.handleCusomPickCompleted(arg_10_0)
-	arg_10_0:closeThis()
+function SummonNewCustomPickChoiceView:handleCusomPickCompleted()
+	self:closeThis()
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function SummonNewCustomPickChoiceView:onDestroyView()
 	return
 end
 
-return var_0_0
+return SummonNewCustomPickChoiceView

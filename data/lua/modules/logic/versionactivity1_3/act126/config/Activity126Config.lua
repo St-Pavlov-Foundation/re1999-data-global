@@ -1,12 +1,14 @@
-﻿module("modules.logic.versionactivity1_3.act126.config.Activity126Config", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/act126/config/Activity126Config.lua
 
-local var_0_0 = class("Activity126Config", BaseConfig)
+module("modules.logic.versionactivity1_3.act126.config.Activity126Config", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local Activity126Config = class("Activity126Config", BaseConfig)
+
+function Activity126Config:ctor()
 	return
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function Activity126Config:reqConfigNames()
 	return {
 		"activity126_buff",
 		"activity126_const",
@@ -18,46 +20,46 @@ function var_0_0.reqConfigNames(arg_2_0)
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity126_dreamland" then
-		arg_3_0:_dealDreamlandTask()
+function Activity126Config:onConfigLoaded(configName, configTable)
+	if configName == "activity126_dreamland" then
+		self:_dealDreamlandTask()
 	end
 end
 
-function var_0_0.getConst(arg_4_0, arg_4_1, arg_4_2)
-	return lua_activity126_const.configDict[arg_4_1][arg_4_2]
+function Activity126Config:getConst(activityId, id)
+	return lua_activity126_const.configDict[activityId][id]
 end
 
-function var_0_0.getHoroscopeConfig(arg_5_0, arg_5_1, arg_5_2)
-	return lua_activity126_horoscope.configDict[arg_5_2][arg_5_1]
+function Activity126Config:getHoroscopeConfig(activityId, id)
+	return lua_activity126_horoscope.configDict[id][activityId]
 end
 
-function var_0_0.getStarConfig(arg_6_0, arg_6_1, arg_6_2)
-	return lua_activity126_star.configDict[arg_6_2][arg_6_1]
+function Activity126Config:getStarConfig(activityId, id)
+	return lua_activity126_star.configDict[id][activityId]
 end
 
-function var_0_0._dealDreamlandTask(arg_7_0)
-	arg_7_0._taskDic = {}
+function Activity126Config:_dealDreamlandTask()
+	self._taskDic = {}
 
-	for iter_7_0, iter_7_1 in ipairs(lua_activity126_dreamland.configList) do
-		local var_7_0 = string.splitToNumber(iter_7_1.battleIds, "#")
+	for i, v in ipairs(lua_activity126_dreamland.configList) do
+		local battleIdArr = string.splitToNumber(v.battleIds, "#")
 
-		for iter_7_2, iter_7_3 in ipairs(var_7_0) do
-			arg_7_0._taskDic[iter_7_3] = iter_7_1
+		for index, battleId in ipairs(battleIdArr) do
+			self._taskDic[battleId] = v
 		end
 	end
 end
 
-function var_0_0.getDramlandTask(arg_8_0, arg_8_1)
-	if arg_8_0._taskeDic then
-		return arg_8_0._taskDic[arg_8_1]
+function Activity126Config:getDramlandTask(battleId)
+	if self._taskeDic then
+		return self._taskDic[battleId]
 	end
 
-	arg_8_0:_dealDreamlandTask()
+	self:_dealDreamlandTask()
 
-	return arg_8_0._taskDic[arg_8_1]
+	return self._taskDic[battleId]
 end
 
-var_0_0.instance = var_0_0.New()
+Activity126Config.instance = Activity126Config.New()
 
-return var_0_0
+return Activity126Config

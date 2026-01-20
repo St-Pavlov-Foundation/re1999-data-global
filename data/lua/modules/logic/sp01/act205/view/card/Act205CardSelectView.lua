@@ -1,185 +1,191 @@
-﻿module("modules.logic.sp01.act205.view.card.Act205CardSelectView", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/act205/view/card/Act205CardSelectView.lua
 
-local var_0_0 = class("Act205CardSelectView", BaseView)
-local var_0_1 = {
+module("modules.logic.sp01.act205.view.card.Act205CardSelectView", package.seeall)
+
+local Act205CardSelectView = class("Act205CardSelectView", BaseView)
+local ViewStage = {
 	PlayerSelectCard = 2,
 	ShowEnemyCard = 1
 }
-local var_0_2 = "Act205CardSelectViewConfirmSelect"
+local AnimBlockKey = "Act205CardSelectViewConfirmSelect"
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gomask = gohelper.findChild(arg_1_0.viewGO, "BG/Mask")
-	arg_1_0._goenemyCards = gohelper.findChild(arg_1_0.viewGO, "Enemy/#go_enemyCards")
-	arg_1_0._goplayer = gohelper.findChild(arg_1_0.viewGO, "Self")
-	arg_1_0._goplayerCards = gohelper.findChild(arg_1_0.viewGO, "Self/#go_playerCards")
-	arg_1_0._txtWeaponNum = gohelper.findChildText(arg_1_0.viewGO, "Self/txt_Selected/#txt_WeaponNum")
-	arg_1_0._txtRoleNum = gohelper.findChildText(arg_1_0.viewGO, "Self/txt_Selected/#txt_RoleNum")
-	arg_1_0._btnStart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Start")
-	arg_1_0._goNext = gohelper.findChild(arg_1_0.viewGO, "#btn_Start/#go_Next")
-	arg_1_0._goStart = gohelper.findChild(arg_1_0.viewGO, "#btn_Start/#go_Start")
-	arg_1_0._golight2 = gohelper.findChild(arg_1_0.viewGO, "#btn_Start/stepIndexContent/#go_stepIndex2/go_light")
-	arg_1_0._godesc = gohelper.findChild(arg_1_0.viewGO, "Info/image_DescrBG")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "Info/image_DescrBG/#txt_InfoDescr")
-	arg_1_0._btnrule = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_rule")
+function Act205CardSelectView:onInitView()
+	self._gomask = gohelper.findChild(self.viewGO, "BG/Mask")
+	self._goenemyCards = gohelper.findChild(self.viewGO, "Enemy/#go_enemyCards")
+	self._goplayer = gohelper.findChild(self.viewGO, "Self")
+	self._goplayerCards = gohelper.findChild(self.viewGO, "Self/#go_playerCards")
+	self._txtWeaponNum = gohelper.findChildText(self.viewGO, "Self/txt_Selected/#txt_WeaponNum")
+	self._txtRoleNum = gohelper.findChildText(self.viewGO, "Self/txt_Selected/#txt_RoleNum")
+	self._btnStart = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Start")
+	self._goNext = gohelper.findChild(self.viewGO, "#btn_Start/#go_Next")
+	self._goStart = gohelper.findChild(self.viewGO, "#btn_Start/#go_Start")
+	self._golight2 = gohelper.findChild(self.viewGO, "#btn_Start/stepIndexContent/#go_stepIndex2/go_light")
+	self._godesc = gohelper.findChild(self.viewGO, "Info/image_DescrBG")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "Info/image_DescrBG/#txt_InfoDescr")
+	self._btnrule = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_rule")
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnStart:AddClickListener(arg_2_0._btnStartOnClick, arg_2_0)
-	arg_2_0._btnrule:AddClickListener(arg_2_0._btnruleOnClick, arg_2_0)
-	arg_2_0:addEventCb(Act205CardController.instance, Act205Event.PlayerSelectCard, arg_2_0._onSelectedCard, arg_2_0)
+function Act205CardSelectView:addEvents()
+	self._btnStart:AddClickListener(self._btnStartOnClick, self)
+	self._btnrule:AddClickListener(self._btnruleOnClick, self)
+	self:addEventCb(Act205CardController.instance, Act205Event.PlayerSelectCard, self._onSelectedCard, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnStart:RemoveClickListener()
-	arg_3_0._btnrule:RemoveClickListener()
-	arg_3_0:removeEventCb(Act205CardController.instance, Act205Event.PlayerSelectCard, arg_3_0._onSelectedCard, arg_3_0)
+function Act205CardSelectView:removeEvents()
+	self._btnStart:RemoveClickListener()
+	self._btnrule:RemoveClickListener()
+	self:removeEventCb(Act205CardController.instance, Act205Event.PlayerSelectCard, self._onSelectedCard, self)
 end
 
-function var_0_0._btnStartOnClick(arg_4_0)
-	if arg_4_0._viewStage == var_0_1.ShowEnemyCard then
-		arg_4_0:_enterNextStage()
-	elseif arg_4_0._viewStage == var_0_1.PlayerSelectCard then
-		if Act205CardController.instance:checkPkPoint() then
-			arg_4_0:playAnim("close", arg_4_0._openCardShowAfterCloseAnim, arg_4_0)
+function Act205CardSelectView:_btnStartOnClick()
+	if self._viewStage == ViewStage.ShowEnemyCard then
+		self:_enterNextStage()
+	elseif self._viewStage == ViewStage.PlayerSelectCard then
+		local result = Act205CardController.instance:checkPkPoint()
+
+		if result then
+			self:playAnim("close", self._openCardShowAfterCloseAnim, self)
 		end
 	else
-		arg_4_0:setViewStage()
+		self:setViewStage()
 	end
 end
 
-function var_0_0._openCardShowAfterCloseAnim(arg_5_0)
+function Act205CardSelectView:_openCardShowAfterCloseAnim()
 	Act205CardController.instance:openCardShowView()
 end
 
-function var_0_0._btnruleOnClick(arg_6_0)
+function Act205CardSelectView:_btnruleOnClick()
 	Act205Controller.instance:openRuleTipsView()
 end
 
-function var_0_0._onSelectedCard(arg_7_0)
-	arg_7_0:refreshSelectedCard()
+function Act205CardSelectView:_onSelectedCard()
+	self:refreshSelectedCard()
 end
 
-function var_0_0._enterNextStage(arg_8_0)
-	arg_8_0:setViewStage(var_0_1.PlayerSelectCard, true)
+function Act205CardSelectView:_enterNextStage()
+	self:setViewStage(ViewStage.PlayerSelectCard, true)
 end
 
-function var_0_0._editableInitView(arg_9_0)
-	arg_9_0._animatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_9_0.viewGO)
+function Act205CardSelectView:_editableInitView()
+	self._animatorPlayer = ZProj.ProjAnimatorPlayer.Get(self.viewGO)
 
-	local var_9_0 = arg_9_0.viewContainer:getSetting().otherRes[1]
+	local cardItemPath = self.viewContainer:getSetting().otherRes[1]
 
-	arg_9_0._goCardItem = arg_9_0:getResInst(var_9_0, arg_9_0.viewGO, "cardItem")
+	self._goCardItem = self:getResInst(cardItemPath, self.viewGO, "cardItem")
 
-	gohelper.setActive(arg_9_0._goCardItem, false)
-	arg_9_0:setViewStage()
+	gohelper.setActive(self._goCardItem, false)
+	self:setViewStage()
 end
 
-function var_0_0.setViewStage(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_0._viewStage = arg_10_1 or var_0_1.ShowEnemyCard
+function Act205CardSelectView:setViewStage(stage, needPlay)
+	self._viewStage = stage or ViewStage.ShowEnemyCard
 
-	arg_10_0:refreshViewStage(arg_10_2)
+	self:refreshViewStage(needPlay)
 end
 
-function var_0_0.onUpdateParam(arg_11_0)
+function Act205CardSelectView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_12_0)
-	local var_12_0 = Act205CardController.instance:getEnemyCardIdList()
+function Act205CardSelectView:onOpen()
+	local enemyCardList = Act205CardController.instance:getEnemyCardIdList()
 
-	gohelper.CreateObjList(arg_12_0, arg_12_0._onEnemyCardItemCreated, var_12_0, arg_12_0._goenemyCards, arg_12_0._goCardItem, Act205CardItem)
+	gohelper.CreateObjList(self, self._onEnemyCardItemCreated, enemyCardList, self._goenemyCards, self._goCardItem, Act205CardItem)
 
-	local var_12_1 = Act205CardController.instance:getPlayerCardIdList()
+	local playerCardList = Act205CardController.instance:getPlayerCardIdList()
 
-	gohelper.CreateObjList(arg_12_0, arg_12_0._onPlayerCardItemCreated, var_12_1, arg_12_0._goplayerCards, arg_12_0._goCardItem, Act205CardItem)
+	gohelper.CreateObjList(self, self._onPlayerCardItemCreated, playerCardList, self._goplayerCards, self._goCardItem, Act205CardItem)
 end
 
-function var_0_0._onEnemyCardItemCreated(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	arg_13_1:setData(arg_13_2)
+function Act205CardSelectView:_onEnemyCardItemCreated(obj, data, index)
+	obj:setData(data)
 end
 
-function var_0_0._onPlayerCardItemCreated(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	arg_14_1:setData(arg_14_2, true)
+function Act205CardSelectView:_onPlayerCardItemCreated(obj, data, index)
+	obj:setData(data, true)
 end
 
-function var_0_0.refreshViewStage(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_0._viewStage == var_0_1.PlayerSelectCard
+function Act205CardSelectView:refreshViewStage(needPlay)
+	local isPlayerSelectedCard = self._viewStage == ViewStage.PlayerSelectCard
 
-	gohelper.setActive(arg_15_0._goNext, not var_15_0)
-	gohelper.setActive(arg_15_0._goStart, var_15_0)
-	gohelper.setActive(arg_15_0._golight2, var_15_0)
+	gohelper.setActive(self._goNext, not isPlayerSelectedCard)
+	gohelper.setActive(self._goStart, isPlayerSelectedCard)
+	gohelper.setActive(self._golight2, isPlayerSelectedCard)
 
-	if arg_15_1 then
-		local var_15_1 = var_15_0 and "selfin" or "open"
+	if needPlay then
+		local animName = isPlayerSelectedCard and "selfin" or "open"
 
-		arg_15_0:playAnim(var_15_1)
+		self:playAnim(animName)
 
-		if var_15_0 then
+		if isPlayerSelectedCard then
 			AudioMgr.instance:trigger(AudioEnum2_9.Activity205.play_ui_s01_yunying_swich1)
 		end
 	end
 
-	arg_15_0:refreshSelectedCard()
+	self:refreshSelectedCard()
 end
 
-function var_0_0.playAnim(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
-	if string.nilorempty(arg_16_1) or not arg_16_0._animatorPlayer then
+function Act205CardSelectView:playAnim(animName, cb, cbObj)
+	if string.nilorempty(animName) or not self._animatorPlayer then
 		return
 	end
 
-	UIBlockMgr.instance:startBlock(var_0_2)
+	UIBlockMgr.instance:startBlock(AnimBlockKey)
 
-	arg_16_0._animCb = arg_16_2
-	arg_16_0._animCbObj = arg_16_3
+	self._animCb = cb
+	self._animCbObj = cbObj
 
-	arg_16_0._animatorPlayer:Play(arg_16_1, arg_16_0._playAnimFinish, arg_16_0)
+	self._animatorPlayer:Play(animName, self._playAnimFinish, self)
 end
 
-function var_0_0._playAnimFinish(arg_17_0)
-	if arg_17_0._animCb then
-		arg_17_0._animCb(arg_17_0._animCbObj)
+function Act205CardSelectView:_playAnimFinish()
+	if self._animCb then
+		self._animCb(self._animCbObj)
 	end
 
-	arg_17_0._animCb = nil
-	arg_17_0._animCbObj = nil
+	self._animCb = nil
+	self._animCbObj = nil
 
-	UIBlockMgr.instance:endBlock(var_0_2)
+	UIBlockMgr.instance:endBlock(AnimBlockKey)
 end
 
-function var_0_0.refreshSelectedCard(arg_18_0)
-	if not (arg_18_0._viewStage == var_0_1.PlayerSelectCard) then
+function Act205CardSelectView:refreshSelectedCard()
+	local isPlayerSelectedCard = self._viewStage == ViewStage.PlayerSelectCard
+
+	if not isPlayerSelectedCard then
 		return
 	end
 
-	local var_18_0 = Act205CardModel.instance:isSelectedCardTypeCard(Act205Enum.CardType.Role)
+	local isSelectedRoleCard = Act205CardModel.instance:isSelectedCardTypeCard(Act205Enum.CardType.Role)
 
-	arg_18_0._txtRoleNum.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("act205_card_selected"), var_18_0 and 1 or 0)
+	self._txtRoleNum.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("act205_card_selected"), isSelectedRoleCard and 1 or 0)
 
-	UIColorHelper.set(arg_18_0._txtRoleNum, var_18_0 and "#BA1515" or "#4B2A1E")
+	UIColorHelper.set(self._txtRoleNum, isSelectedRoleCard and "#BA1515" or "#4B2A1E")
 
-	local var_18_1 = Act205CardModel.instance:isSelectedCardTypeCard(Act205Enum.CardType.Weapon)
+	local isSelectedWeaponCard = Act205CardModel.instance:isSelectedCardTypeCard(Act205Enum.CardType.Weapon)
 
-	arg_18_0._txtWeaponNum.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("act205_card_selected"), var_18_1 and 1 or 0)
+	self._txtWeaponNum.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("act205_card_selected"), isSelectedWeaponCard and 1 or 0)
 
-	UIColorHelper.set(arg_18_0._txtWeaponNum, var_18_1 and "#BA1515" or "#4B2A1E")
+	UIColorHelper.set(self._txtWeaponNum, isSelectedWeaponCard and "#BA1515" or "#4B2A1E")
 
-	local var_18_2 = Act205CardModel.instance:getIsCanBeginPK()
+	local isCanPK = Act205CardModel.instance:getIsCanBeginPK()
 
-	ZProj.UGUIHelper.SetGrayscale(arg_18_0._goStart, not var_18_2)
+	ZProj.UGUIHelper.SetGrayscale(self._goStart, not isCanPK)
 end
 
-function var_0_0.onClose(arg_19_0)
+function Act205CardSelectView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_20_0)
-	arg_20_0._viewStage = nil
+function Act205CardSelectView:onDestroyView()
+	self._viewStage = nil
 
-	UIBlockMgr.instance:endBlock(var_0_2)
+	UIBlockMgr.instance:endBlock(AnimBlockKey)
 end
 
-return var_0_0
+return Act205CardSelectView

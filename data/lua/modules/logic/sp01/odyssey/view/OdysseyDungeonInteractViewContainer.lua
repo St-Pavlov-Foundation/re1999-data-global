@@ -1,34 +1,36 @@
-﻿module("modules.logic.sp01.odyssey.view.OdysseyDungeonInteractViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/view/OdysseyDungeonInteractViewContainer.lua
 
-local var_0_0 = class("OdysseyDungeonInteractViewContainer", BaseViewContainer)
+module("modules.logic.sp01.odyssey.view.OdysseyDungeonInteractViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local OdysseyDungeonInteractViewContainer = class("OdysseyDungeonInteractViewContainer", BaseViewContainer)
 
-	arg_1_0.odysseyDungeonInteractFightView = OdysseyDungeonInteractFightView.New()
+function OdysseyDungeonInteractViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, arg_1_0.odysseyDungeonInteractFightView)
-	table.insert(var_1_0, OdysseyDungeonInteractView.New())
+	self.odysseyDungeonInteractFightView = OdysseyDungeonInteractFightView.New()
 
-	return var_1_0
+	table.insert(views, self.odysseyDungeonInteractFightView)
+	table.insert(views, OdysseyDungeonInteractView.New())
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function OdysseyDungeonInteractViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-function var_0_0.getInteractFightView(arg_3_0)
-	return arg_3_0.odysseyDungeonInteractFightView
+function OdysseyDungeonInteractViewContainer:getInteractFightView()
+	return self.odysseyDungeonInteractFightView
 end
 
-return var_0_0
+return OdysseyDungeonInteractViewContainer

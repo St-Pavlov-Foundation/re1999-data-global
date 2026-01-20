@@ -1,94 +1,96 @@
-﻿local var_0_0 = require("protobuf.protobuf")
+﻿-- chunkname: @modules/proto/AntiqueModule_pb.lua
+
+local require = require
+local protobuf = require("protobuf.protobuf")
 
 module("modules.proto.AntiqueModule_pb", package.seeall)
 
-local var_0_1 = {
-	GETANTIQUEINFOREQUEST_MSG = var_0_0.Descriptor(),
-	ANTIQUEUPDATEPUSH_MSG = var_0_0.Descriptor(),
-	ANTIQUEUPDATEPUSHANTIQUESFIELD = var_0_0.FieldDescriptor(),
-	ANTIQUEINFO_MSG = var_0_0.Descriptor(),
-	ANTIQUEINFOANTIQUEIDFIELD = var_0_0.FieldDescriptor(),
-	ANTIQUEINFOGETTIMEFIELD = var_0_0.FieldDescriptor(),
-	GETANTIQUEINFOREPLY_MSG = var_0_0.Descriptor(),
-	GETANTIQUEINFOREPLYANTIQUESFIELD = var_0_0.FieldDescriptor()
-}
+local AntiqueModule_pb = {}
 
-var_0_1.GETANTIQUEINFOREQUEST_MSG.name = "GetAntiqueInfoRequest"
-var_0_1.GETANTIQUEINFOREQUEST_MSG.full_name = ".GetAntiqueInfoRequest"
-var_0_1.GETANTIQUEINFOREQUEST_MSG.nested_types = {}
-var_0_1.GETANTIQUEINFOREQUEST_MSG.enum_types = {}
-var_0_1.GETANTIQUEINFOREQUEST_MSG.fields = {}
-var_0_1.GETANTIQUEINFOREQUEST_MSG.is_extendable = false
-var_0_1.GETANTIQUEINFOREQUEST_MSG.extensions = {}
-var_0_1.ANTIQUEUPDATEPUSHANTIQUESFIELD.name = "antiques"
-var_0_1.ANTIQUEUPDATEPUSHANTIQUESFIELD.full_name = ".AntiqueUpdatePush.antiques"
-var_0_1.ANTIQUEUPDATEPUSHANTIQUESFIELD.number = 1
-var_0_1.ANTIQUEUPDATEPUSHANTIQUESFIELD.index = 0
-var_0_1.ANTIQUEUPDATEPUSHANTIQUESFIELD.label = 3
-var_0_1.ANTIQUEUPDATEPUSHANTIQUESFIELD.has_default_value = false
-var_0_1.ANTIQUEUPDATEPUSHANTIQUESFIELD.default_value = {}
-var_0_1.ANTIQUEUPDATEPUSHANTIQUESFIELD.message_type = var_0_1.ANTIQUEINFO_MSG
-var_0_1.ANTIQUEUPDATEPUSHANTIQUESFIELD.type = 11
-var_0_1.ANTIQUEUPDATEPUSHANTIQUESFIELD.cpp_type = 10
-var_0_1.ANTIQUEUPDATEPUSH_MSG.name = "AntiqueUpdatePush"
-var_0_1.ANTIQUEUPDATEPUSH_MSG.full_name = ".AntiqueUpdatePush"
-var_0_1.ANTIQUEUPDATEPUSH_MSG.nested_types = {}
-var_0_1.ANTIQUEUPDATEPUSH_MSG.enum_types = {}
-var_0_1.ANTIQUEUPDATEPUSH_MSG.fields = {
-	var_0_1.ANTIQUEUPDATEPUSHANTIQUESFIELD
+AntiqueModule_pb.GETANTIQUEINFOREQUEST_MSG = protobuf.Descriptor()
+AntiqueModule_pb.ANTIQUEUPDATEPUSH_MSG = protobuf.Descriptor()
+AntiqueModule_pb.ANTIQUEUPDATEPUSHANTIQUESFIELD = protobuf.FieldDescriptor()
+AntiqueModule_pb.ANTIQUEINFO_MSG = protobuf.Descriptor()
+AntiqueModule_pb.ANTIQUEINFOANTIQUEIDFIELD = protobuf.FieldDescriptor()
+AntiqueModule_pb.ANTIQUEINFOGETTIMEFIELD = protobuf.FieldDescriptor()
+AntiqueModule_pb.GETANTIQUEINFOREPLY_MSG = protobuf.Descriptor()
+AntiqueModule_pb.GETANTIQUEINFOREPLYANTIQUESFIELD = protobuf.FieldDescriptor()
+AntiqueModule_pb.GETANTIQUEINFOREQUEST_MSG.name = "GetAntiqueInfoRequest"
+AntiqueModule_pb.GETANTIQUEINFOREQUEST_MSG.full_name = ".GetAntiqueInfoRequest"
+AntiqueModule_pb.GETANTIQUEINFOREQUEST_MSG.nested_types = {}
+AntiqueModule_pb.GETANTIQUEINFOREQUEST_MSG.enum_types = {}
+AntiqueModule_pb.GETANTIQUEINFOREQUEST_MSG.fields = {}
+AntiqueModule_pb.GETANTIQUEINFOREQUEST_MSG.is_extendable = false
+AntiqueModule_pb.GETANTIQUEINFOREQUEST_MSG.extensions = {}
+AntiqueModule_pb.ANTIQUEUPDATEPUSHANTIQUESFIELD.name = "antiques"
+AntiqueModule_pb.ANTIQUEUPDATEPUSHANTIQUESFIELD.full_name = ".AntiqueUpdatePush.antiques"
+AntiqueModule_pb.ANTIQUEUPDATEPUSHANTIQUESFIELD.number = 1
+AntiqueModule_pb.ANTIQUEUPDATEPUSHANTIQUESFIELD.index = 0
+AntiqueModule_pb.ANTIQUEUPDATEPUSHANTIQUESFIELD.label = 3
+AntiqueModule_pb.ANTIQUEUPDATEPUSHANTIQUESFIELD.has_default_value = false
+AntiqueModule_pb.ANTIQUEUPDATEPUSHANTIQUESFIELD.default_value = {}
+AntiqueModule_pb.ANTIQUEUPDATEPUSHANTIQUESFIELD.message_type = AntiqueModule_pb.ANTIQUEINFO_MSG
+AntiqueModule_pb.ANTIQUEUPDATEPUSHANTIQUESFIELD.type = 11
+AntiqueModule_pb.ANTIQUEUPDATEPUSHANTIQUESFIELD.cpp_type = 10
+AntiqueModule_pb.ANTIQUEUPDATEPUSH_MSG.name = "AntiqueUpdatePush"
+AntiqueModule_pb.ANTIQUEUPDATEPUSH_MSG.full_name = ".AntiqueUpdatePush"
+AntiqueModule_pb.ANTIQUEUPDATEPUSH_MSG.nested_types = {}
+AntiqueModule_pb.ANTIQUEUPDATEPUSH_MSG.enum_types = {}
+AntiqueModule_pb.ANTIQUEUPDATEPUSH_MSG.fields = {
+	AntiqueModule_pb.ANTIQUEUPDATEPUSHANTIQUESFIELD
 }
-var_0_1.ANTIQUEUPDATEPUSH_MSG.is_extendable = false
-var_0_1.ANTIQUEUPDATEPUSH_MSG.extensions = {}
-var_0_1.ANTIQUEINFOANTIQUEIDFIELD.name = "antiqueId"
-var_0_1.ANTIQUEINFOANTIQUEIDFIELD.full_name = ".AntiqueInfo.antiqueId"
-var_0_1.ANTIQUEINFOANTIQUEIDFIELD.number = 1
-var_0_1.ANTIQUEINFOANTIQUEIDFIELD.index = 0
-var_0_1.ANTIQUEINFOANTIQUEIDFIELD.label = 1
-var_0_1.ANTIQUEINFOANTIQUEIDFIELD.has_default_value = false
-var_0_1.ANTIQUEINFOANTIQUEIDFIELD.default_value = 0
-var_0_1.ANTIQUEINFOANTIQUEIDFIELD.type = 5
-var_0_1.ANTIQUEINFOANTIQUEIDFIELD.cpp_type = 1
-var_0_1.ANTIQUEINFOGETTIMEFIELD.name = "getTime"
-var_0_1.ANTIQUEINFOGETTIMEFIELD.full_name = ".AntiqueInfo.getTime"
-var_0_1.ANTIQUEINFOGETTIMEFIELD.number = 2
-var_0_1.ANTIQUEINFOGETTIMEFIELD.index = 1
-var_0_1.ANTIQUEINFOGETTIMEFIELD.label = 1
-var_0_1.ANTIQUEINFOGETTIMEFIELD.has_default_value = false
-var_0_1.ANTIQUEINFOGETTIMEFIELD.default_value = 0
-var_0_1.ANTIQUEINFOGETTIMEFIELD.type = 4
-var_0_1.ANTIQUEINFOGETTIMEFIELD.cpp_type = 4
-var_0_1.ANTIQUEINFO_MSG.name = "AntiqueInfo"
-var_0_1.ANTIQUEINFO_MSG.full_name = ".AntiqueInfo"
-var_0_1.ANTIQUEINFO_MSG.nested_types = {}
-var_0_1.ANTIQUEINFO_MSG.enum_types = {}
-var_0_1.ANTIQUEINFO_MSG.fields = {
-	var_0_1.ANTIQUEINFOANTIQUEIDFIELD,
-	var_0_1.ANTIQUEINFOGETTIMEFIELD
+AntiqueModule_pb.ANTIQUEUPDATEPUSH_MSG.is_extendable = false
+AntiqueModule_pb.ANTIQUEUPDATEPUSH_MSG.extensions = {}
+AntiqueModule_pb.ANTIQUEINFOANTIQUEIDFIELD.name = "antiqueId"
+AntiqueModule_pb.ANTIQUEINFOANTIQUEIDFIELD.full_name = ".AntiqueInfo.antiqueId"
+AntiqueModule_pb.ANTIQUEINFOANTIQUEIDFIELD.number = 1
+AntiqueModule_pb.ANTIQUEINFOANTIQUEIDFIELD.index = 0
+AntiqueModule_pb.ANTIQUEINFOANTIQUEIDFIELD.label = 1
+AntiqueModule_pb.ANTIQUEINFOANTIQUEIDFIELD.has_default_value = false
+AntiqueModule_pb.ANTIQUEINFOANTIQUEIDFIELD.default_value = 0
+AntiqueModule_pb.ANTIQUEINFOANTIQUEIDFIELD.type = 5
+AntiqueModule_pb.ANTIQUEINFOANTIQUEIDFIELD.cpp_type = 1
+AntiqueModule_pb.ANTIQUEINFOGETTIMEFIELD.name = "getTime"
+AntiqueModule_pb.ANTIQUEINFOGETTIMEFIELD.full_name = ".AntiqueInfo.getTime"
+AntiqueModule_pb.ANTIQUEINFOGETTIMEFIELD.number = 2
+AntiqueModule_pb.ANTIQUEINFOGETTIMEFIELD.index = 1
+AntiqueModule_pb.ANTIQUEINFOGETTIMEFIELD.label = 1
+AntiqueModule_pb.ANTIQUEINFOGETTIMEFIELD.has_default_value = false
+AntiqueModule_pb.ANTIQUEINFOGETTIMEFIELD.default_value = 0
+AntiqueModule_pb.ANTIQUEINFOGETTIMEFIELD.type = 4
+AntiqueModule_pb.ANTIQUEINFOGETTIMEFIELD.cpp_type = 4
+AntiqueModule_pb.ANTIQUEINFO_MSG.name = "AntiqueInfo"
+AntiqueModule_pb.ANTIQUEINFO_MSG.full_name = ".AntiqueInfo"
+AntiqueModule_pb.ANTIQUEINFO_MSG.nested_types = {}
+AntiqueModule_pb.ANTIQUEINFO_MSG.enum_types = {}
+AntiqueModule_pb.ANTIQUEINFO_MSG.fields = {
+	AntiqueModule_pb.ANTIQUEINFOANTIQUEIDFIELD,
+	AntiqueModule_pb.ANTIQUEINFOGETTIMEFIELD
 }
-var_0_1.ANTIQUEINFO_MSG.is_extendable = false
-var_0_1.ANTIQUEINFO_MSG.extensions = {}
-var_0_1.GETANTIQUEINFOREPLYANTIQUESFIELD.name = "antiques"
-var_0_1.GETANTIQUEINFOREPLYANTIQUESFIELD.full_name = ".GetAntiqueInfoReply.antiques"
-var_0_1.GETANTIQUEINFOREPLYANTIQUESFIELD.number = 1
-var_0_1.GETANTIQUEINFOREPLYANTIQUESFIELD.index = 0
-var_0_1.GETANTIQUEINFOREPLYANTIQUESFIELD.label = 3
-var_0_1.GETANTIQUEINFOREPLYANTIQUESFIELD.has_default_value = false
-var_0_1.GETANTIQUEINFOREPLYANTIQUESFIELD.default_value = {}
-var_0_1.GETANTIQUEINFOREPLYANTIQUESFIELD.message_type = var_0_1.ANTIQUEINFO_MSG
-var_0_1.GETANTIQUEINFOREPLYANTIQUESFIELD.type = 11
-var_0_1.GETANTIQUEINFOREPLYANTIQUESFIELD.cpp_type = 10
-var_0_1.GETANTIQUEINFOREPLY_MSG.name = "GetAntiqueInfoReply"
-var_0_1.GETANTIQUEINFOREPLY_MSG.full_name = ".GetAntiqueInfoReply"
-var_0_1.GETANTIQUEINFOREPLY_MSG.nested_types = {}
-var_0_1.GETANTIQUEINFOREPLY_MSG.enum_types = {}
-var_0_1.GETANTIQUEINFOREPLY_MSG.fields = {
-	var_0_1.GETANTIQUEINFOREPLYANTIQUESFIELD
+AntiqueModule_pb.ANTIQUEINFO_MSG.is_extendable = false
+AntiqueModule_pb.ANTIQUEINFO_MSG.extensions = {}
+AntiqueModule_pb.GETANTIQUEINFOREPLYANTIQUESFIELD.name = "antiques"
+AntiqueModule_pb.GETANTIQUEINFOREPLYANTIQUESFIELD.full_name = ".GetAntiqueInfoReply.antiques"
+AntiqueModule_pb.GETANTIQUEINFOREPLYANTIQUESFIELD.number = 1
+AntiqueModule_pb.GETANTIQUEINFOREPLYANTIQUESFIELD.index = 0
+AntiqueModule_pb.GETANTIQUEINFOREPLYANTIQUESFIELD.label = 3
+AntiqueModule_pb.GETANTIQUEINFOREPLYANTIQUESFIELD.has_default_value = false
+AntiqueModule_pb.GETANTIQUEINFOREPLYANTIQUESFIELD.default_value = {}
+AntiqueModule_pb.GETANTIQUEINFOREPLYANTIQUESFIELD.message_type = AntiqueModule_pb.ANTIQUEINFO_MSG
+AntiqueModule_pb.GETANTIQUEINFOREPLYANTIQUESFIELD.type = 11
+AntiqueModule_pb.GETANTIQUEINFOREPLYANTIQUESFIELD.cpp_type = 10
+AntiqueModule_pb.GETANTIQUEINFOREPLY_MSG.name = "GetAntiqueInfoReply"
+AntiqueModule_pb.GETANTIQUEINFOREPLY_MSG.full_name = ".GetAntiqueInfoReply"
+AntiqueModule_pb.GETANTIQUEINFOREPLY_MSG.nested_types = {}
+AntiqueModule_pb.GETANTIQUEINFOREPLY_MSG.enum_types = {}
+AntiqueModule_pb.GETANTIQUEINFOREPLY_MSG.fields = {
+	AntiqueModule_pb.GETANTIQUEINFOREPLYANTIQUESFIELD
 }
-var_0_1.GETANTIQUEINFOREPLY_MSG.is_extendable = false
-var_0_1.GETANTIQUEINFOREPLY_MSG.extensions = {}
-var_0_1.AntiqueInfo = var_0_0.Message(var_0_1.ANTIQUEINFO_MSG)
-var_0_1.AntiqueUpdatePush = var_0_0.Message(var_0_1.ANTIQUEUPDATEPUSH_MSG)
-var_0_1.GetAntiqueInfoReply = var_0_0.Message(var_0_1.GETANTIQUEINFOREPLY_MSG)
-var_0_1.GetAntiqueInfoRequest = var_0_0.Message(var_0_1.GETANTIQUEINFOREQUEST_MSG)
+AntiqueModule_pb.GETANTIQUEINFOREPLY_MSG.is_extendable = false
+AntiqueModule_pb.GETANTIQUEINFOREPLY_MSG.extensions = {}
+AntiqueModule_pb.AntiqueInfo = protobuf.Message(AntiqueModule_pb.ANTIQUEINFO_MSG)
+AntiqueModule_pb.AntiqueUpdatePush = protobuf.Message(AntiqueModule_pb.ANTIQUEUPDATEPUSH_MSG)
+AntiqueModule_pb.GetAntiqueInfoReply = protobuf.Message(AntiqueModule_pb.GETANTIQUEINFOREPLY_MSG)
+AntiqueModule_pb.GetAntiqueInfoRequest = protobuf.Message(AntiqueModule_pb.GETANTIQUEINFOREQUEST_MSG)
 
-return var_0_1
+return AntiqueModule_pb

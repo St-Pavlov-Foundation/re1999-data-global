@@ -1,114 +1,117 @@
-﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeonother.view.VersionActivity1_2TaskView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/versionactivity1_2dungeonother/view/VersionActivity1_2TaskView.lua
 
-local var_0_0 = class("VersionActivity1_2TaskView", BaseView)
+module("modules.logic.versionactivity1_2.versionactivity1_2dungeonother.view.VersionActivity1_2TaskView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._simagelangtxt = gohelper.findChildSingleImage(arg_1_0.viewGO, "left/#simage_langtxt")
-	arg_1_0._txtremaintime = gohelper.findChildText(arg_1_0.viewGO, "left/#simage_langtxt/#txt_remaintime")
-	arg_1_0._txtcurrencynum = gohelper.findChildText(arg_1_0.viewGO, "left/node/cn/#txt_currencynum")
-	arg_1_0._scrolllist = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_list")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
+local VersionActivity1_2TaskView = class("VersionActivity1_2TaskView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity1_2TaskView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._simagelangtxt = gohelper.findChildSingleImage(self.viewGO, "left/#simage_langtxt")
+	self._txtremaintime = gohelper.findChildText(self.viewGO, "left/#simage_langtxt/#txt_remaintime")
+	self._txtcurrencynum = gohelper.findChildText(self.viewGO, "left/node/cn/#txt_currencynum")
+	self._scrolllist = gohelper.findChildScrollRect(self.viewGO, "#scroll_list")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function VersionActivity1_2TaskView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function VersionActivity1_2TaskView:removeEvents()
 	return
 end
 
-function var_0_0.onClickStore(arg_4_0)
+function VersionActivity1_2TaskView:onClickStore()
 	VersionActivity1_2EnterController.instance:openActivityStoreView()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._simagebg:LoadImage(ResUrl.getVersionActivity1_2TaskImage("renwu_bj"))
+function VersionActivity1_2TaskView:_editableInitView()
+	self._simagebg:LoadImage(ResUrl.getVersionActivity1_2TaskImage("renwu_bj"))
 
-	arg_5_0.storeClick = gohelper.findChildClick(arg_5_0.viewGO, "left/node")
+	self.storeClick = gohelper.findChildClick(self.viewGO, "left/node")
 
-	arg_5_0.storeClick:AddClickListener(arg_5_0.onClickStore, arg_5_0)
-	arg_5_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_5_0.refreshCurrency, arg_5_0)
+	self.storeClick:AddClickListener(self.onClickStore, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self.refreshCurrency, self)
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function VersionActivity1_2TaskView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
+function VersionActivity1_2TaskView:onOpen()
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.ActivityDungeon
-	}, arg_7_0._onOpen, arg_7_0)
+	}, self._onOpen, self)
 end
 
-function var_0_0._onOpen(arg_8_0)
-	arg_8_0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_8_0.refreshRight, arg_8_0)
-	arg_8_0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_8_0.refreshRight, arg_8_0)
-	arg_8_0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_8_0.refreshRight, arg_8_0)
-	TaskDispatcher.runRepeat(arg_8_0.refreshRemainTime, arg_8_0, TimeUtil.OneMinuteSecond)
+function VersionActivity1_2TaskView:_onOpen()
+	self:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, self.refreshRight, self)
+	self:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, self.refreshRight, self)
+	self:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, self.refreshRight, self)
+	TaskDispatcher.runRepeat(self.refreshRemainTime, self, TimeUtil.OneMinuteSecond)
 	VersionActivity1_2TaskListModel.instance:initTask()
-	arg_8_0:refreshLeft()
-	arg_8_0:refreshRight()
+	self:refreshLeft()
+	self:refreshRight()
 end
 
-function var_0_0.refreshLeft(arg_9_0)
-	arg_9_0:refreshRemainTime()
-	arg_9_0:refreshCurrency()
+function VersionActivity1_2TaskView:refreshLeft()
+	self:refreshRemainTime()
+	self:refreshCurrency()
 end
 
-function var_0_0.refreshRemainTime(arg_10_0)
-	local var_10_0 = ActivityModel.instance:getActivityInfo()[VersionActivity1_2Enum.ActivityId.Dungeon]:getRealEndTimeStamp() - ServerTime.now()
-	local var_10_1 = Mathf.Floor(var_10_0 / TimeUtil.OneDaySecond)
-	local var_10_2 = var_10_0 % TimeUtil.OneDaySecond
-	local var_10_3 = Mathf.Floor(var_10_2 / TimeUtil.OneHourSecond)
+function VersionActivity1_2TaskView:refreshRemainTime()
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[VersionActivity1_2Enum.ActivityId.Dungeon]
+	local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
+	local day = Mathf.Floor(offsetSecond / TimeUtil.OneDaySecond)
+	local hourSecond = offsetSecond % TimeUtil.OneDaySecond
+	local hour = Mathf.Floor(hourSecond / TimeUtil.OneHourSecond)
 
-	if var_10_1 > 0 then
+	if day > 0 then
 		if LangSettings.instance:isEn() then
-			arg_10_0._txtremaintime.text = string.format(luaLang("remain"), string.format("%s%s %s%s", var_10_1, luaLang("time_day"), var_10_3, luaLang("time_hour")))
+			self._txtremaintime.text = string.format(luaLang("remain"), string.format("%s%s %s%s", day, luaLang("time_day"), hour, luaLang("time_hour")))
 		else
-			arg_10_0._txtremaintime.text = string.format(luaLang("remain"), string.format("%s%s%s%s", var_10_1, luaLang("time_day"), var_10_3, luaLang("time_hour")))
+			self._txtremaintime.text = string.format(luaLang("remain"), string.format("%s%s%s%s", day, luaLang("time_day"), hour, luaLang("time_hour")))
 		end
 	else
-		local var_10_4 = var_10_2 % TimeUtil.OneHourSecond
-		local var_10_5 = Mathf.Floor(var_10_4 / TimeUtil.OneMinuteSecond)
+		local minuteSecond = hourSecond % TimeUtil.OneHourSecond
+		local minute = Mathf.Floor(minuteSecond / TimeUtil.OneMinuteSecond)
 
-		if var_10_3 > 0 then
+		if hour > 0 then
 			if LangSettings.instance:isEn() then
-				arg_10_0._txtremaintime.text = string.format(luaLang("remain"), string.format("%s%s %s%s", var_10_3, luaLang("time_hour"), var_10_5, luaLang("time_minute2")))
+				self._txtremaintime.text = string.format(luaLang("remain"), string.format("%s%s %s%s", hour, luaLang("time_hour"), minute, luaLang("time_minute2")))
 			else
-				arg_10_0._txtremaintime.text = string.format(luaLang("remain"), string.format("%s%s%s%s", var_10_3, luaLang("time_hour"), var_10_5, luaLang("time_minute2")))
+				self._txtremaintime.text = string.format(luaLang("remain"), string.format("%s%s%s%s", hour, luaLang("time_hour"), minute, luaLang("time_minute2")))
 			end
-		elseif var_10_5 > 0 then
-			arg_10_0._txtremaintime.text = string.format(luaLang("remain"), string.format("%s%s", var_10_5, luaLang("time_minute")))
+		elseif minute > 0 then
+			self._txtremaintime.text = string.format(luaLang("remain"), string.format("%s%s", minute, luaLang("time_minute")))
 		else
-			arg_10_0._txtremaintime.text = string.format(luaLang("remain"), string.format("<1%s", luaLang("time_minute")))
+			self._txtremaintime.text = string.format(luaLang("remain"), string.format("<1%s", luaLang("time_minute")))
 		end
 	end
 end
 
-function var_0_0.refreshCurrency(arg_11_0)
-	local var_11_0 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.LvHuEMen)
+function VersionActivity1_2TaskView:refreshCurrency()
+	local currencyMo = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.LvHuEMen)
 
-	arg_11_0._txtcurrencynum.text = var_11_0 and GameUtil.numberDisplay(var_11_0.quantity) or 0
+	self._txtcurrencynum.text = currencyMo and GameUtil.numberDisplay(currencyMo.quantity) or 0
 end
 
-function var_0_0.refreshRight(arg_12_0)
+function VersionActivity1_2TaskView:refreshRight()
 	VersionActivity1_2TaskListModel.instance:sortTaskMoList()
 	VersionActivity1_2TaskListModel.instance:refreshList()
 end
 
-function var_0_0.onClose(arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0.refreshRemainTime, arg_13_0)
+function VersionActivity1_2TaskView:onClose()
+	TaskDispatcher.cancelTask(self.refreshRemainTime, self)
 end
 
-function var_0_0.onDestroyView(arg_14_0)
-	arg_14_0._simagebg:UnLoadImage()
-	arg_14_0.storeClick:RemoveClickListener()
+function VersionActivity1_2TaskView:onDestroyView()
+	self._simagebg:UnLoadImage()
+	self.storeClick:RemoveClickListener()
 end
 
-return var_0_0
+return VersionActivity1_2TaskView

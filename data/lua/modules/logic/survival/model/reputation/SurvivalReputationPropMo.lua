@@ -1,35 +1,39 @@
-﻿module("modules.logic.survival.model.reputation.SurvivalReputationPropMo", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/reputation/SurvivalReputationPropMo.lua
 
-local var_0_0 = pureTable("SurvivalReputationPropMo")
+module("modules.logic.survival.model.reputation.SurvivalReputationPropMo", package.seeall)
 
-function var_0_0.setData(arg_1_0, arg_1_1)
-	arg_1_0.prop = arg_1_1
-	arg_1_0.survivalShopMo = arg_1_0.survivalShopMo or SurvivalShopMo.New()
+local SurvivalReputationPropMo = pureTable("SurvivalReputationPropMo")
 
-	arg_1_0.survivalShopMo:init(arg_1_0.prop.shop, arg_1_0.prop.reputationId, arg_1_0.prop.reputationLevel)
+function SurvivalReputationPropMo:setData(reputationProp)
+	self.prop = reputationProp
+	self.survivalShopMo = self.survivalShopMo or SurvivalShopMo.New()
+
+	self.survivalShopMo:init(self.prop.shop, self.prop.reputationId, self.prop.reputationLevel)
 end
 
-function var_0_0.onReceiveSurvivalReputationRewardReply(arg_2_0, arg_2_1)
-	if not tabletool.indexOf(arg_2_0.prop.gain, arg_2_1) then
-		table.insert(arg_2_0.prop.gain, arg_2_1)
+function SurvivalReputationPropMo:onReceiveSurvivalReputationRewardReply(level)
+	if not tabletool.indexOf(self.prop.gain, level) then
+		table.insert(self.prop.gain, level)
 	end
 end
 
-function var_0_0.getReputationLevel(arg_3_0)
-	return arg_3_0.prop.reputationLevel
+function SurvivalReputationPropMo:getReputationLevel()
+	return self.prop.reputationLevel
 end
 
-function var_0_0.isMaxLevel(arg_4_0)
-	return SurvivalConfig.instance:getReputationMaxLevel(arg_4_0.prop.reputationId) <= arg_4_0.prop.reputationLevel
+function SurvivalReputationPropMo:isMaxLevel()
+	local maxLevel = SurvivalConfig.instance:getReputationMaxLevel(self.prop.reputationId)
+
+	return maxLevel <= self.prop.reputationLevel
 end
 
-function var_0_0.isGainFreeReward(arg_5_0, arg_5_1)
-	return tabletool.indexOf(arg_5_0.prop.gain, arg_5_1) ~= nil
+function SurvivalReputationPropMo:isGainFreeReward(level)
+	return tabletool.indexOf(self.prop.gain, level) ~= nil
 end
 
-function var_0_0.haveFreeReward(arg_6_0)
-	for iter_6_0 = 1, arg_6_0.prop.reputationLevel do
-		if not tabletool.indexOf(arg_6_0.prop.gain, iter_6_0) then
+function SurvivalReputationPropMo:haveFreeReward()
+	for level = 1, self.prop.reputationLevel do
+		if not tabletool.indexOf(self.prop.gain, level) then
 			return true
 		end
 	end
@@ -37,18 +41,19 @@ function var_0_0.haveFreeReward(arg_6_0)
 	return false
 end
 
-function var_0_0.getLevelBkg(arg_7_0)
-	local var_7_0 = arg_7_0.prop.reputationLevel
+function SurvivalReputationPropMo:getLevelBkg()
+	local level = self.prop.reputationLevel
 
-	return "survival_commit_levelbg_" .. var_7_0
+	return "survival_commit_levelbg_" .. level
 end
 
-function var_0_0.getLevelProgressBkg(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0.prop.reputationLevel
-	local var_8_1
-	local var_8_2 = arg_8_1 and 1 or 2
+function SurvivalReputationPropMo:getLevelProgressBkg(isFront)
+	local level = self.prop.reputationLevel
+	local index
 
-	return string.format("survival_commit_progressbg%s_%s", var_8_0, var_8_2)
+	index = isFront and 1 or 2
+
+	return string.format("survival_commit_progressbg%s_%s", level, index)
 end
 
-return var_0_0
+return SurvivalReputationPropMo

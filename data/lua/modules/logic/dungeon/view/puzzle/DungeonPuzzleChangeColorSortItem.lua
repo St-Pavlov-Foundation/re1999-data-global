@@ -1,26 +1,28 @@
-﻿module("modules.logic.dungeon.view.puzzle.DungeonPuzzleChangeColorSortItem", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/puzzle/DungeonPuzzleChangeColorSortItem.lua
 
-local var_0_0 = class("DungeonPuzzleChangeColorSortItem", LuaCompBase)
+module("modules.logic.dungeon.view.puzzle.DungeonPuzzleChangeColorSortItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.go = arg_1_1
-	arg_1_0.id = arg_1_2
-	arg_1_0._image = arg_1_1:GetComponent(gohelper.Type_Image)
-	arg_1_0._txtname = gohelper.findChildText(arg_1_1, "tiptxt")
+local DungeonPuzzleChangeColorSortItem = class("DungeonPuzzleChangeColorSortItem", LuaCompBase)
 
-	arg_1_0:setItem()
+function DungeonPuzzleChangeColorSortItem:init(go, id)
+	self.go = go
+	self.id = id
+	self._image = go:GetComponent(gohelper.Type_Image)
+	self._txtname = gohelper.findChildText(go, "tiptxt")
+
+	self:setItem()
 end
 
-function var_0_0.setItem(arg_2_0)
-	local var_2_0 = DungeonConfig.instance:getDecryptChangeColorColorCo(arg_2_0.id)
+function DungeonPuzzleChangeColorSortItem:setItem()
+	local colorCo = DungeonConfig.instance:getDecryptChangeColorColorCo(self.id)
 
-	SLFramework.UGUI.GuiHelper.SetColor(arg_2_0._image, var_2_0.colorvalue)
+	SLFramework.UGUI.GuiHelper.SetColor(self._image, colorCo.colorvalue)
 
-	arg_2_0._txtname.text = var_2_0.name
+	self._txtname.text = colorCo.name
 end
 
-function var_0_0.onDestroy(arg_3_0)
-	gohelper.destroy(arg_3_0.go)
+function DungeonPuzzleChangeColorSortItem:onDestroy()
+	gohelper.destroy(self.go)
 end
 
-return var_0_0
+return DungeonPuzzleChangeColorSortItem

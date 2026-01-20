@@ -1,11 +1,13 @@
-﻿module("modules.logic.voyage.view.ActivityGiftForTheVoyageContainer", package.seeall)
+﻿-- chunkname: @modules/logic/voyage/view/ActivityGiftForTheVoyageContainer.lua
 
-local var_0_0 = class("ActivityGiftForTheVoyageContainer", BaseViewContainer)
+module("modules.logic.voyage.view.ActivityGiftForTheVoyageContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local ActivityGiftForTheVoyageContainer = class("ActivityGiftForTheVoyageContainer", BaseViewContainer)
+
+function ActivityGiftForTheVoyageContainer:buildViews()
 	return {
 		ActivityGiftForTheVoyage.New()
 	}
 end
 
-return var_0_0
+return ActivityGiftForTheVoyageContainer

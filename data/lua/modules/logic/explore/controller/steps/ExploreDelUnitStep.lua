@@ -1,25 +1,27 @@
-﻿module("modules.logic.explore.controller.steps.ExploreDelUnitStep", package.seeall)
+﻿-- chunkname: @modules/logic/explore/controller/steps/ExploreDelUnitStep.lua
 
-local var_0_0 = class("ExploreDelUnitStep", ExploreStepBase)
-local var_0_1 = {
+module("modules.logic.explore.controller.steps.ExploreDelUnitStep", package.seeall)
+
+local ExploreDelUnitStep = class("ExploreDelUnitStep", ExploreStepBase)
+local waitUnitTypes = {
 	[ExploreEnum.ItemType.Rock] = true
 }
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0._data.interact
-	local var_1_1 = ExploreController.instance:getMap():getUnit(var_1_0.id, true)
+function ExploreDelUnitStep:onStart()
+	local interact = self._data.interact
+	local unit = ExploreController.instance:getMap():getUnit(interact.id, true)
 
-	if var_1_1 then
-		ExploreController.instance:removeUnit(var_1_0.id)
+	if unit then
+		ExploreController.instance:removeUnit(interact.id)
 
-		if not ExploreModel.instance.isReseting and var_0_1[var_1_1:getUnitType()] then
-			var_1_1:setExitCallback(arg_1_0.onDone, arg_1_0)
+		if not ExploreModel.instance.isReseting and waitUnitTypes[unit:getUnitType()] then
+			unit:setExitCallback(self.onDone, self)
 		else
-			arg_1_0:onDone()
+			self:onDone()
 		end
 	else
-		arg_1_0:onDone()
+		self:onDone()
 	end
 end
 
-return var_0_0
+return ExploreDelUnitStep

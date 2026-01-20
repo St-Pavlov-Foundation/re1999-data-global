@@ -1,50 +1,54 @@
-﻿module("modules.logic.versionactivity2_7.coopergarland.view.CooperGarlandGameViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/coopergarland/view/CooperGarlandGameViewContainer.lua
 
-local var_0_0 = class("CooperGarlandGameViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_7.coopergarland.view.CooperGarlandGameViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local CooperGarlandGameViewContainer = class("CooperGarlandGameViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, CooperGarlandGameView.New())
-	table.insert(var_1_0, CooperGarlandGameScene.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
+function CooperGarlandGameViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, CooperGarlandGameView.New())
+	table.insert(views, CooperGarlandGameScene.New())
+	table.insert(views, TabViewGroup.New(1, "#go_topleft"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function CooperGarlandGameViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
-		arg_2_0.navigateView:setOverrideClose(arg_2_0.overrideClose, arg_2_0)
+		self.navigateView:setOverrideClose(self.overrideClose, self)
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-function var_0_0.overrideClose(arg_3_0)
-	if CooperGarlandGameModel.instance:getIsRemoveMode() then
+function CooperGarlandGameViewContainer:overrideClose()
+	local isRemoveMode = CooperGarlandGameModel.instance:getIsRemoveMode()
+
+	if isRemoveMode then
 		CooperGarlandController.instance:changeRemoveMode()
 	else
 		CooperGarlandController.instance:setStopGame(true)
-		GameFacade.showMessageBox(MessageBoxIdDefine.CooperGarlandExitGame, MsgBoxEnum.BoxType.Yes_No, arg_3_0._confirmExit, arg_3_0._closeMessBox, nil, arg_3_0, arg_3_0)
+		GameFacade.showMessageBox(MessageBoxIdDefine.CooperGarlandExitGame, MsgBoxEnum.BoxType.Yes_No, self._confirmExit, self._closeMessBox, nil, self, self)
 	end
 end
 
-function var_0_0._confirmExit(arg_4_0)
+function CooperGarlandGameViewContainer:_confirmExit()
 	CooperGarlandStatHelper.instance:sendGameExit(ViewName.CooperGarlandGameView)
-	arg_4_0.navigateView:_reallyClose()
+	self.navigateView:_reallyClose()
 	CooperGarlandController.instance:exitGame()
 end
 
-function var_0_0._closeMessBox(arg_5_0)
+function CooperGarlandGameViewContainer:_closeMessBox()
 	CooperGarlandController.instance:setStopGame(false)
 end
 
-return var_0_0
+return CooperGarlandGameViewContainer

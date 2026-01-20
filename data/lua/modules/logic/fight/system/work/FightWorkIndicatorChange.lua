@@ -1,32 +1,34 @@
-﻿module("modules.logic.fight.system.work.FightWorkIndicatorChange", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkIndicatorChange.lua
 
-local var_0_0 = class("FightWorkIndicatorChange", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkIndicatorChange", package.seeall)
 
-var_0_0.ConfigEffect = {
+local FightWorkIndicatorChange = class("FightWorkIndicatorChange", FightEffectBase)
+
+FightWorkIndicatorChange.ConfigEffect = {
 	ClearIndicator = 60017,
 	AddIndicator = 60016
 }
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = tonumber(arg_1_0.actEffectData.targetId)
+function FightWorkIndicatorChange:onStart()
+	local indicatorId = tonumber(self.actEffectData.targetId)
 
 	FightModel.instance:setWaitIndicatorAnimation(false)
-	arg_1_0:com_sendFightEvent(FightEvent.OnIndicatorChange, var_1_0, arg_1_0.actEffectData.effectNum)
+	self:com_sendFightEvent(FightEvent.OnIndicatorChange, indicatorId, self.actEffectData.effectNum)
 
 	if FightModel.instance:isWaitIndicatorAnimation() then
-		arg_1_0:com_registTimer(arg_1_0._delayDone, 3)
-		arg_1_0:com_registFightEvent(FightEvent.OnIndicatorAnimationDone, arg_1_0._delayDone)
+		self:com_registTimer(self._delayDone, 3)
+		self:com_registFightEvent(FightEvent.OnIndicatorAnimationDone, self._delayDone)
 	else
-		arg_1_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._delayDone(arg_2_0)
-	arg_2_0:onDone(true)
+function FightWorkIndicatorChange:_delayDone()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
+function FightWorkIndicatorChange:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkIndicatorChange

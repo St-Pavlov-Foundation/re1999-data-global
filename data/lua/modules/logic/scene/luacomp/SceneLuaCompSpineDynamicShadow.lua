@@ -1,113 +1,115 @@
-﻿module("modules.logic.scene.luacomp.SceneLuaCompSpineDynamicShadow", package.seeall)
+﻿-- chunkname: @modules/logic/scene/luacomp/SceneLuaCompSpineDynamicShadow.lua
 
-local var_0_0 = class("SceneLuaCompSpineDynamicShadow", LuaCompBase)
+module("modules.logic.scene.luacomp.SceneLuaCompSpineDynamicShadow", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	if string.nilorempty(arg_1_1[1]) then
+local SceneLuaCompSpineDynamicShadow = class("SceneLuaCompSpineDynamicShadow", LuaCompBase)
+
+function SceneLuaCompSpineDynamicShadow:ctor(param)
+	if string.nilorempty(param[1]) then
 		logError("场景阴影贴图未配置，请检查 C场景表.xlsx-export_场景表现")
 
 		return
 	end
 
-	arg_1_0._texturePath = ResUrl.getRoleSpineMatTex(arg_1_1[1])
+	self._texturePath = ResUrl.getRoleSpineMatTex(param[1])
 
-	if arg_1_1[2] then
-		local var_1_0 = string.splitToNumber(arg_1_1[2], "#")
+	if param[2] then
+		local param2 = string.splitToNumber(param[2], "#")
 
-		arg_1_0._vec_ShadowMap_ST = Vector4.New(var_1_0[1], var_1_0[2], var_1_0[3], var_1_0[4])
+		self._vec_ShadowMap_ST = Vector4.New(param2[1], param2[2], param2[3], param2[4])
 	end
 
-	if arg_1_1[3] then
-		local var_1_1 = string.splitToNumber(arg_1_1[3], "#")
+	if param[3] then
+		local param3 = string.splitToNumber(param[3], "#")
 
-		arg_1_0._vec_ShadowMapOffset = Vector4.New(var_1_1[1], var_1_1[2], var_1_1[3], var_1_1[4])
+		self._vec_ShadowMapOffset = Vector4.New(param3[1], param3[2], param3[3], param3[4])
 	end
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0._loader = MultiAbLoader.New()
-	arg_2_0._needSetMatDict = nil
+function SceneLuaCompSpineDynamicShadow:init(go)
+	self._loader = MultiAbLoader.New()
+	self._needSetMatDict = nil
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.OnSpineLoaded, arg_3_0._onSpineLoaded, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.OnSpineMaterialChange, arg_3_0._onSpineMatChange, arg_3_0)
+function SceneLuaCompSpineDynamicShadow:addEventListeners()
+	self:addEventCb(FightController.instance, FightEvent.OnSpineLoaded, self._onSpineLoaded, self)
+	self:addEventCb(FightController.instance, FightEvent.OnSpineMaterialChange, self._onSpineMatChange, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	arg_4_0:removeEventCb(FightController.instance, FightEvent.OnSpineLoaded, arg_4_0._onSpineLoaded, arg_4_0)
-	arg_4_0:removeEventCb(FightController.instance, FightEvent.OnSpineMaterialChange, arg_4_0._onSpineMatChange, arg_4_0)
+function SceneLuaCompSpineDynamicShadow:removeEventListeners()
+	self:removeEventCb(FightController.instance, FightEvent.OnSpineLoaded, self._onSpineLoaded, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnSpineMaterialChange, self._onSpineMatChange, self)
 end
 
-function var_0_0.onStart(arg_5_0)
-	if not arg_5_0._texturePath then
+function SceneLuaCompSpineDynamicShadow:onStart()
+	if not self._texturePath then
 		return
 	end
 
-	arg_5_0._loader:addPath(arg_5_0._texturePath)
-	arg_5_0._loader:startLoad(arg_5_0._onLoadCallback, arg_5_0)
+	self._loader:addPath(self._texturePath)
+	self._loader:startLoad(self._onLoadCallback, self)
 
-	local var_5_0 = FightHelper.getAllEntitys()
+	local allEntitys = FightHelper.getAllEntitys()
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_0) do
-		if iter_5_1.spine and iter_5_1.spine:getSpineGO() then
-			arg_5_0:_setSpineMat(iter_5_1.spineRenderer:getReplaceMat())
+	for _, entity in ipairs(allEntitys) do
+		if entity.spine and entity.spine:getSpineGO() then
+			self:_setSpineMat(entity.spineRenderer:getReplaceMat())
 		end
 	end
 end
 
-function var_0_0._onLoadCallback(arg_6_0)
-	if arg_6_0._needSetMatDict then
-		for iter_6_0, iter_6_1 in pairs(arg_6_0._needSetMatDict) do
-			arg_6_0:_setSpineMat(iter_6_0)
+function SceneLuaCompSpineDynamicShadow:_onLoadCallback()
+	if self._needSetMatDict then
+		for material, _ in pairs(self._needSetMatDict) do
+			self:_setSpineMat(material)
 		end
 
-		arg_6_0._needSetMatDict = nil
+		self._needSetMatDict = nil
 	end
 end
 
-function var_0_0._onSpineLoaded(arg_7_0, arg_7_1)
-	arg_7_0:_setSpineMat(arg_7_1.unitSpawn.spineRenderer:getReplaceMat())
+function SceneLuaCompSpineDynamicShadow:_onSpineLoaded(unitSpine)
+	self:_setSpineMat(unitSpine.unitSpawn.spineRenderer:getReplaceMat())
 end
 
-function var_0_0._onSpineMatChange(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0:_setSpineMat(arg_8_2)
+function SceneLuaCompSpineDynamicShadow:_onSpineMatChange(entityId, material)
+	self:_setSpineMat(material)
 end
 
-function var_0_0._setSpineMat(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0._loader and arg_9_0._loader:getFirstAssetItem()
+function SceneLuaCompSpineDynamicShadow:_setSpineMat(material)
+	local assetItem = self._loader and self._loader:getFirstAssetItem()
 
-	if var_9_0 then
-		local var_9_1 = var_9_0:GetResource(arg_9_0._texturePath)
+	if assetItem then
+		local texture = assetItem:GetResource(self._texturePath)
 
-		arg_9_1:EnableKeyword("_SHADOW_DYNAMIC_ON")
+		material:EnableKeyword("_SHADOW_DYNAMIC_ON")
 
-		if arg_9_0._vec_ShadowMap_ST then
-			arg_9_1:SetVector("_ShadowMap_ST", arg_9_0._vec_ShadowMap_ST)
+		if self._vec_ShadowMap_ST then
+			material:SetVector("_ShadowMap_ST", self._vec_ShadowMap_ST)
 		end
 
-		if arg_9_0._vec_ShadowMapOffset then
-			arg_9_1:SetVector("_ShadowMapOffset", arg_9_0._vec_ShadowMapOffset)
+		if self._vec_ShadowMapOffset then
+			material:SetVector("_ShadowMapOffset", self._vec_ShadowMapOffset)
 		end
 
-		arg_9_1:SetTexture("_ShadowMap", var_9_1)
+		material:SetTexture("_ShadowMap", texture)
 	else
-		if not arg_9_0._needSetMatDict then
-			arg_9_0._needSetMatDict = {}
+		if not self._needSetMatDict then
+			self._needSetMatDict = {}
 		end
 
-		arg_9_0._needSetMatDict[arg_9_1] = true
+		self._needSetMatDict[material] = true
 	end
 end
 
-function var_0_0.onDestroy(arg_10_0)
-	if arg_10_0._loader then
-		arg_10_0._loader:dispose()
+function SceneLuaCompSpineDynamicShadow:onDestroy()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_10_0._loader = nil
+		self._loader = nil
 	end
 
-	arg_10_0._needSetMatDict = nil
+	self._needSetMatDict = nil
 end
 
-return var_0_0
+return SceneLuaCompSpineDynamicShadow

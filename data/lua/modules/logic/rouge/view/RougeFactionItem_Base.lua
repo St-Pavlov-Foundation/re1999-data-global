@@ -1,50 +1,54 @@
-﻿module("modules.logic.rouge.view.RougeFactionItem_Base", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeFactionItem_Base.lua
 
-local var_0_0 = class("RougeFactionItem_Base", RougeItemNodeBase)
+module("modules.logic.rouge.view.RougeFactionItem_Base", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	arg_1_0._itemClick = gohelper.getClickWithAudio(arg_1_0._goBg)
+local RougeFactionItem_Base = class("RougeFactionItem_Base", RougeItemNodeBase)
+
+function RougeFactionItem_Base:_editableInitView()
+	self._itemClick = gohelper.getClickWithAudio(self._goBg)
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	RougeItemNodeBase.addEventListeners(arg_2_0)
-	arg_2_0._itemClick:AddClickListener(arg_2_0._onItemClick, arg_2_0)
+function RougeFactionItem_Base:addEventListeners()
+	RougeItemNodeBase.addEventListeners(self)
+	self._itemClick:AddClickListener(self._onItemClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	RougeItemNodeBase.removeEventListeners(arg_3_0)
-	GameUtil.onDestroyViewMember_ClickListener(arg_3_0, "_itemClick")
+function RougeFactionItem_Base:removeEventListeners()
+	RougeItemNodeBase.removeEventListeners(self)
+	GameUtil.onDestroyViewMember_ClickListener(self, "_itemClick")
 end
 
-function var_0_0._onItemClick(arg_4_0)
-	local var_4_0 = arg_4_0:staticData()
+function RougeFactionItem_Base:_onItemClick()
+	local data = self:staticData()
 
-	if not var_4_0 then
+	if not data then
 		return
 	end
 
-	local var_4_1 = var_4_0.baseViewContainer
+	local baseViewContainer = data.baseViewContainer
 
-	if not var_4_1 then
+	if not baseViewContainer then
 		return
 	end
 
-	var_4_1:dispatchEvent(RougeEvent.RougeFactionView_OnSelectIndex, arg_4_0:index())
+	baseViewContainer:dispatchEvent(RougeEvent.RougeFactionView_OnSelectIndex, self:index())
 end
 
-function var_0_0.setData(arg_5_0, arg_5_1)
-	arg_5_0._mo = arg_5_1
+function RougeFactionItem_Base:setData(mo)
+	self._mo = mo
 
-	local var_5_0 = arg_5_1.styleCO
+	local styleCO = mo.styleCO
 
-	arg_5_0._txtname.text = var_5_0.name
-	arg_5_0._txtscrollDesc.text = var_5_0.desc
+	self._txtname.text = styleCO.name
+	self._txtscrollDesc.text = styleCO.desc
 
-	UISpriteSetMgr.instance:setRouge2Sprite(arg_5_0._imageicon, var_5_0.icon)
+	UISpriteSetMgr.instance:setRouge2Sprite(self._imageicon, styleCO.icon)
 end
 
-function var_0_0.difficulty(arg_6_0)
-	return arg_6_0:parent():difficulty()
+function RougeFactionItem_Base:difficulty()
+	local p = self:parent()
+
+	return p:difficulty()
 end
 
-return var_0_0
+return RougeFactionItem_Base

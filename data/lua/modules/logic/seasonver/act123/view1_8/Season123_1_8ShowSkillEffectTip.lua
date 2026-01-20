@@ -1,122 +1,129 @@
-﻿module("modules.logic.seasonver.act123.view1_8.Season123_1_8ShowSkillEffectTip", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view1_8/Season123_1_8ShowSkillEffectTip.lua
 
-local var_0_0 = class("Season123_1_8ShowSkillEffectTip", LuaCompBase)
+module("modules.logic.seasonver.act123.view1_8.Season123_1_8ShowSkillEffectTip", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._goBuffContainer = arg_1_1
-	arg_1_0._btnclosebuff = gohelper.findChildButtonWithAudio(arg_1_0._goBuffContainer, "buff_bg")
-	arg_1_0._goBuffContent = gohelper.findChild(arg_1_0._goBuffContainer, "#go_buffContent")
-	arg_1_0._goBuffItem = gohelper.findChild(arg_1_0._goBuffContainer, "#go_buffContent/#go_buffitem")
-	arg_1_0._buffTab = arg_1_0:getUserDataTb_()
+local Season123_1_8ShowSkillEffectTip = class("Season123_1_8ShowSkillEffectTip", LuaCompBase)
 
-	arg_1_0._btnclosebuff:AddClickListener(arg_1_0._btnclosebuffOnClick, arg_1_0)
-	gohelper.setActive(arg_1_0._goBuffContainer, false)
-	gohelper.setActive(arg_1_0._goBuffItem, false)
+function Season123_1_8ShowSkillEffectTip:init(go)
+	self._goBuffContainer = go
+	self._btnclosebuff = gohelper.findChildButtonWithAudio(self._goBuffContainer, "buff_bg")
+	self._goBuffContent = gohelper.findChild(self._goBuffContainer, "#go_buffContent")
+	self._goBuffItem = gohelper.findChild(self._goBuffContainer, "#go_buffContent/#go_buffitem")
+	self._buffTab = self:getUserDataTb_()
+
+	self._btnclosebuff:AddClickListener(self._btnclosebuffOnClick, self)
+	gohelper.setActive(self._goBuffContainer, false)
+	gohelper.setActive(self._goBuffItem, false)
 end
 
-function var_0_0._btnclosebuffOnClick(arg_2_0)
-	gohelper.setActive(arg_2_0._goBuffContainer, false)
+function Season123_1_8ShowSkillEffectTip:_btnclosebuffOnClick()
+	gohelper.setActive(self._goBuffContainer, false)
 
-	for iter_2_0, iter_2_1 in pairs(arg_2_0._buffTab) do
-		arg_2_0._buffTab[iter_2_0] = nil
+	for id, item in pairs(self._buffTab) do
+		self._buffTab[id] = nil
 
-		gohelper.destroy(iter_2_1.go)
+		gohelper.destroy(item.go)
 	end
 end
 
-function var_0_0.addLink(arg_3_0, arg_3_1)
-	if string.nilorempty(arg_3_1) then
+function Season123_1_8ShowSkillEffectTip:addLink(desc)
+	if string.nilorempty(desc) then
 		return ""
 	end
 
-	arg_3_1 = string.gsub(arg_3_1, "%[(.-)%]", var_0_0.addLinkTag1)
-	arg_3_1 = string.gsub(arg_3_1, "%【(.-)%】", var_0_0.addLinkTag2)
+	desc = string.gsub(desc, "%[(.-)%]", Season123_1_8ShowSkillEffectTip.addLinkTag1)
+	desc = string.gsub(desc, "%【(.-)%】", Season123_1_8ShowSkillEffectTip.addLinkTag2)
 
-	return arg_3_1
+	return desc
 end
 
-function var_0_0.addLinkTag1(arg_4_0)
-	arg_4_0 = SkillConfig.instance:processSkillDesKeyWords(arg_4_0)
+function Season123_1_8ShowSkillEffectTip.addLinkTag1(skillEffectName)
+	skillEffectName = SkillConfig.instance:processSkillDesKeyWords(skillEffectName)
 
-	local var_4_0 = SkillConfig.instance:getSkillEffectDescCoByName(arg_4_0)
+	local effectCo = SkillConfig.instance:getSkillEffectDescCoByName(skillEffectName)
 
-	if not var_4_0 or var_4_0.isNoShow4ActiveSkill == 1 or var_4_0.isSpecialCharacter == 1 then
-		return string.format("[%s]", arg_4_0)
+	if not effectCo or effectCo.isNoShow4ActiveSkill == 1 or effectCo.isSpecialCharacter == 1 then
+		return string.format("[%s]", skillEffectName)
 	end
 
-	return string.format("<u><link=%s>[%s]</link></u>", var_4_0.id, arg_4_0)
+	return string.format("<u><link=%s>[%s]</link></u>", effectCo.id, skillEffectName)
 end
 
-function var_0_0.addLinkTag2(arg_5_0)
-	arg_5_0 = SkillConfig.instance:processSkillDesKeyWords(arg_5_0)
+function Season123_1_8ShowSkillEffectTip.addLinkTag2(skillEffectName)
+	skillEffectName = SkillConfig.instance:processSkillDesKeyWords(skillEffectName)
 
-	local var_5_0 = SkillConfig.instance:getSkillEffectDescCoByName(arg_5_0)
+	local effectCo = SkillConfig.instance:getSkillEffectDescCoByName(skillEffectName)
 
-	if not var_5_0 or var_5_0.isNoShow4ActiveSkill == 1 or var_5_0.isSpecialCharacter == 1 then
-		return string.format("【%s】", arg_5_0)
+	if not effectCo or effectCo.isNoShow4ActiveSkill == 1 or effectCo.isSpecialCharacter == 1 then
+		return string.format("【%s】", skillEffectName)
 	end
 
-	return string.format("<u><link=%s>【%s】</link></u>", var_5_0.id, arg_5_0)
+	return string.format("<u><link=%s>【%s】</link></u>", effectCo.id, skillEffectName)
 end
 
-function var_0_0.addHyperLinkClick(arg_6_0, arg_6_1)
-	gohelper.onceAddComponent(arg_6_1, typeof(ZProj.TMPHyperLinkClick)):SetClickListener(arg_6_0.onHyperLinkClick, arg_6_0)
+function Season123_1_8ShowSkillEffectTip:addHyperLinkClick(txtDesc)
+	local hyperLinkClick = gohelper.onceAddComponent(txtDesc, typeof(ZProj.TMPHyperLinkClick))
+
+	hyperLinkClick:SetClickListener(self.onHyperLinkClick, self)
 end
 
-function var_0_0.onHyperLinkClick(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = tonumber(arg_7_1)
+function Season123_1_8ShowSkillEffectTip:onHyperLinkClick(id, clickPosition)
+	local effectId = tonumber(id)
 
-	arg_7_0:createAndGetBufferItem(var_7_0)
+	self:createAndGetBufferItem(effectId)
 
-	local var_7_1 = recthelper.screenPosToAnchorPos(arg_7_2, arg_7_0._goBuffContainer.transform).y
+	local reallyClickPosition = recthelper.screenPosToAnchorPos(clickPosition, self._goBuffContainer.transform)
+	local y = reallyClickPosition.y
 
-	gohelper.setActive(arg_7_0._goBuffContainer, true)
-	recthelper.setAnchorY(arg_7_0._goBuffContent.transform, var_7_1)
+	gohelper.setActive(self._goBuffContainer, true)
+	recthelper.setAnchorY(self._goBuffContent.transform, y)
 end
 
-function var_0_0.createAndGetBufferItem(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0._buffTab[arg_8_1]
+function Season123_1_8ShowSkillEffectTip:createAndGetBufferItem(effectId)
+	local buffItem = self._buffTab[effectId]
 
-	if not var_8_0 then
-		var_8_0 = {
-			go = gohelper.clone(arg_8_0._goBuffItem, arg_8_0._goBuffContent, "go_buffitem" .. arg_8_1)
+	if not buffItem then
+		buffItem = {
+			go = gohelper.clone(self._goBuffItem, self._goBuffContent, "go_buffitem" .. effectId)
 		}
-		var_8_0.txtBuffName = gohelper.findChildText(var_8_0.go, "title/txt_name")
-		var_8_0.goBuffTag = gohelper.findChild(var_8_0.go, "title/txt_name/go_tag")
-		var_8_0.txtBuffTagName = gohelper.findChildText(var_8_0.go, "title/txt_name/go_tag/bg/txt_tagname")
-		var_8_0.txtBuffDesc = gohelper.findChildText(var_8_0.go, "txt_desc")
-		var_8_0.config = SkillConfig.instance:getSkillEffectDescCo(arg_8_1)
-		arg_8_0._buffTab[arg_8_1] = var_8_0
+		buffItem.txtBuffName = gohelper.findChildText(buffItem.go, "title/txt_name")
+		buffItem.goBuffTag = gohelper.findChild(buffItem.go, "title/txt_name/go_tag")
+		buffItem.txtBuffTagName = gohelper.findChildText(buffItem.go, "title/txt_name/go_tag/bg/txt_tagname")
+		buffItem.txtBuffDesc = gohelper.findChildText(buffItem.go, "txt_desc")
+		buffItem.config = SkillConfig.instance:getSkillEffectDescCo(effectId)
+		self._buffTab[effectId] = buffItem
 	end
 
-	gohelper.setActive(var_8_0.go, true)
+	gohelper.setActive(buffItem.go, true)
 
-	local var_8_1 = var_8_0.config.name
+	local buffName = buffItem.config.name
 
-	var_8_0.txtBuffName.text = SkillConfig.instance:processSkillDesKeyWords(var_8_1)
+	buffItem.txtBuffName.text = SkillConfig.instance:processSkillDesKeyWords(buffName)
 
-	local var_8_2 = FightConfig.instance:getBuffTag(var_8_1)
+	local buffTagName = FightConfig.instance:getBuffTag(buffName)
 
-	gohelper.setActive(var_8_0.goBuffTag, not string.nilorempty(var_8_2))
+	gohelper.setActive(buffItem.goBuffTag, not string.nilorempty(buffTagName))
 
-	var_8_0.txtBuffTagName.text = var_8_2
-	var_8_0.txtBuffDesc.text = arg_8_0:addLink(HeroSkillModel.instance:skillDesToSpot(var_8_0.config.desc))
+	buffItem.txtBuffTagName.text = buffTagName
+	buffItem.txtBuffDesc.text = self:addLink(HeroSkillModel.instance:skillDesToSpot(buffItem.config.desc))
 
-	arg_8_0:addChildHyperLinkClick(var_8_0.txtBuffDesc, true)
+	self:addChildHyperLinkClick(buffItem.txtBuffDesc, true)
 end
 
-function var_0_0.addChildHyperLinkClick(arg_9_0, arg_9_1)
-	gohelper.onceAddComponent(arg_9_1, typeof(ZProj.TMPHyperLinkClick)):SetClickListener(arg_9_0.onChildHyperLinkClick, arg_9_0)
+function Season123_1_8ShowSkillEffectTip:addChildHyperLinkClick(txtDesc)
+	local hyperLinkClick = gohelper.onceAddComponent(txtDesc, typeof(ZProj.TMPHyperLinkClick))
+
+	hyperLinkClick:SetClickListener(self.onChildHyperLinkClick, self)
 end
 
-function var_0_0.onChildHyperLinkClick(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = tonumber(arg_10_1)
+function Season123_1_8ShowSkillEffectTip:onChildHyperLinkClick(id, clickPosition)
+	local effectId = tonumber(id)
 
-	arg_10_0:createAndGetBufferItem(var_10_0)
+	self:createAndGetBufferItem(effectId)
 end
 
-function var_0_0.onDestroy(arg_11_0)
-	arg_11_0._btnclosebuff:RemoveClickListener()
+function Season123_1_8ShowSkillEffectTip:onDestroy()
+	self._btnclosebuff:RemoveClickListener()
 end
 
-return var_0_0
+return Season123_1_8ShowSkillEffectTip

@@ -1,17 +1,19 @@
-﻿module("modules.logic.video.adjust.AvProUGUIListPlayer_adjust", package.seeall)
+﻿-- chunkname: @modules/logic/video/adjust/AvProUGUIListPlayer_adjust.lua
 
-local var_0_0 = class("AvProUGUIListPlayer_adjust")
+module("modules.logic.video.adjust.AvProUGUIListPlayer_adjust", package.seeall)
 
-function var_0_0.SetEventListener(arg_1_0, arg_1_1, arg_1_2)
+local AvProUGUIListPlayer_adjust = class("AvProUGUIListPlayer_adjust")
+
+function AvProUGUIListPlayer_adjust:SetEventListener(callback, callbackObj)
 	return
 end
 
-function var_0_0.SetMediaPath(arg_2_0, arg_2_1, arg_2_2)
+function AvProUGUIListPlayer_adjust:SetMediaPath(path, index)
 	return
 end
 
-function var_0_0.Clear(arg_3_0)
+function AvProUGUIListPlayer_adjust:Clear()
 	return
 end
 
-return var_0_0
+return AvProUGUIListPlayer_adjust

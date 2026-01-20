@@ -1,37 +1,39 @@
-﻿module("modules.logic.permanent.view.enterview.Permanent2_1EnterView", package.seeall)
+﻿-- chunkname: @modules/logic/permanent/view/enterview/Permanent2_1EnterView.lua
 
-local var_0_0 = class("Permanent2_1EnterView", BaseView)
+module("modules.logic.permanent.view.enterview.Permanent2_1EnterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._btnEntranceRole1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/EntranceRole1/#btn_EntranceRole1")
-	arg_1_0._goReddot1 = gohelper.findChild(arg_1_0.viewGO, "Left/EntranceRole1/#go_Reddot1")
-	arg_1_0._btnEntranceRole2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/EntranceRole2/#btn_EntranceRole2")
-	arg_1_0._goReddot2 = gohelper.findChild(arg_1_0.viewGO, "Left/EntranceRole2/#go_Reddot2")
-	arg_1_0._btnPlay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Title/#btn_Play")
-	arg_1_0._btnAchievement = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Achievement")
-	arg_1_0._btnEntranceDungeon = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/EntranceDungeon/#btn_EntranceDungeon")
-	arg_1_0._goReddot = gohelper.findChild(arg_1_0.viewGO, "Right/EntranceDungeon/#go_Reddot")
+local Permanent2_1EnterView = class("Permanent2_1EnterView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Permanent2_1EnterView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._btnEntranceRole1 = gohelper.findChildButtonWithAudio(self.viewGO, "Left/EntranceRole1/#btn_EntranceRole1")
+	self._goReddot1 = gohelper.findChild(self.viewGO, "Left/EntranceRole1/#go_Reddot1")
+	self._btnEntranceRole2 = gohelper.findChildButtonWithAudio(self.viewGO, "Left/EntranceRole2/#btn_EntranceRole2")
+	self._goReddot2 = gohelper.findChild(self.viewGO, "Left/EntranceRole2/#go_Reddot2")
+	self._btnPlay = gohelper.findChildButtonWithAudio(self.viewGO, "Title/#btn_Play")
+	self._btnAchievement = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_Achievement")
+	self._btnEntranceDungeon = gohelper.findChildButtonWithAudio(self.viewGO, "Right/EntranceDungeon/#btn_EntranceDungeon")
+	self._goReddot = gohelper.findChild(self.viewGO, "Right/EntranceDungeon/#go_Reddot")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._btnEntranceRole1, arg_2_0._btnEntranceRole1OnClick, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._btnEntranceRole2, arg_2_0._btnEntranceRole2OnClick, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._btnPlay, arg_2_0._btnPlayOnClick, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._btnAchievement, arg_2_0._btnAchievementOnClick, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._btnEntranceDungeon, arg_2_0._btnEntranceDungeonOnClick, arg_2_0)
-	arg_2_0:addEventCb(Activity165Controller.instance, Activity165Event.refreshStoryReddot, arg_2_0._act165RedDot, arg_2_0)
+function Permanent2_1EnterView:addEvents()
+	self:addClickCb(self._btnEntranceRole1, self._btnEntranceRole1OnClick, self)
+	self:addClickCb(self._btnEntranceRole2, self._btnEntranceRole2OnClick, self)
+	self:addClickCb(self._btnPlay, self._btnPlayOnClick, self)
+	self:addClickCb(self._btnAchievement, self._btnAchievementOnClick, self)
+	self:addClickCb(self._btnEntranceDungeon, self._btnEntranceDungeonOnClick, self)
+	self:addEventCb(Activity165Controller.instance, Activity165Event.refreshStoryReddot, self._act165RedDot, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(Activity165Controller.instance, Activity165Event.refreshStoryReddot, arg_3_0._act165RedDot, arg_3_0)
+function Permanent2_1EnterView:removeEvents()
+	self:removeEventCb(Activity165Controller.instance, Activity165Event.refreshStoryReddot, self._act165RedDot, self)
 end
 
-local var_0_1 = {
+local kRoleIndex2ActId = {
 	{
 		actId = VersionActivity2_1Enum.ActivityId.LanShouPa,
 		redDotId = RedDotEnum.DotNode.V2a1LanShouPaTaskRed
@@ -42,61 +44,61 @@ local var_0_1 = {
 	}
 }
 
-var_0_0.kRoleIndex2ActId = var_0_1
+Permanent2_1EnterView.kRoleIndex2ActId = kRoleIndex2ActId
 
-local function var_0_2(arg_4_0)
-	local var_4_0 = var_0_1[arg_4_0]
+local function _getActId(roleIndex)
+	local actInfo = kRoleIndex2ActId[roleIndex]
 
-	return var_4_0 and var_4_0.actId or 0
+	return actInfo and actInfo.actId or 0
 end
 
-local function var_0_3(arg_5_0)
-	local var_5_0 = var_0_1[arg_5_0]
+local function _getRedDotId(roleIndex)
+	local actInfo = kRoleIndex2ActId[roleIndex]
 
-	return var_5_0 and var_5_0.redDotId or 0
+	return actInfo and actInfo.redDotId or 0
 end
 
-local function var_0_4(arg_6_0, arg_6_1)
-	local var_6_0 = var_0_2(arg_6_1)
-	local var_6_1 = ActivityConfig.instance:getActivityCo(var_6_0)
-	local var_6_2 = var_0_3(arg_6_1) or var_6_1.redDotId
+local function _addRedDot(goReddot, roleIndex)
+	local actId = _getActId(roleIndex)
+	local activityCo = ActivityConfig.instance:getActivityCo(actId)
+	local redDotId = _getRedDotId(roleIndex) or activityCo.redDotId
 
-	RedDotController.instance:addRedDot(arg_6_0, var_6_2, var_6_0)
+	RedDotController.instance:addRedDot(goReddot, redDotId, actId)
 end
 
-local function var_0_5(arg_7_0, arg_7_1)
-	if arg_7_1 == nil then
-		arg_7_1 = true
+local function _showLanShouPa(actId, isReqInfo)
+	if isReqInfo == nil then
+		isReqInfo = true
 	end
 
-	LanShouPaController.instance:openLanShouPaMapView(arg_7_0 or var_0_2(1), arg_7_1)
+	LanShouPaController.instance:openLanShouPaMapView(actId or _getActId(1), isReqInfo)
 end
 
-local function var_0_6(arg_8_0, arg_8_1)
-	if arg_8_1 == nil then
-		arg_8_1 = true
+local function _showAergusi(actId, isReqInfo)
+	if isReqInfo == nil then
+		isReqInfo = true
 	end
 
-	AergusiController.instance:openAergusiLevelView(arg_8_0 or var_0_2(2), arg_8_1)
+	AergusiController.instance:openAergusiLevelView(actId or _getActId(2), isReqInfo)
 end
 
-function var_0_0._btnEntranceRole1OnClick(arg_9_0)
-	var_0_5()
+function Permanent2_1EnterView:_btnEntranceRole1OnClick()
+	_showLanShouPa()
 end
 
-function var_0_0._btnEntranceRole2OnClick(arg_10_0)
-	var_0_6()
+function Permanent2_1EnterView:_btnEntranceRole2OnClick()
+	_showAergusi()
 end
 
-function var_0_0._btnPlayOnClick(arg_11_0)
-	local var_11_0 = {}
+function Permanent2_1EnterView:_btnPlayOnClick()
+	local param = {}
 
-	var_11_0.isVersionActivityPV = true
+	param.isVersionActivityPV = true
 
-	StoryController.instance:playStory(arg_11_0.actCfg.storyId, var_11_0)
+	StoryController.instance:playStory(self.actCfg.storyId, param)
 end
 
-function var_0_0._btnAchievementOnClick(arg_12_0)
+function Permanent2_1EnterView:_btnAchievementOnClick()
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Achievement) then
 		ViewMgr.instance:openView(ViewName.AchievementMainView, {
 			categoryType = AchievementEnum.Type.Activity
@@ -106,45 +108,47 @@ function var_0_0._btnAchievementOnClick(arg_12_0)
 	end
 end
 
-function var_0_0._btnEntranceDungeonOnClick(arg_13_0)
+function Permanent2_1EnterView:_btnEntranceDungeonOnClick()
 	VersionActivity2_1DungeonController.instance:openVersionActivityDungeonMapView()
 end
 
-function var_0_0._editableInitView(arg_14_0)
-	arg_14_0.actCfg = ActivityConfig.instance:getActivityCo(VersionActivity2_1Enum.ActivityId.EnterView)
+function Permanent2_1EnterView:_editableInitView()
+	self.actCfg = ActivityConfig.instance:getActivityCo(VersionActivity2_1Enum.ActivityId.EnterView)
 
-	gohelper.setActive(arg_14_0._btnAchievement.gameObject, false)
+	gohelper.setActive(self._btnAchievement.gameObject, false)
 
-	arg_14_0._commonRedDotIcon = RedDotController.instance:addRedDot(arg_14_0._goReddot, 0, 0, arg_14_0._act165RedDotOverrideRefreshFunc, arg_14_0)
+	self._commonRedDotIcon = RedDotController.instance:addRedDot(self._goReddot, 0, 0, self._act165RedDotOverrideRefreshFunc, self)
 end
 
-function var_0_0.onOpen(arg_15_0)
-	if arg_15_0.viewParam then
-		local var_15_0 = arg_15_0.viewParam
+function Permanent2_1EnterView:onOpen()
+	if self.viewParam then
+		local viewParam = self.viewParam
 
-		if var_15_0.isJumpAergusi then
-			var_0_6(var_15_0.roleActId, var_15_0.roleActNeedReqInfo)
-		elseif var_15_0.isJumpLanShouPa then
-			var_0_5(var_15_0.roleActId, var_15_0.roleActNeedReqInfo)
+		if viewParam.isJumpAergusi then
+			_showAergusi(viewParam.roleActId, viewParam.roleActNeedReqInfo)
+		elseif viewParam.isJumpLanShouPa then
+			_showLanShouPa(viewParam.roleActId, viewParam.roleActNeedReqInfo)
 		end
 	end
 
-	var_0_4(arg_15_0._goReddot1, 1)
-	var_0_4(arg_15_0._goReddot2, 2)
+	_addRedDot(self._goReddot1, 1)
+	_addRedDot(self._goReddot2, 2)
 end
 
-function var_0_0.onClose(arg_16_0)
-	PermanentModel.instance:undateActivityInfo(arg_16_0.actCfg.id)
+function Permanent2_1EnterView:onClose()
+	PermanentModel.instance:undateActivityInfo(self.actCfg.id)
 end
 
-function var_0_0._act165RedDotOverrideRefreshFunc(arg_17_0, arg_17_1)
-	arg_17_1.show = Activity165Model.instance:isShowAct165Reddot()
+function Permanent2_1EnterView:_act165RedDotOverrideRefreshFunc(redDotIcon)
+	local isShow = Activity165Model.instance:isShowAct165Reddot()
 
-	arg_17_1:showRedDot(RedDotEnum.Style.Normal)
+	redDotIcon.show = isShow
+
+	redDotIcon:showRedDot(RedDotEnum.Style.Normal)
 end
 
-function var_0_0._act165RedDot(arg_18_0)
-	arg_18_0._commonRedDotIcon:refreshDot()
+function Permanent2_1EnterView:_act165RedDot()
+	self._commonRedDotIcon:refreshDot()
 end
 
-return var_0_0
+return Permanent2_1EnterView

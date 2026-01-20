@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity2_6.dicehero.config.DiceHeroConfig", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/dicehero/config/DiceHeroConfig.lua
 
-local var_0_0 = class("DiceHeroConfig", BaseConfig)
+module("modules.logic.versionactivity2_6.dicehero.config.DiceHeroConfig", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local DiceHeroConfig = class("DiceHeroConfig", BaseConfig)
+
+function DiceHeroConfig:reqConfigNames()
 	return {
 		"dice",
 		"dice_buff",
@@ -19,90 +21,90 @@ function var_0_0.reqConfigNames(arg_1_0)
 	}
 end
 
-function var_0_0.getTaskList(arg_2_0)
-	local var_2_0 = {}
+function DiceHeroConfig:getTaskList()
+	local list = {}
 
-	for iter_2_0, iter_2_1 in ipairs(lua_dice_task.configList) do
-		if iter_2_1.isOnline == 1 then
-			table.insert(var_2_0, iter_2_1)
+	for i, v in ipairs(lua_dice_task.configList) do
+		if v.isOnline == 1 then
+			table.insert(list, v)
 		end
 	end
 
-	return var_2_0
+	return list
 end
 
-function var_0_0.getLevelCo(arg_3_0, arg_3_1, arg_3_2)
-	for iter_3_0, iter_3_1 in ipairs(lua_dice_level.configList) do
-		if iter_3_1.chapter == arg_3_1 and iter_3_1.room == arg_3_2 then
-			return iter_3_1
+function DiceHeroConfig:getLevelCo(chapterId, roomId)
+	for i, v in ipairs(lua_dice_level.configList) do
+		if v.chapter == chapterId and v.room == roomId then
+			return v
 		end
 	end
 end
 
-function var_0_0.getLevelCos(arg_4_0, arg_4_1)
-	if not arg_4_0._levelCos then
-		arg_4_0._levelCos = {}
+function DiceHeroConfig:getLevelCos(chapterId)
+	if not self._levelCos then
+		self._levelCos = {}
 
-		for iter_4_0, iter_4_1 in ipairs(lua_dice_level.configList) do
-			if not arg_4_0._levelCos[iter_4_1.chapter] then
-				arg_4_0._levelCos[iter_4_1.chapter] = {}
+		for i, v in ipairs(lua_dice_level.configList) do
+			if not self._levelCos[v.chapter] then
+				self._levelCos[v.chapter] = {}
 			end
 
-			arg_4_0._levelCos[iter_4_1.chapter][iter_4_1.room] = iter_4_1
+			self._levelCos[v.chapter][v.room] = v
 		end
 	end
 
-	return arg_4_0._levelCos[arg_4_1] or {}
+	return self._levelCos[chapterId] or {}
 end
 
-function var_0_0.getDiceSuitDict(arg_5_0, arg_5_1)
-	if not arg_5_0._suitDict then
-		arg_5_0._suitDict = {}
+function DiceHeroConfig:getDiceSuitDict(suitId)
+	if not self._suitDict then
+		self._suitDict = {}
 
-		for iter_5_0, iter_5_1 in ipairs(lua_dice_suit.configList) do
-			local var_5_0 = {}
+		for _, suitCo in ipairs(lua_dice_suit.configList) do
+			local dict = {}
 
-			for iter_5_2, iter_5_3 in ipairs(string.splitToNumber(iter_5_1.suit, "#") or {}) do
-				var_5_0[iter_5_3] = true
+			for _, suit in ipairs(string.splitToNumber(suitCo.suit, "#") or {}) do
+				dict[suit] = true
 			end
 
-			arg_5_0._suitDict[iter_5_1.id] = var_5_0
+			self._suitDict[suitCo.id] = dict
 		end
 
-		local var_5_1 = {}
+		local any = {}
 
-		GameUtil.setDefaultValue(var_5_1, true)
+		GameUtil.setDefaultValue(any, true)
 
-		arg_5_0._suitDict[0] = var_5_1
+		self._suitDict[0] = any
 	end
 
-	return arg_5_0._suitDict[arg_5_1]
+	return self._suitDict[suitId]
 end
 
-function var_0_0.getDicePointDict(arg_6_0, arg_6_1)
-	if not arg_6_0._pointDict then
-		arg_6_0._pointDict = {}
+function DiceHeroConfig:getDicePointDict(pointId)
+	if not self._pointDict then
+		self._pointDict = {}
 
-		for iter_6_0, iter_6_1 in ipairs(lua_dice_point.configList) do
-			local var_6_0 = {}
+		for _, pointCo in ipairs(lua_dice_point.configList) do
+			local dict = {}
 
-			for iter_6_2, iter_6_3 in ipairs(string.splitToNumber(iter_6_1.pointList, "#") or {}) do
-				var_6_0[iter_6_3] = true
+			for _, point in ipairs(string.splitToNumber(pointCo.pointList, "#") or {}) do
+				dict[point] = true
 			end
 
-			arg_6_0._pointDict[iter_6_1.id] = var_6_0
+			self._pointDict[pointCo.id] = dict
 		end
 
-		local var_6_1 = {}
+		local any = {}
 
-		GameUtil.setDefaultValue(var_6_1, true)
+		GameUtil.setDefaultValue(any, true)
 
-		arg_6_0._pointDict[0] = var_6_1
+		self._pointDict[0] = any
 	end
 
-	return arg_6_0._pointDict[arg_6_1]
+	return self._pointDict[pointId]
 end
 
-var_0_0.instance = var_0_0.New()
+DiceHeroConfig.instance = DiceHeroConfig.New()
 
-return var_0_0
+return DiceHeroConfig

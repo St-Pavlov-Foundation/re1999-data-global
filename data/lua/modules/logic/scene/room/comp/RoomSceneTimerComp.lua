@@ -1,22 +1,26 @@
-﻿module("modules.logic.scene.room.comp.RoomSceneTimerComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/comp/RoomSceneTimerComp.lua
 
-local var_0_0 = class("RoomSceneTimerComp", BaseSceneComp)
+module("modules.logic.scene.room.comp.RoomSceneTimerComp", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	TaskDispatcher.runRepeat(arg_1_0.everySecondCall, arg_1_0, TimeUtil.OneSecond)
+local RoomSceneTimerComp = class("RoomSceneTimerComp", BaseSceneComp)
+
+function RoomSceneTimerComp:init(sceneId, levelId)
+	TaskDispatcher.runRepeat(self.everySecondCall, self, TimeUtil.OneSecond)
 	RoomMapController.instance:dispatchEvent(RoomEvent.RoomTimerInitComplete)
 end
 
-function var_0_0.everySecondCall(arg_2_0)
-	if RoomController.instance:isDebugMode() then
+function RoomSceneTimerComp:everySecondCall()
+	local isDebugMode = RoomController.instance:isDebugMode()
+
+	if isDebugMode then
 		return
 	end
 
 	ManufactureController.instance:checkManufactureInfoUpdate()
 end
 
-function var_0_0.onSceneClose(arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0.everySecondCall, arg_3_0)
+function RoomSceneTimerComp:onSceneClose()
+	TaskDispatcher.cancelTask(self.everySecondCall, self)
 end
 
-return var_0_0
+return RoomSceneTimerComp

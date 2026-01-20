@@ -1,22 +1,24 @@
-﻿module("modules.logic.chessgame.game.step.ChessStepShowToast", package.seeall)
+﻿-- chunkname: @modules/logic/chessgame/game/step/ChessStepShowToast.lua
 
-local var_0_0 = class("ChessStepShowToast", BaseWork)
+module("modules.logic.chessgame.game.step.ChessStepShowToast", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.originData = arg_1_1
+local ChessStepShowToast = class("ChessStepShowToast", BaseWork)
+
+function ChessStepShowToast:init(stepData)
+	self.originData = stepData
 end
 
-function var_0_0.onStart(arg_2_0)
-	arg_2_0:showToast()
-	arg_2_0:onDone(true)
+function ChessStepShowToast:onStart()
+	self:showToast()
+	self:onDone(true)
 end
 
-function var_0_0.showToast(arg_3_0)
-	local var_3_0 = arg_3_0.originData.notifyId
-	local var_3_1 = ChessModel.instance:getActId()
-	local var_3_2 = ChessConfig.instance:getTipsCo(var_3_1, var_3_0)
+function ChessStepShowToast:showToast()
+	local toastId = self.originData.notifyId
+	local actId = ChessModel.instance:getActId()
+	local tipco = ChessConfig.instance:getTipsCo(actId, toastId)
 
-	ChessGameController.instance:dispatchEvent(ChessGameEvent.GameToastUpdate, var_3_2)
+	ChessGameController.instance:dispatchEvent(ChessGameEvent.GameToastUpdate, tipco)
 end
 
-return var_0_0
+return ChessStepShowToast

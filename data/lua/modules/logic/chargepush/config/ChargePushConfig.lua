@@ -1,33 +1,35 @@
-﻿module("modules.logic.chargepush.config.ChargePushConfig", package.seeall)
+﻿-- chunkname: @modules/logic/chargepush/config/ChargePushConfig.lua
 
-local var_0_0 = class("ChargePushConfig", BaseConfig)
+module("modules.logic.chargepush.config.ChargePushConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local ChargePushConfig = class("ChargePushConfig", BaseConfig)
+
+function ChargePushConfig:ctor()
 	return
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function ChargePushConfig:reqConfigNames()
 	return {
 		"store_push_goods"
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "store_push_goods" then
-		arg_3_0._chargePushGoodsConfig = arg_3_2
+function ChargePushConfig:onConfigLoaded(configName, configTable)
+	if configName == "store_push_goods" then
+		self._chargePushGoodsConfig = configTable
 	end
 end
 
-function var_0_0.getPushGoodsConfig(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0._chargePushGoodsConfig.configDict[arg_4_1]
+function ChargePushConfig:getPushGoodsConfig(id)
+	local co = self._chargePushGoodsConfig.configDict[id]
 
-	if not var_4_0 then
-		logError(string.format("chargepushgoods config is nil, id:%s", arg_4_1))
+	if not co then
+		logError(string.format("chargepushgoods config is nil, id:%s", id))
 	end
 
-	return var_4_0
+	return co
 end
 
-var_0_0.instance = var_0_0.New()
+ChargePushConfig.instance = ChargePushConfig.New()
 
-return var_0_0
+return ChargePushConfig

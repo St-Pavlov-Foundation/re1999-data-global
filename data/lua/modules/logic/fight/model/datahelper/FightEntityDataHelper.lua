@@ -1,24 +1,26 @@
-﻿module("modules.logic.fight.model.datahelper.FightEntityDataHelper", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/datahelper/FightEntityDataHelper.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.logic.fight.model.datahelper.FightEntityDataHelper", package.seeall)
+
+local FightEntityDataHelper = {}
+local filterCopyEntityMOKey = {
 	class = true
 }
 
-function var_0_0.isPlayerUid(arg_1_0)
-	return arg_1_0 == FightEntityScene.MySideId or arg_1_0 == FightEntityScene.EnemySideId
+function FightEntityDataHelper.isPlayerUid(uid)
+	return uid == FightEntityScene.MySideId or uid == FightEntityScene.EnemySideId
 end
 
-function var_0_0.isNotPlayerUid(arg_2_0)
-	return arg_2_0 ~= FightEntityScene.MySideId and arg_2_0 ~= FightEntityScene.EnemySideId
+function FightEntityDataHelper.isNotPlayerUid(uid)
+	return uid ~= FightEntityScene.MySideId and uid ~= FightEntityScene.EnemySideId
 end
 
-function var_0_0.copyEntityMO(arg_3_0, arg_3_1)
-	FightDataUtil.coverData(arg_3_0, arg_3_1, var_0_1)
+function FightEntityDataHelper.copyEntityMO(entityMO1, entityMO2)
+	FightDataUtil.coverData(entityMO1, entityMO2, filterCopyEntityMOKey)
 end
 
-function var_0_0.sortSubEntityList(arg_4_0, arg_4_1)
-	return arg_4_0.position > arg_4_1.position
+function FightEntityDataHelper.sortSubEntityList(item1, item2)
+	return item1.position > item2.position
 end
 
-return var_0_0
+return FightEntityDataHelper

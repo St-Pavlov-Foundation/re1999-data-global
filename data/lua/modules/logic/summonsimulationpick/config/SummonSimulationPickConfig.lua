@@ -1,37 +1,39 @@
-﻿module("modules.logic.summonsimulationpick.config.SummonSimulationPickConfig", package.seeall)
+﻿-- chunkname: @modules/logic/summonsimulationpick/config/SummonSimulationPickConfig.lua
 
-local var_0_0 = class("SummonSimulationPickConfig", BaseConfig)
+module("modules.logic.summonsimulationpick.config.SummonSimulationPickConfig", package.seeall)
 
-var_0_0.ACTIVITY_CONFIG_170 = "activity170"
+local SummonSimulationPickConfig = class("SummonSimulationPickConfig", BaseConfig)
 
-function var_0_0.reqConfigNames(arg_1_0)
+SummonSimulationPickConfig.ACTIVITY_CONFIG_NAME = "activity221"
+
+function SummonSimulationPickConfig:reqConfigNames()
 	return {
-		arg_1_0.ACTIVITY_CONFIG_170
+		self.ACTIVITY_CONFIG_NAME
 	}
 end
 
-function var_0_0.onInit(arg_2_0)
-	arg_2_0._summonSimulationPickConfig = nil
+function SummonSimulationPickConfig:onInit()
+	self._summonSimulationPickConfig = nil
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == arg_3_0.ACTIVITY_CONFIG_170 then
-		arg_3_0._summonSimulationPickConfig = arg_3_2
+function SummonSimulationPickConfig:onConfigLoaded(configName, configTable)
+	if configName == self.ACTIVITY_CONFIG_NAME then
+		self._summonSimulationPickConfig = configTable
 	end
 end
 
-function var_0_0.getAllConfig(arg_4_0)
-	return arg_4_0._summonSimulationPickConfig.configList
+function SummonSimulationPickConfig:getAllConfig()
+	return self._summonSimulationPickConfig.configList
 end
 
-function var_0_0.getSummonConfig(arg_5_0)
-	return arg_5_0._summonSimulationPickConfig
+function SummonSimulationPickConfig:getSummonConfig()
+	return self._summonSimulationPickConfig
 end
 
-function var_0_0.getSummonConfigById(arg_6_0, arg_6_1)
-	return arg_6_0._summonSimulationPickConfig.configDict[arg_6_1]
+function SummonSimulationPickConfig:getSummonConfigById(activityId)
+	return self._summonSimulationPickConfig.configDict[activityId]
 end
 
-var_0_0.instance = var_0_0.New()
+SummonSimulationPickConfig.instance = SummonSimulationPickConfig.New()
 
-return var_0_0
+return SummonSimulationPickConfig

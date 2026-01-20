@@ -1,11 +1,13 @@
-﻿module("modules.logic.equip.view.EquipStoryViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/equip/view/EquipStoryViewContainer.lua
 
-local var_0_0 = class("EquipStoryViewContainer", BaseViewContainer)
+module("modules.logic.equip.view.EquipStoryViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local EquipStoryViewContainer = class("EquipStoryViewContainer", BaseViewContainer)
+
+function EquipStoryViewContainer:buildViews()
 	return {
 		EquipStoryView.New()
 	}
 end
 
-return var_0_0
+return EquipStoryViewContainer

@@ -1,20 +1,22 @@
-﻿module("modules.logic.fight.system.work.FightWorkEffectShieldChange", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkEffectShieldChange.lua
 
-local var_0_0 = class("FightWorkEffectShieldChange", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkEffectShieldChange", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = FightHelper.getEntity(arg_1_0.actEffectData.targetId)
-	local var_1_1 = arg_1_0.actEffectData.effectNum
+local FightWorkEffectShieldChange = class("FightWorkEffectShieldChange", FightEffectBase)
 
-	if var_1_0 and var_1_0.nameUI and var_1_1 > 0 then
-		var_1_0.nameUI:addHp(var_1_1)
-		var_1_0.nameUI:setShield(0)
-		FightFloatMgr.instance:float(var_1_0.id, FightEnum.FloatType.heal, var_1_1, nil, arg_1_0.actEffectData.buffActId == 1)
-		FightController.instance:dispatchEvent(FightEvent.OnHpChange, var_1_0, var_1_1)
-		FightController.instance:dispatchEvent(FightEvent.OnShieldChange, var_1_0, 0)
+function FightWorkEffectShieldChange:onStart()
+	local entity = FightHelper.getEntity(self.actEffectData.targetId)
+	local effectNum = self.actEffectData.effectNum
+
+	if entity and entity.nameUI and effectNum > 0 then
+		entity.nameUI:addHp(effectNum)
+		entity.nameUI:setShield(0)
+		FightFloatMgr.instance:float(entity.id, FightEnum.FloatType.heal, effectNum, nil, self.actEffectData.buffActId == 1)
+		FightController.instance:dispatchEvent(FightEvent.OnHpChange, entity, effectNum)
+		FightController.instance:dispatchEvent(FightEvent.OnShieldChange, entity, 0)
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkEffectShieldChange

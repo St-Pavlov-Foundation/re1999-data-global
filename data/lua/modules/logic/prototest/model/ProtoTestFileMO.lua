@@ -1,11 +1,13 @@
-﻿module("modules.logic.prototest.model.ProtoTestFileMO", package.seeall)
+﻿-- chunkname: @modules/logic/prototest/model/ProtoTestFileMO.lua
 
-local var_0_0 = pureTable("ProtoTestFileMO")
+module("modules.logic.prototest.model.ProtoTestFileMO", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.id = nil
-	arg_1_0.fileName = nil
-	arg_1_0.filePath = nil
+local ProtoTestFileMO = pureTable("ProtoTestFileMO")
+
+function ProtoTestFileMO:ctor()
+	self.id = nil
+	self.fileName = nil
+	self.filePath = nil
 end
 
-return var_0_0
+return ProtoTestFileMO

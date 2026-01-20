@@ -1,28 +1,30 @@
-﻿module("modules.logic.rouge.view.RougeStoryListViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeStoryListViewContainer.lua
 
-local var_0_0 = class("RougeStoryListViewContainer", BaseViewContainer)
+module("modules.logic.rouge.view.RougeStoryListViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RougeStoryListViewContainer = class("RougeStoryListViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RougeStoryListView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
+function RougeStoryListViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RougeStoryListView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_btns"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function RougeStoryListViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-return var_0_0
+return RougeStoryListViewContainer

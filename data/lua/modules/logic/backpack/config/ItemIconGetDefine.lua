@@ -1,116 +1,123 @@
-﻿module("modules.logic.backpack.config.ItemIconGetDefine", package.seeall)
+﻿-- chunkname: @modules/logic/backpack/config/ItemIconGetDefine.lua
 
-local var_0_0 = class("ItemIconGetDefine", BaseConfig)
+module("modules.logic.backpack.config.ItemIconGetDefine", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._defineList = {
-		[MaterialEnum.MaterialType.Item] = var_0_0._getItem,
-		[MaterialEnum.MaterialType.Currency] = var_0_0._getCurrency,
-		[MaterialEnum.MaterialType.PowerPotion] = var_0_0._getPowerPotion,
-		[MaterialEnum.MaterialType.HeroSkin] = var_0_0._getHeroSkin,
-		[MaterialEnum.MaterialType.Hero] = var_0_0._getHero,
-		[MaterialEnum.MaterialType.Equip] = var_0_0._getEquip,
-		[MaterialEnum.MaterialType.PlayerCloth] = var_0_0._getPlayerCloth,
-		[MaterialEnum.MaterialType.Building] = var_0_0._getBuilding,
-		[MaterialEnum.MaterialType.Formula] = var_0_0._getFormula,
-		[MaterialEnum.MaterialType.BlockPackage] = var_0_0._getBlockPackage,
-		[MaterialEnum.MaterialType.SpecialBlock] = var_0_0._getSpecialBlock,
-		[MaterialEnum.MaterialType.RoomTheme] = var_0_0._getRoomTheme,
-		[MaterialEnum.MaterialType.Explore] = var_0_0._getExplore,
-		[MaterialEnum.MaterialType.EquipCard] = var_0_0._getEquipCard,
-		[MaterialEnum.MaterialType.Antique] = var_0_0._getAntique,
-		[MaterialEnum.MaterialType.V1a5AiZiLa] = var_0_0._getV1a5AiZiLaItem,
-		[MaterialEnum.MaterialType.Season123EquipCard] = var_0_0._getEquipCard,
-		[MaterialEnum.MaterialType.NewInsight] = var_0_0._getNewInsight,
-		[MaterialEnum.MaterialType.Critter] = var_0_0._getCritterIcon,
-		[MaterialEnum.MaterialType.UnlockVoucher] = var_0_0._getUnlockVoucherIcon
+local ItemIconGetDefine = class("ItemIconGetDefine", BaseConfig)
+
+function ItemIconGetDefine:ctor()
+	self._defineList = {
+		[MaterialEnum.MaterialType.Item] = ItemIconGetDefine._getItem,
+		[MaterialEnum.MaterialType.Currency] = ItemIconGetDefine._getCurrency,
+		[MaterialEnum.MaterialType.PowerPotion] = ItemIconGetDefine._getPowerPotion,
+		[MaterialEnum.MaterialType.HeroSkin] = ItemIconGetDefine._getHeroSkin,
+		[MaterialEnum.MaterialType.Hero] = ItemIconGetDefine._getHero,
+		[MaterialEnum.MaterialType.Equip] = ItemIconGetDefine._getEquip,
+		[MaterialEnum.MaterialType.PlayerCloth] = ItemIconGetDefine._getPlayerCloth,
+		[MaterialEnum.MaterialType.Building] = ItemIconGetDefine._getBuilding,
+		[MaterialEnum.MaterialType.Formula] = ItemIconGetDefine._getFormula,
+		[MaterialEnum.MaterialType.BlockPackage] = ItemIconGetDefine._getBlockPackage,
+		[MaterialEnum.MaterialType.SpecialBlock] = ItemIconGetDefine._getSpecialBlock,
+		[MaterialEnum.MaterialType.RoomTheme] = ItemIconGetDefine._getRoomTheme,
+		[MaterialEnum.MaterialType.Explore] = ItemIconGetDefine._getExplore,
+		[MaterialEnum.MaterialType.EquipCard] = ItemIconGetDefine._getEquipCard,
+		[MaterialEnum.MaterialType.Antique] = ItemIconGetDefine._getAntique,
+		[MaterialEnum.MaterialType.V1a5AiZiLa] = ItemIconGetDefine._getV1a5AiZiLaItem,
+		[MaterialEnum.MaterialType.Season123EquipCard] = ItemIconGetDefine._getEquipCard,
+		[MaterialEnum.MaterialType.NewInsight] = ItemIconGetDefine._getNewInsight,
+		[MaterialEnum.MaterialType.Critter] = ItemIconGetDefine._getCritterIcon,
+		[MaterialEnum.MaterialType.UnlockVoucher] = ItemIconGetDefine._getUnlockVoucherIcon,
+		[MaterialEnum.MaterialType.TalentItem] = ItemIconGetDefine._getTalentItemIcon
 	}
 end
 
-function var_0_0._getItem(arg_2_0)
-	return ResUrl.getPropItemIcon(arg_2_0.icon)
+function ItemIconGetDefine._getItem(config)
+	return ResUrl.getPropItemIcon(config.icon)
 end
 
-function var_0_0._getCurrency(arg_3_0)
-	return ResUrl.getCurrencyItemIcon(arg_3_0.icon)
+function ItemIconGetDefine._getCurrency(config)
+	return ResUrl.getCurrencyItemIcon(config.icon)
 end
 
-function var_0_0._getPowerPotion(arg_4_0)
-	return ResUrl.getPropItemIcon(arg_4_0.icon)
+function ItemIconGetDefine._getPowerPotion(config)
+	return ResUrl.getPropItemIcon(config.icon)
 end
 
-function var_0_0._getHeroSkin(arg_5_0)
-	return ResUrl.getHeadIconSmall(arg_5_0.headIcon), ResUrl.getHeroSkinPropIcon(arg_5_0.itemIcon)
+function ItemIconGetDefine._getHeroSkin(config)
+	return ResUrl.getHeadIconSmall(config.headIcon), ResUrl.getHeroSkinPropIcon(config.itemIcon)
 end
 
-function var_0_0._getHero(arg_6_0)
-	local var_6_0 = SkinConfig.instance:getSkinCo(arg_6_0.skinId)
+function ItemIconGetDefine._getHero(config)
+	local skinCo = SkinConfig.instance:getSkinCo(config.skinId)
 
-	return ResUrl.getHeadIconSmall(var_6_0.headIcon), ResUrl.getHeadIconNew(arg_6_0.id)
+	return ResUrl.getHeadIconSmall(skinCo.headIcon), ResUrl.getHeadIconNew(config.id)
 end
 
-function var_0_0._getEquip(arg_7_0)
-	return ResUrl.getEquipIcon(arg_7_0.icon)
+function ItemIconGetDefine._getEquip(config)
+	return ResUrl.getEquipIcon(config.icon)
 end
 
-function var_0_0._getPlayerCloth(arg_8_0)
-	return ResUrl.getPlayerClothIcon(arg_8_0.icon)
+function ItemIconGetDefine._getPlayerCloth(config)
+	return ResUrl.getPlayerClothIcon(config.icon)
 end
 
-function var_0_0._getBuilding(arg_9_0)
-	return ResUrl.getRoomBuildingPropIcon(arg_9_0.icon)
+function ItemIconGetDefine._getBuilding(config)
+	return ResUrl.getRoomBuildingPropIcon(config.icon)
 end
 
-function var_0_0._getFormula(arg_10_0)
-	return ResUrl.getPropItemIcon(arg_10_0.icon)
+function ItemIconGetDefine._getFormula(config)
+	return ResUrl.getPropItemIcon(config.icon)
 end
 
-function var_0_0._getBlockPackage(arg_11_0)
-	return ResUrl.getRoomBlockPackagePropIcon(arg_11_0.icon)
+function ItemIconGetDefine._getBlockPackage(config)
+	return ResUrl.getRoomBlockPackagePropIcon(config.icon)
 end
 
-function var_0_0._getSpecialBlock(arg_12_0)
-	return ResUrl.getRoomBlockPropIcon(arg_12_0.icon)
+function ItemIconGetDefine._getSpecialBlock(config)
+	return ResUrl.getRoomBlockPropIcon(config.icon)
 end
 
-function var_0_0._getRoomTheme(arg_13_0)
-	return ResUrl.getRoomThemePropIcon(arg_13_0.icon)
+function ItemIconGetDefine._getRoomTheme(config)
+	return ResUrl.getRoomThemePropIcon(config.icon)
 end
 
-function var_0_0._getExplore(arg_14_0)
-	return ResUrl.getPropItemIcon(arg_14_0.icon)
+function ItemIconGetDefine._getExplore(config)
+	return ResUrl.getPropItemIcon(config.icon)
 end
 
-function var_0_0._getEquipCard(arg_15_0)
-	return ResUrl.getSeasonCelebrityCard(arg_15_0.icon)
+function ItemIconGetDefine._getEquipCard(config)
+	return ResUrl.getSeasonCelebrityCard(config.icon)
 end
 
-function var_0_0._getAntique(arg_16_0)
-	return ResUrl.getPropItemIcon(arg_16_0.icon)
+function ItemIconGetDefine._getAntique(config)
+	return ResUrl.getPropItemIcon(config.icon)
 end
 
-function var_0_0._getV1a5AiZiLaItem(arg_17_0)
-	return ResUrl.getV1a5AiZiLaItemIcon(arg_17_0.icon)
+function ItemIconGetDefine._getV1a5AiZiLaItem(config)
+	return ResUrl.getV1a5AiZiLaItemIcon(config.icon)
 end
 
-function var_0_0._getNewInsight(arg_18_0)
-	return ResUrl.getPropItemIcon(arg_18_0.icon)
+function ItemIconGetDefine._getNewInsight(config)
+	return ResUrl.getPropItemIcon(config.icon)
 end
 
-function var_0_0._getCritterIcon(arg_19_0)
-	return ResUrl.getCritterItemIcon(arg_19_0.icon)
+function ItemIconGetDefine._getCritterIcon(config)
+	return ResUrl.getCritterItemIcon(config.icon)
 end
 
-function var_0_0._getUnlockVoucherIcon(arg_20_0)
-	return ResUrl.getPropItemIcon(arg_20_0.icon)
+function ItemIconGetDefine._getUnlockVoucherIcon(config)
+	return ResUrl.getPropItemIcon(config.icon)
 end
 
-function var_0_0.getItemIconFunc(arg_21_0, arg_21_1)
-	arg_21_1 = tonumber(arg_21_1)
-
-	return arg_21_0._defineList[arg_21_1]
+function ItemIconGetDefine._getTalentItemIcon(config)
+	return ResUrl.getPropItemIcon(config.icon)
 end
 
-var_0_0.instance = var_0_0.New()
+function ItemIconGetDefine:getItemIconFunc(type)
+	type = tonumber(type)
 
-return var_0_0
+	return self._defineList[type]
+end
+
+ItemIconGetDefine.instance = ItemIconGetDefine.New()
+
+return ItemIconGetDefine

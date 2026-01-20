@@ -1,286 +1,291 @@
-﻿module("modules.logic.versionactivity2_7.act191.view.Act191HeroGroupView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/act191/view/Act191HeroGroupView.lua
 
-local var_0_0 = class("Act191HeroGroupView", BaseView)
+module("modules.logic.versionactivity2_7.act191.view.Act191HeroGroupView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnStart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "container/btnContain/horizontal/#btn_Start")
-	arg_1_0._scrollInfo = gohelper.findChildScrollRect(arg_1_0.viewGO, "container/#scroll_Info")
-	arg_1_0._imageRank = gohelper.findChildImage(arg_1_0.viewGO, "container/#scroll_Info/infocontain/enemyrank/bg/txt_Name/#image_Rank")
-	arg_1_0._btnEnemy = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "container/#scroll_Info/infocontain/enemycontain/enemytitle/#btn_Enemy")
-	arg_1_0._goEnemyTeam = gohelper.findChild(arg_1_0.viewGO, "container/#scroll_Info/infocontain/enemycontain/enemyList/#go_EnemyTeam")
-	arg_1_0._goSelectedBg = gohelper.findChild(arg_1_0.viewGO, "container/#scroll_Info/infocontain/autofight/#go_SelectedBg")
-	arg_1_0._goUnSelectBg = gohelper.findChild(arg_1_0.viewGO, "container/#scroll_Info/infocontain/autofight/#go_UnSelectBg")
-	arg_1_0._goRewardList = gohelper.findChild(arg_1_0.viewGO, "container/#scroll_Info/infocontain/autofight/#go_RewardList")
-	arg_1_0._goRewardItem = gohelper.findChild(arg_1_0.viewGO, "container/#scroll_Info/infocontain/autofight/#go_RewardList/#go_RewardItem")
-	arg_1_0._toggleAutoFight = gohelper.findChildToggle(arg_1_0.viewGO, "container/#scroll_Info/infocontain/autofight/bg/#toggle_AutoFight")
-	arg_1_0._btnDetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "herogroupcontain/subTitle/txt_TeamLvlS/#btn_Detail")
-	arg_1_0._goDetail = gohelper.findChild(arg_1_0.viewGO, "herogroupcontain/subTitle/txt_TeamLvlS/#go_Detail")
-	arg_1_0._btnCloseDetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "herogroupcontain/subTitle/txt_TeamLvlS/#go_Detail/#btn_CloseDetail")
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
+local Act191HeroGroupView = class("Act191HeroGroupView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Act191HeroGroupView:onInitView()
+	self._btnStart = gohelper.findChildButtonWithAudio(self.viewGO, "container/btnContain/horizontal/#btn_Start")
+	self._scrollInfo = gohelper.findChildScrollRect(self.viewGO, "container/#scroll_Info")
+	self._imageRank = gohelper.findChildImage(self.viewGO, "container/#scroll_Info/infocontain/enemyrank/bg/txt_Name/#image_Rank")
+	self._btnEnemy = gohelper.findChildButtonWithAudio(self.viewGO, "container/#scroll_Info/infocontain/enemycontain/enemytitle/#btn_Enemy")
+	self._goEnemyTeam = gohelper.findChild(self.viewGO, "container/#scroll_Info/infocontain/enemycontain/enemyList/#go_EnemyTeam")
+	self._goSelectedBg = gohelper.findChild(self.viewGO, "container/#scroll_Info/infocontain/autofight/#go_SelectedBg")
+	self._goUnSelectBg = gohelper.findChild(self.viewGO, "container/#scroll_Info/infocontain/autofight/#go_UnSelectBg")
+	self._goRewardList = gohelper.findChild(self.viewGO, "container/#scroll_Info/infocontain/autofight/#go_RewardList")
+	self._goRewardItem = gohelper.findChild(self.viewGO, "container/#scroll_Info/infocontain/autofight/#go_RewardList/#go_RewardItem")
+	self._toggleAutoFight = gohelper.findChildToggle(self.viewGO, "container/#scroll_Info/infocontain/autofight/bg/#toggle_AutoFight")
+	self._btnDetail = gohelper.findChildButtonWithAudio(self.viewGO, "herogroupcontain/subTitle/txt_TeamLvlS/#btn_Detail")
+	self._goDetail = gohelper.findChild(self.viewGO, "herogroupcontain/subTitle/txt_TeamLvlS/#go_Detail")
+	self._btnCloseDetail = gohelper.findChildButtonWithAudio(self.viewGO, "herogroupcontain/subTitle/txt_TeamLvlS/#go_Detail/#btn_CloseDetail")
+	self._gotopleft = gohelper.findChild(self.viewGO, "#go_topleft")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnStart:AddClickListener(arg_2_0._btnStartOnClick, arg_2_0)
-	arg_2_0._btnEnemy:AddClickListener(arg_2_0._btnEnemyOnClick, arg_2_0)
-	arg_2_0._btnDetail:AddClickListener(arg_2_0._btnDetailOnClick, arg_2_0)
-	arg_2_0._btnCloseDetail:AddClickListener(arg_2_0._btnCloseDetailOnClick, arg_2_0)
+function Act191HeroGroupView:addEvents()
+	self._btnStart:AddClickListener(self._btnStartOnClick, self)
+	self._btnEnemy:AddClickListener(self._btnEnemyOnClick, self)
+	self._btnDetail:AddClickListener(self._btnDetailOnClick, self)
+	self._btnCloseDetail:AddClickListener(self._btnCloseDetailOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnStart:RemoveClickListener()
-	arg_3_0._btnEnemy:RemoveClickListener()
-	arg_3_0._btnDetail:RemoveClickListener()
-	arg_3_0._btnCloseDetail:RemoveClickListener()
+function Act191HeroGroupView:removeEvents()
+	self._btnStart:RemoveClickListener()
+	self._btnEnemy:RemoveClickListener()
+	self._btnDetail:RemoveClickListener()
+	self._btnCloseDetail:RemoveClickListener()
 end
 
-function var_0_0._btnDetailOnClick(arg_4_0)
-	gohelper.setActive(arg_4_0._goDetail, true)
+function Act191HeroGroupView:_btnDetailOnClick()
+	gohelper.setActive(self._goDetail, true)
 end
 
-function var_0_0._btnCloseDetailOnClick(arg_5_0)
-	gohelper.setActive(arg_5_0._goDetail, false)
+function Act191HeroGroupView:_btnCloseDetailOnClick()
+	gohelper.setActive(self._goDetail, false)
 end
 
-function var_0_0._btnStartOnClick(arg_6_0)
-	if arg_6_0.fighting then
+function Act191HeroGroupView:_btnStartOnClick()
+	if self.fighting then
 		return
 	end
 
-	if not arg_6_0.gameInfo:teamHasMainHero() then
+	if not self.gameInfo:teamHasMainHero() then
 		GameFacade.showToast(ToastEnum.Act191StartFightTip)
 
 		return
 	end
 
-	local var_6_0 = DungeonModel.instance.curSendEpisodeId
-	local var_6_1 = DungeonConfig.instance:getEpisodeCO(var_6_0)
-	local var_6_2 = var_6_1.battleId
+	local episodeId = DungeonModel.instance.curSendEpisodeId
+	local episodeCo = DungeonConfig.instance:getEpisodeCO(episodeId)
+	local battleId = episodeCo.battleId
+	local fightParam = FightController.instance:setFightParamByEpisodeAndBattle(episodeId, battleId)
 
-	FightController.instance:setFightParamByEpisodeAndBattle(var_6_0, var_6_2):setDungeon(var_6_1.chapterId, var_6_0)
-	DungeonRpc.instance:sendStartDungeonRequest(var_6_1.chapterId, var_6_0)
+	fightParam:setDungeon(episodeCo.chapterId, episodeId)
+	DungeonRpc.instance:sendStartDungeonRequest(episodeCo.chapterId, episodeId)
 
-	arg_6_0.fighting = true
+	self.fighting = true
 end
 
-function var_0_0._btnEnemyOnClick(arg_7_0)
-	if not arg_7_0.isPvp then
-		local var_7_0 = FightModel.instance:getFightParam()
+function Act191HeroGroupView:_btnEnemyOnClick()
+	if not self.isPvp then
+		local fight_param = FightModel.instance:getFightParam()
 
-		EnemyInfoController.instance:openAct191EnemyInfoView(var_7_0.battleId)
+		EnemyInfoController.instance:openAct191EnemyInfoView(fight_param.battleId)
 	else
-		ViewMgr.instance:openView(ViewName.Act191EnemyInfoView, arg_7_0.nodeDetailMo)
+		ViewMgr.instance:openView(ViewName.Act191EnemyInfoView, self.nodeDetailMo)
 	end
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0.anim = arg_8_0.viewGO:GetComponent(gohelper.Type_Animator)
-	arg_8_0._monsterGroupItemList = {}
-	arg_8_0.actId = Activity191Model.instance:getCurActId()
-	arg_8_0.gameInfo = Activity191Model.instance:getActInfo():getGameInfo()
+function Act191HeroGroupView:_editableInitView()
+	self.anim = self.viewGO:GetComponent(gohelper.Type_Animator)
+	self._monsterGroupItemList = {}
+	self.actId = Activity191Model.instance:getCurActId()
+	self.gameInfo = Activity191Model.instance:getActInfo():getGameInfo()
 
-	local var_8_0 = arg_8_0.gameInfo:getTeamInfo()
+	local teamInfo = self.gameInfo:getTeamInfo()
 
-	arg_8_0._toggleAutoFight.isOn = var_8_0 and var_8_0.auto or false
+	self._toggleAutoFight.isOn = teamInfo and teamInfo.auto or false
 
-	arg_8_0._toggleAutoFight:AddOnValueChanged(arg_8_0.onToggleValueChanged, arg_8_0)
+	self._toggleAutoFight:AddOnValueChanged(self.onToggleValueChanged, self)
 
-	arg_8_0.goAutoFight = gohelper.findChild(arg_8_0._goRewardList, "mask/#autofight")
+	self.goAutoFight = gohelper.findChild(self._goRewardList, "mask/#autofight")
 
-	gohelper.setActive(arg_8_0.goAutoFight, arg_8_0._toggleAutoFight.isOn)
+	gohelper.setActive(self.goAutoFight, self._toggleAutoFight.isOn)
 
-	arg_8_0.rewardItemList = {}
+	self.rewardItemList = {}
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
+function Act191HeroGroupView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_10_0)
-	Act191StatController.instance:onViewOpen(arg_10_0.viewName)
-	arg_10_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnHeroGroupExit, arg_10_0.eventClose, arg_10_0)
+function Act191HeroGroupView:onOpen()
+	Act191StatController.instance:onViewOpen(self.viewName)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnHeroGroupExit, self.eventClose, self)
 
-	arg_10_0.nodeDetailMo = arg_10_0.gameInfo:getNodeDetailMo()
+	self.nodeDetailMo = self.gameInfo:getNodeDetailMo()
 
-	arg_10_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_11_0)
-	arg_11_0.isPvp = Activity191Helper.isPvpBattle(arg_11_0.nodeDetailMo.type)
+function Act191HeroGroupView:refreshUI()
+	self.isPvp = Activity191Helper.isPvpBattle(self.nodeDetailMo.type)
 
-	local var_11_0
+	local fightLevel
 
-	if not arg_11_0.isPvp then
-		local var_11_1 = arg_11_0.nodeDetailMo.fightEventId
+	if not self.isPvp then
+		local fightEventId = self.nodeDetailMo.fightEventId
+		local eventCo = lua_activity191_fight_event.configDict[fightEventId]
 
-		var_11_0 = lua_activity191_fight_event.configDict[var_11_1].fightLevel
+		fightLevel = eventCo.fightLevel
 	else
-		local var_11_2 = arg_11_0.nodeDetailMo.matchInfo.rank
+		local rank = self.nodeDetailMo.matchInfo.rank
+		local rankCo = lua_activity191_match_rank.configDict[rank]
 
-		var_11_0 = lua_activity191_match_rank.configDict[var_11_2].fightLevel
+		fightLevel = rankCo.fightLevel
 	end
 
-	UISpriteSetMgr.instance:setAct174Sprite(arg_11_0._imageRank, "act191_level_" .. string.lower(var_11_0))
-	arg_11_0:showEnemyList()
-	arg_11_0:refreshReward()
+	UISpriteSetMgr.instance:setAct174Sprite(self._imageRank, "act191_level_" .. string.lower(fightLevel))
+	self:showEnemyList()
+	self:refreshReward()
 end
 
-function var_0_0.onClose(arg_12_0)
-	local var_12_0 = arg_12_0.viewContainer:isManualClose()
+function Act191HeroGroupView:onClose()
+	local isManual = self.viewContainer:isManualClose()
 
-	Act191StatController.instance:statViewClose(arg_12_0.viewName, var_12_0)
+	Act191StatController.instance:statViewClose(self.viewName, isManual)
 end
 
-function var_0_0.onDestroyView(arg_13_0)
-	arg_13_0._toggleAutoFight:RemoveOnValueChanged()
+function Act191HeroGroupView:onDestroyView()
+	self._toggleAutoFight:RemoveOnValueChanged()
 end
 
-function var_0_0.onToggleValueChanged(arg_14_0)
-	local var_14_0 = arg_14_0._toggleAutoFight.isOn
+function Act191HeroGroupView:onToggleValueChanged()
+	local isOn = self._toggleAutoFight.isOn
 
-	arg_14_0.gameInfo:setAutoFight(var_14_0)
-	gohelper.setActive(arg_14_0.goAutoFight, var_14_0)
+	self.gameInfo:setAutoFight(isOn)
+	gohelper.setActive(self.goAutoFight, isOn)
 
-	if var_14_0 then
+	if isOn then
 		AudioMgr.instance:trigger(AudioEnum2_7.Act191.play_ui_yuzhou_dqq_reward_increase)
 	end
 
-	arg_14_0:refreshReward()
-	Act191StatController.instance:statButtonClick(arg_14_0.viewName, "onToggleValueChanged")
+	self:refreshReward()
+	Act191StatController.instance:statButtonClick(self.viewName, "onToggleValueChanged")
 end
 
-function var_0_0.showEnemyList(arg_15_0)
-	local var_15_0 = {}
-	local var_15_1 = {}
+function Act191HeroGroupView:showEnemyList()
+	local boss_career_dic = {}
+	local enemy_career_dic = {}
 
-	if arg_15_0.isPvp then
-		local var_15_2 = arg_15_0.nodeDetailMo.matchInfo
+	if self.isPvp then
+		local matchInfo = self.nodeDetailMo.matchInfo
 
-		for iter_15_0, iter_15_1 in pairs(var_15_2.heroMap) do
-			local var_15_3 = var_15_2:getRoleCo(iter_15_1.heroId)
+		for _, info in pairs(matchInfo.heroMap) do
+			local roleCo = matchInfo:getRoleCo(info.heroId)
 
-			if var_15_3 then
-				local var_15_4 = var_15_3.career
+			if roleCo then
+				local enemy_career = roleCo.career
 
-				var_15_1[var_15_4] = (var_15_1[var_15_4] or 0) + 1
+				enemy_career_dic[enemy_career] = (enemy_career_dic[enemy_career] or 0) + 1
 			end
 		end
 
-		for iter_15_2, iter_15_3 in pairs(var_15_2.subHeroMap) do
-			local var_15_5 = var_15_2:getRoleCo(iter_15_3)
+		for _, heroId in pairs(matchInfo.subHeroMap) do
+			local roleCo = matchInfo:getRoleCo(heroId)
 
-			if var_15_5 then
-				local var_15_6 = var_15_5.career
+			if roleCo then
+				local enemy_career = roleCo.career
 
-				var_15_1[var_15_6] = (var_15_1[var_15_6] or 0) + 1
+				enemy_career_dic[enemy_career] = (enemy_career_dic[enemy_career] or 0) + 1
 			end
 		end
 	else
-		local var_15_7 = FightModel.instance:getFightParam()
+		local fight_param = FightModel.instance:getFightParam()
 
-		for iter_15_4, iter_15_5 in ipairs(var_15_7.monsterGroupIds) do
-			local var_15_8 = lua_monster_group.configDict[iter_15_5].bossId
-			local var_15_9 = FightStrUtil.instance:getSplitToNumberCache(lua_monster_group.configDict[iter_15_5].monster, "#")
+		for _, v in ipairs(fight_param.monsterGroupIds) do
+			local boss_id = lua_monster_group.configDict[v].bossId
+			local ids = FightStrUtil.instance:getSplitToNumberCache(lua_monster_group.configDict[v].monster, "#")
 
-			for iter_15_6, iter_15_7 in ipairs(var_15_9) do
-				local var_15_10 = lua_monster.configDict[iter_15_7].career
+			for _, id in ipairs(ids) do
+				local enemy_career = lua_monster.configDict[id].career
 
-				if FightHelper.isBossId(var_15_8, iter_15_7) then
-					var_15_0[var_15_10] = (var_15_0[var_15_10] or 0) + 1
+				if FightHelper.isBossId(boss_id, id) then
+					boss_career_dic[enemy_career] = (boss_career_dic[enemy_career] or 0) + 1
 				else
-					var_15_1[var_15_10] = (var_15_1[var_15_10] or 0) + 1
+					enemy_career_dic[enemy_career] = (enemy_career_dic[enemy_career] or 0) + 1
 				end
 			end
 		end
 	end
 
-	local var_15_11 = {}
+	local enemy_career_list = {}
 
-	for iter_15_8, iter_15_9 in pairs(var_15_0) do
-		table.insert(var_15_11, {
-			career = iter_15_8,
-			count = iter_15_9
+	for k, v in pairs(boss_career_dic) do
+		table.insert(enemy_career_list, {
+			career = k,
+			count = v
 		})
 	end
 
-	arg_15_0._enemy_boss_end_index = #var_15_11
+	self._enemy_boss_end_index = #enemy_career_list
 
-	for iter_15_10, iter_15_11 in pairs(var_15_1) do
-		table.insert(var_15_11, {
-			career = iter_15_10,
-			count = iter_15_11
+	for k, v in pairs(enemy_career_dic) do
+		table.insert(enemy_career_list, {
+			career = k,
+			count = v
 		})
 	end
 
-	gohelper.CreateObjList(arg_15_0, arg_15_0._onEnemyItemShow, var_15_11, gohelper.findChild(arg_15_0._goEnemyTeam, "enemyList"), gohelper.findChild(arg_15_0._goEnemyTeam, "enemyList/go_enemyitem"))
+	gohelper.CreateObjList(self, self._onEnemyItemShow, enemy_career_list, gohelper.findChild(self._goEnemyTeam, "enemyList"), gohelper.findChild(self._goEnemyTeam, "enemyList/go_enemyitem"))
 end
 
-function var_0_0._onEnemyItemShow(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
-	local var_16_0 = gohelper.findChildImage(arg_16_1, "icon")
-	local var_16_1 = gohelper.findChild(arg_16_1, "icon/kingIcon")
-	local var_16_2 = gohelper.findChildTextMesh(arg_16_1, "enemycount")
+function Act191HeroGroupView:_onEnemyItemShow(obj, data, index)
+	local icon = gohelper.findChildImage(obj, "icon")
+	local kingIcon = gohelper.findChild(obj, "icon/kingIcon")
+	local enemy_count = gohelper.findChildTextMesh(obj, "enemycount")
 
-	UISpriteSetMgr.instance:setCommonSprite(var_16_0, "lssx_" .. tostring(arg_16_2.career))
+	UISpriteSetMgr.instance:setCommonSprite(icon, "lssx_" .. tostring(data.career))
 
-	var_16_2.text = arg_16_2.count > 1 and luaLang("multiple") .. arg_16_2.count or ""
+	enemy_count.text = data.count > 1 and luaLang("multiple") .. data.count or ""
 
-	gohelper.setActive(var_16_1, arg_16_3 <= arg_16_0._enemy_boss_end_index)
+	gohelper.setActive(kingIcon, index <= self._enemy_boss_end_index)
 end
 
-function var_0_0.refreshReward(arg_17_0)
-	local var_17_0 = arg_17_0._toggleAutoFight.isOn and "autoRewardView" or "rewardView"
-	local var_17_1
+function Act191HeroGroupView:refreshReward()
+	local rewardKey = self._toggleAutoFight.isOn and "autoRewardView" or "rewardView"
+	local rewardList
 
-	if arg_17_0.isPvp then
-		local var_17_2 = Activity191Enum.NodeType2Key[arg_17_0.nodeDetailMo.type]
-		local var_17_3 = lua_activity191_pvp_match.configDict[var_17_2]
+	if self.isPvp then
+		local typeKey = Activity191Enum.NodeType2Key[self.nodeDetailMo.type]
+		local matchCo = lua_activity191_pvp_match.configDict[typeKey]
 
-		var_17_1 = GameUtil.splitString2(var_17_3[var_17_0], true)
+		rewardList = GameUtil.splitString2(matchCo[rewardKey], true)
 	else
-		local var_17_4 = lua_activity191_fight_event.configDict[arg_17_0.nodeDetailMo.fightEventId]
+		local eventCo = lua_activity191_fight_event.configDict[self.nodeDetailMo.fightEventId]
 
-		var_17_1 = GameUtil.splitString2(var_17_4[var_17_0], true)
+		rewardList = GameUtil.splitString2(eventCo[rewardKey], true)
 	end
 
-	for iter_17_0, iter_17_1 in ipairs(arg_17_0.rewardItemList) do
-		gohelper.setActive(iter_17_1.parent, false)
+	for _, item in ipairs(self.rewardItemList) do
+		gohelper.setActive(item.parent, false)
 	end
 
-	for iter_17_2, iter_17_3 in ipairs(var_17_1) do
-		local var_17_5 = arg_17_0.rewardItemList[iter_17_2]
+	for k, v in ipairs(rewardList) do
+		local item = self.rewardItemList[k]
 
-		if not var_17_5 then
-			var_17_5 = arg_17_0:getUserDataTb_()
-			var_17_5.parent = gohelper.cloneInPlace(arg_17_0._goRewardItem)
+		if not item then
+			item = self:getUserDataTb_()
+			item.parent = gohelper.cloneInPlace(self._goRewardItem)
 
-			local var_17_6 = arg_17_0:getResInst(Activity191Enum.PrefabPath.RewardItem, var_17_5.parent)
+			local rewardGo = self:getResInst(Activity191Enum.PrefabPath.RewardItem, item.parent)
 
-			var_17_5.item = MonoHelper.addNoUpdateLuaComOnceToGo(var_17_6, Act191RewardItem)
-			arg_17_0.rewardItemList[iter_17_2] = var_17_5
+			item.item = MonoHelper.addNoUpdateLuaComOnceToGo(rewardGo, Act191RewardItem)
+			self.rewardItemList[k] = item
 		end
 
-		var_17_5.item:showAutoEff(false)
-		var_17_5.item:setData(iter_17_3[1], iter_17_3[2])
-		var_17_5.item:setExtraParam({
-			fromView = arg_17_0.viewName,
-			index = iter_17_2
+		item.item:showAutoEff(false)
+		item.item:setData(v[1], v[2])
+		item.item:setExtraParam({
+			fromView = self.viewName,
+			index = k
 		})
-		gohelper.setActive(var_17_5.parent, true)
+		gohelper.setActive(item.parent, true)
 
-		if arg_17_0._toggleAutoFight.isOn then
-			var_17_5.item:showAutoEff(true)
+		if self._toggleAutoFight.isOn then
+			item.item:showAutoEff(true)
 		end
 	end
 
-	gohelper.setActive(arg_17_0._goSelectedBg, arg_17_0._toggleAutoFight.isOn)
-	gohelper.setActive(arg_17_0._goUnSelectBg, not arg_17_0._toggleAutoFight.isOn)
+	gohelper.setActive(self._goSelectedBg, self._toggleAutoFight.isOn)
+	gohelper.setActive(self._goUnSelectBg, not self._toggleAutoFight.isOn)
 end
 
-function var_0_0.eventClose(arg_18_0)
-	ViewMgr.instance:closeView(arg_18_0.viewName)
+function Act191HeroGroupView:eventClose()
+	ViewMgr.instance:closeView(self.viewName)
 end
 
-return var_0_0
+return Act191HeroGroupView

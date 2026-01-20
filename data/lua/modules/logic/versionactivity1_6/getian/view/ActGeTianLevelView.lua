@@ -1,356 +1,371 @@
-﻿module("modules.logic.versionactivity1_6.getian.view.ActGeTianLevelView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/getian/view/ActGeTianLevelView.lua
 
-local var_0_0 = class("ActGeTianLevelView", BaseView)
+module("modules.logic.versionactivity1_6.getian.view.ActGeTianLevelView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._gostoryPath = gohelper.findChild(arg_1_0.viewGO, "#go_storyPath")
-	arg_1_0._gostoryScroll = gohelper.findChild(arg_1_0.viewGO, "#go_storyPath/#go_storyScroll")
-	arg_1_0._gostoryStages = gohelper.findChild(arg_1_0.viewGO, "#go_storyPath/#go_storyScroll/#go_storyStages")
-	arg_1_0._gofightPath = gohelper.findChild(arg_1_0.viewGO, "#go_fightPath")
-	arg_1_0._gofightScroll = gohelper.findChild(arg_1_0.viewGO, "#go_fightPath/#go_fightScroll")
-	arg_1_0._gofightStages = gohelper.findChild(arg_1_0.viewGO, "#go_fightPath/#go_fightScroll/#go_fightStages")
-	arg_1_0._goTitle = gohelper.findChild(arg_1_0.viewGO, "#go_Title")
-	arg_1_0._simagetitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_Title/#simage_title")
-	arg_1_0._gotime = gohelper.findChild(arg_1_0.viewGO, "#go_Title/#go_time")
-	arg_1_0._txtlimittime = gohelper.findChildText(arg_1_0.viewGO, "#go_Title/#go_time/#txt_limittime")
-	arg_1_0._btnPlayBtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_Title/#btn_PlayBtn")
-	arg_1_0._btnStory = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_Story")
-	arg_1_0._goStoryN = gohelper.findChild(arg_1_0._btnStory.gameObject, "go_UnSelected")
-	arg_1_0._goStoryS = gohelper.findChild(arg_1_0._btnStory.gameObject, "go_Selected")
-	arg_1_0._btnFight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_Fight")
-	arg_1_0._goFightN = gohelper.findChild(arg_1_0._btnFight.gameObject, "go_UnSelected")
-	arg_1_0._goFightS = gohelper.findChild(arg_1_0._btnFight.gameObject, "go_Selected")
-	arg_1_0._btnTask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Task")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._anim = arg_1_0.viewGO:GetComponent(gohelper.Type_Animator)
-	arg_1_0._animEvent = arg_1_0.viewGO:GetComponent(gohelper.Type_AnimationEventWrap)
-	arg_1_0._animPath = gohelper.findChild(arg_1_0._gostoryScroll, "path/path_2"):GetComponent(gohelper.Type_Animator)
-	arg_1_0._animTask = gohelper.findChild(arg_1_0.viewGO, "#btn_Task/ani"):GetComponent(gohelper.Type_Animator)
-	arg_1_0._scrollStory = gohelper.findChildScrollRect(arg_1_0._gostoryPath, "")
+local ActGeTianLevelView = class("ActGeTianLevelView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ActGeTianLevelView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._gostoryPath = gohelper.findChild(self.viewGO, "#go_storyPath")
+	self._gostoryScroll = gohelper.findChild(self.viewGO, "#go_storyPath/#go_storyScroll")
+	self._gostoryStages = gohelper.findChild(self.viewGO, "#go_storyPath/#go_storyScroll/#go_storyStages")
+	self._gofightPath = gohelper.findChild(self.viewGO, "#go_fightPath")
+	self._gofightScroll = gohelper.findChild(self.viewGO, "#go_fightPath/#go_fightScroll")
+	self._gofightStages = gohelper.findChild(self.viewGO, "#go_fightPath/#go_fightScroll/#go_fightStages")
+	self._goTitle = gohelper.findChild(self.viewGO, "#go_Title")
+	self._simagetitle = gohelper.findChildSingleImage(self.viewGO, "#go_Title/#simage_title")
+	self._gotime = gohelper.findChild(self.viewGO, "#go_Title/#go_time")
+	self._txtlimittime = gohelper.findChildText(self.viewGO, "#go_Title/#go_time/#txt_limittime")
+	self._btnPlayBtn = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Title/#btn_PlayBtn")
+	self._btnStory = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_Story")
+	self._goStoryN = gohelper.findChild(self._btnStory.gameObject, "go_UnSelected")
+	self._goStoryS = gohelper.findChild(self._btnStory.gameObject, "go_Selected")
+	self._btnFight = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_Fight")
+	self._goFightN = gohelper.findChild(self._btnFight.gameObject, "go_UnSelected")
+	self._goFightS = gohelper.findChild(self._btnFight.gameObject, "go_Selected")
+	self._btnTask = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Task")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._anim = self.viewGO:GetComponent(gohelper.Type_Animator)
+	self._animEvent = self.viewGO:GetComponent(gohelper.Type_AnimationEventWrap)
+
+	local goPath = gohelper.findChild(self._gostoryScroll, "path/path_2")
+
+	self._animPath = goPath:GetComponent(gohelper.Type_Animator)
+
+	local goTaskAnim = gohelper.findChild(self.viewGO, "#btn_Task/ani")
+
+	self._animTask = goTaskAnim:GetComponent(gohelper.Type_Animator)
+	self._scrollStory = gohelper.findChildScrollRect(self._gostoryPath, "")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnPlayBtn:AddClickListener(arg_2_0._btnPlayBtnOnClick, arg_2_0)
-	arg_2_0._btnStory:AddClickListener(arg_2_0._btnStoryOnClick, arg_2_0)
-	arg_2_0._btnFight:AddClickListener(arg_2_0._btnFightOnClick, arg_2_0)
-	arg_2_0._btnTask:AddClickListener(arg_2_0._btnTaskOnClick, arg_2_0)
-	arg_2_0._animEvent:AddEventListener(ActGeTianEnum.AnimEvt.OnStoryOpenEnd, arg_2_0._onStoryOpenEnd, arg_2_0)
-	arg_2_0._animEvent:AddEventListener(ActGeTianEnum.AnimEvt.OnFightOpenEnd, arg_2_0._onFightOpenEnd, arg_2_0)
-	arg_2_0._animEvent:AddEventListener(ActGeTianEnum.AnimEvt.OnGoStoryEnd, arg_2_0._onGoStoryEnd, arg_2_0)
+function ActGeTianLevelView:addEvents()
+	self._btnPlayBtn:AddClickListener(self._btnPlayBtnOnClick, self)
+	self._btnStory:AddClickListener(self._btnStoryOnClick, self)
+	self._btnFight:AddClickListener(self._btnFightOnClick, self)
+	self._btnTask:AddClickListener(self._btnTaskOnClick, self)
+	self._animEvent:AddEventListener(ActGeTianEnum.AnimEvt.OnStoryOpenEnd, self._onStoryOpenEnd, self)
+	self._animEvent:AddEventListener(ActGeTianEnum.AnimEvt.OnFightOpenEnd, self._onFightOpenEnd, self)
+	self._animEvent:AddEventListener(ActGeTianEnum.AnimEvt.OnGoStoryEnd, self._onGoStoryEnd, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnPlayBtn:RemoveClickListener()
-	arg_3_0._btnStory:RemoveClickListener()
-	arg_3_0._btnFight:RemoveClickListener()
-	arg_3_0._btnTask:RemoveClickListener()
+function ActGeTianLevelView:removeEvents()
+	self._btnPlayBtn:RemoveClickListener()
+	self._btnStory:RemoveClickListener()
+	self._btnFight:RemoveClickListener()
+	self._btnTask:RemoveClickListener()
 end
 
-function var_0_0._btnPlayBtnOnClick(arg_4_0)
-	if arg_4_0.actConfig.storyId > 0 then
-		StoryController.instance:playStory(arg_4_0.actConfig.storyId)
+function ActGeTianLevelView:_btnPlayBtnOnClick()
+	if self.actConfig.storyId > 0 then
+		StoryController.instance:playStory(self.actConfig.storyId)
 	end
 end
 
-function var_0_0._btnStoryOnClick(arg_5_0, arg_5_1)
-	if arg_5_0._gostoryPath.activeInHierarchy then
+function ActGeTianLevelView:_btnStoryOnClick(isOpen)
+	if self._gostoryPath.activeInHierarchy then
 		return
 	end
 
-	gohelper.setActive(arg_5_0._goStoryN, false)
-	gohelper.setActive(arg_5_0._goStoryS, true)
-	gohelper.setActive(arg_5_0._goFightN, true)
-	gohelper.setActive(arg_5_0._goFightS, false)
-	gohelper.setActive(arg_5_0._btnPlayBtn, arg_5_0.actConfig.storyId > 0)
+	gohelper.setActive(self._goStoryN, false)
+	gohelper.setActive(self._goStoryS, true)
+	gohelper.setActive(self._goFightN, true)
+	gohelper.setActive(self._goFightS, false)
+	gohelper.setActive(self._btnPlayBtn, self.actConfig.storyId > 0)
 
-	if arg_5_1 then
-		arg_5_0._anim:Play("openstory", -1, 0)
+	if isOpen then
+		self._anim:Play("openstory", -1, 0)
 	else
-		arg_5_0._anim:Play("gostory", -1, 0)
+		self._anim:Play("gostory", -1, 0)
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_shuori_story_switch)
 	end
 end
 
-function var_0_0._btnFightOnClick(arg_6_0, arg_6_1)
-	if arg_6_0._gofightPath.activeInHierarchy then
+function ActGeTianLevelView:_btnFightOnClick(isOpen)
+	if self._gofightPath.activeInHierarchy then
 		return
 	end
 
-	gohelper.setActive(arg_6_0._goStoryN, true)
-	gohelper.setActive(arg_6_0._goStoryS, false)
-	gohelper.setActive(arg_6_0._goFightN, false)
-	gohelper.setActive(arg_6_0._goFightS, true)
-	gohelper.setActive(arg_6_0._btnPlayBtn, false)
+	gohelper.setActive(self._goStoryN, true)
+	gohelper.setActive(self._goStoryS, false)
+	gohelper.setActive(self._goFightN, false)
+	gohelper.setActive(self._goFightS, true)
+	gohelper.setActive(self._btnPlayBtn, false)
 
-	if arg_6_1 then
-		arg_6_0._anim:Play("openfight", -1, 0)
+	if isOpen then
+		self._anim:Play("openfight", -1, 0)
 	else
-		arg_6_0._anim:Play("gofight", -1, 0)
+		self._anim:Play("gofight", -1, 0)
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_shuori_story_switch)
 	end
 end
 
-function var_0_0._btnTaskOnClick(arg_7_0)
+function ActGeTianLevelView:_btnTaskOnClick()
 	ViewMgr.instance:openView(ViewName.ActGeTianTaskView)
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	local var_8_0 = recthelper.getWidth(ViewMgr.instance:getUIRoot().transform)
+function ActGeTianLevelView:_editableInitView()
+	local width = recthelper.getWidth(ViewMgr.instance:getUIRoot().transform)
+	local rightOffsetX = -300
 
-	arg_8_0._offsetX = (var_8_0 - -300) / 2
-	arg_8_0.minContentAnchorX = -4660 + var_8_0
-	arg_8_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_8_0._gostoryPath)
+	self._offsetX = (width - rightOffsetX) / 2
+	self.minContentAnchorX = -4660 + width
+	self._drag = SLFramework.UGUI.UIDragListener.Get(self._gostoryPath)
 
-	arg_8_0._drag:AddDragBeginListener(arg_8_0._onDragBegin, arg_8_0)
-	arg_8_0._drag:AddDragEndListener(arg_8_0._onDragEnd, arg_8_0)
+	self._drag:AddDragBeginListener(self._onDragBegin, self)
+	self._drag:AddDragEndListener(self._onDragEnd, self)
 
-	arg_8_0._touch = SLFramework.UGUI.UIClickListener.Get(arg_8_0._gostoryPath)
+	self._touch = SLFramework.UGUI.UIClickListener.Get(self._gostoryPath)
 
-	arg_8_0._touch:AddClickDownListener(arg_8_0._onClickDown, arg_8_0)
+	self._touch:AddClickDownListener(self._onClickDown, self)
 
-	arg_8_0._audioScroll = MonoHelper.addLuaComOnceToGo(arg_8_0._gostoryPath, DungeonMapEpisodeAudio, arg_8_0._scrollStory)
+	self._audioScroll = MonoHelper.addLuaComOnceToGo(self._gostoryPath, DungeonMapEpisodeAudio, self._scrollStory)
 
 	ActGeTianModel.instance:initData()
-	arg_8_0:_initStageItems()
+	self:_initStageItems()
 
-	arg_8_0.enterConfig = RoleActivityConfig.instance:getActivityEnterInfo(ActGeTianEnum.ActivityId)
-	arg_8_0.actConfig = ActivityConfig.instance:getActivityCo(ActGeTianEnum.ActivityId)
+	self.enterConfig = RoleActivityConfig.instance:getActivityEnterInfo(ActGeTianEnum.ActivityId)
+	self.actConfig = ActivityConfig.instance:getActivityCo(ActGeTianEnum.ActivityId)
 
-	gohelper.setActive(arg_8_0._gotime, false)
-	gohelper.setActive(arg_8_0._btnPlayBtn, arg_8_0.actConfig.storyId > 0)
+	gohelper.setActive(self._gotime, false)
+	gohelper.setActive(self._btnPlayBtn, self.actConfig.storyId > 0)
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0:addEventCb(ActGeTianController.instance, ActGeTianEvent.StoryItemClick, arg_9_0.OnStoryItemClick, arg_9_0)
-	arg_9_0:addEventCb(ActGeTianController.instance, ActGeTianEvent.FightItemClick, arg_9_0.OnFightItemClick, arg_9_0)
-	arg_9_0:addEventCb(ActGeTianController.instance, ActGeTianEvent.TabSwitch, arg_9_0.OnTabSwitch, arg_9_0)
-	arg_9_0:addEventCb(StoryController.instance, StoryEvent.Finish, arg_9_0.OnStoryFinish, arg_9_0)
-	arg_9_0:addEventCb(DungeonController.instance, DungeonEvent.OnEndDungeonPush, arg_9_0.OnEndDungeonPush, arg_9_0)
-	arg_9_0:addEventCb(RedDotController.instance, RedDotEvent.RefreshClientCharacterDot, arg_9_0.OnDotChange, arg_9_0)
-	arg_9_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_9_0.OnCheckActEnd, arg_9_0)
+function ActGeTianLevelView:onOpen()
+	self:addEventCb(ActGeTianController.instance, ActGeTianEvent.StoryItemClick, self.OnStoryItemClick, self)
+	self:addEventCb(ActGeTianController.instance, ActGeTianEvent.FightItemClick, self.OnFightItemClick, self)
+	self:addEventCb(ActGeTianController.instance, ActGeTianEvent.TabSwitch, self.OnTabSwitch, self)
+	self:addEventCb(StoryController.instance, StoryEvent.Finish, self.OnStoryFinish, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.OnEndDungeonPush, self.OnEndDungeonPush, self)
+	self:addEventCb(RedDotController.instance, RedDotEvent.RefreshClientCharacterDot, self.OnDotChange, self)
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self.OnCheckActEnd, self)
 
-	local var_9_0 = gohelper.findChild(arg_9_0._btnTask.gameObject, "#go_reddot")
-	local var_9_1 = ActivityConfig.instance:getActivityCo(VersionActivity1_6Enum.ActivityId.Role2)
+	local goreddot = gohelper.findChild(self._btnTask.gameObject, "#go_reddot")
+	local act2MO = ActivityConfig.instance:getActivityCo(VersionActivity1_6Enum.ActivityId.Role2)
 
-	RedDotController.instance:addRedDot(var_9_0, var_9_1.redDotId, VersionActivity1_6Enum.ActivityId.Role2)
-	arg_9_0:OnDotChange()
-	arg_9_0:_showLeftTime()
-	TaskDispatcher.runRepeat(arg_9_0._showLeftTime, arg_9_0, 1)
+	RedDotController.instance:addRedDot(goreddot, act2MO.redDotId, VersionActivity1_6Enum.ActivityId.Role2)
+	self:OnDotChange()
+	self:_showLeftTime()
+	TaskDispatcher.runRepeat(self._showLeftTime, self, 1)
 
-	if arg_9_0.viewParam and arg_9_0.viewParam.needShowFight then
-		local var_9_2 = ActGeTianModel.instance:getEnterFightIndex()
+	if self.viewParam and self.viewParam.needShowFight then
+		local fightIndex = ActGeTianModel.instance:getEnterFightIndex()
 
-		if var_9_2 then
-			arg_9_0.latestfightItem = var_9_2
+		if fightIndex then
+			self.latestfightItem = fightIndex
 
-			for iter_9_0, iter_9_1 in ipairs(arg_9_0.fightItemList) do
-				iter_9_1:refreshSelect(var_9_2)
+			for _, fightItem in ipairs(self.fightItemList) do
+				fightItem:refreshSelect(fightIndex)
 			end
 		end
 
-		arg_9_0:_btnFightOnClick(true)
-		arg_9_0:_lockScreen(true)
-		TaskDispatcher.runDelay(arg_9_0._delayOpenFight, arg_9_0, 0.3)
+		self:_btnFightOnClick(true)
+		self:_lockScreen(true)
+		TaskDispatcher.runDelay(self._delayOpenFight, self, 0.3)
 	else
-		arg_9_0:_btnStoryOnClick(true)
+		self:_btnStoryOnClick(true)
 
-		if ActGeTianModel.instance:getFirstEnter() then
+		local firstEnter = ActGeTianModel.instance:getFirstEnter()
+
+		if firstEnter then
 			ActGeTianModel.instance:clearFirstEnter()
-			arg_9_0:_lockScreen(true)
-			arg_9_0.storyItemList[1]:lockStatus()
-			TaskDispatcher.runDelay(arg_9_0._playFirstUnlock, arg_9_0, 0.8)
+			self:_lockScreen(true)
+			self.storyItemList[1]:lockStatus()
+			TaskDispatcher.runDelay(self._playFirstUnlock, self, 0.8)
 		end
 	end
 end
 
-function var_0_0.onClose(arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._showLeftTime, arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._delayOpenFight, arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._playFirstUnlock, arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._delayOpenStory, arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._unlockStoryEnd, arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._finishStoryEnd, arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._playPathAnim, arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._unlockFightEnd, arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._unlockStory, arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._starShowEnd, arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._playStoryFinishAnim, arg_10_0)
-	arg_10_0:_lockScreen(false)
+function ActGeTianLevelView:onClose()
+	TaskDispatcher.cancelTask(self._showLeftTime, self)
+	TaskDispatcher.cancelTask(self._delayOpenFight, self)
+	TaskDispatcher.cancelTask(self._playFirstUnlock, self)
+	TaskDispatcher.cancelTask(self._delayOpenStory, self)
+	TaskDispatcher.cancelTask(self._unlockStoryEnd, self)
+	TaskDispatcher.cancelTask(self._finishStoryEnd, self)
+	TaskDispatcher.cancelTask(self._playPathAnim, self)
+	TaskDispatcher.cancelTask(self._unlockFightEnd, self)
+	TaskDispatcher.cancelTask(self._unlockStory, self)
+	TaskDispatcher.cancelTask(self._starShowEnd, self)
+	TaskDispatcher.cancelTask(self._playStoryFinishAnim, self)
+	self:_lockScreen(false)
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	arg_11_0.storyItemList = nil
-	arg_11_0.fightItemList = nil
+function ActGeTianLevelView:onDestroyView()
+	self.storyItemList = nil
+	self.fightItemList = nil
 
-	if arg_11_0._drag then
-		arg_11_0._drag:RemoveDragBeginListener()
-		arg_11_0._drag:RemoveDragEndListener()
+	if self._drag then
+		self._drag:RemoveDragBeginListener()
+		self._drag:RemoveDragEndListener()
 
-		arg_11_0._drag = nil
+		self._drag = nil
 	end
 
-	if arg_11_0._touch then
-		arg_11_0._touch:RemoveClickDownListener()
+	if self._touch then
+		self._touch:RemoveClickDownListener()
 
-		arg_11_0._touch = nil
+		self._touch = nil
 	end
 end
 
-function var_0_0.OnStoryItemClick(arg_12_0, arg_12_1)
-	arg_12_0:_focusStoryItem(arg_12_1, true)
+function ActGeTianLevelView:OnStoryItemClick(index)
+	self:_focusStoryItem(index, true)
 end
 
-function var_0_0.OnFightItemClick(arg_13_0, arg_13_1)
-	if arg_13_0.latestfightItem == arg_13_1 then
+function ActGeTianLevelView:OnFightItemClick(_index)
+	if self.latestfightItem == _index then
 		return
 	end
 
-	arg_13_0.latestfightItem = arg_13_1
+	self.latestfightItem = _index
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_shuori_story_click)
 
-	for iter_13_0, iter_13_1 in ipairs(arg_13_0.fightItemList) do
-		iter_13_1:refreshSelect(arg_13_1)
+	for _, fightItem in ipairs(self.fightItemList) do
+		fightItem:refreshSelect(_index)
 	end
 end
 
-function var_0_0.OnTabSwitch(arg_14_0, arg_14_1)
-	if arg_14_1 then
-		arg_14_0:_btnFightOnClick()
+function ActGeTianLevelView:OnTabSwitch(needShowFight)
+	if needShowFight then
+		self:_btnFightOnClick()
 	else
-		arg_14_0:_btnStoryOnClick()
+		self:_btnStoryOnClick()
 	end
 end
 
-function var_0_0.OnStoryFinish(arg_15_0)
-	TaskDispatcher.runDelay(arg_15_0._delayOpenStory, arg_15_0, 0.4)
+function ActGeTianLevelView:OnStoryFinish()
+	TaskDispatcher.runDelay(self._delayOpenStory, self, 0.4)
 end
 
-function var_0_0.OnEndDungeonPush(arg_16_0)
+function ActGeTianLevelView:OnEndDungeonPush()
 	ActGeTianModel.instance:updateData()
-	TaskDispatcher.runDelay(arg_16_0._playStoryFinishAnim, arg_16_0, 0.73)
+	TaskDispatcher.runDelay(self._playStoryFinishAnim, self, 0.73)
 end
 
-function var_0_0.OnDotChange(arg_17_0)
-	if RedDotModel.instance:isDotShow(RedDotEnum.DotNode.V1a6RoleActivityTask, ActGeTianEnum.ActivityId) then
-		arg_17_0._animTask:Play("loop")
+function ActGeTianLevelView:OnDotChange()
+	local isDotShow = RedDotModel.instance:isDotShow(RedDotEnum.DotNode.V1a6RoleActivityTask, ActGeTianEnum.ActivityId)
+
+	if isDotShow then
+		self._animTask:Play("loop")
 	else
-		arg_17_0._animTask:Play("idle")
+		self._animTask:Play("idle")
 	end
 end
 
-function var_0_0.OnCheckActEnd(arg_18_0, arg_18_1)
-	if string.nilorempty(arg_18_1) or arg_18_1 == 0 then
+function ActGeTianLevelView:OnCheckActEnd(actId)
+	if string.nilorempty(actId) or actId == 0 then
 		return
 	end
 
-	if arg_18_1 ~= ActGeTianEnum.ActivityId then
+	if actId ~= ActGeTianEnum.ActivityId then
 		return
 	end
 
-	if ActivityHelper.getActivityStatus(arg_18_1) ~= ActivityEnum.ActivityStatus.Normal then
+	local status = ActivityHelper.getActivityStatus(actId)
+
+	if status ~= ActivityEnum.ActivityStatus.Normal then
 		GameFacade.showMessageBox(MessageBoxIdDefine.EndActivity, MsgBoxEnum.BoxType.Yes, NavigateButtonsView.homeClick)
 	end
 end
 
-function var_0_0._onStoryOpenEnd(arg_19_0)
-	arg_19_0:_initPathStatus()
+function ActGeTianLevelView:_onStoryOpenEnd()
+	self:_initPathStatus()
 end
 
-function var_0_0._onFightOpenEnd(arg_20_0)
-	arg_20_0:_playFightFinishAnim()
+function ActGeTianLevelView:_onFightOpenEnd()
+	self:_playFightFinishAnim()
 end
 
-function var_0_0._onGoStoryEnd(arg_21_0)
-	arg_21_0:_initPathStatus()
+function ActGeTianLevelView:_onGoStoryEnd()
+	self:_initPathStatus()
 end
 
-function var_0_0._onDragBegin(arg_22_0)
-	arg_22_0._audioScroll:onDragBegin()
+function ActGeTianLevelView:_onDragBegin()
+	self._audioScroll:onDragBegin()
 end
 
-function var_0_0._onDragEnd(arg_23_0)
-	arg_23_0._audioScroll:onDragEnd()
+function ActGeTianLevelView:_onDragEnd()
+	self._audioScroll:onDragEnd()
 end
 
-function var_0_0._onClickDown(arg_24_0)
-	arg_24_0._audioScroll:onClickDown()
+function ActGeTianLevelView:_onClickDown()
+	self._audioScroll:onClickDown()
 end
 
-function var_0_0._initStageItems(arg_25_0)
-	local var_25_0
-	local var_25_1
-	local var_25_2 = arg_25_0.viewContainer:getSetting().otherRes[1]
+function ActGeTianLevelView:_initStageItems()
+	local levelCount, path
 
-	arg_25_0.storyItemList = {}
+	path = self.viewContainer:getSetting().otherRes[1]
+	self.storyItemList = {}
 
-	local var_25_3 = RoleActivityConfig.instance:getStoryLevelList(ActGeTianEnum.ActivityId)
-	local var_25_4 = #var_25_3
+	local storyConfigList = RoleActivityConfig.instance:getStoryLevelList(ActGeTianEnum.ActivityId)
 
-	for iter_25_0 = 1, var_25_4 do
-		local var_25_5 = gohelper.findChild(arg_25_0._gostoryStages, "stage" .. iter_25_0)
-		local var_25_6 = arg_25_0:getResInst(var_25_2, var_25_5)
-		local var_25_7 = MonoHelper.addNoUpdateLuaComOnceToGo(var_25_6, GeTianStoryItem, arg_25_0)
+	levelCount = #storyConfigList
 
-		arg_25_0.storyItemList[iter_25_0] = var_25_7
+	for i = 1, levelCount do
+		local stageGo = gohelper.findChild(self._gostoryStages, "stage" .. i)
+		local cloneGo = self:getResInst(path, stageGo)
+		local stageItem = MonoHelper.addNoUpdateLuaComOnceToGo(cloneGo, GeTianStoryItem, self)
 
-		arg_25_0.storyItemList[iter_25_0]:setParam(var_25_3[iter_25_0], iter_25_0)
+		self.storyItemList[i] = stageItem
 
-		if arg_25_0.storyItemList[iter_25_0]:isUnlock() then
-			arg_25_0.latestStoryItem = iter_25_0
+		self.storyItemList[i]:setParam(storyConfigList[i], i)
+
+		if self.storyItemList[i]:isUnlock() then
+			self.latestStoryItem = i
 		end
 	end
 
-	arg_25_0:_focusStoryItem(arg_25_0.latestStoryItem)
+	self:_focusStoryItem(self.latestStoryItem)
 
-	local var_25_8 = arg_25_0.viewContainer:getSetting().otherRes[2]
+	path = self.viewContainer:getSetting().otherRes[2]
+	self.fightItemList = {}
 
-	arg_25_0.fightItemList = {}
+	local fightConfigList = RoleActivityConfig.instance:getBattleLevelList(ActGeTianEnum.ActivityId)
 
-	local var_25_9 = RoleActivityConfig.instance:getBattleLevelList(ActGeTianEnum.ActivityId)
-	local var_25_10 = #var_25_9 / 2
+	levelCount = #fightConfigList / 2
 
-	for iter_25_1 = 1, var_25_10 do
-		local var_25_11 = gohelper.findChild(arg_25_0._gofightStages, "stage" .. iter_25_1)
-		local var_25_12 = arg_25_0:getResInst(var_25_8, var_25_11)
-		local var_25_13 = MonoHelper.addNoUpdateLuaComOnceToGo(var_25_12, GeTianFightItem, arg_25_0)
+	for i = 1, levelCount do
+		local stageGo = gohelper.findChild(self._gofightStages, "stage" .. i)
+		local cloneGo = self:getResInst(path, stageGo)
+		local stageItem = MonoHelper.addNoUpdateLuaComOnceToGo(cloneGo, GeTianFightItem, self)
 
-		arg_25_0.fightItemList[iter_25_1] = var_25_13
+		self.fightItemList[i] = stageItem
 
-		arg_25_0.fightItemList[iter_25_1]:setParam(var_25_9[2 * iter_25_1 - 1], iter_25_1)
+		self.fightItemList[i]:setParam(fightConfigList[2 * i - 1], i)
 
-		if arg_25_0.fightItemList[iter_25_1]:isUnlock() then
-			arg_25_0.latestfightItem = iter_25_1
+		if self.fightItemList[i]:isUnlock() then
+			self.latestfightItem = i
 		end
 	end
 
-	arg_25_0.fightItemList[arg_25_0.latestfightItem]:refreshSelect()
+	self.fightItemList[self.latestfightItem]:refreshSelect()
 end
 
-function var_0_0._playFirstUnlock(arg_26_0)
-	arg_26_0.finishStoryIndex = 0
+function ActGeTianLevelView:_playFirstUnlock()
+	self.finishStoryIndex = 0
 
-	arg_26_0.storyItemList[1]:playUnlock()
-	TaskDispatcher.runDelay(arg_26_0._unlockStoryEnd, arg_26_0, 0.83)
+	self.storyItemList[1]:playUnlock()
+	TaskDispatcher.runDelay(self._unlockStoryEnd, self, 0.83)
 end
 
-function var_0_0._playStoryFinishAnim(arg_27_0)
-	local var_27_0 = ActGeTianModel.instance:getNewFinishStoryLvl()
+function ActGeTianLevelView:_playStoryFinishAnim()
+	local newFinishStoryLvlId = ActGeTianModel.instance:getNewFinishStoryLvl()
 
-	if var_27_0 then
-		for iter_27_0, iter_27_1 in ipairs(arg_27_0.storyItemList) do
-			if iter_27_1.id == var_27_0 then
-				arg_27_0:_lockScreen(true)
+	if newFinishStoryLvlId then
+		for k, storyItem in ipairs(self.storyItemList) do
+			if storyItem.id == newFinishStoryLvlId then
+				self:_lockScreen(true)
 
-				arg_27_0.finishStoryIndex = iter_27_0
+				self.finishStoryIndex = k
 
-				iter_27_1:playFinish()
-				TaskDispatcher.runDelay(arg_27_0._finishStoryEnd, arg_27_0, 1.5)
+				storyItem:playFinish()
+				TaskDispatcher.runDelay(self._finishStoryEnd, self, 1.5)
 
 				break
 			end
@@ -360,63 +375,63 @@ function var_0_0._playStoryFinishAnim(arg_27_0)
 	end
 end
 
-function var_0_0._finishStoryEnd(arg_28_0)
-	arg_28_0.storyItemList[arg_28_0.finishStoryIndex]:refreshStatus()
-	arg_28_0.storyItemList[arg_28_0.finishStoryIndex]:playStarAnim()
+function ActGeTianLevelView:_finishStoryEnd()
+	self.storyItemList[self.finishStoryIndex]:refreshStatus()
+	self.storyItemList[self.finishStoryIndex]:playStarAnim()
 
-	if arg_28_0.finishStoryIndex == #arg_28_0.storyItemList then
-		arg_28_0.latestStoryItem = arg_28_0.finishStoryIndex
-		arg_28_0.finishStoryIndex = nil
+	if self.finishStoryIndex == #self.storyItemList then
+		self.latestStoryItem = self.finishStoryIndex
+		self.finishStoryIndex = nil
 
-		arg_28_0:_lockScreen(false)
+		self:_lockScreen(false)
 	else
-		arg_28_0.latestStoryItem = arg_28_0.finishStoryIndex + 1
+		self.latestStoryItem = self.finishStoryIndex + 1
 
-		TaskDispatcher.runDelay(arg_28_0._playPathAnim, arg_28_0, 0.67)
+		TaskDispatcher.runDelay(self._playPathAnim, self, 0.67)
 	end
 end
 
-function var_0_0._playPathAnim(arg_29_0)
-	local var_29_0 = "go" .. arg_29_0.finishStoryIndex
+function ActGeTianLevelView:_playPathAnim()
+	local animName = "go" .. self.finishStoryIndex
 
-	arg_29_0._animPath.speed = 1
+	self._animPath.speed = 1
 
-	arg_29_0._animPath:Play(var_29_0)
-	TaskDispatcher.runDelay(arg_29_0._unlockStory, arg_29_0, 0.5)
+	self._animPath:Play(animName)
+	TaskDispatcher.runDelay(self._unlockStory, self, 0.5)
 end
 
-function var_0_0._unlockStory(arg_30_0)
-	arg_30_0.storyItemList[arg_30_0.finishStoryIndex + 1]:playUnlock()
-	TaskDispatcher.runDelay(arg_30_0._unlockStoryEnd, arg_30_0, 1.7)
+function ActGeTianLevelView:_unlockStory()
+	self.storyItemList[self.finishStoryIndex + 1]:playUnlock()
+	TaskDispatcher.runDelay(self._unlockStoryEnd, self, 1.7)
 end
 
-function var_0_0._unlockStoryEnd(arg_31_0)
-	arg_31_0.storyItemList[arg_31_0.finishStoryIndex + 1]:refreshStatus()
+function ActGeTianLevelView:_unlockStoryEnd()
+	self.storyItemList[self.finishStoryIndex + 1]:refreshStatus()
 
-	arg_31_0.finishStoryIndex = nil
+	self.finishStoryIndex = nil
 
-	arg_31_0:_lockScreen(false)
+	self:_lockScreen(false)
 end
 
-function var_0_0._playFightFinishAnim(arg_32_0)
+function ActGeTianLevelView:_playFightFinishAnim()
 	ActGeTianModel.instance:updateData()
 
-	local var_32_0 = ActGeTianModel.instance:getNewFinishFightLvl()
+	local newFinishFightLvlId = ActGeTianModel.instance:getNewFinishFightLvl()
 
-	if var_32_0 then
-		for iter_32_0, iter_32_1 in ipairs(arg_32_0.fightItemList) do
-			if iter_32_1.id == var_32_0 then
-				arg_32_0.finishFightIndex = iter_32_0
+	if newFinishFightLvlId then
+		for k, fightItem in ipairs(self.fightItemList) do
+			if fightItem.id == newFinishFightLvlId then
+				self.finishFightIndex = k
 
-				iter_32_1:refreshStar()
-				iter_32_1:playStarAnim(true)
-				TaskDispatcher.runDelay(arg_32_0._starShowEnd, arg_32_0, 0.67)
+				fightItem:refreshStar()
+				fightItem:playStarAnim(true)
+				TaskDispatcher.runDelay(self._starShowEnd, self, 0.67)
 
 				break
-			elseif iter_32_1.hardConfig.id == var_32_0 then
-				iter_32_1:refreshStar()
-				iter_32_1:playStarAnim()
-				arg_32_0:_lockScreen(false)
+			elseif fightItem.hardConfig.id == newFinishFightLvlId then
+				fightItem:refreshStar()
+				fightItem:playStarAnim()
+				self:_lockScreen(false)
 
 				break
 			end
@@ -427,75 +442,75 @@ function var_0_0._playFightFinishAnim(arg_32_0)
 		return
 	end
 
-	arg_32_0:_lockScreen(false)
+	self:_lockScreen(false)
 end
 
-function var_0_0._starShowEnd(arg_33_0)
-	arg_33_0.fightItemList[arg_33_0.finishFightIndex]:playHardUnlock()
-	TaskDispatcher.runDelay(arg_33_0._unlockFightEnd, arg_33_0, 1.7)
+function ActGeTianLevelView:_starShowEnd()
+	self.fightItemList[self.finishFightIndex]:playHardUnlock()
+	TaskDispatcher.runDelay(self._unlockFightEnd, self, 1.7)
 
-	if arg_33_0.fightItemList[arg_33_0.finishFightIndex + 1] then
-		arg_33_0.fightItemList[arg_33_0.finishFightIndex + 1]:playUnlock()
+	if self.fightItemList[self.finishFightIndex + 1] then
+		self.fightItemList[self.finishFightIndex + 1]:playUnlock()
 	end
 end
 
-function var_0_0._unlockFightEnd(arg_34_0)
-	arg_34_0.fightItemList[arg_34_0.finishFightIndex]:refreshStatus()
+function ActGeTianLevelView:_unlockFightEnd()
+	self.fightItemList[self.finishFightIndex]:refreshStatus()
 
-	if arg_34_0.fightItemList[arg_34_0.finishFightIndex + 1] then
-		arg_34_0.fightItemList[arg_34_0.finishFightIndex + 1]:refreshStatus()
+	if self.fightItemList[self.finishFightIndex + 1] then
+		self.fightItemList[self.finishFightIndex + 1]:refreshStatus()
 	end
 
-	arg_34_0.finishFightIndex = nil
+	self.finishFightIndex = nil
 
-	arg_34_0:_lockScreen(false)
+	self:_lockScreen(false)
 end
 
-function var_0_0._delayOpenStory(arg_35_0)
-	arg_35_0._anim:Play("openstory", -1, 0)
+function ActGeTianLevelView:_delayOpenStory()
+	self._anim:Play("openstory", -1, 0)
 end
 
-function var_0_0._delayOpenFight(arg_36_0)
-	arg_36_0._anim:Play("openfight", -1, 0)
+function ActGeTianLevelView:_delayOpenFight()
+	self._anim:Play("openfight", -1, 0)
 end
 
-function var_0_0._showLeftTime(arg_37_0)
-	arg_37_0._txtlimittime.text = ActivityHelper.getActivityRemainTimeStr(ActGeTianEnum.ActivityId)
+function ActGeTianLevelView:_showLeftTime()
+	self._txtlimittime.text = ActivityHelper.getActivityRemainTimeStr(ActGeTianEnum.ActivityId)
 end
 
-function var_0_0._initPathStatus(arg_38_0)
-	if arg_38_0.latestStoryItem > 1 then
-		arg_38_0._animPath:Play("go" .. arg_38_0.latestStoryItem - 1, -1, 1)
+function ActGeTianLevelView:_initPathStatus()
+	if self.latestStoryItem > 1 then
+		self._animPath:Play("go" .. self.latestStoryItem - 1, -1, 1)
 	else
-		arg_38_0._animPath.speed = 0
+		self._animPath.speed = 0
 
-		arg_38_0._animPath:Play("go1", -1, 0)
+		self._animPath:Play("go1", -1, 0)
 	end
 end
 
-function var_0_0._focusStoryItem(arg_39_0, arg_39_1, arg_39_2)
-	local var_39_0 = recthelper.getAnchorX(arg_39_0.storyItemList[arg_39_1].transform.parent)
-	local var_39_1 = arg_39_0._offsetX - var_39_0
+function ActGeTianLevelView:_focusStoryItem(index, needPlay)
+	local contentAnchorX = recthelper.getAnchorX(self.storyItemList[index].transform.parent)
+	local offsetX = self._offsetX - contentAnchorX
 
-	if var_39_1 > 0 then
-		var_39_1 = 0
-	elseif var_39_1 < arg_39_0.minContentAnchorX then
-		var_39_1 = arg_39_0.minContentAnchorX
+	if offsetX > 0 then
+		offsetX = 0
+	elseif offsetX < self.minContentAnchorX then
+		offsetX = self.minContentAnchorX
 	end
 
-	if arg_39_2 then
-		ZProj.TweenHelper.DOAnchorPosX(arg_39_0._gostoryScroll.transform, var_39_1, 0.26, arg_39_0._onFocusEnd, arg_39_0, arg_39_1)
+	if needPlay then
+		ZProj.TweenHelper.DOAnchorPosX(self._gostoryScroll.transform, offsetX, 0.26, self._onFocusEnd, self, index)
 	else
-		ZProj.TweenHelper.DOAnchorPosX(arg_39_0._gostoryScroll.transform, var_39_1, 0.26)
+		ZProj.TweenHelper.DOAnchorPosX(self._gostoryScroll.transform, offsetX, 0.26)
 	end
 end
 
-function var_0_0._onFocusEnd(arg_40_0, arg_40_1)
-	arg_40_0.storyItemList[arg_40_1]:playStory()
+function ActGeTianLevelView:_onFocusEnd(index)
+	self.storyItemList[index]:playStory()
 end
 
-function var_0_0._lockScreen(arg_41_0, arg_41_1)
-	if arg_41_1 then
+function ActGeTianLevelView:_lockScreen(lock)
+	if lock then
 		UIBlockMgrExtend.setNeedCircleMv(false)
 		UIBlockMgr.instance:startBlock("finishAnim")
 	else
@@ -504,4 +519,4 @@ function var_0_0._lockScreen(arg_41_0, arg_41_1)
 	end
 end
 
-return var_0_0
+return ActGeTianLevelView

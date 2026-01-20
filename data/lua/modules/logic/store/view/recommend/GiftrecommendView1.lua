@@ -1,11 +1,13 @@
-﻿module("modules.logic.store.view.recommend.GiftrecommendView1", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/recommend/GiftrecommendView1.lua
 
-local var_0_0 = class("GiftrecommendView1", GiftrecommendViewBase)
+module("modules.logic.store.view.recommend.GiftrecommendView1", package.seeall)
 
-function var_0_0.ctor(arg_1_0, ...)
-	var_0_0.super.ctor(arg_1_0, ...)
+local GiftrecommendView1 = class("GiftrecommendView1", GiftrecommendViewBase)
 
-	arg_1_0.config = StoreConfig.instance:getStoreRecommendConfig(StoreEnum.RecommendSubStoreId.GiftrecommendView1)
+function GiftrecommendView1:ctor(...)
+	GiftrecommendView1.super.ctor(self, ...)
+
+	self.config = StoreConfig.instance:getStoreRecommendConfig(StoreEnum.RecommendSubStoreId.GiftrecommendView1)
 end
 
-return var_0_0
+return GiftrecommendView1

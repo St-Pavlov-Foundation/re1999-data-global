@@ -1,20 +1,22 @@
-﻿module("modules.logic.fight.system.work.FightWorkUseCards", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkUseCards.lua
 
-local var_0_0 = class("FightWorkUseCards", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkUseCards", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	FightPlayCardModel.instance:setUsedCard(arg_1_0.actEffectData.cardInfoList)
+local FightWorkUseCards = class("FightWorkUseCards", FightEffectBase)
+
+function FightWorkUseCards:onStart()
+	FightPlayCardModel.instance:setUsedCard(self.actEffectData.cardInfoList)
 	FightController.instance:dispatchEvent(FightEvent.SetUseCards)
 	FightViewPartVisible.set(false, false, false, false, true)
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0._delayDone(arg_2_0)
-	arg_2_0:onDone(true)
+function FightWorkUseCards:_delayDone()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
+function FightWorkUseCards:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkUseCards

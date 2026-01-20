@@ -1,76 +1,78 @@
-﻿module("modules.logic.versionactivity2_4.enter.view.subview.VersionActivity2_4WuErLiXiEnterView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/enter/view/subview/VersionActivity2_4WuErLiXiEnterView.lua
 
-local var_0_0 = class("VersionActivity2_4WuErLiXiEnterView", VersionActivityEnterBaseSubView)
+module("modules.logic.versionactivity2_4.enter.view.subview.VersionActivity2_4WuErLiXiEnterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtDescr = gohelper.findChildTextMesh(arg_1_0.viewGO, "#txt_Descr")
-	arg_1_0._txtLimitTime = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/image_LimitTimeBG/#txt_LimitTime")
-	arg_1_0._btnEnter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Enter")
-	arg_1_0._goEnterRedDot = gohelper.findChild(arg_1_0.viewGO, "Right/#btn_Enter/#go_reddot")
-	arg_1_0._btnLocked = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Locked")
+local VersionActivity2_4WuErLiXiEnterView = class("VersionActivity2_4WuErLiXiEnterView", VersionActivityEnterBaseSubView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity2_4WuErLiXiEnterView:onInitView()
+	self._txtDescr = gohelper.findChildTextMesh(self.viewGO, "#txt_Descr")
+	self._txtLimitTime = gohelper.findChildTextMesh(self.viewGO, "Right/image_LimitTimeBG/#txt_LimitTime")
+	self._btnEnter = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_Enter")
+	self._goEnterRedDot = gohelper.findChild(self.viewGO, "Right/#btn_Enter/#go_reddot")
+	self._btnLocked = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_Locked")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnEnter:AddClickListener(arg_2_0._enterGame, arg_2_0)
-	arg_2_0._btnLocked:AddClickListener(arg_2_0._clickLock, arg_2_0)
+function VersionActivity2_4WuErLiXiEnterView:addEvents()
+	self._btnEnter:AddClickListener(self._enterGame, self)
+	self._btnLocked:AddClickListener(self._clickLock, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnEnter:RemoveClickListener()
-	arg_3_0._btnLocked:RemoveClickListener()
+function VersionActivity2_4WuErLiXiEnterView:removeEvents()
+	self._btnEnter:RemoveClickListener()
+	self._btnLocked:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0.actCo = ActivityConfig.instance:getActivityCo(VersionActivity2_4Enum.ActivityId.WuErLiXi)
-	arg_4_0._txtDescr.text = arg_4_0.actCo.actDesc
+function VersionActivity2_4WuErLiXiEnterView:_editableInitView()
+	self.actCo = ActivityConfig.instance:getActivityCo(VersionActivity2_4Enum.ActivityId.WuErLiXi)
+	self._txtDescr.text = self.actCo.actDesc
 end
 
-function var_0_0.onOpen(arg_5_0)
-	RedDotController.instance:addRedDot(arg_5_0._goEnterRedDot, RedDotEnum.DotNode.V2a4WuErLiXiTask)
+function VersionActivity2_4WuErLiXiEnterView:onOpen()
+	RedDotController.instance:addRedDot(self._goEnterRedDot, RedDotEnum.DotNode.V2a4WuErLiXiTask)
 	AudioMgr.instance:trigger(AudioEnum.WuErLiXi.play_ui_diqiu_jinru)
-	var_0_0.super.onOpen(arg_5_0)
-	arg_5_0:_refreshTime()
+	VersionActivity2_4WuErLiXiEnterView.super.onOpen(self)
+	self:_refreshTime()
 end
 
-function var_0_0._enterGame(arg_6_0)
+function VersionActivity2_4WuErLiXiEnterView:_enterGame()
 	WuErLiXiController.instance:enterLevelView()
 end
 
-function var_0_0._clickLock(arg_7_0)
-	local var_7_0, var_7_1 = OpenHelper.getToastIdAndParam(arg_7_0.actCo.openId)
+function VersionActivity2_4WuErLiXiEnterView:_clickLock()
+	local toastId, toastParamList = OpenHelper.getToastIdAndParam(self.actCo.openId)
 
-	if var_7_0 and var_7_0 ~= 0 then
-		GameFacade.showToast(var_7_0)
+	if toastId and toastId ~= 0 then
+		GameFacade.showToast(toastId)
 	end
 end
 
-function var_0_0.everySecondCall(arg_8_0)
-	arg_8_0:_refreshTime()
+function VersionActivity2_4WuErLiXiEnterView:everySecondCall()
+	self:_refreshTime()
 end
 
-function var_0_0._refreshTime(arg_9_0)
-	local var_9_0 = ActivityModel.instance:getActivityInfo()[VersionActivity2_4Enum.ActivityId.WuErLiXi]
+function VersionActivity2_4WuErLiXiEnterView:_refreshTime()
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[VersionActivity2_4Enum.ActivityId.WuErLiXi]
 
-	if var_9_0 then
-		local var_9_1 = var_9_0:getRealEndTimeStamp() - ServerTime.now()
+	if actInfoMo then
+		local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
 
-		gohelper.setActive(arg_9_0._txtLimitTime.gameObject, var_9_1 > 0)
+		gohelper.setActive(self._txtLimitTime.gameObject, offsetSecond > 0)
 
-		if var_9_1 > 0 then
-			local var_9_2 = TimeUtil.SecondToActivityTimeFormat(var_9_1)
+		if offsetSecond > 0 then
+			local dateStr = TimeUtil.SecondToActivityTimeFormat(offsetSecond)
 
-			arg_9_0._txtLimitTime.text = var_9_2
+			self._txtLimitTime.text = dateStr
 		end
 
-		local var_9_3 = ActivityHelper.getActivityStatus(VersionActivity2_4Enum.ActivityId.WuErLiXi) ~= ActivityEnum.ActivityStatus.Normal
+		local isLock = ActivityHelper.getActivityStatus(VersionActivity2_4Enum.ActivityId.WuErLiXi) ~= ActivityEnum.ActivityStatus.Normal
 
-		gohelper.setActive(arg_9_0._btnEnter, not var_9_3)
-		gohelper.setActive(arg_9_0._btnLocked, var_9_3)
+		gohelper.setActive(self._btnEnter, not isLock)
+		gohelper.setActive(self._btnLocked, isLock)
 	end
 end
 
-return var_0_0
+return VersionActivity2_4WuErLiXiEnterView

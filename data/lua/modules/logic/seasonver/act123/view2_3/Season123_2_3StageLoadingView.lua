@@ -1,55 +1,57 @@
-﻿module("modules.logic.seasonver.act123.view2_3.Season123_2_3StageLoadingView", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view2_3/Season123_2_3StageLoadingView.lua
 
-local var_0_0 = class("Season123_2_3StageLoadingView", BaseView)
+module("modules.logic.seasonver.act123.view2_3.Season123_2_3StageLoadingView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local Season123_2_3StageLoadingView = class("Season123_2_3StageLoadingView", BaseView)
+
+function Season123_2_3StageLoadingView:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function Season123_2_3StageLoadingView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Season123_2_3StageLoadingView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function Season123_2_3StageLoadingView:_editableInitView()
 	return
 end
 
-function var_0_0.onDestroyView(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0.handleDelayAnimTransition, arg_5_0)
+function Season123_2_3StageLoadingView:onDestroyView()
+	TaskDispatcher.cancelTask(self.handleDelayAnimTransition, self)
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_6_0.handleOpenView, arg_6_0)
+function Season123_2_3StageLoadingView:onOpen()
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self.handleOpenView, self)
 	AudioMgr.instance:trigger(AudioEnum.Season123.play_ui_leimi_map_upgrade)
 
-	local var_6_0 = arg_6_0.viewParam.actId
-	local var_6_1 = arg_6_0.viewParam.stage
+	local actId = self.viewParam.actId
+	local stage = self.viewParam.stage
 
-	logNormal(string.format("Season123_2_3StageLoadingView actId=%s, stage=%s", var_6_0, var_6_1))
-	TaskDispatcher.runDelay(arg_6_0.handleDelayAnimTransition, arg_6_0, 2.5)
+	logNormal(string.format("Season123_2_3StageLoadingView actId=%s, stage=%s", actId, stage))
+	TaskDispatcher.runDelay(self.handleDelayAnimTransition, self, 2.5)
 end
 
-function var_0_0.onClose(arg_7_0)
+function Season123_2_3StageLoadingView:onClose()
 	Season123Controller.instance:dispatchEvent(Season123Event.EnterEpiosdeList, true)
 end
 
-function var_0_0.handleDelayAnimTransition(arg_8_0)
+function Season123_2_3StageLoadingView:handleDelayAnimTransition()
 	ViewMgr.instance:openView(Season123Controller.instance:getEpisodeListViewName(), {
-		actId = arg_8_0.viewParam.actId,
-		stage = arg_8_0.viewParam.stage
+		actId = self.viewParam.actId,
+		stage = self.viewParam.stage
 	})
 end
 
-function var_0_0.handleOpenView(arg_9_0, arg_9_1)
-	if arg_9_1 == Season123Controller.instance:getEpisodeListViewName() then
-		arg_9_0:closeThis()
+function Season123_2_3StageLoadingView:handleOpenView(viewName)
+	if viewName == Season123Controller.instance:getEpisodeListViewName() then
+		self:closeThis()
 	end
 end
 
-return var_0_0
+return Season123_2_3StageLoadingView

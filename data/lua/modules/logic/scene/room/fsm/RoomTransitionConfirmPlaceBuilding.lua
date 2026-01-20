@@ -1,50 +1,52 @@
-﻿module("modules.logic.scene.room.fsm.RoomTransitionConfirmPlaceBuilding", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/fsm/RoomTransitionConfirmPlaceBuilding.lua
 
-local var_0_0 = class("RoomTransitionConfirmPlaceBuilding", SimpleFSMBaseTransition)
+module("modules.logic.scene.room.fsm.RoomTransitionConfirmPlaceBuilding", package.seeall)
 
-function var_0_0.start(arg_1_0)
-	arg_1_0._scene = GameSceneMgr.instance:getCurScene()
+local RoomTransitionConfirmPlaceBuilding = class("RoomTransitionConfirmPlaceBuilding", SimpleFSMBaseTransition)
+
+function RoomTransitionConfirmPlaceBuilding:start()
+	self._scene = GameSceneMgr.instance:getCurScene()
 end
 
-function var_0_0.check(arg_2_0)
+function RoomTransitionConfirmPlaceBuilding:check()
 	return true
 end
 
-function var_0_0.onStart(arg_3_0, arg_3_1)
-	arg_3_0._param = arg_3_1
+function RoomTransitionConfirmPlaceBuilding:onStart(param)
+	self._param = param
 
-	local var_3_0 = arg_3_0._param.buildingInfo
-	local var_3_1 = arg_3_0._param.tempBuildingMO
+	local buildingInfo = self._param.buildingInfo
+	local tempBuildingMO = self._param.tempBuildingMO
 
-	RoomBuildingController.instance:addWaitRefreshBuildingNearBlock(var_3_1.buildingId, var_3_1.hexPoint, var_3_1.rotate)
+	RoomBuildingController.instance:addWaitRefreshBuildingNearBlock(tempBuildingMO.buildingId, tempBuildingMO.hexPoint, tempBuildingMO.rotate)
 
-	local var_3_2 = arg_3_0._scene.buildingmgr:getBuildingEntity(var_3_1.id, SceneTag.RoomBuilding)
+	local curEntity = self._scene.buildingmgr:getBuildingEntity(tempBuildingMO.id, SceneTag.RoomBuilding)
 
-	if var_3_2 then
-		arg_3_0._scene.buildingmgr:moveTo(var_3_2, var_3_1.hexPoint)
-		var_3_2:refreshBuilding()
-		var_3_2:refreshRotation()
-		var_3_2:playSmokeEffect()
+	if curEntity then
+		self._scene.buildingmgr:moveTo(curEntity, tempBuildingMO.hexPoint)
+		curEntity:refreshBuilding()
+		curEntity:refreshRotation()
+		curEntity:playSmokeEffect()
 	end
 
 	RoomBuildingController.instance:cancelPressBuilding()
 	RoomResourceModel.instance:clearLightResourcePoint()
-	RoomBuildingController.instance:dispatchEvent(RoomEvent.BuildingUIRefreshUI, var_3_1.id)
+	RoomBuildingController.instance:dispatchEvent(RoomEvent.BuildingUIRefreshUI, tempBuildingMO.id)
 	RoomShowBuildingListModel.instance:clearSelect()
-	RoomBuildingController.instance:dispatchEvent(RoomEvent.ConfirmBuilding, var_3_0.defineId)
+	RoomBuildingController.instance:dispatchEvent(RoomEvent.ConfirmBuilding, buildingInfo.defineId)
 	RoomMapController.instance:dispatchEvent(RoomEvent.RefreshResourceUIShow)
-	arg_3_0:onDone()
+	self:onDone()
 	RoomMapController.instance:dispatchEvent(RoomEvent.BuildingCanConfirm)
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_board_fix)
 	RoomBuildingController.instance:refreshBuildingOccupy()
 end
 
-function var_0_0.stop(arg_4_0)
+function RoomTransitionConfirmPlaceBuilding:stop()
 	return
 end
 
-function var_0_0.clear(arg_5_0)
+function RoomTransitionConfirmPlaceBuilding:clear()
 	return
 end
 
-return var_0_0
+return RoomTransitionConfirmPlaceBuilding

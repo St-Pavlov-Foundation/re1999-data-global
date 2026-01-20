@@ -1,178 +1,196 @@
-﻿module("modules.logic.herogroup.model.HeroSingleGroupModel", package.seeall)
+﻿-- chunkname: @modules/logic/herogroup/model/HeroSingleGroupModel.lua
 
-local var_0_0 = class("HeroSingleGroupModel", ListScrollModel)
+module("modules.logic.herogroup.model.HeroSingleGroupModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:_buildMOList()
+local HeroSingleGroupModel = class("HeroSingleGroupModel", ListScrollModel)
+
+function HeroSingleGroupModel:onInit()
+	self:_buildMOList()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:_buildMOList()
+function HeroSingleGroupModel:reInit()
+	self:_buildMOList()
 end
 
-function var_0_0._buildMOList(arg_3_0)
-	arg_3_0:setMaxHeroCount()
+function HeroSingleGroupModel:_buildMOList()
+	self:setMaxHeroCount()
 end
 
-function var_0_0.isTemp(arg_4_0)
-	return arg_4_0.temp
+function HeroSingleGroupModel:isTemp()
+	return self.temp
 end
 
-function var_0_0.setMaxHeroCount(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = {}
+function HeroSingleGroupModel:setMaxHeroCount(maxHeroCount, groupMoCls)
+	local moList = {}
 
-	arg_5_1 = arg_5_1 or ModuleEnum.MaxHeroCountInGroup
-	arg_5_2 = arg_5_2 or HeroSingleGroupMO
+	maxHeroCount = maxHeroCount or ModuleEnum.MaxHeroCountInGroup
+	groupMoCls = groupMoCls or HeroSingleGroupMO
 
-	for iter_5_0 = 1, arg_5_1 do
-		table.insert(var_5_0, arg_5_2.New())
+	for i = 1, maxHeroCount do
+		table.insert(moList, groupMoCls.New())
 	end
 
-	arg_5_0:clear()
-	arg_5_0:setList(var_5_0)
+	self:clear()
+	self:setList(moList)
 end
 
-function var_0_0.setSingleGroup(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = arg_6_0:getList()
+function HeroSingleGroupModel:setSingleGroup(heroGroupMO, setTrial)
+	local moList = self:getList()
 
-	for iter_6_0 = 1, #var_6_0 do
-		local var_6_1 = arg_6_1 and arg_6_1.heroList[iter_6_0]
+	for i = 1, #moList do
+		local heroUid = heroGroupMO and heroGroupMO.heroList[i]
 
-		var_6_0[iter_6_0]:init(iter_6_0, var_6_1)
+		moList[i]:init(i, heroUid)
 	end
 
-	arg_6_0.temp = arg_6_1 and arg_6_1.temp
+	self.temp = heroGroupMO and heroGroupMO.temp
 
-	arg_6_0:setList(var_6_0)
+	self:setList(moList)
 
-	if arg_6_2 and arg_6_1 then
-		local var_6_2 = arg_6_0:getList()
+	if setTrial and heroGroupMO then
+		local list = self:getList()
 
-		for iter_6_1 = 1, #var_6_2 do
-			var_6_2[iter_6_1]:setAid(arg_6_1.aidDict and arg_6_1.aidDict[iter_6_1])
+		for i = 1, #list do
+			list[i]:setAid(heroGroupMO.aidDict and heroGroupMO.aidDict[i])
 
-			if arg_6_1.trialDict and arg_6_1.trialDict[iter_6_1] then
-				var_6_2[iter_6_1]:setTrial(unpack(arg_6_1.trialDict[iter_6_1]))
+			if heroGroupMO.trialDict and heroGroupMO.trialDict[i] then
+				list[i]:setTrial(unpack(heroGroupMO.trialDict[i]))
 			else
-				var_6_2[iter_6_1]:setTrial()
+				list[i]:setTrial()
 			end
 		end
 	end
 end
 
-function var_0_0.addToEmpty(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0:getList()
+function HeroSingleGroupModel:addToEmpty(heroUid)
+	local moList = self:getList()
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-		if iter_7_1:isEmpty() then
-			iter_7_1:setHeroUid(arg_7_1)
-
-			break
-		end
-	end
-end
-
-function var_0_0.addTo(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = arg_8_0:getById(arg_8_2)
-
-	if var_8_0 then
-		var_8_0:setHeroUid(arg_8_1)
-	end
-end
-
-function var_0_0.remove(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0:getList()
-
-	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
-		if iter_9_1:isEqual(arg_9_1) then
-			iter_9_1:setEmpty()
+	for _, mo in ipairs(moList) do
+		if mo:isEmpty() then
+			mo:setHeroUid(heroUid)
 
 			break
 		end
 	end
 end
 
-function var_0_0.removeFrom(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0:getById(arg_10_1)
+function HeroSingleGroupModel:addTo(heroUid, id)
+	local mo = self:getById(id)
 
-	if var_10_0 then
-		var_10_0:setEmpty()
+	if mo then
+		mo:setHeroUid(heroUid)
 	end
 end
 
-function var_0_0.swap(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = arg_11_0:getById(arg_11_1)
-	local var_11_1 = arg_11_0:getById(arg_11_2)
+function HeroSingleGroupModel:remove(heroUid)
+	local moList = self:getList()
 
-	if var_11_0 and var_11_1 then
-		if var_11_0.aid == -1 or var_11_1.aid == -1 then
+	for _, mo in ipairs(moList) do
+		if mo:isEqual(heroUid) then
+			mo:setEmpty()
+
+			break
+		end
+	end
+end
+
+function HeroSingleGroupModel:removeFrom(id)
+	local mo = self:getById(id)
+
+	if mo then
+		mo:setEmpty()
+	end
+end
+
+function HeroSingleGroupModel:swap(id1, id2)
+	local mo1 = self:getById(id1)
+	local mo2 = self:getById(id2)
+
+	if mo1 and mo2 then
+		if mo1.aid == -1 or mo2.aid == -1 then
 			return
 		end
 
-		local var_11_2 = var_11_0.heroUid
+		local temp = mo1.heroUid
 
-		var_11_0:setHeroUid(var_11_1.heroUid)
-		var_11_1:setHeroUid(var_11_2)
+		mo1:setHeroUid(mo2.heroUid)
+		mo2:setHeroUid(temp)
 
-		local var_11_3 = var_11_0.aid
+		local tempAid = mo1.aid
 
-		var_11_0:setAid(var_11_1.aid)
-		var_11_1:setAid(var_11_3)
+		mo1:setAid(mo2.aid)
+		mo2:setAid(tempAid)
 
-		local var_11_4 = var_11_0.trial
-		local var_11_5 = var_11_0.trialTemplate
-		local var_11_6 = var_11_0.trialPos
+		local tempTrialId = mo1.trial
+		local tempTrialTemplate = mo1.trialTemplate
+		local tempTrialPos = mo1.trialPos
 
-		var_11_0:setTrial(var_11_1.trial, var_11_1.trialTemplate, var_11_1.trialPos, true)
-		var_11_1:setTrial(var_11_4, var_11_5, var_11_6, true)
+		mo1:setTrial(mo2.trial, mo2.trialTemplate, mo2.trialPos, true)
+		mo2:setTrial(tempTrialId, tempTrialTemplate, tempTrialPos, true)
 	end
 end
 
-function var_0_0.move(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = arg_12_0:getList()
-	local var_12_1 = {}
+function HeroSingleGroupModel:move(from, to)
+	local moList = self:getList()
+	local newList = {}
 
-	for iter_12_0, iter_12_1 in ipairs(var_12_0) do
-		local var_12_2 = iter_12_0
+	for i, mo in ipairs(moList) do
+		local result = i
 
-		if iter_12_0 ~= arg_12_1 then
-			if iter_12_0 < arg_12_1 and arg_12_2 <= iter_12_0 then
-				var_12_2 = iter_12_0 + 1
-			elseif arg_12_1 < iter_12_0 and iter_12_0 <= arg_12_2 then
-				var_12_2 = iter_12_0 - 1
+		if i ~= from then
+			if i < from and to <= i then
+				result = i + 1
+			elseif from < i and i <= to then
+				result = i - 1
 			end
 		else
-			var_12_2 = arg_12_2
+			result = to
 		end
 
-		var_12_1[var_12_2] = iter_12_1
-		iter_12_1.id = var_12_2
+		newList[result] = mo
+		mo.id = result
 	end
 
-	arg_12_0:setList(var_12_1)
+	self:setList(newList)
 end
 
-function var_0_0.isInGroup(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0:getList()
+function HeroSingleGroupModel:isInGroup(heroUid)
+	local moList = self:getList()
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
-		if iter_13_1:isEqual(arg_13_1) then
+	for _, mo in ipairs(moList) do
+		if mo:isEqual(heroUid) then
 			return true
 		end
 	end
 end
 
-function var_0_0.isEmptyById(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_0:getById(arg_14_1)
+function HeroSingleGroupModel:isEmptyById(id)
+	local mo = self:getById(id)
 
-	return var_14_0 and var_14_0:isEmpty()
+	return mo and mo:isEmpty()
 end
 
-function var_0_0.isEmptyExcept(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_0:getList()
+function HeroSingleGroupModel:isEmptyExcept(id)
+	local moList = self:getList()
 
-	for iter_15_0 = 1, ModuleEnum.HeroCountInGroup do
-		if iter_15_0 ~= arg_15_1 and not var_15_0[iter_15_0]:isEmpty() then
+	for i = 1, ModuleEnum.HeroCountInGroup do
+		if i ~= id then
+			local mo = moList[i]
+
+			if not mo:isEmpty() then
+				return false
+			end
+		end
+	end
+
+	return true
+end
+
+function HeroSingleGroupModel:isFull()
+	local moList = self:getList()
+
+	for _, mo in ipairs(moList) do
+		if mo:canAddHero() and HeroGroupModel.instance:isPositionOpen(mo.id) then
 			return false
 		end
 	end
@@ -180,62 +198,50 @@ function var_0_0.isEmptyExcept(arg_15_0, arg_15_1)
 	return true
 end
 
-function var_0_0.isFull(arg_16_0)
-	local var_16_0 = arg_16_0:getList()
+function HeroSingleGroupModel:getHeroUids()
+	local list = {}
+	local moList = self:getList()
 
-	for iter_16_0, iter_16_1 in ipairs(var_16_0) do
-		if iter_16_1:canAddHero() and HeroGroupModel.instance:isPositionOpen(iter_16_1.id) then
-			return false
-		end
+	for _, mo in ipairs(moList) do
+		table.insert(list, mo.heroUid)
 	end
 
-	return true
+	return list
 end
 
-function var_0_0.getHeroUids(arg_17_0)
-	local var_17_0 = {}
-	local var_17_1 = arg_17_0:getList()
+function HeroSingleGroupModel:getHeroUid(id)
+	local heroUid = "0"
+	local mo = self:getById(id)
 
-	for iter_17_0, iter_17_1 in ipairs(var_17_1) do
-		table.insert(var_17_0, iter_17_1.heroUid)
+	if mo then
+		heroUid = mo.heroUid
 	end
 
-	return var_17_0
+	return heroUid
 end
 
-function var_0_0.getHeroUid(arg_18_0, arg_18_1)
-	local var_18_0 = "0"
-	local var_18_1 = arg_18_0:getById(arg_18_1)
-
-	if var_18_1 then
-		var_18_0 = var_18_1.heroUid
-	end
-
-	return var_18_0
-end
-
-function var_0_0.hasHeroUids(arg_19_0, arg_19_1, arg_19_2)
-	if arg_19_1 == "0" then
+function HeroSingleGroupModel:hasHeroUids(heroUid, id)
+	if heroUid == "0" then
 		return false
 	end
 
-	local var_19_0 = arg_19_0:getList()
+	local moList = self:getList()
 
-	for iter_19_0, iter_19_1 in ipairs(var_19_0) do
-		if iter_19_1.heroUid == arg_19_1 and iter_19_1.id ~= arg_19_2 then
-			return true, iter_19_0
+	for i, mo in ipairs(moList) do
+		if mo.heroUid == heroUid and mo.id ~= id then
+			return true, i
 		end
 	end
 
 	return false
 end
 
-function var_0_0.hasHero(arg_20_0)
-	local var_20_0 = HeroModel.instance:getList()
+function HeroSingleGroupModel:hasHero()
+	local moList = HeroModel.instance:getList()
 
-	if var_20_0 and #var_20_0 > 0 then
-		for iter_20_0, iter_20_1 in ipairs(var_20_0) do
-			if not arg_20_0:hasHeroUids(iter_20_1.uid) then
+	if moList and #moList > 0 then
+		for _, mo in ipairs(moList) do
+			if not self:hasHeroUids(mo.uid) then
 				return true
 			end
 		end
@@ -244,11 +250,11 @@ function var_0_0.hasHero(arg_20_0)
 	return false
 end
 
-function var_0_0.isAidConflict(arg_21_0, arg_21_1)
-	local var_21_0 = arg_21_0:getList()
+function HeroSingleGroupModel:isAidConflict(heroId)
+	local moList = self:getList()
 
-	for iter_21_0, iter_21_1 in ipairs(var_21_0) do
-		if iter_21_1:isAidConflict(arg_21_1) then
+	for _, mo in ipairs(moList) do
+		if mo:isAidConflict(heroId) then
 			return true
 		end
 	end
@@ -256,34 +262,35 @@ function var_0_0.isAidConflict(arg_21_0, arg_21_1)
 	return false
 end
 
-function var_0_0.getTeamLevel(arg_22_0)
-	local var_22_0 = arg_22_0:getList()
-	local var_22_1 = 0
-	local var_22_2 = 0
+function HeroSingleGroupModel:getTeamLevel()
+	local moList = self:getList()
+	local allLev, heroCount = 0, 0
 
-	for iter_22_0, iter_22_1 in ipairs(var_22_0) do
-		if tonumber(iter_22_1.heroUid) < 0 and iter_22_1.trial > 0 then
-			var_22_1 = var_22_1 + (lua_hero_trial.configDict[iter_22_1.trial] and lua_hero_trial.configDict[iter_22_1.trial][0]).level
-			var_22_2 = var_22_2 + 1
+	for i, mo in ipairs(moList) do
+		if tonumber(mo.heroUid) < 0 and mo.trial > 0 then
+			local trialCo = lua_hero_trial.configDict[mo.trial] and lua_hero_trial.configDict[mo.trial][0]
+
+			allLev = allLev + trialCo.level
+			heroCount = heroCount + 1
 		else
-			local var_22_3 = HeroModel.instance:getById(iter_22_1.heroUid)
+			local heroMo = HeroModel.instance:getById(mo.heroUid)
 
-			if var_22_3 then
-				var_22_1 = var_22_1 + var_22_3.level
-				var_22_2 = var_22_2 + 1
+			if heroMo then
+				allLev = allLev + heroMo.level
+				heroCount = heroCount + 1
 			end
 		end
 	end
 
-	local var_22_4 = 0
+	local lev = 0
 
-	if var_22_2 ~= 0 then
-		var_22_4 = math.floor(var_22_1 / var_22_2)
+	if heroCount ~= 0 then
+		lev = math.floor(allLev / heroCount)
 	end
 
-	return var_22_4
+	return lev
 end
 
-var_0_0.instance = var_0_0.New()
+HeroSingleGroupModel.instance = HeroSingleGroupModel.New()
 
-return var_0_0
+return HeroSingleGroupModel

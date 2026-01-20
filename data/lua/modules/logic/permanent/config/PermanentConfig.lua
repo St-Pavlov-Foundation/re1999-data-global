@@ -1,41 +1,45 @@
-﻿module("modules.logic.permanent.config.PermanentConfig", package.seeall)
+﻿-- chunkname: @modules/logic/permanent/config/PermanentConfig.lua
 
-local var_0_0 = class("PermanentConfig", BaseConfig)
+module("modules.logic.permanent.config.PermanentConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local PermanentConfig = class("PermanentConfig", BaseConfig)
+
+function PermanentConfig:ctor()
 	return
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function PermanentConfig:reqConfigNames()
 	return {
 		"permanent"
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "permanent" then
-		arg_3_0._permanentConfig = arg_3_2
+function PermanentConfig:onConfigLoaded(configName, configTable)
+	if configName == "permanent" then
+		self._permanentConfig = configTable
 	end
 end
 
-function var_0_0.getKvIconName(arg_4_0, arg_4_1)
-	return arg_4_0:getPermanentCO(arg_4_1).kvIcon
+function PermanentConfig:getKvIconName(actId)
+	local perActCfg = self:getPermanentCO(actId)
+
+	return perActCfg.kvIcon
 end
 
-function var_0_0.getPermanentDic(arg_5_0)
-	return arg_5_0._permanentConfig.configDict
+function PermanentConfig:getPermanentDic()
+	return self._permanentConfig.configDict
 end
 
-function var_0_0.getPermanentCO(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0._permanentConfig.configDict[arg_6_1]
+function PermanentConfig:getPermanentCO(actId)
+	local config = self._permanentConfig.configDict[actId]
 
-	if not var_6_0 then
-		logError("config permanent no activityId" .. arg_6_1)
+	if not config then
+		logError("config permanent no activityId" .. actId)
 	end
 
-	return var_6_0
+	return config
 end
 
-var_0_0.instance = var_0_0.New()
+PermanentConfig.instance = PermanentConfig.New()
 
-return var_0_0
+return PermanentConfig

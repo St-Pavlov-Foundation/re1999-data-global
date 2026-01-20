@@ -1,239 +1,241 @@
-﻿module("modules.logic.room.view.trade.RoomWholesaleItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/trade/RoomWholesaleItem.lua
 
-local var_0_0 = class("RoomWholesaleItem", LuaCompBase)
+module("modules.logic.room.view.trade.RoomWholesaleItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#txt_name")
-	arg_1_0._goicon = gohelper.findChild(arg_1_0.viewGO, "stuff/#go_icon")
-	arg_1_0._txtpricechange = gohelper.findChildText(arg_1_0.viewGO, "stuff/change/#txt_pricechange")
-	arg_1_0._txtprice = gohelper.findChildText(arg_1_0.viewGO, "stuff/#txt_price")
-	arg_1_0._simagerewardicon1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "stuff/#txt_price/#simage_rewardicon")
-	arg_1_0._txtinventory = gohelper.findChildText(arg_1_0.viewGO, "order/#txt_inventory ")
-	arg_1_0._txtinventorycount = gohelper.findChildText(arg_1_0.viewGO, "order/#txt_inventorycount")
-	arg_1_0._txtsold = gohelper.findChildText(arg_1_0.viewGO, "order/#txt_sold")
-	arg_1_0._txtsoldcount = gohelper.findChildText(arg_1_0.viewGO, "order/#txt_soldcount")
-	arg_1_0._inputvalue = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "order/valuebg/#input_value")
-	arg_1_0._btnsub = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "order/#btn_sub")
-	arg_1_0._btnadd = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "order/#btn_add")
-	arg_1_0._txttotalprice = gohelper.findChildText(arg_1_0.viewGO, "price/#txt_price")
-	arg_1_0._simagerewardicon2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "price/#txt_price/#simage_rewardicon")
-	arg_1_0._btnunconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btn/#btn_unconfirm")
-	arg_1_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btn/#btn_confirm")
+local RoomWholesaleItem = class("RoomWholesaleItem", LuaCompBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomWholesaleItem:onInitView()
+	self._txtname = gohelper.findChildText(self.viewGO, "#txt_name")
+	self._goicon = gohelper.findChild(self.viewGO, "stuff/#go_icon")
+	self._txtpricechange = gohelper.findChildText(self.viewGO, "stuff/change/#txt_pricechange")
+	self._txtprice = gohelper.findChildText(self.viewGO, "stuff/#txt_price")
+	self._simagerewardicon1 = gohelper.findChildSingleImage(self.viewGO, "stuff/#txt_price/#simage_rewardicon")
+	self._txtinventory = gohelper.findChildText(self.viewGO, "order/#txt_inventory ")
+	self._txtinventorycount = gohelper.findChildText(self.viewGO, "order/#txt_inventorycount")
+	self._txtsold = gohelper.findChildText(self.viewGO, "order/#txt_sold")
+	self._txtsoldcount = gohelper.findChildText(self.viewGO, "order/#txt_soldcount")
+	self._inputvalue = gohelper.findChildTextMeshInputField(self.viewGO, "order/valuebg/#input_value")
+	self._btnsub = gohelper.findChildClickWithDefaultAudio(self.viewGO, "order/#btn_sub")
+	self._btnadd = gohelper.findChildClickWithDefaultAudio(self.viewGO, "order/#btn_add")
+	self._txttotalprice = gohelper.findChildText(self.viewGO, "price/#txt_price")
+	self._simagerewardicon2 = gohelper.findChildSingleImage(self.viewGO, "price/#txt_price/#simage_rewardicon")
+	self._btnunconfirm = gohelper.findChildButtonWithAudio(self.viewGO, "btn/#btn_unconfirm")
+	self._btnconfirm = gohelper.findChildButtonWithAudio(self.viewGO, "btn/#btn_confirm")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnsub:AddClickListener(arg_2_0._btnsubOnClick, arg_2_0)
-	arg_2_0._btnadd:AddClickListener(arg_2_0._btnaddOnClick, arg_2_0)
-	arg_2_0._btnconfirm:AddClickListener(arg_2_0._btnconfirmOnClick, arg_2_0)
-	arg_2_0._btnunconfirm:AddClickListener(arg_2_0._btnunconfirmOnClick, arg_2_0)
-	arg_2_0._inputvalue:AddOnValueChanged(arg_2_0._onValueChanged, arg_2_0)
+function RoomWholesaleItem:addEvents()
+	self._btnsub:AddClickListener(self._btnsubOnClick, self)
+	self._btnadd:AddClickListener(self._btnaddOnClick, self)
+	self._btnconfirm:AddClickListener(self._btnconfirmOnClick, self)
+	self._btnunconfirm:AddClickListener(self._btnunconfirmOnClick, self)
+	self._inputvalue:AddOnValueChanged(self._onValueChanged, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnsub:RemoveClickListener()
-	arg_3_0._btnadd:RemoveClickListener()
-	arg_3_0._btnconfirm:RemoveClickListener()
-	arg_3_0._btnunconfirm:RemoveClickListener()
-	arg_3_0._inputvalue:RemoveOnValueChanged()
+function RoomWholesaleItem:removeEvents()
+	self._btnsub:RemoveClickListener()
+	self._btnadd:RemoveClickListener()
+	self._btnconfirm:RemoveClickListener()
+	self._btnunconfirm:RemoveClickListener()
+	self._inputvalue:RemoveOnValueChanged()
 
-	if arg_3_0._btnsublongPrees then
-		arg_3_0._btnsublongPrees:RemoveLongPressListener()
+	if self._btnsublongPrees then
+		self._btnsublongPrees:RemoveLongPressListener()
 	end
 
-	if arg_3_0._btnaddlongPrees then
-		arg_3_0._btnaddlongPrees:RemoveLongPressListener()
+	if self._btnaddlongPrees then
+		self._btnaddlongPrees:RemoveLongPressListener()
 	end
 end
 
-function var_0_0.init(arg_4_0, arg_4_1)
-	arg_4_0.viewGO = arg_4_1
+function RoomWholesaleItem:init(go)
+	self.viewGO = go
 
-	arg_4_0:onInitView()
+	self:onInitView()
 end
 
-function var_0_0.addEventListeners(arg_5_0)
-	arg_5_0:addEvents()
+function RoomWholesaleItem:addEventListeners()
+	self:addEvents()
 end
 
-function var_0_0.removeEventListeners(arg_6_0)
-	arg_6_0:removeEvents()
+function RoomWholesaleItem:removeEventListeners()
+	self:removeEvents()
 end
 
-function var_0_0._btnsubOnClick(arg_7_0)
+function RoomWholesaleItem:_btnsubOnClick()
 	if RoomTradeModel.instance:isMaxWeelyOrder() then
 		GameFacade.showToast(ToastEnum.RoomWholesaleWeeklyMax)
 
 		return
 	end
 
-	arg_7_0._mo:reduceSoldCount()
-	arg_7_0:_refreshSoldCount()
+	self._mo:reduceSoldCount()
+	self:_refreshSoldCount()
 end
 
-function var_0_0._btnaddOnClick(arg_8_0)
+function RoomWholesaleItem:_btnaddOnClick()
 	if RoomTradeModel.instance:isMaxWeelyOrder() then
 		GameFacade.showToast(ToastEnum.RoomWholesaleWeeklyMax)
 
 		return
 	end
 
-	arg_8_0._mo:addSoldCount()
-	arg_8_0:_refreshSoldCount()
+	self._mo:addSoldCount()
+	self:_refreshSoldCount()
 end
 
-function var_0_0._btnconfirmOnClick(arg_9_0)
+function RoomWholesaleItem:_btnconfirmOnClick()
 	if RoomTradeModel.instance:isMaxWeelyOrder() then
 		GameFacade.showToast(ToastEnum.RoomWholesaleWeeklyMax)
 
 		return
 	end
 
-	if arg_9_0._mo:getSoldCount() <= 0 then
+	if self._mo:getSoldCount() <= 0 then
 		return
 	end
 
-	RoomTradeController.instance:finishDailyOrder(RoomTradeEnum.Mode.Wholesale, arg_9_0._mo.orderId, arg_9_0._mo:getSoldCount())
+	RoomTradeController.instance:finishDailyOrder(RoomTradeEnum.Mode.Wholesale, self._mo.orderId, self._mo:getSoldCount())
 end
 
-function var_0_0._btnunconfirmOnClick(arg_10_0)
+function RoomWholesaleItem:_btnunconfirmOnClick()
 	GameFacade.showToast(ToastEnum.RoomOrderNotCommit)
 end
 
-function var_0_0._onSubLongPress(arg_11_0)
-	arg_11_0:_btnsubOnClick()
+function RoomWholesaleItem:_onSubLongPress()
+	self:_btnsubOnClick()
 end
 
-function var_0_0._onAddLongPress(arg_12_0)
-	arg_12_0:_btnaddOnClick()
+function RoomWholesaleItem:_onAddLongPress()
+	self:_btnaddOnClick()
 end
 
-local var_0_1 = 0.5
-local var_0_2 = 0.1
+local PRESS_TIME = 0.5
+local NEXT_PRESS_TIME = 0.1
 
-function var_0_0._editableInitView(arg_13_0)
-	arg_13_0._btnsublongPrees = SLFramework.UGUI.UILongPressListener.Get(arg_13_0._btnsub.gameObject)
+function RoomWholesaleItem:_editableInitView()
+	self._btnsublongPrees = SLFramework.UGUI.UILongPressListener.Get(self._btnsub.gameObject)
 
-	arg_13_0._btnsublongPrees:SetLongPressTime({
-		var_0_1,
-		var_0_2
+	self._btnsublongPrees:SetLongPressTime({
+		PRESS_TIME,
+		NEXT_PRESS_TIME
 	})
-	arg_13_0._btnsublongPrees:AddLongPressListener(arg_13_0._onSubLongPress, arg_13_0)
+	self._btnsublongPrees:AddLongPressListener(self._onSubLongPress, self)
 
-	arg_13_0._btnaddlongPrees = SLFramework.UGUI.UILongPressListener.Get(arg_13_0._btnadd.gameObject)
+	self._btnaddlongPrees = SLFramework.UGUI.UILongPressListener.Get(self._btnadd.gameObject)
 
-	arg_13_0._btnaddlongPrees:SetLongPressTime({
-		var_0_1,
-		var_0_2
+	self._btnaddlongPrees:SetLongPressTime({
+		PRESS_TIME,
+		NEXT_PRESS_TIME
 	})
-	arg_13_0._btnaddlongPrees:AddLongPressListener(arg_13_0._onAddLongPress, arg_13_0)
+	self._btnaddlongPrees:AddLongPressListener(self._onAddLongPress, self)
 end
 
-function var_0_0.onUpdateParam(arg_14_0)
+function RoomWholesaleItem:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_15_0)
+function RoomWholesaleItem:onOpen()
 	return
 end
 
-function var_0_0.onClose(arg_16_0)
+function RoomWholesaleItem:onClose()
 	return
 end
 
-function var_0_0.onDestroy(arg_17_0)
-	arg_17_0._simagerewardicon1:UnLoadImage()
-	arg_17_0._simagerewardicon2:UnLoadImage()
+function RoomWholesaleItem:onDestroy()
+	self._simagerewardicon1:UnLoadImage()
+	self._simagerewardicon2:UnLoadImage()
 end
 
-function var_0_0.onUpdateMo(arg_18_0, arg_18_1)
-	arg_18_0._mo = arg_18_1
-	arg_18_0._txtname.text = arg_18_1:getGoodsName()
+function RoomWholesaleItem:onUpdateMo(mo)
+	self._mo = mo
+	self._txtname.text = mo:getGoodsName()
 
-	arg_18_0:setIconItem()
-	arg_18_0:setUnitPrice()
-	arg_18_0:onRefresh()
+	self:setIconItem()
+	self:setUnitPrice()
+	self:onRefresh()
 end
 
-function var_0_0.setIconItem(arg_19_0)
-	if not arg_19_0._iconItem then
-		arg_19_0._iconItem = IconMgr.instance:getCommonItemIcon(arg_19_0._goicon.gameObject)
+function RoomWholesaleItem:setIconItem()
+	if not self._iconItem then
+		self._iconItem = IconMgr.instance:getCommonItemIcon(self._goicon.gameObject)
 	end
 
-	local var_19_0, var_19_1, var_19_2 = arg_19_0._mo:getItem()
+	local type, id, quantity = self._mo:getItem()
 
-	arg_19_0._iconItem:setMOValue(var_19_0, var_19_1, var_19_2, nil, true)
-	transformhelper.setLocalScale(arg_19_0._iconItem.go.transform, 0.8, 0.8, 1)
-	arg_19_0._iconItem:isShowQuality(false)
-	arg_19_0._iconItem:isShowCount(false)
+	self._iconItem:setMOValue(type, id, quantity, nil, true)
+	transformhelper.setLocalScale(self._iconItem.go.transform, 0.8, 0.8, 1)
+	self._iconItem:isShowQuality(false)
+	self._iconItem:isShowCount(false)
 end
 
-function var_0_0.setUnitPrice(arg_20_0)
-	local var_20_0, var_20_1, var_20_2 = arg_20_0._mo:getUnitPrice()
-	local var_20_3, var_20_4 = ItemModel.instance:getItemConfigAndIcon(var_20_0, var_20_1)
+function RoomWholesaleItem:setUnitPrice()
+	local type, id, price = self._mo:getUnitPrice()
+	local _, icon = ItemModel.instance:getItemConfigAndIcon(type, id)
 
-	if var_20_4 ~= arg_20_0._priceIcon then
-		arg_20_0._simagerewardicon1:LoadImage(var_20_4)
-		arg_20_0._simagerewardicon2:LoadImage(var_20_4)
+	if icon ~= self._priceIcon then
+		self._simagerewardicon1:LoadImage(icon)
+		self._simagerewardicon2:LoadImage(icon)
 
-		arg_20_0._priceIcon = var_20_4
+		self._priceIcon = icon
 	end
 
-	local var_20_5 = luaLang("room_wholesaleorder_utilprice")
+	local langutilprice = luaLang("room_wholesaleorder_utilprice")
 
-	arg_20_0._txtprice.text = GameUtil.getSubPlaceholderLuaLangOneParam(var_20_5, GameUtil.numberDisplay(var_20_2))
+	self._txtprice.text = GameUtil.getSubPlaceholderLuaLangOneParam(langutilprice, GameUtil.numberDisplay(price))
 
-	local var_20_6 = luaLang("room_wholesaleorder_priceratio")
+	local langpriceratio = luaLang("room_wholesaleorder_priceratio")
 
-	arg_20_0._txtpricechange.text = GameUtil.getSubPlaceholderLuaLangOneParam(var_20_6, arg_20_0._mo:getPriceRatio())
+	self._txtpricechange.text = GameUtil.getSubPlaceholderLuaLangOneParam(langpriceratio, self._mo:getPriceRatio())
 end
 
-function var_0_0.onRefresh(arg_21_0)
-	arg_21_0._txtinventorycount.text = arg_21_0._mo:getMaxCountStr()
-	arg_21_0._txtsoldcount.text = arg_21_0._mo:getTodaySoldCountStr()
+function RoomWholesaleItem:onRefresh()
+	self._txtinventorycount.text = self._mo:getMaxCountStr()
+	self._txtsoldcount.text = self._mo:getTodaySoldCountStr()
 
-	arg_21_0:_refreshSoldCount()
-	arg_21_0:_refreshBtn()
+	self:_refreshSoldCount()
+	self:_refreshBtn()
 end
 
-function var_0_0._refreshSoldCount(arg_22_0)
-	local var_22_0 = arg_22_0._mo:getSoldCount() or 0
-	local var_22_1, var_22_2, var_22_3 = arg_22_0._mo:getUnitPrice()
-	local var_22_4 = GameUtil.numberDisplay(var_22_0 * var_22_3)
+function RoomWholesaleItem:_refreshSoldCount()
+	local sold = self._mo:getSoldCount() or 0
+	local _, _, price = self._mo:getUnitPrice()
+	local totalPrice = GameUtil.numberDisplay(sold * price)
 
-	arg_22_0._inputvalue:SetText(var_22_0)
+	self._inputvalue:SetText(sold)
 
-	arg_22_0._txttotalprice.text = var_22_4
+	self._txttotalprice.text = totalPrice
 
-	arg_22_0:_refreshBtn()
+	self:_refreshBtn()
 end
 
-function var_0_0._onValueChanged(arg_23_0)
-	local var_23_0 = arg_23_0._inputvalue:GetText()
+function RoomWholesaleItem:_onValueChanged()
+	local inputValue = self._inputvalue:GetText()
 
-	if string.nilorempty(var_23_0) then
-		var_23_0 = 0
+	if string.nilorempty(inputValue) then
+		inputValue = 0
 	end
 
-	arg_23_0._mo:setSoldCount(tonumber(var_23_0))
-	arg_23_0:_refreshSoldCount()
+	self._mo:setSoldCount(tonumber(inputValue))
+	self:_refreshSoldCount()
 end
 
-function var_0_0._refreshBtn(arg_24_0)
-	local var_24_0 = RoomTradeModel.instance:isMaxWeelyOrder()
-	local var_24_1 = arg_24_0._mo:getMaxCount() > 0
-	local var_24_2 = arg_24_0._mo:getSoldCount() or 0
+function RoomWholesaleItem:_refreshBtn()
+	local isMaxWeelyOrder = RoomTradeModel.instance:isMaxWeelyOrder()
+	local isCanSold = self._mo:getMaxCount() > 0
+	local sold = self._mo:getSoldCount() or 0
 
-	gohelper.setActive(arg_24_0._btnunconfirm.gameObject, not var_24_1)
-	gohelper.setActive(arg_24_0._btnconfirm.gameObject, var_24_1)
-	ZProj.UGUIHelper.SetGrayscale(arg_24_0._btnconfirm.gameObject, var_24_0 or arg_24_0._mo:getSoldCount() <= 0)
-	ZProj.UGUIHelper.SetGrayscale(arg_24_0._btnsub.gameObject, var_24_2 <= 0 or var_24_0)
-	ZProj.UGUIHelper.SetGrayscale(arg_24_0._btnadd.gameObject, var_24_2 >= arg_24_0._mo:getMaxCount() or var_24_0)
+	gohelper.setActive(self._btnunconfirm.gameObject, not isCanSold)
+	gohelper.setActive(self._btnconfirm.gameObject, isCanSold)
+	ZProj.UGUIHelper.SetGrayscale(self._btnconfirm.gameObject, isMaxWeelyOrder or self._mo:getSoldCount() <= 0)
+	ZProj.UGUIHelper.SetGrayscale(self._btnsub.gameObject, sold <= 0 or isMaxWeelyOrder)
+	ZProj.UGUIHelper.SetGrayscale(self._btnadd.gameObject, sold >= self._mo:getMaxCount() or isMaxWeelyOrder)
 end
 
-var_0_0.ResUrl = "ui/viewres/room/trade/roomwholesaleitem.prefab"
+RoomWholesaleItem.ResUrl = "ui/viewres/room/trade/roomwholesaleitem.prefab"
 
-return var_0_0
+return RoomWholesaleItem

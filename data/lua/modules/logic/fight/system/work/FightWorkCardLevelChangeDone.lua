@@ -1,9 +1,11 @@
-﻿module("modules.logic.fight.system.work.FightWorkCardLevelChangeDone", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkCardLevelChangeDone.lua
 
-local var_0_0 = class("FightWorkCardLevelChangeDone", BaseWork)
+module("modules.logic.fight.system.work.FightWorkCardLevelChangeDone", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0:onDone(true)
+local FightWorkCardLevelChangeDone = class("FightWorkCardLevelChangeDone", BaseWork)
+
+function FightWorkCardLevelChangeDone:onStart()
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkCardLevelChangeDone

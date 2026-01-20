@@ -1,105 +1,107 @@
-﻿module("modules.logic.versionactivity1_2.dreamtail.view.Activity119View", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/dreamtail/view/Activity119View.lua
 
-local var_0_0 = class("Activity119View", BaseView)
-local var_0_1 = {
+module("modules.logic.versionactivity1_2.dreamtail.view.Activity119View", package.seeall)
+
+local Activity119View = class("Activity119View", BaseView)
+local ViewShowMode = {
 	Hard = 2,
 	LockHard = 3,
 	Normal = 1
 }
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg")
-	arg_1_0._txtremainTime = gohelper.findChildText(arg_1_0.viewGO, "bg/#txt_remainTime")
-	arg_1_0._simagebookleftbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "bookleft/bg/#simage_bookleftbg")
-	arg_1_0._simagepageNormal = gohelper.findChildSingleImage(arg_1_0.viewGO, "bookleft/bg/exchange/#simage_pageNormal")
-	arg_1_0._simagepageHard = gohelper.findChildSingleImage(arg_1_0.viewGO, "bookleft/bg/exchange/#simage_pageHard")
-	arg_1_0._gocategory = gohelper.findChild(arg_1_0.viewGO, "bookleft/category/#go_category")
-	arg_1_0._gocategoryItem = gohelper.findChild(arg_1_0.viewGO, "bookleft/category/#go_category/#go_categoryItem")
-	arg_1_0._simageleftpage = gohelper.findChildSingleImage(arg_1_0.viewGO, "bookleft/#simage_leftpage")
-	arg_1_0._simageleftpageline = gohelper.findChildSingleImage(arg_1_0.viewGO, "bookleft/#simage_leftpageline")
-	arg_1_0._goframehard = gohelper.findChild(arg_1_0.viewGO, "bookleft/leftup/exchange/#go_framehard")
-	arg_1_0._goframenormal = gohelper.findChild(arg_1_0.viewGO, "bookleft/leftup/exchange/#go_framenormal")
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "bookleft/leftup/#simage_icon")
-	arg_1_0._txtpageIndex = gohelper.findChildText(arg_1_0.viewGO, "bookleft/leftup/#txt_pageIndex")
-	arg_1_0._txtpagename = gohelper.findChildText(arg_1_0.viewGO, "bookleft/leftup/#txt_pagename")
-	arg_1_0._goselectHard = gohelper.findChild(arg_1_0.viewGO, "bookleft/leftmiddle/#go_selectHard")
-	arg_1_0._goselctNormal = gohelper.findChild(arg_1_0.viewGO, "bookleft/leftmiddle/#go_selctNormal")
-	arg_1_0._golockHard = gohelper.findChild(arg_1_0.viewGO, "bookleft/leftmiddle/#go_lockHard")
-	arg_1_0._leftmiddleAnim = ZProj.ProjAnimatorPlayer.Get(gohelper.findChild(arg_1_0.viewGO, "bookleft/leftmiddle"))
-	arg_1_0._btnnormal = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bookleft/leftmiddle/#btn_normal")
-	arg_1_0._btnhard = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bookleft/leftmiddle/#btn_hard")
-	arg_1_0._txtrecommendLevel = gohelper.findChildText(arg_1_0.viewGO, "bookleft/leftdown/desc/txt/#txt_recommendLevel")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "bookleft/leftdown/desc/#txt_desc")
-	arg_1_0._gosamplehero = gohelper.findChild(arg_1_0.viewGO, "bookleft/leftdown/samplehero/#scroll_samplehero/Viewport/#go_samplehero")
-	arg_1_0._gosampleHeroItem = gohelper.findChild(arg_1_0.viewGO, "bookleft/leftdown/samplehero/#scroll_samplehero/Viewport/#go_samplehero/#go_sampleHeroItem")
-	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "bookright/bg/nomal")
-	arg_1_0._gohard = gohelper.findChild(arg_1_0.viewGO, "bookright/bg/hard")
-	arg_1_0._simagebookrightbghard = gohelper.findChildSingleImage(arg_1_0.viewGO, "bookright/bg/hard/#simage_bookrightbghard")
-	arg_1_0._simagebookrightpagehard = gohelper.findChildSingleImage(arg_1_0.viewGO, "bookright/bg/hard/#simage_bookrightpagehard")
-	arg_1_0._simagebookrightbgnormal = gohelper.findChildSingleImage(arg_1_0.viewGO, "bookright/bg/nomal/#simage_bookrightbgnormal")
-	arg_1_0._simagebookrightpagenormal = gohelper.findChildSingleImage(arg_1_0.viewGO, "bookright/bg/nomal/#simage_bookrightpagenormal")
-	arg_1_0._simagerightpageline = gohelper.findChildSingleImage(arg_1_0.viewGO, "bookright/bg/#simage_rightpageline")
-	arg_1_0._txtnormalTaskDesc = gohelper.findChildText(arg_1_0.viewGO, "bookright/normalpoint/content/#txt_normalTaskDesc")
-	arg_1_0._gonormalComplete = gohelper.findChild(arg_1_0.viewGO, "bookright/normalpoint/#go_normalComplete")
-	arg_1_0._gohardpoint = gohelper.findChild(arg_1_0.viewGO, "bookright/#go_hardpoint")
-	arg_1_0._txthardTaskDesc1 = gohelper.findChildText(arg_1_0.viewGO, "bookright/#go_hardpoint/hardpoint1/content/#txt_hardTaskDesc1")
-	arg_1_0._gohardComplete1 = gohelper.findChild(arg_1_0.viewGO, "bookright/#go_hardpoint/hardpoint1/#go_hardComplete1")
-	arg_1_0._txthardTaskDesc2 = gohelper.findChildText(arg_1_0.viewGO, "bookright/#go_hardpoint/hardpoint2/content/#txt_hardTaskDesc2")
-	arg_1_0._gohardComplete2 = gohelper.findChild(arg_1_0.viewGO, "bookright/#go_hardpoint/hardpoint2/#go_hardComplete2")
-	arg_1_0._golockhard = gohelper.findChild(arg_1_0.viewGO, "bookright/#go_lockhard")
-	arg_1_0._goreward = gohelper.findChild(arg_1_0.viewGO, "bookright/#go_reward")
-	arg_1_0._btnstarthard = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btn/#btn_starthard")
-	arg_1_0._btnstartnormal = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btn/#btn_startnormal")
+function Activity119View:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_bg")
+	self._txtremainTime = gohelper.findChildText(self.viewGO, "bg/#txt_remainTime")
+	self._simagebookleftbg = gohelper.findChildSingleImage(self.viewGO, "bookleft/bg/#simage_bookleftbg")
+	self._simagepageNormal = gohelper.findChildSingleImage(self.viewGO, "bookleft/bg/exchange/#simage_pageNormal")
+	self._simagepageHard = gohelper.findChildSingleImage(self.viewGO, "bookleft/bg/exchange/#simage_pageHard")
+	self._gocategory = gohelper.findChild(self.viewGO, "bookleft/category/#go_category")
+	self._gocategoryItem = gohelper.findChild(self.viewGO, "bookleft/category/#go_category/#go_categoryItem")
+	self._simageleftpage = gohelper.findChildSingleImage(self.viewGO, "bookleft/#simage_leftpage")
+	self._simageleftpageline = gohelper.findChildSingleImage(self.viewGO, "bookleft/#simage_leftpageline")
+	self._goframehard = gohelper.findChild(self.viewGO, "bookleft/leftup/exchange/#go_framehard")
+	self._goframenormal = gohelper.findChild(self.viewGO, "bookleft/leftup/exchange/#go_framenormal")
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "bookleft/leftup/#simage_icon")
+	self._txtpageIndex = gohelper.findChildText(self.viewGO, "bookleft/leftup/#txt_pageIndex")
+	self._txtpagename = gohelper.findChildText(self.viewGO, "bookleft/leftup/#txt_pagename")
+	self._goselectHard = gohelper.findChild(self.viewGO, "bookleft/leftmiddle/#go_selectHard")
+	self._goselctNormal = gohelper.findChild(self.viewGO, "bookleft/leftmiddle/#go_selctNormal")
+	self._golockHard = gohelper.findChild(self.viewGO, "bookleft/leftmiddle/#go_lockHard")
+	self._leftmiddleAnim = ZProj.ProjAnimatorPlayer.Get(gohelper.findChild(self.viewGO, "bookleft/leftmiddle"))
+	self._btnnormal = gohelper.findChildButtonWithAudio(self.viewGO, "bookleft/leftmiddle/#btn_normal")
+	self._btnhard = gohelper.findChildButtonWithAudio(self.viewGO, "bookleft/leftmiddle/#btn_hard")
+	self._txtrecommendLevel = gohelper.findChildText(self.viewGO, "bookleft/leftdown/desc/txt/#txt_recommendLevel")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "bookleft/leftdown/desc/#txt_desc")
+	self._gosamplehero = gohelper.findChild(self.viewGO, "bookleft/leftdown/samplehero/#scroll_samplehero/Viewport/#go_samplehero")
+	self._gosampleHeroItem = gohelper.findChild(self.viewGO, "bookleft/leftdown/samplehero/#scroll_samplehero/Viewport/#go_samplehero/#go_sampleHeroItem")
+	self._gonormal = gohelper.findChild(self.viewGO, "bookright/bg/nomal")
+	self._gohard = gohelper.findChild(self.viewGO, "bookright/bg/hard")
+	self._simagebookrightbghard = gohelper.findChildSingleImage(self.viewGO, "bookright/bg/hard/#simage_bookrightbghard")
+	self._simagebookrightpagehard = gohelper.findChildSingleImage(self.viewGO, "bookright/bg/hard/#simage_bookrightpagehard")
+	self._simagebookrightbgnormal = gohelper.findChildSingleImage(self.viewGO, "bookright/bg/nomal/#simage_bookrightbgnormal")
+	self._simagebookrightpagenormal = gohelper.findChildSingleImage(self.viewGO, "bookright/bg/nomal/#simage_bookrightpagenormal")
+	self._simagerightpageline = gohelper.findChildSingleImage(self.viewGO, "bookright/bg/#simage_rightpageline")
+	self._txtnormalTaskDesc = gohelper.findChildText(self.viewGO, "bookright/normalpoint/content/#txt_normalTaskDesc")
+	self._gonormalComplete = gohelper.findChild(self.viewGO, "bookright/normalpoint/#go_normalComplete")
+	self._gohardpoint = gohelper.findChild(self.viewGO, "bookright/#go_hardpoint")
+	self._txthardTaskDesc1 = gohelper.findChildText(self.viewGO, "bookright/#go_hardpoint/hardpoint1/content/#txt_hardTaskDesc1")
+	self._gohardComplete1 = gohelper.findChild(self.viewGO, "bookright/#go_hardpoint/hardpoint1/#go_hardComplete1")
+	self._txthardTaskDesc2 = gohelper.findChildText(self.viewGO, "bookright/#go_hardpoint/hardpoint2/content/#txt_hardTaskDesc2")
+	self._gohardComplete2 = gohelper.findChild(self.viewGO, "bookright/#go_hardpoint/hardpoint2/#go_hardComplete2")
+	self._golockhard = gohelper.findChild(self.viewGO, "bookright/#go_lockhard")
+	self._goreward = gohelper.findChild(self.viewGO, "bookright/#go_reward")
+	self._btnstarthard = gohelper.findChildButtonWithAudio(self.viewGO, "btn/#btn_starthard")
+	self._btnstartnormal = gohelper.findChildButtonWithAudio(self.viewGO, "btn/#btn_startnormal")
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnnormal:AddClickListener(arg_2_0._btnnormalOnClick, arg_2_0)
-	arg_2_0._btnhard:AddClickListener(arg_2_0._btnhardOnClick, arg_2_0)
-	arg_2_0._btnstarthard:AddClickListener(arg_2_0._btnstarthardOnClick, arg_2_0)
-	arg_2_0._btnstartnormal:AddClickListener(arg_2_0._btnstartnormalOnClick, arg_2_0)
-	arg_2_0._eventWrap:AddEventListener("onSwitch", arg_2_0.onAnimSwitch, arg_2_0)
-	arg_2_0:addEventCb(Activity119Controller.instance, Activity119Event.TabChange, arg_2_0.onTabChange, arg_2_0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_2_0.onUpdateLeftTime, arg_2_0)
-	TaskController.instance:registerCallback(TaskEvent.UpdateTaskList, arg_2_0._onUpdateTaskList, arg_2_0)
+function Activity119View:addEvents()
+	self._btnnormal:AddClickListener(self._btnnormalOnClick, self)
+	self._btnhard:AddClickListener(self._btnhardOnClick, self)
+	self._btnstarthard:AddClickListener(self._btnstarthardOnClick, self)
+	self._btnstartnormal:AddClickListener(self._btnstartnormalOnClick, self)
+	self._eventWrap:AddEventListener("onSwitch", self.onAnimSwitch, self)
+	self:addEventCb(Activity119Controller.instance, Activity119Event.TabChange, self.onTabChange, self)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self.onUpdateLeftTime, self)
+	TaskController.instance:registerCallback(TaskEvent.UpdateTaskList, self._onUpdateTaskList, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnnormal:RemoveClickListener()
-	arg_3_0._btnhard:RemoveClickListener()
-	arg_3_0._btnstarthard:RemoveClickListener()
-	arg_3_0._btnstartnormal:RemoveClickListener()
-	arg_3_0._eventWrap:RemoveAllEventListener()
-	arg_3_0:removeEventCb(Activity119Controller.instance, Activity119Event.TabChange, arg_3_0.onTabChange, arg_3_0)
-	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, arg_3_0.onUpdateLeftTime, arg_3_0)
-	TaskController.instance:unregisterCallback(TaskEvent.UpdateTaskList, arg_3_0._onUpdateTaskList, arg_3_0)
+function Activity119View:removeEvents()
+	self._btnnormal:RemoveClickListener()
+	self._btnhard:RemoveClickListener()
+	self._btnstarthard:RemoveClickListener()
+	self._btnstartnormal:RemoveClickListener()
+	self._eventWrap:RemoveAllEventListener()
+	self:removeEventCb(Activity119Controller.instance, Activity119Event.TabChange, self.onTabChange, self)
+	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, self.onUpdateLeftTime, self)
+	TaskController.instance:unregisterCallback(TaskEvent.UpdateTaskList, self._onUpdateTaskList, self)
 end
 
-function var_0_0._btnnormalOnClick(arg_4_0)
-	local var_4_0 = arg_4_0._toMode
+function Activity119View:_btnnormalOnClick()
+	local preMode = self._toMode
 
-	if arg_4_0:isHardUnLock() then
-		arg_4_0._toMode = var_0_1.Normal
+	if self:isHardUnLock() then
+		self._toMode = ViewShowMode.Normal
 	else
-		arg_4_0._toMode = var_0_1.LockHard
+		self._toMode = ViewShowMode.LockHard
 	end
 
-	local var_4_1 = Activity119Model.instance:getData()
+	local data = Activity119Model.instance:getData()
 
-	if var_4_1.lastSelectModel ~= 1 then
-		var_4_1.lastSelectModel = 1
+	if data.lastSelectModel ~= 1 then
+		data.lastSelectModel = 1
 
 		Activity119Model.instance:saveData()
 	end
 
-	if not var_4_0 or var_4_0 == arg_4_0._toMode or arg_4_0._toMode == var_0_1.LockHard or arg_4_0._toMode ~= var_0_1.Hard and var_4_0 ~= var_0_1.Hard then
-		arg_4_0._animtor.enabled = true
+	if not preMode or preMode == self._toMode or self._toMode == ViewShowMode.LockHard or self._toMode ~= ViewShowMode.Hard and preMode ~= ViewShowMode.Hard then
+		self._animtor.enabled = true
 
-		arg_4_0._animtor:Play("tonomal", 0, 1)
-		arg_4_0:updateShow(arg_4_0._toMode)
+		self._animtor:Play("tonomal", 0, 1)
+		self:updateShow(self._toMode)
 
 		return
 	end
@@ -107,32 +109,32 @@ function var_0_0._btnnormalOnClick(arg_4_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_set_click)
 	UIBlockMgr.instance:startBlock("Activity119ViewSwitch")
 
-	arg_4_0._animtor.enabled = true
+	self._animtor.enabled = true
 
-	arg_4_0._animtor:Play("tonomal", 0, 0)
+	self._animtor:Play("tonomal", 0, 0)
 end
 
-function var_0_0._btnhardOnClick(arg_5_0)
-	if not arg_5_0:isHardUnLock() then
+function Activity119View:_btnhardOnClick()
+	if not self:isHardUnLock() then
 		GameFacade.showToast(ToastEnum.Act119HardLock)
 
 		return
 	end
 
-	local var_5_0 = Activity119Model.instance:getData()
+	local data = Activity119Model.instance:getData()
 
-	if var_5_0.lastSelectModel ~= 2 then
-		var_5_0.lastSelectModel = 2
+	if data.lastSelectModel ~= 2 then
+		data.lastSelectModel = 2
 
 		Activity119Model.instance:saveData()
 	end
 
-	local var_5_1 = arg_5_0._toMode
+	local preMode = self._toMode
 
-	arg_5_0._toMode = var_0_1.Hard
+	self._toMode = ViewShowMode.Hard
 
-	if not var_5_1 or var_5_1 == arg_5_0._toMode then
-		arg_5_0:updateShow(arg_5_0._toMode)
+	if not preMode or preMode == self._toMode then
+		self:updateShow(self._toMode)
 
 		return
 	end
@@ -140,410 +142,410 @@ function var_0_0._btnhardOnClick(arg_5_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_set_click)
 	UIBlockMgr.instance:startBlock("Activity119ViewSwitch")
 
-	arg_5_0._animtor.enabled = true
+	self._animtor.enabled = true
 
-	arg_5_0._animtor:Play("tohard", 0, 0)
+	self._animtor:Play("tohard", 0, 0)
 end
 
-function var_0_0.onAnimSwitch(arg_6_0)
+function Activity119View:onAnimSwitch()
 	UIBlockMgr.instance:endBlock("Activity119ViewSwitch")
-	arg_6_0:updateShow(arg_6_0._toMode)
+	self:updateShow(self._toMode)
 end
 
-function var_0_0.updateShow(arg_7_0, arg_7_1)
-	arg_7_0:resetTrialHeroPos()
+function Activity119View:updateShow(showMode)
+	self:resetTrialHeroPos()
 
-	arg_7_0._isHardMode = arg_7_1 == var_0_1.Hard
+	self._isHardMode = showMode == ViewShowMode.Hard
 
-	gohelper.setActive(arg_7_0._golockHard, arg_7_1 == var_0_1.LockHard)
-	gohelper.setActive(arg_7_0._golockhard, false)
-	gohelper.setActive(arg_7_0._gohardpoint, true)
-	gohelper.setActive(arg_7_0._btnstartnormal.gameObject, arg_7_1 ~= var_0_1.Hard)
-	gohelper.setActive(arg_7_0._btnstarthard.gameObject, arg_7_1 == var_0_1.Hard)
+	gohelper.setActive(self._golockHard, showMode == ViewShowMode.LockHard)
+	gohelper.setActive(self._golockhard, false)
+	gohelper.setActive(self._gohardpoint, true)
+	gohelper.setActive(self._btnstartnormal.gameObject, showMode ~= ViewShowMode.Hard)
+	gohelper.setActive(self._btnstarthard.gameObject, showMode == ViewShowMode.Hard)
 
-	local var_7_0 = arg_7_0._config.normalCO
+	local episodeCO = self._config.normalCO
 
-	if arg_7_1 == var_0_1.Hard then
-		var_7_0 = arg_7_0._config.hardCO
+	if showMode == ViewShowMode.Hard then
+		episodeCO = self._config.hardCO
 	end
 
-	local var_7_1 = DungeonConfig.instance:getEpisodeCO(var_7_0.id)
-	local var_7_2 = lua_battle.configDict[var_7_1.battleId]
-	local var_7_3 = var_7_2 and string.splitToNumber(var_7_2.monsterGroupIds, "#")
-	local var_7_4 = var_7_3 and var_7_3[1]
-	local var_7_5 = var_7_4 and lua_monster_group.configDict[var_7_4]
-	local var_7_6 = var_7_5 and var_7_5.monster
-	local var_7_7 = var_7_6 and string.splitToNumber(var_7_6, "#")[1]
-	local var_7_8 = var_7_7 and lua_monster.configDict[var_7_7]
-	local var_7_9 = var_7_8 and HeroConfig.instance:getCommonLevelDisplay(var_7_8.level) or ""
+	local episodeCO2 = DungeonConfig.instance:getEpisodeCO(episodeCO.id)
+	local battleCO = lua_battle.configDict[episodeCO2.battleId]
+	local monsterGroupIds = battleCO and string.splitToNumber(battleCO.monsterGroupIds, "#")
+	local monsterGroupId = monsterGroupIds and monsterGroupIds[1]
+	local monsterGroupCO = monsterGroupId and lua_monster_group.configDict[monsterGroupId]
+	local monster = monsterGroupCO and monsterGroupCO.monster
+	local monsterId = monster and string.splitToNumber(monster, "#")[1]
+	local monsterCO = monsterId and lua_monster.configDict[monsterId]
+	local levelDesc = monsterCO and HeroConfig.instance:getCommonLevelDisplay(monsterCO.level) or ""
 
-	arg_7_0._txtrecommendLevel.text = var_7_9
-	arg_7_0._txtdesc.text = var_7_0.des
+	self._txtrecommendLevel.text = levelDesc
+	self._txtdesc.text = episodeCO.des
 
-	HeroGroupTrialModel.instance:setTrialByBattleId(var_7_1.battleId)
-	arg_7_0:updateTrialHero()
+	HeroGroupTrialModel.instance:setTrialByBattleId(episodeCO2.battleId)
+	self:updateTrialHero()
 end
 
-function var_0_0.updateTrialHero(arg_8_0)
-	gohelper.setActive(arg_8_0._gosampleHeroItem, false)
+function Activity119View:updateTrialHero()
+	gohelper.setActive(self._gosampleHeroItem, false)
 
-	if not arg_8_0.heroItems then
-		arg_8_0.heroItems = {}
+	if not self.heroItems then
+		self.heroItems = {}
 	end
 
-	local var_8_0 = HeroGroupTrialModel.instance:getList()
+	local list = HeroGroupTrialModel.instance:getList()
 
-	for iter_8_0 = 1, #var_8_0 do
-		local var_8_1 = arg_8_0.heroItems[iter_8_0]
+	for i = 1, #list do
+		local heroItem = self.heroItems[i]
 
-		if not var_8_1 then
-			var_8_1 = Activity119TrialHeroItem.New()
+		if not heroItem then
+			heroItem = Activity119TrialHeroItem.New()
 
-			local var_8_2 = gohelper.cloneInPlace(arg_8_0._gosampleHeroItem, "Hero" .. iter_8_0)
+			local go = gohelper.cloneInPlace(self._gosampleHeroItem, "Hero" .. i)
 
-			var_8_1:init(var_8_2, iter_8_0)
+			heroItem:init(go, i)
 
-			arg_8_0.heroItems[iter_8_0] = var_8_1
+			self.heroItems[i] = heroItem
 		end
 
-		gohelper.setActive(var_8_1.go, true)
-		var_8_1:updateMO()
+		gohelper.setActive(heroItem.go, true)
+		heroItem:updateMO()
 	end
 
-	for iter_8_1 = #var_8_0 + 1, #arg_8_0.heroItems do
-		gohelper.setActive(arg_8_0.heroItems[iter_8_1].go, false)
+	for i = #list + 1, #self.heroItems do
+		gohelper.setActive(self.heroItems[i].go, false)
 	end
 end
 
-function var_0_0.updateTaskInfo(arg_9_0)
-	local var_9_0 = arg_9_0._config.taskList
+function Activity119View:updateTaskInfo()
+	local taskList = self._config.taskList
 
-	arg_9_0._txtnormalTaskDesc.text = var_9_0[1].desc
-	arg_9_0._txthardTaskDesc1.text = var_9_0[2].desc
-	arg_9_0._txthardTaskDesc2.text = var_9_0[3].desc
+	self._txtnormalTaskDesc.text = taskList[1].desc
+	self._txthardTaskDesc1.text = taskList[2].desc
+	self._txthardTaskDesc2.text = taskList[3].desc
 
-	local var_9_1 = arg_9_0:isHardUnLock()
+	local isUnLock = self:isHardUnLock()
 
-	for iter_9_0 = 1, 3 do
-		arg_9_0.rewards[iter_9_0]:setBonus(var_9_0[iter_9_0].bonus, var_9_0[iter_9_0].id, iter_9_0 == 1 or var_9_1)
+	for i = 1, 3 do
+		self.rewards[i]:setBonus(taskList[i].bonus, taskList[i].id, i == 1 or isUnLock)
 	end
 
-	arg_9_0:updateTaskStatus()
+	self:updateTaskStatus()
 	UnityEngine.Canvas.ForceUpdateCanvases()
-	arg_9_0:calcTxtLen()
+	self:calcTxtLen()
 end
 
-function var_0_0.calcTxtLen(arg_10_0)
-	if not arg_10_0._txtnormalTaskDesc then
+function Activity119View:calcTxtLen()
+	if not self._txtnormalTaskDesc then
 		return
 	end
 
-	arg_10_0:updateLineLen(gohelper.findChildTextMesh(arg_10_0.viewGO, "bookright/normalpoint/content/titletxt"), arg_10_0._txtnormalTaskDesc, arg_10_0._gonormalComplete)
-	arg_10_0:updateLineLen(gohelper.findChildTextMesh(arg_10_0.viewGO, "bookright/#go_hardpoint/hardpoint1/content/titletxt"), arg_10_0._txthardTaskDesc1, arg_10_0._gohardComplete1)
-	arg_10_0:updateLineLen(gohelper.findChildTextMesh(arg_10_0.viewGO, "bookright/#go_hardpoint/hardpoint2/content/titletxt"), arg_10_0._txthardTaskDesc2, arg_10_0._gohardComplete2)
+	self:updateLineLen(gohelper.findChildTextMesh(self.viewGO, "bookright/normalpoint/content/titletxt"), self._txtnormalTaskDesc, self._gonormalComplete)
+	self:updateLineLen(gohelper.findChildTextMesh(self.viewGO, "bookright/#go_hardpoint/hardpoint1/content/titletxt"), self._txthardTaskDesc1, self._gohardComplete1)
+	self:updateLineLen(gohelper.findChildTextMesh(self.viewGO, "bookright/#go_hardpoint/hardpoint2/content/titletxt"), self._txthardTaskDesc2, self._gohardComplete2)
 end
 
-function var_0_0.updateLineLen(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	local var_11_0 = gohelper.findChild(arg_11_3, "img_complete1")
-	local var_11_1 = gohelper.findChild(arg_11_3, "img_complete2")
-	local var_11_2 = gohelper.findChild(arg_11_3, "img_complete3")
-	local var_11_3 = arg_11_1:GetTextInfo(arg_11_1.text).lineInfo
+function Activity119View:updateLineLen(title, desc, lineGo)
+	local line1 = gohelper.findChild(lineGo, "img_complete1")
+	local line2 = gohelper.findChild(lineGo, "img_complete2")
+	local line3 = gohelper.findChild(lineGo, "img_complete3")
+	local lineInfo = title:GetTextInfo(title.text).lineInfo
 
-	recthelper.setWidth(var_11_0.transform, var_11_3[0].length + 17)
+	recthelper.setWidth(line1.transform, lineInfo[0].length + 17)
 
-	local var_11_4 = arg_11_2:GetTextInfo(arg_11_2.text).lineInfo
+	lineInfo = desc:GetTextInfo(desc.text).lineInfo
 
-	recthelper.setWidth(var_11_1.transform, var_11_4[0].length + 25)
+	recthelper.setWidth(line2.transform, lineInfo[0].length + 25)
 
-	if var_11_4.Length <= 1 or var_11_4[1].length <= 1 then
-		gohelper.setActive(var_11_2, false)
+	if lineInfo.Length <= 1 or lineInfo[1].length <= 1 then
+		gohelper.setActive(line3, false)
 	else
-		gohelper.setActive(var_11_2, true)
-		recthelper.setWidth(var_11_2.transform, var_11_4[1].length + 25)
+		gohelper.setActive(line3, true)
+		recthelper.setWidth(line3.transform, lineInfo[1].length + 25)
 	end
 end
 
-function var_0_0._onUpdateTaskList(arg_12_0, arg_12_1)
-	for iter_12_0, iter_12_1 in ipairs(arg_12_1.taskInfo) do
-		if iter_12_1.type == TaskEnum.TaskType.Activity119 then
-			return arg_12_0:updateTaskStatus()
+function Activity119View:_onUpdateTaskList(msg)
+	for _, info in ipairs(msg.taskInfo) do
+		if info.type == TaskEnum.TaskType.Activity119 then
+			return self:updateTaskStatus()
 		end
 	end
 end
 
-function var_0_0.updateTaskStatus(arg_13_0)
-	local var_13_0 = arg_13_0._config.taskList
+function Activity119View:updateTaskStatus()
+	local taskList = self._config.taskList
 
-	for iter_13_0 = 1, 3 do
-		local var_13_1 = TaskModel.instance:getTaskById(var_13_0[iter_13_0].id)
-		local var_13_2 = 1
+	for i = 1, 3 do
+		local taskMO = TaskModel.instance:getTaskById(taskList[i].id)
+		local status = 1
 
-		if var_13_1 then
-			if var_13_1.finishCount > 0 then
-				var_13_2 = 3
-			elseif var_13_1.hasFinished then
-				var_13_2 = 2
+		if taskMO then
+			if taskMO.finishCount > 0 then
+				status = 3
+			elseif taskMO.hasFinished then
+				status = 2
 			end
 		end
 
-		arg_13_0.rewards[iter_13_0]:updateTaskStatus(var_13_2)
+		self.rewards[i]:updateTaskStatus(status)
 
-		arg_13_0.taskCanvasGroups[iter_13_0].alpha = var_13_2 == 3 and 0.4 or 1
+		self.taskCanvasGroups[i].alpha = status == 3 and 0.4 or 1
 
-		if iter_13_0 == 1 then
-			gohelper.setActive(arg_13_0._gonormalComplete, var_13_2 == 3)
-		elseif iter_13_0 == 2 then
-			gohelper.setActive(arg_13_0._gohardComplete1, var_13_2 == 3)
-		elseif iter_13_0 == 3 then
-			gohelper.setActive(arg_13_0._gohardComplete2, var_13_2 == 3)
+		if i == 1 then
+			gohelper.setActive(self._gonormalComplete, status == 3)
+		elseif i == 2 then
+			gohelper.setActive(self._gohardComplete1, status == 3)
+		elseif i == 3 then
+			gohelper.setActive(self._gohardComplete2, status == 3)
 		end
 	end
 end
 
-function var_0_0._btnstarthardOnClick(arg_14_0)
+function Activity119View:_btnstarthardOnClick()
 	if not ActivityModel.instance:isActOnLine(VersionActivity1_2Enum.ActivityId.DreamTail) then
 		GameFacade.showToast(ToastEnum.ActivityEnd)
 
 		return
 	end
 
-	local var_14_0 = arg_14_0._config.hardCO.id
-	local var_14_1 = DungeonConfig.instance:getEpisodeCO(var_14_0)
+	local episodeId = self._config.hardCO.id
+	local config = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-	DungeonFightController.instance:enterFight(var_14_1.chapterId, var_14_0)
+	DungeonFightController.instance:enterFight(config.chapterId, episodeId)
 end
 
-function var_0_0._btnstartnormalOnClick(arg_15_0)
+function Activity119View:_btnstartnormalOnClick()
 	if not ActivityModel.instance:isActOnLine(VersionActivity1_2Enum.ActivityId.DreamTail) then
 		GameFacade.showToast(ToastEnum.ActivityEnd)
 
 		return
 	end
 
-	local var_15_0 = arg_15_0._config.normalCO.id
-	local var_15_1 = DungeonConfig.instance:getEpisodeCO(var_15_0)
+	local episodeId = self._config.normalCO.id
+	local config = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-	DungeonFightController.instance:enterFight(var_15_1.chapterId, var_15_0)
+	DungeonFightController.instance:enterFight(config.chapterId, episodeId)
 end
 
-function var_0_0._editableInitView(arg_16_0)
-	arg_16_0._eventWrap = gohelper.onceAddComponent(arg_16_0.viewGO, typeof(ZProj.AnimationEventWrap))
-	arg_16_0._animtor = gohelper.onceAddComponent(arg_16_0.viewGO, typeof(UnityEngine.Animator))
+function Activity119View:_editableInitView()
+	self._eventWrap = gohelper.onceAddComponent(self.viewGO, typeof(ZProj.AnimationEventWrap))
+	self._animtor = gohelper.onceAddComponent(self.viewGO, typeof(UnityEngine.Animator))
 
-	arg_16_0._simagebg:LoadImage(ResUrl.getDreamTailImage("bg"))
-	arg_16_0._simagebookleftbg:LoadImage(ResUrl.getDreamTailImage("bg_book_nor_left"))
-	arg_16_0._simagepageNormal:LoadImage(ResUrl.getDreamTailImage("bg_book_nor_lefttag"))
-	arg_16_0._simagepageHard:LoadImage(ResUrl.getDreamTailImage("bg_book_dif_lefttag"))
-	arg_16_0._simageleftpage:LoadImage(ResUrl.getDreamTailImage("bg_book_nor_lefttop"))
-	arg_16_0._simageleftpageline:LoadImage(ResUrl.getDreamTailImage("deco_left"))
-	arg_16_0._simagebookrightbgnormal:LoadImage(ResUrl.getDreamTailImage("bg_book_nor_right"))
-	arg_16_0._simagebookrightpagenormal:LoadImage(ResUrl.getDreamTailImage("bg_book_nor_righttop"))
-	arg_16_0._simagebookrightbghard:LoadImage(ResUrl.getDreamTailImage("bg_book_dificult_right"))
-	arg_16_0._simagebookrightpagehard:LoadImage(ResUrl.getDreamTailImage("bg_book_dif_righttop"))
-	arg_16_0._simagerightpageline:LoadImage(ResUrl.getDreamTailImage("deco_right"))
+	self._simagebg:LoadImage(ResUrl.getDreamTailImage("bg"))
+	self._simagebookleftbg:LoadImage(ResUrl.getDreamTailImage("bg_book_nor_left"))
+	self._simagepageNormal:LoadImage(ResUrl.getDreamTailImage("bg_book_nor_lefttag"))
+	self._simagepageHard:LoadImage(ResUrl.getDreamTailImage("bg_book_dif_lefttag"))
+	self._simageleftpage:LoadImage(ResUrl.getDreamTailImage("bg_book_nor_lefttop"))
+	self._simageleftpageline:LoadImage(ResUrl.getDreamTailImage("deco_left"))
+	self._simagebookrightbgnormal:LoadImage(ResUrl.getDreamTailImage("bg_book_nor_right"))
+	self._simagebookrightpagenormal:LoadImage(ResUrl.getDreamTailImage("bg_book_nor_righttop"))
+	self._simagebookrightbghard:LoadImage(ResUrl.getDreamTailImage("bg_book_dificult_right"))
+	self._simagebookrightpagehard:LoadImage(ResUrl.getDreamTailImage("bg_book_dif_righttop"))
+	self._simagerightpageline:LoadImage(ResUrl.getDreamTailImage("deco_right"))
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_swath_open)
-	gohelper.addUIClickAudio(arg_16_0._btnstarthard.gameObject, AudioEnum.HeroGroupUI.Play_UI_Formation_Action)
-	gohelper.addUIClickAudio(arg_16_0._btnstartnormal.gameObject, AudioEnum.HeroGroupUI.Play_UI_Formation_Action)
+	gohelper.addUIClickAudio(self._btnstarthard.gameObject, AudioEnum.HeroGroupUI.Play_UI_Formation_Action)
+	gohelper.addUIClickAudio(self._btnstartnormal.gameObject, AudioEnum.HeroGroupUI.Play_UI_Formation_Action)
 
-	arg_16_0._openDt = os.clock()
+	self._openDt = os.clock()
 
-	gohelper.setActive(arg_16_0._gocategoryItem, false)
+	gohelper.setActive(self._gocategoryItem, false)
 
-	arg_16_0.tabs = {}
+	self.tabs = {}
 
-	for iter_16_0 = 1, 7 do
-		local var_16_0 = Activity119TabItem.New()
-		local var_16_1 = gohelper.cloneInPlace(arg_16_0._gocategoryItem, "Tab" .. iter_16_0)
+	for i = 1, 7 do
+		local tab = Activity119TabItem.New()
+		local go = gohelper.cloneInPlace(self._gocategoryItem, "Tab" .. i)
 
-		gohelper.setActive(var_16_1, true)
-		var_16_0:init(var_16_1, iter_16_0)
+		gohelper.setActive(go, true)
+		tab:init(go, i)
 
-		arg_16_0.tabs[iter_16_0] = var_16_0
+		self.tabs[i] = tab
 	end
 
-	gohelper.setActive(arg_16_0._goreward, false)
+	gohelper.setActive(self._goreward, false)
 
-	arg_16_0.rewards = {}
+	self.rewards = {}
 
-	for iter_16_1 = 1, 3 do
-		local var_16_2 = Activity119RewardItem.New()
-		local var_16_3 = gohelper.findChild(arg_16_0.viewGO, "bookright/reward" .. iter_16_1)
-		local var_16_4 = gohelper.clone(arg_16_0._goreward, var_16_3, "RewardItem")
+	for i = 1, 3 do
+		local reward = Activity119RewardItem.New()
+		local root = gohelper.findChild(self.viewGO, "bookright/reward" .. i)
+		local go = gohelper.clone(self._goreward, root, "RewardItem")
 
-		gohelper.setActive(var_16_4, true)
-		var_16_2:init(var_16_4)
+		gohelper.setActive(go, true)
+		reward:init(go)
 
-		arg_16_0.rewards[iter_16_1] = var_16_2
+		self.rewards[i] = reward
 	end
 
-	arg_16_0.taskCanvasGroups = arg_16_0:getUserDataTb_()
-	arg_16_0.taskCanvasGroups[1] = gohelper.onceAddComponent(gohelper.findChild(arg_16_0.viewGO, "bookright/normalpoint/content"), typeof(UnityEngine.CanvasGroup))
-	arg_16_0.taskCanvasGroups[2] = gohelper.onceAddComponent(gohelper.findChild(arg_16_0.viewGO, "bookright/#go_hardpoint/hardpoint1/content"), typeof(UnityEngine.CanvasGroup))
-	arg_16_0.taskCanvasGroups[3] = gohelper.onceAddComponent(gohelper.findChild(arg_16_0.viewGO, "bookright/#go_hardpoint/hardpoint2/content"), typeof(UnityEngine.CanvasGroup))
+	self.taskCanvasGroups = self:getUserDataTb_()
+	self.taskCanvasGroups[1] = gohelper.onceAddComponent(gohelper.findChild(self.viewGO, "bookright/normalpoint/content"), typeof(UnityEngine.CanvasGroup))
+	self.taskCanvasGroups[2] = gohelper.onceAddComponent(gohelper.findChild(self.viewGO, "bookright/#go_hardpoint/hardpoint1/content"), typeof(UnityEngine.CanvasGroup))
+	self.taskCanvasGroups[3] = gohelper.onceAddComponent(gohelper.findChild(self.viewGO, "bookright/#go_hardpoint/hardpoint2/content"), typeof(UnityEngine.CanvasGroup))
 
-	arg_16_0:onUpdateLeftTime()
+	self:onUpdateLeftTime()
 
-	local var_16_5 = Activity119Model.instance:getData()
+	local data = Activity119Model.instance:getData()
 
-	arg_16_0:onTabChange(var_16_5.lastSelectDay)
-	TaskDispatcher.runRepeat(arg_16_0.refreshTime, arg_16_0, 60, -1)
+	self:onTabChange(data.lastSelectDay)
+	TaskDispatcher.runRepeat(self.refreshTime, self, 60, -1)
 end
 
-function var_0_0.onOpenFinish(arg_17_0)
-	for iter_17_0 = 1, 7 do
-		arg_17_0.tabs[iter_17_0]:playUnLockAnim()
+function Activity119View:onOpenFinish()
+	for i = 1, 7 do
+		self.tabs[i]:playUnLockAnim()
 	end
 end
 
-function var_0_0.onUpdateLeftTime(arg_18_0)
-	local var_18_0 = ActivityModel.instance:getActMO(VersionActivity1_2Enum.ActivityId.DreamTail)
+function Activity119View:onUpdateLeftTime()
+	local actInfo = ActivityModel.instance:getActMO(VersionActivity1_2Enum.ActivityId.DreamTail)
 
-	if not var_18_0 or not arg_18_0.tabs then
+	if not actInfo or not self.tabs then
 		return
 	end
 
-	local var_18_1 = math.ceil((ServerTime.now() - var_18_0:getRealStartTimeStamp()) / 86400)
-	local var_18_2 = Activity119Model.instance:getData()
-	local var_18_3 = Activity119Config.instance:getConfig(VersionActivity1_2Enum.ActivityId.DreamTail, var_18_2.lastSelectDay)
+	local nowDay = math.ceil((ServerTime.now() - actInfo:getRealStartTimeStamp()) / 86400)
+	local data = Activity119Model.instance:getData()
+	local co = Activity119Config.instance:getConfig(VersionActivity1_2Enum.ActivityId.DreamTail, data.lastSelectDay)
 
-	if not var_18_3 or var_18_1 < var_18_3.normalCO.openDay then
-		var_18_2.lastSelectDay = 1
+	if not co or nowDay < co.normalCO.openDay then
+		data.lastSelectDay = 1
 
 		Activity119Model.instance:saveData()
 	end
 
-	for iter_18_0 = 1, 7 do
-		arg_18_0.tabs[iter_18_0]:updateLock(var_18_1)
+	for i = 1, 7 do
+		self.tabs[i]:updateLock(nowDay)
 	end
 
-	if os.clock() - arg_18_0._openDt > 1 then
-		for iter_18_1 = 1, 7 do
-			arg_18_0.tabs[iter_18_1]:playUnLockAnim()
+	if os.clock() - self._openDt > 1 then
+		for i = 1, 7 do
+			self.tabs[i]:playUnLockAnim()
 		end
 	end
 
-	arg_18_0:refreshTime()
+	self:refreshTime()
 end
 
-function var_0_0.refreshTime(arg_19_0)
-	local var_19_0 = ActivityModel.instance:getActMO(VersionActivity1_2Enum.ActivityId.DreamTail)
+function Activity119View:refreshTime()
+	local actInfoMo = ActivityModel.instance:getActMO(VersionActivity1_2Enum.ActivityId.DreamTail)
 
-	if not var_19_0 or not var_19_0.online then
-		arg_19_0._txtremainTime.text = luaLang("versionactivity_1_2_114enterview_isend")
+	if not actInfoMo or not actInfoMo.online then
+		self._txtremainTime.text = luaLang("versionactivity_1_2_114enterview_isend")
 	else
-		arg_19_0._txtremainTime.text = string.format(luaLang("remain"), var_19_0:getRemainTimeStr2ByEndTime())
+		self._txtremainTime.text = string.format(luaLang("remain"), actInfoMo:getRemainTimeStr2ByEndTime())
 	end
 end
 
-function var_0_0.isHardUnLock(arg_20_0)
-	return DungeonModel.instance:hasPassLevel(arg_20_0._config.normalCO.id)
+function Activity119View:isHardUnLock()
+	return DungeonModel.instance:hasPassLevel(self._config.normalCO.id)
 end
 
-function var_0_0.onTabChange(arg_21_0, arg_21_1)
-	if arg_21_0.curIndex == arg_21_1 then
+function Activity119View:onTabChange(tabIndex)
+	if self.curIndex == tabIndex then
 		return
 	end
 
-	arg_21_0._leftmiddleAnim:Stop()
+	self._leftmiddleAnim:Stop()
 
-	local var_21_0 = Activity119Model.instance:getData()
+	local data = Activity119Model.instance:getData()
 
-	if var_21_0.lastSelectDay ~= arg_21_1 then
-		var_21_0.lastSelectDay = arg_21_1
+	if data.lastSelectDay ~= tabIndex then
+		data.lastSelectDay = tabIndex
 
 		Activity119Model.instance:saveData()
 	end
 
-	if arg_21_0.curIndex then
-		arg_21_0.tabs[arg_21_0.curIndex]:changeSelect(false)
+	if self.curIndex then
+		self.tabs[self.curIndex]:changeSelect(false)
 	end
 
-	arg_21_0._config = Activity119Config.instance:getConfig(VersionActivity1_2Enum.ActivityId.DreamTail, arg_21_1)
-	arg_21_0.curIndex = arg_21_1
+	self._config = Activity119Config.instance:getConfig(VersionActivity1_2Enum.ActivityId.DreamTail, tabIndex)
+	self.curIndex = tabIndex
 
-	arg_21_0.tabs[arg_21_0.curIndex]:changeSelect(true)
+	self.tabs[self.curIndex]:changeSelect(true)
 
-	if var_21_0.lastSelectModel == 1 or not arg_21_0:isHardUnLock() then
-		arg_21_0:_btnnormalOnClick()
+	if data.lastSelectModel == 1 or not self:isHardUnLock() then
+		self:_btnnormalOnClick()
 	else
-		arg_21_0:_btnhardOnClick()
+		self:_btnhardOnClick()
 	end
 
-	arg_21_0._simageicon:LoadImage(ResUrl.getDreamTailImage(arg_21_0._config.normalCO.icon))
+	self._simageicon:LoadImage(ResUrl.getDreamTailImage(self._config.normalCO.icon))
 
-	arg_21_0._txtpageIndex.text = string.format("%02d", arg_21_0.curIndex)
-	arg_21_0._txtpagename.text = arg_21_0._config.normalCO.name
+	self._txtpageIndex.text = string.format("%02d", self.curIndex)
+	self._txtpagename.text = self._config.normalCO.name
 
-	arg_21_0:updateTaskInfo()
-	TaskDispatcher.cancelTask(arg_21_0.playUnLockAnim, arg_21_0)
+	self:updateTaskInfo()
+	TaskDispatcher.cancelTask(self.playUnLockAnim, self)
 
-	if arg_21_0:isHardUnLock() and not tabletool.indexOf(var_21_0.unLockHardList, arg_21_1) then
-		table.insert(var_21_0.unLockHardList, arg_21_1)
+	if self:isHardUnLock() and not tabletool.indexOf(data.unLockHardList, tabIndex) then
+		table.insert(data.unLockHardList, tabIndex)
 		Activity119Model.instance:saveData()
 
-		if os.clock() - arg_21_0._openDt > 1 then
-			arg_21_0._leftmiddleAnim:Play(UIAnimationName.Unlock, arg_21_0.onUnLockEnd, arg_21_0)
+		if os.clock() - self._openDt > 1 then
+			self._leftmiddleAnim:Play(UIAnimationName.Unlock, self.onUnLockEnd, self)
 		else
-			arg_21_0._leftmiddleAnim:Play(UIAnimationName.Idle)
-			TaskDispatcher.runDelay(arg_21_0.playUnLockAnim, arg_21_0, 1)
+			self._leftmiddleAnim:Play(UIAnimationName.Idle)
+			TaskDispatcher.runDelay(self.playUnLockAnim, self, 1)
 		end
 	else
-		arg_21_0._leftmiddleAnim:Play(UIAnimationName.Idle)
+		self._leftmiddleAnim:Play(UIAnimationName.Idle)
 	end
 
-	arg_21_0:resetTrialHeroPos()
+	self:resetTrialHeroPos()
 end
 
-function var_0_0.resetTrialHeroPos(arg_22_0)
-	local var_22_0 = arg_22_0._gosamplehero.transform
-	local var_22_1 = var_22_0.localPosition
+function Activity119View:resetTrialHeroPos()
+	local trans = self._gosamplehero.transform
+	local pos = trans.localPosition
 
-	transformhelper.setLocalPosXY(var_22_0, 0, var_22_1.y)
+	transformhelper.setLocalPosXY(trans, 0, pos.y)
 end
 
-function var_0_0.playUnLockAnim(arg_23_0)
-	TaskDispatcher.cancelTask(arg_23_0.playUnLockAnim, arg_23_0)
-	arg_23_0._leftmiddleAnim:Play(UIAnimationName.Unlock, arg_23_0.onUnLockEnd, arg_23_0)
+function Activity119View:playUnLockAnim()
+	TaskDispatcher.cancelTask(self.playUnLockAnim, self)
+	self._leftmiddleAnim:Play(UIAnimationName.Unlock, self.onUnLockEnd, self)
 end
 
-function var_0_0.onUnLockEnd(arg_24_0)
+function Activity119View:onUnLockEnd()
 	return
 end
 
-function var_0_0.onDestroyView(arg_25_0)
-	TaskDispatcher.cancelTask(arg_25_0.refreshTime, arg_25_0)
-	arg_25_0._simagebg:UnLoadImage()
-	arg_25_0._simagebookleftbg:UnLoadImage()
-	arg_25_0._simagepageNormal:UnLoadImage()
-	arg_25_0._simagepageHard:UnLoadImage()
-	arg_25_0._simageleftpage:UnLoadImage()
-	arg_25_0._simageleftpageline:UnLoadImage()
-	arg_25_0._simagebookrightbgnormal:UnLoadImage()
-	arg_25_0._simagebookrightpagenormal:UnLoadImage()
-	arg_25_0._simagebookrightbghard:UnLoadImage()
-	arg_25_0._simagebookrightpagehard:UnLoadImage()
-	arg_25_0._simagerightpageline:UnLoadImage()
-	arg_25_0._simageicon:UnLoadImage()
+function Activity119View:onDestroyView()
+	TaskDispatcher.cancelTask(self.refreshTime, self)
+	self._simagebg:UnLoadImage()
+	self._simagebookleftbg:UnLoadImage()
+	self._simagepageNormal:UnLoadImage()
+	self._simagepageHard:UnLoadImage()
+	self._simageleftpage:UnLoadImage()
+	self._simageleftpageline:UnLoadImage()
+	self._simagebookrightbgnormal:UnLoadImage()
+	self._simagebookrightpagenormal:UnLoadImage()
+	self._simagebookrightbghard:UnLoadImage()
+	self._simagebookrightpagehard:UnLoadImage()
+	self._simagerightpageline:UnLoadImage()
+	self._simageicon:UnLoadImage()
 	UIBlockMgr.instance:endBlock("Activity119ViewSwitch")
-	TaskDispatcher.cancelTask(arg_25_0.playUnLockAnim, arg_25_0)
+	TaskDispatcher.cancelTask(self.playUnLockAnim, self)
 
-	for iter_25_0 = 1, #arg_25_0.tabs do
-		arg_25_0.tabs[iter_25_0]:dispose()
+	for i = 1, #self.tabs do
+		self.tabs[i]:dispose()
 	end
 
-	arg_25_0.tabs = nil
+	self.tabs = nil
 
-	for iter_25_1 = 1, #arg_25_0.heroItems do
-		arg_25_0.heroItems[iter_25_1]:dispose()
+	for i = 1, #self.heroItems do
+		self.heroItems[i]:dispose()
 	end
 
-	arg_25_0.heroItems = nil
+	self.heroItems = nil
 
-	for iter_25_2 = 1, #arg_25_0.rewards do
-		arg_25_0.rewards[iter_25_2]:dispose()
+	for i = 1, #self.rewards do
+		self.rewards[i]:dispose()
 	end
 
-	arg_25_0.rewards = nil
+	self.rewards = nil
 end
 
-return var_0_0
+return Activity119View

@@ -1,32 +1,34 @@
-﻿module("modules.logic.fight.system.work.asfd.effectwork.FightWorkEmitterRemove", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/asfd/effectwork/FightWorkEmitterRemove.lua
 
-local var_0_0 = class("FightWorkEmitterRemove", FightEffectBase)
+module("modules.logic.fight.system.work.asfd.effectwork.FightWorkEmitterRemove", package.seeall)
 
-function var_0_0.beforePlayEffectData(arg_1_0)
-	local var_1_0 = arg_1_0.actEffectData.effectNum
+local FightWorkEmitterRemove = class("FightWorkEmitterRemove", FightEffectBase)
 
-	arg_1_0.emitterMo = FightDataHelper.entityMgr:getASFDEntityMo(var_1_0)
+function FightWorkEmitterRemove:beforePlayEffectData()
+	local side = self.actEffectData.effectNum
+
+	self.emitterMo = FightDataHelper.entityMgr:getASFDEntityMo(side)
 end
 
-function var_0_0.onStart(arg_2_0)
-	if not arg_2_0.emitterMo then
-		return arg_2_0:onDone(true)
+function FightWorkEmitterRemove:onStart()
+	if not self.emitterMo then
+		return self:onDone(true)
 	end
 
-	local var_2_0 = GameSceneMgr.instance:getCurScene()
-	local var_2_1 = var_2_0 and var_2_0.entityMgr
+	local curScene = GameSceneMgr.instance:getCurScene()
+	local sceneMgr = curScene and curScene.entityMgr
 
-	if not var_2_1 then
-		return arg_2_0:onDone(true)
+	if not sceneMgr then
+		return self:onDone(true)
 	end
 
-	local var_2_2 = FightHelper.getEntity(arg_2_0.emitterMo.id)
+	local entity = FightHelper.getEntity(self.emitterMo.id)
 
-	if var_2_2 then
-		var_2_1:removeUnit(var_2_2:getTag(), var_2_2.id)
+	if entity then
+		sceneMgr:removeUnit(entity:getTag(), entity.id)
 	end
 
-	arg_2_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkEmitterRemove

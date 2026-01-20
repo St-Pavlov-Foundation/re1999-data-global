@@ -1,23 +1,25 @@
-﻿module("modules.logic.gm.view.GM_ActivityWelfareViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GM_ActivityWelfareViewContainer.lua
 
-local var_0_0 = class("GM_ActivityWelfareViewContainer", BaseViewContainer)
+module("modules.logic.gm.view.GM_ActivityWelfareViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local GM_ActivityWelfareViewContainer = class("GM_ActivityWelfareViewContainer", BaseViewContainer)
+
+function GM_ActivityWelfareViewContainer:buildViews()
 	return {
 		GM_ActivityWelfareView.New()
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	ViewMgr.instance:closeView(arg_2_0.viewName)
+function GM_ActivityWelfareViewContainer:onContainerClickModalMask()
+	ViewMgr.instance:closeView(self.viewName)
 end
 
-function var_0_0.addEvents(arg_3_0)
-	GMController.instance:registerCallback(GMEvent.ActivityWelfareView_ShowAllTabIdUpdate, arg_3_0._gm_showAllTabIdUpdate, arg_3_0)
+function GM_ActivityWelfareViewContainer.addEvents(viewObj)
+	GMController.instance:registerCallback(GMEvent.ActivityWelfareView_ShowAllTabIdUpdate, viewObj._gm_showAllTabIdUpdate, viewObj)
 end
 
-function var_0_0.removeEvents(arg_4_0)
-	GMController.instance:unregisterCallback(GMEvent.ActivityWelfareView_ShowAllTabIdUpdate, arg_4_0._gm_showAllTabIdUpdate, arg_4_0)
+function GM_ActivityWelfareViewContainer.removeEvents(viewObj)
+	GMController.instance:unregisterCallback(GMEvent.ActivityWelfareView_ShowAllTabIdUpdate, viewObj._gm_showAllTabIdUpdate, viewObj)
 end
 
-return var_0_0
+return GM_ActivityWelfareViewContainer

@@ -1,18 +1,20 @@
-﻿module("modules.logic.versionactivity1_4.puzzle.model.PuzzleRecordMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/puzzle/model/PuzzleRecordMO.lua
 
-local var_0_0 = pureTable("PuzzleRecordMO")
+module("modules.logic.versionactivity1_4.puzzle.model.PuzzleRecordMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.index = arg_1_1
-	arg_1_0.desc = arg_1_2
+local PuzzleRecordMO = pureTable("PuzzleRecordMO")
+
+function PuzzleRecordMO:init(_index, _desc)
+	self.index = _index
+	self.desc = _desc
 end
 
-function var_0_0.GetIndex(arg_2_0)
-	return arg_2_0.index
+function PuzzleRecordMO:GetIndex()
+	return self.index
 end
 
-function var_0_0.GetRecord(arg_3_0)
-	return arg_3_0.desc
+function PuzzleRecordMO:GetRecord()
+	return self.desc
 end
 
-return var_0_0
+return PuzzleRecordMO

@@ -1,46 +1,48 @@
-﻿module("modules.logic.gm.view.GMFightSimulateRightItem", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GMFightSimulateRightItem.lua
 
-local var_0_0 = class("GMFightSimulateRightItem", ListScrollCell)
-local var_0_1 = Color.New(1, 0.8, 0.8, 1)
-local var_0_2 = Color.white
-local var_0_3
+module("modules.logic.gm.view.GMFightSimulateRightItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._btn = gohelper.findChildButtonWithAudio(arg_1_1, "btn")
+local GMFightSimulateRightItem = class("GMFightSimulateRightItem", ListScrollCell)
+local SelectColor = Color.New(1, 0.8, 0.8, 1)
+local NotSelectColor = Color.white
+local PrevSelectId
 
-	arg_1_0._btn:AddClickListener(arg_1_0._onClickItem, arg_1_0)
+function GMFightSimulateRightItem:init(go)
+	self._btn = gohelper.findChildButtonWithAudio(go, "btn")
 
-	arg_1_0._imgBtn = gohelper.findChildImage(arg_1_1, "btn")
-	arg_1_0._txtName = gohelper.findChildText(arg_1_1, "btn/Text")
+	self._btn:AddClickListener(self._onClickItem, self)
+
+	self._imgBtn = gohelper.findChildImage(go, "btn")
+	self._txtName = gohelper.findChildText(go, "btn/Text")
 end
 
-function var_0_0.onUpdateMO(arg_2_0, arg_2_1)
-	arg_2_0._episodeCO = arg_2_1
-	arg_2_0._txtName.text = arg_2_0._episodeCO.name
-	arg_2_0._imgBtn.color = arg_2_0._episodeCO.id == var_0_3 and var_0_1 or var_0_2
+function GMFightSimulateRightItem:onUpdateMO(mo)
+	self._episodeCO = mo
+	self._txtName.text = self._episodeCO.name
+	self._imgBtn.color = self._episodeCO.id == PrevSelectId and SelectColor or NotSelectColor
 end
 
-function var_0_0._onClickItem(arg_3_0)
-	var_0_3 = arg_3_0._episodeCO.id
-	arg_3_0._imgBtn.color = var_0_1
+function GMFightSimulateRightItem:_onClickItem()
+	PrevSelectId = self._episodeCO.id
+	self._imgBtn.color = SelectColor
 
-	arg_3_0._view:closeThis()
+	self._view:closeThis()
 
-	if DungeonModel.isBattleEpisode(arg_3_0._episodeCO) then
+	if DungeonModel.isBattleEpisode(self._episodeCO) then
 		JumpModel.instance.jumpFromFightSceneParam = "99"
 
-		DungeonFightController.instance:enterFight(arg_3_0._episodeCO.chapterId, arg_3_0._episodeCO.id)
+		DungeonFightController.instance:enterFight(self._episodeCO.chapterId, self._episodeCO.id)
 	else
-		logError("GMToolView 不支持该类型的关卡" .. arg_3_0._episodeCO.id)
+		logError("GMToolView 不支持该类型的关卡" .. self._episodeCO.id)
 	end
 end
 
-function var_0_0.onDestroy(arg_4_0)
-	if arg_4_0._btn then
-		arg_4_0._btn:RemoveClickListener()
+function GMFightSimulateRightItem:onDestroy()
+	if self._btn then
+		self._btn:RemoveClickListener()
 
-		arg_4_0._btn = nil
+		self._btn = nil
 	end
 end
 
-return var_0_0
+return GMFightSimulateRightItem

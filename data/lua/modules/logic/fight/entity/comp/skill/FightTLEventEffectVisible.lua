@@ -1,27 +1,29 @@
-﻿module("modules.logic.fight.entity.comp.skill.FightTLEventEffectVisible", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skill/FightTLEventEffectVisible.lua
 
-local var_0_0 = class("FightTLEventEffectVisible", FightTimelineTrackItem)
+module("modules.logic.fight.entity.comp.skill.FightTLEventEffectVisible", package.seeall)
 
-function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = arg_1_3[1]
+local FightTLEventEffectVisible = class("FightTLEventEffectVisible", FightTimelineTrackItem)
 
-	arg_1_0:com_sendFightEvent(FightEvent.SetMagicCircleVisible, var_1_0 == "1", "FightTLEventEffectVisible")
+function FightTLEventEffectVisible:onTrackStart(fightStepData, duration, paramsArr)
+	local magicCircleVisible = paramsArr[1]
 
-	local var_1_1 = arg_1_3[2]
+	self:com_sendFightEvent(FightEvent.SetMagicCircleVisible, magicCircleVisible == "1", "FightTLEventEffectVisible")
 
-	arg_1_0:com_sendFightEvent(FightEvent.SetLiangYueEffectVisible, var_1_1 == "1")
+	local liangYueEffectVisible = paramsArr[2]
 
-	local var_1_2 = arg_1_3[3]
+	self:com_sendFightEvent(FightEvent.SetLiangYueEffectVisible, liangYueEffectVisible == "1")
 
-	arg_1_0:com_sendFightEvent(FightEvent.SetBuffTypeIdSceneEffect, var_1_2 == "1")
+	local buffTypeIdSceneEffect = paramsArr[3]
+
+	self:com_sendFightEvent(FightEvent.SetBuffTypeIdSceneEffect, buffTypeIdSceneEffect == "1")
 end
 
-function var_0_0.onTrackEnd(arg_2_0)
+function FightTLEventEffectVisible:onTrackEnd()
 	return
 end
 
-function var_0_0.onDestructor(arg_3_0)
+function FightTLEventEffectVisible:onDestructor()
 	return
 end
 
-return var_0_0
+return FightTLEventEffectVisible

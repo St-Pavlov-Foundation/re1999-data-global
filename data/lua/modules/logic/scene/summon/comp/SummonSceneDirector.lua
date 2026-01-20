@@ -1,147 +1,149 @@
-﻿module("modules.logic.scene.summon.comp.SummonSceneDirector", package.seeall)
+﻿-- chunkname: @modules/logic/scene/summon/comp/SummonSceneDirector.lua
 
-local var_0_0 = class("SummonSceneDirector", BaseSceneComp)
+module("modules.logic.scene.summon.comp.SummonSceneDirector", package.seeall)
 
-function var_0_0.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._scene = arg_1_0:getCurScene()
-	arg_1_0._hasSummonView = false
-	arg_1_0._allStepReady = false
+local SummonSceneDirector = class("SummonSceneDirector", BaseSceneComp)
 
-	arg_1_0._scene.selector:registerCallback(SummonSceneEvent.OnSceneGOInited, arg_1_0._onSelectorGOInited, arg_1_0)
+function SummonSceneDirector:onSceneStart(sceneId, levelId)
+	self._scene = self:getCurScene()
+	self._hasSummonView = false
+	self._allStepReady = false
 
-	arg_1_0._hasCharPreload = VirtualSummonScene.instance:isABLoaded(true)
+	self._scene.selector:registerCallback(SummonSceneEvent.OnSceneGOInited, self._onSelectorGOInited, self)
 
-	if not arg_1_0._hasEquipPreload or not arg_1_0._hasCharPreload then
-		VirtualSummonScene.instance:registerCallback(SummonSceneEvent.OnPreloadFinish, arg_1_0._onPreloadFinish, arg_1_0)
+	self._hasCharPreload = VirtualSummonScene.instance:isABLoaded(true)
+
+	if not self._hasEquipPreload or not self._hasCharPreload then
+		VirtualSummonScene.instance:registerCallback(SummonSceneEvent.OnPreloadFinish, self._onPreloadFinish, self)
 	end
 
-	if arg_1_0._scene.selector:isSceneGOInited(true) then
-		arg_1_0:_onSelectorGOInited(true)
+	if self._scene.selector:isSceneGOInited(true) then
+		self:_onSelectorGOInited(true)
 	end
 
 	if VirtualSummonScene.instance:isOpenImmediately() then
 		VirtualSummonScene.instance:checkNeedLoad(true, true)
 	end
 
-	arg_1_0._scene.view:registerCallback(SummonSceneEvent.OnViewFinish, arg_1_0._onViewReady, arg_1_0)
-	arg_1_0._scene.view:openView()
+	self._scene.view:registerCallback(SummonSceneEvent.OnViewFinish, self._onViewReady, self)
+	self._scene.view:openView()
 end
 
-function var_0_0.onScenePrepared(arg_2_0)
-	arg_2_0:dispatchEvent(SummonSceneEvent.OnEnterScene)
+function SummonSceneDirector:onScenePrepared()
+	self:dispatchEvent(SummonSceneEvent.OnEnterScene)
 end
 
-function var_0_0._onPreloadFinish(arg_3_0, arg_3_1)
-	if arg_3_1 then
-		arg_3_0._hasCharPreload = true
+function SummonSceneDirector:_onPreloadFinish(isChar)
+	if isChar then
+		self._hasCharPreload = true
 	else
-		arg_3_0._hasEquipPreload = true
+		self._hasEquipPreload = true
 	end
 
-	arg_3_0:_checkAllResPrepared()
-	VirtualSummonScene.instance:dispatchEvent(SummonSceneEvent.OnPreloadFinishAtScene, arg_3_1)
+	self:_checkAllResPrepared()
+	VirtualSummonScene.instance:dispatchEvent(SummonSceneEvent.OnPreloadFinishAtScene, isChar)
 end
 
-function var_0_0._onSelectorGOInited(arg_4_0, arg_4_1)
-	if arg_4_1 then
-		local var_4_0 = arg_4_0._scene.selector:getCharSceneGo()
+function SummonSceneDirector:_onSelectorGOInited(isChar)
+	if isChar then
+		local sceneCharGO = self._scene.selector:getCharSceneGo()
 
-		arg_4_0._drawCompChar = MonoHelper.addLuaComOnceToGo(var_4_0, SummonDrawComp, var_4_0)
+		self._drawCompChar = MonoHelper.addLuaComOnceToGo(sceneCharGO, SummonDrawComp, sceneCharGO)
 
-		local var_4_1 = gohelper.findChild(var_4_0, "anim")
+		local animGO = gohelper.findChild(sceneCharGO, "anim")
 
-		if var_4_1 then
-			local var_4_2 = var_4_1:GetComponent(typeof(UnityEngine.Animator))
+		if animGO then
+			local anim = animGO:GetComponent(typeof(UnityEngine.Animator))
 
 			if SummonController.instance:isInSummonGuide() then
-				var_4_2:Play(SummonEnum.SummonFogAnimationName, 0, 0)
+				anim:Play(SummonEnum.SummonFogAnimationName, 0, 0)
 			else
-				var_4_2:Play(SummonEnum.InitialStateAnimationName, 0, 0)
+				anim:Play(SummonEnum.InitialStateAnimationName, 0, 0)
 			end
 
-			var_4_2.speed = 0
+			anim.speed = 0
 		end
 	else
-		local var_4_3 = arg_4_0._scene.selector:getEquipSceneGo()
+		local sceneEquipGO = self._scene.selector:getEquipSceneGo()
 
-		arg_4_0._drawCompEquip = MonoHelper.addLuaComOnceToGo(var_4_3, SummonDrawEquipComp, var_4_3)
+		self._drawCompEquip = MonoHelper.addLuaComOnceToGo(sceneEquipGO, SummonDrawEquipComp, sceneEquipGO)
 
-		local var_4_4 = gohelper.findChild(var_4_3, "anim")
+		local animGO = gohelper.findChild(sceneEquipGO, "anim")
 
-		if var_4_4 then
-			local var_4_5 = var_4_4:GetComponent(typeof(UnityEngine.Animator))
+		if animGO then
+			local anim = animGO:GetComponent(typeof(UnityEngine.Animator))
 
-			var_4_5:Play(SummonEnum.InitialStateEquipAnimationName, 0, 0)
+			anim:Play(SummonEnum.InitialStateEquipAnimationName, 0, 0)
 
-			var_4_5.speed = 0
+			anim.speed = 0
 		end
 	end
 
 	SummonController.instance:prepareSummon()
 end
 
-function var_0_0._onViewReady(arg_5_0)
-	arg_5_0._scene.view:unregisterCallback(SummonSceneEvent.OnViewFinish, arg_5_0._onViewReady, arg_5_0)
+function SummonSceneDirector:_onViewReady()
+	self._scene.view:unregisterCallback(SummonSceneEvent.OnViewFinish, self._onViewReady, self)
 
-	arg_5_0._hasSummonView = true
+	self._hasSummonView = true
 
-	arg_5_0:_checkAllResPrepared()
+	self:_checkAllResPrepared()
 end
 
-function var_0_0._checkAllResPrepared(arg_6_0)
+function SummonSceneDirector:_checkAllResPrepared()
 	if VirtualSummonScene.instance:isOpenImmediately() then
-		if arg_6_0._hasCharPreload then
-			arg_6_0._scene.selector:initSceneGO(true)
+		if self._hasCharPreload then
+			self._scene.selector:initSceneGO(true)
 
-			if arg_6_0._hasSummonView then
-				arg_6_0._allStepReady = true
+			if self._hasSummonView then
+				self._allStepReady = true
 
-				arg_6_0._scene:onPrepared()
+				self._scene:onPrepared()
 			end
 		end
-	elseif arg_6_0._hasSummonView then
-		arg_6_0._allStepReady = true
+	elseif self._hasSummonView then
+		self._allStepReady = true
 
-		arg_6_0._scene:onPrepared()
+		self._scene:onPrepared()
 	end
 end
 
-function var_0_0.isPreloadReady(arg_7_0, arg_7_1)
-	if arg_7_1 then
-		return arg_7_0._hasCharPreload
+function SummonSceneDirector:isPreloadReady(isChar)
+	if isChar then
+		return self._hasCharPreload
 	else
-		return arg_7_0._hasEquipPreload
+		return self._hasEquipPreload
 	end
 
 	return false
 end
 
-function var_0_0.isReady(arg_8_0)
-	return arg_8_0._allStepReady
+function SummonSceneDirector:isReady()
+	return self._allStepReady
 end
 
-function var_0_0.getDrawComp(arg_9_0, arg_9_1)
-	if arg_9_1 == SummonEnum.ResultType.Equip then
-		return arg_9_0._drawCompEquip
+function SummonSceneDirector:getDrawComp(resultType)
+	if resultType == SummonEnum.ResultType.Equip then
+		return self._drawCompEquip
 	else
-		return arg_9_0._drawCompChar
+		return self._drawCompChar
 	end
 end
 
-function var_0_0.onSceneClose(arg_10_0)
-	arg_10_0._scene.selector:unregisterCallback(SummonSceneEvent.OnSceneGOInited, arg_10_0._onSelectorGOInited, arg_10_0)
-	arg_10_0._scene.view:unregisterCallback(SummonSceneEvent.OnViewFinish, arg_10_0._onViewReady, arg_10_0)
-	VirtualSummonScene.instance:unregisterCallback(SummonSceneEvent.OnPreloadFinish, arg_10_0._onPreloadFinish, arg_10_0)
+function SummonSceneDirector:onSceneClose()
+	self._scene.selector:unregisterCallback(SummonSceneEvent.OnSceneGOInited, self._onSelectorGOInited, self)
+	self._scene.view:unregisterCallback(SummonSceneEvent.OnViewFinish, self._onViewReady, self)
+	VirtualSummonScene.instance:unregisterCallback(SummonSceneEvent.OnPreloadFinish, self._onPreloadFinish, self)
 
-	arg_10_0._drawCompChar = nil
-	arg_10_0._drawCompEquip = nil
-	arg_10_0._allStepReady = false
-	arg_10_0._hasCharPreload = false
-	arg_10_0._hasEquipPreload = false
+	self._drawCompChar = nil
+	self._drawCompEquip = nil
+	self._allStepReady = false
+	self._hasCharPreload = false
+	self._hasEquipPreload = false
 end
 
-function var_0_0.onSceneHide(arg_11_0)
-	arg_11_0:onSceneClose()
+function SummonSceneDirector:onSceneHide()
+	self:onSceneClose()
 end
 
-return var_0_0
+return SummonSceneDirector

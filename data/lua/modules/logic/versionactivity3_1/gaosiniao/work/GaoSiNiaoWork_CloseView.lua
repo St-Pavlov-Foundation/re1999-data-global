@@ -1,38 +1,40 @@
-﻿module("modules.logic.versionactivity3_1.gaosiniao.work.GaoSiNiaoWork_CloseView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/gaosiniao/work/GaoSiNiaoWork_CloseView.lua
 
-local var_0_0 = class("GaoSiNiaoWork_CloseView", GaoSiNiaoWorkBase)
+module("modules.logic.versionactivity3_1.gaosiniao.work.GaoSiNiaoWork_CloseView", package.seeall)
 
-function var_0_0.s_create(arg_1_0)
-	local var_1_0 = var_0_0.New()
+local GaoSiNiaoWork_CloseView = class("GaoSiNiaoWork_CloseView", GaoSiNiaoWorkBase)
 
-	var_1_0._viewName = arg_1_0
+function GaoSiNiaoWork_CloseView.s_create(viewName)
+	local work = GaoSiNiaoWork_CloseView.New()
 
-	return var_1_0
+	work._viewName = viewName
+
+	return work
 end
 
-function var_0_0.onStart(arg_2_0)
-	arg_2_0:clearWork()
+function GaoSiNiaoWork_CloseView:onStart()
+	self:clearWork()
 
-	local var_2_0 = arg_2_0._viewName
+	local viewName = self._viewName
 
-	if ViewMgr.instance:isOpen(var_2_0) then
-		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_2_0._onCloseViewFinish, arg_2_0)
-		ViewMgr.instance:closeView(var_2_0)
+	if ViewMgr.instance:isOpen(viewName) then
+		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+		ViewMgr.instance:closeView(viewName)
 	else
-		arg_2_0:onSucc()
+		self:onSucc()
 	end
 end
 
-function var_0_0._onCloseViewFinish(arg_3_0, arg_3_1)
-	if arg_3_0._viewName == arg_3_1 then
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_3_0._onCloseViewFinish, arg_3_0)
-		arg_3_0:onSucc()
+function GaoSiNiaoWork_CloseView:_onCloseViewFinish(viewName)
+	if self._viewName == viewName then
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+		self:onSucc()
 	end
 end
 
-function var_0_0.clearWork(arg_4_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_4_0._onCloseViewFinish, arg_4_0)
-	var_0_0.super.clearWork(arg_4_0)
+function GaoSiNiaoWork_CloseView:clearWork()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	GaoSiNiaoWork_CloseView.super.clearWork(self)
 end
 
-return var_0_0
+return GaoSiNiaoWork_CloseView

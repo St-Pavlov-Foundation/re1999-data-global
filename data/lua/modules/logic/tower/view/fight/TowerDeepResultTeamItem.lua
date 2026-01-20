@@ -1,143 +1,149 @@
-﻿module("modules.logic.tower.view.fight.TowerDeepResultTeamItem", package.seeall)
+﻿-- chunkname: @modules/logic/tower/view/fight/TowerDeepResultTeamItem.lua
 
-local var_0_0 = class("TowerDeepResultTeamItem", LuaCompBase)
+module("modules.logic.tower.view.fight.TowerDeepResultTeamItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0.goNormalContent = gohelper.findChild(arg_1_0.go, "go_NormalContent")
-	arg_1_0.goNormalRoot = gohelper.findChild(arg_1_0.go, "go_NormalContent/root")
-	arg_1_0.animNormalRoot = arg_1_0.goNormalRoot:GetComponent(gohelper.Type_Animation)
-	arg_1_0.goHeroNormalContent = gohelper.findChild(arg_1_0.go, "go_NormalContent/root/go_heroNormalContent")
-	arg_1_0.goHeroItem = gohelper.findChild(arg_1_0.go, "go_NormalContent/root/go_heroNormalContent/go_heroitem")
-	arg_1_0.txtNormalDepth = gohelper.findChildText(arg_1_0.go, "go_NormalContent/root/depth/txt_normalDepth")
-	arg_1_0.goFinalContent = gohelper.findChild(arg_1_0.go, "go_FinalContent")
-	arg_1_0.goFinalRoot = gohelper.findChild(arg_1_0.go, "go_FinalContent/root")
-	arg_1_0.animFinalRoot = arg_1_0.goFinalRoot:GetComponent(gohelper.Type_Animation)
-	arg_1_0.goHeroFinalContent = gohelper.findChild(arg_1_0.go, "go_FinalContent/root/go_heroFinalContent")
-	arg_1_0.goHeroGroupItem = gohelper.findChild(arg_1_0.go, "go_FinalContent/root/go_heroFinalContent/group/go_herogroupitem")
-	arg_1_0.txtFinalDepth = gohelper.findChildText(arg_1_0.go, "go_FinalContent/root/depth/txt_finalDepth")
-	arg_1_0.goNewRecord = gohelper.findChild(arg_1_0.go, "go_FinalContent/root/depth/go_newRecord")
-	arg_1_0.groupItemPosList = {}
+local TowerDeepResultTeamItem = class("TowerDeepResultTeamItem", LuaCompBase)
 
-	for iter_1_0 = 1, 4 do
-		arg_1_0.groupItemPosList[iter_1_0] = gohelper.findChild(arg_1_0.go, "go_FinalContent/root/go_heroFinalContent/group/item" .. iter_1_0)
+function TowerDeepResultTeamItem:init(go)
+	self.go = go
+	self.goNormalContent = gohelper.findChild(self.go, "go_NormalContent")
+	self.goNormalRoot = gohelper.findChild(self.go, "go_NormalContent/root")
+	self.animNormalRoot = self.goNormalRoot:GetComponent(gohelper.Type_Animation)
+	self.goHeroNormalContent = gohelper.findChild(self.go, "go_NormalContent/root/go_heroNormalContent")
+	self.goHeroItem = gohelper.findChild(self.go, "go_NormalContent/root/go_heroNormalContent/go_heroitem")
+	self.txtNormalDepth = gohelper.findChildText(self.go, "go_NormalContent/root/depth/txt_normalDepth")
+	self.goFinalContent = gohelper.findChild(self.go, "go_FinalContent")
+	self.goFinalRoot = gohelper.findChild(self.go, "go_FinalContent/root")
+	self.animFinalRoot = self.goFinalRoot:GetComponent(gohelper.Type_Animation)
+	self.goHeroFinalContent = gohelper.findChild(self.go, "go_FinalContent/root/go_heroFinalContent")
+	self.goHeroGroupItem = gohelper.findChild(self.go, "go_FinalContent/root/go_heroFinalContent/group/go_herogroupitem")
+	self.txtFinalDepth = gohelper.findChildText(self.go, "go_FinalContent/root/depth/txt_finalDepth")
+	self.goNewRecord = gohelper.findChild(self.go, "go_FinalContent/root/depth/go_newRecord")
+	self.groupItemPosList = {}
+
+	for i = 1, 4 do
+		self.groupItemPosList[i] = gohelper.findChild(self.go, "go_FinalContent/root/go_heroFinalContent/group/item" .. i)
 	end
 
-	arg_1_0.finalHeroItemList = arg_1_0:getUserDataTb_()
-	arg_1_0.normalHeroItemList = arg_1_0:getUserDataTb_()
+	self.finalHeroItemList = self:getUserDataTb_()
+	self.normalHeroItemList = self:getUserDataTb_()
 
-	gohelper.setActive(arg_1_0.goHeroItem, false)
-	gohelper.setActive(arg_1_0.goHeroGroupItem, false)
+	gohelper.setActive(self.goHeroItem, false)
+	gohelper.setActive(self.goHeroGroupItem, false)
 
-	arg_1_0.fightParam = FightModel.instance:getFightParam()
-	arg_1_0.heroEquipMoList = arg_1_0.fightParam:getHeroEquipAndTrialMoList(true)
+	self.fightParam = FightModel.instance:getFightParam()
+	self.heroEquipMoList = self.fightParam:getHeroEquipAndTrialMoList(true)
 end
 
-function var_0_0.refreshUI(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0.teamData = arg_2_2[arg_2_1]
+function TowerDeepResultTeamItem:refreshUI(index, curTeamDataList)
+	self.teamData = curTeamDataList[index]
 
-	gohelper.setActive(arg_2_0.go, true)
+	gohelper.setActive(self.go, true)
 
-	arg_2_0.txtNormalDepth.text = string.format("%sM", arg_2_0.teamData.deep)
-	arg_2_0.txtFinalDepth.text = string.format("%sM", arg_2_0.teamData.deep)
-	arg_2_0.isFinalContent = arg_2_1 == #arg_2_2
+	self.txtNormalDepth.text = string.format("%sM", self.teamData.deep)
+	self.txtFinalDepth.text = string.format("%sM", self.teamData.deep)
+	self.isFinalContent = index == #curTeamDataList
 
-	gohelper.setActive(arg_2_0.goNewRecord, arg_2_0.isFinalContent and TowerPermanentDeepModel.instance.isNewRecord)
-	gohelper.setActive(arg_2_0.goNormalContent, not arg_2_0.isFinalContent)
-	gohelper.setActive(arg_2_0.goFinalContent, arg_2_0.isFinalContent)
-	recthelper.setWidth(arg_2_0.goNormalContent.transform, arg_2_1 % 2 == 0 and 0 or 80)
+	gohelper.setActive(self.goNewRecord, self.isFinalContent and TowerPermanentDeepModel.instance.isNewRecord)
+	gohelper.setActive(self.goNormalContent, not self.isFinalContent)
+	gohelper.setActive(self.goFinalContent, self.isFinalContent)
+	recthelper.setWidth(self.goNormalContent.transform, index % 2 == 0 and 0 or 80)
 
-	if arg_2_0.isFinalContent then
-		arg_2_0:createFinalHeroItem(arg_2_0.finalHeroItemList)
+	if self.isFinalContent then
+		self:createFinalHeroItem(self.finalHeroItemList)
 	else
-		arg_2_0:createNormalHeroItem(arg_2_0.normalHeroItemList)
+		self:createNormalHeroItem(self.normalHeroItemList)
 	end
 
-	gohelper.setActive(arg_2_0.goNormalRoot, false)
-	gohelper.setActive(arg_2_0.goFinalRoot, false)
+	gohelper.setActive(self.goNormalRoot, false)
+	gohelper.setActive(self.goFinalRoot, false)
 end
 
-function var_0_0.createNormalHeroItem(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_0.teamData.heroList
+function TowerDeepResultTeamItem:createNormalHeroItem(heroItemList)
+	local heroDataList = self.teamData.heroList
 
-	for iter_3_0 = 1, 4 do
-		local var_3_1 = arg_3_1[iter_3_0]
+	for index = 1, 4 do
+		local heroItem = heroItemList[index]
 
-		if not var_3_1 then
-			var_3_1 = {
-				go = gohelper.clone(arg_3_0.goHeroItem, arg_3_0.goHeroNormalContent, "heroitem" .. iter_3_0)
+		if not heroItem then
+			heroItem = {
+				go = gohelper.clone(self.goHeroItem, self.goHeroNormalContent, "heroitem" .. index)
 			}
-			var_3_1.simageRoleHead = gohelper.findChildSingleImage(var_3_1.go, "simage_rolehead")
-			var_3_1.goEmpty = gohelper.findChild(var_3_1.go, "go_empty")
-			arg_3_1[iter_3_0] = var_3_1
+			heroItem.simageRoleHead = gohelper.findChildSingleImage(heroItem.go, "simage_rolehead")
+			heroItem.goEmpty = gohelper.findChild(heroItem.go, "go_empty")
+			heroItemList[index] = heroItem
 		end
 
-		gohelper.setActive(var_3_1.go, true)
+		gohelper.setActive(heroItem.go, true)
 
-		local var_3_2 = var_3_0[iter_3_0]
+		local heroData = heroDataList[index]
 
-		gohelper.setActive(var_3_1.goEmpty, not var_3_2)
-		gohelper.setActive(var_3_1.simageRoleHead.gameObject, var_3_2)
+		gohelper.setActive(heroItem.goEmpty, not heroData)
+		gohelper.setActive(heroItem.simageRoleHead.gameObject, heroData)
 
-		if var_3_2 then
-			local var_3_3 = 0
+		if heroData then
+			local skinId = 0
 
-			if var_3_2.trialId and var_3_2.trialId > 0 then
-				var_3_3 = lua_hero_trial.configDict[var_3_2.trialId][0].skin
-			elseif var_3_2.heroId and var_3_2.heroId > 0 then
-				var_3_3 = HeroConfig.instance:getHeroCO(var_3_2.heroId).skinId
+			if heroData.trialId and heroData.trialId > 0 then
+				local trialConfig = lua_hero_trial.configDict[heroData.trialId][0]
+
+				skinId = trialConfig.skin
+			elseif heroData.heroId and heroData.heroId > 0 then
+				local heroConfig = HeroConfig.instance:getHeroCO(heroData.heroId)
+
+				skinId = heroConfig.skinId
 			end
 
-			local var_3_4 = SkinConfig.instance:getSkinCo(var_3_3)
+			local skinConfig = SkinConfig.instance:getSkinCo(skinId)
 
-			var_3_1.simageRoleHead:LoadImage(ResUrl.getHeadIconSmall(var_3_4.retangleIcon))
+			heroItem.simageRoleHead:LoadImage(ResUrl.getHeadIconSmall(skinConfig.retangleIcon))
 		end
 	end
 end
 
-function var_0_0.createFinalHeroItem(arg_4_0, arg_4_1)
-	for iter_4_0 = 1, 4 do
-		local var_4_0 = arg_4_1[iter_4_0]
+function TowerDeepResultTeamItem:createFinalHeroItem(heroItemList)
+	for index = 1, 4 do
+		local heroItem = heroItemList[index]
 
-		if not var_4_0 then
-			var_4_0 = {
-				go = gohelper.clone(arg_4_0.goHeroGroupItem, arg_4_0.groupItemPosList[iter_4_0], "heroitem" .. iter_4_0)
+		if not heroItem then
+			heroItem = {
+				go = gohelper.clone(self.goHeroGroupItem, self.groupItemPosList[index], "heroitem" .. index)
 			}
-			var_4_0.heroItemComp = MonoHelper.addNoUpdateLuaComOnceToGo(var_4_0.go, TowerDeepResultHeroItem)
-			arg_4_1[iter_4_0] = var_4_0
+			heroItem.heroItemComp = MonoHelper.addNoUpdateLuaComOnceToGo(heroItem.go, TowerDeepResultHeroItem)
+			heroItemList[index] = heroItem
 		end
 
-		local var_4_1 = arg_4_0.heroEquipMoList[iter_4_0]
+		local mo = self.heroEquipMoList[index]
 
-		if var_4_1 then
-			var_4_0.heroItemComp:setData(var_4_1.heroMo, var_4_1.equipMo)
+		if mo then
+			heroItem.heroItemComp:setData(mo.heroMo, mo.equipMo)
 		else
-			var_4_0.heroItemComp:setData()
+			heroItem.heroItemComp:setData()
 		end
 	end
 end
 
-function var_0_0.showTeamItem(arg_5_0, arg_5_1)
-	TaskDispatcher.runDelay(arg_5_0.playShowAnim, arg_5_0, arg_5_1)
+function TowerDeepResultTeamItem:showTeamItem(time)
+	TaskDispatcher.runDelay(self.playShowAnim, self, time)
 end
 
-function var_0_0.playShowAnim(arg_6_0)
-	gohelper.setActive(arg_6_0.goNormalRoot, not arg_6_0.isFinalContent)
-	gohelper.setActive(arg_6_0.goFinalRoot, arg_6_0.isFinalContent)
+function TowerDeepResultTeamItem:playShowAnim()
+	gohelper.setActive(self.goNormalRoot, not self.isFinalContent)
+	gohelper.setActive(self.goFinalRoot, self.isFinalContent)
 
-	if arg_6_0.isFinalContent then
-		arg_6_0.animFinalRoot:Play()
+	if self.isFinalContent then
+		self.animFinalRoot:Play()
 	else
-		arg_6_0.animNormalRoot:Play()
+		self.animNormalRoot:Play()
 	end
 end
 
-function var_0_0.onDestroy(arg_7_0)
-	for iter_7_0, iter_7_1 in pairs(arg_7_0.normalHeroItemList) do
-		iter_7_1.simageRoleHead:UnLoadImage()
+function TowerDeepResultTeamItem:onDestroy()
+	for _, heroItem in pairs(self.normalHeroItemList) do
+		heroItem.simageRoleHead:UnLoadImage()
 	end
 
-	TaskDispatcher.cancelTask(arg_7_0.playShowAnim, arg_7_0)
+	TaskDispatcher.cancelTask(self.playShowAnim, self)
 end
 
-return var_0_0
+return TowerDeepResultTeamItem

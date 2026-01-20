@@ -1,10 +1,14 @@
-﻿module("modules.logic.fight.system.work.FightWorkChangeRound", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkChangeRound.lua
 
-local var_0_0 = class("FightWorkChangeRound", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkChangeRound", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	if FightModel.instance:getVersion() < 3 then
-		arg_1_0:onDone(true)
+local FightWorkChangeRound = class("FightWorkChangeRound", FightEffectBase)
+
+function FightWorkChangeRound:onStart()
+	local version = FightModel.instance:getVersion()
+
+	if version < 3 then
+		self:onDone(true)
 
 		return
 	end
@@ -13,22 +17,22 @@ function var_0_0.onStart(arg_1_0)
 
 	FightController.instance:dispatchEvent(FightEvent.ChangeRound)
 
-	local var_1_0 = FightDataHelper.entityMgr:getMySubList()
+	local mySubList = FightDataHelper.entityMgr:getMySubList()
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
-		iter_1_1.subCd = 0
+	for i, v in ipairs(mySubList) do
+		v.subCd = 0
 
-		FightController.instance:dispatchEvent(FightEvent.ChangeEntitySubCd, iter_1_1.uid)
+		FightController.instance:dispatchEvent(FightEvent.ChangeEntitySubCd, v.uid)
 	end
 
-	local var_1_1 = arg_1_0:com_registWorkDoneFlowSequence()
+	local flow = self:com_registWorkDoneFlowSequence()
 
-	var_1_1:registWork(Work2FightWork, FightWorkFbStory, FightWorkFbStory.Type_ChangeRound, FightModel.instance._curRoundId)
-	var_1_1:start()
+	flow:registWork(Work2FightWork, FightWorkFbStory, FightWorkFbStory.Type_ChangeRound, FightModel.instance._curRoundId)
+	flow:start()
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkChangeRound:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkChangeRound

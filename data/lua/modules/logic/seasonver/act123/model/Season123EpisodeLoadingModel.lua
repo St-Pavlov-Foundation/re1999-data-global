@@ -1,95 +1,98 @@
-﻿module("modules.logic.seasonver.act123.model.Season123EpisodeLoadingModel", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/model/Season123EpisodeLoadingModel.lua
 
-local var_0_0 = class("Season123EpisodeLoadingModel", BaseModel)
+module("modules.logic.seasonver.act123.model.Season123EpisodeLoadingModel", package.seeall)
 
-function var_0_0.release(arg_1_0)
-	arg_1_0.activityId = nil
-	arg_1_0.stage = nil
-	arg_1_0.layer = nil
-	arg_1_0._layerDict = nil
+local Season123EpisodeLoadingModel = class("Season123EpisodeLoadingModel", BaseModel)
 
-	arg_1_0:clear()
+function Season123EpisodeLoadingModel:release()
+	self.activityId = nil
+	self.stage = nil
+	self.layer = nil
+	self._layerDict = nil
+
+	self:clear()
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	arg_2_0.activityId = arg_2_1
-	arg_2_0.stage = arg_2_2
-	arg_2_0.layer = arg_2_3
-	arg_2_0._layerDict = {}
+function Season123EpisodeLoadingModel:init(actId, stage, layer)
+	self.activityId = actId
+	self.stage = stage
+	self.layer = layer
+	self._layerDict = {}
 
-	arg_2_0:initEpisodeList()
+	self:initEpisodeList()
 end
 
-var_0_0.AnimCount = 7
-var_0_0.EmptyStyleCount = 3
-var_0_0.TargetEpisodeOrder = 5
+Season123EpisodeLoadingModel.AnimCount = 7
+Season123EpisodeLoadingModel.EmptyStyleCount = 3
+Season123EpisodeLoadingModel.TargetEpisodeOrder = 5
 
-function var_0_0.initEpisodeList(arg_3_0)
-	local var_3_0 = {}
-	local var_3_1 = Season123Config.instance:getSeasonEpisodeByStage(arg_3_0.activityId, arg_3_0.stage)
+function Season123EpisodeLoadingModel:initEpisodeList()
+	local episodeList = {}
+	local episodeCfgs = Season123Config.instance:getSeasonEpisodeByStage(self.activityId, self.stage)
 
-	logNormal("episode list length : " .. tostring(#var_3_1))
+	logNormal("episode list length : " .. tostring(#episodeCfgs))
 
-	local var_3_2 = Season123Model.instance:getActInfo(arg_3_0.activityId):getStageMO(arg_3_0.stage)
+	local seasonMO = Season123Model.instance:getActInfo(self.activityId)
+	local curStageMO = seasonMO:getStageMO(self.stage)
 
-	if var_3_2 then
-		local var_3_3 = #var_3_1
+	if curStageMO then
+		local episodeCount = #episodeCfgs
 
-		for iter_3_0 = 1, var_0_0.AnimCount do
-			local var_3_4 = (arg_3_0.layer - var_0_0.TargetEpisodeOrder + iter_3_0) % (var_3_3 + 1)
-			local var_3_5 = Season123EpisodeLoadingMO.New()
+		for i = 1, Season123EpisodeLoadingModel.AnimCount do
+			local index = (self.layer - Season123EpisodeLoadingModel.TargetEpisodeOrder + i) % (episodeCount + 1)
+			local mo = Season123EpisodeLoadingMO.New()
 
-			if var_3_4 == 0 then
-				var_3_5:init(iter_3_0, nil, nil, 1)
+			if index == 0 then
+				mo:init(i, nil, nil, 1)
 			else
-				local var_3_6 = var_3_1[var_3_4]
-				local var_3_7 = var_3_2.episodeMap[var_3_6.layer]
+				local episodeCfg = episodeCfgs[index]
+				local episodeMO = curStageMO.episodeMap[episodeCfg.layer]
 
-				var_3_5:init(iter_3_0, var_3_7, var_3_6)
+				mo:init(i, episodeMO, episodeCfg)
 
-				if not arg_3_0._layerDict[var_3_6.layer] then
-					arg_3_0._layerDict[var_3_6.layer] = var_3_5
+				if not self._layerDict[episodeCfg.layer] then
+					self._layerDict[episodeCfg.layer] = mo
 				end
 			end
 
-			table.insert(var_3_0, var_3_5)
+			table.insert(episodeList, mo)
 		end
 	end
 
-	arg_3_0:setList(var_3_0)
+	self:setList(episodeList)
 end
 
-function var_0_0.isEpisodeUnlock(arg_4_0, arg_4_1)
-	local var_4_0 = Season123Model.instance:getActInfo(arg_4_0.activityId)
-	local var_4_1 = arg_4_0._layerDict[arg_4_1]
+function Season123EpisodeLoadingModel:isEpisodeUnlock(layer)
+	local seasonMO = Season123Model.instance:getActInfo(self.activityId)
+	local curLayerMO = self._layerDict[layer]
 
-	if var_4_1 and var_4_1.isFinished then
+	if curLayerMO and curLayerMO.isFinished then
 		return true
 	end
 
-	if arg_4_1 <= 1 then
-		if not var_4_0 then
+	if layer <= 1 then
+		if not seasonMO then
 			return false
 		end
 
-		return arg_4_0.stage == var_4_0.stage
+		return self.stage == seasonMO.stage
 	end
 
-	local var_4_2 = arg_4_0._layerDict[arg_4_1 - 1]
+	local prevLayerMO = self._layerDict[layer - 1]
 
-	if not var_4_2 or not var_4_2.isFinished then
+	if not prevLayerMO or not prevLayerMO.isFinished then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0.inCurrentStage(arg_5_0)
-	local var_5_0 = Season123Model.instance:getActInfo(arg_5_0.activityId)
+function Season123EpisodeLoadingModel:inCurrentStage()
+	local actMO = Season123Model.instance:getActInfo(self.activityId)
 
-	return var_5_0 ~= nil and not var_5_0:isNotInStage() and var_5_0.stage == var_0_0.instance.stage
+	return actMO ~= nil and not actMO:isNotInStage() and actMO.stage == Season123EpisodeLoadingModel.instance.stage
 end
 
-var_0_0.instance = var_0_0.New()
+Season123EpisodeLoadingModel.instance = Season123EpisodeLoadingModel.New()
 
-return var_0_0
+return Season123EpisodeLoadingModel

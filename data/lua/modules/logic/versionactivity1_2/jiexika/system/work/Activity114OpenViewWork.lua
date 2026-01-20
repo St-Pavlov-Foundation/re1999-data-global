@@ -1,28 +1,30 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114OpenViewWork", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/system/work/Activity114OpenViewWork.lua
 
-local var_0_0 = class("Activity114OpenViewWork", Activity114BaseWork)
+module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114OpenViewWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._viewName = arg_1_1
+local Activity114OpenViewWork = class("Activity114OpenViewWork", Activity114BaseWork)
 
-	var_0_0.super.ctor(arg_1_0)
+function Activity114OpenViewWork:ctor(viewName)
+	self._viewName = viewName
+
+	Activity114OpenViewWork.super.ctor(self)
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_2_0._onCloseViewFinish, arg_2_0)
-	ViewMgr.instance:openView(arg_2_0._viewName, arg_2_1)
+function Activity114OpenViewWork:onStart(context)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, self._onCloseViewFinish, self)
+	ViewMgr.instance:openView(self._viewName, context)
 end
 
-function var_0_0._onCloseViewFinish(arg_3_0, arg_3_1)
-	if arg_3_1 == arg_3_0._viewName then
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_3_0._onCloseViewFinish, arg_3_0)
-		arg_3_0:onDone(true)
+function Activity114OpenViewWork:_onCloseViewFinish(viewName)
+	if viewName == self._viewName then
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, self._onCloseViewFinish, self)
+		self:onDone(true)
 	end
 end
 
-function var_0_0.clearWork(arg_4_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_4_0._onCloseViewFinish, arg_4_0)
-	var_0_0.super.clearWork(arg_4_0)
+function Activity114OpenViewWork:clearWork()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, self._onCloseViewFinish, self)
+	Activity114OpenViewWork.super.clearWork(self)
 end
 
-return var_0_0
+return Activity114OpenViewWork

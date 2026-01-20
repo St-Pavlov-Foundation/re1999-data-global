@@ -1,51 +1,53 @@
-﻿module("modules.logic.sp01.odyssey.view.OdysseyHeroGroupViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/view/OdysseyHeroGroupViewContainer.lua
 
-local var_0_0 = class("OdysseyHeroGroupViewContainer", BaseViewContainer)
+module("modules.logic.sp01.odyssey.view.OdysseyHeroGroupViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local OdysseyHeroGroupViewContainer = class("OdysseyHeroGroupViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, OdysseyHeroGroupView.New())
-	table.insert(var_1_0, OdysseyHeroListView.New())
-	table.insert(var_1_0, OdysseySuitListView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_container/btnContain/commonBtns"))
-	table.insert(var_1_0, CheckActivityEndView.New())
+function OdysseyHeroGroupViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, OdysseyHeroGroupView.New())
+	table.insert(views, OdysseyHeroListView.New())
+	table.insert(views, OdysseySuitListView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_container/btnContain/commonBtns"))
+	table.insert(views, CheckActivityEndView.New())
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function OdysseyHeroGroupViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			true
-		}, HelpEnum.HelpId.OdysseyHeroGroup, arg_2_0._closeCallback, arg_2_0._closeHomeCallback, nil, arg_2_0)
+		}, HelpEnum.HelpId.OdysseyHeroGroup, self._closeCallback, self._closeHomeCallback, nil, self)
 
-		arg_2_0.navigateView:setCloseCheck(arg_2_0.defaultOverrideCloseCheck, arg_2_0)
+		self.navigateView:setCloseCheck(self.defaultOverrideCloseCheck, self)
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-function var_0_0._closeCallback(arg_3_0)
-	arg_3_0:closeThis()
+function OdysseyHeroGroupViewContainer:_closeCallback()
+	self:closeThis()
 
-	if arg_3_0:handleVersionActivityCloseCall() then
+	if self:handleVersionActivityCloseCall() then
 		return
 	end
 
 	MainController.instance:enterMainScene(true, false)
 end
 
-function var_0_0._closeHomeCallback(arg_4_0)
-	arg_4_0:closeThis()
+function OdysseyHeroGroupViewContainer:_closeHomeCallback()
+	self:closeThis()
 	MainController.instance:enterMainScene(true, false)
 end
 
-function var_0_0.handleVersionActivityCloseCall(arg_5_0)
+function OdysseyHeroGroupViewContainer:handleVersionActivityCloseCall()
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Main then
 		return true
 	end
@@ -57,4 +59,4 @@ function var_0_0.handleVersionActivityCloseCall(arg_5_0)
 	end
 end
 
-return var_0_0
+return OdysseyHeroGroupViewContainer

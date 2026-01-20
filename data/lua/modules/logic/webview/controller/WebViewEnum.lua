@@ -1,8 +1,10 @@
-﻿module("modules.logic.webview.controller.WebViewEnum", package.seeall)
+﻿-- chunkname: @modules/logic/webview/controller/WebViewEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.webview.controller.WebViewEnum", package.seeall)
 
-var_0_0.WebViewCBType = {
+local WebViewEnum = _M
+
+WebViewEnum.WebViewCBType = {
 	Err = 1,
 	Hooked = 4,
 	Cookies = 5,
@@ -11,17 +13,17 @@ var_0_0.WebViewCBType = {
 	HttpErr = 2,
 	LD = 6
 }
-var_0_0.DefaultMargin = {
+WebViewEnum.DefaultMargin = {
 	Top = 0,
 	Right = 0,
 	Left = 0,
 	Bottom = 120
 }
-var_0_0.DeviceType = {
+WebViewEnum.DeviceType = {
 	PC = 2,
 	Harmony = 3,
 	Emulator = 1,
 	Normal = 0
 }
 
-return var_0_0
+return WebViewEnum

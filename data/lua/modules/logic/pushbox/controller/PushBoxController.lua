@@ -1,29 +1,31 @@
-﻿module("modules.logic.pushbox.controller.PushBoxController", package.seeall)
+﻿-- chunkname: @modules/logic/pushbox/controller/PushBoxController.lua
 
-local var_0_0 = class("PushBoxController", BaseController)
+module("modules.logic.pushbox.controller.PushBoxController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local PushBoxController = class("PushBoxController", BaseController)
+
+function PushBoxController:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function PushBoxController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function PushBoxController:addConstEvents()
 	return
 end
 
-function var_0_0.reInit(arg_4_0)
+function PushBoxController:reInit()
 	return
 end
 
-function var_0_0.enterPushBoxGame(arg_5_0)
+function PushBoxController:enterPushBoxGame()
 	PushBoxRpc.instance:sendGet111InfosRequest(function()
 		GameSceneMgr.instance:startScene(SceneType.PushBox, 1, 1)
-	end, arg_5_0)
+	end, self)
 end
 
-var_0_0.instance = var_0_0.New()
+PushBoxController.instance = PushBoxController.New()
 
-return var_0_0
+return PushBoxController

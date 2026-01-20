@@ -1,4 +1,6 @@
-﻿return {
+﻿-- chunkname: @modules/configs/match3/T_lua_eliminate_chessBoard.lua
+
+return {
 	{
 		id = 1,
 		iSDefault = true,

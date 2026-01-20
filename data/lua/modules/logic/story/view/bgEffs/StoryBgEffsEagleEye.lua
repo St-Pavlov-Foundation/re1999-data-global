@@ -1,52 +1,54 @@
-﻿module("modules.logic.story.view.bgEffs.StoryBgEffsEagleEye", package.seeall)
+﻿-- chunkname: @modules/logic/story/view/bgEffs/StoryBgEffsEagleEye.lua
 
-local var_0_0 = class("StoryBgEffsEagleEye", StoryBgEffsBase)
+module("modules.logic.story.view.bgEffs.StoryBgEffsEagleEye", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	var_0_0.super.ctor(arg_1_0)
+local StoryBgEffsEagleEye = class("StoryBgEffsEagleEye", StoryBgEffsBase)
+
+function StoryBgEffsEagleEye:ctor()
+	StoryBgEffsEagleEye.super.ctor(self)
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	var_0_0.super.init(arg_2_0, arg_2_1)
+function StoryBgEffsEagleEye:init(bgCo)
+	StoryBgEffsEagleEye.super.init(self, bgCo)
 
-	arg_2_0._eagleEyePrefabPath = "ui/viewres/story/bg/radial_blur_controller.prefab"
+	self._eagleEyePrefabPath = "ui/viewres/story/bg/radial_blur_controller.prefab"
 
-	table.insert(arg_2_0._resList, arg_2_0._eagleEyePrefabPath)
+	table.insert(self._resList, self._eagleEyePrefabPath)
 
-	arg_2_0._effInTime = 0.5
-	arg_2_0._effKeepTime = arg_2_1.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()]
+	self._effInTime = 0.5
+	self._effKeepTime = bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()]
 end
 
-function var_0_0.start(arg_3_0, arg_3_1, arg_3_2)
-	var_0_0.super.start(arg_3_0)
+function StoryBgEffsEagleEye:start(callback, callbackObj)
+	StoryBgEffsEagleEye.super.start(self)
 
-	arg_3_0._finishedCallback = arg_3_1
-	arg_3_0._finishedCallbackObj = arg_3_2
+	self._finishedCallback = callback
+	self._finishedCallbackObj = callbackObj
 
-	arg_3_0:_setViewTop(true)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_3_0._onOpenView, arg_3_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_3_0._onCloseView, arg_3_0)
-	arg_3_0:loadRes()
+	self:_setViewTop(true)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, self._onOpenView, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, self._onCloseView, self)
+	self:loadRes()
 end
 
-function var_0_0._onOpenView(arg_4_0, arg_4_1)
-	local var_4_0 = ViewMgr.instance:getSetting(arg_4_1)
+function StoryBgEffsEagleEye:_onOpenView(viewName)
+	local setting = ViewMgr.instance:getSetting(viewName)
 
-	if var_4_0.layer == UILayerName.Message or var_4_0.layer == UILayerName.IDCanvasPopUp then
-		arg_4_0:_setViewTop(false)
+	if setting.layer == UILayerName.Message or setting.layer == UILayerName.IDCanvasPopUp then
+		self:_setViewTop(false)
 	end
 end
 
-function var_0_0._onCloseView(arg_5_0, arg_5_1)
-	local var_5_0 = ViewMgr.instance:getSetting(arg_5_1)
+function StoryBgEffsEagleEye:_onCloseView(viewName)
+	local setting = ViewMgr.instance:getSetting(viewName)
 
-	if var_5_0.layer == UILayerName.Message or var_5_0.layer == UILayerName.IDCanvasPopUp then
-		arg_5_0:_setViewTop(true)
+	if setting.layer == UILayerName.Message or setting.layer == UILayerName.IDCanvasPopUp then
+		self:_setViewTop(true)
 	end
 end
 
-function var_0_0._setViewTop(arg_6_0, arg_6_1)
-	if arg_6_1 then
+function StoryBgEffsEagleEye:_setViewTop(set)
+	if set then
 		StoryViewMgr.instance:setStoryViewLayer(UnityLayer.UITop)
 		StoryViewMgr.instance:setStoryLeadRoleSpineViewLayer(UnityLayer.UITop)
 	else
@@ -55,105 +57,113 @@ function var_0_0._setViewTop(arg_6_0, arg_6_1)
 	end
 end
 
-function var_0_0.onLoadFinished(arg_7_0)
-	var_0_0.super.onLoadFinished(arg_7_0)
+function StoryBgEffsEagleEye:onLoadFinished()
+	StoryBgEffsEagleEye.super.onLoadFinished(self)
 	StoryTool.enablePostProcess(true)
 
-	local var_7_0 = StoryViewMgr.instance:getStoryBackgroundView()
+	local bgGo = StoryViewMgr.instance:getStoryBackgroundView()
 
-	arg_7_0._rootGo = gohelper.findChild(var_7_0, "#go_upbg/#simage_bgimg")
+	self._rootGo = gohelper.findChild(bgGo, "#go_upbg/#simage_bgimg")
 
-	local var_7_1 = arg_7_0._loader:getAssetItem(arg_7_0._eagleEyePrefabPath)
+	local prefAssetItem = self._loader:getAssetItem(self._eagleEyePrefabPath)
 
-	arg_7_0._eagleEyeGo = gohelper.clone(var_7_1:GetResource(), arg_7_0._rootGo)
-	arg_7_0._eagleCtrl = arg_7_0._eagleEyeGo:GetComponent(typeof(ZProj.MaterialPropsCtrl))
-	arg_7_0._eagleCtrl.float_01 = 0.2
-	arg_7_0._eagleCtrl.float_02 = 1.5
+	self._eagleEyeGo = gohelper.clone(prefAssetItem:GetResource(), self._rootGo)
+	self._eagleCtrl = self._eagleEyeGo:GetComponent(typeof(ZProj.MaterialPropsCtrl))
+	self._eagleCtrl.float_01 = 0.2
+	self._eagleCtrl.float_02 = 1.5
 
-	local var_7_2 = Vector2(0.5, 0.5)
+	local center = Vector2(0.5, 0.5)
 
-	PostProcessingMgr.instance:setUIPPValue("rgbSplitCenter", var_7_2)
-	PostProcessingMgr.instance:setUIPPValue("RgbSplitCenter", var_7_2)
-	arg_7_0:_setBlurLevel(1)
+	PostProcessingMgr.instance:setUIPPValue("rgbSplitCenter", center)
+	PostProcessingMgr.instance:setUIPPValue("RgbSplitCenter", center)
+	self:_setBlurLevel(1)
 
-	if arg_7_0._eyeTweenId then
-		ZProj.TweenHelper.KillById(arg_7_0._eyeTweenId)
+	if self._eyeTweenId then
+		ZProj.TweenHelper.KillById(self._eyeTweenId)
 
-		arg_7_0._eyeTweenId = nil
+		self._eyeTweenId = nil
 	end
 
-	arg_7_0._eyeTweenId = ZProj.TweenHelper.DOTweenFloat(1, 10, arg_7_0._effInTime, arg_7_0._setBlurLevel, arg_7_0.onEffInFinished, arg_7_0)
+	self._eyeTweenId = ZProj.TweenHelper.DOTweenFloat(1, 10, self._effInTime, self._setBlurLevel, self.onEffInFinished, self)
 end
 
-function var_0_0._setBlurLevel(arg_8_0, arg_8_1)
-	PostProcessingMgr.instance:setUIPPValue("radialBlurLevel", arg_8_1)
-	PostProcessingMgr.instance:setUIPPValue("RadialBlurLevel", arg_8_1)
+function StoryBgEffsEagleEye:reset(bgCo)
+	StoryBgEffsEagleEye.super.reset(self, bgCo)
+	StoryTool.enablePostProcess(true)
+	self:_setViewTop(true)
 end
 
-function var_0_0.onEffInFinished(arg_9_0)
-	arg_9_0:_setBlurLevel(10)
+function StoryBgEffsEagleEye:_setBlurLevel(lv)
+	PostProcessingMgr.instance:setUIPPValue("radialBlurLevel", lv)
+	PostProcessingMgr.instance:setUIPPValue("RadialBlurLevel", lv)
+end
 
-	if arg_9_0._eyeTweenId then
-		ZProj.TweenHelper.KillById(arg_9_0._eyeTweenId)
+function StoryBgEffsEagleEye:onEffInFinished()
+	self:_setBlurLevel(10)
 
-		arg_9_0._eyeTweenId = nil
+	if self._eyeTweenId then
+		ZProj.TweenHelper.KillById(self._eyeTweenId)
+
+		self._eyeTweenId = nil
 	end
 
-	TaskDispatcher.runDelay(arg_9_0.onEffKeepFinished, arg_9_0, arg_9_0._effKeepTime)
+	TaskDispatcher.runDelay(self.onEffKeepFinished, self, self._effKeepTime)
 end
 
-function var_0_0.onEffKeepFinished(arg_10_0)
-	if arg_10_0._eyeTweenId then
-		ZProj.TweenHelper.KillById(arg_10_0._eyeTweenId)
+function StoryBgEffsEagleEye:onEffKeepFinished()
+	if self._eyeTweenId then
+		ZProj.TweenHelper.KillById(self._eyeTweenId)
 
-		arg_10_0._eyeTweenId = nil
+		self._eyeTweenId = nil
 	end
 
-	arg_10_0._eyeTweenId = ZProj.TweenHelper.DOTweenFloat(10, 1, arg_10_0._effOutTime, arg_10_0._setBlurLevel, arg_10_0.onEffOutFinished, arg_10_0)
+	self._eyeTweenId = ZProj.TweenHelper.DOTweenFloat(10, 1, self._effOutTime, self._setBlurLevel, self.onEffOutFinished, self)
 end
 
-function var_0_0.onEffOutFinished(arg_11_0)
-	var_0_0.super.onEffOutFinished(arg_11_0)
+function StoryBgEffsEagleEye:onEffOutFinished()
+	StoryBgEffsEagleEye.super.onEffOutFinished(self)
 
-	if arg_11_0._finishedCallback then
-		arg_11_0._finishedCallback(arg_11_0._finishedCallbackObj)
+	if self._finishedCallback then
+		self._finishedCallback(self._finishedCallbackObj)
 
-		arg_11_0._finishedCallback = nil
-		arg_11_0._finishedCallbackObj = nil
+		self._finishedCallback = nil
+		self._finishedCallbackObj = nil
 	end
 end
 
-function var_0_0._clearEffs(arg_12_0)
-	arg_12_0:_setBlurLevel(1)
-	arg_12_0:_setViewTop(false)
+function StoryBgEffsEagleEye:_clearEffs()
+	self:_setBlurLevel(1)
+	self:_setViewTop(false)
 
-	if arg_12_0._eagleCtrl then
-		arg_12_0._eagleCtrl.float_01 = 0
-		arg_12_0._eagleCtrl.float_02 = 0.001
-		arg_12_0._eagleCtrl = nil
+	if self._eagleCtrl then
+		self._eagleCtrl.float_01 = 0
+		self._eagleCtrl.float_02 = 0.001
+		self._eagleCtrl = nil
 	end
 
-	if arg_12_0._eagleEyeGo then
-		gohelper.destroy(arg_12_0._eagleEyeGo)
+	if self._eagleEyeGo then
+		gohelper.destroy(self._eagleEyeGo)
 
-		arg_12_0._eagleEyeGo = nil
+		self._eagleEyeGo = nil
 	end
 
-	arg_12_0._finishedCallback = nil
-	arg_12_0._finishedCallbackObj = nil
+	self._finishedCallback = nil
+	self._finishedCallbackObj = nil
 end
 
-function var_0_0.destroy(arg_13_0)
-	var_0_0.super.destroy(arg_13_0)
+function StoryBgEffsEagleEye:destroy()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, self._onOpenView, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, self._onCloseView, self)
+	StoryBgEffsEagleEye.super.destroy(self)
 
-	if arg_13_0._eyeTweenId then
-		ZProj.TweenHelper.KillById(arg_13_0._eyeTweenId)
+	if self._eyeTweenId then
+		ZProj.TweenHelper.KillById(self._eyeTweenId)
 
-		arg_13_0._eyeTweenId = nil
+		self._eyeTweenId = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_13_0.onEffKeepFinished, arg_13_0)
-	arg_13_0:_clearEffs()
+	TaskDispatcher.cancelTask(self.onEffKeepFinished, self)
+	self:_clearEffs()
 end
 
-return var_0_0
+return StoryBgEffsEagleEye

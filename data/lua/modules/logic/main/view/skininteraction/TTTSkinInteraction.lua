@@ -1,91 +1,95 @@
-﻿module("modules.logic.main.view.skininteraction.TTTSkinInteraction", package.seeall)
+﻿-- chunkname: @modules/logic/main/view/skininteraction/TTTSkinInteraction.lua
 
-local var_0_0 = class("TTTSkinInteraction", BaseSkinInteraction)
+module("modules.logic.main.view.skininteraction.TTTSkinInteraction", package.seeall)
 
-function var_0_0._onInit(arg_1_0)
-	arg_1_0._tvOff = false
-	arg_1_0._closeEffectList = nil
+local TTTSkinInteraction = class("TTTSkinInteraction", BaseSkinInteraction)
+
+function TTTSkinInteraction:_onInit()
+	self._tvOff = false
+	self._closeEffectList = nil
 end
 
-function var_0_0.isPlayingVoice(arg_2_0)
-	return arg_2_0._tvOff
+function TTTSkinInteraction:isPlayingVoice()
+	return self._tvOff
 end
 
-function var_0_0.onCloseFullView(arg_3_0)
-	arg_3_0:_openTv()
+function TTTSkinInteraction:onCloseFullView()
+	self:_openTv()
 end
 
-function var_0_0._onClick(arg_4_0, arg_4_1)
-	if not arg_4_0:_checkPosInBound(arg_4_1) then
+function TTTSkinInteraction:_onClick(pos)
+	if not self:_checkPosInBound(pos) then
 		return
 	end
 
-	arg_4_0._lightSpine = arg_4_0._view._lightSpine
+	self._lightSpine = self._view._lightSpine
 
-	local var_4_0 = CommonConfig.instance:getConstNum(ConstEnum.TTTCloseTv) / 100
+	local closeProb = CommonConfig.instance:getConstNum(ConstEnum.TTTCloseTv) / 100
 
-	if not arg_4_0._tvOff and var_4_0 > math.random() then
-		local var_4_1 = arg_4_0._lightSpine:getSpineGo()
+	if not self._tvOff and closeProb > math.random() then
+		local go = self._lightSpine:getSpineGo()
 
-		arg_4_0._tvOff = true
+		self._tvOff = true
 
-		TaskDispatcher.cancelTask(arg_4_0._hideCloseEffects, arg_4_0)
+		TaskDispatcher.cancelTask(self._hideCloseEffects, self)
 
-		arg_4_0._closeEffectList = arg_4_0._closeEffectList or arg_4_0._view:getUserDataTb_()
+		self._closeEffectList = self._closeEffectList or self._view:getUserDataTb_()
 
-		local var_4_2 = gohelper.findChild(var_4_1, "mountroot").transform
-		local var_4_3 = var_4_2.childCount
+		local mountroot = gohelper.findChild(go, "mountroot")
+		local transform = mountroot.transform
+		local childCount = transform.childCount
 
-		for iter_4_0 = 1, var_4_3 do
-			local var_4_4 = var_4_2:GetChild(iter_4_0 - 1)
+		for i = 1, childCount do
+			local child = transform:GetChild(i - 1)
 
-			for iter_4_1 = 1, var_4_4.childCount do
-				local var_4_5 = var_4_4:GetChild(iter_4_1 - 1)
+			for j = 1, child.childCount do
+				local effectGo = child:GetChild(j - 1)
 
-				if string.find(var_4_5.name, "close") then
-					gohelper.setActive(var_4_5.gameObject, true)
+				if string.find(effectGo.name, "close") then
+					gohelper.setActive(effectGo.gameObject, true)
 
-					arg_4_0._closeEffectList[iter_4_0] = var_4_5.gameObject
+					self._closeEffectList[i] = effectGo.gameObject
 				else
-					gohelper.setActive(var_4_5.gameObject, false)
+					gohelper.setActive(effectGo.gameObject, false)
 				end
 			end
 		end
 
-		if arg_4_0._lightSpine then
-			arg_4_0._lightSpine:stopVoice()
+		if self._lightSpine then
+			self._lightSpine:stopVoice()
 		end
 
 		return
 	end
 
-	if arg_4_0:_openTv() then
+	if self:_openTv() then
 		return
 	end
 
-	arg_4_0:_clickDefault(arg_4_1)
+	self:_clickDefault(pos)
 end
 
-function var_0_0._openTv(arg_5_0)
-	if arg_5_0._tvOff then
-		arg_5_0._tvOff = false
+function TTTSkinInteraction:_openTv()
+	if self._tvOff then
+		self._tvOff = false
 
-		local var_5_0 = arg_5_0._lightSpine:getSpineGo()
+		local go = self._lightSpine:getSpineGo()
 
-		TaskDispatcher.cancelTask(arg_5_0._hideCloseEffects, arg_5_0)
-		TaskDispatcher.runDelay(arg_5_0._hideCloseEffects, arg_5_0, 0.2)
+		TaskDispatcher.cancelTask(self._hideCloseEffects, self)
+		TaskDispatcher.runDelay(self._hideCloseEffects, self, 0.2)
 
-		local var_5_1 = gohelper.findChild(var_5_0, "mountroot").transform
-		local var_5_2 = var_5_1.childCount
+		local mountroot = gohelper.findChild(go, "mountroot")
+		local transform = mountroot.transform
+		local childCount = transform.childCount
 
-		for iter_5_0 = 1, var_5_2 do
-			local var_5_3 = var_5_1:GetChild(iter_5_0 - 1)
+		for i = 1, childCount do
+			local child = transform:GetChild(i - 1)
 
-			for iter_5_1 = 1, var_5_3.childCount do
-				local var_5_4 = var_5_3:GetChild(iter_5_1 - 1)
+			for j = 1, child.childCount do
+				local effectGo = child:GetChild(j - 1)
 
-				if not string.find(var_5_4.name, "close") then
-					gohelper.setActive(var_5_4.gameObject, true)
+				if not string.find(effectGo.name, "close") then
+					gohelper.setActive(effectGo.gameObject, true)
 				end
 			end
 		end
@@ -94,17 +98,17 @@ function var_0_0._openTv(arg_5_0)
 	end
 end
 
-function var_0_0._hideCloseEffects(arg_6_0)
-	for iter_6_0, iter_6_1 in pairs(arg_6_0._closeEffectList) do
-		gohelper.setActive(iter_6_1, false)
+function TTTSkinInteraction:_hideCloseEffects()
+	for i, v in pairs(self._closeEffectList) do
+		gohelper.setActive(v, false)
 	end
 end
 
-function var_0_0._onDestroy(arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0._hideCloseEffects, arg_7_0)
+function TTTSkinInteraction:_onDestroy()
+	TaskDispatcher.cancelTask(self._hideCloseEffects, self)
 
-	arg_7_0._closeEffectList = nil
-	arg_7_0._lightSpine = nil
+	self._closeEffectList = nil
+	self._lightSpine = nil
 end
 
-return var_0_0
+return TTTSkinInteraction

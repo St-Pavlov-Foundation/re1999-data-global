@@ -1,97 +1,99 @@
-﻿module("modules.logic.investigate.view.InvestigateOpinionTabViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/investigate/view/InvestigateOpinionTabViewContainer.lua
 
-local var_0_0 = class("InvestigateOpinionTabViewContainer", BaseViewContainer)
+module("modules.logic.investigate.view.InvestigateOpinionTabViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local InvestigateOpinionTabViewContainer = class("InvestigateOpinionTabViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, InvestigateOpinionTabView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "root/#go_topleft"))
+function InvestigateOpinionTabViewContainer:buildViews()
+	local views = {}
 
-	arg_1_0._tabViewGroupFit = TabViewGroupFit.New(2, "root/#go_container")
+	table.insert(views, InvestigateOpinionTabView.New())
+	table.insert(views, TabViewGroup.New(1, "root/#go_topleft"))
 
-	arg_1_0._tabViewGroupFit:keepCloseVisible(true)
-	arg_1_0._tabViewGroupFit:setTabCloseFinishCallback(arg_1_0._onTabCloseFinish, arg_1_0)
-	arg_1_0._tabViewGroupFit:setTabOpenFinishCallback(arg_1_0._onTabOpenFinish, arg_1_0)
-	table.insert(var_1_0, arg_1_0._tabViewGroupFit)
+	self._tabViewGroupFit = TabViewGroupFit.New(2, "root/#go_container")
 
-	return var_1_0
+	self._tabViewGroupFit:keepCloseVisible(true)
+	self._tabViewGroupFit:setTabCloseFinishCallback(self._onTabCloseFinish, self)
+	self._tabViewGroupFit:setTabOpenFinishCallback(self._onTabOpenFinish, self)
+	table.insert(views, self._tabViewGroupFit)
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function InvestigateOpinionTabViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 
-	if arg_2_1 == 2 then
-		arg_2_0._commonView = InvestigateOpinionCommonView.New()
-		arg_2_0._commonExtendView = InvestigateOpinionCommonView.New()
+	if tabContainerId == 2 then
+		self._commonView = InvestigateOpinionCommonView.New()
+		self._commonExtendView = InvestigateOpinionCommonView.New()
 
-		arg_2_0._commonExtendView:setInExtendView(true)
+		self._commonExtendView:setInExtendView(true)
 
-		arg_2_0._opinionView = InvestigateOpinionView.New()
-		arg_2_0._opinionExtendView = InvestigateOpinionExtendView.New()
+		self._opinionView = InvestigateOpinionView.New()
+		self._opinionExtendView = InvestigateOpinionExtendView.New()
 
 		return {
 			MultiView.New({
-				arg_2_0._commonView,
-				arg_2_0._opinionView
+				self._commonView,
+				self._opinionView
 			}),
 			MultiView.New({
-				arg_2_0._commonExtendView,
-				arg_2_0._opinionExtendView
+				self._commonExtendView,
+				self._opinionExtendView
 			})
 		}
 	end
 end
 
-function var_0_0.getCurTabId(arg_3_0)
-	return arg_3_0._tabViewGroupFit:getCurTabId()
+function InvestigateOpinionTabViewContainer:getCurTabId()
+	return self._tabViewGroupFit:getCurTabId()
 end
 
-function var_0_0.switchTab(arg_4_0, arg_4_1)
-	arg_4_0:dispatchEvent(ViewEvent.ToSwitchTab, 2, arg_4_1)
+function InvestigateOpinionTabViewContainer:switchTab(tabId)
+	self:dispatchEvent(ViewEvent.ToSwitchTab, 2, tabId)
 end
 
-function var_0_0._onTabCloseFinish(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0._closeTabId = arg_5_1
+function InvestigateOpinionTabViewContainer:_onTabCloseFinish(tabId, tabView)
+	self._closeTabId = tabId
 
-	arg_5_0._tabViewGroupFit:setTabAlpha(arg_5_1, 1)
+	self._tabViewGroupFit:setTabAlpha(tabId, 1)
 end
 
-function var_0_0._onTabOpenFinish(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	arg_6_0._openTabId = arg_6_1
+function InvestigateOpinionTabViewContainer:_onTabOpenFinish(tabId, tabView, isFirstOpen)
+	self._openTabId = tabId
 
-	if arg_6_0._closeTabId == arg_6_0._openTabId then
+	if self._closeTabId == self._openTabId then
 		return
 	end
 
-	if arg_6_1 == 1 then
-		gohelper.setAsFirstSibling(arg_6_2.viewGO)
+	if tabId == 1 then
+		gohelper.setAsFirstSibling(tabView.viewGO)
 
-		if arg_6_0._closeTabId then
-			arg_6_0._opinionExtendView:playAnim("gone", arg_6_0._onAnimDone, arg_6_0)
+		if self._closeTabId then
+			self._opinionExtendView:playAnim("gone", self._onAnimDone, self)
 		end
 	else
-		gohelper.setAsLastSibling(arg_6_2.viewGO)
-		arg_6_0._opinionExtendView:playAnim("into", arg_6_0._onAnimDone, arg_6_0)
+		gohelper.setAsLastSibling(tabView.viewGO)
+		self._opinionExtendView:playAnim("into", self._onAnimDone, self)
 	end
 end
 
-function var_0_0._onAnimDone(arg_7_0)
-	if arg_7_0._openTabId == 1 then
-		arg_7_0._tabViewGroupFit:setTabAlpha(2, 0)
+function InvestigateOpinionTabViewContainer:_onAnimDone()
+	if self._openTabId == 1 then
+		self._tabViewGroupFit:setTabAlpha(2, 0)
 	else
-		arg_7_0._tabViewGroupFit:setTabAlpha(1, 0)
+		self._tabViewGroupFit:setTabAlpha(1, 0)
 	end
 end
 
-return var_0_0
+return InvestigateOpinionTabViewContainer

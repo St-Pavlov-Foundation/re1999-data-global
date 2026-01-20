@@ -1,25 +1,27 @@
-﻿module("modules.logic.activity.model.ActivityType172InfoMo", package.seeall)
+﻿-- chunkname: @modules/logic/activity/model/ActivityType172InfoMo.lua
 
-local var_0_0 = pureTable("ActivityType172InfoMo")
+module("modules.logic.activity.model.ActivityType172InfoMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.useItemTaskIds = {}
+local ActivityType172InfoMo = pureTable("ActivityType172InfoMo")
+
+function ActivityType172InfoMo:ctor()
+	self.useItemTaskIds = {}
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.useItemTaskIds = {}
+function ActivityType172InfoMo:init(taskIds)
+	self.useItemTaskIds = {}
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_1) do
-		table.insert(arg_2_0.useItemTaskIds, iter_2_1)
+	for _, v in ipairs(taskIds) do
+		table.insert(self.useItemTaskIds, v)
 	end
 end
 
-function var_0_0.update(arg_3_0, arg_3_1)
-	arg_3_0.useItemTaskIds = {}
+function ActivityType172InfoMo:update(taskIds)
+	self.useItemTaskIds = {}
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
-		table.insert(arg_3_0.useItemTaskIds, iter_3_1)
+	for _, v in ipairs(taskIds) do
+		table.insert(self.useItemTaskIds, v)
 	end
 end
 
-return var_0_0
+return ActivityType172InfoMo

@@ -1,42 +1,44 @@
-﻿module("modules.logic.versionactivity2_2.enter.view.subview.V2a2_EliminateEnterView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/enter/view/subview/V2a2_EliminateEnterView.lua
 
-local var_0_0 = class("V2a2_EliminateEnterView", VersionActivityEnterBaseSubView)
+module("modules.logic.versionactivity2_2.enter.view.subview.V2a2_EliminateEnterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtLimitTime = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/image_LimitTimeBG/#txt_LimitTime")
-	arg_1_0._txtDescr = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/#txt_Descr")
-	arg_1_0._txtunlocked = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/#btn_Locked/#txt_UnLocked")
-	arg_1_0._btnEnter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Enter")
-	arg_1_0._gored = gohelper.findChild(arg_1_0.viewGO, "Right/#btn_Enter/#go_reddot")
-	arg_1_0._btnLocked = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Locked")
+local V2a2_EliminateEnterView = class("V2a2_EliminateEnterView", VersionActivityEnterBaseSubView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V2a2_EliminateEnterView:onInitView()
+	self._txtLimitTime = gohelper.findChildTextMesh(self.viewGO, "Right/image_LimitTimeBG/#txt_LimitTime")
+	self._txtDescr = gohelper.findChildTextMesh(self.viewGO, "Right/#txt_Descr")
+	self._txtunlocked = gohelper.findChildTextMesh(self.viewGO, "Right/#btn_Locked/#txt_UnLocked")
+	self._btnEnter = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_Enter")
+	self._gored = gohelper.findChild(self.viewGO, "Right/#btn_Enter/#go_reddot")
+	self._btnLocked = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_Locked")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnEnter:AddClickListener(arg_2_0._enterGame, arg_2_0)
-	arg_2_0._btnLocked:AddClickListener(arg_2_0._clickLock, arg_2_0)
+function V2a2_EliminateEnterView:addEvents()
+	self._btnEnter:AddClickListener(self._enterGame, self)
+	self._btnLocked:AddClickListener(self._clickLock, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnEnter:RemoveClickListener()
-	arg_3_0._btnLocked:RemoveClickListener()
+function V2a2_EliminateEnterView:removeEvents()
+	self._btnEnter:RemoveClickListener()
+	self._btnLocked:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0.actCo = ActivityConfig.instance:getActivityCo(VersionActivity2_2Enum.ActivityId.Eliminate)
-	arg_4_0._txtDescr.text = arg_4_0.actCo.actDesc
-	arg_4_0._txtunlocked.text = lua_toast.configDict[ToastEnum.EliminateLockDungeon].tips
+function V2a2_EliminateEnterView:_editableInitView()
+	self.actCo = ActivityConfig.instance:getActivityCo(VersionActivity2_2Enum.ActivityId.Eliminate)
+	self._txtDescr.text = self.actCo.actDesc
+	self._txtunlocked.text = lua_toast.configDict[ToastEnum.EliminateLockDungeon].tips
 end
 
-function var_0_0.onOpen(arg_5_0)
-	var_0_0.super.onOpen(arg_5_0)
-	arg_5_0:_refreshTime()
+function V2a2_EliminateEnterView:onOpen()
+	V2a2_EliminateEnterView.super.onOpen(self)
+	self:_refreshTime()
 end
 
-function var_0_0._enterGame(arg_6_0)
+function V2a2_EliminateEnterView:_enterGame()
 	if not OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Eliminate) then
 		GameFacade.showToast(ToastEnum.EliminateLockDungeon)
 
@@ -46,61 +48,61 @@ function var_0_0._enterGame(arg_6_0)
 	EliminateMapController.instance:openEliminateMapView()
 end
 
-function var_0_0._onRecvMsg(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	if arg_7_2 == 0 then
+function V2a2_EliminateEnterView:_onRecvMsg(cmd, resultCode, msg)
+	if resultCode == 0 then
 		-- block empty
 	end
 end
 
-function var_0_0._clickLock(arg_8_0)
-	local var_8_0, var_8_1 = OpenHelper.getToastIdAndParam(arg_8_0.actCo.openId)
+function V2a2_EliminateEnterView:_clickLock()
+	local toastId, toastParamList = OpenHelper.getToastIdAndParam(self.actCo.openId)
 
-	if var_8_0 and var_8_0 ~= 0 then
+	if toastId and toastId ~= 0 then
 		GameFacade.showToast(ToastEnum.EliminateLockDungeon)
 	end
 end
 
-function var_0_0._clickTrial(arg_9_0)
+function V2a2_EliminateEnterView:_clickTrial()
 	if ActivityHelper.getActivityStatus(VersionActivity2_2Enum.ActivityId.Eliminate) == ActivityEnum.ActivityStatus.Normal then
-		local var_9_0 = arg_9_0.actCo.tryoutEpisode
+		local episodeId = self.actCo.tryoutEpisode
 
-		if var_9_0 <= 0 then
+		if episodeId <= 0 then
 			logError("没有配置对应的试用关卡")
 
 			return
 		end
 
-		local var_9_1 = DungeonConfig.instance:getEpisodeCO(var_9_0)
+		local config = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-		DungeonFightController.instance:enterFight(var_9_1.chapterId, var_9_0)
+		DungeonFightController.instance:enterFight(config.chapterId, episodeId)
 	else
-		arg_9_0:_clickLock()
+		self:_clickLock()
 	end
 end
 
-function var_0_0.everySecondCall(arg_10_0)
-	arg_10_0:_refreshTime()
+function V2a2_EliminateEnterView:everySecondCall()
+	self:_refreshTime()
 end
 
-function var_0_0._refreshTime(arg_11_0)
-	local var_11_0 = ActivityModel.instance:getActivityInfo()[VersionActivity2_2Enum.ActivityId.Eliminate]
+function V2a2_EliminateEnterView:_refreshTime()
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[VersionActivity2_2Enum.ActivityId.Eliminate]
 
-	if var_11_0 then
-		local var_11_1 = var_11_0:getRealEndTimeStamp() - ServerTime.now()
+	if actInfoMo then
+		local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
 
-		gohelper.setActive(arg_11_0._txtLimitTime.gameObject, var_11_1 > 0)
+		gohelper.setActive(self._txtLimitTime.gameObject, offsetSecond > 0)
 
-		if var_11_1 > 0 then
-			local var_11_2 = TimeUtil.SecondToActivityTimeFormat(var_11_1)
+		if offsetSecond > 0 then
+			local dateStr = TimeUtil.SecondToActivityTimeFormat(offsetSecond)
 
-			arg_11_0._txtLimitTime.text = var_11_2
+			self._txtLimitTime.text = dateStr
 		end
 
-		local var_11_3 = ActivityHelper.getActivityStatus(VersionActivity2_2Enum.ActivityId.Eliminate) ~= ActivityEnum.ActivityStatus.Normal
+		local isLock = ActivityHelper.getActivityStatus(VersionActivity2_2Enum.ActivityId.Eliminate) ~= ActivityEnum.ActivityStatus.Normal
 
-		gohelper.setActive(arg_11_0._btnEnter, not var_11_3)
-		gohelper.setActive(arg_11_0._btnLocked, var_11_3)
+		gohelper.setActive(self._btnEnter, not isLock)
+		gohelper.setActive(self._btnLocked, isLock)
 	end
 end
 
-return var_0_0
+return V2a2_EliminateEnterView

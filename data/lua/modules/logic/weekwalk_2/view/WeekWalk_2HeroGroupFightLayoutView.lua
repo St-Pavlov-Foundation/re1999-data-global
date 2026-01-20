@@ -1,9 +1,11 @@
-﻿module("modules.logic.weekwalk_2.view.WeekWalk_2HeroGroupFightLayoutView", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk_2/view/WeekWalk_2HeroGroupFightLayoutView.lua
 
-local var_0_0 = class("WeekWalk_2HeroGroupFightLayoutView", HeroGroupFightLayoutView)
+module("modules.logic.weekwalk_2.view.WeekWalk_2HeroGroupFightLayoutView", package.seeall)
 
-function var_0_0.checkNeedSetOffset(arg_1_0)
+local WeekWalk_2HeroGroupFightLayoutView = class("WeekWalk_2HeroGroupFightLayoutView", HeroGroupFightLayoutView)
+
+function WeekWalk_2HeroGroupFightLayoutView:checkNeedSetOffset()
 	return true
 end
 
-return var_0_0
+return WeekWalk_2HeroGroupFightLayoutView

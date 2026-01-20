@@ -1,174 +1,180 @@
-﻿module("modules.logic.versionactivity2_2.act101.view.VersionActivity2_2RoomSignView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/act101/view/VersionActivity2_2RoomSignView.lua
 
-local var_0_0 = class("VersionActivity2_2RoomSignView", BaseView)
+module("modules.logic.versionactivity2_2.act101.view.VersionActivity2_2RoomSignView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtLimitTime = gohelper.findChildTextMesh(arg_1_0.viewGO, "timebg/#txt_LimitTime")
-	arg_1_0._goScroll = gohelper.findChild(arg_1_0.viewGO, "#scroll_ItemList")
-	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "#scroll_ItemList/Viewport/Content")
-	arg_1_0.itemList = {}
+local VersionActivity2_2RoomSignView = class("VersionActivity2_2RoomSignView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity2_2RoomSignView:onInitView()
+	self._txtLimitTime = gohelper.findChildTextMesh(self.viewGO, "timebg/#txt_LimitTime")
+	self._goScroll = gohelper.findChild(self.viewGO, "#scroll_ItemList")
+	self._goContent = gohelper.findChild(self.viewGO, "#scroll_ItemList/Viewport/Content")
+	self.itemList = {}
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(Activity125Controller.instance, Activity125Event.DataUpdate, arg_2_0._onRefresh, arg_2_0)
+function VersionActivity2_2RoomSignView:addEvents()
+	self:addEventCb(Activity125Controller.instance, Activity125Event.DataUpdate, self._onRefresh, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(Activity125Controller.instance, Activity125Event.DataUpdate, arg_3_0._onRefresh, arg_3_0)
+function VersionActivity2_2RoomSignView:removeEvents()
+	self:removeEventCb(Activity125Controller.instance, Activity125Event.DataUpdate, self._onRefresh, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function VersionActivity2_2RoomSignView:_editableInitView()
 	return
 end
 
-function var_0_0._onRefresh(arg_5_0)
-	arg_5_0:refreshView()
+function VersionActivity2_2RoomSignView:_onRefresh()
+	self:refreshView()
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
-	arg_6_0:refreshView()
+function VersionActivity2_2RoomSignView:onUpdateParam()
+	self:refreshView()
 end
 
-function var_0_0.onOpen(arg_7_0)
-	local var_7_0 = arg_7_0.viewParam.parent
+function VersionActivity2_2RoomSignView:onOpen()
+	local parentGO = self.viewParam.parent
 
-	arg_7_0._actId = arg_7_0.viewParam.actId
+	self._actId = self.viewParam.actId
 
-	gohelper.addChild(var_7_0, arg_7_0.viewGO)
+	gohelper.addChild(parentGO, self.viewGO)
 
-	arg_7_0.isFirstOpen = true
+	self.isFirstOpen = true
 
-	arg_7_0:refreshView()
-	arg_7_0:moveLast()
+	self:refreshView()
+	self:moveLast()
 end
 
-function var_0_0.refreshView(arg_8_0)
-	if arg_8_0.isFirstOpen then
-		arg_8_0.isFirstOpen = false
+function VersionActivity2_2RoomSignView:refreshView()
+	if self.isFirstOpen then
+		self.isFirstOpen = false
 
-		arg_8_0:refreshItemListDelay()
+		self:refreshItemListDelay()
 	else
-		arg_8_0:refreshItemList()
+		self:refreshItemList()
 	end
 
-	arg_8_0:_showDeadline()
+	self:_showDeadline()
 end
 
-function var_0_0.refreshItemList(arg_9_0)
-	if arg_9_0.curIndex then
+function VersionActivity2_2RoomSignView:refreshItemList()
+	if self.curIndex then
 		return
 	end
 
-	local var_9_0 = Activity125Model.instance:getById(arg_9_0._actId)
-	local var_9_1 = var_9_0:getEpisodeList()
-	local var_9_2 = #var_9_1
+	local mo = Activity125Model.instance:getById(self._actId)
+	local list = mo:getEpisodeList()
+	local count = #list
 
-	for iter_9_0 = 1, math.max(#arg_9_0.itemList, var_9_2) do
-		local var_9_3 = arg_9_0.itemList[iter_9_0]
+	for i = 1, math.max(#self.itemList, count) do
+		local item = self.itemList[i]
 
-		if not var_9_3 then
-			local var_9_4 = arg_9_0:getResInst(arg_9_0.viewContainer:getSetting().otherRes[1], arg_9_0._goContent)
+		if not item then
+			local itemIconGO = self:getResInst(self.viewContainer:getSetting().otherRes[1], self._goContent)
 
-			var_9_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_9_4, VersionActivity2_2RoomSignItem)
-			var_9_3._index = iter_9_0
-			arg_9_0.itemList[iter_9_0] = var_9_3
+			item = MonoHelper.addNoUpdateLuaComOnceToGo(itemIconGO, VersionActivity2_2RoomSignItem)
+			item._index = i
+			self.itemList[i] = item
 		end
 
-		var_9_3:onUpdateMO(var_9_1[iter_9_0], var_9_0)
+		item:onUpdateMO(list[i], mo)
 	end
 end
 
-function var_0_0.refreshItemListDelay(arg_10_0)
-	arg_10_0.curIndex = 0
+function VersionActivity2_2RoomSignView:refreshItemListDelay()
+	self.curIndex = 0
 
-	TaskDispatcher.cancelTask(arg_10_0._refreshCurItem, arg_10_0)
-	TaskDispatcher.runRepeat(arg_10_0._refreshCurItem, arg_10_0, 0.06)
+	TaskDispatcher.cancelTask(self._refreshCurItem, self)
+	TaskDispatcher.runRepeat(self._refreshCurItem, self, 0.06)
 end
 
-function var_0_0._refreshCurItem(arg_11_0)
-	arg_11_0.curIndex = arg_11_0.curIndex + 1
+function VersionActivity2_2RoomSignView:_refreshCurItem()
+	self.curIndex = self.curIndex + 1
 
-	local var_11_0 = Activity125Model.instance:getById(arg_11_0._actId)
-	local var_11_1 = var_11_0:getEpisodeList()[arg_11_0.curIndex]
+	local mo = Activity125Model.instance:getById(self._actId)
+	local list = mo:getEpisodeList()
+	local data = list[self.curIndex]
 
-	if var_11_1 then
-		arg_11_0:refreshItem(arg_11_0.curIndex, var_11_1, var_11_0)
+	if data then
+		self:refreshItem(self.curIndex, data, mo)
 	else
-		arg_11_0.curIndex = nil
+		self.curIndex = nil
 
-		TaskDispatcher.cancelTask(arg_11_0._refreshCurItem, arg_11_0)
+		TaskDispatcher.cancelTask(self._refreshCurItem, self)
 	end
 end
 
-function var_0_0.refreshItem(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	local var_12_0 = arg_12_0.itemList[arg_12_1]
+function VersionActivity2_2RoomSignView:refreshItem(index, data, mo)
+	local item = self.itemList[index]
 
-	if not var_12_0 then
-		local var_12_1 = arg_12_0:getResInst(arg_12_0.viewContainer:getSetting().otherRes[1], arg_12_0._goContent)
+	if not item then
+		local itemIconGO = self:getResInst(self.viewContainer:getSetting().otherRes[1], self._goContent)
 
-		var_12_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_12_1, VersionActivity2_2RoomSignItem)
-		var_12_0._index = arg_12_1
-		arg_12_0.itemList[arg_12_1] = var_12_0
+		item = MonoHelper.addNoUpdateLuaComOnceToGo(itemIconGO, VersionActivity2_2RoomSignItem)
+		item._index = index
+		self.itemList[index] = item
 	end
 
-	var_12_0:onUpdateMO(arg_12_2, arg_12_3)
+	item:onUpdateMO(data, mo)
 end
 
-function var_0_0.moveLast(arg_13_0)
-	local var_13_0 = Activity125Model.instance:getById(arg_13_0._actId)
-	local var_13_1 = var_13_0:getEpisodeList()
-	local var_13_2 = 1
+function VersionActivity2_2RoomSignView:moveLast()
+	local mo = Activity125Model.instance:getById(self._actId)
+	local list = mo:getEpisodeList()
+	local index = 1
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_1) do
-		if var_13_0:isEpisodeDayOpen(iter_13_1.id) and not var_13_0:isEpisodeFinished(iter_13_1.id) then
-			var_13_2 = iter_13_0
+	for i, v in ipairs(list) do
+		if mo:isEpisodeDayOpen(v.id) and not mo:isEpisodeFinished(v.id) then
+			index = i
 
 			break
 		end
 	end
 
-	local var_13_3 = 0
-	local var_13_4 = arg_13_0:getMaxScrollX()
-	local var_13_5 = 476
-	local var_13_6 = 30
-	local var_13_7 = math.max(0, var_13_3 + (var_13_2 - 1) * (var_13_5 + var_13_6))
-	local var_13_8 = math.min(var_13_4, var_13_7)
+	local startSpace = 0
+	local maxScrollX = self:getMaxScrollX()
+	local cellWidth = 476
+	local cellSpaceH = 30
+	local scrollPixel = math.max(0, startSpace + (index - 1) * (cellWidth + cellSpaceH))
+	local posX = math.min(maxScrollX, scrollPixel)
 
-	recthelper.setAnchorX(arg_13_0._goContent.transform, -var_13_8)
+	recthelper.setAnchorX(self._goContent.transform, -posX)
 end
 
-function var_0_0.getMaxScrollX(arg_14_0)
-	local var_14_0 = recthelper.getWidth(arg_14_0._goScroll.transform)
-	local var_14_1 = 506 * #Activity125Model.instance:getById(arg_14_0._actId):getEpisodeList() - 12
+function VersionActivity2_2RoomSignView:getMaxScrollX()
+	local viewportW = recthelper.getWidth(self._goScroll.transform)
+	local mo = Activity125Model.instance:getById(self._actId)
+	local list = mo:getEpisodeList()
+	local count = #list
+	local maxContentW = 506 * count - 12
 
-	recthelper.setWidth(arg_14_0._goContent.transform, var_14_1)
+	recthelper.setWidth(self._goContent.transform, maxContentW)
 
-	return math.max(0, var_14_1 - var_14_0)
+	return math.max(0, maxContentW - viewportW)
 end
 
-function var_0_0._showDeadline(arg_15_0)
-	arg_15_0:_onRefreshDeadline()
-	TaskDispatcher.cancelTask(arg_15_0._onRefreshDeadline, arg_15_0)
-	TaskDispatcher.runRepeat(arg_15_0._onRefreshDeadline, arg_15_0, 60)
+function VersionActivity2_2RoomSignView:_showDeadline()
+	self:_onRefreshDeadline()
+	TaskDispatcher.cancelTask(self._onRefreshDeadline, self)
+	TaskDispatcher.runRepeat(self._onRefreshDeadline, self, 60)
 end
 
-function var_0_0._onRefreshDeadline(arg_16_0)
-	arg_16_0._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(arg_16_0._actId)
+function VersionActivity2_2RoomSignView:_onRefreshDeadline()
+	self._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(self._actId)
 end
 
-function var_0_0.onClose(arg_17_0)
+function VersionActivity2_2RoomSignView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_18_0)
-	TaskDispatcher.cancelTask(arg_18_0._refreshCurItem, arg_18_0)
-	TaskDispatcher.cancelTask(arg_18_0._onRefreshDeadline, arg_18_0)
+function VersionActivity2_2RoomSignView:onDestroyView()
+	TaskDispatcher.cancelTask(self._refreshCurItem, self)
+	TaskDispatcher.cancelTask(self._onRefreshDeadline, self)
 
-	arg_18_0.itemList = nil
+	self.itemList = nil
 end
 
-return var_0_0
+return VersionActivity2_2RoomSignView

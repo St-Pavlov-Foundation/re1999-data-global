@@ -1,24 +1,26 @@
-﻿module("modules.logic.versionactivity3_1.towerdeep.controller.TowerDeepOperActController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/towerdeep/controller/TowerDeepOperActController.lua
 
-local var_0_0 = class("TowerDeepOperActController", BaseController)
+module("modules.logic.versionactivity3_1.towerdeep.controller.TowerDeepOperActController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local TowerDeepOperActController = class("TowerDeepOperActController", BaseController)
+
+function TowerDeepOperActController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function TowerDeepOperActController:reInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_3_0)
+function TowerDeepOperActController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_4_0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_4_0.dailyRefresh, arg_4_0)
+function TowerDeepOperActController:addConstEvents()
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self.dailyRefresh, self)
 end
 
-function var_0_0.dailyRefresh(arg_5_0)
+function TowerDeepOperActController:dailyRefresh()
 	if not ActivityModel.instance:isActOnLine(VersionActivity3_1Enum.ActivityId.TowerDeep) then
 		return
 	end
@@ -28,10 +30,10 @@ function var_0_0.dailyRefresh(arg_5_0)
 	})
 end
 
-function var_0_0.openTowerPanelView(arg_6_0)
+function TowerDeepOperActController:openTowerPanelView()
 	ViewMgr.instance:openView(ViewName.TowerDeepOperActPanelView)
 end
 
-var_0_0.instance = var_0_0.New()
+TowerDeepOperActController.instance = TowerDeepOperActController.New()
 
-return var_0_0
+return TowerDeepOperActController

@@ -1,220 +1,229 @@
-﻿module("modules.logic.fight.mgr.FightBuffTypeId2EffectMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/mgr/FightBuffTypeId2EffectMgr.lua
 
-local var_0_0 = class("FightBuffTypeId2EffectMgr", FightBaseClass)
+module("modules.logic.fight.mgr.FightBuffTypeId2EffectMgr", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0.effectDic = {}
-	arg_1_0.refCounter = {}
-	arg_1_0.posDic = {}
+local FightBuffTypeId2EffectMgr = class("FightBuffTypeId2EffectMgr", FightBaseClass)
 
-	arg_1_0:com_registFightEvent(FightEvent.AddEntityBuff, arg_1_0._onAddEntityBuff)
-	arg_1_0:com_registFightEvent(FightEvent.RemoveEntityBuff, arg_1_0._onRemoveEntityBuff)
-	arg_1_0:com_registFightEvent(FightEvent.OnFightReconnectLastWork, arg_1_0._onFightReconnectLastWork)
-	arg_1_0:com_registFightEvent(FightEvent.OnSkillPlayStart, arg_1_0._onSkillPlayStart)
-	arg_1_0:com_registFightEvent(FightEvent.OnSkillPlayFinish, arg_1_0._onSkillPlayFinish)
-	arg_1_0:com_registFightEvent(FightEvent.OnRoundSequenceFinish, arg_1_0._onOnRoundSequenceFinish)
-	arg_1_0:com_registFightEvent(FightEvent.SetBuffTypeIdSceneEffect, arg_1_0._onSetBuffTypeIdSceneEffect)
+function FightBuffTypeId2EffectMgr:onConstructor()
+	self.effectDic = {}
+	self.refCounter = {}
+	self.posDic = {}
+
+	self:com_registFightEvent(FightEvent.AddEntityBuff, self._onAddEntityBuff)
+	self:com_registFightEvent(FightEvent.RemoveEntityBuff, self._onRemoveEntityBuff)
+	self:com_registFightEvent(FightEvent.OnFightReconnectLastWork, self._onFightReconnectLastWork)
+	self:com_registFightEvent(FightEvent.OnSkillPlayStart, self._onSkillPlayStart)
+	self:com_registFightEvent(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish)
+	self:com_registFightEvent(FightEvent.OnRoundSequenceFinish, self._onOnRoundSequenceFinish)
+	self:com_registFightEvent(FightEvent.SetBuffTypeIdSceneEffect, self._onSetBuffTypeIdSceneEffect)
 end
 
-function var_0_0._isValid(arg_2_0, arg_2_1)
-	local var_2_0 = lua_skill_buff.configDict[arg_2_1]
+function FightBuffTypeId2EffectMgr:_isValid(buffId)
+	local buffConfig = lua_skill_buff.configDict[buffId]
 
-	if not var_2_0 then
+	if not buffConfig then
 		return
 	end
 
-	local var_2_1 = var_2_0.typeId
+	local buffTypeId = buffConfig.typeId
 
-	if not lua_fight_buff_type_id_2_scene_effect.configDict[var_2_1] then
+	if not lua_fight_buff_type_id_2_scene_effect.configDict[buffTypeId] then
 		return
 	end
 
-	return true, var_2_0
+	return true, buffConfig
 end
 
-function var_0_0._onAddEntityBuff(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0, var_3_1 = arg_3_0:_isValid(arg_3_2.buffId)
+function FightBuffTypeId2EffectMgr:_onAddEntityBuff(entityId, buffMO)
+	local valid, buffConfig = self:_isValid(buffMO.buffId)
 
-	if not var_3_0 then
+	if not valid then
 		return
 	end
 
-	arg_3_0:addBuff(arg_3_1, var_3_1.typeId)
+	self:addBuff(entityId, buffConfig.typeId)
 end
 
-function var_0_0._onRemoveEntityBuff(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0, var_4_1 = arg_4_0:_isValid(arg_4_2.buffId)
+function FightBuffTypeId2EffectMgr:_onRemoveEntityBuff(entityId, buffMO)
+	local valid, buffConfig = self:_isValid(buffMO.buffId)
 
-	if not var_4_0 then
+	if not valid then
 		return
 	end
 
-	arg_4_0:deleteBuff(var_4_1.typeId)
+	self:deleteBuff(buffConfig.typeId)
 end
 
-function var_0_0.addBuff(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = (arg_5_0.refCounter[arg_5_2] or 0) + 1
+function FightBuffTypeId2EffectMgr:addBuff(entityId, buffTypeId)
+	local counter = self.refCounter[buffTypeId] or 0
 
-	arg_5_0.refCounter[arg_5_2] = var_5_0
+	counter = counter + 1
+	self.refCounter[buffTypeId] = counter
 
-	if var_5_0 == 1 then
-		arg_5_0:addEffect(arg_5_1, arg_5_2)
+	if counter == 1 then
+		self:addEffect(entityId, buffTypeId)
 	end
 end
 
-function var_0_0.deleteBuff(arg_6_0, arg_6_1)
-	local var_6_0 = (arg_6_0.refCounter[arg_6_1] or 0) - 1
+function FightBuffTypeId2EffectMgr:deleteBuff(buffTypeId)
+	local counter = self.refCounter[buffTypeId] or 0
 
-	arg_6_0.refCounter[arg_6_1] = var_6_0
+	counter = counter - 1
+	self.refCounter[buffTypeId] = counter
 
-	if var_6_0 <= 0 then
-		arg_6_0:releaseEffect(arg_6_1)
+	if counter <= 0 then
+		self:releaseEffect(buffTypeId)
 	end
 end
 
-function var_0_0.addEffect(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = FightHelper.getEntity(FightEntityScene.MySideId)
+function FightBuffTypeId2EffectMgr:addEffect(entityId, buffTypeId)
+	local vertin = FightHelper.getEntity(FightEntityScene.MySideId)
 
-	if not var_7_0 then
+	if not vertin then
 		return
 	end
 
-	local var_7_1 = lua_fight_buff_type_id_2_scene_effect.configDict[arg_7_2]
+	local config = lua_fight_buff_type_id_2_scene_effect.configDict[buffTypeId]
 
-	if not var_7_1 then
+	if not config then
 		return
 	end
 
-	local var_7_2 = var_7_1.effect
-	local var_7_3 = var_7_1.pos
-	local var_7_4 = var_7_3[1] or 0
+	local effect = config.effect
+	local pos = config.pos
+	local posX = pos[1] or 0
 
-	if var_7_1.reverseX == 1 then
-		local var_7_5 = FightDataHelper.entityMgr:getById(arg_7_1)
+	if config.reverseX == 1 then
+		local entityMO = FightDataHelper.entityMgr:getById(entityId)
 
-		if var_7_5 and var_7_5:isEnemySide() then
-			var_7_4 = -var_7_4
+		if entityMO and entityMO:isEnemySide() then
+			posX = -posX
 		end
 	end
 
-	local var_7_6 = var_7_3[2] or 0
-	local var_7_7 = var_7_3[3] or 0
-	local var_7_8 = var_7_0.effect:addGlobalEffect(var_7_2)
+	local posY = pos[2] or 0
+	local posZ = pos[3] or 0
+	local effectWrap = vertin.effect:addGlobalEffect(effect)
 
-	var_7_8:setLocalPos(var_7_4, var_7_6, var_7_7)
+	effectWrap:setLocalPos(posX, posY, posZ)
 
-	arg_7_0.posDic[arg_7_2] = {
-		var_7_4,
-		var_7_6,
-		var_7_7
+	self.posDic[buffTypeId] = {
+		posX,
+		posY,
+		posZ
 	}
-	arg_7_0.effectDic[arg_7_2] = var_7_8
+	self.effectDic[buffTypeId] = effectWrap
 end
 
-function var_0_0.releaseEffect(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0.effectDic[arg_8_1]
+function FightBuffTypeId2EffectMgr:releaseEffect(buffTypeId)
+	local effectWrap = self.effectDic[buffTypeId]
 
-	if not var_8_0 then
+	if not effectWrap then
 		return
 	end
 
-	local var_8_1 = FightHelper.getEntity(FightEntityScene.MySideId)
+	local vertin = FightHelper.getEntity(FightEntityScene.MySideId)
 
-	if not var_8_1 then
+	if not vertin then
 		return
 	end
 
-	var_8_1.effect:removeEffect(var_8_0)
+	vertin.effect:removeEffect(effectWrap)
 
-	arg_8_0.effectDic[arg_8_1] = nil
+	self.effectDic[buffTypeId] = nil
 end
 
-function var_0_0._onFightReconnectLastWork(arg_9_0)
-	local var_9_0 = FightDataHelper.entityMgr:getAllEntityData()
+function FightBuffTypeId2EffectMgr:_onFightReconnectLastWork()
+	local entityDic = FightDataHelper.entityMgr:getAllEntityData()
 
-	for iter_9_0, iter_9_1 in pairs(var_9_0) do
-		local var_9_1 = iter_9_1:getBuffDic()
+	for uid, entityData in pairs(entityDic) do
+		local buffDic = entityData:getBuffDic()
 
-		for iter_9_2, iter_9_3 in pairs(var_9_1) do
-			arg_9_0:_onAddEntityBuff(iter_9_0, iter_9_3)
+		for buffUid, buff in pairs(buffDic) do
+			self:_onAddEntityBuff(uid, buff)
 		end
 	end
 end
 
-function var_0_0._onSkillPlayStart(arg_10_0, arg_10_1, arg_10_2)
-	if arg_10_1:getMO() and FightCardDataHelper.isBigSkill(arg_10_2) then
-		arg_10_0:_hideEffect()
+function FightBuffTypeId2EffectMgr:_onSkillPlayStart(entity, curSkillId)
+	local entityMO = entity:getMO()
+
+	if entityMO and FightCardDataHelper.isBigSkill(curSkillId) then
+		self:_hideEffect()
 	end
 end
 
-function var_0_0._onSkillPlayFinish(arg_11_0, arg_11_1, arg_11_2)
-	if arg_11_1:getMO() and FightCardDataHelper.isBigSkill(arg_11_2) then
-		arg_11_0:_showEffect()
+function FightBuffTypeId2EffectMgr:_onSkillPlayFinish(entity, curSkillId)
+	local entityMO = entity:getMO()
+
+	if entityMO and FightCardDataHelper.isBigSkill(curSkillId) then
+		self:_showEffect()
 	end
 end
 
-function var_0_0._onSetBuffTypeIdSceneEffect(arg_12_0, arg_12_1)
-	for iter_12_0, iter_12_1 in pairs(arg_12_0.effectDic) do
-		local var_12_0 = arg_12_0.posDic[iter_12_0]
-		local var_12_1 = arg_12_1 and var_12_0[1] or 9999
-		local var_12_2 = arg_12_1 and var_12_0[2] or 9999
-		local var_12_3 = arg_12_1 and var_12_0[3] or 9999
+function FightBuffTypeId2EffectMgr:_onSetBuffTypeIdSceneEffect(visible)
+	for k, effectWrap in pairs(self.effectDic) do
+		local pos = self.posDic[k]
+		local posX = visible and pos[1] or 9999
+		local posY = visible and pos[2] or 9999
+		local posZ = visible and pos[3] or 9999
 
-		iter_12_1:setLocalPos(var_12_1, var_12_2, var_12_3)
+		effectWrap:setLocalPos(posX, posY, posZ)
 	end
 end
 
-function var_0_0._hideEffect(arg_13_0)
-	for iter_13_0, iter_13_1 in pairs(arg_13_0.effectDic) do
-		iter_13_1:setActive(false, "FightBuffTypeId2EffectMgr")
+function FightBuffTypeId2EffectMgr:_hideEffect()
+	for k, effectWrap in pairs(self.effectDic) do
+		effectWrap:setActive(false, "FightBuffTypeId2EffectMgr")
 	end
 end
 
-function var_0_0._showEffect(arg_14_0)
-	for iter_14_0, iter_14_1 in pairs(arg_14_0.effectDic) do
-		iter_14_1:setActive(true, "FightBuffTypeId2EffectMgr")
+function FightBuffTypeId2EffectMgr:_showEffect()
+	for k, effectWrap in pairs(self.effectDic) do
+		effectWrap:setActive(true, "FightBuffTypeId2EffectMgr")
 	end
 end
 
-function var_0_0._onOnRoundSequenceFinish(arg_15_0)
-	if tabletool.len(arg_15_0.refCounter) <= 0 then
+function FightBuffTypeId2EffectMgr:_onOnRoundSequenceFinish()
+	if tabletool.len(self.refCounter) <= 0 then
 		return
 	end
 
-	local var_15_0 = {}
-	local var_15_1 = FightDataHelper.entityMgr:getAllEntityData()
+	local refTab = {}
+	local entityDic = FightDataHelper.entityMgr:getAllEntityData()
 
-	for iter_15_0, iter_15_1 in pairs(var_15_1) do
-		local var_15_2 = iter_15_1:getBuffDic()
+	for uid, entityData in pairs(entityDic) do
+		local buffDic = entityData:getBuffDic()
 
-		for iter_15_2, iter_15_3 in pairs(var_15_2) do
-			local var_15_3 = lua_skill_buff.configDict[iter_15_3.buffId]
+		for buffUid, buff in pairs(buffDic) do
+			local buffConfig = lua_skill_buff.configDict[buff.buffId]
 
-			if var_15_3 and lua_fight_buff_type_id_2_scene_effect.configDict[var_15_3.typeId] then
-				local var_15_4 = (var_15_0[var_15_3.typeId] or 0) + 1
+			if buffConfig and lua_fight_buff_type_id_2_scene_effect.configDict[buffConfig.typeId] then
+				local counter = refTab[buffConfig.typeId] or 0
 
-				var_15_0[var_15_3.typeId] = var_15_4
+				counter = counter + 1
+				refTab[buffConfig.typeId] = counter
 			end
 		end
 	end
 
-	if FightDataUtil.findDiff(arg_15_0.refCounter, var_15_0) then
-		arg_15_0:releaseAllEffect()
+	if FightDataUtil.findDiff(self.refCounter, refTab) then
+		self:releaseAllEffect()
 
-		arg_15_0.refCounter = {}
+		self.refCounter = {}
 
-		arg_15_0:_onFightReconnectLastWork()
+		self:_onFightReconnectLastWork()
 	end
 end
 
-function var_0_0.releaseAllEffect(arg_16_0)
-	for iter_16_0, iter_16_1 in pairs(arg_16_0.effectDic) do
-		arg_16_0:releaseEffect(iter_16_0)
+function FightBuffTypeId2EffectMgr:releaseAllEffect()
+	for buffTypeId, effectWrap in pairs(self.effectDic) do
+		self:releaseEffect(buffTypeId)
 	end
 end
 
-function var_0_0.onDestructor(arg_17_0)
+function FightBuffTypeId2EffectMgr:onDestructor()
 	return
 end
 
-return var_0_0
+return FightBuffTypeId2EffectMgr

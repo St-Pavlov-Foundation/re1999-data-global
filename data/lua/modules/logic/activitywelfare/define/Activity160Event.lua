@@ -1,8 +1,10 @@
-﻿module("modules.logic.activitywelfare.define.Activity160Event", package.seeall)
+﻿-- chunkname: @modules/logic/activitywelfare/define/Activity160Event.lua
 
-local var_0_0 = _M
+module("modules.logic.activitywelfare.define.Activity160Event", package.seeall)
 
-var_0_0.HasReadMail = 1
-var_0_0.InfoUpdate = 2
+local Activity160Event = _M
 
-return var_0_0
+Activity160Event.HasReadMail = 1
+Activity160Event.InfoUpdate = 2
+
+return Activity160Event

@@ -1,22 +1,24 @@
-﻿module("modules.logic.weekwalk.model.BattleInfoMO", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk/model/BattleInfoMO.lua
 
-local var_0_0 = pureTable("BattleInfoMO")
+module("modules.logic.weekwalk.model.BattleInfoMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.battleId = arg_1_1.battleId
-	arg_1_0.star = arg_1_1.star
-	arg_1_0.maxStar = arg_1_1.maxStar
-	arg_1_0.heroIds = {}
-	arg_1_0.heroGroupSelect = arg_1_1.heroGroupSelect or 0
-	arg_1_0.elementId = arg_1_1.elementId
+local BattleInfoMO = pureTable("BattleInfoMO")
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1.heroIds) do
-		table.insert(arg_1_0.heroIds, iter_1_1)
+function BattleInfoMO:init(info)
+	self.battleId = info.battleId
+	self.star = info.star
+	self.maxStar = info.maxStar
+	self.heroIds = {}
+	self.heroGroupSelect = info.heroGroupSelect or 0
+	self.elementId = info.elementId
+
+	for i, v in ipairs(info.heroIds) do
+		table.insert(self.heroIds, v)
 	end
 end
 
-function var_0_0.setIndex(arg_2_0, arg_2_1)
-	arg_2_0.index = arg_2_1
+function BattleInfoMO:setIndex(index)
+	self.index = index
 end
 
-return var_0_0
+return BattleInfoMO

@@ -1,68 +1,70 @@
-﻿module("modules.logic.weekwalk.view.WeekWalkLayerPage", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk/view/WeekWalkLayerPage.lua
 
-local var_0_0 = class("WeekWalkLayerPage", BaseChildView)
+module("modules.logic.weekwalk.view.WeekWalkLayerPage", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebgimg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bgimg")
-	arg_1_0._simageline = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_line")
-	arg_1_0._scrollview = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_view")
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#scroll_view/Viewport/#go_content")
-	arg_1_0._gopos5 = gohelper.findChild(arg_1_0.viewGO, "#scroll_view/Viewport/#go_content/#go_pos5")
-	arg_1_0._gopos3 = gohelper.findChild(arg_1_0.viewGO, "#scroll_view/Viewport/#go_content/#go_pos3")
-	arg_1_0._gotopblock = gohelper.findChild(arg_1_0.viewGO, "#go_topblock")
+local WeekWalkLayerPage = class("WeekWalkLayerPage", BaseChildView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function WeekWalkLayerPage:onInitView()
+	self._simagebgimg = gohelper.findChildSingleImage(self.viewGO, "#simage_bgimg")
+	self._simageline = gohelper.findChildSingleImage(self.viewGO, "#simage_line")
+	self._scrollview = gohelper.findChildScrollRect(self.viewGO, "#scroll_view")
+	self._gocontent = gohelper.findChild(self.viewGO, "#scroll_view/Viewport/#go_content")
+	self._gopos5 = gohelper.findChild(self.viewGO, "#scroll_view/Viewport/#go_content/#go_pos5")
+	self._gopos3 = gohelper.findChild(self.viewGO, "#scroll_view/Viewport/#go_content/#go_pos3")
+	self._gotopblock = gohelper.findChild(self.viewGO, "#go_topblock")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._scrollview:AddOnValueChanged(arg_2_0._setEdgFadeStrengthen, arg_2_0)
+function WeekWalkLayerPage:addEvents()
+	self._scrollview:AddOnValueChanged(self._setEdgFadeStrengthen, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._scrollview:RemoveOnValueChanged()
+function WeekWalkLayerPage:removeEvents()
+	self._scrollview:RemoveOnValueChanged()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._simageline:LoadImage(ResUrl.getWeekWalkBg("hw2.png"))
+function WeekWalkLayerPage:_editableInitView()
+	self._simageline:LoadImage(ResUrl.getWeekWalkBg("hw2.png"))
 
-	arg_4_0._animatorPlayer = SLFramework.AnimatorPlayer.Get(arg_4_0.viewGO)
-	arg_4_0._bgAnimation = arg_4_0._simagebgimg.gameObject:GetComponent(typeof(UnityEngine.Animation))
+	self._animatorPlayer = SLFramework.AnimatorPlayer.Get(self.viewGO)
+	self._bgAnimation = self._simagebgimg.gameObject:GetComponent(typeof(UnityEngine.Animation))
 end
 
-function var_0_0.removeScrollDragListener(arg_5_0, arg_5_1)
-	arg_5_1:RemoveDragBeginListener()
-	arg_5_1:RemoveDragEndListener()
-	arg_5_1:RemoveDragListener()
+function WeekWalkLayerPage:removeScrollDragListener(drag)
+	drag:RemoveDragBeginListener()
+	drag:RemoveDragEndListener()
+	drag:RemoveDragListener()
 end
 
-function var_0_0.initScrollDragListener(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_1:AddDragBeginListener(arg_6_0._onDragBegin, arg_6_0, arg_6_2)
-	arg_6_1:AddDragListener(arg_6_0._onDrag, arg_6_0, arg_6_2)
-	arg_6_1:AddDragEndListener(arg_6_0._onDragEnd, arg_6_0, arg_6_2)
+function WeekWalkLayerPage:initScrollDragListener(drag, scroll)
+	drag:AddDragBeginListener(self._onDragBegin, self, scroll)
+	drag:AddDragListener(self._onDrag, self, scroll)
+	drag:AddDragEndListener(self._onDragEnd, self, scroll)
 end
 
-function var_0_0._onScrollValueChanged(arg_7_0, arg_7_1, arg_7_2)
-	if not arg_7_0._curScroll then
+function WeekWalkLayerPage:_onScrollValueChanged(x, y)
+	if not self._curScroll then
 		return
 	end
 
-	local var_7_0 = arg_7_0._curScroll.horizontalNormalizedPosition
+	local scrollNormalizePos = self._curScroll.horizontalNormalizedPosition
 
-	if arg_7_0._curNormalizedPos and var_7_0 >= 0 and var_7_0 <= 1 then
-		local var_7_1 = var_7_0 - arg_7_0._curNormalizedPos
+	if self._curNormalizedPos and scrollNormalizePos >= 0 and scrollNormalizePos <= 1 then
+		local delta = scrollNormalizePos - self._curNormalizedPos
 
-		if math.abs(var_7_1) >= arg_7_0._cellCenterPos then
-			if var_7_1 > 0 then
-				arg_7_0._curNormalizedPos = arg_7_0._curNormalizedPos + arg_7_0._cellCenterPos
+		if math.abs(delta) >= self._cellCenterPos then
+			if delta > 0 then
+				self._curNormalizedPos = self._curNormalizedPos + self._cellCenterPos
 			else
-				arg_7_0._curNormalizedPos = arg_7_0._curNormalizedPos - arg_7_0._cellCenterPos
+				self._curNormalizedPos = self._curNormalizedPos - self._cellCenterPos
 			end
 
-			arg_7_0._curNormalizedPos = var_7_0
+			self._curNormalizedPos = scrollNormalizePos
 
-			if var_7_1 <= -arg_7_0._cellCenterPos and var_7_0 <= 0 then
+			if delta <= -self._cellCenterPos and scrollNormalizePos <= 0 then
 				return
 			end
 
@@ -71,288 +73,291 @@ function var_0_0._onScrollValueChanged(arg_7_0, arg_7_1, arg_7_2)
 	end
 end
 
-function var_0_0._onDragBegin(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0._beginDragScrollNormalizePos = arg_8_1.horizontalNormalizedPosition
-	arg_8_0._beginDrag = true
+function WeekWalkLayerPage:_onDragBegin(scroll, pointerEventData)
+	self._beginDragScrollNormalizePos = scroll.horizontalNormalizedPosition
+	self._beginDrag = true
 
-	arg_8_0:initNormalizePos(arg_8_1)
+	self:initNormalizePos(scroll)
 	AudioMgr.instance:trigger(AudioEnum.WeekWalk.play_artificial_ui_slipmap)
 end
 
-function var_0_0.initNormalizePos(arg_9_0, arg_9_1)
-	local var_9_0 = recthelper.getWidth(arg_9_1.content)
-	local var_9_1 = recthelper.getWidth(arg_9_1.transform)
-	local var_9_2 = arg_9_1.content
-	local var_9_3 = var_9_2.childCount
+function WeekWalkLayerPage:initNormalizePos(scroll)
+	local contentWidth = recthelper.getWidth(scroll.content)
+	local scrollWidth = recthelper.getWidth(scroll.transform)
+	local transform = scroll.content
+	local itemCount = transform.childCount
 
-	if var_9_3 == 0 then
+	if itemCount == 0 then
 		return
 	end
 
-	local var_9_4 = var_9_2:GetChild(var_9_3 - 1)
-	local var_9_5 = recthelper.getWidth(var_9_4)
-	local var_9_6 = var_9_0 - var_9_1
+	local child = transform:GetChild(itemCount - 1)
+	local childWidth = recthelper.getWidth(child)
+	local deltaWidth = contentWidth - scrollWidth
 
-	if var_9_6 > 0 then
-		arg_9_0._cellCenterPos = 1 / (var_9_6 / var_9_5) / 3
-		arg_9_0._curNormalizedPos = arg_9_1.horizontalNormalizedPosition
+	if deltaWidth > 0 then
+		local showNum = deltaWidth / childWidth
+		local cellWidth = 1 / showNum
 
-		if arg_9_0._curScroll then
-			arg_9_0._curScroll = nil
+		self._cellCenterPos = cellWidth / 3
+		self._curNormalizedPos = scroll.horizontalNormalizedPosition
+
+		if self._curScroll then
+			self._curScroll = nil
 		end
 
-		arg_9_0._curScroll = arg_9_1
+		self._curScroll = scroll
 	else
-		arg_9_0._curNormalizedPos = nil
+		self._curNormalizedPos = nil
 	end
 end
 
-function var_0_0._onDrag(arg_10_0, arg_10_1, arg_10_2)
-	if arg_10_0._beginDrag then
-		arg_10_0._beginDrag = false
+function WeekWalkLayerPage:_onDrag(scroll, pointerEventData)
+	if self._beginDrag then
+		self._beginDrag = false
 
 		return
 	end
 
-	local var_10_0 = arg_10_2.delta.x
-	local var_10_1 = arg_10_1.horizontalNormalizedPosition
+	local deltaX = pointerEventData.delta.x
+	local scrollNormalizePos = scroll.horizontalNormalizedPosition
 
-	if arg_10_0._beginDragScrollNormalizePos then
-		arg_10_0._beginDragScrollNormalizePos = nil
+	if self._beginDragScrollNormalizePos then
+		self._beginDragScrollNormalizePos = nil
 	end
 end
 
-function var_0_0._onDragEnd(arg_11_0, arg_11_1, arg_11_2)
-	arg_11_0._beginDrag = false
-	arg_11_0._beginDragScrollNormalizePos = nil
+function WeekWalkLayerPage:_onDragEnd(scroll, pointerEventData)
+	self._beginDrag = false
+	self._beginDragScrollNormalizePos = nil
 end
 
-function var_0_0.playAnim(arg_12_0, arg_12_1)
-	if not arg_12_0._animatorPlayer then
+function WeekWalkLayerPage:playAnim(name)
+	if not self._animatorPlayer then
 		return
 	end
 
-	arg_12_0._animName = arg_12_1
+	self._animName = name
 
-	arg_12_0._animatorPlayer:Play(arg_12_1, arg_12_0._animDone, arg_12_0)
-	gohelper.setActive(arg_12_0._gotopblock, true)
-	TaskDispatcher.cancelTask(arg_12_0._hideBlock, arg_12_0)
-	TaskDispatcher.runDelay(arg_12_0._hideBlock, arg_12_0, 0.5)
+	self._animatorPlayer:Play(name, self._animDone, self)
+	gohelper.setActive(self._gotopblock, true)
+	TaskDispatcher.cancelTask(self._hideBlock, self)
+	TaskDispatcher.runDelay(self._hideBlock, self, 0.5)
 end
 
-function var_0_0._hideBlock(arg_13_0)
-	gohelper.setActive(arg_13_0._gotopblock, false)
+function WeekWalkLayerPage:_hideBlock()
+	gohelper.setActive(self._gotopblock, false)
 end
 
-function var_0_0.playBgAnim(arg_14_0, arg_14_1)
-	arg_14_0._bgAnimation:Play(arg_14_1)
+function WeekWalkLayerPage:playBgAnim(name)
+	self._bgAnimation:Play(name)
 end
 
-function var_0_0._animDone(arg_15_0)
-	if arg_15_0._animName == "weekwalklayerpage_in" then
-		arg_15_0:_changeRightBtnVisible()
+function WeekWalkLayerPage:_animDone()
+	if self._animName == "weekwalklayerpage_in" then
+		self:_changeRightBtnVisible()
 	end
 
-	if arg_15_0._visible then
-		for iter_15_0, iter_15_1 in ipairs(arg_15_0._itemList) do
-			iter_15_1:updateUnlockStatus()
+	if self._visible then
+		for i, v in ipairs(self._itemList) do
+			v:updateUnlockStatus()
 		end
 	end
 end
 
-function var_0_0.onUpdateParam(arg_16_0)
+function WeekWalkLayerPage:onUpdateParam()
 	return
 end
 
-function var_0_0.setVisible(arg_17_0, arg_17_1)
-	arg_17_0._visible = arg_17_1
+function WeekWalkLayerPage:setVisible(value)
+	self._visible = value
 end
 
-function var_0_0.getVisible(arg_18_0)
-	return arg_18_0._visible
+function WeekWalkLayerPage:getVisible()
+	return self._visible
 end
 
-function var_0_0.resetPos(arg_19_0, arg_19_1)
-	if arg_19_1 then
-		for iter_19_0, iter_19_1 in ipairs(arg_19_0._layerList) do
-			if iter_19_1.id == arg_19_1 then
-				arg_19_0:focusPos(iter_19_0)
+function WeekWalkLayerPage:resetPos(mapId)
+	if mapId then
+		for i, v in ipairs(self._layerList) do
+			if v.id == mapId then
+				self:focusPos(i)
 
 				return
 			end
 		end
 	end
 
-	for iter_19_2, iter_19_3 in ipairs(arg_19_0._layerList) do
-		local var_19_0 = WeekWalkModel.instance:getMapInfo(iter_19_3.id)
+	for i, v in ipairs(self._layerList) do
+		local mapInfo = WeekWalkModel.instance:getMapInfo(v.id)
 
-		if var_19_0 and var_19_0.isFinish <= 0 then
-			arg_19_0:focusPos(iter_19_2)
+		if mapInfo and mapInfo.isFinish <= 0 then
+			self:focusPos(i)
 
 			return
 		end
 
-		if not var_19_0 and iter_19_2 == 1 then
-			arg_19_0._scrollview.horizontalNormalizedPosition = 0
+		if not mapInfo and i == 1 then
+			self._scrollview.horizontalNormalizedPosition = 0
 
 			return
 		end
 	end
 
-	for iter_19_4, iter_19_5 in ipairs(arg_19_0._layerList) do
-		local var_19_1 = WeekWalkModel.instance:getMapInfo(iter_19_5.id)
+	for i, v in ipairs(self._layerList) do
+		local mapInfo = WeekWalkModel.instance:getMapInfo(v.id)
 
-		if var_19_1 then
-			local var_19_2, var_19_3 = var_19_1:getStarInfo()
+		if mapInfo then
+			local cur, total = mapInfo:getStarInfo()
 
-			if var_19_2 ~= var_19_3 then
-				arg_19_0:focusPos(iter_19_4)
+			if cur ~= total then
+				self:focusPos(i)
 
 				return
 			end
 		end
 	end
 
-	arg_19_0._scrollview.horizontalNormalizedPosition = 1
+	self._scrollview.horizontalNormalizedPosition = 1
 end
 
-function var_0_0.focusPos(arg_20_0, arg_20_1)
-	local var_20_0 = arg_20_0._itemList[arg_20_1]
+function WeekWalkLayerPage:focusPos(index)
+	local item = self._itemList[index]
 
-	if not var_20_0 then
+	if not item then
 		return
 	end
 
-	local var_20_1 = var_20_0._relativeAnchorPos
+	local pos = item._relativeAnchorPos
 
-	recthelper.setAnchorX(arg_20_0._gocontent.transform, -var_20_1.x + 300)
+	recthelper.setAnchorX(self._gocontent.transform, -pos.x + 300)
 end
 
-function var_0_0.onOpen(arg_21_0)
-	arg_21_0._layerView = arg_21_0.viewParam[1]
-	arg_21_0._pageIndex = arg_21_0.viewParam[2]
-	arg_21_0._layerList = arg_21_0.viewParam[3]
-	arg_21_0._itemList = arg_21_0:getUserDataTb_()
+function WeekWalkLayerPage:onOpen()
+	self._layerView = self.viewParam[1]
+	self._pageIndex = self.viewParam[2]
+	self._layerList = self.viewParam[3]
+	self._itemList = self:getUserDataTb_()
 
-	arg_21_0:_initItems()
+	self:_initItems()
 
-	if WeekWalkLayerView.isShallowPage(arg_21_0._pageIndex) then
-		if arg_21_0._pageIndex <= 1 then
-			arg_21_0._simagebgimg:LoadImage(ResUrl.getWeekWalkLayerIcon("full/bg_choose_shallow_1"))
+	if WeekWalkLayerView.isShallowPage(self._pageIndex) then
+		if self._pageIndex <= 1 then
+			self._simagebgimg:LoadImage(ResUrl.getWeekWalkLayerIcon("full/bg_choose_shallow_1"))
 		else
-			arg_21_0._simagebgimg:LoadImage(ResUrl.getWeekWalkLayerIcon("full/bg_choose_shallow_2"))
+			self._simagebgimg:LoadImage(ResUrl.getWeekWalkLayerIcon("full/bg_choose_shallow_2"))
 		end
 	else
-		arg_21_0._simagebgimg:LoadImage(ResUrl.getWeekWalkLayerIcon("full/bg_choose_deep"))
+		self._simagebgimg:LoadImage(ResUrl.getWeekWalkLayerIcon("full/bg_choose_deep"))
 	end
 
-	arg_21_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_21_0._scrollview.gameObject)
+	self._drag = SLFramework.UGUI.UIDragListener.Get(self._scrollview.gameObject)
 
-	arg_21_0:initScrollDragListener(arg_21_0._drag, arg_21_0._scrollview)
-	gohelper.setActive(arg_21_0._goshallowicon, WeekWalkLayerView.isShallowPage(arg_21_0._pageIndex))
-	gohelper.setActive(arg_21_0._godeepicon, not WeekWalkLayerView.isShallowPage(arg_21_0._pageIndex))
-	arg_21_0:_setEdgFadeStrengthen()
+	self:initScrollDragListener(self._drag, self._scrollview)
+	gohelper.setActive(self._goshallowicon, WeekWalkLayerView.isShallowPage(self._pageIndex))
+	gohelper.setActive(self._godeepicon, not WeekWalkLayerView.isShallowPage(self._pageIndex))
+	self:_setEdgFadeStrengthen()
 end
 
-function var_0_0.updateLayerList(arg_22_0, arg_22_1)
-	arg_22_0._layerList = arg_22_1
+function WeekWalkLayerPage:updateLayerList(layerList)
+	self._layerList = layerList
 
-	arg_22_0:_initItems()
+	self:_initItems()
 end
 
-function var_0_0._initItems(arg_23_0)
-	gohelper.setActive(arg_23_0._gopos3, false)
-	gohelper.setActive(arg_23_0._gopos5, false)
+function WeekWalkLayerPage:_initItems()
+	gohelper.setActive(self._gopos3, false)
+	gohelper.setActive(self._gopos5, false)
 
-	local var_23_0 = #arg_23_0._layerList ~= WeekWalkEnum.ShallowLayerMaxNum
-	local var_23_1 = arg_23_0._gopos5
-	local var_23_2 = #arg_23_0._layerList == WeekWalkEnum.NewDeepLayerMaxNum
+	local isDeep = #self._layerList ~= WeekWalkEnum.ShallowLayerMaxNum
+	local go = self._gopos5
+	local isNewDeep = #self._layerList == WeekWalkEnum.NewDeepLayerMaxNum
 
-	gohelper.setActive(var_23_1, true)
+	gohelper.setActive(go, true)
 
-	local var_23_3 = var_23_1.transform
+	local transform = go.transform
 
-	for iter_23_0, iter_23_1 in ipairs(arg_23_0._layerList) do
-		local var_23_4 = var_23_3:GetChild(iter_23_0 - 1).gameObject
+	for i, v in ipairs(self._layerList) do
+		local childGo = transform:GetChild(i - 1).gameObject
 
-		arg_23_0:_addItem(var_23_4, iter_23_1, iter_23_0)
+		self:_addItem(childGo, v, i)
 	end
 
-	if var_23_0 then
-		if var_23_2 then
-			recthelper.setWidth(arg_23_0._gocontent.transform, 3932)
+	if isDeep then
+		if isNewDeep then
+			recthelper.setWidth(self._gocontent.transform, 3932)
 		else
-			recthelper.setWidth(arg_23_0._gocontent.transform, 3400)
+			recthelper.setWidth(self._gocontent.transform, 3400)
 		end
 	end
 end
 
-function var_0_0._addItem(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
-	if arg_24_0._itemList[arg_24_3] then
+function WeekWalkLayerPage:_addItem(parentGo, itemCfg, index)
+	if self._itemList[index] then
 		return
 	end
 
-	local var_24_0 = arg_24_0._layerView.viewContainer:getSetting().otherRes[2]
-	local var_24_1 = arg_24_0._layerView.viewContainer:getResInst(var_24_0, arg_24_1)
+	local path = self._layerView.viewContainer:getSetting().otherRes[2]
+	local itemGo = self._layerView.viewContainer:getResInst(path, parentGo)
 
-	var_24_1.name = "weekwalklayerpageitem" .. arg_24_2.layer
+	itemGo.name = "weekwalklayerpageitem" .. itemCfg.layer
 
-	local var_24_2 = MonoHelper.addLuaComOnceToGo(var_24_1, WeekWalkLayerPageItem, {
-		arg_24_2,
-		arg_24_0._pageIndex,
-		arg_24_0
+	local pageItem = MonoHelper.addLuaComOnceToGo(itemGo, WeekWalkLayerPageItem, {
+		itemCfg,
+		self._pageIndex,
+		self
 	})
 
-	var_24_2._relativeAnchorPos = recthelper.rectToRelativeAnchorPos(var_24_1.transform.position, arg_24_0._gocontent.transform)
-	arg_24_0._itemList[arg_24_3] = var_24_2
+	pageItem._relativeAnchorPos = recthelper.rectToRelativeAnchorPos(itemGo.transform.position, self._gocontent.transform)
+	self._itemList[index] = pageItem
 end
 
-function var_0_0._setEdgFadeStrengthen(arg_25_0, arg_25_1, arg_25_2)
-	if arg_25_0._scrollview.horizontalNormalizedPosition < 0.01 then
-		arg_25_0._scrollview.horizontalNormalizedPosition = 0
+function WeekWalkLayerPage:_setEdgFadeStrengthen(x, y)
+	if self._scrollview.horizontalNormalizedPosition < 0.01 then
+		self._scrollview.horizontalNormalizedPosition = 0
 	end
 
-	local var_25_0 = Mathf.Clamp(Mathf.Abs(arg_25_0._scrollview.horizontalNormalizedPosition * 8), 0, 1)
+	local value = Mathf.Clamp(Mathf.Abs(self._scrollview.horizontalNormalizedPosition * 8), 0, 1)
 
-	WeekWalkController.instance:dispatchEvent(WeekWalkEvent.OnScrollPage, var_25_0, arg_25_0._pageIndex)
-	arg_25_0:_changeRightBtnVisible()
-	arg_25_0:_onScrollValueChanged(arg_25_1, arg_25_2)
+	WeekWalkController.instance:dispatchEvent(WeekWalkEvent.OnScrollPage, value, self._pageIndex)
+	self:_changeRightBtnVisible()
+	self:_onScrollValueChanged(x, y)
 end
 
-function var_0_0._changeRightBtnVisible(arg_26_0)
-	if not WeekWalkLayerView.isShallowPage(arg_26_0._pageIndex) or not arg_26_0._visible or not arg_26_0._scrollview then
+function WeekWalkLayerPage:_changeRightBtnVisible()
+	if not WeekWalkLayerView.isShallowPage(self._pageIndex) or not self._visible or not self._scrollview then
 		return
 	end
 
-	local var_26_0 = arg_26_0._scrollview.horizontalNormalizedPosition
+	local pos = self._scrollview.horizontalNormalizedPosition
 
-	if var_26_0 >= 0.95 then
-		arg_26_0._showRightBtn = true
+	if pos >= 0.95 then
+		self._showRightBtn = true
 
-		WeekWalkController.instance:dispatchEvent(WeekWalkEvent.OnChangeRightBtnVisible, arg_26_0._showRightBtn)
-	elseif var_26_0 <= 0.5 and arg_26_0._showRightBtn then
-		arg_26_0._showRightBtn = false
+		WeekWalkController.instance:dispatchEvent(WeekWalkEvent.OnChangeRightBtnVisible, self._showRightBtn)
+	elseif pos <= 0.5 and self._showRightBtn then
+		self._showRightBtn = false
 
-		WeekWalkController.instance:dispatchEvent(WeekWalkEvent.OnChangeRightBtnVisible, arg_26_0._showRightBtn)
+		WeekWalkController.instance:dispatchEvent(WeekWalkEvent.OnChangeRightBtnVisible, self._showRightBtn)
 	end
 end
 
-function var_0_0.onClose(arg_27_0)
-	TaskDispatcher.cancelTask(arg_27_0._hideBlock, arg_27_0)
-	arg_27_0._animatorPlayer:Stop()
+function WeekWalkLayerPage:onClose()
+	TaskDispatcher.cancelTask(self._hideBlock, self)
+	self._animatorPlayer:Stop()
 
-	if arg_27_0._drag then
-		arg_27_0:removeScrollDragListener(arg_27_0._drag)
+	if self._drag then
+		self:removeScrollDragListener(self._drag)
 	end
 
-	for iter_27_0, iter_27_1 in ipairs(arg_27_0._itemList) do
-		iter_27_1:onDestroy()
+	for i, v in ipairs(self._itemList) do
+		v:onDestroy()
 	end
 end
 
-function var_0_0.onDestroyView(arg_28_0)
-	arg_28_0._simagebgimg:UnLoadImage()
-	arg_28_0._simageline:UnLoadImage()
+function WeekWalkLayerPage:onDestroyView()
+	self._simagebgimg:UnLoadImage()
+	self._simageline:UnLoadImage()
 end
 
-return var_0_0
+return WeekWalkLayerPage

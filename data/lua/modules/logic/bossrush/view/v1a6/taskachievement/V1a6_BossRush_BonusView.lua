@@ -1,171 +1,174 @@
-﻿module("modules.logic.bossrush.view.v1a6.taskachievement.V1a6_BossRush_BonusView", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/view/v1a6/taskachievement/V1a6_BossRush_BonusView.lua
 
-local var_0_0 = class("V1a6_BossRush_BonusView", BaseView)
+module("modules.logic.bossrush.view.v1a6.taskachievement.V1a6_BossRush_BonusView", package.seeall)
 
-function var_0_0._setActive_text(arg_1_0, arg_1_1)
-	gohelper.setActive(arg_1_0._textGo, arg_1_1)
+local V1a6_BossRush_BonusView = class("V1a6_BossRush_BonusView", BaseView)
+
+function V1a6_BossRush_BonusView:_setActive_text(isActive)
+	gohelper.setActive(self._textGo, isActive)
 end
 
-function var_0_0.onInitView(arg_2_0)
-	arg_2_0._simageFullBG = gohelper.findChildSingleImage(arg_2_0.viewGO, "#simage_FullBG")
-	arg_2_0._gobonus = gohelper.findChild(arg_2_0.viewGO, "#go_bonus")
-	arg_2_0._goTab1 = gohelper.findChild(arg_2_0.viewGO, "Tab/#go_Tab1")
-	arg_2_0._goTab2 = gohelper.findChild(arg_2_0.viewGO, "Tab/#go_Tab2")
-	arg_2_0._goTab3 = gohelper.findChild(arg_2_0.viewGO, "Tab/#go_Tab3")
-	arg_2_0._goBlock = gohelper.findChild(arg_2_0.viewGO, "#go_Block")
+function V1a6_BossRush_BonusView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._gobonus = gohelper.findChild(self.viewGO, "#go_bonus")
+	self._goTab1 = gohelper.findChild(self.viewGO, "Tab/#go_Tab1")
+	self._goTab2 = gohelper.findChild(self.viewGO, "Tab/#go_Tab2")
+	self._goTab3 = gohelper.findChild(self.viewGO, "Tab/#go_Tab3")
+	self._goBlock = gohelper.findChild(self.viewGO, "#go_Block")
 
-	if arg_2_0._editableInitView then
-		arg_2_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_3_0)
-	arg_3_0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_3_0._refreshRedDot, arg_3_0)
-	arg_3_0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_3_0._refreshRedDot, arg_3_0)
-	arg_3_0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_3_0._refreshRedDot, arg_3_0)
-	arg_3_0:addEventCb(TaskController.instance, TaskEvent.SetTaskList, arg_3_0._refreshRedDot, arg_3_0)
+function V1a6_BossRush_BonusView:addEvents()
+	self:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, self._refreshRedDot, self)
+	self:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, self._refreshRedDot, self)
+	self:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, self._refreshRedDot, self)
+	self:addEventCb(TaskController.instance, TaskEvent.SetTaskList, self._refreshRedDot, self)
 end
 
-function var_0_0.removeEvents(arg_4_0)
-	arg_4_0:removeEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_4_0._refreshRedDot, arg_4_0)
-	arg_4_0:removeEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_4_0._refreshRedDot, arg_4_0)
-	arg_4_0:removeEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_4_0._refreshRedDot, arg_4_0)
-	arg_4_0:removeEventCb(TaskController.instance, TaskEvent.SetTaskList, arg_4_0._refreshRedDot, arg_4_0)
+function V1a6_BossRush_BonusView:removeEvents()
+	self:removeEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, self._refreshRedDot, self)
+	self:removeEventCb(TaskController.instance, TaskEvent.OnFinishTask, self._refreshRedDot, self)
+	self:removeEventCb(TaskController.instance, TaskEvent.UpdateTaskList, self._refreshRedDot, self)
+	self:removeEventCb(TaskController.instance, TaskEvent.SetTaskList, self._refreshRedDot, self)
 end
 
-function var_0_0._btnOnClick(arg_5_0, arg_5_1)
-	arg_5_0:cutTab(arg_5_1)
+function V1a6_BossRush_BonusView:_btnOnClick(index)
+	self:cutTab(index)
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._textGo = gohelper.findChild(arg_6_0.viewGO, "text")
-	arg_6_0._tabs = arg_6_0:getUserDataTb_()
+function V1a6_BossRush_BonusView:_editableInitView()
+	self._textGo = gohelper.findChild(self.viewGO, "text")
+	self._tabs = self:getUserDataTb_()
 
-	for iter_6_0 = 1, 3 do
-		local var_6_0 = arg_6_0:getUserDataTb_()
-		local var_6_1 = arg_6_0["_goTab" .. iter_6_0]
-		local var_6_2 = gohelper.findChild(var_6_1, "#go_UnSelect")
-		local var_6_3 = gohelper.findChild(var_6_1, "#go_Selected")
-		local var_6_4 = gohelper.findChild(var_6_1, "#go_RedDot")
+	for i = 1, 3 do
+		local item = self:getUserDataTb_()
+		local go = self["_goTab" .. i]
+		local goUnSelected = gohelper.findChild(go, "#go_UnSelect")
+		local goSelected = gohelper.findChild(go, "#go_Selected")
+		local goRedDot = gohelper.findChild(go, "#go_RedDot")
 
-		var_6_0.go = var_6_1
-		var_6_0.goUnSelected = var_6_2
-		var_6_0.txtUnSelected = gohelper.findChildText(var_6_2, "txt_Tab")
-		var_6_0.goSelected = var_6_3
-		var_6_0.txtSelected = gohelper.findChildText(var_6_3, "txt_Tab")
-		var_6_0.goRedDot = var_6_4
-		var_6_0.btn = gohelper.findChildButtonWithAudio(var_6_1, "#btn")
+		item.go = go
+		item.goUnSelected = goUnSelected
+		item.txtUnSelected = gohelper.findChildText(goUnSelected, "txt_Tab")
+		item.goSelected = goSelected
+		item.txtSelected = gohelper.findChildText(goSelected, "txt_Tab")
+		item.goRedDot = goRedDot
+		item.btn = gohelper.findChildButtonWithAudio(go, "#btn")
 
-		var_6_0.btn:AddClickListener(arg_6_0._btnOnClick, arg_6_0, iter_6_0)
+		item.btn:AddClickListener(self._btnOnClick, self, i)
 
-		arg_6_0._tabs[iter_6_0] = var_6_0
+		self._tabs[i] = item
 	end
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function V1a6_BossRush_BonusView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0._stage = arg_8_0.viewParam.stage
-	arg_8_0._selectTab = arg_8_0.viewParam.defaultTab or V1a6_BossRush_BonusModel.instance:getTab()
+function V1a6_BossRush_BonusView:onOpen()
+	self._stage = self.viewParam.stage
+	self._selectTab = self.viewParam.defaultTab or V1a6_BossRush_BonusModel.instance:getTab()
 
-	arg_8_0:_refreshRedDot()
-	arg_8_0:activeTab()
-	arg_8_0:_refreshTab()
-	arg_8_0:_addRedDot()
+	self:_refreshRedDot()
+	self:activeTab()
+	self:_refreshTab()
+	self:_addRedDot()
 
-	if arg_8_0._selectTab == BossRushEnum.BonusViewTab.AchievementTab then
-		V1a6_BossRush_BonusModel.instance:selecAchievementTab(arg_8_0._stage)
+	if self._selectTab == BossRushEnum.BonusViewTab.AchievementTab then
+		V1a6_BossRush_BonusModel.instance:selecAchievementTab(self._stage)
 	end
 end
 
-function var_0_0.onClose(arg_9_0)
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0._tabs) do
-		iter_9_1.btn:RemoveClickListener()
+function V1a6_BossRush_BonusView:onClose()
+	for i, item in ipairs(self._tabs) do
+		item.btn:RemoveClickListener()
 	end
 end
 
-function var_0_0.onDestroyView(arg_10_0)
+function V1a6_BossRush_BonusView:onDestroyView()
 	return
 end
 
-function var_0_0.openDefaultTab(arg_11_0)
-	arg_11_0:selectTab(arg_11_0._selectTab)
-	arg_11_0:_refreshRedDot()
+function V1a6_BossRush_BonusView:openDefaultTab()
+	self:selectTab(self._selectTab)
+	self:_refreshRedDot()
 end
 
-function var_0_0.cutTab(arg_12_0, arg_12_1)
-	if arg_12_0._selectTab and arg_12_0._selectTab == arg_12_1 then
+function V1a6_BossRush_BonusView:cutTab(tab)
+	if self._selectTab and self._selectTab == tab then
 		return
 	end
 
-	arg_12_0._selectTab = arg_12_1
+	self._selectTab = tab
 
-	arg_12_0:activeTab()
-	arg_12_0:selectTab(arg_12_0._selectTab)
+	self:activeTab()
+	self:selectTab(self._selectTab)
 end
 
-function var_0_0.selectTab(arg_13_0, arg_13_1, arg_13_2)
-	arg_13_0:_setActive_text(arg_13_1 == BossRushEnum.BonusViewTab.AchievementTab)
-	arg_13_0.viewContainer:selectTabView(arg_13_1, arg_13_2)
+function V1a6_BossRush_BonusView:selectTab(tab, callback)
+	self:_setActive_text(tab == BossRushEnum.BonusViewTab.AchievementTab)
+	self.viewContainer:selectTabView(tab, callback)
 end
 
-function var_0_0.activeTab(arg_14_0)
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0._tabs) do
-		gohelper.setActive(iter_14_1.goUnSelected, iter_14_0 ~= arg_14_0._selectTab)
-		gohelper.setActive(iter_14_1.goSelected, iter_14_0 == arg_14_0._selectTab)
+function V1a6_BossRush_BonusView:activeTab()
+	for i, item in ipairs(self._tabs) do
+		gohelper.setActive(item.goUnSelected, i ~= self._selectTab)
+		gohelper.setActive(item.goSelected, i == self._selectTab)
 	end
 end
 
-function var_0_0._addRedDot(arg_15_0)
-	local var_15_0 = BossRushModel.instance:getActivityBonus()
+function V1a6_BossRush_BonusView:_addRedDot()
+	local tabViewEnum = BossRushModel.instance:getActivityBonus()
 
-	if var_15_0 then
-		for iter_15_0, iter_15_1 in ipairs(var_15_0) do
-			local var_15_1 = iter_15_1.Reddot
-			local var_15_2 = arg_15_0._tabs[iter_15_0].goRedDot
+	if tabViewEnum then
+		for i, tab in ipairs(tabViewEnum) do
+			local reddotId = tab.Reddot
+			local goRedDot = self._tabs[i].goRedDot
 
-			if var_15_1 and var_15_2 then
-				local var_15_3 = BossRushRedModel.instance:getUId(var_15_1, arg_15_0._stage)
+			if reddotId and goRedDot then
+				local uid = BossRushRedModel.instance:getUId(reddotId, self._stage)
 
-				RedDotController.instance:addRedDot(var_15_2, var_15_1, var_15_3)
+				RedDotController.instance:addRedDot(goRedDot, reddotId, uid)
 			end
 		end
 	end
 end
 
-function var_0_0._refreshRedDot(arg_16_0)
-	local var_16_0 = BossRushModel.instance:getActivityBonus()
+function V1a6_BossRush_BonusView:_refreshRedDot()
+	local tabViewEnum = BossRushModel.instance:getActivityBonus()
 
-	if var_16_0 then
-		for iter_16_0, iter_16_1 in ipairs(var_16_0) do
-			local var_16_1 = arg_16_0._tabs[iter_16_0].goRedDot
+	if tabViewEnum then
+		for i, tab in ipairs(tabViewEnum) do
+			local goRedDot = self._tabs[i].goRedDot
 
-			if var_16_1 and iter_16_1.ListModel and iter_16_1.ListModel.instance.isReddot then
-				local var_16_2 = iter_16_1.ListModel.instance:isReddot(arg_16_0._stage, iter_16_0)
+			if goRedDot and tab.ListModel and tab.ListModel.instance.isReddot then
+				local isShow = tab.ListModel.instance:isReddot(self._stage, i)
 
-				gohelper.setActive(var_16_1, var_16_2)
+				gohelper.setActive(goRedDot, isShow)
 			end
 		end
 	end
 end
 
-function var_0_0._refreshTab(arg_17_0)
-	local var_17_0 = BossRushModel.instance:getActivityBonus()
-	local var_17_1 = #var_17_0 > 2 and 326 or 489
+function V1a6_BossRush_BonusView:_refreshTab()
+	local tabViewEnum = BossRushModel.instance:getActivityBonus()
+	local isTab3 = #tabViewEnum > 2
+	local width = isTab3 and 326 or 489
 
-	for iter_17_0, iter_17_1 in ipairs(arg_17_0._tabs) do
-		recthelper.setWidth(iter_17_1.go.transform, var_17_1)
-		gohelper.setActive(iter_17_1.go, iter_17_0 <= #var_17_0)
+	for i, item in ipairs(self._tabs) do
+		recthelper.setWidth(item.go.transform, width)
+		gohelper.setActive(item.go, i <= #tabViewEnum)
 
-		local var_17_2 = var_17_0[iter_17_0] and var_17_0[iter_17_0].TabTitle
+		local txt = tabViewEnum[i] and tabViewEnum[i].TabTitle
 
-		if not string.nilorempty(var_17_2) then
-			iter_17_1.txtUnSelected.text = luaLang(var_17_2)
-			iter_17_1.txtSelected.text = luaLang(var_17_2)
+		if not string.nilorempty(txt) then
+			item.txtUnSelected.text = luaLang(txt)
+			item.txtSelected.text = luaLang(txt)
 		end
 	end
 end
 
-return var_0_0
+return V1a6_BossRush_BonusView

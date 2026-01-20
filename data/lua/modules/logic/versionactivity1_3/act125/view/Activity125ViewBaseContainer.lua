@@ -1,205 +1,259 @@
-﻿module("modules.logic.versionactivity1_3.act125.view.Activity125ViewBaseContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/act125/view/Activity125ViewBaseContainer.lua
 
-local var_0_0 = table.insert
-local var_0_1 = string.format
-local var_0_2 = class("Activity125ViewBaseContainer", BaseViewContainer)
-local var_0_3 = "Activity125|"
+module("modules.logic.versionactivity1_3.act125.view.Activity125ViewBaseContainer", package.seeall)
 
-function var_0_2.getPrefsKeyPrefix(arg_1_0)
-	return var_0_3 .. tostring(arg_1_0:actId())
+local Activity125ViewBaseContainer = class("Activity125ViewBaseContainer", BaseViewContainer)
+local kPrefix = "Activity125|"
+
+function Activity125ViewBaseContainer:getPrefsKeyPrefix()
+	return kPrefix .. tostring(self:actId())
 end
 
-function var_0_2.saveInt(arg_2_0, arg_2_1, arg_2_2)
-	GameUtil.playerPrefsSetNumberByUserId(arg_2_1, arg_2_2)
+function Activity125ViewBaseContainer:saveInt(key, value)
+	GameUtil.playerPrefsSetNumberByUserId(key, value)
 end
 
-function var_0_2.getInt(arg_3_0, arg_3_1, arg_3_2)
-	return GameUtil.playerPrefsGetNumberByUserId(arg_3_1, arg_3_2)
+function Activity125ViewBaseContainer:getInt(key, defaultValue)
+	return GameUtil.playerPrefsGetNumberByUserId(key, defaultValue)
 end
 
-function var_0_2.getActivityRemainTimeStr(arg_4_0)
-	return ActivityHelper.getActivityRemainTimeStr(arg_4_0:actId())
+function Activity125ViewBaseContainer:getActivityRemainTimeStr()
+	return ActivityHelper.getActivityRemainTimeStr(self:actId())
 end
 
-function var_0_2.getEpisodeCount(arg_5_0)
-	return Activity125Config.instance:getEpisodeCount(arg_5_0:actId())
+function Activity125ViewBaseContainer:getEpisodeCount()
+	return Activity125Config.instance:getEpisodeCount(self:actId())
 end
 
-function var_0_2.hasEpisodeCanCheck(arg_6_0)
-	return Activity125Model.instance:hasEpisodeCanCheck(arg_6_0:actId())
+function Activity125ViewBaseContainer:getH5BaseUrl()
+	return Activity125Config.instance:getH5BaseUrl(self:actId())
 end
 
-function var_0_2.getH5BaseUrl(arg_7_0)
-	return Activity125Config.instance:getH5BaseUrl(arg_7_0:actId())
+function Activity125ViewBaseContainer:getEpisodeConfig(episodeId)
+	return Activity125Config.instance:getEpisodeConfig(self:actId(), episodeId)
 end
 
-function var_0_2.setCurSelectEpisodeIdSlient(arg_8_0, arg_8_1)
-	if arg_8_0:getCurSelectedEpisode() == arg_8_1 then
+function Activity125ViewBaseContainer:getFirstEpisodeId()
+	local COs = Activity125Config.instance:getAct125Config(self:actId())
+
+	if not COs then
+		return nil
+	end
+
+	local key, CO = next(COs)
+
+	if not key then
+		return nil
+	end
+
+	return CO.id
+end
+
+function Activity125ViewBaseContainer:setCurSelectEpisodeIdSlient(episodeId)
+	if self:getCurSelectedEpisode() == episodeId then
 		return
 	end
 
-	arg_8_0:setSelectEpisodeId(arg_8_1)
+	self:setSelectEpisodeId(episodeId)
 
-	if arg_8_1 then
-		arg_8_0:setOldEpisode(arg_8_1)
+	if episodeId then
+		self:setOldEpisode(episodeId)
 	end
 end
 
-function var_0_2.sendFinishAct125EpisodeRequest(arg_9_0)
-	local var_9_0 = arg_9_0:getEpisodeConfigCur()
-	local var_9_1 = var_9_0.id
+function Activity125ViewBaseContainer:sendFinishAct125EpisodeRequest(episodeId)
+	local CO
 
-	Activity125Rpc.instance:sendFinishAct125EpisodeRequest(arg_9_0:actId(), var_9_1, var_9_0.targetFrequency)
+	if not episodeId then
+		CO = self:getEpisodeConfigCur()
+		episodeId = CO.id
+	end
+
+	CO = CO or self:getEpisodeConfig(episodeId)
+
+	Activity125Rpc.instance:sendFinishAct125EpisodeRequest(self:actId(), episodeId, CO.targetFrequency)
 end
 
-function var_0_2.getCurSelectedEpisode(arg_10_0)
-	return Activity125Model.instance:getSelectEpisodeId(arg_10_0:actId())
+function Activity125ViewBaseContainer:getCurSelectedEpisode()
+	return Activity125Model.instance:getSelectEpisodeId(self:actId())
 end
 
-function var_0_2.getEpisodeConfig(arg_11_0, arg_11_1)
-	return Activity125Config.instance:getEpisodeConfig(arg_11_0:actId(), arg_11_1)
+function Activity125ViewBaseContainer:setSelectEpisodeId(episodeId)
+	return Activity125Model.instance:setSelectEpisodeId(self:actId(), episodeId)
 end
 
-function var_0_2.setSelectEpisodeId(arg_12_0, arg_12_1)
-	return Activity125Model.instance:setSelectEpisodeId(arg_12_0:actId(), arg_12_1)
+function Activity125ViewBaseContainer:isEpisodeFinished(episodeId)
+	return Activity125Model.instance:isEpisodeFinished(self:actId(), episodeId)
 end
 
-function var_0_2.isEpisodeFinished(arg_13_0, arg_13_1)
-	return Activity125Model.instance:isEpisodeFinished(arg_13_0:actId(), arg_13_1)
+function Activity125ViewBaseContainer:checkIsOldEpisode(episodeId)
+	return Activity125Model.instance:checkIsOldEpisode(self:actId(), episodeId)
 end
 
-function var_0_2.checkIsOldEpisode(arg_14_0, arg_14_1)
-	return Activity125Model.instance:checkIsOldEpisode(arg_14_0:actId(), arg_14_1)
+function Activity125ViewBaseContainer:isFirstCheckEpisode(episodeId)
+	return Activity125Model.instance:isFirstCheckEpisode(self:actId(), episodeId)
 end
 
-function var_0_2.isFirstCheckEpisode(arg_15_0, arg_15_1)
-	return Activity125Model.instance:isFirstCheckEpisode(arg_15_0:actId(), arg_15_1)
+function Activity125ViewBaseContainer:isEpisodeDayOpen(episodeId)
+	return Activity125Model.instance:isEpisodeDayOpen(self:actId(), episodeId)
 end
 
-function var_0_2.isEpisodeDayOpen(arg_16_0, arg_16_1)
-	return Activity125Model.instance:isEpisodeDayOpen(arg_16_0:actId(), arg_16_1)
+function Activity125ViewBaseContainer:isEpisodeUnLock(episodeId)
+	return Activity125Model.instance:isEpisodeUnLock(self:actId(), episodeId)
 end
 
-function var_0_2.isEpisodeUnLock(arg_17_0, arg_17_1)
-	return Activity125Model.instance:isEpisodeUnLock(arg_17_0:actId(), arg_17_1)
+function Activity125ViewBaseContainer:setLocalIsPlay(episodeId)
+	return Activity125Model.instance:setLocalIsPlay(self:actId(), episodeId)
 end
 
-function var_0_2.setLocalIsPlay(arg_18_0, arg_18_1)
-	return Activity125Model.instance:setLocalIsPlay(arg_18_0:actId(), arg_18_1)
+function Activity125ViewBaseContainer:checkLocalIsPlay(episodeId)
+	return Activity125Model.instance:checkLocalIsPlay(self:actId(), episodeId)
 end
 
-function var_0_2.checkLocalIsPlay(arg_19_0, arg_19_1)
-	return Activity125Model.instance:checkLocalIsPlay(arg_19_0:actId(), arg_19_1)
+function Activity125ViewBaseContainer:isEpisodeReallyOpen(episodeId)
+	return Activity125Model.instance:isEpisodeReallyOpen(self:actId(), episodeId)
 end
 
-function var_0_2.isEpisodeReallyOpen(arg_20_0, arg_20_1)
-	return Activity125Model.instance:isEpisodeReallyOpen(arg_20_0:actId(), arg_20_1)
+function Activity125ViewBaseContainer:setOldEpisode(episodeId)
+	return Activity125Model.instance:setOldEpisode(self:actId(), episodeId)
 end
 
-function var_0_2.setOldEpisode(arg_21_0, arg_21_1)
-	return Activity125Model.instance:setOldEpisode(arg_21_0:actId(), arg_21_1)
+function Activity125ViewBaseContainer:getActivity125MO()
+	return Activity125Model.instance:getById(self:actId())
 end
 
-function var_0_2.getFirstRewardEpisode(arg_22_0)
-	return Activity125Model.instance:getById(arg_22_0:actId()):getFirstRewardEpisode()
+function Activity125ViewBaseContainer:getFirstRewardEpisode()
+	local mo = self:getActivity125MO()
+
+	return mo:getFirstRewardEpisode()
 end
 
-function var_0_2.getRLOC(arg_23_0, arg_23_1)
-	return Activity125Model.instance:getById(arg_23_0:actId()):getRLOC(arg_23_1)
+function Activity125ViewBaseContainer:getRLOC(episodeId)
+	local mo = self:getActivity125MO()
+
+	return mo:getRLOC(episodeId)
 end
 
-function var_0_2.getEpisodeConfigCur(arg_24_0)
-	return arg_24_0:getEpisodeConfig(arg_24_0:getCurSelectedEpisode())
+function Activity125ViewBaseContainer:isActivityOpen()
+	return Activity125Model.instance:isActivityOpen(self:actId())
 end
 
-function var_0_2.isEpisodeFinishedCur(arg_25_0)
-	return arg_25_0:isEpisodeFinished(arg_25_0:getCurSelectedEpisode())
+function Activity125ViewBaseContainer:hasEpisodeCanCheck()
+	return Activity125Model.instance:hasEpisodeCanCheck(self:actId())
 end
 
-function var_0_2.checkIsOldEpisodeCur(arg_26_0)
-	return arg_26_0:checkIsOldEpisode(arg_26_0:getCurSelectedEpisode())
+function Activity125ViewBaseContainer:getEpisodeList()
+	local mo = self:getActivity125MO()
+
+	return mo:getEpisodeList() or {}
 end
 
-function var_0_2.isFirstCheckEpisodeCur(arg_27_0)
-	return arg_27_0:isFirstCheckEpisode(arg_27_0:getCurSelectedEpisode())
+function Activity125ViewBaseContainer:getEpisodeConfigCur()
+	return self:getEpisodeConfig(self:getCurSelectedEpisode())
 end
 
-function var_0_2.isEpisodeDayOpenCur(arg_28_0)
-	return arg_28_0:isEpisodeDayOpen(arg_28_0:getCurSelectedEpisode())
+function Activity125ViewBaseContainer:isEpisodeFinishedCur()
+	return self:isEpisodeFinished(self:getCurSelectedEpisode())
 end
 
-function var_0_2.isEpisodeUnLockCur(arg_29_0)
-	return arg_29_0:isEpisodeUnLock(arg_29_0:getCurSelectedEpisode())
+function Activity125ViewBaseContainer:checkIsOldEpisodeCur()
+	return self:checkIsOldEpisode(self:getCurSelectedEpisode())
 end
 
-function var_0_2.setLocalIsPlayCur(arg_30_0)
-	return arg_30_0:setLocalIsPlay(arg_30_0:getCurSelectedEpisode())
+function Activity125ViewBaseContainer:isFirstCheckEpisodeCur()
+	return self:isFirstCheckEpisode(self:getCurSelectedEpisode())
 end
 
-function var_0_2.checkLocalIsPlayCur(arg_31_0)
-	return arg_31_0:checkLocalIsPlay(arg_31_0:getCurSelectedEpisode())
+function Activity125ViewBaseContainer:isEpisodeDayOpenCur()
+	return self:isEpisodeDayOpen(self:getCurSelectedEpisode())
 end
 
-function var_0_2.getLocalIsPlayCur(arg_32_0)
-	return arg_32_0:checkLocalIsPlayCur()
+function Activity125ViewBaseContainer:isEpisodeUnLockCur()
+	return self:isEpisodeUnLock(self:getCurSelectedEpisode())
 end
 
-function var_0_2.isEpisodeReallyOpenCur(arg_33_0)
-	return arg_33_0:isEpisodeReallyOpen(arg_33_0:getCurSelectedEpisode())
+function Activity125ViewBaseContainer:setLocalIsPlayCur()
+	return self:setLocalIsPlay(self:getCurSelectedEpisode())
 end
 
-function var_0_2.getRLOCCur(arg_34_0)
-	return arg_34_0:getRLOC(arg_34_0:getCurSelectedEpisode())
+function Activity125ViewBaseContainer:checkLocalIsPlayCur()
+	return self:checkLocalIsPlay(self:getCurSelectedEpisode())
 end
 
-function var_0_2.setOldEpisodeCur(arg_35_0)
-	return arg_35_0:setOldEpisode(arg_35_0:getCurSelectedEpisode())
+function Activity125ViewBaseContainer:getLocalIsPlayCur()
+	return self:checkLocalIsPlayCur()
 end
 
-function var_0_2.sendGetTaskInfoRequest(arg_36_0, arg_36_1, arg_36_2)
-	Activity125Controller.instance:sendGetTaskInfoRequest(arg_36_1, arg_36_2)
+function Activity125ViewBaseContainer:isEpisodeReallyOpenCur()
+	return self:isEpisodeReallyOpen(self:getCurSelectedEpisode())
 end
 
-function var_0_2.sendFinishAllTaskRequest(arg_37_0, arg_37_1, arg_37_2)
-	Activity125Controller.instance:sendFinishAllTaskRequest(arg_37_0:actId(), arg_37_1, arg_37_2)
+function Activity125ViewBaseContainer:getRLOCCur()
+	return self:getRLOC(self:getCurSelectedEpisode())
 end
 
-function var_0_2.sendFinishTaskRequest(arg_38_0, arg_38_1, arg_38_2, arg_38_3)
-	TaskRpc.instance:sendFinishTaskRequest(arg_38_1, arg_38_2, arg_38_3)
+function Activity125ViewBaseContainer:setOldEpisodeCur()
+	return self:setOldEpisode(self:getCurSelectedEpisode())
 end
 
-function var_0_2.getTaskCO_sum_help_npc(arg_39_0, arg_39_1)
-	return Activity125Config.instance:getTaskCO_ReadTask_Tag_TaskId(arg_39_0:actId(), ActivityWarmUpEnum.Activity125TaskTag.sum_help_npc, arg_39_1)
+function Activity125ViewBaseContainer:getBonusListCur()
+	local CO = self:getEpisodeConfigCur()
+
+	return GameUtil.splitString2(CO.bonus, true) or {}
 end
 
-function var_0_2.getTaskCO_help_npc(arg_40_0, arg_40_1)
-	return Activity125Config.instance:getTaskCO_ReadTask_Tag_TaskId(arg_40_0:actId(), ActivityWarmUpEnum.Activity125TaskTag.help_npc, arg_40_1)
+function Activity125ViewBaseContainer:sendGetTaskInfoRequest(callback, callbackObj)
+	Activity125Controller.instance:sendGetTaskInfoRequest(callback, callbackObj)
 end
 
-function var_0_2.getTaskCO_perfect_win(arg_41_0, arg_41_1)
-	return Activity125Config.instance:getTaskCO_ReadTask_Tag_TaskId(arg_41_0:actId(), ActivityWarmUpEnum.Activity125TaskTag.perfect_win, arg_41_1)
+function Activity125ViewBaseContainer:sendFinishAllTaskRequest(callback, callbackObj)
+	Activity125Controller.instance:sendFinishAllTaskRequest(self:actId(), callback, callbackObj)
 end
 
-function var_0_2.isTimeToActiveH5Btn(arg_42_0)
-	local var_42_0 = CommonConfig.instance:getConstStr(ConstEnum.V2a4_WarmUp_btnplay_openTs)
+function Activity125ViewBaseContainer:sendFinishTaskRequest(taskId, callback, callbackObj)
+	TaskRpc.instance:sendFinishTaskRequest(taskId, callback, callbackObj)
+end
 
-	if string.nilorempty(var_42_0) then
+function Activity125ViewBaseContainer:getTaskCO_sum_help_npc(taskId)
+	return Activity125Config.instance:getTaskCO_ReadTask_Tag_TaskId(self:actId(), ActivityWarmUpEnum.Activity125TaskTag.sum_help_npc, taskId)
+end
+
+function Activity125ViewBaseContainer:getTaskCO_help_npc(taskId)
+	return Activity125Config.instance:getTaskCO_ReadTask_Tag_TaskId(self:actId(), ActivityWarmUpEnum.Activity125TaskTag.help_npc, taskId)
+end
+
+function Activity125ViewBaseContainer:getTaskCO_perfect_win(taskId)
+	return Activity125Config.instance:getTaskCO_ReadTask_Tag_TaskId(self:actId(), ActivityWarmUpEnum.Activity125TaskTag.perfect_win, taskId)
+end
+
+function Activity125ViewBaseContainer:isTimeToActiveH5Btn()
+	local openTs = CommonConfig.instance:getConstStr(ConstEnum.V2a4_WarmUp_btnplay_openTs)
+
+	if string.nilorempty(openTs) then
 		return true
 	end
 
-	local var_42_1 = SettingsModel.instance:extractByRegion(var_42_0)
+	openTs = SettingsModel.instance:extractByRegion(openTs)
 
-	return ServerTime.now() >= TimeUtil.stringToTimestamp(var_42_1)
+	return ServerTime.now() >= TimeUtil.stringToTimestamp(openTs)
 end
 
-function var_0_2.openWebView(arg_43_0, arg_43_1, arg_43_2)
-	local var_43_0 = arg_43_0:getH5BaseUrl()
+function Activity125ViewBaseContainer:openWebView(onWebViewCb, onWebViewCbObj)
+	local baseUrl = self:getH5BaseUrl()
 
-	WebViewController.instance:simpleOpenWebView(var_43_0, arg_43_1, arg_43_2)
+	WebViewController.instance:simpleOpenWebView(baseUrl, onWebViewCb, onWebViewCbObj)
 end
 
-function var_0_2.actId(arg_44_0)
+function Activity125ViewBaseContainer:getActivityCo()
+	return ActivityConfig.instance:getActivityCo(self:actId())
+end
+
+function Activity125ViewBaseContainer:ActivityInfoMo()
+	return ActivityModel.instance:getActMO(self:actId())
+end
+
+function Activity125ViewBaseContainer:actId()
 	assert(false, "please override this function")
 end
 
-return var_0_2
+return Activity125ViewBaseContainer

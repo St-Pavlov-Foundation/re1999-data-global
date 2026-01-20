@@ -1,11 +1,13 @@
-﻿module("modules.logic.tips.view.FightCommonTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/tips/view/FightCommonTipViewContainer.lua
 
-local var_0_0 = class("FightCommonTipViewContainer", BaseViewContainer)
+module("modules.logic.tips.view.FightCommonTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local FightCommonTipViewContainer = class("FightCommonTipViewContainer", BaseViewContainer)
+
+function FightCommonTipViewContainer:buildViews()
 	return {
 		FightCommonTipView.New()
 	}
 end
 
-return var_0_0
+return FightCommonTipViewContainer

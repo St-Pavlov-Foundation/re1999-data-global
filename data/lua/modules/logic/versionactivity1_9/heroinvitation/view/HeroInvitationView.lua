@@ -1,48 +1,51 @@
-﻿module("modules.logic.versionactivity1_9.heroinvitation.view.HeroInvitationView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/heroinvitation/view/HeroInvitationView.lua
 
-local var_0_0 = class("HeroInvitationView", BaseView)
+module("modules.logic.versionactivity1_9.heroinvitation.view.HeroInvitationView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0.btnMask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "mask")
-	arg_1_0.txtTotal = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/#txt_Total")
-	arg_1_0.txtNum = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/#txt_Total/#txt_Num")
-	arg_1_0.btnPreview = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/skinname/txt_Dec2/#btn_preview")
-	arg_1_0.btnClaim = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_claim")
-	arg_1_0.goEffect = gohelper.findChild(arg_1_0.viewGO, "Left/#btn_claim/bg_effect1")
-	arg_1_0.btnFinish = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_finish")
+local HeroInvitationView = class("HeroInvitationView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function HeroInvitationView:onInitView()
+	self.btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self.btnMask = gohelper.findChildButtonWithAudio(self.viewGO, "mask")
+	self.txtTotal = gohelper.findChildTextMesh(self.viewGO, "Right/#txt_Total")
+	self.txtNum = gohelper.findChildTextMesh(self.viewGO, "Right/#txt_Total/#txt_Num")
+	self.btnPreview = gohelper.findChildButtonWithAudio(self.viewGO, "Left/skinname/txt_Dec2/#btn_preview")
+	self.btnClaim = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_claim")
+	self.goEffect = gohelper.findChild(self.viewGO, "Left/#btn_claim/bg_effect1")
+	self.btnFinish = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_finish")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnMask, arg_2_0.onClickBtnClose, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnClose, arg_2_0.onClickBtnClose, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnPreview, arg_2_0.onClickBtnPreview, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnClaim, arg_2_0.onClickBtnClaim, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnFinish, arg_2_0.onClickBtnFinish, arg_2_0)
-	arg_2_0:addEventCb(HeroInvitationController.instance, HeroInvitationEvent.StateChange, arg_2_0.refreshView, arg_2_0)
-	arg_2_0:addEventCb(HeroInvitationController.instance, HeroInvitationEvent.UpdateInfo, arg_2_0.refreshView, arg_2_0)
+function HeroInvitationView:addEvents()
+	self:addClickCb(self.btnMask, self.onClickBtnClose, self)
+	self:addClickCb(self.btnClose, self.onClickBtnClose, self)
+	self:addClickCb(self.btnPreview, self.onClickBtnPreview, self)
+	self:addClickCb(self.btnClaim, self.onClickBtnClaim, self)
+	self:addClickCb(self.btnFinish, self.onClickBtnFinish, self)
+	self:addEventCb(HeroInvitationController.instance, HeroInvitationEvent.StateChange, self.refreshView, self)
+	self:addEventCb(HeroInvitationController.instance, HeroInvitationEvent.UpdateInfo, self.refreshView, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function HeroInvitationView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function HeroInvitationView:_editableInitView()
 	return
 end
 
-function var_0_0.onClickBtnPreview(arg_5_0)
-	local var_5_0 = CommonConfig.instance:getConstStr(ConstEnum.HeroInvitationReward)
-	local var_5_1 = GameUtil.splitString2(var_5_0, true)[1]
+function HeroInvitationView:onClickBtnPreview()
+	local rewardStr = CommonConfig.instance:getConstStr(ConstEnum.HeroInvitationReward)
+	local rewardList = GameUtil.splitString2(rewardStr, true)
+	local reward1 = rewardList[1]
 
-	MaterialTipController.instance:showMaterialInfo(var_5_1[1], var_5_1[2], false, nil, false)
+	MaterialTipController.instance:showMaterialInfo(reward1[1], reward1[2], false, nil, false)
 end
 
-function var_0_0.onClickBtnClaim(arg_6_0)
+function HeroInvitationView:onClickBtnClaim()
 	if HeroInvitationModel.instance.finalReward then
 		return
 	end
@@ -54,57 +57,59 @@ function var_0_0.onClickBtnClaim(arg_6_0)
 	HeroInvitationRpc.instance:sendGainFinalInviteRewardRequest()
 end
 
-function var_0_0.onClickBtnFinish(arg_7_0)
+function HeroInvitationView:onClickBtnFinish()
 	return
 end
 
-function var_0_0.onClickBtnClose(arg_8_0)
-	arg_8_0:closeThis()
+function HeroInvitationView:onClickBtnClose()
+	self:closeThis()
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
-	arg_9_0:refreshView()
+function HeroInvitationView:onUpdateParam()
+	self:refreshView()
 end
 
-function var_0_0.onOpen(arg_10_0)
+function HeroInvitationView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_mln_unlock)
-	arg_10_0:refreshView()
+	self:refreshView()
 
-	local var_10_0 = arg_10_0.viewContainer:getScrollView()
+	local scrollView = self.viewContainer:getScrollView()
 
-	var_10_0:moveToByCheckFunc(function(arg_11_0)
-		return HeroInvitationModel.instance:getInvitationState(arg_11_0.id) ~= HeroInvitationEnum.InvitationState.Finish
+	scrollView:moveToByCheckFunc(function(mo)
+		local state = HeroInvitationModel.instance:getInvitationState(mo.id)
+
+		return state ~= HeroInvitationEnum.InvitationState.Finish
 	end)
-	var_10_0:refreshScroll()
+	scrollView:refreshScroll()
 end
 
-function var_0_0.onClose(arg_12_0)
+function HeroInvitationView:onClose()
 	return
 end
 
-function var_0_0.refreshView(arg_13_0)
+function HeroInvitationView:refreshView()
 	HeroInvitationListModel.instance:refreshList()
 
-	local var_13_0, var_13_1 = HeroInvitationModel.instance:getInvitationHasRewardCount()
+	local count, finishCount = HeroInvitationModel.instance:getInvitationHasRewardCount()
 
-	arg_13_0.txtNum.text = var_13_1
-	arg_13_0.txtTotal.text = var_13_0
+	self.txtNum.text = finishCount
+	self.txtTotal.text = count
 
-	local var_13_2 = HeroInvitationModel.instance.finalReward
+	local finalReward = HeroInvitationModel.instance.finalReward
 
-	gohelper.setActive(arg_13_0.btnClaim, not var_13_2)
-	gohelper.setActive(arg_13_0.btnFinish, var_13_2)
+	gohelper.setActive(self.btnClaim, not finalReward)
+	gohelper.setActive(self.btnFinish, finalReward)
 
-	if not var_13_2 then
-		local var_13_3 = var_13_1 < var_13_0
+	if not finalReward then
+		local gray = finishCount < count
 
-		ZProj.UGUIHelper.SetGrayscale(arg_13_0.btnClaim.gameObject, var_13_3)
-		gohelper.setActive(arg_13_0.goEffect, not var_13_3)
+		ZProj.UGUIHelper.SetGrayscale(self.btnClaim.gameObject, gray)
+		gohelper.setActive(self.goEffect, not gray)
 	end
 end
 
-function var_0_0.onDestroyView(arg_14_0)
+function HeroInvitationView:onDestroyView()
 	return
 end
 
-return var_0_0
+return HeroInvitationView

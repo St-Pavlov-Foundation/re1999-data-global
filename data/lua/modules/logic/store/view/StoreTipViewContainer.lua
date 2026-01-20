@@ -1,15 +1,17 @@
-﻿module("modules.logic.store.view.StoreTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/StoreTipViewContainer.lua
 
-local var_0_0 = class("StoreTipViewContainer", BaseViewContainer)
+module("modules.logic.store.view.StoreTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local StoreTipViewContainer = class("StoreTipViewContainer", BaseViewContainer)
+
+function StoreTipViewContainer:buildViews()
 	return {
 		StoreTipView.New()
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	arg_2_0:closeThis()
+function StoreTipViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return StoreTipViewContainer

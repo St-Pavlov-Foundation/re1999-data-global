@@ -1,160 +1,162 @@
-﻿module("modules.logic.story.model.StoryStepMo", package.seeall)
+﻿-- chunkname: @modules/logic/story/model/StoryStepMo.lua
 
-local var_0_0 = pureTable("StoryStepMo")
+module("modules.logic.story.model.StoryStepMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.id = 0
-	arg_1_0.name = ""
-	arg_1_0.conversation = {}
-	arg_1_0.heroList = {}
-	arg_1_0.bg = {}
-	arg_1_0.audioList = {}
-	arg_1_0.effList = {}
-	arg_1_0.picList = {}
-	arg_1_0.videoList = {}
-	arg_1_0.navigateList = {}
-	arg_1_0.optList = {}
-	arg_1_0.mainRole = {}
-	arg_1_0.mourningBorder = {}
+local StoryStepMo = pureTable("StoryStepMo")
+
+function StoryStepMo:ctor()
+	self.id = 0
+	self.name = ""
+	self.conversation = {}
+	self.heroList = {}
+	self.bg = {}
+	self.audioList = {}
+	self.effList = {}
+	self.picList = {}
+	self.videoList = {}
+	self.navigateList = {}
+	self.optList = {}
+	self.mainRole = {}
+	self.mourningBorder = {}
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.id = arg_2_1[1]
-	arg_2_0.name = arg_2_1[2]
-	arg_2_0.conversation = arg_2_0:_buildConversation(arg_2_1[3])
-	arg_2_0.heroList = arg_2_0:_buildHero(arg_2_1[4])
-	arg_2_0.bg = arg_2_0:_buildBackground(arg_2_1[5])
-	arg_2_0.audioList = arg_2_0:_buildAudio(arg_2_1[6])
-	arg_2_0.effList = arg_2_0:_buildEffect(arg_2_1[7])
-	arg_2_0.picList = arg_2_0:_buildPictures(arg_2_1[8])
-	arg_2_0.videoList = arg_2_0:_buildVideo(arg_2_1[9])
-	arg_2_0.navigateList = arg_2_0:_buildNavigate(arg_2_1[10])
-	arg_2_0.optList = arg_2_0:_buildOption(arg_2_1[11])
-	arg_2_0.mainRole = arg_2_0:_buildMainRole(arg_2_1[12])
-	arg_2_0.mourningBorder = arg_2_0:_buildMourningBorder(arg_2_1[13])
+function StoryStepMo:init(info)
+	self.id = info[1]
+	self.name = info[2]
+	self.conversation = self:_buildConversation(info[3])
+	self.heroList = self:_buildHero(info[4])
+	self.bg = self:_buildBackground(info[5])
+	self.audioList = self:_buildAudio(info[6])
+	self.effList = self:_buildEffect(info[7])
+	self.picList = self:_buildPictures(info[8])
+	self.videoList = self:_buildVideo(info[9])
+	self.navigateList = self:_buildNavigate(info[10])
+	self.optList = self:_buildOption(info[11])
+	self.mainRole = self:_buildMainRole(info[12])
+	self.mourningBorder = self:_buildMourningBorder(info[13])
 end
 
-function var_0_0._buildConversation(arg_3_0, arg_3_1)
-	local var_3_0 = StoryStepConversationMo.New()
+function StoryStepMo:_buildConversation(param)
+	local conMo = StoryStepConversationMo.New()
 
-	var_3_0:init(arg_3_1)
+	conMo:init(param)
 
-	return var_3_0
+	return conMo
 end
 
-function var_0_0._buildHero(arg_4_0, arg_4_1)
-	local var_4_0 = {}
+function StoryStepMo:_buildHero(param)
+	local list = {}
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
-		local var_4_1 = StoryStepHeroMo.New()
+	for _, hero in ipairs(param) do
+		local heroMo = StoryStepHeroMo.New()
 
-		var_4_1:init(iter_4_1)
-		table.insert(var_4_0, var_4_1)
+		heroMo:init(hero)
+		table.insert(list, heroMo)
 	end
 
-	return var_4_0
+	return list
 end
 
-function var_0_0._buildBackground(arg_5_0, arg_5_1)
-	local var_5_0 = StoryStepBGMo.New()
+function StoryStepMo:_buildBackground(param)
+	local bgMo = StoryStepBGMo.New()
 
-	var_5_0:init(arg_5_1)
+	bgMo:init(param)
 
-	return var_5_0
+	return bgMo
 end
 
-function var_0_0._buildAudio(arg_6_0, arg_6_1)
-	local var_6_0 = {}
+function StoryStepMo:_buildAudio(param)
+	local list = {}
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_1) do
-		local var_6_1 = StoryStepAudioMo.New()
+	for _, v in ipairs(param) do
+		local audioMo = StoryStepAudioMo.New()
 
-		var_6_1:init(iter_6_1)
-		table.insert(var_6_0, var_6_1)
+		audioMo:init(v)
+		table.insert(list, audioMo)
 	end
 
-	return var_6_0
+	return list
 end
 
-function var_0_0._buildEffect(arg_7_0, arg_7_1)
-	local var_7_0 = {}
+function StoryStepMo:_buildEffect(param)
+	local list = {}
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_1) do
-		local var_7_1 = StoryStepEffectMo.New()
+	for _, v in ipairs(param) do
+		local effMo = StoryStepEffectMo.New()
 
-		var_7_1:init(iter_7_1)
-		table.insert(var_7_0, var_7_1)
+		effMo:init(v)
+		table.insert(list, effMo)
 	end
 
-	return var_7_0
+	return list
 end
 
-function var_0_0._buildPictures(arg_8_0, arg_8_1)
-	local var_8_0 = {}
+function StoryStepMo:_buildPictures(param)
+	local list = {}
 
-	for iter_8_0, iter_8_1 in ipairs(arg_8_1) do
-		local var_8_1 = StoryStepPictureMo.New()
+	for _, v in ipairs(param) do
+		local picMo = StoryStepPictureMo.New()
 
-		var_8_1:init(iter_8_1)
-		table.insert(var_8_0, var_8_1)
+		picMo:init(v)
+		table.insert(list, picMo)
 	end
 
-	return var_8_0
+	return list
 end
 
-function var_0_0._buildVideo(arg_9_0, arg_9_1)
-	local var_9_0 = {}
+function StoryStepMo:_buildVideo(param)
+	local list = {}
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_1) do
-		local var_9_1 = StoryStepVideoMo.New()
+	for _, v in ipairs(param) do
+		local videoMo = StoryStepVideoMo.New()
 
-		var_9_1:init(iter_9_1)
-		table.insert(var_9_0, var_9_1)
+		videoMo:init(v)
+		table.insert(list, videoMo)
 	end
 
-	return var_9_0
+	return list
 end
 
-function var_0_0._buildNavigate(arg_10_0, arg_10_1)
-	local var_10_0 = {}
+function StoryStepMo:_buildNavigate(param)
+	local list = {}
 
-	for iter_10_0, iter_10_1 in ipairs(arg_10_1) do
-		local var_10_1 = StoryStepNavigateMo.New()
+	for _, v in ipairs(param) do
+		local mapMo = StoryStepNavigateMo.New()
 
-		var_10_1:init(iter_10_1)
-		table.insert(var_10_0, var_10_1)
+		mapMo:init(v)
+		table.insert(list, mapMo)
 	end
 
-	return var_10_0
+	return list
 end
 
-function var_0_0._buildOption(arg_11_0, arg_11_1)
-	local var_11_0 = {}
+function StoryStepMo:_buildOption(param)
+	local list = {}
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_1) do
-		local var_11_1 = StoryStepOptionMo.New()
+	for _, v in ipairs(param) do
+		local optMo = StoryStepOptionMo.New()
 
-		var_11_1:init(iter_11_1)
-		table.insert(var_11_0, var_11_1)
+		optMo:init(v)
+		table.insert(list, optMo)
 	end
 
-	return var_11_0
+	return list
 end
 
-function var_0_0._buildMainRole(arg_12_0, arg_12_1)
-	local var_12_0 = StoryStepMainHeroMo.New()
+function StoryStepMo:_buildMainRole(param)
+	local mrMo = StoryStepMainHeroMo.New()
 
-	var_12_0:init(arg_12_1)
+	mrMo:init(param)
 
-	return var_12_0
+	return mrMo
 end
 
-function var_0_0._buildMourningBorder(arg_13_0, arg_13_1)
-	local var_13_0 = StoryStepMourningBorderMo.New()
+function StoryStepMo:_buildMourningBorder(param)
+	local mb = StoryStepMourningBorderMo.New()
 
-	var_13_0:init(arg_13_1)
+	mb:init(param)
 
-	return var_13_0
+	return mb
 end
 
-return var_0_0
+return StoryStepMo

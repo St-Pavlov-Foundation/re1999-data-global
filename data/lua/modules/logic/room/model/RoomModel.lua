@@ -1,285 +1,291 @@
-﻿module("modules.logic.room.model.RoomModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/RoomModel.lua
 
-local var_0_0 = class("RoomModel", BaseModel)
+module("modules.logic.room.model.RoomModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:_clearData()
+local RoomModel = class("RoomModel", BaseModel)
+
+function RoomModel:onInit()
+	self:_clearData()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:_clearData()
+function RoomModel:reInit()
+	self:_clearData()
 end
 
-function var_0_0.clear(arg_3_0)
-	var_0_0.super.clear(arg_3_0)
-	arg_3_0:_clearData()
+function RoomModel:clear()
+	RoomModel.super.clear(self)
+	self:_clearData()
 end
 
-function var_0_0._clearData(arg_4_0)
-	arg_4_0._eidtInfo = nil
-	arg_4_0._obInfo = nil
-	arg_4_0._visitParam = nil
-	arg_4_0._enterParam = nil
-	arg_4_0._gameMode = RoomEnum.GameMode.Ob
-	arg_4_0._debugParam = nil
-	arg_4_0._roomInfoDict = {}
-	arg_4_0._buildingInfoDict = {}
-	arg_4_0._buildingIdCountDict = {}
-	arg_4_0._clickBuildingUidDict = {}
-	arg_4_0._buildingInfoList = {}
-	arg_4_0._formulaIdCountDict = {}
-	arg_4_0._blockPackageIds = {}
-	arg_4_0._specialBlockIds = {}
-	arg_4_0._specialBlockInfoList = {}
-	arg_4_0._themeItemMOListDict = {}
-	arg_4_0._roomLevel = 0
-	arg_4_0._interactionCount = 0
-	arg_4_0._existInteractionDict = {}
-	arg_4_0._characterPositionDict = {}
-	arg_4_0._hasGetRoomThemes = {}
-	arg_4_0._hasEdit = nil
-	arg_4_0._roadInfoListDict = {}
-	arg_4_0._atmosphereCacheData = nil
+function RoomModel:_clearData()
+	self._eidtInfo = nil
+	self._obInfo = nil
+	self._visitParam = nil
+	self._enterParam = nil
+	self._gameMode = RoomEnum.GameMode.Ob
+	self._debugParam = nil
+	self._roomInfoDict = {}
+	self._buildingInfoDict = {}
+	self._buildingIdCountDict = {}
+	self._clickBuildingUidDict = {}
+	self._buildingInfoList = {}
+	self._formulaIdCountDict = {}
+	self._blockPackageIds = {}
+	self._specialBlockIds = {}
+	self._specialBlockInfoList = {}
+	self._themeItemMOListDict = {}
+	self._roomLevel = 0
+	self._interactionCount = 0
+	self._existInteractionDict = {}
+	self._characterPositionDict = {}
+	self._hasGetRoomThemes = {}
+	self._hasEdit = nil
+	self._roadInfoListDict = {}
+	self._atmosphereCacheData = nil
 
-	if arg_4_0._characterModel then
-		arg_4_0._characterModel:clear()
+	if self._characterModel then
+		self._characterModel:clear()
 	else
-		arg_4_0._characterModel = BaseModel.New()
+		self._characterModel = BaseModel.New()
 	end
 end
 
-function var_0_0.setEditInfo(arg_5_0, arg_5_1)
-	arg_5_0._eidtInfo = arg_5_1
+function RoomModel:setEditInfo(info)
+	self._eidtInfo = info
 
-	arg_5_0:_setInfoByMode(arg_5_1, RoomEnum.GameMode.Edit)
+	self:_setInfoByMode(info, RoomEnum.GameMode.Edit)
 
-	if arg_5_1 and arg_5_1.blockPackages then
-		arg_5_0:_addBlockPackageIdByPackageInfos(arg_5_1.blockPackages)
+	if info and info.blockPackages then
+		self:_addBlockPackageIdByPackageInfos(info.blockPackages)
 	end
 end
 
-function var_0_0.getEditInfo(arg_6_0)
-	return arg_6_0._eidtInfo
+function RoomModel:getEditInfo()
+	return self._eidtInfo
 end
 
-function var_0_0.setObInfo(arg_7_0, arg_7_1)
-	arg_7_0._obInfo = arg_7_1
+function RoomModel:setObInfo(info)
+	self._obInfo = info
 
-	arg_7_0:_setInfoByMode(arg_7_1, RoomEnum.GameMode.Ob)
+	self:_setInfoByMode(info, RoomEnum.GameMode.Ob)
 
-	if arg_7_1 and arg_7_1.blockPackages then
-		arg_7_0:_addBlockPackageIdByPackageInfos(arg_7_1.blockPackages)
+	if info and info.blockPackages then
+		self:_addBlockPackageIdByPackageInfos(info.blockPackages)
 	end
 
-	if arg_7_1 and arg_7_1.hasGetRoomThemes then
-		arg_7_0:setGetThemeRewardIds(arg_7_1.hasGetRoomThemes)
+	if info and info.hasGetRoomThemes then
+		self:setGetThemeRewardIds(info.hasGetRoomThemes)
 	end
 end
 
-function var_0_0.getObInfo(arg_8_0)
-	return arg_8_0._obInfo
+function RoomModel:getObInfo()
+	return self._obInfo
 end
 
-function var_0_0.setInfoByMode(arg_9_0, arg_9_1, arg_9_2)
-	if arg_9_2 == RoomEnum.GameMode.Ob then
-		arg_9_0:setObInfo(arg_9_1)
-	elseif arg_9_2 == RoomEnum.GameMode.Edit then
-		arg_9_0:setEditInfo(arg_9_1)
+function RoomModel:setInfoByMode(info, gameMode)
+	if gameMode == RoomEnum.GameMode.Ob then
+		self:setObInfo(info)
+	elseif gameMode == RoomEnum.GameMode.Edit then
+		self:setEditInfo(info)
 	else
-		arg_9_0:_setInfoByMode(arg_9_1, arg_9_2)
+		self:_setInfoByMode(info, gameMode)
 	end
 end
 
-function var_0_0._setInfoByMode(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_0._roomInfoDict[arg_10_2] = arg_10_1
+function RoomModel:_setInfoByMode(info, gameMode)
+	self._roomInfoDict[gameMode] = info
 
-	arg_10_0:setRoadInfoListByMode(arg_10_1 and arg_10_1.roadInfos, arg_10_2)
+	self:setRoadInfoListByMode(info and info.roadInfos, gameMode)
 end
 
-function var_0_0.getRoadInfoListByMode(arg_11_0, arg_11_1)
-	return arg_11_0._roadInfoListDict[arg_11_1]
+function RoomModel:getRoadInfoListByMode(gameMode)
+	return self._roadInfoListDict[gameMode]
 end
 
-function var_0_0.setRoadInfoListByMode(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = {}
+function RoomModel:setRoadInfoListByMode(roadInfos, gameMode)
+	local roadList = {}
 
-	arg_12_0._roadInfoListDict[arg_12_2] = var_12_0
+	self._roadInfoListDict[gameMode] = roadList
 
-	if arg_12_1 then
-		for iter_12_0 = 1, #arg_12_1 do
-			table.insert(var_12_0, RoomTransportHelper.serverRoadInfo2Info(arg_12_1[iter_12_0]))
+	if roadInfos then
+		for i = 1, #roadInfos do
+			table.insert(roadList, RoomTransportHelper.serverRoadInfo2Info(roadInfos[i]))
 		end
 	end
 end
 
-function var_0_0.removeRoadInfoByIdsMode(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0 = arg_13_0._roadInfoListDict[arg_13_2]
+function RoomModel:removeRoadInfoByIdsMode(ids, gameMode)
+	local roadList = self._roadInfoListDict[gameMode]
 
-	if var_13_0 then
-		for iter_13_0 = #var_13_0, 1, -1 do
-			local var_13_1 = var_13_0[iter_13_0]
+	if roadList then
+		for i = #roadList, 1, -1 do
+			local roadInfo = roadList[i]
 
-			if tabletool.indexOf(arg_13_1, var_13_1.id) then
-				table.remove(var_13_0, iter_13_0)
+			if tabletool.indexOf(ids, roadInfo.id) then
+				table.remove(roadList, i)
 			end
 		end
 	end
 end
 
-function var_0_0.getInfoByMode(arg_14_0, arg_14_1)
-	return arg_14_0._roomInfoDict[arg_14_1]
+function RoomModel:getInfoByMode(gameMode)
+	return self._roomInfoDict[gameMode]
 end
 
-function var_0_0.setGameMode(arg_15_0, arg_15_1)
-	arg_15_0._gameMode = arg_15_1
+function RoomModel:setGameMode(gameMode)
+	self._gameMode = gameMode
 end
 
-function var_0_0.getGameMode(arg_16_0)
-	return arg_16_0._gameMode
+function RoomModel:getGameMode()
+	return self._gameMode
 end
 
-function var_0_0.setEnterParam(arg_17_0, arg_17_1)
-	arg_17_0._enterParam = arg_17_1
+function RoomModel:setEnterParam(enterParam)
+	self._enterParam = enterParam
 end
 
-function var_0_0.getEnterParam(arg_18_0)
-	return arg_18_0._enterParam
+function RoomModel:getEnterParam()
+	return self._enterParam
 end
 
-function var_0_0.setVisitParam(arg_19_0, arg_19_1)
-	arg_19_0._visitParam = arg_19_1
+function RoomModel:setVisitParam(visitParam)
+	self._visitParam = visitParam
 end
 
-function var_0_0.getVisitParam(arg_20_0)
-	return arg_20_0._visitParam
+function RoomModel:getVisitParam()
+	return self._visitParam
 end
 
-function var_0_0.setDebugParam(arg_21_0, arg_21_1)
-	arg_21_0._debugParam = arg_21_1
+function RoomModel:setDebugParam(debugParam)
+	self._debugParam = debugParam
 end
 
-function var_0_0.getDebugParam(arg_22_0)
-	return arg_22_0._debugParam
+function RoomModel:getDebugParam()
+	return self._debugParam
 end
 
-function var_0_0.getBuildingInfoList(arg_23_0)
-	return arg_23_0._buildingInfoList
+function RoomModel:getBuildingInfoList()
+	return self._buildingInfoList
 end
 
-function var_0_0.resetBuildingInfos(arg_24_0)
-	local var_24_0 = arg_24_0._buildingInfoList
+function RoomModel:resetBuildingInfos()
+	local buildingInfos = self._buildingInfoList
 
-	for iter_24_0 = 1, #var_24_0 do
-		var_24_0[iter_24_0].use = false
+	for i = 1, #buildingInfos do
+		buildingInfos[i].use = false
 	end
 end
 
-function var_0_0.setBuildingInfos(arg_25_0, arg_25_1)
-	arg_25_0._buildingIdCountDict = {}
-	arg_25_0._buildingInfoList = {}
-	arg_25_0._buildingInfoDict = {}
+function RoomModel:setBuildingInfos(buildingInfos)
+	self._buildingIdCountDict = {}
+	self._buildingInfoList = {}
+	self._buildingInfoDict = {}
 
-	arg_25_0:updateBuildingInfos(arg_25_1)
+	self:updateBuildingInfos(buildingInfos)
 end
 
-function var_0_0.updateBuildingInfos(arg_26_0, arg_26_1)
-	for iter_26_0, iter_26_1 in ipairs(arg_26_1) do
-		local var_26_0 = iter_26_1.defineId
-		local var_26_1 = arg_26_0._buildingInfoDict[iter_26_1.uid]
+function RoomModel:updateBuildingInfos(buildingInfos)
+	for i, buildingInfo in ipairs(buildingInfos) do
+		local buildingId = buildingInfo.defineId
+		local info = self._buildingInfoDict[buildingInfo.uid]
 
-		if not var_26_1 then
-			var_26_1 = {}
-			arg_26_0._buildingInfoDict[iter_26_1.uid] = var_26_1
-			var_26_1.uid = iter_26_1.uid
-			var_26_1.buildingId = var_26_0
-			var_26_1.defineId = var_26_0
+		if not info then
+			info = {}
+			self._buildingInfoDict[buildingInfo.uid] = info
+			info.uid = buildingInfo.uid
+			info.buildingId = buildingId
+			info.defineId = buildingId
 
-			table.insert(arg_26_0._buildingInfoList, var_26_1)
+			table.insert(self._buildingInfoList, info)
 
-			arg_26_0._buildingIdCountDict[var_26_0] = (arg_26_0._buildingIdCountDict[var_26_0] or 0) + 1
+			self._buildingIdCountDict[buildingId] = (self._buildingIdCountDict[buildingId] or 0) + 1
 		end
 
-		var_26_1.use = iter_26_1.use or false
-		var_26_1.x = iter_26_1.x or 0
-		var_26_1.y = iter_26_1.y or 0
-		var_26_1.rotate = iter_26_1.rotate or 0
-		var_26_1.level = iter_26_1.level or 0
+		info.use = buildingInfo.use or false
+		info.x = buildingInfo.x or 0
+		info.y = buildingInfo.y or 0
+		info.rotate = buildingInfo.rotate or 0
+		info.level = buildingInfo.level or 0
 	end
 end
 
-function var_0_0.getBuildingCount(arg_27_0, arg_27_1)
-	return arg_27_0._buildingIdCountDict[arg_27_1] or 0
+function RoomModel:getBuildingCount(buildingId)
+	return self._buildingIdCountDict[buildingId] or 0
 end
 
-function var_0_0.getBuildingInfoByBuildingUid(arg_28_0, arg_28_1)
-	return arg_28_0._buildingInfoDict[arg_28_1]
+function RoomModel:getBuildingInfoByBuildingUid(buildingUid)
+	return self._buildingInfoDict[buildingUid]
 end
 
-function var_0_0.blockPackageGainPush(arg_29_0, arg_29_1)
-	arg_29_0:_addBlockPackageIdByPackageInfos(arg_29_1.blockPackages)
+function RoomModel:blockPackageGainPush(msg)
+	self:_addBlockPackageIdByPackageInfos(msg.blockPackages)
 end
 
-function var_0_0._addBlockPackageIdByPackageInfos(arg_30_0, arg_30_1)
-	if not arg_30_1 then
+function RoomModel:_addBlockPackageIdByPackageInfos(blockPackageInfos)
+	if not blockPackageInfos then
 		return
 	end
 
-	for iter_30_0 = 1, #arg_30_1 do
-		arg_30_0:_addBlockPackageId(arg_30_1[iter_30_0].blockPackageId)
+	for i = 1, #blockPackageInfos do
+		self:_addBlockPackageId(blockPackageInfos[i].blockPackageId)
 	end
 end
 
-function var_0_0._addBlockPackageId(arg_31_0, arg_31_1)
-	if not arg_31_0:isHasBlockPackageById(arg_31_1) then
-		table.insert(arg_31_0._blockPackageIds, arg_31_1)
+function RoomModel:_addBlockPackageId(blockPackageId)
+	if not self:isHasBlockPackageById(blockPackageId) then
+		table.insert(self._blockPackageIds, blockPackageId)
 	end
 end
 
-function var_0_0.setGetThemeRewardIds(arg_32_0, arg_32_1)
-	if not arg_32_1 then
+function RoomModel:setGetThemeRewardIds(themeIds)
+	if not themeIds then
 		return
 	end
 
-	arg_32_0._hasGetRoomThemes = {}
+	self._hasGetRoomThemes = {}
 
-	for iter_32_0 = 1, #arg_32_1 do
-		table.insert(arg_32_0._hasGetRoomThemes, arg_32_1[iter_32_0])
+	for i = 1, #themeIds do
+		table.insert(self._hasGetRoomThemes, themeIds[i])
 	end
 end
 
-function var_0_0.addGetThemeRewardId(arg_33_0, arg_33_1)
-	table.insert(arg_33_0._hasGetRoomThemes, arg_33_1)
+function RoomModel:addGetThemeRewardId(themeId)
+	table.insert(self._hasGetRoomThemes, themeId)
 end
 
-function var_0_0.isHasBlockPackageById(arg_34_0, arg_34_1)
-	return tabletool.indexOf(arg_34_0._blockPackageIds, arg_34_1) and true or false
+function RoomModel:isHasBlockPackageById(blockPackageId)
+	local index = tabletool.indexOf(self._blockPackageIds, blockPackageId)
+
+	return index and true or false
 end
 
-function var_0_0.isHasBlockById(arg_35_0, arg_35_1)
-	if tabletool.indexOf(arg_35_0._specialBlockIds, arg_35_1) then
+function RoomModel:isHasBlockById(blockId)
+	local index = tabletool.indexOf(self._specialBlockIds, blockId)
+
+	if index then
 		return true
 	end
 
-	local var_35_0 = RoomConfig.instance:getBlock(arg_35_1)
+	local blockCfg = RoomConfig.instance:getBlock(blockId)
 
-	if var_35_0 and var_35_0.ownType == RoomBlockEnum.OwnType.Package and tabletool.indexOf(arg_35_0._blockPackageIds, var_35_0.packageId) then
+	if blockCfg and blockCfg.ownType == RoomBlockEnum.OwnType.Package and tabletool.indexOf(self._blockPackageIds, blockCfg.packageId) then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.isHasRoomThemeById(arg_36_0, arg_36_1)
-	local var_36_0 = arg_36_0:getThemeItemMOListById(arg_36_1)
+function RoomModel:isHasRoomThemeById(themeId)
+	local themeMOlist = self:getThemeItemMOListById(themeId)
 
-	if var_36_0 == nil or #var_36_0 < 1 then
+	if themeMOlist == nil or #themeMOlist < 1 then
 		return false
 	end
 
-	for iter_36_0 = 1, #var_36_0 do
-		local var_36_1 = var_36_0[iter_36_0]
+	for i = 1, #themeMOlist do
+		local themeMO = themeMOlist[i]
 
-		if var_36_1.itemNum > var_36_1:getItemQuantity() then
+		if themeMO.itemNum > themeMO:getItemQuantity() then
 			return false
 		end
 	end
@@ -287,117 +293,117 @@ function var_0_0.isHasRoomThemeById(arg_36_0, arg_36_1)
 	return true
 end
 
-function var_0_0.setBlockPackageIds(arg_37_0, arg_37_1)
-	local var_37_0 = {}
+function RoomModel:setBlockPackageIds(packageIds)
+	local tIds = {}
 
-	tabletool.addValues(var_37_0, arg_37_1)
+	tabletool.addValues(tIds, packageIds)
 
-	arg_37_0._blockPackageIds = var_37_0
+	self._blockPackageIds = tIds
 end
 
-function var_0_0.setSpecialBlockInfoList(arg_38_0, arg_38_1)
-	local var_38_0 = {}
+function RoomModel:setSpecialBlockInfoList(blockInfos)
+	local tInfos = {}
 
-	tabletool.addValues(var_38_0, arg_38_1)
+	tabletool.addValues(tInfos, blockInfos)
 
-	arg_38_0._specialBlockInfoList = var_38_0
-	arg_38_0._specialBlockIds = {}
+	self._specialBlockInfoList = tInfos
+	self._specialBlockIds = {}
 
-	for iter_38_0, iter_38_1 in ipairs(var_38_0) do
-		table.insert(arg_38_0._specialBlockIds, iter_38_1.blockId)
+	for _, info in ipairs(tInfos) do
+		table.insert(self._specialBlockIds, info.blockId)
 	end
 end
 
-function var_0_0.addSpecialBlockIds(arg_39_0, arg_39_1)
-	local var_39_0 = ServerTime.now()
+function RoomModel:addSpecialBlockIds(blockIds)
+	local createTime = ServerTime.now()
 
-	for iter_39_0 = 1, #arg_39_1 do
-		local var_39_1 = arg_39_1[iter_39_0]
+	for i = 1, #blockIds do
+		local blockId = blockIds[i]
 
-		if var_39_1 and tabletool.indexOf(arg_39_0._specialBlockIds, var_39_1) == nil then
-			table.insert(arg_39_0._specialBlockIds, var_39_1)
-			table.insert(arg_39_0._specialBlockInfoList, {
-				blockId = var_39_1,
-				createTime = var_39_0
+		if blockId and tabletool.indexOf(self._specialBlockIds, blockId) == nil then
+			table.insert(self._specialBlockIds, blockId)
+			table.insert(self._specialBlockInfoList, {
+				blockId = blockId,
+				createTime = createTime
 			})
 		end
 	end
 end
 
-function var_0_0.getBlockPackageIds(arg_40_0)
-	return arg_40_0._blockPackageIds
+function RoomModel:getBlockPackageIds()
+	return self._blockPackageIds
 end
 
-function var_0_0.getSpecialBlockIds(arg_41_0)
-	return arg_41_0._specialBlockIds
+function RoomModel:getSpecialBlockIds()
+	return self._specialBlockIds
 end
 
-function var_0_0.getSpecialBlockInfoList(arg_42_0)
-	return arg_42_0._specialBlockInfoList
+function RoomModel:getSpecialBlockInfoList()
+	return self._specialBlockInfoList
 end
 
-function var_0_0.setFormulaInfos(arg_43_0, arg_43_1)
-	arg_43_0._formulaIdCountDict = {}
+function RoomModel:setFormulaInfos(formulaInfos)
+	self._formulaIdCountDict = {}
 
-	arg_43_0:addFormulaInfos(arg_43_1)
+	self:addFormulaInfos(formulaInfos)
 end
 
-function var_0_0.addFormulaInfos(arg_44_0, arg_44_1)
-	for iter_44_0, iter_44_1 in ipairs(arg_44_1) do
-		local var_44_0 = iter_44_1.id
+function RoomModel:addFormulaInfos(formulaInfos)
+	for i, formulaInfo in ipairs(formulaInfos) do
+		local formulaId = formulaInfo.id
 
-		arg_44_0._formulaIdCountDict[var_44_0] = (arg_44_0._formulaIdCountDict[var_44_0] or 0) + 1
+		self._formulaIdCountDict[formulaId] = (self._formulaIdCountDict[formulaId] or 0) + 1
 	end
 end
 
-function var_0_0.getFormulaCount(arg_45_0, arg_45_1)
-	return arg_45_0._formulaIdCountDict[arg_45_1] or 0
+function RoomModel:getFormulaCount(formulaId)
+	return self._formulaIdCountDict[formulaId] or 0
 end
 
-function var_0_0.updateRoomLevel(arg_46_0, arg_46_1)
-	arg_46_0._roomLevel = arg_46_1
+function RoomModel:updateRoomLevel(roomLevel)
+	self._roomLevel = roomLevel
 end
 
-function var_0_0.getRoomLevel(arg_47_0)
-	return arg_47_0._roomLevel
+function RoomModel:getRoomLevel()
+	return self._roomLevel
 end
 
-function var_0_0.setCharacterList(arg_48_0, arg_48_1)
-	local var_48_0 = {}
+function RoomModel:setCharacterList(heroDatas)
+	local roomCharacterMOList = {}
 
-	if arg_48_1 then
-		for iter_48_0, iter_48_1 in ipairs(arg_48_1) do
-			local var_48_1 = RoomCharacterMO.New()
+	if heroDatas then
+		for _, info in ipairs(heroDatas) do
+			local characterMO = RoomCharacterMO.New()
 
-			var_48_1:init(RoomInfoHelper.serverInfoToCharacterInfo(iter_48_1))
-			table.insert(var_48_0, var_48_1)
+			characterMO:init(RoomInfoHelper.serverInfoToCharacterInfo(info))
+			table.insert(roomCharacterMOList, characterMO)
 		end
 	end
 
-	arg_48_0._characterModel:setList(var_48_0)
+	self._characterModel:setList(roomCharacterMOList)
 end
 
-function var_0_0.getCharacterList(arg_49_0)
-	return arg_49_0._characterModel:getList()
+function RoomModel:getCharacterList()
+	return self._characterModel:getList()
 end
 
-function var_0_0.removeCharacterById(arg_50_0, arg_50_1)
-	arg_50_0._characterModel:remove(arg_50_0._characterModel:getById(arg_50_1))
+function RoomModel:removeCharacterById(heroId)
+	self._characterModel:remove(self._characterModel:getById(heroId))
 end
 
-function var_0_0.getCharacterById(arg_51_0, arg_51_1)
-	return arg_51_0._characterModel:getById(arg_51_1)
+function RoomModel:getCharacterById(heroId)
+	return self._characterModel:getById(heroId)
 end
 
-function var_0_0.getThemeItemMO(arg_52_0, arg_52_1, arg_52_2, arg_52_3)
-	local var_52_0 = arg_52_0:getThemeItemMOListById(arg_52_1)
+function RoomModel:getThemeItemMO(themeId, itemId, itemType)
+	local moList = self:getThemeItemMOListById(themeId)
 
-	if not var_52_0 then
-		for iter_52_0 = 1, #var_52_0 do
-			local var_52_1 = var_52_0[iter_52_0]
+	if not moList then
+		for i = 1, #moList do
+			local mo = moList[i]
 
-			if var_52_1.id == arg_52_2 and var_52_1.materialType == arg_52_3 then
-				return var_52_1
+			if mo.id == itemId and mo.materialType == itemType then
+				return mo
 			end
 		end
 	end
@@ -405,69 +411,69 @@ function var_0_0.getThemeItemMO(arg_52_0, arg_52_1, arg_52_2, arg_52_3)
 	return nil
 end
 
-function var_0_0.getThemeItemMOListById(arg_53_0, arg_53_1)
-	local var_53_0 = arg_53_0._themeItemMOListDict[arg_53_1]
+function RoomModel:getThemeItemMOListById(themeId)
+	local moList = self._themeItemMOListDict[themeId]
 
-	if not var_53_0 then
-		local var_53_1 = RoomConfig.instance:getThemeConfig(arg_53_1)
+	if not moList then
+		local themeCfg = RoomConfig.instance:getThemeConfig(themeId)
 
-		if var_53_1 then
-			var_53_0 = {}
+		if themeCfg then
+			moList = {}
 
-			arg_53_0:_addThemeMOToListByStr(var_53_1.packages, var_53_0, MaterialEnum.MaterialType.BlockPackage)
-			arg_53_0:_addThemeMOToListByStr(var_53_1.building, var_53_0, MaterialEnum.MaterialType.Building)
+			self:_addThemeMOToListByStr(themeCfg.packages, moList, MaterialEnum.MaterialType.BlockPackage)
+			self:_addThemeMOToListByStr(themeCfg.building, moList, MaterialEnum.MaterialType.Building)
 
-			arg_53_0._themeItemMOListDict[arg_53_1] = var_53_0
+			self._themeItemMOListDict[themeId] = moList
 		end
 	end
 
-	return var_53_0
+	return moList
 end
 
-function var_0_0.findHasGetThemeRewardThemeId(arg_54_0)
-	local var_54_0 = RoomConfig.instance:getThemeConfigList()
+function RoomModel:findHasGetThemeRewardThemeId()
+	local cfgList = RoomConfig.instance:getThemeConfigList()
 
-	for iter_54_0 = 1, #var_54_0 do
-		local var_54_1 = var_54_0[iter_54_0].id
+	for i = 1, #cfgList do
+		local themeId = cfgList[i].id
 
-		if arg_54_0:isHasGetThemeRewardById(var_54_1) then
-			return var_54_1
+		if self:isHasGetThemeRewardById(themeId) then
+			return themeId
 		end
 	end
 end
 
-function var_0_0.isGetThemeRewardById(arg_55_0, arg_55_1)
-	return tabletool.indexOf(arg_55_0._hasGetRoomThemes, arg_55_1)
+function RoomModel:isGetThemeRewardById(themeId)
+	return tabletool.indexOf(self._hasGetRoomThemes, themeId)
 end
 
-function var_0_0.isHasGetThemeRewardById(arg_56_0, arg_56_1)
-	if tabletool.indexOf(arg_56_0._hasGetRoomThemes, arg_56_1) then
+function RoomModel:isHasGetThemeRewardById(themeId)
+	if tabletool.indexOf(self._hasGetRoomThemes, themeId) then
 		return false
 	end
 
-	local var_56_0 = RoomConfig.instance:getThemeCollectionRewards(arg_56_1)
+	local reswardList = RoomConfig.instance:getThemeCollectionRewards(themeId)
 
-	if not var_56_0 or #var_56_0 < 1 then
+	if not reswardList or #reswardList < 1 then
 		return false
 	end
 
-	local var_56_1 = arg_56_0:getThemeItemMOListById(arg_56_1)
+	local moList = self:getThemeItemMOListById(themeId)
 
-	if not var_56_1 or #var_56_1 < 1 then
+	if not moList or #moList < 1 then
 		return false
 	end
 
-	for iter_56_0 = 1, #var_56_1 do
-		local var_56_2 = var_56_1[iter_56_0]
-		local var_56_3 = var_56_2:getItemQuantity()
+	for i = 1, #moList do
+		local mo = moList[i]
+		local count = mo:getItemQuantity()
 
-		for iter_56_1, iter_56_2 in ipairs(var_56_0) do
-			if #iter_56_2 >= 3 and iter_56_2[1] == var_56_2.materialType and iter_56_2[2] == var_56_2.itemId then
-				var_56_3 = iter_56_2[3] + var_56_3
+		for _, resward in ipairs(reswardList) do
+			if #resward >= 3 and resward[1] == mo.materialType and resward[2] == mo.itemId then
+				count = resward[3] + count
 			end
 		end
 
-		if var_56_3 < var_56_2.itemNum then
+		if count < mo.itemNum then
 			return false
 		end
 	end
@@ -475,17 +481,18 @@ function var_0_0.isHasGetThemeRewardById(arg_56_0, arg_56_1)
 	return true
 end
 
-function var_0_0.isFinshThemeById(arg_57_0, arg_57_1)
-	local var_57_0 = arg_57_0:getThemeItemMOListById(arg_57_1)
+function RoomModel:isFinshThemeById(themeId)
+	local moList = self:getThemeItemMOListById(themeId)
 
-	if not var_57_0 or #var_57_0 < 1 then
+	if not moList or #moList < 1 then
 		return false
 	end
 
-	for iter_57_0 = 1, #var_57_0 do
-		local var_57_1 = var_57_0[iter_57_0]
+	for i = 1, #moList do
+		local mo = moList[i]
+		local count = mo:getItemQuantity()
 
-		if var_57_1:getItemQuantity() < var_57_1.itemNum then
+		if count < mo.itemNum then
 			return false
 		end
 	end
@@ -493,243 +500,254 @@ function var_0_0.isFinshThemeById(arg_57_0, arg_57_1)
 	return true
 end
 
-function var_0_0._addThemeMOToListByStr(arg_58_0, arg_58_1, arg_58_2, arg_58_3)
-	arg_58_2 = arg_58_2 or {}
+function RoomModel:_addThemeMOToListByStr(str, molist, materialType)
+	molist = molist or {}
 
-	local var_58_0 = GameUtil.splitString2(arg_58_1, true)
+	local nums = GameUtil.splitString2(str, true)
 
-	for iter_58_0, iter_58_1 in ipairs(var_58_0) do
-		local var_58_1 = RoomThemeItemMO.New()
-		local var_58_2 = iter_58_1[1]
-		local var_58_3 = ItemModel.instance:getItemConfig(arg_58_3, var_58_2)
-		local var_58_4 = var_58_3 and var_58_3.numLimit or 1
+	for _, item in ipairs(nums) do
+		local mo = RoomThemeItemMO.New()
+		local itemId = item[1]
+		local cfg = ItemModel.instance:getItemConfig(materialType, itemId)
+		local itemNum = cfg and cfg.numLimit or 1
 
-		var_58_1:init(var_58_2, var_58_4, arg_58_3)
-		table.insert(arg_58_2, var_58_1)
+		mo:init(itemId, itemNum, materialType)
+		table.insert(molist, mo)
 	end
 
-	return arg_58_2
+	return molist
 end
 
-function var_0_0.updateInteraction(arg_59_0, arg_59_1)
-	arg_59_0._interactionCount = arg_59_1.interactionCount
-	arg_59_0._existInteractionDict = {}
+function RoomModel:updateInteraction(info)
+	self._interactionCount = info.interactionCount
+	self._existInteractionDict = {}
 
-	for iter_59_0, iter_59_1 in ipairs(arg_59_1.infos) do
-		if RoomConfig.instance:getCharacterInteractionConfig(iter_59_1.id) then
-			arg_59_0._existInteractionDict[iter_59_1.id] = iter_59_1.finish and RoomCharacterEnum.InteractionState.Complete or RoomCharacterEnum.InteractionState.Start
+	for i, interactionInfo in ipairs(info.infos) do
+		local config = RoomConfig.instance:getCharacterInteractionConfig(interactionInfo.id)
+
+		if config then
+			self._existInteractionDict[interactionInfo.id] = interactionInfo.finish and RoomCharacterEnum.InteractionState.Complete or RoomCharacterEnum.InteractionState.Start
 		end
 	end
 end
 
-function var_0_0.getExistInteractionDict(arg_60_0)
-	return arg_60_0._existInteractionDict
+function RoomModel:getExistInteractionDict()
+	return self._existInteractionDict
 end
 
-function var_0_0.getInteractionCount(arg_61_0)
-	return arg_61_0._interactionCount
+function RoomModel:getInteractionCount()
+	return self._interactionCount
 end
 
-function var_0_0.getInteractionState(arg_62_0, arg_62_1)
-	return arg_62_0._existInteractionDict[arg_62_1] or RoomCharacterEnum.InteractionState.None
+function RoomModel:getInteractionState(interactionId)
+	return self._existInteractionDict[interactionId] or RoomCharacterEnum.InteractionState.None
 end
 
-function var_0_0.interactStart(arg_63_0, arg_63_1)
-	arg_63_0._interactionCount = arg_63_0._interactionCount + 1
-	arg_63_0._existInteractionDict[arg_63_1] = RoomCharacterEnum.InteractionState.Start
+function RoomModel:interactStart(interactionId)
+	self._interactionCount = self._interactionCount + 1
+	self._existInteractionDict[interactionId] = RoomCharacterEnum.InteractionState.Start
 end
 
-function var_0_0.interactComplete(arg_64_0, arg_64_1)
-	arg_64_0._existInteractionDict[arg_64_1] = RoomCharacterEnum.InteractionState.Complete
+function RoomModel:interactComplete(interactionId)
+	self._existInteractionDict[interactionId] = RoomCharacterEnum.InteractionState.Complete
 end
 
-function var_0_0.updateCharacterPoint(arg_65_0)
-	arg_65_0._characterPositionDict = {}
+function RoomModel:updateCharacterPoint()
+	self._characterPositionDict = {}
 
-	local var_65_0 = RoomCharacterModel.instance:getList()
+	local roomCharacterMOList = RoomCharacterModel.instance:getList()
 
-	for iter_65_0, iter_65_1 in ipairs(var_65_0) do
-		local var_65_1 = iter_65_1.currentPosition
+	for i, roomCharacterMO in ipairs(roomCharacterMOList) do
+		local currentPosition = roomCharacterMO.currentPosition
 
-		arg_65_0._characterPositionDict[iter_65_1.heroId] = var_65_1
+		self._characterPositionDict[roomCharacterMO.heroId] = currentPosition
 	end
 end
 
-function var_0_0.getCharacterPosition(arg_66_0, arg_66_1)
-	return arg_66_0._characterPositionDict[arg_66_1]
+function RoomModel:getCharacterPosition(heroId)
+	return self._characterPositionDict[heroId]
 end
 
-function var_0_0.setEditFlag(arg_67_0)
-	arg_67_0._hasEdit = true
+function RoomModel:setEditFlag()
+	self._hasEdit = true
 end
 
-function var_0_0.clearEditFlag(arg_68_0)
-	arg_68_0._hasEdit = nil
+function RoomModel:clearEditFlag()
+	self._hasEdit = nil
 end
 
-function var_0_0.hasEdit(arg_69_0)
-	return arg_69_0._hasEdit
+function RoomModel:hasEdit()
+	return self._hasEdit
 end
 
-function var_0_0.getOpenAndEndAtmosphereList(arg_70_0, arg_70_1)
-	local var_70_0 = {}
-	local var_70_1 = {}
-	local var_70_2 = RoomConfig.instance:getBuildingAtmospheres(arg_70_1)
-	local var_70_3 = ServerTime.now()
+function RoomModel:getOpenAndEndAtmosphereList(buildingId)
+	local openList = {}
+	local endList = {}
+	local atmosphereList = RoomConfig.instance:getBuildingAtmospheres(buildingId)
+	local nowTime = ServerTime.now()
 
-	for iter_70_0, iter_70_1 in ipairs(var_70_2) do
-		local var_70_4 = RoomConfig.instance:getAtmosphereOpenTime(iter_70_1)
-		local var_70_5 = var_70_4 + RoomConfig.instance:getAtmosphereDurationDay(iter_70_1) * TimeUtil.OneDaySecond
+	for _, atmosphereId in ipairs(atmosphereList) do
+		local openTime = RoomConfig.instance:getAtmosphereOpenTime(atmosphereId)
+		local durationDay = RoomConfig.instance:getAtmosphereDurationDay(atmosphereId)
+		local endTime = openTime + durationDay * TimeUtil.OneDaySecond
 
-		if var_70_4 <= var_70_3 and var_70_3 <= var_70_5 then
-			local var_70_6, var_70_7 = arg_70_0:isAtmosphereTrigger(iter_70_1)
+		if openTime <= nowTime and nowTime <= endTime then
+			local isTrigger, isAddToEnd = self:isAtmosphereTrigger(atmosphereId)
 
-			if var_70_6 then
-				var_70_0[#var_70_0 + 1] = iter_70_1
-			elseif var_70_7 then
-				var_70_1[#var_70_1 + 1] = iter_70_1
+			if isTrigger then
+				openList[#openList + 1] = atmosphereId
+			elseif isAddToEnd then
+				endList[#endList + 1] = atmosphereId
 			end
 		else
-			var_70_1[#var_70_1 + 1] = iter_70_1
+			endList[#endList + 1] = atmosphereId
 		end
 	end
 
-	return var_70_0, var_70_1
+	return openList, endList
 end
 
-function var_0_0.getAtmosphereCacheData(arg_71_0)
-	if not arg_71_0._atmosphereCacheData then
-		arg_71_0._atmosphereCacheData = {}
+function RoomModel:getAtmosphereCacheData()
+	if not self._atmosphereCacheData then
+		self._atmosphereCacheData = {}
 
-		local var_71_0 = GameUtil.playerPrefsGetStringByUserId(RoomEnum.AtmosphereCacheKey, "")
+		local strCacheData = GameUtil.playerPrefsGetStringByUserId(RoomEnum.AtmosphereCacheKey, "")
 
-		if not string.nilorempty(var_71_0) then
-			local var_71_1 = GameUtil.splitString2(var_71_0, true) or {}
+		if not string.nilorempty(strCacheData) then
+			local numsList = GameUtil.splitString2(strCacheData, true) or {}
 
-			for iter_71_0, iter_71_1 in ipairs(var_71_1) do
-				if iter_71_1 and #iter_71_1 > 1 then
-					arg_71_0._atmosphereCacheData[iter_71_1[1]] = iter_71_1[2]
+			for _, nums in ipairs(numsList) do
+				if nums and #nums > 1 then
+					self._atmosphereCacheData[nums[1]] = nums[2]
 				end
 			end
 		end
 	end
 
-	return arg_71_0._atmosphereCacheData
+	return self._atmosphereCacheData
 end
 
-function var_0_0.setAtmosphereHasPlay(arg_72_0, arg_72_1)
-	local var_72_0
+function RoomModel:setAtmosphereHasPlay(atmosphereId)
+	local nowTime = ServerTime.now()
+	local atmosphereCacheData = self:getAtmosphereCacheData()
 
-	var_72_0[arg_72_1], var_72_0 = ServerTime.now(), arg_72_0:getAtmosphereCacheData()
+	atmosphereCacheData[atmosphereId] = nowTime
 
-	local var_72_1 = ""
-	local var_72_2 = true
+	local str = ""
+	local isFirst = true
 
-	for iter_72_0, iter_72_1 in pairs(var_72_0) do
-		if var_72_2 then
-			var_72_2 = false
-			var_72_1 = iter_72_0 .. "#" .. iter_72_1
+	for kId, vTime in pairs(atmosphereCacheData) do
+		if isFirst then
+			isFirst = false
+			str = kId .. "#" .. vTime
 		else
-			var_72_1 = var_72_1 .. "|" .. iter_72_0 .. "#" .. iter_72_1
+			str = str .. "|" .. kId .. "#" .. vTime
 		end
 	end
 
-	GameUtil.playerPrefsSetStringByUserId(RoomEnum.AtmosphereCacheKey, var_72_1)
+	GameUtil.playerPrefsSetStringByUserId(RoomEnum.AtmosphereCacheKey, str)
 end
 
-local function var_0_1()
+local function _noneTrigger()
 	return false
 end
 
-local function var_0_2(arg_74_0, arg_74_1)
-	local var_74_0 = false
+local function _isDisposableTrigger(atmosphereId, lastPlayTime)
+	local result = false
 
-	if not var_0_0._checkAtmospherCdTime(arg_74_0, arg_74_1) then
-		return var_74_0
+	if not RoomModel._checkAtmospherCdTime(atmosphereId, lastPlayTime) then
+		return result
 	end
 
-	local var_74_1 = RoomConfig.instance:getAtmosphereOpenTime(arg_74_0)
-	local var_74_2 = var_74_1 + RoomConfig.instance:getAtmosphereDurationDay(arg_74_0) * TimeUtil.OneDaySecond
+	local openTime = RoomConfig.instance:getAtmosphereOpenTime(atmosphereId)
+	local durationDay = RoomConfig.instance:getAtmosphereDurationDay(atmosphereId)
+	local endTime = openTime + durationDay * TimeUtil.OneDaySecond
 
-	if arg_74_1 < var_74_1 or var_74_2 < arg_74_1 then
-		var_74_0 = true
+	if lastPlayTime < openTime or endTime < lastPlayTime then
+		result = true
 	end
 
-	return var_74_0
+	return result
 end
 
-local function var_0_3(arg_75_0, arg_75_1)
-	local var_75_0 = false
-	local var_75_1 = ServerTime.now()
-	local var_75_2 = math.modf((var_75_1 + TimeUtil.OneMinuteSecond) / TimeUtil.OneHourSecond) * TimeUtil.OneHourSecond
-	local var_75_3 = var_75_2 - TimeUtil.OneMinuteSecond
-	local var_75_4 = var_75_2 + TimeUtil.OneMinuteSecond
-	local var_75_5 = var_75_3 <= var_75_1 and var_75_1 <= var_75_4
-	local var_75_6 = var_75_3 <= arg_75_1 and arg_75_1 <= var_75_4
+local function _isIntegralPointTrigger(atmosphereId, lastPlayTime)
+	local result = false
+	local nowTime = ServerTime.now()
+	local integralHour = math.modf((nowTime + TimeUtil.OneMinuteSecond) / TimeUtil.OneHourSecond)
+	local integralSecond = integralHour * TimeUtil.OneHourSecond
+	local integralPreMin = integralSecond - TimeUtil.OneMinuteSecond
+	local integralNextMin = integralSecond + TimeUtil.OneMinuteSecond
+	local inPlayTime = integralPreMin <= nowTime and nowTime <= integralNextMin
+	local hasPlayed = integralPreMin <= lastPlayTime and lastPlayTime <= integralNextMin
 
-	if var_75_5 and not var_75_6 and var_0_0._checkAtmospherCdTime(arg_75_0, arg_75_1) then
-		var_75_0 = true
+	if inPlayTime and not hasPlayed and RoomModel._checkAtmospherCdTime(atmosphereId, lastPlayTime) then
+		result = true
 	end
 
-	local var_75_7 = not var_75_0
+	local isAddToEnd = not result
 
-	return var_75_0, var_75_7
+	return result, isAddToEnd
 end
 
-function var_0_0._isCdTimeAtmosphereTrigger(arg_76_0, arg_76_1)
-	local var_76_0 = false
+function RoomModel._isCdTimeAtmosphereTrigger(atmosphereId, lastPlayTime)
+	local result = false
 
-	if not var_0_0._checkAtmospherCdTime(arg_76_0, arg_76_1) then
-		return var_76_0
+	if not RoomModel._checkAtmospherCdTime(atmosphereId, lastPlayTime) then
+		return result
 	end
 
-	local var_76_1 = RoomConfig.instance:getAtmosphereOpenTime(arg_76_0)
-	local var_76_2 = RoomConfig.instance:getAtmosphereDurationDay(arg_76_0)
-	local var_76_3 = ServerTime.now()
-	local var_76_4 = var_76_1 + var_76_2 * TimeUtil.OneDaySecond
+	local openTime = RoomConfig.instance:getAtmosphereOpenTime(atmosphereId)
+	local durationDay = RoomConfig.instance:getAtmosphereDurationDay(atmosphereId)
+	local nowTime = ServerTime.now()
+	local endTime = openTime + durationDay * TimeUtil.OneDaySecond
 
-	if var_76_1 <= var_76_3 and var_76_3 <= var_76_4 then
-		var_76_0 = true
+	if openTime <= nowTime and nowTime <= endTime then
+		result = true
 	end
 
-	return var_76_0
+	return result
 end
 
-function var_0_0._checkAtmospherCdTime(arg_77_0, arg_77_1)
-	local var_77_0 = RoomConfig.instance:getAtmosphereCfg(arg_77_0)
-	local var_77_1 = var_77_0 and var_77_0.cdtimes or 0
+function RoomModel._checkAtmospherCdTime(atmosphereId, lastPlayTime)
+	local cfg = RoomConfig.instance:getAtmosphereCfg(atmosphereId)
+	local cdTime = cfg and cfg.cdtimes or 0
 
-	if var_77_1 and var_77_1 ~= 0 and var_77_1 > ServerTime.now() - arg_77_1 then
-		return false
+	if cdTime and cdTime ~= 0 then
+		local nowTime = ServerTime.now()
+
+		if cdTime > nowTime - lastPlayTime then
+			return false
+		end
 	end
 
 	return true
 end
 
-local var_0_4 = {
-	[RoomEnum.AtmosphereTriggerType.None] = var_0_1,
-	[RoomEnum.AtmosphereTriggerType.Disposable] = var_0_2,
-	[RoomEnum.AtmosphereTriggerType.IntegralPoint] = var_0_3,
-	[RoomEnum.AtmosphereTriggerType.CDTime] = var_0_0._isCdTimeAtmosphereTrigger
+local triggerType2Func = {
+	[RoomEnum.AtmosphereTriggerType.None] = _noneTrigger,
+	[RoomEnum.AtmosphereTriggerType.Disposable] = _isDisposableTrigger,
+	[RoomEnum.AtmosphereTriggerType.IntegralPoint] = _isIntegralPointTrigger,
+	[RoomEnum.AtmosphereTriggerType.CDTime] = RoomModel._isCdTimeAtmosphereTrigger
 }
 
-function var_0_0.isAtmosphereTrigger(arg_78_0, arg_78_1)
-	local var_78_0 = false
-	local var_78_1 = false
-	local var_78_2 = RoomConfig.instance:getAtmosphereTriggerType(arg_78_1)
-	local var_78_3 = var_0_4[var_78_2]
+function RoomModel:isAtmosphereTrigger(atmosphereId)
+	local result = false
+	local isAddToEnd = false
+	local triggerType = RoomConfig.instance:getAtmosphereTriggerType(atmosphereId)
+	local triggerFunc = triggerType2Func[triggerType]
 
-	if var_78_3 then
-		local var_78_4 = arg_78_0:getAtmosphereCacheData()[arg_78_1] or 0
+	if triggerFunc then
+		local atmosphereCacheData = self:getAtmosphereCacheData()
+		local lastPlayTime = atmosphereCacheData[atmosphereId] or 0
 
-		var_78_0, var_78_1 = var_78_3(arg_78_1, var_78_4)
+		result, isAddToEnd = triggerFunc(atmosphereId, lastPlayTime)
 	else
-		logError(string.format("RoomModel:isAtmosphereTrigger error atmosphereId:%s triggerType:%s not defined", arg_78_1, var_78_2))
+		logError(string.format("RoomModel:isAtmosphereTrigger error atmosphereId:%s triggerType:%s not defined", atmosphereId, triggerType))
 	end
 
-	return var_78_0, var_78_1
+	return result, isAddToEnd
 end
 
-var_0_0.instance = var_0_0.New()
+RoomModel.instance = RoomModel.New()
 
-return var_0_0
+return RoomModel

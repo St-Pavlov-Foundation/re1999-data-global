@@ -1,13 +1,15 @@
-﻿module("modules.common.preload.ConstSettingCache", package.seeall)
+﻿-- chunkname: @modules/common/preload/ConstSettingCache.lua
 
-local var_0_0 = class("ConstSettingCache")
+module("modules.common.preload.ConstSettingCache", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._resPath = {}
+local ConstSettingCache = class("ConstSettingCache")
+
+function ConstSettingCache:ctor()
+	self._resPath = {}
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
+function ConstSettingCache:init(cb, cbObj)
 	return
 end
 
-return var_0_0
+return ConstSettingCache

@@ -1,83 +1,85 @@
-﻿module("modules.logic.survival.view.shelter.ShelterNpcManagerView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/ShelterNpcManagerView.lua
 
-local var_0_0 = class("ShelterNpcManagerView", BaseView)
+module("modules.logic.survival.view.shelter.ShelterNpcManagerView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.goItem = gohelper.findChild(arg_1_0.viewGO, "Panel/Left/#scroll_List/Viewport/Content/#go_Item")
-	arg_1_0.goSmallItem = gohelper.findChild(arg_1_0.viewGO, "Panel/Left/#scroll_List/Viewport/Content/#go_SmallItem")
+local ShelterNpcManagerView = class("ShelterNpcManagerView", BaseView)
 
-	gohelper.setActive(arg_1_0.goItem, false)
-	gohelper.setActive(arg_1_0.goSmallItem, false)
+function ShelterNpcManagerView:onInitView()
+	self.goItem = gohelper.findChild(self.viewGO, "Panel/Left/#scroll_List/Viewport/Content/#go_Item")
+	self.goSmallItem = gohelper.findChild(self.viewGO, "Panel/Left/#scroll_List/Viewport/Content/#go_SmallItem")
 
-	arg_1_0.goFilter = gohelper.findChild(arg_1_0.viewGO, "Panel/Left/#btn_filter")
+	gohelper.setActive(self.goItem, false)
+	gohelper.setActive(self.goSmallItem, false)
+
+	self.goFilter = gohelper.findChild(self.viewGO, "Panel/Left/#btn_filter")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(SurvivalController.instance, SurvivalEvent.OnNpcPostionChange, arg_2_0.onNpcPostionChange, arg_2_0)
+function ShelterNpcManagerView:addEvents()
+	self:addEventCb(SurvivalController.instance, SurvivalEvent.OnNpcPostionChange, self.onNpcPostionChange, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(SurvivalController.instance, SurvivalEvent.OnNpcPostionChange, arg_3_0.onNpcPostionChange, arg_3_0)
+function ShelterNpcManagerView:removeEvents()
+	self:removeEventCb(SurvivalController.instance, SurvivalEvent.OnNpcPostionChange, self.onNpcPostionChange, self)
 end
 
-function var_0_0.onNpcPostionChange(arg_4_0)
-	arg_4_0:refreshView()
+function ShelterNpcManagerView:onNpcPostionChange()
+	self:refreshView()
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0:refreshFilter()
-	arg_5_0:refreshView()
+function ShelterNpcManagerView:onOpen()
+	self:refreshFilter()
+	self:refreshView()
 end
 
-function var_0_0.refreshView(arg_6_0)
-	arg_6_0:refreshList()
-	arg_6_0:refreshInfoView()
+function ShelterNpcManagerView:refreshView()
+	self:refreshList()
+	self:refreshInfoView()
 end
 
-function var_0_0.refreshList(arg_7_0)
-	SurvivalShelterNpcListModel.instance:refreshList(arg_7_0._filterList)
+function ShelterNpcManagerView:refreshList()
+	SurvivalShelterNpcListModel.instance:refreshList(self._filterList)
 end
 
-function var_0_0.refreshFilter(arg_8_0)
-	local var_8_0 = MonoHelper.addNoUpdateLuaComOnceToGo(arg_8_0.goFilter, SurvivalFilterPart)
-	local var_8_1 = {}
-	local var_8_2 = lua_survival_tag_type.configList
+function ShelterNpcManagerView:refreshFilter()
+	local filterComp = MonoHelper.addNoUpdateLuaComOnceToGo(self.goFilter, SurvivalFilterPart)
+	local filterOptions = {}
+	local list = lua_survival_tag_type.configList
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_2) do
-		table.insert(var_8_1, {
-			desc = iter_8_1.name,
-			type = iter_8_1.id
+	for i, v in ipairs(list) do
+		table.insert(filterOptions, {
+			desc = v.name,
+			type = v.id
 		})
 	end
 
-	var_8_0:setOptionChangeCallback(arg_8_0._onFilterChange, arg_8_0)
-	var_8_0:setOptions(var_8_1)
+	filterComp:setOptionChangeCallback(self._onFilterChange, self)
+	filterComp:setOptions(filterOptions)
 end
 
-function var_0_0._onFilterChange(arg_9_0, arg_9_1)
-	arg_9_0._filterList = arg_9_1
+function ShelterNpcManagerView:_onFilterChange(filterList)
+	self._filterList = filterList
 
-	arg_9_0:refreshView()
+	self:refreshView()
 end
 
-function var_0_0.refreshInfoView(arg_10_0)
-	if not arg_10_0.infoView then
-		local var_10_0 = arg_10_0.viewContainer:getRes(arg_10_0.viewContainer:getSetting().otherRes.infoView)
-		local var_10_1 = gohelper.findChild(arg_10_0.viewGO, "Panel/Right/go_manageinfo")
+function ShelterNpcManagerView:refreshInfoView()
+	if not self.infoView then
+		local prefabRes = self.viewContainer:getRes(self.viewContainer:getSetting().otherRes.infoView)
+		local parentGO = gohelper.findChild(self.viewGO, "Panel/Right/go_manageinfo")
 
-		arg_10_0.infoView = ShelterManagerInfoView.getView(var_10_0, var_10_1, "infoView")
+		self.infoView = ShelterManagerInfoView.getView(prefabRes, parentGO, "infoView")
 	end
 
-	local var_10_2 = {
-		showType = SurvivalEnum.InfoShowType.Npc,
-		showId = SurvivalShelterNpcListModel.instance:getSelectNpc()
-	}
+	local param = {}
 
-	arg_10_0.infoView:refreshParam(var_10_2)
+	param.showType = SurvivalEnum.InfoShowType.Npc
+	param.showId = SurvivalShelterNpcListModel.instance:getSelectNpc()
+
+	self.infoView:refreshParam(param)
 end
 
-function var_0_0.onClose(arg_11_0)
+function ShelterNpcManagerView:onClose()
 	return
 end
 
-return var_0_0
+return ShelterNpcManagerView

@@ -1,90 +1,92 @@
-﻿module("modules.logic.enemyinfo.controller.EnemyInfoController", package.seeall)
+﻿-- chunkname: @modules/logic/enemyinfo/controller/EnemyInfoController.lua
 
-local var_0_0 = class("EnemyInfoController")
+module("modules.logic.enemyinfo.controller.EnemyInfoController", package.seeall)
 
-function var_0_0.openRougeEnemyInfoView(arg_1_0, arg_1_1, arg_1_2)
+local EnemyInfoController = class("EnemyInfoController")
+
+function EnemyInfoController:openRougeEnemyInfoView(battleId, hpFixRate)
 	ViewMgr.instance:openView(ViewName.BaseEnemyInfoView, {
-		battleId = arg_1_1,
-		hpFixRate = arg_1_2,
+		battleId = battleId,
+		hpFixRate = hpFixRate,
 		tabEnum = EnemyInfoEnum.TabEnum.Rouge
 	})
 end
 
-function var_0_0.openSurvivalEnemyInfoView(arg_2_0, arg_2_1, arg_2_2)
+function EnemyInfoController:openSurvivalEnemyInfoView(battleId, hpFixRate)
 	ViewMgr.instance:openView(ViewName.BaseEnemyInfoView, {
-		battleId = arg_2_1,
-		hpFixRate = arg_2_2,
+		battleId = battleId,
+		hpFixRate = hpFixRate,
 		tabEnum = EnemyInfoEnum.TabEnum.Survival
 	})
 end
 
-function var_0_0.openEnemyInfoViewByBattleId(arg_3_0, arg_3_1)
+function EnemyInfoController:openEnemyInfoViewByBattleId(battleId)
 	ViewMgr.instance:openView(ViewName.BaseEnemyInfoView, {
-		battleId = arg_3_1,
+		battleId = battleId,
 		tabEnum = EnemyInfoEnum.TabEnum.Normal
 	})
 end
 
-function var_0_0.openWeekWalkEnemyInfoView(arg_4_0, arg_4_1, arg_4_2)
+function EnemyInfoController:openWeekWalkEnemyInfoView(mapId, selectBattleId)
 	ViewMgr.instance:openView(ViewName.BaseEnemyInfoView, {
-		mapId = arg_4_1,
-		selectBattleId = arg_4_2,
+		mapId = mapId,
+		selectBattleId = selectBattleId,
 		tabEnum = EnemyInfoEnum.TabEnum.WeekWalk
 	})
 end
 
-function var_0_0.openWeekWalk_2EnemyInfoView(arg_5_0, arg_5_1, arg_5_2)
+function EnemyInfoController:openWeekWalk_2EnemyInfoView(mapId, selectBattleId)
 	ViewMgr.instance:openView(ViewName.WeekWalk_2EnemyInfoView, {
-		mapId = arg_5_1,
-		selectBattleId = arg_5_2,
+		mapId = mapId,
+		selectBattleId = selectBattleId,
 		tabEnum = EnemyInfoEnum.TabEnum.WeekWalk_2
 	})
 end
 
-function var_0_0.openSeason123EnemyInfoView(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+function EnemyInfoController:openSeason123EnemyInfoView(activityId, stage, layer)
 	ViewMgr.instance:openView(ViewName.BaseEnemyInfoView, {
 		showLeftTab = true,
-		activityId = arg_6_1,
-		stage = arg_6_2,
-		layer = arg_6_3,
+		activityId = activityId,
+		stage = stage,
+		layer = layer,
 		tabEnum = EnemyInfoEnum.TabEnum.Season123
 	})
 end
 
-function var_0_0.openSeason123EnemyInfoViewWithNoTab(arg_7_0, arg_7_1, arg_7_2)
+function EnemyInfoController:openSeason123EnemyInfoViewWithNoTab(activityId, battleId)
 	ViewMgr.instance:openView(ViewName.BaseEnemyInfoView, {
 		showLeftTab = false,
-		activityId = arg_7_1,
-		battleId = arg_7_2,
+		activityId = activityId,
+		battleId = battleId,
 		tabEnum = EnemyInfoEnum.TabEnum.Season123
 	})
 end
 
-function var_0_0.openBossRushEnemyInfoView(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+function EnemyInfoController:openBossRushEnemyInfoView(activityId, stage, layer)
 	ViewMgr.instance:openView(ViewName.BaseEnemyInfoView, {
-		activityId = arg_8_1,
-		stage = arg_8_2,
-		layer = arg_8_3,
+		activityId = activityId,
+		stage = stage,
+		layer = layer,
 		tabEnum = EnemyInfoEnum.TabEnum.BossRush
 	})
 end
 
-function var_0_0.openAct191EnemyInfoView(arg_9_0, arg_9_1)
+function EnemyInfoController:openAct191EnemyInfoView(battleId)
 	ViewMgr.instance:openView(ViewName.BaseEnemyInfoView, {
-		battleId = arg_9_1,
+		battleId = battleId,
 		tabEnum = EnemyInfoEnum.TabEnum.Act191
 	})
 end
 
-function var_0_0.openTowerDeepEnemyInfoView(arg_10_0, arg_10_1)
+function EnemyInfoController:openTowerDeepEnemyInfoView(battleId)
 	ViewMgr.instance:openView(ViewName.BaseEnemyInfoView, {
-		battleId = arg_10_1,
+		battleId = battleId,
 		tabEnum = EnemyInfoEnum.TabEnum.TowerDeep
 	})
 end
 
-var_0_0.instance = var_0_0.New()
+EnemyInfoController.instance = EnemyInfoController.New()
 
-LuaEventSystem.addEventMechanism(var_0_0.instance)
+LuaEventSystem.addEventMechanism(EnemyInfoController.instance)
 
-return var_0_0
+return EnemyInfoController

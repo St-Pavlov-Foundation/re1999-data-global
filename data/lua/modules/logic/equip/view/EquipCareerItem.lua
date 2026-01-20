@@ -1,63 +1,65 @@
-﻿module("modules.logic.equip.view.EquipCareerItem", package.seeall)
+﻿-- chunkname: @modules/logic/equip/view/EquipCareerItem.lua
 
-local var_0_0 = class("EquipCareerItem", UserDataDispose)
+module("modules.logic.equip.view.EquipCareerItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0:__onInit()
+local EquipCareerItem = class("EquipCareerItem", UserDataDispose)
 
-	arg_1_0.go = arg_1_1
-	arg_1_0.selectedBg = gohelper.findChild(arg_1_0.go, "BG")
-	arg_1_0.txt = gohelper.findChildText(arg_1_0.go, "txt")
-	arg_1_0.icon = gohelper.findChildImage(arg_1_0.go, "icon")
-	arg_1_0.clickCallback = arg_1_2
-	arg_1_0.clickCallbackObj = arg_1_3
-	arg_1_0.click = gohelper.getClick(arg_1_0.go)
+function EquipCareerItem:onInitView(go, clickCallback, clickCallbackObj)
+	self:__onInit()
 
-	arg_1_0.click:AddClickListener(arg_1_0.onClick, arg_1_0)
-	gohelper.setActive(arg_1_0.go, true)
+	self.go = go
+	self.selectedBg = gohelper.findChild(self.go, "BG")
+	self.txt = gohelper.findChildText(self.go, "txt")
+	self.icon = gohelper.findChildImage(self.go, "icon")
+	self.clickCallback = clickCallback
+	self.clickCallbackObj = clickCallbackObj
+	self.click = gohelper.getClick(self.go)
+
+	self.click:AddClickListener(self.onClick, self)
+	gohelper.setActive(self.go, true)
 end
 
-function var_0_0.onClick(arg_2_0)
+function EquipCareerItem:onClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_hero_card_property)
 
-	if arg_2_0.clickCallback then
-		if arg_2_0.clickCallbackObj then
-			arg_2_0.clickCallback(arg_2_0.clickCallbackObj, arg_2_0.careerMo)
+	if self.clickCallback then
+		if self.clickCallbackObj then
+			self.clickCallback(self.clickCallbackObj, self.careerMo)
 		else
-			arg_2_0.clickCallback(arg_2_0.careerMo)
+			self.clickCallback(self.careerMo)
 		end
 	end
 end
 
-function var_0_0.onUpdateMO(arg_3_0, arg_3_1)
-	arg_3_0.careerMo = arg_3_1
+function EquipCareerItem:onUpdateMO(careerMo)
+	self.careerMo = careerMo
 
-	if arg_3_0.careerMo.txt then
-		arg_3_0.txt.text = arg_3_0.careerMo.txt
+	if self.careerMo.txt then
+		self.txt.text = self.careerMo.txt
 
-		gohelper.setActive(arg_3_0.txt.gameObject, true)
+		gohelper.setActive(self.txt.gameObject, true)
 	else
-		gohelper.setActive(arg_3_0.txt.gameObject, false)
+		gohelper.setActive(self.txt.gameObject, false)
 	end
 
-	if arg_3_0.careerMo.iconName then
-		UISpriteSetMgr.instance:setCommonSprite(arg_3_0.icon, arg_3_0.careerMo.iconName)
-		gohelper.setActive(arg_3_0.icon.gameObject, true)
+	if self.careerMo.iconName then
+		UISpriteSetMgr.instance:setCommonSprite(self.icon, self.careerMo.iconName)
+		gohelper.setActive(self.icon.gameObject, true)
 	else
-		gohelper.setActive(arg_3_0.icon.gameObject, false)
+		gohelper.setActive(self.icon.gameObject, false)
 	end
 end
 
-function var_0_0.refreshSelect(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0.careerMo.career == arg_4_1
+function EquipCareerItem:refreshSelect(selectedCareer)
+	local isSelect = self.careerMo.career == selectedCareer
 
-	gohelper.setActive(arg_4_0.selectedBg, var_4_0)
-	ZProj.UGUIHelper.SetColorAlpha(arg_4_0.icon, var_4_0 and 1 or 0.4)
+	gohelper.setActive(self.selectedBg, isSelect)
+	ZProj.UGUIHelper.SetColorAlpha(self.icon, isSelect and 1 or 0.4)
 end
 
-function var_0_0.onDestroyView(arg_5_0)
-	arg_5_0.click:RemoveClickListener()
-	arg_5_0:__onDispose()
+function EquipCareerItem:onDestroyView()
+	self.click:RemoveClickListener()
+	self:__onDispose()
 end
 
-return var_0_0
+return EquipCareerItem

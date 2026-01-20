@@ -1,101 +1,103 @@
-﻿module("modules.logic.versionactivity1_2.yaxian.controller.game.state.YaXianStateFinishEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/yaxian/controller/game/state/YaXianStateFinishEvent.lua
 
-local var_0_0 = class("YaXianStateFinishEvent", YaXianStateBase)
+module("modules.logic.versionactivity1_2.yaxian.controller.game.state.YaXianStateFinishEvent", package.seeall)
 
-var_0_0.BLOCK_KEY = "YaXianStateFinishEvent"
+local YaXianStateFinishEvent = class("YaXianStateFinishEvent", YaXianStateBase)
 
-function var_0_0.start(arg_1_0)
-	arg_1_0.stateType = YaXianGameEnum.GameStateType.FinishEvent
-	arg_1_0.gameLoadDone = YaXianGameModel.instance:gameIsLoadDone()
-	arg_1_0.openingLoadingView = ViewMgr.instance:isOpen(ViewName.LoadingView)
+YaXianStateFinishEvent.BLOCK_KEY = "YaXianStateFinishEvent"
+
+function YaXianStateFinishEvent:start()
+	self.stateType = YaXianGameEnum.GameStateType.FinishEvent
+	self.gameLoadDone = YaXianGameModel.instance:gameIsLoadDone()
+	self.openingLoadingView = ViewMgr.instance:isOpen(ViewName.LoadingView)
 
 	UIBlockMgrExtend.setNeedCircleMv(false)
-	UIBlockMgr.instance:startBlock(var_0_0.BLOCK_KEY)
+	UIBlockMgr.instance:startBlock(YaXianStateFinishEvent.BLOCK_KEY)
 
-	if arg_1_0.gameLoadDone and not arg_1_0.openingLoadingView then
-		arg_1_0:onFinish()
+	if self.gameLoadDone and not self.openingLoadingView then
+		self:onFinish()
 	else
-		if not arg_1_0.gameLoadDone then
-			YaXianGameController.instance:registerCallback(YaXianEvent.OnGameLoadDone, arg_1_0.onGameLoadDone, arg_1_0)
+		if not self.gameLoadDone then
+			YaXianGameController.instance:registerCallback(YaXianEvent.OnGameLoadDone, self.onGameLoadDone, self)
 		end
 
-		if arg_1_0.openingLoadingView then
-			ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_1_0.onCloseViewFinish, arg_1_0)
+		if self.openingLoadingView then
+			ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self.onCloseViewFinish, self)
 		end
 	end
 end
 
-function var_0_0.onGameLoadDone(arg_2_0)
-	YaXianGameController.instance:unregisterCallback(YaXianEvent.OnGameLoadDone, arg_2_0.onGameLoadDone, arg_2_0)
+function YaXianStateFinishEvent:onGameLoadDone()
+	YaXianGameController.instance:unregisterCallback(YaXianEvent.OnGameLoadDone, self.onGameLoadDone, self)
 
-	arg_2_0.gameLoadDone = true
+	self.gameLoadDone = true
 
-	arg_2_0:checkCanStartFinishEvent()
+	self:checkCanStartFinishEvent()
 end
 
-function var_0_0.onCloseViewFinish(arg_3_0, arg_3_1)
-	if arg_3_1 == ViewName.LoadingView then
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_3_0.onCloseViewFinish, arg_3_0)
+function YaXianStateFinishEvent:onCloseViewFinish(viewName)
+	if viewName == ViewName.LoadingView then
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self.onCloseViewFinish, self)
 
-		arg_3_0.openingLoadingView = false
+		self.openingLoadingView = false
 
-		arg_3_0:checkCanStartFinishEvent()
+		self:checkCanStartFinishEvent()
 	end
 end
 
-function var_0_0.checkCanStartFinishEvent(arg_4_0)
-	if arg_4_0.gameLoadDone and not arg_4_0.openingLoadingView then
-		arg_4_0:onFinish()
+function YaXianStateFinishEvent:checkCanStartFinishEvent()
+	if self.gameLoadDone and not self.openingLoadingView then
+		self:onFinish()
 	end
 end
 
-function var_0_0.onFinish(arg_5_0)
-	local var_5_0 = arg_5_0.originData.preEvent
+function YaXianStateFinishEvent:onFinish()
+	local preEvent = self.originData.preEvent
 
-	if var_5_0 and var_5_0.eventType == YaXianGameEnum.GameStateType.Battle then
-		arg_5_0:startFinishBattleAnimation(arg_5_0.sendRequest, arg_5_0)
+	if preEvent and preEvent.eventType == YaXianGameEnum.GameStateType.Battle then
+		self:startFinishBattleAnimation(self.sendRequest, self)
 
 		return
 	end
 
-	arg_5_0:sendRequest()
+	self:sendRequest()
 end
 
-function var_0_0.startFinishBattleAnimation(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0
-	local var_6_1
-	local var_6_2 = YaXianGameController.instance:getPlayerInteractItem()
-	local var_6_3 = YaXianGameController.instance:getInteractItem(arg_6_0.originData.preEvent.interactId)
+function YaXianStateFinishEvent:startFinishBattleAnimation(callback, callbackObj)
+	local winItem, loseItem
+	local playerInteractItem = YaXianGameController.instance:getPlayerInteractItem()
+	local enemyItem = YaXianGameController.instance:getInteractItem(self.originData.preEvent.interactId)
+	local fightResult = EnterActivityViewOnExitFightSceneHelper.recordMO.fightResult
 
-	if EnterActivityViewOnExitFightSceneHelper.recordMO.fightResult ~= FightEnum.FightResult.Succ then
-		var_6_0 = var_6_3
-		var_6_1 = var_6_2
+	if fightResult ~= FightEnum.FightResult.Succ then
+		winItem = enemyItem
+		loseItem = playerInteractItem
 	else
-		var_6_0 = var_6_2
-		var_6_1 = var_6_3
+		winItem = playerInteractItem
+		loseItem = enemyItem
 	end
 
-	var_6_0:showEffect(YaXianGameEnum.EffectType.FightSuccess)
-	var_6_1:showEffect(YaXianGameEnum.EffectType.Die, arg_6_1, arg_6_2)
+	winItem:showEffect(YaXianGameEnum.EffectType.FightSuccess)
+	loseItem:showEffect(YaXianGameEnum.EffectType.Die, callback, callbackObj)
 end
 
-function var_0_0.sendRequest(arg_7_0)
-	Activity115Rpc.instance:sendAct115EventEndRequest(YaXianGameEnum.ActivityId, arg_7_0.onReceiveReply, arg_7_0)
+function YaXianStateFinishEvent:sendRequest()
+	Activity115Rpc.instance:sendAct115EventEndRequest(YaXianGameEnum.ActivityId, self.onReceiveReply, self)
 end
 
-function var_0_0.onReceiveReply(arg_8_0, arg_8_1, arg_8_2)
-	if arg_8_2 == 0 then
-		YaXianGameController.instance:dispatchEvent(YaXianEvent.OnStateFinish, arg_8_0.stateType)
+function YaXianStateFinishEvent:onReceiveReply(cmd, resultCode)
+	if resultCode == 0 then
+		YaXianGameController.instance:dispatchEvent(YaXianEvent.OnStateFinish, self.stateType)
 	end
 
-	UIBlockMgr.instance:endBlock(var_0_0.BLOCK_KEY)
+	UIBlockMgr.instance:endBlock(YaXianStateFinishEvent.BLOCK_KEY)
 	UIBlockMgrExtend.setNeedCircleMv(true)
 end
 
-function var_0_0.dispose(arg_9_0)
-	YaXianGameController.instance:unregisterCallback(YaXianEvent.OnGameLoadDone, arg_9_0.onGameLoadDone, arg_9_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_9_0.onCloseViewFinish, arg_9_0)
-	var_0_0.super.dispose(arg_9_0)
+function YaXianStateFinishEvent:dispose()
+	YaXianGameController.instance:unregisterCallback(YaXianEvent.OnGameLoadDone, self.onGameLoadDone, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self.onCloseViewFinish, self)
+	YaXianStateFinishEvent.super.dispose(self)
 end
 
-return var_0_0
+return YaXianStateFinishEvent

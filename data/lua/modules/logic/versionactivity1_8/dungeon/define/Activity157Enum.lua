@@ -1,49 +1,51 @@
-﻿module("modules.logic.versionactivity1_8.dungeon.define.Activity157Enum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_8/dungeon/define/Activity157Enum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_8.dungeon.define.Activity157Enum", package.seeall)
 
-var_0_0.MissionType = {
+local Activity157Enum = _M
+
+Activity157Enum.MissionType = {
 	MainMission = 1,
 	SideMission = 2
 }
-var_0_0.MissionStatus = {
+Activity157Enum.MissionStatus = {
 	Locked = 2,
 	DispatchFinish = 4,
 	Finish = 5,
 	Dispatching = 3,
 	Normal = 1
 }
-var_0_0.MissionStatusShowSetting = {
-	[var_0_0.MissionStatus.Normal] = {
+Activity157Enum.MissionStatusShowSetting = {
+	[Activity157Enum.MissionStatus.Normal] = {
 		fight = "v1a8_dungeon_factory_btn_fight",
 		normal = "v1a8_dungeon_factory_btn_finishing"
 	},
-	[var_0_0.MissionStatus.Locked] = "v1a8_dungeon_factory_btn_locked",
-	[var_0_0.MissionStatus.Dispatching] = "v1a8_dungeon_factory_btn_finishing",
-	[var_0_0.MissionStatus.DispatchFinish] = "v1a8_dungeon_factory_btn_reward",
-	[var_0_0.MissionStatus.Finish] = {
+	[Activity157Enum.MissionStatus.Locked] = "v1a8_dungeon_factory_btn_locked",
+	[Activity157Enum.MissionStatus.Dispatching] = "v1a8_dungeon_factory_btn_finishing",
+	[Activity157Enum.MissionStatus.DispatchFinish] = "v1a8_dungeon_factory_btn_reward",
+	[Activity157Enum.MissionStatus.Finish] = {
 		story = "v1a8_dungeon_factory_btn_review",
 		normal = "v1a8_dungeon_factory_btn_finished"
 	}
 }
-var_0_0.MissionLineStatusIcon = {
-	[var_0_0.MissionStatus.Normal] = {
+Activity157Enum.MissionLineStatusIcon = {
+	[Activity157Enum.MissionStatus.Normal] = {
 		point = "v1a8_dungeon_factory_point_unlocked"
 	},
-	[var_0_0.MissionStatus.Locked] = {
+	[Activity157Enum.MissionStatus.Locked] = {
 		point = "v1a8_dungeon_factory_point_locked"
 	},
-	[var_0_0.MissionStatus.Finish] = {
+	[Activity157Enum.MissionStatus.Finish] = {
 		point = "v1a8_dungeon_factory_point_finished"
 	},
-	[var_0_0.MissionStatus.Dispatching] = {
+	[Activity157Enum.MissionStatus.Dispatching] = {
 		point = "v1a8_dungeon_factory_point_unlocked"
 	},
-	[var_0_0.MissionStatus.DispatchFinish] = {
+	[Activity157Enum.MissionStatus.DispatchFinish] = {
 		point = "v1a8_dungeon_factory_point_unlocked"
 	}
 }
-var_0_0.ConstId = {
+Activity157Enum.ConstId = {
 	FactoryCompositeCost = 3,
 	FirstFactoryComponent = 2,
 	UnlockEntranceElement = 1,
@@ -53,8 +55,8 @@ var_0_0.ConstId = {
 	FactoryMapNodeLineOffsetY = 11,
 	FactoryRepairGameMapSize = 10
 }
-var_0_0.UnlockBlueprintElement = 1811801
-var_0_0.res = {
+Activity157Enum.UnlockBlueprintElement = 1811801
+Activity157Enum.res = {
 	[ArmPuzzlePipeEnum.type.straight] = {
 		"",
 		"v1a8_dungeon_factory_pipepath3"
@@ -68,12 +70,12 @@ var_0_0.res = {
 		"v1a8_dungeon_factory_pipepath1"
 	}
 }
-var_0_0.entryColor = {
+Activity157Enum.entryColor = {
 	[0] = "#FFFFFF",
 	"#77251e",
 	"#8b603d"
 }
-var_0_0.entryTypeColor = {
+Activity157Enum.entryTypeColor = {
 	[ArmPuzzlePipeEnum.type.first] = {
 		[1] = "#7e251f",
 		[2] = "#a4693a"
@@ -83,10 +85,10 @@ var_0_0.entryTypeColor = {
 		[2] = "#a4693a"
 	}
 }
-var_0_0.pathColor = {
+Activity157Enum.pathColor = {
 	[0] = "#FFFFFF",
 	"#7e251f",
 	"#aa7e58"
 }
 
-return var_0_0
+return Activity157Enum

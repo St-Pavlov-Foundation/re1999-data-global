@@ -1,78 +1,80 @@
-﻿module("modules.logic.guide.controller.exception.GuideExceptionFindBtn", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/exception/GuideExceptionFindBtn.lua
 
-local var_0_0 = class("GuideExceptionFindBtn")
+module("modules.logic.guide.controller.exception.GuideExceptionFindBtn", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.guideId = nil
-	arg_1_0.stepId = nil
-	arg_1_0.repeatCount = nil
-	arg_1_0.handlerFuncs = nil
-	arg_1_0.handlerParams = nil
-	arg_1_0.goPath = nil
-	arg_1_0.elapseCount = 0
+local GuideExceptionFindBtn = class("GuideExceptionFindBtn")
+
+function GuideExceptionFindBtn:ctor()
+	self.guideId = nil
+	self.stepId = nil
+	self.repeatCount = nil
+	self.handlerFuncs = nil
+	self.handlerParams = nil
+	self.goPath = nil
+	self.elapseCount = 0
 end
 
-function var_0_0.startCheck(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4, arg_2_5)
-	arg_2_0.guideId = arg_2_1
-	arg_2_0.stepId = arg_2_2
-	arg_2_0.handlerFuncs = arg_2_4
-	arg_2_0.handlerParams = arg_2_5
+function GuideExceptionFindBtn:startCheck(guideId, stepId, checkerParam, handlerFuncs, handlerParams)
+	self.guideId = guideId
+	self.stepId = stepId
+	self.handlerFuncs = handlerFuncs
+	self.handlerParams = handlerParams
 
-	local var_2_0 = string.split(arg_2_3, "_")
-	local var_2_1 = tonumber(var_2_0[1])
+	local temp = string.split(checkerParam, "_")
+	local interval = tonumber(temp[1])
 
-	arg_2_0.repeatCount = var_2_0[2] and tonumber(var_2_0[2]) or 1
-	arg_2_0._ignoreLog = var_2_0[3] and tonumber(var_2_0[3]) == 1
-	arg_2_0.goPath = GuideModel.instance:getStepGOPath(arg_2_1, arg_2_2)
+	self.repeatCount = temp[2] and tonumber(temp[2]) or 1
+	self._ignoreLog = temp[3] and tonumber(temp[3]) == 1
+	self.goPath = GuideModel.instance:getStepGOPath(guideId, stepId)
 
-	TaskDispatcher.runRepeat(arg_2_0._onTick, arg_2_0, var_2_1)
+	TaskDispatcher.runRepeat(self._onTick, self, interval)
 
-	arg_2_0.elapseCount = 0
+	self.elapseCount = 0
 end
 
-function var_0_0.stopCheck(arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0._onTick, arg_3_0)
+function GuideExceptionFindBtn:stopCheck()
+	TaskDispatcher.cancelTask(self._onTick, self)
 
-	arg_3_0.guideId = nil
-	arg_3_0.stepId = nil
-	arg_3_0.handlerFuncs = nil
-	arg_3_0.handlerParams = nil
-	arg_3_0.goPath = nil
-	arg_3_0.elapseCount = 0
+	self.guideId = nil
+	self.stepId = nil
+	self.handlerFuncs = nil
+	self.handlerParams = nil
+	self.goPath = nil
+	self.elapseCount = 0
 end
 
-function var_0_0._onTick(arg_4_0)
-	local var_4_0 = gohelper.find(arg_4_0.goPath)
+function GuideExceptionFindBtn:_onTick()
+	local targetGO = gohelper.find(self.goPath)
 
-	if not GuideUtil.isGOShowInScreen(var_4_0) then
-		local var_4_1 = arg_4_0.handlerFuncs
-		local var_4_2 = arg_4_0.handlerParams
+	if not GuideUtil.isGOShowInScreen(targetGO) then
+		local funcs = self.handlerFuncs
+		local params = self.handlerParams
 
-		if not arg_4_0._ignoreLog then
-			GuideActionFindGO._exceptionFindLog(arg_4_0.guideId, arg_4_0.stepId, arg_4_0.goPath, "[ExceptionFind]")
+		if not self._ignoreLog then
+			GuideActionFindGO._exceptionFindLog(self.guideId, self.stepId, self.goPath, "[ExceptionFind]")
 		end
 
-		local var_4_3 = arg_4_0.guideId
-		local var_4_4 = arg_4_0.stepId
+		local guideId = self.guideId
+		local stepId = self.stepId
 
-		arg_4_0:stopCheck()
+		self:stopCheck()
 
-		if var_4_1 then
-			for iter_4_0 = 1, #var_4_1 do
-				GuideExceptionController.instance:handle(var_4_3, var_4_4, var_4_1[iter_4_0], var_4_2[iter_4_0])
+		if funcs then
+			for i = 1, #funcs do
+				GuideExceptionController.instance:handle(guideId, stepId, funcs[i], params[i])
 			end
 		end
 
 		return
 	end
 
-	if arg_4_0.elapseCount and arg_4_0.repeatCount then
-		arg_4_0.elapseCount = arg_4_0.elapseCount + 1
+	if self.elapseCount and self.repeatCount then
+		self.elapseCount = self.elapseCount + 1
 
-		if arg_4_0.elapseCount >= arg_4_0.repeatCount then
-			arg_4_0:stopCheck()
+		if self.elapseCount >= self.repeatCount then
+			self:stopCheck()
 		end
 	end
 end
 
-return var_0_0
+return GuideExceptionFindBtn

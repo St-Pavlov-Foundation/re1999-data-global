@@ -1,589 +1,594 @@
-﻿module("modules.logic.season.view3_0.Season3_0MainView", package.seeall)
+﻿-- chunkname: @modules/logic/season/view3_0/Season3_0MainView.lua
 
-local var_0_0 = class("Season3_0MainView", BaseView)
+module("modules.logic.season.view3_0.Season3_0MainView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goreadprocess = gohelper.findChild(arg_1_0.viewGO, "leftbtns/#go_readprocess")
-	arg_1_0._txtNum = gohelper.findChildTextMesh(arg_1_0.viewGO, "leftbtns/#go_readprocess/#btn_Store/#txt_Num")
-	arg_1_0._btnreadprocess = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "leftbtns/#go_readprocess/#btn_readprocess")
-	arg_1_0._gotask = gohelper.findChild(arg_1_0.viewGO, "leftbtns/#go_task")
-	arg_1_0._btntask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "leftbtns/#go_task/#btn_task")
-	arg_1_0._gotaskreddot = gohelper.findChild(arg_1_0.viewGO, "leftbtns/#go_task/#go_taskreddot")
-	arg_1_0._gocelebrity = gohelper.findChild(arg_1_0.viewGO, "rightbtns/#go_celebrity")
-	arg_1_0._btncelebrity = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rightbtns/#go_celebrity/#btn_celebrity")
-	arg_1_0._goretail = gohelper.findChild(arg_1_0.viewGO, "rightbtns/#go_retail")
-	arg_1_0._gocurrency = gohelper.findChild(arg_1_0.viewGO, "rightbtns/#go_retail/#go_currency")
-	arg_1_0._imagecurrencyicon = gohelper.findChildImage(arg_1_0.viewGO, "rightbtns/#go_retail/#go_currency/#image_currencyicon")
-	arg_1_0._btncurrencyicon = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rightbtns/#go_retail/#go_currency/#image_currencyicon")
-	arg_1_0._txtcurrencycount = gohelper.findChildText(arg_1_0.viewGO, "rightbtns/#go_retail/#go_currency/#txt_currencycount")
-	arg_1_0._btnretail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rightbtns/#go_retail/#btn_retail")
-	arg_1_0._goassemblying = gohelper.findChild(arg_1_0.viewGO, "rightbtns/#go_retail/#go_assemblying")
-	arg_1_0._gotitle = gohelper.findChild(arg_1_0.viewGO, "#go_title")
-	arg_1_0._txtunlocktime = gohelper.findChildText(arg_1_0.viewGO, "#go_title/txt_unlocktime")
-	arg_1_0._goentrance = gohelper.findChild(arg_1_0.viewGO, "#go_entrance")
-	arg_1_0._gotop = gohelper.findChild(arg_1_0.viewGO, "#go_entrance/#go_top")
-	arg_1_0._txtindex = gohelper.findChildText(arg_1_0.viewGO, "#go_entrance/#txt_index")
-	arg_1_0._txtmapname = gohelper.findChildText(arg_1_0.viewGO, "#go_entrance/#txt_mapname")
-	arg_1_0._btnentrance = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_entrance/#btn_entrance", AudioEnum.UI.play_ui_leimi_biguncharted_open)
-	arg_1_0._godiscount = gohelper.findChild(arg_1_0.viewGO, "#go_discount")
-	arg_1_0._gonewdiscount = gohelper.findChild(arg_1_0.viewGO, "#go_discount/#go_new")
-	arg_1_0._btndiscount = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_discount/#btn_discount")
-	arg_1_0._godiscountlock = gohelper.findChild(arg_1_0.viewGO, "#go_discount_lock")
-	arg_1_0._txtdiscountunlock = gohelper.findChildText(arg_1_0.viewGO, "#go_discount_lock/#txt_discountunlock")
-	arg_1_0._btndiscountlock = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_discount_lock/#btn_discountlock")
-	arg_1_0._goMask = gohelper.findChild(arg_1_0.viewGO, "#go_mask")
-	arg_1_0._goarrow = gohelper.findChild(arg_1_0.viewGO, "#go_entrance/decorates/#go_arrow")
-	arg_1_0._animationEvent = arg_1_0.viewGO:GetComponent(typeof(ZProj.AnimationEventWrap))
-	arg_1_0._goEnterEffect = gohelper.findChild(arg_1_0.viewGO, "eff")
+local Season3_0MainView = class("Season3_0MainView", BaseView)
 
-	RedDotController.instance:addRedDot(arg_1_0._gotaskreddot, RedDotEnum.DotNode.SeasonTaskLevel)
+function Season3_0MainView:onInitView()
+	self._goreadprocess = gohelper.findChild(self.viewGO, "leftbtns/#go_readprocess")
+	self._txtNum = gohelper.findChildTextMesh(self.viewGO, "leftbtns/#go_readprocess/#btn_Store/#txt_Num")
+	self._btnreadprocess = gohelper.findChildButtonWithAudio(self.viewGO, "leftbtns/#go_readprocess/#btn_readprocess")
+	self._gotask = gohelper.findChild(self.viewGO, "leftbtns/#go_task")
+	self._btntask = gohelper.findChildButtonWithAudio(self.viewGO, "leftbtns/#go_task/#btn_task")
+	self._gotaskreddot = gohelper.findChild(self.viewGO, "leftbtns/#go_task/#go_taskreddot")
+	self._gocelebrity = gohelper.findChild(self.viewGO, "rightbtns/#go_celebrity")
+	self._btncelebrity = gohelper.findChildButtonWithAudio(self.viewGO, "rightbtns/#go_celebrity/#btn_celebrity")
+	self._goretail = gohelper.findChild(self.viewGO, "rightbtns/#go_retail")
+	self._gocurrency = gohelper.findChild(self.viewGO, "rightbtns/#go_retail/#go_currency")
+	self._imagecurrencyicon = gohelper.findChildImage(self.viewGO, "rightbtns/#go_retail/#go_currency/#image_currencyicon")
+	self._btncurrencyicon = gohelper.findChildButtonWithAudio(self.viewGO, "rightbtns/#go_retail/#go_currency/#image_currencyicon")
+	self._txtcurrencycount = gohelper.findChildText(self.viewGO, "rightbtns/#go_retail/#go_currency/#txt_currencycount")
+	self._btnretail = gohelper.findChildButtonWithAudio(self.viewGO, "rightbtns/#go_retail/#btn_retail")
+	self._goassemblying = gohelper.findChild(self.viewGO, "rightbtns/#go_retail/#go_assemblying")
+	self._gotitle = gohelper.findChild(self.viewGO, "#go_title")
+	self._txtunlocktime = gohelper.findChildText(self.viewGO, "#go_title/txt_unlocktime")
+	self._goentrance = gohelper.findChild(self.viewGO, "#go_entrance")
+	self._gotop = gohelper.findChild(self.viewGO, "#go_entrance/#go_top")
+	self._txtindex = gohelper.findChildText(self.viewGO, "#go_entrance/#txt_index")
+	self._txtmapname = gohelper.findChildText(self.viewGO, "#go_entrance/#txt_mapname")
+	self._btnentrance = gohelper.findChildButtonWithAudio(self.viewGO, "#go_entrance/#btn_entrance", AudioEnum.UI.play_ui_leimi_biguncharted_open)
+	self._godiscount = gohelper.findChild(self.viewGO, "#go_discount")
+	self._gonewdiscount = gohelper.findChild(self.viewGO, "#go_discount/#go_new")
+	self._btndiscount = gohelper.findChildButtonWithAudio(self.viewGO, "#go_discount/#btn_discount")
+	self._godiscountlock = gohelper.findChild(self.viewGO, "#go_discount_lock")
+	self._txtdiscountunlock = gohelper.findChildText(self.viewGO, "#go_discount_lock/#txt_discountunlock")
+	self._btndiscountlock = gohelper.findChildButtonWithAudio(self.viewGO, "#go_discount_lock/#btn_discountlock")
+	self._goMask = gohelper.findChild(self.viewGO, "#go_mask")
+	self._goarrow = gohelper.findChild(self.viewGO, "#go_entrance/decorates/#go_arrow")
+	self._animationEvent = self.viewGO:GetComponent(typeof(ZProj.AnimationEventWrap))
+	self._goEnterEffect = gohelper.findChild(self.viewGO, "eff")
 
-	arg_1_0._goletter = gohelper.findChild(arg_1_0.viewGO, "#go_letter")
-	arg_1_0._btnletter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_letter/#btn_try")
-	arg_1_0._gotry = gohelper.findChild(arg_1_0.viewGO, "#go_try")
-	arg_1_0._trialTxtNameen = gohelper.findChildTextMesh(arg_1_0._gotry, "#txt_characteren")
-	arg_1_0._trialTxtNamecn = gohelper.findChildTextMesh(arg_1_0._gotry, "#txt_charactercn")
-	arg_1_0._btntrial = gohelper.findChildButtonWithAudio(arg_1_0._gotry, "#btn_try")
-	arg_1_0._trialCardGo = gohelper.findChild(arg_1_0._gotry, "#go_card")
-	arg_1_0._btnstory = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_story/#btn_story")
+	RedDotController.instance:addRedDot(self._gotaskreddot, RedDotEnum.DotNode.SeasonTaskLevel)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	self._goletter = gohelper.findChild(self.viewGO, "#go_letter")
+	self._btnletter = gohelper.findChildButtonWithAudio(self.viewGO, "#go_letter/#btn_try")
+	self._gotry = gohelper.findChild(self.viewGO, "#go_try")
+	self._trialTxtNameen = gohelper.findChildTextMesh(self._gotry, "#txt_characteren")
+	self._trialTxtNamecn = gohelper.findChildTextMesh(self._gotry, "#txt_charactercn")
+	self._btntrial = gohelper.findChildButtonWithAudio(self._gotry, "#btn_try")
+	self._trialCardGo = gohelper.findChild(self._gotry, "#go_card")
+	self._btnstory = gohelper.findChildButtonWithAudio(self.viewGO, "#go_story/#btn_story")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnreadprocess:AddClickListener(arg_2_0._btnreadprocessOnClick, arg_2_0)
-	arg_2_0._btntask:AddClickListener(arg_2_0._btntaskOnClick, arg_2_0)
-	arg_2_0._btncelebrity:AddClickListener(arg_2_0._btncelebrityOnClick, arg_2_0)
-	arg_2_0._btnretail:AddClickListener(arg_2_0._btnretailOnClick, arg_2_0)
-	arg_2_0._btnentrance:AddClickListener(arg_2_0._btnentranceOnClick, arg_2_0)
-	arg_2_0._btndiscount:AddClickListener(arg_2_0._btndiscountOnClick, arg_2_0)
-	arg_2_0._btndiscountlock:AddClickListener(arg_2_0._btndiscountlockOnClick, arg_2_0)
-	arg_2_0._btncurrencyicon:AddClickListener(arg_2_0._btncurrencyiconOnClick, arg_2_0)
-	arg_2_0._btnletter:AddClickListener(arg_2_0._btnletterOnClick, arg_2_0)
-	arg_2_0._btntrial:AddClickListener(arg_2_0._btntrialOnClick, arg_2_0)
-	arg_2_0._btnstory:AddClickListener(arg_2_0._btnStoryOnClick, arg_2_0)
-	arg_2_0._animationEvent:AddEventListener("levelup", arg_2_0.onLevelUp, arg_2_0)
-	arg_2_0:addEventCb(Activity104Controller.instance, Activity104Event.RefreshRetail, arg_2_0._onRefreshRetail, arg_2_0)
-	arg_2_0:addEventCb(GuideController.instance, GuideEvent.SeasonShowUTTU, arg_2_0._showUTTU, arg_2_0)
-	arg_2_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_2_0._onChangeRetail, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_2_0._onCloseView, arg_2_0)
-	arg_2_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_2_0.refreshCurrency, arg_2_0)
+function Season3_0MainView:addEvents()
+	self._btnreadprocess:AddClickListener(self._btnreadprocessOnClick, self)
+	self._btntask:AddClickListener(self._btntaskOnClick, self)
+	self._btncelebrity:AddClickListener(self._btncelebrityOnClick, self)
+	self._btnretail:AddClickListener(self._btnretailOnClick, self)
+	self._btnentrance:AddClickListener(self._btnentranceOnClick, self)
+	self._btndiscount:AddClickListener(self._btndiscountOnClick, self)
+	self._btndiscountlock:AddClickListener(self._btndiscountlockOnClick, self)
+	self._btncurrencyicon:AddClickListener(self._btncurrencyiconOnClick, self)
+	self._btnletter:AddClickListener(self._btnletterOnClick, self)
+	self._btntrial:AddClickListener(self._btntrialOnClick, self)
+	self._btnstory:AddClickListener(self._btnStoryOnClick, self)
+	self._animationEvent:AddEventListener("levelup", self.onLevelUp, self)
+	self:addEventCb(Activity104Controller.instance, Activity104Event.RefreshRetail, self._onRefreshRetail, self)
+	self:addEventCb(GuideController.instance, GuideEvent.SeasonShowUTTU, self._showUTTU, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._onChangeRetail, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseView, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self.refreshCurrency, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnreadprocess:RemoveClickListener()
-	arg_3_0._btntask:RemoveClickListener()
-	arg_3_0._btncelebrity:RemoveClickListener()
-	arg_3_0._btnretail:RemoveClickListener()
-	arg_3_0._btnentrance:RemoveClickListener()
-	arg_3_0._btndiscount:RemoveClickListener()
-	arg_3_0._btndiscountlock:RemoveClickListener()
-	arg_3_0._btncurrencyicon:RemoveClickListener()
-	arg_3_0._btnletter:RemoveClickListener()
-	arg_3_0._btntrial:RemoveClickListener()
-	arg_3_0._btnstory:RemoveClickListener()
-	arg_3_0._animationEvent:RemoveEventListener("levelup")
-	arg_3_0:removeEventCb(Activity104Controller.instance, Activity104Event.RefreshRetail, arg_3_0._onRefreshRetail, arg_3_0)
-	arg_3_0:removeEventCb(GuideController.instance, GuideEvent.SeasonShowUTTU, arg_3_0._showUTTU, arg_3_0)
-	arg_3_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_3_0._onChangeRetail, arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_3_0._onCloseView, arg_3_0)
-	arg_3_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_3_0.refreshCurrency, arg_3_0)
+function Season3_0MainView:removeEvents()
+	self._btnreadprocess:RemoveClickListener()
+	self._btntask:RemoveClickListener()
+	self._btncelebrity:RemoveClickListener()
+	self._btnretail:RemoveClickListener()
+	self._btnentrance:RemoveClickListener()
+	self._btndiscount:RemoveClickListener()
+	self._btndiscountlock:RemoveClickListener()
+	self._btncurrencyicon:RemoveClickListener()
+	self._btnletter:RemoveClickListener()
+	self._btntrial:RemoveClickListener()
+	self._btnstory:RemoveClickListener()
+	self._animationEvent:RemoveEventListener("levelup")
+	self:removeEventCb(Activity104Controller.instance, Activity104Event.RefreshRetail, self._onRefreshRetail, self)
+	self:removeEventCb(GuideController.instance, GuideEvent.SeasonShowUTTU, self._showUTTU, self)
+	self:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._onChangeRetail, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseView, self)
+	self:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self.refreshCurrency, self)
 end
 
-function var_0_0._onCloseView(arg_4_0, arg_4_1)
-	if arg_4_1 == ViewName.LoadingView then
-		if not arg_4_0._isViewOpen then
-			arg_4_0:realOpen()
+function Season3_0MainView:_onCloseView(viewName)
+	if viewName == ViewName.LoadingView then
+		if not self._isViewOpen then
+			self:realOpen()
 		end
 
 		return
 	end
 
-	local var_4_0 = Activity104Model.instance:getCurSeasonId()
+	local actId = Activity104Model.instance:getCurSeasonId()
+	local storyPagePopView = SeasonViewHelper.getViewName(actId, Activity104Enum.ViewName.StoryPagePopView)
 
-	if arg_4_1 == SeasonViewHelper.getViewName(var_4_0, Activity104Enum.ViewName.StoryPagePopView) then
-		arg_4_0.viewContainer:getScene():showLevelObjs(arg_4_0.levelUpStage)
+	if viewName == storyPagePopView then
+		self.viewContainer:getScene():showLevelObjs(self.levelUpStage)
 	end
 end
 
-function var_0_0.hideMask(arg_5_0)
-	gohelper.setActive(arg_5_0._goMask, false)
+function Season3_0MainView:hideMask()
+	gohelper.setActive(self._goMask, false)
 
-	local var_5_0 = Activity104Model.instance:getCurSeasonId()
+	local actId = Activity104Model.instance:getCurSeasonId()
 
-	if Activity104Model.instance:hasSeasonReview(var_5_0) and Activity104Model.instance:getIsPopSummary(var_5_0) and Activity104Model.instance:getLastMaxLayer(var_5_0) > 0 then
+	if Activity104Model.instance:hasSeasonReview(actId) and Activity104Model.instance:getIsPopSummary(actId) and Activity104Model.instance:getLastMaxLayer(actId) > 0 then
 		Activity104Controller.instance:openSeasonSumView()
 	else
 		Activity104Controller.instance:dispatchEvent(Activity104Event.EnterSeasonMainView)
 	end
 end
 
-function var_0_0.activeMask(arg_6_0, arg_6_1)
-	gohelper.setActive(arg_6_0._goMask, arg_6_1)
+function Season3_0MainView:activeMask(active)
+	gohelper.setActive(self._goMask, active)
 end
 
-function var_0_0._btnStoryOnClick(arg_7_0)
+function Season3_0MainView:_btnStoryOnClick()
 	Activity104Controller.instance:openSeasonStoryView()
 end
 
-function var_0_0._btnletterOnClick(arg_8_0)
+function Season3_0MainView:_btnletterOnClick()
 	Activity104Controller.instance:openSeasonSumView()
 end
 
-function var_0_0._btntrialOnClick(arg_9_0)
-	local var_9_0 = Activity104Model.instance:getCurSeasonId()
-	local var_9_1 = Activity104Model.instance:getTrialId(var_9_0)
-	local var_9_2 = SeasonConfig.instance:getTrialConfig(var_9_0, var_9_1)
+function Season3_0MainView:_btntrialOnClick()
+	local actId = Activity104Model.instance:getCurSeasonId()
+	local trialId = Activity104Model.instance:getTrialId(actId)
+	local co = SeasonConfig.instance:getTrialConfig(actId, trialId)
 
-	if var_9_2 then
-		Activity104Model.instance:enterAct104Battle(var_9_2.episodeId, var_9_1)
+	if co then
+		Activity104Model.instance:enterAct104Battle(co.episodeId, trialId)
 	end
 end
 
-function var_0_0.onTrialBattleReply(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	if arg_10_2 ~= 0 then
+function Season3_0MainView:onTrialBattleReply(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	Activity104Model.instance:onStartAct104BattleReply(arg_10_3)
+	Activity104Model.instance:onStartAct104BattleReply(msg)
 end
 
-function var_0_0._btndiscountOnClick(arg_11_0)
+function Season3_0MainView:_btndiscountOnClick()
 	Activity104Controller.instance:openSeasonSpecialMarketView()
 end
 
-function var_0_0._btndiscountlockOnClick(arg_12_0)
+function Season3_0MainView:_btndiscountlockOnClick()
 	GameFacade.showToast(ToastEnum.SeasonSpecialNotOpen)
 end
 
-function var_0_0._btnretailOnClick(arg_13_0)
+function Season3_0MainView:_btnretailOnClick()
 	Activity104Controller.instance:openSeasonRetailView()
 end
 
-function var_0_0._btnentranceOnClick(arg_14_0)
+function Season3_0MainView:_btnentranceOnClick()
 	Activity104Controller.instance:openSeasonMarketView()
 end
 
-function var_0_0._btnreadprocessOnClick(arg_15_0)
+function Season3_0MainView:_btnreadprocessOnClick()
 	Activity104Controller.instance:openSeasonStoreView()
 end
 
-function var_0_0._btntaskOnClick(arg_16_0)
+function Season3_0MainView:_btntaskOnClick()
 	Activity104Controller.instance:openSeasonTaskView()
 end
 
-function var_0_0._btncelebrityOnClick(arg_17_0)
+function Season3_0MainView:_btncelebrityOnClick()
 	Activity104Controller.instance:openSeasonCardBook()
 end
 
-function var_0_0._btncurrencyiconOnClick(arg_18_0)
-	local var_18_0 = Activity104Model.instance:getCurSeasonId()
-	local var_18_1 = SeasonConfig.instance:getRetailTicket(var_18_0)
+function Season3_0MainView:_btncurrencyiconOnClick()
+	local actId = Activity104Model.instance:getCurSeasonId()
+	local id = SeasonConfig.instance:getRetailTicket(actId)
 
-	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.Currency, var_18_1)
+	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.Currency, id)
 end
 
-function var_0_0._editableInitView(arg_19_0)
-	arg_19_0._progressItems = {}
+function Season3_0MainView:_editableInitView()
+	self._progressItems = {}
 
-	local var_19_0 = gohelper.findChild(arg_19_0.viewGO, "#go_entrance/progress")
+	local parentGo = gohelper.findChild(self.viewGO, "#go_entrance/progress")
 
-	for iter_19_0 = 1, 7 do
-		arg_19_0._progressItems[iter_19_0] = arg_19_0:createProgress(iter_19_0, var_19_0)
+	for i = 1, 7 do
+		self._progressItems[i] = self:createProgress(i, parentGo)
 	end
 end
 
-function var_0_0.onUpdateParam(arg_20_0)
-	arg_20_0:_refreshUI()
-	arg_20_0:checkJump()
+function Season3_0MainView:onUpdateParam()
+	self:_refreshUI()
+	self:checkJump()
 end
 
-function var_0_0.onOpen(arg_21_0)
-	local var_21_0 = arg_21_0.viewParam and arg_21_0.viewParam.jumpId
+function Season3_0MainView:onOpen()
+	local jumpId = self.viewParam and self.viewParam.jumpId
 
-	if ViewMgr.instance:isOpen(ViewName.LoadingView) and var_21_0 ~= nil then
+	if ViewMgr.instance:isOpen(ViewName.LoadingView) and jumpId ~= nil then
 		return
 	end
 
-	arg_21_0:realOpen()
+	self:realOpen()
 end
 
-function var_0_0.realOpen(arg_22_0)
-	arg_22_0._isViewOpen = true
+function Season3_0MainView:realOpen()
+	self._isViewOpen = true
 
-	gohelper.setActive(arg_22_0.viewGO, false)
-	gohelper.setActive(arg_22_0.viewGO, true)
-	arg_22_0:activeMask(true)
-	TaskDispatcher.cancelTask(arg_22_0.hideMask, arg_22_0)
-	TaskDispatcher.runDelay(arg_22_0.hideMask, arg_22_0, 1.5)
-	TaskDispatcher.runDelay(arg_22_0._checkShowEquipSelfChoiceView, arg_22_0, 0.1)
-	arg_22_0:checkLevupStage()
-	arg_22_0:_refreshUI()
-	arg_22_0:checkJump()
+	gohelper.setActive(self.viewGO, false)
+	gohelper.setActive(self.viewGO, true)
+	self:activeMask(true)
+	TaskDispatcher.cancelTask(self.hideMask, self)
+	TaskDispatcher.runDelay(self.hideMask, self, 1.5)
+	TaskDispatcher.runDelay(self._checkShowEquipSelfChoiceView, self, 0.1)
+	self:checkLevupStage()
+	self:_refreshUI()
+	self:checkJump()
 
-	if not arg_22_0.levelUpStage and (not arg_22_0.viewParam or not arg_22_0.viewParam.jumpId) then
+	if not self.levelUpStage and (not self.viewParam or not self.viewParam.jumpId) then
 		AudioMgr.instance:trigger(AudioEnum.VersionActivity1_2.play_ui_lvhu_goldcup_open)
 	end
 end
 
-function var_0_0.checkLevupStage(arg_23_0)
-	arg_23_0.levelUpStage = arg_23_0.viewParam and arg_23_0.viewParam.levelUpStage
+function Season3_0MainView:checkLevupStage()
+	self.levelUpStage = self.viewParam and self.viewParam.levelUpStage
 
-	if arg_23_0.levelUpStage then
-		arg_23_0.viewContainer:stopUI()
-		TaskDispatcher.runDelay(arg_23_0.showStoryPage, arg_23_0, 0.2)
+	if self.levelUpStage then
+		self.viewContainer:stopUI()
+		TaskDispatcher.runDelay(self.showStoryPage, self, 0.2)
 	end
 end
 
-function var_0_0.showStoryPage(arg_24_0)
-	if not arg_24_0.levelUpStage then
+function Season3_0MainView:showStoryPage()
+	if not self.levelUpStage then
 		return
 	end
 
-	local var_24_0 = {
-		actId = Activity104Model.instance:getCurSeasonId(),
-		stageId = arg_24_0.levelUpStage - 1
-	}
+	local param = {}
 
-	Activity104Controller.instance:openSeasonStoryPagePopView(var_24_0)
+	param.actId = Activity104Model.instance:getCurSeasonId()
+	param.stageId = self.levelUpStage - 1
+
+	Activity104Controller.instance:openSeasonStoryPagePopView(param)
 end
 
-function var_0_0.checkJump(arg_25_0)
-	local var_25_0 = arg_25_0.viewParam and arg_25_0.viewParam.jumpId
-	local var_25_1 = arg_25_0.viewParam and arg_25_0.viewParam.jumpParam
+function Season3_0MainView:checkJump()
+	local jumpId = self.viewParam and self.viewParam.jumpId
+	local jumpParam = self.viewParam and self.viewParam.jumpParam
 
-	if var_25_0 == Activity104Enum.JumpId.Market then
-		Activity104Controller.instance:openSeasonMarketView(var_25_1)
-	elseif var_25_0 == Activity104Enum.JumpId.Retail then
-		Activity104Controller.instance:openSeasonRetailView(var_25_1)
-	elseif var_25_0 == Activity104Enum.JumpId.Discount then
-		Activity104Controller.instance:openSeasonSpecialMarketView(var_25_1)
+	if jumpId == Activity104Enum.JumpId.Market then
+		Activity104Controller.instance:openSeasonMarketView(jumpParam)
+	elseif jumpId == Activity104Enum.JumpId.Retail then
+		Activity104Controller.instance:openSeasonRetailView(jumpParam)
+	elseif jumpId == Activity104Enum.JumpId.Discount then
+		Activity104Controller.instance:openSeasonSpecialMarketView(jumpParam)
 	end
 end
 
-function var_0_0._checkShowEquipSelfChoiceView(arg_26_0)
+function Season3_0MainView:_checkShowEquipSelfChoiceView()
 	Activity104Controller.instance:checkShowEquipSelfChoiceView()
 end
 
-function var_0_0.onLevelUp(arg_27_0)
-	if not arg_27_0.levelUpStage then
+function Season3_0MainView:onLevelUp()
+	if not self.levelUpStage then
 		return
 	end
 
-	arg_27_0:activeProgressLevup(arg_27_0.levelUpStage, true)
+	self:activeProgressLevup(self.levelUpStage, true)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_symbol_upgrade)
 
-	arg_27_0._passStage = arg_27_0.levelUpStage
-	arg_27_0.levelUpStage = nil
+	self._passStage = self.levelUpStage
+	self.levelUpStage = nil
 end
 
-function var_0_0._refreshUI(arg_28_0)
-	arg_28_0:_refreshMain()
-	arg_28_0:_refreshRetail()
-	arg_28_0:refreshCurrency()
-	TaskDispatcher.cancelTask(arg_28_0._refreshMain, arg_28_0)
-	TaskDispatcher.runRepeat(arg_28_0._refreshMain, arg_28_0, 60)
+function Season3_0MainView:_refreshUI()
+	self:_refreshMain()
+	self:_refreshRetail()
+	self:refreshCurrency()
+	TaskDispatcher.cancelTask(self._refreshMain, self)
+	TaskDispatcher.runRepeat(self._refreshMain, self, 60)
 end
 
-function var_0_0._refreshMain(arg_29_0)
-	arg_29_0:refreshMarketEpisode()
-	arg_29_0:refreshDiscount()
-	arg_29_0:refreshProgress()
-	arg_29_0:refreshTime()
-	arg_29_0:refreshTrial()
+function Season3_0MainView:_refreshMain()
+	self:refreshMarketEpisode()
+	self:refreshDiscount()
+	self:refreshProgress()
+	self:refreshTime()
+	self:refreshTrial()
 
-	local var_29_0 = Activity104Model.instance:getCurSeasonId()
-	local var_29_1 = Activity104Model.instance:hasSeasonReview(var_29_0)
+	local actId = Activity104Model.instance:getCurSeasonId()
+	local hasReview = Activity104Model.instance:hasSeasonReview(actId)
 
-	gohelper.setActive(arg_29_0._goletter, var_29_1)
+	gohelper.setActive(self._goletter, hasReview)
 end
 
-local var_0_1 = Vector2(-92.8, -42.3)
-local var_0_2 = Vector2(-76.6, -42.3)
-local var_0_3 = Vector2(53.3, 15.7)
-local var_0_4 = Vector2(72, 16.1)
+local indexNormalPos = Vector2(-92.8, -42.3)
+local indexMaxLayerPos = Vector2(-76.6, -42.3)
+local arrowNormalPos = Vector2(53.3, 15.7)
+local arrowMaxLayerPos = Vector2(72, 16.1)
 
-function var_0_0.refreshMarketEpisode(arg_30_0)
-	local var_30_0 = Activity104Model.instance:getCurSeasonId()
-	local var_30_1 = Activity104Model.instance:getAct104CurLayer()
-	local var_30_2 = Activity104Model.instance:getMaxLayer()
+function Season3_0MainView:refreshMarketEpisode()
+	local actId = Activity104Model.instance:getCurSeasonId()
+	local layer = Activity104Model.instance:getAct104CurLayer()
+	local maxLayer = Activity104Model.instance:getMaxLayer()
 
-	arg_30_0._txtindex.text = string.format("%02d", var_30_1)
+	self._txtindex.text = string.format("%02d", layer)
 
-	local var_30_3 = var_30_2 == var_30_1 and var_0_2 or var_0_1
-	local var_30_4 = var_30_2 == var_30_1 and var_0_4 or var_0_3
+	local targetIndexPos = maxLayer == layer and indexMaxLayerPos or indexNormalPos
+	local targetArrowPos = maxLayer == layer and arrowMaxLayerPos or arrowNormalPos
 
-	recthelper.setAnchor(arg_30_0._txtindex.transform, var_30_3.x, var_30_3.y)
-	recthelper.setAnchor(arg_30_0._goarrow.transform, var_30_4.x, var_30_4.y)
-	gohelper.setActive(arg_30_0._gotop, var_30_2 == var_30_1 and Activity104Model.instance:isLayerPassed(var_30_0, var_30_1))
+	recthelper.setAnchor(self._txtindex.transform, targetIndexPos.x, targetIndexPos.y)
+	recthelper.setAnchor(self._goarrow.transform, targetArrowPos.x, targetArrowPos.y)
+	gohelper.setActive(self._gotop, maxLayer == layer and Activity104Model.instance:isLayerPassed(actId, layer))
 
-	local var_30_5 = SeasonConfig.instance:getSeasonEpisodeCo(var_30_0, var_30_1)
+	local episodeCo = SeasonConfig.instance:getSeasonEpisodeCo(actId, layer)
 
-	arg_30_0._txtmapname.text = var_30_5.stageName
+	self._txtmapname.text = episodeCo.stageName
 end
 
-function var_0_0.refreshDiscount(arg_31_0)
-	local var_31_0 = Activity104Model.instance:getCurSeasonId()
-	local var_31_1 = Activity104Model.instance:isSpecialOpen()
+function Season3_0MainView:refreshDiscount()
+	local actId = Activity104Model.instance:getCurSeasonId()
+	local spOpen = Activity104Model.instance:isSpecialOpen()
 
-	gohelper.setActive(arg_31_0._godiscount, var_31_1)
-	gohelper.setActive(arg_31_0._godiscountlock, not var_31_1)
+	gohelper.setActive(self._godiscount, spOpen)
+	gohelper.setActive(self._godiscountlock, not spOpen)
 
-	if not var_31_1 then
-		local var_31_2 = SeasonConfig.instance:getSeasonConstCo(var_31_0, Activity104Enum.ConstEnum.SpecialOpenLayer)
-		local var_31_3 = var_31_2 and var_31_2.value1
+	if not spOpen then
+		local co = SeasonConfig.instance:getSeasonConstCo(actId, Activity104Enum.ConstEnum.SpecialOpenLayer)
+		local openLayer = co and co.value1
+		local isLayerPass = Activity104Model.instance:isLayerPassed(actId, openLayer)
 
-		if Activity104Model.instance:isLayerPassed(var_31_0, var_31_3) then
-			local var_31_4 = SeasonConfig.instance:getSeasonConstCo(var_31_0, Activity104Enum.ConstEnum.SpecialOpenDayCount).value1 - 1
-			local var_31_5 = ActivityModel.instance:getActStartTime(var_31_0) / 1000 + var_31_4 * 86400 - ServerTime.now()
-			local var_31_6 = string.format("%s%s", TimeUtil.secondToRoughTime2(var_31_5))
+		if isLayerPass then
+			local dayCo = SeasonConfig.instance:getSeasonConstCo(actId, Activity104Enum.ConstEnum.SpecialOpenDayCount)
+			local dayCount = dayCo.value1 - 1
+			local limitSec = ActivityModel.instance:getActStartTime(actId) / 1000 + dayCount * 86400 - ServerTime.now()
+			local timeStr = string.format("%s%s", TimeUtil.secondToRoughTime2(limitSec))
 
-			arg_31_0._txtdiscountunlock.text = string.format(luaLang("seasonmainview_timeopencondition"), var_31_6)
+			self._txtdiscountunlock.text = string.format(luaLang("seasonmainview_timeopencondition"), timeStr)
 		else
-			arg_31_0._txtdiscountunlock.text = string.format(luaLang("seasonmainview_layeropencondition"), var_31_3)
+			self._txtdiscountunlock.text = string.format(luaLang("seasonmainview_layeropencondition"), openLayer)
 		end
 	else
-		gohelper.setActive(arg_31_0._godiscountlock, false)
+		gohelper.setActive(self._godiscountlock, false)
 
-		local var_31_7 = Activity104Model.instance:isSpecialLayerOpen(var_31_0, 6)
+		local newEpisodeOpen = Activity104Model.instance:isSpecialLayerOpen(actId, 6)
 
-		gohelper.setActive(arg_31_0._gonewdiscount, var_31_7)
+		gohelper.setActive(self._gonewdiscount, newEpisodeOpen)
 	end
 end
 
-function var_0_0.refreshTime(arg_32_0)
-	arg_32_0:_refreshTime()
+function Season3_0MainView:refreshTime()
+	self:_refreshTime()
 end
 
-function var_0_0._refreshTime(arg_33_0)
-	local var_33_0 = Activity104Model.instance:getCurSeasonId()
+function Season3_0MainView:_refreshTime()
+	local actId = Activity104Model.instance:getCurSeasonId()
 
-	if not var_33_0 then
+	if not actId then
 		return
 	end
 
-	local var_33_1 = ActivityModel.instance:getActMO(var_33_0)
+	local actInfoMo = ActivityModel.instance:getActMO(actId)
 
-	if not var_33_1 then
+	if not actInfoMo then
 		return
 	end
 
-	local var_33_2 = var_33_1:getRealEndTimeStamp() - ServerTime.now()
-	local var_33_3 = Mathf.Floor(var_33_2 / TimeUtil.OneDaySecond)
-	local var_33_4 = var_33_2 % TimeUtil.OneDaySecond
-	local var_33_5 = Mathf.Floor(var_33_4 / TimeUtil.OneHourSecond)
-	local var_33_6 = GameUtil.getSubPlaceholderLuaLang(luaLang("time_day_hour2"), {
-		var_33_3,
-		var_33_5
+	local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
+	local day = Mathf.Floor(offsetSecond / TimeUtil.OneDaySecond)
+	local hourSecond = offsetSecond % TimeUtil.OneDaySecond
+	local hour = Mathf.Floor(hourSecond / TimeUtil.OneHourSecond)
+	local timeStr = GameUtil.getSubPlaceholderLuaLang(luaLang("time_day_hour2"), {
+		day,
+		hour
 	})
 
-	arg_33_0._txtunlocktime.text = formatLuaLang("remain", var_33_6)
+	self._txtunlocktime.text = formatLuaLang("remain", timeStr)
 end
 
-function var_0_0.refreshProgress(arg_34_0)
-	local var_34_0 = Activity104Model.instance:getCurSeasonId()
-	local var_34_1 = Activity104Model.instance:getMaxStage(var_34_0)
-	local var_34_2 = Activity104Model.instance:getAct104CurStage(var_34_0)
+function Season3_0MainView:refreshProgress()
+	local actId = Activity104Model.instance:getCurSeasonId()
+	local maxStage = Activity104Model.instance:getMaxStage(actId)
+	local stage = Activity104Model.instance:getAct104CurStage(actId)
 
-	for iter_34_0, iter_34_1 in ipairs(arg_34_0._progressItems) do
-		arg_34_0:updateProgress(iter_34_1, var_34_2, var_34_1)
+	for i, v in ipairs(self._progressItems) do
+		self:updateProgress(v, stage, maxStage)
 	end
 end
 
-function var_0_0.refreshTrial(arg_35_0)
-	local var_35_0 = Activity104Model.instance:getCurSeasonId()
-	local var_35_1 = Activity104Model.instance:getTrialId(var_35_0)
-	local var_35_2 = SeasonConfig.instance:getTrialConfig(var_35_0, var_35_1)
+function Season3_0MainView:refreshTrial()
+	local actId = Activity104Model.instance:getCurSeasonId()
+	local trialId = Activity104Model.instance:getTrialId(actId)
+	local co = SeasonConfig.instance:getTrialConfig(actId, trialId)
 
-	if var_35_2 then
-		gohelper.setActive(arg_35_0._gotry, true)
+	if co then
+		gohelper.setActive(self._gotry, true)
 
-		local var_35_3 = SeasonConfig.instance:getTrialCount(var_35_0) + 1
+		local maxStage = SeasonConfig.instance:getTrialCount(actId) + 1
 
-		if not arg_35_0.starComp then
-			local var_35_4 = gohelper.findChild(arg_35_0._gotry, "progress")
+		if not self.starComp then
+			local parentGo = gohelper.findChild(self._gotry, "progress")
 
-			arg_35_0.starComp = MonoHelper.addNoUpdateLuaComOnceToGo(var_35_4, SeasonStarProgressComp)
+			self.starComp = MonoHelper.addNoUpdateLuaComOnceToGo(parentGo, SeasonStarProgressComp)
 		end
 
-		arg_35_0.starComp:refreshStar("#go_progress", var_35_1, var_35_3)
+		self.starComp:refreshStar("#go_progress", trialId, maxStage)
 
-		arg_35_0._trialTxtNameen.text = var_35_2.nameEn
-		arg_35_0._trialTxtNamecn.text = var_35_2.name
+		self._trialTxtNameen.text = co.nameEn
+		self._trialTxtNamecn.text = co.name
 
-		local var_35_5 = DungeonConfig.instance:getEpisodeCO(var_35_2.episodeId)
-		local var_35_6 = var_35_5 and var_35_5.battleId
-		local var_35_7
+		local episodeCo = DungeonConfig.instance:getEpisodeCO(co.episodeId)
+		local battleId = episodeCo and episodeCo.battleId
+		local battleCo = battleId and lua_battle.configDict[battleId]
 
-		var_35_7 = var_35_6 and lua_battle.configDict[var_35_6]
+		if not self.trialCardItem then
+			self.trialCardItem = Season3_0CelebrityCardItem.New()
 
-		if not arg_35_0.trialCardItem then
-			arg_35_0.trialCardItem = Season3_0CelebrityCardItem.New()
-
-			arg_35_0.trialCardItem:init(arg_35_0._trialCardGo, var_35_2.equipId, {
+			self.trialCardItem:init(self._trialCardGo, co.equipId, {
 				noClick = true
 			})
 		else
-			arg_35_0.trialCardItem:reset(var_35_2.equipId)
+			self.trialCardItem:reset(co.equipId)
 		end
 	else
-		gohelper.setActive(arg_35_0._gotry, false)
+		gohelper.setActive(self._gotry, false)
 	end
 end
 
-function var_0_0._refreshRetail(arg_36_0)
-	local var_36_0 = Activity104Model.instance:getCurSeasonId()
-	local var_36_1 = SeasonConfig.instance:getRetailTicket(var_36_0)
-	local var_36_2 = CurrencyConfig.instance:getCurrencyCo(var_36_1)
-	local var_36_3 = var_36_2 and var_36_2.icon
+function Season3_0MainView:_refreshRetail()
+	local actId = Activity104Model.instance:getCurSeasonId()
+	local id = SeasonConfig.instance:getRetailTicket(actId)
+	local currencyCo = CurrencyConfig.instance:getCurrencyCo(id)
+	local currencyname = currencyCo and currencyCo.icon
 
-	if var_36_3 then
-		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_36_0._imagecurrencyicon, var_36_3 .. "_1", true)
+	if currencyname then
+		UISpriteSetMgr.instance:setCurrencyItemSprite(self._imagecurrencyicon, currencyname .. "_1", true)
 	end
 
-	local var_36_4 = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.SeasonRetail)
-	local var_36_5 = GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.SeasonUTTU)
-	local var_36_6 = var_36_5 or GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.SeasonDiscount)
+	local isOpen = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.SeasonRetail)
+	local isInUTTUGuide = GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.SeasonUTTU)
+	local isInGuide = isInUTTUGuide or GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.SeasonDiscount)
 
-	gohelper.setActive(arg_36_0._goretail, var_36_4 and not var_36_5)
+	gohelper.setActive(self._goretail, isOpen and not isInUTTUGuide)
 
-	arg_36_0._retailProcessing = #Activity104Model.instance:getAct104Retails() > 0
+	self._retailProcessing = #Activity104Model.instance:getAct104Retails() > 0
 
-	gohelper.setActive(arg_36_0._goassemblying, arg_36_0._retailProcessing)
-	gohelper.setActive(arg_36_0._gocurrency, not arg_36_0._retailProcessing)
+	gohelper.setActive(self._goassemblying, self._retailProcessing)
+	gohelper.setActive(self._gocurrency, not self._retailProcessing)
 
-	if not arg_36_0._retailProcessing then
-		local var_36_7 = var_36_2 and var_36_2.recoverLimit
-		local var_36_8 = CurrencyModel.instance:getCurrency(var_36_1)
-		local var_36_9 = var_36_8 and var_36_8.quantity or 0
+	if not self._retailProcessing then
+		local needTicket = currencyCo and currencyCo.recoverLimit
+		local readableMo = CurrencyModel.instance:getCurrency(id)
+		local hasTicket = readableMo and readableMo.quantity or 0
 
-		arg_36_0._hasEnoughTicket = var_36_9 >= 1
+		self._hasEnoughTicket = hasTicket >= 1
 
-		local var_36_10 = var_36_9 > 0 and var_36_9 or "<color=#CF4543>" .. var_36_9 .. "</color>"
+		local hasTxt = hasTicket > 0 and hasTicket or "<color=#CF4543>" .. hasTicket .. "</color>"
 
-		arg_36_0._txtcurrencycount.text = string.format("%s/%s", var_36_10, var_36_7)
+		self._txtcurrencycount.text = string.format("%s/%s", hasTxt, needTicket)
 	end
 
-	gohelper.setActive(arg_36_0._goEnterEffect, not var_36_6)
+	gohelper.setActive(self._goEnterEffect, not isInGuide)
 end
 
-function var_0_0._showUTTU(arg_37_0)
-	arg_37_0:_refreshRetail()
+function Season3_0MainView:_showUTTU()
+	self:_refreshRetail()
 
-	local var_37_0 = gohelper.onceAddComponent(arg_37_0._goretail, typeof(UnityEngine.Animator))
+	local animator = gohelper.onceAddComponent(self._goretail, typeof(UnityEngine.Animator))
 
-	if var_37_0 then
-		var_37_0:Play(UIAnimationName.Switch, 0, 0)
+	if animator then
+		animator:Play(UIAnimationName.Switch, 0, 0)
 	end
 end
 
-function var_0_0._onRefreshRetail(arg_38_0)
-	arg_38_0:_refreshRetail()
+function Season3_0MainView:_onRefreshRetail()
+	self:_refreshRetail()
 end
 
-function var_0_0._onChangeRetail(arg_39_0, arg_39_1)
-	local var_39_0 = Activity104Model.instance:getCurSeasonId()
-	local var_39_1 = SeasonConfig.instance:getRetailTicket(var_39_0)
+function Season3_0MainView:_onChangeRetail(changeIds)
+	local actId = Activity104Model.instance:getCurSeasonId()
+	local id = SeasonConfig.instance:getRetailTicket(actId)
 
-	if not var_39_1 or not arg_39_1[var_39_1] then
+	if not id or not changeIds[id] then
 		return
 	end
 
-	arg_39_0:_refreshRetail()
+	self:_refreshRetail()
 end
 
-function var_0_0.createProgress(arg_40_0, arg_40_1, arg_40_2)
-	local var_40_0 = arg_40_0:getUserDataTb_()
+function Season3_0MainView:createProgress(index, parentGo)
+	local item = self:getUserDataTb_()
 
-	var_40_0.index = arg_40_1
-	var_40_0.go = gohelper.findChild(arg_40_2, string.format("#go_progress%s", arg_40_1))
-	var_40_0.dark = gohelper.findChild(var_40_0.go, "dark")
-	var_40_0.light = gohelper.findChild(var_40_0.go, "light")
-	var_40_0.lightImg = var_40_0.light:GetComponent(gohelper.Type_Image)
-	var_40_0.leveup = gohelper.findChild(var_40_0.go, "leveup")
-	var_40_0.leveupImg = gohelper.findChildImage(var_40_0.go, "leveup/lock")
+	item.index = index
+	item.go = gohelper.findChild(parentGo, string.format("#go_progress%s", index))
+	item.dark = gohelper.findChild(item.go, "dark")
+	item.light = gohelper.findChild(item.go, "light")
+	item.lightImg = item.light:GetComponent(gohelper.Type_Image)
+	item.leveup = gohelper.findChild(item.go, "leveup")
+	item.leveupImg = gohelper.findChildImage(item.go, "leveup/lock")
 
-	return var_40_0
+	return item
 end
 
-function var_0_0.activeProgress(arg_41_0, arg_41_1, arg_41_2)
-	if not arg_41_1 then
+function Season3_0MainView:activeProgress(item, active)
+	if not item then
 		return
 	end
 
-	gohelper.setActive(arg_41_1.go, arg_41_2)
+	gohelper.setActive(item.go, active)
 end
 
-function var_0_0.activeProgressLevup(arg_42_0, arg_42_1, arg_42_2)
-	local var_42_0 = arg_42_0._progressItems[arg_42_1]
+function Season3_0MainView:activeProgressLevup(index, active)
+	local item = self._progressItems[index]
 
-	if not var_42_0 then
+	if not item then
 		return
 	end
 
-	gohelper.setActive(var_42_0.leveup, arg_42_2)
+	gohelper.setActive(item.leveup, active)
 
-	if arg_42_2 then
-		local var_42_1 = Activity104Model.instance:getCurSeasonId()
-		local var_42_2 = Activity104Model.instance:getMaxStage(var_42_1) == arg_42_1 and "#B83838" or "#FFFFFF"
+	if active then
+		local actId = Activity104Model.instance:getCurSeasonId()
+		local maxStage = Activity104Model.instance:getMaxStage(actId)
+		local color = maxStage == index and "#B83838" or "#FFFFFF"
 
-		SLFramework.UGUI.GuiHelper.SetColor(var_42_0.leveupImg, var_42_2)
+		SLFramework.UGUI.GuiHelper.SetColor(item.leveupImg, color)
 	end
 end
 
-function var_0_0.activeProgressLight(arg_43_0, arg_43_1, arg_43_2)
-	local var_43_0 = arg_43_0._progressItems[arg_43_1]
+function Season3_0MainView:activeProgressLight(index, active)
+	local item = self._progressItems[index]
 
-	if not var_43_0 then
+	if not item then
 		return
 	end
 
-	gohelper.setActive(var_43_0.light, arg_43_2)
+	gohelper.setActive(item.light, active)
 end
 
-function var_0_0.updateProgress(arg_44_0, arg_44_1, arg_44_2, arg_44_3)
-	if not arg_44_1 then
+function Season3_0MainView:updateProgress(item, stage, maxStage)
+	if not item then
 		return
 	end
 
-	local var_44_0 = arg_44_1.index
-	local var_44_1 = var_44_0 == arg_44_3
+	local index = item.index
+	local isMaxStage = index == maxStage
+	local isNotShow = maxStage < index or isMaxStage and stage < index
 
-	if arg_44_3 < var_44_0 or var_44_1 and arg_44_2 < var_44_0 then
-		gohelper.setActive(arg_44_1.go, false)
+	if isNotShow then
+		gohelper.setActive(item.go, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_44_1.go, true)
+	gohelper.setActive(item.go, true)
 
-	local var_44_2 = var_44_1 and "#B83838" or "#FFFFFF"
+	local color = isMaxStage and "#B83838" or "#FFFFFF"
 
-	SLFramework.UGUI.GuiHelper.SetColor(arg_44_1.lightImg, var_44_2)
-	gohelper.setActive(arg_44_1.light, var_44_0 <= arg_44_2 and arg_44_0.levelUpStage ~= var_44_0)
-	gohelper.setActive(arg_44_1.dark, arg_44_2 < var_44_0)
+	SLFramework.UGUI.GuiHelper.SetColor(item.lightImg, color)
+	gohelper.setActive(item.light, index <= stage and self.levelUpStage ~= index)
+	gohelper.setActive(item.dark, stage < index)
 end
 
-function var_0_0.refreshCurrency(arg_45_0)
-	local var_45_0 = Activity104Model.instance:getCurSeasonId()
-	local var_45_1 = Activity104Enum.StoreUTTU[var_45_0]
-	local var_45_2 = CurrencyModel.instance:getCurrency(var_45_1)
-	local var_45_3 = var_45_2 and var_45_2.quantity or 0
+function Season3_0MainView:refreshCurrency()
+	local actId = Activity104Model.instance:getCurSeasonId()
+	local currencyId = Activity104Enum.StoreUTTU[actId]
+	local currencyMO = CurrencyModel.instance:getCurrency(currencyId)
+	local quantity = currencyMO and currencyMO.quantity or 0
 
-	arg_45_0._txtNum.text = GameUtil.numberDisplay(var_45_3)
+	self._txtNum.text = GameUtil.numberDisplay(quantity)
 end
 
-function var_0_0.onClose(arg_46_0)
+function Season3_0MainView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_47_0)
-	TaskDispatcher.cancelTask(arg_47_0._refreshMain, arg_47_0)
-	TaskDispatcher.cancelTask(arg_47_0.hideMask, arg_47_0)
-	TaskDispatcher.cancelTask(arg_47_0._checkShowEquipSelfChoiceView, arg_47_0)
-	TaskDispatcher.cancelTask(arg_47_0.showStoryPage, arg_47_0)
+function Season3_0MainView:onDestroyView()
+	TaskDispatcher.cancelTask(self._refreshMain, self)
+	TaskDispatcher.cancelTask(self.hideMask, self)
+	TaskDispatcher.cancelTask(self._checkShowEquipSelfChoiceView, self)
+	TaskDispatcher.cancelTask(self.showStoryPage, self)
 end
 
-return var_0_0
+return Season3_0MainView

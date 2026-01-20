@@ -1,43 +1,45 @@
-﻿module("modules.logic.teach.view.TeachNoteViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/teach/view/TeachNoteViewContainer.lua
 
-local var_0_0 = class("TeachNoteViewContainer", BaseViewContainer)
+module("modules.logic.teach.view.TeachNoteViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+local TeachNoteViewContainer = class("TeachNoteViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "#go_reward/#scroll_rewarditem"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_1.cellClass = TeachNoteRewardListItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 1
-	var_1_1.cellWidth = 620
-	var_1_1.cellHeight = 81
-	var_1_1.cellSpaceH = 50
-	var_1_1.cellSpaceV = 0
-	var_1_1.minUpdateCountInFrame = 10
+function TeachNoteViewContainer:buildViews()
+	local views = {}
+	local scrollParam = ListScrollParam.New()
 
-	table.insert(var_1_0, LuaListScrollView.New(TeachNoteRewardListModel.instance, var_1_1))
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
-	table.insert(var_1_0, TeachNoteView.New())
+	scrollParam.scrollGOPath = "#go_reward/#scroll_rewarditem"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = TeachNoteRewardListItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 620
+	scrollParam.cellHeight = 81
+	scrollParam.cellSpaceH = 50
+	scrollParam.cellSpaceV = 0
+	scrollParam.minUpdateCountInFrame = 10
 
-	return var_1_0
+	table.insert(views, LuaListScrollView.New(TeachNoteRewardListModel.instance, scrollParam))
+	table.insert(views, TabViewGroup.New(1, "#go_btns"))
+	table.insert(views, TeachNoteView.New())
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	arg_2_0.navigationView = NavigateButtonsView.New({
+function TeachNoteViewContainer:buildTabViews(tabContainerId)
+	self.navigationView = NavigateButtonsView.New({
 		true,
 		false,
 		true
-	}, 116, arg_2_0._closeCallback, nil, nil, arg_2_0)
+	}, 116, self._closeCallback, nil, nil, self)
 
 	return {
-		arg_2_0.navigationView
+		self.navigationView
 	}
 end
 
-function var_0_0._closeCallback(arg_3_0)
+function TeachNoteViewContainer:_closeCallback()
 	TeachNoteModel.instance:setJumpEpisodeId(nil)
 
 	JumpModel.instance.jumpFromFightSceneParam = nil
@@ -45,8 +47,8 @@ function var_0_0._closeCallback(arg_3_0)
 	TeachNoteModel.instance:setJumpEnter(false)
 end
 
-function var_0_0.onContainerOpenFinish(arg_4_0)
-	arg_4_0.navigationView:resetOnCloseViewAudio(AudioEnum.TeachNote.play_ui_closehouse)
+function TeachNoteViewContainer:onContainerOpenFinish()
+	self.navigationView:resetOnCloseViewAudio(AudioEnum.TeachNote.play_ui_closehouse)
 end
 
-return var_0_0
+return TeachNoteViewContainer

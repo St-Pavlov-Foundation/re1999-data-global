@@ -1,70 +1,73 @@
-﻿module("modules.logic.room.entity.comp.RoomEffectCompCacheData", package.seeall)
+﻿-- chunkname: @modules/logic/room/entity/comp/RoomEffectCompCacheData.lua
 
-local var_0_0 = class("RoomEffectCompCacheData")
+module("modules.logic.room.entity.comp.RoomEffectCompCacheData", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.effectComp = arg_1_1
-	arg_1_0._cacheDataDic = {}
+local RoomEffectCompCacheData = class("RoomEffectCompCacheData")
+
+function RoomEffectCompCacheData:ctor(effectComp)
+	self.effectComp = effectComp
+	self._cacheDataDic = {}
 end
 
-function var_0_0.getUserDataTb_(arg_2_0)
-	return arg_2_0.effectComp:getUserDataTb_()
+function RoomEffectCompCacheData:getUserDataTb_()
+	return self.effectComp:getUserDataTb_()
 end
 
-function var_0_0.addDataByKey(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	local var_3_0 = arg_3_0._cacheDataDic
-	local var_3_1 = var_3_0[arg_3_2]
+function RoomEffectCompCacheData:addDataByKey(key, typeName, data)
+	local target = self._cacheDataDic
+	local xTypeDic = target[typeName]
 
-	if not var_3_1 then
-		var_3_1 = {}
-		var_3_0[arg_3_2] = var_3_1
+	if not xTypeDic then
+		xTypeDic = {}
+		target[typeName] = xTypeDic
 	end
 
-	var_3_1[arg_3_1] = arg_3_3
+	xTypeDic[key] = data
 end
 
-function var_0_0.getDataByKey(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = arg_4_0._cacheDataDic[arg_4_2]
+function RoomEffectCompCacheData:getDataByKey(key, typeName)
+	local target = self._cacheDataDic
+	local xTypeDic = target[typeName]
 
-	if var_4_0 then
-		return var_4_0[arg_4_1]
+	if xTypeDic then
+		return xTypeDic[key]
 	end
 end
 
-function var_0_0.removeDataByKey(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0._cacheDataDic
+function RoomEffectCompCacheData:removeDataByKey(key)
+	local target = self._cacheDataDic
 
-	for iter_5_0, iter_5_1 in pairs(var_5_0) do
-		local var_5_1 = iter_5_1[arg_5_1]
+	for typeName, xTypeDic in pairs(target) do
+		local data = xTypeDic[key]
 
-		if var_5_1 then
-			arg_5_0:_removeData(var_5_1)
-			rawset(iter_5_1, arg_5_1, nil)
+		if data then
+			self:_removeData(data)
+			rawset(xTypeDic, key, nil)
 		end
 	end
 end
 
-function var_0_0._removeData(arg_6_0, arg_6_1)
-	if arg_6_1 and type(arg_6_1) == "table" then
-		for iter_6_0 in pairs(arg_6_1) do
-			rawset(arg_6_1, iter_6_0, nil)
+function RoomEffectCompCacheData:_removeData(data)
+	if data and type(data) == "table" then
+		for datakey in pairs(data) do
+			rawset(data, datakey, nil)
 		end
 	end
 end
 
-function var_0_0.dispose(arg_7_0)
-	local var_7_0 = arg_7_0._cacheDataDic
+function RoomEffectCompCacheData:dispose()
+	local target = self._cacheDataDic
 
-	for iter_7_0, iter_7_1 in pairs(var_7_0) do
-		for iter_7_2, iter_7_3 in pairs(iter_7_1) do
-			if iter_7_3 then
-				rawset(iter_7_1, iter_7_2, nil)
-				arg_7_0:_removeData(iter_7_3)
+	for typeName, xTypeDic in pairs(target) do
+		for key, data in pairs(xTypeDic) do
+			if data then
+				rawset(xTypeDic, key, nil)
+				self:_removeData(data)
 			end
 		end
 
-		var_7_0[iter_7_0] = nil
+		target[typeName] = nil
 	end
 end
 
-return var_0_0
+return RoomEffectCompCacheData

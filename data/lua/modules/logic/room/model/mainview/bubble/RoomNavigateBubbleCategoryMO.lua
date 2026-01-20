@@ -1,70 +1,75 @@
-﻿module("modules.logic.room.model.mainview.bubble.RoomNavigateBubbleCategoryMO", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/mainview/bubble/RoomNavigateBubbleCategoryMO.lua
 
-local var_0_0 = pureTable("RoomNavigateBubbleCategoryMO")
+module("modules.logic.room.model.mainview.bubble.RoomNavigateBubbleCategoryMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.showType = arg_1_1
-	arg_1_0._buildingBubblesDict = {}
-	arg_1_0._buildingBubblesList = {}
+local RoomNavigateBubbleCategoryMO = pureTable("RoomNavigateBubbleCategoryMO")
+
+function RoomNavigateBubbleCategoryMO:init(showType)
+	self.showType = showType
+	self._buildingBubblesDict = {}
+	self._buildingBubblesList = {}
 end
 
-local var_0_1 = {}
+local ChildrenTypeClz = {}
 
-function var_0_0.getOrCreateBubbleMO(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_0._buildingBubblesDict[arg_2_1]
+function RoomNavigateBubbleCategoryMO:getOrCreateBubbleMO(bubbleType)
+	local bubbleMO = self._buildingBubblesDict[bubbleType]
 
-	if not var_2_0 then
-		var_2_0 = (var_0_1[arg_2_1] or RoomNavigateBaseBubble).New()
+	if not bubbleMO then
+		local clz = ChildrenTypeClz[bubbleType]
 
-		var_2_0:init(arg_2_1)
+		clz = clz or RoomNavigateBaseBubble
+		bubbleMO = clz.New()
 
-		arg_2_0._buildingBubblesDict[arg_2_1] = var_2_0
-		arg_2_0._buildingBubblesList[#arg_2_0._buildingBubblesList + 1] = var_2_0
+		bubbleMO:init(bubbleType)
+
+		self._buildingBubblesDict[bubbleType] = bubbleMO
+		self._buildingBubblesList[#self._buildingBubblesList + 1] = bubbleMO
 	end
 
-	return var_2_0
+	return bubbleMO
 end
 
-function var_0_0.cleanBubble(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_0._buildingBubblesDict[arg_3_1]
+function RoomNavigateBubbleCategoryMO:cleanBubble(bubbleType)
+	local bubbleMO = self._buildingBubblesDict[bubbleType]
 
-	if var_3_0 then
-		var_3_0:clear()
+	if bubbleMO then
+		bubbleMO:clear()
 	end
 end
 
-function var_0_0.getBubbles(arg_4_0)
-	return arg_4_0._buildingBubblesList
+function RoomNavigateBubbleCategoryMO:getBubbles()
+	return self._buildingBubblesList
 end
 
-function var_0_0.getBubbleByType(arg_5_0, arg_5_1)
-	local var_5_0
+function RoomNavigateBubbleCategoryMO:getBubbleByType(bubbleType)
+	local bubbleMO
 
-	if arg_5_0._buildingBubblesDict and arg_5_1 then
-		var_5_0 = arg_5_0._buildingBubblesDict[arg_5_1]
+	if self._buildingBubblesDict and bubbleType then
+		bubbleMO = self._buildingBubblesDict[bubbleType]
 	end
 
-	return var_5_0
+	return bubbleMO
 end
 
-function var_0_0.getBubblesCount(arg_6_0)
-	local var_6_0 = 0
+function RoomNavigateBubbleCategoryMO:getBubblesCount()
+	local rs = 0
 
-	for iter_6_0, iter_6_1 in pairs(arg_6_0._buildingBubblesDict) do
-		var_6_0 = var_6_0 + iter_6_1:getBubbleCount()
+	for k, bubbleMO in pairs(self._buildingBubblesDict) do
+		rs = rs + bubbleMO:getBubbleCount()
 	end
 
-	return var_6_0
+	return rs
 end
 
-function var_0_0.sort(arg_7_0)
-	for iter_7_0, iter_7_1 in pairs(arg_7_0._buildingBubblesDict) do
-		local var_7_0 = RoomNavigateBubbleController.sortFunc[arg_7_0.showType][iter_7_1.showType]
+function RoomNavigateBubbleCategoryMO:sort()
+	for _, bubbleMO in pairs(self._buildingBubblesDict) do
+		local compareFunc = RoomNavigateBubbleController.sortFunc[self.showType][bubbleMO.showType]
 
-		if var_7_0 then
-			iter_7_1:sort(var_7_0)
+		if compareFunc then
+			bubbleMO:sort(compareFunc)
 		end
 	end
 end
 
-return var_0_0
+return RoomNavigateBubbleCategoryMO

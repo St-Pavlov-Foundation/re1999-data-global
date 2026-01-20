@@ -1,11 +1,13 @@
-﻿module("modules.logic.explore.view.ExploreBlackViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/explore/view/ExploreBlackViewContainer.lua
 
-local var_0_0 = class("ExploreBlackViewContainer", BaseViewContainer)
+module("modules.logic.explore.view.ExploreBlackViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local ExploreBlackViewContainer = class("ExploreBlackViewContainer", BaseViewContainer)
+
+function ExploreBlackViewContainer:buildViews()
 	return {
 		ExploreBlackView.New()
 	}
 end
 
-return var_0_0
+return ExploreBlackViewContainer

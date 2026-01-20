@@ -1,21 +1,40 @@
-﻿module("modules.logic.activity.rpc.Activity113Rpc", package.seeall)
+﻿-- chunkname: @modules/logic/activity/rpc/Activity113Rpc.lua
 
-local var_0_0 = class("Activity113Rpc", BaseRpc)
+module("modules.logic.activity.rpc.Activity113Rpc", package.seeall)
 
-function var_0_0.sendGetAct113InfoRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = Activity113Module_pb.GetAct113InfoRequest()
+local Activity113Rpc = class("Activity113Rpc", BaseRpc)
 
-	var_1_0.activityId = arg_1_1
+function Activity113Rpc:sendGetAct113InfoRequest(activityId, cb, cbObj)
+	local req = Activity113Module_pb.GetAct113InfoRequest()
 
-	return arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
+	req.activityId = activityId
+
+	return self:sendMsg(req, cb, cbObj)
 end
 
-function var_0_0.onReceiveGetAct113InfoReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 ~= 0 then
+function Activity113Rpc:onReceiveGetAct113InfoReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+function Activity113Rpc:sendGetAct113MilestoneBonusRequest(activityId, cb, cbObj)
+	local req = Activity113Module_pb.GetAct113MilestoneBonusRequest()
 
-return var_0_0
+	req.activityId = activityId
+
+	self:sendMsg(req, cb, cbObj)
+end
+
+function Activity113Rpc:onReceiveGetAct113MilestoneBonusReply(resultCode, msg)
+	if resultCode ~= 0 then
+		return
+	end
+
+	local activityId = msg.activityId
+	local acceptedRewardId = msg.acceptedRewardId
+end
+
+Activity113Rpc.instance = Activity113Rpc.New()
+
+return Activity113Rpc

@@ -1,67 +1,69 @@
-﻿module("modules.logic.social.view.SocialHeroItem", package.seeall)
+﻿-- chunkname: @modules/logic/social/view/SocialHeroItem.lua
 
-local var_0_0 = class("SocialHeroItem", LuaCompBase)
+module("modules.logic.social.view.SocialHeroItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._imagerare = gohelper.findChildImage(arg_1_1, "Role/#image_Rare")
-	arg_1_0._imagecareer = gohelper.findChildImage(arg_1_1, "Role/#image_Career")
-	arg_1_0._simageheroicon = gohelper.findChildSingleImage(arg_1_1, "Role/#simage_HeroIcon")
-	arg_1_0._txtlv = gohelper.findChildTextMesh(arg_1_1, "Lv/#txt_Lv")
+local SocialHeroItem = class("SocialHeroItem", LuaCompBase)
 
-	for iter_1_0 = 1, 5 do
-		arg_1_0["_goexSkillFull" .. iter_1_0] = gohelper.findChild(arg_1_1, "Lv/SuZao/" .. iter_1_0 .. "/FG")
+function SocialHeroItem:init(go)
+	self.go = go
+	self._imagerare = gohelper.findChildImage(go, "Role/#image_Rare")
+	self._imagecareer = gohelper.findChildImage(go, "Role/#image_Career")
+	self._simageheroicon = gohelper.findChildSingleImage(go, "Role/#simage_HeroIcon")
+	self._txtlv = gohelper.findChildTextMesh(go, "Lv/#txt_Lv")
+
+	for i = 1, 5 do
+		self["_goexSkillFull" .. i] = gohelper.findChild(go, "Lv/SuZao/" .. i .. "/FG")
 	end
 
-	arg_1_0._gorank = gohelper.findChild(arg_1_1, "Rank")
+	self._gorank = gohelper.findChild(go, "Rank")
 
-	for iter_1_1 = 1, 3 do
-		arg_1_0["_gorank" .. iter_1_1] = gohelper.findChild(arg_1_0._gorank, "rank" .. iter_1_1)
+	for i = 1, 3 do
+		self["_gorank" .. i] = gohelper.findChild(self._gorank, "rank" .. i)
 	end
 end
 
-function var_0_0.setActive(arg_2_0, arg_2_1)
-	gohelper.setActive(arg_2_0.go, arg_2_1)
+function SocialHeroItem:setActive(isActive)
+	gohelper.setActive(self.go, isActive)
 end
 
-function var_0_0.updateMo(arg_3_0, arg_3_1)
-	arg_3_0:setActive(true)
+function SocialHeroItem:updateMo(mo)
+	self:setActive(true)
 
-	local var_3_0 = arg_3_1.level
-	local var_3_1 = arg_3_1.exSkillLevel
-	local var_3_2 = lua_character.configDict[arg_3_1.heroId]
-	local var_3_3 = arg_3_1.skin
+	local level = mo.level
+	local exSkillLv = mo.exSkillLevel
+	local heroCo = lua_character.configDict[mo.heroId]
+	local skinId = mo.skin
 
-	if var_3_3 == 0 then
-		var_3_3 = var_3_2.skinId
+	if skinId == 0 then
+		skinId = heroCo.skinId
 	end
 
-	local var_3_4 = lua_skin.configDict[var_3_3]
-	local var_3_5, var_3_6 = HeroConfig.instance:getShowLevel(var_3_0)
+	local skinCo = lua_skin.configDict[skinId]
+	local showLevel, rank = HeroConfig.instance:getShowLevel(level)
 
-	arg_3_0._simageheroicon:LoadImage(ResUrl.getRoomHeadIcon(var_3_4.headIcon))
-	UISpriteSetMgr.instance:setCommonSprite(arg_3_0._imagecareer, "lssx_" .. tostring(var_3_2.career))
-	UISpriteSetMgr.instance:setCommonSprite(arg_3_0._imagerare, "bgequip" .. CharacterEnum.Star[var_3_2.rare])
+	self._simageheroicon:LoadImage(ResUrl.getRoomHeadIcon(skinCo.headIcon))
+	UISpriteSetMgr.instance:setCommonSprite(self._imagecareer, "lssx_" .. tostring(heroCo.career))
+	UISpriteSetMgr.instance:setCommonSprite(self._imagerare, "bgequip" .. CharacterEnum.Star[heroCo.rare])
 
-	if var_3_6 == 1 then
-		gohelper.setActive(arg_3_0._gorank, false)
+	if rank == 1 then
+		gohelper.setActive(self._gorank, false)
 	else
-		gohelper.setActive(arg_3_0._gorank, true)
+		gohelper.setActive(self._gorank, true)
 
-		for iter_3_0 = 1, 3 do
-			gohelper.setActive(arg_3_0["_gorank" .. iter_3_0], iter_3_0 == var_3_6 - 1)
+		for i = 1, 3 do
+			gohelper.setActive(self["_gorank" .. i], i == rank - 1)
 		end
 	end
 
-	for iter_3_1 = 1, 5 do
-		gohelper.setActive(arg_3_0["_goexSkillFull" .. iter_3_1], iter_3_1 <= var_3_1)
+	for i = 1, 5 do
+		gohelper.setActive(self["_goexSkillFull" .. i], i <= exSkillLv)
 	end
 
-	arg_3_0._txtlv.text = "Lv." .. var_3_5
+	self._txtlv.text = "Lv." .. showLevel
 end
 
-function var_0_0.onDestroy(arg_4_0)
-	arg_4_0._simageheroicon:UnLoadImage()
+function SocialHeroItem:onDestroy()
+	self._simageheroicon:UnLoadImage()
 end
 
-return var_0_0
+return SocialHeroItem

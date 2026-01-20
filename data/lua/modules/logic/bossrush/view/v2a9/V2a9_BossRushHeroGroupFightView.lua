@@ -1,28 +1,30 @@
-﻿module("modules.logic.bossrush.view.v2a9.V2a9_BossRushHeroGroupFightView", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/view/v2a9/V2a9_BossRushHeroGroupFightView.lua
 
-local var_0_0 = class("V2a9_BossRushHeroGroupFightView", HeroGroupFightView)
+module("modules.logic.bossrush.view.v2a9.V2a9_BossRushHeroGroupFightView", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	var_0_0.super._editableInitView(arg_1_0)
+local V2a9_BossRushHeroGroupFightView = class("V2a9_BossRushHeroGroupFightView", HeroGroupFightView)
 
-	local var_1_0 = gohelper.findChild(arg_1_0.viewGO, "#go_assassinskill")
-	local var_1_1 = arg_1_0.viewContainer:getSetting().otherRes[2]
-	local var_1_2 = arg_1_0:getResInst(var_1_1, var_1_0, "skillComp")
+function V2a9_BossRushHeroGroupFightView:_editableInitView()
+	V2a9_BossRushHeroGroupFightView.super._editableInitView(self)
 
-	arg_1_0._skillComp = MonoHelper.addNoUpdateLuaComOnceToGo(var_1_2, V2a9_BossRushHeroGroupSkillComp)
+	local skillroot = gohelper.findChild(self.viewGO, "#go_assassinskill")
+	local path = self.viewContainer:getSetting().otherRes[2]
+	local childGO = self:getResInst(path, skillroot, "skillComp")
 
-	arg_1_0._skillComp:onUpdateMO()
-	gohelper.setActive(var_1_0, true)
+	self._skillComp = MonoHelper.addNoUpdateLuaComOnceToGo(childGO, V2a9_BossRushHeroGroupSkillComp)
 
-	local var_1_3 = gohelper.findChild(arg_1_0.viewGO, "herogroupcontain/hero")
-	local var_1_4 = gohelper.findChild(arg_1_0.viewGO, "herogroupcontain/area")
+	self._skillComp:onUpdateMO()
+	gohelper.setActive(skillroot, true)
 
-	recthelper.setAnchorX(var_1_3.transform, -350)
-	recthelper.setAnchorX(var_1_4.transform, -350)
+	local heroRoot = gohelper.findChild(self.viewGO, "herogroupcontain/hero")
+	local areaRoot = gohelper.findChild(self.viewGO, "herogroupcontain/area")
+
+	recthelper.setAnchorX(heroRoot.transform, -350)
+	recthelper.setAnchorX(areaRoot.transform, -350)
 end
 
-function var_0_0._refreshCloth(arg_2_0)
-	gohelper.setActive(arg_2_0._btncloth.gameObject, false)
+function V2a9_BossRushHeroGroupFightView:_refreshCloth()
+	gohelper.setActive(self._btncloth.gameObject, false)
 end
 
-return var_0_0
+return V2a9_BossRushHeroGroupFightView

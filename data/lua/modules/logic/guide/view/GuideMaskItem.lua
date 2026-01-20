@@ -1,465 +1,467 @@
-﻿module("modules.logic.guide.view.GuideMaskItem", package.seeall)
+﻿-- chunkname: @modules/logic/guide/view/GuideMaskItem.lua
 
-local var_0_0 = class("GuideMaskItem", LuaCompBase)
-local var_0_1 = Vector2.zero
-local var_0_2 = 16
-local var_0_3 = 16
+module("modules.logic.guide.view.GuideMaskItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._maskView = arg_1_1
-	arg_1_0._viewTrs = nil
-	arg_1_0._targetGO = nil
-	arg_1_0._targetTrs = nil
-	arg_1_0._targetIs2D = false
-	arg_1_0._globalTouch = nil
-	arg_1_0._root2DTrs = nil
-	arg_1_0._uiCamera = nil
-	arg_1_0._maskOpenTime = 0
-	arg_1_0._exceptionClickCount = 0
+local GuideMaskItem = class("GuideMaskItem", LuaCompBase)
+local Vector2Zero = Vector2.zero
+local _rectangleOffsetX = 16
+local _rectangleOffsetY = 16
+
+function GuideMaskItem:ctor(maskView)
+	self._maskView = maskView
+	self._viewTrs = nil
+	self._targetGO = nil
+	self._targetTrs = nil
+	self._targetIs2D = false
+	self._globalTouch = nil
+	self._root2DTrs = nil
+	self._uiCamera = nil
+	self._maskOpenTime = 0
+	self._exceptionClickCount = 0
 end
 
-function var_0_0.onDestroy(arg_2_0)
-	TaskDispatcher.cancelTask(arg_2_0._updateMaskPosAndSize, arg_2_0)
-	TaskDispatcher.cancelTask(arg_2_0._showArrow, arg_2_0)
-	arg_2_0:removeEventCb(GuideController.instance, GuideEvent.SetMaskOffset, arg_2_0._setMaskOffset, arg_2_0)
-	arg_2_0:removeEventCb(GuideController.instance, GuideEvent.SetMaskPosition, arg_2_0._setMaskCustomPos, arg_2_0)
+function GuideMaskItem:onDestroy()
+	TaskDispatcher.cancelTask(self._updateMaskPosAndSize, self)
+	TaskDispatcher.cancelTask(self._showArrow, self)
+	self:removeEventCb(GuideController.instance, GuideEvent.SetMaskOffset, self._setMaskOffset, self)
+	self:removeEventCb(GuideController.instance, GuideEvent.SetMaskPosition, self._setMaskCustomPos, self)
 end
 
-function var_0_0.init(arg_3_0, arg_3_1)
-	arg_3_0._cacheEffects = arg_3_0:getUserDataTb_()
+function GuideMaskItem:init(go)
+	self._cacheEffects = self:getUserDataTb_()
 
-	arg_3_0:onInitView()
-	arg_3_0:addEventCb(GuideController.instance, GuideEvent.SetMaskOffset, arg_3_0._setMaskOffset, arg_3_0)
-	arg_3_0:addEventCb(GuideController.instance, GuideEvent.SetMaskPosition, arg_3_0._setMaskCustomPos, arg_3_0)
+	self:onInitView()
+	self:addEventCb(GuideController.instance, GuideEvent.SetMaskOffset, self._setMaskOffset, self)
+	self:addEventCb(GuideController.instance, GuideEvent.SetMaskPosition, self._setMaskCustomPos, self)
 end
 
-function var_0_0.onInitView(arg_4_0)
-	arg_4_0._uiCamera = CameraMgr.instance:getUICamera()
-	arg_4_0._unitCamera = CameraMgr.instance:getUnitCamera()
-	arg_4_0._mainCamera = CameraMgr.instance:getMainCamera()
-	arg_4_0._root2DTrs = ViewMgr.instance:getTopUICanvas().transform
+function GuideMaskItem:onInitView()
+	self._uiCamera = CameraMgr.instance:getUICamera()
+	self._unitCamera = CameraMgr.instance:getUnitCamera()
+	self._mainCamera = CameraMgr.instance:getMainCamera()
+	self._root2DTrs = ViewMgr.instance:getTopUICanvas().transform
 end
 
-function var_0_0.addEventListeners(arg_5_0)
-	if arg_5_0._csGuideMaskHole then
-		arg_5_0._csGuideMaskHole:InitPointerLuaFunction(arg_5_0._onPointerClick, arg_5_0)
+function GuideMaskItem:addEventListeners()
+	if self._csGuideMaskHole then
+		self._csGuideMaskHole:InitPointerLuaFunction(self._onPointerClick, self)
 	end
 end
 
-function var_0_0.removeEventListeners(arg_6_0)
-	if arg_6_0._csGuideMaskHole then
-		arg_6_0._csGuideMaskHole:InitPointerLuaFunction(nil, nil)
+function GuideMaskItem:removeEventListeners()
+	if self._csGuideMaskHole then
+		self._csGuideMaskHole:InitPointerLuaFunction(nil, nil)
 	end
 end
 
-function var_0_0.initTargetGo(arg_7_0)
-	arg_7_0._targetGO = gohelper.find(arg_7_0._goPath)
+function GuideMaskItem:initTargetGo()
+	self._targetGO = gohelper.find(self._goPath)
 
-	if arg_7_0._targetGO then
-		arg_7_0._targetTrs = arg_7_0._targetGO.transform
-		arg_7_0._targetIs2D = arg_7_0._targetGO:GetComponent("RectTransform") ~= nil
+	if self._targetGO then
+		self._targetTrs = self._targetGO.transform
+		self._targetIs2D = self._targetGO:GetComponent("RectTransform") ~= nil
 
-		local var_7_0 = arg_7_0._targetGO.transform.parent
+		local tr = self._targetGO.transform.parent
 
-		while arg_7_0._targetIs2D and not gohelper.isNil(var_7_0) do
-			if var_7_0:GetComponent("RectTransform") == nil then
-				arg_7_0._targetIs2D = false
+		while self._targetIs2D and not gohelper.isNil(tr) do
+			if tr:GetComponent("RectTransform") == nil then
+				self._targetIs2D = false
 
 				break
 			end
 
-			var_7_0 = var_7_0.parent
+			tr = tr.parent
 		end
 	end
 end
 
-function var_0_0.setPrevUIInfo(arg_8_0, arg_8_1)
-	arg_8_0._prevUIInfo = arg_8_1
+function GuideMaskItem:setPrevUIInfo(info)
+	self._prevUIInfo = info
 end
 
-function var_0_0.updateUI(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4, arg_9_5)
-	arg_9_0._maskOpenTime = ServerTime.now()
+function GuideMaskItem:updateUI(go, viewParam, csGuideMaskHole, holeImg, typeGo)
+	self._maskOpenTime = ServerTime.now()
 
-	local var_9_0 = arg_9_2.uiInfo
+	local uiInfo = viewParam.uiInfo
 
-	arg_9_0._uiType = var_9_0.uiType
-	arg_9_0._rotation = var_9_0.rotation
-	arg_9_0._width = var_9_0.width
-	arg_9_0._height = var_9_0.height
-	arg_9_0._arrowOffsetX = var_9_0.arrowOffsetX
-	arg_9_0._arrowOffsetY = var_9_0.arrowOffsetY
-	arg_9_0._maskAlpha = var_9_0.maskAlpha
-	arg_9_0._imgAlpha = var_9_0.imgAlpha
-	arg_9_0._goPath = arg_9_2.goPath
-	arg_9_0._posX = arg_9_2.uiOffset[1] or 0
-	arg_9_0._posY = arg_9_2.uiOffset[2] or 0
-	arg_9_0._touchGoPath = arg_9_2.touchGOPath
-	arg_9_0._enableClick = arg_9_2.enableClick
-	arg_9_0._enableDrag = arg_9_2.enableDrag
-	arg_9_0._enablePress = arg_9_2.enablePress
-	arg_9_0._enableHoleClick = arg_9_2.enableHoleClick
-	arg_9_0._showMask = arg_9_2.showMask
-	arg_9_0._isStepEditor = arg_9_2._isStepEditor
+	self._uiType = uiInfo.uiType
+	self._rotation = uiInfo.rotation
+	self._width = uiInfo.width
+	self._height = uiInfo.height
+	self._arrowOffsetX = uiInfo.arrowOffsetX
+	self._arrowOffsetY = uiInfo.arrowOffsetY
+	self._maskAlpha = uiInfo.maskAlpha
+	self._imgAlpha = uiInfo.imgAlpha
+	self._goPath = viewParam.goPath
+	self._posX = viewParam.uiOffset[1] or 0
+	self._posY = viewParam.uiOffset[2] or 0
+	self._touchGoPath = viewParam.touchGOPath
+	self._enableClick = viewParam.enableClick
+	self._enableDrag = viewParam.enableDrag
+	self._enablePress = viewParam.enablePress
+	self._enableHoleClick = viewParam.enableHoleClick
+	self._showMask = viewParam.showMask
+	self._isStepEditor = viewParam._isStepEditor
 
-	arg_9_0:removeEventListeners()
+	self:removeEventListeners()
 
-	arg_9_0._csGuideMaskHole = arg_9_3
+	self._csGuideMaskHole = csGuideMaskHole
 
-	arg_9_0:addEventListeners()
+	self:addEventListeners()
 
-	arg_9_0._holeImg = arg_9_4
-	arg_9_0._typeGo = arg_9_5
-	arg_9_0._viewTrs = arg_9_1.transform
+	self._holeImg = holeImg
+	self._typeGo = typeGo
+	self._viewTrs = go.transform
 
-	arg_9_0:initTargetGo()
+	self:initTargetGo()
 
-	arg_9_0._globalTouch = not string.nilorempty(arg_9_0._touchGoPath) and gohelper.find(arg_9_0._touchGoPath) or nil
+	self._globalTouch = not string.nilorempty(self._touchGoPath) and gohelper.find(self._touchGoPath) or nil
 
-	TaskDispatcher.cancelTask(arg_9_0._updateMaskPosAndSize, arg_9_0)
-	TaskDispatcher.runRepeat(arg_9_0._updateMaskPosAndSize, arg_9_0, 0.01)
-	arg_9_0:_updateMaskPosAndSize()
-	arg_9_0:_updateMaskAlpha()
-	arg_9_0:_updateEnableClick()
-	arg_9_0:_updateEnableDrag()
-	arg_9_0:_updateEnablePress()
-	arg_9_0:_updateEnableTargetClick()
+	TaskDispatcher.cancelTask(self._updateMaskPosAndSize, self)
+	TaskDispatcher.runRepeat(self._updateMaskPosAndSize, self, 0.01)
+	self:_updateMaskPosAndSize()
+	self:_updateMaskAlpha()
+	self:_updateEnableClick()
+	self:_updateEnableDrag()
+	self:_updateEnablePress()
+	self:_updateEnableTargetClick()
 end
 
-function var_0_0._getHoleEffect(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0._maskView.viewContainer:getSetting().otherRes[arg_10_1 and 1 or 2]
-	local var_10_1 = arg_10_0._cacheEffects[var_10_0]
+function GuideMaskItem:_getHoleEffect(isRed)
+	local path = self._maskView.viewContainer:getSetting().otherRes[isRed and 1 or 2]
+	local holeEffect = self._cacheEffects[path]
 
-	if not var_10_1 then
-		local var_10_2 = arg_10_0._maskView:getResInst(var_10_0)
+	if not holeEffect then
+		local holeGo = self._maskView:getResInst(path)
 
-		var_10_1 = MonoHelper.addLuaComOnceToGo(var_10_2, GuideHoleEffect)
-		arg_10_0._cacheEffects[var_10_0] = var_10_1
+		holeEffect = MonoHelper.addLuaComOnceToGo(holeGo, GuideHoleEffect)
+		self._cacheEffects[path] = holeEffect
 	end
 
-	var_10_1:setVisible(false)
+	holeEffect:setVisible(false)
 
-	return var_10_1
+	return holeEffect
 end
 
-function var_0_0._updateHoleAlpha(arg_11_0, arg_11_1)
-	if arg_11_0._holeEffect then
-		arg_11_0._holeEffect:setVisible(false)
+function GuideMaskItem:_updateHoleAlpha(color)
+	if self._holeEffect then
+		self._holeEffect:setVisible(false)
 
-		arg_11_0._holeEffect = nil
+		self._holeEffect = nil
 	end
 
-	local var_11_0 = arg_11_0._holeImg
+	local holeImg = self._holeImg
 
-	if var_11_0 then
-		arg_11_1 = arg_11_1 or var_11_0.color
-		arg_11_1.a = 0
-		var_11_0.color = arg_11_1
+	if holeImg then
+		color = color or holeImg.color
+		color.a = 0
+		holeImg.color = color
 
-		arg_11_0:_setArrow(var_11_0)
+		self:_setArrow(holeImg)
 
-		if arg_11_0._imgAlpha > 0 then
-			arg_11_0._holeEffect = arg_11_0:_getHoleEffect(arg_11_0._showMask)
-			arg_11_0._holeEffect.showMask = arg_11_0._showMask
+		if self._imgAlpha > 0 then
+			self._holeEffect = self:_getHoleEffect(self._showMask)
+			self._holeEffect.showMask = self._showMask
 
-			arg_11_0._holeEffect:addToParent(arg_11_0._holeImg.gameObject)
+			self._holeEffect:addToParent(self._holeImg.gameObject)
 		end
 	end
 end
 
-function var_0_0._updateHoleTrans(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4)
-	local var_12_0 = arg_12_0._holeImg
+function GuideMaskItem:_updateHoleTrans(width, height, posX, posY)
+	local holeImg = self._holeImg
 
-	if var_12_0 then
-		local var_12_1 = var_12_0.transform
-		local var_12_2 = arg_12_0:_isRectangle()
-		local var_12_3 = var_12_2 and arg_12_1 - var_0_2
-		local var_12_4 = var_12_2 and arg_12_2 - var_0_3
+	if holeImg then
+		local holeImgTrs = holeImg.transform
+		local isRectangle = self:_isRectangle()
+		local w = isRectangle and width - _rectangleOffsetX
+		local h = isRectangle and height - _rectangleOffsetY
 
-		recthelper.setSize(var_12_1, var_12_3, var_12_4)
-		transformhelper.setLocalPosXY(var_12_1, arg_12_3, arg_12_4)
+		recthelper.setSize(holeImgTrs, w, h)
+		transformhelper.setLocalPosXY(holeImgTrs, posX, posY)
 	end
 
-	if arg_12_0._holeEffect then
-		arg_12_0._holeEffect:setSize(arg_12_1, arg_12_2, arg_12_0._isStepEditor)
+	if self._holeEffect then
+		self._holeEffect:setSize(width, height, self._isStepEditor)
 	end
 end
 
-function var_0_0._updateMaskAlpha(arg_13_0)
-	local var_13_0 = arg_13_0._csGuideMaskHole
-	local var_13_1
+function GuideMaskItem:_updateMaskAlpha()
+	local csGuideMaskHole = self._csGuideMaskHole
+	local color
 
-	if var_13_0 then
-		if arg_13_0._prevUIInfo and arg_13_0._prevUIInfo.maskAlpha ~= arg_13_0._maskAlpha then
-			arg_13_0._fadeId = ZProj.TweenHelper.DoFade(var_13_0, arg_13_0._prevUIInfo.maskAlpha, arg_13_0._maskAlpha, 0.3)
-			arg_13_0._prevUIInfo = nil
+	if csGuideMaskHole then
+		if self._prevUIInfo and self._prevUIInfo.maskAlpha ~= self._maskAlpha then
+			self._fadeId = ZProj.TweenHelper.DoFade(csGuideMaskHole, self._prevUIInfo.maskAlpha, self._maskAlpha, 0.3)
+			self._prevUIInfo = nil
 		else
-			var_13_1 = var_13_0.color
-			var_13_1.a = arg_13_0._maskAlpha
-			var_13_0.color = var_13_1
+			color = csGuideMaskHole.color
+			color.a = self._maskAlpha
+			csGuideMaskHole.color = color
 		end
 	end
 
-	arg_13_0:_updateHoleAlpha(var_13_1)
+	self:_updateHoleAlpha(color)
 end
 
-function var_0_0._updateEnableClick(arg_14_0)
-	local var_14_0 = arg_14_0._csGuideMaskHole
+function GuideMaskItem:_updateEnableClick()
+	local csGuideMaskHole = self._csGuideMaskHole
 
-	if var_14_0 then
-		var_14_0.enableClick = arg_14_0._enableClick
+	if csGuideMaskHole then
+		csGuideMaskHole.enableClick = self._enableClick
 	end
 end
 
-function var_0_0._updateEnableTargetClick(arg_15_0)
-	local var_15_0 = arg_15_0._csGuideMaskHole
+function GuideMaskItem:_updateEnableTargetClick()
+	local csGuideMaskHole = self._csGuideMaskHole
 
-	if var_15_0 then
-		var_15_0.enableTargetClick = arg_15_0:_hasArrow()
+	if csGuideMaskHole then
+		csGuideMaskHole.enableTargetClick = self:_hasArrow()
 	end
 end
 
-function var_0_0._updateEnableDrag(arg_16_0)
-	local var_16_0 = arg_16_0._csGuideMaskHole
+function GuideMaskItem:_updateEnableDrag()
+	local csGuideMaskHole = self._csGuideMaskHole
 
-	if var_16_0 then
-		var_16_0.enableDrag = arg_16_0._enableDrag
+	if csGuideMaskHole then
+		csGuideMaskHole.enableDrag = self._enableDrag
 	end
 end
 
-function var_0_0._updateEnablePress(arg_17_0)
-	local var_17_0 = arg_17_0._csGuideMaskHole
+function GuideMaskItem:_updateEnablePress()
+	local csGuideMaskHole = self._csGuideMaskHole
 
-	if var_17_0 then
-		var_17_0.enablePress = arg_17_0._enablePress
+	if csGuideMaskHole then
+		csGuideMaskHole.enablePress = self._enablePress
 	end
 end
 
-function var_0_0._setArrow(arg_18_0, arg_18_1)
-	if not arg_18_0:_hasArrow() then
+function GuideMaskItem:_setArrow(holeImg)
+	if not self:_hasArrow() then
 		return
 	end
 
-	arg_18_0._arrow = gohelper.findChild(arg_18_1.gameObject, "arrow")
+	self._arrow = gohelper.findChild(holeImg.gameObject, "arrow")
 
-	if arg_18_0._arrow then
-		transformhelper.setLocalPosXY(arg_18_0._arrow.transform, arg_18_0._arrowOffsetX, arg_18_0._arrowOffsetY)
-		transformhelper.setLocalRotation(arg_18_0._arrow.transform, 0, 0, arg_18_0._rotation)
-		TaskDispatcher.cancelTask(arg_18_0._showArrow, arg_18_0)
-		gohelper.setActive(arg_18_0._arrow, false)
-		TaskDispatcher.runDelay(arg_18_0._showArrow, arg_18_0, 0.5)
+	if self._arrow then
+		transformhelper.setLocalPosXY(self._arrow.transform, self._arrowOffsetX, self._arrowOffsetY)
+		transformhelper.setLocalRotation(self._arrow.transform, 0, 0, self._rotation)
+		TaskDispatcher.cancelTask(self._showArrow, self)
+		gohelper.setActive(self._arrow, false)
+		TaskDispatcher.runDelay(self._showArrow, self, 0.5)
 	end
 end
 
-function var_0_0._showArrow(arg_19_0)
-	gohelper.setActive(arg_19_0._arrow, true)
+function GuideMaskItem:_showArrow()
+	gohelper.setActive(self._arrow, true)
 end
 
-function var_0_0._hasArrow(arg_20_0)
-	return arg_20_0._uiType == GuideEnum.uiTypeArrow or arg_20_0._uiType == GuideEnum.uiTypePressArrow
+function GuideMaskItem:_hasArrow()
+	return self._uiType == GuideEnum.uiTypeArrow or self._uiType == GuideEnum.uiTypePressArrow
 end
 
-function var_0_0._isRectangle(arg_21_0)
-	return arg_21_0._uiType == GuideEnum.uiTypeRectangle or arg_21_0._uiType == GuideEnum.uiTypeArrow or arg_21_0._uiType == GuideEnum.uiTypePressArrow
+function GuideMaskItem:_isRectangle()
+	return self._uiType == GuideEnum.uiTypeRectangle or self._uiType == GuideEnum.uiTypeArrow or self._uiType == GuideEnum.uiTypePressArrow
 end
 
-function var_0_0._updateMaskPosAndSize(arg_22_0)
-	local var_22_0 = arg_22_0._width
-	local var_22_1 = arg_22_0._height
-	local var_22_2 = arg_22_0._posX
-	local var_22_3 = arg_22_0._posY
-	local var_22_4 = arg_22_0._csGuideMaskHole
+function GuideMaskItem:_updateMaskPosAndSize()
+	local width = self._width
+	local height = self._height
+	local posX = self._posX
+	local posY = self._posY
+	local csGuideMaskHole = self._csGuideMaskHole
 
-	if var_22_4 and var_22_4.customAdjustSize then
-		local var_22_5 = var_22_4.sizeOffset
+	if csGuideMaskHole and csGuideMaskHole.customAdjustSize then
+		local sizeOffset = csGuideMaskHole.sizeOffset
 
-		var_22_2 = var_22_5.x
-		var_22_3 = var_22_5.y
+		posX = sizeOffset.x
+		posY = sizeOffset.y
 
-		local var_22_6 = var_22_4.size
+		local size = csGuideMaskHole.size
 
-		var_22_0 = var_22_6.x
-		var_22_1 = var_22_6.y
+		width = size.x
+		height = size.y
 	end
 
-	local var_22_7 = arg_22_0:_isRectangle()
+	local isRectangle = self:_isRectangle()
 
-	if not gohelper.isNil(arg_22_0._targetGO) then
-		if var_22_0 == -1 then
-			var_22_0 = recthelper.getWidth(arg_22_0._targetGO.transform)
+	if not gohelper.isNil(self._targetGO) then
+		if width == -1 then
+			width = recthelper.getWidth(self._targetGO.transform)
 
-			if var_22_7 then
-				var_22_0 = var_22_0 + var_0_2
+			if isRectangle then
+				width = width + _rectangleOffsetX
 			end
 		end
 
-		if var_22_1 == -1 then
-			var_22_1 = recthelper.getHeight(arg_22_0._targetGO.transform)
+		if height == -1 then
+			height = recthelper.getHeight(self._targetGO.transform)
 
-			if var_22_7 then
-				var_22_1 = var_22_1 + var_0_3
+			if isRectangle then
+				height = height + _rectangleOffsetY
 			end
 		end
 	else
-		var_22_0 = math.max(var_22_0, 0)
-		var_22_1 = math.max(var_22_1, 0)
+		width = math.max(width, 0)
+		height = math.max(height, 0)
 	end
 
-	if not gohelper.isNil(arg_22_0._targetGO) then
-		if arg_22_0._targetIs2D then
-			if not gohelper.isNil(arg_22_0._root2DTrs) and not gohelper.isNil(arg_22_0._targetTrs) then
-				local var_22_8 = ZProj.GuideMaskHole.CalculateRelativeRectTransformBounds(arg_22_0._root2DTrs, arg_22_0._targetTrs)
+	if not gohelper.isNil(self._targetGO) then
+		if self._targetIs2D then
+			if not gohelper.isNil(self._root2DTrs) and not gohelper.isNil(self._targetTrs) then
+				local bounds = ZProj.GuideMaskHole.CalculateRelativeRectTransformBounds(self._root2DTrs, self._targetTrs)
 
-				var_22_2 = var_22_2 + var_22_8.center.x
-				var_22_3 = var_22_3 + var_22_8.center.y
+				posX = posX + bounds.center.x
+				posY = posY + bounds.center.y
 			end
 		else
-			arg_22_0._pos = arg_22_0._pos or Vector3.New()
-			arg_22_0._pos.x, arg_22_0._pos.y, arg_22_0._pos.z = transformhelper.getPos(arg_22_0._targetTrs)
+			self._pos = self._pos or Vector3.New()
+			self._pos.x, self._pos.y, self._pos.z = transformhelper.getPos(self._targetTrs)
 
-			local var_22_9 = arg_22_0._unitCamera
+			local camera = self._unitCamera
 
 			if GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.MaskUseMainCamera) then
-				var_22_9 = arg_22_0._mainCamera
+				camera = self._mainCamera
 			end
 
-			local var_22_10 = recthelper.worldPosToAnchorPos(arg_22_0._pos, arg_22_0._viewTrs, arg_22_0._uiCamera, var_22_9)
+			local localPos = recthelper.worldPosToAnchorPos(self._pos, self._viewTrs, self._uiCamera, camera)
 
-			var_22_2 = var_22_2 + var_22_10.x + (arg_22_0._externalOffset and arg_22_0._externalOffset.x or 0)
-			var_22_3 = var_22_3 + var_22_10.y + (arg_22_0._externalOffset and arg_22_0._externalOffset.y or 0)
+			posX = posX + localPos.x + (self._externalOffset and self._externalOffset.x or 0)
+			posY = posY + localPos.y + (self._externalOffset and self._externalOffset.y or 0)
 		end
 
-		if arg_22_0._customPos then
-			var_22_2 = arg_22_0._customPos.x
-			var_22_3 = arg_22_0._customPos.y
+		if self._customPos then
+			posX = self._customPos.x
+			posY = self._customPos.y
 		end
 
-		arg_22_0:_updateHoleTrans(var_22_0, var_22_1, var_22_2, var_22_3)
+		self:_updateHoleTrans(width, height, posX, posY)
 	else
-		arg_22_0:initTargetGo()
+		self:initTargetGo()
 	end
 
-	if var_22_4 then
-		var_22_4:SetTarget(arg_22_0._targetTrs, arg_22_0:getTempVector2(var_22_2, var_22_3), var_0_1, arg_22_0._globalTouch)
+	if csGuideMaskHole then
+		csGuideMaskHole:SetTarget(self._targetTrs, self:getTempVector2(posX, posY), Vector2Zero, self._globalTouch)
 
-		if arg_22_0._enableHoleClick then
-			if var_22_7 then
-				var_22_0 = math.max(0, var_22_0 - var_0_2)
-				var_22_1 = math.max(0, var_22_1 - var_0_3)
+		if self._enableHoleClick then
+			if isRectangle then
+				width = math.max(0, width - _rectangleOffsetX)
+				height = math.max(0, height - _rectangleOffsetY)
 			end
 
-			var_22_4.size = arg_22_0:getTempVector2(var_22_0, var_22_1)
+			csGuideMaskHole.size = self:getTempVector2(width, height)
 
-			if arg_22_0._lastPosX ~= var_22_2 or arg_22_0._lastPosY ~= var_22_3 then
-				arg_22_0._lastPosX = var_22_2
-				arg_22_0._lastPosY = var_22_3
+			if self._lastPosX ~= posX or self._lastPosY ~= posY then
+				self._lastPosX = posX
+				self._lastPosY = posY
 
-				arg_22_0._csGuideMaskHole:RefreshMesh()
+				self._csGuideMaskHole:RefreshMesh()
 			end
 		else
-			var_22_4.size = var_0_1
+			csGuideMaskHole.size = Vector2Zero
 		end
 	else
-		local var_22_11 = arg_22_0._typeGo
+		local typeGO = self._typeGo
 
-		if not gohelper.isNil(var_22_11) then
-			recthelper.setAnchor(var_22_11.transform, var_22_2, var_22_3)
+		if not gohelper.isNil(typeGO) then
+			recthelper.setAnchor(typeGO.transform, posX, posY)
 		end
 	end
 end
 
-function var_0_0.getTempVector2(arg_23_0, arg_23_1, arg_23_2)
-	arg_23_0._tempVec2 = arg_23_0._tempVec2 or Vector2.New()
-	arg_23_0._tempVec2.x = arg_23_1
-	arg_23_0._tempVec2.y = arg_23_2
+function GuideMaskItem:getTempVector2(x, y)
+	self._tempVec2 = self._tempVec2 or Vector2.New()
+	self._tempVec2.x = x
+	self._tempVec2.y = y
 
-	return arg_23_0._tempVec2
+	return self._tempVec2
 end
 
-function var_0_0._onClickOutside(arg_24_0)
-	if arg_24_0._uiType ~= GuideEnum.uiTypeArrow or arg_24_0._maskAlpha ~= 0 or not arg_24_0._arrow then
+function GuideMaskItem:_onClickOutside()
+	if self._uiType ~= GuideEnum.uiTypeArrow or self._maskAlpha ~= 0 or not self._arrow then
 		return
 	end
 
-	if not arg_24_0._animator then
-		arg_24_0._animator = arg_24_0._arrow:GetComponentInChildren(typeof(UnityEngine.Animator))
+	if not self._animator then
+		self._animator = self._arrow:GetComponentInChildren(typeof(UnityEngine.Animator))
 	end
 
-	if arg_24_0._animator then
-		arg_24_0._animator:Play("guide_shark")
+	if self._animator then
+		self._animator:Play("guide_shark")
 	end
 end
 
-function var_0_0._onPointerClick(arg_25_0, arg_25_1)
+function GuideMaskItem:_onPointerClick(isInside)
 	if GuideController.EnableLog then
-		logNormal("guidelog: GuideMaskItem._onPointerClick " .. (arg_25_1 and "true" or "false") .. debug.traceback("", 2))
+		logNormal("guidelog: GuideMaskItem._onPointerClick " .. (isInside and "true" or "false") .. debug.traceback("", 2))
 	end
 
-	if not gohelper.isNil(arg_25_0._targetGO) and not GuideUtil.isGOShowInScreen(arg_25_0._targetGO) then
-		arg_25_0._exceptionClickCount = arg_25_0._exceptionClickCount + 1
+	if not gohelper.isNil(self._targetGO) and not GuideUtil.isGOShowInScreen(self._targetGO) then
+		self._exceptionClickCount = self._exceptionClickCount + 1
 
-		local var_25_0 = arg_25_0._maskView:getUiInfo()
-		local var_25_1 = var_25_0 and var_25_0.guideId
-		local var_25_2 = var_25_0 and var_25_0.stepId
+		local uiInfo = self._maskView:getUiInfo()
+		local guideId = uiInfo and uiInfo.guideId
+		local stepId = uiInfo and uiInfo.stepId
 
-		if arg_25_0._exceptionClickCount >= 5 and ServerTime.now() - arg_25_0._maskOpenTime > 5 then
-			arg_25_0._exceptionClickCount = 0
+		if self._exceptionClickCount >= 5 and ServerTime.now() - self._maskOpenTime > 5 then
+			self._exceptionClickCount = 0
 
-			logError(string.format("目标GameObject不在视野，跳过指引 %s_%s", tostring(var_25_1), tostring(var_25_2)))
+			logError(string.format("目标GameObject不在视野，跳过指引 %s_%s", tostring(guideId), tostring(stepId)))
 			GuideController.instance:disableGuides()
 			GameFacade.showMessageBox(MessageBoxIdDefine.GuideSureToSkip, MsgBoxEnum.BoxType.Yes_No, function()
-				arg_25_0:_onClickYes()
+				self:_onClickYes()
 			end, function()
-				arg_25_0:_onClickNo()
+				self:_onClickNo()
 			end)
 		end
 
-		logError(string.format("目标GameObject不在视野，直接响应点击 %s_%s", tostring(var_25_1), tostring(var_25_2)))
+		logError(string.format("目标GameObject不在视野，直接响应点击 %s_%s", tostring(guideId), tostring(stepId)))
 		GuideViewMgr.instance:onClickCallback(true)
 		GuideController.instance:dispatchEvent(GuideEvent.OnClickGuideMask, true)
 
 		return
 	end
 
-	if arg_25_1 then
+	if isInside then
 		GuideViewMgr.instance:disableHoleClick()
 	end
 
-	GuideViewMgr.instance:onClickCallback(arg_25_1)
-	GuideController.instance:dispatchEvent(GuideEvent.OnClickGuideMask, arg_25_1)
+	GuideViewMgr.instance:onClickCallback(isInside)
+	GuideController.instance:dispatchEvent(GuideEvent.OnClickGuideMask, isInside)
 end
 
-function var_0_0._onClickNo(arg_28_0)
+function GuideMaskItem:_onClickNo()
 	GuideController.instance:enableGuides()
 end
 
-function var_0_0._onClickYes(arg_29_0)
-	local var_29_0 = GuideModel.instance:getDoingGuideId()
+function GuideMaskItem:_onClickYes()
+	local doingGuideId = GuideModel.instance:getDoingGuideId()
 
-	if var_29_0 then
-		GuideController.instance:oneKeyFinishGuide(var_29_0, true)
+	if doingGuideId then
+		GuideController.instance:oneKeyFinishGuide(doingGuideId, true)
 		GuideStepController.instance:clearStep()
 	end
 
 	GuideController.instance:enableGuides()
 end
 
-function var_0_0._setMaskOffset(arg_30_0, arg_30_1)
-	arg_30_0._externalOffset = arg_30_1
+function GuideMaskItem:_setMaskOffset(offset)
+	self._externalOffset = offset
 
-	arg_30_0:_updateMaskPosAndSize()
+	self:_updateMaskPosAndSize()
 end
 
-function var_0_0._setMaskCustomPos(arg_31_0, arg_31_1, arg_31_2)
-	if arg_31_2 then
-		local var_31_0 = CameraMgr.instance:getUICamera()
-		local var_31_1 = CameraMgr.instance:getMainCamera()
+function GuideMaskItem:_setMaskCustomPos(pos, isWorldPos)
+	if isWorldPos then
+		local uiCamera = CameraMgr.instance:getUICamera()
+		local mainCamera = CameraMgr.instance:getMainCamera()
 
-		arg_31_1 = recthelper.worldPosToAnchorPos(arg_31_1, arg_31_0._viewTrs, var_31_0, var_31_1)
+		pos = recthelper.worldPosToAnchorPos(pos, self._viewTrs, uiCamera, mainCamera)
 	end
 
-	arg_31_0._customPos = arg_31_1
+	self._customPos = pos
 
-	arg_31_0:_updateMaskPosAndSize()
+	self:_updateMaskPosAndSize()
 end
 
-return var_0_0
+return GuideMaskItem

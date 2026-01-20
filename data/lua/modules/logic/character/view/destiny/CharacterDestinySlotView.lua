@@ -1,983 +1,1082 @@
-﻿module("modules.logic.character.view.destiny.CharacterDestinySlotView", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/destiny/CharacterDestinySlotView.lua
 
-local var_0_0 = class("CharacterDestinySlotView", BaseView)
+module("modules.logic.character.view.destiny.CharacterDestinySlotView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg")
-	arg_1_0._gomain = gohelper.findChild(arg_1_0.viewGO, "#go_main")
-	arg_1_0._scrollattr = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_main/left/#scroll_attr")
-	arg_1_0._goattritem = gohelper.findChild(arg_1_0.viewGO, "#go_main/left/#scroll_attr/Viewport/Content/#go_attritem")
-	arg_1_0._goslot = gohelper.findChild(arg_1_0.viewGO, "#go_main/middle/#go_slot")
-	arg_1_0._goslotItem = gohelper.findChild(arg_1_0.viewGO, "#go_main/middle/#go_slot/#go_slotItem")
-	arg_1_0._golock = gohelper.findChild(arg_1_0.viewGO, "#go_main/middle/#go_slot/#go_lock")
-	arg_1_0._gopreview = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_main/middle/#go_slot/#go_lock/#btn_preview")
-	arg_1_0._gounlock = gohelper.findChild(arg_1_0.viewGO, "#go_main/middle/#go_slot/#go_unlock")
-	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "#go_main/middle/#go_slot/#go_unlock/#go_empty")
-	arg_1_0._btnadd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_main/middle/#go_slot/#go_unlock/#go_empty/#btn_add")
-	arg_1_0._gostone = gohelper.findChild(arg_1_0.viewGO, "#go_main/middle/#go_slot/#go_unlock/#go_stone")
-	arg_1_0._txtstonename = gohelper.findChildText(arg_1_0.viewGO, "#go_main/middle/#go_slot/#go_unlock/#go_stone/#txt_stonename")
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "#go_main/middle/#go_slot/#go_unlock/#go_stone/#image_icon")
-	arg_1_0._simagestone = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_main/middle/#go_slot/#go_unlock/#go_stone/#simage_stone")
-	arg_1_0._gostonebtnicon = gohelper.findChild(arg_1_0.viewGO, "#go_main/middle/#go_slot/#go_unlock/#go_stone/icon")
-	arg_1_0._simagestonedec = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_main/middle/#go_slot/#go_unlock/#go_stone/#simage_stonedec")
-	arg_1_0._btnstone = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_main/middle/#go_slot/#go_unlock/#btn_stone")
-	arg_1_0._goconsumeitem = gohelper.findChild(arg_1_0.viewGO, "#go_main/middle/#go_slot/btn/#go_consumeitem")
-	arg_1_0._gocurrency = gohelper.findChild(arg_1_0.viewGO, "#go_main/middle/#go_slot/btn/#go_currency")
-	arg_1_0._txtcurrency = gohelper.findChildText(arg_1_0.viewGO, "#go_main/middle/#go_slot/btn/#go_currency/#txt_currency")
-	arg_1_0._imagecurrency = gohelper.findChildImage(arg_1_0.viewGO, "#go_main/middle/#go_slot/btn/#go_currency/#txt_currency/#image_currency")
-	arg_1_0._gounlockbtn = gohelper.findChild(arg_1_0.viewGO, "#go_main/middle/#go_slot/btn/#go_unlockbtn")
-	arg_1_0._btnunlock = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_main/middle/#go_slot/btn/#go_unlockbtn/#btn_unlock", AudioEnum.CharacterDestinyStone.play_ui_common_click)
-	arg_1_0._gouplv = gohelper.findChild(arg_1_0.viewGO, "#go_main/middle/#go_slot/btn/#go_uplv")
-	arg_1_0._btnuplv = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_main/middle/#go_slot/btn/#go_uplv/#btn_uplv", AudioEnum.CharacterDestinyStone.play_ui_common_click)
-	arg_1_0._txtlv = gohelper.findChildText(arg_1_0.viewGO, "#go_main/middle/#go_slot/btn/#go_uplv/#btn_uplv/#txt_lv")
-	arg_1_0._gouprank = gohelper.findChild(arg_1_0.viewGO, "#go_main/middle/#go_slot/btn/#go_uprank")
-	arg_1_0._btnuprank = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_main/middle/#go_slot/btn/#go_uprank/#btn_uprank", AudioEnum.CharacterDestinyStone.play_ui_common_click)
-	arg_1_0._gomax = gohelper.findChild(arg_1_0.viewGO, "#go_main/middle/#go_slot/btn/#go_max")
-	arg_1_0._gocaneasycombinetip = gohelper.findChild(arg_1_0.viewGO, "#go_main/middle/#go_slot/btn/txt_onceCombine")
-	arg_1_0._scrolleffect = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_main/right/#scroll_effect")
-	arg_1_0._gostoneeffectitem = gohelper.findChild(arg_1_0.viewGO, "#go_main/right/#scroll_effect/Viewport/Content/#go_stoneeffectitem")
-	arg_1_0._gostoneempty = gohelper.findChild(arg_1_0.viewGO, "#go_main/right/#go_stoneempty")
-	arg_1_0._gostonelock = gohelper.findChild(arg_1_0.viewGO, "#go_main/right/#go_stonelock")
-	arg_1_0._gounlockanim = gohelper.findChild(arg_1_0.viewGO, "#go_unlockanim")
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
+local CharacterDestinySlotView = class("CharacterDestinySlotView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CharacterDestinySlotView:onInitView()
+	self._simagefullbg = gohelper.findChildSingleImage(self.viewGO, "#simage_fullbg")
+	self._goreshapefullbg = gohelper.findChild(self.viewGO, "#simage_fullbg/#go_reshapefullbg")
+	self._gomain = gohelper.findChild(self.viewGO, "#go_main")
+	self._scrollattr = gohelper.findChildScrollRect(self.viewGO, "#go_main/left/#scroll_attr")
+	self._goattritem = gohelper.findChild(self.viewGO, "#go_main/left/#scroll_attr/Viewport/Content/#go_attritem")
+	self._goslot = gohelper.findChild(self.viewGO, "#go_main/middle/#go_slot")
+	self._goslotItem = gohelper.findChild(self.viewGO, "#go_main/middle/#go_slot/#go_slotItem")
+	self._golock = gohelper.findChild(self.viewGO, "#go_main/middle/#go_slot/#go_lock")
+	self._gopreview = gohelper.findChildButtonWithAudio(self.viewGO, "#go_main/middle/#go_slot/#go_lock/#btn_preview")
+	self._gounlock = gohelper.findChild(self.viewGO, "#go_main/middle/#go_slot/#go_unlock")
+	self._goempty = gohelper.findChild(self.viewGO, "#go_main/middle/#go_slot/#go_unlock/#go_empty")
+	self._btnadd = gohelper.findChildButtonWithAudio(self.viewGO, "#go_main/middle/#go_slot/#go_unlock/#go_empty/#btn_add")
+	self._gostone = gohelper.findChild(self.viewGO, "#go_main/middle/#go_slot/#go_unlock/#go_stone")
+	self._txtstonename = gohelper.findChildText(self.viewGO, "#go_main/middle/#go_slot/#go_unlock/#go_stone/#txt_stonename")
+	self._imageicon = gohelper.findChildImage(self.viewGO, "#go_main/middle/#go_slot/#go_unlock/#go_stone/#image_icon")
+	self._simagestone = gohelper.findChildSingleImage(self.viewGO, "#go_main/middle/#go_slot/#go_unlock/#go_stone/#simage_stone")
+	self._gostonebtnicon = gohelper.findChild(self.viewGO, "#go_main/middle/#go_slot/#go_unlock/#go_stone/icon")
+	self._simagestonedec = gohelper.findChildSingleImage(self.viewGO, "#go_main/middle/#go_slot/#go_unlock/#go_stone/#simage_stonedec")
+	self._btnstone = gohelper.findChildButtonWithAudio(self.viewGO, "#go_main/middle/#go_slot/#go_unlock/#btn_stone")
+	self._goconsumeitem = gohelper.findChild(self.viewGO, "#go_main/middle/#go_slot/btn/#go_consumeitem")
+	self._gocurrency = gohelper.findChild(self.viewGO, "#go_main/middle/#go_slot/btn/#go_currency")
+	self._txtcurrency = gohelper.findChildText(self.viewGO, "#go_main/middle/#go_slot/btn/#go_currency/#txt_currency")
+	self._imagecurrency = gohelper.findChildImage(self.viewGO, "#go_main/middle/#go_slot/btn/#go_currency/#txt_currency/#image_currency")
+	self._gounlockbtn = gohelper.findChild(self.viewGO, "#go_main/middle/#go_slot/btn/#go_unlockbtn")
+	self._btnunlock = gohelper.findChildButtonWithAudio(self.viewGO, "#go_main/middle/#go_slot/btn/#go_unlockbtn/#btn_unlock", AudioEnum.CharacterDestinyStone.play_ui_common_click)
+	self._gouplv = gohelper.findChild(self.viewGO, "#go_main/middle/#go_slot/btn/#go_uplv")
+	self._btnuplv = gohelper.findChildButtonWithAudio(self.viewGO, "#go_main/middle/#go_slot/btn/#go_uplv/#btn_uplv", AudioEnum.CharacterDestinyStone.play_ui_common_click)
+	self._txtlv = gohelper.findChildText(self.viewGO, "#go_main/middle/#go_slot/btn/#go_uplv/#btn_uplv/#txt_lv")
+	self._gouprank = gohelper.findChild(self.viewGO, "#go_main/middle/#go_slot/btn/#go_uprank")
+	self._btnuprank = gohelper.findChildButtonWithAudio(self.viewGO, "#go_main/middle/#go_slot/btn/#go_uprank/#btn_uprank", AudioEnum.CharacterDestinyStone.play_ui_common_click)
+	self._gomax = gohelper.findChild(self.viewGO, "#go_main/middle/#go_slot/btn/#go_max")
+	self._gocaneasycombinetip = gohelper.findChild(self.viewGO, "#go_main/middle/#go_slot/btn/txt_onceCombine")
+	self._scrolleffect = gohelper.findChildScrollRect(self.viewGO, "#go_main/right/#scroll_effect")
+	self._gostoneeffectitem = gohelper.findChild(self.viewGO, "#go_main/right/#scroll_effect/Viewport/Content/#go_stoneeffectitem")
+	self._gostoneempty = gohelper.findChild(self.viewGO, "#go_main/right/#go_stoneempty")
+	self._gostonelock = gohelper.findChild(self.viewGO, "#go_main/right/#go_stonelock")
+	self._goreshape = gohelper.findChild(self.viewGO, "#go_main/#go_reshape")
+	self._btnreshape = gohelper.findChildButtonWithAudio(self.viewGO, "#go_main/#go_reshape/#btn_reshape")
+	self._gounlockanim = gohelper.findChild(self.viewGO, "#go_unlockanim")
+	self._gotopleft = gohelper.findChild(self.viewGO, "#go_topleft")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnadd:AddClickListener(arg_2_0._btnaddOnClick, arg_2_0)
-	arg_2_0._btnstone:AddClickListener(arg_2_0._btnstoneOnClick, arg_2_0)
-	arg_2_0._btnunlock:AddClickListener(arg_2_0._btnunlockOnClick, arg_2_0)
-	arg_2_0._btnuplv:AddClickListener(arg_2_0._btnuplvOnClick, arg_2_0)
-	arg_2_0._btnuprank:AddClickListener(arg_2_0._btnuprankOnClick, arg_2_0)
-	arg_2_0._gopreview:AddClickListener(arg_2_0._btnpreviewOnClick, arg_2_0)
+function CharacterDestinySlotView:addEvents()
+	self._btnadd:AddClickListener(self._btnaddOnClick, self)
+	self._btnstone:AddClickListener(self._btnstoneOnClick, self)
+	self._btnunlock:AddClickListener(self._btnunlockOnClick, self)
+	self._btnuplv:AddClickListener(self._btnuplvOnClick, self)
+	self._btnuprank:AddClickListener(self._btnuprankOnClick, self)
+	self._gopreview:AddClickListener(self._btnpreviewOnClick, self)
+	self._btnreshape:AddClickListener(self._btnreshapeOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnadd:RemoveClickListener()
-	arg_3_0._btnstone:RemoveClickListener()
-	arg_3_0._btnunlock:RemoveClickListener()
-	arg_3_0._btnuplv:RemoveClickListener()
-	arg_3_0._btnuprank:RemoveClickListener()
-	arg_3_0._gopreview:RemoveClickListener()
+function CharacterDestinySlotView:removeEvents()
+	self._btnadd:RemoveClickListener()
+	self._btnstone:RemoveClickListener()
+	self._btnunlock:RemoveClickListener()
+	self._btnuplv:RemoveClickListener()
+	self._btnuprank:RemoveClickListener()
+	self._gopreview:RemoveClickListener()
+	self._btnreshape:RemoveClickListener()
 end
 
-function var_0_0._btnaddOnClick(arg_4_0)
+function CharacterDestinySlotView:_btnreshapeOnClick()
+	self:_showReshape(not self._isShowReshape, true)
+	CharacterDestinyController.instance:dispatchEvent(CharacterDestinyEvent.onClickReshapeBtn)
+end
+
+function CharacterDestinySlotView:_btnaddOnClick()
 	return
 end
 
-function var_0_0._btnuplvOnClick(arg_5_0)
+function CharacterDestinySlotView:_btnuplvOnClick()
 	return
 end
 
-function var_0_0._btnpreviewOnClick(arg_6_0)
-	arg_6_0:_openCharacterDestinyStoneView()
+function CharacterDestinySlotView:_btnpreviewOnClick()
+	self:_openCharacterDestinyStoneView()
 end
 
-var_0_0.UI_CLICK_BLOCK_KEY = "CharacterDestinySlotView_Click"
+CharacterDestinySlotView.UI_CLICK_BLOCK_KEY = "CharacterDestinySlotView_Click"
 
-function var_0_0._btnuprankOnClick(arg_7_0)
-	if arg_7_0._heroMO.destinyStoneMo:isSlotMaxLevel() then
+function CharacterDestinySlotView:_btnuprankOnClick()
+	if self._heroMO.destinyStoneMo:isSlotMaxLevel() then
 		return
 	end
 
-	local var_7_0, var_7_1, var_7_2 = arg_7_0:isHasEnoughCurrenctLevelUp()
+	local isEnough, toastIcon, toastName = self:isHasEnoughCurrenctLevelUp()
 
-	if not var_7_0 then
-		if arg_7_0._canEasyCombine then
-			PopupCacheModel.instance:setViewIgnoreGetPropView(arg_7_0.viewName, true, MaterialEnum.GetApproach.RoomProductChange)
-			RoomProductionHelper.openRoomFormulaMsgBoxView(arg_7_0._easyCombineTable, arg_7_0._lackedItemDataList, RoomProductLineEnum.Line.Spring, nil, nil, arg_7_0._onRankUpEasyCombineFinished, arg_7_0)
+	if not isEnough then
+		if self._canEasyCombine then
+			PopupCacheModel.instance:setViewIgnoreGetPropView(self.viewName, true, MaterialEnum.GetApproach.RoomProductChange)
+			RoomProductionHelper.openRoomFormulaMsgBoxView(self._easyCombineTable, self._lackedItemDataList, RoomProductLineEnum.Line.Spring, nil, nil, self._onRankUpEasyCombineFinished, self)
 		else
-			GameFacade.showToastWithIcon(ToastEnum.NotEnoughId, var_7_1, var_7_2)
+			GameFacade.showToastWithIcon(ToastEnum.NotEnoughId, toastIcon, toastName)
 		end
 
 		return
 	end
 
-	arg_7_0._isPlayingRankUpAnim = true
+	self._isPlayingRankUpAnim = true
 
-	arg_7_0._anim:Play(CharacterDestinyEnum.SlotViewAnim.LevelUp, 0, 0)
-	CharacterDestinyController.instance:onRankUp(arg_7_0._heroMO.heroId)
+	self._anim:Play(CharacterDestinyEnum.SlotViewAnim.LevelUp, 0, 0)
+	CharacterDestinyController.instance:onRankUp(self._heroMO.heroId)
 
-	local var_7_3 = arg_7_0._slotmats[arg_7_0._heroMO.destinyStoneMo.rank + 1]
+	local slotItem = self._slotmats[self._heroMO.destinyStoneMo.rank + 1]
 
-	if var_7_3 then
-		gohelper.setActive(var_7_3.golevelup, true)
+	if slotItem then
+		gohelper.setActive(slotItem.golevelup, true)
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.CharacterDestinyStone.play_ui_leimi_smalluncharted_refresh)
-	gohelper.setActive(arg_7_0._goempty, false)
-	UIBlockMgr.instance:startBlock(var_0_0.UI_CLICK_BLOCK_KEY)
+	gohelper.setActive(self._goempty, false)
+	UIBlockMgr.instance:startBlock(CharacterDestinySlotView.UI_CLICK_BLOCK_KEY)
 end
 
-function var_0_0._onRankUpEasyCombineFinished(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	PopupCacheModel.instance:setViewIgnoreGetPropView(arg_8_0.viewName, false)
+function CharacterDestinySlotView:_onRankUpEasyCombineFinished(cmd, resultCode, msg)
+	PopupCacheModel.instance:setViewIgnoreGetPropView(self.viewName, false)
 
-	if arg_8_2 ~= 0 then
+	if resultCode ~= 0 then
 		return
 	end
 
-	arg_8_0:_btnuprankOnClick()
+	self:_btnuprankOnClick()
 end
 
-function var_0_0._btnstoneOnClick(arg_9_0)
-	arg_9_0:_openCharacterDestinyStoneView()
+function CharacterDestinySlotView:_btnstoneOnClick()
+	self:_openCharacterDestinyStoneView()
 end
 
-function var_0_0._btnunlockOnClick(arg_10_0)
-	local var_10_0, var_10_1, var_10_2 = arg_10_0:isHasEnoughCurrenctLevelUp()
+function CharacterDestinySlotView:_btnunlockOnClick()
+	local isEnough, toastIcon, toastName = self:isHasEnoughCurrenctLevelUp()
 
-	if not var_10_0 then
-		if arg_10_0._canEasyCombine then
-			PopupCacheModel.instance:setViewIgnoreGetPropView(arg_10_0.viewName, true, MaterialEnum.GetApproach.RoomProductChange)
-			RoomProductionHelper.openRoomFormulaMsgBoxView(arg_10_0._easyCombineTable, arg_10_0._lackedItemDataList, RoomProductLineEnum.Line.Spring, nil, nil, arg_10_0._onUnlockEasyCombineFinished, arg_10_0)
+	if not isEnough then
+		if self._canEasyCombine then
+			PopupCacheModel.instance:setViewIgnoreGetPropView(self.viewName, true, MaterialEnum.GetApproach.RoomProductChange)
+			RoomProductionHelper.openRoomFormulaMsgBoxView(self._easyCombineTable, self._lackedItemDataList, RoomProductLineEnum.Line.Spring, nil, nil, self._onUnlockEasyCombineFinished, self)
 		else
-			GameFacade.showToastWithIcon(ToastEnum.NotEnoughId, var_10_1, var_10_2)
+			GameFacade.showToastWithIcon(ToastEnum.NotEnoughId, toastIcon, toastName)
 		end
 
 		return
 	end
 
-	arg_10_0._isPlayingUnlockAnim = true
+	self._isPlayingUnlockAnim = true
 
-	arg_10_0._anim:Play(CharacterDestinyEnum.SlotViewAnim.Unlock, 0, 0)
-	CharacterDestinyController.instance:onRankUp(arg_10_0._heroMO.heroId)
-	gohelper.setActive(arg_10_0._gotopleft, false)
-	gohelper.setActive(arg_10_0._goempty, false)
+	self._anim:Play(CharacterDestinyEnum.SlotViewAnim.Unlock, 0, 0)
+	CharacterDestinyController.instance:onRankUp(self._heroMO.heroId)
+	gohelper.setActive(self._gotopleft, false)
+	gohelper.setActive(self._goempty, false)
 	AudioMgr.instance:trigger(AudioEnum.CharacterDestinyStone.play_ui_fate_slots_unlock)
-	UIBlockMgr.instance:startBlock(var_0_0.UI_CLICK_BLOCK_KEY)
+	UIBlockMgr.instance:startBlock(CharacterDestinySlotView.UI_CLICK_BLOCK_KEY)
 end
 
-function var_0_0._onUnlockEasyCombineFinished(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	PopupCacheModel.instance:setViewIgnoreGetPropView(arg_11_0.viewName, false)
+function CharacterDestinySlotView:_onUnlockEasyCombineFinished(cmd, resultCode, msg)
+	PopupCacheModel.instance:setViewIgnoreGetPropView(self.viewName, false)
 
-	if arg_11_2 ~= 0 then
+	if resultCode ~= 0 then
 		return
 	end
 
-	arg_11_0:_btnunlockOnClick()
+	self:_btnunlockOnClick()
 end
 
-local var_0_1 = 0.5
-local var_0_2 = 0.1
+local PRESS_TIME = 0.5
+local NEXT_PRESS_TIME = 0.1
 
-function var_0_0._editableInitView(arg_12_0)
-	arg_12_0._btnUpLvlongPress = SLFramework.UGUI.UILongPressListener.Get(arg_12_0._btnuplv.gameObject)
+function CharacterDestinySlotView:_editableInitView()
+	self._btnUpLvlongPress = SLFramework.UGUI.UILongPressListener.Get(self._btnuplv.gameObject)
 
-	arg_12_0._btnUpLvlongPress:SetLongPressTime({
-		var_0_1,
-		var_0_2
+	self._btnUpLvlongPress:SetLongPressTime({
+		PRESS_TIME,
+		NEXT_PRESS_TIME
 	})
-	arg_12_0._btnUpLvlongPress:AddLongPressListener(arg_12_0._upLvLongPress, arg_12_0)
+	self._btnUpLvlongPress:AddLongPressListener(self._upLvLongPress, self)
 
-	arg_12_0._btnuplevel = SLFramework.UGUI.UIClickListener.Get(arg_12_0._btnuplv.gameObject)
+	self._btnuplevel = SLFramework.UGUI.UIClickListener.Get(self._btnuplv.gameObject)
 
-	arg_12_0._btnuplevel:AddClickUpListener(arg_12_0._onClickLevelUpBtnUp, arg_12_0)
-	arg_12_0._btnuplevel:AddClickDownListener(arg_12_0._onClickLevelUpBtnDown, arg_12_0)
+	self._btnuplevel:AddClickUpListener(self._onClickLevelUpBtnUp, self)
+	self._btnuplevel:AddClickDownListener(self._onClickLevelUpBtnDown, self)
 
-	arg_12_0._consumeCurrencyItems = arg_12_0:getUserDataTb_()
-	arg_12_0._consumeCurrencyItems[1] = {
-		go = arg_12_0._txtcurrency.gameObject,
-		txt = arg_12_0._txtcurrency,
-		icon = arg_12_0._imagecurrency
+	self._consumeCurrencyItems = self:getUserDataTb_()
+	self._consumeCurrencyItems[1] = {
+		go = self._txtcurrency.gameObject,
+		txt = self._txtcurrency,
+		icon = self._imagecurrency
 	}
-	arg_12_0._txttitle = gohelper.findChildText(arg_12_0.viewGO, "#go_main/middle/#go_slot/title/txt_title")
-	arg_12_0._anim = arg_12_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_12_0._animEvent = arg_12_0.viewGO:GetComponent(typeof(ZProj.AnimationEventWrap))
-	arg_12_0._slotmats = arg_12_0:getUserDataTb_()
+	self._txttitle = gohelper.findChildText(self.viewGO, "#go_main/middle/#go_slot/title/txt_title")
+	self._anim = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._animEvent = self.viewGO:GetComponent(typeof(ZProj.AnimationEventWrap))
+	self._reshapeAnim = self._goreshape:GetComponent(typeof(UnityEngine.Animator))
+	self._effectAnim = self._scrolleffect.gameObject:GetComponent(typeof(UnityEngine.Animator))
+	self._slotmats = self:getUserDataTb_()
 
-	for iter_12_0 = 1, CharacterDestinyEnum.EffectItemCount do
-		local var_12_0 = gohelper.findChild(arg_12_0._goslot, "mesh0" .. iter_12_0)
-		local var_12_1 = gohelper.findChild(var_12_0, "ms"):GetComponent(typeof(UIMesh))
-		local var_12_2 = gohelper.findChild(var_12_0, "#leveup")
-		local var_12_3 = var_12_0:GetComponent(typeof(ZProj.MaterialPropsCtrl))
-		local var_12_4 = {
-			mpc = var_12_3,
-			ms = var_12_1,
-			golevelup = var_12_2
+	for i = 1, CharacterDestinyEnum.EffectItemCount do
+		local go = gohelper.findChild(self._goslot, "mesh0" .. i)
+		local ms = gohelper.findChild(go, "ms"):GetComponent(typeof(UIMesh))
+		local golevelup = gohelper.findChild(go, "#leveup")
+		local mpc = go:GetComponent(typeof(ZProj.MaterialPropsCtrl))
+		local item = {
+			mpc = mpc,
+			ms = ms,
+			golevelup = golevelup
 		}
 
-		table.insert(arg_12_0._slotmats, var_12_4)
+		table.insert(self._slotmats, item)
 	end
 
-	arg_12_0._gyroOffsetID = UnityEngine.Shader.PropertyToID("_GyroOffset")
-	arg_12_0._gyroOffset = Vector4.New(0, 0, 0)
+	self._gyroOffsetID = UnityEngine.Shader.PropertyToID("_GyroOffset")
+	self._gyroOffset = Vector4.New(0, 0, 0)
 
-	TaskDispatcher.runRepeat(arg_12_0._tick, arg_12_0, 0)
+	TaskDispatcher.runRepeat(self._tick, self, 0)
+
+	self._goreshapeselect = gohelper.findChild(self._btnreshape.gameObject, "selected")
+	self._goreshapeunselect = gohelper.findChild(self._btnreshape.gameObject, "unselect")
+	self._simagestoneName = gohelper.findChildSingleImage(self.viewGO, "#go_main/middle/#go_slot/#go_unlock/#go_stone/#simage_reshapeTitle")
+	self._imagestoneName = gohelper.findChildImage(self.viewGO, "#go_main/middle/#go_slot/#go_unlock/#go_stone/#simage_reshapeTitle")
+	self._goreshapeVX = gohelper.findChild(self.viewGO, "#go_main/middle/#go_slot/#go_unlock/#go_stone/#reshape")
+	self._cgReshape = self._scrolleffect:GetComponent(typeof(UnityEngine.CanvasGroup))
 end
 
-function var_0_0._tick(arg_13_0)
-	local var_13_0, var_13_1, var_13_2 = ZProj.EngineUtil.GetInputAcceleration(0, 0, 0)
+function CharacterDestinySlotView:_tick()
+	local curX, curY, curZ = ZProj.EngineUtil.GetInputAcceleration(0, 0, 0)
 
-	arg_13_0._gyroOffset.x, arg_13_0._gyroOffset.y = (arg_13_0._gyroOffset.x + var_13_0) * 0.5, (arg_13_0._gyroOffset.y + var_13_1) * 0.5
+	self._gyroOffset.x, self._gyroOffset.y = (self._gyroOffset.x + curX) * 0.5, (self._gyroOffset.y + curY) * 0.5
 
-	UnityEngine.Shader.SetGlobalVector(arg_13_0._gyroOffsetID, arg_13_0._gyroOffset)
+	UnityEngine.Shader.SetGlobalVector(self._gyroOffsetID, self._gyroOffset)
 end
 
-function var_0_0._upLvLongPress(arg_14_0)
-	if not arg_14_0._canLongPress then
+function CharacterDestinySlotView:_upLvLongPress()
+	if not self._canLongPress then
 		return
 	end
 
-	local var_14_0 = arg_14_0._heroMO.destinyStoneMo
+	local destinyStoneMo = self._heroMO.destinyStoneMo
 
-	if var_14_0:isSlotMaxLevel() then
-		arg_14_0:_onClickLevelUpBtnUp()
+	if destinyStoneMo:isSlotMaxLevel() then
+		self:_onClickLevelUpBtnUp()
 
 		return
 	end
 
-	local var_14_1 = var_14_0.level
+	local totalLevel = destinyStoneMo.level
 
-	if arg_14_0._addLevel then
-		var_14_1 = var_14_0.level + arg_14_0._addLevel
+	if self._addLevel then
+		totalLevel = destinyStoneMo.level + self._addLevel
 
-		if not arg_14_0:isHasEnoughCurrenctLevelUp(true, var_14_0.rank, var_14_1 - 1) then
-			arg_14_0._addLevel = arg_14_0._addLevel - 1
+		if not self:isHasEnoughCurrenctLevelUp(true, destinyStoneMo.rank, totalLevel - 1) then
+			self._addLevel = self._addLevel - 1
 
-			arg_14_0:_onClickLevelUpBtnUp()
+			self:_onClickLevelUpBtnUp()
 
 			return
 		end
 
-		if var_14_1 < arg_14_0._maxRankLevel then
-			arg_14_0._addLevel = arg_14_0._addLevel + 1
+		if totalLevel < self._maxRankLevel then
+			self._addLevel = self._addLevel + 1
 
-			arg_14_0:_refreshLevelUpConsume(var_14_1)
+			self:_refreshLevelUpConsume(totalLevel)
 		else
-			arg_14_0:_onClickLevelUpBtnUp()
+			self:_onClickLevelUpBtnUp()
 		end
 	else
-		var_14_1 = var_14_0.level + 2
-		arg_14_0._addLevel = 2
+		totalLevel = destinyStoneMo.level + 2
+		self._addLevel = 2
 	end
 
-	arg_14_0:_refreshLevelUp(var_14_0.rank, var_14_1)
+	self:_refreshLevelUp(destinyStoneMo.rank, totalLevel)
 end
 
-function var_0_0._onClickLevelUpBtnDown(arg_15_0)
-	if arg_15_0._heroMO.destinyStoneMo:isSlotMaxLevel() then
+function CharacterDestinySlotView:_onClickLevelUpBtnDown()
+	if self._heroMO.destinyStoneMo:isSlotMaxLevel() then
 		return
 	end
 
-	if not arg_15_0:isHasEnoughCurrenctLevelUp(true) then
+	if not self:isHasEnoughCurrenctLevelUp(true) then
 		return
 	end
 
-	arg_15_0._addLevel = 1
-	arg_15_0._canLongPress = true
+	self._addLevel = 1
+	self._canLongPress = true
 end
 
-function var_0_0._onClickLevelUpBtnUp(arg_16_0)
-	if not arg_16_0._canLongPress then
+function CharacterDestinySlotView:_onClickLevelUpBtnUp()
+	if not self._canLongPress then
 		return
 	end
 
-	arg_16_0._canLongPress = nil
+	self._canLongPress = nil
 
-	local var_16_0 = arg_16_0._heroMO.destinyStoneMo
+	local destinyStoneMo = self._heroMO.destinyStoneMo
 
-	if var_16_0:isSlotMaxLevel() then
+	if destinyStoneMo:isSlotMaxLevel() then
 		return
 	end
 
-	if arg_16_0._addLevel then
-		local var_16_1 = math.min(var_16_0.level + arg_16_0._addLevel, arg_16_0._maxRankLevel)
+	if self._addLevel then
+		local totallevel = math.min(destinyStoneMo.level + self._addLevel, self._maxRankLevel)
 
-		if var_16_0.level + arg_16_0._addLevel <= arg_16_0._maxRankLevel then
-			CharacterDestinyController.instance:onLevelUp(arg_16_0._heroMO.heroId, var_16_1)
-			arg_16_0:_refreshLevelUp(var_16_0.rank, var_16_1)
+		if destinyStoneMo.level + self._addLevel <= self._maxRankLevel then
+			CharacterDestinyController.instance:onLevelUp(self._heroMO.heroId, totallevel)
+			self:_refreshLevelUp(destinyStoneMo.rank, totallevel)
 		else
-			arg_16_0:_refreshBtn(var_16_1)
+			self:_refreshBtn(totallevel)
 		end
 	end
 
-	arg_16_0._addLevel = nil
+	self._addLevel = nil
 end
 
-function var_0_0._refreshLevelUp(arg_17_0, arg_17_1, arg_17_2)
-	arg_17_0:_playAttrItemLevelUp(arg_17_1, arg_17_2 - 1)
+function CharacterDestinySlotView:_refreshLevelUp(rank, level)
+	self:_playAttrItemLevelUp(rank, level - 1)
 	TaskDispatcher.runDelay(function()
-		arg_17_0:_refreshAttrPanel(arg_17_1, arg_17_2)
-	end, arg_17_0, 0.5)
-	arg_17_0:_refreshBtnLevel(arg_17_2)
+		self:_refreshAttrPanel(rank, level)
+	end, self, 0.5)
+	self:_refreshBtnLevel(level)
 
-	if arg_17_2 < arg_17_0._heroMO.destinyStoneMo.maxLevel[arg_17_1] then
+	local maxLevel = self._heroMO.destinyStoneMo.maxLevel[rank]
+
+	if level < maxLevel then
 		AudioMgr.instance:trigger(AudioEnum.CharacterDestinyStone.play_ui_fate_slots_charged)
 	else
 		AudioMgr.instance:trigger(AudioEnum.CharacterDestinyStone.play_ui_fate_slots_full)
 	end
 end
 
-function var_0_0.onUpdateParam(arg_19_0)
+function CharacterDestinySlotView:onUpdateParam()
 	return
 end
 
-function var_0_0._addEvents(arg_20_0)
-	arg_20_0:addEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.OnRankUpReply, arg_20_0._OnRankUpReply, arg_20_0)
-	arg_20_0:addEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.OnLevelUpReply, arg_20_0._onLevelUpReply, arg_20_0)
-	arg_20_0:addEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.OnUseStoneReply, arg_20_0._onUseStoneReply, arg_20_0)
-	arg_20_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_20_0._refreshCurrency, arg_20_0)
-	arg_20_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_20_0._refreshCurrency, arg_20_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_20_0._onCloseViewFinish, arg_20_0)
-	arg_20_0._animEvent:AddEventListener(CharacterDestinyEnum.AnimEventName.RefreshView, arg_20_0._refreshDataCB, arg_20_0)
-	arg_20_0._animEvent:AddEventListener(CharacterDestinyEnum.AnimEventName.UnlockEnd, arg_20_0._unlockEndCB, arg_20_0)
-	arg_20_0._animEvent:AddEventListener(CharacterDestinyEnum.AnimEventName.LevelUpEnd, arg_20_0._rankUpEndCB, arg_20_0)
-	arg_20_0._animEvent:AddEventListener(CharacterDestinyEnum.AnimEventName.UnlockAttrAnim, arg_20_0._unlockAttrAnim, arg_20_0)
+function CharacterDestinySlotView:_addEvents()
+	self:addEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.OnRankUpReply, self._OnRankUpReply, self)
+	self:addEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.OnLevelUpReply, self._onLevelUpReply, self)
+	self:addEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.OnUseStoneReply, self._onUseStoneReply, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._refreshCurrency, self)
+	self:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._refreshCurrency, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	self._animEvent:AddEventListener(CharacterDestinyEnum.AnimEventName.RefreshView, self._refreshDataCB, self)
+	self._animEvent:AddEventListener(CharacterDestinyEnum.AnimEventName.UnlockEnd, self._unlockEndCB, self)
+	self._animEvent:AddEventListener(CharacterDestinyEnum.AnimEventName.LevelUpEnd, self._rankUpEndCB, self)
+	self._animEvent:AddEventListener(CharacterDestinyEnum.AnimEventName.UnlockAttrAnim, self._unlockAttrAnim, self)
 end
 
-function var_0_0._removeEvents(arg_21_0)
-	arg_21_0:removeEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.OnRankUpReply, arg_21_0._OnRankUpReply, arg_21_0)
-	arg_21_0:removeEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.OnLevelUpReply, arg_21_0._onLevelUpReply, arg_21_0)
-	arg_21_0:removeEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.OnUseStoneReply, arg_21_0._onUseStoneReply, arg_21_0)
-	arg_21_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_21_0._refreshCurrency, arg_21_0)
-	arg_21_0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_21_0._refreshCurrency, arg_21_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_21_0._onCloseViewFinish, arg_21_0)
+function CharacterDestinySlotView:_removeEvents()
+	self:removeEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.OnRankUpReply, self._OnRankUpReply, self)
+	self:removeEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.OnLevelUpReply, self._onLevelUpReply, self)
+	self:removeEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.OnUseStoneReply, self._onUseStoneReply, self)
+	self:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._refreshCurrency, self)
+	self:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._refreshCurrency, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 
-	if arg_21_0._btnUpLvlongPress then
-		arg_21_0._btnUpLvlongPress:RemoveLongPressListener()
+	if self._btnUpLvlongPress then
+		self._btnUpLvlongPress:RemoveLongPressListener()
 	end
 
-	if arg_21_0._btnuplevel then
-		arg_21_0._btnuplevel:RemoveClickUpListener()
-		arg_21_0._btnuplevel:RemoveClickDownListener()
+	if self._btnuplevel then
+		self._btnuplevel:RemoveClickUpListener()
+		self._btnuplevel:RemoveClickDownListener()
 	end
 
-	arg_21_0._animEvent:RemoveEventListener(CharacterDestinyEnum.AnimEventName.RefreshView)
-	arg_21_0._animEvent:RemoveEventListener(CharacterDestinyEnum.AnimEventName.UnlockEnd)
-	arg_21_0._animEvent:RemoveEventListener(CharacterDestinyEnum.AnimEventName.LevelUpEnd)
-	arg_21_0._animEvent:RemoveEventListener(CharacterDestinyEnum.AnimEventName.UnlockAttrAnim)
+	self._animEvent:RemoveEventListener(CharacterDestinyEnum.AnimEventName.RefreshView)
+	self._animEvent:RemoveEventListener(CharacterDestinyEnum.AnimEventName.UnlockEnd)
+	self._animEvent:RemoveEventListener(CharacterDestinyEnum.AnimEventName.LevelUpEnd)
+	self._animEvent:RemoveEventListener(CharacterDestinyEnum.AnimEventName.UnlockAttrAnim)
 end
 
-function var_0_0._onLevelUpReply(arg_22_0, arg_22_1, arg_22_2)
-	arg_22_0:_refreshView()
+function CharacterDestinySlotView:_onLevelUpReply(heroId, level)
+	self:_refreshView()
 
-	if arg_22_0._heroMO.destinyStoneMo:isSlotMaxLevel() then
+	if self._heroMO.destinyStoneMo:isSlotMaxLevel() then
 		AudioMgr.instance:trigger(AudioEnum.CharacterDestinyStone.play_ui_molu_sky_open)
 	end
 end
 
-function var_0_0._playItemLevelUp(arg_23_0, arg_23_1)
-	local var_23_0 = arg_23_0:_getAttrItemByAtttrId(arg_23_1)
+function CharacterDestinySlotView:_playItemLevelUp(attrId)
+	local item = self:_getAttrItemByAtttrId(attrId)
 
-	if var_23_0 then
-		var_23_0:playLevelUpAnim()
+	if item then
+		item:playLevelUpAnim()
 	end
 end
 
-function var_0_0._playAttrItemLevelUp(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
-	local var_24_0, var_24_1, var_24_2 = CharacterDestinyModel.instance:getCurSlotAttrInfos(arg_24_0._heroMO.heroId, arg_24_1, arg_24_2)
-	local var_24_3 = 0
+function CharacterDestinySlotView:_playAttrItemLevelUp(rank, level, isUnlock)
+	local curSlotAttrInfos, specialAttrInfos, lockAttrInfos = CharacterDestinyModel.instance:getCurSlotAttrInfos(self._heroMO.heroId, rank, level)
+	local count = 0
 
-	if var_24_0 then
-		for iter_24_0, iter_24_1 in ipairs(var_24_0) do
-			if iter_24_1.nextNum then
-				arg_24_0:_playItemLevelUp(iter_24_1.attrId)
+	if curSlotAttrInfos then
+		for _, info in ipairs(curSlotAttrInfos) do
+			if info.nextNum then
+				self:_playItemLevelUp(info.attrId)
 
-				var_24_3 = var_24_3 + 1
+				count = count + 1
 			end
 		end
 	end
 
-	if var_24_1 then
-		for iter_24_2, iter_24_3 in ipairs(var_24_1) do
-			if iter_24_3.nextNum then
-				arg_24_0:_playItemLevelUp(iter_24_3.attrId)
+	if specialAttrInfos then
+		for _, info in ipairs(specialAttrInfos) do
+			if info.nextNum then
+				self:_playItemLevelUp(info.attrId)
 
-				var_24_3 = var_24_3 + 1
+				count = count + 1
 			end
 		end
 	end
 
-	local var_24_4 = arg_24_3 and var_24_2[1] or var_24_2[arg_24_1]
+	local unlockAttrs = isUnlock and lockAttrInfos[1] or lockAttrInfos[rank]
 
-	if var_24_4 then
-		for iter_24_4, iter_24_5 in ipairs(var_24_4) do
-			arg_24_0:_playItemLevelUp(iter_24_5.attrId)
+	if unlockAttrs then
+		for _, info in ipairs(unlockAttrs) do
+			self:_playItemLevelUp(info.attrId)
 
-			var_24_3 = var_24_3 + 1
+			count = count + 1
 		end
 	end
 
-	if var_24_3 > 0 then
+	if count > 0 then
 		AudioMgr.instance:trigger(AudioEnum.CharacterDestinyStone.play_ui_inking_preference_open)
 	end
 end
 
-function var_0_0._onUseStoneReply(arg_25_0, arg_25_1, arg_25_2)
-	arg_25_0:_refreshView()
-	arg_25_0:_refreshEmpty()
+function CharacterDestinySlotView:_onUseStoneReply(heroId, stoneId)
+	self:_refreshView()
+	self:_refreshEmpty()
 end
 
-function var_0_0._onCloseViewFinish(arg_26_0, arg_26_1)
-	if arg_26_1 == ViewName.CharacterDestinyStoneView then
-		arg_26_0:_playerOpenAnim()
+function CharacterDestinySlotView:_onCloseViewFinish(viewName)
+	if viewName == ViewName.CharacterDestinyStoneView then
+		self:_playerOpenAnim()
 	end
 end
 
-function var_0_0.onOpen(arg_27_0)
-	arg_27_0:_addEvents()
+function CharacterDestinySlotView:onOpen()
+	self:_addEvents()
 
-	arg_27_0._heroMO = arg_27_0.viewParam.heroMo
-	arg_27_0._isPlayingUnlockAnim = false
+	self._heroMO = self.viewParam.heroMo
+	self._isPlayingUnlockAnim = false
 
-	local var_27_0 = arg_27_0._heroMO.destinyStoneMo
+	local destinyStoneMo = self._heroMO.destinyStoneMo
 
-	arg_27_0._maxRankLevel = var_27_0:getRankLevelCount()
+	self._maxRankLevel = destinyStoneMo:getRankLevelCount()
 
-	if not arg_27_0._itemConsumeList then
-		arg_27_0._itemConsumeList = {}
+	if not self._itemConsumeList then
+		self._itemConsumeList = {}
 	end
 
-	local var_27_1 = CharacterDestinyEnum.SlotTitle[arg_27_0._heroMO.config.heroType] or CharacterDestinyEnum.SlotTitle[1]
+	local title = CharacterDestinyEnum.SlotTitle[self._heroMO.config.heroType] or CharacterDestinyEnum.SlotTitle[1]
 
-	arg_27_0._txttitle.text = luaLang(var_27_1)
+	self._txttitle.text = luaLang(title)
 
-	if arg_27_0.viewParam.isBack then
-		local var_27_2 = arg_27_0._heroMO.destinyStoneMo:isUnlockSlot() and CharacterDestinyEnum.SlotViewAnim.CloseUnlock or CharacterDestinyEnum.SlotViewAnim.CloseLock
+	if self.viewParam.isBack then
+		local isUnlock = self._heroMO.destinyStoneMo:isUnlockSlot()
+		local animatorName = isUnlock and CharacterDestinyEnum.SlotViewAnim.CloseUnlock or CharacterDestinyEnum.SlotViewAnim.CloseLock
 
-		arg_27_0._anim:Play(var_27_2, 0, 1)
+		self._anim:Play(animatorName, 0, 1)
 	else
-		arg_27_0:_playerOpenAnim()
+		self:_playerOpenAnim()
 	end
 
-	arg_27_0:_refreshView(true)
-	arg_27_0:_refreshAttrPanel()
-	arg_27_0:_refreshEmpty()
-	arg_27_0.viewContainer:setCurDestinySlot(var_27_0)
-	arg_27_0:_refreshTrial()
+	self:_refreshView(true)
+	self:_refreshAttrPanel()
+	self:_refreshEmpty()
+	self.viewContainer:setCurDestinySlot(destinyStoneMo)
+	self:_refreshTrial()
 end
 
-function var_0_0._refreshTrial(arg_28_0)
-	local var_28_0 = arg_28_0._heroMO:isTrial()
+function CharacterDestinySlotView:_refreshTrial()
+	local isTrial = self._heroMO:isTrial()
 
-	gohelper.setActive(arg_28_0._gostonebtnicon.gameObject, not var_28_0)
-	gohelper.setActive(arg_28_0._btnstone.gameObject, not var_28_0)
+	gohelper.setActive(self._gostonebtnicon.gameObject, not isTrial)
+	gohelper.setActive(self._btnstone.gameObject, not isTrial)
 end
 
-function var_0_0._playerOpenAnim(arg_29_0)
-	local var_29_0 = arg_29_0._heroMO.destinyStoneMo:isUnlockSlot() and CharacterDestinyEnum.SlotViewAnim.OpenUnlock or CharacterDestinyEnum.SlotViewAnim.OpenLock
+function CharacterDestinySlotView:_playerOpenAnim()
+	local isUnlock = self._heroMO.destinyStoneMo:isUnlockSlot()
+	local animatorName = isUnlock and CharacterDestinyEnum.SlotViewAnim.OpenUnlock or CharacterDestinyEnum.SlotViewAnim.OpenLock
 
-	arg_29_0._anim:Play(var_29_0, 0, 0)
+	self._anim:Play(animatorName, 0, 0)
 end
 
-function var_0_0._refreshView(arg_30_0, arg_30_1)
-	arg_30_0:_refreshBtn()
-	arg_30_0:_refreshSlot(arg_30_1)
+function CharacterDestinySlotView:_refreshView(isOpenView)
+	self:_refreshBtn()
+	self:_refreshSlot(isOpenView)
 end
 
-function var_0_0._refreshCurrency(arg_31_0)
-	for iter_31_0, iter_31_1 in pairs(arg_31_0._itemConsumeList) do
-		for iter_31_2, iter_31_3 in pairs(iter_31_1) do
-			arg_31_0._itemConsumeList[iter_31_0][iter_31_2] = ItemModel.instance:getItemQuantity(iter_31_0, iter_31_2)
+function CharacterDestinySlotView:_refreshCurrency()
+	for type, consumes in pairs(self._itemConsumeList) do
+		for id, quantity in pairs(consumes) do
+			self._itemConsumeList[type][id] = ItemModel.instance:getItemQuantity(type, id)
 		end
 	end
 
-	arg_31_0:_refreshBtn()
+	self:_refreshBtn()
 end
 
-function var_0_0._playIdleAnim(arg_32_0, arg_32_1)
-	local var_32_0 = arg_32_1 and CharacterDestinyEnum.SlotViewAnim.UnlockIdle or CharacterDestinyEnum.SlotViewAnim.LockIdle
+function CharacterDestinySlotView:_playIdleAnim(isUnlock)
+	local animatorName = isUnlock and CharacterDestinyEnum.SlotViewAnim.UnlockIdle or CharacterDestinyEnum.SlotViewAnim.LockIdle
 
-	arg_32_0._anim:Play(var_32_0, 0, 1)
+	self._anim:Play(animatorName, 0, 1)
 end
 
-function var_0_0._OnRankUpReply(arg_33_0)
-	arg_33_0._maxRankLevel = arg_33_0._heroMO.destinyStoneMo:getRankLevelCount()
+function CharacterDestinySlotView:_OnRankUpReply()
+	self._maxRankLevel = self._heroMO.destinyStoneMo:getRankLevelCount()
 end
 
-function var_0_0._rankUpEndCB(arg_34_0)
-	arg_34_0._isPlayingRankUpAnim = false
+function CharacterDestinySlotView:_rankUpEndCB()
+	self._isPlayingRankUpAnim = false
 
-	local var_34_0 = arg_34_0._heroMO.destinyStoneMo
-	local var_34_1 = var_34_0.rank
-	local var_34_2 = var_34_0.maxLevel[var_34_1 - 1]
+	local destinyStoneMo = self._heroMO.destinyStoneMo
+	local rank = destinyStoneMo.rank
+	local level = destinyStoneMo.maxLevel[rank - 1]
 
-	arg_34_0:_playAttrItemLevelUp(var_34_1 - 1, var_34_2)
-	TaskDispatcher.runDelay(arg_34_0._refreshAttrPanel, arg_34_0, 0.5)
-	arg_34_0:_refreshBtnLevel(var_34_0.level)
-	gohelper.setActive(arg_34_0._goempty, var_34_0.curUseStoneId == 0)
-	UIBlockMgr.instance:endBlock(var_0_0.UI_CLICK_BLOCK_KEY)
+	self:_playAttrItemLevelUp(rank - 1, level)
+	TaskDispatcher.runDelay(self._refreshAttrPanel, self, 0.5)
+	self:_refreshBtnLevel(destinyStoneMo.level)
+	gohelper.setActive(self._goempty, destinyStoneMo.curUseStoneId == 0)
+	UIBlockMgr.instance:endBlock(CharacterDestinySlotView.UI_CLICK_BLOCK_KEY)
 end
 
-function var_0_0._unlockEndCB(arg_35_0)
-	arg_35_0._isPlayingUnlockAnim = false
+function CharacterDestinySlotView:_unlockEndCB()
+	self._isPlayingUnlockAnim = false
 
-	arg_35_0:_playIdleAnim(true)
-	gohelper.setActive(arg_35_0._goempty, true)
-	gohelper.setActive(arg_35_0._gotopleft, true)
+	self:_playIdleAnim(true)
+	gohelper.setActive(self._goempty, true)
+	gohelper.setActive(self._gotopleft, true)
 	CharacterDestinyController.instance:dispatchEvent(CharacterDestinyEvent.OnUnlockSlot)
 end
 
-function var_0_0._refreshDataCB(arg_36_0)
-	arg_36_0:_refreshView(true)
-	arg_36_0:_refreshAttrPanel()
+function CharacterDestinySlotView:_refreshDataCB()
+	self:_refreshView(true)
+	self:_refreshAttrPanel()
 end
 
-function var_0_0._unlockAttrAnim(arg_37_0)
-	arg_37_0:_playAttrItemLevelUp(0, 1, true)
-	UIBlockMgr.instance:endBlock(var_0_0.UI_CLICK_BLOCK_KEY)
+function CharacterDestinySlotView:_unlockAttrAnim()
+	self:_playAttrItemLevelUp(0, 1, true)
+	UIBlockMgr.instance:endBlock(CharacterDestinySlotView.UI_CLICK_BLOCK_KEY)
 end
 
-function var_0_0._refreshAttrPanel(arg_38_0, arg_38_1, arg_38_2)
-	if arg_38_0.isClose then
+function CharacterDestinySlotView:_refreshAttrPanel(rank, level)
+	if self.isClose then
 		return
 	end
 
-	local var_38_0 = arg_38_1 or arg_38_0._heroMO.destinyStoneMo.rank
-	local var_38_1 = arg_38_2 or arg_38_0._heroMO.destinyStoneMo.level
-	local var_38_2, var_38_3, var_38_4 = CharacterDestinyModel.instance:getCurSlotAttrInfos(arg_38_0._heroMO.heroId, var_38_0, var_38_1)
+	local rank = rank or self._heroMO.destinyStoneMo.rank
+	local level = level or self._heroMO.destinyStoneMo.level
+	local curSlotAttrInfos, specialAttrInfos, lockAttrInfos = CharacterDestinyModel.instance:getCurSlotAttrInfos(self._heroMO.heroId, rank, level)
 
-	if not arg_38_0._attrItems then
-		arg_38_0._attrItems = arg_38_0:getUserDataTb_()
+	if not self._attrItems then
+		self._attrItems = self:getUserDataTb_()
 	end
 
-	local var_38_5 = 1
+	local index = 1
 
-	if var_38_2 then
-		for iter_38_0, iter_38_1 in ipairs(var_38_2) do
-			arg_38_0:_getAttrItem(var_38_5):onUpdateBaseAttrMO(var_38_5, iter_38_1)
+	if curSlotAttrInfos then
+		for _, info in ipairs(curSlotAttrInfos) do
+			local item = self:_getAttrItem(index)
 
-			var_38_5 = var_38_5 + 1
+			item:onUpdateBaseAttrMO(index, info)
+
+			index = index + 1
 		end
 	end
 
-	if var_38_3 then
-		for iter_38_2, iter_38_3 in ipairs(var_38_3) do
-			arg_38_0:_getAttrItem(var_38_5):onUpdateSpecailAttrMO(var_38_5, iter_38_3, iter_38_2 == 1, #var_38_3)
+	if specialAttrInfos then
+		for i, info in ipairs(specialAttrInfos) do
+			local item = self:_getAttrItem(index)
 
-			var_38_5 = var_38_5 + 1
+			item:onUpdateSpecailAttrMO(index, info, i == 1, #specialAttrInfos)
+
+			index = index + 1
 		end
 	end
 
-	if var_38_4 then
-		for iter_38_4, iter_38_5 in pairs(var_38_4) do
-			arg_38_0:_getAttrItem(var_38_5):onUpdateLockSpecialAttrMO(var_38_5, iter_38_4, iter_38_5)
+	if lockAttrInfos then
+		for rank, info in pairs(lockAttrInfos) do
+			local item = self:_getAttrItem(index)
 
-			var_38_5 = var_38_5 + 1
+			item:onUpdateLockSpecialAttrMO(index, rank, info)
+
+			index = index + 1
 		end
 	end
 
-	if arg_38_0._attrItems then
-		for iter_38_6 = 1, #arg_38_0._attrItems do
-			local var_38_6 = arg_38_0._attrItems[iter_38_6]
+	if self._attrItems then
+		for i = 1, #self._attrItems do
+			local item = self._attrItems[i]
 
-			gohelper.setActive(var_38_6.viewGO, iter_38_6 < var_38_5)
-		end
-	end
-end
-
-function var_0_0._getAttrItem(arg_39_0, arg_39_1)
-	local var_39_0 = arg_39_0._attrItems[arg_39_1]
-
-	if not var_39_0 then
-		var_39_0 = arg_39_0:getUserDataTb_()
-
-		local var_39_1 = gohelper.cloneInPlace(arg_39_0._goattritem, "attritem_" .. arg_39_1)
-
-		var_39_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_39_1, CharacterDestinySlotAttrItem)
-		arg_39_0._attrItems[arg_39_1] = var_39_0
-	end
-
-	return var_39_0
-end
-
-function var_0_0._getAttrItemByAtttrId(arg_40_0, arg_40_1)
-	for iter_40_0, iter_40_1 in ipairs(arg_40_0._attrItems) do
-		if iter_40_1.attrId == arg_40_1 then
-			return iter_40_1
+			gohelper.setActive(item.viewGO, i < index)
 		end
 	end
 end
 
-function var_0_0._refreshSlot(arg_41_0, arg_41_1)
-	local var_41_0 = arg_41_0._heroMO.destinyStoneMo
-	local var_41_1 = var_41_0:isUnlockSlot()
-	local var_41_2 = var_41_0.curUseStoneId ~= 0
-	local var_41_3 = Color.white
+function CharacterDestinySlotView:_getAttrItem(index)
+	local item = self._attrItems[index]
 
-	if var_41_2 then
-		local var_41_4, var_41_5, var_41_6 = var_41_0:getCurStoneNameAndIcon()
+	if not item then
+		item = self:getUserDataTb_()
 
-		arg_41_0._txtstonename.text = var_41_4
+		local go = gohelper.cloneInPlace(self._goattritem, "attritem_" .. index)
 
-		arg_41_0._simagestone:LoadImage(var_41_5)
-
-		local var_41_7 = CharacterDestinyEnum.SlotTend[var_41_6.tend]
-		local var_41_8 = var_41_7.TitleIconName
-
-		UISpriteSetMgr.instance:setUiCharacterSprite(arg_41_0._imageicon, var_41_8)
-
-		arg_41_0._txtstonename.color = GameUtil.parseColor(var_41_7.TitleColor)
-
-		if not arg_41_0._stoneEffectItem then
-			arg_41_0._stoneEffectItem = MonoHelper.addNoUpdateLuaComOnceToGo(arg_41_0._gostoneeffectitem, CharacterDestinyStoneEffectItem)
-		end
-
-		var_41_3 = var_41_7.RuneColor
-
-		arg_41_0._stoneEffectItem:onUpdateMo(var_41_0)
+		item = MonoHelper.addNoUpdateLuaComOnceToGo(go, CharacterDestinySlotAttrItem)
+		self._attrItems[index] = item
 	end
 
-	for iter_41_0, iter_41_1 in ipairs(arg_41_0._slotmats) do
-		local var_41_9 = iter_41_1.mpc
+	return item
+end
 
-		if var_41_9.color_01 ~= var_41_3 then
-			var_41_9.color_01 = var_41_3
-
-			var_41_9:SetProps()
+function CharacterDestinySlotView:_getAttrItemByAtttrId(id)
+	for _, item in ipairs(self._attrItems) do
+		if item.attrId == id then
+			return item
 		end
 	end
-
-	arg_41_0:_setSlotLevel(arg_41_1)
-	gohelper.setActive(arg_41_0._txttitle.gameObject, not var_41_2)
-	gohelper.setActive(arg_41_0._golock, not var_41_1)
-	gohelper.setActive(arg_41_0._gounlock, var_41_1)
-	gohelper.setActive(arg_41_0._gostone, var_41_2)
-	gohelper.setActive(arg_41_0._scrolleffect.gameObject, var_41_1 and var_41_2)
-	gohelper.setActive(arg_41_0._gostoneempty.gameObject, var_41_1 and not var_41_2)
-	gohelper.setActive(arg_41_0._gostonelock.gameObject, not var_41_1)
 end
 
-function var_0_0._refreshEmpty(arg_42_0)
-	local var_42_0 = arg_42_0._heroMO.destinyStoneMo.curUseStoneId ~= 0
+function CharacterDestinySlotView:_refreshSlot(isOpenView)
+	local destinyStoneMo = self._heroMO.destinyStoneMo
+	local isUnlock = destinyStoneMo:isUnlockSlot()
+	local stoneId = destinyStoneMo.curUseStoneId
+	local isHasStone = stoneId ~= 0
+	local tenpColor = Color.white
 
-	gohelper.setActive(arg_42_0._goempty, not var_42_0)
-end
+	if isHasStone then
+		local name, icon, co = destinyStoneMo:getCurStoneNameAndIcon()
+		local isReshapeStone = destinyStoneMo:isEquipReshape()
 
-function var_0_0._setSlotLevel(arg_43_0, arg_43_1)
-	local var_43_0 = arg_43_0._heroMO.destinyStoneMo
-	local var_43_1 = var_43_0.rank
-	local var_43_2 = var_43_0.level - 1
+		gohelper.setActive(self._txtstonename.gameObject, not isReshapeStone)
+		gohelper.setActive(self._simagestoneName.gameObject, isReshapeStone)
+		self._simagestone:LoadImage(icon)
 
-	for iter_43_0 = 1, var_43_0.maxRank do
-		local var_43_3 = 0.65
-		local var_43_4 = 1
+		local tenp = CharacterDestinyEnum.SlotTend[co.tend]
+		local tendIcon = tenp.TitleIconName
 
-		if iter_43_0 < var_43_1 then
-			var_43_4 = 0
-		elseif var_43_1 < iter_43_0 then
-			var_43_4 = 1
-			var_43_3 = 0.3
+		UISpriteSetMgr.instance:setUiCharacterSprite(self._imageicon, tendIcon)
+
+		self._txtstonename.color = GameUtil.parseColor(tenp.TitleColor)
+
+		if isReshapeStone then
+			local resName = destinyStoneMo.curUseStoneId
+
+			self._simagestoneName:LoadImage(ResUrl.getTxtDestinyIcon(resName), function()
+				self._imagestoneName:SetNativeSize()
+			end)
 		else
-			local var_43_5 = var_43_0:getRankLevelCount() - 1
+			self._txtstonename.text = name
+			self._txtstonename.color = GameUtil.parseColor(tenp.TitleColor)
+		end
+	end
 
-			var_43_4 = var_43_5 ~= 0 and 1 - var_43_2 / var_43_5 or 0
+	if not self._stoneEffectItem then
+		self._stoneEffectItem = MonoHelper.addNoUpdateLuaComOnceToGo(self._gostoneeffectitem, CharacterDestinyStoneEffectItem)
+	end
+
+	self._stoneEffectItem:onUpdateMo(destinyStoneMo)
+
+	local hasReshapeStone = destinyStoneMo:hasReshapeStone()
+
+	gohelper.setActive(self._goreshape, hasReshapeStone)
+	gohelper.setActive(self._goreshapeVX, hasReshapeStone)
+	self:_showReshape(false, false)
+
+	for _, mat in ipairs(self._slotmats) do
+		local mpc = mat.mpc
+
+		if mpc.color_01 ~= tenpColor then
+			mpc.color_01 = tenpColor
+
+			mpc:SetProps()
+		end
+	end
+
+	self:_setSlotLevel(isOpenView)
+	gohelper.setActive(self._txttitle.gameObject, not isHasStone)
+	gohelper.setActive(self._golock, not isUnlock)
+	gohelper.setActive(self._gounlock, isUnlock)
+	gohelper.setActive(self._gostone, isHasStone)
+	gohelper.setActive(self._scrolleffect.gameObject, self._isShowReshape or isUnlock and isHasStone)
+	gohelper.setActive(self._gostoneempty.gameObject, not self._isShowReshape and isUnlock and not isHasStone)
+	gohelper.setActive(self._gostonelock.gameObject, not self._isShowReshape and not isUnlock)
+end
+
+function CharacterDestinySlotView:_refreshEmpty()
+	local isHasStone = self._heroMO.destinyStoneMo.curUseStoneId ~= 0
+
+	gohelper.setActive(self._goempty, not isHasStone)
+end
+
+function CharacterDestinySlotView:_setSlotLevel(isOpenView)
+	local destinyStoneMo = self._heroMO.destinyStoneMo
+	local rank = destinyStoneMo.rank
+	local level = destinyStoneMo.level - 1
+
+	for i = 1, destinyStoneMo.maxRank do
+		local alpha = 0.65
+		local progress = 1
+
+		if i < rank then
+			progress = 0
+		elseif rank < i then
+			progress = 1
+			alpha = 0.3
+		else
+			local maxlevel = destinyStoneMo:getRankLevelCount() - 1
+
+			progress = maxlevel ~= 0 and 1 - level / maxlevel or 0
 		end
 
-		local var_43_6 = arg_43_0._slotmats[iter_43_0]
-		local var_43_7 = var_43_6.ms.color
+		local matInfo = self._slotmats[i]
+		local color = matInfo.ms.color
 
-		var_43_7.a = var_43_3
-		var_43_6.ms.color = var_43_7
+		color.a = alpha
+		matInfo.ms.color = color
 
-		local var_43_8 = var_43_6.mpc
-		local var_43_9 = var_43_8.vector_01
-		local var_43_10 = var_43_8.vector_02
+		local mpc = matInfo.mpc
+		local vector1 = mpc.vector_01
+		local vector2 = mpc.vector_02
 
-		if var_43_6._tweenId then
-			ZProj.TweenHelper.KillById(var_43_6._tweenId, false)
+		if matInfo._tweenId then
+			ZProj.TweenHelper.KillById(matInfo._tweenId, false)
 
-			var_43_6._tweenId = nil
+			matInfo._tweenId = nil
 		end
 
-		local var_43_11 = {
-			mpc = var_43_8,
-			vector1 = var_43_9,
-			vector2 = var_43_10
+		local param = {
+			mpc = mpc,
+			vector1 = vector1,
+			vector2 = vector2
 		}
 
-		if not arg_43_1 then
-			if var_43_4 < var_43_10.x then
-				var_43_6._tweenId = ZProj.TweenHelper.DOTweenFloat(var_43_10.x, var_43_4, 0.5, arg_43_0._progressMat, nil, arg_43_0, var_43_11)
+		if not isOpenView then
+			if progress < vector2.x then
+				matInfo._tweenId = ZProj.TweenHelper.DOTweenFloat(vector2.x, progress, 0.5, self._progressMat, nil, self, param)
 			end
 		else
-			arg_43_0:_progressMat(var_43_4, var_43_11)
+			self:_progressMat(progress, param)
 		end
 	end
 end
 
-function var_0_0._openCharacterDestinyStoneView(arg_44_0)
-	if arg_44_0._isPlayingUnlockAnim then
+function CharacterDestinySlotView:_openCharacterDestinyStoneView()
+	if self._isPlayingUnlockAnim then
 		return
 	end
 
-	local var_44_0 = arg_44_0._heroMO.destinyStoneMo:isUnlockSlot() and CharacterDestinyEnum.SlotViewAnim.CloseUnlock or CharacterDestinyEnum.SlotViewAnim.CloseLock
+	local isUnlock = self._heroMO.destinyStoneMo:isUnlockSlot()
+	local animName = isUnlock and CharacterDestinyEnum.SlotViewAnim.CloseUnlock or CharacterDestinyEnum.SlotViewAnim.CloseLock
 
-	arg_44_0._anim:Play(var_44_0, 0, 0)
-	CharacterDestinyController.instance:openCharacterDestinyStoneView(arg_44_0._heroMO)
+	self._anim:Play(animName, 0, 0)
+	CharacterDestinyController.instance:openCharacterDestinyStoneView(self._heroMO)
 end
 
-function var_0_0._progressMat(arg_45_0, arg_45_1, arg_45_2)
-	local var_45_0 = arg_45_2.mpc
+function CharacterDestinySlotView:_progressMat(value, param)
+	local mpc = param.mpc
 
-	var_45_0.vector_01 = Vector4.New(arg_45_2.vector1.x, arg_45_2.vector1.y, arg_45_2.vector1.z, -0.5 + arg_45_1)
-	var_45_0.vector_02 = Vector4.New(arg_45_1, arg_45_2.vector2.y, arg_45_2.vector2.z, arg_45_2.vector2.w)
+	mpc.vector_01 = Vector4.New(param.vector1.x, param.vector1.y, param.vector1.z, -0.5 + value)
+	mpc.vector_02 = Vector4.New(value, param.vector2.y, param.vector2.z, param.vector2.w)
 
-	var_45_0:SetProps()
+	mpc:SetProps()
 end
 
-function var_0_0.isHasEnoughCurrenctLevelUp(arg_46_0, arg_46_1, arg_46_2, arg_46_3)
-	local var_46_0 = arg_46_0._heroMO.destinyStoneMo
+function CharacterDestinySlotView:isHasEnoughCurrenctLevelUp(isShowToast, rank, level)
+	local destinyStoneMo = self._heroMO.destinyStoneMo
 
-	arg_46_2 = arg_46_2 or var_46_0.rank
-	arg_46_3 = arg_46_3 or var_46_0.level
+	rank = rank or destinyStoneMo.rank
+	level = level or destinyStoneMo.level
 
-	local var_46_1 = CharacterDestinyConfig.instance:getNextDestinySlotCo(var_46_0.heroId, arg_46_2, arg_46_3)
+	local nextCo = CharacterDestinyConfig.instance:getNextDestinySlotCo(destinyStoneMo.heroId, rank, level)
 
-	if not var_46_1 then
+	if not nextCo then
 		return
 	end
 
-	local var_46_2 = GameUtil.splitString2(var_46_1.consume, true)
-	local var_46_3
-	local var_46_4
+	local consumeList = GameUtil.splitString2(nextCo.consume, true)
+	local itemCo, icon
 
-	if var_46_2 then
-		for iter_46_0, iter_46_1 in ipairs(var_46_2) do
-			local var_46_5 = iter_46_1[1]
-			local var_46_6 = iter_46_1[2]
-			local var_46_7 = iter_46_1[3]
-			local var_46_8 = arg_46_0._itemConsumeList[var_46_5]
+	if consumeList then
+		for _, consume in ipairs(consumeList) do
+			local type = consume[1]
+			local id = consume[2]
+			local quantity = consume[3]
+			local consumeTypes = self._itemConsumeList[type]
 
-			if not var_46_8 then
-				var_46_8 = {}
-				arg_46_0._itemConsumeList[var_46_5] = var_46_8
+			if not consumeTypes then
+				consumeTypes = {}
+				self._itemConsumeList[type] = consumeTypes
 			end
 
-			if not var_46_8[var_46_6] then
-				var_46_8[var_46_6] = ItemModel.instance:getItemQuantity(var_46_5, var_46_6)
+			if not consumeTypes[id] then
+				consumeTypes[id] = ItemModel.instance:getItemQuantity(type, id)
 			end
 
-			if var_46_7 > arg_46_0._itemConsumeList[var_46_5][var_46_6] then
-				var_46_3, var_46_4 = ItemModel.instance:getItemConfigAndIcon(var_46_5, var_46_6)
+			if quantity > self._itemConsumeList[type][id] then
+				itemCo, icon = ItemModel.instance:getItemConfigAndIcon(type, id)
 
 				break
 			end
 		end
 	end
 
-	if var_46_3 then
-		if arg_46_1 then
-			GameFacade.showToastWithIcon(ToastEnum.NotEnoughId, var_46_4, var_46_3.name)
+	if itemCo then
+		if isShowToast then
+			GameFacade.showToastWithIcon(ToastEnum.NotEnoughId, icon, itemCo.name)
 		end
 
-		return false, var_46_4, var_46_3.name
+		return false, icon, itemCo.name
 	end
 
 	return true
 end
 
-function var_0_0._refreshBtn(arg_47_0, arg_47_1)
-	local var_47_0 = arg_47_0._heroMO.destinyStoneMo
-	local var_47_1 = var_47_0:isUnlockSlot()
-	local var_47_2 = var_47_1 and var_47_0:isSlotMaxLevel()
-	local var_47_3 = var_47_1 and not var_47_2 and var_47_0:isCanUpSlotRank()
-	local var_47_4 = var_47_1 and not var_47_2 and not var_47_0:isCanUpSlotRank()
-	local var_47_5 = not var_47_1 or var_47_3
-	local var_47_6 = arg_47_0._heroMO:isTrial()
+function CharacterDestinySlotView:_refreshBtn(level)
+	local destinyStoneMo = self._heroMO.destinyStoneMo
+	local isUnlock = destinyStoneMo:isUnlockSlot()
+	local isMaxLv = isUnlock and destinyStoneMo:isSlotMaxLevel()
+	local isCanUpRank = isUnlock and not isMaxLv and destinyStoneMo:isCanUpSlotRank()
+	local isCanUpLv = isUnlock and not isMaxLv and not destinyStoneMo:isCanUpSlotRank()
+	local isShowItem = not isUnlock or isCanUpRank
+	local isTrial = self._heroMO:isTrial()
 
-	gohelper.setActive(arg_47_0._gounlockbtn, not var_47_6 and not var_47_1)
-	gohelper.setActive(arg_47_0._gouplv, not var_47_6 and var_47_4)
-	gohelper.setActive(arg_47_0._gouprank, not var_47_6 and var_47_3)
-	gohelper.setActive(arg_47_0._gomax, var_47_1 and var_47_2)
-	gohelper.setActive(arg_47_0._goconsumeitem, not var_47_6 and var_47_5)
-	gohelper.setActive(arg_47_0._gocurrency, not var_47_6 and var_47_4)
+	gohelper.setActive(self._gounlockbtn, not isTrial and not isUnlock)
+	gohelper.setActive(self._gouplv, not isTrial and isCanUpLv)
+	gohelper.setActive(self._gouprank, not isTrial and isCanUpRank)
+	gohelper.setActive(self._gomax, isUnlock and isMaxLv)
+	gohelper.setActive(self._goconsumeitem, not isTrial and isShowItem)
+	gohelper.setActive(self._gocurrency, not isTrial and isCanUpLv)
 
-	arg_47_1 = arg_47_1 or var_47_0.level
-	arg_47_0._canEasyCombine = false
+	level = level or destinyStoneMo.level
+	self._canEasyCombine = false
 
-	local var_47_7 = CharacterDestinyConfig.instance:getNextDestinySlotCo(var_47_0.heroId, var_47_0.rank, arg_47_1)
+	local nextCo = CharacterDestinyConfig.instance:getNextDestinySlotCo(destinyStoneMo.heroId, destinyStoneMo.rank, level)
 
-	if var_47_7 then
-		local var_47_8 = ItemModel.instance:getItemDataListByConfigStr(var_47_7.consume)
+	if nextCo then
+		local consumeList = ItemModel.instance:getItemDataListByConfigStr(nextCo.consume)
 
-		if var_47_5 then
-			arg_47_0._lackedItemDataList = {}
-			arg_47_0._occupyItemDic = {}
+		if isShowItem then
+			self._lackedItemDataList = {}
+			self._occupyItemDic = {}
 
-			IconMgr.instance:getCommonPropItemIconList(arg_47_0, arg_47_0._onConsumeItemCB, var_47_8, arg_47_0._goconsumeitem)
+			IconMgr.instance:getCommonPropItemIconList(self, self._onConsumeItemCB, consumeList, self._goconsumeitem)
 
-			arg_47_0._canEasyCombine, arg_47_0._easyCombineTable = RoomProductionHelper.canEasyCombineItems(arg_47_0._lackedItemDataList, arg_47_0._occupyItemDic)
-			arg_47_0._occupyItemDic = nil
+			self._canEasyCombine, self._easyCombineTable = RoomProductionHelper.canEasyCombineItems(self._lackedItemDataList, self._occupyItemDic)
+			self._occupyItemDic = nil
 		end
 
-		if var_47_4 then
-			arg_47_0:_onRefreshConsumeCurrencyItems(var_47_8)
+		if isCanUpLv then
+			self:_onRefreshConsumeCurrencyItems(consumeList)
 		end
 	end
 
-	gohelper.setActive(arg_47_0._gocaneasycombinetip, arg_47_0._canEasyCombine)
-	arg_47_0:_refreshBtnLevel(var_47_0.level)
+	gohelper.setActive(self._gocaneasycombinetip, self._canEasyCombine)
+	self:_refreshBtnLevel(destinyStoneMo.level)
 end
 
-function var_0_0._onConsumeItemCB(arg_48_0, arg_48_1, arg_48_2, arg_48_3)
-	transformhelper.setLocalScale(arg_48_1.viewGO.transform, 0.6, 0.6, 1)
-	arg_48_1:onUpdateMO(arg_48_2)
-	arg_48_1:setConsume(true)
-	arg_48_1:showStackableNum2()
-	arg_48_1:isShowEffect(true)
-	arg_48_1:setAutoPlay(true)
-	arg_48_1:setCountFontSize(48)
+function CharacterDestinySlotView:_onConsumeItemCB(item, data, index)
+	transformhelper.setLocalScale(item.viewGO.transform, 0.6, 0.6, 1)
+	item:onUpdateMO(data)
+	item:setConsume(true)
+	item:showStackableNum2()
+	item:isShowEffect(true)
+	item:setAutoPlay(true)
+	item:setCountFontSize(48)
 
-	local var_48_0 = arg_48_1:getItemIcon():getCount()
-	local var_48_1 = 170
-	local var_48_2 = var_48_0.gameObject:GetComponent(typeof(UnityEngine.UI.ContentSizeFitter))
+	local txt = item:getItemIcon():getCount()
+	local maxWidth = 170
+	local contentSizeFitter = txt.gameObject:GetComponent(typeof(UnityEngine.UI.ContentSizeFitter))
 
-	var_48_0.enableAutoSizing = true
-	var_48_2.enabled = false
-	var_48_0.fontSizeMax = 48
-	var_48_0.fontSizeMin = 30
-	var_48_0.transform.anchorMax = Vector2(0.5, 0.5)
-	var_48_0.transform.anchorMin = Vector2(0.5, 0.5)
-	var_48_0.transform.pivot = Vector2(0.5, 0.5)
-	var_48_0.alignment = TMPro.TextAlignmentOptions.Center
+	txt.enableAutoSizing = true
+	contentSizeFitter.enabled = false
+	txt.fontSizeMax = 48
+	txt.fontSizeMin = 30
+	txt.transform.anchorMax = Vector2(0.5, 0.5)
+	txt.transform.anchorMin = Vector2(0.5, 0.5)
+	txt.transform.pivot = Vector2(0.5, 0.5)
+	txt.alignment = TMPro.TextAlignmentOptions.Center
 
-	recthelper.setWidth(var_48_0.transform, var_48_1)
-	recthelper.setHeight(var_48_0.transform, 70)
-	arg_48_1:SetCountLocalY(-50)
+	recthelper.setWidth(txt.transform, maxWidth)
+	recthelper.setHeight(txt.transform, 70)
+	item:SetCountLocalY(-50)
 
-	local var_48_3 = arg_48_2.materilType
-	local var_48_4 = arg_48_2.materilId
-	local var_48_5 = arg_48_2.quantity
-	local var_48_6, var_48_7 = ItemModel.instance:getItemIsEnoughText(arg_48_2)
+	local type = data.materilType
+	local id = data.materilId
+	local costQuantity = data.quantity
+	local enoughText, lackedQuantity = ItemModel.instance:getItemIsEnoughText(data)
 
-	if var_48_7 then
-		table.insert(arg_48_0._lackedItemDataList, {
-			type = var_48_3,
-			id = var_48_4,
-			quantity = var_48_7
+	if lackedQuantity then
+		table.insert(self._lackedItemDataList, {
+			type = type,
+			id = id,
+			quantity = lackedQuantity
 		})
 	else
-		if not arg_48_0._occupyItemDic[var_48_3] then
-			arg_48_0._occupyItemDic[var_48_3] = {}
+		if not self._occupyItemDic[type] then
+			self._occupyItemDic[type] = {}
 		end
 
-		arg_48_0._occupyItemDic[var_48_3][var_48_4] = (arg_48_0._occupyItemDic[var_48_3][var_48_4] or 0) + var_48_5
+		self._occupyItemDic[type][id] = (self._occupyItemDic[type][id] or 0) + costQuantity
 	end
 
-	arg_48_1:setCountText(var_48_6)
-	arg_48_1:setOnBeforeClickCallback(JumpController.commonIconBeforeClickSetRecordItem, arg_48_0)
-	arg_48_1:setRecordFarmItem({
-		type = var_48_3,
-		id = var_48_4,
-		quantity = var_48_5
+	item:setCountText(enoughText)
+	item:setOnBeforeClickCallback(JumpController.commonIconBeforeClickSetRecordItem, self)
+	item:setRecordFarmItem({
+		type = type,
+		id = id,
+		quantity = costQuantity
 	})
 end
 
-function var_0_0._onRefreshConsumeCurrencyItems(arg_49_0, arg_49_1)
-	if arg_49_1 then
-		for iter_49_0, iter_49_1 in ipairs(arg_49_1) do
-			arg_49_0:_refreshConsumeCurrencyItem(iter_49_0, iter_49_1)
+function CharacterDestinySlotView:_onRefreshConsumeCurrencyItems(consumeList)
+	if consumeList then
+		for i, consume in ipairs(consumeList) do
+			self:_refreshConsumeCurrencyItem(i, consume)
 		end
 	end
 
-	for iter_49_2 = 1, #arg_49_0._consumeCurrencyItems do
-		gohelper.setActive(arg_49_0._consumeCurrencyItems[iter_49_2].go, arg_49_1 and iter_49_2 <= #arg_49_1)
+	for i = 1, #self._consumeCurrencyItems do
+		gohelper.setActive(self._consumeCurrencyItems[i].go, consumeList and i <= #consumeList)
 	end
 end
 
-function var_0_0._refreshConsumeCurrencyItem(arg_50_0, arg_50_1, arg_50_2)
-	local var_50_0 = arg_50_0:_getConsumeCurrencyItem(arg_50_1)
-	local var_50_1 = ItemModel.instance:getItemConfig(arg_50_2.materilType, arg_50_2.materilId)
+function CharacterDestinySlotView:_refreshConsumeCurrencyItem(i, consume)
+	local item = self:_getConsumeCurrencyItem(i)
+	local co = ItemModel.instance:getItemConfig(consume.materilType, consume.materilId)
 
-	UISpriteSetMgr.instance:setCurrencyItemSprite(var_50_0.icon, var_50_1.icon .. "_1")
+	UISpriteSetMgr.instance:setCurrencyItemSprite(item.icon, co.icon .. "_1")
 
-	var_50_0.consumeBtn = SLFramework.UGUI.UIClickListener.Get(var_50_0.icon.gameObject)
+	item.consumeBtn = SLFramework.UGUI.UIClickListener.Get(item.icon.gameObject)
 
-	var_50_0.consumeBtn:AddClickListener(function()
-		MaterialTipController.instance:showMaterialInfo(arg_50_2.materilType, arg_50_2.materilId)
-	end, arg_50_0)
+	item.consumeBtn:AddClickListener(function()
+		MaterialTipController.instance:showMaterialInfo(consume.materilType, consume.materilId)
+	end, self)
 
-	local var_50_2 = arg_50_0._itemConsumeList[arg_50_2.materilType] and arg_50_0._itemConsumeList[arg_50_2.materilType][arg_50_2.materilId] or ItemModel.instance:getItemQuantity(arg_50_2.materilType, arg_50_2.materilId)
-	local var_50_3 = var_50_2 >= arg_50_2.quantity and "%s/%s" or "<color=#cd5353>%s</color>/%s"
+	local quantity = self._itemConsumeList[consume.materilType] and self._itemConsumeList[consume.materilType][consume.materilId]
+	local cur = quantity or ItemModel.instance:getItemQuantity(consume.materilType, consume.materilId)
+	local lang = cur >= consume.quantity and "%s/%s" or "<color=#cd5353>%s</color>/%s"
 
-	var_50_0.txt.text = string.format(var_50_3, GameUtil.numberDisplay(var_50_2), GameUtil.numberDisplay(arg_50_2.quantity))
+	item.txt.text = string.format(lang, GameUtil.numberDisplay(cur), GameUtil.numberDisplay(consume.quantity))
 end
 
-function var_0_0._refreshLevelUpConsume(arg_52_0, arg_52_1)
-	local var_52_0 = CharacterDestinyConfig.instance:getNextDestinySlotCo(arg_52_0._heroMO.destinyStoneMo.heroId, arg_52_0._heroMO.destinyStoneMo.rank, arg_52_1 - 1)
-	local var_52_1 = CharacterDestinyConfig.instance:getNextDestinySlotCo(arg_52_0._heroMO.destinyStoneMo.heroId, arg_52_0._heroMO.destinyStoneMo.rank, arg_52_1)
+function CharacterDestinySlotView:_refreshLevelUpConsume(level)
+	local co = CharacterDestinyConfig.instance:getNextDestinySlotCo(self._heroMO.destinyStoneMo.heroId, self._heroMO.destinyStoneMo.rank, level - 1)
+	local nextCo = CharacterDestinyConfig.instance:getNextDestinySlotCo(self._heroMO.destinyStoneMo.heroId, self._heroMO.destinyStoneMo.rank, level)
 
-	if var_52_0 then
-		local var_52_2 = ItemModel.instance:getItemDataListByConfigStr(var_52_0.consume)
+	if co then
+		local consumeList = ItemModel.instance:getItemDataListByConfigStr(co.consume)
 
-		if var_52_2 then
-			for iter_52_0, iter_52_1 in ipairs(var_52_2) do
-				local var_52_3 = iter_52_1.materilType
-				local var_52_4 = iter_52_1.materilId
-				local var_52_5 = iter_52_1.quantity
+		if consumeList then
+			for i, consume in ipairs(consumeList) do
+				local type = consume.materilType
+				local id = consume.materilId
+				local quantity = consume.quantity
 
-				if not arg_52_0._itemConsumeList[var_52_3] then
-					arg_52_0._itemConsumeList[var_52_3] = {}
+				if not self._itemConsumeList[type] then
+					self._itemConsumeList[type] = {}
 				end
 
-				local var_52_6 = arg_52_0._itemConsumeList[var_52_3][var_52_4] or ItemModel.instance:getItemQuantity(var_52_3, var_52_4)
+				local curQuantity = self._itemConsumeList[type][id]
 
-				arg_52_0._itemConsumeList[var_52_3][var_52_4] = var_52_6 - var_52_5
+				curQuantity = curQuantity or ItemModel.instance:getItemQuantity(type, id)
+				self._itemConsumeList[type][id] = curQuantity - quantity
 			end
 		end
 	end
 
-	if var_52_1 then
-		local var_52_7 = ItemModel.instance:getItemDataListByConfigStr(var_52_1.consume)
+	if nextCo then
+		local consumeList = ItemModel.instance:getItemDataListByConfigStr(nextCo.consume)
 
-		arg_52_0:_onRefreshConsumeCurrencyItems(var_52_7)
+		self:_onRefreshConsumeCurrencyItems(consumeList)
 	end
 end
 
-function var_0_0._getConsumeCurrencyItem(arg_53_0, arg_53_1)
-	local var_53_0 = arg_53_0._consumeCurrencyItems[arg_53_1]
+function CharacterDestinySlotView:_getConsumeCurrencyItem(index)
+	local item = self._consumeCurrencyItems[index]
 
-	if not var_53_0 then
-		local var_53_1 = gohelper.cloneInPlace(arg_53_0._txtcurrency.gameObject)
+	if not item then
+		local go = gohelper.cloneInPlace(self._txtcurrency.gameObject)
 
-		var_53_0 = arg_53_0:getUserDataTb_()
-		var_53_0.go = var_53_1
-		var_53_0.txt = var_53_1:GetComponent(gohelper.Type_TextMesh)
-		var_53_0.icon = gohelper.findChildImage(var_53_1, "#image_currency")
-		arg_53_0._consumeCurrencyItems[arg_53_1] = var_53_0
+		item = self:getUserDataTb_()
+		item.go = go
+		item.txt = go:GetComponent(gohelper.Type_TextMesh)
+		item.icon = gohelper.findChildImage(go, "#image_currency")
+		self._consumeCurrencyItems[index] = item
 	end
 
-	return var_53_0
+	return item
 end
 
-function var_0_0._refreshBtnLevel(arg_54_0, arg_54_1)
-	local var_54_0 = luaLang("character_destiny_slot_level")
+function CharacterDestinySlotView:_refreshBtnLevel(level)
+	if self._heroMO.destinyStoneMo:isCanUpSlotRank() then
+		return
+	end
 
-	arg_54_1 = math.min(arg_54_0._maxRankLevel, arg_54_1)
-	arg_54_0._txtlv.text = GameUtil.getSubPlaceholderLuaLangTwoParam(var_54_0, arg_54_1, arg_54_0._maxRankLevel)
+	if self._heroMO.destinyStoneMo:isSlotMaxLevel() then
+		return
+	end
+
+	local lang = luaLang("character_destiny_slot_level")
+
+	level = math.min(self._maxRankLevel, level)
+	self._txtlv.text = GameUtil.getSubPlaceholderLuaLangTwoParam(lang, level, self._maxRankLevel)
 end
 
-function var_0_0.onClose(arg_55_0)
-	arg_55_0.isClose = true
+function CharacterDestinySlotView:_showReshape(show, isPlayAnim)
+	gohelper.setActive(self._goreshapeselect, show)
+	gohelper.setActive(self._goreshapeunselect, not show)
+
+	self._isShowReshape = show
+
+	TaskDispatcher.cancelTask(self.showReshapeItem, self)
+
+	if isPlayAnim then
+		self._reshapeAnim:Play(CharacterDestinyEnum.SlotViewAnim.Switch, 0, 0)
+		self._effectAnim:Play(CharacterDestinyEnum.SlotViewAnim.Switch, 0, 0)
+		TaskDispatcher.runDelay(self.showReshapeItem, self, 0.16)
+	else
+		self:showReshapeItem()
+	end
+
+	local stoneCo = self._heroMO.destinyStoneMo:getEquipReshapeStoneCo()
+
+	self._cgReshape.alpha = show and stoneCo == nil and 0.43 or 1
+
+	CharacterDestinyModel.instance:setShowReshape(show)
 end
 
-function var_0_0.onDestroyView(arg_56_0)
-	if arg_56_0._consumeCurrencyItems then
-		for iter_56_0, iter_56_1 in ipairs(arg_56_0._consumeCurrencyItems) do
-			if iter_56_1.consumeBtn then
-				iter_56_1.consumeBtn:RemoveClickListener()
+function CharacterDestinySlotView:showReshapeItem()
+	if self._stoneEffectItem then
+		self._stoneEffectItem:showReshape(self._isShowReshape)
+	end
+
+	local destinyStoneMo = self._heroMO.destinyStoneMo
+	local isUnlock = destinyStoneMo:isUnlockSlot()
+	local stoneId = destinyStoneMo.curUseStoneId
+	local isHasStone = stoneId ~= 0
+
+	gohelper.setActive(self._scrolleffect.gameObject, self._isShowReshape or isUnlock and isHasStone)
+	gohelper.setActive(self._gostoneempty.gameObject, not self._isShowReshape and isUnlock and not isHasStone)
+	gohelper.setActive(self._gostonelock.gameObject, not self._isShowReshape and not isUnlock)
+	gohelper.setActive(self._goreshapefullbg, self._isShowReshape)
+end
+
+function CharacterDestinySlotView:onClose()
+	self.isClose = true
+end
+
+function CharacterDestinySlotView:onDestroyView()
+	if self._consumeCurrencyItems then
+		for _, item in ipairs(self._consumeCurrencyItems) do
+			if item.consumeBtn then
+				item.consumeBtn:RemoveClickListener()
 			end
 		end
 	end
 
-	arg_56_0:_removeEvents()
-	arg_56_0._simagestone:UnLoadImage()
-	TaskDispatcher.cancelTask(arg_56_0._tick, arg_56_0)
-	TaskDispatcher.cancelTask(arg_56_0._refreshAttrPanel, arg_56_0)
+	self:_removeEvents()
+	self._simagestone:UnLoadImage()
+	self._simagestoneName:UnLoadImage()
+	TaskDispatcher.cancelTask(self._tick, self)
+	TaskDispatcher.cancelTask(self._refreshAttrPanel, self)
+	TaskDispatcher.cancelTask(self.showReshapeItem, self)
 
-	if arg_56_0._slotmats then
-		for iter_56_2, iter_56_3 in ipairs(arg_56_0._slotmats) do
-			if iter_56_3._tweenId then
-				ZProj.TweenHelper.KillById(iter_56_3._tweenId, false)
+	if self._slotmats then
+		for _, matInfo in ipairs(self._slotmats) do
+			if matInfo._tweenId then
+				ZProj.TweenHelper.KillById(matInfo._tweenId, false)
 
-				iter_56_3._tweenId = nil
+				matInfo._tweenId = nil
 			end
 		end
 	end
 end
 
-return var_0_0
+return CharacterDestinySlotView

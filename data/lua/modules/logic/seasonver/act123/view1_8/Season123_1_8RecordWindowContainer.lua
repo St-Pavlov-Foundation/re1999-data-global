@@ -1,11 +1,13 @@
-﻿module("modules.logic.seasonver.act123.view1_8.Season123_1_8RecordWindowContainer", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view1_8/Season123_1_8RecordWindowContainer.lua
 
-local var_0_0 = class("Season123_1_8RecordWindowContainer", BaseViewContainer)
+module("modules.logic.seasonver.act123.view1_8.Season123_1_8RecordWindowContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local Season123_1_8RecordWindowContainer = class("Season123_1_8RecordWindowContainer", BaseViewContainer)
+
+function Season123_1_8RecordWindowContainer:buildViews()
 	return {
 		Season123_1_8RecordWindow.New()
 	}
 end
 
-return var_0_0
+return Season123_1_8RecordWindowContainer

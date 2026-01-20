@@ -1,17 +1,19 @@
-﻿module("modules.logic.gm.view.GMAddItemView", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GMAddItemView.lua
 
-local var_0_0 = class("GMAddItemView", BaseView)
+module("modules.logic.gm.view.GMAddItemView", package.seeall)
 
-var_0_0.LevelType = "人物等级"
-var_0_0.HeroAttr = "英雄提升"
-var_0_0.ClickItem = "ClickItem"
-var_0_0.Return = "Return"
+local GMAddItemView = class("GMAddItemView", BaseView)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._allItems = nil
-	arg_1_0._itemListView = nil
-	arg_1_0._rootType = nil
-	arg_1_0.RootTypes = {
+GMAddItemView.LevelType = "人物等级"
+GMAddItemView.HeroAttr = "英雄提升"
+GMAddItemView.ClickItem = "ClickItem"
+GMAddItemView.Return = "Return"
+
+function GMAddItemView:ctor()
+	self._allItems = nil
+	self._itemListView = nil
+	self._rootType = nil
+	self.RootTypes = {
 		{
 			name = "物品",
 			isRoot = 1,
@@ -36,7 +38,7 @@ function var_0_0.ctor(arg_1_0)
 			numTips = "目标等级",
 			name = "人物等级",
 			isRoot = 0,
-			type = var_0_0.LevelType
+			type = GMAddItemView.LevelType
 		},
 		{
 			numTips = "增加经验值",
@@ -52,7 +54,7 @@ function var_0_0.ctor(arg_1_0)
 		{
 			name = "英雄提升",
 			isRoot = 1,
-			type = var_0_0.HeroAttr
+			type = GMAddItemView.HeroAttr
 		},
 		{
 			name = "英雄皮肤",
@@ -92,194 +94,194 @@ function var_0_0.ctor(arg_1_0)
 	}
 end
 
-function var_0_0._checkBuildItems(arg_2_0)
-	local function var_2_0(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-		for iter_3_0 = 1, #arg_3_1 do
-			local var_3_0 = arg_3_1[iter_3_0]
-			local var_3_1 = var_3_0.rare
+function GMAddItemView:_checkBuildItems()
+	local function classify(list, list2, type, numTips)
+		for i = 1, #list2 do
+			local item = list2[i]
+			local rare = item.rare
 
-			table.insert(arg_3_0, {
-				itemId = var_3_0.id,
-				itemIdStr = tostring(var_3_0.id),
-				type = arg_3_2,
-				name = var_3_0.name,
-				rare = var_3_1,
-				numTips = arg_3_3
+			table.insert(list, {
+				itemId = item.id,
+				itemIdStr = tostring(item.id),
+				type = type,
+				name = item.name,
+				rare = rare,
+				numTips = numTips
 			})
 		end
 	end
 
-	if arg_2_0._allItems == nil then
-		arg_2_0._allItems = {}
+	if self._allItems == nil then
+		self._allItems = {}
 
-		local var_2_1 = {
+		local oneMO = {
 			itemId = 0,
 			name = "ALL",
 			numTips = "<size=25>等级#洞悉#共鸣#塑造</size>",
 			itemIdStr = "0",
 			rare = 5,
-			type = var_0_0.HeroAttr
+			type = GMAddItemView.HeroAttr
 		}
 
-		table.insert(arg_2_0._allItems, var_2_1)
-		var_2_0(arg_2_0._allItems, lua_item.configList, MaterialEnum.MaterialType.Item, "物品数量")
-		var_2_0(arg_2_0._allItems, lua_equip.configList, MaterialEnum.MaterialType.Equip, "装备数量")
-		var_2_0(arg_2_0._allItems, lua_currency.configList, MaterialEnum.MaterialType.Currency, "货币数量")
-		var_2_0(arg_2_0._allItems, lua_power_item.configList, MaterialEnum.MaterialType.PowerPotion, "体力药数量")
-		var_2_0(arg_2_0._allItems, lua_character.configList, MaterialEnum.MaterialType.Hero, "英雄数量")
-		var_2_0(arg_2_0._allItems, lua_skin.configList, MaterialEnum.MaterialType.HeroSkin, "英雄服装数量")
-		var_2_0(arg_2_0._allItems, lua_character.configList, MaterialEnum.MaterialType.Faith, "增加英雄信赖值")
-		var_2_0(arg_2_0._allItems, lua_cloth.configList, MaterialEnum.MaterialType.PlayerCloth, "服装数量")
-		var_2_0(arg_2_0._allItems, lua_cloth.configList, MaterialEnum.MaterialType.PlayerClothExp, "增加服装经验值")
-		var_2_0(arg_2_0._allItems, lua_room_building.configList, MaterialEnum.MaterialType.Building, "1")
-		var_2_0(arg_2_0._allItems, lua_formula.configList, MaterialEnum.MaterialType.Formula, "1")
-		var_2_0(arg_2_0._allItems, lua_character.configList, var_0_0.HeroAttr, "<size=25>等级#洞悉#共鸣#塑造</size>")
-		var_2_0(arg_2_0._allItems, lua_block_package.configList, MaterialEnum.MaterialType.BlockPackage, "数量（不用填）")
+		table.insert(self._allItems, oneMO)
+		classify(self._allItems, lua_item.configList, MaterialEnum.MaterialType.Item, "物品数量")
+		classify(self._allItems, lua_equip.configList, MaterialEnum.MaterialType.Equip, "装备数量")
+		classify(self._allItems, lua_currency.configList, MaterialEnum.MaterialType.Currency, "货币数量")
+		classify(self._allItems, lua_power_item.configList, MaterialEnum.MaterialType.PowerPotion, "体力药数量")
+		classify(self._allItems, lua_character.configList, MaterialEnum.MaterialType.Hero, "英雄数量")
+		classify(self._allItems, lua_skin.configList, MaterialEnum.MaterialType.HeroSkin, "英雄服装数量")
+		classify(self._allItems, lua_character.configList, MaterialEnum.MaterialType.Faith, "增加英雄信赖值")
+		classify(self._allItems, lua_cloth.configList, MaterialEnum.MaterialType.PlayerCloth, "服装数量")
+		classify(self._allItems, lua_cloth.configList, MaterialEnum.MaterialType.PlayerClothExp, "增加服装经验值")
+		classify(self._allItems, lua_room_building.configList, MaterialEnum.MaterialType.Building, "1")
+		classify(self._allItems, lua_formula.configList, MaterialEnum.MaterialType.Formula, "1")
+		classify(self._allItems, lua_character.configList, GMAddItemView.HeroAttr, "<size=25>等级#洞悉#共鸣#塑造</size>")
+		classify(self._allItems, lua_block_package.configList, MaterialEnum.MaterialType.BlockPackage, "数量（不用填）")
 	end
 end
 
-function var_0_0.onInitView(arg_4_0)
-	arg_4_0._maskGO = gohelper.findChild(arg_4_0.viewGO, "addItem")
-	arg_4_0._inpItem = gohelper.findChildTextMeshInputField(arg_4_0.viewGO, "viewport/content/item2/inpItem")
-	arg_4_0._txtNumPlaceholder = gohelper.findChildText(arg_4_0.viewGO, "viewport/content/item2/inpNum/Placeholder")
+function GMAddItemView:onInitView()
+	self._maskGO = gohelper.findChild(self.viewGO, "addItem")
+	self._inpItem = gohelper.findChildTextMeshInputField(self.viewGO, "viewport/content/item2/inpItem")
+	self._txtNumPlaceholder = gohelper.findChildText(self.viewGO, "viewport/content/item2/inpNum/Placeholder")
 
-	arg_4_0:_hideScroll()
+	self:_hideScroll()
 end
 
-function var_0_0.addEvents(arg_5_0)
-	SLFramework.UGUI.UIClickListener.Get(arg_5_0._inpItem.gameObject):AddClickListener(arg_5_0._onClickInpItem, arg_5_0, nil)
-	SLFramework.UGUI.UIClickListener.Get(arg_5_0._maskGO):AddClickListener(arg_5_0._onClickMask, arg_5_0, nil)
-	arg_5_0._inpItem:AddOnValueChanged(arg_5_0._onInpValueChanged, arg_5_0)
+function GMAddItemView:addEvents()
+	SLFramework.UGUI.UIClickListener.Get(self._inpItem.gameObject):AddClickListener(self._onClickInpItem, self, nil)
+	SLFramework.UGUI.UIClickListener.Get(self._maskGO):AddClickListener(self._onClickMask, self, nil)
+	self._inpItem:AddOnValueChanged(self._onInpValueChanged, self)
 end
 
-function var_0_0.removeEvents(arg_6_0)
-	SLFramework.UGUI.UIClickListener.Get(arg_6_0._inpItem.gameObject):RemoveClickListener()
-	SLFramework.UGUI.UIClickListener.Get(arg_6_0._maskGO):RemoveClickListener()
-	arg_6_0._inpItem:RemoveOnValueChanged()
+function GMAddItemView:removeEvents()
+	SLFramework.UGUI.UIClickListener.Get(self._inpItem.gameObject):RemoveClickListener()
+	SLFramework.UGUI.UIClickListener.Get(self._maskGO):RemoveClickListener()
+	self._inpItem:RemoveOnValueChanged()
 end
 
-function var_0_0.onOpen(arg_7_0)
-	GMController.instance:registerCallback(var_0_0.ClickItem, arg_7_0._onClickItem, arg_7_0)
-	GMController.instance:registerCallback(var_0_0.Return, arg_7_0._onClickReturn, arg_7_0)
+function GMAddItemView:onOpen()
+	GMController.instance:registerCallback(GMAddItemView.ClickItem, self._onClickItem, self)
+	GMController.instance:registerCallback(GMAddItemView.Return, self._onClickReturn, self)
 end
 
-function var_0_0.onClose(arg_8_0)
-	GMController.instance:unregisterCallback(var_0_0.ClickItem, arg_8_0._onClickItem, arg_8_0)
-	GMController.instance:unregisterCallback(var_0_0.Return, arg_8_0._onClickReturn, arg_8_0)
+function GMAddItemView:onClose()
+	GMController.instance:unregisterCallback(GMAddItemView.ClickItem, self._onClickItem, self)
+	GMController.instance:unregisterCallback(GMAddItemView.Return, self._onClickReturn, self)
 end
 
-function var_0_0._onClickInpItem(arg_9_0)
-	arg_9_0:_showScroll()
+function GMAddItemView:_onClickInpItem()
+	self:_showScroll()
 end
 
-function var_0_0._onClickMask(arg_10_0)
-	arg_10_0:_hideScroll()
+function GMAddItemView:_onClickMask()
+	self:_hideScroll()
 end
 
-function var_0_0._showScroll(arg_11_0)
-	gohelper.setActive(arg_11_0._maskGO, true)
-	arg_11_0:_checkBuildItems()
+function GMAddItemView:_showScroll()
+	gohelper.setActive(self._maskGO, true)
+	self:_checkBuildItems()
 
-	arg_11_0._rootType = nil
+	self._rootType = nil
 
-	arg_11_0:_showDefaultItems()
+	self:_showDefaultItems()
 end
 
-function var_0_0._hideScroll(arg_12_0)
-	gohelper.setActive(arg_12_0._maskGO, false)
+function GMAddItemView:_hideScroll()
+	gohelper.setActive(self._maskGO, false)
 
-	arg_12_0._rootType = nil
+	self._rootType = nil
 
 	GMAddItemModel.instance:clear()
 end
 
-function var_0_0._onClickItem(arg_13_0, arg_13_1)
-	if not arg_13_1.type then
+function GMAddItemView:_onClickItem(mo)
+	if not mo.type then
 		return
 	end
 
-	if arg_13_1.isRoot == 1 then
-		arg_13_0._rootType = arg_13_1.type
+	if mo.isRoot == 1 then
+		self._rootType = mo.type
 
-		arg_13_0:_showTargetItems()
+		self:_showTargetItems()
 	else
-		arg_13_0._inpItem:SetText(arg_13_1.type .. "#" .. (arg_13_1.itemIdStr or ""))
-		arg_13_0:_hideScroll()
+		self._inpItem:SetText(mo.type .. "#" .. (mo.itemIdStr or ""))
+		self:_hideScroll()
 	end
 
-	arg_13_0._txtNumPlaceholder.text = string.nilorempty(arg_13_1.numTips) and "Num" or arg_13_1.numTips
+	self._txtNumPlaceholder.text = string.nilorempty(mo.numTips) and "Num" or mo.numTips
 end
 
-function var_0_0._onClickReturn(arg_14_0, arg_14_1)
-	arg_14_0._rootType = nil
+function GMAddItemView:_onClickReturn(mo)
+	self._rootType = nil
 
-	arg_14_0:_showDefaultItems()
+	self:_showDefaultItems()
 end
 
-function var_0_0._onInpValueChanged(arg_15_0, arg_15_1)
-	arg_15_0._rootType = nil
+function GMAddItemView:_onInpValueChanged(inputStr)
+	self._rootType = nil
 
-	if string.nilorempty(arg_15_1) then
-		arg_15_0:_showDefaultItems()
+	if string.nilorempty(inputStr) then
+		self:_showDefaultItems()
 	else
-		arg_15_0:_showTargetItems()
+		self:_showTargetItems()
 	end
 end
 
-function var_0_0._showDefaultItems(arg_16_0)
-	GMAddItemModel.instance:setList(arg_16_0.RootTypes)
+function GMAddItemView:_showDefaultItems()
+	GMAddItemModel.instance:setList(self.RootTypes)
 end
 
-function var_0_0._showTargetItems(arg_17_0)
-	if not arg_17_0._allItems then
+function GMAddItemView:_showTargetItems()
+	if not self._allItems then
 		return
 	end
 
-	if arg_17_0._rootType then
-		local var_17_0 = 2
-		local var_17_1 = {}
+	if self._rootType then
+		local idCounter = 2
+		local toShowItems = {}
 
-		table.insert(var_17_1, {
+		table.insert(toShowItems, {
 			id = 1,
 			name = "返回",
 			type = 0
 		})
 
-		for iter_17_0 = 1, #arg_17_0._allItems do
-			local var_17_2 = arg_17_0._allItems[iter_17_0]
+		for i = 1, #self._allItems do
+			local item = self._allItems[i]
 
-			if var_17_2.type == arg_17_0._rootType then
-				var_17_2.id = var_17_0
-				var_17_0 = var_17_0 + 1
+			if item.type == self._rootType then
+				item.id = idCounter
+				idCounter = idCounter + 1
 
-				table.insert(var_17_1, var_17_2)
+				table.insert(toShowItems, item)
 			end
 		end
 
-		GMAddItemModel.instance:setList(var_17_1)
+		GMAddItemModel.instance:setList(toShowItems)
 	else
-		local var_17_3 = arg_17_0._inpItem:GetText()
+		local itemIdStr = self._inpItem:GetText()
 
-		if not string.nilorempty(var_17_3) then
-			local var_17_4 = 1
-			local var_17_5 = {}
+		if not string.nilorempty(itemIdStr) then
+			local idCounter = 1
+			local toShowItems = {}
 
-			for iter_17_1 = 1, #arg_17_0._allItems do
-				local var_17_6 = arg_17_0._allItems[iter_17_1]
+			for i = 1, #self._allItems do
+				local item = self._allItems[i]
 
-				if string.find(var_17_6.name, var_17_3) or string.find(var_17_6.itemIdStr, var_17_3) then
-					var_17_6.id = var_17_4
-					var_17_4 = var_17_4 + 1
+				if string.find(item.name, itemIdStr) or string.find(item.itemIdStr, itemIdStr) then
+					item.id = idCounter
+					idCounter = idCounter + 1
 
-					table.insert(var_17_5, var_17_6)
+					table.insert(toShowItems, item)
 				end
 			end
 
-			GMAddItemModel.instance:setList(var_17_5)
+			GMAddItemModel.instance:setList(toShowItems)
 		else
-			GMAddItemModel.instance:setList(arg_17_0.RootTypes)
+			GMAddItemModel.instance:setList(self.RootTypes)
 		end
 	end
 end
 
-return var_0_0
+return GMAddItemView

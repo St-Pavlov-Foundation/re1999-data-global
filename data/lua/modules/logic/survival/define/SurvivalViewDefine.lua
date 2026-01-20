@@ -1,12 +1,14 @@
-﻿module("modules.logic.survival.define.SurvivalViewDefine", package.seeall)
+﻿-- chunkname: @modules/logic/survival/define/SurvivalViewDefine.lua
 
-local var_0_0 = class("SurvivalViewDefine")
+module("modules.logic.survival.define.SurvivalViewDefine", package.seeall)
 
-function var_0_0.init(arg_1_0)
-	var_0_0.initMapDefine(arg_1_0)
-	var_0_0.initShelterDefine(arg_1_0)
+local SurvivalViewDefine = class("SurvivalViewDefine")
 
-	arg_1_0.SurvivalView = {
+function SurvivalViewDefine.init(module_views)
+	SurvivalViewDefine.initMapDefine(module_views)
+	SurvivalViewDefine.initShelterDefine(module_views)
+
+	module_views.SurvivalView = {
 		destroy = 0,
 		container = "SurvivalViewContainer",
 		mainRes = "ui/viewres/survival/map/survivalview.prefab",
@@ -25,7 +27,7 @@ function var_0_0.init(arg_1_0)
 			infoView = "ui/viewres/survival/map/survivalmapbaginfoview.prefab"
 		}
 	}
-	arg_1_0.SurvivalShelterRewardView = {
+	module_views.SurvivalShelterRewardView = {
 		bgBlur = 0,
 		container = "SurvivalShelterRewardViewContainer",
 		destroy = 0,
@@ -44,7 +46,7 @@ function var_0_0.init(arg_1_0)
 			itemRes = "ui/viewres/survival/shelter/survivalshelterrewarditem.prefab"
 		}
 	}
-	arg_1_0.SurvivalItemInfoView = {
+	module_views.SurvivalItemInfoView = {
 		destroy = 0,
 		container = "SurvivalItemInfoViewContainer",
 		mainRes = "ui/viewres/survival/map/survivalmapbaginfoview.prefab",
@@ -52,7 +54,7 @@ function var_0_0.init(arg_1_0)
 		viewType = ViewType.Normal,
 		anim = ViewAnim.Default
 	}
-	arg_1_0.SurvivalCurrencyTipView = {
+	module_views.SurvivalCurrencyTipView = {
 		destroy = 0,
 		container = "SurvivalCurrencyTipViewContainer",
 		mainRes = "ui/viewres/survival/map/survivalcurrencytipview.prefab",
@@ -60,7 +62,7 @@ function var_0_0.init(arg_1_0)
 		viewType = ViewType.Normal,
 		anim = ViewAnim.Default
 	}
-	arg_1_0.SurvivalHandbookView = {
+	module_views.SurvivalHandbookView = {
 		destroy = 0,
 		container = "SurvivalHandbookViewContainer",
 		mainRes = "ui/viewres/survival/handbook/survivalhandbookview.prefab",
@@ -83,7 +85,7 @@ function var_0_0.init(arg_1_0)
 			}
 		}
 	}
-	arg_1_0.SurvivalHandbookInfoView = {
+	module_views.SurvivalHandbookInfoView = {
 		destroy = 0,
 		container = "SurvivalHandbookInfoViewContainer",
 		bgBlur = 1,
@@ -95,7 +97,7 @@ function var_0_0.init(arg_1_0)
 			infoView = "ui/viewres/survival/map/survivalmapbaginfoview.prefab"
 		}
 	}
-	arg_1_0.SurvivalRewardInheritView = {
+	module_views.SurvivalRewardInheritView = {
 		destroy = 0,
 		container = "SurvivalRewardInheritViewContainer",
 		maskAlpha = 0,
@@ -111,7 +113,7 @@ function var_0_0.init(arg_1_0)
 			survivalnpcheaditem = "ui/viewres/survival/shelter/survivalnpcheaditem.prefab"
 		}
 	}
-	arg_1_0.SurvivalRewardSelectView = {
+	module_views.SurvivalRewardSelectView = {
 		bgBlur = 1,
 		container = "SurvivalRewardSelectViewContainer",
 		maskAlpha = 0,
@@ -128,7 +130,7 @@ function var_0_0.init(arg_1_0)
 			survivalnpcheaditem = "ui/viewres/survival/shelter/survivalnpcheaditem.prefab"
 		}
 	}
-	arg_1_0.SurvivalReputationSelectView = {
+	module_views.SurvivalReputationSelectView = {
 		destroy = 0,
 		container = "SurvivalReputationSelectViewContainer",
 		mainRes = "ui/viewres/survival/reputation/survivalreputationselectview.prefab",
@@ -141,7 +143,7 @@ function var_0_0.init(arg_1_0)
 			survivalreputationbuilditem = "ui/viewres/survival/reputation/survivalreputationbuilditem.prefab"
 		}
 	}
-	arg_1_0.SurvivalReputationShopView = {
+	module_views.SurvivalReputationShopView = {
 		destroy = 0,
 		container = "SurvivalReputationShopViewContainer",
 		mainRes = "ui/viewres/survival/reputation/survivalreputationshopview.prefab",
@@ -160,7 +162,7 @@ function var_0_0.init(arg_1_0)
 			infoView = "ui/viewres/survival/map/survivalmapbaginfoview.prefab"
 		}
 	}
-	arg_1_0.SurvivalCommonTipsView = {
+	module_views.SurvivalCommonTipsView = {
 		destroy = 10,
 		container = "SurvivalCommonTipsViewContainer",
 		bgBlur = 0,
@@ -171,8 +173,8 @@ function var_0_0.init(arg_1_0)
 	}
 end
 
-function var_0_0.initMapDefine(arg_2_0)
-	arg_2_0.SurvivalMapMainView = {
+function SurvivalViewDefine.initMapDefine(module_views)
+	module_views.SurvivalMapMainView = {
 		destroy = 0,
 		container = "SurvivalMapMainViewContainer",
 		mainRes = "ui/viewres/survival/map/survivalmapmainview.prefab",
@@ -192,7 +194,7 @@ function var_0_0.initMapDefine(arg_2_0)
 			unititem = "ui/viewres/survival/map/survivalmapunititem.prefab"
 		}
 	}
-	arg_2_0.SurvivalMapEventView = {
+	module_views.SurvivalMapEventView = {
 		destroy = 0,
 		container = "SurvivalMapEventViewContainer",
 		bgBlur = 4,
@@ -206,7 +208,7 @@ function var_0_0.initMapDefine(arg_2_0)
 			infoView = "ui/viewres/survival/map/survivalmapbaginfoview.prefab"
 		}
 	}
-	arg_2_0.SurvivalMapSearchView = {
+	module_views.SurvivalMapSearchView = {
 		destroy = 0,
 		container = "SurvivalMapSearchViewContainer",
 		bgBlur = 4,
@@ -219,7 +221,7 @@ function var_0_0.initMapDefine(arg_2_0)
 			itemRes = "ui/viewres/survival/map/survivalmapbagitem.prefab"
 		}
 	}
-	arg_2_0.SurvivalMapBagView = {
+	module_views.SurvivalMapBagView = {
 		destroy = 0,
 		container = "SurvivalMapBagViewContainer",
 		bgBlur = 4,
@@ -232,7 +234,7 @@ function var_0_0.initMapDefine(arg_2_0)
 			infoView = "ui/viewres/survival/map/survivalmapbaginfoview.prefab"
 		}
 	}
-	arg_2_0.SurvivalMapResultView = {
+	module_views.SurvivalMapResultView = {
 		destroy = 0,
 		container = "SurvivalMapResultViewContainer",
 		bgBlur = 4,
@@ -245,7 +247,7 @@ function var_0_0.initMapDefine(arg_2_0)
 			infoView = "ui/viewres/survival/map/survivalmapbaginfoview.prefab"
 		}
 	}
-	arg_2_0.SurvivalMapResultPanelView = {
+	module_views.SurvivalMapResultPanelView = {
 		destroy = 0,
 		container = "SurvivalMapResultPanelViewContainer",
 		maskAlpha = 0,
@@ -254,7 +256,7 @@ function var_0_0.initMapDefine(arg_2_0)
 		viewType = ViewType.Modal,
 		anim = ViewAnim.Default
 	}
-	arg_2_0.SurvivalInitTeamView = {
+	module_views.SurvivalInitTeamView = {
 		bgBlur = 1,
 		container = "SurvivalInitTeamViewContainer",
 		destroy = 0,
@@ -277,7 +279,7 @@ function var_0_0.initMapDefine(arg_2_0)
 			initHeroItemSmall = "ui/viewres/survival/map/survivalinitherosmallitem.prefab"
 		}
 	}
-	arg_2_0.SurvivalMapTeamView = {
+	module_views.SurvivalMapTeamView = {
 		bgBlur = 4,
 		container = "SurvivalMapTeamViewContainer",
 		destroy = 0,
@@ -298,7 +300,7 @@ function var_0_0.initMapDefine(arg_2_0)
 			infoView = "ui/viewres/survival/map/survivalpartnermanageinfoview.prefab"
 		}
 	}
-	arg_2_0.SurvivalNPCSelectView = {
+	module_views.SurvivalNPCSelectView = {
 		destroy = 0,
 		container = "SurvivalNPCSelectViewContainer",
 		mainRes = "ui/viewres/survival/map/survivalnpcselectview.prefab",
@@ -309,7 +311,7 @@ function var_0_0.initMapDefine(arg_2_0)
 			infoView = "ui/viewres/survival/map/survivalpartnermanageinfoview.prefab"
 		}
 	}
-	arg_2_0.SurvivalPickAssistView = {
+	module_views.SurvivalPickAssistView = {
 		destroy = 0,
 		container = "SurvivalPickAssistViewContainer",
 		mainRes = "ui/viewres/pickassist/pickassistview.prefab",
@@ -326,7 +328,7 @@ function var_0_0.initMapDefine(arg_2_0)
 			[1] = "ui/viewres/pickassist/pickassistitem.prefab"
 		}
 	}
-	arg_2_0.SurvivalInitHeroSelectView = {
+	module_views.SurvivalInitHeroSelectView = {
 		container = "SurvivalInitHeroSelectViewContainer",
 		destroy = 5,
 		mainRes = "ui/viewres/survival/map/survivalinitselectheroeditview.prefab",
@@ -348,7 +350,7 @@ function var_0_0.initMapDefine(arg_2_0)
 			"bg"
 		}
 	}
-	arg_2_0.SurvivalLoadingView = {
+	module_views.SurvivalLoadingView = {
 		destroy = 0,
 		container = "SurvivalLoadingViewContainer",
 		mainRes = "ui/viewres/survival/map/survivalloadingview.prefab",
@@ -358,14 +360,14 @@ function var_0_0.initMapDefine(arg_2_0)
 			[1] = "singlebg/survival_singlebg/loading/survival_loading_fullbg.png"
 		}
 	}
-	arg_2_0.SurvivalToastView = {
+	module_views.SurvivalToastView = {
 		destroy = 0,
 		container = "SurvivalToastViewContainer",
 		mainRes = "ui/viewres/survival/map/survivaltoastview.prefab",
 		layer = "MESSAGE",
 		viewType = ViewType.Normal
 	}
-	arg_2_0.SurvivalLogView = {
+	module_views.SurvivalLogView = {
 		bgBlur = 4,
 		container = "SurvivalLogViewContainer",
 		destroy = 0,
@@ -373,7 +375,7 @@ function var_0_0.initMapDefine(arg_2_0)
 		layer = "POPUP_TOP",
 		viewType = ViewType.Modal
 	}
-	arg_2_0.SurvivalCommitItemView = {
+	module_views.SurvivalCommitItemView = {
 		bgBlur = 4,
 		container = "SurvivalCommitItemViewContainer",
 		destroy = 0,
@@ -386,7 +388,7 @@ function var_0_0.initMapDefine(arg_2_0)
 			infoView = "ui/viewres/survival/map/survivalmapbaginfoview.prefab"
 		}
 	}
-	arg_2_0.SurvivalHeroGroupFightView = {
+	module_views.SurvivalHeroGroupFightView = {
 		bgBlur = 4,
 		container = "SurvivalHeroGroupFightViewContainer",
 		destroy = 0,
@@ -410,7 +412,7 @@ function var_0_0.initMapDefine(arg_2_0)
 			[1] = "ui/viewres/fight/clothskill.prefab"
 		}
 	}
-	arg_2_0.SurvivalHeroGroupEditView = {
+	module_views.SurvivalHeroGroupEditView = {
 		container = "SurvivalHeroGroupEditViewContainer",
 		destroy = 5,
 		mainRes = "ui/viewres/survival/map/survivalherogroupeditview.prefab",
@@ -432,7 +434,7 @@ function var_0_0.initMapDefine(arg_2_0)
 			"bg"
 		}
 	}
-	arg_2_0.SurvivalDropSelectView = {
+	module_views.SurvivalDropSelectView = {
 		destroy = 0,
 		container = "SurvivalDropSelectViewContainer",
 		maskAlpha = 0,
@@ -443,7 +445,7 @@ function var_0_0.initMapDefine(arg_2_0)
 			infoView = "ui/viewres/survival/map/survivalmapbaginfoview.prefab"
 		}
 	}
-	arg_2_0.SurvivalShopView = {
+	module_views.SurvivalShopView = {
 		bgBlur = 4,
 		container = "SurvivalShopViewContainer",
 		destroy = 0,
@@ -456,7 +458,7 @@ function var_0_0.initMapDefine(arg_2_0)
 			infoView = "ui/viewres/survival/map/survivalmapbaginfoview.prefab"
 		}
 	}
-	arg_2_0.SurvivalGetRewardView = {
+	module_views.SurvivalGetRewardView = {
 		destroy = 0,
 		container = "SurvivalGetRewardViewContainer",
 		maskAlpha = 0,
@@ -469,8 +471,8 @@ function var_0_0.initMapDefine(arg_2_0)
 	}
 end
 
-function var_0_0.initShelterDefine(arg_3_0)
-	arg_3_0.SurvivalMainView = {
+function SurvivalViewDefine.initShelterDefine(module_views)
+	module_views.SurvivalMainView = {
 		destroy = 0,
 		container = "SurvivalMainViewContainer",
 		mainRes = "ui/viewres/survival/shelter/survivalmainview.prefab",
@@ -489,7 +491,7 @@ function var_0_0.initShelterDefine(arg_3_0)
 			survivalbossinvasionview = "ui/viewres/survival/shelter/survivalbossinvasionview.prefab"
 		}
 	}
-	arg_3_0.SurvivalHardView = {
+	module_views.SurvivalHardView = {
 		destroy = 0,
 		container = "SurvivalHardViewContainer",
 		mainRes = "ui/viewres/survival/map/survivalselectdifficultyview.prefab",
@@ -504,7 +506,7 @@ function var_0_0.initShelterDefine(arg_3_0)
 			}
 		}
 	}
-	arg_3_0.SurvivalSelectTalentTreeView = {
+	module_views.SurvivalSelectTalentTreeView = {
 		bgBlur = 1,
 		container = "SurvivalSelectTalentTreeViewContainer",
 		destroy = 0,
@@ -523,7 +525,7 @@ function var_0_0.initShelterDefine(arg_3_0)
 			survivalmapbagitem = "ui/viewres/survival/map/survivalmapbagitem.prefab"
 		}
 	}
-	arg_3_0.SurvivalEquipView = {
+	module_views.SurvivalEquipView = {
 		bgBlur = 4,
 		container = "SurvivalEquipViewContainer",
 		destroy = 0,
@@ -543,7 +545,7 @@ function var_0_0.initShelterDefine(arg_3_0)
 			infoView = "ui/viewres/survival/map/survivalmapbaginfoview.prefab"
 		}
 	}
-	arg_3_0.SurvivalEquipOverView = {
+	module_views.SurvivalEquipOverView = {
 		destroy = 0,
 		container = "SurvivalEquipOverViewContainer",
 		bgBlur = 4,
@@ -556,7 +558,7 @@ function var_0_0.initShelterDefine(arg_3_0)
 			infoView = "ui/viewres/survival/map/survivalmapbaginfoview.prefab"
 		}
 	}
-	arg_3_0.ShelterHeroGroupFightView = {
+	module_views.ShelterHeroGroupFightView = {
 		bgBlur = 4,
 		container = "ShelterHeroGroupFightViewContainer",
 		destroy = 0,
@@ -580,7 +582,7 @@ function var_0_0.initShelterDefine(arg_3_0)
 			[1] = "ui/viewres/fight/clothskill.prefab"
 		}
 	}
-	arg_3_0.ShelterTaskView = {
+	module_views.ShelterTaskView = {
 		destroy = 0,
 		container = "ShelterTaskViewContainer",
 		mainRes = "ui/viewres/survival/map/survivaltaskview.prefab",
@@ -598,7 +600,7 @@ function var_0_0.initShelterDefine(arg_3_0)
 			itemRes = "ui/viewres/survival/map/survivalmapbagitem.prefab"
 		}
 	}
-	arg_3_0.ShelterNpcManagerView = {
+	module_views.ShelterNpcManagerView = {
 		destroy = 0,
 		container = "ShelterNpcManagerViewContainer",
 		mainRes = "ui/viewres/survival/map/survivalpartnermanageview.prefab",
@@ -616,7 +618,7 @@ function var_0_0.initShelterDefine(arg_3_0)
 			infoView = "ui/viewres/survival/map/survivalpartnermanageinfoview.prefab"
 		}
 	}
-	arg_3_0.ShelterBuildingManagerView = {
+	module_views.ShelterBuildingManagerView = {
 		destroy = 0,
 		container = "ShelterBuildingManagerViewContainer",
 		mainRes = "ui/viewres/survival/map/survivalbuildingmanageview.prefab",
@@ -634,7 +636,7 @@ function var_0_0.initShelterDefine(arg_3_0)
 			infoView = "ui/viewres/survival/map/survivalpartnermanageinfoview.prefab"
 		}
 	}
-	arg_3_0.ShelterTentManagerView = {
+	module_views.ShelterTentManagerView = {
 		destroy = 0,
 		container = "ShelterTentManagerViewContainer",
 		mainRes = "ui/viewres/survival/map/survivaltentmanageview.prefab",
@@ -652,7 +654,7 @@ function var_0_0.initShelterDefine(arg_3_0)
 			infoView = "ui/viewres/survival/map/survivalpartnermanageinfoview.prefab"
 		}
 	}
-	arg_3_0.ShelterRestManagerView = {
+	module_views.ShelterRestManagerView = {
 		destroy = 0,
 		container = "ShelterRestManagerViewContainer",
 		mainRes = "ui/viewres/survival/map/survivalrestmanageview.prefab",
@@ -671,7 +673,7 @@ function var_0_0.initShelterDefine(arg_3_0)
 			infoView = "ui/viewres/survival/map/survivalpartnermanageinfoview.prefab"
 		}
 	}
-	arg_3_0.ShelterRestHeroSelectView = {
+	module_views.ShelterRestHeroSelectView = {
 		container = "ShelterRestHeroSelectViewContainer",
 		destroy = 5,
 		mainRes = "ui/viewres/survival/map/survivalinitselectheroeditview.prefab",
@@ -693,7 +695,7 @@ function var_0_0.initShelterDefine(arg_3_0)
 			"bg"
 		}
 	}
-	arg_3_0.ShelterMapEventView = {
+	module_views.ShelterMapEventView = {
 		destroy = 0,
 		container = "ShelterMapEventViewContainer",
 		bgBlur = 1,
@@ -707,7 +709,7 @@ function var_0_0.initShelterDefine(arg_3_0)
 			infoView = "ui/viewres/survival/map/survivalmapbaginfoview.prefab"
 		}
 	}
-	arg_3_0.SurvivalMonsterEventView = {
+	module_views.SurvivalMonsterEventView = {
 		destroy = 0,
 		container = "SurvivalMonsterEventViewContainer",
 		bgBlur = 1,
@@ -716,14 +718,14 @@ function var_0_0.initShelterDefine(arg_3_0)
 		viewType = ViewType.Modal,
 		anim = ViewAnim.Default
 	}
-	arg_3_0.SurvivalNpcStationView = {
+	module_views.SurvivalNpcStationView = {
 		destroy = 0,
 		container = "SurvivalNpcStationViewContainer",
 		mainRes = "ui/viewres/survival/map/survivalnpcstationview.prefab",
 		layer = "POPUP_TOP",
 		viewType = ViewType.Modal
 	}
-	arg_3_0.SurvivalDecreeView = {
+	module_views.SurvivalDecreeView = {
 		destroy = 0,
 		container = "SurvivalDecreeViewContainer",
 		mainRes = "ui/viewres/survival/map/survivaldecreeview.prefab",
@@ -742,7 +744,7 @@ function var_0_0.initShelterDefine(arg_3_0)
 			infoView = "ui/viewres/survival/map/survivalpartnermanageinfoview.prefab"
 		}
 	}
-	arg_3_0.SurvivalDecreeSelectView = {
+	module_views.SurvivalDecreeSelectView = {
 		destroy = 0,
 		container = "SurvivalDecreeSelectViewContainer",
 		mainRes = "ui/viewres/survival/map/survivaldecreeselectview.prefab",
@@ -750,7 +752,7 @@ function var_0_0.initShelterDefine(arg_3_0)
 		viewType = ViewType.Modal,
 		anim = ViewAnim.Default
 	}
-	arg_3_0.SurvivalDecreeVoteView = {
+	module_views.SurvivalDecreeVoteView = {
 		destroy = 0,
 		container = "SurvivalDecreeVoteViewContainer",
 		mainRes = "ui/viewres/survival/map/survivaldecreevoteview.prefab",
@@ -761,7 +763,7 @@ function var_0_0.initShelterDefine(arg_3_0)
 			itemRes = "ui/viewres/survival/map/survivaldecreevoteitem.prefab"
 		}
 	}
-	arg_3_0.ShelterMapBagView = {
+	module_views.ShelterMapBagView = {
 		destroy = 0,
 		container = "ShelterMapBagViewContainer",
 		bgBlur = 4,
@@ -774,7 +776,7 @@ function var_0_0.initShelterDefine(arg_3_0)
 			infoView = "ui/viewres/survival/map/survivalmapbaginfoview.prefab"
 		}
 	}
-	arg_3_0.ShelterHeroWareHouseView = {
+	module_views.ShelterHeroWareHouseView = {
 		container = "ShelterHeroWareHouseViewContainer",
 		destroy = 0,
 		mainRes = "ui/viewres/survival/shelter/survivalherowarehouseview.prefab",
@@ -795,7 +797,7 @@ function var_0_0.initShelterDefine(arg_3_0)
 			"bg"
 		}
 	}
-	arg_3_0.ShelterRecruitView = {
+	module_views.ShelterRecruitView = {
 		destroy = 0,
 		container = "ShelterRecruitViewContainer",
 		bgBlur = 1,
@@ -804,7 +806,7 @@ function var_0_0.initShelterDefine(arg_3_0)
 		viewType = ViewType.Normal,
 		anim = ViewAnim.Default
 	}
-	arg_3_0.ShelterCompositeView = {
+	module_views.ShelterCompositeView = {
 		bgBlur = 1,
 		container = "ShelterCompositeViewContainer",
 		destroy = 0,
@@ -824,7 +826,7 @@ function var_0_0.initShelterDefine(arg_3_0)
 			infoView = "ui/viewres/survival/map/survivalmapbaginfoview.prefab"
 		}
 	}
-	arg_3_0.ShelterCompositeSuccessView = {
+	module_views.ShelterCompositeSuccessView = {
 		bgBlur = 1,
 		container = "ShelterCompositeSuccessViewContainer",
 		maskAlpha = 0,
@@ -837,7 +839,7 @@ function var_0_0.initShelterDefine(arg_3_0)
 			infoView = "ui/viewres/survival/map/survivalmapbaginfoview.prefab"
 		}
 	}
-	arg_3_0.SurvivalCeremonyClosingView = {
+	module_views.SurvivalCeremonyClosingView = {
 		destroy = 0,
 		container = "SurvivalCeremonyClosingViewContainer",
 		bgBlur = 1,
@@ -849,7 +851,7 @@ function var_0_0.initShelterDefine(arg_3_0)
 			itemRes = "ui/viewres/survival/map/survivalmapbagitem.prefab"
 		}
 	}
-	arg_3_0.SurvivalBootyChooseView = {
+	module_views.SurvivalBootyChooseView = {
 		destroy = 0,
 		container = "SurvivalBootyChooseViewContainer",
 		bgBlur = 1,
@@ -864,7 +866,7 @@ function var_0_0.initShelterDefine(arg_3_0)
 			itemRes = "ui/viewres/survival/map/survivalmapbagitem.prefab"
 		}
 	}
-	arg_3_0.SurvivalReportView = {
+	module_views.SurvivalReportView = {
 		destroy = 0,
 		container = "SurvivalReportViewContainer",
 		bgBlur = 1,
@@ -873,7 +875,7 @@ function var_0_0.initShelterDefine(arg_3_0)
 		viewType = ViewType.Modal,
 		anim = ViewAnim.Default
 	}
-	arg_3_0.SurvivalEventPanelView = {
+	module_views.SurvivalEventPanelView = {
 		destroy = 0,
 		container = "SurvivalEventPanelViewContainer",
 		bgBlur = 1,
@@ -882,7 +884,7 @@ function var_0_0.initShelterDefine(arg_3_0)
 		viewType = ViewType.Modal,
 		anim = ViewAnim.Default
 	}
-	arg_3_0.SurvivalBossInvadeView = {
+	module_views.SurvivalBossInvadeView = {
 		destroy = 0,
 		container = "SurvivalBossInvadeViewContainer",
 		bgBlur = 1,
@@ -891,7 +893,7 @@ function var_0_0.initShelterDefine(arg_3_0)
 		viewType = ViewType.Modal,
 		anim = ViewAnim.Default
 	}
-	arg_3_0.SurvivalShelterResultPanelView = {
+	module_views.SurvivalShelterResultPanelView = {
 		destroy = 0,
 		container = "SurvivalShelterResultPanelViewContainer",
 		maskAlpha = 0,
@@ -900,7 +902,7 @@ function var_0_0.initShelterDefine(arg_3_0)
 		viewType = ViewType.Modal,
 		anim = ViewAnim.Default
 	}
-	arg_3_0.SurvivalSummaryActView = {
+	module_views.SurvivalSummaryActView = {
 		destroy = 0,
 		container = "SurvivalSummaryActViewContainer",
 		mainRes = "ui/viewres/survival/shelter/survivalsummaryactview.prefab",
@@ -910,4 +912,4 @@ function var_0_0.initShelterDefine(arg_3_0)
 	}
 end
 
-return var_0_0
+return SurvivalViewDefine

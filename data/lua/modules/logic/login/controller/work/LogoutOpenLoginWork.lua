@@ -1,18 +1,20 @@
-﻿module("modules.logic.login.controller.work.LogoutOpenLoginWork", package.seeall)
+﻿-- chunkname: @modules/logic/login/controller/work/LogoutOpenLoginWork.lua
 
-local var_0_0 = class("LogoutOpenLoginWork", BaseWork)
+module("modules.logic.login.controller.work.LogoutOpenLoginWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local LogoutOpenLoginWork = class("LogoutOpenLoginWork", BaseWork)
+
+function LogoutOpenLoginWork:ctor()
 	return
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
+function LogoutOpenLoginWork:onStart(context)
 	LoginController.instance:login({
 		userManualLogout = true,
 		isModuleLogout = true,
-		isSdkLogout = arg_2_1.isSdkLogout
+		isSdkLogout = context.isSdkLogout
 	})
-	arg_2_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return LogoutOpenLoginWork

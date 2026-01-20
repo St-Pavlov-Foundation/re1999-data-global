@@ -1,11 +1,13 @@
-﻿module("modules.logic.season.model.Activity104ProgressListModel", package.seeall)
+﻿-- chunkname: @modules/logic/season/model/Activity104ProgressListModel.lua
 
-local var_0_0 = class("Activity104ProgressListModel", ListScrollModel)
+module("modules.logic.season.model.Activity104ProgressListModel", package.seeall)
 
-function var_0_0.setProgressList(arg_1_0, arg_1_1)
-	arg_1_0:setList(arg_1_1)
+local Activity104ProgressListModel = class("Activity104ProgressListModel", ListScrollModel)
+
+function Activity104ProgressListModel:setProgressList(infos)
+	self:setList(infos)
 end
 
-var_0_0.instance = var_0_0.New()
+Activity104ProgressListModel.instance = Activity104ProgressListModel.New()
 
-return var_0_0
+return Activity104ProgressListModel

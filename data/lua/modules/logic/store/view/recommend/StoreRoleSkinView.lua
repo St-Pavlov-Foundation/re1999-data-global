@@ -1,123 +1,120 @@
-﻿module("modules.logic.store.view.recommend.StoreRoleSkinView", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/recommend/StoreRoleSkinView.lua
 
-local var_0_0 = class("StoreRoleSkinView", StoreRecommendBaseSubView)
+module("modules.logic.store.view.recommend.StoreRoleSkinView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/#simage_bg")
-	arg_1_0._simagesignature1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/left/role1/#simage_signature1")
-	arg_1_0._simagesignature2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/left/role2/#simage_signature2")
-	arg_1_0._txtdurationTime = gohelper.findChildText(arg_1_0.viewGO, "view/right/time/#txt_durationTime")
-	arg_1_0._btnbuy = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/right/#btn_buy")
+local StoreRoleSkinView = class("StoreRoleSkinView", StoreRecommendBaseSubView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function StoreRoleSkinView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "view/#simage_bg")
+	self._simagesignature1 = gohelper.findChildSingleImage(self.viewGO, "view/left/role1/#simage_signature1")
+	self._simagesignature2 = gohelper.findChildSingleImage(self.viewGO, "view/left/role2/#simage_signature2")
+	self._txtdurationTime = gohelper.findChildText(self.viewGO, "view/right/time/#txt_durationTime")
+	self._btnbuy = gohelper.findChildButtonWithAudio(self.viewGO, "view/right/#btn_buy")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnbuy:AddClickListener(arg_2_0._btnbuyOnClick, arg_2_0)
+function StoreRoleSkinView:addEvents()
+	self._btnbuy:AddClickListener(self._btnbuyOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnbuy:RemoveClickListener()
+function StoreRoleSkinView:removeEvents()
+	self._btnbuy:RemoveClickListener()
 end
 
-function var_0_0._btnbuyOnClick(arg_4_0)
+function StoreRoleSkinView:_btnbuyOnClick()
 	StatController.instance:track(StatEnum.EventName.ClickRecommendPage, {
 		[StatEnum.EventProperties.RecommendPageType] = StatEnum.RecommendType.Store,
-		[StatEnum.EventProperties.RecommendPageId] = tostring(arg_4_0.config and arg_4_0.config.id or ""),
-		[StatEnum.EventProperties.RecommendPageName] = arg_4_0.config and arg_4_0.config.name or "StoreRoleSkinView",
-		[StatEnum.EventProperties.RecommendPageRank] = arg_4_0:getTabIndex()
+		[StatEnum.EventProperties.RecommendPageId] = tostring(self.config and self.config.id or ""),
+		[StatEnum.EventProperties.RecommendPageName] = self.config and self.config.name or "StoreRoleSkinView",
+		[StatEnum.EventProperties.RecommendPageRank] = self:getTabIndex()
 	})
 
-	local var_4_0 = {}
+	local skinGoods = {}
 
-	if arg_4_0.config.relations and not string.nilorempty(arg_4_0.config.relations) then
-		local var_4_1 = string.split(arg_4_0.config.relations, "|")
+	if self.config.relations and not string.nilorempty(self.config.relations) then
+		local relations = string.split(self.config.relations, "|")
 
-		for iter_4_0, iter_4_1 in pairs(var_4_1) do
-			local var_4_2 = string.splitToNumber(iter_4_1, "#")
+		for _, relation in pairs(relations) do
+			local goods = string.splitToNumber(relation, "#")
 
-			if var_4_2[1] == 5 then
-				table.insert(var_4_0, var_4_2[2])
+			if goods[1] == 5 then
+				table.insert(skinGoods, goods[2])
 			end
 		end
 	end
 
-	local var_4_3 = {}
+	local unSoldOutGoods = {}
 
-	for iter_4_2, iter_4_3 in ipairs(var_4_0) do
-		local var_4_4 = StoreModel.instance:getGoodsMO(iter_4_3)
+	for _, skinGood in ipairs(skinGoods) do
+		local skinGoodMo = StoreModel.instance:getGoodsMO(skinGood)
+		local has = skinGoodMo:alreadyHas()
 
-		if not var_4_4:alreadyHas() then
-			table.insert(var_4_3, var_4_4)
+		if not has then
+			table.insert(unSoldOutGoods, skinGoodMo)
 		end
 	end
 
-	if #var_4_3 < 1 then
+	if #unSoldOutGoods < 1 then
 		return
 	end
 
-	if #var_4_0 == 1 then
-		ViewMgr.instance:openView(ViewName.StoreSkinPreviewView, {
-			goodsMO = var_4_3[1]
-		})
-	elseif #var_4_3 > 0 then
-		GameFacade.jumpByAdditionParam(arg_4_0.config.systemJumpCode .. "#" .. tostring(var_4_3[1].goodsId) .. "#1")
-	end
+	GameFacade.jumpByAdditionParam(self.config.systemJumpCode .. "#" .. tostring(unSoldOutGoods[1].goodsId) .. "#1")
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._txtprice = gohelper.findChildText(arg_5_0.viewGO, "view/left/#txt_price")
-	arg_5_0._animator = arg_5_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_5_0._animatorPlayer = SLFramework.AnimatorPlayer.Get(arg_5_0.viewGO)
-	arg_5_0._txtprice = gohelper.findChildText(arg_5_0.viewGO, "view/left/#txt_price")
+function StoreRoleSkinView:_editableInitView()
+	self._txtprice = gohelper.findChildText(self.viewGO, "view/left/#txt_price")
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._animatorPlayer = SLFramework.AnimatorPlayer.Get(self.viewGO)
+	self._txtprice = gohelper.findChildText(self.viewGO, "view/left/#txt_price")
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function StoreRoleSkinView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	var_0_0.super.onOpen(arg_7_0)
-	arg_7_0:refreshUI()
+function StoreRoleSkinView:onOpen()
+	StoreRoleSkinView.super.onOpen(self)
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_8_0)
-	arg_8_0.config = arg_8_0.config or StoreConfig.instance:getStoreRecommendConfig(StoreEnum.RecommendSubStoreId.StoreRoleSkinView)
-	arg_8_0._txtdurationTime.text = StoreController.instance:getRecommendStoreTime(arg_8_0.config)
+function StoreRoleSkinView:refreshUI()
+	self.config = self.config or StoreConfig.instance:getStoreRecommendConfig(StoreEnum.RecommendSubStoreId.StoreRoleSkinView)
+	self._txtdurationTime.text = StoreController.instance:getRecommendStoreTime(self.config)
 
-	if arg_8_0._txtprice then
-		local var_8_0, var_8_1 = arg_8_0:_getCostSymbolAndPrice(arg_8_0.config.systemJumpCode)
+	if self._txtprice then
+		local symbol1, price1 = self:_getCostSymbolAndPrice(self.config.systemJumpCode)
 
-		if var_8_0 then
-			arg_8_0._txtprice.text = string.format("%s%s", var_8_0, var_8_1)
+		if symbol1 then
+			self._txtprice.text = string.format("%s%s", symbol1, price1)
 		end
 	end
 end
 
-function var_0_0.onClose(arg_9_0)
+function StoreRoleSkinView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_10_0)
+function StoreRoleSkinView:onDestroyView()
 	return
 end
 
-function var_0_0._getCostSymbolAndPrice(arg_11_0, arg_11_1)
-	if not arg_11_1 or arg_11_1 == "" then
+function StoreRoleSkinView:_getCostSymbolAndPrice(systemJumpCode)
+	if not systemJumpCode or systemJumpCode == "" then
 		return
 	end
 
-	local var_11_0 = string.splitToNumber(arg_11_1, "#")
+	local paramsList = string.splitToNumber(systemJumpCode, "#")
 
-	if type(var_11_0) ~= "table" and #var_11_0 < 2 then
+	if type(paramsList) ~= "table" and #paramsList < 2 then
 		return
 	end
 
-	local var_11_1 = var_11_0[2]
+	local jumpGoodsId = paramsList[2]
 
-	return PayModel.instance:getProductPrice(var_11_1), ""
+	return PayModel.instance:getProductPrice(jumpGoodsId), ""
 end
 
-return var_0_0
+return StoreRoleSkinView

@@ -1,565 +1,575 @@
-﻿module("modules.logic.herogroup.view.HeroGroupFightViewLevel", package.seeall)
+﻿-- chunkname: @modules/logic/herogroup/view/HeroGroupFightViewLevel.lua
 
-local var_0_0 = class("HeroGroupFightViewLevel", BaseView)
+module("modules.logic.herogroup.view.HeroGroupFightViewLevel", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gobalanceEffect = gohelper.findChild(arg_1_0.viewGO, "#go_balance")
-	arg_1_0._simageleft = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_balance/#simage_left")
-	arg_1_0._simageright = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_balance/#simage_right")
-	arg_1_0._gohardEffect = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_hardEffect")
-	arg_1_0._gonormalcondition = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_normalcondition")
-	arg_1_0._txtnormalcondition = gohelper.findChildText(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_normalcondition/#txt_normalcondition")
-	arg_1_0._gonormalfinish = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_normalcondition/#go_normalfinish")
-	arg_1_0._gonormalunfinish = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_normalcondition/#go_normalunfinish")
-	arg_1_0._goplatinumcondition = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_platinumcondition")
-	arg_1_0._txtplatinumcondition = gohelper.findChildText(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_platinumcondition/#txt_platinumcondition")
-	arg_1_0._goplatinumfinish = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_platinumcondition/#go_platinumfinish")
-	arg_1_0._goplatinumunfinish = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_platinumcondition/#go_platinumunfinish")
-	arg_1_0._goplatinumcondition2 = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_platinumcondition2")
-	arg_1_0._txtplatinumcondition2 = gohelper.findChildText(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_platinumcondition2/#txt_platinumcondition")
-	arg_1_0._goplatinumfinish2 = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_platinumcondition2/#go_platinumfinish")
-	arg_1_0._goplatinumunfinish2 = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_platinumcondition2/#go_platinumunfinish")
-	arg_1_0._gohardplatinumcondition = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_hardplatinumcondition")
-	arg_1_0._txthardplatinumcondition = gohelper.findChildText(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_hardplatinumcondition/#txt_hardplatinumcondition")
-	arg_1_0._gohardplatinumfinish = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_hardplatinumcondition/#go_hardplatinumfinish")
-	arg_1_0._gohardplatinumunfinish = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_hardplatinumcondition/#go_hardunfinish")
-	arg_1_0._gohardcondition = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_hardcondition")
-	arg_1_0._txthardcondition = gohelper.findChildText(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_hardcondition/#txt_hardcondition")
-	arg_1_0._gohardfinish = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_hardcondition/#go_hardfinish")
-	arg_1_0._gohardunfinish = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_hardcondition/#go_hardunfinish")
-	arg_1_0._gohardconditionlock = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_hardconditionlock")
-	arg_1_0._gotargetlist = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList")
-	arg_1_0._btnenemy = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/enemycontain/enemytitle/#btn_enemy")
-	arg_1_0._enemylist = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/enemycontain/enemyList/#go_enemyteam/enemyList")
-	arg_1_0._txtrecommendlevel = gohelper.findChildText(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/enemycontain/recommendtxt/#txt_recommendLevel")
-	arg_1_0._goenemyteam = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/enemycontain/enemyList/#go_enemyteam")
-	arg_1_0._gocount = gohelper.findChild(arg_1_0.viewGO, "#go_container/btnContain/#go_cost/#go_count")
-	arg_1_0._goReplayBtn = gohelper.findChild(arg_1_0.viewGO, "#go_container/btnContain/btnReplay")
-	arg_1_0._gorecommendattr = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/enemycontain/#go_recommendAttr")
-	arg_1_0._goattritem = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/enemycontain/#go_recommendAttr/attrlist/#go_attritem")
-	arg_1_0._txtrecommonddes = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/enemycontain/#go_recommendAttr/#txt_recommonddes")
-	arg_1_0._goadditionrule = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/#go_additionRule")
-	arg_1_0._goplace = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_place")
-	arg_1_0._gostar3 = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/text/starcontainer/#go_star3")
-	arg_1_0._gostar2 = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/text/starcontainer/#go_star2")
-	arg_1_0._gostar1 = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/text/starcontainer/#go_star1")
-	arg_1_0._btnOffer = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/#btn_Offer")
+local HeroGroupFightViewLevel = class("HeroGroupFightViewLevel", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function HeroGroupFightViewLevel:onInitView()
+	self._gobalanceEffect = gohelper.findChild(self.viewGO, "#go_balance")
+	self._simageleft = gohelper.findChildSingleImage(self.viewGO, "#go_balance/#simage_left")
+	self._simageright = gohelper.findChildSingleImage(self.viewGO, "#go_balance/#simage_right")
+	self._gohardEffect = gohelper.findChild(self.viewGO, "#go_container/#go_hardEffect")
+	self._gonormalcondition = gohelper.findChild(self.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_normalcondition")
+	self._txtnormalcondition = gohelper.findChildText(self.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_normalcondition/#txt_normalcondition")
+	self._gonormalfinish = gohelper.findChild(self.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_normalcondition/#go_normalfinish")
+	self._gonormalunfinish = gohelper.findChild(self.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_normalcondition/#go_normalunfinish")
+	self._goplatinumcondition = gohelper.findChild(self.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_platinumcondition")
+	self._txtplatinumcondition = gohelper.findChildText(self.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_platinumcondition/#txt_platinumcondition")
+	self._goplatinumfinish = gohelper.findChild(self.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_platinumcondition/#go_platinumfinish")
+	self._goplatinumunfinish = gohelper.findChild(self.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_platinumcondition/#go_platinumunfinish")
+	self._goplatinumcondition2 = gohelper.findChild(self.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_platinumcondition2")
+	self._txtplatinumcondition2 = gohelper.findChildText(self.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_platinumcondition2/#txt_platinumcondition")
+	self._goplatinumfinish2 = gohelper.findChild(self.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_platinumcondition2/#go_platinumfinish")
+	self._goplatinumunfinish2 = gohelper.findChild(self.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_platinumcondition2/#go_platinumunfinish")
+	self._gohardplatinumcondition = gohelper.findChild(self.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_hardplatinumcondition")
+	self._txthardplatinumcondition = gohelper.findChildText(self.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_hardplatinumcondition/#txt_hardplatinumcondition")
+	self._gohardplatinumfinish = gohelper.findChild(self.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_hardplatinumcondition/#go_hardplatinumfinish")
+	self._gohardplatinumunfinish = gohelper.findChild(self.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_hardplatinumcondition/#go_hardunfinish")
+	self._gohardcondition = gohelper.findChild(self.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_hardcondition")
+	self._txthardcondition = gohelper.findChildText(self.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_hardcondition/#txt_hardcondition")
+	self._gohardfinish = gohelper.findChild(self.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_hardcondition/#go_hardfinish")
+	self._gohardunfinish = gohelper.findChild(self.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_hardcondition/#go_hardunfinish")
+	self._gohardconditionlock = gohelper.findChild(self.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_hardconditionlock")
+	self._gotargetlist = gohelper.findChild(self.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList")
+	self._btnenemy = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/#scroll_info/infocontain/enemycontain/enemytitle/#btn_enemy")
+	self._enemylist = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/#scroll_info/infocontain/enemycontain/enemyList/#go_enemyteam/enemyList")
+	self._txtrecommendlevel = gohelper.findChildText(self.viewGO, "#go_container/#scroll_info/infocontain/enemycontain/recommendtxt/#txt_recommendLevel")
+	self._goenemyteam = gohelper.findChild(self.viewGO, "#go_container/#scroll_info/infocontain/enemycontain/enemyList/#go_enemyteam")
+	self._gocount = gohelper.findChild(self.viewGO, "#go_container/btnContain/#go_cost/#go_count")
+	self._goReplayBtn = gohelper.findChild(self.viewGO, "#go_container/btnContain/btnReplay")
+	self._gorecommendattr = gohelper.findChild(self.viewGO, "#go_container/#scroll_info/infocontain/enemycontain/#go_recommendAttr")
+	self._goattritem = gohelper.findChild(self.viewGO, "#go_container/#scroll_info/infocontain/enemycontain/#go_recommendAttr/attrlist/#go_attritem")
+	self._txtrecommonddes = gohelper.findChildTextMesh(self.viewGO, "#go_container/#scroll_info/infocontain/enemycontain/#go_recommendAttr/#txt_recommonddes")
+	self._goadditionrule = gohelper.findChild(self.viewGO, "#go_container/#scroll_info/infocontain/#go_additionRule")
+	self._goplace = gohelper.findChild(self.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_place")
+	self._gostar3 = gohelper.findChild(self.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/text/starcontainer/#go_star3")
+	self._gostar2 = gohelper.findChild(self.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/text/starcontainer/#go_star2")
+	self._gostar1 = gohelper.findChild(self.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/text/starcontainer/#go_star1")
+	self._btnOffer = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/#btn_Offer")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnenemy:AddClickListener(arg_2_0._btnenemyOnClick, arg_2_0)
-	arg_2_0._enemylist:AddClickListener(arg_2_0._btnenemyOnClick, arg_2_0)
+function HeroGroupFightViewLevel:addEvents()
+	self._btnenemy:AddClickListener(self._btnenemyOnClick, self)
+	self._enemylist:AddClickListener(self._btnenemyOnClick, self)
 
-	if arg_2_0._btnOffer then
-		arg_2_0._btnOffer:AddClickListener(arg_2_0._btnOfferOnClick, arg_2_0)
+	if self._btnOffer then
+		self._btnOffer:AddClickListener(self._btnOfferOnClick, self)
 	end
 
-	arg_2_0:addEventCb(arg_2_0.viewContainer, HeroGroupEvent.SwitchBalance, arg_2_0._refreshUI, arg_2_0)
+	self:addEventCb(self.viewContainer, HeroGroupEvent.SwitchBalance, self._refreshUI, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnenemy:RemoveClickListener()
-	arg_3_0._enemylist:RemoveClickListener()
+function HeroGroupFightViewLevel:removeEvents()
+	self._btnenemy:RemoveClickListener()
+	self._enemylist:RemoveClickListener()
 
-	if arg_3_0._btnOffer then
-		arg_3_0._btnOffer:RemoveClickListener()
+	if self._btnOffer then
+		self._btnOffer:RemoveClickListener()
 	end
 
-	arg_3_0:removeEventCb(arg_3_0.viewContainer, HeroGroupEvent.SwitchBalance, arg_3_0._refreshUI, arg_3_0)
+	self:removeEventCb(self.viewContainer, HeroGroupEvent.SwitchBalance, self._refreshUI, self)
 end
 
-function var_0_0._btnenemyOnClick(arg_4_0)
-	local var_4_0 = DungeonConfig.instance:getEpisodeCO(arg_4_0._episodeId)
+function HeroGroupFightViewLevel:_btnenemyOnClick()
+	local episodeConfig = DungeonConfig.instance:getEpisodeCO(self._episodeId)
 
-	if var_4_0.type == DungeonEnum.EpisodeType.WeekWalk then
-		local var_4_1 = WeekWalkModel.instance:getCurMapId()
+	if episodeConfig.type == DungeonEnum.EpisodeType.WeekWalk then
+		local mapId = WeekWalkModel.instance:getCurMapId()
 
-		EnemyInfoController.instance:openWeekWalkEnemyInfoView(var_4_1, arg_4_0._battleId)
+		EnemyInfoController.instance:openWeekWalkEnemyInfoView(mapId, self._battleId)
 
 		return
-	elseif var_4_0.type == DungeonEnum.EpisodeType.Cachot then
+	elseif episodeConfig.type == DungeonEnum.EpisodeType.Cachot then
 		-- block empty
-	elseif var_4_0.type == DungeonEnum.EpisodeType.BossRush then
-		local var_4_2 = BossRushConfig.instance:getActivityId()
-		local var_4_3, var_4_4 = BossRushConfig.instance:tryGetStageAndLayerByEpisodeId(arg_4_0._episodeId)
+	elseif episodeConfig.type == DungeonEnum.EpisodeType.BossRush then
+		local actId = BossRushConfig.instance:getActivityId()
+		local stage, layer = BossRushConfig.instance:tryGetStageAndLayerByEpisodeId(self._episodeId)
 
-		EnemyInfoController.instance:openBossRushEnemyInfoView(var_4_2, var_4_3, var_4_4)
+		EnemyInfoController.instance:openBossRushEnemyInfoView(actId, stage, layer)
 
 		return
 	end
 
-	EnemyInfoController.instance:openEnemyInfoViewByBattleId(arg_4_0._battleId)
+	EnemyInfoController.instance:openEnemyInfoViewByBattleId(self._battleId)
 end
 
-function var_0_0._btnOfferOnClick(arg_5_0)
+function HeroGroupFightViewLevel:_btnOfferOnClick()
 	BossRushController.instance:openBossRushOfferRoleView()
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._monsterGroupItemList = {}
+function HeroGroupFightViewLevel:_editableInitView()
+	self._monsterGroupItemList = {}
 
-	gohelper.addUIClickAudio(arg_6_0._btnenemy.gameObject, AudioEnum.UI.play_ui_formation_monstermessage)
-	arg_6_0._simageleft:LoadImage(ResUrl.getHeroGroupBg("herogroup_bg_balanceleft"))
-	arg_6_0._simageright:LoadImage(ResUrl.getHeroGroupBg("herogroup_bg_balanceright"))
+	gohelper.addUIClickAudio(self._btnenemy.gameObject, AudioEnum.UI.play_ui_formation_monstermessage)
+	self._simageleft:LoadImage(ResUrl.getHeroGroupBg("herogroup_bg_balanceleft"))
+	self._simageright:LoadImage(ResUrl.getHeroGroupBg("herogroup_bg_balanceright"))
 end
 
-function var_0_0._refreshUI(arg_7_0)
-	arg_7_0._episodeId = HeroGroupModel.instance.episodeId
-	arg_7_0._battleId = HeroGroupModel.instance.battleId
+function HeroGroupFightViewLevel:_refreshUI()
+	self._episodeId = HeroGroupModel.instance.episodeId
+	self._battleId = HeroGroupModel.instance.battleId
 
-	local var_7_0 = DungeonModel.instance.curSendChapterId
+	local chapterId = DungeonModel.instance.curSendChapterId
 
-	if var_7_0 then
-		local var_7_1 = DungeonConfig.instance:getChapterCO(var_7_0)
+	if chapterId then
+		local chapterCo = DungeonConfig.instance:getChapterCO(chapterId)
 
-		arg_7_0._isSimple = var_7_1 and var_7_1.type == DungeonEnum.ChapterType.Simple
+		self._isSimple = chapterCo and chapterCo.type == DungeonEnum.ChapterType.Simple
 	end
 
-	arg_7_0:_refreshTarget()
-	arg_7_0:_showEnemyList()
-	arg_7_0:_recommendCareer()
+	self:_refreshTarget()
+	self:_showEnemyList()
+	self:_recommendCareer()
 end
 
-function var_0_0._refreshTarget(arg_8_0)
-	local var_8_0 = DungeonConfig.instance:getEpisodeCO(arg_8_0._episodeId)
-	local var_8_1 = DungeonConfig.instance:getChapterCO(var_8_0.chapterId)
+function HeroGroupFightViewLevel:_refreshTarget()
+	local episodeConfig = DungeonConfig.instance:getEpisodeCO(self._episodeId)
+	local chapterConfig = DungeonConfig.instance:getChapterCO(episodeConfig.chapterId)
 
-	gohelper.setActive(arg_8_0._gotargetlist, true)
+	gohelper.setActive(self._gotargetlist, true)
 
-	local var_8_2 = var_8_1.type == DungeonEnum.ChapterType.Hard
+	local isHardMode = chapterConfig.type == DungeonEnum.ChapterType.Hard
 
-	gohelper.setActive(arg_8_0._gohardEffect, var_8_2)
-	gohelper.setActive(arg_8_0._gobalanceEffect, HeroGroupBalanceHelper.getIsBalanceMode())
+	gohelper.setActive(self._gohardEffect, isHardMode)
+	gohelper.setActive(self._gobalanceEffect, HeroGroupBalanceHelper.getIsBalanceMode())
 
-	arg_8_0._isHardMode = var_8_2
+	self._isHardMode = isHardMode
 
-	local var_8_3
-	local var_8_4
+	local normalEpisodeId, hardEpisodeId
 
-	if var_8_2 then
-		var_8_4 = arg_8_0._episodeId
-		var_8_3 = var_8_0.preEpisode
+	if isHardMode then
+		hardEpisodeId = self._episodeId
+		normalEpisodeId = episodeConfig.preEpisode
 	else
-		var_8_3 = arg_8_0._episodeId
+		normalEpisodeId = self._episodeId
 
-		local var_8_5 = var_8_3 and DungeonConfig.instance:getHardEpisode(var_8_3)
+		local hardEpisodeConfig = normalEpisodeId and DungeonConfig.instance:getHardEpisode(normalEpisodeId)
 
-		var_8_4 = var_8_5 and var_8_5.id
+		hardEpisodeId = hardEpisodeConfig and hardEpisodeConfig.id
 	end
 
-	local var_8_6 = var_8_3 and DungeonModel.instance:getEpisodeInfo(var_8_3)
-	local var_8_7 = var_8_4 and DungeonModel.instance:getEpisodeInfo(var_8_4)
-	local var_8_8 = var_8_3 and DungeonModel.instance:hasPassLevelAndStory(var_8_3)
-	local var_8_9 = var_8_3 and DungeonConfig.instance:getEpisodeAdvancedConditionText(var_8_3)
-	local var_8_10 = var_8_4 and DungeonConfig.instance:getEpisodeAdvancedConditionText(var_8_4)
-	local var_8_11 = DungeonModel.instance:isOpenHardDungeon(var_8_0.chapterId)
-	local var_8_12 = true
+	local normalEpisodeInfo = normalEpisodeId and DungeonModel.instance:getEpisodeInfo(normalEpisodeId)
+	local hardEpisodeInfo = hardEpisodeId and DungeonModel.instance:getEpisodeInfo(hardEpisodeId)
+	local passStory = normalEpisodeId and DungeonModel.instance:hasPassLevelAndStory(normalEpisodeId)
+	local advancedConditionText = normalEpisodeId and DungeonConfig.instance:getEpisodeAdvancedConditionText(normalEpisodeId)
+	local advancedConditionTextHard = hardEpisodeId and DungeonConfig.instance:getEpisodeAdvancedConditionText(hardEpisodeId)
+	local hardOpen = DungeonModel.instance:isOpenHardDungeon(episodeConfig.chapterId)
+	local isOnlyShowOneTarget = true
 
-	if var_8_2 then
-		gohelper.setActive(arg_8_0._gohardcondition, true)
+	if isHardMode then
+		gohelper.setActive(self._gohardcondition, true)
 
-		arg_8_0._txthardcondition.text = DungeonConfig.instance:getFirstEpisodeWinConditionText(var_8_4)
+		self._txthardcondition.text = DungeonConfig.instance:getFirstEpisodeWinConditionText(hardEpisodeId)
 
-		local var_8_13 = var_8_7.star >= DungeonEnum.StarType.Normal and var_8_8
+		local passHard = hardEpisodeInfo.star >= DungeonEnum.StarType.Normal and passStory
 
-		gohelper.setActive(arg_8_0._gohardfinish, var_8_13)
-		gohelper.setActive(arg_8_0._gohardunfinish, not var_8_13)
-		ZProj.UGUIHelper.SetColorAlpha(arg_8_0._txthardcondition, var_8_13 and 1 or 0.63)
-		gohelper.setActive(arg_8_0._gohardplatinumcondition, not string.nilorempty(var_8_10))
+		gohelper.setActive(self._gohardfinish, passHard)
+		gohelper.setActive(self._gohardunfinish, not passHard)
+		ZProj.UGUIHelper.SetColorAlpha(self._txthardcondition, passHard and 1 or 0.63)
+		gohelper.setActive(self._gohardplatinumcondition, not string.nilorempty(advancedConditionTextHard))
 
-		local var_8_14 = var_8_7.star >= DungeonEnum.StarType.Advanced and var_8_8
+		local passAdvanced = hardEpisodeInfo.star >= DungeonEnum.StarType.Advanced and passStory
 
-		if not string.nilorempty(var_8_10) then
-			arg_8_0._txthardplatinumcondition.text = var_8_10
+		if not string.nilorempty(advancedConditionTextHard) then
+			self._txthardplatinumcondition.text = advancedConditionTextHard
 
-			gohelper.setActive(arg_8_0._gohardplatinumfinish, var_8_14)
-			gohelper.setActive(arg_8_0._gohardplatinumunfinish, not var_8_14)
-			ZProj.UGUIHelper.SetColorAlpha(arg_8_0._txthardplatinumcondition, var_8_14 and 1 or 0.63)
+			gohelper.setActive(self._gohardplatinumfinish, passAdvanced)
+			gohelper.setActive(self._gohardplatinumunfinish, not passAdvanced)
+			ZProj.UGUIHelper.SetColorAlpha(self._txthardplatinumcondition, passAdvanced and 1 or 0.63)
 
-			var_8_12 = false
+			isOnlyShowOneTarget = false
 		end
 
-		arg_8_0:_showStar(var_8_7, var_8_10, var_8_13, var_8_14)
-	elseif arg_8_0._isSimple then
-		local var_8_15 = DungeonModel.instance:getEpisodeInfo(arg_8_0._episodeId)
-		local var_8_16 = var_8_15 and var_8_15.star >= DungeonEnum.StarType.Normal and var_8_8
+		self:_showStar(hardEpisodeInfo, advancedConditionTextHard, passHard, passAdvanced)
+	elseif self._isSimple then
+		local simpleEpisodeInfo = DungeonModel.instance:getEpisodeInfo(self._episodeId)
+		local passSimple = simpleEpisodeInfo and simpleEpisodeInfo.star >= DungeonEnum.StarType.Normal and passStory
 
-		gohelper.setActive(arg_8_0._gonormalcondition, true)
+		gohelper.setActive(self._gonormalcondition, true)
 
-		local var_8_17 = DungeonConfig.instance:getFirstEpisodeWinConditionText(var_8_3)
+		local condition = DungeonConfig.instance:getFirstEpisodeWinConditionText(normalEpisodeId)
 
-		arg_8_0._txtnormalcondition.text = var_8_17
+		self._txtnormalcondition.text = condition
 
-		gohelper.setActive(arg_8_0._gonormalfinish, var_8_16)
-		gohelper.setActive(arg_8_0._gonormalunfinish, not var_8_16)
-		ZProj.UGUIHelper.SetColorAlpha(arg_8_0._txtnormalcondition, var_8_16 and 1 or 0.63)
-		arg_8_0:_showStar(var_8_15, nil, var_8_16)
+		gohelper.setActive(self._gonormalfinish, passSimple)
+		gohelper.setActive(self._gonormalunfinish, not passSimple)
+		ZProj.UGUIHelper.SetColorAlpha(self._txtnormalcondition, passSimple and 1 or 0.63)
+		self:_showStar(simpleEpisodeInfo, nil, passSimple)
 	else
-		gohelper.setActive(arg_8_0._gonormalcondition, true)
+		gohelper.setActive(self._gonormalcondition, true)
 
-		local var_8_18 = DungeonConfig.instance:getFirstEpisodeWinConditionText(var_8_3)
+		local condition = DungeonConfig.instance:getFirstEpisodeWinConditionText(normalEpisodeId)
+		local _bossRushCondition = BossRushEnum.LevelCondition[chapterConfig.type]
 
-		if BossRushController.instance:isInBossRushInfiniteFight() then
-			var_8_18 = luaLang("v1a4_bossrushleveldetail_txt_target")
+		if not string.nilorempty(_bossRushCondition) then
+			condition = luaLang(_bossRushCondition)
 		end
 
-		arg_8_0._txtnormalcondition.text = var_8_18
+		self._txtnormalcondition.text = condition
 
-		local var_8_19 = var_8_6 and var_8_6.star >= DungeonEnum.StarType.Normal and var_8_8
-		local var_8_20 = var_8_6 and var_8_6.star >= DungeonEnum.StarType.Advanced and var_8_8
-		local var_8_21 = false
+		local passNormal = normalEpisodeInfo and normalEpisodeInfo.star >= DungeonEnum.StarType.Normal and passStory
+		local passAdvanced = normalEpisodeInfo and normalEpisodeInfo.star >= DungeonEnum.StarType.Advanced and passStory
+		local passUltra = false
 
-		if var_8_0.type == DungeonEnum.EpisodeType.WeekWalk then
-			local var_8_22 = WeekWalkModel.instance:getCurMapInfo():getBattleInfo(arg_8_0._battleId)
+		if episodeConfig.type == DungeonEnum.EpisodeType.WeekWalk then
+			local mapInfo = WeekWalkModel.instance:getCurMapInfo()
+			local battleInfo = mapInfo:getBattleInfo(self._battleId)
 
-			if var_8_22 then
-				var_8_19 = var_8_22.star >= DungeonEnum.StarType.Normal
-				var_8_20 = var_8_22.star >= DungeonEnum.StarType.Advanced
-				var_8_21 = var_8_22.star >= DungeonEnum.StarType.Ultra
+			if battleInfo then
+				passNormal = battleInfo.star >= DungeonEnum.StarType.Normal
+				passAdvanced = battleInfo.star >= DungeonEnum.StarType.Advanced
+				passUltra = battleInfo.star >= DungeonEnum.StarType.Ultra
 			end
 
-			local var_8_23 = var_8_3 and DungeonConfig.instance:getEpisodeAdvancedCondition2Text(var_8_3)
+			local advancedCondition2Text = normalEpisodeId and DungeonConfig.instance:getEpisodeAdvancedCondition2Text(normalEpisodeId)
 
-			gohelper.setActive(arg_8_0._goplatinumcondition2, not string.nilorempty(var_8_23))
+			gohelper.setActive(self._goplatinumcondition2, not string.nilorempty(advancedCondition2Text))
 
-			if not string.nilorempty(var_8_23) then
-				arg_8_0._txtplatinumcondition2.text = var_8_23
+			if not string.nilorempty(advancedCondition2Text) then
+				self._txtplatinumcondition2.text = advancedCondition2Text
 
-				gohelper.setActive(arg_8_0._goplatinumfinish2, var_8_21)
-				gohelper.setActive(arg_8_0._goplatinumunfinish2, not var_8_21)
-				ZProj.UGUIHelper.SetColorAlpha(arg_8_0._txtplatinumcondition2, var_8_21 and 1 or 0.63)
+				gohelper.setActive(self._goplatinumfinish2, passUltra)
+				gohelper.setActive(self._goplatinumunfinish2, not passUltra)
+				ZProj.UGUIHelper.SetColorAlpha(self._txtplatinumcondition2, passUltra and 1 or 0.63)
 			end
 		end
 
-		if var_8_0.type == DungeonEnum.EpisodeType.Jiexika then
-			var_8_19 = false
+		if episodeConfig.type == DungeonEnum.EpisodeType.Jiexika then
+			passNormal = false
 		end
 
-		gohelper.setActive(arg_8_0._gonormalfinish, var_8_19)
-		gohelper.setActive(arg_8_0._gonormalunfinish, not var_8_19)
-		ZProj.UGUIHelper.SetColorAlpha(arg_8_0._txtnormalcondition, var_8_19 and 1 or 0.63)
-		gohelper.setActive(arg_8_0._goplatinumcondition, not arg_8_0._isSimple and not string.nilorempty(var_8_9))
+		gohelper.setActive(self._gonormalfinish, passNormal)
+		gohelper.setActive(self._gonormalunfinish, not passNormal)
+		ZProj.UGUIHelper.SetColorAlpha(self._txtnormalcondition, passNormal and 1 or 0.63)
+		gohelper.setActive(self._goplatinumcondition, not self._isSimple and not string.nilorempty(advancedConditionText))
 
-		if not string.nilorempty(var_8_9) then
-			arg_8_0._txtplatinumcondition.text = var_8_9
+		if not string.nilorempty(advancedConditionText) then
+			self._txtplatinumcondition.text = advancedConditionText
 
-			gohelper.setActive(arg_8_0._goplatinumfinish, var_8_20)
-			gohelper.setActive(arg_8_0._goplatinumunfinish, not var_8_20)
-			ZProj.UGUIHelper.SetColorAlpha(arg_8_0._txtplatinumcondition, var_8_20 and 1 or 0.63)
+			gohelper.setActive(self._goplatinumfinish, passAdvanced)
+			gohelper.setActive(self._goplatinumunfinish, not passAdvanced)
+			ZProj.UGUIHelper.SetColorAlpha(self._txtplatinumcondition, passAdvanced and 1 or 0.63)
 
-			var_8_12 = false
+			isOnlyShowOneTarget = false
 		end
 
-		gohelper.setActive(arg_8_0._goplace, var_8_12)
-		arg_8_0:_showStar(var_8_6, var_8_9, var_8_19, var_8_20, var_8_21)
+		gohelper.setActive(self._goplace, isOnlyShowOneTarget)
+		self:_showStar(normalEpisodeInfo, advancedConditionText, passNormal, passAdvanced, passUltra)
 	end
 end
 
-function var_0_0._initStars(arg_9_0)
-	if arg_9_0._starList then
+function HeroGroupFightViewLevel:_initStars()
+	if self._starList then
 		return
 	end
 
-	local var_9_0 = 2
+	local starNum = 2
+	local episodeConfig = DungeonConfig.instance:getEpisodeCO(self._episodeId)
 
-	if DungeonConfig.instance:getEpisodeCO(arg_9_0._episodeId).type == DungeonEnum.EpisodeType.WeekWalk then
-		var_9_0 = WeekWalkModel.instance:getCurMapInfo():getStarNumConfig()
+	if episodeConfig.type == DungeonEnum.EpisodeType.WeekWalk then
+		local mapInfo = WeekWalkModel.instance:getCurMapInfo()
+
+		starNum = mapInfo:getStarNumConfig()
 	end
 
-	if arg_9_0._isSimple then
-		var_9_0 = 1
+	if self._isSimple then
+		starNum = 1
 	end
 
-	gohelper.setActive(arg_9_0._gostar1, var_9_0 == 1)
-	gohelper.setActive(arg_9_0._gostar2, var_9_0 == 2)
-	gohelper.setActive(arg_9_0._gostar3, var_9_0 == 3)
+	gohelper.setActive(self._gostar1, starNum == 1)
+	gohelper.setActive(self._gostar2, starNum == 2)
+	gohelper.setActive(self._gostar3, starNum == 3)
 
-	local var_9_1 = var_9_0 == 1 and arg_9_0._gostar1 or var_9_0 == 2 and arg_9_0._gostar2 or arg_9_0._gostar3
+	local starGo = starNum == 1 and self._gostar1 or starNum == 2 and self._gostar2 or self._gostar3
 
-	arg_9_0._starList = arg_9_0:getUserDataTb_()
+	self._starList = self:getUserDataTb_()
 
-	for iter_9_0 = 1, var_9_0 do
-		local var_9_2 = gohelper.findChildImage(var_9_1, "star" .. iter_9_0)
+	for i = 1, starNum do
+		local star = gohelper.findChildImage(starGo, "star" .. i)
 
-		table.insert(arg_9_0._starList, var_9_2)
+		table.insert(self._starList, star)
 	end
 end
 
-function var_0_0._showStar(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4, arg_10_5)
-	arg_10_0:_initStars()
-	gohelper.setActive(arg_10_0._starList[1], true)
-	arg_10_0:_setStar(arg_10_0._starList[1], arg_10_3)
+function HeroGroupFightViewLevel:_showStar(episodeInfo, advancedConditionText, passNormal, passAdvanced, passUltra)
+	self:_initStars()
+	gohelper.setActive(self._starList[1], true)
+	self:_setStar(self._starList[1], passNormal)
 
-	if not arg_10_0._isSimple then
-		if string.nilorempty(arg_10_2) then
-			gohelper.setActive(arg_10_0._starList[2], false)
+	if not self._isSimple then
+		if string.nilorempty(advancedConditionText) then
+			gohelper.setActive(self._starList[2], false)
 		else
-			gohelper.setActive(arg_10_0._starList[2], true)
-			arg_10_0:_setStar(arg_10_0._starList[2], arg_10_4)
+			gohelper.setActive(self._starList[2], true)
+			self:_setStar(self._starList[2], passAdvanced)
 
-			if arg_10_0._starList[3] then
-				gohelper.setActive(arg_10_0._starList[3], true)
-				arg_10_0:_setStar(arg_10_0._starList[3], arg_10_5)
+			if self._starList[3] then
+				gohelper.setActive(self._starList[3], true)
+				self:_setStar(self._starList[3], passUltra)
 			end
 		end
 	end
 end
 
-function var_0_0._setStar(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	local var_11_0 = ""
-	local var_11_1 = "#87898C"
-	local var_11_2 = arg_11_0._isHardMode and "zhuxianditu_kn_xingxing_002" or "zhuxianditu_pt_xingxing_001"
+function HeroGroupFightViewLevel:_setStar(image, light, double)
+	local star = ""
+	local color = "#87898C"
 
-	if arg_11_2 then
-		var_11_1 = arg_11_0._isHardMode and "#FF4343" or "#F77040"
+	star = self._isHardMode and "zhuxianditu_kn_xingxing_002" or "zhuxianditu_pt_xingxing_001"
+
+	if light then
+		color = self._isHardMode and "#FF4343" or "#F77040"
 	end
 
-	UISpriteSetMgr.instance:setCommonSprite(arg_11_1, var_11_2, true)
-	SLFramework.UGUI.GuiHelper.SetColor(arg_11_1, var_11_1)
+	UISpriteSetMgr.instance:setCommonSprite(image, star, true)
+	SLFramework.UGUI.GuiHelper.SetColor(image, color)
 end
 
-function var_0_0._refreshMonster(arg_12_0)
-	local var_12_0 = lua_battle.configDict[arg_12_0._battleId].monsterGroupIds
-	local var_12_1 = {}
+function HeroGroupFightViewLevel:_refreshMonster()
+	local battleConfig = lua_battle.configDict[self._battleId]
+	local monsterGroupIdsParam = battleConfig.monsterGroupIds
+	local monsterGroupIds = {}
 
-	if not string.nilorempty(var_12_0) then
-		var_12_1 = string.splitToNumber(var_12_0, "#")
+	if not string.nilorempty(monsterGroupIdsParam) then
+		monsterGroupIds = string.splitToNumber(monsterGroupIdsParam, "#")
 	end
 
-	for iter_12_0, iter_12_1 in ipairs(var_12_1) do
-		local var_12_2 = lua_monster_group.configDict[iter_12_1]
-		local var_12_3 = arg_12_0._monsterGroupItemList[iter_12_0]
+	for i, monsterGroupId in ipairs(monsterGroupIds) do
+		local monsterGroupConfig = lua_monster_group.configDict[monsterGroupId]
+		local monsterGroupItem = self._monsterGroupItemList[i]
 
-		if not var_12_3 then
-			var_12_3 = arg_12_0:getUserDataTb_()
-			var_12_3.go = gohelper.cloneInPlace(arg_12_0._goenemyteam, "item" .. iter_12_0)
-			var_12_3.goenemyitem = gohelper.findChild(var_12_3.go, "enemyList/go_enemyitem")
-			var_12_3.monsterItemList = {}
+		if not monsterGroupItem then
+			monsterGroupItem = self:getUserDataTb_()
+			monsterGroupItem.go = gohelper.cloneInPlace(self._goenemyteam, "item" .. i)
+			monsterGroupItem.goenemyitem = gohelper.findChild(monsterGroupItem.go, "enemyList/go_enemyitem")
+			monsterGroupItem.monsterItemList = {}
 
-			gohelper.setActive(var_12_3.goenemyitem, false)
-			table.insert(arg_12_0._monsterGroupItemList, var_12_3)
+			gohelper.setActive(monsterGroupItem.goenemyitem, false)
+			table.insert(self._monsterGroupItemList, monsterGroupItem)
 		end
 
-		arg_12_0:_refreshMonsterItem(var_12_3, var_12_2)
-		gohelper.setActive(var_12_3.go, true)
+		self:_refreshMonsterItem(monsterGroupItem, monsterGroupConfig)
+		gohelper.setActive(monsterGroupItem.go, true)
 	end
 
-	for iter_12_2 = #var_12_1 + 1, #arg_12_0._monsterGroupItemList do
-		local var_12_4 = arg_12_0._monsterGroupItemList[iter_12_2]
+	for i = #monsterGroupIds + 1, #self._monsterGroupItemList do
+		local monsterGroupItem = self._monsterGroupItemList[i]
 
-		gohelper.setActive(var_12_4.go, false)
+		gohelper.setActive(monsterGroupItem.go, false)
 	end
 end
 
-function var_0_0._refreshMonsterItem(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0 = arg_13_1.monsterItemList
-	local var_13_1 = arg_13_1.goenemyitem
-	local var_13_2 = arg_13_2.monster
-	local var_13_3 = {}
+function HeroGroupFightViewLevel:_refreshMonsterItem(monsterGroupItem, monsterGroupConfig)
+	local monsterItemList = monsterGroupItem.monsterItemList
+	local goenemyitem = monsterGroupItem.goenemyitem
+	local monsterIdsParam = monsterGroupConfig.monster
+	local monsterIds = {}
 
-	if not string.nilorempty(var_13_2) then
-		var_13_3 = string.splitToNumber(var_13_2, "#")
+	if not string.nilorempty(monsterIdsParam) then
+		monsterIds = string.splitToNumber(monsterIdsParam, "#")
 	end
 
-	local var_13_4 = string.nilorempty(arg_13_2.spMonster) and {} or string.splitToNumber(arg_13_2.spMonster, "#")
+	local spMonsterIds = string.nilorempty(monsterGroupConfig.spMonster) and {} or string.splitToNumber(monsterGroupConfig.spMonster, "#")
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_4) do
-		table.insert(var_13_3, iter_13_1)
+	for _, spMonsterId in ipairs(spMonsterIds) do
+		table.insert(monsterIds, spMonsterId)
 	end
 
-	local var_13_5 = 0
-	local var_13_6 = {}
-	local var_13_7 = {}
+	local bossCareer = 0
+	local monsterCareersDict = {}
+	local monsterCareers = {}
 
-	if not string.nilorempty(arg_13_2.bossId) then
-		local var_13_8 = string.splitToNumber(arg_13_2.bossId, "#")
+	if not string.nilorempty(monsterGroupConfig.bossId) then
+		local bossIds = string.splitToNumber(monsterGroupConfig.bossId, "#")
+		local monsterConfig = lua_monster.configDict[bossIds[1]]
 
-		var_13_5 = lua_monster.configDict[var_13_8[1]].career
+		bossCareer = monsterConfig.career
 	end
 
-	for iter_13_2, iter_13_3 in ipairs(var_13_3) do
-		local var_13_9 = lua_monster.configDict[iter_13_3]
-		local var_13_10 = lua_monster_skill_template.configDict[var_13_9.skillTemplate]
+	for i, monsterId in ipairs(monsterIds) do
+		local monsterConfig = lua_monster.configDict[monsterId]
+		local monsterTemplateConfig = lua_monster_skill_template.configDict[monsterConfig.skillTemplate]
 
-		if not var_13_6[var_13_9.career] then
-			var_13_6[var_13_9.career] = true
+		if not monsterCareersDict[monsterConfig.career] then
+			monsterCareersDict[monsterConfig.career] = true
 
-			table.insert(var_13_7, var_13_9.career)
+			table.insert(monsterCareers, monsterConfig.career)
 		end
 	end
 
-	for iter_13_4, iter_13_5 in ipairs(var_13_7) do
-		local var_13_11 = var_13_0[iter_13_4]
+	for i, monsterCareer in ipairs(monsterCareers) do
+		local monsterItem = monsterItemList[i]
 
-		if not var_13_11 then
-			var_13_11 = arg_13_0:getUserDataTb_()
-			var_13_11.go = gohelper.cloneInPlace(var_13_1, "item" .. iter_13_4)
-			var_13_11.icon = gohelper.findChildImage(var_13_11.go, "icon")
-			var_13_11.kingIcon = gohelper.findChild(var_13_11.go, "icon/kingIcon")
+		if not monsterItem then
+			monsterItem = self:getUserDataTb_()
+			monsterItem.go = gohelper.cloneInPlace(goenemyitem, "item" .. i)
+			monsterItem.icon = gohelper.findChildImage(monsterItem.go, "icon")
+			monsterItem.kingIcon = gohelper.findChild(monsterItem.go, "icon/kingIcon")
 
-			table.insert(var_13_0, var_13_11)
+			table.insert(monsterItemList, monsterItem)
 		end
 
-		UISpriteSetMgr.instance:setCommonSprite(var_13_11.icon, "lssx_" .. tostring(iter_13_5))
-		gohelper.setActive(var_13_11.kingIcon, iter_13_5 == var_13_5)
-		gohelper.setActive(var_13_11.go, true)
+		UISpriteSetMgr.instance:setCommonSprite(monsterItem.icon, "lssx_" .. tostring(monsterCareer))
+		gohelper.setActive(monsterItem.kingIcon, monsterCareer == bossCareer)
+		gohelper.setActive(monsterItem.go, true)
 	end
 
-	for iter_13_6 = #var_13_7 + 1, #var_13_0 do
-		local var_13_12 = var_13_0[iter_13_6]
+	for i = #monsterCareers + 1, #monsterItemList do
+		local monsterItem = monsterItemList[i]
 
-		gohelper.setActive(var_13_12.go, false)
+		gohelper.setActive(monsterItem.go, false)
 	end
 end
 
-function var_0_0._getSumCE(arg_14_0)
-	local var_14_0 = HeroGroupModel.instance:getCurGroupMO()
-	local var_14_1 = var_14_0:getMainList()
-	local var_14_2 = var_14_0:getSubList()
-	local var_14_3 = var_14_0:getAllHeroEquips()
-	local var_14_4 = HeroGroupModel.instance.battleId
+function HeroGroupFightViewLevel:_getSumCE()
+	local curGroupMO = HeroGroupModel.instance:getCurGroupMO()
+	local heroList = curGroupMO:getMainList()
+	local subHeroList = curGroupMO:getSubList()
+	local allEquips = curGroupMO:getAllHeroEquips()
+	local battleId = HeroGroupModel.instance.battleId
 
-	return CharacterModel.instance:getSumCE(var_14_1, var_14_2, var_14_3, var_14_4, true)
+	return CharacterModel.instance:getSumCE(heroList, subHeroList, allEquips, battleId, true)
 end
 
-function var_0_0.onOpen(arg_15_0)
-	arg_15_0:_refreshUI()
-	arg_15_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, arg_15_0._recommendCareer, arg_15_0)
-	arg_15_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.ShowEnemyInfoViewByGuide, arg_15_0._btnenemyOnClick, arg_15_0)
+function HeroGroupFightViewLevel:onOpen()
+	self:_refreshUI()
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, self._recommendCareer, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.ShowEnemyInfoViewByGuide, self._btnenemyOnClick, self)
 
 	if BossRushController.instance:isInBossRushFight(true) then
-		local var_15_0, var_15_1 = BossRushModel.instance:getBattleStageAndLayer()
-		local var_15_2 = BossRushModel.instance:isEnhanceRole(var_15_0, var_15_1)
+		local stage, layer = BossRushModel.instance:getBattleStageAndLayer()
+		local isEnhanceRole = BossRushModel.instance:isEnhanceRole(stage, layer)
 
-		if arg_15_0._btnOffer then
-			gohelper.setActive(arg_15_0._btnOffer.gameObject, var_15_2)
+		if self._btnOffer then
+			gohelper.setActive(self._btnOffer.gameObject, isEnhanceRole)
 		end
 	end
 end
 
-function var_0_0.onOpenFinish(arg_16_0)
+function HeroGroupFightViewLevel:onOpenFinish()
 	UIBlockMgr.instance:startBlock("HeroGroupFightViewLevel tryShowFirstHelp")
-	TaskDispatcher.runDelay(arg_16_0._tryShowFirstHelp, arg_16_0, 0.2)
+	TaskDispatcher.runDelay(self._tryShowFirstHelp, self, 0.2)
 end
 
-function var_0_0._tryShowFirstHelp(arg_17_0)
+function HeroGroupFightViewLevel:_tryShowFirstHelp()
 	UIBlockMgr.instance:endBlock("HeroGroupFightViewLevel tryShowFirstHelp")
-	arg_17_0:_showHelp()
+	self:_showHelp()
 end
 
-function var_0_0._showHelp(arg_18_0)
-	local var_18_0 = HeroGroupModel.instance.episodeId
-	local var_18_1 = DungeonConfig.instance:getEpisodeCO(var_18_0)
-	local var_18_2 = DungeonConfig.instance:getChapterCO(var_18_1.chapterId).type == DungeonEnum.ChapterType.Hard
-	local var_18_3 = CommonConfig.instance:getConstNum(ConstEnum.HeroGroupGuideNormal)
-	local var_18_4 = CommonConfig.instance:getConstNum(ConstEnum.HeroGroupGuideHard)
+function HeroGroupFightViewLevel:_showHelp()
+	local episodeId = HeroGroupModel.instance.episodeId
+	local episodeConfig = DungeonConfig.instance:getEpisodeCO(episodeId)
+	local chapterConfig = DungeonConfig.instance:getChapterCO(episodeConfig.chapterId)
+	local isHardMode = chapterConfig.type == DungeonEnum.ChapterType.Hard
+	local normalGuideId = CommonConfig.instance:getConstNum(ConstEnum.HeroGroupGuideNormal)
+	local hardGuideId = CommonConfig.instance:getConstNum(ConstEnum.HeroGroupGuideHard)
 
-	if var_18_2 then
-		if GuideModel.instance:isGuideFinish(var_18_4) then
+	if isHardMode then
+		if GuideModel.instance:isGuideFinish(hardGuideId) then
 			HelpController.instance:tryShowFirstHelp(HelpEnum.HelpId.HeroGroupHard)
 		end
-	elseif GuideModel.instance:isGuideFinish(var_18_3) then
+	elseif GuideModel.instance:isGuideFinish(normalGuideId) then
 		HelpController.instance:tryShowFirstHelp(HelpEnum.HelpId.HeroGroupNormal)
 	end
 end
 
-function var_0_0._showEnemyList(arg_19_0)
-	local var_19_0 = FightModel.instance:getFightParam()
-	local var_19_1 = {}
-	local var_19_2 = {}
-	local var_19_3 = {}
-	local var_19_4 = {}
+function HeroGroupFightViewLevel:_showEnemyList()
+	local fight_param = FightModel.instance:getFightParam()
+	local boss_career_dic = {}
+	local enemy_career_dic = {}
+	local enemy_list = {}
+	local enemy_boss_list = {}
 
-	for iter_19_0, iter_19_1 in ipairs(var_19_0.monsterGroupIds) do
-		local var_19_5 = lua_monster_group.configDict[iter_19_1].bossId
-		local var_19_6 = FightStrUtil.instance:getSplitToNumberCache(lua_monster_group.configDict[iter_19_1].monster, "#")
+	for i, v in ipairs(fight_param.monsterGroupIds) do
+		local boss_id = lua_monster_group.configDict[v].bossId
+		local ids = FightStrUtil.instance:getSplitToNumberCache(lua_monster_group.configDict[v].monster, "#")
 
-		for iter_19_2, iter_19_3 in ipairs(var_19_6) do
-			local var_19_7 = lua_monster.configDict[iter_19_3].career
+		for index, id in ipairs(ids) do
+			local enemy_career = lua_monster.configDict[id].career
 
-			if FightHelper.isBossId(var_19_5, iter_19_3) then
-				var_19_1[var_19_7] = (var_19_1[var_19_7] or 0) + 1
+			if FightHelper.isBossId(boss_id, id) then
+				boss_career_dic[enemy_career] = (boss_career_dic[enemy_career] or 0) + 1
 
-				table.insert(var_19_4, iter_19_3)
+				table.insert(enemy_boss_list, id)
 			else
-				var_19_2[var_19_7] = (var_19_2[var_19_7] or 0) + 1
+				enemy_career_dic[enemy_career] = (enemy_career_dic[enemy_career] or 0) + 1
 
-				table.insert(var_19_3, iter_19_3)
+				table.insert(enemy_list, id)
 			end
 		end
 	end
 
-	local var_19_8 = {}
+	local enemy_career_list = {}
 
-	for iter_19_4, iter_19_5 in pairs(var_19_1) do
-		table.insert(var_19_8, {
-			career = iter_19_4,
-			count = iter_19_5
+	for k, v in pairs(boss_career_dic) do
+		table.insert(enemy_career_list, {
+			career = k,
+			count = v
 		})
 	end
 
-	arg_19_0._enemy_boss_end_index = #var_19_8
+	self._enemy_boss_end_index = #enemy_career_list
 
-	for iter_19_6, iter_19_7 in pairs(var_19_2) do
-		table.insert(var_19_8, {
-			career = iter_19_6,
-			count = iter_19_7
+	for k, v in pairs(enemy_career_dic) do
+		table.insert(enemy_career_list, {
+			career = k,
+			count = v
 		})
 	end
 
-	gohelper.CreateObjList(arg_19_0, arg_19_0._onEnemyItemShow, var_19_8, gohelper.findChild(arg_19_0._goenemyteam, "enemyList"), gohelper.findChild(arg_19_0._goenemyteam, "enemyList/go_enemyitem"))
+	gohelper.CreateObjList(self, self._onEnemyItemShow, enemy_career_list, gohelper.findChild(self._goenemyteam, "enemyList"), gohelper.findChild(self._goenemyteam, "enemyList/go_enemyitem"))
 
-	local var_19_9 = FightHelper.getBattleRecommendLevel(var_19_0.battleId, arg_19_0._isSimple)
+	local recommendLevel = FightHelper.getBattleRecommendLevel(fight_param.battleId, self._isSimple)
 
-	if var_19_9 >= 0 then
-		arg_19_0._txtrecommendlevel.text = HeroConfig.instance:getLevelDisplayVariant(var_19_9)
+	if recommendLevel >= 0 then
+		self._txtrecommendlevel.text = HeroConfig.instance:getLevelDisplayVariant(recommendLevel)
 	else
-		arg_19_0._txtrecommendlevel.text = ""
+		self._txtrecommendlevel.text = ""
 	end
 end
 
-function var_0_0._onEnemyItemShow(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
-	local var_20_0 = gohelper.findChildImage(arg_20_1, "icon")
-	local var_20_1 = gohelper.findChild(arg_20_1, "icon/kingIcon")
-	local var_20_2 = gohelper.findChildTextMesh(arg_20_1, "enemycount")
+function HeroGroupFightViewLevel:_onEnemyItemShow(obj, data, index)
+	local icon = gohelper.findChildImage(obj, "icon")
+	local kingIcon = gohelper.findChild(obj, "icon/kingIcon")
+	local enemy_count = gohelper.findChildTextMesh(obj, "enemycount")
 
-	UISpriteSetMgr.instance:setCommonSprite(var_20_0, "lssx_" .. tostring(arg_20_2.career))
+	UISpriteSetMgr.instance:setCommonSprite(icon, "lssx_" .. tostring(data.career))
 
-	var_20_2.text = arg_20_2.count > 1 and luaLang("multiple") .. arg_20_2.count or ""
+	enemy_count.text = data.count > 1 and luaLang("multiple") .. data.count or ""
 
-	gohelper.setActive(var_20_1, arg_20_3 <= arg_20_0._enemy_boss_end_index)
+	gohelper.setActive(kingIcon, index <= self._enemy_boss_end_index)
 end
 
-function var_0_0._recommendCareer(arg_21_0)
-	local var_21_0, var_21_1 = FightHelper.detectAttributeCounter()
+function HeroGroupFightViewLevel:_recommendCareer()
+	local recommended, counter = FightHelper.detectAttributeCounter()
 
-	gohelper.CreateObjList(arg_21_0, arg_21_0._onRecommendCareerItemShow, var_21_0, gohelper.findChild(arg_21_0._gorecommendattr.gameObject, "attrlist"), arg_21_0._goattritem)
+	gohelper.CreateObjList(self, self._onRecommendCareerItemShow, recommended, gohelper.findChild(self._gorecommendattr.gameObject, "attrlist"), self._goattritem)
 
-	if #var_21_0 == 0 then
-		arg_21_0._txtrecommonddes.text = luaLang("new_common_none")
+	if #recommended == 0 then
+		self._txtrecommonddes.text = luaLang("new_common_none")
 	else
-		arg_21_0._txtrecommonddes.text = ""
+		self._txtrecommonddes.text = ""
 	end
 end
 
-function var_0_0._onRecommendCareerItemShow(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
-	local var_22_0 = gohelper.findChildImage(arg_22_1, "icon")
+function HeroGroupFightViewLevel:_onRecommendCareerItemShow(obj, data, index)
+	local icon = gohelper.findChildImage(obj, "icon")
 
-	UISpriteSetMgr.instance:setHeroGroupSprite(var_22_0, "career_" .. arg_22_2)
+	UISpriteSetMgr.instance:setHeroGroupSprite(icon, "career_" .. data)
 end
 
-function var_0_0.onClose(arg_23_0)
+function HeroGroupFightViewLevel:onClose()
 	UIBlockMgr.instance:endBlock("HeroGroupFightViewLevel tryShowFirstHelp")
-	TaskDispatcher.cancelTask(arg_23_0._tryShowFirstHelp, arg_23_0)
+	TaskDispatcher.cancelTask(self._tryShowFirstHelp, self)
 end
 
-function var_0_0.onDestroyView(arg_24_0)
-	arg_24_0._simageleft:UnLoadImage()
-	arg_24_0._simageright:UnLoadImage()
+function HeroGroupFightViewLevel:onDestroyView()
+	self._simageleft:UnLoadImage()
+	self._simageright:UnLoadImage()
 end
 
-return var_0_0
+return HeroGroupFightViewLevel

@@ -1,185 +1,185 @@
-﻿module("modules.spine.roleeffect.DoorRoleEffect", package.seeall)
+﻿-- chunkname: @modules/spine/roleeffect/DoorRoleEffect.lua
 
-local var_0_0 = class("DoorRoleEffect", BaseSpineRoleEffect)
+module("modules.spine.roleeffect.DoorRoleEffect", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._roleEffectConfig = arg_1_1
-	arg_1_0._spineGo = arg_1_0._spine._spineGo
+local DoorRoleEffect = class("DoorRoleEffect", BaseSpineRoleEffect)
 
-	local var_1_0 = gohelper.findChild(arg_1_0._spineGo, "mountroot/mountweapon/roleeffect_b_idle2/zhujue_camera")
+function DoorRoleEffect:init(roleEffectConfig)
+	self._roleEffectConfig = roleEffectConfig
+	self._spineGo = self._spine._spineGo
 
-	arg_1_0._idle2Camera = var_1_0 and var_1_0:GetComponent(typeof(UnityEngine.Camera))
+	local cameraGo = gohelper.findChild(self._spineGo, "mountroot/mountweapon/roleeffect_b_idle2/zhujue_camera")
 
-	local var_1_1 = "mountroot/mountweapon"
+	self._idle2Camera = cameraGo and cameraGo:GetComponent(typeof(UnityEngine.Camera))
 
-	arg_1_0._effectGo = gohelper.findChild(arg_1_0._spineGo, var_1_1)
-	arg_1_0._videoList = {}
+	local effectPath = "mountroot/mountweapon"
+
+	self._effectGo = gohelper.findChild(self._spineGo, effectPath)
+	self._videoList = {}
 end
 
-function var_0_0.showBodyEffect(arg_2_0, arg_2_1)
-	arg_2_0:_setIdle2CameraEnabled(false)
-	arg_2_0:_stopVideo()
+function DoorRoleEffect:showBodyEffect(bodyName)
+	self:_setIdle2CameraEnabled(false)
+	self:_stopVideo()
 
-	local var_2_0 = arg_2_0._effectGo.transform
-	local var_2_1 = var_2_0.childCount
+	local transform = self._effectGo.transform
+	local itemCount = transform.childCount
 
-	for iter_2_0 = 1, var_2_1 do
-		local var_2_2 = var_2_0:GetChild(iter_2_0 - 1)
-		local var_2_3 = var_2_2.name == "roleeffect_" .. arg_2_1
+	for i = 1, itemCount do
+		local child = transform:GetChild(i - 1)
+		local showEffect = child.name == "roleeffect_" .. bodyName
 
-		gohelper.setActive(var_2_2.gameObject, var_2_3)
-		arg_2_0:_playBodyEffect(var_2_3, var_2_2, arg_2_1)
+		gohelper.setActive(child.gameObject, showEffect)
+		self:_playBodyEffect(showEffect, child, bodyName)
 	end
 end
 
-function var_0_0._playBodyEffect(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	if not arg_3_1 then
+function DoorRoleEffect:_playBodyEffect(showEffect, child, bodyName)
+	if not showEffect then
 		return
 	end
 
-	if arg_3_3 == "b_idle2" then
-		arg_3_0:_setIdle2CameraEnabled(true)
+	if bodyName == "b_idle2" then
+		self:_setIdle2CameraEnabled(true)
 
-		if arg_3_0._spine:isInMainView() then
-			arg_3_0:_setLightEnvColor()
+		if self._spine:isInMainView() then
+			self:_setLightEnvColor()
 
 			return
 		end
 	end
 
-	arg_3_0:_playVideo(arg_3_2, arg_3_3)
+	self:_playVideo(child, bodyName)
 end
 
-function var_0_0._setIdle2CameraEnabled(arg_4_0, arg_4_1)
-	if gohelper.isNil(arg_4_0._idle2Camera) then
+function DoorRoleEffect:_setIdle2CameraEnabled(value)
+	if gohelper.isNil(self._idle2Camera) then
 		return
 	end
 
-	arg_4_0._idle2Camera.enabled = arg_4_1
+	self._idle2Camera.enabled = value
 end
 
-function var_0_0._setLightEnvColor(arg_5_0)
-	local var_5_0 = WeatherController.instance.reportLightMode
+function DoorRoleEffect:_setLightEnvColor()
+	local reportLightMode = WeatherController.instance.reportLightMode
 
-	if not var_5_0 then
+	if not reportLightMode then
 		return
 	end
 
-	local var_5_1 = arg_5_0:_getLightMat()
+	local mat = self:_getLightMat()
 
-	if not var_5_1 then
+	if not mat then
 		return
 	end
 
-	local var_5_2 = WeatherEnum.DoorLightColor[var_5_0]
+	local lightColor = WeatherEnum.DoorLightColor[reportLightMode]
 
-	arg_5_0._lightColor = arg_5_0._lightColor or Color.New()
-	arg_5_0._lightColor.r = var_5_2[1] / 255
-	arg_5_0._lightColor.g = var_5_2[2] / 255
-	arg_5_0._lightColor.b = var_5_2[3] / 255
-	arg_5_0._lightColor.a = var_5_2[4] / 255
+	self._lightColor = self._lightColor or Color.New()
+	self._lightColor.r = lightColor[1] / 255
+	self._lightColor.g = lightColor[2] / 255
+	self._lightColor.b = lightColor[3] / 255
+	self._lightColor.a = lightColor[4] / 255
 
-	MaterialUtil.setMainColor(var_5_1, arg_5_0._lightColor)
+	MaterialUtil.setMainColor(mat, self._lightColor)
 end
 
-function var_0_0._getLightMat(arg_6_0)
-	if arg_6_0._material then
-		return arg_6_0._material
+function DoorRoleEffect:_getLightMat()
+	if self._material then
+		return self._material
 	end
 
-	local var_6_0 = "mountroot/mountweapon/roleeffect_b_idle2/504301_banshen_light"
+	local effectPath = "mountroot/mountweapon/roleeffect_b_idle2/504301_banshen_light"
+	local lightGo = gohelper.findChild(self._spine._spineGo, effectPath)
+	local meshRenderer = lightGo:GetComponent(typeof(UnityEngine.MeshRenderer))
 
-	arg_6_0._material = gohelper.findChild(arg_6_0._spine._spineGo, var_6_0):GetComponent(typeof(UnityEngine.MeshRenderer)).sharedMaterial
+	self._material = meshRenderer.sharedMaterial
 
-	return arg_6_0._material
+	return self._material
 end
 
-function var_0_0._playVideo(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = arg_7_1:GetComponent(typeof(RenderHeads.Media.AVProVideo.MediaPlayer))
+function DoorRoleEffect:_playVideo(child, bodyName)
+	local videoName = ""
 
-	if var_7_0 then
-		local var_7_1 = arg_7_1:GetComponent(typeof(ZProj.AvProUGUIPlayer))
-		local var_7_2 = gohelper.onceAddComponent(arg_7_1.gameObject, typeof(ZProj.AvProUGUIPlayer))
-		local var_7_3 = arg_7_1:GetComponent(typeof(UnityEngine.ParticleSystem))
-
-		var_7_3:Stop()
-
-		local var_7_4 = ""
-
-		if arg_7_2 == "b_idle4" then
-			var_7_4 = "door_idle4"
-		elseif arg_7_2 == "b_idle5" then
-			var_7_4 = "door_idle5"
-		elseif arg_7_2 == "b_biaoyan" then
-			var_7_4 = "door_idle6"
-		elseif arg_7_2 == "b_bowen" then
-			var_7_4 = "door_bowen"
-		end
-
-		var_7_2:SetEventListener(arg_7_0._videoStatusUpdate, arg_7_0)
-		var_7_2:LoadMedia(langVideoUrl(var_7_4))
-
-		local var_7_5 = arg_7_1.gameObject:GetComponent(typeof(UnityEngine.AudioSource))
-
-		if var_7_5 then
-			var_7_5.enabled = false
-		end
-
-		arg_7_0._mediaPlayer = var_7_0
-		arg_7_0._avProVideoPlayer = var_7_2
-		arg_7_0._particleSystem = var_7_3
-		arg_7_0._videoList[var_7_2] = var_7_0
+	if bodyName == "b_idle4" then
+		videoName = "door_idle4"
+	elseif bodyName == "b_idle5" then
+		videoName = "door_idle5"
+	elseif bodyName == "b_biaoyan" then
+		videoName = "door_idle6"
+	elseif bodyName == "b_bowen" then
+		videoName = "door_bowen"
 	end
-end
 
-function var_0_0._videoStatusUpdate(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	if arg_8_2 == AvProEnum.PlayerStatus.FirstFrameReady then
-		if arg_8_0._mediaPlayer then
-			arg_8_0._mediaPlayer:OpenMedia(true)
+	if videoName == "" then
+		return
+	end
+
+	local avProVideoPlayer = VideoPlayerMgr.instance:createVideoPlayer(child.gameObject)
+
+	if avProVideoPlayer then
+		local particleSystem = child:GetComponent(typeof(UnityEngine.ParticleSystem))
+
+		particleSystem:Stop()
+		avProVideoPlayer:setEventListener(self._videoStatusUpdate, self)
+		avProVideoPlayer:loadMedia(videoName)
+
+		local audioComp = child.gameObject:GetComponent(typeof(UnityEngine.AudioSource))
+
+		if audioComp then
+			audioComp.enabled = false
 		end
 
-		if arg_8_0._particleSystem then
-			arg_8_0._particleSystem:Play()
-		end
+		self._avProVideoPlayer = avProVideoPlayer
+		self._particleSystem = particleSystem
+
+		table.insert(self._videoList, avProVideoPlayer)
 	end
 end
 
-function var_0_0._stopVideo(arg_9_0)
-	if arg_9_0._mediaPlayer then
-		arg_9_0._mediaPlayer:CloseMedia()
+function DoorRoleEffect:_videoStatusUpdate(path, status, errorCode)
+	if status == VideoEnum.PlayerStatus.FirstFrameReady then
+		if self._avProVideoPlayer then
+			self._avProVideoPlayer:playLoadMedia(true)
+		end
 
-		arg_9_0._mediaPlayer = nil
-
-		arg_9_0._avProVideoPlayer:Stop()
-
-		arg_9_0._avProVideoPlayer = nil
-		arg_9_0._particleSystem = nil
+		if self._particleSystem then
+			self._particleSystem:Play()
+		end
 	end
 end
 
-function var_0_0._clearVideos(arg_10_0)
-	arg_10_0:_setIdle2CameraEnabled(false)
+function DoorRoleEffect:_stopVideo()
+	if self._avProVideoPlayer then
+		self._avProVideoPlayer:stop()
 
-	for iter_10_0, iter_10_1 in pairs(arg_10_0._videoList) do
-		if not gohelper.isNil(iter_10_0) then
+		self._avProVideoPlayer = nil
+		self._particleSystem = nil
+	end
+end
+
+function DoorRoleEffect:_clearVideos()
+	self:_setIdle2CameraEnabled(false)
+
+	for _, avProVideoPlayer in ipairs(self._videoList) do
+		if avProVideoPlayer ~= nil then
 			if not BootNativeUtil.isIOS() then
-				iter_10_0:Stop()
+				avProVideoPlayer:stop()
 			end
 
-			iter_10_0:Clear()
+			avProVideoPlayer:clear()
 		end
 	end
 
-	arg_10_0._videoList = {}
-	arg_10_0._mediaPlayer = nil
-	arg_10_0._avProVideoPlayer = nil
-	arg_10_0._particleSystem = nil
-	arg_10_0._idle2Camera = nil
-	arg_10_0._spineGo = nil
+	self._videoList = {}
+	self._avProVideoPlayer = nil
+	self._particleSystem = nil
+	self._idle2Camera = nil
+	self._spineGo = nil
 end
 
-function var_0_0.onDestroy(arg_11_0)
-	arg_11_0:_clearVideos()
+function DoorRoleEffect:onDestroy()
+	self:_clearVideos()
 end
 
-return var_0_0
+return DoorRoleEffect

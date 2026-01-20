@@ -1,596 +1,603 @@
-﻿module("modules.logic.room.model.map.RoomMapBlockModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/map/RoomMapBlockModel.lua
 
-local var_0_0 = class("RoomMapBlockModel", BaseModel)
+module("modules.logic.room.model.map.RoomMapBlockModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:_clearData()
+local RoomMapBlockModel = class("RoomMapBlockModel", BaseModel)
+
+function RoomMapBlockModel:onInit()
+	self:_clearData()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:_clearData()
+function RoomMapBlockModel:reInit()
+	self:_clearData()
 end
 
-function var_0_0.clear(arg_3_0)
-	var_0_0.super.clear(arg_3_0)
-	arg_3_0:_clearData()
+function RoomMapBlockModel:clear()
+	RoomMapBlockModel.super.clear(self)
+	self:_clearData()
 end
 
-function var_0_0._clearData(arg_4_0)
-	arg_4_0._mapBlockMOList = {}
-	arg_4_0._mapBlockMODict = {}
+function RoomMapBlockModel:_clearData()
+	self._mapBlockMOList = {}
+	self._mapBlockMODict = {}
 
-	if arg_4_0._emptyBlockModel then
-		arg_4_0._emptyBlockModel:clear()
+	if self._emptyBlockModel then
+		self._emptyBlockModel:clear()
 	end
 
-	arg_4_0._emptyBlockModel = BaseModel.New()
+	self._emptyBlockModel = BaseModel.New()
 
-	if arg_4_0._fullBlockModel then
-		arg_4_0._fullBlockModel:clear()
+	if self._fullBlockModel then
+		self._fullBlockModel:clear()
 	end
 
-	arg_4_0._fullBlockModel = BaseModel.New()
-	arg_4_0._tempBlockMO = nil
-	arg_4_0._emptyId = -1000
-	arg_4_0._convexHull = nil
-	arg_4_0._convexHexPointDict = nil
-	arg_4_0._isBackMore = false
+	self._fullBlockModel = BaseModel.New()
+	self._tempBlockMO = nil
+	self._emptyId = -1000
+	self._convexHull = nil
+	self._convexHexPointDict = nil
+	self._isBackMore = false
 
-	if arg_4_0._backBlockModel then
-		arg_4_0._backBlockModel:clear()
+	if self._backBlockModel then
+		self._backBlockModel:clear()
 	end
 
-	arg_4_0._backBlockModel = BaseModel.New()
+	self._backBlockModel = BaseModel.New()
 end
 
-function var_0_0.getBackBlockModel(arg_5_0)
-	return arg_5_0._backBlockModel
+function RoomMapBlockModel:getBackBlockModel()
+	return self._backBlockModel
 end
 
-function var_0_0.isCanBackBlock(arg_6_0)
-	if arg_6_0._backBlockModel:getCount() < 1 then
+function RoomMapBlockModel:isCanBackBlock()
+	if self._backBlockModel:getCount() < 1 then
 		return false
 	end
 
 	if RoomEnum.IsBlockNeedConnInit then
-		local var_6_0 = arg_6_0:getFullListNoTempBlockMO()
-		local var_6_1 = arg_6_0._backBlockModel:getList()
+		local blockMOList = self:getFullListNoTempBlockMO()
+		local backBlockMOList = self._backBlockModel:getList()
 
-		if RoomBackBlockHelper.isCanBack(var_6_0, var_6_1) then
+		if RoomBackBlockHelper.isCanBack(blockMOList, backBlockMOList) then
 			return true
 		end
 
 		return false
 	end
 
-	if RoomBackBlockHelper.isHasInitBlock(arg_6_0._backBlockModel:getList()) then
+	if RoomBackBlockHelper.isHasInitBlock(self._backBlockModel:getList()) then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0.getFullListNoTempBlockMO(arg_7_0)
-	if not arg_7_0:getTempBlockMO() then
-		return arg_7_0._fullBlockModel:getList()
+function RoomMapBlockModel:getFullListNoTempBlockMO()
+	if not self:getTempBlockMO() then
+		return self._fullBlockModel:getList()
 	end
 
-	local var_7_0 = {}
+	local backBlockMOList = {}
 
-	tabletool.addValues(var_7_0, arg_7_0._fullBlockModel:getList())
-	tabletool.removeValue(var_7_0, arg_7_0:getTempBlockMO())
+	tabletool.addValues(backBlockMOList, self._fullBlockModel:getList())
+	tabletool.removeValue(backBlockMOList, self:getTempBlockMO())
 
-	return var_7_0
+	return backBlockMOList
 end
 
-function var_0_0.backBlockById(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0:getFullBlockMOById(arg_8_1)
+function RoomMapBlockModel:backBlockById(blockId)
+	local blockMO = self:getFullBlockMOById(blockId)
 
-	if var_8_0 then
-		var_8_0:setOpState(RoomBlockEnum.OpState.Normal)
-		arg_8_0:_removeBlockMO(var_8_0)
-		arg_8_0._backBlockModel:remove(var_8_0)
-		arg_8_0:_placeOneEmptyBlock(var_8_0.hexPoint)
+	if blockMO then
+		blockMO:setOpState(RoomBlockEnum.OpState.Normal)
+		self:_removeBlockMO(blockMO)
+		self._backBlockModel:remove(blockMO)
+		self:_placeOneEmptyBlock(blockMO.hexPoint)
 
-		return var_8_0
+		return blockMO
 	end
 end
 
-function var_0_0.isBackMore(arg_9_0)
-	return arg_9_0._isBackMore
+function RoomMapBlockModel:isBackMore()
+	return self._isBackMore
 end
 
-function var_0_0.setBackMore(arg_10_0, arg_10_1)
-	arg_10_0._isBackMore = arg_10_1 == true
+function RoomMapBlockModel:setBackMore(isBackMore)
+	self._isBackMore = isBackMore == true
 end
 
-function var_0_0.initMap(arg_11_0, arg_11_1)
-	arg_11_0:clear()
+function RoomMapBlockModel:initMap(infos)
+	self:clear()
 
-	if not arg_11_1 or #arg_11_1 <= 0 then
+	if not infos or #infos <= 0 then
 		return
 	end
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_1) do
-		if iter_11_1.use ~= false then
-			local var_11_0 = RoomInfoHelper.serverInfoToBlockInfo(iter_11_1)
-			local var_11_1 = RoomBlockMO.New()
+	for i, info in ipairs(infos) do
+		if info.use ~= false then
+			local blockInfo = RoomInfoHelper.serverInfoToBlockInfo(info)
+			local blockMO = RoomBlockMO.New()
 
-			var_11_1:init(var_11_0)
-			arg_11_0:_addBlockMO(var_11_1)
+			blockMO:init(blockInfo)
+			self:_addBlockMO(blockMO)
 		end
 	end
 
-	arg_11_0:_refreshEmpty()
-	arg_11_0:_refreshConvexHull()
+	self:_refreshEmpty()
+	self:_refreshConvexHull()
 end
 
-function var_0_0._refreshEmpty(arg_12_0)
-	local var_12_0 = {}
-	local var_12_1 = arg_12_0._fullBlockModel:getList()
+function RoomMapBlockModel:_refreshEmpty()
+	local emptyDict = {}
+	local fullBlockMOList = self._fullBlockModel:getList()
 
-	for iter_12_0, iter_12_1 in ipairs(var_12_1) do
-		local var_12_2 = iter_12_1.hexPoint
+	for _, fullMO in ipairs(fullBlockMOList) do
+		local hexPoint = fullMO.hexPoint
 
-		for iter_12_2 = 1, RoomBlockEnum.EmptyBlockDistanceStyleCount do
-			local var_12_3 = var_12_2:getOnRanges(iter_12_2)
-			local var_12_4 = iter_12_2
+		for distance = 1, RoomBlockEnum.EmptyBlockDistanceStyleCount do
+			local ranges = hexPoint:getOnRanges(distance)
+			local distanceStyle = distance
 
-			for iter_12_3, iter_12_4 in ipairs(var_12_3) do
-				var_12_0[iter_12_4.x] = var_12_0[iter_12_4.x] or {}
-				var_12_0[iter_12_4.x][iter_12_4.y] = math.min(var_12_0[iter_12_4.x][iter_12_4.y] or RoomBlockEnum.EmptyBlockDistanceStyleCount, var_12_4)
+			for _, range in ipairs(ranges) do
+				emptyDict[range.x] = emptyDict[range.x] or {}
+				emptyDict[range.x][range.y] = math.min(emptyDict[range.x][range.y] or RoomBlockEnum.EmptyBlockDistanceStyleCount, distanceStyle)
 			end
 		end
 	end
 
-	local var_12_5 = 0
+	local count = 0
 
-	for iter_12_5, iter_12_6 in pairs(var_12_0) do
-		for iter_12_7, iter_12_8 in pairs(iter_12_6) do
-			local var_12_6 = arg_12_0:getBlockMO(iter_12_5, iter_12_7)
+	for x, dict in pairs(emptyDict) do
+		for y, distanceStyle in pairs(dict) do
+			local emptyMO = self:getBlockMO(x, y)
 
-			var_12_5 = var_12_5 + 1
+			count = count + 1
 
-			if var_12_6 then
-				arg_12_0:_refreshEmptyMO(var_12_6, iter_12_8)
+			if emptyMO then
+				self:_refreshEmptyMO(emptyMO, distanceStyle)
 			else
-				arg_12_0:_placeOneEmptyBlock(HexPoint(iter_12_5, iter_12_7), iter_12_8)
+				self:_placeOneEmptyBlock(HexPoint(x, y), distanceStyle)
 			end
 		end
 	end
 end
 
-function var_0_0._placeEmptyBlock(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_1.hexPoint:getInRanges(RoomBlockEnum.EmptyBlockDistanceStyleCount, true)
+function RoomMapBlockModel:_placeEmptyBlock(blockMO)
+	local hexPoint = blockMO.hexPoint
+	local neighbors = hexPoint:getInRanges(RoomBlockEnum.EmptyBlockDistanceStyleCount, true)
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
-		local var_13_1 = arg_13_0:getBlockMO(iter_13_1.x, iter_13_1.y)
+	for _, neighbor in ipairs(neighbors) do
+		local neighborMO = self:getBlockMO(neighbor.x, neighbor.y)
 
-		if var_13_1 then
-			arg_13_0:_refreshEmptyMO(var_13_1)
+		if neighborMO then
+			self:_refreshEmptyMO(neighborMO)
 		else
-			arg_13_0:_placeOneEmptyBlock(iter_13_1)
+			self:_placeOneEmptyBlock(neighbor)
 		end
 	end
 end
 
-function var_0_0._placeOneEmptyBlock(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = arg_14_0:_getEmptyGUID(arg_14_1.x, arg_14_1.y)
-	local var_14_1 = arg_14_0._emptyBlockModel:getById(var_14_0)
+function RoomMapBlockModel:_placeOneEmptyBlock(hexPoint, distanceStyle)
+	local emptyId = self:_getEmptyGUID(hexPoint.x, hexPoint.y)
+	local emptyMO = self._emptyBlockModel:getById(emptyId)
 
-	if var_14_1 then
-		var_14_1.distanceStyle = arg_14_2
+	if emptyMO then
+		emptyMO.distanceStyle = distanceStyle
 
-		arg_14_0:_addBlockMOToMapDict(var_14_1)
+		self:_addBlockMOToMapDict(emptyMO)
 	else
-		var_14_1 = RoomBlockMO.New()
+		emptyMO = RoomBlockMO.New()
 
-		local var_14_2 = RoomInfoHelper.generateEmptyMapBlockInfo(var_14_0, arg_14_1.x, arg_14_1.y, arg_14_2)
+		local emptyInfo = RoomInfoHelper.generateEmptyMapBlockInfo(emptyId, hexPoint.x, hexPoint.y, distanceStyle)
 
-		var_14_1:init(var_14_2)
-		arg_14_0:_addBlockMO(var_14_1)
+		emptyMO:init(emptyInfo)
+		self:_addBlockMO(emptyMO)
 	end
 
-	arg_14_0:_refreshEmptyMO(var_14_1, arg_14_2)
+	self:_refreshEmptyMO(emptyMO, distanceStyle)
 end
 
-function var_0_0._addBlockMOToMapDict(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_1.hexPoint
+function RoomMapBlockModel:_addBlockMOToMapDict(mo)
+	local hexPoint = mo.hexPoint
 
-	arg_15_0._mapBlockMODict[var_15_0.x] = arg_15_0._mapBlockMODict[var_15_0.x] or {}
-	arg_15_0._mapBlockMODict[var_15_0.x][var_15_0.y] = arg_15_1
+	self._mapBlockMODict[hexPoint.x] = self._mapBlockMODict[hexPoint.x] or {}
+	self._mapBlockMODict[hexPoint.x][hexPoint.y] = mo
 
-	table.insert(arg_15_0._mapBlockMOList, arg_15_1)
+	table.insert(self._mapBlockMOList, mo)
 end
 
-function var_0_0._addBlockMO(arg_16_0, arg_16_1)
-	arg_16_0:_addBlockMOToMapDict(arg_16_1)
+function RoomMapBlockModel:_addBlockMO(mo)
+	self:_addBlockMOToMapDict(mo)
 
-	if arg_16_1.blockState == RoomBlockEnum.BlockState.Water then
-		arg_16_0._emptyBlockModel:addAtLast(arg_16_1)
+	if mo.blockState == RoomBlockEnum.BlockState.Water then
+		self._emptyBlockModel:addAtLast(mo)
 	else
-		arg_16_0._fullBlockModel:addAtLast(arg_16_1)
+		self._fullBlockModel:addAtLast(mo)
 	end
 end
 
-function var_0_0._removeBlockMO(arg_17_0, arg_17_1)
-	local var_17_0 = arg_17_1.hexPoint
+function RoomMapBlockModel:_removeBlockMO(mo)
+	local hexPoint = mo.hexPoint
 
-	if arg_17_0._mapBlockMODict[var_17_0.x] then
-		arg_17_0._mapBlockMODict[var_17_0.x][var_17_0.y] = nil
+	if self._mapBlockMODict[hexPoint.x] then
+		self._mapBlockMODict[hexPoint.x][hexPoint.y] = nil
 	end
 
-	local var_17_1 = tabletool.indexOf(arg_17_0._mapBlockMOList, arg_17_1)
+	local index = tabletool.indexOf(self._mapBlockMOList, mo)
 
-	if var_17_1 then
-		table.remove(arg_17_0._mapBlockMOList, var_17_1)
+	if index then
+		table.remove(self._mapBlockMOList, index)
 	end
 
-	if arg_17_1.blockState == RoomBlockEnum.BlockState.Water then
-		arg_17_0._emptyBlockModel:remove(arg_17_1)
+	if mo.blockState == RoomBlockEnum.BlockState.Water then
+		self._emptyBlockModel:remove(mo)
 	else
-		arg_17_0._fullBlockModel:remove(arg_17_1)
+		self._fullBlockModel:remove(mo)
 	end
 end
 
-function var_0_0.addTempBlockMO(arg_18_0, arg_18_1, arg_18_2)
-	if arg_18_0._tempBlockMO then
+function RoomMapBlockModel:addTempBlockMO(inventoryBlockMO, hexPoint)
+	if self._tempBlockMO then
 		logError("暂不支持两个临时地块")
 
 		return
 	end
 
-	local var_18_0 = arg_18_0:getBlockMO(arg_18_2.x, arg_18_2.y)
+	local originalMO = self:getBlockMO(hexPoint.x, hexPoint.y)
 
-	if var_18_0 then
-		arg_18_0:_removeBlockMO(var_18_0)
+	if originalMO then
+		self:_removeBlockMO(originalMO)
 	end
 
-	local var_18_1 = RoomInfoHelper.blockMOToBlockInfo(arg_18_1)
+	local inventoryInfo = RoomInfoHelper.blockMOToBlockInfo(inventoryBlockMO)
 
-	arg_18_0._tempBlockMO = RoomBlockMO.New()
-	var_18_1.blockState = RoomBlockEnum.BlockState.Temp
-	var_18_1.x = arg_18_2.x
-	var_18_1.y = arg_18_2.y
+	self._tempBlockMO = RoomBlockMO.New()
+	inventoryInfo.blockState = RoomBlockEnum.BlockState.Temp
+	inventoryInfo.x = hexPoint.x
+	inventoryInfo.y = hexPoint.y
 
-	arg_18_0._tempBlockMO:init(var_18_1)
-	arg_18_0:_addBlockMO(arg_18_0._tempBlockMO)
+	self._tempBlockMO:init(inventoryInfo)
+	self:_addBlockMO(self._tempBlockMO)
 
-	return arg_18_0._tempBlockMO
+	return self._tempBlockMO
 end
 
-function var_0_0.getTempBlockMO(arg_19_0)
-	return arg_19_0._tempBlockMO
+function RoomMapBlockModel:getTempBlockMO()
+	return self._tempBlockMO
 end
 
-function var_0_0.changeTempBlockMO(arg_20_0, arg_20_1, arg_20_2)
-	if not arg_20_0._tempBlockMO then
+function RoomMapBlockModel:changeTempBlockMO(hexPoint, rotate)
+	if not self._tempBlockMO then
 		return
 	end
 
-	arg_20_0._tempBlockMO.rotate = arg_20_2
+	self._tempBlockMO.rotate = rotate
 
-	if arg_20_0._tempBlockMO.hexPoint ~= arg_20_1 then
-		local var_20_0 = HexPoint(arg_20_0._tempBlockMO.hexPoint.x, arg_20_0._tempBlockMO.hexPoint.y)
-		local var_20_1 = arg_20_0:getBlockMO(arg_20_1.x, arg_20_1.y)
+	if self._tempBlockMO.hexPoint ~= hexPoint then
+		local previousHexPoint = HexPoint(self._tempBlockMO.hexPoint.x, self._tempBlockMO.hexPoint.y)
+		local originalMO = self:getBlockMO(hexPoint.x, hexPoint.y)
 
-		if var_20_1 then
-			arg_20_0:_removeBlockMO(var_20_1)
+		if originalMO then
+			self:_removeBlockMO(originalMO)
 		end
 
-		arg_20_0:_removeBlockMO(arg_20_0._tempBlockMO)
+		self:_removeBlockMO(self._tempBlockMO)
 
-		arg_20_0._tempBlockMO.hexPoint = arg_20_1
+		self._tempBlockMO.hexPoint = hexPoint
 
-		arg_20_0:_addBlockMO(arg_20_0._tempBlockMO)
-		arg_20_0:_placeOneEmptyBlock(var_20_0)
+		self:_addBlockMO(self._tempBlockMO)
+		self:_placeOneEmptyBlock(previousHexPoint)
 	end
 end
 
-function var_0_0.removeTempBlockMO(arg_21_0)
-	if not arg_21_0._tempBlockMO then
+function RoomMapBlockModel:removeTempBlockMO()
+	if not self._tempBlockMO then
 		return
 	end
 
-	local var_21_0 = arg_21_0._tempBlockMO.hexPoint
+	local hexPoint = self._tempBlockMO.hexPoint
 
-	arg_21_0:_removeBlockMO(arg_21_0._tempBlockMO)
-	arg_21_0:_placeOneEmptyBlock(var_21_0)
+	self:_removeBlockMO(self._tempBlockMO)
+	self:_placeOneEmptyBlock(hexPoint)
 
-	arg_21_0._tempBlockMO = nil
+	self._tempBlockMO = nil
 end
 
-function var_0_0.placeTempBlockMO(arg_22_0, arg_22_1)
-	if not arg_22_0._tempBlockMO then
+function RoomMapBlockModel:placeTempBlockMO(info)
+	if not self._tempBlockMO then
 		return
 	end
 
-	local var_22_0 = RoomBlockMO.New()
-	local var_22_1 = RoomInfoHelper.serverInfoToBlockInfo(arg_22_1)
+	local blockMO = RoomBlockMO.New()
+	local blockInfo = RoomInfoHelper.serverInfoToBlockInfo(info)
 
-	var_22_0:init(var_22_1)
+	blockMO:init(blockInfo)
 
-	local var_22_2 = RoomWaterReformModel.instance:getBlockPermanentInfo(arg_22_0._tempBlockMO.blockId)
+	local blockColor = RoomWaterReformModel.instance:getBlockPermanentInfo(self._tempBlockMO.blockId)
 
-	if var_22_2 and var_22_2 ~= RoomWaterReformModel.InitBlockColor then
-		arg_22_0._tempBlockMO:setBlockColorType(var_22_2)
+	if blockColor and blockColor ~= RoomWaterReformModel.InitBlockColor then
+		self._tempBlockMO:setBlockColorType(blockColor)
 	end
 
-	arg_22_0._tempBlockMO.rotate = var_22_0.rotate
-	arg_22_0._tempBlockMO.blockState = RoomBlockEnum.BlockState.Map
+	self._tempBlockMO.rotate = blockMO.rotate
+	self._tempBlockMO.blockState = RoomBlockEnum.BlockState.Map
 
-	arg_22_0:_placeEmptyBlock(arg_22_0._tempBlockMO)
+	self:_placeEmptyBlock(self._tempBlockMO)
 
-	arg_22_0._tempBlockMO = nil
+	self._tempBlockMO = nil
 
-	arg_22_0:_refreshConvexHull()
+	self:_refreshConvexHull()
 end
 
-function var_0_0.getBlockMO(arg_23_0, arg_23_1, arg_23_2)
-	return arg_23_0._mapBlockMODict[arg_23_1] and arg_23_0._mapBlockMODict[arg_23_1][arg_23_2]
+function RoomMapBlockModel:getBlockMO(x, y)
+	return self._mapBlockMODict[x] and self._mapBlockMODict[x][y]
 end
 
-function var_0_0.getBlockMOList(arg_24_0)
-	return arg_24_0._mapBlockMOList
+function RoomMapBlockModel:getBlockMOList()
+	return self._mapBlockMOList
 end
 
-function var_0_0.getBlockMODict(arg_25_0)
-	return arg_25_0._mapBlockMODict
+function RoomMapBlockModel:getBlockMODict()
+	return self._mapBlockMODict
 end
 
-function var_0_0.getEmptyBlockMOList(arg_26_0)
-	return arg_26_0._emptyBlockModel:getList()
+function RoomMapBlockModel:getEmptyBlockMOList()
+	return self._emptyBlockModel:getList()
 end
 
-function var_0_0.getFullBlockMOList(arg_27_0)
-	return arg_27_0._fullBlockModel:getList()
+function RoomMapBlockModel:getFullBlockMOList()
+	return self._fullBlockModel:getList()
 end
 
-function var_0_0.getEmptyBlockMOById(arg_28_0, arg_28_1)
-	return arg_28_0._emptyBlockModel:getById(arg_28_1)
+function RoomMapBlockModel:getEmptyBlockMOById(id)
+	return self._emptyBlockModel:getById(id)
 end
 
-function var_0_0.getFullBlockMOById(arg_29_0, arg_29_1)
-	return arg_29_0._fullBlockModel:getById(arg_29_1)
+function RoomMapBlockModel:getFullBlockMOById(id)
+	return self._fullBlockModel:getById(id)
 end
 
-function var_0_0.getFullBlockCount(arg_30_0)
-	local var_30_0 = arg_30_0._fullBlockModel:getCount()
+function RoomMapBlockModel:getFullBlockCount()
+	local count = self._fullBlockModel:getCount()
 
-	if arg_30_0._tempBlockMO then
-		var_30_0 = var_30_0 - 1
+	if self._tempBlockMO then
+		count = count - 1
 	end
 
-	return var_30_0
+	return count
 end
 
-function var_0_0.getConfirmBlockCount(arg_31_0)
-	local var_31_0 = 0
-	local var_31_1 = arg_31_0._fullBlockModel:getList()
+function RoomMapBlockModel:getConfirmBlockCount()
+	local count = 0
+	local blockMOList = self._fullBlockModel:getList()
 
-	for iter_31_0, iter_31_1 in ipairs(var_31_1) do
-		if iter_31_1.blockState == RoomBlockEnum.BlockState.Map and iter_31_1.blockId > 0 then
-			var_31_0 = var_31_0 + 1
+	for i, blockMO in ipairs(blockMOList) do
+		if blockMO.blockState == RoomBlockEnum.BlockState.Map and blockMO.blockId > 0 then
+			count = count + 1
 		end
 	end
 
-	return var_31_0
+	return count
 end
 
-function var_0_0.getMaxBlockCount(arg_32_0, arg_32_1)
-	local var_32_0 = arg_32_1 or RoomMapModel.instance:getRoomLevel()
-	local var_32_1 = RoomConfig.instance:getRoomLevelConfig(var_32_0) or RoomConfig.instance:getRoomLevelConfig(RoomConfig.instance:getMaxRoomLevel())
+function RoomMapBlockModel:getMaxBlockCount(roomLevel)
+	local roomLevel = roomLevel or RoomMapModel.instance:getRoomLevel()
+	local roomLevelConfig = RoomConfig.instance:getRoomLevelConfig(roomLevel)
 
-	return (var_32_1 and var_32_1.maxBlockCount or 0) + arg_32_0:getTradeBlockCount()
+	roomLevelConfig = roomLevelConfig or RoomConfig.instance:getRoomLevelConfig(RoomConfig.instance:getMaxRoomLevel())
+
+	local count = roomLevelConfig and roomLevelConfig.maxBlockCount or 0
+
+	count = count + self:getTradeBlockCount()
+
+	return count
 end
 
-function var_0_0.getTradeBlockCount(arg_33_0)
-	local var_33_0 = ManufactureModel.instance:getTradeLevel()
-	local var_33_1 = ManufactureConfig.instance:getTradeLevelCfg(var_33_0, false)
+function RoomMapBlockModel:getTradeBlockCount()
+	local tradeLevel = ManufactureModel.instance:getTradeLevel()
+	local trandLevelCfg = ManufactureConfig.instance:getTradeLevelCfg(tradeLevel, false)
 
-	return var_33_1 and var_33_1.addBlockMax or 0
+	return trandLevelCfg and trandLevelCfg.addBlockMax or 0
 end
 
-function var_0_0._refreshConvexHull(arg_34_0)
-	arg_34_0._convexHull = {}
+function RoomMapBlockModel:_refreshConvexHull()
+	self._convexHull = {}
 
-	local var_34_0 = arg_34_0._fullBlockModel:getList()
-	local var_34_1 = {}
+	local blockMOList = self._fullBlockModel:getList()
+	local points = {}
 
-	for iter_34_0, iter_34_1 in ipairs(var_34_0) do
-		if iter_34_1.blockState == RoomBlockEnum.BlockState.Map then
-			local var_34_2 = iter_34_1.hexPoint
-			local var_34_3 = HexMath.hexToPosition(var_34_2, RoomBlockEnum.BlockSize)
-			local var_34_4 = RoomBlockEnum.BlockSize * 3
+	for _, blockMO in ipairs(blockMOList) do
+		if blockMO.blockState == RoomBlockEnum.BlockState.Map then
+			local hexPoint = blockMO.hexPoint
+			local position = HexMath.hexToPosition(hexPoint, RoomBlockEnum.BlockSize)
+			local area = RoomBlockEnum.BlockSize * 3
 
-			table.insert(var_34_1, var_34_3 + Vector2(1.1546 * var_34_4, 0))
-			table.insert(var_34_1, var_34_3 + Vector2(0.5773 * var_34_4, -var_34_4))
-			table.insert(var_34_1, var_34_3 + Vector2(-0.5773 * var_34_4, -var_34_4))
-			table.insert(var_34_1, var_34_3 + Vector2(-1.1546 * var_34_4, 0))
-			table.insert(var_34_1, var_34_3 + Vector2(-0.5773 * var_34_4, var_34_4))
-			table.insert(var_34_1, var_34_3 + Vector2(0.5773 * var_34_4, var_34_4))
+			table.insert(points, position + Vector2(1.1546 * area, 0))
+			table.insert(points, position + Vector2(0.5773 * area, -area))
+			table.insert(points, position + Vector2(-0.5773 * area, -area))
+			table.insert(points, position + Vector2(-1.1546 * area, 0))
+			table.insert(points, position + Vector2(-0.5773 * area, area))
+			table.insert(points, position + Vector2(0.5773 * area, area))
 		end
 	end
 
-	arg_34_0._convexHull = RoomCameraHelper.getConvexHull(var_34_1)
+	self._convexHull = RoomCameraHelper.getConvexHull(points)
 
-	local var_34_5 = RoomCameraHelper.expandConvexHull(arg_34_0._convexHull, RoomBlockEnum.BlockSize * 10)
+	local expandConvexHull = RoomCameraHelper.expandConvexHull(self._convexHull, RoomBlockEnum.BlockSize * 10)
 
-	arg_34_0._convexHexPointDict = RoomCameraHelper.getConvexHexPointDict(var_34_5)
+	self._convexHexPointDict = RoomCameraHelper.getConvexHexPointDict(expandConvexHull)
 end
 
-function var_0_0.getConvexHull(arg_35_0)
-	if not arg_35_0._convexHull then
-		arg_35_0:_refreshConvexHull()
+function RoomMapBlockModel:getConvexHull()
+	if not self._convexHull then
+		self:_refreshConvexHull()
 	end
 
-	return arg_35_0._convexHull
+	return self._convexHull
 end
 
-function var_0_0.getConvexHexPointDict(arg_36_0)
-	if not arg_36_0._convexHexPointDict then
-		arg_36_0:_refreshConvexHull()
+function RoomMapBlockModel:getConvexHexPointDict()
+	if not self._convexHexPointDict then
+		self:_refreshConvexHull()
 	end
 
-	return arg_36_0._convexHexPointDict
+	return self._convexHexPointDict
 end
 
-function var_0_0._getEmptyGUID(arg_37_0, arg_37_1, arg_37_2)
-	local var_37_0 = CommonConfig.instance:getConstNum(ConstEnum.RoomMapMaxRadius) + 1
-	local var_37_1 = (arg_37_1 + var_37_0) * 2 * var_37_0 + arg_37_2 + var_37_0
+function RoomMapBlockModel:_getEmptyGUID(x, y)
+	local mapMaxRadius = CommonConfig.instance:getConstNum(ConstEnum.RoomMapMaxRadius)
+	local radius = mapMaxRadius + 1
+	local index = (x + radius) * 2 * radius + y + radius
 
-	return arg_37_0._emptyId - var_37_1
+	return self._emptyId - index
 end
 
-function var_0_0.refreshNearRiver(arg_38_0, arg_38_1, arg_38_2)
-	local var_38_0 = arg_38_1:getInRanges(arg_38_2)
+function RoomMapBlockModel:refreshNearRiver(hexPoint, range)
+	local nears = hexPoint:getInRanges(range)
 
-	for iter_38_0, iter_38_1 in ipairs(var_38_0) do
-		local var_38_1 = arg_38_0:getBlockMO(iter_38_1.x, iter_38_1.y)
+	for _, near in ipairs(nears) do
+		local nearMO = self:getBlockMO(near.x, near.y)
 
-		if var_38_1 and var_38_1.blockState ~= RoomBlockEnum.BlockState.Water then
-			var_38_1:refreshRiver()
+		if nearMO and nearMO.blockState ~= RoomBlockEnum.BlockState.Water then
+			nearMO:refreshRiver()
 		end
 	end
 end
 
-function var_0_0.refreshNearRiverByHexPointList(arg_39_0, arg_39_1, arg_39_2)
-	local var_39_0 = {}
+function RoomMapBlockModel:refreshNearRiverByHexPointList(hexPointList, range)
+	local dict = {}
 
-	for iter_39_0, iter_39_1 in ipairs(arg_39_1) do
-		local var_39_1 = iter_39_1:getInRanges(arg_39_2)
+	for _, hexPoint in ipairs(hexPointList) do
+		local nears = hexPoint:getInRanges(range)
 
-		for iter_39_2, iter_39_3 in ipairs(var_39_1) do
-			local var_39_2 = arg_39_0:getBlockMO(iter_39_3.x, iter_39_3.y)
-			local var_39_3 = var_39_2.blockId
+		for _, near in ipairs(nears) do
+			local nearMO = self:getBlockMO(near.x, near.y)
+			local blockId = nearMO.blockId
 
-			if var_39_2 and var_39_2.blockState ~= RoomBlockEnum.BlockState.Water and not var_39_0[var_39_3] then
-				var_39_0[var_39_3] = var_39_2
+			if nearMO and nearMO.blockState ~= RoomBlockEnum.BlockState.Water and not dict[blockId] then
+				dict[blockId] = nearMO
 			end
 		end
 	end
 
-	for iter_39_4, iter_39_5 in pairs(var_39_0) do
-		iter_39_5:refreshRiver()
+	for _, nearMO in pairs(dict) do
+		nearMO:refreshRiver()
 	end
 end
 
-function var_0_0._refreshEmptyMO(arg_40_0, arg_40_1, arg_40_2)
+function RoomMapBlockModel:_refreshEmptyMO(emptyMO, distanceStyle)
 	return
 end
 
-function var_0_0.debugConfirmPlaceBlock(arg_41_0, arg_41_1, arg_41_2)
-	local var_41_0 = RoomBlockMO.New()
+function RoomMapBlockModel:debugConfirmPlaceBlock(hexPoint, info)
+	local blockMO = RoomBlockMO.New()
 
-	var_41_0:init(arg_41_2)
+	blockMO:init(info)
 
-	local var_41_1 = arg_41_0:getBlockMO(arg_41_1.x, arg_41_1.y)
+	local emptyMO = self:getBlockMO(hexPoint.x, hexPoint.y)
 
-	if var_41_1 then
-		arg_41_0:_removeBlockMO(var_41_1)
+	if emptyMO then
+		self:_removeBlockMO(emptyMO)
 	end
 
-	arg_41_0:_addBlockMO(var_41_0)
-	arg_41_0:_placeEmptyBlock(var_41_0)
-	arg_41_0:_refreshConvexHull()
+	self:_addBlockMO(blockMO)
+	self:_placeEmptyBlock(blockMO)
+	self:_refreshConvexHull()
 
-	return var_41_0, var_41_1
+	return blockMO, emptyMO
 end
 
-function var_0_0.debugRootOutBlock(arg_42_0, arg_42_1)
-	local var_42_0 = arg_42_0:getBlockMO(arg_42_1.x, arg_42_1.y)
+function RoomMapBlockModel:debugRootOutBlock(hexPoint)
+	local blockMO = self:getBlockMO(hexPoint.x, hexPoint.y)
 
-	if var_42_0 then
-		arg_42_0:_removeBlockMO(var_42_0)
+	if blockMO then
+		self:_removeBlockMO(blockMO)
 	end
 
-	local var_42_1 = arg_42_1:getInRanges(RoomBlockEnum.EmptyBlockDistanceStyleCount, true)
-	local var_42_2 = {}
+	local neighbors = hexPoint:getInRanges(RoomBlockEnum.EmptyBlockDistanceStyleCount, true)
+	local emptyMOList = {}
 
-	for iter_42_0, iter_42_1 in ipairs(var_42_1) do
-		local var_42_3 = false
-		local var_42_4 = arg_42_0:getBlockMO(iter_42_1.x, iter_42_1.y)
+	for _, neighbor in ipairs(neighbors) do
+		local flag = false
+		local neighborMO = self:getBlockMO(neighbor.x, neighbor.y)
 
-		if var_42_4 and var_42_4.blockState == RoomBlockEnum.BlockState.Water then
-			local var_42_5 = false
-			local var_42_6 = iter_42_1:getInRanges(RoomBlockEnum.EmptyBlockDistanceStyleCount, true)
+		if neighborMO and neighborMO.blockState == RoomBlockEnum.BlockState.Water then
+			local flag2 = false
+			local neighbors2 = neighbor:getInRanges(RoomBlockEnum.EmptyBlockDistanceStyleCount, true)
 
-			for iter_42_2, iter_42_3 in ipairs(var_42_6) do
-				local var_42_7 = arg_42_0:getBlockMO(iter_42_3.x, iter_42_3.y)
+			for _, neighbor2 in ipairs(neighbors2) do
+				local neighbor2MO = self:getBlockMO(neighbor2.x, neighbor2.y)
 
-				if var_42_7 and var_42_7.blockState == RoomBlockEnum.BlockState.Map then
-					var_42_5 = true
+				if neighbor2MO and neighbor2MO.blockState == RoomBlockEnum.BlockState.Map then
+					flag2 = true
 
 					break
 				end
 			end
 
-			if var_42_5 then
-				arg_42_0:_refreshEmptyMO(var_42_4)
+			if flag2 then
+				self:_refreshEmptyMO(neighborMO)
 			else
-				arg_42_0:_removeBlockMO(var_42_4)
-				table.insert(var_42_2, var_42_4)
+				self:_removeBlockMO(neighborMO)
+				table.insert(emptyMOList, neighborMO)
 			end
-		elseif var_42_4 and var_42_4.blockState == RoomBlockEnum.BlockState.Map then
-			var_42_3 = true
+		elseif neighborMO and neighborMO.blockState == RoomBlockEnum.BlockState.Map then
+			flag = true
 		end
 
-		if var_42_3 then
-			arg_42_0:_placeOneEmptyBlock(arg_42_1)
+		if flag then
+			self:_placeOneEmptyBlock(hexPoint)
 		end
 	end
 
-	arg_42_0:_refreshConvexHull()
+	self:_refreshConvexHull()
 
-	return var_42_2
+	return emptyMOList
 end
 
-function var_0_0.debugMoveAllBlock(arg_43_0, arg_43_1, arg_43_2)
-	if not arg_43_0._mapBlockMOList then
+function RoomMapBlockModel:debugMoveAllBlock(offsetX, offsetY)
+	if not self._mapBlockMOList then
 		return
 	end
 
-	for iter_43_0, iter_43_1 in ipairs(arg_43_0._mapBlockMOList) do
-		local var_43_0 = iter_43_1.hexPoint.x
-		local var_43_1 = iter_43_1.hexPoint.y
-		local var_43_2 = var_43_0 + arg_43_1
-		local var_43_3 = var_43_1 + arg_43_2
+	for _, blockMO in ipairs(self._mapBlockMOList) do
+		local x = blockMO.hexPoint.x
+		local y = blockMO.hexPoint.y
+		local newX = x + offsetX
+		local newY = y + offsetY
 
-		iter_43_1.hexPoint = HexPoint(var_43_2, var_43_3)
-		arg_43_0._mapBlockMODict[var_43_0][var_43_1] = nil
-		arg_43_0._mapBlockMODict[var_43_2] = arg_43_0._mapBlockMODict[var_43_2] or {}
-		arg_43_0._mapBlockMODict[var_43_2][var_43_3] = iter_43_1
+		blockMO.hexPoint = HexPoint(newX, newY)
+		self._mapBlockMODict[x][y] = nil
+		self._mapBlockMODict[newX] = self._mapBlockMODict[newX] or {}
+		self._mapBlockMODict[newX][newY] = blockMO
 	end
 end
 
-function var_0_0.getFullMapSizeAndCenter(arg_44_0)
-	local var_44_0 = 0
-	local var_44_1 = 0
-	local var_44_2 = 0
-	local var_44_3 = 0
+function RoomMapBlockModel:getFullMapSizeAndCenter()
+	local max_x, max_y, min_x, min_y = 0, 0, 0, 0
 
-	for iter_44_0, iter_44_1 in ipairs(arg_44_0._mapBlockMOList) do
-		local var_44_4 = iter_44_1.hexPoint
-		local var_44_5 = HexMath.hexToPosition(var_44_4, RoomBlockEnum.BlockSize)
+	for _, blockMo in ipairs(self._mapBlockMOList) do
+		local hexPoint = blockMo.hexPoint
+		local v2 = HexMath.hexToPosition(hexPoint, RoomBlockEnum.BlockSize)
 
-		var_44_0 = math.max(var_44_0, var_44_5.x)
-		var_44_1 = math.max(var_44_1, var_44_5.y)
-		var_44_2 = math.min(var_44_2, var_44_5.x)
-		var_44_3 = math.min(var_44_3, var_44_5.y)
+		max_x = math.max(max_x, v2.x)
+		max_y = math.max(max_y, v2.y)
+		min_x = math.min(min_x, v2.x)
+		min_y = math.min(min_y, v2.y)
 	end
 
-	local var_44_6 = math.floor((var_44_0 - var_44_2) * RoomEnum.WorldPosToAStarMeshWidth)
-	local var_44_7 = math.floor((var_44_1 - var_44_3) * RoomEnum.WorldPosToAStarMeshDepth)
-	local var_44_8 = 0
-	local var_44_9 = 0
-	local var_44_10 = math.min(var_44_6, RoomEnum.AStarMeshMaxWidthOrDepth)
-	local var_44_11 = math.min(var_44_7, RoomEnum.AStarMeshMaxWidthOrDepth)
-	local var_44_12 = (var_44_0 + var_44_2) * 0.5
-	local var_44_13 = (var_44_1 + var_44_3) * 0.5
+	local wight = math.floor((max_x - min_x) * RoomEnum.WorldPosToAStarMeshWidth)
+	local height = math.floor((max_y - min_y) * RoomEnum.WorldPosToAStarMeshDepth)
+	local offsetX, offsetY = 0, 0
 
-	return var_44_10, var_44_11, var_44_12, var_44_13
+	wight = math.min(wight, RoomEnum.AStarMeshMaxWidthOrDepth)
+	height = math.min(height, RoomEnum.AStarMeshMaxWidthOrDepth)
+	offsetX = (max_x + min_x) * 0.5
+	offsetY = (max_y + min_y) * 0.5
+
+	return wight, height, offsetX, offsetY
 end
 
-var_0_0.instance = var_0_0.New()
+RoomMapBlockModel.instance = RoomMapBlockModel.New()
 
-return var_0_0
+return RoomMapBlockModel

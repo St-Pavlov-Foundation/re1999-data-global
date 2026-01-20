@@ -1,109 +1,111 @@
-﻿module("modules.logic.versionactivity1_5.peaceulu.model.PeaceUluTaskModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/peaceulu/model/PeaceUluTaskModel.lua
 
-local var_0_0 = class("PeaceUluTaskModel", ListScrollModel)
+module("modules.logic.versionactivity1_5.peaceulu.model.PeaceUluTaskModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local PeaceUluTaskModel = class("PeaceUluTaskModel", ListScrollModel)
+
+function PeaceUluTaskModel:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function PeaceUluTaskModel:reInit()
 	return
 end
 
-function var_0_0.sortTaskMoList(arg_3_0, arg_3_1)
-	local var_3_0 = PeaceUluModel.instance:getTasksInfo()
-	local var_3_1 = {}
-	local var_3_2 = {}
-	local var_3_3 = {}
+function PeaceUluTaskModel:sortTaskMoList(firstOpen)
+	local taskMoList = PeaceUluModel.instance:getTasksInfo()
+	local finishNotGetRewardMoList = {}
+	local notFinishMoList = {}
+	local finishAndGetRewardMoList = {}
 
-	for iter_3_0, iter_3_1 in pairs(var_3_0) do
-		iter_3_1.firstOpen = arg_3_1
-		iter_3_1.isupdate = true
+	for _, taskMo in pairs(taskMoList) do
+		taskMo.firstOpen = firstOpen
+		taskMo.isupdate = true
 
-		if iter_3_1.finishCount > 0 then
-			table.insert(var_3_3, iter_3_1)
-		elseif iter_3_1.hasFinished then
-			table.insert(var_3_1, iter_3_1)
+		if taskMo.finishCount > 0 then
+			table.insert(finishAndGetRewardMoList, taskMo)
+		elseif taskMo.hasFinished then
+			table.insert(finishNotGetRewardMoList, taskMo)
 		else
-			table.insert(var_3_2, iter_3_1)
+			table.insert(notFinishMoList, taskMo)
 		end
 	end
 
-	table.sort(var_3_1, var_0_0._sortFunc)
-	table.sort(var_3_2, var_0_0._sortFunc)
-	table.sort(var_3_3, var_0_0._sortFunc)
+	table.sort(finishNotGetRewardMoList, PeaceUluTaskModel._sortFunc)
+	table.sort(notFinishMoList, PeaceUluTaskModel._sortFunc)
+	table.sort(finishAndGetRewardMoList, PeaceUluTaskModel._sortFunc)
 
-	arg_3_0.serverTaskModel = {}
+	self.serverTaskModel = {}
 
-	tabletool.addValues(arg_3_0.serverTaskModel, var_3_1)
-	tabletool.addValues(arg_3_0.serverTaskModel, var_3_2)
-	tabletool.addValues(arg_3_0.serverTaskModel, var_3_3)
-	arg_3_0:refreshList(arg_3_1)
+	tabletool.addValues(self.serverTaskModel, finishNotGetRewardMoList)
+	tabletool.addValues(self.serverTaskModel, notFinishMoList)
+	tabletool.addValues(self.serverTaskModel, finishAndGetRewardMoList)
+	self:refreshList(firstOpen)
 end
 
-function var_0_0._sortFunc(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0.finishCount > 0 and 3 or arg_4_0.progress >= arg_4_0.config.maxProgress and 1 or 2
-	local var_4_1 = arg_4_1.finishCount > 0 and 3 or arg_4_1.progress >= arg_4_1.config.maxProgress and 1 or 2
+function PeaceUluTaskModel._sortFunc(a, b)
+	local aValue = a.finishCount > 0 and 3 or a.progress >= a.config.maxProgress and 1 or 2
+	local bValue = b.finishCount > 0 and 3 or b.progress >= b.config.maxProgress and 1 or 2
 
-	if var_4_0 ~= var_4_1 then
-		return var_4_0 < var_4_1
-	elseif arg_4_0.config.sort ~= arg_4_1.config.sort then
-		return arg_4_0.config.sort < arg_4_1.config.sort
+	if aValue ~= bValue then
+		return aValue < bValue
+	elseif a.config.sort ~= b.config.sort then
+		return a.config.sort < b.config.sort
 	else
-		return arg_4_0.config.id < arg_4_1.config.id
+		return a.config.id < b.config.id
 	end
 end
 
-function var_0_0.refreshList(arg_5_0, arg_5_1)
-	local var_5_0 = tabletool.copy(arg_5_0.serverTaskModel)
+function PeaceUluTaskModel:refreshList(firstOpen)
+	local moList = tabletool.copy(self.serverTaskModel)
 
-	table.insert(var_5_0, 1, {
+	table.insert(moList, 1, {
 		isGame = true,
 		isupdate = true,
-		firstOpen = arg_5_1
+		firstOpen = firstOpen
 	})
-	arg_5_0:setList(var_5_0)
+	self:setList(moList)
 end
 
-function var_0_0.getFinishTaskCount(arg_6_0)
-	local var_6_0 = 0
+function PeaceUluTaskModel:getFinishTaskCount()
+	local count = 0
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0.serverTaskModel) do
-		if iter_6_1.hasFinished and iter_6_1.finishCount < iter_6_1.config.maxProgress then
-			var_6_0 = var_6_0 + 1
+	for _, taskMo in ipairs(self.serverTaskModel) do
+		if taskMo.hasFinished and taskMo.finishCount < taskMo.config.maxProgress then
+			count = count + 1
 		end
 	end
 
-	return var_6_0
+	return count
 end
 
-function var_0_0.getFinishTaskActivityCount(arg_7_0)
-	local var_7_0 = 0
+function PeaceUluTaskModel:getFinishTaskActivityCount()
+	local count = 0
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0.serverTaskModel) do
-		if iter_7_1.hasFinished and iter_7_1.finishCount < iter_7_1.config.maxProgress then
-			var_7_0 = var_7_0 + iter_7_1.config.activity
+	for _, taskMo in ipairs(self.serverTaskModel) do
+		if taskMo.hasFinished and taskMo.finishCount < taskMo.config.maxProgress then
+			count = count + taskMo.config.activity
 		end
 	end
 
-	return var_7_0
+	return count
 end
 
-function var_0_0.getGetRewardTaskCount(arg_8_0)
-	local var_8_0 = 0
+function PeaceUluTaskModel:getGetRewardTaskCount()
+	local count = 0
 
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0.serverTaskModel) do
-		if iter_8_1.finishCount >= iter_8_1.config.maxProgress then
-			var_8_0 = var_8_0 + 1
+	for _, taskMo in ipairs(self.serverTaskModel) do
+		if taskMo.finishCount >= taskMo.config.maxProgress then
+			count = count + 1
 		end
 	end
 
-	return var_8_0
+	return count
 end
 
-function var_0_0.checkAllTaskFinished(arg_9_0)
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0.serverTaskModel) do
-		if iter_9_1.finishCount == 0 then
+function PeaceUluTaskModel:checkAllTaskFinished()
+	for index, value in ipairs(self.serverTaskModel) do
+		if value.finishCount == 0 then
 			return false
 		end
 	end
@@ -111,16 +113,16 @@ function var_0_0.checkAllTaskFinished(arg_9_0)
 	return true
 end
 
-function var_0_0.getKeyRewardMo(arg_10_0)
-	if arg_10_0.serverTaskModel then
-		for iter_10_0, iter_10_1 in ipairs(arg_10_0.serverTaskModel) do
-			if iter_10_1.config.isKeyReward == 1 and iter_10_1.finishCount < iter_10_1.config.maxProgress then
-				return iter_10_1
+function PeaceUluTaskModel:getKeyRewardMo()
+	if self.serverTaskModel then
+		for i, v in ipairs(self.serverTaskModel) do
+			if v.config.isKeyReward == 1 and v.finishCount < v.config.maxProgress then
+				return v
 			end
 		end
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+PeaceUluTaskModel.instance = PeaceUluTaskModel.New()
 
-return var_0_0
+return PeaceUluTaskModel

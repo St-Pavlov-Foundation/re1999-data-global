@@ -1,66 +1,70 @@
-﻿module("modules.logic.season.view1_3.Season1_3EquipBookViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/season/view1_3/Season1_3EquipBookViewContainer.lua
 
-local var_0_0 = class("Season1_3EquipBookViewContainer", BaseViewContainer)
+module("modules.logic.season.view1_3.Season1_3EquipBookViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = arg_1_0:createEquipItemsParam()
-	local var_1_1 = Season1_3EquipFloatTouch.New()
+local Season1_3EquipBookViewContainer = class("Season1_3EquipBookViewContainer", BaseViewContainer)
 
-	var_1_1:init("left/#go_target/#go_ctrl", "left/#go_target/#go_touch")
+function Season1_3EquipBookViewContainer:buildViews()
+	local scrollParam = self:createEquipItemsParam()
+	local touchView = Season1_3EquipFloatTouch.New()
 
-	local var_1_2 = Season1_3EquipTagSelect.New()
+	touchView:init("left/#go_target/#go_ctrl", "left/#go_target/#go_touch")
 
-	var_1_2:init(Activity104EquipBookController.instance, "right/#drop_filter")
+	local filterView = Season1_3EquipTagSelect.New()
+
+	filterView:init(Activity104EquipBookController.instance, "right/#drop_filter")
 
 	return {
 		Season1_3EquipBookView.New(),
-		var_1_1,
-		var_1_2,
-		LuaListScrollView.New(Activity104EquipItemBookModel.instance, var_1_0),
+		touchView,
+		filterView,
+		LuaListScrollView.New(Activity104EquipItemBookModel.instance, scrollParam),
 		TabViewGroup.New(1, "#go_btns")
 	}
 end
 
-function var_0_0.createEquipItemsParam(arg_2_0)
-	local var_2_0 = ListScrollParam.New()
+function Season1_3EquipBookViewContainer:createEquipItemsParam()
+	local scrollParam = ListScrollParam.New()
 
-	var_2_0.scrollGOPath = "right/mask/#scroll_cardlist"
-	var_2_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_2_0.prefabUrl = arg_2_0._viewSetting.otherRes[1]
-	var_2_0.cellClass = Season1_3EquipBookItem
-	var_2_0.scrollDir = ScrollEnum.ScrollDirV
-	var_2_0.lineCount = Season1_3EquipBookItem.ColumnCount
-	var_2_0.cellWidth = 170
-	var_2_0.cellHeight = 235
-	var_2_0.cellSpaceH = 8.2
-	var_2_0.cellSpaceV = 1.74
-	var_2_0.frameUpdateMs = 100
-	var_2_0.minUpdateCountInFrame = Season1_3EquipBookItem.ColumnCount
+	scrollParam.scrollGOPath = "right/mask/#scroll_cardlist"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = Season1_3EquipBookItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = Season1_3EquipBookItem.ColumnCount
+	scrollParam.cellWidth = 170
+	scrollParam.cellHeight = 235
+	scrollParam.cellSpaceH = 8.2
+	scrollParam.cellSpaceV = 1.74
+	scrollParam.frameUpdateMs = 100
+	scrollParam.minUpdateCountInFrame = Season1_3EquipBookItem.ColumnCount
 
-	return var_2_0
+	return scrollParam
 end
 
-function var_0_0.buildTabViews(arg_3_0, arg_3_1)
-	if arg_3_1 == 1 then
-		arg_3_0._navigateButtonView = NavigateButtonsView.New({
+function Season1_3EquipBookViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			arg_3_0._navigateButtonView
+			self._navigateButtonView
 		}
 	end
 end
 
-function var_0_0.playCloseTransition(arg_4_0)
-	arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animator)):Play("close", 0, 0)
-	TaskDispatcher.runDelay(arg_4_0.delayOnPlayCloseAnim, arg_4_0, 0.2)
+function Season1_3EquipBookViewContainer:playCloseTransition()
+	local animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+
+	animator:Play("close", 0, 0)
+	TaskDispatcher.runDelay(self.delayOnPlayCloseAnim, self, 0.2)
 end
 
-function var_0_0.delayOnPlayCloseAnim(arg_5_0)
-	arg_5_0:onPlayCloseTransitionFinish()
+function Season1_3EquipBookViewContainer:delayOnPlayCloseAnim()
+	self:onPlayCloseTransitionFinish()
 end
 
-return var_0_0
+return Season1_3EquipBookViewContainer

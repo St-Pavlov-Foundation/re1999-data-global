@@ -1,71 +1,73 @@
-﻿module("modules.logic.explore.map.unit.comp.ExploreUnitLightComp", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/unit/comp/ExploreUnitLightComp.lua
 
-local var_0_0 = class("ExploreUnitLightComp", LuaCompBase)
+module("modules.logic.explore.map.unit.comp.ExploreUnitLightComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.unit = arg_1_1
-	arg_1_0.lights = {}
+local ExploreUnitLightComp = class("ExploreUnitLightComp", LuaCompBase)
+
+function ExploreUnitLightComp:ctor(unit)
+	self.unit = unit
+	self.lights = {}
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
+function ExploreUnitLightComp:init(go)
+	self.go = go
 end
 
-function var_0_0.addLight(arg_3_0, arg_3_1)
-	if arg_3_1 % 45 ~= 0 then
+function ExploreUnitLightComp:addLight(dir)
+	if dir % 45 ~= 0 then
 		return
 	end
 
-	local var_3_0 = ExploreController.instance:getMapLight():addLight(arg_3_0.unit, arg_3_1)
-	local var_3_1 = #arg_3_0.lights + 1
+	local lightMO = ExploreController.instance:getMapLight():addLight(self.unit, dir)
+	local index = #self.lights + 1
 
-	arg_3_0.lights[var_3_1] = {
-		mo = var_3_0,
-		lightItem = ExploreMapLightPool.instance:getInst(var_3_0, arg_3_0.go)
+	self.lights[index] = {
+		mo = lightMO,
+		lightItem = ExploreMapLightPool.instance:getInst(lightMO, self.go)
 	}
 end
 
-function var_0_0.haveLight(arg_4_0)
-	return #arg_4_0.lights > 0
+function ExploreUnitLightComp:haveLight()
+	return #self.lights > 0
 end
 
-function var_0_0.onLightDataChange(arg_5_0, arg_5_1)
-	for iter_5_0 = 1, #arg_5_0.lights do
-		if arg_5_0.lights[iter_5_0].mo == arg_5_1 then
-			return arg_5_0.lights[iter_5_0].lightItem:updateLightMO(arg_5_1)
+function ExploreUnitLightComp:onLightDataChange(lightMO)
+	for i = 1, #self.lights do
+		if self.lights[i].mo == lightMO then
+			return self.lights[i].lightItem:updateLightMO(lightMO)
 		end
 	end
 end
 
-function var_0_0.addLights(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_0:addLight(arg_6_1)
-	arg_6_0:addLight(arg_6_2)
+function ExploreUnitLightComp:addLights(dir1, dir2)
+	self:addLight(dir1)
+	self:addLight(dir2)
 end
 
-function var_0_0.removeLightByDir(arg_7_0, arg_7_1)
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0.lights) do
-		if iter_7_1.mo.dir == arg_7_1 then
-			ExploreMapLightPool.instance:inPool(iter_7_1.lightItem)
-			table.remove(arg_7_0.lights, iter_7_0)
+function ExploreUnitLightComp:removeLightByDir(dir)
+	for index, lightInfo in ipairs(self.lights) do
+		if lightInfo.mo.dir == dir then
+			ExploreMapLightPool.instance:inPool(lightInfo.lightItem)
+			table.remove(self.lights, index)
 
 			break
 		end
 	end
 end
 
-function var_0_0.removeAllLight(arg_8_0)
-	for iter_8_0, iter_8_1 in pairs(arg_8_0.lights) do
-		ExploreMapLightPool.instance:inPool(iter_8_1.lightItem)
+function ExploreUnitLightComp:removeAllLight()
+	for _, lightInfo in pairs(self.lights) do
+		ExploreMapLightPool.instance:inPool(lightInfo.lightItem)
 	end
 
-	arg_8_0.lights = {}
+	self.lights = {}
 end
 
-function var_0_0.onDestroy(arg_9_0)
-	arg_9_0:removeAllLight()
+function ExploreUnitLightComp:onDestroy()
+	self:removeAllLight()
 
-	arg_9_0.go = nil
-	arg_9_0.unit = nil
+	self.go = nil
+	self.unit = nil
 end
 
-return var_0_0
+return ExploreUnitLightComp

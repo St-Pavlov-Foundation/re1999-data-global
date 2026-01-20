@@ -1,7 +1,9 @@
-﻿module("modules.logic.survival.view.map.comp.SurvivalInitTeamHeroSmallItem", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/comp/SurvivalInitTeamHeroSmallItem.lua
 
-local var_0_0 = class("SurvivalInitTeamHeroSmallItem", LuaCompBase)
-local var_0_1 = {
+module("modules.logic.survival.view.map.comp.SurvivalInitTeamHeroSmallItem", package.seeall)
+
+local SurvivalInitTeamHeroSmallItem = class("SurvivalInitTeamHeroSmallItem", LuaCompBase)
+local exSkillFillAmount = {
 	0.2,
 	0.4,
 	0.6,
@@ -9,180 +11,182 @@ local var_0_1 = {
 	1
 }
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._goHeroRoot = gohelper.findChild(arg_1_1, "#go_HaveHero")
-	arg_1_0._goEmpty = gohelper.findChild(arg_1_1, "#go_Empty")
-	arg_1_0._goEmpty2 = gohelper.findChild(arg_1_1, "#go_Empty2")
-	arg_1_0._goEmptyAdd = gohelper.findChild(arg_1_1, "#go_Empty/image_Add")
-	arg_1_0._goLock = gohelper.findChild(arg_1_1, "#go_Locked")
-	arg_1_0._goAssit = gohelper.findChild(arg_1_0._goHeroRoot, "assit")
+function SurvivalInitTeamHeroSmallItem:init(go)
+	self.go = go
+	self._goHeroRoot = gohelper.findChild(go, "#go_HaveHero")
+	self._goEmpty = gohelper.findChild(go, "#go_Empty")
+	self._goEmpty2 = gohelper.findChild(go, "#go_Empty2")
+	self._goEmptyAdd = gohelper.findChild(go, "#go_Empty/image_Add")
+	self._goLock = gohelper.findChild(go, "#go_Locked")
+	self._goAssit = gohelper.findChild(self._goHeroRoot, "assit")
 
-	local var_1_0 = gohelper.findChild(arg_1_0._goHeroRoot, "hero")
+	local heroGo = gohelper.findChild(self._goHeroRoot, "hero")
 
-	arg_1_0._imagerare = gohelper.findChildImage(var_1_0, "role/rare")
-	arg_1_0._simageicon = gohelper.findChildSingleImage(var_1_0, "role/heroicon")
-	arg_1_0._imagecareer = gohelper.findChildImage(var_1_0, "role/career")
-	arg_1_0._txtlv = gohelper.findChildText(var_1_0, "role/Lv")
-	arg_1_0._goexskill = gohelper.findChild(var_1_0, "role/#go_exskill")
-	arg_1_0._imageexskill = gohelper.findChildImage(var_1_0, "role/#go_exskill/#image_exskill")
-	arg_1_0._goRankBg = gohelper.findChild(var_1_0, "role/Rank")
-	arg_1_0._goranks = arg_1_0:getUserDataTb_()
+	self._imagerare = gohelper.findChildImage(heroGo, "role/rare")
+	self._simageicon = gohelper.findChildSingleImage(heroGo, "role/heroicon")
+	self._imagecareer = gohelper.findChildImage(heroGo, "role/career")
+	self._txtlv = gohelper.findChildText(heroGo, "role/Lv")
+	self._goexskill = gohelper.findChild(heroGo, "role/#go_exskill")
+	self._imageexskill = gohelper.findChildImage(heroGo, "role/#go_exskill/#image_exskill")
+	self._goRankBg = gohelper.findChild(heroGo, "role/Rank")
+	self._goranks = self:getUserDataTb_()
 
-	for iter_1_0 = 1, 3 do
-		arg_1_0._goranks[iter_1_0] = gohelper.findChildImage(var_1_0, "role/Rank/rank" .. iter_1_0)
+	for i = 1, 3 do
+		self._goranks[i] = gohelper.findChildImage(heroGo, "role/Rank/rank" .. i)
 	end
 
-	arg_1_0._clickThis = gohelper.getClick(arg_1_0.go)
+	self._clickThis = gohelper.getClick(self.go)
 
-	gohelper.setActive(arg_1_0._goLock, false)
+	gohelper.setActive(self._goLock, false)
 
-	arg_1_0._healthPart = MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0._goHeroRoot, SurvivalHeroHealthPart)
+	self._healthPart = MonoHelper.addNoUpdateLuaComOnceToGo(self._goHeroRoot, SurvivalHeroHealthPart)
 end
 
-function var_0_0.setIndex(arg_2_0, arg_2_1)
-	arg_2_0._index = arg_2_1
+function SurvivalInitTeamHeroSmallItem:setIndex(index)
+	self._index = index
 end
 
-function var_0_0.setParentView(arg_3_0, arg_3_1)
-	arg_3_0._teamView = arg_3_1
+function SurvivalInitTeamHeroSmallItem:setParentView(view)
+	self._teamView = view
 end
 
-function var_0_0.addEventListeners(arg_4_0)
-	arg_4_0._clickThis:AddClickListener(arg_4_0._onClickThis, arg_4_0)
+function SurvivalInitTeamHeroSmallItem:addEventListeners()
+	self._clickThis:AddClickListener(self._onClickThis, self)
 end
 
-function var_0_0.removeEventListeners(arg_5_0)
-	arg_5_0._clickThis:RemoveClickListener()
+function SurvivalInitTeamHeroSmallItem:removeEventListeners()
+	self._clickThis:RemoveClickListener()
 end
 
-function var_0_0.getHeroMo(arg_6_0)
-	return arg_6_0._heroMO
+function SurvivalInitTeamHeroSmallItem:getHeroMo()
+	return self._heroMO
 end
 
-function var_0_0.setNoShowAdd(arg_7_0)
-	arg_7_0._noShowAdd = true
+function SurvivalInitTeamHeroSmallItem:setNoShowAdd()
+	self._noShowAdd = true
 end
 
-function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
-	arg_8_0._heroMO = arg_8_1
+function SurvivalInitTeamHeroSmallItem:onUpdateMO(mo)
+	self._heroMO = mo
 
-	local var_8_0 = arg_8_0._heroMO ~= nil
+	local hasHero = self._heroMO ~= nil
 
-	gohelper.setActive(arg_8_0._goEmpty, not var_8_0)
-	gohelper.setActive(arg_8_0._goEmptyAdd, not var_8_0 and not arg_8_0._noShowAdd)
-	gohelper.setActive(arg_8_0._goEmpty2, not var_8_0 and arg_8_0._noShowAdd and not arg_8_0._isLock)
-	gohelper.setActive(arg_8_0._goHeroRoot, var_8_0)
+	gohelper.setActive(self._goEmpty, not hasHero)
+	gohelper.setActive(self._goEmptyAdd, not hasHero and not self._noShowAdd)
+	gohelper.setActive(self._goEmpty2, not hasHero and self._noShowAdd and not self._isLock)
+	gohelper.setActive(self._goHeroRoot, hasHero)
 
-	if var_8_0 then
-		arg_8_0:updateBaseInfo(arg_8_1)
-		arg_8_0._healthPart:setHeroId(arg_8_1.heroId)
-	end
-end
-
-function var_0_0.setTrialValue(arg_9_0, arg_9_1)
-	arg_9_0._isTrial = arg_9_1
-
-	gohelper.setActive(arg_9_0._goAssit, arg_9_1)
-end
-
-function var_0_0.setIsLock(arg_10_0, arg_10_1)
-	arg_10_0._isLock = arg_10_1
-
-	if arg_10_1 then
-		gohelper.setActive(arg_10_0._goLock, true)
-		gohelper.setActive(arg_10_0._goHeroRoot, false)
-		gohelper.setActive(arg_10_0._goEmpty, false)
+	if hasHero then
+		self:updateBaseInfo(mo)
+		self._healthPart:setHeroId(mo.heroId)
 	end
 end
 
-function var_0_0.showSelectEffect(arg_11_0)
+function SurvivalInitTeamHeroSmallItem:setTrialValue(value)
+	self._isTrial = value
+
+	gohelper.setActive(self._goAssit, value)
+end
+
+function SurvivalInitTeamHeroSmallItem:setIsLock(value)
+	self._isLock = value
+
+	if value then
+		gohelper.setActive(self._goLock, true)
+		gohelper.setActive(self._goHeroRoot, false)
+		gohelper.setActive(self._goEmpty, false)
+	end
+end
+
+function SurvivalInitTeamHeroSmallItem:showSelectEffect()
 	return
 end
 
-function var_0_0._onClickThis(arg_12_0)
-	if SurvivalShelterModel.instance:getWeekInfo().inSurvival and not arg_12_0._isLock then
-		if arg_12_0._heroMO then
-			local var_12_0 = {}
-			local var_12_1 = SurvivalMapModel.instance:getSceneMo().teamInfo
+function SurvivalInitTeamHeroSmallItem:_onClickThis()
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
 
-			for iter_12_0, iter_12_1 in ipairs(var_12_1.heros) do
-				local var_12_2 = var_12_1:getHeroMo(iter_12_1)
+	if weekInfo.inSurvival and not self._isLock then
+		if self._heroMO then
+			local list = {}
+			local teamInfoMo = SurvivalMapModel.instance:getSceneMo().teamInfo
 
-				table.insert(var_12_0, var_12_2)
+			for i, v in ipairs(teamInfoMo.heros) do
+				local heroMo = teamInfoMo:getHeroMo(v)
+
+				table.insert(list, heroMo)
 			end
 
-			CharacterController.instance:openCharacterView(arg_12_0._heroMO, var_12_0)
+			CharacterController.instance:openCharacterView(self._heroMO, list)
 		end
 
 		return
 	end
 
-	if arg_12_0._isTrial or arg_12_0._isLock then
+	if self._isTrial or self._isLock then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.HeroGroupUI.Play_UI_Team_Open)
 
-	SurvivalMapModel.instance:getInitGroup().curClickHeroIndex = arg_12_0._index
+	SurvivalMapModel.instance:getInitGroup().curClickHeroIndex = self._index
 
 	CharacterModel.instance:setCharacterList(false, CharacterEnum.FilterType.Survival)
 	SurvivalMapModel.instance:getInitGroup():initHeroList()
 	ViewMgr.instance:openView(ViewName.SurvivalInitHeroSelectView)
 end
 
-function var_0_0.updateBaseInfo(arg_13_0, arg_13_1)
-	local var_13_0 = SkinConfig.instance:getSkinCo(arg_13_1.skin)
-	local var_13_1 = arg_13_1.config
+function SurvivalInitTeamHeroSmallItem:updateBaseInfo(heroMo)
+	local skinConfig = SkinConfig.instance:getSkinCo(heroMo.skin)
+	local heroCo = heroMo.config
 
-	arg_13_0._simageicon:LoadImage(ResUrl.getRoomHeadIcon(var_13_0.headIcon))
-	UISpriteSetMgr.instance:setCommonSprite(arg_13_0._imagecareer, "lssx_" .. var_13_1.career)
-	UISpriteSetMgr.instance:setCommonSprite(arg_13_0._imagerare, "bgequip" .. tostring(CharacterEnum.Color[var_13_1.rare]))
+	self._simageicon:LoadImage(ResUrl.getRoomHeadIcon(skinConfig.headIcon))
+	UISpriteSetMgr.instance:setCommonSprite(self._imagecareer, "lssx_" .. heroCo.career)
+	UISpriteSetMgr.instance:setCommonSprite(self._imagerare, "bgequip" .. tostring(CharacterEnum.Color[heroCo.rare]))
 
-	local var_13_2, var_13_3, var_13_4 = SurvivalBalanceHelper.getHeroBalanceInfo(arg_13_1.heroId, arg_13_1)
-	local var_13_5 = arg_13_1.rank
-	local var_13_6 = var_13_3 and var_13_3 - 1 or var_13_5 - 1
-	local var_13_7 = false
+	local balanceLv, balanceRank, fixTalent = SurvivalBalanceHelper.getHeroBalanceInfo(heroMo.heroId, heroMo)
+	local rank = heroMo.rank
+	local rankIconIndex = balanceRank and balanceRank - 1 or rank - 1
+	local isShowRanIcon = false
 
-	for iter_13_0 = 1, 3 do
-		local var_13_8 = iter_13_0 == var_13_6
+	for i = 1, 3 do
+		local isCurRanIcon = i == rankIconIndex
 
-		gohelper.setActive(arg_13_0._goranks[iter_13_0], var_13_8)
+		gohelper.setActive(self._goranks[i], isCurRanIcon)
 
-		var_13_7 = var_13_7 or var_13_8
+		isShowRanIcon = isShowRanIcon or isCurRanIcon
 
-		if var_13_8 and var_13_3 and var_13_5 < var_13_3 then
-			SLFramework.UGUI.GuiHelper.SetColor(arg_13_0._goranks[iter_13_0], SurvivalBalanceHelper.BalanceIconColor)
+		if isCurRanIcon and balanceRank and rank < balanceRank then
+			SLFramework.UGUI.GuiHelper.SetColor(self._goranks[i], SurvivalBalanceHelper.BalanceIconColor)
 		else
-			SLFramework.UGUI.GuiHelper.SetColor(arg_13_0._goranks[iter_13_0], "#F6F3EC")
+			SLFramework.UGUI.GuiHelper.SetColor(self._goranks[i], "#F6F3EC")
 		end
 	end
 
-	gohelper.setActive(arg_13_0._goRankBg, var_13_7)
+	gohelper.setActive(self._goRankBg, isShowRanIcon)
 
-	local var_13_9 = ""
-	local var_13_10 = arg_13_1.level
+	local color = ""
+	local heroLv = heroMo.level
 
-	if var_13_2 and var_13_10 < var_13_2 then
-		var_13_10 = var_13_2
-		var_13_9 = "<color=" .. SurvivalBalanceHelper.BalanceColor .. ">"
+	if balanceLv and heroLv < balanceLv then
+		heroLv = balanceLv
+		color = "<color=" .. SurvivalBalanceHelper.BalanceColor .. ">"
 	end
 
-	arg_13_0._txtlv.text = var_13_9 .. "LV." .. tostring(HeroConfig.instance:getShowLevel(var_13_10))
+	self._txtlv.text = color .. "LV." .. tostring(HeroConfig.instance:getShowLevel(heroLv))
 
-	if arg_13_1.exSkillLevel <= 0 then
-		gohelper.setActive(arg_13_0._goexskill, false)
+	if heroMo.exSkillLevel <= 0 then
+		gohelper.setActive(self._goexskill, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_13_0._goexskill, true)
+	gohelper.setActive(self._goexskill, true)
 
-	arg_13_0._imageexskill.fillAmount = var_0_1[arg_13_1.exSkillLevel] or 1
+	self._imageexskill.fillAmount = exSkillFillAmount[heroMo.exSkillLevel] or 1
 end
 
-function var_0_0.onDestroy(arg_14_0)
-	arg_14_0._teamView = nil
+function SurvivalInitTeamHeroSmallItem:onDestroy()
+	self._teamView = nil
 end
 
-return var_0_0
+return SurvivalInitTeamHeroSmallItem

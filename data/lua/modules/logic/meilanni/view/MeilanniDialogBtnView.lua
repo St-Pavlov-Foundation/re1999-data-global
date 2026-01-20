@@ -1,195 +1,198 @@
-﻿module("modules.logic.meilanni.view.MeilanniDialogBtnView", package.seeall)
+﻿-- chunkname: @modules/logic/meilanni/view/MeilanniDialogBtnView.lua
 
-local var_0_0 = class("MeilanniDialogBtnView", BaseView)
+module("modules.logic.meilanni.view.MeilanniDialogBtnView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gooptions = gohelper.findChild(arg_1_0.viewGO, "top_right/btncontain/#go_btntype1")
-	arg_1_0._gotalkitem = gohelper.findChild(arg_1_0.viewGO, "top_right/btncontain/#go_btntype1/#btn_templateclick")
-	arg_1_0._gobtnpos1 = gohelper.findChild(arg_1_0.viewGO, "top_right/btncontain/#go_btntype1/#go_btnpos1")
-	arg_1_0._gobtnpos2 = gohelper.findChild(arg_1_0.viewGO, "top_right/btncontain/#go_btntype1/#go_btnpos2")
-	arg_1_0._gobtnpos3 = gohelper.findChild(arg_1_0.viewGO, "top_right/btncontain/#go_btntype1/#go_btnpos3")
-	arg_1_0._btnend = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "top_right/btncontain/#btn_end")
-	arg_1_0._txtendinfo = gohelper.findChildText(arg_1_0.viewGO, "top_right/btncontain/#btn_end/layout/txt_info")
+local MeilanniDialogBtnView = class("MeilanniDialogBtnView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function MeilanniDialogBtnView:onInitView()
+	self._gooptions = gohelper.findChild(self.viewGO, "top_right/btncontain/#go_btntype1")
+	self._gotalkitem = gohelper.findChild(self.viewGO, "top_right/btncontain/#go_btntype1/#btn_templateclick")
+	self._gobtnpos1 = gohelper.findChild(self.viewGO, "top_right/btncontain/#go_btntype1/#go_btnpos1")
+	self._gobtnpos2 = gohelper.findChild(self.viewGO, "top_right/btncontain/#go_btntype1/#go_btnpos2")
+	self._gobtnpos3 = gohelper.findChild(self.viewGO, "top_right/btncontain/#go_btntype1/#go_btnpos3")
+	self._btnend = gohelper.findChildButtonWithAudio(self.viewGO, "top_right/btncontain/#btn_end")
+	self._txtendinfo = gohelper.findChildText(self.viewGO, "top_right/btncontain/#btn_end/layout/txt_info")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnend:AddClickListener(arg_2_0._btnendOnClick, arg_2_0)
+function MeilanniDialogBtnView:addEvents()
+	self._btnend:AddClickListener(self._btnendOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnend:RemoveClickListener()
+function MeilanniDialogBtnView:removeEvents()
+	self._btnend:RemoveClickListener()
 end
 
-function var_0_0._btnresetOnClick(arg_4_0)
+function MeilanniDialogBtnView:_btnresetOnClick()
 	return
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._optionBtnList = arg_5_0:getUserDataTb_()
-	arg_5_0._animatorPlayer = SLFramework.AnimatorPlayer.Get(arg_5_0._gooptions)
-	arg_5_0._endPlayer = SLFramework.AnimatorPlayer.Get(arg_5_0._btnend.gameObject)
+function MeilanniDialogBtnView:_editableInitView()
+	self._optionBtnList = self:getUserDataTb_()
+	self._animatorPlayer = SLFramework.AnimatorPlayer.Get(self._gooptions)
+	self._endPlayer = SLFramework.AnimatorPlayer.Get(self._btnend.gameObject)
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function MeilanniDialogBtnView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0:addEventCb(MeilanniController.instance, MeilanniEvent.startShowDialogOptionBtn, arg_7_0._startShowDialogOptionBtn, arg_7_0)
-	arg_7_0:addEventCb(MeilanniController.instance, MeilanniEvent.refreshDialogBtnState, arg_7_0._refreshDialogBtnState, arg_7_0)
-	arg_7_0:addEventCb(MeilanniController.instance, MeilanniEvent.showDialogOptionBtn, arg_7_0._showDialogOptionBtn, arg_7_0)
-	arg_7_0:addEventCb(MeilanniController.instance, MeilanniEvent.showDialogEndBtn, arg_7_0._showDialogEndBtn, arg_7_0)
-	arg_7_0:addEventCb(MeilanniController.instance, MeilanniEvent.dialogClose, arg_7_0._dialogClose, arg_7_0)
-	arg_7_0:addEventCb(MeilanniController.instance, MeilanniEvent.resetMap, arg_7_0._resetMap, arg_7_0)
+function MeilanniDialogBtnView:onOpen()
+	self:addEventCb(MeilanniController.instance, MeilanniEvent.startShowDialogOptionBtn, self._startShowDialogOptionBtn, self)
+	self:addEventCb(MeilanniController.instance, MeilanniEvent.refreshDialogBtnState, self._refreshDialogBtnState, self)
+	self:addEventCb(MeilanniController.instance, MeilanniEvent.showDialogOptionBtn, self._showDialogOptionBtn, self)
+	self:addEventCb(MeilanniController.instance, MeilanniEvent.showDialogEndBtn, self._showDialogEndBtn, self)
+	self:addEventCb(MeilanniController.instance, MeilanniEvent.dialogClose, self._dialogClose, self)
+	self:addEventCb(MeilanniController.instance, MeilanniEvent.resetMap, self._resetMap, self)
 end
 
-function var_0_0._onAnimDone(arg_8_0)
-	gohelper.setActive(arg_8_0._gooptions, arg_8_0._showOption)
+function MeilanniDialogBtnView:_onAnimDone()
+	gohelper.setActive(self._gooptions, self._showOption)
 end
 
-function var_0_0._refreshDialogBtnState(arg_9_0, arg_9_1)
-	arg_9_0._showOption = arg_9_1
+function MeilanniDialogBtnView:_refreshDialogBtnState(showOption)
+	self._showOption = showOption
 
-	if not arg_9_1 then
-		if not arg_9_0._gooptions.activeSelf then
+	if not showOption then
+		if not self._gooptions.activeSelf then
 			return
 		end
 
-		arg_9_0._animatorPlayer:Play("close", arg_9_0._onAnimDone, arg_9_0)
+		self._animatorPlayer:Play("close", self._onAnimDone, self)
 
 		return
 	end
 
-	gohelper.setActive(arg_9_0._gooptions, arg_9_1)
-	arg_9_0._animatorPlayer:Play("open", arg_9_0._onAnimDone, arg_9_0)
+	gohelper.setActive(self._gooptions, showOption)
+	self._animatorPlayer:Play("open", self._onAnimDone, self)
 end
 
-function var_0_0._onEndAnimDone(arg_10_0)
-	gohelper.setActive(arg_10_0._btnend, arg_10_0._showEndBtn)
+function MeilanniDialogBtnView:_onEndAnimDone()
+	gohelper.setActive(self._btnend, self._showEndBtn)
 end
 
-function var_0_0._refreshEndBtnState(arg_11_0, arg_11_1)
-	arg_11_0._showEndBtn = arg_11_1
+function MeilanniDialogBtnView:_refreshEndBtnState(showOption)
+	self._showEndBtn = showOption
 
-	if not arg_11_1 then
-		if not arg_11_0._btnend.gameObject.activeSelf then
+	if not showOption then
+		if not self._btnend.gameObject.activeSelf then
 			return
 		end
 
-		arg_11_0._endPlayer:Play("close", arg_11_0._onEndAnimDone, arg_11_0)
+		self._endPlayer:Play("close", self._onEndAnimDone, self)
 
 		return
 	end
 
-	gohelper.setActive(arg_11_0._btnend, arg_11_1)
-	arg_11_0._endPlayer:Play("open", arg_11_0._onEndAnimDone, arg_11_0)
+	gohelper.setActive(self._btnend, showOption)
+	self._endPlayer:Play("open", self._onEndAnimDone, self)
 end
 
-function var_0_0._startShowDialogOptionBtn(arg_12_0)
-	for iter_12_0, iter_12_1 in pairs(arg_12_0._optionBtnList) do
-		gohelper.setActive(iter_12_1[1], false)
+function MeilanniDialogBtnView:_startShowDialogOptionBtn()
+	for k, v in pairs(self._optionBtnList) do
+		gohelper.setActive(v[1], false)
 	end
 end
 
-function var_0_0._showDialogOptionBtn(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_1[1]
-	local var_13_1 = var_13_0[1]
-	local var_13_2 = var_13_0[5]
-	local var_13_3 = var_13_0[6]
-	local var_13_4 = var_13_0[2]
-	local var_13_5 = var_13_0[3]
+function MeilanniDialogBtnView:_showDialogOptionBtn(param)
+	local optionParam = param[1]
+	local sectionId = optionParam[1]
+	local num = optionParam[5]
+	local iconName = optionParam[6]
+	local text = optionParam[2]
+	local index = optionParam[3]
 
-	arg_13_0._optionCallbackTarget = arg_13_1[2]
-	arg_13_0._optionCallback = arg_13_1[3]
+	self._optionCallbackTarget = param[2]
+	self._optionCallback = param[3]
 
-	if var_13_2 < 3 then
-		var_13_5 = var_13_5 + 1
+	if num < 3 then
+		index = index + 1
 	end
 
-	local var_13_6 = arg_13_0._optionBtnList[var_13_5] and arg_13_0._optionBtnList[var_13_5][1] or gohelper.clone(arg_13_0._gotalkitem, arg_13_0["_gobtnpos" .. var_13_5])
+	local item = self._optionBtnList[index] and self._optionBtnList[index][1] or gohelper.clone(self._gotalkitem, self["_gobtnpos" .. index])
 
-	gohelper.setActive(var_13_6, true)
+	gohelper.setActive(item, true)
 
-	local var_13_7 = var_13_4
+	local optionText = text
+	local txt = gohelper.findChildText(item, "layout/txt_info")
 
-	gohelper.findChildText(var_13_6, "layout/txt_info").text = ":" .. var_13_7
+	txt.text = ":" .. optionText
 
-	local var_13_8 = gohelper.findChildImage(var_13_6, "layout/txt_info/image_icon")
+	local iconImg = gohelper.findChildImage(item, "layout/txt_info/image_icon")
 
-	UISpriteSetMgr.instance:setMeilanniSprite(var_13_8, var_13_3 or "bg_xuanzhe_1")
+	UISpriteSetMgr.instance:setMeilanniSprite(iconImg, iconName or "bg_xuanzhe_1")
 
-	local var_13_9 = var_13_6:GetComponent(gohelper.Type_Image)
+	local bgImg = item:GetComponent(gohelper.Type_Image)
 
-	UISpriteSetMgr.instance:setMeilanniSprite(var_13_9, var_13_1 == -1 and "btn000" or "btn001")
+	UISpriteSetMgr.instance:setMeilanniSprite(bgImg, sectionId == -1 and "btn000" or "btn001")
 
-	local var_13_10 = gohelper.findButtonWithAudio(var_13_6, AudioEnum.WeekWalk.play_artificial_ui_talkchoose)
+	local btn = gohelper.findButtonWithAudio(item, AudioEnum.WeekWalk.play_artificial_ui_talkchoose)
 
-	var_13_10:AddClickListener(arg_13_0._onOptionClick, arg_13_0, var_13_0)
+	btn:AddClickListener(self._onOptionClick, self, optionParam)
 
-	if not arg_13_0._optionBtnList[var_13_5] then
-		arg_13_0._optionBtnList[var_13_5] = {
-			var_13_6,
-			var_13_10
+	if not self._optionBtnList[index] then
+		self._optionBtnList[index] = {
+			item,
+			btn
 		}
-		var_13_6.name = "talkitem_" .. tostring(var_13_5)
+		item.name = "talkitem_" .. tostring(index)
 	end
 end
 
-function var_0_0._onOptionClick(arg_14_0, arg_14_1)
-	arg_14_0._optionCallback(arg_14_0._optionCallbackTarget, arg_14_1)
+function MeilanniDialogBtnView:_onOptionClick(param)
+	self._optionCallback(self._optionCallbackTarget, param)
 end
 
-function var_0_0._showDialogEndBtn(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_1[1]
+function MeilanniDialogBtnView:_showDialogEndBtn(param)
+	local endText = param[1]
 
-	arg_15_0._txtendinfo.text = var_15_0
-	arg_15_0._callbackTarget = arg_15_1[2]
-	arg_15_0._callback = arg_15_1[3]
+	self._txtendinfo.text = endText
+	self._callbackTarget = param[2]
+	self._callback = param[3]
 
-	local var_15_1 = arg_15_1[4]
+	local delayTime = param[4]
 
-	if not var_15_1 then
-		arg_15_0:_refreshEndBtnState(true)
+	if not delayTime then
+		self:_refreshEndBtnState(true)
 
 		return
 	end
 
-	TaskDispatcher.cancelTask(arg_15_0._delayShowEndBtn, arg_15_0)
-	TaskDispatcher.runDelay(arg_15_0._delayShowEndBtn, arg_15_0, var_15_1)
+	TaskDispatcher.cancelTask(self._delayShowEndBtn, self)
+	TaskDispatcher.runDelay(self._delayShowEndBtn, self, delayTime)
 end
 
-function var_0_0._delayShowEndBtn(arg_16_0)
-	arg_16_0:_refreshEndBtnState(true)
+function MeilanniDialogBtnView:_delayShowEndBtn()
+	self:_refreshEndBtnState(true)
 end
 
-function var_0_0._btnendOnClick(arg_17_0)
-	arg_17_0._callback(arg_17_0._callbackTarget)
+function MeilanniDialogBtnView:_btnendOnClick()
+	self._callback(self._callbackTarget)
 end
 
-function var_0_0._dialogClose(arg_18_0)
-	TaskDispatcher.cancelTask(arg_18_0._delayShowEndBtn, arg_18_0)
-	arg_18_0:_refreshEndBtnState(false)
-	arg_18_0:_refreshDialogBtnState(false)
+function MeilanniDialogBtnView:_dialogClose()
+	TaskDispatcher.cancelTask(self._delayShowEndBtn, self)
+	self:_refreshEndBtnState(false)
+	self:_refreshDialogBtnState(false)
 end
 
-function var_0_0._resetMap(arg_19_0)
-	arg_19_0:_dialogClose()
+function MeilanniDialogBtnView:_resetMap()
+	self:_dialogClose()
 end
 
-function var_0_0.onClose(arg_20_0)
-	arg_20_0:_dialogClose()
+function MeilanniDialogBtnView:onClose()
+	self:_dialogClose()
 
-	for iter_20_0, iter_20_1 in pairs(arg_20_0._optionBtnList) do
-		iter_20_1[2]:RemoveClickListener()
+	for k, v in pairs(self._optionBtnList) do
+		v[2]:RemoveClickListener()
 	end
 end
 
-function var_0_0.onDestroyView(arg_21_0)
+function MeilanniDialogBtnView:onDestroyView()
 	return
 end
 
-return var_0_0
+return MeilanniDialogBtnView

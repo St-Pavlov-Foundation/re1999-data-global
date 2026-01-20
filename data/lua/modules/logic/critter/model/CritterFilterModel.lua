@@ -1,89 +1,92 @@
-﻿module("modules.logic.critter.model.CritterFilterModel", package.seeall)
+﻿-- chunkname: @modules/logic/critter/model/CritterFilterModel.lua
 
-local var_0_0 = class("CritterFilterModel")
+module("modules.logic.critter.model.CritterFilterModel", package.seeall)
 
-function var_0_0.generateFilterMO(arg_1_0, arg_1_1)
-	arg_1_0.filterMODict = arg_1_0.filterMODict or {}
+local CritterFilterModel = class("CritterFilterModel")
 
-	local var_1_0 = CritterFilterMO.New()
+function CritterFilterModel:generateFilterMO(viewName)
+	self.filterMODict = self.filterMODict or {}
 
-	var_1_0:init(arg_1_1)
+	local filterMO = CritterFilterMO.New()
 
-	arg_1_0.filterMODict[arg_1_1] = var_1_0
+	filterMO:init(viewName)
 
-	return var_1_0
+	self.filterMODict[viewName] = filterMO
+
+	return filterMO
 end
 
-function var_0_0.getFilterMO(arg_2_0, arg_2_1, arg_2_2)
-	local var_2_0 = arg_2_0.filterMODict and arg_2_0.filterMODict[arg_2_1]
+function CritterFilterModel:getFilterMO(viewName, isNew)
+	local result = self.filterMODict and self.filterMODict[viewName]
 
-	if not var_2_0 and arg_2_1 and arg_2_2 then
-		var_2_0 = arg_2_0:generateFilterMO(arg_2_1)
+	if not result and viewName and isNew then
+		result = self:generateFilterMO(viewName)
 	end
 
-	return var_2_0
+	return result
 end
 
-function var_0_0.clear(arg_3_0, arg_3_1)
-	if arg_3_0.filterMODict then
-		arg_3_0.filterMODict[arg_3_1] = nil
+function CritterFilterModel:clear(viewName)
+	if self.filterMODict then
+		self.filterMODict[viewName] = nil
 	end
 end
 
-function var_0_0.reset(arg_4_0, arg_4_1)
-	if arg_4_0.filterMODict then
-		local var_4_0 = arg_4_0.filterMODict[arg_4_1]
+function CritterFilterModel:reset(viewName)
+	if self.filterMODict then
+		local filterMO = self.filterMODict[viewName]
 
-		if var_4_0 then
-			var_4_0:init(arg_4_1)
+		if filterMO then
+			filterMO:init(viewName)
 		end
 	end
 end
 
-function var_0_0.applyMO(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_1.viewName
-	local var_5_1 = arg_5_0.filterMODict[var_5_0]
+function CritterFilterModel:applyMO(newFilterMO)
+	local viewName = newFilterMO.viewName
+	local oldFilterMO = self.filterMODict[viewName]
 
-	if not var_5_1 then
-		arg_5_0.filterMODict[var_5_0] = arg_5_1
+	if not oldFilterMO then
+		self.filterMODict[viewName] = newFilterMO
 
-		CritterController.instance:dispatchEvent(CritterEvent.CritterChangeFilterType, var_5_0)
+		CritterController.instance:dispatchEvent(CritterEvent.CritterChangeFilterType, viewName)
 
 		return
 	end
 
-	local var_5_2 = var_5_1:getFilterCategoryDict()
-	local var_5_3 = arg_5_1:getFilterCategoryDict()
+	local oldFilterDict = oldFilterMO:getFilterCategoryDict()
+	local newFilterDict = newFilterMO:getFilterCategoryDict()
+	local isSame = self:isSameFilterDict(oldFilterDict, newFilterDict)
 
-	if not arg_5_0:isSameFilterDict(var_5_2, var_5_3) then
-		var_5_1:updateMo(arg_5_1)
-		CritterController.instance:dispatchEvent(CritterEvent.CritterChangeFilterType, var_5_0)
+	if not isSame then
+		oldFilterMO:updateMo(newFilterMO)
+		CritterController.instance:dispatchEvent(CritterEvent.CritterChangeFilterType, viewName)
 	end
 end
 
-function var_0_0.isSameFilterDict(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = type(arg_6_1)
+function CritterFilterModel:isSameFilterDict(t1, t2)
+	local type1, type2 = type(t1), type(t2)
 
-	if var_6_0 ~= type(arg_6_2) then
+	if type1 ~= type2 then
 		return false
 	end
 
-	if var_6_0 ~= "table" then
-		return arg_6_1 == arg_6_2
+	if type1 ~= "table" then
+		return t1 == t2
 	end
 
-	for iter_6_0, iter_6_1 in pairs(arg_6_1) do
-		local var_6_1 = arg_6_2[iter_6_0]
+	for k1, v1 in pairs(t1) do
+		local v2 = t2[k1]
 
-		if var_6_1 == nil or not arg_6_0:isSameFilterDict(iter_6_1, var_6_1) then
+		if v2 == nil or not self:isSameFilterDict(v1, v2) then
 			return false
 		end
 	end
 
-	for iter_6_2, iter_6_3 in pairs(arg_6_2) do
-		local var_6_2 = arg_6_1[iter_6_2]
+	for k2, v2 in pairs(t2) do
+		local v1 = t1[k2]
 
-		if var_6_2 == nil or not arg_6_0:isSameFilterDict(var_6_2, iter_6_3) then
+		if v1 == nil or not self:isSameFilterDict(v1, v2) then
 			return false
 		end
 	end
@@ -91,6 +94,6 @@ function var_0_0.isSameFilterDict(arg_6_0, arg_6_1, arg_6_2)
 	return true
 end
 
-var_0_0.instance = var_0_0.New()
+CritterFilterModel.instance = CritterFilterModel.New()
 
-return var_0_0
+return CritterFilterModel

@@ -1,12 +1,14 @@
-﻿module("modules.logic.scene.config.SceneConfig", package.seeall)
+﻿-- chunkname: @modules/logic/scene/config/SceneConfig.lua
 
-local var_0_0 = class("SceneConfig", BaseConfig)
+module("modules.logic.scene.config.SceneConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._scene2LevelCOs = nil
+local SceneConfig = class("SceneConfig", BaseConfig)
+
+function SceneConfig:ctor()
+	self._scene2LevelCOs = nil
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function SceneConfig:reqConfigNames()
 	return {
 		"scene",
 		"scene_level",
@@ -17,72 +19,72 @@ function var_0_0.reqConfigNames(arg_2_0)
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "loading_icon" then
-		arg_3_0:_initLoadingIcon()
-	elseif arg_3_1 == "loading_text" then
-		arg_3_0:_initLoadingText()
+function SceneConfig:onConfigLoaded(configName, configTable)
+	if configName == "loading_icon" then
+		self:_initLoadingIcon()
+	elseif configName == "loading_text" then
+		self:_initLoadingText()
 	end
 end
 
-function var_0_0._initLoadingIcon(arg_4_0)
-	arg_4_0._loadingIconList = {}
+function SceneConfig:_initLoadingIcon()
+	self._loadingIconList = {}
 
-	for iter_4_0, iter_4_1 in ipairs(lua_loading_icon.configList) do
-		if iter_4_1.isOnline == 1 then
-			table.insert(arg_4_0._loadingIconList, iter_4_1)
+	for i, v in ipairs(lua_loading_icon.configList) do
+		if v.isOnline == 1 then
+			table.insert(self._loadingIconList, v)
 		end
 	end
 end
 
-function var_0_0._initLoadingText(arg_5_0)
-	arg_5_0._loadingTextList = {}
+function SceneConfig:_initLoadingText()
+	self._loadingTextList = {}
 
-	for iter_5_0, iter_5_1 in ipairs(lua_loading_text.configList) do
-		if iter_5_1.isOnline == 1 then
-			table.insert(arg_5_0._loadingTextList, iter_5_1)
+	for i, v in ipairs(lua_loading_text.configList) do
+		if v.isOnline == 1 then
+			table.insert(self._loadingTextList, v)
 		end
 	end
 end
 
-function var_0_0.getSceneLevelCOs(arg_6_0, arg_6_1)
-	if not arg_6_0._scene2LevelCOs then
-		arg_6_0._scene2LevelCOs = {}
+function SceneConfig:getSceneLevelCOs(sceneId)
+	if not self._scene2LevelCOs then
+		self._scene2LevelCOs = {}
 	end
 
-	local var_6_0 = lua_scene.configDict[arg_6_1]
+	local scneCO = lua_scene.configDict[sceneId]
 
-	if not var_6_0 then
-		logError("scene config not exist: " .. tostring(arg_6_1))
+	if not scneCO then
+		logError("scene config not exist: " .. tostring(sceneId))
 
 		return
 	end
 
-	if not arg_6_0._scene2LevelCOs[arg_6_1] then
-		arg_6_0._scene2LevelCOs[arg_6_1] = {}
+	if not self._scene2LevelCOs[sceneId] then
+		self._scene2LevelCOs[sceneId] = {}
 
-		for iter_6_0, iter_6_1 in ipairs(var_6_0.levels) do
-			local var_6_1 = lua_scene_level.configDict[iter_6_1]
+		for _, levelId in ipairs(scneCO.levels) do
+			local levelCO = lua_scene_level.configDict[levelId]
 
-			if var_6_1 then
-				table.insert(arg_6_0._scene2LevelCOs[arg_6_1], var_6_1)
+			if levelCO then
+				table.insert(self._scene2LevelCOs[sceneId], levelCO)
 			else
-				logError("scene level config not exist: " .. tostring(iter_6_1))
+				logError("scene level config not exist: " .. tostring(levelId))
 			end
 		end
 	end
 
-	return arg_6_0._scene2LevelCOs[arg_6_1]
+	return self._scene2LevelCOs[sceneId]
 end
 
-function var_0_0.getLoadingIcons(arg_7_0)
-	return arg_7_0._loadingIconList
+function SceneConfig:getLoadingIcons()
+	return self._loadingIconList
 end
 
-function var_0_0.getLoadingTexts(arg_8_0)
-	return arg_8_0._loadingTextList
+function SceneConfig:getLoadingTexts()
+	return self._loadingTextList
 end
 
-var_0_0.instance = var_0_0.New()
+SceneConfig.instance = SceneConfig.New()
 
-return var_0_0
+return SceneConfig

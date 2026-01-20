@@ -1,40 +1,42 @@
-﻿module("modules.logic.versionactivity2_3.zhixinquaner.maze.controller.ZhiXinQuanErGuideStep", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/zhixinquaner/maze/controller/ZhiXinQuanErGuideStep.lua
 
-local var_0_0 = class("ZhiXinQuanErGuideStep", BaseWork)
+module("modules.logic.versionactivity2_3.zhixinquaner.maze.controller.ZhiXinQuanErGuideStep", package.seeall)
 
-function var_0_0.initData(arg_1_0, arg_1_1)
-	arg_1_0.effectData = arg_1_1
-	arg_1_0._guideId = tonumber(arg_1_0.effectData.param)
+local ZhiXinQuanErGuideStep = class("ZhiXinQuanErGuideStep", BaseWork)
+
+function ZhiXinQuanErGuideStep:initData(effectData)
+	self.effectData = effectData
+	self._guideId = tonumber(self.effectData.param)
 end
 
-function var_0_0.onStart(arg_2_0)
+function ZhiXinQuanErGuideStep:onStart()
 	if GuideController.instance:isForbidGuides() then
-		arg_2_0:onDone(true)
+		self:onDone(true)
 
 		return
 	end
 
-	if GuideModel.instance:isGuideFinish(arg_2_0._guideId) then
-		arg_2_0:onDone(true)
+	if GuideModel.instance:isGuideFinish(self._guideId) then
+		self:onDone(true)
 
 		return
 	end
 
-	GuideController.instance:registerCallback(GuideEvent.FinishGuideLastStep, arg_2_0._onGuideFinish, arg_2_0)
-	PuzzleMazeDrawController.instance:dispatchEvent(PuzzleEvent.GuideStart, tostring(arg_2_0._guideId))
+	GuideController.instance:registerCallback(GuideEvent.FinishGuideLastStep, self._onGuideFinish, self)
+	PuzzleMazeDrawController.instance:dispatchEvent(PuzzleEvent.GuideStart, tostring(self._guideId))
 end
 
-function var_0_0._onGuideFinish(arg_3_0, arg_3_1)
-	if arg_3_0._guideId ~= arg_3_1 then
+function ZhiXinQuanErGuideStep:_onGuideFinish(guideId)
+	if self._guideId ~= guideId then
 		return
 	end
 
-	GuideController.instance:unregisterCallback(GuideEvent.FinishGuideLastStep, arg_3_0._onGuideFinish, arg_3_0)
-	arg_3_0:onDone(true)
+	GuideController.instance:unregisterCallback(GuideEvent.FinishGuideLastStep, self._onGuideFinish, self)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	GuideController.instance:unregisterCallback(GuideEvent.FinishGuideLastStep, arg_4_0._onGuideFinish, arg_4_0)
+function ZhiXinQuanErGuideStep:clearWork()
+	GuideController.instance:unregisterCallback(GuideEvent.FinishGuideLastStep, self._onGuideFinish, self)
 end
 
-return var_0_0
+return ZhiXinQuanErGuideStep

@@ -1,8 +1,10 @@
-﻿module("modules.video.AvProEnum", package.seeall)
+﻿-- chunkname: @modules/video/AvProEnum.lua
 
-local var_0_0 = class("AvProEnum")
+module("modules.video.AvProEnum", package.seeall)
 
-var_0_0.PlayerStatus = {
+local AvProEnum = class("AvProEnum")
+
+AvProEnum.PlayerStatus = {
 	Stalled = 8,
 	ReadyToPlay = 1,
 	Unstalled = 9,
@@ -25,110 +27,110 @@ var_0_0.PlayerStatus = {
 	FinishedSeeking = 12
 }
 
-function var_0_0.getPlayerStatusEnumName(arg_1_0)
-	if arg_1_0 == var_0_0.PlayerStatus.MetaDataReady then
+function AvProEnum.getPlayerStatusEnumName(status)
+	if status == AvProEnum.PlayerStatus.MetaDataReady then
 		return "MetaDataReady"
 	end
 
-	if arg_1_0 == var_0_0.PlayerStatus.ReadyToPlay then
+	if status == AvProEnum.PlayerStatus.ReadyToPlay then
 		return "ReadyToPlay"
 	end
 
-	if arg_1_0 == var_0_0.PlayerStatus.Started then
+	if status == AvProEnum.PlayerStatus.Started then
 		return "Started"
 	end
 
-	if arg_1_0 == var_0_0.PlayerStatus.FirstFrameReady then
+	if status == AvProEnum.PlayerStatus.FirstFrameReady then
 		return "FirstFrameReady"
 	end
 
-	if arg_1_0 == var_0_0.PlayerStatus.FinishedPlaying then
+	if status == AvProEnum.PlayerStatus.FinishedPlaying then
 		return "FinishedPlaying"
 	end
 
-	if arg_1_0 == var_0_0.PlayerStatus.Closing then
+	if status == AvProEnum.PlayerStatus.Closing then
 		return "Closing"
 	end
 
-	if arg_1_0 == var_0_0.PlayerStatus.Error then
+	if status == AvProEnum.PlayerStatus.Error then
 		return "Error"
 	end
 
-	if arg_1_0 == var_0_0.PlayerStatus.SubtitleChange then
+	if status == AvProEnum.PlayerStatus.SubtitleChange then
 		return "SubtitleChange"
 	end
 
-	if arg_1_0 == var_0_0.PlayerStatus.Stalled then
+	if status == AvProEnum.PlayerStatus.Stalled then
 		return "Stalled"
 	end
 
-	if arg_1_0 == var_0_0.PlayerStatus.Unstalled then
+	if status == AvProEnum.PlayerStatus.Unstalled then
 		return "Unstalled"
 	end
 
-	if arg_1_0 == var_0_0.PlayerStatus.ResolutionChanged then
+	if status == AvProEnum.PlayerStatus.ResolutionChanged then
 		return "ResolutionChanged"
 	end
 
-	if arg_1_0 == var_0_0.PlayerStatus.StartedSeeking then
+	if status == AvProEnum.PlayerStatus.StartedSeeking then
 		return "StartedSeeking"
 	end
 
-	if arg_1_0 == var_0_0.PlayerStatus.FinishedSeeking then
+	if status == AvProEnum.PlayerStatus.FinishedSeeking then
 		return "FinishedSeeking"
 	end
 
-	if arg_1_0 == var_0_0.PlayerStatus.StartedBuffering then
+	if status == AvProEnum.PlayerStatus.StartedBuffering then
 		return "StartedBuffering"
 	end
 
-	if arg_1_0 == var_0_0.PlayerStatus.FinishedBuffering then
+	if status == AvProEnum.PlayerStatus.FinishedBuffering then
 		return "FinishedBuffering"
 	end
 
-	if arg_1_0 == var_0_0.PlayerStatus.PropertiesChanged then
+	if status == AvProEnum.PlayerStatus.PropertiesChanged then
 		return "PropertiesChanged"
 	end
 
-	if arg_1_0 == var_0_0.PlayerStatus.PlaylistItemChanged then
+	if status == AvProEnum.PlayerStatus.PlaylistItemChanged then
 		return "PlaylistItemChanged"
 	end
 
-	if arg_1_0 == var_0_0.PlayerStatus.PlaylistFinished then
+	if status == AvProEnum.PlayerStatus.PlaylistFinished then
 		return "PlaylistFinished"
 	end
 
-	if arg_1_0 == var_0_0.PlayerStatus.TextTracksChanged then
+	if status == AvProEnum.PlayerStatus.TextTracksChanged then
 		return "TextTracksChanged"
 	end
 
-	if arg_1_0 == var_0_0.PlayerStatus.TextCueChanged then
+	if status == AvProEnum.PlayerStatus.TextCueChanged then
 		return "TextCueChanged"
 	end
 
 	return "None"
 end
 
-var_0_0.ErrorCode = {
+AvProEnum.ErrorCode = {
 	DecodeFailed = 200,
 	LoadFailed = 100,
 	None = 0
 }
 
-function var_0_0.getErrorCodeEnumName(arg_2_0)
-	if arg_2_0 == var_0_0.ErrorCode.None then
+function AvProEnum.getErrorCodeEnumName(errorCode)
+	if errorCode == AvProEnum.ErrorCode.None then
 		return "None"
 	end
 
-	if arg_2_0 == var_0_0.ErrorCode.LoadFailed then
+	if errorCode == AvProEnum.ErrorCode.LoadFailed then
 		return "LoadFailed"
 	end
 
-	if arg_2_0 == var_0_0.ErrorCode.DecodeFailed then
+	if errorCode == AvProEnum.ErrorCode.DecodeFailed then
 		return "DecodeFailed"
 	end
 
 	return "UnKnown"
 end
 
-return var_0_0
+return AvProEnum

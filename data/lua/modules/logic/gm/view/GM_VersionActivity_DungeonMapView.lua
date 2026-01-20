@@ -1,144 +1,146 @@
-﻿module("modules.logic.gm.view.GM_VersionActivity_DungeonMapView", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GM_VersionActivity_DungeonMapView.lua
 
-local var_0_0 = class("GM_VersionActivity_DungeonMapView", BaseView)
-local var_0_1 = "#FFFF00"
+module("modules.logic.gm.view.GM_VersionActivity_DungeonMapView", package.seeall)
 
-local function var_0_2()
+local GM_VersionActivity_DungeonMapView = class("GM_VersionActivity_DungeonMapView", BaseView)
+local kYellow = "#FFFF00"
+
+local function _defaultBtnGmFunc()
 	ViewMgr.instance:openView(ViewName.GM_VersionActivity_DungeonMapView)
 end
 
-function var_0_0.VersionActivityX_XDungeonMapView_register(arg_2_0)
-	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "_editableInitView")
-	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "addEvents")
-	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "removeEvents")
+function GM_VersionActivity_DungeonMapView.VersionActivityX_XDungeonMapView_register(T)
+	GMMinusModel.instance:saveOriginalFunc(T, "_editableInitView")
+	GMMinusModel.instance:saveOriginalFunc(T, "addEvents")
+	GMMinusModel.instance:saveOriginalFunc(T, "removeEvents")
 
-	function arg_2_0._editableInitView(arg_3_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_3_0, "_editableInitView", ...)
-		GMMinusModel.instance:addBtnGM(arg_3_0)
+	function T:_editableInitView(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "_editableInitView", ...)
+		GMMinusModel.instance:addBtnGM(self)
 	end
 
-	function arg_2_0.addEvents(arg_4_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_4_0, "addEvents", ...)
-		GMMinusModel.instance:btnGM_AddClickListener(arg_4_0, var_0_2)
-		GM_VersionActivity_DungeonMapViewContainer.addEvents(arg_4_0)
+	function T:addEvents(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "addEvents", ...)
+		GMMinusModel.instance:btnGM_AddClickListener(self, _defaultBtnGmFunc)
+		GM_VersionActivity_DungeonMapViewContainer.addEvents(self)
 	end
 
-	function arg_2_0.removeEvents(arg_5_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_5_0, "removeEvents", ...)
-		GMMinusModel.instance:btnGM_RemoveClickListener(arg_5_0)
-		GM_VersionActivity_DungeonMapViewContainer.removeEvents(arg_5_0)
+	function T:removeEvents(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "removeEvents", ...)
+		GMMinusModel.instance:btnGM_RemoveClickListener(self)
+		GM_VersionActivity_DungeonMapViewContainer.removeEvents(self)
 	end
 
-	function arg_2_0._gm_showAllTabIdUpdate()
+	function T._gm_showAllTabIdUpdate()
 		DungeonController.instance:dispatchEvent(DungeonEvent.OnUpdateDungeonInfo)
 	end
 end
 
-function var_0_0.VersionActivityX_XMapEpisodeItem_register(arg_7_0)
-	GMMinusModel.instance:saveOriginalFunc(arg_7_0, "refreshUI")
+function GM_VersionActivity_DungeonMapView.VersionActivityX_XMapEpisodeItem_register(T)
+	GMMinusModel.instance:saveOriginalFunc(T, "refreshUI")
 
-	function arg_7_0.refreshUI(arg_8_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_8_0, "refreshUI", ...)
+	function T.refreshUI(SelfObj, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(SelfObj, "refreshUI", ...)
 
-		if not var_0_0.s_ShowAllTabId then
+		if not GM_VersionActivity_DungeonMapView.s_ShowAllTabId then
 			return
 		end
 
-		arg_8_0._txtsectionname.text = tostring(arg_8_0._config.id) .. "\n" .. arg_8_0._config.name
+		SelfObj._txtsectionname.text = tostring(SelfObj._config.id) .. "\n" .. SelfObj._config.name
 	end
 end
 
-function var_0_0.VersionActivityX_XDungeonMapLevelView_register(arg_9_0, arg_9_1, arg_9_2)
-	arg_9_1 = arg_9_1 or 1
-	arg_9_2 = arg_9_2 or 0
+function GM_VersionActivity_DungeonMapView.VersionActivityX_XDungeonMapLevelView_register(T, major, minor)
+	major = major or 1
+	minor = minor or 0
 
-	local function var_9_0(arg_10_0, arg_10_1)
-		if arg_10_0 > arg_9_1 then
+	local function _isLowerVer(expectMajor, expectMinor)
+		if expectMajor > major then
 			return true
 		end
 
-		if arg_9_1 == arg_10_0 then
-			return arg_10_1 >= arg_9_2
+		if major == expectMajor then
+			return expectMinor >= minor
 		end
 
 		return false
 	end
 
-	local function var_9_1(arg_11_0, arg_11_1)
-		if arg_11_0 < arg_9_1 then
+	local function _isVer(expectMajor, expectMinor)
+		if expectMajor < major then
 			return true
 		end
 
-		if arg_9_1 == arg_11_0 then
-			return arg_11_1 <= arg_9_2
+		if major == expectMajor then
+			return expectMinor <= minor
 		end
 
 		return false
 	end
 
-	GMMinusModel.instance:saveOriginalFunc(arg_9_0, "refreshStartBtn")
+	GMMinusModel.instance:saveOriginalFunc(T, "refreshStartBtn")
 
-	function arg_9_0.refreshStartBtn(arg_12_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_12_0, "refreshStartBtn", ...)
+	function T.refreshStartBtn(SelfObj, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(SelfObj, "refreshStartBtn", ...)
 
-		if not var_0_0.s_ShowAllTabId then
+		if not GM_VersionActivity_DungeonMapView.s_ShowAllTabId then
 			return
 		end
 
-		local var_12_0 = arg_12_0.showEpisodeCo
-		local var_12_1 = gohelper.getRichColorText(var_12_0.id, var_0_1)
+		local config = SelfObj.showEpisodeCo
+		local showDesc = gohelper.getRichColorText(config.id, kYellow)
 
-		if DungeonModel.instance:hasPassLevel(var_12_0.id) and var_12_0.afterStory > 0 and not StoryModel.instance:isStoryFinished(var_12_0.afterStory) then
-			var_12_1 = var_12_1 .. luaLang("p_dungeonlevelview_continuestory")
+		if DungeonModel.instance:hasPassLevel(config.id) and config.afterStory > 0 and not StoryModel.instance:isStoryFinished(config.afterStory) then
+			showDesc = showDesc .. luaLang("p_dungeonlevelview_continuestory")
 		else
-			var_12_1 = var_12_1 .. luaLang("p_dungeonlevelview_startfight")
+			showDesc = showDesc .. luaLang("p_dungeonlevelview_startfight")
 		end
 
-		arg_12_0._txtnorstarttext.text = var_12_1
+		SelfObj._txtnorstarttext.text = showDesc
 
-		if var_9_0(1, 2) then
-			arg_12_0._txtnorstarttext2.text = var_12_1
+		if _isLowerVer(1, 2) then
+			SelfObj._txtnorstarttext2.text = showDesc
 		end
 	end
 end
 
-function var_0_0.onInitView(arg_13_0)
-	arg_13_0._btnClose = gohelper.findChildButtonWithAudio(arg_13_0.viewGO, "btnClose")
-	arg_13_0._item1Toggle = gohelper.findChildToggle(arg_13_0.viewGO, "viewport/content/item1/Toggle")
+function GM_VersionActivity_DungeonMapView:onInitView()
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "btnClose")
+	self._item1Toggle = gohelper.findChildToggle(self.viewGO, "viewport/content/item1/Toggle")
 end
 
-function var_0_0.addEvents(arg_14_0)
-	arg_14_0._btnClose:AddClickListener(arg_14_0.closeThis, arg_14_0)
-	arg_14_0._item1Toggle:AddOnValueChanged(arg_14_0._onItem1ToggleValueChanged, arg_14_0)
+function GM_VersionActivity_DungeonMapView:addEvents()
+	self._btnClose:AddClickListener(self.closeThis, self)
+	self._item1Toggle:AddOnValueChanged(self._onItem1ToggleValueChanged, self)
 end
 
-function var_0_0.removeEvents(arg_15_0)
-	arg_15_0._btnClose:RemoveClickListener()
-	arg_15_0._item1Toggle:RemoveOnValueChanged()
+function GM_VersionActivity_DungeonMapView:removeEvents()
+	self._btnClose:RemoveClickListener()
+	self._item1Toggle:RemoveOnValueChanged()
 end
 
-function var_0_0.onOpen(arg_16_0)
-	arg_16_0:_refreshItem1()
+function GM_VersionActivity_DungeonMapView:onOpen()
+	self:_refreshItem1()
 end
 
-function var_0_0.onDestroyView(arg_17_0)
+function GM_VersionActivity_DungeonMapView:onDestroyView()
 	return
 end
 
-var_0_0.s_ShowAllTabId = false
+GM_VersionActivity_DungeonMapView.s_ShowAllTabId = false
 
-function var_0_0._refreshItem1(arg_18_0)
-	local var_18_0 = var_0_0.s_ShowAllTabId
+function GM_VersionActivity_DungeonMapView:_refreshItem1()
+	local isOn = GM_VersionActivity_DungeonMapView.s_ShowAllTabId
 
-	arg_18_0._item1Toggle.isOn = var_18_0
+	self._item1Toggle.isOn = isOn
 end
 
-function var_0_0._onItem1ToggleValueChanged(arg_19_0)
-	local var_19_0 = arg_19_0._item1Toggle.isOn
+function GM_VersionActivity_DungeonMapView:_onItem1ToggleValueChanged()
+	local isOn = self._item1Toggle.isOn
 
-	var_0_0.s_ShowAllTabId = var_19_0
+	GM_VersionActivity_DungeonMapView.s_ShowAllTabId = isOn
 
-	GMController.instance:dispatchEvent(GMEvent.VersionActivity_DungeonMapView_ShowAllTabIdUpdate, var_19_0)
+	GMController.instance:dispatchEvent(GMEvent.VersionActivity_DungeonMapView_ShowAllTabIdUpdate, isOn)
 end
 
-return var_0_0
+return GM_VersionActivity_DungeonMapView

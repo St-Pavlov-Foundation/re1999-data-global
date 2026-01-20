@@ -1,35 +1,37 @@
-﻿module("modules.logic.activity.view.chessmap.Activity109ChessEntryContainer", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/chessmap/Activity109ChessEntryContainer.lua
 
-local var_0_0 = class("Activity109ChessEntryContainer", BaseViewContainer)
+module("modules.logic.activity.view.chessmap.Activity109ChessEntryContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Activity109ChessEntryContainer = class("Activity109ChessEntryContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Activity109ChessEntry.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
+function Activity109ChessEntryContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Activity109ChessEntry.New())
+	table.insert(views, TabViewGroup.New(1, "#go_btns"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._navigateButtonView = NavigateButtonsView.New({
+function Activity109ChessEntryContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			arg_2_0._navigateButtonView
+			self._navigateButtonView
 		}
 	end
 end
 
-function var_0_0.onContainerOpen(arg_3_0)
+function Activity109ChessEntryContainer:onContainerOpen()
 	ActivityEnterMgr.instance:enterActivity(VersionActivityEnum.ActivityId.Act109)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
 		VersionActivityEnum.ActivityId.Act109
 	})
 end
 
-return var_0_0
+return Activity109ChessEntryContainer

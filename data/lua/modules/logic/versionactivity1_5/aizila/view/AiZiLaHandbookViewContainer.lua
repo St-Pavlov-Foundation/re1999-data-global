@@ -1,36 +1,38 @@
-﻿module("modules.logic.versionactivity1_5.aizila.view.AiZiLaHandbookViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/aizila/view/AiZiLaHandbookViewContainer.lua
 
-local var_0_0 = class("AiZiLaHandbookViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_5.aizila.view.AiZiLaHandbookViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+local AiZiLaHandbookViewContainer = class("AiZiLaHandbookViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "Right/#scroll_Items"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = AiZiLaGoodsItem.prefabPath
-	var_1_1.cellClass = AiZiLaHandbookItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 4
-	var_1_1.cellWidth = 286
-	var_1_1.cellHeight = 236
-	var_1_1.cellSpaceH = 0
-	var_1_1.cellSpaceV = 0
-	var_1_1.startSpace = 0
+function AiZiLaHandbookViewContainer:buildViews()
+	local views = {}
+	local scrollParam = ListScrollParam.New()
 
-	table.insert(var_1_0, LuaListScrollView.New(AiZiLaHandbookListModel.instance, var_1_1))
-	table.insert(var_1_0, AiZiLaHandbookView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_BackBtns"))
+	scrollParam.scrollGOPath = "Right/#scroll_Items"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = AiZiLaGoodsItem.prefabPath
+	scrollParam.cellClass = AiZiLaHandbookItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 4
+	scrollParam.cellWidth = 286
+	scrollParam.cellHeight = 236
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 0
+	scrollParam.startSpace = 0
 
-	return var_1_0
+	table.insert(views, LuaListScrollView.New(AiZiLaHandbookListModel.instance, scrollParam))
+	table.insert(views, AiZiLaHandbookView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_BackBtns"))
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
+function AiZiLaHandbookViewContainer:onContainerClickModalMask()
 	return
 end
 
-function var_0_0.buildTabViews(arg_3_0, arg_3_1)
-	if arg_3_1 == 1 then
+function AiZiLaHandbookViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -41,4 +43,4 @@ function var_0_0.buildTabViews(arg_3_0, arg_3_1)
 	end
 end
 
-return var_0_0
+return AiZiLaHandbookViewContainer

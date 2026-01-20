@@ -1,37 +1,41 @@
-﻿module("modules.logic.versionactivity.view.VersionActivityDungeonMapLevelView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity/view/VersionActivityDungeonMapLevelView.lua
 
-local var_0_0 = class("VersionActivityDungeonMapLevelView", VersionActivityDungeonBaseMapLevelView)
+module("modules.logic.versionactivity.view.VersionActivityDungeonMapLevelView", package.seeall)
 
-function var_0_0.getEpisodeIndex(arg_1_0)
-	if ActivityConfig.instance:getChapterIdMode(arg_1_0.originEpisodeConfig.chapterId) == VersionActivityDungeonBaseEnum.DungeonMode.Hard then
-		return var_0_0.super.getEpisodeIndex(arg_1_0)
+local VersionActivityDungeonMapLevelView = class("VersionActivityDungeonMapLevelView", VersionActivityDungeonBaseMapLevelView)
+
+function VersionActivityDungeonMapLevelView:getEpisodeIndex()
+	local mode = ActivityConfig.instance:getChapterIdMode(self.originEpisodeConfig.chapterId)
+
+	if mode == VersionActivityDungeonBaseEnum.DungeonMode.Hard then
+		return VersionActivityDungeonMapLevelView.super.getEpisodeIndex(self)
 	end
 
-	local var_1_0 = DungeonConfig.instance:getVersionActivityBrotherEpisodeByEpisodeCo(arg_1_0.originEpisodeConfig)
+	local episodeList = DungeonConfig.instance:getVersionActivityBrotherEpisodeByEpisodeCo(self.originEpisodeConfig)
 
-	return DungeonConfig.instance:getEpisodeLevelIndex(var_1_0[1])
+	return DungeonConfig.instance:getEpisodeLevelIndex(episodeList[1])
 end
 
-function var_0_0.buildEpisodeName(arg_2_0)
-	local var_2_0 = arg_2_0.showEpisodeCo.name
-	local var_2_1 = GameUtil.utf8sub(var_2_0, 1, 1)
-	local var_2_2 = ""
-	local var_2_3 = GameUtil.utf8len(var_2_0)
+function VersionActivityDungeonMapLevelView:buildEpisodeName()
+	local name = self.showEpisodeCo.name
+	local firstName = GameUtil.utf8sub(name, 1, 1)
+	local remainName = ""
+	local nameLen = GameUtil.utf8len(name)
 
-	if var_2_3 > 1 then
-		var_2_2 = GameUtil.utf8sub(var_2_0, 2, var_2_3 - 1)
+	if nameLen > 1 then
+		remainName = GameUtil.utf8sub(name, 2, nameLen - 1)
 	end
 
-	local var_2_4 = arg_2_0.mode == VersionActivityDungeonBaseEnum.DungeonMode.Hard and "#bc9999" or "#bcbaaa"
-	local var_2_5 = 112
+	local txtColor = self.mode == VersionActivityDungeonBaseEnum.DungeonMode.Hard and "#bc9999" or "#bcbaaa"
+	local _firstSize = 112
 
 	if GameConfig:GetCurLangType() == LangSettings.en then
-		var_2_5 = 90
+		_firstSize = 90
 	elseif GameConfig:GetCurLangType() == LangSettings.kr then
-		var_2_5 = 100
+		_firstSize = 100
 	end
 
-	return arg_2_0:buildColorText(string.format("<size=%s>%s</size>%s", var_2_5, var_2_1, var_2_2), var_2_4)
+	return self:buildColorText(string.format("<size=%s>%s</size>%s", _firstSize, firstName, remainName), txtColor)
 end
 
-return var_0_0
+return VersionActivityDungeonMapLevelView

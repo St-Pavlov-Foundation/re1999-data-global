@@ -1,268 +1,270 @@
-﻿module("modules.logic.versionactivity1_2.yaxian.view.game.YaXianGamePathView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/yaxian/view/game/YaXianGamePathView.lua
 
-local var_0_0 = class("YaXianGamePathView", BaseView)
+module("modules.logic.versionactivity1_2.yaxian.view.game.YaXianGamePathView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local YaXianGamePathView = class("YaXianGamePathView", BaseView)
+
+function YaXianGamePathView:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(YaXianGameController.instance, YaXianEvent.RefreshInteractPath, arg_2_0.refreshInteractPath, arg_2_0)
-	arg_2_0:addEventCb(YaXianGameController.instance, YaXianEvent.OnUpdateEffectInfo, arg_2_0.onUpdateEffectInfo, arg_2_0)
-	arg_2_0:addEventCb(YaXianGameController.instance, YaXianEvent.OnResetView, arg_2_0.resetMapView, arg_2_0)
-	arg_2_0:addEventCb(YaXianGameController.instance, YaXianEvent.MainResLoadDone, arg_2_0.onMainResLoadDone, arg_2_0)
+function YaXianGamePathView:addEvents()
+	self:addEventCb(YaXianGameController.instance, YaXianEvent.RefreshInteractPath, self.refreshInteractPath, self)
+	self:addEventCb(YaXianGameController.instance, YaXianEvent.OnUpdateEffectInfo, self.onUpdateEffectInfo, self)
+	self:addEventCb(YaXianGameController.instance, YaXianEvent.OnResetView, self.resetMapView, self)
+	self:addEventCb(YaXianGameController.instance, YaXianEvent.MainResLoadDone, self.onMainResLoadDone, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function YaXianGamePathView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0.playerPathPool = {}
-	arg_4_0.playerHalfPathPool = {}
-	arg_4_0.enemyPathPool = {}
-	arg_4_0.enemyHalfPathPool = {}
-	arg_4_0.playerPathList = {}
-	arg_4_0.playerHalfPathList = {}
-	arg_4_0.enemyPathList = {}
-	arg_4_0.enemyHalfPathList = {}
+function YaXianGamePathView:_editableInitView()
+	self.playerPathPool = {}
+	self.playerHalfPathPool = {}
+	self.enemyPathPool = {}
+	self.enemyHalfPathPool = {}
+	self.playerPathList = {}
+	self.playerHalfPathList = {}
+	self.enemyPathList = {}
+	self.enemyHalfPathList = {}
 end
 
-function var_0_0.onMainResLoadDone(arg_5_0, arg_5_1)
-	if arg_5_0.initResDone then
+function YaXianGamePathView:onMainResLoadDone(loader)
+	if self.initResDone then
 		return
 	end
 
-	arg_5_0.loader = arg_5_1
-	arg_5_0.sceneGo = arg_5_0.viewContainer:getRootSceneGo()
-	arg_5_0.pathContainer = UnityEngine.GameObject.New("pathContainer")
+	self.loader = loader
+	self.sceneGo = self.viewContainer:getRootSceneGo()
+	self.pathContainer = UnityEngine.GameObject.New("pathContainer")
 
-	arg_5_0.pathContainer.transform:SetParent(arg_5_0.sceneGo.transform, false)
-	transformhelper.setLocalPos(arg_5_0.pathContainer.transform, 0, 0, YaXianGameEnum.ContainerOffsetZ.Path)
+	self.pathContainer.transform:SetParent(self.sceneGo.transform, false)
+	transformhelper.setLocalPos(self.pathContainer.transform, 0, 0, YaXianGameEnum.ContainerOffsetZ.Path)
 
-	arg_5_0.greedLinePrefab = arg_5_0.loader:getAssetItem(YaXianGameEnum.SceneResPath.GreenLine):GetResource()
-	arg_5_0.redLinePrefab = arg_5_0.loader:getAssetItem(YaXianGameEnum.SceneResPath.RedLine):GetResource()
-	arg_5_0.greenHalfLinePrefab = arg_5_0.loader:getAssetItem(YaXianGameEnum.SceneResPath.GreedLineHalf):GetResource()
-	arg_5_0.redHalfLinePrefab = arg_5_0.loader:getAssetItem(YaXianGameEnum.SceneResPath.RedLineHalf):GetResource()
-	arg_5_0.initResDone = true
+	self.greedLinePrefab = self.loader:getAssetItem(YaXianGameEnum.SceneResPath.GreenLine):GetResource()
+	self.redLinePrefab = self.loader:getAssetItem(YaXianGameEnum.SceneResPath.RedLine):GetResource()
+	self.greenHalfLinePrefab = self.loader:getAssetItem(YaXianGameEnum.SceneResPath.GreedLineHalf):GetResource()
+	self.redHalfLinePrefab = self.loader:getAssetItem(YaXianGameEnum.SceneResPath.RedLineHalf):GetResource()
+	self.initResDone = true
 end
 
-function var_0_0.onUpdateEffectInfo(arg_6_0)
-	arg_6_0:refreshInteractPath(arg_6_0.preIsShow)
+function YaXianGamePathView:onUpdateEffectInfo()
+	self:refreshInteractPath(self.preIsShow)
 end
 
-function var_0_0.refreshInteractPath(arg_7_0, arg_7_1)
-	arg_7_0.preIsShow = arg_7_1
+function YaXianGamePathView:refreshInteractPath(isShow)
+	self.preIsShow = isShow
 
-	arg_7_0:refreshPlayerInteractPath(arg_7_1)
-	arg_7_0:refreshEnemyInteractPath(arg_7_1)
+	self:refreshPlayerInteractPath(isShow)
+	self:refreshEnemyInteractPath(isShow)
 end
 
-function var_0_0.refreshPlayerInteractPath(arg_8_0, arg_8_1)
-	arg_8_0:recyclePlayerInteractPath()
+function YaXianGamePathView:refreshPlayerInteractPath(isShow)
+	self:recyclePlayerInteractPath()
 
-	if arg_8_1 then
-		local var_8_0 = YaXianGameModel.instance:getPlayerInteractMo()
-		local var_8_1 = YaXianGameModel.instance:getCanWalkTargetPosDict()
+	if isShow then
+		local interactMo = YaXianGameModel.instance:getPlayerInteractMo()
+		local canWalkTargetPosDict = YaXianGameModel.instance:getCanWalkTargetPosDict()
 
-		for iter_8_0, iter_8_1 in pairs(var_8_1) do
-			arg_8_0:buildPath(var_8_0.posX, var_8_0.posY, iter_8_1.x, iter_8_1.y, true, iter_8_0)
+		for direction, pos in pairs(canWalkTargetPosDict) do
+			self:buildPath(interactMo.posX, interactMo.posY, pos.x, pos.y, true, direction)
 		end
 	end
 end
 
-function var_0_0.refreshEnemyInteractPath(arg_9_0, arg_9_1)
-	arg_9_0:recycleEnemyInteractPath()
+function YaXianGamePathView:refreshEnemyInteractPath(isShow)
+	self:recycleEnemyInteractPath()
 
-	if arg_9_1 then
-		for iter_9_0, iter_9_1 in ipairs(YaXianGameModel.instance:getInteractMoList()) do
-			if iter_9_1.nextPos then
-				arg_9_0:buildPath(iter_9_1.posX, iter_9_1.posY, iter_9_1.nextPos.posX, iter_9_1.nextPos.posY, false)
+	if isShow then
+		for _, interactMo in ipairs(YaXianGameModel.instance:getInteractMoList()) do
+			if interactMo.nextPos then
+				self:buildPath(interactMo.posX, interactMo.posY, interactMo.nextPos.posX, interactMo.nextPos.posY, false)
 			end
 		end
 	end
 end
 
-function var_0_0.buildPath(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4, arg_10_5, arg_10_6)
-	arg_10_6 = arg_10_6 or YaXianGameHelper.getDirection(arg_10_1, arg_10_2, arg_10_3, arg_10_4)
+function YaXianGamePathView:buildPath(startPosX, startPosY, targetPosX, targetPosY, isPlayer, direction)
+	direction = direction or YaXianGameHelper.getDirection(startPosX, startPosY, targetPosX, targetPosY)
 
-	if arg_10_1 ~= arg_10_3 then
-		local var_10_0 = 1
+	if startPosX ~= targetPosX then
+		local step = 1
 
-		if arg_10_3 < arg_10_1 then
-			var_10_0 = -1
+		if targetPosX < startPosX then
+			step = -1
 		end
 
-		for iter_10_0 = arg_10_1 + var_10_0, arg_10_3 - var_10_0, var_10_0 do
-			local var_10_1 = arg_10_0:getPathItem(arg_10_5)
+		for i = startPosX + step, targetPosX - step, step do
+			local pathItem = self:getPathItem(isPlayer)
 
-			arg_10_0:setPathItemPos(var_10_1, arg_10_6, iter_10_0, arg_10_2)
+			self:setPathItemPos(pathItem, direction, i, startPosY)
 		end
 
-		local var_10_2 = arg_10_0:getHalfPathItem(arg_10_5)
+		local pathItem = self:getHalfPathItem(isPlayer)
 
-		arg_10_0:setPathItemPos(var_10_2, arg_10_6, arg_10_3, arg_10_4)
+		self:setPathItemPos(pathItem, direction, targetPosX, targetPosY)
 
 		return
 	end
 
-	if arg_10_2 ~= arg_10_4 then
-		local var_10_3 = 1
+	if startPosY ~= targetPosY then
+		local step = 1
 
-		if arg_10_4 < arg_10_2 then
-			var_10_3 = -1
+		if targetPosY < startPosY then
+			step = -1
 		end
 
-		for iter_10_1 = arg_10_2 + var_10_3, arg_10_4 - var_10_3, var_10_3 do
-			local var_10_4 = arg_10_0:getPathItem(arg_10_5)
+		for i = startPosY + step, targetPosY - step, step do
+			local pathItem = self:getPathItem(isPlayer)
 
-			arg_10_0:setPathItemPos(var_10_4, arg_10_6, arg_10_1, iter_10_1)
+			self:setPathItemPos(pathItem, direction, startPosX, i)
 		end
 
-		local var_10_5 = arg_10_0:getHalfPathItem(arg_10_5)
+		local pathItem = self:getHalfPathItem(isPlayer)
 
-		arg_10_0:setPathItemPos(var_10_5, arg_10_6, arg_10_3, arg_10_4)
+		self:setPathItemPos(pathItem, direction, targetPosX, targetPosY)
 
 		return
 	end
 
-	logError(string.format("build Path fail ... %s, %s, %s, %s", arg_10_1, arg_10_2, arg_10_3, arg_10_4))
+	logError(string.format("build Path fail ... %s, %s, %s, %s", startPosX, startPosY, targetPosX, targetPosY))
 end
 
-function var_0_0.getPathItem(arg_11_0, arg_11_1)
-	local var_11_0
+function YaXianGamePathView:getPathItem(isPlayer)
+	local pathItem
 
-	if arg_11_1 then
-		if next(arg_11_0.playerPathPool) then
-			var_11_0 = table.remove(arg_11_0.playerPathPool)
+	if isPlayer then
+		if next(self.playerPathPool) then
+			pathItem = table.remove(self.playerPathPool)
 		else
-			var_11_0 = arg_11_0:createPathItem(arg_11_0.greedLinePrefab)
+			pathItem = self:createPathItem(self.greedLinePrefab)
 		end
 
-		table.insert(arg_11_0.playerPathList, var_11_0)
+		table.insert(self.playerPathList, pathItem)
 
-		return var_11_0
+		return pathItem
 	end
 
-	if next(arg_11_0.enemyPathPool) then
-		var_11_0 = table.remove(arg_11_0.enemyPathPool)
+	if next(self.enemyPathPool) then
+		pathItem = table.remove(self.enemyPathPool)
 	else
-		var_11_0 = arg_11_0:createPathItem(arg_11_0.redLinePrefab)
+		pathItem = self:createPathItem(self.redLinePrefab)
 	end
 
-	table.insert(arg_11_0.enemyPathList, var_11_0)
+	table.insert(self.enemyPathList, pathItem)
 
-	return var_11_0
+	return pathItem
 end
 
-function var_0_0.getHalfPathItem(arg_12_0, arg_12_1)
-	local var_12_0
+function YaXianGamePathView:getHalfPathItem(isPlayer)
+	local pathItem
 
-	if arg_12_1 then
-		if next(arg_12_0.playerHalfPathPool) then
-			var_12_0 = table.remove(arg_12_0.playerHalfPathPool)
+	if isPlayer then
+		if next(self.playerHalfPathPool) then
+			pathItem = table.remove(self.playerHalfPathPool)
 		else
-			var_12_0 = arg_12_0:createPathItem(arg_12_0.greenHalfLinePrefab)
+			pathItem = self:createPathItem(self.greenHalfLinePrefab)
 		end
 
-		table.insert(arg_12_0.playerHalfPathList, var_12_0)
+		table.insert(self.playerHalfPathList, pathItem)
 
-		return var_12_0
+		return pathItem
 	end
 
-	if next(arg_12_0.enemyHalfPathPool) then
-		var_12_0 = table.remove(arg_12_0.enemyHalfPathPool)
+	if next(self.enemyHalfPathPool) then
+		pathItem = table.remove(self.enemyHalfPathPool)
 	else
-		var_12_0 = arg_12_0:createPathItem(arg_12_0.redHalfLinePrefab)
+		pathItem = self:createPathItem(self.redHalfLinePrefab)
 	end
 
-	table.insert(arg_12_0.enemyHalfPathList, var_12_0)
+	table.insert(self.enemyHalfPathList, pathItem)
 
-	return var_12_0
+	return pathItem
 end
 
-function var_0_0.createPathItem(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0:getUserDataTb_()
+function YaXianGamePathView:createPathItem(prefab)
+	local pathItem = self:getUserDataTb_()
 
-	var_13_0.go = gohelper.clone(arg_13_1, arg_13_0.pathContainer)
-	var_13_0.tr = var_13_0.go.transform
-	var_13_0.goDirectionDict = {
-		[YaXianGameEnum.MoveDirection.Bottom] = gohelper.findChild(var_13_0.go, YaXianGameEnum.DirectionName[YaXianGameEnum.MoveDirection.Bottom]),
-		[YaXianGameEnum.MoveDirection.Left] = gohelper.findChild(var_13_0.go, YaXianGameEnum.DirectionName[YaXianGameEnum.MoveDirection.Left]),
-		[YaXianGameEnum.MoveDirection.Right] = gohelper.findChild(var_13_0.go, YaXianGameEnum.DirectionName[YaXianGameEnum.MoveDirection.Right]),
-		[YaXianGameEnum.MoveDirection.Top] = gohelper.findChild(var_13_0.go, YaXianGameEnum.DirectionName[YaXianGameEnum.MoveDirection.Top])
+	pathItem.go = gohelper.clone(prefab, self.pathContainer)
+	pathItem.tr = pathItem.go.transform
+	pathItem.goDirectionDict = {
+		[YaXianGameEnum.MoveDirection.Bottom] = gohelper.findChild(pathItem.go, YaXianGameEnum.DirectionName[YaXianGameEnum.MoveDirection.Bottom]),
+		[YaXianGameEnum.MoveDirection.Left] = gohelper.findChild(pathItem.go, YaXianGameEnum.DirectionName[YaXianGameEnum.MoveDirection.Left]),
+		[YaXianGameEnum.MoveDirection.Right] = gohelper.findChild(pathItem.go, YaXianGameEnum.DirectionName[YaXianGameEnum.MoveDirection.Right]),
+		[YaXianGameEnum.MoveDirection.Top] = gohelper.findChild(pathItem.go, YaXianGameEnum.DirectionName[YaXianGameEnum.MoveDirection.Top])
 	}
 
-	return var_13_0
+	return pathItem
 end
 
-function var_0_0.resetPathItem(arg_14_0, arg_14_1)
-	if not arg_14_1 then
+function YaXianGamePathView:resetPathItem(pathItem)
+	if not pathItem then
 		return
 	end
 
-	for iter_14_0, iter_14_1 in pairs(YaXianGameEnum.MoveDirection) do
-		gohelper.setActive(arg_14_1.goDirectionDict[iter_14_1], false)
+	for _, direction in pairs(YaXianGameEnum.MoveDirection) do
+		gohelper.setActive(pathItem.goDirectionDict[direction], false)
 	end
 end
 
-function var_0_0.setPathItemPos(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4)
-	arg_15_0:resetPathItem(arg_15_1)
-	gohelper.setActive(arg_15_1.go, true)
-	gohelper.setActive(arg_15_1.goDirectionDict[arg_15_2], true)
+function YaXianGamePathView:setPathItemPos(pathItem, direction, posX, posY)
+	self:resetPathItem(pathItem)
+	gohelper.setActive(pathItem.go, true)
+	gohelper.setActive(pathItem.goDirectionDict[direction], true)
 
-	local var_15_0, var_15_1, var_15_2 = YaXianGameHelper.calcTilePosInScene(arg_15_3, arg_15_4)
+	local x, y, z = YaXianGameHelper.calcTilePosInScene(posX, posY)
 
-	transformhelper.setLocalPos(arg_15_1.tr, var_15_0, var_15_1, var_15_2)
+	transformhelper.setLocalPos(pathItem.tr, x, y, z)
 end
 
-function var_0_0.recyclePlayerInteractPath(arg_16_0)
-	for iter_16_0, iter_16_1 in ipairs(arg_16_0.playerPathList) do
-		gohelper.setActive(iter_16_1.go, false)
-		table.insert(arg_16_0.playerPathPool, iter_16_1)
+function YaXianGamePathView:recyclePlayerInteractPath()
+	for _, pathItem in ipairs(self.playerPathList) do
+		gohelper.setActive(pathItem.go, false)
+		table.insert(self.playerPathPool, pathItem)
 	end
 
-	for iter_16_2, iter_16_3 in ipairs(arg_16_0.playerHalfPathList) do
-		gohelper.setActive(iter_16_3.go, false)
-		table.insert(arg_16_0.playerHalfPathPool, iter_16_3)
+	for _, pathItem in ipairs(self.playerHalfPathList) do
+		gohelper.setActive(pathItem.go, false)
+		table.insert(self.playerHalfPathPool, pathItem)
 	end
 
-	arg_16_0.playerPathList = {}
-	arg_16_0.playerHalfPathList = {}
+	self.playerPathList = {}
+	self.playerHalfPathList = {}
 end
 
-function var_0_0.recycleEnemyInteractPath(arg_17_0)
-	for iter_17_0, iter_17_1 in ipairs(arg_17_0.enemyPathList) do
-		gohelper.setActive(iter_17_1.go, false)
-		table.insert(arg_17_0.enemyPathPool, iter_17_1)
+function YaXianGamePathView:recycleEnemyInteractPath()
+	for _, pathItem in ipairs(self.enemyPathList) do
+		gohelper.setActive(pathItem.go, false)
+		table.insert(self.enemyPathPool, pathItem)
 	end
 
-	for iter_17_2, iter_17_3 in ipairs(arg_17_0.enemyHalfPathList) do
-		gohelper.setActive(iter_17_3.go, false)
-		table.insert(arg_17_0.enemyHalfPathPool, iter_17_3)
+	for _, pathItem in ipairs(self.enemyHalfPathList) do
+		gohelper.setActive(pathItem.go, false)
+		table.insert(self.enemyHalfPathPool, pathItem)
 	end
 
-	arg_17_0.enemyPathList = {}
-	arg_17_0.enemyHalfPathList = {}
+	self.enemyPathList = {}
+	self.enemyHalfPathList = {}
 end
 
-function var_0_0.recycleAllPath(arg_18_0)
-	arg_18_0:recyclePlayerInteractPath()
-	arg_18_0:recycleEnemyInteractPath()
+function YaXianGamePathView:recycleAllPath()
+	self:recyclePlayerInteractPath()
+	self:recycleEnemyInteractPath()
 end
 
-function var_0_0.resetMapView(arg_19_0)
-	arg_19_0:recycleAllPath()
+function YaXianGamePathView:resetMapView()
+	self:recycleAllPath()
 end
 
-function var_0_0.onClose(arg_20_0)
+function YaXianGamePathView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_21_0)
+function YaXianGamePathView:onDestroyView()
 	return
 end
 
-return var_0_0
+return YaXianGamePathView

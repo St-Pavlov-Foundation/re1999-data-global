@@ -1,28 +1,30 @@
-﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionCloseView", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/WaitGuideActionCloseView.lua
 
-local var_0_0 = class("WaitGuideActionCloseView", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.WaitGuideActionCloseView", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+local WaitGuideActionCloseView = class("WaitGuideActionCloseView", BaseGuideAction)
 
-	arg_1_0._viewName = arg_1_0.actionParam
+function WaitGuideActionCloseView:onStart(context)
+	WaitGuideActionCloseView.super.onStart(self, context)
 
-	if ViewMgr.instance:isOpen(arg_1_0._viewName) then
-		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_1_0._onCloseViewFinish, arg_1_0)
+	self._viewName = self.actionParam
+
+	if ViewMgr.instance:isOpen(self._viewName) then
+		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 	else
-		arg_1_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._onCloseViewFinish(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_0._viewName == arg_2_1 then
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_2_0._onCloseViewFinish, arg_2_0)
-		arg_2_0:onDone(true)
+function WaitGuideActionCloseView:_onCloseViewFinish(viewName, viewParam)
+	if self._viewName == viewName then
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+		self:onDone(true)
 	end
 end
 
-function var_0_0.clearWork(arg_3_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_3_0._onCloseViewFinish, arg_3_0)
+function WaitGuideActionCloseView:clearWork()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 end
 
-return var_0_0
+return WaitGuideActionCloseView

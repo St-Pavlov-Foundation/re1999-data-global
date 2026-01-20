@@ -1,122 +1,124 @@
-﻿module("modules.logic.versionactivity2_8.molideer.view.game.MoLiDeErResultView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/molideer/view/game/MoLiDeErResultView.lua
 
-local var_0_0 = class("MoLiDeErResultView", BaseView)
+module("modules.logic.versionactivity2_8.molideer.view.game.MoLiDeErResultView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gotop = gohelper.findChild(arg_1_0.viewGO, "#go_top")
-	arg_1_0._txtstage = gohelper.findChildText(arg_1_0.viewGO, "#go_top/#txt_stage")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#go_top/#txt_name")
-	arg_1_0._gosuccess = gohelper.findChild(arg_1_0.viewGO, "#go_success")
-	arg_1_0._gofail = gohelper.findChild(arg_1_0.viewGO, "#go_fail")
-	arg_1_0._gotargetitem = gohelper.findChild(arg_1_0.viewGO, "targets/#go_targetitem")
-	arg_1_0._txttaskdesc = gohelper.findChildText(arg_1_0.viewGO, "targets/#go_targetitem/#txt_taskdesc")
-	arg_1_0._gounfinish = gohelper.findChild(arg_1_0.viewGO, "targets/#go_targetitem/result/#go_unfinish")
-	arg_1_0._gofinish = gohelper.findChild(arg_1_0.viewGO, "targets/#go_targetitem/result/#go_finish")
-	arg_1_0._gobtn = gohelper.findChild(arg_1_0.viewGO, "#go_btn")
-	arg_1_0._btnquitgame = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_btn/#btn_quitgame")
-	arg_1_0._btnrestart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_btn/#btn_restart")
-	arg_1_0._btnsuccessClick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_successClick")
-	arg_1_0._goTargetParent = gohelper.findChild(arg_1_0.viewGO, "targets")
+local MoLiDeErResultView = class("MoLiDeErResultView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function MoLiDeErResultView:onInitView()
+	self._gotop = gohelper.findChild(self.viewGO, "#go_top")
+	self._txtstage = gohelper.findChildText(self.viewGO, "#go_top/#txt_stage")
+	self._txtname = gohelper.findChildText(self.viewGO, "#go_top/#txt_name")
+	self._gosuccess = gohelper.findChild(self.viewGO, "#go_success")
+	self._gofail = gohelper.findChild(self.viewGO, "#go_fail")
+	self._gotargetitem = gohelper.findChild(self.viewGO, "targets/#go_targetitem")
+	self._txttaskdesc = gohelper.findChildText(self.viewGO, "targets/#go_targetitem/#txt_taskdesc")
+	self._gounfinish = gohelper.findChild(self.viewGO, "targets/#go_targetitem/result/#go_unfinish")
+	self._gofinish = gohelper.findChild(self.viewGO, "targets/#go_targetitem/result/#go_finish")
+	self._gobtn = gohelper.findChild(self.viewGO, "#go_btn")
+	self._btnquitgame = gohelper.findChildButtonWithAudio(self.viewGO, "#go_btn/#btn_quitgame")
+	self._btnrestart = gohelper.findChildButtonWithAudio(self.viewGO, "#go_btn/#btn_restart")
+	self._btnsuccessClick = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_successClick")
+	self._goTargetParent = gohelper.findChild(self.viewGO, "targets")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnquitgame:AddClickListener(arg_2_0._btnquitgameOnClick, arg_2_0)
-	arg_2_0._btnrestart:AddClickListener(arg_2_0._btnrestartOnClick, arg_2_0)
-	arg_2_0._btnsuccessClick:AddClickListener(arg_2_0._btnsuccessClickOnClick, arg_2_0)
-	arg_2_0:addEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameExit, arg_2_0.onGameExit, arg_2_0)
-	arg_2_0:addEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameReset, arg_2_0.onGameReset, arg_2_0)
+function MoLiDeErResultView:addEvents()
+	self._btnquitgame:AddClickListener(self._btnquitgameOnClick, self)
+	self._btnrestart:AddClickListener(self._btnrestartOnClick, self)
+	self._btnsuccessClick:AddClickListener(self._btnsuccessClickOnClick, self)
+	self:addEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameExit, self.onGameExit, self)
+	self:addEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameReset, self.onGameReset, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnquitgame:RemoveClickListener()
-	arg_3_0._btnrestart:RemoveClickListener()
-	arg_3_0._btnsuccessClick:RemoveClickListener()
-	arg_3_0:removeEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameExit, arg_3_0.onGameExit, arg_3_0)
-	arg_3_0:removeEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameReset, arg_3_0.onGameReset, arg_3_0)
+function MoLiDeErResultView:removeEvents()
+	self._btnquitgame:RemoveClickListener()
+	self._btnrestart:RemoveClickListener()
+	self._btnsuccessClick:RemoveClickListener()
+	self:removeEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameExit, self.onGameExit, self)
+	self:removeEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameReset, self.onGameReset, self)
 end
 
-function var_0_0._btnquitgameOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function MoLiDeErResultView:_btnquitgameOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnrestartOnClick(arg_5_0)
+function MoLiDeErResultView:_btnrestartOnClick()
 	MoLiDeErGameController.instance:onFailRestart()
 end
 
-function var_0_0._btnsuccessClickOnClick(arg_6_0)
-	arg_6_0:closeThis()
+function MoLiDeErResultView:_btnsuccessClickOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0._targetItemList = {}
+function MoLiDeErResultView:_editableInitView()
+	self._targetItemList = {}
 
-	local var_7_0 = arg_7_0._gotargetitem.transform.parent.gameObject
+	local targetParentGo = self._gotargetitem.transform.parent.gameObject
 
-	for iter_7_0 = 1, 2 do
-		local var_7_1 = gohelper.clone(arg_7_0._gotargetitem, var_7_0)
-		local var_7_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_7_1, MoLiDeErResultTargetItem)
+	for i = 1, 2 do
+		local targetGo = gohelper.clone(self._gotargetitem, targetParentGo)
+		local targetItem = MonoHelper.addNoUpdateLuaComOnceToGo(targetGo, MoLiDeErResultTargetItem)
 
-		arg_7_0._targetItemList[iter_7_0] = var_7_2
+		self._targetItemList[i] = targetItem
 	end
 
-	gohelper.setActive(arg_7_0._gotargetitem, false)
+	gohelper.setActive(self._gotargetitem, false)
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
+function MoLiDeErResultView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0._gameInfoMo = MoLiDeErGameModel.instance:getCurGameInfo()
+function MoLiDeErResultView:onOpen()
+	self._gameInfoMo = MoLiDeErGameModel.instance:getCurGameInfo()
 
-	arg_9_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_10_0)
-	local var_10_0 = arg_10_0._gameInfoMo
-	local var_10_1 = var_10_0.passStar > 0
+function MoLiDeErResultView:refreshUI()
+	local gameInfoMo = self._gameInfoMo
+	local isSuccess = gameInfoMo.passStar > 0
 
-	if var_10_1 then
+	if isSuccess then
 		AudioMgr.instance:trigger(AudioEnum2_8.MoLiDeEr.play_ui_pkls_endpoint_arrival)
 	else
 		AudioMgr.instance:trigger(AudioEnum2_8.MoLiDeEr.play_ui_pkls_challenge_fail)
 	end
 
-	arg_10_0.isSuccess = var_10_1
+	self.isSuccess = isSuccess
 
-	gohelper.setActive(arg_10_0._gosuccess, var_10_1)
-	gohelper.setActive(arg_10_0._goTargetParent, var_10_1)
-	gohelper.setActive(arg_10_0._gofail, not var_10_1)
-	gohelper.setActive(arg_10_0._gobtn, not var_10_1)
-	gohelper.setActive(arg_10_0._btnsuccessClick, var_10_1)
+	gohelper.setActive(self._gosuccess, isSuccess)
+	gohelper.setActive(self._goTargetParent, isSuccess)
+	gohelper.setActive(self._gofail, not isSuccess)
+	gohelper.setActive(self._gobtn, not isSuccess)
+	gohelper.setActive(self._btnsuccessClick, isSuccess)
 
-	local var_10_2 = MoLiDeErModel.instance:getCurEpisode()
+	local episodeConfig = MoLiDeErModel.instance:getCurEpisode()
 
-	arg_10_0._txtname.text = var_10_2.name
-	arg_10_0._txtstage.text = "01"
+	self._txtname.text = episodeConfig.name
+	self._txtstage.text = "01"
 
-	local var_10_3 = var_10_0.isExtraStar
-	local var_10_4 = MoLiDeErGameModel.instance:getCurGameConfig()
-	local var_10_5 = arg_10_0._targetItemList
+	local isExtraComplete = gameInfoMo.isExtraStar
+	local gameConfig = MoLiDeErGameModel.instance:getCurGameConfig()
+	local targetItemList = self._targetItemList
 
-	var_10_5[1]:refreshUI(var_10_4.winConditionStr, var_10_4.winCondition, var_10_0.passStar and var_10_0.passStar >= 1, true)
-	var_10_5[2]:refreshUI(var_10_4.extraConditionStr, var_10_4.extraCondition, var_10_3, false)
+	targetItemList[1]:refreshUI(gameConfig.winConditionStr, gameConfig.winCondition, gameInfoMo.passStar and gameInfoMo.passStar >= 1, true)
+	targetItemList[2]:refreshUI(gameConfig.extraConditionStr, gameConfig.extraCondition, isExtraComplete, false)
 end
 
-function var_0_0.onGameExit(arg_11_0)
-	arg_11_0:closeThis()
+function MoLiDeErResultView:onGameExit()
+	self:closeThis()
 end
 
-function var_0_0.onGameReset(arg_12_0)
-	arg_12_0:closeThis()
+function MoLiDeErResultView:onGameReset()
+	self:closeThis()
 end
 
-function var_0_0.onClose(arg_13_0)
-	if arg_13_0.isSuccess then
+function MoLiDeErResultView:onClose()
+	if self.isSuccess then
 		MoLiDeErGameController.instance:onSuccessExit()
 		MoLiDeErController.instance:statGameExit(StatEnum.MoLiDeErGameExitType.Win)
 	else
@@ -125,8 +127,8 @@ function var_0_0.onClose(arg_13_0)
 	end
 end
 
-function var_0_0.onDestroyView(arg_14_0)
+function MoLiDeErResultView:onDestroyView()
 	return
 end
 
-return var_0_0
+return MoLiDeErResultView

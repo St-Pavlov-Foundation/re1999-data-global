@@ -1,47 +1,49 @@
-﻿module("modules.logic.versionactivity2_6.dicehero.view.DiceHeroEffectItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/dicehero/view/DiceHeroEffectItem.lua
 
-local var_0_0 = class("DiceHeroEffectItem", LuaCompBase)
+module("modules.logic.versionactivity2_6.dicehero.view.DiceHeroEffectItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._trans = arg_1_1.transform
-	arg_1_0._godamage = gohelper.findChild(arg_1_1, "damage")
-	arg_1_0._txtdamage = gohelper.findChildText(arg_1_1, "damage/x/txtNum")
-	arg_1_0._goshield = gohelper.findChild(arg_1_1, "shield")
-	arg_1_0._txtshield = gohelper.findChildText(arg_1_1, "shield/x/txtNum")
-	arg_1_0._gohero = gohelper.findChild(arg_1_1, "#go_hpFlyItem_hero")
-	arg_1_0._goenemy = gohelper.findChild(arg_1_1, "#go_hpFlyItem_enemy")
-	arg_1_0._goeffectenergy = gohelper.findChild(arg_1_1, "#go_hpFlyItem_energy")
-	arg_1_0._goeffectshield = gohelper.findChild(arg_1_1, "#go_hpFlyItem_shield")
+local DiceHeroEffectItem = class("DiceHeroEffectItem", LuaCompBase)
+
+function DiceHeroEffectItem:init(go)
+	self.go = go
+	self._trans = go.transform
+	self._godamage = gohelper.findChild(go, "damage")
+	self._txtdamage = gohelper.findChildText(go, "damage/x/txtNum")
+	self._goshield = gohelper.findChild(go, "shield")
+	self._txtshield = gohelper.findChildText(go, "shield/x/txtNum")
+	self._gohero = gohelper.findChild(go, "#go_hpFlyItem_hero")
+	self._goenemy = gohelper.findChild(go, "#go_hpFlyItem_enemy")
+	self._goeffectenergy = gohelper.findChild(go, "#go_hpFlyItem_energy")
+	self._goeffectshield = gohelper.findChild(go, "#go_hpFlyItem_shield")
 end
 
-function var_0_0.initData(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
-	ZProj.TweenHelper.KillByObj(arg_2_0._trans)
-	gohelper.setActive(arg_2_0._godamage, arg_2_1 == 1)
-	gohelper.setActive(arg_2_0._gohero, arg_2_1 == 2)
-	gohelper.setActive(arg_2_0._goenemy, arg_2_1 == 3)
-	gohelper.setActive(arg_2_0._goshield, arg_2_1 == 4)
-	gohelper.setActive(arg_2_0._goeffectenergy, arg_2_1 == 5)
-	gohelper.setActive(arg_2_0._goeffectshield, arg_2_1 == 6)
-	transformhelper.setPos(arg_2_0._trans, arg_2_2.x, arg_2_2.y, arg_2_2.z)
+function DiceHeroEffectItem:initData(type, fromPos, toPos, num)
+	ZProj.TweenHelper.KillByObj(self._trans)
+	gohelper.setActive(self._godamage, type == 1)
+	gohelper.setActive(self._gohero, type == 2)
+	gohelper.setActive(self._goenemy, type == 3)
+	gohelper.setActive(self._goshield, type == 4)
+	gohelper.setActive(self._goeffectenergy, type == 5)
+	gohelper.setActive(self._goeffectshield, type == 6)
+	transformhelper.setPos(self._trans, fromPos.x, fromPos.y, fromPos.z)
 
-	if arg_2_1 == 1 then
-		arg_2_0._txtdamage.text = arg_2_4
+	if type == 1 then
+		self._txtdamage.text = num
 
-		transformhelper.setLocalRotation(arg_2_0._trans, 0, 0, 0)
-	elseif arg_2_1 == 4 then
-		arg_2_0._txtshield.text = arg_2_4
+		transformhelper.setLocalRotation(self._trans, 0, 0, 0)
+	elseif type == 4 then
+		self._txtshield.text = num
 
-		transformhelper.setLocalRotation(arg_2_0._trans, 0, 0, 0)
+		transformhelper.setLocalRotation(self._trans, 0, 0, 0)
 	else
-		local var_2_0 = arg_2_0._trans.parent:InverseTransformPoint(arg_2_3)
+		local localPos = self._trans.parent:InverseTransformPoint(toPos)
 
-		ZProj.TweenHelper.DOLocalMove(arg_2_0._trans, var_2_0.x, var_2_0.y, var_2_0.z, 0.5)
+		ZProj.TweenHelper.DOLocalMove(self._trans, localPos.x, localPos.y, localPos.z, 0.5)
 
-		local var_2_1 = math.deg(math.atan2(arg_2_3.y - arg_2_2.y, arg_2_3.x - arg_2_2.x)) + 180
+		local angle = math.deg(math.atan2(toPos.y - fromPos.y, toPos.x - fromPos.x)) + 180
 
-		transformhelper.setLocalRotation(arg_2_0._trans, 0, 0, var_2_1)
+		transformhelper.setLocalRotation(self._trans, 0, 0, angle)
 	end
 end
 
-return var_0_0
+return DiceHeroEffectItem

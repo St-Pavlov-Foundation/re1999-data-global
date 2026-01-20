@@ -1,104 +1,106 @@
-﻿module("modules.logic.characterskin.view.CharacterSkinTipRightView", package.seeall)
+﻿-- chunkname: @modules/logic/characterskin/view/CharacterSkinTipRightView.lua
 
-local var_0_0 = class("CharacterSkinTipRightView", BaseView)
+module("modules.logic.characterskin.view.CharacterSkinTipRightView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageskinSwitchBg = gohelper.findChildSingleImage(arg_1_0.viewGO, "container/#simage_skinSwitchBg")
-	arg_1_0._simageskinicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "container/skinTip/skinSwitch/skinmask/skinicon")
-	arg_1_0._btnBpPay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "container/skinTip/skinSwitch/#btn_bpPay", AudioEnum.UI.UI_vertical_first_tabs_click)
+local CharacterSkinTipRightView = class("CharacterSkinTipRightView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CharacterSkinTipRightView:onInitView()
+	self._simageskinSwitchBg = gohelper.findChildSingleImage(self.viewGO, "container/#simage_skinSwitchBg")
+	self._simageskinicon = gohelper.findChildSingleImage(self.viewGO, "container/skinTip/skinSwitch/skinmask/skinicon")
+	self._btnBpPay = gohelper.findChildButtonWithAudio(self.viewGO, "container/skinTip/skinSwitch/#btn_bpPay", AudioEnum.UI.UI_vertical_first_tabs_click)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnBpPay:AddClickListener(arg_2_0._jumpBpCharge, arg_2_0)
+function CharacterSkinTipRightView:addEvents()
+	self._btnBpPay:AddClickListener(self._jumpBpCharge, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnBpPay:RemoveClickListener()
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_3_0.OnOpenViewFinish, arg_3_0)
+function CharacterSkinTipRightView:removeEvents()
+	self._btnBpPay:RemoveClickListener()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, self.OnOpenViewFinish, self)
 end
 
-function var_0_0.refreshRightContainer(arg_4_0)
-	arg_4_0.goSkinNormalContainer = gohelper.findChild(arg_4_0.viewGO, "container/normal")
-	arg_4_0.goSkinTipContainer = gohelper.findChild(arg_4_0.viewGO, "container/skinTip")
-	arg_4_0.goSkinStoreContainer = gohelper.findChild(arg_4_0.viewGO, "container/skinStore")
+function CharacterSkinTipRightView:refreshRightContainer()
+	self.goSkinNormalContainer = gohelper.findChild(self.viewGO, "container/normal")
+	self.goSkinTipContainer = gohelper.findChild(self.viewGO, "container/skinTip")
+	self.goSkinStoreContainer = gohelper.findChild(self.viewGO, "container/skinStore")
 
-	gohelper.setActive(arg_4_0.goSkinNormalContainer, false)
-	gohelper.setActive(arg_4_0.goSkinTipContainer, true)
-	gohelper.setActive(arg_4_0.goSkinStoreContainer, false)
+	gohelper.setActive(self.goSkinNormalContainer, false)
+	gohelper.setActive(self.goSkinTipContainer, true)
+	gohelper.setActive(self.goSkinStoreContainer, false)
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0:refreshRightContainer()
-	arg_5_0._simageskinSwitchBg:LoadImage(ResUrl.getCharacterSkinIcon("img_yulan_bg"))
+function CharacterSkinTipRightView:_editableInitView()
+	self:refreshRightContainer()
+	self._simageskinSwitchBg:LoadImage(ResUrl.getCharacterSkinIcon("img_yulan_bg"))
 end
 
-function var_0_0.initViewParam(arg_6_0)
-	if LuaUtil.isTable(arg_6_0.viewParam) then
-		local var_6_0 = arg_6_0.viewParam.skinId
+function CharacterSkinTipRightView:initViewParam()
+	if LuaUtil.isTable(self.viewParam) then
+		local skinId = self.viewParam.skinId
 
-		arg_6_0.skinCo = SkinConfig.instance:getSkinCo(var_6_0)
+		self.skinCo = SkinConfig.instance:getSkinCo(skinId)
 
-		arg_6_0.viewContainer:setHomeBtnVisible(arg_6_0.viewParam.isShowHomeBtn)
+		self.viewContainer:setHomeBtnVisible(self.viewParam.isShowHomeBtn)
 	else
-		arg_6_0.skinCo = SkinConfig.instance:getSkinCo(arg_6_0.viewParam)
+		self.skinCo = SkinConfig.instance:getSkinCo(self.viewParam)
 	end
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
-	arg_7_0:initViewParam()
-	arg_7_0:refreshView()
+function CharacterSkinTipRightView:onUpdateParam()
+	self:initViewParam()
+	self:refreshView()
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0:initViewParam()
-	arg_8_0:refreshView()
+function CharacterSkinTipRightView:onOpen()
+	self:initViewParam()
+	self:refreshView()
 end
 
-function var_0_0.refreshView(arg_9_0)
-	arg_9_0:refreshLeftUI()
-	arg_9_0:refreshRightUI()
+function CharacterSkinTipRightView:refreshView()
+	self:refreshLeftUI()
+	self:refreshRightUI()
 end
 
-function var_0_0._jumpBpCharge(arg_10_0)
+function CharacterSkinTipRightView:_jumpBpCharge()
 	if ViewMgr.instance:isOpen(ViewName.BpChargeView) then
-		arg_10_0:closeThis()
+		self:closeThis()
 	else
-		ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_10_0.OnOpenViewFinish, arg_10_0)
+		ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, self.OnOpenViewFinish, self)
 	end
 
 	BpController.instance:openBattlePassView(false, nil, true)
 end
 
-function var_0_0.OnOpenViewFinish(arg_11_0, arg_11_1)
-	if arg_11_1 == ViewName.BpChargeView then
-		arg_11_0:closeThis()
+function CharacterSkinTipRightView:OnOpenViewFinish(viewName)
+	if viewName == ViewName.BpChargeView then
+		self:closeThis()
 	end
 end
 
-function var_0_0.refreshLeftUI(arg_12_0)
-	CharacterController.instance:dispatchEvent(CharacterEvent.OnSwitchSkin, arg_12_0.skinCo, arg_12_0.viewName)
+function CharacterSkinTipRightView:refreshLeftUI()
+	CharacterController.instance:dispatchEvent(CharacterEvent.OnSwitchSkin, self.skinCo, self.viewName)
 end
 
-function var_0_0.refreshRightUI(arg_13_0)
-	arg_13_0._simageskinicon:LoadImage(ResUrl.getHeadSkinSmall(arg_13_0.skinCo.id))
-	gohelper.setActive(arg_13_0._btnBpPay, false)
+function CharacterSkinTipRightView:refreshRightUI()
+	self._simageskinicon:LoadImage(ResUrl.getHeadSkinSmall(self.skinCo.id))
+	gohelper.setActive(self._btnBpPay, false)
 
-	if arg_13_0.skinCo.id == BpConfig.instance:getCurSkinId(BpModel.instance.id) and not BpModel.instance:isEnd() and BpModel.instance.payStatus == BpEnum.PayStatus.NotPay then
-		gohelper.setActive(arg_13_0._btnBpPay, true)
+	if self.skinCo.id == BpConfig.instance:getCurSkinId(BpModel.instance.id) and not BpModel.instance:isEnd() and BpModel.instance.payStatus == BpEnum.PayStatus.NotPay then
+		gohelper.setActive(self._btnBpPay, true)
 	end
 end
 
-function var_0_0.onClose(arg_14_0)
+function CharacterSkinTipRightView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_15_0)
-	arg_15_0._simageskinSwitchBg:UnLoadImage()
-	arg_15_0._simageskinicon:UnLoadImage()
+function CharacterSkinTipRightView:onDestroyView()
+	self._simageskinSwitchBg:UnLoadImage()
+	self._simageskinicon:UnLoadImage()
 end
 
-return var_0_0
+return CharacterSkinTipRightView

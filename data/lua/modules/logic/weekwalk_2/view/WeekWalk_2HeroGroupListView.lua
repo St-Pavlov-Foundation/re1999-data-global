@@ -1,64 +1,66 @@
-﻿module("modules.logic.weekwalk_2.view.WeekWalk_2HeroGroupListView", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk_2/view/WeekWalk_2HeroGroupListView.lua
 
-local var_0_0 = class("WeekWalk_2HeroGroupListView", HeroGroupListView)
+module("modules.logic.weekwalk_2.view.WeekWalk_2HeroGroupListView", package.seeall)
 
-function var_0_0.addEvents(arg_1_0)
-	var_0_0.super.addEvents(arg_1_0)
-	arg_1_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnUseRecommendGroupFinish, arg_1_0._checkRestrictHero, arg_1_0)
+local WeekWalk_2HeroGroupListView = class("WeekWalk_2HeroGroupListView", HeroGroupListView)
+
+function WeekWalk_2HeroGroupListView:addEvents()
+	WeekWalk_2HeroGroupListView.super.addEvents(self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnUseRecommendGroupFinish, self._checkRestrictHero, self)
 end
 
-function var_0_0._getHeroItemCls(arg_2_0)
+function WeekWalk_2HeroGroupListView:_getHeroItemCls()
 	return WeekWalk_2HeroGroupHeroItem
 end
 
-function var_0_0._checkRestrictHero(arg_3_0)
-	local var_3_0 = {}
+function WeekWalk_2HeroGroupListView:_checkRestrictHero()
+	local list = {}
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0._heroItemList) do
-		local var_3_1 = iter_3_1:checkWeekWalkCd()
+	for i, heroItem in ipairs(self._heroItemList) do
+		local id = heroItem:checkWeekWalkCd()
 
-		if var_3_1 then
-			table.insert(var_3_0, var_3_1)
+		if id then
+			table.insert(list, id)
 		end
 	end
 
-	if #var_3_0 == 0 then
+	if #list == 0 then
 		return
 	end
 
 	UIBlockMgr.instance:startBlock("removeWeekWalkInCdHero")
 
-	arg_3_0._heroInCdList = var_3_0
+	self._heroInCdList = list
 
-	TaskDispatcher.runDelay(arg_3_0._removeWeekWalkInCdHero, arg_3_0, 1.5)
+	TaskDispatcher.runDelay(self._removeWeekWalkInCdHero, self, 1.5)
 end
 
-function var_0_0._removeWeekWalkInCdHero(arg_4_0)
+function WeekWalk_2HeroGroupListView:_removeWeekWalkInCdHero()
 	UIBlockMgr.instance:endBlock("removeWeekWalkInCdHero")
 
-	if not arg_4_0._heroInCdList then
+	if not self._heroInCdList then
 		return
 	end
 
-	local var_4_0 = arg_4_0._heroInCdList
+	local list = self._heroInCdList
 
-	arg_4_0._heroInCdList = nil
+	self._heroInCdList = nil
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_0) do
-		HeroSingleGroupModel.instance:remove(iter_4_1)
+	for i, id in ipairs(list) do
+		HeroSingleGroupModel.instance:remove(id)
 	end
 
-	for iter_4_2, iter_4_3 in ipairs(arg_4_0._heroItemList) do
-		iter_4_3:resetGrayFactor()
+	for _, heroItem in ipairs(self._heroItemList) do
+		heroItem:resetGrayFactor()
 	end
 
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
 end
 
-function var_0_0.onDestroyView(arg_5_0)
+function WeekWalk_2HeroGroupListView:onDestroyView()
 	UIBlockMgr.instance:endBlock("removeWeekWalkInCdHero")
-	TaskDispatcher.cancelTask(arg_5_0._removeWeekWalkInCdHero, arg_5_0)
-	var_0_0.super.onDestroyView(arg_5_0)
+	TaskDispatcher.cancelTask(self._removeWeekWalkInCdHero, self)
+	WeekWalk_2HeroGroupListView.super.onDestroyView(self)
 end
 
-return var_0_0
+return WeekWalk_2HeroGroupListView

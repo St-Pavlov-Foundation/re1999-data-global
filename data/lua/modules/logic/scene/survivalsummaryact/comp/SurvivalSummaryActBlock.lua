@@ -1,37 +1,39 @@
-﻿module("modules.logic.scene.survivalsummaryact.comp.SurvivalSummaryActBlock", package.seeall)
+﻿-- chunkname: @modules/logic/scene/survivalsummaryact/comp/SurvivalSummaryActBlock.lua
 
-local var_0_0 = class("SurvivalSummaryActBlock", BaseSceneComp)
+module("modules.logic.scene.survivalsummaryact.comp.SurvivalSummaryActBlock", package.seeall)
 
-function var_0_0.init(arg_1_0)
-	arg_1_0:getCurScene().preloader:registerCallback(SurvivalEvent.OnSurvivalPreloadFinish, arg_1_0._onPreloadFinish, arg_1_0)
+local SurvivalSummaryActBlock = class("SurvivalSummaryActBlock", BaseSceneComp)
+
+function SurvivalSummaryActBlock:init()
+	self:getCurScene().preloader:registerCallback(SurvivalEvent.OnSurvivalPreloadFinish, self._onPreloadFinish, self)
 end
 
-function var_0_0._onPreloadFinish(arg_2_0)
-	arg_2_0:getCurScene().preloader:unregisterCallback(SurvivalEvent.OnSurvivalPreloadFinish, arg_2_0._onPreloadFinish, arg_2_0)
+function SurvivalSummaryActBlock:_onPreloadFinish()
+	self:getCurScene().preloader:unregisterCallback(SurvivalEvent.OnSurvivalPreloadFinish, self._onPreloadFinish, self)
 
-	local var_2_0 = arg_2_0:getCurScene():getSceneContainerGO()
+	local sceneGo = self:getCurScene():getSceneContainerGO()
 
-	arg_2_0.blockRoot = gohelper.create3d(var_2_0, "BlockRoot")
+	self.blockRoot = gohelper.create3d(sceneGo, "BlockRoot")
 
-	local var_2_1 = SurvivalConfig.instance:getShelterCfg()
-	local var_2_2 = SurvivalConfig.instance:getShelterMapCo(var_2_1.mapId)
+	local shelterCfg = SurvivalConfig.instance:getShelterCfg()
+	local mapCo = SurvivalConfig.instance:getShelterMapCo(shelterCfg.mapId)
 
-	arg_2_0.blocks = {}
+	self.blocks = {}
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_2.allBlocks) do
-		local var_2_3 = SurvivalShelterBlockEntity.Create(iter_2_1, arg_2_0.blockRoot)
+	for i, v in ipairs(mapCo.allBlocks) do
+		local block = SurvivalShelterBlockEntity.Create(v, self.blockRoot)
 
-		table.insert(arg_2_0.blocks, var_2_3)
+		table.insert(self.blocks, block)
 	end
 
-	arg_2_0:dispatchEvent(SurvivalEvent.OnSurvivalBlockLoadFinish)
+	self:dispatchEvent(SurvivalEvent.OnSurvivalBlockLoadFinish)
 end
 
-function var_0_0.onSceneClose(arg_3_0)
-	arg_3_0:getCurScene().preloader:unregisterCallback(SurvivalEvent.OnSurvivalPreloadFinish, arg_3_0._onPreloadFinish, arg_3_0)
-	gohelper.destroy(arg_3_0.blockRoot)
+function SurvivalSummaryActBlock:onSceneClose()
+	self:getCurScene().preloader:unregisterCallback(SurvivalEvent.OnSurvivalPreloadFinish, self._onPreloadFinish, self)
+	gohelper.destroy(self.blockRoot)
 
-	arg_3_0.blocks = {}
+	self.blocks = {}
 end
 
-return var_0_0
+return SurvivalSummaryActBlock

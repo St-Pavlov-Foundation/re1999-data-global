@@ -1,35 +1,38 @@
-﻿module("modules.logic.versionactivity1_9.semmelweisgift.model.SemmelWeisGiftModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/semmelweisgift/model/SemmelWeisGiftModel.lua
 
-local var_0_0 = class("SemmelWeisGiftModel", BaseModel)
+module("modules.logic.versionactivity1_9.semmelweisgift.model.SemmelWeisGiftModel", package.seeall)
 
-var_0_0.REWARD_INDEX = 1
+local SemmelWeisGiftModel = class("SemmelWeisGiftModel", BaseModel)
 
-function var_0_0.getSemmelWeisGiftActId(arg_1_0)
+SemmelWeisGiftModel.REWARD_INDEX = 1
+
+function SemmelWeisGiftModel:getSemmelWeisGiftActId()
 	return ActivityEnum.Activity.V1a9_SemmelWeisGift
 end
 
-function var_0_0.isSemmelWeisGiftOpen(arg_2_0)
-	local var_2_0 = false
-	local var_2_1 = arg_2_0:getSemmelWeisGiftActId()
+function SemmelWeisGiftModel:isSemmelWeisGiftOpen()
+	local result = false
+	local actId = self:getSemmelWeisGiftActId()
 
-	if ActivityType101Model.instance:isOpen(var_2_1) then
-		var_2_0 = true
+	if ActivityType101Model.instance:isOpen(actId) then
+		result = true
 	end
 
-	return var_2_0
+	return result
 end
 
-function var_0_0.isShowRedDot(arg_3_0)
-	local var_3_0 = false
-	local var_3_1 = arg_3_0:getSemmelWeisGiftActId()
+function SemmelWeisGiftModel:isShowRedDot()
+	local result = false
+	local actId = self:getSemmelWeisGiftActId()
+	local isOpen = ActivityType101Model.instance:isOpen(actId)
 
-	if ActivityType101Model.instance:isOpen(var_3_1) then
-		var_3_0 = ActivityType101Model.instance:isType101RewardCouldGetAnyOne(var_3_1)
+	if isOpen then
+		result = ActivityType101Model.instance:isType101RewardCouldGetAnyOne(actId)
 	end
 
-	return var_3_0
+	return result
 end
 
-var_0_0.instance = var_0_0.New()
+SemmelWeisGiftModel.instance = SemmelWeisGiftModel.New()
 
-return var_0_0
+return SemmelWeisGiftModel

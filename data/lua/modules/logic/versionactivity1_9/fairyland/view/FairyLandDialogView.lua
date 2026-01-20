@@ -1,80 +1,82 @@
-﻿module("modules.logic.versionactivity1_9.fairyland.view.FairyLandDialogView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/fairyland/view/FairyLandDialogView.lua
 
-local var_0_0 = class("FairyLandDialogView", BaseView)
+module("modules.logic.versionactivity1_9.fairyland.view.FairyLandDialogView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.dialogGO = gohelper.findChild(arg_1_0.viewGO, "dialog_overseas")
-	arg_1_0.bubble = FairyLandBubble.New()
+local FairyLandDialogView = class("FairyLandDialogView", BaseView)
 
-	arg_1_0.bubble:init(arg_1_0)
+function FairyLandDialogView:onInitView()
+	self.dialogGO = gohelper.findChild(self.viewGO, "dialog_overseas")
+	self.bubble = FairyLandBubble.New()
+
+	self.bubble:init(self)
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(FairyLandController.instance, FairyLandEvent.CloseDialogView, arg_2_0._onCloseDialogView, arg_2_0)
-	arg_2_0:addEventCb(FairyLandController.instance, FairyLandEvent.ShowDialogView, arg_2_0._refreshView, arg_2_0)
+function FairyLandDialogView:addEvents()
+	self:addEventCb(FairyLandController.instance, FairyLandEvent.CloseDialogView, self._onCloseDialogView, self)
+	self:addEventCb(FairyLandController.instance, FairyLandEvent.ShowDialogView, self._refreshView, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function FairyLandDialogView:removeEvents()
 	return
 end
 
-function var_0_0.onOpen(arg_4_0)
+function FairyLandDialogView:onOpen()
 	return
 end
 
-function var_0_0._onCloseDialogView(arg_5_0)
-	arg_5_0:finished()
+function FairyLandDialogView:_onCloseDialogView()
+	self:finished()
 end
 
-function var_0_0._refreshView(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_1.dialogId
+function FairyLandDialogView:_refreshView(param)
+	local dialogId = param.dialogId
 
-	if arg_6_0.dialogId == var_6_0 then
+	if self.dialogId == dialogId then
 		return
 	end
 
-	arg_6_0.dialogId = arg_6_1.dialogId
-	arg_6_0.dialogType = arg_6_1.dialogType
-	arg_6_0.callback = arg_6_1.callback
-	arg_6_0.callbackObj = arg_6_1.callbackObj
+	self.dialogId = param.dialogId
+	self.dialogType = param.dialogType
+	self.callback = param.callback
+	self.callbackObj = param.callbackObj
 
-	if arg_6_0.dialogType == FairyLandEnum.DialogType.Bubble then
-		gohelper.setActive(arg_6_0.dialogGO, true)
-		arg_6_0.bubble:startDialog(arg_6_1)
+	if self.dialogType == FairyLandEnum.DialogType.Bubble then
+		gohelper.setActive(self.dialogGO, true)
+		self.bubble:startDialog(param)
 	else
-		gohelper.setActive(arg_6_0.dialogGO, false)
-		ViewMgr.instance:openView(ViewName.FairyLandOptionView, arg_6_1)
+		gohelper.setActive(self.dialogGO, false)
+		ViewMgr.instance:openView(ViewName.FairyLandOptionView, param)
 	end
 end
 
-function var_0_0.finished(arg_7_0)
-	if arg_7_0.dialogId then
-		if arg_7_0.dialogId == 22 and not FairyLandModel.instance:isFinishDialog(8) then
+function FairyLandDialogView:finished()
+	if self.dialogId then
+		if self.dialogId == 22 and not FairyLandModel.instance:isFinishDialog(8) then
 			FairyLandRpc.instance:sendRecordDialogRequest(8)
 		end
 
-		if not FairyLandModel.instance:isFinishDialog(arg_7_0.dialogId) then
-			FairyLandRpc.instance:sendRecordDialogRequest(arg_7_0.dialogId)
+		if not FairyLandModel.instance:isFinishDialog(self.dialogId) then
+			FairyLandRpc.instance:sendRecordDialogRequest(self.dialogId)
 		end
 	end
 
-	if arg_7_0.callback then
-		arg_7_0.callback(arg_7_0.callbackObj)
+	if self.callback then
+		self.callback(self.callbackObj)
 	end
 
-	if arg_7_0.bubble then
-		arg_7_0.bubble:hide()
+	if self.bubble then
+		self.bubble:hide()
 	end
 
-	arg_7_0.dialogId = nil
+	self.dialogId = nil
 
-	gohelper.setActive(arg_7_0.dialogGO, false)
+	gohelper.setActive(self.dialogGO, false)
 end
 
-function var_0_0.onDestroyView(arg_8_0)
-	if arg_8_0.bubble then
-		arg_8_0.bubble:dispose()
+function FairyLandDialogView:onDestroyView()
+	if self.bubble then
+		self.bubble:dispose()
 	end
 end
 
-return var_0_0
+return FairyLandDialogView

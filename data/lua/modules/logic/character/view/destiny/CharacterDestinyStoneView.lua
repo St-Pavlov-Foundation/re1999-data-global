@@ -1,631 +1,762 @@
-﻿module("modules.logic.character.view.destiny.CharacterDestinyStoneView", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/destiny/CharacterDestinyStoneView.lua
 
-local var_0_0 = class("CharacterDestinyStoneView", BaseView)
+module("modules.logic.character.view.destiny.CharacterDestinyStoneView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._godrag = gohelper.findChild(arg_1_0.viewGO, "#go_drag")
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "root/#image_icon")
-	arg_1_0._txtstonename = gohelper.findChildText(arg_1_0.viewGO, "root/#txt_stonename")
-	arg_1_0._gostone = gohelper.findChild(arg_1_0.viewGO, "root/#go_stone")
-	arg_1_0._goprestone = gohelper.findChild(arg_1_0.viewGO, "root/#go_prestone")
-	arg_1_0._btnprestone = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#go_prestone/#btn_prestone")
-	arg_1_0._gonextstone = gohelper.findChild(arg_1_0.viewGO, "root/#go_nextstone")
-	arg_1_0._btnnextstone = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#go_nextstone/#btn_nextstone")
-	arg_1_0._gounlock = gohelper.findChild(arg_1_0.viewGO, "root/btn/#go_unlock")
-	arg_1_0._gounlockitem = gohelper.findChild(arg_1_0.viewGO, "root/btn/#go_unlock/#go_unlockitem")
-	arg_1_0._gocaneasycombinetip = gohelper.findChild(arg_1_0.viewGO, "root/btn/#go_unlock/txt_onceCombine")
-	arg_1_0._btnunlock = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/btn/#go_unlock/#btn_unlock")
-	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "root/btn/#go_select")
-	arg_1_0._btnselect = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/btn/#go_select/#btn_select")
-	arg_1_0._gounselect = gohelper.findChild(arg_1_0.viewGO, "root/btn/#go_unselect")
-	arg_1_0._btnunselect = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/btn/#go_unselect/#btn_unselect")
-	arg_1_0._goexchange = gohelper.findChild(arg_1_0.viewGO, "root/btn/#go_exchange")
-	arg_1_0._btnexchange = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/btn/#go_exchange/#btn_exchange")
-	arg_1_0._gopoint = gohelper.findChild(arg_1_0.viewGO, "root/point/#go_point")
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
+local CharacterDestinyStoneView = class("CharacterDestinyStoneView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CharacterDestinyStoneView:onInitView()
+	self._godrag = gohelper.findChild(self.viewGO, "#go_drag")
+	self._imageicon = gohelper.findChildImage(self.viewGO, "root/#image_icon")
+	self._txtstonename = gohelper.findChildText(self.viewGO, "root/#txt_stonename")
+	self._gostone = gohelper.findChild(self.viewGO, "root/#go_stone")
+	self._goprestone = gohelper.findChild(self.viewGO, "root/#go_prestone")
+	self._btnprestone = gohelper.findChildButtonWithAudio(self.viewGO, "root/#go_prestone/#btn_prestone")
+	self._gonextstone = gohelper.findChild(self.viewGO, "root/#go_nextstone")
+	self._btnnextstone = gohelper.findChildButtonWithAudio(self.viewGO, "root/#go_nextstone/#btn_nextstone")
+	self._gounlock = gohelper.findChild(self.viewGO, "root/btn/#go_unlock")
+	self._gounlockitem = gohelper.findChild(self.viewGO, "root/btn/#go_unlock/#go_unlockitem")
+	self._gocaneasycombinetip = gohelper.findChild(self.viewGO, "root/btn/#go_unlock/txt_onceCombine")
+	self._btnunlock = gohelper.findChildButtonWithAudio(self.viewGO, "root/btn/#go_unlock/#btn_unlock")
+	self._goselect = gohelper.findChild(self.viewGO, "root/btn/#go_select")
+	self._btnselect = gohelper.findChildButtonWithAudio(self.viewGO, "root/btn/#go_select/#btn_select")
+	self._gounselect = gohelper.findChild(self.viewGO, "root/btn/#go_unselect")
+	self._btnunselect = gohelper.findChildButtonWithAudio(self.viewGO, "root/btn/#go_unselect/#btn_unselect")
+	self._goexchange = gohelper.findChild(self.viewGO, "root/btn/#go_exchange")
+	self._btnexchange = gohelper.findChildButtonWithAudio(self.viewGO, "root/btn/#go_exchange/#btn_exchange")
+	self._gounlocktips = gohelper.findChild(self.viewGO, "root/btn/#go_unlocktips")
+	self._goreshapeeffect = gohelper.findChild(self.viewGO, "root/#go_reshape/#go_reshapeeffect")
+	self._goreshapeItem = gohelper.findChild(self.viewGO, "root/#go_reshape/#go_reshapeeffect/#scroll_reshape")
+	self._gopoint = gohelper.findChild(self.viewGO, "root/point/#go_point")
+	self._gotopleft = gohelper.findChild(self.viewGO, "#go_topleft")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnprestone:AddClickListener(arg_2_0._btnprestoneOnClick, arg_2_0)
-	arg_2_0._btnnextstone:AddClickListener(arg_2_0._btnnextstoneOnClick, arg_2_0)
-	arg_2_0._btnunlock:AddClickListener(arg_2_0._btnunlockOnClick, arg_2_0)
-	arg_2_0._btnselect:AddClickListener(arg_2_0._btnselectOnClick, arg_2_0)
-	arg_2_0._btnunselect:AddClickListener(arg_2_0._btnunselectOnClick, arg_2_0)
-	arg_2_0._btnexchange:AddClickListener(arg_2_0._btnexchangeOnClick, arg_2_0)
+function CharacterDestinyStoneView:addEvents()
+	self._btnprestone:AddClickListener(self._btnprestoneOnClick, self)
+	self._btnnextstone:AddClickListener(self._btnnextstoneOnClick, self)
+	self._btnunlock:AddClickListener(self._btnunlockOnClick, self)
+	self._btnselect:AddClickListener(self._btnselectOnClick, self)
+	self._btnunselect:AddClickListener(self._btnunselectOnClick, self)
+	self._btnexchange:AddClickListener(self._btnexchangeOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnprestone:RemoveClickListener()
-	arg_3_0._btnnextstone:RemoveClickListener()
-	arg_3_0._btnunlock:RemoveClickListener()
-	arg_3_0._btnselect:RemoveClickListener()
-	arg_3_0._btnunselect:RemoveClickListener()
-	arg_3_0._btnexchange:RemoveClickListener()
+function CharacterDestinyStoneView:removeEvents()
+	self._btnprestone:RemoveClickListener()
+	self._btnnextstone:RemoveClickListener()
+	self._btnunlock:RemoveClickListener()
+	self._btnselect:RemoveClickListener()
+	self._btnunselect:RemoveClickListener()
+	self._btnexchange:RemoveClickListener()
 end
 
-function var_0_0._btnprestoneOnClick(arg_4_0)
-	if arg_4_0._openUnlockStoneView then
+function CharacterDestinyStoneView:_btnreshapeOnClick()
+	self:_showReshape(not self._isShowReshape, true)
+end
+
+function CharacterDestinyStoneView:_btnprestoneOnClick()
+	if self._openUnlockStoneView then
 		return
 	end
 
-	arg_4_0._animRoot:Play(CharacterDestinyEnum.StoneViewAnim.SwitchRight, 0, 0)
-	TaskDispatcher.runDelay(arg_4_0._cutPreStoneCB, arg_4_0, 0.16)
+	self._animRoot:Play(CharacterDestinyEnum.StoneViewAnim.SwitchRight, 0, 0)
+	TaskDispatcher.runDelay(self._cutPreStoneCB, self, 0.16)
 end
 
-function var_0_0._btnnextstoneOnClick(arg_5_0)
-	if arg_5_0._openUnlockStoneView then
+function CharacterDestinyStoneView:_btnnextstoneOnClick()
+	if self._openUnlockStoneView then
 		return
 	end
 
-	arg_5_0._animRoot:Play(CharacterDestinyEnum.StoneViewAnim.SwitchLeft, 0, 0)
-	TaskDispatcher.runDelay(arg_5_0._cutNextStoneCB, arg_5_0, 0.16)
+	self._animRoot:Play(CharacterDestinyEnum.StoneViewAnim.SwitchLeft, 0, 0)
+	TaskDispatcher.runDelay(self._cutNextStoneCB, self, 0.16)
 end
 
-function var_0_0._btnunselectOnClick(arg_6_0)
-	CharacterDestinyController.instance:onUseStone(arg_6_0._heroMO.heroId, 0)
+function CharacterDestinyStoneView:_btnunselectOnClick()
+	CharacterDestinyController.instance:onUseStone(self._heroMO.heroId, 0)
 end
 
-function var_0_0._btnunlockOnClick(arg_7_0)
-	if not arg_7_0._curStoneMo then
+function CharacterDestinyStoneView:_btnunlockOnClick()
+	if not self._curStoneMo then
 		return
 	end
 
-	if arg_7_0._curStoneMo.conusmeCo then
-		local var_7_0 = ItemModel.instance:getItemDataListByConfigStr(arg_7_0._curStoneMo.conusmeCo.consume)
-		local var_7_1, var_7_2, var_7_3 = ItemModel.instance:hasEnoughItemsByCellData(var_7_0)
+	if self._curStoneMo.conusmeCo then
+		local consumeList = ItemModel.instance:getItemDataListByConfigStr(self._curStoneMo.conusmeCo.consume)
+		local notEnoughItemName, enough, icon = ItemModel.instance:hasEnoughItemsByCellData(consumeList)
 
-		if not var_7_2 then
-			if arg_7_0._canEasyCombine then
-				PopupCacheModel.instance:setViewIgnoreGetPropView(arg_7_0.viewName, true, MaterialEnum.GetApproach.RoomProductChange)
-				RoomProductionHelper.openRoomFormulaMsgBoxView(arg_7_0._easyCombineTable, arg_7_0._lackedItemDataList, RoomProductLineEnum.Line.Spring, nil, nil, arg_7_0._onUnlockEasyCombineFinished, arg_7_0)
+		if not enough then
+			if self._canEasyCombine then
+				PopupCacheModel.instance:setViewIgnoreGetPropView(self.viewName, true, MaterialEnum.GetApproach.RoomProductChange)
+				RoomProductionHelper.openRoomFormulaMsgBoxView(self._easyCombineTable, self._lackedItemDataList, RoomProductLineEnum.Line.Spring, nil, nil, self._onUnlockEasyCombineFinished, self)
 			else
-				GameFacade.showToastWithIcon(ToastEnum.NotEnoughId, var_7_3, var_7_1)
+				GameFacade.showToastWithIcon(ToastEnum.NotEnoughId, icon, notEnoughItemName)
 			end
 
 			return
 		end
 	end
 
-	local var_7_4 = arg_7_0._facetMos[arg_7_0._selectStoneIndex]
+	local stoneMo = self._facetMos[self._selectStoneIndex]
 
-	if var_7_4 then
-		arg_7_0:openUnlockStoneView(var_7_4.stoneId)
+	if stoneMo then
+		self:openUnlockStoneView(stoneMo.stoneId)
 	end
 end
 
-function var_0_0._onUnlockEasyCombineFinished(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	PopupCacheModel.instance:setViewIgnoreGetPropView(arg_8_0.viewName, false)
+function CharacterDestinyStoneView:_onUnlockEasyCombineFinished(cmd, resultCode, msg)
+	PopupCacheModel.instance:setViewIgnoreGetPropView(self.viewName, false)
 
-	if arg_8_2 ~= 0 then
+	if resultCode ~= 0 then
 		return
 	end
 
-	arg_8_0:_btnunlockOnClick()
+	self:_btnunlockOnClick()
 end
 
-function var_0_0._btnselectOnClick(arg_9_0)
-	local var_9_0 = arg_9_0._facetMos[arg_9_0._selectStoneIndex]
+function CharacterDestinyStoneView:_btnselectOnClick()
+	local stoneMo = self._facetMos[self._selectStoneIndex]
 
-	if var_9_0 then
-		CharacterDestinyController.instance:onUseStone(arg_9_0._heroMO.heroId, var_9_0.stoneId)
+	if stoneMo then
+		CharacterDestinyController.instance:onUseStone(self._heroMO.heroId, stoneMo.stoneId)
 	end
 end
 
-function var_0_0._btnexchangeOnClick(arg_10_0)
-	local var_10_0 = arg_10_0._facetMos[arg_10_0._selectStoneIndex]
+function CharacterDestinyStoneView:_btnexchangeOnClick()
+	local stoneMo = self._facetMos[self._selectStoneIndex]
 
-	if var_10_0 then
-		CharacterDestinyController.instance:onUseStone(arg_10_0._heroMO.heroId, var_10_0.stoneId)
+	if stoneMo then
+		CharacterDestinyController.instance:onUseStone(self._heroMO.heroId, stoneMo.stoneId)
 	end
 end
 
-function var_0_0._editableInitView(arg_11_0)
-	arg_11_0._simagestone = gohelper.findChildSingleImage(arg_11_0.viewGO, "root/#go_stone/#simage_stone")
-	arg_11_0._simagepre = gohelper.findChildSingleImage(arg_11_0.viewGO, "root/#go_prestone/#btn_prestone")
-	arg_11_0._simagenext = gohelper.findChildSingleImage(arg_11_0.viewGO, "root/#go_nextstone/#btn_nextstone")
-	arg_11_0._gounlockstone = gohelper.findChild(arg_11_0.viewGO, "unlockstone")
-	arg_11_0._root = gohelper.findChild(arg_11_0.viewGO, "root")
-	arg_11_0._goeffect = gohelper.findChild(arg_11_0.viewGO, "root/effectItem")
-	arg_11_0._imgstone = gohelper.findChildImage(arg_11_0.viewGO, "root/#go_stone/#simage_stone")
-	arg_11_0._goEquip = gohelper.findChild(arg_11_0.viewGO, "root/#go_stone/#equip")
-	arg_11_0._animRoot = arg_11_0._root:GetComponent(typeof(UnityEngine.Animator))
-	arg_11_0._animPlayerRoot = ZProj.ProjAnimatorPlayer.Get(arg_11_0._root)
-	arg_11_0._animPlayerUnlockStone = ZProj.ProjAnimatorPlayer.Get(arg_11_0._gounlockstone)
-	arg_11_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_11_0._godrag.gameObject)
+function CharacterDestinyStoneView:_editableInitView()
+	self._simagestone = gohelper.findChildSingleImage(self.viewGO, "root/#go_stone/#simage_stone")
+	self._simagepre = gohelper.findChildSingleImage(self.viewGO, "root/#go_prestone/#btn_prestone")
+	self._simagenext = gohelper.findChildSingleImage(self.viewGO, "root/#go_nextstone/#btn_nextstone")
+	self._gounlockstone = gohelper.findChild(self.viewGO, "unlockstone")
+	self._root = gohelper.findChild(self.viewGO, "root")
+	self._goeffect = gohelper.findChild(self.viewGO, "root/effectItem")
+	self._imgstone = gohelper.findChildImage(self.viewGO, "root/#go_stone/#simage_stone")
+	self._goEquip = gohelper.findChild(self.viewGO, "root/#go_stone/#equip")
+	self._animRoot = self._root:GetComponent(typeof(UnityEngine.Animator))
+	self._animPlayerRoot = ZProj.ProjAnimatorPlayer.Get(self._root)
+	self._animPlayerUnlockStone = ZProj.ProjAnimatorPlayer.Get(self._gounlockstone)
+	self._drag = SLFramework.UGUI.UIDragListener.Get(self._godrag.gameObject)
+	self._goreshapeVX = gohelper.findChild(self.viewGO, "root/#go_stone/#reshape")
+	self._simagereshape = gohelper.findChildSingleImage(self.viewGO, "root/#go_stone/#reshape/#simage_stone")
+	self._simagestoneName = gohelper.findChildSingleImage(self.viewGO, "root/#simage_reshapeTitle")
+	self._imagestoneName = gohelper.findChildImage(self.viewGO, "root/#simage_reshapeTitle")
+
+	self:_initReshapeItem()
 end
 
-function var_0_0.onUpdateParam(arg_12_0)
+function CharacterDestinyStoneView:onUpdateParam()
 	return
 end
 
-function var_0_0._addEvents(arg_13_0)
-	arg_13_0:addEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.OnUnlockStoneReply, arg_13_0._onUnlockStoneReply, arg_13_0)
-	arg_13_0:addEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.OnUseStoneReply, arg_13_0._onUseStoneReply, arg_13_0)
-	arg_13_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_13_0._refreshConsume, arg_13_0)
-	arg_13_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_13_0._refreshConsume, arg_13_0)
+function CharacterDestinyStoneView:_addEvents()
+	self:addEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.OnUnlockStoneReply, self._onUnlockStoneReply, self)
+	self:addEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.OnUseStoneReply, self._onUseStoneReply, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._refreshConsume, self)
+	self:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._refreshConsume, self)
+	self:addEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.onClickReshapeBtn, self._btnreshapeOnClick, self)
 
-	if arg_13_0._drag then
-		arg_13_0._drag:AddDragBeginListener(arg_13_0._dragBeginEventCb, arg_13_0)
-		arg_13_0._drag:AddDragListener(arg_13_0._dragEventCb, arg_13_0)
-		arg_13_0._drag:AddDragEndListener(arg_13_0._dragEndEventCb, arg_13_0)
+	if self._drag then
+		self._drag:AddDragBeginListener(self._dragBeginEventCb, self)
+		self._drag:AddDragListener(self._dragEventCb, self)
+		self._drag:AddDragEndListener(self._dragEndEventCb, self)
 	end
 end
 
-function var_0_0._removeEvents(arg_14_0)
-	arg_14_0:removeEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.OnUnlockStoneReply, arg_14_0._onUnlockStoneReply, arg_14_0)
-	arg_14_0:removeEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.OnUseStoneReply, arg_14_0._onUseStoneReply, arg_14_0)
-	arg_14_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_14_0._refreshConsume, arg_14_0)
-	arg_14_0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_14_0._refreshConsume, arg_14_0)
+function CharacterDestinyStoneView:_removeEvents()
+	self:removeEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.OnUnlockStoneReply, self._onUnlockStoneReply, self)
+	self:removeEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.OnUseStoneReply, self._onUseStoneReply, self)
+	self:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._refreshConsume, self)
+	self:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._refreshConsume, self)
+	self:removeEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.onClickReshapeBtn, self._btnreshapeOnClick, self)
 
-	if arg_14_0._drag then
-		arg_14_0._drag:RemoveDragBeginListener()
-		arg_14_0._drag:RemoveDragListener()
-		arg_14_0._drag:RemoveDragEndListener()
+	if self._drag then
+		self._drag:RemoveDragBeginListener()
+		self._drag:RemoveDragListener()
+		self._drag:RemoveDragEndListener()
 	end
 end
 
-function var_0_0._refreshView(arg_15_0)
-	arg_15_0:_refreshStoneItem(arg_15_0._selectStoneIndex)
-	arg_15_0:_refreshBtn()
+function CharacterDestinyStoneView:_refreshView()
+	self:_refreshStoneItem(self._selectStoneIndex)
+	self:_refreshBtn()
 end
 
-function var_0_0._onUnlockStoneReply(arg_16_0, arg_16_1, arg_16_2)
-	if arg_16_0._curStoneMo then
-		arg_16_0._curStoneMo:refresUnlock(true)
+function CharacterDestinyStoneView:_onUnlockStoneReply(heroId, stoneId)
+	if self._curStoneMo then
+		self._curStoneMo:refresUnlock(true)
 	end
 
-	arg_16_0:_refreshView()
-	gohelper.setActive(arg_16_0._root, true)
-	gohelper.setActive(arg_16_0._gounlockstone, false)
+	self:_refreshView()
+	gohelper.setActive(self._root, true)
+	gohelper.setActive(self._gounlockstone, false)
 
-	arg_16_0._openUnlockStoneView = false
+	self._openUnlockStoneView = false
 end
 
-function var_0_0._onUseStoneReply(arg_17_0, arg_17_1, arg_17_2)
-	arg_17_0._heroMO.destinyStoneMo:refreshUseStone()
+function CharacterDestinyStoneView:_onUseStoneReply(heroId, stoneId)
+	self._heroMO.destinyStoneMo:refreshUseStone()
 
-	arg_17_0._curUseStoneId = arg_17_0._heroMO.destinyStoneMo.curUseStoneId
+	self._curUseStoneId = self._heroMO.destinyStoneMo.curUseStoneId
 
-	arg_17_0:_refreshBtn()
-	gohelper.setActive(arg_17_0._goEquip, arg_17_0._curStoneMo.isUse)
+	self:_refreshBtn()
+	gohelper.setActive(self._goEquip, self._curStoneMo.isUse)
 end
 
-function var_0_0.onOpen(arg_18_0)
-	arg_18_0:_addEvents()
+function CharacterDestinyStoneView:onOpen()
+	self:_addEvents()
 
-	arg_18_0._effectItems = arg_18_0:getUserDataTb_()
+	self._effectItems = self:getUserDataTb_()
+	self._effectitemPrefab = gohelper.findChild(self._goeffect, "#scroll_effect")
 
-	for iter_18_0 = 1, CharacterDestinyEnum.EffectItemCount do
-		local var_18_0 = gohelper.findChild(arg_18_0._goeffect, "scroll_desc" .. iter_18_0 .. "/viewport/content")
-		local var_18_1 = arg_18_0:getUserDataTb_()
+	for i = 1, CharacterDestinyEnum.EffectItemCount do
+		local item = self:_getEffectItem(i)
 
-		var_18_1.go = var_18_0
-		var_18_1.lockicon = gohelper.findChildImage(var_18_0, "#txt_dec/#go_lockicon")
-		var_18_1.unlockicon = gohelper.findChildImage(var_18_0, "#txt_dec/#go_unlockicon")
-		var_18_1.txt = gohelper.findChildText(var_18_0, "#txt_dec")
-		var_18_1.gounlock = gohelper.findChild(var_18_0, "#unlock")
-		var_18_1.canvasgroup = var_18_0:GetComponent(typeof(UnityEngine.CanvasGroup))
-		arg_18_0._effectItems[iter_18_0] = var_18_1
+		gohelper.setActive(item.root, true)
 	end
 
-	arg_18_0._heroMO = arg_18_0.viewParam.heroMo
-	arg_18_0._curUseStoneId = arg_18_0._heroMO.destinyStoneMo.curUseStoneId
+	self._heroMO = self.viewParam.heroMo
+	self._curUseStoneId = self._heroMO.destinyStoneMo.curUseStoneId
 
-	local var_18_2 = arg_18_0._heroMO.destinyStoneMo.stoneMoList
+	local facetMos = self._heroMO.destinyStoneMo.stoneMoList
 
-	arg_18_0._facetMos = {}
+	self._facetMos = {}
 
-	if var_18_2 then
-		local var_18_3 = 1
+	if facetMos then
+		local curUseStoneIndex = 1
 
-		for iter_18_1, iter_18_2 in pairs(var_18_2) do
-			table.insert(arg_18_0._facetMos, iter_18_2)
+		for _, mo in pairs(facetMos) do
+			table.insert(self._facetMos, mo)
 		end
 
-		table.sort(arg_18_0._facetMos, arg_18_0._sortStone)
+		table.sort(self._facetMos, self._sortStone)
 
-		if arg_18_0._curUseStoneId and arg_18_0._curUseStoneId ~= 0 then
-			for iter_18_3, iter_18_4 in ipairs(arg_18_0._facetMos) do
-				if iter_18_4.stoneId == arg_18_0._curUseStoneId then
-					var_18_3 = iter_18_3
+		if self._curUseStoneId and self._curUseStoneId ~= 0 then
+			for i, mo in ipairs(self._facetMos) do
+				if mo.stoneId == self._curUseStoneId then
+					curUseStoneIndex = i
 				end
 			end
 		end
 
-		arg_18_0:_refreshStoneItem(var_18_3)
-		arg_18_0:_refreshBtn()
+		self:_refreshStoneItem(curUseStoneIndex)
+		self:_refreshBtn()
 	end
 
-	gohelper.setActive(arg_18_0._root, true)
-	gohelper.setActive(arg_18_0._gounlockstone, false)
+	gohelper.setActive(self._root, true)
+	gohelper.setActive(self._gounlockstone, false)
 
-	arg_18_0._openUnlockStoneView = false
+	self._openUnlockStoneView = false
 end
 
-function var_0_0._sortStone(arg_19_0, arg_19_1)
-	local var_19_0 = CharacterDestinyConfig.instance:getDestinyFacetConsumeCo(arg_19_0.stoneId)
-	local var_19_1 = CharacterDestinyConfig.instance:getDestinyFacetConsumeCo(arg_19_1.stoneId)
+function CharacterDestinyStoneView:_getEffectItem(index)
+	local item = self._effectItems[index]
 
-	if var_19_0.facetsSort ~= var_19_1.facetsSort then
-		return var_19_0.facetsSort < var_19_1.facetsSort
+	if not item then
+		item = self:getUserDataTb_()
+
+		local go = gohelper.findChild(self._goeffect, index)
+
+		item.go = go
+		item.root = gohelper.clone(self._effectitemPrefab, go)
+		item.lockicon = gohelper.findChildImage(item.root, "Viewport/Content/#go_decItem/#txt_dec/#go_lockicon")
+		item.unlockicon = gohelper.findChildImage(item.root, "Viewport/Content/#go_decItem/#txt_dec/#go_unlockicon")
+		item.txt = gohelper.findChildText(item.root, "Viewport/Content/#go_decItem/#txt_dec")
+		item.gounlock = gohelper.findChild(item.root, "Viewport/Content/#go_decItem/#unlock")
+		item.canvasgroup = item.root:GetComponent(typeof(UnityEngine.CanvasGroup))
+		self._effectItems[index] = item
 	end
 
-	return arg_19_0.stoneId > arg_19_1.stoneId
+	return item
 end
 
-function var_0_0._refreshStoneItem(arg_20_0, arg_20_1)
-	if not arg_20_1 or arg_20_1 == 0 then
-		arg_20_1 = 1
+function CharacterDestinyStoneView._sortStone(x, y)
+	local xConsumeCo = CharacterDestinyConfig.instance:getDestinyFacetConsumeCo(x.stoneId)
+	local yConsumeCo = CharacterDestinyConfig.instance:getDestinyFacetConsumeCo(y.stoneId)
+
+	if xConsumeCo.facetsSort ~= yConsumeCo.facetsSort then
+		return xConsumeCo.facetsSort < yConsumeCo.facetsSort
 	end
 
-	arg_20_0._selectStoneIndex = arg_20_1
+	return x.stoneId > y.stoneId
+end
 
-	local var_20_0 = #arg_20_0._facetMos
+function CharacterDestinyStoneView:_refreshStoneItem(curIndex)
+	if not curIndex or curIndex == 0 then
+		curIndex = 1
+	end
 
-	arg_20_0._curStoneMo = arg_20_0._facetMos[arg_20_1]
+	self._selectStoneIndex = curIndex
 
-	if arg_20_0._curStoneMo then
-		arg_20_0._levelCos = arg_20_0._curStoneMo:getFacetCo()
+	local max = #self._facetMos
 
-		local var_20_1 = arg_20_0._curStoneMo.conusmeCo
+	self._curStoneMo = self._facetMos[curIndex]
 
-		if arg_20_0._levelCos then
-			for iter_20_0, iter_20_1 in ipairs(arg_20_0._effectItems) do
-				local var_20_2 = arg_20_0._levelCos[iter_20_0]
+	local isReshapeStone = self._curStoneMo:isReshape()
 
-				iter_20_1.skillDesc = MonoHelper.addNoUpdateLuaComOnceToGo(iter_20_1.txt.gameObject, SkillDescComp)
+	if self._curStoneMo then
+		self._levelCos = self._curStoneMo:getFacetCo()
 
-				iter_20_1.skillDesc:updateInfo(iter_20_1.txt, var_20_2.desc, arg_20_0._heroMO.heroId)
-				iter_20_1.skillDesc:setTipParam(0, Vector2(300, 100))
+		local conusmeCo = self._curStoneMo.conusmeCo
 
-				local var_20_3 = arg_20_0._curStoneMo.isUnlock and iter_20_0 <= arg_20_0._heroMO.destinyStoneMo.rank
-				local var_20_4 = iter_20_1.txt.color
+		if self._levelCos then
+			for i, item in ipairs(self._effectItems) do
+				local co = self._levelCos[i]
 
-				var_20_4.a = var_20_3 and 1 or 0.43
-				iter_20_1.txt.color = var_20_4
+				item.skillDesc = MonoHelper.addNoUpdateLuaComOnceToGo(item.txt.gameObject, SkillDescComp)
 
-				if var_20_3 then
-					local var_20_5 = iter_20_1.unlockicon.color
+				item.skillDesc:updateInfo(item.txt, co.desc, self._heroMO.heroId)
+				item.skillDesc:setTipParam(0, Vector2(300, 100))
 
-					var_20_5.a = var_20_3 and 1 or 0.43
-					iter_20_1.unlockicon.color = var_20_5
+				local isUnlock = self._curStoneMo.isUnlock and i <= self._heroMO.destinyStoneMo.rank
+				local color = item.txt.color
+
+				color.a = isUnlock and 1 or 0.43
+				item.txt.color = color
+
+				if isUnlock then
+					local color = item.unlockicon.color
+
+					color.a = isUnlock and 1 or 0.43
+					item.unlockicon.color = color
 				else
-					local var_20_6 = iter_20_1.lockicon.color
+					local color = item.lockicon.color
 
-					var_20_6.a = var_20_3 and 1 or 0.43
-					iter_20_1.lockicon.color = var_20_6
+					color.a = isUnlock and 1 or 0.43
+					item.lockicon.color = color
 				end
 
-				gohelper.setActive(iter_20_1.lockicon.gameObject, not var_20_3)
-				gohelper.setActive(iter_20_1.unlockicon.gameObject, var_20_3)
+				gohelper.setActive(item.lockicon.gameObject, not isUnlock)
+				gohelper.setActive(item.unlockicon.gameObject, isUnlock)
 			end
 		end
 
-		gohelper.setActive(arg_20_0._goEquip, arg_20_0._curStoneMo.isUse)
+		gohelper.setActive(self._goEquip, self._curStoneMo.isUse)
+		gohelper.setActive(self._txtstonename.gameObject, not isReshapeStone)
+		gohelper.setActive(self._simagestoneName.gameObject, isReshapeStone)
+		gohelper.setActive(self._goreshapeVX, isReshapeStone)
 
-		if var_20_1 then
-			local var_20_7, var_20_8 = arg_20_0._curStoneMo:getNameAndIcon()
+		if conusmeCo then
+			local name, icon = self._curStoneMo:getNameAndIcon()
 
-			arg_20_0._txtstonename.text = var_20_7
+			self._simagestone:LoadImage(icon)
+			self._simagereshape:LoadImage(icon)
 
-			arg_20_0._simagestone:LoadImage(var_20_8)
+			local tenp = CharacterDestinyEnum.SlotTend[conusmeCo.tend]
+			local tendIcon = tenp.TitleIconName
 
-			local var_20_9 = CharacterDestinyEnum.SlotTend[var_20_1.tend]
-			local var_20_10 = var_20_9.TitleIconName
+			UISpriteSetMgr.instance:setUiCharacterSprite(self._imageicon, tendIcon)
 
-			UISpriteSetMgr.instance:setUiCharacterSprite(arg_20_0._imageicon, var_20_10)
+			if isReshapeStone then
+				local resName = self._curStoneMo.stoneId
 
-			arg_20_0._txtstonename.color = GameUtil.parseColor(var_20_9.TitleColor)
+				self._simagestoneName:LoadImage(ResUrl.getTxtDestinyIcon(resName), function()
+					self._imagestoneName:SetNativeSize()
+				end)
+			else
+				self._txtstonename.text = name
+				self._txtstonename.color = GameUtil.parseColor(tenp.TitleColor)
+			end
 		end
 
-		local var_20_11 = arg_20_0._curStoneMo.isUnlock and Color.white or Color(0.5, 0.5, 0.5, 1)
+		local isUnlock = self._curStoneMo.isUnlock
+		local color = isUnlock and Color.white or Color(0.5, 0.5, 0.5, 1)
 
-		arg_20_0._imgstone.color = var_20_11
+		self._imgstone.color = color
 
-		arg_20_0:_checkPlayAttrUnlockAnim(arg_20_0._curStoneMo.stoneId)
+		self:_checkPlayAttrUnlockAnim(self._curStoneMo.stoneId)
+
+		local isReshape = CharacterDestinyModel.instance:getIsShowReshape()
+
+		self:_showReshape(isReshape, false)
+		self:_refreshReshape()
 	end
 
-	if not arg_20_0._pointItems then
-		arg_20_0._pointItems = arg_20_0:getUserDataTb_()
+	if not self._pointItems then
+		self._pointItems = self:getUserDataTb_()
 	end
 
-	if var_20_0 > 1 then
-		for iter_20_2 = 1, var_20_0 do
-			local var_20_12 = arg_20_0:_getPointItem(iter_20_2)
+	if max > 1 then
+		for i = 1, max do
+			local item = self:_getPointItem(i)
 
-			gohelper.setActive(var_20_12.select, arg_20_1 == iter_20_2)
-			gohelper.setActive(var_20_12.go, true)
+			gohelper.setActive(item.select, curIndex == i)
+			gohelper.setActive(item.go, true)
 		end
 	else
-		for iter_20_3, iter_20_4 in ipairs(arg_20_0._pointItems) do
-			gohelper.setActive(iter_20_4.go, false)
+		for _, item in ipairs(self._pointItems) do
+			gohelper.setActive(item.go, false)
 		end
 	end
 
-	arg_20_0:_refreshConsume()
-	arg_20_0:_refreshPreAndNextStoneItem(arg_20_1)
+	self:_refreshConsume()
+	self:_refreshPreAndNextStoneItem(curIndex)
 end
 
-function var_0_0._refreshConsume(arg_21_0)
-	if not arg_21_0._curStoneMo then
-		gohelper.setActive(arg_21_0._gocaneasycombinetip, false)
+function CharacterDestinyStoneView:_refreshConsume()
+	if not self._curStoneMo then
+		gohelper.setActive(self._gocaneasycombinetip, false)
 
 		return
 	end
 
-	arg_21_0._canEasyCombine = false
-	arg_21_0._lackedItemDataList = {}
-	arg_21_0._occupyItemDic = {}
+	self._canEasyCombine = false
+	self._lackedItemDataList = {}
+	self._occupyItemDic = {}
 
-	local var_21_0 = arg_21_0._curStoneMo.conusmeCo
+	local conusmeCo = self._curStoneMo.conusmeCo
 
-	if not arg_21_0._curStoneMo.isUnlock then
-		local var_21_1 = ItemModel.instance:getItemDataListByConfigStr(var_21_0.consume)
+	if not self._curStoneMo.isUnlock then
+		local consumeList = ItemModel.instance:getItemDataListByConfigStr(conusmeCo.consume)
 
-		IconMgr.instance:getCommonPropItemIconList(arg_21_0, arg_21_0._onCostItemShow, var_21_1, arg_21_0._gounlockitem)
+		IconMgr.instance:getCommonPropItemIconList(self, self._onCostItemShow, consumeList, self._gounlockitem)
 
-		arg_21_0._canEasyCombine, arg_21_0._easyCombineTable = RoomProductionHelper.canEasyCombineItems(arg_21_0._lackedItemDataList, arg_21_0._occupyItemDic)
-		arg_21_0._occupyItemDic = nil
+		self._canEasyCombine, self._easyCombineTable = RoomProductionHelper.canEasyCombineItems(self._lackedItemDataList, self._occupyItemDic)
+		self._occupyItemDic = nil
 	end
 
-	gohelper.setActive(arg_21_0._gocaneasycombinetip, arg_21_0._canEasyCombine)
+	gohelper.setActive(self._gocaneasycombinetip, self._canEasyCombine)
 end
 
-function var_0_0._checkPlayAttrUnlockAnim(arg_22_0, arg_22_1)
-	if arg_22_0._effectItems then
-		for iter_22_0, iter_22_1 in ipairs(arg_22_0._effectItems) do
-			local var_22_0 = arg_22_0._heroMO.destinyStoneMo:isCanPlayAttrUnlockAnim(arg_22_1, iter_22_0)
+function CharacterDestinyStoneView:_checkPlayAttrUnlockAnim(stoneId)
+	if self._effectItems then
+		for rank, item in ipairs(self._effectItems) do
+			local isCanPlay = self._heroMO.destinyStoneMo:isCanPlayAttrUnlockAnim(stoneId, rank)
 
-			gohelper.setActive(iter_22_1.gounlock, var_22_0)
+			gohelper.setActive(item.gounlock, isCanPlay)
 		end
 	end
 end
 
-function var_0_0._refreshPreAndNextStoneItem(arg_23_0, arg_23_1)
-	if arg_23_1 > 1 then
-		local var_23_0 = arg_23_0._facetMos[arg_23_1 - 1]
+function CharacterDestinyStoneView:_refreshPreAndNextStoneItem(curIndex)
+	if curIndex > 1 then
+		local preMo = self._facetMos[curIndex - 1]
 
-		if var_23_0 and var_23_0.conusmeCo then
-			local var_23_1, var_23_2 = var_23_0:getNameAndIcon()
+		if preMo and preMo.conusmeCo then
+			local _, icon = preMo:getNameAndIcon()
 
-			arg_23_0._simagepre:LoadImage(var_23_2)
+			self._simagepre:LoadImage(icon)
 		end
 	end
 
-	if arg_23_1 < #arg_23_0._facetMos then
-		local var_23_3 = arg_23_0._facetMos[arg_23_1 + 1]
+	if curIndex < #self._facetMos then
+		local nextMo = self._facetMos[curIndex + 1]
 
-		if var_23_3 and var_23_3.conusmeCo then
-			local var_23_4, var_23_5 = var_23_3:getNameAndIcon()
+		if nextMo and nextMo.conusmeCo then
+			local _, icon = nextMo:getNameAndIcon()
 
-			arg_23_0._simagenext:LoadImage(var_23_5)
+			self._simagenext:LoadImage(icon)
 		end
 	end
 
-	gohelper.setActive(arg_23_0._goprestone, arg_23_1 > 1)
-	gohelper.setActive(arg_23_0._gonextstone, arg_23_1 < #arg_23_0._facetMos)
+	gohelper.setActive(self._goprestone, curIndex > 1)
+	gohelper.setActive(self._gonextstone, curIndex < #self._facetMos)
 end
 
-function var_0_0._onCostItemShow(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
-	transformhelper.setLocalScale(arg_24_1.viewGO.transform, 0.6, 0.6, 1)
-	arg_24_1:onUpdateMO(arg_24_2)
-	arg_24_1:setConsume(true)
-	arg_24_1:showStackableNum2()
-	arg_24_1:isShowEffect(true)
-	arg_24_1:setAutoPlay(true)
-	arg_24_1:setCountFontSize(48)
+function CharacterDestinyStoneView:_onCostItemShow(item, data, index)
+	transformhelper.setLocalScale(item.viewGO.transform, 0.6, 0.6, 1)
+	item:onUpdateMO(data)
+	item:setConsume(true)
+	item:showStackableNum2()
+	item:isShowEffect(true)
+	item:setAutoPlay(true)
+	item:setCountFontSize(48)
 
-	local var_24_0 = arg_24_1:getItemIcon():getCount()
-	local var_24_1 = 170
-	local var_24_2 = var_24_0.gameObject:GetComponent(typeof(UnityEngine.UI.ContentSizeFitter))
+	local txt = item:getItemIcon():getCount()
+	local maxWidth = 170
+	local contentSizeFitter = txt.gameObject:GetComponent(typeof(UnityEngine.UI.ContentSizeFitter))
 
-	var_24_0.enableAutoSizing = true
-	var_24_2.enabled = false
-	var_24_0.fontSizeMax = 48
-	var_24_0.fontSizeMin = 30
-	var_24_0.transform.anchorMax = Vector2(0.5, 0.5)
-	var_24_0.transform.anchorMin = Vector2(0.5, 0.5)
-	var_24_0.transform.pivot = Vector2(0.5, 0.5)
-	var_24_0.alignment = TMPro.TextAlignmentOptions.Center
+	txt.enableAutoSizing = true
+	contentSizeFitter.enabled = false
+	txt.fontSizeMax = 48
+	txt.fontSizeMin = 30
+	txt.transform.anchorMax = Vector2(0.5, 0.5)
+	txt.transform.anchorMin = Vector2(0.5, 0.5)
+	txt.transform.pivot = Vector2(0.5, 0.5)
+	txt.alignment = TMPro.TextAlignmentOptions.Center
 
-	recthelper.setWidth(var_24_0.transform, var_24_1)
-	recthelper.setHeight(var_24_0.transform, 70)
-	arg_24_1:SetCountLocalY(-50)
+	recthelper.setWidth(txt.transform, maxWidth)
+	recthelper.setHeight(txt.transform, 70)
+	item:SetCountLocalY(-50)
 
-	local var_24_3 = arg_24_2.materilType
-	local var_24_4 = arg_24_2.materilId
-	local var_24_5 = arg_24_2.quantity
-	local var_24_6, var_24_7 = ItemModel.instance:getItemIsEnoughText(arg_24_2)
+	local type = data.materilType
+	local id = data.materilId
+	local costQuantity = data.quantity
+	local enoughText, lackedQuantity = ItemModel.instance:getItemIsEnoughText(data)
 
-	if var_24_7 then
-		table.insert(arg_24_0._lackedItemDataList, {
-			type = var_24_3,
-			id = var_24_4,
-			quantity = var_24_7
+	if lackedQuantity then
+		table.insert(self._lackedItemDataList, {
+			type = type,
+			id = id,
+			quantity = lackedQuantity
 		})
 	else
-		if not arg_24_0._occupyItemDic[var_24_3] then
-			arg_24_0._occupyItemDic[var_24_3] = {}
+		if not self._occupyItemDic[type] then
+			self._occupyItemDic[type] = {}
 		end
 
-		arg_24_0._occupyItemDic[var_24_3][var_24_4] = (arg_24_0._occupyItemDic[var_24_3][var_24_4] or 0) + var_24_5
+		self._occupyItemDic[type][id] = (self._occupyItemDic[type][id] or 0) + costQuantity
 	end
 
-	arg_24_1:setCountText(var_24_6)
-	arg_24_1:setOnBeforeClickCallback(arg_24_0.onBeforeClickItem, arg_24_0)
+	item:setCountText(enoughText)
+	item:setOnBeforeClickCallback(self.onBeforeClickItem, self)
 end
 
-function var_0_0.onBeforeClickItem(arg_25_0, arg_25_1, arg_25_2)
-	local var_25_0 = JumpController.instance:getCurrentOpenedView(arg_25_0.viewName)
+function CharacterDestinyStoneView:onBeforeClickItem(param, commonItemIcon)
+	local openedViewList = JumpController.instance:getCurrentOpenedView(self.viewName)
 
-	for iter_25_0, iter_25_1 in ipairs(var_25_0) do
-		if iter_25_1.viewName == ViewName.CharacterDestinySlotView then
-			iter_25_1.viewParam.isBack = true
+	for _, openView in ipairs(openedViewList) do
+		if openView.viewName == ViewName.CharacterDestinySlotView then
+			openView.viewParam.isBack = true
 
 			break
 		end
 	end
 
-	arg_25_2:setRecordFarmItem({
-		type = arg_25_2._itemType,
-		id = arg_25_2._itemId,
-		quantity = arg_25_2._itemQuantity,
+	commonItemIcon:setRecordFarmItem({
+		type = commonItemIcon._itemType,
+		id = commonItemIcon._itemId,
+		quantity = commonItemIcon._itemQuantity,
 		sceneType = GameSceneMgr.instance:getCurSceneType(),
-		openedViewNameList = var_25_0
+		openedViewNameList = openedViewList
 	})
 end
 
-function var_0_0._refreshBtn(arg_26_0)
-	if not arg_26_0._curStoneMo then
+function CharacterDestinyStoneView:_refreshBtn()
+	if not self._curStoneMo then
 		return
 	end
 
-	local var_26_0 = arg_26_0._heroMO.destinyStoneMo:isUnlockSlot()
-	local var_26_1 = arg_26_0._curStoneMo.isUnlock
-	local var_26_2 = arg_26_0._curStoneMo.isUse
-	local var_26_3 = arg_26_0._curUseStoneId ~= 0
+	local isUnlockSlot = self._heroMO.destinyStoneMo:isUnlockSlot()
+	local isUnlock = self._curStoneMo.isUnlock
+	local isUse = self._curStoneMo.isUse
+	local isUseStone = self._curUseStoneId ~= 0
 
-	gohelper.setActive(arg_26_0._gounlock.gameObject, var_26_0 and not var_26_1)
-	gohelper.setActive(arg_26_0._goselect.gameObject, var_26_0 and var_26_1 and not var_26_2 and not var_26_3)
-	gohelper.setActive(arg_26_0._gounselect.gameObject, var_26_0 and var_26_1 and var_26_2)
-	gohelper.setActive(arg_26_0._goexchange.gameObject, var_26_0 and var_26_1 and not var_26_2 and var_26_3)
+	gohelper.setActive(self._gounlock.gameObject, isUnlockSlot and not isUnlock)
+	gohelper.setActive(self._goselect.gameObject, isUnlockSlot and isUnlock and not isUse and not isUseStone)
+	gohelper.setActive(self._gounselect.gameObject, isUnlockSlot and isUnlock and isUse)
+	gohelper.setActive(self._goexchange.gameObject, isUnlockSlot and isUnlock and not isUse and isUseStone)
 end
 
-function var_0_0._getPointItem(arg_27_0, arg_27_1)
-	local var_27_0 = arg_27_0._pointItems[arg_27_1]
+function CharacterDestinyStoneView:_getPointItem(index)
+	local item = self._pointItems[index]
 
-	if not var_27_0 then
-		var_27_0 = arg_27_0:getUserDataTb_()
+	if not item then
+		item = self:getUserDataTb_()
 
-		local var_27_1 = gohelper.cloneInPlace(arg_27_0._gopoint, arg_27_1)
+		local go = gohelper.cloneInPlace(self._gopoint, index)
 
-		var_27_0.go = var_27_1
-		var_27_0.normal = gohelper.findChild(var_27_1, "normal")
-		var_27_0.select = gohelper.findChild(var_27_1, "select")
-		arg_27_0._pointItems[arg_27_1] = var_27_0
+		item.go = go
+		item.normal = gohelper.findChild(go, "normal")
+		item.select = gohelper.findChild(go, "select")
+		self._pointItems[index] = item
 	end
 
-	return var_27_0
+	return item
 end
 
-function var_0_0.openUnlockStoneView(arg_28_0, arg_28_1)
-	if not arg_28_0._unlockStoneView then
-		arg_28_0._unlockStoneView = MonoHelper.addNoUpdateLuaComOnceToGo(arg_28_0._gounlockstone, CharacterDestinyUnlockStoneComp)
+function CharacterDestinyStoneView:openUnlockStoneView(stoneId)
+	if not self._unlockStoneView then
+		self._unlockStoneView = MonoHelper.addNoUpdateLuaComOnceToGo(self._gounlockstone, CharacterDestinyUnlockStoneComp)
 
-		arg_28_0._unlockStoneView:setStoneView(arg_28_0)
+		self._unlockStoneView:setStoneView(self)
 	end
 
-	arg_28_0._unlockStoneView:onUpdateMo(arg_28_0._heroMO.heroId, arg_28_1)
-	gohelper.setActive(arg_28_0._gounlockstone, true)
-	arg_28_0:playRootOpenCloseAnim(false, arg_28_0._hideRoot, arg_28_0)
-	arg_28_0:playUnlockstoneOpenCloseAnim(true, nil, arg_28_0)
-	arg_28_0.viewContainer:setOpenUnlockStoneView(true)
+	self._unlockStoneView:onUpdateMo(self._heroMO.heroId, stoneId)
+	gohelper.setActive(self._gounlockstone, true)
+	self:playRootOpenCloseAnim(false, self._hideRoot, self)
+	self:playUnlockstoneOpenCloseAnim(true, nil, self)
+	self.viewContainer:setOpenUnlockStoneView(true)
 
-	arg_28_0._openUnlockStoneView = true
+	self._openUnlockStoneView = true
 end
 
-function var_0_0.closeUnlockStoneView(arg_29_0)
-	gohelper.setActive(arg_29_0._root, true)
-	arg_29_0:playRootOpenCloseAnim(true, nil, arg_29_0)
-	arg_29_0:playUnlockstoneOpenCloseAnim(false, arg_29_0._hideUnlockstone, arg_29_0)
-	arg_29_0.viewContainer:setOpenUnlockStoneView(false)
+function CharacterDestinyStoneView:closeUnlockStoneView()
+	gohelper.setActive(self._root, true)
+	self:playRootOpenCloseAnim(true, nil, self)
+	self:playUnlockstoneOpenCloseAnim(false, self._hideUnlockstone, self)
+	self.viewContainer:setOpenUnlockStoneView(false)
 
-	arg_29_0._openUnlockStoneView = false
+	self._openUnlockStoneView = false
 end
 
-function var_0_0._cutPreStoneCB(arg_30_0)
-	arg_30_0:_refreshStoneItem(arg_30_0._selectStoneIndex - 1)
-	arg_30_0:_refreshBtn()
+function CharacterDestinyStoneView:_cutPreStoneCB()
+	self:_refreshStoneItem(self._selectStoneIndex - 1)
+	self:_refreshBtn()
 end
 
-function var_0_0._cutNextStoneCB(arg_31_0)
-	arg_31_0:_refreshStoneItem(arg_31_0._selectStoneIndex + 1)
-	arg_31_0:_refreshBtn()
+function CharacterDestinyStoneView:_cutNextStoneCB()
+	self:_refreshStoneItem(self._selectStoneIndex + 1)
+	self:_refreshBtn()
 end
 
-function var_0_0._dragBeginEventCb(arg_32_0, arg_32_1, arg_32_2)
-	arg_32_0._dragPos = arg_32_2.position
+function CharacterDestinyStoneView:_dragBeginEventCb(data, pointerEventData)
+	self._dragPos = pointerEventData.position
 end
 
-function var_0_0._dragEventCb(arg_33_0, arg_33_1, arg_33_2)
+function CharacterDestinyStoneView:_dragEventCb(data, pointerEventData)
 	return
 end
 
-function var_0_0._dragEndEventCb(arg_34_0, arg_34_1, arg_34_2)
-	if arg_34_0._openUnlockStoneView then
+function CharacterDestinyStoneView:_dragEndEventCb(data, pointerEventData)
+	if self._openUnlockStoneView then
 		return
 	end
 
-	if #arg_34_0._facetMos < 2 then
-		arg_34_0._dragPos = nil
+	if #self._facetMos < 2 then
+		self._dragPos = nil
 
 		return
 	end
 
-	if arg_34_0._dragPos then
-		TaskDispatcher.cancelTask(arg_34_0._cutPreStoneCB, arg_34_0)
-		TaskDispatcher.cancelTask(arg_34_0._cutNextStoneCB, arg_34_0)
+	if self._dragPos then
+		TaskDispatcher.cancelTask(self._cutPreStoneCB, self)
+		TaskDispatcher.cancelTask(self._cutNextStoneCB, self)
 
-		if arg_34_0._dragPos.x < arg_34_2.position.x and arg_34_0._selectStoneIndex > 1 then
-			arg_34_0._animRoot:Play(CharacterDestinyEnum.StoneViewAnim.SwitchRight, 0, 0)
-			TaskDispatcher.runDelay(arg_34_0._cutPreStoneCB, arg_34_0, 0.16)
-		elseif arg_34_0._dragPos.x > arg_34_2.position.x and arg_34_0._selectStoneIndex < #arg_34_0._facetMos then
-			arg_34_0._animRoot:Play(CharacterDestinyEnum.StoneViewAnim.SwitchLeft, 0, 0)
-			TaskDispatcher.runDelay(arg_34_0._cutNextStoneCB, arg_34_0, 0.16)
+		if self._dragPos.x < pointerEventData.position.x and self._selectStoneIndex > 1 then
+			self._animRoot:Play(CharacterDestinyEnum.StoneViewAnim.SwitchRight, 0, 0)
+			TaskDispatcher.runDelay(self._cutPreStoneCB, self, 0.16)
+		elseif self._dragPos.x > pointerEventData.position.x and self._selectStoneIndex < #self._facetMos then
+			self._animRoot:Play(CharacterDestinyEnum.StoneViewAnim.SwitchLeft, 0, 0)
+			TaskDispatcher.runDelay(self._cutNextStoneCB, self, 0.16)
 		end
 	end
 end
 
-function var_0_0.onUnlockStone(arg_35_0)
-	arg_35_0.viewContainer:setOpenUnlockStoneView(false)
-	arg_35_0:_refreshBtn()
+function CharacterDestinyStoneView:onUnlockStone()
+	self.viewContainer:setOpenUnlockStoneView(false)
+	self:_refreshBtn()
 end
 
-function var_0_0.playRootOpenCloseAnim(arg_36_0, arg_36_1, arg_36_2, arg_36_3)
-	local var_36_0 = arg_36_1 and CharacterDestinyEnum.StoneViewAnim.Open or CharacterDestinyEnum.StoneViewAnim.Close
+function CharacterDestinyStoneView:playRootOpenCloseAnim(isOpen, callback, callbackObj)
+	local animName = isOpen and CharacterDestinyEnum.StoneViewAnim.Open or CharacterDestinyEnum.StoneViewAnim.Close
 
-	arg_36_0:playRootAnim(var_36_0, arg_36_2, arg_36_3)
+	self:playRootAnim(animName, callback, callbackObj)
 end
 
-function var_0_0.playUnlockstoneOpenCloseAnim(arg_37_0, arg_37_1, arg_37_2, arg_37_3)
-	local var_37_0 = arg_37_1 and CharacterDestinyEnum.StoneViewAnim.Open or CharacterDestinyEnum.StoneViewAnim.Close
+function CharacterDestinyStoneView:playUnlockstoneOpenCloseAnim(isOpen, callback, callbackObj)
+	local animName = isOpen and CharacterDestinyEnum.StoneViewAnim.Open or CharacterDestinyEnum.StoneViewAnim.Close
 
-	arg_37_0:playUnlockstoneAnim(var_37_0, arg_37_2, arg_37_3)
+	self:playUnlockstoneAnim(animName, callback, callbackObj)
 end
 
-function var_0_0.playRootAnim(arg_38_0, arg_38_1, arg_38_2, arg_38_3)
-	arg_38_0._animPlayerRoot:Play(arg_38_1, arg_38_2, arg_38_3)
+function CharacterDestinyStoneView:playRootAnim(name, callback, callbackObj)
+	self._animPlayerRoot:Play(name, callback, callbackObj)
 end
 
-function var_0_0.playUnlockstoneAnim(arg_39_0, arg_39_1, arg_39_2, arg_39_3)
-	arg_39_0._animPlayerUnlockStone:Play(arg_39_1, arg_39_2, arg_39_3)
+function CharacterDestinyStoneView:playUnlockstoneAnim(name, callback, callbackObj)
+	self._animPlayerUnlockStone:Play(name, callback, callbackObj)
 end
 
-function var_0_0._hideRoot(arg_40_0)
-	gohelper.setActive(arg_40_0._root, false)
+function CharacterDestinyStoneView:_hideRoot()
+	gohelper.setActive(self._root, false)
 end
 
-function var_0_0._hideUnlockstone(arg_41_0)
-	gohelper.setActive(arg_41_0._gounlockstone, false)
+function CharacterDestinyStoneView:_hideUnlockstone()
+	gohelper.setActive(self._gounlockstone, false)
 
-	arg_41_0._openUnlockStoneView = false
+	self._openUnlockStoneView = false
 end
 
-function var_0_0.onClose(arg_42_0)
+function CharacterDestinyStoneView:_showReshape(show, isPlayAnim)
+	self._isShowReshape = show
+
+	TaskDispatcher.cancelTask(self._showReshapeEffect, self)
+
+	if isPlayAnim then
+		local animName = show and CharacterDestinyEnum.StoneViewAnim.Switch_reshape or CharacterDestinyEnum.StoneViewAnim.Switch_normal
+
+		self._animRoot:Play(animName, 0, 0)
+		TaskDispatcher.runDelay(self._showReshapeEffect, self, 0.16)
+	else
+		self:_showReshapeEffect()
+	end
+
+	local isEquipReshapeAttr = self._heroMO.destinyStoneMo:getEquipReshapeStoneCo(self._curStoneMo) ~= nil
+	local isShowTip = show and not isEquipReshapeAttr
+
+	gohelper.setActive(self._gounlocktips, isShowTip)
+end
+
+function CharacterDestinyStoneView:_showReshapeEffect()
+	gohelper.setActive(self._goeffect, not self._isShowReshape)
+	gohelper.setActive(self._goreshapeeffect, self._isShowReshape)
+end
+
+function CharacterDestinyStoneView:_refreshReshape()
+	local descList = self._curStoneMo:getReshapeDesc()
+	local count = 0
+	local isEquipReshapeAttr = self._heroMO.destinyStoneMo:getEquipReshapeStoneCo(self._curStoneMo) ~= nil
+
+	if descList then
+		count = #descList
+
+		for i = 1, count do
+			local item = self._reshapeItems[i]
+			local lang = luaLang("character_destinystone_reshape_lv")
+
+			item.titleTxt.text = GameUtil.getSubPlaceholderLuaLangOneParam(lang, i)
+			item.skillDesc = MonoHelper.addNoUpdateLuaComOnceToGo(item.descTxt.gameObject, SkillDescComp)
+
+			item.skillDesc:updateInfo(item.descTxt, descList[i], self._heroMO.heroId)
+			item.skillDesc:setTipParam(0, Vector2(300, 100))
+
+			item.cg.alpha = isEquipReshapeAttr and 1 or 0.43
+		end
+	end
+
+	for i = 1, #self._reshapeItems do
+		gohelper.setActive(self._reshapeItems[i].go, i <= count)
+	end
+end
+
+function CharacterDestinyStoneView:_initReshapeItem()
+	gohelper.setActive(self._goreshapeItem, false)
+
+	self._reshapeItems = self:getUserDataTb_()
+
+	for index = 1, 5 do
+		local item = self._reshapeItems[index]
+
+		if not item then
+			item = self:getUserDataTb_()
+
+			local root = gohelper.findChild(self._goreshapeeffect, index)
+			local go = gohelper.clone(self._goreshapeItem, root, "item" .. index)
+
+			item.go = root
+			item.descTxt = gohelper.findChildText(go, "Viewport/Content/#go_reshapeItem")
+			item.titleTxt = gohelper.findChildText(go, "Viewport/Content/#go_reshapeItem/title")
+			item.cg = root:GetComponent(typeof(UnityEngine.CanvasGroup))
+			self._reshapeItems[index] = item
+
+			gohelper.setActive(go, true)
+		end
+	end
+end
+
+function CharacterDestinyStoneView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_43_0)
-	arg_43_0:_removeEvents()
-	arg_43_0._simagestone:UnLoadImage()
-	arg_43_0._simagepre:UnLoadImage()
-	arg_43_0._simagenext:UnLoadImage()
-	TaskDispatcher.cancelTask(arg_43_0._cutPreStoneCB, arg_43_0)
-	TaskDispatcher.cancelTask(arg_43_0._cutNextStoneCB, arg_43_0)
+function CharacterDestinyStoneView:onDestroyView()
+	self:_removeEvents()
+	self._simagestone:UnLoadImage()
+	self._simagepre:UnLoadImage()
+	self._simagenext:UnLoadImage()
+	self._simagereshape:UnLoadImage()
+	self._simagestoneName:UnLoadImage()
+	TaskDispatcher.cancelTask(self._cutPreStoneCB, self)
+	TaskDispatcher.cancelTask(self._cutNextStoneCB, self)
+	TaskDispatcher.cancelTask(self._showReshapeEffect, self)
 end
 
-return var_0_0
+return CharacterDestinyStoneView

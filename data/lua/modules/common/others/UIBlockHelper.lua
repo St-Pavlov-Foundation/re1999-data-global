@@ -1,124 +1,126 @@
-﻿module("modules.common.others.UIBlockHelper", package.seeall)
+﻿-- chunkname: @modules/common/others/UIBlockHelper.lua
 
-local var_0_0 = class("UIBlockHelper")
+module("modules.common.others.UIBlockHelper", package.seeall)
 
-function var_0_0._init(arg_1_0)
-	if not arg_1_0._inited then
-		arg_1_0._inited = true
-		arg_1_0._blockTimeDict = {}
-		arg_1_0._blockViewDict = {}
-		arg_1_0._blockViewCount = {}
-		arg_1_0._nextRemoveBlockTime = 0
+local UIBlockHelper = class("UIBlockHelper")
 
-		setmetatable(arg_1_0._blockViewCount, {
+function UIBlockHelper:_init()
+	if not self._inited then
+		self._inited = true
+		self._blockTimeDict = {}
+		self._blockViewDict = {}
+		self._blockViewCount = {}
+		self._nextRemoveBlockTime = 0
+
+		setmetatable(self._blockViewCount, {
 			__index = function()
 				return 0
 			end
 		})
-		ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_1_0._onCloseView, arg_1_0)
+		ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, self._onCloseView, self)
 	end
 end
 
-function var_0_0.startBlock(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	arg_3_0:_init()
+function UIBlockHelper:startBlock(key, time, bindViewName)
+	self:_init()
 
-	if arg_3_0._blockTimeDict[arg_3_1] and arg_3_0._blockViewDict[arg_3_1] ~= arg_3_3 then
+	if self._blockTimeDict[key] and self._blockViewDict[key] ~= bindViewName then
 		logError("不支持改变绑定的界面")
 
 		return
 	end
 
-	arg_3_2 = arg_3_2 or 0.1
+	time = time or 0.1
 
-	UIBlockMgr.instance:startBlock(arg_3_1)
+	UIBlockMgr.instance:startBlock(key)
 
-	if arg_3_3 and not arg_3_0._blockTimeDict[arg_3_1] then
-		arg_3_0._blockViewDict[arg_3_1] = arg_3_3
-		arg_3_0._blockViewCount[arg_3_3] = arg_3_0._blockViewCount[arg_3_3] + 1
+	if bindViewName and not self._blockTimeDict[key] then
+		self._blockViewDict[key] = bindViewName
+		self._blockViewCount[bindViewName] = self._blockViewCount[bindViewName] + 1
 	end
 
-	arg_3_0._blockTimeDict[arg_3_1] = UnityEngine.Time.time + arg_3_2
+	self._blockTimeDict[key] = UnityEngine.Time.time + time
 
-	arg_3_0:_checkNextRemoveBlock()
+	self:_checkNextRemoveBlock()
 end
 
-function var_0_0.endBlock(arg_4_0, arg_4_1)
-	if not arg_4_0._blockTimeDict or not arg_4_0._blockTimeDict[arg_4_1] then
+function UIBlockHelper:endBlock(key)
+	if not self._blockTimeDict or not self._blockTimeDict[key] then
 		return
 	end
 
-	arg_4_0:_endBlock(arg_4_1)
-	arg_4_0:_checkNextRemoveBlock()
+	self:_endBlock(key)
+	self:_checkNextRemoveBlock()
 end
 
-function var_0_0._checkNextRemoveBlock(arg_5_0)
-	local var_5_0 = UnityEngine.Time.time
-	local var_5_1 = math.huge
+function UIBlockHelper:_checkNextRemoveBlock()
+	local nowTime = UnityEngine.Time.time
+	local nextTime = math.huge
 
-	for iter_5_0, iter_5_1 in pairs(arg_5_0._blockTimeDict) do
-		if iter_5_1 < var_5_0 then
-			arg_5_0:endBlock(iter_5_0)
-		elseif iter_5_1 < var_5_1 then
-			var_5_1 = iter_5_1
+	for key, time in pairs(self._blockTimeDict) do
+		if time < nowTime then
+			self:endBlock(key)
+		elseif time < nextTime then
+			nextTime = time
 		end
 	end
 
-	if var_5_1 ~= math.huge then
-		if var_5_1 ~= arg_5_0._nextRemoveBlockTime then
-			arg_5_0._nextRemoveBlockTime = var_5_1
+	if nextTime ~= math.huge then
+		if nextTime ~= self._nextRemoveBlockTime then
+			self._nextRemoveBlockTime = nextTime
 
-			TaskDispatcher.cancelTask(arg_5_0._checkNextRemoveBlock, arg_5_0)
-			TaskDispatcher.runDelay(arg_5_0._checkNextRemoveBlock, arg_5_0, var_5_1 - var_5_0)
+			TaskDispatcher.cancelTask(self._checkNextRemoveBlock, self)
+			TaskDispatcher.runDelay(self._checkNextRemoveBlock, self, nextTime - nowTime)
 		end
-	elseif arg_5_0._nextRemoveBlockTime ~= 0 then
-		arg_5_0._nextRemoveBlockTime = 0
+	elseif self._nextRemoveBlockTime ~= 0 then
+		self._nextRemoveBlockTime = 0
 
-		TaskDispatcher.cancelTask(arg_5_0._checkNextRemoveBlock, arg_5_0)
+		TaskDispatcher.cancelTask(self._checkNextRemoveBlock, self)
 	end
 end
 
-function var_0_0._endBlock(arg_6_0, arg_6_1)
-	UIBlockMgr.instance:endBlock(arg_6_1)
+function UIBlockHelper:_endBlock(key)
+	UIBlockMgr.instance:endBlock(key)
 
-	arg_6_0._blockTimeDict[arg_6_1] = nil
+	self._blockTimeDict[key] = nil
 
-	if arg_6_0._blockViewDict[arg_6_1] then
-		local var_6_0 = arg_6_0._blockViewDict[arg_6_1]
+	if self._blockViewDict[key] then
+		local bindViewName = self._blockViewDict[key]
 
-		arg_6_0._blockViewCount[var_6_0] = arg_6_0._blockViewCount[var_6_0] - 1
+		self._blockViewCount[bindViewName] = self._blockViewCount[bindViewName] - 1
 
-		if arg_6_0._blockViewCount[var_6_0] == 0 then
-			arg_6_0._blockViewCount[var_6_0] = nil
+		if self._blockViewCount[bindViewName] == 0 then
+			self._blockViewCount[bindViewName] = nil
 		end
 	end
 end
 
-function var_0_0._onCloseView(arg_7_0, arg_7_1)
-	if arg_7_0._blockViewCount[arg_7_1] > 0 then
-		for iter_7_0, iter_7_1 in pairs(arg_7_0._blockViewDict) do
-			if iter_7_1 == arg_7_1 then
-				arg_7_0:endBlock(iter_7_0)
+function UIBlockHelper:_onCloseView(closeViewName)
+	if self._blockViewCount[closeViewName] > 0 then
+		for key, viewName in pairs(self._blockViewDict) do
+			if viewName == closeViewName then
+				self:endBlock(key)
 			end
 		end
 
-		arg_7_0:_checkNextRemoveBlock()
+		self:_checkNextRemoveBlock()
 	end
 end
 
-function var_0_0.clearAll(arg_8_0)
-	if not arg_8_0._blockTimeDict then
+function UIBlockHelper:clearAll()
+	if not self._blockTimeDict then
 		return
 	end
 
-	for iter_8_0 in pairs(arg_8_0._blockTimeDict) do
-		arg_8_0:_endBlock(iter_8_0)
+	for key in pairs(self._blockTimeDict) do
+		self:_endBlock(key)
 	end
 
-	arg_8_0._nextRemoveBlockTime = 0
+	self._nextRemoveBlockTime = 0
 
-	TaskDispatcher.cancelTask(arg_8_0._checkNextRemoveBlock, arg_8_0)
+	TaskDispatcher.cancelTask(self._checkNextRemoveBlock, self)
 end
 
-var_0_0.instance = var_0_0.New()
+UIBlockHelper.instance = UIBlockHelper.New()
 
-return var_0_0
+return UIBlockHelper

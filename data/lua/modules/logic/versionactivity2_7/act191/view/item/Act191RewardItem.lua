@@ -1,56 +1,58 @@
-﻿module("modules.logic.versionactivity2_7.act191.view.item.Act191RewardItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/act191/view/item/Act191RewardItem.lua
 
-local var_0_0 = class("Act191RewardItem", LuaCompBase)
+module("modules.logic.versionactivity2_7.act191.view.item.Act191RewardItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0.bg = gohelper.findChildImage(arg_1_1, "bg")
-	arg_1_0.rare = gohelper.findChildImage(arg_1_1, "rare")
-	arg_1_0.icon = gohelper.findChildImage(arg_1_1, "icon")
-	arg_1_0.num = gohelper.findChildText(arg_1_1, "num")
-	arg_1_0.click = gohelper.findChildButtonWithAudio(arg_1_1, "clickArea")
-	arg_1_0.effAutoFight = gohelper.findChild(arg_1_1, "eff_AutoFight")
+local Act191RewardItem = class("Act191RewardItem", LuaCompBase)
+
+function Act191RewardItem:init(go)
+	self.go = go
+	self.bg = gohelper.findChildImage(go, "bg")
+	self.rare = gohelper.findChildImage(go, "rare")
+	self.icon = gohelper.findChildImage(go, "icon")
+	self.num = gohelper.findChildText(go, "num")
+	self.click = gohelper.findChildButtonWithAudio(go, "clickArea")
+	self.effAutoFight = gohelper.findChild(go, "eff_AutoFight")
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.click, arg_2_0.onClick, arg_2_0)
+function Act191RewardItem:addEventListeners()
+	self:addClickCb(self.click, self.onClick, self)
 end
 
-function var_0_0.setData(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0.config = lua_activity191_item.configDict[arg_3_1]
-	arg_3_0.num.text = arg_3_2
+function Act191RewardItem:setData(id, count)
+	self.config = lua_activity191_item.configDict[id]
+	self.num.text = count
 
-	if arg_3_0.config then
-		UISpriteSetMgr.instance:setAct174Sprite(arg_3_0.icon, arg_3_0.config.icon)
+	if self.config then
+		UISpriteSetMgr.instance:setAct174Sprite(self.icon, self.config.icon)
 
-		if arg_3_0.config.rare ~= 0 then
-			UISpriteSetMgr.instance:setAct174Sprite(arg_3_0.rare, "act174_roleframe_" .. arg_3_0.config.rare)
+		if self.config.rare ~= 0 then
+			UISpriteSetMgr.instance:setAct174Sprite(self.rare, "act174_roleframe_" .. self.config.rare)
 		end
 
-		gohelper.setActive(arg_3_0.rare, arg_3_0.config.rare ~= 0)
+		gohelper.setActive(self.rare, self.config.rare ~= 0)
 	end
 end
 
-function var_0_0.onClick(arg_4_0)
-	if arg_4_0.param then
-		Act191StatController.instance:statButtonClick(arg_4_0.param.fromView, string.format("clickArea_%s_%s", arg_4_0.param.index, arg_4_0.config.name))
+function Act191RewardItem:onClick()
+	if self.param then
+		Act191StatController.instance:statButtonClick(self.param.fromView, string.format("clickArea_%s_%s", self.param.index, self.config.name))
 	end
 
-	if arg_4_0.config then
-		Activity191Controller.instance:openItemView(arg_4_0.config)
+	if self.config then
+		Activity191Controller.instance:openItemView(self.config)
 	end
 end
 
-function var_0_0.setClickEnable(arg_5_0, arg_5_1)
-	gohelper.setActive(arg_5_0.click, arg_5_1)
+function Act191RewardItem:setClickEnable(bool)
+	gohelper.setActive(self.click, bool)
 end
 
-function var_0_0.setExtraParam(arg_6_0, arg_6_1)
-	arg_6_0.param = arg_6_1
+function Act191RewardItem:setExtraParam(param)
+	self.param = param
 end
 
-function var_0_0.showAutoEff(arg_7_0, arg_7_1)
-	gohelper.setActive(arg_7_0.effAutoFight, arg_7_1)
+function Act191RewardItem:showAutoEff(bool)
+	gohelper.setActive(self.effAutoFight, bool)
 end
 
-return var_0_0
+return Act191RewardItem

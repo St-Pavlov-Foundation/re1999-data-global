@@ -1,222 +1,224 @@
-﻿module("modules.logic.guide.controller.action.GuideActionBuilder", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/GuideActionBuilder.lua
 
-local var_0_0 = class("GuideActionBuilder")
+module("modules.logic.guide.controller.action.GuideActionBuilder", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._ActionType2Impl = {}
-	var_0_0.ActionType2Impl = arg_1_0._ActionType2Impl
-	arg_1_0._ActionType2Impl[101] = GuideActionPlayStory
-	arg_1_0._ActionType2Impl[102] = GuideActionEnterEpisode
-	arg_1_0._ActionType2Impl[103] = GuideActionExitEpisode
-	arg_1_0._ActionType2Impl[104] = GuideActionCloseView
-	arg_1_0._ActionType2Impl[105] = GuideActionOpenView
-	arg_1_0._ActionType2Impl[106] = GuideActionEnterScene
-	arg_1_0._ActionType2Impl[107] = GuideActionOpenHelpView
-	arg_1_0._ActionType2Impl[108] = GuideActionSkillContinue
-	arg_1_0._ActionType2Impl[109] = GuideActionEntityDeadContinue
-	arg_1_0._ActionType2Impl[110] = GuideActionJump
-	arg_1_0._ActionType2Impl[111] = GuideActionEnableClick
-	arg_1_0._ActionType2Impl[112] = GuideActionEnablePress
-	arg_1_0._ActionType2Impl[113] = GuideActionDispatchFightEvent
-	arg_1_0._ActionType2Impl[114] = GuideActionTriggerGuide
-	arg_1_0._ActionType2Impl[115] = GuideActionDispatchEvent
-	arg_1_0._ActionType2Impl[116] = GuideActionSetFlag
-	arg_1_0._ActionType2Impl[117] = GuideActionPlayEffect
-	arg_1_0._ActionType2Impl[118] = GuideActionPlayAnimator
-	arg_1_0._ActionType2Impl[119] = GuideActionFightVictory
-	arg_1_0._ActionType2Impl[120] = GuideActionLockGuide
-	arg_1_0._ActionType2Impl[121] = GuideActionRoomFixBlockMaskPos
-	arg_1_0._ActionType2Impl[122] = GuideActionRoomFocusBlock
-	arg_1_0._ActionType2Impl[123] = GuideActionOpenCommonPropView
-	arg_1_0._ActionType2Impl[125] = GuideActionSetNextStepGOPath
-	arg_1_0._ActionType2Impl[126] = GuideActionShowToast
-	arg_1_0._ActionType2Impl[127] = GuideActionExploreShowOutline
-	arg_1_0._ActionType2Impl[128] = GuideActionFinishMapElement
-	arg_1_0._ActionType2Impl[129] = GuideActionExploreUseItem
-	arg_1_0._ActionType2Impl[130] = GuideActionRoomFocusBlockBuildingPut
-	arg_1_0._ActionType2Impl[131] = GuideActionCondition
-	arg_1_0._ActionType2Impl[132] = GuideActionAdditionCondition
-	arg_1_0._ActionType2Impl[201] = WaitGuideActionClickMask
-	arg_1_0._ActionType2Impl[202] = WaitGuideActionClickAnywhere
-	arg_1_0._ActionType2Impl[203] = WaitGuideActionStoryStart
-	arg_1_0._ActionType2Impl[204] = WaitGuideActionStoryFinish
-	arg_1_0._ActionType2Impl[205] = WaitGuideActionEnterEpisode
-	arg_1_0._ActionType2Impl[206] = WaitGuideActionOpenFinishView
-	arg_1_0._ActionType2Impl[207] = WaitGuideActionEnterScene
-	arg_1_0._ActionType2Impl[208] = WaitGuideActionBackToMain
-	arg_1_0._ActionType2Impl[209] = WaitGuideActionCloseView
-	arg_1_0._ActionType2Impl[210] = WaitGuideActionWaitSeconds
-	arg_1_0._ActionType2Impl[211] = WaitGuideActionOpenView
-	arg_1_0._ActionType2Impl[212] = WaitGuideActionAnyTouch
-	arg_1_0._ActionType2Impl[213] = WaitGuideActionEnterPassedEpisode
-	arg_1_0._ActionType2Impl[214] = WaitGuideActionEnterFightSubEntity
-	arg_1_0._ActionType2Impl[215] = WaitGuideActionBreakFightResultClose
-	arg_1_0._ActionType2Impl[216] = WaitGuideActionOpenViewWithEpisode
-	arg_1_0._ActionType2Impl[217] = WaitGuideActionOpenViewWithCondition
-	arg_1_0._ActionType2Impl[218] = WaitGuideActionRoomBlockClick
-	arg_1_0._ActionType2Impl[219] = WaitGuideActionRoomEnterMode
-	arg_1_0._ActionType2Impl[220] = WaitGuideActionRoomPlaceBlock
-	arg_1_0._ActionType2Impl[221] = WaitGuideActionWaitForGuideFinish
-	arg_1_0._ActionType2Impl[222] = WaitGuideActionRoomCanGetResources
-	arg_1_0._ActionType2Impl[223] = WaitGuideActionRoomInitBuildingLvUp
-	arg_1_0._ActionType2Impl[224] = WaitGuideActionHasEnoughMaterial
-	arg_1_0._ActionType2Impl[225] = WaitGuideActionRoomBlockSatisfy
-	arg_1_0._ActionType2Impl[226] = WaitGuideActionEnterRoomOrOpenView
-	arg_1_0._ActionType2Impl[227] = WaitGuideActionOpenDungeonMapView
-	arg_1_0._ActionType2Impl[228] = WaitGuideActionRoomLineLvUpSatisfy
-	arg_1_0._ActionType2Impl[229] = WaitGuideNotPressing
-	arg_1_0._ActionType2Impl[230] = WaitGuideActionOpenViewInFirstWithCondition
-	arg_1_0._ActionType2Impl[231] = WaitGuideActionSeasonRetail
-	arg_1_0._ActionType2Impl[232] = WaitGuideActionExploreLoaded
-	arg_1_0._ActionType2Impl[233] = WaitGuideActionExploreTweenCamera
-	arg_1_0._ActionType2Impl[234] = WaitGuideActionExploreClickNode
-	arg_1_0._ActionType2Impl[235] = WaitGuideActionExploreTrigger
-	arg_1_0._ActionType2Impl[236] = WaitGuideActionExploreSetFov
-	arg_1_0._ActionType2Impl[237] = WaitGuideActionExploreHeroStopMove
-	arg_1_0._ActionType2Impl[238] = WaitGuideActionExploreTransferFinish
-	arg_1_0._ActionType2Impl[239] = WaitGuideActionEnterBattle
-	arg_1_0._ActionType2Impl[240] = WaitGuideActionRoleStoryTicketExchange
-	arg_1_0._ActionType2Impl[241] = WaitGuideActionRoomGetBuilding
-	arg_1_0._ActionType2Impl[242] = WaitGuideActionRoomPutBuilding
-	arg_1_0._ActionType2Impl[243] = WaitGuideActionRoomBuildingClick
-	arg_1_0._ActionType2Impl[244] = WaitGuideActionGetCritter
-	arg_1_0._ActionType2Impl[245] = WaitGuideActionRoomCritterMood
-	arg_1_0._ActionType2Impl[246] = WaitGuideActionRoomBuildingPlaceBlock
-	arg_1_0._ActionType2Impl[247] = WaitGuideActionRoomPlan
-	arg_1_0._ActionType2Impl[248] = WaitGuideActionRoomTransport
-	arg_1_0._ActionType2Impl[249] = WaitGuideActionPlayStoryStep
-	arg_1_0._ActionType2Impl[250] = WaitGuideActionEnterChapter
-	arg_1_0._ActionType2Impl[251] = WaitGuideActionSurvivalBuildingLv
-	arg_1_0._ActionType2Impl[301] = WaitGuideActionFightRoundBegin
-	arg_1_0._ActionType2Impl[302] = WaitGuideActionFightRoundEnd
-	arg_1_0._ActionType2Impl[303] = WaitGuideActionFightResultClose
-	arg_1_0._ActionType2Impl[304] = WaitGuideActionFightDragCard
-	arg_1_0._ActionType2Impl[305] = WaitGuideActionFightEnd
-	arg_1_0._ActionType2Impl[306] = WaitGuideActionSkillPause
-	arg_1_0._ActionType2Impl[307] = WaitGuideActionEntityDeadPause
-	arg_1_0._ActionType2Impl[308] = WaitGuideActionUseActPoint
-	arg_1_0._ActionType2Impl[309] = WaitGuideActionFightWaveBegin
-	arg_1_0._ActionType2Impl[310] = WaitGuideActionFightSkillPlayFinish
-	arg_1_0._ActionType2Impl[311] = WaitGuideActionFightEvent
-	arg_1_0._ActionType2Impl[312] = WaitGuideActionCardEndPause
-	arg_1_0._ActionType2Impl[313] = WaitGuideActionAnyEvent
-	arg_1_0._ActionType2Impl[314] = WaitGuideActionFightEndPause
-	arg_1_0._ActionType2Impl[315] = WaitGuideActionFightPauseGeneral
-	arg_1_0._ActionType2Impl[316] = WaitGuideActionFightRoundXFail
-	arg_1_0._ActionType2Impl[317] = WaitGuideActionFightEndPause_sp
-	arg_1_0._ActionType2Impl[318] = WaitGuideActionPauseGeneral
-	arg_1_0._ActionType2Impl[319] = WaitGuideActionFightGetSpecificCard
-	arg_1_0._ActionType2Impl[320] = WaitGuideActionAnyEventWithCondition
-	arg_1_0._ActionType2Impl[401] = WaitGuideActionSpecialEvent
-	arg_1_0._ActionType2Impl[402] = GuideActionPreloadFirstFight
-	arg_1_0._ActionType2Impl[998] = GuideActionAppendStep
-	arg_1_0._ActionType2Impl[999] = GuideActionEmptyStep
+local GuideActionBuilder = class("GuideActionBuilder")
+
+function GuideActionBuilder:ctor()
+	self._ActionType2Impl = {}
+	GuideActionBuilder.ActionType2Impl = self._ActionType2Impl
+	self._ActionType2Impl[101] = GuideActionPlayStory
+	self._ActionType2Impl[102] = GuideActionEnterEpisode
+	self._ActionType2Impl[103] = GuideActionExitEpisode
+	self._ActionType2Impl[104] = GuideActionCloseView
+	self._ActionType2Impl[105] = GuideActionOpenView
+	self._ActionType2Impl[106] = GuideActionEnterScene
+	self._ActionType2Impl[107] = GuideActionOpenHelpView
+	self._ActionType2Impl[108] = GuideActionSkillContinue
+	self._ActionType2Impl[109] = GuideActionEntityDeadContinue
+	self._ActionType2Impl[110] = GuideActionJump
+	self._ActionType2Impl[111] = GuideActionEnableClick
+	self._ActionType2Impl[112] = GuideActionEnablePress
+	self._ActionType2Impl[113] = GuideActionDispatchFightEvent
+	self._ActionType2Impl[114] = GuideActionTriggerGuide
+	self._ActionType2Impl[115] = GuideActionDispatchEvent
+	self._ActionType2Impl[116] = GuideActionSetFlag
+	self._ActionType2Impl[117] = GuideActionPlayEffect
+	self._ActionType2Impl[118] = GuideActionPlayAnimator
+	self._ActionType2Impl[119] = GuideActionFightVictory
+	self._ActionType2Impl[120] = GuideActionLockGuide
+	self._ActionType2Impl[121] = GuideActionRoomFixBlockMaskPos
+	self._ActionType2Impl[122] = GuideActionRoomFocusBlock
+	self._ActionType2Impl[123] = GuideActionOpenCommonPropView
+	self._ActionType2Impl[125] = GuideActionSetNextStepGOPath
+	self._ActionType2Impl[126] = GuideActionShowToast
+	self._ActionType2Impl[127] = GuideActionExploreShowOutline
+	self._ActionType2Impl[128] = GuideActionFinishMapElement
+	self._ActionType2Impl[129] = GuideActionExploreUseItem
+	self._ActionType2Impl[130] = GuideActionRoomFocusBlockBuildingPut
+	self._ActionType2Impl[131] = GuideActionCondition
+	self._ActionType2Impl[132] = GuideActionAdditionCondition
+	self._ActionType2Impl[201] = WaitGuideActionClickMask
+	self._ActionType2Impl[202] = WaitGuideActionClickAnywhere
+	self._ActionType2Impl[203] = WaitGuideActionStoryStart
+	self._ActionType2Impl[204] = WaitGuideActionStoryFinish
+	self._ActionType2Impl[205] = WaitGuideActionEnterEpisode
+	self._ActionType2Impl[206] = WaitGuideActionOpenFinishView
+	self._ActionType2Impl[207] = WaitGuideActionEnterScene
+	self._ActionType2Impl[208] = WaitGuideActionBackToMain
+	self._ActionType2Impl[209] = WaitGuideActionCloseView
+	self._ActionType2Impl[210] = WaitGuideActionWaitSeconds
+	self._ActionType2Impl[211] = WaitGuideActionOpenView
+	self._ActionType2Impl[212] = WaitGuideActionAnyTouch
+	self._ActionType2Impl[213] = WaitGuideActionEnterPassedEpisode
+	self._ActionType2Impl[214] = WaitGuideActionEnterFightSubEntity
+	self._ActionType2Impl[215] = WaitGuideActionBreakFightResultClose
+	self._ActionType2Impl[216] = WaitGuideActionOpenViewWithEpisode
+	self._ActionType2Impl[217] = WaitGuideActionOpenViewWithCondition
+	self._ActionType2Impl[218] = WaitGuideActionRoomBlockClick
+	self._ActionType2Impl[219] = WaitGuideActionRoomEnterMode
+	self._ActionType2Impl[220] = WaitGuideActionRoomPlaceBlock
+	self._ActionType2Impl[221] = WaitGuideActionWaitForGuideFinish
+	self._ActionType2Impl[222] = WaitGuideActionRoomCanGetResources
+	self._ActionType2Impl[223] = WaitGuideActionRoomInitBuildingLvUp
+	self._ActionType2Impl[224] = WaitGuideActionHasEnoughMaterial
+	self._ActionType2Impl[225] = WaitGuideActionRoomBlockSatisfy
+	self._ActionType2Impl[226] = WaitGuideActionEnterRoomOrOpenView
+	self._ActionType2Impl[227] = WaitGuideActionOpenDungeonMapView
+	self._ActionType2Impl[228] = WaitGuideActionRoomLineLvUpSatisfy
+	self._ActionType2Impl[229] = WaitGuideNotPressing
+	self._ActionType2Impl[230] = WaitGuideActionOpenViewInFirstWithCondition
+	self._ActionType2Impl[231] = WaitGuideActionSeasonRetail
+	self._ActionType2Impl[232] = WaitGuideActionExploreLoaded
+	self._ActionType2Impl[233] = WaitGuideActionExploreTweenCamera
+	self._ActionType2Impl[234] = WaitGuideActionExploreClickNode
+	self._ActionType2Impl[235] = WaitGuideActionExploreTrigger
+	self._ActionType2Impl[236] = WaitGuideActionExploreSetFov
+	self._ActionType2Impl[237] = WaitGuideActionExploreHeroStopMove
+	self._ActionType2Impl[238] = WaitGuideActionExploreTransferFinish
+	self._ActionType2Impl[239] = WaitGuideActionEnterBattle
+	self._ActionType2Impl[240] = WaitGuideActionRoleStoryTicketExchange
+	self._ActionType2Impl[241] = WaitGuideActionRoomGetBuilding
+	self._ActionType2Impl[242] = WaitGuideActionRoomPutBuilding
+	self._ActionType2Impl[243] = WaitGuideActionRoomBuildingClick
+	self._ActionType2Impl[244] = WaitGuideActionGetCritter
+	self._ActionType2Impl[245] = WaitGuideActionRoomCritterMood
+	self._ActionType2Impl[246] = WaitGuideActionRoomBuildingPlaceBlock
+	self._ActionType2Impl[247] = WaitGuideActionRoomPlan
+	self._ActionType2Impl[248] = WaitGuideActionRoomTransport
+	self._ActionType2Impl[249] = WaitGuideActionPlayStoryStep
+	self._ActionType2Impl[250] = WaitGuideActionEnterChapter
+	self._ActionType2Impl[251] = WaitGuideActionSurvivalBuildingLv
+	self._ActionType2Impl[301] = WaitGuideActionFightRoundBegin
+	self._ActionType2Impl[302] = WaitGuideActionFightRoundEnd
+	self._ActionType2Impl[303] = WaitGuideActionFightResultClose
+	self._ActionType2Impl[304] = WaitGuideActionFightDragCard
+	self._ActionType2Impl[305] = WaitGuideActionFightEnd
+	self._ActionType2Impl[306] = WaitGuideActionSkillPause
+	self._ActionType2Impl[307] = WaitGuideActionEntityDeadPause
+	self._ActionType2Impl[308] = WaitGuideActionUseActPoint
+	self._ActionType2Impl[309] = WaitGuideActionFightWaveBegin
+	self._ActionType2Impl[310] = WaitGuideActionFightSkillPlayFinish
+	self._ActionType2Impl[311] = WaitGuideActionFightEvent
+	self._ActionType2Impl[312] = WaitGuideActionCardEndPause
+	self._ActionType2Impl[313] = WaitGuideActionAnyEvent
+	self._ActionType2Impl[314] = WaitGuideActionFightEndPause
+	self._ActionType2Impl[315] = WaitGuideActionFightPauseGeneral
+	self._ActionType2Impl[316] = WaitGuideActionFightRoundXFail
+	self._ActionType2Impl[317] = WaitGuideActionFightEndPause_sp
+	self._ActionType2Impl[318] = WaitGuideActionPauseGeneral
+	self._ActionType2Impl[319] = WaitGuideActionFightGetSpecificCard
+	self._ActionType2Impl[320] = WaitGuideActionAnyEventWithCondition
+	self._ActionType2Impl[401] = WaitGuideActionSpecialEvent
+	self._ActionType2Impl[402] = GuideActionPreloadFirstFight
+	self._ActionType2Impl[998] = GuideActionAppendStep
+	self._ActionType2Impl[999] = GuideActionEmptyStep
 end
 
-function var_0_0._noDisplay(arg_2_0, arg_2_1)
-	return not string.nilorempty(arg_2_1.tipsContent) and not string.nilorempty(arg_2_1.uiInfo)
+function GuideActionBuilder:_noDisplay(stepCO)
+	return not string.nilorempty(stepCO.tipsContent) and not string.nilorempty(stepCO.uiInfo)
 end
 
-function var_0_0.buildActionFlow(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	local var_3_0 = arg_3_3 > 0 and arg_3_3 or arg_3_1
-	local var_3_1 = GuideActionFlow.New(arg_3_1, arg_3_2, arg_3_3)
+function GuideActionBuilder:buildActionFlow(guideId, stepId, againGuideId)
+	local stepGuideId = againGuideId > 0 and againGuideId or guideId
+	local flow = GuideActionFlow.New(guideId, stepId, againGuideId)
 
-	arg_3_0:addActionToFlow(var_3_1, var_3_0, arg_3_2)
+	self:addActionToFlow(flow, stepGuideId, stepId)
 
-	return var_3_1
+	return flow
 end
 
-function var_0_0.addActionToFlow(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
-	if not arg_4_1 then
+function GuideActionBuilder:addActionToFlow(flow, guideId, stepId, addtion)
+	if not flow then
 		return
 	end
 
-	local var_4_0 = arg_4_4 and GuideConfig.instance:getAddtionStepCfg(arg_4_2, arg_4_3) or GuideConfig.instance:getStepCO(arg_4_2, arg_4_3)
+	local stepCO = addtion and GuideConfig.instance:getAddtionStepCfg(guideId, stepId) or GuideConfig.instance:getStepCO(guideId, stepId)
 
-	if not var_4_0 then
-		logError(string.format("guide_%d_%d stepCO is nil", arg_4_2, arg_4_3))
+	if not stepCO then
+		logError(string.format("guide_%d_%d stepCO is nil", guideId, stepId))
 
 		return
 	end
 
-	local var_4_1 = GuideModel.instance:getStepGOPath(arg_4_2, arg_4_3)
-	local var_4_2 = var_4_0.delay
+	local goPath = GuideModel.instance:getStepGOPath(guideId, stepId)
+	local delay = stepCO.delay
 
-	if var_4_2 > 0 then
-		local var_4_3 = WaitGuideActionWaitSeconds.New(arg_4_2, arg_4_3, var_4_2)
+	if delay > 0 then
+		local action = WaitGuideActionWaitSeconds.New(guideId, stepId, delay)
 
-		arg_4_1:addWork(var_4_3)
+		flow:addWork(action)
 	end
 
-	if not string.nilorempty(var_4_1) then
-		local var_4_4 = GuideActionFindGO.New(arg_4_2, arg_4_3, var_4_1)
+	if not string.nilorempty(goPath) then
+		local action = GuideActionFindGO.New(guideId, stepId, goPath)
 
-		arg_4_1:addWork(var_4_4)
+		flow:addWork(action)
 	end
 
-	if var_4_0.audio and var_4_0.audio > 0 then
-		local var_4_5 = GuideActionPlayAudio.New(arg_4_2, arg_4_3, var_4_0.audio)
+	if stepCO.audio and stepCO.audio > 0 then
+		local action = GuideActionPlayAudio.New(guideId, stepId, stepCO.audio)
 
-		arg_4_1:addWork(var_4_5)
+		flow:addWork(action)
 	end
 
-	if not string.nilorempty(var_4_0.tipsContent) or not string.nilorempty(var_4_1) or not string.nilorempty(var_4_0.storyContent) then
-		local var_4_6 = GuideActionOpenMaskHole.New(arg_4_2, arg_4_3)
+	if not string.nilorempty(stepCO.tipsContent) or not string.nilorempty(goPath) or not string.nilorempty(stepCO.storyContent) then
+		local action = GuideActionOpenMaskHole.New(guideId, stepId)
 
-		arg_4_1:addWork(var_4_6)
+		flow:addWork(action)
 	end
 
-	if not string.nilorempty(var_4_0.action) then
-		local var_4_7 = string.split(var_4_0.action, "|")
+	if not string.nilorempty(stepCO.action) then
+		local actionStrs = string.split(stepCO.action, "|")
 
-		for iter_4_0 = 1, #var_4_7 do
-			local var_4_8, var_4_9 = string.find(var_4_7[iter_4_0], "#")
-			local var_4_10
-			local var_4_11
+		for i = 1, #actionStrs do
+			local index, _ = string.find(actionStrs[i], "#")
+			local actionType, actionParam
 
-			if var_4_8 then
-				var_4_10 = tonumber(string.sub(var_4_7[iter_4_0], 1, var_4_8 - 1))
-				var_4_11 = string.sub(var_4_7[iter_4_0], var_4_8 + 1)
+			if index then
+				actionType = tonumber(string.sub(actionStrs[i], 1, index - 1))
+				actionParam = string.sub(actionStrs[i], index + 1)
 			else
-				var_4_10 = tonumber(var_4_7[iter_4_0]) or var_4_7[iter_4_0]
+				actionType = tonumber(actionStrs[i]) or actionStrs[i]
 			end
 
-			local var_4_12 = arg_4_0._ActionType2Impl[var_4_10]
+			local actionCls = self._ActionType2Impl[actionType]
 
-			if var_4_12 then
-				local var_4_13 = var_4_12.New(arg_4_2, arg_4_3, var_4_11)
+			if actionCls then
+				local action = actionCls.New(guideId, stepId, actionParam)
 
-				arg_4_1:addWork(var_4_13)
+				flow:addWork(action)
 			else
-				logError("guide action type " .. var_4_10 .. " not exist")
+				logError("guide action type " .. actionType .. " not exist")
 			end
 		end
 	end
 
-	if #arg_4_1:getWorkList() == 0 then
-		logNormal(string.format("<color=#FFA500>guide_%d_%d has no action!</color>", arg_4_2, arg_4_3))
+	if #flow:getWorkList() == 0 then
+		logNormal(string.format("<color=#FFA500>guide_%d_%d has no action!</color>", guideId, stepId))
 	end
 end
 
-function var_0_0.buildAction(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0, var_5_1 = string.find(arg_5_2, "#")
-	local var_5_2
-	local var_5_3
+function GuideActionBuilder.buildAction(guideId, stepId, actionStr)
+	local index, _ = string.find(actionStr, "#")
+	local actionType, actionParam
 
-	if var_5_0 then
-		var_5_2 = tonumber(string.sub(arg_5_2, 1, var_5_0 - 1))
-		var_5_3 = string.sub(arg_5_2, var_5_0 + 1)
+	if index then
+		actionType = tonumber(string.sub(actionStr, 1, index - 1))
+		actionParam = string.sub(actionStr, index + 1)
 	else
-		var_5_2 = tonumber(arg_5_2) or arg_5_2
+		actionType = tonumber(actionStr) or actionStr
 	end
 
-	local var_5_4 = var_0_0.ActionType2Impl[var_5_2]
+	local actionCls = GuideActionBuilder.ActionType2Impl[actionType]
 
-	if var_5_4 then
-		return (var_5_4.New(arg_5_0, arg_5_1, var_5_3))
+	if actionCls then
+		local action = actionCls.New(guideId, stepId, actionParam)
+
+		return action
 	else
-		logError("guide action type " .. var_5_2 .. " not exist")
+		logError("guide action type " .. actionType .. " not exist")
 	end
 end
 
-return var_0_0
+return GuideActionBuilder

@@ -1,8 +1,10 @@
-﻿module("modules.logic.fight.entity.comp.buff.FightBuffFrozen", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/buff/FightBuffFrozen.lua
 
-local var_0_0 = class("FightBuffFrozen")
-local var_0_1 = 0.5
-local var_0_2 = {
+module("modules.logic.fight.entity.comp.buff.FightBuffFrozen", package.seeall)
+
+local FightBuffFrozen = class("FightBuffFrozen")
+local Duration = 0.5
+local BuffMatParam = {
 	buff_stone = {
 		"_TempOffset3",
 		"Vector4",
@@ -17,90 +19,90 @@ local var_0_2 = {
 	}
 }
 
-function var_0_0.onBuffStart(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.entity = arg_1_1
-	arg_1_0.buffMO = arg_1_2
+function FightBuffFrozen:onBuffStart(entity, buffMO)
+	self.entity = entity
+	self.buffMO = buffMO
 
-	FightController.instance:registerCallback(FightEvent.OnSpineMaterialChange, arg_1_0._onChangeMaterial, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.OnSpineMaterialChange, self._onChangeMaterial, self)
 end
 
-function var_0_0.onBuffEnd(arg_2_0)
-	FightController.instance:unregisterCallback(FightEvent.OnSpineMaterialChange, arg_2_0._onChangeMaterial, arg_2_0)
+function FightBuffFrozen:onBuffEnd()
+	FightController.instance:unregisterCallback(FightEvent.OnSpineMaterialChange, self._onChangeMaterial, self)
 end
 
-function var_0_0.reset(arg_3_0)
-	arg_3_0._preMatName = nil
+function FightBuffFrozen:reset()
+	self._preMatName = nil
 
-	FightController.instance:unregisterCallback(FightEvent.OnSpineMaterialChange, arg_3_0._onChangeMaterial, arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0._delayEnd, arg_3_0)
+	FightController.instance:unregisterCallback(FightEvent.OnSpineMaterialChange, self._onChangeMaterial, self)
+	TaskDispatcher.cancelTask(self._delayEnd, self)
 
-	if arg_3_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_3_0._tweenId)
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_3_0._tweenId = nil
+		self._tweenId = nil
 	end
 end
 
-function var_0_0.dispose(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._delayEnd, arg_4_0)
-	FightController.instance:unregisterCallback(FightEvent.OnSpineMaterialChange, arg_4_0._onChangeMaterial, arg_4_0)
+function FightBuffFrozen:dispose()
+	TaskDispatcher.cancelTask(self._delayEnd, self)
+	FightController.instance:unregisterCallback(FightEvent.OnSpineMaterialChange, self._onChangeMaterial, self)
 end
 
-function var_0_0._onChangeMaterial(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_1 ~= arg_5_0.entity.id then
+function FightBuffFrozen:_onChangeMaterial(entityId, spineMat)
+	if entityId ~= self.entity.id then
 		return
 	end
 
-	if arg_5_0._preMatName and arg_5_0._preMatName == arg_5_2.name then
+	if self._preMatName and self._preMatName == spineMat.name then
 		return
 	end
 
-	arg_5_0._preMatName = arg_5_2.name
+	self._preMatName = spineMat.name
 
-	local var_5_0 = lua_skill_buff.configDict[arg_5_0.buffMO.buffId]
-	local var_5_1 = var_0_2[var_5_0.mat]
+	local buffCO = lua_skill_buff.configDict[self.buffMO.buffId]
+	local matParam = BuffMatParam[buffCO.mat]
 
-	if not var_5_1 then
+	if not matParam then
 		return
 	end
 
-	local var_5_2 = "_Pow"
-	local var_5_3 = "_FloorAlpha"
-	local var_5_4 = "Color"
-	local var_5_5 = "Vector4"
-	local var_5_6 = arg_5_0.entity.spineRenderer and arg_5_0.entity.spineRenderer:getCloneOriginMat()
-	local var_5_7 = var_5_6 and MaterialUtil.getPropValueFromMat(var_5_6, var_5_2, var_5_4)
-	local var_5_8 = var_5_6 and MaterialUtil.getPropValueFromMat(var_5_6, var_5_3, var_5_5)
+	local propNamePow = "_Pow"
+	local propNameFloorAlpha = "_FloorAlpha"
+	local propTypePow = "Color"
+	local propTypeFloorAlpha = "Vector4"
+	local spineOriginMat = self.entity.spineRenderer and self.entity.spineRenderer:getCloneOriginMat()
+	local spineOriginPowValue = spineOriginMat and MaterialUtil.getPropValueFromMat(spineOriginMat, propNamePow, propTypePow)
+	local spineOriginFloorAlphaValue = spineOriginMat and MaterialUtil.getPropValueFromMat(spineOriginMat, propNameFloorAlpha, propTypeFloorAlpha)
 
-	if var_5_7 then
-		MaterialUtil.setPropValue(arg_5_2, var_5_2, var_5_4, var_5_7)
+	if spineOriginPowValue then
+		MaterialUtil.setPropValue(spineMat, propNamePow, propTypePow, spineOriginPowValue)
 	end
 
-	if var_5_8 then
-		MaterialUtil.setPropValue(arg_5_2, var_5_3, var_5_5, var_5_8)
+	if spineOriginFloorAlphaValue then
+		MaterialUtil.setPropValue(spineMat, propNameFloorAlpha, propTypeFloorAlpha, spineOriginFloorAlphaValue)
 	end
 
-	local var_5_9 = var_5_1[1]
-	local var_5_10 = var_5_1[2]
-	local var_5_11 = MaterialUtil.getPropValueFromStr(var_5_10, var_5_1[3])
-	local var_5_12 = MaterialUtil.getPropValueFromStr(var_5_10, var_5_1[4])
+	local propName = matParam[1]
+	local propType = matParam[2]
+	local startValue = MaterialUtil.getPropValueFromStr(propType, matParam[3])
+	local endValue = MaterialUtil.getPropValueFromStr(propType, matParam[4])
 
-	MaterialUtil.setPropValue(arg_5_2, var_5_9, var_5_10, var_5_11)
+	MaterialUtil.setPropValue(spineMat, propName, propType, startValue)
 
-	local var_5_13
-	local var_5_14 = UnityEngine.Shader.PropertyToID(var_5_9)
+	local frameValue
+	local propertyId = UnityEngine.Shader.PropertyToID(propName)
 
-	arg_5_0._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, var_0_1, function(arg_6_0)
-		var_5_13 = MaterialUtil.getLerpValue(var_5_10, var_5_11, var_5_12, arg_6_0, var_5_13)
+	self._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, Duration, function(value)
+		frameValue = MaterialUtil.getLerpValue(propType, startValue, endValue, value, frameValue)
 
-		MaterialUtil.setPropValue(arg_5_2, var_5_14, var_5_10, var_5_13)
+		MaterialUtil.setPropValue(spineMat, propertyId, propType, frameValue)
 	end)
 
-	TaskDispatcher.runDelay(arg_5_0._delayEnd, arg_5_0, var_0_1)
+	TaskDispatcher.runDelay(self._delayEnd, self, Duration)
 end
 
-function var_0_0._delayEnd(arg_7_0)
-	arg_7_0._tweenId = nil
+function FightBuffFrozen:_delayEnd()
+	self._tweenId = nil
 end
 
-return var_0_0
+return FightBuffFrozen

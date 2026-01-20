@@ -1,61 +1,63 @@
-﻿module("modules.logic.room.view.manufacture.RoomManufactureBuildingViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/manufacture/RoomManufactureBuildingViewContainer.lua
 
-local var_0_0 = class("RoomManufactureBuildingViewContainer", BaseViewContainer)
+module("modules.logic.room.view.manufacture.RoomManufactureBuildingViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoomManufactureBuildingViewContainer = class("RoomManufactureBuildingViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RoomManufactureBuildingView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_BackBtns"))
-	table.insert(var_1_0, TabViewGroup.New(2, "go_detailBanner"))
+function RoomManufactureBuildingViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RoomManufactureBuildingView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_BackBtns"))
+	table.insert(views, TabViewGroup.New(2, "go_detailBanner"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function RoomManufactureBuildingViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
-		}, nil, arg_2_0._closeCallback, nil, nil, arg_2_0)
+		}, nil, self._closeCallback, nil, nil, self)
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
-	elseif arg_2_1 == 2 then
-		arg_2_0.detailBanner = RoomManufactureBuildingDetailBanner.New()
+	elseif tabContainerId == 2 then
+		self.detailBanner = RoomManufactureBuildingDetailBanner.New()
 
 		return {
-			arg_2_0.detailBanner
+			self.detailBanner
 		}
 	end
 end
 
-function var_0_0._closeCallback(arg_3_0)
+function RoomManufactureBuildingViewContainer:_closeCallback()
 	ManufactureController.instance:resetCameraOnCloseView()
 end
 
-function var_0_0.onContainerInit(arg_4_0)
-	arg_4_0:setContainerViewBuildingUid()
+function RoomManufactureBuildingViewContainer:onContainerInit()
+	self:setContainerViewBuildingUid()
 end
 
-function var_0_0.onContainerClose(arg_5_0)
-	arg_5_0:setContainerViewBuildingUid()
+function RoomManufactureBuildingViewContainer:onContainerClose()
+	self:setContainerViewBuildingUid()
 end
 
-function var_0_0.setContainerViewBuildingUid(arg_6_0, arg_6_1)
-	arg_6_0._viewBuildingUid = arg_6_1
+function RoomManufactureBuildingViewContainer:setContainerViewBuildingUid(buildingUid)
+	self._viewBuildingUid = buildingUid
 end
 
-function var_0_0.getContainerViewBuilding(arg_7_0, arg_7_1)
-	local var_7_0 = RoomMapBuildingModel.instance:getBuildingMOById(arg_7_0._viewBuildingUid)
+function RoomManufactureBuildingViewContainer:getContainerViewBuilding(nilError)
+	local viewBuildingMO = RoomMapBuildingModel.instance:getBuildingMOById(self._viewBuildingUid)
 
-	if not var_7_0 and arg_7_1 then
-		logError(string.format("RoomManufactureBuildingViewContainer:getContainerViewBuilding error, buildingMO is nil, uid:%s", arg_7_0._viewBuildingUid))
+	if not viewBuildingMO and nilError then
+		logError(string.format("RoomManufactureBuildingViewContainer:getContainerViewBuilding error, buildingMO is nil, uid:%s", self._viewBuildingUid))
 	end
 
-	return arg_7_0._viewBuildingUid, var_7_0
+	return self._viewBuildingUid, viewBuildingMO
 end
 
-return var_0_0
+return RoomManufactureBuildingViewContainer

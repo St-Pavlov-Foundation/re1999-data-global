@@ -1,56 +1,60 @@
-﻿module("modules.versionactivitybase.fixed.dungeon.config.VersionActivityFixedDungeonConfig", package.seeall)
+﻿-- chunkname: @modules/versionactivitybase/fixed/dungeon/config/VersionActivityFixedDungeonConfig.lua
 
-local var_0_0 = class("VersionActivityFixedDungeonConfig", BaseConfig)
+module("modules.versionactivitybase.fixed.dungeon.config.VersionActivityFixedDungeonConfig", package.seeall)
 
-local function var_0_1(arg_1_0)
-	local var_1_0, var_1_1 = VersionActivityFixedDungeonController.instance:getEnterVerison()
-	local var_1_2 = VersionActivityFixedHelper.getVersionActivityDungeonEnum(var_1_0, var_1_1)
-	local var_1_3 = DungeonConfig.instance:getEpisodeCO(arg_1_0)
+local VersionActivityFixedDungeonConfig = class("VersionActivityFixedDungeonConfig", BaseConfig)
 
-	if var_1_3.chapterId ~= var_1_2.DungeonChapterId.ElementFight then
-		if var_1_3.chapterId == var_1_2.DungeonChapterId.Hard then
-			arg_1_0 = arg_1_0 - 10000
-			var_1_3 = DungeonConfig.instance:getEpisodeCO(arg_1_0)
+local function getStoryEpisodeCo(episodeId)
+	local bigVersion, smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
+	local actDungeonEnum = VersionActivityFixedHelper.getVersionActivityDungeonEnum(bigVersion, smallVersion)
+	local episodeConfig = DungeonConfig.instance:getEpisodeCO(episodeId)
+
+	if episodeConfig.chapterId ~= actDungeonEnum.DungeonChapterId.ElementFight then
+		if episodeConfig.chapterId == actDungeonEnum.DungeonChapterId.Hard then
+			episodeId = episodeId - 10000
+			episodeConfig = DungeonConfig.instance:getEpisodeCO(episodeId)
 		else
-			while var_1_3.chapterId ~= var_1_2.DungeonChapterId.Story do
-				var_1_3 = DungeonConfig.instance:getEpisodeCO(var_1_3.preEpisode)
+			while episodeConfig.chapterId ~= actDungeonEnum.DungeonChapterId.Story do
+				episodeConfig = DungeonConfig.instance:getEpisodeCO(episodeConfig.preEpisode)
 			end
 		end
 	end
 
-	return var_1_3
+	return episodeConfig
 end
 
-function var_0_0.getEpisodeMapConfig(arg_2_0, arg_2_1)
-	local var_2_0, var_2_1 = VersionActivityFixedDungeonController.instance:getEnterVerison()
-	local var_2_2 = VersionActivityFixedHelper.getVersionActivityDungeonEnum(var_2_0, var_2_1)
-	local var_2_3 = var_0_1(arg_2_1)
+function VersionActivityFixedDungeonConfig:getEpisodeMapConfig(episodeId)
+	local bigVersion, smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
+	local actDungeonEnum = VersionActivityFixedHelper.getVersionActivityDungeonEnum(bigVersion, smallVersion)
+	local episodeCo = getStoryEpisodeCo(episodeId)
 
-	return DungeonConfig.instance:getChapterMapCfg(var_2_2.DungeonChapterId.Story, var_2_3.preEpisode)
+	return DungeonConfig.instance:getChapterMapCfg(actDungeonEnum.DungeonChapterId.Story, episodeCo.preEpisode)
 end
 
-function var_0_0.checkElementBelongMapId(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = {
-		arg_3_1.mapId
+function VersionActivityFixedDungeonConfig:checkElementBelongMapId(elementCo, mapId)
+	local belongMapIdList = {
+		elementCo.mapId
 	}
 
-	return tabletool.indexOf(var_3_0, arg_3_2)
+	return tabletool.indexOf(belongMapIdList, mapId)
 end
 
-function var_0_0.getEpisodeIndex(arg_4_0, arg_4_1)
-	local var_4_0 = var_0_1(arg_4_1)
+function VersionActivityFixedDungeonConfig:getEpisodeIndex(episodeId, episodeType)
+	local episodeConfig = getStoryEpisodeCo(episodeId)
 
-	return DungeonConfig.instance:getChapterEpisodeIndexWithSP(var_4_0.chapterId, var_4_0.id)
+	return DungeonConfig.instance:getChapterEpisodeIndexWithSPType(episodeConfig.chapterId, episodeConfig.id, episodeType)
 end
 
-function var_0_0.getStoryEpisodeCo(arg_5_0, arg_5_1)
-	return var_0_1(arg_5_1)
+function VersionActivityFixedDungeonConfig:getStoryEpisodeCo(episodeId)
+	return getStoryEpisodeCo(episodeId)
 end
 
-function var_0_0.getEpisodeIdByElementId(arg_6_0, arg_6_1)
-	return DungeonConfig.instance:getChapterMapElement(arg_6_1).mapId
+function VersionActivityFixedDungeonConfig:getEpisodeIdByElementId(elementId)
+	local elementCo = DungeonConfig.instance:getChapterMapElement(elementId)
+
+	return elementCo.mapId
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivityFixedDungeonConfig.instance = VersionActivityFixedDungeonConfig.New()
 
-return var_0_0
+return VersionActivityFixedDungeonConfig

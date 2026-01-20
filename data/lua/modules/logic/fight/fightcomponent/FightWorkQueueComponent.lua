@@ -1,66 +1,68 @@
-﻿module("modules.logic.fight.fightcomponent.FightWorkQueueComponent", package.seeall)
+﻿-- chunkname: @modules/logic/fight/fightcomponent/FightWorkQueueComponent.lua
 
-local var_0_0 = class("FightWorkQueueComponent", FightBaseClass)
+module("modules.logic.fight.fightcomponent.FightWorkQueueComponent", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0.workQueue = {}
-	arg_1_0.callback = nil
-	arg_1_0.callbackHandle = nil
+local FightWorkQueueComponent = class("FightWorkQueueComponent", FightBaseClass)
+
+function FightWorkQueueComponent:onConstructor()
+	self.workQueue = {}
+	self.callback = nil
+	self.callbackHandle = nil
 end
 
-function var_0_0.registFinishCallback(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0.callback = arg_2_1
-	arg_2_0.callbackHandle = arg_2_2
+function FightWorkQueueComponent:registFinishCallback(callback, handle)
+	self.callback = callback
+	self.callbackHandle = handle
 end
 
-function var_0_0.clearFinishCallback(arg_3_0)
-	arg_3_0.callback = nil
-	arg_3_0.callbackHandle = nil
+function FightWorkQueueComponent:clearFinishCallback()
+	self.callback = nil
+	self.callbackHandle = nil
 end
 
-function var_0_0.addWork(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0:addWorkList({
-		arg_4_1
-	}, arg_4_2)
+function FightWorkQueueComponent:addWork(work, context)
+	self:addWorkList({
+		work
+	}, context)
 end
 
-function var_0_0.addWorkList(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = false
+function FightWorkQueueComponent:addWorkList(workList, context)
+	local immediately = false
 
-	if #arg_5_0.workQueue == 0 then
-		var_5_0 = true
+	if #self.workQueue == 0 then
+		immediately = true
 	end
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
-		iter_5_1:registFinishCallback(arg_5_0._onWorkFinish, arg_5_0)
-		table.insert(arg_5_0.workQueue, {
-			work = iter_5_1,
-			context = arg_5_2
+	for i, work in ipairs(workList) do
+		work:registFinishCallback(self._onWorkFinish, self)
+		table.insert(self.workQueue, {
+			work = work,
+			context = context
 		})
 	end
 
-	if var_5_0 then
-		arg_5_0:_onWorkFinish()
+	if immediately then
+		self:_onWorkFinish()
 	end
 end
 
-function var_0_0._onWorkFinish(arg_6_0)
-	local var_6_0 = arg_6_0.workQueue
-	local var_6_1 = table.remove(var_6_0, 1)
+function FightWorkQueueComponent:_onWorkFinish()
+	local list = self.workQueue
+	local tab = table.remove(list, 1)
 
-	if var_6_1 then
-		return var_6_1.work:start(var_6_1.context)
-	elseif arg_6_0.callback then
-		arg_6_0.callback(arg_6_0.callbackHandle)
+	if tab then
+		return tab.work:start(tab.context)
+	elseif self.callback then
+		self.callback(self.callbackHandle)
 	end
 end
 
-function var_0_0.onDestructor(arg_7_0)
-	for iter_7_0 = #arg_7_0.workQueue, 1, -1 do
-		arg_7_0.workQueue[iter_7_0].work:disposeSelf()
+function FightWorkQueueComponent:onDestructor()
+	for i = #self.workQueue, 1, -1 do
+		self.workQueue[i].work:disposeSelf()
 	end
 
-	arg_7_0:clearFinishCallback()
+	self:clearFinishCallback()
 end
 
-return var_0_0
+return FightWorkQueueComponent

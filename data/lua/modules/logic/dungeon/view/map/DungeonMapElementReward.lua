@@ -1,129 +1,131 @@
-﻿module("modules.logic.dungeon.view.map.DungeonMapElementReward", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/map/DungeonMapElementReward.lua
 
-local var_0_0 = class("DungeonMapElementReward", BaseView)
+module("modules.logic.dungeon.view.map.DungeonMapElementReward", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local DungeonMapElementReward = class("DungeonMapElementReward", BaseView)
+
+function DungeonMapElementReward:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function DungeonMapElementReward:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function DungeonMapElementReward:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function DungeonMapElementReward:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function DungeonMapElementReward:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:addEventCb(DungeonController.instance, DungeonEvent.OnRemoveElement, arg_6_0._OnRemoveElement, arg_6_0, LuaEventSystem.High)
-	arg_6_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_6_0._onCloseViewFinish, arg_6_0)
-	arg_6_0:addEventCb(DungeonMazeController.instance, DungeonMazeEvent.DungeonMazeCompleted, arg_6_0._onMazeCompleted, arg_6_0)
+function DungeonMapElementReward:onOpen()
+	self:addEventCb(DungeonController.instance, DungeonEvent.OnRemoveElement, self._OnRemoveElement, self, LuaEventSystem.High)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	self:addEventCb(DungeonMazeController.instance, DungeonMazeEvent.DungeonMazeCompleted, self._onMazeCompleted, self)
 end
 
-function var_0_0._onCloseViewFinish(arg_7_0, arg_7_1)
-	if arg_7_1 == arg_7_0._lastViewName then
-		if arg_7_0._rewardPoint then
-			arg_7_0:_dispatchEvent()
+function DungeonMapElementReward:_onCloseViewFinish(viewName)
+	if viewName == self._lastViewName then
+		if self._rewardPoint then
+			self:_dispatchEvent()
 		end
 
 		DungeonController.instance:dispatchEvent(DungeonEvent.EndShowRewardView)
 	end
 end
 
-function var_0_0._onMazeCompleted(arg_8_0)
-	arg_8_0._lastViewName = ViewName.CommonPropView
+function DungeonMapElementReward:_onMazeCompleted()
+	self._lastViewName = ViewName.CommonPropView
 end
 
-function var_0_0.setShowToastState(arg_9_0, arg_9_1)
-	arg_9_0.notShowToast = arg_9_1
+function DungeonMapElementReward:setShowToastState(state)
+	self.notShowToast = state
 end
 
-function var_0_0._OnRemoveElement(arg_10_0, arg_10_1)
-	local var_10_0 = lua_chapter_map_element.configDict[arg_10_1]
+function DungeonMapElementReward:_OnRemoveElement(id)
+	local config = lua_chapter_map_element.configDict[id]
 
-	arg_10_0._lastViewName = nil
-	arg_10_0._rewardPoint = nil
+	self._lastViewName = nil
+	self._rewardPoint = nil
 
-	local var_10_1 = DungeonModel.instance:getMapElementReward(arg_10_1)
+	local rewardStr = DungeonModel.instance:getMapElementReward(id)
 
-	if not string.nilorempty(var_10_1) then
-		local var_10_2 = GameUtil.splitString2(var_10_1, false, "|", "#")
-		local var_10_3 = {}
+	if not string.nilorempty(rewardStr) then
+		local list = GameUtil.splitString2(rewardStr, false, "|", "#")
+		local dataList = {}
 
-		for iter_10_0, iter_10_1 in ipairs(var_10_2) do
-			local var_10_4 = MaterialDataMO.New()
+		for i, v in ipairs(list) do
+			local materialData = MaterialDataMO.New()
 
-			var_10_4:initValue(iter_10_1[1], iter_10_1[2], iter_10_1[3])
-			table.insert(var_10_3, var_10_4)
+			materialData:initValue(v[1], v[2], v[3])
+			table.insert(dataList, materialData)
 		end
 
-		PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, var_10_3)
+		PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, dataList)
 
-		arg_10_0._lastViewName = ViewName.CommonPropView
+		self._lastViewName = ViewName.CommonPropView
 	end
 
-	if var_10_0.fragment > 0 then
-		local var_10_5 = lua_chapter_map_fragment.configDict[var_10_0.fragment]
+	if config.fragment > 0 then
+		local fragmentCo = lua_chapter_map_fragment.configDict[config.fragment]
 
-		if var_10_5 and var_10_5.type == DungeonEnum.FragmentType.LeiMiTeBeiNew then
-			arg_10_0._lastViewName = ViewName.VersionActivityNewsView
-		elseif var_10_0.type == DungeonEnum.ElementType.SpStory then
+		if fragmentCo and fragmentCo.type == DungeonEnum.FragmentType.LeiMiTeBeiNew then
+			self._lastViewName = ViewName.VersionActivityNewsView
+		elseif config.type == DungeonEnum.ElementType.SpStory then
 			-- block empty
-		elseif var_10_0.type == DungeonEnum.ElementType.Investigate then
-			arg_10_0._lastViewName = ViewName.InvestigateTipsView
+		elseif config.type == DungeonEnum.ElementType.Investigate then
+			self._lastViewName = ViewName.InvestigateTipsView
 		else
-			arg_10_0._lastViewName = ViewName.DungeonFragmentInfoView
+			self._lastViewName = ViewName.DungeonFragmentInfoView
 		end
 
-		if arg_10_0._lastViewName then
-			PopupController.instance:addPopupView(PopupEnum.PriorityType.DungeonFragmentInfoView, arg_10_0._lastViewName, {
-				elementId = var_10_0.id,
-				fragmentId = var_10_0.fragment,
-				notShowToast = arg_10_0.notShowToast
+		if self._lastViewName then
+			PopupController.instance:addPopupView(PopupEnum.PriorityType.DungeonFragmentInfoView, self._lastViewName, {
+				elementId = config.id,
+				fragmentId = config.fragment,
+				notShowToast = self.notShowToast
 			})
 		end
 	end
 
-	if var_10_0.type == DungeonEnum.ElementType.EnterDialogue then
-		arg_10_0._lastViewName = ViewName.DialogueView
+	if config.type == DungeonEnum.ElementType.EnterDialogue then
+		self._lastViewName = ViewName.DialogueView
 	end
 
-	if arg_10_0._lastViewName then
+	if self._lastViewName then
 		DungeonController.instance:dispatchEvent(DungeonEvent.BeginShowRewardView)
 	end
 
-	if var_10_0.rewardPoint > 0 then
-		arg_10_0._rewardPoint = var_10_0.rewardPoint
+	if config.rewardPoint > 0 then
+		self._rewardPoint = config.rewardPoint
 
-		if not arg_10_0._lastViewName then
-			arg_10_0:_dispatchEvent()
+		if not self._lastViewName then
+			self:_dispatchEvent()
 		end
 	end
 end
 
-function var_0_0._dispatchEvent(arg_11_0)
+function DungeonMapElementReward:_dispatchEvent()
 	DungeonModel.instance:endCheckUnlockChapter()
-	DungeonController.instance:dispatchEvent(DungeonEvent.OnAddRewardPoint, arg_11_0._rewardPoint)
+	DungeonController.instance:dispatchEvent(DungeonEvent.OnAddRewardPoint, self._rewardPoint)
 
-	arg_11_0._rewardPoint = nil
+	self._rewardPoint = nil
 end
 
-function var_0_0.onClose(arg_12_0)
+function DungeonMapElementReward:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_13_0)
+function DungeonMapElementReward:onDestroyView()
 	return
 end
 
-return var_0_0
+return DungeonMapElementReward

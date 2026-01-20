@@ -1,33 +1,37 @@
-﻿module("modules.logic.room.view.critter.train.RoomCritterTrainStoryViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/critter/train/RoomCritterTrainStoryViewContainer.lua
 
-local var_0_0 = class("RoomCritterTrainStoryViewContainer", BaseViewContainer)
+module("modules.logic.room.view.critter.train.RoomCritterTrainStoryViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	return {
+local RoomCritterTrainStoryViewContainer = class("RoomCritterTrainStoryViewContainer", BaseViewContainer)
+
+function RoomCritterTrainStoryViewContainer:buildViews()
+	local views = {
 		RoomCritterTrainStoryView.New(),
 		TabViewGroup.New(1, "#go_lefttopbtns")
 	}
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._navigateButtonView = NavigateButtonsView.New({
+function RoomCritterTrainStoryViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
-		arg_2_0._navigateButtonView:setOverrideClose(arg_2_0.overrideOnCloseClick, arg_2_0)
+		self._navigateButtonView:setOverrideClose(self.overrideOnCloseClick, self)
 
 		return {
-			arg_2_0._navigateButtonView
+			self._navigateButtonView
 		}
 	end
 end
 
-function var_0_0.overrideOnCloseClick(arg_3_0)
+function RoomCritterTrainStoryViewContainer:overrideOnCloseClick()
 	StoryController.instance:closeStoryView()
-	arg_3_0:closeThis()
+	self:closeThis()
 end
 
-return var_0_0
+return RoomCritterTrainStoryViewContainer

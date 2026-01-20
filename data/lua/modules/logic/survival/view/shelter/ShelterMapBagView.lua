@@ -1,23 +1,27 @@
-﻿module("modules.logic.survival.view.shelter.ShelterMapBagView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/ShelterMapBagView.lua
 
-local var_0_0 = class("ShelterMapBagView", SurvivalMapBagView)
+module("modules.logic.survival.view.shelter.ShelterMapBagView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	var_0_0.super.onInitView(arg_1_0)
+local ShelterMapBagView = class("ShelterMapBagView", SurvivalMapBagView)
 
-	local var_1_0 = gohelper.findChild(arg_1_0.viewGO, "root/toggleGroup")
+function ShelterMapBagView:onInitView()
+	ShelterMapBagView.super.onInitView(self)
 
-	gohelper.setActive(var_1_0, false)
-	gohelper.setActive(arg_1_0._goheavy, false)
+	local goToggle = gohelper.findChild(self.viewGO, "root/toggleGroup")
+
+	gohelper.setActive(goToggle, false)
+	gohelper.setActive(self._goheavy, false)
 end
 
-function var_0_0.onOpen(arg_2_0)
-	var_0_0.super.onOpen(arg_2_0)
-	arg_2_0.viewContainer:dispatchEvent(ViewEvent.ToSwitchTab, 1, 2)
+function ShelterMapBagView:onOpen()
+	ShelterMapBagView.super.onOpen(self)
+	self.viewContainer:dispatchEvent(ViewEvent.ToSwitchTab, 1, 2)
 end
 
-function var_0_0.getBag(arg_3_0)
-	return SurvivalShelterModel.instance:getWeekInfo():getBag(SurvivalEnum.ItemSource.Shelter)
+function ShelterMapBagView:getBag()
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+
+	return weekInfo:getBag(SurvivalEnum.ItemSource.Shelter)
 end
 
-return var_0_0
+return ShelterMapBagView

@@ -1,337 +1,353 @@
-﻿module("modules.logic.room.utils.RoomCameraHelper", package.seeall)
+﻿-- chunkname: @modules/logic/room/utils/RoomCameraHelper.lua
 
-local var_0_0 = {}
+module("modules.logic.room.utils.RoomCameraHelper", package.seeall)
 
-function var_0_0.getConvexHull(arg_1_0)
-	return var_0_0.getSubConvexHull(arg_1_0)
+local RoomCameraHelper = {}
+
+function RoomCameraHelper.getConvexHull(points)
+	return RoomCameraHelper.getSubConvexHull(points)
 end
 
-function var_0_0.getSubConvexHull(arg_2_0)
-	if not arg_2_0 then
+function RoomCameraHelper.getSubConvexHull(points)
+	if not points then
 		return {}
 	end
 
-	arg_2_0 = var_0_0.derepeat(arg_2_0)
+	points = RoomCameraHelper.derepeat(points)
 
-	if #arg_2_0 <= 2 then
-		return arg_2_0
+	local n = #points
+
+	if n <= 2 then
+		return points
 	end
 
-	local var_2_0 = {}
-	local var_2_1 = 0
+	local result = {}
+	local polarIndex = 0
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0) do
-		if iter_2_0 == 1 or iter_2_1.y < arg_2_0[var_2_1].y or iter_2_1.y == arg_2_0[var_2_1].y and iter_2_1.x < arg_2_0[var_2_1].x then
-			var_2_1 = iter_2_0
+	for i, point in ipairs(points) do
+		if i == 1 or point.y < points[polarIndex].y or point.y == points[polarIndex].y and point.x < points[polarIndex].x then
+			polarIndex = i
 		end
 	end
 
-	arg_2_0[1], arg_2_0[var_2_1] = arg_2_0[var_2_1], arg_2_0[1]
+	points[1], points[polarIndex] = points[polarIndex], points[1]
 
-	local var_2_2 = arg_2_0[1]
+	local polar = points[1]
 
-	table.sort(arg_2_0, function(arg_3_0, arg_3_1)
-		if arg_3_0 == var_2_2 and arg_3_1 ~= var_2_2 then
+	table.sort(points, function(pA, pB)
+		if pA == polar and pB ~= polar then
 			return true
-		elseif arg_3_0 ~= var_2_2 and arg_3_1 == var_2_2 then
+		elseif pA ~= polar and pB == polar then
 			return false
 		end
 
-		local var_3_0 = var_0_0.getCross(arg_3_0, arg_3_1, var_2_2)
+		local cross = RoomCameraHelper.getCross(pA, pB, polar)
 
-		if var_3_0 ~= 0 then
-			return var_3_0 > 0
+		if cross ~= 0 then
+			return cross > 0
 		end
 
-		if arg_3_0.y ~= arg_3_1.y then
-			return arg_3_0.y > arg_3_1.y
+		if pA.y ~= pB.y then
+			return pA.y > pB.y
 		end
 
-		return math.abs(arg_3_0.x - var_2_2.x) > math.abs(arg_3_1.x - var_2_2.x)
+		return math.abs(pA.x - polar.x) > math.abs(pB.x - polar.x)
 	end)
 
-	arg_2_0 = var_0_0.collineation(arg_2_0)
+	points = RoomCameraHelper.collineation(points)
+	n = #points
 
-	local var_2_3 = #arg_2_0
-	local var_2_4 = 1
-	local var_2_5 = 1
+	local top = 1
+	local index = 1
 
-	while var_2_5 <= var_2_3 + 1 do
-		local var_2_6 = arg_2_0[(var_2_5 - 1) % var_2_3 + 1]
+	while index <= n + 1 do
+		local fixedIndex = (index - 1) % n + 1
+		local point = points[fixedIndex]
 
-		while var_2_4 > 2 do
-			if var_0_0.getCross(var_2_0[var_2_4 - 1], var_2_6, var_2_0[var_2_4 - 2]) > 0 then
+		while top > 2 do
+			local cross = RoomCameraHelper.getCross(result[top - 1], point, result[top - 2])
+
+			if cross > 0 then
 				break
 			end
 
-			var_2_4 = var_2_4 - 1
+			top = top - 1
 		end
 
-		if var_2_5 <= var_2_3 then
-			var_2_0[var_2_4] = var_2_6
+		if index <= n then
+			result[top] = point
 		else
-			var_2_0[var_2_4] = Vector2(var_2_6.x, var_2_6.y)
+			result[top] = Vector2(point.x, point.y)
 		end
 
-		var_2_4 = var_2_4 + 1
-		var_2_5 = var_2_5 + 1
+		top = top + 1
+		index = index + 1
 	end
 
-	for iter_2_2 = #var_2_0, 1, -1 do
-		if var_2_4 <= iter_2_2 then
-			table.remove(var_2_0, iter_2_2)
+	for i = #result, 1, -1 do
+		if top <= i then
+			table.remove(result, i)
 		end
 	end
 
-	return var_2_0
+	return result
 end
 
-function var_0_0.getCross(arg_4_0, arg_4_1, arg_4_2)
-	return (arg_4_0.x - arg_4_2.x) * (arg_4_1.y - arg_4_2.y) - (arg_4_0.y - arg_4_2.y) * (arg_4_1.x - arg_4_2.x)
+function RoomCameraHelper.getCross(pA, pB, point)
+	return (pA.x - point.x) * (pB.y - point.y) - (pA.y - point.y) * (pB.x - point.x)
 end
 
-function var_0_0.collineation(arg_5_0)
-	local var_5_0 = {}
-	local var_5_1 = arg_5_0[1]
-	local var_5_2 = {}
-	local var_5_3 = 2
+function RoomCameraHelper.collineation(points)
+	local newPoints = {}
+	local polar = points[1]
+	local deleteDict = {}
+	local index = 2
 
-	for iter_5_0 = 3, #arg_5_0 do
-		local var_5_4 = arg_5_0[var_5_3]
-		local var_5_5 = arg_5_0[iter_5_0]
+	for i = 3, #points do
+		local pA = points[index]
+		local pB = points[i]
 
-		if math.abs(var_0_0.getCross(var_5_4, var_5_5, var_5_1)) < 1e-05 then
-			if var_5_4.y > var_5_5.y or var_5_4.y == var_5_5.y and math.abs(var_5_4.x - var_5_1.x) > math.abs(var_5_5.x - var_5_1.x) then
-				var_5_2[iter_5_0] = true
+		if math.abs(RoomCameraHelper.getCross(pA, pB, polar)) < 1e-05 then
+			if pA.y > pB.y or pA.y == pB.y and math.abs(pA.x - polar.x) > math.abs(pB.x - polar.x) then
+				deleteDict[i] = true
 			else
-				var_5_2[var_5_3] = true
-				var_5_3 = iter_5_0
+				deleteDict[index] = true
+				index = i
 			end
 		else
-			var_5_3 = iter_5_0
+			index = i
 		end
 	end
 
-	for iter_5_1, iter_5_2 in ipairs(arg_5_0) do
-		if not var_5_2[iter_5_1] then
-			table.insert(var_5_0, iter_5_2)
+	for i, point in ipairs(points) do
+		if not deleteDict[i] then
+			table.insert(newPoints, point)
 		end
 	end
 
-	return var_5_0
+	return newPoints
 end
 
-function var_0_0.derepeat(arg_6_0)
-	local var_6_0 = {}
-	local var_6_1 = {}
+function RoomCameraHelper.derepeat(points)
+	local newPoints = {}
+	local repeatDict = {}
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0) do
-		if not (var_6_1[iter_6_1.x] and var_6_1[iter_6_1.x][iter_6_1.y]) then
-			table.insert(var_6_0, iter_6_1)
+	for _, point in ipairs(points) do
+		local isRepeat = repeatDict[point.x] and repeatDict[point.x][point.y]
 
-			var_6_1[iter_6_1.x] = var_6_1[iter_6_1.x] or {}
-			var_6_1[iter_6_1.x][iter_6_1.y] = true
+		if not isRepeat then
+			table.insert(newPoints, point)
+
+			repeatDict[point.x] = repeatDict[point.x] or {}
+			repeatDict[point.x][point.y] = true
 		end
 	end
 
-	return var_6_0
+	return newPoints
 end
 
-function var_0_0.isPointInConvexHull(arg_7_0, arg_7_1)
-	if not arg_7_0 or not arg_7_1 or #arg_7_1 <= 2 then
+function RoomCameraHelper.isPointInConvexHull(point, convexHull)
+	if not point or not convexHull or #convexHull <= 2 then
 		return true
 	end
 
-	local var_7_0 = true
-	local var_7_1 = 0
-	local var_7_2
-	local var_7_3
-	local var_7_4 = 0
+	local isInConvexHull = true
+	local maxDistance = 0
+	local maxPA, maxPB
+	local count = 0
 
-	for iter_7_0 = 1, #arg_7_1 do
-		local var_7_5 = arg_7_1[iter_7_0]
-		local var_7_6 = arg_7_1[iter_7_0 + 1]
+	for i = 1, #convexHull do
+		local pA = convexHull[i]
+		local pB = convexHull[i + 1]
 
-		if var_7_5 and var_7_6 and var_0_0.getCross(var_7_6, arg_7_0, var_7_5) < 0 then
-			var_7_0 = false
+		if pA and pB and RoomCameraHelper.getCross(pB, point, pA) < 0 then
+			isInConvexHull = false
 
-			local var_7_7 = var_0_0.getDistance(arg_7_0, var_7_5, var_7_6)
+			local distance = RoomCameraHelper.getDistance(point, pA, pB)
 
-			if var_7_1 < var_7_7 or var_7_1 == 0 then
-				var_7_1 = var_7_7
-				var_7_2 = var_7_5
-				var_7_3 = var_7_6
+			if maxDistance < distance or maxDistance == 0 then
+				maxDistance = distance
+				maxPA = pA
+				maxPB = pB
 			end
 
-			var_7_4 = var_7_4 + 1
+			count = count + 1
 		end
 	end
 
-	return var_7_0, var_7_1, var_7_2, var_7_3, var_7_4
+	return isInConvexHull, maxDistance, maxPA, maxPB, count
 end
 
-function var_0_0.getDistance(arg_8_0, arg_8_1, arg_8_2)
-	if arg_8_1 == arg_8_2 then
-		return Vector2.Distance(arg_8_1, arg_8_0)
+function RoomCameraHelper.getDistance(point, pA, pB)
+	if pA == pB then
+		return Vector2.Distance(pA, point)
 	end
 
-	if arg_8_1.y == arg_8_2.y then
-		local var_8_0 = arg_8_1.y
+	if pA.y == pB.y then
+		local b = pA.y
 
-		return math.abs(arg_8_0.y - var_8_0)
+		return math.abs(point.y - b)
 	end
 
-	if arg_8_1.x == arg_8_2.x then
-		local var_8_1 = arg_8_1.x
+	if pA.x == pB.x then
+		local b = pA.x
 
-		return math.abs(arg_8_0.x - var_8_1)
+		return math.abs(point.x - b)
 	end
 
-	local var_8_2 = (arg_8_1.y - arg_8_2.y) / (arg_8_1.x - arg_8_2.x)
-	local var_8_3 = (arg_8_1.x * arg_8_2.y - arg_8_2.x * arg_8_1.y) / (arg_8_1.x - arg_8_2.x)
+	local k = (pA.y - pB.y) / (pA.x - pB.x)
+	local b = (pA.x * pB.y - pB.x * pA.y) / (pA.x - pB.x)
 
-	return math.abs((var_8_2 * arg_8_0.x - arg_8_0.y + var_8_3) / math.sqrt(var_8_2 * var_8_2 + 1))
+	return math.abs((k * point.x - point.y + b) / math.sqrt(k * k + 1))
 end
 
-function var_0_0.getDirection(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = Vector2.Normalize(arg_9_2 - arg_9_1)
+function RoomCameraHelper.getDirection(point, pA, pB)
+	local direction = Vector2.Normalize(pB - pA)
 
-	return Vector2(-var_9_0.y, var_9_0.x)
+	return Vector2(-direction.y, direction.x)
 end
 
-function var_0_0.getOffsetPosition(arg_10_0, arg_10_1, arg_10_2)
+function RoomCameraHelper.getOffsetPosition(currentPos, expectPos, convexHull)
 	if RoomController.instance:isDebugMode() then
-		return arg_10_1
+		return expectPos
 	end
 
-	if not arg_10_2 or #arg_10_2 <= 2 then
-		return arg_10_1
+	if not convexHull or #convexHull <= 2 then
+		return expectPos
 	end
 
-	local var_10_0, var_10_1, var_10_2, var_10_3, var_10_4 = var_0_0.isPointInConvexHull(arg_10_1, arg_10_2)
+	local isInConvexHull, maxDistance, maxPA, maxPB, count = RoomCameraHelper.isPointInConvexHull(expectPos, convexHull)
 
-	if var_10_0 then
-		return arg_10_1
-	elseif var_10_4 >= 2 then
-		local var_10_5 = arg_10_1 + var_0_0.getDirection(arg_10_1, var_10_2, var_10_3) * (var_10_1 + 0.0001)
+	if isInConvexHull then
+		return expectPos
+	elseif count >= 2 then
+		local direction = RoomCameraHelper.getDirection(expectPos, maxPA, maxPB)
+		local offsetPos = expectPos + direction * (maxDistance + 0.0001)
+		local isOffsetInConvexHull = RoomCameraHelper.isPointInConvexHull(offsetPos, convexHull)
 
-		if var_0_0.isPointInConvexHull(var_10_5, arg_10_2) then
-			return var_10_5
+		if isOffsetInConvexHull then
+			return offsetPos
 		else
-			return arg_10_0
+			return currentPos
 		end
 	else
-		return arg_10_1 + var_0_0.getDirection(arg_10_1, var_10_2, var_10_3) * var_10_1
+		local direction = RoomCameraHelper.getDirection(expectPos, maxPA, maxPB)
+
+		return expectPos + direction * maxDistance
 	end
 end
 
-function var_0_0.expandConvexHull(arg_11_0, arg_11_1)
-	local var_11_0 = {}
-	local var_11_1 = #arg_11_0
+function RoomCameraHelper.expandConvexHull(convexHull, expandDistance)
+	local expandConvexHull = {}
+	local count = #convexHull
 
-	if var_11_1 <= 0 then
-		return arg_11_0
+	if count <= 0 then
+		return convexHull
 	end
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0) do
-		if iter_11_0 < var_11_1 then
-			local var_11_2 = arg_11_0[iter_11_0 - 1] or arg_11_0[var_11_1 - 1]
-			local var_11_3 = arg_11_0[iter_11_0 + 1]
+	for i, point in ipairs(convexHull) do
+		if i < count then
+			local pointA = convexHull[i - 1] or convexHull[count - 1]
+			local pointB = convexHull[i + 1]
 
-			if var_11_2 and var_11_3 then
-				local var_11_4 = var_0_0.expandPoint(iter_11_1, var_11_2, var_11_3, arg_11_1)
+			if pointA and pointB then
+				local expandPoint = RoomCameraHelper.expandPoint(point, pointA, pointB, expandDistance)
 
-				table.insert(var_11_0, var_11_4)
+				table.insert(expandConvexHull, expandPoint)
 			end
 		end
 	end
 
-	local var_11_5 = var_11_0[1]
+	local point = expandConvexHull[1]
 
-	table.insert(var_11_0, Vector2(var_11_5.x, var_11_5.y))
+	table.insert(expandConvexHull, Vector2(point.x, point.y))
 
-	return (var_0_0.getConvexHull(var_11_0))
+	expandConvexHull = RoomCameraHelper.getConvexHull(expandConvexHull)
+
+	return expandConvexHull
 end
 
-function var_0_0.expandPoint(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	local var_12_0 = Vector2.Normalize(arg_12_1 - arg_12_0)
-	local var_12_1 = Vector2.Normalize(arg_12_2 - arg_12_0)
+function RoomCameraHelper.expandPoint(point, pointA, pointB, expandDistance)
+	local pa = Vector2.Normalize(pointA - point)
+	local pb = Vector2.Normalize(pointB - point)
 
-	if Mathf.Abs(Vector2.Dot(var_12_0, var_12_1)) <= 0.0001 then
-		local var_12_2 = arg_12_0
-		local var_12_3 = Vector2(var_12_0.y, var_12_0.x)
-		local var_12_4 = -var_12_3
+	if Mathf.Abs(Vector2.Dot(pa, pb)) <= 0.0001 then
+		local op = point
+		local up = Vector2(pa.y, pa.x)
+		local down = -up
 
-		if Vector2.Dot(var_12_2, var_12_3) > 0 then
-			return arg_12_0 + var_12_3 * arg_12_3
-		elseif Vector2.Dot(var_12_2, var_12_4) > 0 then
-			return arg_12_0 + var_12_4 * arg_12_3
+		if Vector2.Dot(op, up) > 0 then
+			return point + up * expandDistance
+		elseif Vector2.Dot(op, down) > 0 then
+			return point + down * expandDistance
 		end
 
-		return arg_12_0
+		return point
 	end
 
-	local var_12_5 = -Vector2.Normalize(var_12_0 + var_12_1)
-	local var_12_6 = Vector2.Dot(var_12_0, var_12_1)
+	local half = -Vector2.Normalize(pa + pb)
+	local cos = Vector2.Dot(pa, pb)
 
-	if var_12_6 < -1 then
-		var_12_6 = -1
-	elseif var_12_6 > 1 then
-		var_12_6 = 1
+	if cos < -1 then
+		cos = -1
+	elseif cos > 1 then
+		cos = 1
 	end
 
-	local var_12_7 = Mathf.Acos(var_12_6)
-	local var_12_8 = Mathf.Sin(var_12_7 / 2)
+	local theta = Mathf.Acos(cos)
+	local halfSin = Mathf.Sin(theta / 2)
 
-	if var_12_8 == 0 then
-		return arg_12_0
+	if halfSin == 0 then
+		return point
 	end
 
-	return arg_12_0 + var_12_5 * (arg_12_3 / var_12_8)
+	local length = expandDistance / halfSin
+
+	return point + half * length
 end
 
-function var_0_0.getConvexHexPointDict(arg_13_0)
-	local var_13_0 = {}
+function RoomCameraHelper.getConvexHexPointDict(convexHull)
+	local hexPointDict = {}
 
-	if not arg_13_0 or #arg_13_0 <= 2 then
-		return var_13_0
+	if not convexHull or #convexHull <= 2 then
+		return hexPointDict
 	end
 
-	local var_13_1 = {}
-	local var_13_2 = {
+	local closeHexPointDict = {}
+	local openHexPointList = {
 		HexPoint(0, 0)
 	}
 
-	var_13_1[0] = var_13_1[0] or {}
-	var_13_1[0][0] = true
+	closeHexPointDict[0] = closeHexPointDict[0] or {}
+	closeHexPointDict[0][0] = true
 
-	while #var_13_2 > 0 do
-		local var_13_3 = {}
+	while #openHexPointList > 0 do
+		local newOpenHexPointList = {}
 
-		for iter_13_0, iter_13_1 in ipairs(var_13_2) do
-			local var_13_4 = HexMath.hexToPosition(iter_13_1, RoomBlockEnum.BlockSize)
+		for i, openHexPoint in ipairs(openHexPointList) do
+			local point = HexMath.hexToPosition(openHexPoint, RoomBlockEnum.BlockSize)
 
-			if var_0_0.isPointInConvexHull(var_13_4, arg_13_0) then
-				var_13_0[iter_13_1.x] = var_13_0[iter_13_1.x] or {}
-				var_13_0[iter_13_1.x][iter_13_1.y] = true
+			if RoomCameraHelper.isPointInConvexHull(point, convexHull) then
+				hexPointDict[openHexPoint.x] = hexPointDict[openHexPoint.x] or {}
+				hexPointDict[openHexPoint.x][openHexPoint.y] = true
 
-				local var_13_5 = iter_13_1:getNeighbors()
+				local neighborHexPointList = openHexPoint:getNeighbors()
 
-				for iter_13_2, iter_13_3 in ipairs(var_13_5) do
-					if not var_13_1[iter_13_3.x] or not var_13_1[iter_13_3.x][iter_13_3.y] then
-						table.insert(var_13_3, iter_13_3)
+				for j, neighborHexPoint in ipairs(neighborHexPointList) do
+					if not closeHexPointDict[neighborHexPoint.x] or not closeHexPointDict[neighborHexPoint.x][neighborHexPoint.y] then
+						table.insert(newOpenHexPointList, neighborHexPoint)
 
-						var_13_1[iter_13_3.x] = var_13_1[iter_13_3.x] or {}
-						var_13_1[iter_13_3.x][iter_13_3.y] = true
+						closeHexPointDict[neighborHexPoint.x] = closeHexPointDict[neighborHexPoint.x] or {}
+						closeHexPointDict[neighborHexPoint.x][neighborHexPoint.y] = true
 					end
 				end
 			end
 		end
 
-		var_13_2 = var_13_3
+		openHexPointList = newOpenHexPointList
 	end
 
-	return var_13_0
+	return hexPointDict
 end
 
-return var_0_0
+return RoomCameraHelper

@@ -1,25 +1,27 @@
-﻿module("modules.logic.explore.model.mo.unit.ExploreMapAreaMO", package.seeall)
+﻿-- chunkname: @modules/logic/explore/model/mo/unit/ExploreMapAreaMO.lua
 
-local var_0_0 = pureTable("ExploreMapAreaMO")
+module("modules.logic.explore.model.mo.unit.ExploreMapAreaMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1[1]
-	arg_1_0._unitData = arg_1_1[2]
-	arg_1_0.isCanReset = arg_1_1[3]
-	arg_1_0.visible = ExploreModel.instance:isAreaShow(arg_1_0.id)
-	arg_1_0.unitList = {}
+local ExploreMapAreaMO = pureTable("ExploreMapAreaMO")
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_0._unitData) do
-		local var_1_0 = iter_1_1[1]
+function ExploreMapAreaMO:init(config)
+	self.id = config[1]
+	self._unitData = config[2]
+	self.isCanReset = config[3]
+	self.visible = ExploreModel.instance:isAreaShow(self.id)
+	self.unitList = {}
 
-		if ExploreModel.instance:hasInteractInfo(var_1_0) then
-			local var_1_1 = ExploreMapModel.instance:createUnitMO(iter_1_1)
+	for _, item in ipairs(self._unitData) do
+		local id = item[1]
 
-			if var_1_1 then
-				table.insert(arg_1_0.unitList, var_1_1)
+		if ExploreModel.instance:hasInteractInfo(id) then
+			local mo = ExploreMapModel.instance:createUnitMO(item)
+
+			if mo then
+				table.insert(self.unitList, mo)
 			end
 		end
 	end
 end
 
-return var_0_0
+return ExploreMapAreaMO

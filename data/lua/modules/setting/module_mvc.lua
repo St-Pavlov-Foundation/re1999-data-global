@@ -1,4 +1,14 @@
-﻿return {
+﻿-- chunkname: @modules/setting/module_mvc.lua
+
+local module_mvc = {
+	BeiLiEr = {
+		model = {
+			"BeiLiErModel"
+		},
+		config = {
+			"BeiLiErConfig"
+		}
+	},
 	ClickUI = {
 		model = {
 			"ClickUISwitchModel"
@@ -8,6 +18,14 @@
 		},
 		config = {
 			"ClickUISwitchConfig"
+		}
+	},
+	Device = {
+		model = {
+			"DeviceModel"
+		},
+		controller = {
+			"DeviceController"
 		}
 	},
 	Activity208 = {
@@ -310,7 +328,7 @@
 			"VersionActivity2_4MusicController"
 		}
 	},
-	Activity170 = {
+	Activity221 = {
 		model = {
 			"SummonSimulationPickModel"
 		},
@@ -503,6 +521,34 @@
 			"RougeOutsideController",
 			"RougeStatController",
 			"RougeDLCController"
+		}
+	},
+	Rouge2 = {
+		model = {
+			"Rouge2_Model",
+			"Rouge2_OutsideModel",
+			"Rouge2_StoreModel",
+			"Rouge2_TalentModel",
+			"Rouge2_BackpackModel",
+			"Rouge2_AlchemyModel"
+		},
+		rpc = {
+			"Rouge2_Rpc",
+			"Rouge2OutsideRpc"
+		},
+		config = {
+			"Rouge2_Config",
+			"Rouge2_OutSideConfig",
+			"Rouge2_CareerConfig",
+			"Rouge2_CollectionConfig",
+			"Rouge2_AttributeConfig",
+			"Rouge2_MapConfig",
+			"Rouge2_ChatConfig"
+		},
+		controller = {
+			"Rouge2_Controller",
+			"Rouge2_OutsideController",
+			"Rouge2_StatController"
 		}
 	},
 	ActWindSong = {
@@ -1119,7 +1165,8 @@
 			"ItemModel",
 			"ItemPowerModel",
 			"ItemInsightModel",
-			"AntiqueModel"
+			"AntiqueModel",
+			"ItemExpireModel"
 		},
 		rpc = {
 			"ItemRpc",
@@ -1872,8 +1919,7 @@
 	RoleStory = {
 		config = {
 			"RoleStoryConfig",
-			"NecrologistStoryConfig",
-			"NecrologistStoryV3A1Config"
+			"NecrologistStoryConfig"
 		},
 		model = {
 			"RoleStoryModel",
@@ -1939,7 +1985,8 @@
 			"BossRushRedModel",
 			"V1a6_BossRush_StoreModel",
 			"V2a9BossRushModel",
-			"V2a9BossRushSkillBackpackListModel"
+			"V2a9BossRushSkillBackpackListModel",
+			"V3a2_BossRushModel"
 		},
 		controller = {
 			"BossRushController",
@@ -2066,7 +2113,8 @@
 			"TurnbackRecommendModel"
 		},
 		controller = {
-			"TurnbackController"
+			"TurnbackController",
+			"TurnbackPickEquipController"
 		},
 		rpc = {
 			"TurnbackRpc"
@@ -2865,6 +2913,14 @@
 			"VersionActivity2_8DungeonTaskStoreController"
 		}
 	},
+	VersionActivity3_2Dungeon = {
+		controller = {
+			"VersionActivity3_2DungeonLogicController"
+		},
+		config = {
+			"VersionActivity3_2DungeonConfig"
+		}
+	},
 	BossFight = {
 		config = {
 			"VersionActivity2_8BossConfig"
@@ -3103,6 +3159,20 @@
 			"UI3DRenderController"
 		}
 	},
+	Udimo = {
+		model = {
+			"UdimoModel"
+		},
+		controller = {
+			"UdimoController"
+		},
+		rpc = {
+			"UdimoRpc"
+		},
+		config = {
+			"UdimoConfig"
+		}
+	},
 	Activity211 = {
 		model = {
 			"YeShuMeiModel",
@@ -3172,5 +3242,127 @@
 		controller = {
 			"ChargePushController"
 		}
+	},
+	HuiDiaoLan = {
+		model = {
+			"HuiDiaoLanModel",
+			"HuiDiaoLanGameModel"
+		},
+		config = {
+			"HuiDiaoLanConfig",
+			"Activity220Config"
+		},
+		controller = {
+			"HuiDiaoLanGameController"
+		}
+	},
+	Activity220 = {
+		model = {
+			"Activity220Model"
+		},
+		config = {
+			"Activity220Config"
+		},
+		rpc = {
+			"Activity220Rpc"
+		},
+		controller = {
+			"Activity220Controller"
+		}
+	},
+	Act215 = {
+		model = {
+			"Activity215Model"
+		},
+		config = {
+			"Activity215Config"
+		},
+		rpc = {
+			"Activity215Rpc"
+		},
+		controller = {
+			"Activity215Controller"
+		}
+	},
+	Act216 = {
+		model = {
+			"Activity216Model"
+		},
+		config = {
+			"Activity216Config"
+		},
+		rpc = {
+			"Activity216Rpc"
+		},
+		controller = {
+			"Activity216Controller"
+		}
+	},
+	Act217 = {
+		model = {
+			"Activity217Model"
+		},
+		config = {
+			"Activity217Config"
+		},
+		rpc = {
+			"Activity217Rpc"
+		},
+		controller = {
+			"Activity217Controller"
+		}
+	},
+	Act218 = {
+		model = {
+			"Activity218Model"
+		},
+		config = {
+			"Activity218Config"
+		},
+		rpc = {
+			"Activity218Rpc"
+		},
+		controller = {
+			"Activity218Controller"
+		}
+	},
+	Cruise = {
+		model = {
+			"CruiseModel"
+		},
+		controller = {
+			"CruiseController"
+		}
+	},
+	Item = {
+		model = {
+			"ItemTalentModel"
+		},
+		config = {
+			"ItemTalentConfig"
+		},
+		controller = {
+			"ItemTalentController"
+		}
+	},
+	BeiLiEr = {
+		model = {
+			"BeiLiErGameModel",
+			"BeiLiErModel"
+		},
+		config = {
+			"BeiLiErConfig"
+		},
+		controller = {
+			"BeiLiErGameController",
+			"BeiLiErController"
+		}
+	},
+	GameCenter = {
+		controller = {
+			"GameCenterController"
+		}
 	}
 }
+
+return module_mvc

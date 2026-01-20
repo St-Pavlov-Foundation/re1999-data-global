@@ -1,92 +1,98 @@
-﻿module("modules.logic.guide.controller.trigger.GuideTriggerDestinyStone", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/trigger/GuideTriggerDestinyStone.lua
 
-local var_0_0 = class("GuideTriggerDestinyStone", BaseGuideTrigger)
+module("modules.logic.guide.controller.trigger.GuideTriggerDestinyStone", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0, arg_1_1)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_1_0._onOpenView, arg_1_0)
-	CharacterDestinyController.instance:registerCallback(CharacterDestinyEvent.OnUnlockSlot, arg_1_0._OnUnlockSlot, arg_1_0)
-	CharacterDestinyController.instance:registerCallback(CharacterDestinyEvent.OnUseStoneReply, arg_1_0._OnUseStone, arg_1_0)
-	CharacterController.instance:registerCallback(CharacterEvent.successHeroRankUp, arg_1_0._characterLevelUp, arg_1_0)
-	CharacterController.instance:registerCallback(CharacterEvent.successHeroLevelUp, arg_1_0._characterLevelUp, arg_1_0)
+local GuideTriggerDestinyStone = class("GuideTriggerDestinyStone", BaseGuideTrigger)
+
+function GuideTriggerDestinyStone:ctor(triggerKey)
+	GuideTriggerDestinyStone.super.ctor(self, triggerKey)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, self._onOpenView, self)
+	CharacterDestinyController.instance:registerCallback(CharacterDestinyEvent.OnUnlockSlot, self._OnUnlockSlot, self)
+	CharacterDestinyController.instance:registerCallback(CharacterDestinyEvent.OnUseStoneReply, self._OnUseStone, self)
+	CharacterController.instance:registerCallback(CharacterEvent.successHeroRankUp, self._characterLevelUp, self)
+	CharacterController.instance:registerCallback(CharacterEvent.successHeroLevelUp, self._characterLevelUp, self)
 end
 
-function var_0_0.assertGuideSatisfy(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 == tonumber(arg_2_2) then
+function GuideTriggerDestinyStone:assertGuideSatisfy(param, configParam)
+	if param == tonumber(configParam) then
 		return true
 	end
 end
 
-function var_0_0._characterLevelUp(arg_3_0)
-	if arg_3_0:_checkDestinyStone(arg_3_0.heroMo) then
-		local var_3_0 = arg_3_0.heroMo.destinyStoneMo
+function GuideTriggerDestinyStone:_characterLevelUp()
+	if self:_checkDestinyStone(self.heroMo) then
+		local destinyStoneMo = self.heroMo.destinyStoneMo
 
-		if var_3_0 and not var_3_0:isUnlockSlot() then
-			arg_3_0:checkStartGuide(23301)
+		if destinyStoneMo and not destinyStoneMo:isUnlockSlot() then
+			self:checkStartGuide(23301)
 		end
 	end
 end
 
-function var_0_0._onOpenView(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 == ViewName.CharacterView then
-		local var_4_0 = arg_4_2
+function GuideTriggerDestinyStone:_onOpenView(viewName, viewParam)
+	if viewName == ViewName.CharacterView then
+		local heroMo = viewParam
 
-		if arg_4_0:_checkDestinyStone(var_4_0) then
-			local var_4_1 = var_4_0.destinyStoneMo
-			local var_4_2 = 23301
+		if self:_checkDestinyStone(heroMo) then
+			local destinyStoneMo = heroMo.destinyStoneMo
+			local guideId = 23301
 
-			if var_4_1:isUnlockSlot() then
-				local var_4_3 = GuideModel.instance:getById(var_4_2)
+			if destinyStoneMo:isUnlockSlot() then
+				local guideMO = GuideModel.instance:getById(guideId)
 
-				if var_4_3 and not (var_4_3.serverStepId == -1 and var_4_3.clientStepId == -1) then
-					GuideStepController.instance:clearFlow(var_4_2)
-					GuideModel.instance:remove(var_4_3)
+				if guideMO then
+					local isGuideFinish = guideMO.serverStepId == -1 and guideMO.clientStepId == -1
+
+					if not isGuideFinish then
+						GuideStepController.instance:clearFlow(guideId)
+						GuideModel.instance:remove(guideMO)
+					end
 				end
 			else
-				arg_4_0:checkStartGuide(var_4_2)
+				self:checkStartGuide(guideId)
 			end
 		end
 
-		arg_4_0.heroMo = var_4_0
+		self.heroMo = heroMo
 	end
 
-	if arg_4_1 == ViewName.CharacterDestinySlotView then
-		local var_4_4 = arg_4_2.heroMo
+	if viewName == ViewName.CharacterDestinySlotView then
+		local heroMo = viewParam.heroMo
 
-		if arg_4_0:_checkDestinyStone(var_4_4) then
-			local var_4_5 = var_4_4.destinyStoneMo
+		if self:_checkDestinyStone(heroMo) then
+			local destinyStoneMo = heroMo.destinyStoneMo
 
-			if var_4_5 and var_4_5:isUnlockSlot() then
-				if var_4_5.curUseStoneId == 0 then
-					if not var_4_5.unlockStoneIds or #var_4_5.unlockStoneIds == 0 then
-						arg_4_0:checkStartGuide(23302)
+			if destinyStoneMo and destinyStoneMo:isUnlockSlot() then
+				if destinyStoneMo.curUseStoneId == 0 then
+					if not destinyStoneMo.unlockStoneIds or #destinyStoneMo.unlockStoneIds == 0 then
+						self:checkStartGuide(23302)
 					end
 				else
-					arg_4_0:checkStartGuide(23303)
+					self:checkStartGuide(23303)
 				end
 			end
 		end
 	end
 end
 
-function var_0_0._checkDestinyStone(arg_5_0, arg_5_1)
-	if not arg_5_1 or not arg_5_1:isOwnHero() then
+function GuideTriggerDestinyStone:_checkDestinyStone(heroMo)
+	if not heroMo or not heroMo:isOwnHero() then
 		return
 	end
 
-	if not arg_5_1:isCanOpenDestinySystem() then
+	if not heroMo:isCanOpenDestinySystem() then
 		return
 	end
 
 	return true
 end
 
-function var_0_0._OnUnlockSlot(arg_6_0)
-	arg_6_0:checkStartGuide(23302)
+function GuideTriggerDestinyStone:_OnUnlockSlot()
+	self:checkStartGuide(23302)
 end
 
-function var_0_0._OnUseStone(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_0:checkStartGuide(23303)
+function GuideTriggerDestinyStone:_OnUseStone(heroId, stoneId)
+	self:checkStartGuide(23303)
 end
 
-return var_0_0
+return GuideTriggerDestinyStone

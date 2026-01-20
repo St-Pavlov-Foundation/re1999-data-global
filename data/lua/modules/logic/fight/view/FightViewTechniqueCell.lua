@@ -1,69 +1,73 @@
-﻿module("modules.logic.fight.view.FightViewTechniqueCell", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightViewTechniqueCell.lua
 
-local var_0_0 = class("FightViewTechniqueCell", ListScrollCell)
+module("modules.logic.fight.view.FightViewTechniqueCell", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._click = gohelper.getClickWithAudio(arg_1_1)
-	arg_1_0._txtName = gohelper.findChildText(arg_1_1, "effectname")
-	arg_1_0._img = gohelper.findChildSingleImage(arg_1_1, "icon")
-	arg_1_0._animator = arg_1_1:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._moPlayHistory = {}
+local FightViewTechniqueCell = class("FightViewTechniqueCell", ListScrollCell)
+
+function FightViewTechniqueCell:init(go)
+	self._click = gohelper.getClickWithAudio(go)
+	self._txtName = gohelper.findChildText(go, "effectname")
+	self._img = gohelper.findChildSingleImage(go, "icon")
+	self._animator = go:GetComponent(typeof(UnityEngine.Animator))
+	self._moPlayHistory = {}
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnStartSequenceFinish, arg_2_0._onStartSequenceFinish, arg_2_0)
-	arg_2_0._click:AddClickListener(arg_2_0._onClickItem, arg_2_0)
+function FightViewTechniqueCell:addEventListeners()
+	self:addEventCb(FightController.instance, FightEvent.OnStartSequenceFinish, self._onStartSequenceFinish, self)
+	self._click:AddClickListener(self._onClickItem, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._click:RemoveClickListener()
+function FightViewTechniqueCell:removeEventListeners()
+	self._click:RemoveClickListener()
 end
 
-function var_0_0._onStartSequenceFinish(arg_4_0)
-	if arg_4_0._mo and not gohelper.isNil(arg_4_0._animator) then
-		arg_4_0._animator:Play("fight_effecttips_loop")
-		arg_4_0._animator:Update(0)
+function FightViewTechniqueCell:_onStartSequenceFinish()
+	if self._mo and not gohelper.isNil(self._animator) then
+		self._animator:Play("fight_effecttips_loop")
+		self._animator:Update(0)
 	end
 end
 
-function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
-	if (not arg_5_0._mo or arg_5_0._mo ~= arg_5_1) and not arg_5_1.hasPlayAnimin and not gohelper.isNil(arg_5_0._animator) then
-		arg_5_1.hasPlayAnimin = true
-		arg_5_0._moPlayHistory[arg_5_1] = true
+function FightViewTechniqueCell:onUpdateMO(mo)
+	if (not self._mo or self._mo ~= mo) and not mo.hasPlayAnimin and not gohelper.isNil(self._animator) then
+		mo.hasPlayAnimin = true
+		self._moPlayHistory[mo] = true
 
-		arg_5_0._animator:Play("fight_effecttips")
-		arg_5_0._animator:Update(0)
+		self._animator:Play("fight_effecttips")
+		self._animator:Update(0)
 	end
 
-	arg_5_0._mo = arg_5_1
+	self._mo = mo
 
-	local var_5_0 = lua_fight_technique.configDict[arg_5_1.id]
+	local co = lua_fight_technique.configDict[mo.id]
 
-	arg_5_0._txtName.text = var_5_0 and var_5_0.title_cn or ""
+	self._txtName.text = co and co.title_cn or ""
 
-	if var_5_0 and not string.nilorempty(var_5_0.icon) then
-		arg_5_0._img:LoadImage(ResUrl.getFightIcon(var_5_0.icon) .. ".png")
+	if co and not string.nilorempty(co.icon) then
+		self._img:LoadImage(ResUrl.getFightIcon(co.icon) .. ".png")
 	end
 end
 
-function var_0_0.onDestroy(arg_6_0)
-	if arg_6_0._img then
-		arg_6_0._img:UnLoadImage()
+function FightViewTechniqueCell:onDestroy()
+	if self._img then
+		self._img:UnLoadImage()
 
-		arg_6_0._img = nil
+		self._img = nil
 	end
 
-	if arg_6_0._moPlayHistory then
-		for iter_6_0, iter_6_1 in pairs(arg_6_0._moPlayHistory) do
-			iter_6_0.hasPlayAnimin = nil
+	if self._moPlayHistory then
+		for mo, _ in pairs(self._moPlayHistory) do
+			mo.hasPlayAnimin = nil
 		end
 
-		arg_6_0._moPlayHistory = nil
+		self._moPlayHistory = nil
 	end
 end
 
-function var_0_0._onClickItem(arg_7_0)
-	if GuideModel.instance:getFlagValue(GuideModel.GuideFlag.FightForbidClickTechnique) then
+function FightViewTechniqueCell:_onClickItem()
+	local guideFlag = GuideModel.instance:getFlagValue(GuideModel.GuideFlag.FightForbidClickTechnique)
+
+	if guideFlag then
 		return
 	end
 
@@ -71,14 +75,14 @@ function var_0_0._onClickItem(arg_7_0)
 		return
 	end
 
-	local var_7_0 = GuideModel.instance:getDoingGuideIdList()
-	local var_7_1 = var_7_0 and #var_7_0 or 0
+	local doingGuideIdList = GuideModel.instance:getDoingGuideIdList()
+	local doingGuideIdCount = doingGuideIdList and #doingGuideIdList or 0
 
-	if not FightModel.instance:isStartFinish() and var_7_1 > 0 then
+	if not FightModel.instance:isStartFinish() and doingGuideIdCount > 0 then
 		return
 	end
 
-	ViewMgr.instance:openView(ViewName.FightTechniqueTipsView, lua_fight_technique.configDict[arg_7_0._mo.id])
+	ViewMgr.instance:openView(ViewName.FightTechniqueTipsView, lua_fight_technique.configDict[self._mo.id])
 end
 
-return var_0_0
+return FightViewTechniqueCell

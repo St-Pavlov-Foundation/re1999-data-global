@@ -1,9 +1,11 @@
-﻿module("modules.common.gameobject.GameObjectLiveEvent", package.seeall)
+﻿-- chunkname: @modules/common/gameobject/GameObjectLiveEvent.lua
 
-local var_0_0 = _M
+module("modules.common.gameobject.GameObjectLiveEvent", package.seeall)
 
-var_0_0.OnAwake = 1
-var_0_0.OnStart = 2
-var_0_0.OnDestroy = 3
+local GameObjectLiveEvent = _M
 
-return var_0_0
+GameObjectLiveEvent.OnAwake = 1
+GameObjectLiveEvent.OnStart = 2
+GameObjectLiveEvent.OnDestroy = 3
+
+return GameObjectLiveEvent

@@ -1,42 +1,46 @@
-﻿module("modules.logic.versionactivity1_6.dungeon.view.store.VersionActivity1_6NormalStoreGoodsViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/dungeon/view/store/VersionActivity1_6NormalStoreGoodsViewContainer.lua
 
-local var_0_0 = class("VersionActivity1_6NormalStoreGoodsViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_6.dungeon.view.store.VersionActivity1_6NormalStoreGoodsViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local VersionActivity1_6NormalStoreGoodsViewContainer = class("VersionActivity1_6NormalStoreGoodsViewContainer", BaseViewContainer)
+
+function VersionActivity1_6NormalStoreGoodsViewContainer:buildViews()
 	return {
 		TabViewGroup.New(1, "#go_topright"),
 		VersionActivity1_6NormalStoreGoodsView.New()
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	local var_2_0 = CurrencyEnum.CurrencyType.LeiMiTeBei
+function VersionActivity1_6NormalStoreGoodsViewContainer:buildTabViews(tabContainerId)
+	local costId = CurrencyEnum.CurrencyType.LeiMiTeBei
 
-	if arg_2_0.viewParam then
-		var_2_0 = string.splitToNumber(arg_2_0.viewParam.cost, "#")[2]
+	if self.viewParam then
+		local itemParam = string.splitToNumber(self.viewParam.cost, "#")
+
+		costId = itemParam[2]
 	end
 
-	arg_2_0._currencyView = CurrencyView.New({
-		var_2_0
+	self._currencyView = CurrencyView.New({
+		costId
 	})
 
-	arg_2_0._currencyView:setOpenCallback(arg_2_0._onCurrencyOpen, arg_2_0)
+	self._currencyView:setOpenCallback(self._onCurrencyOpen, self)
 
 	return {
-		arg_2_0._currencyView
+		self._currencyView
 	}
 end
 
-function var_0_0._onCurrencyOpen(arg_3_0)
-	local var_3_0 = arg_3_0._currencyView:getCurrencyItem(1)
+function VersionActivity1_6NormalStoreGoodsViewContainer:_onCurrencyOpen()
+	local item = self._currencyView:getCurrencyItem(1)
 
-	gohelper.setActive(var_3_0.btn, false)
-	gohelper.setActive(var_3_0.click, true)
-	recthelper.setAnchorX(var_3_0.txt.transform, 313)
+	gohelper.setActive(item.btn, false)
+	gohelper.setActive(item.click, true)
+	recthelper.setAnchorX(item.txt.transform, 313)
 end
 
-function var_0_0.onContainerClickModalMask(arg_4_0)
-	arg_4_0:closeThis()
+function VersionActivity1_6NormalStoreGoodsViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return VersionActivity1_6NormalStoreGoodsViewContainer

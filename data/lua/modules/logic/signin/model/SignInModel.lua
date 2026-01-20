@@ -1,85 +1,87 @@
-﻿module("modules.logic.signin.model.SignInModel", package.seeall)
+﻿-- chunkname: @modules/logic/signin/model/SignInModel.lua
 
-local var_0_0 = class("SignInModel", BaseModel)
+module("modules.logic.signin.model.SignInModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local SignInModel = class("SignInModel", BaseModel)
+
+function SignInModel:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._totalSignDays = 0
-	arg_2_0._targetdate = {
+function SignInModel:reInit()
+	self._totalSignDays = 0
+	self._targetdate = {
 		2021,
 		1,
 		1
 	}
-	arg_2_0._newShowDetail = true
-	arg_2_0._newSwitch = false
-	arg_2_0._isAutoSignGetReward = true
-	arg_2_0._showBirthday = false
-	arg_2_0._signInfo = {}
-	arg_2_0._historySignInfos = {}
-	arg_2_0._heroBirthdayInfos = {}
+	self._newShowDetail = true
+	self._newSwitch = false
+	self._isAutoSignGetReward = true
+	self._showBirthday = false
+	self._signInfo = {}
+	self._historySignInfos = {}
+	self._heroBirthdayInfos = {}
 end
 
-function var_0_0.setHeroBirthdayInfos(arg_3_0, arg_3_1)
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
-		if not arg_3_0._heroBirthdayInfos[iter_3_1.heroId] then
-			local var_3_0 = SignInHeroBirthdayInfoMo.New()
+function SignInModel:setHeroBirthdayInfos(info)
+	for _, v in ipairs(info) do
+		if not self._heroBirthdayInfos[v.heroId] then
+			local birthInfoMo = SignInHeroBirthdayInfoMo.New()
 
-			var_3_0:init(iter_3_1)
+			birthInfoMo:init(v)
 
-			arg_3_0._heroBirthdayInfos[iter_3_1.heroId] = var_3_0
+			self._heroBirthdayInfos[v.heroId] = birthInfoMo
 		else
-			arg_3_0._heroBirthdayInfos[iter_3_1.heroId]:reset(iter_3_1)
+			self._heroBirthdayInfos[v.heroId]:reset(v)
 		end
 	end
 end
 
-function var_0_0.addSignInBirthdayCount(arg_4_0, arg_4_1)
-	if not arg_4_0._heroBirthdayInfos[arg_4_1] then
-		local var_4_0 = SignInHeroBirthdayInfoMo.New()
+function SignInModel:addSignInBirthdayCount(heroId)
+	if not self._heroBirthdayInfos[heroId] then
+		local birthInfoMo = SignInHeroBirthdayInfoMo.New()
 
-		arg_4_0._heroBirthdayInfos[arg_4_1] = var_4_0
+		self._heroBirthdayInfos[heroId] = birthInfoMo
 	end
 
-	arg_4_0._heroBirthdayInfos[arg_4_1]:addBirthdayCount()
+	self._heroBirthdayInfos[heroId]:addBirthdayCount()
 end
 
-function var_0_0.getHeroBirthdayCount(arg_5_0, arg_5_1)
-	if arg_5_0._heroBirthdayInfos[arg_5_1] then
-		return arg_5_0._heroBirthdayInfos[arg_5_1].birthdayCount
+function SignInModel:getHeroBirthdayCount(heroId)
+	if self._heroBirthdayInfos[heroId] then
+		return self._heroBirthdayInfos[heroId].birthdayCount
 	end
 
 	return 0
 end
 
-function var_0_0.setShowBirthday(arg_6_0, arg_6_1)
-	arg_6_0._showBirthday = arg_6_1
+function SignInModel:setShowBirthday(show)
+	self._showBirthday = show
 end
 
-function var_0_0.isShowBirthday(arg_7_0)
-	return arg_7_0._showBirthday
+function SignInModel:isShowBirthday()
+	return self._showBirthday
 end
 
-function var_0_0.setHeroBirthdayGet(arg_8_0, arg_8_1)
-	arg_8_0._signInfo:addBirthdayHero(arg_8_1)
+function SignInModel:setHeroBirthdayGet(heroId)
+	self._signInfo:addBirthdayHero(heroId)
 end
 
-function var_0_0.isHeroBirthdayGet(arg_9_0, arg_9_1)
-	local var_9_0 = false
-	local var_9_1 = RoomConfig.instance:getHeroSpecialBlockId(arg_9_1)
+function SignInModel:isHeroBirthdayGet(heroId)
+	local isHasBlock = false
+	local specialBlockId = RoomConfig.instance:getHeroSpecialBlockId(heroId)
 
-	if var_9_1 then
-		var_9_0 = RoomModel.instance:isHasBlockById(var_9_1)
+	if specialBlockId then
+		isHasBlock = RoomModel.instance:isHasBlockById(specialBlockId)
 	end
 
-	if var_9_0 then
+	if isHasBlock then
 		return true
 	end
 
-	for iter_9_0, iter_9_1 in pairs(arg_9_0._signInfo.birthdayHeroIds) do
-		if iter_9_1 == arg_9_1 then
+	for _, v in pairs(self._signInfo.birthdayHeroIds) do
+		if v == heroId then
 			return true
 		end
 	end
@@ -87,137 +89,180 @@ function var_0_0.isHeroBirthdayGet(arg_9_0, arg_9_1)
 	return false
 end
 
-function var_0_0.getCurDayBirthdayHeros(arg_10_0)
-	local var_10_0 = arg_10_0:getCurDate()
-	local var_10_1 = {}
-	local var_10_2 = arg_10_0:getDayAllBirthdayHeros(var_10_0.month, var_10_0.day)
+function SignInModel:getCurDayBirthdayHeros()
+	local curDate = self:getCurDate()
+	local heros = {}
+	local heroList = self:getDayAllBirthdayHeros(curDate.month, curDate.day)
 
-	for iter_10_0, iter_10_1 in pairs(var_10_2) do
-		local var_10_3 = HeroConfig.instance:getHeroCO(iter_10_1)
+	for _, v in pairs(heroList) do
+		local heroCo = HeroConfig.instance:getHeroCO(v)
 
-		if var_10_3.roleBirthday ~= "" then
-			local var_10_4 = string.splitToNumber(var_10_3.roleBirthday, "/")
-			local var_10_5 = #string.split(var_10_3.birthdayBonus, ";")
+		if heroCo.roleBirthday ~= "" then
+			local birth = string.splitToNumber(heroCo.roleBirthday, "/")
+			local bonusLength = #string.split(heroCo.birthdayBonus, ";")
 
-			if var_10_4[1] == var_10_0.month and var_10_4[2] == var_10_0.day then
-				local var_10_6 = arg_10_0:getHeroBirthdayCount(iter_10_1)
+			if birth[1] == curDate.month and birth[2] == curDate.day then
+				local birthdayCount = self:getHeroBirthdayCount(v)
 
-				if arg_10_0:isHeroBirthdayGet(iter_10_1) then
-					if var_10_6 <= var_10_5 then
-						table.insert(var_10_1, iter_10_1)
+				if self:isHeroBirthdayGet(v) then
+					if birthdayCount <= bonusLength then
+						table.insert(heros, v)
 					end
-				elseif var_10_6 < var_10_5 then
-					table.insert(var_10_1, iter_10_1)
+				elseif birthdayCount < bonusLength then
+					table.insert(heros, v)
 				end
 			end
 		end
 	end
 
-	table.sort(var_10_1)
+	table.sort(heros)
 
-	return var_10_1
+	return heros
 end
 
-function var_0_0.getNoSignBirthdayHeros(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = {}
-	local var_11_1 = arg_11_0:getDayAllBirthdayHeros(arg_11_1, arg_11_2)
+function SignInModel:getNoSignBirthdayHeros(month, day)
+	local heros = {}
+	local heroList = self:getDayAllBirthdayHeros(month, day)
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_1) do
-		local var_11_2 = HeroConfig.instance:getHeroCO(iter_11_1)
+	for _, v in ipairs(heroList) do
+		local heroCo = HeroConfig.instance:getHeroCO(v)
 
-		if var_11_2.roleBirthday ~= "" then
-			local var_11_3 = string.splitToNumber(var_11_2.roleBirthday, "/")
-			local var_11_4 = #string.split(var_11_2.birthdayBonus, ";")
-			local var_11_5 = arg_11_0:getHeroBirthdayCount(iter_11_1)
+		if heroCo.roleBirthday ~= "" then
+			local birth = string.splitToNumber(heroCo.roleBirthday, "/")
+			local bonusLength = #string.split(heroCo.birthdayBonus, ";")
+			local birthdayCount = self:getHeroBirthdayCount(v)
 
-			if var_11_3[1] == arg_11_1 and var_11_3[2] == arg_11_2 and var_11_5 < var_11_4 then
-				table.insert(var_11_0, tonumber(var_11_2.id))
+			if birth[1] == month and birth[2] == day and birthdayCount < bonusLength then
+				table.insert(heros, tonumber(heroCo.id))
 			end
 		end
 	end
 
-	table.sort(var_11_0)
+	table.sort(heros)
 
-	return var_11_0
+	return heros
 end
 
-function var_0_0.getDayAllBirthdayHeros(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = {}
-	local var_12_1 = lua_character.configDict
+function SignInModel:getDayAllBirthdayHeros(month, day)
+	local heros = {}
+	local heroList = lua_character.configDict
 
-	for iter_12_0, iter_12_1 in pairs(var_12_1) do
-		if iter_12_1.roleBirthday ~= "" and iter_12_1.isOnline == "1" then
-			local var_12_2 = string.splitToNumber(iter_12_1.roleBirthday, "/")
+	for _, v in pairs(heroList) do
+		if v.roleBirthday ~= "" and v.isOnline == "1" then
+			local birth = string.splitToNumber(v.roleBirthday, "/")
 
-			if var_12_2[1] == arg_12_1 and var_12_2[2] == arg_12_2 then
-				table.insert(var_12_0, tonumber(iter_12_1.id))
+			if birth[1] == month and birth[2] == day then
+				table.insert(heros, tonumber(v.id))
 			end
 		end
 	end
 
-	table.sort(var_12_0)
+	table.sort(heros)
 
-	return var_12_0
+	return heros
 end
 
-function var_0_0.getSignBirthdayHeros(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	local var_13_0 = {}
-	local var_13_1 = {}
+function SignInModel:getSignBirthdayHeros(year, month, day)
+	local heros = {}
+	local heroIds = {}
 
-	arg_13_0._curDate = arg_13_0:getCurDate()
+	self._curDate = self:getCurDate()
+	heroIds = self:getDayAllBirthdayHeros(month, day)
 
-	local var_13_2 = arg_13_0:getDayAllBirthdayHeros(arg_13_2, arg_13_3)
-	local var_13_3 = false
+	local isBirthdayPastInThisYear = false
 
-	if arg_13_2 < arg_13_0._curDate.month or arg_13_2 == arg_13_0._curDate.month and arg_13_3 < arg_13_0._curDate.day then
-		var_13_3 = true
+	if month < self._curDate.month or month == self._curDate.month and day < self._curDate.day then
+		isBirthdayPastInThisYear = true
 	end
 
-	for iter_13_0, iter_13_1 in pairs(var_13_2) do
-		local var_13_4 = HeroConfig.instance:getHeroCO(iter_13_1)
+	for _, v in pairs(heroIds) do
+		local heroCo = HeroConfig.instance:getHeroCO(v)
 
-		if var_13_4.roleBirthday ~= "" then
-			local var_13_5 = string.splitToNumber(var_13_4.roleBirthday, "/")
-			local var_13_6 = #string.split(var_13_4.birthdayBonus, ";")
+		if heroCo.roleBirthday ~= "" then
+			local birth = string.splitToNumber(heroCo.roleBirthday, "/")
+			local bonusLength = #string.split(heroCo.birthdayBonus, ";")
 
-			if var_13_5[1] == arg_13_2 and var_13_5[2] == arg_13_3 then
-				local var_13_7 = arg_13_0:getHeroBirthdayCount(iter_13_1)
+			if birth[1] == month and birth[2] == day then
+				local birthdayCount = self:getHeroBirthdayCount(v)
 
-				if arg_13_0._curDate.year ~= arg_13_1 then
-					if arg_13_0._curDate.month == arg_13_2 then
-						var_13_7 = var_13_7 - 1
+				if self._curDate.year ~= year then
+					if self._curDate.month == month then
+						birthdayCount = birthdayCount - 1
 					end
-				elseif not arg_13_0:isHeroBirthdayGet(iter_13_1) and not var_13_3 then
-					var_13_7 = var_13_7 + 1
+				else
+					local birthdayGet = self:isHeroBirthdayGet(v)
+
+					if not birthdayGet and not isBirthdayPastInThisYear then
+						birthdayCount = birthdayCount + 1
+					end
 				end
 
-				if var_13_7 > 0 and var_13_7 <= var_13_6 then
-					table.insert(var_13_0, iter_13_1)
+				if birthdayCount > 0 and birthdayCount <= bonusLength then
+					table.insert(heros, v)
 				end
 			end
 		end
 	end
 
-	table.sort(var_13_0)
+	table.sort(heros)
 
-	return var_13_0
+	return heros
 end
 
-function var_0_0.setSignInInfo(arg_14_0, arg_14_1)
-	arg_14_0._signInfo = SignInInfoMo.New()
+function SignInModel:setSignInInfo(info)
+	self._signInfo = SignInInfoMo.New()
 
-	arg_14_0._signInfo:init(arg_14_1)
+	self._signInfo:init(info)
 
-	arg_14_0._totalSignDays = arg_14_0._signInfo.addupSignInDay
+	self._totalSignDays = self._signInfo.addupSignInDay
 end
 
-function var_0_0.setSignDayRewardGet(arg_15_0, arg_15_1)
-	arg_15_0._signInfo:addSignInfo(arg_15_1)
+function SignInModel:setSignDayRewardGet(info)
+	self._signInfo:addSignInfo(info)
 
-	arg_15_0._totalSignDays = #arg_15_0._signInfo:getSignDays()
+	self._totalSignDays = #self._signInfo:getSignDays()
 end
 
-function var_0_0.checkDailyAllowanceIsOpen(arg_16_0)
+function SignInModel:getSupplementMonthCardDays()
+	return self._signInfo and self._signInfo:getSupplementMonthCardDays() or 0
+end
+
+function SignInModel:setSupplementMonthCard(day)
+	self._signInfo:setSupplementMonthCardDays(day)
+end
+
+function SignInModel:getCanSupplementMonthCardDays()
+	local day = 0
+
+	if StoreModel.instance:hasPurchaseMonthCard() then
+		local monthCardInfo = StoreModel.instance:getMonthCardInfo()
+		local monthCardCo = StoreConfig.instance:getMonthCardConfig(monthCardInfo.id)
+
+		if monthCardCo then
+			local itemId = monthCardCo.signingItem
+			local itemCount = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.SpecialExpiredItem, itemId)
+			local noSignInDay = self:getSupplementMonthCardDays()
+
+			if not itemCount or not noSignInDay then
+				return 0
+			end
+
+			if itemCount < 1 or noSignInDay < 1 then
+				return day
+			end
+
+			return math.min(itemCount, noSignInDay)
+		end
+	end
+
+	return day
+end
+
+function SignInModel:getSupplementMonthCardItemId()
+	return
+end
+
+function SignInModel:checkDailyAllowanceIsOpen()
 	if not ActivityModel.instance:isActOnLine(ActivityEnum.Activity.DailyAllowance) then
 		return false
 	end
@@ -225,12 +270,13 @@ function var_0_0.checkDailyAllowanceIsOpen(arg_16_0)
 	return true
 end
 
-function var_0_0.checkIsFirstGoldDay(arg_17_0)
-	if arg_17_0:checkDailyAllowanceIsOpen() then
-		local var_17_0 = ActivityModel.instance:getActMO(ActivityEnum.Activity.DailyAllowance)
-		local var_17_1 = ServerTime.now() - var_17_0:getRealStartTimeStamp()
+function SignInModel:checkIsFirstGoldDay()
+	if self:checkDailyAllowanceIsOpen() then
+		local actmo = ActivityModel.instance:getActMO(ActivityEnum.Activity.DailyAllowance)
+		local sec = ServerTime.now() - actmo:getRealStartTimeStamp()
+		local remainday = TimeUtil.secondsToDDHHMMSS(sec) + 1
 
-		if TimeUtil.secondsToDDHHMMSS(var_17_1) + 1 == 1 then
+		if remainday == 1 then
 			return true
 		end
 
@@ -238,126 +284,134 @@ function var_0_0.checkIsFirstGoldDay(arg_17_0)
 	end
 end
 
-function var_0_0.getDailyAllowanceBonus(arg_18_0)
-	if arg_18_0:checkDailyAllowanceIsOpen() then
-		local var_18_0 = math.floor(arg_18_0:getGoldOpenDay())
+function SignInModel:getDailyAllowanceBonus()
+	if self:checkDailyAllowanceIsOpen() then
+		local remainday = math.floor(self:getGoldOpenDay())
 
-		return SignInConfig.instance:getGoldReward(var_18_0)
+		return SignInConfig.instance:getGoldReward(remainday)
 	end
 end
 
-function var_0_0.getTargetDailyAllowanceBonus(arg_19_0, arg_19_1)
-	if arg_19_0:checkDailyAllowanceIsOpen() then
-		local var_19_0 = TimeUtil.timeToTimeStamp(arg_19_1[1], arg_19_1[2], arg_19_1[3], TimeDispatcher.DailyRefreshTime, 1, 1)
-		local var_19_1 = math.floor(arg_19_0:getGoldOpenDay(var_19_0))
+function SignInModel:getTargetDailyAllowanceBonus(date)
+	if self:checkDailyAllowanceIsOpen() then
+		local targetTime = TimeUtil.timeToTimeStamp(date[1], date[2], date[3], TimeDispatcher.DailyRefreshTime, 1, 1)
+		local remainday = math.floor(self:getGoldOpenDay(targetTime))
 
-		return SignInConfig.instance:getGoldReward(var_19_1)
+		return SignInConfig.instance:getGoldReward(remainday)
 	end
 end
 
-function var_0_0.getGoldOpenDay(arg_20_0, arg_20_1)
-	local var_20_0 = ActivityModel.instance:getActStartTime(ActivityEnum.Activity.DailyAllowance) / 1000
-	local var_20_1 = os.date("*t", ServerTime.timeInLocal(var_20_0))
+function SignInModel:getGoldOpenDay(targetTime)
+	local actStartTime = ActivityModel.instance:getActStartTime(ActivityEnum.Activity.DailyAllowance) / 1000
+	local startTimeTable = os.date("*t", ServerTime.timeInLocal(actStartTime))
 
-	var_20_1.hour = 5
-	var_20_1.min = 0
-	var_20_1.sec = 0
+	startTimeTable.hour = 5
+	startTimeTable.min = 0
+	startTimeTable.sec = 0
 
-	local var_20_2 = os.time(var_20_1) - ServerTime.clientToServerOffset()
-	local var_20_3 = ServerTime.now() - var_20_2
+	local startTimeAmend = os.time(startTimeTable) - ServerTime.clientToServerOffset()
+	local offset = ServerTime.now() - startTimeAmend
 
-	if arg_20_1 then
-		var_20_3 = arg_20_1 - var_20_2
+	if targetTime then
+		offset = targetTime - startTimeAmend
 	end
 
-	return var_20_3 / 86400 + 1
+	local day = offset / 86400 + 1
+
+	return day
 end
 
-function var_0_0.checkIsGoldDayAndPass(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
-	if arg_21_0:checkIsGoldDay(arg_21_1, arg_21_2, arg_21_3) then
-		local var_21_0 = arg_21_1[3]
+function SignInModel:checkIsGoldDayAndPass(date, isItem, itemIndex)
+	if self:checkIsGoldDay(date, isItem, itemIndex) then
+		local targetDay = date[3]
 
-		if arg_21_2 then
-			var_21_0 = arg_21_3
+		if isItem then
+			targetDay = itemIndex
 		end
 
-		local var_21_1 = {
+		local dtTable = {
 			hour = 0,
 			min = 0,
 			sec = 0,
-			year = arg_21_1[1],
-			month = arg_21_1[2],
-			day = var_21_0
+			year = date[1],
+			month = date[2],
+			day = targetDay
 		}
-		local var_21_2 = os.time(var_21_1) - ServerTime.clientToServerOffset() - ServerTime.getDstOffset()
-		local var_21_3 = ServerTime.now() - TimeDispatcher.DailyRefreshTime * 3600
-		local var_21_4 = ServerTime.timeInLocal(tonumber(PlayerModel.instance:getPlayinfo().registerTime) / 1000)
-		local var_21_5 = os.date("*t", var_21_4 - TimeDispatcher.DailyRefreshTime * 3600)
-		local var_21_6 = {
+		local localTimestamp = os.time(dtTable)
+		local dateTimeInServer = localTimestamp - ServerTime.clientToServerOffset() - ServerTime.getDstOffset()
+		local now = ServerTime.now() - TimeDispatcher.DailyRefreshTime * 3600
+		local registerTimeInLocal = ServerTime.timeInLocal(tonumber(PlayerModel.instance:getPlayinfo().registerTime) / 1000)
+		local registerDateTime = os.date("*t", registerTimeInLocal - TimeDispatcher.DailyRefreshTime * 3600)
+		local registerDateTimeTable = {
 			hour = 0,
 			min = 0,
 			sec = 0,
-			year = var_21_5.year,
-			month = var_21_5.month,
-			day = var_21_5.day
+			year = registerDateTime.year,
+			month = registerDateTime.month,
+			day = registerDateTime.day
 		}
+		local registerTimeStamp = os.time(registerDateTimeTable)
+		local registerTimeStamp0Clock = registerTimeStamp - ServerTime.clientToServerOffset() - ServerTime.getDstOffset()
 
-		return var_21_2 >= os.time(var_21_6) - ServerTime.clientToServerOffset() - ServerTime.getDstOffset() and var_21_2 <= var_21_3
+		return registerTimeStamp0Clock <= dateTimeInServer and dateTimeInServer <= now
 	end
 
 	return false
 end
 
-function var_0_0.checkIsGoldDay(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
-	if arg_22_0:checkDailyAllowanceIsOpen() then
-		local var_22_0 = arg_22_1[3]
+function SignInModel:checkIsGoldDay(date, isItem, itemIndex)
+	if self:checkDailyAllowanceIsOpen() then
+		local targetDay = date[3]
 
-		if arg_22_2 then
-			var_22_0 = arg_22_3
+		if isItem then
+			targetDay = itemIndex
 		end
 
-		local var_22_1 = {
+		local dtTable = {
 			hour = 12,
 			min = 0,
 			sec = 0,
-			year = arg_22_1[1],
-			month = arg_22_1[2],
-			day = var_22_0
+			year = date[1],
+			month = date[2],
+			day = targetDay
 		}
-		local var_22_2 = os.time(var_22_1) - ServerTime.clientToServerOffset() - ServerTime.getDstOffset()
-		local var_22_3 = ActivityModel.instance:getActMO(ActivityEnum.Activity.DailyAllowance)
-		local var_22_4 = var_22_3:getRealStartTimeStamp() - TimeDispatcher.DailyRefreshTime * 3600
-		local var_22_5 = var_22_3:getRealEndTimeStamp() - TimeDispatcher.DailyRefreshTime * 3600
-		local var_22_6 = lua_activity143_bonus.configDict
-		local var_22_7 = var_22_6 and var_22_6[ActivityEnum.Activity.DailyAllowance]
-		local var_22_8 = var_22_4 + (var_22_7 and #var_22_7 or 0) * TimeUtil.OneDaySecond
-		local var_22_9 = math.min(var_22_5, var_22_8)
+		local localTimestamp = os.time(dtTable)
+		local dateTimeInServer = localTimestamp - ServerTime.clientToServerOffset() - ServerTime.getDstOffset()
+		local actmo = ActivityModel.instance:getActMO(ActivityEnum.Activity.DailyAllowance)
+		local startTime = actmo:getRealStartTimeStamp() - TimeDispatcher.DailyRefreshTime * 3600
+		local endTime = actmo:getRealEndTimeStamp() - TimeDispatcher.DailyRefreshTime * 3600
+		local codict = lua_activity143_bonus.configDict
+		local colist = codict and codict[ActivityEnum.Activity.DailyAllowance]
+		local actDays = colist and #colist or 0
+		local onlinesec = actDays * TimeUtil.OneDaySecond
+		local endTimeWithActDays = startTime + onlinesec
+		local realEndTime = math.min(endTime, endTimeWithActDays)
 
-		return var_22_4 < var_22_2 and var_22_2 < var_22_9
+		return startTime < dateTimeInServer and dateTimeInServer < realEndTime
 	end
 
 	return false
 end
 
-function var_0_0.setSignTotalRewardGet(arg_23_0, arg_23_1)
-	arg_23_0._signInfo:addSignTotalIds(arg_23_1)
+function SignInModel:setSignTotalRewardGet(id)
+	self._signInfo:addSignTotalIds(id)
 end
 
-function var_0_0.getTotalSignDays(arg_24_0)
-	return arg_24_0._totalSignDays
+function SignInModel:getTotalSignDays()
+	return self._totalSignDays
 end
 
-function var_0_0.getAllSignDays(arg_25_0)
-	return arg_25_0._signInfo.hasSignInDays
+function SignInModel:getAllSignDays()
+	return self._signInfo.hasSignInDays
 end
 
-function var_0_0.getAllSignTotals(arg_26_0)
-	return arg_26_0._signInfo.hasGetAddupBonus
+function SignInModel:getAllSignTotals()
+	return self._signInfo.hasGetAddupBonus
 end
 
-function var_0_0.isSignDayRewardGet(arg_27_0, arg_27_1)
-	for iter_27_0, iter_27_1 in pairs(arg_27_0._signInfo.hasSignInDays) do
-		if iter_27_1 == arg_27_1 then
+function SignInModel:isSignDayRewardGet(day)
+	for _, v in pairs(self._signInfo.hasSignInDays) do
+		if v == day then
 			return true
 		end
 	end
@@ -365,15 +419,15 @@ function var_0_0.isSignDayRewardGet(arg_27_0, arg_27_1)
 	return false
 end
 
-function var_0_0.clearSignInDays(arg_28_0)
-	arg_28_0._signInfo:clearSignInDays()
+function SignInModel:clearSignInDays()
+	self._signInfo:clearSignInDays()
 
-	arg_28_0._getBirthHeros = {}
+	self._getBirthHeros = {}
 end
 
-function var_0_0.isSignTotalRewardGet(arg_29_0, arg_29_1)
-	for iter_29_0, iter_29_1 in pairs(arg_29_0._signInfo.hasGetAddupBonus) do
-		if iter_29_1 == arg_29_1 then
+function SignInModel:isSignTotalRewardGet(id)
+	for _, v in pairs(self._signInfo.hasGetAddupBonus) do
+		if v == id then
 			return true
 		end
 	end
@@ -381,73 +435,73 @@ function var_0_0.isSignTotalRewardGet(arg_29_0, arg_29_1)
 	return false
 end
 
-function var_0_0.isSignSeverDataGet(arg_30_0)
-	local var_30_0 = arg_30_0:getCurDate()
+function SignInModel:isSignSeverDataGet()
+	local date = self:getCurDate()
 
-	return arg_30_0:isSignDayRewardGet(var_30_0.day)
+	return self:isSignDayRewardGet(date.day)
 end
 
-function var_0_0.getValidMonthCard(arg_31_0, arg_31_1, arg_31_2, arg_31_3)
-	local var_31_0 = TimeUtil.timeToTimeStamp(arg_31_1, arg_31_2, arg_31_3, 0, 0, 0)
+function SignInModel:getValidMonthCard(year, month, day)
+	local time = TimeUtil.timeToTimeStamp(year, month, day, 0, 0, 0)
 
-	for iter_31_0, iter_31_1 in pairs(arg_31_0._signInfo.monthCardHistory) do
-		if TimeUtil.isSameDay(var_31_0, iter_31_1.startTime - TimeDispatcher.DailyRefreshTime * 3600) or TimeUtil.isSameDay(var_31_0, iter_31_1.endTime - TimeDispatcher.DailyRefreshTime * 3600 - 1) then
-			return iter_31_1.id
+	for _, v in pairs(self._signInfo.monthCardHistory) do
+		if TimeUtil.isSameDay(time, v.startTime - TimeDispatcher.DailyRefreshTime * 3600) or TimeUtil.isSameDay(time, v.endTime - TimeDispatcher.DailyRefreshTime * 3600 - 1) then
+			return v.id
 		end
 
-		if var_31_0 >= iter_31_1.startTime - TimeDispatcher.DailyRefreshTime * 3600 and var_31_0 <= iter_31_1.endTime - TimeDispatcher.DailyRefreshTime * 3600 - 1 then
-			return iter_31_1.id
+		if time >= v.startTime - TimeDispatcher.DailyRefreshTime * 3600 and time <= v.endTime - TimeDispatcher.DailyRefreshTime * 3600 - 1 then
+			return v.id
 		end
 	end
 
 	return nil
 end
 
-function var_0_0.getCurDate(arg_32_0)
+function SignInModel:getCurDate()
 	return os.date("!*t", ServerTime.now() + ServerTime.serverUtcOffset() - TimeDispatcher.DailyRefreshTime * 3600)
 end
 
-function var_0_0.isAutoSign(arg_33_0)
-	return arg_33_0._isAutoSignGetReward
+function SignInModel:isAutoSign()
+	return self._isAutoSignGetReward
 end
 
-function var_0_0.setAutoSign(arg_34_0, arg_34_1)
-	arg_34_0._isAutoSignGetReward = arg_34_1
+function SignInModel:setAutoSign(auto)
+	self._isAutoSignGetReward = auto
 end
 
-function var_0_0.isNewShowDetail(arg_35_0)
-	return arg_35_0._newShowDetail
+function SignInModel:isNewShowDetail()
+	return self._newShowDetail
 end
 
-function var_0_0.setNewShowDetail(arg_36_0, arg_36_1)
-	arg_36_0._newShowDetail = arg_36_1
+function SignInModel:setNewShowDetail(new)
+	self._newShowDetail = new
 end
 
-function var_0_0.isNewSwitch(arg_37_0)
-	return arg_37_0._newSwitch
+function SignInModel:isNewSwitch()
+	return self._newSwitch
 end
 
-function var_0_0.setNewSwitch(arg_38_0, arg_38_1)
-	arg_38_0._newSwitch = arg_38_1
+function SignInModel:setNewSwitch(new)
+	self._newSwitch = new
 end
 
-function var_0_0.setSignInHistory(arg_39_0, arg_39_1)
-	arg_39_0._historySignInfos[arg_39_1.month] = SignInHistoryInfoMo.New()
+function SignInModel:setSignInHistory(info)
+	self._historySignInfos[info.month] = SignInHistoryInfoMo.New()
 
-	arg_39_0._historySignInfos[arg_39_1.month]:init(arg_39_1)
+	self._historySignInfos[info.month]:init(info)
 end
 
-function var_0_0.getHistorySignInDays(arg_40_0, arg_40_1)
-	return arg_40_0._historySignInfos[arg_40_1].hasSignInDays
+function SignInModel:getHistorySignInDays(month)
+	return self._historySignInfos[month].hasSignInDays
 end
 
-function var_0_0.isHistoryDaySigned(arg_41_0, arg_41_1, arg_41_2)
-	if not arg_41_0._historySignInfos[arg_41_1] then
+function SignInModel:isHistoryDaySigned(month, day)
+	if not self._historySignInfos[month] then
 		return false
 	end
 
-	for iter_41_0, iter_41_1 in pairs(arg_41_0._historySignInfos[arg_41_1].hasSignInDays) do
-		if tonumber(iter_41_1) == tonumber(arg_41_2) then
+	for _, v in pairs(self._historySignInfos[month].hasSignInDays) do
+		if tonumber(v) == tonumber(day) then
 			return true
 		end
 	end
@@ -455,128 +509,174 @@ function var_0_0.isHistoryDaySigned(arg_41_0, arg_41_1, arg_41_2)
 	return false
 end
 
-function var_0_0.getSignTargetDate(arg_42_0)
-	return arg_42_0._targetdate
+function SignInModel:getSignTargetDate()
+	return self._targetdate
 end
 
-function var_0_0.setTargetDate(arg_43_0, arg_43_1, arg_43_2, arg_43_3)
-	arg_43_0._targetdate = {
-		arg_43_1,
-		arg_43_2,
-		arg_43_3
-	}
+function SignInModel:setTargetDate(year, month, day, wday)
+	if self._targetdate then
+		self._targetDate = {
+			year,
+			month,
+			day
+		}
+	end
+
+	if not wday then
+		local timestamp = TimeUtil.timeToTimeStamp(year, month, day, wday, TimeDispatcher.DailyRefreshTime, 1, 1)
+		local date = os.date("*t", timestamp)
+
+		wday = date.wday
+	end
+
+	self._targetdate.year = tonumber(year)
+	self._targetdate.month = tonumber(month)
+	self._targetdate.day = tonumber(day)
+	self._targetdate.wday = tonumber(wday)
+	self._targetdate[1] = self._targetdate.year
+	self._targetdate[2] = self._targetdate.month
+	self._targetdate[3] = self._targetdate.day
 end
 
-function var_0_0.getAdvanceHero(arg_44_0)
-	local var_44_0 = arg_44_0:getCurDate()
+function SignInModel:getSignRewardsByDate(date)
+	local wday = TimeUtil.getTodayWeedDay(date)
 
-	for iter_44_0 = 1, 3 do
-		local var_44_1 = os.date("!*t", ServerTime.now() + ServerTime.serverUtcOffset() + 86400 * iter_44_0 - TimeDispatcher.DailyRefreshTime * 3600)
-		local var_44_2 = arg_44_0:getNoSignBirthdayHeros(var_44_1.month, var_44_1.day)
+	return SignInConfig.instance:getSignRewardBouns(wday)
+end
 
-		if #var_44_2 > 0 then
-			local var_44_3 = var_44_2[1]
+function SignInModel:getAdvanceHero()
+	local curDate = self:getCurDate()
 
-			for iter_44_1, iter_44_2 in pairs(var_44_2) do
-				local var_44_4 = HeroConfig.instance:getHeroCO(var_44_3)
-				local var_44_5 = HeroConfig.instance:getHeroCO(iter_44_2)
+	for i = 1, 3 do
+		local date = os.date("!*t", ServerTime.now() + ServerTime.serverUtcOffset() + 86400 * i - TimeDispatcher.DailyRefreshTime * 3600)
+		local heros = self:getNoSignBirthdayHeros(date.month, date.day)
 
-				if var_44_4.rare < var_44_5.rare then
-					var_44_3 = iter_44_2
+		if #heros > 0 then
+			local hero = heros[1]
+
+			for _, v in pairs(heros) do
+				local maxCo = HeroConfig.instance:getHeroCO(hero)
+				local co = HeroConfig.instance:getHeroCO(v)
+
+				if maxCo.rare < co.rare then
+					hero = v
 				end
 			end
 
-			return var_44_3, iter_44_0
+			return hero, i
 		end
 	end
 
 	return 0
 end
 
-function var_0_0.getShowMonthItemCo(arg_45_0)
-	local var_45_0 = tonumber(PlayerModel.instance:getPlayinfo().registerTime)
-	local var_45_1 = os.date("!*t", var_45_0 / 1000 + ServerTime.serverUtcOffset() - TimeDispatcher.DailyRefreshTime * 3600)
-	local var_45_2 = arg_45_0:getCurDate()
-	local var_45_3 = {}
+function SignInModel:getShowMonthItemCo()
+	local registerDate = tonumber(PlayerModel.instance:getPlayinfo().registerTime)
+	local date = os.date("!*t", registerDate / 1000 + ServerTime.serverUtcOffset() - TimeDispatcher.DailyRefreshTime * 3600)
+	local curDate = self:getCurDate()
+	local monthCo = {}
 
-	if var_45_1.year == var_45_2.year then
-		for iter_45_0 = var_45_1.month, var_45_2.month do
-			local var_45_4 = {
-				year = var_45_1.year,
-				month = iter_45_0
-			}
+	if date.year == curDate.year then
+		for i = date.month, curDate.month do
+			local o = {}
 
-			table.insert(var_45_3, var_45_4)
+			o.year = date.year
+			o.month = i
+
+			table.insert(monthCo, o)
 		end
 	else
-		if var_45_2.year - var_45_1.year > 1 then
-			for iter_45_1 = var_45_2.month, 12 do
-				local var_45_5 = {
-					year = var_45_2.year - 1,
-					month = iter_45_1
-				}
+		if curDate.year - date.year > 1 then
+			for i = curDate.month, 12 do
+				local o = {}
 
-				table.insert(var_45_3, var_45_5)
+				o.year = curDate.year - 1
+				o.month = i
+
+				table.insert(monthCo, o)
 			end
 		else
-			for iter_45_2 = var_45_1.month < var_45_2.month and var_45_2.month or var_45_1.month, 12 do
-				local var_45_6 = {
-					year = var_45_2.year - 1,
-					month = iter_45_2
-				}
+			local month = date.month < curDate.month and curDate.month or date.month
 
-				table.insert(var_45_3, var_45_6)
+			for i = month, 12 do
+				local o = {}
+
+				o.year = curDate.year - 1
+				o.month = i
+
+				table.insert(monthCo, o)
 			end
 		end
 
-		for iter_45_3 = 1, var_45_2.month do
-			local var_45_7 = {
-				year = var_45_2.year,
-				month = iter_45_3
-			}
+		for i = 1, curDate.month do
+			local o = {}
 
-			table.insert(var_45_3, var_45_7)
+			o.year = curDate.year
+			o.month = i
+
+			table.insert(monthCo, o)
 		end
 	end
 
-	return var_45_3
+	return monthCo
 end
 
-function var_0_0.checkFestivalDecorationUnlock()
-	local var_46_0 = GameBranchMgr.instance:Vxax_ActId("Calendar_Decoration", ActivityEnum.Activity.V2a2_Calendar_Decoration)
-	local var_46_1 = ActivityModel.instance:isActOnLine(var_46_0)
+function SignInModel.checkFestivalDecorationUnlock()
+	local actId = GameBranchMgr.instance:Vxax_ActId("Calendar_Decoration", ActivityEnum.Activity.V2a2_Calendar_Decoration)
+	local unlock = ActivityModel.instance:isActOnLine(actId)
 
-	if var_46_1 == nil or var_46_1 == false then
+	if unlock == nil or unlock == false then
 		return false
 	end
 
-	local var_46_2 = ActivityModel.instance:getActStartTime(var_46_0)
-	local var_46_3 = ActivityModel.instance:getActEndTime(var_46_0)
-	local var_46_4 = ServerTime.now() * 1000
+	local startTime = ActivityModel.instance:getActStartTime(actId)
+	local endTime = ActivityModel.instance:getActEndTime(actId)
+	local nowTime = ServerTime.now() * 1000
 
-	return var_46_2 ~= nil and var_46_3 ~= nil and var_46_2 <= var_46_4 and var_46_4 < var_46_3
+	return startTime ~= nil and endTime ~= nil and startTime <= nowTime and nowTime < endTime
 end
 
-function var_0_0.onReceiveSignInTotalRewardReply(arg_47_0, arg_47_1)
-	arg_47_0:setRewardMark(arg_47_1.mark)
+function SignInModel:onReceiveSignInTotalRewardReply(msg)
+	self:setRewardMark(msg.mark)
 end
 
-function var_0_0.isClaimedAccumulateReward(arg_48_0, arg_48_1)
-	return arg_48_0._signInfo:isClaimedAccumulateReward(arg_48_1)
+function SignInModel:isClaimedAccumulateReward(id)
+	return self._signInfo:isClaimedAccumulateReward(id)
 end
 
-function var_0_0.isClaimableAccumulateReward(arg_49_0, arg_49_1)
-	return arg_49_0._signInfo:isClaimableAccumulateReward(arg_49_1)
+function SignInModel:isClaimableAccumulateReward(idOrNil)
+	return self._signInfo:isClaimableAccumulateReward(idOrNil)
 end
 
-function var_0_0.onReceiveSignInTotalRewardAllReply(arg_50_0, arg_50_1)
-	arg_50_0:setRewardMark(arg_50_1.mark)
+function SignInModel:onReceiveSignInTotalRewardAllReply(msg)
+	self:setRewardMark(msg.mark)
 end
 
-function var_0_0.setRewardMark(arg_51_0, arg_51_1)
-	arg_51_0._signInfo:setRewardMark(arg_51_1 or 0)
+function SignInModel:setRewardMark(rewardMark)
+	self._signInfo:setRewardMark(rewardMark or 0)
 end
 
-var_0_0.instance = var_0_0.New()
+function SignInModel:getSpecialdate()
+	if not self._specialdate then
+		local dateString = CommonConfig.instance:getConstStr(ConstEnum.SignInSpecialDate)
+		local year, month, day = 0, 0, 0
 
-return var_0_0
+		if not string.nilorempty(dateString) then
+			year, month, day = dateString:match("(%d+)-(%d+)-(%d+)")
+		end
+
+		logNormal(string.format("SignInModel:getSpecialdate() ==> %s %s %s %s", dateString, year, month, day))
+
+		self._specialdate = {
+			year = tonumber(year),
+			month = tonumber(month),
+			day = tonumber(day)
+		}
+	end
+
+	return self._specialdate
+end
+
+SignInModel.instance = SignInModel.New()
+
+return SignInModel

@@ -1,16 +1,18 @@
-﻿module("modules.logic.fight.system.work.FightWorkContract", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkContract.lua
 
-local var_0_0 = class("FightWorkContract", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkContract", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = FightDataHelper.entityMgr:getById(arg_1_0.actEffectData.targetId)
+local FightWorkContract = class("FightWorkContract", FightEffectBase)
 
-	if var_1_0 then
-		var_1_0:clearNotifyBindContract()
-		FightModel.instance:setContractEntityUid(var_1_0.uid)
+function FightWorkContract:onStart()
+	local entityMO = FightDataHelper.entityMgr:getById(self.actEffectData.targetId)
+
+	if entityMO then
+		entityMO:clearNotifyBindContract()
+		FightModel.instance:setContractEntityUid(entityMO.uid)
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkContract

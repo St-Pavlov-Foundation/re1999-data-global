@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity1_2.enter.define.VersionActivity1_2Enum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/enter/define/VersionActivity1_2Enum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_2.enter.define.VersionActivity1_2Enum", package.seeall)
 
-var_0_0.ActivityId = {
+local VersionActivity1_2Enum = _M
+
+VersionActivity1_2Enum.ActivityId = {
 	DungeonStore = 11207,
 	Dungeon = 11208,
 	Season = 11200,
@@ -13,13 +15,13 @@ var_0_0.ActivityId = {
 	YaXian = 11203,
 	EnterView = 11201
 }
-var_0_0.EnterViewActIdList = {
-	var_0_0.ActivityId.Trade,
-	var_0_0.ActivityId.JieXiKa,
-	var_0_0.ActivityId.Season,
-	var_0_0.ActivityId.Dungeon,
-	var_0_0.ActivityId.YaXian,
-	var_0_0.ActivityId.DreamTail
+VersionActivity1_2Enum.EnterViewActIdList = {
+	VersionActivity1_2Enum.ActivityId.Trade,
+	VersionActivity1_2Enum.ActivityId.JieXiKa,
+	VersionActivity1_2Enum.ActivityId.Season,
+	VersionActivity1_2Enum.ActivityId.Dungeon,
+	VersionActivity1_2Enum.ActivityId.YaXian,
+	VersionActivity1_2Enum.ActivityId.DreamTail
 }
 
-return var_0_0
+return VersionActivity1_2Enum

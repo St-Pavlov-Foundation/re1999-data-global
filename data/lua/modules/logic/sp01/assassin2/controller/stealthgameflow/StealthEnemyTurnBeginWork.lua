@@ -1,41 +1,45 @@
-﻿module("modules.logic.sp01.assassin2.controller.stealthgameflow.StealthEnemyTurnBeginWork", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/controller/stealthgameflow/StealthEnemyTurnBeginWork.lua
 
-local var_0_0 = class("StealthEnemyTurnBeginWork", BaseWork)
-local var_0_1 = 0.24
+module("modules.logic.sp01.assassin2.controller.stealthgameflow.StealthEnemyTurnBeginWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = true
-	local var_1_1 = AssassinStealthGameModel.instance:getMapId()
+local StealthEnemyTurnBeginWork = class("StealthEnemyTurnBeginWork", BaseWork)
+local TWEEN_MAP_WAIT_TIME = 0.24
 
-	if var_1_1 == AssassinEnum.StealthConst.FirstStealthMap then
-		local var_1_2 = AssassinConfig.instance:getStealthMapForbidScaleGuide(var_1_1)
+function StealthEnemyTurnBeginWork:onStart(context)
+	local isCancelSelected = true
+	local mapId = AssassinStealthGameModel.instance:getMapId()
 
-		if var_1_2 then
-			var_1_0 = GuideModel.instance:isGuideFinish(var_1_2)
+	if mapId == AssassinEnum.StealthConst.FirstStealthMap then
+		local checkGuide = AssassinConfig.instance:getStealthMapForbidScaleGuide(mapId)
+
+		if checkGuide then
+			isCancelSelected = GuideModel.instance:isGuideFinish(checkGuide)
 		end
 	end
 
-	if var_1_0 then
+	if isCancelSelected then
 		AssassinStealthGameController.instance:selectHero()
 	end
 
-	if AssassinStealthGameModel.instance:getHasEnemyOperation() then
+	local hasEnemyOperation = AssassinStealthGameModel.instance:getHasEnemyOperation()
+
+	if hasEnemyOperation then
 		AssassinStealthGameController.instance:dispatchEvent(AssassinEvent.TweenStealthMapPos, {
 			scale = AssassinEnum.StealthConst.MinMapScale
 		}, true)
-		TaskDispatcher.cancelTask(arg_1_0._tweenMapFinished, arg_1_0)
-		TaskDispatcher.runDelay(arg_1_0._tweenMapFinished, arg_1_0, AssassinEnum.StealthConst.MapTweenPosTime + var_0_1)
+		TaskDispatcher.cancelTask(self._tweenMapFinished, self)
+		TaskDispatcher.runDelay(self._tweenMapFinished, self, AssassinEnum.StealthConst.MapTweenPosTime + TWEEN_MAP_WAIT_TIME)
 	else
-		TaskDispatcher.runDelay(arg_1_0._tweenMapFinished, arg_1_0, AssassinEnum.StealthConst.EnemyTurnWaitTime)
+		TaskDispatcher.runDelay(self._tweenMapFinished, self, AssassinEnum.StealthConst.EnemyTurnWaitTime)
 	end
 end
 
-function var_0_0._tweenMapFinished(arg_2_0)
-	arg_2_0:onDone(true)
+function StealthEnemyTurnBeginWork:_tweenMapFinished()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0._tweenMapFinished, arg_3_0)
+function StealthEnemyTurnBeginWork:clearWork()
+	TaskDispatcher.cancelTask(self._tweenMapFinished, self)
 end
 
-return var_0_0
+return StealthEnemyTurnBeginWork

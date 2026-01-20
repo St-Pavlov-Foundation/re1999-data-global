@@ -1,185 +1,190 @@
-﻿module("modules.logic.gm.model.GMMinusModel", package.seeall)
+﻿-- chunkname: @modules/logic/gm/model/GMMinusModel.lua
 
-local var_0_0 = class("GMMinusModel", BaseModel)
+module("modules.logic.gm.model.GMMinusModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local GMMinusModel = class("GMMinusModel", BaseModel)
+
+function GMMinusModel:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._firstLoginDataDict = {}
+function GMMinusModel:reInit()
+	self._firstLoginDataDict = {}
 end
 
-function var_0_0.setFirstLogin(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0._firstLoginDataDict[arg_3_1] = arg_3_2
+function GMMinusModel:setFirstLogin(k, v)
+	self._firstLoginDataDict[k] = v
 end
 
-function var_0_0.getFirstLogin(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = arg_4_0._firstLoginDataDict[arg_4_1]
+function GMMinusModel:getFirstLogin(k, defaultValue)
+	local v = self._firstLoginDataDict[k]
 
-	return var_4_0 == nil and arg_4_2 or var_4_0
+	return v == nil and defaultValue or v
 end
 
-local var_0_1 = {}
-local var_0_2 = {}
+local s_constDataKeySet = {}
+local s_constData = {}
 
-function var_0_0.setConst(arg_5_0, arg_5_1, arg_5_2)
-	if var_0_1[arg_5_1] then
+function GMMinusModel:setConst(k, v)
+	if s_constDataKeySet[k] then
 		return
 	end
 
-	var_0_1[arg_5_1] = true
-	var_0_2[arg_5_1] = arg_5_2
+	s_constDataKeySet[k] = true
+	s_constData[k] = v
 end
 
-function var_0_0.getConst(arg_6_0, arg_6_1, arg_6_2)
-	if not var_0_1[arg_6_1] then
-		return arg_6_2
+function GMMinusModel:getConst(k, defaultValue)
+	if not s_constDataKeySet[k] then
+		return defaultValue
 	end
 
-	return var_0_2[arg_6_1]
+	return s_constData[k]
 end
 
-function var_0_0.setToPlayer(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = PlayerModel.instance:getMyUserId()
+function GMMinusModel:setToPlayer(k, v)
+	local userId = PlayerModel.instance:getMyUserId()
 
-	if not var_7_0 or var_7_0 == 0 then
+	if not userId or userId == 0 then
 		return
 	end
 
-	local var_7_1 = arg_7_1 .. "#" .. tostring(var_7_0)
+	local key = k .. "#" .. tostring(userId)
 
-	arg_7_0:setToUnity(var_7_1, arg_7_2)
+	self:setToUnity(key, v)
 end
 
-function var_0_0.getFromPlayer(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = PlayerModel.instance:getMyUserId()
+function GMMinusModel:getFromPlayer(k, defaultValue)
+	local userId = PlayerModel.instance:getMyUserId()
 
-	if not var_8_0 or var_8_0 == 0 then
-		return arg_8_2
+	if not userId or userId == 0 then
+		return defaultValue
 	end
 
-	local var_8_1 = arg_8_1 .. "#" .. tostring(var_8_0)
+	local key = k .. "#" .. tostring(userId)
 
-	return arg_8_0:getFromUnity(var_8_1, arg_8_2)
+	return self:getFromUnity(key, defaultValue)
 end
 
-function var_0_0.setToUnity(arg_9_0, arg_9_1, arg_9_2)
-	PlayerPrefsHelper._set(arg_9_1, arg_9_2)
+function GMMinusModel:setToUnity(k, v)
+	PlayerPrefsHelper._set(k, v)
 end
 
-function var_0_0.getFromUnity(arg_10_0, arg_10_1, arg_10_2)
-	assert(arg_10_2 ~= nil)
+function GMMinusModel:getFromUnity(k, defaultValue)
+	assert(defaultValue ~= nil)
 
-	local var_10_0 = type(arg_10_2) == "number"
+	local isNum = type(defaultValue) == "number"
 
-	return PlayerPrefsHelper._get(arg_10_1, arg_10_2, var_10_0)
+	return PlayerPrefsHelper._get(k, defaultValue, isNum)
 end
 
-function var_0_0._addBtnText(arg_11_0, arg_11_1)
-	local var_11_0 = GMController.instance:getGMNode("mainview", arg_11_1)
-	local var_11_1 = gohelper.findChildButtonWithAudio(var_11_0, "#btn_gm")
-	local var_11_2 = gohelper.findChildText(var_11_0, "#btn_gm/Text")
+function GMMinusModel:_addBtnText(parentGO)
+	local go = GMController.instance:getGMNode("mainview", parentGO)
+	local btnCmp = gohelper.findChildButtonWithAudio(go, "#btn_gm")
+	local btnTextCmp = gohelper.findChildText(go, "#btn_gm/Text")
 
-	return var_11_1, var_11_2, var_11_0
+	return btnCmp, btnTextCmp, go
 end
 
-function var_0_0.addBtnGM(arg_12_0, arg_12_1)
-	arg_12_1._btngm11235 = arg_12_0:_addBtnText(arg_12_1.viewGO)
+function GMMinusModel:addBtnGM(viewObj)
+	viewObj._btngm11235 = self:_addBtnText(viewObj.viewGO)
 
-	return arg_12_1._btngm11235
+	return viewObj._btngm11235
 end
 
-local function var_0_3(arg_13_0)
-	local var_13_0 = arg_13_0.class.__cname
-	local var_13_1 = "GM_" .. var_13_0
+local function _defaultBtnGmFunc(viewObj)
+	local T = viewObj.class
+	local name = T.__cname
+	local viewName = "GM_" .. name
 
-	assert(ViewName[var_13_1], "please add customFunc when call btnGM_AddClickListener!!viewName not found: " .. var_13_1)
-	ViewMgr.instance:openView(var_13_1)
+	assert(ViewName[viewName], "please add customFunc when call btnGM_AddClickListener!!viewName not found: " .. viewName)
+	ViewMgr.instance:openView(viewName)
 end
 
-function var_0_0.btnGM_AddClickListener(arg_14_0, arg_14_1, arg_14_2)
-	arg_14_1._btngm11235:AddClickListener(arg_14_2 or var_0_3, arg_14_1)
+function GMMinusModel:btnGM_AddClickListener(viewObj, customFunc)
+	viewObj._btngm11235:AddClickListener(customFunc or _defaultBtnGmFunc, viewObj)
 end
 
-function var_0_0.btnGM_RemoveClickListener(arg_15_0, arg_15_1)
-	arg_15_1._btngm11235:RemoveClickListener()
+function GMMinusModel:btnGM_RemoveClickListener(viewObj)
+	viewObj._btngm11235:RemoveClickListener()
 end
 
-local var_0_4 = 20
+local kMaxCountLimitStackOverflow = 20
 
-local function var_0_5(arg_16_0, arg_16_1)
-	return string.format("GM_%s_%s", arg_16_0.__cname, arg_16_1)
+local function _get_ori_func_key(T, funcName)
+	return string.format("GM_%s_%s", T.__cname, funcName)
 end
 
-function var_0_0.saveOriginalFunc(arg_17_0, arg_17_1, arg_17_2)
-	assert(type(arg_17_2) == "string")
+function GMMinusModel:saveOriginalFunc(T, funcName)
+	assert(type(funcName) == "string")
 
-	local var_17_0 = arg_17_1[arg_17_2]
+	local func = T[funcName]
 
-	if var_17_0 == nil then
-		local var_17_1 = arg_17_1
-		local var_17_2 = var_0_4
+	if func == nil then
+		local cls = T
+		local safeLoopCount = kMaxCountLimitStackOverflow
 
-		while var_17_1.super and var_17_0 == nil do
-			if var_17_2 <= 0 then
-				logError("stack overflow >= " .. tostring(var_0_4))
+		while cls.super and func == nil do
+			if safeLoopCount <= 0 then
+				logError("stack overflow >= " .. tostring(kMaxCountLimitStackOverflow))
 
 				break
 			end
 
-			var_17_0 = var_17_1[arg_17_2]
-			var_17_1 = var_17_1.super
-			var_17_2 = var_17_2 - 1
+			func = cls[funcName]
+			cls = cls.super
+			safeLoopCount = safeLoopCount - 1
 		end
 	end
 
-	assert(type(var_17_0) == "function", "type(func)=" .. type(var_17_0) .. " funcName=" .. arg_17_2)
+	assert(type(func) == "function", "type(func)=" .. type(func) .. " funcName=" .. funcName)
 
-	local var_17_3 = var_0_5(arg_17_1, arg_17_2)
+	local key = _get_ori_func_key(T, funcName)
 
-	arg_17_0:setConst(var_17_3, var_17_0)
+	self:setConst(key, func)
 end
 
-function var_0_0.loadOriginalFunc(arg_18_0, arg_18_1, arg_18_2)
-	local var_18_0 = var_0_5(arg_18_1, arg_18_2)
-	local var_18_1 = arg_18_0:getConst(var_18_0, nil)
+function GMMinusModel:loadOriginalFunc(T, funcName)
+	local key = _get_ori_func_key(T, funcName)
+	local func = self:getConst(key, nil)
 
-	if not var_18_1 then
-		local var_18_2 = arg_18_1.super
-		local var_18_3 = var_0_4
+	if not func then
+		local cls = T.super
+		local safeLoopCount = kMaxCountLimitStackOverflow
 
-		while var_18_2 and var_18_1 == nil do
-			if var_18_3 <= 0 then
-				logError("stack overflow >= " .. tostring(var_0_4))
+		while cls and func == nil do
+			if safeLoopCount <= 0 then
+				logError("stack overflow >= " .. tostring(kMaxCountLimitStackOverflow))
 
 				break
 			end
 
-			local var_18_4 = var_0_5(var_18_2, arg_18_2)
-
-			var_18_1 = arg_18_0:getConst(var_18_4, nil)
-			var_18_1 = var_18_1 or var_18_2[arg_18_2]
-			var_18_2 = var_18_2.super
-			var_18_3 = var_18_3 - 1
+			key = _get_ori_func_key(cls, funcName)
+			func = self:getConst(key, nil)
+			func = func or cls[funcName]
+			cls = cls.super
+			safeLoopCount = safeLoopCount - 1
 		end
 	end
 
-	return var_18_1 or function()
-		assert(false, string.format("undefine behaviour: '%s:%s'", arg_18_1.__cname, arg_18_2))
+	return func or function()
+		assert(false, string.format("undefine behaviour: '%s:%s'", T.__cname, funcName))
 	end
 end
 
-function var_0_0.callOriginalSelfFunc(arg_20_0, arg_20_1, arg_20_2, ...)
-	local var_20_0 = arg_20_1.class
+function GMMinusModel:callOriginalSelfFunc(viewObj, funcName, ...)
+	local T = viewObj.class
+	local f = self:loadOriginalFunc(T, funcName)
 
-	return arg_20_0:loadOriginalFunc(var_20_0, arg_20_2)(arg_20_1, ...)
+	return f(viewObj, ...)
 end
 
-function var_0_0.callOriginalStaticFunc(arg_21_0, arg_21_1, arg_21_2, ...)
-	return arg_21_0:loadOriginalFunc(arg_21_1, arg_21_2)(...)
+function GMMinusModel:callOriginalStaticFunc(T, funcName, ...)
+	local f = self:loadOriginalFunc(T, funcName)
+
+	return f(...)
 end
 
-var_0_0.instance = var_0_0.New()
+GMMinusModel.instance = GMMinusModel.New()
 
-return var_0_0
+return GMMinusModel

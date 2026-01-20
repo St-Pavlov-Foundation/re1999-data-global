@@ -1,165 +1,169 @@
-﻿module("modules.logic.act201.model.Activity201Model", package.seeall)
+﻿-- chunkname: @modules/logic/act201/model/Activity201Model.lua
 
-local var_0_0 = class("Activity201Model", BaseModel)
+module("modules.logic.act201.model.Activity201Model", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._dict = {}
+local Activity201Model = class("Activity201Model", BaseModel)
+
+function Activity201Model:onInit()
+	self._dict = {}
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._dict = {}
+function Activity201Model:reInit()
+	self._dict = {}
 end
 
-function var_0_0.setActivityInfo(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_1.activityId
-	local var_3_1 = arg_3_0:getInvitationInfo(var_3_0)
+function Activity201Model:setActivityInfo(info)
+	local activityId = info.activityId
+	local activityInfoMo = self:getInvitationInfo(activityId)
 
-	if var_3_1 == nil then
-		var_3_1 = Activity201Mo.New()
-		arg_3_0._dict[var_3_0] = var_3_1
+	if activityInfoMo == nil then
+		activityInfoMo = Activity201Mo.New()
+		self._dict[activityId] = activityInfoMo
 	end
 
-	var_3_1:init(arg_3_1)
+	activityInfoMo:init(info)
 end
 
-function var_0_0.getInvitationInfo(arg_4_0, arg_4_1)
-	return arg_4_0._dict[arg_4_1]
+function Activity201Model:getInvitationInfo(activityId)
+	return self._dict[activityId]
 end
 
-function var_0_0.getHelpId(arg_5_0)
-	return arg_5_0.HELP_ID
+function Activity201Model:getHelpId()
+	return self.HELP_ID
 end
 
-function var_0_0.getSelfBindId(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0:getInvitationInfo(arg_6_1)
+function Activity201Model:getSelfBindId(activityId)
+	local activityInfo = self:getInvitationInfo(activityId)
 
-	if var_6_0 == nil or var_6_0.inviteCode == nil then
+	if activityInfo == nil or activityInfo.inviteCode == nil then
 		return nil
 	end
 
-	return var_6_0.inviteCode
+	return activityInfo.inviteCode
 end
 
-function var_0_0.haveBind(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0:getInvitationInfo(arg_7_1)
+function Activity201Model:haveBind(activityId)
+	local activityInfo = self:getInvitationInfo(activityId)
 
-	if var_7_0 == nil or var_7_0.isTurnBack == nil then
+	if activityInfo == nil or activityInfo.isTurnBack == nil then
 		return false
 	end
 
-	return var_7_0.isTurnBack
+	return activityInfo.isTurnBack
 end
 
-function var_0_0.setBindState(arg_8_0, arg_8_1, arg_8_2)
-	if arg_8_0:haveBind(arg_8_1) then
+function Activity201Model:setBindState(activityId, state)
+	if self:haveBind(activityId) then
 		logError("Have bind friend ID")
 
 		return
 	end
 
-	arg_8_0:getInvitationInfo(arg_8_1).isTurnBack = arg_8_2
+	local info = self:getInvitationInfo(activityId)
+
+	info.isTurnBack = state
 end
 
-function var_0_0.isActOpen(arg_9_0, arg_9_1)
-	local var_9_0 = ActivityModel.instance:isActOnLine(arg_9_1)
+function Activity201Model:isActOpen(activityId)
+	local online = ActivityModel.instance:isActOnLine(activityId)
 
-	if var_9_0 == false then
-		return var_9_0
+	if online == false then
+		return online
 	end
 
-	local var_9_1 = ActivityModel.instance:getActStartTime(arg_9_1)
-	local var_9_2 = ActivityModel.instance:getActEndTime(arg_9_1)
-	local var_9_3 = ServerTime.now() * 1000
+	local startTime = ActivityModel.instance:getActStartTime(activityId)
+	local endTime = ActivityModel.instance:getActEndTime(activityId)
+	local nowTime = ServerTime.now() * 1000
 
-	return var_9_1 <= var_9_3 and var_9_3 < var_9_2
+	return startTime <= nowTime and nowTime < endTime
 end
 
-function var_0_0.getLoginUrl(arg_10_0)
-	local var_10_0 = arg_10_0:getCurChannel()
-	local var_10_1 = GameChannelConfig.getServerType()
-	local var_10_2 = var_10_1 == GameChannelConfig.ServerType.OutRelease or var_10_1 == GameChannelConfig.ServerType.OutPreview
-	local var_10_3
+function Activity201Model:getLoginUrl()
+	local channel = self:getCurChannel()
+	local serverType = GameChannelConfig.getServerType()
+	local isRelease = serverType == GameChannelConfig.ServerType.OutRelease or serverType == GameChannelConfig.ServerType.OutPreview
+	local urlHead
 
-	if var_10_2 then
-		var_10_3 = Activity201Config.instance:getUrlByChannelId(var_10_0)
+	if isRelease then
+		urlHead = Activity201Config.instance:getUrlByChannelId(channel)
 	else
-		var_10_3 = Activity201Config.instance:getTestUrlByChannelId(var_10_0)
+		urlHead = Activity201Config.instance:getTestUrlByChannelId(channel)
 	end
 
-	if var_10_0 == TurnbackEnum.ChannelType.eFun then
-		return arg_10_0:getEFunLoginUrl(var_10_3)
-	elseif var_10_0 == TurnbackEnum.ChannelType.KO then
-		return arg_10_0:getKOLoginUrl(var_10_3)
+	if channel == TurnbackEnum.ChannelType.eFun then
+		return self:getEFunLoginUrl(urlHead)
+	elseif channel == TurnbackEnum.ChannelType.KO then
+		return self:getKOLoginUrl(urlHead)
 	else
-		return arg_10_0:getGlobalLoginUrl(var_10_3)
+		return self:getGlobalLoginUrl(urlHead)
 	end
 end
 
-function var_0_0.getGlobalLoginUrl(arg_11_0, arg_11_1)
-	local var_11_0 = {
-		arg_11_1 .. "?" .. string.format("timestamp=%s", ServerTime.now() * 1000)
+function Activity201Model:getGlobalLoginUrl(urlHead)
+	local data = {
+		urlHead .. "?" .. string.format("timestamp=%s", ServerTime.now() * 1000)
 	}
 
-	table.insert(var_11_0, string.format("gameId=%s", SDKMgr.instance:getGameId()))
-	table.insert(var_11_0, string.format("gameRoleId=%s", PlayerModel.instance:getMyUserId()))
-	table.insert(var_11_0, string.format("channelUserId=%s", LoginModel.instance.channelUserId))
+	table.insert(data, string.format("gameId=%s", SDKMgr.instance:getGameId()))
+	table.insert(data, string.format("gameRoleId=%s", PlayerModel.instance:getMyUserId()))
+	table.insert(data, string.format("channelUserId=%s", LoginModel.instance.channelUserId))
 
-	local var_11_1 = string.format("deviceModel=%s", WebViewController.instance:urlEncode(UnityEngine.SystemInfo.deviceModel))
+	local deviceModel = string.format("deviceModel=%s", WebViewController.instance:urlEncode(UnityEngine.SystemInfo.deviceModel))
 
-	table.insert(var_11_0, var_11_1)
-	table.insert(var_11_0, string.format("deviceId=%s", SDKMgr.instance:getDeviceInfo().deviceId))
+	table.insert(data, deviceModel)
+	table.insert(data, string.format("deviceId=%s", SDKMgr.instance:getDeviceInfo().deviceId))
 
-	local var_11_2 = string.format("os=%s", WebViewController.instance:urlEncode(UnityEngine.SystemInfo.operatingSystem))
+	local operatingSystem = string.format("os=%s", WebViewController.instance:urlEncode(UnityEngine.SystemInfo.operatingSystem))
 
-	table.insert(var_11_0, var_11_2)
-	table.insert(var_11_0, string.format("token=%s", SDKMgr.instance:getGameSdkToken()))
-	table.insert(var_11_0, string.format("channelId=%s", SDKMgr.instance:getChannelId()))
-	table.insert(var_11_0, string.format("isEmulator=%s", arg_11_0:getCurrentDeviceType()))
+	table.insert(data, operatingSystem)
+	table.insert(data, string.format("token=%s", SDKMgr.instance:getGameSdkToken()))
+	table.insert(data, string.format("channelId=%s", SDKMgr.instance:getChannelId()))
+	table.insert(data, string.format("isEmulator=%s", self:getCurrentDeviceType()))
 
-	local var_11_3 = WebViewController.instance:urlEncode(LangSettings.instance:getCurLangKeyByShortCut())
+	local languageModel = WebViewController.instance:urlEncode(LangSettings.instance:getCurLangKeyByShortCut())
 
-	table.insert(var_11_0, string.format("language=%s", var_11_3))
+	table.insert(data, string.format("language=%s", languageModel))
 
-	return table.concat(var_11_0, "&")
+	return table.concat(data, "&")
 end
 
-function var_0_0.getEFunLoginUrl(arg_12_0, arg_12_1)
-	local var_12_0 = SDKMgr.instance:getUserInfoExtraParams()
-	local var_12_1 = {
-		arg_12_1 .. "&" .. string.format("userId=%s", var_12_0.userId)
+function Activity201Model:getEFunLoginUrl(urlHead)
+	local extraParams = SDKMgr.instance:getUserInfoExtraParams()
+	local data = {
+		urlHead .. "&" .. string.format("userId=%s", extraParams.userId)
 	}
 
-	table.insert(var_12_1, string.format("sign=%s", var_12_0.sign))
-	table.insert(var_12_1, string.format("timestamp=%s", var_12_0.timestamp))
-	table.insert(var_12_1, string.format("gameCode=twcfwl"))
+	table.insert(data, string.format("sign=%s", extraParams.sign))
+	table.insert(data, string.format("timestamp=%s", extraParams.timestamp))
+	table.insert(data, string.format("gameCode=twcfwl"))
 
-	local var_12_2 = PayModel.instance:getGameRoleInfo()
+	local roleInfo = PayModel.instance:getGameRoleInfo()
 
-	table.insert(var_12_1, string.format("serverCode=%s", var_12_2.serverId))
-	table.insert(var_12_1, string.format("roleId=%s", var_12_2.roleId))
+	table.insert(data, string.format("serverCode=%s", roleInfo.serverId))
+	table.insert(data, string.format("roleId=%s", roleInfo.roleId))
 
-	local var_12_3 = string.format("serverName=%s", WebViewController.instance:urlEncode(var_12_2.serverName))
+	local serverNameModel = string.format("serverName=%s", WebViewController.instance:urlEncode(roleInfo.serverName))
 
-	table.insert(var_12_1, var_12_3)
+	table.insert(data, serverNameModel)
 
-	local var_12_4 = string.format("roleName=%s", WebViewController.instance:urlEncode(var_12_2.roleName))
+	local roleNameModel = string.format("roleName=%s", WebViewController.instance:urlEncode(roleInfo.roleName))
 
-	table.insert(var_12_1, var_12_4)
-	table.insert(var_12_1, string.format("language=zh-TW"))
+	table.insert(data, roleNameModel)
+	table.insert(data, string.format("language=zh-TW"))
 
-	return table.concat(var_12_1, "&")
+	return table.concat(data, "&")
 end
 
-function var_0_0.getKOLoginUrl(arg_13_0, arg_13_1)
-	local var_13_0 = SDKMgr.instance:getUserInfoExtraParams()
-	local var_13_1 = {
-		arg_13_1 .. "?" .. string.format("jwt=%s", var_13_0.ko_jwt)
+function Activity201Model:getKOLoginUrl(urlHead)
+	local extraParams = SDKMgr.instance:getUserInfoExtraParams()
+	local data = {
+		urlHead .. "?" .. string.format("jwt=%s", extraParams.ko_jwt)
 	}
 
-	return table.concat(var_13_1, "&")
+	return table.concat(data, "&")
 end
 
-function var_0_0.getCurrentDeviceType(arg_14_0)
+function Activity201Model:getCurrentDeviceType()
 	if SDKMgr.instance:isEmulator() then
 		return WebViewEnum.DeviceType.Emulator
 	elseif SLFramework.FrameworkSettings.IsEditor or BootNativeUtil.isWindows() then
@@ -169,7 +173,7 @@ function var_0_0.getCurrentDeviceType(arg_14_0)
 	end
 end
 
-function var_0_0.getCurChannel(arg_15_0)
+function Activity201Model:getCurChannel()
 	if GameChannelConfig.isEfun() then
 		return TurnbackEnum.ChannelType.eFun
 	elseif GameChannelConfig.isLongCheng() then
@@ -179,6 +183,6 @@ function var_0_0.getCurChannel(arg_15_0)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+Activity201Model.instance = Activity201Model.New()
 
-return var_0_0
+return Activity201Model

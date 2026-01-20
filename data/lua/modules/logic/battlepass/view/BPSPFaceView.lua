@@ -1,52 +1,54 @@
-﻿module("modules.logic.battlepass.view.BPSPFaceView", package.seeall)
+﻿-- chunkname: @modules/logic/battlepass/view/BPSPFaceView.lua
 
-local var_0_0 = class("BPSPFaceView", BaseView)
+module("modules.logic.battlepass.view.BPSPFaceView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._btnSkin = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_skin")
-	arg_1_0._btnGet = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_get")
+local BPSPFaceView = class("BPSPFaceView", BaseView)
+
+function BPSPFaceView:onInitView()
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._btnSkin = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_skin")
+	self._btnGet = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_get")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnClose:AddClickListener(arg_2_0.closeThis, arg_2_0)
-	arg_2_0._btnSkin:AddClickListener(arg_2_0._openSkinPreview, arg_2_0)
-	arg_2_0._btnGet:AddClickListener(arg_2_0._openSpView, arg_2_0)
+function BPSPFaceView:addEvents()
+	self._btnClose:AddClickListener(self.closeThis, self)
+	self._btnSkin:AddClickListener(self._openSkinPreview, self)
+	self._btnGet:AddClickListener(self._openSpView, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnClose:RemoveClickListener()
-	arg_3_0._btnSkin:RemoveClickListener()
-	arg_3_0._btnGet:RemoveClickListener()
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_3_0._onViewClose, arg_3_0)
+function BPSPFaceView:removeEvents()
+	self._btnClose:RemoveClickListener()
+	self._btnSkin:RemoveClickListener()
+	self._btnGet:RemoveClickListener()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, self._onViewClose, self)
 end
 
-function var_0_0.onClickModalMask(arg_4_0)
-	arg_4_0:closeThis()
+function BPSPFaceView:onClickModalMask()
+	self:closeThis()
 end
 
-function var_0_0.onOpen(arg_5_0)
+function BPSPFaceView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2BPSP.play_ui_youyu_liuxing_give)
 end
 
-function var_0_0._openSkinPreview(arg_6_0)
+function BPSPFaceView:_openSkinPreview()
 	ViewMgr.instance:openView(ViewName.BpBonusSelectView)
 end
 
-function var_0_0._openSpView(arg_7_0)
+function BPSPFaceView:_openSpView()
 	BpModel.instance.firstShowSp = false
 
 	BpRpc.instance:sendBpMarkFirstShowRequest(true)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_7_0._onViewClose, arg_7_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, self._onViewClose, self)
 	BpController.instance:openBattlePassView(true, {
 		isFirst = true
 	})
 end
 
-function var_0_0._onViewClose(arg_8_0, arg_8_1)
-	if arg_8_1 == ViewName.BpSPView then
-		arg_8_0:closeThis()
+function BPSPFaceView:_onViewClose(viewName)
+	if viewName == ViewName.BpSPView then
+		self:closeThis()
 	end
 end
 
-return var_0_0
+return BPSPFaceView

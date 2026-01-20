@@ -1,17 +1,19 @@
-﻿module("modules.logic.turnback.config.TurnbackConfig", package.seeall)
+﻿-- chunkname: @modules/logic/turnback/config/TurnbackConfig.lua
 
-local var_0_0 = class("TurnbackConfig", BaseConfig)
+module("modules.logic.turnback.config.TurnbackConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._turnbackConfig = nil
-	arg_1_0._turnbackSigninConfig = nil
-	arg_1_0._turnbackTaskConfig = nil
-	arg_1_0._turnbackSubModuleConfig = nil
-	arg_1_0._turnbackTaskBonusConfig = nil
-	arg_1_0._turnbackRecommendConfig = nil
+local TurnbackConfig = class("TurnbackConfig", BaseConfig)
+
+function TurnbackConfig:ctor()
+	self._turnbackConfig = nil
+	self._turnbackSigninConfig = nil
+	self._turnbackTaskConfig = nil
+	self._turnbackSubModuleConfig = nil
+	self._turnbackTaskBonusConfig = nil
+	self._turnbackRecommendConfig = nil
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function TurnbackConfig:reqConfigNames()
 	return {
 		"turnback",
 		"turnback_sign_in",
@@ -19,229 +21,239 @@ function var_0_0.reqConfigNames(arg_2_0)
 		"turnback_submodule",
 		"turnback_task_bonus",
 		"turnback_recommend",
-		"turnback_drop"
+		"turnback_drop",
+		"turnback_daily_bonus"
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "turnback" then
-		arg_3_0:initTurnbackConfig(arg_3_2)
-	elseif arg_3_1 == "turnback_sign_in" then
-		arg_3_0._turnbackSigninConfig = arg_3_2
-	elseif arg_3_1 == "turnback_task" then
-		arg_3_0._turnbackTaskConfig = arg_3_2
-	elseif arg_3_1 == "turnback_submodule" then
-		arg_3_0._turnbackSubModuleConfig = arg_3_2
-	elseif arg_3_1 == "turnback_task_bonus" then
-		arg_3_0._turnbackTaskBonusConfig = arg_3_2
-	elseif arg_3_1 == "turnback_recommend" then
-		arg_3_0._turnbackRecommendConfig = arg_3_2
-	elseif arg_3_1 == "turnback_drop" then
-		arg_3_0._turnbackDropConfig = arg_3_2
+function TurnbackConfig:onConfigLoaded(configName, configTable)
+	if configName == "turnback" then
+		self:initTurnbackConfig(configTable)
+	elseif configName == "turnback_sign_in" then
+		self._turnbackSigninConfig = configTable
+	elseif configName == "turnback_task" then
+		self._turnbackTaskConfig = configTable
+	elseif configName == "turnback_submodule" then
+		self._turnbackSubModuleConfig = configTable
+	elseif configName == "turnback_task_bonus" then
+		self._turnbackTaskBonusConfig = configTable
+	elseif configName == "turnback_recommend" then
+		self._turnbackRecommendConfig = configTable
+	elseif configName == "turnback_drop" then
+		self._turnbackDropConfig = configTable
+	elseif configName == "turnback_daily_bonus" then
+		self._turnbackDailyBonusConfig = configTable
 	end
 end
 
-function var_0_0.initTurnbackConfig(arg_4_0, arg_4_1)
-	arg_4_0._turnbackConfig = arg_4_1
-	arg_4_0.turnBackAdditionChapterId = {}
+function TurnbackConfig:initTurnbackConfig(configTable)
+	self._turnbackConfig = configTable
+	self.turnBackAdditionChapterId = {}
 
-	for iter_4_0, iter_4_1 in pairs(arg_4_1.configDict) do
-		local var_4_0 = {}
-		local var_4_1 = string.splitToNumber(iter_4_1.additionChapterIds, "#")
+	for turnBackId, cfg in pairs(configTable.configDict) do
+		local chapterIdDic = {}
+		local additionChapterIds = string.splitToNumber(cfg.additionChapterIds, "#")
 
-		for iter_4_2, iter_4_3 in ipairs(var_4_1) do
-			var_4_0[iter_4_3] = true
+		for _, chapterId in ipairs(additionChapterIds) do
+			chapterIdDic[chapterId] = true
 		end
 
-		arg_4_0.turnBackAdditionChapterId[iter_4_0] = var_4_0
+		self.turnBackAdditionChapterId[turnBackId] = chapterIdDic
 	end
 end
 
-function var_0_0.isTurnBackAdditionToChapter(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = false
+function TurnbackConfig:isTurnBackAdditionToChapter(turnBackId, chapterId)
+	local result = false
 
-	if arg_5_1 and arg_5_2 and arg_5_0.turnBackAdditionChapterId and arg_5_0.turnBackAdditionChapterId[arg_5_1] then
-		var_5_0 = arg_5_0.turnBackAdditionChapterId[arg_5_1][arg_5_2]
+	if turnBackId and chapterId and self.turnBackAdditionChapterId and self.turnBackAdditionChapterId[turnBackId] then
+		result = self.turnBackAdditionChapterId[turnBackId][chapterId]
 	end
 
-	return var_5_0
+	return result
 end
 
-function var_0_0.getTurnbackCo(arg_6_0, arg_6_1)
-	return arg_6_0._turnbackConfig.configDict[arg_6_1]
+function TurnbackConfig:getTurnbackCo(id)
+	return self._turnbackConfig.configDict[id]
 end
 
-function var_0_0.getTurnbackSignInCo(arg_7_0, arg_7_1)
-	return arg_7_0._turnbackSigninConfig.configDict[arg_7_1]
+function TurnbackConfig:getTurnbackSignInCo(id)
+	return self._turnbackSigninConfig.configDict[id]
 end
 
-function var_0_0.getTurnbackSignInDayCo(arg_8_0, arg_8_1, arg_8_2)
-	return arg_8_0._turnbackSigninConfig.configDict[arg_8_1][arg_8_2]
+function TurnbackConfig:getTurnbackSignInDayCo(id, day)
+	return self._turnbackSigninConfig.configDict[id][day]
 end
 
-function var_0_0.getTurnbackTaskCo(arg_9_0, arg_9_1)
-	return arg_9_0._turnbackTaskConfig.configDict[arg_9_1]
+function TurnbackConfig:getTurnbackTaskCo(id)
+	return self._turnbackTaskConfig.configDict[id]
 end
 
-function var_0_0.getTurnbackSubModuleCo(arg_10_0, arg_10_1)
-	return arg_10_0._turnbackSubModuleConfig.configDict[arg_10_1]
+function TurnbackConfig:getTurnbackSubModuleCo(id)
+	return self._turnbackSubModuleConfig.configDict[id]
 end
 
-function var_0_0.getAllTurnbackTaskBonusCo(arg_11_0, arg_11_1)
-	return arg_11_0._turnbackTaskBonusConfig.configDict[arg_11_1]
+function TurnbackConfig:getAllTurnbackTaskBonusCo(turnbackId)
+	return self._turnbackTaskBonusConfig.configDict[turnbackId]
 end
 
-function var_0_0.getTurnbackTaskBonusCo(arg_12_0, arg_12_1, arg_12_2)
-	return arg_12_0._turnbackTaskBonusConfig.configDict[arg_12_1][arg_12_2]
+function TurnbackConfig:getTurnbackTaskBonusCo(turnbackId, id)
+	return self._turnbackTaskBonusConfig.configDict[turnbackId][id]
 end
 
-function var_0_0.getTurnbackLastBounsPoint(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0._turnbackTaskBonusConfig.configDict[arg_13_1]
+function TurnbackConfig:getTurnbackLastBounsPoint(turnbackId)
+	local list = self._turnbackTaskBonusConfig.configDict[turnbackId]
 
-	if var_13_0 then
-		return var_13_0[#var_13_0].needPoint
+	if list then
+		return list[#list].needPoint
 	end
 
 	return 0
 end
 
-function var_0_0.getAllTurnbackTaskBonusCoCount(arg_14_0, arg_14_1)
-	return #arg_14_0._turnbackTaskBonusConfig.configList[arg_14_1]
+function TurnbackConfig:getAllTurnbackTaskBonusCoCount(turnbackId)
+	return #self._turnbackTaskBonusConfig.configList[turnbackId]
 end
 
-function var_0_0.getAllTurnbackSubModules(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_0:getTurnbackCo(arg_15_1)
-
-	return (string.splitToNumber(var_15_0.subModuleIds, "#"))
+function TurnbackConfig:getTurnbackDailyBonusConfig(turnbackId, day)
+	return self._turnbackDailyBonusConfig.configDict[turnbackId][day]
 end
 
-function var_0_0.getTurnbackSubViewCo(arg_16_0, arg_16_1, arg_16_2)
-	local var_16_0 = arg_16_0:getAllTurnbackSubModules(arg_16_1)
-	local var_16_1
+function TurnbackConfig:getAllTurnbackSubModules(turnbackid)
+	local turnbackConfig = self:getTurnbackCo(turnbackid)
+	local subViewTab = string.splitToNumber(turnbackConfig.subModuleIds, "#")
 
-	for iter_16_0, iter_16_1 in ipairs(var_16_0) do
-		if iter_16_1 == arg_16_2 then
-			var_16_1 = arg_16_0:getTurnbackSubModuleCo(iter_16_1)
+	return subViewTab
+end
+
+function TurnbackConfig:getTurnbackSubViewCo(turnbackid, subId)
+	local subViewTab = self:getAllTurnbackSubModules(turnbackid)
+	local subViewCo
+
+	for _, subViewId in ipairs(subViewTab) do
+		if subViewId == subId then
+			subViewCo = self:getTurnbackSubModuleCo(subViewId)
 
 			break
 		end
 	end
 
-	return var_16_1
+	return subViewCo
 end
 
-function var_0_0.getAdditionTotalCount(arg_17_0, arg_17_1)
-	local var_17_0 = 0
-	local var_17_1 = arg_17_0:getTurnbackCo(arg_17_1)
+function TurnbackConfig:getAdditionTotalCount(turnbackid)
+	local result = 0
+	local turnbackConfig = self:getTurnbackCo(turnbackid)
 
-	if var_17_1 then
-		var_17_0 = string.splitToNumber(var_17_1.additionType, "#")[2] or 0
+	if turnbackConfig then
+		local additionTab = string.splitToNumber(turnbackConfig.additionType, "#")
+
+		result = additionTab[2] or 0
 	end
 
-	return var_17_0
+	return result
 end
 
-function var_0_0.getAdditionRate(arg_18_0, arg_18_1)
-	local var_18_0 = 0
-	local var_18_1 = arg_18_0:getTurnbackCo(arg_18_1)
+function TurnbackConfig:getAdditionRate(turnbackid)
+	local result = 0
+	local turnbackConfig = self:getTurnbackCo(turnbackid)
 
-	if var_18_1 then
-		var_18_0 = var_18_1.additionRate
+	if turnbackConfig then
+		result = turnbackConfig.additionRate
 	end
 
-	return var_18_0
+	return result
 end
 
-function var_0_0.getAdditionDurationDays(arg_19_0, arg_19_1)
-	local var_19_0 = 0
-	local var_19_1 = arg_19_0:getTurnbackCo(arg_19_1)
+function TurnbackConfig:getAdditionDurationDays(turnbackid)
+	local result = 0
+	local turnbackConfig = self:getTurnbackCo(turnbackid)
 
-	if var_19_1 then
-		var_19_0 = var_19_1.additionDurationDays
+	if turnbackConfig then
+		result = turnbackConfig.additionDurationDays
 	end
 
-	return var_19_0
+	return result
 end
 
-function var_0_0.getOnlineDurationDays(arg_20_0, arg_20_1)
-	local var_20_0 = 0
-	local var_20_1 = arg_20_0:getTurnbackCo(arg_20_1)
+function TurnbackConfig:getOnlineDurationDays(turnbackid)
+	local result = 0
+	local turnbackConfig = self:getTurnbackCo(turnbackid)
 
-	if var_20_1 then
-		var_20_0 = var_20_1.onlineDurationDays
+	if turnbackConfig then
+		result = turnbackConfig.onlineDurationDays
 	end
 
-	return var_20_0
+	return result
 end
 
-function var_0_0.getTaskItemBonusPoint(arg_21_0, arg_21_1, arg_21_2)
-	local var_21_0, var_21_1 = arg_21_0:getBonusPointCo(arg_21_1)
-	local var_21_2 = arg_21_0:getTurnbackTaskCo(arg_21_2)
-	local var_21_3 = string.split(var_21_2.bonus, "|")
+function TurnbackConfig:getTaskItemBonusPoint(turnbackId, taskId)
+	local bonusPointItemType, bonusPointItemId = self:getBonusPointCo(turnbackId)
+	local taskConfig = self:getTurnbackTaskCo(taskId)
+	local taskBonusItemTab = string.split(taskConfig.bonus, "|")
 
-	for iter_21_0, iter_21_1 in ipairs(var_21_3) do
-		local var_21_4 = string.split(iter_21_1, "#")
+	for _, item in ipairs(taskBonusItemTab) do
+		local itemCoTab = string.split(item, "#")
 
-		if tonumber(var_21_4[1]) == var_21_0 and tonumber(var_21_4[2]) == var_21_1 then
-			return tonumber(var_21_4[3]) or 0
+		if tonumber(itemCoTab[1]) == bonusPointItemType and tonumber(itemCoTab[2]) == bonusPointItemId then
+			return tonumber(itemCoTab[3]) or 0
 		end
 	end
 end
 
-function var_0_0.getBonusPointCo(arg_22_0, arg_22_1)
-	local var_22_0 = arg_22_0:getTurnbackCo(arg_22_1)
-	local var_22_1 = string.split(var_22_0.bonusPointMaterial, "#")
-	local var_22_2 = tonumber(var_22_1[1])
-	local var_22_3 = tonumber(var_22_1[2])
+function TurnbackConfig:getBonusPointCo(turnbackId)
+	local turnbackConfig = self:getTurnbackCo(turnbackId)
+	local bonusPointItemCo = string.split(turnbackConfig.bonusPointMaterial, "#")
+	local bonusPointItemType = tonumber(bonusPointItemCo[1])
+	local bonusPointItemId = tonumber(bonusPointItemCo[2])
 
-	return var_22_2, var_22_3
+	return bonusPointItemType, bonusPointItemId
 end
 
-function var_0_0.getAllRecommendCo(arg_23_0, arg_23_1)
-	return arg_23_0._turnbackRecommendConfig.configDict[arg_23_1]
+function TurnbackConfig:getAllRecommendCo(turnbackId)
+	return self._turnbackRecommendConfig.configDict[turnbackId]
 end
 
-function var_0_0.getAllRecommendList(arg_24_0, arg_24_1)
-	local var_24_0 = arg_24_0._turnbackRecommendConfig.configList
-	local var_24_1 = {}
+function TurnbackConfig:getAllRecommendList(turnbackId)
+	local allConfigList = self._turnbackRecommendConfig.configList
+	local configList = {}
 
-	for iter_24_0, iter_24_1 in ipairs(var_24_0) do
-		if iter_24_1.turnbackId == arg_24_1 then
-			table.insert(var_24_1, iter_24_1)
+	for id, config in ipairs(allConfigList) do
+		if config.turnbackId == turnbackId then
+			table.insert(configList, config)
 		end
 	end
 
-	return var_24_1
+	return configList
 end
 
-function var_0_0.getRecommendCo(arg_25_0, arg_25_1, arg_25_2)
-	return arg_25_0._turnbackRecommendConfig.configDict[arg_25_1][arg_25_2]
+function TurnbackConfig:getRecommendCo(turnbackId, id)
+	return self._turnbackRecommendConfig.configDict[turnbackId][id]
 end
 
-function var_0_0.getSearchTaskCoList(arg_26_0)
-	local var_26_0 = {}
+function TurnbackConfig:getSearchTaskCoList(turnbackId)
+	local list = {}
 
-	for iter_26_0, iter_26_1 in ipairs(arg_26_0._turnbackTaskConfig.configList) do
-		if iter_26_1.listenerType == "TodayOnlineSeconds" then
-			table.insert(var_26_0, iter_26_1)
+	for index, value in ipairs(self._turnbackTaskConfig.configList) do
+		if value.listenerType == "TodayOnlineSeconds" and value.turnbackId == turnbackId then
+			table.insert(list, value)
 		end
 	end
 
-	return var_26_0
+	return list
 end
 
-function var_0_0.getDropCoList(arg_27_0)
-	return arg_27_0._turnbackDropConfig.configList
+function TurnbackConfig:getDropCoList()
+	return self._turnbackDropConfig.configList
 end
 
-function var_0_0.getDropCoById(arg_28_0, arg_28_1)
-	return arg_28_0._turnbackDropConfig.configDict[arg_28_1]
+function TurnbackConfig:getDropCoById(id)
+	return self._turnbackDropConfig.configDict[id]
 end
 
-function var_0_0.getDropCoCount(arg_29_0)
-	return #arg_29_0._turnbackDropConfig.configList
+function TurnbackConfig:getDropCoCount()
+	return #self._turnbackDropConfig.configList
 end
 
-var_0_0.instance = var_0_0.New()
+TurnbackConfig.instance = TurnbackConfig.New()
 
-return var_0_0
+return TurnbackConfig

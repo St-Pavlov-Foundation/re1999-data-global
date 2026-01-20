@@ -1,256 +1,269 @@
-﻿module("modules.logic.room.model.manufacture.ManufactureCritterListModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/manufacture/ManufactureCritterListModel.lua
 
-local var_0_0 = class("ManufactureCritterListModel", ListScrollModel)
-local var_0_1 = 1
-local var_0_2 = 50
-local var_0_3 = 5
+module("modules.logic.room.model.manufacture.ManufactureCritterListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:clear()
-	arg_1_0:clearData()
-	arg_1_0:clearSort()
+local ManufactureCritterListModel = class("ManufactureCritterListModel", ListScrollModel)
+local DEFAULT_START_INDEX = 1
+local DEFAULT_MAX_PREVIEW_COUNT = 50
+local MIN_PREVIEW_COUNT = 5
+
+function ManufactureCritterListModel:onInit()
+	self:clear()
+	self:clearData()
+	self:clearSort()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clearData()
-	arg_2_0:clearSort()
+function ManufactureCritterListModel:reInit()
+	self:clearData()
+	self:clearSort()
 end
 
-function var_0_0.clearData(arg_3_0)
-	arg_3_0._newList = nil
-	arg_3_0._curPreviewIndex = 0
-	arg_3_0.critterAttrPreviewDict = {}
-	arg_3_0._buildingCritterAttrPreviewDict = {}
-	arg_3_0._buildingCritterAttrDict = {}
+function ManufactureCritterListModel:clearData()
+	self._newList = nil
+	self._curPreviewIndex = 0
+	self.critterAttrPreviewDict = {}
+	self._buildingCritterAttrPreviewDict = {}
+	self._buildingCritterAttrDict = {}
 end
 
-function var_0_0.clearSort(arg_4_0)
-	arg_4_0:setOrder(CritterEnum.OrderType.MoodDown)
+function ManufactureCritterListModel:clearSort()
+	self:setOrder(CritterEnum.OrderType.MoodDown)
 end
 
-local function var_0_4(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0:getId()
-	local var_5_1 = arg_5_1:getId()
-	local var_5_2 = RoomMapTransportPathModel.instance:getTransportPathMOByCritterUid(var_5_0)
-	local var_5_3 = RoomMapTransportPathModel.instance:getTransportPathMOByCritterUid(var_5_1)
-	local var_5_4 = var_5_2 and var_5_2.id
-	local var_5_5 = var_5_3 and var_5_3.id
-	local var_5_6 = ManufactureModel.instance:getCritterWorkingBuilding(var_5_0)
-	local var_5_7 = ManufactureModel.instance:getCritterWorkingBuilding(var_5_1)
-	local var_5_8 = false
-	local var_5_9 = false
-	local var_5_10 = var_0_0.instance:getTmpWorkingUid()
+local function _sortFunction(aCritterMO, bCritterMO)
+	local aCritterUid = aCritterMO:getId()
+	local bCritterUid = bCritterMO:getId()
+	local aWorkingPathMO = RoomMapTransportPathModel.instance:getTransportPathMOByCritterUid(aCritterUid)
+	local bWorkingPathMO = RoomMapTransportPathModel.instance:getTransportPathMOByCritterUid(bCritterUid)
+	local aWorkingPathId = aWorkingPathMO and aWorkingPathMO.id
+	local bWorkingPathId = bWorkingPathMO and bWorkingPathMO.id
+	local aWorkBuilding = ManufactureModel.instance:getCritterWorkingBuilding(aCritterUid)
+	local bWorkBuilding = ManufactureModel.instance:getCritterWorkingBuilding(bCritterUid)
+	local aIsWorkInCurBuilding = false
+	local bIsWorkInCurBuilding = false
+	local tmpWorkingUid = ManufactureCritterListModel.instance:getTmpWorkingUid()
 
-	if var_5_10 then
-		var_5_8 = var_5_6 == var_5_10 or var_5_4 == var_5_10
-		var_5_9 = var_5_7 == var_5_10 or var_5_5 == var_5_10
+	if tmpWorkingUid then
+		aIsWorkInCurBuilding = aWorkBuilding == tmpWorkingUid or aWorkingPathId == tmpWorkingUid
+		bIsWorkInCurBuilding = bWorkBuilding == tmpWorkingUid or bWorkingPathId == tmpWorkingUid
 	end
 
-	if var_5_8 ~= var_5_9 then
-		return var_5_8
+	if aIsWorkInCurBuilding ~= bIsWorkInCurBuilding then
+		return aIsWorkInCurBuilding
 	end
 
-	local var_5_11 = var_0_0.instance:getOrder()
-	local var_5_12 = arg_5_0:getMoodValue()
-	local var_5_13 = arg_5_1:getMoodValue()
+	local order = ManufactureCritterListModel.instance:getOrder()
+	local aMood = aCritterMO:getMoodValue()
+	local bMood = bCritterMO:getMoodValue()
 
-	if var_5_12 ~= var_5_13 then
-		if var_5_11 == CritterEnum.OrderType.MoodDown then
-			return var_5_13 < var_5_12
-		elseif var_5_11 == CritterEnum.OrderType.MoodUp then
-			return var_5_12 < var_5_13
+	if aMood ~= bMood then
+		if order == CritterEnum.OrderType.MoodDown then
+			return bMood < aMood
+		elseif order == CritterEnum.OrderType.MoodUp then
+			return aMood < bMood
 		end
 	end
 
-	local var_5_14 = arg_5_0:getDefineId()
-	local var_5_15 = arg_5_1:getDefineId()
-	local var_5_16 = CritterConfig.instance:getCritterRare(var_5_14)
-	local var_5_17 = CritterConfig.instance:getCritterRare(var_5_15)
+	local aCritterId = aCritterMO:getDefineId()
+	local bCritterId = bCritterMO:getDefineId()
+	local aRare = CritterConfig.instance:getCritterRare(aCritterId)
+	local bRare = CritterConfig.instance:getCritterRare(bCritterId)
 
-	if var_5_16 ~= var_5_17 then
-		if var_5_11 == CritterEnum.OrderType.RareDown then
-			return var_5_17 < var_5_16
-		elseif var_5_11 == CritterEnum.OrderType.RareUp then
-			return var_5_16 < var_5_17
+	if aRare ~= bRare then
+		if order == CritterEnum.OrderType.RareDown then
+			return bRare < aRare
+		elseif order == CritterEnum.OrderType.RareUp then
+			return aRare < bRare
 		end
 	end
 
-	if var_5_14 ~= var_5_15 then
-		return var_5_14 < var_5_15
+	if aCritterId ~= bCritterId then
+		return aCritterId < bCritterId
 	end
 
-	return var_5_0 < var_5_1
+	return aCritterUid < bCritterUid
 end
 
-function var_0_0.setCritterNewList(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	arg_6_0:clearData()
+function ManufactureCritterListModel:setCritterNewList(workingUid, isTransport, filterMO)
+	self:clearData()
 
-	arg_6_0._newList = {}
+	self._newList = {}
 
-	local var_6_0 = CritterModel.instance:getAllCritters()
+	local critterMOList = CritterModel.instance:getAllCritters()
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
-		local var_6_1 = iter_6_1:isMaturity()
-		local var_6_2 = iter_6_1:isCultivating()
+	for _, critterMO in ipairs(critterMOList) do
+		local isMaturity = critterMO:isMaturity()
+		local isCultivating = critterMO:isCultivating()
 
-		if var_6_1 and not var_6_2 then
-			local var_6_3
+		if isMaturity and not isCultivating then
+			local checkWorkingManuBuilding
 
-			if arg_6_2 then
-				local var_6_4 = iter_6_1:getId()
+			if isTransport then
+				local critterUid = critterMO:getId()
 
-				var_6_3 = ManufactureModel.instance:getCritterWorkingBuilding(var_6_4)
+				checkWorkingManuBuilding = ManufactureModel.instance:getCritterWorkingBuilding(critterUid)
 			end
 
-			if not var_6_3 then
-				local var_6_5 = true
+			if not checkWorkingManuBuilding then
+				local isPassFilter = true
 
-				if arg_6_3 then
-					var_6_5 = arg_6_3:isPassedFilter(iter_6_1)
+				if filterMO then
+					isPassFilter = filterMO:isPassedFilter(critterMO)
 				end
 
-				if var_6_5 then
-					table.insert(arg_6_0._newList, iter_6_1)
+				if isPassFilter then
+					table.insert(self._newList, critterMO)
 				end
 			end
 		end
 	end
 
-	arg_6_0:setTmpWorkingUid(arg_6_1)
-	table.sort(arg_6_0._newList, var_0_4)
-	arg_6_0:setTmpWorkingUid()
+	self:setTmpWorkingUid(workingUid)
+	table.sort(self._newList, _sortFunction)
+	self:setTmpWorkingUid()
 end
 
-function var_0_0.setTmpWorkingUid(arg_7_0, arg_7_1)
-	arg_7_0._tmpWorkingUid = arg_7_1
+function ManufactureCritterListModel:setTmpWorkingUid(workingUid)
+	self._tmpWorkingUid = workingUid
 end
 
-function var_0_0.getTmpWorkingUid(arg_8_0)
-	return arg_8_0._tmpWorkingUid
+function ManufactureCritterListModel:getTmpWorkingUid()
+	return self._tmpWorkingUid
 end
 
-function var_0_0.getPreviewCritterUidList(arg_9_0, arg_9_1)
-	arg_9_1 = arg_9_1 or var_0_1
+function ManufactureCritterListModel:getPreviewCritterUidList(startIndex)
+	startIndex = startIndex or DEFAULT_START_INDEX
 
-	local var_9_0 = {}
-	local var_9_1 = arg_9_0._newList or arg_9_0:getList()
-	local var_9_2 = #var_9_1
-	local var_9_3 = var_9_2 <= arg_9_0._curPreviewIndex
-	local var_9_4 = arg_9_1 <= var_9_2
-	local var_9_5 = arg_9_0._curPreviewIndex - arg_9_1 <= var_0_3
+	local previewCritterUidList = {}
+	local list = self._newList or self:getList()
+	local listCount = #list
+	local isPreviewAll = listCount <= self._curPreviewIndex
+	local isStartIndexValid = startIndex <= listCount
+	local remainPreviewCount = self._curPreviewIndex - startIndex
+	local isMinPreviewCount = remainPreviewCount <= MIN_PREVIEW_COUNT
 
-	if not var_9_3 and var_9_4 and var_9_5 then
-		local var_9_6 = arg_9_1 + (tonumber(CritterConfig.instance:getCritterConstStr(CritterEnum.ConstId.MaxPreviewCount)) or var_0_2) - 1
+	if not isPreviewAll and isStartIndexValid and isMinPreviewCount then
+		local maxPreviewCount = tonumber(CritterConfig.instance:getCritterConstStr(CritterEnum.ConstId.MaxPreviewCount)) or DEFAULT_MAX_PREVIEW_COUNT
+		local endIndex = startIndex + maxPreviewCount - 1
 
-		for iter_9_0 = arg_9_1, var_9_6 do
-			local var_9_7 = var_9_1[iter_9_0]
+		for i = startIndex, endIndex do
+			local critterMO = list[i]
 
-			if not var_9_7 then
+			if not critterMO then
 				break
 			end
 
-			var_9_0[#var_9_0 + 1] = var_9_7:getId()
+			previewCritterUidList[#previewCritterUidList + 1] = critterMO:getId()
 		end
 	end
 
-	return var_9_0
+	return previewCritterUidList
 end
 
-local var_0_5 = {}
+local _TEMP_EMPTY_TB = {}
 
-function var_0_0.getPreviewAttrInfo(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	local var_10_0 = arg_10_0.critterAttrPreviewDict
+function ManufactureCritterListModel:getPreviewAttrInfo(critterUid, buildingId, isPreview)
+	local critterAttrDict = self.critterAttrPreviewDict
 
-	if arg_10_2 then
-		var_10_0 = (arg_10_3 == false and arg_10_0._buildingCritterAttrDict or arg_10_0._buildingCritterAttrPreviewDict)[arg_10_2] or arg_10_0.critterAttrPreviewDict
+	if buildingId then
+		local isNotPreview = isPreview == false
+		local buildingDict = isNotPreview and self._buildingCritterAttrDict or self._buildingCritterAttrPreviewDict
+
+		critterAttrDict = buildingDict[buildingId] or self.critterAttrPreviewDict
 	end
 
-	return var_10_0 and var_10_0[arg_10_1] or var_0_5
+	return critterAttrDict and critterAttrDict[critterUid] or _TEMP_EMPTY_TB
 end
 
-function var_0_0.setAttrPreview(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	if not arg_11_1 then
+function ManufactureCritterListModel:setAttrPreview(infoList, buildingId, isPreview)
+	if not infoList then
 		return
 	end
 
-	local var_11_0
+	local buildingCritterAttrDict
 
-	if arg_11_2 then
-		local var_11_1 = arg_11_3 == false
-		local var_11_2 = var_11_1 and arg_11_0._buildingCritterAttrDict or arg_11_0._buildingCritterAttrPreviewDict
+	if buildingId then
+		local isNotPreview = isPreview == false
+		local buildingDict = isNotPreview and self._buildingCritterAttrDict or self._buildingCritterAttrPreviewDict
 
-		if not var_11_2[arg_11_2] or var_11_1 then
-			var_11_2[arg_11_2] = {}
+		if not buildingDict[buildingId] or isNotPreview then
+			buildingDict[buildingId] = {}
 		end
 
-		var_11_0 = var_11_2[arg_11_2]
+		buildingCritterAttrDict = buildingDict[buildingId]
 	end
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_1) do
-		local var_11_3 = iter_11_1.critterUid
-		local var_11_4 = {
-			isSpSkillEffect = iter_11_1.isSpSkillEffect,
-			efficiency = iter_11_1.efficiency,
-			moodCostSpeed = iter_11_1.moodChangeSpeed,
-			moodChangeSpeed = iter_11_1.moodChangeSpeed,
-			criRate = iter_11_1.criRate,
-			skillTags = {}
+	for _, info in ipairs(infoList) do
+		local critterUid = info.critterUid
+		local attr = {
+			isSpSkillEffect = info.isSpSkillEffect,
+			efficiency = info.efficiency,
+			moodCostSpeed = info.moodChangeSpeed,
+			moodChangeSpeed = info.moodChangeSpeed,
+			criRate = info.criRate
 		}
 
-		tabletool.addValues(var_11_4.skillTags, iter_11_1.skillTags)
+		attr.skillTags = {}
 
-		arg_11_0.critterAttrPreviewDict[var_11_3] = var_11_4
+		tabletool.addValues(attr.skillTags, info.skillTags)
 
-		if var_11_0 then
-			var_11_0[var_11_3] = var_11_4
+		self.critterAttrPreviewDict[critterUid] = attr
+
+		if buildingCritterAttrDict then
+			buildingCritterAttrDict[critterUid] = attr
 		end
 	end
 
-	local var_11_5 = 0
+	local maxIndex = 0
 
-	for iter_11_2, iter_11_3 in pairs(arg_11_0.critterAttrPreviewDict) do
-		local var_11_6 = 0
+	for critterUid, _ in pairs(self.critterAttrPreviewDict) do
+		local index = 0
 
-		if arg_11_0._newList then
-			for iter_11_4, iter_11_5 in ipairs(arg_11_0._newList) do
-				if iter_11_5:getId() == iter_11_2 then
-					var_11_6 = iter_11_4
+		if self._newList then
+			for i, mo in ipairs(self._newList) do
+				local id = mo:getId()
+
+				if id == critterUid then
+					index = i
 				end
 			end
 		else
-			local var_11_7 = arg_11_0:getById(iter_11_2)
+			local mo = self:getById(critterUid)
 
-			if var_11_7 then
-				var_11_6 = arg_11_0:getIndex(var_11_7)
+			if mo then
+				index = self:getIndex(mo)
 			end
 		end
 
-		if var_11_5 < var_11_6 then
-			var_11_5 = var_11_6
+		if maxIndex < index then
+			maxIndex = index
 		end
 	end
 
-	arg_11_0._curPreviewIndex = var_11_5
+	self._curPreviewIndex = maxIndex
 end
 
-function var_0_0.setManufactureCritterList(arg_12_0)
-	arg_12_0:setList(arg_12_0._newList)
+function ManufactureCritterListModel:setManufactureCritterList()
+	self:setList(self._newList)
 
-	arg_12_0._newList = nil
+	self._newList = nil
 end
 
-function var_0_0.isCritterListEmpty(arg_13_0)
-	return arg_13_0:getCount() <= 0
+function ManufactureCritterListModel:isCritterListEmpty()
+	local count = self:getCount()
+	local result = count <= 0
+
+	return result
 end
 
-function var_0_0.setOrder(arg_14_0, arg_14_1)
-	arg_14_0._order = arg_14_1
+function ManufactureCritterListModel:setOrder(order)
+	self._order = order
 end
 
-function var_0_0.getOrder(arg_15_0)
-	return arg_15_0._order
+function ManufactureCritterListModel:getOrder()
+	return self._order
 end
 
-var_0_0.instance = var_0_0.New()
+ManufactureCritterListModel.instance = ManufactureCritterListModel.New()
 
-return var_0_0
+return ManufactureCritterListModel

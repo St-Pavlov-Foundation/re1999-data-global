@@ -1,59 +1,61 @@
-﻿module("modules.logic.dungeon.model.DungeonMazeCellData", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/model/DungeonMazeCellData.lua
 
-local var_0_0 = pureTable("DungeonMazeCellData")
+module("modules.logic.dungeon.model.DungeonMazeCellData", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.x = arg_1_1
-	arg_1_0.y = arg_1_2
-	arg_1_0.cellId = 0
-	arg_1_0.value = 0
-	arg_1_0.connectSet = {}
-	arg_1_0.entryConnect = {}
-	arg_1_0.entryCount = 0
-	arg_1_0.diagueId = 0
-	arg_1_0.obstacleDialog = ""
-	arg_1_0.obstacleToggled = false
-	arg_1_0.eventId = 0
-	arg_1_0.eventToggled = false
-	arg_1_0.pass = false
+local DungeonMazeCellData = pureTable("DungeonMazeCellData")
+
+function DungeonMazeCellData:init(x, y)
+	self.x = x
+	self.y = y
+	self.cellId = 0
+	self.value = 0
+	self.connectSet = {}
+	self.entryConnect = {}
+	self.entryCount = 0
+	self.diagueId = 0
+	self.obstacleDialog = ""
+	self.obstacleToggled = false
+	self.eventId = 0
+	self.eventToggled = false
+	self.pass = false
 end
 
-local var_0_1 = {}
+local _cacheTable = {}
 
-function var_0_0.getConnectValue(arg_2_0)
-	local var_2_0 = 0
-	local var_2_1 = 0
+function DungeonMazeCellData:getConnectValue()
+	local len = 0
+	local result = 0
 
-	if arg_2_0.entryConnect then
-		for iter_2_0, iter_2_1 in pairs(arg_2_0.entryConnect) do
-			table.insert(var_0_1, iter_2_0)
+	if self.entryConnect then
+		for k, v in pairs(self.entryConnect) do
+			table.insert(_cacheTable, k)
 
-			var_2_0 = var_2_0 + 1
+			len = len + 1
 		end
 
-		table.sort(var_0_1)
+		table.sort(_cacheTable)
 
-		for iter_2_2, iter_2_3 in ipairs(var_0_1) do
-			var_2_1 = var_2_1 * 10 + iter_2_3
+		for _, v in ipairs(_cacheTable) do
+			result = result * 10 + v
 		end
 
-		for iter_2_4 = 1, var_2_0 do
-			var_0_1[iter_2_4] = nil
+		for i = 1, len do
+			_cacheTable[i] = nil
 		end
 	end
 
-	return var_2_1
+	return result
 end
 
-function var_0_0.getDirectionTo(arg_3_0, arg_3_1)
-	if arg_3_1.x == arg_3_0.x then
-		if arg_3_1.y > arg_3_0.y then
+function DungeonMazeCellData:getDirectionTo(cell)
+	if cell.x == self.x then
+		if cell.y > self.y then
 			return DungeonMazeEnum.dir.right
 		else
 			return DungeonMazeEnum.dir.left
 		end
-	elseif arg_3_1.y == arg_3_0.y then
-		if arg_3_1.x > arg_3_0.x then
+	elseif cell.y == self.y then
+		if cell.x > self.x then
 			return DungeonMazeEnum.dir.down
 		else
 			return DungeonMazeEnum.dir.up
@@ -63,12 +65,12 @@ function var_0_0.getDirectionTo(arg_3_0, arg_3_1)
 	return nil
 end
 
-function var_0_0.cleanEntrySet(arg_4_0)
-	for iter_4_0, iter_4_1 in pairs(arg_4_0.entryConnect) do
-		arg_4_0.entryConnect[iter_4_0] = nil
+function DungeonMazeCellData:cleanEntrySet()
+	for k, v in pairs(self.entryConnect) do
+		self.entryConnect[k] = nil
 	end
 
-	arg_4_0.entryCount = 0
+	self.entryCount = 0
 end
 
-return var_0_0
+return DungeonMazeCellData

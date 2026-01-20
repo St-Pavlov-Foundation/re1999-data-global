@@ -1,78 +1,80 @@
-﻿module("modules.logic.rouge.map.view.nextlayer.RougeNextLayerView", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/view/nextlayer/RougeNextLayerView.lua
 
-local var_0_0 = class("RougeNextLayerView", BaseView)
+module("modules.logic.rouge.map.view.nextlayer.RougeNextLayerView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg")
-	arg_1_0._simagetitlebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_titlebg")
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "#txt_title")
-	arg_1_0._txtdec = gohelper.findChildText(arg_1_0.viewGO, "#txt_dec")
+local RougeNextLayerView = class("RougeNextLayerView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeNextLayerView:onInitView()
+	self._simagefullbg = gohelper.findChildSingleImage(self.viewGO, "#simage_fullbg")
+	self._simagetitlebg = gohelper.findChildSingleImage(self.viewGO, "#simage_titlebg")
+	self._txttitle = gohelper.findChildText(self.viewGO, "#txt_title")
+	self._txtdec = gohelper.findChildText(self.viewGO, "#txt_dec")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RougeNextLayerView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RougeNextLayerView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._simagefullbg:LoadImage("singlebg/rouge/map/rouge_map_nextlevelbg.png")
-	arg_4_0._simagetitlebg:LoadImage("singlebg/rouge/map/rouge_map_nextlevelbg2.png")
-	NavigateMgr.instance:addEscape(arg_4_0.viewName, RougeMapHelper.blockEsc, arg_4_0)
-	arg_4_0:addEventCb(RougeMapController.instance, RougeMapEvent.onLoadMapDone, arg_4_0.onLoadMapDone, arg_4_0)
+function RougeNextLayerView:_editableInitView()
+	self._simagefullbg:LoadImage("singlebg/rouge/map/rouge_map_nextlevelbg.png")
+	self._simagetitlebg:LoadImage("singlebg/rouge/map/rouge_map_nextlevelbg2.png")
+	NavigateMgr.instance:addEscape(self.viewName, RougeMapHelper.blockEsc, self)
+	self:addEventCb(RougeMapController.instance, RougeMapEvent.onLoadMapDone, self.onLoadMapDone, self)
 end
 
-function var_0_0.onLoadMapDone(arg_5_0)
-	arg_5_0.loadDone = true
+function RougeNextLayerView:onLoadMapDone()
+	self.loadDone = true
 
-	arg_5_0:closeView()
+	self:closeView()
 end
 
-function var_0_0.closeView(arg_6_0)
-	if not arg_6_0.loadDone or not arg_6_0.overMinTime then
+function RougeNextLayerView:closeView()
+	if not self.loadDone or not self.overMinTime then
 		return
 	end
 
-	arg_6_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.onOpen(arg_7_0)
+function RougeNextLayerView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.SwitchNormalLayer)
 
-	arg_7_0.loadDone = not RougeMapModel.instance:checkIsLoading()
-	arg_7_0.overMinTime = false
+	self.loadDone = not RougeMapModel.instance:checkIsLoading()
+	self.overMinTime = false
 
-	local var_7_0 = arg_7_0.viewParam
-	local var_7_1 = lua_rouge_layer.configDict[var_7_0]
+	local layerId = self.viewParam
+	local layerCo = lua_rouge_layer.configDict[layerId]
 
-	arg_7_0._txttitle.text = var_7_1.name
-	arg_7_0._txtdec.text = var_7_1.crossDesc
+	self._txttitle.text = layerCo.name
+	self._txtdec.text = layerCo.crossDesc
 
-	TaskDispatcher.runDelay(arg_7_0.onMinTimeDone, arg_7_0, RougeMapEnum.SwitchLayerMinDuration)
-	TaskDispatcher.runDelay(arg_7_0.onMaxTimeDone, arg_7_0, RougeMapEnum.SwitchLayerMaxDuration)
+	TaskDispatcher.runDelay(self.onMinTimeDone, self, RougeMapEnum.SwitchLayerMinDuration)
+	TaskDispatcher.runDelay(self.onMaxTimeDone, self, RougeMapEnum.SwitchLayerMaxDuration)
 end
 
-function var_0_0.onMinTimeDone(arg_8_0)
-	arg_8_0.overMinTime = true
+function RougeNextLayerView:onMinTimeDone()
+	self.overMinTime = true
 
-	arg_8_0:closeView()
+	self:closeView()
 end
 
-function var_0_0.onMaxTimeDone(arg_9_0)
-	arg_9_0:closeThis()
+function RougeNextLayerView:onMaxTimeDone()
+	self:closeThis()
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0.onMinTimeDone, arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0.onMaxTimeDone, arg_10_0)
-	arg_10_0._simagefullbg:UnLoadImage()
-	arg_10_0._simagetitlebg:UnLoadImage()
+function RougeNextLayerView:onDestroyView()
+	TaskDispatcher.cancelTask(self.onMinTimeDone, self)
+	TaskDispatcher.cancelTask(self.onMaxTimeDone, self)
+	self._simagefullbg:UnLoadImage()
+	self._simagetitlebg:UnLoadImage()
 end
 
-return var_0_0
+return RougeNextLayerView

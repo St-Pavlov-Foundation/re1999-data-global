@@ -1,90 +1,92 @@
-﻿module("modules.logic.scene.fight.preloadwork.FightPreloadSpineWork", package.seeall)
+﻿-- chunkname: @modules/logic/scene/fight/preloadwork/FightPreloadSpineWork.lua
 
-local var_0_0 = class("FightPreloadSpineWork", BaseWork)
+module("modules.logic.scene.fight.preloadwork.FightPreloadSpineWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_0:_getSpineUrlList()
+local FightPreloadSpineWork = class("FightPreloadSpineWork", BaseWork)
 
-	arg_1_0._loader = SequenceAbLoader.New()
+function FightPreloadSpineWork:onStart(context)
+	local spineUrlList = self:_getSpineUrlList()
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
-		arg_1_0._loader:addPath(iter_1_1)
+	self._loader = SequenceAbLoader.New()
+
+	for _, resPath in ipairs(spineUrlList) do
+		self._loader:addPath(resPath)
 	end
 
-	arg_1_0._loader:setConcurrentCount(10)
-	arg_1_0._loader:setLoadFailCallback(arg_1_0._onPreloadOneFail)
-	arg_1_0._loader:startLoad(arg_1_0._onPreloadFinish, arg_1_0)
+	self._loader:setConcurrentCount(10)
+	self._loader:setLoadFailCallback(self._onPreloadOneFail)
+	self._loader:startLoad(self._onPreloadFinish, self)
 end
 
-function var_0_0._onPreloadFinish(arg_2_0)
-	local var_2_0 = arg_2_0._loader:getAssetItemDict()
+function FightPreloadSpineWork:_onPreloadFinish()
+	local assetItemDict = self._loader:getAssetItemDict()
 
-	for iter_2_0, iter_2_1 in pairs(var_2_0) do
-		arg_2_0.context.callback(arg_2_0.context.callbackObj, iter_2_1)
+	for url, assetItem in pairs(assetItemDict) do
+		self.context.callback(self.context.callbackObj, assetItem)
 	end
 
-	arg_2_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0._onPreloadOneFail(arg_3_0, arg_3_1, arg_3_2)
-	logError("战斗Spine加载失败：" .. arg_3_2.ResPath)
+function FightPreloadSpineWork:_onPreloadOneFail(loader, assetItem)
+	logError("战斗Spine加载失败：" .. assetItem.ResPath)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	if arg_4_0._loader then
-		arg_4_0._loader:dispose()
+function FightPreloadSpineWork:clearWork()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_4_0._loader = nil
+		self._loader = nil
 	end
 end
 
-function var_0_0._getSpineUrlList(arg_5_0)
-	local var_5_0 = {}
+function FightPreloadSpineWork:_getSpineUrlList()
+	local spineUrlDict = {}
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0.context.mySkinIds) do
-		local var_5_1 = FightConfig.instance:getSkinCO(iter_5_1)
+	for _, skinId in ipairs(self.context.mySkinIds) do
+		local skinCO = FightConfig.instance:getSkinCO(skinId)
 
-		if var_5_1 and not string.nilorempty(var_5_1.spine) then
-			var_5_0[ResUrl.getSpineFightPrefabBySkin(var_5_1)] = true
+		if skinCO and not string.nilorempty(skinCO.spine) then
+			spineUrlDict[ResUrl.getSpineFightPrefabBySkin(skinCO)] = true
 		end
 
-		FightHelper.setZongMaoShaLiMianJuSpineUrl(iter_5_1, var_5_0)
+		FightHelper.setZongMaoShaLiMianJuSpineUrl(skinId, spineUrlDict)
 	end
 
-	for iter_5_2, iter_5_3 in ipairs(arg_5_0.context.enemySkinIds) do
-		local var_5_2 = FightConfig.instance:getSkinCO(iter_5_3)
+	for _, skinId in ipairs(self.context.enemySkinIds) do
+		local skinCO = FightConfig.instance:getSkinCO(skinId)
 
-		if var_5_2 and not string.nilorempty(var_5_2.spine) then
-			var_5_0[ResUrl.getSpineFightPrefabBySkin(var_5_2)] = true
+		if skinCO and not string.nilorempty(skinCO.spine) then
+			spineUrlDict[ResUrl.getSpineFightPrefabBySkin(skinCO)] = true
 		end
 	end
 
-	for iter_5_4, iter_5_5 in ipairs(arg_5_0.context.subSkinIds) do
-		local var_5_3 = FightConfig.instance:getSkinCO(iter_5_5)
+	for _, subSkinId in ipairs(self.context.subSkinIds) do
+		local skinCO = FightConfig.instance:getSkinCO(subSkinId)
 
-		if var_5_3 and not string.nilorempty(var_5_3.alternateSpine) then
-			var_5_0[ResUrl.getSpineFightPrefab(var_5_3.alternateSpine)] = true
+		if skinCO and not string.nilorempty(skinCO.alternateSpine) then
+			spineUrlDict[ResUrl.getSpineFightPrefab(skinCO.alternateSpine)] = true
 		end
 
-		FightHelper.setZongMaoShaLiMianJuSpineUrl(iter_5_5, var_5_0)
+		FightHelper.setZongMaoShaLiMianJuSpineUrl(subSkinId, spineUrlDict)
 	end
 
-	local var_5_4 = FightHelper.preloadXingTiSpecialUrl(arg_5_0.context.myModelIds, arg_5_0.context.enemyModelIds)
-	local var_5_5 = {}
+	local xing_ti_special_url = FightHelper.preloadXingTiSpecialUrl(self.context.myModelIds, self.context.enemyModelIds)
+	local ret = {}
 
-	for iter_5_6, iter_5_7 in pairs(var_5_0) do
-		if FightHelper.XingTiSpineUrl2Special[iter_5_6] and var_5_4 then
-			if var_5_4 == 1 then
-				iter_5_6 = FightHelper.XingTiSpineUrl2Special[iter_5_6]
-			elseif var_5_4 == 2 then
-				table.insert(var_5_5, FightHelper.XingTiSpineUrl2Special[iter_5_6])
+	for url, _ in pairs(spineUrlDict) do
+		if FightHelper.XingTiSpineUrl2Special[url] and xing_ti_special_url then
+			if xing_ti_special_url == 1 then
+				url = FightHelper.XingTiSpineUrl2Special[url]
+			elseif xing_ti_special_url == 2 then
+				table.insert(ret, FightHelper.XingTiSpineUrl2Special[url])
 			end
 		end
 
-		table.insert(var_5_5, iter_5_6)
+		table.insert(ret, url)
 	end
 
-	return var_5_5
+	return ret
 end
 
-return var_0_0
+return FightPreloadSpineWork

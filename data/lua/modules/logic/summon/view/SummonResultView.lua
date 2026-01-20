@@ -1,553 +1,562 @@
-﻿module("modules.logic.summon.view.SummonResultView", package.seeall)
+﻿-- chunkname: @modules/logic/summon/view/SummonResultView.lua
 
-local var_0_0 = class("SummonResultView", BaseView)
+module("modules.logic.summon.view.SummonResultView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnok = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_ok")
+local SummonResultView = class("SummonResultView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SummonResultView:onInitView()
+	self._btnok = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_ok")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnok:AddClickListener(arg_2_0._btnokOnClick, arg_2_0)
+function SummonResultView:addEvents()
+	self._btnok:AddClickListener(self._btnokOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnok:RemoveClickListener()
+function SummonResultView:removeEvents()
+	self._btnok:RemoveClickListener()
 end
 
-function var_0_0._btnokOnClick(arg_4_0)
-	if arg_4_0._cantClose then
+function SummonResultView:_btnokOnClick()
+	if self._cantClose then
 		return
 	end
 
-	arg_4_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	gohelper.setActive(arg_5_0._goheroitem, false)
+function SummonResultView:_editableInitView()
+	gohelper.setActive(self._goheroitem, false)
 
-	arg_5_0._heroItemTables = {}
+	self._heroItemTables = {}
 
-	for iter_5_0 = 1, 10 do
-		local var_5_0 = arg_5_0:getUserDataTb_()
+	for i = 1, 10 do
+		local heroItemTable = self:getUserDataTb_()
 
-		var_5_0.go = gohelper.findChild(arg_5_0.viewGO, "herocontent/#go_heroitem" .. iter_5_0)
-		var_5_0.txtname = gohelper.findChildText(var_5_0.go, "name")
-		var_5_0.txtnameen = gohelper.findChildText(var_5_0.go, "nameen")
-		var_5_0.imagerare = gohelper.findChildImage(var_5_0.go, "rare")
-		var_5_0.equiprare = gohelper.findChildImage(var_5_0.go, "equiprare")
-		var_5_0.imagecareer = gohelper.findChildImage(var_5_0.go, "career")
-		var_5_0.imageequipcareer = gohelper.findChildImage(var_5_0.go, "equipcareer")
-		var_5_0.goHeroIcon = gohelper.findChild(var_5_0.go, "heroicon")
-		var_5_0.simageicon = gohelper.findChildSingleImage(var_5_0.go, "heroicon/icon")
-		var_5_0.simageequipicon = gohelper.findChildSingleImage(var_5_0.go, "equipicon")
-		var_5_0.imageicon = gohelper.findChildImage(var_5_0.go, "heroicon/icon")
-		var_5_0.goeffect = gohelper.findChild(var_5_0.go, "effect")
-		var_5_0.btnself = gohelper.findChildButtonWithAudio(var_5_0.go, "btn_self")
-		var_5_0.goluckybag = gohelper.findChild(var_5_0.go, "luckybag")
-		var_5_0.txtluckybagname = gohelper.findChildText(var_5_0.goluckybag, "name")
-		var_5_0.txtluckybagnameen = gohelper.findChildText(var_5_0.goluckybag, "nameen")
-		var_5_0.simageluckgbagicon = gohelper.findChildSingleImage(var_5_0.goluckybag, "icon")
+		heroItemTable.go = gohelper.findChild(self.viewGO, "herocontent/#go_heroitem" .. i)
+		heroItemTable.txtname = gohelper.findChildText(heroItemTable.go, "name")
+		heroItemTable.txtnameen = gohelper.findChildText(heroItemTable.go, "nameen")
+		heroItemTable.imagerare = gohelper.findChildImage(heroItemTable.go, "rare")
+		heroItemTable.equiprare = gohelper.findChildImage(heroItemTable.go, "equiprare")
+		heroItemTable.imagecareer = gohelper.findChildImage(heroItemTable.go, "career")
+		heroItemTable.imageequipcareer = gohelper.findChildImage(heroItemTable.go, "equipcareer")
+		heroItemTable.goHeroIcon = gohelper.findChild(heroItemTable.go, "heroicon")
+		heroItemTable.simageicon = gohelper.findChildSingleImage(heroItemTable.go, "heroicon/icon")
+		heroItemTable.simageequipicon = gohelper.findChildSingleImage(heroItemTable.go, "equipicon")
+		heroItemTable.imageicon = gohelper.findChildImage(heroItemTable.go, "heroicon/icon")
+		heroItemTable.goeffect = gohelper.findChild(heroItemTable.go, "effect")
+		heroItemTable.btnself = gohelper.findChildButtonWithAudio(heroItemTable.go, "btn_self")
+		heroItemTable.goluckybag = gohelper.findChild(heroItemTable.go, "luckybag")
+		heroItemTable.txtluckybagname = gohelper.findChildText(heroItemTable.goluckybag, "name")
+		heroItemTable.txtluckybagnameen = gohelper.findChildText(heroItemTable.goluckybag, "nameen")
+		heroItemTable.simageluckgbagicon = gohelper.findChildSingleImage(heroItemTable.goluckybag, "icon")
 
-		var_5_0.btnself:AddClickListener(arg_5_0.onClickItem, {
-			view = arg_5_0,
-			index = iter_5_0
+		heroItemTable.btnself:AddClickListener(self.onClickItem, {
+			view = self,
+			index = i
 		})
-		table.insert(arg_5_0._heroItemTables, var_5_0)
+		table.insert(self._heroItemTables, heroItemTable)
 	end
 
-	arg_5_0._animation = arg_5_0.viewGO:GetComponent(typeof(UnityEngine.Animation))
-	arg_5_0._canvas = gohelper.findChild(arg_5_0.viewGO, "#go_righttop"):GetComponent(gohelper.Type_CanvasGroup)
-	arg_5_0._canvas.blocksRaycasts = false
+	self._animation = self.viewGO:GetComponent(typeof(UnityEngine.Animation))
 
-	arg_5_0._animation:PlayQueued("summonresult_loop", UnityEngine.QueueMode.CompleteOthers)
+	local go_righttop = gohelper.findChild(self.viewGO, "#go_righttop")
 
-	arg_5_0._cantClose = true
-	arg_5_0._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 1.9, nil, arg_5_0._tweenFinish, arg_5_0, nil, EaseType.Linear)
-	arg_5_0._goBtn = gohelper.findChild(arg_5_0.viewGO, "summonbtns")
-	arg_5_0._gosummon10 = gohelper.findChild(arg_5_0.viewGO, "summonbtns/#go_summon10")
-	arg_5_0._btnsummon10 = gohelper.findChildButtonWithAudio(arg_5_0.viewGO, "summonbtns/#go_summon10/#btn_summon10")
-	arg_5_0._simagecurrency10 = gohelper.findChildSingleImage(arg_5_0.viewGO, "summonbtns/#go_summon10/currency/#simage_currency10")
-	arg_5_0._txtcurrency101 = gohelper.findChildText(arg_5_0.viewGO, "summonbtns/#go_summon10/currency/#txt_currency10_1")
-	arg_5_0._txtcurrency102 = gohelper.findChildText(arg_5_0.viewGO, "summonbtns/#go_summon10/currency/#txt_currency10_2")
-	arg_5_0._gocount = gohelper.findChild(arg_5_0.viewGO, "summonbtns/#go_summon10/#go_count")
-	arg_5_0._txtcount = gohelper.findChildText(arg_5_0.viewGO, "summonbtns/#go_summon10/#go_count/#txt_count")
-	arg_5_0._gosummon10normal = gohelper.findChild(arg_5_0.viewGO, "summonbtns/#go_summon10_normal")
-	arg_5_0._btnsummon10normal = gohelper.findChildButtonWithAudio(arg_5_0.viewGO, "summonbtns/#go_summon10_normal/#btn_summon10_normal")
-	arg_5_0._simagecurrency10normal = gohelper.findChildSingleImage(arg_5_0.viewGO, "summonbtns/#go_summon10_normal/currency/#simage_currency10_normal")
-	arg_5_0._txtcurrency101normal = gohelper.findChildText(arg_5_0.viewGO, "summonbtns/#go_summon10_normal/currency/#txt_currency10_1_normal")
-	arg_5_0._txtcurrency102normal = gohelper.findChildText(arg_5_0.viewGO, "summonbtns/#go_summon10_normal/currency/#txt_currency10_2_normal")
+	self._canvas = go_righttop:GetComponent(gohelper.Type_CanvasGroup)
+	self._canvas.blocksRaycasts = false
 
-	arg_5_0._btnsummon10:AddClickListener(arg_5_0._btnsummon10OnClick, arg_5_0)
-	arg_5_0._btnsummon10normal:AddClickListener(arg_5_0._btnsummon10OnClick, arg_5_0)
+	self._animation:PlayQueued("summonresult_loop", UnityEngine.QueueMode.CompleteOthers)
 
-	arg_5_0._isReSummon = false
-	arg_5_0._canSummon = true
+	self._cantClose = true
+	self._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 1.9, nil, self._tweenFinish, self, nil, EaseType.Linear)
+	self._goBtn = gohelper.findChild(self.viewGO, "summonbtns")
+	self._gosummon10 = gohelper.findChild(self.viewGO, "summonbtns/#go_summon10")
+	self._btnsummon10 = gohelper.findChildButtonWithAudio(self.viewGO, "summonbtns/#go_summon10/#btn_summon10")
+	self._simagecurrency10 = gohelper.findChildSingleImage(self.viewGO, "summonbtns/#go_summon10/currency/#simage_currency10")
+	self._txtcurrency101 = gohelper.findChildText(self.viewGO, "summonbtns/#go_summon10/currency/#txt_currency10_1")
+	self._txtcurrency102 = gohelper.findChildText(self.viewGO, "summonbtns/#go_summon10/currency/#txt_currency10_2")
+	self._gocount = gohelper.findChild(self.viewGO, "summonbtns/#go_summon10/#go_count")
+	self._txtcount = gohelper.findChildText(self.viewGO, "summonbtns/#go_summon10/#go_count/#txt_count")
+	self._gosummon10normal = gohelper.findChild(self.viewGO, "summonbtns/#go_summon10_normal")
+	self._btnsummon10normal = gohelper.findChildButtonWithAudio(self.viewGO, "summonbtns/#go_summon10_normal/#btn_summon10_normal")
+	self._simagecurrency10normal = gohelper.findChildSingleImage(self.viewGO, "summonbtns/#go_summon10_normal/currency/#simage_currency10_normal")
+	self._txtcurrency101normal = gohelper.findChildText(self.viewGO, "summonbtns/#go_summon10_normal/currency/#txt_currency10_1_normal")
+	self._txtcurrency102normal = gohelper.findChildText(self.viewGO, "summonbtns/#go_summon10_normal/currency/#txt_currency10_2_normal")
+
+	self._btnsummon10:AddClickListener(self._btnsummon10OnClick, self)
+	self._btnsummon10normal:AddClickListener(self._btnsummon10OnClick, self)
+
+	self._isReSummon = false
+	self._canSummon = true
 end
 
-function var_0_0.onDestroyView(arg_6_0)
-	for iter_6_0 = 1, 10 do
-		local var_6_0 = arg_6_0._heroItemTables[iter_6_0]
+function SummonResultView:onDestroyView()
+	for i = 1, 10 do
+		local heroItemTable = self._heroItemTables[i]
 
-		if var_6_0 then
-			if var_6_0.simageicon then
-				var_6_0.simageicon:UnLoadImage()
+		if heroItemTable then
+			if heroItemTable.simageicon then
+				heroItemTable.simageicon:UnLoadImage()
 			end
 
-			if var_6_0.simageequipicon then
-				var_6_0.simageequipicon:UnLoadImage()
+			if heroItemTable.simageequipicon then
+				heroItemTable.simageequipicon:UnLoadImage()
 			end
 
-			if var_6_0.btnself then
-				var_6_0.btnself:RemoveClickListener()
+			if heroItemTable.btnself then
+				heroItemTable.btnself:RemoveClickListener()
 			end
 
-			if var_6_0.simageluckgbagicon then
-				var_6_0.simageluckgbagicon:UnLoadImage()
+			if heroItemTable.simageluckgbagicon then
+				heroItemTable.simageluckgbagicon:UnLoadImage()
 			end
 		end
 	end
 
-	if arg_6_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_6_0._tweenId)
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 	end
 
-	arg_6_0._btnsummon10:RemoveClickListener()
-	arg_6_0._btnsummon10normal:RemoveClickListener()
+	self._btnsummon10:RemoveClickListener()
+	self._btnsummon10normal:RemoveClickListener()
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0:addEventCb(SummonController.instance, SummonEvent.onSummonReply, arg_7_0.onSummonReply, arg_7_0)
-	arg_7_0:addEventCb(SummonController.instance, SummonEvent.onSummonFailed, arg_7_0.onSummonFailed, arg_7_0)
+function SummonResultView:onOpen()
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonReply, self.onSummonReply, self)
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonFailed, self.onSummonFailed, self)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_LuckDraw_TenHero_OpenAll)
 
-	local var_7_0 = arg_7_0.viewParam.summonResultList
+	local summonResultList = self.viewParam.summonResultList
 
-	arg_7_0._curPool = arg_7_0:getCurPool()
-	arg_7_0._summonResultList = {}
+	self._curPool = self:getCurPool()
+	self._summonResultList = {}
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-		table.insert(arg_7_0._summonResultList, iter_7_1)
+	for i, v in ipairs(summonResultList) do
+		table.insert(self._summonResultList, v)
 	end
 
-	if arg_7_0._curPool then
-		SummonModel.sortResult(arg_7_0._summonResultList, arg_7_0._curPool.id)
+	if self._curPool then
+		SummonModel.sortResult(self._summonResultList, self._curPool.id)
 	end
 
-	SummonModel.instance:cacheReward(arg_7_0._summonResultList)
-	arg_7_0:_refreshUI()
-	NavigateMgr.instance:addEscape(ViewName.SummonResultView, arg_7_0._btnokOnClick, arg_7_0)
-	arg_7_0:_setSummonBtnActive(true)
-	arg_7_0:exReward()
+	SummonModel.instance:cacheReward(self._summonResultList)
+	self:_refreshUI()
+	NavigateMgr.instance:addEscape(ViewName.SummonResultView, self._btnokOnClick, self)
+	self:_setSummonBtnActive(true)
+	self:exReward()
 end
 
-function var_0_0.onClose(arg_8_0)
-	arg_8_0:removeEventCb(SummonController.instance, SummonEvent.onSummonReply, arg_8_0.onSummonReply, arg_8_0)
-	arg_8_0:removeEventCb(SummonController.instance, SummonEvent.onSummonFailed, arg_8_0.onSummonFailed, arg_8_0)
+function SummonResultView:onClose()
+	self:removeEventCb(SummonController.instance, SummonEvent.onSummonReply, self.onSummonReply, self)
+	self:removeEventCb(SummonController.instance, SummonEvent.onSummonFailed, self.onSummonFailed, self)
 
-	if not arg_8_0._isReSummon and not arg_8_0:_showCommonPropView() then
+	if not self._isReSummon and not self:_showCommonPropView() then
 		SummonController.instance:dispatchEvent(SummonEvent.onSummonResultClose)
 	end
 end
 
-function var_0_0.onCloseFinish(arg_9_0)
+function SummonResultView:onCloseFinish()
 	PopupController.instance:showPopupView()
 end
 
-function var_0_0.onClickItem(arg_10_0)
-	local var_10_0 = arg_10_0.view
-	local var_10_1 = arg_10_0.index
-	local var_10_2 = var_10_0._summonResultList[var_10_1]
+function SummonResultView.onClickItem(params)
+	local view = params.view
+	local index = params.index
+	local summonReward = view._summonResultList[index]
 
-	if var_10_2.heroId and var_10_2.heroId ~= 0 then
+	if summonReward.heroId and summonReward.heroId ~= 0 then
 		ViewMgr.instance:openView(ViewName.SummonHeroDetailView, {
-			heroId = var_10_2.heroId
+			heroId = summonReward.heroId
 		})
-	elseif var_10_2.equipId and var_10_2.equipId ~= 0 then
+	elseif summonReward.equipId and summonReward.equipId ~= 0 then
 		EquipController.instance:openEquipView({
-			equipId = var_10_2.equipId
+			equipId = summonReward.equipId
 		})
-	elseif var_10_2:isLuckyBag() then
+	elseif summonReward:isLuckyBag() then
 		GameFacade.showToast(ToastEnum.SummonLuckyBagGoMainViewOpen)
 	end
 end
 
-function var_0_0._tweenFinish(arg_11_0)
-	arg_11_0._cantClose = false
-	arg_11_0._canvas.blocksRaycasts = true
+function SummonResultView:_tweenFinish()
+	self._cantClose = false
+	self._canvas.blocksRaycasts = true
 end
 
-function var_0_0._refreshUI(arg_12_0)
-	for iter_12_0 = 1, #arg_12_0._summonResultList do
-		local var_12_0 = arg_12_0._summonResultList[iter_12_0]
+function SummonResultView:_refreshUI()
+	for i = 1, #self._summonResultList do
+		local summonReward = self._summonResultList[i]
 
-		if var_12_0.heroId and var_12_0.heroId ~= 0 then
-			arg_12_0:_refreshHeroItem(arg_12_0._heroItemTables[iter_12_0], var_12_0)
-		elseif var_12_0.equipId and var_12_0.equipId ~= 0 then
-			arg_12_0:_refreshEquipItem(arg_12_0._heroItemTables[iter_12_0], var_12_0)
-		elseif var_12_0:isLuckyBag() then
-			arg_12_0:_refreshLuckyBagItem(arg_12_0._heroItemTables[iter_12_0], var_12_0)
+		if summonReward.heroId and summonReward.heroId ~= 0 then
+			self:_refreshHeroItem(self._heroItemTables[i], summonReward)
+		elseif summonReward.equipId and summonReward.equipId ~= 0 then
+			self:_refreshEquipItem(self._heroItemTables[i], summonReward)
+		elseif summonReward:isLuckyBag() then
+			self:_refreshLuckyBagItem(self._heroItemTables[i], summonReward)
 		else
-			gohelper.setActive(arg_12_0._heroItemTables[iter_12_0].go, false)
+			gohelper.setActive(self._heroItemTables[i].go, false)
 		end
 	end
 
-	for iter_12_1 = #arg_12_0._summonResultList + 1, #arg_12_0._heroItemTables do
-		gohelper.setActive(arg_12_0._heroItemTables[iter_12_1].go, false)
+	for i = #self._summonResultList + 1, #self._heroItemTables do
+		gohelper.setActive(self._heroItemTables[i].go, false)
 	end
 
-	arg_12_0:_refreshCost()
+	self:_refreshCost()
 end
 
-local function var_0_1(arg_13_0)
-	if not gohelper.isNil(arg_13_0.imageicon) then
-		arg_13_0.imageicon:SetNativeSize()
+local function onImageLoaded(heroItemTable)
+	if not gohelper.isNil(heroItemTable.imageicon) then
+		heroItemTable.imageicon:SetNativeSize()
 	end
 end
 
-function var_0_0._refreshEquipItem(arg_14_0, arg_14_1, arg_14_2)
-	gohelper.setActive(arg_14_1.goHeroIcon, false)
-	gohelper.setActive(arg_14_1.simageequipicon.gameObject, true)
-	gohelper.setActive(arg_14_1.goluckybag, false)
-	gohelper.setActive(arg_14_1.txtname, true)
+function SummonResultView:_refreshEquipItem(heroItemTable, summonReward)
+	gohelper.setActive(heroItemTable.goHeroIcon, false)
+	gohelper.setActive(heroItemTable.simageequipicon.gameObject, true)
+	gohelper.setActive(heroItemTable.goluckybag, false)
+	gohelper.setActive(heroItemTable.txtname, true)
 
-	local var_14_0 = GameConfig:GetCurLangType() == LangSettings.zh
+	local isShowEn = GameConfig:GetCurLangType() == LangSettings.zh
 
-	gohelper.setActive(arg_14_1.txtnameen, var_14_0)
+	gohelper.setActive(heroItemTable.txtnameen, isShowEn)
 
-	local var_14_1 = arg_14_2.equipId
-	local var_14_2 = EquipConfig.instance:getEquipCo(var_14_1)
+	local equipId = summonReward.equipId
+	local equipCo = EquipConfig.instance:getEquipCo(equipId)
 
-	arg_14_1.txtname.text = var_14_2.name
-	arg_14_1.txtnameen.text = var_14_2.name_en
+	heroItemTable.txtname.text = equipCo.name
+	heroItemTable.txtnameen.text = equipCo.name_en
 
-	UISpriteSetMgr.instance:setSummonSprite(arg_14_1.imagerare, "pingzhi_" .. tostring(CharacterEnum.Color[var_14_2.rare]))
-	UISpriteSetMgr.instance:setSummonSprite(arg_14_1.equiprare, "equiprare_" .. tostring(CharacterEnum.Color[var_14_2.rare]))
-	gohelper.setActive(arg_14_1.imagecareer.gameObject, false)
-	gohelper.setActive(arg_14_1.simageicon.gameObject, false)
-	arg_14_1.simageequipicon:LoadImage(ResUrl.getSummonEquipGetIcon(var_14_2.icon), var_0_1, arg_14_1)
-	EquipHelper.loadEquipCareerNewIcon(var_14_2, arg_14_1.imageequipcareer, 1, "lssx")
-	arg_14_0:_refreshEffect(var_14_2.rare, arg_14_1)
-	gohelper.setActive(arg_14_1.go, true)
+	UISpriteSetMgr.instance:setSummonSprite(heroItemTable.imagerare, "pingzhi_" .. tostring(CharacterEnum.Color[equipCo.rare]))
+	UISpriteSetMgr.instance:setSummonSprite(heroItemTable.equiprare, "equiprare_" .. tostring(CharacterEnum.Color[equipCo.rare]))
+	gohelper.setActive(heroItemTable.imagecareer.gameObject, false)
+	gohelper.setActive(heroItemTable.simageicon.gameObject, false)
+	heroItemTable.simageequipicon:LoadImage(ResUrl.getSummonEquipGetIcon(equipCo.icon), onImageLoaded, heroItemTable)
+	EquipHelper.loadEquipCareerNewIcon(equipCo, heroItemTable.imageequipcareer, 1, "lssx")
+	self:_refreshEffect(equipCo.rare, heroItemTable)
+	gohelper.setActive(heroItemTable.go, true)
 end
 
-function var_0_0._refreshHeroItem(arg_15_0, arg_15_1, arg_15_2)
-	gohelper.setActive(arg_15_1.imageequipcareer.gameObject, false)
-	gohelper.setActive(arg_15_1.goHeroIcon, true)
-	gohelper.setActive(arg_15_1.goluckybag, false)
-	gohelper.setActive(arg_15_1.txtname, true)
+function SummonResultView:_refreshHeroItem(heroItemTable, summonReward)
+	gohelper.setActive(heroItemTable.imageequipcareer.gameObject, false)
+	gohelper.setActive(heroItemTable.goHeroIcon, true)
+	gohelper.setActive(heroItemTable.goluckybag, false)
+	gohelper.setActive(heroItemTable.txtname, true)
 
-	local var_15_0 = GameConfig:GetCurLangType() == LangSettings.zh
+	local isShowEn = GameConfig:GetCurLangType() == LangSettings.zh
 
-	gohelper.setActive(arg_15_1.txtnameen, var_15_0)
+	gohelper.setActive(heroItemTable.txtnameen, isShowEn)
 
-	local var_15_1 = arg_15_2.heroId
-	local var_15_2 = HeroConfig.instance:getHeroCO(var_15_1)
-	local var_15_3 = SkinConfig.instance:getSkinCo(var_15_2.skinId)
+	local heroId = summonReward.heroId
+	local heroConfig = HeroConfig.instance:getHeroCO(heroId)
+	local skinConfig = SkinConfig.instance:getSkinCo(heroConfig.skinId)
 
-	gohelper.setActive(arg_15_1.equiprare.gameObject, false)
-	gohelper.setActive(arg_15_1.simageequipicon.gameObject, false)
+	gohelper.setActive(heroItemTable.equiprare.gameObject, false)
+	gohelper.setActive(heroItemTable.simageequipicon.gameObject, false)
 
-	arg_15_1.txtname.text = var_15_2.name
-	arg_15_1.txtnameen.text = var_15_2.nameEng
+	heroItemTable.txtname.text = heroConfig.name
+	heroItemTable.txtnameen.text = heroConfig.nameEng
 
-	UISpriteSetMgr.instance:setSummonSprite(arg_15_1.imagerare, "pingzhi_" .. tostring(CharacterEnum.Color[var_15_2.rare]))
-	UISpriteSetMgr.instance:setCommonSprite(arg_15_1.imagecareer, "lssx_" .. tostring(var_15_2.career))
-	arg_15_1.simageicon:LoadImage(ResUrl.getHeadIconMiddle(var_15_3.retangleIcon))
+	UISpriteSetMgr.instance:setSummonSprite(heroItemTable.imagerare, "pingzhi_" .. tostring(CharacterEnum.Color[heroConfig.rare]))
+	UISpriteSetMgr.instance:setCommonSprite(heroItemTable.imagecareer, "lssx_" .. tostring(heroConfig.career))
+	heroItemTable.simageicon:LoadImage(ResUrl.getHeadIconMiddle(skinConfig.retangleIcon))
 
-	if arg_15_1.effect then
-		gohelper.destroy(arg_15_1.effect)
+	if heroItemTable.effect then
+		gohelper.destroy(heroItemTable.effect)
 
-		arg_15_1.effect = nil
+		heroItemTable.effect = nil
 	end
 
-	arg_15_0:_refreshEffect(var_15_2.rare, arg_15_1)
-	gohelper.setActive(arg_15_1.go, true)
+	self:_refreshEffect(heroConfig.rare, heroItemTable)
+	gohelper.setActive(heroItemTable.go, true)
 end
 
-function var_0_0._refreshLuckyBagItem(arg_16_0, arg_16_1, arg_16_2)
-	gohelper.setActive(arg_16_1.goluckybag, true)
-	gohelper.setActive(arg_16_1.equiprare.gameObject, false)
-	gohelper.setActive(arg_16_1.simageequipicon.gameObject, false)
-	gohelper.setActive(arg_16_1.imagecareer.gameObject, false)
-	gohelper.setActive(arg_16_1.simageicon.gameObject, false)
-	gohelper.setActive(arg_16_1.txtname, false)
-	gohelper.setActive(arg_16_1.txtnameen, false)
+function SummonResultView:_refreshLuckyBagItem(heroItemTable, summonReward)
+	gohelper.setActive(heroItemTable.goluckybag, true)
+	gohelper.setActive(heroItemTable.equiprare.gameObject, false)
+	gohelper.setActive(heroItemTable.simageequipicon.gameObject, false)
+	gohelper.setActive(heroItemTable.imagecareer.gameObject, false)
+	gohelper.setActive(heroItemTable.simageicon.gameObject, false)
+	gohelper.setActive(heroItemTable.txtname, false)
+	gohelper.setActive(heroItemTable.txtnameen, false)
 
-	local var_16_0 = arg_16_2.luckyBagId
+	local luckyBagId = summonReward.luckyBagId
 
-	if not arg_16_0._curPool then
+	if not self._curPool then
 		return
 	end
 
-	local var_16_1 = SummonConfig.instance:getLuckyBag(arg_16_0._curPool.id, var_16_0)
+	local co = SummonConfig.instance:getLuckyBag(self._curPool.id, luckyBagId)
 
-	arg_16_1.txtluckybagname.text = var_16_1.name
-	arg_16_1.txtluckybagnameen.text = var_16_1.nameEn or ""
+	heroItemTable.txtluckybagname.text = co.name
+	heroItemTable.txtluckybagnameen.text = co.nameEn or ""
 
-	arg_16_1.simageluckgbagicon:LoadImage(ResUrl.getSummonCoverBg(var_16_1.icon))
-	UISpriteSetMgr.instance:setSummonSprite(arg_16_1.imagerare, "pingzhi_" .. tostring(CharacterEnum.Color[SummonEnum.LuckyBagRare]))
-	arg_16_0:_refreshEffect(SummonEnum.LuckyBagRare, arg_16_1)
-	gohelper.setActive(arg_16_1.go, true)
+	heroItemTable.simageluckgbagicon:LoadImage(ResUrl.getSummonCoverBg(co.icon))
+	UISpriteSetMgr.instance:setSummonSprite(heroItemTable.imagerare, "pingzhi_" .. tostring(CharacterEnum.Color[SummonEnum.LuckyBagRare]))
+	self:_refreshEffect(SummonEnum.LuckyBagRare, heroItemTable)
+	gohelper.setActive(heroItemTable.go, true)
 end
 
-function var_0_0._refreshEffect(arg_17_0, arg_17_1, arg_17_2)
-	local var_17_0
+function SummonResultView:_refreshEffect(rare, heroItemTable)
+	local effectPath
 
-	if arg_17_1 == 3 then
-		var_17_0 = arg_17_0.viewContainer:getSetting().otherRes[1]
-	elseif arg_17_1 == 4 then
-		var_17_0 = arg_17_0.viewContainer:getSetting().otherRes[2]
-	elseif arg_17_1 == 5 then
-		var_17_0 = arg_17_0.viewContainer:getSetting().otherRes[3]
+	if rare == 3 then
+		effectPath = self.viewContainer:getSetting().otherRes[1]
+	elseif rare == 4 then
+		effectPath = self.viewContainer:getSetting().otherRes[2]
+	elseif rare == 5 then
+		effectPath = self.viewContainer:getSetting().otherRes[3]
 	end
 
-	if var_17_0 then
-		arg_17_2.effect = arg_17_0.viewContainer:getResInst(var_17_0, arg_17_2.goeffect, "effect")
+	if effectPath then
+		heroItemTable.effect = self.viewContainer:getResInst(effectPath, heroItemTable.goeffect, "effect")
 
-		arg_17_2.effect:GetComponent(typeof(UnityEngine.Animation)):PlayQueued("ssr_loop", UnityEngine.QueueMode.CompleteOthers)
-	end
-end
+		local animation = heroItemTable.effect:GetComponent(typeof(UnityEngine.Animation))
 
-function var_0_0.onUpdateParam(arg_18_0)
-	local var_18_0 = arg_18_0.viewParam.summonResultList
-
-	arg_18_0._summonResultList = {}
-	arg_18_0._curPool = arg_18_0:getCurPool()
-
-	for iter_18_0, iter_18_1 in ipairs(var_18_0) do
-		table.insert(arg_18_0._summonResultList, iter_18_1)
-	end
-
-	if arg_18_0._curPool then
-		SummonModel.sortResult(arg_18_0._summonResultList, arg_18_0._curPool.id)
-	end
-
-	arg_18_0:_refreshUI()
-end
-
-function var_0_0.exReward(arg_19_0)
-	local var_19_0 = SummonModel.instance:getCacheReward()
-
-	arg_19_0.rewards = SummonModel.getRewardList(var_19_0)
-
-	if arg_19_0._curPool and arg_19_0._curPool.ticketId ~= 0 then
-		SummonModel.appendRewardTicket(arg_19_0._summonResultList, arg_19_0.rewards, arg_19_0._curPool.ticketId)
+		animation:PlayQueued("ssr_loop", UnityEngine.QueueMode.CompleteOthers)
 	end
 end
 
-function var_0_0._showCommonPropView(arg_20_0)
+function SummonResultView:onUpdateParam()
+	local paramResultList = self.viewParam.summonResultList
+
+	self._summonResultList = {}
+	self._curPool = self:getCurPool()
+
+	for i, v in ipairs(paramResultList) do
+		table.insert(self._summonResultList, v)
+	end
+
+	if self._curPool then
+		SummonModel.sortResult(self._summonResultList, self._curPool.id)
+	end
+
+	self:_refreshUI()
+end
+
+function SummonResultView:exReward()
+	local rewardList, cacheCount = SummonModel.instance:getCacheReward()
+
+	self.rewards = SummonModel.getRewardList(rewardList)
+
+	if self._curPool and self._curPool.ticketId ~= 0 then
+		SummonModel.appendRewardTicket(self._summonResultList, self.rewards, self._curPool.ticketId, cacheCount)
+	end
+end
+
+function SummonResultView:_showCommonPropView()
 	if GuideController.instance:isGuiding() and GuideModel.instance:getDoingGuideId() == 102 then
 		return false
 	end
 
-	if #arg_20_0.rewards <= 0 then
+	if #self.rewards <= 0 then
 		return false
 	end
 
-	table.sort(arg_20_0.rewards, SummonModel.sortRewards)
-	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, arg_20_0.rewards)
+	table.sort(self.rewards, SummonModel.sortRewards)
+	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, self.rewards)
 	SummonModel.instance:clearCacheReward()
 
 	return true
 end
 
-function var_0_0.getCurPool(arg_21_0)
-	return arg_21_0.viewParam.curPool
+function SummonResultView:getCurPool()
+	return self.viewParam.curPool
 end
 
-function var_0_0._setSummonBtnActive(arg_22_0, arg_22_1)
-	gohelper.setActive(arg_22_0._goBtn, arg_22_1)
+function SummonResultView:_setSummonBtnActive(active)
+	gohelper.setActive(self._goBtn, active)
 
-	local var_22_0 = arg_22_0:getCurPool()
-	local var_22_1 = SummonMainModel.instance:getPoolServerMO(var_22_0.id)
+	local curPool = self:getCurPool()
+	local mo = SummonMainModel.instance:getPoolServerMO(curPool.id)
 
-	if SummonMainModel.validContinueTenPool(var_22_0.id) then
-		gohelper.setActive(arg_22_0._gosummon10, true)
-		gohelper.setActive(arg_22_0._gosummon10normal, true)
-		arg_22_0:_summonTrack("summon10_auto_show")
+	if SummonMainModel.validContinueTenPool(curPool.id) then
+		gohelper.setActive(self._gosummon10, true)
+		gohelper.setActive(self._gosummon10normal, true)
+		self:_summonTrack("summon10_auto_show")
 
-		local var_22_2 = SummonMainModel.instance:getDiscountTime10Server(var_22_0.id) > 0
+		local discountTime10Server = SummonMainModel.instance:getDiscountTime10Server(curPool.id)
+		local showDisCount = discountTime10Server > 0
 
-		gohelper.setActive(arg_22_0._gosummon10, var_22_2)
-		gohelper.setActive(arg_22_0._gosummon10normal, not var_22_2)
+		gohelper.setActive(self._gosummon10, showDisCount)
+		gohelper.setActive(self._gosummon10normal, not showDisCount)
 	else
-		gohelper.setActive(arg_22_0._gosummon10, false)
-		gohelper.setActive(arg_22_0._gosummon10normal, false)
+		gohelper.setActive(self._gosummon10, false)
+		gohelper.setActive(self._gosummon10normal, false)
 	end
 end
 
-function var_0_0._btnsummon10OnClick(arg_23_0)
-	if not arg_23_0._canSummon then
+function SummonResultView:_btnsummon10OnClick()
+	if not self._canSummon then
 		return
 	end
 
-	local var_23_0 = arg_23_0:getCurPool()
+	local curPool = self:getCurPool()
 
-	if not var_23_0 then
+	if not curPool then
 		return
 	end
 
-	local var_23_1 = SummonModel.instance:getSummonFullExSkillHero(var_23_0.id)
+	local heroId = SummonModel.instance:getSummonFullExSkillHero(curPool.id)
 
-	if var_23_1 == nil then
-		arg_23_0:_btnsummon10OnClick_2()
+	if heroId == nil then
+		self:_btnsummon10OnClick_2()
 	else
-		local var_23_2 = HeroConfig.instance:getHeroCO(var_23_1).name
+		local heroConfig = HeroConfig.instance:getHeroCO(heroId)
+		local heroName = heroConfig.name
 
-		GameFacade.showOptionAndParamsMessageBox(MessageBoxIdDefine.SummonHeroExFull, MsgBoxEnum.BoxType.Yes_No, MsgBoxEnum.optionType.Daily, var_23_0.id, arg_23_0._btnsummon10OnClick_2, nil, nil, arg_23_0, nil, nil, var_23_2)
+		GameFacade.showOptionAndParamsMessageBox(MessageBoxIdDefine.SummonHeroExFull, MsgBoxEnum.BoxType.Yes_No, MsgBoxEnum.optionType.Daily, curPool.id, self._btnsummon10OnClick_2, nil, nil, self, nil, nil, heroName)
 	end
 
-	arg_23_0:_summonTrack("summon10_click")
+	self:_summonTrack("summon10_click")
 end
 
-function var_0_0._btnsummon10OnClick_2(arg_24_0)
-	local var_24_0 = arg_24_0:getCurPool()
+function SummonResultView:_btnsummon10OnClick_2()
+	local curPool = self:getCurPool()
 
-	if not var_24_0 then
+	if not curPool then
 		return
 	end
 
-	local var_24_1, var_24_2, var_24_3 = SummonMainModel.getCostByConfig(var_24_0.cost10)
-	local var_24_4 = SummonMainModel.instance:getDiscountCost10(var_24_0.id)
+	local cost_type, cost_id, cost_num = SummonMainModel.getCostByConfig(curPool.cost10)
+	local discountCost = SummonMainModel.instance:getDiscountCost10(curPool.id)
+	local discountCostId = SummonMainModel.instance:getDiscountCostId(curPool.id)
 
-	if SummonMainModel.instance:getDiscountCostId(var_24_0.id) == var_24_2 then
-		var_24_3 = var_24_4 < 0 and var_24_3 or var_24_4
+	if discountCostId == cost_id then
+		cost_num = discountCost < 0 and cost_num or discountCost
 	end
 
-	local var_24_5 = {
-		type = var_24_1,
-		id = var_24_2,
-		quantity = var_24_3,
-		callback = arg_24_0._summon10Confirm,
-		callbackObj = arg_24_0,
-		noCallback = arg_24_0._btnokOnClick,
-		noCallbackObj = arg_24_0
-	}
+	local param = {}
 
-	var_24_5.notEnough = false
+	param.type = cost_type
+	param.id = cost_id
+	param.quantity = cost_num
+	param.callback = self._summon10Confirm
+	param.callbackObj = self
+	param.noCallback = self._btnokOnClick
+	param.noCallbackObj = self
+	param.notEnough = false
 
-	local var_24_6 = ItemModel.instance:getItemQuantity(var_24_1, var_24_2)
-	local var_24_7 = var_24_3 <= var_24_6
-	local var_24_8 = SummonMainModel.instance.everyCostCount
-	local var_24_9 = SummonMainModel.instance:getOwnCostCurrencyNum()
-	local var_24_10 = var_24_3 - var_24_6
-	local var_24_11 = var_24_8 * var_24_10
+	local ownNum = ItemModel.instance:getItemQuantity(cost_type, cost_id)
+	local itemEnough = cost_num <= ownNum
+	local everyCostCount = SummonMainModel.instance.everyCostCount
+	local currencyNum = SummonMainModel.instance:getOwnCostCurrencyNum()
+	local remainCount = cost_num - ownNum
+	local costRemain = everyCostCount * remainCount
 
-	if not var_24_7 and var_24_9 < var_24_11 then
-		var_24_5.notEnough = true
+	if not itemEnough and currencyNum < costRemain then
+		param.notEnough = true
 	end
 
-	if var_24_7 then
-		var_24_5.needTransform = false
+	if itemEnough then
+		param.needTransform = false
 
-		arg_24_0:_summon10Confirm()
+		self:_summon10Confirm()
 
 		return
 	else
-		var_24_5.needTransform = true
-		var_24_5.cost_type = SummonMainModel.instance.costCurrencyType
-		var_24_5.cost_id = SummonMainModel.instance.costCurrencyId
-		var_24_5.cost_quantity = var_24_11
-		var_24_5.miss_quantity = var_24_10
+		param.needTransform = true
+		param.cost_type = SummonMainModel.instance.costCurrencyType
+		param.cost_id = SummonMainModel.instance.costCurrencyId
+		param.cost_quantity = costRemain
+		param.miss_quantity = remainCount
 	end
 
-	SummonMainController.instance:openSummonConfirmView(var_24_5)
+	SummonMainController.instance:openSummonConfirmView(param)
 	PopupController.instance:endPopupView()
 end
 
-function var_0_0._summon10Confirm(arg_25_0)
-	local var_25_0 = arg_25_0:getCurPool()
+function SummonResultView:_summon10Confirm()
+	local curPool = self:getCurPool()
 
-	if not var_25_0 then
+	if not curPool then
 		return
 	end
 
-	arg_25_0._canSummon = false
+	self._canSummon = false
 
-	SummonMainController.instance:sendStartSummon(var_25_0.id, 10, false, true)
+	SummonMainController.instance:sendStartSummon(curPool.id, 10, false, true)
 end
 
-function var_0_0._refreshCost(arg_26_0)
-	local var_26_0 = arg_26_0:getCurPool()
+function SummonResultView:_refreshCost()
+	local curPool = self:getCurPool()
 
-	if var_26_0 then
-		arg_26_0:refreshCost10(var_26_0.cost10)
+	if curPool then
+		self:refreshCost10(curPool.cost10)
 	end
 end
 
-function var_0_0.refreshCost10(arg_27_0, arg_27_1)
-	local var_27_0, var_27_1, var_27_2 = SummonMainModel.instance.getCostByConfig(arg_27_1)
-	local var_27_3 = SummonMainModel.instance.getSummonItemIcon(var_27_0, var_27_1)
+function SummonResultView:refreshCost10(costs)
+	local cost_type, cost_id, cost_num = SummonMainModel.instance.getCostByConfig(costs)
+	local cost_icon = SummonMainModel.instance.getSummonItemIcon(cost_type, cost_id)
 
-	arg_27_0._simagecurrency10:LoadImage(var_27_3)
-	arg_27_0._simagecurrency10normal:LoadImage(var_27_3)
+	self._simagecurrency10:LoadImage(cost_icon)
+	self._simagecurrency10normal:LoadImage(cost_icon)
 
-	local var_27_4 = SummonMainModel.instance:getCurId()
-	local var_27_5 = SummonMainModel.instance:getDiscountCostId(var_27_4)
-	local var_27_6 = SummonMainModel.instance:getDiscountTime10Server(var_27_4)
-	local var_27_7 = var_27_6 > 0
+	local curPoolId = SummonMainModel.instance:getCurId()
+	local discountCostId = SummonMainModel.instance:getDiscountCostId(curPoolId)
+	local discountTime10Server = SummonMainModel.instance:getDiscountTime10Server(curPoolId)
+	local showDisCount = discountTime10Server > 0
 
-	gohelper.setActive(arg_27_0._gotip2bg, var_27_7)
-	gohelper.setActive(arg_27_0._gosummon10, var_27_7)
-	gohelper.setActive(arg_27_0._gosummon10normal, not var_27_7)
+	gohelper.setActive(self._gotip2bg, showDisCount)
+	gohelper.setActive(self._gosummon10, showDisCount)
+	gohelper.setActive(self._gosummon10normal, not showDisCount)
 
-	local var_27_8 = ""
-	local var_27_9 = ""
+	local currency101Str = ""
+	local currency102Str = ""
 
-	if var_27_1 == var_27_5 then
-		gohelper.setActive(arg_27_0._gocount, var_27_6 > 0)
+	if cost_id == discountCostId then
+		gohelper.setActive(self._gocount, discountTime10Server > 0)
 
-		if var_27_6 > 0 then
-			local var_27_10 = SummonMainModel.instance:getDiscountCost10(var_27_4)
+		if discountTime10Server > 0 then
+			local realyCountTime10 = SummonMainModel.instance:getDiscountCost10(curPoolId)
 
-			var_27_8 = string.format("<color=%s>%s</color>", "#FFE095", luaLang("multiple") .. var_27_10)
-			var_27_9 = var_27_2
+			currency101Str = string.format("<color=%s>%s</color>", "#FFE095", luaLang("multiple") .. realyCountTime10)
+			currency102Str = cost_num
 
-			local var_27_11 = (var_27_2 - var_27_10) / var_27_2 * 100
+			local preferential = (cost_num - realyCountTime10) / cost_num * 100
 
-			arg_27_0._txtcount.text = string.format(luaLang("summonpickchoice_discount"), var_27_11)
+			self._txtcount.text = string.format(luaLang("summonpickchoice_discount"), preferential)
 		else
-			var_27_8 = string.format("<color=%s>%s</color>", "#000000", luaLang("multiple") .. var_27_2)
+			currency101Str = string.format("<color=%s>%s</color>", "#000000", luaLang("multiple") .. cost_num)
 		end
 	else
-		var_27_8 = string.format("<color=%s>%s</color>", "#000000", luaLang("multiple") .. var_27_2)
+		currency101Str = string.format("<color=%s>%s</color>", "#000000", luaLang("multiple") .. cost_num)
 
-		gohelper.setActive(arg_27_0._gocount, false)
+		gohelper.setActive(self._gocount, false)
 	end
 
-	arg_27_0._txtcurrency101.text = var_27_8
-	arg_27_0._txtcurrency101normal.text = var_27_8
-	arg_27_0._txtcurrency102.text = var_27_9
-	arg_27_0._txtcurrency102normal.text = var_27_9
+	self._txtcurrency101.text = currency101Str
+	self._txtcurrency101normal.text = currency101Str
+	self._txtcurrency102.text = currency102Str
+	self._txtcurrency102normal.text = currency102Str
 end
 
-function var_0_0.onSummonReply(arg_28_0)
-	arg_28_0:_summonShowExitAnim()
+function SummonResultView:onSummonReply()
+	self:_summonShowExitAnim()
 end
 
-function var_0_0.onSummonFailed(arg_29_0)
-	arg_29_0._canSummon = true
+function SummonResultView:onSummonFailed()
+	self._canSummon = true
 end
 
-function var_0_0._summonShowExitAnim(arg_30_0)
-	arg_30_0._isReSummon = true
-	arg_30_0._canSummon = true
+function SummonResultView:_summonShowExitAnim()
+	self._isReSummon = true
+	self._canSummon = true
 
-	arg_30_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._summonTrack(arg_31_0, arg_31_1)
-	local var_31_0 = arg_31_0:getCurPool()
+function SummonResultView:_summonTrack(butName)
+	local curPool = self:getCurPool()
 
 	StatController.instance:track(StatEnum.EventName.ButtonClick, {
-		[StatEnum.EventProperties.PoolName] = var_31_0 and var_31_0.nameCn or "",
-		[StatEnum.EventProperties.ButtonName] = arg_31_1,
-		[StatEnum.EventProperties.ViewName] = arg_31_0.viewName
+		[StatEnum.EventProperties.PoolName] = curPool and curPool.nameCn or "",
+		[StatEnum.EventProperties.ButtonName] = butName,
+		[StatEnum.EventProperties.ViewName] = self.viewName
 	})
 end
 
-return var_0_0
+return SummonResultView

@@ -1,112 +1,114 @@
-﻿module("modules.common.utils.Bitwise", package.seeall)
+﻿-- chunkname: @modules/common/utils/Bitwise.lua
 
-local var_0_0 = require("bit")
-local var_0_1 = {
-	["&"] = function(arg_1_0, arg_1_1)
-		return var_0_0.band(arg_1_0, arg_1_1)
+module("modules.common.utils.Bitwise", package.seeall)
+
+local bit = require("bit")
+local _B = {
+	["&"] = function(a, b)
+		return bit.band(a, b)
 	end,
-	["|"] = function(arg_2_0, arg_2_1)
-		return var_0_0.bor(arg_2_0, arg_2_1)
+	["|"] = function(a, b)
+		return bit.bor(a, b)
 	end,
-	[">>"] = function(arg_3_0, arg_3_1)
-		return var_0_0.rshift(arg_3_0, arg_3_1)
+	[">>"] = function(a, b)
+		return bit.rshift(a, b)
 	end,
-	["<<"] = function(arg_4_0, arg_4_1)
-		return var_0_0.lshift(arg_4_0, arg_4_1)
+	["<<"] = function(a, b)
+		return bit.lshift(a, b)
 	end,
-	["^"] = function(arg_5_0, arg_5_1)
-		return var_0_0.bxor(arg_5_0, arg_5_1)
+	["^"] = function(a, b)
+		return bit.bxor(a, b)
 	end,
-	["~"] = function(arg_6_0)
-		return var_0_0.bnot(arg_6_0)
+	["~"] = function(a)
+		return bit.bnot(a)
 	end
 }
-local var_0_2 = var_0_1
+local Bitwise = _B
 
-function var_0_2.hasAny(arg_7_0, arg_7_1)
-	return var_0_1["&"](arg_7_0, arg_7_1) ~= 0
+function Bitwise.hasAny(num, bits)
+	return _B["&"](num, bits) ~= 0
 end
 
-function var_0_2.has(arg_8_0, arg_8_1)
-	return var_0_1["&"](arg_8_0, arg_8_1) == arg_8_1
+function Bitwise.has(num, bits)
+	return _B["&"](num, bits) == bits
 end
 
-function var_0_2.set(arg_9_0, arg_9_1)
-	return var_0_1["|"](arg_9_0, arg_9_1)
+function Bitwise.set(num, bits)
+	return _B["|"](num, bits)
 end
 
-function var_0_2.unset(arg_10_0, arg_10_1)
-	return var_0_1["&"](arg_10_0, var_0_1["~"](arg_10_1))
+function Bitwise.unset(num, bits)
+	return _B["&"](num, _B["~"](bits))
 end
 
-function var_0_2.lowbit(arg_11_0)
-	return var_0_1["&"](arg_11_0, -arg_11_0)
+function Bitwise.lowbit(num)
+	return _B["&"](num, -num)
 end
 
-function var_0_2.isPow2(arg_12_0)
-	if arg_12_0 == 0 then
+function Bitwise.isPow2(num)
+	if num == 0 then
 		return true
 	end
 
-	return var_0_1["&"](arg_12_0, arg_12_0 - 1) == 0
+	return _B["&"](num, num - 1) == 0
 end
 
-function var_0_2.nextPow2(arg_13_0)
-	arg_13_0 = arg_13_0 - 1
-	arg_13_0 = var_0_1["|"](arg_13_0, var_0_1[">>"](arg_13_0, 1))
-	arg_13_0 = var_0_1["|"](arg_13_0, var_0_1[">>"](arg_13_0, 2))
-	arg_13_0 = var_0_1["|"](arg_13_0, var_0_1[">>"](arg_13_0, 4))
-	arg_13_0 = var_0_1["|"](arg_13_0, var_0_1[">>"](arg_13_0, 8))
-	arg_13_0 = var_0_1["|"](arg_13_0, var_0_1[">>"](arg_13_0, 16))
-	arg_13_0 = var_0_1["|"](arg_13_0, var_0_1[">>"](arg_13_0, 32))
+function Bitwise.nextPow2(num)
+	num = num - 1
+	num = _B["|"](num, _B[">>"](num, 1))
+	num = _B["|"](num, _B[">>"](num, 2))
+	num = _B["|"](num, _B[">>"](num, 4))
+	num = _B["|"](num, _B[">>"](num, 8))
+	num = _B["|"](num, _B[">>"](num, 16))
+	num = _B["|"](num, _B[">>"](num, 32))
 
-	return arg_13_0 + 1
+	return num + 1
 end
 
-function var_0_2.count1(arg_14_0)
-	local var_14_0 = 0
+function Bitwise.count1(num)
+	local cnt = 0
 
-	while arg_14_0 ~= 0 do
-		arg_14_0 = arg_14_0 - var_0_1.lowbit(arg_14_0)
-		var_14_0 = var_14_0 + 1
+	while num ~= 0 do
+		num = num - _B.lowbit(num)
+		cnt = cnt + 1
 	end
 
-	return var_14_0
+	return cnt
 end
 
-function var_0_2.unitTest()
-	assert(var_0_1["&"](2, 3) == 2)
-	assert(var_0_1["|"](1, 2) == 3)
-	assert(var_0_1[">>"](2, 1) == 1)
-	assert(var_0_1["<<"](2, 1) == 4)
-	assert(var_0_1["^"](1, 3) == 2)
-	assert(var_0_1["~"](1) == -2)
-	assert(var_0_1["~"](4) == -5)
-	assert(var_0_2.hasAny(5, 1) == true)
-	assert(var_0_2.hasAny(5, 2) == false)
-	assert(var_0_2.hasAny(5, 3) == true)
-	assert(var_0_2.has(5, 3) == false)
-	assert(var_0_2.has(6, 3) == false)
-	assert(var_0_2.has(6, 4) == true)
-	assert(var_0_2.set(5, 1) == 5)
-	assert(var_0_2.unset(5, 1) == 4)
-	assert(var_0_2.unset(5, 3) == 4)
-	assert(var_0_2.lowbit(5) == 1)
-	assert(var_0_2.lowbit(4) == 4)
-	assert(var_0_2.isPow2(0) == true)
-	assert(var_0_2.isPow2(4) == true)
-	assert(var_0_2.isPow2(64) == true)
-	assert(var_0_2.isPow2(5) == false)
-	assert(var_0_2.nextPow2(8) == 8)
-	assert(var_0_2.nextPow2(16) == 16)
-	assert(var_0_2.nextPow2(17) == 32)
-	assert(var_0_2.nextPow2(1) == 1)
-	assert(var_0_2.nextPow2(0) == 0)
-	assert(var_0_2.nextPow2(320) == 512)
-	assert(var_0_2.count1(5) == 2)
-	assert(var_0_2.count1(15) == 4)
-	assert(var_0_2.count1(128) == 1)
-	assert(var_0_2.count1(127) == 7)
+function Bitwise.unitTest()
+	assert(_B["&"](2, 3) == 2)
+	assert(_B["|"](1, 2) == 3)
+	assert(_B[">>"](2, 1) == 1)
+	assert(_B["<<"](2, 1) == 4)
+	assert(_B["^"](1, 3) == 2)
+	assert(_B["~"](1) == -2)
+	assert(_B["~"](4) == -5)
+	assert(Bitwise.hasAny(5, 1) == true)
+	assert(Bitwise.hasAny(5, 2) == false)
+	assert(Bitwise.hasAny(5, 3) == true)
+	assert(Bitwise.has(5, 3) == false)
+	assert(Bitwise.has(6, 3) == false)
+	assert(Bitwise.has(6, 4) == true)
+	assert(Bitwise.set(5, 1) == 5)
+	assert(Bitwise.unset(5, 1) == 4)
+	assert(Bitwise.unset(5, 3) == 4)
+	assert(Bitwise.lowbit(5) == 1)
+	assert(Bitwise.lowbit(4) == 4)
+	assert(Bitwise.isPow2(0) == true)
+	assert(Bitwise.isPow2(4) == true)
+	assert(Bitwise.isPow2(64) == true)
+	assert(Bitwise.isPow2(5) == false)
+	assert(Bitwise.nextPow2(8) == 8)
+	assert(Bitwise.nextPow2(16) == 16)
+	assert(Bitwise.nextPow2(17) == 32)
+	assert(Bitwise.nextPow2(1) == 1)
+	assert(Bitwise.nextPow2(0) == 0)
+	assert(Bitwise.nextPow2(320) == 512)
+	assert(Bitwise.count1(5) == 2)
+	assert(Bitwise.count1(15) == 4)
+	assert(Bitwise.count1(128) == 1)
+	assert(Bitwise.count1(127) == 7)
 end
 
-return var_0_2
+return Bitwise

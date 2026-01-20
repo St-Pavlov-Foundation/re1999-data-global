@@ -1,11 +1,13 @@
-﻿module("modules.logic.survival.view.map.SurvivalCommitItemViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/SurvivalCommitItemViewContainer.lua
 
-local var_0_0 = class("SurvivalCommitItemViewContainer", BaseViewContainer)
+module("modules.logic.survival.view.map.SurvivalCommitItemViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local SurvivalCommitItemViewContainer = class("SurvivalCommitItemViewContainer", BaseViewContainer)
+
+function SurvivalCommitItemViewContainer:buildViews()
 	return {
 		SurvivalCommitItemView.New()
 	}
 end
 
-return var_0_0
+return SurvivalCommitItemViewContainer

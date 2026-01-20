@@ -1,66 +1,71 @@
-﻿module("modules.logic.rouge.view.RougeCollectionOverViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeCollectionOverViewContainer.lua
 
-local var_0_0 = class("RougeCollectionOverViewContainer", BaseViewContainer)
+module("modules.logic.rouge.view.RougeCollectionOverViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	arg_1_0._scrollView = arg_1_0:buildScrollView()
+local RougeCollectionOverViewContainer = class("RougeCollectionOverViewContainer", BaseViewContainer)
+
+function RougeCollectionOverViewContainer:buildViews()
+	self._scrollView = self:buildScrollView()
 
 	return {
 		TabViewGroup.New(1, "#go_lefttop"),
 		TabViewGroup.New(2, "#go_rougemapdetailcontainer"),
 		RougeCollectionOverView.New(),
-		arg_1_0._scrollView
+		self._scrollView
 	}
 end
 
-local var_0_1 = 0.06
+local rowDelayShowTime = 0.06
 
-function var_0_0.buildScrollView(arg_2_0)
-	local var_2_0 = ListScrollParam.New()
+function RougeCollectionOverViewContainer:buildScrollView()
+	local scrollParam = ListScrollParam.New()
 
-	var_2_0.scrollGOPath = "#scroll_view"
-	var_2_0.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_2_0.prefabUrl = "#scroll_view/Viewport/Content/#go_collectionitem"
-	var_2_0.cellClass = RougeCollectionOverListItem
-	var_2_0.scrollDir = ScrollEnum.ScrollDirV
-	var_2_0.lineCount = 3
-	var_2_0.cellWidth = 620
-	var_2_0.cellHeight = 190
-	var_2_0.cellSpaceH = 0
-	var_2_0.cellSpaceV = -6
-	var_2_0.startSpace = 0
-	var_2_0.endSpace = 0
+	scrollParam.scrollGOPath = "#scroll_view"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "#scroll_view/Viewport/Content/#go_collectionitem"
+	scrollParam.cellClass = RougeCollectionOverListItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 3
+	scrollParam.cellWidth = 620
+	scrollParam.cellHeight = 190
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = -6
+	scrollParam.startSpace = 0
+	scrollParam.endSpace = 0
 
-	local var_2_1 = {}
-	local var_2_2 = 5
+	local animationDelayTimes = {}
+	local row = 5
 
-	for iter_2_0 = 1, var_2_2 do
-		for iter_2_1 = 1, var_2_0.lineCount do
-			local var_2_3 = iter_2_0 * var_0_1
+	for i = 1, row do
+		for j = 1, scrollParam.lineCount do
+			local delayTime = i * rowDelayShowTime
+			local index = (i - 1) * scrollParam.lineCount + j
 
-			var_2_1[(iter_2_0 - 1) * var_2_0.lineCount + iter_2_1] = var_2_3
+			animationDelayTimes[index] = delayTime
 		end
 	end
 
-	return (LuaListScrollViewWithAnimator.New(RougeCollectionOverListModel.instance, var_2_0, var_2_1))
+	local scrollView = LuaListScrollViewWithAnimator.New(RougeCollectionOverListModel.instance, scrollParam, animationDelayTimes)
+
+	return scrollView
 end
 
-function var_0_0.buildTabViews(arg_3_0, arg_3_1)
-	if arg_3_1 == 1 then
-		arg_3_0._navigateButtonView = NavigateButtonsView.New({
+function RougeCollectionOverViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_3_0._navigateButtonView
+			self._navigateButtonView
 		}
-	elseif arg_3_1 == 2 then
+	elseif tabContainerId == 2 then
 		return {
 			RougeCollectionDetailBtnComp.New()
 		}
 	end
 end
 
-return var_0_0
+return RougeCollectionOverViewContainer

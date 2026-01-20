@@ -1,173 +1,183 @@
-﻿module("modules.logic.rouge.view.RougePageProgress", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougePageProgress.lua
 
-local var_0_0 = class("RougePageProgress", LuaCompBase)
+module("modules.logic.rouge.view.RougePageProgress", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._highLightRange = {
+local RougePageProgress = class("RougePageProgress", LuaCompBase)
+
+function RougePageProgress:ctor()
+	self._highLightRange = {
 		false,
 		false
 	}
-	arg_1_0._totalPage = 0
+	self._totalPage = 0
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0._itemList = arg_2_0:getUserDataTb_()
-	arg_2_0._goLayout = gohelper.findChild(arg_2_1, "Root/#go_Layout")
+function RougePageProgress:init(go)
+	self._itemList = self:getUserDataTb_()
+	self._goLayout = gohelper.findChild(go, "Root/#go_Layout")
 
-	local var_2_0 = arg_2_0._goLayout.transform
-	local var_2_1 = var_2_0.childCount
+	local transform = self._goLayout.transform
+	local n = transform.childCount
 
-	for iter_2_0 = 0, var_2_1 - 1 do
-		local var_2_2 = var_2_0:GetChild(iter_2_0)
-		local var_2_3 = RougePageProgressItem.New(arg_2_0)
+	for i = 0, n - 1 do
+		local childTrans = transform:GetChild(i)
+		local item = RougePageProgressItem.New(self)
 
-		var_2_3:init(var_2_2)
-		var_2_3:setHighLight(false)
+		item:init(childTrans)
+		item:setHighLight(false)
 
-		if iter_2_0 == var_2_1 - 1 then
-			var_2_3:setLineActiveByState(nil)
+		if i == n - 1 then
+			item:setLineActiveByState(nil)
 		else
-			var_2_3:setLineActiveByState(RougePageProgressItem.LineStateEnum.Done)
+			item:setLineActiveByState(RougePageProgressItem.LineStateEnum.Done)
 		end
 
-		table.insert(arg_2_0._itemList, var_2_3)
+		table.insert(self._itemList, item)
 	end
 
-	arg_2_0._totalPage = var_2_1
+	self._totalPage = n
 end
 
-function var_0_0.setHighLightRange(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_2 = arg_3_2 or 1
+function RougePageProgress:setHighLightRange(endIndex, startIndex)
+	startIndex = startIndex or 1
 
-	local var_3_0 = arg_3_0._highLightRange[1]
-	local var_3_1 = arg_3_0._highLightRange[2]
+	local lastSt = self._highLightRange[1]
+	local lastEd = self._highLightRange[2]
 
-	if var_3_0 == arg_3_2 and var_3_1 == arg_3_1 then
+	if lastSt == startIndex and lastEd == endIndex then
 		return
 	end
 
-	local var_3_2 = var_3_1 and math.max(var_3_1, arg_3_2) or arg_3_2
-	local var_3_3 = var_3_0 and math.min(var_3_0, arg_3_1) or arg_3_1
+	local from = lastEd and math.max(lastEd, startIndex) or startIndex
+	local to = lastSt and math.min(lastSt, endIndex) or endIndex
 
-	for iter_3_0 = var_3_2, var_3_3 do
-		arg_3_0._itemList[iter_3_0]:setHighLight(true)
+	for i = from, to do
+		local item = self._itemList[i]
+
+		item:setHighLight(true)
 	end
 
-	if var_3_0 then
-		for iter_3_1 = var_3_0, var_3_2 - 1 do
-			arg_3_0._itemList[iter_3_1]:setHighLight(false)
+	if lastSt then
+		for i = lastSt, from - 1 do
+			local item = self._itemList[i]
+
+			item:setHighLight(false)
 		end
 	end
 
-	if var_3_1 then
-		for iter_3_2 = var_3_3 + 1, var_3_1 do
-			arg_3_0._itemList[iter_3_2]:setHighLight(false)
+	if lastEd then
+		for i = to + 1, lastEd do
+			local item = self._itemList[i]
+
+			item:setHighLight(false)
 		end
 	end
 
-	arg_3_0._highLightRange[1] = arg_3_2
-	arg_3_0._highLightRange[2] = arg_3_1
+	self._highLightRange[1] = startIndex
+	self._highLightRange[2] = endIndex
 end
 
-function var_0_0.onDestroyView(arg_4_0)
+function RougePageProgress:onDestroyView()
 	return
 end
 
-function var_0_0.initData(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = arg_5_1 or 0
+function RougePageProgress:initData(initTotalPage, curPageIndex)
+	local totalPage = initTotalPage or 0
 
-	assert(var_5_0 <= arg_5_0:capacity(), "[RougePageProgress] initData: totalPage=" .. tostring(var_5_0) .. " maxPage=" .. tostring(arg_5_0:capacity()))
+	assert(totalPage <= self:capacity(), "[RougePageProgress] initData: totalPage=" .. tostring(totalPage) .. " maxPage=" .. tostring(self:capacity()))
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0._itemList) do
-		local var_5_1 = iter_5_0 <= var_5_0
+	for i, item in ipairs(self._itemList) do
+		local isActive = i <= totalPage
 
-		if arg_5_2 then
-			local var_5_2 = RougePageProgressItem.LineStateEnum.Done
+		if curPageIndex then
+			local lineState = RougePageProgressItem.LineStateEnum.Done
 
-			if iter_5_0 == arg_5_2 then
-				var_5_2 = RougePageProgressItem.LineStateEnum.Edit
+			if i == curPageIndex then
+				lineState = RougePageProgressItem.LineStateEnum.Edit
 			end
 
-			if arg_5_2 < iter_5_0 then
-				var_5_2 = RougePageProgressItem.LineStateEnum.Locked
+			if curPageIndex < i then
+				lineState = RougePageProgressItem.LineStateEnum.Locked
 			end
 
-			if iter_5_0 == arg_5_1 then
-				if arg_5_2 == arg_5_1 then
-					var_5_2 = RougePageProgressItem.LineStateEnum.Done
-				elseif arg_5_2 + 1 == arg_5_1 then
-					var_5_2 = RougePageProgressItem.LineStateEnum.Edit
+			if i == initTotalPage then
+				if curPageIndex == initTotalPage then
+					lineState = RougePageProgressItem.LineStateEnum.Done
+				elseif curPageIndex + 1 == initTotalPage then
+					lineState = RougePageProgressItem.LineStateEnum.Edit
 				else
-					var_5_2 = RougePageProgressItem.LineStateEnum.Locked
+					lineState = RougePageProgressItem.LineStateEnum.Locked
 				end
 			end
 
-			if var_5_1 then
-				iter_5_1:setLineActiveByState(var_5_2)
+			if isActive then
+				item:setLineActiveByState(lineState)
 			end
 		end
 
-		iter_5_1:setActive(var_5_1)
+		item:setActive(isActive)
 	end
 
-	arg_5_0._totalPage = var_5_0
+	self._totalPage = totalPage
 end
 
-function var_0_0.capacity(arg_6_0)
-	return arg_6_0._itemList and #arg_6_0._itemList or 0
+function RougePageProgress:capacity()
+	return self._itemList and #self._itemList or 0
 end
 
-function var_0_0.count(arg_7_0)
-	return arg_7_0._totalPage
+function RougePageProgress:count()
+	return self._totalPage
 end
 
-function var_0_0.highLightRange(arg_8_0)
-	return arg_8_0._highLightRange[1], arg_8_0._highLightRange[2]
+function RougePageProgress:highLightRange()
+	return self._highLightRange[1], self._highLightRange[2]
 end
 
-function var_0_0._getCurStartProgress(arg_9_0)
-	local var_9_0 = arg_9_0:_getStartProgressCount()
+function RougePageProgress:_getCurStartProgress()
+	local i = self:_getStartProgressCount()
 
 	if ViewMgr.instance:isOpen(ViewName.RougeInitTeamView) then
-		return var_9_0
+		return i
 	end
 
-	local var_9_1 = var_9_0 - 1
+	i = i - 1
 
 	if ViewMgr.instance:isOpen(ViewName.RougeFactionView) then
-		return var_9_1
+		return i
 	end
 
-	local var_9_2 = var_9_1 - 1
+	i = i - 1
 
 	if RougeModel.instance:isCanSelectRewards() then
 		if ViewMgr.instance:isOpen(ViewName.RougeCollectionGiftView) then
-			return var_9_2
+			return i
 		end
 
-		var_9_2 = var_9_2 - 1
+		i = i - 1
 	end
 
 	if ViewMgr.instance:isOpen(ViewName.RougeDifficultyView) then
-		return var_9_2
+		return i
 	end
 
-	return var_9_2 - 1
+	i = i - 1
+
+	return i
 end
 
-function var_0_0._getStartProgressCount(arg_10_0)
-	local var_10_0 = 3
+function RougePageProgress:_getStartProgressCount()
+	local defaultPageCount = 3
 
 	if RougeModel.instance:isCanSelectRewards() then
-		var_10_0 = var_10_0 + 1
+		defaultPageCount = defaultPageCount + 1
 	end
 
-	return var_10_0
+	return defaultPageCount
 end
 
-function var_0_0.setData(arg_11_0)
-	arg_11_0:initData(arg_11_0:_getStartProgressCount(), arg_11_0:_getCurStartProgress())
-	arg_11_0:setHighLightRange(arg_11_0:_getCurStartProgress())
+function RougePageProgress:setData()
+	self:initData(self:_getStartProgressCount(), self:_getCurStartProgress())
+	self:setHighLightRange(self:_getCurStartProgress())
 end
 
-return var_0_0
+return RougePageProgress

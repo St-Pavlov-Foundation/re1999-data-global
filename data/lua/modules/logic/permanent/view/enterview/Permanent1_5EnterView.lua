@@ -1,52 +1,54 @@
-﻿module("modules.logic.permanent.view.enterview.Permanent1_5EnterView", package.seeall)
+﻿-- chunkname: @modules/logic/permanent/view/enterview/Permanent1_5EnterView.lua
 
-local var_0_0 = class("Permanent1_5EnterView", BaseView)
+module("modules.logic.permanent.view.enterview.Permanent1_5EnterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._btnEntranceRole1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/EntranceRole1/#btn_EntranceRole1")
-	arg_1_0._goReddot1 = gohelper.findChild(arg_1_0.viewGO, "Left/EntranceRole1/#go_Reddot1")
-	arg_1_0._btnEntranceRole2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/EntranceRole2/#btn_EntranceRole2")
-	arg_1_0._goReddot2 = gohelper.findChild(arg_1_0.viewGO, "Left/EntranceRole2/#go_Reddot2")
-	arg_1_0._btnPlay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Title/#btn_Play")
-	arg_1_0._btnEntranceDungeon = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/EntranceDungeon/#btn_EntranceDungeon")
-	arg_1_0._goReddot3 = gohelper.findChild(arg_1_0.viewGO, "Right/#go_Reddot3")
-	arg_1_0._btnAchievement = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Achievement")
+local Permanent1_5EnterView = class("Permanent1_5EnterView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Permanent1_5EnterView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._btnEntranceRole1 = gohelper.findChildButtonWithAudio(self.viewGO, "Left/EntranceRole1/#btn_EntranceRole1")
+	self._goReddot1 = gohelper.findChild(self.viewGO, "Left/EntranceRole1/#go_Reddot1")
+	self._btnEntranceRole2 = gohelper.findChildButtonWithAudio(self.viewGO, "Left/EntranceRole2/#btn_EntranceRole2")
+	self._goReddot2 = gohelper.findChild(self.viewGO, "Left/EntranceRole2/#go_Reddot2")
+	self._btnPlay = gohelper.findChildButtonWithAudio(self.viewGO, "Title/#btn_Play")
+	self._btnEntranceDungeon = gohelper.findChildButtonWithAudio(self.viewGO, "Right/EntranceDungeon/#btn_EntranceDungeon")
+	self._goReddot3 = gohelper.findChild(self.viewGO, "Right/#go_Reddot3")
+	self._btnAchievement = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_Achievement")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._btnEntranceRole1, arg_2_0._btnEntranceRole1OnClick, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._btnEntranceRole2, arg_2_0._btnEntranceRole2OnClick, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._btnPlay, arg_2_0._btnPlayOnClick, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._btnEntranceDungeon, arg_2_0._btnEntranceDungeonOnClick, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._btnAchievement, arg_2_0._btnAchievementOnClick, arg_2_0)
+function Permanent1_5EnterView:addEvents()
+	self:addClickCb(self._btnEntranceRole1, self._btnEntranceRole1OnClick, self)
+	self:addClickCb(self._btnEntranceRole2, self._btnEntranceRole2OnClick, self)
+	self:addClickCb(self._btnPlay, self._btnPlayOnClick, self)
+	self:addClickCb(self._btnEntranceDungeon, self._btnEntranceDungeonOnClick, self)
+	self:addClickCb(self._btnAchievement, self._btnAchievementOnClick, self)
 end
 
-function var_0_0._btnEntranceRole1OnClick(arg_3_0)
+function Permanent1_5EnterView:_btnEntranceRole1OnClick()
 	AiZiLaController.instance:openMapView()
 end
 
-function var_0_0._btnEntranceRole2OnClick(arg_4_0)
+function Permanent1_5EnterView:_btnEntranceRole2OnClick()
 	Activity142Controller.instance:openMapView()
 end
 
-function var_0_0._btnPlayOnClick(arg_5_0)
-	local var_5_0 = {}
+function Permanent1_5EnterView:_btnPlayOnClick()
+	local param = {}
 
-	var_5_0.isVersionActivityPV = true
+	param.isVersionActivityPV = true
 
-	StoryController.instance:playStory(arg_5_0.actCfg.storyId, var_5_0)
+	StoryController.instance:playStory(self.actCfg.storyId, param)
 end
 
-function var_0_0._btnEntranceDungeonOnClick(arg_6_0)
+function Permanent1_5EnterView:_btnEntranceDungeonOnClick()
 	VersionActivity1_5DungeonController.instance:openVersionActivityDungeonMapView()
 end
 
-function var_0_0._btnAchievementOnClick(arg_7_0)
+function Permanent1_5EnterView:_btnAchievementOnClick()
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Achievement) then
 		ViewMgr.instance:openView(ViewName.AchievementMainView, {
 			categoryType = AchievementEnum.Type.Activity
@@ -56,31 +58,31 @@ function var_0_0._btnAchievementOnClick(arg_7_0)
 	end
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0.actCfg = ActivityConfig.instance:getActivityCo(VersionActivity1_5Enum.ActivityId.EnterView)
+function Permanent1_5EnterView:_editableInitView()
+	self.actCfg = ActivityConfig.instance:getActivityCo(VersionActivity1_5Enum.ActivityId.EnterView)
 
-	gohelper.setActive(arg_8_0._btnAchievement.gameObject, false)
+	gohelper.setActive(self._btnAchievement.gameObject, false)
 
-	arg_8_0.switchGroupId = AudioMgr.instance:getIdFromString("music_vocal_filter")
-	arg_8_0.originalStateId = AudioMgr.instance:getIdFromString("original")
-	arg_8_0.accompanimentStateId = AudioMgr.instance:getIdFromString("accompaniment")
+	self.switchGroupId = AudioMgr.instance:getIdFromString("music_vocal_filter")
+	self.originalStateId = AudioMgr.instance:getIdFromString("original")
+	self.accompanimentStateId = AudioMgr.instance:getIdFromString("accompaniment")
 end
 
-function var_0_0.onOpen(arg_9_0)
-	AudioMgr.instance:setSwitch(arg_9_0.switchGroupId, arg_9_0.originalStateId)
+function Permanent1_5EnterView:onOpen()
+	AudioMgr.instance:setSwitch(self.switchGroupId, self.originalStateId)
 
-	local var_9_0 = ActivityConfig.instance:getActivityCo(VersionActivity1_5Enum.ActivityId.AiZiLa)
-	local var_9_1 = ActivityConfig.instance:getActivityCo(VersionActivity1_5Enum.ActivityId.Activity142)
+	local act1MO = ActivityConfig.instance:getActivityCo(VersionActivity1_5Enum.ActivityId.AiZiLa)
+	local act2MO = ActivityConfig.instance:getActivityCo(VersionActivity1_5Enum.ActivityId.Activity142)
 
-	if var_9_0.redDotId ~= 0 then
-		RedDotController.instance:addRedDot(arg_9_0._goReddot1, var_9_0.redDotId)
+	if act1MO.redDotId ~= 0 then
+		RedDotController.instance:addRedDot(self._goReddot1, act1MO.redDotId)
 	end
 
-	if var_9_1.redDotId ~= 0 then
-		RedDotController.instance:addRedDot(arg_9_0._goReddot2, var_9_1.redDotId)
+	if act2MO.redDotId ~= 0 then
+		RedDotController.instance:addRedDot(self._goReddot2, act2MO.redDotId)
 	end
 
-	RedDotController.instance:addMultiRedDot(arg_9_0._goReddot3, {
+	RedDotController.instance:addMultiRedDot(self._goReddot3, {
 		{
 			id = RedDotEnum.DotNode.V1a5DungeonTask
 		},
@@ -93,9 +95,9 @@ function var_0_0.onOpen(arg_9_0)
 	})
 end
 
-function var_0_0.onClose(arg_10_0)
-	AudioMgr.instance:setSwitch(arg_10_0.switchGroupId, arg_10_0.accompanimentStateId)
-	PermanentModel.instance:undateActivityInfo(arg_10_0.actCfg.id)
+function Permanent1_5EnterView:onClose()
+	AudioMgr.instance:setSwitch(self.switchGroupId, self.accompanimentStateId)
+	PermanentModel.instance:undateActivityInfo(self.actCfg.id)
 end
 
-return var_0_0
+return Permanent1_5EnterView

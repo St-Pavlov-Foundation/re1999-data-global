@@ -1,13 +1,15 @@
-﻿module("modules.logic.store.view.optionalcharge.OptionalChargeViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/optionalcharge/OptionalChargeViewContainer.lua
 
-local var_0_0 = class("OptionalChargeViewContainer", BaseViewContainer)
+module("modules.logic.store.view.optionalcharge.OptionalChargeViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local OptionalChargeViewContainer = class("OptionalChargeViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, OptionalChargeView.New())
+function OptionalChargeViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, OptionalChargeView.New())
+
+	return views
 end
 
-return var_0_0
+return OptionalChargeViewContainer

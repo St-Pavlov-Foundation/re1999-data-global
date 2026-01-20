@@ -1,30 +1,32 @@
-﻿module("modules.logic.versionactivity2_3.newcultivationgift.view.VersionActivity2_3NewCultivationGiftRewardViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/newcultivationgift/view/VersionActivity2_3NewCultivationGiftRewardViewContainer.lua
 
-local var_0_0 = class("VersionActivity2_3NewCultivationGiftRewardViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_3.newcultivationgift.view.VersionActivity2_3NewCultivationGiftRewardViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = ListScrollParam.New()
+local VersionActivity2_3NewCultivationGiftRewardViewContainer = class("VersionActivity2_3NewCultivationGiftRewardViewContainer", BaseViewContainer)
 
-	var_1_0.scrollGOPath = "#scroll_reward"
-	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_0.prefabUrl = "#scroll_reward/viewport/content/#go_rewarditem"
-	var_1_0.cellClass = VersionActivity2_3NewCultivationRewardItem
-	var_1_0.scrollDir = ScrollEnum.ScrollDirV
-	var_1_0.lineCount = 6
-	var_1_0.cellWidth = 250
-	var_1_0.cellHeight = 250
-	var_1_0.cellSpaceH = 0
-	var_1_0.cellSpaceV = 0
-	var_1_0.startSpace = 20
-	var_1_0.endSpace = 10
-	var_1_0.minUpdateCountInFrame = 100
+function VersionActivity2_3NewCultivationGiftRewardViewContainer:buildViews()
+	local scrollParam = ListScrollParam.New()
 
-	local var_1_1 = {}
+	scrollParam.scrollGOPath = "#scroll_reward"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "#scroll_reward/viewport/content/#go_rewarditem"
+	scrollParam.cellClass = VersionActivity2_3NewCultivationRewardItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 6
+	scrollParam.cellWidth = 250
+	scrollParam.cellHeight = 250
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 0
+	scrollParam.startSpace = 20
+	scrollParam.endSpace = 10
+	scrollParam.minUpdateCountInFrame = 100
 
-	table.insert(var_1_1, VersionActivity2_3NewCultivationGiftRewardView.New())
-	table.insert(var_1_1, LuaListScrollView.New(VersionActivity2_3NewCultivationGiftRewardListModel.instance, var_1_0))
+	local views = {}
 
-	return var_1_1
+	table.insert(views, VersionActivity2_3NewCultivationGiftRewardView.New())
+	table.insert(views, LuaListScrollView.New(VersionActivity2_3NewCultivationGiftRewardListModel.instance, scrollParam))
+
+	return views
 end
 
-return var_0_0
+return VersionActivity2_3NewCultivationGiftRewardViewContainer

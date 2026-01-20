@@ -1,15 +1,17 @@
-﻿module("modules.logic.versionactivity1_4.act132.view.Activity132CollectDetailViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act132/view/Activity132CollectDetailViewContainer.lua
 
-local var_0_0 = class("Activity132CollectDetailViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_4.act132.view.Activity132CollectDetailViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local Activity132CollectDetailViewContainer = class("Activity132CollectDetailViewContainer", BaseViewContainer)
+
+function Activity132CollectDetailViewContainer:buildViews()
 	return {
 		Activity132CollectDetailView.New(),
 		TabViewGroup.New(1, "#go_topleft")
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function Activity132CollectDetailViewContainer:buildTabViews(tabContainerId)
 	return {
 		NavigateButtonsView.New({
 			true,
@@ -19,8 +21,8 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	}
 end
 
-function var_0_0.onContainerClose(arg_3_0)
+function Activity132CollectDetailViewContainer:onContainerClose()
 	Activity132Controller.instance:dispatchEvent(Activity132Event.OnForceClueItem)
 end
 
-return var_0_0
+return Activity132CollectDetailViewContainer

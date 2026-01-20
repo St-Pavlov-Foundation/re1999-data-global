@@ -1,15 +1,17 @@
-﻿module("modules.logic.tipdialog.model.TipDialogModel", package.seeall)
+﻿-- chunkname: @modules/logic/tipdialog/model/TipDialogModel.lua
 
-local var_0_0 = class("TipDialogModel", BaseModel)
+module("modules.logic.tipdialog.model.TipDialogModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local TipDialogModel = class("TipDialogModel", BaseModel)
+
+function TipDialogModel:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function TipDialogModel:reInit()
 	return
 end
 
-var_0_0.instance = var_0_0.New()
+TipDialogModel.instance = TipDialogModel.New()
 
-return var_0_0
+return TipDialogModel

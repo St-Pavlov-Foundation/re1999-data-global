@@ -1,24 +1,26 @@
-﻿module("modules.logic.guide.controller.action.impl.GuideActionExploreShowOutline", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/GuideActionExploreShowOutline.lua
 
-local var_0_0 = class("GuideActionExploreShowOutline", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.GuideActionExploreShowOutline", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = string.splitToNumber(arg_1_0.actionParam, "#")
-	local var_1_1 = var_1_0[1]
-	local var_1_2 = var_1_0[2] == 1
-	local var_1_3 = ExploreController.instance:getMap()
+local GuideActionExploreShowOutline = class("GuideActionExploreShowOutline", BaseGuideAction)
 
-	if var_1_3 then
-		local var_1_4 = var_1_3:getUnit(var_1_1)
+function GuideActionExploreShowOutline:onStart(context)
+	local arr = string.splitToNumber(self.actionParam, "#")
+	local id = arr[1]
+	local isShowOutLine = arr[2] == 1
+	local map = ExploreController.instance:getMap()
 
-		if var_1_4 then
-			var_1_4:forceOutLine(var_1_2)
+	if map then
+		local unit = map:getUnit(id)
+
+		if unit then
+			unit:forceOutLine(isShowOutLine)
 		end
 	else
 		logError("不在密室中？？？")
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return GuideActionExploreShowOutline

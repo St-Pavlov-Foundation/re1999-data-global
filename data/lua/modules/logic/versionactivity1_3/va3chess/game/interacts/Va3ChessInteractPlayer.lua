@@ -1,86 +1,85 @@
-﻿module("modules.logic.versionactivity1_3.va3chess.game.interacts.Va3ChessInteractPlayer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/va3chess/game/interacts/Va3ChessInteractPlayer.lua
 
-local var_0_0 = class("Va3ChessInteractPlayer", Va3ChessInteractBase)
+module("modules.logic.versionactivity1_3.va3chess.game.interacts.Va3ChessInteractPlayer", package.seeall)
 
-function var_0_0.onSelected(arg_1_0)
+local Va3ChessInteractPlayer = class("Va3ChessInteractPlayer", Va3ChessInteractBase)
+
+function Va3ChessInteractPlayer:onSelected()
 	Va3ChessGameController.instance:setClickStatus(Va3ChessEnum.SelectPosStatus.SelectObjWaitPos)
 
-	local var_1_0 = arg_1_0._target.originData.posX
-	local var_1_1 = arg_1_0._target.originData.posY
-	local var_1_2 = {
+	local x, y = self._target.originData.posX, self._target.originData.posY
+	local evtObj = {
 		visible = true,
 		posXList = {},
 		posYList = {},
-		selfPosX = var_1_0,
-		selfPosY = var_1_1,
+		selfPosX = x,
+		selfPosY = y,
 		selectType = Va3ChessEnum.ChessSelectType.Normal
 	}
 
-	arg_1_0:insertPosToList(var_1_0 + 1, var_1_1, var_1_2.posXList, var_1_2.posYList)
-	arg_1_0:insertPosToList(var_1_0 - 1, var_1_1, var_1_2.posXList, var_1_2.posYList)
-	arg_1_0:insertPosToList(var_1_0, var_1_1 + 1, var_1_2.posXList, var_1_2.posYList)
-	arg_1_0:insertPosToList(var_1_0, var_1_1 - 1, var_1_2.posXList, var_1_2.posYList)
-	Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.SetNeedChooseDirectionVisible, var_1_2)
+	self:insertPosToList(x + 1, y, evtObj.posXList, evtObj.posYList)
+	self:insertPosToList(x - 1, y, evtObj.posXList, evtObj.posYList)
+	self:insertPosToList(x, y + 1, evtObj.posXList, evtObj.posYList)
+	self:insertPosToList(x, y - 1, evtObj.posXList, evtObj.posYList)
+	Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.SetNeedChooseDirectionVisible, evtObj)
 
-	arg_1_0._isPlayerSelected = true
+	self._isPlayerSelected = true
 
-	arg_1_0:refreshPlayerSelected()
+	self:refreshPlayerSelected()
 end
 
-function var_0_0.insertPosToList(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
-	local var_2_0 = arg_2_0._target.originData.posX
-	local var_2_1 = arg_2_0._target.originData.posY
-	local var_2_2 = Va3ChessMapUtils.ToDirection(var_2_0, var_2_1, arg_2_1, arg_2_2)
+function Va3ChessInteractPlayer:insertPosToList(x, y, posXList, posYList)
+	local curX, curY = self._target.originData.posX, self._target.originData.posY
+	local dir = Va3ChessMapUtils.ToDirection(curX, curY, x, y)
 
-	if Va3ChessGameController.instance:posCanWalk(arg_2_1, arg_2_2, var_2_2, arg_2_0._target.objType) then
-		table.insert(arg_2_3, arg_2_1)
-		table.insert(arg_2_4, arg_2_2)
+	if Va3ChessGameController.instance:posCanWalk(x, y, dir, self._target.objType) then
+		table.insert(posXList, x)
+		table.insert(posYList, y)
 	end
 end
 
-function var_0_0.onCancelSelect(arg_3_0)
+function Va3ChessInteractPlayer:onCancelSelect()
 	Va3ChessGameController.instance:setClickStatus(Va3ChessEnum.SelectPosStatus.None)
 	Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.SetNeedChooseDirectionVisible, {
 		visible = false
 	})
 
-	arg_3_0._isPlayerSelected = false
+	self._isPlayerSelected = false
 
-	arg_3_0:refreshPlayerSelected()
+	self:refreshPlayerSelected()
 end
 
-function var_0_0.onSelectPos(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = arg_4_0._target.originData.posX
-	local var_4_1 = arg_4_0._target.originData.posY
-	local var_4_2 = Va3ChessGameModel.instance:getBaseTile(arg_4_1, arg_4_2)
-	local var_4_3 = Va3ChessMapUtils.ToDirection(var_4_0, var_4_1, arg_4_1, arg_4_2)
+function Va3ChessInteractPlayer:onSelectPos(x, y)
+	local curX, curY = self._target.originData.posX, self._target.originData.posY
+	local canWalk = Va3ChessGameModel.instance:getBaseTile(x, y)
+	local dir = Va3ChessMapUtils.ToDirection(curX, curY, x, y)
 
-	if (var_4_0 == arg_4_1 and math.abs(var_4_1 - arg_4_2) == 1 or var_4_1 == arg_4_2 and math.abs(var_4_0 - arg_4_1) == 1) and Va3ChessGameController.instance:posCanWalk(arg_4_1, arg_4_2, var_4_3, arg_4_0._target.objType) then
-		local var_4_4 = {
-			id = arg_4_0._target.originData.id,
-			dir = Va3ChessMapUtils.ToDirection(var_4_0, var_4_1, arg_4_1, arg_4_2)
+	if (curX == x and math.abs(curY - y) == 1 or curY == y and math.abs(curX - x) == 1) and Va3ChessGameController.instance:posCanWalk(x, y, dir, self._target.objType) then
+		local optData = {
+			id = self._target.originData.id,
+			dir = Va3ChessMapUtils.ToDirection(curX, curY, x, y)
 		}
 
-		Va3ChessGameModel.instance:appendOpt(var_4_4)
+		Va3ChessGameModel.instance:appendOpt(optData)
 
-		local var_4_5 = Va3ChessGameModel.instance:getActId()
-		local var_4_6 = Va3ChessGameModel.instance:getOptList()
+		local actId = Va3ChessGameModel.instance:getActId()
+		local optList = Va3ChessGameModel.instance:getOptList()
 
-		Va3ChessRpcController.instance:sendActBeginRoundRequest(var_4_5, var_4_6, arg_4_0.onMoveSuccess, arg_4_0)
+		Va3ChessRpcController.instance:sendActBeginRoundRequest(actId, optList, self.onMoveSuccess, self)
 		Va3ChessGameController.instance:saveTempSelectObj()
 		Va3ChessGameController.instance:setSelectObj(nil)
 
-		local var_4_7 = Va3ChessGameController.instance.event
+		local evtMgr = Va3ChessGameController.instance.event
 
-		if var_4_7 then
-			var_4_7:setLockEvent()
+		if evtMgr then
+			evtMgr:setLockEvent()
 		end
 	else
-		local var_4_8, var_4_9 = Va3ChessGameController.instance:searchInteractByPos(arg_4_1, arg_4_2)
-		local var_4_10 = var_4_8 > 1 and var_4_9[1] or var_4_9
+		local len, result = Va3ChessGameController.instance:searchInteractByPos(x, y)
+		local clickObj = len > 1 and result[1] or result
 
-		if var_4_10 then
-			if var_4_10.config and var_4_10.config.interactType ~= Va3ChessEnum.InteractType.Player and var_4_10.config.interactType ~= Va3ChessEnum.InteractType.AssistPlayer then
+		if clickObj then
+			if clickObj.config and clickObj.config.interactType ~= Va3ChessEnum.InteractType.Player and clickObj.config.interactType ~= Va3ChessEnum.InteractType.AssistPlayer then
 				-- block empty
 			else
 				Va3ChessGameController.instance:setSelectObj(nil)
@@ -95,49 +94,49 @@ function var_0_0.onSelectPos(arg_4_0, arg_4_1, arg_4_2)
 	end
 end
 
-function var_0_0.onMoveSuccess(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	if arg_5_2 ~= 0 then
+function Va3ChessInteractPlayer:onMoveSuccess(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 end
 
-function var_0_0.moveTo(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
-	var_0_0.super.moveTo(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
+function Va3ChessInteractPlayer:moveTo(x, y, callback, callbackObj)
+	Va3ChessInteractPlayer.super.moveTo(self, x, y, callback, callbackObj)
 
-	if arg_6_0._animSelf then
-		arg_6_0._animSelf:Play("jump", 0, 0)
+	if self._animSelf then
+		self._animSelf:Play("jump", 0, 0)
 	end
 end
 
-function var_0_0.showHitAni(arg_7_0)
-	if arg_7_0._animSelf then
-		arg_7_0._animSelf:Play("hit", 0, 0)
+function Va3ChessInteractPlayer:showHitAni()
+	if self._animSelf then
+		self._animSelf:Play("hit", 0, 0)
 	end
 end
 
-function var_0_0.refreshPlayerSelected(arg_8_0)
+function Va3ChessInteractPlayer:refreshPlayerSelected()
 	return
 end
 
-function var_0_0.onAvatarLoaded(arg_9_0)
-	var_0_0.super.onAvatarLoaded(arg_9_0)
+function Va3ChessInteractPlayer:onAvatarLoaded()
+	Va3ChessInteractPlayer.super.onAvatarLoaded(self)
 
-	local var_9_0 = arg_9_0._target.avatar.loader
+	local loader = self._target.avatar.loader
 
-	if not var_9_0 then
+	if not loader then
 		return
 	end
 
-	local var_9_1 = var_9_0:getInstGO()
+	local go = loader:getInstGO()
 
-	if not gohelper.isNil(var_9_1) then
-		arg_9_0._animSelf = var_9_1:GetComponent(typeof(UnityEngine.Animator))
+	if not gohelper.isNil(go) then
+		self._animSelf = go:GetComponent(typeof(UnityEngine.Animator))
 	end
 
-	arg_9_0._target.avatar.goSelected = gohelper.findChild(var_9_0:getInstGO(), "piecea/vx_select")
+	self._target.avatar.goSelected = gohelper.findChild(loader:getInstGO(), "piecea/vx_select")
 
-	gohelper.setActive(arg_9_0._target.avatar.goSelected, true)
-	arg_9_0:refreshPlayerSelected()
+	gohelper.setActive(self._target.avatar.goSelected, true)
+	self:refreshPlayerSelected()
 end
 
-return var_0_0
+return Va3ChessInteractPlayer

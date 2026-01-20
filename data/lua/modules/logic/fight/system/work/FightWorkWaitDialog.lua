@@ -1,36 +1,38 @@
-﻿module("modules.logic.fight.system.work.FightWorkWaitDialog", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkWaitDialog.lua
 
-local var_0_0 = class("FightWorkWaitDialog", BaseWork)
+module("modules.logic.fight.system.work.FightWorkWaitDialog", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = gohelper.find("UIRoot/HUD/FightView/#go_dialogcontainer")
+local FightWorkWaitDialog = class("FightWorkWaitDialog", BaseWork)
 
-	if var_1_0 and var_1_0.activeInHierarchy then
-		TaskDispatcher.runDelay(arg_1_0._delayDone, arg_1_0, 60)
-		FightController.instance:registerCallback(FightEvent.FightDialogShow, arg_1_0._onFightDialogShow, arg_1_0)
-		FightController.instance:registerCallback(FightEvent.FightDialogEnd, arg_1_0._onFightDialogEnd, arg_1_0)
+function FightWorkWaitDialog:onStart()
+	local godialogcontainer = gohelper.find("UIRoot/HUD/FightView/#go_dialogcontainer")
+
+	if godialogcontainer and godialogcontainer.activeInHierarchy then
+		TaskDispatcher.runDelay(self._delayDone, self, 60)
+		FightController.instance:registerCallback(FightEvent.FightDialogShow, self._onFightDialogShow, self)
+		FightController.instance:registerCallback(FightEvent.FightDialogEnd, self._onFightDialogEnd, self)
 	else
-		arg_1_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._onFightDialogShow(arg_2_0)
-	TaskDispatcher.cancelTask(arg_2_0._delayDone, arg_2_0)
-	TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 60)
+function FightWorkWaitDialog:_onFightDialogShow()
+	TaskDispatcher.cancelTask(self._delayDone, self)
+	TaskDispatcher.runDelay(self._delayDone, self, 60)
 end
 
-function var_0_0._delayDone(arg_3_0)
-	arg_3_0:onDone(true)
+function FightWorkWaitDialog:_delayDone()
+	self:onDone(true)
 end
 
-function var_0_0._onFightDialogEnd(arg_4_0)
-	arg_4_0:onDone(true)
+function FightWorkWaitDialog:_onFightDialogEnd()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0._delayDone, arg_5_0)
-	FightController.instance:unregisterCallback(FightEvent.FightDialogShow, arg_5_0._onFightDialogShow, arg_5_0)
-	FightController.instance:unregisterCallback(FightEvent.FightDialogEnd, arg_5_0._onFightDialogEnd, arg_5_0)
+function FightWorkWaitDialog:clearWork()
+	TaskDispatcher.cancelTask(self._delayDone, self)
+	FightController.instance:unregisterCallback(FightEvent.FightDialogShow, self._onFightDialogShow, self)
+	FightController.instance:unregisterCallback(FightEvent.FightDialogEnd, self._onFightDialogEnd, self)
 end
 
-return var_0_0
+return FightWorkWaitDialog

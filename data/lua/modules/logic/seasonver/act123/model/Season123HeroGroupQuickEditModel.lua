@@ -1,116 +1,121 @@
-﻿module("modules.logic.seasonver.act123.model.Season123HeroGroupQuickEditModel", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/model/Season123HeroGroupQuickEditModel.lua
 
-local var_0_0 = class("Season123HeroGroupQuickEditModel", ListScrollModel)
+module("modules.logic.seasonver.act123.model.Season123HeroGroupQuickEditModel", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	arg_1_0.activityId = arg_1_1
-	arg_1_0.layer = arg_1_2
-	arg_1_0.episodeId = arg_1_3
-	arg_1_0.episodeCO = DungeonConfig.instance:getEpisodeCO(arg_1_0.episodeId)
-	arg_1_0.stage = arg_1_4
+local Season123HeroGroupQuickEditModel = class("Season123HeroGroupQuickEditModel", ListScrollModel)
+
+function Season123HeroGroupQuickEditModel:init(actId, layer, episodeId, stage)
+	self.activityId = actId
+	self.layer = layer
+	self.episodeId = episodeId
+	self.episodeCO = DungeonConfig.instance:getEpisodeCO(self.episodeId)
+	self.stage = stage
 end
 
-function var_0_0.copyQuickEditCardList(arg_2_0)
-	local var_2_0 = tabletool.copy(CharacterBackpackCardListModel.instance:getCharacterCardList())
-	local var_2_1 = Season123Model.instance:getAssistData(arg_2_0.activityId, arg_2_0.stage)
+function Season123HeroGroupQuickEditModel:copyQuickEditCardList()
+	local moList = tabletool.copy(CharacterBackpackCardListModel.instance:getCharacterCardList())
+	local heroMO = Season123Model.instance:getAssistData(self.activityId, self.stage)
 
-	if var_2_1 and Season123Controller.isEpisodeFromSeason123(arg_2_0.episodeId) and Season123HeroGroupModel.instance:isEpisodeSeason123() then
-		table.insert(var_2_0, var_2_1)
+	if heroMO and Season123Controller.isEpisodeFromSeason123(self.episodeId) and Season123HeroGroupModel.instance:isEpisodeSeason123() then
+		table.insert(moList, heroMO)
 	end
 
-	local var_2_2 = {}
-	local var_2_3 = {}
+	local newMOList = {}
+	local repeatHero = {}
 
-	arg_2_0._inTeamHeroUidMap = {}
-	arg_2_0._inTeamHeroUidList = {}
-	arg_2_0._originalHeroUidList = {}
-	arg_2_0._selectUid = nil
+	self._inTeamHeroUidMap = {}
+	self._inTeamHeroUidList = {}
+	self._originalHeroUidList = {}
+	self._selectUid = nil
 
-	local var_2_4 = HeroGroupModel.instance:getCurGroupMO()
+	local heroGroupMO = HeroGroupModel.instance:getCurGroupMO()
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_4.heroList) do
-		local var_2_5 = HeroGroupModel.instance:isPositionOpen(iter_2_0)
+	for pos, heroUid in ipairs(heroGroupMO.heroList) do
+		local posOpen = HeroGroupModel.instance:isPositionOpen(pos)
 
-		if iter_2_1 ~= "0" and not var_2_3[iter_2_1] then
-			local var_2_6 = Season123HeroUtils.getHeroMO(arg_2_0.activityId, iter_2_1, arg_2_0.stage)
+		if heroUid ~= "0" and not repeatHero[heroUid] then
+			local tmpMO = Season123HeroUtils.getHeroMO(self.activityId, heroUid, self.stage)
 
-			if arg_2_0:checkSeasonBox(var_2_6) then
-				table.insert(var_2_2, var_2_6)
+			if self:checkSeasonBox(tmpMO) then
+				table.insert(newMOList, tmpMO)
 
-				if var_2_5 then
-					arg_2_0._inTeamHeroUidMap[iter_2_1] = 1
+				if posOpen then
+					self._inTeamHeroUidMap[heroUid] = 1
 				end
 
-				var_2_3[iter_2_1] = true
+				repeatHero[heroUid] = true
 			end
 		end
 
-		if var_2_5 then
-			table.insert(arg_2_0._inTeamHeroUidList, iter_2_1)
-			table.insert(arg_2_0._originalHeroUidList, iter_2_1)
+		if posOpen then
+			table.insert(self._inTeamHeroUidList, heroUid)
+			table.insert(self._originalHeroUidList, heroUid)
 		end
 	end
 
-	local var_2_7 = {}
+	local deathList = {}
 
-	for iter_2_2, iter_2_3 in ipairs(var_2_0) do
-		if not var_2_3[iter_2_3.uid] and arg_2_0:checkSeasonBox(iter_2_3) then
-			var_2_3[iter_2_3.uid] = true
+	for i, mo in ipairs(moList) do
+		if not repeatHero[mo.uid] and self:checkSeasonBox(mo) then
+			repeatHero[mo.uid] = true
 
-			table.insert(var_2_2, iter_2_3)
+			table.insert(newMOList, mo)
 		end
 	end
 
-	if arg_2_0.adventure then
-		tabletool.addValues(var_2_2, var_2_7)
+	if self.adventure then
+		tabletool.addValues(newMOList, deathList)
 	end
 
 	if Season123HeroGroupModel.instance:isEpisodeSeason123() then
-		arg_2_0.sortIndexMap = {}
+		self.sortIndexMap = {}
 
-		for iter_2_4, iter_2_5 in ipairs(var_2_2) do
-			arg_2_0.sortIndexMap[iter_2_5] = iter_2_4
+		for i, v in ipairs(newMOList) do
+			self.sortIndexMap[v] = i
 		end
 
-		table.sort(var_2_2, var_0_0.sortDead)
+		table.sort(newMOList, Season123HeroGroupQuickEditModel.sortDead)
 	end
 
-	arg_2_0:setList(var_2_2)
+	self:setList(newMOList)
 end
 
-function var_0_0.sortDead(arg_3_0, arg_3_1)
-	local var_3_0 = var_0_0.instance:getHeroIsDead(arg_3_0)
-	local var_3_1 = var_0_0.instance:getHeroIsDead(arg_3_1)
+function Season123HeroGroupQuickEditModel.sortDead(a, b)
+	local aIsDead = Season123HeroGroupQuickEditModel.instance:getHeroIsDead(a)
+	local bIsDead = Season123HeroGroupQuickEditModel.instance:getHeroIsDead(b)
 
-	if var_3_0 ~= var_3_1 then
-		return var_3_1
+	if aIsDead ~= bIsDead then
+		return bIsDead
 	else
-		return Season123HeroGroupEditModel.instance.sortIndexMap[arg_3_0] < Season123HeroGroupEditModel.instance.sortIndexMap[arg_3_1]
+		local aIndex = Season123HeroGroupEditModel.instance.sortIndexMap[a]
+		local bIndex = Season123HeroGroupEditModel.instance.sortIndexMap[b]
+
+		return aIndex < bIndex
 	end
 end
 
-function var_0_0.getHeroIsDead(arg_4_0, arg_4_1)
+function Season123HeroGroupQuickEditModel:getHeroIsDead(mo)
 	if Season123HeroGroupModel.instance:isEpisodeSeason123() then
-		local var_4_0 = false
-		local var_4_1 = arg_4_0.activityId
-		local var_4_2 = arg_4_0.stage
-		local var_4_3 = arg_4_0.layer
-		local var_4_4 = Season123Model.instance:getSeasonHeroMO(var_4_1, var_4_2, var_4_3, arg_4_1.uid)
+		local isDead = false
+		local actId = self.activityId
+		local stage = self.stage
+		local layer = self.layer
+		local seasonHeroMO = Season123Model.instance:getSeasonHeroMO(actId, stage, layer, mo.uid)
 
-		if var_4_4 ~= nil then
-			var_4_0 = var_4_4.hpRate <= 0
+		if seasonHeroMO ~= nil then
+			isDead = seasonHeroMO.hpRate <= 0
 		end
 
-		return var_4_0
+		return isDead
 	end
 
 	return false
 end
 
-function var_0_0.checkSeasonBox(arg_5_0, arg_5_1)
-	if arg_5_0.episodeCO then
-		if arg_5_0.episodeCO.type == DungeonEnum.EpisodeType.Season123 then
-			return Season123Model.instance:getSeasonHeroMO(arg_5_0.activityId, arg_5_0.stage, arg_5_0.layer, arg_5_1.uid)
+function Season123HeroGroupQuickEditModel:checkSeasonBox(heroMO)
+	if self.episodeCO then
+		if self.episodeCO.type == DungeonEnum.EpisodeType.Season123 then
+			return Season123Model.instance:getSeasonHeroMO(self.activityId, self.stage, self.layer, heroMO.uid)
 		else
 			return true
 		end
@@ -119,31 +124,31 @@ function var_0_0.checkSeasonBox(arg_5_0, arg_5_1)
 	return false
 end
 
-function var_0_0.keepSelect(arg_6_0, arg_6_1)
-	arg_6_0._selectIndex = arg_6_1
+function Season123HeroGroupQuickEditModel:keepSelect(selectIndex)
+	self._selectIndex = selectIndex
 
-	local var_6_0 = arg_6_0:getList()
+	local list = self:getList()
 
-	if #arg_6_0._scrollViews > 0 then
-		for iter_6_0, iter_6_1 in ipairs(arg_6_0._scrollViews) do
-			iter_6_1:selectCell(arg_6_1, true)
+	if #self._scrollViews > 0 then
+		for _, view in ipairs(self._scrollViews) do
+			view:selectCell(selectIndex, true)
 		end
 
-		if var_6_0[arg_6_1] then
-			return var_6_0[arg_6_1]
+		if list[selectIndex] then
+			return list[selectIndex]
 		end
 	end
 end
 
-function var_0_0.isInTeamHero(arg_7_0, arg_7_1)
-	return arg_7_0._inTeamHeroUidMap and arg_7_0._inTeamHeroUidMap[arg_7_1]
+function Season123HeroGroupQuickEditModel:isInTeamHero(uid)
+	return self._inTeamHeroUidMap and self._inTeamHeroUidMap[uid]
 end
 
-function var_0_0.getHeroTeamPos(arg_8_0, arg_8_1)
-	if arg_8_0._inTeamHeroUidList then
-		for iter_8_0, iter_8_1 in pairs(arg_8_0._inTeamHeroUidList) do
-			if iter_8_1 == arg_8_1 then
-				return iter_8_0
+function Season123HeroGroupQuickEditModel:getHeroTeamPos(uid)
+	if self._inTeamHeroUidList then
+		for index, heroUid in pairs(self._inTeamHeroUidList) do
+			if heroUid == uid then
+				return index
 			end
 		end
 	end
@@ -151,51 +156,51 @@ function var_0_0.getHeroTeamPos(arg_8_0, arg_8_1)
 	return 0
 end
 
-function var_0_0.selectHero(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0:getHeroTeamPos(arg_9_1)
+function Season123HeroGroupQuickEditModel:selectHero(uid)
+	local index = self:getHeroTeamPos(uid)
 
-	if var_9_0 ~= 0 then
-		arg_9_0._inTeamHeroUidList[var_9_0] = "0"
-		arg_9_0._inTeamHeroUidMap[arg_9_1] = nil
+	if index ~= 0 then
+		self._inTeamHeroUidList[index] = "0"
+		self._inTeamHeroUidMap[uid] = nil
 
-		arg_9_0:onModelUpdate()
+		self:onModelUpdate()
 
-		arg_9_0._selectUid = nil
+		self._selectUid = nil
 
 		return true
 	else
-		local var_9_1 = 0
+		local nextIndex = 0
 
-		for iter_9_0 = 1, #arg_9_0._inTeamHeroUidList do
-			local var_9_2 = arg_9_0._inTeamHeroUidList[iter_9_0]
+		for i = 1, #self._inTeamHeroUidList do
+			local heroUid = self._inTeamHeroUidList[i]
 
-			if var_9_2 == 0 or var_9_2 == "0" then
-				arg_9_0._inTeamHeroUidList[iter_9_0] = arg_9_1
-				arg_9_0._inTeamHeroUidMap[arg_9_1] = 1
+			if heroUid == 0 or heroUid == "0" then
+				self._inTeamHeroUidList[i] = uid
+				self._inTeamHeroUidMap[uid] = 1
 
-				arg_9_0:onModelUpdate()
+				self:onModelUpdate()
 
 				return true
 			end
 		end
 
-		arg_9_0._selectUid = arg_9_1
+		self._selectUid = uid
 	end
 
 	return false
 end
 
-function var_0_0.getHeroUids(arg_10_0)
-	return arg_10_0._inTeamHeroUidList
+function Season123HeroGroupQuickEditModel:getHeroUids()
+	return self._inTeamHeroUidList
 end
 
-function var_0_0.getHeroUidByPos(arg_11_0, arg_11_1)
-	return arg_11_0._inTeamHeroUidList[arg_11_1]
+function Season123HeroGroupQuickEditModel:getHeroUidByPos(pos)
+	return self._inTeamHeroUidList[pos]
 end
 
-function var_0_0.getIsDirty(arg_12_0)
-	for iter_12_0 = 1, #arg_12_0._inTeamHeroUidList do
-		if arg_12_0._inTeamHeroUidList[iter_12_0] ~= arg_12_0._originalHeroUidList[iter_12_0] then
+function Season123HeroGroupQuickEditModel:getIsDirty()
+	for i = 1, #self._inTeamHeroUidList do
+		if self._inTeamHeroUidList[i] ~= self._originalHeroUidList[i] then
 			return true
 		end
 	end
@@ -203,22 +208,22 @@ function var_0_0.getIsDirty(arg_12_0)
 	return false
 end
 
-function var_0_0.cancelAllSelected(arg_13_0)
-	if arg_13_0._scrollViews then
-		for iter_13_0, iter_13_1 in ipairs(arg_13_0._scrollViews) do
-			local var_13_0 = iter_13_1:getFirstSelect()
-			local var_13_1 = arg_13_0:getIndex(var_13_0)
+function Season123HeroGroupQuickEditModel:cancelAllSelected()
+	if self._scrollViews then
+		for _, view in ipairs(self._scrollViews) do
+			local mo = view:getFirstSelect()
+			local index = self:getIndex(mo)
 
-			iter_13_1:selectCell(var_13_1, false)
+			view:selectCell(index, false)
 		end
 	end
 end
 
-function var_0_0.isTeamFull(arg_14_0)
-	for iter_14_0 = 1, #arg_14_0._inTeamHeroUidList do
-		local var_14_0 = HeroGroupModel.instance:isPositionOpen(iter_14_0)
+function Season123HeroGroupQuickEditModel:isTeamFull()
+	for i = 1, #self._inTeamHeroUidList do
+		local posOpen = HeroGroupModel.instance:isPositionOpen(i)
 
-		if arg_14_0._inTeamHeroUidList[iter_14_0] == "0" and var_14_0 then
+		if self._inTeamHeroUidList[i] == "0" and posOpen then
 			return false
 		end
 	end
@@ -226,20 +231,20 @@ function var_0_0.isTeamFull(arg_14_0)
 	return true
 end
 
-function var_0_0.setParam(arg_15_0, arg_15_1)
-	arg_15_0.adventure = arg_15_1
+function Season123HeroGroupQuickEditModel:setParam(adventure)
+	self.adventure = adventure
 end
 
-function var_0_0.clear(arg_16_0)
-	arg_16_0._inTeamHeroUidMap = nil
-	arg_16_0._inTeamHeroUidList = nil
-	arg_16_0._originalHeroUidList = nil
-	arg_16_0._selectIndex = nil
-	arg_16_0._selectUid = nil
+function Season123HeroGroupQuickEditModel:clear()
+	self._inTeamHeroUidMap = nil
+	self._inTeamHeroUidList = nil
+	self._originalHeroUidList = nil
+	self._selectIndex = nil
+	self._selectUid = nil
 
-	var_0_0.super.clear(arg_16_0)
+	Season123HeroGroupQuickEditModel.super.clear(self)
 end
 
-var_0_0.instance = var_0_0.New()
+Season123HeroGroupQuickEditModel.instance = Season123HeroGroupQuickEditModel.New()
 
-return var_0_0
+return Season123HeroGroupQuickEditModel

@@ -1,106 +1,108 @@
-﻿module("modules.logic.rouge.common.comp.RougeCollectionComp", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/common/comp/RougeCollectionComp.lua
 
-local var_0_0 = class("RougeCollectionComp", RougeLuaCompBase)
+module("modules.logic.rouge.common.comp.RougeCollectionComp", package.seeall)
 
-function var_0_0.Get(arg_1_0)
-	local var_1_0 = var_0_0.New()
+local RougeCollectionComp = class("RougeCollectionComp", RougeLuaCompBase)
 
-	var_1_0:init(arg_1_0)
+function RougeCollectionComp.Get(go)
+	local comp = RougeCollectionComp.New()
 
-	return var_1_0
+	comp:init(go)
+
+	return comp
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0:__onInit()
-	var_0_0.super.init(arg_2_0, arg_2_1)
+function RougeCollectionComp:init(go)
+	self:__onInit()
+	RougeCollectionComp.super.init(self, go)
 
-	arg_2_0.go = arg_2_1
-	arg_2_0._gostate1 = gohelper.findChild(arg_2_0.go, "Root/#go_state1")
-	arg_2_0._gostate2 = gohelper.findChild(arg_2_0.go, "Root/#go_state2")
-	arg_2_0._goicon = gohelper.findChild(arg_2_0.go, "Root/#go_state1/#go_icon")
-	arg_2_0._gostate2Normal = gohelper.findChild(arg_2_0.go, "Root/#go_state2/#go_Normal")
-	arg_2_0._gostate2Light = gohelper.findChild(arg_2_0.go, "Root/#go_state2/#go_Light")
-	arg_2_0._btnclick = gohelper.findChildButtonWithAudio(arg_2_0.go, "Root/#btn_click")
+	self.go = go
+	self._gostate1 = gohelper.findChild(self.go, "Root/#go_state1")
+	self._gostate2 = gohelper.findChild(self.go, "Root/#go_state2")
+	self._goicon = gohelper.findChild(self.go, "Root/#go_state1/#go_icon")
+	self._gostate2Normal = gohelper.findChild(self.go, "Root/#go_state2/#go_Normal")
+	self._gostate2Light = gohelper.findChild(self.go, "Root/#go_state2/#go_Light")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.go, "Root/#btn_click")
 
-	if arg_2_0._editableInitView then
-		arg_2_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0._editableInitView(arg_3_0)
-	arg_3_0._btnclick:AddClickListener(arg_3_0._btnclickOnClick, arg_3_0)
+function RougeCollectionComp:_editableInitView()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
 
-	arg_3_0._animator = gohelper.onceAddComponent(arg_3_0.go, gohelper.Type_Animator)
-	arg_3_0._slotComp = RougeCollectionSlotComp.Get(arg_3_0._goicon, RougeCollectionHelper.BagEntrySlotParam)
+	self._animator = gohelper.onceAddComponent(self.go, gohelper.Type_Animator)
+	self._slotComp = RougeCollectionSlotComp.Get(self._goicon, RougeCollectionHelper.BagEntrySlotParam)
 
-	arg_3_0:addEventCb(RougeCollectionChessController.instance, RougeEvent.PlaceCollection2SlotArea, arg_3_0.placeCollection2SlotArea, arg_3_0)
+	self:addEventCb(RougeCollectionChessController.instance, RougeEvent.PlaceCollection2SlotArea, self.placeCollection2SlotArea, self)
 end
 
-function var_0_0._btnclickOnClick(arg_4_0)
+function RougeCollectionComp:_btnclickOnClick()
 	RougeController.instance:openRougeCollectionChessView()
 end
 
-function var_0_0.onOpen(arg_5_0, arg_5_1)
-	local var_5_0 = RougeCollectionModel.instance:getSlotAreaCollection()
-	local var_5_1 = RougeCollectionModel.instance:getCurSlotAreaSize()
-	local var_5_2 = var_5_1.col
-	local var_5_3 = var_5_1.row
+function RougeCollectionComp:onOpen(state)
+	local slotCollections = RougeCollectionModel.instance:getSlotAreaCollection()
+	local slotSize = RougeCollectionModel.instance:getCurSlotAreaSize()
+	local col = slotSize.col
+	local row = slotSize.row
 
-	arg_5_0._slotComp:onUpdateMO(var_5_2, var_5_3, var_5_0)
-	arg_5_0:switchEntryState(arg_5_1)
-	arg_5_0:tickUpdateDLCs()
+	self._slotComp:onUpdateMO(col, row, slotCollections)
+	self:switchEntryState(state)
+	self:tickUpdateDLCs()
 end
 
-function var_0_0.onClose(arg_6_0)
+function RougeCollectionComp:onClose()
 	return
 end
 
-function var_0_0.switchEntryState(arg_7_0, arg_7_1)
-	arg_7_1 = arg_7_1 or RougeEnum.CollectionEntryState.Grid
+function RougeCollectionComp:switchEntryState(newState)
+	newState = newState or RougeEnum.CollectionEntryState.Grid
 
-	if arg_7_0._curState == arg_7_1 then
+	if self._curState == newState then
 		return
 	end
 
-	arg_7_0._curState = arg_7_1
+	self._curState = newState
 
-	if arg_7_1 == RougeEnum.CollectionEntryState.Icon then
-		arg_7_0:onSwitch2IconState()
-	elseif arg_7_1 == RougeEnum.CollectionEntryState.Grid then
-		arg_7_0:onSwitch2GridState()
+	if newState == RougeEnum.CollectionEntryState.Icon then
+		self:onSwitch2IconState()
+	elseif newState == RougeEnum.CollectionEntryState.Grid then
+		self:onSwitch2GridState()
 	end
 end
 
-function var_0_0.onSwitch2IconState(arg_8_0)
-	arg_8_0:setState2IconLight(false)
-	arg_8_0._animator:Play("swicth_state2", 0, 0)
+function RougeCollectionComp:onSwitch2IconState()
+	self:setState2IconLight(false)
+	self._animator:Play("swicth_state2", 0, 0)
 end
 
-function var_0_0.onSwitch2GridState(arg_9_0)
-	arg_9_0._animator:Play("swicth_state1", 0, 0)
+function RougeCollectionComp:onSwitch2GridState()
+	self._animator:Play("swicth_state1", 0, 0)
 end
 
-function var_0_0.setState2IconLight(arg_10_0, arg_10_1)
-	gohelper.setActive(arg_10_0._gostate2Normal, not arg_10_1)
-	gohelper.setActive(arg_10_0._gostate2Light, arg_10_1)
+function RougeCollectionComp:setState2IconLight(isLight)
+	gohelper.setActive(self._gostate2Normal, not isLight)
+	gohelper.setActive(self._gostate2Light, isLight)
 end
 
-function var_0_0.placeCollection2SlotArea(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = RougeCollectionHelper.isNewGetCollection(arg_11_2)
+function RougeCollectionComp:placeCollection2SlotArea(collectionMO, reason)
+	local isNewGetCollection = RougeCollectionHelper.isNewGetCollection(reason)
 
-	if arg_11_1 and var_11_0 and arg_11_0._curState == RougeEnum.CollectionEntryState.Icon then
-		arg_11_0:setState2IconLight(true)
+	if collectionMO and isNewGetCollection and self._curState == RougeEnum.CollectionEntryState.Icon then
+		self:setState2IconLight(true)
 	end
 end
 
-function var_0_0.destroy(arg_12_0)
-	arg_12_0._btnclick:RemoveClickListener()
+function RougeCollectionComp:destroy()
+	self._btnclick:RemoveClickListener()
 
-	if arg_12_0._slotComp then
-		arg_12_0._slotComp:destroy()
+	if self._slotComp then
+		self._slotComp:destroy()
 	end
 
-	arg_12_0:__onDispose()
+	self:__onDispose()
 end
 
-return var_0_0
+return RougeCollectionComp

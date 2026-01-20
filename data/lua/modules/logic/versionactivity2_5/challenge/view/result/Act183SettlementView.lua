@@ -1,121 +1,125 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.result.Act183SettlementView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/result/Act183SettlementView.lua
 
-local var_0_0 = class("Act183SettlementView", BaseView)
+module("modules.logic.versionactivity2_5.challenge.view.result.Act183SettlementView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gonormalbg = gohelper.findChild(arg_1_0.viewGO, "root/bg")
-	arg_1_0._gohardbg = gohelper.findChild(arg_1_0.viewGO, "root/hardbg")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_close")
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "root/#go_topleft")
-	arg_1_0._scrollbadge = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/left/#scroll_badge")
-	arg_1_0._goepisodeitem = gohelper.findChild(arg_1_0.viewGO, "root/left/#scroll_badge/Viewport/Content/#go_episodeitem")
-	arg_1_0._simageplayericon = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/left/player/icon/#simage_playericon")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "root/left/player/#txt_name")
-	arg_1_0._txtdate = gohelper.findChildText(arg_1_0.viewGO, "root/left/player/#txt_date")
-	arg_1_0._txtbossbadge = gohelper.findChildText(arg_1_0.viewGO, "root/right/#txt_bossbadge")
-	arg_1_0._gobossheros = gohelper.findChild(arg_1_0.viewGO, "root/right/#go_bossheros")
-	arg_1_0._goheroitem = gohelper.findChild(arg_1_0.viewGO, "root/#go_heroitem")
-	arg_1_0._gobuffs = gohelper.findChild(arg_1_0.viewGO, "root/right/buffs/#go_buffs")
-	arg_1_0._gobuffitem = gohelper.findChild(arg_1_0.viewGO, "root/right/buffs/#go_buffs/#go_buffitem")
-	arg_1_0._simageboss = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/right/#simage_boss")
+local Act183SettlementView = class("Act183SettlementView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Act183SettlementView:onInitView()
+	self._gonormalbg = gohelper.findChild(self.viewGO, "root/bg")
+	self._gohardbg = gohelper.findChild(self.viewGO, "root/hardbg")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_close")
+	self._gotopleft = gohelper.findChild(self.viewGO, "root/#go_topleft")
+	self._scrollbadge = gohelper.findChildScrollRect(self.viewGO, "root/left/#scroll_badge")
+	self._goepisodeitem = gohelper.findChild(self.viewGO, "root/left/#scroll_badge/Viewport/Content/#go_episodeitem")
+	self._simageplayericon = gohelper.findChildSingleImage(self.viewGO, "root/left/player/icon/#simage_playericon")
+	self._txtname = gohelper.findChildText(self.viewGO, "root/left/player/#txt_name")
+	self._txtdate = gohelper.findChildText(self.viewGO, "root/left/player/#txt_date")
+	self._txtbossbadge = gohelper.findChildText(self.viewGO, "root/right/#txt_bossbadge")
+	self._gobossheros = gohelper.findChild(self.viewGO, "root/right/#go_bossheros")
+	self._goheroitem = gohelper.findChild(self.viewGO, "root/#go_heroitem")
+	self._gobuffs = gohelper.findChild(self.viewGO, "root/right/buffs/#go_buffs")
+	self._gobuffitem = gohelper.findChild(self.viewGO, "root/right/buffs/#go_buffs/#go_buffitem")
+	self._simageboss = gohelper.findChildSingleImage(self.viewGO, "root/right/#simage_boss")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function Act183SettlementView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function Act183SettlementView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function Act183SettlementView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._gocontent = gohelper.findChild(arg_5_0.viewGO, "root/left/#scroll_badge/Viewport/Content")
-	arg_5_0._heroIconTab = arg_5_0:getUserDataTb_()
+function Act183SettlementView:_editableInitView()
+	self._gocontent = gohelper.findChild(self.viewGO, "root/left/#scroll_badge/Viewport/Content")
+	self._heroIconTab = self:getUserDataTb_()
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function Act183SettlementView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0._activityId = arg_7_0.viewParam and arg_7_0.viewParam.activityId
-	arg_7_0._groupRecordMo = arg_7_0.viewParam and arg_7_0.viewParam.groupRecordMo
+function Act183SettlementView:onOpen()
+	self._activityId = self.viewParam and self.viewParam.activityId
+	self._groupRecordMo = self.viewParam and self.viewParam.groupRecordMo
 
-	arg_7_0:refresh()
+	self:refresh()
 	AudioMgr.instance:trigger(AudioEnum.UI.Act183_OpenSettlementView)
 end
 
-function var_0_0.refresh(arg_8_0)
-	arg_8_0:refreshAllSubEpisodeItems()
-	arg_8_0:refreshBossEpisodeItem()
-	arg_8_0:refreshPlayerInfo()
-	arg_8_0:refreshOtherInfo()
+function Act183SettlementView:refresh()
+	self:refreshAllSubEpisodeItems()
+	self:refreshBossEpisodeItem()
+	self:refreshPlayerInfo()
+	self:refreshOtherInfo()
 end
 
-function var_0_0.refreshAllSubEpisodeItems(arg_9_0)
-	local var_9_0 = arg_9_0._groupRecordMo:getEpusideListByTypeAndPassOrder(Act183Enum.EpisodeType.Sub)
+function Act183SettlementView:refreshAllSubEpisodeItems()
+	local subEpisodes = self._groupRecordMo:getEpusideListByTypeAndPassOrder(Act183Enum.EpisodeType.Sub)
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
-		local var_9_1 = gohelper.cloneInPlace(arg_9_0._goepisodeitem, "episode_" .. iter_9_0)
-		local var_9_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_9_1, Act183SettlementSubEpisodeItem)
+	for index, episodeMo in ipairs(subEpisodes) do
+		local episodeItemGo = gohelper.cloneInPlace(self._goepisodeitem, "episode_" .. index)
+		local episodeItem = MonoHelper.addNoUpdateLuaComOnceToGo(episodeItemGo, Act183SettlementSubEpisodeItem)
 
-		var_9_2:setHeroTemplate(arg_9_0._goheroitem)
-		var_9_2:onUpdateMO(arg_9_0._groupRecordMo, iter_9_1)
+		episodeItem:setHeroTemplate(self._goheroitem)
+		episodeItem:onUpdateMO(self._groupRecordMo, episodeMo)
 	end
 end
 
-function var_0_0.refreshBossEpisodeItem(arg_10_0)
-	local var_10_0 = arg_10_0._groupRecordMo:getEpisodeListByType(Act183Enum.EpisodeType.Boss)
-	local var_10_1 = var_10_0 and var_10_0[1]
-	local var_10_2 = MonoHelper.addNoUpdateLuaComOnceToGo(arg_10_0.viewGO, Act183SettlementBossEpisodeItem)
+function Act183SettlementView:refreshBossEpisodeItem()
+	local bossEpisodeRecordMos = self._groupRecordMo:getEpisodeListByType(Act183Enum.EpisodeType.Boss)
+	local bossEpisodeRecordMo = bossEpisodeRecordMos and bossEpisodeRecordMos[1]
+	local episodeItem = MonoHelper.addNoUpdateLuaComOnceToGo(self.viewGO, Act183SettlementBossEpisodeItem)
 
-	var_10_2:setHeroTemplate(arg_10_0._goheroitem)
-	var_10_2:onUpdateMO(arg_10_0._groupRecordMo, var_10_1)
+	episodeItem:setHeroTemplate(self._goheroitem)
+	episodeItem:onUpdateMO(self._groupRecordMo, bossEpisodeRecordMo)
 end
 
-function var_0_0.refreshPlayerInfo(arg_11_0)
-	arg_11_0._txtname.text = arg_11_0._groupRecordMo:getUserName()
-	arg_11_0._portraitId = arg_11_0._groupRecordMo:getPortrait()
+function Act183SettlementView:refreshPlayerInfo()
+	self._txtname.text = self._groupRecordMo:getUserName()
+	self._portraitId = self._groupRecordMo:getPortrait()
 
-	if not arg_11_0._liveHeadIcon then
-		arg_11_0._liveHeadIcon = IconMgr.instance:getCommonLiveHeadIcon(arg_11_0._simageplayericon)
+	if not self._liveHeadIcon then
+		local commonLiveIcon = IconMgr.instance:getCommonLiveHeadIcon(self._simageplayericon)
+
+		self._liveHeadIcon = commonLiveIcon
 	end
 
-	arg_11_0._liveHeadIcon:setLiveHead(arg_11_0._portraitId)
+	self._liveHeadIcon:setLiveHead(self._portraitId)
 
-	arg_11_0._txtdate.text = TimeUtil.timestampToString(arg_11_0._groupRecordMo:getFinishedTime() / 1000)
+	self._txtdate.text = TimeUtil.timestampToString(self._groupRecordMo:getFinishedTime() / 1000)
 end
 
-function var_0_0.refreshOtherInfo(arg_12_0)
-	local var_12_0 = arg_12_0._groupRecordMo:getGroupType()
+function Act183SettlementView:refreshOtherInfo()
+	local groupType = self._groupRecordMo:getGroupType()
 
-	gohelper.setActive(arg_12_0._gohardbg, var_12_0 == Act183Enum.GroupType.HardMain)
-	gohelper.setActive(arg_12_0._gonormalbg, var_12_0 ~= Act183Enum.GroupType.HardMain)
+	gohelper.setActive(self._gohardbg, groupType == Act183Enum.GroupType.HardMain)
+	gohelper.setActive(self._gonormalbg, groupType ~= Act183Enum.GroupType.HardMain)
 end
 
-function var_0_0.releaseAllSingleImage(arg_13_0)
-	if arg_13_0._heroIconTab then
-		for iter_13_0, iter_13_1 in pairs(arg_13_0._heroIconTab) do
-			iter_13_0:UnLoadImage()
+function Act183SettlementView:releaseAllSingleImage()
+	if self._heroIconTab then
+		for simagecomp, _ in pairs(self._heroIconTab) do
+			simagecomp:UnLoadImage()
 		end
 	end
 end
 
-function var_0_0.onClose(arg_14_0)
-	arg_14_0:releaseAllSingleImage()
-	arg_14_0._simageplayericon:UnLoadImage()
+function Act183SettlementView:onClose()
+	self:releaseAllSingleImage()
+	self._simageplayericon:UnLoadImage()
 end
 
-function var_0_0.onDestroyView(arg_15_0)
+function Act183SettlementView:onDestroyView()
 	return
 end
 
-return var_0_0
+return Act183SettlementView

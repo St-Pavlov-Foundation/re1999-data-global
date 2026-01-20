@@ -1,25 +1,27 @@
-﻿module("modules.logic.act189.view.Activity189BaseViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/act189/view/Activity189BaseViewContainer.lua
 
-local var_0_0 = class("Activity189BaseViewContainer", BaseViewContainer)
+module("modules.logic.act189.view.Activity189BaseViewContainer", package.seeall)
 
-function var_0_0.getActivityRemainTimeStr(arg_1_0)
-	return ActivityHelper.getActivityRemainTimeStr(arg_1_0:actId())
+local Activity189BaseViewContainer = class("Activity189BaseViewContainer", BaseViewContainer)
+
+function Activity189BaseViewContainer:getActivityRemainTimeStr()
+	return ActivityHelper.getActivityRemainTimeStr(self:actId())
 end
 
-function var_0_0.sendGetTaskInfoRequest(arg_2_0, arg_2_1, arg_2_2)
-	Activity189Controller.instance:sendGetTaskInfoRequest(arg_2_1, arg_2_2)
+function Activity189BaseViewContainer:sendGetTaskInfoRequest(callback, callbackObj)
+	Activity189Controller.instance:sendGetTaskInfoRequest(callback, callbackObj)
 end
 
-function var_0_0.sendFinishAllTaskRequest(arg_3_0, arg_3_1, arg_3_2)
-	Activity189Controller.instance:sendFinishAllTaskRequest(arg_3_0:actId(), arg_3_1, arg_3_2)
+function Activity189BaseViewContainer:sendFinishAllTaskRequest(callback, callbackObj)
+	Activity189Controller.instance:sendFinishAllTaskRequest(self:actId(), callback, callbackObj)
 end
 
-function var_0_0.sendFinishTaskRequest(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	TaskRpc.instance:sendFinishTaskRequest(arg_4_1, arg_4_2, arg_4_3)
+function Activity189BaseViewContainer:sendFinishTaskRequest(taskId, callback, callbackObj)
+	TaskRpc.instance:sendFinishTaskRequest(taskId, callback, callbackObj)
 end
 
-function var_0_0.actId(arg_5_0)
+function Activity189BaseViewContainer:actId()
 	assert(false, "please override this function")
 end
 
-return var_0_0
+return Activity189BaseViewContainer

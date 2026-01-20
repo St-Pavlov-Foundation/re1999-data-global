@@ -1,11 +1,13 @@
-﻿module("modules.logic.survival.view.shelter.SurvivalCeremonyClosingViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/SurvivalCeremonyClosingViewContainer.lua
 
-local var_0_0 = class("SurvivalCeremonyClosingViewContainer", BaseViewContainer)
+module("modules.logic.survival.view.shelter.SurvivalCeremonyClosingViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local SurvivalCeremonyClosingViewContainer = class("SurvivalCeremonyClosingViewContainer", BaseViewContainer)
+
+function SurvivalCeremonyClosingViewContainer:buildViews()
 	return {
 		SurvivalCeremonyClosingView.New()
 	}
 end
 
-return var_0_0
+return SurvivalCeremonyClosingViewContainer

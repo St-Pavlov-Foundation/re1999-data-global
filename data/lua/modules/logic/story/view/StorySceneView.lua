@@ -1,116 +1,118 @@
-﻿module("modules.logic.story.view.StorySceneView", package.seeall)
+﻿-- chunkname: @modules/logic/story/view/StorySceneView.lua
 
-local var_0_0 = class("StorySceneView", BaseView)
+module("modules.logic.story.view.StorySceneView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local StorySceneView = class("StorySceneView", BaseView)
+
+function StorySceneView:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function StorySceneView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function StorySceneView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._cameraComp = GameSceneMgr.instance:getCurScene().camera
-	arg_4_0._sceneRoot = CameraMgr.instance:getSceneRoot()
+function StorySceneView:_editableInitView()
+	self._cameraComp = GameSceneMgr.instance:getCurScene().camera
+	self._sceneRoot = CameraMgr.instance:getSceneRoot()
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0:_initScene()
+function StorySceneView:onOpen()
+	self:_initScene()
 end
 
-function var_0_0.onClose(arg_6_0)
-	arg_6_0:_disposeScene()
+function StorySceneView:onClose()
+	self:_disposeScene()
 end
 
-function var_0_0._initScene(arg_7_0)
-	local var_7_0 = arg_7_0.viewParam.levelId
-	local var_7_1 = lua_scene_level.configDict[var_7_0]
+function StorySceneView:_initScene()
+	local levelId = self.viewParam.levelId
+	local levelConfig = lua_scene_level.configDict[levelId]
 
-	arg_7_0._sceneContainer = gohelper.create3d(arg_7_0._sceneRoot, "StoryScene")
+	self._sceneContainer = gohelper.create3d(self._sceneRoot, "StoryScene")
 
-	if not var_7_1 then
+	if not levelConfig then
 		return
 	end
 
-	local var_7_2 = ResUrl.getSceneUrl(var_7_1.resName)
+	local sceneRes = ResUrl.getSceneUrl(levelConfig.resName)
 
-	arg_7_0._sceneLoader = MultiAbLoader.New()
+	self._sceneLoader = MultiAbLoader.New()
 
-	arg_7_0._sceneLoader:addPath(var_7_2)
-	arg_7_0._sceneLoader:startLoad(function(arg_8_0)
-		local var_8_0 = arg_8_0:getAssetItem(var_7_2)
+	self._sceneLoader:addPath(sceneRes)
+	self._sceneLoader:startLoad(function(multiAbLoader)
+		local assetItem = multiAbLoader:getAssetItem(sceneRes)
 
-		if not var_8_0 then
+		if not assetItem then
 			return
 		end
 
-		local var_8_1 = arg_7_0._assetItem
+		local oldAsstet = self._assetItem
 
-		arg_7_0._assetItem = var_8_0
+		self._assetItem = assetItem
 
-		arg_7_0._assetItem:Retain()
+		self._assetItem:Retain()
 
-		if var_8_1 then
-			var_8_1:Release()
+		if oldAsstet then
+			oldAsstet:Release()
 		end
 
-		local var_8_2 = arg_7_0._assetItem:GetResource(var_7_2)
-		local var_8_3 = gohelper.clone(var_8_2, arg_7_0._sceneContainer, var_7_1.resName)
+		local scenePrefab = self._assetItem:GetResource(sceneRes)
+		local sceneGO = gohelper.clone(scenePrefab, self._sceneContainer, levelConfig.resName)
 
-		if var_7_0 == 10101 then
-			local var_8_4 = arg_7_0.viewContainer:getStoryMainSceneView()
+		if levelId == 10101 then
+			local storyMainSceneView = self.viewContainer:getStoryMainSceneView()
 
-			if var_8_4 then
-				var_8_4:setSceneId(1)
-				var_8_4:initSceneGo(var_8_3, var_7_1.resName)
+			if storyMainSceneView then
+				storyMainSceneView:setSceneId(1)
+				storyMainSceneView:initSceneGo(sceneGO, levelConfig.resName)
 			end
 		end
 	end)
 
-	local var_7_3 = lua_camera.configDict[var_7_1.cameraId]
+	local cameraConfig = lua_camera.configDict[levelConfig.cameraId]
 
-	arg_7_0._cameraComp:setCameraTraceEnable(true)
-	arg_7_0._cameraComp:resetParam(var_7_3)
-	arg_7_0._cameraComp:applyDirectly()
-	arg_7_0._cameraComp:setCameraTraceEnable(false)
-	PostProcessingMgr.instance:setLocalBloomColor(Color.New(var_7_1.bloomR, var_7_1.bloomG, var_7_1.bloomB, var_7_1.bloomA))
+	self._cameraComp:setCameraTraceEnable(true)
+	self._cameraComp:resetParam(cameraConfig)
+	self._cameraComp:applyDirectly()
+	self._cameraComp:setCameraTraceEnable(false)
+	PostProcessingMgr.instance:setLocalBloomColor(Color.New(levelConfig.bloomR, levelConfig.bloomG, levelConfig.bloomB, levelConfig.bloomA))
 end
 
-function var_0_0._disposeScene(arg_9_0)
-	if arg_9_0._sceneContainer then
-		gohelper.destroy(arg_9_0._sceneContainer)
+function StorySceneView:_disposeScene()
+	if self._sceneContainer then
+		gohelper.destroy(self._sceneContainer)
 
-		arg_9_0._sceneContainer = nil
+		self._sceneContainer = nil
 	end
 
-	if arg_9_0._assetItem then
-		arg_9_0._assetItem:Release()
+	if self._assetItem then
+		self._assetItem:Release()
 
-		arg_9_0._assetItem = nil
+		self._assetItem = nil
 	end
 
-	if arg_9_0._sceneLoader then
-		arg_9_0._sceneLoader:dispose()
+	if self._sceneLoader then
+		self._sceneLoader:dispose()
 
-		arg_9_0._sceneLoader = nil
+		self._sceneLoader = nil
 	end
 
-	arg_9_0._cameraComp:setCameraTraceEnable(true)
-	arg_9_0._cameraComp:resetParam()
-	arg_9_0._cameraComp:applyDirectly()
-	arg_9_0._cameraComp:setCameraTraceEnable(false)
+	self._cameraComp:setCameraTraceEnable(true)
+	self._cameraComp:resetParam()
+	self._cameraComp:applyDirectly()
+	self._cameraComp:setCameraTraceEnable(false)
 
-	local var_9_0 = GameSceneMgr.instance:getCurLevelId()
-	local var_9_1 = lua_scene_level.configDict[var_9_0]
+	local curLevelId = GameSceneMgr.instance:getCurLevelId()
+	local curLevelConfig = lua_scene_level.configDict[curLevelId]
 
-	PostProcessingMgr.instance:setLocalBloomColor(Color.New(var_9_1.bloomR, var_9_1.bloomG, var_9_1.bloomB, var_9_1.bloomA))
+	PostProcessingMgr.instance:setLocalBloomColor(Color.New(curLevelConfig.bloomR, curLevelConfig.bloomG, curLevelConfig.bloomB, curLevelConfig.bloomA))
 end
 
-return var_0_0
+return StorySceneView

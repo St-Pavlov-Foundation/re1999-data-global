@@ -1,162 +1,163 @@
-﻿module("modules.logic.scene.pushbox.logic.PushBoxCharacter", package.seeall)
+﻿-- chunkname: @modules/logic/scene/pushbox/logic/PushBoxCharacter.lua
 
-local var_0_0 = class("PushBoxCharacter", UserDataDispose)
+module("modules.logic.scene.pushbox.logic.PushBoxCharacter", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+local PushBoxCharacter = class("PushBoxCharacter", UserDataDispose)
 
-	arg_1_0._game_mgr = arg_1_1
-	arg_1_0._scene = arg_1_1._scene
-	arg_1_0._scene_root = arg_1_1._scene_root
+function PushBoxCharacter:ctor(game_mgr)
+	self:__onInit()
+
+	self._game_mgr = game_mgr
+	self._scene = game_mgr._scene
+	self._scene_root = game_mgr._scene_root
 end
 
-function var_0_0.revertMove(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0:_moveCharacter(arg_2_1, arg_2_2, true)
+function PushBoxCharacter:revertMove(pos_x, pos_y)
+	self:_moveCharacter(pos_x, pos_y, true)
 end
 
-function var_0_0.revertDirection(arg_3_0, arg_3_1)
-	arg_3_0._cur_direction = arg_3_1
+function PushBoxCharacter:revertDirection(direction)
+	self._cur_direction = direction
 end
 
-function var_0_0.move(arg_4_0, arg_4_1)
-	if not arg_4_0._last_time then
-		arg_4_0._last_time = Time.time
-	elseif Time.time - arg_4_0._last_time < 0.2 then
+function PushBoxCharacter:move(direction)
+	if not self._last_time then
+		self._last_time = Time.time
+	elseif Time.time - self._last_time < 0.2 then
 		return
 	end
 
-	local var_4_0
-	local var_4_1
+	local to_x, to_y
 
-	if arg_4_1 == PushBoxGameMgr.Direction.Up then
-		var_4_0 = arg_4_0._pos_x
-		var_4_1 = arg_4_0._pos_y - 1
-	elseif arg_4_1 == PushBoxGameMgr.Direction.Down then
-		var_4_0 = arg_4_0._pos_x
-		var_4_1 = arg_4_0._pos_y + 1
-	elseif arg_4_1 == PushBoxGameMgr.Direction.Left then
-		var_4_0 = arg_4_0._pos_x - 1
-		var_4_1 = arg_4_0._pos_y
-	elseif arg_4_1 == PushBoxGameMgr.Direction.Right then
-		var_4_0 = arg_4_0._pos_x + 1
-		var_4_1 = arg_4_0._pos_y
+	if direction == PushBoxGameMgr.Direction.Up then
+		to_x = self._pos_x
+		to_y = self._pos_y - 1
+	elseif direction == PushBoxGameMgr.Direction.Down then
+		to_x = self._pos_x
+		to_y = self._pos_y + 1
+	elseif direction == PushBoxGameMgr.Direction.Left then
+		to_x = self._pos_x - 1
+		to_y = self._pos_y
+	elseif direction == PushBoxGameMgr.Direction.Right then
+		to_x = self._pos_x + 1
+		to_y = self._pos_y
 	end
 
-	if arg_4_0._game_mgr:outOfBounds(var_4_0, var_4_1) then
+	if self._game_mgr:outOfBounds(to_x, to_y) then
 		return
 	end
 
-	arg_4_0._cur_direction = arg_4_1
+	self._cur_direction = direction
 
-	if not arg_4_0:_canMove(var_4_0, var_4_1) then
+	if not self:_canMove(to_x, to_y) then
 		return
 	end
 
-	arg_4_0._last_time = Time.time
+	self._last_time = Time.time
 
-	arg_4_0._game_mgr.step_data:moveCharacter(arg_4_0._pos_x, arg_4_0._pos_y)
-	arg_4_0:_moveCharacter(var_4_0, var_4_1)
+	self._game_mgr.step_data:moveCharacter(self._pos_x, self._pos_y)
+	self:_moveCharacter(to_x, to_y)
 end
 
-function var_0_0._moveCharacter(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	local var_5_0 = arg_5_0._game_mgr:getCell(arg_5_0._pos_x, arg_5_0._pos_y)
+function PushBoxCharacter:_moveCharacter(aim_pos_x, aim_pos_y, is_revert)
+	local cur_cell = self._game_mgr:getCell(self._pos_x, self._pos_y)
 
-	arg_5_0._pos_x = arg_5_1
-	arg_5_0._pos_y = arg_5_2
+	self._pos_x = aim_pos_x
+	self._pos_y = aim_pos_y
 
-	arg_5_0:_releaseWalkTween()
+	self:_releaseWalkTween()
 
-	local var_5_1 = arg_5_0._game_mgr:getCell(arg_5_1, arg_5_2)
-	local var_5_2 = var_5_1:getTransform().position
+	local aim_cell = self._game_mgr:getCell(aim_pos_x, aim_pos_y)
+	local tar_pos = aim_cell:getTransform().position
 
-	arg_5_0._character_final_renderer_index = var_5_1:getRendererIndex()
+	self._character_final_renderer_index = aim_cell:getRendererIndex()
 
-	arg_5_0:_setRendererIndex(var_5_0:getRendererIndex() >= var_5_1:getRendererIndex() and var_5_0:getRendererIndex() or var_5_1:getRendererIndex())
+	self:_setRendererIndex(cur_cell:getRendererIndex() >= aim_cell:getRendererIndex() and cur_cell:getRendererIndex() or aim_cell:getRendererIndex())
 
-	arg_5_0._walk_tween = ZProj.TweenHelper.DOMove(arg_5_0._transform, var_5_2.x, var_5_2.y, var_5_2.z, 0.2)
+	self._walk_tween = ZProj.TweenHelper.DOMove(self._transform, tar_pos.x, tar_pos.y, tar_pos.z, 0.2)
 
-	TaskDispatcher.runDelay(arg_5_0._refreshCharacterRendererIndex, arg_5_0, 0.2)
-	arg_5_0._game_mgr:detectCellData()
-	arg_5_0._game_mgr.cell_mgr:releaseBoxLight()
+	TaskDispatcher.runDelay(self._refreshCharacterRendererIndex, self, 0.2)
+	self._game_mgr:detectCellData()
+	self._game_mgr.cell_mgr:releaseBoxLight()
 
-	if not arg_5_3 then
+	if not is_revert then
 		PushBoxController.instance:dispatchEvent(PushBoxEvent.RefreshElement)
 		PushBoxController.instance:dispatchEvent(PushBoxEvent.StepFinished)
-		arg_5_0._game_mgr:stepOver()
+		self._game_mgr:stepOver()
 	end
 
-	if arg_5_0._ani then
-		for iter_5_0, iter_5_1 in ipairs(arg_5_0._ani) do
-			iter_5_1:Play("downm", 0, 0)
+	if self._ani then
+		for i, v in ipairs(self._ani) do
+			v:Play("downm", 0, 0)
 		end
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_activity_role_move)
 end
 
-function var_0_0._refreshCharacterRendererIndex(arg_6_0)
-	arg_6_0:_setRendererIndex(arg_6_0._character_final_renderer_index)
+function PushBoxCharacter:_refreshCharacterRendererIndex()
+	self:_setRendererIndex(self._character_final_renderer_index)
 end
 
-function var_0_0._canMove(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = arg_7_0._game_mgr:getCell(arg_7_1, arg_7_2)
+function PushBoxCharacter:_canMove(pos_x, pos_y)
+	local target_cell = self._game_mgr:getCell(pos_x, pos_y)
 
-	if var_7_0:getBox() then
-		local var_7_1 = arg_7_1
-		local var_7_2 = arg_7_2
+	if target_cell:getBox() then
+		local aim_x = pos_x
+		local aim_y = pos_y
 
-		if arg_7_0._cur_direction == PushBoxGameMgr.Direction.Up then
-			var_7_1 = arg_7_1
-			var_7_2 = arg_7_2 - 1
-		elseif arg_7_0._cur_direction == PushBoxGameMgr.Direction.Down then
-			var_7_1 = arg_7_1
-			var_7_2 = arg_7_2 + 1
-		elseif arg_7_0._cur_direction == PushBoxGameMgr.Direction.Left then
-			var_7_1 = arg_7_1 - 1
-			var_7_2 = arg_7_2
-		elseif arg_7_0._cur_direction == PushBoxGameMgr.Direction.Right then
-			var_7_1 = arg_7_1 + 1
-			var_7_2 = arg_7_2
+		if self._cur_direction == PushBoxGameMgr.Direction.Up then
+			aim_x = pos_x
+			aim_y = pos_y - 1
+		elseif self._cur_direction == PushBoxGameMgr.Direction.Down then
+			aim_x = pos_x
+			aim_y = pos_y + 1
+		elseif self._cur_direction == PushBoxGameMgr.Direction.Left then
+			aim_x = pos_x - 1
+			aim_y = pos_y
+		elseif self._cur_direction == PushBoxGameMgr.Direction.Right then
+			aim_x = pos_x + 1
+			aim_y = pos_y
 		end
 
-		local var_7_3 = arg_7_0._game_mgr:getCell(var_7_1, var_7_2)
+		local box_aim_cell = self._game_mgr:getCell(aim_x, aim_y)
 
-		if var_7_3 then
-			local var_7_4 = true
+		if box_aim_cell then
+			local can_push = true
 
-			if var_7_3:getBox() then
-				var_7_4 = false
+			if box_aim_cell:getBox() then
+				can_push = false
 			else
-				local var_7_5 = var_7_3:getCellType()
+				local box_cell_type = box_aim_cell:getCellType()
 
-				if arg_7_0._game_mgr:typeIsEnemy(var_7_5) then
-					var_7_4 = false
-				elseif arg_7_0._game_mgr:typeIsLight(var_7_5) then
-					var_7_4 = false
-				elseif var_7_5 == PushBoxGameMgr.ElementType.Empty then
-					var_7_4 = false
+				if self._game_mgr:typeIsEnemy(box_cell_type) then
+					can_push = false
+				elseif self._game_mgr:typeIsLight(box_cell_type) then
+					can_push = false
+				elseif box_cell_type == PushBoxGameMgr.ElementType.Empty then
+					can_push = false
 				end
 			end
 
-			if var_7_4 then
-				arg_7_0._game_mgr.step_data:pushBox(arg_7_1, arg_7_2, var_7_1, var_7_2)
-				arg_7_0._game_mgr.cell_mgr:pushBox(arg_7_1, arg_7_2, var_7_1, var_7_2)
-				arg_7_0:_moveCharacter(arg_7_1, arg_7_2)
+			if can_push then
+				self._game_mgr.step_data:pushBox(pos_x, pos_y, aim_x, aim_y)
+				self._game_mgr.cell_mgr:pushBox(pos_x, pos_y, aim_x, aim_y)
+				self:_moveCharacter(pos_x, pos_y)
 			end
 		end
 
 		return false
 	end
 
-	if arg_7_0._game_mgr:typeIsEnemy(var_7_0:getCellType()) then
+	if self._game_mgr:typeIsEnemy(target_cell:getCellType()) then
 		return false
 	end
 
-	if arg_7_0._game_mgr:typeIsLight(var_7_0:getCellType()) then
+	if self._game_mgr:typeIsLight(target_cell:getCellType()) then
 		return false
 	end
 
-	arg_7_0._chechCanMove = arg_7_0._chechCanMove or {
+	self._chechCanMove = self._chechCanMove or {
 		[PushBoxGameMgr.ElementType.Empty] = false,
 		[PushBoxGameMgr.ElementType.Mechanics] = true,
 		[PushBoxGameMgr.ElementType.Fan] = true,
@@ -164,16 +165,16 @@ function var_0_0._canMove(arg_7_0, arg_7_1, arg_7_2)
 		[PushBoxGameMgr.ElementType.Goal] = true
 	}
 
-	if arg_7_0._chechCanMove[var_7_0:getCellType()] then
-		return arg_7_0._chechCanMove[var_7_0:getCellType()]
+	if self._chechCanMove[target_cell:getCellType()] then
+		return self._chechCanMove[target_cell:getCellType()]
 	end
 
-	if arg_7_0._game_mgr:typeIsCharacter(var_7_0:getCellType()) then
+	if self._game_mgr:typeIsCharacter(target_cell:getCellType()) then
 		return true
 	end
 
-	if arg_7_0._game_mgr:typeIsDoor(var_7_0:getCellType()) then
-		if not var_7_0.door_is_opened then
+	if self._game_mgr:typeIsDoor(target_cell:getCellType()) then
+		if not target_cell.door_is_opened then
 			return false
 		end
 
@@ -181,97 +182,98 @@ function var_0_0._canMove(arg_7_0, arg_7_1, arg_7_2)
 	end
 end
 
-function var_0_0.getCharacterObj(arg_8_0)
-	return arg_8_0._gameObject
+function PushBoxCharacter:getCharacterObj()
+	return self._gameObject
 end
 
-function var_0_0.getCharacterTran(arg_9_0)
-	return arg_9_0._transform
+function PushBoxCharacter:getCharacterTran()
+	return self._transform
 end
 
-function var_0_0.getPosX(arg_10_0)
-	return arg_10_0._pos_x
+function PushBoxCharacter:getPosX()
+	return self._pos_x
 end
 
-function var_0_0.getPosY(arg_11_0)
-	return arg_11_0._pos_y
+function PushBoxCharacter:getPosY()
+	return self._pos_y
 end
 
-function var_0_0.init(arg_12_0)
-	arg_12_0._gameObject = gohelper.create3d(gohelper.findChild(arg_12_0._scene:getSceneContainerGO(), "Root"), "character")
+function PushBoxCharacter:init()
+	self._gameObject = gohelper.create3d(gohelper.findChild(self._scene:getSceneContainerGO(), "Root"), "character")
 
-	gohelper.clone(gohelper.findChild(arg_12_0._scene_root, "Root/OriginElement/CharacterUp"), arg_12_0._gameObject, PushBoxGameMgr.Direction.Up)
-	gohelper.clone(gohelper.findChild(arg_12_0._scene_root, "Root/OriginElement/CharacterDown"), arg_12_0._gameObject, PushBoxGameMgr.Direction.Down)
-	gohelper.clone(gohelper.findChild(arg_12_0._scene_root, "Root/OriginElement/CharacterLeft"), arg_12_0._gameObject, PushBoxGameMgr.Direction.Left)
-	gohelper.clone(gohelper.findChild(arg_12_0._scene_root, "Root/OriginElement/CharacterRight"), arg_12_0._gameObject, PushBoxGameMgr.Direction.Right)
+	gohelper.clone(gohelper.findChild(self._scene_root, "Root/OriginElement/CharacterUp"), self._gameObject, PushBoxGameMgr.Direction.Up)
+	gohelper.clone(gohelper.findChild(self._scene_root, "Root/OriginElement/CharacterDown"), self._gameObject, PushBoxGameMgr.Direction.Down)
+	gohelper.clone(gohelper.findChild(self._scene_root, "Root/OriginElement/CharacterLeft"), self._gameObject, PushBoxGameMgr.Direction.Left)
+	gohelper.clone(gohelper.findChild(self._scene_root, "Root/OriginElement/CharacterRight"), self._gameObject, PushBoxGameMgr.Direction.Right)
 
-	arg_12_0._transform = arg_12_0._gameObject.transform
+	self._transform = self._gameObject.transform
 
-	arg_12_0:_refreshPos()
+	self:_refreshPos()
 
-	arg_12_0._ani = arg_12_0:getUserDataTb_()
+	self._ani = self:getUserDataTb_()
 
-	for iter_12_0 = 0, 3 do
-		local var_12_0 = arg_12_0._gameObject.transform:GetChild(iter_12_0)
+	for i = 0, 3 do
+		local tar_transform = self._gameObject.transform:GetChild(i)
 
-		table.insert(arg_12_0._ani, gohelper.onceAddComponent(var_12_0.gameObject, typeof(UnityEngine.Animator)))
+		table.insert(self._ani, gohelper.onceAddComponent(tar_transform.gameObject, typeof(UnityEngine.Animator)))
 	end
 end
 
-function var_0_0.setPos(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	local var_13_0 = arg_13_0._game_mgr:getCell(arg_13_1, arg_13_2)
+function PushBoxCharacter:setPos(x, y, direction)
+	local tar_cell = self._game_mgr:getCell(x, y)
 
-	arg_13_0._cur_direction = arg_13_3
-	arg_13_0._pos_x = var_13_0:getPosX()
-	arg_13_0._pos_y = var_13_0:getPosY()
+	self._cur_direction = direction
+	self._pos_x = tar_cell:getPosX()
+	self._pos_y = tar_cell:getPosY()
 
-	arg_13_0:_refreshPos()
+	self:_refreshPos()
 end
 
-function var_0_0.getDirection(arg_14_0)
-	return arg_14_0._cur_direction
+function PushBoxCharacter:getDirection()
+	return self._cur_direction
 end
 
-function var_0_0._refreshPos(arg_15_0)
-	if not arg_15_0._transform then
+function PushBoxCharacter:_refreshPos()
+	if not self._transform then
 		return
 	end
 
-	local var_15_0 = arg_15_0._game_mgr:getCell(arg_15_0._pos_x, arg_15_0._pos_y)
+	local tar_cell = self._game_mgr:getCell(self._pos_x, self._pos_y)
 
-	if var_15_0 then
-		local var_15_1 = var_15_0:getCellObj().transform.position
+	if tar_cell then
+		local tar_pos = tar_cell:getCellObj().transform.position
 
-		transformhelper.setPos(arg_15_0._transform, var_15_1.x, var_15_1.y, var_15_1.z)
-		arg_15_0:_setRendererIndex(var_15_0:getRendererIndex())
+		transformhelper.setPos(self._transform, tar_pos.x, tar_pos.y, tar_pos.z)
+		self:_setRendererIndex(tar_cell:getRendererIndex())
 	end
 end
 
-function var_0_0._setRendererIndex(arg_16_0, arg_16_1)
-	local var_16_0 = tostring(arg_16_0._cur_direction)
+function PushBoxCharacter:_setRendererIndex(tar_index)
+	local cur_direction = tostring(self._cur_direction)
 
-	for iter_16_0 = 0, 3 do
-		local var_16_1 = arg_16_0._gameObject.transform:GetChild(iter_16_0)
+	for i = 0, 3 do
+		local tar_transform = self._gameObject.transform:GetChild(i)
+		local meshRenderer = tar_transform:GetChild(0):GetComponent("MeshRenderer")
 
-		var_16_1:GetChild(0):GetComponent("MeshRenderer").sortingOrder = arg_16_1 + 8
+		meshRenderer.sortingOrder = tar_index + 8
 
-		gohelper.setActive(var_16_1.gameObject, var_16_1.name == var_16_0)
+		gohelper.setActive(tar_transform.gameObject, tar_transform.name == cur_direction)
 	end
 end
 
-function var_0_0._releaseWalkTween(arg_17_0)
-	if arg_17_0._walk_tween then
-		ZProj.TweenHelper.KillById(arg_17_0._walk_tween)
+function PushBoxCharacter:_releaseWalkTween()
+	if self._walk_tween then
+		ZProj.TweenHelper.KillById(self._walk_tween)
 	end
 
-	arg_17_0._walk_tween = nil
+	self._walk_tween = nil
 end
 
-function var_0_0.releaseSelf(arg_18_0)
-	gohelper.destroy(arg_18_0._gameObject)
-	TaskDispatcher.cancelTask(arg_18_0._refreshCharacterRendererIndex, arg_18_0)
-	arg_18_0:_releaseWalkTween()
-	arg_18_0:__onDispose()
+function PushBoxCharacter:releaseSelf()
+	gohelper.destroy(self._gameObject)
+	TaskDispatcher.cancelTask(self._refreshCharacterRendererIndex, self)
+	self:_releaseWalkTween()
+	self:__onDispose()
 end
 
-return var_0_0
+return PushBoxCharacter

@@ -1,17 +1,19 @@
-﻿module("modules.logic.fight.entity.comp.FightNameUIExPointExtraItem", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/FightNameUIExPointExtraItem.lua
 
-local var_0_0 = class("FightNameUIExPointExtraItem", FightNameUIExPointBaseItem)
+module("modules.logic.fight.entity.comp.FightNameUIExPointExtraItem", package.seeall)
 
-function var_0_0.getType(arg_1_0)
+local FightNameUIExPointExtraItem = class("FightNameUIExPointExtraItem", FightNameUIExPointBaseItem)
+
+function FightNameUIExPointExtraItem:getType()
 	return FightNameUIExPointBaseItem.ExPointType.Extra
 end
 
-function var_0_0.GetExtraExPointItem(arg_2_0)
-	local var_2_0 = var_0_0.New()
+function FightNameUIExPointExtraItem.GetExtraExPointItem(exPointGo)
+	local pointItem = FightNameUIExPointExtraItem.New()
 
-	var_2_0:init(arg_2_0)
+	pointItem:init(exPointGo)
 
-	return var_2_0
+	return pointItem
 end
 
-return var_0_0
+return FightNameUIExPointExtraItem

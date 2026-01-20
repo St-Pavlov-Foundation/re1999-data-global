@@ -1,18 +1,20 @@
-﻿module("modules.logic.fight.system.work.FightWorkPlayAroundUpRankContainer", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkPlayAroundUpRankContainer.lua
 
-local var_0_0 = class("FightWorkPlayAroundUpRankContainer", FightStepEffectFlow)
-local var_0_1 = {
+module("modules.logic.fight.system.work.FightWorkPlayAroundUpRankContainer", package.seeall)
+
+local FightWorkPlayAroundUpRankContainer = class("FightWorkPlayAroundUpRankContainer", FightStepEffectFlow)
+local parallelEffectType = {
 	[FightEnum.EffectType.PLAYAROUNDUPRANK] = true,
 	[FightEnum.EffectType.PLAYAROUNDDOWNRANK] = true,
 	[FightEnum.EffectType.PLAYCHANGERANKFAIL] = true
 }
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0:playAdjacentParallelEffect(var_0_1, true)
+function FightWorkPlayAroundUpRankContainer:onStart()
+	self:playAdjacentParallelEffect(parallelEffectType, true)
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkPlayAroundUpRankContainer:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkPlayAroundUpRankContainer

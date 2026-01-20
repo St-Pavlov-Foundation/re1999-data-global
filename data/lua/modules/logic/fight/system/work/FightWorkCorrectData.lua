@@ -1,27 +1,29 @@
-﻿module("modules.logic.fight.system.work.FightWorkCorrectData", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkCorrectData.lua
 
-local var_0_0 = class("FightWorkCorrectData", BaseWork)
+module("modules.logic.fight.system.work.FightWorkCorrectData", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = FightDataHelper.roundMgr:getRoundData()
-	local var_1_1 = var_1_0 and var_1_0.exPointInfo
+local FightWorkCorrectData = class("FightWorkCorrectData", BaseWork)
 
-	if var_1_1 then
-		for iter_1_0, iter_1_1 in pairs(var_1_1) do
-			local var_1_2 = FightDataHelper.entityMgr:getById(iter_1_0)
+function FightWorkCorrectData:onStart(context)
+	local curRound = FightDataHelper.roundMgr:getRoundData()
+	local dataList = curRound and curRound.exPointInfo
 
-			if var_1_2 and iter_1_1.currentHp and iter_1_1.currentHp ~= var_1_2.currentHp then
-				var_1_2:setHp(iter_1_1.currentHp)
-				FightController.instance:dispatchEvent(FightEvent.OnCurrentHpChange, iter_1_0)
+	if dataList then
+		for entityId, data in pairs(dataList) do
+			local entityMO = FightDataHelper.entityMgr:getById(entityId)
+
+			if entityMO and data.currentHp and data.currentHp ~= entityMO.currentHp then
+				entityMO:setHp(data.currentHp)
+				FightController.instance:dispatchEvent(FightEvent.OnCurrentHpChange, entityId)
 			end
 		end
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkCorrectData:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkCorrectData

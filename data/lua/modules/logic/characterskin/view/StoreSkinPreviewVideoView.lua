@@ -1,174 +1,177 @@
-﻿module("modules.logic.characterskin.view.StoreSkinPreviewVideoView", package.seeall)
+﻿-- chunkname: @modules/logic/characterskin/view/StoreSkinPreviewVideoView.lua
 
-local var_0_0 = class("StoreSkinPreviewVideoView", BaseView)
+module("modules.logic.characterskin.view.StoreSkinPreviewVideoView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._startTime = Time.time
-	arg_1_0._videoRoot = gohelper.findChild(arg_1_0.viewGO, "video")
-	arg_1_0._clickMask = gohelper.findChildClick(arg_1_0._videoRoot, "clickMask")
-	arg_1_0._btnSkip = gohelper.findChildButtonWithAudio(arg_1_0._videoRoot, "#btn_skip")
-	arg_1_0._videoGO = gohelper.findChild(arg_1_0._videoRoot, "#go_video")
+local StoreSkinPreviewVideoView = class("StoreSkinPreviewVideoView", BaseView)
 
-	gohelper.setActive(arg_1_0._btnSkip.gameObject, false)
+function StoreSkinPreviewVideoView:onInitView()
+	self._startTime = Time.time
+	self._videoRoot = gohelper.findChild(self.viewGO, "video")
+	self._clickMask = gohelper.findChildClick(self._videoRoot, "clickMask")
+	self._btnSkip = gohelper.findChildButtonWithAudio(self._videoRoot, "#btn_skip")
+	self._videoGO = gohelper.findChild(self._videoRoot, "#go_video")
+
+	gohelper.setActive(self._btnSkip.gameObject, false)
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._clickMask:AddClickListener(arg_2_0._onClickMask, arg_2_0)
-	arg_2_0._btnSkip:AddClickListener(arg_2_0._onClickBtnSkip, arg_2_0)
+function StoreSkinPreviewVideoView:addEvents()
+	self._clickMask:AddClickListener(self._onClickMask, self)
+	self._btnSkip:AddClickListener(self._onClickBtnSkip, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._clickMask:RemoveClickListener()
-	arg_3_0._btnSkip:RemoveClickListener()
+function StoreSkinPreviewVideoView:removeEvents()
+	self._clickMask:RemoveClickListener()
+	self._btnSkip:RemoveClickListener()
 end
 
-function var_0_0._onClickMask(arg_4_0)
-	if not arg_4_0._hasPlayFinish then
-		gohelper.setActive(arg_4_0._btnSkip.gameObject, true)
+function StoreSkinPreviewVideoView:_onClickMask()
+	if not self._hasPlayFinish then
+		gohelper.setActive(self._btnSkip.gameObject, true)
 	end
 end
 
-function var_0_0._onClickBtnSkip(arg_5_0)
-	arg_5_0:_stopMovie()
+function StoreSkinPreviewVideoView:_onClickBtnSkip()
+	self:_stopMovie()
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0._skinGoodMo = arg_6_0.viewParam.goodsMO
+function StoreSkinPreviewVideoView:onOpen()
+	self._skinGoodMo = self.viewParam.goodsMO
 
-	local var_6_0 = arg_6_0._skinGoodMo.config.product
-	local var_6_1 = string.splitToNumber(var_6_0, "#")[2]
+	local product = self._skinGoodMo.config.product
+	local productInfo = string.splitToNumber(product, "#")
+	local skinId = productInfo[2]
 
-	arg_6_0.skinConfig = lua_skin.configDict[var_6_1]
+	self.skinConfig = lua_skin.configDict[skinId]
 
-	local var_6_2 = lua_character_limited.configDict[var_6_1]
+	local skinViewCfg = lua_character_limited.configDict[skinId]
 
-	if not var_6_2 or VersionValidator.instance:isInReviewing() then
-		arg_6_0:checkVideoGuide()
+	if not skinViewCfg or VersionValidator.instance:isInReviewing() then
+		self:checkVideoGuide()
 
 		return
 	end
 
-	arg_6_0._startTime = Time.time
-	arg_6_0._hasPlayFinish = false
+	self._startTime = Time.time
+	self._hasPlayFinish = false
 
-	NavigateMgr.instance:addEscape(arg_6_0.viewName, arg_6_0._onEscBtnClick, arg_6_0)
+	NavigateMgr.instance:addEscape(self.viewName, self._onEscBtnClick, self)
 
-	if not var_6_2 then
+	if not skinViewCfg then
 		return
 	else
-		arg_6_0._videoAudioId = var_6_2.audio
-		arg_6_0._stopAudioId = var_6_2.stopAudio
-		arg_6_0._stopBgm = arg_6_0._videoAudioId > 0
-		arg_6_0._videoPath = string.nilorempty(var_6_2.entranceMv) and "" or langVideoUrl(var_6_2.entranceMv)
-		arg_6_0._mvTime = var_6_2.mvtime
+		self._videoAudioId = skinViewCfg.audio
+		self._stopAudioId = skinViewCfg.stopAudio
+		self._stopBgm = self._videoAudioId > 0
+		self._videoPath = string.nilorempty(skinViewCfg.entranceMv) and "" or skinViewCfg.entranceMv
+		self._mvTime = skinViewCfg.mvtime
 	end
 
-	if arg_6_0._stopBgm then
-		arg_6_0:_stopMainBgm()
-		TaskDispatcher.runDelay(arg_6_0._stopMainBgm, arg_6_0, 0.5)
+	if self._stopBgm then
+		self:_stopMainBgm()
+		TaskDispatcher.runDelay(self._stopMainBgm, self, 0.5)
 	end
 
-	gohelper.setActive(arg_6_0._videoRoot, true)
+	gohelper.setActive(self._videoRoot, true)
 
-	if not string.nilorempty(arg_6_0._videoPath) then
-		if not arg_6_0._videoPlayer then
-			arg_6_0._videoPlayer, arg_6_0._displauUGUI, arg_6_0._videoPlayerGO = AvProMgr.instance:getVideoPlayer(arg_6_0._videoGO)
+	if not string.nilorempty(self._videoPath) then
+		if not self._videoPlayer then
+			self._videoPlayer, self._videoPlayerGO = VideoPlayerMgr.instance:createGoAndVideoPlayer(self._videoGO)
 
-			local var_6_3 = MonoHelper.addNoUpdateLuaComOnceToGo(arg_6_0._videoPlayerGO, FullScreenVideoAdapter)
+			local uiVideoAdapter = MonoHelper.addNoUpdateLuaComOnceToGo(self._videoPlayerGO, FullScreenVideoAdapter)
 
-			arg_6_0._videoPlayerGO = nil
+			self._videoPlayerGO = nil
 		end
 
-		arg_6_0._videoPlayer:Play(arg_6_0._displauUGUI, arg_6_0._videoPath, false, arg_6_0._videoStatusUpdate, arg_6_0)
+		self._videoPlayer:play(self._videoPath, false, self._videoStatusUpdate, self)
 
-		if arg_6_0._mvTime and arg_6_0._mvTime > 0 then
-			TaskDispatcher.runDelay(arg_6_0._timeout, arg_6_0, arg_6_0._mvTime)
+		if self._mvTime and self._mvTime > 0 then
+			TaskDispatcher.runDelay(self._timeout, self, self._mvTime)
 		end
 	else
-		TaskDispatcher.runDelay(arg_6_0._hideVideoGo, arg_6_0, 1)
+		TaskDispatcher.runDelay(self._hideVideoGo, self, 1)
 	end
 end
 
-function var_0_0.checkVideoGuide(arg_7_0)
-	if arg_7_0.skinConfig and arg_7_0.skinConfig.isSkinVideo then
+function StoreSkinPreviewVideoView:checkVideoGuide()
+	if self.skinConfig and self.skinConfig.isSkinVideo then
 		CharacterController.instance:dispatchEvent(CharacterEvent.onClientVideoPlayFinish)
 	end
 end
 
-function var_0_0.onClose(arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0._timeout, arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0._hideVideoGo, arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0._stopMainBgm, arg_8_0)
+function StoreSkinPreviewVideoView:onClose()
+	TaskDispatcher.cancelTask(self._timeout, self)
+	TaskDispatcher.cancelTask(self._hideVideoGo, self)
+	TaskDispatcher.cancelTask(self._stopMainBgm, self)
 
-	if arg_8_0._videoPlayer then
-		arg_8_0._videoPlayer:Stop()
-		arg_8_0._videoPlayer:Clear()
+	if self._videoPlayer then
+		self._videoPlayer:stop()
+		self._videoPlayer:clear()
 
-		arg_8_0._videoPlayer = nil
+		self._videoPlayer = nil
 	end
 
-	if arg_8_0._stopAudioId and arg_8_0._stopAudioId > 0 then
-		AudioMgr.instance:trigger(arg_8_0._stopAudioId)
+	if self._stopAudioId and self._stopAudioId > 0 then
+		AudioMgr.instance:trigger(self._stopAudioId)
 	end
 end
 
-function var_0_0._onEscBtnClick(arg_9_0)
+function StoreSkinPreviewVideoView:_onEscBtnClick()
 	return
 end
 
-function var_0_0._videoStatusUpdate(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	if arg_10_2 == AvProEnum.PlayerStatus.FinishedPlaying then
-		TaskDispatcher.cancelTask(arg_10_0._timeout, arg_10_0)
-		arg_10_0:_playMovieFinish()
+function StoreSkinPreviewVideoView:_videoStatusUpdate(path, status, errorCode)
+	if status == VideoEnum.PlayerStatus.FinishedPlaying then
+		TaskDispatcher.cancelTask(self._timeout, self)
+		self:_playMovieFinish()
 	end
 
-	if (arg_10_2 == AvProEnum.PlayerStatus.Started or arg_10_2 == AvProEnum.PlayerStatus.StartedSeeking) and arg_10_0._videoAudioId > 0 then
-		AudioMgr.instance:trigger(arg_10_0._videoAudioId)
+	if (status == VideoEnum.PlayerStatus.Started or status == VideoEnum.PlayerStatus.StartedSeeking) and self._videoAudioId > 0 then
+		AudioMgr.instance:trigger(self._videoAudioId)
 	end
 end
 
-function var_0_0._timeout(arg_11_0)
+function StoreSkinPreviewVideoView:_timeout()
 	if isDebugBuild then
 		logError("播放入场视频超时")
 	end
 
-	arg_11_0:_stopMovie()
+	self:_stopMovie()
 end
 
-function var_0_0._stopMovie(arg_12_0)
-	NavigateMgr.instance:removeEscape(arg_12_0.viewName)
-	arg_12_0:_hideVideoGo()
+function StoreSkinPreviewVideoView:_stopMovie()
+	NavigateMgr.instance:removeEscape(self.viewName)
+	self:_hideVideoGo()
 
-	if arg_12_0._videoPlayer then
-		arg_12_0._videoPlayer:Stop()
-		arg_12_0._videoPlayer:Clear()
+	if self._videoPlayer then
+		self._videoPlayer:stop()
+		self._videoPlayer:clear()
 
-		arg_12_0._videoPlayer = nil
+		self._videoPlayer = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_12_0._timeout, arg_12_0)
+	TaskDispatcher.cancelTask(self._timeout, self)
 
-	if arg_12_0._stopAudioId and arg_12_0._stopAudioId > 0 then
-		AudioMgr.instance:trigger(arg_12_0._stopAudioId)
+	if self._stopAudioId and self._stopAudioId > 0 then
+		AudioMgr.instance:trigger(self._stopAudioId)
 	end
 
-	arg_12_0:_playMainBgm()
+	self:_playMainBgm()
 end
 
-function var_0_0._playMovieFinish(arg_13_0)
-	arg_13_0._hasPlayFinish = true
+function StoreSkinPreviewVideoView:_playMovieFinish()
+	self._hasPlayFinish = true
 
-	arg_13_0:_hideVideoGo()
-	NavigateMgr.instance:removeEscape(arg_13_0.viewName)
+	self:_hideVideoGo()
+	NavigateMgr.instance:removeEscape(self.viewName)
 
-	if arg_13_0._stopAudioId and arg_13_0._stopAudioId > 0 then
-		AudioMgr.instance:trigger(arg_13_0._stopAudioId)
+	if self._stopAudioId and self._stopAudioId > 0 then
+		AudioMgr.instance:trigger(self._stopAudioId)
 	end
 
-	arg_13_0:_playMainBgm()
+	self:_playMainBgm()
 end
 
-function var_0_0._playMainBgm(arg_14_0)
+function StoreSkinPreviewVideoView:_playMainBgm()
 	if ViewMgr.instance:isOpen(ViewName.CharacterSkinView) then
 		AudioBgmManager.instance:playBgm(AudioBgmEnum.Layer.Character)
 	else
@@ -176,7 +179,7 @@ function var_0_0._playMainBgm(arg_14_0)
 	end
 end
 
-function var_0_0._stopMainBgm(arg_15_0)
+function StoreSkinPreviewVideoView:_stopMainBgm()
 	if ViewMgr.instance:isOpen(ViewName.CharacterSkinView) then
 		AudioBgmManager.instance:stopBgm(AudioBgmEnum.Layer.Character)
 	else
@@ -184,9 +187,9 @@ function var_0_0._stopMainBgm(arg_15_0)
 	end
 end
 
-function var_0_0._hideVideoGo(arg_16_0)
-	gohelper.setActive(arg_16_0._videoRoot, false)
-	arg_16_0:checkVideoGuide()
+function StoreSkinPreviewVideoView:_hideVideoGo()
+	gohelper.setActive(self._videoRoot, false)
+	self:checkVideoGuide()
 end
 
-return var_0_0
+return StoreSkinPreviewVideoView

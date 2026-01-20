@@ -1,36 +1,39 @@
-﻿module("modules.logic.sp01.odyssey.view.OdysseyBagItemDetailItem", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/view/OdysseyBagItemDetailItem.lua
 
-local var_0_0 = class("OdysseyBagItemDetailItem", LuaCompBase)
+module("modules.logic.sp01.odyssey.view.OdysseyBagItemDetailItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0._txtitemName = gohelper.findChildText(arg_1_0.viewGO, "#txt_itemName")
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_icon")
-	arg_1_0._scrolldesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_desc")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#scroll_desc/Viewport/Content/#txt_desc")
+local OdysseyBagItemDetailItem = class("OdysseyBagItemDetailItem", LuaCompBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function OdysseyBagItemDetailItem:init(go)
+	self.viewGO = go
+	self._txtitemName = gohelper.findChildText(self.viewGO, "#txt_itemName")
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "#simage_icon")
+	self._scrolldesc = gohelper.findChildScrollRect(self.viewGO, "#scroll_desc")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "#scroll_desc/Viewport/Content/#txt_desc")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.setInfo(arg_2_0, arg_2_1)
-	arg_2_0.mo = arg_2_1
+function OdysseyBagItemDetailItem:setInfo(mo)
+	self.mo = mo
 
-	arg_2_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_3_0)
-	local var_3_0 = arg_3_0.mo.config
+function OdysseyBagItemDetailItem:refreshUI()
+	local mo = self.mo
+	local itemConfig = mo.config
 
-	arg_3_0._simageicon:LoadImage(ResUrl.getSp01OdysseyItemSingleBg(var_3_0.icon))
+	self._simageicon:LoadImage(ResUrl.getSp01OdysseyItemSingleBg(itemConfig.icon))
 
-	arg_3_0._txtdesc.text = var_3_0.desc
-	arg_3_0._txtitemName.text = var_3_0.name
+	self._txtdesc.text = itemConfig.desc
+	self._txtitemName.text = itemConfig.name
 end
 
-function var_0_0.onDestroy(arg_4_0)
+function OdysseyBagItemDetailItem:onDestroy()
 	return
 end
 
-return var_0_0
+return OdysseyBagItemDetailItem

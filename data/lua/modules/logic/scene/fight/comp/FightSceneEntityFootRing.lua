@@ -1,177 +1,180 @@
-﻿module("modules.logic.scene.fight.comp.FightSceneEntityFootRing", package.seeall)
+﻿-- chunkname: @modules/logic/scene/fight/comp/FightSceneEntityFootRing.lua
 
-local var_0_0 = class("FightSceneEntityFootRing", BaseSceneComp)
+module("modules.logic.scene.fight.comp.FightSceneEntityFootRing", package.seeall)
 
-function var_0_0.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0:_setLevelCO(arg_1_2)
-	FightController.instance:registerCallback(FightEvent.OnSpineLoaded, arg_1_0._onSpineLoaded, arg_1_0)
-	FightController.instance:registerCallback(FightEvent.BeforeDeadEffect, arg_1_0._onEntityDeadBefore, arg_1_0)
-	FightController.instance:registerCallback(FightEvent.BeforePlayUniqueSkill, arg_1_0._onBeforePlayUniqueSkill, arg_1_0)
-	FightController.instance:registerCallback(FightEvent.AfterPlayUniqueSkill, arg_1_0._onAfterPlayUniqueSkill, arg_1_0)
-	FightController.instance:registerCallback(FightEvent.SetEntityFootEffectVisible, arg_1_0._onSetEntityFootEffectVisible, arg_1_0)
-	FightController.instance:registerCallback(FightEvent.OnRestartStageBefore, arg_1_0._releaseAllEntityEffect, arg_1_0)
+local FightSceneEntityFootRing = class("FightSceneEntityFootRing", BaseSceneComp)
+
+function FightSceneEntityFootRing:onSceneStart(sceneId, levelId)
+	self:_setLevelCO(levelId)
+	FightController.instance:registerCallback(FightEvent.OnSpineLoaded, self._onSpineLoaded, self)
+	FightController.instance:registerCallback(FightEvent.BeforeDeadEffect, self._onEntityDeadBefore, self)
+	FightController.instance:registerCallback(FightEvent.BeforePlayUniqueSkill, self._onBeforePlayUniqueSkill, self)
+	FightController.instance:registerCallback(FightEvent.AfterPlayUniqueSkill, self._onAfterPlayUniqueSkill, self)
+	FightController.instance:registerCallback(FightEvent.SetEntityFootEffectVisible, self._onSetEntityFootEffectVisible, self)
+	FightController.instance:registerCallback(FightEvent.OnRestartStageBefore, self._releaseAllEntityEffect, self)
 end
 
-function var_0_0.onScenePrepared(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0:getCurScene().level:registerCallback(CommonSceneLevelComp.OnLevelLoaded, arg_2_0._onLevelLoaded, arg_2_0)
+function FightSceneEntityFootRing:onScenePrepared(sceneId, levelId)
+	self:getCurScene().level:registerCallback(CommonSceneLevelComp.OnLevelLoaded, self._onLevelLoaded, self)
 end
 
-function var_0_0.onSceneClose(arg_3_0)
-	arg_3_0:getCurScene().level:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, arg_3_0._onLevelLoaded, arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, arg_3_0._onSpineLoaded, arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.BeforeDeadEffect, arg_3_0._onEntityDeadBefore, arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.BeforePlayUniqueSkill, arg_3_0._onBeforePlayUniqueSkill, arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.AfterPlayUniqueSkill, arg_3_0._onAfterPlayUniqueSkill, arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.SetEntityFootEffectVisible, arg_3_0._onSetEntityFootEffectVisible, arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.OnRestartStageBefore, arg_3_0._releaseAllEntityEffect, arg_3_0)
-	arg_3_0:_releaseFlyEffect()
+function FightSceneEntityFootRing:onSceneClose()
+	self:getCurScene().level:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, self._onLevelLoaded, self)
+	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, self._onSpineLoaded, self)
+	FightController.instance:unregisterCallback(FightEvent.BeforeDeadEffect, self._onEntityDeadBefore, self)
+	FightController.instance:unregisterCallback(FightEvent.BeforePlayUniqueSkill, self._onBeforePlayUniqueSkill, self)
+	FightController.instance:unregisterCallback(FightEvent.AfterPlayUniqueSkill, self._onAfterPlayUniqueSkill, self)
+	FightController.instance:unregisterCallback(FightEvent.SetEntityFootEffectVisible, self._onSetEntityFootEffectVisible, self)
+	FightController.instance:unregisterCallback(FightEvent.OnRestartStageBefore, self._releaseAllEntityEffect, self)
+	self:_releaseFlyEffect()
 end
 
-function var_0_0._onSpineLoaded(arg_4_0, arg_4_1)
-	if not arg_4_1 or not arg_4_0._fly_effect_url then
+function FightSceneEntityFootRing:_onSpineLoaded(unitSpine)
+	if not unitSpine or not self._fly_effect_url then
 		return
 	end
 
-	arg_4_0:_setSpineFlyEffect(arg_4_1)
+	self:_setSpineFlyEffect(unitSpine)
 end
 
-function var_0_0._onLevelLoaded(arg_5_0, arg_5_1)
-	arg_5_0:_releaseFlyEffect()
-	arg_5_0:_setLevelCO(arg_5_1)
-	arg_5_0:_setAllSpineFlyEffect()
+function FightSceneEntityFootRing:_onLevelLoaded(levelId)
+	self:_releaseFlyEffect()
+	self:_setLevelCO(levelId)
+	self:_setAllSpineFlyEffect()
 end
 
-function var_0_0._setLevelCO(arg_6_0, arg_6_1)
-	local var_6_0 = lua_scene_level.configDict[arg_6_1].flyEffect
+function FightSceneEntityFootRing:_setLevelCO(levelId)
+	local levelCO = lua_scene_level.configDict[levelId]
+	local flyEffect = levelCO.flyEffect
 
-	if not string.nilorempty(var_6_0) then
-		TaskDispatcher.runRepeat(arg_6_0._onFrameUpdateEffectPos, arg_6_0, 0.01)
+	if not string.nilorempty(flyEffect) then
+		TaskDispatcher.runRepeat(self._onFrameUpdateEffectPos, self, 0.01)
 
-		arg_6_0._fly_effect_url = "buff/buff_feixing"
+		self._fly_effect_url = "buff/buff_feixing"
 	end
 end
 
-function var_0_0._setAllSpineFlyEffect(arg_7_0)
-	if not arg_7_0._fly_effect_url then
+function FightSceneEntityFootRing:_setAllSpineFlyEffect()
+	if not self._fly_effect_url then
 		return
 	end
 
-	local var_7_0 = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, true)
+	local entityList = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, true)
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-		if iter_7_1.spine and arg_7_0._fly_effect_url then
-			arg_7_0:_setSpineFlyEffect(iter_7_1.spine)
+	for _, entity in ipairs(entityList) do
+		if entity.spine and self._fly_effect_url then
+			self:_setSpineFlyEffect(entity.spine)
 		end
 	end
 end
 
-function var_0_0._setSpineFlyEffect(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_1.unitSpawn
+function FightSceneEntityFootRing:_setSpineFlyEffect(spine)
+	local target_entity = spine.unitSpawn
 
-	if not var_8_0:isMySide() then
+	if not target_entity:isMySide() then
 		return
 	end
 
-	local var_8_1 = var_8_0.id
-	local var_8_2 = var_8_0:getMO()
+	local entity_id = target_entity.id
+	local entity_mo = target_entity:getMO()
 
-	if not var_8_2 then
+	if not entity_mo then
 		return
 	end
 
-	local var_8_3 = FightConfig.instance:getSkinCO(var_8_2.skin)
+	local skin_config = FightConfig.instance:getSkinCO(entity_mo.skin)
 
-	if not var_8_3 or var_8_3.isFly == 1 then
+	if not skin_config or skin_config.isFly == 1 then
 		return
 	end
 
-	if not arg_8_0.foot_effect then
-		arg_8_0.foot_effect = {}
-		arg_8_0.origin_pos_y = {}
-		arg_8_0.cache_entity = {}
+	if not self.foot_effect then
+		self.foot_effect = {}
+		self.origin_pos_y = {}
+		self.cache_entity = {}
 	end
 
-	if arg_8_0.cache_entity[var_8_1] then
-		arg_8_0:_onEntityDeadBefore(var_8_1)
+	if self.cache_entity[entity_id] then
+		self:_onEntityDeadBefore(entity_id)
 	end
 
-	local var_8_4, var_8_5 = FightHelper.getEntityStandPos(var_8_2)
+	local x, y = FightHelper.getEntityStandPos(entity_mo)
 
-	arg_8_0.origin_pos_y[var_8_1] = var_8_5
-	arg_8_0.cache_entity[var_8_1] = var_8_0
-	arg_8_0.foot_effect[var_8_1] = arg_8_0.foot_effect[var_8_1] or var_8_0.effect:addHangEffect(arg_8_0._fly_effect_url)
+	self.origin_pos_y[entity_id] = y
+	self.cache_entity[entity_id] = target_entity
+	self.foot_effect[entity_id] = self.foot_effect[entity_id] or target_entity.effect:addHangEffect(self._fly_effect_url)
 end
 
-function var_0_0._onFrameUpdateEffectPos(arg_9_0)
-	if arg_9_0.foot_effect then
-		for iter_9_0, iter_9_1 in pairs(arg_9_0.foot_effect) do
-			local var_9_0 = arg_9_0.cache_entity[iter_9_0]
+function FightSceneEntityFootRing:_onFrameUpdateEffectPos()
+	if self.foot_effect then
+		for k, v in pairs(self.foot_effect) do
+			local target_entity = self.cache_entity[k]
 
-			if var_9_0 and not gohelper.isNil(var_9_0.go) then
-				local var_9_1 = var_9_0.go
+			if target_entity and not gohelper.isNil(target_entity.go) then
+				local target_go = target_entity.go
 
-				if var_9_1 then
-					local var_9_2, var_9_3, var_9_4 = transformhelper.getPos(var_9_1.transform)
+				if target_go then
+					local pos_x, pos_y, pos_z = transformhelper.getPos(target_go.transform)
 
-					arg_9_0.foot_effect[iter_9_0]:setWorldPos(var_9_2, arg_9_0.origin_pos_y[iter_9_0], var_9_4)
+					self.foot_effect[k]:setWorldPos(pos_x, self.origin_pos_y[k], pos_z)
 				end
 			end
 		end
 	end
 end
 
-function var_0_0._onBeforePlayUniqueSkill(arg_10_0)
-	if arg_10_0.foot_effect then
-		for iter_10_0, iter_10_1 in pairs(arg_10_0.foot_effect) do
-			gohelper.setActive(iter_10_1.containerGO, false)
+function FightSceneEntityFootRing:_onBeforePlayUniqueSkill()
+	if self.foot_effect then
+		for k, v in pairs(self.foot_effect) do
+			gohelper.setActive(v.containerGO, false)
 		end
 	end
 end
 
-function var_0_0._onAfterPlayUniqueSkill(arg_11_0)
-	if arg_11_0.foot_effect then
-		for iter_11_0, iter_11_1 in pairs(arg_11_0.foot_effect) do
-			gohelper.setActive(iter_11_1.containerGO, true)
+function FightSceneEntityFootRing:_onAfterPlayUniqueSkill()
+	if self.foot_effect then
+		for k, v in pairs(self.foot_effect) do
+			gohelper.setActive(v.containerGO, true)
 		end
 	end
 end
 
-function var_0_0._onEntityDeadBefore(arg_12_0, arg_12_1)
-	if arg_12_0.foot_effect and arg_12_0.foot_effect[arg_12_1] then
-		local var_12_0 = arg_12_0.cache_entity[arg_12_1]
+function FightSceneEntityFootRing:_onEntityDeadBefore(entityId)
+	if self.foot_effect and self.foot_effect[entityId] then
+		local entity = self.cache_entity[entityId]
 
-		if var_12_0 and var_12_0.effect then
-			var_12_0.effect:removeEffect(arg_12_0.foot_effect[arg_12_1])
+		if entity and entity.effect then
+			entity.effect:removeEffect(self.foot_effect[entityId])
 		end
 
-		arg_12_0.foot_effect[arg_12_1] = nil
-		arg_12_0.cache_entity[arg_12_1] = nil
+		self.foot_effect[entityId] = nil
+		self.cache_entity[entityId] = nil
 	end
 end
 
-function var_0_0._onSetEntityFootEffectVisible(arg_13_0, arg_13_1, arg_13_2)
-	if arg_13_0.foot_effect and arg_13_0.foot_effect[arg_13_1] then
-		arg_13_0:_onFrameUpdateEffectPos()
-		gohelper.setActive(arg_13_0.foot_effect[arg_13_1].containerGO, arg_13_2 or false)
+function FightSceneEntityFootRing:_onSetEntityFootEffectVisible(entity_id, state)
+	if self.foot_effect and self.foot_effect[entity_id] then
+		self:_onFrameUpdateEffectPos()
+		gohelper.setActive(self.foot_effect[entity_id].containerGO, state or false)
 	end
 end
 
-function var_0_0._releaseAllEntityEffect(arg_14_0)
-	if arg_14_0.foot_effect then
-		for iter_14_0, iter_14_1 in pairs(arg_14_0.foot_effect) do
-			arg_14_0:_onEntityDeadBefore(iter_14_0)
+function FightSceneEntityFootRing:_releaseAllEntityEffect()
+	if self.foot_effect then
+		for k, v in pairs(self.foot_effect) do
+			self:_onEntityDeadBefore(k)
 		end
 	end
 end
 
-function var_0_0._releaseFlyEffect(arg_15_0)
-	TaskDispatcher.cancelTask(arg_15_0._onFrameUpdateEffectPos, arg_15_0)
-	arg_15_0:_releaseAllEntityEffect()
+function FightSceneEntityFootRing:_releaseFlyEffect()
+	TaskDispatcher.cancelTask(self._onFrameUpdateEffectPos, self)
+	self:_releaseAllEntityEffect()
 
-	arg_15_0.origin_pos_y = nil
-	arg_15_0.foot_effect = nil
-	arg_15_0._fly_effect_url = nil
-	arg_15_0.cache_entity = nil
+	self.origin_pos_y = nil
+	self.foot_effect = nil
+	self._fly_effect_url = nil
+	self.cache_entity = nil
 end
 
-return var_0_0
+return FightSceneEntityFootRing

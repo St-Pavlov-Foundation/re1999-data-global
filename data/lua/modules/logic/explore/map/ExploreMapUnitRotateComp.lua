@@ -1,296 +1,302 @@
-﻿module("modules.logic.explore.map.ExploreMapUnitRotateComp", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/ExploreMapUnitRotateComp.lua
 
-local var_0_0 = class("ExploreMapUnitRotateComp", ExploreMapBaseComp)
+module("modules.logic.explore.map.ExploreMapUnitRotateComp", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._curRotateUnit = nil
-	arg_1_0._btnLeft = nil
-	arg_1_0._btnRight = nil
-	arg_1_0._anim = nil
-	arg_1_0._containerGO = gohelper.create3d(arg_1_0._mapGo, "RotateComp")
+local ExploreMapUnitRotateComp = class("ExploreMapUnitRotateComp", ExploreMapBaseComp)
 
-	gohelper.setActive(arg_1_0._containerGO, false)
+function ExploreMapUnitRotateComp:onInit()
+	self._curRotateUnit = nil
+	self._btnLeft = nil
+	self._btnRight = nil
+	self._anim = nil
+	self._containerGO = gohelper.create3d(self._mapGo, "RotateComp")
 
-	arg_1_0._loader = PrefabInstantiate.Create(arg_1_0._containerGO)
+	gohelper.setActive(self._containerGO, false)
 
-	arg_1_0._loader:startLoad("explore/common/sprite/prefabs/msts_icon_xuanzhuan.prefab", arg_1_0._onLoaded, arg_1_0)
+	self._loader = PrefabInstantiate.Create(self._containerGO)
+
+	self._loader:startLoad("explore/common/sprite/prefabs/msts_icon_xuanzhuan.prefab", self._onLoaded, self)
 end
 
-function var_0_0._onLoaded(arg_2_0)
-	local var_2_0 = arg_2_0._loader:getInstGO()
+function ExploreMapUnitRotateComp:_onLoaded()
+	local go = self._loader:getInstGO()
 
-	arg_2_0._anim = var_2_0:GetComponent(typeof(UnityEngine.Animator))
-	arg_2_0._btnLeft = gohelper.findChild(var_2_0, "right").transform
-	arg_2_0._btnRight = gohelper.findChild(var_2_0, "left").transform
+	self._anim = go:GetComponent(typeof(UnityEngine.Animator))
+	self._btnLeft = gohelper.findChild(go, "right").transform
+	self._btnRight = gohelper.findChild(go, "left").transform
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	arg_3_0:addEventCb(ExploreController.instance, ExploreEvent.SetRotateUnit, arg_3_0.changeStatus, arg_3_0)
+function ExploreMapUnitRotateComp:addEventListeners()
+	self:addEventCb(ExploreController.instance, ExploreEvent.SetRotateUnit, self.changeStatus, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	arg_4_0:removeEventCb(ExploreController.instance, ExploreEvent.SetRotateUnit, arg_4_0.changeStatus, arg_4_0)
+function ExploreMapUnitRotateComp:removeEventListeners()
+	self:removeEventCb(ExploreController.instance, ExploreEvent.SetRotateUnit, self.changeStatus, self)
 end
 
-function var_0_0.changeStatus(arg_5_0, arg_5_1)
-	if not arg_5_0:beginStatus() then
+function ExploreMapUnitRotateComp:changeStatus(unit)
+	if not self:beginStatus() then
 		return
 	end
 
-	arg_5_0:setRotateUnit(arg_5_1)
+	self:setRotateUnit(unit)
 end
 
-function var_0_0.setRotateUnit(arg_6_0, arg_6_1)
-	if arg_6_0._curRotateUnit == arg_6_1 then
+function ExploreMapUnitRotateComp:setRotateUnit(unit)
+	if self._curRotateUnit == unit then
 		return
 	end
 
-	if arg_6_0._curRotateUnit then
-		arg_6_0._curRotateUnit:endRotate()
+	if self._curRotateUnit then
+		self._curRotateUnit:endRotate()
 	end
 
-	arg_6_0._curRotateUnit = arg_6_1
+	self._curRotateUnit = unit
 
-	if arg_6_0._curRotateUnit then
-		arg_6_0._curRotateUnit:beginRotate()
+	if self._curRotateUnit then
+		self._curRotateUnit:beginRotate()
 	end
 
-	if arg_6_0._curRotateUnit then
-		arg_6_0:roleMoveToUnit(arg_6_0._curRotateUnit)
-		arg_6_0:_setViewShow(true)
+	if self._curRotateUnit then
+		self:roleMoveToUnit(self._curRotateUnit)
+		self:_setViewShow(true)
 
-		arg_6_0._containerGO.transform.position = arg_6_0._curRotateUnit:getPos()
+		self._containerGO.transform.position = self._curRotateUnit:getPos()
 	else
-		arg_6_0:_setViewShow(false)
+		self:_setViewShow(false)
 	end
 end
 
-function var_0_0.onMapClick(arg_7_0, arg_7_1)
-	if arg_7_0._isRoleMoving then
+function ExploreMapUnitRotateComp:onMapClick(mousePosition)
+	if self._isRoleMoving then
 		return
 	end
 
-	if arg_7_0._isRotating then
+	if self._isRotating then
 		return
 	end
 
-	local var_7_0 = arg_7_0._map:getHitTriggerTrans()
+	local hitTrans = self._map:getHitTriggerTrans()
 
-	if var_7_0 then
-		if var_7_0:IsChildOf(arg_7_0._btnLeft) then
-			return arg_7_0:doRotate(false)
-		elseif var_7_0:IsChildOf(arg_7_0._btnRight) then
-			return arg_7_0:doRotate(true)
+	if hitTrans then
+		if hitTrans:IsChildOf(self._btnLeft) then
+			return self:doRotate(false)
+		elseif hitTrans:IsChildOf(self._btnRight) then
+			return self:doRotate(true)
 		end
 	end
 
-	arg_7_0:roleMoveBack()
+	self:roleMoveBack()
 end
 
-function var_0_0.roleMoveToUnit(arg_8_0, arg_8_1)
-	arg_8_0._isRoleMoving = true
+function ExploreMapUnitRotateComp:roleMoveToUnit(unit)
+	self._isRoleMoving = true
 
-	local var_8_0 = arg_8_0:getHero()
-	local var_8_1 = ExploreHelper.xyToDir(arg_8_1.nodePos.x - var_8_0.nodePos.x, arg_8_1.nodePos.y - var_8_0.nodePos.y)
-	local var_8_2 = (var_8_0:getPos() - arg_8_1:getPos()):SetNormalize():Mul(0.6):Add(arg_8_1:getPos())
+	local hero = self:getHero()
+	local dir = ExploreHelper.xyToDir(unit.nodePos.x - hero.nodePos.x, unit.nodePos.y - hero.nodePos.y)
+	local finalPos = (hero:getPos() - unit:getPos()):SetNormalize():Mul(0.6):Add(unit:getPos())
 
-	var_8_0:setTrOffset(var_8_1, var_8_2, nil, arg_8_0.onRoleMoveToUnitEnd, arg_8_0)
-	var_8_0:setMoveSpeed(0.3)
+	hero:setTrOffset(dir, finalPos, nil, self.onRoleMoveToUnitEnd, self)
+	hero:setMoveSpeed(0.3)
 end
 
-function var_0_0.onRoleMoveToUnitEnd(arg_9_0)
-	arg_9_0._isRoleMoving = false
+function ExploreMapUnitRotateComp:onRoleMoveToUnitEnd()
+	self._isRoleMoving = false
 
-	arg_9_0:getHero():setMoveSpeed(0)
+	self:getHero():setMoveSpeed(0)
 end
 
-function var_0_0.getHero(arg_10_0)
+function ExploreMapUnitRotateComp:getHero()
 	return ExploreController.instance:getMap():getHero()
 end
 
-function var_0_0._setViewShow(arg_11_0, arg_11_1)
-	TaskDispatcher.cancelTask(arg_11_0._onCloseAnimEnd, arg_11_0)
+function ExploreMapUnitRotateComp:_setViewShow(isShow)
+	TaskDispatcher.cancelTask(self._onCloseAnimEnd, self)
 
-	if arg_11_0._anim then
-		if arg_11_1 then
-			arg_11_0._anim:Play("open", 0, 0)
-			gohelper.setActive(arg_11_0._containerGO, true)
+	if self._anim then
+		if isShow then
+			self._anim:Play("open", 0, 0)
+			gohelper.setActive(self._containerGO, true)
 		else
-			arg_11_0._anim:Play("close", 0, 0)
-			TaskDispatcher.runDelay(arg_11_0._onCloseAnimEnd, arg_11_0, 0.167)
+			self._anim:Play("close", 0, 0)
+			TaskDispatcher.runDelay(self._onCloseAnimEnd, self, 0.167)
 		end
 	else
-		gohelper.setActive(arg_11_0._containerGO, arg_11_1)
+		gohelper.setActive(self._containerGO, isShow)
 	end
 end
 
-function var_0_0._onCloseAnimEnd(arg_12_0)
-	gohelper.setActive(arg_12_0._containerGO, false)
+function ExploreMapUnitRotateComp:_onCloseAnimEnd()
+	gohelper.setActive(self._containerGO, false)
 end
 
-function var_0_0.onRoleMoveBackEnd(arg_13_0)
-	arg_13_0:getHero():setMoveSpeed(0)
+function ExploreMapUnitRotateComp:onRoleMoveBackEnd()
+	self:getHero():setMoveSpeed(0)
 
-	arg_13_0._isRoleMoving = false
+	self._isRoleMoving = false
 
-	arg_13_0._map:setMapStatus(ExploreEnum.MapStatus.Normal)
+	self._map:setMapStatus(ExploreEnum.MapStatus.Normal)
 end
 
-function var_0_0.roleMoveBack(arg_14_0)
-	arg_14_0._isRoleMoving = true
+function ExploreMapUnitRotateComp:roleMoveBack()
+	self._isRoleMoving = true
 
-	arg_14_0:setRotateUnit(nil)
+	self:setRotateUnit(nil)
 
-	local var_14_0 = arg_14_0:getHero()
-	local var_14_1 = var_14_0:getPos()
+	local hero = self:getHero()
+	local finalPos = hero:getPos()
 
-	var_14_0:setMoveSpeed(0.3)
-	var_14_0:setTrOffset(nil, var_14_1, nil, arg_14_0.onRoleMoveBackEnd, arg_14_0)
+	hero:setMoveSpeed(0.3)
+	hero:setTrOffset(nil, finalPos, nil, self.onRoleMoveBackEnd, self)
 end
 
-function var_0_0.canSwitchStatus(arg_15_0, arg_15_1)
-	if arg_15_1 == ExploreEnum.MapStatus.UseItem then
+function ExploreMapUnitRotateComp:canSwitchStatus(toStatus)
+	if toStatus == ExploreEnum.MapStatus.UseItem then
 		return false
 	end
 
-	if arg_15_0._isRoleMoving or arg_15_0._isRotating then
+	if self._isRoleMoving or self._isRotating then
 		return false
 	end
 
 	return true
 end
 
-local var_0_1 = ExploreEnum.TriggerEvent.Rotate .. "#%d"
+local paramsFormat = ExploreEnum.TriggerEvent.Rotate .. "#%d"
 
-function var_0_0.doRotate(arg_16_0, arg_16_1)
-	local var_16_0 = 0
-	local var_16_1 = 0
+function ExploreMapUnitRotateComp:doRotate(isReverse)
+	local stepIndex = 0
+	local rotateAngle = 0
 
-	for iter_16_0, iter_16_1 in pairs(arg_16_0._curRotateUnit.mo.triggerEffects) do
-		if iter_16_1[1] == ExploreEnum.TriggerEvent.Rotate then
-			var_16_0 = iter_16_0
-			var_16_1 = 1
+	for k, v in pairs(self._curRotateUnit.mo.triggerEffects) do
+		if v[1] == ExploreEnum.TriggerEvent.Rotate then
+			stepIndex = k
+			rotateAngle = 1
 
-			if arg_16_1 then
-				var_16_1 = -var_16_1
+			if isReverse then
+				rotateAngle = -rotateAngle
 			end
 
 			break
 		end
 	end
 
-	if var_16_0 <= 0 then
+	if stepIndex <= 0 then
 		return
 	end
 
-	arg_16_0._isRotating = true
-	arg_16_0._isReverse = arg_16_1
+	self._isRotating = true
+	self._isReverse = isReverse
 
-	arg_16_0:_setViewShow(false)
-	ExploreRpc.instance:sendExploreInteractRequest(arg_16_0._curRotateUnit.id, var_16_0, string.format(var_0_1, var_16_1), arg_16_0.onRotateRecv, arg_16_0)
+	self:_setViewShow(false)
+	ExploreRpc.instance:sendExploreInteractRequest(self._curRotateUnit.id, stepIndex, string.format(paramsFormat, rotateAngle), self.onRotateRecv, self)
 end
 
-function var_0_0.onRotateRecv(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	if arg_17_2 ~= 0 then
-		arg_17_0._isRotating = false
+function ExploreMapUnitRotateComp:onRotateRecv(cmd, resultCode, msg)
+	if resultCode ~= 0 then
+		self._isRotating = false
 
-		arg_17_0:_setViewShow(true)
+		self:_setViewShow(true)
 	end
 end
 
-function var_0_0.rotateByServer(arg_18_0, arg_18_1, arg_18_2, arg_18_3, arg_18_4)
-	local var_18_0 = ExploreController.instance:getMap()
+function ExploreMapUnitRotateComp:rotateByServer(unitId, finalDir, callback, callObj)
+	local map = ExploreController.instance:getMap()
 
-	if not arg_18_0._curRotateUnit or arg_18_0._curRotateUnit.id ~= arg_18_1 then
-		local var_18_1 = var_18_0:getUnit(arg_18_1)
+	if not self._curRotateUnit or self._curRotateUnit.id ~= unitId then
+		local unit = map:getUnit(unitId)
 
-		if var_18_1 then
-			var_18_1:_onFrameRotate(arg_18_2)
+		if unit then
+			unit:_onFrameRotate(finalDir)
 		end
 
-		if arg_18_3 then
-			arg_18_3(arg_18_4)
+		if callback then
+			callback(callObj)
 		end
 
 		return
 	end
 
-	var_18_0:getHero():setHeroStatus(ExploreAnimEnum.RoleAnimStatus.RotateInteract, true, true)
+	local hero = map:getHero()
 
-	arg_18_0._fromRotate = arg_18_0._curRotateUnit.mo.unitDir
-	arg_18_0._toRotate = arg_18_2
+	hero:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.RotateInteract, true, true)
 
-	if arg_18_0._isReverse then
-		while arg_18_0._fromRotate < arg_18_0._toRotate do
-			arg_18_0._fromRotate = arg_18_0._fromRotate + 360
+	local nowUnitDir = self._curRotateUnit.mo.unitDir
+
+	self._fromRotate = nowUnitDir
+	self._toRotate = finalDir
+
+	if self._isReverse then
+		while self._fromRotate < self._toRotate do
+			self._fromRotate = self._fromRotate + 360
 		end
 
-		while arg_18_0._fromRotate > arg_18_0._toRotate + 360 do
-			arg_18_0._fromRotate = arg_18_0._fromRotate - 360
+		while self._fromRotate > self._toRotate + 360 do
+			self._fromRotate = self._fromRotate - 360
 		end
 	else
-		while arg_18_0._fromRotate > arg_18_0._toRotate do
-			arg_18_0._fromRotate = arg_18_0._fromRotate - 360
+		while self._fromRotate > self._toRotate do
+			self._fromRotate = self._fromRotate - 360
 		end
 
-		while arg_18_0._fromRotate < arg_18_0._toRotate - 360 do
-			arg_18_0._fromRotate = arg_18_0._fromRotate + 360
+		while self._fromRotate < self._toRotate - 360 do
+			self._fromRotate = self._fromRotate + 360
 		end
 	end
 
-	arg_18_0._curRotateUnit:_onFrameRotate(arg_18_0._fromRotate)
+	self._curRotateUnit:_onFrameRotate(self._fromRotate)
 
-	arg_18_0._rotateEndCallBack = arg_18_3
-	arg_18_0._rotateEndCallBackObj = arg_18_4
+	self._rotateEndCallBack = callback
+	self._rotateEndCallBackObj = callObj
 
-	arg_18_0._curRotateUnit:setEmitLight(true)
-	TaskDispatcher.runDelay(arg_18_0._rotateUnit, arg_18_0, 0.2)
+	self._curRotateUnit:setEmitLight(true)
+	TaskDispatcher.runDelay(self._rotateUnit, self, 0.2)
 end
 
-function var_0_0._rotateUnit(arg_19_0)
+function ExploreMapUnitRotateComp:_rotateUnit()
 	AudioMgr.instance:trigger(AudioEnum.Explore.UnitRotate)
-	arg_19_0._curRotateUnit:doRotate(arg_19_0._fromRotate, arg_19_0._toRotate, 0.2, arg_19_0._unitRotateEnd, arg_19_0)
+	self._curRotateUnit:doRotate(self._fromRotate, self._toRotate, 0.2, self._unitRotateEnd, self)
 end
 
-function var_0_0._unitRotateEnd(arg_20_0)
-	if arg_20_0._curRotateUnit then
-		arg_20_0._curRotateUnit:setEmitLight(false)
+function ExploreMapUnitRotateComp:_unitRotateEnd()
+	if self._curRotateUnit then
+		self._curRotateUnit:setEmitLight(false)
 	end
 
-	arg_20_0:_setViewShow(true)
+	self:_setViewShow(true)
 
-	arg_20_0._isRotating = false
+	self._isRotating = false
 
-	if arg_20_0._rotateEndCallBack then
-		arg_20_0._rotateEndCallBack(arg_20_0._rotateEndCallBackObj)
+	if self._rotateEndCallBack then
+		self._rotateEndCallBack(self._rotateEndCallBackObj)
 	end
 end
 
-function var_0_0.onStatusEnd(arg_21_0)
-	arg_21_0:setRotateUnit(nil)
+function ExploreMapUnitRotateComp:onStatusEnd()
+	self:setRotateUnit(nil)
 end
 
-function var_0_0.onDestroy(arg_22_0)
-	TaskDispatcher.cancelTask(arg_22_0._onCloseAnimEnd, arg_22_0)
-	TaskDispatcher.cancelTask(arg_22_0._rotateUnit, arg_22_0)
+function ExploreMapUnitRotateComp:onDestroy()
+	TaskDispatcher.cancelTask(self._onCloseAnimEnd, self)
+	TaskDispatcher.cancelTask(self._rotateUnit, self)
 
-	arg_22_0._rotateEndCallBack = nil
-	arg_22_0._rotateEndCallBackObj = nil
-	arg_22_0._curRotateUnit = nil
-	arg_22_0._btnLeft = nil
-	arg_22_0._btnRight = nil
+	self._rotateEndCallBack = nil
+	self._rotateEndCallBackObj = nil
+	self._curRotateUnit = nil
+	self._btnLeft = nil
+	self._btnRight = nil
 
-	if arg_22_0._loader then
-		arg_22_0._loader:dispose()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_22_0._loader = nil
+		self._loader = nil
 	end
 
-	gohelper.destroy(arg_22_0._containerGO)
+	gohelper.destroy(self._containerGO)
 
-	arg_22_0._containerGO = nil
+	self._containerGO = nil
 
-	var_0_0.super.onDestroy(arg_22_0)
+	ExploreMapUnitRotateComp.super.onDestroy(self)
 end
 
-return var_0_0
+return ExploreMapUnitRotateComp

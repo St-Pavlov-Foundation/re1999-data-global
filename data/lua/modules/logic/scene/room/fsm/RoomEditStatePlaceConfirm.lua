@@ -1,25 +1,27 @@
-﻿module("modules.logic.scene.room.fsm.RoomEditStatePlaceConfirm", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/fsm/RoomEditStatePlaceConfirm.lua
 
-local var_0_0 = class("RoomEditStatePlaceConfirm", SimpleFSMBaseState)
+module("modules.logic.scene.room.fsm.RoomEditStatePlaceConfirm", package.seeall)
 
-function var_0_0.start(arg_1_0)
-	arg_1_0._scene = GameSceneMgr.instance:getCurScene()
+local RoomEditStatePlaceConfirm = class("RoomEditStatePlaceConfirm", SimpleFSMBaseState)
+
+function RoomEditStatePlaceConfirm:start()
+	self._scene = GameSceneMgr.instance:getCurScene()
 end
 
-function var_0_0.onEnter(arg_2_0)
-	var_0_0.super.onEnter(arg_2_0)
+function RoomEditStatePlaceConfirm:onEnter()
+	RoomEditStatePlaceConfirm.super.onEnter(self)
 end
 
-function var_0_0.onLeave(arg_3_0)
-	var_0_0.super.onLeave(arg_3_0)
+function RoomEditStatePlaceConfirm:onLeave()
+	RoomEditStatePlaceConfirm.super.onLeave(self)
 end
 
-function var_0_0.stop(arg_4_0)
+function RoomEditStatePlaceConfirm:stop()
 	return
 end
 
-function var_0_0.clear(arg_5_0)
+function RoomEditStatePlaceConfirm:clear()
 	return
 end
 
-return var_0_0
+return RoomEditStatePlaceConfirm

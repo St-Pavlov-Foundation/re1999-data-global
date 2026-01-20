@@ -1,21 +1,23 @@
-﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionCardEndPause", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/WaitGuideActionCardEndPause.lua
 
-local var_0_0 = class("WaitGuideActionCardEndPause", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.WaitGuideActionCardEndPause", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
-	FightController.instance:registerCallback(FightEvent.OnGuideCardEndPause, arg_1_0._onGuideCardEndPause, arg_1_0)
+local WaitGuideActionCardEndPause = class("WaitGuideActionCardEndPause", BaseGuideAction)
+
+function WaitGuideActionCardEndPause:onStart(context)
+	WaitGuideActionCardEndPause.super.onStart(self, context)
+	FightController.instance:registerCallback(FightEvent.OnGuideCardEndPause, self._onGuideCardEndPause, self)
 end
 
-function var_0_0._onGuideCardEndPause(arg_2_0, arg_2_1)
-	arg_2_1.OnGuideCardEndPause = true
+function WaitGuideActionCardEndPause:_onGuideCardEndPause(guideParam)
+	guideParam.OnGuideCardEndPause = true
 
-	FightController.instance:unregisterCallback(FightEvent.OnGuideCardEndPause, arg_2_0._onGuideCardEndPause, arg_2_0)
-	arg_2_0:onDone(true)
+	FightController.instance:unregisterCallback(FightEvent.OnGuideCardEndPause, self._onGuideCardEndPause, self)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.OnGuideCardEndPause, arg_3_0._onGuideCardEndPause, arg_3_0)
+function WaitGuideActionCardEndPause:clearWork()
+	FightController.instance:unregisterCallback(FightEvent.OnGuideCardEndPause, self._onGuideCardEndPause, self)
 end
 
-return var_0_0
+return WaitGuideActionCardEndPause

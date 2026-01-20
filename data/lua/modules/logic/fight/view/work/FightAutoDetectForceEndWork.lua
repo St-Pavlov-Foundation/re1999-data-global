@@ -1,27 +1,29 @@
-﻿module("modules.logic.fight.view.work.FightAutoDetectForceEndWork", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/work/FightAutoDetectForceEndWork.lua
 
-local var_0_0 = class("FightAutoDetectForceEndWork", BaseWork)
+module("modules.logic.fight.view.work.FightAutoDetectForceEndWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local FightAutoDetectForceEndWork = class("FightAutoDetectForceEndWork", BaseWork)
+
+function FightAutoDetectForceEndWork:ctor()
 	return
 end
 
-function var_0_0.onStart(arg_2_0)
-	TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 1)
+function FightAutoDetectForceEndWork:onStart()
+	TaskDispatcher.runDelay(self._delayDone, self, 1)
 
 	if not FightDataHelper.operationDataMgr:isCardOpEnd() then
 		FightController.instance:dispatchEvent(FightEvent.ForceEndAutoCardFlow)
 	end
 
-	arg_2_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0._delayDone(arg_3_0)
-	arg_3_0:onDone(true)
+function FightAutoDetectForceEndWork:_delayDone()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._delayDone, arg_4_0)
+function FightAutoDetectForceEndWork:clearWork()
+	TaskDispatcher.cancelTask(self._delayDone, self)
 end
 
-return var_0_0
+return FightAutoDetectForceEndWork

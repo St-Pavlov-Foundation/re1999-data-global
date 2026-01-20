@@ -1,169 +1,174 @@
-﻿module("modules.logic.dungeon.view.DungeonViewAudio", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/DungeonViewAudio.lua
 
-local var_0_0 = class("DungeonViewAudio", BaseView)
+module("modules.logic.dungeon.view.DungeonViewAudio", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._scrollchapter = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_story/chapterlist/#scroll_chapter")
-	arg_1_0._scrollchapterresource = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_resource/chapterlist/#scroll_chapter_resource")
+local DungeonViewAudio = class("DungeonViewAudio", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function DungeonViewAudio:onInitView()
+	self._scrollchapter = gohelper.findChildScrollRect(self.viewGO, "#go_story/chapterlist/#scroll_chapter")
+	self._scrollchapterresource = gohelper.findChildScrollRect(self.viewGO, "#go_resource/chapterlist/#scroll_chapter_resource")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function DungeonViewAudio:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function DungeonViewAudio:removeEvents()
 	return
 end
 
-function var_0_0.onOpen(arg_4_0)
-	arg_4_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_4_0._scrollchapter.gameObject)
+function DungeonViewAudio:onOpen()
+	self._drag = SLFramework.UGUI.UIDragListener.Get(self._scrollchapter.gameObject)
 
-	arg_4_0:initScrollDragListener(arg_4_0._drag, arg_4_0._scrollchapter)
+	self:initScrollDragListener(self._drag, self._scrollchapter)
 
-	arg_4_0._dragResource = SLFramework.UGUI.UIDragListener.Get(arg_4_0._scrollchapterresource.gameObject)
+	self._dragResource = SLFramework.UGUI.UIDragListener.Get(self._scrollchapterresource.gameObject)
 
-	arg_4_0:initScrollDragListener(arg_4_0._dragResource, arg_4_0._scrollchapterresource)
-	arg_4_0:addEventCb(DungeonController.instance, DungeonEvent.OnChangeChapterList, arg_4_0._onChangeChapterList, arg_4_0)
-	arg_4_0:addEventCb(DungeonController.instance, DungeonEvent.SelectMainStorySection, arg_4_0._onSelectMainStorySection, arg_4_0)
+	self:initScrollDragListener(self._dragResource, self._scrollchapterresource)
+	self:addEventCb(DungeonController.instance, DungeonEvent.OnChangeChapterList, self._onChangeChapterList, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.SelectMainStorySection, self._onSelectMainStorySection, self)
 end
 
-function var_0_0._onSelectMainStorySection(arg_5_0)
-	arg_5_0._silentTime = Time.time
-	arg_5_0._silentCD = 0.5
+function DungeonViewAudio:_onSelectMainStorySection()
+	self._silentTime = Time.time
+	self._silentCD = 0.5
 end
 
-function var_0_0._onChangeChapterList(arg_6_0)
-	if arg_6_0._curScroll then
-		arg_6_0._curScroll:RemoveOnValueChanged()
+function DungeonViewAudio:_onChangeChapterList()
+	if self._curScroll then
+		self._curScroll:RemoveOnValueChanged()
 
-		arg_6_0._curScroll = nil
+		self._curScroll = nil
 	end
 end
 
-function var_0_0.initScrollDragListener(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_1:AddDragBeginListener(arg_7_0._onDragBegin, arg_7_0, arg_7_2)
-	arg_7_1:AddDragListener(arg_7_0._onDrag, arg_7_0, arg_7_2)
-	arg_7_1:AddDragEndListener(arg_7_0._onDragEnd, arg_7_0, arg_7_2)
+function DungeonViewAudio:initScrollDragListener(drag, scroll)
+	drag:AddDragBeginListener(self._onDragBegin, self, scroll)
+	drag:AddDragListener(self._onDrag, self, scroll)
+	drag:AddDragEndListener(self._onDragEnd, self, scroll)
 end
 
-function var_0_0.addScrollChangeCallback(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0._scrollChangeCallback = arg_8_1
-	arg_8_0._scrollChangeCallbackTarget = arg_8_2
+function DungeonViewAudio:addScrollChangeCallback(callback, callbackTarget)
+	self._scrollChangeCallback = callback
+	self._scrollChangeCallbackTarget = callbackTarget
 end
 
-function var_0_0._onScrollValueChanged(arg_9_0, arg_9_1, arg_9_2)
-	if arg_9_0._scrollChangeCallback then
-		arg_9_0._scrollChangeCallback(arg_9_0._scrollChangeCallbackTarget)
+function DungeonViewAudio:_onScrollValueChanged(x, y)
+	if self._scrollChangeCallback then
+		self._scrollChangeCallback(self._scrollChangeCallbackTarget)
 	end
 
-	local var_9_0 = arg_9_0._curScroll.horizontalNormalizedPosition
+	local scrollNormalizePos = self._curScroll.horizontalNormalizedPosition
 
-	if arg_9_0._curNormalizedPos and var_9_0 >= 0 and var_9_0 <= 1 then
-		local var_9_1 = var_9_0 - arg_9_0._curNormalizedPos
+	if self._curNormalizedPos and scrollNormalizePos >= 0 and scrollNormalizePos <= 1 then
+		local delta = scrollNormalizePos - self._curNormalizedPos
 
-		if math.abs(var_9_1) >= arg_9_0._cellCenterPos then
-			if var_9_1 > 0 then
-				arg_9_0._curNormalizedPos = arg_9_0._curNormalizedPos + arg_9_0._cellCenterPos
+		if math.abs(delta) >= self._cellCenterPos then
+			if delta > 0 then
+				self._curNormalizedPos = self._curNormalizedPos + self._cellCenterPos
 			else
-				arg_9_0._curNormalizedPos = arg_9_0._curNormalizedPos - arg_9_0._cellCenterPos
+				self._curNormalizedPos = self._curNormalizedPos - self._cellCenterPos
 			end
 
-			arg_9_0._curNormalizedPos = var_9_0
+			self._curNormalizedPos = scrollNormalizePos
 
-			if not arg_9_0._silentTime or Time.time - arg_9_0._silentTime >= arg_9_0._silentCD then
+			if not self._silentTime or Time.time - self._silentTime >= self._silentCD then
 				DungeonAudio.instance:cardPass()
 			end
 		end
 	end
 end
 
-function var_0_0._onDragBegin(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_0._beginDragScrollNormalizePos = arg_10_1.horizontalNormalizedPosition
-	arg_10_0._beginDrag = true
+function DungeonViewAudio:_onDragBegin(scroll, pointerEventData)
+	self._beginDragScrollNormalizePos = scroll.horizontalNormalizedPosition
+	self._beginDrag = true
 
-	arg_10_0:initNormalizePos(arg_10_1)
+	self:initNormalizePos(scroll)
 end
 
-function var_0_0.initNormalizePos(arg_11_0, arg_11_1)
-	local var_11_0 = recthelper.getWidth(arg_11_1.content)
-	local var_11_1 = recthelper.getWidth(arg_11_1.transform)
-	local var_11_2 = arg_11_1.content
-	local var_11_3 = var_11_2.childCount
+function DungeonViewAudio:initNormalizePos(scroll)
+	local contentWidth = recthelper.getWidth(scroll.content)
+	local scrollWidth = recthelper.getWidth(scroll.transform)
+	local transform = scroll.content
+	local itemCount = transform.childCount
 
-	if var_11_3 == 0 then
+	if itemCount == 0 then
 		return
 	end
 
-	local var_11_4 = var_11_2:GetChild(var_11_3 - 1)
-	local var_11_5 = recthelper.getWidth(var_11_4)
-	local var_11_6 = var_11_0 - var_11_1
+	local child = transform:GetChild(itemCount - 1)
+	local childWidth = recthelper.getWidth(child)
+	local deltaWidth = contentWidth - scrollWidth
 
-	if var_11_6 > 0 then
-		arg_11_0._cellCenterPos = 1 / (var_11_6 / var_11_5) / 2
-		arg_11_0._curNormalizedPos = arg_11_1.horizontalNormalizedPosition
+	if deltaWidth > 0 then
+		local showNum = deltaWidth / childWidth
+		local cellWidth = 1 / showNum
 
-		if arg_11_0._curScroll then
-			arg_11_0._curScroll:RemoveOnValueChanged()
+		self._cellCenterPos = cellWidth / 2
+		self._curNormalizedPos = scroll.horizontalNormalizedPosition
 
-			arg_11_0._curScroll = nil
+		if self._curScroll then
+			self._curScroll:RemoveOnValueChanged()
+
+			self._curScroll = nil
 		end
 
-		arg_11_0._curScroll = arg_11_1
+		self._curScroll = scroll
 
-		arg_11_0._curScroll:AddOnValueChanged(arg_11_0._onScrollValueChanged, arg_11_0)
+		self._curScroll:AddOnValueChanged(self._onScrollValueChanged, self)
 	else
-		arg_11_0._curNormalizedPos = nil
+		self._curNormalizedPos = nil
 	end
 end
 
-function var_0_0._onDrag(arg_12_0, arg_12_1, arg_12_2)
-	if arg_12_0._beginDrag then
-		arg_12_0._beginDrag = false
+function DungeonViewAudio:_onDrag(scroll, pointerEventData)
+	if self._beginDrag then
+		self._beginDrag = false
 
 		return
 	end
 
-	local var_12_0 = arg_12_2.delta.x
-	local var_12_1 = arg_12_1.horizontalNormalizedPosition
+	local deltaX = pointerEventData.delta.x
+	local scrollNormalizePos = scroll.horizontalNormalizedPosition
 
-	if arg_12_0._beginDragScrollNormalizePos then
-		if var_12_1 == arg_12_0._beginDragScrollNormalizePos then
-			if not arg_12_0._silentTime or Time.time - arg_12_0._silentTime >= arg_12_0._silentCD then
+	if self._beginDragScrollNormalizePos then
+		if scrollNormalizePos == self._beginDragScrollNormalizePos then
+			if not self._silentTime or Time.time - self._silentTime >= self._silentCD then
 				DungeonAudio.instance:chapterListBoundary()
 			end
-		elseif (var_12_0 > 0 and var_12_1 <= 0 or var_12_0 < 0 and var_12_1 >= 1) and (not arg_12_0._silentTime or Time.time - arg_12_0._silentTime >= arg_12_0._silentCD) then
+		elseif (deltaX > 0 and scrollNormalizePos <= 0 or deltaX < 0 and scrollNormalizePos >= 1) and (not self._silentTime or Time.time - self._silentTime >= self._silentCD) then
 			DungeonAudio.instance:chapterListBoundary()
 		end
 
-		arg_12_0._beginDragScrollNormalizePos = nil
+		self._beginDragScrollNormalizePos = nil
 	end
 end
 
-function var_0_0._onDragEnd(arg_13_0, arg_13_1, arg_13_2)
-	arg_13_0._beginDrag = false
-	arg_13_0._beginDragScrollNormalizePos = nil
+function DungeonViewAudio:_onDragEnd(scroll, pointerEventData)
+	self._beginDrag = false
+	self._beginDragScrollNormalizePos = nil
 end
 
-function var_0_0.removeScrollDragListener(arg_14_0, arg_14_1)
-	arg_14_1:RemoveDragBeginListener()
-	arg_14_1:RemoveDragEndListener()
-	arg_14_1:RemoveDragListener()
+function DungeonViewAudio:removeScrollDragListener(drag)
+	drag:RemoveDragBeginListener()
+	drag:RemoveDragEndListener()
+	drag:RemoveDragListener()
 end
 
-function var_0_0.onClose(arg_15_0)
-	if arg_15_0._curScroll then
-		arg_15_0._curScroll:RemoveOnValueChanged()
+function DungeonViewAudio:onClose()
+	if self._curScroll then
+		self._curScroll:RemoveOnValueChanged()
 	end
 
-	arg_15_0:removeScrollDragListener(arg_15_0._drag)
-	arg_15_0:removeScrollDragListener(arg_15_0._dragResource)
+	self:removeScrollDragListener(self._drag)
+	self:removeScrollDragListener(self._dragResource)
 
-	arg_15_0._scrollChangeCallback = nil
-	arg_15_0._scrollChangeCallbackTarget = nil
+	self._scrollChangeCallback = nil
+	self._scrollChangeCallbackTarget = nil
 end
 
-return var_0_0
+return DungeonViewAudio

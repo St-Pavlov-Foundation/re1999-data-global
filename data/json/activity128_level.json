@@ -1,0 +1,107 @@
+[
+  {
+    "playerLevel": 1,
+    "needExp": 100,
+    "levelBg": "v3a2_bossrush_main_scorebg_lv1",
+    "spLevelBg": 1,
+    "bonus": ""
+  },
+  {
+    "playerLevel": 2,
+    "needExp": 100,
+    "levelBg": "v3a2_bossrush_main_scorebg_lv1",
+    "spLevelBg": 1,
+    "bonus": "1#110204#1"
+  },
+  {
+    "playerLevel": 3,
+    "needExp": 100,
+    "levelBg": "v3a2_bossrush_main_scorebg_lv1",
+    "spLevelBg": 1,
+    "bonus": ""
+  },
+  {
+    "playerLevel": 4,
+    "needExp": 100,
+    "levelBg": "v3a2_bossrush_main_scorebg_lv1",
+    "spLevelBg": 1,
+    "bonus": ""
+  },
+  {
+    "playerLevel": 5,
+    "needExp": 100,
+    "levelBg": "v3a2_bossrush_main_scorebg_lv1",
+    "spLevelBg": 1,
+    "bonus": "1#120013#2"
+  },
+  {
+    "playerLevel": 6,
+    "needExp": 100,
+    "levelBg": "v3a2_bossrush_main_scorebg_lv1",
+    "spLevelBg": 1,
+    "bonus": ""
+  },
+  {
+    "playerLevel": 7,
+    "needExp": 100,
+    "levelBg": "v3a2_bossrush_main_scorebg_lv1",
+    "spLevelBg": 1,
+    "bonus": "1#110404#1"
+  },
+  {
+    "playerLevel": 8,
+    "needExp": 100,
+    "levelBg": "v3a2_bossrush_main_scorebg_lv1",
+    "spLevelBg": 1,
+    "bonus": ""
+  },
+  {
+    "playerLevel": 9,
+    "needExp": 100,
+    "levelBg": "v3a2_bossrush_main_scorebg_lv1",
+    "spLevelBg": 1,
+    "bonus": ""
+  },
+  {
+    "playerLevel": 10,
+    "needExp": 100,
+    "levelBg": "v3a2_bossrush_main_scorebg_lv2",
+    "spLevelBg": 2,
+    "bonus": "1#111007#1"
+  },
+  {
+    "playerLevel": 11,
+    "needExp": 100,
+    "levelBg": "v3a2_bossrush_main_scorebg_lv2",
+    "spLevelBg": 2,
+    "bonus": ""
+  },
+  {
+    "playerLevel": 12,
+    "needExp": 100,
+    "levelBg": "v3a2_bossrush_main_scorebg_lv2",
+    "spLevelBg": 2,
+    "bonus": "1#110604#1"
+  },
+  {
+    "playerLevel": 13,
+    "needExp": 100,
+    "levelBg": "v3a2_bossrush_main_scorebg_lv2",
+    "spLevelBg": 2,
+    "bonus": ""
+  },
+  {
+    "playerLevel": 14,
+    "needExp": 100,
+    "levelBg": "v3a2_bossrush_main_scorebg_lv2",
+    "spLevelBg": 2,
+    "bonus": ""
+  },
+  {
+    "playerLevel": 15,
+    "needExp": 100,
+    "levelBg": "v3a2_bossrush_main_scorebg_lv2",
+    "spLevelBg": 2,
+    "bonus": "1#120013#2"
+  }
+]

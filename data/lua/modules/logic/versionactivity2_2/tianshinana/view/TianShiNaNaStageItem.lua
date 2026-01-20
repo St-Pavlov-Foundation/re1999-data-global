@@ -1,203 +1,211 @@
-﻿module("modules.logic.versionactivity2_2.tianshinana.view.TianShiNaNaStageItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/tianshinana/view/TianShiNaNaStageItem.lua
 
-local var_0_0 = class("TianShiNaNaStageItem", LuaCompBase)
+module("modules.logic.versionactivity2_2.tianshinana.view.TianShiNaNaStageItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0._gounlock = gohelper.findChild(arg_1_0.viewGO, "#go_UnLocked")
-	arg_1_0._gostory = gohelper.findChild(arg_1_0.viewGO, "#go_UnLocked/#go_StoryStage")
-	arg_1_0._gogame1 = gohelper.findChild(arg_1_0.viewGO, "#go_UnLocked/#go_GameStage1")
-	arg_1_0._gogame2 = gohelper.findChild(arg_1_0.viewGO, "#go_UnLocked/#go_GameStage2")
-	arg_1_0._goStar1Has1 = gohelper.findChild(arg_1_0.viewGO, "#go_UnLocked/#go_Star/#go_Star1/Has1")
-	arg_1_0._goStar1Has2 = gohelper.findChild(arg_1_0.viewGO, "#go_UnLocked/#go_Star/#go_Star1/Has2")
-	arg_1_0._goStar1Eff = gohelper.findChild(arg_1_0.viewGO, "#go_UnLocked/#go_Star/#go_Star1/eff_star")
-	arg_1_0._goStar2 = gohelper.findChild(arg_1_0.viewGO, "#go_UnLocked/#go_Star/#go_Star2")
-	arg_1_0._goStar2Has1 = gohelper.findChild(arg_1_0.viewGO, "#go_UnLocked/#go_Star/#go_Star2/Has1")
-	arg_1_0._goStar2Has2 = gohelper.findChild(arg_1_0.viewGO, "#go_UnLocked/#go_Star/#go_Star2/Has2")
-	arg_1_0._goStar2Eff = gohelper.findChild(arg_1_0.viewGO, "#go_UnLocked/#go_Star/#go_Star2/eff_star")
-	arg_1_0._txtstagename = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_UnLocked/#txt_StageName")
-	arg_1_0._txtstagenameEn = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_UnLocked/#txt_StageName/#txt_StageName")
-	arg_1_0._txtstagenum = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_UnLocked/#txt_StageNum")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_UnLocked/#btn_click")
-	arg_1_0._effect1 = gohelper.findChild(arg_1_0.viewGO, "#go_UnLocked/eff_flow1")
-	arg_1_0._effect2 = gohelper.findChild(arg_1_0.viewGO, "#go_UnLocked/eff_flow2")
-	arg_1_0._goChess = gohelper.findChild(arg_1_0.viewGO, "image_chess")
-	arg_1_0._chessAnimator = gohelper.findChild(arg_1_0._goChess, "ani"):GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._golocked = gohelper.findChild(arg_1_0.viewGO, "#go_Locked")
-	arg_1_0._txtlockstagenum = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_Locked/#txt_StageNum")
-	arg_1_0._anim = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+local TianShiNaNaStageItem = class("TianShiNaNaStageItem", LuaCompBase)
+
+function TianShiNaNaStageItem:init(go)
+	self.viewGO = go
+	self._gounlock = gohelper.findChild(self.viewGO, "#go_UnLocked")
+	self._gostory = gohelper.findChild(self.viewGO, "#go_UnLocked/#go_StoryStage")
+	self._gogame1 = gohelper.findChild(self.viewGO, "#go_UnLocked/#go_GameStage1")
+	self._gogame2 = gohelper.findChild(self.viewGO, "#go_UnLocked/#go_GameStage2")
+	self._goStar1Has1 = gohelper.findChild(self.viewGO, "#go_UnLocked/#go_Star/#go_Star1/Has1")
+	self._goStar1Has2 = gohelper.findChild(self.viewGO, "#go_UnLocked/#go_Star/#go_Star1/Has2")
+	self._goStar1Eff = gohelper.findChild(self.viewGO, "#go_UnLocked/#go_Star/#go_Star1/eff_star")
+	self._goStar2 = gohelper.findChild(self.viewGO, "#go_UnLocked/#go_Star/#go_Star2")
+	self._goStar2Has1 = gohelper.findChild(self.viewGO, "#go_UnLocked/#go_Star/#go_Star2/Has1")
+	self._goStar2Has2 = gohelper.findChild(self.viewGO, "#go_UnLocked/#go_Star/#go_Star2/Has2")
+	self._goStar2Eff = gohelper.findChild(self.viewGO, "#go_UnLocked/#go_Star/#go_Star2/eff_star")
+	self._txtstagename = gohelper.findChildTextMesh(self.viewGO, "#go_UnLocked/#txt_StageName")
+	self._txtstagenameEn = gohelper.findChildTextMesh(self.viewGO, "#go_UnLocked/#txt_StageName/#txt_StageName")
+	self._txtstagenum = gohelper.findChildTextMesh(self.viewGO, "#go_UnLocked/#txt_StageNum")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "#go_UnLocked/#btn_click")
+	self._effect1 = gohelper.findChild(self.viewGO, "#go_UnLocked/eff_flow1")
+	self._effect2 = gohelper.findChild(self.viewGO, "#go_UnLocked/eff_flow2")
+	self._goChess = gohelper.findChild(self.viewGO, "image_chess")
+	self._chessAnimator = gohelper.findChild(self._goChess, "ani"):GetComponent(typeof(UnityEngine.Animator))
+	self._golocked = gohelper.findChild(self.viewGO, "#go_Locked")
+	self._txtlockstagenum = gohelper.findChildTextMesh(self.viewGO, "#go_Locked/#txt_StageNum")
+	self._anim = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function var_0_0.initCo(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._episodeCo = arg_2_1
-	arg_2_0._index = arg_2_2
-	arg_2_0._txtstagename.text = arg_2_0._episodeCo.name
-	arg_2_0._txtstagenameEn.text = arg_2_0._episodeCo.nameEn
-	arg_2_0._txtstagenum.text = string.format("%02d", arg_2_0._index)
-	arg_2_0._txtlockstagenum.text = string.format("%02d", arg_2_0._index)
+function TianShiNaNaStageItem:initCo(co, index)
+	self._episodeCo = co
+	self._index = index
+	self._txtstagename.text = self._episodeCo.name
+	self._txtstagenameEn.text = self._episodeCo.nameEn
+	self._txtstagenum.text = string.format("%02d", self._index)
+	self._txtlockstagenum.text = string.format("%02d", self._index)
 
-	gohelper.setActive(arg_2_0._gostory, arg_2_0._episodeCo.episodeType == TianShiNaNaEnum.EpisodeType.Story)
-	gohelper.setActive(arg_2_0._gogame1, arg_2_0._episodeCo.episodeType == TianShiNaNaEnum.EpisodeType.Normal)
-	gohelper.setActive(arg_2_0._gogame2, arg_2_0._episodeCo.episodeType == TianShiNaNaEnum.EpisodeType.Hard)
-	gohelper.setActive(arg_2_0._effect1, arg_2_0._episodeCo.episodeType ~= TianShiNaNaEnum.EpisodeType.Hard)
-	gohelper.setActive(arg_2_0._effect2, arg_2_0._episodeCo.episodeType == TianShiNaNaEnum.EpisodeType.Hard)
+	gohelper.setActive(self._gostory, self._episodeCo.episodeType == TianShiNaNaEnum.EpisodeType.Story)
+	gohelper.setActive(self._gogame1, self._episodeCo.episodeType == TianShiNaNaEnum.EpisodeType.Normal)
+	gohelper.setActive(self._gogame2, self._episodeCo.episodeType == TianShiNaNaEnum.EpisodeType.Hard)
+	gohelper.setActive(self._effect1, self._episodeCo.episodeType ~= TianShiNaNaEnum.EpisodeType.Hard)
+	gohelper.setActive(self._effect2, self._episodeCo.episodeType == TianShiNaNaEnum.EpisodeType.Hard)
 
-	local var_2_0 = not string.nilorempty(arg_2_0._episodeCo.exStarCondition)
+	local haveStar2 = not string.nilorempty(self._episodeCo.exStarCondition)
 
-	gohelper.setActive(arg_2_0._goStar2, var_2_0)
-	gohelper.setActive(arg_2_0._goStar1Has1, arg_2_0._episodeCo.episodeType ~= TianShiNaNaEnum.EpisodeType.Hard)
-	gohelper.setActive(arg_2_0._goStar1Has2, arg_2_0._episodeCo.episodeType == TianShiNaNaEnum.EpisodeType.Hard)
-	gohelper.setActive(arg_2_0._goStar2Has1, arg_2_0._episodeCo.episodeType ~= TianShiNaNaEnum.EpisodeType.Hard)
-	gohelper.setActive(arg_2_0._goStar2Has2, arg_2_0._episodeCo.episodeType == TianShiNaNaEnum.EpisodeType.Hard)
-	arg_2_0:_refreshView()
+	gohelper.setActive(self._goStar2, haveStar2)
+	gohelper.setActive(self._goStar1Has1, self._episodeCo.episodeType ~= TianShiNaNaEnum.EpisodeType.Hard)
+	gohelper.setActive(self._goStar1Has2, self._episodeCo.episodeType == TianShiNaNaEnum.EpisodeType.Hard)
+	gohelper.setActive(self._goStar2Has1, self._episodeCo.episodeType ~= TianShiNaNaEnum.EpisodeType.Hard)
+	gohelper.setActive(self._goStar2Has2, self._episodeCo.episodeType == TianShiNaNaEnum.EpisodeType.Hard)
+	self:_refreshView()
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	arg_3_0._btnclick:AddClickListener(arg_3_0._clickBtn, arg_3_0)
-	TianShiNaNaController.instance:registerCallback(TianShiNaNaEvent.EpisodeClick, arg_3_0._playChooseEpisode, arg_3_0)
-	TianShiNaNaController.instance:registerCallback(TianShiNaNaEvent.EpisodeStarChange, arg_3_0._onStarChange, arg_3_0)
+function TianShiNaNaStageItem:addEventListeners()
+	self._btnclick:AddClickListener(self._clickBtn, self)
+	TianShiNaNaController.instance:registerCallback(TianShiNaNaEvent.EpisodeClick, self._playChooseEpisode, self)
+	TianShiNaNaController.instance:registerCallback(TianShiNaNaEvent.EpisodeStarChange, self._onStarChange, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	arg_4_0._btnclick:RemoveClickListener()
-	TianShiNaNaController.instance:unregisterCallback(TianShiNaNaEvent.EpisodeClick, arg_4_0._playChooseEpisode, arg_4_0)
-	TianShiNaNaController.instance:unregisterCallback(TianShiNaNaEvent.EpisodeStarChange, arg_4_0._onStarChange, arg_4_0)
+function TianShiNaNaStageItem:removeEventListeners()
+	self._btnclick:RemoveClickListener()
+	TianShiNaNaController.instance:unregisterCallback(TianShiNaNaEvent.EpisodeClick, self._playChooseEpisode, self)
+	TianShiNaNaController.instance:unregisterCallback(TianShiNaNaEvent.EpisodeStarChange, self._onStarChange, self)
 end
 
-function var_0_0._onStarChange(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	if arg_5_1 + 1 == arg_5_0._index then
-		arg_5_0:_refreshView()
+function TianShiNaNaStageItem:_onStarChange(index, preStar, star)
+	if index + 1 == self._index then
+		self:_refreshView()
 
-		if arg_5_2 == 0 then
-			if arg_5_0._episodeCo.episodeType == TianShiNaNaEnum.EpisodeType.Hard then
-				arg_5_0._anim:Play("unlock_hard")
+		if preStar == 0 then
+			if self._episodeCo.episodeType == TianShiNaNaEnum.EpisodeType.Hard then
+				self._anim:Play("unlock_hard")
 			else
-				arg_5_0._anim:Play("unlock")
+				self._anim:Play("unlock")
 			end
 		end
 
 		AudioEffectMgr.instance:playAudio(AudioEnum.UI.play_ui_activity_hero37_checkpoint_tongguan)
-	elseif arg_5_1 == arg_5_0._index then
-		arg_5_0:_refreshView()
+	elseif index == self._index then
+		self:_refreshView()
 
-		if arg_5_2 < 1 and arg_5_3 >= 1 then
-			gohelper.setActive(arg_5_0._goStar1Eff, true)
+		if preStar < 1 and star >= 1 then
+			gohelper.setActive(self._goStar1Eff, true)
 		end
 
-		if arg_5_2 < 2 and arg_5_3 >= 2 then
-			gohelper.setActive(arg_5_0._goStar2Eff, true)
+		if preStar < 2 and star >= 2 then
+			gohelper.setActive(self._goStar2Eff, true)
 		end
 	end
 end
 
-function var_0_0._refreshView(arg_6_0)
-	gohelper.setActive(arg_6_0._goStar1Eff, false)
-	gohelper.setActive(arg_6_0._goStar2Eff, false)
+function TianShiNaNaStageItem:_refreshView()
+	gohelper.setActive(self._goStar1Eff, false)
+	gohelper.setActive(self._goStar2Eff, false)
 
-	local var_6_0 = true
-	local var_6_1 = lua_activity167_episode.configDict[arg_6_0._episodeCo.activityId][arg_6_0._episodeCo.preEpisode]
+	local unLock = true
+	local preEpisodeCo = lua_activity167_episode.configDict[self._episodeCo.activityId][self._episodeCo.preEpisode]
 
-	if var_6_1 then
-		if var_6_1.storyBefore > 0 and not StoryModel.instance:isStoryFinished(var_6_1.storyBefore) then
-			var_6_0 = false
+	if preEpisodeCo then
+		if preEpisodeCo.storyBefore > 0 and not StoryModel.instance:isStoryFinished(preEpisodeCo.storyBefore) then
+			unLock = false
 		end
 
-		if var_6_1.mapId > 0 and TianShiNaNaModel.instance:getEpisodeStar(arg_6_0._index - 1) <= 0 then
-			var_6_0 = false
+		if preEpisodeCo.mapId > 0 then
+			local star = TianShiNaNaModel.instance:getEpisodeStar(self._index - 1)
+
+			if star <= 0 then
+				unLock = false
+			end
 		end
 	end
 
-	gohelper.setActive(arg_6_0._gounlock, var_6_0)
-	gohelper.setActive(arg_6_0._golocked, not var_6_0)
-	gohelper.setActive(arg_6_0._goChess, TianShiNaNaModel.instance.curSelectIndex == arg_6_0._index)
+	gohelper.setActive(self._gounlock, unLock)
+	gohelper.setActive(self._golocked, not unLock)
+	gohelper.setActive(self._goChess, TianShiNaNaModel.instance.curSelectIndex == self._index)
 
-	if var_6_0 then
-		local var_6_2 = TianShiNaNaModel.instance:getEpisodeStar(arg_6_0._index)
+	if unLock then
+		local star = TianShiNaNaModel.instance:getEpisodeStar(self._index)
 
-		ZProj.UGUIHelper.SetGrayFactor(arg_6_0._goStar1Has1, var_6_2 < 1 and 1 or 0)
-		ZProj.UGUIHelper.SetGrayFactor(arg_6_0._goStar1Has2, var_6_2 < 1 and 1 or 0)
-		ZProj.UGUIHelper.SetGrayFactor(arg_6_0._goStar2Has1, var_6_2 < 2 and 1 or 0)
-		ZProj.UGUIHelper.SetGrayFactor(arg_6_0._goStar2Has2, var_6_2 < 2 and 1 or 0)
+		ZProj.UGUIHelper.SetGrayFactor(self._goStar1Has1, star < 1 and 1 or 0)
+		ZProj.UGUIHelper.SetGrayFactor(self._goStar1Has2, star < 1 and 1 or 0)
+		ZProj.UGUIHelper.SetGrayFactor(self._goStar2Has1, star < 2 and 1 or 0)
+		ZProj.UGUIHelper.SetGrayFactor(self._goStar2Has2, star < 2 and 1 or 0)
 	end
 end
 
-function var_0_0._playChooseEpisode(arg_7_0, arg_7_1)
-	if TianShiNaNaModel.instance.curSelectIndex == arg_7_0._index then
-		if arg_7_1 < arg_7_0._index then
-			arg_7_0._chessAnimator:Play("close_left", 0, 0)
+function TianShiNaNaStageItem:_playChooseEpisode(nowIndex)
+	if TianShiNaNaModel.instance.curSelectIndex == self._index then
+		if nowIndex < self._index then
+			self._chessAnimator:Play("close_left", 0, 0)
 		else
-			arg_7_0._chessAnimator:Play("close_right", 0, 0)
+			self._chessAnimator:Play("close_right", 0, 0)
 		end
 
 		AudioEffectMgr.instance:playAudio(AudioEnum.UI.play_ui_activity_hero37_checkpoint_unlock)
 	end
 end
 
-function var_0_0._clickBtn(arg_8_0)
-	if TianShiNaNaModel.instance.curSelectIndex == arg_8_0._index then
-		arg_8_0:_beginStory()
+function TianShiNaNaStageItem:_clickBtn()
+	if TianShiNaNaModel.instance.curSelectIndex == self._index then
+		self:_beginStory()
 	else
 		UIBlockMgr.instance:startBlock("TianShiNaNaStageItem")
-		TianShiNaNaController.instance:dispatchEvent(TianShiNaNaEvent.EpisodeClick, arg_8_0._index)
-		TaskDispatcher.runDelay(arg_8_0._delayPlayChessOpenAnim, arg_8_0, 0.4)
+		TianShiNaNaController.instance:dispatchEvent(TianShiNaNaEvent.EpisodeClick, self._index)
+		TaskDispatcher.runDelay(self._delayPlayChessOpenAnim, self, 0.4)
 	end
 end
 
-function var_0_0._delayPlayChessOpenAnim(arg_9_0)
-	gohelper.setActive(arg_9_0._goChess, true)
-	arg_9_0._chessAnimator:Play("open_right", 0, 0)
-	TaskDispatcher.runDelay(arg_9_0._beginStory, arg_9_0, 0.9)
+function TianShiNaNaStageItem:_delayPlayChessOpenAnim()
+	gohelper.setActive(self._goChess, true)
+	self._chessAnimator:Play("open_right", 0, 0)
+	TaskDispatcher.runDelay(self._beginStory, self, 0.9)
 end
 
-function var_0_0._beginStory(arg_10_0)
+function TianShiNaNaStageItem:_beginStory()
 	UIBlockMgr.instance:endBlock("TianShiNaNaStageItem")
 
-	TianShiNaNaModel.instance.curSelectIndex = arg_10_0._index
+	TianShiNaNaModel.instance.curSelectIndex = self._index
 
-	local var_10_0 = VersionActivity2_2Enum.ActivityId.TianShiNaNa
+	local actId = VersionActivity2_2Enum.ActivityId.TianShiNaNa
 
-	GameUtil.playerPrefsSetStringByUserId(PlayerPrefsKey.Version2_2TianShiNaNaSelect .. var_10_0, tostring(arg_10_0._index))
+	GameUtil.playerPrefsSetStringByUserId(PlayerPrefsKey.Version2_2TianShiNaNaSelect .. actId, tostring(self._index))
 
-	if arg_10_0._episodeCo.mapId > 0 then
-		if arg_10_0._episodeCo.storyBefore <= 0 then
-			arg_10_0:_storyEnd()
+	if self._episodeCo.mapId > 0 then
+		local isSkipStory = self._episodeCo.storyBefore <= 0
+
+		if isSkipStory then
+			self:_storyEnd()
 		else
-			StoryController.instance:playStory(arg_10_0._episodeCo.storyBefore, nil, arg_10_0._storyEnd, arg_10_0)
+			StoryController.instance:playStory(self._episodeCo.storyBefore, nil, self._storyEnd, self)
 		end
-	elseif arg_10_0._episodeCo.storyBefore > 0 then
-		StoryController.instance:playStory(arg_10_0._episodeCo.storyBefore, nil, arg_10_0._storyEnd, arg_10_0)
+	elseif self._episodeCo.storyBefore > 0 then
+		StoryController.instance:playStory(self._episodeCo.storyBefore, nil, self._storyEnd, self)
 	end
 end
 
-function var_0_0._onGetEpisodeInfo(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	if arg_11_2 == 0 then
-		TianShiNaNaModel.instance.currEpisodeId = arg_11_3.episodeId
+function TianShiNaNaStageItem:_onGetEpisodeInfo(cmd, resultCode, msg)
+	if resultCode == 0 then
+		TianShiNaNaModel.instance.currEpisodeId = msg.episodeId
 
 		TianShiNaNaController.instance:dispatchEvent(TianShiNaNaEvent.EnterLevelScene)
 	end
 end
 
-function var_0_0._storyEnd(arg_12_0)
-	if arg_12_0._episodeCo.mapId > 0 then
-		Activity167Rpc.instance:sendAct167StartEpisodeRequest(VersionActivity2_2Enum.ActivityId.TianShiNaNa, arg_12_0._episodeCo.id, arg_12_0._onGetEpisodeInfo, arg_12_0)
+function TianShiNaNaStageItem:_storyEnd()
+	if self._episodeCo.mapId > 0 then
+		Activity167Rpc.instance:sendAct167StartEpisodeRequest(VersionActivity2_2Enum.ActivityId.TianShiNaNa, self._episodeCo.id, self._onGetEpisodeInfo, self)
 	else
-		TaskDispatcher.runDelay(arg_12_0._delayMarkFinish, arg_12_0, 0.2)
+		TaskDispatcher.runDelay(self._delayMarkFinish, self, 0.2)
 	end
 end
 
-function var_0_0._delayMarkFinish(arg_13_0)
-	if not arg_13_0._index then
+function TianShiNaNaStageItem:_delayMarkFinish()
+	if not self._index then
 		return
 	end
 
-	TianShiNaNaModel.instance:markEpisodeFinish(arg_13_0._index, 1)
+	TianShiNaNaModel.instance:markEpisodeFinish(self._index, 1)
 end
 
-function var_0_0.onDestroy(arg_14_0)
+function TianShiNaNaStageItem:onDestroy()
 	UIBlockMgr.instance:endBlock("TianShiNaNaStageItem")
-	TaskDispatcher.cancelTask(arg_14_0._delayPlayChessOpenAnim, arg_14_0)
-	TaskDispatcher.cancelTask(arg_14_0._beginStory, arg_14_0)
-	TaskDispatcher.cancelTask(arg_14_0._delayMarkFinish, arg_14_0)
+	TaskDispatcher.cancelTask(self._delayPlayChessOpenAnim, self)
+	TaskDispatcher.cancelTask(self._beginStory, self)
+	TaskDispatcher.cancelTask(self._delayMarkFinish, self)
 end
 
-return var_0_0
+return TianShiNaNaStageItem

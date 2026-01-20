@@ -1,40 +1,43 @@
-﻿module("modules.logic.ressplit.config.ResSplitEnum", package.seeall)
+﻿-- chunkname: @modules/logic/ressplit/config/ResSplitEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.ressplit.config.ResSplitEnum", package.seeall)
 
-var_0_0.Path = "pathList"
-var_0_0.Folder = "dicList"
-var_0_0.SinglebgFolder = "singlebgFolder"
-var_0_0.AudioBank = "audioBank"
-var_0_0.CommonAudioBank = "commonAudioBank"
-var_0_0.Video = "videos"
-var_0_0.AudioWem = "audioWem"
-var_0_0.InnerAudioWem = "innerAudioWem"
-var_0_0.InnerRoomAB = "innerRoomAB"
-var_0_0.OutRoomAB = "outRoomAB"
-var_0_0.OutSceneAB = "outSceneAB"
-var_0_0.InnerSceneAB = "InnerSceneAB"
-var_0_0.ExportConfigPath = "Assets/ZResourcesLib/configs/ressplit.json"
-var_0_0.VersionResSplitCfgPath = "Assets/ZResourcesLib/configs/versionressplit.json"
-var_0_0.VersionResSplitDebugCfgPath = "versionressplitdebug.json"
-var_0_0.SingleBgAbCfgPath = "Assets/ZProj/Editor/Settings/singlebgabcfg.json"
-var_0_0.VersionResWhiteListPath = "Assets/ZProj/Editor/Settings/versionreswhitelistcfg.json"
-var_0_0.SplitAllScene = true
-var_0_0.VersionResEnum = {}
-var_0_0.VersionResEnum.StoryBg = "StoryBg"
-var_0_0.VersionResEnum.StoryVideo = "StoryVideo"
-var_0_0.VersionResEnum.StoryAudio = "StoryAudio"
-var_0_0.VersionResEnum.StoryCharIcon = "StoryCharIcon"
-var_0_0.VersionResEnum.StoryBgItem = "StoryBgItem"
-var_0_0.VersionResEnum.StoryRole = "StoryRole"
-var_0_0.VersionResEnum.ChapterScene = "ChapterScene"
-var_0_0.VersionResEnum.ChapterSceneDepand = "ChapterSceneDepand"
-var_0_0.VersionResEnum.VersionAudio = "VersionAudio"
-var_0_0.VersionResEnum.GuideHalpPage = "GuideHalpPage"
-var_0_0.VersionResEnum.SingleFolder = "SingleFolder"
-var_0_0.VersionResEnum.SingleFile = "SingleFile"
-var_0_0.VersionResEnum.UIPrefab = "UIPrefab"
-var_0_0.VersionResEnum.UIPrefabDepand = "UIPrefabDepand"
-var_0_0.VersionResEnum.UISingleBg = "UISingleBg"
+local ResSplitEnum = _M
 
-return var_0_0
+ResSplitEnum.Path = "pathList"
+ResSplitEnum.Folder = "dicList"
+ResSplitEnum.SinglebgFolder = "singlebgFolder"
+ResSplitEnum.AudioBank = "audioBank"
+ResSplitEnum.CommonAudioBank = "commonAudioBank"
+ResSplitEnum.Video = "videos"
+ResSplitEnum.AudioWem = "audioWem"
+ResSplitEnum.InnerAudioWem = "innerAudioWem"
+ResSplitEnum.InnerRoomAB = "innerRoomAB"
+ResSplitEnum.OutRoomAB = "outRoomAB"
+ResSplitEnum.OutSceneAB = "outSceneAB"
+ResSplitEnum.InnerSceneAB = "InnerSceneAB"
+ResSplitEnum.ExportConfigPath = "Assets/ZResourcesLib/configs/ressplit.json"
+ResSplitEnum.ExportSaveConfigPath = "Assets/ZResourcesLib/configs/res_save_config.json"
+ResSplitEnum.VersionResSplitCfgPath = "Assets/ZResourcesLib/configs/versionressplit.json"
+ResSplitEnum.VersionResSplitDebugCfgPath = "versionressplitdebug.json"
+ResSplitEnum.SingleBgAbCfgPath = "Assets/ZProj/Editor/Settings/singlebgabcfg.json"
+ResSplitEnum.VersionResWhiteListPath = "Assets/ZProj/Editor/Settings/versionreswhitelistcfg.json"
+ResSplitEnum.SplitAllScene = true
+ResSplitEnum.VersionResEnum = {}
+ResSplitEnum.VersionResEnum.StoryBg = "StoryBg"
+ResSplitEnum.VersionResEnum.StoryVideo = "StoryVideo"
+ResSplitEnum.VersionResEnum.StoryAudio = "StoryAudio"
+ResSplitEnum.VersionResEnum.StoryCharIcon = "StoryCharIcon"
+ResSplitEnum.VersionResEnum.StoryBgItem = "StoryBgItem"
+ResSplitEnum.VersionResEnum.StoryRole = "StoryRole"
+ResSplitEnum.VersionResEnum.ChapterScene = "ChapterScene"
+ResSplitEnum.VersionResEnum.ChapterSceneDepand = "ChapterSceneDepand"
+ResSplitEnum.VersionResEnum.VersionAudio = "VersionAudio"
+ResSplitEnum.VersionResEnum.GuideHalpPage = "GuideHalpPage"
+ResSplitEnum.VersionResEnum.SingleFolder = "SingleFolder"
+ResSplitEnum.VersionResEnum.SingleFile = "SingleFile"
+ResSplitEnum.VersionResEnum.UIPrefab = "UIPrefab"
+ResSplitEnum.VersionResEnum.UIPrefabDepand = "UIPrefabDepand"
+ResSplitEnum.VersionResEnum.UISingleBg = "UISingleBg"
+
+return ResSplitEnum

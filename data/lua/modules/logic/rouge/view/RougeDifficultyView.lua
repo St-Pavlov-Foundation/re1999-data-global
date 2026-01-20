@@ -1,143 +1,151 @@
-﻿module("modules.logic.rouge.view.RougeDifficultyView", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeDifficultyView.lua
 
-local var_0_0 = class("RougeDifficultyView", BaseView)
+module("modules.logic.rouge.view.RougeDifficultyView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._simagemask2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_mask2")
-	arg_1_0._simagemask3 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_mask3")
-	arg_1_0._scrollview = gohelper.findChildScrollRect(arg_1_0.viewGO, "Middle/#scroll_view")
-	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "Middle/#scroll_view/Viewport/#go_Content")
-	arg_1_0._btnleftarrow = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Middle/#btn_leftarrow")
-	arg_1_0._btnrightarrow = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Middle/#btn_rightarrow")
-	arg_1_0._gorougepageprogress = gohelper.findChild(arg_1_0.viewGO, "#go_rougepageprogress")
-	arg_1_0._btnstart1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Btn/#btn_start1")
-	arg_1_0._btnstart2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Btn/#btn_start2")
-	arg_1_0._btnstart3 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Btn/#btn_start3")
-	arg_1_0._goblock = gohelper.findChild(arg_1_0.viewGO, "#go_block")
-	arg_1_0._gooverviewtips = gohelper.findChild(arg_1_0.viewGO, "#go_overviewtips")
-	arg_1_0._godecitem = gohelper.findChild(arg_1_0.viewGO, "#go_overviewtips/#scroll_overview/Viewport/Content/#txt_decitem")
-	arg_1_0._gobalancetips = gohelper.findChild(arg_1_0.viewGO, "#go_balancetips")
-	arg_1_0._golevelitem = gohelper.findChild(arg_1_0.viewGO, "#go_balancetips/#scroll_details/Viewport/Content/level/#go_levelitem")
-	arg_1_0._golefttop = gohelper.findChild(arg_1_0.viewGO, "#go_lefttop")
+local RougeDifficultyView = class("RougeDifficultyView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeDifficultyView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._simagemask2 = gohelper.findChildSingleImage(self.viewGO, "#simage_mask2")
+	self._simagemask3 = gohelper.findChildSingleImage(self.viewGO, "#simage_mask3")
+	self._scrollview = gohelper.findChildScrollRect(self.viewGO, "Middle/#scroll_view")
+	self._goContent = gohelper.findChild(self.viewGO, "Middle/#scroll_view/Viewport/#go_Content")
+	self._btnleftarrow = gohelper.findChildButtonWithAudio(self.viewGO, "Middle/#btn_leftarrow")
+	self._btnrightarrow = gohelper.findChildButtonWithAudio(self.viewGO, "Middle/#btn_rightarrow")
+	self._gorougepageprogress = gohelper.findChild(self.viewGO, "#go_rougepageprogress")
+	self._btnstart1 = gohelper.findChildButtonWithAudio(self.viewGO, "Btn/#btn_start1")
+	self._btnstart2 = gohelper.findChildButtonWithAudio(self.viewGO, "Btn/#btn_start2")
+	self._btnstart3 = gohelper.findChildButtonWithAudio(self.viewGO, "Btn/#btn_start3")
+	self._goblock = gohelper.findChild(self.viewGO, "#go_block")
+	self._gooverviewtips = gohelper.findChild(self.viewGO, "#go_overviewtips")
+	self._godecitem = gohelper.findChild(self.viewGO, "#go_overviewtips/#scroll_overview/Viewport/Content/#txt_decitem")
+	self._gobalancetips = gohelper.findChild(self.viewGO, "#go_balancetips")
+	self._golevelitem = gohelper.findChild(self.viewGO, "#go_balancetips/#scroll_details/Viewport/Content/level/#go_levelitem")
+	self._golefttop = gohelper.findChild(self.viewGO, "#go_lefttop")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnleftarrow:AddClickListener(arg_2_0._btnleftarrowOnClick, arg_2_0)
-	arg_2_0._btnrightarrow:AddClickListener(arg_2_0._btnrightarrowOnClick, arg_2_0)
-	arg_2_0._btnstart1:AddClickListener(arg_2_0._btnstart1OnClick, arg_2_0)
-	arg_2_0._btnstart2:AddClickListener(arg_2_0._btnstart2OnClick, arg_2_0)
-	arg_2_0._btnstart3:AddClickListener(arg_2_0._btnstart3OnClick, arg_2_0)
+function RougeDifficultyView:addEvents()
+	self._btnleftarrow:AddClickListener(self._btnleftarrowOnClick, self)
+	self._btnrightarrow:AddClickListener(self._btnrightarrowOnClick, self)
+	self._btnstart1:AddClickListener(self._btnstart1OnClick, self)
+	self._btnstart2:AddClickListener(self._btnstart2OnClick, self)
+	self._btnstart3:AddClickListener(self._btnstart3OnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnleftarrow:RemoveClickListener()
-	arg_3_0._btnrightarrow:RemoveClickListener()
-	arg_3_0._btnstart1:RemoveClickListener()
-	arg_3_0._btnstart2:RemoveClickListener()
-	arg_3_0._btnstart3:RemoveClickListener()
+function RougeDifficultyView:removeEvents()
+	self._btnleftarrow:RemoveClickListener()
+	self._btnrightarrow:RemoveClickListener()
+	self._btnstart1:RemoveClickListener()
+	self._btnstart2:RemoveClickListener()
+	self._btnstart3:RemoveClickListener()
 end
 
-local var_0_1 = ZProj.TweenHelper
-local var_0_2 = 100
-local var_0_3 = 0.3
-local var_0_4 = 0.6
-local var_0_5 = 2
+local csTweenHelper = ZProj.TweenHelper
+local kFastScrollSpeed = 100
+local kTweenSecond = 0.3
+local kAfterOpen1ScaleAnimSecond = 0.6
+local kAfterUnlock1ScaleAnimSecond = 2
 
-function var_0_0._btnleftarrowOnClick(arg_4_0)
-	arg_4_0:_moveByArrow(true)
+function RougeDifficultyView:_btnleftarrowOnClick()
+	self:_moveByArrow(true)
 end
 
-function var_0_0._btnrightarrowOnClick(arg_5_0)
-	arg_5_0:_moveByArrow(false)
+function RougeDifficultyView:_btnrightarrowOnClick()
+	self:_moveByArrow(false)
 end
 
-function var_0_0._moveByArrow(arg_6_0, arg_6_1)
-	arg_6_0._drag:clear()
+function RougeDifficultyView:_moveByArrow(isLeft)
+	self._drag:clear()
 
-	local var_6_0 = arg_6_0._lastSelectedIndex or arg_6_1 and 2 or 0
-	local var_6_1 = arg_6_1 and var_6_0 - 1 or var_6_0 + 1
+	local lastIndex = self._lastSelectedIndex
 
-	arg_6_0:_onSelectIndex(arg_6_0:_validateIndex(var_6_1))
+	lastIndex = lastIndex or isLeft and 2 or 0
+
+	local selectIndex = isLeft and lastIndex - 1 or lastIndex + 1
+
+	self:_onSelectIndex(self:_validateIndex(selectIndex))
 end
 
-function var_0_0._btnstart1OnClick(arg_7_0)
-	arg_7_0:_btnStartOnClick()
+function RougeDifficultyView:_btnstart1OnClick()
+	self:_btnStartOnClick()
 end
 
-function var_0_0._btnstart2OnClick(arg_8_0)
-	arg_8_0:_btnStartOnClick()
+function RougeDifficultyView:_btnstart2OnClick()
+	self:_btnStartOnClick()
 end
 
-function var_0_0._btnstart3OnClick(arg_9_0)
-	arg_9_0:_btnStartOnClick()
+function RougeDifficultyView:_btnstart3OnClick()
+	self:_btnStartOnClick()
 end
 
-local var_0_6 = "RougeDifficultyView:_btnStartOnClick"
+local kBlockKey = "RougeDifficultyView:_btnStartOnClick"
 
-function var_0_0._btnStartOnClick(arg_10_0)
-	local var_10_0 = RougeOutsideModel.instance:season()
-	local var_10_1 = arg_10_0:_versionList()
-	local var_10_2 = arg_10_0:difficulty()
-	local var_10_3
+function RougeDifficultyView:_btnStartOnClick()
+	local season = RougeOutsideModel.instance:season()
+	local versionList = self:_versionList()
+	local difficulty = self:difficulty()
+	local limiterMO
 
-	if tabletool.indexOf(var_10_1, RougeDLCEnum.DLCEnum.DLC_101) then
-		var_10_3 = RougeDLCModel101.instance:getLimiterClientMo()
+	if tabletool.indexOf(versionList, RougeDLCEnum.DLCEnum.DLC_101) then
+		limiterMO = RougeDLCModel101.instance:getLimiterClientMo()
 	end
 
-	if not arg_10_0._lastSelectedIndex then
+	if not self._lastSelectedIndex then
 		return
 	end
 
-	UIBlockHelper.instance:startBlock(var_0_6, 1, arg_10_0.viewName)
+	UIBlockHelper.instance:startBlock(kBlockKey, 1, self.viewName)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_dungeon_1_6_columns_update_20190318)
 
-	local var_10_4 = false
-	local var_10_5 = false
+	local isAnimDone = false
+	local isRpcReplyed = false
+	local lastItem = self._itemList[self._lastSelectedIndex]
 
-	arg_10_0._itemList[arg_10_0._lastSelectedIndex]:setOnCloseEndCb(function()
-		var_10_4 = true
+	lastItem:setOnCloseEndCb(function()
+		isAnimDone = true
 
-		if not var_10_5 then
+		if not isRpcReplyed then
 			return
 		end
 
-		UIBlockHelper.instance:endBlock(var_0_6)
-		arg_10_0:_directOpenNextView()
+		UIBlockHelper.instance:endBlock(kBlockKey)
+		self:_directOpenNextView()
 	end)
 
-	local var_10_6 = arg_10_0:_validateIndex(arg_10_0._lastSelectedIndex - 2)
-	local var_10_7 = arg_10_0:_validateIndex(arg_10_0._lastSelectedIndex + 2)
+	local from = self:_validateIndex(self._lastSelectedIndex - 2)
+	local to = self:_validateIndex(self._lastSelectedIndex + 2)
 
-	for iter_10_0 = var_10_6, var_10_7 do
-		arg_10_0._itemList[iter_10_0]:playClose()
+	for i = from, to do
+		local item = self._itemList[i]
+
+		item:playClose()
 	end
 
-	RougeRpc.instance:sendEnterRougeSelectDifficultyRequest(var_10_0, var_10_1, var_10_2, var_10_3, function(arg_12_0, arg_12_1)
-		if arg_12_1 ~= 0 then
-			logError("RougeDifficultyView:_btnStartOnClick resultCode=" .. tostring(arg_12_1))
+	RougeRpc.instance:sendEnterRougeSelectDifficultyRequest(season, versionList, difficulty, limiterMO, function(_, resultCode)
+		if resultCode ~= 0 then
+			logError("RougeDifficultyView:_btnStartOnClick resultCode=" .. tostring(resultCode))
 
 			return
 		end
 
-		RougeOutsideModel.instance:setLastMarkSelectedDifficulty(var_10_2)
+		RougeOutsideModel.instance:setLastMarkSelectedDifficulty(difficulty)
 
-		var_10_5 = true
+		isRpcReplyed = true
 
-		if not var_10_4 then
+		if not isAnimDone then
 			return
 		end
 
-		UIBlockHelper.instance:endBlock(var_0_6)
-		arg_10_0:_directOpenNextView()
+		UIBlockHelper.instance:endBlock(kBlockKey)
+		self:_directOpenNextView()
 	end)
 end
 
-function var_0_0._directOpenNextView(arg_13_0)
+function RougeDifficultyView:_directOpenNextView()
 	if RougeModel.instance:isCanSelectRewards() then
 		RougeController.instance:openRougeSelectRewardsView()
 	else
@@ -145,834 +153,850 @@ function var_0_0._directOpenNextView(arg_13_0)
 	end
 end
 
-function var_0_0._editableInitView(arg_14_0)
-	arg_14_0._goblockClick = gohelper.findChildClick(arg_14_0._goblock, "")
+function RougeDifficultyView:_editableInitView()
+	self._goblockClick = gohelper.findChildClick(self._goblock, "")
 
-	arg_14_0._goblockClick:AddClickListener(arg_14_0._goblockClickonClick, arg_14_0)
+	self._goblockClick:AddClickListener(self._goblockClickonClick, self)
 
-	arg_14_0._decitemTextList = arg_14_0:getUserDataTb_()
+	self._decitemTextList = self:getUserDataTb_()
 
-	gohelper.setActive(arg_14_0._godecitem, false)
+	gohelper.setActive(self._godecitem, false)
 
-	arg_14_0._golevelitemList = arg_14_0:getUserDataTb_()
+	self._golevelitemList = self:getUserDataTb_()
 
-	gohelper.setActive(arg_14_0._golevelitem, false)
-	arg_14_0:_setActiveOverviewTips(false)
-	arg_14_0:_setActiveBalanceTips(false)
-	arg_14_0:_initScrollView()
-	arg_14_0:_initPageProgress()
-	arg_14_0:_initViewStyles()
+	gohelper.setActive(self._golevelitem, false)
+	self:_setActiveOverviewTips(false)
+	self:_setActiveBalanceTips(false)
+	self:_initScrollView()
+	self:_initPageProgress()
+	self:_initViewStyles()
 end
 
-function var_0_0._goblockClickonClick(arg_15_0)
-	arg_15_0:_setActiveBlock(false)
+function RougeDifficultyView:_goblockClickonClick()
+	self:_setActiveBlock(false)
 end
 
-function var_0_0._setActiveOverviewTips(arg_16_0, arg_16_1)
-	gohelper.setActive(arg_16_0._gooverviewtips, arg_16_1)
+function RougeDifficultyView:_setActiveOverviewTips(isActive)
+	gohelper.setActive(self._gooverviewtips, isActive)
 end
 
-function var_0_0._setActiveBalanceTips(arg_17_0, arg_17_1)
-	gohelper.setActive(arg_17_0._gobalancetips, arg_17_1)
+function RougeDifficultyView:_setActiveBalanceTips(isActive)
+	gohelper.setActive(self._gobalancetips, isActive)
 end
 
-function var_0_0._initScrollView(arg_18_0)
-	arg_18_0._scrollViewGo = arg_18_0._scrollview.gameObject
-	arg_18_0._scrollViewTrans = arg_18_0._scrollViewGo.transform
-	arg_18_0._scrollViewLimitScrollCmp = arg_18_0._scrollViewGo:GetComponent(gohelper.Type_LimitedScrollRect)
-	arg_18_0._goContentHLayout = arg_18_0._goContent:GetComponent(gohelper.Type_HorizontalLayoutGroup)
-	arg_18_0._drag = UIDragListenerHelper.New()
+function RougeDifficultyView:_initScrollView()
+	self._scrollViewGo = self._scrollview.gameObject
+	self._scrollViewTrans = self._scrollViewGo.transform
+	self._scrollViewLimitScrollCmp = self._scrollViewGo:GetComponent(gohelper.Type_LimitedScrollRect)
+	self._goContentHLayout = self._goContent:GetComponent(gohelper.Type_HorizontalLayoutGroup)
+	self._drag = UIDragListenerHelper.New()
 
-	arg_18_0._drag:createByScrollRect(arg_18_0._scrollViewLimitScrollCmp)
-	arg_18_0._drag:registerCallback(arg_18_0._drag.EventBegin, arg_18_0._onDragBeginHandler, arg_18_0)
-	arg_18_0._drag:registerCallback(arg_18_0._drag.EventDragging, arg_18_0._onDragging, arg_18_0)
-	arg_18_0._scrollview:AddOnValueChanged(arg_18_0._onScrollValueChanged, arg_18_0)
+	self._drag:createByScrollRect(self._scrollViewLimitScrollCmp)
+	self._drag:registerCallback(self._drag.EventBegin, self._onDragBeginHandler, self)
+	self._drag:registerCallback(self._drag.EventDragging, self._onDragging, self)
+	self._scrollview:AddOnValueChanged(self._onScrollValueChanged, self)
 end
 
-function var_0_0._initPageProgress(arg_19_0)
-	local var_19_0 = RougePageProgress
-	local var_19_1 = arg_19_0.viewContainer:getResInst(RougeEnum.ResPath.rougepageprogress, arg_19_0._gorougepageprogress, var_19_0.__cname)
+function RougeDifficultyView:_initPageProgress()
+	local itemClass = RougePageProgress
+	local go = self.viewContainer:getResInst(RougeEnum.ResPath.rougepageprogress, self._gorougepageprogress, itemClass.__cname)
 
-	arg_19_0._pageProgress = MonoHelper.addNoUpdateLuaComOnceToGo(var_19_1, var_19_0)
+	self._pageProgress = MonoHelper.addNoUpdateLuaComOnceToGo(go, itemClass)
 
-	arg_19_0._pageProgress:setData()
+	self._pageProgress:setData()
 end
 
-function var_0_0._initViewStyles(arg_20_0)
-	arg_20_0._transBtnStartList = arg_20_0:getUserDataTb_()
-	arg_20_0._animBtnStartList = arg_20_0:getUserDataTb_()
+function RougeDifficultyView:_initViewStyles()
+	self._transBtnStartList = self:getUserDataTb_()
+	self._animBtnStartList = self:getUserDataTb_()
 
-	local var_20_0 = 1
-	local var_20_1 = arg_20_0["_btnstart" .. var_20_0]
+	local i = 1
+	local btnStart = self["_btnstart" .. i]
 
-	while var_20_1 ~= nil do
-		local var_20_2 = var_20_1.gameObject
-		local var_20_3 = var_20_2.transform
+	while btnStart ~= nil do
+		local go = btnStart.gameObject
+		local t = go.transform
 
-		table.insert(arg_20_0._transBtnStartList, var_20_3)
-		table.insert(arg_20_0._animBtnStartList, var_20_2:GetComponent(gohelper.Type_Animator))
-		gohelper.setActive(var_20_2, true)
-		GameUtil.setActive01(var_20_3, false)
+		table.insert(self._transBtnStartList, t)
+		table.insert(self._animBtnStartList, go:GetComponent(gohelper.Type_Animator))
+		gohelper.setActive(go, true)
+		GameUtil.setActive01(t, false)
 
-		var_20_0 = var_20_0 + 1
-		var_20_1 = arg_20_0["_btnstart" .. var_20_0]
+		i = i + 1
+		btnStart = self["_btnstart" .. i]
 	end
 
-	arg_20_0._transSimageMaskList = arg_20_0:getUserDataTb_()
-	arg_20_0._animSimageMaskList = arg_20_0:getUserDataTb_()
+	self._transSimageMaskList = self:getUserDataTb_()
+	self._animSimageMaskList = self:getUserDataTb_()
 
-	for iter_20_0 = 1, #arg_20_0._transBtnStartList do
-		local var_20_4 = arg_20_0["_simagemask" .. iter_20_0]
+	for i = 1, #self._transBtnStartList do
+		local simagemask = self["_simagemask" .. i]
 
-		if var_20_4 then
-			local var_20_5 = var_20_4.gameObject
-			local var_20_6 = var_20_5.transform
+		if simagemask then
+			local go = simagemask.gameObject
+			local t = go.transform
 
-			arg_20_0._transSimageMaskList[iter_20_0] = var_20_6
-			arg_20_0._animSimageMaskList[iter_20_0] = var_20_5:GetComponent(gohelper.Type_Animator)
+			self._transSimageMaskList[i] = t
+			self._animSimageMaskList[i] = go:GetComponent(gohelper.Type_Animator)
 
-			GameUtil.setActive01(var_20_6, false)
-			gohelper.setActive(var_20_5, true)
+			GameUtil.setActive01(t, false)
+			gohelper.setActive(go, true)
 		end
 	end
 end
 
-function var_0_0.onUpdateParam(arg_21_0)
-	arg_21_0:_refresh()
-	arg_21_0:_onSelectIndex(arg_21_0:_onOpenSelectedIndex())
+function RougeDifficultyView:onUpdateParam()
+	self:_refresh()
+	self:_onSelectIndex(self:_onOpenSelectedIndex())
 end
 
-function var_0_0.onOpen(arg_22_0)
-	arg_22_0._lastSelectedIndex = false
-	arg_22_0._uiAduioLastDragNear = nil
-	arg_22_0._cache_difficultyCOList = nil
-	arg_22_0._cache_sumDescIndexList = nil
+function RougeDifficultyView:onOpen()
+	self._lastSelectedIndex = false
+	self._uiAduioLastDragNear = nil
+	self._cache_difficultyCOList = nil
+	self._cache_sumDescIndexList = nil
 
-	arg_22_0:_setActiveBlock(false)
+	self:_setActiveBlock(false)
 
-	arg_22_0._dataList = RougeOutsideModel.instance:getDifficultyInfoList(arg_22_0:_versionList())
+	self._dataList = RougeOutsideModel.instance:getDifficultyInfoList(self:_versionList())
 
-	arg_22_0:_refresh()
-	UpdateBeat:Add(arg_22_0._update, arg_22_0)
-	arg_22_0.viewContainer:registerCallback(RougeEvent.RougeDifficultyView_OnSelectIndex, arg_22_0._onSelectIndexByUser, arg_22_0)
-	arg_22_0.viewContainer:registerCallback(RougeEvent.RougeDifficultyView_btnTipsIconOnClick, arg_22_0._btnTipsIconOnClick, arg_22_0)
-	arg_22_0.viewContainer:registerCallback(RougeEvent.RougeDifficultyView_btnBalanceOnClick, arg_22_0._btnBalanceOnClick, arg_22_0)
-	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnScreenResize, arg_22_0._onScreenResize, arg_22_0)
+	self:_refresh()
+	UpdateBeat:Add(self._update, self)
+	self.viewContainer:registerCallback(RougeEvent.RougeDifficultyView_OnSelectIndex, self._onSelectIndexByUser, self)
+	self.viewContainer:registerCallback(RougeEvent.RougeDifficultyView_btnTipsIconOnClick, self._btnTipsIconOnClick, self)
+	self.viewContainer:registerCallback(RougeEvent.RougeDifficultyView_btnBalanceOnClick, self._btnBalanceOnClick, self)
+	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnScreenResize, self._onScreenResize, self)
 end
 
-function var_0_0.onOpenFinish(arg_23_0)
-	arg_23_0:_onScreenResize()
-	arg_23_0:_tweenOpenAnim()
+function RougeDifficultyView:onOpenFinish()
+	self:_onScreenResize()
+	self:_tweenOpenAnim()
 end
 
-function var_0_0.onClose(arg_24_0)
-	arg_24_0:_clearTweenOpenAnimFirstItemScaleTimer()
-	UpdateBeat:Remove(arg_24_0._update, arg_24_0)
-	arg_24_0._goblockClick:RemoveClickListener()
-	arg_24_0._scrollview:RemoveOnValueChanged()
-	arg_24_0.viewContainer:unregisterCallback(RougeEvent.RougeDifficultyView_OnSelectIndex, arg_24_0._onSelectIndexByUser, arg_24_0)
-	arg_24_0.viewContainer:unregisterCallback(RougeEvent.RougeDifficultyView_btnTipsIconOnClick, arg_24_0._btnTipsIconOnClick, arg_24_0)
-	arg_24_0.viewContainer:unregisterCallback(RougeEvent.RougeDifficultyView_btnBalanceOnClick, arg_24_0._btnBalanceOnClick, arg_24_0)
-	GameGlobalMgr.instance:unregisterCallback(GameStateEvent.OnScreenResize, arg_24_0._onScreenResize, arg_24_0)
-	arg_24_0:_killTween()
+function RougeDifficultyView:onClose()
+	self:_clearTweenOpenAnimFirstItemScaleTimer()
+	UpdateBeat:Remove(self._update, self)
+	self._goblockClick:RemoveClickListener()
+	self._scrollview:RemoveOnValueChanged()
+	self.viewContainer:unregisterCallback(RougeEvent.RougeDifficultyView_OnSelectIndex, self._onSelectIndexByUser, self)
+	self.viewContainer:unregisterCallback(RougeEvent.RougeDifficultyView_btnTipsIconOnClick, self._btnTipsIconOnClick, self)
+	self.viewContainer:unregisterCallback(RougeEvent.RougeDifficultyView_btnBalanceOnClick, self._btnBalanceOnClick, self)
+	GameGlobalMgr.instance:unregisterCallback(GameStateEvent.OnScreenResize, self._onScreenResize, self)
+	self:_killTween()
 end
 
-function var_0_0._killTween(arg_25_0)
-	GameUtil.onDestroyViewMember_TweenId(arg_25_0, "_contentPosXTweenId")
+function RougeDifficultyView:_killTween()
+	GameUtil.onDestroyViewMember_TweenId(self, "_contentPosXTweenId")
 end
 
-function var_0_0._clearTweenOpenAnimFirstItemScaleTimer(arg_26_0)
-	TaskDispatcher.cancelTask(arg_26_0._tweenOpenAnimFirstItemScale, arg_26_0)
+function RougeDifficultyView:_clearTweenOpenAnimFirstItemScaleTimer()
+	TaskDispatcher.cancelTask(self._tweenOpenAnimFirstItemScale, self)
 end
 
-function var_0_0.onDestroyView(arg_27_0)
-	arg_27_0:_clearTweenOpenAnimFirstItemScaleTimer()
-	UpdateBeat:Remove(arg_27_0._update, arg_27_0)
-	GameUtil.onDestroyViewMember(arg_27_0, "_drag")
-	GameUtil.onDestroyViewMemberList(arg_27_0, "_itemList")
+function RougeDifficultyView:onDestroyView()
+	self:_clearTweenOpenAnimFirstItemScaleTimer()
+	UpdateBeat:Remove(self._update, self)
+	GameUtil.onDestroyViewMember(self, "_drag")
+	GameUtil.onDestroyViewMemberList(self, "_itemList")
 end
 
-function var_0_0._refresh(arg_28_0)
-	arg_28_0:_refreshList()
+function RougeDifficultyView:_refresh()
+	self:_refreshList()
 end
 
-function var_0_0._getNewUnlockStateList(arg_29_0)
-	local var_29_0 = {}
+function RougeDifficultyView:_getNewUnlockStateList()
+	local res = {}
 
-	for iter_29_0, iter_29_1 in ipairs(arg_29_0._dataList) do
-		local var_29_1 = iter_29_1.difficulty
+	for i, itemData in ipairs(self._dataList) do
+		local difficulty = itemData.difficulty
+		local isUnlockNewLayer = RougeOutsideModel.instance:getIsNewUnlockDifficulty(difficulty)
 
-		var_29_0[iter_29_0] = RougeOutsideModel.instance:getIsNewUnlockDifficulty(var_29_1)
+		res[i] = isUnlockNewLayer
 	end
 
-	return var_29_0
+	return res
 end
 
-function var_0_0._tweenOpenAnimFirstItemScale(arg_30_0)
-	if not arg_30_0._itemList then
+function RougeDifficultyView:_tweenOpenAnimFirstItemScale()
+	if not self._itemList then
 		return
 	end
 
-	local var_30_0 = arg_30_0._itemList[1]
+	local firstSelectedItem = self._itemList[1]
 
-	if not var_30_0 then
+	if not firstSelectedItem then
 		return
 	end
 
-	arg_30_0:_setScaleAdjacent(1, true)
-	var_30_0:tweenScale(RougeDifficultyItem.ScalerSelected)
+	self:_setScaleAdjacent(1, true)
+	firstSelectedItem:tweenScale(RougeDifficultyItem.ScalerSelected)
 end
 
-function var_0_0._tweenOpenAnim(arg_31_0)
-	UIBlockHelper.instance:startBlock("RougeDifficultyView:_tweenOpenAnim", 1.9, arg_31_0.viewName)
+function RougeDifficultyView:_tweenOpenAnim()
+	UIBlockHelper.instance:startBlock("RougeDifficultyView:_tweenOpenAnim", 1.9, self.viewName)
 
-	local var_31_0 = arg_31_0:_getItemList()
-	local var_31_1 = arg_31_0:_getNewUnlockStateList()
-	local var_31_2 = arg_31_0:_onOpenSelectedIndex()
-	local var_31_3 = var_31_0[var_31_2]
+	local itemList = self:_getItemList()
+	local newUnlockStateList = self:_getNewUnlockStateList()
+	local openSelectedIndex = self:_onOpenSelectedIndex()
+	local firstSelectedItem = itemList[openSelectedIndex]
 
-	local function var_31_4()
+	local function _animDoneCb()
 		UIBlockHelper.instance:endBlock("RougeRougeDifficultyViewFactionView:_tweenOpenAnim")
-		arg_31_0:_onSelectIndex(var_31_2)
+		self:_onSelectIndex(openSelectedIndex)
 	end
 
-	if var_31_2 == 1 then
-		arg_31_0:_clearTweenOpenAnimFirstItemScaleTimer()
-		TaskDispatcher.runDelay(arg_31_0._tweenOpenAnimFirstItemScale, arg_31_0, var_31_1[var_31_2] and var_0_5 or var_0_4)
+	if openSelectedIndex == 1 then
+		self:_clearTweenOpenAnimFirstItemScaleTimer()
+		TaskDispatcher.runDelay(self._tweenOpenAnimFirstItemScale, self, newUnlockStateList[openSelectedIndex] and kAfterUnlock1ScaleAnimSecond or kAfterOpen1ScaleAnimSecond)
 	end
 
-	var_31_3:setOnOpenEndCb(var_31_4)
+	firstSelectedItem:setOnOpenEndCb(_animDoneCb)
 
-	if var_31_1[var_31_2] then
-		var_31_3:setOnOpenEndCb(nil)
-		var_31_3:setOnUnlockEndCb(var_31_4)
+	if newUnlockStateList[openSelectedIndex] then
+		firstSelectedItem:setOnOpenEndCb(nil)
+		firstSelectedItem:setOnUnlockEndCb(_animDoneCb)
 	end
 
-	for iter_31_0, iter_31_1 in ipairs(var_31_0) do
-		local var_31_5 = var_31_1 and var_31_1[iter_31_0] or nil
+	for i, item in ipairs(itemList) do
+		local isNewUnlock = newUnlockStateList and newUnlockStateList[i] or nil
 
-		if iter_31_0 == 1 then
+		if i == 1 then
 			AudioMgr.instance:trigger(AudioEnum.UI.play_ui_dungeon_1_6_clearing_open_20190313)
 		end
 
-		if var_31_5 ~= nil then
-			local var_31_6 = arg_31_0._dataList[iter_31_0].difficulty
+		if isNewUnlock ~= nil then
+			local itemData = self._dataList[i]
+			local difficulty = itemData.difficulty
 
-			iter_31_1:playOpen(var_31_5)
+			item:playOpen(isNewUnlock)
 
-			if var_31_5 then
-				RougeOutsideModel.instance:setIsNewUnlockDifficulty(var_31_6, false)
+			if isNewUnlock then
+				RougeOutsideModel.instance:setIsNewUnlockDifficulty(difficulty, false)
 			end
 		else
-			iter_31_1:playOpen()
+			item:playOpen()
 		end
 	end
 end
 
-function var_0_0._versionList(arg_33_0)
-	if not arg_33_0.viewParam then
+function RougeDifficultyView:_versionList()
+	if not self.viewParam then
 		return RougeModel.instance:getVersion()
 	end
 
-	return arg_33_0.viewParam.versionList or RougeModel.instance:getVersion()
+	return self.viewParam.versionList or RougeModel.instance:getVersion()
 end
 
-function var_0_0._trySelectDifficulty2TabIndex(arg_34_0, arg_34_1)
-	local var_34_0 = arg_34_0:_getDataList()
+function RougeDifficultyView:_trySelectDifficulty2TabIndex(difficulty)
+	local dataList = self:_getDataList()
 
-	if arg_34_1 > #var_34_0 then
+	if difficulty > #dataList then
 		return 1
 	end
 
-	for iter_34_0, iter_34_1 in ipairs(var_34_0) do
-		if iter_34_1.difficulty == arg_34_1 then
-			return iter_34_1.isUnLocked and iter_34_0 or 1
+	for i, v in ipairs(dataList) do
+		if v.difficulty == difficulty then
+			return v.isUnLocked and i or 1
 		end
 	end
 
 	return 1
 end
 
-function var_0_0._selectedDifficultyOnOpen(arg_35_0)
-	if not arg_35_0.viewParam then
-		return arg_35_0:_trySelectDifficulty2TabIndex(RougeOutsideModel.instance:getLastMarkSelectedDifficulty(1))
+function RougeDifficultyView:_selectedDifficultyOnOpen()
+	if not self.viewParam then
+		return self:_trySelectDifficulty2TabIndex(RougeOutsideModel.instance:getLastMarkSelectedDifficulty(1))
 	end
 
-	return arg_35_0.viewParam.selectedDifficulty or arg_35_0:_trySelectDifficulty2TabIndex(RougeOutsideModel.instance:getLastMarkSelectedDifficulty(1))
+	return self.viewParam.selectedDifficulty or self:_trySelectDifficulty2TabIndex(RougeOutsideModel.instance:getLastMarkSelectedDifficulty(1))
 end
 
-function var_0_0.difficulty(arg_36_0)
-	return arg_36_0._lastSelectedIndex or arg_36_0:_onOpenSelectedIndex()
+function RougeDifficultyView:difficulty()
+	return self._lastSelectedIndex or self:_onOpenSelectedIndex()
 end
 
-function var_0_0._difficultyCOList(arg_37_0)
-	if arg_37_0._cache_difficultyCOList then
-		return arg_37_0._cache_difficultyCOList
+function RougeDifficultyView:_difficultyCOList()
+	if self._cache_difficultyCOList then
+		return self._cache_difficultyCOList
 	end
 
-	local var_37_0 = RougeOutsideModel.instance:config():getDifficultyCOListByVersions(arg_37_0:_versionList())
+	local cfg = RougeOutsideModel.instance:config()
+	local difficultyCOList = cfg:getDifficultyCOListByVersions(self:_versionList())
 
-	arg_37_0._cache_difficultyCOList = var_37_0
+	self._cache_difficultyCOList = difficultyCOList
 
-	return var_37_0
+	return difficultyCOList
 end
 
-function var_0_0._onOpenSelectedIndex(arg_38_0)
-	local var_38_0 = arg_38_0._lastSelectedIndex or arg_38_0:_selectedDifficultyOnOpen()
+function RougeDifficultyView:_onOpenSelectedIndex()
+	local index = self._lastSelectedIndex or self:_selectedDifficultyOnOpen()
 
-	if var_38_0 > #arg_38_0._itemList then
+	if index > #self._itemList then
 		return 1
 	end
 
-	return var_38_0
+	return index
 end
 
-function var_0_0._onSelectIndexByUser(arg_39_0, arg_39_1)
-	arg_39_0._drag:stopMovement()
-	arg_39_0:_onSelectIndex(arg_39_1)
+function RougeDifficultyView:_onSelectIndexByUser(index)
+	self._drag:stopMovement()
+	self:_onSelectIndex(index)
 end
 
-function var_0_0._guessIsStopedScrolling(arg_40_0)
-	if not arg_40_0._drag:isStoped() then
+function RougeDifficultyView:_guessIsStopedScrolling()
+	if not self._drag:isStoped() then
 		return false
 	end
 
-	if not arg_40_0:_isScrollSlowly() then
+	if not self:_isScrollSlowly() then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0._btnTipsIconOnClick(arg_41_0, arg_41_1)
-	if not arg_41_0:_guessIsStopedScrolling() then
+function RougeDifficultyView:_btnTipsIconOnClick(curDifficulty)
+	if not self:_guessIsStopedScrolling() then
 		return
 	end
 
-	arg_41_0:_setExtendProp(arg_41_1)
-	arg_41_0:_setActiveOverviewTips(true)
-	arg_41_0:_setActiveBlock(true)
+	self:_setExtendProp(curDifficulty)
+	self:_setActiveOverviewTips(true)
+	self:_setActiveBlock(true)
 end
 
-function var_0_0._btnBalanceOnClick(arg_42_0, arg_42_1)
-	if not arg_42_0:_guessIsStopedScrolling() then
+function RougeDifficultyView:_btnBalanceOnClick(curDifficulty)
+	if not self:_guessIsStopedScrolling() then
 		return
 	end
 
-	arg_42_0:_setBalance(arg_42_1)
-	arg_42_0:_setActiveBalanceTips(true)
-	arg_42_0:_setActiveBlock(true)
+	self:_setBalance(curDifficulty)
+	self:_setActiveBalanceTips(true)
+	self:_setActiveBlock(true)
 end
 
-function var_0_0._onSelectIndex(arg_43_0, arg_43_1)
-	if arg_43_0._lastSelectedIndex == arg_43_1 then
-		arg_43_0:_animFocusIndex(arg_43_1)
+function RougeDifficultyView:_onSelectIndex(index)
+	if self._lastSelectedIndex == index then
+		self:_animFocusIndex(index)
 
 		return
 	end
 
-	if arg_43_0._lastSelectedIndex then
-		arg_43_0._itemList[arg_43_0._lastSelectedIndex]:setSelected(false)
+	if self._lastSelectedIndex then
+		local lastItem = self._itemList[self._lastSelectedIndex]
+
+		lastItem:setSelected(false)
 	end
 
-	arg_43_0._itemList[arg_43_1]:setSelected(true)
+	local curItem = self._itemList[index]
+
+	curItem:setSelected(true)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_insight_close_20190315)
-	arg_43_0:_setScaleAdjacent(arg_43_1, true)
-	arg_43_0:_refreshStartBtn(arg_43_0._lastSelectedIndex, arg_43_1)
+	self:_setScaleAdjacent(index, true)
+	self:_refreshStartBtn(self._lastSelectedIndex, index)
 
-	arg_43_0._lastSelectedIndex = arg_43_1
+	self._lastSelectedIndex = index
 
-	arg_43_0:_animFocusIndex(arg_43_1)
+	self:_animFocusIndex(index)
 end
 
-function var_0_0._hideAllStartBtn(arg_44_0)
-	for iter_44_0, iter_44_1 in ipairs(arg_44_0._transBtnStartList) do
-		GameUtil.setActive01(iter_44_1, false)
+function RougeDifficultyView:_hideAllStartBtn()
+	for _, t in ipairs(self._transBtnStartList) do
+		GameUtil.setActive01(t, false)
 	end
 end
 
-function var_0_0._hideAllSimageMask(arg_45_0)
-	for iter_45_0, iter_45_1 in ipairs(arg_45_0._transSimageMaskList) do
-		GameUtil.setActive01(iter_45_1, false)
+function RougeDifficultyView:_hideAllSimageMask()
+	for _, t in ipairs(self._transSimageMaskList) do
+		GameUtil.setActive01(t, false)
 	end
 end
 
-local var_0_7 = UIAnimationName.Open
-local var_0_8 = UIAnimationName.Close
+local kAnimOpen = UIAnimationName.Open
+local kAnimClose = UIAnimationName.Close
 
-function var_0_0._setSingleStyleActive(arg_46_0, arg_46_1, arg_46_2)
-	arg_46_0:_setActiveStartBtn(arg_46_1, arg_46_2)
-	arg_46_0:_setActiveSimageMask(arg_46_1, arg_46_2)
+function RougeDifficultyView:_setSingleStyleActive(index, isActive)
+	self:_setActiveStartBtn(index, isActive)
+	self:_setActiveSimageMask(index, isActive)
 end
 
-function var_0_0._setActiveStartBtn(arg_47_0, arg_47_1, arg_47_2)
-	local var_47_0 = arg_47_0._transBtnStartList[arg_47_1]
-	local var_47_1 = arg_47_0._animBtnStartList[arg_47_1]
-	local var_47_2 = arg_47_2 and var_0_7 or var_0_8
+function RougeDifficultyView:_setActiveStartBtn(index, isActive)
+	local transBtnStart = self._transBtnStartList[index]
+	local animBtnStart = self._animBtnStartList[index]
+	local animName = isActive and kAnimOpen or kAnimClose
 
-	GameUtil.setActive01(var_47_0, arg_47_2)
-	var_47_1:Play(var_47_2, 0, 0)
+	GameUtil.setActive01(transBtnStart, isActive)
+	animBtnStart:Play(animName, 0, 0)
 end
 
-function var_0_0._setActiveSimageMask(arg_48_0, arg_48_1, arg_48_2)
-	local var_48_0 = arg_48_0._transSimageMaskList[arg_48_1]
+function RougeDifficultyView:_setActiveSimageMask(index, isActive)
+	local transSimageMask = self._transSimageMaskList[index]
 
-	if not var_48_0 then
+	if not transSimageMask then
 		return
 	end
 
-	local var_48_1 = arg_48_2 and var_0_7 or var_0_8
-	local var_48_2 = arg_48_0._animSimageMaskList[arg_48_1]
+	local animName = isActive and kAnimOpen or kAnimClose
+	local animSimageMask = self._animSimageMaskList[index]
 
-	GameUtil.setActive01(var_48_0, arg_48_2)
-	var_48_2:Play(var_48_1, 0, 0)
+	GameUtil.setActive01(transSimageMask, isActive)
+	animSimageMask:Play(animName, 0, 0)
 end
 
-function var_0_0._refreshStartBtn(arg_49_0, arg_49_1, arg_49_2)
-	if arg_49_1 == arg_49_2 then
+function RougeDifficultyView:_refreshStartBtn(lastDifficult, curDifficulty)
+	if lastDifficult == curDifficulty then
 		return
 	end
 
-	local var_49_0 = RougeConfig1.instance:getRougeDifficultyViewStyleIndex(arg_49_1)
-	local var_49_1 = RougeConfig1.instance:getRougeDifficultyViewStyleIndex(arg_49_2 or arg_49_0:difficulty())
-	local var_49_2 = arg_49_0:_getDataList()
-	local var_49_3 = var_49_2[arg_49_2].isUnLocked
-	local var_49_4
+	local lastIndex = RougeConfig1.instance:getRougeDifficultyViewStyleIndex(lastDifficult)
+	local curIndex = RougeConfig1.instance:getRougeDifficultyViewStyleIndex(curDifficulty or self:difficulty())
+	local dataList = self:_getDataList()
+	local isCurUnLocked = dataList[curDifficulty].isUnLocked
+	local isLastUnLocked
 
-	if arg_49_1 then
-		var_49_4 = var_49_2[arg_49_1].isUnLocked
+	if lastDifficult then
+		isLastUnLocked = dataList[lastDifficult].isUnLocked
 	end
 
-	if var_49_0 == var_49_1 and var_49_3 == var_49_4 then
+	if lastIndex == curIndex and isCurUnLocked == isLastUnLocked then
 		return
 	end
 
-	if not var_49_0 then
-		arg_49_0:_hideAllStartBtn()
-		arg_49_0:_hideAllSimageMask()
+	if not lastIndex then
+		self:_hideAllStartBtn()
+		self:_hideAllSimageMask()
 	else
-		arg_49_0:_setSingleStyleActive(var_49_0, false)
+		self:_setSingleStyleActive(lastIndex, false)
 	end
 
-	if var_49_3 then
+	if isCurUnLocked then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_activity_course_open_20190317)
 	end
 
-	arg_49_0:_setSingleStyleActive(var_49_1, var_49_3)
+	self:_setSingleStyleActive(curIndex, isCurUnLocked)
 end
 
-function var_0_0._refreshList(arg_50_0)
-	local var_50_0 = arg_50_0:_getDataList()
+function RougeDifficultyView:_refreshList()
+	local dataList = self:_getDataList()
 
-	if not arg_50_0._itemList then
-		arg_50_0._itemList = {}
+	if not self._itemList then
+		self._itemList = {}
 	end
 
-	for iter_50_0, iter_50_1 in ipairs(var_50_0) do
-		local var_50_1 = arg_50_0._itemList[iter_50_0]
+	for i, mo in ipairs(dataList) do
+		local item = self._itemList[i]
 
-		if not var_50_1 then
-			var_50_1 = arg_50_0:_create_RougeDifficultyItem()
+		if not item then
+			item = self:_create_RougeDifficultyItem()
 
-			var_50_1:setIndex(iter_50_0)
-			table.insert(arg_50_0._itemList, var_50_1)
+			item:setIndex(i)
+			table.insert(self._itemList, item)
 		end
 
-		var_50_1:setData(iter_50_1)
-		var_50_1:playIdle()
-		var_50_1:setSelected(arg_50_0._lastSelectedIndex == iter_50_0)
+		item:setData(mo)
+		item:playIdle()
+		item:setSelected(self._lastSelectedIndex == i)
 	end
 end
 
-function var_0_0._setScaleAdjacent(arg_51_0, arg_51_1, arg_51_2)
-	if not arg_51_0._itemList[arg_51_1] then
+function RougeDifficultyView:_setScaleAdjacent(index, isAnim)
+	local item = self._itemList[index]
+
+	if not item then
 		return
 	end
 
-	local var_51_0 = arg_51_1 - 1
-	local var_51_1 = arg_51_0._itemList[var_51_0]
+	local left = index - 1
+	local lItem = self._itemList[left]
 
-	if var_51_1 then
-		var_51_1:setScale(RougeDifficultyItem.ScalerSelectedAdjacent, arg_51_2)
+	if lItem then
+		lItem:setScale(RougeDifficultyItem.ScalerSelectedAdjacent, isAnim)
 
-		local var_51_2 = var_51_0 - 1
-		local var_51_3 = arg_51_0._itemList[var_51_2]
+		left = left - 1
 
-		if var_51_3 then
-			var_51_3:setScale(RougeDifficultyItem.ScalerNormal, arg_51_2)
+		local llItem = self._itemList[left]
+
+		if llItem then
+			llItem:setScale(RougeDifficultyItem.ScalerNormal, isAnim)
 		end
 	end
 
-	local var_51_4 = arg_51_1 + 1
-	local var_51_5 = arg_51_0._itemList[var_51_4]
+	local right = index + 1
+	local rItem = self._itemList[right]
 
-	if var_51_5 then
-		var_51_5:setScale(RougeDifficultyItem.ScalerSelectedAdjacent, arg_51_2)
+	if rItem then
+		rItem:setScale(RougeDifficultyItem.ScalerSelectedAdjacent, isAnim)
 
-		local var_51_6 = var_51_4 + 1
-		local var_51_7 = arg_51_0._itemList[var_51_6]
+		right = right + 1
 
-		if var_51_7 then
-			var_51_7:setScale(RougeDifficultyItem.ScalerNormal, arg_51_2)
+		local rrItem = self._itemList[right]
+
+		if rrItem then
+			rrItem:setScale(RougeDifficultyItem.ScalerNormal, isAnim)
 		end
 	end
 end
 
-function var_0_0._create_RougeDifficultyItem(arg_52_0)
-	local var_52_0 = RougeDifficultyItem
-	local var_52_1 = arg_52_0.viewContainer:getResInst(RougeEnum.ResPath.rougedifficultyitem, arg_52_0.viewContainer:getScrollContentGo(), var_52_0.__cname)
+function RougeDifficultyView:_create_RougeDifficultyItem()
+	local itemClass = RougeDifficultyItem
+	local go = self.viewContainer:getResInst(RougeEnum.ResPath.rougedifficultyitem, self.viewContainer:getScrollContentGo(), itemClass.__cname)
 
-	return MonoHelper.addNoUpdateLuaComOnceToGo(var_52_1, var_52_0, {
-		baseViewContainer = arg_52_0.viewContainer
+	return MonoHelper.addNoUpdateLuaComOnceToGo(go, itemClass, {
+		baseViewContainer = self.viewContainer
 	})
 end
 
-function var_0_0._getDataList(arg_53_0)
-	if not arg_53_0._dataList then
-		arg_53_0._dataList = RougeOutsideModel.instance:getDifficultyInfoList(arg_53_0:_versionList())
+function RougeDifficultyView:_getDataList()
+	if not self._dataList then
+		self._dataList = RougeOutsideModel.instance:getDifficultyInfoList(self:_versionList())
 	end
 
-	return arg_53_0._dataList
+	return self._dataList
 end
 
-function var_0_0._getItemList(arg_54_0)
-	if not arg_54_0._itemList then
-		arg_54_0:_refreshList()
+function RougeDifficultyView:_getItemList()
+	if not self._itemList then
+		self:_refreshList()
 	end
 
-	return arg_54_0._itemList
+	return self._itemList
 end
 
-function var_0_0._getDataListCount(arg_55_0)
-	return #arg_55_0:_getDataList()
+function RougeDifficultyView:_getDataListCount()
+	return #self:_getDataList()
 end
 
-function var_0_0._validateIndex(arg_56_0, arg_56_1)
-	local var_56_0 = arg_56_0:_getDataListCount()
+function RougeDifficultyView:_validateIndex(index)
+	local count = self:_getDataListCount()
 
-	return GameUtil.clamp(arg_56_1, 1, var_56_0)
+	return GameUtil.clamp(index, 1, count)
 end
 
-function var_0_0._contentPosX(arg_57_0)
-	return recthelper.getAnchorX(arg_57_0.viewContainer:getScrollContentTranform())
+function RougeDifficultyView:_contentPosX()
+	return recthelper.getAnchorX(self.viewContainer:getScrollContentTranform())
 end
 
-function var_0_0._contentAbsPosX(arg_58_0)
-	local var_58_0 = arg_58_0:_contentPosX()
+function RougeDifficultyView:_contentAbsPosX()
+	local contentPosX = self:_contentPosX()
 
-	return var_58_0 <= 0 and -var_58_0 or 0
+	return contentPosX <= 0 and -contentPosX or 0
 end
 
-function var_0_0._onScrollValueChanged(arg_59_0)
-	arg_59_0:_tweenSelectItemsInBetween()
+function RougeDifficultyView:_onScrollValueChanged()
+	self:_tweenSelectItemsInBetween()
 end
 
-function var_0_0._getIndexFactorInbetween(arg_60_0)
-	local var_60_0 = arg_60_0.viewContainer:getListScrollParamStep()
-	local var_60_1 = arg_60_0:_contentAbsPosX()
-	local var_60_2 = math.ceil(var_60_1 / var_60_0)
-	local var_60_3 = var_60_1 % var_60_0
+function RougeDifficultyView:_getIndexFactorInbetween()
+	local step = self.viewContainer:getListScrollParamStep()
+	local contentAbsPosX = self:_contentAbsPosX()
+	local index = math.ceil(contentAbsPosX / step)
+	local contentAbsPosXFromZero = contentAbsPosX % step
 
-	var_60_3 = var_60_3 == 0 and var_60_0 or var_60_3
+	contentAbsPosXFromZero = contentAbsPosXFromZero == 0 and step or contentAbsPosXFromZero
 
-	local var_60_4 = var_60_3 / (var_60_0 * 0.5) > 1 and 1 or 0
-	local var_60_5 = arg_60_0:_validateIndex(var_60_2 + var_60_4)
-	local var_60_6 = arg_60_0:_validateIndex(var_60_4 == 1 and var_60_2 or var_60_2 + 1)
-	local var_60_7 = GameUtil.saturate(GameUtil.remap01(var_60_3, 0, var_60_0))
-	local var_60_8 = var_60_4 == 1 and var_60_7 or 1 - var_60_7
-	local var_60_9 = 1 - var_60_8
+	local offset = contentAbsPosXFromZero / (step * 0.5) > 1 and 1 or 0
+	local nearIndex = self:_validateIndex(index + offset)
+	local farIndex = self:_validateIndex(offset == 1 and index or index + 1)
+	local f = GameUtil.saturate(GameUtil.remap01(contentAbsPosXFromZero, 0, step))
+	local nearFactor = offset == 1 and f or 1 - f
+	local farFactor = 1 - nearFactor
 
-	if var_60_5 == var_60_6 then
-		var_60_9 = 1
-		var_60_8 = 1
+	if nearIndex == farIndex then
+		farFactor = 1
+		nearFactor = 1
 	end
 
-	return var_60_5, var_60_8, var_60_6, var_60_9
+	return nearIndex, nearFactor, farIndex, farFactor
 end
 
-function var_0_0._tweenSelectItemsInBetween(arg_61_0)
-	local var_61_0, var_61_1, var_61_2, var_61_3 = arg_61_0:_getIndexFactorInbetween()
-	local var_61_4 = arg_61_0._itemList[var_61_0]
-	local var_61_5 = arg_61_0._itemList[var_61_2]
+function RougeDifficultyView:_tweenSelectItemsInBetween()
+	local nearIndex, nearFactor, farIndex, farFactor = self:_getIndexFactorInbetween()
+	local nearItem = self._itemList[nearIndex]
+	local farItem = self._itemList[farIndex]
 
-	var_61_4:setScale01(var_61_1)
-	var_61_5:setScale01(var_61_3)
+	nearItem:setScale01(nearFactor)
+	farItem:setScale01(farFactor)
 end
 
-function var_0_0._onDragBeginHandler(arg_62_0)
-	arg_62_0:_killTween()
+function RougeDifficultyView:_onDragBeginHandler()
+	self:_killTween()
 end
 
-function var_0_0._onDragging(arg_63_0)
-	arg_63_0:_playAudioOnDragging()
+function RougeDifficultyView:_onDragging()
+	self:_playAudioOnDragging()
 end
 
-function var_0_0._playAudioOnDragging(arg_64_0)
-	local var_64_0 = arg_64_0:_getIndexFactorInbetween()
+function RougeDifficultyView:_playAudioOnDragging()
+	local nearIndex = self:_getIndexFactorInbetween()
 
-	if arg_64_0._uiAduioLastDragNear == nil then
-		arg_64_0._uiAduioLastDragNear = var_64_0
-	elseif arg_64_0._uiAduioLastDragNear ~= var_64_0 then
-		arg_64_0._uiAduioLastDragNear = var_64_0
+	if self._uiAduioLastDragNear == nil then
+		self._uiAduioLastDragNear = nearIndex
+	elseif self._uiAduioLastDragNear ~= nearIndex then
+		self._uiAduioLastDragNear = nearIndex
 
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_chain_20190314)
 	end
 end
 
-function var_0_0._calcContentWidth(arg_65_0)
-	return arg_65_0._goContentHLayout.preferredWidth
+function RougeDifficultyView:_calcContentWidth()
+	return self._goContentHLayout.preferredWidth
 end
 
-function var_0_0._getViewportW(arg_66_0)
-	return recthelper.getWidth(arg_66_0._scrollViewTrans)
+function RougeDifficultyView:_getViewportW()
+	return recthelper.getWidth(self._scrollViewTrans)
 end
 
-function var_0_0._getViewportH(arg_67_0)
-	return recthelper.getHeight(arg_67_0._scrollViewTrans)
+function RougeDifficultyView:_getViewportH()
+	return recthelper.getHeight(self._scrollViewTrans)
 end
 
-function var_0_0._getViewportWH(arg_68_0)
-	return arg_68_0:_getViewportW(), arg_68_0:_getViewportH()
+function RougeDifficultyView:_getViewportWH()
+	return self:_getViewportW(), self:_getViewportH()
 end
 
-function var_0_0._getMaxScrollX(arg_69_0)
-	local var_69_0 = arg_69_0:_getViewportW()
-	local var_69_1 = arg_69_0:_calcContentWidth()
+function RougeDifficultyView:_getMaxScrollX()
+	local viewportW = self:_getViewportW()
+	local maxContentW = self:_calcContentWidth()
 
-	return math.max(0, var_69_1 - var_69_0)
+	return math.max(0, maxContentW - viewportW)
 end
 
-function var_0_0._calcFocusIndexPosX(arg_70_0, arg_70_1)
-	local var_70_0 = 0
-	local var_70_1 = arg_70_0:_getMaxScrollX()
+function RougeDifficultyView:_calcFocusIndexPosX(index)
+	local posX = 0
+	local maxScrollX = self:_getMaxScrollX()
 
-	if arg_70_1 <= 1 then
-		return var_70_0, var_70_1
+	if index <= 1 then
+		return posX, maxScrollX
 	end
 
-	local var_70_2 = arg_70_0._itemList[arg_70_1]
-	local var_70_3 = arg_70_0._goContentHLayout.padding.left
-	local var_70_4 = arg_70_0.viewContainer:getListScrollParam_cellSize() * 0.5
+	local item = self._itemList[index]
+	local startOffset = self._goContentHLayout.padding.left
+	local w = self.viewContainer:getListScrollParam_cellSize()
+	local halfW = w * 0.5
 
-	return var_70_2:posX() - var_70_4 - var_70_3, var_70_1
+	posX = item:posX() - halfW - startOffset
+
+	return posX, maxScrollX
 end
 
-function var_0_0._animFocusIndex(arg_71_0, arg_71_1)
-	arg_71_0:_killTween()
+function RougeDifficultyView:_animFocusIndex(index)
+	self:_killTween()
 
-	local var_71_0 = -arg_71_0:_calcFocusIndexPosX(arg_71_1)
+	local toPosX = -self:_calcFocusIndexPosX(index)
 
-	arg_71_0._contentPosXTweenId = var_0_1.DOAnchorPosX(arg_71_0.viewContainer:getScrollContentTranform(), var_71_0, var_0_3, nil, nil, nil, EaseType.OutQuad)
+	self._contentPosXTweenId = csTweenHelper.DOAnchorPosX(self.viewContainer:getScrollContentTranform(), toPosX, kTweenSecond, nil, nil, nil, EaseType.OutQuad)
 end
 
-function var_0_0._noAnimFocusIndex(arg_72_0, arg_72_1)
-	local var_72_0 = arg_72_0.viewContainer:getScrollContentTranform()
-	local var_72_1 = -arg_72_0:_calcFocusIndexPosX(arg_72_1)
+function RougeDifficultyView:_noAnimFocusIndex(index)
+	local scrollContentTran = self.viewContainer:getScrollContentTranform()
+	local posX = -self:_calcFocusIndexPosX(index)
 
-	recthelper.setAnchorX(var_72_0, var_72_1)
+	recthelper.setAnchorX(scrollContentTran, posX)
 end
 
-function var_0_0._scrollVelocityX(arg_73_0)
-	if not arg_73_0._scrollViewLimitScrollCmp then
+function RougeDifficultyView:_scrollVelocityX()
+	if not self._scrollViewLimitScrollCmp then
 		return nil
 	end
 
-	return arg_73_0._scrollViewLimitScrollCmp.velocity.x
+	return self._scrollViewLimitScrollCmp.velocity.x
 end
 
-function var_0_0._isScrollSlowly(arg_74_0)
-	local var_74_0 = arg_74_0:_scrollVelocityX()
+function RougeDifficultyView:_isScrollSlowly()
+	local velocity = self:_scrollVelocityX()
 
-	if not var_74_0 then
+	if not velocity then
 		return false
 	end
 
-	return math.abs(var_74_0) < var_0_2
+	return math.abs(velocity) < kFastScrollSpeed
 end
 
-function var_0_0._update(arg_75_0)
-	if not arg_75_0._drag:isEndedDrag() then
+function RougeDifficultyView:_update()
+	if not self._drag:isEndedDrag() then
 		return
 	end
 
-	if arg_75_0:_isScrollSlowly() then
-		arg_75_0._drag:clear()
+	if self:_isScrollSlowly() then
+		self._drag:clear()
 
-		local var_75_0 = arg_75_0:_getIndexFactorInbetween()
+		local nearIndex = self:_getIndexFactorInbetween()
 
-		arg_75_0:_onSelectIndex(var_75_0)
+		self:_onSelectIndex(nearIndex)
 	end
 end
 
-function var_0_0._setActiveBlock(arg_76_0, arg_76_1)
-	gohelper.setActive(arg_76_0._goblock, arg_76_1)
+function RougeDifficultyView:_setActiveBlock(isActive)
+	gohelper.setActive(self._goblock, isActive)
 
-	if not arg_76_1 then
-		arg_76_0:_setActiveOverviewTips(false)
-		arg_76_0:_setActiveBalanceTips(false)
+	if not isActive then
+		self:_setActiveOverviewTips(false)
+		self:_setActiveBalanceTips(false)
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_common_click_20190316)
 	end
 end
 
-function var_0_0._calcLeftRightOffset(arg_77_0)
-	local var_77_0 = arg_77_0:_getViewportW()
-	local var_77_1 = arg_77_0.viewContainer:getListScrollParam().cellWidth
+function RougeDifficultyView:_calcLeftRightOffset()
+	local width = self:_getViewportW()
+	local listScrollParam = self.viewContainer:getListScrollParam()
+	local cellWidth = listScrollParam.cellWidth
 
-	return Mathf.Round(var_77_0 * 0.5 - var_77_1 * 0.5)
+	return Mathf.Round(width * 0.5 - cellWidth * 0.5)
 end
 
-function var_0_0._onScreenResize(arg_78_0)
-	local var_78_0 = arg_78_0:_calcLeftRightOffset()
+function RougeDifficultyView:_onScreenResize()
+	local offset = self:_calcLeftRightOffset()
 
-	arg_78_0._goContentHLayout.padding.left = var_78_0
-	arg_78_0._goContentHLayout.padding.right = var_78_0
+	self._goContentHLayout.padding.left = offset
+	self._goContentHLayout.padding.right = offset
 
-	arg_78_0.viewContainer:rebuildLayout()
+	self.viewContainer:rebuildLayout()
 end
 
-function var_0_0._calcSpaceOffset(arg_79_0)
-	local var_79_0 = arg_79_0.viewContainer:getListScrollParam()
-	local var_79_1 = arg_79_0:_getViewportW()
-	local var_79_2 = var_79_0.cellWidth
-	local var_79_3 = var_79_0.startSpace
-	local var_79_4 = var_79_1 * 0.5 - var_79_2 * 0.5 - var_79_3
+function RougeDifficultyView:_calcSpaceOffset()
+	local listScrollParam = self.viewContainer:getListScrollParam()
+	local width = self:_getViewportW()
+	local cellWidth = listScrollParam.cellWidth
+	local startSpace = listScrollParam.startSpace
+	local res = width * 0.5 - cellWidth * 0.5 - startSpace
 
-	return math.max(0, var_79_4)
+	return math.max(0, res)
 end
 
-function var_0_0._setExtendProp(arg_80_0, arg_80_1)
-	local var_80_0 = arg_80_0:getSumDescIndexList(arg_80_1)
-	local var_80_1 = arg_80_0:_difficultyCOList()
-	local var_80_2 = 0
+function RougeDifficultyView:_setExtendProp(curDifficulty)
+	local sumDescIndexList = self:getSumDescIndexList(curDifficulty)
+	local difficultyCOList = self:_difficultyCOList()
+	local descCount = 0
 
-	for iter_80_0, iter_80_1 in ipairs(var_80_0) do
-		local var_80_3 = var_80_1[iter_80_1]
-		local var_80_4 = string.split(var_80_3.desc, "\n")
+	for _, idx in ipairs(sumDescIndexList) do
+		local difficultyCO = difficultyCOList[idx]
+		local descList = string.split(difficultyCO.desc, "\n")
 
-		for iter_80_2, iter_80_3 in ipairs(var_80_4) do
-			if not string.nilorempty(iter_80_3) then
-				var_80_2 = var_80_2 + 1
+		for _, desc in ipairs(descList) do
+			if not string.nilorempty(desc) then
+				descCount = descCount + 1
 
-				local var_80_5
+				local itemObj
 
-				if var_80_2 > #arg_80_0._decitemTextList then
-					var_80_5 = {}
+				if descCount > #self._decitemTextList then
+					itemObj = {}
 
-					local var_80_6 = gohelper.cloneInPlace(arg_80_0._godecitem)
+					local go = gohelper.cloneInPlace(self._godecitem)
 
-					var_80_5.txt = var_80_6:GetComponent(gohelper.Type_TextMesh)
-					var_80_5.go = var_80_6
+					itemObj.txt = go:GetComponent(gohelper.Type_TextMesh)
+					itemObj.go = go
 
-					table.insert(arg_80_0._decitemTextList, var_80_5)
-					gohelper.setActive(var_80_6, true)
+					table.insert(self._decitemTextList, itemObj)
+					gohelper.setActive(go, true)
 				else
-					var_80_5 = arg_80_0._decitemTextList[var_80_2]
+					itemObj = self._decitemTextList[descCount]
 
-					gohelper.setActive(var_80_5.go, true)
+					gohelper.setActive(itemObj.go, true)
 				end
 
-				var_80_5.txt.text = iter_80_3
+				itemObj.txt.text = desc
 			end
 		end
 	end
 
-	for iter_80_4 = var_80_2 + 1, #arg_80_0._decitemTextList do
-		local var_80_7 = arg_80_0._decitemTextList[iter_80_4]
+	for i = descCount + 1, #self._decitemTextList do
+		local itemObj = self._decitemTextList[i]
 
-		gohelper.setActive(var_80_7.go, false)
+		gohelper.setActive(itemObj.go, false)
 	end
 end
 
-function var_0_0.getSumDescIndexList(arg_81_0, arg_81_1)
-	arg_81_0._cache_sumDescIndexList = arg_81_0._cache_sumDescIndexList or {}
+function RougeDifficultyView:getSumDescIndexList(curDifficulty)
+	self._cache_sumDescIndexList = self._cache_sumDescIndexList or {}
 
-	if arg_81_0._cache_sumDescIndexList[arg_81_1] then
-		return arg_81_0._cache_sumDescIndexList[arg_81_1]
+	if self._cache_sumDescIndexList[curDifficulty] then
+		return self._cache_sumDescIndexList[curDifficulty]
 	end
 
-	local var_81_0 = {}
-	local var_81_1 = arg_81_0:_difficultyCOList()
+	local res = {}
+	local difficultyCOList = self:_difficultyCOList()
 
-	for iter_81_0, iter_81_1 in ipairs(var_81_1) do
-		if arg_81_1 <= iter_81_1.difficulty then
+	for idx, difficultyCO in ipairs(difficultyCOList) do
+		if curDifficulty <= difficultyCO.difficulty then
 			break
 		end
 
-		if not string.nilorempty(iter_81_1.desc) then
-			table.insert(var_81_0, iter_81_0)
+		if not string.nilorempty(difficultyCO.desc) then
+			table.insert(res, idx)
 		end
 	end
 
-	arg_81_0._cache_sumDescIndexList[arg_81_1] = var_81_0
+	self._cache_sumDescIndexList[curDifficulty] = res
 
-	return var_81_0
+	return res
 end
 
-local var_0_9 = {
+local kTitleList = {
 	"p_herogroupbalancetipview_txt_RoleLevel",
 	"p_herogroupbalancetipview_txt_TalentLevel",
 	"p_herogroupbalancetipview_txt_HeartLevel"
 }
-local var_0_10 = 3
-local var_0_11 = 3
+local kTextMaxCount = 3
+local kRankMaxLv = 3
 
-function var_0_0._setBalance(arg_82_0, arg_82_1)
-	local var_82_0 = RougeOutsideModel.instance:config():getDifficultyCO(arg_82_1).balanceLevel
+function RougeDifficultyView:_setBalance(curDifficulty)
+	local cfg = RougeOutsideModel.instance:config()
+	local difficultyCO = cfg:getDifficultyCO(curDifficulty)
+	local balanceLevel = difficultyCO.balanceLevel
+	local isBalance = not string.nilorempty(balanceLevel)
 
-	if not not string.nilorempty(var_82_0) then
+	if not isBalance then
 		return
 	end
 
-	local var_82_1 = string.splitToNumber(var_82_0, "#")
+	local balanceSp = string.splitToNumber(balanceLevel, "#")
 
-	for iter_82_0 = 1, var_0_10 do
-		local var_82_2
+	for i = 1, kTextMaxCount do
+		local itemObj
 
-		if iter_82_0 > #arg_82_0._golevelitemList then
-			var_82_2 = {}
+		if i > #self._golevelitemList then
+			itemObj = {}
 
-			local var_82_3 = gohelper.cloneInPlace(arg_82_0._golevelitem)
+			local go = gohelper.cloneInPlace(self._golevelitem)
 
-			var_82_2.go = var_82_3
-			var_82_2.txtTitle = gohelper.findChildText(var_82_3, "#txt_smalltitle")
-			var_82_2.txtLevel = gohelper.findChildText(var_82_3, "#txt_level")
+			itemObj.go = go
+			itemObj.txtTitle = gohelper.findChildText(go, "#txt_smalltitle")
+			itemObj.txtLevel = gohelper.findChildText(go, "#txt_level")
 
-			for iter_82_1 = 1, var_0_11 do
-				local var_82_4 = gohelper.findChild(var_82_3, "#txt_level/rank" .. iter_82_1)
+			for j = 1, kRankMaxLv do
+				local rankGO = gohelper.findChild(go, "#txt_level/rank" .. j)
 
-				var_82_2["rankGO" .. iter_82_1] = var_82_4
+				itemObj["rankGO" .. j] = rankGO
 
-				gohelper.setActive(var_82_4, false)
+				gohelper.setActive(rankGO, false)
 			end
 
-			gohelper.setActive(var_82_3, true)
-			table.insert(arg_82_0._golevelitemList, var_82_2)
+			gohelper.setActive(go, true)
+			table.insert(self._golevelitemList, itemObj)
 		else
-			var_82_2 = arg_82_0._golevelitemList[iter_82_0]
+			itemObj = self._golevelitemList[i]
 
-			gohelper.setActive(var_82_2.go, true)
+			gohelper.setActive(itemObj.go, true)
 		end
 
-		var_82_2.txtTitle.text = luaLang(var_0_9[iter_82_0])
+		itemObj.txtTitle.text = luaLang(kTitleList[i])
 
-		local var_82_5 = 0
-		local var_82_6 = 0
+		local showLv = 0
+		local rankLv = 0
 
-		if iter_82_0 == 1 then
-			local var_82_7
-
-			var_82_7, var_82_6 = HeroConfig.instance:getShowLevel(var_82_1[iter_82_0])
-			var_82_2.txtLevel.text = formatLuaLang("v1a5_aizila_level", var_82_7)
+		if i == 1 then
+			showLv, rankLv = HeroConfig.instance:getShowLevel(balanceSp[i])
+			itemObj.txtLevel.text = formatLuaLang("v1a5_aizila_level", showLv)
 		else
-			var_82_2.txtLevel.text = formatLuaLang("v1a5_aizila_level", var_82_1[iter_82_0])
+			itemObj.txtLevel.text = formatLuaLang("v1a5_aizila_level", balanceSp[i])
 		end
 
-		for iter_82_2 = 1, var_0_11 do
-			local var_82_8 = var_82_2["rankGO" .. iter_82_2]
+		for j = 1, kRankMaxLv do
+			local rankGO = itemObj["rankGO" .. j]
 
-			gohelper.setActive(var_82_8, iter_82_0 == 1 and iter_82_2 == var_82_6 - 1)
+			gohelper.setActive(rankGO, i == 1 and j == rankLv - 1)
 		end
 	end
 end
 
-return var_0_0
+return RougeDifficultyView

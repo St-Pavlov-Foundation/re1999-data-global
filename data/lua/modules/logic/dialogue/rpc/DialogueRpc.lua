@@ -1,37 +1,39 @@
-﻿module("modules.logic.dialogue.rpc.DialogueRpc", package.seeall)
+﻿-- chunkname: @modules/logic/dialogue/rpc/DialogueRpc.lua
 
-local var_0_0 = class("DialogueRpc", BaseRpc)
+module("modules.logic.dialogue.rpc.DialogueRpc", package.seeall)
 
-function var_0_0.sendGetDialogInfoRequest(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = DialogModule_pb.GetDialogInfoRequest()
+local DialogueRpc = class("DialogueRpc", BaseRpc)
 
-	return arg_1_0:sendMsg(var_1_0, arg_1_1, arg_1_2)
+function DialogueRpc:sendGetDialogInfoRequest(callback, callbackObj)
+	local req = DialogModule_pb.GetDialogInfoRequest()
+
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveGetDialogInfoReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 ~= 0 then
+function DialogueRpc:onReceiveGetDialogInfoReply(code, msg)
+	if code ~= 0 then
 		return
 	end
 
-	DialogueModel.instance:initDialogue(arg_2_2.dialogIds)
+	DialogueModel.instance:initDialogue(msg.dialogIds)
 end
 
-function var_0_0.sendRecordDialogInfoRequest(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	local var_3_0 = DialogModule_pb.RecordDialogInfoRequest()
+function DialogueRpc:sendRecordDialogInfoRequest(dialogueId, callback, callbackObj)
+	local req = DialogModule_pb.RecordDialogInfoRequest()
 
-	var_3_0.dialogId = arg_3_1
+	req.dialogId = dialogueId
 
-	return arg_3_0:sendMsg(var_3_0, arg_3_2, arg_3_3)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveRecordDialogInfoReplay(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 ~= 0 then
+function DialogueRpc:onReceiveRecordDialogInfoReplay(code, msg)
+	if code ~= 0 then
 		return
 	end
 
-	DialogueModel.instance:updateDialogueInfo(arg_4_2.dialogId)
+	DialogueModel.instance:updateDialogueInfo(msg.dialogId)
 end
 
-var_0_0.instance = var_0_0.New()
+DialogueRpc.instance = DialogueRpc.New()
 
-return var_0_0
+return DialogueRpc

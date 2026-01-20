@@ -1,14 +1,16 @@
-﻿module("modules.logic.weekwalk_2.model.rpcmo.WeekwalkVer2PrevSettleLayerInfoMO", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk_2/model/rpcmo/WeekwalkVer2PrevSettleLayerInfoMO.lua
 
-local var_0_0 = pureTable("WeekwalkVer2PrevSettleLayerInfoMO")
+module("modules.logic.weekwalk_2.model.rpcmo.WeekwalkVer2PrevSettleLayerInfoMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.layerId = arg_1_1.layerId
-	arg_1_0.platinumCupNum = arg_1_1.platinumCupNum
+local WeekwalkVer2PrevSettleLayerInfoMO = pureTable("WeekwalkVer2PrevSettleLayerInfoMO")
 
-	local var_1_0 = lua_weekwalk_ver2.configDict[arg_1_0.layerId]
+function WeekwalkVer2PrevSettleLayerInfoMO:init(info)
+	self.layerId = info.layerId
+	self.platinumCupNum = info.platinumCupNum
 
-	arg_1_0.layerIndex = var_1_0 and var_1_0.layer or 0
+	local config = lua_weekwalk_ver2.configDict[self.layerId]
+
+	self.layerIndex = config and config.layer or 0
 end
 
-return var_0_0
+return WeekwalkVer2PrevSettleLayerInfoMO

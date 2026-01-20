@@ -1,41 +1,47 @@
-﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionRoomBlockSatisfy", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/WaitGuideActionRoomBlockSatisfy.lua
 
-local var_0_0 = class("WaitGuideActionRoomBlockSatisfy", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.WaitGuideActionRoomBlockSatisfy", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
-	GameSceneMgr.instance:registerCallback(SceneEventName.EnterSceneFinish, arg_1_0._check, arg_1_0)
-	RoomController.instance:registerCallback(RoomEvent.OnSwitchModeDone, arg_1_0._check, arg_1_0)
+local WaitGuideActionRoomBlockSatisfy = class("WaitGuideActionRoomBlockSatisfy", BaseGuideAction)
 
-	arg_1_0._blockCount = tonumber(arg_1_0.actionParam)
+function WaitGuideActionRoomBlockSatisfy:onStart(context)
+	WaitGuideActionRoomBlockSatisfy.super.onStart(self, context)
+	GameSceneMgr.instance:registerCallback(SceneEventName.EnterSceneFinish, self._check, self)
+	RoomController.instance:registerCallback(RoomEvent.OnSwitchModeDone, self._check, self)
 
-	arg_1_0:_check()
+	self._blockCount = tonumber(self.actionParam)
+
+	self:_check()
 end
 
-function var_0_0._check(arg_2_0)
-	if arg_2_0:_checkBlockCount() and arg_2_0:_checkRoomOb() then
-		GuidePriorityController.instance:add(arg_2_0.guideId, arg_2_0._satisfyPriority, arg_2_0, 0.01)
+function WaitGuideActionRoomBlockSatisfy:_check()
+	if self:_checkBlockCount() and self:_checkRoomOb() then
+		GuidePriorityController.instance:add(self.guideId, self._satisfyPriority, self, 0.01)
 	end
 end
 
-function var_0_0._checkBlockCount(arg_3_0)
-	return RoomMapBlockModel.instance:getFullBlockCount() >= arg_3_0._blockCount
+function WaitGuideActionRoomBlockSatisfy:_checkBlockCount()
+	local fullBlockCount = RoomMapBlockModel.instance:getFullBlockCount()
+
+	return fullBlockCount >= self._blockCount
 end
 
-function var_0_0._checkRoomOb(arg_4_0)
-	if GameSceneMgr.instance:getCurSceneType() == SceneType.Room then
+function WaitGuideActionRoomBlockSatisfy:_checkRoomOb()
+	local sceneType = GameSceneMgr.instance:getCurSceneType()
+
+	if sceneType == SceneType.Room then
 		return RoomController.instance:isObMode()
 	end
 end
 
-function var_0_0.clearWork(arg_5_0)
-	GameSceneMgr.instance:unregisterCallback(SceneEventName.EnterSceneFinish, arg_5_0._check, arg_5_0)
-	RoomController.instance:unregisterCallback(RoomEvent.OnSwitchModeDone, arg_5_0._check, arg_5_0)
-	GuidePriorityController.instance:remove(arg_5_0.guideId)
+function WaitGuideActionRoomBlockSatisfy:clearWork()
+	GameSceneMgr.instance:unregisterCallback(SceneEventName.EnterSceneFinish, self._check, self)
+	RoomController.instance:unregisterCallback(RoomEvent.OnSwitchModeDone, self._check, self)
+	GuidePriorityController.instance:remove(self.guideId)
 end
 
-function var_0_0._satisfyPriority(arg_6_0)
-	arg_6_0:onDone(true)
+function WaitGuideActionRoomBlockSatisfy:_satisfyPriority()
+	self:onDone(true)
 end
 
-return var_0_0
+return WaitGuideActionRoomBlockSatisfy

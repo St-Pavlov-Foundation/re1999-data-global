@@ -1,42 +1,44 @@
-﻿module("modules.logic.fight.view.FightAct174StartFirstView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightAct174StartFirstView.lua
 
-local var_0_0 = class("FightAct174StartFirstView", FightBaseView)
+module("modules.logic.fight.view.FightAct174StartFirstView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._playerFirst = gohelper.findChild(arg_1_0.viewGO, "titlebg/#simage_player")
-	arg_1_0._enemyFirst = gohelper.findChild(arg_1_0.viewGO, "titlebg/#simage_enemy")
-	arg_1_0._title = gohelper.findChild(arg_1_0.viewGO, "titlebg/#simage_title")
-	arg_1_0._title1 = gohelper.findChild(arg_1_0.viewGO, "titlebg/#simage_title1")
-	arg_1_0._playerPoint = gohelper.findChildText(arg_1_0.viewGO, "player/#txt_num")
-	arg_1_0._playPointEffect = gohelper.findChildText(arg_1_0.viewGO, "player/#txt_eff")
-	arg_1_0._enemyPoint = gohelper.findChildText(arg_1_0.viewGO, "enemy/#txt_num")
-	arg_1_0._enemyPointEffect = gohelper.findChildText(arg_1_0.viewGO, "enemy/#txt_eff")
-	arg_1_0._titlebgGo = gohelper.findChild(arg_1_0.viewGO, "titlebg")
-	arg_1_0._ttitlebgAnimator = arg_1_0._titlebgGo:GetComponent(gohelper.Type_Animator)
+local FightAct174StartFirstView = class("FightAct174StartFirstView", FightBaseView)
+
+function FightAct174StartFirstView:onInitView()
+	self._playerFirst = gohelper.findChild(self.viewGO, "titlebg/#simage_player")
+	self._enemyFirst = gohelper.findChild(self.viewGO, "titlebg/#simage_enemy")
+	self._title = gohelper.findChild(self.viewGO, "titlebg/#simage_title")
+	self._title1 = gohelper.findChild(self.viewGO, "titlebg/#simage_title1")
+	self._playerPoint = gohelper.findChildText(self.viewGO, "player/#txt_num")
+	self._playPointEffect = gohelper.findChildText(self.viewGO, "player/#txt_eff")
+	self._enemyPoint = gohelper.findChildText(self.viewGO, "enemy/#txt_num")
+	self._enemyPointEffect = gohelper.findChildText(self.viewGO, "enemy/#txt_eff")
+	self._titlebgGo = gohelper.findChild(self.viewGO, "titlebg")
+	self._ttitlebgAnimator = self._titlebgGo:GetComponent(gohelper.Type_Animator)
 end
 
-function var_0_0.onConstructor(arg_2_0, arg_2_1)
-	arg_2_0.actEffectData = arg_2_1
+function FightAct174StartFirstView:onConstructor(actEffectData)
+	self.actEffectData = actEffectData
 end
 
-function var_0_0.onOpen(arg_3_0)
-	local var_3_0 = arg_3_0.actEffectData.reserveId == "1"
+function FightAct174StartFirstView:onOpen()
+	local isPlayer = self.actEffectData.reserveId == "1"
 
-	arg_3_0:com_registTimer(arg_3_0.disposeSelf, FightEnum.PerformanceTime.DouQuQuXianHouShou)
+	self:com_registTimer(self.disposeSelf, FightEnum.PerformanceTime.DouQuQuXianHouShou)
 
-	local var_3_1 = string.splitToNumber(arg_3_0.actEffectData.reserveStr, "#")
-	local var_3_2 = var_3_0 and var_3_1[1] or var_3_1[2]
+	local point = string.splitToNumber(self.actEffectData.reserveStr, "#")
+	local playerPint = isPlayer and point[1] or point[2]
 
-	arg_3_0._playerPoint.text = var_3_2
-	arg_3_0._playPointEffect.text = var_3_2
+	self._playerPoint.text = playerPint
+	self._playPointEffect.text = playerPint
 
-	local var_3_3 = not var_3_0 and var_3_1[1] or var_3_1[2]
+	local enemyPoint = not isPlayer and point[1] or point[2]
 
-	arg_3_0._enemyPoint.text = var_3_3
-	arg_3_0._enemyPointEffect.text = var_3_3
+	self._enemyPoint.text = enemyPoint
+	self._enemyPointEffect.text = enemyPoint
 
-	arg_3_0._ttitlebgAnimator:Play(var_3_0 and "player" or "enemy", 0, 0)
+	self._ttitlebgAnimator:Play(isPlayer and "player" or "enemy", 0, 0)
 	AudioMgr.instance:trigger(AudioEnum.Act174.play_ui_shenghuo_dqq_dice)
 end
 
-return var_0_0
+return FightAct174StartFirstView

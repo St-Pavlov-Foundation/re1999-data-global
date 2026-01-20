@@ -1,43 +1,45 @@
-﻿module("modules.logic.equip.controller.EquipEvent", package.seeall)
+﻿-- chunkname: @modules/logic/equip/controller/EquipEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.equip.controller.EquipEvent", package.seeall)
 
-var_0_0.onChooseEquip = 1
-var_0_0.onDeleteEquip = 2
-var_0_0.onUpdateEquip = 3
-var_0_0.onChooseAttr = 4
-var_0_0.onStrengthenFast = 5
-var_0_0.onStrengthenUpgrade = 6
-var_0_0.onDecomposeSuccess = 7
-var_0_0.onChangeStrengthenScrollState = 9
-var_0_0.onHideChooseEquipList = 10
-var_0_0.onChooseChange = 11
-var_0_0.onBreakMaxLevel = 12
-var_0_0.onEquipStrengthenReply = 13
-var_0_0.onRefreshEquipResolveList = 14
-var_0_0.onSelectResolveScrollItem = 15
-var_0_0.onShowBreakCostListModelContainer = 16
-var_0_0.onShowStrengthenListModelContainer = 17
-var_0_0.onHideBreakAndStrengthenListModelContainer = 18
-var_0_0.onBreakSuccess = 19
-var_0_0.onSelectRefineScrollItem = 20
-var_0_0.onEquipRefineReply = 21
-var_0_0.onChangeRefineScrollState = 50
-var_0_0.onCloseEquipStrengthenView = 51
-var_0_0.onAddEquipToPlayEffect = 52
-var_0_0.onOpenEquipScroll = 53
-var_0_0.onOpenRefineEquipScroll = 54
-var_0_0.onCloseEquipRefineView = 55
-var_0_0.onEquipLockChange = 56
-var_0_0.onCloseEquipLevelUpView = 57
-var_0_0.onRefreshRefineEquipList = 58
-var_0_0.ChangeSelectedEquip = 59
-var_0_0.OnRefineSelectedEquipChange = 60
-var_0_0.OnEquipTypeHasChange = 61
-var_0_0.equipHasRefine = 100
-var_0_0.onGuideChooseEquip = 201
-var_0_0.OnEquipDecomposeSelectEquipChange = 301
-var_0_0.OnEquipDecomposeSortStatusChange = 302
-var_0_0.OnEquipBeforeDecompose = 303
+local EquipEvent = _M
 
-return var_0_0
+EquipEvent.onChooseEquip = 1
+EquipEvent.onDeleteEquip = 2
+EquipEvent.onUpdateEquip = 3
+EquipEvent.onChooseAttr = 4
+EquipEvent.onStrengthenFast = 5
+EquipEvent.onStrengthenUpgrade = 6
+EquipEvent.onDecomposeSuccess = 7
+EquipEvent.onChangeStrengthenScrollState = 9
+EquipEvent.onHideChooseEquipList = 10
+EquipEvent.onChooseChange = 11
+EquipEvent.onBreakMaxLevel = 12
+EquipEvent.onEquipStrengthenReply = 13
+EquipEvent.onRefreshEquipResolveList = 14
+EquipEvent.onSelectResolveScrollItem = 15
+EquipEvent.onShowBreakCostListModelContainer = 16
+EquipEvent.onShowStrengthenListModelContainer = 17
+EquipEvent.onHideBreakAndStrengthenListModelContainer = 18
+EquipEvent.onBreakSuccess = 19
+EquipEvent.onSelectRefineScrollItem = 20
+EquipEvent.onEquipRefineReply = 21
+EquipEvent.onChangeRefineScrollState = 50
+EquipEvent.onCloseEquipStrengthenView = 51
+EquipEvent.onAddEquipToPlayEffect = 52
+EquipEvent.onOpenEquipScroll = 53
+EquipEvent.onOpenRefineEquipScroll = 54
+EquipEvent.onCloseEquipRefineView = 55
+EquipEvent.onEquipLockChange = 56
+EquipEvent.onCloseEquipLevelUpView = 57
+EquipEvent.onRefreshRefineEquipList = 58
+EquipEvent.ChangeSelectedEquip = 59
+EquipEvent.OnRefineSelectedEquipChange = 60
+EquipEvent.OnEquipTypeHasChange = 61
+EquipEvent.equipHasRefine = 100
+EquipEvent.onGuideChooseEquip = 201
+EquipEvent.OnEquipDecomposeSelectEquipChange = 301
+EquipEvent.OnEquipDecomposeSortStatusChange = 302
+EquipEvent.OnEquipBeforeDecompose = 303
+
+return EquipEvent

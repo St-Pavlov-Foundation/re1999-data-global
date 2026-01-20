@@ -1,8 +1,10 @@
-﻿module("modules.logic.scene.survival.comp.SurvivalSceneMapPath", package.seeall)
+﻿-- chunkname: @modules/logic/scene/survival/comp/SurvivalSceneMapPath.lua
 
-local var_0_0 = class("SurvivalSceneMapPath", BaseSceneComp)
+module("modules.logic.scene.survival.comp.SurvivalSceneMapPath", package.seeall)
 
-var_0_0.ResPaths = {
+local SurvivalSceneMapPath = class("SurvivalSceneMapPath", BaseSceneComp)
+
+SurvivalSceneMapPath.ResPaths = {
 	line180 = "survival/transport/v2a8_survival_transport_b.prefab",
 	tail = "survival/transport/v2a8_survival_transport_a.prefab",
 	linePoint = "survival/transport/v2a8_survival_transport_e.prefab",
@@ -10,159 +12,159 @@ var_0_0.ResPaths = {
 	line120 = "survival/transport/v2a8_survival_transport_d.prefab"
 }
 
-function var_0_0.onScenePrepared(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._sceneGo = arg_1_0:getCurScene().level:getSceneGo()
-	arg_1_0._pathRoot = gohelper.create3d(arg_1_0._sceneGo, "PathRoot")
+function SurvivalSceneMapPath:onScenePrepared(sceneId, levelId)
+	self._sceneGo = self:getCurScene().level:getSceneGo()
+	self._pathRoot = gohelper.create3d(self._sceneGo, "PathRoot")
 
-	local var_1_0 = arg_1_0._pathRoot.transform
+	local trans = self._pathRoot.transform
 
-	transformhelper.setLocalPos(var_1_0, 0, 0.01, 0)
+	transformhelper.setLocalPos(trans, 0, 0.01, 0)
 
-	arg_1_0._curShowLines = {}
-	arg_1_0._pools = {}
+	self._curShowLines = {}
+	self._pools = {}
 
-	for iter_1_0, iter_1_1 in pairs(var_0_0.ResPaths) do
-		arg_1_0._pools[iter_1_1] = {}
+	for k, v in pairs(SurvivalSceneMapPath.ResPaths) do
+		self._pools[v] = {}
 	end
 end
 
-function var_0_0.setPathListShow(arg_2_0, arg_2_1)
-	TaskDispatcher.cancelTask(arg_2_0.setPathListShow, arg_2_0)
-	arg_2_0:clearCurLines()
+function SurvivalSceneMapPath:setPathListShow(paths)
+	TaskDispatcher.cancelTask(self.setPathListShow, self)
+	self:clearCurLines()
 
-	local var_2_0 = arg_2_1 and #arg_2_1 or 0
+	local len = paths and #paths or 0
 
-	if var_2_0 >= 2 then
-		for iter_2_0 = 1, var_2_0 do
-			local var_2_1, var_2_2 = arg_2_0:getPathAndRotate(arg_2_1[iter_2_0 - 1], arg_2_1[iter_2_0], arg_2_1[iter_2_0 + 1])
-			local var_2_3 = arg_2_0:getObj(var_2_1, arg_2_1[iter_2_0], var_2_2)
+	if len >= 2 then
+		for i = 1, len do
+			local path, rotate = self:getPathAndRotate(paths[i - 1], paths[i], paths[i + 1])
+			local obj = self:getObj(path, paths[i], rotate)
 
-			table.insert(arg_2_0._curShowLines, var_2_3)
+			table.insert(self._curShowLines, obj)
 		end
 
-		table.insert(arg_2_0._curShowLines, arg_2_0:getObj(var_0_0.ResPaths.linePoint, arg_2_1[#arg_2_1], 0))
+		table.insert(self._curShowLines, self:getObj(SurvivalSceneMapPath.ResPaths.linePoint, paths[#paths], 0))
 
-		local var_2_4 = SurvivalShelterModel.instance:getWeekInfo()
-		local var_2_5 = SurvivalMapModel.instance:getSceneMo()
-		local var_2_6 = var_2_4:getAttr(SurvivalEnum.AttrType.MoveCost)
-		local var_2_7 = 0
+		local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+		local sceneMo = SurvivalMapModel.instance:getSceneMo()
+		local cost = weekInfo:getAttr(SurvivalEnum.AttrType.MoveCost)
+		local totalCost = 0
 
-		for iter_2_1, iter_2_2 in ipairs(arg_2_1) do
-			if iter_2_1 ~= var_2_0 then
-				local var_2_8 = var_2_5:getBlockCoByPos(iter_2_2)
+		for index, pos in ipairs(paths) do
+			if index ~= len then
+				local co = sceneMo:getBlockCoByPos(pos)
 
-				if var_2_8 then
-					if var_2_8.subType == SurvivalEnum.UnitSubType.Ice or var_2_8.subType == SurvivalEnum.UnitSubType.Morass and var_2_4:getAttr(SurvivalEnum.AttrType.Vehicle_Morass) == 0 or var_2_8.subType == SurvivalEnum.UnitSubType.Water and var_2_4:getAttr(SurvivalEnum.AttrType.Vehicle_Water) == 0 then
-						var_2_7 = var_2_7 + math.floor(var_2_6 * (1000 + var_2_8.preAttr) / 1000)
+				if co then
+					if co.subType == SurvivalEnum.UnitSubType.Ice or co.subType == SurvivalEnum.UnitSubType.Morass and weekInfo:getAttr(SurvivalEnum.AttrType.Vehicle_Morass) == 0 or co.subType == SurvivalEnum.UnitSubType.Water and weekInfo:getAttr(SurvivalEnum.AttrType.Vehicle_Water) == 0 then
+						totalCost = totalCost + math.floor(cost * (1000 + co.preAttr) / 1000)
 					else
-						var_2_7 = var_2_7 + var_2_6
+						totalCost = totalCost + cost
 					end
 				else
-					var_2_7 = var_2_7 + var_2_6
+					totalCost = totalCost + cost
 				end
 			end
 		end
 
-		SurvivalMapModel.instance.showCostTime = var_2_7
+		SurvivalMapModel.instance.showCostTime = totalCost
 	else
 		SurvivalMapModel.instance.showCostTime = 0
-		arg_2_1 = nil
+		paths = nil
 	end
 
-	SurvivalController.instance:dispatchEvent(SurvivalEvent.OnMapCostTimeUpdate, arg_2_1)
+	SurvivalController.instance:dispatchEvent(SurvivalEvent.OnMapCostTimeUpdate, paths)
 end
 
-function var_0_0.getPathAndRotate(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	if not arg_3_1 then
-		local var_3_0 = SurvivalHelper.instance:getDir(arg_3_2, arg_3_3)
+function SurvivalSceneMapPath:getPathAndRotate(pos1, pos2, pos3)
+	if not pos1 then
+		local dir = SurvivalHelper.instance:getDir(pos2, pos3)
 
-		return var_0_0.ResPaths.tail, var_3_0 * 60
-	elseif not arg_3_3 then
-		local var_3_1 = SurvivalHelper.instance:getDir(arg_3_2, arg_3_1)
+		return SurvivalSceneMapPath.ResPaths.tail, dir * 60
+	elseif not pos3 then
+		local dir = SurvivalHelper.instance:getDir(pos2, pos1)
 
-		return var_0_0.ResPaths.tail, var_3_1 * 60
+		return SurvivalSceneMapPath.ResPaths.tail, dir * 60
 	else
-		local var_3_2 = SurvivalHelper.instance:getDir(arg_3_2, arg_3_1)
-		local var_3_3 = SurvivalHelper.instance:getDir(arg_3_2, arg_3_3)
-		local var_3_4 = (var_3_3 - var_3_2 + 6) % 6
+		local dir1 = SurvivalHelper.instance:getDir(pos2, pos1)
+		local dir2 = SurvivalHelper.instance:getDir(pos2, pos3)
+		local angle = (dir2 - dir1 + 6) % 6
 
-		if var_3_4 == 3 then
-			return var_0_0.ResPaths.line180, var_3_2 * 60
-		elseif var_3_4 == 2 then
-			return var_0_0.ResPaths.line120, var_3_2 * 60
-		elseif var_3_4 == 1 then
-			return var_0_0.ResPaths.line60, var_3_2 * 60
-		elseif var_3_4 == 4 then
-			return var_0_0.ResPaths.line120, var_3_3 * 60
-		elseif var_3_4 == 5 then
-			return var_0_0.ResPaths.line60, var_3_3 * 60
+		if angle == 3 then
+			return SurvivalSceneMapPath.ResPaths.line180, dir1 * 60
+		elseif angle == 2 then
+			return SurvivalSceneMapPath.ResPaths.line120, dir1 * 60
+		elseif angle == 1 then
+			return SurvivalSceneMapPath.ResPaths.line60, dir1 * 60
+		elseif angle == 4 then
+			return SurvivalSceneMapPath.ResPaths.line120, dir2 * 60
+		elseif angle == 5 then
+			return SurvivalSceneMapPath.ResPaths.line60, dir2 * 60
 		end
 	end
 end
 
-function var_0_0.getObj(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	local var_4_0 = table.remove(arg_4_0._pools[arg_4_1])
+function SurvivalSceneMapPath:getObj(path, pos, rotate)
+	local go = table.remove(self._pools[path])
 
-	if var_4_0 then
-		gohelper.setActive(var_4_0, true)
+	if go then
+		gohelper.setActive(go, true)
 	else
-		local var_4_1 = SurvivalMapHelper.instance:getBlockRes(arg_4_1)
+		local res = SurvivalMapHelper.instance:getBlockRes(path)
 
-		var_4_0 = gohelper.clone(var_4_1, arg_4_0._pathRoot)
+		go = gohelper.clone(res, self._pathRoot)
 	end
 
-	local var_4_2 = var_4_0.transform
-	local var_4_3, var_4_4, var_4_5 = SurvivalHelper.instance:hexPointToWorldPoint(arg_4_2.q, arg_4_2.r)
+	local trans = go.transform
+	local x, y, z = SurvivalHelper.instance:hexPointToWorldPoint(pos.q, pos.r)
 
-	transformhelper.setLocalPos(var_4_2, var_4_3, var_4_4, var_4_5)
-	transformhelper.setLocalRotation(var_4_2, 0, arg_4_3 + 90, 0)
+	transformhelper.setLocalPos(trans, x, y, z)
+	transformhelper.setLocalRotation(trans, 0, rotate + 90, 0)
 
 	return {
-		path = arg_4_1,
-		go = var_4_0
+		path = path,
+		go = go
 	}
 end
 
-function var_0_0.returnObj(arg_5_0, arg_5_1, arg_5_2)
-	table.insert(arg_5_0._pools[arg_5_1], arg_5_2)
-	gohelper.setActive(arg_5_2, false)
+function SurvivalSceneMapPath:returnObj(path, obj)
+	table.insert(self._pools[path], obj)
+	gohelper.setActive(obj, false)
 end
 
-function var_0_0.clearCurLines(arg_6_0)
-	if not next(arg_6_0._curShowLines) then
+function SurvivalSceneMapPath:clearCurLines()
+	if not next(self._curShowLines) then
 		return
 	end
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0._curShowLines) do
-		arg_6_0:returnObj(iter_6_1.path, iter_6_1.go)
+	for _, v in ipairs(self._curShowLines) do
+		self:returnObj(v.path, v.go)
 	end
 
-	arg_6_0._curShowLines = {}
+	self._curShowLines = {}
 end
 
-function var_0_0.setDelayHide(arg_7_0)
+function SurvivalSceneMapPath:setDelayHide()
 	SurvivalMapModel.instance.showCostTime = 0
 
 	SurvivalController.instance:dispatchEvent(SurvivalEvent.OnMapCostTimeUpdate)
-	TaskDispatcher.runDelay(arg_7_0.setPathListShow, arg_7_0, 0.3)
+	TaskDispatcher.runDelay(self.setPathListShow, self, 0.3)
 end
 
-function var_0_0.onSceneClose(arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0.setPathListShow, arg_8_0)
+function SurvivalSceneMapPath:onSceneClose()
+	TaskDispatcher.cancelTask(self.setPathListShow, self)
 
-	for iter_8_0, iter_8_1 in pairs(arg_8_0._pools) do
-		for iter_8_2, iter_8_3 in pairs(iter_8_1) do
-			gohelper.destroy(iter_8_3)
+	for k, v in pairs(self._pools) do
+		for _, go in pairs(v) do
+			gohelper.destroy(go)
 		end
 	end
 
-	arg_8_0._pools = {}
+	self._pools = {}
 
-	for iter_8_4, iter_8_5 in ipairs(arg_8_0._curShowLines) do
-		gohelper.destroy(iter_8_5.go)
+	for _, v in ipairs(self._curShowLines) do
+		gohelper.destroy(v.go)
 	end
 
-	arg_8_0._curShowLines = {}
+	self._curShowLines = {}
 end
 
-return var_0_0
+return SurvivalSceneMapPath

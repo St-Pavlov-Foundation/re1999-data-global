@@ -1,196 +1,198 @@
-﻿module("modules.logic.prototest.model.ProtoTestCaseParamMO", package.seeall)
+﻿-- chunkname: @modules/logic/prototest/model/ProtoTestCaseParamMO.lua
 
-local var_0_0 = pureTable("ProtoTestCaseParamMO")
+module("modules.logic.prototest.model.ProtoTestCaseParamMO", package.seeall)
 
-function var_0_0.initProto(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.key = arg_1_2.name
-	arg_1_0.value = arg_1_3
-	arg_1_0.id = arg_1_2.number
-	arg_1_0.pType = arg_1_2.type
-	arg_1_0.pLabel = arg_1_2.label
-	arg_1_0.repeated = false
+local ProtoTestCaseParamMO = pureTable("ProtoTestCaseParamMO")
 
-	if arg_1_0:isRepeated() then
-		arg_1_0.value = ProtoParamHelper.buildRepeatedParamsByProto(arg_1_3 or {}, arg_1_0)
+function ProtoTestCaseParamMO:initProto(parentParamMO, descField, value)
+	self.key = descField.name
+	self.value = value
+	self.id = descField.number
+	self.pType = descField.type
+	self.pLabel = descField.label
+	self.repeated = false
 
-		if arg_1_2.message_type then
-			arg_1_0.struct = arg_1_2.message_type.name
+	if self:isRepeated() then
+		self.value = ProtoParamHelper.buildRepeatedParamsByProto(value or {}, self)
+
+		if descField.message_type then
+			self.struct = descField.message_type.name
 		end
-	elseif arg_1_0:isProtoType() then
-		if arg_1_3 then
-			arg_1_0.struct = getmetatable(arg_1_3)._descriptor.name
-			arg_1_0.value = ProtoParamHelper.buildProtoParamsByProto(arg_1_3, arg_1_0)
+	elseif self:isProtoType() then
+		if value then
+			self.struct = getmetatable(value)._descriptor.name
+			self.value = ProtoParamHelper.buildProtoParamsByProto(value, self)
 		else
-			arg_1_0.struct = arg_1_2.message_type.name
+			self.struct = descField.message_type.name
 
-			local var_1_0 = ProtoParamHelper.buildProtoByStructName(arg_1_0.struct)
+			local temp = ProtoParamHelper.buildProtoByStructName(self.struct)
 
-			arg_1_0.value = ProtoParamHelper.buildProtoParamsByProto(var_1_0, arg_1_0)
+			self.value = ProtoParamHelper.buildProtoParamsByProto(temp, self)
 		end
 	end
 end
 
-function var_0_0.initProtoRepeated(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	arg_2_0.key = arg_2_2
-	arg_2_0.value = arg_2_3
-	arg_2_0.id = arg_2_2
-	arg_2_0.pType = arg_2_1.pType
-	arg_2_0.pLabel = ProtoEnum.LabelType.optional
-	arg_2_0.repeated = true
+function ProtoTestCaseParamMO:initProtoRepeated(parentParamMO, id, value)
+	self.key = id
+	self.value = value
+	self.id = id
+	self.pType = parentParamMO.pType
+	self.pLabel = ProtoEnum.LabelType.optional
+	self.repeated = true
 
-	if arg_2_0:isProtoType() then
-		arg_2_0.struct = getmetatable(arg_2_3)._descriptor.name
-		arg_2_0.value = ProtoParamHelper.buildProtoParamsByProto(arg_2_3, arg_2_0)
+	if self:isProtoType() then
+		self.struct = getmetatable(value)._descriptor.name
+		self.value = ProtoParamHelper.buildProtoParamsByProto(value, self)
 	end
 end
 
-function var_0_0.isProtoType(arg_3_0)
-	return arg_3_0.pType == ProtoEnum.ParamType.proto
+function ProtoTestCaseParamMO:isProtoType()
+	return self.pType == ProtoEnum.ParamType.proto
 end
 
-function var_0_0.isOptional(arg_4_0)
-	return arg_4_0.pLabel == ProtoEnum.LabelType.optional
+function ProtoTestCaseParamMO:isOptional()
+	return self.pLabel == ProtoEnum.LabelType.optional
 end
 
-function var_0_0.isRepeated(arg_5_0)
-	return arg_5_0.pLabel == ProtoEnum.LabelType.repeated
+function ProtoTestCaseParamMO:isRepeated()
+	return self.pLabel == ProtoEnum.LabelType.repeated
 end
 
-function var_0_0.getParamDescLine(arg_6_0)
-	if arg_6_0:isRepeated() then
-		local var_6_0 = {}
+function ProtoTestCaseParamMO:getParamDescLine()
+	if self:isRepeated() then
+		local tb = {}
 
-		for iter_6_0, iter_6_1 in ipairs(arg_6_0.value) do
-			table.insert(var_6_0, iter_6_1:getParamDescLine())
+		for _, childParamMO in ipairs(self.value) do
+			table.insert(tb, childParamMO:getParamDescLine())
 		end
 
-		return string.format("%s:{%s}", arg_6_0.key, table.concat(var_6_0, ","))
-	elseif arg_6_0:isProtoType() then
-		local var_6_1 = {}
+		return string.format("%s:{%s}", self.key, table.concat(tb, ","))
+	elseif self:isProtoType() then
+		local tb = {}
 
-		if arg_6_0.value then
-			for iter_6_2, iter_6_3 in ipairs(arg_6_0.value) do
-				table.insert(var_6_1, iter_6_3:getParamDescLine())
+		if self.value then
+			for _, childParamMO in ipairs(self.value) do
+				table.insert(tb, childParamMO:getParamDescLine())
 			end
 		end
 
-		if arg_6_0.repeated then
-			return string.format("{%s}", table.concat(var_6_1, ","))
+		if self.repeated then
+			return string.format("{%s}", table.concat(tb, ","))
 		else
-			return string.format("%s:{%s}", arg_6_0.key, table.concat(var_6_1, ","))
+			return string.format("%s:{%s}", self.key, table.concat(tb, ","))
 		end
-	elseif arg_6_0.repeated then
-		return cjson.encode(arg_6_0.value)
+	elseif self.repeated then
+		return cjson.encode(self.value)
 	else
-		return string.format("%s:%s", arg_6_0.key, arg_6_0.value)
+		return string.format("%s:%s", self.key, self.value)
 	end
 end
 
-function var_0_0.clone(arg_7_0)
-	local var_7_0 = var_0_0.New()
+function ProtoTestCaseParamMO:clone()
+	local paramMO = ProtoTestCaseParamMO.New()
 
-	var_7_0.key = arg_7_0.key
-	var_7_0.value = arg_7_0.value
-	var_7_0.id = arg_7_0.id
-	var_7_0.pType = arg_7_0.pType
-	var_7_0.pLabel = arg_7_0.pLabel
-	var_7_0.struct = arg_7_0.struct
-	var_7_0.repeated = arg_7_0.repeated
+	paramMO.key = self.key
+	paramMO.value = self.value
+	paramMO.id = self.id
+	paramMO.pType = self.pType
+	paramMO.pLabel = self.pLabel
+	paramMO.struct = self.struct
+	paramMO.repeated = self.repeated
 
-	if arg_7_0:isRepeated() then
-		var_7_0.value = {}
+	if self:isRepeated() then
+		paramMO.value = {}
 
-		for iter_7_0, iter_7_1 in ipairs(arg_7_0.value) do
-			table.insert(var_7_0.value, iter_7_1:clone())
+		for _, childParamMO in ipairs(self.value) do
+			table.insert(paramMO.value, childParamMO:clone())
 		end
-	elseif arg_7_0:isProtoType() then
-		var_7_0.value = {}
+	elseif self:isProtoType() then
+		paramMO.value = {}
 
-		for iter_7_2, iter_7_3 in ipairs(arg_7_0.value) do
-			local var_7_1 = iter_7_3:clone()
+		for _, childParamMO in ipairs(self.value) do
+			local cloneChildParamMO = childParamMO:clone()
 
-			table.insert(var_7_0.value, var_7_1)
+			table.insert(paramMO.value, cloneChildParamMO)
 		end
 	end
 
-	return var_7_0
+	return paramMO
 end
 
-function var_0_0.fillProtoMsg(arg_8_0, arg_8_1)
-	if not arg_8_0.value then
+function ProtoTestCaseParamMO:fillProtoMsg(protoMsg)
+	if not self.value then
 		return
 	end
 
-	if arg_8_0:isRepeated() then
-		for iter_8_0, iter_8_1 in ipairs(arg_8_0.value) do
-			iter_8_1:fillProtoMsg(arg_8_1[arg_8_0.key])
+	if self:isRepeated() then
+		for _, childParamMO in ipairs(self.value) do
+			childParamMO:fillProtoMsg(protoMsg[self.key])
 		end
-	elseif arg_8_0:isProtoType() then
-		if arg_8_0.repeated then
-			local var_8_0 = ProtoParamHelper.buildProtoByStructName(arg_8_0.struct)
+	elseif self:isProtoType() then
+		if self.repeated then
+			local proto = ProtoParamHelper.buildProtoByStructName(self.struct)
 
-			for iter_8_2, iter_8_3 in ipairs(arg_8_0.value) do
-				iter_8_3:fillProtoMsg(var_8_0)
+			for _, childParamMO in ipairs(self.value) do
+				childParamMO:fillProtoMsg(proto)
 			end
 
-			table.insert(arg_8_1, var_8_0)
+			table.insert(protoMsg, proto)
 		else
-			for iter_8_4, iter_8_5 in ipairs(arg_8_0.value) do
-				iter_8_5:fillProtoMsg(arg_8_1[arg_8_0.key])
+			for _, childParamMO in ipairs(self.value) do
+				childParamMO:fillProtoMsg(protoMsg[self.key])
 			end
 		end
-	elseif arg_8_0.repeated then
-		table.insert(arg_8_1, arg_8_0.value)
+	elseif self.repeated then
+		table.insert(protoMsg, self.value)
 	else
-		if not arg_8_1 then
-			logError(arg_8_0.key)
+		if not protoMsg then
+			logError(self.key)
 		end
 
-		arg_8_1[arg_8_0.key] = arg_8_0.value
+		protoMsg[self.key] = self.value
 	end
 end
 
-function var_0_0.serialize(arg_9_0)
-	local var_9_0 = {
-		key = arg_9_0.key,
-		value = arg_9_0.value,
-		id = arg_9_0.id,
-		pType = arg_9_0.pType,
-		pLabel = arg_9_0.pLabel,
-		repeated = arg_9_0.repeated,
-		struct = arg_9_0.struct
-	}
+function ProtoTestCaseParamMO:serialize()
+	local jsonTable = {}
 
-	if arg_9_0:isRepeated() or arg_9_0:isProtoType() then
-		var_9_0.value = {}
+	jsonTable.key = self.key
+	jsonTable.value = self.value
+	jsonTable.id = self.id
+	jsonTable.pType = self.pType
+	jsonTable.pLabel = self.pLabel
+	jsonTable.repeated = self.repeated
+	jsonTable.struct = self.struct
 
-		for iter_9_0, iter_9_1 in ipairs(arg_9_0.value) do
-			table.insert(var_9_0.value, iter_9_1:serialize())
+	if self:isRepeated() or self:isProtoType() then
+		jsonTable.value = {}
+
+		for _, childParamMO in ipairs(self.value) do
+			table.insert(jsonTable.value, childParamMO:serialize())
 		end
 	end
 
-	return var_9_0
+	return jsonTable
 end
 
-function var_0_0.deserialize(arg_10_0, arg_10_1)
-	arg_10_0.key = arg_10_1.key
-	arg_10_0.value = arg_10_1.value
-	arg_10_0.id = arg_10_1.id
-	arg_10_0.pType = arg_10_1.pType
-	arg_10_0.pLabel = arg_10_1.pLabel
-	arg_10_0.repeated = arg_10_1.repeated
-	arg_10_0.struct = arg_10_1.struct
+function ProtoTestCaseParamMO:deserialize(jsonTable)
+	self.key = jsonTable.key
+	self.value = jsonTable.value
+	self.id = jsonTable.id
+	self.pType = jsonTable.pType
+	self.pLabel = jsonTable.pLabel
+	self.repeated = jsonTable.repeated
+	self.struct = jsonTable.struct
 
-	if arg_10_0:isRepeated() or arg_10_0:isProtoType() then
-		arg_10_0.value = {}
+	if self:isRepeated() or self:isProtoType() then
+		self.value = {}
 
-		for iter_10_0, iter_10_1 in ipairs(arg_10_1.value) do
-			local var_10_0 = var_0_0.New()
+		for _, childParamJson in ipairs(jsonTable.value) do
+			local paramMO = ProtoTestCaseParamMO.New()
 
-			var_10_0:deserialize(iter_10_1)
-			table.insert(arg_10_0.value, var_10_0)
+			paramMO:deserialize(childParamJson)
+			table.insert(self.value, paramMO)
 		end
 	end
 end
 
-return var_0_0
+return ProtoTestCaseParamMO

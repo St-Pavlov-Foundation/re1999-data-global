@@ -1,84 +1,86 @@
-﻿module("modules.logic.room.entity.comp.RoomBuildingInteractComp", package.seeall)
+﻿-- chunkname: @modules/logic/room/entity/comp/RoomBuildingInteractComp.lua
 
-local var_0_0 = class("RoomBuildingInteractComp", RoomBaseEffectKeyComp)
+module("modules.logic.room.entity.comp.RoomBuildingInteractComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0, arg_1_1)
+local RoomBuildingInteractComp = class("RoomBuildingInteractComp", RoomBaseEffectKeyComp)
 
-	arg_1_0.entity = arg_1_1
+function RoomBuildingInteractComp:ctor(entity)
+	RoomBuildingInteractComp.super.ctor(self, entity)
+
+	self.entity = entity
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
+function RoomBuildingInteractComp:init(go)
+	self.go = go
 end
 
-function var_0_0.addEventListeners(arg_3_0)
+function RoomBuildingInteractComp:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
+function RoomBuildingInteractComp:removeEventListeners()
 	return
 end
 
-function var_0_0.beforeDestroy(arg_5_0)
-	arg_5_0:removeEventListeners()
+function RoomBuildingInteractComp:beforeDestroy()
+	self:removeEventListeners()
 end
 
-function var_0_0.onRebuildEffectGO(arg_6_0)
+function RoomBuildingInteractComp:onRebuildEffectGO()
 	return
 end
 
-function var_0_0.onReturnEffectGO(arg_7_0)
+function RoomBuildingInteractComp:onReturnEffectGO()
 	return
 end
 
-function var_0_0.startInteract(arg_8_0)
-	local var_8_0 = arg_8_0.entity:getMO()
+function RoomBuildingInteractComp:startInteract()
+	local buildingMO = self.entity:getMO()
 
-	if not var_8_0 then
+	if not buildingMO then
 		return
 	end
 
-	local var_8_1 = var_8_0:getInteractMO()
+	local interactMO = buildingMO:getInteractMO()
 
-	if not var_8_1 then
+	if not interactMO then
 		return
 	end
 
-	local var_8_2 = var_8_1:getHeroIdList()
-	local var_8_3 = RoomCameraController.instance:getRoomScene()
+	local heroIdList = interactMO:getHeroIdList()
+	local roomScene = RoomCameraController.instance:getRoomScene()
 
-	if not var_8_3 then
+	if not roomScene then
 		return
 	end
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_2) do
-		local var_8_4 = var_8_3.charactermgr:getCharacterEntity(iter_8_1, SceneTag.RoomCharacter)
+	for siteId, heroId in ipairs(heroIdList) do
+		local characterEntity = roomScene.charactermgr:getCharacterEntity(heroId, SceneTag.RoomCharacter)
 
-		if var_8_4 and var_8_4.interactActionComp then
-			var_8_4.interactActionComp:startInteract(var_8_0.buildingUid, iter_8_0, var_8_1.config.showTime * 0.001)
+		if characterEntity and characterEntity.interactActionComp then
+			characterEntity.interactActionComp:startInteract(buildingMO.buildingUid, siteId, interactMO.config.showTime * 0.001)
 		end
 	end
 
-	if var_8_1.config and not string.nilorempty(var_8_1.config.buildingAnim) then
-		arg_8_0.entity:playAnimator(var_8_1.config.buildingAnim)
+	if interactMO.config and not string.nilorempty(interactMO.config.buildingAnim) then
+		self.entity:playAnimator(interactMO.config.buildingAnim)
 	end
 end
 
-function var_0_0.getPointGOByName(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0.entity.effect:getGameObjectsByName(arg_9_0._effectKey, arg_9_1)
+function RoomBuildingInteractComp:getPointGOByName(name)
+	local goList = self.entity.effect:getGameObjectsByName(self._effectKey, name)
 
-	if var_9_0 and #var_9_0 > 0 then
-		return var_9_0[1]
+	if goList and #goList > 0 then
+		return goList[1]
 	end
 end
 
-function var_0_0.getPointGOTrsByName(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0.entity.effect:getGameObjectsTrsByName(arg_10_0._effectKey, arg_10_1)
+function RoomBuildingInteractComp:getPointGOTrsByName(name)
+	local trsList = self.entity.effect:getGameObjectsTrsByName(self._effectKey, name)
 
-	if var_10_0 and #var_10_0 > 0 then
-		return var_10_0[1]
+	if trsList and #trsList > 0 then
+		return trsList[1]
 	end
 end
 
-return var_0_0
+return RoomBuildingInteractComp

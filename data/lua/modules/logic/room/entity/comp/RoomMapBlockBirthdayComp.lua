@@ -1,70 +1,74 @@
-﻿module("modules.logic.room.entity.comp.RoomMapBlockBirthdayComp", package.seeall)
+﻿-- chunkname: @modules/logic/room/entity/comp/RoomMapBlockBirthdayComp.lua
 
-local var_0_0 = class("RoomMapBlockBirthdayComp", LuaCompBase)
+module("modules.logic.room.entity.comp.RoomMapBlockBirthdayComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.entity = arg_1_1
+local RoomMapBlockBirthdayComp = class("RoomMapBlockBirthdayComp", LuaCompBase)
+
+function RoomMapBlockBirthdayComp:ctor(entity)
+	self.entity = entity
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
+function RoomMapBlockBirthdayComp:init(go)
+	self.go = go
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_3_0._onDailyRefresh, arg_3_0)
+function RoomMapBlockBirthdayComp:addEventListeners()
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self._onDailyRefresh, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, arg_4_0._onDailyRefresh, arg_4_0)
+function RoomMapBlockBirthdayComp:removeEventListeners()
+	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, self._onDailyRefresh, self)
 end
 
-function var_0_0._onDailyRefresh(arg_5_0)
-	arg_5_0:refreshBirthday()
+function RoomMapBlockBirthdayComp:_onDailyRefresh()
+	self:refreshBirthday()
 end
 
-function var_0_0.onStart(arg_6_0)
+function RoomMapBlockBirthdayComp:onStart()
 	return
 end
 
-function var_0_0.refreshBirthday(arg_7_0)
-	if arg_7_0.__willDestroy then
+function RoomMapBlockBirthdayComp:refreshBirthday()
+	if self.__willDestroy then
 		return
 	end
 
-	local var_7_0 = arg_7_0.entity:getMO()
+	local blockMO = self.entity:getMO()
+	local isBirthdayBlock = blockMO and blockMO.packageId == RoomBlockPackageEnum.ID.RoleBirthday
 
-	if not (var_7_0 and var_7_0.packageId == RoomBlockPackageEnum.ID.RoleBirthday) then
+	if not isBirthdayBlock then
 		return
 	end
 
-	if not arg_7_0._birthdayAnimator then
-		local var_7_1 = arg_7_0.entity.effect:getGameObjectByPath(RoomEnum.EffectKey.BlockLandKey, RoomEnum.EntityChildKey.BirthdayBlockGOKey)
+	if not self._birthdayAnimator then
+		local birthdayGo = self.entity.effect:getGameObjectByPath(RoomEnum.EffectKey.BlockLandKey, RoomEnum.EntityChildKey.BirthdayBlockGOKey)
 
-		if gohelper.isNil(var_7_1) then
+		if gohelper.isNil(birthdayGo) then
 			return
 		end
 
-		arg_7_0._birthdayAnimator = var_7_1:GetComponent(RoomEnum.ComponentType.Animator)
+		self._birthdayAnimator = birthdayGo:GetComponent(RoomEnum.ComponentType.Animator)
 	end
 
-	if not arg_7_0._birthdayAnimator then
+	if not self._birthdayAnimator then
 		return
 	end
 
-	local var_7_2 = RoomConfig.instance:getSpecialBlockConfig(var_7_0.id)
-	local var_7_3 = RoomCharacterModel.instance:isOnBirthday(var_7_2 and var_7_2.heroId) and "v1a9_bxhy_terrain_role_birthday" or "shengri"
+	local spBlockCfg = RoomConfig.instance:getSpecialBlockConfig(blockMO.id)
+	local isOnBirthday = RoomCharacterModel.instance:isOnBirthday(spBlockCfg and spBlockCfg.heroId)
+	local animName = isOnBirthday and "v1a9_bxhy_terrain_role_birthday" or "shengri"
 
-	arg_7_0._birthdayAnimator:Play(var_7_3, 0, 0)
+	self._birthdayAnimator:Play(animName, 0, 0)
 end
 
-function var_0_0.beforeDestroy(arg_8_0)
-	arg_8_0.__willDestroy = true
+function RoomMapBlockBirthdayComp:beforeDestroy()
+	self.__willDestroy = true
 
-	arg_8_0:removeEventListeners()
+	self:removeEventListeners()
 end
 
-function var_0_0.onDestroy(arg_9_0)
+function RoomMapBlockBirthdayComp:onDestroy()
 	return
 end
 
-return var_0_0
+return RoomMapBlockBirthdayComp

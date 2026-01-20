@@ -1,182 +1,185 @@
-﻿module("modules.logic.versionactivity1_2.trade.view.ActivityQuoteDemandItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/trade/view/ActivityQuoteDemandItem.lua
 
-local var_0_0 = class("ActivityQuoteDemandItem", UserDataDispose)
+module("modules.logic.versionactivity1_2.trade.view.ActivityQuoteDemandItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+local ActivityQuoteDemandItem = class("ActivityQuoteDemandItem", UserDataDispose)
 
-	arg_1_0.go = arg_1_1
-	arg_1_0.anim = arg_1_1:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.go, "simage_bg")
+function ActivityQuoteDemandItem:ctor(go)
+	self:__onInit()
 
-	arg_1_0._simagebg:LoadImage(ResUrl.getVersionTradeBargainBg("img_changguidi"))
+	self.go = go
+	self.anim = go:GetComponent(typeof(UnityEngine.Animator))
+	self._simagebg = gohelper.findChildSingleImage(self.go, "simage_bg")
 
-	arg_1_0.goFinish = gohelper.findChild(arg_1_0.go, "go_finish")
-	arg_1_0.txtCurProgress = gohelper.findChildTextMesh(arg_1_0.go, "layout/left/txt_curcount")
-	arg_1_0.txtMaxProgress = gohelper.findChildTextMesh(arg_1_0.go, "layout/right/txt_curcount")
-	arg_1_0.txtDesc = gohelper.findChildTextMesh(arg_1_0.go, "txt_desc")
-	arg_1_0.txtPricerange = gohelper.findChildTextMesh(arg_1_0.go, "bargain/txt_pricerange")
-	arg_1_0.btnJump = gohelper.findChildButtonWithAudio(arg_1_0.go, "btn_jump", AudioEnum.UI.play_ui_petrus_mission_skip)
+	self._simagebg:LoadImage(ResUrl.getVersionTradeBargainBg("img_changguidi"))
 
-	arg_1_0.btnJump:AddClickListener(arg_1_0.onClickJump, arg_1_0)
+	self.goFinish = gohelper.findChild(self.go, "go_finish")
+	self.txtCurProgress = gohelper.findChildTextMesh(self.go, "layout/left/txt_curcount")
+	self.txtMaxProgress = gohelper.findChildTextMesh(self.go, "layout/right/txt_curcount")
+	self.txtDesc = gohelper.findChildTextMesh(self.go, "txt_desc")
+	self.txtPricerange = gohelper.findChildTextMesh(self.go, "bargain/txt_pricerange")
+	self.btnJump = gohelper.findChildButtonWithAudio(self.go, "btn_jump", AudioEnum.UI.play_ui_petrus_mission_skip)
 
-	arg_1_0.btnCancel = gohelper.findChildButtonWithAudio(arg_1_0.go, "btn_cancel", AudioEnum.UI.Play_UI_Rolesback)
+	self.btnJump:AddClickListener(self.onClickJump, self)
 
-	arg_1_0.btnCancel:AddClickListener(arg_1_0.onClickCancel, arg_1_0)
+	self.btnCancel = gohelper.findChildButtonWithAudio(self.go, "btn_cancel", AudioEnum.UI.Play_UI_Rolesback)
 
-	arg_1_0.btnBargain = gohelper.findChildButtonWithAudio(arg_1_0.go, "btn_bargain")
+	self.btnCancel:AddClickListener(self.onClickCancel, self)
 
-	arg_1_0.btnBargain:AddClickListener(arg_1_0.onClickStartBargain, arg_1_0)
+	self.btnBargain = gohelper.findChildButtonWithAudio(self.go, "btn_bargain")
 
-	arg_1_0._simageclickbg = gohelper.findChildSingleImage(arg_1_0.go, "click/bg")
+	self.btnBargain:AddClickListener(self.onClickStartBargain, self)
 
-	arg_1_0._simageclickbg:LoadImage(ResUrl.getVersionActivity1_2TaskImage("renwu_diehei"))
+	self._simageclickbg = gohelper.findChildSingleImage(self.go, "click/bg")
+
+	self._simageclickbg:LoadImage(ResUrl.getVersionActivity1_2TaskImage("renwu_diehei"))
 end
 
-function var_0_0.setData(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4, arg_2_5, arg_2_6)
-	arg_2_0.data = arg_2_1
+function ActivityQuoteDemandItem:setData(data, allFinish, index, count, callback, callbackObj)
+	self.data = data
 
-	if not arg_2_1 then
-		gohelper.setActive(arg_2_0.go, false)
+	if not data then
+		gohelper.setActive(self.go, false)
 
 		return
 	end
 
-	arg_2_0.index = arg_2_3
-	arg_2_0.count = arg_2_4
-	arg_2_0.callback = arg_2_5
-	arg_2_0.callbackObj = arg_2_6
+	self.index = index
+	self.count = count
+	self.callback = callback
+	self.callbackObj = callbackObj
 
-	gohelper.setActive(arg_2_0.go, true)
+	gohelper.setActive(self.go, true)
 
-	local var_2_0 = arg_2_1:isProgressEnough()
-	local var_2_1 = arg_2_1.hasGetBonus
+	local isFinish = data:isProgressEnough()
+	local hasGetBonus = data.hasGetBonus
+	local isSelect = data.id == Activity117Model.instance:getSelectOrder(data.activityId)
 
-	if arg_2_1.id == Activity117Model.instance:getSelectOrder(arg_2_1.activityId) then
-		gohelper.setActive(arg_2_0.btnCancel, true)
-		gohelper.setActive(arg_2_0.goFinish, false)
-		gohelper.setActive(arg_2_0.btnJump, false)
-		gohelper.setActive(arg_2_0.btnBargain, false)
-	elseif arg_2_2 then
-		gohelper.setActive(arg_2_0.goFinish, true)
-		gohelper.setActive(arg_2_0.btnJump, false)
-		gohelper.setActive(arg_2_0.btnBargain, false)
-		gohelper.setActive(arg_2_0.btnCancel, false)
+	if isSelect then
+		gohelper.setActive(self.btnCancel, true)
+		gohelper.setActive(self.goFinish, false)
+		gohelper.setActive(self.btnJump, false)
+		gohelper.setActive(self.btnBargain, false)
+	elseif allFinish then
+		gohelper.setActive(self.goFinish, true)
+		gohelper.setActive(self.btnJump, false)
+		gohelper.setActive(self.btnBargain, false)
+		gohelper.setActive(self.btnCancel, false)
 	else
-		gohelper.setActive(arg_2_0.goFinish, var_2_1)
-		gohelper.setActive(arg_2_0.btnJump, not var_2_0 and not var_2_1)
-		gohelper.setActive(arg_2_0.btnBargain, var_2_0 and not var_2_1)
-		gohelper.setActive(arg_2_0.btnCancel, false)
+		gohelper.setActive(self.goFinish, hasGetBonus)
+		gohelper.setActive(self.btnJump, not isFinish and not hasGetBonus)
+		gohelper.setActive(self.btnBargain, isFinish and not hasGetBonus)
+		gohelper.setActive(self.btnCancel, false)
 	end
 
-	arg_2_0.txtCurProgress.text = (var_2_0 or var_2_1) and "1" or "0"
-	arg_2_0.txtMaxProgress.text = "1"
-	arg_2_0.txtDesc.text = arg_2_1:getDesc() or ""
-	arg_2_0.txtPricerange.text = string.format("%s-%s", arg_2_1.minScore, arg_2_1.maxScore)
+	self.txtCurProgress.text = (isFinish or hasGetBonus) and "1" or "0"
+	self.txtMaxProgress.text = "1"
+	self.txtDesc.text = data:getDesc() or ""
+	self.txtPricerange.text = string.format("%s-%s", data.minScore, data.maxScore)
 
-	if not arg_2_0.playedAnim then
-		arg_2_0.playedAnim = true
-		arg_2_0.anim.speed = 0
+	if not self.playedAnim then
+		self.playedAnim = true
+		self.anim.speed = 0
 
-		local var_2_2 = (arg_2_3 - 1) * 0.06
+		local delayTime = (index - 1) * 0.06
 
-		if var_2_2 and var_2_2 > 0 then
-			TaskDispatcher.runDelay(arg_2_0.playOpenAnim, arg_2_0, var_2_2)
+		if delayTime and delayTime > 0 then
+			TaskDispatcher.runDelay(self.playOpenAnim, self, delayTime)
 		else
-			arg_2_0:playOpenAnim()
+			self:playOpenAnim()
 		end
 	else
-		arg_2_0:checkDoCallback()
+		self:checkDoCallback()
 	end
 end
 
-function var_0_0.playOpenAnim(arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0.playOpenAnim, arg_3_0)
+function ActivityQuoteDemandItem:playOpenAnim()
+	TaskDispatcher.cancelTask(self.playOpenAnim, self)
 
-	arg_3_0.anim.speed = 1
+	self.anim.speed = 1
 
-	arg_3_0.anim:Play(UIAnimationName.Open, 0, 0)
-	arg_3_0:checkDoCallback()
+	self.anim:Play(UIAnimationName.Open, 0, 0)
+	self:checkDoCallback()
 end
 
-function var_0_0.checkDoCallback(arg_4_0)
-	if arg_4_0.index == arg_4_0.count and arg_4_0.callback then
-		arg_4_0.callback(arg_4_0.callbackObj)
+function ActivityQuoteDemandItem:checkDoCallback()
+	if self.index == self.count and self.callback then
+		self.callback(self.callbackObj)
 
-		arg_4_0.callback = nil
+		self.callback = nil
 	end
 end
 
-function var_0_0.onAllAnimFinish(arg_5_0)
-	if arg_5_0.data then
-		local var_5_0 = gohelper.findChild(arg_5_0.btnBargain.gameObject, "huan")
+function ActivityQuoteDemandItem:onAllAnimFinish()
+	if self.data then
+		local go = gohelper.findChild(self.btnBargain.gameObject, "huan")
 
-		gohelper.setActive(var_5_0, false)
-		gohelper.setActive(var_5_0, true)
+		gohelper.setActive(go, false)
+		gohelper.setActive(go, true)
 	end
 end
 
-function var_0_0.onClickStartBargain(arg_6_0)
-	if not arg_6_0.data then
+function ActivityQuoteDemandItem:onClickStartBargain()
+	if not self.data then
 		return
 	end
 
-	local var_6_0 = arg_6_0.data
-	local var_6_1 = var_6_0.activityId
+	local data = self.data
+	local actId = data.activityId
 
-	Activity117Model.instance:setSelectOrder(var_6_1, var_6_0.id)
-	Activity117Model.instance:setInQuote(var_6_1)
-	Activity117Controller.instance:dispatchEvent(Activity117Event.RefreshQuoteView, var_6_1)
+	Activity117Model.instance:setSelectOrder(actId, data.id)
+	Activity117Model.instance:setInQuote(actId)
+	Activity117Controller.instance:dispatchEvent(Activity117Event.RefreshQuoteView, actId)
 end
 
-function var_0_0.onClickJump(arg_7_0)
-	local var_7_0 = arg_7_0.data and arg_7_0.data.jumpId
+function ActivityQuoteDemandItem:onClickJump()
+	local jumpId = self.data and self.data.jumpId
 
-	if not var_7_0 then
+	if not jumpId then
 		return
 	end
 
-	local var_7_1 = {
+	local item = {
 		jumpId = 10011205,
 		special = true,
 		desc = luaLang("versionactivity_1_2_tradedemand"),
 		sceneType = SceneType.Main,
-		checkFunc = arg_7_0.data.isProgressEnough,
-		checkFuncObj = arg_7_0.data
+		checkFunc = self.data.isProgressEnough,
+		checkFuncObj = self.data
 	}
 
-	GameFacade.jump(var_7_0, nil, nil, var_7_1)
+	GameFacade.jump(jumpId, nil, nil, item)
 end
 
-function var_0_0.onClickCancel(arg_8_0)
-	if not arg_8_0.data then
+function ActivityQuoteDemandItem:onClickCancel()
+	if not self.data then
 		return
 	end
 
-	local var_8_0 = arg_8_0.data.activityId
+	local actId = self.data.activityId
 
-	Activity117Model.instance:setSelectOrder(var_8_0)
-	Activity117Model.instance:setInQuote(var_8_0)
-	Activity117Controller.instance:dispatchEvent(Activity117Event.RefreshQuoteView, var_8_0)
+	Activity117Model.instance:setSelectOrder(actId)
+	Activity117Model.instance:setInQuote(actId)
+	Activity117Controller.instance:dispatchEvent(Activity117Event.RefreshQuoteView, actId)
 end
 
-function var_0_0.destory(arg_9_0)
-	if arg_9_0.btnBargain then
-		arg_9_0.btnBargain:RemoveClickListener()
+function ActivityQuoteDemandItem:destory()
+	if self.btnBargain then
+		self.btnBargain:RemoveClickListener()
 	end
 
-	if arg_9_0.btnJump then
-		arg_9_0.btnJump:RemoveClickListener()
+	if self.btnJump then
+		self.btnJump:RemoveClickListener()
 	end
 
-	if arg_9_0.btnCancel then
-		arg_9_0.btnCancel:RemoveClickListener()
+	if self.btnCancel then
+		self.btnCancel:RemoveClickListener()
 	end
 
-	arg_9_0._simagebg:UnLoadImage()
-	arg_9_0._simageclickbg:UnLoadImage()
-	TaskDispatcher.cancelTask(arg_9_0.playOpenAnim, arg_9_0)
-	arg_9_0:__onDispose()
+	self._simagebg:UnLoadImage()
+	self._simageclickbg:UnLoadImage()
+	TaskDispatcher.cancelTask(self.playOpenAnim, self)
+	self:__onDispose()
 end
 
-return var_0_0
+return ActivityQuoteDemandItem

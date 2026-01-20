@@ -1,313 +1,315 @@
-﻿module("modules.ugui.icon.common.CommonHeroCard", package.seeall)
+﻿-- chunkname: @modules/ugui/icon/common/CommonHeroCard.lua
 
-local var_0_0 = class("CommonHeroCard", ListScrollCell)
-local var_0_1 = typeof(UnityEngine.UI.Mask)
-local var_0_2 = 0.001
+module("modules.ugui.icon.common.CommonHeroCard", package.seeall)
 
-function var_0_0.create(arg_1_0, arg_1_1)
-	local var_1_0 = MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0, var_0_0)
+local CommonHeroCard = class("CommonHeroCard", ListScrollCell)
+local type_mask = typeof(UnityEngine.UI.Mask)
+local GrayFactorMin = 0.001
 
-	var_1_0:setUseCase(arg_1_1)
+function CommonHeroCard.create(go, reuseCase)
+	local commonHeroCard = MonoHelper.addNoUpdateLuaComOnceToGo(go, CommonHeroCard)
 
-	return var_1_0
+	commonHeroCard:setUseCase(reuseCase)
+
+	return commonHeroCard
 end
 
-local var_0_3 = {}
+local spineCache = {}
 
-function var_0_0.put(arg_2_0, arg_2_1, arg_2_2)
-	if not arg_2_0 or not arg_2_1 or not arg_2_2 then
+function CommonHeroCard.put(reuseCase, skinId, guiSpine)
+	if not reuseCase or not skinId or not guiSpine then
 		if isDebugBuild then
-			logError(string.format("put 参数为空 case{%s} skin{%s} spine{%s}", tostring(arg_2_0), tostring(arg_2_1), tostring(arg_2_2)))
+			logError(string.format("put 参数为空 case{%s} skin{%s} spine{%s}", tostring(reuseCase), tostring(skinId), tostring(guiSpine)))
 		end
 
 		return
 	end
 
-	var_0_3[arg_2_0] = var_0_3[arg_2_0] or {}
-	var_0_3[arg_2_0][arg_2_1] = var_0_3[arg_2_0][arg_2_1] or {}
+	spineCache[reuseCase] = spineCache[reuseCase] or {}
+	spineCache[reuseCase][skinId] = spineCache[reuseCase][skinId] or {}
 
-	table.insert(var_0_3[arg_2_0][arg_2_1], arg_2_2)
+	table.insert(spineCache[reuseCase][skinId], guiSpine)
 end
 
-function var_0_0.get(arg_3_0, arg_3_1)
-	if not arg_3_0 or not arg_3_1 then
+function CommonHeroCard.get(reuseCase, skinId)
+	if not reuseCase or not skinId then
 		if isDebugBuild then
-			logError(string.format("get 参数为空 case{%s} skin{%s}", tostring(arg_3_0), tostring(arg_3_1)))
+			logError(string.format("get 参数为空 case{%s} skin{%s}", tostring(reuseCase), tostring(skinId)))
 		end
 
 		return
 	end
 
-	local var_3_0 = var_0_3[arg_3_0]
+	local skinGuiSpines = spineCache[reuseCase]
 
-	if var_3_0 then
-		local var_3_1 = var_3_0[arg_3_1]
+	if skinGuiSpines then
+		local guiSpines = skinGuiSpines[skinId]
 
-		if var_3_1 and #var_3_1 > 0 then
-			for iter_3_0 = #var_3_1, 1, -1 do
-				local var_3_2 = table.remove(var_3_1, #var_3_1)
+		if guiSpines and #guiSpines > 0 then
+			for i = #guiSpines, 1, -1 do
+				local spine = table.remove(guiSpines, #guiSpines)
 
-				if not gohelper.isNil(var_3_2:getSpineGo()) then
-					return var_3_2
+				if not gohelper.isNil(spine:getSpineGo()) then
+					return spine
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.release(arg_4_0, arg_4_1)
-	if not arg_4_0 or not arg_4_1 then
+function CommonHeroCard.release(reuseCase, guiSpine)
+	if not reuseCase or not guiSpine then
 		if isDebugBuild then
-			logError(string.format("release 参数为空 case{%s} spine{%s}", tostring(arg_4_0), tostring(arg_4_1)))
+			logError(string.format("release 参数为空 case{%s} spine{%s}", tostring(reuseCase), tostring(guiSpine)))
 		end
 
 		return
 	end
 
-	local var_4_0 = var_0_3[arg_4_0]
+	local skinGuiSpines = spineCache[reuseCase]
 
-	if var_4_0 then
-		for iter_4_0, iter_4_1 in pairs(var_4_0) do
-			for iter_4_2 = #iter_4_1, 1, -1 do
-				if arg_4_1 == iter_4_1[iter_4_2] then
-					table.remove(iter_4_1, iter_4_2)
+	if skinGuiSpines then
+		for _, guiSpines in pairs(skinGuiSpines) do
+			for i = #guiSpines, 1, -1 do
+				if guiSpine == guiSpines[i] then
+					table.remove(guiSpines, i)
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.init(arg_5_0, arg_5_1)
-	arg_5_0._go = arg_5_1
-	arg_5_0._tr = arg_5_1.transform
-	arg_5_0._imgIcon = gohelper.onceAddComponent(arg_5_0._go, gohelper.Type_Image)
-	arg_5_0._spineGO = nil
-	arg_5_0._guiSpine = nil
+function CommonHeroCard:init(go)
+	self._go = go
+	self._tr = go.transform
+	self._imgIcon = gohelper.onceAddComponent(self._go, gohelper.Type_Image)
+	self._spineGO = nil
+	self._guiSpine = nil
 end
 
-function var_0_0.setUseCase(arg_6_0, arg_6_1)
-	arg_6_0._reuseCase = arg_6_1
+function CommonHeroCard:setUseCase(needReuse)
+	self._reuseCase = needReuse
 end
 
-function var_0_0.setSpineRaycastTarget(arg_7_0, arg_7_1)
-	arg_7_0._raycastTarget = arg_7_1 == true and true or false
+function CommonHeroCard:setSpineRaycastTarget(raycast)
+	self._raycastTarget = raycast == true and true or false
 
-	if arg_7_0._uiLimitSpine then
-		local var_7_0 = arg_7_0._uiLimitSpine:getSkeletonGraphic()
+	if self._uiLimitSpine then
+		local spineGraphic = self._uiLimitSpine:getSkeletonGraphic()
 
-		if var_7_0 then
-			var_7_0.raycastTarget = arg_7_0._raycastTarget
+		if spineGraphic then
+			spineGraphic.raycastTarget = self._raycastTarget
 		end
 	end
 end
 
-function var_0_0.setGrayScale(arg_8_0, arg_8_1)
-	ZProj.UGUIHelper.SetGrayscale(arg_8_0._go, arg_8_1)
+function CommonHeroCard:setGrayScale(isGray)
+	ZProj.UGUIHelper.SetGrayscale(self._go, isGray)
 end
 
-function var_0_0.setGrayFactor(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0._grayFactor
+function CommonHeroCard:setGrayFactor(value)
+	local prevGrayFactor = self._grayFactor
 
-	arg_9_0._grayFactor = arg_9_1
+	self._grayFactor = value
 
-	local var_9_1 = var_9_0 and var_9_0 > var_0_2
-	local var_9_2 = arg_9_0._grayFactor and arg_9_0._grayFactor > var_0_2
+	local isGrayBefore = prevGrayFactor and prevGrayFactor > GrayFactorMin
+	local isGrayNow = self._grayFactor and self._grayFactor > GrayFactorMin
 
-	if (var_9_1 and not var_9_2 or not var_9_1 and var_9_2) and arg_9_0._skinConfig then
-		arg_9_0:onUpdateMO(arg_9_0._skinConfig, true)
+	if (isGrayBefore and not isGrayNow or not isGrayBefore and isGrayNow) and self._skinConfig then
+		self:onUpdateMO(self._skinConfig, true)
 	end
 
-	ZProj.UGUIHelper.SetGrayFactor(arg_9_0._go, arg_9_1)
+	ZProj.UGUIHelper.SetGrayFactor(self._go, value)
 end
 
-function var_0_0.onUpdateMO(arg_10_0, arg_10_1, arg_10_2)
-	if arg_10_1 and arg_10_1 == arg_10_0._skinConfig and not arg_10_2 then
+function CommonHeroCard:onUpdateMO(skinConfig, force)
+	if skinConfig and skinConfig == self._skinConfig and not force then
 		return
 	end
 
-	arg_10_0:_checkPutSpineToPool(arg_10_0._skinConfig)
+	self:_checkPutSpineToPool(self._skinConfig)
 
-	arg_10_0._skinConfig = arg_10_1
-	arg_10_0._limitedCO = arg_10_0._skinConfig and lua_character_limited.configDict[arg_10_0._skinConfig.id]
+	self._skinConfig = skinConfig
+	self._limitedCO = self._skinConfig and lua_character_limited.configDict[self._skinConfig.id]
 
-	local var_10_0 = arg_10_0._grayFactor and arg_10_0._grayFactor > var_0_2
-	local var_10_1 = arg_10_0._limitedCO and not string.nilorempty(arg_10_0._limitedCO.spine) and not var_10_0
+	local isGray = self._grayFactor and self._grayFactor > GrayFactorMin
+	local showLimitedSpine = self._limitedCO and not string.nilorempty(self._limitedCO.spine) and not isGray
 
-	if var_10_1 then
-		local var_10_2 = ResUrl.getRolesBustPrefab(arg_10_0._limitedCO.spine)
+	if showLimitedSpine then
+		local resPath = ResUrl.getRolesBustPrefab(self._limitedCO.spine)
 
-		if arg_10_0._uiLimitSpine then
-			arg_10_0._uiLimitSpine:setResPath(var_10_2, arg_10_0._onSpineLoaded, arg_10_0, true)
+		if self._uiLimitSpine then
+			self._uiLimitSpine:setResPath(resPath, self._onSpineLoaded, self, true)
 		else
-			if arg_10_0._reuseCase then
-				arg_10_0._uiLimitSpine = var_0_0.get(arg_10_0._reuseCase, arg_10_0._skinConfig.id)
+			if self._reuseCase then
+				self._uiLimitSpine = CommonHeroCard.get(self._reuseCase, self._skinConfig.id)
 
-				if arg_10_0._uiLimitSpine then
-					arg_10_0._limitSpineGO = arg_10_0._uiLimitSpine._gameObj
+				if self._uiLimitSpine then
+					self._limitSpineGO = self._uiLimitSpine._gameObj
 
-					local var_10_3, var_10_4 = recthelper.getAnchor(arg_10_0._limitSpineGO.transform)
+					local x, y = recthelper.getAnchor(self._limitSpineGO.transform)
 
-					gohelper.addChild(arg_10_0._go, arg_10_0._limitSpineGO)
-					recthelper.setAnchor(arg_10_0._limitSpineGO.transform, var_10_3, var_10_4)
+					gohelper.addChild(self._go, self._limitSpineGO)
+					recthelper.setAnchor(self._limitSpineGO.transform, x, y)
 				end
 			end
 
-			if not arg_10_0._uiLimitSpine then
-				arg_10_0._limitSpineGO = gohelper.create2d(arg_10_0._go, "LimitedSpine")
-				arg_10_0._uiLimitSpine = GuiSpine.Create(arg_10_0._limitSpineGO, false)
+			if not self._uiLimitSpine then
+				self._limitSpineGO = gohelper.create2d(self._go, "LimitedSpine")
+				self._uiLimitSpine = GuiSpine.Create(self._limitSpineGO, false)
 
-				arg_10_0._uiLimitSpine:setResPath(var_10_2, arg_10_0._onSpineLoaded, arg_10_0, true)
+				self._uiLimitSpine:setResPath(resPath, self._onSpineLoaded, self, true)
 			end
 		end
 
-		gohelper.setActive(arg_10_0._limitSpineGO, true)
-		gohelper.setAsFirstSibling(arg_10_0._limitSpineGO)
+		gohelper.setActive(self._limitSpineGO, true)
+		gohelper.setAsFirstSibling(self._limitSpineGO)
 
-		if arg_10_0._simageIcon then
-			arg_10_0._simageIcon:UnLoadImage()
+		if self._simageIcon then
+			self._simageIcon:UnLoadImage()
 		end
 
-		arg_10_0._imgIcon.enabled = true
+		self._imgIcon.enabled = true
 
-		TaskDispatcher.runRepeat(arg_10_0._checkAlphaClip, arg_10_0, 0.05, 20)
+		TaskDispatcher.runRepeat(self._checkAlphaClip, self, 0.05, 20)
 	else
-		TaskDispatcher.cancelTask(arg_10_0._checkAlphaClip, arg_10_0)
+		TaskDispatcher.cancelTask(self._checkAlphaClip, self)
 
-		if not arg_10_0._simageIcon then
-			arg_10_0._simageIcon = gohelper.getSingleImage(arg_10_0._go)
+		if not self._simageIcon then
+			self._simageIcon = gohelper.getSingleImage(self._go)
 		end
 
-		local var_10_5 = ResUrl.getHeadIconMiddle(arg_10_0._skinConfig.retangleIcon)
+		local imageUrl = ResUrl.getHeadIconMiddle(self._skinConfig.retangleIcon)
 
-		if arg_10_0._simageIcon.curImageUrl ~= var_10_5 then
-			arg_10_0._simageIcon:UnLoadImage()
+		if self._simageIcon.curImageUrl ~= imageUrl then
+			self._simageIcon:UnLoadImage()
 		end
 
-		arg_10_0._simageIcon:LoadImage(var_10_5)
+		self._simageIcon:LoadImage(imageUrl)
 	end
 
-	if var_10_1 then
-		if not arg_10_0._mask then
-			arg_10_0._mask = gohelper.onceAddComponent(arg_10_0._go, var_0_1)
-			arg_10_0._mask.showMaskGraphic = false
+	if showLimitedSpine then
+		if not self._mask then
+			self._mask = gohelper.onceAddComponent(self._go, type_mask)
+			self._mask.showMaskGraphic = false
 		end
 
-		arg_10_0._mask.enabled = true
-	elseif arg_10_0._mask then
-		arg_10_0._mask.enabled = false
-	end
-end
-
-function var_0_0.onEnable(arg_11_0)
-	if arg_11_0._uiLimitSpine then
-		TaskDispatcher.runRepeat(arg_11_0._checkAlphaClip, arg_11_0, 0.05, 20)
+		self._mask.enabled = true
+	elseif self._mask then
+		self._mask.enabled = false
 	end
 end
 
-function var_0_0._checkAlphaClip(arg_12_0)
-	if not arg_12_0._uiLimitSpine then
-		TaskDispatcher.cancelTask(arg_12_0._checkAlphaClip, arg_12_0)
+function CommonHeroCard:onEnable()
+	if self._uiLimitSpine then
+		TaskDispatcher.runRepeat(self._checkAlphaClip, self, 0.05, 20)
+	end
+end
+
+function CommonHeroCard:_checkAlphaClip()
+	if not self._uiLimitSpine then
+		TaskDispatcher.cancelTask(self._checkAlphaClip, self)
 
 		return
 	end
 
-	local var_12_0 = arg_12_0._uiLimitSpine:getSkeletonGraphic()
+	local spineGraphic = self._uiLimitSpine:getSkeletonGraphic()
 
-	if gohelper.isNil(var_12_0) then
+	if gohelper.isNil(spineGraphic) then
 		return
 	end
 
-	if var_12_0.color.a < 1 then
+	if spineGraphic.color.a < 1 then
 		ShaderKeyWordMgr.enableKeyWordAutoDisable(ShaderKeyWordMgr.CLIPALPHA, 0.5)
 
 		return
 	end
 
-	local var_12_1 = var_12_0.transform.parent
+	local parent = spineGraphic.transform.parent
 
-	for iter_12_0 = 1, 5 do
-		if var_12_1 == nil then
+	for i = 1, 5 do
+		if parent == nil then
 			return
 		end
 
-		local var_12_2 = var_12_1:GetComponent(gohelper.Type_CanvasGroup)
+		local canvasGroup = parent:GetComponent(gohelper.Type_CanvasGroup)
 
-		if var_12_2 and var_12_2.alpha < 1 then
+		if canvasGroup and canvasGroup.alpha < 1 then
 			ShaderKeyWordMgr.enableKeyWordAutoDisable(ShaderKeyWordMgr.CLIPALPHA, 0.5)
 
 			return
 		end
 
-		var_12_1 = var_12_1.parent
+		parent = parent.parent
 	end
 end
 
-function var_0_0._checkPutSpineToPool(arg_13_0, arg_13_1)
-	if arg_13_0._uiLimitSpine then
-		if not gohelper.isNil(arg_13_0._uiLimitSpine:getSpineGo()) then
-			gohelper.setActive(arg_13_0._limitSpineGO, false)
+function CommonHeroCard:_checkPutSpineToPool(prevSkinConfig)
+	if self._uiLimitSpine then
+		if not gohelper.isNil(self._uiLimitSpine:getSpineGo()) then
+			gohelper.setActive(self._limitSpineGO, false)
 
-			if arg_13_0._reuseCase and arg_13_1 then
-				var_0_0.put(arg_13_0._reuseCase, arg_13_1.id, arg_13_0._uiLimitSpine)
+			if self._reuseCase and prevSkinConfig then
+				CommonHeroCard.put(self._reuseCase, prevSkinConfig.id, self._uiLimitSpine)
 
-				arg_13_0._uiLimitSpine = nil
-				arg_13_0._limitSpineGO = nil
+				self._uiLimitSpine = nil
+				self._limitSpineGO = nil
 			end
 		else
-			arg_13_0._uiLimitSpine:doClear()
+			self._uiLimitSpine:doClear()
 
-			if not gohelper.isNil(arg_13_0._limitSpineGO) then
-				gohelper.destroy(arg_13_0._limitSpineGO)
+			if not gohelper.isNil(self._limitSpineGO) then
+				gohelper.destroy(self._limitSpineGO)
 			end
 
-			arg_13_0._uiLimitSpine = nil
-			arg_13_0._limitSpineGO = nil
+			self._uiLimitSpine = nil
+			self._limitSpineGO = nil
 		end
 	end
 end
 
-function var_0_0._onSpineLoaded(arg_14_0)
-	local var_14_0 = arg_14_0._limitedCO.spineParam[1] or 0
-	local var_14_1 = arg_14_0._limitedCO.spineParam[2] or 0
-	local var_14_2 = arg_14_0._limitedCO.spineParam[3] or 1
-	local var_14_3 = arg_14_0._uiLimitSpine:getSpineTr()
+function CommonHeroCard:_onSpineLoaded()
+	local posX = self._limitedCO.spineParam[1] or 0
+	local posY = self._limitedCO.spineParam[2] or 0
+	local scale = self._limitedCO.spineParam[3] or 1
+	local spineTr = self._uiLimitSpine:getSpineTr()
 
-	recthelper.setAnchor(var_14_3, recthelper.getAnchor(arg_14_0._tr))
-	recthelper.setWidth(var_14_3, recthelper.getWidth(arg_14_0._tr))
-	recthelper.setHeight(var_14_3, recthelper.getHeight(arg_14_0._tr))
-	recthelper.setAnchor(var_14_3, var_14_0, var_14_1)
-	transformhelper.setLocalScale(var_14_3, var_14_2, var_14_2, 1)
-	arg_14_0:setSpineRaycastTarget(arg_14_0._raycastTarget)
+	recthelper.setAnchor(spineTr, recthelper.getAnchor(self._tr))
+	recthelper.setWidth(spineTr, recthelper.getWidth(self._tr))
+	recthelper.setHeight(spineTr, recthelper.getHeight(self._tr))
+	recthelper.setAnchor(spineTr, posX, posY)
+	transformhelper.setLocalScale(spineTr, scale, scale, 1)
+	self:setSpineRaycastTarget(self._raycastTarget)
 end
 
-function var_0_0.onDestroy(arg_15_0)
-	TaskDispatcher.cancelTask(arg_15_0._checkAlphaClip, arg_15_0)
+function CommonHeroCard:onDestroy()
+	TaskDispatcher.cancelTask(self._checkAlphaClip, self)
 
-	if arg_15_0._reuseCase then
-		if not arg_15_0._uiLimitSpine then
-			local var_15_0 = gohelper.findChild(arg_15_0._go, "LimitedSpine")
+	if self._reuseCase then
+		if not self._uiLimitSpine then
+			local limitSpineGO = gohelper.findChild(self._go, "LimitedSpine")
 
-			if var_15_0 then
-				arg_15_0._uiLimitSpine = MonoHelper.getLuaComFromGo(var_15_0, GuiSpine)
+			if limitSpineGO then
+				self._uiLimitSpine = MonoHelper.getLuaComFromGo(limitSpineGO, GuiSpine)
 			end
 		end
 
-		if arg_15_0._uiLimitSpine then
-			var_0_0.release(arg_15_0._reuseCase, arg_15_0._uiLimitSpine)
+		if self._uiLimitSpine then
+			CommonHeroCard.release(self._reuseCase, self._uiLimitSpine)
 		end
 	end
 
-	if arg_15_0._uiLimitSpine then
-		arg_15_0._uiLimitSpine:doClear()
+	if self._uiLimitSpine then
+		self._uiLimitSpine:doClear()
 
-		arg_15_0._uiLimitSpine = nil
+		self._uiLimitSpine = nil
 	end
 
-	if arg_15_0._simageIcon then
-		arg_15_0._simageIcon:UnLoadImage()
+	if self._simageIcon then
+		self._simageIcon:UnLoadImage()
 
-		arg_15_0._simageIcon = nil
+		self._simageIcon = nil
 	end
 end
 
-return var_0_0
+return CommonHeroCard

@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity2_8.nuodika.view.NuoDiKaGameViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/nuodika/view/NuoDiKaGameViewContainer.lua
 
-local var_0_0 = class("NuoDiKaGameViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_8.nuodika.view.NuoDiKaGameViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local NuoDiKaGameViewContainer = class("NuoDiKaGameViewContainer", BaseViewContainer)
+
+function NuoDiKaGameViewContainer:buildViews()
 	return {
 		NuoDiKaGameView.New(),
 		NuoDiKaGameMapView.New(),
@@ -10,37 +12,37 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		local var_2_0 = NavigateButtonsView.New({
+function NuoDiKaGameViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		local navView = NavigateButtonsView.New({
 			true,
 			true,
 			true
 		})
 
-		var_2_0:setOverrideClose(arg_2_0._onCloseGameView, arg_2_0)
-		var_2_0:setOverrideHome(arg_2_0._onHomeCloseGameView, arg_2_0)
-		var_2_0:setOverrideHelp(arg_2_0._onEnterInfoClick, arg_2_0)
+		navView:setOverrideClose(self._onCloseGameView, self)
+		navView:setOverrideHome(self._onHomeCloseGameView, self)
+		navView:setOverrideHelp(self._onEnterInfoClick, self)
 
 		return {
-			var_2_0
+			navView
 		}
 	end
 end
 
-function var_0_0._onCloseGameView(arg_3_0)
+function NuoDiKaGameViewContainer:_onCloseGameView()
 	NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.OnActiveClose)
 	NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.OnBackToLevel)
-	arg_3_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._onHomeCloseGameView(arg_4_0)
+function NuoDiKaGameViewContainer:_onHomeCloseGameView()
 	NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.OnActiveClose)
 	NavigateButtonsView.homeClick()
 end
 
-function var_0_0._onEnterInfoClick(arg_5_0)
+function NuoDiKaGameViewContainer:_onEnterInfoClick()
 	NuoDiKaController.instance:enterInfosView()
 end
 
-return var_0_0
+return NuoDiKaGameViewContainer

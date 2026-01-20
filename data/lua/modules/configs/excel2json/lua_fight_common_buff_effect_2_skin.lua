@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_fight_common_buff_effect_2_skin", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_fight_common_buff_effect_2_skin.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_fight_common_buff_effect_2_skin", package.seeall)
+
+local lua_fight_common_buff_effect_2_skin = {}
+local fields = {
 	audio = 5,
 	effectHang = 3,
 	buffId = 1,
@@ -9,14 +11,14 @@ local var_0_1 = {
 	duration = 6,
 	effectPath = 4
 }
-local var_0_2 = {
+local primaryKey = {
 	"buffId",
 	"skinId"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_fight_common_buff_effect_2_skin.onLoad(json)
+	lua_fight_common_buff_effect_2_skin.configList, lua_fight_common_buff_effect_2_skin.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_fight_common_buff_effect_2_skin

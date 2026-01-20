@@ -1,243 +1,266 @@
-﻿module("modules.logic.fight.entity.comp.skill.FightTLEventUniqueCameraNew", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skill/FightTLEventUniqueCameraNew.lua
 
-local var_0_0 = class("FightTLEventUniqueCameraNew", FightTimelineTrackItem)
+module("modules.logic.fight.entity.comp.skill.FightTLEventUniqueCameraNew", package.seeall)
 
-function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.paramsArr = arg_1_3
-	arg_1_0.fightStepData = arg_1_1
-	arg_1_0._attacker = FightHelper.getEntity(arg_1_1.fromId)
-	arg_1_0._cameraResName = arg_1_3[1]
+local FightTLEventUniqueCameraNew = class("FightTLEventUniqueCameraNew", FightTimelineTrackItem)
 
-	if not string.nilorempty(arg_1_3[2]) and arg_1_3[2] ~= "0" and FightHelper.detectTimelinePlayEffectCondition(arg_1_1, arg_1_3[2]) and not string.nilorempty(arg_1_3[3]) then
-		arg_1_0._cameraResName = arg_1_3[3]
+function FightTLEventUniqueCameraNew:onTrackStart(fightStepData, duration, paramsArr)
+	self.paramsArr = paramsArr
+	self.fightStepData = fightStepData
+	self._attacker = FightHelper.getEntity(fightStepData.fromId)
+
+	if not string.nilorempty(paramsArr[5]) then
+		local targetSkin = tonumber(paramsArr[5])
+		local entityList = FightHelper.getAllEntitys()
+
+		for i, entity in ipairs(entityList) do
+			local entityData = entity:getMO()
+
+			if entityData and entityData.skin == targetSkin then
+				self._attacker = entity
+
+				break
+			end
+		end
 	end
 
-	if not string.nilorempty(arg_1_0._cameraResName) then
-		arg_1_0._loader = MultiAbLoader.New()
+	self._cameraResName = paramsArr[1]
 
-		arg_1_0._loader:addPath(FightHelper.getCameraAniPath(arg_1_0._cameraResName))
-		arg_1_0._loader:startLoad(arg_1_0._onLoaded, arg_1_0)
+	if not string.nilorempty(paramsArr[2]) and paramsArr[2] ~= "0" and FightHelper.detectTimelinePlayEffectCondition(fightStepData, paramsArr[2]) and not string.nilorempty(paramsArr[3]) then
+		self._cameraResName = paramsArr[3]
 	end
 
-	FightController.instance:registerCallback(FightEvent.ParallelPlayNextSkillDoneThis, arg_1_0._parallelSkillDoneThis, arg_1_0)
+	if not string.nilorempty(self._cameraResName) then
+		self._loader = MultiAbLoader.New()
+
+		self._loader:addPath(FightHelper.getCameraAniPath(self._cameraResName))
+		self._loader:startLoad(self._onLoaded, self)
+	end
+
+	FightController.instance:registerCallback(FightEvent.ParallelPlayNextSkillDoneThis, self._parallelSkillDoneThis, self)
 end
 
-function var_0_0.onTrackEnd(arg_2_0)
-	arg_2_0:_onFinish()
-	arg_2_0:dealFinalValue(arg_2_0.paramsArr[4])
+function FightTLEventUniqueCameraNew:onTrackEnd()
+	self:_onFinish()
+	self:dealFinalValue(self.paramsArr[4])
 end
 
-function var_0_0._onLoaded(arg_3_0, arg_3_1)
-	arg_3_0.fightStepData.hasPlayTimelineCamera = true
+function FightTLEventUniqueCameraNew:_onLoaded(multiAbLoader)
+	self.fightStepData.hasPlayTimelineCamera = true
 
-	local var_3_0 = GameSceneMgr.instance:getCurScene().camera
-	local var_3_1 = var_3_0:getCurVirtualCamera(1)
-	local var_3_2 = var_3_0:getCurVirtualCamera(2)
-	local var_3_3 = ZProj.VirtualCameraWrap.Get(var_3_1.gameObject).body
-	local var_3_4 = ZProj.VirtualCameraWrap.Get(var_3_2.gameObject).body
-	local var_3_5 = "Follower" .. string.sub(var_3_1.name, string.len(var_3_1.name))
-	local var_3_6 = "Follower" .. string.sub(var_3_2.name, string.len(var_3_2.name))
-	local var_3_7 = gohelper.findChild(var_3_1.transform.parent.gameObject, var_3_5)
-	local var_3_8 = gohelper.findChild(var_3_2.transform.parent.gameObject, var_3_6)
-	local var_3_9 = var_3_1.transform.parent.gameObject
-	local var_3_10 = var_3_2.transform.parent.gameObject
-	local var_3_11
-	local var_3_12 = GameSceneMgr.instance:getCurScene().cardCamera
+	local cameraComp = GameSceneMgr.instance:getCurScene().camera
+	local virtualCamera1 = cameraComp:getCurVirtualCamera(1)
+	local virtualCamera2 = cameraComp:getCurVirtualCamera(2)
+	local body1 = ZProj.VirtualCameraWrap.Get(virtualCamera1.gameObject).body
+	local body2 = ZProj.VirtualCameraWrap.Get(virtualCamera2.gameObject).body
+	local followerName1 = "Follower" .. string.sub(virtualCamera1.name, string.len(virtualCamera1.name))
+	local followerName2 = "Follower" .. string.sub(virtualCamera2.name, string.len(virtualCamera2.name))
+	local follower1 = gohelper.findChild(virtualCamera1.transform.parent.gameObject, followerName1)
+	local follower2 = gohelper.findChild(virtualCamera2.transform.parent.gameObject, followerName2)
+	local vcam1 = virtualCamera1.transform.parent.gameObject
+	local vcam2 = virtualCamera2.transform.parent.gameObject
+	local preVirtualCameraParams
+	local cardCamera = GameSceneMgr.instance:getCurScene().cardCamera
 
-	if arg_3_0.fightStepData.isParallelStep or var_3_12:isPlaying() then
+	if self.fightStepData.isParallelStep or cardCamera:isPlaying() then
 		GameSceneMgr.instance:getCurScene().camera:enablePostProcessSmooth(true)
 
-		var_3_11 = {
+		preVirtualCameraParams = {
 			{
-				body = var_3_3,
-				follower = var_3_7,
-				vcam = var_3_9,
-				params = arg_3_0:_getVirtualCameraParams(var_3_3, var_3_7, var_3_9)
+				body = body1,
+				follower = follower1,
+				vcam = vcam1,
+				params = self:_getVirtualCameraParams(body1, follower1, vcam1)
 			},
 			{
-				body = var_3_4,
-				follower = var_3_8,
-				vcam = var_3_10,
-				params = arg_3_0:_getVirtualCameraParams(var_3_4, var_3_8, var_3_10)
+				body = body2,
+				follower = follower2,
+				vcam = vcam2,
+				params = self:_getVirtualCameraParams(body2, follower2, vcam2)
 			}
 		}
 
-		var_3_0:switchNextVirtualCamera()
+		cameraComp:switchNextVirtualCamera()
 	end
 
-	arg_3_0._animatorInst = arg_3_0._loader:getFirstAssetItem():GetResource(ResUrl.getCameraAnim(arg_3_0._cameraResName))
-	arg_3_0._animComp = CameraMgr.instance:getCameraRootAnimator()
-	arg_3_0._animComp.enabled = true
-	arg_3_0._animComp.runtimeAnimatorController = nil
-	arg_3_0._animComp.runtimeAnimatorController = arg_3_0._animatorInst
-	arg_3_0._animComp.speed = FightModel.instance:getSpeed()
+	self._animatorInst = self._loader:getFirstAssetItem():GetResource(ResUrl.getCameraAnim(self._cameraResName))
+	self._animComp = CameraMgr.instance:getCameraRootAnimator()
+	self._animComp.enabled = true
+	self._animComp.runtimeAnimatorController = nil
+	self._animComp.runtimeAnimatorController = self._animatorInst
+	self._animComp.speed = FightModel.instance:getSpeed()
 
-	arg_3_0._animComp:SetBool("isRight", arg_3_0._attacker and arg_3_0._attacker:isMySide() or false)
+	self._animComp:SetBool("isRight", self._attacker and self._attacker:isMySide() or false)
 
-	local var_3_13 = arg_3_0._attacker and arg_3_0._attacker:getMO() and arg_3_0._attacker:getMO().position
+	local pos = self._attacker and self._attacker:getMO() and self._attacker:getMO().position
 
-	if var_3_13 then
-		arg_3_0._animComp:SetInteger("pos", var_3_13 > 4 and 4 or var_3_13)
+	if pos then
+		self._animComp:SetInteger("pos", pos > 4 and 4 or pos)
 	end
 
-	FightController.instance:registerCallback(FightEvent.OnUpdateSpeed, arg_3_0._onUpdateSpeed, arg_3_0)
+	FightController.instance:registerCallback(FightEvent.OnUpdateSpeed, self._onUpdateSpeed, self)
 
-	arg_3_0._animationIndex = 1
+	self._animationIndex = 1
 
-	local var_3_14 = arg_3_0._animComp:GetCurrentAnimatorStateInfo(0)
+	local curState = self._animComp:GetCurrentAnimatorStateInfo(0)
 
-	arg_3_0._animationName = var_3_14 and var_3_14.shortNameHash
+	self._animationName = curState and curState.shortNameHash
 
-	if arg_3_0.fightStepData.isParallelStep or var_3_12:isPlaying() then
-		if var_3_12:isPlaying() then
-			var_3_12:stop()
+	if self.fightStepData.isParallelStep or cardCamera:isPlaying() then
+		if cardCamera:isPlaying() then
+			cardCamera:stop()
 		end
 
-		arg_3_0._defaultVirtualCameraParams = {
+		self._defaultVirtualCameraParams = {
 			{
-				body = var_3_3,
-				follower = var_3_7,
-				vcam = var_3_9,
-				params = arg_3_0:_getDefaultVirtualCameraParams(var_3_3, var_3_7, var_3_9)
+				body = body1,
+				follower = follower1,
+				vcam = vcam1,
+				params = self:_getDefaultVirtualCameraParams(body1, follower1, vcam1)
 			},
 			{
-				body = var_3_4,
-				follower = var_3_8,
-				vcam = var_3_10,
-				params = arg_3_0:_getDefaultVirtualCameraParams(var_3_4, var_3_8, var_3_10)
+				body = body2,
+				follower = follower2,
+				vcam = vcam2,
+				params = self:_getDefaultVirtualCameraParams(body2, follower2, vcam2)
 			}
 		}
 
-		arg_3_0:_setVirtualCameraParam(var_3_11)
-		TaskDispatcher.runDelay(arg_3_0._delaySetDefaultVirtualCameraParam, arg_3_0, 1)
+		self:_setVirtualCameraParam(preVirtualCameraParams)
+		TaskDispatcher.runDelay(self._delaySetDefaultVirtualCameraParam, self, 1)
 	end
 end
 
-function var_0_0._getVirtualCameraParams(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	local var_4_0 = arg_4_1.m_PathOffset
-	local var_4_1 = arg_4_1.m_PathPosition
-	local var_4_2 = arg_4_1.m_XDamping
-	local var_4_3 = arg_4_1.m_YDamping
-	local var_4_4 = arg_4_1.m_ZDamping
-	local var_4_5 = arg_4_2.transform.localPosition
-	local var_4_6 = arg_4_3.transform.localPosition
+function FightTLEventUniqueCameraNew:_getVirtualCameraParams(body, follower, vcam)
+	local pathOffset = body.m_PathOffset
+	local pathPosition = body.m_PathPosition
+	local xDamping = body.m_XDamping
+	local yDamping = body.m_YDamping
+	local zDamping = body.m_ZDamping
+	local followerPos = follower.transform.localPosition
+	local vcamPos = vcam.transform.localPosition
 
 	return {
-		pathOffset = var_4_0,
-		pathPosition = var_4_1,
-		xDamping = var_4_2,
-		yDamping = var_4_3,
-		zDamping = var_4_4,
-		followerPos = var_4_5,
-		vcamPos = var_4_6
+		pathOffset = pathOffset,
+		pathPosition = pathPosition,
+		xDamping = xDamping,
+		yDamping = yDamping,
+		zDamping = zDamping,
+		followerPos = followerPos,
+		vcamPos = vcamPos
 	}
 end
 
-function var_0_0._getDefaultVirtualCameraParams(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	local var_5_0 = Vector3.zero
-	local var_5_1 = arg_5_2.transform.localPosition
+function FightTLEventUniqueCameraNew:_getDefaultVirtualCameraParams(body, follower, vcam)
+	local vec3Zero = Vector3.zero
+	local followerPos = follower.transform.localPosition
 
 	return {
 		zDamping = 0.5,
 		xDamping = 0.5,
 		yDamping = 0.5,
 		pathPosition = 1,
-		pathOffset = var_5_0,
-		followerPos = var_5_1,
-		vcamPos = var_5_0
+		pathOffset = vec3Zero,
+		followerPos = followerPos,
+		vcamPos = vec3Zero
 	}
 end
 
-function var_0_0._delaySetDefaultVirtualCameraParam(arg_6_0)
-	arg_6_0:_setVirtualCameraParam(arg_6_0._defaultVirtualCameraParams)
+function FightTLEventUniqueCameraNew:_delaySetDefaultVirtualCameraParam()
+	self:_setVirtualCameraParam(self._defaultVirtualCameraParams)
 end
 
-function var_0_0._setVirtualCameraParam(arg_7_0, arg_7_1)
-	for iter_7_0, iter_7_1 in ipairs(arg_7_1) do
-		iter_7_1.body.m_PathOffset = iter_7_1.params.pathOffset
-		iter_7_1.body.m_PathPosition = iter_7_1.params.pathPosition
-		iter_7_1.body.m_XDamping = iter_7_1.params.xDamping
-		iter_7_1.body.m_YDamping = iter_7_1.params.yDamping
-		iter_7_1.body.m_ZDamping = iter_7_1.params.zDamping
-		iter_7_1.follower.transform.localPosition = iter_7_1.params.followerPos
-		iter_7_1.vcam.transform.localPosition = iter_7_1.params.vcamPos
+function FightTLEventUniqueCameraNew:_setVirtualCameraParam(virtualCameraParams)
+	for _, one in ipairs(virtualCameraParams) do
+		one.body.m_PathOffset = one.params.pathOffset
+		one.body.m_PathPosition = one.params.pathPosition
+		one.body.m_XDamping = one.params.xDamping
+		one.body.m_YDamping = one.params.yDamping
+		one.body.m_ZDamping = one.params.zDamping
+		one.follower.transform.localPosition = one.params.followerPos
+		one.vcam.transform.localPosition = one.params.vcamPos
 	end
 end
 
-function var_0_0._onUpdateSpeed(arg_8_0)
-	if arg_8_0._animComp then
-		arg_8_0._animComp.speed = FightModel.instance:getSpeed()
+function FightTLEventUniqueCameraNew:_onUpdateSpeed()
+	if self._animComp then
+		self._animComp.speed = FightModel.instance:getSpeed()
 	end
 end
 
-function var_0_0._parallelSkillDoneThis(arg_9_0, arg_9_1)
-	TaskDispatcher.cancelTask(arg_9_0._delaySetDefaultVirtualCameraParam, arg_9_0)
+function FightTLEventUniqueCameraNew:_parallelSkillDoneThis(fightStepData)
+	TaskDispatcher.cancelTask(self._delaySetDefaultVirtualCameraParam, self)
 
-	arg_9_0._animComp = nil
+	self._animComp = nil
 end
 
-function var_0_0._onFinish(arg_10_0)
-	arg_10_0:_clear()
+function FightTLEventUniqueCameraNew:_onFinish()
+	self:_clear()
 end
 
-function var_0_0.onDestructor(arg_11_0)
-	arg_11_0:_clear()
+function FightTLEventUniqueCameraNew:onDestructor()
+	self:_clear()
 end
 
-function var_0_0._clear(arg_12_0)
-	if arg_12_0._defaultVirtualCameraParams then
-		for iter_12_0, iter_12_1 in ipairs(arg_12_0._defaultVirtualCameraParams) do
-			iter_12_1.body = nil
-			iter_12_1.params = nil
+function FightTLEventUniqueCameraNew:_clear()
+	if self._defaultVirtualCameraParams then
+		for _, one in ipairs(self._defaultVirtualCameraParams) do
+			one.body = nil
+			one.params = nil
 		end
 
-		arg_12_0._defaultVirtualCameraParams = nil
+		self._defaultVirtualCameraParams = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_12_0._delaySetDefaultVirtualCameraParam, arg_12_0)
-	FightController.instance:unregisterCallback(FightEvent.ParallelPlayNextSkillDoneThis, arg_12_0._parallelSkillDoneThis, arg_12_0)
-	FightController.instance:unregisterCallback(FightEvent.OnUpdateSpeed, arg_12_0._onUpdateSpeed, arg_12_0)
+	TaskDispatcher.cancelTask(self._delaySetDefaultVirtualCameraParam, self)
+	FightController.instance:unregisterCallback(FightEvent.ParallelPlayNextSkillDoneThis, self._parallelSkillDoneThis, self)
+	FightController.instance:unregisterCallback(FightEvent.OnUpdateSpeed, self._onUpdateSpeed, self)
 
-	if arg_12_0._animComp and arg_12_0._animComp.runtimeAnimatorController == arg_12_0._animatorInst then
-		arg_12_0._animComp.runtimeAnimatorController = nil
-		arg_12_0._animComp.enabled = false
+	if self._animComp and self._animComp.runtimeAnimatorController == self._animatorInst then
+		self._animComp.runtimeAnimatorController = nil
+		self._animComp.enabled = false
 	end
 
-	if arg_12_0._loader then
-		arg_12_0._loader:dispose()
+	if self._loader then
+		self._loader:dispose()
 	end
 
-	arg_12_0._loader = nil
-	arg_12_0._animComp = nil
-	arg_12_0._animatorInst = nil
+	self._loader = nil
+	self._animComp = nil
+	self._animatorInst = nil
 end
 
-function var_0_0.dealFinalValue(arg_13_0, arg_13_1)
-	if string.nilorempty(arg_13_1) then
+function FightTLEventUniqueCameraNew:dealFinalValue(finalValue)
+	if string.nilorempty(finalValue) then
 		return
 	end
 
-	local var_13_0 = GameUtil.splitString2(arg_13_1, false, ",", "#")
+	local arr = GameUtil.splitString2(finalValue, false, ",", "#")
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
-		if FightHelper.detectTimelinePlayEffectCondition(arg_13_0.fightStepData, string.format("%s#%s", iter_13_1[1], iter_13_1[2])) then
-			local var_13_1 = iter_13_1[3]
-			local var_13_2 = iter_13_1[4]
+	for i, v in ipairs(arr) do
+		if FightHelper.detectTimelinePlayEffectCondition(self.fightStepData, string.format("%s#%s", v[1], v[2])) then
+			local id = v[3]
+			local value = v[4]
 
-			if var_13_1 == "1" then
-				local var_13_3 = CameraMgr.instance:getCameraRootGO()
-				local var_13_4 = gohelper.findChild(var_13_3, "main/VirtualCameras/light/direct"):GetComponent(typeof(UnityEngine.Light))
-				local var_13_5 = var_13_4.color
+			if id == "1" then
+				local cameraRoot = CameraMgr.instance:getCameraRootGO()
+				local light = gohelper.findChild(cameraRoot, "main/VirtualCameras/light/direct")
 
-				var_13_4.color = Color.New(var_13_5.r, var_13_5.g, var_13_5.b, tonumber(var_13_2))
-			elseif var_13_1 == "2" then
-				local var_13_6 = GameSceneMgr.instance:getCurScene().camera:getCurActiveVirtualCame().transform.parent
-				local var_13_7 = var_13_6.localPosition
+				light = light:GetComponent(typeof(UnityEngine.Light))
 
-				transformhelper.setLocalPos(var_13_6, var_13_7.x, var_13_7.y, tonumber(var_13_2))
+				local color = light.color
+
+				light.color = Color.New(color.r, color.g, color.b, tonumber(value))
+			elseif id == "2" then
+				local cameraComp = GameSceneMgr.instance:getCurScene().camera
+				local virtualCamera = cameraComp:getCurActiveVirtualCame()
+				local transform = virtualCamera.transform.parent
+				local localPos = transform.localPosition
+
+				transformhelper.setLocalPos(transform, localPos.x, localPos.y, tonumber(value))
 			end
 		end
 	end
 end
 
-return var_0_0
+return FightTLEventUniqueCameraNew

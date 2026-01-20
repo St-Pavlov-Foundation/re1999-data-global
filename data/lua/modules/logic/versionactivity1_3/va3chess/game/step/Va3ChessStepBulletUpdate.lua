@@ -1,275 +1,277 @@
-﻿module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepBulletUpdate", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/va3chess/game/step/Va3ChessStepBulletUpdate.lua
 
-local var_0_0 = class("Va3ChessStepBulletUpdate", Va3ChessStepBase)
+module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepBulletUpdate", package.seeall)
 
-function var_0_0.start(arg_1_0)
-	arg_1_0._bulletPoolDict = {}
-	arg_1_0._launcherId2BulletTweenDict = {}
-	arg_1_0._tweenCompleteCount = 0
-	arg_1_0._totalTweenCount = arg_1_0.originData and arg_1_0.originData.arrowSteps and #arg_1_0.originData.arrowSteps or 0
+local Va3ChessStepBulletUpdate = class("Va3ChessStepBulletUpdate", Va3ChessStepBase)
 
-	if arg_1_0._totalTweenCount > 0 then
-		if arg_1_0._arrowAssetItem and arg_1_0._arrowAssetItem.IsLoadSuccess then
-			arg_1_0:beginBulletListTween(arg_1_0._arrowAssetItem, arg_1_0.originData.arrowSteps, Va3ChessEnum.Bullet.Arrow)
+function Va3ChessStepBulletUpdate:start()
+	self._bulletPoolDict = {}
+	self._launcherId2BulletTweenDict = {}
+	self._tweenCompleteCount = 0
+	self._totalTweenCount = self.originData and self.originData.arrowSteps and #self.originData.arrowSteps or 0
+
+	if self._totalTweenCount > 0 then
+		if self._arrowAssetItem and self._arrowAssetItem.IsLoadSuccess then
+			self:beginBulletListTween(self._arrowAssetItem, self.originData.arrowSteps, Va3ChessEnum.Bullet.Arrow)
 		else
-			loadAbAsset(Va3ChessEnum.Bullet.Arrow.path, false, arg_1_0.onLoadArrowComplete, arg_1_0)
+			loadAbAsset(Va3ChessEnum.Bullet.Arrow.path, false, self.onLoadArrowComplete, self)
 		end
 	else
-		arg_1_0:finish()
+		self:finish()
 	end
 end
 
-function var_0_0.onLoadArrowComplete(arg_2_0, arg_2_1)
-	if arg_2_0._arrowAssetItem then
-		arg_2_0._arrowAssetItem:Release()
+function Va3ChessStepBulletUpdate:onLoadArrowComplete(assetItem)
+	if self._arrowAssetItem then
+		self._arrowAssetItem:Release()
 	end
 
-	arg_2_0._arrowAssetItem = arg_2_1
+	self._arrowAssetItem = assetItem
 
-	if arg_2_1 then
-		arg_2_1:Retain()
+	if assetItem then
+		assetItem:Retain()
 	end
 
-	arg_2_0:beginBulletListTween(arg_2_0._arrowAssetItem, arg_2_0.originData.arrowSteps, Va3ChessEnum.Bullet.Arrow)
+	self:beginBulletListTween(self._arrowAssetItem, self.originData.arrowSteps, Va3ChessEnum.Bullet.Arrow)
 end
 
-function var_0_0.getBulletItem(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	if not arg_3_2 or gohelper.isNil(arg_3_3) then
+function Va3ChessStepBulletUpdate:getBulletItem(assetItem, bulletSetting, parentGO, pos)
+	if not bulletSetting or gohelper.isNil(parentGO) then
 		return
 	end
 
-	local var_3_0
-	local var_3_1 = arg_3_0._bulletPoolDict[arg_3_2.path]
+	local bulletItem
+	local pool = self._bulletPoolDict[bulletSetting.path]
 
-	if not var_3_1 then
-		var_3_1 = {}
-		arg_3_0._bulletPoolDict[arg_3_2.path] = var_3_1
+	if not pool then
+		pool = {}
+		self._bulletPoolDict[bulletSetting.path] = pool
 	end
 
-	local var_3_2 = #var_3_1
+	local poolLen = #pool
 
-	if var_3_2 > 0 then
-		var_3_0 = var_3_1[var_3_2]
-		var_3_1[var_3_2] = nil
+	if poolLen > 0 then
+		bulletItem = pool[poolLen]
+		pool[poolLen] = nil
 	end
 
-	if not var_3_0 and arg_3_1 and arg_3_1.IsLoadSuccess then
-		local var_3_3 = gohelper.clone(arg_3_1:GetResource(arg_3_2.path), arg_3_3)
+	if not bulletItem and assetItem and assetItem.IsLoadSuccess then
+		local bulletGO = gohelper.clone(assetItem:GetResource(bulletSetting.path), parentGO)
 
-		if not gohelper.isNil(var_3_3) then
-			var_3_0 = {
-				go = var_3_3,
+		if not gohelper.isNil(bulletGO) then
+			bulletItem = {
+				go = bulletGO,
 				dir2GO = {}
 			}
 
-			for iter_3_0, iter_3_1 in pairs(Va3ChessEnum.Direction) do
-				local var_3_4 = gohelper.findChild(var_3_0.go, string.format("dir_%s", iter_3_1))
+			for _, tmpDir in pairs(Va3ChessEnum.Direction) do
+				local dirGO = gohelper.findChild(bulletItem.go, string.format("dir_%s", tmpDir))
 
-				var_3_0.dir2GO[iter_3_1] = var_3_4
+				bulletItem.dir2GO[tmpDir] = dirGO
 			end
 
-			arg_3_0:_setBulletDirGOActive(var_3_0)
+			self:_setBulletDirGOActive(bulletItem)
 
-			var_3_0.hitEffect = gohelper.findChild(var_3_3, "vx_jian_hit")
+			bulletItem.hitEffect = gohelper.findChild(bulletGO, "vx_jian_hit")
 
-			gohelper.setActive(var_3_0.hitEffect, false)
+			gohelper.setActive(bulletItem.hitEffect, false)
 		end
 	end
 
-	if var_3_0 and not gohelper.isNil(var_3_0.go) then
-		local var_3_5 = var_3_0.go.transform
+	if bulletItem and not gohelper.isNil(bulletItem.go) then
+		local bulletTrans = bulletItem.go.transform
 
-		if arg_3_4 and arg_3_4.x and arg_3_4.y and arg_3_4.z then
-			transformhelper.setLocalPos(var_3_5, arg_3_4.x, arg_3_4.y, arg_3_4.z)
+		if pos and pos.x and pos.y and pos.z then
+			transformhelper.setLocalPos(bulletTrans, pos.x, pos.y, pos.z)
 		end
 
-		var_3_5:SetParent(arg_3_3.transform, true)
+		bulletTrans:SetParent(parentGO.transform, true)
 	else
-		var_3_0 = nil
+		bulletItem = nil
 
 		logError("Va3ChessStepBulletUpdate.getBulletItem error, get bullet item fail")
 	end
 
-	return var_3_0
+	return bulletItem
 end
 
-function var_0_0._setBulletDirGOActive(arg_4_0, arg_4_1, arg_4_2)
-	if not arg_4_1 or not arg_4_1.dir2GO then
+function Va3ChessStepBulletUpdate:_setBulletDirGOActive(bulletItem, dir)
+	if not bulletItem or not bulletItem.dir2GO then
 		return
 	end
 
-	for iter_4_0, iter_4_1 in pairs(arg_4_1.dir2GO) do
-		gohelper.setActive(iter_4_1, iter_4_0 == arg_4_2)
+	for goDir, dirGO in pairs(bulletItem.dir2GO) do
+		gohelper.setActive(dirGO, goDir == dir)
 	end
 end
 
-function var_0_0.recycleBulletItem(arg_5_0, arg_5_1, arg_5_2)
-	if not arg_5_1 or gohelper.isNil(arg_5_1.go) then
+function Va3ChessStepBulletUpdate:recycleBulletItem(bulletItem, resPath)
+	if not bulletItem or gohelper.isNil(bulletItem.go) then
 		return
 	end
 
-	gohelper.setActive(arg_5_1.go, false)
+	gohelper.setActive(bulletItem.go, false)
 
-	local var_5_0 = arg_5_0._bulletPoolDict[arg_5_2]
+	local pool = self._bulletPoolDict[resPath]
 
-	if not var_5_0 then
-		var_5_0 = {}
-		arg_5_0._bulletPoolDict[arg_5_2] = var_5_0
+	if not pool then
+		pool = {}
+		self._bulletPoolDict[resPath] = pool
 	end
 
-	table.insert(var_5_0, arg_5_1)
+	table.insert(pool, bulletItem)
 end
 
-function var_0_0.disposeBulletItem(arg_6_0, arg_6_1)
-	if not arg_6_1 then
+function Va3ChessStepBulletUpdate:disposeBulletItem(bulletItem)
+	if not bulletItem then
 		return
 	end
 
-	if arg_6_1.dir2GO then
-		for iter_6_0, iter_6_1 in pairs(arg_6_1.dir2GO) do
-			iter_6_1 = nil
+	if bulletItem.dir2GO then
+		for _, dirGO in pairs(bulletItem.dir2GO) do
+			dirGO = nil
 		end
 
-		arg_6_1.dir2GO = nil
+		bulletItem.dir2GO = nil
 	end
 
-	if not gohelper.isNil(arg_6_1.go) then
-		gohelper.destroy(arg_6_1.go)
+	if not gohelper.isNil(bulletItem.go) then
+		gohelper.destroy(bulletItem.go)
 
-		arg_6_1.go = nil
+		bulletItem.go = nil
 	end
 end
 
-function var_0_0.beginBulletListTween(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	if not arg_7_1 or not arg_7_1.IsLoadSuccess or not arg_7_2 or not arg_7_3 then
-		arg_7_0:finish()
+function Va3ChessStepBulletUpdate:beginBulletListTween(assetItem, stepDataList, bulletSetting)
+	if not assetItem or not assetItem.IsLoadSuccess or not stepDataList or not bulletSetting then
+		self:finish()
 
 		return
 	end
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_2) do
-		local var_7_0 = {}
-		local var_7_1
-		local var_7_2 = Va3ChessGameController.instance.interacts:get(iter_7_1.launcherId)
+	for _, stepData in ipairs(stepDataList) do
+		local pos = {}
+		local parentGO
+		local launcherInteractObj = Va3ChessGameController.instance.interacts:get(stepData.launcherId)
 
-		if var_7_2 then
-			local var_7_3 = var_7_2:tryGetSceneGO()
+		if launcherInteractObj then
+			local launcherSceneGO = launcherInteractObj:tryGetSceneGO()
 
-			if not gohelper.isNil(var_7_3) then
-				local var_7_4 = var_7_3.transform
+			if not gohelper.isNil(launcherSceneGO) then
+				local launcherSceneTrans = launcherSceneGO.transform
 
-				var_7_0.x, var_7_0.y, var_7_0.z = transformhelper.getLocalPos(var_7_4)
-				var_7_1 = var_7_4.parent and var_7_4.parent.gameObject or nil
+				pos.x, pos.y, pos.z = transformhelper.getLocalPos(launcherSceneTrans)
+				parentGO = launcherSceneTrans.parent and launcherSceneTrans.parent.gameObject or nil
 			end
 		end
 
-		local var_7_5 = arg_7_0:getBulletItem(arg_7_1, arg_7_3, var_7_1, var_7_0)
+		local bulletItem = self:getBulletItem(assetItem, bulletSetting, parentGO, pos)
 
-		if var_7_5 and not gohelper.isNil(var_7_5.go) then
-			arg_7_0:playSingleBulletTween(var_7_5, iter_7_1, arg_7_3)
+		if bulletItem and not gohelper.isNil(bulletItem.go) then
+			self:playSingleBulletTween(bulletItem, stepData, bulletSetting)
 		else
-			arg_7_0._totalTweenCount = arg_7_0._totalTweenCount - 1
+			self._totalTweenCount = self._totalTweenCount - 1
 		end
 	end
 
-	if arg_7_0._totalTweenCount <= 0 then
-		arg_7_0:finish()
+	if self._totalTweenCount <= 0 then
+		self:finish()
 	end
 end
 
-function var_0_0.playSingleBulletTween(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	local var_8_0 = arg_8_2.x1
-	local var_8_1 = arg_8_2.y1
-	local var_8_2, var_8_3 = Va3ChessGameModel.instance:getGameSize()
-	local var_8_4 = Mathf.Clamp(arg_8_2.x2, 0, var_8_2 - 1)
-	local var_8_5 = Mathf.Clamp(arg_8_2.y2, 0, var_8_3 - 1)
-	local var_8_6 = Va3ChessMapUtils.ToDirection(var_8_0, var_8_1, var_8_4, var_8_5)
+function Va3ChessStepBulletUpdate:playSingleBulletTween(bulletItem, stepData, bulletSetting)
+	local startX = stepData.x1
+	local startY = stepData.y1
+	local w, h = Va3ChessGameModel.instance:getGameSize()
+	local endX = Mathf.Clamp(stepData.x2, 0, w - 1)
+	local endY = Mathf.Clamp(stepData.y2, 0, h - 1)
+	local dir = Va3ChessMapUtils.ToDirection(startX, startY, endX, endY)
 
-	arg_8_0:_setBulletDirGOActive(arg_8_1, var_8_6)
+	self:_setBulletDirGOActive(bulletItem, dir)
 
-	local var_8_7 = arg_8_2.launcherId
-	local var_8_8 = Va3ChessMapUtils.calBulletFlyTime(arg_8_3.speed, var_8_0, var_8_1, var_8_4, var_8_5)
-	local var_8_9, var_8_10, var_8_11 = Va3ChessGameController.instance:calcTilePosInScene(var_8_4, var_8_5)
-	local var_8_12 = ZProj.TweenHelper.DOLocalMove(arg_8_1.go.transform, var_8_9, var_8_10, var_8_11, var_8_8, function()
-		arg_8_0:onSingleTweenComplete(arg_8_2, arg_8_3)
+	local launcherId = stepData.launcherId
+	local flyTime = Va3ChessMapUtils.calBulletFlyTime(bulletSetting.speed, startX, startY, endX, endY)
+	local sceneX, sceneY, sceneZ = Va3ChessGameController.instance:calcTilePosInScene(endX, endY)
+	local tweenMoveId = ZProj.TweenHelper.DOLocalMove(bulletItem.go.transform, sceneX, sceneY, sceneZ, flyTime, function()
+		self:onSingleTweenComplete(stepData, bulletSetting)
 	end, nil, nil, EaseType.Linear)
 
 	AudioMgr.instance:trigger(AudioEnum.chess_activity142.Arrow)
 
-	arg_8_0._launcherId2BulletTweenDict[var_8_7] = {
-		tweenId = var_8_12,
-		bulletItem = arg_8_1
+	self._launcherId2BulletTweenDict[launcherId] = {
+		tweenId = tweenMoveId,
+		bulletItem = bulletItem
 	}
 end
 
-function var_0_0.onSingleTweenComplete(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0
-	local var_10_1 = arg_10_1.launcherId
-	local var_10_2 = arg_10_0._launcherId2BulletTweenDict[var_10_1]
+function Va3ChessStepBulletUpdate:onSingleTweenComplete(stepData, bulletSetting)
+	local bulletItem
+	local launcherId = stepData.launcherId
+	local tweenBulletData = self._launcherId2BulletTweenDict[launcherId]
 
-	if var_10_2 then
-		var_10_2.tweenId = nil
-		var_10_0 = var_10_2.bulletItem
-		var_10_2.bulletItem = nil
+	if tweenBulletData then
+		tweenBulletData.tweenId = nil
+		bulletItem = tweenBulletData.bulletItem
+		tweenBulletData.bulletItem = nil
 	end
 
-	arg_10_0._launcherId2BulletTweenDict[var_10_1] = nil
+	self._launcherId2BulletTweenDict[launcherId] = nil
 
-	local var_10_3 = arg_10_1.targetId
+	local targetId = stepData.targetId
 
-	if var_10_3 and var_10_3 > 0 then
-		local var_10_4 = Va3ChessGameController.instance.interacts
-		local var_10_5 = var_10_4 and var_10_4:get(var_10_3) or nil
+	if targetId and targetId > 0 then
+		local interactMgr = Va3ChessGameController.instance.interacts
+		local interactObj = interactMgr and interactMgr:get(targetId) or nil
 
-		if var_10_5 and var_10_5.effect and var_10_5.effect.showEffect then
-			var_10_5.effect:showEffect(Va3ChessEnum.EffectType.ArrowHit)
+		if interactObj and interactObj.effect and interactObj.effect.showEffect then
+			interactObj.effect:showEffect(Va3ChessEnum.EffectType.ArrowHit)
 		end
 	end
 
-	arg_10_0:recycleBulletItem(var_10_0, arg_10_2.path)
+	self:recycleBulletItem(bulletItem, bulletSetting.path)
 
-	arg_10_0._tweenCompleteCount = arg_10_0._tweenCompleteCount + 1
+	self._tweenCompleteCount = self._tweenCompleteCount + 1
 
-	if arg_10_0._tweenCompleteCount >= arg_10_0._totalTweenCount and not next(arg_10_0._launcherId2BulletTweenDict) then
-		arg_10_0:finish()
+	if self._tweenCompleteCount >= self._totalTweenCount and not next(self._launcherId2BulletTweenDict) then
+		self:finish()
 	end
 end
 
-function var_0_0.dispose(arg_11_0)
-	if arg_11_0._arrowAssetItem then
-		arg_11_0._arrowAssetItem:Release()
+function Va3ChessStepBulletUpdate:dispose()
+	if self._arrowAssetItem then
+		self._arrowAssetItem:Release()
 
-		arg_11_0._arrowAssetItem = nil
+		self._arrowAssetItem = nil
 	end
 
-	for iter_11_0, iter_11_1 in pairs(arg_11_0._launcherId2BulletTweenDict) do
-		ZProj.TweenHelper.KillById(iter_11_1.tweenId)
+	for k, tweenData in pairs(self._launcherId2BulletTweenDict) do
+		ZProj.TweenHelper.KillById(tweenData.tweenId)
 
-		iter_11_1.tweenId = nil
+		tweenData.tweenId = nil
 
-		arg_11_0:disposeBulletItem(iter_11_1.bulletItem)
+		self:disposeBulletItem(tweenData.bulletItem)
 
-		iter_11_1.bulletItem = nil
-		arg_11_0._launcherId2BulletTweenDict[iter_11_0] = nil
+		tweenData.bulletItem = nil
+		self._launcherId2BulletTweenDict[k] = nil
 	end
 
-	arg_11_0._launcherId2BulletTweenDict = {}
+	self._launcherId2BulletTweenDict = {}
 
-	for iter_11_2, iter_11_3 in pairs(arg_11_0._bulletPoolDict) do
-		for iter_11_4, iter_11_5 in ipairs(iter_11_3) do
-			arg_11_0:disposeBulletItem(iter_11_5)
+	for k, pool in pairs(self._bulletPoolDict) do
+		for i, bulletItem in ipairs(pool) do
+			self:disposeBulletItem(bulletItem)
 
-			iter_11_3[iter_11_4] = nil
+			pool[i] = nil
 		end
 
-		arg_11_0._bulletPoolDict[iter_11_2] = nil
+		self._bulletPoolDict[k] = nil
 	end
 
-	arg_11_0._bulletPoolDict = {}
-	arg_11_0._tweenCompleteCount = 0
-	arg_11_0._totalTweenCount = 0
+	self._bulletPoolDict = {}
+	self._tweenCompleteCount = 0
+	self._totalTweenCount = 0
 
-	var_0_0.super.dispose(arg_11_0)
+	Va3ChessStepBulletUpdate.super.dispose(self)
 end
 
-return var_0_0
+return Va3ChessStepBulletUpdate

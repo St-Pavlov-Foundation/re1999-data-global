@@ -1,11 +1,13 @@
-﻿module("modules.logic.fight.model.FightEnemySideModel", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/FightEnemySideModel.lua
 
-local var_0_0 = class("FightEnemySideModel", BaseModel)
+module("modules.logic.fight.model.FightEnemySideModel", package.seeall)
 
-function var_0_0.getList(arg_1_0)
-	table.sort(arg_1_0._list, FightHelper.sortAssembledMonsterFunc)
+local FightEnemySideModel = class("FightEnemySideModel", BaseModel)
 
-	return arg_1_0._list
+function FightEnemySideModel:getList()
+	table.sort(self._list, FightHelper.sortAssembledMonsterFunc)
+
+	return self._list
 end
 
-return var_0_0
+return FightEnemySideModel

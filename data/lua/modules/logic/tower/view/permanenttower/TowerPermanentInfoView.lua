@@ -1,283 +1,287 @@
-﻿module("modules.logic.tower.view.permanenttower.TowerPermanentInfoView", package.seeall)
+﻿-- chunkname: @modules/logic/tower/view/permanenttower/TowerPermanentInfoView.lua
 
-local var_0_0 = class("TowerPermanentInfoView", BaseView)
+module("modules.logic.tower.view.permanenttower.TowerPermanentInfoView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtepisode = gohelper.findChildText(arg_1_0.viewGO, "right/Title/#txt_episode")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "right/Title/#txt_name")
-	arg_1_0._txtTitleEn = gohelper.findChildText(arg_1_0.viewGO, "right/Title/txt_TitleEn")
-	arg_1_0._btnenemyInfo = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/Title/#btn_enemyInfo")
-	arg_1_0._gorecommendAttr = gohelper.findChild(arg_1_0.viewGO, "right/#go_recommendAttr")
-	arg_1_0._goattritem = gohelper.findChild(arg_1_0.viewGO, "right/#go_recommendAttr/attrlist/#go_attritem")
-	arg_1_0._txtrecommonddes = gohelper.findChildText(arg_1_0.viewGO, "right/#go_recommendAttr/#txt_recommonddes")
-	arg_1_0._txtrecommendLevel = gohelper.findChildText(arg_1_0.viewGO, "right/recommendlevel/#txt_recommendLevel")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "right/desc/Viewport/#txt_desc")
-	arg_1_0._gocurherogroup = gohelper.findChild(arg_1_0.viewGO, "right/#go_curherogroup")
-	arg_1_0._goherogroupItem = gohelper.findChild(arg_1_0.viewGO, "right/#go_curherogroup/#go_herogroupItem")
-	arg_1_0._btnreset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#btn_reset")
-	arg_1_0._golock = gohelper.findChild(arg_1_0.viewGO, "right/#btn_fight/#go_lock")
-	arg_1_0._gostart = gohelper.findChild(arg_1_0.viewGO, "right/#btn_fight/#go_start")
-	arg_1_0._gorestart = gohelper.findChild(arg_1_0.viewGO, "right/#btn_fight/#go_restart")
-	arg_1_0._gostartElite = gohelper.findChild(arg_1_0.viewGO, "right/#btn_fight/#go_startelite")
-	arg_1_0._gorestartElite = gohelper.findChild(arg_1_0.viewGO, "right/#btn_fight/#go_restartelite")
-	arg_1_0._btnlock = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#btn_fight/#go_lock")
-	arg_1_0._btnstart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#btn_fight/#go_start")
-	arg_1_0._btnrestart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#btn_fight/#go_restart")
-	arg_1_0._btnstartElite = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#btn_fight/#go_startelite")
-	arg_1_0._btnrestartElite = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#btn_fight/#go_restartelite")
-	arg_1_0._gomopup = gohelper.findChild(arg_1_0.viewGO, "#go_mopup")
-	arg_1_0._btnticket = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_mopup/ticket/#btn_ticket")
-	arg_1_0._imageticket = gohelper.findChildImage(arg_1_0.viewGO, "#go_mopup/ticket/#btn_ticket/#image_ticket")
-	arg_1_0._txtticketNum = gohelper.findChildText(arg_1_0.viewGO, "#go_mopup/ticket/#btn_ticket/#txt_ticketNum")
-	arg_1_0._btnmopup = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_mopup/#btn_mopup")
-	arg_1_0._goMopUpReddot = gohelper.findChild(arg_1_0.viewGO, "#go_mopup/#btn_mopup/#go_mopupReddot")
+local TowerPermanentInfoView = class("TowerPermanentInfoView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function TowerPermanentInfoView:onInitView()
+	self._txtepisode = gohelper.findChildText(self.viewGO, "right/Title/#txt_episode")
+	self._txtname = gohelper.findChildText(self.viewGO, "right/Title/#txt_name")
+	self._txtTitleEn = gohelper.findChildText(self.viewGO, "right/Title/txt_TitleEn")
+	self._btnenemyInfo = gohelper.findChildButtonWithAudio(self.viewGO, "right/Title/#btn_enemyInfo")
+	self._gorecommendAttr = gohelper.findChild(self.viewGO, "right/#go_recommendAttr")
+	self._goattritem = gohelper.findChild(self.viewGO, "right/#go_recommendAttr/attrlist/#go_attritem")
+	self._txtrecommonddes = gohelper.findChildText(self.viewGO, "right/#go_recommendAttr/#txt_recommonddes")
+	self._txtrecommendLevel = gohelper.findChildText(self.viewGO, "right/recommendlevel/#txt_recommendLevel")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "right/desc/Viewport/#txt_desc")
+	self._gocurherogroup = gohelper.findChild(self.viewGO, "right/#go_curherogroup")
+	self._goherogroupItem = gohelper.findChild(self.viewGO, "right/#go_curherogroup/#go_herogroupItem")
+	self._btnreset = gohelper.findChildButtonWithAudio(self.viewGO, "right/#btn_reset")
+	self._golock = gohelper.findChild(self.viewGO, "right/#btn_fight/#go_lock")
+	self._gostart = gohelper.findChild(self.viewGO, "right/#btn_fight/#go_start")
+	self._gorestart = gohelper.findChild(self.viewGO, "right/#btn_fight/#go_restart")
+	self._gostartElite = gohelper.findChild(self.viewGO, "right/#btn_fight/#go_startelite")
+	self._gorestartElite = gohelper.findChild(self.viewGO, "right/#btn_fight/#go_restartelite")
+	self._btnlock = gohelper.findChildButtonWithAudio(self.viewGO, "right/#btn_fight/#go_lock")
+	self._btnstart = gohelper.findChildButtonWithAudio(self.viewGO, "right/#btn_fight/#go_start")
+	self._btnrestart = gohelper.findChildButtonWithAudio(self.viewGO, "right/#btn_fight/#go_restart")
+	self._btnstartElite = gohelper.findChildButtonWithAudio(self.viewGO, "right/#btn_fight/#go_startelite")
+	self._btnrestartElite = gohelper.findChildButtonWithAudio(self.viewGO, "right/#btn_fight/#go_restartelite")
+	self._gomopup = gohelper.findChild(self.viewGO, "#go_mopup")
+	self._btnticket = gohelper.findChildButtonWithAudio(self.viewGO, "#go_mopup/ticket/#btn_ticket")
+	self._imageticket = gohelper.findChildImage(self.viewGO, "#go_mopup/ticket/#btn_ticket/#image_ticket")
+	self._txtticketNum = gohelper.findChildText(self.viewGO, "#go_mopup/ticket/#btn_ticket/#txt_ticketNum")
+	self._btnmopup = gohelper.findChildButtonWithAudio(self.viewGO, "#go_mopup/#btn_mopup")
+	self._goMopUpReddot = gohelper.findChild(self.viewGO, "#go_mopup/#btn_mopup/#go_mopupReddot")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnenemyInfo:AddClickListener(arg_2_0._btnenemyInfoOnClick, arg_2_0)
-	arg_2_0._btnreset:AddClickListener(arg_2_0._btnresetOnClick, arg_2_0)
-	arg_2_0._btnlock:AddClickListener(arg_2_0._btnfightOnClick, arg_2_0)
-	arg_2_0._btnstart:AddClickListener(arg_2_0._btnfightOnClick, arg_2_0)
-	arg_2_0._btnrestart:AddClickListener(arg_2_0._btnfightOnClick, arg_2_0)
-	arg_2_0._btnstartElite:AddClickListener(arg_2_0._btnfightOnClick, arg_2_0)
-	arg_2_0._btnrestartElite:AddClickListener(arg_2_0._btnfightOnClick, arg_2_0)
-	arg_2_0._btnticket:AddClickListener(arg_2_0._btnticketOnClick, arg_2_0)
-	arg_2_0._btnmopup:AddClickListener(arg_2_0._btnmopupOnClick, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.SelectPermanentEpisode, arg_2_0.refreshUI, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.OnTowerResetSubEpisode, arg_2_0.refreshUI, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.TowerMopUp, arg_2_0.refreshTicket, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.DailyReresh, arg_2_0.refreshTicket, arg_2_0)
+function TowerPermanentInfoView:addEvents()
+	self._btnenemyInfo:AddClickListener(self._btnenemyInfoOnClick, self)
+	self._btnreset:AddClickListener(self._btnresetOnClick, self)
+	self._btnlock:AddClickListener(self._btnfightOnClick, self)
+	self._btnstart:AddClickListener(self._btnfightOnClick, self)
+	self._btnrestart:AddClickListener(self._btnfightOnClick, self)
+	self._btnstartElite:AddClickListener(self._btnfightOnClick, self)
+	self._btnrestartElite:AddClickListener(self._btnfightOnClick, self)
+	self._btnticket:AddClickListener(self._btnticketOnClick, self)
+	self._btnmopup:AddClickListener(self._btnmopupOnClick, self)
+	self:addEventCb(TowerController.instance, TowerEvent.SelectPermanentEpisode, self.refreshUI, self)
+	self:addEventCb(TowerController.instance, TowerEvent.OnTowerResetSubEpisode, self.refreshUI, self)
+	self:addEventCb(TowerController.instance, TowerEvent.TowerMopUp, self.refreshTicket, self)
+	self:addEventCb(TowerController.instance, TowerEvent.DailyReresh, self.refreshTicket, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnenemyInfo:RemoveClickListener()
-	arg_3_0._btnreset:RemoveClickListener()
-	arg_3_0._btnlock:RemoveClickListener()
-	arg_3_0._btnstart:RemoveClickListener()
-	arg_3_0._btnrestart:RemoveClickListener()
-	arg_3_0._btnstartElite:RemoveClickListener()
-	arg_3_0._btnrestartElite:RemoveClickListener()
-	arg_3_0._btnticket:RemoveClickListener()
-	arg_3_0._btnmopup:RemoveClickListener()
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.SelectPermanentEpisode, arg_3_0.refreshUI, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.OnTowerResetSubEpisode, arg_3_0.refreshUI, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.TowerMopUp, arg_3_0.refreshTicket, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.DailyReresh, arg_3_0.refreshTicket, arg_3_0)
+function TowerPermanentInfoView:removeEvents()
+	self._btnenemyInfo:RemoveClickListener()
+	self._btnreset:RemoveClickListener()
+	self._btnlock:RemoveClickListener()
+	self._btnstart:RemoveClickListener()
+	self._btnrestart:RemoveClickListener()
+	self._btnstartElite:RemoveClickListener()
+	self._btnrestartElite:RemoveClickListener()
+	self._btnticket:RemoveClickListener()
+	self._btnmopup:RemoveClickListener()
+	self:removeEventCb(TowerController.instance, TowerEvent.SelectPermanentEpisode, self.refreshUI, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.OnTowerResetSubEpisode, self.refreshUI, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.TowerMopUp, self.refreshTicket, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.DailyReresh, self.refreshTicket, self)
 end
 
-function var_0_0._btnenemyInfoOnClick(arg_4_0)
-	EnemyInfoController.instance:openEnemyInfoViewByBattleId(arg_4_0.episodeCo.battleId)
+function TowerPermanentInfoView:_btnenemyInfoOnClick()
+	EnemyInfoController.instance:openEnemyInfoViewByBattleId(self.episodeCo.battleId)
 end
 
-function var_0_0._btnresetOnClick(arg_5_0)
-	GameFacade.showMessageBox(MessageBoxIdDefine.TowerResetPermanentEpisode, MsgBoxEnum.BoxType.Yes_No, arg_5_0.sendTowerResetSubEpisodeRequest, nil, nil, arg_5_0)
+function TowerPermanentInfoView:_btnresetOnClick()
+	GameFacade.showMessageBox(MessageBoxIdDefine.TowerResetPermanentEpisode, MsgBoxEnum.BoxType.Yes_No, self.sendTowerResetSubEpisodeRequest, nil, nil, self)
 end
 
-function var_0_0.sendTowerResetSubEpisodeRequest(arg_6_0)
-	TowerRpc.instance:sendTowerResetSubEpisodeRequest(TowerEnum.TowerType.Normal, TowerEnum.PermanentTowerId, arg_6_0.layerConfig.layerId, arg_6_0.curSelectEpisodeId)
+function TowerPermanentInfoView:sendTowerResetSubEpisodeRequest()
+	TowerRpc.instance:sendTowerResetSubEpisodeRequest(TowerEnum.TowerType.Normal, TowerEnum.PermanentTowerId, self.layerConfig.layerId, self.curSelectEpisodeId)
 end
 
-function var_0_0._btnfightOnClick(arg_7_0)
-	if not arg_7_0.layerConfig then
+function TowerPermanentInfoView:_btnfightOnClick()
+	if not self.layerConfig then
 		return
 	end
 
-	if not TowerPermanentModel.instance:checkLayerUnlock(arg_7_0.layerConfig) then
+	local isLayerUnlock = TowerPermanentModel.instance:checkLayerUnlock(self.layerConfig)
+
+	if not isLayerUnlock then
 		return
 	end
 
-	local var_7_0 = {
-		towerType = TowerEnum.TowerType.Normal,
-		towerId = TowerEnum.PermanentTowerId,
-		layerId = arg_7_0.layerConfig.layerId,
-		episodeId = arg_7_0.curSelectEpisodeId
-	}
+	local param = {}
 
-	TowerController.instance:enterFight(var_7_0)
+	param.towerType = TowerEnum.TowerType.Normal
+	param.towerId = TowerEnum.PermanentTowerId
+	param.layerId = self.layerConfig.layerId
+	param.episodeId = self.curSelectEpisodeId
+
+	TowerController.instance:enterFight(param)
 end
 
-function var_0_0._btnticketOnClick(arg_8_0)
-	local var_8_0 = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.MopUpTicketIcon)
+function TowerPermanentInfoView:_btnticketOnClick()
+	local ticketId = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.MopUpTicketIcon)
 end
 
-function var_0_0._btnmopupOnClick(arg_9_0)
+function TowerPermanentInfoView:_btnmopupOnClick()
 	TowerController.instance:openTowerMopUpView()
 end
 
-function var_0_0._editableInitView(arg_10_0)
-	arg_10_0.simageHeroGroupTab = arg_10_0:getUserDataTb_()
-	arg_10_0._animEventWrap = arg_10_0.viewGO:GetComponent(typeof(ZProj.AnimationEventWrap))
+function TowerPermanentInfoView:_editableInitView()
+	self.simageHeroGroupTab = self:getUserDataTb_()
+	self._animEventWrap = self.viewGO:GetComponent(typeof(ZProj.AnimationEventWrap))
 
-	arg_10_0._animEventWrap:AddEventListener("switchright", arg_10_0.refreshUI, arg_10_0)
+	self._animEventWrap:AddEventListener("switchright", self.refreshUI, self)
 end
 
-function var_0_0.onUpdateParam(arg_11_0)
+function TowerPermanentInfoView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_12_0)
-	RedDotController.instance:addRedDot(arg_12_0._goMopUpReddot, RedDotEnum.DotNode.TowerMopUp)
-	arg_12_0:refreshUI()
-	arg_12_0:refreshTicket()
+function TowerPermanentInfoView:onOpen()
+	RedDotController.instance:addRedDot(self._goMopUpReddot, RedDotEnum.DotNode.TowerMopUp)
+	self:refreshUI()
+	self:refreshTicket()
 end
 
-function var_0_0.refreshUI(arg_13_0)
-	arg_13_0.permanentTowerMo = TowerModel.instance:getCurPermanentMo()
-	arg_13_0.isDeepLayerUnlock = TowerPermanentDeepModel.instance:checkDeepLayerUnlock()
-	arg_13_0.isEnterDeepGuideFinish = TowerPermanentDeepModel.instance:checkEnterDeepLayerGuideFinish()
-	arg_13_0.isInDeepLayer = TowerPermanentDeepModel.instance:getIsInDeepLayerState()
-	arg_13_0.canShowDeep = arg_13_0.isDeepLayerUnlock and arg_13_0.isEnterDeepGuideFinish and arg_13_0.isInDeepLayer
+function TowerPermanentInfoView:refreshUI()
+	self.permanentTowerMo = TowerModel.instance:getCurPermanentMo()
+	self.isDeepLayerUnlock = TowerPermanentDeepModel.instance:checkDeepLayerUnlock()
+	self.isEnterDeepGuideFinish = TowerPermanentDeepModel.instance:checkEnterDeepLayerGuideFinish()
+	self.isInDeepLayer = TowerPermanentDeepModel.instance:getIsInDeepLayerState()
+	self.canShowDeep = self.isDeepLayerUnlock and self.isEnterDeepGuideFinish and self.isInDeepLayer
 
-	if arg_13_0.canShowDeep then
+	if self.canShowDeep then
 		return
 	end
 
-	arg_13_0.curSelectEpisodeId = TowerPermanentModel.instance:getCurSelectEpisodeId()
+	self.curSelectEpisodeId = TowerPermanentModel.instance:getCurSelectEpisodeId()
 
-	local var_13_0, var_13_1 = TowerPermanentModel.instance:getRealSelectStage()
+	local realSelectStage, realSelectLayerIndex = TowerPermanentModel.instance:getRealSelectStage()
 
-	arg_13_0.layerConfig = TowerConfig.instance:getPermanentEpisodeLayerCo(var_13_0, var_13_1)
-	arg_13_0.episodeCo = lua_episode.configDict[arg_13_0.curSelectEpisodeId]
+	self.layerConfig = TowerConfig.instance:getPermanentEpisodeLayerCo(realSelectStage, realSelectLayerIndex)
+	self.episodeCo = lua_episode.configDict[self.curSelectEpisodeId]
 
-	DungeonModel.instance:SetSendChapterEpisodeId(arg_13_0.episodeCo.chapterId, arg_13_0.episodeCo.id)
+	DungeonModel.instance:SetSendChapterEpisodeId(self.episodeCo.chapterId, self.episodeCo.id)
 
-	arg_13_0.isElite = arg_13_0.layerConfig.isElite == 1
-	arg_13_0._txtepisode.text = "ST - " .. var_13_1
-	arg_13_0._txtname.text = GameUtil.setFirstStrSize(arg_13_0.episodeCo.name, 90)
-	arg_13_0._txtTitleEn.text = arg_13_0.episodeCo.name_En
-	arg_13_0._txtdesc.text = arg_13_0.episodeCo.desc
+	self.isElite = self.layerConfig.isElite == 1
+	self._txtepisode.text = "ST - " .. realSelectLayerIndex
+	self._txtname.text = GameUtil.setFirstStrSize(self.episodeCo.name, 90)
+	self._txtTitleEn.text = self.episodeCo.name_En
+	self._txtdesc.text = self.episodeCo.desc
 
-	local var_13_2, var_13_3 = TowerPermanentModel.instance:checkLayerSubEpisodeFinish(arg_13_0.layerConfig.layerId, arg_13_0.curSelectEpisodeId)
-	local var_13_4 = arg_13_0.layerConfig.layerId <= arg_13_0.permanentTowerMo.passLayerId
-	local var_13_5 = TowerPermanentModel.instance:checkLayerUnlock(arg_13_0.layerConfig)
+	local isEpisodeFinish, subEpisodeMo = TowerPermanentModel.instance:checkLayerSubEpisodeFinish(self.layerConfig.layerId, self.curSelectEpisodeId)
+	local isPassLayer = self.layerConfig.layerId <= self.permanentTowerMo.passLayerId
+	local isLayerUnlock = TowerPermanentModel.instance:checkLayerUnlock(self.layerConfig)
 
-	gohelper.setActive(arg_13_0._golock, not var_13_5)
-	gohelper.setActive(arg_13_0._gorestart, var_13_4 and var_13_5 and not arg_13_0.isElite)
-	gohelper.setActive(arg_13_0._gostart, not var_13_4 and var_13_5 and not arg_13_0.isElite)
-	gohelper.setActive(arg_13_0._gorestartElite, var_13_2 and var_13_5 and arg_13_0.isElite)
-	gohelper.setActive(arg_13_0._gostartElite, not var_13_2 and var_13_5 and arg_13_0.isElite)
-	gohelper.setActive(arg_13_0._gocurherogroup, var_13_2 and var_13_3 and #var_13_3.heroIds > 0)
-	gohelper.setActive(arg_13_0._btnreset.gameObject, var_13_2 and var_13_3 and #var_13_3.heroIds > 0)
+	gohelper.setActive(self._golock, not isLayerUnlock)
+	gohelper.setActive(self._gorestart, isPassLayer and isLayerUnlock and not self.isElite)
+	gohelper.setActive(self._gostart, not isPassLayer and isLayerUnlock and not self.isElite)
+	gohelper.setActive(self._gorestartElite, isEpisodeFinish and isLayerUnlock and self.isElite)
+	gohelper.setActive(self._gostartElite, not isEpisodeFinish and isLayerUnlock and self.isElite)
+	gohelper.setActive(self._gocurherogroup, isEpisodeFinish and subEpisodeMo and #subEpisodeMo.heroIds > 0)
+	gohelper.setActive(self._btnreset.gameObject, isEpisodeFinish and subEpisodeMo and #subEpisodeMo.heroIds > 0)
 
-	if var_13_3 then
-		local var_13_6 = {}
-		local var_13_7 = var_13_3.assistBossId
+	if subEpisodeMo then
+		local heroGroupDataList = {}
+		local assistBossId = subEpisodeMo.assistBossId
 
-		if var_13_7 > 0 then
-			table.insert(var_13_6, {
+		if assistBossId > 0 then
+			table.insert(heroGroupDataList, {
 				isAssistBoss = true,
-				id = var_13_7
+				id = assistBossId
 			})
 		end
 
-		for iter_13_0, iter_13_1 in ipairs(var_13_3.heroIds) do
-			table.insert(var_13_6, {
-				id = iter_13_1
+		for index, heroId in ipairs(subEpisodeMo.heroIds) do
+			table.insert(heroGroupDataList, {
+				id = heroId
 			})
 		end
 
-		gohelper.CreateObjList(arg_13_0, arg_13_0.showHeroGroupItem, var_13_6, arg_13_0._gocurherogroup, arg_13_0._goherogroupItem)
+		gohelper.CreateObjList(self, self.showHeroGroupItem, heroGroupDataList, self._gocurherogroup, self._goherogroupItem)
 	end
 
-	local var_13_8 = FightModel.instance:getFightParam()
+	local fightParam = FightModel.instance:getFightParam()
 
-	if var_13_8 then
-		var_13_8:setEpisodeId(arg_13_0.episodeCo.id)
+	if fightParam then
+		fightParam:setEpisodeId(self.episodeCo.id)
 	end
 
-	arg_13_0:refreshRecommend()
+	self:refreshRecommend()
 end
 
-function var_0_0.showHeroGroupItem(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	local var_14_0 = gohelper.findChild(arg_14_1, "go_herogItem")
-	local var_14_1 = gohelper.findChild(arg_14_1, "go_bossItem")
-	local var_14_2 = gohelper.findChildSingleImage(var_14_0, "simage_hero")
-	local var_14_3 = gohelper.findChildSingleImage(var_14_1, "simage_enemy")
-	local var_14_4 = {
-		var_14_2,
-		var_14_3
+function TowerPermanentInfoView:showHeroGroupItem(obj, data, index)
+	local goHeroItem = gohelper.findChild(obj, "go_herogItem")
+	local goBossItem = gohelper.findChild(obj, "go_bossItem")
+	local simageHeroIcon = gohelper.findChildSingleImage(goHeroItem, "simage_hero")
+	local simageBossIcon = gohelper.findChildSingleImage(goBossItem, "simage_enemy")
+	local simageIconList = {
+		simageHeroIcon,
+		simageBossIcon
 	}
 
-	gohelper.setActive(var_14_0, not arg_14_2.isAssistBoss)
-	gohelper.setActive(var_14_1, arg_14_2.isAssistBoss)
+	gohelper.setActive(goHeroItem, not data.isAssistBoss)
+	gohelper.setActive(goBossItem, data.isAssistBoss)
 
-	if arg_14_2.isAssistBoss then
-		local var_14_5 = TowerConfig.instance:getAssistBossConfig(arg_14_2.id)
-		local var_14_6 = FightConfig.instance:getSkinCO(var_14_5.skinId)
+	if data.isAssistBoss then
+		local assistBossConfig = TowerConfig.instance:getAssistBossConfig(data.id)
+		local skinConfig = FightConfig.instance:getSkinCO(assistBossConfig.skinId)
 
-		var_14_3:LoadImage(ResUrl.monsterHeadIcon(var_14_6.headIcon))
+		simageBossIcon:LoadImage(ResUrl.monsterHeadIcon(skinConfig.headIcon))
 	else
-		local var_14_7 = HeroModel.instance:getByHeroId(arg_14_2.id)
-		local var_14_8 = {}
+		local heroMO = HeroModel.instance:getByHeroId(data.id)
+		local skinConfig = {}
 
-		if not var_14_7 then
-			local var_14_9 = HeroConfig.instance:getHeroCO(arg_14_2.id)
+		if not heroMO then
+			local heroCo = HeroConfig.instance:getHeroCO(data.id)
 
-			var_14_8 = SkinConfig.instance:getSkinCo(var_14_9.skinId)
+			skinConfig = SkinConfig.instance:getSkinCo(heroCo.skinId)
 		else
-			var_14_8 = FightConfig.instance:getSkinCO(var_14_7.skin)
+			skinConfig = FightConfig.instance:getSkinCO(heroMO.skin)
 		end
 
-		var_14_2:LoadImage(ResUrl.getHeadIconSmall(var_14_8.retangleIcon))
+		simageHeroIcon:LoadImage(ResUrl.getHeadIconSmall(skinConfig.retangleIcon))
 	end
 
-	arg_14_0.simageHeroGroupTab[arg_14_3] = var_14_4
+	self.simageHeroGroupTab[index] = simageIconList
 end
 
-function var_0_0.refreshRecommend(arg_15_0)
-	local var_15_0 = FightHelper.getBattleRecommendLevel(arg_15_0.episodeCo.battleId)
+function TowerPermanentInfoView:refreshRecommend()
+	local recommendLevel = FightHelper.getBattleRecommendLevel(self.episodeCo.battleId)
 
-	arg_15_0._txtrecommendLevel.text = var_15_0 >= 0 and HeroConfig.instance:getLevelDisplayVariant(var_15_0) or ""
+	self._txtrecommendLevel.text = recommendLevel >= 0 and HeroConfig.instance:getLevelDisplayVariant(recommendLevel) or ""
 
-	local var_15_1, var_15_2 = TowerController.instance:getRecommendList(arg_15_0.episodeCo.battleId)
+	local recommended, counter = TowerController.instance:getRecommendList(self.episodeCo.battleId)
 
-	gohelper.CreateObjList(arg_15_0, arg_15_0._onRecommendCareerItemShow, var_15_1, gohelper.findChild(arg_15_0._gorecommendAttr.gameObject, "attrlist"), arg_15_0._goattritem)
+	gohelper.CreateObjList(self, self._onRecommendCareerItemShow, recommended, gohelper.findChild(self._gorecommendAttr.gameObject, "attrlist"), self._goattritem)
 
-	arg_15_0._txtrecommonddes.text = #var_15_1 == 0 and luaLang("new_common_none") or ""
+	self._txtrecommonddes.text = #recommended == 0 and luaLang("new_common_none") or ""
 end
 
-function var_0_0._onRecommendCareerItemShow(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
-	local var_16_0 = gohelper.findChildImage(arg_16_1, "icon")
+function TowerPermanentInfoView:_onRecommendCareerItemShow(obj, data, index)
+	local icon = gohelper.findChildImage(obj, "icon")
 
-	UISpriteSetMgr.instance:setHeroGroupSprite(var_16_0, "career_" .. arg_16_2)
+	UISpriteSetMgr.instance:setHeroGroupSprite(icon, "career_" .. data)
 end
 
-function var_0_0.refreshTicket(arg_17_0)
-	local var_17_0 = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.MopUpOpenLayerNum)
-	local var_17_1 = arg_17_0.permanentTowerMo.passLayerId >= tonumber(var_17_0)
+function TowerPermanentInfoView:refreshTicket()
+	local mopUpOpenLayerNum = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.MopUpOpenLayerNum)
+	local isOpenMopUp = self.permanentTowerMo.passLayerId >= tonumber(mopUpOpenLayerNum)
 
-	gohelper.setActive(arg_17_0._gomopup, var_17_1)
+	gohelper.setActive(self._gomopup, isOpenMopUp)
 
-	if not var_17_1 then
+	if not isOpenMopUp then
 		return
 	end
 
-	local var_17_2 = TowerModel.instance:getMopUpTimes()
-	local var_17_3 = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.MaxMopUpTimes)
+	local curMopUpTimes = TowerModel.instance:getMopUpTimes()
+	local maxMopUpTimes = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.MaxMopUpTimes)
 
-	arg_17_0._txtticketNum.text = string.format("%s/%s", var_17_2, var_17_3)
+	self._txtticketNum.text = string.format("%s/%s", curMopUpTimes, maxMopUpTimes)
 
-	local var_17_4 = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.MopUpTicketIcon)
+	local ticketId = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.MopUpTicketIcon)
 
-	UISpriteSetMgr.instance:setCurrencyItemSprite(arg_17_0._imageticket, var_17_4 .. "_1", true)
+	UISpriteSetMgr.instance:setCurrencyItemSprite(self._imageticket, ticketId .. "_1", true)
 end
 
-function var_0_0.onClose(arg_18_0)
+function TowerPermanentInfoView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_19_0)
-	for iter_19_0, iter_19_1 in pairs(arg_19_0.simageHeroGroupTab) do
-		for iter_19_2, iter_19_3 in pairs(iter_19_1) do
-			iter_19_3:UnLoadImage()
+function TowerPermanentInfoView:onDestroyView()
+	for _, simageHeroGroupList in pairs(self.simageHeroGroupTab) do
+		for index, simageHeroGroup in pairs(simageHeroGroupList) do
+			simageHeroGroup:UnLoadImage()
 		end
 	end
 
-	arg_19_0._animEventWrap:RemoveAllEventListener()
+	self._animEventWrap:RemoveAllEventListener()
 end
 
-return var_0_0
+return TowerPermanentInfoView

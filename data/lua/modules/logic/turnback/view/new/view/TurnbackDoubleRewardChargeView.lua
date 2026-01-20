@@ -1,102 +1,104 @@
-﻿module("modules.logic.turnback.view.new.view.TurnbackDoubleRewardChargeView", package.seeall)
+﻿-- chunkname: @modules/logic/turnback/view/new/view/TurnbackDoubleRewardChargeView.lua
 
-local var_0_0 = class("TurnbackDoubleRewardChargeView", BaseView)
+module("modules.logic.turnback.view.new.view.TurnbackDoubleRewardChargeView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._btnbgclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "close")
-	arg_1_0._btnbuy = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "content/#btn_buy")
-	arg_1_0._txtcost = gohelper.findChildText(arg_1_0.viewGO, "content/#btn_buy/#txt_cost")
-	arg_1_0._golockreward = gohelper.findChild(arg_1_0.viewGO, "content/lockreward/reward")
-	arg_1_0._gounlockreward1 = gohelper.findChild(arg_1_0.viewGO, "content/unlockreward/reward1")
-	arg_1_0._gounlockreward2 = gohelper.findChild(arg_1_0.viewGO, "content/unlockreward/reward2")
-	arg_1_0._contentanim = gohelper.findChild(arg_1_0.viewGO, "content"):GetComponent(typeof(UnityEngine.Animator))
+local TurnbackDoubleRewardChargeView = class("TurnbackDoubleRewardChargeView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function TurnbackDoubleRewardChargeView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._btnbgclose = gohelper.findChildButtonWithAudio(self.viewGO, "close")
+	self._btnbuy = gohelper.findChildButtonWithAudio(self.viewGO, "content/#btn_buy")
+	self._txtcost = gohelper.findChildText(self.viewGO, "content/#btn_buy/#txt_cost")
+	self._golockreward = gohelper.findChild(self.viewGO, "content/lockreward/reward")
+	self._gounlockreward1 = gohelper.findChild(self.viewGO, "content/unlockreward/reward1")
+	self._gounlockreward2 = gohelper.findChild(self.viewGO, "content/unlockreward/reward2")
+	self._contentanim = gohelper.findChild(self.viewGO, "content"):GetComponent(typeof(UnityEngine.Animator))
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btnclsoeOnClick, arg_2_0)
-	arg_2_0._btnbgclose:AddClickListener(arg_2_0._btnclsoeOnClick, arg_2_0)
-	arg_2_0._btnbuy:AddClickListener(arg_2_0._btnbuyOnClick, arg_2_0)
-	arg_2_0:addEventCb(TurnbackController.instance, TurnbackEvent.AfterBuyDoubleReward, arg_2_0.succbuydoublereward, arg_2_0)
+function TurnbackDoubleRewardChargeView:addEvents()
+	self._btnclose:AddClickListener(self._btnclsoeOnClick, self)
+	self._btnbgclose:AddClickListener(self._btnclsoeOnClick, self)
+	self._btnbuy:AddClickListener(self._btnbuyOnClick, self)
+	self:addEventCb(TurnbackController.instance, TurnbackEvent.AfterBuyDoubleReward, self.succbuydoublereward, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnbgclose:RemoveClickListener()
-	arg_3_0._btnbuy:RemoveClickListener()
-	arg_3_0:removeEventCb(TurnbackController.instance, TurnbackEvent.AfterBuyDoubleReward, arg_3_0.succbuydoublereward, arg_3_0)
+function TurnbackDoubleRewardChargeView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btnbgclose:RemoveClickListener()
+	self._btnbuy:RemoveClickListener()
+	self:removeEventCb(TurnbackController.instance, TurnbackEvent.AfterBuyDoubleReward, self.succbuydoublereward, self)
 end
 
-function var_0_0._btnbuyOnClick(arg_4_0)
-	local var_4_0 = TurnbackModel.instance:getCurTurnbackId()
+function TurnbackDoubleRewardChargeView:_btnbuyOnClick()
+	local turnbackId = TurnbackModel.instance:getCurTurnbackId()
 
-	TurnbackRpc.instance:sendBuyDoubleBonusRequest(var_4_0)
+	TurnbackRpc.instance:sendBuyDoubleBonusRequest(turnbackId)
 end
 
-function var_0_0.succbuydoublereward(arg_5_0)
-	arg_5_0._contentanim:Play("unlock")
-	TaskDispatcher.runDelay(arg_5_0.afterAnim, arg_5_0, 0.8)
+function TurnbackDoubleRewardChargeView:succbuydoublereward()
+	self._contentanim:Play("unlock")
+	TaskDispatcher.runDelay(self.afterAnim, self, 0.8)
 end
 
-function var_0_0.afterAnim(arg_6_0)
-	arg_6_0:closeThis()
+function TurnbackDoubleRewardChargeView:afterAnim()
+	self:closeThis()
 end
 
-function var_0_0._btnclsoeOnClick(arg_7_0)
-	arg_7_0:closeThis()
+function TurnbackDoubleRewardChargeView:_btnclsoeOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0.rewardList = {}
+function TurnbackDoubleRewardChargeView:_editableInitView()
+	self.rewardList = {}
 
-	arg_8_0:getRewardIcon(arg_8_0._golockreward)
-	arg_8_0:getRewardIcon(arg_8_0._gounlockreward1)
-	arg_8_0:getRewardIcon(arg_8_0._gounlockreward2)
+	self:getRewardIcon(self._golockreward)
+	self:getRewardIcon(self._gounlockreward1)
+	self:getRewardIcon(self._gounlockreward2)
 end
 
-function var_0_0.getRewardIcon(arg_9_0, arg_9_1)
-	local var_9_0 = {}
+function TurnbackDoubleRewardChargeView:getRewardIcon(contentgo)
+	local list = {}
 
-	for iter_9_0 = 1, 4 do
-		local var_9_1 = gohelper.findChild(arg_9_1, "icon" .. iter_9_0)
+	for i = 1, 4 do
+		local icon = gohelper.findChild(contentgo, "icon" .. i)
 
-		table.insert(var_9_0, var_9_1)
+		table.insert(list, icon)
 	end
 
-	table.insert(arg_9_0.rewardList, var_9_0)
+	table.insert(self.rewardList, list)
 end
 
-function var_0_0.onUpdateParam(arg_10_0)
+function TurnbackDoubleRewardChargeView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_11_0)
-	local var_11_0 = TurnbackModel.instance:getAllBonus()
+function TurnbackDoubleRewardChargeView:onOpen()
+	local rewardList = TurnbackModel.instance:getAllBonus()
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0.rewardList) do
-		for iter_11_2, iter_11_3 in ipairs(var_11_0) do
-			local var_11_1 = arg_11_0:getUserDataTb_()
+	for _, iconList in ipairs(self.rewardList) do
+		for index, rewardco in ipairs(rewardList) do
+			local rewardItem = self:getUserDataTb_()
 
-			if not var_11_1.itemIcon then
-				var_11_1.itemIcon = IconMgr.instance:getCommonPropItemIcon(iter_11_1[iter_11_2])
+			if not rewardItem.itemIcon then
+				rewardItem.itemIcon = IconMgr.instance:getCommonPropItemIcon(iconList[index])
 			end
 
-			var_11_1.itemIcon:setMOValue(iter_11_3[1], iter_11_3[2], iter_11_3[3], nil, true)
-			var_11_1.itemIcon:setCountFontSize(30)
+			rewardItem.itemIcon:setMOValue(rewardco[1], rewardco[2], rewardco[3], nil, true)
+			rewardItem.itemIcon:setCountFontSize(30)
 		end
 	end
 end
 
-function var_0_0.onClose(arg_12_0)
+function TurnbackDoubleRewardChargeView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_13_0)
+function TurnbackDoubleRewardChargeView:onDestroyView()
 	return
 end
 
-return var_0_0
+return TurnbackDoubleRewardChargeView

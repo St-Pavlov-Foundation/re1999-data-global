@@ -1,19 +1,21 @@
-﻿module("modules.logic.versionactivity2_7.enter.view.VersionActivity2_7EnterBgmView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/enter/view/VersionActivity2_7EnterBgmView.lua
 
-local var_0_0 = class("VersionActivity2_7EnterBgmView", VersionActivityFixedEnterBgmView)
+module("modules.logic.versionactivity2_7.enter.view.VersionActivity2_7EnterBgmView", package.seeall)
 
-function var_0_0.initActHandle(arg_1_0)
-	if not arg_1_0.actHandleDict then
-		arg_1_0.actHandleDict = {
-			[BossRushConfig.instance:getActivityId()] = arg_1_0._bossrushBgmHandle,
-			[VersionActivity2_7Enum.ActivityId.Reactivity] = arg_1_0._reactivityBgmHandle
+local VersionActivity2_7EnterBgmView = class("VersionActivity2_7EnterBgmView", VersionActivityFixedEnterBgmView)
+
+function VersionActivity2_7EnterBgmView:initActHandle()
+	if not self.actHandleDict then
+		self.actHandleDict = {
+			[BossRushConfig.instance:getActivityId()] = self._bossrushBgmHandle,
+			[VersionActivity2_7Enum.ActivityId.Reactivity] = self._reactivityBgmHandle
 		}
 	end
 end
 
-function var_0_0.defaultBgmHandle(arg_2_0, arg_2_1)
-	var_0_0.super.defaultBgmHandle(arg_2_0, arg_2_1)
-	VersionActivityFixedDungeonController.instance:dispatchEvent(VersionActivityFixedDungeonEvent.SwitchBGM, arg_2_1)
+function VersionActivity2_7EnterBgmView:defaultBgmHandle(actId)
+	VersionActivity2_7EnterBgmView.super.defaultBgmHandle(self, actId)
+	VersionActivityFixedDungeonController.instance:dispatchEvent(VersionActivityFixedDungeonEvent.SwitchBGM, actId)
 end
 
-return var_0_0
+return VersionActivity2_7EnterBgmView

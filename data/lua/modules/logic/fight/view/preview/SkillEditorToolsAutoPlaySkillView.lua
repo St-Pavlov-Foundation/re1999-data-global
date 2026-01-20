@@ -1,361 +1,369 @@
-﻿module("modules.logic.fight.view.preview.SkillEditorToolsAutoPlaySkillView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/preview/SkillEditorToolsAutoPlaySkillView.lua
 
-local var_0_0 = class("SkillEditorToolsAutoPlaySkillView", BaseViewExtended)
+module("modules.logic.fight.view.preview.SkillEditorToolsAutoPlaySkillView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._go = gohelper.findChild(arg_1_0.viewGO, "autoPlaySkill")
-	arg_1_0._goHuazhi = gohelper.findChild(arg_1_0.viewGO, "autoPlaySkill/huazhi")
-	arg_1_0._inp = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "autoPlaySkill/inp")
-	arg_1_0._goHuazhiItem = gohelper.findChild(arg_1_0.viewGO, "autoPlaySkill/huazhi/item")
-	arg_1_0._btnPlay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "autoPlaySkill/play")
-	arg_1_0._btnSelectAll = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "autoPlaySkill/selectAll")
-	arg_1_0._btnCancelAll = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "autoPlaySkill/cancel")
-	arg_1_0._btnclean = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "autoPlaySkill/clean")
-	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "autoPlaySkill/close")
-	arg_1_0._scrollView = gohelper.findChildScrollRect(arg_1_0.viewGO, "autoPlaySkill/scroll")
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "autoPlaySkill/scroll/Content")
-	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "autoPlaySkill/scroll/Content/item")
-	arg_1_0._selectScrollView = gohelper.findChildScrollRect(arg_1_0.viewGO, "autoPlaySkill/selectScroll")
-	arg_1_0._goselectcontent = gohelper.findChild(arg_1_0.viewGO, "autoPlaySkill/selectScroll/Content")
-	arg_1_0._goselectitem = gohelper.findChild(arg_1_0.viewGO, "autoPlaySkill/selectScroll/Content/item")
-	arg_1_0._btnlist = {}
-	arg_1_0._actionViewGO = gohelper.findChild(arg_1_0.viewGO, "autoPlaySkill/selectSkin")
-	arg_1_0._itemGOParent = gohelper.findChild(arg_1_0.viewGO, "autoPlaySkill/selectSkin/scroll/content")
-	arg_1_0._itemGOPrefab = gohelper.findChild(arg_1_0.viewGO, "autoPlaySkill/selectSkin/scroll/item")
+local SkillEditorToolsAutoPlaySkillView = class("SkillEditorToolsAutoPlaySkillView", BaseViewExtended)
+
+function SkillEditorToolsAutoPlaySkillView:onInitView()
+	self._go = gohelper.findChild(self.viewGO, "autoPlaySkill")
+	self._goHuazhi = gohelper.findChild(self.viewGO, "autoPlaySkill/huazhi")
+	self._inp = gohelper.findChildTextMeshInputField(self.viewGO, "autoPlaySkill/inp")
+	self._goHuazhiItem = gohelper.findChild(self.viewGO, "autoPlaySkill/huazhi/item")
+	self._btnPlay = gohelper.findChildButtonWithAudio(self.viewGO, "autoPlaySkill/play")
+	self._btnSelectAll = gohelper.findChildButtonWithAudio(self.viewGO, "autoPlaySkill/selectAll")
+	self._btnCancelAll = gohelper.findChildButtonWithAudio(self.viewGO, "autoPlaySkill/cancel")
+	self._btnclean = gohelper.findChildButtonWithAudio(self.viewGO, "autoPlaySkill/clean")
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "autoPlaySkill/close")
+	self._scrollView = gohelper.findChildScrollRect(self.viewGO, "autoPlaySkill/scroll")
+	self._gocontent = gohelper.findChild(self.viewGO, "autoPlaySkill/scroll/Content")
+	self._goitem = gohelper.findChild(self.viewGO, "autoPlaySkill/scroll/Content/item")
+	self._selectScrollView = gohelper.findChildScrollRect(self.viewGO, "autoPlaySkill/selectScroll")
+	self._goselectcontent = gohelper.findChild(self.viewGO, "autoPlaySkill/selectScroll/Content")
+	self._goselectitem = gohelper.findChild(self.viewGO, "autoPlaySkill/selectScroll/Content/item")
+	self._btnlist = {}
+	self._actionViewGO = gohelper.findChild(self.viewGO, "autoPlaySkill/selectSkin")
+	self._itemGOParent = gohelper.findChild(self.viewGO, "autoPlaySkill/selectSkin/scroll/content")
+	self._itemGOPrefab = gohelper.findChild(self.viewGO, "autoPlaySkill/selectSkin/scroll/item")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._inp:AddOnValueChanged(arg_2_0._onInpValueChanged, arg_2_0)
-	arg_2_0._btnSelectAll:AddClickListener(arg_2_0._onClickSelectAll, arg_2_0)
-	arg_2_0._btnCancelAll:AddClickListener(arg_2_0._onClickCancelAll, arg_2_0)
-	arg_2_0._btnPlay:AddClickListener(arg_2_0._playTimeline, arg_2_0)
-	arg_2_0._btnclean:AddClickListener(arg_2_0._onClickClean, arg_2_0)
-	arg_2_0._btnClose:AddClickListener(arg_2_0._closeview, arg_2_0)
-	SkillEditorMgr.instance:registerCallback(SkillEditorMgr._StopAutoPlayFlow2, arg_2_0._stopFlow, arg_2_0)
-	SkillEditorMgr.instance:registerCallback(SkillEditorMgr._OpenAutoPlaySkin, arg_2_0._showSelectSkin, arg_2_0)
-	SLFramework.UGUI.UIClickListener.Get(arg_2_0._actionViewGO):AddClickListener(arg_2_0._hideSelectSkinView, arg_2_0)
+function SkillEditorToolsAutoPlaySkillView:addEvents()
+	self._inp:AddOnValueChanged(self._onInpValueChanged, self)
+	self._btnSelectAll:AddClickListener(self._onClickSelectAll, self)
+	self._btnCancelAll:AddClickListener(self._onClickCancelAll, self)
+	self._btnPlay:AddClickListener(self._playTimeline, self)
+	self._btnclean:AddClickListener(self._onClickClean, self)
+	self._btnClose:AddClickListener(self._closeview, self)
+	SkillEditorMgr.instance:registerCallback(SkillEditorMgr._StopAutoPlayFlow2, self._stopFlow, self)
+	SkillEditorMgr.instance:registerCallback(SkillEditorMgr._OpenAutoPlaySkin, self._showSelectSkin, self)
+	SLFramework.UGUI.UIClickListener.Get(self._actionViewGO):AddClickListener(self._hideSelectSkinView, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._inp:RemoveOnValueChanged()
-	arg_3_0._btnSelectAll:RemoveClickListener()
-	arg_3_0._btnPlay:RemoveClickListener()
-	arg_3_0._btnclean:RemoveClickListener()
-	arg_3_0._btnCancelAll:RemoveClickListener()
-	arg_3_0._btnClose:RemoveClickListener()
+function SkillEditorToolsAutoPlaySkillView:removeEvents()
+	self._inp:RemoveOnValueChanged()
+	self._btnSelectAll:RemoveClickListener()
+	self._btnPlay:RemoveClickListener()
+	self._btnclean:RemoveClickListener()
+	self._btnCancelAll:RemoveClickListener()
+	self._btnClose:RemoveClickListener()
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0._btnlist) do
-		iter_3_1:RemoveClickListener()
+	for index, click in ipairs(self._btnlist) do
+		click:RemoveClickListener()
 	end
 
-	SkillEditorMgr.instance:unregisterCallback(SkillEditorMgr._StopAutoPlayFlow2, arg_3_0._stopFlow, arg_3_0)
-	SkillEditorMgr.instance:unregisterCallback(SkillEditorMgr._OpenAutoPlaySkin, arg_3_0._showSelectSkin, arg_3_0)
-	SLFramework.UGUI.UIClickListener.Get(arg_3_0._actionViewGO):RemoveClickListener()
+	SkillEditorMgr.instance:unregisterCallback(SkillEditorMgr._StopAutoPlayFlow2, self._stopFlow, self)
+	SkillEditorMgr.instance:unregisterCallback(SkillEditorMgr._OpenAutoPlaySkin, self._showSelectSkin, self)
+	SLFramework.UGUI.UIClickListener.Get(self._actionViewGO):RemoveClickListener()
 end
 
-function var_0_0._playTimeline(arg_4_0)
-	arg_4_0._count = 0
+function SkillEditorToolsAutoPlaySkillView:_playTimeline()
+	self._count = 0
 
-	local var_4_0 = SkillEditorToolAutoPlaySkillSelectModel.instance:getList()
+	local list = SkillEditorToolAutoPlaySkillSelectModel.instance:getList()
 
-	arg_4_0.flow = FlowSequence.New()
+	self.flow = FlowSequence.New()
 
-	arg_4_0.flow:addWork(FunctionWork.New(arg_4_0._closeview, arg_4_0))
+	self.flow:addWork(FunctionWork.New(self._closeview, self))
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_0) do
-		arg_4_0.flow:addWork(FunctionWork.New(arg_4_0.switchEntity, arg_4_0, iter_4_1))
-		arg_4_0.flow:addWork(FunctionWork.New(function()
-			local var_5_0
+	for index, mo in ipairs(list) do
+		self.flow:addWork(FunctionWork.New(self.switchEntity, self, mo))
+		self.flow:addWork(FunctionWork.New(function()
+			local name
 
-			if iter_4_1.type == SkillEditorMgr.SelectType.Group then
-				local var_5_1 = iter_4_1.co
-				local var_5_2 = string.splitToNumber(var_5_1.monster, "#")
-				local var_5_3 = lua_monster.configDict[var_5_2[1]]
+			if mo.type == SkillEditorMgr.SelectType.Group then
+				local co = mo.co
+				local monsterIds = string.splitToNumber(co.monster, "#")
+				local monsterCO = lua_monster.configDict[monsterIds[1]]
 
-				for iter_5_0 = 2, #var_5_2 do
-					if tabletool.indexOf(string.splitToNumber(var_5_1.bossId, "#"), var_5_2[iter_5_0]) then
-						var_5_3 = lua_monster.configDict[var_5_2[iter_5_0]]
+				for i = 2, #monsterIds do
+					if tabletool.indexOf(string.splitToNumber(co.bossId, "#"), monsterIds[i]) then
+						monsterCO = lua_monster.configDict[monsterIds[i]]
 
 						break
 					end
 				end
 
-				var_5_0 = var_5_3 and var_5_3.name
+				name = monsterCO and monsterCO.name
 			else
-				var_5_0 = iter_4_1.co.name
+				name = mo.co.name
 			end
 
-			local var_5_4 = iter_4_1.co.id .. "\n" .. string.format("当前角色\n%s\n剩余角色%s/%s", var_5_0, #var_4_0 - iter_4_0, #var_4_0)
+			local str = mo.co.id .. "\n" .. string.format("当前角色\n%s\n剩余角色%s/%s", name, #list - index, #list)
 
 			SkillEditorMgr.instance:dispatchEvent(SkillEditorMgr._onSwitchEnityOrSkill, {
-				rolestr = var_5_4
+				rolestr = str
 			})
-		end, arg_4_0))
-		arg_4_0.flow:addWork(SkillEditorPlayTimelineWork.New())
-		arg_4_0.flow:addWork(FunctionWork.New(function()
-			arg_4_0._count = arg_4_0._count + 1
-		end, arg_4_0))
+		end, self))
+		self.flow:addWork(SkillEditorPlayTimelineWork.New())
+		self.flow:addWork(FunctionWork.New(function()
+			self._count = self._count + 1
+		end, self))
 	end
 
-	arg_4_0.flow:addWork(FunctionWork.New(arg_4_0._checkSkillDone, arg_4_0, #var_4_0))
-	arg_4_0.flow:start()
+	self.flow:addWork(FunctionWork.New(self._checkSkillDone, self, #list))
+	self.flow:start()
 end
 
-function var_0_0._checkSkillDone(arg_7_0, arg_7_1)
-	if arg_7_0._count == arg_7_1 and arg_7_0.flow then
+function SkillEditorToolsAutoPlaySkillView:_checkSkillDone(count)
+	if self._count == count and self.flow then
 		SkillEditorMgr.instance:dispatchEvent(SkillEditorMgr._onSwitchEnityOrSkill)
-		arg_7_0.flow:onDone(true)
+		self.flow:onDone(true)
 	end
 end
 
-function var_0_0.switchEntity(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_1.type
-	local var_8_1 = FightEnum.EntitySide.MySide
-	local var_8_2 = SkillEditorHeroSelectModel.instance.stancePosId or 1
-	local var_8_3, var_8_4 = SkillEditorMgr.instance:getTypeInfo(var_8_1)
-	local var_8_5 = arg_8_1.co
-	local var_8_6 = arg_8_1.co.id
+function SkillEditorToolsAutoPlaySkillView:switchEntity(mo)
+	local selectType = mo.type
+	local side = FightEnum.EntitySide.MySide
+	local stancePosId = SkillEditorHeroSelectModel.instance.stancePosId or 1
+	local oldType, info = SkillEditorMgr.instance:getTypeInfo(side)
+	local co = mo.co
+	local newId = mo.co.id
 
-	if var_8_0 == SkillEditorMgr.SelectType.Group then
-		var_8_4.ids = {}
-		var_8_4.skinIds = {}
-		var_8_4.groupId = var_8_6
+	if selectType == SkillEditorMgr.SelectType.Group then
+		info.ids = {}
+		info.skinIds = {}
+		info.groupId = newId
 
-		local var_8_7 = lua_monster_group.configDict[var_8_6]
-		local var_8_8 = string.splitToNumber(var_8_7.monster, "#")
+		local monsterGroupCO = lua_monster_group.configDict[newId]
+		local monsterIds = string.splitToNumber(monsterGroupCO.monster, "#")
 
-		for iter_8_0, iter_8_1 in ipairs(var_8_8) do
-			local var_8_9 = lua_monster.configDict[iter_8_1]
+		for _, monsterId in ipairs(monsterIds) do
+			local monsterCO = lua_monster.configDict[monsterId]
 
-			if var_8_9 then
-				local var_8_10 = FightConfig.instance:getSkinCO(var_8_9.skinId)
+			if monsterCO then
+				local skinCO = FightConfig.instance:getSkinCO(monsterCO.skinId)
 
-				if not var_8_10 or string.nilorempty(var_8_10.spine) then
-					GameFacade.showToast(ToastEnum.SkillEditorHeroSelect, var_8_5.skinId or var_8_5.id)
+				if not skinCO or string.nilorempty(skinCO.spine) then
+					GameFacade.showToast(ToastEnum.SkillEditorHeroSelect, co.skinId or co.id)
 
 					return
 				end
 
-				table.insert(var_8_4.ids, iter_8_1)
-				table.insert(var_8_4.skinIds, var_8_9.skinId)
+				table.insert(info.ids, monsterId)
+				table.insert(info.skinIds, monsterCO.skinId)
 			end
 		end
 
-		arg_8_0:_onSelectStance(var_8_7.stanceId, true)
-	elseif var_8_0 == SkillEditorMgr.SelectType.SubHero then
-		SkillEditorMgr.instance:addSubHero(arg_8_1.co.id, arg_8_1.co.skinId)
+		self:_onSelectStance(monsterGroupCO.stanceId, true)
+	elseif selectType == SkillEditorMgr.SelectType.SubHero then
+		SkillEditorMgr.instance:addSubHero(mo.co.id, mo.co.skinId)
 
 		return
 	else
-		local var_8_11 = var_8_4.ids[1]
-		local var_8_12 = var_8_0 == SkillEditorMgr.SelectType.Hero and arg_8_1.co or lua_monster.configDict[var_8_6]
-		local var_8_13 = FightConfig.instance:getSkinCO(arg_8_1.skinId)
+		local firstId = info.ids[1]
+		local co = selectType == SkillEditorMgr.SelectType.Hero and mo.co or lua_monster.configDict[newId]
+		local skinCO = FightConfig.instance:getSkinCO(mo.skinId)
 
-		if not var_8_13 or string.nilorempty(var_8_13.spine) then
-			GameFacade.showToast(ToastEnum.SkillEditorHeroSelect, arg_8_1.skinId or var_8_12.id)
+		if not skinCO or string.nilorempty(skinCO.spine) then
+			GameFacade.showToast(ToastEnum.SkillEditorHeroSelect, mo.skinId or co.id)
 
 			return
 		end
 
-		if var_8_2 then
-			var_8_4.ids[var_8_2] = var_8_6
-			var_8_4.skinIds[var_8_2] = arg_8_1.skinId
+		if stancePosId then
+			info.ids[stancePosId] = newId
+			info.skinIds[stancePosId] = mo.skinId
 		else
-			for iter_8_2, iter_8_3 in ipairs(var_8_4.ids) do
-				if iter_8_3 == var_8_11 or var_8_3 ~= var_8_0 then
-					var_8_4.ids[iter_8_2] = var_8_6
-					var_8_4.skinIds[iter_8_2] = arg_8_1.skinId
+			for i, id in ipairs(info.ids) do
+				if id == firstId or oldType ~= selectType then
+					info.ids[i] = newId
+					info.skinIds[i] = mo.skinId
 				end
 			end
 		end
 
-		var_8_4.groupId = nil
+		info.groupId = nil
 	end
 
-	SkillEditorMgr.instance:setTypeInfo(var_8_1, var_8_0, var_8_4.ids, var_8_4.skinIds, var_8_4.groupId)
-	SkillEditorMgr.instance:refreshInfo(var_8_1)
-	SkillEditorMgr.instance:rebuildEntitys(var_8_1)
-	SkillEditorMgr.instance:dispatchEvent(SkillEditorMgr.OnSelectEntity, var_8_1)
+	SkillEditorMgr.instance:setTypeInfo(side, selectType, info.ids, info.skinIds, info.groupId)
+	SkillEditorMgr.instance:refreshInfo(side)
+	SkillEditorMgr.instance:rebuildEntitys(side)
+	SkillEditorMgr.instance:dispatchEvent(SkillEditorMgr.OnSelectEntity, side)
 end
 
-function var_0_0._onSelectStance(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = FightEnum.EntitySide.MySide
-	local var_9_1 = lua_stance.configDict[arg_9_1]
+function SkillEditorToolsAutoPlaySkillView:_onSelectStance(stanceId, needRebuild)
+	local side = FightEnum.EntitySide.MySide
+	local config = lua_stance.configDict[stanceId]
 
-	if not var_9_1 then
-		logError("站位不存在: " .. arg_9_1)
+	if not config then
+		logError("站位不存在: " .. stanceId)
 
 		return
 	end
 
-	SkillEditorMgr.instance.enemy_stance_id = var_9_1.id
+	SkillEditorMgr.instance.enemy_stance_id = config.id
 
-	local var_9_2 = 0
+	local member_num = 0
 
-	for iter_9_0 = 1, 4 do
-		if #var_9_1["pos" .. iter_9_0] ~= 0 then
-			var_9_2 = var_9_2 + 1
+	for i = 1, 4 do
+		if #config["pos" .. i] ~= 0 then
+			member_num = member_num + 1
 		end
 	end
 
-	local var_9_3, var_9_4 = SkillEditorMgr.instance:getTypeInfo(var_9_0)
+	local _, info = SkillEditorMgr.instance:getTypeInfo(side)
 
-	while var_9_2 < #var_9_4.ids do
-		local var_9_5 = #var_9_4.ids
+	while member_num < #info.ids do
+		local index = #info.ids
 
-		if SkillEditorMgr.instance.cur_select_entity_id == var_9_4.ids[var_9_5] then
-			SkillEditorMgr.instance.cur_select_entity_id = var_9_4.ids[var_9_5 - 1]
+		if SkillEditorMgr.instance.cur_select_entity_id == info.ids[index] then
+			SkillEditorMgr.instance.cur_select_entity_id = info.ids[index - 1]
 		end
 
-		table.remove(var_9_4.ids, var_9_5)
-		table.remove(var_9_4.skinIds, var_9_5)
+		table.remove(info.ids, index)
+		table.remove(info.skinIds, index)
 	end
 
-	SkillEditorMgr.instance.enemy_stance_count_limit = var_9_2
+	SkillEditorMgr.instance.enemy_stance_count_limit = member_num
 
-	SkillEditorMgr.instance:refreshInfo(var_9_0)
+	SkillEditorMgr.instance:refreshInfo(side)
 	SkillEditorMgr.instance:clearSubHero()
 
-	if arg_9_2 then
-		SkillEditorMgr.instance:rebuildEntitys(var_9_0)
+	if needRebuild then
+		SkillEditorMgr.instance:rebuildEntitys(side)
 	end
 end
 
-function var_0_0._onClickSelectAll(arg_10_0)
+function SkillEditorToolsAutoPlaySkillView:_onClickSelectAll()
 	SkillEditorToolAutoPlaySkillSelectModel.instance:selectAll()
 end
 
-function var_0_0._onClickCancelAll(arg_11_0)
+function SkillEditorToolsAutoPlaySkillView:_onClickCancelAll()
 	SkillEditorToolAutoPlaySkillSelectModel.instance:cancelSelectAll()
 end
 
-function var_0_0._onClickClean(arg_12_0)
+function SkillEditorToolsAutoPlaySkillView:_onClickClean()
 	SkillEditorToolAutoPlaySkillSelectModel.instance:clear()
 end
 
-function var_0_0._closeview(arg_13_0)
-	gohelper.setActive(arg_13_0._go, false)
+function SkillEditorToolsAutoPlaySkillView:_closeview()
+	gohelper.setActive(self._go, false)
 end
 
-function var_0_0._onInpValueChanged(arg_14_0)
-	arg_14_0:_updateItems()
+function SkillEditorToolsAutoPlaySkillView:_onInpValueChanged()
+	self:_updateItems()
 end
 
-function var_0_0._hideSelectSkinView(arg_15_0)
-	gohelper.setActive(arg_15_0._actionViewGO, false)
+function SkillEditorToolsAutoPlaySkillView:_hideSelectSkinView()
+	gohelper.setActive(self._actionViewGO, false)
 end
 
-function var_0_0._showSelectSkin(arg_16_0, arg_16_1)
-	gohelper.setActive(arg_16_0._actionViewGO, true)
+function SkillEditorToolsAutoPlaySkillView:_showSelectSkin(mo)
+	gohelper.setActive(self._actionViewGO, true)
 
-	local var_16_0 = arg_16_1.co
-	local var_16_1 = SkinConfig.instance:getCharacterSkinCoList(var_16_0.id) or {}
+	local co = mo.co
+	local skin_list = SkinConfig.instance:getCharacterSkinCoList(co.id) or {}
 
-	gohelper.CreateObjList(arg_16_0, arg_16_0.OnItemShow, var_16_1, arg_16_0._itemGOParent, arg_16_0._itemGOPrefab)
+	gohelper.CreateObjList(self, self.OnItemShow, skin_list, self._itemGOParent, self._itemGOPrefab)
 
-	if #var_16_1 == 0 then
+	if #skin_list == 0 then
 		logError("所选对象没有可选皮肤")
-		arg_16_0:_hideSelectSkinView()
+		self:_hideSelectSkinView()
 	end
 end
 
-function var_0_0.OnItemShow(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	arg_17_1.transform:Find("Text"):GetComponent(gohelper.Type_TextMesh).text = arg_17_2.des
+function SkillEditorToolsAutoPlaySkillView:OnItemShow(obj, data, index)
+	local transform = obj.transform
+	local text = transform:Find("Text"):GetComponent(gohelper.Type_TextMesh)
 
-	local var_17_0 = arg_17_1:GetComponent(typeof(SLFramework.UGUI.ButtonWrap))
+	text.text = data.des
 
-	arg_17_0:removeClickCb(var_17_0)
-	arg_17_0:addClickCb(var_17_0, arg_17_0.OnItemClick, arg_17_0, arg_17_2)
+	local obj_button = obj:GetComponent(typeof(SLFramework.UGUI.ButtonWrap))
+
+	self:removeClickCb(obj_button)
+	self:addClickCb(obj_button, self.OnItemClick, self, data)
 end
 
-function var_0_0.OnItemClick(arg_18_0, arg_18_1)
+function SkillEditorToolsAutoPlaySkillView:OnItemClick(config)
 	SkillEditorMgr.instance:dispatchEvent(SkillEditorMgr._SelectAutoPlaySkin, {
-		skinid = arg_18_1.id,
-		roleid = arg_18_1.characterId
+		skinid = config.id,
+		roleid = config.characterId
 	})
 end
 
-function var_0_0._updateItems(arg_19_0)
-	SkillEditorToolAutoPlaySkillModel.instance:setSelect(arg_19_0._inp:GetText())
+function SkillEditorToolsAutoPlaySkillView:_updateItems()
+	SkillEditorToolAutoPlaySkillModel.instance:setSelect(self._inp:GetText())
 end
 
-function var_0_0.onOpen(arg_20_0)
-	arg_20_0:_updateItems()
-	arg_20_0:_showData()
+function SkillEditorToolsAutoPlaySkillView:onOpen()
+	self:_updateItems()
+	self:_showData()
 end
 
-function var_0_0._showData(arg_21_0)
-	local var_21_0 = {
+function SkillEditorToolsAutoPlaySkillView:_showData()
+	local list = {
 		ModuleEnum.Performance.High,
 		ModuleEnum.Performance.Middle,
 		ModuleEnum.Performance.Low
 	}
 
-	gohelper.CreateObjList(arg_21_0, arg_21_0._onItemShow, var_21_0, arg_21_0._goHuazhi, arg_21_0._goHuazhiItem)
+	gohelper.CreateObjList(self, self._onItemShow, list, self._goHuazhi, self._goHuazhiItem)
 end
 
-function var_0_0._onItemShow(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
-	local var_22_0 = gohelper.findChildText(arg_22_1, "txt")
-	local var_22_1 = ""
+function SkillEditorToolsAutoPlaySkillView:_onItemShow(obj, data, index)
+	local text = gohelper.findChildText(obj, "txt")
+	local str = ""
 
-	if arg_22_2 == ModuleEnum.Performance.High then
-		var_22_1 = "高"
-	elseif arg_22_2 == ModuleEnum.Performance.Middle then
-		var_22_1 = "中"
-	elseif arg_22_2 == ModuleEnum.Performance.Low then
-		var_22_1 = "低"
+	if data == ModuleEnum.Performance.High then
+		str = "高"
+	elseif data == ModuleEnum.Performance.Middle then
+		str = "中"
+	elseif data == ModuleEnum.Performance.Low then
+		str = "低"
 	end
 
-	var_22_0.text = var_22_1
+	text.text = str
 
-	local var_22_2 = gohelper.getClick(arg_22_1)
+	local click = gohelper.getClick(obj)
 
-	var_22_2:AddClickListener(arg_22_0._onItemClick, arg_22_0, arg_22_2)
-	table.insert(arg_22_0._btnlist, var_22_2)
+	click:AddClickListener(self._onItemClick, self, data)
+	table.insert(self._btnlist, click)
 end
 
-function var_0_0._onItemClick(arg_23_0, arg_23_1)
-	GameGlobalMgr.instance:getScreenState():setLocalQuality(arg_23_1)
+function SkillEditorToolsAutoPlaySkillView:_onItemClick(data)
+	GameGlobalMgr.instance:getScreenState():setLocalQuality(data)
 	FightEffectPool.dispose()
 end
 
-function var_0_0._stopFlow(arg_24_0)
-	if arg_24_0.flow and arg_24_0.flow.status == WorkStatus.Running then
-		local var_24_0 = arg_24_0.flow:getWorkList()
-		local var_24_1 = arg_24_0.flow._curIndex
-		local var_24_2 = SkillEditorToolAutoPlaySkillSelectModel.instance:getList()
+function SkillEditorToolsAutoPlaySkillView:_stopFlow()
+	if self.flow and self.flow.status == WorkStatus.Running then
+		local workList = self.flow:getWorkList()
+		local curWorkIdx = self.flow._curIndex
+		local list = SkillEditorToolAutoPlaySkillSelectModel.instance:getList()
 
-		for iter_24_0 = var_24_1, #var_24_0 do
-			var_24_0[iter_24_0]:onDone(true)
+		for i = curWorkIdx, #workList do
+			local work = workList[i]
+
+			work:onDone(true)
 		end
 
-		if arg_24_0._count == #var_24_2 then
-			local var_24_3 = GameSceneMgr.instance:getCurScene().entityMgr:getTagUnitDict(SceneTag.UnitPlayer)
+		if self._count == #list then
+			local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+			local dict = entityMgr:getTagUnitDict(SceneTag.UnitPlayer)
 
-			if var_24_3 then
-				for iter_24_1, iter_24_2 in pairs(var_24_3) do
-					if iter_24_2.skill then
-						iter_24_2.skill:stopSkill()
+			if dict then
+				for _, entity in pairs(dict) do
+					if entity.skill then
+						entity.skill:stopSkill()
 					end
 				end
 			end
 
 			SkillEditorMgr.instance:dispatchEvent(SkillEditorMgr._onSwitchEnityOrSkill)
-			arg_24_0.flow:onDone(true)
+			self.flow:onDone(true)
 		end
 	end
 end
 
-function var_0_0.onClose(arg_25_0)
-	if arg_25_0.flow then
-		arg_25_0.flow:stop()
+function SkillEditorToolsAutoPlaySkillView:onClose()
+	if self.flow then
+		self.flow:stop()
 
-		arg_25_0.flow = nil
+		self.flow = nil
 	end
 end
 
-function var_0_0.onDestroyView(arg_26_0)
+function SkillEditorToolsAutoPlaySkillView:onDestroyView()
 	return
 end
 
-return var_0_0
+return SkillEditorToolsAutoPlaySkillView

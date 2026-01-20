@@ -1,12 +1,14 @@
-﻿module("modules.logic.fight.model.data.FightSummonedInfoData", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightSummonedInfoData.lua
 
-local var_0_0 = FightDataClass("FightSummonedInfoData")
+module("modules.logic.fight.model.data.FightSummonedInfoData", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1)
-	arg_1_0.summonedId = arg_1_1.summonedId
-	arg_1_0.level = arg_1_1.level
-	arg_1_0.uid = arg_1_1.uid
-	arg_1_0.fromUid = arg_1_1.fromUid
+local FightSummonedInfoData = FightDataClass("FightSummonedInfoData")
+
+function FightSummonedInfoData:onConstructor(proto)
+	self.summonedId = proto.summonedId
+	self.level = proto.level
+	self.uid = proto.uid
+	self.fromUid = proto.fromUid
 end
 
-return var_0_0
+return FightSummonedInfoData

@@ -1,26 +1,28 @@
-﻿module("modules.logic.seasonver.act123.controller.Season123ShowHeroController", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/controller/Season123ShowHeroController.lua
 
-local var_0_0 = class("Season123ShowHeroController", BaseController)
+module("modules.logic.seasonver.act123.controller.Season123ShowHeroController", package.seeall)
 
-function var_0_0.onOpenView(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	Season123ShowHeroModel.instance:init(arg_1_1, arg_1_2, arg_1_3)
+local Season123ShowHeroController = class("Season123ShowHeroController", BaseController)
+
+function Season123ShowHeroController:onOpenView(actId, stage, layer)
+	Season123ShowHeroModel.instance:init(actId, stage, layer)
 end
 
-function var_0_0.onCloseView(arg_2_0)
+function Season123ShowHeroController:onCloseView()
 	Season123ShowHeroModel.instance:release()
 end
 
-function var_0_0.openReset(arg_3_0)
+function Season123ShowHeroController:openReset()
 	Season123Controller.instance:openResetView({
 		actId = Season123ShowHeroModel.instance.activityId,
 		stage = Season123ShowHeroModel.instance.stage
 	})
 end
 
-function var_0_0.notifyView(arg_4_0)
+function Season123ShowHeroController:notifyView()
 	return
 end
 
-var_0_0.instance = var_0_0.New()
+Season123ShowHeroController.instance = Season123ShowHeroController.New()
 
-return var_0_0
+return Season123ShowHeroController

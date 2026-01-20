@@ -1,173 +1,176 @@
-﻿module("modules.logic.prototest.view.ProtoModifyView", package.seeall)
+﻿-- chunkname: @modules/logic/prototest/view/ProtoModifyView.lua
 
-local var_0_0 = class("ProtoModifyView", BaseView)
+module("modules.logic.prototest.view.ProtoModifyView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnBack1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "paramlistpanel/btnBack")
-	arg_1_0._btnBack2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "modifyparampanel/btnBack")
-	arg_1_0._btnSave = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "modifyparampanel/panel/Btn_save")
-	arg_1_0._listPanel = gohelper.findChild(arg_1_0.viewGO, "paramlistpanel")
-	arg_1_0._modifyPanel = gohelper.findChild(arg_1_0.viewGO, "modifyparampanel")
-	arg_1_0._txtTitle1 = gohelper.findChildText(arg_1_0.viewGO, "paramlistpanel/txtTitle")
-	arg_1_0._txtTitle2 = gohelper.findChildText(arg_1_0.viewGO, "modifyparampanel/txtTitle")
-	arg_1_0._txtParam = gohelper.findChildText(arg_1_0.viewGO, "modifyparampanel/panel/txtParam")
-	arg_1_0._inputValue = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "modifyparampanel/panel/inputValue")
+local ProtoModifyView = class("ProtoModifyView", BaseView)
+
+function ProtoModifyView:onInitView()
+	self._btnBack1 = gohelper.findChildButtonWithAudio(self.viewGO, "paramlistpanel/btnBack")
+	self._btnBack2 = gohelper.findChildButtonWithAudio(self.viewGO, "modifyparampanel/btnBack")
+	self._btnSave = gohelper.findChildButtonWithAudio(self.viewGO, "modifyparampanel/panel/Btn_save")
+	self._listPanel = gohelper.findChild(self.viewGO, "paramlistpanel")
+	self._modifyPanel = gohelper.findChild(self.viewGO, "modifyparampanel")
+	self._txtTitle1 = gohelper.findChildText(self.viewGO, "paramlistpanel/txtTitle")
+	self._txtTitle2 = gohelper.findChildText(self.viewGO, "modifyparampanel/txtTitle")
+	self._txtParam = gohelper.findChildText(self.viewGO, "modifyparampanel/panel/txtParam")
+	self._inputValue = gohelper.findChildTextMeshInputField(self.viewGO, "modifyparampanel/panel/inputValue")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnBack1:AddClickListener(arg_2_0._onClickBack, arg_2_0)
-	arg_2_0._btnBack2:AddClickListener(arg_2_0._closeModify, arg_2_0)
-	arg_2_0._btnSave:AddClickListener(arg_2_0._onClickSave, arg_2_0)
-	ProtoTestMgr.instance:registerCallback(ProtoEnum.OnClickModifyItem, arg_2_0._enterModifyItem, arg_2_0)
+function ProtoModifyView:addEvents()
+	self._btnBack1:AddClickListener(self._onClickBack, self)
+	self._btnBack2:AddClickListener(self._closeModify, self)
+	self._btnSave:AddClickListener(self._onClickSave, self)
+	ProtoTestMgr.instance:registerCallback(ProtoEnum.OnClickModifyItem, self._enterModifyItem, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnBack1:RemoveClickListener()
-	arg_3_0._btnBack2:RemoveClickListener()
-	arg_3_0._btnSave:RemoveClickListener()
-	ProtoTestMgr.instance:unregisterCallback(ProtoEnum.OnClickModifyItem, arg_3_0._enterModifyItem, arg_3_0)
+function ProtoModifyView:removeEvents()
+	self._btnBack1:RemoveClickListener()
+	self._btnBack2:RemoveClickListener()
+	self._btnSave:RemoveClickListener()
+	ProtoTestMgr.instance:unregisterCallback(ProtoEnum.OnClickModifyItem, self._enterModifyItem, self)
 end
 
-function var_0_0.onOpen(arg_4_0)
-	local var_4_0 = arg_4_0.viewParam.protoMO
-	local var_4_1 = arg_4_0.viewParam.paramId
+function ProtoModifyView:onOpen()
+	local protoMO = self.viewParam.protoMO
+	local paramId = self.viewParam.paramId
 
-	if var_4_0 then
-		ProtoModifyModel.instance:enterProto(var_4_0)
+	if protoMO then
+		ProtoModifyModel.instance:enterProto(protoMO)
 
-		if var_4_1 then
-			arg_4_0:_enterModifyItem(var_4_1)
+		if paramId then
+			self:_enterModifyItem(paramId)
 		else
-			arg_4_0:_updateTitle()
+			self:_updateTitle()
 		end
 	end
 end
 
-function var_0_0._enterModifyItem(arg_5_0, arg_5_1)
-	ProtoModifyModel.instance:enterParam(arg_5_1)
+function ProtoModifyView:_enterModifyItem(id)
+	ProtoModifyModel.instance:enterParam(id)
 
-	local var_5_0 = ProtoModifyModel.instance:getLastMO()
-	local var_5_1 = var_5_0:isRepeated()
-	local var_5_2 = var_5_0:isProtoType()
+	local lastMO = ProtoModifyModel.instance:getLastMO()
+	local isRepeated = lastMO:isRepeated()
+	local isProtoType = lastMO:isProtoType()
 
-	if var_5_1 or var_5_2 then
-		gohelper.setActive(arg_5_0._listPanel, true)
-		gohelper.setActive(arg_5_0._modifyPanel, false)
+	if isRepeated or isProtoType then
+		gohelper.setActive(self._listPanel, true)
+		gohelper.setActive(self._modifyPanel, false)
 	else
-		local var_5_3 = var_5_0.value
+		local valueStr = lastMO.value
 
-		var_5_3 = (type(var_5_3) == "boolean" or type(var_5_3) == "number") and tostring(var_5_3) or var_5_3
+		valueStr = (type(valueStr) == "boolean" or type(valueStr) == "number") and tostring(valueStr) or valueStr
 
-		arg_5_0._inputValue:SetText(var_5_3)
-		gohelper.setActive(arg_5_0._listPanel, false)
-		gohelper.setActive(arg_5_0._modifyPanel, true)
+		self._inputValue:SetText(valueStr)
+		gohelper.setActive(self._listPanel, false)
+		gohelper.setActive(self._modifyPanel, true)
 	end
 
-	arg_5_0:_updateTitle()
+	self:_updateTitle()
 end
 
-function var_0_0._updateTitle(arg_6_0)
-	local var_6_0 = ProtoModifyModel.instance:getProtoMO()
-	local var_6_1 = ProtoModifyModel.instance:getDepthParamMOs()
-	local var_6_2 = ProtoModifyModel.instance:getLastMO()
-	local var_6_3 = var_6_0.struct
+function ProtoModifyView:_updateTitle()
+	local protoMO = ProtoModifyModel.instance:getProtoMO()
+	local depthParamMOs = ProtoModifyModel.instance:getDepthParamMOs()
+	local lastMO = ProtoModifyModel.instance:getLastMO()
+	local titleStr = protoMO.struct
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_1) do
-		if iter_6_1.repeated then
-			var_6_3 = var_6_3 .. "[" .. iter_6_1.key .. "]"
+	for _, depthParamMO in ipairs(depthParamMOs) do
+		if depthParamMO.repeated then
+			titleStr = titleStr .. "[" .. depthParamMO.key .. "]"
 		else
-			var_6_3 = var_6_3 .. " - " .. iter_6_1.key
+			titleStr = titleStr .. " - " .. depthParamMO.key
 		end
 	end
 
-	arg_6_0._txtTitle1.text = var_6_3
-	arg_6_0._txtTitle2.text = var_6_3
+	self._txtTitle1.text = titleStr
+	self._txtTitle2.text = titleStr
 
-	if isTypeOf(var_6_2, ProtoTestCaseParamMO) then
-		local var_6_4 = ProtoEnum.LabelType[var_6_2.pLabel]
-		local var_6_5 = var_6_2.pType == ProtoEnum.ParamType.proto and var_6_2.struct or ProtoEnum.ParamType[var_6_2.pType]
+	if isTypeOf(lastMO, ProtoTestCaseParamMO) then
+		local labelType = ProtoEnum.LabelType[lastMO.pLabel]
+		local paramType = lastMO.pType == ProtoEnum.ParamType.proto and lastMO.struct or ProtoEnum.ParamType[lastMO.pType]
 
-		arg_6_0._txtParam.text = var_6_4 .. " - " .. var_6_5
+		self._txtParam.text = labelType .. " - " .. paramType
 	end
 end
 
-function var_0_0._updateList(arg_7_0)
+function ProtoModifyView:_updateList()
 	ProtoModifyModel.instance:onModelUpdate()
 	ProtoTestCaseModel.instance:onModelUpdate()
 end
 
-function var_0_0._onClickBack(arg_8_0)
+function ProtoModifyView:_onClickBack()
 	if ProtoModifyModel.instance:isRoot() then
-		arg_8_0:closeThis()
+		self:closeThis()
 	else
-		arg_8_0:_closeModify()
+		self:_closeModify()
 	end
 end
 
-function var_0_0._closeModify(arg_9_0)
+function ProtoModifyView:_closeModify()
 	ProtoModifyModel.instance:exitParam()
-	gohelper.setActive(arg_9_0._listPanel, true)
-	gohelper.setActive(arg_9_0._modifyPanel, false)
-	arg_9_0:_updateTitle()
+	gohelper.setActive(self._listPanel, true)
+	gohelper.setActive(self._modifyPanel, false)
+	self:_updateTitle()
 end
 
-function var_0_0._onClickSave(arg_10_0)
-	local var_10_0 = ProtoModifyModel.instance:getLastMO()
-	local var_10_1 = arg_10_0._inputValue:GetText()
+function ProtoModifyView:_onClickSave()
+	local lastMO = ProtoModifyModel.instance:getLastMO()
+	local inputStr = self._inputValue:GetText()
 
-	if var_10_0.pType ~= ProtoEnum.ParamType.string and string.nilorempty(var_10_1) and not var_10_0:isOptional() then
+	if lastMO.pType ~= ProtoEnum.ParamType.string and string.nilorempty(inputStr) and not lastMO:isOptional() then
 		GameFacade.showToast(ToastEnum.ProtoModifyNotString)
 
 		return
 	end
 
-	if var_10_0.pType == ProtoEnum.ParamType.int32 or var_10_0.pType == ProtoEnum.ParamType.uint32 then
-		local var_10_2 = tonumber(var_10_1)
+	if lastMO.pType == ProtoEnum.ParamType.int32 or lastMO.pType == ProtoEnum.ParamType.uint32 then
+		local value = tonumber(inputStr)
 
-		if not var_10_2 then
+		if not value then
 			GameFacade.showToast(ToastEnum.ProtoModifyNotValue)
 
 			return
 		end
 
-		var_10_0.value = var_10_2
-	elseif var_10_0.pType == ProtoEnum.ParamType.int64 or var_10_0.pType == ProtoEnum.ParamType.uint64 then
-		if not string.nilorempty(var_10_1) and not tonumber(var_10_1) then
+		lastMO.value = value
+	elseif lastMO.pType == ProtoEnum.ParamType.int64 or lastMO.pType == ProtoEnum.ParamType.uint64 then
+		if not string.nilorempty(inputStr) and not tonumber(inputStr) then
 			GameFacade.showToast(ToastEnum.ProtoModifyNotValue)
 
 			return
 		end
 
-		var_10_0.value = not string.nilorempty(var_10_1) and var_10_1 or nil
-	elseif var_10_0.pType == ProtoEnum.ParamType.bool then
-		local var_10_3 = ({
+		lastMO.value = not string.nilorempty(inputStr) and inputStr or nil
+	elseif lastMO.pType == ProtoEnum.ParamType.bool then
+		local dict = {
 			["0"] = false,
 			["false"] = false,
 			["1"] = true,
 			["true"] = true
-		})[string.lower(var_10_1)]
+		}
+		local value = dict[string.lower(inputStr)]
 
-		if not var_10_0:isOptional() and var_10_3 == nil then
+		if not lastMO:isOptional() and value == nil then
 			GameFacade.showToast(ToastEnum.ProtoModifyIsNil)
 
 			return
 		end
 
-		var_10_0.value = var_10_3
+		lastMO.value = value
 	else
-		var_10_0.value = var_10_1
+		lastMO.value = inputStr
 	end
 
-	arg_10_0:_closeModify()
-	arg_10_0:_updateList()
+	self:_closeModify()
+	self:_updateList()
 end
 
-function var_0_0.onClickModalMask(arg_11_0)
-	if arg_11_0._modifyPanel.activeInHierarchy then
-		arg_11_0:_closeModify()
+function ProtoModifyView:onClickModalMask()
+	if self._modifyPanel.activeInHierarchy then
+		self:_closeModify()
 	else
-		arg_11_0:_onClickBack()
+		self:_onClickBack()
 	end
 end
 
-return var_0_0
+return ProtoModifyView

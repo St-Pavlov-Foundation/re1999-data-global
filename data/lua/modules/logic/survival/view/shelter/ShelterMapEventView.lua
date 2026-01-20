@@ -1,392 +1,397 @@
-﻿module("modules.logic.survival.view.shelter.ShelterMapEventView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/ShelterMapEventView.lua
 
-local var_0_0 = class("ShelterMapEventView", BaseView)
+module("modules.logic.survival.view.shelter.ShelterMapEventView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._golist = gohelper.findChild(arg_1_0.viewGO, "Panel/#go_list")
-	arg_1_0._eventItem = gohelper.findChild(arg_1_0.viewGO, "Panel/#go_list/#go_item")
+local ShelterMapEventView = class("ShelterMapEventView", BaseView)
 
-	gohelper.setActive(arg_1_0._eventItem, false)
+function ShelterMapEventView:onInitView()
+	self._golist = gohelper.findChild(self.viewGO, "Panel/#go_list")
+	self._eventItem = gohelper.findChild(self.viewGO, "Panel/#go_list/#go_item")
 
-	arg_1_0._txtTitle = gohelper.findChildTextMesh(arg_1_0.viewGO, "Panel/Title/#txt_Title")
-	arg_1_0._btnNpc = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Panel/Title/#txt_Title/#btn_npc")
-	arg_1_0._txtDesc = gohelper.findChildTextMesh(arg_1_0.viewGO, "Panel/#scroll/viewport/content/#txt_Descr")
-	arg_1_0._gobtn = gohelper.findChild(arg_1_0.viewGO, "Panel/Btns")
-	arg_1_0._gobtnitem = gohelper.findChild(arg_1_0.viewGO, "Panel/Btns/#go_btn")
+	gohelper.setActive(self._eventItem, false)
 
-	gohelper.setActive(arg_1_0._gobtnitem, false)
+	self._txtTitle = gohelper.findChildTextMesh(self.viewGO, "Panel/Title/#txt_Title")
+	self._btnNpc = gohelper.findChildButtonWithAudio(self.viewGO, "Panel/Title/#txt_Title/#btn_npc")
+	self._txtDesc = gohelper.findChildTextMesh(self.viewGO, "Panel/#scroll/viewport/content/#txt_Descr")
+	self._gobtn = gohelper.findChild(self.viewGO, "Panel/Btns")
+	self._gobtnitem = gohelper.findChild(self.viewGO, "Panel/Btns/#go_btn")
 
-	arg_1_0._gopos1 = gohelper.findChild(arg_1_0.viewGO, "Panel/Btns/#go_pos2/#go_pos1")
-	arg_1_0._gopos2 = gohelper.findChild(arg_1_0.viewGO, "Panel/Btns/#go_pos2")
-	arg_1_0._gopos3 = gohelper.findChild(arg_1_0.viewGO, "Panel/Btns/#go_pos4/#go_pos3")
-	arg_1_0._gopos4 = gohelper.findChild(arg_1_0.viewGO, "Panel/Btns/#go_pos4")
-	arg_1_0._imageModel = gohelper.findChild(arg_1_0.viewGO, "Panel/Left/#image_model")
+	gohelper.setActive(self._gobtnitem, false)
 
-	gohelper.setActive(gohelper.findChild(arg_1_0.viewGO, "Top"), false)
+	self._gopos1 = gohelper.findChild(self.viewGO, "Panel/Btns/#go_pos2/#go_pos1")
+	self._gopos2 = gohelper.findChild(self.viewGO, "Panel/Btns/#go_pos2")
+	self._gopos3 = gohelper.findChild(self.viewGO, "Panel/Btns/#go_pos4/#go_pos3")
+	self._gopos4 = gohelper.findChild(self.viewGO, "Panel/Btns/#go_pos4")
+	self._imageModel = gohelper.findChild(self.viewGO, "Panel/Left/#image_model")
 
-	arg_1_0._goinfo = gohelper.findChild(arg_1_0.viewGO, "Panel/#go_info")
-	arg_1_0._click = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_clicknext")
-	arg_1_0._goitemRoot = gohelper.findChild(arg_1_0.viewGO, "Panel/#scroll/viewport/content/#scroll_Reward")
+	gohelper.setActive(gohelper.findChild(self.viewGO, "Top"), false)
 
-	gohelper.setActive(arg_1_0._goitemRoot, false)
+	self._goinfo = gohelper.findChild(self.viewGO, "Panel/#go_info")
+	self._click = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_clicknext")
+	self._goitemRoot = gohelper.findChild(self.viewGO, "Panel/#scroll/viewport/content/#scroll_Reward")
 
-	arg_1_0._btns = {}
+	gohelper.setActive(self._goitemRoot, false)
 
-	arg_1_0:initCamera()
+	self._btns = {}
+
+	self:initCamera()
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._click:AddClickListener(arg_2_0.nextStep, arg_2_0)
-	arg_2_0._btnNpc:AddClickListener(arg_2_0.showNpcInfo, arg_2_0)
+function ShelterMapEventView:addEvents()
+	self._click:AddClickListener(self.nextStep, self)
+	self._btnNpc:AddClickListener(self.showNpcInfo, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._click:RemoveClickListener()
-	arg_3_0._btnNpc:RemoveClickListener()
+function ShelterMapEventView:removeEvents()
+	self._click:RemoveClickListener()
+	self._btnNpc:RemoveClickListener()
 end
 
-function var_0_0.showNpcInfo(arg_4_0)
+function ShelterMapEventView:showNpcInfo()
 	ViewMgr.instance:openView(ViewName.SurvivalItemInfoView, {
-		itemMo = arg_4_0.itemMo,
-		goPanel = arg_4_0._goinfo
+		itemMo = self.itemMo,
+		goPanel = self._goinfo
 	})
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0:refreshParam()
-	arg_5_0:refreshView()
+function ShelterMapEventView:onOpen()
+	self:refreshParam()
+	self:refreshView()
 
-	local var_5_0 = GameSceneMgr.instance:getCurSceneType()
+	local sceneType = GameSceneMgr.instance:getCurSceneType()
 
-	if var_5_0 == SceneType.SurvivalShelter then
+	if sceneType == SceneType.SurvivalShelter then
 		SurvivalMapHelper.instance:getSceneFogComp():setRainEnable(false)
-	elseif var_5_0 == SceneType.Survival then
+	elseif sceneType == SceneType.Survival then
 		SurvivalMapHelper.instance:getSceneFogComp():setFogEnable(false)
 	end
 end
 
-function var_0_0.refreshParam(arg_6_0)
-	arg_6_0.title = arg_6_0.viewParam.title
-	arg_6_0.behaviorConfig = arg_6_0.viewParam.behaviorConfig
-	arg_6_0.unitResPath = arg_6_0.viewParam.unitResPath
-	arg_6_0.itemMo = arg_6_0.viewParam.itemMo
-	arg_6_0.conditionParam = arg_6_0.viewParam.conditionParam
-	arg_6_0.taskConfig = arg_6_0.viewParam.taskConfig
-	arg_6_0.moduleId = arg_6_0.viewParam.moduleId
+function ShelterMapEventView:refreshParam()
+	self.title = self.viewParam.title
+	self.behaviorConfig = self.viewParam.behaviorConfig
+	self.unitResPath = self.viewParam.unitResPath
+	self.itemMo = self.viewParam.itemMo
+	self.conditionParam = self.viewParam.conditionParam
+	self.taskConfig = self.viewParam.taskConfig
+	self.moduleId = self.viewParam.moduleId
 
-	if arg_6_0.taskConfig and arg_6_0.taskConfig.title then
-		arg_6_0.title = arg_6_0.taskConfig.title
+	if self.taskConfig and self.taskConfig.title then
+		self.title = self.taskConfig.title
 	end
 
-	arg_6_0.eventID = arg_6_0.viewParam.eventID
+	self.eventID = self.viewParam.eventID
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
-	arg_7_0:refreshParam()
-	arg_7_0:refreshView()
+function ShelterMapEventView:onUpdateParam()
+	self:refreshParam()
+	self:refreshView()
 end
 
-function var_0_0.refreshView(arg_8_0)
-	gohelper.setActive(arg_8_0._btnNpc, arg_8_0.itemMo ~= nil)
+function ShelterMapEventView:refreshView()
+	gohelper.setActive(self._btnNpc, self.itemMo ~= nil)
 
-	arg_8_0._txtTitle.text = arg_8_0.title or ""
+	self._txtTitle.text = self.title or ""
 
-	arg_8_0:refreshCamera()
-	arg_8_0:startDialog()
+	self:refreshCamera()
+	self:startDialog()
 end
 
-function var_0_0.startDialog(arg_9_0)
-	arg_9_0.stepIndex = 0
-	arg_9_0._curDescIndex = 0
-	arg_9_0._txtDesc.text = ""
-	arg_9_0.curStepData = nil
+function ShelterMapEventView:startDialog()
+	self.stepIndex = 0
+	self._curDescIndex = 0
+	self._txtDesc.text = ""
+	self.curStepData = nil
 
-	arg_9_0:hideOption()
-	arg_9_0:nextStep()
+	self:hideOption()
+	self:nextStep()
 end
 
-function var_0_0.nextStep(arg_10_0)
-	if arg_10_0.curStepData and arg_10_0._curDescIndex < arg_10_0.curStepData.descLen then
-		arg_10_0:finishStep()
+function ShelterMapEventView:nextStep()
+	if self.curStepData and self._curDescIndex < self.curStepData.descLen then
+		self:finishStep()
 
 		return
 	end
 
-	arg_10_0.stepIndex = arg_10_0.stepIndex + 1
+	self.stepIndex = self.stepIndex + 1
 
-	local var_10_0 = arg_10_0:getStepCo(arg_10_0.stepIndex)
+	local stepCo = self:getStepCo(self.stepIndex)
 
-	if not var_10_0 then
-		arg_10_0:finishDialog()
+	if not stepCo then
+		self:finishDialog()
 
 		return
 	end
 
-	local var_10_1 = GameUtil.getUCharArrWithoutRichTxt(var_10_0.content)
+	local descArr = GameUtil.getUCharArrWithoutRichTxt(stepCo.content)
 
-	arg_10_0.curStepData = {
-		descArr = var_10_1,
-		descLen = #var_10_1,
-		desc = var_10_0.content,
-		animType = var_10_0.animType
+	self.curStepData = {
+		descArr = descArr,
+		descLen = #descArr,
+		desc = stepCo.content,
+		animType = stepCo.animType
 	}
 
-	gohelper.setActive(arg_10_0._click, true)
+	gohelper.setActive(self._click, true)
 
-	arg_10_0._curDescIndex = 0
+	self._curDescIndex = 0
 
-	TaskDispatcher.cancelTask(arg_10_0._autoShowDesc, arg_10_0)
-	TaskDispatcher.runRepeat(arg_10_0._autoShowDesc, arg_10_0, 0.02)
+	TaskDispatcher.cancelTask(self._autoShowDesc, self)
+	TaskDispatcher.runRepeat(self._autoShowDesc, self, 0.02)
 
-	local var_10_2 = arg_10_0.curStepData.animType or 0
+	local animType = self.curStepData.animType or 0
 
-	if arg_10_0._modelComp then
-		arg_10_0._modelComp:playNextAnim(var_10_2)
+	if self._modelComp then
+		self._modelComp:playNextAnim(animType)
 	end
 end
 
-function var_0_0.getStepCo(arg_11_0, arg_11_1)
-	if arg_11_0.taskConfig then
-		if arg_11_1 > 1 then
+function ShelterMapEventView:getStepCo(stepIndex)
+	if self.taskConfig then
+		if stepIndex > 1 then
 			return
 		end
 
-		local var_11_0 = {
-			content = arg_11_0.taskConfig.desc
-		}
+		local stepCo = {}
 
-		var_11_0.animType = 0
+		stepCo.content = self.taskConfig.desc
+		stepCo.animType = 0
 
-		return var_11_0
+		return stepCo
 	end
 
-	local var_11_1 = arg_11_0.behaviorConfig.dialogueId
-	local var_11_2 = lua_survival_talk.configDict[var_11_1]
+	local dialogId = self.behaviorConfig.dialogueId
+	local dict = lua_survival_talk.configDict[dialogId]
+	local stepCo = dict and dict[stepIndex]
 
-	return var_11_2 and var_11_2[arg_11_1]
+	return stepCo
 end
 
-function var_0_0.finishStep(arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0._autoShowDesc, arg_12_0)
+function ShelterMapEventView:finishStep()
+	TaskDispatcher.cancelTask(self._autoShowDesc, self)
 
-	if arg_12_0.curStepData then
-		arg_12_0._txtDesc.text = arg_12_0.curStepData.desc
-		arg_12_0._curDescIndex = arg_12_0.curStepData.descLen
+	if self.curStepData then
+		self._txtDesc.text = self.curStepData.desc
+		self._curDescIndex = self.curStepData.descLen
 	end
 
-	if not arg_12_0:getStepCo(arg_12_0.stepIndex + 1) then
-		arg_12_0:finishDialog()
+	local nextStepCo = self:getStepCo(self.stepIndex + 1)
+
+	if not nextStepCo then
+		self:finishDialog()
 	end
 end
 
-function var_0_0.finishDialog(arg_13_0)
-	arg_13_0._txtDesc.text = arg_13_0.curStepData and arg_13_0.curStepData.desc or ""
+function ShelterMapEventView:finishDialog()
+	self._txtDesc.text = self.curStepData and self.curStepData.desc or ""
 
-	gohelper.setActive(arg_13_0._click, false)
-	arg_13_0:showOption()
+	gohelper.setActive(self._click, false)
+	self:showOption()
 
-	arg_13_0.curStepData = nil
+	self.curStepData = nil
 end
 
-function var_0_0._autoShowDesc(arg_14_0)
-	if not arg_14_0.curStepData then
+function ShelterMapEventView:_autoShowDesc()
+	if not self.curStepData then
 		return
 	end
 
-	arg_14_0._curDescIndex = arg_14_0._curDescIndex + 1
-	arg_14_0._txtDesc.text = table.concat(arg_14_0.curStepData.descArr, "", 1, arg_14_0._curDescIndex)
+	self._curDescIndex = self._curDescIndex + 1
+	self._txtDesc.text = table.concat(self.curStepData.descArr, "", 1, self._curDescIndex)
 
-	if arg_14_0._curDescIndex >= arg_14_0.curStepData.descLen then
-		arg_14_0:finishStep()
+	if self._curDescIndex >= self.curStepData.descLen then
+		self:finishStep()
 	end
 end
 
-function var_0_0.showOption(arg_15_0)
-	local var_15_0 = arg_15_0:getOptionDataList()
+function ShelterMapEventView:showOption()
+	local optionDatas = self:getOptionDataList()
 
-	for iter_15_0 = 1, math.max(#var_15_0, #arg_15_0._btns) do
-		arg_15_0:getBtnItem(iter_15_0):updateData(var_15_0[iter_15_0])
+	for i = 1, math.max(#optionDatas, #self._btns) do
+		local item = self:getBtnItem(i)
+
+		item:updateData(optionDatas[i])
 	end
 
-	gohelper.setActive(arg_15_0._gobtn, true)
+	gohelper.setActive(self._gobtn, true)
 end
 
-function var_0_0.getOptionDataList(arg_16_0)
-	local var_16_0 = {}
-	local var_16_1
-	local var_16_2
+function ShelterMapEventView:getOptionDataList()
+	local optionDatas = {}
+	local optionDescList, eventList
 
-	if arg_16_0.behaviorConfig then
-		var_16_1 = string.split(arg_16_0.behaviorConfig.chooseDesc, "|")
-		var_16_2 = string.split(arg_16_0.behaviorConfig.chooseEvent, "&")
+	if self.behaviorConfig then
+		optionDescList = string.split(self.behaviorConfig.chooseDesc, "|")
+		eventList = string.split(self.behaviorConfig.chooseEvent, "&")
 	end
 
-	if arg_16_0.taskConfig then
-		var_16_1 = {
+	if self.taskConfig then
+		optionDescList = {
 			luaLang("ShelterMapEventView_looktask")
 		}
-		var_16_2 = {
-			string.format("jumpTask#%s#%s", arg_16_0.moduleId, arg_16_0.taskConfig.id)
+		eventList = {
+			string.format("jumpTask#%s#%s", self.moduleId, self.taskConfig.id)
 		}
 	end
 
-	if var_16_1 then
-		for iter_16_0, iter_16_1 in ipairs(var_16_1) do
-			local var_16_3 = SurvivalChoiceMo.Create({
-				callback = arg_16_0.onClickOption,
-				callobj = arg_16_0,
-				desc = iter_16_1,
-				param = var_16_2[iter_16_0]
+	if optionDescList then
+		for i, v in ipairs(optionDescList) do
+			local data = SurvivalChoiceMo.Create({
+				callback = self.onClickOption,
+				callobj = self,
+				desc = v,
+				param = eventList[i]
 			})
 
-			table.insert(var_16_0, var_16_3)
+			table.insert(optionDatas, data)
 		end
 	end
 
-	return var_16_0
+	return optionDatas
 end
 
-function var_0_0.getBtnItem(arg_17_0, arg_17_1)
-	local var_17_0 = arg_17_0._btns[arg_17_1]
+function ShelterMapEventView:getBtnItem(index)
+	local item = self._btns[index]
 
-	if not var_17_0 then
-		local var_17_1 = gohelper.clone(arg_17_0._gobtnitem, arg_17_0["_gopos" .. arg_17_1])
+	if not item then
+		local go = gohelper.clone(self._gobtnitem, self["_gopos" .. index])
 
-		gohelper.setAsFirstSibling(var_17_1)
+		gohelper.setAsFirstSibling(go)
 
-		var_17_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_17_1, SurvivalEventChoiceItem)
-		arg_17_0._btns[arg_17_1] = var_17_0
+		item = MonoHelper.addNoUpdateLuaComOnceToGo(go, SurvivalEventChoiceItem)
+		self._btns[index] = item
 	end
 
-	return var_17_0
+	return item
 end
 
-function var_0_0.hideOption(arg_18_0)
-	gohelper.setActive(arg_18_0._gobtn, false)
+function ShelterMapEventView:hideOption()
+	gohelper.setActive(self._gobtn, false)
 end
 
-function var_0_0.onClose(arg_19_0)
-	TaskDispatcher.cancelTask(arg_19_0._autoShowDesc, arg_19_0)
+function ShelterMapEventView:onClose()
+	TaskDispatcher.cancelTask(self._autoShowDesc, self)
 end
 
-function var_0_0.onDestroyView(arg_20_0)
-	local var_20_0 = GameSceneMgr.instance:getCurSceneType()
+function ShelterMapEventView:onDestroyView()
+	local sceneType = GameSceneMgr.instance:getCurSceneType()
 
-	if var_20_0 == SceneType.SurvivalShelter then
+	if sceneType == SceneType.SurvivalShelter then
 		SurvivalMapHelper.instance:getSceneFogComp():setRainEnable(true)
-	elseif var_20_0 == SceneType.Survival then
+	elseif sceneType == SceneType.Survival then
 		SurvivalMapHelper.instance:getSceneFogComp():setFogEnable(true)
 	end
 end
 
-function var_0_0.refreshCamera(arg_21_0)
-	local var_21_0 = Survival3DModelMO.New()
+function ShelterMapEventView:refreshCamera()
+	local survival3DModelMO = Survival3DModelMO.New()
 
-	var_21_0:setDataByEventID(arg_21_0.eventID, arg_21_0.unitResPath)
-	arg_21_0._modelComp:setSurvival3DModelMO(var_21_0)
+	survival3DModelMO:setDataByEventID(self.eventID, self.unitResPath)
+	self._modelComp:setSurvival3DModelMO(survival3DModelMO)
 end
 
-function var_0_0.onClickOption(arg_22_0, arg_22_1)
-	arg_22_0:hideOption()
+function ShelterMapEventView:onClickOption(event)
+	self:hideOption()
 
-	arg_22_0._eventIndex = 0
-	arg_22_0._eventList = GameUtil.splitString2(arg_22_1, false) or {}
+	self._eventIndex = 0
+	self._eventList = GameUtil.splitString2(event, false) or {}
 
-	arg_22_0:_playNext()
+	self:_playNext()
 end
 
-function var_0_0._playNext(arg_23_0)
-	arg_23_0._eventIndex = arg_23_0._eventIndex + 1
+function ShelterMapEventView:_playNext()
+	self._eventIndex = self._eventIndex + 1
 
-	local var_23_0 = arg_23_0._eventList[arg_23_0._eventIndex]
+	local param = self._eventList[self._eventIndex]
 
-	if not var_23_0 then
-		arg_23_0:closeThis()
-
-		return
-	end
-
-	local var_23_1 = var_23_0[1]
-
-	if var_23_1 == "behavior" then
-		arg_23_0:gotoBehavior(tonumber(var_23_0[2]))
+	if not param then
+		self:closeThis()
 
 		return
 	end
 
-	if var_23_1 == "acceptTask" then
-		arg_23_0:acceptTask()
+	local eventName = param[1]
+
+	if eventName == "behavior" then
+		self:gotoBehavior(tonumber(param[2]))
 
 		return
 	end
 
-	if var_23_1 == "tipDialog" then
-		TipDialogController.instance:openTipDialogView(tonumber(var_23_0[2]), arg_23_0._playNext, arg_23_0)
+	if eventName == "acceptTask" then
+		self:acceptTask()
 
 		return
 	end
 
-	if var_23_1 == "jumpTask" then
-		arg_23_0:jumpTask(tonumber(var_23_0[2]), tonumber(var_23_0[3]))
+	if eventName == "tipDialog" then
+		TipDialogController.instance:openTipDialogView(tonumber(param[2]), self._playNext, self)
 
 		return
 	end
 
-	arg_23_0:closeThis()
+	if eventName == "jumpTask" then
+		self:jumpTask(tonumber(param[2]), tonumber(param[3]))
+
+		return
+	end
+
+	self:closeThis()
 end
 
-function var_0_0.jumpTask(arg_24_0, arg_24_1, arg_24_2)
+function ShelterMapEventView:jumpTask(moduleId, taskId)
 	ViewMgr.instance:openView(ViewName.ShelterTaskView, {
-		moduleId = arg_24_1,
-		taskId = arg_24_2
+		moduleId = moduleId,
+		taskId = taskId
 	})
-	arg_24_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.gotoBehavior(arg_25_0, arg_25_1)
-	local var_25_0 = lua_survival_behavior.configDict[arg_25_1]
+function ShelterMapEventView:gotoBehavior(behaviorId)
+	local behaviorConfig = lua_survival_behavior.configDict[behaviorId]
 
-	if not var_25_0 then
-		arg_25_0:closeThis()
+	if not behaviorConfig then
+		self:closeThis()
 
 		return
 	end
 
-	if not SurvivalMapHelper.instance:isBehaviorMeetCondition(var_25_0.condition, arg_25_0.conditionParam) then
-		logError("ShelterMapEvent behavior condition not meet behaviorId = " .. arg_25_1)
-		arg_25_0:closeThis()
+	if not SurvivalMapHelper.instance:isBehaviorMeetCondition(behaviorConfig.condition, self.conditionParam) then
+		logError("ShelterMapEvent behavior condition not meet behaviorId = " .. behaviorId)
+		self:closeThis()
 
 		return
 	end
 
-	arg_25_0.behaviorConfig = var_25_0
+	self.behaviorConfig = behaviorConfig
 
-	arg_25_0:startDialog()
+	self:startDialog()
 end
 
-function var_0_0.acceptTask(arg_26_0)
-	local var_26_0 = arg_26_0.itemMo and arg_26_0.itemMo.id
-	local var_26_1 = arg_26_0.behaviorConfig and arg_26_0.behaviorConfig.id
+function ShelterMapEventView:acceptTask()
+	local npcId = self.itemMo and self.itemMo.id
+	local behaviorId = self.behaviorConfig and self.behaviorConfig.id
 
-	if var_26_0 and var_26_1 then
-		SurvivalWeekRpc.instance:sendSurvivalNpcAcceptTaskRequest(var_26_0, var_26_1)
+	if npcId and behaviorId then
+		SurvivalWeekRpc.instance:sendSurvivalNpcAcceptTaskRequest(npcId, behaviorId)
 	end
 
-	arg_26_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.initCamera(arg_27_0)
+function ShelterMapEventView:initCamera()
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Survival then
-		local var_27_0 = SurvivalMapModel.instance:getCurMapCo()
-		local var_27_1, var_27_2, var_27_3 = SurvivalHelper.instance:hexPointToWorldPoint(var_27_0.exitPos.q, var_27_0.exitPos.r)
-		local var_27_4 = Vector3(var_27_1, -1000, var_27_3)
+		local mapCo = SurvivalMapModel.instance:getCurMapCo()
+		local x, y, z = SurvivalHelper.instance:hexPointToWorldPoint(mapCo.exitPos.q, mapCo.exitPos.r)
+		local customPos = Vector3(x, -1000, z)
 
-		arg_27_0._modelComp = MonoHelper.addNoUpdateLuaComOnceToGo(arg_27_0._imageModel, Survival3DModelComp, {
-			customPos = var_27_4
+		self._modelComp = MonoHelper.addNoUpdateLuaComOnceToGo(self._imageModel, Survival3DModelComp, {
+			customPos = customPos
 		})
 	else
-		arg_27_0._modelComp = MonoHelper.addNoUpdateLuaComOnceToGo(arg_27_0._imageModel, Survival3DModelComp)
+		self._modelComp = MonoHelper.addNoUpdateLuaComOnceToGo(self._imageModel, Survival3DModelComp)
 	end
 end
 
-return var_0_0
+return ShelterMapEventView

@@ -1,255 +1,272 @@
-﻿module("modules.logic.versionactivity2_2.lopera.view.LoperaMainViewStageItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/lopera/view/LoperaMainViewStageItem.lua
 
-local var_0_0 = class("LoperaMainViewStageItem", LuaCompBase)
-local var_0_1 = VersionActivity2_2Enum.ActivityId.Lopera
-local var_0_2 = LoperaEnum.MapCfgIdx
+module("modules.logic.versionactivity2_2.lopera.view.LoperaMainViewStageItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0._animator = arg_1_1:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._imagepoint = gohelper.findChildImage(arg_1_0.viewGO, "#image_point")
-	arg_1_0._goImagepointfinished = gohelper.findChild(arg_1_0.viewGO, "#image_pointfinished")
-	arg_1_0._gostagefinish = gohelper.findChild(arg_1_0.viewGO, "unlock/#go_stagefinish")
-	arg_1_0._gostar = gohelper.findChild(arg_1_0.viewGO, "unlock/#go_stage/info/#txt_stagename/#go_star")
-	arg_1_0._gohasstar = gohelper.findChild(arg_1_0._gostar, "has/#image_Star")
-	arg_1_0._gounlock = gohelper.findChild(arg_1_0.viewGO, "unlock")
-	arg_1_0._imagestageline = gohelper.findChildImage(arg_1_0.viewGO, "unlock/#image_stageline")
-	arg_1_0._gogame = gohelper.findChild(arg_1_0.viewGO, "unlock/#go_stage/#go_Game")
-	arg_1_0._gostory = gohelper.findChild(arg_1_0.viewGO, "unlock/#go_stagenormal/#go_Story")
-	arg_1_0._imageline = gohelper.findChildImage(arg_1_0.viewGO, "unlock/#image_line")
-	arg_1_0._imageangle = gohelper.findChildImage(arg_1_0.viewGO, "unlock/#image_angle")
-	arg_1_0._txtstagename = gohelper.findChildText(arg_1_0.viewGO, "unlock/#go_stage/info/#txt_stagename")
-	arg_1_0._txtstagenum = gohelper.findChildText(arg_1_0.viewGO, "unlock/#go_stage/info/#txt_stagename/#txt_stageNum")
-	arg_1_0._goArrowSign = gohelper.findChild(arg_1_0.viewGO, "#image_Sign")
-	arg_1_0._btnreview = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "unlock/#go_stage/info/#txt_stagename/#btn_review")
-	arg_1_0._imagechess = gohelper.findChildImage(arg_1_0.viewGO, "unlock/#image_chess")
-	arg_1_0._chessAnimator = gohelper.findChild(arg_1_0._imagechess.gameObject, "ani"):GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "unlock/#btn_click")
+local LoperaMainViewStageItem = class("LoperaMainViewStageItem", LuaCompBase)
+local loperaActId = VersionActivity2_2Enum.ActivityId.Lopera
+local mapCfgIdx = LoperaEnum.MapCfgIdx
 
-	arg_1_0:_addEvents()
+function LoperaMainViewStageItem:init(go)
+	self.viewGO = go
+	self._animator = go:GetComponent(typeof(UnityEngine.Animator))
+	self._imagepoint = gohelper.findChildImage(self.viewGO, "#image_point")
+	self._goImagepointfinished = gohelper.findChild(self.viewGO, "#image_pointfinished")
+	self._gostagefinish = gohelper.findChild(self.viewGO, "unlock/#go_stagefinish")
+	self._gostar = gohelper.findChild(self.viewGO, "unlock/#go_stage/info/#txt_stagename/#go_star")
+	self._gohasstar = gohelper.findChild(self._gostar, "has/#image_Star")
+	self._gounlock = gohelper.findChild(self.viewGO, "unlock")
+	self._imagestageline = gohelper.findChildImage(self.viewGO, "unlock/#image_stageline")
+	self._gogame = gohelper.findChild(self.viewGO, "unlock/#go_stage/#go_Game")
+	self._gostory = gohelper.findChild(self.viewGO, "unlock/#go_stagenormal/#go_Story")
+	self._imageline = gohelper.findChildImage(self.viewGO, "unlock/#image_line")
+	self._imageangle = gohelper.findChildImage(self.viewGO, "unlock/#image_angle")
+	self._txtstagename = gohelper.findChildText(self.viewGO, "unlock/#go_stage/info/#txt_stagename")
+	self._txtstagenum = gohelper.findChildText(self.viewGO, "unlock/#go_stage/info/#txt_stagename/#txt_stageNum")
+	self._goArrowSign = gohelper.findChild(self.viewGO, "#image_Sign")
+	self._btnreview = gohelper.findChildButtonWithAudio(self.viewGO, "unlock/#go_stage/info/#txt_stagename/#btn_review")
+	self._imagechess = gohelper.findChildImage(self.viewGO, "unlock/#image_chess")
+	self._chessAnimator = gohelper.findChild(self._imagechess.gameObject, "ani"):GetComponent(typeof(UnityEngine.Animator))
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "unlock/#btn_click")
+
+	self:_addEvents()
 end
 
-function var_0_0.refreshItem(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._actId = VersionActivity2_2Enum.ActivityId.Lopera
-	arg_2_0._index = arg_2_2
-	arg_2_0._config = arg_2_1
-	arg_2_0._episodeId = arg_2_0._config.id
-	arg_2_0._battleEpisodeId = arg_2_0._config.episodeId
+function LoperaMainViewStageItem:refreshItem(cfg, index)
+	self._actId = VersionActivity2_2Enum.ActivityId.Lopera
+	self._index = index
+	self._config = cfg
+	self._episodeId = self._config.id
+	self._battleEpisodeId = self._config.episodeId
 
-	local var_2_0 = Activity168Model.instance:getCurEpisodeId()
+	local curEpisodeId = Activity168Model.instance:getCurEpisodeId()
 
-	arg_2_0:refreshTitle()
+	self:refreshTitle()
 
-	local var_2_1 = arg_2_0._config.mapId ~= 0
-	local var_2_2 = Activity168Model.instance:isEpisodeFinished(arg_2_0._episodeId)
-	local var_2_3 = Activity168Model.instance:isEpisodeUnlock(arg_2_0._episodeId)
+	local isChessStage = self._config.mapId ~= 0
+	local isFinish = Activity168Model.instance:isEpisodeFinished(self._episodeId)
+	local isUnlock = Activity168Model.instance:isEpisodeUnlock(self._episodeId)
 
-	gohelper.setActive(arg_2_0._btnreview.gameObject, false)
-	gohelper.setActive(arg_2_0._imagechess.gameObject, arg_2_0._episodeId == var_2_0)
-	gohelper.setActive(arg_2_0._goArrowSign, arg_2_0._episodeId == var_2_0)
-	gohelper.setActive(arg_2_0._gounlock, var_2_3)
-	gohelper.setActive(arg_2_0._gostagefinish, var_2_1)
-	gohelper.setActive(arg_2_0._gohasstar, var_2_2)
-	gohelper.setActive(arg_2_0._gogame, var_2_1)
-	gohelper.setActive(arg_2_0._goImagepointfinished, var_2_2)
+	gohelper.setActive(self._btnreview.gameObject, false)
+	gohelper.setActive(self._imagechess.gameObject, self._episodeId == curEpisodeId)
+	gohelper.setActive(self._goArrowSign, self._episodeId == curEpisodeId)
+	gohelper.setActive(self._gounlock, isUnlock)
+	gohelper.setActive(self._gostagefinish, isChessStage)
+	gohelper.setActive(self._gohasstar, isFinish)
+	gohelper.setActive(self._gogame, isChessStage)
+	gohelper.setActive(self._goImagepointfinished, isFinish)
 end
 
-function var_0_0.refreshTitle(arg_3_0)
-	arg_3_0._txtstagename.text = arg_3_0._config.name
-	arg_3_0._txtstagenum.text = string.format("STAGE %02d", arg_3_0._index)
+function LoperaMainViewStageItem:refreshTitle()
+	self._txtstagename.text = self._config.name
+	self._txtstagenum.text = string.format("STAGE %02d", self._index)
 end
 
-function var_0_0.addEventListeners(arg_4_0)
-	arg_4_0._btnclick:AddClickListener(arg_4_0._btnclickOnClick, arg_4_0)
-	arg_4_0._btnreview:AddClickListener(arg_4_0._btnReviewOnClick, arg_4_0)
+function LoperaMainViewStageItem:addEventListeners()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
+	self._btnreview:AddClickListener(self._btnReviewOnClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_5_0)
-	if arg_5_0._btnclick then
-		arg_5_0._btnclick:RemoveClickListener()
-		arg_5_0._btnreview:RemoveClickListener()
+function LoperaMainViewStageItem:removeEventListeners()
+	if self._btnclick then
+		self._btnclick:RemoveClickListener()
+		self._btnreview:RemoveClickListener()
 	end
 end
 
-function var_0_0._btnclickOnClick(arg_6_0)
-	if Activity168Model.instance:getCurEpisodeId() == arg_6_0._episodeId then
-		arg_6_0:_delayEnterLoperaLevel()
+function LoperaMainViewStageItem:_btnclickOnClick()
+	local curEpisodeId = Activity168Model.instance:getCurEpisodeId()
+
+	if curEpisodeId == self._episodeId then
+		self:_delayEnterLoperaLevel()
 	else
-		LoperaController.instance:dispatchEvent(LoperaEvent.ClickOtherEpisode, arg_6_0._episodeId)
-		UIBlockHelper.instance:startBlock("LoperaMainViewStageItemEpisodeClick", 0.5, arg_6_0.viewName)
-		TaskDispatcher.runDelay(arg_6_0._delayPlayChessOpenAnim, arg_6_0, 0.25)
+		LoperaController.instance:dispatchEvent(LoperaEvent.ClickOtherEpisode, self._episodeId)
+		UIBlockHelper.instance:startBlock("LoperaMainViewStageItemEpisodeClick", 0.5, self.viewName)
+		TaskDispatcher.runDelay(self._delayPlayChessOpenAnim, self, 0.25)
 	end
 end
 
-function var_0_0._delayPlayChessOpenAnim(arg_7_0)
-	if not arg_7_0._imagechess then
+function LoperaMainViewStageItem:_delayPlayChessOpenAnim()
+	if not self._imagechess then
 		return
 	end
 
-	gohelper.setActive(arg_7_0._imagechess, true)
+	gohelper.setActive(self._imagechess, true)
 
-	if Activity168Model.instance:getCurEpisodeId() > arg_7_0._episodeId then
-		arg_7_0._chessAnimator:Play("open_left", 0, 0)
+	local curEpisodeId = Activity168Model.instance:getCurEpisodeId()
+
+	if curEpisodeId > self._episodeId then
+		self._chessAnimator:Play("open_left", 0, 0)
 	else
-		arg_7_0._chessAnimator:Play("open_right", 0, 0)
+		self._chessAnimator:Play("open_right", 0, 0)
 	end
 
-	gohelper.setActive(arg_7_0._goArrowSign, true)
-	TaskDispatcher.runDelay(arg_7_0._delayEnterLoperaLevel, arg_7_0, 0.35)
+	gohelper.setActive(self._goArrowSign, true)
+	TaskDispatcher.runDelay(self._delayEnterLoperaLevel, self, 0.35)
 end
 
-function var_0_0._delayEnterLoperaLevel(arg_8_0)
-	if not arg_8_0._config then
+function LoperaMainViewStageItem:_delayEnterLoperaLevel()
+	if not self._config then
 		return
 	end
 
 	LoperaController.instance:dispatchEvent(LoperaEvent.BeforeEnterEpisode)
-	TaskDispatcher.runDelay(arg_8_0._enterLoperaLevel, arg_8_0, 0.5)
+	TaskDispatcher.runDelay(self._enterLoperaLevel, self, 0.5)
 end
 
-function var_0_0._enterLoperaLevel(arg_9_0)
-	LoperaController.instance:enterEpisode(arg_9_0._episodeId)
+function LoperaMainViewStageItem:_enterLoperaLevel()
+	LoperaController.instance:enterEpisode(self._episodeId)
 end
 
-function var_0_0._btnReviewOnClick(arg_10_0)
-	if arg_10_0._config.mapId ~= 0 then
-		LanShouPaController.instance:openStoryView(arg_10_0._episodeId)
+function LoperaMainViewStageItem:_btnReviewOnClick()
+	local isChessStage = self._config.mapId ~= 0
+
+	if isChessStage then
+		LanShouPaController.instance:openStoryView(self._episodeId)
 	else
-		StoryController.instance:playStory(arg_10_0._config.storyBefore, nil, arg_10_0._storyEnd, arg_10_0)
+		StoryController.instance:playStory(self._config.storyBefore, nil, self._storyEnd, self)
 	end
 end
 
-function var_0_0._addEvents(arg_11_0)
-	LoperaController.instance:registerCallback(LoperaEvent.ClickOtherEpisode, arg_11_0._playChooseEpisode, arg_11_0)
-	LoperaController.instance:registerCallback(LoperaEvent.EnterEpisode, arg_11_0._onEnterEpisode, arg_11_0)
+function LoperaMainViewStageItem:_addEvents()
+	LoperaController.instance:registerCallback(LoperaEvent.ClickOtherEpisode, self._playChooseEpisode, self)
+	LoperaController.instance:registerCallback(LoperaEvent.EnterEpisode, self._onEnterEpisode, self)
 end
 
-function var_0_0._removeEvents(arg_12_0)
-	LoperaController.instance:unregisterCallback(LoperaEvent.ClickOtherEpisode, arg_12_0._playChooseEpisode, arg_12_0)
-	LoperaController.instance:unregisterCallback(LoperaEvent.EnterEpisode, arg_12_0._onEnterEpisode, arg_12_0)
+function LoperaMainViewStageItem:_removeEvents()
+	LoperaController.instance:unregisterCallback(LoperaEvent.ClickOtherEpisode, self._playChooseEpisode, self)
+	LoperaController.instance:unregisterCallback(LoperaEvent.EnterEpisode, self._onEnterEpisode, self)
 end
 
-function var_0_0.playFinishAni(arg_13_0)
-	arg_13_0:refreshItem(arg_13_0._config, arg_13_0._index)
-	arg_13_0._animator:Play(UIAnimationName.Finish, 0, 0)
+function LoperaMainViewStageItem:playFinishAni()
+	self:refreshItem(self._config, self._index)
+	self._animator:Play(UIAnimationName.Finish, 0, 0)
 end
 
-function var_0_0.playUnlockAni(arg_14_0)
-	arg_14_0:refreshItem(arg_14_0._config, arg_14_0._index)
-	arg_14_0._animator:Play(UIAnimationName.Unlock, 0, 0)
+function LoperaMainViewStageItem:playUnlockAni()
+	self:refreshItem(self._config, self._index)
+	self._animator:Play(UIAnimationName.Unlock, 0, 0)
 end
 
-function var_0_0._playChooseEpisode(arg_15_0, arg_15_1)
-	local var_15_0 = Activity168Model.instance:getCurEpisodeId()
+function LoperaMainViewStageItem:_playChooseEpisode(clickEpisodeId)
+	local curEpisodeId = Activity168Model.instance:getCurEpisodeId()
 
-	if arg_15_0._episodeId == var_15_0 then
+	if self._episodeId == curEpisodeId then
 		AudioEffectMgr.instance:playAudio(AudioEnum.UI.play_ui_activity_hero37_checkpoint_unlock)
 
-		if arg_15_1 < arg_15_0._episodeId then
-			arg_15_0._chessAnimator:Play("close_left", 0, 0)
+		if clickEpisodeId < self._episodeId then
+			self._chessAnimator:Play("close_left", 0, 0)
 		else
-			arg_15_0._chessAnimator:Play("close_right", 0, 0)
+			self._chessAnimator:Play("close_right", 0, 0)
 		end
 	end
 
-	gohelper.setActive(arg_15_0._goArrowSign, false)
+	gohelper.setActive(self._goArrowSign, false)
 end
 
-function var_0_0._onEnterEpisode(arg_16_0, arg_16_1)
-	if arg_16_0._episodeId ~= arg_16_1 then
+function LoperaMainViewStageItem:_onEnterEpisode(episodeId)
+	if self._episodeId ~= episodeId then
 		return
 	end
 
-	GameUtil.playerPrefsSetStringByUserId(PlayerPrefsKey.Version2_2LoperaSelect .. var_0_1, tostring(arg_16_0._index))
+	GameUtil.playerPrefsSetStringByUserId(PlayerPrefsKey.Version2_2LoperaSelect .. loperaActId, tostring(self._index))
 
-	if arg_16_0._config.episodeType == LoperaEnum.EpisodeType.Explore then
-		local var_16_0 = arg_16_0._config.storyBefore == 0
-		local var_16_1 = Activity168Model.instance:getCurEpisodeId() == arg_16_1
+	if self._config.episodeType == LoperaEnum.EpisodeType.Explore then
+		local isSkipStory = self._config.storyBefore == 0
+		local isPlayedStoryLastTime = Activity168Model.instance:getCurEpisodeId() == episodeId
 
-		if var_16_0 or var_16_1 then
-			arg_16_0:_storyEnd()
+		if isSkipStory or isPlayedStoryLastTime then
+			self:_storyEnd()
 		else
-			StoryController.instance:playStory(arg_16_0._config.storyBefore, nil, arg_16_0._storyEnd, arg_16_0)
+			StoryController.instance:playStory(self._config.storyBefore, nil, self._storyEnd, self)
 		end
-	elseif arg_16_0._config.episodeType == LoperaEnum.EpisodeType.Battle then
-		if arg_16_0._battleEpisodeId <= 0 then
+	elseif self._config.episodeType == LoperaEnum.EpisodeType.Battle then
+		if self._battleEpisodeId <= 0 then
 			logError("没有配置对应的关卡")
 
 			return
 		end
 
-		local var_16_2 = Activity168Model.instance:getEpisodeData(arg_16_0._episodeId)
-		local var_16_3 = DungeonConfig.instance:getEpisodeCO(arg_16_0._battleEpisodeId)
-		local var_16_4 = var_16_3.beforeStory
-		local var_16_5 = var_16_3.afterStory
-		local var_16_6 = var_16_4 == 0 or var_16_2.status == LoperaEnum.EpisodeStatus.PlayStartStory
-		local var_16_7 = var_16_5 == 0 and var_16_2.status == LoperaEnum.EpisodeStatus.PlayEndStory
+		local episodeData = Activity168Model.instance:getEpisodeData(self._episodeId)
+		local dungeonEpisodeCfg = DungeonConfig.instance:getEpisodeCO(self._battleEpisodeId)
+		local storyBefore = dungeonEpisodeCfg.beforeStory
+		local endStory = dungeonEpisodeCfg.afterStory
+		local isSkipStory = storyBefore == 0 or episodeData.status == LoperaEnum.EpisodeStatus.PlayStartStory
+		local playEndStory = endStory == 0 and episodeData.status == LoperaEnum.EpisodeStatus.PlayEndStory
 
-		if var_16_6 then
-			arg_16_0:_enterBattleHeroGroupView()
-		elseif var_16_7 then
-			StoryController.instance:playStory(var_16_5, nil, arg_16_0._storyEnd, arg_16_0)
+		if isSkipStory then
+			self:_enterBattleHeroGroupView()
+		elseif playEndStory then
+			StoryController.instance:playStory(endStory, nil, self._storyEnd, self)
 		else
-			StoryController.instance:playStory(var_16_4, nil, arg_16_0._storyEnd, arg_16_0)
+			StoryController.instance:playStory(storyBefore, nil, self._storyEnd, self)
 		end
-	elseif arg_16_0._config.episodeType == LoperaEnum.EpisodeType.Story then
-		if arg_16_0._config.storyBefore == 0 or arg_16_0._config.mapId ~= 0 and Activity168Model.instance.currChessGameEpisodeId == arg_16_0._episodeId then
-			arg_16_0:_storyEnd()
+	elseif self._config.episodeType == LoperaEnum.EpisodeType.Story then
+		local isSkipStory = self._config.storyBefore == 0 or self._config.mapId ~= 0 and Activity168Model.instance.currChessGameEpisodeId == self._episodeId
+
+		if isSkipStory then
+			self:_storyEnd()
 		else
-			StoryController.instance:playStory(arg_16_0._config.storyBefore, nil, arg_16_0._storyEnd, arg_16_0)
+			StoryController.instance:playStory(self._config.storyBefore, nil, self._storyEnd, self)
 		end
-	elseif arg_16_0._config.episodeType == LoperaEnum.EpisodeType.ExploreEndless then
+	elseif self._config.episodeType == LoperaEnum.EpisodeType.ExploreEndless then
 		LoperaController.instance:openLoperaLevelView()
 	end
 
-	Activity168Model.instance:setCurEpisodeId(arg_16_1)
+	Activity168Model.instance:setCurEpisodeId(episodeId)
 end
 
-function var_0_0._storyEnd(arg_17_0)
-	if arg_17_0._config.episodeType == LoperaEnum.EpisodeType.Explore then
-		if Activity168Model.instance:getCurGameState().round == 1 then
-			local var_17_0 = Activity168Config.instance:getMapStartCell()[var_0_2.storyId]
+function LoperaMainViewStageItem:_storyEnd()
+	if self._config.episodeType == LoperaEnum.EpisodeType.Explore then
+		local curGameState = Activity168Model.instance:getCurGameState()
+		local isNewGame = curGameState.round == 1
 
-			if var_17_0 ~= 0 then
-				StoryController.instance:playStory(var_17_0, nil, arg_17_0._gameFirstStoryEnd, arg_17_0)
+		if isNewGame then
+			local firstCellData = Activity168Config.instance:getMapStartCell()
+			local startStory = firstCellData[mapCfgIdx.storyId]
+
+			if startStory ~= 0 then
+				StoryController.instance:playStory(startStory, nil, self._gameFirstStoryEnd, self)
 			else
-				arg_17_0:_gameFirstStoryEnd()
+				self:_gameFirstStoryEnd()
 			end
 		else
 			LoperaController.instance:openLoperaLevelView()
 		end
-	elseif arg_17_0._config.episodeType == LoperaEnum.EpisodeType.Battle then
-		local var_17_1 = Activity168Model.instance:getEpisodeData(arg_17_0._episodeId)
+	elseif self._config.episodeType == LoperaEnum.EpisodeType.Battle then
+		local episodeData = Activity168Model.instance:getEpisodeData(self._episodeId)
+		local dungeonEpisodeCfg = DungeonConfig.instance:getEpisodeCO(self._battleEpisodeId)
+		local endStory = dungeonEpisodeCfg.afterStory
+		local playEndStory = endStory == 0 and episodeData.status == LoperaEnum.EpisodeStatus.PlayEndStory
 
-		if DungeonConfig.instance:getEpisodeCO(arg_17_0._battleEpisodeId).afterStory == 0 and var_17_1.status == LoperaEnum.EpisodeStatus.PlayEndStory then
+		if playEndStory then
 			LoperaController.instance:finishStoryPlay()
 		else
 			LoperaController.instance:finishStoryPlay()
-			arg_17_0:_enterBattleHeroGroupView()
+			self:_enterBattleHeroGroupView()
 		end
-	elseif arg_17_0._config.episodeType == LoperaEnum.EpisodeType.Story then
+	elseif self._config.episodeType == LoperaEnum.EpisodeType.Story then
 		LoperaController.instance:finishStoryPlay()
 	end
 end
 
-function var_0_0._gameFirstStoryEnd(arg_18_0)
+function LoperaMainViewStageItem:_gameFirstStoryEnd()
 	LoperaController.instance:openLoperaLevelView()
 end
 
-function var_0_0._enterBattleHeroGroupView(arg_19_0)
-	local var_19_0 = arg_19_0._battleId
-	local var_19_1 = LoperaController.instance
-	local var_19_2 = arg_19_0._battleEpisodeId
-	local var_19_3 = DungeonConfig.instance:getEpisodeCO(arg_19_0._battleEpisodeId)
+function LoperaMainViewStageItem:_enterBattleHeroGroupView()
+	local battleId = self._battleId
+	local loperaCtrler = LoperaController.instance
+	local episodeId = self._battleEpisodeId
+	local config = DungeonConfig.instance:getEpisodeCO(self._battleEpisodeId)
 
-	Activity168Model.instance:setCurBattleEpisodeId(arg_19_0._battleEpisodeId)
-	DungeonFightController.instance:setBattleRequestAction(var_19_1.startBattle, var_19_1)
-	DungeonFightController.instance:enterFight(var_19_3.chapterId, var_19_2)
+	Activity168Model.instance:setCurBattleEpisodeId(self._battleEpisodeId)
+	DungeonFightController.instance:setBattleRequestAction(loperaCtrler.startBattle, loperaCtrler)
+	DungeonFightController.instance:enterFight(config.chapterId, episodeId)
 end
 
-function var_0_0.onDestroy(arg_20_0)
-	arg_20_0:_removeEvents()
-	arg_20_0:removeEventListeners()
+function LoperaMainViewStageItem:onDestroy()
+	self:_removeEvents()
+	self:removeEventListeners()
 end
 
-return var_0_0
+return LoperaMainViewStageItem

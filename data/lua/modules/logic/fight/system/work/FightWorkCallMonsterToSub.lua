@@ -1,10 +1,12 @@
-﻿module("modules.logic.fight.system.work.FightWorkCallMonsterToSub", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkCallMonsterToSub.lua
 
-local var_0_0 = class("FightWorkCallMonsterToSub", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkCallMonsterToSub", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0:com_sendFightEvent(FightEvent.AddSubEntity)
-	arg_1_0:onDone(true)
+local FightWorkCallMonsterToSub = class("FightWorkCallMonsterToSub", FightEffectBase)
+
+function FightWorkCallMonsterToSub:onStart()
+	self:com_sendFightEvent(FightEvent.AddSubEntity)
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkCallMonsterToSub

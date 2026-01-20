@@ -1,483 +1,495 @@
-﻿module("modules.ugui.icon.common.CommonPropItemIcon", package.seeall)
+﻿-- chunkname: @modules/ugui/icon/common/CommonPropItemIcon.lua
 
-local var_0_0 = class("CommonPropItemIcon", ListScrollCellExtend)
+module("modules.ugui.icon.common.CommonPropItemIcon", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local CommonPropItemIcon = class("CommonPropItemIcon", ListScrollCellExtend)
+
+function CommonPropItemIcon:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function CommonPropItemIcon:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function CommonPropItemIcon:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0.go = arg_4_0.viewGO
-	arg_4_0._goitem = gohelper.findChild(arg_4_0.viewGO, "go_item")
-	arg_4_0._goequip = gohelper.findChild(arg_4_0.viewGO, "go_equip")
-	arg_4_0._gogold = gohelper.findChild(arg_4_0.viewGO, "#go_gold")
-	arg_4_0._nameTxt = gohelper.findChildText(arg_4_0.viewGO, "txt")
-	arg_4_0._rareInGos = arg_4_0:getUserDataTb_()
-	arg_4_0._hightQualityEffect = arg_4_0:getUserDataTb_()
+function CommonPropItemIcon:_editableInitView()
+	self.go = self.viewGO
+	self._goitem = gohelper.findChild(self.viewGO, "go_item")
+	self._goequip = gohelper.findChild(self.viewGO, "go_equip")
+	self._gogold = gohelper.findChild(self.viewGO, "#go_gold")
+	self._nameTxt = gohelper.findChildText(self.viewGO, "txt")
+	self._rareInGos = self:getUserDataTb_()
+	self._hightQualityEffect = self:getUserDataTb_()
 
-	for iter_4_0 = 1, 6 do
-		local var_4_0 = gohelper.findChild(arg_4_0.viewGO, "vx/" .. tostring(iter_4_0))
+	for i = 1, 6 do
+		local go = gohelper.findChild(self.viewGO, "vx/" .. tostring(i))
 
-		table.insert(arg_4_0._rareInGos, var_4_0)
+		table.insert(self._rareInGos, go)
 	end
 
-	for iter_4_1 = 4, 5 do
-		local var_4_1 = gohelper.findChild(arg_4_0.viewGO, "vx/" .. tostring(iter_4_1) .. "/#teshudaoju")
+	for i = 4, 5 do
+		local go = gohelper.findChild(self.viewGO, "vx/" .. tostring(i) .. "/#teshudaoju")
 
-		table.insert(arg_4_0._hightQualityEffect, iter_4_1, var_4_1)
+		table.insert(self._hightQualityEffect, i, go)
 	end
 
-	gohelper.setActive(arg_4_0._nameTxt.gameObject, false)
+	gohelper.setActive(self._nameTxt.gameObject, false)
 end
 
-function var_0_0._editableAddEvents(arg_5_0)
+function CommonPropItemIcon:_editableAddEvents()
 	return
 end
 
-function var_0_0._editableRemoveEvents(arg_6_0)
+function CommonPropItemIcon:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_7_0, arg_7_1)
-	arg_7_0:setMOValue(arg_7_1.materilType, arg_7_1.materilId, arg_7_1.quantity, arg_7_1.uid, arg_7_1.isIcon, arg_7_1.isGold, arg_7_1.roomBuildingLevel)
+function CommonPropItemIcon:onUpdateMO(mo)
+	self:setMOValue(mo.materilType, mo.materilId, mo.quantity, mo.uid, mo.isIcon, mo.isGold, mo.roomBuildingLevel)
 end
 
-function var_0_0.setMOValue(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4, arg_8_5, arg_8_6, arg_8_7)
-	arg_8_0._type = tonumber(arg_8_1)
+function CommonPropItemIcon:setMOValue(type, id, quantity, uid, isIcon, isGold, roomBuildingLevel)
+	self._type = tonumber(type)
 
-	if arg_8_0._type == MaterialEnum.MaterialType.Equip then
-		if not arg_8_0._equipIcon then
-			arg_8_0._equipIcon = IconMgr.instance:getCommonEquipIcon(arg_8_0._goequip, 1)
+	if self._type == MaterialEnum.MaterialType.Equip then
+		if not self._equipIcon then
+			self._equipIcon = IconMgr.instance:getCommonEquipIcon(self._goequip, 1)
 
-			arg_8_0._equipIcon:addClick()
+			self._equipIcon:addClick()
 		end
 
-		arg_8_0._equipIcon:setMOValue(arg_8_1, arg_8_2, arg_8_3, arg_8_4)
+		self._equipIcon:setMOValue(type, id, quantity, uid)
 	else
-		arg_8_0._itemIcon = arg_8_0._itemIcon or IconMgr.instance:getCommonItemIcon(arg_8_0._goitem)
+		self._itemIcon = self._itemIcon or IconMgr.instance:getCommonItemIcon(self._goitem)
 
-		if arg_8_0._itemIcon and arg_8_0._itemIcon.setQuantityColor then
-			arg_8_0._itemIcon:setQuantityColor(arg_8_0._quantityColor)
+		if self._itemIcon and self._itemIcon.setQuantityColor then
+			self._itemIcon:setQuantityColor(self._quantityColor)
 		end
 
-		arg_8_0._itemIcon:setMOValue(arg_8_1, arg_8_2, arg_8_3, arg_8_4, arg_8_5)
+		self._itemIcon:setMOValue(type, id, quantity, uid, isIcon)
 
-		local var_8_0
+		local newIcon
 
-		if arg_8_1 == MaterialEnum.MaterialType.Building and arg_8_7 and arg_8_7 > 0 then
-			local var_8_1 = RoomConfig.instance:getLevelGroupConfig(arg_8_2, arg_8_7)
+		if type == MaterialEnum.MaterialType.Building and roomBuildingLevel and roomBuildingLevel > 0 then
+			local levelConfig = RoomConfig.instance:getLevelGroupConfig(id, roomBuildingLevel)
 
-			var_8_0 = var_8_1 and ResUrl.getRoomBuildingPropIcon(var_8_1.icon)
+			newIcon = levelConfig and ResUrl.getRoomBuildingPropIcon(levelConfig.icon)
 		end
 
-		arg_8_0._itemIcon:setSpecificIcon(var_8_0)
-		arg_8_0._itemIcon:setRoomBuildingLevel(arg_8_7)
+		self._itemIcon:setSpecificIcon(newIcon)
+		self._itemIcon:setRoomBuildingLevel(roomBuildingLevel)
 	end
 
-	gohelper.setActive(arg_8_0._goequip, arg_8_0._type == MaterialEnum.MaterialType.Equip)
-	gohelper.setActive(arg_8_0._goitem, arg_8_0._type ~= MaterialEnum.MaterialType.Equip)
-	gohelper.setActive(arg_8_0._gogold, arg_8_6)
+	gohelper.setActive(self._goequip, self._type == MaterialEnum.MaterialType.Equip)
+	gohelper.setActive(self._goitem, self._type ~= MaterialEnum.MaterialType.Equip)
+	gohelper.setActive(self._gogold, isGold)
 
-	arg_8_0._isEquip = arg_8_0._type == MaterialEnum.MaterialType.Equip
+	self._isEquip = self._type == MaterialEnum.MaterialType.Equip
 end
 
-function var_0_0.setAlpha(arg_9_0, arg_9_1, arg_9_2)
-	if arg_9_0._equipIcon then
-		arg_9_0._equipIcon:setAlpha(arg_9_1, arg_9_2)
+function CommonPropItemIcon:setAlpha(iconAlpha, bgAlpha)
+	if self._equipIcon then
+		self._equipIcon:setAlpha(iconAlpha, bgAlpha)
 	end
 
-	if arg_9_0._itemIcon then
-		arg_9_0._itemIcon:setAlpha(arg_9_1, arg_9_2)
-	end
-end
-
-function var_0_0.hideEffect(arg_10_0)
-	for iter_10_0, iter_10_1 in pairs(arg_10_0._rareInGos) do
-		gohelper.setActive(iter_10_1, false)
+	if self._itemIcon then
+		self._itemIcon:setAlpha(iconAlpha, bgAlpha)
 	end
 end
 
-function var_0_0.showVxEffect(arg_11_0, arg_11_1, arg_11_2)
-	arg_11_1 = tonumber(arg_11_1)
-
-	local var_11_0, var_11_1 = ItemModel.instance:getItemConfigAndIcon(arg_11_1, arg_11_2)
-	local var_11_2 = var_11_0.rare
-
-	if arg_11_1 == MaterialEnum.MaterialType.PlayerCloth then
-		var_11_2 = var_11_2 or 5
-	end
-
-	for iter_11_0, iter_11_1 in pairs(arg_11_0._rareInGos) do
-		gohelper.setActive(iter_11_1, false)
-		gohelper.setActive(iter_11_1, iter_11_0 == var_11_2)
+function CommonPropItemIcon:hideEffect()
+	for k, v in pairs(self._rareInGos) do
+		gohelper.setActive(v, false)
 	end
 end
 
-function var_0_0.showHighQualityEffect(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	arg_12_1 = tonumber(arg_12_1)
+function CommonPropItemIcon:showVxEffect(itemType, id)
+	itemType = tonumber(itemType)
 
-	if arg_12_1 == MaterialEnum.MaterialType.PlayerCloth then
-		arg_12_3 = arg_12_3 or 5
+	local config, icon = ItemModel.instance:getItemConfigAndIcon(itemType, id)
+	local rare = config.rare
+
+	if itemType == MaterialEnum.MaterialType.PlayerCloth then
+		rare = rare or 5
 	end
 
-	local var_12_0 = ItemModel.canShowVfx(arg_12_1, arg_12_2, arg_12_3)
+	for k, v in pairs(self._rareInGos) do
+		gohelper.setActive(v, false)
+		gohelper.setActive(v, k == rare)
+	end
+end
 
-	for iter_12_0, iter_12_1 in pairs(arg_12_0._hightQualityEffect) do
-		if iter_12_0 == arg_12_3 and var_12_0 then
-			gohelper.setActive(iter_12_1, false)
-			gohelper.setActive(iter_12_1, true)
+function CommonPropItemIcon:showHighQualityEffect(itemType, config, rare)
+	itemType = tonumber(itemType)
+
+	if itemType == MaterialEnum.MaterialType.PlayerCloth then
+		rare = rare or 5
+	end
+
+	local canShowVfx = ItemModel.canShowVfx(itemType, config, rare)
+
+	for k, v in pairs(self._hightQualityEffect) do
+		if k == rare and canShowVfx then
+			gohelper.setActive(v, false)
+			gohelper.setActive(v, true)
 		else
-			gohelper.setActive(iter_12_1, false)
+			gohelper.setActive(v, false)
 		end
 	end
 end
 
-function var_0_0.setItemIconScale(arg_13_0, arg_13_1)
-	if arg_13_0._itemIcon then
-		arg_13_0._itemIcon:setItemIconScale(arg_13_1)
+function CommonPropItemIcon:setItemIconScale(scale)
+	if self._itemIcon then
+		self._itemIcon:setItemIconScale(scale)
 	end
 
-	if arg_13_0._equipIcon and arg_13_0._isEquip then
-		arg_13_0._equipIcon:setItemIconScale(arg_13_1)
-	end
-end
-
-function var_0_0.setItemOffset(arg_14_0, arg_14_1, arg_14_2)
-	if arg_14_0._itemIcon then
-		arg_14_0._itemIcon:setItemOffset(arg_14_1, arg_14_2)
-	end
-
-	if arg_14_0._equipIcon then
-		arg_14_0._equipIcon:setItemOffset(arg_14_1, arg_14_2)
+	if self._equipIcon and self._isEquip then
+		self._equipIcon:setItemIconScale(scale)
 	end
 end
 
-function var_0_0.setCountTxtSize(arg_15_0, arg_15_1)
-	if arg_15_0._itemIcon then
-		arg_15_0._itemIcon:setCountFontSize(arg_15_1)
+function CommonPropItemIcon:setItemOffset(anchorX, anchorY)
+	if self._itemIcon then
+		self._itemIcon:setItemOffset(anchorX, anchorY)
 	end
 
-	if arg_15_0._equipIcon then
-		arg_15_0._equipIcon:setCountFontSize(arg_15_1)
-	end
-end
-
-function var_0_0.setScale(arg_16_0, arg_16_1)
-	if arg_16_0._itemIcon then
-		arg_16_0._itemIcon:setScale(arg_16_1)
-	end
-
-	if arg_16_0._equipIcon and arg_16_0._isEquip then
-		arg_16_0._equipIcon:setScale(arg_16_1)
+	if self._equipIcon then
+		self._equipIcon:setItemOffset(anchorX, anchorY)
 	end
 end
 
-function var_0_0.setPropItemScale(arg_17_0, arg_17_1)
-	transformhelper.setLocalScale(arg_17_0.viewGO.transform, arg_17_1, arg_17_1, arg_17_1)
-end
+function CommonPropItemIcon:setCountTxtSize(fontsize)
+	if self._itemIcon then
+		self._itemIcon:setCountFontSize(fontsize)
+	end
 
-function var_0_0.showName(arg_18_0, arg_18_1)
-	if arg_18_0._itemIcon then
-		arg_18_0._itemIcon:showName(arg_18_1)
+	if self._equipIcon then
+		self._equipIcon:setCountFontSize(fontsize)
 	end
 end
 
-function var_0_0.setNameType(arg_19_0, arg_19_1)
-	if arg_19_0._itemIcon then
-		arg_19_0._itemIcon:setNameType(arg_19_1)
+function CommonPropItemIcon:setScale(scale)
+	if self._itemIcon then
+		self._itemIcon:setScale(scale)
+	end
+
+	if self._equipIcon and self._isEquip then
+		self._equipIcon:setScale(scale)
 	end
 end
 
-function var_0_0.customOnClickCallback(arg_20_0, arg_20_1, arg_20_2)
-	if arg_20_0._equipIcon and arg_20_0._isEquip then
-		arg_20_0._equipIcon:customClick(arg_20_1, arg_20_2)
-	end
+function CommonPropItemIcon:setPropItemScale(scale)
+	transformhelper.setLocalScale(self.viewGO.transform, scale, scale, scale)
+end
 
-	if arg_20_0._itemIcon then
-		arg_20_0._itemIcon:customOnClickCallback(arg_20_1, arg_20_2)
+function CommonPropItemIcon:showName(txt)
+	if self._itemIcon then
+		self._itemIcon:showName(txt)
 	end
 end
 
-function var_0_0.setOnBeforeClickCallback(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
-	if arg_21_0._itemIcon then
-		arg_21_0._itemIcon:setOnBeforeClickCallback(arg_21_1, arg_21_2, arg_21_3)
+function CommonPropItemIcon:setNameType(str)
+	if self._itemIcon then
+		self._itemIcon:setNameType(str)
 	end
 end
 
-function var_0_0.showStackableNum(arg_22_0)
-	if arg_22_0._itemIcon and arg_22_0._itemIcon.showStackableNum then
-		arg_22_0._itemIcon:showStackableNum()
+function CommonPropItemIcon:customOnClickCallback(callback, param)
+	if self._equipIcon and self._isEquip then
+		self._equipIcon:customClick(callback, param)
+	end
+
+	if self._itemIcon then
+		self._itemIcon:customOnClickCallback(callback, param)
 	end
 end
 
-function var_0_0.setFrameMaskable(arg_23_0, arg_23_1)
-	if arg_23_0._itemIcon and arg_23_0._itemIcon._setFrameMaskable then
-		arg_23_0._itemIcon:_setFrameMaskable(arg_23_1)
+function CommonPropItemIcon:setInterceptClick(callback, callbackObj)
+	if self._equipIcon and self._isEquip then
+		self._equipIcon:setInterceptClick(callback, callbackObj)
+	end
+
+	if self._itemIcon then
+		self._itemIcon:setInterceptClick(callback, callbackObj)
 	end
 end
 
-function var_0_0.isShowCount(arg_24_0, arg_24_1)
-	if arg_24_0._itemIcon and arg_24_0._itemIcon.isShowCount then
-		arg_24_0._itemIcon:isShowCount(arg_24_1)
+function CommonPropItemIcon:setOnBeforeClickCallback(callback, callbackObj, param)
+	if self._itemIcon then
+		self._itemIcon:setOnBeforeClickCallback(callback, callbackObj, param)
 	end
 end
 
-function var_0_0.isShowQuality(arg_25_0, arg_25_1)
-	if arg_25_0._itemIcon and arg_25_0._itemIcon.isShowQuality then
-		arg_25_0._itemIcon:isShowQuality(arg_25_1)
-	end
-
-	if arg_25_0._equipIcon and arg_25_0._isEquip then
-		arg_25_0._equipIcon:isShowQuality(arg_25_1)
+function CommonPropItemIcon:showStackableNum()
+	if self._itemIcon and self._itemIcon.showStackableNum then
+		self._itemIcon:showStackableNum()
 	end
 end
 
-function var_0_0.isShowEquipAndItemCount(arg_26_0, arg_26_1)
-	if arg_26_0._itemIcon and arg_26_0._itemIcon.isShowCount then
-		arg_26_0._itemIcon:isShowCount(arg_26_1)
-	end
-
-	if arg_26_0._equipIcon and arg_26_0._isEquip then
-		arg_26_0._equipIcon:isShowCount(arg_26_1)
+function CommonPropItemIcon:setFrameMaskable(state)
+	if self._itemIcon and self._itemIcon._setFrameMaskable then
+		self._itemIcon:_setFrameMaskable(state)
 	end
 end
 
-function var_0_0.setHideLvAndBreakFlag(arg_27_0, arg_27_1)
-	if arg_27_0._equipIcon and arg_27_0._isEquip then
-		arg_27_0._equipIcon:setHideLvAndBreakFlag(arg_27_1)
+function CommonPropItemIcon:isShowCount(flag)
+	if self._itemIcon and self._itemIcon.isShowCount then
+		self._itemIcon:isShowCount(flag)
 	end
 end
 
-function var_0_0.setShowCountFlag(arg_28_0, arg_28_1)
-	if arg_28_0._equipIcon and arg_28_0._isEquip then
-		arg_28_0._equipIcon:setShowCountFlag(arg_28_1)
+function CommonPropItemIcon:isShowQuality(flag)
+	if self._itemIcon and self._itemIcon.isShowQuality then
+		self._itemIcon:isShowQuality(flag)
+	end
+
+	if self._equipIcon and self._isEquip then
+		self._equipIcon:isShowQuality(flag)
 	end
 end
 
-function var_0_0.isShowName(arg_29_0, arg_29_1)
-	if arg_29_0._itemIcon and arg_29_0._itemIcon.isShowName then
-		arg_29_0._itemIcon:isShowName(arg_29_1)
+function CommonPropItemIcon:isShowEquipAndItemCount(flag)
+	if self._itemIcon and self._itemIcon.isShowCount then
+		self._itemIcon:isShowCount(flag)
+	end
+
+	if self._equipIcon and self._isEquip then
+		self._equipIcon:isShowCount(flag)
 	end
 end
 
-function var_0_0.isShowEffect(arg_30_0, arg_30_1)
-	if arg_30_0._itemIcon and arg_30_0._itemIcon.isShowEffect then
-		arg_30_0._itemIcon:isShowEffect(arg_30_1)
+function CommonPropItemIcon:setHideLvAndBreakFlag(flag)
+	if self._equipIcon and self._isEquip then
+		self._equipIcon:setHideLvAndBreakFlag(flag)
 	end
 end
 
-function var_0_0.isShowAddition(arg_31_0, arg_31_1)
-	if arg_31_0._itemIcon and arg_31_0._itemIcon.isShowAddition then
-		arg_31_0._itemIcon:isShowAddition(arg_31_1)
-	elseif arg_31_0._isEquip and arg_31_0._equipIcon then
-		arg_31_0._equipIcon:isShowAddition(arg_31_1)
+function CommonPropItemIcon:setShowCountFlag(flag)
+	if self._equipIcon and self._isEquip then
+		self._equipIcon:setShowCountFlag(flag)
 	end
 end
 
-function var_0_0.ShowEquipCount(arg_32_0, arg_32_1, arg_32_2)
-	if arg_32_0._isEquip and arg_32_0._equipIcon then
-		arg_32_0._equipIcon:showEquipCount(arg_32_1, arg_32_2)
+function CommonPropItemIcon:isShowName(flag)
+	if self._itemIcon and self._itemIcon.isShowName then
+		self._itemIcon:isShowName(flag)
 	end
 end
 
-function var_0_0.isShowEquipCount(arg_33_0, arg_33_1)
-	if arg_33_0._isEquip and arg_33_0._equipIcon then
-		arg_33_0._equipIcon:isShowCount(arg_33_1)
+function CommonPropItemIcon:isShowEffect(flag)
+	if self._itemIcon and self._itemIcon.isShowEffect then
+		self._itemIcon:isShowEffect(flag)
 	end
 end
 
-function var_0_0.hideExpEquipState(arg_34_0)
-	if arg_34_0._isEquip and arg_34_0._equipIcon then
-		arg_34_0._equipIcon:hideExpEquipState()
+function CommonPropItemIcon:isShowAddition(flag)
+	if self._itemIcon and self._itemIcon.isShowAddition then
+		self._itemIcon:isShowAddition(flag)
+	elseif self._isEquip and self._equipIcon then
+		self._equipIcon:isShowAddition(flag)
 	end
 end
 
-function var_0_0.hideEquipLvAndBreak(arg_35_0, arg_35_1)
-	if arg_35_0._isEquip and arg_35_0._equipIcon then
-		arg_35_0._equipIcon:hideLvAndBreak(arg_35_1)
+function CommonPropItemIcon:ShowEquipCount(countbg, count)
+	if self._isEquip and self._equipIcon then
+		self._equipIcon:showEquipCount(countbg, count)
 	end
 end
 
-function var_0_0.showEquipRefineContainer(arg_36_0, arg_36_1)
-	if arg_36_0._isEquip and arg_36_0._equipIcon then
-		arg_36_0._equipIcon:showEquipRefineContainer(arg_36_1)
+function CommonPropItemIcon:isShowEquipCount(flag)
+	if self._isEquip and self._equipIcon then
+		self._equipIcon:isShowCount(flag)
 	end
 end
 
-function var_0_0.setCantJump(arg_37_0, arg_37_1)
-	if arg_37_0._itemIcon and arg_37_0._itemIcon.setCantJump then
-		arg_37_0._itemIcon:setCantJump(arg_37_1)
-	end
-
-	if arg_37_0._equipIcon and arg_37_0._equipIcon.setCantJump then
-		arg_37_0._equipIcon:setCantJump(arg_37_1)
+function CommonPropItemIcon:hideExpEquipState()
+	if self._isEquip and self._equipIcon then
+		self._equipIcon:hideExpEquipState()
 	end
 end
 
-function var_0_0.setRecordFarmItem(arg_38_0, arg_38_1)
-	if arg_38_0._itemIcon and arg_38_0._itemIcon.setRecordFarmItem then
-		arg_38_0._itemIcon:setRecordFarmItem(arg_38_1)
+function CommonPropItemIcon:hideEquipLvAndBreak(flag)
+	if self._isEquip and self._equipIcon then
+		self._equipIcon:hideLvAndBreak(flag)
 	end
 end
 
-function var_0_0.setQuantityColor(arg_39_0, arg_39_1)
-	arg_39_0._quantityColor = arg_39_1
-
-	if arg_39_0._itemIcon and arg_39_0._itemIcon.setQuantityColor then
-		arg_39_0._itemIcon:setQuantityColor(arg_39_1)
+function CommonPropItemIcon:showEquipRefineContainer(flag)
+	if self._isEquip and self._equipIcon then
+		self._equipIcon:showEquipRefineContainer(flag)
 	end
 end
 
-function var_0_0.setQuantityText(arg_40_0, arg_40_1)
-	if arg_40_0._itemIcon then
-		arg_40_0._itemIcon:setQuantityText(arg_40_1)
+function CommonPropItemIcon:setCantJump(cantJump)
+	if self._itemIcon and self._itemIcon.setCantJump then
+		self._itemIcon:setCantJump(cantJump)
+	end
+
+	if self._equipIcon and self._equipIcon.setCantJump then
+		self._equipIcon:setCantJump(cantJump)
 	end
 end
 
-function var_0_0.setItemColor(arg_41_0, arg_41_1)
-	if arg_41_0._itemIcon then
-		arg_41_0._itemIcon:setItemColor(arg_41_1)
-	end
-
-	if arg_41_0._equipIcon then
-		arg_41_0._equipIcon:setItemColor(arg_41_1)
+function CommonPropItemIcon:setRecordFarmItem(recordFarmItem)
+	if self._itemIcon and self._itemIcon.setRecordFarmItem then
+		self._itemIcon:setRecordFarmItem(recordFarmItem)
 	end
 end
 
-function var_0_0.showStackableNum2(arg_42_0, arg_42_1, arg_42_2)
-	if arg_42_0._itemIcon and arg_42_0._itemIcon.showStackableNum2 then
-		arg_42_0._itemIcon:showStackableNum2(arg_42_1, arg_42_2)
+function CommonPropItemIcon:setQuantityColor(quantityColor)
+	self._quantityColor = quantityColor
+
+	if self._itemIcon and self._itemIcon.setQuantityColor then
+		self._itemIcon:setQuantityColor(quantityColor)
 	end
 end
 
-function var_0_0.setCountText(arg_43_0, arg_43_1)
-	if arg_43_0._itemIcon then
-		arg_43_0._itemIcon:setCountText(arg_43_1)
+function CommonPropItemIcon:setQuantityText(color)
+	if self._itemIcon then
+		self._itemIcon:setQuantityText(color)
 	end
 end
 
-function var_0_0.getItemIcon(arg_44_0)
-	return arg_44_0._isEquip and arg_44_0._equipIcon or arg_44_0._itemIcon
+function CommonPropItemIcon:setItemColor(color)
+	if self._itemIcon then
+		self._itemIcon:setItemColor(color)
+	end
+
+	if self._equipIcon then
+		self._equipIcon:setItemColor(color)
+	end
 end
 
-function var_0_0.isEquipIcon(arg_45_0)
-	return arg_45_0._isEquip
+function CommonPropItemIcon:showStackableNum2(countbg, txtQuantity)
+	if self._itemIcon and self._itemIcon.showStackableNum2 then
+		self._itemIcon:showStackableNum2(countbg, txtQuantity)
+	end
 end
 
-function var_0_0.setCountFontSize(arg_46_0, arg_46_1)
-	if arg_46_0._equipIcon and arg_46_0._isEquip then
-		arg_46_0._equipIcon:setCountFontSize(arg_46_1)
+function CommonPropItemIcon:setCountText(str)
+	if self._itemIcon then
+		self._itemIcon:setCountText(str)
+	end
+end
+
+function CommonPropItemIcon:getItemIcon()
+	return self._isEquip and self._equipIcon or self._itemIcon
+end
+
+function CommonPropItemIcon:isEquipIcon()
+	return self._isEquip
+end
+
+function CommonPropItemIcon:setCountFontSize(fontsize)
+	if self._equipIcon and self._isEquip then
+		self._equipIcon:setCountFontSize(fontsize)
 	else
-		arg_46_0._itemIcon:setCountFontSize(arg_46_1)
+		self._itemIcon:setCountFontSize(fontsize)
 	end
 end
 
-function var_0_0.setEquipLevelScaleAndColor(arg_47_0, arg_47_1, arg_47_2)
-	if arg_47_0._equipIcon and arg_47_0._isEquip then
-		arg_47_0._equipIcon:setLevelScaleAndColor(arg_47_1, arg_47_2)
+function CommonPropItemIcon:setEquipLevelScaleAndColor(scale, color)
+	if self._equipIcon and self._isEquip then
+		self._equipIcon:setLevelScaleAndColor(scale, color)
 	end
 end
 
-function var_0_0.setCarrerIconAndRefineVisible(arg_48_0, arg_48_1)
-	if arg_48_0._equipIcon and arg_48_0._isEquip then
-		arg_48_0._equipIcon:setCarrerIconAndRefineVisible(arg_48_1)
+function CommonPropItemIcon:setCarrerIconAndRefineVisible(flag)
+	if self._equipIcon and self._isEquip then
+		self._equipIcon:setCarrerIconAndRefineVisible(flag)
 	end
 end
 
-function var_0_0.playAnimation(arg_49_0)
-	if arg_49_0._itemIcon then
-		arg_49_0._itemIcon:playAnimation()
+function CommonPropItemIcon:playAnimation()
+	if self._itemIcon then
+		self._itemIcon:playAnimation()
 	end
 end
 
-function var_0_0.setAutoPlay(arg_50_0, arg_50_1)
-	if arg_50_0._itemIcon then
-		arg_50_0._itemIcon:setAutoPlay(arg_50_1)
+function CommonPropItemIcon:setAutoPlay(autoPlay)
+	if self._itemIcon then
+		self._itemIcon:setAutoPlay(autoPlay)
 	end
 end
 
-function var_0_0.setConsume(arg_51_0, arg_51_1)
-	if arg_51_0._itemIcon then
-		arg_51_0._itemIcon:setConsume(arg_51_1)
+function CommonPropItemIcon:setConsume(consume)
+	if self._itemIcon then
+		self._itemIcon:setConsume(consume)
 	end
 end
 
-function var_0_0.isShowEquipRefineLv(arg_52_0, arg_52_1)
-	if arg_52_0._isEquip then
-		arg_52_0._equipIcon:isShowRefineLv(arg_52_1)
+function CommonPropItemIcon:isShowEquipRefineLv(isShow)
+	if self._isEquip then
+		self._equipIcon:isShowRefineLv(isShow)
 	end
 end
 
-function var_0_0.SetCountLocalY(arg_53_0, arg_53_1)
-	if arg_53_0._itemIcon and arg_53_0._itemIcon._txtQuantity then
-		recthelper.setAnchorY(arg_53_0._itemIcon._txtQuantity.transform, arg_53_1)
+function CommonPropItemIcon:SetCountLocalY(localY)
+	if self._itemIcon and self._itemIcon._txtQuantity then
+		recthelper.setAnchorY(self._itemIcon._txtQuantity.transform, localY)
 	end
 
-	if arg_53_0._equipIcon and arg_53_0._equipIcon._txtnum then
-		recthelper.setAnchorY(arg_53_0._equipIcon._txtnum.transform, arg_53_1 - 39.6)
-	end
-end
-
-function var_0_0.SetCountBgHeight(arg_54_0, arg_54_1)
-	if arg_54_0._itemIcon and arg_54_0._itemIcon._countbg then
-		recthelper.setHeight(arg_54_0._itemIcon._countbg.transform, arg_54_1)
-	end
-
-	if arg_54_0._equipIcon and arg_54_0._equipIcon._countbg then
-		recthelper.setHeight(arg_54_0._equipIcon._countbg.transform, arg_54_1)
+	if self._equipIcon and self._equipIcon._txtnum then
+		recthelper.setAnchorY(self._equipIcon._txtnum.transform, localY - 39.6)
 	end
 end
 
-function var_0_0.SetCountBgScale(arg_55_0, arg_55_1, arg_55_2, arg_55_3)
-	if arg_55_0._itemIcon and arg_55_0._itemIcon._countbg then
-		transformhelper.setLocalScale(arg_55_0._itemIcon._countbg.transform, arg_55_1, arg_55_2, arg_55_3)
+function CommonPropItemIcon:SetCountBgHeight(height)
+	if self._itemIcon and self._itemIcon._countbg then
+		recthelper.setHeight(self._itemIcon._countbg.transform, height)
 	end
 
-	if arg_55_0._equipIcon and arg_55_0._equipIcon._countbg then
-		transformhelper.setLocalScale(arg_55_0._equipIcon._countbg.transform, arg_55_1, arg_55_2, arg_55_3)
-	end
-end
-
-function var_0_0.setGetMask(arg_56_0, arg_56_1)
-	if arg_56_0._itemIcon then
-		arg_56_0._itemIcon:setGetMask(arg_56_1)
-	end
-
-	if arg_56_0._equipIcon then
-		arg_56_0._equipIcon:setGetMask(arg_56_1)
+	if self._equipIcon and self._equipIcon._countbg then
+		recthelper.setHeight(self._equipIcon._countbg.transform, height)
 	end
 end
 
-function var_0_0.setIconBg(arg_57_0, arg_57_1)
-	if arg_57_0._itemIcon then
-		arg_57_0._itemIcon:setIconBg(arg_57_1)
+function CommonPropItemIcon:SetCountBgScale(scalex, scaley, scalez)
+	if self._itemIcon and self._itemIcon._countbg then
+		transformhelper.setLocalScale(self._itemIcon._countbg.transform, scalex, scaley, scalez)
+	end
+
+	if self._equipIcon and self._equipIcon._countbg then
+		transformhelper.setLocalScale(self._equipIcon._countbg.transform, scalex, scaley, scalez)
 	end
 end
 
-function var_0_0.setCanShowDeadLine(arg_58_0, arg_58_1)
-	if arg_58_0._itemIcon then
-		arg_58_0._itemIcon:setCanShowDeadLine(arg_58_1)
+function CommonPropItemIcon:setGetMask(isMask)
+	if self._itemIcon then
+		self._itemIcon:setGetMask(isMask)
+	end
+
+	if self._equipIcon then
+		self._equipIcon:setGetMask(isMask)
 	end
 end
 
-function var_0_0.isExpiredItem(arg_59_0)
-	if arg_59_0._itemIcon then
-		return arg_59_0._itemIcon:isExpiredItem()
-	end
-
-	if arg_59_0._equipIcon then
-		return arg_59_0._equipIcon:isExpiredItem()
+function CommonPropItemIcon:setIconBg(bgStr)
+	if self._itemIcon then
+		self._itemIcon:setIconBg(bgStr)
 	end
 end
 
-return var_0_0
+function CommonPropItemIcon:setCanShowDeadLine(canShowDeadLine)
+	if self._itemIcon then
+		self._itemIcon:setCanShowDeadLine(canShowDeadLine)
+	end
+end
+
+function CommonPropItemIcon:isExpiredItem()
+	if self._itemIcon then
+		return self._itemIcon:isExpiredItem()
+	end
+
+	if self._equipIcon then
+		return self._equipIcon:isExpiredItem()
+	end
+end
+
+return CommonPropItemIcon

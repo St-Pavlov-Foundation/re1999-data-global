@@ -1,10 +1,12 @@
-﻿module("modules.logic.meilanni.model.EventHistoryMO", package.seeall)
+﻿-- chunkname: @modules/logic/meilanni/model/EventHistoryMO.lua
 
-local var_0_0 = pureTable("EventHistoryMO")
+module("modules.logic.meilanni.model.EventHistoryMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.index = arg_1_1.index
-	arg_1_0.history = arg_1_1.history
+local EventHistoryMO = pureTable("EventHistoryMO")
+
+function EventHistoryMO:init(info)
+	self.index = info.index
+	self.history = info.history
 end
 
-return var_0_0
+return EventHistoryMO

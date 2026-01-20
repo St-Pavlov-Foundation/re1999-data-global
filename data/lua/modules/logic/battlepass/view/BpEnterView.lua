@@ -1,101 +1,119 @@
-﻿module("modules.logic.battlepass.view.BpEnterView", package.seeall)
+﻿-- chunkname: @modules/logic/battlepass/view/BpEnterView.lua
 
-local var_0_0 = class("BpEnterView", StoreRecommendBaseSubView)
+module("modules.logic.battlepass.view.BpEnterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagecover = gohelper.findChildSingleImage(arg_1_0.viewGO, "cover/#simage_cover")
-	arg_1_0._transName = gohelper.findChildComponent(arg_1_0.viewGO, "cover/skinname", typeof(UnityEngine.Transform))
-	arg_1_0._txtenname = gohelper.findChildText(arg_1_0.viewGO, "cover/skinname/name/#txt_enname")
-	arg_1_0._btndetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "cover/skinname/#btn_detail")
-	arg_1_0._simagedetail = gohelper.findChildSingleImage(arg_1_0.viewGO, "cover/skinname/#btn_detail")
-	arg_1_0._headicon = gohelper.findChild(arg_1_0.viewGO, "stamp/icon")
-	arg_1_0._btnenter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_enter", AudioEnum.UI.play_ui_role_pieces_open)
-	arg_1_0._txthead = gohelper.findChildTextMesh(arg_1_0.viewGO, "stamp/txt")
-	arg_1_0._txtheadname = gohelper.findChildTextMesh(arg_1_0.viewGO, "stamp/name")
-	arg_1_0._addReward = gohelper.findChild(arg_1_0.viewGO, "#go_addreward")
-	arg_1_0._gostyle1 = gohelper.findChild(arg_1_0.viewGO, "#go_style1")
-	arg_1_0._gostyle2 = gohelper.findChild(arg_1_0.viewGO, "#go_style2")
-	arg_1_0._gostyle3 = gohelper.findChild(arg_1_0.viewGO, "#go_style3")
+local BpEnterView = class("BpEnterView", StoreRecommendBaseSubView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function BpEnterView:onInitView()
+	self._simagecover = gohelper.findChildSingleImage(self.viewGO, "cover/#simage_cover")
+	self._transName = gohelper.findChildComponent(self.viewGO, "cover/skinname", typeof(UnityEngine.Transform))
+	self._txtenname = gohelper.findChildText(self.viewGO, "cover/skinname/name/#txt_enname")
+	self._btndetail = gohelper.findChildButtonWithAudio(self.viewGO, "cover/skinname/#btn_detail")
+	self._simagedetail = gohelper.findChildSingleImage(self.viewGO, "cover/skinname/#btn_detail")
+	self._headicon = gohelper.findChild(self.viewGO, "stamp/icon")
+	self._btnenter = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_enter", AudioEnum.UI.play_ui_role_pieces_open)
+	self._txthead = gohelper.findChildTextMesh(self.viewGO, "stamp/txt")
+	self._txtheadname = gohelper.findChildTextMesh(self.viewGO, "stamp/name")
+	self._addReward = gohelper.findChild(self.viewGO, "#go_addreward")
+	self._gostyle1 = gohelper.findChild(self.viewGO, "#go_style1")
+	self._gostyle2 = gohelper.findChild(self.viewGO, "#go_style2")
+	self._gostyle3 = gohelper.findChild(self.viewGO, "#go_style3")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btndetail:AddClickListener(arg_2_0._btndetailOnClick, arg_2_0)
-	arg_2_0._btnenter:AddClickListener(arg_2_0._btnenterOnClick, arg_2_0)
+function BpEnterView:addEvents()
+	self._btndetail:AddClickListener(self._btndetailOnClick, self)
+	self._btnenter:AddClickListener(self._btnenterOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btndetail:RemoveClickListener()
-	arg_3_0._btnenter:RemoveClickListener()
+function BpEnterView:removeEvents()
+	self._btndetail:RemoveClickListener()
+	self._btnenter:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._animator = arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_4_0._animatorPlayer = SLFramework.AnimatorPlayer.Get(arg_4_0.viewGO)
+function BpEnterView:_editableInitView()
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._animatorPlayer = SLFramework.AnimatorPlayer.Get(self.viewGO)
 
-	local var_4_0 = BpConfig.instance:getBpCO(BpModel.instance.id)
+	local co = BpConfig.instance:getBpCO(BpModel.instance.id)
 
-	if var_4_0 then
-		local var_4_1 = gohelper.findChildTextMesh(arg_4_0.viewGO, "cover/skinname")
-		local var_4_2 = gohelper.findChildTextMesh(arg_4_0.viewGO, "cover/skinname/name")
-		local var_4_3 = gohelper.findChildTextMesh(arg_4_0.viewGO, "cover/skinname/#txt_enname")
+	if co then
+		local skinname = gohelper.findChildTextMesh(self.viewGO, "cover/skinname")
+		local name = gohelper.findChildTextMesh(self.viewGO, "cover/skinname/name")
+		local nameEn = gohelper.findChildTextMesh(self.viewGO, "cover/skinname/#txt_enname")
 
-		var_4_1.text = var_4_0.bpSkinDesc
-		var_4_2.text = var_4_0.bpSkinNametxt
-		var_4_3.text = var_4_0.bpSkinEnNametxt
+		skinname.text = co.bpSkinDesc
+		name.text = co.bpSkinNametxt
+		nameEn.text = co.bpSkinEnNametxt
 	end
 
-	local var_4_4, var_4_5 = BpConfig.instance:getCurHeadItemName(BpModel.instance.id)
+	local headName, headId = BpConfig.instance:getCurHeadItemName(BpModel.instance.id)
 
-	arg_4_0._txtheadname.text = string.format("「%s」", var_4_4)
+	self._txtheadname.text = string.format("「%s」", headName)
 
-	IconMgr.instance:getCommonLiveHeadIcon(arg_4_0._headicon):setLiveHead(var_4_5)
+	local liveIcon = IconMgr.instance:getCommonLiveHeadIcon(self._headicon)
 
-	local var_4_6 = BpConfig.instance:getNewItems(BpModel.instance.id)
-	local var_4_7 = #var_4_6
+	liveIcon:setLiveHead(headId)
 
-	if var_4_7 > 3 then
-		logError("BP 新增道具数量错误" .. #var_4_6)
-	elseif var_4_7 == 0 then
-		gohelper.setActive(arg_4_0._addReward, false)
+	local newItems = BpConfig.instance:getNewItems(BpModel.instance.id)
+	local len = #newItems
+
+	if len > 3 then
+		logError("BP 新增道具数量错误" .. #newItems)
+	elseif len == 0 then
+		gohelper.setActive(self._addReward, false)
 	else
-		gohelper.setActive(arg_4_0._addReward, true)
+		gohelper.setActive(self._addReward, true)
 
-		for iter_4_0 = 1, 3 do
-			local var_4_8 = gohelper.findChild(arg_4_0._addReward, tostring(iter_4_0))
+		for i = 1, 3 do
+			local node = gohelper.findChild(self._addReward, tostring(i))
 
-			if var_4_7 < iter_4_0 then
-				gohelper.setActive(var_4_8, false)
+			if len < i then
+				gohelper.setActive(node, false)
 			else
-				local var_4_9 = var_4_6[iter_4_0]
-				local var_4_10, var_4_11 = ItemModel.instance:getItemConfigAndIcon(var_4_9[1], var_4_9[2])
+				local data = newItems[i]
+				local config, icon = ItemModel.instance:getItemConfigAndIcon(data[1], data[2])
+				local image = gohelper.findChildSingleImage(node, "#simage_icon" .. i)
 
-				gohelper.findChildSingleImage(var_4_8, "#simage_icon" .. iter_4_0):LoadImage(var_4_11)
+				image:LoadImage(icon)
 			end
 		end
 	end
+
+	self.stamp2 = gohelper.findChild(self.viewGO, "stamp2")
+	self.haveSpecialBonus = BpModel.instance:haveSpecialBonus()
+
+	gohelper.setActive(self.stamp2, self.haveSpecialBonus)
+
+	if self.haveSpecialBonus then
+		self._textBonusNum = gohelper.findChildTextMesh(self.viewGO, "stamp2/iconitem/#txt_num")
+
+		local bonus = BpModel.instance:getSpecialBonus()[1]
+
+		self._textBonusNum.text = bonus[3]
+	end
 end
 
-function var_0_0._btndetailOnClick(arg_5_0)
+function BpEnterView:_btndetailOnClick()
 	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.HeroSkin, BpConfig.instance:getCurSkinId(BpModel.instance.id), false, nil, false)
 end
 
-function var_0_0._btnenterOnClick(arg_6_0)
+function BpEnterView:_btnenterOnClick()
 	StatController.instance:track(StatEnum.EventName.ClickRecommendPage, {
 		[StatEnum.EventProperties.RecommendPageType] = StatEnum.RecommendType.Store,
 		[StatEnum.EventProperties.RecommendPageId] = "714",
 		[StatEnum.EventProperties.RecommendPageName] = "吼吼点唱机",
-		[StatEnum.EventProperties.RecommendPageRank] = arg_6_0:getTabIndex(714)
+		[StatEnum.EventProperties.RecommendPageRank] = self:getTabIndex(714)
 	})
 	BpController.instance:openBattlePassView()
 end
 
-function var_0_0.onDestroyView(arg_7_0)
-	arg_7_0._simagecover:UnLoadImage()
-	arg_7_0._simagedetail:UnLoadImage()
+function BpEnterView:onDestroyView()
+	self._simagecover:UnLoadImage()
+	self._simagedetail:UnLoadImage()
 end
 
-return var_0_0
+return BpEnterView

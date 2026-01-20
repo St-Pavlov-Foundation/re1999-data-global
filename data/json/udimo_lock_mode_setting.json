@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "name": "v3a2_udimo_lock_setting_1",
+    "waitTime": 0,
+    "isDefault": true
+  },
+  {
+    "id": 2,
+    "name": "v3a2_udimo_lock_setting_2",
+    "waitTime": 30,
+    "isDefault": false
+  },
+  {
+    "id": 3,
+    "name": "v3a2_udimo_lock_setting_3",
+    "waitTime": 60,
+    "isDefault": false
+  },
+  {
+    "id": 4,
+    "name": "v3a2_udimo_lock_setting_4",
+    "waitTime": 300,
+    "isDefault": false
+  },
+  {
+    "id": 5,
+    "name": "v3a2_udimo_lock_setting_5",
+    "waitTime": 600,
+    "isDefault": false
+  },
+  {
+    "id": 6,
+    "name": "v3a2_udimo_lock_setting_6",
+    "waitTime": 1800,
+    "isDefault": false
+  },
+  {
+    "id": 7,
+    "name": "v3a2_udimo_lock_setting_7",
+    "waitTime": 3600,
+    "isDefault": false
+  }
+]

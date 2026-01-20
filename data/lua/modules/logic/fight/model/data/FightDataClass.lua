@@ -1,69 +1,71 @@
-﻿module("modules.logic.fight.model.data.FightDataClass", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightDataClass.lua
 
-local var_0_0 = {}
-local var_0_1 = {}
-local var_0_2 = {}
-local var_0_3 = {}
+module("modules.logic.fight.model.data.FightDataClass", package.seeall)
 
-function var_0_1.ctor()
+local FightDataClass = {}
+local baseTab = {}
+local cname2meta = {}
+local cname2super = {}
+
+function baseTab.ctor()
 	return
 end
 
-function var_0_1.onConstructor()
+function baseTab.onConstructor()
 	return
 end
 
-local function var_0_4(arg_3_0, arg_3_1, ...)
-	local var_3_0 = var_0_3[arg_3_0.__cname]
+local function initializationInternal(class, handle, ...)
+	local super = cname2super[class.__cname]
 
-	if var_3_0 then
-		var_0_4(var_3_0, arg_3_1, ...)
+	if super then
+		initializationInternal(super, handle, ...)
 	end
 
-	local var_3_1 = rawget(arg_3_0, "onConstructor")
+	local func = rawget(class, "onConstructor")
 
-	if var_3_1 then
-		return var_3_1(arg_3_1, ...)
+	if func then
+		return func(handle, ...)
 	end
 end
 
-local function var_0_5(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = {
-		__cname = arg_4_1
-	}
+local function baseOf(xxx, name, super)
+	local class = {}
 
-	if arg_4_2 then
-		setmetatable(var_4_0, {
-			__index = arg_4_2
+	class.__cname = name
+
+	if super then
+		setmetatable(class, {
+			__index = super
 		})
 	else
-		setmetatable(var_4_0, {
-			__index = var_0_1
+		setmetatable(class, {
+			__index = baseTab
 		})
 	end
 
-	var_0_2[arg_4_1] = {
-		__index = var_4_0
+	cname2meta[name] = {
+		__index = class
 	}
-	var_0_3[arg_4_1] = arg_4_2
+	cname2super[name] = super
 
-	function var_4_0.New(...)
-		local var_5_0 = {
-			__cname = arg_4_1
-		}
+	function class.New(...)
+		local tab = {}
 
-		setmetatable(var_5_0, var_0_2[arg_4_1])
-		var_5_0:ctor()
-		var_0_4(var_4_0, var_5_0, ...)
+		tab.__cname = name
 
-		return var_5_0
+		setmetatable(tab, cname2meta[name])
+		tab:ctor()
+		initializationInternal(class, tab, ...)
+
+		return tab
 	end
 
-	return var_4_0
+	return class
 end
 
-setmetatable(var_0_0, {
-	__call = var_0_5
+setmetatable(FightDataClass, {
+	__call = baseOf
 })
 
-return var_0_0
+return FightDataClass

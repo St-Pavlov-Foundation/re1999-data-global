@@ -1,35 +1,37 @@
-﻿module("modules.logic.versionactivity2_2.tianshinana.controller.step.TianShiNaNaWinStep", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/tianshinana/controller/step/TianShiNaNaWinStep.lua
 
-local var_0_0 = class("TianShiNaNaWinStep", TianShiNaNaStepBase)
+module("modules.logic.versionactivity2_2.tianshinana.controller.step.TianShiNaNaWinStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = TianShiNaNaModel.instance.episodeCo.storyClear
+local TianShiNaNaWinStep = class("TianShiNaNaWinStep", TianShiNaNaStepBase)
 
-	if var_1_0 > 0 then
-		arg_1_0._initMaskActive = PostProcessingMgr.instance:getUIPPValue("LocalMaskActive")
-		arg_1_0._initDistortStrength = PostProcessingMgr.instance:getUIPPValue("LocalDistortStrength")
+function TianShiNaNaWinStep:onStart(context)
+	local storyId = TianShiNaNaModel.instance.episodeCo.storyClear
+
+	if storyId > 0 then
+		self._initMaskActive = PostProcessingMgr.instance:getUIPPValue("LocalMaskActive")
+		self._initDistortStrength = PostProcessingMgr.instance:getUIPPValue("LocalDistortStrength")
 
 		PostProcessingMgr.instance:setUIPPValue("LocalMaskActive", false)
 		PostProcessingMgr.instance:setUIPPValue("localDistortStrength", 0)
-		StoryController.instance:playStory(var_1_0, nil, arg_1_0._onStoryEnd, arg_1_0)
+		StoryController.instance:playStory(storyId, nil, self._onStoryEnd, self)
 	else
-		arg_1_0:_onStoryEnd()
+		self:_onStoryEnd()
 	end
 end
 
-function var_0_0._onStoryEnd(arg_2_0)
+function TianShiNaNaWinStep:_onStoryEnd()
 	ViewMgr.instance:openView(ViewName.TianShiNaNaResultView, {
 		isWin = true,
-		star = arg_2_0._data.star
+		star = self._data.star
 	})
-	arg_2_0:onDone(false)
+	self:onDone(false)
 end
 
-function var_0_0.clearWork(arg_3_0)
-	if arg_3_0._initMaskActive ~= nil then
-		PostProcessingMgr.instance:setUIPPValue("LocalMaskActive", arg_3_0._initMaskActive)
-		PostProcessingMgr.instance:setUIPPValue("LocalDistortStrength", arg_3_0._initDistortStrength)
+function TianShiNaNaWinStep:clearWork()
+	if self._initMaskActive ~= nil then
+		PostProcessingMgr.instance:setUIPPValue("LocalMaskActive", self._initMaskActive)
+		PostProcessingMgr.instance:setUIPPValue("LocalDistortStrength", self._initDistortStrength)
 	end
 end
 
-return var_0_0
+return TianShiNaNaWinStep

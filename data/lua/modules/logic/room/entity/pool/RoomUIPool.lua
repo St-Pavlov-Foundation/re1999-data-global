@@ -1,191 +1,198 @@
-﻿module("modules.logic.room.entity.pool.RoomUIPool", package.seeall)
+﻿-- chunkname: @modules/logic/room/entity/pool/RoomUIPool.lua
 
-local var_0_0 = _M
-local var_0_1 = false
-local var_0_2
-local var_0_3
-local var_0_4 = {}
-local var_0_5 = {}
-local var_0_6 = {}
-local var_0_7 = {}
-local var_0_8
+module("modules.logic.room.entity.pool.RoomUIPool", package.seeall)
 
-function var_0_0.init(arg_1_0)
-	var_0_0._reset()
+local RoomUIPool = _M
+local _initialized = false
+local _poolContainerGO, _instanceContainerGO
+local _poolDictList = {}
+local _instanceDictList = {}
+local _instanceListForSibling = {}
+local _instanceDictForSibling = {}
+local _prefabDict
 
-	var_0_8 = arg_1_0
-	var_0_1 = true
+function RoomUIPool.init(prefabDict)
+	RoomUIPool._reset()
 
-	TaskDispatcher.runRepeat(var_0_0._onTickSortSibling, nil, 2)
+	_prefabDict = prefabDict
+	_initialized = true
+
+	TaskDispatcher.runRepeat(RoomUIPool._onTickSortSibling, nil, 2)
 end
 
-function var_0_0.getInstance(arg_2_0, arg_2_1)
-	if not var_0_1 then
+function RoomUIPool.getInstance(res, name)
+	if not _initialized then
 		return
 	end
 
-	local var_2_0 = var_0_8[arg_2_0] or GameSceneMgr.instance:getCurScene().preloader:getResource(arg_2_0)
+	local prefab = _prefabDict[res]
 
-	if not var_2_0 then
-		logError(string.format("找不到资源:%s", arg_2_0))
+	if not prefab then
+		local scene = GameSceneMgr.instance:getCurScene()
+
+		prefab = scene.preloader:getResource(res)
+	end
+
+	if not prefab then
+		logError(string.format("找不到资源:%s", res))
 
 		return
 	end
 
-	local var_2_1 = var_0_4[arg_2_0]
+	local poolList = _poolDictList[res]
 
-	if not var_2_1 then
-		var_2_1 = {}
-		var_0_4[arg_2_0] = var_2_1
+	if not poolList then
+		poolList = {}
+		_poolDictList[res] = poolList
 	end
 
-	local var_2_2 = var_0_5[arg_2_0]
+	local instanceList = _instanceDictList[res]
 
-	if not var_2_2 then
-		var_2_2 = {}
-		var_0_5[arg_2_0] = var_2_2
+	if not instanceList then
+		instanceList = {}
+		_instanceDictList[res] = instanceList
 	end
 
-	local var_2_3
+	local go
 
-	if #var_2_1 > 0 then
-		var_2_3 = var_2_1[#var_2_1]
+	if #poolList > 0 then
+		go = poolList[#poolList]
 
-		gohelper.addChild(var_0_0.getInstanceContainerGO(), var_2_3)
+		gohelper.addChild(RoomUIPool.getInstanceContainerGO(), go)
 
-		var_2_3.name = arg_2_1 or "ui"
+		go.name = name or "ui"
 
-		table.remove(var_2_1, #var_2_1)
+		table.remove(poolList, #poolList)
 	else
-		var_2_3 = gohelper.clone(var_2_0, var_0_0.getInstanceContainerGO(), arg_2_1 or "ui")
+		go = gohelper.clone(prefab, RoomUIPool.getInstanceContainerGO(), name or "ui")
 	end
 
-	table.insert(var_2_2, var_2_3)
-	table.insert(var_0_6, var_2_3)
-	transformhelper.setLocalScale(var_2_3.transform, 0.01, 0.01, 0.01)
+	table.insert(instanceList, go)
+	table.insert(_instanceListForSibling, go)
+	transformhelper.setLocalScale(go.transform, 0.01, 0.01, 0.01)
 
-	return var_2_3
+	return go
 end
 
-function var_0_0.returnInstance(arg_3_0, arg_3_1)
-	if not var_0_1 then
+function RoomUIPool.returnInstance(res, go)
+	if not _initialized then
 		return
 	end
 
-	local var_3_0 = var_0_4[arg_3_0]
+	local poolList = _poolDictList[res]
 
-	if not var_3_0 then
-		var_3_0 = {}
-		var_0_4[arg_3_0] = var_3_0
+	if not poolList then
+		poolList = {}
+		_poolDictList[res] = poolList
 	end
 
-	local var_3_1 = var_0_5[arg_3_0]
+	local instanceList = _instanceDictList[res]
 
-	if not var_3_1 then
-		var_3_1 = {}
-		var_0_5[arg_3_0] = var_3_1
+	if not instanceList then
+		instanceList = {}
+		_instanceDictList[res] = instanceList
 	end
 
-	gohelper.addChild(var_0_0.getPoolContainerGO(), arg_3_1)
+	gohelper.addChild(RoomUIPool.getPoolContainerGO(), go)
 
-	for iter_3_0, iter_3_1 in ipairs(var_3_1) do
-		if iter_3_1 == arg_3_1 then
-			table.remove(var_3_1, iter_3_0)
+	for i, one in ipairs(instanceList) do
+		if one == go then
+			table.remove(instanceList, i)
 
 			break
 		end
 	end
 
-	tabletool.removeValue(var_0_6, arg_3_1)
-	table.insert(var_3_0, arg_3_1)
+	tabletool.removeValue(_instanceListForSibling, go)
+	table.insert(poolList, go)
 end
 
-function var_0_0.dispose()
-	var_0_1 = false
+function RoomUIPool.dispose()
+	_initialized = false
 
-	for iter_4_0, iter_4_1 in pairs(var_0_5) do
-		for iter_4_2, iter_4_3 in ipairs(iter_4_1) do
-			gohelper.destroy(iter_4_3)
+	for res, instanceList in pairs(_instanceDictList) do
+		for i, go in ipairs(instanceList) do
+			gohelper.destroy(go)
 		end
 	end
 
-	for iter_4_4, iter_4_5 in pairs(var_0_4) do
-		for iter_4_6, iter_4_7 in ipairs(iter_4_5) do
-			gohelper.destroy(iter_4_7)
+	for res, poolList in pairs(_poolDictList) do
+		for i, go in ipairs(poolList) do
+			gohelper.destroy(go)
 		end
 	end
 
-	var_0_0._reset()
-	TaskDispatcher.cancelTask(var_0_0._onTickSortSibling, nil)
+	RoomUIPool._reset()
+	TaskDispatcher.cancelTask(RoomUIPool._onTickSortSibling, nil)
 end
 
-function var_0_0._reset()
-	var_0_1 = false
-	var_0_2 = nil
-	var_0_3 = nil
-	var_0_4 = {}
-	var_0_5 = {}
+function RoomUIPool._reset()
+	_initialized = false
+	_poolContainerGO = nil
+	_instanceContainerGO = nil
+	_poolDictList = {}
+	_instanceDictList = {}
 
-	for iter_5_0, iter_5_1 in pairs(var_0_6) do
-		var_0_6[iter_5_0] = nil
+	for key, _ in pairs(_instanceListForSibling) do
+		_instanceListForSibling[key] = nil
 	end
 
-	for iter_5_2, iter_5_3 in pairs(var_0_7) do
-		var_0_7[iter_5_2] = nil
+	for key, _ in pairs(_instanceDictForSibling) do
+		_instanceDictForSibling[key] = nil
 	end
 
-	var_0_6 = {}
-	var_0_7 = {}
+	_instanceListForSibling = {}
+	_instanceDictForSibling = {}
 end
 
-function var_0_0.getPoolContainerGO()
-	if not var_0_2 then
-		local var_6_0 = GameSceneMgr.instance:getCurScene()
+function RoomUIPool.getPoolContainerGO()
+	if not _poolContainerGO then
+		local scene = GameSceneMgr.instance:getCurScene()
 
-		var_0_2 = gohelper.findChild(var_6_0.go.canvasGO, "uipoolcontainer")
+		_poolContainerGO = gohelper.findChild(scene.go.canvasGO, "uipoolcontainer")
 
-		gohelper.setActive(var_0_2, false)
+		gohelper.setActive(_poolContainerGO, false)
 	end
 
-	return var_0_2
+	return _poolContainerGO
 end
 
-function var_0_0.getInstanceContainerGO()
-	if not var_0_3 then
-		local var_7_0 = GameSceneMgr.instance:getCurScene()
+function RoomUIPool.getInstanceContainerGO()
+	if not _instanceContainerGO then
+		local scene = GameSceneMgr.instance:getCurScene()
 
-		var_0_3 = gohelper.findChild(var_7_0.go.canvasGO, "uiinstancecontainer")
+		_instanceContainerGO = gohelper.findChild(scene.go.canvasGO, "uiinstancecontainer")
 	end
 
-	return var_0_3
+	return _instanceContainerGO
 end
 
-function var_0_0._onTickSortSibling()
-	if #var_0_6 <= 1 then
+function RoomUIPool._onTickSortSibling()
+	if #_instanceListForSibling <= 1 then
 		return
 	end
 
-	local var_8_0, var_8_1, var_8_2 = transformhelper.getPos(CameraMgr.instance:getMainCameraTrs())
+	local cameraX, cameraY, cameraZ = transformhelper.getPos(CameraMgr.instance:getMainCameraTrs())
 
-	for iter_8_0, iter_8_1 in ipairs(var_0_6) do
-		local var_8_3, var_8_4, var_8_5 = transformhelper.getPos(iter_8_1.transform)
-		local var_8_6 = var_8_0 - var_8_3
-		local var_8_7 = var_8_1 - var_8_4
-		local var_8_8 = var_8_2 - var_8_5
-		local var_8_9 = var_8_6 * var_8_6 + var_8_7 * var_8_7 + var_8_8 * var_8_8
+	for _, go in ipairs(_instanceListForSibling) do
+		local x, y, z = transformhelper.getPos(go.transform)
+		local offsetX = cameraX - x
+		local offsetY = cameraY - y
+		local offsetZ = cameraZ - z
+		local distance2 = offsetX * offsetX + offsetY * offsetY + offsetZ * offsetZ
 
-		var_0_7[iter_8_1] = var_8_9
+		_instanceDictForSibling[go] = distance2
 	end
 
-	table.sort(var_0_6, var_0_0._sortByDistance)
+	table.sort(_instanceListForSibling, RoomUIPool._sortByDistance)
 
-	for iter_8_2, iter_8_3 in ipairs(var_0_6) do
-		gohelper.setSibling(iter_8_3, iter_8_2 - 1)
+	for i, go in ipairs(_instanceListForSibling) do
+		gohelper.setSibling(go, i - 1)
 	end
 end
 
-function var_0_0._sortByDistance(arg_9_0, arg_9_1)
-	return var_0_7[arg_9_0] > var_0_7[arg_9_1]
+function RoomUIPool._sortByDistance(go1, go2)
+	return _instanceDictForSibling[go1] > _instanceDictForSibling[go2]
 end
 
-return var_0_0
+return RoomUIPool

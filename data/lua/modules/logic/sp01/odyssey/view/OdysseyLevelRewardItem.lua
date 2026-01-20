@@ -1,152 +1,154 @@
-﻿module("modules.logic.sp01.odyssey.view.OdysseyLevelRewardItem", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/view/OdysseyLevelRewardItem.lua
 
-local var_0_0 = class("OdysseyLevelRewardItem", ListScrollCellExtend)
+module("modules.logic.sp01.odyssey.view.OdysseyLevelRewardItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goLock = gohelper.findChild(arg_1_0.viewGO, "title/go_lock")
-	arg_1_0._txtLockLevel = gohelper.findChildText(arg_1_0.viewGO, "title/go_lock/txt_lockLevel")
-	arg_1_0._goHasGet = gohelper.findChild(arg_1_0.viewGO, "title/go_hasget")
-	arg_1_0._txtHasGetLevel = gohelper.findChildText(arg_1_0.viewGO, "title/go_hasget/txt_hasgetLevel")
-	arg_1_0._goCanGet = gohelper.findChild(arg_1_0.viewGO, "title/go_canget")
-	arg_1_0._txtCanGetLevel = gohelper.findChildText(arg_1_0.viewGO, "title/go_canget/txt_cangetLevel")
-	arg_1_0._goRewardContent = gohelper.findChild(arg_1_0.viewGO, "go_rewardContent")
-	arg_1_0._goRewardItem = gohelper.findChild(arg_1_0.viewGO, "go_rewardContent/go_rewardItem")
-	arg_1_0._goLine = gohelper.findChild(arg_1_0.viewGO, "go_line")
+local OdysseyLevelRewardItem = class("OdysseyLevelRewardItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function OdysseyLevelRewardItem:onInitView()
+	self._goLock = gohelper.findChild(self.viewGO, "title/go_lock")
+	self._txtLockLevel = gohelper.findChildText(self.viewGO, "title/go_lock/txt_lockLevel")
+	self._goHasGet = gohelper.findChild(self.viewGO, "title/go_hasget")
+	self._txtHasGetLevel = gohelper.findChildText(self.viewGO, "title/go_hasget/txt_hasgetLevel")
+	self._goCanGet = gohelper.findChild(self.viewGO, "title/go_canget")
+	self._txtCanGetLevel = gohelper.findChildText(self.viewGO, "title/go_canget/txt_cangetLevel")
+	self._goRewardContent = gohelper.findChild(self.viewGO, "go_rewardContent")
+	self._goRewardItem = gohelper.findChild(self.viewGO, "go_rewardContent/go_rewardItem")
+	self._goLine = gohelper.findChild(self.viewGO, "go_line")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function OdysseyLevelRewardItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function OdysseyLevelRewardItem:removeEvents()
 	return
 end
 
-function var_0_0.onRewardItemClick(arg_4_0, arg_4_1)
-	if arg_4_0.isCanGet then
-		local var_4_0 = OdysseyTaskModel.instance:getAllCanGetIdList(OdysseyEnum.TaskType.LevelReward)
+function OdysseyLevelRewardItem:onRewardItemClick(rewardItem)
+	if self.isCanGet then
+		local allCanGetIdList = OdysseyTaskModel.instance:getAllCanGetIdList(OdysseyEnum.TaskType.LevelReward)
 
-		if #var_4_0 > 1 then
-			TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.Odyssey, 0, var_4_0, nil, nil, 0)
+		if #allCanGetIdList > 1 then
+			TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.Odyssey, 0, allCanGetIdList, nil, nil, 0)
 		else
-			TaskRpc.instance:sendFinishTaskRequest(arg_4_0.taskId)
+			TaskRpc.instance:sendFinishTaskRequest(self.taskId)
 		end
 	else
-		MaterialTipController.instance:showMaterialInfo(arg_4_1.rewardData[1], arg_4_1.rewardData[2])
+		MaterialTipController.instance:showMaterialInfo(rewardItem.rewardData[1], rewardItem.rewardData[2])
 	end
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0.rewardItemTab = arg_5_0:getUserDataTb_()
+function OdysseyLevelRewardItem:_editableInitView()
+	self.rewardItemTab = self:getUserDataTb_()
 
-	gohelper.setActive(arg_5_0._goRewardItem, false)
+	gohelper.setActive(self._goRewardItem, false)
 
-	arg_5_0.taskList = OdysseyTaskModel.instance:getCurTaskList(OdysseyEnum.TaskType.LevelReward)
+	self.taskList = OdysseyTaskModel.instance:getCurTaskList(OdysseyEnum.TaskType.LevelReward)
 end
 
-function var_0_0.onUpdateMO(arg_6_0, arg_6_1)
-	if arg_6_1 == nil then
+function OdysseyLevelRewardItem:onUpdateMO(mo)
+	if mo == nil then
 		return
 	end
 
-	arg_6_0.mo = arg_6_1
+	self.mo = mo
 
-	arg_6_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_7_0)
-	arg_7_0.taskId = arg_7_0.mo.id
-	arg_7_0.config = arg_7_0.mo.config
-	arg_7_0.level = arg_7_0.config.maxProgress
+function OdysseyLevelRewardItem:refreshUI()
+	self.taskId = self.mo.id
+	self.config = self.mo.config
+	self.level = self.config.maxProgress
 
-	gohelper.setActive(arg_7_0.viewGO, true)
+	gohelper.setActive(self.viewGO, true)
 
-	arg_7_0._txtLockLevel.text = "LV." .. arg_7_0.level
-	arg_7_0._txtHasGetLevel.text = "LV." .. arg_7_0.level
-	arg_7_0._txtCanGetLevel.text = "LV." .. arg_7_0.level
+	self._txtLockLevel.text = "LV." .. self.level
+	self._txtHasGetLevel.text = "LV." .. self.level
+	self._txtCanGetLevel.text = "LV." .. self.level
 
-	gohelper.setActive(arg_7_0._goLine, arg_7_0.taskId ~= arg_7_0.taskList[#arg_7_0.taskList].id)
-	arg_7_0:refreshReward()
+	gohelper.setActive(self._goLine, self.taskId ~= self.taskList[#self.taskList].id)
+	self:refreshReward()
 end
 
-function var_0_0.refreshReward(arg_8_0)
-	arg_8_0.isHasGet = OdysseyTaskModel.instance:isTaskHasGet(arg_8_0.mo)
-	arg_8_0.isCanGet = OdysseyTaskModel.instance:isTaskCanGet(arg_8_0.mo)
+function OdysseyLevelRewardItem:refreshReward()
+	self.isHasGet = OdysseyTaskModel.instance:isTaskHasGet(self.mo)
+	self.isCanGet = OdysseyTaskModel.instance:isTaskCanGet(self.mo)
 
-	local var_8_0 = arg_8_0.mo.config
-	local var_8_1 = GameUtil.splitString2(var_8_0.bonus, true)
+	local config = self.mo.config
+	local rewardList = GameUtil.splitString2(config.bonus, true)
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_1) do
-		local var_8_2 = arg_8_0.rewardItemTab[iter_8_0]
+	for index, rewardData in ipairs(rewardList) do
+		local rewardItem = self.rewardItemTab[index]
 
-		if not var_8_2 then
-			var_8_2 = {
-				go = gohelper.clone(arg_8_0._goRewardItem, arg_8_0._goRewardContent, "rewardItem_" .. iter_8_0)
+		if not rewardItem then
+			rewardItem = {
+				go = gohelper.clone(self._goRewardItem, self._goRewardContent, "rewardItem_" .. index)
 			}
-			var_8_2.imageRare = gohelper.findChildImage(var_8_2.go, "image_rare")
-			var_8_2.simageReward = gohelper.findChildSingleImage(var_8_2.go, "simage_reward")
-			var_8_2.goCanGet = gohelper.findChild(var_8_2.go, "go_canget")
-			var_8_2.goHasGet = gohelper.findChild(var_8_2.go, "go_hasget")
-			var_8_2.txtRewardCount = gohelper.findChildText(var_8_2.go, "mask/txt_rewardcount")
-			var_8_2.txtRewardCountGrey = gohelper.findChildText(var_8_2.go, "mask/txt_rewardcount_grey")
-			var_8_2.btnClick = gohelper.findChildButton(var_8_2.go, "btn_click")
+			rewardItem.imageRare = gohelper.findChildImage(rewardItem.go, "image_rare")
+			rewardItem.simageReward = gohelper.findChildSingleImage(rewardItem.go, "simage_reward")
+			rewardItem.goCanGet = gohelper.findChild(rewardItem.go, "go_canget")
+			rewardItem.goHasGet = gohelper.findChild(rewardItem.go, "go_hasget")
+			rewardItem.txtRewardCount = gohelper.findChildText(rewardItem.go, "mask/txt_rewardcount")
+			rewardItem.txtRewardCountGrey = gohelper.findChildText(rewardItem.go, "mask/txt_rewardcount_grey")
+			rewardItem.btnClick = gohelper.findChildButton(rewardItem.go, "btn_click")
 
-			var_8_2.btnClick:AddClickListener(arg_8_0.onRewardItemClick, arg_8_0, var_8_2)
+			rewardItem.btnClick:AddClickListener(self.onRewardItemClick, self, rewardItem)
 
-			arg_8_0.rewardItemTab[iter_8_0] = var_8_2
+			self.rewardItemTab[index] = rewardItem
 		end
 
-		var_8_2.rewardData = iter_8_1
-		var_8_2.config, var_8_2.icon = ItemModel.instance:getItemConfigAndIcon(iter_8_1[1], iter_8_1[2], true)
+		rewardItem.rewardData = rewardData
+		rewardItem.config, rewardItem.icon = ItemModel.instance:getItemConfigAndIcon(rewardData[1], rewardData[2], true)
 
-		gohelper.setActive(var_8_2.go, true)
-		UISpriteSetMgr.instance:setUiFBSprite(var_8_2.imageRare, "bg_pinjidi_" .. tostring(var_8_2.config.rare), nil)
+		gohelper.setActive(rewardItem.go, true)
+		UISpriteSetMgr.instance:setUiFBSprite(rewardItem.imageRare, "bg_pinjidi_" .. tostring(rewardItem.config.rare), nil)
 
-		if var_8_2.config.subType == ItemEnum.SubType.Portrait then
-			var_8_2.simageReward:LoadImage(ResUrl.getPlayerHeadIcon(var_8_2.config.icon), function()
-				ZProj.UGUIHelper.SetImageSize(var_8_2.simageReward.gameObject)
+		if rewardItem.config.subType == ItemEnum.SubType.Portrait then
+			rewardItem.simageReward:LoadImage(ResUrl.getPlayerHeadIcon(rewardItem.config.icon), function()
+				ZProj.UGUIHelper.SetImageSize(rewardItem.simageReward.gameObject)
 			end)
 		else
-			var_8_2.simageReward:LoadImage(var_8_2.icon, function()
-				ZProj.UGUIHelper.SetImageSize(var_8_2.simageReward.gameObject)
+			rewardItem.simageReward:LoadImage(rewardItem.icon, function()
+				ZProj.UGUIHelper.SetImageSize(rewardItem.simageReward.gameObject)
 			end)
 		end
 
-		var_8_2.txtRewardCount.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("multi_num"), iter_8_1[3])
-		var_8_2.txtRewardCountGrey.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("multi_num"), iter_8_1[3])
+		rewardItem.txtRewardCount.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("multi_num"), rewardData[3])
+		rewardItem.txtRewardCountGrey.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("multi_num"), rewardData[3])
 
-		gohelper.setActive(var_8_2.goHasGet, arg_8_0.isHasGet)
-		gohelper.setActive(var_8_2.goCanGet, arg_8_0.isCanGet)
-		gohelper.setActive(var_8_2.txtRewardCount, not arg_8_0.isHasGet)
-		gohelper.setActive(var_8_2.txtRewardCountGrey, arg_8_0.isHasGet)
+		gohelper.setActive(rewardItem.goHasGet, self.isHasGet)
+		gohelper.setActive(rewardItem.goCanGet, self.isCanGet)
+		gohelper.setActive(rewardItem.txtRewardCount, not self.isHasGet)
+		gohelper.setActive(rewardItem.txtRewardCountGrey, self.isHasGet)
 	end
 
-	for iter_8_2 = #var_8_1 + 1, #arg_8_0.rewardItemTab do
-		local var_8_3 = arg_8_0.rewardItemTab[iter_8_2]
+	for index = #rewardList + 1, #self.rewardItemTab do
+		local rewardItem = self.rewardItemTab[index]
 
-		if var_8_3 then
-			gohelper.setActive(var_8_3.itemIcon.go, false)
+		if rewardItem then
+			gohelper.setActive(rewardItem.itemIcon.go, false)
 		end
 	end
 
-	gohelper.setActive(arg_8_0._goLock, not arg_8_0.isCanGet and not arg_8_0.isHasGet)
-	gohelper.setActive(arg_8_0._goHasGet, arg_8_0.isHasGet)
-	gohelper.setActive(arg_8_0._goCanGet, arg_8_0.isCanGet)
+	gohelper.setActive(self._goLock, not self.isCanGet and not self.isHasGet)
+	gohelper.setActive(self._goHasGet, self.isHasGet)
+	gohelper.setActive(self._goCanGet, self.isCanGet)
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	if arg_11_0.rewardItemTab then
-		for iter_11_0, iter_11_1 in pairs(arg_11_0.rewardItemTab) do
-			iter_11_1.simageReward:UnLoadImage()
-			iter_11_1.btnClick:RemoveClickListener()
+function OdysseyLevelRewardItem:onDestroyView()
+	if self.rewardItemTab then
+		for _, item in pairs(self.rewardItemTab) do
+			item.simageReward:UnLoadImage()
+			item.btnClick:RemoveClickListener()
 		end
 
-		arg_11_0.rewardItemTab = nil
+		self.rewardItemTab = nil
 	end
 end
 
-return var_0_0
+return OdysseyLevelRewardItem

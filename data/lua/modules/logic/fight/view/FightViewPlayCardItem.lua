@@ -1,280 +1,345 @@
-﻿module("modules.logic.fight.view.FightViewPlayCardItem", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightViewPlayCardItem.lua
 
-local var_0_0 = class("FightViewPlayCardItem", LuaCompBase)
-local var_0_1 = 0.76
+module("modules.logic.fight.view.FightViewPlayCardItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0.tr = arg_1_1.transform
-	arg_1_0._emtpyGO = gohelper.findChild(arg_1_1, "imgEmpty")
-	arg_1_0._emptyNormal = gohelper.findChild(arg_1_1, "imgEmpty/emptyNormal")
+local FightViewPlayCardItem = class("FightViewPlayCardItem", LuaCompBase)
+local CardScale = 0.76
 
-	local var_1_0 = FightCardDataHelper.getCardSkin()
-	local var_1_1 = gohelper.findChildImage(arg_1_1, "imgEmpty/emptyNormal")
-	local var_1_2 = gohelper.findChildSingleImage(arg_1_1, "imgMove/Image")
-	local var_1_3 = "singlebg_lang/txt_fight/change.png"
+function FightViewPlayCardItem:init(go)
+	self.go = go
+	self.tr = go.transform
+	self._emtpyGO = gohelper.findChild(go, "imgEmpty")
+	self._emptyNormal = gohelper.findChild(go, "imgEmpty/emptyNormal")
 
-	if var_1_0 == 672801 then
-		UISpriteSetMgr.instance:setFightSkillCardSprite(var_1_1, "card_dz5", true)
+	local cardSkin = FightCardDataHelper.getCardSkin()
+	local normalImg = gohelper.findChildImage(go, "imgEmpty/emptyNormal")
+	local moveSingleImg = gohelper.findChildSingleImage(go, "imgMove/Image")
+	local moveImgUrl = "singlebg_lang/txt_fight/change.png"
 
-		var_1_3 = "singlebg_lang/txt_fight/change2.png"
+	if cardSkin == 672801 then
+		UISpriteSetMgr.instance:setFightSkillCardSprite(normalImg, "card_dz5", true)
 
-		local var_1_4 = gohelper.cloneInPlace(arg_1_0._emptyNormal.gameObject, "emptyDarkBg")
+		moveImgUrl = "singlebg_lang/txt_fight/change2.png"
 
-		var_1_4 = var_1_4 and gohelper.onceAddComponent(var_1_4, gohelper.Type_Image)
+		local emptyDarkBg = gohelper.cloneInPlace(self._emptyNormal.gameObject, "emptyDarkBg")
 
-		if var_1_4 then
-			UISpriteSetMgr.instance:setFightSkillCardSprite(var_1_4, "card_dz6", true)
+		emptyDarkBg = emptyDarkBg and gohelper.onceAddComponent(emptyDarkBg, gohelper.Type_Image)
+
+		if emptyDarkBg then
+			UISpriteSetMgr.instance:setFightSkillCardSprite(emptyDarkBg, "card_dz6", true)
 		end
 	end
 
-	var_1_2:UnLoadImage()
-	var_1_2:LoadImage(var_1_3)
+	moveSingleImg:UnLoadImage()
+	moveSingleImg:LoadImage(moveImgUrl)
 
-	arg_1_0._moveGO = gohelper.findChild(arg_1_1, "imgMove")
-	arg_1_0._moveAnimComp = arg_1_0._moveGO:GetComponent(typeof(UnityEngine.Animation))
-	arg_1_0._lockGO = gohelper.findChild(arg_1_1, "lock")
+	self._moveGO = gohelper.findChild(go, "imgMove")
+	self._moveAnimComp = self._moveGO:GetComponent(typeof(UnityEngine.Animation))
+	self._lockGO = gohelper.findChild(go, "lock")
 
 	if FightCardDataHelper.getCardSkin() == 672801 then
-		FightViewHandCardItem.replaceLockBg(arg_1_0._lockGO)
+		FightViewHandCardItem.replaceLockBg(self._lockGO)
 	end
 
-	local var_1_5 = ViewMgr.instance:getContainer(ViewName.FightView)
-	local var_1_6 = var_1_5:getSetting().otherRes[1]
+	local viewContainer = ViewMgr.instance:getContainer(ViewName.FightView)
+	local path = viewContainer:getSetting().otherRes[1]
 
-	arg_1_0._innerGO = var_1_5:getResInst(var_1_6, arg_1_0.go, "card")
+	self._innerGO = viewContainer:getResInst(path, self.go, "card")
 
-	transformhelper.setLocalScale(arg_1_0._innerGO.transform, var_0_1, var_0_1, var_0_1)
-	gohelper.setSiblingBefore(arg_1_0._innerGO, arg_1_0._lockGO)
+	transformhelper.setLocalScale(self._innerGO.transform, CardScale, CardScale, CardScale)
+	gohelper.setSiblingBefore(self._innerGO, self._lockGO)
 
-	arg_1_0._click = SLFramework.UGUI.UIClickListener.Get(arg_1_0.go)
-	arg_1_0._goEffect1 = gohelper.create2d(arg_1_0.go, "effect1")
-	arg_1_0._goEffect2 = gohelper.create2d(arg_1_0.go, "effect2")
-	arg_1_0._goEffect3 = gohelper.create2d(arg_1_0.go, "effect3")
+	self._click = SLFramework.UGUI.UIClickListener.Get(self.go)
+	self._goEffect1 = gohelper.create2d(self.go, "effect1")
+	self._goEffect2 = gohelper.create2d(self.go, "effect2")
+	self._goEffect3 = gohelper.create2d(self.go, "effect3")
 
-	gohelper.setSiblingBefore(arg_1_0._goEffect1, arg_1_0._innerGO)
-	gohelper.setSiblingAfter(arg_1_0._goEffect2, arg_1_0._innerGO)
-	gohelper.setSiblingAfter(arg_1_0._goEffect3, arg_1_0._innerGO)
-	transformhelper.setLocalScale(arg_1_0._goEffect1.transform, var_0_1, var_0_1, var_0_1)
-	transformhelper.setLocalScale(arg_1_0._goEffect2.transform, var_0_1, var_0_1, var_0_1)
-	transformhelper.setLocalScale(arg_1_0._goEffect3.transform, var_0_1, var_0_1, var_0_1)
-	gohelper.setActive(arg_1_0._goEffect1, false)
-	gohelper.setActive(arg_1_0._goEffect2, false)
-	gohelper.setActive(arg_1_0._goEffect3, false)
+	gohelper.setSiblingBefore(self._goEffect1, self._innerGO)
+	gohelper.setSiblingAfter(self._goEffect2, self._innerGO)
+	gohelper.setSiblingAfter(self._goEffect3, self._innerGO)
+	transformhelper.setLocalScale(self._goEffect1.transform, CardScale, CardScale, CardScale)
+	transformhelper.setLocalScale(self._goEffect2.transform, CardScale, CardScale, CardScale)
+	transformhelper.setLocalScale(self._goEffect3.transform, CardScale, CardScale, CardScale)
+	gohelper.setActive(self._goEffect1, false)
+	gohelper.setActive(self._goEffect2, false)
+	gohelper.setActive(self._goEffect3, false)
 
-	arg_1_0._effectLoader1 = nil
-	arg_1_0._effectLoader2 = nil
-	arg_1_0._effectLoader3 = nil
-	arg_1_0._conversionGO = gohelper.findChild(arg_1_1, "conversion")
-	arg_1_0.rankChangeRoot = gohelper.findChild(arg_1_1, "#go_Grade")
-	arg_1_0._seasonRoot = gohelper.findChild(arg_1_1, "imgEmpty/SeasonRoot")
-	arg_1_0._seasonEmpty1 = gohelper.findChild(arg_1_1, "imgEmpty/SeasonRoot/imgEmpty1")
-	arg_1_0._seasonEmpty2 = gohelper.findChild(arg_1_1, "imgEmpty/SeasonRoot/imgEmpty2")
-	arg_1_0._seasonCurActIndex = gohelper.findChild(arg_1_1, "imgEmpty/SeasonRoot/#go_Selected")
-	arg_1_0._seasonCurActArrow = gohelper.findChild(arg_1_1, "imgEmpty/SeasonRoot/image_SelectedArrow")
+	self._effectLoader1 = nil
+	self._effectLoader2 = nil
+	self._effectLoader3 = nil
+	self._conversionGO = gohelper.findChild(go, "conversion")
+	self.rankChangeRoot = gohelper.findChild(go, "#go_Grade")
+	self._seasonRoot = gohelper.findChild(go, "imgEmpty/SeasonRoot")
+	self._seasonEmpty1 = gohelper.findChild(go, "imgEmpty/SeasonRoot/imgEmpty1")
+	self._seasonEmpty2 = gohelper.findChild(go, "imgEmpty/SeasonRoot/imgEmpty2")
+	self._seasonCurActIndex = gohelper.findChild(go, "imgEmpty/SeasonRoot/#go_Selected")
+	self._seasonCurActArrow = gohelper.findChild(go, "imgEmpty/SeasonRoot/image_SelectedArrow")
 
-	local var_1_7 = FightModel.instance:isSeason2()
+	local isSeason = FightModel.instance:isSeason2()
 
-	gohelper.setActive(arg_1_0._seasonRoot, var_1_7)
-	gohelper.setActive(arg_1_0._emptyNormal, not var_1_7)
+	gohelper.setActive(self._seasonRoot, isSeason)
+	gohelper.setActive(self._emptyNormal, not isSeason)
 
-	arg_1_0.goASFD = gohelper.findChild(arg_1_1, "asfd_icon")
-	arg_1_0.asfdAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_1_0.goASFD)
-	arg_1_0.txtASFDEnergy = gohelper.findChildText(arg_1_1, "asfd_icon/#txt_Num")
+	self.goASFD = gohelper.findChild(go, "asfd_icon")
+	self.asfdAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(self.goASFD)
+	self.txtASFDEnergy = gohelper.findChildText(go, "asfd_icon/#txt_Num")
 
-	gohelper.setSiblingAfter(arg_1_0.goASFD, arg_1_0._innerGO)
+	gohelper.setSiblingAfter(self.goASFD, self._innerGO)
 end
 
-function var_0_0.refreshSeasonArrowShow(arg_2_0, arg_2_1)
-	gohelper.setActive(arg_2_0._seasonEmpty1, arg_2_1)
-	gohelper.setActive(arg_2_0._seasonEmpty2, not arg_2_1)
-	gohelper.setActive(arg_2_0._seasonCurActIndex, arg_2_1)
-	gohelper.setActive(arg_2_0._seasonCurActArrow, arg_2_1)
+function FightViewPlayCardItem:refreshSeasonArrowShow(newActIndex)
+	gohelper.setActive(self._seasonEmpty1, newActIndex)
+	gohelper.setActive(self._seasonEmpty2, not newActIndex)
+	gohelper.setActive(self._seasonCurActIndex, newActIndex)
+	gohelper.setActive(self._seasonCurActArrow, newActIndex)
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	arg_3_0._click:AddClickListener(arg_3_0._onClickThis, arg_3_0)
+function FightViewPlayCardItem:addEventListeners()
+	self._click:AddClickListener(self._onClickThis, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	arg_4_0._click:RemoveClickListener()
-	TaskDispatcher.cancelTask(arg_4_0._delayHideEffect, arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._delayDisableMoveAnim, arg_4_0)
+function FightViewPlayCardItem:removeEventListeners()
+	self._click:RemoveClickListener()
+	TaskDispatcher.cancelTask(self._delayHideEffect, self)
+	TaskDispatcher.cancelTask(self._delayDisableMoveAnim, self)
 end
 
-function var_0_0.onDestroy(arg_5_0)
-	if arg_5_0._effectLoader1 then
-		arg_5_0._effectLoader1:dispose()
+function FightViewPlayCardItem:onDestroy()
+	if self._effectLoader1 then
+		self._effectLoader1:dispose()
 
-		arg_5_0._effectLoader1 = nil
+		self._effectLoader1 = nil
 	end
 
-	if arg_5_0._effectLoader2 then
-		arg_5_0._effectLoader2:dispose()
+	if self._effectLoader2 then
+		self._effectLoader2:dispose()
 
-		arg_5_0._effectLoader2 = nil
+		self._effectLoader2 = nil
 	end
 
-	if arg_5_0._effectLoader3 then
-		arg_5_0._effectLoader3:dispose()
+	if self._effectLoader3 then
+		self._effectLoader3:dispose()
 
-		arg_5_0._effectLoader3 = nil
+		self._effectLoader3 = nil
 	end
 
-	arg_5_0._tailEffectGO = nil
+	if self.rouge2MusicLoader then
+		self.rouge2MusicLoader:dispose()
+
+		self.rouge2MusicLoader = nil
+	end
+
+	self._tailEffectGO = nil
 end
 
-function var_0_0.updateItem(arg_6_0, arg_6_1)
-	arg_6_0.fightBeginRoundOp = arg_6_1
+function FightViewPlayCardItem:updateItem(fightBeginRoundOp)
+	self.fightBeginRoundOp = fightBeginRoundOp
 
-	local var_6_0 = arg_6_1
-	local var_6_1 = not var_6_0
-	local var_6_2 = var_6_0 and (var_6_0:isMoveCard() or var_6_0:isMoveUniversal())
-	local var_6_3 = FightCardDataHelper.checkOpAsPlayCardHandle(var_6_0)
+	local op = fightBeginRoundOp
+	local isEmpty = not op
+	local isMove = op and (op:isMoveCard() or op:isMoveUniversal())
+	local isSkill = FightCardDataHelper.checkOpAsPlayCardHandle(op)
 
-	gohelper.setActive(arg_6_0._emtpyGO, var_6_1)
-	gohelper.setActive(arg_6_0._moveGO, var_6_2)
-	TaskDispatcher.cancelTask(arg_6_0._delayDisableMoveAnim, arg_6_0)
+	gohelper.setActive(self._emtpyGO, isEmpty)
+	gohelper.setActive(self._moveGO, isMove)
+	TaskDispatcher.cancelTask(self._delayDisableMoveAnim, self)
 
-	if var_6_2 then
-		arg_6_0._moveAnimComp.enabled = true
+	if isMove then
+		self._moveAnimComp.enabled = true
 
-		TaskDispatcher.runDelay(arg_6_0._delayDisableMoveAnim, arg_6_0, 1)
+		TaskDispatcher.runDelay(self._delayDisableMoveAnim, self, 1)
 	end
 
-	gohelper.setActive(arg_6_0._innerGO, var_6_3)
+	gohelper.setActive(self._innerGO, isSkill)
 
-	if var_6_3 then
-		if not arg_6_0._cardItem then
-			arg_6_0._cardItem = MonoHelper.addNoUpdateLuaComOnceToGo(arg_6_0._innerGO, FightViewCardItem, FightEnum.CardShowType.Operation)
+	if isSkill then
+		if not self._cardItem then
+			self._cardItem = MonoHelper.addNoUpdateLuaComOnceToGo(self._innerGO, FightViewCardItem, FightEnum.CardShowType.Operation)
 		end
 
-		arg_6_0._cardItem:updateItem(var_6_0.belongToEntityId, var_6_0.skillId)
+		self._cardItem:updateItem(op.belongToEntityId, op.skillId)
 
-		local var_6_4 = FightDataHelper.entityMgr:getById(var_6_0.belongToEntityId)
-		local var_6_5 = FightBuffHelper.simulateBuffList(var_6_4, var_6_0)
+		local entityMO = FightDataHelper.entityMgr:getById(op.belongToEntityId)
+		local buffList = FightBuffHelper.simulateBuffList(entityMO, op)
 
-		FightViewHandCardItemLock.setCardLock(var_6_0 and var_6_0.belongToEntityId, var_6_0 and var_6_0.skillId, arg_6_0._lockGO, false, var_6_5)
-		arg_6_0:_setCardPreRemove(var_6_0, var_6_5)
-		arg_6_0._cardItem:detectShowBlueStar()
-		arg_6_0._cardItem:updateResistanceByBeginRoundOp(arg_6_1)
+		FightViewHandCardItemLock.setCardLock(op and op.belongToEntityId, op and op.skillId, self._lockGO, false, buffList, op)
+		self:_setCardPreRemove(op, buffList)
+		self._cardItem:detectShowBlueStar()
+		self._cardItem:updateResistanceByBeginRoundOp(fightBeginRoundOp)
+		self._cardItem:_showRouge2EnchantsEffect(op.cardData)
 
-		if var_6_0:isPlayerFinisherSkill() then
-			gohelper.setActive(arg_6_0._lockGO, false)
+		if op:isPlayerFinisherSkill() then
+			gohelper.setActive(self._lockGO, false)
 		end
 	else
-		gohelper.setActive(arg_6_0._lockGO, false)
+		gohelper.setActive(self._lockGO, false)
 	end
 
-	if arg_6_0.fightBeginRoundOp then
-		if arg_6_0.PARENTVIEW and arg_6_0.PARENTVIEW.refreshRankUpDown then
-			arg_6_0.PARENTVIEW:refreshRankUpDown()
+	if self.fightBeginRoundOp then
+		if self.PARENTVIEW and self.PARENTVIEW.refreshRankUpDown then
+			self.PARENTVIEW:refreshRankUpDown()
 		end
 	else
-		gohelper.setActive(arg_6_0.rankChangeRoot, false)
+		gohelper.setActive(self.rankChangeRoot, false)
 	end
 
-	arg_6_0:refreshASFDEnergy()
-	arg_6_0:refreshRedAndBlueArea()
+	self:refreshASFDEnergy()
+	self:refreshRedAndBlueArea()
 end
 
-function var_0_0.refreshRedAndBlueArea(arg_7_0)
-	if not arg_7_0._cardItem then
+function FightViewPlayCardItem:refreshRedAndBlueArea()
+	if not self._cardItem then
 		return
 	end
 
-	local var_7_0 = arg_7_0.fightBeginRoundOp and arg_7_0.fightBeginRoundOp.cardColor
+	local color = self.fightBeginRoundOp and self.fightBeginRoundOp.cardColor
 
-	arg_7_0._cardItem:setActiveRed(var_7_0 == FightEnum.CardColor.Red)
-	arg_7_0._cardItem:setActiveBlue(var_7_0 == FightEnum.CardColor.Blue)
-	arg_7_0._cardItem:setActiveBoth(var_7_0 == FightEnum.CardColor.Both)
+	self._cardItem:setActiveRed(color == FightEnum.CardColor.Red)
+	self._cardItem:setActiveBlue(color == FightEnum.CardColor.Blue)
+	self._cardItem:setActiveBoth(color == FightEnum.CardColor.Both)
 end
 
-function var_0_0.refreshASFDEnergy(arg_8_0)
-	local var_8_0 = arg_8_0.fightBeginRoundOp and arg_8_0.fightBeginRoundOp.cardInfoMO
-	local var_8_1 = var_8_0 and var_8_0.energy
-	local var_8_2 = var_8_1 and var_8_1 > 0
-	local var_8_3 = arg_8_0.goASFD.activeSelf
+function FightViewPlayCardItem:refreshASFDEnergy()
+	local cardInfoMo = self.fightBeginRoundOp and self.fightBeginRoundOp.cardInfoMO
+	local energy = cardInfoMo and cardInfoMo.energy
+	local showASFDEnergy = energy and energy > 0
+	local beforeActive = self.goASFD.activeSelf
 
-	gohelper.setActive(arg_8_0.goASFD, var_8_2)
+	gohelper.setActive(self.goASFD, showASFDEnergy)
 
-	if var_8_2 then
-		arg_8_0.txtASFDEnergy.text = var_8_1
+	if showASFDEnergy then
+		self.txtASFDEnergy.text = energy
 
-		if var_8_3 then
-			arg_8_0.asfdAnimatorPlayer:Play("open", arg_8_0.resetToASFDIdle, arg_8_0)
+		if beforeActive then
+			self.asfdAnimatorPlayer:Play("open", self.resetToASFDIdle, self)
 		end
 	end
 end
 
-function var_0_0.resetToASFDIdle(arg_9_0)
-	arg_9_0.asfdAnimatorPlayer:Play("idle")
+function FightViewPlayCardItem:resetToASFDIdle()
+	self.asfdAnimatorPlayer:Play("idle")
 end
 
-function var_0_0.playASFDCloseAnim(arg_10_0)
-	arg_10_0.asfdAnimatorPlayer:Play("close", arg_10_0.hideASFD, arg_10_0)
+function FightViewPlayCardItem:playASFDCloseAnim()
+	self.asfdAnimatorPlayer:Play("close", self.hideASFD, self)
 end
 
-function var_0_0.hideASFD(arg_11_0)
-	gohelper.setActive(arg_11_0.goASFD, false)
+function FightViewPlayCardItem:hideASFD()
+	gohelper.setActive(self.goASFD, false)
 end
 
-function var_0_0.setCopyCard(arg_12_0)
-	arg_12_0._isCopyCard = true
+function FightViewPlayCardItem:setCopyCard()
+	self._isCopyCard = true
 end
 
-function var_0_0.isCopyCard(arg_13_0)
-	return arg_13_0._isCopyCard
+function FightViewPlayCardItem:isCopyCard()
+	return self._isCopyCard
 end
 
-local var_0_2 = Color.New(1, 1, 1, 0.5)
+local ColorPreRemove = Color.New(1, 1, 1, 0.5)
 
-function var_0_0._setCardPreRemove(arg_14_0, arg_14_1, arg_14_2)
-	if arg_14_1 == nil then
+function FightViewPlayCardItem:_setCardPreRemove(op, buffList)
+	if op == nil then
 		return
 	end
 
-	if FightViewHandCardItemLock.canUseCardSkill(arg_14_1.belongToEntityId, arg_14_1.skillId, arg_14_2) then
+	local canUse = FightViewHandCardItemLock.canUseCardSkill(op.belongToEntityId, op.skillId, buffList)
+
+	if canUse then
 		return
 	end
 
-	if FightViewHandCardItemLock.canPreRemove(arg_14_1.belongToEntityId, arg_14_1.skillId, arg_14_1, arg_14_2) then
-		FightViewHandCardItemLock.setCardPreRemove(arg_14_1.belongToEntityId, arg_14_1.skillId, arg_14_0._lockGO, false)
+	local isPreRemove = FightViewHandCardItemLock.canPreRemove(op.belongToEntityId, op.skillId, op, buffList)
+
+	if isPreRemove then
+		FightViewHandCardItemLock.setCardPreRemove(op.belongToEntityId, op.skillId, self._lockGO, false)
 	end
 end
 
-function var_0_0.showPlayCardEffect(arg_15_0, arg_15_1, arg_15_2)
-	gohelper.setActive(arg_15_0._emtpyGO, false)
+function FightViewPlayCardItem:showPlayCardEffect(cardInfoMO, tailEffectGO)
+	gohelper.setActive(self._emtpyGO, false)
 end
 
-function var_0_0._delayHideEffect(arg_16_0)
-	gohelper.setActive(arg_16_0._goEffect1, false)
-	gohelper.setActive(arg_16_0._goEffect2, false)
-	gohelper.setActive(arg_16_0._goEffect3, false)
-	gohelper.destroy(arg_16_0._tailEffectGO)
+function FightViewPlayCardItem:_delayHideEffect()
+	gohelper.setActive(self._goEffect1, false)
+	gohelper.setActive(self._goEffect2, false)
+	gohelper.setActive(self._goEffect3, false)
+	gohelper.destroy(self._tailEffectGO)
 
-	arg_16_0._tailEffectGO = nil
+	self._tailEffectGO = nil
 end
 
-function var_0_0.hideExtMoveEffect(arg_17_0)
-	gohelper.setActive(arg_17_0._conversionGO, false)
+function FightViewPlayCardItem:hideExtMoveEffect()
+	gohelper.setActive(self._conversionGO, false)
 end
 
-function var_0_0.showExtMoveEffect(arg_18_0)
-	gohelper.setActive(arg_18_0._conversionGO, true)
+function FightViewPlayCardItem:showExtMoveEffect()
+	gohelper.setActive(self._conversionGO, true)
 end
 
-function var_0_0.showExtMoveEndEffect(arg_19_0)
-	gohelper.setActive(arg_19_0._conversionGO, false)
+function FightViewPlayCardItem:showExtMoveEndEffect()
+	gohelper.setActive(self._conversionGO, false)
 end
 
-function var_0_0._delayDisableMoveAnim(arg_20_0)
-	arg_20_0._moveAnimComp.enabled = false
+function FightViewPlayCardItem:_delayDisableMoveAnim()
+	self._moveAnimComp.enabled = false
 end
 
-local var_0_3 = {}
+function FightViewPlayCardItem:checkPlayAddRouge2MusicEffect()
+	if not self.fightBeginRoundOp then
+		gohelper.setActive(self.rouge2MusicAnimGo, false)
 
-function var_0_0._onClickThis(arg_21_0)
+		return
+	end
+
+	if not self.fightBeginRoundOp:isRouge2MusicSkill() then
+		gohelper.setActive(self.rouge2MusicAnimGo, false)
+
+		return
+	end
+
+	self:_playAddRouge2MusicEffect()
+end
+
+local rouge2MusicEffectPath = "ui/viewres/fight/fight_rouge2/fight_rouge2_cardineffect.prefab"
+
+function FightViewPlayCardItem:_playAddRouge2MusicEffect()
+	if not self.rouge2MusicAnim then
+		if self.rouge2MusicLoader then
+			return
+		end
+
+		self.rouge2MusicLoader = MultiAbLoader.New()
+
+		self.rouge2MusicLoader:addPath(rouge2MusicEffectPath)
+		self.rouge2MusicLoader:startLoad(self.onLoadRouge2MusicEffectDone, self)
+
+		return
+	end
+
+	gohelper.setActive(self.rouge2MusicAnimGo, true)
+	self.rouge2MusicAnim:Play()
+end
+
+function FightViewPlayCardItem:onLoadRouge2MusicEffectDone(loader)
+	local assetItem = self.rouge2MusicLoader:getFirstAssetItem()
+
+	if not assetItem then
+		return
+	end
+
+	local prefab = assetItem:GetResource()
+	local go = gohelper.clone(prefab, self.go)
+
+	self.rouge2MusicAnimGo = go
+	self.rouge2MusicAnim = gohelper.findChildComponent(go, "ani", gohelper.Type_Animation)
+
+	self.rouge2MusicAnim:Play()
+end
+
+local filterOperateState = {}
+
+function FightViewPlayCardItem:_onClickThis()
 	if FightDataHelper.lockOperateMgr:isLock() then
 		return
 	end
@@ -291,11 +356,13 @@ function var_0_0._onClickThis(arg_21_0)
 		return
 	end
 
-	if FightDataHelper.stageMgr:getCurOperateState() == FightStageMgr.OperateStateType.Discard then
+	local curOperateState = FightDataHelper.stageMgr:getCurOperateState()
+
+	if curOperateState == FightStageMgr.OperateStateType.Discard then
 		FightDataHelper.stageMgr:exitOperateState(FightStageMgr.OperateStateType.Discard)
 	end
 
-	if not FightDataHelper.stageMgr:isFree(var_0_3) then
+	if not FightDataHelper.stageMgr:isFree(filterOperateState) then
 		return
 	end
 
@@ -304,4 +371,4 @@ function var_0_0._onClickThis(arg_21_0)
 	FightAudioMgr.instance:stopAllCardAudio()
 end
 
-return var_0_0
+return FightViewPlayCardItem

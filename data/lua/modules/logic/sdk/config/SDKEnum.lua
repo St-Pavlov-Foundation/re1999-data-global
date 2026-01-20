@@ -1,8 +1,10 @@
-﻿module("modules.logic.sdk.config.SDKEnum", package.seeall)
+﻿-- chunkname: @modules/logic/sdk/config/SDKEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.sdk.config.SDKEnum", package.seeall)
 
-var_0_0.AccountType = {
+local SDKEnum = _M
+
+SDKEnum.AccountType = {
 	JpExtend = 14,
 	Twitter = 12,
 	Apple = 5,
@@ -11,10 +13,10 @@ var_0_0.AccountType = {
 	FaceBook = 11,
 	Guest = 1
 }
-var_0_0.RewardType = {
+SDKEnum.RewardType = {
 	Claim = 1,
 	Got = 2,
 	None = 0
 }
 
-return var_0_0
+return SDKEnum

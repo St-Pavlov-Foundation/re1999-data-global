@@ -1,14 +1,16 @@
-﻿module("modules.versionactivitybase.enterview.define.VersionActivityEnterViewEnum", package.seeall)
+﻿-- chunkname: @modules/versionactivitybase/enterview/define/VersionActivityEnterViewEnum.lua
 
-local var_0_0 = _M
+module("modules.versionactivitybase.enterview.define.VersionActivityEnterViewEnum", package.seeall)
 
-var_0_0.ActLevel = {
+local VersionActivityEnterViewEnum = _M
+
+VersionActivityEnterViewEnum.ActLevel = {
 	Second = 2,
 	First = 1
 }
-var_0_0.ActType = {
+VersionActivityEnterViewEnum.ActType = {
 	Multi = 2,
 	Single = 1
 }
 
-return var_0_0
+return VersionActivityEnterViewEnum

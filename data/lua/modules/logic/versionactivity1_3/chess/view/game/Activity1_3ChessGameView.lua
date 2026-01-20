@@ -1,487 +1,496 @@
-﻿module("modules.logic.versionactivity1_3.chess.view.game.Activity1_3ChessGameView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/chess/view/game/Activity1_3ChessGameView.lua
 
-local var_0_0 = class("Activity1_3ChessGameView", BaseView)
-local var_0_1 = {
+module("modules.logic.versionactivity1_3.chess.view.game.Activity1_3ChessGameView", package.seeall)
+
+local Activity1_3ChessGameView = class("Activity1_3ChessGameView", BaseView)
+local lifeStateAniName = {
 	lose = "idle_black",
 	losing = "hit",
 	normal = "idle_light"
 }
-local var_0_2 = {
+local excessiveAniName = {
 	loop = "loop",
 	open = "open",
 	close = "close"
 }
 
-var_0_0.UI_RESET_BLOCK_KEY = "Activity1_3ChessGameViewResetBlock"
+Activity1_3ChessGameView.UI_RESET_BLOCK_KEY = "Activity1_3ChessGameViewResetBlock"
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._animatorLife1 = gohelper.findChildComponent(arg_1_0.viewGO, "LeftTop/LifeTimes/txt_LifeTimes/LifeTimesIcons/#image_LifeTimesIcons1", typeof(UnityEngine.Animator))
-	arg_1_0._animatorLife2 = gohelper.findChildComponent(arg_1_0.viewGO, "LeftTop/LifeTimes/txt_LifeTimes/LifeTimesIcons/#image_LifeTimesIcons2", typeof(UnityEngine.Animator))
-	arg_1_0._animatorLife3 = gohelper.findChildComponent(arg_1_0.viewGO, "LeftTop/LifeTimes/txt_LifeTimes/LifeTimesIcons/#image_LifeTimesIcons3", typeof(UnityEngine.Animator))
-	arg_1_0._txtTargetDesc = gohelper.findChildText(arg_1_0.viewGO, "LeftTop/TargetList/Target1/#txt_TargetDesc")
-	arg_1_0._imageTargetIcon = gohelper.findChildImage(arg_1_0.viewGO, "LeftTop/TargetList/Target1/image_TargetIcon")
-	arg_1_0._gotargetFinish = gohelper.findChild(arg_1_0.viewGO, "LeftTop/TargetList/Target1/vx_finish")
-	arg_1_0._txtTargetDesc2 = gohelper.findChildText(arg_1_0.viewGO, "LeftTop/TargetList/Target2/#txt_TargetDesc")
-	arg_1_0._imageTargetIcon2 = gohelper.findChildImage(arg_1_0.viewGO, "LeftTop/TargetList/Target2/image_TargetIcon")
-	arg_1_0._gotargetStar = gohelper.findChild(arg_1_0.viewGO, "LeftTop/TargetList/Target2/vx_glow")
-	arg_1_0._txtStage = gohelper.findChildText(arg_1_0.viewGO, "Top/#txt_Stage")
-	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "Top/#txt_Title")
-	arg_1_0._txtTips = gohelper.findChildText(arg_1_0.viewGO, "Top/Tips/image_TipsBG/#txt_Tips")
-	arg_1_0._btnResetBtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "RightTop/#btn_ResetBtn")
-	arg_1_0._btnReadBtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "RightTop/#btn_ReadBtn")
-	arg_1_0._goBackBtns = gohelper.findChild(arg_1_0.viewGO, "#go_BackBtns")
-	arg_1_0._goTop = gohelper.findChild(arg_1_0.viewGO, "Top")
-	arg_1_0._exTargetGo = gohelper.findChild(arg_1_0.viewGO, "LeftTop/TargetList/Target2")
-	arg_1_0._goTargetList = gohelper.findChild(arg_1_0.viewGO, "LeftTop/TargetList")
-	arg_1_0._goTipsRoot = gohelper.findChild(arg_1_0.viewGO, "Top/Tips")
-	arg_1_0._goResetExcessive = gohelper.findChild(arg_1_0.viewGO, "excessive")
-	arg_1_0._goNextMapExcessive = gohelper.findChild(arg_1_0.viewGO, "#go_excessive")
+function Activity1_3ChessGameView:onInitView()
+	self._animatorLife1 = gohelper.findChildComponent(self.viewGO, "LeftTop/LifeTimes/txt_LifeTimes/LifeTimesIcons/#image_LifeTimesIcons1", typeof(UnityEngine.Animator))
+	self._animatorLife2 = gohelper.findChildComponent(self.viewGO, "LeftTop/LifeTimes/txt_LifeTimes/LifeTimesIcons/#image_LifeTimesIcons2", typeof(UnityEngine.Animator))
+	self._animatorLife3 = gohelper.findChildComponent(self.viewGO, "LeftTop/LifeTimes/txt_LifeTimes/LifeTimesIcons/#image_LifeTimesIcons3", typeof(UnityEngine.Animator))
+	self._txtTargetDesc = gohelper.findChildText(self.viewGO, "LeftTop/TargetList/Target1/#txt_TargetDesc")
+	self._imageTargetIcon = gohelper.findChildImage(self.viewGO, "LeftTop/TargetList/Target1/image_TargetIcon")
+	self._gotargetFinish = gohelper.findChild(self.viewGO, "LeftTop/TargetList/Target1/vx_finish")
+	self._txtTargetDesc2 = gohelper.findChildText(self.viewGO, "LeftTop/TargetList/Target2/#txt_TargetDesc")
+	self._imageTargetIcon2 = gohelper.findChildImage(self.viewGO, "LeftTop/TargetList/Target2/image_TargetIcon")
+	self._gotargetStar = gohelper.findChild(self.viewGO, "LeftTop/TargetList/Target2/vx_glow")
+	self._txtStage = gohelper.findChildText(self.viewGO, "Top/#txt_Stage")
+	self._txtTitle = gohelper.findChildText(self.viewGO, "Top/#txt_Title")
+	self._txtTips = gohelper.findChildText(self.viewGO, "Top/Tips/image_TipsBG/#txt_Tips")
+	self._btnResetBtn = gohelper.findChildButtonWithAudio(self.viewGO, "RightTop/#btn_ResetBtn")
+	self._btnReadBtn = gohelper.findChildButtonWithAudio(self.viewGO, "RightTop/#btn_ReadBtn")
+	self._goBackBtns = gohelper.findChild(self.viewGO, "#go_BackBtns")
+	self._goTop = gohelper.findChild(self.viewGO, "Top")
+	self._exTargetGo = gohelper.findChild(self.viewGO, "LeftTop/TargetList/Target2")
+	self._goTargetList = gohelper.findChild(self.viewGO, "LeftTop/TargetList")
+	self._goTipsRoot = gohelper.findChild(self.viewGO, "Top/Tips")
+	self._goResetExcessive = gohelper.findChild(self.viewGO, "excessive")
+	self._goNextMapExcessive = gohelper.findChild(self.viewGO, "#go_excessive")
 
-	gohelper.setActive(arg_1_0._goResetExcessive, false)
-	gohelper.setActive(arg_1_0._goNextMapExcessive, false)
+	gohelper.setActive(self._goResetExcessive, false)
+	gohelper.setActive(self._goNextMapExcessive, false)
 
-	arg_1_0._animatorResetExcessive = gohelper.findChildComponent(arg_1_0.viewGO, "excessive/anim", typeof(UnityEngine.Animator))
-	arg_1_0._animatorNextMapExcessive = gohelper.findChildComponent(arg_1_0.viewGO, "#go_excessive/anim", typeof(UnityEngine.Animator))
-	arg_1_0._viewAnimator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._animatorResetExcessive = gohelper.findChildComponent(self.viewGO, "excessive/anim", typeof(UnityEngine.Animator))
+	self._animatorNextMapExcessive = gohelper.findChildComponent(self.viewGO, "#go_excessive/anim", typeof(UnityEngine.Animator))
+	self._viewAnimator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnResetBtn:AddClickListener(arg_2_0._btnResetBtnOnClick, arg_2_0)
-	arg_2_0._btnReadBtn:AddClickListener(arg_2_0._btnBackOnClick, arg_2_0)
-	arg_2_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.SetViewVictory, arg_2_0.onSetViewVictory, arg_2_0)
-	arg_2_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.SetViewFail, arg_2_0.onSetViewFail, arg_2_0)
-	arg_2_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.CurrentHpUpdate, arg_2_0.refreshLifeCount, arg_2_0)
-	arg_2_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.GameResultQuit, arg_2_0.onResultQuit, arg_2_0)
-	arg_2_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.CurrentConditionUpdate, arg_2_0.refreshConditions, arg_2_0)
-	arg_2_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.TargetUpdate, arg_2_0.refreshConditions, arg_2_0)
-	arg_2_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.GameMapDataUpdate, arg_2_0.refreshUI, arg_2_0)
-	arg_2_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.GameToastUpdate, arg_2_0.showTips, arg_2_0)
-	arg_2_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.BeforeEnterNextMap, arg_2_0._beforeEnterNextMap, arg_2_0)
-	arg_2_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.EnterNextMap, arg_2_0._onEnterNextMap, arg_2_0)
-	arg_2_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.PlayStoryFinish, arg_2_0._onPlayStoryFinish, arg_2_0)
-	arg_2_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.EventBattleReturn, arg_2_0._onReturnChessFromBattleGroup, arg_2_0)
-	arg_2_0:addEventCb(Activity1_3ChessController.instance, Activity1_3ChessEvent.AfterResetChessGame, arg_2_0.onResetGame, arg_2_0)
-	arg_2_0:addEventCb(Activity1_3ChessController.instance, Activity1_3ChessEvent.OnReadChessGame, arg_2_0.onReadGame, arg_2_0)
-	arg_2_0:addEventCb(Activity1_3ChessController.instance, Activity1_3ChessEvent.ClickReset, arg_2_0.eventResetFunc, arg_2_0)
-	arg_2_0:addEventCb(Activity1_3ChessController.instance, Activity1_3ChessEvent.ClickRead, arg_2_0._btnReadBtnOnClick, arg_2_0)
-	arg_2_0:addEventCb(StoryController.instance, StoryEvent.StoryFrontViewDestroy, arg_2_0._afterPlayStory, arg_2_0)
+function Activity1_3ChessGameView:addEvents()
+	self._btnResetBtn:AddClickListener(self._btnResetBtnOnClick, self)
+	self._btnReadBtn:AddClickListener(self._btnBackOnClick, self)
+	self:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.SetViewVictory, self.onSetViewVictory, self)
+	self:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.SetViewFail, self.onSetViewFail, self)
+	self:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.CurrentHpUpdate, self.refreshLifeCount, self)
+	self:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.GameResultQuit, self.onResultQuit, self)
+	self:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.CurrentConditionUpdate, self.refreshConditions, self)
+	self:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.TargetUpdate, self.refreshConditions, self)
+	self:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.GameMapDataUpdate, self.refreshUI, self)
+	self:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.GameToastUpdate, self.showTips, self)
+	self:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.BeforeEnterNextMap, self._beforeEnterNextMap, self)
+	self:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.EnterNextMap, self._onEnterNextMap, self)
+	self:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.PlayStoryFinish, self._onPlayStoryFinish, self)
+	self:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.EventBattleReturn, self._onReturnChessFromBattleGroup, self)
+	self:addEventCb(Activity1_3ChessController.instance, Activity1_3ChessEvent.AfterResetChessGame, self.onResetGame, self)
+	self:addEventCb(Activity1_3ChessController.instance, Activity1_3ChessEvent.OnReadChessGame, self.onReadGame, self)
+	self:addEventCb(Activity1_3ChessController.instance, Activity1_3ChessEvent.ClickReset, self.eventResetFunc, self)
+	self:addEventCb(Activity1_3ChessController.instance, Activity1_3ChessEvent.ClickRead, self._btnReadBtnOnClick, self)
+	self:addEventCb(StoryController.instance, StoryEvent.StoryFrontViewDestroy, self._afterPlayStory, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnResetBtn:RemoveClickListener()
-	arg_3_0._btnReadBtn:RemoveClickListener()
+function Activity1_3ChessGameView:removeEvents()
+	self._btnResetBtn:RemoveClickListener()
+	self._btnReadBtn:RemoveClickListener()
 end
 
-function var_0_0._btnBackOnClick(arg_4_0)
+function Activity1_3ChessGameView:_btnBackOnClick()
 	if Va3ChessGameController.instance:isNeedBlock() then
 		return
 	end
 
-	local var_4_0 = Va3ChessModel.instance:getActId()
+	local actId = Va3ChessModel.instance:getActId()
 
 	Stat1_3Controller.instance:bristleMarkUseRead()
-	Activity1_3ChessController.instance:requestBackChessGame(var_4_0)
+	Activity1_3ChessController.instance:requestBackChessGame(actId)
 end
 
-function var_0_0._btnReadBtnOnClick(arg_5_0)
+function Activity1_3ChessGameView:_btnReadBtnOnClick()
 	Stat1_3Controller.instance:bristleMarkUseRead()
-	UIBlockMgr.instance:startBlock(var_0_0.UI_RESET_BLOCK_KEY)
-	arg_5_0:_playReadProgressAniamtion(true)
-	TaskDispatcher.runDelay(arg_5_0.delayReadProgress, arg_5_0, 0.8)
+	UIBlockMgr.instance:startBlock(Activity1_3ChessGameView.UI_RESET_BLOCK_KEY)
+	self:_playReadProgressAniamtion(true)
+	TaskDispatcher.runDelay(self.delayReadProgress, self, 0.8)
 	AudioMgr.instance:trigger(AudioEnum.ChessGame.GameReset)
 end
 
-function var_0_0.delayReadProgress(arg_6_0)
-	UIBlockMgr.instance:endBlock(var_0_0.UI_RESET_BLOCK_KEY)
-	TaskDispatcher.cancelTask(arg_6_0.delayReadProgress, arg_6_0)
+function Activity1_3ChessGameView:delayReadProgress()
+	UIBlockMgr.instance:endBlock(Activity1_3ChessGameView.UI_RESET_BLOCK_KEY)
+	TaskDispatcher.cancelTask(self.delayReadProgress, self)
 
-	local var_6_0 = Va3ChessModel.instance:getActId()
+	local actId = Va3ChessModel.instance:getActId()
 
-	Activity1_3ChessController.instance:requestReadChessGame(var_6_0, arg_6_0.playReadAniamtionClose, arg_6_0)
+	Activity1_3ChessController.instance:requestReadChessGame(actId, self.playReadAniamtionClose, self)
 end
 
-function var_0_0._btnResetBtnOnClick(arg_7_0)
+function Activity1_3ChessGameView:_btnResetBtnOnClick()
 	if Va3ChessGameController.instance:isNeedBlock() then
 		return
 	end
 
-	GameFacade.showMessageBox(MessageBoxIdDefine.PushBoxReset, MsgBoxEnum.BoxType.Yes_No, arg_7_0.btnResetFunc, nil, nil, arg_7_0)
+	GameFacade.showMessageBox(MessageBoxIdDefine.PushBoxReset, MsgBoxEnum.BoxType.Yes_No, self.btnResetFunc, nil, nil, self)
 end
 
-function var_0_0.btnResetFunc(arg_8_0)
+function Activity1_3ChessGameView:btnResetFunc()
 	Stat1_3Controller.instance:bristleStatReset()
-	arg_8_0:_resetFunc()
+	self:_resetFunc()
 end
 
-function var_0_0.eventResetFunc(arg_9_0)
+function Activity1_3ChessGameView:eventResetFunc()
 	Stat1_3Controller.instance:bristleStatStart()
-	arg_9_0:_resetFunc()
+	self:_resetFunc()
 end
 
-function var_0_0._resetFunc(arg_10_0)
-	UIBlockMgr.instance:startBlock(var_0_0.UI_RESET_BLOCK_KEY)
-	arg_10_0:_playResetAniamtion(true)
-	TaskDispatcher.runDelay(arg_10_0.delayRestartGame, arg_10_0, 0.8)
+function Activity1_3ChessGameView:_resetFunc()
+	UIBlockMgr.instance:startBlock(Activity1_3ChessGameView.UI_RESET_BLOCK_KEY)
+	self:_playResetAniamtion(true)
+	TaskDispatcher.runDelay(self.delayRestartGame, self, 0.8)
 	AudioMgr.instance:trigger(AudioEnum.ChessGame.GameReset)
 end
 
-function var_0_0.delayRestartGame(arg_11_0)
-	UIBlockMgr.instance:endBlock(var_0_0.UI_RESET_BLOCK_KEY)
-	TaskDispatcher.cancelTask(arg_11_0.delayRestartGame, arg_11_0)
+function Activity1_3ChessGameView:delayRestartGame()
+	UIBlockMgr.instance:endBlock(Activity1_3ChessGameView.UI_RESET_BLOCK_KEY)
+	TaskDispatcher.cancelTask(self.delayRestartGame, self)
 
-	local var_11_0 = Va3ChessModel.instance:getEpisodeId()
+	local episodeId = Va3ChessModel.instance:getEpisodeId()
 
-	if var_11_0 then
-		Activity1_3ChessController.instance:beginResetChessGame(var_11_0, arg_11_0.playResetAniamtionClose, arg_11_0)
+	if episodeId then
+		Activity1_3ChessController.instance:beginResetChessGame(episodeId, self.playResetAniamtionClose, self)
 	end
 end
 
-function var_0_0._editableInitView(arg_12_0)
-	arg_12_0._lifeState = {
+function Activity1_3ChessGameView:_editableInitView()
+	self._lifeState = {
 		true,
 		true,
 		true
 	}
 
-	MainCameraMgr.instance:addView(arg_12_0.viewName, arg_12_0.initCamera, arg_12_0.resetCamera, arg_12_0)
+	MainCameraMgr.instance:addView(self.viewName, self.initCamera, self.resetCamera, self)
 end
 
-function var_0_0.initCamera(arg_13_0)
+function Activity1_3ChessGameView:initCamera()
 	if Va3ChessGameModel.instance:isPlayingStory() then
 		return
 	end
 
-	local var_13_0 = CameraMgr.instance:getMainCamera()
+	local camera = CameraMgr.instance:getMainCamera()
 
-	var_13_0.orthographic = true
-	var_13_0.orthographicSize = 7.5 * GameUtil.getAdapterScale(true)
+	camera.orthographic = true
+
+	local scale = GameUtil.getAdapterScale(true)
+
+	camera.orthographicSize = 7.5 * scale
 
 	Activity1_3ChessGameController.instance:setSceneCamera(true)
 end
 
-function var_0_0.resetCamera(arg_14_0)
-	CameraMgr.instance:getMainCamera().orthographic = false
+function Activity1_3ChessGameView:resetCamera()
+	local camera = CameraMgr.instance:getMainCamera()
+
+	camera.orthographic = false
 
 	Activity1_3ChessGameController.instance:setSceneCamera(false)
-	arg_14_0:removeEventCb(StoryController.instance, StoryEvent.StoryFrontViewDestroy, arg_14_0._afterPlayStory, arg_14_0)
+	self:removeEventCb(StoryController.instance, StoryEvent.StoryFrontViewDestroy, self._afterPlayStory, self)
 end
 
-function var_0_0.onUpdateParam(arg_15_0)
+function Activity1_3ChessGameView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_16_0)
-	gohelper.setActive(arg_16_0._goTipsRoot, false)
+function Activity1_3ChessGameView:onOpen()
+	gohelper.setActive(self._goTipsRoot, false)
 	AudioMgr.instance:trigger(AudioEnum.RoleChessGame1_3Common.GameTitleAppear)
-	arg_16_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.onClose(arg_17_0)
+function Activity1_3ChessGameView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_18_0)
-	TaskDispatcher.cancelTask(arg_18_0.refreshConditions, arg_18_0)
-	TaskDispatcher.cancelTask(arg_18_0.delayRestartGame, arg_18_0)
-	TaskDispatcher.cancelTask(arg_18_0.delayReadProgress, arg_18_0)
-	TaskDispatcher.cancelTask(arg_18_0._delayHideTips, arg_18_0)
+function Activity1_3ChessGameView:onDestroyView()
+	TaskDispatcher.cancelTask(self.refreshConditions, self)
+	TaskDispatcher.cancelTask(self.delayRestartGame, self)
+	TaskDispatcher.cancelTask(self.delayReadProgress, self)
+	TaskDispatcher.cancelTask(self._delayHideTips, self)
 end
 
-function var_0_0.refreshUI(arg_19_0)
-	local var_19_0 = arg_19_0:_getEpisodeCfg()
+function Activity1_3ChessGameView:refreshUI()
+	local episodeCfg = self:_getEpisodeCfg()
 
-	if var_19_0 then
-		arg_19_0._txtStage.text = var_19_0.orderId
-		arg_19_0._txtTitle.text = var_19_0.name
+	if episodeCfg then
+		self._txtStage.text = episodeCfg.orderId
+		self._txtTitle.text = episodeCfg.name
 	end
 
-	arg_19_0:refreshConditions()
-	arg_19_0:refreshLifeCount()
+	self:refreshConditions()
+	self:refreshLifeCount()
 end
 
-function var_0_0.onSetViewVictory(arg_20_0)
+function Activity1_3ChessGameView:onSetViewVictory()
 	Stat1_3Controller.instance:bristleStatSuccess()
-	arg_20_0:refreshConditions()
+	self:refreshConditions()
 
-	local var_20_0 = arg_20_0:_getEpisodeCfg()
+	local episodeCfg = self:_getEpisodeCfg()
 
-	if var_20_0 then
-		if var_20_0.storyClear == 0 then
-			arg_20_0.openWinResult()
+	if episodeCfg then
+		if episodeCfg.storyClear == 0 then
+			self.openWinResult()
 
 			return
 		end
 
-		local var_20_1 = var_20_0.storyClear
+		local story = episodeCfg.storyClear
 
-		if var_20_0.storyRepeat == 1 or not StoryModel.instance:isStoryHasPlayed(var_20_1) then
-			local var_20_2 = {}
+		if episodeCfg.storyRepeat == 1 or not StoryModel.instance:isStoryHasPlayed(story) then
+			local param = {}
 
-			var_20_2.blur = true
-			var_20_2.mark = true
-			var_20_2.hideStartAndEndDark = true
-			var_20_2.isReplay = false
+			param.blur = true
+			param.mark = true
+			param.hideStartAndEndDark = true
+			param.isReplay = false
 
 			StoryController.instance:playStories({
-				var_20_1
-			}, var_20_2, var_0_0.openWinResult)
+				story
+			}, param, Activity1_3ChessGameView.openWinResult)
 		else
-			arg_20_0.openWinResult()
+			self.openWinResult()
 		end
 	end
 end
 
-function var_0_0.openWinResult()
-	local var_21_0 = Va3ChessModel.instance:getEpisodeId()
-	local var_21_1 = "OnChessWinPause" .. var_21_0
-	local var_21_2 = GuideEvent[var_21_1]
-	local var_21_3 = GuideEvent.OnChessWinContinue
-	local var_21_4 = var_0_0._openSuccessView
-	local var_21_5
+function Activity1_3ChessGameView.openWinResult()
+	local episodeId = Va3ChessModel.instance:getEpisodeId()
+	local v1 = "OnChessWinPause" .. episodeId
+	local v2 = GuideEvent[v1]
+	local v3 = GuideEvent.OnChessWinContinue
+	local v4 = Activity1_3ChessGameView._openSuccessView
+	local v5
 
-	GuideController.instance:GuideFlowPauseAndContinue(var_21_1, var_21_2, var_21_3, var_21_4, var_21_5)
+	GuideController.instance:GuideFlowPauseAndContinue(v1, v2, v3, v4, v5)
 end
 
-function var_0_0._openSuccessView()
+function Activity1_3ChessGameView._openSuccessView()
 	AudioMgr.instance:trigger(AudioEnum.ChessGame.PlayerArrive)
 	ViewMgr.instance:openView(ViewName.Activity1_3ChessResultView, {
 		result = true
 	})
 end
 
-function var_0_0.onSetViewFail(arg_23_0)
+function Activity1_3ChessGameView:onSetViewFail()
 	Stat1_3Controller.instance:bristleStatFail()
-	arg_23_0:refreshConditions()
+	self:refreshConditions()
 	ViewMgr.instance:openView(ViewName.Activity1_3ChessResultView, {
 		result = false
 	})
 end
 
-function var_0_0.onResultQuit(arg_24_0)
-	arg_24_0:closeThis()
+function Activity1_3ChessGameView:onResultQuit()
+	self:closeThis()
 end
 
-function var_0_0.refreshConditions(arg_25_0)
-	local var_25_0 = arg_25_0:_getEpisodeCfg()
+function Activity1_3ChessGameView:refreshConditions()
+	local episodeCfg = self:_getEpisodeCfg()
 
-	if not var_25_0 then
+	if not episodeCfg then
 		return
 	end
 
-	local var_25_1 = Va3ChessModel.instance:getActId()
-	local var_25_2 = Va3ChessGameModel.instance:getFinishedTargetNum() + 1
-	local var_25_3 = string.split(var_25_0.starCondition, "|")
-	local var_25_4 = arg_25_0._curTargetIndex and var_25_2 > arg_25_0._curTargetIndex and var_25_2 <= #var_25_3
+	local actId = Va3ChessModel.instance:getActId()
+	local mainTargetIndex = Va3ChessGameModel.instance:getFinishedTargetNum() + 1
+	local conditions = string.split(episodeCfg.starCondition, "|")
+	local needUpdateTarget = self._curTargetIndex and mainTargetIndex > self._curTargetIndex and mainTargetIndex <= #conditions
 
-	arg_25_0._curTargetIndex = var_25_2
+	self._curTargetIndex = mainTargetIndex
 
-	if var_25_4 then
-		gohelper.setActive(arg_25_0._gotargetFinish, false)
-		gohelper.setActive(arg_25_0._gotargetFinish, true)
+	if needUpdateTarget then
+		gohelper.setActive(self._gotargetFinish, false)
+		gohelper.setActive(self._gotargetFinish, true)
 		AudioMgr.instance:trigger(AudioEnum.RoleChessGame1_3Common.MainTargetRefresh)
-		TaskDispatcher.runDelay(arg_25_0.refreshConditions, arg_25_0, 0.5)
+		TaskDispatcher.runDelay(self.refreshConditions, self, 0.5)
 
 		return
 	end
 
-	local var_25_5 = string.split(var_25_0.conditionStr, "|")
+	local conditionDesc = string.split(episodeCfg.conditionStr, "|")
 
-	if var_25_2 <= #var_25_3 then
-		local var_25_6 = string.splitToNumber(var_25_3[var_25_2], "#")
+	if mainTargetIndex <= #conditions then
+		local params = string.splitToNumber(conditions[mainTargetIndex], "#")
 
-		arg_25_0._txtTargetDesc.text = var_25_5[var_25_2] or Va3ChessMapUtils.getClearConditionDesc(var_25_6, var_25_1)
+		self._txtTargetDesc.text = conditionDesc[mainTargetIndex] or Va3ChessMapUtils.getClearConditionDesc(params, actId)
 	else
-		arg_25_0._txtTargetDesc.text = var_25_5[#var_25_5]
+		self._txtTargetDesc.text = conditionDesc[#conditionDesc]
 	end
 
-	arg_25_0._imageTargetIcon.color = GameUtil.parseColor(Activity1_3ChessEnum.ChessGameEnum.MainTargetColorGray)
+	self._imageTargetIcon.color = GameUtil.parseColor(Activity1_3ChessEnum.ChessGameEnum.MainTargetColorGray)
 
-	local var_25_7 = string.split(var_25_0.extStarCondition, "|")
+	local exConditions = string.split(episodeCfg.extStarCondition, "|")
 
-	if #var_25_7 > 1 then
-		local var_25_8 = 0
-		local var_25_9 = true
+	if #exConditions > 1 then
+		local finishedCount = 0
+		local isFinished = true
 
-		for iter_25_0 = 1, #var_25_7 do
-			local var_25_10 = string.splitToNumber(var_25_7[iter_25_0], "#")
+		for i = 1, #exConditions do
+			local params = string.splitToNumber(exConditions[i], "#")
 
-			if Va3ChessMapUtils.isClearConditionFinish(var_25_10, var_25_1) then
-				var_25_8 = var_25_8 + 1
+			isFinished = Va3ChessMapUtils.isClearConditionFinish(params, actId)
+
+			if isFinished then
+				finishedCount = finishedCount + 1
 			end
 		end
 
-		local var_25_11 = var_25_8 == #var_25_7
-		local var_25_12 = var_25_0.extConditionStr
-		local var_25_13 = string.format("%s (%s/%s)", var_25_12, var_25_8, #var_25_7)
+		isFinished = finishedCount == #exConditions
 
-		arg_25_0._txtTargetDesc2.text = var_25_13
+		local exConditionDesc = episodeCfg.extConditionStr
 
-		local var_25_14 = GameUtil.parseColor(var_25_11 and Activity1_3ChessEnum.ChessGameEnum.ExTargetColorActive or Activity1_3ChessEnum.ChessGameEnum.ExTargetColorGray)
+		exConditionDesc = string.format("%s (%s/%s)", exConditionDesc, finishedCount, #exConditions)
+		self._txtTargetDesc2.text = exConditionDesc
 
-		arg_25_0._imageTargetIcon2.color = var_25_14
+		local color = GameUtil.parseColor(isFinished and Activity1_3ChessEnum.ChessGameEnum.ExTargetColorActive or Activity1_3ChessEnum.ChessGameEnum.ExTargetColorGray)
 
-		if var_25_11 then
-			gohelper.setActive(arg_25_0._gotargetStar, true)
+		self._imageTargetIcon2.color = color
+
+		if isFinished then
+			gohelper.setActive(self._gotargetStar, true)
 		end
 	else
-		local var_25_15 = string.splitToNumber(var_25_0.extStarCondition, "#")
-		local var_25_16 = var_25_0.extConditionStr or Va3ChessMapUtils.getClearConditionDesc(var_25_15, var_25_1)
-		local var_25_17 = false
+		local params = string.splitToNumber(episodeCfg.extStarCondition, "#")
+		local exConditionDesc = episodeCfg.extConditionStr or Va3ChessMapUtils.getClearConditionDesc(params, actId)
+		local isFinished = false
 
-		if var_25_15[1] == Va3ChessEnum.ChessClearCondition.InteractAllFinish then
-			local var_25_18
-			local var_25_19
+		if params[1] == Va3ChessEnum.ChessClearCondition.InteractAllFinish then
+			local unFinishedCount
 
-			var_25_17, var_25_19 = Va3ChessMapUtils.isClearConditionFinish(var_25_15, var_25_1)
-			var_25_16 = var_25_0.extConditionStr .. string.format("(%s/%s)", #var_25_15 - 1 - var_25_19, #var_25_15 - 1)
+			isFinished, unFinishedCount = Va3ChessMapUtils.isClearConditionFinish(params, actId)
+			exConditionDesc = episodeCfg.extConditionStr .. string.format("(%s/%s)", #params - 1 - unFinishedCount, #params - 1)
 		else
-			var_25_17 = Va3ChessMapUtils.isClearConditionFinish(var_25_15, var_25_1)
+			isFinished = Va3ChessMapUtils.isClearConditionFinish(params, actId)
 		end
 
-		arg_25_0._txtTargetDesc2.text = var_25_16
+		self._txtTargetDesc2.text = exConditionDesc
 
-		local var_25_20 = GameUtil.parseColor(var_25_17 and Activity1_3ChessEnum.ChessGameEnum.ExTargetColorActive or Activity1_3ChessEnum.ChessGameEnum.ExTargetColorGray)
+		local color = GameUtil.parseColor(isFinished and Activity1_3ChessEnum.ChessGameEnum.ExTargetColorActive or Activity1_3ChessEnum.ChessGameEnum.ExTargetColorGray)
 
-		arg_25_0._imageTargetIcon2.color = var_25_20
+		self._imageTargetIcon2.color = color
 
-		if var_25_17 then
-			gohelper.setActive(arg_25_0._gotargetStar, true)
+		if isFinished then
+			gohelper.setActive(self._gotargetStar, true)
 		end
 	end
 end
 
-function var_0_0.initLifeCountView(arg_26_0)
-	for iter_26_0 = 1, 3 do
-		arg_26_0["_animatorLife" .. iter_26_0]:Play(var_0_1.normal)
+function Activity1_3ChessGameView:initLifeCountView()
+	for i = 1, 3 do
+		self["_animatorLife" .. i]:Play(lifeStateAniName.normal)
 	end
 end
 
-function var_0_0.refreshLifeCount(arg_27_0, arg_27_1)
-	local var_27_0 = Va3ChessGameModel.instance:getHp()
-	local var_27_1 = {
+function Activity1_3ChessGameView:refreshLifeCount(skipAnimation)
+	local hp = Va3ChessGameModel.instance:getHp()
+	local hpThreshold = {
 		0,
 		1,
 		2
 	}
 
-	for iter_27_0 = 1, 3 do
-		if arg_27_0._lifeState[iter_27_0] and var_27_0 > var_27_1[iter_27_0] then
-			arg_27_0["_animatorLife" .. iter_27_0]:Play(var_0_1.normal)
-		elseif arg_27_0._lifeState[iter_27_0] then
-			arg_27_0._lifeState[iter_27_0] = false
+	for i = 1, 3 do
+		if self._lifeState[i] and hp > hpThreshold[i] then
+			self["_animatorLife" .. i]:Play(lifeStateAniName.normal)
+		elseif self._lifeState[i] then
+			self._lifeState[i] = false
 
-			if not arg_27_1 then
-				arg_27_0["_animatorLife" .. iter_27_0]:Play(var_0_1.losing)
+			if not skipAnimation then
+				self["_animatorLife" .. i]:Play(lifeStateAniName.losing)
 			else
-				arg_27_0["_animatorLife" .. iter_27_0]:Play(var_0_1.lose)
+				self["_animatorLife" .. i]:Play(lifeStateAniName.lose)
 			end
 		end
 	end
 end
 
-function var_0_0.showTips(arg_28_0, arg_28_1)
-	local var_28_0 = Va3ChessModel.instance:getActId()
-	local var_28_1 = Va3ChessConfig.instance:getTipsCfg(var_28_0, arg_28_1)
+function Activity1_3ChessGameView:showTips(tipsId)
+	local actId = Va3ChessModel.instance:getActId()
+	local tipsCfg = Va3ChessConfig.instance:getTipsCfg(actId, tipsId)
 
-	gohelper.setActive(arg_28_0._goTipsRoot, true)
+	gohelper.setActive(self._goTipsRoot, true)
 
-	arg_28_0._txtTips.text = var_28_1.content
+	self._txtTips.text = tipsCfg.content
 
-	TaskDispatcher.runDelay(arg_28_0._delayHideTips, arg_28_0, 3)
+	TaskDispatcher.runDelay(self._delayHideTips, self, 3)
 end
 
-function var_0_0._delayHideTips(arg_29_0)
-	gohelper.setActive(arg_29_0._goTipsRoot, false)
+function Activity1_3ChessGameView:_delayHideTips()
+	gohelper.setActive(self._goTipsRoot, false)
 end
 
-function var_0_0.onResetGame(arg_30_0)
-	arg_30_0._lifeState = {
+function Activity1_3ChessGameView:onResetGame()
+	self._lifeState = {
 		true,
 		true,
 		true
 	}
 
-	arg_30_0:refreshLifeCount(true)
+	self:refreshLifeCount(true)
 end
 
-function var_0_0.onReadGame(arg_31_0)
-	arg_31_0._lifeState = {
+function Activity1_3ChessGameView:onReadGame()
+	self._lifeState = {
 		true,
 		true,
 		true
 	}
 
-	arg_31_0:refreshLifeCount(true)
+	self:refreshLifeCount(true)
 end
 
-function var_0_0._beforeEnterNextMap(arg_32_0)
-	UIBlockMgr.instance:startBlock(var_0_0.UI_RESET_BLOCK_KEY)
+function Activity1_3ChessGameView:_beforeEnterNextMap()
+	UIBlockMgr.instance:startBlock(Activity1_3ChessGameView.UI_RESET_BLOCK_KEY)
 	AudioMgr.instance:trigger(AudioEnum.RoleChessGame1_3Common.NextStage)
-	arg_32_0:_playNextMapAniamtion(true)
+	self:_playNextMapAniamtion(true)
 end
 
-function var_0_0._onEnterNextMap(arg_33_0)
-	UIBlockMgr.instance:endBlock(var_0_0.UI_RESET_BLOCK_KEY)
-	arg_33_0:_playNextMapAniamtion(false)
+function Activity1_3ChessGameView:_onEnterNextMap()
+	UIBlockMgr.instance:endBlock(Activity1_3ChessGameView.UI_RESET_BLOCK_KEY)
+	self:_playNextMapAniamtion(false)
 end
 
-function var_0_0._afterPlayStory(arg_34_0)
+function Activity1_3ChessGameView:_afterPlayStory()
 	Activity1_3ChessGameController.instance:setSceneCamera(true)
 end
 
-function var_0_0._getEpisodeCfg(arg_35_0)
-	local var_35_0 = Va3ChessModel.instance:getActId()
-	local var_35_1 = Va3ChessModel.instance:getEpisodeId()
+function Activity1_3ChessGameView:_getEpisodeCfg()
+	local actId = Va3ChessModel.instance:getActId()
+	local episodeId = Va3ChessModel.instance:getEpisodeId()
 
-	if var_35_0 ~= nil and var_35_1 ~= nil then
-		return Va3ChessConfig.instance:getEpisodeCo(var_35_0, var_35_1)
+	if actId ~= nil and episodeId ~= nil then
+		return Va3ChessConfig.instance:getEpisodeCo(actId, episodeId)
 	end
 end
 
-function var_0_0._onPlayStoryFinish(arg_36_0)
+function Activity1_3ChessGameView:_onPlayStoryFinish()
 	Activity1_3ChessGameController.instance:setSceneCamera(true)
 end
 
-function var_0_0._onReturnChessFromBattleGroup(arg_37_0)
-	local var_37_0 = Va3ChessModel.instance:getActId()
+function Activity1_3ChessGameView:_onReturnChessFromBattleGroup()
+	local actId = Va3ChessModel.instance:getActId()
 
-	Activity1_3ChessController.instance:requestBackChessGame(var_37_0)
+	Activity1_3ChessController.instance:requestBackChessGame(actId)
 end
 
-function var_0_0.playCloseAniamtion(arg_38_0)
-	gohelper.setActive(arg_38_0._goTop, false)
-	arg_38_0._viewAnimator:Play(UIAnimationName.Close)
+function Activity1_3ChessGameView:playCloseAniamtion()
+	gohelper.setActive(self._goTop, false)
+	self._viewAnimator:Play(UIAnimationName.Close)
 end
 
-function var_0_0.playViewAnimation(arg_39_0, arg_39_1)
-	arg_39_0._viewAnimator:Play(arg_39_1, 0, 0)
+function Activity1_3ChessGameView:playViewAnimation(aniName)
+	self._viewAnimator:Play(aniName, 0, 0)
 end
 
-function var_0_0.playResetAniamtionClose(arg_40_0)
-	arg_40_0:_playResetAniamtion(false)
+function Activity1_3ChessGameView:playResetAniamtionClose()
+	self:_playResetAniamtion(false)
 end
 
-function var_0_0._playResetAniamtion(arg_41_0, arg_41_1)
-	gohelper.setActive(arg_41_0._goResetExcessive, true)
-	arg_41_0._animatorResetExcessive:Play(arg_41_1 and var_0_2.open or var_0_2.close)
+function Activity1_3ChessGameView:_playResetAniamtion(begin)
+	gohelper.setActive(self._goResetExcessive, true)
+	self._animatorResetExcessive:Play(begin and excessiveAniName.open or excessiveAniName.close)
 end
 
-function var_0_0.playReadAniamtionClose(arg_42_0)
-	arg_42_0:_playReadProgressAniamtion(false)
+function Activity1_3ChessGameView:playReadAniamtionClose()
+	self:_playReadProgressAniamtion(false)
 end
 
-function var_0_0._playReadProgressAniamtion(arg_43_0, arg_43_1)
-	gohelper.setActive(arg_43_0._goResetExcessive, true)
-	arg_43_0._animatorResetExcessive:Play(arg_43_1 and var_0_2.open or var_0_2.close)
+function Activity1_3ChessGameView:_playReadProgressAniamtion(begin)
+	gohelper.setActive(self._goResetExcessive, true)
+	self._animatorResetExcessive:Play(begin and excessiveAniName.open or excessiveAniName.close)
 end
 
-function var_0_0._playNextMapAniamtion(arg_44_0, arg_44_1)
-	gohelper.setActive(arg_44_0._goNextMapExcessive, true)
-	arg_44_0._animatorNextMapExcessive:Play(arg_44_1 and var_0_2.open or var_0_2.close)
+function Activity1_3ChessGameView:_playNextMapAniamtion(begin)
+	gohelper.setActive(self._goNextMapExcessive, true)
+	self._animatorNextMapExcessive:Play(begin and excessiveAniName.open or excessiveAniName.close)
 end
 
-return var_0_0
+return Activity1_3ChessGameView

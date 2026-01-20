@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_scene_click", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_scene_click.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_scene_click", package.seeall)
+
+local lua_scene_click = {}
+local fields = {
 	itemId = 3,
 	effect = 6,
 	previewIcon = 5,
@@ -9,13 +11,13 @@ local var_0_1 = {
 	icon = 4,
 	defaultUnlock = 2
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_scene_click.onLoad(json)
+	lua_scene_click.configList, lua_scene_click.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_scene_click

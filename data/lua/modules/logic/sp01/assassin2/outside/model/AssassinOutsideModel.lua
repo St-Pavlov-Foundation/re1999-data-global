@@ -1,197 +1,220 @@
-﻿module("modules.logic.sp01.assassin2.outside.model.AssassinOutsideModel", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/outside/model/AssassinOutsideModel.lua
 
-local var_0_0 = class("AssassinOutsideModel", BaseModel)
+module("modules.logic.sp01.assassin2.outside.model.AssassinOutsideModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:clear()
-	arg_1_0:clearData()
+local AssassinOutsideModel = class("AssassinOutsideModel", BaseModel)
+
+function AssassinOutsideModel:onInit()
+	self:clear()
+	self:clearData()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clearData()
+function AssassinOutsideModel:reInit()
+	self:clearData()
 end
 
-function var_0_0.clearData(arg_3_0)
-	if arg_3_0._outsideMo then
-		arg_3_0._outsideMo:clearData()
+function AssassinOutsideModel:clearData()
+	if self._outsideMo then
+		self._outsideMo:clearData()
 	end
 
-	arg_3_0:setEnterFightQuest()
-	arg_3_0:updateIsNeedPlayGetCoin()
+	self:setEnterFightQuest()
+	self:updateIsNeedPlayGetCoin()
 
-	arg_3_0.playerCacheData = nil
+	self.playerCacheData = nil
 end
 
-function var_0_0.updateAllInfo(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
-	arg_4_0:updateIsNeedPlayGetCoin(arg_4_4)
-	arg_4_0:getOutsideMo():updateAllInfo(arg_4_1, arg_4_2, arg_4_3, arg_4_4)
+function AssassinOutsideModel:updateAllInfo(buildingInfo, unlockMapIds, allQuestInfo, coin)
+	self:updateIsNeedPlayGetCoin(coin)
+
+	local outsideMo = self:getOutsideMo()
+
+	outsideMo:updateAllInfo(buildingInfo, unlockMapIds, allQuestInfo, coin)
 end
 
-function var_0_0.getAct195Id(arg_5_0)
+function AssassinOutsideModel:getAct195Id()
 	return VersionActivity2_9Enum.ActivityId.Outside
 end
 
-function var_0_0.isAct195Open(arg_6_0, arg_6_1)
-	local var_6_0 = true
-	local var_6_1
-	local var_6_2
+function AssassinOutsideModel:isAct195Open(isToast)
+	local result = true
+	local toastId, toastParam
 
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.AssassinOutside) then
-		var_6_1, var_6_2 = OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.AssassinOutside)
-		var_6_0 = false
+		toastId, toastParam = OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.AssassinOutside)
+		result = false
 	else
-		local var_6_3
-		local var_6_4 = arg_6_0:getAct195Id()
+		local actStatus
+		local actId = self:getAct195Id()
+		local actInfoMo = ActivityModel.instance:getActivityInfo()[actId]
 
-		if ActivityModel.instance:getActivityInfo()[var_6_4] then
-			var_6_3, var_6_1, var_6_2 = ActivityHelper.getActivityStatusAndToast(var_6_4)
+		if actInfoMo then
+			actStatus, toastId, toastParam = ActivityHelper.getActivityStatusAndToast(actId)
 		else
-			var_6_1 = ToastEnum.ActivityEnd
+			toastId = ToastEnum.ActivityEnd
 		end
 
-		var_6_0 = var_6_3 == ActivityEnum.ActivityStatus.Normal
+		result = actStatus == ActivityEnum.ActivityStatus.Normal
 	end
 
-	if arg_6_1 and var_6_1 then
-		GameFacade.showToast(var_6_1, var_6_2)
+	if isToast and toastId then
+		GameFacade.showToast(toastId, toastParam)
 	end
 
-	return var_6_0
+	return result
 end
 
-function var_0_0.getOutsideMo(arg_7_0)
-	if not arg_7_0._outsideMo then
-		arg_7_0._outsideMo = AssassinOutsideMO.New()
+function AssassinOutsideModel:getOutsideMo()
+	if not self._outsideMo then
+		self._outsideMo = AssassinOutsideMO.New()
 	end
 
-	return arg_7_0._outsideMo
+	return self._outsideMo
 end
 
-function var_0_0.updateIsNeedPlayGetCoin(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0:getOutsideMo()
-	local var_8_1 = var_8_0 and var_8_0:getCoinNum()
+function AssassinOutsideModel:updateIsNeedPlayGetCoin(newCoin)
+	local outsideMo = self:getOutsideMo()
+	local curCoin = outsideMo and outsideMo:getCoinNum()
 
-	if arg_8_1 and var_8_1 then
-		arg_8_0._needPlayGetCoin = var_8_1 < arg_8_1
+	if newCoin and curCoin then
+		self._needPlayGetCoin = curCoin < newCoin
 	else
-		arg_8_0._needPlayGetCoin = nil
+		self._needPlayGetCoin = nil
 	end
 end
 
-function var_0_0.getIsNeedPlayGetCoin(arg_9_0)
-	return arg_9_0._needPlayGetCoin
+function AssassinOutsideModel:getIsNeedPlayGetCoin()
+	return self._needPlayGetCoin
 end
 
-function var_0_0.saveCacheData(arg_10_0)
-	if not arg_10_0.playerCacheData then
+function AssassinOutsideModel:saveCacheData()
+	if not self.playerCacheData then
 		return
 	end
 
-	GameUtil.playerPrefsSetStringByUserId(PlayerPrefsKey.AssassinOutsideDataKey, cjson.encode(arg_10_0.playerCacheData))
+	GameUtil.playerPrefsSetStringByUserId(PlayerPrefsKey.AssassinOutsideDataKey, cjson.encode(self.playerCacheData))
 end
 
-function var_0_0.unlockMapList(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0:getOutsideMo()
+function AssassinOutsideModel:unlockMapList(newMapList)
+	local outsideMo = self:getOutsideMo()
 
-	if var_11_0 then
-		var_11_0:unlockQuestMapByList(arg_11_1)
+	if outsideMo then
+		outsideMo:unlockQuestMapByList(newMapList)
 	end
 end
 
-function var_0_0.unlockQuestList(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0:getOutsideMo()
+function AssassinOutsideModel:unlockQuestList(newQuestList)
+	local outsideMo = self:getOutsideMo()
 
-	if var_12_0 then
-		var_12_0:unlockQuestByList(arg_12_1)
+	if outsideMo then
+		outsideMo:unlockQuestByList(newQuestList)
 	end
 end
 
-function var_0_0.finishQuest(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0:getOutsideMo()
+function AssassinOutsideModel:finishQuest(questId)
+	local outsideMo = self:getOutsideMo()
 
-	if var_13_0 then
-		var_13_0:finishQuest(arg_13_1)
+	if outsideMo then
+		outsideMo:finishQuest(questId)
 	end
 end
 
-function var_0_0.setEnterFightQuest(arg_14_0, arg_14_1)
-	arg_14_0._enterFightQuest = arg_14_1
+function AssassinOutsideModel:setEnterFightQuest(questId)
+	self._enterFightQuest = questId
 end
 
-function var_0_0.getQuestMapStatus(arg_15_0, arg_15_1)
-	return arg_15_0:getOutsideMo():getQuestMapStatus(arg_15_1)
+function AssassinOutsideModel:getQuestMapStatus(mapId)
+	local outsideMo = self:getOutsideMo()
+
+	return outsideMo:getQuestMapStatus(mapId)
 end
 
-function var_0_0.getQuestMapProgress(arg_16_0, arg_16_1)
-	local var_16_0, var_16_1 = arg_16_0:getOutsideMo():getQuestMapProgress(arg_16_1)
+function AssassinOutsideModel:getQuestMapProgress(mapId)
+	local outsideMo = self:getOutsideMo()
+	local progress, strProgress = outsideMo:getQuestMapProgress(mapId)
 
-	return var_16_0, var_16_1
+	return progress, strProgress
 end
 
-function var_0_0.getQuestTypeProgressStr(arg_17_0, arg_17_1, arg_17_2)
-	return arg_17_0:getOutsideMo():getQuestTypeProgressStr(arg_17_1, arg_17_2)
+function AssassinOutsideModel:getQuestTypeProgressStr(mapId, questType)
+	local outsideMo = self:getOutsideMo()
+
+	return outsideMo:getQuestTypeProgressStr(mapId, questType)
 end
 
-function var_0_0.getMapUnlockQuestIdList(arg_18_0, arg_18_1)
-	return arg_18_0:getOutsideMo():getMapUnlockQuestIdList(arg_18_1)
+function AssassinOutsideModel:getMapUnlockQuestIdList(mapId)
+	local outsideMo = self:getOutsideMo()
+
+	return outsideMo:getMapUnlockQuestIdList(mapId)
 end
 
-function var_0_0.getMapFinishQuestIdList(arg_19_0, arg_19_1)
-	return arg_19_0:getOutsideMo():getMapFinishQuestIdList(arg_19_1)
+function AssassinOutsideModel:getMapFinishQuestIdList(mapId)
+	local outsideMo = self:getOutsideMo()
+
+	return outsideMo:getMapFinishQuestIdList(mapId)
 end
 
-function var_0_0.isUnlockQuest(arg_20_0, arg_20_1)
-	return arg_20_0:getOutsideMo():isUnlockQuest(arg_20_1)
+function AssassinOutsideModel:isUnlockQuest(questId)
+	local outsideMo = self:getOutsideMo()
+
+	return outsideMo:isUnlockQuest(questId)
 end
 
-function var_0_0.isFinishQuest(arg_21_0, arg_21_1)
-	return arg_21_0:getOutsideMo():isFinishQuest(arg_21_1)
+function AssassinOutsideModel:isFinishQuest(questId)
+	local outsideMo = self:getOutsideMo()
+
+	return outsideMo:isFinishQuest(questId)
 end
 
-function var_0_0.getPlayerCacheData(arg_22_0)
-	if not arg_22_0.playerCacheData then
-		local var_22_0 = GameUtil.playerPrefsGetStringByUserId(PlayerPrefsKey.AssassinOutsideDataKey, "")
+function AssassinOutsideModel:getPlayerCacheData()
+	if not self.playerCacheData then
+		local strCacheData = GameUtil.playerPrefsGetStringByUserId(PlayerPrefsKey.AssassinOutsideDataKey, "")
 
-		if not string.nilorempty(var_22_0) then
-			arg_22_0.playerCacheData = cjson.decode(var_22_0)
+		if not string.nilorempty(strCacheData) then
+			self.playerCacheData = cjson.decode(strCacheData)
 		end
 
-		arg_22_0.playerCacheData = arg_22_0.playerCacheData or {}
+		self.playerCacheData = self.playerCacheData or {}
 	end
 
-	return arg_22_0.playerCacheData
+	return self.playerCacheData
 end
 
-function var_0_0.getCacheKeyData(arg_23_0, arg_23_1)
-	local var_23_0 = false
+function AssassinOutsideModel:getCacheKeyData(key)
+	local result = false
 
-	if arg_23_1 then
-		local var_23_1 = arg_23_0:getPlayerCacheData()
+	if key then
+		local playerCacheData = self:getPlayerCacheData()
 
-		var_23_0 = var_23_1 and var_23_1[arg_23_1] or false
+		result = playerCacheData and playerCacheData[key] or false
 	end
 
-	return var_23_0
+	return result
 end
 
-function var_0_0.getProcessingQuest(arg_24_0)
-	return arg_24_0:getOutsideMo():getProcessingQuest()
+function AssassinOutsideModel:getProcessingQuest()
+	local outsideMo = self:getOutsideMo()
+
+	return outsideMo:getProcessingQuest()
 end
 
-function var_0_0.getEnterFightQuest(arg_25_0)
-	return arg_25_0._enterFightQuest
+function AssassinOutsideModel:getEnterFightQuest()
+	return self._enterFightQuest
 end
 
-function var_0_0.getBuildingMapMo(arg_26_0)
-	return arg_26_0:getOutsideMo():getBuildingMap()
+function AssassinOutsideModel:getBuildingMapMo()
+	local outsideMo = self:getOutsideMo()
+
+	return outsideMo:getBuildingMap()
 end
 
-function var_0_0.getBuildingMo(arg_27_0, arg_27_1)
-	local var_27_0 = arg_27_0:getBuildingMapMo()
+function AssassinOutsideModel:getBuildingMo(buildingType)
+	local mapMo = self:getBuildingMapMo()
+	local buildingMo = mapMo and mapMo:getBuildingMo(buildingType)
 
-	return var_27_0 and var_27_0:getBuildingMo(arg_27_1)
+	return buildingMo
 end
 
-var_0_0.instance = var_0_0.New()
+AssassinOutsideModel.instance = AssassinOutsideModel.New()
 
-return var_0_0
+return AssassinOutsideModel

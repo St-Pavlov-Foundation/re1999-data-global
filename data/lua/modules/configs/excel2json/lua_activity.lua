@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_activity", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_activity.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_activity", package.seeall)
+
+local lua_activity = {}
+local fields = {
 	tabBgPath = 25,
 	name = 3,
 	logoType = 8,
@@ -37,10 +39,10 @@ local var_0_1 = {
 	joinCondition = 10,
 	displayPriority = 12
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	logoName = 5,
 	name = 2,
 	actDesc = 3,
@@ -49,8 +51,8 @@ local var_0_3 = {
 	desc = 6
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_activity.onLoad(json)
+	lua_activity.configList, lua_activity.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_activity

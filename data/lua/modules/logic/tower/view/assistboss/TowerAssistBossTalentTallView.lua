@@ -1,88 +1,92 @@
-﻿module("modules.logic.tower.view.assistboss.TowerAssistBossTalentTallView", package.seeall)
+﻿-- chunkname: @modules/logic/tower/view/assistboss/TowerAssistBossTalentTallView.lua
 
-local var_0_0 = class("TowerAssistBossTalentTallView", BaseView)
+module("modules.logic.tower.view.assistboss.TowerAssistBossTalentTallView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.goEmpty = gohelper.findChild(arg_1_0.viewGO, "#go_Empty")
-	arg_1_0.goScroll = gohelper.findChild(arg_1_0.viewGO, "#scroll_Descr")
-	arg_1_0.goItem = gohelper.findChild(arg_1_0.viewGO, "#scroll_Descr/Viewport/Content/#go_Item")
+local TowerAssistBossTalentTallView = class("TowerAssistBossTalentTallView", BaseView)
 
-	gohelper.setActive(arg_1_0.goItem, false)
+function TowerAssistBossTalentTallView:onInitView()
+	self.goEmpty = gohelper.findChild(self.viewGO, "#go_Empty")
+	self.goScroll = gohelper.findChild(self.viewGO, "#scroll_Descr")
+	self.goItem = gohelper.findChild(self.viewGO, "#scroll_Descr/Viewport/Content/#go_Item")
 
-	arg_1_0.items = {}
+	gohelper.setActive(self.goItem, false)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	self.items = {}
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function TowerAssistBossTalentTallView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function TowerAssistBossTalentTallView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function TowerAssistBossTalentTallView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
-	arg_5_0:refreshParam()
-	arg_5_0:refreshView()
+function TowerAssistBossTalentTallView:onUpdateParam()
+	self:refreshParam()
+	self:refreshView()
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:refreshParam()
-	arg_6_0:refreshView()
+function TowerAssistBossTalentTallView:onOpen()
+	self:refreshParam()
+	self:refreshView()
 end
 
-function var_0_0.refreshParam(arg_7_0)
-	arg_7_0.bossId = arg_7_0.viewParam.bossId
-	arg_7_0.bossMo = TowerAssistBossModel.instance:getBoss(arg_7_0.bossId)
-	arg_7_0.talentTree = arg_7_0.bossMo:getTalentTree()
+function TowerAssistBossTalentTallView:refreshParam()
+	self.bossId = self.viewParam.bossId
+	self.bossMo = TowerAssistBossModel.instance:getBoss(self.bossId)
+	self.talentTree = self.bossMo:getTalentTree()
 end
 
-function var_0_0.refreshView(arg_8_0)
-	arg_8_0:refreshList()
+function TowerAssistBossTalentTallView:refreshView()
+	self:refreshList()
 end
 
-function var_0_0.refreshList(arg_9_0)
-	local var_9_0 = arg_9_0.talentTree:getActiveTalentList()
-	local var_9_1 = #var_9_0
-	local var_9_2 = var_9_1 == 0
+function TowerAssistBossTalentTallView:refreshList()
+	local list = self.talentTree:getActiveTalentList()
+	local talentCount = #list
+	local isEmpty = talentCount == 0
 
-	gohelper.setActive(arg_9_0.goScroll, not var_9_2)
-	gohelper.setActive(arg_9_0.goEmpty, var_9_2)
+	gohelper.setActive(self.goScroll, not isEmpty)
+	gohelper.setActive(self.goEmpty, isEmpty)
 
-	if not var_9_2 then
-		local var_9_3 = #arg_9_0.items
-		local var_9_4 = math.max(var_9_3, var_9_1)
+	if not isEmpty then
+		local itemCount = #self.items
+		local runCount = math.max(itemCount, talentCount)
 
-		for iter_9_0 = 1, var_9_4 do
-			arg_9_0:getItem(iter_9_0):onUpdateMO(var_9_0[iter_9_0])
+		for i = 1, runCount do
+			local item = self:getItem(i)
+
+			item:onUpdateMO(list[i])
 		end
 	end
 end
 
-function var_0_0.getItem(arg_10_0, arg_10_1)
-	if not arg_10_0.items[arg_10_1] then
-		local var_10_0 = gohelper.cloneInPlace(arg_10_0.goItem, tostring(arg_10_1))
-		local var_10_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_10_0, TowerAssistBossTalentTallItem)
+function TowerAssistBossTalentTallView:getItem(index)
+	if not self.items[index] then
+		local go = gohelper.cloneInPlace(self.goItem, tostring(index))
+		local item = MonoHelper.addNoUpdateLuaComOnceToGo(go, TowerAssistBossTalentTallItem)
 
-		arg_10_0.items[arg_10_1] = var_10_1
+		self.items[index] = item
 	end
 
-	return arg_10_0.items[arg_10_1]
+	return self.items[index]
 end
 
-function var_0_0.onClose(arg_11_0)
+function TowerAssistBossTalentTallView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_12_0)
+function TowerAssistBossTalentTallView:onDestroyView()
 	return
 end
 
-return var_0_0
+return TowerAssistBossTalentTallView

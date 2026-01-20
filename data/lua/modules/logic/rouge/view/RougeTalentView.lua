@@ -1,361 +1,364 @@
-﻿module("modules.logic.rouge.view.RougeTalentView", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeTalentView.lua
 
-local var_0_0 = class("RougeTalentView", BaseView)
+module("modules.logic.rouge.view.RougeTalentView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._simageTypeIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "Left/Top/#simage_TypeIcon")
-	arg_1_0._txtType = gohelper.findChildText(arg_1_0.viewGO, "Left/Top/#txt_Type")
-	arg_1_0._txtLv = gohelper.findChildText(arg_1_0.viewGO, "Left/Top/#txt_Lv")
-	arg_1_0._txtNum = gohelper.findChildText(arg_1_0.viewGO, "Left/Top/#txt_Num")
-	arg_1_0._imageslider = gohelper.findChildImage(arg_1_0.viewGO, "Left/Top/Slider/#image_slider")
-	arg_1_0._txtDescr1 = gohelper.findChildText(arg_1_0.viewGO, "Left/Skill/#scroll_desc_overseas/viewport/Layout/#txt_Descr1")
-	arg_1_0._txtDescr2 = gohelper.findChildText(arg_1_0.viewGO, "Left/Skill/#scroll_desc_overseas/viewport/Layout/#txt_Descr2")
-	arg_1_0._godetail = gohelper.findChild(arg_1_0.viewGO, "Left/Card/Layout/#go_detail")
-	arg_1_0._imageskillicon = gohelper.findChildImage(arg_1_0.viewGO, "Left/Card/Layout/#go_detail/#image_skillicon")
-	arg_1_0._txtdec2 = gohelper.findChildText(arg_1_0.viewGO, "Left/Card/Layout/#go_detail/#txt_dec2")
-	arg_1_0._goskillitem = gohelper.findChild(arg_1_0.viewGO, "Left/Card/Layout/#go_skillitem")
-	arg_1_0._scrollTree = gohelper.findChildScrollRect(arg_1_0.viewGO, "Tree/#scroll_Tree")
-	arg_1_0._simageTypeIcon2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "Tree/#scroll_Tree/Viewport/Branch/#simage_TypeIcon2")
-	arg_1_0._goNormal = gohelper.findChild(arg_1_0.viewGO, "Tree/#scroll_Tree/Viewport/Branch/#go_Normal")
-	arg_1_0._goSpecial = gohelper.findChild(arg_1_0.viewGO, "Tree/#scroll_Tree/Viewport/Branch/#go_Special")
-	arg_1_0._goBranch = gohelper.findChild(arg_1_0.viewGO, "Tree/#scroll_Tree/Viewport/Branch/#go_Branch")
-	arg_1_0._golefttop = gohelper.findChild(arg_1_0.viewGO, "#go_lefttop")
+local RougeTalentView = class("RougeTalentView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeTalentView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._simageTypeIcon = gohelper.findChildSingleImage(self.viewGO, "Left/Top/#simage_TypeIcon")
+	self._txtType = gohelper.findChildText(self.viewGO, "Left/Top/#txt_Type")
+	self._txtLv = gohelper.findChildText(self.viewGO, "Left/Top/#txt_Lv")
+	self._txtNum = gohelper.findChildText(self.viewGO, "Left/Top/#txt_Num")
+	self._imageslider = gohelper.findChildImage(self.viewGO, "Left/Top/Slider/#image_slider")
+	self._txtDescr1 = gohelper.findChildText(self.viewGO, "Left/Skill/#scroll_desc_overseas/viewport/Layout/#txt_Descr1")
+	self._txtDescr2 = gohelper.findChildText(self.viewGO, "Left/Skill/#scroll_desc_overseas/viewport/Layout/#txt_Descr2")
+	self._godetail = gohelper.findChild(self.viewGO, "Left/Card/Layout/#go_detail")
+	self._imageskillicon = gohelper.findChildImage(self.viewGO, "Left/Card/Layout/#go_detail/#image_skillicon")
+	self._txtdec2 = gohelper.findChildText(self.viewGO, "Left/Card/Layout/#go_detail/#txt_dec2")
+	self._goskillitem = gohelper.findChild(self.viewGO, "Left/Card/Layout/#go_skillitem")
+	self._scrollTree = gohelper.findChildScrollRect(self.viewGO, "Tree/#scroll_Tree")
+	self._simageTypeIcon2 = gohelper.findChildSingleImage(self.viewGO, "Tree/#scroll_Tree/Viewport/Branch/#simage_TypeIcon2")
+	self._goNormal = gohelper.findChild(self.viewGO, "Tree/#scroll_Tree/Viewport/Branch/#go_Normal")
+	self._goSpecial = gohelper.findChild(self.viewGO, "Tree/#scroll_Tree/Viewport/Branch/#go_Special")
+	self._goBranch = gohelper.findChild(self.viewGO, "Tree/#scroll_Tree/Viewport/Branch/#go_Branch")
+	self._golefttop = gohelper.findChild(self.viewGO, "#go_lefttop")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RougeTalentView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RougeTalentView:removeEvents()
 	return
 end
 
-function var_0_0._setBtnStatus(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	gohelper.setActive(arg_4_2, not arg_4_1)
-	gohelper.setActive(arg_4_3, arg_4_1)
+function RougeTalentView:_setBtnStatus(isSelected, normalGo, selectedGo)
+	gohelper.setActive(normalGo, not isSelected)
+	gohelper.setActive(selectedGo, isSelected)
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._imagePointGo1 = gohelper.findChild(arg_5_0._txtDescr1.gameObject, "image_Point")
-	arg_5_0._imagePointGo2 = gohelper.findChild(arg_5_0._txtDescr2.gameObject, "image_Point")
-	arg_5_0._imageTypeIcon = gohelper.findChildImage(arg_5_0.viewGO, "Left/Top/#simage_TypeIcon")
-	arg_5_0._imageTypeIcon2 = gohelper.findChildImage(arg_5_0.viewGO, "Tree/#scroll_Tree/Viewport/Branch/#simage_TypeIcon2")
-	arg_5_0._gocontent = gohelper.findChild(arg_5_0.viewGO, "Tree/#scroll_Tree/Viewport/Branch")
+function RougeTalentView:_editableInitView()
+	self._imagePointGo1 = gohelper.findChild(self._txtDescr1.gameObject, "image_Point")
+	self._imagePointGo2 = gohelper.findChild(self._txtDescr2.gameObject, "image_Point")
+	self._imageTypeIcon = gohelper.findChildImage(self.viewGO, "Left/Top/#simage_TypeIcon")
+	self._imageTypeIcon2 = gohelper.findChildImage(self.viewGO, "Tree/#scroll_Tree/Viewport/Branch/#simage_TypeIcon2")
+	self._gocontent = gohelper.findChild(self.viewGO, "Tree/#scroll_Tree/Viewport/Branch")
 
-	gohelper.setActive(arg_5_0._godetail, false)
+	gohelper.setActive(self._godetail, false)
 
-	arg_5_0._skillItemList = arg_5_0:getUserDataTb_()
+	self._skillItemList = self:getUserDataTb_()
 end
 
-function var_0_0._initIcon(arg_6_0)
-	local var_6_0 = arg_6_0._rougeInfo.style
-	local var_6_1 = arg_6_0._rougeInfo.season
-	local var_6_2 = lua_rouge_style.configDict[var_6_1][var_6_0]
-	local var_6_3 = string.format("%s_light", var_6_2.icon)
+function RougeTalentView:_initIcon()
+	local style = self._rougeInfo.style
+	local season = self._rougeInfo.season
+	local styleCo = lua_rouge_style.configDict[season][style]
+	local iconName = string.format("%s_light", styleCo.icon)
 
-	UISpriteSetMgr.instance:setRouge2Sprite(arg_6_0._imageTypeIcon, var_6_3)
-	UISpriteSetMgr.instance:setRouge2Sprite(arg_6_0._imageTypeIcon2, var_6_3)
+	UISpriteSetMgr.instance:setRouge2Sprite(self._imageTypeIcon, iconName)
+	UISpriteSetMgr.instance:setRouge2Sprite(self._imageTypeIcon2, iconName)
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function RougeTalentView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0._season = RougeConfig1.instance:season()
-	arg_8_0._rougeInfo = RougeModel.instance:getRougeInfo()
+function RougeTalentView:onOpen()
+	self._season = RougeConfig1.instance:season()
+	self._rougeInfo = RougeModel.instance:getRougeInfo()
 
-	local var_8_0 = RougeModel.instance:getStyle()
+	local styleId = RougeModel.instance:getStyle()
 
-	arg_8_0._styleConfig = RougeConfig1.instance:getStyleConfig(var_8_0)
-	arg_8_0._txtType.text = arg_8_0._styleConfig.name
-	arg_8_0._txtLv.text = string.format("Lv.%s", arg_8_0._rougeInfo.teamLevel)
-	arg_8_0._txtDescr1.text = arg_8_0._styleConfig.passiveSkillDescs
-	arg_8_0._txtDescr2.text = arg_8_0._styleConfig.passiveSkillDescs2
+	self._styleConfig = RougeConfig1.instance:getStyleConfig(styleId)
+	self._txtType.text = self._styleConfig.name
+	self._txtLv.text = string.format("Lv.%s", self._rougeInfo.teamLevel)
+	self._txtDescr1.text = self._styleConfig.passiveSkillDescs
+	self._txtDescr2.text = self._styleConfig.passiveSkillDescs2
 
-	gohelper.setActive(arg_8_0._imagePointGo1, not string.nilorempty(arg_8_0._styleConfig.passiveSkillDescs))
-	gohelper.setActive(arg_8_0._imagePointGo2, not string.nilorempty(arg_8_0._styleConfig.passiveSkillDescs2))
-	arg_8_0:_initLevel()
+	gohelper.setActive(self._imagePointGo1, not string.nilorempty(self._styleConfig.passiveSkillDescs))
+	gohelper.setActive(self._imagePointGo2, not string.nilorempty(self._styleConfig.passiveSkillDescs2))
+	self:_initLevel()
 
-	arg_8_0._nextLevel = math.min(arg_8_0._rougeInfo.teamLevel + 1, arg_8_0._maxLevelConfig.level)
+	self._nextLevel = math.min(self._rougeInfo.teamLevel + 1, self._maxLevelConfig.level)
 
-	local var_8_1 = arg_8_0._levelList[arg_8_0._nextLevel]
-	local var_8_2 = arg_8_0._rougeInfo.teamExp
+	local nextLevelConfig = self._levelList[self._nextLevel]
+	local exp = self._rougeInfo.teamExp
 
-	arg_8_0._txtNum.text = string.format("<color=#b67a45>%s</color>/%s", var_8_2, var_8_1.exp)
-	arg_8_0._imageslider.fillAmount = var_8_2 / var_8_1.exp
-	arg_8_0._moveContent = true
+	self._txtNum.text = string.format("<color=#b67a45>%s</color>/%s", exp, nextLevelConfig.exp)
+	self._imageslider.fillAmount = exp / nextLevelConfig.exp
+	self._moveContent = true
 
-	arg_8_0:_initTalentList()
-	arg_8_0:_initSkill()
-	arg_8_0:_initIcon()
-	arg_8_0:addEventCb(RougeController.instance, RougeEvent.OnUpdateRougeTalentInfo, arg_8_0._onUpdateRougeTalentInfo, arg_8_0)
-	GameStateMgr.instance:registerCallback(GameStateEvent.OnTouchScreenUp, arg_8_0._onTouchScreenUp, arg_8_0)
+	self:_initTalentList()
+	self:_initSkill()
+	self:_initIcon()
+	self:addEventCb(RougeController.instance, RougeEvent.OnUpdateRougeTalentInfo, self._onUpdateRougeTalentInfo, self)
+	GameStateMgr.instance:registerCallback(GameStateEvent.OnTouchScreenUp, self._onTouchScreenUp, self)
 end
 
-function var_0_0._onTouchScreenUp(arg_9_0)
-	if arg_9_0._showTips then
-		arg_9_0._showTips = false
+function RougeTalentView:_onTouchScreenUp()
+	if self._showTips then
+		self._showTips = false
 
 		return
 	end
 
-	gohelper.setActive(arg_9_0._godetail, false)
-	arg_9_0:_refreshAllBtnStatus()
+	gohelper.setActive(self._godetail, false)
+	self:_refreshAllBtnStatus()
 end
 
-function var_0_0._initLevel(arg_10_0)
-	arg_10_0._levelList = {}
+function RougeTalentView:_initLevel()
+	self._levelList = {}
 
-	local var_10_0 = lua_rouge_level.configDict[arg_10_0._season]
-	local var_10_1 = 0
+	local list = lua_rouge_level.configDict[self._season]
+	local level = 0
 
-	for iter_10_0, iter_10_1 in ipairs(var_10_0) do
-		if var_10_1 <= iter_10_1.level then
-			var_10_1 = iter_10_1.level
-			arg_10_0._maxLevelConfig = iter_10_1
+	for i, v in ipairs(list) do
+		if level <= v.level then
+			level = v.level
+			self._maxLevelConfig = v
 		end
 
-		arg_10_0._levelList[iter_10_1.level] = iter_10_1
+		self._levelList[v.level] = v
 	end
 end
 
-function var_0_0._initTalentList(arg_11_0)
-	arg_11_0._talentCompList = arg_11_0:getUserDataTb_()
-	arg_11_0._groupMap = arg_11_0:getUserDataTb_()
+function RougeTalentView:_initTalentList()
+	self._talentCompList = self:getUserDataTb_()
+	self._groupMap = self:getUserDataTb_()
 
-	local var_11_0 = arg_11_0._rougeInfo.talentInfo
-	local var_11_1 = RougeConfig1.instance:getConstValueByID(RougeEnum.Const.TalentCost)
+	local talentList = self._rougeInfo.talentInfo
+	local costTalentPoint = RougeConfig1.instance:getConstValueByID(RougeEnum.Const.TalentCost)
 
-	arg_11_0._costTalentPoint = tonumber(var_11_1)
+	self._costTalentPoint = tonumber(costTalentPoint)
 
-	local var_11_2 = RougeConfig1.instance:getConstValueByID(RougeEnum.Const.TalentBigNode)
-	local var_11_3 = string.splitToNumber(var_11_2, "#")
-	local var_11_4 = {}
+	local bigNodeString = RougeConfig1.instance:getConstValueByID(RougeEnum.Const.TalentBigNode)
+	local bigNodeList = string.splitToNumber(bigNodeString, "#")
+	local bigNodeMap = {}
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_3) do
-		var_11_4[iter_11_1] = true
+	for i, v in ipairs(bigNodeList) do
+		bigNodeMap[v] = true
 	end
 
-	local var_11_5 = 1
-	local var_11_6
+	local i = 1
+	local prevGroupComp
 
-	while var_11_5 <= #var_11_0 do
-		local var_11_7 = var_11_5
-		local var_11_8 = var_11_5 + 1
+	while i <= #talentList do
+		local leftIndex = i
+		local rightIndex = i + 1
 
-		var_11_5 = var_11_8 + 1
+		i = rightIndex + 1
 
-		local var_11_9 = var_11_8 / 2
-		local var_11_10 = var_11_0[var_11_7]
-		local var_11_11 = var_11_0[var_11_8]
+		local layer = rightIndex / 2
+		local leftInfo = talentList[leftIndex]
+		local rightInfo = talentList[rightIndex]
 
-		if not var_11_10 or not var_11_11 then
+		if not leftInfo or not rightInfo then
 			return
 		end
 
-		local var_11_12 = gohelper.cloneInPlace(arg_11_0._goBranch)
+		local branchGo = gohelper.cloneInPlace(self._goBranch)
 
-		gohelper.setActive(var_11_12, true)
+		gohelper.setActive(branchGo, true)
 
-		local var_11_13 = var_11_4[var_11_9]
-		local var_11_14 = gohelper.clone(var_11_13 and arg_11_0._goSpecial or arg_11_0._goNormal, var_11_12)
+		local isSpecial = bigNodeMap[layer]
+		local go = gohelper.clone(isSpecial and self._goSpecial or self._goNormal, branchGo)
 
-		gohelper.setActive(var_11_14, true)
+		gohelper.setActive(go, true)
 
-		local var_11_15 = var_11_14:GetComponent(typeof(UnityEngine.Animator))
-		local var_11_16 = gohelper.findChild(var_11_14, "Left")
-		local var_11_17 = gohelper.findChild(var_11_14, "Right")
-		local var_11_18 = MonoHelper.addNoUpdateLuaComOnceToGo(var_11_16, RougeTalentItem)
-		local var_11_19 = MonoHelper.addNoUpdateLuaComOnceToGo(var_11_17, RougeTalentItem)
+		local animator = go:GetComponent(typeof(UnityEngine.Animator))
+		local leftGo = gohelper.findChild(go, "Left")
+		local rightGo = gohelper.findChild(go, "Right")
+		local leftComp = MonoHelper.addNoUpdateLuaComOnceToGo(leftGo, RougeTalentItem)
+		local rightComp = MonoHelper.addNoUpdateLuaComOnceToGo(rightGo, RougeTalentItem)
 
-		table.insert(arg_11_0._talentCompList, var_11_18)
-		table.insert(arg_11_0._talentCompList, var_11_19)
+		table.insert(self._talentCompList, leftComp)
+		table.insert(self._talentCompList, rightComp)
 
-		arg_11_0._groupMap[var_11_18] = var_11_15
-		arg_11_0._groupMap[var_11_19] = var_11_15
+		self._groupMap[leftComp] = animator
+		self._groupMap[rightComp] = animator
 
-		var_11_18:setSpecial(var_11_13)
-		var_11_19:setSpecial(var_11_13)
-		var_11_18:setInfo(arg_11_0, var_11_7, var_11_10, var_11_19, var_11_6)
-		var_11_19:setInfo(arg_11_0, var_11_8, var_11_11, var_11_18, var_11_6)
+		leftComp:setSpecial(isSpecial)
+		rightComp:setSpecial(isSpecial)
+		leftComp:setInfo(self, leftIndex, leftInfo, rightComp, prevGroupComp)
+		rightComp:setInfo(self, rightIndex, rightInfo, leftComp, prevGroupComp)
 
-		var_11_6 = {
-			var_11_18,
-			var_11_19
+		prevGroupComp = {
+			leftComp,
+			rightComp
 		}
 	end
 
-	arg_11_0:_onUpdateRougeTalentInfo()
+	self:_onUpdateRougeTalentInfo()
 end
 
-function var_0_0._onUpdateRougeTalentInfo(arg_12_0)
-	local var_12_0 = arg_12_0._rougeInfo.talentInfo
-	local var_12_1 = arg_12_0._rougeInfo.talentPoint
-	local var_12_2
-	local var_12_3
-	local var_12_4
-	local var_12_5
-	local var_12_6 = 1
+function RougeTalentView:_onUpdateRougeTalentInfo()
+	local talentList = self._rougeInfo.talentInfo
+	local talentPoint = self._rougeInfo.talentPoint
+	local leftInfo, rightInfo, leftComp, rightComp
+	local index = 1
 
-	for iter_12_0, iter_12_1 in ipairs(arg_12_0._talentCompList) do
-		local var_12_7 = var_12_0[iter_12_0]
+	for i, comp in ipairs(self._talentCompList) do
+		local mo = talentList[i]
 
-		if not var_12_4 then
-			var_12_2 = var_12_7
-			var_12_4 = iter_12_1
+		if not leftComp then
+			leftInfo = mo
+			leftComp = comp
 		else
-			var_12_3 = var_12_7
-			var_12_5 = iter_12_1
+			rightInfo = mo
+			rightComp = comp
 		end
 
-		if var_12_4 and var_12_5 then
-			var_12_4:updateInfo(var_12_2)
-			var_12_5:updateInfo(var_12_3)
-			var_12_4:updateState(var_12_1 >= arg_12_0._costTalentPoint)
-			var_12_5:updateState(var_12_1 >= arg_12_0._costTalentPoint)
+		if leftComp and rightComp then
+			leftComp:updateInfo(leftInfo)
+			rightComp:updateInfo(rightInfo)
+			leftComp:updateState(talentPoint >= self._costTalentPoint)
+			rightComp:updateState(talentPoint >= self._costTalentPoint)
 
-			if var_12_4:isRootPlayCloseAnim() or var_12_5:isRootPlayCloseAnim() then
-				arg_12_0._groupMap[var_12_4]:Play("close", 0, 0)
+			if leftComp:isRootPlayCloseAnim() or rightComp:isRootPlayCloseAnim() then
+				local group = self._groupMap[leftComp]
+
+				group:Play("close", 0, 0)
 			end
 
-			if var_12_4:isRootPlayOpenAnim() or var_12_5:isRootPlayOpenAnim() then
-				arg_12_0._groupMap[var_12_4]:Play("open", 0, 0)
+			if leftComp:isRootPlayOpenAnim() or rightComp:isRootPlayOpenAnim() then
+				local group = self._groupMap[leftComp]
+
+				group:Play("open", 0, 0)
 			end
 
-			if var_12_4:needCostTalentPoint() or var_12_5:needCostTalentPoint() then
-				var_12_1 = var_12_1 - arg_12_0._costTalentPoint
+			if leftComp:needCostTalentPoint() or rightComp:needCostTalentPoint() then
+				talentPoint = talentPoint - self._costTalentPoint
 			end
 
-			if arg_12_0._moveContent and var_12_6 > 4 and (var_12_4:canActivated() or var_12_5:canActivated()) then
-				arg_12_0._moveContent = false
+			if self._moveContent and index > 4 and (leftComp:canActivated() or rightComp:canActivated()) then
+				self._moveContent = false
 
-				recthelper.setAnchorY(arg_12_0._gocontent.transform, (var_12_6 - 4 + 1) * 180)
+				recthelper.setAnchorY(self._gocontent.transform, (index - 4 + 1) * 180)
 			end
 
-			var_12_4 = nil
-			var_12_5 = nil
-			var_12_6 = var_12_6 + 1
+			leftComp = nil
+			rightComp = nil
+			index = index + 1
 		end
 	end
 end
 
-function var_0_0._initSkill(arg_13_0)
-	local var_13_0 = RougeDLCHelper.getAllCurrentUseStyleSkills(arg_13_0._styleConfig.id)
-	local var_13_1 = RougeOutsideModel.instance:config()
-	local var_13_2 = {}
+function RougeTalentView:_initSkill()
+	local totalSkills = RougeDLCHelper.getAllCurrentUseStyleSkills(self._styleConfig.id)
+	local rougeConfig = RougeOutsideModel.instance:config()
+	local useMap = {}
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
-		local var_13_3 = arg_13_0:_getOrCreateSkillItem(iter_13_0)
-		local var_13_4 = var_13_1:getSkillCo(iter_13_1.type, iter_13_1.skillId)
-		local var_13_5 = var_13_4 and var_13_4.icon
+	for index, skillMo in ipairs(totalSkills) do
+		local skillItem = self:_getOrCreateSkillItem(index)
+		local skillCo = rougeConfig:getSkillCo(skillMo.type, skillMo.skillId)
+		local icon = skillCo and skillCo.icon
 
-		if not string.nilorempty(var_13_5) then
-			UISpriteSetMgr.instance:setRouge2Sprite(var_13_3.imagenormalicon, var_13_5, true)
-			UISpriteSetMgr.instance:setRouge2Sprite(var_13_3.imagselecticon, var_13_5 .. "_light", true)
+		if not string.nilorempty(icon) then
+			UISpriteSetMgr.instance:setRouge2Sprite(skillItem.imagenormalicon, icon, true)
+			UISpriteSetMgr.instance:setRouge2Sprite(skillItem.imagselecticon, icon .. "_light", true)
 		else
-			logError(string.format("未配置肉鸽流派技能图标, 技能类型 = %s, 技能id = %s", iter_13_1.type, iter_13_1.skillId))
+			logError(string.format("未配置肉鸽流派技能图标, 技能类型 = %s, 技能id = %s", skillMo.type, skillMo.skillId))
 		end
 
-		arg_13_0["_skillDesc" .. iter_13_0] = var_13_4 and var_13_4.desc
-		arg_13_0["_skillIcon" .. iter_13_0] = var_13_4 and var_13_4.icon
+		self["_skillDesc" .. index] = skillCo and skillCo.desc
+		self["_skillIcon" .. index] = skillCo and skillCo.icon
 
-		gohelper.setActive(var_13_3.viewGO, true)
+		gohelper.setActive(skillItem.viewGO, true)
 
-		var_13_2[var_13_3] = true
+		useMap[skillItem] = true
 	end
 
-	for iter_13_2, iter_13_3 in ipairs(arg_13_0._skillItemList) do
-		if not var_13_2[iter_13_3] then
-			gohelper.setActive(iter_13_3.viewGO, false)
+	for _, skillItem in ipairs(self._skillItemList) do
+		if not useMap[skillItem] then
+			gohelper.setActive(skillItem.viewGO, false)
 		end
 	end
 end
 
-function var_0_0._getOrCreateSkillItem(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_0._skillItemList and arg_14_0._skillItemList[arg_14_1]
+function RougeTalentView:_getOrCreateSkillItem(index)
+	local skillItem = self._skillItemList and self._skillItemList[index]
 
-	if not var_14_0 then
-		var_14_0 = arg_14_0:getUserDataTb_()
-		var_14_0.viewGO = gohelper.cloneInPlace(arg_14_0._goskillitem, "item_" .. arg_14_1)
-		var_14_0.gonormal = gohelper.findChild(var_14_0.viewGO, "go_normal")
-		var_14_0.imagenormalicon = gohelper.findChildImage(var_14_0.viewGO, "go_normal/image_icon")
-		var_14_0.goselect = gohelper.findChild(var_14_0.viewGO, "go_select")
-		var_14_0.imagselecticon = gohelper.findChildImage(var_14_0.viewGO, "go_select/image_icon")
-		var_14_0.btnclick = gohelper.findChildButtonWithAudio(var_14_0.viewGO, "btn_click")
+	if not skillItem then
+		skillItem = self:getUserDataTb_()
+		skillItem.viewGO = gohelper.cloneInPlace(self._goskillitem, "item_" .. index)
+		skillItem.gonormal = gohelper.findChild(skillItem.viewGO, "go_normal")
+		skillItem.imagenormalicon = gohelper.findChildImage(skillItem.viewGO, "go_normal/image_icon")
+		skillItem.goselect = gohelper.findChild(skillItem.viewGO, "go_select")
+		skillItem.imagselecticon = gohelper.findChildImage(skillItem.viewGO, "go_select/image_icon")
+		skillItem.btnclick = gohelper.findChildButtonWithAudio(skillItem.viewGO, "btn_click")
 
-		var_14_0.btnclick:AddClickListener(arg_14_0._btnskillOnClick, arg_14_0, arg_14_1)
-		table.insert(arg_14_0._skillItemList, var_14_0)
+		skillItem.btnclick:AddClickListener(self._btnskillOnClick, self, index)
+		table.insert(self._skillItemList, skillItem)
 	end
 
-	return var_14_0
+	return skillItem
 end
 
-function var_0_0._btnskillOnClick(arg_15_0, arg_15_1)
-	arg_15_0._showTips = true
-	arg_15_0._txtdec2.text = arg_15_0["_skillDesc" .. arg_15_1]
+function RougeTalentView:_btnskillOnClick(index)
+	self._showTips = true
+	self._txtdec2.text = self["_skillDesc" .. index]
 
-	UISpriteSetMgr.instance:setRouge2Sprite(arg_15_0._imageskillicon, arg_15_0["_skillIcon" .. arg_15_1], true)
-	gohelper.setActive(arg_15_0._godetail, false)
-	gohelper.setActive(arg_15_0._godetail, true)
-	gohelper.setAsLastSibling(arg_15_0._godetail)
-	arg_15_0:_refreshAllBtnStatus(arg_15_1)
+	UISpriteSetMgr.instance:setRouge2Sprite(self._imageskillicon, self["_skillIcon" .. index], true)
+	gohelper.setActive(self._godetail, false)
+	gohelper.setActive(self._godetail, true)
+	gohelper.setAsLastSibling(self._godetail)
+	self:_refreshAllBtnStatus(index)
 end
 
-function var_0_0._refreshAllBtnStatus(arg_16_0, arg_16_1)
-	for iter_16_0, iter_16_1 in ipairs(arg_16_0._skillItemList) do
-		local var_16_0 = arg_16_1 == iter_16_0
+function RougeTalentView:_refreshAllBtnStatus(selectBtnIndex)
+	for index, skillItem in ipairs(self._skillItemList) do
+		local isSelect = selectBtnIndex == index
 
-		arg_16_0:_setBtnStatus(var_16_0, iter_16_1.gonormal, iter_16_1.goselect)
+		self:_setBtnStatus(isSelect, skillItem.gonormal, skillItem.goselect)
 	end
 end
 
-function var_0_0._removeAllSkillClickListener(arg_17_0)
-	if arg_17_0._skillItemList then
-		for iter_17_0, iter_17_1 in pairs(arg_17_0._skillItemList) do
-			if iter_17_1.btnclick then
-				iter_17_1.btnclick:RemoveClickListener()
+function RougeTalentView:_removeAllSkillClickListener()
+	if self._skillItemList then
+		for _, skillItem in pairs(self._skillItemList) do
+			if skillItem.btnclick then
+				skillItem.btnclick:RemoveClickListener()
 			end
 		end
 	end
 end
 
-function var_0_0.setTalentCompSelected(arg_18_0, arg_18_1)
-	for iter_18_0, iter_18_1 in ipairs(arg_18_0._talentCompList) do
-		iter_18_1:setSelected(iter_18_1 == arg_18_1)
+function RougeTalentView:setTalentCompSelected(comp)
+	for i, v in ipairs(self._talentCompList) do
+		v:setSelected(v == comp)
 	end
 end
 
-function var_0_0.activeTalent(arg_19_0, arg_19_1)
-	arg_19_0._tmpActiveTalentId = arg_19_1 and arg_19_1._talentId
+function RougeTalentView:activeTalent(comp)
+	self._tmpActiveTalentId = comp and comp._talentId
 
-	RougeRpc.instance:sendActiveTalentRequest(arg_19_0._season, arg_19_1._index - 1, arg_19_0.activeTalentCb, arg_19_0)
+	RougeRpc.instance:sendActiveTalentRequest(self._season, comp._index - 1, self.activeTalentCb, self)
 end
 
-function var_0_0.activeTalentCb(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
-	if arg_20_2 ~= 0 then
+function RougeTalentView:activeTalentCb(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	RougeStatController.instance:trackUpdateTalent(arg_20_0._tmpActiveTalentId)
+	RougeStatController.instance:trackUpdateTalent(self._tmpActiveTalentId)
 
-	arg_20_0._tmpActiveTalentId = nil
+	self._tmpActiveTalentId = nil
 end
 
-function var_0_0.onClose(arg_21_0)
-	arg_21_0._tmpActiveTalentId = nil
+function RougeTalentView:onClose()
+	self._tmpActiveTalentId = nil
 
-	arg_21_0:_removeAllSkillClickListener()
-	GameStateMgr.instance:unregisterCallback(GameStateEvent.OnTouchScreenUp, arg_21_0._onTouchScreenUp, arg_21_0)
+	self:_removeAllSkillClickListener()
+	GameStateMgr.instance:unregisterCallback(GameStateEvent.OnTouchScreenUp, self._onTouchScreenUp, self)
 end
 
-function var_0_0.onDestroyView(arg_22_0)
+function RougeTalentView:onDestroyView()
 	return
 end
 
-return var_0_0
+return RougeTalentView

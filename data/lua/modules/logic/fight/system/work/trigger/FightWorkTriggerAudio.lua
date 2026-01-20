@@ -1,25 +1,27 @@
-﻿module("modules.logic.fight.system.work.trigger.FightWorkTriggerAudio", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/trigger/FightWorkTriggerAudio.lua
 
-local var_0_0 = class("FightWorkTriggerAudio", BaseWork)
+module("modules.logic.fight.system.work.trigger.FightWorkTriggerAudio", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.fightStepData = arg_1_1
-	arg_1_0.actEffectData = arg_1_2
+local FightWorkTriggerAudio = class("FightWorkTriggerAudio", BaseWork)
+
+function FightWorkTriggerAudio:ctor(fightStepData, actEffectData)
+	self.fightStepData = fightStepData
+	self.actEffectData = actEffectData
 end
 
-function var_0_0.onStart(arg_2_0)
-	arg_2_0._config = lua_trigger_action.configDict[arg_2_0.actEffectData.effectNum]
+function FightWorkTriggerAudio:onStart()
+	self._config = lua_trigger_action.configDict[self.actEffectData.effectNum]
 
-	AudioMgr.instance:trigger(tonumber(arg_2_0._config.param1))
-	arg_2_0:_delayDone()
+	AudioMgr.instance:trigger(tonumber(self._config.param1))
+	self:_delayDone()
 end
 
-function var_0_0._delayDone(arg_3_0)
-	arg_3_0:onDone(true)
+function FightWorkTriggerAudio:_delayDone()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
+function FightWorkTriggerAudio:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkTriggerAudio

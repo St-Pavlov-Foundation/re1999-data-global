@@ -1,50 +1,54 @@
-﻿module("modules.logic.survival.controller.work.SummaryAct.SurvivalSummaryActBuildPlayerWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/SummaryAct/SurvivalSummaryActBuildPlayerWork.lua
 
-local var_0_0 = class("SurvivalSummaryActBuildPlayerWork", BaseWork)
+module("modules.logic.survival.controller.work.SummaryAct.SurvivalSummaryActBuildPlayerWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0:initParam(arg_1_1)
+local SurvivalSummaryActBuildPlayerWork = class("SurvivalSummaryActBuildPlayerWork", BaseWork)
+
+function SurvivalSummaryActBuildPlayerWork:ctor(param)
+	self:initParam(param)
 end
 
-function var_0_0.initParam(arg_2_0, arg_2_1)
-	arg_2_0.goBubble = arg_2_1.goBubble
+function SurvivalSummaryActBuildPlayerWork:initParam(param)
+	self.goBubble = param.goBubble
 end
 
-function var_0_0.onStart(arg_3_0)
-	arg_3_0.playerEntity = SurvivalMapHelper.instance:getScene().actProgress.playerEntity
+function SurvivalSummaryActBuildPlayerWork:onStart()
+	local scene = SurvivalMapHelper.instance:getScene()
 
-	arg_3_0:buildBubble(arg_3_0.playerEntity)
-	arg_3_0:onDone(true)
+	self.playerEntity = scene.actProgress.playerEntity
+
+	self:buildBubble(self.playerEntity)
+	self:onDone(true)
 end
 
-function var_0_0.setPos(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	local var_4_0, var_4_1, var_4_2 = SurvivalHelper.instance:hexPointToWorldPoint(arg_4_1, arg_4_2)
+function SurvivalSummaryActBuildPlayerWork:setPos(q, r, dir)
+	local x, y, z = SurvivalHelper.instance:hexPointToWorldPoint(q, r)
 
-	transformhelper.setLocalPos(arg_4_0.playerEntity.trans, var_4_0, var_4_1, var_4_2)
-	transformhelper.setLocalRotation(arg_4_0.playerEntity.trans, 0, arg_4_3 * 60, 0)
+	transformhelper.setLocalPos(self.playerEntity.trans, x, y, z)
+	transformhelper.setLocalRotation(self.playerEntity.trans, 0, dir * 60, 0)
 end
 
-function var_0_0.buildBubble(arg_5_0, arg_5_1)
-	arg_5_0.playerBubble = MonoHelper.addNoUpdateLuaComOnceToGo(arg_5_0.goBubble, SurvivalDecreeVoteUIItem, arg_5_1.go)
+function SurvivalSummaryActBuildPlayerWork:buildBubble(entity)
+	self.playerBubble = MonoHelper.addNoUpdateLuaComOnceToGo(self.goBubble, SurvivalDecreeVoteUIItem, entity.go)
 
 	AudioMgr.instance:trigger(AudioEnum3_1.Survival.ui_mingdi_tansuo_talks_eject)
 end
 
-function var_0_0.clearBubble(arg_6_0)
-	if arg_6_0.playerBubble then
-		arg_6_0.playerBubble:dispose()
+function SurvivalSummaryActBuildPlayerWork:clearBubble()
+	if self.playerBubble then
+		self.playerBubble:dispose()
 
-		arg_6_0.playerBubble = nil
+		self.playerBubble = nil
 	end
 end
 
-function var_0_0.onDestroy(arg_7_0)
-	gohelper.destroy(arg_7_0.playerEntity.go)
+function SurvivalSummaryActBuildPlayerWork:onDestroy()
+	gohelper.destroy(self.playerEntity.go)
 
-	arg_7_0.playerEntity = nil
+	self.playerEntity = nil
 
-	arg_7_0:clearBubble()
-	var_0_0.super.onDestroy(arg_7_0)
+	self:clearBubble()
+	SurvivalSummaryActBuildPlayerWork.super.onDestroy(self)
 end
 
-return var_0_0
+return SurvivalSummaryActBuildPlayerWork

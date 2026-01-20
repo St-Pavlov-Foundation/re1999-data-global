@@ -1,228 +1,237 @@
-﻿module("modules.logic.room.view.RoomViewTouch", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomViewTouch.lua
 
-local var_0_0 = class("RoomViewTouch", BaseView)
+module("modules.logic.room.view.RoomViewTouch", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._commonEmptyBlockMO = RoomBlockMO.New()
+local RoomViewTouch = class("RoomViewTouch", BaseView)
 
-	arg_1_0._commonEmptyBlockMO:init(RoomInfoHelper.generateEmptyMapBlockInfo(-1, 0, 0))
+function RoomViewTouch:onInitView()
+	self._commonEmptyBlockMO = RoomBlockMO.New()
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	self._commonEmptyBlockMO:init(RoomInfoHelper.generateEmptyMapBlockInfo(-1, 0, 0))
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RoomViewTouch:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RoomViewTouch:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._scene = GameSceneMgr.instance:getCurScene()
-	arg_4_0._characterTouchStateMap = {
+function RoomViewTouch:_editableInitView()
+	self._scene = GameSceneMgr.instance:getCurScene()
+	self._characterTouchStateMap = {
 		[RoomEnum.CameraState.Overlook] = true,
 		[RoomEnum.CameraState.Normal] = true
 	}
-	arg_4_0._isNotCanClickEeventMap = {
+	self._isNotCanClickEeventMap = {
 		[RoomEnum.CameraState.InteractBuilding] = true
 	}
 end
 
-function var_0_0._isInitBlockById(arg_5_0, arg_5_1)
-	return RoomConfig.instance:getInitBlock(arg_5_1) ~= nil
+function RoomViewTouch:_isInitBlockById(blockId)
+	return RoomConfig.instance:getInitBlock(blockId) ~= nil
 end
 
-function var_0_0._onClick(arg_6_0, arg_6_1)
-	if RoomMapController.instance:isUIHide() then
+function RoomViewTouch:_onClick(pos)
+	local isUIHide = RoomMapController.instance:isUIHide()
+
+	if isUIHide then
 		RoomMapController.instance:setUIHide(false)
 
 		return
 	end
 
-	if arg_6_0._isNotCanClickEeventMap[arg_6_0._scene.camera:getCameraState()] then
+	if self._isNotCanClickEeventMap[self._scene.camera:getCameraState()] then
 		return
 	end
 
-	if arg_6_0:_click3DGameObject(arg_6_1) then
+	if self:_click3DGameObject(pos) then
 		return
 	end
 
-	local var_6_0, var_6_1 = RoomBendingHelper.screenPosToHex(arg_6_1)
+	local hexPoint, direction = RoomBendingHelper.screenPosToHex(pos)
 
-	if not var_6_0 then
+	if not hexPoint then
 		return
 	end
 
-	local var_6_2 = RoomMapBlockModel.instance:getBlockMO(var_6_0.x, var_6_0.y)
+	local blockMO = RoomMapBlockModel.instance:getBlockMO(hexPoint.x, hexPoint.y)
 
-	if not var_6_2 and not RoomEnum.IsBlockNeedConnInit and RoomBlockHelper.isCanPlaceBlock() then
-		arg_6_0._commonEmptyBlockMO.hexPiont = var_6_0
-		var_6_2 = arg_6_0._commonEmptyBlockMO
+	if not blockMO and not RoomEnum.IsBlockNeedConnInit and RoomBlockHelper.isCanPlaceBlock() then
+		self._commonEmptyBlockMO.hexPiont = hexPoint
+		blockMO = self._commonEmptyBlockMO
 	end
 
-	if not var_6_2 then
-		arg_6_0:_checkCancelBackBlock()
+	if not blockMO then
+		self:_checkCancelBackBlock()
 
 		return
 	end
 
-	local var_6_3 = RoomBendingHelper.screenToWorld(arg_6_1)
+	local worldPos = RoomBendingHelper.screenToWorld(pos)
 
 	if RoomController.instance:isDebugMode() then
-		arg_6_0:_debugBlockInfo(var_6_2)
-		arg_6_0:_clickInDebugMode(var_6_2, var_6_0, var_6_1)
+		self:_debugBlockInfo(blockMO)
+		self:_clickInDebugMode(blockMO, hexPoint, direction)
 	elseif RoomController.instance:isEditMode() then
-		arg_6_0:_debugBlockInfo(var_6_2)
-		arg_6_0:_clickInEditMode(var_6_2, var_6_0, var_6_1)
+		self:_debugBlockInfo(blockMO)
+		self:_clickInEditMode(blockMO, hexPoint, direction)
 	elseif RoomController.instance:isObMode() then
-		arg_6_0:_debugBlockInfo(var_6_2)
-		arg_6_0:_clickInObMode(var_6_2, var_6_0, var_6_1, var_6_3)
+		self:_debugBlockInfo(blockMO)
+		self:_clickInObMode(blockMO, hexPoint, direction, worldPos)
 	end
 end
 
-function var_0_0._clickInDebugMode(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	if UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftShift) then
+function RoomViewTouch:_clickInDebugMode(blockMO, hexPoint, direction)
+	local leftShift = UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftShift)
+
+	if leftShift then
 		return
 	end
 
-	if arg_7_1:canPlace() then
-		RoomDebugController.instance:debugPlaceBlock(arg_7_2)
-	elseif arg_7_1.blockState == RoomBlockEnum.BlockState.Map then
+	if blockMO:canPlace() then
+		RoomDebugController.instance:debugPlaceBlock(hexPoint)
+	elseif blockMO.blockState == RoomBlockEnum.BlockState.Map then
 		if UnityEngine.Input.GetKey(UnityEngine.KeyCode.X) then
 			if RoomDebugController.instance:isDebugBuildingListShow() then
-				RoomDebugController.instance:debugRotateBuilding(arg_7_2)
+				RoomDebugController.instance:debugRotateBuilding(hexPoint)
 			elseif RoomDebugController.instance:isDebugPlaceListShow() then
-				RoomDebugController.instance:debugRotateBlock(arg_7_2)
+				RoomDebugController.instance:debugRotateBlock(hexPoint)
 			end
 		elseif UnityEngine.Input.GetKey(UnityEngine.KeyCode.C) then
 			if RoomDebugController.instance:isDebugBuildingListShow() then
-				RoomDebugController.instance:debugRootOutBuilding(arg_7_2)
+				RoomDebugController.instance:debugRootOutBuilding(hexPoint)
 			elseif RoomDebugController.instance:isDebugPackageListShow() then
-				RoomDebugController.instance:debugSetPackageId(arg_7_1.id, 0)
+				RoomDebugController.instance:debugSetPackageId(blockMO.id, 0)
 			elseif RoomDebugController.instance:isDebugPlaceListShow() then
-				RoomDebugController.instance:debugRootOutBlock(arg_7_2)
+				RoomDebugController.instance:debugRootOutBlock(hexPoint)
 			end
 		elseif RoomController.instance:isDebugNormalMode() and UnityEngine.Input.GetKey(UnityEngine.KeyCode.V) then
-			RoomDebugController.instance:debugPlaceBuilding(arg_7_2)
+			RoomDebugController.instance:debugPlaceBuilding(hexPoint)
 		elseif RoomController.instance:isDebugNormalMode() and UnityEngine.Input.GetKey(UnityEngine.KeyCode.B) then
-			RoomDebugController.instance:debugRotateBuilding(arg_7_2)
+			RoomDebugController.instance:debugRotateBuilding(hexPoint)
 		elseif RoomController.instance:isDebugNormalMode() and UnityEngine.Input.GetKey(UnityEngine.KeyCode.N) then
-			RoomDebugController.instance:debugRootOutBuilding(arg_7_2)
+			RoomDebugController.instance:debugRootOutBuilding(hexPoint)
 		elseif RoomDebugController.instance:isDebugBuildingListShow() then
-			RoomDebugController.instance:debugPlaceBuilding(arg_7_2)
+			RoomDebugController.instance:debugPlaceBuilding(hexPoint)
 		elseif RoomDebugController.instance:isDebugPlaceListShow() then
-			RoomDebugController.instance:debugReplaceBlock(arg_7_2)
+			RoomDebugController.instance:debugReplaceBlock(hexPoint)
 		elseif RoomDebugController.instance:isDebugPackageListShow() then
 			if RoomDebugController.instance:isEditPackageOrder() then
-				RoomDebugController.instance:debugSetPackageLastOrder(arg_7_1.id)
+				RoomDebugController.instance:debugSetPackageLastOrder(blockMO.id)
 			else
-				RoomDebugController.instance:debugSetPackage(arg_7_1.id)
+				RoomDebugController.instance:debugSetPackage(blockMO.id)
 			end
 		end
 	end
 end
 
-function var_0_0._chickSelectInventontoryBlockId(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	local var_8_0 = HexMath.hexToPosition(arg_8_1.hexPoint, RoomBlockEnum.BlockSize)
+function RoomViewTouch:_chickSelectInventontoryBlockId(blockMO, hexPoint, direction)
+	local pos = HexMath.hexToPosition(blockMO.hexPoint, RoomBlockEnum.BlockSize)
 
-	if not RoomHelper.isOutCameraFocusCenter(var_8_0) then
+	if not RoomHelper.isOutCameraFocusCenter(pos) then
 		-- block empty
-	elseif not arg_8_0._scene.camera:isTweening() then
-		arg_8_0._scene.camera:tweenCamera({
-			focusX = var_8_0.x,
-			focusY = var_8_0.y
+	elseif not self._scene.camera:isTweening() then
+		self._scene.camera:tweenCamera({
+			focusX = pos.x,
+			focusY = pos.y
 		})
 	end
 end
 
-function var_0_0._chickBackBlock(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	local var_9_0 = {
-		hexPoint = arg_9_2
-	}
+function RoomViewTouch:_chickBackBlock(blockMO, hexPoint, direction)
+	local param = {}
 
-	arg_9_0._scene.fsm:triggerEvent(RoomSceneEvent.TryBackBlock, var_9_0)
+	param.hexPoint = hexPoint
+
+	self._scene.fsm:triggerEvent(RoomSceneEvent.TryBackBlock, param)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 end
 
-function var_0_0._checkBuilding(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	local var_10_0 = RoomMapBuildingModel.instance:getTempBuildingMO()
+function RoomViewTouch:_checkBuilding(blockMO, hexPoint, direction)
+	local tempBuildingMO = RoomMapBuildingModel.instance:getTempBuildingMO()
 
-	if not var_10_0 then
+	if not tempBuildingMO then
 		return
 	end
 
-	if arg_10_0:_isInitBlockById(arg_10_1.id) then
+	if self:_isInitBlockById(blockMO.id) then
 		GameFacade.showToast(RoomEnum.Toast.BuildingCannotInitBlock)
 
 		return
 	end
 
-	local var_10_1 = {
-		hexPoint = arg_10_2
-	}
+	local param = {}
 
-	if arg_10_2 ~= var_10_0.hexPoint then
-		AudioMgr.instance:trigger(var_10_0:getPlaceAudioId())
+	param.hexPoint = hexPoint
+
+	if hexPoint ~= tempBuildingMO.hexPoint then
+		AudioMgr.instance:trigger(tempBuildingMO:getPlaceAudioId())
 	end
 
-	for iter_10_0 = 0, 5 do
-		local var_10_2 = RoomRotateHelper.rotateRotate(var_10_0.rotate, iter_10_0)
+	for i = 0, 5 do
+		local rotate = RoomRotateHelper.rotateRotate(tempBuildingMO.rotate, i)
+		local canTry = RoomBuildingHelper.canTryPlace(tempBuildingMO.buildingId, hexPoint, rotate)
 
-		if RoomBuildingHelper.canTryPlace(var_10_0.buildingId, arg_10_2, var_10_2) then
-			var_10_1.rotate = var_10_2
+		if canTry then
+			param.rotate = rotate
 
-			arg_10_0._scene.fsm:triggerEvent(RoomSceneEvent.TryPlaceBuilding, var_10_1)
+			self._scene.fsm:triggerEvent(RoomSceneEvent.TryPlaceBuilding, param)
 
 			break
 		end
 	end
 end
 
-function var_0_0._checkCancelBackBlock(arg_11_0)
-	local var_11_0 = RoomMapBlockModel.instance:isBackMore()
-	local var_11_1 = RoomWaterReformModel.instance:isWaterReform()
+function RoomViewTouch:_checkCancelBackBlock()
+	local isBackMore = RoomMapBlockModel.instance:isBackMore()
+	local isWaterReform = RoomWaterReformModel.instance:isWaterReform()
 
-	if RoomController.instance:isEditMode() and not var_11_0 and not var_11_1 and RoomHelper.isFSMState(RoomEnum.FSMEditState.BackConfirm) then
-		arg_11_0._scene.fsm:triggerEvent(RoomSceneEvent.CancelBackBlock)
+	if RoomController.instance:isEditMode() and not isBackMore and not isWaterReform and RoomHelper.isFSMState(RoomEnum.FSMEditState.BackConfirm) then
+		self._scene.fsm:triggerEvent(RoomSceneEvent.CancelBackBlock)
 	end
 end
 
-function var_0_0._clickInEditMode(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+function RoomViewTouch:_clickInEditMode(blockMO, hexPoint, direction)
 	if RoomHelper.isFSMState(RoomEnum.FSMEditState.PlaceBuildingConfirm) or RoomBuildingController.instance:isBuildingListShow() then
-		arg_12_0:_checkBuilding(arg_12_1, arg_12_2, arg_12_3)
+		self:_checkBuilding(blockMO, hexPoint, direction)
 
 		return
 	end
 
-	local var_12_0 = RoomMapBlockModel.instance:isBackMore()
-	local var_12_1 = RoomWaterReformModel.instance:isWaterReform()
+	local isBackMore = RoomMapBlockModel.instance:isBackMore()
+	local isWaterReform = RoomWaterReformModel.instance:isWaterReform()
 
-	if not arg_12_1:canPlace() then
-		if arg_12_1.id == RoomInventoryBlockModel.instance:getSelectInventoryBlockId() then
-			arg_12_0:_chickSelectInventontoryBlockId(arg_12_1, arg_12_2, arg_12_3)
-		elseif arg_12_1.blockState == RoomBlockEnum.BlockState.Map then
-			if var_12_1 then
-				RoomWaterReformController.instance:onClickBlock(arg_12_1, arg_12_2)
-			elseif var_12_0 and arg_12_0:_isInitBlockById(arg_12_1.id) then
+	if not blockMO:canPlace() then
+		if blockMO.id == RoomInventoryBlockModel.instance:getSelectInventoryBlockId() then
+			self:_chickSelectInventontoryBlockId(blockMO, hexPoint, direction)
+		elseif blockMO.blockState == RoomBlockEnum.BlockState.Map then
+			if isWaterReform then
+				RoomWaterReformController.instance:onClickBlock(blockMO, hexPoint)
+			elseif isBackMore and self:_isInitBlockById(blockMO.id) then
 				GameFacade.showToast(RoomEnum.Toast.InventoryCannotBackInitBlock)
 			else
-				arg_12_0:_chickBackBlock(arg_12_1, arg_12_2, arg_12_3)
+				self:_chickBackBlock(blockMO, hexPoint, direction)
 			end
 		end
 
 		return
 	end
 
-	arg_12_0:_checkCancelBackBlock()
+	self:_checkCancelBackBlock()
 
-	if var_12_0 or var_12_1 then
+	if isBackMore or isWaterReform then
 		return
 	end
 
-	if not RoomInventoryBlockModel.instance:getSelectInventoryBlockMO() then
+	local firstInventoryBlockMO = RoomInventoryBlockModel.instance:getSelectInventoryBlockMO()
+
+	if not firstInventoryBlockMO then
 		GameFacade.showToast(RoomEnum.Toast.NoSelectInventoryBlock)
 
 		return
@@ -234,39 +243,40 @@ function var_0_0._clickInEditMode(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
 		return
 	end
 
-	if not RoomBlockHelper.isInBoundary(arg_12_2) then
+	if not RoomBlockHelper.isInBoundary(hexPoint) then
 		GameFacade.showToast(RoomEnum.Toast.InventBlockMapPositionMax)
 
 		return
 	end
 
 	if RoomHelper.isFSMState(RoomEnum.FSMEditState.Idle) or RoomHelper.isFSMState(RoomEnum.FSMEditState.PlaceConfirm) or RoomHelper.isFSMState(RoomEnum.FSMEditState.BackConfirm) then
-		local var_12_2 = {
-			hexPoint = arg_12_2
-		}
+		local param = {}
 
-		arg_12_0._scene.fsm:triggerEvent(RoomSceneEvent.TryPlaceBlock, var_12_2)
+		param.hexPoint = hexPoint
+
+		self._scene.fsm:triggerEvent(RoomSceneEvent.TryPlaceBlock, param)
 	end
 end
 
-function var_0_0._clickInObMode(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4)
+function RoomViewTouch:_clickInObMode(blockMO, hexPoint, direction, worldPos)
 	if RoomHelper.isFSMState(RoomEnum.FSMObState.PlaceBuildingConfirm) then
-		arg_13_0:_checkBuilding(arg_13_1, arg_13_2, arg_13_3)
-	elseif RoomHelper.isFSMState(RoomEnum.FSMObState.PlaceCharacterConfirm) and arg_13_1.blockState == RoomBlockEnum.BlockState.Map then
-		local var_13_0 = RoomCharacterModel.instance:getTempCharacterMO()
+		self:_checkBuilding(blockMO, hexPoint, direction)
+	elseif RoomHelper.isFSMState(RoomEnum.FSMObState.PlaceCharacterConfirm) and blockMO.blockState == RoomBlockEnum.BlockState.Map then
+		local tempCharacterMO = RoomCharacterModel.instance:getTempCharacterMO()
 
-		if var_13_0 then
-			local var_13_1 = var_13_0.currentPosition
+		if tempCharacterMO then
+			local currentPosition = tempCharacterMO.currentPosition
+			local worldPos3D = RoomCharacterHelper.reCalculateHeight(Vector3(worldPos.x, 0, worldPos.y))
 
-			if RoomCharacterHelper.reCalculateHeight(Vector3(arg_13_4.x, 0, arg_13_4.y)) ~= var_13_1 then
-				local var_13_2 = RoomCharacterHelper.getRecommendHexPoint(var_13_0.heroId, var_13_0.skinId, arg_13_4)
+			if worldPos3D ~= currentPosition then
+				local bestParam = RoomCharacterHelper.getRecommendHexPoint(tempCharacterMO.heroId, tempCharacterMO.skinId, worldPos)
 
-				if var_13_2 then
-					local var_13_3 = {
-						position = var_13_2.position
-					}
+				if bestParam then
+					local param = {}
 
-					arg_13_0._scene.fsm:triggerEvent(RoomSceneEvent.TryPlaceCharacter, var_13_3)
+					param.position = bestParam.position
+
+					self._scene.fsm:triggerEvent(RoomSceneEvent.TryPlaceCharacter, param)
 
 					return
 				end
@@ -277,29 +287,29 @@ function var_0_0._clickInObMode(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4
 	end
 end
 
-function var_0_0._click3DGameObject(arg_14_0, arg_14_1)
-	if not arg_14_0._click3DFuncDict then
-		arg_14_0._click3DFuncDict = {
-			[RoomEnum.TouchTab.RoomBuilding] = arg_14_0._click3DBuilding,
-			[RoomEnum.TouchTab.RoomInitBuilding] = arg_14_0._click3DInitBuilding,
-			[RoomEnum.TouchTab.RoomPartBuilding] = arg_14_0._click3DPartBuilding,
-			[RoomEnum.TouchTab.RoomCharacter] = arg_14_0._click3DCharacter,
-			[RoomEnum.TouchTab.RoomCritter] = arg_14_0._click3DCritter,
-			[RoomEnum.TouchTab.RoomTransportSite] = arg_14_0._click3DTransportSite
+function RoomViewTouch:_click3DGameObject(pos)
+	if not self._click3DFuncDict then
+		self._click3DFuncDict = {
+			[RoomEnum.TouchTab.RoomBuilding] = self._click3DBuilding,
+			[RoomEnum.TouchTab.RoomInitBuilding] = self._click3DInitBuilding,
+			[RoomEnum.TouchTab.RoomPartBuilding] = self._click3DPartBuilding,
+			[RoomEnum.TouchTab.RoomCharacter] = self._click3DCharacter,
+			[RoomEnum.TouchTab.RoomCritter] = self._click3DCritter,
+			[RoomEnum.TouchTab.RoomTransportSite] = self._click3DTransportSite
 		}
 	end
 
-	local var_14_0, var_14_1 = RoomBendingHelper.getRaycastEntity(arg_14_1)
-	local var_14_2 = arg_14_0._click3DFuncDict[var_14_0]
+	local touchTag, id = RoomBendingHelper.getRaycastEntity(pos)
+	local clickFunc = self._click3DFuncDict[touchTag]
 
-	if var_14_2 then
-		return var_14_2(arg_14_0, var_14_1)
+	if clickFunc then
+		return clickFunc(self, id)
 	end
 
 	return false
 end
 
-function var_0_0._isCanClickBuilding(arg_15_0)
+function RoomViewTouch:_isCanClickBuilding()
 	if RoomBuildingController.instance:isBuildingListShow() or RoomCharacterController.instance:isCharacterListShow() then
 		return false
 	end
@@ -307,30 +317,30 @@ function var_0_0._isCanClickBuilding(arg_15_0)
 	return RoomController.instance:isObMode()
 end
 
-function var_0_0._click3DBuilding(arg_16_0, arg_16_1)
-	local var_16_0 = RoomMapBuildingModel.instance:getBuildingMOById(arg_16_1)
+function RoomViewTouch:_click3DBuilding(uid)
+	local buildingMO = RoomMapBuildingModel.instance:getBuildingMOById(uid)
 
-	if not var_16_0 then
+	if not buildingMO then
 		return false
 	end
 
 	if RoomController.instance:isEditMode() then
 		if RoomBuildingController.instance:isBuildingListShow() then
-			local var_16_1 = RoomHelper.isFSMState(RoomEnum.FSMEditState.Idle) or RoomHelper.isFSMState(RoomEnum.FSMEditState.PlaceBuildingConfirm)
+			local canReplace = RoomHelper.isFSMState(RoomEnum.FSMEditState.Idle) or RoomHelper.isFSMState(RoomEnum.FSMEditState.PlaceBuildingConfirm)
 
-			if var_16_1 then
-				arg_16_0._scene.fsm:triggerEvent(RoomSceneEvent.TryPlaceBuilding, {
-					buildingUid = var_16_0.id,
-					hexPoint = var_16_0.hexPoint,
-					rotate = var_16_0.rotate
+			if canReplace then
+				self._scene.fsm:triggerEvent(RoomSceneEvent.TryPlaceBuilding, {
+					buildingUid = buildingMO.id,
+					hexPoint = buildingMO.hexPoint,
+					rotate = buildingMO.rotate
 				})
-				RoomShowBuildingListModel.instance:setSelect(var_16_0.id)
+				RoomShowBuildingListModel.instance:setSelect(buildingMO.id)
 			end
 
-			return var_16_1
+			return canReplace
 		end
-	elseif arg_16_0:_isCanClickBuilding() and var_16_0.config and RoomBuildingEnum.CanClickTouchBuildingType[var_16_0.config.buildingType] == true then
-		RoomMap3DClickController.instance:onBuildingEntityClick(var_16_0)
+	elseif self:_isCanClickBuilding() and buildingMO.config and RoomBuildingEnum.CanClickTouchBuildingType[buildingMO.config.buildingType] == true then
+		RoomMap3DClickController.instance:onBuildingEntityClick(buildingMO)
 
 		return true
 	end
@@ -338,8 +348,8 @@ function var_0_0._click3DBuilding(arg_16_0, arg_16_1)
 	return false
 end
 
-function var_0_0._click3DInitBuilding(arg_17_0, arg_17_1)
-	if arg_17_0:_isCanClickBuilding() then
+function RoomViewTouch:_click3DInitBuilding(id)
+	if self:_isCanClickBuilding() then
 		AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_yield_click)
 		RoomMapController.instance:openRoomInitBuildingView(0.2)
 
@@ -349,11 +359,11 @@ function var_0_0._click3DInitBuilding(arg_17_0, arg_17_1)
 	return false
 end
 
-function var_0_0._click3DPartBuilding(arg_18_0, arg_18_1)
-	if arg_18_0:_isCanClickBuilding() then
+function RoomViewTouch:_click3DPartBuilding(id)
+	if self:_isCanClickBuilding() then
 		AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_yield_click)
 		RoomMapController.instance:openRoomInitBuildingView(0.2, {
-			partId = arg_18_1
+			partId = id
 		})
 
 		return true
@@ -362,33 +372,33 @@ function var_0_0._click3DPartBuilding(arg_18_0, arg_18_1)
 	return false
 end
 
-function var_0_0._click3DCharacter(arg_19_0, arg_19_1)
-	local var_19_0 = RoomCharacterModel.instance:getCharacterMOById(arg_19_1)
+function RoomViewTouch:_click3DCharacter(id)
+	local characterMO = RoomCharacterModel.instance:getCharacterMOById(id)
 
-	if not var_19_0 then
+	if not characterMO then
 		return false
 	end
 
 	if RoomController.instance:isObMode() then
 		if RoomCharacterController.instance:isCharacterListShow() then
-			local var_19_1 = RoomHelper.isFSMState(RoomEnum.FSMObState.Idle) or RoomHelper.isFSMState(RoomEnum.FSMObState.PlaceCharacterConfirm)
+			local canReplace = RoomHelper.isFSMState(RoomEnum.FSMObState.Idle) or RoomHelper.isFSMState(RoomEnum.FSMObState.PlaceCharacterConfirm)
 
-			if var_19_1 then
-				arg_19_0._scene.fsm:triggerEvent(RoomSceneEvent.TryPlaceCharacter, {
-					heroId = var_19_0.heroId,
-					position = var_19_0.currentPosition
+			if canReplace then
+				self._scene.fsm:triggerEvent(RoomSceneEvent.TryPlaceCharacter, {
+					heroId = characterMO.heroId,
+					position = characterMO.currentPosition
 				})
-				RoomCharacterPlaceListModel.instance:setSelect(var_19_0.id)
+				RoomCharacterPlaceListModel.instance:setSelect(characterMO.id)
 			end
 
-			return var_19_1
-		elseif arg_19_0._characterTouchStateMap[arg_19_0._scene.camera:getCameraState()] then
-			RoomCharacterController.instance:dispatchEvent(RoomEvent.ClickCharacterInNormalCamera, var_19_0.heroId)
+			return canReplace
+		elseif self._characterTouchStateMap[self._scene.camera:getCameraState()] then
+			RoomCharacterController.instance:dispatchEvent(RoomEvent.ClickCharacterInNormalCamera, characterMO.heroId)
 
 			return true
 		end
-	elseif RoomController.instance:isVisitMode() and arg_19_0._characterTouchStateMap[arg_19_0._scene.camera:getCameraState()] then
-		RoomCharacterController.instance:dispatchEvent(RoomEvent.ClickCharacterInNormalCamera, var_19_0.heroId)
+	elseif RoomController.instance:isVisitMode() and self._characterTouchStateMap[self._scene.camera:getCameraState()] then
+		RoomCharacterController.instance:dispatchEvent(RoomEvent.ClickCharacterInNormalCamera, characterMO.heroId)
 
 		return true
 	end
@@ -396,15 +406,15 @@ function var_0_0._click3DCharacter(arg_19_0, arg_19_1)
 	return false
 end
 
-function var_0_0._click3DCritter(arg_20_0, arg_20_1)
-	local var_20_0 = RoomCritterModel.instance:getCritterMOById(arg_20_1)
+function RoomViewTouch:_click3DCritter(id)
+	local critterMO = RoomCritterModel.instance:getCritterMOById(id)
 
-	if not var_20_0 then
+	if not critterMO then
 		return false
 	end
 
-	if (RoomController.instance:isObMode() or RoomController.instance:isVisitMode()) and arg_20_0._characterTouchStateMap[arg_20_0._scene.camera:getCameraState()] then
-		RoomMap3DClickController.instance:onCritterEntityClick(var_20_0)
+	if (RoomController.instance:isObMode() or RoomController.instance:isVisitMode()) and self._characterTouchStateMap[self._scene.camera:getCameraState()] then
+		RoomMap3DClickController.instance:onCritterEntityClick(critterMO)
 
 		return true
 	end
@@ -412,9 +422,9 @@ function var_0_0._click3DCritter(arg_20_0, arg_20_1)
 	return false
 end
 
-function var_0_0._click3DTransportSite(arg_21_0, arg_21_1)
-	if arg_21_0:_isCanClickBuilding() then
-		RoomMap3DClickController.instance:onTransportSiteClick(arg_21_1)
+function RoomViewTouch:_click3DTransportSite(id)
+	if self:_isCanClickBuilding() then
+		RoomMap3DClickController.instance:onTransportSiteClick(id)
 
 		return true
 	end
@@ -422,154 +432,163 @@ function var_0_0._click3DTransportSite(arg_21_0, arg_21_1)
 	return false
 end
 
-function var_0_0._debugBlockInfo(arg_22_0, arg_22_1)
+function RoomViewTouch:_debugBlockInfo(blockMO)
 	if isDebugBuild then
-		local var_22_0 = UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftShift)
+		local leftShift = UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftShift)
 
-		if (arg_22_1.blockState == RoomBlockEnum.BlockState.Map or arg_22_1.blockState == RoomBlockEnum.BlockState.Temp) and var_22_0 then
-			local var_22_1 = HexMath.hexToPosition(arg_22_1.hexPoint, RoomBlockEnum.BlockSize)
+		if (blockMO.blockState == RoomBlockEnum.BlockState.Map or blockMO.blockState == RoomBlockEnum.BlockState.Temp) and leftShift then
+			local goPosition = HexMath.hexToPosition(blockMO.hexPoint, RoomBlockEnum.BlockSize)
 
-			var_22_1.z = var_22_1.y
-			var_22_1.y = 0
+			goPosition.z = goPosition.y
+			goPosition.y = 0
 
-			local var_22_2 = CameraMgr.instance:getMainCameraTrs().position
-			local var_22_3 = arg_22_1:getResourceList()
-			local var_22_4 = arg_22_1:getResourceCenter()
+			local cameraPosition = CameraMgr.instance:getMainCameraTrs().position
+			local resourceList = blockMO:getResourceList()
+			local resourceCenter = blockMO:getResourceCenter()
 
-			logNormal(string.format("当前选中的地块(%d, %d, %d) %d, 资源: %d | %d # %d # %d # %d # %d # %d, 发声位置 : (%s, %s, %s), 摄像机位置 : (%s, %s, %s), 距离摄像机距离 : %s", arg_22_1.hexPoint.x, arg_22_1.hexPoint.y, arg_22_1.id, arg_22_1.defineId, var_22_4, var_22_3[1], var_22_3[2], var_22_3[3], var_22_3[4], var_22_3[5], var_22_3[6], var_22_1.x, var_22_1.y, var_22_1.z, var_22_2.x, var_22_2.y, var_22_2.z, Vector3.Distance(var_22_1, var_22_2)))
+			logNormal(string.format("当前选中的地块(%d, %d, %d) %d, 资源: %d | %d # %d # %d # %d # %d # %d, 发声位置 : (%s, %s, %s), 摄像机位置 : (%s, %s, %s), 距离摄像机距离 : %s", blockMO.hexPoint.x, blockMO.hexPoint.y, blockMO.id, blockMO.defineId, resourceCenter, resourceList[1], resourceList[2], resourceList[3], resourceList[4], resourceList[5], resourceList[6], goPosition.x, goPosition.y, goPosition.z, cameraPosition.x, cameraPosition.y, cameraPosition.z, Vector3.Distance(goPosition, cameraPosition)))
 		end
 	end
 end
 
-function var_0_0._onDrag(arg_23_0, arg_23_1)
-	if arg_23_0._scene.cameraFollow:isFollowing() then
+function RoomViewTouch:_onDrag(deltaPos)
+	if self._scene.cameraFollow:isFollowing() then
 		return
 	end
 
-	local var_23_0 = arg_23_0._scene.camera:getCameraRotate()
-	local var_23_1 = arg_23_0._scene.camera:getCameraZoom()
-	local var_23_2 = arg_23_1.x * (var_23_1 / 2 + 1)
-	local var_23_3 = arg_23_1.y * (var_23_1 / 2 + 1)
+	local rotate = self._scene.camera:getCameraRotate()
+	local zoom = self._scene.camera:getCameraZoom()
+	local deltaX = deltaPos.x * (zoom / 2 + 1)
+	local deltaY = deltaPos.y * (zoom / 2 + 1)
 
-	if not arg_23_0._scene.fsm:isTransitioning() then
-		local var_23_4 = var_23_2 * Mathf.Cos(var_23_0) + var_23_3 * Mathf.Sin(var_23_0)
-		local var_23_5 = -var_23_2 * Mathf.Sin(var_23_0) + var_23_3 * Mathf.Cos(var_23_0)
-		local var_23_6 = -0.0025 * RoomController.instance.touchMoveSpeed
+	if not self._scene.fsm:isTransitioning() then
+		local combinedX = deltaX * Mathf.Cos(rotate) + deltaY * Mathf.Sin(rotate)
+		local combinedY = -deltaX * Mathf.Sin(rotate) + deltaY * Mathf.Cos(rotate)
+		local scale = -0.0025 * RoomController.instance.touchMoveSpeed
 
-		arg_23_0._scene.camera:move(var_23_4 * var_23_6, var_23_5 * var_23_6)
+		self._scene.camera:move(combinedX * scale, combinedY * scale)
 	end
 end
 
-function var_0_0._onPressBuilding(arg_24_0, arg_24_1, arg_24_2)
-	if arg_24_0._scene.camera:getCameraState() ~= RoomEnum.CameraState.Overlook then
+function RoomViewTouch:_onPressBuilding(pos, buildingUid)
+	local cameraState = self._scene.camera:getCameraState()
+
+	if cameraState ~= RoomEnum.CameraState.Overlook then
 		return
 	end
 
-	RoomBuildingController.instance:pressBuildingUp(arg_24_1, arg_24_2)
+	RoomBuildingController.instance:pressBuildingUp(pos, buildingUid)
 end
 
-function var_0_0._onDropBuilding(arg_25_0, arg_25_1)
-	if arg_25_0._scene.camera:getCameraState() ~= RoomEnum.CameraState.Overlook then
+function RoomViewTouch:_onDropBuilding(pos)
+	local cameraState = self._scene.camera:getCameraState()
+
+	if cameraState ~= RoomEnum.CameraState.Overlook then
 		return
 	end
 
-	RoomBuildingController.instance:dropBuildingDown(arg_25_1)
+	RoomBuildingController.instance:dropBuildingDown(pos)
 end
 
-function var_0_0._onPressCharacter(arg_26_0, arg_26_1, arg_26_2)
-	local var_26_0 = arg_26_0._scene.camera:getCameraState()
+function RoomViewTouch:_onPressCharacter(pos, heroId)
+	local cameraState = self._scene.camera:getCameraState()
 
-	if var_26_0 ~= RoomEnum.CameraState.Character and var_26_0 ~= RoomEnum.CameraState.Normal then
+	if cameraState ~= RoomEnum.CameraState.Character and cameraState ~= RoomEnum.CameraState.Normal then
 		return
 	end
 
-	RoomCharacterController.instance:pressCharacterUp(arg_26_1, arg_26_2)
+	RoomCharacterController.instance:pressCharacterUp(pos, heroId)
 end
 
-function var_0_0._onDropCharacter(arg_27_0, arg_27_1)
-	if arg_27_0._scene.camera:getCameraState() ~= RoomEnum.CameraState.Character then
+function RoomViewTouch:_onDropCharacter(pos)
+	local cameraState = self._scene.camera:getCameraState()
+
+	if cameraState ~= RoomEnum.CameraState.Character then
 		return
 	end
 
-	RoomCharacterController.instance:dropCharacterDown(arg_27_1)
+	RoomCharacterController.instance:dropCharacterDown(pos)
 end
 
-function var_0_0.onOpen(arg_28_0)
-	arg_28_0:addEventCb(RoomMapController.instance, RoomEvent.TouchClickScene, arg_28_0._onClick, arg_28_0)
-	arg_28_0:addEventCb(RoomMapController.instance, RoomEvent.TouchDrag, arg_28_0._onDrag, arg_28_0)
-	arg_28_0:addEventCb(RoomMapController.instance, RoomEvent.TouchScale, arg_28_0._onScale, arg_28_0)
-	arg_28_0:addEventCb(RoomMapController.instance, RoomEvent.TouchRotate, arg_28_0._onRotate, arg_28_0)
-	arg_28_0:addEventCb(RoomMapController.instance, RoomEvent.TouchPressBuilding, arg_28_0._onPressBuilding, arg_28_0)
-	arg_28_0:addEventCb(RoomMapController.instance, RoomEvent.TouchDropBuilding, arg_28_0._onDropBuilding, arg_28_0)
-	arg_28_0:addEventCb(RoomMapController.instance, RoomEvent.TouchPressCharacter, arg_28_0._onPressCharacter, arg_28_0)
-	arg_28_0:addEventCb(RoomMapController.instance, RoomEvent.TouchDropCharacter, arg_28_0._onDropCharacter, arg_28_0)
+function RoomViewTouch:onOpen()
+	self:addEventCb(RoomMapController.instance, RoomEvent.TouchClickScene, self._onClick, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.TouchDrag, self._onDrag, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.TouchScale, self._onScale, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.TouchRotate, self._onRotate, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.TouchPressBuilding, self._onPressBuilding, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.TouchDropBuilding, self._onDropBuilding, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.TouchPressCharacter, self._onPressCharacter, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.TouchDropCharacter, self._onDropCharacter, self)
 end
 
-function var_0_0.onClose(arg_29_0)
+function RoomViewTouch:onClose()
 	return
 end
 
-function var_0_0._onScale(arg_30_0, arg_30_1)
-	local var_30_0 = arg_30_0._scene.camera:getCameraState()
+function RoomViewTouch:_onScale(deltaScale)
+	local cameraState = self._scene.camera:getCameraState()
 
-	if not RoomEnum.CameraCanScaleMap[var_30_0] then
+	if not RoomEnum.CameraCanScaleMap[cameraState] then
 		return
 	end
 
-	if arg_30_0._scene.fsm:isTransitioning() then
+	if self._scene.fsm:isTransitioning() then
 		return
 	end
 
-	if arg_30_1 ~= 0 then
-		arg_30_0._scene.camera:zoom(arg_30_1)
+	if deltaScale ~= 0 then
+		self._scene.camera:zoom(deltaScale)
 	end
 end
 
-function var_0_0._onRotate(arg_31_0, arg_31_1)
-	if arg_31_0._scene.fsm:isTransitioning() or arg_31_0._scene.cameraFollow:isLockRotate() then
+function RoomViewTouch:_onRotate(deltaRotate)
+	if self._scene.fsm:isTransitioning() or self._scene.cameraFollow:isLockRotate() then
 		return
 	end
 
-	if arg_31_1 ~= 0 then
-		arg_31_0._scene.camera:rotate(arg_31_1)
+	if deltaRotate ~= 0 then
+		self._scene.camera:rotate(deltaRotate)
 	end
 end
 
-function var_0_0._screenPosToHexPoint(arg_32_0, arg_32_1)
-	local var_32_0 = arg_32_0:_screenPosToGroundPos(arg_32_1)
+function RoomViewTouch:_screenPosToHexPoint(pos)
+	local groundPos = self:_screenPosToGroundPos(pos)
+	local hexPoint = groundPos and HexMath.positionToRoundHex(groundPos, RoomBlockEnum.BlockSize)
 
-	return var_32_0 and HexMath.positionToRoundHex(var_32_0, RoomBlockEnum.BlockSize)
+	return hexPoint
 end
 
-function var_0_0._screenPosToGroundPos(arg_33_0, arg_33_1)
-	local var_33_0 = CameraMgr.instance:getMainCamera()
-	local var_33_1 = GameSceneMgr.instance:getCurScene()
-	local var_33_2 = var_33_1.camera.camera
-	local var_33_3 = var_33_1.go.planeGO.transform.position.y
-	local var_33_4 = var_33_2:ScreenPointToRay(arg_33_1)
+function RoomViewTouch:_screenPosToGroundPos(pos)
+	local camera = CameraMgr.instance:getMainCamera()
+	local scene = GameSceneMgr.instance:getCurScene()
+	local camera = scene.camera.camera
+	local height = scene.go.planeGO.transform.position.y
+	local ray = camera:ScreenPointToRay(pos)
 
-	if var_33_4.direction.y == 0 then
+	if ray.direction.y == 0 then
 		return nil
 	end
 
-	local var_33_5 = (var_33_3 - var_33_4.origin.y) / var_33_4.direction.y
+	local step = (height - ray.origin.y) / ray.direction.y
 
-	if var_33_5 > 1000 or var_33_5 < 0 then
+	if step > 1000 or step < 0 then
 		return nil
 	end
 
-	local var_33_6 = Vector2(var_33_4.origin.x + var_33_4.direction.x * var_33_5, var_33_4.origin.z + var_33_4.direction.z * var_33_5)
-	local var_33_7 = var_33_1.go.groundGO.transform.localScale
+	local worldPos = Vector2(ray.origin.x + ray.direction.x * step, ray.origin.z + ray.direction.z * step)
+	local scale = scene.go.groundGO.transform.localScale
 
-	if var_33_7.x == 0 or var_33_7.y == 0 then
+	if scale.x == 0 or scale.y == 0 then
 		return nil
 	end
 
-	return (Vector2(var_33_6.x / var_33_7.x, var_33_6.y / var_33_7.z))
+	local localPos = Vector2(worldPos.x / scale.x, worldPos.y / scale.z)
+
+	return localPos
 end
 
-function var_0_0.onDestroyView(arg_34_0)
+function RoomViewTouch:onDestroyView()
 	return
 end
 
-return var_0_0
+return RoomViewTouch

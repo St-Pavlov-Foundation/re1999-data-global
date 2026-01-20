@@ -1,70 +1,79 @@
-﻿module("modules.logic.versionactivity1_6.goldenmilletpresent.controller.GoldenMilletPresentController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/goldenmilletpresent/controller/GoldenMilletPresentController.lua
 
-local var_0_0 = class("GoldenMilletPresentController", BaseController)
+module("modules.logic.versionactivity1_6.goldenmilletpresent.controller.GoldenMilletPresentController", package.seeall)
 
-function var_0_0.addConstEvents(arg_1_0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, arg_1_0._checkActivityInfo, arg_1_0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_1_0._checkActivityInfo, arg_1_0)
+local GoldenMilletPresentController = class("GoldenMilletPresentController", BaseController)
+
+function GoldenMilletPresentController:addConstEvents()
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, self._checkActivityInfo, self)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self._checkActivityInfo, self)
 end
 
-function var_0_0.reInit(arg_2_0)
-	TaskDispatcher.cancelTask(arg_2_0._delayGetInfo, arg_2_0)
+function GoldenMilletPresentController:reInit()
+	TaskDispatcher.cancelTask(self._delayGetInfo, self)
 end
 
-function var_0_0._checkActivityInfo(arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0._delayGetInfo, arg_3_0)
-	TaskDispatcher.runDelay(arg_3_0._delayGetInfo, arg_3_0, 0.2)
+function GoldenMilletPresentController:_checkActivityInfo()
+	TaskDispatcher.cancelTask(self._delayGetInfo, self)
+	TaskDispatcher.runDelay(self._delayGetInfo, self, 0.2)
 end
 
-function var_0_0._delayGetInfo(arg_4_0)
-	arg_4_0:getGoldenMilletPresentActivityInfo()
+function GoldenMilletPresentController:_delayGetInfo()
+	self:getGoldenMilletPresentActivityInfo()
 end
 
-function var_0_0.getGoldenMilletPresentActivityInfo(arg_5_0, arg_5_1, arg_5_2)
-	if not GoldenMilletPresentModel.instance:isGoldenMilletPresentOpen() then
+function GoldenMilletPresentController:getGoldenMilletPresentActivityInfo(cb, cbObj)
+	local isOpen = GoldenMilletPresentModel.instance:isGoldenMilletPresentOpen()
+
+	if not isOpen then
 		return
 	end
 
-	local var_5_0 = GoldenMilletPresentModel.instance:getGoldenMilletPresentActId()
+	local actId = GoldenMilletPresentModel.instance:getGoldenMilletPresentActId()
 
-	Activity101Rpc.instance:sendGet101InfosRequest(var_5_0, arg_5_1, arg_5_2)
+	Activity101Rpc.instance:sendGet101InfosRequest(actId, cb, cbObj)
 end
 
-function var_0_0.openGoldenMilletPresentView(arg_6_0)
-	if not GoldenMilletPresentModel.instance:isGoldenMilletPresentOpen(true) then
+function GoldenMilletPresentController:openGoldenMilletPresentView()
+	local isOpen = GoldenMilletPresentModel.instance:isGoldenMilletPresentOpen(true)
+
+	if not isOpen then
 		return
 	end
 
-	local var_6_0 = GoldenMilletPresentModel.instance:getGoldenMilletPresentActId()
+	local actId = GoldenMilletPresentModel.instance:getGoldenMilletPresentActId()
 
-	Activity101Rpc.instance:sendGet101InfosRequest(var_6_0, arg_6_0._realOpenGoldenMilletPresentView, arg_6_0)
+	Activity101Rpc.instance:sendGet101InfosRequest(actId, self._realOpenGoldenMilletPresentView, self)
 end
 
-function var_0_0._realOpenGoldenMilletPresentView(arg_7_0)
-	local var_7_0 = GoldenMilletPresentModel.instance:isShowRedDot()
+function GoldenMilletPresentController:_realOpenGoldenMilletPresentView()
+	local isShowRedDot = GoldenMilletPresentModel.instance:isShowRedDot()
 
 	ViewMgr.instance:openView(ViewName.V2a5_GoldenMilletPresentView, {
-		isDisplayView = not var_7_0
+		isDisplayView = not isShowRedDot
 	})
 end
 
-function var_0_0.receiveGoldenMilletPresent(arg_8_0, arg_8_1, arg_8_2)
-	if not GoldenMilletPresentModel.instance:isGoldenMilletPresentOpen(true) then
+function GoldenMilletPresentController:receiveGoldenMilletPresent(cb, cbObj)
+	local isOpen = GoldenMilletPresentModel.instance:isGoldenMilletPresentOpen(true)
+
+	if not isOpen then
 		return
 	end
 
-	local var_8_0 = GoldenMilletPresentModel.instance:getGoldenMilletPresentActId()
-	local var_8_1 = GoldenMilletEnum.REWARD_INDEX
+	local actId = GoldenMilletPresentModel.instance:getGoldenMilletPresentActId()
+	local index = GoldenMilletEnum.REWARD_INDEX
+	local canReceive = ActivityType101Model.instance:isType101RewardCouldGet(actId, index)
 
-	if not ActivityType101Model.instance:isType101RewardCouldGet(var_8_0, var_8_1) then
+	if not canReceive then
 		GameFacade.showToast(ToastEnum.ActivityRewardHasReceive)
 
 		return
 	end
 
-	Activity101Rpc.instance:sendGet101BonusRequest(var_8_0, var_8_1, arg_8_1, arg_8_2)
+	Activity101Rpc.instance:sendGet101BonusRequest(actId, index, cb, cbObj)
 end
 
-var_0_0.instance = var_0_0.New()
+GoldenMilletPresentController.instance = GoldenMilletPresentController.New()
 
-return var_0_0
+return GoldenMilletPresentController

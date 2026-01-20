@@ -1,114 +1,119 @@
-﻿module("modules.logic.dungeon.view.rolestory.RoleStoryHeroGroupFightView", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/rolestory/RoleStoryHeroGroupFightView.lua
 
-local var_0_0 = class("RoleStoryHeroGroupFightView", HeroGroupFightView)
+module("modules.logic.dungeon.view.rolestory.RoleStoryHeroGroupFightView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	var_0_0.super.onInitView(arg_1_0)
+local RoleStoryHeroGroupFightView = class("RoleStoryHeroGroupFightView", HeroGroupFightView)
 
-	arg_1_0._gotarget = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/targetcontain")
+function RoleStoryHeroGroupFightView:onInitView()
+	RoleStoryHeroGroupFightView.super.onInitView(self)
 
-	gohelper.setActive(arg_1_0._gotarget, false)
+	self._gotarget = gohelper.findChild(self.viewGO, "#go_container/#scroll_info/infocontain/targetcontain")
+
+	gohelper.setActive(self._gotarget, false)
 end
 
-function var_0_0._refreshCost(arg_2_0, arg_2_1)
-	gohelper.setActive(arg_2_0._gocost, arg_2_1)
+function RoleStoryHeroGroupFightView:_refreshCost(visible)
+	gohelper.setActive(self._gocost, visible)
 
-	local var_2_0 = arg_2_0:_getfreeCount()
+	local remainCount = self:_getfreeCount()
 
-	gohelper.setActive(arg_2_0._gopower, not arg_2_0._enterAfterFreeLimit)
-	gohelper.setActive(arg_2_0._gocount, not arg_2_0._enterAfterFreeLimit and var_2_0 > 0)
-	gohelper.setActive(arg_2_0._gonormallackpower, false)
-	gohelper.setActive(arg_2_0._goreplaylackpower, false)
+	gohelper.setActive(self._gopower, not self._enterAfterFreeLimit)
+	gohelper.setActive(self._gocount, not self._enterAfterFreeLimit and remainCount > 0)
+	gohelper.setActive(self._gonormallackpower, false)
+	gohelper.setActive(self._goreplaylackpower, false)
 
-	if arg_2_0._enterAfterFreeLimit or var_2_0 > 0 then
-		local var_2_1 = tostring(-1 * math.min(arg_2_0._multiplication, var_2_0))
+	if self._enterAfterFreeLimit or remainCount > 0 then
+		local str = tostring(-1 * math.min(self._multiplication, remainCount))
 
-		arg_2_0._txtCostNum.text = var_2_1
-		arg_2_0._txtReplayCostNum.text = var_2_1
-		arg_2_0._txtcostcount.text = string.format("<color=#B3AFAC>%s</color><color=#B26161>%s</color>", luaLang("p_dungeonmaplevel_costcount"), var_2_1)
+		self._txtCostNum.text = str
+		self._txtReplayCostNum.text = str
+		self._txtcostcount.text = string.format("<color=#B3AFAC>%s</color><color=#B26161>%s</color>", luaLang("p_dungeonmaplevel_costcount"), str)
 
-		if var_2_0 >= arg_2_0._multiplication then
-			arg_2_0:_refreshBtns(false)
+		if remainCount >= self._multiplication then
+			self:_refreshBtns(false)
 
 			return
 		end
 	end
 
-	local var_2_2 = GameUtil.splitString2(arg_2_0.episodeConfig.cost, true)[1]
-	local var_2_3
+	local costs = GameUtil.splitString2(self.episodeConfig.cost, true)
+	local cost1 = costs[1]
+	local powerIcon
 
-	if var_2_2[1] == MaterialEnum.MaterialType.Currency and var_2_2[2] == CurrencyEnum.CurrencyType.Power then
-		local var_2_4 = CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.Power)
+	if cost1[1] == MaterialEnum.MaterialType.Currency and cost1[2] == CurrencyEnum.CurrencyType.Power then
+		local currencyCo = CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.Power)
 
-		var_2_3 = ResUrl.getCurrencyItemIcon(var_2_4.icon .. "_btn")
+		powerIcon = ResUrl.getCurrencyItemIcon(currencyCo.icon .. "_btn")
 	else
-		var_2_3 = ItemModel.instance:getItemSmallIcon(var_2_2[2])
+		powerIcon = ItemModel.instance:getItemSmallIcon(cost1[2])
 	end
 
-	arg_2_0._simagepower:LoadImage(var_2_3)
-	recthelper.setSize(arg_2_0._simagepower.transform, 100, 100)
-	arg_2_0:_refreshCostPower()
+	self._simagepower:LoadImage(powerIcon)
+	recthelper.setSize(self._simagepower.transform, 100, 100)
+	self:_refreshCostPower()
 end
 
-function var_0_0._onClickStart(arg_3_0)
-	local var_3_0 = GameUtil.splitString2(arg_3_0.episodeConfig.cost, true)
-	local var_3_1 = arg_3_0:_getfreeCount()
-	local var_3_2 = (arg_3_0._multiplication or 1) - var_3_1
-	local var_3_3 = {}
+function RoleStoryHeroGroupFightView:_onClickStart()
+	local costs = GameUtil.splitString2(self.episodeConfig.cost, true)
+	local remainCount = self:_getfreeCount()
+	local multi = (self._multiplication or 1) - remainCount
+	local items = {}
 
-	for iter_3_0, iter_3_1 in ipairs(var_3_0) do
-		table.insert(var_3_3, {
-			type = iter_3_1[1],
-			id = iter_3_1[2],
-			quantity = iter_3_1[3] * var_3_2
+	for i, v in ipairs(costs) do
+		table.insert(items, {
+			type = v[1],
+			id = v[2],
+			quantity = v[3] * multi
 		})
 	end
 
-	local var_3_4, var_3_5, var_3_6 = ItemModel.instance:hasEnoughItems(var_3_3)
+	local notEnoughItemName, enough, icon = ItemModel.instance:hasEnoughItems(items)
 
-	if not var_3_5 then
-		GameFacade.showToastWithIcon(ToastEnum.NotEnoughId, var_3_6, var_3_4)
+	if not enough then
+		GameFacade.showToastWithIcon(ToastEnum.NotEnoughId, icon, notEnoughItemName)
 
 		return
 	end
 
-	arg_3_0:_closemultcontent()
-	arg_3_0:_enterFight()
+	self:_closemultcontent()
+	self:_enterFight()
 end
 
-function var_0_0._refreshCostPower(arg_4_0)
-	local var_4_0 = GameUtil.splitString2(arg_4_0.episodeConfig.cost, true)[1]
-	local var_4_1 = var_4_0[3] or 0
-	local var_4_2 = var_4_1 > 0
+function RoleStoryHeroGroupFightView:_refreshCostPower()
+	local costs = GameUtil.splitString2(self.episodeConfig.cost, true)
+	local cost1 = costs[1]
+	local value = cost1[3] or 0
+	local showPower = value > 0
 
-	if arg_4_0._enterAfterFreeLimit then
-		var_4_2 = false
+	if self._enterAfterFreeLimit then
+		showPower = false
 	end
 
-	gohelper.setActive(arg_4_0._gopower, var_4_2)
-	arg_4_0:_refreshBtns(var_4_2)
+	gohelper.setActive(self._gopower, showPower)
+	self:_refreshBtns(showPower)
 
-	if not var_4_2 then
+	if not showPower then
 		return
 	end
 
-	local var_4_3 = var_4_1 * ((arg_4_0._multiplication or 1) - arg_4_0:_getfreeCount())
+	local multiCost = value * ((self._multiplication or 1) - self:_getfreeCount())
 
-	arg_4_0._txtusepower.text = string.format("-%s", var_4_3)
+	self._txtusepower.text = string.format("-%s", multiCost)
 
-	local var_4_4 = arg_4_0._chapterConfig.type == DungeonEnum.ChapterType.Hard
+	local isHardChapter = self._chapterConfig.type == DungeonEnum.ChapterType.Hard
+	local quantity = ItemModel.instance:getItemQuantity(cost1[1], cost1[2])
 
-	if var_4_3 <= ItemModel.instance:getItemQuantity(var_4_0[1], var_4_0[2]) then
-		local var_4_5 = var_4_4 and "#FFFFFF" or "#070706"
+	if multiCost <= quantity then
+		local usePowerColor = isHardChapter and "#FFFFFF" or "#070706"
 
-		SLFramework.UGUI.GuiHelper.SetColor(arg_4_0._txtusepower, arg_4_0._replayMode and "#070706" or var_4_5)
+		SLFramework.UGUI.GuiHelper.SetColor(self._txtusepower, self._replayMode and "#070706" or usePowerColor)
 	else
-		local var_4_6 = var_4_4 and "#C44945" or "#800015"
+		local usePowerColor = isHardChapter and "#C44945" or "#800015"
 
-		SLFramework.UGUI.GuiHelper.SetColor(arg_4_0._txtusepower, arg_4_0._replayMode and "#800015" or var_4_6)
-		gohelper.setActive(arg_4_0._gonormallackpower, not arg_4_0._replayMode)
-		gohelper.setActive(arg_4_0._goreplaylackpower, arg_4_0._replayMode)
+		SLFramework.UGUI.GuiHelper.SetColor(self._txtusepower, self._replayMode and "#800015" or usePowerColor)
+		gohelper.setActive(self._gonormallackpower, not self._replayMode)
+		gohelper.setActive(self._goreplaylackpower, self._replayMode)
 	end
 end
 
-return var_0_0
+return RoleStoryHeroGroupFightView

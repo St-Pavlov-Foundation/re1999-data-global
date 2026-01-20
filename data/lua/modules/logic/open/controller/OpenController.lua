@@ -1,27 +1,29 @@
-﻿module("modules.logic.open.controller.OpenController", package.seeall)
+﻿-- chunkname: @modules/logic/open/controller/OpenController.lua
 
-local var_0_0 = class("OpenController", BaseController)
+module("modules.logic.open.controller.OpenController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local OpenController = class("OpenController", BaseController)
+
+function OpenController:onInit()
 	return
 end
 
-function var_0_0.addConstEvents(arg_2_0)
-	var_0_0.instance:registerCallback(OpenEvent.GetOpenInfoSuccess, arg_2_0._onCheckFuncUnlock, arg_2_0)
-	MainController.instance:registerCallback(MainEvent.OnFuncUnlockRefresh, arg_2_0._onCheckFuncUnlock, arg_2_0)
-	var_0_0.instance:registerCallback(OpenEvent.NewFuncUnlock, arg_2_0._newFuncUnlock, arg_2_0)
+function OpenController:addConstEvents()
+	OpenController.instance:registerCallback(OpenEvent.GetOpenInfoSuccess, self._onCheckFuncUnlock, self)
+	MainController.instance:registerCallback(MainEvent.OnFuncUnlockRefresh, self._onCheckFuncUnlock, self)
+	OpenController.instance:registerCallback(OpenEvent.NewFuncUnlock, self._newFuncUnlock, self)
 end
 
-function var_0_0.reInit(arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0._delayCheckFuncUnlock, arg_3_0)
+function OpenController:reInit()
+	TaskDispatcher.cancelTask(self._delayCheckFuncUnlock, self)
 end
 
-function var_0_0._onCheckFuncUnlock(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._delayCheckFuncUnlock, arg_4_0)
-	TaskDispatcher.runDelay(arg_4_0._delayCheckFuncUnlock, arg_4_0, 0.2)
+function OpenController:_onCheckFuncUnlock()
+	TaskDispatcher.cancelTask(self._delayCheckFuncUnlock, self)
+	TaskDispatcher.runDelay(self._delayCheckFuncUnlock, self, 0.2)
 end
 
-function var_0_0._delayCheckFuncUnlock(arg_5_0)
+function OpenController:_delayCheckFuncUnlock()
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Friend) then
 		FriendRpc.instance:sendLoadFriendInfosRequest()
 	end
@@ -58,7 +60,9 @@ function var_0_0._delayCheckFuncUnlock(arg_5_0)
 		RoomController.instance:sendInitRoomObInfo()
 	end
 
-	if CritterModel.instance:isCritterUnlock() then
+	local isCritterUnlock = CritterModel.instance:isCritterUnlock()
+
+	if isCritterUnlock then
 		CritterRpc.instance:sendCritterGetInfoRequest()
 	end
 
@@ -67,9 +71,9 @@ function var_0_0._delayCheckFuncUnlock(arg_5_0)
 		ActivityController.instance:updateAct101Infos()
 
 		if ActivityModel.instance:isActOnLine(ActivityEnum.Activity.V2a9_Act208) then
-			local var_6_0 = Act208Helper.getCurPlatformType()
+			local channelId = Act208Helper.getCurPlatformType()
 
-			Act208Controller.instance:getActInfo(ActivityEnum.Activity.V2a9_Act208, var_6_0)
+			Act208Controller.instance:getActInfo(ActivityEnum.Activity.V2a9_Act208, channelId)
 		end
 	end)
 	HandbookRpc.instance:sendGetHandbookInfoRequest()
@@ -85,23 +89,23 @@ function var_0_0._delayCheckFuncUnlock(arg_5_0)
 	ItemRpc.instance:sendGetPowerMakerInfoRequest(false, true)
 end
 
-function var_0_0._newFuncUnlock(arg_7_0, arg_7_1)
-	for iter_7_0, iter_7_1 in ipairs(arg_7_1) do
-		if iter_7_1 == OpenEnum.UnlockFunc.Talent then
-			HeroRpc.instance:sendHeroInfoListRequest(arg_7_0._heroInfoUpdate, arg_7_0)
-		elseif iter_7_1 == OpenEnum.UnlockFunc.WeekWalk then
+function OpenController:_newFuncUnlock(newIds)
+	for i, id in ipairs(newIds) do
+		if id == OpenEnum.UnlockFunc.Talent then
+			HeroRpc.instance:sendHeroInfoListRequest(self._heroInfoUpdate, self)
+		elseif id == OpenEnum.UnlockFunc.WeekWalk then
 			WeekwalkRpc.instance:sendGetWeekwalkInfoRequest()
 			Weekwalk_2Rpc.instance:sendWeekwalkVer2GetInfoRequest()
-		elseif iter_7_1 == OpenEnum.UnlockFunc.Explore then
+		elseif id == OpenEnum.UnlockFunc.Explore then
 			ExploreRpc.instance:sendGetExploreSimpleInfoRequest()
 		end
 	end
 end
 
-function var_0_0._heroInfoUpdate(arg_8_0)
+function OpenController:_heroInfoUpdate()
 	CharacterController.instance:tryStatAllTalent()
 end
 
-var_0_0.instance = var_0_0.New()
+OpenController.instance = OpenController.New()
 
-return var_0_0
+return OpenController

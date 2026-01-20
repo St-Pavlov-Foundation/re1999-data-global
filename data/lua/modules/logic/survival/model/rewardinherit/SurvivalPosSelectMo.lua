@@ -1,55 +1,59 @@
-﻿module("modules.logic.survival.model.rewardinherit.SurvivalPosSelectMo", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/rewardinherit/SurvivalPosSelectMo.lua
 
-local var_0_0 = pureTable("SurvivalPosSelectMo")
+module("modules.logic.survival.model.rewardinherit.SurvivalPosSelectMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.cache = {}
-	arg_1_0.dataList = {}
+local SurvivalPosSelectMo = pureTable("SurvivalPosSelectMo")
+
+function SurvivalPosSelectMo:ctor()
+	self.cache = {}
+	self.dataList = {}
 end
 
-function var_0_0.addToEmptyPos(arg_2_0, arg_2_1)
-	table.insert(arg_2_0.dataList, arg_2_1)
+function SurvivalPosSelectMo:addToEmptyPos(value)
+	table.insert(self.dataList, value)
 end
 
-function var_0_0.addToPos(arg_3_0, arg_3_1, arg_3_2)
-	table.insert(arg_3_0.dataList, arg_3_1, arg_3_2)
+function SurvivalPosSelectMo:addToPos(posIndex, value)
+	table.insert(self.dataList, posIndex, value)
 end
 
-function var_0_0.removeFromPos(arg_4_0, arg_4_1)
-	table.remove(arg_4_0.dataList, arg_4_1)
+function SurvivalPosSelectMo:removeFromPos(posIndex)
+	table.remove(self.dataList, posIndex)
 end
 
-function var_0_0.removeByValue(arg_5_0, arg_5_1)
-	tabletool.removeValue(arg_5_0.dataList, arg_5_1)
+function SurvivalPosSelectMo:removeByValue(value)
+	tabletool.removeValue(self.dataList, value)
 end
 
-function var_0_0.removeAll(arg_6_0)
-	tabletool.clear(arg_6_0.dataList)
+function SurvivalPosSelectMo:removeAll()
+	tabletool.clear(self.dataList)
 end
 
-function var_0_0.isSelect(arg_7_0, arg_7_1)
-	return tabletool.indexOf(arg_7_0.dataList, arg_7_1) ~= nil
+function SurvivalPosSelectMo:isSelect(value)
+	local index = tabletool.indexOf(self.dataList, value)
+
+	return index ~= nil
 end
 
-function var_0_0.Record(arg_8_0)
-	tabletool.clear(arg_8_0.cache)
+function SurvivalPosSelectMo:Record()
+	tabletool.clear(self.cache)
 
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0.dataList) do
-		arg_8_0.cache[iter_8_0] = iter_8_1
+	for i, v in ipairs(self.dataList) do
+		self.cache[i] = v
 	end
 end
 
-function var_0_0.Revert(arg_9_0)
-	tabletool.clear(arg_9_0.dataList)
+function SurvivalPosSelectMo:Revert()
+	tabletool.clear(self.dataList)
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0.cache) do
-		arg_9_0.dataList[iter_9_0] = iter_9_1
+	for i, v in ipairs(self.cache) do
+		self.dataList[i] = v
 	end
 end
 
-function var_0_0.clear(arg_10_0)
-	tabletool.clear(arg_10_0.dataList)
-	tabletool.clear(arg_10_0.cache)
+function SurvivalPosSelectMo:clear()
+	tabletool.clear(self.dataList)
+	tabletool.clear(self.cache)
 end
 
-return var_0_0
+return SurvivalPosSelectMo

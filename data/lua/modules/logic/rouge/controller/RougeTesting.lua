@@ -1,205 +1,207 @@
-﻿module("modules.logic.rouge.controller.RougeTesting", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/controller/RougeTesting.lua
 
-local var_0_0 = _G.class("TestingBase")
+module("modules.logic.rouge.controller.RougeTesting", package.seeall)
 
-function var_0_0.build_test(arg_1_0)
+local TestingBase = _G.class("TestingBase")
+
+function TestingBase:build_test()
 	return
 end
 
-function var_0_0.link(arg_2_0, arg_2_1)
-	arg_2_0._obj = arg_2_1
+function TestingBase:link(obj)
+	self._obj = obj
 end
 
-local var_0_1 = _G.class("SRougeTesting", var_0_0)
+local SRougeTesting = _G.class("SRougeTesting", TestingBase)
 
-function var_0_1.ctor(arg_3_0)
-	arg_3_0._season2RougeInfo = {}
-	arg_3_0._season2RougeOutsideInfo = {}
+function SRougeTesting:ctor()
+	self._season2RougeInfo = {}
+	self._season2RougeOutsideInfo = {}
 end
 
-function var_0_1._make_RougeBattleHero(arg_4_0, arg_4_1)
+function SRougeTesting:_make_RougeBattleHero(index)
 	return {
 		supportHeroSkill = 0,
-		index = arg_4_1 or math.random(1, 4),
+		index = index or math.random(1, 4),
 		heroId = math.random(3003, 3020),
 		equipUid = math.random(1501, 1510),
 		supportHeroId = math.random(3022, 3060)
 	}
 end
 
-function var_0_1._make_RougeHeroLife(arg_5_0, arg_5_1)
+function SRougeTesting:_make_RougeHeroLife(heroId)
 	return {
-		heroId = arg_5_1 or math.random(3003, 3020),
+		heroId = heroId or math.random(3003, 3020),
 		life = math.random(1, 100) * 1000
 	}
 end
 
-function var_0_1._make_RougeTeamInfo(arg_6_0)
-	local var_6_0 = {
+function SRougeTesting:_make_RougeTeamInfo()
+	local res = {
 		battleHeroList = {},
 		heroLifeList = {}
 	}
 
-	function var_6_0.HasField(arg_7_0, arg_7_1)
-		return var_6_0[arg_7_1] ~= nil
+	function res.HasField(_, fieldName)
+		return res[fieldName] ~= nil
 	end
 
-	local var_6_1 = 4
+	local N = 4
 
-	for iter_6_0 = 1, var_6_1 do
-		local var_6_2 = arg_6_0:_make_RougeBattleHero(iter_6_0)
+	for index = 1, N do
+		local item = self:_make_RougeBattleHero(index)
 
-		var_6_2.supportHeroId = math.random(1, 1000) % 2 == 0 and var_6_2.supportHeroId or 0
+		item.supportHeroId = math.random(1, 1000) % 2 == 0 and item.supportHeroId or 0
 
-		table.insert(var_6_0.battleHeroList, var_6_2)
+		table.insert(res.battleHeroList, item)
 	end
 
-	for iter_6_1 = 1, var_6_1 do
-		local var_6_3 = var_6_0.battleHeroList[iter_6_1].heroId
-		local var_6_4 = arg_6_0:_make_RougeHeroLife(var_6_3)
+	for index = 1, N do
+		local heroId = res.battleHeroList[index].heroId
+		local item = self:_make_RougeHeroLife(heroId)
 
-		table.insert(var_6_0.heroLifeList, var_6_4)
+		table.insert(res.heroLifeList, item)
 	end
 
-	return var_6_0
+	return res
 end
 
-function var_0_1._make_RougeBagPos(arg_8_0, arg_8_1, arg_8_2)
+function SRougeTesting:_make_RougeBagPos(row, col)
 	return {
-		row = arg_8_1 or 0,
-		col = arg_8_2 or 0
+		row = row or 0,
+		col = col or 0
 	}
 end
 
-local var_0_2 = 1
+local s_make_RougeItem_uid = 1
 
-function var_0_1._make_RougeItem(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = lua_item.configList
-	local var_9_1 = math.random(1, #var_9_0)
-	local var_9_2 = {
-		id = arg_9_1 or var_0_2,
-		itemId = arg_9_2 or var_9_0[var_9_1].id,
+function SRougeTesting:_make_RougeItem(id, itemId)
+	local itemList = lua_item.configList
+	local itemListIndex = math.random(1, #itemList)
+	local res = {
+		id = id or s_make_RougeItem_uid,
+		itemId = itemId or itemList[itemListIndex].id,
 		holdItems = {},
 		holdIds = {}
 	}
 
-	var_0_2 = var_0_2 + 1
+	s_make_RougeItem_uid = s_make_RougeItem_uid + 1
 
-	local var_9_3 = 0
-	local var_9_4 = {}
+	local NholdItems = 0
+	local rougeSynthesisList = {}
 
-	for iter_9_0 = 1, var_9_3 do
-		local var_9_5 = math.random(1, #var_9_4)
+	for i = 1, NholdItems do
+		local index = math.random(1, #rougeSynthesisList)
 
-		var_9_2.holdItems[iter_9_0] = var_9_4[var_9_5]
+		res.holdItems[i] = rougeSynthesisList[index]
 	end
 
-	local var_9_6 = 0
+	local NholdIds = 0
 
-	for iter_9_1 = 1, var_9_6 do
-		var_9_2.holdItems[iter_9_1] = var_9_6
+	for i = 1, NholdIds do
+		res.holdItems[i] = NholdIds
 	end
 
-	return var_9_2
+	return res
 end
 
-function var_0_1._make_RougeItemLayout(arg_10_0)
-	local var_10_0 = 1
-	local var_10_1 = 1
+function SRougeTesting:_make_RougeItemLayout()
+	local maxRow = 1
+	local maxCol = 1
 
 	if RougeEnum.MaxCollectionSlotSize then
-		var_10_0 = RougeEnum.MaxCollectionSlotSize.x
-		var_10_1 = RougeEnum.MaxCollectionSlotSize.y
+		maxRow = RougeEnum.MaxCollectionSlotSize.x
+		maxCol = RougeEnum.MaxCollectionSlotSize.y
 	end
 
-	local var_10_2 = math.random(1, var_10_0)
-	local var_10_3 = math.random(1, var_10_1)
-	local var_10_4 = {
-		pos = arg_10_0:_make_RougeBagPos(var_10_2, var_10_3),
+	local row = math.random(1, maxRow)
+	local col = math.random(1, maxCol)
+	local res = {
+		pos = self:_make_RougeBagPos(row, col),
 		rotation = math.random(0, 3),
-		item = arg_10_0:_make_RougeItem(),
+		item = self:_make_RougeItem(),
 		baseEffects = {},
 		extraEffects = {}
 	}
-	local var_10_5 = 0
+	local NbaseEffects = 0
 
-	for iter_10_0 = 1, var_10_5 do
-		var_10_4.baseEffects[iter_10_0] = 1
+	for i = 1, NbaseEffects do
+		res.baseEffects[i] = 1
 	end
 
-	local var_10_6 = 0
+	local NextraEffects = 0
 
-	for iter_10_1 = 1, var_10_6 do
-		var_10_4.extraEffects[iter_10_1] = 1
+	for i = 1, NextraEffects do
+		res.extraEffects[i] = 1
 	end
 
-	return var_10_4
+	return res
 end
 
-function var_0_1._make_RougeBag(arg_11_0)
-	local var_11_0 = {
+function SRougeTesting:_make_RougeBag()
+	local res = {
 		layouts = {}
 	}
-	local var_11_1 = 0
+	local Nlayouts = 0
 
-	for iter_11_0 = 1, var_11_1 do
-		var_11_0.layouts[iter_11_0] = arg_11_0:_make_RougeItemLayout()
+	for i = 1, Nlayouts do
+		res.layouts[i] = self:_make_RougeItemLayout()
 	end
 
-	return var_11_0
+	return res
 end
 
-function var_0_1._make_RougeTalent(arg_12_0, arg_12_1, arg_12_2)
+function SRougeTesting:_make_RougeTalent(id, isActive)
 	return {
-		id = arg_12_1,
-		isActive = arg_12_2 or false
+		id = id,
+		isActive = isActive or false
 	}
 end
 
-function var_0_1._make_RougeTalentTree(arg_13_0)
-	local var_13_0 = {
+function SRougeTesting:_make_RougeTalentTree()
+	local res = {
 		rougeTalent = {}
 	}
-	local var_13_1 = lua_rouge_talent.configList
+	local list = lua_rouge_talent.configList
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_1 or {}) do
-		local var_13_2 = iter_13_1.id
-		local var_13_3 = math.random(0, 9999) % 2 == 0
+	for i, CO in ipairs(list or {}) do
+		local id = CO.id
+		local isActive = math.random(0, 9999) % 2 == 0
 
-		var_13_0.rougeTalent[iter_13_0] = arg_13_0:_make_RougeTalent(var_13_2, var_13_3)
+		res.rougeTalent[i] = self:_make_RougeTalent(id, isActive)
 	end
 
-	return var_13_0
+	return res
 end
 
-function var_0_1._make_RougeWarehouse(arg_14_0)
-	local var_14_0 = {
+function SRougeTesting:_make_RougeWarehouse()
+	local res = {
 		items = {}
 	}
-	local var_14_1 = 0
+	local Nitems = 0
 
-	for iter_14_0 = 1, var_14_1 do
-		var_14_0.items[iter_14_0] = arg_14_0:_make_RougeItem()
+	for i = 1, Nitems do
+		res.items[i] = self:_make_RougeItem()
 	end
 
-	return var_14_0
+	return res
 end
 
-function var_0_1._make_NodeInfo(arg_15_0, arg_15_1, arg_15_2)
+function SRougeTesting:_make_NodeInfo(layer, stage)
 	return {
 		nodeId = 0,
 		status = 0,
 		eventId = 0,
 		eventData = "",
-		layer = arg_15_1 or 0,
-		stage = arg_15_2 or 0,
+		layer = layer or 0,
+		stage = stage or 0,
 		lastNodeList = {},
 		nextNodeList = {}
 	}
 end
 
-function var_0_1._make_RougeMapInfo(arg_16_0)
-	local var_16_0 = {
+function SRougeTesting:_make_RougeMapInfo()
+	local res = {
 		curNode = 0,
 		middleLayerId = 0,
 		curStage = 0,
@@ -207,128 +209,135 @@ function var_0_1._make_RougeMapInfo(arg_16_0)
 		mapType = RougeMapEnum.MapType.Normal,
 		nodeInfo = {}
 	}
-	local var_16_1 = var_16_0.layerId
-	local var_16_2 = var_16_0.curStage
+	local layer = res.layerId
+	local stage = res.curStage
 
-	for iter_16_0 = 1, 5 do
-		local var_16_3 = arg_16_0:_make_NodeInfo(var_16_1, var_16_2)
+	for i = 1, 5 do
+		local item = self:_make_NodeInfo(layer, stage)
 
-		table.insert(var_16_0.nodeInfo, var_16_3)
+		table.insert(res.nodeInfo, item)
 	end
 
-	return var_16_0
+	return res
 end
 
-function var_0_1._make_RougeLastReward(arg_17_0, arg_17_1, arg_17_2)
-	local var_17_0 = addGlobalModule("modules.configs.rouge.lua_rouge_collection_editor", "lua_rouge_collection_editor")
-	local var_17_1 = #var_17_0
-	local var_17_2 = {
+function SRougeTesting:_make_RougeLastReward(season, id)
+	local lua_rouge_collection_editor = addGlobalModule("modules.configs.rouge.lua_rouge_collection_editor", "lua_rouge_collection_editor")
+	local maxCollectionN = #lua_rouge_collection_editor
+	local res = {
 		param = "",
-		id = arg_17_2 or 0
+		id = id or 0
 	}
-	local var_17_3 = (lua_rouge_last_reward.configDict or {})[arg_17_1]
-	local var_17_4 = var_17_3 and var_17_3[arg_17_2] or nil
+	local dict = lua_rouge_last_reward.configDict or {}
+	local cfgs = dict[season]
+	local cfg = cfgs and cfgs[id] or nil
 
-	if var_17_4 then
-		local var_17_5 = var_17_4.type
+	if cfg then
+		local type = cfg.type
 
-		if var_17_5 == "drop" then
-			var_17_2.param = ""
-		elseif var_17_5 == "dropGroup" then
-			local var_17_6 = var_17_0[math.random(1, var_17_1)]
+		if type == "drop" then
+			res.param = ""
+		elseif type == "dropGroup" then
+			local CO = lua_rouge_collection_editor[math.random(1, maxCollectionN)]
 
-			var_17_2.param = tostring(var_17_6.id)
+			res.param = tostring(CO.id)
 		end
 	end
 
-	return var_17_2
+	return res
 end
 
-function var_0_1._make_RougeLastReward_lastReward(arg_18_0, arg_18_1)
-	local var_18_0 = lua_rouge_last_reward and lua_rouge_last_reward.configList or {}
-	local var_18_1 = 4
+function SRougeTesting:_make_RougeLastReward_lastReward(refList)
+	local list = lua_rouge_last_reward and lua_rouge_last_reward.configList or {}
+	local N = 4
 
-	for iter_18_0 = 1, var_18_1 do
-		local var_18_2 = var_18_0[math.random(1, var_18_1)]
-		local var_18_3 = var_18_2.id
-		local var_18_4 = var_18_2.season
+	for i = 1, N do
+		local index = math.random(1, N)
+		local cfg = list[index]
+		local id = cfg.id
+		local season = cfg.season
 
-		table.insert(arg_18_1, arg_18_0:_make_RougeLastReward(var_18_4, var_18_3))
+		table.insert(refList, self:_make_RougeLastReward(season, id))
 	end
 end
 
-function var_0_1._make_RougeInfo(arg_19_0, arg_19_1, arg_19_2, arg_19_3, arg_19_4)
-	local var_19_0 = {
+function SRougeTesting:_make_RougeInfo(season, version, difficulty, style)
+	local res = {
 		selectRewardNum = 0,
 		state = 0,
 		endId = 0,
-		season = arg_19_1,
-		version = arg_19_2 or {},
-		difficulty = arg_19_3 or 1,
+		season = season,
+		version = version or {},
+		difficulty = difficulty or 1,
 		lastReward = {},
-		style = arg_19_4 or 0,
+		style = style or 0,
 		teamLevel = math.random(1, 100),
 		teamExp = math.random(1, 100),
 		teamSize = math.random(1, 4),
 		coin = math.random(0, 100),
 		talentPoint = math.random(1, 100),
-		teamInfo = arg_19_0:_make_RougeTeamInfo(),
-		bag = arg_19_0:_make_RougeBag(),
-		warehouse = arg_19_0:_make_RougeWarehouse(),
-		talentTree = arg_19_0:_make_RougeTalentTree(),
+		teamInfo = self:_make_RougeTeamInfo(),
+		bag = self:_make_RougeBag(),
+		warehouse = self:_make_RougeWarehouse(),
+		talentTree = self:_make_RougeTalentTree(),
 		effectInfo = {}
 	}
 
-	arg_19_0:_make_RougeLastReward_lastReward(var_19_0.lastReward)
+	self:_make_RougeLastReward_lastReward(res.lastReward)
 
-	function var_19_0.HasField(arg_20_0, arg_20_1)
-		return var_19_0[arg_20_1] ~= nil
+	function res.HasField(_, fieldName)
+		return res[fieldName] ~= nil
 	end
 
-	if #var_19_0.lastReward > 0 then
-		var_19_0.selectRewardNum = math.random(1, #var_19_0.lastReward)
+	if #res.lastReward > 0 then
+		res.selectRewardNum = math.random(1, #res.lastReward)
 	end
 
-	return var_19_0
+	return res
 end
 
-function var_0_1._make_RougeOutsideBonusStageNO(arg_21_0, arg_21_1, ...)
-	return {
-		stage = arg_21_1 or 1,
+function SRougeTesting:_make_RougeOutsideBonusStageNO(stage, ...)
+	local ret = {
+		stage = stage or 1,
 		bonusIds = {
 			...
 		}
 	}
+
+	return ret
 end
 
-function var_0_1._make_RougeOutsideBonusNO(arg_22_0)
-	return {
+function SRougeTesting:_make_RougeOutsideBonusNO()
+	local ret = {
 		bonusStages = {}
 	}
+
+	return ret
 end
 
-function var_0_1._make_RougeReviewInfo(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
-	return {
+function SRougeTesting:_make_RougeReviewInfo(season, difficulty, style)
+	local ret = {
 		portrait = 0,
 		playerName = "123456",
-		season = arg_23_1 or 1,
+		season = season or 1,
 		playerLevel = math.random(1, 999),
 		finishTime = os.time(),
-		difficulty = arg_23_2 or math.random(1, 5),
-		style = arg_23_3 or math.random(1, 5),
+		difficulty = difficulty or math.random(1, 5),
+		style = style or math.random(1, 5),
 		teamLevel = math.random(1, 10),
 		collectionNum = math.random(1, 10)
 	}
+
+	return ret
 end
 
-function var_0_1._make_RougeOutsideInfo(arg_24_0, arg_24_1)
-	local var_24_0 = RougeConfig1.instance:getDifficultyCOListByVersions({
+function SRougeTesting:_make_RougeOutsideInfo(season)
+	local difficultyList = RougeConfig1.instance:getDifficultyCOListByVersions({
 		101
 	})
-
-	return {
+	local res = {
 		isGeniusNewStage = false,
-		season = arg_24_1,
+		season = season,
 		geniusPoint = math.random(0, 100),
 		geniusIds = {
 			1,
@@ -336,364 +345,366 @@ function var_0_1._make_RougeOutsideInfo(arg_24_0, arg_24_1)
 			3
 		},
 		point = math.random(0, 100),
-		bonus = arg_24_0:_make_RougeOutsideBonusNO(),
+		bonus = self:_make_RougeOutsideBonusNO(),
 		review = {},
 		gameRecordInfo = {
 			lastGameTime = 0,
-			maxDifficulty = math.random(0, #var_24_0),
+			maxDifficulty = math.random(0, #difficultyList),
 			passLayerId = {},
 			passEventId = {},
 			passEndId = {},
 			passEntrustId = {}
 		}
 	}
+
+	return res
 end
 
-function var_0_1.handleGetRougeOutsideInfo(arg_25_0, arg_25_1, arg_25_2)
-	local var_25_0 = arg_25_1.season
+function SRougeTesting:handleGetRougeOutsideInfo(req, reply)
+	local season = req.season
 
-	if not arg_25_0:_getRougeOutsideInfo(var_25_0) then
-		arg_25_0._season2RougeOutsideInfo[var_25_0] = arg_25_0:_make_RougeOutsideInfo(var_25_0)
+	if not self:_getRougeOutsideInfo(season) then
+		self._season2RougeOutsideInfo[season] = self:_make_RougeOutsideInfo(season)
 	end
 
-	rawset(arg_25_2, "rougeInfo", arg_25_0:_getRougeOutsideInfo(var_25_0))
+	rawset(reply, "rougeInfo", self:_getRougeOutsideInfo(season))
 end
 
-function var_0_1.handleGetRougeInfo(arg_26_0, arg_26_1, arg_26_2)
-	local var_26_0 = arg_26_1.season
+function SRougeTesting:handleGetRougeInfo(req, reply)
+	local season = req.season
 
-	if not arg_26_0:_getRougeInfo(var_26_0) then
-		arg_26_0._season2RougeInfo[var_26_0] = arg_26_0:_make_RougeInfo(var_26_0)
+	if not self:_getRougeInfo(season) then
+		self._season2RougeInfo[season] = self:_make_RougeInfo(season)
 	end
 
-	rawset(arg_26_2, "rougeInfo", arg_26_0:_getRougeInfo(var_26_0))
+	rawset(reply, "rougeInfo", self:_getRougeInfo(season))
 end
 
-function var_0_1.handleEnterRougeSelectDifficulty(arg_27_0, arg_27_1, arg_27_2)
-	local var_27_0 = arg_27_1.season
-	local var_27_1 = arg_27_0:_getRougeInfo(var_27_0)
+function SRougeTesting:handleEnterRougeSelectDifficulty(req, reply)
+	local season = req.season
+	local rougeInfo = self:_getRougeInfo(season)
 
-	assert(var_27_1, "handleEnterRougeSelectDifficulty rougeInfo == nil")
+	assert(rougeInfo, "handleEnterRougeSelectDifficulty rougeInfo == nil")
 
-	var_27_1.season = arg_27_1.season
-	var_27_1.version = arg_27_1.version
-	var_27_1.difficulty = arg_27_1.difficulty
-	var_27_1.state = RougeEnum.State.Difficulty
+	rougeInfo.season = req.season
+	rougeInfo.version = req.version
+	rougeInfo.difficulty = req.difficulty
+	rougeInfo.state = RougeEnum.State.Difficulty
 
-	rawset(arg_27_2, "season", var_27_0)
-	rawset(arg_27_2, "rougeInfo", arg_27_0:_getRougeInfo(var_27_0))
+	rawset(reply, "season", season)
+	rawset(reply, "rougeInfo", self:_getRougeInfo(season))
 end
 
-function var_0_1.handleEnterRougeSelectReward(arg_28_0, arg_28_1, arg_28_2)
-	local var_28_0 = arg_28_1.season
-	local var_28_1 = arg_28_0:_getRougeInfo(var_28_0)
+function SRougeTesting:handleEnterRougeSelectReward(req, reply)
+	local season = req.season
+	local rougeInfo = self:_getRougeInfo(season)
 
-	assert(var_28_1, "handleEnterRougeSelectReward rougeInfo == nil")
+	assert(rougeInfo, "handleEnterRougeSelectReward rougeInfo == nil")
 
-	var_28_1.selectRewardId = arg_28_1.rewardId
-	var_28_1.state = RougeEnum.State.LastReward
+	rougeInfo.selectRewardId = req.rewardId
+	rougeInfo.state = RougeEnum.State.LastReward
 
-	rawset(arg_28_2, "season", var_28_0)
-	rawset(arg_28_2, "rougeInfo", arg_28_0:_getRougeInfo(var_28_0))
+	rawset(reply, "season", season)
+	rawset(reply, "rougeInfo", self:_getRougeInfo(season))
 end
 
-function var_0_1.handleEnterRougeSelectStyle(arg_29_0, arg_29_1, arg_29_2)
-	local var_29_0 = arg_29_1.season
-	local var_29_1 = arg_29_0:_getRougeInfo(var_29_0)
+function SRougeTesting:handleEnterRougeSelectStyle(req, reply)
+	local season = req.season
+	local rougeInfo = self:_getRougeInfo(season)
 
-	assert(var_29_1, "handleEnterRougeSelectStyle rougeInfo == nil")
+	assert(rougeInfo, "handleEnterRougeSelectStyle rougeInfo == nil")
 
-	var_29_1.style = arg_29_1.style
+	rougeInfo.style = req.style
 
-	rawset(arg_29_2, "season", var_29_0)
-	rawset(arg_29_2, "rougeInfo", arg_29_0:_getRougeInfo(var_29_0))
+	rawset(reply, "season", season)
+	rawset(reply, "rougeInfo", self:_getRougeInfo(season))
 end
 
-function var_0_1._getRougeInfo(arg_30_0, arg_30_1)
-	return arg_30_0._season2RougeInfo[arg_30_1]
+function SRougeTesting:_getRougeInfo(season)
+	return self._season2RougeInfo[season]
 end
 
-function var_0_1._getRougeOutsideInfo(arg_31_0, arg_31_1)
-	return arg_31_0._season2RougeOutsideInfo[arg_31_1]
+function SRougeTesting:_getRougeOutsideInfo(season)
+	return self._season2RougeOutsideInfo[season]
 end
 
-local var_0_3 = _G.class("CRougeTesting", var_0_0)
+local CRougeTesting = _G.class("CRougeTesting", TestingBase)
 
-function var_0_3.ctor(arg_32_0)
-	arg_32_0._cCfg = RougeConfig1
-	arg_32_0._cRpc = RougeRpc
-	arg_32_0._cCtrl = RougeController
-	arg_32_0._cModel = RougeModel
-	arg_32_0._cOutsideRpc = RougeOutsideRpc
-	arg_32_0._cOutsideCtrl = RougeOutsideController
-	arg_32_0._cOutsideModel = RougeOutsideModel
-	arg_32_0._cOpenModel = OpenModel
+function CRougeTesting:ctor()
+	self._cCfg = RougeConfig1
+	self._cRpc = RougeRpc
+	self._cCtrl = RougeController
+	self._cModel = RougeModel
+	self._cOutsideRpc = RougeOutsideRpc
+	self._cOutsideCtrl = RougeOutsideController
+	self._cOutsideModel = RougeOutsideModel
+	self._cOpenModel = OpenModel
 end
 
-function var_0_3.build_test(arg_33_0)
-	local var_33_0 = 0
-	local var_33_1 = arg_33_0._cCfg.instance
-	local var_33_2 = arg_33_0._cRpc.instance
-	local var_33_3 = arg_33_0._cCtrl.instance
-	local var_33_4 = arg_33_0._cModel.instance
-	local var_33_5 = arg_33_0._cOutsideRpc.instance
+function CRougeTesting:build_test()
+	local resultCode = 0
+	local cfgObj = self._cCfg.instance
+	local rpcObj = self._cRpc.instance
+	local ctrlObj = self._cCtrl.instance
+	local modelObj = self._cModel.instance
+	local outsideRpcObj = self._cOutsideRpc.instance
 
-	function arg_33_0._cOutsideRpc.sendGetRougeOutsideInfoRequest(arg_34_0, arg_34_1, arg_34_2, arg_34_3)
-		local var_34_0 = RougeOutsideModule_pb.GetRougeOutsideInfoRequest()
+	function self._cOutsideRpc.sendGetRougeOutsideInfoRequest(thisObj, season, cb, cbObj)
+		local req = RougeOutsideModule_pb.GetRougeOutsideInfoRequest()
 
-		var_34_0.season = arg_34_1
+		req.season = season
 
-		local var_34_1 = RougeOutsideModule_pb.GetRougeOutsideInfoReply()
+		local reply = RougeOutsideModule_pb.GetRougeOutsideInfoReply()
 
-		arg_33_0._obj:handleGetRougeOutsideInfo(var_34_0, var_34_1)
-		var_33_5:onReceiveGetRougeOutsideInfoReply(var_33_0, var_34_1)
+		self._obj:handleGetRougeOutsideInfo(req, reply)
+		outsideRpcObj:onReceiveGetRougeOutsideInfoReply(resultCode, reply)
 
-		local var_34_2 = LuaSocketMgr.instance:getCmdByPbStructName(var_34_0.__cname)
+		local cmd = LuaSocketMgr.instance:getCmdByPbStructName(req.__cname)
 
-		if arg_34_2 then
-			if arg_34_3 then
-				arg_34_2(arg_34_3, var_34_2, var_33_0)
+		if cb then
+			if cbObj then
+				cb(cbObj, cmd, resultCode)
 			else
-				arg_34_2(var_34_2, var_33_0)
+				cb(cmd, resultCode)
 			end
 		end
 	end
 
-	arg_33_0._cOutsideRpc.sendGetRougeOutSideInfoRequest = arg_33_0._cOutsideRpc.sendGetRougeOutsideInfoRequest
+	self._cOutsideRpc.sendGetRougeOutSideInfoRequest = self._cOutsideRpc.sendGetRougeOutsideInfoRequest
 
-	function arg_33_0._cRpc.sendGetRougeInfoRequest(arg_35_0, arg_35_1, arg_35_2, arg_35_3)
-		local var_35_0 = RougeModule_pb.GetRougeInfoRequest()
+	function self._cRpc.sendGetRougeInfoRequest(thisObj, season, cb, cbObj)
+		local req = RougeModule_pb.GetRougeInfoRequest()
 
-		var_35_0.season = arg_35_1
+		req.season = season
 
-		local var_35_1 = RougeModule_pb.GetRougeInfoReply()
+		local reply = RougeModule_pb.GetRougeInfoReply()
 
-		arg_33_0._obj:handleGetRougeInfo(var_35_0, var_35_1)
-		var_33_2:onReceiveGetRougeInfoReply(var_33_0, var_35_1)
+		self._obj:handleGetRougeInfo(req, reply)
+		rpcObj:onReceiveGetRougeInfoReply(resultCode, reply)
 
-		local var_35_2 = LuaSocketMgr.instance:getCmdByPbStructName(var_35_0.__cname)
+		local cmd = LuaSocketMgr.instance:getCmdByPbStructName(req.__cname)
 
-		if arg_35_2 then
-			if arg_35_3 then
-				arg_35_2(arg_35_3, var_35_2, var_33_0)
+		if cb then
+			if cbObj then
+				cb(cbObj, cmd, resultCode)
 			else
-				arg_35_2(var_35_2, var_33_0)
+				cb(cmd, resultCode)
 			end
 		end
 	end
 
-	function arg_33_0._cRpc.sendEnterRougeSelectDifficultyRequest(arg_36_0, arg_36_1, arg_36_2, arg_36_3, arg_36_4, arg_36_5, arg_36_6)
-		local var_36_0 = RougeModule_pb.EnterRougeSelectDifficultyRequest()
+	function self._cRpc.sendEnterRougeSelectDifficultyRequest(thisObj, season, version, difficulty, limiterNO, cb, cbObj)
+		local req = RougeModule_pb.EnterRougeSelectDifficultyRequest()
 
-		var_36_0.season = arg_36_1
+		req.season = season
 
-		for iter_36_0, iter_36_1 in ipairs(arg_36_2) do
-			var_36_0.version:append(iter_36_1)
+		for _, v in ipairs(version) do
+			req.version:append(v)
 		end
 
-		var_36_0.difficulty = arg_36_3
+		req.difficulty = difficulty
 
-		local var_36_1 = RougeModule_pb.EnterRougeSelectDifficultyReply()
+		local reply = RougeModule_pb.EnterRougeSelectDifficultyReply()
 
-		arg_33_0._obj:handleEnterRougeSelectDifficulty(var_36_0, var_36_1)
-		var_33_2:onReceiveEnterRougeSelectDifficultyReply(var_33_0, var_36_1)
+		self._obj:handleEnterRougeSelectDifficulty(req, reply)
+		rpcObj:onReceiveEnterRougeSelectDifficultyReply(resultCode, reply)
 
-		local var_36_2 = LuaSocketMgr.instance:getCmdByPbStructName(var_36_0.__cname)
+		local cmd = LuaSocketMgr.instance:getCmdByPbStructName(req.__cname)
 
-		if arg_36_5 then
-			if arg_36_6 then
-				arg_36_5(arg_36_6, var_36_2, var_33_0)
+		if cb then
+			if cbObj then
+				cb(cbObj, cmd, resultCode)
 			else
-				arg_36_5(var_36_2, var_33_0)
+				cb(cmd, resultCode)
 			end
 		end
 	end
 
-	function arg_33_0._cRpc.sendEnterRougeSelectRewardRequest(arg_37_0, arg_37_1, arg_37_2, arg_37_3, arg_37_4)
-		local var_37_0 = RougeModule_pb.EnterRougeSelectRewardRequest()
+	function self._cRpc.sendEnterRougeSelectRewardRequest(thisObj, season, rewardId, cb, cbObj)
+		local req = RougeModule_pb.EnterRougeSelectRewardRequest()
 
-		var_37_0.season = arg_37_1
+		req.season = season
 
-		for iter_37_0, iter_37_1 in ipairs(arg_37_2) do
-			var_37_0.rewardId:append(iter_37_1)
+		for i, v in ipairs(rewardId) do
+			req.rewardId:append(v)
 		end
 
-		local var_37_1 = RougeModule_pb.EnterRougeSelectRewardReply()
+		local reply = RougeModule_pb.EnterRougeSelectRewardReply()
 
-		arg_33_0._obj:handleEnterRougeSelectReward(var_37_0, var_37_1)
-		var_33_2:onReceiveEnterRougeSelectRewardReply(var_33_0, var_37_1)
+		self._obj:handleEnterRougeSelectReward(req, reply)
+		rpcObj:onReceiveEnterRougeSelectRewardReply(resultCode, reply)
 
-		local var_37_2 = LuaSocketMgr.instance:getCmdByPbStructName(var_37_0.__cname)
+		local cmd = LuaSocketMgr.instance:getCmdByPbStructName(req.__cname)
 
-		if arg_37_3 then
-			if arg_37_4 then
-				arg_37_3(arg_37_4, var_37_2, var_33_0)
+		if cb then
+			if cbObj then
+				cb(cbObj, cmd, resultCode)
 			else
-				arg_37_3(var_37_2, var_33_0)
+				cb(cmd, resultCode)
 			end
 		end
 	end
 
-	function arg_33_0._cRpc.sendEnterRougeSelectStyleRequest(arg_38_0, arg_38_1, arg_38_2, arg_38_3, arg_38_4)
-		local var_38_0 = RougeModule_pb.EnterRougeSelectStyleRequest()
+	function self._cRpc.sendEnterRougeSelectStyleRequest(thisObj, season, style, cb, cbObj)
+		local req = RougeModule_pb.EnterRougeSelectStyleRequest()
 
-		var_38_0.season = arg_38_1
-		var_38_0.style = arg_38_2
+		req.season = season
+		req.style = style
 
-		local var_38_1 = RougeModule_pb.EnterRougeSelectStyleReply()
+		local reply = RougeModule_pb.EnterRougeSelectStyleReply()
 
-		arg_33_0._obj:handleEnterRougeSelectStyle(var_38_0, var_38_1)
-		var_33_2:onReceiveEnterRougeSelectStyleReply(var_33_0, var_38_1)
+		self._obj:handleEnterRougeSelectStyle(req, reply)
+		rpcObj:onReceiveEnterRougeSelectStyleReply(resultCode, reply)
 
-		local var_38_2 = LuaSocketMgr.instance:getCmdByPbStructName(var_38_0.__cname)
+		local cmd = LuaSocketMgr.instance:getCmdByPbStructName(req.__cname)
 
-		if arg_38_3 then
-			if arg_38_4 then
-				arg_38_3(arg_38_4, var_38_2, var_33_0)
+		if cb then
+			if cbObj then
+				cb(cbObj, cmd, resultCode)
 			else
-				arg_38_3(var_38_2, var_33_0)
+				cb(cmd, resultCode)
 			end
 		end
 	end
 
-	function arg_33_0._cOpenModel.isFunctionUnlock()
+	function self._cOpenModel.isFunctionUnlock()
 		return true
 	end
 
-	function arg_33_0._cOutsideModel.isUnlock()
+	function self._cOutsideModel.isUnlock()
 		return true
 	end
 
-	function arg_33_0._cOutsideCtrl.isOpen()
+	function self._cOutsideCtrl.isOpen()
 		return true
 	end
 
-	local var_33_6 = false
-	local var_33_7 = false
-	local var_33_8 = false
+	local isTestDifficulty = false
+	local isTestLastReward = false
+	local isTestFaction = false
 
-	function arg_33_0._cModel.isContinueLast()
-		return var_33_8 or var_33_7 or false
+	function self._cModel.isContinueLast()
+		return isTestFaction or isTestLastReward or false
 	end
 
-	if var_33_6 then
-		function arg_33_0._cModel.isContinueLast()
+	if isTestDifficulty then
+		function self._cModel.isContinueLast()
 			return false
 		end
 
-		function arg_33_0._cOutsideModel.isOpenedDifficulty()
+		function self._cOutsideModel.isOpenedDifficulty()
 			return true
 		end
 
-		function arg_33_0._cOutsideModel.isPassedDifficulty()
+		function self._cOutsideModel.isPassedDifficulty()
 			return true
 		end
 
-		function arg_33_0._cModel.getDifficulty(arg_46_0)
-			return arg_46_0._rougeInfo and arg_46_0._rougeInfo.difficulty or nil
+		function self._cModel.getDifficulty(thisObj)
+			return thisObj._rougeInfo and thisObj._rougeInfo.difficulty or nil
 		end
 	end
 
-	if var_33_8 then
-		function arg_33_0._cModel.isFinishedLastReward()
+	if isTestFaction then
+		function self._cModel.isFinishedLastReward()
 			return true
 		end
 
-		function arg_33_0._cModel.getDifficulty()
+		function self._cModel.getDifficulty()
 			return 1
 		end
 
-		function arg_33_0._cOutsideModel.isOpenedStyle(arg_49_0, arg_49_1)
+		function self._cOutsideModel.isOpenedStyle(thisObj, style)
 			return math.random(1, 99999) % 2 == 0
 		end
 	end
 
-	if var_33_7 then
-		function arg_33_0._cModel.isCanSelectRewards()
+	if isTestLastReward then
+		function self._cModel.isCanSelectRewards()
 			return true
 		end
 
-		function arg_33_0._cModel.isFinishedLastReward()
+		function self._cModel.isFinishedLastReward()
 			return false
 		end
 
-		function arg_33_0._cModel.isFinishedDifficulty()
+		function self._cModel.isFinishedDifficulty()
 			return true
 		end
 	end
 end
 
-function var_0_3.build_test_outside(arg_53_0)
-	local var_53_0 = 0
-	local var_53_1 = arg_53_0._cCfg.instance
-	local var_53_2 = arg_53_0._cOutsideRpc.instance
-	local var_53_3 = arg_53_0._cOutsideCtrl.instance
-	local var_53_4 = arg_53_0._cOutsideModel.instance
+function CRougeTesting:build_test_outside()
+	local resultCode = 0
+	local cfgObj = self._cCfg.instance
+	local outsideRpcObj = self._cOutsideRpc.instance
+	local outsideCtrlObj = self._cOutsideCtrl.instance
+	local outsideModelObj = self._cOutsideModel.instance
 
-	function arg_53_0._cOutsideRpc.sendGetRougeOutsideInfoRequest(arg_54_0, arg_54_1, arg_54_2, arg_54_3)
-		local var_54_0 = RougeOutsideModule_pb.GetRougeOutsideInfoRequest()
+	function self._cOutsideRpc.sendGetRougeOutsideInfoRequest(thisObj, season, cb, cbObj)
+		local req = RougeOutsideModule_pb.GetRougeOutsideInfoRequest()
 
-		var_54_0.season = arg_54_1
+		req.season = season
 
-		local var_54_1 = RougeOutsideModule_pb.GetRougeOutsideInfoReply()
+		local reply = RougeOutsideModule_pb.GetRougeOutsideInfoReply()
 
-		arg_53_0._obj:handleGetRougeOutsideInfo(var_54_0, var_54_1)
-		var_53_2:onReceiveGetRougeOutsideInfoReply(var_53_0, var_54_1)
+		self._obj:handleGetRougeOutsideInfo(req, reply)
+		outsideRpcObj:onReceiveGetRougeOutsideInfoReply(resultCode, reply)
 
-		local var_54_2 = LuaSocketMgr.instance:getCmdByPbStructName(var_54_0.__cname)
+		local cmd = LuaSocketMgr.instance:getCmdByPbStructName(req.__cname)
 
-		if arg_54_2 then
-			if arg_54_3 then
-				arg_54_2(arg_54_3, var_54_2, var_53_0)
+		if cb then
+			if cbObj then
+				cb(cbObj, cmd, resultCode)
 			else
-				arg_54_2(var_54_2, var_53_0)
+				cb(cmd, resultCode)
 			end
 		end
 	end
 
-	arg_53_0._cOutsideRpc.sendGetRougeOutSideInfoRequest = arg_53_0._cOutsideRpc.sendGetRougeOutsideInfoRequest
+	self._cOutsideRpc.sendGetRougeOutSideInfoRequest = self._cOutsideRpc.sendGetRougeOutsideInfoRequest
 
-	local var_53_5 = true
+	local isTestUnlockAnim = true
 
-	if var_53_5 then
-		local var_53_6 = {}
+	if isTestUnlockAnim then
+		local difficultyIsNotNewDict = {}
 
-		function arg_53_0._cOutsideModel.getIsNewUnlockDifficulty(arg_55_0, arg_55_1)
-			return not var_53_6[arg_55_1]
+		function self._cOutsideModel.getIsNewUnlockDifficulty(thisObj, difficulty)
+			return not difficultyIsNotNewDict[difficulty]
 		end
 
-		function arg_53_0._cOutsideModel.setIsNewUnlockDifficulty(arg_56_0, arg_56_1, arg_56_2)
-			var_53_6[arg_56_1] = not arg_56_2
+		function self._cOutsideModel.setIsNewUnlockDifficulty(thisObj, difficulty, isNew)
+			difficultyIsNotNewDict[difficulty] = not isNew
 		end
 
-		local var_53_7 = {}
+		local styleIsNotNewDict = {}
 
-		function arg_53_0._cOutsideModel.getIsNewUnlockStyle(arg_57_0, arg_57_1)
-			return not var_53_7[arg_57_1]
+		function self._cOutsideModel.getIsNewUnlockStyle(thisObj, style)
+			return not styleIsNotNewDict[style]
 		end
 
-		function arg_53_0._cOutsideModel.setIsNewUnlockStyle(arg_58_0, arg_58_1, arg_58_2)
-			var_53_7[arg_58_1] = not arg_58_2
+		function self._cOutsideModel.setIsNewUnlockStyle(thisObj, style, isNew)
+			styleIsNotNewDict[style] = not isNew
 		end
 	end
 end
 
-local var_0_4 = _G.class("RougeTesting")
+local RougeTesting = _G.class("RougeTesting")
 
-function var_0_4.ctor(arg_59_0)
-	arg_59_0._client = var_0_3.New()
-	arg_59_0._sever = var_0_1.New()
+function RougeTesting:ctor()
+	self._client = CRougeTesting.New()
+	self._sever = SRougeTesting.New()
 
-	arg_59_0._sever:link(arg_59_0._client)
-	arg_59_0._client:link(arg_59_0._sever)
+	self._sever:link(self._client)
+	self._client:link(self._sever)
 end
 
-function var_0_4._test(arg_60_0)
-	arg_60_0._client:build_test()
-	arg_60_0._sever:build_test()
-	arg_60_0._client:build_test_outside()
+function RougeTesting:_test()
+	self._client:build_test()
+	self._sever:build_test()
+	self._client:build_test_outside()
 end
 
-var_0_4.instance = var_0_4.New()
+RougeTesting.instance = RougeTesting.New()
 
-return var_0_4
+return RougeTesting

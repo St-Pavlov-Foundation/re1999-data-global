@@ -1,13 +1,15 @@
-﻿module("modules.logic.store.view.DecorateStoreGoodsTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/DecorateStoreGoodsTipViewContainer.lua
 
-local var_0_0 = class("DecorateStoreGoodsTipViewContainer", BaseViewContainer)
+module("modules.logic.store.view.DecorateStoreGoodsTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local DecorateStoreGoodsTipViewContainer = class("DecorateStoreGoodsTipViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, DecorateStoreGoodsTipView.New())
+function DecorateStoreGoodsTipViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, DecorateStoreGoodsTipView.New())
+
+	return views
 end
 
-return var_0_0
+return DecorateStoreGoodsTipViewContainer

@@ -1,13 +1,15 @@
-﻿module("modules.logic.activitywelfare.subview.NewWelfareViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/activitywelfare/subview/NewWelfareViewContainer.lua
 
-local var_0_0 = class("NewWelfareViewContainer", BaseViewContainer)
+module("modules.logic.activitywelfare.subview.NewWelfareViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local NewWelfareViewContainer = class("NewWelfareViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, NewWelfareView.New())
+function NewWelfareViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, NewWelfareView.New())
+
+	return views
 end
 
-return var_0_0
+return NewWelfareViewContainer

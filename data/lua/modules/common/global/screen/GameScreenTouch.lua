@@ -1,235 +1,241 @@
-﻿module("modules.common.global.screen.GameScreenTouch", package.seeall)
+﻿-- chunkname: @modules/common/global/screen/GameScreenTouch.lua
 
-local var_0_0 = class("GameScreenTouch")
-local var_0_1 = 120
+module("modules.common.global.screen.GameScreenTouch", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._prefabTb = {}
-	arg_1_0._effectItemTb = {}
-	arg_1_0._globalTouchGO = gohelper.create2d(ViewMgr.instance:getUILayer(UILayerName.Top), "GlobalTouch")
-	arg_1_0._globalTouch = TouchEventMgrHepler.getTouchEventMgr(arg_1_0._globalTouchGO)
+local GameScreenTouch = class("GameScreenTouch")
+local GCInterval = 120
 
-	arg_1_0._globalTouch:SetIgnoreUI(true)
-	arg_1_0._globalTouch:SetOnlyTouch(true)
-	arg_1_0._globalTouch:SetOnTouchDownCb(arg_1_0._onTouchDownCb, arg_1_0)
-	arg_1_0._globalTouch:SetOnTouchUp(arg_1_0._onTouchUpCb, arg_1_0)
+function GameScreenTouch:ctor()
+	self._prefabTb = {}
+	self._effectItemTb = {}
+	self._globalTouchGO = gohelper.create2d(ViewMgr.instance:getUILayer(UILayerName.Top), "GlobalTouch")
+	self._globalTouch = TouchEventMgrHepler.getTouchEventMgr(self._globalTouchGO)
 
-	arg_1_0._gamepadModel = SDKNativeUtil.isGamePad()
+	self._globalTouch:SetIgnoreUI(true)
+	self._globalTouch:SetOnlyTouch(true)
+	self._globalTouch:SetOnTouchDownCb(self._onTouchDownCb, self)
+	self._globalTouch:SetOnTouchUp(self._onTouchUpCb, self)
 
-	arg_1_0:_loadEffect()
-	TaskDispatcher.runRepeat(arg_1_0._onTick, arg_1_0, 5)
-	GameStateMgr.instance:registerCallback(GameStateEvent.onApplicationPause, arg_1_0._onApplicationPause, arg_1_0)
+	self._gamepadModel = SDKNativeUtil.isGamePad()
+
+	self:_loadEffect()
+	TaskDispatcher.runRepeat(self._onTick, self, 5)
+	GameStateMgr.instance:registerCallback(GameStateEvent.onApplicationPause, self._onApplicationPause, self)
 end
 
-function var_0_0.playTouchEffect(arg_2_0, arg_2_1)
-	arg_2_0:_playTouchEffect(arg_2_1)
+function GameScreenTouch:playTouchEffect(pos)
+	self:_playTouchEffect(pos)
 end
 
-function var_0_0._onTick(arg_3_0)
-	local var_3_0 = Time.realtimeSinceStartup
+function GameScreenTouch:_onTick()
+	local now = Time.realtimeSinceStartup
 
-	if arg_3_0._lastTime and var_3_0 - arg_3_0._lastTime > var_0_1 then
-		arg_3_0._lastTime = var_3_0
+	if self._lastTime and now - self._lastTime > GCInterval then
+		self._lastTime = now
 
-		GameGCMgr.instance:dispatchEvent(GameGCEvent.DelayFullGC, 1, arg_3_0)
+		GameGCMgr.instance:dispatchEvent(GameGCEvent.DelayFullGC, 1, self)
 	end
 end
 
-function var_0_0._onApplicationPause(arg_4_0, arg_4_1)
-	if arg_4_1 then
-		arg_4_0._lastTime = Time.realtimeSinceStartup
+function GameScreenTouch:_onApplicationPause(isFront)
+	if isFront then
+		self._lastTime = Time.realtimeSinceStartup
 	end
 end
 
-function var_0_0._onTouchDownCb(arg_5_0)
+function GameScreenTouch:_onTouchDownCb()
 	GameStateMgr.instance:dispatchEvent(GameStateEvent.OnTouchScreen)
 
-	if arg_5_0._gamepadModel == false and GMFightShowState.screenTouchEffect then
-		arg_5_0._lastTime = Time.realtimeSinceStartup
+	if self._gamepadModel == false and GMFightShowState.screenTouchEffect then
+		self._lastTime = Time.realtimeSinceStartup
 
-		arg_5_0:_playTouchEffect()
+		self:_playTouchEffect()
 	end
 end
 
-function var_0_0._onTouchUpCb(arg_6_0)
+function GameScreenTouch:_onTouchUpCb()
 	GameStateMgr.instance:dispatchEvent(GameStateEvent.OnTouchScreenUp)
 end
 
-function var_0_0._loadEffect(arg_7_0)
-	arg_7_0._maxNum = 7
-	arg_7_0._effectNum = 4
-	arg_7_0._effectIndex = arg_7_0._maxNum
-	arg_7_0._effectUrl = arg_7_0:_getClickResPath()
-	arg_7_0._effectLoader = MultiAbLoader.New()
+function GameScreenTouch:_loadEffect()
+	self._maxNum = 7
+	self._effectNum = 4
+	self._effectIndex = self._maxNum
+	self._effectUrl = self:_getClickResPath()
+	self._effectLoader = MultiAbLoader.New()
 
-	arg_7_0._effectLoader:addPath(arg_7_0._effectUrl)
-	arg_7_0._effectLoader:startLoad(arg_7_0._createEffect, arg_7_0)
+	self._effectLoader:addPath(self._effectUrl)
+	self._effectLoader:startLoad(self._createEffect, self)
 end
 
-function var_0_0.refreshEffect(arg_8_0)
-	local var_8_0 = arg_8_0:getCurUseUIPrefabName()
+function GameScreenTouch:refreshEffect()
+	local prefabName = self:getCurUseUIPrefabName()
 
-	arg_8_0:_recycleEffects(var_8_0)
+	self:_recycleEffects(prefabName)
 
-	if not arg_8_0._prefabTb[var_8_0] then
-		arg_8_0:_loadEffect()
+	if not self._prefabTb[prefabName] then
+		self:_loadEffect()
 
 		return
 	end
 
-	arg_8_0._effectPrefab = arg_8_0._prefabTb[var_8_0]
+	self._effectPrefab = self._prefabTb[prefabName]
 
-	if not arg_8_0._effectItemTb[var_8_0] then
-		arg_8_0._effectItemTb[var_8_0] = {}
+	if not self._effectItemTb[prefabName] then
+		self._effectItemTb[prefabName] = {}
 	end
 end
 
-function var_0_0._recycleEffects(arg_9_0, arg_9_1)
-	for iter_9_0, iter_9_1 in pairs(arg_9_0._effectItemTb) do
-		if iter_9_0 ~= arg_9_1 then
-			for iter_9_2, iter_9_3 in pairs(iter_9_1) do
-				arg_9_0:_recycleEffect(iter_9_3.go)
+function GameScreenTouch:_recycleEffects(ignoreName)
+	for name, tb in pairs(self._effectItemTb) do
+		if name ~= ignoreName then
+			for _, effect in pairs(tb) do
+				self:_recycleEffect(effect.go)
 			end
 		end
 	end
 end
 
-function var_0_0._getClickResPath(arg_10_0)
-	return (string.format(ClickUISwitchEnum.ClickUIPath, arg_10_0:getCurUseUIPrefabName()))
+function GameScreenTouch:_getClickResPath()
+	local path = string.format(ClickUISwitchEnum.ClickUIPath, self:getCurUseUIPrefabName())
+
+	return path
 end
 
-function var_0_0.getCurUseUIPrefabName(arg_11_0)
+function GameScreenTouch:getCurUseUIPrefabName()
 	if SurvivalMapHelper.instance:isInSurvivalScene() then
 		return "laplace_click"
 	end
 
-	local var_11_0 = ClickUISwitchModel.instance:getCurUseUICo()
+	local co = ClickUISwitchModel.instance:getCurUseUICo()
 
-	if not var_11_0 or string.nilorempty(var_11_0.effect) then
+	if not co or string.nilorempty(co.effect) then
 		return ClickUISwitchEnum.DefaultClickUIPrefabName
 	end
 
-	return var_11_0.effect
+	return co.effect
 end
 
-function var_0_0._createEffect(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0:_getClickResPath()
-	local var_12_1 = arg_12_1:getAssetItem(var_12_0):GetResource(var_12_0)
+function GameScreenTouch:_createEffect(effectLoader)
+	local path = self:_getClickResPath()
+	local assetItem = effectLoader:getAssetItem(path)
+	local prefab = assetItem:GetResource(path)
 
-	arg_12_0._effectPrefab = var_12_1
+	self._effectPrefab = prefab
 
-	for iter_12_0 = 1, arg_12_0._effectNum do
-		arg_12_0:_create(arg_12_0._effectPrefab)
+	for i = 1, self._effectNum do
+		self:_create(self._effectPrefab)
 	end
 
-	local var_12_2 = arg_12_0:getCurUseUIPrefabName()
+	local name = self:getCurUseUIPrefabName()
 
-	arg_12_0._prefabTb[var_12_2] = var_12_1
+	self._prefabTb[name] = prefab
 end
 
-function var_0_0._create(arg_13_0, arg_13_1)
-	local var_13_0 = {}
-	local var_13_1 = gohelper.clone(arg_13_1, arg_13_0._globalTouchGO)
+function GameScreenTouch:_create(effectGO)
+	local item = {}
+	local effectItem = gohelper.clone(effectGO, self._globalTouchGO)
 
-	var_13_0.go = var_13_1
+	item.go = effectItem
 
-	function var_13_0.recycleFunc()
-		arg_13_0:_recycleEffect(var_13_1)
+	function item.recycleFunc()
+		self:_recycleEffect(effectItem)
 	end
 
-	local var_13_2 = gohelper.findChildImage(var_13_1, "image")
-	local var_13_3 = var_13_2.material
+	local image = gohelper.findChildImage(effectItem, "image")
+	local material = image.material
 
-	var_13_2.material = UnityEngine.Object.Instantiate(var_13_3)
+	image.material = UnityEngine.Object.Instantiate(material)
 
-	local var_13_4 = var_13_1:GetComponent(typeof(ZProj.MaterialPropsCtrl))
+	local materialPropsCtrl = effectItem:GetComponent(typeof(ZProj.MaterialPropsCtrl))
 
-	var_13_4.mas:Clear()
-	var_13_4.mas:Add(var_13_2.material)
-	gohelper.setActive(var_13_1, false)
+	materialPropsCtrl.mas:Clear()
+	materialPropsCtrl.mas:Add(image.material)
+	gohelper.setActive(effectItem, false)
 
-	local var_13_5 = arg_13_0:getCurUseUIPrefabName()
+	local prefabName = self:getCurUseUIPrefabName()
 
-	if not arg_13_0._effectItemTb[var_13_5] then
-		arg_13_0._effectItemTb[var_13_5] = {}
+	if not self._effectItemTb[prefabName] then
+		self._effectItemTb[prefabName] = {}
 	end
 
-	table.insert(arg_13_0._effectItemTb[var_13_5], var_13_0)
+	table.insert(self._effectItemTb[prefabName], item)
 
-	return var_13_0
+	return item
 end
 
-function var_0_0._getEffect(arg_15_0)
-	local var_15_0 = arg_15_0:getCurUseUIPrefabName()
-	local var_15_1 = arg_15_0._effectItemTb[var_15_0]
+function GameScreenTouch:_getEffect()
+	local prefabName = self:getCurUseUIPrefabName()
+	local effecttb = self._effectItemTb[prefabName]
 
-	if var_15_1 then
-		for iter_15_0 = 1, #var_15_1 do
-			if var_15_1[iter_15_0].go.activeInHierarchy == false then
-				arg_15_0._effectIndex = iter_15_0
+	if effecttb then
+		for i = 1, #effecttb do
+			if effecttb[i].go.activeInHierarchy == false then
+				self._effectIndex = i
 
-				return var_15_1[iter_15_0]
+				return effecttb[i]
 			end
 		end
 
-		if #var_15_1 < arg_15_0._maxNum then
-			if not arg_15_0._prefabTb[var_15_0] then
+		if #effecttb < self._maxNum then
+			if not self._prefabTb[prefabName] then
 				return
 			end
 
-			return arg_15_0:_create(arg_15_0._prefabTb[var_15_0])
+			return self:_create(self._prefabTb[prefabName])
 		else
-			arg_15_0._effectIndex = (arg_15_0._effectIndex + 1) % arg_15_0._maxNum
+			self._effectIndex = (self._effectIndex + 1) % self._maxNum
 
-			if arg_15_0._effectIndex <= 0 then
-				arg_15_0._effectIndex = arg_15_0._maxNum
+			if self._effectIndex <= 0 then
+				self._effectIndex = self._maxNum
 			end
 
-			arg_15_0:_recycleEffect(var_15_1[arg_15_0._effectIndex].go)
+			self:_recycleEffect(effecttb[self._effectIndex].go)
 
-			return var_15_1[arg_15_0._effectIndex]
+			return effecttb[self._effectIndex]
 		end
 	else
-		arg_15_0:refreshEffect()
+		self:refreshEffect()
 	end
 end
 
-function var_0_0._playTouchEffect(arg_16_0, arg_16_1)
-	if not arg_16_0:_canShowEffect() then
+function GameScreenTouch:_playTouchEffect(pos)
+	if not self:_canShowEffect() then
 		return
 	end
 
-	local var_16_0 = arg_16_0:_getEffect()
+	local effectGO = self:_getEffect()
 
-	if var_16_0 then
-		local var_16_1 = var_16_0.go:GetComponent(typeof(UnityEngine.Animation))
-		local var_16_2 = arg_16_1 or UnityEngine.Input.mousePosition
-		local var_16_3 = recthelper.screenPosToAnchorPos(var_16_2, arg_16_0._globalTouchGO.transform)
+	if effectGO then
+		local effectAnim = effectGO.go:GetComponent(typeof(UnityEngine.Animation))
+		local mousePos = pos or UnityEngine.Input.mousePosition
 
-		recthelper.setAnchor(var_16_0.go.transform, var_16_3.x, var_16_3.y)
-		var_16_1:Stop()
-		gohelper.setActive(var_16_0.go, true)
-		var_16_1:Play()
-		TaskDispatcher.runDelay(var_16_0.recycleFunc, arg_16_0, 0.7)
+		mousePos = recthelper.screenPosToAnchorPos(mousePos, self._globalTouchGO.transform)
+
+		recthelper.setAnchor(effectGO.go.transform, mousePos.x, mousePos.y)
+		effectAnim:Stop()
+		gohelper.setActive(effectGO.go, true)
+		effectAnim:Play()
+		TaskDispatcher.runDelay(effectGO.recycleFunc, self, 0.7)
 	end
 end
 
-function var_0_0._recycleEffect(arg_17_0, arg_17_1)
-	local var_17_0 = arg_17_1:GetComponent(typeof(UnityEngine.Animation))
+function GameScreenTouch:_recycleEffect(effectGO)
+	local effectAnim = effectGO:GetComponent(typeof(UnityEngine.Animation))
 
-	gohelper.setActive(arg_17_1, false)
-	var_17_0:Stop()
-	recthelper.setAnchor(arg_17_1.transform, 0, 0)
+	gohelper.setActive(effectGO, false)
+	effectAnim:Stop()
+	recthelper.setAnchor(effectGO.transform, 0, 0)
 end
 
-function var_0_0._canShowEffect(arg_18_0)
-	local var_18_0 = ViewMgr.instance:getOpenViewNameList()
+function GameScreenTouch:_canShowEffect()
+	local viewNameList = ViewMgr.instance:getOpenViewNameList()
 
-	if var_18_0[#var_18_0] == ViewName.DungeonView and DungeonModel.instance:getDungeonStoryState() or var_18_0[#var_18_0] == ViewName.FightView and FightModel.instance:getClickEnemyState() or var_18_0[#var_18_0] == ViewName.StoryFrontView and StoryModel.instance:isVersionActivityPV() then
+	if viewNameList[#viewNameList] == ViewName.DungeonView and DungeonModel.instance:getDungeonStoryState() or viewNameList[#viewNameList] == ViewName.FightView and FightModel.instance:getClickEnemyState() or viewNameList[#viewNameList] == ViewName.StoryFrontView and StoryModel.instance:isVersionActivityPV() then
 		return false
 	end
 
 	return true
 end
 
-return var_0_0
+return GameScreenTouch

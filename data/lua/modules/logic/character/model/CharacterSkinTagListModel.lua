@@ -1,21 +1,23 @@
-﻿module("modules.logic.character.model.CharacterSkinTagListModel", package.seeall)
+﻿-- chunkname: @modules/logic/character/model/CharacterSkinTagListModel.lua
 
-local var_0_0 = class("CharacterSkinTagListModel", ListScrollModel)
+module("modules.logic.character.model.CharacterSkinTagListModel", package.seeall)
 
-function var_0_0.updateList(arg_1_0, arg_1_1)
-	local var_1_0 = {}
+local CharacterSkinTagListModel = class("CharacterSkinTagListModel", ListScrollModel)
 
-	if string.nilorempty(arg_1_1.storeTag) == false then
-		local var_1_1 = string.splitToNumber(arg_1_1.storeTag, "|")
+function CharacterSkinTagListModel:updateList(config)
+	local moList = {}
 
-		for iter_1_0, iter_1_1 in ipairs(var_1_1) do
-			table.insert(var_1_0, SkinConfig.instance:getSkinStoreTagConfig(iter_1_1))
+	if string.nilorempty(config.storeTag) == false then
+		local arr = string.splitToNumber(config.storeTag, "|")
+
+		for i, v in ipairs(arr) do
+			table.insert(moList, SkinConfig.instance:getSkinStoreTagConfig(v))
 		end
 	end
 
-	arg_1_0:setList(var_1_0)
+	self:setList(moList)
 end
 
-var_0_0.instance = var_0_0.New()
+CharacterSkinTagListModel.instance = CharacterSkinTagListModel.New()
 
-return var_0_0
+return CharacterSkinTagListModel

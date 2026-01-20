@@ -1,17 +1,19 @@
-﻿module("modules.logic.versionactivity1_6.getian.define.ActGeTianEnum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/getian/define/ActGeTianEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_6.getian.define.ActGeTianEnum", package.seeall)
 
-var_0_0.ActivityId = VersionActivity1_6Enum.ActivityId.Role2
-var_0_0.TaskMOAllFinishId = -100
-var_0_0.AnimatorTime = {
+local ActGeTianEnum = _M
+
+ActGeTianEnum.ActivityId = VersionActivity1_6Enum.ActivityId.Role2
+ActGeTianEnum.TaskMOAllFinishId = -100
+ActGeTianEnum.AnimatorTime = {
 	TaskReward = 0.5,
 	TaskRewardMoveUp = 0.15
 }
-var_0_0.AnimEvt = {
+ActGeTianEnum.AnimEvt = {
 	OnGoStoryEnd = "goStoryEnd",
 	OnStoryOpenEnd = "storyOpenEnd",
 	OnFightOpenEnd = "fightOpenEnd"
 }
 
-return var_0_0
+return ActGeTianEnum

@@ -1,58 +1,60 @@
-﻿module("modules.logic.summon.view.custompick.SummonOneCustomPickView", package.seeall)
+﻿-- chunkname: @modules/logic/summon/view/custompick/SummonOneCustomPickView.lua
 
-local var_0_0 = class("SummonOneCustomPickView", BaseView)
+module("modules.logic.summon.view.custompick.SummonOneCustomPickView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goui = gohelper.findChild(arg_1_0.viewGO, "#go_ui")
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/#simage_bg")
-	arg_1_0._simageunselect = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/#simage_unselect")
-	arg_1_0._goselected = gohelper.findChild(arg_1_0.viewGO, "#go_ui/current/#go_selected")
-	arg_1_0._gorole1 = gohelper.findChild(arg_1_0.viewGO, "#go_ui/current/#go_selected/#go_role1")
-	arg_1_0._simagerole1outline = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/#go_selected/#go_role1/#simage_role1_outline")
-	arg_1_0._simagerole1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/#go_selected/#go_role1/#simage_role1")
-	arg_1_0._simagefrontbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/#simage_frontbg")
-	arg_1_0._gocharacteritem = gohelper.findChild(arg_1_0.viewGO, "#go_ui/current/right/#go_characteritem")
-	arg_1_0._simagetitle1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/title/#simage_title1")
-	arg_1_0._simagetips = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/tip/#simage_tips")
-	arg_1_0._gotip2bg = gohelper.findChild(arg_1_0.viewGO, "#go_ui/current/tip/#go_tip2bg")
-	arg_1_0._txttips2 = gohelper.findChildText(arg_1_0.viewGO, "#go_ui/current/tip/#go_tip2bg/#txt_tips2")
-	arg_1_0._txtdeadline = gohelper.findChildText(arg_1_0.viewGO, "#go_ui/current/#txt_deadline")
-	arg_1_0._simageline = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/#txt_deadline/#simage_line")
-	arg_1_0._txttips = gohelper.findChildText(arg_1_0.viewGO, "#go_ui/current/#txt_tips")
-	arg_1_0._goselfselect = gohelper.findChild(arg_1_0.viewGO, "#go_ui/#go_selfselect")
-	arg_1_0._btnselfselect = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_ui/#go_selfselect/#btn_selfselect")
-	arg_1_0._gosummonbtns = gohelper.findChild(arg_1_0.viewGO, "#go_ui/#go_summonbtns")
-	arg_1_0._btnsummon1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_ui/#go_summonbtns/summon1/#btn_summon1")
-	arg_1_0._simagecurrency1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/#go_summonbtns/summon1/currency/#simage_currency1")
-	arg_1_0._txtcurrency11 = gohelper.findChildText(arg_1_0.viewGO, "#go_ui/#go_summonbtns/summon1/currency/#txt_currency1_1")
-	arg_1_0._txtcurrency12 = gohelper.findChildText(arg_1_0.viewGO, "#go_ui/#go_summonbtns/summon1/currency/#txt_currency1_2")
-	arg_1_0._btnsummon10 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_ui/#go_summonbtns/summon10/#btn_summon10")
-	arg_1_0._simagecurrency10 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/#go_summonbtns/summon10/currency/#simage_currency10")
-	arg_1_0._txtcurrency101 = gohelper.findChildText(arg_1_0.viewGO, "#go_ui/#go_summonbtns/summon10/currency/#txt_currency10_1")
-	arg_1_0._txtcurrency102 = gohelper.findChildText(arg_1_0.viewGO, "#go_ui/#go_summonbtns/summon10/currency/#txt_currency10_2")
-	arg_1_0._gocount = gohelper.findChild(arg_1_0.viewGO, "#go_ui/#go_summonbtns/summon10/#go_count")
-	arg_1_0._txtcount = gohelper.findChildText(arg_1_0.viewGO, "#go_ui/#go_summonbtns/summon10/#go_count/#txt_count")
-	arg_1_0._golefttop = gohelper.findChild(arg_1_0.viewGO, "#go_ui/#go_lefttop")
-	arg_1_0._gorighttop = gohelper.findChild(arg_1_0.viewGO, "#go_ui/#go_righttop")
+local SummonOneCustomPickView = class("SummonOneCustomPickView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SummonOneCustomPickView:onInitView()
+	self._goui = gohelper.findChild(self.viewGO, "#go_ui")
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#go_ui/current/#simage_bg")
+	self._simageunselect = gohelper.findChildSingleImage(self.viewGO, "#go_ui/current/#simage_unselect")
+	self._goselected = gohelper.findChild(self.viewGO, "#go_ui/current/#go_selected")
+	self._gorole1 = gohelper.findChild(self.viewGO, "#go_ui/current/#go_selected/#go_role1")
+	self._simagerole1outline = gohelper.findChildSingleImage(self.viewGO, "#go_ui/current/#go_selected/#go_role1/#simage_role1_outline")
+	self._simagerole1 = gohelper.findChildSingleImage(self.viewGO, "#go_ui/current/#go_selected/#go_role1/#simage_role1")
+	self._simagefrontbg = gohelper.findChildSingleImage(self.viewGO, "#go_ui/current/#simage_frontbg")
+	self._gocharacteritem = gohelper.findChild(self.viewGO, "#go_ui/current/right/#go_characteritem")
+	self._simagetitle1 = gohelper.findChildSingleImage(self.viewGO, "#go_ui/current/title/#simage_title1")
+	self._simagetips = gohelper.findChildSingleImage(self.viewGO, "#go_ui/current/tip/#simage_tips")
+	self._gotip2bg = gohelper.findChild(self.viewGO, "#go_ui/current/tip/#go_tip2bg")
+	self._txttips2 = gohelper.findChildText(self.viewGO, "#go_ui/current/tip/#go_tip2bg/#txt_tips2")
+	self._txtdeadline = gohelper.findChildText(self.viewGO, "#go_ui/current/#txt_deadline")
+	self._simageline = gohelper.findChildSingleImage(self.viewGO, "#go_ui/current/#txt_deadline/#simage_line")
+	self._txttips = gohelper.findChildText(self.viewGO, "#go_ui/current/#txt_tips")
+	self._goselfselect = gohelper.findChild(self.viewGO, "#go_ui/#go_selfselect")
+	self._btnselfselect = gohelper.findChildButtonWithAudio(self.viewGO, "#go_ui/#go_selfselect/#btn_selfselect")
+	self._gosummonbtns = gohelper.findChild(self.viewGO, "#go_ui/#go_summonbtns")
+	self._btnsummon1 = gohelper.findChildButtonWithAudio(self.viewGO, "#go_ui/#go_summonbtns/summon1/#btn_summon1")
+	self._simagecurrency1 = gohelper.findChildSingleImage(self.viewGO, "#go_ui/#go_summonbtns/summon1/currency/#simage_currency1")
+	self._txtcurrency11 = gohelper.findChildText(self.viewGO, "#go_ui/#go_summonbtns/summon1/currency/#txt_currency1_1")
+	self._txtcurrency12 = gohelper.findChildText(self.viewGO, "#go_ui/#go_summonbtns/summon1/currency/#txt_currency1_2")
+	self._btnsummon10 = gohelper.findChildButtonWithAudio(self.viewGO, "#go_ui/#go_summonbtns/summon10/#btn_summon10")
+	self._simagecurrency10 = gohelper.findChildSingleImage(self.viewGO, "#go_ui/#go_summonbtns/summon10/currency/#simage_currency10")
+	self._txtcurrency101 = gohelper.findChildText(self.viewGO, "#go_ui/#go_summonbtns/summon10/currency/#txt_currency10_1")
+	self._txtcurrency102 = gohelper.findChildText(self.viewGO, "#go_ui/#go_summonbtns/summon10/currency/#txt_currency10_2")
+	self._gocount = gohelper.findChild(self.viewGO, "#go_ui/#go_summonbtns/summon10/#go_count")
+	self._txtcount = gohelper.findChildText(self.viewGO, "#go_ui/#go_summonbtns/summon10/#go_count/#txt_count")
+	self._golefttop = gohelper.findChild(self.viewGO, "#go_ui/#go_lefttop")
+	self._gorighttop = gohelper.findChild(self.viewGO, "#go_ui/#go_righttop")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnselfselect:AddClickListener(arg_2_0._btnselfselectOnClick, arg_2_0)
-	arg_2_0._btnsummon1:AddClickListener(arg_2_0._btnsummon1OnClick, arg_2_0)
-	arg_2_0._btnsummon10:AddClickListener(arg_2_0._btnsummon10OnClick, arg_2_0)
+function SummonOneCustomPickView:addEvents()
+	self._btnselfselect:AddClickListener(self._btnselfselectOnClick, self)
+	self._btnsummon1:AddClickListener(self._btnsummon1OnClick, self)
+	self._btnsummon10:AddClickListener(self._btnsummon10OnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnselfselect:RemoveClickListener()
-	arg_3_0._btnsummon1:RemoveClickListener()
-	arg_3_0._btnsummon10:RemoveClickListener()
+function SummonOneCustomPickView:removeEvents()
+	self._btnselfselect:RemoveClickListener()
+	self._btnsummon1:RemoveClickListener()
+	self._btnsummon10:RemoveClickListener()
 end
 
-var_0_0.preloadList = {
+SummonOneCustomPickView.preloadList = {
 	"singlebg/summon/heroversion_2_2/selfselectsix/v2a2_selfselectsix_summon_line4_2.png",
 	"singlebg/summon/heroversion_2_2/selfselectsix/v2a2_selfselectsix_summon_line4_1.png",
 	"singlebg/summon/heroversion_2_2/selfselectsix/v2a2_selfselectsix_summon_fullbg2.png",
@@ -61,476 +63,477 @@ var_0_0.preloadList = {
 	"singlebg/summon/heroversion_2_8/v2a8_selfselect2/v2a8_selfselect2_fullbg.png"
 }
 
-function var_0_0._btnselfselectOnClick(arg_4_0)
-	local var_4_0 = SummonMainModel.instance:getCurPool()
+function SummonOneCustomPickView:_btnselfselectOnClick()
+	local curPool = SummonMainModel.instance:getCurPool()
 
-	if not var_4_0 then
+	if not curPool then
 		return
 	end
 
 	ViewMgr.instance:openView(ViewName.SummonCustomPickChoice, {
-		poolId = var_4_0.id
+		poolId = curPool.id
 	})
 end
 
-function var_0_0._btnsummon1OnClick(arg_5_0)
+function SummonOneCustomPickView:_btnsummon1OnClick()
 	if SummonController.instance:isInSummonGuide() then
 		return
 	end
 
-	local var_5_0 = SummonMainModel.instance:getCurPool()
+	local curPool = SummonMainModel.instance:getCurPool()
 
-	if not var_5_0 then
+	if not curPool then
 		return
 	end
 
-	local var_5_1, var_5_2, var_5_3 = SummonMainModel.getCostByConfig(var_5_0.cost1)
-	local var_5_4 = {
-		type = var_5_1,
-		id = var_5_2,
-		quantity = var_5_3,
-		callback = arg_5_0._summon1Confirm,
-		callbackObj = arg_5_0
-	}
+	local cost_type, cost_id, cost_num = SummonMainModel.getCostByConfig(curPool.cost1)
+	local param = {}
 
-	var_5_4.notEnough = false
+	param.type = cost_type
+	param.id = cost_id
+	param.quantity = cost_num
+	param.callback = self._summon1Confirm
+	param.callbackObj = self
+	param.notEnough = false
 
-	local var_5_5 = var_5_3 <= ItemModel.instance:getItemQuantity(var_5_1, var_5_2)
-	local var_5_6 = SummonMainModel.instance.everyCostCount
-	local var_5_7 = SummonMainModel.instance:getOwnCostCurrencyNum()
+	local num = ItemModel.instance:getItemQuantity(cost_type, cost_id)
+	local itemEnough = cost_num <= num
+	local everyCostCount = SummonMainModel.instance.everyCostCount
+	local currencyNum = SummonMainModel.instance:getOwnCostCurrencyNum()
 
-	if not var_5_5 and var_5_7 < var_5_6 then
-		var_5_4.notEnough = true
+	if not itemEnough and currencyNum < everyCostCount then
+		param.notEnough = true
 	end
 
-	if var_5_5 then
-		var_5_4.needTransform = false
+	if itemEnough then
+		param.needTransform = false
 
-		arg_5_0:_summon1Confirm()
-
-		return
-	else
-		var_5_4.needTransform = true
-		var_5_4.cost_type = SummonMainModel.instance.costCurrencyType
-		var_5_4.cost_id = SummonMainModel.instance.costCurrencyId
-		var_5_4.cost_quantity = var_5_6
-		var_5_4.miss_quantity = 1
-	end
-
-	SummonMainController.instance:openSummonConfirmView(var_5_4)
-end
-
-function var_0_0._btnsummon10OnClick(arg_6_0)
-	local var_6_0 = SummonMainModel.instance:getCurPool()
-
-	if not var_6_0 then
-		return
-	end
-
-	local var_6_1, var_6_2, var_6_3, var_6_4 = SummonMainModel.getCostByConfig(var_6_0.cost10)
-	local var_6_5 = SummonMainModel.instance:getDiscountCost10(var_6_0.id)
-
-	if SummonMainModel.instance:getDiscountCostId(var_6_0.id) == var_6_2 then
-		var_6_3 = var_6_5 < 0 and var_6_3 or var_6_5
-	end
-
-	local var_6_6 = {
-		type = var_6_1,
-		id = var_6_2,
-		quantity = var_6_3,
-		callback = arg_6_0._summon10Confirm,
-		callbackObj = arg_6_0
-	}
-
-	var_6_6.notEnough = false
-	var_6_4 = var_6_4 or ItemModel.instance:getItemQuantity(var_6_1, var_6_2)
-
-	local var_6_7 = var_6_3 <= var_6_4
-	local var_6_8 = SummonMainModel.instance.everyCostCount
-	local var_6_9 = SummonMainModel.instance:getOwnCostCurrencyNum()
-	local var_6_10 = var_6_3 - var_6_4
-	local var_6_11 = var_6_8 * var_6_10
-
-	if not var_6_7 and var_6_9 < var_6_11 then
-		var_6_6.notEnough = true
-	end
-
-	if var_6_7 then
-		var_6_6.needTransform = false
-
-		arg_6_0:_summon10Confirm()
+		self:_summon1Confirm()
 
 		return
 	else
-		var_6_6.needTransform = true
-		var_6_6.cost_type = SummonMainModel.instance.costCurrencyType
-		var_6_6.cost_id = SummonMainModel.instance.costCurrencyId
-		var_6_6.cost_quantity = var_6_11
-		var_6_6.miss_quantity = var_6_10
+		param.needTransform = true
+		param.cost_type = SummonMainModel.instance.costCurrencyType
+		param.cost_id = SummonMainModel.instance.costCurrencyId
+		param.cost_quantity = everyCostCount
+		param.miss_quantity = 1
 	end
 
-	SummonMainController.instance:openSummonConfirmView(var_6_6)
+	SummonMainController.instance:openSummonConfirmView(param)
 end
 
-function var_0_0._onClickDetail(arg_7_0)
-	local var_7_0 = SummonMainModel.instance:getCurPool()
+function SummonOneCustomPickView:_btnsummon10OnClick()
+	local curPool = SummonMainModel.instance:getCurPool()
 
-	if not var_7_0 then
+	if not curPool then
 		return
 	end
 
-	local var_7_1 = arg_7_0:getPickHeroIds(var_7_0)
+	local cost_type, cost_id, cost_num, ownNum = SummonMainModel.getCostByConfig(curPool.cost10)
+	local discountCost = SummonMainModel.instance:getDiscountCost10(curPool.id)
+	local discountCostId = SummonMainModel.instance:getDiscountCostId(curPool.id)
 
-	if var_7_1 and #var_7_1 > 0 then
-		local var_7_2 = var_7_1[1]
+	if discountCostId == cost_id then
+		cost_num = discountCost < 0 and cost_num or discountCost
+	end
 
-		if var_7_2 then
+	local param = {}
+
+	param.type = cost_type
+	param.id = cost_id
+	param.quantity = cost_num
+	param.callback = self._summon10Confirm
+	param.callbackObj = self
+	param.notEnough = false
+	ownNum = ownNum or ItemModel.instance:getItemQuantity(cost_type, cost_id)
+
+	local itemEnough = cost_num <= ownNum
+	local everyCostCount = SummonMainModel.instance.everyCostCount
+	local currencyNum = SummonMainModel.instance:getOwnCostCurrencyNum()
+	local remainCount = cost_num - ownNum
+	local costRemain = everyCostCount * remainCount
+
+	if not itemEnough and currencyNum < costRemain then
+		param.notEnough = true
+	end
+
+	if itemEnough then
+		param.needTransform = false
+
+		self:_summon10Confirm()
+
+		return
+	else
+		param.needTransform = true
+		param.cost_type = SummonMainModel.instance.costCurrencyType
+		param.cost_id = SummonMainModel.instance.costCurrencyId
+		param.cost_quantity = costRemain
+		param.miss_quantity = remainCount
+	end
+
+	SummonMainController.instance:openSummonConfirmView(param)
+end
+
+function SummonOneCustomPickView:_onClickDetail()
+	local pool = SummonMainModel.instance:getCurPool()
+
+	if not pool then
+		return
+	end
+
+	local pickHeroIds = self:getPickHeroIds(pool)
+
+	if pickHeroIds and #pickHeroIds > 0 then
+		local heroId = pickHeroIds[1]
+
+		if heroId then
 			ViewMgr.instance:openView(ViewName.SummonHeroDetailView, {
-				heroId = var_7_2
+				heroId = heroId
 			})
 		end
 	end
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0._animRoot = arg_8_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function SummonOneCustomPickView:_editableInitView()
+	self._animRoot = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	arg_8_0._simageline:LoadImage(ResUrl.getSummonHeroIcon("title_img_deco"))
+	self._simageline:LoadImage(ResUrl.getSummonHeroIcon("title_img_deco"))
 
-	arg_8_0._characteritem = arg_8_0:getUserDataTb_()
-	arg_8_0._characteritem.go = gohelper.findChild(arg_8_0.viewGO, "#go_ui/current/right/#go_characteritem")
-	arg_8_0._characteritem.imagecareer = gohelper.findChildImage(arg_8_0._characteritem.go, "image_career")
-	arg_8_0._characteritem.txtnamecn = gohelper.findChildText(arg_8_0._characteritem.go, "txt_namecn")
-	arg_8_0._characteritem.btndetail = gohelper.findChildButtonWithAudio(arg_8_0._characteritem.go, "btn_detail", AudioEnum.UI.play_ui_action_explore)
-	arg_8_0._characteritem.gorole = gohelper.findChild(arg_8_0.viewGO, "#go_ui/current/#go_selected/#go_role1")
-	arg_8_0._characteritem.simagehero = gohelper.findChildSingleImage(arg_8_0._characteritem.gorole, "#simage_role1")
-	arg_8_0._characteritem.tfimagehero = arg_8_0._characteritem.simagehero.transform
-	arg_8_0._characteritem.rares = arg_8_0:getUserDataTb_()
+	self._characteritem = self:getUserDataTb_()
+	self._characteritem.go = gohelper.findChild(self.viewGO, "#go_ui/current/right/#go_characteritem")
+	self._characteritem.imagecareer = gohelper.findChildImage(self._characteritem.go, "image_career")
+	self._characteritem.txtnamecn = gohelper.findChildText(self._characteritem.go, "txt_namecn")
+	self._characteritem.btndetail = gohelper.findChildButtonWithAudio(self._characteritem.go, "btn_detail", AudioEnum.UI.play_ui_action_explore)
+	self._characteritem.gorole = gohelper.findChild(self.viewGO, "#go_ui/current/#go_selected/#go_role1")
+	self._characteritem.simagehero = gohelper.findChildSingleImage(self._characteritem.gorole, "#simage_role1")
+	self._characteritem.tfimagehero = self._characteritem.simagehero.transform
+	self._characteritem.rares = self:getUserDataTb_()
 
-	for iter_8_0 = 1, 6 do
-		local var_8_0 = gohelper.findChild(arg_8_0._characteritem.go, "rare/go_rare" .. iter_8_0)
+	for j = 1, 6 do
+		local rareGO = gohelper.findChild(self._characteritem.go, "rare/go_rare" .. j)
 
-		table.insert(arg_8_0._characteritem.rares, var_8_0)
+		table.insert(self._characteritem.rares, rareGO)
 	end
 
-	arg_8_0._characteritem.btndetail:AddClickListener(arg_8_0._onClickDetail, arg_8_0)
+	self._characteritem.btndetail:AddClickListener(self._onClickDetail, self)
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
+function SummonOneCustomPickView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0:addAllEvents()
-	arg_10_0:playEnterAnim()
-	arg_10_0:refreshView()
+function SummonOneCustomPickView:onOpen()
+	self:addAllEvents()
+	self:playEnterAnim()
+	self:refreshView()
 end
 
-function var_0_0.onClose(arg_11_0)
-	arg_11_0:removeAllEvents()
+function SummonOneCustomPickView:onClose()
+	self:removeAllEvents()
 end
 
-function var_0_0.onDestroyView(arg_12_0)
-	arg_12_0._simagebg:UnLoadImage()
-	arg_12_0._simageunselect:UnLoadImage()
-	arg_12_0._simagecurrency1:UnLoadImage()
-	arg_12_0._simagecurrency10:UnLoadImage()
-	arg_12_0._simageline:UnLoadImage()
-	arg_12_0._simagefrontbg:UnLoadImage()
+function SummonOneCustomPickView:onDestroyView()
+	self._simagebg:UnLoadImage()
+	self._simageunselect:UnLoadImage()
+	self._simagecurrency1:UnLoadImage()
+	self._simagecurrency10:UnLoadImage()
+	self._simageline:UnLoadImage()
+	self._simagefrontbg:UnLoadImage()
 
-	if arg_12_0._compFreeButton then
-		arg_12_0._compFreeButton:dispose()
+	if self._compFreeButton then
+		self._compFreeButton:dispose()
 
-		arg_12_0._compFreeButton = nil
+		self._compFreeButton = nil
 	end
 
-	if arg_12_0._characteritem then
-		arg_12_0._characteritem.btndetail:RemoveClickListener()
-		arg_12_0._characteritem.simagehero:UnLoadImage()
-		arg_12_0._simagerole1outline:UnLoadImage()
+	if self._characteritem then
+		self._characteritem.btndetail:RemoveClickListener()
+		self._characteritem.simagehero:UnLoadImage()
+		self._simagerole1outline:UnLoadImage()
 
-		arg_12_0._characteritem = nil
-	end
-end
-
-function var_0_0.handleNeedPickStatus(arg_13_0, arg_13_1)
-	gohelper.setActive(arg_13_0._gosummonbtns, false)
-	gohelper.setActive(arg_13_0._goselected, false)
-	gohelper.setActive(arg_13_0._simageunselect, true)
-	gohelper.setActive(arg_13_0._goselfselect, true)
-	gohelper.setActive(arg_13_0._txttips, true)
-	gohelper.setActive(arg_13_0._simageunselect, true)
-end
-
-function var_0_0.handlePickOverStatus(arg_14_0, arg_14_1)
-	gohelper.setActive(arg_14_0._gosummonbtns, true)
-	gohelper.setActive(arg_14_0._goselected, true)
-	gohelper.setActive(arg_14_0._simageunselect, false)
-	gohelper.setActive(arg_14_0._goselfselect, false)
-	gohelper.setActive(arg_14_0._txttips, false)
-	gohelper.setActive(arg_14_0._simageunselect, false)
-	arg_14_0:refreshCost()
-	arg_14_0:refreshFreeSummonButton(arg_14_1)
-end
-
-function var_0_0.refreshFreeSummonButton(arg_15_0, arg_15_1)
-	arg_15_0._compFreeButton = arg_15_0._compFreeButton or SummonFreeSingleGacha.New(arg_15_0._btnsummon1.gameObject, arg_15_1.id)
-
-	arg_15_0._compFreeButton:refreshUI()
-end
-
-function var_0_0.refreshCost(arg_16_0)
-	local var_16_0 = SummonMainModel.instance:getCurPool()
-
-	if var_16_0 then
-		arg_16_0:_refreshSingleCost(var_16_0.cost1, arg_16_0._simagecurrency1, "_txtcurrency1")
-		arg_16_0:refreshCost10(var_16_0.cost10)
+		self._characteritem = nil
 	end
 end
 
-function var_0_0._refreshSingleCost(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	local var_17_0, var_17_1, var_17_2 = SummonMainModel.instance.getCostByConfig(arg_17_1)
-	local var_17_3 = SummonMainModel.instance.getSummonItemIcon(var_17_0, var_17_1)
-
-	arg_17_2:LoadImage(var_17_3)
-
-	arg_17_0[arg_17_3 .. "1"].text = luaLang("multiple") .. var_17_2
-	arg_17_0[arg_17_3 .. "2"].text = ""
+function SummonOneCustomPickView:handleNeedPickStatus(pool)
+	gohelper.setActive(self._gosummonbtns, false)
+	gohelper.setActive(self._goselected, false)
+	gohelper.setActive(self._simageunselect, true)
+	gohelper.setActive(self._goselfselect, true)
+	gohelper.setActive(self._txttips, true)
+	gohelper.setActive(self._simageunselect, true)
 end
 
-function var_0_0.refreshCost10(arg_18_0, arg_18_1)
-	local var_18_0, var_18_1, var_18_2 = SummonMainModel.instance.getCostByConfig(arg_18_1)
-	local var_18_3 = SummonMainModel.instance.getSummonItemIcon(var_18_0, var_18_1)
+function SummonOneCustomPickView:handlePickOverStatus(pool)
+	gohelper.setActive(self._gosummonbtns, true)
+	gohelper.setActive(self._goselected, true)
+	gohelper.setActive(self._simageunselect, false)
+	gohelper.setActive(self._goselfselect, false)
+	gohelper.setActive(self._txttips, false)
+	gohelper.setActive(self._simageunselect, false)
+	self:refreshCost()
+	self:refreshFreeSummonButton(pool)
+end
 
-	arg_18_0._simagecurrency10:LoadImage(var_18_3)
+function SummonOneCustomPickView:refreshFreeSummonButton(poolCo)
+	self._compFreeButton = self._compFreeButton or SummonFreeSingleGacha.New(self._btnsummon1.gameObject, poolCo.id)
 
-	local var_18_4 = SummonMainModel.instance:getCurId()
-	local var_18_5 = SummonMainModel.instance:getDiscountCostId(var_18_4)
-	local var_18_6 = SummonMainModel.instance:getDiscountTime10Server(var_18_4)
+	self._compFreeButton:refreshUI()
+end
 
-	gohelper.setActive(arg_18_0._gotip2bg, var_18_6 > 0)
-	gohelper.setActive(arg_18_0._txttips2, var_18_6 > 0)
+function SummonOneCustomPickView:refreshCost()
+	local curPool = SummonMainModel.instance:getCurPool()
 
-	if var_18_1 == var_18_5 then
-		gohelper.setActive(arg_18_0._gocount, var_18_6 > 0)
+	if curPool then
+		self:_refreshSingleCost(curPool.cost1, self._simagecurrency1, "_txtcurrency1")
+		self:refreshCost10(curPool.cost10)
+	end
+end
 
-		if var_18_6 > 0 then
-			local var_18_7 = SummonMainModel.instance:getDiscountCost10(var_18_4)
+function SummonOneCustomPickView:_refreshSingleCost(costs, icon, numTxt)
+	local cost_type, cost_id, cost_num = SummonMainModel.instance.getCostByConfig(costs)
+	local cost_icon = SummonMainModel.instance.getSummonItemIcon(cost_type, cost_id)
 
-			arg_18_0._txtcurrency101.text = string.format("<color=%s>%s</color>", "#FFE095", luaLang("multiple") .. var_18_7)
-			arg_18_0._txtcurrency102.text = var_18_2
+	icon:LoadImage(cost_icon)
 
-			local var_18_8 = (var_18_2 - var_18_7) / var_18_2 * 100
+	self[numTxt .. "1"].text = luaLang("multiple") .. cost_num
+	self[numTxt .. "2"].text = ""
+end
 
-			arg_18_0._txtcount.text = string.format(luaLang("summonpickchoice_discount"), var_18_8)
+function SummonOneCustomPickView:refreshCost10(costs)
+	local cost_type, cost_id, cost_num = SummonMainModel.instance.getCostByConfig(costs)
+	local cost_icon = SummonMainModel.instance.getSummonItemIcon(cost_type, cost_id)
+
+	self._simagecurrency10:LoadImage(cost_icon)
+
+	local curPoolId = SummonMainModel.instance:getCurId()
+	local discountCostId = SummonMainModel.instance:getDiscountCostId(curPoolId)
+	local discountTime10Server = SummonMainModel.instance:getDiscountTime10Server(curPoolId)
+
+	gohelper.setActive(self._gotip2bg, discountTime10Server > 0)
+	gohelper.setActive(self._txttips2, discountTime10Server > 0)
+
+	if cost_id == discountCostId then
+		gohelper.setActive(self._gocount, discountTime10Server > 0)
+
+		if discountTime10Server > 0 then
+			local realyCountTime10 = SummonMainModel.instance:getDiscountCost10(curPoolId)
+
+			self._txtcurrency101.text = string.format("<color=%s>%s</color>", "#FFE095", luaLang("multiple") .. realyCountTime10)
+			self._txtcurrency102.text = cost_num
+
+			local preferential = (cost_num - realyCountTime10) / cost_num * 100
+
+			self._txtcount.text = string.format(luaLang("summonpickchoice_discount"), preferential)
 
 			return
 		end
 	else
-		gohelper.setActive(arg_18_0._gocount, false)
+		gohelper.setActive(self._gocount, false)
 	end
 
-	arg_18_0._txtcurrency101.text = string.format("<color=%s>%s</color>", "#000000", luaLang("multiple") .. var_18_2)
-	arg_18_0._txtcurrency102.text = ""
+	self._txtcurrency101.text = string.format("<color=%s>%s</color>", "#000000", luaLang("multiple") .. cost_num)
+	self._txtcurrency102.text = ""
 end
 
-function var_0_0.getPickHeroIds(arg_19_0, arg_19_1)
-	local var_19_0 = SummonMainModel.instance:getPoolServerMO(arg_19_1.id)
+function SummonOneCustomPickView:getPickHeroIds(pool)
+	local summonServerMO = SummonMainModel.instance:getPoolServerMO(pool.id)
 
-	if var_19_0 and var_19_0.customPickMO then
-		return var_19_0.customPickMO.pickHeroIds
+	if summonServerMO and summonServerMO.customPickMO then
+		return summonServerMO.customPickMO.pickHeroIds
 	end
 
 	return nil
 end
 
-function var_0_0.refreshPickHero(arg_20_0, arg_20_1)
-	local var_20_0 = arg_20_0:getPickHeroIds(arg_20_1)
+function SummonOneCustomPickView:refreshPickHero(poolId)
+	local pickHeroIds = self:getPickHeroIds(poolId)
 
-	if var_20_0 and #var_20_0 > 0 and arg_20_0._characteritem then
-		local var_20_1 = var_20_0[1]
+	if pickHeroIds and #pickHeroIds > 0 and self._characteritem then
+		local pickHeroId = pickHeroIds[1]
 
-		gohelper.setActive(arg_20_0._characteritem.go, true)
-		gohelper.setActive(arg_20_0._characteritem.simagehero, true)
+		gohelper.setActive(self._characteritem.go, true)
+		gohelper.setActive(self._characteritem.simagehero, true)
 
-		local var_20_2 = HeroConfig.instance:getHeroCO(var_20_1)
+		local heroConfig = HeroConfig.instance:getHeroCO(pickHeroId)
 
-		UISpriteSetMgr.instance:setCommonSprite(arg_20_0._characteritem.imagecareer, "lssx_" .. tostring(var_20_2.career))
+		UISpriteSetMgr.instance:setCommonSprite(self._characteritem.imagecareer, "lssx_" .. tostring(heroConfig.career))
 
-		arg_20_0._characteritem.txtnamecn.text = var_20_2.name
+		self._characteritem.txtnamecn.text = heroConfig.name
 
-		for iter_20_0 = 1, 6 do
-			gohelper.setActive(arg_20_0._characteritem.rares[iter_20_0], iter_20_0 <= CharacterEnum.Star[var_20_2.rare])
+		for j = 1, 6 do
+			gohelper.setActive(self._characteritem.rares[j], j <= CharacterEnum.Star[heroConfig.rare])
 		end
 
-		local var_20_3, var_20_4, var_20_5 = arg_20_0:getOffset(var_20_2.skinId)
+		local offsetX, offsetY, scale = self:getOffset(heroConfig.skinId)
 
-		arg_20_0._characteritem.simagehero:LoadImage(ResUrl.getHeadIconImg(var_20_2.skinId), arg_20_0.handleLoadedImage, {
-			imgTransform = arg_20_0._simagerole1.gameObject.transform,
-			offsetX = var_20_3,
-			offsetY = var_20_4,
-			scale = var_20_5
+		self._characteritem.simagehero:LoadImage(ResUrl.getHeadIconImg(heroConfig.skinId), self.handleLoadedImage, {
+			imgTransform = self._simagerole1.gameObject.transform,
+			offsetX = offsetX,
+			offsetY = offsetY,
+			scale = scale
 		})
-		arg_20_0._simagerole1outline:LoadImage(ResUrl.getHeadIconImg(var_20_2.skinId), arg_20_0.handleLoadedImage, {
-			imgTransform = arg_20_0._simagerole1outline.gameObject.transform,
-			offsetX = var_20_3 - 5,
-			offsetY = var_20_4 + 2,
-			scale = var_20_5
+		self._simagerole1outline:LoadImage(ResUrl.getHeadIconImg(heroConfig.skinId), self.handleLoadedImage, {
+			imgTransform = self._simagerole1outline.gameObject.transform,
+			offsetX = offsetX - 5,
+			offsetY = offsetY + 2,
+			scale = scale
 		})
 	else
-		gohelper.setActive(arg_20_0._characteritem.go, false)
-		gohelper.setActive(arg_20_0._characteritem.simagehero, false)
+		gohelper.setActive(self._characteritem.go, false)
+		gohelper.setActive(self._characteritem.simagehero, false)
 	end
 end
 
-function var_0_0.getOffset(arg_21_0, arg_21_1)
-	local var_21_0 = SkinConfig.instance:getSkinCo(arg_21_1).skinViewImgOffset
+function SummonOneCustomPickView:getOffset(skinId)
+	local skinCo = SkinConfig.instance:getSkinCo(skinId)
+	local offsetStr = skinCo.skinViewImgOffset
 
-	if not string.nilorempty(var_21_0) then
-		local var_21_1 = string.splitToNumber(var_21_0, "#")
-		local var_21_2 = var_21_1[1]
-		local var_21_3 = var_21_1[2]
-		local var_21_4 = var_21_1[3]
+	if not string.nilorempty(offsetStr) then
+		local offsets = string.splitToNumber(offsetStr, "#")
+		local offsetX = offsets[1]
+		local offsetY = offsets[2]
+		local scale = offsets[3]
 
-		return var_21_2, var_21_3, var_21_4
+		return offsetX, offsetY, scale
 	end
 
 	return -150, -150, 0.6
 end
 
-function var_0_0.handleLoadedImage(arg_22_0)
-	local var_22_0 = arg_22_0.imgTransform
-	local var_22_1 = arg_22_0.offsetX
-	local var_22_2 = arg_22_0.offsetY
-	local var_22_3 = arg_22_0.scale
+function SummonOneCustomPickView.handleLoadedImage(param)
+	local imgTr = param.imgTransform
+	local offsetX = param.offsetX
+	local offsetY = param.offsetY
+	local scale = param.scale
 
-	ZProj.UGUIHelper.SetImageSize(var_22_0.gameObject)
-	recthelper.setAnchor(var_22_0, var_22_1, var_22_2)
-	transformhelper.setLocalScale(var_22_0, var_22_3, var_22_3, var_22_3)
+	ZProj.UGUIHelper.SetImageSize(imgTr.gameObject)
+	recthelper.setAnchor(imgTr, offsetX, offsetY)
+	transformhelper.setLocalScale(imgTr, scale, scale, scale)
 end
 
-function var_0_0.refreshView(arg_23_0)
-	arg_23_0.summonSuccess = false
+function SummonOneCustomPickView:refreshView()
+	self.summonSuccess = false
 
-	local var_23_0 = SummonMainModel.instance:getList()
+	local list = SummonMainModel.instance:getList()
 
-	if not var_23_0 or #var_23_0 <= 0 then
-		gohelper.setActive(arg_23_0._goui, false)
+	if not list or #list <= 0 then
+		gohelper.setActive(self._goui, false)
 
 		return
 	end
 
-	arg_23_0:refreshPoolUI()
+	self:refreshPoolUI()
 end
 
-function var_0_0.refreshPoolUI(arg_24_0)
-	local var_24_0 = SummonMainModel.instance:getCurPool()
+function SummonOneCustomPickView:refreshPoolUI()
+	local pool = SummonMainModel.instance:getCurPool()
 
-	if not var_24_0 then
+	if not pool then
 		return
 	end
 
-	if SummonCustomPickModel.instance:isCustomPickOver(var_24_0.id) then
-		arg_24_0:handlePickOverStatus(var_24_0)
+	if SummonCustomPickModel.instance:isCustomPickOver(pool.id) then
+		self:handlePickOverStatus(pool)
 	else
-		arg_24_0:handleNeedPickStatus(var_24_0)
+		self:handleNeedPickStatus(pool)
 	end
 
-	arg_24_0:refreshPickHero(var_24_0)
-	arg_24_0:_refreshOpenTime()
+	self:refreshPickHero(pool)
+	self:_refreshOpenTime()
 
-	local var_24_1 = SummonMainModel.instance:getDiscountCost10(var_24_0.id, 1)
+	local realyCountTime10 = SummonMainModel.instance:getDiscountCost10(pool.id, 1)
 
-	arg_24_0._txttips2.text = string.format(luaLang("summon_discount_tips"), var_24_1)
+	self._txttips2.text = string.format(luaLang("summon_discount_tips"), realyCountTime10)
 end
 
-function var_0_0._refreshOpenTime(arg_25_0)
-	local var_25_0 = SummonMainModel.instance:getCurPool()
+function SummonOneCustomPickView:_refreshOpenTime()
+	local curPool = SummonMainModel.instance:getCurPool()
 
-	if not var_25_0 then
+	if not curPool then
 		return
 	end
 
-	local var_25_1 = SummonMainModel.instance:getPoolServerMO(var_25_0.id)
+	local poolMO = SummonMainModel.instance:getPoolServerMO(curPool.id)
 
-	if var_25_1 ~= nil and var_25_1.offlineTime ~= 0 and var_25_1.offlineTime < TimeUtil.maxDateTimeStamp then
-		local var_25_2 = var_25_1.offlineTime - ServerTime.now()
+	if poolMO ~= nil and poolMO.offlineTime ~= 0 and poolMO.offlineTime < TimeUtil.maxDateTimeStamp then
+		local time = poolMO.offlineTime - ServerTime.now()
 
-		arg_25_0._txtdeadline.text = string.format(luaLang("summonmainequipprobup_deadline"), SummonModel.formatRemainTime(var_25_2))
+		self._txtdeadline.text = string.format(luaLang("summonmainequipprobup_deadline"), SummonModel.formatRemainTime(time))
 	else
-		arg_25_0._txtdeadline.text = ""
+		self._txtdeadline.text = ""
 	end
 end
 
-function var_0_0.playEnterAnim(arg_26_0)
+function SummonOneCustomPickView:playEnterAnim()
 	if SummonMainModel.instance:getFirstTimeSwitch() then
 		SummonMainModel.instance:setFirstTimeSwitch(false)
-		arg_26_0._animRoot:Play(SummonEnum.SummonCharAnimationEnter, 0, 0)
+		self._animRoot:Play(SummonEnum.SummonCharAnimationEnter, 0, 0)
 	else
-		arg_26_0._animRoot:Play(SummonEnum.SummonCharAnimationSwitch, 0, 0)
+		self._animRoot:Play(SummonEnum.SummonCharAnimationSwitch, 0, 0)
 	end
 end
 
-function var_0_0.playerEnterAnimFromScene(arg_27_0)
-	arg_27_0._animRoot:Play(SummonEnum.SummonCharAnimationEnter, 0, 0)
+function SummonOneCustomPickView:playerEnterAnimFromScene()
+	self._animRoot:Play(SummonEnum.SummonCharAnimationEnter, 0, 0)
 end
 
-function var_0_0.addAllEvents(arg_28_0)
-	arg_28_0:addEventCb(SummonController.instance, SummonEvent.onSummonFailed, arg_28_0.onSummonFailed, arg_28_0)
-	arg_28_0:addEventCb(SummonController.instance, SummonEvent.onSummonReply, arg_28_0.onSummonReply, arg_28_0)
-	arg_28_0:addEventCb(SummonController.instance, SummonEvent.onViewCanPlayEnterAnim, arg_28_0.playerEnterAnimFromScene, arg_28_0)
-	arg_28_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_28_0.onItemChanged, arg_28_0)
-	arg_28_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_28_0.onItemChanged, arg_28_0)
-	arg_28_0:addEventCb(SummonController.instance, SummonEvent.onSummonInfoGot, arg_28_0.refreshView, arg_28_0)
-	arg_28_0:addEventCb(SummonController.instance, SummonEvent.onRemainTimeCountdown, arg_28_0._refreshOpenTime, arg_28_0)
+function SummonOneCustomPickView:addAllEvents()
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonFailed, self.onSummonFailed, self)
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonReply, self.onSummonReply, self)
+	self:addEventCb(SummonController.instance, SummonEvent.onViewCanPlayEnterAnim, self.playerEnterAnimFromScene, self)
+	self:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self.onItemChanged, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self.onItemChanged, self)
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonInfoGot, self.refreshView, self)
+	self:addEventCb(SummonController.instance, SummonEvent.onRemainTimeCountdown, self._refreshOpenTime, self)
 end
 
-function var_0_0.removeAllEvents(arg_29_0)
-	arg_29_0:removeEventCb(SummonController.instance, SummonEvent.onSummonFailed, arg_29_0.onSummonFailed, arg_29_0)
-	arg_29_0:removeEventCb(SummonController.instance, SummonEvent.onSummonReply, arg_29_0.onSummonReply, arg_29_0)
-	arg_29_0:removeEventCb(SummonController.instance, SummonEvent.onViewCanPlayEnterAnim, arg_29_0.playerEnterAnimFromScene, arg_29_0)
-	arg_29_0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_29_0.onItemChanged, arg_29_0)
-	arg_29_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_29_0.onItemChanged, arg_29_0)
-	arg_29_0:removeEventCb(SummonController.instance, SummonEvent.onSummonInfoGot, arg_29_0.refreshView, arg_29_0)
-	arg_29_0:removeEventCb(SummonController.instance, SummonEvent.onRemainTimeCountdown, arg_29_0._refreshOpenTime, arg_29_0)
+function SummonOneCustomPickView:removeAllEvents()
+	self:removeEventCb(SummonController.instance, SummonEvent.onSummonFailed, self.onSummonFailed, self)
+	self:removeEventCb(SummonController.instance, SummonEvent.onSummonReply, self.onSummonReply, self)
+	self:removeEventCb(SummonController.instance, SummonEvent.onViewCanPlayEnterAnim, self.playerEnterAnimFromScene, self)
+	self:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self.onItemChanged, self)
+	self:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self.onItemChanged, self)
+	self:removeEventCb(SummonController.instance, SummonEvent.onSummonInfoGot, self.refreshView, self)
+	self:removeEventCb(SummonController.instance, SummonEvent.onRemainTimeCountdown, self._refreshOpenTime, self)
 end
 
-function var_0_0._summon10Confirm(arg_30_0)
-	local var_30_0 = SummonMainModel.instance:getCurPool()
+function SummonOneCustomPickView:_summon10Confirm()
+	local curPool = SummonMainModel.instance:getCurPool()
 
-	if not var_30_0 then
+	if not curPool then
 		return
 	end
 
-	SummonMainController.instance:sendStartSummon(var_30_0.id, 10, false, true)
+	SummonMainController.instance:sendStartSummon(curPool.id, 10, false, true)
 end
 
-function var_0_0._summon1Confirm(arg_31_0)
-	local var_31_0 = SummonMainModel.instance:getCurPool()
+function SummonOneCustomPickView:_summon1Confirm()
+	local curPool = SummonMainModel.instance:getCurPool()
 
-	if not var_31_0 then
+	if not curPool then
 		return
 	end
 
-	SummonMainController.instance:sendStartSummon(var_31_0.id, 1, false, true)
+	SummonMainController.instance:sendStartSummon(curPool.id, 1, false, true)
 end
 
-function var_0_0.onItemChanged(arg_32_0)
-	if SummonController.instance.isWaitingSummonResult or arg_32_0.summonSuccess then
+function SummonOneCustomPickView:onItemChanged()
+	if SummonController.instance.isWaitingSummonResult or self.summonSuccess then
 		return
 	end
 
-	arg_32_0:refreshCost()
+	self:refreshCost()
 end
 
-function var_0_0.onSummonFailed(arg_33_0)
-	arg_33_0.summonSuccess = false
+function SummonOneCustomPickView:onSummonFailed()
+	self.summonSuccess = false
 
-	arg_33_0:refreshCost()
+	self:refreshCost()
 end
 
-function var_0_0.onSummonReply(arg_34_0)
-	arg_34_0.summonSuccess = true
+function SummonOneCustomPickView:onSummonReply()
+	self.summonSuccess = true
 end
 
-return var_0_0
+return SummonOneCustomPickView

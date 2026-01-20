@@ -1,10 +1,12 @@
-﻿module("modules.logic.versionactivity1_7.isolde.define.ActIsoldeEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_7/isolde/define/ActIsoldeEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_7.isolde.define.ActIsoldeEvent", package.seeall)
 
-var_0_0.OneClickClaimReward = 1
-var_0_0.StoryItemClick = 2
-var_0_0.FightItemClick = 3
-var_0_0.TabSwitch = 4
+local ActIsoldeEvent = _M
 
-return var_0_0
+ActIsoldeEvent.OneClickClaimReward = 1
+ActIsoldeEvent.StoryItemClick = 2
+ActIsoldeEvent.FightItemClick = 3
+ActIsoldeEvent.TabSwitch = 4
+
+return ActIsoldeEvent

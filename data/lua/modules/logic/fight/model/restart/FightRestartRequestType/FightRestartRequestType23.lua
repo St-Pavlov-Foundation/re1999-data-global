@@ -1,33 +1,37 @@
-﻿module("modules.logic.fight.model.restart.FightRestartRequestType.FightRestartRequestType23", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/restart/FightRestartRequestType/FightRestartRequestType23.lua
 
-local var_0_0 = class("FightRestartRequestType23", FightRestartRequestType1)
+module("modules.logic.fight.model.restart.FightRestartRequestType.FightRestartRequestType23", package.seeall)
 
-function var_0_0.requestFight(arg_1_0)
-	arg_1_0._fight_work:onDone(true)
+local FightRestartRequestType23 = class("FightRestartRequestType23", FightRestartRequestType1)
 
-	if FightController.instance:setFightHeroGroup() then
-		local var_1_0 = arg_1_0._fightParam
-		local var_1_1 = Season123Model.instance:getBattleContext()
+function FightRestartRequestType23:requestFight()
+	self._fight_work:onDone(true)
 
-		if not var_1_1 then
+	local result = FightController.instance:setFightHeroGroup()
+
+	if result then
+		local fightParam = self._fightParam
+		local battleContext = Season123Model.instance:getBattleContext()
+
+		if not battleContext then
 			FightGameMgr.restartMgr:restartFightFail()
 
 			return
 		end
 
-		local var_1_2 = var_1_1.layer or -1
+		local layer = battleContext.layer or -1
 
-		Activity123Rpc.instance:sendStartAct123BattleRequest(var_1_1.actId, var_1_2, var_1_0.chapterId, var_1_0.episodeId, var_1_0, var_1_0.multiplication, nil, var_1_0.isReplay, true, arg_1_0.onReceiveStartBattle, arg_1_0)
+		Activity123Rpc.instance:sendStartAct123BattleRequest(battleContext.actId, layer, fightParam.chapterId, fightParam.episodeId, fightParam, fightParam.multiplication, nil, fightParam.isReplay, true, self.onReceiveStartBattle, self)
 		AudioMgr.instance:trigger(AudioEnum.UI.Stop_HeroNormalVoc)
 	end
 end
 
-function var_0_0.onReceiveStartBattle(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	if arg_2_2 ~= 0 then
+function FightRestartRequestType23:onReceiveStartBattle(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		FightGameMgr.restartMgr:restartFightFail()
 
 		return
 	end
 end
 
-return var_0_0
+return FightRestartRequestType23

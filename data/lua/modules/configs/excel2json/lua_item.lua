@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_item", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_item.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_item", package.seeall)
+
+local lua_item = {}
+local fields = {
 	isTimeShow = 12,
 	name = 2,
 	cd = 15,
@@ -12,29 +14,30 @@ local var_0_1 = {
 	desc = 4,
 	rare = 8,
 	subType = 5,
+	itemSortIdx = 21,
 	icon = 7,
 	price = 17,
 	expireTime = 16,
 	effect = 14,
 	useDesc = 3,
-	headIconSign = 21,
+	headIconSign = 22,
 	clienttag = 6,
 	id = 1,
 	isStackable = 10,
 	isDynamic = 13,
 	highQuality = 9
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	name = 1,
 	useDesc = 2,
 	desc = 3
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_item.onLoad(json)
+	lua_item.configList, lua_item.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_item

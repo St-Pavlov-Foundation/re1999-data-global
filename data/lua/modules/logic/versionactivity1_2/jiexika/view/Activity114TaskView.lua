@@ -1,71 +1,73 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.view.Activity114TaskView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/view/Activity114TaskView.lua
 
-local var_0_0 = class("Activity114TaskView", BaseView)
+module("modules.logic.versionactivity1_2.jiexika.view.Activity114TaskView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagetxtbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_info/#simage_txtbg")
-	arg_1_0._viewAnim = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+local Activity114TaskView = class("Activity114TaskView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Activity114TaskView:onInitView()
+	self._simagetxtbg = gohelper.findChildSingleImage(self.viewGO, "#go_info/#simage_txtbg")
+	self._viewAnim = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function Activity114TaskView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Activity114TaskView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	local var_4_0 = ListScrollParam.New()
+function Activity114TaskView:_editableInitView()
+	local scrollParam = ListScrollParam.New()
 
-	var_4_0.scrollGOPath = "#scroll"
-	var_4_0.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_4_0.prefabUrl = "#scroll/item"
-	var_4_0.cellClass = Activity114TaskItem
-	var_4_0.scrollDir = ScrollEnum.ScrollDirV
-	var_4_0.lineCount = 1
-	var_4_0.cellWidth = 1150
-	var_4_0.cellHeight = 168
-	var_4_0.cellSpaceH = 0
-	var_4_0.cellSpaceV = 10.5
-	var_4_0.startSpace = 5
-	var_4_0.frameUpdateMs = 100
+	scrollParam.scrollGOPath = "#scroll"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "#scroll/item"
+	scrollParam.cellClass = Activity114TaskItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 1150
+	scrollParam.cellHeight = 168
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 10.5
+	scrollParam.startSpace = 5
+	scrollParam.frameUpdateMs = 100
 
-	local var_4_1 = {}
+	local itemAnimDelayTimes = {}
 
-	for iter_4_0 = 1, 6 do
-		var_4_1[iter_4_0] = iter_4_0 * 0.06
+	for i = 1, 6 do
+		itemAnimDelayTimes[i] = i * 0.06
 	end
 
-	arg_4_0._csListView = SLFramework.UGUI.ListScrollView.Get(gohelper.findChild(arg_4_0.viewGO, "#scroll"))
-	arg_4_0._scrollView = LuaListScrollViewWithAnimator.New(Activity114TaskModel.instance, var_4_0, var_4_1)
+	self._csListView = SLFramework.UGUI.ListScrollView.Get(gohelper.findChild(self.viewGO, "#scroll"))
+	self._scrollView = LuaListScrollViewWithAnimator.New(Activity114TaskModel.instance, scrollParam, itemAnimDelayTimes)
 
-	arg_4_0:addChildView(arg_4_0._scrollView)
-	arg_4_0._simagetxtbg:LoadImage(ResUrl.getVersionActivityWhiteHouse_1_2_Bg("task/bg_heidi.png"))
+	self:addChildView(self._scrollView)
+	self._simagetxtbg:LoadImage(ResUrl.getVersionActivityWhiteHouse_1_2_Bg("task/bg_heidi.png"))
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0._csListView.VerticalScrollPixel = 0
+function Activity114TaskView:onOpen()
+	self._csListView.VerticalScrollPixel = 0
 
-	arg_5_0._viewAnim:Play("open", 0, 0)
+	self._viewAnim:Play("open", 0, 0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_mission_open)
 end
 
-function var_0_0.onOpenFinish(arg_6_0)
-	arg_6_0._viewAnim.enabled = true
+function Activity114TaskView:onOpenFinish()
+	self._viewAnim.enabled = true
 end
 
-function var_0_0.onClose(arg_7_0)
-	arg_7_0._viewAnim:Play("close", 0, 0)
+function Activity114TaskView:onClose()
+	self._viewAnim:Play("close", 0, 0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mission_close)
 end
 
-function var_0_0.onDestroyView(arg_8_0)
-	arg_8_0._simagetxtbg:UnLoadImage()
+function Activity114TaskView:onDestroyView()
+	self._simagetxtbg:UnLoadImage()
 end
 
-return var_0_0
+return Activity114TaskView

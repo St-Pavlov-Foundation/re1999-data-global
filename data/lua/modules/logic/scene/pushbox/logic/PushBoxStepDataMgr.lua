@@ -1,127 +1,131 @@
-﻿module("modules.logic.scene.pushbox.logic.PushBoxStepDataMgr", package.seeall)
+﻿-- chunkname: @modules/logic/scene/pushbox/logic/PushBoxStepDataMgr.lua
 
-local var_0_0 = class("PushBoxStepDataMgr", UserDataDispose)
+module("modules.logic.scene.pushbox.logic.PushBoxStepDataMgr", package.seeall)
 
-var_0_0.StepType = {
+local PushBoxStepDataMgr = class("PushBoxStepDataMgr", UserDataDispose)
+
+PushBoxStepDataMgr.StepType = {
 	PushBox = 2,
 	Move = 1
 }
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+function PushBoxStepDataMgr:ctor(game_mgr)
+	self:__onInit()
 
-	arg_1_0._game_mgr = arg_1_1
-	arg_1_0._scene = arg_1_1._scene
-	arg_1_0._scene_root = arg_1_1._scene_root
+	self._game_mgr = game_mgr
+	self._scene = game_mgr._scene
+	self._scene_root = game_mgr._scene_root
 end
 
-function var_0_0.init(arg_2_0)
-	arg_2_0._step_data = {}
+function PushBoxStepDataMgr:init()
+	self._step_data = {}
 end
 
-function var_0_0._onRevertStep(arg_3_0)
-	local var_3_0 = table.remove(arg_3_0._step_data)
+function PushBoxStepDataMgr:_onRevertStep()
+	local step_data = table.remove(self._step_data)
 
-	if not var_3_0 then
+	if not step_data then
 		GameFacade.showToast(ToastEnum.PushBoxGame)
 
 		return
 	end
 
-	arg_3_0._game_mgr.character:revertDirection(var_3_0.characterDirection)
+	self._game_mgr.character:revertDirection(step_data.characterDirection)
 
-	if var_3_0.step_type == var_0_0.StepType.Move then
-		arg_3_0._game_mgr.character:revertMove(var_3_0.from_x, var_3_0.from_y)
-	elseif var_3_0.step_type == var_0_0.StepType.PushBox then
-		arg_3_0._game_mgr:pushBox(var_3_0.to_x, var_3_0.to_y, var_3_0.from_x, var_3_0.from_y)
-		arg_3_0._game_mgr.character:revertMove(var_3_0.character_pos_x, var_3_0.character_pos_y)
+	if step_data.step_type == PushBoxStepDataMgr.StepType.Move then
+		self._game_mgr.character:revertMove(step_data.from_x, step_data.from_y)
+	elseif step_data.step_type == PushBoxStepDataMgr.StepType.PushBox then
+		self._game_mgr:pushBox(step_data.to_x, step_data.to_y, step_data.from_x, step_data.from_y)
+		self._game_mgr.character:revertMove(step_data.character_pos_x, step_data.character_pos_y)
 	end
 
-	local var_3_1 = arg_3_0:getLastStep()
+	local last_step = self:getLastStep()
 
-	if var_3_1 then
-		arg_3_0._game_mgr:setWarning(var_3_1.warning)
-		PushBoxController.instance:dispatchEvent(PushBoxEvent.RevertStep, var_3_1)
+	if last_step then
+		self._game_mgr:setWarning(last_step.warning)
+		PushBoxController.instance:dispatchEvent(PushBoxEvent.RevertStep, last_step)
 	else
-		arg_3_0._game_mgr:setWarning(0)
+		self._game_mgr:setWarning(0)
 		PushBoxController.instance:dispatchEvent(PushBoxEvent.StartElement)
 	end
 end
 
-function var_0_0.markStepData(arg_4_0)
-	local var_4_0 = arg_4_0:getLastStep()
+function PushBoxStepDataMgr:markStepData()
+	local last_step = self:getLastStep()
 
-	var_4_0.warning = arg_4_0._game_mgr:getCurWarning()
-	var_4_0.characterDirection = arg_4_0._game_mgr.character:getDirection()
+	last_step.warning = self._game_mgr:getCurWarning()
+	last_step.characterDirection = self._game_mgr.character:getDirection()
 
-	local var_4_1 = arg_4_0._game_mgr:getElementLogicList(PushBoxGameMgr.ElementType.Enemy)
+	local element_list = self._game_mgr:getElementLogicList(PushBoxGameMgr.ElementType.Enemy)
 
-	var_4_0.enemy_direction = {}
+	last_step.enemy_direction = {}
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_1) do
-		local var_4_2 = {
-			pos_x = iter_4_1:getPosX(),
-			pos_y = iter_4_1:getPosY(),
-			index = iter_4_1:getIndex()
-		}
+	for i, v in ipairs(element_list) do
+		local temp_tab = {}
 
-		table.insert(var_4_0.enemy_direction, var_4_2)
+		temp_tab.pos_x = v:getPosX()
+		temp_tab.pos_y = v:getPosY()
+		temp_tab.index = v:getIndex()
+
+		table.insert(last_step.enemy_direction, temp_tab)
 	end
 
-	var_4_0.fan_time = {}
+	last_step.fan_time = {}
+	element_list = self._game_mgr:getElementLogicList(PushBoxGameMgr.ElementType.Fan)
 
-	local var_4_3 = arg_4_0._game_mgr:getElementLogicList(PushBoxGameMgr.ElementType.Fan)
+	for i, v in ipairs(element_list) do
+		local temp_tab = {}
 
-	for iter_4_2, iter_4_3 in ipairs(var_4_3) do
-		local var_4_4 = {
-			active = iter_4_3:getState(),
-			pos_x = iter_4_3:getPosX(),
-			pos_y = iter_4_3:getPosY()
-		}
+		temp_tab.active = v:getState()
+		temp_tab.pos_x = v:getPosX()
+		temp_tab.pos_y = v:getPosY()
 
-		if iter_4_3._start_time then
-			var_4_4.left_time = arg_4_0._game_mgr:getConfig().fan_duration - (Time.realtimeSinceStartup - iter_4_3._start_time)
+		if v._start_time then
+			local episode_config = self._game_mgr:getConfig()
+			local duration_time = episode_config.fan_duration
+
+			temp_tab.left_time = duration_time - (Time.realtimeSinceStartup - v._start_time)
 		end
 
-		table.insert(var_4_0.fan_time, var_4_4)
+		table.insert(last_step.fan_time, temp_tab)
 	end
 end
 
-function var_0_0.getLastStep(arg_5_0)
-	return arg_5_0._step_data[#arg_5_0._step_data]
+function PushBoxStepDataMgr:getLastStep()
+	return self._step_data[#self._step_data]
 end
 
-function var_0_0.getStepCount(arg_6_0)
-	return arg_6_0._step_data and #arg_6_0._step_data or 0
+function PushBoxStepDataMgr:getStepCount()
+	return self._step_data and #self._step_data or 0
 end
 
-function var_0_0.moveCharacter(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = {
-		step_type = var_0_0.StepType.Move,
-		from_x = arg_7_1,
-		from_y = arg_7_2
-	}
+function PushBoxStepDataMgr:moveCharacter(from_x, from_y)
+	local step_data = {}
 
-	table.insert(arg_7_0._step_data, var_7_0)
+	step_data.step_type = PushBoxStepDataMgr.StepType.Move
+	step_data.from_x = from_x
+	step_data.from_y = from_y
+
+	table.insert(self._step_data, step_data)
 end
 
-function var_0_0.pushBox(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4)
-	local var_8_0 = arg_8_0._game_mgr.character
-	local var_8_1 = {
-		step_type = var_0_0.StepType.PushBox,
-		from_x = arg_8_1,
-		from_y = arg_8_2,
-		to_x = arg_8_3,
-		to_y = arg_8_4,
-		character_pos_x = var_8_0:getPosX(),
-		character_pos_y = var_8_0:getPosY()
-	}
+function PushBoxStepDataMgr:pushBox(from_x, from_y, to_x, to_y)
+	local character = self._game_mgr.character
+	local step_data = {}
 
-	table.insert(arg_8_0._step_data, var_8_1)
+	step_data.step_type = PushBoxStepDataMgr.StepType.PushBox
+	step_data.from_x = from_x
+	step_data.from_y = from_y
+	step_data.to_x = to_x
+	step_data.to_y = to_y
+	step_data.character_pos_x = character:getPosX()
+	step_data.character_pos_y = character:getPosY()
+
+	table.insert(self._step_data, step_data)
 end
 
-function var_0_0.releaseSelf(arg_9_0)
-	arg_9_0:__onDispose()
+function PushBoxStepDataMgr:releaseSelf()
+	self:__onDispose()
 end
 
-return var_0_0
+return PushBoxStepDataMgr

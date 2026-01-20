@@ -1,19 +1,23 @@
-﻿module("modules.logic.survival.view.reputation.SurvivalReputationSelectViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/reputation/SurvivalReputationSelectViewContainer.lua
 
-local var_0_0 = class("SurvivalReputationSelectViewContainer", BaseViewContainer)
+module("modules.logic.survival.view.reputation.SurvivalReputationSelectViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	return {
+local SurvivalReputationSelectViewContainer = class("SurvivalReputationSelectViewContainer", BaseViewContainer)
+
+function SurvivalReputationSelectViewContainer:buildViews()
+	local views = {
 		SurvivalReputationSelectView.New()
 	}
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function SurvivalReputationSelectViewContainer:buildTabViews(tabContainerId)
 	return
 end
 
-function var_0_0.onContainerOpenFinish(arg_3_0)
+function SurvivalReputationSelectViewContainer:onContainerOpenFinish()
 	return
 end
 
-return var_0_0
+return SurvivalReputationSelectViewContainer

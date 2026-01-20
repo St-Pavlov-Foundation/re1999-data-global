@@ -1,8 +1,10 @@
-﻿module("modules.logic.help.define.HelpEnum", package.seeall)
+﻿-- chunkname: @modules/logic/help/define/HelpEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.help.define.HelpEnum", package.seeall)
 
-var_0_0.HelpId = {
+local HelpEnum = _M
+
+HelpEnum.HelpId = {
 	Season1_6MainViewHelp = 1610001,
 	Season1_3HerogroupHelp = 175,
 	Season1_8CardGetViewHelp = 1800007,
@@ -134,18 +136,18 @@ var_0_0.HelpId = {
 	VersionActivity1_3BuffView = 172,
 	ExploreMap = 1450104
 }
-var_0_0.SaveServer = {
-	[var_0_0.HelpId.Dungeon] = true,
-	[var_0_0.HelpId.HeroGroupNormal] = true,
-	[var_0_0.HelpId.HeroGroupHard] = true
+HelpEnum.SaveServer = {
+	[HelpEnum.HelpId.Dungeon] = true,
+	[HelpEnum.HelpId.HeroGroupNormal] = true,
+	[HelpEnum.HelpId.HeroGroupHard] = true
 }
-var_0_0.HelpType = {
+HelpEnum.HelpType = {
 	VersionActivity = 2,
 	Normal = 1
 }
-var_0_0.PageTabShowType = {
+HelpEnum.PageTabShowType = {
 	Video = 1,
 	HelpView = 2
 }
 
-return var_0_0
+return HelpEnum

@@ -1,117 +1,117 @@
-﻿module("modules.logic.chessgame.game.interact.ChessInteractPlayer", package.seeall)
+﻿-- chunkname: @modules/logic/chessgame/game/interact/ChessInteractPlayer.lua
 
-local var_0_0 = class("ChessInteractPlayer", ChessInteractBase)
+module("modules.logic.chessgame.game.interact.ChessInteractPlayer", package.seeall)
 
-function var_0_0.onSelected(arg_1_0)
+local ChessInteractPlayer = class("ChessInteractPlayer", ChessInteractBase)
+
+function ChessInteractPlayer:onSelected()
 	ChessGameController.instance:setClickStatus(ChessGameEnum.SelectPosStatus.SelectObjWaitPos)
-	arg_1_0:calCanWalkArea()
+	self:calCanWalkArea()
 
-	arg_1_0._isPlayerSelected = true
+	self._isPlayerSelected = true
 
-	arg_1_0:refreshPlayerSelected()
+	self:refreshPlayerSelected()
 end
 
-function var_0_0.insertPosToList(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4, arg_2_5)
-	local var_2_0 = arg_2_0._target.mo.posX
-	local var_2_1 = arg_2_0._target.mo.posY
-	local var_2_2 = ChessGameHelper.ToDirection(var_2_0, var_2_1, arg_2_1, arg_2_2)
+function ChessInteractPlayer:insertPosToList(x, y, posXList, posYList, dirList)
+	local curX, curY = self._target.mo.posX, self._target.mo.posY
+	local dir = ChessGameHelper.ToDirection(curX, curY, x, y)
 
-	if ChessGameController.instance:posCanWalk(arg_2_1, arg_2_2, var_2_2, arg_2_0._target.objType) then
-		table.insert(arg_2_3, arg_2_1)
-		table.insert(arg_2_4, arg_2_2)
-		table.insert(arg_2_5, var_2_2)
+	if ChessGameController.instance:posCanWalk(x, y, dir, self._target.objType) then
+		table.insert(posXList, x)
+		table.insert(posYList, y)
+		table.insert(dirList, dir)
 	end
 end
 
-function var_0_0.onCancelSelect(arg_3_0)
+function ChessInteractPlayer:onCancelSelect()
 	ChessGameController.instance:setClickStatus(ChessGameEnum.SelectPosStatus.None)
 	ChessGameController.instance:dispatchEvent(ChessGameEvent.SetNeedChooseDirectionVisible, {
 		visible = false
 	})
 
-	arg_3_0._isPlayerSelected = false
+	self._isPlayerSelected = false
 
-	arg_3_0:refreshPlayerSelected()
+	self:refreshPlayerSelected()
 end
 
-function var_0_0.onSelectPos(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_0._isMoving or ChessGameController.instance.eventMgr:isPlayingFlow() then
+function ChessInteractPlayer:onSelectPos(x, y)
+	if self._isMoving or ChessGameController.instance.eventMgr:isPlayingFlow() then
 		return
 	end
 
-	local var_4_0 = arg_4_0._target.mo.posX
-	local var_4_1 = arg_4_0._target.mo.posY
-	local var_4_2 = ChessGameHelper.ToDirection(var_4_0, var_4_1, arg_4_1, arg_4_2)
+	local curX, curY = self._target.mo.posX, self._target.mo.posY
+	local dir = ChessGameHelper.ToDirection(curX, curY, x, y)
 
-	if (var_4_0 == arg_4_1 and math.abs(var_4_1 - arg_4_2) == 1 or var_4_1 == arg_4_2 and math.abs(var_4_0 - arg_4_1) == 1) and ChessGameController.instance:posCanWalk(arg_4_1, arg_4_2, var_4_2, arg_4_0._target.objType) then
+	if (curX == x and math.abs(curY - y) == 1 or curY == y and math.abs(curX - x) == 1) and ChessGameController.instance:posCanWalk(x, y, dir, self._target.objType) then
 		if ChessGameController.instance:getClickStatus() ~= ChessGameEnum.SelectPosStatus.CatchObj then
-			local var_4_3 = {
+			local optData = {
 				param = "",
 				type = ChessGameEnum.OptType.Single,
-				id = arg_4_0._target.mo.id,
-				direction = ChessGameHelper.ToDirection(var_4_0, var_4_1, arg_4_1, arg_4_2)
+				id = self._target.mo.id,
+				direction = ChessGameHelper.ToDirection(curX, curY, x, y)
 			}
 
-			ChessGameModel.instance:appendOpt(var_4_3)
+			ChessGameModel.instance:appendOpt(optData)
 
-			local var_4_4 = ChessModel.instance:getActId()
-			local var_4_5 = ChessModel.instance:getEpisodeId()
-			local var_4_6 = ChessGameModel.instance:getOptList()
+			local actId = ChessModel.instance:getActId()
+			local episodeId = ChessModel.instance:getEpisodeId()
+			local optList = ChessGameModel.instance:getOptList()
 
-			ChessRpcController.instance:sendActBeginRoundRequest(var_4_4, var_4_5, var_4_6, arg_4_0.onMoveSuccess, arg_4_0)
+			ChessRpcController.instance:sendActBeginRoundRequest(actId, episodeId, optList, self.onMoveSuccess, self)
 			ChessGameController.instance:saveTempSelectObj()
 			ChessGameController.instance:setSelectObj(nil)
 		end
 	else
-		local var_4_7 = ChessGameController.instance:getPosCanClickInteract(arg_4_1, arg_4_2)
+		local clickObj = ChessGameController.instance:getPosCanClickInteract(x, y)
 
-		if var_4_7 and (var_4_0 == arg_4_1 and math.abs(var_4_1 - arg_4_2) == 1 or var_4_1 == arg_4_2 and math.abs(var_4_0 - arg_4_1) == 1) then
-			if var_4_7.config and var_4_7.config.interactType ~= ChessGameEnum.InteractType.Role then
-				if var_4_7.config.canMove and (ChessGameController.instance:getClickStatus() ~= ChessGameEnum.SelectPosStatus.CatchObj or true) then
+		if clickObj and (curX == x and math.abs(curY - y) == 1 or curY == y and math.abs(curX - x) == 1) then
+			if clickObj.config and clickObj.config.interactType ~= ChessGameEnum.InteractType.Role then
+				if clickObj.config.canMove and (ChessGameController.instance:getClickStatus() ~= ChessGameEnum.SelectPosStatus.CatchObj or true) then
 					AudioMgr.instance:trigger(AudioEnum.VersionActivity2_1ChessGame.play_ui_activity_box_push)
 					ChessGameController.instance:setClickStatus(ChessGameEnum.SelectPosStatus.CatchObj)
 					ChessGameController.instance:dispatchEvent(ChessGameEvent.SetNeedChooseDirectionVisible, {
 						visible = false
 					})
-					ChessGameModel.instance:setCatchObj(var_4_7)
-					var_4_7:getHandler():withCatch()
+					ChessGameModel.instance:setCatchObj(clickObj)
+					clickObj:getHandler():withCatch()
 
-					local var_4_8, var_4_9 = var_4_7.mo:getXY()
-					local var_4_10 = ChessGameHelper.ToDirection(var_4_0, var_4_1, var_4_8, var_4_9)
-					local var_4_11 = (arg_4_0._target.mo.posX + var_4_8) / 2
-					local var_4_12 = (arg_4_0._target.mo.posY + var_4_9) / 2
+					local x, y = clickObj.mo:getXY()
+					local catchdir = ChessGameHelper.ToDirection(curX, curY, x, y)
+					local posx = (self._target.mo.posX + x) / 2
+					local posy = (self._target.mo.posY + y) / 2
 
-					arg_4_0:moveTo(var_4_11, var_4_12, arg_4_0._refreshNodeArea, arg_4_0)
-					arg_4_0:faceTo(var_4_10)
+					self:moveTo(posx, posy, self._refreshNodeArea, self)
+					self:faceTo(catchdir)
 
 					return
 				end
 
-				if not var_4_7.config.touchTrigger then
+				if not clickObj.config.touchTrigger then
 					return
 				end
 
-				if var_4_7.config.triggerDir == 0 or var_4_7.config.triggerDir == var_4_2 then
-					if ChessGameInteractModel.instance:checkInteractFinish(var_4_7.mo.id) then
+				if clickObj.config.triggerDir == 0 or clickObj.config.triggerDir == dir then
+					if ChessGameInteractModel.instance:checkInteractFinish(clickObj.mo.id) then
 						return
 					end
 
-					local var_4_13, var_4_14 = var_4_7.mo:getXY()
-					local var_4_15 = ChessGameHelper.ToDirection(var_4_0, var_4_1, var_4_13, var_4_14)
+					local x, y = clickObj.mo:getXY()
+					local catchdir = ChessGameHelper.ToDirection(curX, curY, x, y)
 
-					arg_4_0:faceTo(var_4_15)
+					self:faceTo(catchdir)
 
-					local var_4_16 = (arg_4_0._target.mo.posX + var_4_13) / 2
-					local var_4_17 = (arg_4_0._target.mo.posY + var_4_14) / 2
+					local posx = (self._target.mo.posX + x) / 2
+					local posy = (self._target.mo.posY + y) / 2
 
-					local function var_4_18()
-						arg_4_0._isMoving = false
+					local function callback()
+						self._isMoving = false
 
-						arg_4_0:moveTo(arg_4_0._target.mo.posX, arg_4_0._target.mo.posY, arg_4_0.calCanWalkArea, arg_4_0)
+						self:moveTo(self._target.mo.posX, self._target.mo.posY, self.calCanWalkArea, self)
 					end
 
-					arg_4_0:moveTo(var_4_16, var_4_17, var_4_18, arg_4_0)
-					arg_4_0:optItem(var_4_7)
+					self:moveTo(posx, posy, callback, self)
+					self:optItem(clickObj)
 				end
 			else
 				ChessGameController.instance:setSelectObj(nil)
@@ -124,364 +124,361 @@ function var_0_0.onSelectPos(arg_4_0, arg_4_1, arg_4_2)
 	end
 end
 
-function var_0_0.optItem(arg_6_0, arg_6_1)
-	if not arg_6_1 then
+function ChessInteractPlayer:optItem(obj)
+	if not obj then
 		return
 	end
 
-	local var_6_0 = {
+	local optData = {
 		param = "",
 		type = ChessGameEnum.OptType.UseItem,
-		id = arg_6_1.config.id,
-		direction = arg_6_1.config.triggerDir
+		id = obj.config.id,
+		direction = obj.config.triggerDir
 	}
 
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_1ChessGame.play_ui_molu_monster_awake)
-	ChessGameModel.instance:appendOpt(var_6_0)
+	ChessGameModel.instance:appendOpt(optData)
 
-	local var_6_1 = ChessModel.instance:getActId()
-	local var_6_2 = ChessModel.instance:getEpisodeId()
-	local var_6_3 = ChessGameModel.instance:getOptList()
+	local actId = ChessModel.instance:getActId()
+	local episodeId = ChessModel.instance:getEpisodeId()
+	local optList = ChessGameModel.instance:getOptList()
 
-	ChessRpcController.instance:sendActBeginRoundRequest(var_6_1, var_6_2, var_6_3, arg_6_0.onOptSuccess, arg_6_0)
+	ChessRpcController.instance:sendActBeginRoundRequest(actId, episodeId, optList, self.onOptSuccess, self)
 	ChessGameController.instance:saveTempSelectObj()
 	ChessGameController.instance:setSelectObj(nil)
 end
 
-function var_0_0.onMoveBegin(arg_7_0)
+function ChessInteractPlayer:onMoveBegin()
 	ChessGameController.instance:dispatchEvent(ChessGameEvent.SetNeedChooseDirectionVisible, {
 		visible = false
 	})
 end
 
-function var_0_0.onMoveSuccess(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	if arg_8_2 ~= 0 then
+function ChessInteractPlayer:onMoveSuccess(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
 	ChessGameController.instance:setSelectObj(nil)
 end
 
-function var_0_0.onOptSuccess(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	if arg_9_2 ~= 0 then
+function ChessInteractPlayer:onOptSuccess(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 end
 
-function var_0_0.calCanWalkArea(arg_10_0)
+function ChessInteractPlayer:calCanWalkArea()
 	if ChessGameModel.instance:isTalking() then
 		return
 	end
 
-	local var_10_0 = arg_10_0._target.mo.posX
-	local var_10_1 = arg_10_0._target.mo.posY
-	local var_10_2 = {
+	local x, y = self._target.mo.posX, self._target.mo.posY
+	local evtObj = {
 		visible = true,
 		posXList = {},
 		posYList = {},
 		dirList = {},
-		selfPosX = var_10_0,
-		selfPosY = var_10_1,
+		selfPosX = x,
+		selfPosY = y,
 		selectType = ChessGameEnum.ChessSelectType.Normal
 	}
 
-	arg_10_0:insertPosToList(var_10_0 + 1, var_10_1, var_10_2.posXList, var_10_2.posYList, var_10_2.dirList)
-	arg_10_0:insertPosToList(var_10_0 - 1, var_10_1, var_10_2.posXList, var_10_2.posYList, var_10_2.dirList)
-	arg_10_0:insertPosToList(var_10_0, var_10_1 + 1, var_10_2.posXList, var_10_2.posYList, var_10_2.dirList)
-	arg_10_0:insertPosToList(var_10_0, var_10_1 - 1, var_10_2.posXList, var_10_2.posYList, var_10_2.dirList)
-	ChessGameController.instance:dispatchEvent(ChessGameEvent.SetNeedChooseDirectionVisible, var_10_2)
+	self:insertPosToList(x + 1, y, evtObj.posXList, evtObj.posYList, evtObj.dirList)
+	self:insertPosToList(x - 1, y, evtObj.posXList, evtObj.posYList, evtObj.dirList)
+	self:insertPosToList(x, y + 1, evtObj.posXList, evtObj.posYList, evtObj.dirList)
+	self:insertPosToList(x, y - 1, evtObj.posXList, evtObj.posYList, evtObj.dirList)
+	ChessGameController.instance:dispatchEvent(ChessGameEvent.SetNeedChooseDirectionVisible, evtObj)
 end
 
-function var_0_0.moveTo(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4)
-	var_0_0.super.moveTo(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4)
+function ChessInteractPlayer:moveTo(x, y, callback, callbackObj)
+	ChessInteractPlayer.super.moveTo(self, x, y, callback, callbackObj)
 
-	if arg_11_0._animSelf then
-		arg_11_0._animSelf:Play("jump", 0, 0)
+	if self._animSelf then
+		self._animSelf:Play("jump", 0, 0)
 	end
 end
 
-function var_0_0.showHitAni(arg_12_0)
-	if arg_12_0._animSelf then
-		arg_12_0._animSelf:Play("hit", 0, 0)
+function ChessInteractPlayer:showHitAni()
+	if self._animSelf then
+		self._animSelf:Play("hit", 0, 0)
 	end
 end
 
-function var_0_0.refreshPlayerSelected(arg_13_0)
+function ChessInteractPlayer:refreshPlayerSelected()
 	return
 end
 
-function var_0_0._refreshNodeArea(arg_14_0)
-	local var_14_0 = arg_14_0._target.mo.posX
-	local var_14_1 = arg_14_0._target.mo.posY
-	local var_14_2 = {
+function ChessInteractPlayer:_refreshNodeArea()
+	local x, y = self._target.mo.posX, self._target.mo.posY
+	local evtObj = {
 		visible = true,
 		posXList = {},
 		posYList = {},
 		dirList = {},
-		selfPosX = var_14_0,
-		selfPosY = var_14_1,
+		selfPosX = x,
+		selfPosY = y,
 		selectType = ChessGameEnum.ChessSelectType.CatchObj
 	}
-	local var_14_3 = ChessGameModel.instance:getCatchObj()
+	local catchObj = ChessGameModel.instance:getCatchObj()
 
-	if not var_14_3 then
+	if not catchObj then
 		return
 	end
 
-	local var_14_4, var_14_5 = var_14_3.mo:getXY()
+	local objX, objY = catchObj.mo:getXY()
 
-	var_14_2.selfPosX = var_14_4
-	var_14_2.selfPosY = var_14_5
+	evtObj.selfPosX = objX
+	evtObj.selfPosY = objY
 
-	local var_14_6
-	local var_14_7
+	local nodePos1, nodePos2
 
 	ChessGameModel.instance:cleanCatchObjCanWalkList()
 
-	if var_14_0 == var_14_4 then
-		local var_14_8 = {
-			x = var_14_0,
-			y = math.max(var_14_1, var_14_5) + 1
+	if x == objX then
+		nodePos1 = {
+			x = x,
+			y = math.max(y, objY) + 1
 		}
 
-		if arg_14_0:catchObjCanWalk(var_14_8) then
-			table.insert(var_14_2.posXList, var_14_4)
-			table.insert(var_14_2.posYList, var_14_5 + 1)
-			table.insert(var_14_2.dirList, ChessGameEnum.Direction.Up)
+		if self:catchObjCanWalk(nodePos1) then
+			table.insert(evtObj.posXList, objX)
+			table.insert(evtObj.posYList, objY + 1)
+			table.insert(evtObj.dirList, ChessGameEnum.Direction.Up)
 
-			local var_14_9 = {
-				x = var_14_4,
-				y = var_14_5 + 1
+			local objPos = {
+				x = objX,
+				y = objY + 1
 			}
 
-			ChessGameModel.instance:insertCatchObjCanWalkList(var_14_9)
+			ChessGameModel.instance:insertCatchObjCanWalkList(objPos)
 		end
 
-		local var_14_10 = {
-			x = var_14_0,
-			y = math.min(var_14_1, var_14_5) - 1
+		nodePos1 = {
+			x = x,
+			y = math.min(y, objY) - 1
 		}
 
-		if arg_14_0:catchObjCanWalk(var_14_10) then
-			table.insert(var_14_2.posXList, var_14_4)
-			table.insert(var_14_2.posYList, var_14_5 - 1)
-			table.insert(var_14_2.dirList, ChessGameEnum.Direction.Down)
+		if self:catchObjCanWalk(nodePos1) then
+			table.insert(evtObj.posXList, objX)
+			table.insert(evtObj.posYList, objY - 1)
+			table.insert(evtObj.dirList, ChessGameEnum.Direction.Down)
 
-			local var_14_11 = {
-				x = var_14_4,
-				y = var_14_5 - 1
+			local objPos = {
+				x = objX,
+				y = objY - 1
 			}
 
-			ChessGameModel.instance:insertCatchObjCanWalkList(var_14_11)
+			ChessGameModel.instance:insertCatchObjCanWalkList(objPos)
 		end
 
-		local var_14_12 = {
-			x = var_14_0 - 1,
-			y = var_14_1
+		nodePos1 = {
+			x = x - 1,
+			y = y
 		}
-		local var_14_13 = {
-			x = var_14_4 - 1,
-			y = var_14_5
+		nodePos2 = {
+			x = objX - 1,
+			y = objY
 		}
 
-		if arg_14_0:catchObjCanWalk(var_14_12, var_14_13) then
-			table.insert(var_14_2.posXList, var_14_4 - 1)
-			table.insert(var_14_2.posYList, var_14_5)
-			table.insert(var_14_2.dirList, ChessGameEnum.Direction.Left)
+		if self:catchObjCanWalk(nodePos1, nodePos2) then
+			table.insert(evtObj.posXList, objX - 1)
+			table.insert(evtObj.posYList, objY)
+			table.insert(evtObj.dirList, ChessGameEnum.Direction.Left)
 
-			local var_14_14 = {
-				x = var_14_4 - 1,
-				y = var_14_5
+			local objPos = {
+				x = objX - 1,
+				y = objY
 			}
 
-			ChessGameModel.instance:insertCatchObjCanWalkList(var_14_14)
+			ChessGameModel.instance:insertCatchObjCanWalkList(objPos)
 		end
 
-		local var_14_15 = {
-			x = var_14_0 + 1,
-			y = var_14_1
+		nodePos1 = {
+			x = x + 1,
+			y = y
 		}
-		local var_14_16 = {
-			x = var_14_4 + 1,
-			y = var_14_5
+		nodePos2 = {
+			x = objX + 1,
+			y = objY
 		}
 
-		if arg_14_0:catchObjCanWalk(var_14_15, var_14_16) then
-			table.insert(var_14_2.posXList, var_14_4 + 1)
-			table.insert(var_14_2.posYList, var_14_5)
-			table.insert(var_14_2.dirList, ChessGameEnum.Direction.Right)
+		if self:catchObjCanWalk(nodePos1, nodePos2) then
+			table.insert(evtObj.posXList, objX + 1)
+			table.insert(evtObj.posYList, objY)
+			table.insert(evtObj.dirList, ChessGameEnum.Direction.Right)
 
-			local var_14_17 = {
-				x = var_14_4 + 1,
-				y = var_14_5
+			local objPos = {
+				x = objX + 1,
+				y = objY
 			}
 
-			ChessGameModel.instance:insertCatchObjCanWalkList(var_14_17)
+			ChessGameModel.instance:insertCatchObjCanWalkList(objPos)
 		end
 	else
-		local var_14_18 = {
-			x = var_14_0,
-			y = var_14_1 + 1
+		nodePos1 = {
+			x = x,
+			y = y + 1
 		}
-		local var_14_19 = {
-			x = var_14_4,
-			y = var_14_5 + 1
+		nodePos2 = {
+			x = objX,
+			y = objY + 1
 		}
 
-		if arg_14_0:catchObjCanWalk(var_14_18, var_14_19) then
-			table.insert(var_14_2.posXList, var_14_4)
-			table.insert(var_14_2.posYList, var_14_5 + 1)
-			table.insert(var_14_2.dirList, ChessGameEnum.Direction.Up)
+		if self:catchObjCanWalk(nodePos1, nodePos2) then
+			table.insert(evtObj.posXList, objX)
+			table.insert(evtObj.posYList, objY + 1)
+			table.insert(evtObj.dirList, ChessGameEnum.Direction.Up)
 
-			local var_14_20 = {
-				x = var_14_4,
-				y = var_14_5 + 1
+			local objPos = {
+				x = objX,
+				y = objY + 1
 			}
 
-			ChessGameModel.instance:insertCatchObjCanWalkList(var_14_20)
+			ChessGameModel.instance:insertCatchObjCanWalkList(objPos)
 		end
 
-		local var_14_21 = {
-			x = var_14_0,
-			y = var_14_1 - 1
+		nodePos1 = {
+			x = x,
+			y = y - 1
 		}
-		local var_14_22 = {
-			x = var_14_4,
-			y = var_14_5 - 1
+		nodePos2 = {
+			x = objX,
+			y = objY - 1
 		}
 
-		if arg_14_0:catchObjCanWalk(var_14_21, var_14_22) then
-			table.insert(var_14_2.posXList, var_14_4)
-			table.insert(var_14_2.posYList, var_14_5 - 1)
-			table.insert(var_14_2.dirList, ChessGameEnum.Direction.Down)
+		if self:catchObjCanWalk(nodePos1, nodePos2) then
+			table.insert(evtObj.posXList, objX)
+			table.insert(evtObj.posYList, objY - 1)
+			table.insert(evtObj.dirList, ChessGameEnum.Direction.Down)
 
-			local var_14_23 = {
-				x = var_14_4,
-				y = var_14_5 - 1
+			local objPos = {
+				x = objX,
+				y = objY - 1
 			}
 
-			ChessGameModel.instance:insertCatchObjCanWalkList(var_14_23)
+			ChessGameModel.instance:insertCatchObjCanWalkList(objPos)
 		end
 
-		local var_14_24 = {
-			x = math.min(var_14_0, var_14_4) - 1,
-			y = var_14_1
+		nodePos1 = {
+			x = math.min(x, objX) - 1,
+			y = y
 		}
 
-		if arg_14_0:catchObjCanWalk(var_14_24) then
-			table.insert(var_14_2.posXList, var_14_4 - 1)
-			table.insert(var_14_2.posYList, var_14_5)
-			table.insert(var_14_2.dirList, ChessGameEnum.Direction.Left)
+		if self:catchObjCanWalk(nodePos1) then
+			table.insert(evtObj.posXList, objX - 1)
+			table.insert(evtObj.posYList, objY)
+			table.insert(evtObj.dirList, ChessGameEnum.Direction.Left)
 
-			local var_14_25 = {
-				x = var_14_4 - 1,
-				y = var_14_5
+			local objPos = {
+				x = objX - 1,
+				y = objY
 			}
 
-			ChessGameModel.instance:insertCatchObjCanWalkList(var_14_25)
+			ChessGameModel.instance:insertCatchObjCanWalkList(objPos)
 		end
 
-		local var_14_26 = {
-			x = math.max(var_14_0, var_14_4) + 1,
-			y = var_14_1
+		nodePos1 = {
+			x = math.max(x, objX) + 1,
+			y = y
 		}
 
-		if arg_14_0:catchObjCanWalk(var_14_26) then
-			table.insert(var_14_2.posXList, var_14_4 + 1)
-			table.insert(var_14_2.posYList, var_14_5)
-			table.insert(var_14_2.dirList, ChessGameEnum.Direction.Right)
+		if self:catchObjCanWalk(nodePos1) then
+			table.insert(evtObj.posXList, objX + 1)
+			table.insert(evtObj.posYList, objY)
+			table.insert(evtObj.dirList, ChessGameEnum.Direction.Right)
 
-			local var_14_27 = {
-				x = var_14_4 + 1,
-				y = var_14_5
+			local objPos = {
+				x = objX + 1,
+				y = objY
 			}
 
-			ChessGameModel.instance:insertCatchObjCanWalkList(var_14_27)
+			ChessGameModel.instance:insertCatchObjCanWalkList(objPos)
 		end
 	end
 
-	ChessGameController.instance:dispatchEvent(ChessGameEvent.SetNeedChooseDirectionVisible, var_14_2)
+	ChessGameController.instance:dispatchEvent(ChessGameEvent.SetNeedChooseDirectionVisible, evtObj)
 end
 
-function var_0_0.catchObjCanWalk(arg_15_0, arg_15_1, arg_15_2)
-	if arg_15_1 and not ChessGameController.instance:posCanWalk(arg_15_1.x, arg_15_1.y) then
+function ChessInteractPlayer:catchObjCanWalk(nodePos1, nodePos2)
+	if nodePos1 and not ChessGameController.instance:posCanWalk(nodePos1.x, nodePos1.y) then
 		return false
 	end
 
-	if arg_15_2 and not ChessGameController.instance:posCanWalk(arg_15_2.x, arg_15_2.y) then
+	if nodePos2 and not ChessGameController.instance:posCanWalk(nodePos2.x, nodePos2.y) then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0.onSetPosWithCatchObj(arg_16_0, arg_16_1, arg_16_2)
-	local var_16_0 = {
-		x = arg_16_1,
-		y = arg_16_2
+function ChessInteractPlayer:onSetPosWithCatchObj(x, y)
+	local pos = {
+		x = x,
+		y = y
 	}
 
-	if not ChessGameModel.instance:checkPosCatchObjCanWalk(var_16_0) then
-		arg_16_0:cancelCatchObj(true)
+	if not ChessGameModel.instance:checkPosCatchObjCanWalk(pos) then
+		self:cancelCatchObj(true)
 
 		return
 	end
 
-	local var_16_1 = ChessGameModel.instance:getCatchObj()
+	local catchObj = ChessGameModel.instance:getCatchObj()
 
-	if not var_16_1 then
+	if not catchObj then
 		return
 	end
 
-	local var_16_2, var_16_3 = var_16_1.mo:getXY()
-	local var_16_4 = {
+	local objX, objY = catchObj.mo:getXY()
+	local optData = {
 		type = ChessGameEnum.OptType.WithInteract,
-		id = arg_16_0._target.mo.id,
-		direction = ChessGameHelper.ToDirection(var_16_2, var_16_3, arg_16_1, arg_16_2),
-		param = tostring(var_16_1.mo.id)
+		id = self._target.mo.id,
+		direction = ChessGameHelper.ToDirection(objX, objY, x, y),
+		param = tostring(catchObj.mo.id)
 	}
 
-	ChessGameModel.instance:appendOpt(var_16_4)
+	ChessGameModel.instance:appendOpt(optData)
 
-	local var_16_5 = ChessModel.instance:getActId()
-	local var_16_6 = ChessModel.instance:getEpisodeId()
-	local var_16_7 = ChessGameModel.instance:getOptList()
+	local actId = ChessModel.instance:getActId()
+	local episodeId = ChessModel.instance:getEpisodeId()
+	local optList = ChessGameModel.instance:getOptList()
 
-	ChessRpcController.instance:sendActBeginRoundRequest(var_16_5, var_16_6, var_16_7, arg_16_0.onMoveSuccess, arg_16_0)
+	ChessRpcController.instance:sendActBeginRoundRequest(actId, episodeId, optList, self.onMoveSuccess, self)
 	ChessGameController.instance:saveTempSelectObj()
 	ChessGameController.instance:setSelectObj(nil)
 end
 
-function var_0_0.cancelCatchObj(arg_17_0, arg_17_1)
-	if arg_17_1 then
+function ChessInteractPlayer:cancelCatchObj(isAnim)
+	if isAnim then
 		ChessGameModel.instance:setCatchObj(nil)
 		ChessGameModel.instance:cleanCatchObjCanWalkList()
 		ChessGameController.instance:dispatchEvent(ChessGameEvent.SetNeedChooseDirectionVisible, {
 			visible = false
 		})
-		arg_17_0:moveTo(arg_17_0._target.mo.posX, arg_17_0._target.mo.posY, arg_17_0.onSelected, arg_17_0)
+		self:moveTo(self._target.mo.posX, self._target.mo.posY, self.onSelected, self)
 	end
 end
 
-function var_0_0.onAvatarLoaded(arg_18_0)
-	var_0_0.super.onAvatarLoaded(arg_18_0)
+function ChessInteractPlayer:onAvatarLoaded()
+	ChessInteractPlayer.super.onAvatarLoaded(self)
 
-	local var_18_0 = arg_18_0._target.avatar.loader
+	local loader = self._target.avatar.loader
 
-	if not var_18_0 then
+	if not loader then
 		return
 	end
 
-	local var_18_1 = var_18_0:getInstGO()
+	local go = loader:getInstGO()
 
-	if not gohelper.isNil(var_18_1) then
-		arg_18_0._animSelf = var_18_1:GetComponent(typeof(UnityEngine.Animator))
+	if not gohelper.isNil(go) then
+		self._animSelf = go:GetComponent(typeof(UnityEngine.Animator))
 	end
 
-	arg_18_0._target.avatar.goSelected = gohelper.findChild(var_18_0:getInstGO(), "piecea/vx_select")
+	self._target.avatar.goSelected = gohelper.findChild(loader:getInstGO(), "piecea/vx_select")
 
-	gohelper.setActive(arg_18_0._target.avatar.goSelected, true)
-	arg_18_0:refreshPlayerSelected()
+	gohelper.setActive(self._target.avatar.goSelected, true)
+	self:refreshPlayerSelected()
 end
 
-return var_0_0
+return ChessInteractPlayer

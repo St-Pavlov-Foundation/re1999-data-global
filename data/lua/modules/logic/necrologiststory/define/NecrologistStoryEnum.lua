@@ -1,50 +1,60 @@
-﻿module("modules.logic.necrologiststory.define.NecrologistStoryEnum", package.seeall)
+﻿-- chunkname: @modules/logic/necrologiststory/define/NecrologistStoryEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.necrologiststory.define.NecrologistStoryEnum", package.seeall)
 
-var_0_0.RoleStoryId = {
-	V3A1 = 26
+local NecrologistStoryEnum = _M
+
+NecrologistStoryEnum.RoleStoryId = {
+	V3A1 = 26,
+	V3A2 = 27
 }
-var_0_0.RoleStoryId2MOCls = {
-	[var_0_0.RoleStoryId.V3A1] = "NecrologistV3A1MO"
+NecrologistStoryEnum.RoleStoryId2MOCls = {
+	[NecrologistStoryEnum.RoleStoryId.V3A1] = "NecrologistV3A1MO",
+	[NecrologistStoryEnum.RoleStoryId.V3A2] = "NecrologistV3A2MO"
 }
-var_0_0.StoryId2GameView = {
-	[var_0_0.RoleStoryId.V3A1] = ViewName.V3A1_RoleStoryGameView
+NecrologistStoryEnum.StoryId2GameView = {
+	[NecrologistStoryEnum.RoleStoryId.V3A1] = ViewName.V3A1_RoleStoryGameView,
+	[NecrologistStoryEnum.RoleStoryId.V3A2] = ViewName.V3A2_RoleStoryGameView
 }
-var_0_0.Pivot = {
+NecrologistStoryEnum.TaskParam = {
+	V3A2ItemUnlockCount = 2701
+}
+NecrologistStoryEnum.Pivot = {
 	Left = Vector2(0, 1),
 	Right = Vector2(1, 1),
 	Down = Vector2(1, 0)
 }
-var_0_0.DefaultInterval = 50
-var_0_0.BottomMargin = 50
-var_0_0.StoryState = {
+NecrologistStoryEnum.DefaultInterval = 50
+NecrologistStoryEnum.BottomMargin = 50
+NecrologistStoryEnum.StoryState = {
 	Finish = 4,
 	Reading = 2,
 	Lock = 1,
 	Normal = 3
 }
-var_0_0.StoryControlType = {
+NecrologistStoryEnum.StoryControlType = {
 	StoryPic = 1,
-	Effect = 4,
-	Audio = 3,
-	Magic = 5,
-	ErasePic = 6,
 	DragPic = 7,
+	Audio = 3,
+	Effect = 4,
+	Magic = 5,
+	ClickPic = 9,
+	Bgm = 2,
 	StopAudio = 8,
-	Bgm = 2
+	SlidePic = 10,
+	ErasePic = 6
 }
-var_0_0.GameState = {
+NecrologistStoryEnum.GameState = {
 	Win = 3,
 	Fail = 2,
 	Normal = 1
 }
-var_0_0.BaseType = {
+NecrologistStoryEnum.BaseType = {
 	InteractiveBase = 3,
 	SmallBase = 2,
 	BigBase = 1
 }
-var_0_0.WeatherType = {
+NecrologistStoryEnum.WeatherType = {
 	Cloudy = 3,
 	Light = 7,
 	Snowy = 5,
@@ -53,25 +63,41 @@ var_0_0.WeatherType = {
 	Rainy = 4,
 	Sunny = 1
 }
-var_0_0.WeatherType2Name = {
-	[var_0_0.WeatherType.Sunny] = "sun",
-	[var_0_0.WeatherType.Fog] = "fog",
-	[var_0_0.WeatherType.Cloudy] = "cloudy",
-	[var_0_0.WeatherType.Rainy] = "rain",
-	[var_0_0.WeatherType.Snowy] = "snow",
-	[var_0_0.WeatherType.Flow] = "flow",
-	[var_0_0.WeatherType.Light] = "light"
+NecrologistStoryEnum.WeatherType2Name = {
+	[NecrologistStoryEnum.WeatherType.Sunny] = "sun",
+	[NecrologistStoryEnum.WeatherType.Fog] = "fog",
+	[NecrologistStoryEnum.WeatherType.Cloudy] = "cloudy",
+	[NecrologistStoryEnum.WeatherType.Rainy] = "rain",
+	[NecrologistStoryEnum.WeatherType.Snowy] = "snow",
+	[NecrologistStoryEnum.WeatherType.Flow] = "flow",
+	[NecrologistStoryEnum.WeatherType.Light] = "light"
 }
-var_0_0.NeedDelayType = {
+NecrologistStoryEnum.NeedDelayType = {
 	options = 4,
 	aside = 2,
 	location = 3,
 	dialog = 1
 }
-var_0_0.NeedDelayControlType = {
-	[var_0_0.StoryControlType.Magic] = 1,
-	[var_0_0.StoryControlType.ErasePic] = 2,
-	[var_0_0.StoryControlType.DragPic] = 3
+NecrologistStoryEnum.NeedDelayControlType = {
+	[NecrologistStoryEnum.StoryControlType.Magic] = 1,
+	[NecrologistStoryEnum.StoryControlType.ErasePic] = 2,
+	[NecrologistStoryEnum.StoryControlType.DragPic] = 3
+}
+NecrologistStoryEnum.DirType = {
+	Top = 3,
+	Left = 1,
+	Right = 2,
+	Bottom = 4
+}
+NecrologistStoryEnum.MagicEffectType = {
+	Distort = 1,
+	SweepLight = 2
+}
+NecrologistStoryEnum.V3A2BaseState = {
+	Finish = 3,
+	Hide = 4,
+	Lock = 1,
+	Normal = 2
 }
 
-return var_0_0
+return NecrologistStoryEnum

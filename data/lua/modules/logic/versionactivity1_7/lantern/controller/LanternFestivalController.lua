@@ -1,34 +1,36 @@
-﻿module("modules.logic.versionactivity1_7.lantern.controller.LanternFestivalController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_7/lantern/controller/LanternFestivalController.lua
 
-local var_0_0 = class("LanternFestivalController", BaseController)
+module("modules.logic.versionactivity1_7.lantern.controller.LanternFestivalController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local LanternFestivalController = class("LanternFestivalController", BaseController)
+
+function LanternFestivalController:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
+function LanternFestivalController:reInit()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, arg_3_0._checkActivityInfo, arg_3_0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_3_0._checkActivityInfo, arg_3_0)
+function LanternFestivalController:addConstEvents()
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, self._checkActivityInfo, self)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self._checkActivityInfo, self)
 end
 
-function var_0_0._checkActivityInfo(arg_4_0)
+function LanternFestivalController:_checkActivityInfo()
 	if ActivityModel.instance:isActOnLine(ActivityEnum.Activity.LanternFestival) then
 		Activity154Rpc.instance:sendGet154InfosRequest(ActivityEnum.Activity.LanternFestival)
 	end
 end
 
-function var_0_0.openQuestionTipView(arg_5_0, arg_5_1)
-	ViewMgr.instance:openView(ViewName.LanternFestivalQuestionTipView, arg_5_1)
+function LanternFestivalController:openQuestionTipView(data)
+	ViewMgr.instance:openView(ViewName.LanternFestivalQuestionTipView, data)
 end
 
-function var_0_0.openLanternFestivalView(arg_6_0)
+function LanternFestivalController:openLanternFestivalView()
 	ViewMgr.instance:openView(ViewName.LanternFestivalView)
 end
 
-var_0_0.instance = var_0_0.New()
+LanternFestivalController.instance = LanternFestivalController.New()
 
-return var_0_0
+return LanternFestivalController

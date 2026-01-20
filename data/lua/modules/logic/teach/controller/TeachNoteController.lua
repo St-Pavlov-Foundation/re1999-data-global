@@ -1,47 +1,49 @@
-﻿module("modules.logic.teach.controller.TeachNoteController", package.seeall)
+﻿-- chunkname: @modules/logic/teach/controller/TeachNoteController.lua
 
-local var_0_0 = class("TeachNoteController", BaseController)
+module("modules.logic.teach.controller.TeachNoteController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local TeachNoteController = class("TeachNoteController", BaseController)
+
+function TeachNoteController:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function TeachNoteController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function TeachNoteController:addConstEvents()
 	return
 end
 
-function var_0_0.reInit(arg_4_0)
+function TeachNoteController:reInit()
 	return
 end
 
-function var_0_0.enterTeachNoteView(arg_5_0, arg_5_1, arg_5_2)
-	TeachNoteModel.instance:setJumpEnter(arg_5_2)
+function TeachNoteController:enterTeachNoteView(id, isJump)
+	TeachNoteModel.instance:setJumpEnter(isJump)
 
-	if not arg_5_2 then
+	if not isJump then
 		TeachNoteModel.instance:setJumpEpisodeId(nil)
 	end
 
-	local var_5_0 = {
-		isJump = arg_5_2,
-		episodeId = arg_5_1
-	}
+	local param = {}
 
-	ViewMgr.instance:openView(ViewName.TeachNoteView, var_5_0)
+	param.isJump = isJump
+	param.episodeId = id
+
+	ViewMgr.instance:openView(ViewName.TeachNoteView, param)
 
 	return ViewName.TeachNoteView
 end
 
-function var_0_0.enterTeachNoteDetailView(arg_6_0, arg_6_1)
+function TeachNoteController:enterTeachNoteDetailView(id)
 	TeachNoteModel.instance:setJumpEnter(false)
-	ViewMgr.instance:openView(ViewName.TeachNoteDetailView, arg_6_1)
+	ViewMgr.instance:openView(ViewName.TeachNoteDetailView, id)
 
 	return ViewName.TeachNoteDetailView
 end
 
-var_0_0.instance = var_0_0.New()
+TeachNoteController.instance = TeachNoteController.New()
 
-return var_0_0
+return TeachNoteController

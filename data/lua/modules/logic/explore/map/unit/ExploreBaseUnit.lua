@@ -1,426 +1,428 @@
-﻿module("modules.logic.explore.map.unit.ExploreBaseUnit", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/unit/ExploreBaseUnit.lua
 
-local var_0_0 = class("ExploreBaseUnit", BaseUnitSpawn)
-local var_0_1 = typeof(SLFramework.LuaMonobehavier)
+module("modules.logic.explore.map.unit.ExploreBaseUnit", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = gohelper.create3d(arg_1_1, arg_1_2)
+local ExploreBaseUnit = class("ExploreBaseUnit", BaseUnitSpawn)
+local Type_LuaMonobehavier = typeof(SLFramework.LuaMonobehavier)
 
-	arg_1_0.trans = var_1_0.transform
+function ExploreBaseUnit:ctor(parentGo, name)
+	local go = gohelper.create3d(parentGo, name)
 
-	arg_1_0:init(var_1_0)
+	self.trans = go.transform
 
-	arg_1_0._hasInteract = false
-	arg_1_0._isEnter = false
+	self:init(go)
 
-	arg_1_0:onInit()
+	self._hasInteract = false
+	self._isEnter = false
 
-	arg_1_0._luamonoContainer = var_1_0:GetComponent(var_0_1)
+	self:onInit()
 
-	arg_1_0:_checkContainerNeedUpdate()
+	self._luamonoContainer = go:GetComponent(Type_LuaMonobehavier)
+
+	self:_checkContainerNeedUpdate()
 end
 
-function var_0_0.isRole(arg_2_0)
+function ExploreBaseUnit:isRole()
 	return false
 end
 
-function var_0_0.canMove(arg_3_0)
+function ExploreBaseUnit:canMove()
 	return false
 end
 
-function var_0_0.onEnter(arg_4_0)
+function ExploreBaseUnit:onEnter()
 	return
 end
 
-function var_0_0.onUpdateCount(arg_5_0, arg_5_1, arg_5_2)
+function ExploreBaseUnit:onUpdateCount(count, totalCount)
 	return
 end
 
-function var_0_0.setupMO(arg_6_0)
+function ExploreBaseUnit:setupMO()
 	return
 end
 
-function var_0_0.doFix(arg_7_0)
+function ExploreBaseUnit:doFix()
 	return
 end
 
-function var_0_0.onTriggerDone(arg_8_0)
+function ExploreBaseUnit:onTriggerDone()
 	return
 end
 
-function var_0_0.onTrigger(arg_9_0)
+function ExploreBaseUnit:onTrigger()
 	return
 end
 
-function var_0_0.onCancelTrigger(arg_10_0)
+function ExploreBaseUnit:onCancelTrigger()
 	return
 end
 
-function var_0_0.onRoleEnter(arg_11_0, arg_11_1, arg_11_2)
+function ExploreBaseUnit:onRoleEnter(nowNode, preNode)
 	return
 end
 
-function var_0_0.onRoleStay(arg_12_0)
+function ExploreBaseUnit:onRoleStay()
 	return
 end
 
-function var_0_0.onRoleLeave(arg_13_0)
+function ExploreBaseUnit:onRoleLeave()
 	return
 end
 
-function var_0_0.onExit(arg_14_0)
+function ExploreBaseUnit:onExit()
 	return
 end
 
-function var_0_0.onRelease(arg_15_0)
+function ExploreBaseUnit:onRelease()
 	return
 end
 
-function var_0_0.onDestroy(arg_16_0)
+function ExploreBaseUnit:onDestroy()
 	return
 end
 
-function var_0_0.isMoving(arg_17_0)
+function ExploreBaseUnit:isMoving()
 	return false
 end
 
-function var_0_0._checkContainerNeedUpdate(arg_18_0)
+function ExploreBaseUnit:_checkContainerNeedUpdate()
 	return
 end
 
-function var_0_0.onLightDataChange(arg_19_0, arg_19_1)
-	if arg_19_0.lightComp then
-		arg_19_0.lightComp:onLightDataChange(arg_19_1)
+function ExploreBaseUnit:onLightDataChange(lightMO)
+	if self.lightComp then
+		self.lightComp:onLightDataChange(lightMO)
 	end
 end
 
-function var_0_0.onStatusChange(arg_20_0, arg_20_1)
-	if ExploreHelper.getBit(arg_20_1, ExploreEnum.InteractIndex.InteractEnabled) > 0 then
-		arg_20_0:onInteractChange(arg_20_0.mo:isInteractEnabled())
+function ExploreBaseUnit:onStatusChange(changeBit)
+	if ExploreHelper.getBit(changeBit, ExploreEnum.InteractIndex.InteractEnabled) > 0 then
+		self:onInteractChange(self.mo:isInteractEnabled())
 	end
 
-	if ExploreHelper.getBit(arg_20_1, ExploreEnum.InteractIndex.ActiveState) > 0 then
-		local var_20_0 = arg_20_0.mo:isInteractActiveState()
+	if ExploreHelper.getBit(changeBit, ExploreEnum.InteractIndex.ActiveState) > 0 then
+		local isActive = self.mo:isInteractActiveState()
 
-		arg_20_0:onActiveChange(var_20_0)
+		self:onActiveChange(isActive)
 
-		if arg_20_0.mo then
-			arg_20_0.mo:activeStateChange(var_20_0)
+		if self.mo then
+			self.mo:activeStateChange(isActive)
 		end
 	end
 end
 
-function var_0_0.onStatus2Change(arg_21_0, arg_21_1, arg_21_2)
+function ExploreBaseUnit:onStatus2Change(preStatuInfo, nowStatuInfo)
 	return
 end
 
-function var_0_0.onInteractChange(arg_22_0, arg_22_1)
+function ExploreBaseUnit:onInteractChange(nowInteract)
 	return
 end
 
-function var_0_0.onActiveChange(arg_23_0, arg_23_1)
+function ExploreBaseUnit:onActiveChange(nowActive)
 	return
 end
 
-function var_0_0.onNodeChange(arg_24_0, arg_24_1, arg_24_2)
+function ExploreBaseUnit:onNodeChange(preNode, nowNode)
 	return
 end
 
-function var_0_0.onRoleNear(arg_25_0)
-	arg_25_0._roleNear = true
+function ExploreBaseUnit:onRoleNear()
+	self._roleNear = true
 end
 
-function var_0_0.onRoleFar(arg_26_0)
-	arg_26_0._roleNear = false
+function ExploreBaseUnit:onRoleFar()
+	self._roleNear = false
 end
 
-function var_0_0.onMapInit(arg_27_0)
+function ExploreBaseUnit:onMapInit()
 	return
 end
 
-function var_0_0.onHeroInitDone(arg_28_0)
+function ExploreBaseUnit:onHeroInitDone()
 	return
 end
 
-function var_0_0.setData(arg_29_0, arg_29_1)
-	arg_29_0.mo = arg_29_1
-	arg_29_0.id = arg_29_1.id
-	arg_29_0.go.name = arg_29_0.__cname .. arg_29_1.id
+function ExploreBaseUnit:setData(mo)
+	self.mo = mo
+	self.id = mo.id
+	self.go.name = self.__cname .. mo.id
 
-	arg_29_0:setPosByNode(arg_29_1.nodePos)
+	self:setPosByNode(mo.nodePos)
 
-	if arg_29_0.mo:isEnter() then
-		arg_29_0:setEnter()
+	if self.mo:isEnter() then
+		self:setEnter()
 	else
-		arg_29_0:setExit()
+		self:setExit()
 	end
 
-	arg_29_0:_setupMO()
+	self:_setupMO()
 end
 
-function var_0_0.getExploreUnitMO(arg_30_0)
-	return arg_30_0.mo
+function ExploreBaseUnit:getExploreUnitMO()
+	return self.mo
 end
 
-function var_0_0.setTmpData(arg_31_0, arg_31_1)
-	arg_31_0.mo = arg_31_1
-	arg_31_0.id = arg_31_1.id
-	arg_31_0.go.name = arg_31_0.__cname .. arg_31_1.id
+function ExploreBaseUnit:setTmpData(mo)
+	self.mo = mo
+	self.id = mo.id
+	self.go.name = self.__cname .. mo.id
 
-	arg_31_0:setPosByNode(arg_31_1.nodePos, true)
-	arg_31_0:_setupMO()
+	self:setPosByNode(mo.nodePos, true)
+	self:_setupMO()
 end
 
-function var_0_0._setupMO(arg_32_0)
-	arg_32_0:setupMO()
+function ExploreBaseUnit:_setupMO()
+	self:setupMO()
 end
 
-function var_0_0.tryTrigger(arg_33_0, arg_33_1)
-	if arg_33_0.mo:isInteractEnabled() and arg_33_0._isEnter then
-		arg_33_0:onTrigger()
-		ExploreMapTriggerController.instance:triggerUnit(arg_33_0, arg_33_1)
+function ExploreBaseUnit:tryTrigger(clientOnly)
+	if self.mo:isInteractEnabled() and self._isEnter then
+		self:onTrigger()
+		ExploreMapTriggerController.instance:triggerUnit(self, clientOnly)
 
-		return arg_33_0:needInteractAnim()
+		return self:needInteractAnim()
 	end
 end
 
-function var_0_0.needInteractAnim(arg_34_0)
+function ExploreBaseUnit:needInteractAnim()
 	return false
 end
 
-function var_0_0.cancelTrigger(arg_35_0)
-	arg_35_0:onCancelTrigger()
-	ExploreMapTriggerController.instance:cancelTrigger(arg_35_0)
+function ExploreBaseUnit:cancelTrigger()
+	self:onCancelTrigger()
+	ExploreMapTriggerController.instance:cancelTrigger(self)
 end
 
-function var_0_0.getHasInteract(arg_36_0)
-	return arg_36_0.mo:isInteractDone()
+function ExploreBaseUnit:getHasInteract()
+	return self.mo:isInteractDone()
 end
 
-function var_0_0.setName(arg_37_0, arg_37_1)
-	arg_37_0.go.name = arg_37_1
+function ExploreBaseUnit:setName(value)
+	self.go.name = value
 end
 
-function var_0_0.setParent(arg_38_0, arg_38_1)
-	arg_38_0.trans:SetParent(arg_38_1)
+function ExploreBaseUnit:setParent(tran)
+	self.trans:SetParent(tran)
 end
 
-function var_0_0.getPos(arg_39_0)
-	return arg_39_0.position
+function ExploreBaseUnit:getPos()
+	return self.position
 end
 
-function var_0_0.getUnitType(arg_40_0)
-	if arg_40_0.mo then
-		return arg_40_0.mo.type
+function ExploreBaseUnit:getUnitType()
+	if self.mo then
+		return self.mo.type
 	end
 end
 
-function var_0_0.needUpdateHeroPos(arg_41_0)
+function ExploreBaseUnit:needUpdateHeroPos()
 	return false
 end
 
-function var_0_0.getFixItemId(arg_42_0)
+function ExploreBaseUnit:getFixItemId()
 	return nil
 end
 
-function var_0_0.canTrigger(arg_43_0)
-	return arg_43_0.mo and arg_43_0.mo:isInteractEnabled() and not arg_43_0.mo:isInteractFinishState() and arg_43_0:isEnter()
+function ExploreBaseUnit:canTrigger()
+	return self.mo and self.mo:isInteractEnabled() and not self.mo:isInteractFinishState() and self:isEnter()
 end
 
-function var_0_0.isInteractActiveState(arg_44_0)
-	if arg_44_0.mo then
-		return arg_44_0.mo:isInteractActiveState()
+function ExploreBaseUnit:isInteractActiveState()
+	if self.mo then
+		return self.mo:isInteractActiveState()
 	end
 
 	return false
 end
 
-function var_0_0.setPos(arg_45_0, arg_45_1, arg_45_2)
-	if gohelper.isNil(arg_45_0.go) == false then
-		transformhelper.setPos(arg_45_0.trans, -999999, 0, -99999)
+function ExploreBaseUnit:setPos(pos, notDispatchEvent)
+	if gohelper.isNil(self.go) == false then
+		transformhelper.setPos(self.trans, -999999, 0, -99999)
 
-		arg_45_1.y = 10
+		pos.y = 10
 
-		local var_45_0, var_45_1 = UnityEngine.Physics.Raycast(arg_45_1, Vector3.down, nil, Mathf.Infinity, ExploreHelper.getNavigateMask())
+		local isHit, hitInfo = UnityEngine.Physics.Raycast(pos, Vector3.down, nil, Mathf.Infinity, ExploreHelper.getNavigateMask())
 
-		if var_45_0 then
-			arg_45_1.y = var_45_1.point.y
+		if isHit then
+			pos.y = hitInfo.point.y
 		else
-			arg_45_1.y = arg_45_0.trans.position.y
+			pos.y = self.trans.position.y
 		end
 
-		arg_45_0.position = arg_45_1
+		self.position = pos
 
-		transformhelper.setPos(arg_45_0.trans, arg_45_0.position.x, arg_45_0.position.y, arg_45_0.position.z)
+		transformhelper.setPos(self.trans, self.position.x, self.position.y, self.position.z)
 
-		local var_45_2 = ExploreHelper.posToTile(arg_45_1)
+		local node = ExploreHelper.posToTile(pos)
 
-		if var_45_2 ~= arg_45_0.nodePos then
-			local var_45_3 = arg_45_0.nodePos
+		if node ~= self.nodePos then
+			local preNode = self.nodePos
 
-			arg_45_0.nodePos = var_45_2
+			self.nodePos = node
 
-			if arg_45_0.mo then
-				arg_45_0.mo:updatePos(var_45_2)
+			if self.mo then
+				self.mo:updatePos(node)
 			end
 
-			arg_45_0.nodeMO = ExploreMapModel.instance:getNode(ExploreHelper.getKey(arg_45_0.nodePos))
+			self.nodeMO = ExploreMapModel.instance:getNode(ExploreHelper.getKey(self.nodePos))
 
-			if arg_45_2 ~= true then
-				ExploreController.instance:dispatchEvent(ExploreEvent.OnUnitNodeChange, arg_45_0, arg_45_0.nodePos, var_45_3)
+			if notDispatchEvent ~= true then
+				ExploreController.instance:dispatchEvent(ExploreEvent.OnUnitNodeChange, self, self.nodePos, preNode)
 			end
 
-			arg_45_0:onNodeChange(var_45_3, arg_45_0.nodePos)
+			self:onNodeChange(preNode, self.nodePos)
 		end
 	end
 end
 
-function var_0_0.removeFromNode(arg_46_0)
-	local var_46_0 = arg_46_0.nodePos
+function ExploreBaseUnit:removeFromNode()
+	local preNode = self.nodePos
 
-	arg_46_0.nodePos = nil
+	self.nodePos = nil
 
-	if arg_46_0.mo then
-		arg_46_0.mo:removeFromNode()
+	if self.mo then
+		self.mo:removeFromNode()
 	end
 
-	arg_46_0.nodeMO = nil
+	self.nodeMO = nil
 
-	ExploreController.instance:dispatchEvent(ExploreEvent.OnUnitNodeChange, arg_46_0, false, var_46_0)
-	arg_46_0:onNodeChange(var_46_0, arg_46_0.nodePos)
+	ExploreController.instance:dispatchEvent(ExploreEvent.OnUnitNodeChange, self, false, preNode)
+	self:onNodeChange(preNode, self.nodePos)
 end
 
-function var_0_0.isPassLight(arg_47_0)
-	return arg_47_0:getLightRecvType() == ExploreEnum.LightRecvType.Photic
+function ExploreBaseUnit:isPassLight()
+	return self:getLightRecvType() == ExploreEnum.LightRecvType.Photic
 end
 
-function var_0_0.getLightRecvType(arg_48_0)
-	return arg_48_0.mo.isPhotic and ExploreEnum.LightRecvType.Photic or ExploreEnum.LightRecvType.Barricade
+function ExploreBaseUnit:getLightRecvType()
+	return self.mo.isPhotic and ExploreEnum.LightRecvType.Photic or ExploreEnum.LightRecvType.Barricade
 end
 
-function var_0_0.getLightRecvDirs(arg_49_0)
+function ExploreBaseUnit:getLightRecvDirs()
 	return nil
 end
 
-function var_0_0.onLightChange(arg_50_0, arg_50_1, arg_50_2)
+function ExploreBaseUnit:onLightChange(lightMO, isEnter)
 	return
 end
 
-function var_0_0.onLightEnter(arg_51_0, arg_51_1)
+function ExploreBaseUnit:onLightEnter(lightMO)
 	return
 end
 
-function var_0_0.onLightExit(arg_52_0)
+function ExploreBaseUnit:onLightExit()
 	return
 end
 
-function var_0_0.onRotation(arg_53_0)
+function ExploreBaseUnit:onRotation()
 	return
 end
 
-function var_0_0.setInFOV(arg_54_0, arg_54_1)
-	if arg_54_0:isEnter() and arg_54_0._isInFOV ~= arg_54_1 then
-		arg_54_0._isInFOV = arg_54_1
+function ExploreBaseUnit:setInFOV(v)
+	if self:isEnter() and self._isInFOV ~= v then
+		self._isInFOV = v
 
-		arg_54_0:onInFOVChange(arg_54_1)
+		self:onInFOVChange(v)
 	end
 end
 
-function var_0_0.isInFOV(arg_55_0)
-	return arg_55_0._isInFOV or false
+function ExploreBaseUnit:isInFOV()
+	return self._isInFOV or false
 end
 
-function var_0_0.onInFOVChange(arg_56_0, arg_56_1)
+function ExploreBaseUnit:onInFOVChange(v)
 	return
 end
 
-function var_0_0.updateSceneY(arg_57_0, arg_57_1)
-	if arg_57_1 then
-		arg_57_0.position.y = arg_57_1
+function ExploreBaseUnit:updateSceneY(y)
+	if y then
+		self.position.y = y
 	else
-		local var_57_0 = arg_57_0.position.y
+		local oldY = self.position.y
 
-		arg_57_0.position.y = 10
+		self.position.y = 10
 
-		local var_57_1, var_57_2 = UnityEngine.Physics.Raycast(arg_57_0.position, Vector3.down, nil, Mathf.Infinity, ExploreHelper.getNavigateMask())
+		local isHit, hitInfo = UnityEngine.Physics.Raycast(self.position, Vector3.down, nil, Mathf.Infinity, ExploreHelper.getNavigateMask())
 
-		if var_57_1 then
-			arg_57_0.position.y = var_57_2.point.y
+		if isHit then
+			self.position.y = hitInfo.point.y
 		else
-			arg_57_0.position.y = arg_57_0.trans.position.y
+			self.position.y = self.trans.position.y
 		end
 	end
 
-	transformhelper.setPos(arg_57_0.trans, arg_57_0.position.x, arg_57_0.position.y, arg_57_0.position.z)
+	transformhelper.setPos(self.trans, self.position.x, self.position.y, self.position.z)
 end
 
-function var_0_0.setScale(arg_58_0, arg_58_1)
-	transformhelper.setLocalScale(arg_58_0.trans, arg_58_1, arg_58_1, arg_58_1)
+function ExploreBaseUnit:setScale(v)
+	transformhelper.setLocalScale(self.trans, v, v, v)
 end
 
-function var_0_0.setRotate(arg_59_0, arg_59_1, arg_59_2, arg_59_3)
-	transformhelper.setLocalRotation(arg_59_0.trans, arg_59_1, arg_59_2, arg_59_3)
+function ExploreBaseUnit:setRotate(x, y, z)
+	transformhelper.setLocalRotation(self.trans, x, y, z)
 end
 
-function var_0_0.setPosByNode(arg_60_0, arg_60_1, arg_60_2)
-	arg_60_0:setPos(ExploreHelper.tileToPos(arg_60_1), arg_60_2)
+function ExploreBaseUnit:setPosByNode(node, notDispatchEvent)
+	self:setPos(ExploreHelper.tileToPos(node), notDispatchEvent)
 end
 
-function var_0_0.isEnter(arg_61_0)
-	return arg_61_0._isEnter
+function ExploreBaseUnit:isEnter()
+	return self._isEnter
 end
 
-function var_0_0.isActive(arg_62_0)
-	return arg_62_0.go.activeSelf
+function ExploreBaseUnit:isActive()
+	return self.go.activeSelf
 end
 
-function var_0_0.isEnable(arg_63_0)
-	return arg_63_0:isActive()
+function ExploreBaseUnit:isEnable()
+	return self:isActive()
 end
 
-function var_0_0.setActive(arg_64_0, arg_64_1)
-	gohelper.setActive(arg_64_0.go, arg_64_1)
+function ExploreBaseUnit:setActive(value)
+	gohelper.setActive(self.go, value)
 end
 
-function var_0_0.setEnter(arg_65_0)
-	if not arg_65_0:isEnter() then
-		arg_65_0._isEnter = true
+function ExploreBaseUnit:setEnter()
+	if not self:isEnter() then
+		self._isEnter = true
 
-		arg_65_0.mo:setEnter(true)
+		self.mo:setEnter(true)
 
 		if isDebugBuild then
-			logWarn(string.format("[+]%s:%s进入地图", arg_65_0.__cname, arg_65_0.id))
+			logWarn(string.format("[+]%s:%s进入地图", self.__cname, self.id))
 		end
 
-		arg_65_0:setActive(true)
-		arg_65_0:onEnter()
+		self:setActive(true)
+		self:onEnter()
 	end
 end
 
-function var_0_0.setExit(arg_66_0)
-	if arg_66_0:isEnter() then
-		arg_66_0._isEnter = false
+function ExploreBaseUnit:setExit()
+	if self:isEnter() then
+		self._isEnter = false
 
-		arg_66_0.mo:setEnter(false)
+		self.mo:setEnter(false)
 
 		if isDebugBuild then
-			logWarn(string.format("[-]%s:%s退出地图", arg_66_0.__cname, arg_66_0.id))
+			logWarn(string.format("[-]%s:%s退出地图", self.__cname, self.id))
 		end
 
-		arg_66_0:setActive(false)
-		arg_66_0:onExit()
+		self:setActive(false)
+		self:onExit()
 	else
-		logWarn("重复退出" .. arg_66_0.id .. arg_66_0.__cname)
+		logWarn("重复退出" .. self.id .. self.__cname)
 	end
 end
 
-function var_0_0.destroy(arg_67_0)
-	arg_67_0:onDestroy()
-	gohelper.destroy(arg_67_0.go)
+function ExploreBaseUnit:destroy()
+	self:onDestroy()
+	gohelper.destroy(self.go)
 
-	arg_67_0.trans = nil
-	arg_67_0.mo = nil
-	arg_67_0.go = nil
+	self.trans = nil
+	self.mo = nil
+	self.go = nil
 end
 
-return var_0_0
+return ExploreBaseUnit

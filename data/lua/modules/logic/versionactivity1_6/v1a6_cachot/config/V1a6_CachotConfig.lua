@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.config.V1a6_CachotConfig", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/config/V1a6_CachotConfig.lua
 
-local var_0_0 = class("V1a6_CachotConfig", BaseConfig)
+module("modules.logic.versionactivity1_6.v1a6_cachot.config.V1a6_CachotConfig", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local V1a6_CachotConfig = class("V1a6_CachotConfig", BaseConfig)
+
+function V1a6_CachotConfig:reqConfigNames()
 	return {
 		"rogue_const",
 		"rogue_difficulty",
@@ -14,88 +16,92 @@ function var_0_0.reqConfigNames(arg_1_0)
 	}
 end
 
-function var_0_0.onInit(arg_2_0)
+function V1a6_CachotConfig:onInit()
 	return
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "rogue_score" then
-		V1a6_CachotScoreConfig.instance:init(arg_3_2)
-	elseif arg_3_1 == "rogue_room" then
-		V1a6_CachotRoomConfig.instance:init(arg_3_2)
+function V1a6_CachotConfig:onConfigLoaded(configName, configTable)
+	if configName == "rogue_score" then
+		V1a6_CachotScoreConfig.instance:init(configTable)
+	elseif configName == "rogue_room" then
+		V1a6_CachotRoomConfig.instance:init(configTable)
 	end
 end
 
-function var_0_0.getHeartConfig(arg_4_0, arg_4_1)
-	local var_4_0
+function V1a6_CachotConfig:getHeartConfig(heartNum)
+	local co
 
-	for iter_4_0, iter_4_1 in pairs(lua_rogue_heartbeat.configList) do
-		local var_4_1 = string.splitToNumber(iter_4_1.range, "#")
+	for _, v in pairs(lua_rogue_heartbeat.configList) do
+		local arr = string.splitToNumber(v.range, "#")
 
-		if arg_4_1 >= var_4_1[1] and arg_4_1 <= var_4_1[2] then
-			var_4_0 = iter_4_1
+		if heartNum >= arr[1] and heartNum <= arr[2] then
+			co = v
 
 			break
 		end
 	end
 
-	if not var_4_0 then
-		logError("没有心跳对应的配置:" .. arg_4_1)
+	if not co then
+		logError("没有心跳对应的配置:" .. heartNum)
 
-		var_4_0 = lua_rogue_heartbeat.configList[1]
+		co = lua_rogue_heartbeat.configList[1]
 	end
 
-	return var_4_0
+	return co
 end
 
-function var_0_0.getDifficultyConfig(arg_5_0, arg_5_1)
-	local var_5_0
+function V1a6_CachotConfig:getDifficultyConfig(difficulty)
+	local co
 
-	for iter_5_0, iter_5_1 in ipairs(lua_rogue_difficulty.configList) do
-		if arg_5_1 == iter_5_0 then
-			var_5_0 = iter_5_1
+	for i, v in ipairs(lua_rogue_difficulty.configList) do
+		if difficulty == i then
+			co = v
 
 			break
 		end
 	end
 
-	if not var_5_0 then
-		logError("没有难度对应的配置:" .. arg_5_1)
+	if not co then
+		logError("没有难度对应的配置:" .. difficulty)
 
-		var_5_0 = lua_rogue_difficulty.configList[1]
+		co = lua_rogue_difficulty.configList[1]
 	end
 
-	return var_5_0
+	return co
 end
 
-function var_0_0.getDifficultyCount(arg_6_0)
+function V1a6_CachotConfig:getDifficultyCount()
 	return #lua_rogue_difficulty.configList
 end
 
-function var_0_0.getConstConfig(arg_7_0, arg_7_1)
-	local var_7_0
+function V1a6_CachotConfig:getConstConfig(id)
+	local co
 
-	for iter_7_0, iter_7_1 in ipairs(lua_rogue_const.configList) do
-		if arg_7_1 == iter_7_0 then
-			var_7_0 = iter_7_1
+	for i, v in ipairs(lua_rogue_const.configList) do
+		if id == i then
+			co = v
 
 			break
 		end
 	end
 
-	if not var_7_0 then
-		logError("没有常量对应的配置:" .. arg_7_1)
+	if not co then
+		logError("没有常量对应的配置:" .. id)
 
-		var_7_0 = lua_rogue_const.configList[1]
+		co = lua_rogue_const.configList[1]
 	end
 
-	return var_7_0
+	return co
 end
 
-function var_0_0.getSceneLevelId(arg_8_0, arg_8_1)
-	return (lua_rogue_scene_level.configDict[arg_8_1] or lua_rogue_scene_level.configList[1]).sceneLevel
+function V1a6_CachotConfig:getSceneLevelId(id)
+	local co = lua_rogue_scene_level.configDict[id]
+
+	co = co or lua_rogue_scene_level.configList[1]
+
+	return co.sceneLevel
 end
 
-var_0_0.instance = var_0_0.New()
+V1a6_CachotConfig.instance = V1a6_CachotConfig.New()
 
-return var_0_0
+return V1a6_CachotConfig

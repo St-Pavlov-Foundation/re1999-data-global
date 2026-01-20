@@ -1,15 +1,17 @@
-﻿module("modules.logic.equip.model.EquipBreakCostListModel", package.seeall)
+﻿-- chunkname: @modules/logic/equip/model/EquipBreakCostListModel.lua
 
-local var_0_0 = class("EquipBreakCostListModel", ListScrollModel)
+module("modules.logic.equip.model.EquipBreakCostListModel", package.seeall)
 
-function var_0_0.initList(arg_1_0, arg_1_1)
-	arg_1_0:setList(arg_1_1)
+local EquipBreakCostListModel = class("EquipBreakCostListModel", ListScrollModel)
+
+function EquipBreakCostListModel:initList(items)
+	self:setList(items)
 end
 
-function var_0_0.clearList(arg_2_0)
-	arg_2_0:clear()
+function EquipBreakCostListModel:clearList()
+	self:clear()
 end
 
-var_0_0.instance = var_0_0.New()
+EquipBreakCostListModel.instance = EquipBreakCostListModel.New()
 
-return var_0_0
+return EquipBreakCostListModel

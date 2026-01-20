@@ -1,7 +1,9 @@
-﻿module("modules.logic.versionactivity2_8.act199.view.V2a8_SelfSelectSix_PickChoiceHeroItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/act199/view/V2a8_SelfSelectSix_PickChoiceHeroItem.lua
 
-local var_0_0 = class("V2a8_SelfSelectSix_PickChoiceHeroItem", LuaCompBase)
-local var_0_1 = {
+module("modules.logic.versionactivity2_8.act199.view.V2a8_SelfSelectSix_PickChoiceHeroItem", package.seeall)
+
+local V2a8_SelfSelectSix_PickChoiceHeroItem = class("V2a8_SelfSelectSix_PickChoiceHeroItem", LuaCompBase)
+local exSkillFillAmount = {
 	0.2,
 	0.4,
 	0.6,
@@ -9,141 +11,142 @@ local var_0_1 = {
 	1
 }
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._go = arg_1_1
-	arg_1_0._goclick = gohelper.findChild(arg_1_0._go, "go_click")
-	arg_1_0._btnClick = gohelper.getClickWithAudio(arg_1_0._goclick, AudioEnum.UI.UI_vertical_first_tabs_click)
-	arg_1_0._btnLongPress = SLFramework.UGUI.UILongPressListener.Get(arg_1_0._goclick)
+function V2a8_SelfSelectSix_PickChoiceHeroItem:init(go)
+	self._go = go
+	self._goclick = gohelper.findChild(self._go, "go_click")
+	self._btnClick = gohelper.getClickWithAudio(self._goclick, AudioEnum.UI.UI_vertical_first_tabs_click)
+	self._btnLongPress = SLFramework.UGUI.UILongPressListener.Get(self._goclick)
 
-	arg_1_0._btnLongPress:SetLongPressTime({
+	self._btnLongPress:SetLongPressTime({
 		0.5,
 		99999
 	})
 
-	arg_1_0._goSelected = gohelper.findChild(arg_1_0._go, "select")
-	arg_1_0._imagerare = gohelper.findChildImage(arg_1_0._go, "role/rare")
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0._go, "role/heroicon")
-	arg_1_0._imagecareer = gohelper.findChildImage(arg_1_0._go, "role/career")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0._go, "role/name")
-	arg_1_0._goexskill = gohelper.findChild(arg_1_1, "role/#go_exskill")
-	arg_1_0._imageexskill = gohelper.findChildImage(arg_1_1, "role/#go_exskill/#image_exskill")
-	arg_1_0._goRankBg = gohelper.findChild(arg_1_1, "role/Rank")
-	arg_1_0._goranks = arg_1_0:getUserDataTb_()
+	self._goSelected = gohelper.findChild(self._go, "select")
+	self._imagerare = gohelper.findChildImage(self._go, "role/rare")
+	self._simageicon = gohelper.findChildSingleImage(self._go, "role/heroicon")
+	self._imagecareer = gohelper.findChildImage(self._go, "role/career")
+	self._txtname = gohelper.findChildText(self._go, "role/name")
+	self._goexskill = gohelper.findChild(go, "role/#go_exskill")
+	self._imageexskill = gohelper.findChildImage(go, "role/#go_exskill/#image_exskill")
+	self._goRankBg = gohelper.findChild(go, "role/Rank")
+	self._goranks = self:getUserDataTb_()
 
-	for iter_1_0 = 1, 3 do
-		arg_1_0._goranks[iter_1_0] = gohelper.findChild(arg_1_1, "role/Rank/rank" .. iter_1_0)
+	for i = 1, 3 do
+		self._goranks[i] = gohelper.findChild(go, "role/Rank/rank" .. i)
 	end
 
-	arg_1_0:addEvents()
+	self:addEvents()
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnClick:AddClickListener(arg_2_0.onClickSelf, arg_2_0)
-	arg_2_0._btnLongPress:AddLongPressListener(arg_2_0._onLongClickItem, arg_2_0)
+function V2a8_SelfSelectSix_PickChoiceHeroItem:addEvents()
+	self._btnClick:AddClickListener(self.onClickSelf, self)
+	self._btnLongPress:AddLongPressListener(self._onLongClickItem, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnClick:RemoveClickListener()
-	arg_3_0._btnLongPress:RemoveLongPressListener()
+function V2a8_SelfSelectSix_PickChoiceHeroItem:removeEvents()
+	self._btnClick:RemoveClickListener()
+	self._btnLongPress:RemoveLongPressListener()
 end
 
-function var_0_0.onClickSelf(arg_4_0)
-	logNormal("V2a8_SelfSelectSix_PickChoiceHeroItem onClickChoice id = " .. tostring(arg_4_0._mo.id))
-	V2a8_SelfSelectSix_PickChoiceController.instance:setSelect(arg_4_0._mo.id)
+function V2a8_SelfSelectSix_PickChoiceHeroItem:onClickSelf()
+	logNormal("V2a8_SelfSelectSix_PickChoiceHeroItem onClickChoice id = " .. tostring(self._mo.id))
+	V2a8_SelfSelectSix_PickChoiceController.instance:setSelect(self._mo.id)
 end
 
-function var_0_0._onLongClickItem(arg_5_0)
-	if not arg_5_0._mo then
+function V2a8_SelfSelectSix_PickChoiceHeroItem:_onLongClickItem()
+	if not self._mo then
 		return
 	end
 
 	ViewMgr.instance:openView(ViewName.SummonHeroDetailView, {
-		heroId = arg_5_0._mo.id
+		heroId = self._mo.id
 	})
 end
 
-function var_0_0.onUpdateMO(arg_6_0, arg_6_1)
-	arg_6_0._mo = arg_6_1
+function V2a8_SelfSelectSix_PickChoiceHeroItem:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_6_0:refreshUI()
-	arg_6_0:refreshSelect()
+	self:refreshUI()
+	self:refreshSelect()
 end
 
-function var_0_0.setLock(arg_7_0)
-	arg_7_0._btnClick:RemoveClickListener()
+function V2a8_SelfSelectSix_PickChoiceHeroItem:setLock()
+	self._btnClick:RemoveClickListener()
 end
 
-function var_0_0.setUnLock(arg_8_0)
-	arg_8_0._btnClick:AddClickListener(arg_8_0.onClickSelf, arg_8_0)
+function V2a8_SelfSelectSix_PickChoiceHeroItem:setUnLock()
+	self._btnClick:AddClickListener(self.onClickSelf, self)
 end
 
-function var_0_0.refreshUI(arg_9_0)
-	local var_9_0 = HeroConfig.instance:getHeroCO(arg_9_0._mo.id)
+function V2a8_SelfSelectSix_PickChoiceHeroItem:refreshUI()
+	local heroCo = HeroConfig.instance:getHeroCO(self._mo.id)
 
-	if not var_9_0 then
-		logError("V2a8_SelfSelectSix_PickChoiceHeroItem.onUpdateMO error, heroConfig is nil, id:" .. tostring(arg_9_0._mo.id))
+	if not heroCo then
+		logError("V2a8_SelfSelectSix_PickChoiceHeroItem.onUpdateMO error, heroConfig is nil, id:" .. tostring(self._mo.id))
 
 		return
 	end
 
-	arg_9_0:refreshBaseInfo(var_9_0)
-	arg_9_0:refreshExSkill()
+	self:refreshBaseInfo(heroCo)
+	self:refreshExSkill()
 end
 
-function var_0_0.refreshBaseInfo(arg_10_0, arg_10_1)
-	local var_10_0 = SkinConfig.instance:getSkinCo(arg_10_1.skinId)
+function V2a8_SelfSelectSix_PickChoiceHeroItem:refreshBaseInfo(heroCo)
+	local skinConfig = SkinConfig.instance:getSkinCo(heroCo.skinId)
 
-	if not var_10_0 then
-		logError("V2a8_SelfSelectSix_PickChoiceHeroItem.onUpdateMO error, skinCfg is nil, id:" .. tostring(arg_10_1.skinId))
+	if not skinConfig then
+		logError("V2a8_SelfSelectSix_PickChoiceHeroItem.onUpdateMO error, skinCfg is nil, id:" .. tostring(heroCo.skinId))
 
 		return
 	end
 
-	arg_10_0._simageicon:LoadImage(ResUrl.getRoomHeadIcon(var_10_0.headIcon))
-	UISpriteSetMgr.instance:setCommonSprite(arg_10_0._imagecareer, "lssx_" .. arg_10_1.career)
-	UISpriteSetMgr.instance:setCommonSprite(arg_10_0._imagerare, "bgequip" .. tostring(CharacterEnum.Color[arg_10_1.rare]))
+	self._simageicon:LoadImage(ResUrl.getRoomHeadIcon(skinConfig.headIcon))
+	UISpriteSetMgr.instance:setCommonSprite(self._imagecareer, "lssx_" .. heroCo.career)
+	UISpriteSetMgr.instance:setCommonSprite(self._imagerare, "bgequip" .. tostring(CharacterEnum.Color[heroCo.rare]))
 
-	arg_10_0._txtname.text = arg_10_1.name
+	self._txtname.text = heroCo.name
 
-	local var_10_1 = arg_10_0._mo.rank - 1
-	local var_10_2 = false
+	local rank = self._mo.rank
+	local rankIconIndex = rank - 1
+	local isShowRanIcon = false
 
-	for iter_10_0 = 1, 3 do
-		local var_10_3 = iter_10_0 == var_10_1
+	for i = 1, 3 do
+		local isCurRanIcon = i == rankIconIndex
 
-		gohelper.setActive(arg_10_0._goranks[iter_10_0], var_10_3)
+		gohelper.setActive(self._goranks[i], isCurRanIcon)
 
-		var_10_2 = var_10_2 or var_10_3
+		isShowRanIcon = isShowRanIcon or isCurRanIcon
 	end
 
-	gohelper.setActive(arg_10_0._goRankBg, var_10_2)
+	gohelper.setActive(self._goRankBg, isShowRanIcon)
 end
 
-function var_0_0.refreshExSkill(arg_11_0)
-	if not arg_11_0._mo:hasHero() or arg_11_0._mo:getSkillLevel() <= 0 then
-		gohelper.setActive(arg_11_0._goexskill, false)
+function V2a8_SelfSelectSix_PickChoiceHeroItem:refreshExSkill()
+	if not self._mo:hasHero() or self._mo:getSkillLevel() <= 0 then
+		gohelper.setActive(self._goexskill, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_11_0._goexskill, true)
+	gohelper.setActive(self._goexskill, true)
 
-	arg_11_0._imageexskill.fillAmount = var_0_1[arg_11_0._mo:getSkillLevel()] or 1
+	self._imageexskill.fillAmount = exSkillFillAmount[self._mo:getSkillLevel()] or 1
 end
 
-function var_0_0.refreshSelect(arg_12_0)
-	local var_12_0 = V2a8_SelfSelectSix_PickChoiceListModel.instance:isHeroIdSelected(arg_12_0._mo.id)
+function V2a8_SelfSelectSix_PickChoiceHeroItem:refreshSelect()
+	local isSelect = V2a8_SelfSelectSix_PickChoiceListModel.instance:isHeroIdSelected(self._mo.id)
 
-	gohelper.setActive(arg_12_0._goSelected, var_12_0)
+	gohelper.setActive(self._goSelected, isSelect)
 end
 
-function var_0_0.onDestroy(arg_13_0)
-	if not arg_13_0._isDisposed then
-		arg_13_0._simageicon:UnLoadImage()
-		arg_13_0:removeEvents()
+function V2a8_SelfSelectSix_PickChoiceHeroItem:onDestroy()
+	if not self._isDisposed then
+		self._simageicon:UnLoadImage()
+		self:removeEvents()
 
-		arg_13_0._isDisposed = true
+		self._isDisposed = true
 	end
 end
 
-return var_0_0
+return V2a8_SelfSelectSix_PickChoiceHeroItem

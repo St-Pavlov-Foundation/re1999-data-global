@@ -1,9 +1,11 @@
-﻿module("modules.logic.activity.view.V2a2_RedLeafFestival_FullViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/V2a2_RedLeafFestival_FullViewContainer.lua
 
-local var_0_0 = class("V2a2_RedLeafFestival_FullViewContainer", V2a2_RedLeafFestival_SignItemViewContainer)
+module("modules.logic.activity.view.V2a2_RedLeafFestival_FullViewContainer", package.seeall)
 
-function var_0_0.onGetMainViewClassType(arg_1_0)
+local V2a2_RedLeafFestival_FullViewContainer = class("V2a2_RedLeafFestival_FullViewContainer", V2a2_RedLeafFestival_SignItemViewContainer)
+
+function V2a2_RedLeafFestival_FullViewContainer:onGetMainViewClassType()
 	return V2a2_RedLeafFestival_FullView
 end
 
-return var_0_0
+return V2a2_RedLeafFestival_FullViewContainer

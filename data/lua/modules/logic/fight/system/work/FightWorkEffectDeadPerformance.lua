@@ -1,27 +1,31 @@
-﻿module("modules.logic.fight.system.work.FightWorkEffectDeadPerformance", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkEffectDeadPerformance.lua
 
-local var_0_0 = class("FightWorkEffectDeadPerformance", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkEffectDeadPerformance", package.seeall)
 
-function var_0_0.onLogicEnter(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.fightStepData = arg_1_1
-	arg_1_0.actEffectData = arg_1_2
-	arg_1_0._waitForLastHit = arg_1_3
+local FightWorkEffectDeadPerformance = class("FightWorkEffectDeadPerformance", FightEffectBase)
+
+function FightWorkEffectDeadPerformance:onLogicEnter(fightStepData, fightActEffectData, waitForLastHit)
+	self.fightStepData = fightStepData
+	self.actEffectData = fightActEffectData
+	self._waitForLastHit = waitForLastHit
 end
 
-function var_0_0.onStart(arg_2_0)
-	local var_2_0 = arg_2_0:com_registWorkDoneFlowSequence()
+function FightWorkEffectDeadPerformance:onStart()
+	local flow = self:com_registWorkDoneFlowSequence()
 
-	var_2_0:registWork(FightWorkEffectDeadNew, arg_2_0.fightStepData, arg_2_0.actEffectData, arg_2_0._waitForLastHit)
+	flow:registWork(FightWorkEffectDeadNew, self.fightStepData, self.actEffectData, self._waitForLastHit)
 
-	if FightModel.instance:getVersion() < 1 and arg_2_0.actEffectData and arg_2_0.actEffectData.targetId then
-		var_2_0:addWork(Work2FightWork.New(FightWorkDissolveCardForDeadVersion0, arg_2_0.actEffectData))
+	local version = FightModel.instance:getVersion()
+
+	if version < 1 and self.actEffectData and self.actEffectData.targetId then
+		flow:addWork(Work2FightWork.New(FightWorkDissolveCardForDeadVersion0, self.actEffectData))
 	end
 
-	var_2_0:start()
+	flow:start()
 end
 
-function var_0_0.clearWork(arg_3_0)
+function FightWorkEffectDeadPerformance:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkEffectDeadPerformance

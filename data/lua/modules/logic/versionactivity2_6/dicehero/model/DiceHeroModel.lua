@@ -1,59 +1,61 @@
-﻿module("modules.logic.versionactivity2_6.dicehero.model.DiceHeroModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/dicehero/model/DiceHeroModel.lua
 
-local var_0_0 = class("DiceHeroModel", BaseModel)
+module("modules.logic.versionactivity2_6.dicehero.model.DiceHeroModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0.unlockChapterIds = {}
-	arg_1_0.gameInfos = {}
-	arg_1_0.guideChapter = 0
-	arg_1_0.guideLevel = 0
-	arg_1_0.isUnlockNewChapter = false
-	arg_1_0.talkId = 0
-	arg_1_0.stepId = 0
+local DiceHeroModel = class("DiceHeroModel", BaseModel)
+
+function DiceHeroModel:onInit()
+	self.unlockChapterIds = {}
+	self.gameInfos = {}
+	self.guideChapter = 0
+	self.guideLevel = 0
+	self.isUnlockNewChapter = false
+	self.talkId = 0
+	self.stepId = 0
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:onInit()
+function DiceHeroModel:reInit()
+	self:onInit()
 end
 
-function var_0_0.initInfo(arg_3_0, arg_3_1)
-	arg_3_0.gameInfos = {}
+function DiceHeroModel:initInfo(msg)
+	self.gameInfos = {}
 
-	local var_3_0 = arg_3_0.unlockChapterIds
+	local leftUnlockChapters = self.unlockChapterIds
 
-	arg_3_0.unlockChapterIds = {
+	self.unlockChapterIds = {
 		[1] = true
 	}
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1.gameInfo) do
-		arg_3_0.gameInfos[iter_3_1.chapter] = DiceHeroGameInfoMo.New()
+	for _, info in ipairs(msg.gameInfo) do
+		self.gameInfos[info.chapter] = DiceHeroGameInfoMo.New()
 
-		arg_3_0.gameInfos[iter_3_1.chapter]:init(iter_3_1)
+		self.gameInfos[info.chapter]:init(info)
 
-		if arg_3_0.gameInfos[iter_3_1.chapter].allPass then
-			arg_3_0.unlockChapterIds[iter_3_1.chapter + 1] = true
+		if self.gameInfos[info.chapter].allPass then
+			self.unlockChapterIds[info.chapter + 1] = true
 		end
 	end
 
-	arg_3_0.isUnlockNewChapter = #var_3_0 ~= #arg_3_0.unlockChapterIds
+	self.isUnlockNewChapter = #leftUnlockChapters ~= #self.unlockChapterIds
 
 	DiceHeroController.instance:dispatchEvent(DiceHeroEvent.InfoUpdate)
 end
 
-function var_0_0.getGameInfo(arg_4_0, arg_4_1)
-	return arg_4_0.gameInfos[arg_4_1 or 1]
+function DiceHeroModel:getGameInfo(chapter)
+	return self.gameInfos[chapter or 1]
 end
 
-function var_0_0.hasReward(arg_5_0, arg_5_1)
-	arg_5_1 = arg_5_1 or 1
+function DiceHeroModel:hasReward(chapter)
+	chapter = chapter or 1
 
-	if not arg_5_0.gameInfos[arg_5_1] then
+	if not self.gameInfos[chapter] then
 		return false
 	end
 
-	return arg_5_0.gameInfos[arg_5_1]:hasReward()
+	return self.gameInfos[chapter]:hasReward()
 end
 
-var_0_0.instance = var_0_0.New()
+DiceHeroModel.instance = DiceHeroModel.New()
 
-return var_0_0
+return DiceHeroModel

@@ -1,17 +1,19 @@
-﻿module("modules.logic.room.view.RoomProductLineLevelUpViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomProductLineLevelUpViewContainer.lua
 
-local var_0_0 = class("RoomProductLineLevelUpViewContainer", BaseViewContainer)
+module("modules.logic.room.view.RoomProductLineLevelUpViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoomProductLineLevelUpViewContainer = class("RoomProductLineLevelUpViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RoomProductLineLevelUpView.New())
+function RoomProductLineLevelUpViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RoomProductLineLevelUpView.New())
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
+function RoomProductLineLevelUpViewContainer:onContainerClickModalMask()
 	ViewMgr.instance:closeView(ViewName.RoomProductLineLevelUpView, nil, true)
 end
 
-return var_0_0
+return RoomProductLineLevelUpViewContainer

@@ -1,13 +1,15 @@
-﻿module("modules.logic.story.view.StoryViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/story/view/StoryViewContainer.lua
 
-local var_0_0 = class("StoryViewContainer", BaseViewContainer)
+module("modules.logic.story.view.StoryViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local StoryViewContainer = class("StoryViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, StoryView.New())
+function StoryViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, StoryView.New())
+
+	return views
 end
 
-return var_0_0
+return StoryViewContainer

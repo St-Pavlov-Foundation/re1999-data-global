@@ -1,114 +1,118 @@
-﻿module("modules.logic.survival.view.map.comp.SurvivalInitHeroSelectQuickEditItem", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/comp/SurvivalInitHeroSelectQuickEditItem.lua
 
-local var_0_0 = class("SurvivalInitHeroSelectQuickEditItem", SurvivalInitHeroSelectEditItem)
+module("modules.logic.survival.view.map.comp.SurvivalInitHeroSelectQuickEditItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	var_0_0.super.init(arg_1_0, arg_1_1)
+local SurvivalInitHeroSelectQuickEditItem = class("SurvivalInitHeroSelectQuickEditItem", SurvivalInitHeroSelectEditItem)
 
-	arg_1_0._goframe = gohelper.findChild(arg_1_1, "frame")
-	arg_1_0._txtorder = gohelper.findChildTextMesh(arg_1_1, "go_order/txt_order")
-	arg_1_0._goorderbg = gohelper.findChild(arg_1_1, "go_order")
+function SurvivalInitHeroSelectQuickEditItem:init(go)
+	SurvivalInitHeroSelectQuickEditItem.super.init(self, go)
 
-	arg_1_0:enableDeselect(false)
-	arg_1_0._heroItem:setNewShow(false)
-	arg_1_0._heroItem:_setTxtPos("_nameCnTxt", 0.55, 68.9)
-	arg_1_0._heroItem:_setTxtPos("_nameEnTxt", 0.55, 36.1)
-	arg_1_0._heroItem:_setTxtPos("_lvObj", 1.7, 96.8)
-	arg_1_0._heroItem:_setTxtPos("_rankObj", 1.7, -107.7)
-	arg_1_0._heroItem:_setTranScale("_nameCnTxt", 1.25, 1.25)
-	arg_1_0._heroItem:_setTranScale("_nameEnTxt", 1.25, 1.25)
-	arg_1_0._heroItem:_setTranScale("_lvObj", 1.25, 1.25)
-	arg_1_0._heroItem:_setTranScale("_rankObj", 0.22, 0.22)
-	arg_1_0._heroItem:setStyle_SurvivalHeroGroupEdit()
-	gohelper.setActive(arg_1_0._goorderbg, false)
+	self._goframe = gohelper.findChild(go, "frame")
+	self._txtorder = gohelper.findChildTextMesh(go, "go_order/txt_order")
+	self._goorderbg = gohelper.findChild(go, "go_order")
+
+	self:enableDeselect(false)
+	self._heroItem:setNewShow(false)
+	self._heroItem:_setTxtPos("_nameCnTxt", 0.55, 68.9)
+	self._heroItem:_setTxtPos("_nameEnTxt", 0.55, 36.1)
+	self._heroItem:_setTxtPos("_lvObj", 1.7, 96.8)
+	self._heroItem:_setTxtPos("_rankObj", 1.7, -107.7)
+	self._heroItem:_setTranScale("_nameCnTxt", 1.25, 1.25)
+	self._heroItem:_setTranScale("_nameEnTxt", 1.25, 1.25)
+	self._heroItem:_setTranScale("_lvObj", 1.25, 1.25)
+	self._heroItem:_setTranScale("_rankObj", 0.22, 0.22)
+	self._heroItem:setStyle_SurvivalHeroGroupEdit()
+	gohelper.setActive(self._goorderbg, false)
 end
 
-function var_0_0.onUpdateMO(arg_2_0, arg_2_1)
-	arg_2_0._mo = arg_2_1
+function SurvivalInitHeroSelectQuickEditItem:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_2_0._heroItem:onUpdateMO(arg_2_1)
-	arg_2_0._heroItem:setNewShow(false)
+	self._heroItem:onUpdateMO(mo)
+	self._heroItem:setNewShow(false)
 
-	if not arg_2_1:isTrial() then
-		local var_2_0 = SurvivalBalanceHelper.getHeroBalanceLv(arg_2_1.heroId)
+	if not mo:isTrial() then
+		local lv = SurvivalBalanceHelper.getHeroBalanceLv(mo.heroId)
 
-		if var_2_0 > arg_2_1.level then
-			arg_2_0._heroItem:setBalanceLv(var_2_0)
+		if lv > mo.level then
+			self._heroItem:setBalanceLv(lv)
 		end
 	end
 
-	arg_2_0:updateLimitStatus()
-	arg_2_0:updateTrialTag()
-	arg_2_0:updateTrialRepeat()
-	arg_2_0._heroItem:setRepeatAnimFinish()
+	self:updateLimitStatus()
+	self:updateTrialTag()
+	self:updateTrialRepeat()
+	self._heroItem:setRepeatAnimFinish()
 
-	local var_2_1 = arg_2_0:getGroupModel():getMoIndex(arg_2_1)
+	local index = self:getGroupModel():getMoIndex(mo)
 
-	arg_2_0._team_pos_index = var_2_1
+	self._team_pos_index = index
 
-	gohelper.setActive(arg_2_0._goorderbg, var_2_1 > 0)
-	gohelper.setActive(arg_2_0._goframe, var_2_1 > 0)
+	gohelper.setActive(self._goorderbg, index > 0)
+	gohelper.setActive(self._goframe, index > 0)
 
-	if var_2_1 > 0 then
-		arg_2_0._txtorder.text = var_2_1
+	if index > 0 then
+		self._txtorder.text = index
 	end
 
-	arg_2_0._open_ani_finish = true
+	self._open_ani_finish = true
 
-	arg_2_0._healthPart:setHeroId(arg_2_1.heroId)
+	self._healthPart:setHeroId(mo.heroId)
 end
 
-function var_0_0.updateTrialRepeat(arg_3_0, arg_3_1)
-	if arg_3_1 and (arg_3_1.heroId ~= arg_3_0._mo.heroId or arg_3_1 == arg_3_0._mo) then
+function SurvivalInitHeroSelectQuickEditItem:updateTrialRepeat(mo)
+	if mo and (mo.heroId ~= self._mo.heroId or mo == self._mo) then
 		return
 	end
 
-	arg_3_0._heroItem:setTrialRepeat(false)
+	self._heroItem:setTrialRepeat(false)
 end
 
-function var_0_0._onItemClick(arg_4_0)
+function SurvivalInitHeroSelectQuickEditItem:_onItemClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
 
-	if SurvivalShelterModel.instance:getWeekInfo():getHeroMo(arg_4_0._mo.heroId).health == 0 then
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+
+	if weekInfo:getHeroMo(self._mo.heroId).health == 0 then
 		GameFacade.showToast(ToastEnum.SurvivalHeroDead)
 
 		return
 	end
 
-	local var_4_0 = arg_4_0:getGroupModel():getMoIndex(arg_4_0._mo)
+	local index = self:getGroupModel():getMoIndex(self._mo)
 
-	if var_4_0 > 0 then
-		arg_4_0:getGroupModel().allSelectHeroMos[var_4_0] = nil
+	if index > 0 then
+		self:getGroupModel().allSelectHeroMos[index] = nil
 
-		gohelper.setActive(arg_4_0._goorderbg, false)
-		gohelper.setActive(arg_4_0._goframe, false)
+		gohelper.setActive(self._goorderbg, false)
+		gohelper.setActive(self._goframe, false)
 	else
-		local var_4_1 = arg_4_0:getGroupModel():tryAddHeroMo(arg_4_0._mo)
+		local addIndex = self:getGroupModel():tryAddHeroMo(self._mo)
 
-		if var_4_1 then
-			arg_4_0._view:selectCell(arg_4_0._index, true)
-			gohelper.setActive(arg_4_0._goorderbg, true)
-			gohelper.setActive(arg_4_0._goframe, true)
+		if addIndex then
+			self._view:selectCell(self._index, true)
+			gohelper.setActive(self._goorderbg, true)
+			gohelper.setActive(self._goframe, true)
 
-			arg_4_0._txtorder.text = var_4_1
+			self._txtorder.text = addIndex
 		else
 			GameFacade.showToast(ToastEnum.SurvivalInitHeroLimit)
 		end
 	end
 
-	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnHeroEditItemSelectChange, arg_4_0._mo)
+	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnHeroEditItemSelectChange, self._mo)
 end
 
-function var_0_0.onSelect(arg_5_0, arg_5_1)
-	arg_5_0._isSelect = arg_5_1
+function SurvivalInitHeroSelectQuickEditItem:onSelect(select)
+	self._isSelect = select
 
-	if arg_5_1 then
-		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickHeroEditItem, arg_5_0._mo)
+	if select then
+		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickHeroEditItem, self._mo)
 	end
 end
 
-function var_0_0.getGroupModel(arg_6_0)
+function SurvivalInitHeroSelectQuickEditItem:getGroupModel()
 	return SurvivalMapModel.instance:getInitGroup()
 end
 
-return var_0_0
+return SurvivalInitHeroSelectQuickEditItem

@@ -1,730 +1,734 @@
-﻿module("modules.logic.seasonver.act166.model.Season166HeroGroupMO", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act166/model/Season166HeroGroupMO.lua
 
-local var_0_0 = pureTable("Season166HeroGroupMO")
+module("modules.logic.seasonver.act166.model.Season166HeroGroupMO", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.id = nil
-	arg_1_0.groupId = nil
-	arg_1_0.name = nil
-	arg_1_0.heroList = {}
-	arg_1_0.aidDict = nil
-	arg_1_0.trialDict = nil
-	arg_1_0.clothId = nil
-	arg_1_0.temp = false
-	arg_1_0.isReplay = false
-	arg_1_0.equips = {}
-	arg_1_0.activity104Equips = {}
-	arg_1_0.exInfos = {}
-	arg_1_0.isHaveTrial = false
+local Season166HeroGroupMO = pureTable("Season166HeroGroupMO")
+
+function Season166HeroGroupMO:ctor()
+	self.id = nil
+	self.groupId = nil
+	self.name = nil
+	self.heroList = {}
+	self.aidDict = nil
+	self.trialDict = nil
+	self.clothId = nil
+	self.temp = false
+	self.isReplay = false
+	self.equips = {}
+	self.activity104Equips = {}
+	self.exInfos = {}
+	self.isHaveTrial = false
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.id = arg_2_1.groupId
-	arg_2_0.groupId = arg_2_1.groupId
-	arg_2_0.name = arg_2_1.name
-	arg_2_0.clothId = arg_2_1.clothId
-	arg_2_0.heroList = {}
+function Season166HeroGroupMO:init(info)
+	self.id = info.groupId
+	self.groupId = info.groupId
+	self.name = info.name
+	self.clothId = info.clothId
+	self.heroList = {}
 
-	local var_2_0 = arg_2_1.heroList and #arg_2_1.heroList or 0
+	local heroCount = info.heroList and #info.heroList or 0
 
-	for iter_2_0 = 1, var_2_0 do
-		table.insert(arg_2_0.heroList, arg_2_1.heroList[iter_2_0])
+	for i = 1, heroCount do
+		table.insert(self.heroList, info.heroList[i])
 	end
 
-	for iter_2_1 = var_2_0 + 1, arg_2_0:getMaxHeroCount() do
-		table.insert(arg_2_0.heroList, "0")
+	for i = heroCount + 1, self:getMaxHeroCount() do
+		table.insert(self.heroList, "0")
 	end
 
-	if arg_2_1.equips then
-		if arg_2_1.equips[0] then
-			arg_2_0:updatePosEquips(arg_2_1.equips[0])
+	if info.equips then
+		if info.equips[0] then
+			self:updatePosEquips(info.equips[0])
 		end
 
-		for iter_2_2, iter_2_3 in ipairs(arg_2_1.equips) do
-			arg_2_0:updatePosEquips(iter_2_3)
+		for i, v in ipairs(info.equips) do
+			self:updatePosEquips(v)
 		end
 	end
 end
 
-function var_0_0.initByFightGroup(arg_3_0, arg_3_1)
-	arg_3_0.id = 1
-	arg_3_0.groupId = 1
-	arg_3_0.clothId = arg_3_1.clothId
-	arg_3_0.recordRound = arg_3_1.recordRound
-	arg_3_0.heroList = {}
-	arg_3_0.replay_hero_data = {}
+function Season166HeroGroupMO:initByFightGroup(fightGroup)
+	self.id = 1
+	self.groupId = 1
+	self.clothId = fightGroup.clothId
+	self.recordRound = fightGroup.recordRound
+	self.heroList = {}
+	self.replay_hero_data = {}
 
-	local var_3_0 = {}
+	local hero2IndexDict = {}
 
-	arg_3_0.replay_equip_data = {}
-	arg_3_0.trialDict = {}
-	arg_3_0.exInfos = {}
-	arg_3_0.replayAssistHeroUid = arg_3_1.assistHeroUid
-	arg_3_0.replayAssistUserId = arg_3_1.assistUserId
+	self.replay_equip_data = {}
+	self.trialDict = {}
+	self.exInfos = {}
+	self.replayAssistHeroUid = fightGroup.assistHeroUid
+	self.replayAssistUserId = fightGroup.assistUserId
 
-	local var_3_1 = Season166HeroGroupModel.instance.battleId
-	local var_3_2 = var_3_1 and lua_battle.configDict[var_3_1]
-	local var_3_3 = var_3_2 and var_3_2.playerMax or ModuleEnum.HeroCountInGroup
+	local battleId = Season166HeroGroupModel.instance.battleId
+	local battleCO = battleId and lua_battle.configDict[battleId]
+	local playerMax = battleCO and battleCO.playerMax or ModuleEnum.HeroCountInGroup
 
-	if arg_3_1.exInfos then
-		for iter_3_0, iter_3_1 in ipairs(arg_3_1.exInfos) do
-			arg_3_0.exInfos[iter_3_0] = iter_3_1
+	if fightGroup.exInfos then
+		for i, v in ipairs(fightGroup.exInfos) do
+			self.exInfos[i] = v
 		end
 	end
 
-	for iter_3_2, iter_3_3 in ipairs(arg_3_1.trialHeroList) do
-		local var_3_4 = lua_hero_trial.configDict[iter_3_3.trialId][0]
-		local var_3_5 = iter_3_3.pos
+	for _, trialHero in ipairs(fightGroup.trialHeroList) do
+		local trialCo = lua_hero_trial.configDict[trialHero.trialId][0]
+		local pos = trialHero.pos
 
-		if var_3_5 < 0 then
-			var_3_5 = var_3_3 - var_3_5
+		if pos < 0 then
+			pos = playerMax - pos
 		end
 
-		local var_3_6 = tostring(var_3_4.heroId - 1099511627776)
+		local hero_uid = tostring(trialCo.heroId - 1099511627776)
 
-		var_3_0[var_3_6] = var_3_5
-		arg_3_0.heroList[var_3_5] = var_3_6
+		hero2IndexDict[hero_uid] = pos
+		self.heroList[pos] = hero_uid
 
-		local var_3_7 = {
-			heroUid = var_3_6,
-			heroId = var_3_4.heroId,
-			level = var_3_4.level,
-			skin = var_3_4.skin
-		}
+		local hero_data = {}
 
-		if var_3_7.skin == 0 then
-			var_3_7.skin = lua_character.configDict[var_3_4.heroId].skinId
+		hero_data.heroUid = hero_uid
+		hero_data.heroId = trialCo.heroId
+		hero_data.level = trialCo.level
+		hero_data.skin = trialCo.skin
+
+		if hero_data.skin == 0 then
+			hero_data.skin = lua_character.configDict[trialCo.heroId].skinId
 		end
 
-		arg_3_0.replay_hero_data[var_3_6] = var_3_7
+		self.replay_hero_data[hero_uid] = hero_data
 
-		local var_3_8 = var_3_5 - 1
+		local index = pos - 1
 
-		arg_3_0.equips[var_3_8] = HeroGroupEquipMO.New()
+		self.equips[index] = HeroGroupEquipMO.New()
 
-		arg_3_0.equips[var_3_8]:init({
-			index = var_3_8,
+		self.equips[index]:init({
+			index = index,
 			equipUid = {
-				iter_3_3.equipRecords[1].equipUid
+				trialHero.equipRecords[1].equipUid
 			}
 		})
 
-		local var_3_9 = {
-			equipUid = iter_3_3.equipRecords[1].equipUid,
-			equipId = iter_3_3.equipRecords[1].equipId,
-			equipLv = iter_3_3.equipRecords[1].equipLv,
-			refineLv = iter_3_3.equipRecords[1].refineLv
-		}
+		local equip_data = {}
 
-		arg_3_0.replay_equip_data[var_3_6] = var_3_9
-		arg_3_0.trialDict[var_3_5] = {
-			iter_3_3.trialId,
+		equip_data.equipUid = trialHero.equipRecords[1].equipUid
+		equip_data.equipId = trialHero.equipRecords[1].equipId
+		equip_data.equipLv = trialHero.equipRecords[1].equipLv
+		equip_data.refineLv = trialHero.equipRecords[1].refineLv
+		self.replay_equip_data[hero_uid] = equip_data
+		self.trialDict[pos] = {
+			trialHero.trialId,
 			0,
-			var_3_5
+			pos
 		}
 	end
 
-	for iter_3_4, iter_3_5 in ipairs(arg_3_1.heroList) do
-		local var_3_10 = iter_3_5.heroUid
-		local var_3_11 = 1
+	for _, heroData in ipairs(fightGroup.heroList) do
+		local hero_uid = heroData.heroUid
+		local index = 1
 
-		while arg_3_0.heroList[var_3_11] do
-			var_3_11 = var_3_11 + 1
+		while self.heroList[index] do
+			index = index + 1
 		end
 
-		arg_3_0.heroList[var_3_11] = var_3_10
-		var_3_0[var_3_10] = var_3_11
+		self.heroList[index] = hero_uid
+		hero2IndexDict[hero_uid] = index
 
-		local var_3_12 = {
-			heroUid = var_3_10,
-			heroId = iter_3_5.heroId,
-			level = iter_3_5.level,
-			skin = iter_3_5.skin
-		}
+		local hero_data = {}
 
-		arg_3_0.replay_hero_data[var_3_10] = var_3_12
+		hero_data.heroUid = hero_uid
+		hero_data.heroId = heroData.heroId
+		hero_data.level = heroData.level
+		hero_data.skin = heroData.skin
+		self.replay_hero_data[hero_uid] = hero_data
 	end
 
-	for iter_3_6, iter_3_7 in ipairs(arg_3_1.subHeroList) do
-		local var_3_13 = iter_3_7.heroUid
-		local var_3_14 = 1
+	for _, subHeroData in ipairs(fightGroup.subHeroList) do
+		local hero_uid = subHeroData.heroUid
+		local index = 1
 
-		while arg_3_0.heroList[var_3_14] do
-			var_3_14 = var_3_14 + 1
+		while self.heroList[index] do
+			index = index + 1
 		end
 
-		arg_3_0.heroList[var_3_14] = var_3_13
-		var_3_0[var_3_13] = var_3_14
+		self.heroList[index] = hero_uid
+		hero2IndexDict[hero_uid] = index
 
-		local var_3_15 = {
-			heroUid = var_3_13,
-			heroId = iter_3_7.heroId,
-			level = iter_3_7.level,
-			skin = iter_3_7.skin
-		}
+		local hero_data = {}
 
-		arg_3_0.replay_hero_data[var_3_13] = var_3_15
+		hero_data.heroUid = hero_uid
+		hero_data.heroId = subHeroData.heroId
+		hero_data.level = subHeroData.level
+		hero_data.skin = subHeroData.skin
+		self.replay_hero_data[hero_uid] = hero_data
 	end
 
-	arg_3_0.replay_equip_data = {}
+	self.replay_equip_data = {}
 
-	for iter_3_8, iter_3_9 in ipairs(arg_3_1.equips) do
-		local var_3_16 = var_3_0[iter_3_9.heroUid] - 1
+	for _, equip in ipairs(fightGroup.equips) do
+		local index = hero2IndexDict[equip.heroUid] - 1
 
-		arg_3_0.equips[var_3_16] = HeroGroupEquipMO.New()
+		self.equips[index] = HeroGroupEquipMO.New()
 
-		local var_3_17 = iter_3_9.equipRecords[1]
+		local record1 = equip.equipRecords[1]
 
-		if var_3_17 then
-			arg_3_0.equips[var_3_16]:init({
-				index = var_3_16,
+		if record1 then
+			self.equips[index]:init({
+				index = index,
 				equipUid = {
-					var_3_17.equipUid
+					record1.equipUid
 				}
 			})
 
-			local var_3_18 = {
-				equipUid = var_3_17.equipUid,
-				equipId = var_3_17.equipId,
-				equipLv = var_3_17.equipLv,
-				refineLv = var_3_17.refineLv
-			}
+			local equip_data = {}
 
-			arg_3_0.replay_equip_data[iter_3_9.heroUid] = var_3_18
+			equip_data.equipUid = record1.equipUid
+			equip_data.equipId = record1.equipId
+			equip_data.equipLv = record1.equipLv
+			equip_data.refineLv = record1.refineLv
+			self.replay_equip_data[equip.heroUid] = equip_data
 		end
 	end
 
-	arg_3_0.replay_activity104Equip_data = {}
+	self.replay_activity104Equip_data = {}
 
-	for iter_3_10, iter_3_11 in ipairs(arg_3_1.activity104Equips) do
-		local var_3_19 = iter_3_11.heroUid == "-100000" and 4 or var_3_0[iter_3_11.heroUid] - 1
+	for _, equip in ipairs(fightGroup.activity104Equips) do
+		local index = equip.heroUid == "-100000" and 4 or hero2IndexDict[equip.heroUid] - 1
 
-		arg_3_0.activity104Equips[var_3_19] = HeroGroupActivity104EquipMo.New()
+		self.activity104Equips[index] = HeroGroupActivity104EquipMo.New()
 
-		arg_3_0.activity104Equips[var_3_19]:setLimitNum(arg_3_0._seasonCardMainNum, arg_3_0._seasonCardNormalNum)
+		self.activity104Equips[index]:setLimitNum(self._seasonCardMainNum, self._seasonCardNormalNum)
 
-		if iter_3_11.activity104EquipRecords[1] then
-			local var_3_20 = {}
+		local record = equip.activity104EquipRecords[1]
 
-			for iter_3_12, iter_3_13 in ipairs(iter_3_11.activity104EquipRecords) do
-				table.insert(var_3_20, iter_3_13.equipUid)
+		if record then
+			local actEquipUIds = {}
+
+			for _, record in ipairs(equip.activity104EquipRecords) do
+				table.insert(actEquipUIds, record.equipUid)
 			end
 
-			arg_3_0.activity104Equips[var_3_19]:init({
-				index = var_3_19,
-				equipUid = var_3_20
+			self.activity104Equips[index]:init({
+				index = index,
+				equipUid = actEquipUIds
 			})
 
-			local var_3_21 = {}
+			local equip_data = {}
 
-			for iter_3_14, iter_3_15 in ipairs(iter_3_11.activity104EquipRecords) do
-				local var_3_22 = {
-					equipUid = iter_3_15.equipUid,
-					equipId = iter_3_15.equipId
-				}
+			for tar_index, tar_equip in ipairs(equip.activity104EquipRecords) do
+				local tab = {}
 
-				table.insert(var_3_21, var_3_22)
+				tab.equipUid = tar_equip.equipUid
+				tab.equipId = tar_equip.equipId
+
+				table.insert(equip_data, tab)
 			end
 
-			arg_3_0.replay_activity104Equip_data[iter_3_11.heroUid] = var_3_21
+			self.replay_activity104Equip_data[equip.heroUid] = equip_data
 		else
-			arg_3_0.activity104Equips[var_3_19]:init({
-				index = var_3_19,
+			self.activity104Equips[index]:init({
+				index = index,
 				equipUid = {}
 			})
 		end
 	end
 
-	arg_3_0.isReplay = true
+	self.isReplay = true
 end
 
-function var_0_0.initByLocalData(arg_4_0, arg_4_1)
-	arg_4_0.id = 1
-	arg_4_0.groupId = 1
-	arg_4_0.name = ""
-	arg_4_0.heroList = {}
-	arg_4_0.aidDict = nil
-	arg_4_0.trialDict = {}
-	arg_4_0.clothId = arg_4_1.clothId
-	arg_4_0.temp = true
-	arg_4_0.isReplay = false
-	arg_4_0.equips = {}
-	arg_4_0.activity104Equips = {}
-	arg_4_0.isHaveTrial = false
+function Season166HeroGroupMO:initByLocalData(saveData)
+	self.id = 1
+	self.groupId = 1
+	self.name = ""
+	self.heroList = {}
+	self.aidDict = nil
+	self.trialDict = {}
+	self.clothId = saveData.clothId
+	self.temp = true
+	self.isReplay = false
+	self.equips = {}
+	self.activity104Equips = {}
+	self.isHaveTrial = false
 
-	local var_4_0 = Season166HeroGroupModel.instance.battleId
-	local var_4_1 = var_4_0 and lua_battle.configDict[var_4_0]
-	local var_4_2 = {}
+	local battleId = Season166HeroGroupModel.instance.battleId
+	local battleCO = battleId and lua_battle.configDict[battleId]
+	local configTrial = {}
 
-	if not string.nilorempty(var_4_1.trialHeros) then
-		var_4_2 = GameUtil.splitString2(var_4_1.trialHeros, true)
+	if not string.nilorempty(battleCO.trialHeros) then
+		configTrial = GameUtil.splitString2(battleCO.trialHeros, true)
 	end
 
-	local var_4_3 = ToughBattleModel.instance:getAddTrialHeros()
+	local addTrials = ToughBattleModel.instance:getAddTrialHeros()
 
-	if var_4_3 then
-		for iter_4_0, iter_4_1 in pairs(var_4_3) do
-			table.insert(var_4_2, {
-				iter_4_1
+	if addTrials then
+		for _, trialId in pairs(addTrials) do
+			table.insert(configTrial, {
+				trialId
 			})
 		end
 	end
 
-	for iter_4_2 = 1, arg_4_0:getMaxHeroCount() do
-		arg_4_0.heroList[iter_4_2] = arg_4_1.heroList[iter_4_2] or "0"
-		arg_4_0.equips[iter_4_2 - 1] = HeroGroupEquipMO.New()
+	for i = 1, self:getMaxHeroCount() do
+		self.heroList[i] = saveData.heroList[i] or "0"
+		self.equips[i - 1] = HeroGroupEquipMO.New()
 
-		arg_4_0.equips[iter_4_2 - 1]:init({
-			index = iter_4_2 - 1,
+		self.equips[i - 1]:init({
+			index = i - 1,
 			equipUid = {
-				arg_4_1.equips[iter_4_2] or "0"
+				saveData.equips[i] or "0"
 			}
 		})
-		arg_4_0:updateActivity104PosEquips({
-			index = iter_4_2 - 1,
-			equipUid = arg_4_1.activity104Equips and arg_4_1.activity104Equips[iter_4_2] or {}
+		self:updateActivity104PosEquips({
+			index = i - 1,
+			equipUid = saveData.activity104Equips and saveData.activity104Equips[i] or {}
 		})
 
-		if tonumber(arg_4_0.heroList[iter_4_2]) < 0 then
-			local var_4_4 = false
+		if tonumber(self.heroList[i]) < 0 then
+			local find = false
 
-			for iter_4_3, iter_4_4 in pairs(var_4_2) do
-				if lua_hero_trial.configDict[iter_4_4[1]][iter_4_4[2] or 0].heroId - 1099511627776 == tonumber(arg_4_0.heroList[iter_4_2]) then
-					arg_4_0.trialDict[iter_4_2] = iter_4_4
-					var_4_4 = true
+			for _, v in pairs(configTrial) do
+				local trialCo = lua_hero_trial.configDict[v[1]][v[2] or 0]
+
+				if trialCo.heroId - 1099511627776 == tonumber(self.heroList[i]) then
+					self.trialDict[i] = v
+					find = true
 
 					break
 				end
 			end
 
-			if not var_4_4 then
-				arg_4_0.heroList[iter_4_2] = "0"
+			if not find then
+				self.heroList[i] = "0"
 			end
 
-			arg_4_0.isHaveTrial = true
+			self.isHaveTrial = true
 		end
 	end
 
-	local var_4_5 = arg_4_0:getMaxHeroCount() + 1
+	local mainRolePos = self:getMaxHeroCount() + 1
 
-	arg_4_0:updateActivity104PosEquips({
-		index = var_4_5 - 1,
-		equipUid = arg_4_1.activity104Equips and arg_4_1.activity104Equips[var_4_5] or {}
+	self:updateActivity104PosEquips({
+		index = mainRolePos - 1,
+		equipUid = saveData.activity104Equips and saveData.activity104Equips[mainRolePos] or {}
 	})
 
-	if Activity104Model.instance:isSeasonChapter() and arg_4_1.battleId ~= var_4_0 then
-		for iter_4_5, iter_4_6 in ipairs(arg_4_0.heroList) do
-			if tonumber(iter_4_6) < 0 then
-				arg_4_0.heroList[iter_4_5] = tostring(0)
-				arg_4_0.trialDict[iter_4_5] = nil
+	if Activity104Model.instance:isSeasonChapter() and saveData.battleId ~= battleId then
+		for i, v in ipairs(self.heroList) do
+			if tonumber(v) < 0 then
+				self.heroList[i] = tostring(0)
+				self.trialDict[i] = nil
 			end
 		end
 	end
 end
 
-function var_0_0.setTrials(arg_5_0, arg_5_1)
-	if not arg_5_0.trialDict then
-		arg_5_0.trialDict = {}
+function Season166HeroGroupMO:setTrials(isReConnect)
+	if not self.trialDict then
+		self.trialDict = {}
 	end
 
-	local var_5_0 = Season166HeroGroupModel.instance.battleId
-	local var_5_1 = var_5_0 and lua_battle.configDict[var_5_0]
-	local var_5_2 = {}
+	local battleId = Season166HeroGroupModel.instance.battleId
+	local battleCO = battleId and lua_battle.configDict[battleId]
+	local configTrial = {}
 
-	if not string.nilorempty(var_5_1.trialHeros) then
-		var_5_2 = GameUtil.splitString2(var_5_1.trialHeros, true)
+	if not string.nilorempty(battleCO.trialHeros) then
+		configTrial = GameUtil.splitString2(battleCO.trialHeros, true)
 	end
 
-	local var_5_3 = {}
+	local useHeroIds = {}
 
-	for iter_5_0, iter_5_1 in pairs(var_5_2) do
-		if iter_5_1[3] then
-			local var_5_4 = iter_5_1[3]
+	for _, v in pairs(configTrial) do
+		if v[3] then
+			local posIndex = v[3]
 
-			if var_5_4 < 0 then
-				var_5_4 = arg_5_0._playerMax - var_5_4
+			if posIndex < 0 then
+				posIndex = self._playerMax - posIndex
 			end
 
-			arg_5_0.trialDict[var_5_4] = iter_5_1
+			self.trialDict[posIndex] = v
 
-			local var_5_5 = lua_hero_trial.configDict[iter_5_1[1]][iter_5_1[2] or 0]
+			local trialCo = lua_hero_trial.configDict[v[1]][v[2] or 0]
 
-			arg_5_0.heroList[var_5_4] = tostring(var_5_5.heroId - 1099511627776)
-			var_5_3[var_5_5.heroId] = true
+			self.heroList[posIndex] = tostring(trialCo.heroId - 1099511627776)
+			useHeroIds[trialCo.heroId] = true
 
-			if not arg_5_1 and (var_5_5.act104EquipId1 > 0 or var_5_5.act104EquipId2 > 0) then
-				arg_5_0:updateActivity104PosEquips({
-					index = var_5_4 - 1
+			if not isReConnect and (trialCo.act104EquipId1 > 0 or trialCo.act104EquipId2 > 0) then
+				self:updateActivity104PosEquips({
+					index = posIndex - 1
 				})
 			end
 		end
 	end
 
-	for iter_5_2, iter_5_3 in pairs(arg_5_0.heroList) do
-		if tonumber(iter_5_3) > 0 then
-			local var_5_6 = HeroModel.instance:getById(iter_5_3)
+	for posIndex, uid in pairs(self.heroList) do
+		if tonumber(uid) > 0 then
+			local heroMO = HeroModel.instance:getById(uid)
 
-			if var_5_6 and var_5_3[var_5_6.heroId] then
-				arg_5_0.heroList[iter_5_2] = "0"
+			if heroMO and useHeroIds[heroMO.heroId] then
+				self.heroList[posIndex] = "0"
 			end
 		end
 	end
 
-	if not arg_5_1 and not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Equip) and not string.nilorempty(var_5_1.trialEquips) then
-		local var_5_7 = string.splitToNumber(var_5_1.trialEquips, "|")
+	if not isReConnect and not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Equip) and not string.nilorempty(battleCO.trialEquips) then
+		local trialEquips = string.splitToNumber(battleCO.trialEquips, "|")
 
-		for iter_5_4 = 1, math.min(#var_5_7, arg_5_0:getMaxHeroCount()) do
-			arg_5_0:updatePosEquips({
-				index = iter_5_4 - 1,
+		for i = 1, math.min(#trialEquips, self:getMaxHeroCount()) do
+			self:updatePosEquips({
+				index = i - 1,
 				equipUid = {
-					tostring(-var_5_7[iter_5_4])
+					tostring(-trialEquips[i])
 				}
 			})
 		end
 	end
 
-	if not arg_5_1 and var_5_1.trialMainAct104EuqipId > 0 then
-		arg_5_0:updateActivity104PosEquips({
-			index = arg_5_0:getMaxHeroCount(),
+	if not isReConnect and battleCO.trialMainAct104EuqipId > 0 then
+		self:updateActivity104PosEquips({
+			index = self:getMaxHeroCount(),
 			equipUid = {
-				-var_5_1.trialMainAct104EuqipId
+				-battleCO.trialMainAct104EuqipId
 			}
 		})
 	end
 end
 
-function var_0_0.saveData(arg_6_0)
-	local var_6_0 = Season166HeroGroupModel.instance.battleId
-	local var_6_1 = Season166Model.instance:getCurSeasonId()
-	local var_6_2 = {
-		clothId = arg_6_0.clothId,
-		heroList = {},
-		equips = {},
-		activity104Equips = {}
-	}
+function Season166HeroGroupMO:saveData()
+	local battleId = Season166HeroGroupModel.instance.battleId
+	local actId = Season166Model.instance:getCurSeasonId()
+	local info = {}
 
-	for iter_6_0 = 1, arg_6_0:getMaxHeroCount() do
-		var_6_2.heroList[iter_6_0] = arg_6_0.heroList[iter_6_0]
-		var_6_2.equips[iter_6_0] = arg_6_0.equips[iter_6_0 - 1] and arg_6_0.equips[iter_6_0 - 1].equipUid[1]
-		var_6_2.activity104Equips[iter_6_0] = arg_6_0.activity104Equips[iter_6_0 - 1] and arg_6_0.activity104Equips[iter_6_0 - 1].equipUid
+	info.clothId = self.clothId
+	info.heroList = {}
+	info.equips = {}
+	info.activity104Equips = {}
+
+	for i = 1, self:getMaxHeroCount() do
+		info.heroList[i] = self.heroList[i]
+		info.equips[i] = self.equips[i - 1] and self.equips[i - 1].equipUid[1]
+		info.activity104Equips[i] = self.activity104Equips[i - 1] and self.activity104Equips[i - 1].equipUid
 	end
 
-	local var_6_3 = arg_6_0:getMaxHeroCount() + 1
+	local mainRolePos = self:getMaxHeroCount() + 1
 
-	var_6_2.activity104Equips[var_6_3] = arg_6_0.activity104Equips[var_6_3 - 1] and arg_6_0.activity104Equips[var_6_3 - 1].equipUid
-	var_6_2.battleId = var_6_0
+	info.activity104Equips[mainRolePos] = self.activity104Equips[mainRolePos - 1] and self.activity104Equips[mainRolePos - 1].equipUid
+	info.battleId = battleId
 
-	local var_6_4 = var_6_1 .. "#" .. PlayerPrefsKey.Season166HeroGroupTrial .. "#" .. tostring(PlayerModel.instance:getMyUserId()) .. "#" .. var_6_0
+	local prefsKey = actId .. "#" .. PlayerPrefsKey.Season166HeroGroupTrial .. "#" .. tostring(PlayerModel.instance:getMyUserId()) .. "#" .. battleId
 
-	PlayerPrefsHelper.setString(var_6_4, cjson.encode(var_6_2))
+	PlayerPrefsHelper.setString(prefsKey, cjson.encode(info))
 end
 
-function var_0_0.setTempName(arg_7_0, arg_7_1)
-	arg_7_0.name = arg_7_1
+function Season166HeroGroupMO:setTempName(name)
+	self.name = name
 end
 
-function var_0_0.setTemp(arg_8_0, arg_8_1)
-	arg_8_0.temp = arg_8_1
+function Season166HeroGroupMO:setTemp(temp)
+	self.temp = temp
 end
 
-function var_0_0.replaceHeroList(arg_9_0, arg_9_1)
-	arg_9_0.heroList = {}
-	arg_9_0.aidDict = {}
-	arg_9_0.trialDict = {}
+function Season166HeroGroupMO:replaceHeroList(heroList)
+	self.heroList = {}
+	self.aidDict = {}
+	self.trialDict = {}
 
-	local var_9_0 = arg_9_1 and #arg_9_1 or 0
+	local heroCount = heroList and #heroList or 0
 
-	for iter_9_0 = 1, var_9_0 do
-		table.insert(arg_9_0.heroList, arg_9_1[iter_9_0].heroUid)
+	for i = 1, heroCount do
+		table.insert(self.heroList, heroList[i].heroUid)
 
-		if arg_9_1[iter_9_0].aid then
-			arg_9_0.aidDict[iter_9_0] = arg_9_1[iter_9_0].aid
+		if heroList[i].aid then
+			self.aidDict[i] = heroList[i].aid
 		end
 	end
 
-	arg_9_0:_dropAidEquip()
+	self:_dropAidEquip()
 end
 
-function var_0_0._dropAidEquip(arg_10_0)
-	if arg_10_0.aidDict then
-		for iter_10_0, iter_10_1 in pairs(arg_10_0.aidDict) do
-			if iter_10_1 > 0 then
-				arg_10_0:_setPosEquips(iter_10_0 - 1, nil)
-				arg_10_0:updateActivity104PosEquips({
-					index = iter_10_0 - 1
+function Season166HeroGroupMO:_dropAidEquip()
+	if self.aidDict then
+		for i, aid in pairs(self.aidDict) do
+			if aid > 0 then
+				self:_setPosEquips(i - 1, nil)
+				self:updateActivity104PosEquips({
+					index = i - 1
 				})
 			end
 		end
 	end
 
-	if arg_10_0.trialDict then
-		for iter_10_2, iter_10_3 in pairs(arg_10_0.trialDict) do
-			arg_10_0:_setPosEquips(iter_10_2 - 1, nil)
-			arg_10_0:updateActivity104PosEquips({
-				index = iter_10_2 - 1
+	if self.trialDict then
+		for i, trialData in pairs(self.trialDict) do
+			self:_setPosEquips(i - 1, nil)
+			self:updateActivity104PosEquips({
+				index = i - 1
 			})
 		end
 	end
 end
 
-function var_0_0.replaceClothId(arg_11_0, arg_11_1)
-	arg_11_0.clothId = arg_11_1
+function Season166HeroGroupMO:replaceClothId(clothId)
+	self.clothId = clothId
 end
 
-function var_0_0.getHeroByIndex(arg_12_0, arg_12_1)
-	return arg_12_0.heroList[arg_12_1]
+function Season166HeroGroupMO:getHeroByIndex(index)
+	return self.heroList[index]
 end
 
-function var_0_0.getAllPosEquips(arg_13_0)
-	return arg_13_0.equips
+function Season166HeroGroupMO:getAllPosEquips()
+	return self.equips
 end
 
-function var_0_0.getPosEquips(arg_14_0, arg_14_1)
-	if not arg_14_0.equips[arg_14_1] then
-		arg_14_0:updatePosEquips({
-			index = arg_14_1
+function Season166HeroGroupMO:getPosEquips(pos)
+	if not self.equips[pos] then
+		self:updatePosEquips({
+			index = pos
 		})
 	end
 
-	return arg_14_0.equips[arg_14_1]
+	return self.equips[pos]
 end
 
-function var_0_0._setPosEquips(arg_15_0, arg_15_1, arg_15_2)
-	if arg_15_2 == nil then
-		arg_15_2 = HeroGroupEquipMO.New()
+function Season166HeroGroupMO:_setPosEquips(pos, equip)
+	if equip == nil then
+		equip = HeroGroupEquipMO.New()
 
-		arg_15_2:init({
-			index = arg_15_1
+		equip:init({
+			index = pos
 		})
 	end
 
-	arg_15_0.equips[arg_15_1] = arg_15_2
+	self.equips[pos] = equip
 end
 
-function var_0_0.updatePosEquips(arg_16_0, arg_16_1)
-	for iter_16_0 = 0, arg_16_0:getMaxHeroCount() do
-		local var_16_0 = arg_16_0.equips[iter_16_0]
+function Season166HeroGroupMO:updatePosEquips(v)
+	for i = 0, self:getMaxHeroCount() do
+		local equips = self.equips[i]
 
-		if var_16_0 and var_16_0.equipUid and #var_16_0.equipUid > 0 and arg_16_1.equipUid and #arg_16_1.equipUid > 0 then
-			for iter_16_1 = 1, 1 do
-				if var_16_0.equipUid[iter_16_1] == arg_16_1.equipUid[iter_16_1] then
-					var_16_0.equipUid[iter_16_1] = "0"
+		if equips and equips.equipUid and #equips.equipUid > 0 and v.equipUid and #v.equipUid > 0 then
+			for j = 1, 1 do
+				if equips.equipUid[j] == v.equipUid[j] then
+					equips.equipUid[j] = "0"
 				end
 			end
 		end
 	end
 
-	local var_16_1 = HeroGroupEquipMO.New()
+	local t = HeroGroupEquipMO.New()
 
-	var_16_1:init(arg_16_1)
+	t:init(v)
 
-	arg_16_0.equips[arg_16_1.index] = var_16_1
+	self.equips[v.index] = t
 end
 
-function var_0_0.getAct104PosEquips(arg_17_0, arg_17_1)
-	if not arg_17_0.activity104Equips[arg_17_1] then
-		arg_17_0:updateActivity104PosEquips({
-			index = arg_17_1
+function Season166HeroGroupMO:getAct104PosEquips(pos)
+	if not self.activity104Equips[pos] then
+		self:updateActivity104PosEquips({
+			index = pos
 		})
 	end
 
-	return arg_17_0.activity104Equips[arg_17_1]
+	return self.activity104Equips[pos]
 end
 
-function var_0_0.updateActivity104PosEquips(arg_18_0, arg_18_1)
-	local var_18_0 = HeroGroupActivity104EquipMo.New()
+function Season166HeroGroupMO:updateActivity104PosEquips(v)
+	local equipMo = HeroGroupActivity104EquipMo.New()
 
-	var_18_0:setLimitNum(arg_18_0._seasonCardMainNum, arg_18_0._seasonCardNormalNum)
-	var_18_0:init(arg_18_1)
+	equipMo:setLimitNum(self._seasonCardMainNum, self._seasonCardNormalNum)
+	equipMo:init(v)
 
-	arg_18_0.activity104Equips[arg_18_1.index] = var_18_0
+	self.activity104Equips[v.index] = equipMo
 end
 
-function var_0_0.checkAndPutOffEquip(arg_19_0)
-	if not arg_19_0.equips then
+function Season166HeroGroupMO:checkAndPutOffEquip()
+	if not self.equips then
 		return
 	end
 
-	for iter_19_0, iter_19_1 in pairs(arg_19_0.equips) do
-		for iter_19_2, iter_19_3 in ipairs(iter_19_1.equipUid) do
-			if tonumber(iter_19_3) > 0 then
-				local var_19_0 = EquipModel.instance:getEquip(iter_19_3)
+	for _, v in pairs(self.equips) do
+		for i, _equipUid in ipairs(v.equipUid) do
+			if tonumber(_equipUid) > 0 then
+				local equipMO = EquipModel.instance:getEquip(_equipUid)
 
-				iter_19_1.equipUid[iter_19_2] = var_19_0 and iter_19_3 or "0"
+				v.equipUid[i] = equipMO and _equipUid or "0"
 			end
 		end
 	end
 end
 
-function var_0_0.getAllHeroEquips(arg_20_0)
-	local var_20_0 = {}
-	local var_20_1 = false
-	local var_20_2 = FightModel.instance:getFightParam()
-	local var_20_3 = {}
+function Season166HeroGroupMO:getAllHeroEquips()
+	local result = {}
+	local equipMiss = false
+	local fightParam = FightModel.instance:getFightParam()
+	local trialEquips = {}
 
-	if var_20_2 and var_20_2.battleId > 0 then
-		local var_20_4 = lua_battle.configDict[var_20_2.battleId]
+	if fightParam and fightParam.battleId > 0 then
+		local battleCo = lua_battle.configDict[fightParam.battleId]
 
-		if not string.nilorempty(var_20_4.trialEquips) then
-			var_20_3 = string.splitToNumber(var_20_4.trialEquips, "|")
+		if not string.nilorempty(battleCo.trialEquips) then
+			trialEquips = string.splitToNumber(battleCo.trialEquips, "|")
 		end
 	end
 
-	for iter_20_0, iter_20_1 in pairs(arg_20_0.equips) do
-		local var_20_5 = iter_20_0 + 1
-		local var_20_6
+	for index, v in pairs(self.equips) do
+		local posIndex = index + 1
+		local uid = self.heroList[posIndex] or "0"
+		local mo = FightEquipMO.New()
 
-		var_20_6.heroUid, var_20_6 = arg_20_0.heroList[var_20_5] or "0", FightEquipMO.New()
+		mo.heroUid = uid
 
-		for iter_20_2, iter_20_3 in ipairs(iter_20_1.equipUid) do
-			if tonumber(iter_20_3) > 0 then
-				local var_20_7 = EquipModel.instance:getEquip(iter_20_3)
+		for i, _equipUid in ipairs(v.equipUid) do
+			if tonumber(_equipUid) > 0 then
+				local equipMO = EquipModel.instance:getEquip(_equipUid)
 
-				iter_20_1.equipUid[iter_20_2] = var_20_7 and iter_20_3 or "0"
+				v.equipUid[i] = equipMO and _equipUid or "0"
 
-				if not var_20_7 then
-					var_20_1 = true
+				if not equipMO then
+					equipMiss = true
 				end
 			else
-				local var_20_8 = -tonumber(iter_20_3)
+				local id = -tonumber(_equipUid)
+				local trialEquipCo = lua_equip_trial.configDict[id]
 
-				if lua_equip_trial.configDict[var_20_8] and tabletool.indexOf(var_20_3, var_20_8) then
-					iter_20_1.equipUid[iter_20_2] = iter_20_3
+				if trialEquipCo and tabletool.indexOf(trialEquips, id) then
+					v.equipUid[i] = _equipUid
 				else
-					iter_20_1.equipUid[iter_20_2] = "0"
+					v.equipUid[i] = "0"
 				end
 			end
 		end
 
-		var_20_6.equipUid = iter_20_1.equipUid
+		mo.equipUid = v.equipUid
 
-		table.insert(var_20_0, var_20_6)
+		table.insert(result, mo)
 	end
 
-	return var_20_0, var_20_1
+	return result, equipMiss
 end
 
-function var_0_0.getAllHeroActivity104Equips(arg_21_0)
-	local var_21_0 = {}
+function Season166HeroGroupMO:getAllHeroActivity104Equips()
+	local result = {}
 
-	for iter_21_0, iter_21_1 in pairs(arg_21_0.activity104Equips) do
-		local var_21_1 = iter_21_0 + 1
-		local var_21_2 = FightEquipMO.New()
+	for index, v in pairs(self.activity104Equips) do
+		local posIndex = index + 1
+		local mo = FightEquipMO.New()
 
-		if var_21_1 == 5 then
-			var_21_2.heroUid = "-100000"
+		if posIndex == 5 then
+			mo.heroUid = "-100000"
 		else
-			var_21_2.heroUid = arg_21_0.heroList[var_21_1] or "0"
+			mo.heroUid = self.heroList[posIndex] or "0"
 		end
 
-		for iter_21_2, iter_21_3 in ipairs(iter_21_1.equipUid) do
-			if tonumber(iter_21_3) > 0 then
-				local var_21_3 = Activity104Model.instance:getItemIdByUid(iter_21_3)
+		for i, _equipUid in ipairs(v.equipUid) do
+			if tonumber(_equipUid) > 0 then
+				local equipId = Activity104Model.instance:getItemIdByUid(_equipUid)
 
-				iter_21_1.equipUid[iter_21_2] = var_21_3 and var_21_3 > 0 and iter_21_3 or "0"
+				v.equipUid[i] = equipId and equipId > 0 and _equipUid or "0"
 			end
 		end
 
-		var_21_2.equipUid = iter_21_1.equipUid
+		mo.equipUid = v.equipUid
 
-		table.insert(var_21_0, var_21_2)
+		table.insert(result, mo)
 	end
 
-	return var_21_0
+	return result
 end
 
-function var_0_0.getEquipUidList(arg_22_0)
-	local var_22_0 = {}
+function Season166HeroGroupMO:getEquipUidList()
+	local equipUidList = {}
 
-	for iter_22_0 = 1, arg_22_0:getMaxHeroCount() do
-		local var_22_1 = arg_22_0.equips[iter_22_0 - 1]
+	for i = 1, self:getMaxHeroCount() do
+		local equipMO = self.equips[i - 1]
 
-		if var_22_1 then
-			var_22_0[iter_22_0] = var_22_1.equipUid and var_22_1.equipUid[1] or 0
+		if equipMO then
+			equipUidList[i] = equipMO.equipUid and equipMO.equipUid[1] or 0
 		else
-			var_22_0[iter_22_0] = 0
+			equipUidList[i] = 0
 		end
 	end
 
-	return var_22_0
+	return equipUidList
 end
 
-function var_0_0.initWithBattle(arg_23_0, arg_23_1, arg_23_2, arg_23_3, arg_23_4, arg_23_5, arg_23_6)
-	arg_23_4 = math.min(arg_23_4, arg_23_3)
+function Season166HeroGroupMO:initWithBattle(info, configAids, roleNum, playerMax, recommend, configTrial)
+	playerMax = math.min(playerMax, roleNum)
 
-	arg_23_0:init(arg_23_1)
+	self:init(info)
 
-	arg_23_0.battleHeroGroup = true
-	arg_23_0.aidDict = {}
-	arg_23_0.trialDict = {}
+	self.battleHeroGroup = true
+	self.aidDict = {}
+	self.trialDict = {}
 
-	if not arg_23_5 then
-		arg_23_0._roleNum = arg_23_3
-		arg_23_0._playerMax = arg_23_4
+	if not recommend then
+		self._roleNum = roleNum
+		self._playerMax = playerMax
 	end
 
-	local var_23_0 = arg_23_0:getMaxHeroCount()
-	local var_23_1 = {}
-	local var_23_2 = {}
-	local var_23_3 = {}
+	local MaxHeroCount = self:getMaxHeroCount()
+	local dropedHeroList = {}
+	local dropedEquipList = {}
+	local allUseHeroIds = {}
 
-	arg_23_6 = arg_23_6 or {}
+	configTrial = configTrial or {}
 
-	for iter_23_0, iter_23_1 in ipairs(arg_23_6) do
-		if iter_23_1[3] then
-			local var_23_4 = iter_23_1[3]
+	for _, data in ipairs(configTrial) do
+		if data[3] then
+			local posIndex = data[3]
 
-			if var_23_4 < 0 then
-				var_23_4 = arg_23_0._playerMax - var_23_4
+			if posIndex < 0 then
+				posIndex = self._playerMax - posIndex
 			end
 
-			if arg_23_0.heroList[var_23_4] then
-				local var_23_5 = lua_hero_trial.configDict[iter_23_1[1]][iter_23_1[2] or 0]
+			if self.heroList[posIndex] then
+				local trialCo = lua_hero_trial.configDict[data[1]][data[2] or 0]
 
-				if tonumber(arg_23_0.heroList[var_23_4]) > 0 then
-					table.insert(var_23_1, arg_23_0.heroList[var_23_4])
-					table.insert(var_23_2, arg_23_0:getPosEquips(var_23_4 - 1))
+				if tonumber(self.heroList[posIndex]) > 0 then
+					table.insert(dropedHeroList, self.heroList[posIndex])
+					table.insert(dropedEquipList, self:getPosEquips(posIndex - 1))
 				end
 
-				arg_23_0.heroList[var_23_4] = tostring(var_23_5.heroId - 1099511627776)
-				arg_23_0.trialDict[var_23_4] = iter_23_1
-				var_23_3[var_23_5.heroId] = true
+				self.heroList[posIndex] = tostring(trialCo.heroId - 1099511627776)
+				self.trialDict[posIndex] = data
+				allUseHeroIds[trialCo.heroId] = true
 			end
 		end
 	end
 
-	for iter_23_2 = 1, var_23_0 do
-		local var_23_6 = HeroModel.instance:getById(arg_23_0.heroList[iter_23_2])
+	for i = 1, MaxHeroCount do
+		local heroMo = HeroModel.instance:getById(self.heroList[i])
 
-		if var_23_6 and var_23_3[var_23_6.heroId] then
-			arg_23_0.heroList[iter_23_2] = "0"
+		if heroMo and allUseHeroIds[heroMo.heroId] then
+			self.heroList[i] = "0"
 		end
 	end
 
-	for iter_23_3 = 1, var_23_0 do
-		for iter_23_4 = 1, #arg_23_2 do
-			local var_23_7 = lua_monster.configDict[tonumber(arg_23_2[iter_23_4])]
-			local var_23_8 = lua_skin.configDict[var_23_7 and var_23_7.skinId]
-			local var_23_9 = var_23_8 and var_23_8.characterId
+	for i = 1, MaxHeroCount do
+		for j = 1, #configAids do
+			local aidConfig = lua_monster.configDict[tonumber(configAids[j])]
+			local skinCO = lua_skin.configDict[aidConfig and aidConfig.skinId]
+			local aidHeroId = skinCO and skinCO.characterId
 
-			if var_23_9 then
-				local var_23_10 = arg_23_0.heroList[iter_23_3] and HeroModel.instance:getById(arg_23_0.heroList[iter_23_3])
+			if aidHeroId then
+				local heroMO = self.heroList[i] and HeroModel.instance:getById(self.heroList[i])
 
-				if var_23_10 and var_23_10.heroId == var_23_9 then
-					if arg_23_4 < iter_23_3 or arg_23_3 < iter_23_3 or iter_23_3 > Season166HeroGroupModel.instance:positionOpenCount() then
-						arg_23_0.heroList[iter_23_3] = "0"
+				if heroMO and heroMO.heroId == aidHeroId then
+					if playerMax < i or roleNum < i or i > Season166HeroGroupModel.instance:positionOpenCount() then
+						self.heroList[i] = "0"
 
 						break
 					end
 
-					arg_23_0.heroList[iter_23_3] = tostring(-iter_23_4)
-					arg_23_0.aidDict[iter_23_3] = arg_23_2[iter_23_4]
+					self.heroList[i] = tostring(-j)
+					self.aidDict[i] = configAids[j]
 
-					arg_23_0:updatePosEquips({
-						index = iter_23_3 - 1
+					self:updatePosEquips({
+						index = i - 1
 					})
 
-					arg_23_2[iter_23_4] = nil
+					configAids[j] = nil
 
 					break
 				end
@@ -732,41 +736,41 @@ function var_0_0.initWithBattle(arg_23_0, arg_23_1, arg_23_2, arg_23_3, arg_23_4
 		end
 	end
 
-	local var_23_11 = 0
-	local var_23_12 = false
+	local aidHeroUid = 0
+	local isSetAid = false
 
-	for iter_23_5 = var_23_0, 1, -1 do
-		if arg_23_3 < iter_23_5 or iter_23_5 > Season166HeroGroupModel.instance:positionOpenCount() and not arg_23_0.trialDict[iter_23_5] then
-			if arg_23_0.heroList[iter_23_5] and tonumber(arg_23_0.heroList[iter_23_5]) > 0 then
-				table.insert(var_23_1, arg_23_0.heroList[iter_23_5])
-				table.insert(var_23_2, arg_23_0:getPosEquips(iter_23_5 - 1))
+	for i = MaxHeroCount, 1, -1 do
+		if roleNum < i or i > Season166HeroGroupModel.instance:positionOpenCount() and not self.trialDict[i] then
+			if self.heroList[i] and tonumber(self.heroList[i]) > 0 then
+				table.insert(dropedHeroList, self.heroList[i])
+				table.insert(dropedEquipList, self:getPosEquips(i - 1))
 			end
 
-			arg_23_0.heroList[iter_23_5] = "0"
+			self.heroList[i] = "0"
 
-			if iter_23_5 <= Season166HeroGroupModel.instance:positionOpenCount() then
-				arg_23_0.aidDict[iter_23_5] = -1
+			if i <= Season166HeroGroupModel.instance:positionOpenCount() then
+				self.aidDict[i] = -1
 			end
-		elseif arg_23_4 < iter_23_5 and tabletool.len(arg_23_2) == 0 then
+		elseif playerMax < i and tabletool.len(configAids) == 0 then
 			-- block empty
-		elseif not arg_23_0.heroList[iter_23_5] or tonumber(arg_23_0.heroList[iter_23_5]) >= 0 and not arg_23_0.trialDict[iter_23_5] then
-			for iter_23_6 = 1, var_23_0 do
-				if arg_23_2[iter_23_6] then
-					if arg_23_0.heroList[iter_23_5] and tonumber(arg_23_0.heroList[iter_23_5]) > 0 then
-						table.insert(var_23_1, arg_23_0.heroList[iter_23_5])
-						table.insert(var_23_2, arg_23_0:getPosEquips(iter_23_5 - 1))
+		elseif not self.heroList[i] or tonumber(self.heroList[i]) >= 0 and not self.trialDict[i] then
+			for j = 1, MaxHeroCount do
+				if configAids[j] then
+					if self.heroList[i] and tonumber(self.heroList[i]) > 0 then
+						table.insert(dropedHeroList, self.heroList[i])
+						table.insert(dropedEquipList, self:getPosEquips(i - 1))
 					end
 
-					var_23_11 = arg_23_2[iter_23_6] ~= 0 and var_23_11 + 1 or var_23_11
-					arg_23_0.heroList[iter_23_5] = arg_23_2[iter_23_6] == 0 and "0" or tostring(-var_23_11)
-					arg_23_0.aidDict[iter_23_6] = arg_23_2[iter_23_6] == 0 and -1 or arg_23_2[iter_23_6]
+					aidHeroUid = configAids[j] ~= 0 and aidHeroUid + 1 or aidHeroUid
+					self.heroList[i] = configAids[j] == 0 and "0" or tostring(-aidHeroUid)
+					self.aidDict[j] = configAids[j] == 0 and -1 or configAids[j]
 
-					arg_23_0:updatePosEquips({
-						index = iter_23_5 - 1
+					self:updatePosEquips({
+						index = i - 1
 					})
 
-					arg_23_2[iter_23_6] = nil
-					var_23_12 = true
+					configAids[j] = nil
+					isSetAid = true
 
 					break
 				end
@@ -774,136 +778,137 @@ function var_0_0.initWithBattle(arg_23_0, arg_23_1, arg_23_2, arg_23_3, arg_23_4
 		end
 	end
 
-	if var_23_12 then
-		tabletool.revert(arg_23_0.heroList)
+	if isSetAid then
+		tabletool.revert(self.heroList)
 	end
 
-	for iter_23_7 = 1, var_23_0 do
-		if #var_23_1 <= 0 then
+	for i = 1, MaxHeroCount do
+		if #dropedHeroList <= 0 then
 			break
 		end
 
-		if iter_23_7 <= arg_23_3 and iter_23_7 <= Season166HeroGroupModel.instance:positionOpenCount() and (not arg_23_0.heroList[iter_23_7] or arg_23_0.heroList[iter_23_7] == "0" or arg_23_0.heroList[iter_23_7] == 0) then
-			arg_23_0.heroList[iter_23_7] = var_23_1[#var_23_1]
+		if i <= roleNum and i <= Season166HeroGroupModel.instance:positionOpenCount() and (not self.heroList[i] or self.heroList[i] == "0" or self.heroList[i] == 0) then
+			self.heroList[i] = dropedHeroList[#dropedHeroList]
 
-			arg_23_0:_setPosEquips(iter_23_7 - 1, var_23_2[#var_23_2])
-			table.remove(var_23_1, #var_23_1)
-			table.remove(var_23_2, #var_23_2)
+			self:_setPosEquips(i - 1, dropedEquipList[#dropedEquipList])
+			table.remove(dropedHeroList, #dropedHeroList)
+			table.remove(dropedEquipList, #dropedEquipList)
 		end
 	end
 
-	arg_23_0:_dropAidEquip()
+	self:_dropAidEquip()
 end
 
-function var_0_0._getHeroListBackup(arg_24_0)
-	local var_24_0 = {}
+function Season166HeroGroupMO:_getHeroListBackup()
+	local heroListBackup = {}
 
-	for iter_24_0, iter_24_1 in ipairs(arg_24_0.heroList) do
-		table.insert(var_24_0, iter_24_1)
+	for _, heroUid in ipairs(self.heroList) do
+		table.insert(heroListBackup, heroUid)
 	end
 
-	return var_24_0
+	return heroListBackup
 end
 
-function var_0_0.getMainList(arg_25_0)
-	local var_25_0 = {}
-	local var_25_1 = 0
+function Season166HeroGroupMO:getMainList()
+	local mainUids = {}
+	local count = 0
 
-	if arg_25_0._playerMax then
-		for iter_25_0 = 1, arg_25_0._playerMax do
-			local var_25_2 = arg_25_0.heroList[iter_25_0] or "0"
+	if self._playerMax then
+		for i = 1, self._playerMax do
+			local uid = self.heroList[i] or "0"
 
-			table.insert(var_25_0, var_25_2)
+			table.insert(mainUids, uid)
 
-			if var_25_2 ~= "0" and var_25_2 ~= 0 then
-				var_25_1 = var_25_1 + 1
+			if uid ~= "0" and uid ~= 0 then
+				count = count + 1
 			end
 		end
 	else
-		local var_25_3 = Season166HeroGroupModel.instance.battleId
-		local var_25_4 = var_25_3 and lua_battle.configDict[var_25_3]
-		local var_25_5 = var_25_4 and var_25_4.playerMax or ModuleEnum.HeroCountInGroup
+		local battleId = Season166HeroGroupModel.instance.battleId
+		local battleCO = battleId and lua_battle.configDict[battleId]
+		local playerMax = battleCO and battleCO.playerMax or ModuleEnum.HeroCountInGroup
 
-		for iter_25_1 = 1, var_25_5 do
-			local var_25_6 = arg_25_0.heroList[iter_25_1] or "0"
+		for i = 1, playerMax do
+			local uid = self.heroList[i] or "0"
 
-			var_25_0[iter_25_1] = var_25_6
+			mainUids[i] = uid
 
-			if var_25_6 ~= "0" and var_25_6 ~= 0 then
-				var_25_1 = var_25_1 + 1
+			if uid ~= "0" and uid ~= 0 then
+				count = count + 1
 			end
 		end
 	end
 
-	return var_25_0, var_25_1
+	return mainUids, count
 end
 
-function var_0_0.getSubList(arg_26_0)
-	local var_26_0 = {}
-	local var_26_1 = 0
+function Season166HeroGroupMO:getSubList()
+	local ans = {}
+	local count = 0
 
-	if arg_26_0._playerMax then
-		for iter_26_0 = 1, arg_26_0._roleNum do
-			if iter_26_0 > arg_26_0._playerMax then
-				local var_26_2 = arg_26_0.heroList[iter_26_0] or "0"
+	if self._playerMax then
+		for i = 1, self._roleNum do
+			if i > self._playerMax then
+				local uid = self.heroList[i] or "0"
 
-				table.insert(var_26_0, var_26_2)
+				table.insert(ans, uid)
 
-				if var_26_2 ~= "0" and var_26_2 ~= 0 then
-					var_26_1 = var_26_1 + 1
+				if uid ~= "0" and uid ~= 0 then
+					count = count + 1
 				end
 			end
 		end
 	else
-		local var_26_3 = Season166HeroGroupModel.instance.battleId
-		local var_26_4 = var_26_3 and lua_battle.configDict[var_26_3]
+		local battleId = Season166HeroGroupModel.instance.battleId
+		local battleCO = battleId and lua_battle.configDict[battleId]
+		local playerMax = battleCO and battleCO.playerMax or ModuleEnum.HeroCountInGroup
 
-		for iter_26_1 = (var_26_4 and var_26_4.playerMax or ModuleEnum.HeroCountInGroup) + 1, arg_26_0:getMaxHeroCount() do
-			local var_26_5 = arg_26_0.heroList[iter_26_1] or "0"
+		for i = playerMax + 1, self:getMaxHeroCount() do
+			local uid = self.heroList[i] or "0"
 
-			table.insert(var_26_0, var_26_5)
+			table.insert(ans, uid)
 
-			if var_26_5 ~= "0" and var_26_5 ~= 0 then
-				var_26_1 = var_26_1 + 1
+			if uid ~= "0" and uid ~= 0 then
+				count = count + 1
 			end
 		end
 	end
 
-	return var_26_0, var_26_1
+	return ans, count
 end
 
-function var_0_0.isAidHero(arg_27_0, arg_27_1)
-	arg_27_1 = tonumber(arg_27_1) or 0
+function Season166HeroGroupMO:isAidHero(uid)
+	uid = tonumber(uid) or 0
 
-	local var_27_0 = arg_27_0:getMaxHeroCount()
+	local maxCount = self:getMaxHeroCount()
 
-	return arg_27_1 < 0 and arg_27_1 >= -var_27_0
+	return uid < 0 and uid >= -maxCount
 end
 
-function var_0_0.clearAidHero(arg_28_0)
-	if arg_28_0.heroList then
-		for iter_28_0, iter_28_1 in ipairs(arg_28_0.heroList) do
-			if arg_28_0:isAidHero(iter_28_1) and (not arg_28_0.aidDict or not arg_28_0.aidDict[iter_28_0]) then
-				arg_28_0.heroList[iter_28_0] = tostring(0)
+function Season166HeroGroupMO:clearAidHero()
+	if self.heroList then
+		for i, v in ipairs(self.heroList) do
+			if self:isAidHero(v) and (not self.aidDict or not self.aidDict[i]) then
+				self.heroList[i] = tostring(0)
 			end
 		end
 	end
 end
 
-function var_0_0.setSeasonCardLimit(arg_29_0, arg_29_1, arg_29_2)
-	arg_29_0._seasonCardMainNum, arg_29_0._seasonCardNormalNum = arg_29_1, arg_29_2
+function Season166HeroGroupMO:setSeasonCardLimit(mainCardNum, normalCardNum)
+	self._seasonCardMainNum, self._seasonCardNormalNum = mainCardNum, normalCardNum
 end
 
-function var_0_0.getSeasonCardLimit(arg_30_0)
-	return arg_30_0._seasonCardMainNum, arg_30_0._seasonCardNormalNum
+function Season166HeroGroupMO:getSeasonCardLimit()
+	return self._seasonCardMainNum, self._seasonCardNormalNum
 end
 
-function var_0_0.getMaxHeroCount(arg_31_0)
-	return arg_31_0._roleNum or Season166HeroGroupModel.instance:getMaxHeroCountInGroup()
+function Season166HeroGroupMO:getMaxHeroCount()
+	return self._roleNum or Season166HeroGroupModel.instance:getMaxHeroCountInGroup()
 end
 
-function var_0_0.setMaxHeroCount(arg_32_0, arg_32_1)
-	arg_32_0._playerMax = arg_32_1
+function Season166HeroGroupMO:setMaxHeroCount(playerMaxCount)
+	self._playerMax = playerMaxCount
 end
 
-return var_0_0
+return Season166HeroGroupMO

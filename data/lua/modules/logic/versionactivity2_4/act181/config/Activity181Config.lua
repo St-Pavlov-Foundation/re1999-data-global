@@ -1,63 +1,65 @@
-﻿module("modules.logic.versionactivity2_4.act181.config.Activity181Config", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/act181/config/Activity181Config.lua
 
-local var_0_0 = class("Activity181Config", BaseConfig)
+module("modules.logic.versionactivity2_4.act181.config.Activity181Config", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local Activity181Config = class("Activity181Config", BaseConfig)
+
+function Activity181Config:reqConfigNames()
 	return {
 		"activity181_box",
 		"activity181_boxlist"
 	}
 end
 
-function var_0_0.onInit(arg_2_0)
+function Activity181Config:onInit()
 	return
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity181_box" then
-		arg_3_0.activity181Config = arg_3_2
-	elseif arg_3_1 == "activity181_boxlist" then
-		arg_3_0.activity181BonusConfig = arg_3_2
+function Activity181Config:onConfigLoaded(configName, configTable)
+	if configName == "activity181_box" then
+		self.activity181Config = configTable
+	elseif configName == "activity181_boxlist" then
+		self.activity181BonusConfig = configTable
 
-		arg_3_0:initBoxListConfig()
+		self:initBoxListConfig()
 	end
 end
 
-function var_0_0.getBoxConfig(arg_4_0, arg_4_1)
-	if not arg_4_0.activity181Config then
+function Activity181Config:getBoxConfig(activityId)
+	if not self.activity181Config then
 		return nil
 	end
 
-	return arg_4_0.activity181Config.configDict[arg_4_1]
+	return self.activity181Config.configDict[activityId]
 end
 
-function var_0_0.initBoxListConfig(arg_5_0)
-	arg_5_0._activityBoxListDic = {}
+function Activity181Config:initBoxListConfig()
+	self._activityBoxListDic = {}
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0.activity181BonusConfig.configList) do
-		local var_5_0 = arg_5_0._activityBoxListDic[iter_5_1.activityId]
+	for _, config in ipairs(self.activity181BonusConfig.configList) do
+		local configList = self._activityBoxListDic[config.activityId]
 
-		if not var_5_0 then
-			var_5_0 = {}
-			arg_5_0._activityBoxListDic[iter_5_1.activityId] = var_5_0
+		if not configList then
+			configList = {}
+			self._activityBoxListDic[config.activityId] = configList
 		end
 
-		table.insert(var_5_0, iter_5_1.id)
+		table.insert(configList, config.id)
 	end
 end
 
-function var_0_0.getBoxListConfig(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_0.activity181BonusConfig.configDict[arg_6_1] then
-		return arg_6_0.activity181BonusConfig.configDict[arg_6_1][arg_6_2]
+function Activity181Config:getBoxListConfig(activityId, boxId)
+	if self.activity181BonusConfig.configDict[activityId] then
+		return self.activity181BonusConfig.configDict[activityId][boxId]
 	end
 
 	return nil
 end
 
-function var_0_0.getBoxListByActivityId(arg_7_0, arg_7_1)
-	return arg_7_0._activityBoxListDic[arg_7_1]
+function Activity181Config:getBoxListByActivityId(activityId)
+	return self._activityBoxListDic[activityId]
 end
 
-var_0_0.instance = var_0_0.New()
+Activity181Config.instance = Activity181Config.New()
 
-return var_0_0
+return Activity181Config

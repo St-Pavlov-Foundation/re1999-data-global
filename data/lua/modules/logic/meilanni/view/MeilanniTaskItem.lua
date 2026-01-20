@@ -1,200 +1,203 @@
-﻿module("modules.logic.meilanni.view.MeilanniTaskItem", package.seeall)
+﻿-- chunkname: @modules/logic/meilanni/view/MeilanniTaskItem.lua
 
-local var_0_0 = class("MeilanniTaskItem", ListScrollCellExtend)
+module("modules.logic.meilanni.view.MeilanniTaskItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "#go_normal")
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_normal/#simage_bg")
-	arg_1_0._txttaskdes = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/#txt_taskdes")
-	arg_1_0._gorewards = gohelper.findChild(arg_1_0.viewGO, "#go_normal/#go_rewards")
-	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.viewGO, "#go_normal/#go_rewards/#go_rewarditem")
-	arg_1_0._gonotget = gohelper.findChild(arg_1_0.viewGO, "#go_normal/#go_notget")
-	arg_1_0._btnnotfinishbg = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_normal/#go_notget/#btn_notfinishbg")
-	arg_1_0._btnfinishbg = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_normal/#go_notget/#btn_finishbg")
-	arg_1_0._goblackmask = gohelper.findChild(arg_1_0.viewGO, "#go_normal/#go_blackmask")
-	arg_1_0._goget = gohelper.findChild(arg_1_0.viewGO, "#go_normal/#go_get")
-	arg_1_0._imagelevelbg = gohelper.findChildImage(arg_1_0.viewGO, "#go_normal/#image_levelbg")
-	arg_1_0._simagelevel = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_normal/#simage_level")
-	arg_1_0._gogetall = gohelper.findChild(arg_1_0.viewGO, "#go_getall")
-	arg_1_0._simagegetallbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_getall/#simage_getallbg")
-	arg_1_0._btncollectall = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_getall/go_getall/#btn_collectall")
+local MeilanniTaskItem = class("MeilanniTaskItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function MeilanniTaskItem:onInitView()
+	self._gonormal = gohelper.findChild(self.viewGO, "#go_normal")
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#go_normal/#simage_bg")
+	self._txttaskdes = gohelper.findChildText(self.viewGO, "#go_normal/#txt_taskdes")
+	self._gorewards = gohelper.findChild(self.viewGO, "#go_normal/#go_rewards")
+	self._gorewarditem = gohelper.findChild(self.viewGO, "#go_normal/#go_rewards/#go_rewarditem")
+	self._gonotget = gohelper.findChild(self.viewGO, "#go_normal/#go_notget")
+	self._btnnotfinishbg = gohelper.findChildButtonWithAudio(self.viewGO, "#go_normal/#go_notget/#btn_notfinishbg")
+	self._btnfinishbg = gohelper.findChildButtonWithAudio(self.viewGO, "#go_normal/#go_notget/#btn_finishbg")
+	self._goblackmask = gohelper.findChild(self.viewGO, "#go_normal/#go_blackmask")
+	self._goget = gohelper.findChild(self.viewGO, "#go_normal/#go_get")
+	self._imagelevelbg = gohelper.findChildImage(self.viewGO, "#go_normal/#image_levelbg")
+	self._simagelevel = gohelper.findChildSingleImage(self.viewGO, "#go_normal/#simage_level")
+	self._gogetall = gohelper.findChild(self.viewGO, "#go_getall")
+	self._simagegetallbg = gohelper.findChildSingleImage(self.viewGO, "#go_getall/#simage_getallbg")
+	self._btncollectall = gohelper.findChildButtonWithAudio(self.viewGO, "#go_getall/go_getall/#btn_collectall")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnnotfinishbg:AddClickListener(arg_2_0._btnnotfinishbgOnClick, arg_2_0)
-	arg_2_0._btnfinishbg:AddClickListener(arg_2_0._btnfinishbgOnClick, arg_2_0)
-	arg_2_0._btncollectall:AddClickListener(arg_2_0._btncollectallOnClick, arg_2_0)
+function MeilanniTaskItem:addEvents()
+	self._btnnotfinishbg:AddClickListener(self._btnnotfinishbgOnClick, self)
+	self._btnfinishbg:AddClickListener(self._btnfinishbgOnClick, self)
+	self._btncollectall:AddClickListener(self._btncollectallOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnnotfinishbg:RemoveClickListener()
-	arg_3_0._btnfinishbg:RemoveClickListener()
-	arg_3_0._btncollectall:RemoveClickListener()
+function MeilanniTaskItem:removeEvents()
+	self._btnnotfinishbg:RemoveClickListener()
+	self._btnfinishbg:RemoveClickListener()
+	self._btncollectall:RemoveClickListener()
 end
 
-function var_0_0._btncollectallOnClick(arg_4_0)
-	arg_4_0:_collect()
+function MeilanniTaskItem:_btncollectallOnClick()
+	self:_collect()
 end
 
-function var_0_0._btnnotfinishbgOnClick(arg_5_0)
-	local var_5_0 = arg_5_0._mo.mapId
-	local var_5_1 = lua_activity108_map.configDict[var_5_0]
+function MeilanniTaskItem:_btnnotfinishbgOnClick()
+	local mapId = self._mo.mapId
+	local mapConfig = lua_activity108_map.configDict[mapId]
+	local isLock = MeilanniMapItem.isLock(mapConfig)
 
-	if MeilanniMapItem.isLock(var_5_1) then
+	if isLock then
 		GameFacade.showToast(ToastEnum.MeilanniTask)
 
 		return
 	end
 
-	MeilanniMapItem.gotoMap(var_5_0)
+	MeilanniMapItem.gotoMap(mapId)
 end
 
-function var_0_0._btnfinishbgOnClick(arg_6_0)
-	arg_6_0:_collect()
+function MeilanniTaskItem:_btnfinishbgOnClick()
+	self:_collect()
 end
 
-function var_0_0._collect(arg_7_0)
-	if arg_7_0._mo.isGetAll then
-		arg_7_0.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_7_0._gogetall)
+function MeilanniTaskItem:_collect()
+	if self._mo.isGetAll then
+		self.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(self._gogetall)
 	else
-		arg_7_0.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_7_0._gonormal)
+		self.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(self._gonormal)
 	end
 
-	arg_7_0._animator.speed = 1
+	self._animator.speed = 1
 
-	arg_7_0.animatorPlayer:Play("finish", arg_7_0.onFinishFirstPartAnimationDone, arg_7_0)
+	self.animatorPlayer:Play("finish", self.onFinishFirstPartAnimationDone, self)
 end
 
-function var_0_0.onFinishFirstPartAnimationDone(arg_8_0)
-	arg_8_0._view.viewContainer.taskAnimRemoveItem:removeByIndex(arg_8_0._index, arg_8_0.onFinishSecondPartAnimationDone, arg_8_0)
+function MeilanniTaskItem:onFinishFirstPartAnimationDone()
+	self._view.viewContainer.taskAnimRemoveItem:removeByIndex(self._index, self.onFinishSecondPartAnimationDone, self)
 end
 
-function var_0_0.onFinishSecondPartAnimationDone(arg_9_0)
-	Activity108Rpc.instance:sendGet108BonusRequest(MeilanniEnum.activityId, arg_9_0._mo.id)
+function MeilanniTaskItem:onFinishSecondPartAnimationDone()
+	Activity108Rpc.instance:sendGet108BonusRequest(MeilanniEnum.activityId, self._mo.id)
 end
 
-function var_0_0._editableInitView(arg_10_0)
-	arg_10_0._rewardItems = arg_10_0:getUserDataTb_()
+function MeilanniTaskItem:_editableInitView()
+	self._rewardItems = self:getUserDataTb_()
 
-	arg_10_0._simagegetallbg:LoadImage(ResUrl.getMeilanniIcon("bg_rwdi_1"))
-	arg_10_0._simagebg:LoadImage(ResUrl.getMeilanniIcon("bg_rwdi_2"))
+	self._simagegetallbg:LoadImage(ResUrl.getMeilanniIcon("bg_rwdi_1"))
+	self._simagebg:LoadImage(ResUrl.getMeilanniIcon("bg_rwdi_2"))
 end
 
-function var_0_0._editableAddEvents(arg_11_0)
-	gohelper.addUIClickAudio(arg_11_0._btnnotfinishbg.gameObject, AudioEnum.Meilanni.play_ui_mln_move)
-	gohelper.addUIClickAudio(arg_11_0._btnfinishbg.gameObject, AudioEnum.Meilanni.play_ui_mln_receive)
-	gohelper.addUIClickAudio(arg_11_0._btncollectall.gameObject, AudioEnum.Meilanni.play_ui_mln_receive)
+function MeilanniTaskItem:_editableAddEvents()
+	gohelper.addUIClickAudio(self._btnnotfinishbg.gameObject, AudioEnum.Meilanni.play_ui_mln_move)
+	gohelper.addUIClickAudio(self._btnfinishbg.gameObject, AudioEnum.Meilanni.play_ui_mln_receive)
+	gohelper.addUIClickAudio(self._btncollectall.gameObject, AudioEnum.Meilanni.play_ui_mln_receive)
 end
 
-function var_0_0._editableRemoveEvents(arg_12_0)
+function MeilanniTaskItem:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_13_0, arg_13_1)
-	arg_13_0._mo = arg_13_1
-	arg_13_0._canGet = false
+function MeilanniTaskItem:onUpdateMO(mo)
+	self._mo = mo
+	self._canGet = false
 
-	gohelper.setActive(arg_13_0._gonormal, not arg_13_1.isGetAll)
-	gohelper.setActive(arg_13_0._gogetall, arg_13_1.isGetAll)
+	gohelper.setActive(self._gonormal, not mo.isGetAll)
+	gohelper.setActive(self._gogetall, mo.isGetAll)
 
-	if arg_13_1.isGetAll then
-		arg_13_0._canGet = true
-		arg_13_0._animator = arg_13_0._gogetall:GetComponent(typeof(UnityEngine.Animator))
+	if mo.isGetAll then
+		self._canGet = true
+		self._animator = self._gogetall:GetComponent(typeof(UnityEngine.Animator))
 
 		return
 	end
 
-	arg_13_0._animator = arg_13_0._gonormal:GetComponent(typeof(UnityEngine.Animator))
-	arg_13_0._txttaskdes.text = arg_13_1.desc
+	self._animator = self._gonormal:GetComponent(typeof(UnityEngine.Animator))
+	self._txttaskdes.text = mo.desc
 
-	local var_13_0 = MeilanniModel.instance:getMapInfo(arg_13_1.mapId)
-	local var_13_1 = var_13_0 and var_13_0:getMaxScore() or 0
-	local var_13_2 = arg_13_1.score
-	local var_13_3 = var_13_0 and var_13_0:isGetReward(arg_13_0._mo.id)
+	local mapInfo = MeilanniModel.instance:getMapInfo(mo.mapId)
+	local curScore = mapInfo and mapInfo:getMaxScore() or 0
+	local totalScore = mo.score
+	local isGet = mapInfo and mapInfo:isGetReward(self._mo.id)
 
-	gohelper.setActive(arg_13_0._gonotget, not var_13_3)
-	gohelper.setActive(arg_13_0._goget, var_13_3)
-	gohelper.setActive(arg_13_0._goblackmask, var_13_3)
+	gohelper.setActive(self._gonotget, not isGet)
+	gohelper.setActive(self._goget, isGet)
+	gohelper.setActive(self._goblackmask, isGet)
 
-	if not var_13_3 then
-		local var_13_4 = var_13_2 <= var_13_1
+	if not isGet then
+		local isFinish = totalScore <= curScore
 
-		gohelper.setActive(arg_13_0._btnnotfinishbg.gameObject, not var_13_4)
-		gohelper.setActive(arg_13_0._btnfinishbg.gameObject, var_13_4)
+		gohelper.setActive(self._btnnotfinishbg.gameObject, not isFinish)
+		gohelper.setActive(self._btnfinishbg.gameObject, isFinish)
 
-		arg_13_0._canGet = var_13_4
+		self._canGet = isFinish
 	end
 
-	local var_13_5 = MeilanniConfig.instance:getScoreIndex(arg_13_1.score)
+	local scoreIndex = MeilanniConfig.instance:getScoreIndex(mo.score)
 
-	if var_13_3 or arg_13_0._canGet then
-		arg_13_0._simagelevel:LoadImage(ResUrl.getMeilanniLangIcon("bg_jiangli_pingfen_" .. var_13_5))
+	if isGet or self._canGet then
+		self._simagelevel:LoadImage(ResUrl.getMeilanniLangIcon("bg_jiangli_pingfen_" .. scoreIndex))
 	else
-		arg_13_0._simagelevel:LoadImage(ResUrl.getMeilanniLangIcon("bg_jiangli_pingfen_" .. var_13_5 .. "_dis"))
+		self._simagelevel:LoadImage(ResUrl.getMeilanniLangIcon("bg_jiangli_pingfen_" .. scoreIndex .. "_dis"))
 	end
 
-	arg_13_0:_addRewards()
+	self:_addRewards()
 end
 
-function var_0_0._addRewards(arg_14_0)
-	arg_14_0._rewardItems = arg_14_0._rewardItems or arg_14_0:getUserDataTb_()
+function MeilanniTaskItem:_addRewards()
+	self._rewardItems = self._rewardItems or self:getUserDataTb_()
 
-	local var_14_0 = string.split(arg_14_0._mo.bonus, "|")
+	local rewards = string.split(self._mo.bonus, "|")
 
-	for iter_14_0 = 1, #var_14_0 do
-		local var_14_1 = string.splitToNumber(var_14_0[iter_14_0], "#")
+	for i = 1, #rewards do
+		local itemCo = string.splitToNumber(rewards[i], "#")
 
-		arg_14_0:_showItem(iter_14_0, var_14_1)
+		self:_showItem(i, itemCo)
 	end
 end
 
-function var_0_0._showItem(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0 = arg_15_0._rewardItems[arg_15_1]
+function MeilanniTaskItem:_showItem(index, itemCo)
+	local item = self._rewardItems[index]
 
-	if not var_15_0 then
-		var_15_0 = {
-			parentGo = gohelper.cloneInPlace(arg_15_0._gorewarditem)
+	if not item then
+		item = {
+			parentGo = gohelper.cloneInPlace(self._gorewarditem)
 		}
 
-		gohelper.setActive(var_15_0.parentGo, true)
+		gohelper.setActive(item.parentGo, true)
 
-		var_15_0.itemIcon = IconMgr.instance:getCommonPropItemIcon(var_15_0.parentGo)
+		item.itemIcon = IconMgr.instance:getCommonPropItemIcon(item.parentGo)
 
-		var_15_0.itemIcon:isShowCount(arg_15_2[1] ~= MaterialEnum.MaterialType.Hero)
-		var_15_0.itemIcon:showStackableNum2()
-		var_15_0.itemIcon:setHideLvAndBreakFlag(true)
-		var_15_0.itemIcon:hideEquipLvAndBreak(true)
+		item.itemIcon:isShowCount(itemCo[1] ~= MaterialEnum.MaterialType.Hero)
+		item.itemIcon:showStackableNum2()
+		item.itemIcon:setHideLvAndBreakFlag(true)
+		item.itemIcon:hideEquipLvAndBreak(true)
 
-		arg_15_0._rewardItems[arg_15_1] = var_15_0
+		self._rewardItems[index] = item
 	end
 
-	var_15_0.itemIcon:setMOValue(arg_15_2[1], arg_15_2[2], arg_15_2[3], nil, true)
-	var_15_0.itemIcon:setCountFontSize(40)
+	item.itemIcon:setMOValue(itemCo[1], itemCo[2], itemCo[3], nil, true)
+	item.itemIcon:setCountFontSize(40)
 end
 
-function var_0_0.onSelect(arg_16_0, arg_16_1)
+function MeilanniTaskItem:onSelect(isSelect)
 	return
 end
 
-function var_0_0.onDestroyView(arg_17_0)
-	for iter_17_0, iter_17_1 in pairs(arg_17_0._rewardItems) do
-		gohelper.destroy(iter_17_1.itemIcon.go)
-		gohelper.destroy(iter_17_1.parentGo)
-		iter_17_1.itemIcon:onDestroy()
+function MeilanniTaskItem:onDestroyView()
+	for _, v in pairs(self._rewardItems) do
+		gohelper.destroy(v.itemIcon.go)
+		gohelper.destroy(v.parentGo)
+		v.itemIcon:onDestroy()
 	end
 
-	arg_17_0._rewardItems = nil
+	self._rewardItems = nil
 
-	arg_17_0._simagebg:UnLoadImage()
-	arg_17_0._simagegetallbg:UnLoadImage()
+	self._simagebg:UnLoadImage()
+	self._simagegetallbg:UnLoadImage()
 end
 
-function var_0_0.getAnimator(arg_18_0)
-	return arg_18_0._animator
+function MeilanniTaskItem:getAnimator()
+	return self._animator
 end
 
-return var_0_0
+return MeilanniTaskItem

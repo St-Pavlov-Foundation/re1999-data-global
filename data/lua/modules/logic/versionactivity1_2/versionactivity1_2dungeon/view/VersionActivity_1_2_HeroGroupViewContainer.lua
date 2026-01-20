@@ -1,12 +1,14 @@
-﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity_1_2_HeroGroupViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/versionactivity1_2dungeon/view/VersionActivity_1_2_HeroGroupViewContainer.lua
 
-local var_0_0 = class("VersionActivity_1_2_HeroGroupViewContainer", HeroGroupFightViewContainer)
+module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity_1_2_HeroGroupViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	arg_1_0._heroGroupFightView = VersionActivity_1_2_HeroGroupView.New()
+local VersionActivity_1_2_HeroGroupViewContainer = class("VersionActivity_1_2_HeroGroupViewContainer", HeroGroupFightViewContainer)
 
-	return {
-		arg_1_0._heroGroupFightView,
+function VersionActivity_1_2_HeroGroupViewContainer:buildViews()
+	self._heroGroupFightView = VersionActivity_1_2_HeroGroupView.New()
+
+	local views = {
+		self._heroGroupFightView,
 		VersionActivity_1_2_HeroGroupBuildView.New(),
 		VersionActivity_1_2_HeroGroupListView.New(),
 		HeroGroupFightViewLevel.New(),
@@ -15,6 +17,8 @@ function var_0_0.buildViews(arg_1_0)
 		TabViewGroup.New(1, "#go_container/btnContain/commonBtns"),
 		TabViewGroup.New(2, "#go_righttop/#go_power")
 	}
+
+	return views
 end
 
-return var_0_0
+return VersionActivity_1_2_HeroGroupViewContainer

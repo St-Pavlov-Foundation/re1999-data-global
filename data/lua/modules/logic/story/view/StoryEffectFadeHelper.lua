@@ -1,49 +1,51 @@
-﻿module("modules.logic.story.view.StoryEffectFadeHelper", package.seeall)
+﻿-- chunkname: @modules/logic/story/view/StoryEffectFadeHelper.lua
 
-local var_0_0 = class("StoryEffectFadeHelper")
+module("modules.logic.story.view.StoryEffectFadeHelper", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._go = arg_1_1
-	arg_1_0._initRenderAlphas = {}
-	arg_1_0._renderGos = {}
+local StoryEffectFadeHelper = class("StoryEffectFadeHelper")
 
-	local var_1_0 = arg_1_0._go.transform:GetComponentsInChildren(typeof(UnityEngine.ParticleSystem))
+function StoryEffectFadeHelper:init(go)
+	self._go = go
+	self._initRenderAlphas = {}
+	self._renderGos = {}
 
-	for iter_1_0 = 0, var_1_0.Length - 1 do
-		local var_1_1 = var_1_0[iter_1_0].gameObject.name
+	local particles = self._go.transform:GetComponentsInChildren(typeof(UnityEngine.ParticleSystem))
 
-		if not string.nilorempty(var_1_1) then
-			table.insert(arg_1_0._renderGos, var_1_0[iter_1_0].gameObject)
+	for i = 0, particles.Length - 1 do
+		local name = particles[i].gameObject.name
+
+		if not string.nilorempty(name) then
+			table.insert(self._renderGos, particles[i].gameObject)
 		end
 	end
 
-	local var_1_2 = arg_1_0._go.transform:GetComponentsInChildren(typeof(UnityEngine.MeshRenderer))
+	local meshs = self._go.transform:GetComponentsInChildren(typeof(UnityEngine.MeshRenderer))
 
-	for iter_1_1 = 0, var_1_2.Length - 1 do
-		local var_1_3 = var_1_2[iter_1_1].gameObject.name
+	for i = 0, meshs.Length - 1 do
+		local name = meshs[i].gameObject.name
 
-		if not string.nilorempty(var_1_3) then
-			table.insert(arg_1_0._renderGos, var_1_2[iter_1_1].gameObject)
+		if not string.nilorempty(name) then
+			table.insert(self._renderGos, meshs[i].gameObject)
 		end
 	end
 
-	for iter_1_2, iter_1_3 in ipairs(arg_1_0._renderGos) do
-		local var_1_4 = iter_1_3:GetComponent(typeof(UnityEngine.Renderer))
+	for _, go in ipairs(self._renderGos) do
+		local renderer = go:GetComponent(typeof(UnityEngine.Renderer))
 
-		if var_1_4 then
-			local var_1_5 = var_1_4.sharedMaterials
+		if renderer then
+			local sharedMaterials = renderer.sharedMaterials
 
-			for iter_1_4 = 0, var_1_5.Length - 1 do
-				local var_1_6 = var_1_5[iter_1_4]
+			for j = 0, sharedMaterials.Length - 1 do
+				local material = sharedMaterials[j]
 
-				if not gohelper.isNil(var_1_6) and var_1_6:HasProperty("_MainColor") then
-					local var_1_7 = var_1_6:GetColor("_MainColor")
+				if not gohelper.isNil(material) and material:HasProperty("_MainColor") then
+					local mainColor = material:GetColor("_MainColor")
 
-					arg_1_0._initRenderAlphas[iter_1_3.name .. "_" .. var_1_6.name] = {
-						var_1_7.r,
-						var_1_7.g,
-						var_1_7.b,
-						var_1_7.a
+					self._initRenderAlphas[go.name .. "_" .. material.name] = {
+						mainColor.r,
+						mainColor.g,
+						mainColor.b,
+						mainColor.a
 					}
 				end
 			end
@@ -51,63 +53,65 @@ function var_0_0.init(arg_1_0, arg_1_1)
 	end
 end
 
-function var_0_0.setTransparency(arg_2_0, arg_2_1)
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0._renderGos) do
-		local var_2_0 = iter_2_1:GetComponent(typeof(UnityEngine.Renderer))
+function StoryEffectFadeHelper:setTransparency(value)
+	for _, go in ipairs(self._renderGos) do
+		local renderer = go:GetComponent(typeof(UnityEngine.Renderer))
 
-		if var_2_0 then
-			local var_2_1 = var_2_0.sharedMaterials
+		if renderer then
+			local sharedMaterials = renderer.sharedMaterials
 
-			for iter_2_2 = 0, var_2_1.Length - 1 do
-				local var_2_2 = var_2_1[iter_2_2]
+			for j = 0, sharedMaterials.Length - 1 do
+				local material = sharedMaterials[j]
 
-				if not gohelper.isNil(var_2_2) and var_2_2:HasProperty("_MainColor") and arg_2_0._initRenderAlphas[iter_2_1.name .. "_" .. var_2_2.name] then
-					local var_2_3 = var_2_2:GetColor("_MainColor")
+				if not gohelper.isNil(material) and material:HasProperty("_MainColor") and self._initRenderAlphas[go.name .. "_" .. material.name] then
+					local mainColor = material:GetColor("_MainColor")
 
-					var_2_3.a = arg_2_1 * arg_2_0._initRenderAlphas[iter_2_1.name .. "_" .. var_2_2.name][4]
+					mainColor.a = value * self._initRenderAlphas[go.name .. "_" .. material.name][4]
 
-					var_2_2:SetColor("_MainColor", var_2_3)
+					material:SetColor("_MainColor", mainColor)
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.setEffectLoop(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_0._go.transform:GetComponentsInChildren(typeof(UnityEngine.ParticleSystem))
+function StoryEffectFadeHelper:setEffectLoop(isLoop)
+	local particles = self._go.transform:GetComponentsInChildren(typeof(UnityEngine.ParticleSystem))
 
-	for iter_3_0 = 0, var_3_0.Length - 1 do
-		var_3_0[iter_3_0].main.loop = arg_3_1
+	for i = 0, particles.Length - 1 do
+		local main = particles[i].main
+
+		main.loop = isLoop
 	end
 end
 
-function var_0_0.destroy(arg_4_0)
-	if not arg_4_0._go or not arg_4_0._go.transform then
+function StoryEffectFadeHelper:destroy()
+	if not self._go or not self._go.transform then
 		return
 	end
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_0._renderGos) do
-		local var_4_0 = iter_4_1:GetComponent(typeof(UnityEngine.Renderer))
+	for _, go in ipairs(self._renderGos) do
+		local renderer = go:GetComponent(typeof(UnityEngine.Renderer))
 
-		if var_4_0 then
-			local var_4_1 = var_4_0.sharedMaterials
+		if renderer then
+			local sharedMaterials = renderer.sharedMaterials
 
-			for iter_4_2 = 0, var_4_1.Length - 1 do
-				local var_4_2 = var_4_1[iter_4_2]
+			for j = 0, sharedMaterials.Length - 1 do
+				local material = sharedMaterials[j]
 
-				if not gohelper.isNil(var_4_2) and var_4_2:HasProperty("_MainColor") and arg_4_0._initRenderAlphas[iter_4_1.name .. "_" .. var_4_2.name] then
-					local var_4_3 = var_4_2:GetColor("_MainColor")
+				if not gohelper.isNil(material) and material:HasProperty("_MainColor") and self._initRenderAlphas[go.name .. "_" .. material.name] then
+					local mainColor = material:GetColor("_MainColor")
 
-					var_4_3.a = arg_4_0._initRenderAlphas[iter_4_1.name .. "_" .. var_4_2.name][4]
+					mainColor.a = self._initRenderAlphas[go.name .. "_" .. material.name][4]
 
-					var_4_2:SetColor("_MainColor", var_4_3)
+					material:SetColor("_MainColor", mainColor)
 				end
 			end
 		end
 	end
 
-	arg_4_0._initRenderAlphas = nil
-	arg_4_0._renderGos = nil
+	self._initRenderAlphas = nil
+	self._renderGos = nil
 end
 
-return var_0_0
+return StoryEffectFadeHelper

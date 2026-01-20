@@ -1,354 +1,357 @@
-﻿module("modules.logic.versionactivity2_8.activity2nd.view.Activity2ndCollectionPageView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/activity2nd/view/Activity2ndCollectionPageView.lua
 
-local var_0_0 = class("Activity2ndCollectionPageView", BaseView)
+module("modules.logic.versionactivity2_8.activity2nd.view.Activity2ndCollectionPageView", package.seeall)
 
-var_0_0.InAnim = "swith_in"
-var_0_0.OutAnim = "switch_out"
+local Activity2ndCollectionPageView = class("Activity2ndCollectionPageView", BaseView)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._simageMiddle = gohelper.findChildSingleImage(arg_1_0.viewGO, "TypeMechine/#simage_Middle")
-	arg_1_0._btntypemechine = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "TypeMechine/#btn_typemechine")
-	arg_1_0._simageMiddleDec1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "TypeMechine/#simage_MiddleDec1")
-	arg_1_0._goPage1 = gohelper.findChild(arg_1_0.viewGO, "Page1")
-	arg_1_0._goPage2 = gohelper.findChild(arg_1_0.viewGO, "Page2")
-	arg_1_0._simageTitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "Page1/#simage_Title")
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Page1/#txt_LimitTime")
-	arg_1_0._btnBack = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Page2/#btn_Back")
-	arg_1_0._btnOK = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Page2/#btn_OK")
-	arg_1_0._inputname = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "Page2/InputField")
-	arg_1_0._txtInput = gohelper.findChildText(arg_1_0.viewGO, "Page2/inputField/#txt_input")
-	arg_1_0._goInputTip = gohelper.findChild(arg_1_0.viewGO, "Page2/Tips")
-	arg_1_0._txtInputTip = gohelper.findChildText(arg_1_0.viewGO, "Page2/Tips/txt_Tips")
-	arg_1_0._goMail = gohelper.findChild(arg_1_0.viewGO, "Page1/Entrance0")
-	arg_1_0._goMailRedPoint = gohelper.findChild(arg_1_0.viewGO, "Page1/Entrance0/#go_RedPoint")
-	arg_1_0._btnMail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Page1/Entrance0/#btn_Entrance")
-	arg_1_0._btnpage2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Page2/#btn_page2")
-	arg_1_0._animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._txt = ""
-	arg_1_0._showTips = false
-	arg_1_0._isswitching = false
-	arg_1_0._showTipTime = 5
-	arg_1_0._isFirstEnter = false
-	arg_1_0._lastStrLen = 0
-	arg_1_0._onceGetReward = false
-	arg_1_0.longPress = SLFramework.UGUI.UILongPressListener.Get(arg_1_0._btnBack.gameObject)
+Activity2ndCollectionPageView.InAnim = "swith_in"
+Activity2ndCollectionPageView.OutAnim = "switch_out"
 
-	arg_1_0.longPress:SetLongPressTime({
+function Activity2ndCollectionPageView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._simageMiddle = gohelper.findChildSingleImage(self.viewGO, "TypeMechine/#simage_Middle")
+	self._btntypemechine = gohelper.findChildButtonWithAudio(self.viewGO, "TypeMechine/#btn_typemechine")
+	self._simageMiddleDec1 = gohelper.findChildSingleImage(self.viewGO, "TypeMechine/#simage_MiddleDec1")
+	self._goPage1 = gohelper.findChild(self.viewGO, "Page1")
+	self._goPage2 = gohelper.findChild(self.viewGO, "Page2")
+	self._simageTitle = gohelper.findChildSingleImage(self.viewGO, "Page1/#simage_Title")
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "Page1/#txt_LimitTime")
+	self._btnBack = gohelper.findChildButtonWithAudio(self.viewGO, "Page2/#btn_Back")
+	self._btnOK = gohelper.findChildButtonWithAudio(self.viewGO, "Page2/#btn_OK")
+	self._inputname = gohelper.findChildTextMeshInputField(self.viewGO, "Page2/InputField")
+	self._txtInput = gohelper.findChildText(self.viewGO, "Page2/inputField/#txt_input")
+	self._goInputTip = gohelper.findChild(self.viewGO, "Page2/Tips")
+	self._txtInputTip = gohelper.findChildText(self.viewGO, "Page2/Tips/txt_Tips")
+	self._goMail = gohelper.findChild(self.viewGO, "Page1/Entrance0")
+	self._goMailRedPoint = gohelper.findChild(self.viewGO, "Page1/Entrance0/#go_RedPoint")
+	self._btnMail = gohelper.findChildButtonWithAudio(self.viewGO, "Page1/Entrance0/#btn_Entrance")
+	self._btnpage2 = gohelper.findChildButtonWithAudio(self.viewGO, "Page2/#btn_page2")
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._txt = ""
+	self._showTips = false
+	self._isswitching = false
+	self._showTipTime = 5
+	self._isFirstEnter = false
+	self._lastStrLen = 0
+	self._onceGetReward = false
+	self.longPress = SLFramework.UGUI.UILongPressListener.Get(self._btnBack.gameObject)
+
+	self.longPress:SetLongPressTime({
 		0.5,
 		99999
 	})
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnBack:AddClickListener(arg_2_0._btnBackOnClick, arg_2_0)
-	arg_2_0.longPress:AddLongPressListener(arg_2_0._onBtnBackLongPress, arg_2_0)
-	arg_2_0._btnOK:AddClickListener(arg_2_0._btnOKOnClick, arg_2_0)
-	arg_2_0._btntypemechine:AddClickListener(arg_2_0._btnTypeMechineOnClick, arg_2_0)
-	arg_2_0._btnMail:AddClickListener(arg_2_0.onClickMailBtn, arg_2_0)
-	arg_2_0._btnpage2:AddClickListener(arg_2_0._btnTypeMechineOnClick, arg_2_0)
-	arg_2_0._inputname:AddOnValueChanged(arg_2_0._inputValueChanged, arg_2_0)
-	arg_2_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_2_0.checkNeedRefreshUI, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_2_0.checkNeedRefreshUI, arg_2_0)
-	arg_2_0:addEventCb(Activity2ndController.instance, Activity2ndEvent.InputErrorOrHasReward, arg_2_0.refreshShowTips, arg_2_0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, arg_2_0.onReceivePVBtn, arg_2_0)
+function Activity2ndCollectionPageView:addEvents()
+	self._btnBack:AddClickListener(self._btnBackOnClick, self)
+	self.longPress:AddLongPressListener(self._onBtnBackLongPress, self)
+	self._btnOK:AddClickListener(self._btnOKOnClick, self)
+	self._btntypemechine:AddClickListener(self._btnTypeMechineOnClick, self)
+	self._btnMail:AddClickListener(self.onClickMailBtn, self)
+	self._btnpage2:AddClickListener(self._btnTypeMechineOnClick, self)
+	self._inputname:AddOnValueChanged(self._inputValueChanged, self)
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self.checkNeedRefreshUI, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self.checkNeedRefreshUI, self)
+	self:addEventCb(Activity2ndController.instance, Activity2ndEvent.InputErrorOrHasReward, self.refreshShowTips, self)
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, self.onReceivePVBtn, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnBack:RemoveClickListener()
-	arg_3_0.longPress:RemoveLongPressListener()
-	arg_3_0._btnOK:RemoveClickListener()
-	arg_3_0._btntypemechine:RemoveClickListener()
-	arg_3_0._btnMail:RemoveClickListener()
-	arg_3_0._btnpage2:RemoveClickListener()
-	arg_3_0._inputname:RemoveOnValueChanged()
-	arg_3_0._btnpvrewarditem:RemoveClickListener()
-	arg_3_0:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_3_0.checkNeedRefreshUI, arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_3_0.checkNeedRefreshUI, arg_3_0)
-	arg_3_0:removeEventCb(Activity2ndController.instance, Activity2ndEvent.InputErrorOrHasReward, arg_3_0.refreshShowTips, arg_3_0)
-	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, arg_3_0.onReceivePVBtn, arg_3_0)
+function Activity2ndCollectionPageView:removeEvents()
+	self._btnBack:RemoveClickListener()
+	self.longPress:RemoveLongPressListener()
+	self._btnOK:RemoveClickListener()
+	self._btntypemechine:RemoveClickListener()
+	self._btnMail:RemoveClickListener()
+	self._btnpage2:RemoveClickListener()
+	self._inputname:RemoveOnValueChanged()
+	self._btnpvrewarditem:RemoveClickListener()
+	self:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self.checkNeedRefreshUI, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self.checkNeedRefreshUI, self)
+	self:removeEventCb(Activity2ndController.instance, Activity2ndEvent.InputErrorOrHasReward, self.refreshShowTips, self)
+	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, self.onReceivePVBtn, self)
 end
 
-function var_0_0._btnPVRewardOnClick(arg_4_0)
-	local var_4_0 = Activity2ndEnum.ActivityId.V2a8_PVPopupReward
+function Activity2ndCollectionPageView:_btnPVRewardOnClick()
+	local actId = Activity2ndEnum.ActivityId.V2a8_PVPopupReward
 
-	if arg_4_0:checkCanGet(var_4_0) then
-		Activity101Rpc.instance:sendGet101BonusRequest(var_4_0, 1)
+	if self:checkCanGet(actId) then
+		Activity101Rpc.instance:sendGet101BonusRequest(actId, 1)
 	end
 end
 
-function var_0_0._onBtnBackLongPress(arg_5_0)
-	arg_5_0._txt = ""
+function Activity2ndCollectionPageView:_onBtnBackLongPress()
+	self._txt = ""
 
-	arg_5_0._inputname:SetText(arg_5_0._txt)
+	self._inputname:SetText(self._txt)
 
-	arg_5_0._lastStrLen = string.len(arg_5_0._txt)
+	self._lastStrLen = string.len(self._txt)
 end
 
-function var_0_0._btnBackOnClick(arg_6_0)
-	arg_6_0._txt = string.sub(arg_6_0._txt, 1, -2)
+function Activity2ndCollectionPageView:_btnBackOnClick()
+	self._txt = string.sub(self._txt, 1, -2)
 
-	arg_6_0._inputname:SetText(arg_6_0._txt)
+	self._inputname:SetText(self._txt)
 
-	arg_6_0._lastStrLen = string.len(arg_6_0._txt)
+	self._lastStrLen = string.len(self._txt)
 end
 
-function var_0_0._btnOKOnClick(arg_7_0)
-	Activity2ndController.instance:trySendText(arg_7_0._txt)
+function Activity2ndCollectionPageView:_btnOKOnClick()
+	Activity2ndController.instance:trySendText(self._txt)
 end
 
-function var_0_0._btnTypewriter(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_1.str
-	local var_8_1 = arg_8_1.anim
+function Activity2ndCollectionPageView:_btnTypewriter(param)
+	local str = param.str
+	local anim = param.anim
 
-	if string.len(arg_8_0._txt) < 20 then
-		arg_8_0._txt = arg_8_0._txt .. var_8_0
+	if string.len(self._txt) < 20 then
+		self._txt = self._txt .. str
 	else
-		local var_8_2 = luaLang("Activity2ndCollectionPageView_EnterMaxStr")
+		str = luaLang("Activity2ndCollectionPageView_EnterMaxStr")
 
-		arg_8_0:refreshShowTips(var_8_2)
+		self:refreshShowTips(str)
 
 		return
 	end
 
-	arg_8_0._inputname:SetText(arg_8_0._txt)
-	var_8_1:Update(0)
-	var_8_1:Play("click", 0, 0)
+	self._inputname:SetText(self._txt)
+	anim:Update(0)
+	anim:Play("click", 0, 0)
 
-	arg_8_0._lastStrLen = string.len(arg_8_0._txt)
+	self._lastStrLen = string.len(self._txt)
 
 	AudioMgr.instance:trigger(AudioEnum2_8.ui_activity_2_8_fuleyuan.play_ui_fuleyuan_typewriter_click)
 end
 
-function var_0_0._btnTypeMechineOnClick(arg_9_0)
-	if arg_9_0._isswitching then
+function Activity2ndCollectionPageView:_btnTypeMechineOnClick()
+	if self._isswitching then
 		return
 	end
 
 	Activity2ndModel.instance:changeShowTypeMechine()
-	arg_9_0:switchTyepMechine()
+	self:switchTyepMechine()
 end
 
-function var_0_0.switchTyepMechine(arg_10_0)
-	arg_10_0._showTypeMechine = Activity2ndModel.instance:getShowTypeMechine()
+function Activity2ndCollectionPageView:switchTyepMechine()
+	self._showTypeMechine = Activity2ndModel.instance:getShowTypeMechine()
 
-	local var_10_0 = arg_10_0._showTypeMechine and var_0_0.InAnim or var_0_0.OutAnim
+	local animAnim = self._showTypeMechine and Activity2ndCollectionPageView.InAnim or Activity2ndCollectionPageView.OutAnim
 
-	arg_10_0._animator:Play(var_10_0, 0, 0)
+	self._animator:Play(animAnim, 0, 0)
 
-	arg_10_0._isswitching = true
+	self._isswitching = true
 
-	local var_10_1 = ActivityHelper.getActivityStatus(Activity2ndEnum.ActivityId.V2a8_PVPopupReward) == ActivityEnum.ActivityStatus.Normal
-	local var_10_2 = arg_10_0:checkReceied(Activity2ndEnum.ActivityId.V2a8_PVPopupReward)
+	local activityStatus = ActivityHelper.getActivityStatus(Activity2ndEnum.ActivityId.V2a8_PVPopupReward)
+	local isNormalStatus = activityStatus == ActivityEnum.ActivityStatus.Normal
+	local hasReceive = self:checkReceied(Activity2ndEnum.ActivityId.V2a8_PVPopupReward)
 
-	gohelper.setActive(arg_10_0._gopvreward, not arg_10_0._showTypeMechine and var_10_1 and not var_10_2)
-	gohelper.setActive(arg_10_0._goPage1, not arg_10_0._showTypeMechine)
-	gohelper.setActive(arg_10_0._goPage2, arg_10_0._showTypeMechine)
+	gohelper.setActive(self._gopvreward, not self._showTypeMechine and isNormalStatus and not hasReceive)
+	gohelper.setActive(self._goPage1, not self._showTypeMechine)
+	gohelper.setActive(self._goPage2, self._showTypeMechine)
 
-	if arg_10_0._showTypeMechine then
+	if self._showTypeMechine then
 		AudioMgr.instance:trigger(AudioEnum2_8.ui_activity_2_8_fuleyuan.play_ui_fuleyuan_typewriter_start)
 		AudioMgr.instance:trigger(AudioEnum2_8.ui_activity_2_8_fuleyuan.stop_ui_fuleyuan_typewriter_loop)
 	else
 		AudioMgr.instance:trigger(AudioEnum2_8.ui_activity_2_8_fuleyuan.play_ui_fuleyuan_typewriter_loop)
 	end
 
-	arg_10_0:_initShowTips()
+	self:_initShowTips()
 
-	arg_10_0._txt = ""
+	self._txt = ""
 
-	arg_10_0._inputname:SetText(arg_10_0._txt)
+	self._inputname:SetText(self._txt)
 
-	arg_10_0._lastStrLen = string.len(arg_10_0._txt)
+	self._lastStrLen = string.len(self._txt)
 
-	TaskDispatcher.runDelay(arg_10_0._afteranim, arg_10_0, 0.5)
+	TaskDispatcher.runDelay(self._afteranim, self, 0.5)
 end
 
-function var_0_0._afteranim(arg_11_0)
-	arg_11_0._isswitching = false
+function Activity2ndCollectionPageView:_afteranim()
+	self._isswitching = false
 
-	TaskDispatcher.cancelTask(arg_11_0._afteranim, arg_11_0)
-	arg_11_0:_checkFirstEnter()
+	TaskDispatcher.cancelTask(self._afteranim, self)
+	self:_checkFirstEnter()
 end
 
-function var_0_0._inputValueChanged(arg_12_0)
-	local var_12_0 = arg_12_0._inputname:GetText()
+function Activity2ndCollectionPageView:_inputValueChanged()
+	local txt = self._inputname:GetText()
 
-	if arg_12_0._lastStrLen == 0 then
-		local var_12_1 = string.sub(var_12_0, -1)
-		local var_12_2 = arg_12_0._btnDict[string.upper(var_12_1)]
+	if self._lastStrLen == 0 then
+		local str = string.sub(txt, -1)
+		local btnItem = self._btnDict[string.upper(str)]
 
-		if var_12_2 and var_12_2.anim then
-			var_12_2.anim:Update(0)
-			var_12_2.anim:Play("click", 0, 0)
+		if btnItem and btnItem.anim then
+			btnItem.anim:Update(0)
+			btnItem.anim:Play("click", 0, 0)
 			AudioMgr.instance:trigger(AudioEnum2_8.ui_activity_2_8_fuleyuan.play_ui_fuleyuan_typewriter_click)
 		end
-	elseif string.len(var_12_0) > arg_12_0._lastStrLen then
-		local var_12_3 = string.sub(var_12_0, -1)
-		local var_12_4 = arg_12_0._btnDict[string.upper(var_12_3)]
+	elseif string.len(txt) > self._lastStrLen then
+		local str = string.sub(txt, -1)
+		local btnItem = self._btnDict[string.upper(str)]
 
-		if var_12_4 and var_12_4.anim then
-			var_12_4.anim:Update(0)
-			var_12_4.anim:Play("click", 0, 0)
+		if btnItem and btnItem.anim then
+			btnItem.anim:Update(0)
+			btnItem.anim:Play("click", 0, 0)
 			AudioMgr.instance:trigger(AudioEnum2_8.ui_activity_2_8_fuleyuan.play_ui_fuleyuan_typewriter_click)
 		end
 	end
 
-	arg_12_0._txt = string.upper(var_12_0)
+	self._txt = string.upper(txt)
 
-	arg_12_0._inputname:SetText(arg_12_0._txt)
+	self._inputname:SetText(self._txt)
 
-	arg_12_0._lastStrLen = string.len(var_12_0)
+	self._lastStrLen = string.len(txt)
 end
 
-function var_0_0._initShowTips(arg_13_0)
-	arg_13_0._showTips = false
+function Activity2ndCollectionPageView:_initShowTips()
+	self._showTips = false
 
-	TaskDispatcher.cancelTask(arg_13_0._endShowTip, arg_13_0)
-	gohelper.setActive(arg_13_0._goInputTip, false)
+	TaskDispatcher.cancelTask(self._endShowTip, self)
+	gohelper.setActive(self._goInputTip, false)
 end
 
-function var_0_0._editableInitView(arg_14_0)
-	arg_14_0._activityItemList = {}
+function Activity2ndCollectionPageView:_editableInitView()
+	self._activityItemList = {}
 
-	gohelper.setActive(arg_14_0._goPage1, not arg_14_0._showTypeMechine)
-	gohelper.setActive(arg_14_0._goPage2, arg_14_0._showTypeMechine)
-	arg_14_0:_initTypewriter()
-	arg_14_0:_initActivityBtn()
-	arg_14_0:_initPVBtn()
+	gohelper.setActive(self._goPage1, not self._showTypeMechine)
+	gohelper.setActive(self._goPage2, self._showTypeMechine)
+	self:_initTypewriter()
+	self:_initActivityBtn()
+	self:_initPVBtn()
 end
 
-function var_0_0._initPVBtn(arg_15_0)
-	arg_15_0._gopvreward = gohelper.findChild(arg_15_0.viewGO, "#go_topright")
-	arg_15_0._gopvrewardreddot = gohelper.findChild(arg_15_0.viewGO, "#go_topright/#go_RedPoint")
-	arg_15_0._txtpvreward = gohelper.findChildText(arg_15_0.viewGO, "#go_topright/#txt_task")
-	arg_15_0._gopvrewarditem = gohelper.findChild(arg_15_0.viewGO, "#go_topright/#go_rewarditem/go_icon")
-	arg_15_0._gopvrewardcanget = gohelper.findChild(arg_15_0.viewGO, "#go_topright/#go_rewarditem/go_canget")
-	arg_15_0._gopvrewardreceive = gohelper.findChild(arg_15_0.viewGO, "#go_topright/#go_rewarditem/go_receive")
-	arg_15_0._btnpvrewarditem = gohelper.findChildButtonWithAudio(arg_15_0.viewGO, "#go_topright/#go_rewarditem/#btn_click")
-	arg_15_0._pvconfig = ActivityConfig.instance:getActivityCo(Activity2ndEnum.ActivityId.V2a8_PVPopupReward)
-	arg_15_0._pvrewardconfig = ActivityConfig.instance:getNorSignActivityCo(Activity2ndEnum.ActivityId.V2a8_PVPopupReward, 1)
-	arg_15_0._txtpvreward.text = arg_15_0._pvconfig.actDesc .. " (0/1)"
-	arg_15_0.goitemcomp = IconMgr.instance:getCommonPropItemIcon(arg_15_0._gopvrewarditem)
+function Activity2ndCollectionPageView:_initPVBtn()
+	self._gopvreward = gohelper.findChild(self.viewGO, "#go_topright")
+	self._gopvrewardreddot = gohelper.findChild(self.viewGO, "#go_topright/#go_RedPoint")
+	self._txtpvreward = gohelper.findChildText(self.viewGO, "#go_topright/#txt_task")
+	self._gopvrewarditem = gohelper.findChild(self.viewGO, "#go_topright/#go_rewarditem/go_icon")
+	self._gopvrewardcanget = gohelper.findChild(self.viewGO, "#go_topright/#go_rewarditem/go_canget")
+	self._gopvrewardreceive = gohelper.findChild(self.viewGO, "#go_topright/#go_rewarditem/go_receive")
+	self._btnpvrewarditem = gohelper.findChildButtonWithAudio(self.viewGO, "#go_topright/#go_rewarditem/#btn_click")
+	self._pvconfig = ActivityConfig.instance:getActivityCo(Activity2ndEnum.ActivityId.V2a8_PVPopupReward)
+	self._pvrewardconfig = ActivityConfig.instance:getNorSignActivityCo(Activity2ndEnum.ActivityId.V2a8_PVPopupReward, 1)
+	self._txtpvreward.text = self._pvconfig.actDesc .. " (0/1)"
+	self.goitemcomp = IconMgr.instance:getCommonPropItemIcon(self._gopvrewarditem)
 
-	local var_15_0 = string.split(arg_15_0._pvrewardconfig.bonus, "#")
+	local rewardCo = string.split(self._pvrewardconfig.bonus, "#")
 
-	if var_15_0 and #var_15_0 > 0 then
-		arg_15_0.goitemcomp:setMOValue(var_15_0[1], var_15_0[2], var_15_0[3], nil, true)
-		arg_15_0.goitemcomp:isShowQuality(false)
-		arg_15_0.goitemcomp:isShowCount(false)
+	if rewardCo and #rewardCo > 0 then
+		self.goitemcomp:setMOValue(rewardCo[1], rewardCo[2], rewardCo[3], nil, true)
+		self.goitemcomp:isShowQuality(false)
+		self.goitemcomp:isShowCount(false)
 	end
 
-	arg_15_0._btnpvrewarditem:AddClickListener(arg_15_0._btnPVRewardOnClick, arg_15_0)
-	gohelper.setActive(arg_15_0._btnpvrewarditem.gameObject, false)
-	gohelper.setActive(arg_15_0._gopvreward, false)
+	self._btnpvrewarditem:AddClickListener(self._btnPVRewardOnClick, self)
+	gohelper.setActive(self._btnpvrewarditem.gameObject, false)
+	gohelper.setActive(self._gopvreward, false)
 end
 
-function var_0_0._initTypewriter(arg_16_0)
-	arg_16_0._btnList = {}
-	arg_16_0._btnDict = {}
+function Activity2ndCollectionPageView:_initTypewriter()
+	self._btnList = {}
+	self._btnDict = {}
 
-	for iter_16_0 = 1, 3 do
-		local var_16_0 = gohelper.findChild(arg_16_0.viewGO, "Page2/Keyboard/Row" .. iter_16_0).transform
-		local var_16_1 = var_16_0.childCount
-		local var_16_2 = Activity196Enum.Typewriter[iter_16_0]
+	for row = 1, 3 do
+		local goRow = gohelper.findChild(self.viewGO, "Page2/Keyboard/Row" .. row)
+		local transform = goRow.transform
+		local itemCount = transform.childCount
+		local orderstring = Activity196Enum.Typewriter[row]
 
-		for iter_16_1 = 1, var_16_1 do
-			local var_16_3 = arg_16_0:getUserDataTb_()
-			local var_16_4 = var_16_0:GetChild(iter_16_1 - 1)
-			local var_16_5 = SLFramework.UGUI.ButtonWrap.Get(var_16_4.gameObject)
-			local var_16_6 = string.sub(var_16_2, iter_16_1, iter_16_1)
-			local var_16_7 = var_16_4.gameObject:GetComponent(typeof(UnityEngine.Animator))
+		for i = 1, itemCount do
+			local btnItem = self:getUserDataTb_()
+			local child = transform:GetChild(i - 1)
+			local btn = SLFramework.UGUI.ButtonWrap.Get(child.gameObject)
+			local str = string.sub(orderstring, i, i)
+			local anim = child.gameObject:GetComponent(typeof(UnityEngine.Animator))
 
-			var_16_5:AddClickListener(arg_16_0._btnTypewriter, arg_16_0, {
-				str = var_16_6,
-				anim = var_16_7
+			btn:AddClickListener(self._btnTypewriter, self, {
+				str = str,
+				anim = anim
 			})
 
-			var_16_3.btn = var_16_5
-			var_16_3.name = "Btn" .. var_16_6
-			var_16_3.anim = var_16_7
-			var_16_7.enabled = true
+			btnItem.btn = btn
+			btnItem.name = "Btn" .. str
+			btnItem.anim = anim
+			anim.enabled = true
 
-			table.insert(arg_16_0._btnList, var_16_3)
+			table.insert(self._btnList, btnItem)
 
-			arg_16_0._btnDict[string.upper(var_16_6)] = var_16_3
+			self._btnDict[string.upper(str)] = btnItem
 		end
 	end
 
-	gohelper.setActive(arg_16_0._goInputTip, false)
+	gohelper.setActive(self._goInputTip, false)
 end
 
-function var_0_0._checkFirstEnter(arg_17_0)
+function Activity2ndCollectionPageView:_checkFirstEnter()
 	if GameUtil.playerPrefsGetNumberByUserId(PlayerPrefsKey.FirstEnterTypewriter, 0) == 1 then
-		local var_17_0 = math.random(1, 4)
-		local var_17_1 = luaLang(Activity2ndEnum.RandomType[var_17_0])
+		local randomIndex = math.random(1, 4)
+		local str = luaLang(Activity2ndEnum.RandomType[randomIndex])
 
-		arg_17_0:refreshShowTips(var_17_1)
+		self:refreshShowTips(str)
 	else
-		arg_17_0:refreshShowTips(luaLang(Activity2ndEnum.ShowTipsType.FirstEnter))
+		self:refreshShowTips(luaLang(Activity2ndEnum.ShowTipsType.FirstEnter))
 		GameUtil.playerPrefsSetNumberByUserId(PlayerPrefsKey.FirstEnterTypewriter, 1)
 	end
 end
 
-function var_0_0._initActivityBtn(arg_18_0)
-	for iter_18_0 = 1, #Activity2ndEnum.ActivityOrder do
-		local var_18_0 = arg_18_0._activityItemList[iter_18_0]
-		local var_18_1 = Activity2ndEnum.ActivityOrder[iter_18_0]
-		local var_18_2 = ActivityConfig.instance:getActivityCo(var_18_1)
+function Activity2ndCollectionPageView:_initActivityBtn()
+	for i = 1, #Activity2ndEnum.ActivityOrder do
+		local item = self._activityItemList[i]
+		local actId = Activity2ndEnum.ActivityOrder[i]
+		local config = ActivityConfig.instance:getActivityCo(actId)
 
-		if not var_18_0 then
-			local var_18_3 = arg_18_0:getUserDataTb_()
+		if not item then
+			item = self:getUserDataTb_()
+			item.actId = actId
+			item.index = i
+			item.redDotId = config and config.redDotId
 
-			var_18_3.actId = var_18_1
-			var_18_3.index = iter_18_0
-			var_18_3.redDotId = var_18_2 and var_18_2.redDotId
+			local go = gohelper.findChild(self.viewGO, "Page1/Entrance" .. i .. "/root")
 
-			local var_18_4 = gohelper.findChild(arg_18_0.viewGO, "Page1/Entrance" .. iter_18_0 .. "/root")
+			item.go = go
+			item.btn = gohelper.findChildButtonWithAudio(go, "#btn_Entrance")
+			item.txtname = gohelper.findChildText(go, "#btn_Entrance/txt_Entrance")
 
-			var_18_3.go = var_18_4
-			var_18_3.btn = gohelper.findChildButtonWithAudio(var_18_4, "#btn_Entrance")
-			var_18_3.txtname = gohelper.findChildText(var_18_4, "#btn_Entrance/txt_Entrance")
+			item.btn:AddClickListener(self._activityBtnOnClick, self, item)
 
-			var_18_3.btn:AddClickListener(arg_18_0._activityBtnOnClick, arg_18_0, var_18_3)
+			item.gotip = gohelper.findChild(go, "Tips")
+			item.txttip = gohelper.findChildText(go, "Tips/#txt_Tips")
+			item.golimittime = gohelper.findChild(go, "LimitTime")
+			item.txtlimittime = gohelper.findChildText(go, "LimitTime/#txt_Time")
+			item.canvasGroup = gohelper.onceAddComponent(item.btn.gameObject, gohelper.Type_CanvasGroup)
+			item.goRedPoint = gohelper.findChild(go, "#go_RedPoint")
 
-			var_18_3.gotip = gohelper.findChild(var_18_4, "Tips")
-			var_18_3.txttip = gohelper.findChildText(var_18_4, "Tips/#txt_Tips")
-			var_18_3.golimittime = gohelper.findChild(var_18_4, "LimitTime")
-			var_18_3.txtlimittime = gohelper.findChildText(var_18_4, "LimitTime/#txt_Time")
-			var_18_3.canvasGroup = gohelper.onceAddComponent(var_18_3.btn.gameObject, gohelper.Type_CanvasGroup)
-			var_18_3.goRedPoint = gohelper.findChild(var_18_4, "#go_RedPoint")
-
-			table.insert(arg_18_0._activityItemList, var_18_3)
+			table.insert(self._activityItemList, item)
 		end
 	end
 end
 
-function var_0_0.onUpdateParam(arg_19_0)
+function Activity2ndCollectionPageView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_20_0)
-	arg_20_0._centerActId = arg_20_0.viewParam.actId
-	arg_20_0._showTypeMechine = Activity2ndModel.instance:getShowTypeMechine()
+function Activity2ndCollectionPageView:onOpen()
+	self._centerActId = self.viewParam.actId
+	self._showTypeMechine = Activity2ndModel.instance:getShowTypeMechine()
 
-	arg_20_0:refreshUI()
+	self:refreshUI()
 	AudioMgr.instance:trigger(AudioEnum2_8.ui_activity_2_8_fuleyuan.play_ui_fuleyuan_typewriter_unfold)
 	AudioMgr.instance:trigger(AudioEnum2_8.ui_activity_2_8_fuleyuan.play_ui_fuleyuan_typewriter_loop)
 end
 
-function var_0_0.checkNeedRefreshUI(arg_21_0, arg_21_1)
-	arg_21_0:refreshUI()
-	arg_21_0:checkCloseActivityView()
-	arg_21_0:checkNeedPlayAudio(arg_21_1)
+function Activity2ndCollectionPageView:checkNeedRefreshUI(viewName)
+	self:refreshUI()
+	self:checkCloseActivityView()
+	self:checkNeedPlayAudio(viewName)
 end
 
-function var_0_0.checkNeedPlayAudio(arg_22_0, arg_22_1)
-	for iter_22_0, iter_22_1 in ipairs(Activity2ndEnum.ActivityViewName) do
-		if arg_22_1 == iter_22_1 then
+function Activity2ndCollectionPageView:checkNeedPlayAudio(viewName)
+	for _, name in ipairs(Activity2ndEnum.ActivityViewName) do
+		if viewName == name then
 			AudioMgr.instance:trigger(AudioEnum2_8.ui_activity_2_8_fuleyuan.play_ui_fuleyuan_typewriter_loop)
 
 			break
@@ -356,177 +359,183 @@ function var_0_0.checkNeedPlayAudio(arg_22_0, arg_22_1)
 	end
 end
 
-function var_0_0.checkCloseActivityView(arg_23_0)
-	local var_23_0 = true
+function Activity2ndCollectionPageView:checkCloseActivityView()
+	local allClose = true
 
-	for iter_23_0, iter_23_1 in pairs(Activity2ndEnum.ActivityId) do
-		local var_23_1 = ActivityHelper.getActivityStatus(iter_23_1)
+	for _, actId in pairs(Activity2ndEnum.ActivityId) do
+		local status = ActivityHelper.getActivityStatus(actId)
 
-		if var_23_1 ~= ActivityEnum.ActivityStatus.NotOnLine and var_23_1 ~= ActivityEnum.ActivityStatus.Expired then
-			var_23_0 = false
+		if status ~= ActivityEnum.ActivityStatus.NotOnLine and status ~= ActivityEnum.ActivityStatus.Expired then
+			allClose = false
 
 			break
 		end
 	end
 
-	if var_23_0 then
+	if allClose then
 		MessageBoxController.instance:showSystemMsgBox(MessageBoxIdDefine.EndActivity, MsgBoxEnum.BoxType.Yes, ActivityLiveMgr.yesCallback)
 
 		return
 	end
 end
 
-function var_0_0.refreshUI(arg_24_0)
-	arg_24_0:refreshCenterActUI()
-	arg_24_0:refreshActivityUI()
+function Activity2ndCollectionPageView:refreshUI()
+	self:refreshCenterActUI()
+	self:refreshActivityUI()
 
-	if not arg_24_0._onceGetReward then
-		arg_24_0:refreshPVBtn()
+	if not self._onceGetReward then
+		self:refreshPVBtn()
 	end
 end
 
-function var_0_0.refreshPVBtn(arg_25_0)
-	local var_25_0 = Activity2ndEnum.ActivityId.V2a8_PVPopupReward
-	local var_25_1 = ActivityHelper.getActivityStatus(var_25_0) == ActivityEnum.ActivityStatus.Normal
+function Activity2ndCollectionPageView:refreshPVBtn()
+	local actId = Activity2ndEnum.ActivityId.V2a8_PVPopupReward
+	local activityStatus = ActivityHelper.getActivityStatus(actId)
+	local isNormalStatus = activityStatus == ActivityEnum.ActivityStatus.Normal
 
-	if not var_25_1 then
+	if not isNormalStatus then
 		return
 	end
 
-	arg_25_0:_cangetPVReward()
+	self:_cangetPVReward()
 
-	local var_25_2 = arg_25_0:checkReceied(var_25_0)
+	local hasReceive = self:checkReceied(actId)
 
-	gohelper.setActive(arg_25_0._gopvreward, not var_25_1 or not var_25_2)
+	gohelper.setActive(self._gopvreward, not isNormalStatus or not hasReceive)
 
-	local var_25_3 = ActivityConfig.instance:getActivityCo(var_25_0)
-	local var_25_4 = var_25_3 and var_25_3.redDotId
+	local config = ActivityConfig.instance:getActivityCo(actId)
+	local redId = config and config.redDotId
 
-	if var_25_1 and var_25_4 then
-		RedDotController.instance:addRedDot(arg_25_0._gopvrewardreddot, var_25_4, var_25_0)
+	if isNormalStatus and redId then
+		RedDotController.instance:addRedDot(self._gopvrewardreddot, redId, actId)
 	end
 end
 
-function var_0_0._cangetPVReward(arg_26_0)
-	gohelper.setActive(arg_26_0._gopvrewardcanget, true)
-	gohelper.setActive(arg_26_0._gopvrewardreceive, false)
-	gohelper.setActive(arg_26_0._btnpvrewarditem.gameObject, true)
+function Activity2ndCollectionPageView:_cangetPVReward()
+	gohelper.setActive(self._gopvrewardcanget, true)
+	gohelper.setActive(self._gopvrewardreceive, false)
+	gohelper.setActive(self._btnpvrewarditem.gameObject, true)
 
-	arg_26_0._txtpvreward.text = arg_26_0._pvconfig.actDesc .. " (1/1)"
+	self._txtpvreward.text = self._pvconfig.actDesc .. " (1/1)"
 end
 
-function var_0_0.refreshCenterActUI(arg_27_0)
-	arg_27_0._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(Activity196Enum.ActId)
+function Activity2ndCollectionPageView:refreshCenterActUI()
+	self._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(Activity196Enum.ActId)
 end
 
-function var_0_0.refreshActivityUI(arg_28_0)
-	arg_28_0.playedActTagAudio = false
-	arg_28_0.playedActUnlockAudio = false
+function Activity2ndCollectionPageView:refreshActivityUI()
+	self.playedActTagAudio = false
+	self.playedActUnlockAudio = false
 
-	for iter_28_0, iter_28_1 in ipairs(arg_28_0._activityItemList) do
-		arg_28_0:refreshActivityItem(iter_28_1)
+	for _, activityItem in ipairs(self._activityItemList) do
+		self:refreshActivityItem(activityItem)
 	end
 
-	arg_28_0:setActiveMailItem()
+	self:setActiveMailItem()
 end
 
-function var_0_0.setActiveMailItem(arg_29_0)
-	local var_29_0 = ActivityHelper.getActivityStatus(Activity2ndEnum.ActivityId.MailActivty) == ActivityEnum.ActivityStatus.Normal
+function Activity2ndCollectionPageView:setActiveMailItem()
+	local activityStatus = ActivityHelper.getActivityStatus(Activity2ndEnum.ActivityId.MailActivty)
+	local isNormalStatus = activityStatus == ActivityEnum.ActivityStatus.Normal
 
-	gohelper.setActive(arg_29_0._goMail, var_29_0)
+	gohelper.setActive(self._goMail, isNormalStatus)
 
-	local var_29_1 = ActivityConfig.instance:getActivityCo(Activity2ndEnum.ActivityId.MailActivty)
-	local var_29_2 = var_29_1 and var_29_1.redDotId
+	local config = ActivityConfig.instance:getActivityCo(Activity2ndEnum.ActivityId.MailActivty)
+	local redId = config and config.redDotId
 
-	if var_29_0 and var_29_2 then
-		RedDotController.instance:addRedDot(arg_29_0._goMailRedPoint, var_29_2, Activity2ndEnum.ActivityId.MailActivty)
+	if isNormalStatus and redId then
+		RedDotController.instance:addRedDot(self._goMailRedPoint, redId, Activity2ndEnum.ActivityId.MailActivty)
 	end
 end
 
-function var_0_0.refreshActivityItem(arg_30_0, arg_30_1)
-	local var_30_0 = ActivityHelper.getActivityStatus(arg_30_1.actId)
-	local var_30_1 = var_30_0 == ActivityEnum.ActivityStatus.Normal
+function Activity2ndCollectionPageView:refreshActivityItem(activityItem)
+	local activityStatus = ActivityHelper.getActivityStatus(activityItem.actId)
+	local isNormalStatus = activityStatus == ActivityEnum.ActivityStatus.Normal
 
-	if arg_30_1.golimittime then
-		gohelper.setActive(arg_30_1.golimittime, var_30_1)
+	if activityItem.golimittime then
+		gohelper.setActive(activityItem.golimittime, isNormalStatus)
 	end
 
-	arg_30_1.canvasGroup.alpha = var_30_1 and 1 or 0.5
+	activityItem.canvasGroup.alpha = isNormalStatus and 1 or 0.5
 
-	local var_30_2 = ActivityModel.instance:getActivityInfo()[arg_30_1.actId]
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[activityItem.actId]
 
-	if not var_30_2 then
+	if not actInfoMo then
 		return
 	end
 
-	if var_30_0 == ActivityEnum.ActivityStatus.NotOpen then
-		gohelper.setActive(arg_30_1.gotip, true)
+	if activityStatus == ActivityEnum.ActivityStatus.NotOpen then
+		gohelper.setActive(activityItem.gotip, true)
 
-		if arg_30_1.txttip then
-			arg_30_1.txttip.text = string.format(luaLang("ShortenAct_TaskItem_remain_open"), var_30_2:getRemainTimeStr2ByOpenTime())
+		if activityItem.txttip then
+			activityItem.txttip.text = string.format(luaLang("ShortenAct_TaskItem_remain_open"), actInfoMo:getRemainTimeStr2ByOpenTime())
 		end
-	elseif var_30_0 == ActivityEnum.ActivityStatus.Expired or var_30_0 == ActivityEnum.ActivityStatus.NotOnLine then
-		gohelper.setActive(arg_30_1.gotip, true)
+	elseif activityStatus == ActivityEnum.ActivityStatus.Expired or activityStatus == ActivityEnum.ActivityStatus.NotOnLine then
+		gohelper.setActive(activityItem.gotip, true)
 
-		if arg_30_1.txttip then
-			arg_30_1.txttip.text = luaLang("ended")
+		if activityItem.txttip then
+			activityItem.txttip.text = luaLang("ended")
 		end
-	elseif var_30_0 == ActivityEnum.ActivityStatus.Normal then
-		gohelper.setActive(arg_30_1.gotip, false)
+	elseif activityStatus == ActivityEnum.ActivityStatus.Normal then
+		gohelper.setActive(activityItem.gotip, false)
 
-		if arg_30_1.txtlimittime then
-			if var_30_0 == ActivityEnum.ActivityStatus.Normal then
-				arg_30_1.txtlimittime.text = var_30_2:getRemainTimeStr2ByEndTime()
+		if activityItem.txtlimittime then
+			if activityStatus == ActivityEnum.ActivityStatus.Normal then
+				activityItem.txtlimittime.text = actInfoMo:getRemainTimeStr2ByEndTime()
 			else
-				arg_30_1.txtlimittime.text = ""
+				activityItem.txtlimittime.text = ""
 			end
 		end
 
-		if arg_30_1.txtname then
-			arg_30_1.txtname.text = var_30_2.config.name
+		if activityItem.txtname then
+			activityItem.txtname.text = actInfoMo.config.name
 		end
 	end
 
-	if var_30_1 and arg_30_1.redDotId and arg_30_1.redDotId ~= 0 then
-		if arg_30_1.actId == Activity2ndEnum.ActivityId.AnnualReview then
-			arg_30_0._annualRed = RedDotController.instance:addRedDot(arg_30_1.goRedPoint, arg_30_1.redDotId, nil, arg_30_0._checkFirstClickRed, arg_30_0)
-		elseif arg_30_1.actId == Activity2ndEnum.ActivityId.ActiveActivity then
-			RedDotController.instance:addRedDot(arg_30_1.goRedPoint, arg_30_1.redDotId, nil, nil, nil)
+	if isNormalStatus and activityItem.redDotId and activityItem.redDotId ~= 0 then
+		if activityItem.actId == Activity2ndEnum.ActivityId.AnnualReview then
+			self._annualRed = RedDotController.instance:addRedDot(activityItem.goRedPoint, activityItem.redDotId, nil, self._checkFirstClickRed, self)
+		elseif activityItem.actId == Activity2ndEnum.ActivityId.ActiveActivity then
+			RedDotController.instance:addRedDot(activityItem.goRedPoint, activityItem.redDotId, nil, nil, nil)
 		else
-			RedDotController.instance:addRedDot(arg_30_1.goRedPoint, arg_30_1.redDotId, arg_30_1.actId, nil, nil)
+			RedDotController.instance:addRedDot(activityItem.goRedPoint, activityItem.redDotId, activityItem.actId, nil, nil)
 		end
 	end
 end
 
-function var_0_0._activityBtnOnClick(arg_31_0, arg_31_1)
-	if not (arg_31_0["checkActivityCanClickFunc" .. arg_31_1.index] or arg_31_0.defaultCheckActivityCanClick)(arg_31_0, arg_31_1) then
+function Activity2ndCollectionPageView:_activityBtnOnClick(activityItem)
+	local checkFunc = self["checkActivityCanClickFunc" .. activityItem.index]
+
+	checkFunc = checkFunc or self.defaultCheckActivityCanClick
+
+	if not checkFunc(self, activityItem) then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_hero_sign)
 
-	local var_31_0 = arg_31_0["onClickActivity" .. arg_31_1.index]
+	local clickCallback = self["onClickActivity" .. activityItem.index]
 
-	if var_31_0 then
-		var_31_0(arg_31_0, arg_31_1.actId)
+	if clickCallback then
+		clickCallback(self, activityItem.actId)
 
-		if arg_31_1.actId ~= Activity2ndEnum.ActivityId.AnnualReview then
+		if activityItem.actId ~= Activity2ndEnum.ActivityId.AnnualReview then
 			AudioMgr.instance:trigger(AudioEnum2_8.ui_activity_2_8_fuleyuan.stop_ui_fuleyuan_typewriter_loop)
 		end
 	end
 
-	ActivityEnterMgr.instance:enterActivity(arg_31_1.actId)
+	ActivityEnterMgr.instance:enterActivity(activityItem.actId)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
-		arg_31_1.actId
+		activityItem.actId
 	})
 end
 
-function var_0_0.defaultCheckActivityCanClick(arg_32_0, arg_32_1)
-	local var_32_0, var_32_1, var_32_2 = ActivityHelper.getActivityStatusAndToast(arg_32_1.actId)
+function Activity2ndCollectionPageView:defaultCheckActivityCanClick(activityItem)
+	local status, toastId, paramList = ActivityHelper.getActivityStatusAndToast(activityItem.actId)
 
-	if var_32_0 ~= ActivityEnum.ActivityStatus.Normal then
-		if var_32_1 then
-			GameFacade.showToastWithTableParam(var_32_1, var_32_2)
+	if status ~= ActivityEnum.ActivityStatus.Normal then
+		if toastId then
+			GameFacade.showToastWithTableParam(toastId, paramList)
 		end
 
 		AudioMgr.instance:trigger(AudioEnum.TeachNote.play_ui_closehouse)
@@ -537,145 +546,149 @@ function var_0_0.defaultCheckActivityCanClick(arg_32_0, arg_32_1)
 	return true
 end
 
-function var_0_0.refreshShowTips(arg_33_0, arg_33_1)
-	if arg_33_0._showTips then
+function Activity2ndCollectionPageView:refreshShowTips(str)
+	if self._showTips then
 		return
 	end
 
-	arg_33_0._showTips = true
-	arg_33_0._txtInputTip.text = arg_33_1
+	self._showTips = true
+	self._txtInputTip.text = str
 
-	gohelper.setActive(arg_33_0._goInputTip, true)
-	TaskDispatcher.runDelay(arg_33_0._endShowTip, arg_33_0, arg_33_0._showTipTime)
+	gohelper.setActive(self._goInputTip, true)
+	TaskDispatcher.runDelay(self._endShowTip, self, self._showTipTime)
 end
 
-function var_0_0._endShowTip(arg_34_0)
-	TaskDispatcher.cancelTask(arg_34_0._endShowTip, arg_34_0)
+function Activity2ndCollectionPageView:_endShowTip()
+	TaskDispatcher.cancelTask(self._endShowTip, self)
 
-	arg_34_0._showTips = false
+	self._showTips = false
 
-	gohelper.setActive(arg_34_0._goInputTip, false)
+	gohelper.setActive(self._goInputTip, false)
 end
 
-function var_0_0.onClickMailBtn(arg_35_0)
-	local var_35_0 = {
+function Activity2ndCollectionPageView:onClickMailBtn()
+	local param = {
 		actId = Activity2ndEnum.ActivityId.MailActivty
 	}
 
 	Activity2ndController.instance:statButtonClick(Activity2ndEnum.ActivityId.MailActivty)
 	AudioMgr.instance:trigger(AudioEnum2_8.ui_activity_2_8_fuleyuan.stop_ui_fuleyuan_typewriter_loop)
-	ViewMgr.instance:openView(ViewName.Activity2ndMailView, var_35_0)
+	ViewMgr.instance:openView(ViewName.Activity2ndMailView, param)
 end
 
-function var_0_0.onClickActivity1(arg_36_0, arg_36_1)
-	Activity2ndController.instance:statButtonClick(arg_36_1)
+function Activity2ndCollectionPageView:onClickActivity1(actId)
+	Activity2ndController.instance:statButtonClick(actId)
 	SDKDataTrackMgr.instance:trackClickActivityJumpButton()
 
-	local var_36_0 = Activity125Config.instance:getH5BaseUrl(arg_36_1)
+	local url = Activity125Config.instance:getH5BaseUrl(actId)
 
-	WebViewController.instance:simpleOpenWebBrowser(var_36_0)
+	WebViewController.instance:simpleOpenWebBrowser(url)
 
 	if GameUtil.playerPrefsGetNumberByUserId(PlayerPrefsKey.Activity2ndAnnualReview, 0) == 0 then
 		GameUtil.playerPrefsSetNumberByUserId(PlayerPrefsKey.Activity2ndAnnualReview, 1)
-		arg_36_0:_checkFirstClickRed(arg_36_0._annualRed)
+		self:_checkFirstClickRed(self._annualRed)
 	end
 end
 
-function var_0_0.onClickActivity2(arg_37_0, arg_37_1)
-	local function var_37_0()
-		local var_38_0 = {
-			actId = arg_37_1
+function Activity2ndCollectionPageView:onClickActivity2(actId)
+	local function openfunc()
+		local param = {
+			actId = actId
 		}
 
-		ViewMgr.instance:openView(ViewName.Activity2ndShowSkinView, var_38_0)
+		ViewMgr.instance:openView(ViewName.Activity2ndShowSkinView, param)
 	end
 
-	Activity101Rpc.instance:sendGet101InfosRequest(arg_37_1, var_37_0, arg_37_0)
-	Activity2ndController.instance:statButtonClick(arg_37_1)
+	Activity101Rpc.instance:sendGet101InfosRequest(actId, openfunc, self)
+	Activity2ndController.instance:statButtonClick(actId)
 end
 
-function var_0_0.onClickActivity3(arg_39_0, arg_39_1)
-	local function var_39_0()
-		local var_40_0 = {
-			actId = arg_39_1
+function Activity2ndCollectionPageView:onClickActivity3(actId)
+	local function openfunc()
+		local param = {
+			actId = actId
 		}
 
-		ViewMgr.instance:openView(ViewName.Activity2ndTakePhotosView, var_40_0)
+		ViewMgr.instance:openView(ViewName.Activity2ndTakePhotosView, param)
 	end
 
-	Activity2ndController.instance:statButtonClick(arg_39_1)
-	Activity125Rpc.instance:sendGetAct125InfosRequest(arg_39_1, var_39_0, arg_39_0)
+	Activity2ndController.instance:statButtonClick(actId)
+	Activity125Rpc.instance:sendGetAct125InfosRequest(actId, openfunc, self)
 end
 
-function var_0_0.onClickActivity4(arg_41_0, arg_41_1)
-	local var_41_0 = {
-		actId = arg_41_1
+function Activity2ndCollectionPageView:onClickActivity4(actId)
+	local param = {
+		actId = actId
 	}
 
-	Activity2ndController.instance:statButtonClick(arg_41_1)
-	ViewMgr.instance:openView(ViewName.V2a8_SelfSelectCharacterView, var_41_0)
+	Activity2ndController.instance:statButtonClick(actId)
+	ViewMgr.instance:openView(ViewName.V2a8_SelfSelectCharacterView, param)
 end
 
-function var_0_0.onClickActivity5(arg_42_0, arg_42_1)
-	local function var_42_0()
-		local var_43_0 = {
-			actId = arg_42_1
+function Activity2ndCollectionPageView:onClickActivity5(actId)
+	local function openfunc()
+		local param = {
+			actId = actId
 		}
 
-		ViewMgr.instance:openView(ViewName.Activity197View, var_43_0)
+		ViewMgr.instance:openView(ViewName.Activity197View, param)
 	end
 
-	Activity2ndController.instance:statButtonClick(arg_42_1)
-	Activity197Rpc.instance:sendGet197InfoRequest(arg_42_1, var_42_0, arg_42_0)
+	Activity2ndController.instance:statButtonClick(actId)
+	Activity197Rpc.instance:sendGet197InfoRequest(actId, openfunc, self)
 end
 
-function var_0_0.checkReceied(arg_44_0, arg_44_1)
-	return (ActivityType101Model.instance:isType101RewardGet(arg_44_1, 1))
+function Activity2ndCollectionPageView:checkReceied(actId)
+	local received = ActivityType101Model.instance:isType101RewardGet(actId, 1)
+
+	return received
 end
 
-function var_0_0.checkCanGet(arg_45_0, arg_45_1)
-	return (ActivityType101Model.instance:isType101RewardCouldGet(arg_45_1, 1))
+function Activity2ndCollectionPageView:checkCanGet(actId)
+	local couldGet = ActivityType101Model.instance:isType101RewardCouldGet(actId, 1)
+
+	return couldGet
 end
 
-function var_0_0.onReceivePVBtn(arg_46_0)
-	local var_46_0 = Activity2ndEnum.ActivityId.V2a8_PVPopupReward
+function Activity2ndCollectionPageView:onReceivePVBtn()
+	local actId = Activity2ndEnum.ActivityId.V2a8_PVPopupReward
 
-	if arg_46_0:checkReceied(var_46_0) then
-		gohelper.setActive(arg_46_0._gopvrewardcanget, false)
-		gohelper.setActive(arg_46_0._gopvrewardreceive, true)
-		gohelper.setActive(arg_46_0._btnpvrewarditem.gameObject, false)
+	if self:checkReceied(actId) then
+		gohelper.setActive(self._gopvrewardcanget, false)
+		gohelper.setActive(self._gopvrewardreceive, true)
+		gohelper.setActive(self._btnpvrewarditem.gameObject, false)
 
-		arg_46_0._onceGetReward = true
-	end
-end
-
-function var_0_0._checkFirstClickRed(arg_47_0, arg_47_1)
-	arg_47_1:defaultRefreshDot()
-
-	if not arg_47_1.show then
-		arg_47_1.show = Activity2ndModel.instance:checkAnnualReviewShowRed()
-
-		arg_47_1:showRedDot(RedDotEnum.Style.Normal)
+		self._onceGetReward = true
 	end
 end
 
-function var_0_0.onDestroyView(arg_48_0)
+function Activity2ndCollectionPageView:_checkFirstClickRed(redDotIcon)
+	redDotIcon:defaultRefreshDot()
+
+	if not redDotIcon.show then
+		redDotIcon.show = Activity2ndModel.instance:checkAnnualReviewShowRed()
+
+		redDotIcon:showRedDot(RedDotEnum.Style.Normal)
+	end
+end
+
+function Activity2ndCollectionPageView:onDestroyView()
 	return
 end
 
-function var_0_0.onClose(arg_49_0)
-	TaskDispatcher.cancelTask(arg_49_0._endShowTip, arg_49_0)
-	TaskDispatcher.cancelTask(arg_49_0._afteranim, arg_49_0)
+function Activity2ndCollectionPageView:onClose()
+	TaskDispatcher.cancelTask(self._endShowTip, self)
+	TaskDispatcher.cancelTask(self._afteranim, self)
 
-	if arg_49_0._btnList and #arg_49_0._btnList > 0 then
-		for iter_49_0, iter_49_1 in ipairs(arg_49_0._btnList) do
-			iter_49_1.btn:RemoveClickListener()
+	if self._btnList and #self._btnList > 0 then
+		for index, value in ipairs(self._btnList) do
+			value.btn:RemoveClickListener()
 		end
 	end
 
-	if arg_49_0._activityItemList and #arg_49_0._activityItemList > 0 then
-		for iter_49_2, iter_49_3 in ipairs(arg_49_0._activityItemList) do
-			iter_49_3.btn:RemoveClickListener()
+	if self._activityItemList and #self._activityItemList > 0 then
+		for index, value in ipairs(self._activityItemList) do
+			value.btn:RemoveClickListener()
 		end
 	end
 
@@ -683,4 +696,4 @@ function var_0_0.onClose(arg_49_0)
 	AudioMgr.instance:trigger(AudioEnum2_8.ui_activity_2_8_fuleyuan.stop_ui_fuleyuan_typewriter_loop)
 end
 
-return var_0_0
+return Activity2ndCollectionPageView

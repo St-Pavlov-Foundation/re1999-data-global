@@ -1,136 +1,138 @@
-﻿module("modules.logic.balanceumbrella.model.BalanceUmbrellaModel", package.seeall)
+﻿-- chunkname: @modules/logic/balanceumbrella/model/BalanceUmbrellaModel.lua
 
-local var_0_0 = class("BalanceUmbrellaModel", BaseModel)
+module("modules.logic.balanceumbrella.model.BalanceUmbrellaModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._newClueDict = nil
-	arg_1_0._noPlayClueDict = nil
-	arg_1_0._allUnLockClues = {}
-	arg_1_0._waitFirstInit = true
+local BalanceUmbrellaModel = class("BalanceUmbrellaModel", BaseModel)
+
+function BalanceUmbrellaModel:onInit()
+	self._newClueDict = nil
+	self._noPlayClueDict = nil
+	self._allUnLockClues = {}
+	self._waitFirstInit = true
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:onInit()
+function BalanceUmbrellaModel:reInit()
+	self:onInit()
 end
 
-function var_0_0.refreshUnlock(arg_3_0, arg_3_1)
-	if not arg_3_1 and arg_3_0._waitFirstInit then
+function BalanceUmbrellaModel:refreshUnlock(isFirst)
+	if not isFirst and self._waitFirstInit then
 		return
 	end
 
-	arg_3_0._waitFirstInit = false
+	self._waitFirstInit = false
 
-	if arg_3_1 then
-		arg_3_0._allUnLockClues = {}
+	if isFirst then
+		self._allUnLockClues = {}
 
-		for iter_3_0, iter_3_1 in ipairs(lua_balance_umbrella.configList) do
-			if iter_3_1.episode > 0 and DungeonModel.instance:hasPassLevel(iter_3_1.episode) then
-				table.insert(arg_3_0._allUnLockClues, iter_3_1.id)
+		for i, co in ipairs(lua_balance_umbrella.configList) do
+			if co.episode > 0 and DungeonModel.instance:hasPassLevel(co.episode) then
+				table.insert(self._allUnLockClues, co.id)
 			end
 		end
 	else
-		local var_3_0 = false
+		local dirty = false
 
-		for iter_3_2, iter_3_3 in ipairs(lua_balance_umbrella.configList) do
-			if iter_3_3.episode > 0 and not tabletool.indexOf(arg_3_0._allUnLockClues, iter_3_3.id) and DungeonModel.instance:hasPassLevel(iter_3_3.episode) then
-				table.insert(arg_3_0._allUnLockClues, iter_3_3.id)
-				arg_3_0:onGetNewId(iter_3_3.id)
+		for i, co in ipairs(lua_balance_umbrella.configList) do
+			if co.episode > 0 and not tabletool.indexOf(self._allUnLockClues, co.id) and DungeonModel.instance:hasPassLevel(co.episode) then
+				table.insert(self._allUnLockClues, co.id)
+				self:onGetNewId(co.id)
 
-				var_3_0 = true
+				dirty = true
 			end
 		end
 
-		if var_3_0 then
-			arg_3_0:_saveLocalData()
+		if dirty then
+			self:_saveLocalData()
 			BalanceUmbrellaController.instance:dispatchEvent(BalanceUmbrellaEvent.ClueUpdate)
 		end
 	end
 end
 
-function var_0_0.getAllNewIds(arg_4_0)
-	arg_4_0:_initLocalData()
+function BalanceUmbrellaModel:getAllNewIds()
+	self:_initLocalData()
 
-	return arg_4_0._newClueDict
+	return self._newClueDict
 end
 
-function var_0_0.getAllNoPlayIds(arg_5_0)
-	arg_5_0:_initLocalData()
+function BalanceUmbrellaModel:getAllNoPlayIds()
+	self:_initLocalData()
 
-	return arg_5_0._noPlayClueDict
+	return self._noPlayClueDict
 end
 
-function var_0_0.markAllNewIds(arg_6_0)
-	if not arg_6_0._newClueDict[1] then
+function BalanceUmbrellaModel:markAllNewIds()
+	if not self._newClueDict[1] then
 		return
 	end
 
-	arg_6_0._newClueDict = {}
+	self._newClueDict = {}
 
 	PlayerPrefsHelper.deleteKey(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.BalanceUmbrellaNew))
 end
 
-function var_0_0.markAllNoPlayIds(arg_7_0)
-	if not arg_7_0._noPlayClueDict[1] then
+function BalanceUmbrellaModel:markAllNoPlayIds()
+	if not self._noPlayClueDict[1] then
 		return
 	end
 
-	arg_7_0._noPlayClueDict = {}
+	self._noPlayClueDict = {}
 
 	PlayerPrefsHelper.deleteKey(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.BalanceUmbrellaNoPlayAnim))
 end
 
-function var_0_0._initLocalData(arg_8_0)
-	if not arg_8_0._newClueDict then
-		arg_8_0._newClueDict = {}
-		arg_8_0._noPlayClueDict = {}
+function BalanceUmbrellaModel:_initLocalData()
+	if not self._newClueDict then
+		self._newClueDict = {}
+		self._noPlayClueDict = {}
 
-		local var_8_0 = PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.BalanceUmbrellaNew), "")
-		local var_8_1 = PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.BalanceUmbrellaNoPlayAnim), "")
+		local newIdStr = PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.BalanceUmbrellaNew), "")
+		local noPlayStr = PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.BalanceUmbrellaNoPlayAnim), "")
 
-		if not string.nilorempty(var_8_0) then
-			arg_8_0._newClueDict = cjson.decode(var_8_0)
+		if not string.nilorempty(newIdStr) then
+			self._newClueDict = cjson.decode(newIdStr)
 		end
 
-		if not string.nilorempty(var_8_1) then
-			arg_8_0._noPlayClueDict = cjson.decode(var_8_1)
+		if not string.nilorempty(noPlayStr) then
+			self._noPlayClueDict = cjson.decode(noPlayStr)
 		end
 	end
 end
 
-function var_0_0.onGetNewId(arg_9_0, arg_9_1)
+function BalanceUmbrellaModel:onGetNewId(id)
 	if ViewMgr.instance:isOpen(ViewName.DungeonMapView) then
 		PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.BalanceUmbrellaClueView, {
 			isGet = true,
-			id = arg_9_1
+			id = id
 		})
 
 		return
 	end
 
-	arg_9_0:_initLocalData()
-	table.insert(arg_9_0._newClueDict, arg_9_1)
-	table.insert(arg_9_0._noPlayClueDict, arg_9_1)
-	table.sort(arg_9_0._newClueDict)
-	table.sort(arg_9_0._noPlayClueDict)
+	self:_initLocalData()
+	table.insert(self._newClueDict, id)
+	table.insert(self._noPlayClueDict, id)
+	table.sort(self._newClueDict)
+	table.sort(self._noPlayClueDict)
 end
 
-function var_0_0._saveLocalData(arg_10_0)
-	PlayerPrefsHelper.setString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.BalanceUmbrellaNew), cjson.encode(arg_10_0._newClueDict))
-	PlayerPrefsHelper.setString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.BalanceUmbrellaNoPlayAnim), cjson.encode(arg_10_0._noPlayClueDict))
+function BalanceUmbrellaModel:_saveLocalData()
+	PlayerPrefsHelper.setString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.BalanceUmbrellaNew), cjson.encode(self._newClueDict))
+	PlayerPrefsHelper.setString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.BalanceUmbrellaNoPlayAnim), cjson.encode(self._noPlayClueDict))
 end
 
-function var_0_0.isClueUnlock(arg_11_0, arg_11_1)
-	return tabletool.indexOf(arg_11_0._allUnLockClues, arg_11_1)
+function BalanceUmbrellaModel:isClueUnlock(id)
+	return tabletool.indexOf(self._allUnLockClues, id)
 end
 
-function var_0_0.isHaveClue(arg_12_0)
-	return arg_12_0._allUnLockClues[1] and true or false
+function BalanceUmbrellaModel:isHaveClue()
+	return self._allUnLockClues[1] and true or false
 end
 
-function var_0_0.isGetAllClue(arg_13_0)
-	return #arg_13_0._allUnLockClues == #lua_balance_umbrella.configList
+function BalanceUmbrellaModel:isGetAllClue()
+	return #self._allUnLockClues == #lua_balance_umbrella.configList
 end
 
-var_0_0.instance = var_0_0.New()
+BalanceUmbrellaModel.instance = BalanceUmbrellaModel.New()
 
-return var_0_0
+return BalanceUmbrellaModel

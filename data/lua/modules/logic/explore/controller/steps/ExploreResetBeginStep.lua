@@ -1,26 +1,28 @@
-﻿module("modules.logic.explore.controller.steps.ExploreResetBeginStep", package.seeall)
+﻿-- chunkname: @modules/logic/explore/controller/steps/ExploreResetBeginStep.lua
 
-local var_0_0 = class("ExploreResetBeginStep", ExploreStepBase)
+module("modules.logic.explore.controller.steps.ExploreResetBeginStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
+local ExploreResetBeginStep = class("ExploreResetBeginStep", ExploreStepBase)
+
+function ExploreResetBeginStep:onStart()
 	ExploreModel.instance.isReseting = true
 
 	ExploreModel.instance:setHeroControl(false, ExploreEnum.HeroLock.Reset)
 	ViewMgr.instance:openView(ViewName.ExploreBlackView)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_1_0.onOpenViewFinish, arg_1_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, self.onOpenViewFinish, self)
 end
 
-function var_0_0.onOpenViewFinish(arg_2_0, arg_2_1)
-	if arg_2_1 == ViewName.ExploreBlackView then
-		TaskDispatcher.runDelay(arg_2_0.onDone, arg_2_0, 0.2)
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_2_0.onOpenViewFinish, arg_2_0)
+function ExploreResetBeginStep:onOpenViewFinish(viewName)
+	if viewName == ViewName.ExploreBlackView then
+		TaskDispatcher.runDelay(self.onDone, self, 0.2)
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, self.onOpenViewFinish, self)
 	end
 end
 
-function var_0_0.onDestory(arg_3_0)
-	var_0_0.super.onDestory(arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0.onDone, arg_3_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_3_0.onOpenViewFinish, arg_3_0)
+function ExploreResetBeginStep:onDestory()
+	ExploreResetBeginStep.super.onDestory(self)
+	TaskDispatcher.cancelTask(self.onDone, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, self.onOpenViewFinish, self)
 end
 
-return var_0_0
+return ExploreResetBeginStep

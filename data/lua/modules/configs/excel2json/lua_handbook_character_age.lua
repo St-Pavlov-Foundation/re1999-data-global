@@ -1,19 +1,21 @@
-﻿module("modules.configs.excel2json.lua_handbook_character_age", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_handbook_character_age.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_handbook_character_age", package.seeall)
+
+local lua_handbook_character_age = {}
+local fields = {
 	id = 1,
 	image = 3,
 	rewardIcon = 4,
 	order = 2
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_handbook_character_age.onLoad(json)
+	lua_handbook_character_age.configList, lua_handbook_character_age.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_handbook_character_age

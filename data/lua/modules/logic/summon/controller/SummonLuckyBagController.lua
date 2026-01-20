@@ -1,55 +1,56 @@
-﻿module("modules.logic.summon.controller.SummonLuckyBagController", package.seeall)
+﻿-- chunkname: @modules/logic/summon/controller/SummonLuckyBagController.lua
 
-local var_0_0 = class("SummonLuckyBagController", BaseController)
+module("modules.logic.summon.controller.SummonLuckyBagController", package.seeall)
 
-function var_0_0.skipOpenGetChar(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	if not arg_1_3 then
+local SummonLuckyBagController = class("SummonLuckyBagController", BaseController)
+
+function SummonLuckyBagController:skipOpenGetChar(heroId, duplicateCount, poolId)
+	if not poolId then
 		return
 	end
 
-	local var_1_0 = SummonConfig.instance:getSummonPool(arg_1_3)
-	local var_1_1 = {
-		heroId = arg_1_1,
-		duplicateCount = arg_1_2
-	}
+	local poolCo = SummonConfig.instance:getSummonPool(poolId)
+	local param = {}
 
-	var_1_1.isSummon = true
-	var_1_1.skipVideo = true
+	param.heroId = heroId
+	param.duplicateCount = duplicateCount
+	param.isSummon = true
+	param.skipVideo = true
 
-	local var_1_2 = SummonController.instance:getMvSkinIdByHeroId(arg_1_1)
+	local mvSkinId = SummonController.instance:getMvSkinIdByHeroId(heroId)
 
-	if var_1_2 then
-		var_1_1.mvSkinId = var_1_2
+	if mvSkinId then
+		param.mvSkinId = mvSkinId
 	end
 
-	if var_1_0 and var_1_0.ticketId ~= 0 then
-		var_1_1.summonTicketId = var_1_0.ticketId
+	if poolCo and poolCo.ticketId ~= 0 then
+		param.summonTicketId = poolCo.ticketId
 	end
 
-	CharacterController.instance:openCharacterGetView(var_1_1)
+	CharacterController.instance:openCharacterGetView(param)
 end
 
-function var_0_0.skipOpenGetLuckyBag(arg_2_0, arg_2_1, arg_2_2)
-	if not arg_2_2 then
+function SummonLuckyBagController:skipOpenGetLuckyBag(luckyBagId, poolId)
+	if not poolId then
 		return
 	end
 
-	local var_2_0 = {
-		arg_2_1
+	local luckyBagList = {
+		luckyBagId
 	}
-	local var_2_1 = {
-		luckyBagIdList = var_2_0,
-		poolId = arg_2_2
+	local param = {
+		luckyBagIdList = luckyBagList,
+		poolId = poolId
 	}
-	local var_2_2 = SummonConfig.instance:getSummonPool(arg_2_2)
+	local poolCo = SummonConfig.instance:getSummonPool(poolId)
 
-	if var_2_2 and var_2_2.ticketId ~= 0 then
-		var_2_1.summonTicketId = var_2_2.ticketId
+	if poolCo and poolCo.ticketId ~= 0 then
+		param.summonTicketId = poolCo.ticketId
 	end
 
-	ViewMgr.instance:openView(ViewName.SummonGetLuckyBag, var_2_1)
+	ViewMgr.instance:openView(ViewName.SummonGetLuckyBag, param)
 end
 
-var_0_0.instance = var_0_0.New()
+SummonLuckyBagController.instance = SummonLuckyBagController.New()
 
-return var_0_0
+return SummonLuckyBagController

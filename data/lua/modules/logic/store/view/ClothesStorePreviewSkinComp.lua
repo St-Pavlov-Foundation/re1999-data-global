@@ -1,303 +1,321 @@
-﻿module("modules.logic.store.view.ClothesStorePreviewSkinComp", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/ClothesStorePreviewSkinComp.lua
 
-local var_0_0 = class("ClothesStorePreviewSkinComp", LuaCompBase)
-local var_0_1 = {
+module("modules.logic.store.view.ClothesStorePreviewSkinComp", package.seeall)
+
+local ClothesStorePreviewSkinComp = class("ClothesStorePreviewSkinComp", LuaCompBase)
+local spineDefaultSize = {
 	500,
 	780
 }
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0.transform = arg_1_1.transform
-	arg_1_0._goskincontainer = gohelper.findChild(arg_1_0.viewGO, "bg/characterSpine/#go_skincontainer")
-	arg_1_0._gol2dRoot = gohelper.findChild(arg_1_0.viewGO, "bg/characterSpine/#go_skincontainer/#go_l2d")
-	arg_1_0._simagel2d = gohelper.findChildSingleImage(arg_1_0._gol2dRoot, "#simage_l2d")
-	arg_1_0._gobigspine = gohelper.findChild(arg_1_0._gol2dRoot, "#go_spinecontainer/#go_spine")
-	arg_1_0._gospinecontainer = gohelper.findChild(arg_1_0._gol2dRoot, "#go_spinecontainer")
-	arg_1_0._go2dRoot = gohelper.findChild(arg_1_0.viewGO, "bg/characterSpine/#go_skincontainer/#go_2d")
-	arg_1_0._simage2d = gohelper.findChildSingleImage(arg_1_0._go2dRoot, "#simage_skin")
-	arg_1_0._go2dspine = gohelper.findChild(arg_1_0._go2dRoot, "#go_spinecontainer/#go_spine")
-	arg_1_0._go2dspinecontainer = gohelper.findChild(arg_1_0._go2dRoot, "#go_spinecontainer")
-	arg_1_0._txtcharacterName = gohelper.findChildText(arg_1_0.viewGO, "#txt_characterName")
-	arg_1_0._txtskinName = gohelper.findChildText(arg_1_0.viewGO, "#txt_skinName")
-	arg_1_0._txtskinNameEn = gohelper.findChildText(arg_1_0.viewGO, "#txt_skinNameEn")
+function ClothesStorePreviewSkinComp:init(go)
+	self.viewGO = go
+	self.transform = go.transform
+	self._goskincontainer = gohelper.findChild(self.viewGO, "bg/characterSpine/#go_skincontainer")
+	self._gol2dRoot = gohelper.findChild(self.viewGO, "bg/characterSpine/#go_skincontainer/#go_l2d")
+	self._simagel2d = gohelper.findChildSingleImage(self._gol2dRoot, "#simage_l2d")
+	self._gobigspine = gohelper.findChild(self._gol2dRoot, "#go_spinecontainer/#go_spine")
+	self._gospinecontainer = gohelper.findChild(self._gol2dRoot, "#go_spinecontainer")
+	self._go2dRoot = gohelper.findChild(self.viewGO, "bg/characterSpine/#go_skincontainer/#go_2d")
+	self._simage2d = gohelper.findChildSingleImage(self._go2dRoot, "#simage_skin")
+	self._go2dspine = gohelper.findChild(self._go2dRoot, "#go_spinecontainer/#go_spine")
+	self._go2dspinecontainer = gohelper.findChild(self._go2dRoot, "#go_spinecontainer")
+	self._txtcharacterName = gohelper.findChildText(self.viewGO, "#txt_characterName")
+	self._txtskinName = gohelper.findChildText(self.viewGO, "#txt_skinName")
+	self._txtskinNameEn = gohelper.findChildText(self.viewGO, "#txt_skinNameEn")
+	self.special2dBgScale = {
+		[306604] = 2,
+		[302504] = 2,
+		[308603] = 2,
+		[308303] = 2
+	}
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0:addEventCb(StoreController.instance, StoreEvent.OnPlaySkinVideo, arg_2_0._onPlaySkinVideo, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenFullView, arg_2_0._onOpenFullView, arg_2_0)
+function ClothesStorePreviewSkinComp:addEventListeners()
+	self:addEventCb(StoreController.instance, StoreEvent.OnPlaySkinVideo, self._onPlaySkinVideo, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenFullView, self._onOpenFullView, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0:removeEventCb(StoreController.instance, StoreEvent.OnPlaySkinVideo, arg_3_0._onPlaySkinVideo, arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenFullView, arg_3_0._onOpenFullView, arg_3_0)
+function ClothesStorePreviewSkinComp:removeEventListeners()
+	self:removeEventCb(StoreController.instance, StoreEvent.OnPlaySkinVideo, self._onPlaySkinVideo, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenFullView, self._onOpenFullView, self)
 end
 
-function var_0_0._onOpenFullView(arg_4_0)
-	arg_4_0:stopVoice()
+function ClothesStorePreviewSkinComp:_onOpenFullView()
+	self:stopVoice()
 end
 
-function var_0_0._onPlaySkinVideo(arg_5_0, arg_5_1)
-	if not arg_5_1 then
+function ClothesStorePreviewSkinComp:_onPlaySkinVideo(goodsMo)
+	if not goodsMo then
 		return
 	end
 
-	arg_5_0:stopVoice()
+	self:stopVoice()
 end
 
-function var_0_0.setSmallSpineGO(arg_6_0, arg_6_1)
-	arg_6_0._gosmallspine = arg_6_1
+function ClothesStorePreviewSkinComp:setSmallSpineGO(gosmallspine)
+	self._gosmallspine = gosmallspine
 end
 
-function var_0_0.setGoods(arg_7_0, arg_7_1)
-	arg_7_0.goodsMO = arg_7_1
-	arg_7_0.showLive2d = StoreClothesGoodsItemListModel.instance:getIsLive2d()
+function ClothesStorePreviewSkinComp:setGoods(mo)
+	self.goodsMO = mo
+	self.showLive2d = StoreClothesGoodsItemListModel.instance:getIsLive2d()
 
-	arg_7_0:refreshView()
+	self:refreshView()
 end
 
-function var_0_0.refreshView(arg_8_0)
-	if not arg_8_0.goodsMO then
+function ClothesStorePreviewSkinComp:refreshView()
+	if not self.goodsMO then
 		return
 	end
 
-	local var_8_0 = arg_8_0.goodsMO.config.product
-	local var_8_1 = string.splitToNumber(var_8_0, "#")[2]
+	local product = self.goodsMO.config.product
+	local productInfo = string.splitToNumber(product, "#")
+	local skinId = productInfo[2]
 
-	arg_8_0.skinCo = SkinConfig.instance:getSkinCo(var_8_1)
+	self.skinCo = SkinConfig.instance:getSkinCo(skinId)
 
-	arg_8_0:refreshBg(arg_8_0.showLive2d)
-	arg_8_0:refreshSmallSpine()
-	arg_8_0:refreshInfo()
+	self:refreshBg(self.showLive2d)
+	self:refreshSmallSpine()
+	self:refreshInfo()
 end
 
-function var_0_0.refreshBg(arg_9_0, arg_9_1)
-	arg_9_0:clearSkin()
-	arg_9_0:setGOActive(arg_9_0._gol2dRoot, arg_9_1)
-	gohelper.setActive(arg_9_0._go2dRoot, not arg_9_1)
-	recthelper.setAnchor(arg_9_0._goskincontainer.transform, 0, 0)
+function ClothesStorePreviewSkinComp:refreshBg(showLive2d)
+	self:clearSkin()
+	self:setGOActive(self._gol2dRoot, showLive2d)
+	gohelper.setActive(self._go2dRoot, not showLive2d)
+	recthelper.setAnchor(self._goskincontainer.transform, 0, 0)
 
-	if arg_9_1 then
-		arg_9_0:refreshLive2d()
+	if showLive2d then
+		self:refreshLive2d()
 	else
-		arg_9_0:refresh2d()
+		self:refresh2d()
 	end
 end
 
-function var_0_0.setGOActive(arg_10_0, arg_10_1, arg_10_2)
-	if not arg_10_1 then
+function ClothesStorePreviewSkinComp:setGOActive(go, isActive)
+	if not go then
 		return
 	end
 
-	gohelper.setActive(arg_10_1, true)
+	gohelper.setActive(go, true)
 
-	if arg_10_2 then
-		transformhelper.setLocalPos(arg_10_1.transform, 0, 0, 0)
+	if isActive then
+		transformhelper.setLocalPos(go.transform, 0, 0, 0)
 	else
-		transformhelper.setLocalPos(arg_10_1.transform, 99999, 99999, 0)
+		transformhelper.setLocalPos(go.transform, 99999, 99999, 0)
 	end
 end
 
-function var_0_0.refreshInfo(arg_11_0)
-	local var_11_0 = HeroConfig.instance:getHeroCO(arg_11_0.skinCo.characterId)
+function ClothesStorePreviewSkinComp:refreshInfo()
+	local heroConfig = HeroConfig.instance:getHeroCO(self.skinCo.characterId)
 
-	arg_11_0._txtcharacterName.text = var_11_0.name
+	self._txtcharacterName.text = heroConfig.name
 
-	gohelper.setActive(arg_11_0._txtskinName.gameObject, true)
-	gohelper.setActive(arg_11_0._txtskinNameEn.gameObject, true)
+	gohelper.setActive(self._txtskinName.gameObject, true)
+	gohelper.setActive(self._txtskinNameEn.gameObject, true)
 
-	arg_11_0._txtskinName.text = "— " .. arg_11_0.skinCo.characterSkin
+	self._txtskinName.text = "— " .. self.skinCo.characterSkin
 
 	if LangSettings.instance:isEn() then
-		arg_11_0._txtskinNameEn.text = ""
+		self._txtskinNameEn.text = ""
 	else
-		arg_11_0._txtskinNameEn.text = arg_11_0.skinCo.characterSkinNameEng
+		self._txtskinNameEn.text = self.skinCo.characterSkinNameEng
 	end
 end
 
-function var_0_0.refreshLive2d(arg_12_0)
-	local var_12_0 = arg_12_0.skinCo.live2dbg
+function ClothesStorePreviewSkinComp:refreshLive2d()
+	local live2dbg = self.skinCo.live2dbg
 
-	arg_12_0._simagel2d:LoadImage(ResUrl.getCharacterSkinLive2dBg(var_12_0))
-
-	if arg_12_0._uiSpine == nil then
-		arg_12_0._uiSpine = GuiModelAgent.Create(arg_12_0._gobigspine, true)
-
-		arg_12_0._uiSpine:setResPath(arg_12_0.skinCo, arg_12_0._onUISpineLoaded, arg_12_0, CharacterVoiceEnum.NormalFullScreenEffectCameraSize)
+	if VersionValidator.instance:isInReviewing() then
+		gohelper.setActive(self._simagel2d.gameObject, false)
 	else
-		arg_12_0:_onUISpineLoaded()
+		self._simagel2d:LoadImage(ResUrl.getCharacterSkinLive2dBg(live2dbg))
+	end
+
+	if self._uiSpine == nil then
+		self._uiSpine = GuiModelAgent.Create(self._gobigspine, true)
+
+		self._uiSpine:setResPath(self.skinCo, self._onUISpineLoaded, self, CharacterVoiceEnum.NormalFullScreenEffectCameraSize)
+	else
+		self:_onUISpineLoaded()
 	end
 end
 
-function var_0_0._onUISpineLoaded(arg_13_0)
-	local var_13_0 = arg_13_0.skinCo.skinViewLive2dOffset
+function ClothesStorePreviewSkinComp:_onUISpineLoaded()
+	local offsetStr = self.skinCo.skinSwitchLive2dOffset
 
-	if string.nilorempty(var_13_0) then
-		var_13_0 = arg_13_0.skinCo.characterViewOffset
+	if string.nilorempty(offsetStr) then
+		offsetStr = self.skinCo.characterViewOffset
 	end
 
-	local var_13_1 = SkinConfig.instance:getSkinOffset(var_13_0)
+	local offsets = SkinConfig.instance:getSkinOffset(offsetStr)
 
-	recthelper.setAnchor(arg_13_0._gobigspine.transform, tonumber(var_13_1[1]), tonumber(var_13_1[2]))
+	recthelper.setAnchor(self._gobigspine.transform, tonumber(offsets[1]), tonumber(offsets[2]))
 
-	local var_13_2 = tonumber(var_13_1[3]) * 1
+	local scale = tonumber(offsets[3]) * 1
 
-	transformhelper.setLocalScale(arg_13_0._gobigspine.transform, var_13_2, var_13_2, var_13_2)
-	TaskDispatcher.cancelTask(arg_13_0._tryPlayVoice, arg_13_0)
-	TaskDispatcher.runDelay(arg_13_0._tryPlayVoice, arg_13_0, 0.3)
+	transformhelper.setLocalScale(self._gobigspine.transform, scale, scale, scale)
+	TaskDispatcher.cancelTask(self._tryPlayVoice, self)
+	TaskDispatcher.runDelay(self._tryPlayVoice, self, 0.3)
 end
 
-function var_0_0._tryPlayVoice(arg_14_0)
-	local var_14_0 = HeroModel.instance:getHeroAllVoice(arg_14_0.skinCo.characterId, arg_14_0.skinCo.id)
+function ClothesStorePreviewSkinComp:_tryPlayVoice()
+	local voiceConfigs = HeroModel.instance:getHeroAllVoice(self.skinCo.characterId, self.skinCo.id)
 
-	if not var_14_0 or next(var_14_0) == nil then
+	if not voiceConfigs or next(voiceConfigs) == nil then
 		return
 	end
 
-	local var_14_1 = {
+	local ignoreVoiveType = {
 		[CharacterEnum.VoiceType.MainViewSpecialInteraction] = 1,
 		[CharacterEnum.VoiceType.MainViewSpecialRespond] = 1,
 		[CharacterEnum.VoiceType.MainViewDragSpecialRespond] = 1
 	}
-	local var_14_2 = {}
+	local keys = {}
 
-	for iter_14_0, iter_14_1 in pairs(var_14_0) do
-		if not var_14_1[iter_14_1.type] then
-			table.insert(var_14_2, iter_14_0)
+	for k, v in pairs(voiceConfigs) do
+		if not ignoreVoiveType[v.type] then
+			table.insert(keys, k)
 		end
 	end
 
-	local var_14_3 = var_14_0[var_14_2[math.random(1, #var_14_2)]]
+	local randomKey = keys[math.random(1, #keys)]
+	local voiceConfig = voiceConfigs[randomKey]
 
-	arg_14_0._uiSpine:playVoice(var_14_3, function()
-		arg_14_0:stopVoice()
+	self._uiSpine:playVoice(voiceConfig, function()
+		self:stopVoice()
 	end)
 end
 
-function var_0_0.stopVoice(arg_16_0)
-	if not arg_16_0._uiSpine then
+function ClothesStorePreviewSkinComp:stopVoice()
+	if not self._uiSpine then
 		return
 	end
 
-	arg_16_0._uiSpine:stopVoice()
+	self._uiSpine:stopVoice()
 end
 
-function var_0_0.refresh2d(arg_17_0)
-	if arg_17_0:isUniqueSkin() and not string.nilorempty(arg_17_0.skinCo.skin2dParams) then
-		arg_17_0._simage2d:LoadImage(ResUrl.getSkin2dBg(arg_17_0.skinCo.id), arg_17_0._loadedImage, arg_17_0)
+function ClothesStorePreviewSkinComp:refresh2d()
+	if self:isUniqueSkin() and not string.nilorempty(self.skinCo.skin2dParams) then
+		self._simage2d:LoadImage(ResUrl.getSkin2dBg(self.skinCo.id), self._loadedImage, self)
 	else
-		arg_17_0._simage2d:LoadImage(ResUrl.getHeadIconImg(arg_17_0.skinCo.id), arg_17_0._loadedImage, arg_17_0)
+		self._simage2d:LoadImage(ResUrl.getHeadIconImg(self.skinCo.id), self._loadedImage, self)
 	end
 
-	arg_17_0:load2dSkinSpine(arg_17_0.skinCo.skin2dParams)
+	self:load2dSkinSpine(self.skinCo.skin2dParams)
 end
 
-function var_0_0.load2dSkinSpine(arg_18_0, arg_18_1)
-	if string.nilorempty(arg_18_1) then
-		gohelper.setActive(arg_18_0._go2dspine, false)
+function ClothesStorePreviewSkinComp:load2dSkinSpine(params)
+	if string.nilorempty(params) then
+		gohelper.setActive(self._go2dspine, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_18_0._go2dspine, true)
+	gohelper.setActive(self._go2dspine, true)
 
-	local var_18_0 = arg_18_0:filterSpineParams(arg_18_1)
+	local spineData = self:filterSpineParams(params)
 
-	if var_18_0.spinePath == arg_18_0._cur2dSpinePath then
+	if spineData.spinePath == self._cur2dSpinePath then
 		return
 	end
 
-	arg_18_0._cur2dSpinePath = var_18_0.spinePath
+	self._cur2dSpinePath = spineData.spinePath
 
-	if not arg_18_0.skin2dSpine then
-		arg_18_0.skin2dSpine = GuiSpine.Create(arg_18_0._go2dspine, false)
+	if not self.skin2dSpine then
+		self.skin2dSpine = GuiSpine.Create(self._go2dspine, false)
 	end
 
-	local var_18_1 = arg_18_0._go2dspine.transform
+	local spineRootRect = self._go2dspine.transform
 
-	recthelper.setWidth(var_18_1, var_0_1[1])
-	transformhelper.setLocalPos(var_18_1, var_18_0.spinePos[1], var_18_0.spinePos[2], 0)
-	transformhelper.setLocalScale(var_18_1, var_18_0.spineScale, var_18_0.spineScale, var_18_0.spineScale)
-	arg_18_0.skin2dSpine:setResPath(arg_18_0._cur2dSpinePath, arg_18_0._onSkinSpineLoaded, arg_18_0, true)
+	recthelper.setWidth(spineRootRect, spineDefaultSize[1])
+	transformhelper.setLocalPos(spineRootRect, spineData.spinePos[1], spineData.spinePos[2], 0)
+	transformhelper.setLocalScale(spineRootRect, spineData.spineScale, spineData.spineScale, spineData.spineScale)
+	self.skin2dSpine:setResPath(self._cur2dSpinePath, self._onSkinSpineLoaded, self, true)
 end
 
-function var_0_0._onSkinSpineLoaded(arg_19_0)
-	local var_19_0 = arg_19_0.skin2dSpine:getSpineTr()
-	local var_19_1 = var_19_0.parent
+function ClothesStorePreviewSkinComp:_onSkinSpineLoaded()
+	local spineTr = self.skin2dSpine:getSpineTr()
+	local rootTrans = spineTr.parent
 
-	recthelper.setWidth(var_19_0, recthelper.getWidth(var_19_1))
-	recthelper.setHeight(var_19_0, recthelper.getHeight(var_19_1))
+	recthelper.setWidth(spineTr, recthelper.getWidth(rootTrans))
+	recthelper.setHeight(spineTr, recthelper.getHeight(rootTrans))
 end
 
-function var_0_0.filterSpineParams(arg_20_0, arg_20_1)
-	local var_20_0 = {}
-	local var_20_1 = string.split(arg_20_1, "#")
+function ClothesStorePreviewSkinComp:filterSpineParams(params)
+	local data = {}
+	local spineParam = string.split(params, "#")
 
-	var_20_0.spinePath = var_20_1[1]
-	var_20_0.spinePos = var_20_1[2] and string.splitToNumber(var_20_1[2], ",") or {
+	data.spinePath = spineParam[1]
+	data.spinePos = spineParam[2] and string.splitToNumber(spineParam[2], ",") or {
 		0,
 		0
 	}
-	var_20_0.spineScale = var_20_1[3] and tonumber(var_20_1[3]) or 1
+	data.spineScale = spineParam[3] and tonumber(spineParam[3]) or 1
 
-	return var_20_0
+	return data
 end
 
-function var_0_0.refreshSmallSpine(arg_21_0)
-	if not arg_21_0._goSpine then
-		arg_21_0._goSpine = GuiSpine.Create(arg_21_0._gosmallspine, false)
+function ClothesStorePreviewSkinComp:refreshSmallSpine()
+	if not self._goSpine then
+		self._goSpine = GuiSpine.Create(self._gosmallspine, false)
 	end
 
-	arg_21_0._goSpine:stopVoice()
-	arg_21_0._goSpine:setResPath(ResUrl.getSpineUIPrefab(arg_21_0.skinCo.spine), arg_21_0._onSpineLoaded, arg_21_0, true)
+	self._goSpine:stopVoice()
+	self._goSpine:setResPath(ResUrl.getSpineUIPrefab(self.skinCo.spine), self._onSpineLoaded, self, true)
 
-	local var_21_0 = SkinConfig.instance:getSkinOffset(arg_21_0.skinCo.skinSpineOffset)
+	local offsets = SkinConfig.instance:getSkinOffset(self.skinCo.skinSpineOffset)
 
-	recthelper.setAnchor(arg_21_0._gosmallspine.transform, tonumber(var_21_0[1]), tonumber(var_21_0[2]))
-	transformhelper.setLocalScale(arg_21_0._gosmallspine.transform, tonumber(var_21_0[3]), tonumber(var_21_0[3]), tonumber(var_21_0[3]))
+	recthelper.setAnchor(self._gosmallspine.transform, tonumber(offsets[1]), tonumber(offsets[2]))
+	transformhelper.setLocalScale(self._gosmallspine.transform, tonumber(offsets[3]), tonumber(offsets[3]), tonumber(offsets[3]))
 end
 
-function var_0_0._loadedImage(arg_22_0)
-	ZProj.UGUIHelper.SetImageSize(arg_22_0._simage2d.gameObject)
+function ClothesStorePreviewSkinComp:_loadedImage()
+	ZProj.UGUIHelper.SetImageSize(self._simage2d.gameObject)
 
-	local var_22_0 = arg_22_0.skinCo.skinViewImgOffset
+	local offsetStr = self.skinCo.skinViewImgOffset
+	local defaultScale = self.special2dBgScale[self.skinCo.id] or 1
 
-	if not string.nilorempty(var_22_0) then
-		local var_22_1 = string.splitToNumber(var_22_0, "#")
+	if not string.nilorempty(offsetStr) then
+		local offsets = string.splitToNumber(offsetStr, "#")
 
-		recthelper.setAnchor(arg_22_0._simage2d.transform, tonumber(var_22_1[1]), tonumber(var_22_1[2]))
-		transformhelper.setLocalScale(arg_22_0._simage2d.transform, tonumber(var_22_1[3]), tonumber(var_22_1[3]), tonumber(var_22_1[3]))
+		recthelper.setAnchor(self._simage2d.transform, tonumber(offsets[1]), tonumber(offsets[2]))
+
+		local scale = tonumber(offsets[3]) * defaultScale
+
+		transformhelper.setLocalScale(self._simage2d.transform, scale, scale, scale)
 	else
-		recthelper.setAnchor(arg_22_0._simage2d.transform, -150, -150)
-		transformhelper.setLocalScale(arg_22_0._simage2d.transform, 0.6, 0.6, 0.6)
+		recthelper.setAnchor(self._simage2d.transform, -150, -150)
+		transformhelper.setLocalScale(self._simage2d.transform, 0.6, 0.6, 0.6)
 	end
 end
 
-function var_0_0.clearSkin(arg_23_0)
-	TaskDispatcher.cancelTask(arg_23_0._tryPlayVoice, arg_23_0)
-	arg_23_0:stopVoice()
-	arg_23_0._simagel2d:UnLoadImage()
-	arg_23_0._simage2d:UnLoadImage()
+function ClothesStorePreviewSkinComp:clearSkin()
+	TaskDispatcher.cancelTask(self._tryPlayVoice, self)
+	self:stopVoice()
+	self._simagel2d:UnLoadImage()
+	self._simage2d:UnLoadImage()
 
-	if arg_23_0._goSpine then
-		arg_23_0._goSpine:stopVoice()
+	if self._goSpine then
+		self._goSpine:stopVoice()
 
-		arg_23_0._goSpine = nil
+		self._goSpine = nil
 	end
 
-	if arg_23_0._uiSpine then
-		arg_23_0._uiSpine:onDestroy()
+	if self._uiSpine then
+		self._uiSpine:onDestroy()
 
-		arg_23_0._uiSpine = nil
+		self._uiSpine = nil
 	end
 end
 
-function var_0_0.isUniqueSkin(arg_24_0)
-	return arg_24_0.goodsMO.config.skinLevel == 2
+function ClothesStorePreviewSkinComp:isUniqueSkin()
+	return self.goodsMO.config.skinLevel == 2
 end
 
-function var_0_0.onDestroy(arg_25_0)
-	arg_25_0:clearSkin()
+function ClothesStorePreviewSkinComp:onDestroy()
+	self:clearSkin()
 end
 
-return var_0_0
+return ClothesStorePreviewSkinComp

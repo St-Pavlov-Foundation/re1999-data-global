@@ -1,71 +1,73 @@
-﻿module("modules.logic.seasonver.act123.controller.Season123EquipHeroController", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/controller/Season123EquipHeroController.lua
 
-local var_0_0 = class("Season123EquipHeroController", BaseController)
+module("modules.logic.seasonver.act123.controller.Season123EquipHeroController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local Season123EquipHeroController = class("Season123EquipHeroController", BaseController)
+
+function Season123EquipHeroController:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function Season123EquipHeroController:onInitFinish()
 	return
 end
 
-function var_0_0.reInit(arg_3_0)
+function Season123EquipHeroController:reInit()
 	return
 end
 
-var_0_0.Toast_Save_Succ = 2855
+Season123EquipHeroController.Toast_Save_Succ = 2855
 
-function var_0_0.onOpenView(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4, arg_4_5)
-	arg_4_0._isOpening = true
-	arg_4_0._callback = arg_4_4
-	arg_4_0._callbackObj = arg_4_5
+function Season123EquipHeroController:onOpenView(actId, stage, slot, callback, callbackObj)
+	self._isOpening = true
+	self._callback = callback
+	self._callbackObj = callbackObj
 
-	Season123Controller.instance:registerCallback(Season123Event.OnEquipItemChange, arg_4_0.handleItemChanged, arg_4_0)
-	Season123Controller.instance:registerCallback(Season123Event.OnPlayerPrefNewUpdate, arg_4_0.handlePlayerPrefNewUpdate, arg_4_0)
-	HeroGroupController.instance:registerCallback(HeroGroupEvent.OnSnapshotSaveSucc, arg_4_0.handleSnapshotSaveSucc, arg_4_0)
+	Season123Controller.instance:registerCallback(Season123Event.OnEquipItemChange, self.handleItemChanged, self)
+	Season123Controller.instance:registerCallback(Season123Event.OnPlayerPrefNewUpdate, self.handlePlayerPrefNewUpdate, self)
+	HeroGroupController.instance:registerCallback(HeroGroupEvent.OnSnapshotSaveSucc, self.handleSnapshotSaveSucc, self)
 
-	local var_4_0 = HeroGroupModel.instance:getCurGroupMO()
-	local var_4_1
+	local heroGroupMO = HeroGroupModel.instance:getCurGroupMO()
+	local equipUidList
 
-	if var_4_0 and var_4_0.activity104Equips and var_4_0.activity104Equips[Activity123Enum.MainCharPos] then
-		var_4_1 = tabletool.copy(var_4_0.activity104Equips[Activity123Enum.MainCharPos].equipUid)
+	if heroGroupMO and heroGroupMO.activity104Equips and heroGroupMO.activity104Equips[Activity123Enum.MainCharPos] then
+		equipUidList = tabletool.copy(heroGroupMO.activity104Equips[Activity123Enum.MainCharPos].equipUid)
 	end
 
-	Season123EquipHeroItemListModel.instance:initDatas(arg_4_1, arg_4_2, arg_4_3, var_4_1)
+	Season123EquipHeroItemListModel.instance:initDatas(actId, stage, slot, equipUidList)
 end
 
-function var_0_0.onCloseView(arg_5_0)
-	arg_5_0._isOpening = false
+function Season123EquipHeroController:onCloseView()
+	self._isOpening = false
 
-	Season123Controller.instance:unregisterCallback(Season123Event.OnEquipItemChange, arg_5_0.handleItemChanged, arg_5_0)
-	Season123Controller.instance:unregisterCallback(Season123Event.OnPlayerPrefNewUpdate, arg_5_0.handlePlayerPrefNewUpdate, arg_5_0)
-	Season123Controller.instance:unregisterCallback(Season123Event.OnSnapshotSaveSucc, arg_5_0.handleSnapshotSaveSucc, arg_5_0)
+	Season123Controller.instance:unregisterCallback(Season123Event.OnEquipItemChange, self.handleItemChanged, self)
+	Season123Controller.instance:unregisterCallback(Season123Event.OnPlayerPrefNewUpdate, self.handlePlayerPrefNewUpdate, self)
+	Season123Controller.instance:unregisterCallback(Season123Event.OnSnapshotSaveSucc, self.handleSnapshotSaveSucc, self)
 	Season123EquipHeroItemListModel.instance:flushRecord()
 	Season123Controller.instance:dispatchEvent(Season123Event.OnPlayerPrefNewUpdate)
 	Season123EquipHeroItemListModel.instance:clear()
 end
 
-function var_0_0.handleSnapshotSaveSucc(arg_6_0, arg_6_1)
-	if not arg_6_0._isOpening then
+function Season123EquipHeroController:handleSnapshotSaveSucc(snapshotId)
+	if not self._isOpening then
 		return
 	end
 
-	if arg_6_1 == ModuleEnum.HeroGroupSnapshotType.Season123 then
-		if arg_6_0._callback then
-			if arg_6_0._callbackObj then
-				arg_6_0._callback(arg_6_0._callbackObj, arg_6_1)
+	if snapshotId == ModuleEnum.HeroGroupSnapshotType.Season123 then
+		if self._callback then
+			if self._callbackObj then
+				self._callback(self._callbackObj, snapshotId)
 			else
-				arg_6_0._callback(arg_6_1)
+				self._callback(snapshotId)
 			end
 		end
 
-		arg_6_0:notifyUpdateView()
+		self:notifyUpdateView()
 	end
 end
 
-function var_0_0.handleItemChanged(arg_7_0)
-	if not arg_7_0._isOpening then
+function Season123EquipHeroController:handleItemChanged()
+	if not self._isOpening then
 		return
 	end
 
@@ -74,52 +76,52 @@ function var_0_0.handleItemChanged(arg_7_0)
 	Season123EquipHeroItemListModel.instance:initPlayerPrefs()
 	Season123EquipHeroItemListModel.instance:initPosData()
 	Season123EquipHeroItemListModel.instance:initList()
-	arg_7_0:notifyUpdateView()
+	self:notifyUpdateView()
 end
 
-function var_0_0.equipItemOnlyShow(arg_8_0, arg_8_1)
-	local var_8_0 = Season123EquipHeroItemListModel.instance.curSelectSlot
-	local var_8_1 = Season123EquipHeroItemListModel.instance.curEquipMap[var_8_0]
-	local var_8_2
+function Season123EquipHeroController:equipItemOnlyShow(itemUid)
+	local curSlot = Season123EquipHeroItemListModel.instance.curSelectSlot
+	local oldUid = Season123EquipHeroItemListModel.instance.curEquipMap[curSlot]
+	local unloadSlotIndex
 
-	for iter_8_0, iter_8_1 in pairs(Season123EquipHeroItemListModel.instance.curEquipMap) do
-		if var_8_0 ~= iter_8_0 and arg_8_1 == iter_8_1 then
-			Season123EquipHeroItemListModel.instance:unloadShowSlot(iter_8_0)
+	for slot, equipedUid in pairs(Season123EquipHeroItemListModel.instance.curEquipMap) do
+		if curSlot ~= slot and itemUid == equipedUid then
+			Season123EquipHeroItemListModel.instance:unloadShowSlot(slot)
 
-			var_8_2 = iter_8_0
+			unloadSlotIndex = slot
 		end
 	end
 
-	Season123EquipHeroItemListModel.instance:equipShowItem(arg_8_1)
+	Season123EquipHeroItemListModel.instance:equipShowItem(itemUid)
 	Season123EquipHeroItemListModel.instance:onModelUpdate()
-	arg_8_0:dispatchEvent(Season123EquipEvent.EquipChangeCard, {
-		isNew = var_8_1 == Season123EquipHeroItemListModel.EmptyUid,
-		unloadSlot = var_8_2
+	self:dispatchEvent(Season123EquipEvent.EquipChangeCard, {
+		isNew = oldUid == Season123EquipHeroItemListModel.EmptyUid,
+		unloadSlot = unloadSlotIndex
 	})
 end
 
-function var_0_0.unloadItem(arg_9_0, arg_9_1)
-	Season123EquipHeroItemListModel.instance:unloadItem(arg_9_1)
-	arg_9_0:notifyUpdateView()
+function Season123EquipHeroController:unloadItem(itemUid)
+	Season123EquipHeroItemListModel.instance:unloadItem(itemUid)
+	self:notifyUpdateView()
 end
 
-function var_0_0.setSlot(arg_10_0, arg_10_1)
-	Season123EquipHeroItemListModel.instance:changeSelectSlot(arg_10_1)
+function Season123EquipHeroController:setSlot(slotIndex)
+	Season123EquipHeroItemListModel.instance:changeSelectSlot(slotIndex)
 	Season123EquipHeroItemListModel.instance:onModelUpdate()
-	arg_10_0:dispatchEvent(Season123EquipEvent.EquipChangeSlot)
+	self:dispatchEvent(Season123EquipEvent.EquipChangeSlot)
 end
 
-function var_0_0.resumeShowSlot(arg_11_0)
+function Season123EquipHeroController:resumeShowSlot()
 	Season123EquipHeroItemListModel.instance:resumeSlotData()
-	arg_11_0:notifyUpdateView()
+	self:notifyUpdateView()
 end
 
-function var_0_0.checkCanSaveSlot(arg_12_0)
+function Season123EquipHeroController:checkCanSaveSlot()
 	if not Season123EquipHeroItemListModel.instance.activityId then
 		return
 	end
 
-	if arg_12_0:checkSlotUnlock() then
+	if self:checkSlotUnlock() then
 		GameFacade.showToast(SeasonEquipItem.Toast_Slot_Lock)
 
 		return
@@ -128,35 +130,35 @@ function var_0_0.checkCanSaveSlot(arg_12_0)
 	return true
 end
 
-function var_0_0.saveShowSlot(arg_13_0)
-	local var_13_0 = Season123EquipHeroItemListModel.instance:getEquipMaxCount(Season123EquipHeroItemListModel.instance.curPos)
+function Season123EquipHeroController:saveShowSlot()
+	local equipCount = Season123EquipHeroItemListModel.instance:getEquipMaxCount(Season123EquipHeroItemListModel.instance.curPos)
 
-	for iter_13_0 = 1, var_13_0 do
-		Season123EquipHeroItemListModel.instance:flushSlot(iter_13_0)
+	for slot = 1, equipCount do
+		Season123EquipHeroItemListModel.instance:flushSlot(slot)
 	end
 
-	local var_13_1 = Season123EquipHeroItemListModel.instance:getEquipedCards()
-	local var_13_2 = HeroGroupModel.instance:getCurGroupMO()
+	local equipUidList = Season123EquipHeroItemListModel.instance:getEquipedCards()
+	local heroGroupMO = HeroGroupModel.instance:getCurGroupMO()
 
-	if var_13_2 and var_13_2.activity104Equips and var_13_2.activity104Equips[Activity123Enum.MainCharPos] then
-		for iter_13_1, iter_13_2 in ipairs(var_13_1) do
-			local var_13_3 = var_13_1[iter_13_1] or Activity123Enum.EmptyUid
+	if heroGroupMO and heroGroupMO.activity104Equips and heroGroupMO.activity104Equips[Activity123Enum.MainCharPos] then
+		for slot, equipUid in ipairs(equipUidList) do
+			local uid = equipUidList[slot] or Activity123Enum.EmptyUid
 
-			var_13_2.activity104Equips[Activity123Enum.MainCharPos].equipUid[iter_13_1] = var_13_3
+			heroGroupMO.activity104Equips[Activity123Enum.MainCharPos].equipUid[slot] = uid
 		end
 
 		HeroGroupModel.instance:saveCurGroupData()
 	end
 end
 
-function var_0_0.checkSlotUnlock(arg_14_0)
-	local var_14_0 = Season123EquipHeroItemListModel.instance.curPos
+function Season123EquipHeroController:checkSlotUnlock()
+	local curPos = Season123EquipHeroItemListModel.instance.curPos
 
-	if var_14_0 ~= Season123EquipHeroItemListModel.MainCharPos then
+	if curPos ~= Season123EquipHeroItemListModel.MainCharPos then
 		return Season123EquipHeroItemListModel.instance:getShowUnlockSlotCount() <= 0
 	else
-		for iter_14_0 = Season123EquipHeroItemListModel.HeroMaxPos, 1, -1 do
-			if Season123Model.instance:isSeasonStagePosUnlock(Season123EquipHeroItemListModel.instance.activityId, Season123EquipHeroItemListModel.instance.stage, iter_14_0, var_14_0) then
+		for slot = Season123EquipHeroItemListModel.HeroMaxPos, 1, -1 do
+			if Season123Model.instance:isSeasonStagePosUnlock(Season123EquipHeroItemListModel.instance.activityId, Season123EquipHeroItemListModel.instance.stage, slot, curPos) then
 				return false
 			end
 		end
@@ -165,32 +167,32 @@ function var_0_0.checkSlotUnlock(arg_14_0)
 	end
 end
 
-function var_0_0.handlePlayerPrefNewUpdate(arg_15_0)
+function Season123EquipHeroController:handlePlayerPrefNewUpdate()
 	if Season123EquipHeroItemListModel.instance.recordNew then
 		Season123EquipHeroItemListModel.instance.recordNew:initLocalSave()
 	end
 
-	arg_15_0:notifyUpdateView()
+	self:notifyUpdateView()
 end
 
-function var_0_0.notifyUpdateView(arg_16_0)
+function Season123EquipHeroController:notifyUpdateView()
 	Season123EquipHeroItemListModel.instance:onModelUpdate()
-	arg_16_0:dispatchEvent(Season123EquipEvent.EquipUpdate)
+	self:dispatchEvent(Season123EquipEvent.EquipUpdate)
 end
 
-function var_0_0.setSelectTag(arg_17_0, arg_17_1)
+function Season123EquipHeroController:setSelectTag(tagIndex)
 	if Season123EquipHeroItemListModel.instance.tagModel then
-		Season123EquipHeroItemListModel.instance.tagModel:selectTagIndex(arg_17_1)
+		Season123EquipHeroItemListModel.instance.tagModel:selectTagIndex(tagIndex)
 		Season123EquipHeroItemListModel.instance:initList()
 	end
 end
 
-function var_0_0.getFilterModel(arg_18_0)
+function Season123EquipHeroController:getFilterModel()
 	return Season123EquipHeroItemListModel.instance.tagModel
 end
 
-var_0_0.instance = var_0_0.New()
+Season123EquipHeroController.instance = Season123EquipHeroController.New()
 
-LuaEventSystem.addEventMechanism(var_0_0.instance)
+LuaEventSystem.addEventMechanism(Season123EquipHeroController.instance)
 
-return var_0_0
+return Season123EquipHeroController

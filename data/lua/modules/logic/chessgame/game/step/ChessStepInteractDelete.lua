@@ -1,31 +1,35 @@
-﻿module("modules.logic.chessgame.game.step.ChessStepInteractDelete", package.seeall)
+﻿-- chunkname: @modules/logic/chessgame/game/step/ChessStepInteractDelete.lua
 
-local var_0_0 = class("ChessStepInteractDelete", BaseWork)
+module("modules.logic.chessgame.game.step.ChessStepInteractDelete", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.originData = arg_1_1
+local ChessStepInteractDelete = class("ChessStepInteractDelete", BaseWork)
+
+function ChessStepInteractDelete:init(stepData)
+	self.originData = stepData
 end
 
-function var_0_0.onStart(arg_2_0)
-	arg_2_0:deleteInteractObj()
+function ChessStepInteractDelete:onStart()
+	self:deleteInteractObj()
 end
 
-function var_0_0.deleteInteractObj(arg_3_0)
-	local var_3_0 = arg_3_0.originData.id
-	local var_3_1 = ChessGameInteractModel.instance:getInteractById(var_3_0)
+function ChessStepInteractDelete:deleteInteractObj()
+	local objId = self.originData.id
+	local mo = ChessGameInteractModel.instance:getInteractById(objId)
 
-	if var_3_1 and var_3_1:isInCurrentMap() then
-		ChessGameController.instance.interactsMgr:get(var_3_0):getHandler():showDestoryAni(arg_3_0._deleteAnimCallback, arg_3_0)
+	if mo and mo:isInCurrentMap() then
+		local comp = ChessGameController.instance.interactsMgr:get(objId)
+
+		comp:getHandler():showDestoryAni(self._deleteAnimCallback, self)
 	else
-		arg_3_0:_deleteAnimCallback()
+		self:_deleteAnimCallback()
 	end
 end
 
-function var_0_0._deleteAnimCallback(arg_4_0)
-	local var_4_0 = arg_4_0.originData.id
+function ChessStepInteractDelete:_deleteAnimCallback()
+	local objId = self.originData.id
 
-	ChessGameController.instance:deleteInteractObj(var_4_0)
-	arg_4_0:onDone(true)
+	ChessGameController.instance:deleteInteractObj(objId)
+	self:onDone(true)
 end
 
-return var_0_0
+return ChessStepInteractDelete

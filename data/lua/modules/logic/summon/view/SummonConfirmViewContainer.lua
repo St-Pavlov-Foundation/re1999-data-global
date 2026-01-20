@@ -1,31 +1,33 @@
-﻿module("modules.logic.summon.view.SummonConfirmViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/summon/view/SummonConfirmViewContainer.lua
 
-local var_0_0 = class("SummonConfirmViewContainer", BaseViewContainer)
+module("modules.logic.summon.view.SummonConfirmViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local SummonConfirmViewContainer = class("SummonConfirmViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topright"))
-	table.insert(var_1_0, SummonConfirmView.New())
+function SummonConfirmViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, TabViewGroup.New(1, "#go_topright"))
+	table.insert(views, SummonConfirmView.New())
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		local var_2_0 = SummonMainModel.instance:getCurPool()
+function SummonConfirmViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		local pool = SummonMainModel.instance:getCurPool()
 
-		if var_2_0 then
-			local var_2_1 = {}
-			local var_2_2 = {}
+		if pool then
+			local result = {}
+			local costSet = {}
 
-			SummonMainModel.addCurrencyByCostStr(var_2_1, var_2_0.cost1, var_2_2)
-			table.insert(var_2_1, CurrencyEnum.CurrencyType.Diamond)
-			table.insert(var_2_1, CurrencyEnum.CurrencyType.FreeDiamondCoupon)
+			SummonMainModel.addCurrencyByCostStr(result, pool.cost1, costSet)
+			table.insert(result, CurrencyEnum.CurrencyType.Diamond)
+			table.insert(result, CurrencyEnum.CurrencyType.FreeDiamondCoupon)
 
-			arg_2_0._currencyView = CurrencyView.New(var_2_1, nil, nil, nil, true)
+			self._currencyView = CurrencyView.New(result, nil, nil, nil, true)
 		else
-			arg_2_0._currencyView = CurrencyView.New({
+			self._currencyView = CurrencyView.New({
 				{
 					id = 140001,
 					isIcon = true,
@@ -36,9 +38,9 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 		end
 
 		return {
-			arg_2_0._currencyView
+			self._currencyView
 		}
 	end
 end
 
-return var_0_0
+return SummonConfirmViewContainer

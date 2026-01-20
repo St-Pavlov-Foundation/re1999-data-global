@@ -1,24 +1,26 @@
-﻿module("modules.logic.rouge.dlc.101.model.rpcmo.RougeGameLimiterMO", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/dlc/101/model/rpcmo/RougeGameLimiterMO.lua
 
-local var_0_0 = pureTable("RougeGameLimiterMO")
+module("modules.logic.rouge.dlc.101.model.rpcmo.RougeGameLimiterMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.riskId = arg_1_1.riskId
-	arg_1_0.riskValue = arg_1_1.riskValue
-	arg_1_0.limitIds = tabletool.copy(arg_1_1.limitIds)
-	arg_1_0.limitBuffIds = tabletool.copy(arg_1_1.limitBuffIds)
+local RougeGameLimiterMO = pureTable("RougeGameLimiterMO")
+
+function RougeGameLimiterMO:init(info)
+	self.riskId = info.riskId
+	self.riskValue = info.riskValue
+	self.limitIds = tabletool.copy(info.limitIds)
+	self.limitBuffIds = tabletool.copy(info.limitBuffIds)
 end
 
-function var_0_0.getLimiterIds(arg_2_0)
-	return arg_2_0.limitIds
+function RougeGameLimiterMO:getLimiterIds()
+	return self.limitIds
 end
 
-function var_0_0.getLimiterBuffIds(arg_3_0)
-	return arg_3_0.limitBuffIds
+function RougeGameLimiterMO:getLimiterBuffIds()
+	return self.limitBuffIds
 end
 
-function var_0_0.getRiskValue(arg_4_0)
-	return arg_4_0.riskValue
+function RougeGameLimiterMO:getRiskValue()
+	return self.riskValue
 end
 
-return var_0_0
+return RougeGameLimiterMO

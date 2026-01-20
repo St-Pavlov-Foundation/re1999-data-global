@@ -1,15 +1,19 @@
-﻿module("modules.logic.bossrush.view.V1a4_BossRush_ResultViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/view/V1a4_BossRush_ResultViewContainer.lua
 
-local var_0_0 = class("V1a4_BossRush_ResultViewContainer", BaseViewContainer)
+module("modules.logic.bossrush.view.V1a4_BossRush_ResultViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	return {
+local V1a4_BossRush_ResultViewContainer = class("V1a4_BossRush_ResultViewContainer", BaseViewContainer)
+
+function V1a4_BossRush_ResultViewContainer:buildViews()
+	local views = {
 		(V1a4_BossRush_ResultView.New())
 	}
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function V1a4_BossRush_ResultViewContainer:buildTabViews(tabContainerId)
 	return
 end
 
-return var_0_0
+return V1a4_BossRush_ResultViewContainer

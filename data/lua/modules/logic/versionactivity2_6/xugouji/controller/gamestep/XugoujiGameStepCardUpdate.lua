@@ -1,77 +1,83 @@
-﻿module("modules.logic.versionactivity2_6.xugouji.controller.gamestep.XugoujiGameStepCardUpdate", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/xugouji/controller/gamestep/XugoujiGameStepCardUpdate.lua
 
-local var_0_0 = VersionActivity2_6Enum.ActivityId.Xugouji
-local var_0_1 = class("XugoujiGameStepCardUpdate", XugoujiGameStepBase)
+module("modules.logic.versionactivity2_6.xugouji.controller.gamestep.XugoujiGameStepCardUpdate", package.seeall)
 
-function var_0_1.start(arg_1_0)
-	local var_1_0 = arg_1_0._stepData.uid
-	local var_1_1 = arg_1_0._stepData.status
-	local var_1_2 = Activity188Model.instance:getCardInfo(var_1_0)
-	local var_1_3 = var_1_2.id
-	local var_1_4 = Activity188Config.instance:getCardCfg(var_0_0, var_1_3)
+local actId = VersionActivity2_6Enum.ActivityId.Xugouji
+local XugoujiGameStepCardUpdate = class("XugoujiGameStepCardUpdate", XugoujiGameStepBase)
 
-	if var_1_4.type ~= 2 and var_1_2.statue ~= XugoujiEnum.CardStatus.Disappear and var_1_1 == XugoujiEnum.CardStatus.Disappear then
-		Activity188Model.instance:addOpenedCard(var_1_0)
-	elseif var_1_4.type == 2 and var_1_1 == XugoujiEnum.CardStatus.Front then
-		Activity188Model.instance:addOpenedCard(var_1_0)
+function XugoujiGameStepCardUpdate:start()
+	local cardUid = self._stepData.uid
+	local cardStatus = self._stepData.status
+	local cardInfo = Activity188Model.instance:getCardInfo(cardUid)
+	local cardId = cardInfo.id
+	local cardCfg = Activity188Config.instance:getCardCfg(actId, cardId)
+
+	if cardCfg.type ~= 2 and cardInfo.statue ~= XugoujiEnum.CardStatus.Disappear and cardStatus == XugoujiEnum.CardStatus.Disappear then
+		Activity188Model.instance:addOpenedCard(cardUid)
+	elseif cardCfg.type == 2 and cardStatus == XugoujiEnum.CardStatus.Front then
+		Activity188Model.instance:addOpenedCard(cardUid)
 		AudioMgr.instance:trigger(AudioEnum2_6.Xugouji.cardPair)
 		XugoujiController.instance:dispatchEvent(XugoujiEvent.GotActiveCard, {
-			var_1_0,
+			cardUid,
 			-1
 		})
 	end
 
-	Activity188Model.instance:updateCardStatus(var_1_0, var_1_1)
+	Activity188Model.instance:updateCardStatus(cardUid, cardStatus)
 
-	if var_1_4.type == 2 then
-		if var_1_1 == XugoujiEnum.CardStatus.Front then
-			if var_1_0 == Activity188Model.instance:getLastCardInfoUId() then
-				arg_1_0:finish()
+	if cardCfg.type == 2 then
+		if cardStatus == XugoujiEnum.CardStatus.Front then
+			if cardUid == Activity188Model.instance:getLastCardInfoUId() then
+				self:finish()
 			else
-				Activity188Model.instance:setLastCardInfoUId(var_1_0)
-				XugoujiController.instance:registerCallback(XugoujiEvent.CloseCardInfoView, arg_1_0.onCloseCardInfoView, arg_1_0)
+				Activity188Model.instance:setLastCardInfoUId(cardUid)
+				XugoujiController.instance:registerCallback(XugoujiEvent.CloseCardInfoView, self.onCloseCardInfoView, self)
 				XugoujiController.instance:openCardInfoView(nil)
 			end
 		else
-			XugoujiController.instance:dispatchEvent(XugoujiEvent.CardPairStatusUpdated, arg_1_0._stepData.uid)
-			XugoujiController.instance:dispatchEvent(XugoujiEvent.CardStatusUpdated, arg_1_0._stepData.uid)
-			TaskDispatcher.runDelay(arg_1_0.finish, arg_1_0, 0.25)
+			XugoujiController.instance:dispatchEvent(XugoujiEvent.CardPairStatusUpdated, self._stepData.uid)
+			XugoujiController.instance:dispatchEvent(XugoujiEvent.CardStatusUpdated, self._stepData.uid)
+			TaskDispatcher.runDelay(self.finish, self, 0.25)
 		end
-	elseif Activity188Model.instance:isMyTurn() then
-		if Activity188Model.instance:getGameViewState() == XugoujiEnum.GameViewState.PlayerOperaDisplay then
-			if var_1_1 ~= XugoujiEnum.CardStatus.Disappear and var_1_1 ~= XugoujiEnum.CardStatus.Back then
-				XugoujiController.instance:dispatchEvent(XugoujiEvent.CardStatusUpdated, arg_1_0._stepData.uid)
-			end
-		else
-			XugoujiController.instance:dispatchEvent(XugoujiEvent.CardStatusUpdated, arg_1_0._stepData.uid)
-		end
-
-		arg_1_0:finish()
-	elseif Activity188Model.instance:getGameViewState() == XugoujiEnum.GameViewState.EnemyOperaDisplay then
-		if var_1_1 ~= XugoujiEnum.CardStatus.Disappear and var_1_1 ~= XugoujiEnum.CardStatus.Back then
-			XugoujiController.instance:dispatchEvent(XugoujiEvent.CardStatusUpdated, arg_1_0._stepData.uid)
-		end
-
-		arg_1_0:finish()
 	else
-		XugoujiController.instance:dispatchEvent(XugoujiEvent.CardStatusUpdated, arg_1_0._stepData.uid)
-		TaskDispatcher.runDelay(arg_1_0.finish, arg_1_0, 0.5)
+		local isMyTurn = Activity188Model.instance:isMyTurn()
+
+		if isMyTurn then
+			if Activity188Model.instance:getGameViewState() == XugoujiEnum.GameViewState.PlayerOperaDisplay then
+				if cardStatus ~= XugoujiEnum.CardStatus.Disappear and cardStatus ~= XugoujiEnum.CardStatus.Back then
+					XugoujiController.instance:dispatchEvent(XugoujiEvent.CardStatusUpdated, self._stepData.uid)
+				end
+			else
+				XugoujiController.instance:dispatchEvent(XugoujiEvent.CardStatusUpdated, self._stepData.uid)
+			end
+
+			self:finish()
+		elseif Activity188Model.instance:getGameViewState() == XugoujiEnum.GameViewState.EnemyOperaDisplay then
+			if cardStatus ~= XugoujiEnum.CardStatus.Disappear and cardStatus ~= XugoujiEnum.CardStatus.Back then
+				XugoujiController.instance:dispatchEvent(XugoujiEvent.CardStatusUpdated, self._stepData.uid)
+			end
+
+			self:finish()
+		else
+			XugoujiController.instance:dispatchEvent(XugoujiEvent.CardStatusUpdated, self._stepData.uid)
+			TaskDispatcher.runDelay(self.finish, self, 0.5)
+		end
 	end
 end
 
-function var_0_1.onCloseCardInfoView(arg_2_0)
-	XugoujiController.instance:unregisterCallback(XugoujiEvent.CloseCardInfoView, arg_2_0.onCloseCardInfoView, arg_2_0)
-	TaskDispatcher.runDelay(arg_2_0.finish, arg_2_0, 0.3)
+function XugoujiGameStepCardUpdate:onCloseCardInfoView()
+	XugoujiController.instance:unregisterCallback(XugoujiEvent.CloseCardInfoView, self.onCloseCardInfoView, self)
+	TaskDispatcher.runDelay(self.finish, self, 0.3)
 end
 
-function var_0_1.finish(arg_3_0)
-	var_0_1.super.finish(arg_3_0)
+function XugoujiGameStepCardUpdate:finish()
+	XugoujiGameStepCardUpdate.super.finish(self)
 end
 
-function var_0_1.dispose(arg_4_0)
-	XugoujiController.instance:unregisterCallback(XugoujiEvent.CloseCardInfoView, arg_4_0.onCloseCardInfoView, arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0.finish, arg_4_0)
-	XugoujiGameStepBase.dispose(arg_4_0)
+function XugoujiGameStepCardUpdate:dispose()
+	XugoujiController.instance:unregisterCallback(XugoujiEvent.CloseCardInfoView, self.onCloseCardInfoView, self)
+	TaskDispatcher.cancelTask(self.finish, self)
+	XugoujiGameStepBase.dispose(self)
 end
 
-return var_0_1
+return XugoujiGameStepCardUpdate

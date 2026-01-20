@@ -1,0 +1,122 @@
+[
+  {
+    "udimoWeatherId": 1,
+    "temperature": -100,
+    "description": "language_10103842"
+  },
+  {
+    "udimoWeatherId": 2,
+    "temperature": -100,
+    "description": "language_10103843"
+  },
+  {
+    "udimoWeatherId": 3,
+    "temperature": -100,
+    "description": "language_10103844"
+  },
+  {
+    "udimoWeatherId": 4,
+    "temperature": -100,
+    "description": "language_10103845"
+  },
+  {
+    "udimoWeatherId": 5,
+    "temperature": -100,
+    "description": "language_10103846"
+  },
+  {
+    "udimoWeatherId": 6,
+    "temperature": -100,
+    "description": "language_10103847"
+  },
+  {
+    "udimoWeatherId": 6,
+    "temperature": 8,
+    "description": "language_10103848"
+  },
+  {
+    "udimoWeatherId": 6,
+    "temperature": 18,
+    "description": "language_10103849"
+  },
+  {
+    "udimoWeatherId": 6,
+    "temperature": 28,
+    "description": "language_10103850"
+  },
+  {
+    "udimoWeatherId": 7,
+    "temperature": -100,
+    "description": "language_10103847"
+  },
+  {
+    "udimoWeatherId": 7,
+    "temperature": 8,
+    "description": "language_10103848"
+  },
+  {
+    "udimoWeatherId": 7,
+    "temperature": 18,
+    "description": "language_10103849"
+  },
+  {
+    "udimoWeatherId": 7,
+    "temperature": 28,
+    "description": "language_10103850"
+  },
+  {
+    "udimoWeatherId": 8,
+    "temperature": -100,
+    "description": "language_10103847"
+  },
+  {
+    "udimoWeatherId": 8,
+    "temperature": 8,
+    "description": "language_10103848"
+  },
+  {
+    "udimoWeatherId": 8,
+    "temperature": 18,
+    "description": "language_10103849"
+  },
+  {
+    "udimoWeatherId": 8,
+    "temperature": 28,
+    "description": "language_10103850"
+  },
+  {
+    "udimoWeatherId": 9,
+    "temperature": -100,
+    "description": "language_10103851"
+  },
+  {
+    "udimoWeatherId": 9,
+    "temperature": 8,
+    "description": "language_10103852"
+  },
+  {
+    "udimoWeatherId": 9,
+    "temperature": 18,
+    "description": "language_10103853"
+  },
+  {
+    "udimoWeatherId": 9,
+    "temperature": 28,
+    "description": "language_10103854"
+  },
+  {
+    "udimoWeatherId": 10,
+    "temperature": -100,
+    "description": "language_10103855"
+  },
+  {
+    "udimoWeatherId": 11,
+    "temperature": -100,
+    "description": "language_10103856"
+  },
+  {
+    "udimoWeatherId": 12,
+    "temperature": -100,
+    "description": "language_10103857"
+  }
+]

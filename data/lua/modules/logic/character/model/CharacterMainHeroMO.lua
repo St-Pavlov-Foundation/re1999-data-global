@@ -1,12 +1,14 @@
-﻿module("modules.logic.character.model.CharacterMainHeroMO", package.seeall)
+﻿-- chunkname: @modules/logic/character/model/CharacterMainHeroMO.lua
 
-local var_0_0 = pureTable("CharacterMainHeroMO")
+module("modules.logic.character.model.CharacterMainHeroMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.heroMO = arg_1_1
-	arg_1_0.skinId = arg_1_2
-	arg_1_0.id = arg_1_2
-	arg_1_0.isRandom = arg_1_3
+local CharacterMainHeroMO = pureTable("CharacterMainHeroMO")
+
+function CharacterMainHeroMO:init(heroMO, skinId, isRandom)
+	self.heroMO = heroMO
+	self.skinId = skinId
+	self.id = skinId
+	self.isRandom = isRandom
 end
 
-return var_0_0
+return CharacterMainHeroMO

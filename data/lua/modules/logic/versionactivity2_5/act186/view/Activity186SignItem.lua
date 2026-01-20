@@ -1,189 +1,191 @@
-﻿module("modules.logic.versionactivity2_5.act186.view.Activity186SignItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/act186/view/Activity186SignItem.lua
 
-local var_0_0 = class("Activity186SignItem", ListScrollCellExtend)
+module("modules.logic.versionactivity2_5.act186.view.Activity186SignItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.txtIndex = gohelper.findChildTextMesh(arg_1_0.viewGO, "txtIndex")
-	arg_1_0.goTomorrow = gohelper.findChild(arg_1_0.viewGO, "#go_TomorrowTag")
-	arg_1_0.goNormal = gohelper.findChild(arg_1_0.viewGO, "#go_normal")
-	arg_1_0.goCanget = gohelper.findChild(arg_1_0.viewGO, "#go_canget")
-	arg_1_0.goCangetCookies1 = gohelper.findChild(arg_1_0.viewGO, "#go_canget/cookies1")
-	arg_1_0.goCangetCookies2 = gohelper.findChild(arg_1_0.viewGO, "#go_canget/cookies2")
-	arg_1_0.goHasget = gohelper.findChild(arg_1_0.viewGO, "#go_hasget")
-	arg_1_0.btnClick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btnClick")
-	arg_1_0.canvasGroup = gohelper.findChildComponent(arg_1_0.viewGO, "#go_rewards", gohelper.Type_CanvasGroup)
-	arg_1_0.rewardList = {}
-	arg_1_0.hasgetCookiesAnim = gohelper.findChildComponent(arg_1_0.viewGO, "#go_hasget/cookies/ani", gohelper.Type_Animator)
-	arg_1_0.hasgetHookAnim = gohelper.findChildComponent(arg_1_0.viewGO, "#go_hasget/gou/go_hasget", gohelper.Type_Animator)
+local Activity186SignItem = class("Activity186SignItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Activity186SignItem:onInitView()
+	self.txtIndex = gohelper.findChildTextMesh(self.viewGO, "txtIndex")
+	self.goTomorrow = gohelper.findChild(self.viewGO, "#go_TomorrowTag")
+	self.goNormal = gohelper.findChild(self.viewGO, "#go_normal")
+	self.goCanget = gohelper.findChild(self.viewGO, "#go_canget")
+	self.goCangetCookies1 = gohelper.findChild(self.viewGO, "#go_canget/cookies1")
+	self.goCangetCookies2 = gohelper.findChild(self.viewGO, "#go_canget/cookies2")
+	self.goHasget = gohelper.findChild(self.viewGO, "#go_hasget")
+	self.btnClick = gohelper.findChildButtonWithAudio(self.viewGO, "btnClick")
+	self.canvasGroup = gohelper.findChildComponent(self.viewGO, "#go_rewards", gohelper.Type_CanvasGroup)
+	self.rewardList = {}
+	self.hasgetCookiesAnim = gohelper.findChildComponent(self.viewGO, "#go_hasget/cookies/ani", gohelper.Type_Animator)
+	self.hasgetHookAnim = gohelper.findChildComponent(self.viewGO, "#go_hasget/gou/go_hasget", gohelper.Type_Animator)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0.btnClick:AddClickListener(arg_2_0.onClickBtn, arg_2_0)
+function Activity186SignItem:addEvents()
+	self.btnClick:AddClickListener(self.onClickBtn, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0.btnClick:RemoveClickListener()
+function Activity186SignItem:removeEvents()
+	self.btnClick:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function Activity186SignItem:_editableInitView()
 	return
 end
 
-function var_0_0.initActId(arg_5_0, arg_5_1)
-	arg_5_0.act186Id = arg_5_1
+function Activity186SignItem:initActId(actId)
+	self.act186Id = actId
 end
 
-function var_0_0.onClickBtn(arg_6_0)
-	if not arg_6_0._mo then
+function Activity186SignItem:onClickBtn()
+	if not self._mo then
 		return
 	end
 
-	local var_6_0 = Activity186SignModel.instance:getSignStatus(arg_6_0._mo.activityId, arg_6_0.act186Id, arg_6_0._mo.id)
+	local status = Activity186SignModel.instance:getSignStatus(self._mo.activityId, self.act186Id, self._mo.id)
 
-	if var_6_0 == Activity186Enum.SignStatus.Canget then
-		Activity101Rpc.instance:sendGet101BonusRequest(arg_6_0._mo.activityId, arg_6_0._mo.id)
-	elseif var_6_0 == Activity186Enum.SignStatus.None then
+	if status == Activity186Enum.SignStatus.Canget then
+		Activity101Rpc.instance:sendGet101BonusRequest(self._mo.activityId, self._mo.id)
+	elseif status == Activity186Enum.SignStatus.None then
 		GameFacade.showToast(ToastEnum.NorSign)
 	else
 		ViewMgr.instance:openView(ViewName.Activity186GameBiscuitsView, {
-			config = arg_6_0._mo,
-			act186Id = arg_6_0.act186Id
+			config = self._mo,
+			act186Id = self.act186Id
 		})
 	end
 end
 
-function var_0_0.onUpdateMO(arg_7_0, arg_7_1)
-	arg_7_0._mo = arg_7_1
+function Activity186SignItem:onUpdateMO(mo)
+	self._mo = mo
 
-	if not arg_7_1 then
-		gohelper.setActive(arg_7_0.viewGO, false)
+	if not mo then
+		gohelper.setActive(self.viewGO, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_7_0.viewGO, true)
-	arg_7_0:refreshView()
+	gohelper.setActive(self.viewGO, true)
+	self:refreshView()
 end
 
-function var_0_0.refreshView(arg_8_0)
-	local var_8_0 = arg_8_0._mo.id
-	local var_8_1 = ActivityType101Model.instance:getType101LoginCount(arg_8_0._mo.activityId)
+function Activity186SignItem:refreshView()
+	local index = self._mo.id
+	local totalday = ActivityType101Model.instance:getType101LoginCount(self._mo.activityId)
 
-	gohelper.setActive(arg_8_0.goTomorrow, var_8_0 == var_8_1 + 1)
+	gohelper.setActive(self.goTomorrow, index == totalday + 1)
 
-	local var_8_2 = Activity186SignModel.instance:getSignStatus(arg_8_0._mo.activityId, arg_8_0.act186Id, var_8_0)
-	local var_8_3 = arg_8_0.status and arg_8_0.status ~= var_8_2
+	local status = Activity186SignModel.instance:getSignStatus(self._mo.activityId, self.act186Id, index)
+	local isChangeStatus = self.status and self.status ~= status
 
-	gohelper.setActive(arg_8_0.goNormal, var_8_2 == Activity186Enum.SignStatus.None)
-	gohelper.setActive(arg_8_0.goCanget, var_8_2 == Activity186Enum.SignStatus.Canplay or var_8_2 == Activity186Enum.SignStatus.Canget)
-	gohelper.setActive(arg_8_0.goCangetCookies1, var_8_2 == Activity186Enum.SignStatus.Canplay)
-	gohelper.setActive(arg_8_0.goCangetCookies2, var_8_2 == Activity186Enum.SignStatus.Canget)
-	gohelper.setActive(arg_8_0.goHasget, var_8_2 == Activity186Enum.SignStatus.Hasget)
+	gohelper.setActive(self.goNormal, status == Activity186Enum.SignStatus.None)
+	gohelper.setActive(self.goCanget, status == Activity186Enum.SignStatus.Canplay or status == Activity186Enum.SignStatus.Canget)
+	gohelper.setActive(self.goCangetCookies1, status == Activity186Enum.SignStatus.Canplay)
+	gohelper.setActive(self.goCangetCookies2, status == Activity186Enum.SignStatus.Canget)
+	gohelper.setActive(self.goHasget, status == Activity186Enum.SignStatus.Hasget)
 
-	if var_8_2 == Activity186Enum.SignStatus.Hasget then
-		arg_8_0.txtIndex.text = string.format("<color=#6A372C>Day %s</color>", var_8_0)
+	if status == Activity186Enum.SignStatus.Hasget then
+		self.txtIndex.text = string.format("<color=#6A372C>Day %s</color>", index)
 	else
-		arg_8_0.txtIndex.text = string.format("Day %s", var_8_0)
+		self.txtIndex.text = string.format("Day %s", index)
 	end
 
-	arg_8_0.canvasGroup.alpha = var_8_2 == Activity186Enum.SignStatus.Hasget and 0.5 or 1
+	self.canvasGroup.alpha = status == Activity186Enum.SignStatus.Hasget and 0.5 or 1
 
-	arg_8_0:refreshReward(var_8_2)
+	self:refreshReward(status)
 
-	if var_8_2 == Activity186Enum.SignStatus.Hasget then
-		if var_8_3 then
-			arg_8_0.hasgetCookiesAnim:Play("open")
-			arg_8_0.hasgetHookAnim:Play("go_hasget_in")
+	if status == Activity186Enum.SignStatus.Hasget then
+		if isChangeStatus then
+			self.hasgetCookiesAnim:Play("open")
+			self.hasgetHookAnim:Play("go_hasget_in")
 		else
-			arg_8_0.hasgetCookiesAnim:Play("opened")
-			arg_8_0.hasgetHookAnim:Play("go_hasget_idle")
+			self.hasgetCookiesAnim:Play("opened")
+			self.hasgetHookAnim:Play("go_hasget_idle")
 		end
 	end
 
-	arg_8_0.status = var_8_2
+	self.status = status
 end
 
-function var_0_0.refreshReward(arg_9_0, arg_9_1)
-	local var_9_0 = GameUtil.splitString2(arg_9_0._mo.bonus, true)
+function Activity186SignItem:refreshReward(status)
+	local rewards = GameUtil.splitString2(self._mo.bonus, true)
 
-	for iter_9_0 = 1, math.max(#var_9_0, #arg_9_0.rewardList) do
-		arg_9_0:updateRewardItem(arg_9_0:getOrCreateRewardItem(iter_9_0), var_9_0[iter_9_0], arg_9_1)
+	for i = 1, math.max(#rewards, #self.rewardList) do
+		self:updateRewardItem(self:getOrCreateRewardItem(i), rewards[i], status)
 	end
 end
 
-function var_0_0.getOrCreateRewardItem(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0.rewardList[arg_10_1]
+function Activity186SignItem:getOrCreateRewardItem(index)
+	local item = self.rewardList[index]
 
-	if not var_10_0 then
-		local var_10_1 = gohelper.findChild(arg_10_0.viewGO, "#go_rewards/#go_reward" .. arg_10_1)
+	if not item then
+		local go = gohelper.findChild(self.viewGO, "#go_rewards/#go_reward" .. index)
 
-		if not var_10_1 then
+		if not go then
 			return
 		end
 
-		var_10_0 = arg_10_0:getUserDataTb_()
-		var_10_0.go = var_10_1
-		var_10_0.goIcon = gohelper.findChild(var_10_1, "go_icon")
-		arg_10_0.rewardList[arg_10_1] = var_10_0
+		item = self:getUserDataTb_()
+		item.go = go
+		item.goIcon = gohelper.findChild(go, "go_icon")
+		self.rewardList[index] = item
 	end
 
-	return var_10_0
+	return item
 end
 
-function var_0_0.updateRewardItem(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	if not arg_11_1 then
+function Activity186SignItem:updateRewardItem(item, data, status)
+	if not item then
 		return
 	end
 
-	if not arg_11_2 then
-		gohelper.setActive(arg_11_1.go, false)
+	if not data then
+		gohelper.setActive(item.go, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_11_1.go, true)
+	gohelper.setActive(item.go, true)
 
-	if not arg_11_1.itemIcon then
-		arg_11_1.itemIcon = IconMgr.instance:getCommonPropItemIcon(arg_11_1.goIcon)
+	if not item.itemIcon then
+		item.itemIcon = IconMgr.instance:getCommonPropItemIcon(item.goIcon)
 	end
 
-	arg_11_1.itemIcon:setMOValue(arg_11_2[1], arg_11_2[2], arg_11_2[3])
-	arg_11_1.itemIcon:setScale(0.7)
-	arg_11_1.itemIcon:setCountFontSize(46)
-	arg_11_1.itemIcon:setHideLvAndBreakFlag(true)
-	arg_11_1.itemIcon:hideEquipLvAndBreak(true)
+	item.itemIcon:setMOValue(data[1], data[2], data[3])
+	item.itemIcon:setScale(0.7)
+	item.itemIcon:setCountFontSize(46)
+	item.itemIcon:setHideLvAndBreakFlag(true)
+	item.itemIcon:hideEquipLvAndBreak(true)
 
-	local var_11_0 = {
-		actId = arg_11_0._mo.activityId,
-		index = arg_11_0._mo.id,
-		status = arg_11_3,
-		itemCo = arg_11_2,
-		selfitem = arg_11_0
+	local param = {
+		actId = self._mo.activityId,
+		index = self._mo.id,
+		status = status,
+		itemCo = data,
+		selfitem = self
 	}
 
-	arg_11_1.itemIcon:customOnClickCallback(var_0_0.onClickItemIcon, var_11_0)
+	item.itemIcon:customOnClickCallback(Activity186SignItem.onClickItemIcon, param)
 end
 
-function var_0_0.onClickItemIcon(arg_12_0)
-	local var_12_0 = arg_12_0.actId
+function Activity186SignItem.onClickItemIcon(param)
+	local actId = param.actId
 
-	if not ActivityModel.instance:isActOnLine(var_12_0) then
+	if not ActivityModel.instance:isActOnLine(actId) then
 		GameFacade.showToast(ToastEnum.BattlePass)
 
 		return
 	end
 
-	local var_12_1 = arg_12_0.itemCo
+	local itemCo = param.itemCo
 
-	MaterialTipController.instance:showMaterialInfo(var_12_1[1], var_12_1[2])
+	MaterialTipController.instance:showMaterialInfo(itemCo[1], itemCo[2])
 end
 
-function var_0_0.onDestroyView(arg_13_0)
+function Activity186SignItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return Activity186SignItem

@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_turnback_drop", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_turnback_drop.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_turnback_drop", package.seeall)
+
+local lua_turnback_drop = {}
+local fields = {
 	listenerParam = 5,
 	name = 3,
 	jumpId = 6,
@@ -10,15 +12,15 @@ local var_0_1 = {
 	picPath = 7,
 	level = 2
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	name = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_turnback_drop.onLoad(json)
+	lua_turnback_drop.configList, lua_turnback_drop.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_turnback_drop

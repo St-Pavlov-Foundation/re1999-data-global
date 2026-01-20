@@ -1,260 +1,262 @@
-﻿module("modules.logic.explore.map.unit.Explore3DRoleBase", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/unit/Explore3DRoleBase.lua
 
-local var_0_0 = class("Explore3DRoleBase", ExploreBaseMoveUnit)
+module("modules.logic.explore.map.unit.Explore3DRoleBase", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._offsetPos = Vector3(0.5, 0, 0.5)
-	arg_1_0._angle = Vector3(0, 0, 0)
-	arg_1_0._walkDistance = 0
-	arg_1_0.dir = 270
+local Explore3DRoleBase = class("Explore3DRoleBase", ExploreBaseMoveUnit)
+
+function Explore3DRoleBase:onInit()
+	self._offsetPos = Vector3(0.5, 0, 0.5)
+	self._angle = Vector3(0, 0, 0)
+	self._walkDistance = 0
+	self.dir = 270
 end
 
-function var_0_0.isRole(arg_2_0)
+function Explore3DRoleBase:isRole()
 	return true
 end
 
-function var_0_0.initComponents(arg_3_0)
-	arg_3_0:addComp("animComp", ExploreRoleAnimComp)
-	arg_3_0:addComp("animEffectComp", ExploreRoleAnimEffectComp)
-	arg_3_0:addComp("uiComp", ExploreUnitUIComp)
+function Explore3DRoleBase:initComponents()
+	self:addComp("animComp", ExploreRoleAnimComp)
+	self:addComp("animEffectComp", ExploreRoleAnimEffectComp)
+	self:addComp("uiComp", ExploreUnitUIComp)
 end
 
-function var_0_0.playAnim(arg_4_0, arg_4_1)
-	var_0_0.super.playAnim(arg_4_0, arg_4_1)
+function Explore3DRoleBase:playAnim(animName)
+	Explore3DRoleBase.super.playAnim(self, animName)
 
-	arg_4_0._cacheAnimName = arg_4_1
+	self._cacheAnimName = animName
 end
 
-function var_0_0.setBool(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0.animComp:setBool(arg_5_1, arg_5_2)
+function Explore3DRoleBase:setBool(key, value)
+	self.animComp:setBool(key, value)
 end
 
-function var_0_0.setFloat(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_0.animComp:setFloat(arg_6_1, arg_6_2)
+function Explore3DRoleBase:setFloat(key, value)
+	self.animComp:setFloat(key, value)
 end
 
-function var_0_0.setMoveState(arg_7_0, arg_7_1)
-	arg_7_0.animComp:setInteger(ExploreAnimEnum.RoleAnimKey.MoveState, arg_7_1)
+function Explore3DRoleBase:setMoveState(state)
+	self.animComp:setInteger(ExploreAnimEnum.RoleAnimKey.MoveState, state)
 end
 
-function var_0_0.getHeroStatus(arg_8_0)
-	return arg_8_0._curStatus or ExploreAnimEnum.RoleAnimStatus.None
+function Explore3DRoleBase:getHeroStatus()
+	return self._curStatus or ExploreAnimEnum.RoleAnimStatus.None
 end
 
-function var_0_0.setHeroStatus(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	if arg_9_1 == arg_9_0._curStatus and arg_9_1 ~= ExploreAnimEnum.RoleAnimStatus.None then
-		arg_9_0.animEffectComp:setStatus(ExploreAnimEnum.RoleAnimStatus.None)
+function Explore3DRoleBase:setHeroStatus(status, isDelaySetNormal, control)
+	if status == self._curStatus and status ~= ExploreAnimEnum.RoleAnimStatus.None then
+		self.animEffectComp:setStatus(ExploreAnimEnum.RoleAnimStatus.None)
 	end
 
-	arg_9_0._curStatus = arg_9_1
+	self._curStatus = status
 
-	arg_9_0.animEffectComp:setStatus(arg_9_1)
-	TaskDispatcher.cancelTask(arg_9_0.delaySetNormalStatus, arg_9_0)
+	self.animEffectComp:setStatus(status)
+	TaskDispatcher.cancelTask(self.delaySetNormalStatus, self)
 
-	if arg_9_0._statusControl then
+	if self._statusControl then
 		ExploreModel.instance:setHeroControl(true, ExploreEnum.HeroLock.HeroAnim)
 
-		arg_9_0._statusControl = nil
+		self._statusControl = nil
 	end
 
-	local var_9_0
+	local duration
 
-	if arg_9_2 then
-		var_9_0 = ExploreAnimEnum.RoleAnimLen[arg_9_1]
+	if isDelaySetNormal then
+		duration = ExploreAnimEnum.RoleAnimLen[status]
 	end
 
-	if var_9_0 and var_9_0 > 0 then
-		TaskDispatcher.runDelay(arg_9_0.delaySetNormalStatus, arg_9_0, var_9_0)
+	if duration and duration > 0 then
+		TaskDispatcher.runDelay(self.delaySetNormalStatus, self, duration)
 	end
 
-	arg_9_0._statusControl = arg_9_3
+	self._statusControl = control
 
-	if arg_9_3 then
+	if control then
 		PopupController.instance:setPause("ExploreHeroLock", true)
 		ExploreModel.instance:setHeroControl(false, ExploreEnum.HeroLock.HeroAnim)
 	end
 
-	arg_9_0.animComp:setInteger(ExploreAnimEnum.RoleAnimKey.Status, arg_9_1)
+	self.animComp:setInteger(ExploreAnimEnum.RoleAnimKey.Status, status)
 end
 
-function var_0_0.delaySetNormalStatus(arg_10_0)
-	arg_10_0._curStatus = ExploreAnimEnum.RoleAnimStatus.None
+function Explore3DRoleBase:delaySetNormalStatus()
+	self._curStatus = ExploreAnimEnum.RoleAnimStatus.None
 
-	arg_10_0.animEffectComp:setStatus(ExploreAnimEnum.RoleAnimStatus.None)
-	arg_10_0.animComp:setInteger(ExploreAnimEnum.RoleAnimKey.Status, ExploreAnimEnum.RoleAnimStatus.None)
+	self.animEffectComp:setStatus(ExploreAnimEnum.RoleAnimStatus.None)
+	self.animComp:setInteger(ExploreAnimEnum.RoleAnimKey.Status, ExploreAnimEnum.RoleAnimStatus.None)
 
-	if arg_10_0._statusControl then
+	if self._statusControl then
 		PopupController.instance:setPause("ExploreHeroLock", false)
 		ExploreModel.instance:setHeroControl(true, ExploreEnum.HeroLock.HeroAnim)
 
-		arg_10_0._statusControl = nil
+		self._statusControl = nil
 	end
 end
 
-function var_0_0.moveSpeed(arg_11_0)
-	local var_11_0 = ExploreAnimEnum.RoleSpeed.run
+function Explore3DRoleBase:moveSpeed()
+	local speed = ExploreAnimEnum.RoleSpeed.run
 
 	if ExploreController.instance:getMap():getNowStatus() == ExploreEnum.MapStatus.MoveUnit then
-		var_11_0 = ExploreAnimEnum.RoleSpeed.walk
+		speed = ExploreAnimEnum.RoleSpeed.walk
 	end
 
-	arg_11_0:setMoveSpeed(var_11_0)
+	self:setMoveSpeed(speed)
 
-	return var_11_0
+	return speed
 end
 
-function var_0_0.setMoveSpeed(arg_12_0, arg_12_1)
-	local var_12_0 = ExploreAnimEnum.RoleMoveState.Idle
+function Explore3DRoleBase:setMoveSpeed(v)
+	local moveState = ExploreAnimEnum.RoleMoveState.Idle
 
-	if arg_12_1 == 0 then
-		var_12_0 = ExploreAnimEnum.RoleMoveState.Idle
+	if v == 0 then
+		moveState = ExploreAnimEnum.RoleMoveState.Idle
 	else
-		var_12_0 = ExploreAnimEnum.RoleMoveState.Move
+		moveState = ExploreAnimEnum.RoleMoveState.Move
 	end
 
-	if var_12_0 == ExploreAnimEnum.RoleMoveState.Move or not arg_12_0._tarUnitMO or arg_12_0._tarUnitMO.type ~= ExploreEnum.ItemType.PipePot then
-		TaskDispatcher.cancelTask(arg_12_0._delaySetIdle, arg_12_0)
-		arg_12_0:setMoveState(var_12_0)
+	if moveState == ExploreAnimEnum.RoleMoveState.Move or not self._tarUnitMO or self._tarUnitMO.type ~= ExploreEnum.ItemType.PipePot then
+		TaskDispatcher.cancelTask(self._delaySetIdle, self)
+		self:setMoveState(moveState)
 	else
-		TaskDispatcher.runDelay(arg_12_0._delaySetIdle, arg_12_0, 0.2)
+		TaskDispatcher.runDelay(self._delaySetIdle, self, 0.2)
 	end
 end
 
-function var_0_0._delaySetIdle(arg_13_0)
-	arg_13_0:setMoveState(ExploreAnimEnum.RoleMoveState.Idle)
+function Explore3DRoleBase:_delaySetIdle()
+	self:setMoveState(ExploreAnimEnum.RoleMoveState.Idle)
 end
 
-function var_0_0._endMove(arg_14_0, ...)
-	arg_14_0:setMoveSpeed(0)
-	var_0_0.super._endMove(arg_14_0, ...)
+function Explore3DRoleBase:_endMove(...)
+	self:setMoveSpeed(0)
+	Explore3DRoleBase.super._endMove(self, ...)
 end
 
-function var_0_0.stopMoving(arg_15_0, arg_15_1)
-	if arg_15_1 then
-		arg_15_0:setMoveSpeed(0)
+function Explore3DRoleBase:stopMoving(force)
+	if force then
+		self:setMoveSpeed(0)
 	end
 
-	return var_0_0.super.stopMoving(arg_15_0, arg_15_1)
+	return Explore3DRoleBase.super.stopMoving(self, force)
 end
 
-function var_0_0.onDirChange(arg_16_0, arg_16_1)
-	arg_16_0:setRotate(0, arg_16_0.dir, 0)
+function Explore3DRoleBase:onDirChange(tureDir)
+	self:setRotate(0, self.dir, 0)
 end
 
-function var_0_0.onCheckDir(arg_17_0, arg_17_1, arg_17_2)
-	if not ExploreHelper.isPosEqual(arg_17_1, arg_17_2) then
-		if arg_17_2.x == arg_17_1.x then
-			if arg_17_2.y > arg_17_1.y then
-				arg_17_0.dir = 0
+function Explore3DRoleBase:onCheckDir(oldTilemapPos, newTilemapPos)
+	if not ExploreHelper.isPosEqual(oldTilemapPos, newTilemapPos) then
+		if newTilemapPos.x == oldTilemapPos.x then
+			if newTilemapPos.y > oldTilemapPos.y then
+				self.dir = 0
 			else
-				arg_17_0.dir = 180
+				self.dir = 180
 			end
-		elseif arg_17_2.x < arg_17_1.x then
-			arg_17_0.dir = 270
+		elseif newTilemapPos.x < oldTilemapPos.x then
+			self.dir = 270
 		else
-			arg_17_0.dir = 90
+			self.dir = 90
 		end
 	end
 
-	arg_17_0.dir = arg_17_0._lockDir or arg_17_0.dir
+	self.dir = self._lockDir or self.dir
 
-	arg_17_0:onDirChange()
+	self:onDirChange()
 end
 
-function var_0_0.onCheckDirByPos(arg_18_0, arg_18_1, arg_18_2)
-	if arg_18_1:Equals(arg_18_2) then
+function Explore3DRoleBase:onCheckDirByPos(oldPos, newPos)
+	if oldPos:Equals(newPos) then
 		return
 	end
 
-	local var_18_0 = arg_18_2.x - arg_18_1.x
-	local var_18_1 = arg_18_2.z - arg_18_1.z
-	local var_18_2 = math.deg(math.atan2(var_18_0, var_18_1))
+	local x = newPos.x - oldPos.x
+	local z = newPos.z - oldPos.z
+	local angle = math.deg(math.atan2(x, z))
 
-	var_18_2 = arg_18_0._lockDir or var_18_2
+	angle = self._lockDir or angle
 
-	arg_18_0:setRotate(0, var_18_2, 0)
+	self:setRotate(0, angle, 0)
 end
 
-function var_0_0._onSpineLoaded(arg_19_0, arg_19_1)
-	arg_19_0:playAnim(arg_19_0._cacheAnimName or ExploreAnimEnum.RoleAnimName.idle)
+function Explore3DRoleBase:_onSpineLoaded(spine)
+	self:playAnim(self._cacheAnimName or ExploreAnimEnum.RoleAnimName.idle)
 
-	if arg_19_0._callback then
-		if arg_19_0._callbackObj then
-			arg_19_0._callback(arg_19_0._callbackObj, arg_19_1, arg_19_0)
+	if self._callback then
+		if self._callbackObj then
+			self._callback(self._callbackObj, spine, self)
 		else
-			arg_19_0._callback(arg_19_1, arg_19_0)
+			self._callback(spine, self)
 		end
 	end
 
-	arg_19_0:setRotate(arg_19_0._angle.x, arg_19_0._angle.y, arg_19_0._angle.z)
+	self:setRotate(self._angle.x, self._angle.y, self._angle.z)
 
-	arg_19_0._callback = nil
-	arg_19_0._callbackObj = nil
+	self._callback = nil
+	self._callbackObj = nil
 end
 
-function var_0_0.setRotate(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
-	arg_20_0._angle.x = arg_20_1
-	arg_20_0._angle.y = arg_20_2
-	arg_20_0._angle.z = arg_20_3
+function Explore3DRoleBase:setRotate(x, y, z)
+	self._angle.x = x
+	self._angle.y = y
+	self._angle.z = z
 
-	if arg_20_0._displayTr then
-		transformhelper.setLocalRotation(arg_20_0._displayTr, arg_20_0._angle.x, arg_20_0._angle.y, arg_20_0._angle.z)
+	if self._displayTr then
+		transformhelper.setLocalRotation(self._displayTr, self._angle.x, self._angle.y, self._angle.z)
 	end
 end
 
-function var_0_0.setTrOffset(arg_21_0, arg_21_1, arg_21_2, arg_21_3, arg_21_4, arg_21_5, arg_21_6)
-	if not arg_21_0._displayTr then
+function Explore3DRoleBase:setTrOffset(dir, finalPos, time, callback, callObj, easeType)
+	if not self._displayTr then
 		return
 	end
 
-	if arg_21_1 then
-		arg_21_0:setRotate(0, arg_21_1, 0)
+	if dir then
+		self:setRotate(0, dir, 0)
 	end
 
-	if arg_21_0._tweenMoveId then
-		ZProj.TweenHelper.KillById(arg_21_0._tweenMoveId)
+	if self._tweenMoveId then
+		ZProj.TweenHelper.KillById(self._tweenMoveId)
 	end
 
-	TaskDispatcher.runRepeat(arg_21_0.onTweenMoving, arg_21_0, 0, -1)
+	TaskDispatcher.runRepeat(self.onTweenMoving, self, 0, -1)
 
-	arg_21_0._tweenMoveEndCb = arg_21_4
-	arg_21_0._tweenMoveEndCbObj = arg_21_5
-	arg_21_0._tweenMoveId = ZProj.TweenHelper.DOMove(arg_21_0._displayTr, arg_21_2.x, arg_21_2.y, arg_21_2.z, arg_21_3 or 0.3, arg_21_0.onTweenMoveEnd, arg_21_0, nil, arg_21_6 or EaseType.Linear)
+	self._tweenMoveEndCb = callback
+	self._tweenMoveEndCbObj = callObj
+	self._tweenMoveId = ZProj.TweenHelper.DOMove(self._displayTr, finalPos.x, finalPos.y, finalPos.z, time or 0.3, self.onTweenMoveEnd, self, nil, easeType or EaseType.Linear)
 end
 
-function var_0_0.onTweenMoving(arg_22_0)
-	ExploreController.instance:dispatchEvent(ExploreEvent.HeroTweenDisTr, arg_22_0._displayTr.position)
+function Explore3DRoleBase:onTweenMoving()
+	ExploreController.instance:dispatchEvent(ExploreEvent.HeroTweenDisTr, self._displayTr.position)
 end
 
-function var_0_0.onTweenMoveEnd(arg_23_0)
-	arg_23_0._tweenMoveId = nil
+function Explore3DRoleBase:onTweenMoveEnd()
+	self._tweenMoveId = nil
 
-	TaskDispatcher.cancelTask(arg_23_0.onTweenMoving, arg_23_0)
+	TaskDispatcher.cancelTask(self.onTweenMoving, self)
 
-	local var_23_0 = arg_23_0._tweenMoveEndCb
-	local var_23_1 = arg_23_0._tweenMoveEndCbObj
+	local cb = self._tweenMoveEndCb
+	local obj = self._tweenMoveEndCbObj
 
-	arg_23_0._tweenMoveEndCb = nil
-	arg_23_0._tweenMoveEndCbObj = nil
+	self._tweenMoveEndCb = nil
+	self._tweenMoveEndCbObj = nil
 
-	if var_23_0 then
-		var_23_0(var_23_1)
+	if cb then
+		cb(obj)
 	end
 end
 
-function var_0_0.onDestroy(arg_24_0)
+function Explore3DRoleBase:onDestroy()
 	PopupController.instance:setPause("ExploreHeroLock", false)
-	TaskDispatcher.cancelTask(arg_24_0._delaySetIdle, arg_24_0)
-	TaskDispatcher.cancelTask(arg_24_0.onTweenMoving, arg_24_0)
+	TaskDispatcher.cancelTask(self._delaySetIdle, self)
+	TaskDispatcher.cancelTask(self.onTweenMoving, self)
 
-	if arg_24_0._tweenMoveId then
-		ZProj.TweenHelper.KillById(arg_24_0._tweenMoveId)
+	if self._tweenMoveId then
+		ZProj.TweenHelper.KillById(self._tweenMoveId)
 
-		arg_24_0._tweenMoveId = nil
+		self._tweenMoveId = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_24_0.delaySetNormalStatus, arg_24_0)
-	var_0_0.super.onDestroy(arg_24_0)
+	TaskDispatcher.cancelTask(self.delaySetNormalStatus, self)
+	Explore3DRoleBase.super.onDestroy(self)
 end
 
-return var_0_0
+return Explore3DRoleBase

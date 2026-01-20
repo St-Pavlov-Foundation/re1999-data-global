@@ -1,141 +1,151 @@
-﻿module("modules.logic.herogrouppreset.model.HeroGroupPresetQuickEditListModel", package.seeall)
+﻿-- chunkname: @modules/logic/herogrouppreset/model/HeroGroupPresetQuickEditListModel.lua
 
-local var_0_0 = class("HeroGroupPresetQuickEditListModel", ListScrollModel)
+module("modules.logic.herogrouppreset.model.HeroGroupPresetQuickEditListModel", package.seeall)
 
-function var_0_0.copyQuickEditCardList(arg_1_0)
-	local var_1_0
+local HeroGroupPresetQuickEditListModel = class("HeroGroupPresetQuickEditListModel", ListScrollModel)
+
+function HeroGroupPresetQuickEditListModel:copyQuickEditCardList()
+	local moList
 
 	if HeroGroupTrialModel.instance:isOnlyUseTrial() then
-		var_1_0 = {}
+		moList = {}
 	else
-		var_1_0 = CharacterBackpackCardListModel.instance:getCharacterCardList()
+		moList = CharacterBackpackCardListModel.instance:getCharacterCardList()
 	end
 
-	local var_1_1 = {}
-	local var_1_2 = {}
+	local newMOList = {}
+	local repeatHero = {}
 
-	arg_1_0._inTeamHeroUidMap = {}
-	arg_1_0._inTeamHeroUidList = {}
-	arg_1_0._originalHeroUidList = {}
-	arg_1_0._selectUid = nil
+	self._inTeamHeroUidMap = {}
+	self._inTeamHeroUidList = {}
+	self._originalHeroUidList = {}
+	self._selectUid = nil
 
-	local var_1_3 = HeroGroupPresetSingleGroupModel.instance:getList()
+	local alreadyList = HeroGroupPresetSingleGroupModel.instance:getList()
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_3) do
-		local var_1_4 = HeroGroupPresetModel.instance:isPositionOpen(iter_1_0)
-		local var_1_5 = iter_1_1.heroUid
+	for pos, heroSingleGroupMO in ipairs(alreadyList) do
+		local posOpen = HeroGroupPresetModel.instance:isPositionOpen(pos)
+		local heroUid = heroSingleGroupMO.heroUid
 
-		if not HeroGroupPresetController.instance:useTrial() and tonumber(var_1_5) < 0 then
-			var_1_5 = "0"
+		if not HeroGroupPresetController.instance:useTrial() and tonumber(heroUid) < 0 then
+			heroUid = "0"
 		end
 
-		if tonumber(var_1_5) > 0 and not var_1_2[var_1_5] then
-			table.insert(var_1_1, HeroModel.instance:getById(var_1_5))
+		if tonumber(heroUid) > 0 and not repeatHero[heroUid] then
+			table.insert(newMOList, HeroModel.instance:getById(heroUid))
 
-			if var_1_4 then
-				arg_1_0._inTeamHeroUidMap[var_1_5] = 1
+			if posOpen then
+				self._inTeamHeroUidMap[heroUid] = 1
 			end
 
-			var_1_2[var_1_5] = true
-		elseif HeroGroupPresetSingleGroupModel.instance:getByIndex(iter_1_0).trial and HeroGroupPresetController.instance:useTrial() then
-			table.insert(var_1_1, HeroGroupTrialModel.instance:getById(var_1_5))
+			repeatHero[heroUid] = true
+		else
+			local singleGroupMo = HeroGroupPresetSingleGroupModel.instance:getByIndex(pos)
 
-			if var_1_4 then
-				arg_1_0._inTeamHeroUidMap[var_1_5] = 1
+			if singleGroupMo.trial and HeroGroupPresetController.instance:useTrial() then
+				table.insert(newMOList, HeroGroupTrialModel.instance:getById(heroUid))
+
+				if posOpen then
+					self._inTeamHeroUidMap[heroUid] = 1
+				end
+
+				repeatHero[heroUid] = true
 			end
-
-			var_1_2[var_1_5] = true
 		end
 
-		if var_1_4 then
-			table.insert(arg_1_0._inTeamHeroUidList, var_1_5)
-			table.insert(arg_1_0._originalHeroUidList, var_1_5)
+		if posOpen then
+			table.insert(self._inTeamHeroUidList, heroUid)
+			table.insert(self._originalHeroUidList, heroUid)
 		end
 	end
 
 	if HeroGroupPresetController.instance:useTrial() then
-		local var_1_6 = HeroGroupTrialModel.instance:getFilterList()
+		local trialList = HeroGroupTrialModel.instance:getFilterList()
 
-		for iter_1_2, iter_1_3 in ipairs(var_1_6) do
-			if not var_1_2[iter_1_3.uid] then
-				table.insert(var_1_1, iter_1_3)
+		for i, heroMo in ipairs(trialList) do
+			if not repeatHero[heroMo.uid] then
+				table.insert(newMOList, heroMo)
 			end
 		end
 	end
 
-	local var_1_7 = arg_1_0.isTowerBattle
-	local var_1_8 = arg_1_0.isWeekWalk_2
-	local var_1_9 = {}
+	local isTowerBattle = self.isTowerBattle
+	local isWeekWalk_2 = self.isWeekWalk_2
+	local deathList = {}
 
-	if var_1_7 then
-		for iter_1_4 = #var_1_1, 1, -1 do
-			if TowerModel.instance:isHeroBan(var_1_1[iter_1_4].heroId) then
-				table.insert(var_1_9, var_1_1[iter_1_4])
-				table.remove(var_1_1, iter_1_4)
+	if isTowerBattle then
+		for i = #newMOList, 1, -1 do
+			if TowerModel.instance:isHeroBan(newMOList[i].heroId) then
+				table.insert(deathList, newMOList[i])
+				table.remove(newMOList, i)
 			end
 		end
 	end
 
-	for iter_1_5, iter_1_6 in ipairs(var_1_0) do
-		if not var_1_2[iter_1_6.uid] then
-			var_1_2[iter_1_6.uid] = true
+	for i, mo in ipairs(moList) do
+		if not repeatHero[mo.uid] then
+			repeatHero[mo.uid] = true
 
-			if arg_1_0.adventure then
-				if WeekWalkModel.instance:getCurMapHeroCd(iter_1_6.heroId) > 0 then
-					table.insert(var_1_9, iter_1_6)
+			if self.adventure then
+				local cd = WeekWalkModel.instance:getCurMapHeroCd(mo.heroId)
+
+				if cd > 0 then
+					table.insert(deathList, mo)
 				else
-					table.insert(var_1_1, iter_1_6)
+					table.insert(newMOList, mo)
 				end
-			elseif var_1_8 then
-				if WeekWalk_2Model.instance:getCurMapHeroCd(iter_1_6.heroId) > 0 then
-					table.insert(var_1_9, iter_1_6)
+			elseif isWeekWalk_2 then
+				local cd = WeekWalk_2Model.instance:getCurMapHeroCd(mo.heroId)
+
+				if cd > 0 then
+					table.insert(deathList, mo)
 				else
-					table.insert(var_1_1, iter_1_6)
+					table.insert(newMOList, mo)
 				end
-			elseif var_1_7 then
-				if TowerModel.instance:isHeroBan(iter_1_6.heroId) then
-					table.insert(var_1_9, iter_1_6)
+			elseif isTowerBattle then
+				if TowerModel.instance:isHeroBan(mo.heroId) then
+					table.insert(deathList, mo)
 				else
-					table.insert(var_1_1, iter_1_6)
+					table.insert(newMOList, mo)
 				end
 			else
-				table.insert(var_1_1, iter_1_6)
+				table.insert(newMOList, mo)
 			end
 		end
 	end
 
-	if arg_1_0.adventure or var_1_7 or var_1_8 then
-		tabletool.addValues(var_1_1, var_1_9)
+	if self.adventure or isTowerBattle or isWeekWalk_2 then
+		tabletool.addValues(newMOList, deathList)
 	end
 
-	arg_1_0:setList(var_1_1)
+	self:setList(newMOList)
 end
 
-function var_0_0.keepSelect(arg_2_0, arg_2_1)
-	arg_2_0._selectIndex = arg_2_1
+function HeroGroupPresetQuickEditListModel:keepSelect(selectIndex)
+	self._selectIndex = selectIndex
 
-	local var_2_0 = arg_2_0:getList()
+	local list = self:getList()
 
-	if #arg_2_0._scrollViews > 0 then
-		for iter_2_0, iter_2_1 in ipairs(arg_2_0._scrollViews) do
-			iter_2_1:selectCell(arg_2_1, true)
+	if #self._scrollViews > 0 then
+		for _, view in ipairs(self._scrollViews) do
+			view:selectCell(selectIndex, true)
 		end
 
-		if var_2_0[arg_2_1] then
-			return var_2_0[arg_2_1]
+		if list[selectIndex] then
+			return list[selectIndex]
 		end
 	end
 end
 
-function var_0_0.isInTeamHero(arg_3_0, arg_3_1)
-	return arg_3_0._inTeamHeroUidMap and arg_3_0._inTeamHeroUidMap[arg_3_1]
+function HeroGroupPresetQuickEditListModel:isInTeamHero(uid)
+	return self._inTeamHeroUidMap and self._inTeamHeroUidMap[uid]
 end
 
-function var_0_0.getHeroTeamPos(arg_4_0, arg_4_1)
-	if arg_4_0._inTeamHeroUidList then
-		for iter_4_0, iter_4_1 in pairs(arg_4_0._inTeamHeroUidList) do
-			if iter_4_1 == arg_4_1 then
-				return iter_4_0
+function HeroGroupPresetQuickEditListModel:getHeroTeamPos(uid)
+	if self._inTeamHeroUidList then
+		for index, heroUid in pairs(self._inTeamHeroUidList) do
+			if heroUid == uid then
+				return index
 			end
 		end
 	end
@@ -143,59 +153,59 @@ function var_0_0.getHeroTeamPos(arg_4_0, arg_4_1)
 	return 0
 end
 
-function var_0_0.selectHero(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0:getHeroTeamPos(arg_5_1)
+function HeroGroupPresetQuickEditListModel:selectHero(uid)
+	local index = self:getHeroTeamPos(uid)
 
-	if var_5_0 ~= 0 then
-		arg_5_0._inTeamHeroUidList[var_5_0] = "0"
-		arg_5_0._inTeamHeroUidMap[arg_5_1] = nil
+	if index ~= 0 then
+		self._inTeamHeroUidList[index] = "0"
+		self._inTeamHeroUidMap[uid] = nil
 
-		arg_5_0:onModelUpdate()
+		self:onModelUpdate()
 
-		arg_5_0._selectUid = nil
+		self._selectUid = nil
 
 		return true
 	else
-		if arg_5_0:isTeamFull() then
+		if self:isTeamFull() then
 			return false
 		end
 
-		local var_5_1 = 0
+		local nextIndex = 0
 
-		for iter_5_0 = 1, #arg_5_0._inTeamHeroUidList do
-			local var_5_2 = arg_5_0._inTeamHeroUidList[iter_5_0]
+		for i = 1, #self._inTeamHeroUidList do
+			local heroUid = self._inTeamHeroUidList[i]
 
-			if var_5_2 == 0 or var_5_2 == "0" then
-				arg_5_0._inTeamHeroUidList[iter_5_0] = arg_5_1
-				arg_5_0._inTeamHeroUidMap[arg_5_1] = 1
+			if heroUid == 0 or heroUid == "0" then
+				self._inTeamHeroUidList[i] = uid
+				self._inTeamHeroUidMap[uid] = 1
 
-				arg_5_0:onModelUpdate()
+				self:onModelUpdate()
 
 				return true
 			end
 		end
 
-		arg_5_0._selectUid = arg_5_1
+		self._selectUid = uid
 	end
 
 	return false
 end
 
-function var_0_0.isRepeatHero(arg_6_0, arg_6_1, arg_6_2)
-	if not arg_6_0._inTeamHeroUidMap then
+function HeroGroupPresetQuickEditListModel:isRepeatHero(heroId, uid)
+	if not self._inTeamHeroUidMap then
 		return false
 	end
 
-	for iter_6_0 in pairs(arg_6_0._inTeamHeroUidMap) do
-		local var_6_0 = arg_6_0:getById(iter_6_0)
+	for inTeamUid in pairs(self._inTeamHeroUidMap) do
+		local mo = self:getById(inTeamUid)
 
-		if not var_6_0 then
-			logError("heroId:" .. arg_6_1 .. ", " .. "uid:" .. arg_6_2 .. "数据为空")
+		if not mo then
+			logError("heroId:" .. heroId .. ", " .. "uid:" .. uid .. "数据为空")
 
 			return false
 		end
 
-		if var_6_0.heroId == arg_6_1 and arg_6_2 ~= var_6_0.uid then
+		if mo.heroId == heroId and uid ~= mo.uid then
 			return true
 		end
 	end
@@ -203,41 +213,43 @@ function var_0_0.isRepeatHero(arg_6_0, arg_6_1, arg_6_2)
 	return false
 end
 
-function var_0_0.isTrialLimit(arg_7_0)
-	if not arg_7_0._inTeamHeroUidMap then
+function HeroGroupPresetQuickEditListModel:isTrialLimit()
+	if not self._inTeamHeroUidMap then
 		return false
 	end
 
-	local var_7_0 = 0
+	local curNum = 0
 
-	for iter_7_0 in pairs(arg_7_0._inTeamHeroUidMap) do
-		if arg_7_0:getById(iter_7_0):isTrial() then
-			var_7_0 = var_7_0 + 1
+	for inTeamUid in pairs(self._inTeamHeroUidMap) do
+		local mo = self:getById(inTeamUid)
+
+		if mo:isTrial() then
+			curNum = curNum + 1
 		end
 	end
 
-	return var_7_0 >= HeroGroupTrialModel.instance:getLimitNum()
+	return curNum >= HeroGroupTrialModel.instance:getLimitNum()
 end
 
-function var_0_0.inInTeam(arg_8_0, arg_8_1)
-	if not arg_8_0._inTeamHeroUidMap then
+function HeroGroupPresetQuickEditListModel:inInTeam(uid)
+	if not self._inTeamHeroUidMap then
 		return false
 	end
 
-	return arg_8_0._inTeamHeroUidMap[arg_8_1] and true or false
+	return self._inTeamHeroUidMap[uid] and true or false
 end
 
-function var_0_0.getHeroUids(arg_9_0)
-	return arg_9_0._inTeamHeroUidList
+function HeroGroupPresetQuickEditListModel:getHeroUids()
+	return self._inTeamHeroUidList
 end
 
-function var_0_0.getHeroUidByPos(arg_10_0, arg_10_1)
-	return arg_10_0._inTeamHeroUidList[arg_10_1]
+function HeroGroupPresetQuickEditListModel:getHeroUidByPos(pos)
+	return self._inTeamHeroUidList[pos]
 end
 
-function var_0_0.getIsDirty(arg_11_0)
-	for iter_11_0 = 1, #arg_11_0._inTeamHeroUidList do
-		if arg_11_0._inTeamHeroUidList[iter_11_0] ~= arg_11_0._originalHeroUidList[iter_11_0] then
+function HeroGroupPresetQuickEditListModel:getIsDirty()
+	for i = 1, #self._inTeamHeroUidList do
+		if self._inTeamHeroUidList[i] ~= self._originalHeroUidList[i] then
 			return true
 		end
 	end
@@ -245,24 +257,24 @@ function var_0_0.getIsDirty(arg_11_0)
 	return false
 end
 
-function var_0_0.cancelAllSelected(arg_12_0)
-	if arg_12_0._scrollViews then
-		for iter_12_0, iter_12_1 in ipairs(arg_12_0._scrollViews) do
-			local var_12_0 = iter_12_1:getFirstSelect()
-			local var_12_1 = arg_12_0:getIndex(var_12_0)
+function HeroGroupPresetQuickEditListModel:cancelAllSelected()
+	if self._scrollViews then
+		for _, view in ipairs(self._scrollViews) do
+			local mo = view:getFirstSelect()
+			local index = self:getIndex(mo)
 
-			iter_12_1:selectCell(var_12_1, false)
+			view:selectCell(index, false)
 		end
 	end
 end
 
-function var_0_0.isTeamFull(arg_13_0)
-	local var_13_0 = HeroGroupPresetModel.instance:getBattleRoleNum() or 0
+function HeroGroupPresetQuickEditListModel:isTeamFull()
+	local limitRole = HeroGroupPresetModel.instance:getBattleRoleNum() or 0
 
-	for iter_13_0 = 1, math.min(var_13_0, #arg_13_0._inTeamHeroUidList) do
-		local var_13_1 = HeroGroupPresetModel.instance:isPositionOpen(iter_13_0)
+	for i = 1, math.min(limitRole, #self._inTeamHeroUidList) do
+		local posOpen = HeroGroupPresetModel.instance:isPositionOpen(i)
 
-		if arg_13_0._inTeamHeroUidList[iter_13_0] == "0" and var_13_1 then
+		if self._inTeamHeroUidList[i] == "0" and posOpen then
 			return false
 		end
 	end
@@ -270,63 +282,67 @@ function var_0_0.isTeamFull(arg_13_0)
 	return true
 end
 
-function var_0_0.checkHeroIsError(arg_14_0, arg_14_1)
-	if not arg_14_1 or tonumber(arg_14_1) < 0 then
+function HeroGroupPresetQuickEditListModel:checkHeroIsError(uid)
+	if not uid or tonumber(uid) < 0 then
 		return
 	end
 
-	local var_14_0 = HeroModel.instance:getById(arg_14_1)
+	local mo = HeroModel.instance:getById(uid)
 
-	if not var_14_0 then
+	if not mo then
 		return
 	end
 
-	if arg_14_0.adventure then
-		if WeekWalkModel.instance:getCurMapHeroCd(var_14_0.heroId) > 0 then
+	if self.adventure then
+		local cd = WeekWalkModel.instance:getCurMapHeroCd(mo.heroId)
+
+		if cd > 0 then
 			return true
 		end
-	elseif arg_14_0.isWeekWalk_2 then
-		if WeekWalk_2Model.instance:getCurMapHeroCd(var_14_0.heroId) > 0 then
+	elseif self.isWeekWalk_2 then
+		local cd = WeekWalk_2Model.instance:getCurMapHeroCd(mo.heroId)
+
+		if cd > 0 then
 			return true
 		end
-	elseif arg_14_0.isTowerBattle and TowerModel.instance:isHeroBan(var_14_0.heroId) then
+	elseif self.isTowerBattle and TowerModel.instance:isHeroBan(mo.heroId) then
 		return true
 	end
 end
 
-function var_0_0.cancelAllErrorSelected(arg_15_0)
-	local var_15_0 = false
+function HeroGroupPresetQuickEditListModel:cancelAllErrorSelected()
+	local isError = false
 
-	for iter_15_0, iter_15_1 in pairs(arg_15_0._inTeamHeroUidList) do
-		if arg_15_0:checkHeroIsError(iter_15_1) then
-			var_15_0 = true
+	for k, v in pairs(self._inTeamHeroUidList) do
+		if self:checkHeroIsError(v) then
+			isError = true
 
 			break
 		end
 	end
 
-	if var_15_0 then
-		arg_15_0._inTeamHeroUidList = {}
+	if isError then
+		self._inTeamHeroUidList = {}
 	end
 end
 
-function var_0_0.setParam(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
-	arg_16_0.adventure = arg_16_1
-	arg_16_0.isTowerBattle = arg_16_2
-	arg_16_0._groupType = arg_16_3
-	arg_16_0.isWeekWalk_2 = arg_16_3 == HeroGroupEnum.GroupType.WeekWalk_2
+function HeroGroupPresetQuickEditListModel:setParam(adventure, isTowerBattle, groupType)
+	self.adventure = adventure
+	self.isTowerBattle = isTowerBattle
+	self._groupType = groupType
+	self.isWeekWalk_2 = groupType == HeroGroupEnum.GroupType.WeekWalk_2
 end
 
-function var_0_0.clear(arg_17_0)
-	arg_17_0._inTeamHeroUidMap = nil
-	arg_17_0._inTeamHeroUidList = nil
-	arg_17_0._originalHeroUidList = nil
-	arg_17_0._selectIndex = nil
-	arg_17_0._selectUid = nil
+function HeroGroupPresetQuickEditListModel:clear()
+	self._inTeamHeroUidMap = nil
+	self._inTeamHeroUidList = nil
+	self._originalHeroUidList = nil
+	self._selectIndex = nil
+	self._selectUid = nil
 
-	var_0_0.super.clear(arg_17_0)
+	HeroGroupPresetQuickEditListModel.super.clear(self)
 end
 
-var_0_0.instance = var_0_0.New()
+HeroGroupPresetQuickEditListModel.instance = HeroGroupPresetQuickEditListModel.New()
 
-return var_0_0
+return HeroGroupPresetQuickEditListModel

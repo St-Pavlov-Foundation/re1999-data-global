@@ -1,93 +1,95 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.view.Activity114MeetView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/view/Activity114MeetView.lua
 
-local var_0_0 = class("Activity114MeetView", BaseView)
+module("modules.logic.versionactivity1_2.jiexika.view.Activity114MeetView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._itemParents = gohelper.findChild(arg_1_0.viewGO, "root/items")
-	arg_1_0._btnleft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_left")
-	arg_1_0._btnright = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_right")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_close")
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._simagehuimianpu1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/bg/#simage_huimianpu1")
-	arg_1_0._simagehuimianpu3 = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/bg/#simage_huimianpu3")
-	arg_1_0._simagehuimianpu4 = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/bg/#simage_huimianpu4")
+local Activity114MeetView = class("Activity114MeetView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Activity114MeetView:onInitView()
+	self._itemParents = gohelper.findChild(self.viewGO, "root/items")
+	self._btnleft = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_left")
+	self._btnright = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_right")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_close")
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._simagehuimianpu1 = gohelper.findChildSingleImage(self.viewGO, "root/bg/#simage_huimianpu1")
+	self._simagehuimianpu3 = gohelper.findChildSingleImage(self.viewGO, "root/bg/#simage_huimianpu3")
+	self._simagehuimianpu4 = gohelper.findChildSingleImage(self.viewGO, "root/bg/#simage_huimianpu4")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnleft:AddClickListener(arg_2_0._btnleftOnClick, arg_2_0)
-	arg_2_0._btnright:AddClickListener(arg_2_0._btnrightOnClick, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function Activity114MeetView:addEvents()
+	self._btnleft:AddClickListener(self._btnleftOnClick, self)
+	self._btnright:AddClickListener(self._btnrightOnClick, self)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnleft:RemoveClickListener()
-	arg_3_0._btnright:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
+function Activity114MeetView:removeEvents()
+	self._btnleft:RemoveClickListener()
+	self._btnright:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btnleftOnClick(arg_4_0)
-	arg_4_0:updatePage(arg_4_0.curPage - 1)
+function Activity114MeetView:_btnleftOnClick()
+	self:updatePage(self.curPage - 1)
 end
 
-function var_0_0._btnrightOnClick(arg_5_0)
-	arg_5_0:updatePage(arg_5_0.curPage + 1)
+function Activity114MeetView:_btnrightOnClick()
+	self:updatePage(self.curPage + 1)
 end
 
-function var_0_0._btncloseOnClick(arg_6_0)
-	arg_6_0:closeThis()
+function Activity114MeetView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0._simagebg:LoadImage(ResUrl.getAct114MeetIcon("bg"))
-	arg_7_0._simagehuimianpu1:LoadImage(ResUrl.getAct114MeetIcon("bg_huimianpu1"))
-	arg_7_0._simagehuimianpu3:LoadImage(ResUrl.getAct114MeetIcon("bg_huimianpu3"))
-	arg_7_0._simagehuimianpu4:LoadImage(ResUrl.getAct114MeetIcon("bg_huimianpu4"))
+function Activity114MeetView:_editableInitView()
+	self._simagebg:LoadImage(ResUrl.getAct114MeetIcon("bg"))
+	self._simagehuimianpu1:LoadImage(ResUrl.getAct114MeetIcon("bg_huimianpu1"))
+	self._simagehuimianpu3:LoadImage(ResUrl.getAct114MeetIcon("bg_huimianpu3"))
+	self._simagehuimianpu4:LoadImage(ResUrl.getAct114MeetIcon("bg_huimianpu4"))
 
-	arg_7_0.meetList = {}
+	self.meetList = {}
 
-	for iter_7_0 = 1, 6 do
-		local var_7_0 = gohelper.findChild(arg_7_0._itemParents, "#go_characteritem" .. iter_7_0)
+	for i = 1, 6 do
+		local itemGo = gohelper.findChild(self._itemParents, "#go_characteritem" .. i)
 
-		arg_7_0.meetList[iter_7_0] = Activity114MeetItem.New(var_7_0)
+		self.meetList[i] = Activity114MeetItem.New(itemGo)
 
-		arg_7_0:addChildView(arg_7_0.meetList[iter_7_0])
+		self:addChildView(self.meetList[i])
 	end
 
-	arg_7_0:updatePage(1)
+	self:updatePage(1)
 end
 
-function var_0_0.updatePage(arg_8_0, arg_8_1)
-	arg_8_0.curPage = arg_8_1
+function Activity114MeetView:updatePage(page)
+	self.curPage = page
 
-	local var_8_0 = Activity114Config.instance:getMeetingCoList(Activity114Model.instance.id)
-	local var_8_1 = #var_8_0
-	local var_8_2 = math.ceil(var_8_1 / 6)
+	local meetList = Activity114Config.instance:getMeetingCoList(Activity114Model.instance.id)
+	local len = #meetList
+	local totalPage = math.ceil(len / 6)
 
-	for iter_8_0 = 1, 6 do
-		arg_8_0.meetList[iter_8_0]:updateMo(var_8_0[iter_8_0 + (arg_8_0.curPage - 1) * 6])
+	for i = 1, 6 do
+		self.meetList[i]:updateMo(meetList[i + (self.curPage - 1) * 6])
 	end
 
-	gohelper.setActive(arg_8_0._btnleft.gameObject, arg_8_1 > 1)
-	gohelper.setActive(arg_8_0._btnright.gameObject, arg_8_1 < var_8_2)
+	gohelper.setActive(self._btnleft.gameObject, page > 1)
+	gohelper.setActive(self._btnright.gameObject, page < totalPage)
 end
 
-function var_0_0.onOpen(arg_9_0)
+function Activity114MeetView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_activity_meeting_book_open)
 end
 
-function var_0_0.onClose(arg_10_0)
+function Activity114MeetView:onClose()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_activity_meeting_book_close)
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	arg_11_0._simagebg:UnLoadImage()
-	arg_11_0._simagehuimianpu1:UnLoadImage()
-	arg_11_0._simagehuimianpu3:UnLoadImage()
-	arg_11_0._simagehuimianpu4:UnLoadImage()
+function Activity114MeetView:onDestroyView()
+	self._simagebg:UnLoadImage()
+	self._simagehuimianpu1:UnLoadImage()
+	self._simagehuimianpu3:UnLoadImage()
+	self._simagehuimianpu4:UnLoadImage()
 end
 
-return var_0_0
+return Activity114MeetView

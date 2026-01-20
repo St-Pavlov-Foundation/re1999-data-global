@@ -1,26 +1,28 @@
-﻿module("modules.logic.fight.view.FightProgressConquerBattleView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightProgressConquerBattleView.lua
 
-local var_0_0 = class("FightProgressConquerBattleView", FightBaseView)
+module("modules.logic.fight.view.FightProgressConquerBattleView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.player = gohelper.findChild(arg_1_0.viewGO, "Root/playerHp")
-	arg_1_0.enemy = gohelper.findChild(arg_1_0.viewGO, "Root/enemyHp")
+local FightProgressConquerBattleView = class("FightProgressConquerBattleView", FightBaseView)
+
+function FightProgressConquerBattleView:onInitView()
+	self.player = gohelper.findChild(self.viewGO, "Root/playerHp")
+	self.enemy = gohelper.findChild(self.viewGO, "Root/enemyHp")
 end
 
-function var_0_0.addEvents(arg_2_0)
+function FightProgressConquerBattleView:addEvents()
 	return
 end
 
-function var_0_0.onOpen(arg_3_0)
-	arg_3_0.progressDic = FightDataHelper.fieldMgr.progressDic
+function FightProgressConquerBattleView:onOpen()
+	self.progressDic = FightDataHelper.fieldMgr.progressDic
 
-	for iter_3_0, iter_3_1 in pairs(arg_3_0.progressDic) do
-		if iter_3_1.showId == 5 then
-			arg_3_0:com_openSubView(FightNewProgressView5, arg_3_0.player, nil, iter_3_1)
-		elseif iter_3_1.showId == 6 then
-			arg_3_0:com_openSubView(FightNewProgressView6, arg_3_0.enemy, nil, iter_3_1)
+	for k, data in pairs(self.progressDic) do
+		if data.showId == 5 then
+			self:com_openSubView(FightNewProgressView5, self.player, nil, data)
+		elseif data.showId == 6 then
+			self:com_openSubView(FightNewProgressView6, self.enemy, nil, data)
 		end
 	end
 end
 
-return var_0_0
+return FightProgressConquerBattleView

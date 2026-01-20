@@ -1,78 +1,88 @@
-﻿module("modules.logic.guide.controller.action.impl.GuideActionFindGO", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/GuideActionFindGO.lua
 
-local var_0_0 = class("GuideActionFindGO", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.GuideActionFindGO", package.seeall)
 
-var_0_0.FindGameObjectSeconds = 5
+local GuideActionFindGO = class("GuideActionFindGO", BaseGuideAction)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	var_0_0.super.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+GuideActionFindGO.FindGameObjectSeconds = 5
 
-	arg_1_0._goPath = arg_1_3
+function GuideActionFindGO:ctor(guideId, stepId, actionParam)
+	GuideActionFindGO.super.ctor(self, guideId, stepId, actionParam)
+
+	self._goPath = actionParam
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	var_0_0.super.onStart(arg_2_0, arg_2_1)
+function GuideActionFindGO:onStart(context)
+	GuideActionFindGO.super.onStart(self, context)
 
-	local var_2_0 = arg_2_0:_findGO(arg_2_0._goPath)
+	local targetGO = self:_findGO(self._goPath)
 
-	if var_2_0 then
-		arg_2_1.targetGO = var_2_0
+	if targetGO then
+		context.targetGO = targetGO
 
-		arg_2_0:_setGlobalTouchGO()
-		arg_2_0:onDone(true)
+		self:_setGlobalTouchGO()
+		self:onDone(true)
 	else
-		if GuideConfig.instance:getStepCO(arg_2_0.guideId, arg_2_0.stepId).notForce == 0 then
-			arg_2_0:_startBlock()
+		local stepCO = GuideConfig.instance:getStepCO(self.guideId, self.stepId)
+
+		if stepCO.notForce == 0 then
+			self:_startBlock()
 		end
 
-		TaskDispatcher.runRepeat(arg_2_0._findGOToStartGuide, arg_2_0, 0.1)
+		TaskDispatcher.runRepeat(self._findGOToStartGuide, self, 0.1)
 
-		arg_2_0._startTime = Time.time
-		arg_2_0._realStartTime = Time.realtimeSinceStartup
+		self._startTime = Time.time
+		self._realStartTime = Time.realtimeSinceStartup
 	end
 end
 
-function var_0_0.onDestroy(arg_3_0)
-	var_0_0.super.onDestroy(arg_3_0)
-	arg_3_0:_endBlock()
+function GuideActionFindGO:onDestroy()
+	GuideActionFindGO.super.onDestroy(self)
+	self:_endBlock()
 end
 
-function var_0_0._setGlobalTouchGO(arg_4_0)
-	local var_4_0 = GuideConfig.instance:getStepCO(arg_4_0.guideId, arg_4_0.stepId)
+function GuideActionFindGO:_setGlobalTouchGO()
+	local guideStepCO = GuideConfig.instance:getStepCO(self.guideId, self.stepId)
 
-	if not string.nilorempty(var_4_0.touchGOPath) then
-		local var_4_1 = gohelper.find(var_4_0.touchGOPath)
+	if not string.nilorempty(guideStepCO.touchGOPath) then
+		local touchGO = gohelper.find(guideStepCO.touchGOPath)
 
-		arg_4_0.context.touchGO = var_4_1 and var_4_1:GetComponent("TouchEventMgr") or nil
+		self.context.touchGO = touchGO and touchGO:GetComponent("TouchEventMgr") or nil
 	end
 end
 
-function var_0_0._findGOToStartGuide(arg_5_0)
-	local var_5_0 = BaseViewContainer.openViewAnimStartTime
+function GuideActionFindGO:_findGOToStartGuide()
+	local openViewAnimStartTime = BaseViewContainer.openViewAnimStartTime
 
-	if var_5_0 and var_5_0 < Time.time and Time.time - var_5_0 <= BaseViewContainer.openViewAnimLength then
-		return
+	if openViewAnimStartTime and openViewAnimStartTime < Time.time then
+		local diffTime = Time.time - openViewAnimStartTime
+
+		if diffTime <= BaseViewContainer.openViewAnimLength then
+			return
+		end
 	end
 
-	local var_5_1 = arg_5_0:_findGO(arg_5_0._goPath)
+	local targetGO = self:_findGO(self._goPath)
 
-	if not gohelper.isNil(var_5_1) and var_5_1.activeInHierarchy then
-		arg_5_0:_endBlock()
+	if not gohelper.isNil(targetGO) and targetGO.activeInHierarchy then
+		self:_endBlock()
 
-		arg_5_0.context.targetGO = var_5_1
+		self.context.targetGO = targetGO
 
-		arg_5_0:_setGlobalTouchGO()
-		arg_5_0:onDone(true)
+		self:_setGlobalTouchGO()
+		self:onDone(true)
 	else
-		local var_5_2 = Time.time - arg_5_0._startTime
-		local var_5_3 = Time.realtimeSinceStartup - arg_5_0._realStartTime
-		local var_5_4 = GuideConfig.instance:getStepCO(arg_5_0.guideId, arg_5_0.stepId)
-		local var_5_5 = var_0_0.FindGameObjectSeconds
+		local elapsedTime = Time.time - self._startTime
+		local realElapsedTime = Time.realtimeSinceStartup - self._realStartTime
+		local stepCO = GuideConfig.instance:getStepCO(self.guideId, self.stepId)
+		local maxTime = GuideActionFindGO.FindGameObjectSeconds
 
-		if var_5_4.notForce == 0 and var_5_5 < var_5_2 and var_5_5 < var_5_3 then
-			if UIBlockMgr.instance:isKeyBlock(UIBlockKey.ViewOpening) then
-				if not arg_5_0._loadingWaitingFlag then
-					arg_5_0._loadingWaitingFlag = true
+		if stepCO.notForce == 0 and maxTime < elapsedTime and maxTime < realElapsedTime then
+			local isLoadingView = UIBlockMgr.instance:isKeyBlock(UIBlockKey.ViewOpening)
+
+			if isLoadingView then
+				if not self._loadingWaitingFlag then
+					self._loadingWaitingFlag = true
 
 					logError("Guide findGO time out, is loading view, waiting!!")
 				end
@@ -80,55 +90,55 @@ function var_0_0._findGOToStartGuide(arg_5_0)
 				return
 			end
 
-			arg_5_0:_endBlock()
-			GuideStepController.instance:clearFlow(arg_5_0.guideId)
-			GuideModel.instance:clearFlagByGuideId(arg_5_0.guideId)
+			self:_endBlock()
+			GuideStepController.instance:clearFlow(self.guideId)
+			GuideModel.instance:clearFlagByGuideId(self.guideId)
 
-			local var_5_6 = #ConnectAliveMgr.instance:getUnresponsiveMsgList()
-			local var_5_7 = GuideModel.instance:getById(arg_5_0.guideId)
+			local msgCount = #ConnectAliveMgr.instance:getUnresponsiveMsgList()
+			local guideMO = GuideModel.instance:getById(self.guideId)
 
-			if var_5_7 and var_5_6 == 0 then
-				var_5_7:exceptionFinishGuide()
+			if guideMO and msgCount == 0 then
+				guideMO:exceptionFinishGuide()
 			end
 
-			var_0_0._exceptionFindLog(arg_5_0.guideId, arg_5_0.stepId, arg_5_0._goPath, "[ActionFind]")
+			GuideActionFindGO._exceptionFindLog(self.guideId, self.stepId, self._goPath, "[ActionFind]")
 		end
 	end
 end
 
-function var_0_0._exceptionFindLog(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	local var_6_0 = #ConnectAliveMgr.instance:getUnresponsiveMsgList()
-	local var_6_1 = "找不到" .. tostring(arg_6_2)
-	local var_6_2 = "msgCount_" .. tostring(var_6_0)
-	local var_6_3 = GuideModel.instance:getStepExecStr()
-	local var_6_4 = "scene_" .. tostring(GameSceneMgr.instance:getCurSceneType())
-	local var_6_5 = ViewMgr.instance:getOpenViewNameList()
-	local var_6_6 = "views:" .. tostring(table.concat(var_6_5, ","))
-	local var_6_7 = GuideConfig.instance:getGuideCO(arg_6_0)
-	local var_6_8 = GuideConfig.instance:getStepCO(arg_6_0, arg_6_1)
+function GuideActionFindGO._exceptionFindLog(guideId, stepId, goPath, prefixStr)
+	local msgCount = #ConnectAliveMgr.instance:getUnresponsiveMsgList()
+	local exceptionDesc = "找不到" .. tostring(goPath)
+	local msgCountStr = "msgCount_" .. tostring(msgCount)
+	local execStepStr = GuideModel.instance:getStepExecStr()
+	local currScene = "scene_" .. tostring(GameSceneMgr.instance:getCurSceneType())
+	local openViewNames = ViewMgr.instance:getOpenViewNameList()
+	local openViewsStr = "views:" .. tostring(table.concat(openViewNames, ","))
+	local guideCO = GuideConfig.instance:getGuideCO(guideId)
+	local stepCO = GuideConfig.instance:getStepCO(guideId, stepId)
 
-	logError(string.format("%s%s guide_%d_%d, %s-%s %s %s %s %s", arg_6_3 or "", var_6_1, arg_6_0, arg_6_1, var_6_7.desc, var_6_8.desc, var_6_2, var_6_4, var_6_6, var_6_3))
+	logNormal(string.format("<color=#FFFF00>%s%s guide_%d_%d, %s-%s %s %s %s %s</color>", prefixStr or "", exceptionDesc, guideId, stepId, guideCO.desc, stepCO.desc, msgCountStr, currScene, openViewsStr, execStepStr))
 end
 
-function var_0_0._startBlock(arg_7_0)
+function GuideActionFindGO:_startBlock()
 	UIBlockMgr.instance:startBlock(UIBlockKey.GuideActionFindGO)
 end
 
-function var_0_0._endBlock(arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0._findGOToStartGuide, arg_8_0)
+function GuideActionFindGO:_endBlock()
+	TaskDispatcher.cancelTask(self._findGOToStartGuide, self)
 	UIBlockMgr.instance:endBlock(UIBlockKey.GuideActionFindGO)
 end
 
-function var_0_0._findGO(arg_9_0, arg_9_1)
-	local var_9_0 = string.split(arg_9_1, "###")
+function GuideActionFindGO:_findGO(paths)
+	local goPaths = string.split(paths, "###")
 
-	for iter_9_0 = 1, #var_9_0 do
-		local var_9_1 = gohelper.find(var_9_0[iter_9_0])
+	for i = 1, #goPaths do
+		local targetGO = gohelper.find(goPaths[i])
 
-		if GuideUtil.isGOShowInScreen(var_9_1) then
-			return var_9_1
+		if GuideUtil.isGOShowInScreen(targetGO) then
+			return targetGO
 		end
 	end
 end
 
-return var_0_0
+return GuideActionFindGO

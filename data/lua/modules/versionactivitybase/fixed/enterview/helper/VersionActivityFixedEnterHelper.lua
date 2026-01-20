@@ -1,55 +1,57 @@
-﻿module("modules.versionactivitybase.fixed.enterview.helper.VersionActivityFixedEnterHelper", package.seeall)
+﻿-- chunkname: @modules/versionactivitybase/fixed/enterview/helper/VersionActivityFixedEnterHelper.lua
 
-local var_0_0 = class("VersionActivityFixedEnterHelper")
+module("modules.versionactivitybase.fixed.enterview.helper.VersionActivityFixedEnterHelper", package.seeall)
 
-function var_0_0.GetIsShowReplayBtn(arg_1_0)
-	local var_1_0 = false
+local VersionActivityFixedEnterHelper = class("VersionActivityFixedEnterHelper")
 
-	if arg_1_0 then
-		var_1_0 = ActivityConfig.instance:getActivityTabButtonState(arg_1_0)
+function VersionActivityFixedEnterHelper.GetIsShowReplayBtn(actId)
+	local result = false
+
+	if actId then
+		result = ActivityConfig.instance:getActivityTabButtonState(actId)
 	end
 
-	return var_1_0
+	return result
 end
 
-function var_0_0.GetIsShowTabRemainTime(arg_2_0)
-	if not arg_2_0 then
+function VersionActivityFixedEnterHelper.GetIsShowTabRemainTime(actId)
+	if not actId then
 		return false
 	end
 
-	local var_2_0, var_2_1, var_2_2 = ActivityConfig.instance:getActivityTabButtonState(arg_2_0)
+	local _, _, result = ActivityConfig.instance:getActivityTabButtonState(actId)
 
-	return var_2_2
+	return result
 end
 
-function var_0_0.GetIsShowAchievementBtn(arg_3_0)
-	if not arg_3_0 then
+function VersionActivityFixedEnterHelper.GetIsShowAchievementBtn(actId)
+	if not actId then
 		return false
 	end
 
-	local var_3_0, var_3_1 = ActivityConfig.instance:getActivityTabButtonState(arg_3_0)
+	local _, result = ActivityConfig.instance:getActivityTabButtonState(actId)
 
-	return var_3_1
+	return result
 end
 
-function var_0_0.getItemTypeIdQuantity(arg_4_0)
-	if not arg_4_0 then
+function VersionActivityFixedEnterHelper.getItemTypeIdQuantity(coStr)
+	if not coStr then
 		return
 	end
 
-	local var_4_0 = string.splitToNumber(arg_4_0, "#")
+	local attribute = string.splitToNumber(coStr, "#")
 
-	return var_4_0[1], var_4_0[2], var_4_0[3]
+	return attribute[1], attribute[2], attribute[3]
 end
 
-function var_0_0.GetActivityPrefsKeyWithUser(arg_5_0)
-	local var_5_0 = var_0_0.GetActivityPrefsKey(arg_5_0)
+function VersionActivityFixedEnterHelper.GetActivityPrefsKeyWithUser(key)
+	local actKey = VersionActivityFixedEnterHelper.GetActivityPrefsKey(key)
 
-	return PlayerModel.instance:getPlayerPrefsKey(var_5_0)
+	return PlayerModel.instance:getPlayerPrefsKey(actKey)
 end
 
-function var_0_0.GetActivityPrefsKey(arg_6_0)
-	return VersionActivityFixedHelper.getVersionActivityEnum().ActivityId.EnterView .. arg_6_0
+function VersionActivityFixedEnterHelper.GetActivityPrefsKey(key)
+	return VersionActivityFixedHelper.getVersionActivityEnum().ActivityId.EnterView .. key
 end
 
-return var_0_0
+return VersionActivityFixedEnterHelper

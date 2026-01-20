@@ -1,145 +1,158 @@
-﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionOpenViewWithCondition", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/WaitGuideActionOpenViewWithCondition.lua
 
-local var_0_0 = class("WaitGuideActionOpenViewWithCondition", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.WaitGuideActionOpenViewWithCondition", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+local WaitGuideActionOpenViewWithCondition = class("WaitGuideActionOpenViewWithCondition", BaseGuideAction)
 
-	local var_1_0 = string.split(arg_1_0.actionParam, "#")
+function WaitGuideActionOpenViewWithCondition:onStart(context)
+	WaitGuideActionOpenViewWithCondition.super.onStart(self, context)
 
-	arg_1_0._viewName = ViewName[var_1_0[1]]
+	local paramList = string.split(self.actionParam, "#")
 
-	local var_1_1 = var_1_0[2]
+	self._viewName = ViewName[paramList[1]]
 
-	arg_1_0._conditionParam = var_1_0[3]
-	arg_1_0._conditionCheckFun = arg_1_0[var_1_1]
+	local funcName = paramList[2]
 
-	if ViewMgr.instance:isOpen(arg_1_0._viewName) and arg_1_0._conditionCheckFun(arg_1_0._conditionParam) then
-		arg_1_0:onDone(true)
+	self._conditionParam = paramList[3]
+	self._conditionCheckFun = self[funcName]
+
+	if ViewMgr.instance:isOpen(self._viewName) and self._conditionCheckFun(self._conditionParam) then
+		self:onDone(true)
 
 		return
 	end
 
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_1_0._checkOpenView, arg_1_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, self._checkOpenView, self)
 end
 
-function var_0_0._checkOpenView(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_0._viewName == arg_2_1 and arg_2_0._conditionCheckFun(arg_2_0._conditionParam) then
-		arg_2_0:clearWork()
-		arg_2_0:onDone(true)
+function WaitGuideActionOpenViewWithCondition:_checkOpenView(viewName, viewParam)
+	if self._viewName == viewName and self._conditionCheckFun(self._conditionParam) then
+		self:clearWork()
+		self:onDone(true)
 	end
 end
 
-function var_0_0.clearWork(arg_3_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_3_0._checkOpenView, arg_3_0)
+function WaitGuideActionOpenViewWithCondition:clearWork()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, self._checkOpenView, self)
 end
 
-function var_0_0.manyFailure()
-	if GuideModel.instance:getDoingGuideId() then
+function WaitGuideActionOpenViewWithCondition.manyFailure()
+	local doingGuideId = GuideModel.instance:getDoingGuideId()
+
+	if doingGuideId then
 		return
 	end
 
-	local var_4_0 = DungeonModel.instance.curLookEpisodeId
-	local var_4_1 = var_4_0 and lua_episode.configDict[var_4_0]
+	local episodeId = DungeonModel.instance.curLookEpisodeId
+	local episodeCO = episodeId and lua_episode.configDict[episodeId]
 
-	if not var_4_1 then
+	if not episodeCO then
 		return
 	end
 
-	if DungeonConfig.instance:getChapterCO(var_4_1.chapterId).type ~= DungeonEnum.ChapterType.Normal then
+	local chapterConfig = DungeonConfig.instance:getChapterCO(episodeCO.chapterId)
+
+	if chapterConfig.type ~= DungeonEnum.ChapterType.Normal then
 		return
 	end
 
-	if DungeonModel.instance:hasPassLevel(var_4_0) then
+	if DungeonModel.instance:hasPassLevel(episodeId) then
 		return
 	end
 
-	local var_4_2 = PlayerPrefsKey.DungeonFailure .. PlayerModel.instance:getPlayinfo().userId .. var_4_0
+	local key = PlayerPrefsKey.DungeonFailure .. PlayerModel.instance:getPlayinfo().userId .. episodeId
+	local value = PlayerPrefsHelper.getNumber(key, 0)
 
-	if PlayerPrefsHelper.getNumber(var_4_2, 0) < 3 then
+	if value < 3 then
 		return
 	end
 
 	return true
 end
 
-function var_0_0.enterFightSubEntity()
-	local var_5_0 = FightDataHelper.entityMgr:getMyNormalList()
+function WaitGuideActionOpenViewWithCondition.enterFightSubEntity()
+	local mySideList = FightDataHelper.entityMgr:getMyNormalList()
 
-	if not var_5_0 or #var_5_0 < 3 then
+	if not mySideList or #mySideList < 3 then
 		return
 	end
 
-	local var_5_1 = FightDataHelper.entityMgr:getMySubList()
+	local mySideSub = FightDataHelper.entityMgr:getMySubList()
 
-	if not var_5_1 or #var_5_1 == 0 then
+	if not mySideSub or #mySideSub == 0 then
 		return
 	end
 
-	if GuideModel.instance:getDoingGuideId() then
-		return
-	end
+	local doingGuideId = GuideModel.instance:getDoingGuideId()
 
-	return true
-end
-
-function var_0_0.clearedOneBattle()
-	local var_6_0 = WeekWalkModel.instance:getMapInfo(201)
-
-	if not var_6_0 then
-		return
-	end
-
-	local var_6_1, var_6_2 = var_6_0:getCurStarInfo()
-
-	return var_6_1 > 0
-end
-
-function var_0_0.remainStars()
-	local var_7_0 = WeekWalkModel.instance:getCurMapInfo()
-
-	if not var_7_0 or var_7_0.isFinish <= 0 then
-		return
-	end
-
-	local var_7_1, var_7_2 = var_7_0:getCurStarInfo()
-
-	return var_7_1 ~= var_7_2
-end
-
-function var_0_0.weekWalkFinishLayer()
-	local var_8_0 = WeekWalkModel.instance:getCurMapInfo()
-
-	if not var_8_0 or var_8_0.isFinish <= 0 then
+	if doingGuideId then
 		return
 	end
 
 	return true
 end
 
-function var_0_0.checkFirstPosHasEquip()
-	local var_9_0 = HeroGroupModel.instance:getCurGroupMO():getPosEquips(0).equipUid
-	local var_9_1 = var_9_0 and var_9_0[1]
+function WaitGuideActionOpenViewWithCondition.clearedOneBattle()
+	local mapInfo = WeekWalkModel.instance:getMapInfo(201)
 
-	if var_9_1 and EquipModel.instance:getEquip(var_9_1) then
+	if not mapInfo then
+		return
+	end
+
+	local cur, total = mapInfo:getCurStarInfo()
+
+	return cur > 0
+end
+
+function WaitGuideActionOpenViewWithCondition.remainStars()
+	local mapInfo = WeekWalkModel.instance:getCurMapInfo()
+
+	if not mapInfo or mapInfo.isFinish <= 0 then
+		return
+	end
+
+	local cur, total = mapInfo:getCurStarInfo()
+
+	return cur ~= total
+end
+
+function WaitGuideActionOpenViewWithCondition.weekWalkFinishLayer()
+	local mapInfo = WeekWalkModel.instance:getCurMapInfo()
+
+	if not mapInfo or mapInfo.isFinish <= 0 then
+		return
+	end
+
+	return true
+end
+
+function WaitGuideActionOpenViewWithCondition.checkFirstPosHasEquip()
+	local curGroupMO = HeroGroupModel.instance:getCurGroupMO()
+	local equips = curGroupMO:getPosEquips(0).equipUid
+	local equipId = equips and equips[1]
+	local equipMO = equipId and EquipModel.instance:getEquip(equipId)
+
+	if equipMO then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.enterWeekWalkMap(arg_10_0)
-	return WeekWalkModel.instance:getCurMapId() == tonumber(arg_10_0)
+function WaitGuideActionOpenViewWithCondition.enterWeekWalkMap(id)
+	return WeekWalkModel.instance:getCurMapId() == tonumber(id)
 end
 
-function var_0_0.enterWeekWalkBattle(arg_11_0)
-	local var_11_0 = HeroGroupModel.instance.episodeId
-	local var_11_1 = DungeonConfig.instance:getEpisodeCO(var_11_0)
+function WaitGuideActionOpenViewWithCondition.enterWeekWalkBattle(id)
+	local episodeId = HeroGroupModel.instance.episodeId
+	local episodeConfig = DungeonConfig.instance:getEpisodeCO(episodeId)
+	local chapterConfig = DungeonConfig.instance:getChapterCO(episodeConfig.chapterId)
+	local isWeekWalk = chapterConfig.type == DungeonEnum.ChapterType.WeekWalk
 
-	return DungeonConfig.instance:getChapterCO(var_11_1.chapterId).type == DungeonEnum.ChapterType.WeekWalk and WeekWalkModel.instance:getCurMapId() == tonumber(arg_11_0)
+	return isWeekWalk and WeekWalkModel.instance:getCurMapId() == tonumber(id)
 end
 
-function var_0_0.checkBuildingPutInObMode(arg_12_0)
+function WaitGuideActionOpenViewWithCondition.checkBuildingPutInObMode(param)
 	if not RoomController.instance:isObMode() then
 		return
 	end
@@ -148,7 +161,7 @@ function var_0_0.checkBuildingPutInObMode(arg_12_0)
 		return
 	end
 
-	if not RoomInventoryBuildingModel.instance:checkBuildingPut(arg_12_0) then
+	if not RoomInventoryBuildingModel.instance:checkBuildingPut(param) then
 		GameFacade.showToast(ToastEnum.WaitGuideActionOpen)
 
 		return false
@@ -157,48 +170,57 @@ function var_0_0.checkBuildingPutInObMode(arg_12_0)
 	return true
 end
 
-function var_0_0.isMainMode()
-	local var_13_0 = DungeonModel.instance.curLookChapterId
+function WaitGuideActionOpenViewWithCondition.isMainMode()
+	local chapterId = DungeonModel.instance.curLookChapterId
 
-	if not var_13_0 then
+	if not chapterId then
 		return false
 	end
 
-	return DungeonConfig.instance:getChapterCO(var_13_0).type == DungeonEnum.ChapterType.Normal
+	local chapterConfig = DungeonConfig.instance:getChapterCO(chapterId)
+	local isNormal = chapterConfig.type == DungeonEnum.ChapterType.Normal
+
+	return isNormal
 end
 
-function var_0_0.isHardMode()
-	local var_14_0 = HeroGroupModel.instance.episodeId
-	local var_14_1 = DungeonConfig.instance:getEpisodeCO(var_14_0)
+function WaitGuideActionOpenViewWithCondition.isHardMode()
+	local episodeId = HeroGroupModel.instance.episodeId
+	local episodeConfig = DungeonConfig.instance:getEpisodeCO(episodeId)
+	local chapterConfig = DungeonConfig.instance:getChapterCO(episodeConfig.chapterId)
+	local isHardMode = chapterConfig.type == DungeonEnum.ChapterType.Hard
 
-	return DungeonConfig.instance:getChapterCO(var_14_1.chapterId).type == DungeonEnum.ChapterType.Hard
+	return isHardMode
 end
 
-function var_0_0.isEditMode()
+function WaitGuideActionOpenViewWithCondition.isEditMode()
 	return RoomController.instance:isEditMode()
 end
 
-function var_0_0.isObMode()
+function WaitGuideActionOpenViewWithCondition.isObMode()
 	return RoomController.instance:isObMode()
 end
 
-function var_0_0.buildingStrengthen()
+function WaitGuideActionOpenViewWithCondition.buildingStrengthen()
 	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Room then
 		return
 	end
 
-	if not RoomController.instance:isObMode() then
+	local isObMode = RoomController.instance:isObMode()
+
+	if not isObMode then
 		return false
 	end
 
-	if ItemModel.instance:getItemCount(190007) <= 0 then
+	local itemCount = ItemModel.instance:getItemCount(190007)
+
+	if itemCount <= 0 then
 		return false
 	end
 
-	local var_17_0 = RoomMapBuildingModel.instance:getBuildingMOList()
+	local buildingList = RoomMapBuildingModel.instance:getBuildingMOList()
 
-	for iter_17_0, iter_17_1 in ipairs(var_17_0) do
-		if iter_17_1.buildingId == 2002 then
+	for _, buildingMO in ipairs(buildingList) do
+		if buildingMO.buildingId == 2002 then
 			return true
 		end
 	end
@@ -206,92 +228,92 @@ function var_0_0.buildingStrengthen()
 	return false
 end
 
-function var_0_0.openSeasonDiscount()
+function WaitGuideActionOpenViewWithCondition.openSeasonDiscount()
 	return Activity104Model.instance:isEnterSpecial()
 end
 
-function var_0_0.checkAct114CanGuide()
+function WaitGuideActionOpenViewWithCondition.checkAct114CanGuide()
 	return Activity114Model.instance:have114StoryFlow()
 end
 
-function var_0_0.checkActivity1_2DungeonBuildingNum()
-	local var_20_0 = VersionActivity1_2DungeonModel.instance:getBuildingGainList()
+function WaitGuideActionOpenViewWithCondition.checkActivity1_2DungeonBuildingNum()
+	local gainList = VersionActivity1_2DungeonModel.instance:getBuildingGainList()
 
-	return var_20_0 and #var_20_0 > 0
+	return gainList and #gainList > 0
 end
 
-function var_0_0.checkActivity1_2DungeonTrapPutting()
-	local var_21_0 = VersionActivity1_2DungeonModel.instance:getTrapPutting()
+function WaitGuideActionOpenViewWithCondition.checkActivity1_2DungeonTrapPutting()
+	local curTrapId = VersionActivity1_2DungeonModel.instance:getTrapPutting()
 
-	return var_21_0 and var_21_0 ~= 0
+	return curTrapId and curTrapId ~= 0
 end
 
-function var_0_0.check1_2DungeonCollectAllNote()
+function WaitGuideActionOpenViewWithCondition.check1_2DungeonCollectAllNote()
 	return VersionActivity1_2NoteModel.instance:isCollectedAllNote()
 end
 
-function var_0_0.checkInEliminateEpisode(arg_23_0)
-	return EliminateTeamSelectionModel.instance:getSelectedEpisodeId() == tonumber(arg_23_0)
+function WaitGuideActionOpenViewWithCondition.checkInEliminateEpisode(id)
+	return EliminateTeamSelectionModel.instance:getSelectedEpisodeId() == tonumber(id)
 end
 
-function var_0_0.checkInWindows(arg_24_0)
+function WaitGuideActionOpenViewWithCondition.checkInWindows(id)
 	return BootNativeUtil.isWindows()
 end
 
-function var_0_0.enterWuErLiXiMap(arg_25_0)
-	return WuErLiXiMapModel.instance:getCurMapId() == tonumber(arg_25_0)
+function WaitGuideActionOpenViewWithCondition.enterWuErLiXiMap(id)
+	return WuErLiXiMapModel.instance:getCurMapId() == tonumber(id)
 end
 
-function var_0_0.enterFeiLinShiDuoMap(arg_26_0)
-	return FeiLinShiDuoGameModel.instance:getCurMapId() == tonumber(arg_26_0)
+function WaitGuideActionOpenViewWithCondition.enterFeiLinShiDuoMap(id)
+	return FeiLinShiDuoGameModel.instance:getCurMapId() == tonumber(id)
 end
 
-function var_0_0.isOpenEpisode(arg_27_0)
-	return LiangYueModel.instance:getCurEpisodeId() == tonumber(arg_27_0)
+function WaitGuideActionOpenViewWithCondition.isOpenEpisode(id)
+	return LiangYueModel.instance:getCurEpisodeId() == tonumber(id)
 end
 
-function var_0_0.isAutoChessInEpisodeAndRound(arg_28_0)
-	local var_28_0 = string.splitToNumber(arg_28_0, ",")
-	local var_28_1 = var_28_0[1]
+function WaitGuideActionOpenViewWithCondition.isAutoChessInEpisodeAndRound(param)
+	local data = string.splitToNumber(param, ",")
+	local episodeId = data[1]
 
-	if not AutoChessModel.instance.episodeId or AutoChessModel.instance.episodeId ~= var_28_1 then
+	if not AutoChessModel.instance.episodeId or AutoChessModel.instance.episodeId ~= episodeId then
 		return
 	end
 
-	local var_28_2 = AutoChessModel.instance:getChessMo()
+	local mo = AutoChessModel.instance:getChessMo()
 
-	if var_28_2 == nil or var_28_2.sceneRound == nil then
+	if mo == nil or mo.sceneRound == nil then
 		return false
 	end
 
-	local var_28_3 = var_28_0[2]
+	local round = data[2]
 
-	return var_28_2.sceneRound == var_28_3
+	return mo.sceneRound == round
 end
 
-function var_0_0.isUnlockEpisode(arg_29_0)
-	local var_29_0 = LiangYueModel.instance:getCurActId()
+function WaitGuideActionOpenViewWithCondition.isUnlockEpisode(id)
+	local actId = LiangYueModel.instance:getCurActId()
 
-	return LiangYueModel.instance:isEpisodeFinish(var_29_0, arg_29_0) == tonumber(arg_29_0)
+	return LiangYueModel.instance:isEpisodeFinish(actId, id) == tonumber(id)
 end
 
-function var_0_0.checkAct191NodeType(arg_30_0)
-	arg_30_0 = tonumber(arg_30_0)
+function WaitGuideActionOpenViewWithCondition.checkAct191NodeType(checkParam)
+	checkParam = tonumber(checkParam)
 
-	local var_30_0 = Activity191Model.instance:getActInfo()
+	local actInfo = Activity191Model.instance:getActInfo()
 
-	if var_30_0 then
-		local var_30_1 = var_30_0:getGameInfo()
-		local var_30_2 = var_30_1:getNodeInfoById(var_30_1.curNode)
+	if actInfo then
+		local gameInfo = actInfo:getGameInfo()
+		local nodeInfo = gameInfo:getNodeInfoById(gameInfo.curNode)
 
-		if #var_30_2.selectNodeStr ~= 0 then
-			local var_30_3 = Act191NodeDetailMO.New()
+		if #nodeInfo.selectNodeStr ~= 0 then
+			local mo = Act191NodeDetailMO.New()
 
-			var_30_3:init(var_30_2.selectNodeStr[1])
+			mo:init(nodeInfo.selectNodeStr[1])
 
-			if arg_30_0 == 1 and Activity191Helper.isPveBattle(var_30_3.type) then
+			if checkParam == 1 and Activity191Helper.isPveBattle(mo.type) then
 				return true
-			elseif arg_30_0 == 2 and Activity191Helper.isPvpBattle(var_30_3.type) then
+			elseif checkParam == 2 and Activity191Helper.isPvpBattle(mo.type) then
 				return true
 			end
 		end
@@ -300,15 +322,15 @@ function var_0_0.checkAct191NodeType(arg_30_0)
 	return false
 end
 
-function var_0_0.checkAct191Stage(arg_31_0)
-	arg_31_0 = tonumber(arg_31_0)
+function WaitGuideActionOpenViewWithCondition.checkAct191Stage(stageId)
+	stageId = tonumber(stageId)
 
-	local var_31_0 = Activity191Model.instance:getActInfo()
+	local actInfo = Activity191Model.instance:getActInfo()
 
-	if var_31_0 then
-		local var_31_1 = var_31_0:getGameInfo()
+	if actInfo then
+		local gameInfo = actInfo:getGameInfo()
 
-		if var_31_1 and var_31_1.curStage == arg_31_0 then
+		if gameInfo and gameInfo.curStage == stageId then
 			return true
 		end
 	end
@@ -316,87 +338,112 @@ function var_0_0.checkAct191Stage(arg_31_0)
 	return false
 end
 
-function var_0_0.commonCheck(arg_32_0)
-	if not arg_32_0 then
+function WaitGuideActionOpenViewWithCondition.commonCheck(param)
+	if not param then
 		return false
 	end
 
-	local var_32_0 = string.split(arg_32_0, "_")
-	local var_32_1 = _G[var_32_0[1]]
+	local arr = string.split(param, "_")
+	local cls = _G[arr[1]]
 
-	if not var_32_1 then
+	if not cls then
 		return false
 	end
 
-	local var_32_2 = var_32_1[var_32_0[2]]
+	local func = cls[arr[2]]
 
-	if not var_32_2 then
+	if not func then
 		return false
 	end
 
-	if var_32_1.instance then
-		return var_32_2(var_32_1.instance, unpack(var_32_0, 3))
+	if cls.instance then
+		return func(cls.instance, unpack(arr, 3))
 	else
-		return var_32_2(unpack(var_32_0, 3))
+		return func(unpack(arr, 3))
 	end
 end
 
-function var_0_0.checkOdysseyPlayerLevel()
-	local var_33_0 = OdysseyModel.instance:getHeroCurLevelAndExp()
-	local var_33_1 = OdysseyTalentModel.instance:getCurTalentPoint()
+function WaitGuideActionOpenViewWithCondition.checkOdysseyPlayerLevel()
+	local curLevel = OdysseyModel.instance:getHeroCurLevelAndExp()
+	local curTalentPoint = OdysseyTalentModel.instance:getCurTalentPoint()
 
-	return var_33_0 >= 2 and var_33_1 > 0
+	return curLevel >= 2 and curTalentPoint > 0
 end
 
-function var_0_0.checkReligionUnlock()
-	local var_34_0 = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.ReligionUnlock)
+function WaitGuideActionOpenViewWithCondition.checkReligionUnlock()
+	local religionUnlockCo = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.ReligionUnlock)
+	local isReligionUnlock = OdysseyDungeonModel.instance:checkConditionCanUnlock(religionUnlockCo.value)
 
-	return (OdysseyDungeonModel.instance:checkConditionCanUnlock(var_34_0.value))
+	return isReligionUnlock
 end
 
-function var_0_0.checkMercenaryUnlock()
-	local var_35_0 = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.MercenaryUnlock)
+function WaitGuideActionOpenViewWithCondition.checkMercenaryUnlock()
+	local mercenaryUnlockCo = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.MercenaryUnlock)
+	local isMercenaryUnlock = OdysseyDungeonModel.instance:checkConditionCanUnlock(mercenaryUnlockCo.value)
 
-	return (OdysseyDungeonModel.instance:checkConditionCanUnlock(var_35_0.value))
+	return isMercenaryUnlock
 end
 
-function var_0_0.checkMythUnlock()
+function WaitGuideActionOpenViewWithCondition.checkMythUnlock()
 	return OdysseyDungeonModel.instance:checkHasFightTypeElement(OdysseyEnum.FightType.Myth)
 end
 
-function var_0_0.checkOpenConquerView()
-	local var_37_0 = OdysseyDungeonModel.instance:getCurInElementId()
-	local var_37_1 = OdysseyConfig.instance:getElementFightConfig(var_37_0)
+function WaitGuideActionOpenViewWithCondition.checkOpenConquerView()
+	local curInElementId = OdysseyDungeonModel.instance:getCurInElementId()
+	local elementConfig = OdysseyConfig.instance:getElementFightConfig(curInElementId)
 
-	return var_37_1 and var_37_1.type == OdysseyEnum.FightType.Conquer
+	return elementConfig and elementConfig.type == OdysseyEnum.FightType.Conquer
 end
 
-function var_0_0.isMoLiDeErInEpisode(arg_38_0)
-	if string.nilorempty(arg_38_0) then
+function WaitGuideActionOpenViewWithCondition.isMoLiDeErInEpisode(param)
+	if string.nilorempty(param) then
 		return false
 	end
 
-	local var_38_0 = tonumber(arg_38_0)
+	local episodeId = tonumber(param)
 
-	if not var_38_0 or var_38_0 == 0 then
+	if not episodeId or episodeId == 0 then
 		return false
 	end
 
-	return var_38_0 == MoLiDeErModel.instance:getCurEpisodeId()
+	local curEpisodeId = MoLiDeErModel.instance:getCurEpisodeId()
+
+	return episodeId == curEpisodeId
 end
 
-function var_0_0.isNuoDiKaEpisode(arg_39_0)
-	if string.nilorempty(arg_39_0) then
+function WaitGuideActionOpenViewWithCondition.isNuoDiKaEpisode(param)
+	if string.nilorempty(param) then
 		return false
 	end
 
-	local var_39_0 = tonumber(arg_39_0)
+	local episodeId = tonumber(param)
 
-	if not var_39_0 or var_39_0 == 0 then
+	if not episodeId or episodeId == 0 then
 		return false
 	end
 
-	return var_39_0 == NuoDiKaModel.instance:getCurEpisode()
+	local curEpisodeId = NuoDiKaModel.instance:getCurEpisode()
+
+	return episodeId == curEpisodeId
 end
 
-return var_0_0
+function WaitGuideActionOpenViewWithCondition.enterHuiDiaoLanEpisodeId(id)
+	local curEpisodeId = HuiDiaoLanModel.instance:getCurEpisodeId()
+
+	return curEpisodeId == tonumber(id)
+end
+
+function WaitGuideActionOpenViewWithCondition.enterHuiDiaoLanSpEpisode()
+	local curEpisodeId = HuiDiaoLanModel.instance:getCurEpisodeId()
+	local episodeConfig = HuiDiaoLanConfig.instance:getEpisodeConfig(curEpisodeId)
+
+	return episodeConfig.type == HuiDiaoLanEnum.SpEpisodeType
+end
+
+function WaitGuideActionOpenViewWithCondition.enterBeiLiErEpisodeId(id)
+	local curEpisodeId = BeiLiErModel.instance:getCurEpisode()
+
+	return curEpisodeId == tonumber(id)
+end
+
+return WaitGuideActionOpenViewWithCondition

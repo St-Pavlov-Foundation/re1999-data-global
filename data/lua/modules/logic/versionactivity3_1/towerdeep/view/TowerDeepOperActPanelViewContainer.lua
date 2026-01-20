@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity3_1.towerdeep.view.TowerDeepOperActPanelViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/towerdeep/view/TowerDeepOperActPanelViewContainer.lua
 
-local var_0_0 = class("TowerDeepOperActPanelViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity3_1.towerdeep.view.TowerDeepOperActPanelViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local TowerDeepOperActPanelViewContainer = class("TowerDeepOperActPanelViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, TowerDeepOperActPanelView.New())
+function TowerDeepOperActPanelViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, TowerDeepOperActPanelView.New())
+
+	return views
 end
 
-return var_0_0
+return TowerDeepOperActPanelViewContainer

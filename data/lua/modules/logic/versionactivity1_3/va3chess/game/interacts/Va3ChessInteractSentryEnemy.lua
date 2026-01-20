@@ -1,51 +1,51 @@
-﻿module("modules.logic.versionactivity1_3.va3chess.game.interacts.Va3ChessInteractSentryEnemy", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/va3chess/game/interacts/Va3ChessInteractSentryEnemy.lua
 
-local var_0_0 = class("Va3ChessInteractSentryEnemy", Va3ChessInteractBase)
+module("modules.logic.versionactivity1_3.va3chess.game.interacts.Va3ChessInteractSentryEnemy", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	var_0_0.super.init(arg_1_0, arg_1_1)
+local Va3ChessInteractSentryEnemy = class("Va3ChessInteractSentryEnemy", Va3ChessInteractBase)
 
-	arg_1_0._enableAlarm = true
+function Va3ChessInteractSentryEnemy:init(targetObj)
+	Va3ChessInteractSentryEnemy.super.init(self, targetObj)
+
+	self._enableAlarm = true
 end
 
-function var_0_0.onDrawAlert(arg_2_0, arg_2_1)
-	if not arg_2_0._enableAlarm then
+function Va3ChessInteractSentryEnemy:onDrawAlert(map)
+	if not self._enableAlarm then
 		return
 	end
 
-	local var_2_0
+	local alertAreaData
 
-	if arg_2_0._target and arg_2_0._target.originData and arg_2_0._target.originData.data then
-		var_2_0 = arg_2_0._target.originData.data.alertArea
+	if self._target and self._target.originData and self._target.originData.data then
+		alertAreaData = self._target.originData.data.alertArea
 	end
 
-	if var_2_0 then
-		local var_2_1 = var_2_0[1].x
-		local var_2_2 = var_2_0[1].y
+	if alertAreaData then
+		local x, y = alertAreaData[1].x, alertAreaData[1].y
 
-		if Va3ChessGameModel.instance:isPosInChessBoard(var_2_1, var_2_2) and Va3ChessGameModel.instance:getBaseTile(var_2_1, var_2_2) ~= Va3ChessEnum.TileBaseType.None then
-			arg_2_1[var_2_1] = arg_2_1[var_2_1] or {}
-			arg_2_1[var_2_1][var_2_2] = arg_2_1[var_2_1][var_2_2] or {}
+		if Va3ChessGameModel.instance:isPosInChessBoard(x, y) and Va3ChessGameModel.instance:getBaseTile(x, y) ~= Va3ChessEnum.TileBaseType.None then
+			map[x] = map[x] or {}
+			map[x][y] = map[x][y] or {}
 
-			table.insert(arg_2_1[var_2_1][var_2_2], true)
+			table.insert(map[x][y], true)
 		end
 	end
 
-	local var_2_3 = arg_2_0._target.originData.posX
-	local var_2_4 = arg_2_0._target.originData.posY
-	local var_2_5 = Activity142Helper.isCanFireKill(arg_2_0._target)
+	local curX, curY = self._target.originData.posX, self._target.originData.posY
+	local isCanFireBallKill = Activity142Helper.isCanFireKill(self._target)
 
-	if var_2_5 then
-		arg_2_1[var_2_3] = arg_2_1[var_2_3] or {}
-		arg_2_1[var_2_3][var_2_4] = arg_2_1[var_2_3][var_2_4] or {}
+	if isCanFireBallKill then
+		map[curX] = map[curX] or {}
+		map[curX][curY] = map[curX][curY] or {}
 
-		table.insert(arg_2_1[var_2_3][var_2_4], {
-			showOrangeStyle = var_2_5
+		table.insert(map[curX][curY], {
+			showOrangeStyle = isCanFireBallKill
 		})
 	end
 end
 
-local var_0_1 = {
+local DeleteReason2Show = {
 	[Va3ChessEnum.DeleteReason.Arrow] = {
 		anim = "die",
 		audio = AudioEnum.chess_activity142.Die
@@ -60,62 +60,62 @@ local var_0_1 = {
 	}
 }
 
-function var_0_0.playDeleteObjView(arg_3_0, arg_3_1)
-	if arg_3_0._animSelf then
-		local var_3_0 = var_0_1[arg_3_1] or {}
-		local var_3_1 = var_3_0.anim or "close"
+function Va3ChessInteractSentryEnemy:playDeleteObjView(deleteReason)
+	if self._animSelf then
+		local showData = DeleteReason2Show[deleteReason] or {}
+		local animName = showData.anim or "close"
 
-		arg_3_0._animSelf:Play(var_3_1, 0, 0)
+		self._animSelf:Play(animName, 0, 0)
 
-		local var_3_2 = var_3_0.audio
+		local audioId = showData.audio
 
-		if var_3_2 then
-			AudioMgr.instance:trigger(var_3_2)
+		if audioId then
+			AudioMgr.instance:trigger(audioId)
 		end
 	end
 
-	if arg_3_0._target and arg_3_0._target.chessEffectObj and arg_3_0._target.chessEffectObj.isShowEffect then
-		arg_3_0._target.chessEffectObj:isShowEffect(false)
+	if self._target and self._target.chessEffectObj and self._target.chessEffectObj.isShowEffect then
+		self._target.chessEffectObj:isShowEffect(false)
 	end
 end
 
-function var_0_0.moveTo(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
-	arg_4_0._enableAlarm = false
+function Va3ChessInteractSentryEnemy:moveTo(x, y, callback, callbackObj)
+	self._enableAlarm = false
 
-	var_0_0.super.moveTo(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
+	Va3ChessInteractSentryEnemy.super.moveTo(self, x, y, callback, callbackObj)
 	Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.RefreshAlarmArea)
 end
 
-function var_0_0.onMoveCompleted(arg_5_0)
-	var_0_0.super.onMoveCompleted(arg_5_0)
+function Va3ChessInteractSentryEnemy:onMoveCompleted()
+	Va3ChessInteractSentryEnemy.super.onMoveCompleted(self)
 
-	arg_5_0._enableAlarm = true
+	self._enableAlarm = true
 
 	Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.RefreshAlarmArea)
 end
 
-function var_0_0.onAvatarLoaded(arg_6_0)
-	var_0_0.super.onAvatarLoaded(arg_6_0)
+function Va3ChessInteractSentryEnemy:onAvatarLoaded()
+	Va3ChessInteractSentryEnemy.super.onAvatarLoaded(self)
 	Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.RefreshAlarmArea)
 
-	if arg_6_0._target.avatar and arg_6_0._target.avatar.loader then
-		local var_6_0 = arg_6_0._target.avatar.loader:getInstGO()
+	if self._target.avatar and self._target.avatar.loader then
+		local go = self._target.avatar.loader:getInstGO()
 
-		if not gohelper.isNil(var_6_0) then
-			arg_6_0._animSelf = var_6_0:GetComponent(typeof(UnityEngine.Animator))
+		if not gohelper.isNil(go) then
+			self._animSelf = go:GetComponent(typeof(UnityEngine.Animator))
 
-			if arg_6_0._animSelf then
-				arg_6_0._animSelf:Play("open", 0, 0)
+			if self._animSelf then
+				self._animSelf:Play("open", 0, 0)
 			end
 		end
 	end
 end
 
-function var_0_0.dispose(arg_7_0)
-	arg_7_0._enableAlarm = false
+function Va3ChessInteractSentryEnemy:dispose()
+	self._enableAlarm = false
 
-	var_0_0.super.dispose(arg_7_0)
+	Va3ChessInteractSentryEnemy.super.dispose(self)
 	Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.RefreshAlarmArea)
 end
 
-return var_0_0
+return Va3ChessInteractSentryEnemy

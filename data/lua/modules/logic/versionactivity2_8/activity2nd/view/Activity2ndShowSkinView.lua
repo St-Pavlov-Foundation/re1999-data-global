@@ -1,119 +1,125 @@
-﻿module("modules.logic.versionactivity2_8.activity2nd.view.Activity2ndShowSkinView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/activity2nd/view/Activity2ndShowSkinView.lua
 
-local var_0_0 = class("Activity2ndShowSkinView", BaseView)
+module("modules.logic.versionactivity2_8.activity2nd.view.Activity2ndShowSkinView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_close")
-	arg_1_0._gotime = gohelper.findChild(arg_1_0.viewGO, "root/#go_time")
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "root/#go_time/#txt_LimitTime")
-	arg_1_0._btndetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_detail")
-	arg_1_0._btnclaim = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_claim")
-	arg_1_0._gocanget = gohelper.findChild(arg_1_0.viewGO, "root/#btn_claim/simage_canget")
-	arg_1_0._gohasget = gohelper.findChild(arg_1_0.viewGO, "root/#btn_claim/simage_hasget")
+local Activity2ndShowSkinView = class("Activity2ndShowSkinView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Activity2ndShowSkinView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_close")
+	self._gotime = gohelper.findChild(self.viewGO, "root/#go_time")
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "root/#go_time/#txt_LimitTime")
+	self._btndetail = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_detail")
+	self._btnclaim = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_claim")
+	self._gocanget = gohelper.findChild(self.viewGO, "root/#btn_claim/simage_canget")
+	self._gohasget = gohelper.findChild(self.viewGO, "root/#btn_claim/simage_hasget")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0._btnPresentList) do
-		iter_2_1:AddClickListener(arg_2_0._btnPresentOnClick, arg_2_0, iter_2_0)
+function Activity2ndShowSkinView:addEvents()
+	for i, btnPresent in ipairs(self._btnPresentList) do
+		btnPresent:AddClickListener(self._btnPresentOnClick, self, i)
 	end
 
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btndetail:AddClickListener(arg_2_0._btndetailOnClick, arg_2_0)
-	arg_2_0._btnclaim:AddClickListener(arg_2_0._btnclaimOnClick, arg_2_0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, arg_2_0.refreshUI, arg_2_0)
-	arg_2_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_2_0.onRefreshActivity, arg_2_0)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btndetail:AddClickListener(self._btndetailOnClick, self)
+	self._btnclaim:AddClickListener(self._btnclaimOnClick, self)
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, self.refreshUI, self)
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self.onRefreshActivity, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btndetail:RemoveClickListener()
-	arg_3_0._btnclaim:RemoveClickListener()
+function Activity2ndShowSkinView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btndetail:RemoveClickListener()
+	self._btnclaim:RemoveClickListener()
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0._btnPresentList) do
-		iter_3_1:RemoveClickListener()
+	for _, btnPresent in ipairs(self._btnPresentList) do
+		btnPresent:RemoveClickListener()
 	end
 
-	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, arg_3_0.refreshUI, arg_3_0)
+	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, self.refreshUI, self)
 end
 
-function var_0_0._btndetailOnClick(arg_4_0)
-	local var_4_0 = arg_4_0._rewardconfig and arg_4_0._rewardconfig.bonus and string.split(arg_4_0._rewardconfig.bonus, "#")
+function Activity2ndShowSkinView:_btndetailOnClick()
+	local reward = self._rewardconfig and self._rewardconfig.bonus and string.split(self._rewardconfig.bonus, "#")
 
-	MaterialTipController.instance:showMaterialInfo(var_4_0[1], var_4_0[2])
+	MaterialTipController.instance:showMaterialInfo(reward[1], reward[2])
 end
 
-function var_0_0._btnclaimOnClick(arg_5_0)
-	if arg_5_0:checkCanGet(arg_5_0._actId) then
-		Activity101Rpc.instance:sendGet101BonusRequest(arg_5_0._actId, 1)
+function Activity2ndShowSkinView:_btnclaimOnClick()
+	if self:checkCanGet(self._actId) then
+		Activity101Rpc.instance:sendGet101BonusRequest(self._actId, 1)
 	end
 end
 
-function var_0_0._btncloseOnClick(arg_6_0)
-	arg_6_0:closeThis()
+function Activity2ndShowSkinView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0._btnPresentList = arg_7_0:getUserDataTb_()
+function Activity2ndShowSkinView:_editableInitView()
+	self._btnPresentList = self:getUserDataTb_()
 
-	for iter_7_0 = 1, Activity2ndEnum.DISPLAY_SKIN_COUNT do
-		local var_7_0 = gohelper.findChildButtonWithAudio(arg_7_0.viewGO, "root/simage_FullBG/role/simage_role" .. iter_7_0)
+	for i = 1, Activity2ndEnum.DISPLAY_SKIN_COUNT do
+		local btnPresent = gohelper.findChildButtonWithAudio(self.viewGO, "root/simage_FullBG/role/simage_role" .. i)
 
-		if var_7_0 then
-			arg_7_0._btnPresentList[#arg_7_0._btnPresentList + 1] = var_7_0
+		if btnPresent then
+			self._btnPresentList[#self._btnPresentList + 1] = btnPresent
 		end
 	end
 end
 
-function var_0_0._btnPresentOnClick(arg_8_0, arg_8_1)
-	if not ActivityHelper.isOpen(arg_8_0._actId) then
+function Activity2ndShowSkinView:_btnPresentOnClick(index)
+	local isOpen = ActivityHelper.isOpen(self._actId)
+
+	if not isOpen then
 		return
 	end
 
-	if arg_8_1 == 1 then
-		local var_8_0 = Activity2ndEnum.ShowSkin4
+	if index == 1 then
+		local skinId = Activity2ndEnum.ShowSkin4
 
-		if var_8_0 then
+		if skinId then
 			CharacterController.instance:openCharacterSkinTipView({
 				isShowHomeBtn = false,
-				skinId = var_8_0
+				skinId = skinId
 			})
 
-			local var_8_1 = SkinConfig.instance:getSkinCo(tonumber(var_8_0))
+			local skinCo = SkinConfig.instance:getSkinCo(tonumber(skinId))
 
-			if var_8_1 then
+			if skinCo then
 				StatController.instance:track(StatEnum.EventName.Activity2ndSkinCollectionClick, {
-					[StatEnum.EventProperties.skinId] = tonumber(var_8_0),
-					[StatEnum.EventProperties.HeroName] = var_8_1.name
+					[StatEnum.EventProperties.skinId] = tonumber(skinId),
+					[StatEnum.EventProperties.HeroName] = skinCo.name
 				})
 			end
 		end
 	else
-		local var_8_2 = Activity2ndEnum.Index2GoodsId[arg_8_1]
+		local goodsId = Activity2ndEnum.Index2GoodsId[index]
 
-		if var_8_2 then
-			if not StoreModel.instance:getGoodsMO(tonumber(var_8_2)) then
+		if goodsId then
+			local goodMo = StoreModel.instance:getGoodsMO(tonumber(goodsId))
+
+			if not goodMo then
 				return
 			end
 
 			ViewMgr.instance:openView(ViewName.StoreSkinPreviewView, {
-				goodsMO = StoreModel.instance:getGoodsMO(tonumber(var_8_2))
+				goodsMO = StoreModel.instance:getGoodsMO(tonumber(goodsId))
 			})
 
-			local var_8_3 = StoreConfig.instance:getGoodsConfig(var_8_2)
-			local var_8_4 = var_8_3 and var_8_3.product and string.split(var_8_3.product, "#")
-			local var_8_5 = var_8_4 and var_8_4[2]
+			local config = StoreConfig.instance:getGoodsConfig(goodsId)
+			local tab = config and config.product and string.split(config.product, "#")
+			local skinId = tab and tab[2]
 
-			if var_8_5 then
-				local var_8_6 = SkinConfig.instance:getSkinCo(tonumber(var_8_5))
+			if skinId then
+				local skinCo = SkinConfig.instance:getSkinCo(tonumber(skinId))
 
-				if var_8_6 then
+				if skinCo then
 					StatController.instance:track(StatEnum.EventName.Activity2ndSkinCollectionClick, {
-						[StatEnum.EventProperties.skinId] = tonumber(var_8_5),
-						[StatEnum.EventProperties.HeroName] = var_8_6.name
+						[StatEnum.EventProperties.skinId] = tonumber(skinId),
+						[StatEnum.EventProperties.HeroName] = skinCo.name
 					})
 				end
 			end
@@ -121,52 +127,56 @@ function var_0_0._btnPresentOnClick(arg_8_0, arg_8_1)
 	end
 end
 
-function var_0_0.checkReceied(arg_9_0, arg_9_1)
-	return (ActivityType101Model.instance:isType101RewardGet(arg_9_1, 1))
+function Activity2ndShowSkinView:checkReceied(actId)
+	local received = ActivityType101Model.instance:isType101RewardGet(actId, 1)
+
+	return received
 end
 
-function var_0_0.checkCanGet(arg_10_0, arg_10_1)
-	return (ActivityType101Model.instance:isType101RewardCouldGet(arg_10_1, 1))
+function Activity2ndShowSkinView:checkCanGet(actId)
+	local couldGet = ActivityType101Model.instance:isType101RewardCouldGet(actId, 1)
+
+	return couldGet
 end
 
-function var_0_0.onUpdateParam(arg_11_0)
+function Activity2ndShowSkinView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_12_0)
-	arg_12_0._actId = arg_12_0.viewParam and arg_12_0.viewParam.actId
-	arg_12_0._rewardconfig = ActivityConfig.instance:getNorSignActivityCo(arg_12_0._actId, 1)
+function Activity2ndShowSkinView:onOpen()
+	self._actId = self.viewParam and self.viewParam.actId
+	self._rewardconfig = ActivityConfig.instance:getNorSignActivityCo(self._actId, 1)
 
-	arg_12_0:refreshUI()
+	self:refreshUI()
 	AudioMgr.instance:trigger(AudioEnum.Meilanni.play_ui_mln_day_night)
 end
 
-function var_0_0.refreshUI(arg_13_0)
-	arg_13_0._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(arg_13_0._actId)
+function Activity2ndShowSkinView:refreshUI()
+	self._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(self._actId)
 
-	local var_13_0 = arg_13_0:checkCanGet(arg_13_0._actId)
-	local var_13_1 = arg_13_0:checkReceied(arg_13_0._actId)
+	local canGet = self:checkCanGet(self._actId)
+	local hasGet = self:checkReceied(self._actId)
 
-	gohelper.setActive(arg_13_0._gohasget, var_13_1)
-	gohelper.setActive(arg_13_0._gocanget, var_13_0)
+	gohelper.setActive(self._gohasget, hasGet)
+	gohelper.setActive(self._gocanget, canGet)
 end
 
-function var_0_0.onRefreshActivity(arg_14_0)
-	local var_14_0 = ActivityHelper.getActivityStatus(arg_14_0._actId)
+function Activity2ndShowSkinView:onRefreshActivity()
+	local status = ActivityHelper.getActivityStatus(self._actId)
 
-	if var_14_0 == ActivityEnum.ActivityStatus.NotOnLine or var_14_0 == ActivityEnum.ActivityStatus.Expired then
+	if status == ActivityEnum.ActivityStatus.NotOnLine or status == ActivityEnum.ActivityStatus.Expired then
 		MessageBoxController.instance:showSystemMsgBox(MessageBoxIdDefine.EndActivity, MsgBoxEnum.BoxType.Yes, ActivityLiveMgr.yesCallback)
 
 		return
 	end
 end
 
-function var_0_0.onClose(arg_15_0)
+function Activity2ndShowSkinView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_16_0)
+function Activity2ndShowSkinView:onDestroyView()
 	return
 end
 
-return var_0_0
+return Activity2ndShowSkinView

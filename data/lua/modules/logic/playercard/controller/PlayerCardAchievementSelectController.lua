@@ -1,147 +1,152 @@
-﻿module("modules.logic.playercard.controller.PlayerCardAchievementSelectController", package.seeall)
+﻿-- chunkname: @modules/logic/playercard/controller/PlayerCardAchievementSelectController.lua
 
-local var_0_0 = class("PlayerCardAchievementSelectController", BaseController)
+module("modules.logic.playercard.controller.PlayerCardAchievementSelectController", package.seeall)
 
-function var_0_0.onOpenView(arg_1_0, arg_1_1)
-	PlayerCardAchievementSelectListModel.instance:initDatas(arg_1_1)
+local PlayerCardAchievementSelectController = class("PlayerCardAchievementSelectController", BaseController)
+
+function PlayerCardAchievementSelectController:onOpenView(selectType)
+	PlayerCardAchievementSelectListModel.instance:initDatas(selectType)
 end
 
-function var_0_0.onCloseView(arg_2_0)
+function PlayerCardAchievementSelectController:onCloseView()
 	PlayerCardAchievementSelectListModel.instance:release()
 end
 
-function var_0_0.changeNamePlateSelect(arg_3_0, arg_3_1)
-	local var_3_0 = PlayerCardAchievementSelectListModel.instance:isSingleSelected(arg_3_1)
-	local var_3_1 = PlayerCardAchievementSelectListModel.instance:getSingleSelectedCount()
+function PlayerCardAchievementSelectController:changeNamePlateSelect(taskId)
+	local isSelected = PlayerCardAchievementSelectListModel.instance:isSingleSelected(taskId)
+	local curCount = PlayerCardAchievementSelectListModel.instance:getSingleSelectedCount()
 
-	if not var_3_0 and var_3_1 >= 1 then
+	if not isSelected and curCount >= 1 then
 		GameFacade.showToast(ToastEnum.AchievementShowMaxSingleCount, 1)
 
 		return
 	end
 
-	PlayerCardAchievementSelectListModel.instance:setSingleSelect(arg_3_1, not var_3_0)
-	arg_3_0:notifyUpdateView()
+	PlayerCardAchievementSelectListModel.instance:setSingleSelect(taskId, not isSelected)
+	self:notifyUpdateView()
 end
 
-function var_0_0.setCategory(arg_4_0, arg_4_1)
-	PlayerCardAchievementSelectListModel.instance:setTab(arg_4_1)
-	arg_4_0:notifyUpdateView()
+function PlayerCardAchievementSelectController:setCategory(category)
+	PlayerCardAchievementSelectListModel.instance:setTab(category)
+	self:notifyUpdateView()
 end
 
-function var_0_0.switchGroup(arg_5_0)
-	local var_5_0 = PlayerCardAchievementSelectListModel.instance.isGroup
+function PlayerCardAchievementSelectController:switchGroup()
+	local isGroup = PlayerCardAchievementSelectListModel.instance.isGroup
+	local needSave = PlayerCardAchievementSelectListModel.instance:checkDirty(isGroup)
 
-	if PlayerCardAchievementSelectListModel.instance:checkDirty(var_5_0) then
-		GameFacade.showMessageBox(MessageBoxIdDefine.AchievementSaveCheck, MsgBoxEnum.BoxType.Yes_No, arg_5_0.switchGroupWithoutCheck, nil, nil, arg_5_0, nil)
+	if needSave then
+		GameFacade.showMessageBox(MessageBoxIdDefine.AchievementSaveCheck, MsgBoxEnum.BoxType.Yes_No, self.switchGroupWithoutCheck, nil, nil, self, nil)
 	else
-		arg_5_0:switchGroupWithoutCheck()
+		self:switchGroupWithoutCheck()
 	end
 end
 
-function var_0_0.switchGroupAfterSave(arg_6_0)
-	arg_6_0:sendSave(arg_6_0.switchGroupWithoutCheck, arg_6_0)
+function PlayerCardAchievementSelectController:switchGroupAfterSave()
+	self:sendSave(self.switchGroupWithoutCheck, self)
 end
 
-function var_0_0.switchGroupWithoutCheck(arg_7_0)
-	local var_7_0 = PlayerCardAchievementSelectListModel.instance.isGroup
+function PlayerCardAchievementSelectController:switchGroupWithoutCheck()
+	local isGroup = PlayerCardAchievementSelectListModel.instance.isGroup
 
 	PlayerCardAchievementSelectListModel.instance:resumeToOriginSelect()
 
-	if not var_7_0 then
+	if not isGroup then
 		PlayerCardAchievementSelectListModel.instance:setTab(AchievementEnum.Type.Activity)
 	end
 
-	PlayerCardAchievementSelectListModel.instance:setIsSelectGroup(not var_7_0)
-	arg_7_0:notifyUpdateView()
+	PlayerCardAchievementSelectListModel.instance:setIsSelectGroup(not isGroup)
+	self:notifyUpdateView()
 end
 
-function var_0_0.resumeToOriginSelect(arg_8_0)
+function PlayerCardAchievementSelectController:resumeToOriginSelect()
 	PlayerCardAchievementSelectListModel.instance:resumeToOriginSelect()
-	arg_8_0:notifyUpdateView()
+	self:notifyUpdateView()
 end
 
-function var_0_0.clearAllSelect(arg_9_0)
+function PlayerCardAchievementSelectController:clearAllSelect()
 	PlayerCardAchievementSelectListModel.instance:clearAllSelect()
-	arg_9_0:notifyUpdateView()
+	self:notifyUpdateView()
 end
 
-function var_0_0.changeGroupSelect(arg_10_0, arg_10_1)
-	local var_10_0 = PlayerCardAchievementSelectListModel.instance:isGroupSelected(arg_10_1)
-	local var_10_1 = PlayerCardAchievementSelectListModel.instance:getGroupSelectedCount()
+function PlayerCardAchievementSelectController:changeGroupSelect(groupId)
+	local isSelected = PlayerCardAchievementSelectListModel.instance:isGroupSelected(groupId)
+	local curCount = PlayerCardAchievementSelectListModel.instance:getGroupSelectedCount()
+	local isSupportSingleSelect = AchievementEnum.ShowMaxGroupCount <= 1
 
-	if AchievementEnum.ShowMaxGroupCount <= 1 then
+	if isSupportSingleSelect then
 		PlayerCardAchievementSelectListModel.instance:clearAllSelect()
-	elseif not var_10_0 and var_10_1 >= AchievementEnum.ShowMaxGroupCount then
+	elseif not isSelected and curCount >= AchievementEnum.ShowMaxGroupCount then
 		GameFacade.showToast(ToastEnum.AchievementShowMaxGroupCount, AchievementEnum.ShowMaxGroupCount)
 
 		return
 	end
 
-	PlayerCardAchievementSelectListModel.instance:setGroupSelect(arg_10_1, not var_10_0)
-	arg_10_0:notifyUpdateView()
+	PlayerCardAchievementSelectListModel.instance:setGroupSelect(groupId, not isSelected)
+	self:notifyUpdateView()
 end
 
-function var_0_0.changeSingleSelect(arg_11_0, arg_11_1)
-	local var_11_0 = PlayerCardAchievementSelectListModel.instance:isSingleSelected(arg_11_1)
-	local var_11_1 = PlayerCardAchievementSelectListModel.instance:getSingleSelectedCount()
+function PlayerCardAchievementSelectController:changeSingleSelect(taskId)
+	local isSelected = PlayerCardAchievementSelectListModel.instance:isSingleSelected(taskId)
+	local curCount = PlayerCardAchievementSelectListModel.instance:getSingleSelectedCount()
 
-	if not var_11_0 and var_11_1 >= AchievementEnum.ShowMaxSingleCount then
+	if not isSelected and curCount >= AchievementEnum.ShowMaxSingleCount then
 		GameFacade.showToast(ToastEnum.AchievementShowMaxSingleCount, AchievementEnum.ShowMaxSingleCount)
 
 		return
 	end
 
-	PlayerCardAchievementSelectListModel.instance:setSingleSelect(arg_11_1, not var_11_0)
-	arg_11_0:notifyUpdateView()
+	PlayerCardAchievementSelectListModel.instance:setSingleSelect(taskId, not isSelected)
+	self:notifyUpdateView()
 end
 
-function var_0_0.handlePlayerInfoChanged(arg_12_0)
+function PlayerCardAchievementSelectController:handlePlayerInfoChanged()
 	PlayerCardAchievementSelectListModel.instance:decodeShowAchievement()
-	arg_12_0:notifyUpdateView()
+	self:notifyUpdateView()
 end
 
-function var_0_0.handleAchievementUpdated(arg_13_0)
+function PlayerCardAchievementSelectController:handleAchievementUpdated()
 	PlayerCardAchievementSelectListModel.instance:refreshTabData()
-	arg_13_0:notifyUpdateView()
+	self:notifyUpdateView()
 end
 
-function var_0_0.checkSave(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	GameFacade.showMessageBox(MessageBoxIdDefine.AchievementSaveCheck, MsgBoxEnum.BoxType.Yes_No, arg_14_0.switchGroupAfterSave, arg_14_2, nil, arg_14_0, arg_14_3)
+function PlayerCardAchievementSelectController:checkSave(isGroup, cancelCall, cancelCallObj)
+	GameFacade.showMessageBox(MessageBoxIdDefine.AchievementSaveCheck, MsgBoxEnum.BoxType.Yes_No, self.switchGroupAfterSave, cancelCall, nil, self, cancelCallObj)
 end
 
-function var_0_0.sendSave(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0, var_15_1 = PlayerCardAchievementSelectListModel.instance:getSaveRequestParam()
+function PlayerCardAchievementSelectController:sendSave(callback, callbackObj)
+	local taskIdList, groupId = PlayerCardAchievementSelectListModel.instance:getSaveRequestParam()
 
-	AchievementRpc.instance:sendShowAchievementRequest(var_15_0, var_15_1, arg_15_1, arg_15_2)
+	AchievementRpc.instance:sendShowAchievementRequest(taskIdList, groupId, callback, callbackObj)
 end
 
-function var_0_0.notifyUpdateView(arg_16_0)
-	arg_16_0:dispatchEvent(AchievementEvent.SelectViewUpdated)
+function PlayerCardAchievementSelectController:notifyUpdateView()
+	self:dispatchEvent(AchievementEvent.SelectViewUpdated)
 	PlayerCardAchievementSelectListModel.instance:onModelUpdate()
 end
 
-function var_0_0.popUpMessageBoxIfNeedSave(arg_17_0, arg_17_1, arg_17_2, arg_17_3, arg_17_4, arg_17_5, arg_17_6)
-	local var_17_0 = PlayerCardAchievementSelectListModel.instance.isGroup
+function PlayerCardAchievementSelectController:popUpMessageBoxIfNeedSave(yesCB, noCB, unPopUpCB, yesCBObj, noCBObj, unPopUpObj)
+	local isGroup = PlayerCardAchievementSelectListModel.instance.isGroup
+	local needSave = PlayerCardAchievementSelectListModel.instance:checkDirty(isGroup)
 
-	if PlayerCardAchievementSelectListModel.instance:checkDirty(var_17_0) then
-		GameFacade.showMessageBox(MessageBoxIdDefine.AchievementSaveCheck, MsgBoxEnum.BoxType.Yes_No, arg_17_1, arg_17_2, nil, arg_17_4, arg_17_5)
-	elseif arg_17_3 then
-		arg_17_3(arg_17_6)
+	if needSave then
+		GameFacade.showMessageBox(MessageBoxIdDefine.AchievementSaveCheck, MsgBoxEnum.BoxType.Yes_No, yesCB, noCB, nil, yesCBObj, noCBObj)
+	elseif unPopUpCB then
+		unPopUpCB(unPopUpObj)
 	end
 end
 
-function var_0_0.isCurrentShowGroupInPlayerView(arg_18_0)
-	local var_18_0 = PlayerCardModel.instance:getShowAchievement()
-	local var_18_1, var_18_2 = AchievementUtils.decodeShowStr(var_18_0)
+function PlayerCardAchievementSelectController:isCurrentShowGroupInPlayerView()
+	local showStr = PlayerCardModel.instance:getShowAchievement()
+	local _, groupSet = AchievementUtils.decodeShowStr(showStr)
 
-	if var_18_2 and tabletool.len(var_18_2) > 0 then
+	if groupSet and tabletool.len(groupSet) > 0 then
 		return true
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+PlayerCardAchievementSelectController.instance = PlayerCardAchievementSelectController.New()
 
-LuaEventSystem.addEventMechanism(var_0_0.instance)
+LuaEventSystem.addEventMechanism(PlayerCardAchievementSelectController.instance)
 
-return var_0_0
+return PlayerCardAchievementSelectController

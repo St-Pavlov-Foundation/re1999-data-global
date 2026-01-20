@@ -1,62 +1,68 @@
-﻿module("modules.logic.fight.system.work.FightWorkPlayHideCardCloseAnim", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkPlayHideCardCloseAnim.lua
 
-local var_0_0 = class("FightWorkPlayHideCardCloseAnim", FightWorkItem)
+module("modules.logic.fight.system.work.FightWorkPlayHideCardCloseAnim", package.seeall)
 
-function var_0_0.onLogicEnter(arg_1_0, arg_1_1)
-	arg_1_0.cardEndEffectWork = arg_1_1
+local FightWorkPlayHideCardCloseAnim = class("FightWorkPlayHideCardCloseAnim", FightWorkItem)
+
+function FightWorkPlayHideCardCloseAnim:onLogicEnter(cardEndEffectWork)
+	self.cardEndEffectWork = cardEndEffectWork
 end
 
-var_0_0.CloseAnimLen = 1
-var_0_0.WaitRefreshCardIconLen = 0.03
+FightWorkPlayHideCardCloseAnim.CloseAnimLen = 1
+FightWorkPlayHideCardCloseAnim.WaitRefreshCardIconLen = 0.03
 
-function var_0_0.onStart(arg_2_0)
-	arg_2_0.cloneItemList = arg_2_0.cardEndEffectWork and arg_2_0.cardEndEffectWork._cloneOperateItemList
+function FightWorkPlayHideCardCloseAnim:onStart()
+	self.cloneItemList = self.cardEndEffectWork and self.cardEndEffectWork._cloneOperateItemList
 
-	if not arg_2_0.cloneItemList then
-		arg_2_0:onDone(true)
+	if not self.cloneItemList then
+		self:onDone(true)
 
 		return
 	end
 
-	local var_2_0 = false
+	local hadAnim = false
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0.cloneItemList) do
-		local var_2_1 = iter_2_1.viewGo
-		local var_2_2 = gohelper.findChild(var_2_1, "card")
-		local var_2_3 = var_2_2 and gohelper.findChild(var_2_2, FightViewCardItem.HideCardVxGoName)
+	for _, item in ipairs(self.cloneItemList) do
+		local go = item.viewGo
+		local cardGo = gohelper.findChild(go, "card")
+		local hideCardGo = cardGo and gohelper.findChild(cardGo, FightViewCardItem.HideCardVxGoName)
 
-		if var_2_3 and var_2_3.activeInHierarchy then
-			var_2_0 = true
+		if hideCardGo and hideCardGo.activeInHierarchy then
+			hadAnim = true
 
-			local var_2_4 = gohelper.findChild(var_2_3, "normal")
+			local normal = gohelper.findChild(hideCardGo, "normal")
 
-			if var_2_4 and var_2_4.activeInHierarchy then
-				gohelper.findChildComponent(var_2_4, "ani", gohelper.Type_Animator):Play("close")
+			if normal and normal.activeInHierarchy then
+				local animator = gohelper.findChildComponent(normal, "ani", gohelper.Type_Animator)
+
+				animator:Play("close")
 			end
 
-			local var_2_5 = gohelper.findChild(var_2_3, "ultimate")
+			local bigSkill = gohelper.findChild(hideCardGo, "ultimate")
 
-			if var_2_5 and var_2_5.activeInHierarchy then
-				gohelper.findChildComponent(var_2_5, "ani", gohelper.Type_Animator):Play("close")
+			if bigSkill and bigSkill.activeInHierarchy then
+				local animator = gohelper.findChildComponent(bigSkill, "ani", gohelper.Type_Animator)
+
+				animator:Play("close")
 			end
 		end
 	end
 
-	if not var_2_0 then
-		arg_2_0:onDone(true)
+	if not hadAnim then
+		self:onDone(true)
 
 		return
 	end
 
 	AudioMgr.instance:trigger(310006)
-	arg_2_0:com_registTimer(arg_2_0.delayRefreshCardIcon, var_0_0.WaitRefreshCardIconLen)
-	arg_2_0:com_registTimer(arg_2_0.finishWork, var_0_0.CloseAnimLen)
+	self:com_registTimer(self.delayRefreshCardIcon, FightWorkPlayHideCardCloseAnim.WaitRefreshCardIconLen)
+	self:com_registTimer(self.finishWork, FightWorkPlayHideCardCloseAnim.CloseAnimLen)
 end
 
-function var_0_0.delayRefreshCardIcon(arg_3_0)
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0.cloneItemList) do
-		iter_3_1:refreshCardIcon()
+function FightWorkPlayHideCardCloseAnim:delayRefreshCardIcon()
+	for _, item in ipairs(self.cloneItemList) do
+		item:refreshCardIcon()
 	end
 end
 
-return var_0_0
+return FightWorkPlayHideCardCloseAnim

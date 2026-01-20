@@ -1,58 +1,60 @@
-﻿module("modules.logic.fight.view.cardeffect.FigthMasterAddHandCardEffect", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/cardeffect/FigthMasterAddHandCardEffect.lua
 
-local var_0_0 = class("FigthMasterAddHandCardEffect", BaseWork)
-local var_0_1 = {
+module("modules.logic.fight.view.cardeffect.FigthMasterAddHandCardEffect", package.seeall)
+
+local FigthMasterAddHandCardEffect = class("FigthMasterAddHandCardEffect", BaseWork)
+local pathList = {
 	"ui/viewres/fight/ui_effect_wuduquan_a.prefab"
 }
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	gohelper.setActive(arg_1_0.context.card.go, false)
+function FigthMasterAddHandCardEffect:onStart(context)
+	gohelper.setActive(self.context.card.go, false)
 
-	arg_1_0._loader = arg_1_0._loader or LoaderComponent.New()
+	self._loader = self._loader or LoaderComponent.New()
 
-	arg_1_0._loader:loadListAsset(var_0_1, arg_1_0._onLoaded, arg_1_0._onAllLoaded, arg_1_0)
+	self._loader:loadListAsset(pathList, self._onLoaded, self._onAllLoaded, self)
 end
 
-function var_0_0._onLoaded(arg_2_0)
+function FigthMasterAddHandCardEffect:_onLoaded()
 	return
 end
 
-function var_0_0._onAllLoaded(arg_3_0)
-	gohelper.setActive(arg_3_0.context.card.go, true)
+function FigthMasterAddHandCardEffect:_onAllLoaded()
+	gohelper.setActive(self.context.card.go, true)
 
-	for iter_3_0, iter_3_1 in ipairs(var_0_1) do
-		local var_3_0 = arg_3_0._loader:getAssetItem(iter_3_1)
+	for i, v in ipairs(pathList) do
+		local loader = self._loader:getAssetItem(v)
 
-		if var_3_0 then
-			local var_3_1 = var_3_0:GetResource()
+		if loader then
+			local tarPrefab = loader:GetResource()
 
-			if iter_3_0 == 1 then
-				arg_3_0.context.card:playAni(ViewAnim.FightCardWuDuQuan)
+			if i == 1 then
+				self.context.card:playAni(ViewAnim.FightCardWuDuQuan)
 
-				arg_3_0._clonePrefab = gohelper.clone(var_3_1, arg_3_0.context.card.go)
+				self._clonePrefab = gohelper.clone(tarPrefab, self.context.card.go)
 
-				gohelper.onceAddComponent(arg_3_0._clonePrefab, typeof(UnityEngine.Animator)):Play("open", 0, 0)
+				gohelper.onceAddComponent(self._clonePrefab, typeof(UnityEngine.Animator)):Play("open", 0, 0)
 			end
 		end
 	end
 
-	TaskDispatcher.runDelay(arg_3_0._delayDone, arg_3_0, 1.1 / FightModel.instance:getUISpeed())
+	TaskDispatcher.runDelay(self._delayDone, self, 1.1 / FightModel.instance:getUISpeed())
 end
 
-function var_0_0._delayDone(arg_4_0)
-	arg_4_0:onDone(true)
+function FigthMasterAddHandCardEffect:_delayDone()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_5_0)
-	if not gohelper.isNil(arg_5_0._clonePrefab) then
-		gohelper.destroy(arg_5_0._clonePrefab)
+function FigthMasterAddHandCardEffect:clearWork()
+	if not gohelper.isNil(self._clonePrefab) then
+		gohelper.destroy(self._clonePrefab)
 	end
 
-	if arg_5_0._loader then
-		arg_5_0._loader:releaseSelf()
+	if self._loader then
+		self._loader:releaseSelf()
 
-		arg_5_0._loader = nil
+		self._loader = nil
 	end
 end
 
-return var_0_0
+return FigthMasterAddHandCardEffect

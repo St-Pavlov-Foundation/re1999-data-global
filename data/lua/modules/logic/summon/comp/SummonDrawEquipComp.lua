@@ -1,161 +1,164 @@
-﻿module("modules.logic.summon.comp.SummonDrawEquipComp", package.seeall)
+﻿-- chunkname: @modules/logic/summon/comp/SummonDrawEquipComp.lua
 
-local var_0_0 = class("SummonDrawEquipComp", LuaCompBase)
+module("modules.logic.summon.comp.SummonDrawEquipComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._rootGO = gohelper.findChild(arg_1_1, "anim")
-	arg_1_0._goLed = gohelper.findChild(arg_1_1, "anim/StandStill/Obj-Plant/erjiguan")
-	arg_1_0._tfLed = arg_1_0._goLed.transform
-	arg_1_0._animLed = arg_1_0._goLed:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._goLedOne = gohelper.findChild(arg_1_0._goLed, "diode_b")
-	arg_1_0._goLedTen = gohelper.findChild(arg_1_0._goLed, "diode_a")
-	arg_1_0._fadingFactor = 1
-	arg_1_0._toZeroSpeed = 0.007
-	arg_1_0._targetLedPosY = -1.51
-	arg_1_0._finished = true
-	arg_1_0._curProgress = 0
+local SummonDrawEquipComp = class("SummonDrawEquipComp", LuaCompBase)
 
-	arg_1_0:onCreate()
+function SummonDrawEquipComp:ctor(sceneGO)
+	self._rootGO = gohelper.findChild(sceneGO, "anim")
+	self._goLed = gohelper.findChild(sceneGO, "anim/StandStill/Obj-Plant/erjiguan")
+	self._tfLed = self._goLed.transform
+	self._animLed = self._goLed:GetComponent(typeof(UnityEngine.Animator))
+	self._goLedOne = gohelper.findChild(self._goLed, "diode_b")
+	self._goLedTen = gohelper.findChild(self._goLed, "diode_a")
+	self._fadingFactor = 1
+	self._toZeroSpeed = 0.007
+	self._targetLedPosY = -1.51
+	self._finished = true
+	self._curProgress = 0
+
+	self:onCreate()
 end
 
-function var_0_0.onCreate(arg_2_0)
+function SummonDrawEquipComp:onCreate()
 	return
 end
 
-function var_0_0.onUpdate(arg_3_0)
-	if arg_3_0._finished then
+function SummonDrawEquipComp:onUpdate()
+	if self._finished then
 		return
 	end
 
-	if arg_3_0._updateSpeed ~= 0 then
-		arg_3_0._curProgress = arg_3_0._curProgress + arg_3_0._updateSpeed
+	if self._updateSpeed ~= 0 then
+		self._curProgress = self._curProgress + self._updateSpeed
 
-		if arg_3_0._curProgress < 0 then
-			arg_3_0._curProgress = 0
-		elseif arg_3_0._curProgress > 1 then
-			arg_3_0._curProgress = 1
+		if self._curProgress < 0 then
+			self._curProgress = 0
+		elseif self._curProgress > 1 then
+			self._curProgress = 1
 		end
 
-		arg_3_0:updateForEffect()
-		arg_3_0:updateForSpeedFading()
-		arg_3_0:updateForFinishCheck()
+		self:updateForEffect()
+		self:updateForSpeedFading()
+		self:updateForFinishCheck()
 	end
 end
 
-function var_0_0.applySpeed(arg_4_0)
-	local var_4_0 = -arg_4_0._deltaDistance * 0.003
-	local var_4_1 = math.abs(var_4_0)
-	local var_4_2 = var_4_0 / var_4_1
-	local var_4_3 = 0.1
+function SummonDrawEquipComp:applySpeed()
+	local deltaValue = -self._deltaDistance * 0.003
+	local absDist = math.abs(deltaValue)
+	local sign = deltaValue / absDist
+	local constMaxSpd = 0.1
+	local speed = constMaxSpd < absDist and sign * constMaxSpd or deltaValue
 
-	return var_4_3 < var_4_1 and var_4_2 * var_4_3 or var_4_0
+	return speed
 end
 
-function var_0_0.updateForEffect(arg_5_0)
-	local var_5_0 = arg_5_0._curProgress
+function SummonDrawEquipComp:updateForEffect()
+	local progress = self._curProgress
 
-	if arg_5_0._tfLed and arg_5_0._ledPosY then
-		local var_5_1 = arg_5_0._ledPosY + (arg_5_0._targetLedPosY - arg_5_0._ledPosY) * var_5_0
-		local var_5_2, var_5_3, var_5_4 = transformhelper.getLocalPos(arg_5_0._rootGO.transform)
+	if self._tfLed and self._ledPosY then
+		local targetPosY = self._ledPosY + (self._targetLedPosY - self._ledPosY) * progress
+		local positionX, positionY, positionZ = transformhelper.getLocalPos(self._rootGO.transform)
 
-		transformhelper.setLocalPos(arg_5_0._tfLed, var_5_2, var_5_1, var_5_4)
+		transformhelper.setLocalPos(self._tfLed, positionX, targetPosY, positionZ)
 	end
 end
 
-function var_0_0.updateForSpeedFading(arg_6_0)
-	if arg_6_0._updateSpeed < arg_6_0._toZeroSpeed then
-		arg_6_0._updateSpeed = 0
+function SummonDrawEquipComp:updateForSpeedFading()
+	if self._updateSpeed < self._toZeroSpeed then
+		self._updateSpeed = 0
 	else
-		arg_6_0._updateSpeed = arg_6_0._updateSpeed * arg_6_0._fadingFactor
+		self._updateSpeed = self._updateSpeed * self._fadingFactor
 	end
 end
 
-function var_0_0.updateForFinishCheck(arg_7_0)
-	if arg_7_0._curProgress >= 1 then
-		arg_7_0:_completeDraw()
+function SummonDrawEquipComp:updateForFinishCheck()
+	if self._curProgress >= 1 then
+		self:_completeDraw()
 	end
 end
 
-function var_0_0.resetDraw(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0._rare = arg_8_1
-	arg_8_0._curProgress = 0
-	arg_8_0._updateSpeed = 0
-	arg_8_0._deltaDistance = 0
-	arg_8_0._finished = false
-	arg_8_0._isTen = arg_8_2
+function SummonDrawEquipComp:resetDraw(rare, isTen)
+	self._rare = rare
+	self._curProgress = 0
+	self._updateSpeed = 0
+	self._deltaDistance = 0
+	self._finished = false
+	self._isTen = isTen
 
-	arg_8_0:updateForEffect()
-	arg_8_0:resetLedFloat()
+	self:updateForEffect()
+	self:resetLedFloat()
 end
 
-function var_0_0.skip(arg_9_0)
-	arg_9_0._curProgress = 0
-	arg_9_0._updateSpeed = 0
-	arg_9_0._deltaDistance = 0
-	arg_9_0._finished = false
+function SummonDrawEquipComp:skip()
+	self._curProgress = 0
+	self._updateSpeed = 0
+	self._deltaDistance = 0
+	self._finished = false
 end
 
-function var_0_0.setEffect(arg_10_0, arg_10_1)
-	arg_10_0._curProgress = math.min(math.max(1 - arg_10_1, 0), 1)
+function SummonDrawEquipComp:setEffect(val)
+	self._curProgress = math.min(math.max(1 - val, 0), 1)
 
-	arg_10_0:updateForEffect()
+	self:updateForEffect()
 end
 
-function var_0_0.resetLedFloat(arg_11_0)
-	local var_11_0 = arg_11_0._isTen and arg_11_0._goLedTen or arg_11_0._goLedOne
-	local var_11_1 = arg_11_0._isTen and arg_11_0._goLedOne or arg_11_0._goLedTen
+function SummonDrawEquipComp:resetLedFloat()
+	local ledCtrlGo = self._isTen and self._goLedTen or self._goLedOne
+	local ledOtherGo = self._isTen and self._goLedOne or self._goLedTen
 
-	gohelper.setActive(var_11_0, false)
-	gohelper.setActive(var_11_1, false)
+	gohelper.setActive(ledCtrlGo, false)
+	gohelper.setActive(ledOtherGo, false)
 
-	if not gohelper.isNil(arg_11_0._animLed) then
-		arg_11_0._animLed.enabled = true
+	if not gohelper.isNil(self._animLed) then
+		self._animLed.enabled = true
 	end
 
-	if not gohelper.isNil(arg_11_0._tfLed) then
-		local var_11_2, var_11_3 = transformhelper.getLocalPos(arg_11_0._tfLed)
+	if not gohelper.isNil(self._tfLed) then
+		local _, positionY = transformhelper.getLocalPos(self._tfLed)
 
-		arg_11_0._ledPosY = var_11_3
+		self._ledPosY = positionY
 	end
 end
 
-function var_0_0.startDrag(arg_12_0)
-	if not gohelper.isNil(arg_12_0._tfLed) then
-		local var_12_0, var_12_1 = transformhelper.getLocalPos(arg_12_0._tfLed)
+function SummonDrawEquipComp:startDrag()
+	if not gohelper.isNil(self._tfLed) then
+		local _, positionY = transformhelper.getLocalPos(self._tfLed)
 
-		arg_12_0._ledPosY = var_12_1
+		self._ledPosY = positionY
 	end
 
-	if not gohelper.isNil(arg_12_0._animLed) then
-		arg_12_0._animLed.enabled = false
+	if not gohelper.isNil(self._animLed) then
+		self._animLed.enabled = false
 	end
 
-	arg_12_0._fadingFactor = 0.1
+	self._fadingFactor = 0.1
 end
 
-function var_0_0.updateDistance(arg_13_0, arg_13_1)
-	arg_13_0._deltaDistance = arg_13_1
-	arg_13_0._updateSpeed = arg_13_0:applySpeed()
+function SummonDrawEquipComp:updateDistance(deltaDistance)
+	self._deltaDistance = deltaDistance
+	self._updateSpeed = self:applySpeed()
 end
 
-function var_0_0.endDrag(arg_14_0)
-	arg_14_0._updateSpeed = 0.1
-	arg_14_0._fadingFactor = 1.1
+function SummonDrawEquipComp:endDrag()
+	self._updateSpeed = 0.1
+	self._fadingFactor = 1.1
 end
 
-function var_0_0._completeDraw(arg_15_0)
-	if arg_15_0._finished then
+function SummonDrawEquipComp:_completeDraw()
+	if self._finished then
 		return
 	end
 
-	arg_15_0._finished = true
-	arg_15_0._updateSpeed = 0
+	self._finished = true
+	self._updateSpeed = 0
 
 	SummonController.instance:dispatchEvent(SummonEvent.onSummonDraw)
 end
 
-function var_0_0.onDestroy(arg_16_0)
+function SummonDrawEquipComp:onDestroy()
 	return
 end
 
-return var_0_0
+return SummonDrawEquipComp

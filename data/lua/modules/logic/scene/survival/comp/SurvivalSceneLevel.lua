@@ -1,3 +1,7 @@
-﻿module("modules.logic.scene.survival.comp.SurvivalSceneLevel", package.seeall)
+﻿-- chunkname: @modules/logic/scene/survival/comp/SurvivalSceneLevel.lua
 
-return (class("SurvivalSceneLevel", SurvivalShelterSceneLevel))
+module("modules.logic.scene.survival.comp.SurvivalSceneLevel", package.seeall)
+
+local SurvivalSceneLevel = class("SurvivalSceneLevel", SurvivalShelterSceneLevel)
+
+return SurvivalSceneLevel

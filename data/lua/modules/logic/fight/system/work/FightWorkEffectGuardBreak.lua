@@ -1,23 +1,25 @@
-﻿module("modules.logic.fight.system.work.FightWorkEffectGuardBreak", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkEffectGuardBreak.lua
 
-local var_0_0 = class("FightWorkEffectGuardBreak", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkEffectGuardBreak", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = FightHelper.getEntity(arg_1_0.actEffectData.targetId)
+local FightWorkEffectGuardBreak = class("FightWorkEffectGuardBreak", FightEffectBase)
 
-	if var_1_0 and var_1_0.effect then
-		local var_1_1 = 0.5
-		local var_1_2 = var_1_0.effect:addHangEffect("buff/buff_podun", ModuleEnum.SpineHangPoint.mountmiddle, nil, var_1_1)
+function FightWorkEffectGuardBreak:onStart()
+	local entity = FightHelper.getEntity(self.actEffectData.targetId)
 
-		var_1_2:setLocalPos(0, 0, 0)
-		FightRenderOrderMgr.instance:onAddEffectWrap(var_1_0.id, var_1_2)
-		arg_1_0:com_registTimer(arg_1_0._delayAfterPerformance, var_1_1)
+	if entity and entity.effect then
+		local effectTime = 0.5
+		local effectWrap = entity.effect:addHangEffect("buff/buff_podun", ModuleEnum.SpineHangPoint.mountmiddle, nil, effectTime)
+
+		effectWrap:setLocalPos(0, 0, 0)
+		FightRenderOrderMgr.instance:onAddEffectWrap(entity.id, effectWrap)
+		self:com_registTimer(self._delayAfterPerformance, effectTime)
 		AudioMgr.instance:trigger(410000102)
 
 		return
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkEffectGuardBreak

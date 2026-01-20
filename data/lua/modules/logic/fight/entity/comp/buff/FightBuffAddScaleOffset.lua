@@ -1,40 +1,46 @@
-﻿module("modules.logic.fight.entity.comp.buff.FightBuffAddScaleOffset", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/buff/FightBuffAddScaleOffset.lua
 
-local var_0_0 = class("FightBuffAddScaleOffset")
+module("modules.logic.fight.entity.comp.buff.FightBuffAddScaleOffset", package.seeall)
 
-function var_0_0.onBuffStart(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = arg_1_1.id
+local FightBuffAddScaleOffset = class("FightBuffAddScaleOffset")
 
-	arg_1_0.entityId = var_1_0
-	FightDataHelper.entityExMgr:getById(var_1_0).scaleOffsetDic.FightBuffAddScaleOffset = 1.3
+function FightBuffAddScaleOffset:onBuffStart(entity, buffMo)
+	local entityId = entity.id
 
-	local var_1_1 = FightDataHelper.entityMgr:getById(var_1_0)
+	self.entityId = entityId
 
-	if var_1_1 then
-		local var_1_2, var_1_3, var_1_4, var_1_5 = FightHelper.getEntityStandPos(var_1_1)
+	local scaleOffsetDic = FightDataHelper.entityExMgr:getById(entityId).scaleOffsetDic
 
-		arg_1_1:setScale(var_1_5)
+	scaleOffsetDic.FightBuffAddScaleOffset = 1.3
+
+	local entityData = FightDataHelper.entityMgr:getById(entityId)
+
+	if entityData then
+		local _, _, _, scale = FightHelper.getEntityStandPos(entityData)
+
+		entity:setScale(scale)
 	end
 end
 
-function var_0_0.onBuffEnd(arg_2_0)
-	local var_2_0 = FightHelper.getEntity(arg_2_0.entityId)
+function FightBuffAddScaleOffset:onBuffEnd()
+	local entity = FightHelper.getEntity(self.entityId)
 
-	if not var_2_0 then
+	if not entity then
 		return
 	end
 
-	local var_2_1 = var_2_0.id
+	local entityId = entity.id
+	local scaleOffsetDic = FightDataHelper.entityExMgr:getById(entityId).scaleOffsetDic
 
-	FightDataHelper.entityExMgr:getById(var_2_1).scaleOffsetDic.FightBuffAddScaleOffset = nil
+	scaleOffsetDic.FightBuffAddScaleOffset = nil
 
-	local var_2_2 = FightDataHelper.entityMgr:getById(var_2_1)
+	local entityData = FightDataHelper.entityMgr:getById(entityId)
 
-	if var_2_2 then
-		local var_2_3, var_2_4, var_2_5, var_2_6 = FightHelper.getEntityStandPos(var_2_2)
+	if entityData then
+		local _, _, _, scale = FightHelper.getEntityStandPos(entityData)
 
-		var_2_0:setScale(var_2_6)
+		entity:setScale(scale)
 	end
 end
 
-return var_0_0
+return FightBuffAddScaleOffset

@@ -1,8 +1,10 @@
-﻿module("modules.logic.main.controller.work.MainSignInWork", package.seeall)
+﻿-- chunkname: @modules/logic/main/controller/work/MainSignInWork.lua
 
-local var_0_0 = class("MainSignInWork", BaseWork)
+module("modules.logic.main.controller.work.MainSignInWork", package.seeall)
 
-local function var_0_1()
+local MainSignInWork = class("MainSignInWork", BaseWork)
+
+local function _checkCanShow()
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.SignIn) then
 		return false
 	end
@@ -15,131 +17,141 @@ local function var_0_1()
 		return false
 	end
 
-	local var_1_0 = SignInModel.instance:getCurDate()
+	local date = SignInModel.instance:getCurDate()
 
-	if SignInModel.instance:isSignDayRewardGet(var_1_0.day) then
+	if SignInModel.instance:isSignDayRewardGet(date.day) then
 		return false
 	end
 
 	return true
 end
 
-local function var_0_2()
-	if GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.MainViewGuideBlock) then
+local function _isNeedWait()
+	local mainViewguideBlock = GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.MainViewGuideBlock)
+
+	if mainViewguideBlock then
 		return true
 	end
 
-	return not MainController.instance:isInMainView()
+	local isInMainView = MainController.instance:isInMainView()
+
+	return not isInMainView
 end
 
-function var_0_0._isNeedWaitShow(arg_3_0)
-	arg_3_0._isWaiting = var_0_2()
+function MainSignInWork:_isNeedWaitShow()
+	self._isWaiting = _isNeedWait()
 
-	return arg_3_0._isWaiting
+	return self._isWaiting
 end
 
-function var_0_0.onStart(arg_4_0, arg_4_1)
-	arg_4_0:clearWork()
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_4_0._onOpenViewFinish, arg_4_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_4_0._onCloseViewFinish, arg_4_0)
-	arg_4_0:_tryStart()
+function MainSignInWork:onStart(context)
+	self:clearWork()
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	self:_tryStart()
 end
 
-function var_0_0._tryStart(arg_5_0)
-	arg_5_0:_endBlock()
+function MainSignInWork:_tryStart()
+	self:_endBlock()
 
-	if not arg_5_0:_isNeedWaitShow() then
-		arg_5_0:_startSignInWork()
+	if not self:_isNeedWaitShow() then
+		self:_startSignInWork()
 	end
 end
 
-function var_0_0._onOpenViewFinish(arg_6_0, arg_6_1)
-	if arg_6_0._isWaiting then
-		if arg_6_1 ~= ViewName.MainView then
+function MainSignInWork:_onOpenViewFinish(openingViewName)
+	if self._isWaiting then
+		local viewName = ViewName.MainView
+
+		if openingViewName ~= viewName then
 			return
 		end
 
-		arg_6_0:_tryStart()
-	elseif arg_6_0._isShowingLifeCircle then
-		if arg_6_1 ~= ViewName.LifeCircleRewardView then
+		self:_tryStart()
+	elseif self._isShowingLifeCircle then
+		local viewName = ViewName.LifeCircleRewardView
+
+		if openingViewName ~= viewName then
 			return
 		end
 
-		arg_6_0:_endBlock()
+		self:_endBlock()
 	end
 end
 
-function var_0_0._onCloseViewFinish(arg_7_0, arg_7_1)
-	if arg_7_0._isWaiting then
-		arg_7_0:_tryStart()
-	elseif arg_7_0._isShowingLifeCircle then
-		local var_7_0 = ViewName.LifeCircleRewardView
+function MainSignInWork:_onCloseViewFinish(closingViewName)
+	if self._isWaiting then
+		self:_tryStart()
+	elseif self._isShowingLifeCircle then
+		local viewName = ViewName.LifeCircleRewardView
 
-		if arg_7_1 ~= var_7_0 then
+		if closingViewName ~= viewName then
 			return
 		end
 
-		if ViewMgr.instance:isOpen(var_7_0) then
+		if ViewMgr.instance:isOpen(viewName) then
 			return
 		end
 
-		arg_7_0:_showSignInDetailView()
+		self:_showSignInDetailView()
 	end
 end
 
-function var_0_0._startSignInWork(arg_8_0)
-	arg_8_0:_startBlock()
+function MainSignInWork:_startSignInWork()
+	self:_startBlock()
 
-	if not var_0_1() then
-		arg_8_0:onDone(true)
+	if not _checkCanShow() then
+		self:onDone(true)
 
 		return
 	end
 
 	if LifeCircleController.instance:isClaimableAccumulateReward() then
-		arg_8_0._isShowingLifeCircle = true
+		self._isShowingLifeCircle = true
 
-		LifeCircleController.instance:sendSignInTotalRewardAllRequest(function(arg_9_0, arg_9_1)
-			arg_8_0:_endBlock()
+		LifeCircleController.instance:sendSignInTotalRewardAllRequest(function(_, resultCode)
+			self:_endBlock()
 
-			if arg_9_1 ~= 0 then
-				arg_8_0:_showSignInDetailView()
+			if resultCode ~= 0 then
+				self:_showSignInDetailView()
 			end
 		end)
 
 		return
 	else
-		arg_8_0:_showSignInDetailView()
+		self:_showSignInDetailView()
 	end
 end
 
-function var_0_0._showSignInDetailView(arg_10_0)
-	arg_10_0._isShowingLifeCircle = false
+function MainSignInWork:_showSignInDetailView()
+	self._isShowingLifeCircle = false
 
-	local var_10_0 = SignInModel.instance:getCurDate()
+	local date = SignInModel.instance:getCurDate()
 
-	SignInModel.instance:setTargetDate(tonumber(var_10_0.year), tonumber(var_10_0.month), tonumber(var_10_0.day))
+	SignInModel.instance:setTargetDate(tonumber(date.year), tonumber(date.month), tonumber(date.day))
 
-	local var_10_1 = {
-		callback = arg_10_0._closeSignInViewFinished,
-		callbackObj = arg_10_0
+	local data = {
+		callback = self._closeSignInViewFinished,
+		callbackObj = self
 	}
 
-	ViewMgr.instance:openView(ViewName.SignInDetailView, var_10_1)
-	arg_10_0:_endBlock()
+	ViewMgr.instance:openView(ViewName.SignInDetailView, data)
+	self:_endBlock()
 end
 
-function var_0_0._closeSignInViewFinished(arg_11_0)
+function MainSignInWork:_closeSignInViewFinished()
 	if not ViewMgr.instance:hasOpenFullView() and ViewMgr.instance:isOpen(ViewName.MainView) then
-		arg_11_0:onDone(true)
+		self:onDone(true)
 	else
-		TaskDispatcher.cancelTask(arg_11_0._onCheckEnterMainView, arg_11_0)
-		TaskDispatcher.runRepeat(arg_11_0._onCheckEnterMainView, arg_11_0, 0.5)
+		TaskDispatcher.cancelTask(self._onCheckEnterMainView, self)
+		TaskDispatcher.runRepeat(self._onCheckEnterMainView, self, 0.5)
 	end
 end
 
-function var_0_0._onCheckEnterMainView(arg_12_0)
-	if not MainController.instance:isInMainView() then
+function MainSignInWork:_onCheckEnterMainView()
+	local isInMainView = MainController.instance:isInMainView()
+
+	if not isInMainView then
 		return
 	end
 
@@ -152,38 +164,38 @@ function var_0_0._onCheckEnterMainView(arg_12_0)
 	end
 
 	if not ViewMgr.instance:hasOpenFullView() and ViewMgr.instance:isOpen(ViewName.MainView) then
-		arg_12_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0.clearWork(arg_13_0)
-	arg_13_0._isWaiting = false
-	arg_13_0._isShowingLifeCircle = false
+function MainSignInWork:clearWork()
+	self._isWaiting = false
+	self._isShowingLifeCircle = false
 
-	TaskDispatcher.cancelTask(arg_13_0._onCheckEnterMainView, arg_13_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_13_0._onOpenViewFinish, arg_13_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_13_0._onCloseViewFinish, arg_13_0)
-	arg_13_0:_endBlock()
+	TaskDispatcher.cancelTask(self._onCheckEnterMainView, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	self:_endBlock()
 end
 
-function var_0_0._endBlock(arg_14_0)
-	if not arg_14_0:_isBlock() then
+function MainSignInWork:_endBlock()
+	if not self:_isBlock() then
 		return
 	end
 
 	UIBlockMgr.instance:endBlock()
 end
 
-function var_0_0._startBlock(arg_15_0)
-	if arg_15_0:_isBlock() then
+function MainSignInWork:_startBlock()
+	if self:_isBlock() then
 		return
 	end
 
 	UIBlockMgr.instance:startBlock()
 end
 
-function var_0_0._isBlock(arg_16_0)
+function MainSignInWork:_isBlock()
 	return UIBlockMgr.instance:isBlock() and true or false
 end
 
-return var_0_0
+return MainSignInWork

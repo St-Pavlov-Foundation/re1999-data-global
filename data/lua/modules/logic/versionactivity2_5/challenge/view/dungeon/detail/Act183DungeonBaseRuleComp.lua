@@ -1,52 +1,54 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.dungeon.detail.Act183DungeonBaseRuleComp", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/dungeon/detail/Act183DungeonBaseRuleComp.lua
 
-local var_0_0 = class("Act183DungeonBaseRuleComp", Act183DungeonBaseComp)
+module("modules.logic.versionactivity2_5.challenge.view.dungeon.detail.Act183DungeonBaseRuleComp", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	var_0_0.super.init(arg_1_0, arg_1_1)
+local Act183DungeonBaseRuleComp = class("Act183DungeonBaseRuleComp", Act183DungeonBaseComp)
 
-	arg_1_0._gobaseruleitem = gohelper.findChild(arg_1_0.go, "#go_baseruleitem")
-	arg_1_0._baseRuleItemTab = arg_1_0:getUserDataTb_()
+function Act183DungeonBaseRuleComp:init(go)
+	Act183DungeonBaseRuleComp.super.init(self, go)
+
+	self._gobaseruleitem = gohelper.findChild(self.go, "#go_baseruleitem")
+	self._baseRuleItemTab = self:getUserDataTb_()
 end
 
-function var_0_0.addEventListeners(arg_2_0)
+function Act183DungeonBaseRuleComp:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
+function Act183DungeonBaseRuleComp:removeEventListeners()
 	return
 end
 
-function var_0_0.updateInfo(arg_4_0, arg_4_1)
-	var_0_0.super.updateInfo(arg_4_0, arg_4_1)
+function Act183DungeonBaseRuleComp:updateInfo(episodeMo)
+	Act183DungeonBaseRuleComp.super.updateInfo(self, episodeMo)
 
-	arg_4_0._baseRules = Act183Config.instance:getEpisodeAllRuleDesc(arg_4_0._episodeId)
+	self._baseRules = Act183Config.instance:getEpisodeAllRuleDesc(self._episodeId)
 end
 
-function var_0_0.checkIsVisible(arg_5_0)
-	return arg_5_0._baseRules and #arg_5_0._baseRules > 0
+function Act183DungeonBaseRuleComp:checkIsVisible()
+	return self._baseRules and #self._baseRules > 0
 end
 
-function var_0_0.show(arg_6_0)
-	var_0_0.super.show(arg_6_0)
-	arg_6_0:createObjList(arg_6_0._baseRules, arg_6_0._baseRuleItemTab, arg_6_0._gobaseruleitem, arg_6_0._initBaseRuleItemFunc, arg_6_0._refreshBaseRuleItemFunc, arg_6_0._defaultItemFreeFunc)
+function Act183DungeonBaseRuleComp:show()
+	Act183DungeonBaseRuleComp.super.show(self)
+	self:createObjList(self._baseRules, self._baseRuleItemTab, self._gobaseruleitem, self._initBaseRuleItemFunc, self._refreshBaseRuleItemFunc, self._defaultItemFreeFunc)
 end
 
-function var_0_0._initBaseRuleItemFunc(arg_7_0, arg_7_1)
-	arg_7_1.txtdesc = gohelper.findChildText(arg_7_1.go, "txt_desc")
-	arg_7_1.imageicon = gohelper.findChildImage(arg_7_1.go, "image_icon")
+function Act183DungeonBaseRuleComp:_initBaseRuleItemFunc(goItem)
+	goItem.txtdesc = gohelper.findChildText(goItem.go, "txt_desc")
+	goItem.imageicon = gohelper.findChildImage(goItem.go, "image_icon")
 
-	SkillHelper.addHyperLinkClick(arg_7_1.txtdesc)
+	SkillHelper.addHyperLinkClick(goItem.txtdesc)
 end
 
-function var_0_0._refreshBaseRuleItemFunc(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	arg_8_1.txtdesc.text = SkillHelper.buildDesc(arg_8_2)
+function Act183DungeonBaseRuleComp:_refreshBaseRuleItemFunc(goItem, ruleDesc, index)
+	goItem.txtdesc.text = SkillHelper.buildDesc(ruleDesc)
 
-	Act183Helper.setRuleIcon(arg_8_0._episodeId, arg_8_3, arg_8_1.imageicon)
+	Act183Helper.setRuleIcon(self._episodeId, index, goItem.imageicon)
 end
 
-function var_0_0.onDestroy(arg_9_0)
-	var_0_0.super.onDestroy(arg_9_0)
+function Act183DungeonBaseRuleComp:onDestroy()
+	Act183DungeonBaseRuleComp.super.onDestroy(self)
 end
 
-return var_0_0
+return Act183DungeonBaseRuleComp

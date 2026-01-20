@@ -1,25 +1,66 @@
-﻿module("modules.logic.login.config.LoginConfig", package.seeall)
+﻿-- chunkname: @modules/logic/login/config/LoginConfig.lua
 
-local var_0_0 = class("LoginConfig", BaseConfig)
+module("modules.logic.login.config.LoginConfig", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
-	return nil
+local LoginConfig = class("LoginConfig", BaseConfig)
+
+function LoginConfig:reqConfigNames()
+	return {
+		"login_view_page"
+	}
 end
 
-function var_0_0.onInit(arg_2_0)
-	arg_2_0._config = nil
+function LoginConfig:onInit()
+	self._config = nil
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "" then
-		arg_3_0._config = arg_3_2
+function LoginConfig:onConfigLoaded(configName, configTable)
+	if configName == "" then
+		self._config = configTable
+	elseif configName == "login_view_page" then
+		self._loginPageConfig = configTable
 	end
 end
 
-function var_0_0.getConfigTable(arg_4_0)
-	return arg_4_0._config
+function LoginConfig:getConfigTable()
+	return self._config
 end
 
-var_0_0.instance = var_0_0.New()
+function LoginConfig:getPageCfgById(id)
+	return self._loginPageConfig and self._loginPageConfig.configDict[id]
+end
 
-return var_0_0
+function LoginConfig:getPageCfgList()
+	return self._loginPageConfig and self._loginPageConfig.configList
+end
+
+function LoginConfig:getEpisodeIdList(isRest)
+	if not self._pisodeIdList or isRest == true then
+		self._pisodeIdList = {}
+
+		local dict = {}
+
+		self:_addEpisodeCo(self:getPageCfgList(), self._pisodeIdList, dict)
+		self:_addEpisodeCo(booterLoadingConfig(), self._pisodeIdList, dict)
+	end
+
+	return self._pisodeIdList
+end
+
+function LoginConfig:_addEpisodeCo(coList, idList, dict)
+	if coList then
+		for _, co in ipairs(coList) do
+			local episodeId = co.episodeId
+
+			if episodeId and episodeId ~= 0 and not dict[episodeId] then
+				dict[episodeId] = true
+
+				table.insert(idList, episodeId)
+			end
+		end
+	end
+end
+
+LoginConfig.instance = LoginConfig.New()
+
+return LoginConfig

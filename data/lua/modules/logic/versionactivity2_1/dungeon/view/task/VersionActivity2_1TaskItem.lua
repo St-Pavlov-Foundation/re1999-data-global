@@ -1,197 +1,201 @@
-﻿module("modules.logic.versionactivity2_1.dungeon.view.task.VersionActivity2_1TaskItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_1/dungeon/view/task/VersionActivity2_1TaskItem.lua
 
-local var_0_0 = class("VersionActivity2_1TaskItem", ListScrollCellExtend)
+module("modules.logic.versionactivity2_1.dungeon.view.task.VersionActivity2_1TaskItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._animatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_1_0.viewGO)
-	arg_1_0._animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "#go_normal")
-	arg_1_0._gogetall = gohelper.findChild(arg_1_0.viewGO, "#go_getall")
-	arg_1_0._simagenormalbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_normal/#simage_normalbg")
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/progress/#txt_num")
-	arg_1_0._txttotal = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/progress/#txt_num/#txt_total")
-	arg_1_0._txttaskdes = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/#txt_taskdes")
-	arg_1_0.scrollReward = gohelper.findChild(arg_1_0.viewGO, "#go_normal/#scroll_rewards"):GetComponent(typeof(ZProj.LimitedScrollRect))
-	arg_1_0.goRewardContent = gohelper.findChild(arg_1_0.viewGO, "#go_normal/#scroll_rewards/Viewport/#go_rewards")
-	arg_1_0.sizeFitterRewardContent = arg_1_0.goRewardContent:GetComponent(typeof(UnityEngine.UI.ContentSizeFitter))
-	arg_1_0.goFinished = gohelper.findChild(arg_1_0.viewGO, "#go_normal/#go_allfinish")
-	arg_1_0.btnNotFinish = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_normal/#btn_notfinishbg")
-	arg_1_0.btnFinish = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_normal/#btn_finishbg", AudioEnum.UI.play_ui_task_slide)
-	arg_1_0.btnFinishAll = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_getall/#btn_getall/#btn_getall", AudioEnum.UI.play_ui_task_slide)
-	arg_1_0._simagegetallbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_getall/#simage_getallbg")
+local VersionActivity2_1TaskItem = class("VersionActivity2_1TaskItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity2_1TaskItem:onInitView()
+	self._animatorPlayer = ZProj.ProjAnimatorPlayer.Get(self.viewGO)
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._gonormal = gohelper.findChild(self.viewGO, "#go_normal")
+	self._gogetall = gohelper.findChild(self.viewGO, "#go_getall")
+	self._simagenormalbg = gohelper.findChildSingleImage(self.viewGO, "#go_normal/#simage_normalbg")
+	self._txtnum = gohelper.findChildText(self.viewGO, "#go_normal/progress/#txt_num")
+	self._txttotal = gohelper.findChildText(self.viewGO, "#go_normal/progress/#txt_num/#txt_total")
+	self._txttaskdes = gohelper.findChildText(self.viewGO, "#go_normal/#txt_taskdes")
+	self.scrollReward = gohelper.findChild(self.viewGO, "#go_normal/#scroll_rewards"):GetComponent(typeof(ZProj.LimitedScrollRect))
+	self.goRewardContent = gohelper.findChild(self.viewGO, "#go_normal/#scroll_rewards/Viewport/#go_rewards")
+	self.sizeFitterRewardContent = self.goRewardContent:GetComponent(typeof(UnityEngine.UI.ContentSizeFitter))
+	self.goFinished = gohelper.findChild(self.viewGO, "#go_normal/#go_allfinish")
+	self.btnNotFinish = gohelper.findChildButtonWithAudio(self.viewGO, "#go_normal/#btn_notfinishbg")
+	self.btnFinish = gohelper.findChildButtonWithAudio(self.viewGO, "#go_normal/#btn_finishbg", AudioEnum.UI.play_ui_task_slide)
+	self.btnFinishAll = gohelper.findChildButtonWithAudio(self.viewGO, "#go_getall/#btn_getall/#btn_getall", AudioEnum.UI.play_ui_task_slide)
+	self._simagegetallbg = gohelper.findChildSingleImage(self.viewGO, "#go_getall/#simage_getallbg")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0.btnNotFinish:AddClickListener(arg_2_0._btnNotFinishOnClick, arg_2_0)
-	arg_2_0.btnFinish:AddClickListener(arg_2_0._btnFinishOnClick, arg_2_0)
-	arg_2_0.btnFinishAll:AddClickListener(arg_2_0._btnAllFinishOnClick, arg_2_0)
-	arg_2_0:addEventCb(VersionActivity2_1DungeonController.instance, VersionActivity2_1DungeonEvent.OnClickAllTaskFinish, arg_2_0._OnClickAllTaskFinish, arg_2_0)
+function VersionActivity2_1TaskItem:addEvents()
+	self.btnNotFinish:AddClickListener(self._btnNotFinishOnClick, self)
+	self.btnFinish:AddClickListener(self._btnFinishOnClick, self)
+	self.btnFinishAll:AddClickListener(self._btnAllFinishOnClick, self)
+	self:addEventCb(VersionActivity2_1DungeonController.instance, VersionActivity2_1DungeonEvent.OnClickAllTaskFinish, self._OnClickAllTaskFinish, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0.btnNotFinish:RemoveClickListener()
-	arg_3_0.btnFinish:RemoveClickListener()
-	arg_3_0.btnFinishAll:RemoveClickListener()
-	arg_3_0:removeEventCb(VersionActivity2_1DungeonController.instance, VersionActivity2_1DungeonEvent.OnClickAllTaskFinish, arg_3_0._OnClickAllTaskFinish, arg_3_0)
+function VersionActivity2_1TaskItem:removeEvents()
+	self.btnNotFinish:RemoveClickListener()
+	self.btnFinish:RemoveClickListener()
+	self.btnFinishAll:RemoveClickListener()
+	self:removeEventCb(VersionActivity2_1DungeonController.instance, VersionActivity2_1DungeonEvent.OnClickAllTaskFinish, self._OnClickAllTaskFinish, self)
 end
 
-function var_0_0._btnNotFinishOnClick(arg_4_0)
-	if arg_4_0.co.jumpId ~= 0 then
+function VersionActivity2_1TaskItem:_btnNotFinishOnClick()
+	if self.co.jumpId ~= 0 then
 		AudioMgr.instance:trigger(AudioEnum.UI.UI_checkpoint_resources_open)
 
-		if GameFacade.jump(arg_4_0.co.jumpId) then
+		if GameFacade.jump(self.co.jumpId) then
 			ViewMgr.instance:closeView(ViewName.VersionActivity2_1TaskView)
 		end
 	end
 end
 
-function var_0_0._btnFinishOnClick(arg_5_0)
+function VersionActivity2_1TaskItem:_btnFinishOnClick()
 	UIBlockMgr.instance:startBlock(VersionActivity2_1DungeonEnum.BlockKey.TaskGetReward)
 
-	arg_5_0._animator.speed = 1
+	self._animator.speed = 1
 
-	arg_5_0._animatorPlayer:Play(UIAnimationName.Finish, arg_5_0.firstAnimationDone, arg_5_0)
+	self._animatorPlayer:Play(UIAnimationName.Finish, self.firstAnimationDone, self)
 end
 
-function var_0_0._btnAllFinishOnClick(arg_6_0)
+function VersionActivity2_1TaskItem:_btnAllFinishOnClick()
 	VersionActivity2_1DungeonController.instance:dispatchEvent(VersionActivity2_1DungeonEvent.OnClickAllTaskFinish)
 end
 
-function var_0_0._OnClickAllTaskFinish(arg_7_0)
-	if arg_7_0.taskMo then
-		if arg_7_0.taskMo.getAll then
-			arg_7_0:_btnFinishOnClick()
-		elseif arg_7_0.taskMo.finishCount < arg_7_0.co.maxFinishCount and arg_7_0.taskMo.hasFinished then
-			arg_7_0:getAnimator():Play(BossRushEnum.V1a6_BonusViewAnimName.Finish, 0, 0)
+function VersionActivity2_1TaskItem:_OnClickAllTaskFinish()
+	if self.taskMo then
+		if self.taskMo.getAll then
+			self:_btnFinishOnClick()
+		else
+			local isFinish = self.taskMo.finishCount < self.co.maxFinishCount and self.taskMo.hasFinished
+
+			if isFinish then
+				self:getAnimator():Play(BossRushEnum.V1a6_BonusViewAnimName.Finish, 0, 0)
+			end
 		end
 	end
 end
 
-function var_0_0.firstAnimationDone(arg_8_0)
-	arg_8_0._view.viewContainer.taskAnimRemoveItem:removeByIndex(arg_8_0._index, arg_8_0.secondAnimationDone, arg_8_0)
+function VersionActivity2_1TaskItem:firstAnimationDone()
+	self._view.viewContainer.taskAnimRemoveItem:removeByIndex(self._index, self.secondAnimationDone, self)
 end
 
-function var_0_0.secondAnimationDone(arg_9_0)
+function VersionActivity2_1TaskItem:secondAnimationDone()
 	UIBlockMgr.instance:endBlock(VersionActivity2_1DungeonEnum.BlockKey.TaskGetReward)
 
-	if arg_9_0.taskMo.getAll then
+	if self.taskMo.getAll then
 		TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.ActivityDungeon, nil, nil, nil, nil, VersionActivity2_1Enum.ActivityId.Dungeon)
 	else
-		TaskRpc.instance:sendFinishTaskRequest(arg_9_0.co.id)
+		TaskRpc.instance:sendFinishTaskRequest(self.co.id)
 	end
 end
 
-function var_0_0._editableInitView(arg_10_0)
-	arg_10_0.rewardItemList = {}
+function VersionActivity2_1TaskItem:_editableInitView()
+	self.rewardItemList = {}
 end
 
-function var_0_0.onUpdateMO(arg_11_0, arg_11_1)
-	arg_11_0.taskMo = arg_11_1
-	arg_11_0.scrollReward.parentGameObject = arg_11_0._view._csListScroll.gameObject
+function VersionActivity2_1TaskItem:onUpdateMO(mo)
+	self.taskMo = mo
+	self.scrollReward.parentGameObject = self._view._csListScroll.gameObject
 
-	gohelper.setActive(arg_11_0._gonormal, not arg_11_0.taskMo.getAll)
-	gohelper.setActive(arg_11_0._gogetall, arg_11_0.taskMo.getAll)
+	gohelper.setActive(self._gonormal, not self.taskMo.getAll)
+	gohelper.setActive(self._gogetall, self.taskMo.getAll)
 
-	if arg_11_0.taskMo.getAll then
-		arg_11_0:refreshGetAllUI()
+	if self.taskMo.getAll then
+		self:refreshGetAllUI()
 	else
-		arg_11_0:refreshNormalUI()
+		self:refreshNormalUI()
 	end
 end
 
-function var_0_0.refreshGetAllUI(arg_12_0)
+function VersionActivity2_1TaskItem:refreshGetAllUI()
 	return
 end
 
-function var_0_0.refreshNormalUI(arg_13_0)
-	arg_13_0.co = arg_13_0.taskMo.config
-	arg_13_0._txttaskdes.text = arg_13_0.co.desc
-	arg_13_0._txtnum.text = arg_13_0.taskMo.progress
-	arg_13_0._txttotal.text = arg_13_0.co.maxProgress
+function VersionActivity2_1TaskItem:refreshNormalUI()
+	self.co = self.taskMo.config
+	self._txttaskdes.text = self.co.desc
+	self._txtnum.text = self.taskMo.progress
+	self._txttotal.text = self.co.maxProgress
 
-	if arg_13_0.taskMo.finishCount >= arg_13_0.co.maxFinishCount then
-		gohelper.setActive(arg_13_0.btnFinish.gameObject, false)
-		gohelper.setActive(arg_13_0.btnNotFinish.gameObject, false)
-		gohelper.setActive(arg_13_0.goFinished, true)
-	elseif arg_13_0.taskMo.hasFinished then
-		gohelper.setActive(arg_13_0.btnFinish.gameObject, true)
-		gohelper.setActive(arg_13_0.btnNotFinish.gameObject, false)
-		gohelper.setActive(arg_13_0.goFinished, false)
+	if self.taskMo.finishCount >= self.co.maxFinishCount then
+		gohelper.setActive(self.btnFinish.gameObject, false)
+		gohelper.setActive(self.btnNotFinish.gameObject, false)
+		gohelper.setActive(self.goFinished, true)
+	elseif self.taskMo.hasFinished then
+		gohelper.setActive(self.btnFinish.gameObject, true)
+		gohelper.setActive(self.btnNotFinish.gameObject, false)
+		gohelper.setActive(self.goFinished, false)
 	else
-		gohelper.setActive(arg_13_0.btnFinish.gameObject, false)
-		gohelper.setActive(arg_13_0.btnNotFinish.gameObject, true)
-		gohelper.setActive(arg_13_0.goFinished, false)
+		gohelper.setActive(self.btnFinish.gameObject, false)
+		gohelper.setActive(self.btnNotFinish.gameObject, true)
+		gohelper.setActive(self.goFinished, false)
 	end
 
-	arg_13_0:refreshRewardItems()
+	self:refreshRewardItems()
 end
 
-local var_0_1 = 26
+local REWARD_FONT_SIZE = 26
 
-function var_0_0.refreshRewardItems(arg_14_0)
-	local var_14_0 = arg_14_0.co.bonus
+function VersionActivity2_1TaskItem:refreshRewardItems()
+	local bonus = self.co.bonus
 
-	if string.nilorempty(var_14_0) then
-		gohelper.setActive(arg_14_0.scrollReward.gameObject, false)
+	if string.nilorempty(bonus) then
+		gohelper.setActive(self.scrollReward.gameObject, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_14_0.scrollReward.gameObject, true)
+	gohelper.setActive(self.scrollReward.gameObject, true)
 
-	local var_14_1 = GameUtil.splitString2(var_14_0, true, "|", "#")
+	local rewardList = GameUtil.splitString2(bonus, true, "|", "#")
 
-	arg_14_0.sizeFitterRewardContent.enabled = #var_14_1 > 2
+	self.sizeFitterRewardContent.enabled = #rewardList > 2
 
-	for iter_14_0, iter_14_1 in ipairs(var_14_1) do
-		local var_14_2 = iter_14_1[1]
-		local var_14_3 = iter_14_1[2]
-		local var_14_4 = iter_14_1[3]
-		local var_14_5 = arg_14_0.rewardItemList[iter_14_0]
+	for index, rewardArr in ipairs(rewardList) do
+		local type, id, quantity = rewardArr[1], rewardArr[2], rewardArr[3]
+		local rewardItem = self.rewardItemList[index]
 
-		if not var_14_5 then
-			var_14_5 = IconMgr.instance:getCommonPropItemIcon(arg_14_0.goRewardContent)
+		if not rewardItem then
+			rewardItem = IconMgr.instance:getCommonPropItemIcon(self.goRewardContent)
 
-			var_14_5:setMOValue(var_14_2, var_14_3, var_14_4, nil, true)
-			var_14_5:setCountFontSize(var_0_1)
-			var_14_5:showStackableNum2()
-			var_14_5:isShowEffect(true)
+			rewardItem:setMOValue(type, id, quantity, nil, true)
+			rewardItem:setCountFontSize(REWARD_FONT_SIZE)
+			rewardItem:showStackableNum2()
+			rewardItem:isShowEffect(true)
 
-			local var_14_6 = var_14_5:getItemIcon():getCountBg()
-			local var_14_7 = var_14_5:getItemIcon():getCount()
+			local countBg = rewardItem:getItemIcon():getCountBg()
+			local count = rewardItem:getItemIcon():getCount()
 
-			transformhelper.setLocalScale(var_14_6.transform, 1, 1.5, 1)
-			transformhelper.setLocalScale(var_14_7.transform, 1.5, 1.5, 1)
-			table.insert(arg_14_0.rewardItemList, var_14_5)
+			transformhelper.setLocalScale(countBg.transform, 1, 1.5, 1)
+			transformhelper.setLocalScale(count.transform, 1.5, 1.5, 1)
+			table.insert(self.rewardItemList, rewardItem)
 		else
-			var_14_5:setMOValue(var_14_2, var_14_3, var_14_4, nil, true)
+			rewardItem:setMOValue(type, id, quantity, nil, true)
 		end
 
-		gohelper.setActive(var_14_5.go, true)
+		gohelper.setActive(rewardItem.go, true)
 	end
 
-	for iter_14_2 = #var_14_1 + 1, #arg_14_0.rewardItemList do
-		gohelper.setActive(arg_14_0.rewardItemList[iter_14_2].go, false)
+	for i = #rewardList + 1, #self.rewardItemList do
+		gohelper.setActive(self.rewardItemList[i].go, false)
 	end
 
-	arg_14_0.scrollReward.horizontalNormalizedPosition = 0
+	self.scrollReward.horizontalNormalizedPosition = 0
 end
 
-function var_0_0.getAnimator(arg_15_0)
-	return arg_15_0._animator
+function VersionActivity2_1TaskItem:getAnimator()
+	return self._animator
 end
 
-function var_0_0.onDestroyView(arg_16_0)
-	arg_16_0._simagenormalbg:UnLoadImage()
-	arg_16_0._simagegetallbg:UnLoadImage()
+function VersionActivity2_1TaskItem:onDestroyView()
+	self._simagenormalbg:UnLoadImage()
+	self._simagegetallbg:UnLoadImage()
 
-	arg_16_0.rewardItemList = {}
+	self.rewardItemList = {}
 
 	UIBlockMgr.instance:endBlock(VersionActivity2_1DungeonEnum.BlockKey.TaskGetReward)
 end
 
-return var_0_0
+return VersionActivity2_1TaskItem

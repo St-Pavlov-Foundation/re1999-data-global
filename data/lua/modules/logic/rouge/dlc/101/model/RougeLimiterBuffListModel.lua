@@ -1,57 +1,62 @@
-﻿module("modules.logic.rouge.dlc.101.model.RougeLimiterBuffListModel", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/dlc/101/model/RougeLimiterBuffListModel.lua
 
-local var_0_0 = class("RougeLimiterBuffListModel", ListScrollModel)
+module("modules.logic.rouge.dlc.101.model.RougeLimiterBuffListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_0:getBuffCosByType(arg_1_1)
+local RougeLimiterBuffListModel = class("RougeLimiterBuffListModel", ListScrollModel)
 
-	arg_1_0:setList(var_1_0)
-	arg_1_0:try2SelectEquipedBuff()
+function RougeLimiterBuffListModel:onInit(buffType)
+	local buffList = self:getBuffCosByType(buffType)
+
+	self:setList(buffList)
+	self:try2SelectEquipedBuff()
 end
 
-function var_0_0.getBuffCosByType(arg_2_0, arg_2_1)
-	local var_2_0 = RougeModel.instance:getVersion()
-	local var_2_1 = RougeDLCConfig101.instance:getAllLimiterBuffCosByType(var_2_0, arg_2_1)
-	local var_2_2 = {}
+function RougeLimiterBuffListModel:getBuffCosByType(buffType)
+	local versions = RougeModel.instance:getVersion()
+	local buffCos = RougeDLCConfig101.instance:getAllLimiterBuffCosByType(versions, buffType)
+	local result = {}
 
-	if var_2_1 then
-		for iter_2_0, iter_2_1 in ipairs(var_2_1) do
-			table.insert(var_2_2, iter_2_1)
+	if buffCos then
+		for _, buffCo in ipairs(buffCos) do
+			table.insert(result, buffCo)
 		end
 	end
 
-	table.sort(var_2_2, arg_2_0._buffSortFunc)
+	table.sort(result, self._buffSortFunc)
 
-	return var_2_2
+	return result
 end
 
-function var_0_0._buffSortFunc(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_0.blank == 1
+function RougeLimiterBuffListModel._buffSortFunc(aBuffCo, bBuffCo)
+	local isABlank = aBuffCo.blank == 1
+	local isBBlank = bBuffCo.blank == 1
 
-	if var_3_0 ~= (arg_3_1.blank == 1) then
-		return var_3_0
+	if isABlank ~= isBBlank then
+		return isABlank
 	end
 
-	return arg_3_0.id < arg_3_1.id
+	return aBuffCo.id < bBuffCo.id
 end
 
-function var_0_0.try2SelectEquipedBuff(arg_4_0)
-	local var_4_0, var_4_1 = arg_4_0:getEquipedBuffId()
+function RougeLimiterBuffListModel:try2SelectEquipedBuff()
+	local buffIndex, equipedBuffId = self:getEquipedBuffId()
 
-	arg_4_0:selectCell(var_4_0, true)
-	RougeDLCController101.instance:dispatchEvent(RougeDLCEvent101.OnSelectBuff, var_4_1, true)
+	self:selectCell(buffIndex, true)
+	RougeDLCController101.instance:dispatchEvent(RougeDLCEvent101.OnSelectBuff, equipedBuffId, true)
 end
 
-function var_0_0.getEquipedBuffId(arg_5_0)
-	local var_5_0 = arg_5_0:getList()
+function RougeLimiterBuffListModel:getEquipedBuffId()
+	local buffCos = self:getList()
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_0) do
-		if RougeDLCModel101.instance:getLimiterBuffState(iter_5_1.id) == RougeDLCEnum101.BuffState.Equiped then
-			return iter_5_0, iter_5_1.id
+	for index, buffCo in ipairs(buffCos) do
+		local buffState = RougeDLCModel101.instance:getLimiterBuffState(buffCo.id)
+
+		if buffState == RougeDLCEnum101.BuffState.Equiped then
+			return index, buffCo.id
 		end
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+RougeLimiterBuffListModel.instance = RougeLimiterBuffListModel.New()
 
-return var_0_0
+return RougeLimiterBuffListModel

@@ -1,31 +1,33 @@
-﻿module("modules.logic.room.controller.RoomBlockGiftController", package.seeall)
+﻿-- chunkname: @modules/logic/room/controller/RoomBlockGiftController.lua
 
-local var_0_0 = class("RoomBlockGiftController", BaseController)
+module("modules.logic.room.controller.RoomBlockGiftController", package.seeall)
 
-function var_0_0.openBlockView(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	if RoomBlockBuildingGiftModel.instance:isAllColloct(arg_1_1) then
+local RoomBlockGiftController = class("RoomBlockGiftController", BaseController)
+
+function RoomBlockGiftController:openBlockView(rare, id, useGiftCallback, useObjct)
+	if RoomBlockBuildingGiftModel.instance:isAllColloct(rare) then
 		GameFacade.showToast(ToastEnum.RoomBlockAllCollect)
 	else
-		RoomBlockBuildingGiftModel.instance:initBlockBuilding(arg_1_1)
+		RoomBlockBuildingGiftModel.instance:initBlockBuilding(rare)
 
-		local var_1_0 = {
-			rare = arg_1_1,
-			id = arg_1_2
+		local param = {
+			rare = rare,
+			id = id
 		}
 
-		ViewMgr.instance:openView(ViewName.RoomBlockGiftChoiceView, var_1_0)
+		ViewMgr.instance:openView(ViewName.RoomBlockGiftChoiceView, param)
 	end
 
-	function arg_1_0._useGiftCallback()
-		arg_1_3(arg_1_4)
+	function self._useGiftCallback()
+		useGiftCallback(useObjct)
 	end
 end
 
-function var_0_0.useItemCallback(arg_3_0)
+function RoomBlockGiftController:useItemCallback()
 	RoomBlockBuildingGiftModel.instance:clearSelect()
 
-	if arg_3_0._useGiftCallback then
-		arg_3_0._useGiftCallback()
+	if self._useGiftCallback then
+		self._useGiftCallback()
 
 		return
 	end
@@ -35,6 +37,6 @@ function var_0_0.useItemCallback(arg_3_0)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+RoomBlockGiftController.instance = RoomBlockGiftController.New()
 
-return var_0_0
+return RoomBlockGiftController

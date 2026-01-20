@@ -1,24 +1,26 @@
-﻿module("modules.logic.versionactivity1_3.va3chess.controller.Va3ChessRpcController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/va3chess/controller/Va3ChessRpcController.lua
 
-local var_0_0 = class("Va3ChessRpcController", BaseController)
+module("modules.logic.versionactivity1_3.va3chess.controller.Va3ChessRpcController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local Va3ChessRpcController = class("Va3ChessRpcController", BaseController)
+
+function Va3ChessRpcController:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function Va3ChessRpcController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function Va3ChessRpcController:addConstEvents()
 	return
 end
 
-function var_0_0.reInit(arg_4_0)
+function Va3ChessRpcController:reInit()
 	return
 end
 
-function var_0_0._registerRcp(arg_5_0)
+function Va3ChessRpcController:_registerRcp()
 	return {
 		[Va3ChessEnum.ActivityId.Act120] = Activity120Rpc.instance,
 		[Va3ChessEnum.ActivityId.Act122] = Activity122Rpc.instance,
@@ -26,11 +28,11 @@ function var_0_0._registerRcp(arg_5_0)
 	}
 end
 
-function var_0_0._getActiviyXRcpIns(arg_6_0, arg_6_1)
-	if not arg_6_0._acXRcpInsMap then
-		arg_6_0._acXRcpInsMap = arg_6_0:_registerRcp()
+function Va3ChessRpcController:_getActiviyXRcpIns(actId)
+	if not self._acXRcpInsMap then
+		self._acXRcpInsMap = self:_registerRcp()
 
-		local var_6_0 = {
+		local funcNames = {
 			"sendGetActInfoRequest",
 			"sendActStartEpisodeRequest",
 			"sendActAbortRequest",
@@ -39,118 +41,118 @@ function var_0_0._getActiviyXRcpIns(arg_6_0, arg_6_1)
 			"sendActBeginRoundRequest"
 		}
 
-		for iter_6_0, iter_6_1 in pairs(arg_6_0._acXRcpInsMap) do
-			for iter_6_2, iter_6_3 in ipairs(var_6_0) do
-				if not iter_6_1[iter_6_3] or type(iter_6_1[iter_6_3]) ~= "function" then
-					logError(string.format("[%s] can not find function [%s]", iter_6_1.__cname, iter_6_3))
+		for _, rpc in pairs(self._acXRcpInsMap) do
+			for __, funName in ipairs(funcNames) do
+				if not rpc[funName] or type(rpc[funName]) ~= "function" then
+					logError(string.format("[%s] can not find function [%s]", rpc.__cname, funName))
 				end
 			end
 		end
 	end
 
-	local var_6_1 = arg_6_0._acXRcpInsMap[arg_6_1]
+	local acCRpc = self._acXRcpInsMap[actId]
 
-	if not var_6_1 then
-		logError(string.format("棋盘小游戏Rpc没注册，activityId[%s]", arg_6_1))
+	if not acCRpc then
+		logError(string.format("棋盘小游戏Rpc没注册，activityId[%s]", actId))
 	end
 
-	return var_6_1
+	return acCRpc
 end
 
-function var_0_0.sendGetActInfoRequest(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	local var_7_0 = arg_7_0:_getActiviyXRcpIns(arg_7_1)
+function Va3ChessRpcController:sendGetActInfoRequest(actId, callback, callbackObj)
+	local acCRpc = self:_getActiviyXRcpIns(actId)
 
-	if var_7_0 then
-		var_7_0:sendGetActInfoRequest(arg_7_1, arg_7_2, arg_7_3)
+	if acCRpc then
+		acCRpc:sendGetActInfoRequest(actId, callback, callbackObj)
 	end
 end
 
-function var_0_0.sendActStartEpisodeRequest(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4)
-	if not arg_8_1 or not arg_8_2 then
+function Va3ChessRpcController:sendActStartEpisodeRequest(actId, id, callback, callbackObj)
+	if not actId or not id then
 		return
 	end
 
-	local var_8_0 = arg_8_0:_getActiviyXRcpIns(arg_8_1)
+	local acCRpc = self:_getActiviyXRcpIns(actId)
 
-	if var_8_0 then
-		var_8_0:sendActStartEpisodeRequest(arg_8_1, arg_8_2, arg_8_3, arg_8_4)
+	if acCRpc then
+		acCRpc:sendActStartEpisodeRequest(actId, id, callback, callbackObj)
 	end
 end
 
-function var_0_0.onReceiveActStartEpisodeReply(arg_9_0, arg_9_1, arg_9_2)
-	if arg_9_1 == 0 then
-		Va3ChessController.instance:initMapData(arg_9_2.activityId, arg_9_2.map)
+function Va3ChessRpcController:onReceiveActStartEpisodeReply(resultCode, msg)
+	if resultCode == 0 then
+		Va3ChessController.instance:initMapData(msg.activityId, msg.map)
 	end
 end
 
-function var_0_0.sendActBeginRoundRequest(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4)
-	local var_10_0 = arg_10_0:_getActiviyXRcpIns(arg_10_1)
+function Va3ChessRpcController:sendActBeginRoundRequest(actId, optList, callback, callbackObj)
+	local acCRpc = self:_getActiviyXRcpIns(actId)
 
-	if var_10_0 then
-		var_10_0:sendActBeginRoundRequest(arg_10_1, arg_10_2, arg_10_3, arg_10_4)
+	if acCRpc then
+		acCRpc:sendActBeginRoundRequest(actId, optList, callback, callbackObj)
 	end
 end
 
-function var_0_0.onReceiveActBeginRoundReply(arg_11_0, arg_11_1, arg_11_2)
-	if arg_11_1 == 0 then
+function Va3ChessRpcController:onReceiveActBeginRoundReply(resultCode, msg)
+	if resultCode == 0 then
 		-- block empty
 	end
 
 	Va3ChessGameModel.instance:cleanOptList()
 end
 
-function var_0_0.sendActUseItemRequest(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4, arg_12_5)
-	local var_12_0 = arg_12_0:_getActiviyXRcpIns(arg_12_1)
+function Va3ChessRpcController:sendActUseItemRequest(actId, x, y, callback, callbackObj)
+	local acCRpc = self:_getActiviyXRcpIns(actId)
 
-	if var_12_0 then
-		var_12_0:sendActUseItemRequest(arg_12_1, arg_12_2, arg_12_3, arg_12_4, arg_12_5)
+	if acCRpc then
+		acCRpc:sendActUseItemRequest(actId, x, y, callback, callbackObj)
 	end
 end
 
-function var_0_0.onReceiveActUseItemReply(arg_13_0, arg_13_1, arg_13_2)
-	if arg_13_1 == 0 then
+function Va3ChessRpcController:onReceiveActUseItemReply(resultCode, msg)
+	if resultCode == 0 then
 		-- block empty
 	end
 end
 
-function var_0_0.onReceiveActStepPush(arg_14_0, arg_14_1, arg_14_2)
-	if arg_14_1 == 0 and Va3ChessModel.instance:getActId() == arg_14_2.activityId then
-		local var_14_0 = Va3ChessGameController.instance.event
+function Va3ChessRpcController:onReceiveActStepPush(resultCode, msg)
+	if resultCode == 0 and Va3ChessModel.instance:getActId() == msg.activityId then
+		local evtMgr = Va3ChessGameController.instance.event
 
-		if var_14_0 then
-			var_14_0:insertStepList(arg_14_2.steps)
+		if evtMgr then
+			evtMgr:insertStepList(msg.steps)
 		end
 	end
 end
 
-function var_0_0.sendActEventEndRequest(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	local var_15_0 = arg_15_0:_getActiviyXRcpIns(arg_15_1)
+function Va3ChessRpcController:sendActEventEndRequest(actId, callback, callbackObj)
+	local acCRpc = self:_getActiviyXRcpIns(actId)
 
-	if var_15_0 then
-		var_15_0:sendActEventEndRequest(arg_15_1, arg_15_2, arg_15_3)
+	if acCRpc then
+		acCRpc:sendActEventEndRequest(actId, callback, callbackObj)
 	end
 end
 
-function var_0_0.onReceiveActEventEndReply(arg_16_0, arg_16_1, arg_16_2)
-	if arg_16_1 == 0 then
+function Va3ChessRpcController:onReceiveActEventEndReply(resultCode, msg)
+	if resultCode == 0 then
 		-- block empty
 	end
 end
 
-function var_0_0.sendActAbortRequest(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	local var_17_0 = arg_17_0:_getActiviyXRcpIns(arg_17_1)
+function Va3ChessRpcController:sendActAbortRequest(actId, callback, callbackObj)
+	local acCRpc = self:_getActiviyXRcpIns(actId)
 
-	if var_17_0 then
-		var_17_0:sendActAbortRequest(arg_17_1, arg_17_2, arg_17_3)
+	if acCRpc then
+		acCRpc:sendActAbortRequest(actId, callback, callbackObj)
 	end
 end
 
-function var_0_0.onReceiveActAbortReply(arg_18_0, arg_18_1, arg_18_2)
-	if arg_18_1 == 0 then
+function Va3ChessRpcController:onReceiveActAbortReply(resultCode, msg)
+	if resultCode == 0 then
 		-- block empty
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+Va3ChessRpcController.instance = Va3ChessRpcController.New()
 
-return var_0_0
+return Va3ChessRpcController

@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity2_7.act191.view.Act191EnhancePickViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/act191/view/Act191EnhancePickViewContainer.lua
 
-local var_0_0 = class("Act191EnhancePickViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_7.act191.view.Act191EnhancePickViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Act191EnhancePickViewContainer = class("Act191EnhancePickViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Act191EnhancePickView.New())
+function Act191EnhancePickViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Act191EnhancePickView.New())
+
+	return views
 end
 
-return var_0_0
+return Act191EnhancePickViewContainer

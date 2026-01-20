@@ -1,598 +1,603 @@
-﻿module("modules.logic.scene.survival.entity.SurvivalUnitEntity", package.seeall)
+﻿-- chunkname: @modules/logic/scene/survival/entity/SurvivalUnitEntity.lua
 
-local var_0_0 = class("SurvivalUnitEntity", LuaCompBase)
-local var_0_1 = UnityEngine.Shader.PropertyToID("_AlphaThreshold")
+module("modules.logic.scene.survival.entity.SurvivalUnitEntity", package.seeall)
 
-function var_0_0.Create(arg_1_0, arg_1_1)
-	local var_1_0 = gohelper.create3d(arg_1_1, string.format("%s_%s", arg_1_0.pos, SurvivalEnum.UnitTypeToName[arg_1_0.unitType]))
+local SurvivalUnitEntity = class("SurvivalUnitEntity", LuaCompBase)
+local OcclusionThresholdId = UnityEngine.Shader.PropertyToID("_AlphaThreshold")
+
+function SurvivalUnitEntity.Create(unitMo, root)
+	local go = gohelper.create3d(root, string.format("%s_%s", unitMo.pos, SurvivalEnum.UnitTypeToName[unitMo.unitType]))
 
 	if isDebugBuild then
-		gohelper.create3d(var_1_0, string.format("id:%s cfgId:%s", arg_1_0.id, arg_1_0.cfgId))
+		gohelper.create3d(go, string.format("id:%s cfgId:%s", unitMo.id, unitMo.cfgId))
 	end
 
-	return MonoHelper.addNoUpdateLuaComOnceToGo(var_1_0, var_0_0, arg_1_0)
+	return MonoHelper.addNoUpdateLuaComOnceToGo(go, SurvivalUnitEntity, unitMo)
 end
 
-function var_0_0.ctor(arg_2_0, arg_2_1)
-	arg_2_0.x = 0
-	arg_2_0.y = 0
-	arg_2_0.z = 0
-	arg_2_0._finalAlpha = 1
-	arg_2_0._unitMo = arg_2_1
+function SurvivalUnitEntity:ctor(unitMo)
+	self.x = 0
+	self.y = 0
+	self.z = 0
+	self._finalAlpha = 1
+	self._unitMo = unitMo
 end
 
-function var_0_0.init(arg_3_0, arg_3_1)
-	arg_3_0.go = arg_3_1
-	arg_3_0.trans = arg_3_1.transform
-	arg_3_0._allEffects = {}
-	arg_3_0._effectRoot = gohelper.create3d(arg_3_1, "Effect")
-	arg_3_0._modelRoot = gohelper.create3d(arg_3_1, "Model")
+function SurvivalUnitEntity:init(go)
+	self.go = go
+	self.trans = go.transform
+	self._allEffects = {}
+	self._effectRoot = gohelper.create3d(go, "Effect")
+	self._modelRoot = gohelper.create3d(go, "Model")
 
-	gohelper.setActive(arg_3_0._effectRoot, false)
-	arg_3_0:_onFollowTaskUpdate()
-	arg_3_0:onPrepairUnitMo()
-	arg_3_0:setPosAndDir(arg_3_0._unitMo.pos, arg_3_0._unitMo.dir)
+	gohelper.setActive(self._effectRoot, false)
+	self:_onFollowTaskUpdate()
+	self:onPrepairUnitMo()
+	self:setPosAndDir(self._unitMo.pos, self._unitMo.dir)
 
-	arg_3_0._loader = PrefabInstantiate.Create(arg_3_0._modelRoot)
+	self._loader = PrefabInstantiate.Create(self._modelRoot)
 
-	local var_3_0 = arg_3_0:getResPath()
+	local path = self:getResPath()
 
-	if string.nilorempty(var_3_0) then
+	if string.nilorempty(path) then
 		return
 	end
 
-	arg_3_0._loader:startLoad(var_3_0, arg_3_0._onResLoadEnd, arg_3_0)
+	self._loader:startLoad(path, self._onResLoadEnd, self)
 end
 
-function var_0_0.getResPath(arg_4_0)
-	return arg_4_0._unitMo:getSceneResPath()
+function SurvivalUnitEntity:getResPath()
+	return self._unitMo:getSceneResPath()
 end
 
-function var_0_0.addEventListeners(arg_5_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapUnitPosChange, arg_5_0._checkIsTop, arg_5_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapUnitChange, arg_5_0._onUnitDataChange, arg_5_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnFollowTaskUpdate, arg_5_0._onFollowTaskUpdate, arg_5_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnSpBlockUpdate, arg_5_0._onSpBlockUpdate, arg_5_0)
+function SurvivalUnitEntity:addEventListeners()
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapUnitPosChange, self._checkIsTop, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapUnitChange, self._onUnitDataChange, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnFollowTaskUpdate, self._onFollowTaskUpdate, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnSpBlockUpdate, self._onSpBlockUpdate, self)
 end
 
-function var_0_0.removeEventListeners(arg_6_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapUnitPosChange, arg_6_0._checkIsTop, arg_6_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapUnitChange, arg_6_0._onUnitDataChange, arg_6_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnFollowTaskUpdate, arg_6_0._onFollowTaskUpdate, arg_6_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnSpBlockUpdate, arg_6_0._onSpBlockUpdate, arg_6_0)
+function SurvivalUnitEntity:removeEventListeners()
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapUnitPosChange, self._checkIsTop, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapUnitChange, self._onUnitDataChange, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnFollowTaskUpdate, self._onFollowTaskUpdate, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnSpBlockUpdate, self._onSpBlockUpdate, self)
 end
 
-function var_0_0.onStart(arg_7_0)
-	arg_7_0.go:GetComponent(typeof(SLFramework.LuaMonobehavier)).enabled = false
+function SurvivalUnitEntity:onStart()
+	self.go:GetComponent(typeof(SLFramework.LuaMonobehavier)).enabled = false
 
-	arg_7_0:_checkIsTop(arg_7_0._unitMo.pos)
+	self:_checkIsTop(self._unitMo.pos)
 end
 
-function var_0_0._onResLoadEnd(arg_8_0)
-	local var_8_0 = arg_8_0._loader:getInstGO()
-	local var_8_1 = var_8_0.transform
+function SurvivalUnitEntity:_onResLoadEnd()
+	local go = self._loader:getInstGO()
+	local trans = go.transform
 
-	arg_8_0._resGo = var_8_0
-	arg_8_0._resTrans = var_8_1
-	arg_8_0._renderers = var_8_1:GetComponentsInChildren(typeof(UnityEngine.MeshRenderer), true)
+	self._resGo = go
+	self._resTrans = trans
+	self._renderers = trans:GetComponentsInChildren(typeof(UnityEngine.MeshRenderer), true)
 
-	transformhelper.setLocalPos(var_8_1, 0, 0, 0)
-	transformhelper.setLocalRotation(var_8_1, 0, 0, 0)
-	transformhelper.setLocalScale(var_8_1, 1, 1, 1)
+	transformhelper.setLocalPos(trans, 0, 0, 0)
+	transformhelper.setLocalRotation(trans, 0, 0, 0)
+	transformhelper.setLocalScale(trans, 1, 1, 1)
 
-	arg_8_0._anim = gohelper.findChildAnim(var_8_0, "")
+	self._anim = gohelper.findChildAnim(go, "")
 
-	if arg_8_0._curAnimName then
-		arg_8_0:playAnim(arg_8_0._curAnimName)
+	if self._curAnimName then
+		self:playAnim(self._curAnimName)
 	end
 
-	arg_8_0:_checkIsTop(arg_8_0._unitMo.pos)
-	arg_8_0:updateIsShow()
+	self:_checkIsTop(self._unitMo.pos)
+	self:updateIsShow()
 end
 
-function var_0_0.setPosAndDir(arg_9_0, arg_9_1, arg_9_2)
-	arg_9_0._unitMo.dir = arg_9_2
+function SurvivalUnitEntity:setPosAndDir(pos, dir)
+	self._unitMo.dir = dir
 
-	arg_9_0:onPosChange(arg_9_1)
+	self:onPosChange(pos)
 
-	local var_9_0, var_9_1, var_9_2 = SurvivalHelper.instance:hexPointToWorldPoint(arg_9_1.q, arg_9_1.r)
+	local x, y, z = SurvivalHelper.instance:hexPointToWorldPoint(pos.q, pos.r)
 
-	transformhelper.setLocalPos(arg_9_0.trans, var_9_0, var_9_1, var_9_2)
-	transformhelper.setLocalRotation(arg_9_0._modelRoot.transform, 0, arg_9_2 * 60, 0)
+	transformhelper.setLocalPos(self.trans, x, y, z)
+	transformhelper.setLocalRotation(self._modelRoot.transform, 0, dir * 60, 0)
 
-	arg_9_0.x = var_9_0
-	arg_9_0.y = var_9_1
-	arg_9_0.z = var_9_2
+	self.x = x
+	self.y = y
+	self.z = z
 end
 
-function var_0_0.tryRemove(arg_10_0, arg_10_1)
-	arg_10_0._isRemove = true
+function SurvivalUnitEntity:tryRemove(isPlayDeadAnim)
+	self._isRemove = true
 
-	SurvivalMapHelper.instance:removeEntity(arg_10_0._unitMo.id)
+	SurvivalMapHelper.instance:removeEntity(self._unitMo.id)
 
-	if not arg_10_0._curShowRes then
-		TaskDispatcher.runDelay(arg_10_0._delayDestroy, arg_10_0, 0.1)
-	elseif arg_10_1 then
-		arg_10_0:playAnim("die")
-		TaskDispatcher.runDelay(arg_10_0._delayDestroy, arg_10_0, 2)
+	if not self._curShowRes then
+		TaskDispatcher.runDelay(self._delayDestroy, self, 0.1)
+	elseif isPlayDeadAnim then
+		self:playAnim("die")
+		TaskDispatcher.runDelay(self._delayDestroy, self, 2)
 	else
-		arg_10_0:setIsInTop(false)
-		TaskDispatcher.runDelay(arg_10_0._delayDestroy, arg_10_0, 0.5)
+		self:setIsInTop(false)
+		TaskDispatcher.runDelay(self._delayDestroy, self, 0.5)
 	end
 end
 
-function var_0_0._delayDestroy(arg_11_0)
-	gohelper.destroy(arg_11_0.go)
-	arg_11_0:onDestroy()
+function SurvivalUnitEntity:_delayDestroy()
+	gohelper.destroy(self.go)
+	self:onDestroy()
 end
 
-function var_0_0.tornadoTransfer(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4)
-	if arg_12_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_12_0._tweenId)
+function SurvivalUnitEntity:tornadoTransfer(pos, dir, callback, callObj)
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 	end
 
-	arg_12_0._callback = arg_12_3
-	arg_12_0._callObj = arg_12_4
-	arg_12_0._targetPos = arg_12_1
+	self._callback = callback
+	self._callObj = callObj
+	self._targetPos = pos
 
-	arg_12_0:beginTornadoTransfer()
+	self:beginTornadoTransfer()
 
-	if not arg_12_0.isShow then
-		arg_12_0:setPosAndDir(arg_12_0._unitMo.pos, arg_12_2)
-		TaskDispatcher.runDelay(arg_12_0.onTornadoTransferDone, arg_12_0, SurvivalConst.TornadoTransferTime)
+	if not self.isShow then
+		self:setPosAndDir(self._unitMo.pos, dir)
+		TaskDispatcher.runDelay(self.onTornadoTransferDone, self, SurvivalConst.TornadoTransferTime)
 	else
-		arg_12_0._tweenId = ZProj.TweenHelper.DOLocalMoveY(arg_12_0.trans, SurvivalConst.TornadoTransferHeight, SurvivalConst.TornadoTransferTime, arg_12_0.onTornadoTransferDone, arg_12_0, nil, EaseType.OutCirc)
+		self._tweenId = ZProj.TweenHelper.DOLocalMoveY(self.trans, SurvivalConst.TornadoTransferHeight, SurvivalConst.TornadoTransferTime, self.onTornadoTransferDone, self, nil, EaseType.OutCirc)
 	end
 end
 
-function var_0_0.beginTornadoTransfer(arg_13_0)
+function SurvivalUnitEntity:beginTornadoTransfer()
 	return
 end
 
-function var_0_0.onTornadoTransferDone(arg_14_0)
-	arg_14_0:setPosAndDir(arg_14_0._targetPos, arg_14_0._unitMo.dir)
+function SurvivalUnitEntity:onTornadoTransferDone()
+	self:setPosAndDir(self._targetPos, self._unitMo.dir)
 
-	arg_14_0._targetPos = nil
+	self._targetPos = nil
 
-	arg_14_0:_doCallback()
+	self:_doCallback()
 
-	if not arg_14_0._tweenModelShowId then
-		SurvivalController.instance:dispatchEvent(SurvivalEvent.UpdateUnitIsShow, arg_14_0._unitMo.id)
+	if not self._tweenModelShowId then
+		SurvivalController.instance:dispatchEvent(SurvivalEvent.UpdateUnitIsShow, self._unitMo.id)
 	end
 
-	arg_14_0:onMoveEnd()
+	self:onMoveEnd()
 end
 
-function var_0_0.swapPos(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4)
-	arg_15_0:transferTo(arg_15_1, arg_15_2, arg_15_3, arg_15_4)
+function SurvivalUnitEntity:swapPos(pos, dir, callback, callObj)
+	self:transferTo(pos, dir, callback, callObj)
 end
 
-function var_0_0.summonPos(arg_16_0, arg_16_1, arg_16_2, arg_16_3, arg_16_4)
-	arg_16_0:transferTo(arg_16_1, arg_16_2, arg_16_3, arg_16_4)
+function SurvivalUnitEntity:summonPos(pos, dir, callback, callObj)
+	self:transferTo(pos, dir, callback, callObj)
 end
 
-function var_0_0.transferTo(arg_17_0, arg_17_1, arg_17_2, arg_17_3, arg_17_4)
-	arg_17_0._targetPos = arg_17_1
-	arg_17_0._callback = arg_17_3
-	arg_17_0._callObj = arg_17_4
+function SurvivalUnitEntity:transferTo(pos, dir, callback, callObj)
+	self._targetPos = pos
+	self._callback = callback
+	self._callObj = callObj
 
-	if arg_17_0._unitMo.dir ~= arg_17_2 then
-		arg_17_0._unitMo.dir = arg_17_2
+	if self._unitMo.dir ~= dir then
+		self._unitMo.dir = dir
 
-		transformhelper.setLocalRotation(arg_17_0._modelRoot.transform, 0, arg_17_2 * 60, 0)
+		transformhelper.setLocalRotation(self._modelRoot.transform, 0, dir * 60, 0)
 	end
 
-	arg_17_0:addEffect(SurvivalConst.UnitEffectPath.Transfer1)
-	TaskDispatcher.runDelay(arg_17_0._tweenToTarget, arg_17_0, SurvivalConst.UnitEffectTime[SurvivalConst.UnitEffectPath.Transfer1])
+	self:addEffect(SurvivalConst.UnitEffectPath.Transfer1)
+	TaskDispatcher.runDelay(self._tweenToTarget, self, SurvivalConst.UnitEffectTime[SurvivalConst.UnitEffectPath.Transfer1])
 end
 
-function var_0_0._tweenToTarget(arg_18_0)
-	arg_18_0:removeEffect(SurvivalConst.UnitEffectPath.Transfer1)
-	TaskDispatcher.runDelay(arg_18_0._delayTransfer2, arg_18_0, 0.3)
+function SurvivalUnitEntity:_tweenToTarget()
+	self:removeEffect(SurvivalConst.UnitEffectPath.Transfer1)
+	TaskDispatcher.runDelay(self._delayTransfer2, self, 0.3)
 end
 
-function var_0_0._delayTransfer2(arg_19_0)
-	arg_19_0:addEffect(SurvivalConst.UnitEffectPath.Transfer2)
+function SurvivalUnitEntity:_delayTransfer2()
+	self:addEffect(SurvivalConst.UnitEffectPath.Transfer2)
 	AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_fuleyuan_tansuo_transmit_2)
-	arg_19_0:onPosChange(arg_19_0._targetPos)
+	self:onPosChange(self._targetPos)
 
-	local var_19_0, var_19_1, var_19_2 = SurvivalHelper.instance:hexPointToWorldPoint(arg_19_0._targetPos.q, arg_19_0._targetPos.r)
+	local x, y, z = SurvivalHelper.instance:hexPointToWorldPoint(self._targetPos.q, self._targetPos.r)
 
-	transformhelper.setLocalPos(arg_19_0.trans, var_19_0, var_19_1, var_19_2)
+	transformhelper.setLocalPos(self.trans, x, y, z)
 
-	arg_19_0.x = var_19_0
-	arg_19_0.y = var_19_1
-	arg_19_0.z = var_19_2
+	self.x = x
+	self.y = y
+	self.z = z
 
-	TaskDispatcher.runDelay(arg_19_0._delayFinish, arg_19_0, SurvivalConst.UnitEffectTime[SurvivalConst.UnitEffectPath.Transfer2])
+	TaskDispatcher.runDelay(self._delayFinish, self, SurvivalConst.UnitEffectTime[SurvivalConst.UnitEffectPath.Transfer2])
 end
 
-function var_0_0._delayFinish(arg_20_0)
-	arg_20_0:removeEffect(SurvivalConst.UnitEffectPath.Transfer2)
+function SurvivalUnitEntity:_delayFinish()
+	self:removeEffect(SurvivalConst.UnitEffectPath.Transfer2)
 
-	arg_20_0._targetPos = nil
-	arg_20_0._tweenId = nil
+	self._targetPos = nil
+	self._tweenId = nil
 
-	arg_20_0:_doCallback()
+	self:_doCallback()
 
-	if not arg_20_0._tweenModelShowId then
-		SurvivalController.instance:dispatchEvent(SurvivalEvent.UpdateUnitIsShow, arg_20_0._unitMo.id)
+	if not self._tweenModelShowId then
+		SurvivalController.instance:dispatchEvent(SurvivalEvent.UpdateUnitIsShow, self._unitMo.id)
 	end
 end
 
-function var_0_0.moveTo(arg_21_0, arg_21_1, arg_21_2, arg_21_3, arg_21_4)
-	if arg_21_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_21_0._tweenId)
+function SurvivalUnitEntity:moveTo(pos, dir, callback, callObj)
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 	end
 
-	if arg_21_0._callback then
-		arg_21_0._callback(arg_21_0._callObj)
+	if self._callback then
+		self._callback(self._callObj)
 	end
 
-	if arg_21_0._targetPos then
-		arg_21_0:setPosAndDir(arg_21_0._targetPos, arg_21_0._unitMo.dir)
+	if self._targetPos then
+		self:setPosAndDir(self._targetPos, self._unitMo.dir)
 	end
 
-	arg_21_0._targetPos = arg_21_1
-	arg_21_0._callback = arg_21_3
-	arg_21_0._callObj = arg_21_4
+	self._targetPos = pos
+	self._callback = callback
+	self._callObj = callObj
 
-	if arg_21_0._unitMo.dir ~= arg_21_2 then
-		arg_21_0._unitMo.dir = arg_21_2
-		arg_21_0._tweenId = ZProj.TweenHelper.DOLocalRotate(arg_21_0._modelRoot.transform, 0, arg_21_2 * 60, 0, SurvivalConst.TurnDirSpeed, arg_21_0._beginMove, arg_21_0)
+	if self._unitMo.dir ~= dir then
+		self._unitMo.dir = dir
+		self._tweenId = ZProj.TweenHelper.DOLocalRotate(self._modelRoot.transform, 0, dir * 60, 0, SurvivalConst.TurnDirSpeed, self._beginMove, self)
 	else
-		arg_21_0:_beginMove()
+		self:_beginMove()
 	end
 end
 
-function var_0_0.onMoveBegin(arg_22_0)
-	SurvivalController.instance:dispatchEvent(SurvivalEvent.OnUnitBeginMove, arg_22_0._unitMo.id)
+function SurvivalUnitEntity:onMoveBegin()
+	SurvivalController.instance:dispatchEvent(SurvivalEvent.OnUnitBeginMove, self._unitMo.id)
 end
 
-function var_0_0._beginMove(arg_23_0)
-	arg_23_0:onMoveBegin()
-	arg_23_0:playAnim("run")
+function SurvivalUnitEntity:_beginMove()
+	self:onMoveBegin()
+	self:playAnim("run")
 
-	local var_23_0, var_23_1, var_23_2 = SurvivalHelper.instance:hexPointToWorldPoint(arg_23_0._targetPos.q, arg_23_0._targetPos.r)
+	local x, y, z = SurvivalHelper.instance:hexPointToWorldPoint(self._targetPos.q, self._targetPos.r)
 
-	arg_23_0._tweenId = ZProj.TweenHelper.DOLocalMove(arg_23_0.trans, (var_23_0 + arg_23_0.x) / 2, (var_23_1 + arg_23_0.y) / 2, (var_23_2 + arg_23_0.z) / 2, SurvivalConst.PlayerMoveSpeed / 2, arg_23_0._beginMoveHalf, arg_23_0, nil, EaseType.Linear)
+	self._tweenId = ZProj.TweenHelper.DOLocalMove(self.trans, (x + self.x) / 2, (y + self.y) / 2, (z + self.z) / 2, SurvivalConst.PlayerMoveSpeed / 2, self._beginMoveHalf, self, nil, EaseType.Linear)
 end
 
-function var_0_0._beginMoveHalf(arg_24_0)
-	arg_24_0:onPosChange(arg_24_0._targetPos)
+function SurvivalUnitEntity:_beginMoveHalf()
+	self:onPosChange(self._targetPos)
 
-	local var_24_0, var_24_1, var_24_2 = SurvivalHelper.instance:hexPointToWorldPoint(arg_24_0._targetPos.q, arg_24_0._targetPos.r)
+	local x, y, z = SurvivalHelper.instance:hexPointToWorldPoint(self._targetPos.q, self._targetPos.r)
 
-	arg_24_0._tweenId = ZProj.TweenHelper.DOLocalMove(arg_24_0.trans, var_24_0, var_24_1, var_24_2, SurvivalConst.PlayerMoveSpeed / 2, arg_24_0._endMove, arg_24_0, nil, EaseType.Linear)
-	arg_24_0.x = var_24_0
-	arg_24_0.y = var_24_1
-	arg_24_0.z = var_24_2
+	self._tweenId = ZProj.TweenHelper.DOLocalMove(self.trans, x, y, z, SurvivalConst.PlayerMoveSpeed / 2, self._endMove, self, nil, EaseType.Linear)
+	self.x = x
+	self.y = y
+	self.z = z
 end
 
-function var_0_0._onSpBlockUpdate(arg_25_0, arg_25_1)
-	if arg_25_1 == arg_25_0._unitMo.pos then
-		arg_25_0:_checkModelPath()
+function SurvivalUnitEntity:_onSpBlockUpdate(pos)
+	if pos == self._unitMo.pos then
+		self:_checkModelPath()
 	end
 end
 
-function var_0_0.onPosChange(arg_26_0, arg_26_1)
-	SurvivalMapModel.instance:getSceneMo():onUnitUpdatePos(arg_26_0._unitMo, arg_26_1)
-	arg_26_0:sortSceneModel()
-	arg_26_0:_checkModelPath()
+function SurvivalUnitEntity:onPosChange(newPos)
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
+
+	sceneMo:onUnitUpdatePos(self._unitMo, newPos)
+	self:sortSceneModel()
+	self:_checkModelPath()
 end
 
-function var_0_0._checkIsTop(arg_27_0, arg_27_1)
-	if arg_27_1 == arg_27_0._unitMo.pos then
-		arg_27_0:sortSceneModel()
+function SurvivalUnitEntity:_checkIsTop(pos)
+	if pos == self._unitMo.pos then
+		self:sortSceneModel()
 	end
 end
 
-function var_0_0.sortSceneModel(arg_28_0)
-	if arg_28_0._isRemove then
+function SurvivalUnitEntity:sortSceneModel()
+	if self._isRemove then
 		return
 	end
 
-	local var_28_0 = SurvivalMapModel.instance:getSceneMo():isInTop(arg_28_0._unitMo)
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
+	local isInTop = sceneMo:isInTop(self._unitMo)
 
-	arg_28_0:setIsInTop(var_28_0)
+	self:setIsInTop(isInTop)
 end
 
-function var_0_0.setIsInTop(arg_29_0, arg_29_1)
-	if arg_29_0._isTop == nil then
-		arg_29_0._isTop = true
+function SurvivalUnitEntity:setIsInTop(isTop)
+	if self._isTop == nil then
+		self._isTop = true
 	end
 
-	if arg_29_0._isTop ~= arg_29_1 then
-		arg_29_0._isTop = arg_29_1
+	if self._isTop ~= isTop then
+		self._isTop = isTop
 
-		arg_29_0:updateIsShow()
+		self:updateIsShow()
 	end
 end
 
-function var_0_0._checkModelPath(arg_30_0)
-	if not arg_30_0._loader then
+function SurvivalUnitEntity:_checkModelPath()
+	if not self._loader then
 		return
 	end
 
-	local var_30_0 = arg_30_0:getResPath()
+	local path = self:getResPath()
 
-	if var_30_0 ~= arg_30_0._loader:getPath() then
-		if arg_30_0._tweenModelShowId then
-			ZProj.TweenHelper.KillById(arg_30_0._tweenModelShowId, true)
+	if path ~= self._loader:getPath() then
+		if self._tweenModelShowId then
+			ZProj.TweenHelper.KillById(self._tweenModelShowId, true)
 
-			arg_30_0._tweenModelShowId = nil
+			self._tweenModelShowId = nil
 		end
 
-		arg_30_0._curShowRes = nil
-		arg_30_0._shareMats = nil
-		arg_30_0._matInsts = nil
-		arg_30_0._finalAlpha = 1
+		self._curShowRes = nil
+		self._shareMats = nil
+		self._matInsts = nil
+		self._finalAlpha = 1
 
-		arg_30_0._loader:dispose()
+		self._loader:dispose()
 
-		if not string.nilorempty(var_30_0) then
-			arg_30_0._loader:startLoad(var_30_0, arg_30_0._onResLoadEnd, arg_30_0)
+		if not string.nilorempty(path) then
+			self._loader:startLoad(path, self._onResLoadEnd, self)
 		end
 
-		arg_30_0:onModelChange()
-		SurvivalMapHelper.instance:getScene().pointEffect:addAutoDisposeEffect(SurvivalPointEffectComp.ResPaths.changeModel, arg_30_0.trans.position, 2)
+		self:onModelChange()
+		SurvivalMapHelper.instance:getScene().pointEffect:addAutoDisposeEffect(SurvivalPointEffectComp.ResPaths.changeModel, self.trans.position, 2)
 	end
 end
 
-function var_0_0.onModelChange(arg_31_0)
+function SurvivalUnitEntity:onModelChange()
 	return
 end
 
-function var_0_0._onUnitDataChange(arg_32_0, arg_32_1)
-	if arg_32_1 == arg_32_0._unitMo.id then
-		local var_32_0 = arg_32_0:getResPath()
+function SurvivalUnitEntity:_onUnitDataChange(unitId)
+	if unitId == self._unitMo.id then
+		local path = self:getResPath()
 
-		if arg_32_0._loader:getPath() ~= var_32_0 then
-			arg_32_0._curShowRes = nil
-			arg_32_0._shareMats = nil
-			arg_32_0._matInsts = nil
-			arg_32_0._finalAlpha = 1
+		if self._loader:getPath() ~= path then
+			self._curShowRes = nil
+			self._shareMats = nil
+			self._matInsts = nil
+			self._finalAlpha = 1
 
-			arg_32_0._loader:dispose()
+			self._loader:dispose()
 
-			if not string.nilorempty(var_32_0) then
-				arg_32_0._loader:startLoad(var_32_0, arg_32_0._onResLoadEnd, arg_32_0)
+			if not string.nilorempty(path) then
+				self._loader:startLoad(path, self._onResLoadEnd, self)
 			end
 		else
-			arg_32_0:updateIsShow()
+			self:updateIsShow()
 		end
 
-		arg_32_0:onPrepairUnitMo()
+		self:onPrepairUnitMo()
 	end
 end
 
-function var_0_0.onPrepairUnitMo(arg_33_0)
-	arg_33_0:removeEffect(SurvivalConst.UnitEffectPath.UnitType42)
-	arg_33_0:removeEffect(SurvivalConst.UnitEffectPath.UnitType44)
-	arg_33_0:removeEffect(SurvivalConst.UnitEffectPath.FollowUnit)
+function SurvivalUnitEntity:onPrepairUnitMo()
+	self:removeEffect(SurvivalConst.UnitEffectPath.UnitType42)
+	self:removeEffect(SurvivalConst.UnitEffectPath.UnitType44)
+	self:removeEffect(SurvivalConst.UnitEffectPath.FollowUnit)
 
-	local var_33_0 = arg_33_0._unitMo.co and arg_33_0._unitMo.co.subType
+	local subType = self._unitMo.co and self._unitMo.co.subType
 
-	if var_33_0 == 42 then
-		arg_33_0:addEffect(SurvivalConst.UnitEffectPath.UnitType42)
-	elseif var_33_0 == 44 then
-		arg_33_0:addEffect(SurvivalConst.UnitEffectPath.UnitType44)
+	if subType == 42 then
+		self:addEffect(SurvivalConst.UnitEffectPath.UnitType42)
+	elseif subType == 44 then
+		self:addEffect(SurvivalConst.UnitEffectPath.UnitType44)
 	end
 
-	if tabletool.indexOf(SurvivalConfig.instance:getHighValueUnitSubTypes(), var_33_0) then
-		arg_33_0:addEffect(SurvivalConst.UnitEffectPath.FollowUnit)
+	if tabletool.indexOf(SurvivalConfig.instance:getHighValueUnitSubTypes(), subType) then
+		self:addEffect(SurvivalConst.UnitEffectPath.FollowUnit)
 	end
 end
 
-function var_0_0._onFollowTaskUpdate(arg_34_0)
+function SurvivalUnitEntity:_onFollowTaskUpdate()
 	return
 end
 
-function var_0_0.updateIsShow(arg_35_0)
-	arg_35_0.isShow = arg_35_0._isTop and arg_35_0._unitMo.visionVal ~= 8
+function SurvivalUnitEntity:updateIsShow()
+	self.isShow = self._isTop and self._unitMo.visionVal ~= 8
 
-	if not arg_35_0._resGo then
+	if not self._resGo then
 		return
 	end
 
-	local var_35_0 = false
+	local isForce = false
 
-	if arg_35_0._curShowRes == nil then
-		arg_35_0._curShowRes = true
-		var_35_0 = true
+	if self._curShowRes == nil then
+		self._curShowRes = true
+		isForce = true
 	end
 
-	if arg_35_0._unitMo.id ~= 0 then
-		gohelper.setActive(arg_35_0._effectRoot, arg_35_0.isShow)
+	if self._unitMo.id ~= 0 then
+		gohelper.setActive(self._effectRoot, self.isShow)
 	end
 
-	if arg_35_0._curShowRes ~= arg_35_0.isShow then
-		transformhelper.setLocalPos(arg_35_0._resTrans, 0, 0, 0)
+	if self._curShowRes ~= self.isShow then
+		transformhelper.setLocalPos(self._resTrans, 0, 0, 0)
 
-		arg_35_0._curShowRes = arg_35_0.isShow
+		self._curShowRes = self.isShow
 
-		if not arg_35_0.isShow then
-			arg_35_0:initMats()
+		if not self.isShow then
+			self:initMats()
 
-			if var_35_0 then
-				arg_35_0:onTween(1)
-				arg_35_0:onTweenEnd()
+			if isForce then
+				self:onTween(1)
+				self:onTweenEnd()
 			else
-				if arg_35_0._tweenModelShowId then
-					ZProj.TweenHelper.KillById(arg_35_0._tweenModelShowId)
+				if self._tweenModelShowId then
+					ZProj.TweenHelper.KillById(self._tweenModelShowId)
 				end
 
-				arg_35_0._tweenModelShowId = ZProj.TweenHelper.DOTweenFloat(arg_35_0._nowClipValue or 1 - arg_35_0._finalAlpha, 1, SurvivalConst.ModelClipTime, arg_35_0.onTween, arg_35_0.onTweenEnd, arg_35_0, nil, EaseType.Linear)
+				self._tweenModelShowId = ZProj.TweenHelper.DOTweenFloat(self._nowClipValue or 1 - self._finalAlpha, 1, SurvivalConst.ModelClipTime, self.onTween, self.onTweenEnd, self, nil, EaseType.Linear)
 			end
 		else
-			SurvivalController.instance:dispatchEvent(SurvivalEvent.UpdateUnitIsShow, arg_35_0._unitMo.id)
+			SurvivalController.instance:dispatchEvent(SurvivalEvent.UpdateUnitIsShow, self._unitMo.id)
 
-			if var_35_0 then
-				arg_35_0:onTweenEnd()
+			if isForce then
+				self:onTweenEnd()
 			else
-				if arg_35_0._tweenModelShowId then
-					ZProj.TweenHelper.KillById(arg_35_0._tweenModelShowId)
+				if self._tweenModelShowId then
+					ZProj.TweenHelper.KillById(self._tweenModelShowId)
 				end
 
-				arg_35_0._tweenModelShowId = ZProj.TweenHelper.DOTweenFloat(arg_35_0._nowClipValue or 1, 1 - arg_35_0._finalAlpha, SurvivalConst.ModelClipTime, arg_35_0.onTween, arg_35_0.onTweenEnd, arg_35_0, nil, EaseType.Linear)
+				self._tweenModelShowId = ZProj.TweenHelper.DOTweenFloat(self._nowClipValue or 1, 1 - self._finalAlpha, SurvivalConst.ModelClipTime, self.onTween, self.onTweenEnd, self, nil, EaseType.Linear)
 			end
 		end
 	end
 end
 
-function var_0_0.onTween(arg_36_0, arg_36_1)
-	arg_36_0._nowClipValue = arg_36_1
+function SurvivalUnitEntity:onTween(value)
+	self._nowClipValue = value
 
-	for iter_36_0, iter_36_1 in pairs(arg_36_0._matInsts) do
-		iter_36_1:SetFloat(var_0_1, arg_36_1)
+	for k, v in pairs(self._matInsts) do
+		v:SetFloat(OcclusionThresholdId, value)
 	end
 end
 
-function var_0_0.onTweenEnd(arg_37_0)
-	arg_37_0._tweenModelShowId = nil
+function SurvivalUnitEntity:onTweenEnd()
+	self._tweenModelShowId = nil
 
-	if arg_37_0._curShowRes then
-		if arg_37_0._finalAlpha == 1 then
-			for iter_37_0 = 0, arg_37_0._renderers.Length - 1 do
-				local var_37_0 = arg_37_0._renderers[iter_37_0]
+	if self._curShowRes then
+		if self._finalAlpha == 1 then
+			for i = 0, self._renderers.Length - 1 do
+				local renderer = self._renderers[i]
 
-				if not tolua.isnull(var_37_0) then
-					var_37_0.material = arg_37_0._shareMats[iter_37_0]
+				if not tolua.isnull(renderer) then
+					renderer.material = self._shareMats[i]
 				end
 			end
 		end
 	else
-		transformhelper.setLocalPos(arg_37_0._resTrans, 0, -10, 0)
+		transformhelper.setLocalPos(self._resTrans, 0, -10, 0)
 
-		if not arg_37_0._tweenId then
-			SurvivalController.instance:dispatchEvent(SurvivalEvent.UpdateUnitIsShow, arg_37_0._unitMo.id)
+		if not self._tweenId then
+			SurvivalController.instance:dispatchEvent(SurvivalEvent.UpdateUnitIsShow, self._unitMo.id)
 		end
 	end
 end
 
-function var_0_0.initMats(arg_38_0)
-	if not arg_38_0._shareMats then
-		arg_38_0._shareMats = arg_38_0:getUserDataTb_()
-		arg_38_0._matInsts = arg_38_0:getUserDataTb_()
+function SurvivalUnitEntity:initMats()
+	if not self._shareMats then
+		self._shareMats = self:getUserDataTb_()
+		self._matInsts = self:getUserDataTb_()
 
-		for iter_38_0 = 0, arg_38_0._renderers.Length - 1 do
-			arg_38_0._shareMats[iter_38_0] = arg_38_0._renderers[iter_38_0].sharedMaterial
-			arg_38_0._matInsts[iter_38_0] = arg_38_0._renderers[iter_38_0].material
+		for i = 0, self._renderers.Length - 1 do
+			self._shareMats[i] = self._renderers[i].sharedMaterial
+			self._matInsts[i] = self._renderers[i].material
 
-			arg_38_0._matInsts[iter_38_0]:EnableKeyword("_SCREENCOORD")
-			arg_38_0._matInsts[iter_38_0]:SetFloat(var_0_1, 0)
+			self._matInsts[i]:EnableKeyword("_SCREENCOORD")
+			self._matInsts[i]:SetFloat(OcclusionThresholdId, 0)
 		end
 	end
 
-	for iter_38_1 = 0, arg_38_0._renderers.Length - 1 do
-		local var_38_0 = arg_38_0._renderers[iter_38_1]
+	for i = 0, self._renderers.Length - 1 do
+		local renderer = self._renderers[i]
 
-		if not tolua.isnull(var_38_0) then
-			var_38_0.material = arg_38_0._matInsts[iter_38_1]
+		if not tolua.isnull(renderer) then
+			renderer.material = self._matInsts[i]
 		end
 	end
 end
 
-function var_0_0._endMove(arg_39_0)
-	arg_39_0:playAnim("idle")
+function SurvivalUnitEntity:_endMove()
+	self:playAnim("idle")
 
-	arg_39_0._targetPos = nil
-	arg_39_0._tweenId = nil
+	self._targetPos = nil
+	self._tweenId = nil
 
-	arg_39_0:_doCallback()
+	self:_doCallback()
 
-	if not arg_39_0._tweenModelShowId then
-		SurvivalController.instance:dispatchEvent(SurvivalEvent.UpdateUnitIsShow, arg_39_0._unitMo.id)
+	if not self._tweenModelShowId then
+		SurvivalController.instance:dispatchEvent(SurvivalEvent.UpdateUnitIsShow, self._unitMo.id)
 	end
 
-	arg_39_0:onMoveEnd()
+	self:onMoveEnd()
 end
 
-function var_0_0._doCallback(arg_40_0)
-	local var_40_0 = arg_40_0._callback
-	local var_40_1 = arg_40_0._callObj
+function SurvivalUnitEntity:_doCallback()
+	local callback = self._callback
+	local callObj = self._callObj
 
-	arg_40_0._callback = nil
-	arg_40_0._callObj = nil
+	self._callback = nil
+	self._callObj = nil
 
-	if var_40_0 then
-		var_40_0(var_40_1)
-	end
-end
-
-function var_0_0.onMoveEnd(arg_41_0)
-	SurvivalController.instance:dispatchEvent(SurvivalEvent.OnUnitEndMove, arg_41_0._unitMo.id)
-end
-
-function var_0_0.playAnim(arg_42_0, arg_42_1)
-	arg_42_0._curAnimName = arg_42_1
-
-	if arg_42_0._anim and not tolua.isnull(arg_42_0._anim) and arg_42_0._anim.isActiveAndEnabled then
-		arg_42_0._anim:Play(arg_42_1, 0, 0)
+	if callback then
+		callback(callObj)
 	end
 end
 
-function var_0_0.addEffect(arg_43_0, arg_43_1)
-	if not arg_43_0._allEffects or arg_43_0._allEffects[arg_43_1] then
+function SurvivalUnitEntity:onMoveEnd()
+	SurvivalController.instance:dispatchEvent(SurvivalEvent.OnUnitEndMove, self._unitMo.id)
+end
+
+function SurvivalUnitEntity:playAnim(animName)
+	self._curAnimName = animName
+
+	if self._anim and not tolua.isnull(self._anim) and self._anim.isActiveAndEnabled then
+		self._anim:Play(animName, 0, 0)
+	end
+end
+
+function SurvivalUnitEntity:addEffect(effectPath)
+	if not self._allEffects or self._allEffects[effectPath] then
 		return
 	end
 
-	if gohelper.isNil(arg_43_0._effectRoot) then
+	if gohelper.isNil(self._effectRoot) then
 		logError("SurvivalUnitEntity._effectRoot is nil")
 
 		return
 	end
 
-	local var_43_0 = gohelper.create3d(arg_43_0._effectRoot, "effect")
-	local var_43_1 = PrefabInstantiate.Create(var_43_0)
+	local go = gohelper.create3d(self._effectRoot, "effect")
+	local loader = PrefabInstantiate.Create(go)
 
-	var_43_1:startLoad(arg_43_1)
+	loader:startLoad(effectPath)
 
-	arg_43_0._allEffects[arg_43_1] = var_43_1
+	self._allEffects[effectPath] = loader
 end
 
-function var_0_0.removeEffect(arg_44_0, arg_44_1)
-	if not arg_44_0._allEffects or not arg_44_0._allEffects[arg_44_1] then
+function SurvivalUnitEntity:removeEffect(effectPath)
+	if not self._allEffects or not self._allEffects[effectPath] then
 		return
 	end
 
-	arg_44_0._allEffects[arg_44_1]:dispose()
-	gohelper.destroy(arg_44_0._allEffects[arg_44_1]._containerGO)
+	self._allEffects[effectPath]:dispose()
+	gohelper.destroy(self._allEffects[effectPath]._containerGO)
 
-	arg_44_0._allEffects[arg_44_1] = nil
+	self._allEffects[effectPath] = nil
 end
 
-function var_0_0.onDestroy(arg_45_0)
-	if arg_45_0._allEffects then
-		for iter_45_0, iter_45_1 in pairs(arg_45_0._allEffects) do
-			iter_45_1:dispose()
+function SurvivalUnitEntity:onDestroy()
+	if self._allEffects then
+		for _, loader in pairs(self._allEffects) do
+			loader:dispose()
 		end
 	end
 
-	if arg_45_0._loader then
-		arg_45_0._loader:dispose()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_45_0._loader = nil
+		self._loader = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_45_0.onTornadoTransferDone, arg_45_0)
-	TaskDispatcher.cancelTask(arg_45_0._delayDestroy, arg_45_0)
+	TaskDispatcher.cancelTask(self.onTornadoTransferDone, self)
+	TaskDispatcher.cancelTask(self._delayDestroy, self)
 
-	if arg_45_0._tweenModelShowId then
-		ZProj.TweenHelper.KillById(arg_45_0._tweenModelShowId)
+	if self._tweenModelShowId then
+		ZProj.TweenHelper.KillById(self._tweenModelShowId)
 
-		arg_45_0._tweenModelShowId = nil
+		self._tweenModelShowId = nil
 	end
 
-	arg_45_0._targetPos = nil
-	arg_45_0._callback = nil
-	arg_45_0._callObj = nil
+	self._targetPos = nil
+	self._callback = nil
+	self._callObj = nil
 
-	if arg_45_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_45_0._tweenId)
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_45_0._tweenId = nil
+		self._tweenId = nil
 	end
 end
 
-return var_0_0
+return SurvivalUnitEntity

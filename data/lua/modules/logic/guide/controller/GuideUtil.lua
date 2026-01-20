@@ -1,35 +1,37 @@
-﻿module("modules.logic.guide.controller.GuideUtil", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/GuideUtil.lua
 
-local var_0_0 = _M
-local var_0_1 = typeof(UnityEngine.RectTransform)
-local var_0_2 = typeof(UnityEngine.CanvasGroup)
-local var_0_3
+module("modules.logic.guide.controller.GuideUtil", package.seeall)
 
-function var_0_0.isGOShowInScreen(arg_1_0)
-	if gohelper.isNil(arg_1_0) or not arg_1_0.activeInHierarchy then
+local GuideUtil = _M
+local typeRectTransform = typeof(UnityEngine.RectTransform)
+local typeCanvasGroup = typeof(UnityEngine.CanvasGroup)
+local uiRootTr
+
+function GuideUtil.isGOShowInScreen(go)
+	if gohelper.isNil(go) or not go.activeInHierarchy then
 		return false
 	end
 
-	local var_1_0 = arg_1_0:GetComponent(var_0_1)
+	local rectTransform = go:GetComponent(typeRectTransform)
 
-	if var_1_0 then
-		var_0_3 = var_0_3 or ViewMgr.instance:getUIRoot().transform
+	if rectTransform then
+		uiRootTr = uiRootTr or ViewMgr.instance:getUIRoot().transform
 
-		if ZProj.UGUIHelper.Overlaps(var_1_0, var_0_3, CameraMgr.instance:getUICamera()) then
-			while var_1_0 do
-				local var_1_1, var_1_2, var_1_3 = transformhelper.getLocalScale(var_1_0, 0, 0, 0)
+		if ZProj.UGUIHelper.Overlaps(rectTransform, uiRootTr, CameraMgr.instance:getUICamera()) then
+			while rectTransform do
+				local scaleX, scaleY, scaleZ = transformhelper.getLocalScale(rectTransform, 0, 0, 0)
 
-				if var_1_1 == 0 or var_1_2 == 0 then
+				if scaleX == 0 or scaleY == 0 then
 					return false
 				end
 
-				local var_1_4 = var_1_0:GetComponent(var_0_2)
+				local canvasGroup = rectTransform:GetComponent(typeCanvasGroup)
 
-				if var_1_4 and var_1_4.alpha == 0 then
+				if canvasGroup and canvasGroup.alpha == 0 then
 					return false
 				end
 
-				var_1_0 = var_1_0.parent
+				rectTransform = rectTransform.parent
 			end
 
 			return true
@@ -41,13 +43,13 @@ function var_0_0.isGOShowInScreen(arg_1_0)
 	end
 end
 
-function var_0_0.isGuideViewTarget(arg_2_0)
+function GuideUtil.isGuideViewTarget(targetGO)
 	if ViewMgr.instance:isOpen(ViewName.GuideView) then
-		local var_2_0 = GuideViewMgr.instance.viewParam
-		local var_2_1 = var_2_0 and var_2_0.goPath
-		local var_2_2 = gohelper.find(var_2_1)
+		local viewParam = GuideViewMgr.instance.viewParam
+		local guideGOPath = viewParam and viewParam.goPath
+		local go = gohelper.find(guideGOPath)
 
-		if var_2_2 and arg_2_0 == var_2_2 then
+		if go and targetGO == go then
 			return true
 		end
 	end
@@ -55,4 +57,4 @@ function var_0_0.isGuideViewTarget(arg_2_0)
 	return false
 end
 
-return var_0_0
+return GuideUtil

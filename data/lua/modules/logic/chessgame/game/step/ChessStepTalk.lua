@@ -1,22 +1,24 @@
-﻿module("modules.logic.chessgame.game.step.ChessStepTalk", package.seeall)
+﻿-- chunkname: @modules/logic/chessgame/game/step/ChessStepTalk.lua
 
-local var_0_0 = class("ChessStepTalk", BaseWork)
+module("modules.logic.chessgame.game.step.ChessStepTalk", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.originData = arg_1_1
+local ChessStepTalk = class("ChessStepTalk", BaseWork)
+
+function ChessStepTalk:init(stepData)
+	self.originData = stepData
 end
 
-function var_0_0.onStart(arg_2_0)
-	arg_2_0:showTalk()
-	arg_2_0:onDone(true)
+function ChessStepTalk:onStart()
+	self:showTalk()
+	self:onDone(true)
 end
 
-function var_0_0.showToast(arg_3_0)
-	local var_3_0 = arg_3_0.originData.notifyId
-	local var_3_1 = ChessModel.instance:getActId()
-	local var_3_2 = ChessConfig.instance:getTipsCo(var_3_1, var_3_0)
+function ChessStepTalk:showToast()
+	local toastId = self.originData.notifyId
+	local actId = ChessModel.instance:getActId()
+	local tipco = ChessConfig.instance:getTipsCo(actId, toastId)
 
-	GameFacade.showToastString(var_3_2.content)
+	GameFacade.showToastString(tipco.content)
 end
 
-return var_0_0
+return ChessStepTalk

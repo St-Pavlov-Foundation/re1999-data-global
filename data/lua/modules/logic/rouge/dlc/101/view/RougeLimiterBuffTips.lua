@@ -1,148 +1,158 @@
-﻿module("modules.logic.rouge.dlc.101.view.RougeLimiterBuffTips", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/dlc/101/view/RougeLimiterBuffTips.lua
 
-local var_0_0 = class("RougeLimiterBuffTips", LuaCompBase)
+module("modules.logic.rouge.dlc.101.view.RougeLimiterBuffTips", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0._txtbuffname = gohelper.findChildText(arg_1_0.viewGO, "#txt_buffname")
-	arg_1_0._txtbuffdec = gohelper.findChildText(arg_1_0.viewGO, "buffdecView/Viewport/#txt_buffdec")
-	arg_1_0._btnequip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btnContain/#btn_equip")
-	arg_1_0._btnunequip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btnContain/#btn_unequip")
-	arg_1_0._btncostunlock = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btnContain/#btn_costunlock")
-	arg_1_0._txtunlocknum = gohelper.findChildText(arg_1_0.viewGO, "btnContain/#btn_costunlock/#txt_unlocknum")
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "btnContain/#btn_costunlock/#txt_unlocknum/#image_icon")
-	arg_1_0._btnspeedup = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btnContain/#btn_speedup")
-	arg_1_0._txtspeedupnum = gohelper.findChildText(arg_1_0.viewGO, "btnContain/#btn_speedup/#txt_speedupnum")
-	arg_1_0._btnclosebuffdec = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_closebuffdec")
+local RougeLimiterBuffTips = class("RougeLimiterBuffTips", LuaCompBase)
+
+function RougeLimiterBuffTips:init(go)
+	self.viewGO = go
+	self._txtbuffname = gohelper.findChildText(self.viewGO, "#txt_buffname")
+	self._txtbuffdec = gohelper.findChildText(self.viewGO, "buffdecView/Viewport/#txt_buffdec")
+	self._btnequip = gohelper.findChildButtonWithAudio(self.viewGO, "btnContain/#btn_equip")
+	self._btnunequip = gohelper.findChildButtonWithAudio(self.viewGO, "btnContain/#btn_unequip")
+	self._btncostunlock = gohelper.findChildButtonWithAudio(self.viewGO, "btnContain/#btn_costunlock")
+	self._txtunlocknum = gohelper.findChildText(self.viewGO, "btnContain/#btn_costunlock/#txt_unlocknum")
+	self._imageicon = gohelper.findChildImage(self.viewGO, "btnContain/#btn_costunlock/#txt_unlocknum/#image_icon")
+	self._btnspeedup = gohelper.findChildButtonWithAudio(self.viewGO, "btnContain/#btn_speedup")
+	self._txtspeedupnum = gohelper.findChildText(self.viewGO, "btnContain/#btn_speedup/#txt_speedupnum")
+	self._btnclosebuffdec = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_closebuffdec")
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0:addEventCb(RougeDLCController101.instance, RougeDLCEvent101.UpdateBuffState, arg_2_0._onUpdateBuffState, arg_2_0)
-	arg_2_0._btnequip:AddClickListener(arg_2_0._btnequipOnClick, arg_2_0)
-	arg_2_0._btnunequip:AddClickListener(arg_2_0._btnunequipOnClick, arg_2_0)
-	arg_2_0._btncostunlock:AddClickListener(arg_2_0._btncostunlockOnClick, arg_2_0)
-	arg_2_0._btnspeedup:AddClickListener(arg_2_0._btnspeedupOnClick, arg_2_0)
-	arg_2_0._btnclosebuffdec:AddClickListener(arg_2_0._btnclosebuffdecOnClick, arg_2_0)
+function RougeLimiterBuffTips:addEventListeners()
+	self:addEventCb(RougeDLCController101.instance, RougeDLCEvent101.UpdateBuffState, self._onUpdateBuffState, self)
+	self._btnequip:AddClickListener(self._btnequipOnClick, self)
+	self._btnunequip:AddClickListener(self._btnunequipOnClick, self)
+	self._btncostunlock:AddClickListener(self._btncostunlockOnClick, self)
+	self._btnspeedup:AddClickListener(self._btnspeedupOnClick, self)
+	self._btnclosebuffdec:AddClickListener(self._btnclosebuffdecOnClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btnequip:RemoveClickListener()
-	arg_3_0._btnunequip:RemoveClickListener()
-	arg_3_0._btncostunlock:RemoveClickListener()
-	arg_3_0._btnspeedup:RemoveClickListener()
-	arg_3_0._btnclosebuffdec:RemoveClickListener()
+function RougeLimiterBuffTips:removeEventListeners()
+	self._btnequip:RemoveClickListener()
+	self._btnunequip:RemoveClickListener()
+	self._btncostunlock:RemoveClickListener()
+	self._btnspeedup:RemoveClickListener()
+	self._btnclosebuffdec:RemoveClickListener()
 end
 
-function var_0_0._btnequipOnClick(arg_4_0)
-	RougeDLCModel101.instance:try2EquipBuff(arg_4_0._buffId)
+function RougeLimiterBuffTips:_btnequipOnClick()
+	RougeDLCModel101.instance:try2EquipBuff(self._buffId)
 
-	if arg_4_0._buffCo and arg_4_0._buffCo.blank == 1 then
+	local isBlank = self._buffCo and self._buffCo.blank == 1
+
+	if isBlank then
 		AudioMgr.instance:trigger(AudioEnum.UI.EquipedBlankLimiterBuff)
 	else
 		AudioMgr.instance:trigger(AudioEnum.UI.EquipedNormalLimiterBuff)
 	end
 end
 
-function var_0_0._btnunequipOnClick(arg_5_0)
-	RougeDLCModel101.instance:try2UnEquipBuff(arg_5_0._buffId)
+function RougeLimiterBuffTips:_btnunequipOnClick()
+	RougeDLCModel101.instance:try2UnEquipBuff(self._buffId)
 end
 
-function var_0_0._btncostunlockOnClick(arg_6_0)
-	RougeDLCController101.instance:unlockLimiterBuff(arg_6_0._buffId)
+function RougeLimiterBuffTips:_btncostunlockOnClick()
+	RougeDLCController101.instance:unlockLimiterBuff(self._buffId)
 end
 
-function var_0_0._btnspeedupOnClick(arg_7_0)
-	RougeDLCController101.instance:speedupLimiterBuff(arg_7_0._buffId)
+function RougeLimiterBuffTips:_btnspeedupOnClick()
+	RougeDLCController101.instance:speedupLimiterBuff(self._buffId)
 end
 
-function var_0_0._btnclosebuffdecOnClick(arg_8_0)
-	gohelper.setActive(arg_8_0.viewGO, false)
+function RougeLimiterBuffTips:_btnclosebuffdecOnClick()
+	gohelper.setActive(self.viewGO, false)
 	RougeDLCController101.instance:dispatchEvent(RougeDLCEvent101.CloseBuffDescTips)
 end
 
-function var_0_0.onUpdateMO(arg_9_0, arg_9_1, arg_9_2)
-	arg_9_0._buffId = arg_9_1
-	arg_9_0._buffCo = RougeDLCConfig101.instance:getLimiterBuffCo(arg_9_0._buffId)
+function RougeLimiterBuffTips:onUpdateMO(buffId, isSelect)
+	self._buffId = buffId
+	self._buffCo = RougeDLCConfig101.instance:getLimiterBuffCo(self._buffId)
 
-	gohelper.setActive(arg_9_0.viewGO, arg_9_0._buffCo and arg_9_2)
+	gohelper.setActive(self.viewGO, self._buffCo and isSelect)
 
-	if not arg_9_0._buffCo or not arg_9_2 then
+	if not self._buffCo or not isSelect then
 		return
 	end
 
-	arg_9_0:_refreshBuffInfo()
-	arg_9_0:_refreshBuffStateUI()
+	self:_refreshBuffInfo()
+	self:_refreshBuffStateUI()
 end
 
-function var_0_0._refreshBuffInfo(arg_10_0)
-	arg_10_0._txtbuffname.text = arg_10_0._buffCo and arg_10_0._buffCo.title
-	arg_10_0._txtbuffdec.text = arg_10_0._buffCo and arg_10_0._buffCo.desc
+function RougeLimiterBuffTips:_refreshBuffInfo()
+	self._txtbuffname.text = self._buffCo and self._buffCo.title
+	self._txtbuffdec.text = self._buffCo and self._buffCo.desc
 end
 
-function var_0_0._refreshBuffStateUI(arg_11_0)
-	local var_11_0 = RougeDLCModel101.instance:getLimiterBuffState(arg_11_0._buffId)
+function RougeLimiterBuffTips:_refreshBuffStateUI()
+	local buffState = RougeDLCModel101.instance:getLimiterBuffState(self._buffId)
 
-	arg_11_0:refreshButtons(var_11_0)
-	arg_11_0:executeBuffStateCallBack(var_11_0)
+	self:refreshButtons(buffState)
+	self:executeBuffStateCallBack(buffState)
 end
 
-function var_0_0.refreshButtons(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_1 == RougeDLCEnum101.BuffState.Locked
-	local var_12_1 = arg_12_1 == RougeDLCEnum101.BuffState.Unlocked
-	local var_12_2 = arg_12_1 == RougeDLCEnum101.BuffState.Equiped
-	local var_12_3 = arg_12_1 == RougeDLCEnum101.BuffState.CD
+function RougeLimiterBuffTips:refreshButtons(buffState)
+	local isLocked = buffState == RougeDLCEnum101.BuffState.Locked
+	local isUnequiped = buffState == RougeDLCEnum101.BuffState.Unlocked
+	local isEquiped = buffState == RougeDLCEnum101.BuffState.Equiped
+	local isCD = buffState == RougeDLCEnum101.BuffState.CD
 
-	gohelper.setActive(arg_12_0._btncostunlock.gameObject, var_12_0)
-	gohelper.setActive(arg_12_0._btnequip.gameObject, var_12_1)
-	gohelper.setActive(arg_12_0._btnunequip.gameObject, var_12_2)
-	gohelper.setActive(arg_12_0._btnspeedup.gameObject, var_12_3)
+	gohelper.setActive(self._btncostunlock.gameObject, isLocked)
+	gohelper.setActive(self._btnequip.gameObject, isUnequiped)
+	gohelper.setActive(self._btnunequip.gameObject, isEquiped)
+	gohelper.setActive(self._btnspeedup.gameObject, isCD)
 end
 
-function var_0_0.executeBuffStateCallBack(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0:getBuffStateCallBack(arg_13_1)
+function RougeLimiterBuffTips:executeBuffStateCallBack(buffState)
+	local callback = self:getBuffStateCallBack(buffState)
 
-	if not var_13_0 then
+	if not callback then
 		return
 	end
 
-	var_13_0(arg_13_0)
+	callback(self)
 end
 
-function var_0_0.getBuffStateCallBack(arg_14_0, arg_14_1)
-	if not arg_14_0._stateCallBackMap then
-		arg_14_0._stateCallBackMap = {
-			[RougeDLCEnum101.BuffState.Locked] = arg_14_0.onBuffLocked,
-			[RougeDLCEnum101.BuffState.CD] = arg_14_0.onBuffCD
+function RougeLimiterBuffTips:getBuffStateCallBack(buffState)
+	if not self._stateCallBackMap then
+		self._stateCallBackMap = {
+			[RougeDLCEnum101.BuffState.Locked] = self.onBuffLocked,
+			[RougeDLCEnum101.BuffState.CD] = self.onBuffCD
 		}
 	end
 
-	return arg_14_0._stateCallBackMap and arg_14_0._stateCallBackMap[arg_14_1]
+	local callback = self._stateCallBackMap and self._stateCallBackMap[buffState]
+
+	return callback
 end
 
-local var_0_1 = "#D6D2C9"
-local var_0_2 = "#BF2E11"
-local var_0_3 = "#D6D2C9"
-local var_0_4 = "#BF2E11"
+local MatchCDEmblemColor = "#D6D2C9"
+local LackCDEmblemColor = "#BF2E11"
+local MatchUnlockEmblemColor = "#D6D2C9"
+local LackUnlockEmblemColor = "#BF2E11"
 
-function var_0_0.onBuffLocked(arg_15_0)
-	local var_15_0 = arg_15_0._buffCo and arg_15_0._buffCo.needEmblem
-	local var_15_1 = var_15_0 <= RougeDLCModel101.instance:getTotalEmblemCount() and var_0_3 or var_0_4
+function RougeLimiterBuffTips:onBuffLocked()
+	local needEmblem = self._buffCo and self._buffCo.needEmblem
+	local totalEmblemCount = RougeDLCModel101.instance:getTotalEmblemCount()
+	local isEmblemCountMatch = needEmblem <= totalEmblemCount
+	local emblemCountColor = isEmblemCountMatch and MatchUnlockEmblemColor or LackUnlockEmblemColor
 
-	arg_15_0._txtunlocknum.text = string.format("<%s>-%s</color>", var_15_1, var_15_0)
+	self._txtunlocknum.text = string.format("<%s>-%s</color>", emblemCountColor, needEmblem)
 end
 
-function var_0_0.onBuffCD(arg_16_0)
-	local var_16_0 = RougeDLCModel101.instance:getLimiterBuffCD(arg_16_0._buffId)
-	local var_16_1 = RougeDLCHelper101.getLimiterBuffSpeedupCost(var_16_0)
-	local var_16_2 = var_16_1 <= RougeDLCModel101.instance:getTotalEmblemCount() and var_0_1 or var_0_2
+function RougeLimiterBuffTips:onBuffCD()
+	local remainCDRound = RougeDLCModel101.instance:getLimiterBuffCD(self._buffId)
+	local speedupCost = RougeDLCHelper101.getLimiterBuffSpeedupCost(remainCDRound)
+	local totalEmblemCount = RougeDLCModel101.instance:getTotalEmblemCount()
+	local isEmblemCountMatch = speedupCost <= totalEmblemCount
+	local emblemCountColor = isEmblemCountMatch and MatchCDEmblemColor or LackCDEmblemColor
 
-	arg_16_0._txtspeedupnum.text = string.format("<%s>-%s</color>", var_16_2, var_16_1)
+	self._txtspeedupnum.text = string.format("<%s>-%s</color>", emblemCountColor, speedupCost)
 end
 
-function var_0_0._onUpdateBuffState(arg_17_0, arg_17_1)
-	if arg_17_0._buffId == arg_17_1 then
-		arg_17_0:_refreshBuffStateUI()
+function RougeLimiterBuffTips:_onUpdateBuffState(buffId)
+	if self._buffId == buffId then
+		self:_refreshBuffStateUI()
 	end
 end
 
-return var_0_0
+return RougeLimiterBuffTips

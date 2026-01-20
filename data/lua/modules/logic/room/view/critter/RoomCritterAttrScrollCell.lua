@@ -1,77 +1,79 @@
-﻿module("modules.logic.room.view.critter.RoomCritterAttrScrollCell", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/critter/RoomCritterAttrScrollCell.lua
 
-local var_0_0 = class("RoomCritterAttrScrollCell", ListScrollCellExtend)
+module("modules.logic.room.view.critter.RoomCritterAttrScrollCell", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#txt_name")
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "#txt_name/#image_icon")
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "#txt_num")
-	arg_1_0._txtratio = gohelper.findChildText(arg_1_0.viewGO, "#txt_ratio")
+local RoomCritterAttrScrollCell = class("RoomCritterAttrScrollCell", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomCritterAttrScrollCell:onInitView()
+	self._txtname = gohelper.findChildText(self.viewGO, "#txt_name")
+	self._imageicon = gohelper.findChildImage(self.viewGO, "#txt_name/#image_icon")
+	self._txtnum = gohelper.findChildText(self.viewGO, "#txt_num")
+	self._txtratio = gohelper.findChildText(self.viewGO, "#txt_ratio")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RoomCritterAttrScrollCell:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RoomCritterAttrScrollCell:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function RoomCritterAttrScrollCell:_editableInitView()
 	return
 end
 
-function var_0_0._editableAddEvents(arg_5_0)
+function RoomCritterAttrScrollCell:_editableAddEvents()
 	return
 end
 
-function var_0_0._editableRemoveEvents(arg_6_0)
+function RoomCritterAttrScrollCell:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.getDataMO(arg_7_0)
-	return arg_7_0._critterAttributeInfoMO
+function RoomCritterAttrScrollCell:getDataMO()
+	return self._critterAttributeInfoMO
 end
 
-function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
-	arg_8_0._critterAttributeInfoMO = arg_8_1
+function RoomCritterAttrScrollCell:onUpdateMO(mo)
+	self._critterAttributeInfoMO = mo
 
-	arg_8_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.onSelect(arg_9_0, arg_9_1)
+function RoomCritterAttrScrollCell:onSelect(isSelect)
 	return
 end
 
-function var_0_0.onDestroyView(arg_10_0)
+function RoomCritterAttrScrollCell:onDestroyView()
 	return
 end
 
-function var_0_0.refreshUI(arg_11_0)
-	local var_11_0 = arg_11_0._critterAttributeInfoMO
+function RoomCritterAttrScrollCell:refreshUI()
+	local mo = self._critterAttributeInfoMO
 
-	if not var_11_0 then
+	if not mo then
 		return
 	end
 
-	local var_11_1 = math.floor(var_11_0.rate * 0.01) * 0.01 .. luaLang("multiple")
+	local ratio = math.floor(mo.rate * 0.01) * 0.01 .. luaLang("multiple")
 
-	arg_11_0._txtnum.text = var_11_0.value
-	arg_11_0._txtratio.text = var_11_1
+	self._txtnum.text = mo.value
+	self._txtratio.text = ratio
 
-	if arg_11_0._txtname then
-		arg_11_0._txtname.text = var_11_0:getName()
+	if self._txtname then
+		self._txtname.text = mo:getName()
 	end
 
-	if arg_11_0._imageicon and not string.nilorempty(var_11_0:getIcon()) then
-		UISpriteSetMgr.instance:setCritterSprite(arg_11_0._imageicon, var_11_0:getIcon())
+	if self._imageicon and not string.nilorempty(mo:getIcon()) then
+		UISpriteSetMgr.instance:setCritterSprite(self._imageicon, mo:getIcon())
 	end
 
-	gohelper.setActive(arg_11_0._goArrow, var_11_0:getIsAddition())
+	gohelper.setActive(self._goArrow, mo:getIsAddition())
 end
 
-return var_0_0
+return RoomCritterAttrScrollCell

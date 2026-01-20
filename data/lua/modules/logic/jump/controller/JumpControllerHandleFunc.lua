@@ -1,91 +1,93 @@
-﻿module("modules.logic.jump.controller.JumpControllerHandleFunc", package.seeall)
+﻿-- chunkname: @modules/logic/jump/controller/JumpControllerHandleFunc.lua
 
-local var_0_0 = JumpController
+module("modules.logic.jump.controller.JumpControllerHandleFunc", package.seeall)
 
-function var_0_0.V2a4_WuErLiXi(arg_1_0, arg_1_1, arg_1_2)
+local JumpController = JumpController
+
+function JumpController:V2a4_WuErLiXi(actId, jumpParam)
 	VersionActivity2_4EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
 		WuErLiXiController.instance:enterLevelView()
-	end, nil, arg_1_1)
+	end, nil, actId)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.V3a0_Reactivity(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = VersionActivity3_0EnterController.instance
-	local var_3_1 = VersionActivity2_3DungeonController.instance
-	local var_3_2 = arg_3_2[3]
+function JumpController:V3a0_Reactivity(actId, paramsList)
+	local versionActivityEnterInstance = VersionActivity3_0EnterController.instance
+	local dungeonCtrlInstance = VersionActivity2_3DungeonController.instance
+	local episodeId = paramsList[3]
 
-	table.insert(arg_3_0.waitOpenViewNames, ViewName.VersionActivity3_0EnterView)
-	table.insert(arg_3_0.closeViewNames, ViewName.VersionActivity2_3DungeonMapLevelView)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity3_0EnterView)
+	table.insert(self.closeViewNames, ViewName.VersionActivity2_3DungeonMapLevelView)
 	VersionActivity2_3DungeonModel.instance:setMapNeedTweenState(true)
 
-	if var_3_2 then
+	if episodeId then
 		VersionActivity3_0EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
-			var_3_1:openVersionActivityDungeonMapView(nil, var_3_2, function()
+			dungeonCtrlInstance:openVersionActivityDungeonMapView(nil, episodeId, function()
 				ViewMgr.instance:openView(ViewName.VersionActivity2_3DungeonMapLevelView, {
 					isJump = true,
-					episodeId = var_3_2
+					episodeId = episodeId
 				})
 			end)
-		end, nil, arg_3_1, true)
+		end, nil, actId, true)
 	else
-		var_3_0:openVersionActivityEnterViewIfNotOpened(var_3_1.openVersionActivityDungeonMapView, var_3_1, arg_3_1, true)
+		versionActivityEnterInstance:openVersionActivityEnterViewIfNotOpened(dungeonCtrlInstance.openVersionActivityDungeonMapView, dungeonCtrlInstance, actId, true)
 	end
 
 	return JumpEnum.JumpResult.Success
 end
 
-var_0_0.DefaultToastId = 0
+JumpController.DefaultToastId = 0
 
-function var_0_0.activateHandleFuncController()
+function JumpController.activateHandleFuncController()
 	return
 end
 
-function var_0_0.defaultHandleFunc(arg_7_0, arg_7_1)
+function JumpController:defaultHandleFunc(jumpParam)
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToRoleStoryActivity(arg_8_0, arg_8_1)
-	local var_8_0 = string.splitToNumber(arg_8_1, "#")
-	local var_8_1 = ViewName.RoleStoryDispatchMainView
+function JumpController:jumpToRoleStoryActivity(jumpParam)
+	local jumpArray = string.splitToNumber(jumpParam, "#")
+	local viewName = ViewName.RoleStoryDispatchMainView
 
-	table.insert(arg_8_0.waitOpenViewNames, var_8_1)
+	table.insert(self.waitOpenViewNames, viewName)
 
-	if RoleStoryController.instance:openRoleStoryDispatchMainView(var_8_0) then
+	if RoleStoryController.instance:openRoleStoryDispatchMainView(jumpArray) then
 		return JumpEnum.JumpResult.Success
 	end
 
-	tabletool.removeValue(arg_8_0.waitOpenViewNames, var_8_1)
+	tabletool.removeValue(self.waitOpenViewNames, viewName)
 
 	return JumpEnum.JumpResult.Fail
 end
 
-function var_0_0.jumpToStoreView(arg_9_0, arg_9_1)
-	local var_9_0 = string.splitToNumber(arg_9_1, "#")
+function JumpController:jumpToStoreView(jumpParam)
+	local jumpArray = string.splitToNumber(jumpParam, "#")
 
-	table.insert(arg_9_0.waitOpenViewNames, ViewName.StoreView)
-	table.insert(arg_9_0.closeViewNames, ViewName.NormalStoreGoodsView)
-	table.insert(arg_9_0.closeViewNames, ViewName.ChargeStoreGoodsView)
-	table.insert(arg_9_0.remainViewNames, ViewName.StoreView)
+	table.insert(self.waitOpenViewNames, ViewName.StoreView)
+	table.insert(self.closeViewNames, ViewName.NormalStoreGoodsView)
+	table.insert(self.closeViewNames, ViewName.ChargeStoreGoodsView)
+	table.insert(self.remainViewNames, ViewName.StoreView)
 
 	if ViewMgr.instance:isOpen(ViewName.DungeonView) and DungeonModel.instance.curChapterType == DungeonEnum.ChapterType.WeekWalk then
-		table.insert(arg_9_0.remainViewNames, ViewName.DungeonView)
+		table.insert(self.remainViewNames, ViewName.DungeonView)
 	end
 
-	if #var_9_0 >= 2 then
-		local var_9_1 = var_9_0[2]
-		local var_9_2 = var_9_0[3]
-		local var_9_3 = var_9_0[4]
+	if #jumpArray >= 2 then
+		local jumpTab = jumpArray[2]
+		local jumpGoodsId = jumpArray[3]
+		local isFocus = jumpArray[4]
 
-		if (var_9_1 == StoreEnum.StoreId.Package or var_9_1 == StoreEnum.StoreId.RecommendPackage or var_9_1 == StoreEnum.StoreId.NormalPackage or var_9_1 == StoreEnum.StoreId.OneTimePackage or var_9_1 == StoreEnum.StoreId.VersionPackage or var_9_1 == StoreEnum.StoreId.MediciPackage) and var_9_2 then
-			table.insert(arg_9_0.remainViewNames, ViewName.PackageStoreGoodsView)
+		if (jumpTab == StoreEnum.StoreId.Package or jumpTab == StoreEnum.StoreId.RecommendPackage or jumpTab == StoreEnum.StoreId.NormalPackage or jumpTab == StoreEnum.StoreId.OneTimePackage or jumpTab == StoreEnum.StoreId.VersionPackage or jumpTab == StoreEnum.StoreId.MediciPackage) and jumpGoodsId then
+			table.insert(self.remainViewNames, ViewName.PackageStoreGoodsView)
 		end
 
-		if (var_9_1 == StoreEnum.StoreId.NewDecorateStore or var_9_1 == StoreEnum.StoreId.OldDecorateStore) and var_9_2 then
-			table.insert(arg_9_0.remainViewNames, ViewName.DecorateStoreGoodsView)
+		if (jumpTab == StoreEnum.StoreId.NewDecorateStore or jumpTab == StoreEnum.StoreId.OldDecorateStore) and jumpGoodsId then
+			table.insert(self.remainViewNames, ViewName.DecorateStoreGoodsView)
 		end
 
-		StoreController.instance:openStoreView(var_9_1, var_9_2, var_9_3)
+		StoreController.instance:openStoreView(jumpTab, jumpGoodsId, isFocus)
 	else
 		StoreController.instance:openStoreView()
 	end
@@ -93,16 +95,16 @@ function var_0_0.jumpToStoreView(arg_9_0, arg_9_1)
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToSummonView(arg_10_0, arg_10_1)
-	local var_10_0 = string.splitToNumber(arg_10_1, "#")
+function JumpController:jumpToSummonView(jumpParam)
+	local jumpArray = string.splitToNumber(jumpParam, "#")
 
-	table.insert(arg_10_0.remainViewNames, ViewName.SummonADView)
-	table.insert(arg_10_0.remainViewNames, ViewName.SummonView)
+	table.insert(self.remainViewNames, ViewName.SummonADView)
+	table.insert(self.remainViewNames, ViewName.SummonView)
 
-	if #var_10_0 >= 2 then
-		local var_10_1 = var_10_0[2]
+	if #jumpArray >= 2 then
+		local jumpPoolId = jumpArray[2]
 
-		SummonController.instance:jumpSummon(var_10_1)
+		SummonController.instance:jumpSummon(jumpPoolId)
 	else
 		SummonController.instance:jumpSummon()
 	end
@@ -115,16 +117,16 @@ function var_0_0.jumpToSummonView(arg_10_0, arg_10_1)
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToSummonViewGroup(arg_11_0, arg_11_1)
-	local var_11_0 = string.splitToNumber(arg_11_1, "#")
+function JumpController:jumpToSummonViewGroup(jumpParam)
+	local jumpArray = string.splitToNumber(jumpParam, "#")
 
-	table.insert(arg_11_0.remainViewNames, ViewName.SummonADView)
-	table.insert(arg_11_0.remainViewNames, ViewName.SummonView)
+	table.insert(self.remainViewNames, ViewName.SummonADView)
+	table.insert(self.remainViewNames, ViewName.SummonView)
 
-	if #var_11_0 >= 2 then
-		local var_11_1 = var_11_0[2]
+	if #jumpArray >= 2 then
+		local jumpPoolGroupId = jumpArray[2]
 
-		SummonController.instance:jumpSummonByGroup(var_11_1)
+		SummonController.instance:jumpSummonByGroup(jumpPoolGroupId)
 	else
 		SummonController.instance:jumpSummon()
 	end
@@ -137,45 +139,46 @@ function var_0_0.jumpToSummonViewGroup(arg_11_0, arg_11_1)
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToDungeonViewWithChapter(arg_12_0, arg_12_1)
-	local var_12_0 = string.splitToNumber(arg_12_1, "#")
+function JumpController:jumpToDungeonViewWithChapter(jumpParam)
+	local jumpArray = string.splitToNumber(jumpParam, "#")
 
-	table.insert(arg_12_0.waitOpenViewNames, ViewName.DungeonMapView)
-	table.insert(arg_12_0.closeViewNames, ViewName.HeroInvitationView)
-	table.insert(arg_12_0.closeViewNames, ViewName.HeroInvitationDungeonMapView)
-	table.insert(arg_12_0.closeViewNames, ViewName.DungeonMapView)
-	table.insert(arg_12_0.closeViewNames, ViewName.DungeonMapLevelView)
-	table.insert(arg_12_0.closeViewNames, ViewName.VersionActivity1_5DungeonMapView)
-	table.insert(arg_12_0.closeViewNames, ViewName.VersionActivity1_5DungeonMapLevelView)
-	table.insert(arg_12_0.closeViewNames, ViewName.WeekWalkView)
-	table.insert(arg_12_0.closeViewNames, ViewName.WeekWalkCharacterView)
-	table.insert(arg_12_0.closeViewNames, ViewName.WeekWalkLayerView)
-	table.insert(arg_12_0.closeViewNames, ViewName.WeekWalkLayerRewardView)
-	table.insert(arg_12_0.closeViewNames, ViewName.StoryView)
-	table.insert(arg_12_0.closeViewNames, ViewName.DungeonPuzzleChangeColorView)
+	table.insert(self.waitOpenViewNames, ViewName.DungeonMapView)
+	table.insert(self.closeViewNames, ViewName.HeroInvitationView)
+	table.insert(self.closeViewNames, ViewName.HeroInvitationDungeonMapView)
+	table.insert(self.closeViewNames, ViewName.DungeonMapView)
+	table.insert(self.closeViewNames, ViewName.DungeonMapLevelView)
+	table.insert(self.closeViewNames, ViewName.VersionActivity1_5DungeonMapView)
+	table.insert(self.closeViewNames, ViewName.VersionActivity1_5DungeonMapLevelView)
+	table.insert(self.closeViewNames, ViewName.WeekWalkView)
+	table.insert(self.closeViewNames, ViewName.WeekWalkCharacterView)
+	table.insert(self.closeViewNames, ViewName.WeekWalkLayerView)
+	table.insert(self.closeViewNames, ViewName.WeekWalkLayerRewardView)
+	table.insert(self.closeViewNames, ViewName.StoryView)
+	table.insert(self.closeViewNames, ViewName.DungeonPuzzleChangeColorView)
 
-	local var_12_1 = var_12_0[2]
-	local var_12_2 = DungeonConfig.instance:getChapterCO(var_12_1)
+	local chapterId = jumpArray[2]
+	local chapterConfig = DungeonConfig.instance:getChapterCO(chapterId)
 
-	if var_12_2 then
-		local var_12_3 = var_12_2.type
-		local var_12_4 = {
-			chapterType = var_12_3,
-			chapterId = var_12_1
-		}
-		local var_12_5 = DungeonController.instance:jumpDungeon(var_12_4)
+	if chapterConfig then
+		local chapterType = chapterConfig.type
+		local param = {}
 
-		if var_12_5 and #var_12_5 > 0 then
-			for iter_12_0, iter_12_1 in ipairs(var_12_5) do
-				table.insert(arg_12_0.remainViewNames, iter_12_1)
+		param.chapterType = chapterType
+		param.chapterId = chapterId
+
+		local moduleRemainViewNames = DungeonController.instance:jumpDungeon(param)
+
+		if moduleRemainViewNames and #moduleRemainViewNames > 0 then
+			for i, viewName in ipairs(moduleRemainViewNames) do
+				table.insert(self.remainViewNames, viewName)
 			end
 
-			table.insert(arg_12_0.remainViewNames, ViewName.DungeonView)
+			table.insert(self.remainViewNames, ViewName.DungeonView)
 		end
 
 		return JumpEnum.JumpResult.Success
 	else
-		logError("找不到章节配置, chapterId: " .. tostring(var_12_1))
+		logError("找不到章节配置, chapterId: " .. tostring(chapterId))
 
 		return JumpEnum.JumpResult.Fail
 	end
@@ -183,68 +186,69 @@ function var_0_0.jumpToDungeonViewWithChapter(arg_12_0, arg_12_1)
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToDungeonViewWithEpisode(arg_13_0, arg_13_1)
-	local var_13_0 = string.splitToNumber(arg_13_1, "#")
+function JumpController:jumpToDungeonViewWithEpisode(jumpParam)
+	local jumpArray = string.splitToNumber(jumpParam, "#")
 
-	table.insert(arg_13_0.waitOpenViewNames, ViewName.DungeonMapView)
+	table.insert(self.waitOpenViewNames, ViewName.DungeonMapView)
 
-	if var_13_0[3] ~= 1 then
-		table.insert(arg_13_0.waitOpenViewNames, ViewName.DungeonMapLevelView)
+	if jumpArray[3] ~= 1 then
+		table.insert(self.waitOpenViewNames, ViewName.DungeonMapLevelView)
 	end
 
-	table.insert(arg_13_0.closeViewNames, ViewName.HeroInvitationView)
-	table.insert(arg_13_0.closeViewNames, ViewName.HeroInvitationDungeonMapView)
-	table.insert(arg_13_0.closeViewNames, ViewName.DungeonMapView)
-	table.insert(arg_13_0.closeViewNames, ViewName.DungeonMapLevelView)
-	table.insert(arg_13_0.closeViewNames, ViewName.VersionActivity1_5DungeonMapView)
-	table.insert(arg_13_0.closeViewNames, ViewName.VersionActivity1_5DungeonMapLevelView)
-	table.insert(arg_13_0.closeViewNames, ViewName.WeekWalkView)
-	table.insert(arg_13_0.closeViewNames, ViewName.WeekWalkCharacterView)
-	table.insert(arg_13_0.closeViewNames, ViewName.WeekWalkLayerView)
-	table.insert(arg_13_0.closeViewNames, ViewName.WeekWalkLayerRewardView)
-	table.insert(arg_13_0.closeViewNames, ViewName.StoryView)
-	table.insert(arg_13_0.closeViewNames, ViewName.DungeonPuzzleChangeColorView)
-	table.insert(arg_13_0.closeViewNames, ViewName.InvestigateOpinionView)
-	table.insert(arg_13_0.closeViewNames, ViewName.InvestigateView)
+	table.insert(self.closeViewNames, ViewName.HeroInvitationView)
+	table.insert(self.closeViewNames, ViewName.HeroInvitationDungeonMapView)
+	table.insert(self.closeViewNames, ViewName.DungeonMapView)
+	table.insert(self.closeViewNames, ViewName.DungeonMapLevelView)
+	table.insert(self.closeViewNames, ViewName.VersionActivity1_5DungeonMapView)
+	table.insert(self.closeViewNames, ViewName.VersionActivity1_5DungeonMapLevelView)
+	table.insert(self.closeViewNames, ViewName.WeekWalkView)
+	table.insert(self.closeViewNames, ViewName.WeekWalkCharacterView)
+	table.insert(self.closeViewNames, ViewName.WeekWalkLayerView)
+	table.insert(self.closeViewNames, ViewName.WeekWalkLayerRewardView)
+	table.insert(self.closeViewNames, ViewName.StoryView)
+	table.insert(self.closeViewNames, ViewName.DungeonPuzzleChangeColorView)
+	table.insert(self.closeViewNames, ViewName.InvestigateOpinionView)
+	table.insert(self.closeViewNames, ViewName.InvestigateView)
 
-	for iter_13_0 in pairs(ActivityHelper.getJumpNeedCloseViewDict()) do
-		table.insert(arg_13_0.closeViewNames, iter_13_0)
+	for viewName in pairs(ActivityHelper.getJumpNeedCloseViewDict()) do
+		table.insert(self.closeViewNames, viewName)
 	end
 
-	local var_13_1 = var_13_0[2]
-	local var_13_2 = var_13_0[3] == 1
-	local var_13_3 = DungeonConfig.instance:getEpisodeCO(var_13_1)
+	local episodeId = jumpArray[2]
+	local isNoShowMapLevel = jumpArray[3] == 1
+	local episodeConfig = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-	if var_13_3 then
-		local var_13_4 = var_13_3.chapterId
-		local var_13_5 = DungeonConfig.instance:getChapterCO(var_13_4)
+	if episodeConfig then
+		local chapterId = episodeConfig.chapterId
+		local chapterConfig = DungeonConfig.instance:getChapterCO(chapterId)
 
-		if var_13_5 then
-			local var_13_6 = var_13_5.type
-			local var_13_7 = {
-				chapterType = var_13_6,
-				chapterId = var_13_4,
-				episodeId = var_13_1,
-				isNoShowMapLevel = var_13_2
-			}
-			local var_13_8 = DungeonController.instance:jumpDungeon(var_13_7)
+		if chapterConfig then
+			local chapterType = chapterConfig.type
+			local param = {}
 
-			if var_13_8 and #var_13_8 > 0 then
-				for iter_13_1, iter_13_2 in ipairs(var_13_8) do
-					table.insert(arg_13_0.remainViewNames, iter_13_2)
+			param.chapterType = chapterType
+			param.chapterId = chapterId
+			param.episodeId = episodeId
+			param.isNoShowMapLevel = isNoShowMapLevel
+
+			local moduleRemainViewNames = DungeonController.instance:jumpDungeon(param)
+
+			if moduleRemainViewNames and #moduleRemainViewNames > 0 then
+				for i, viewName in ipairs(moduleRemainViewNames) do
+					table.insert(self.remainViewNames, viewName)
 				end
 
-				table.insert(arg_13_0.remainViewNames, ViewName.DungeonView)
+				table.insert(self.remainViewNames, ViewName.DungeonView)
 			else
 				return JumpEnum.JumpResult.Fail
 			end
 		else
-			logError("找不到章节配置, chapterId: " .. tostring(var_13_4))
+			logError("找不到章节配置, chapterId: " .. tostring(chapterId))
 
 			return JumpEnum.JumpResult.Fail
 		end
 	else
-		logError("找不到关卡配置, episodeId: " .. tostring(var_13_1))
+		logError("找不到关卡配置, episodeId: " .. tostring(episodeId))
 
 		return JumpEnum.JumpResult.Fail
 	end
@@ -252,20 +256,21 @@ function var_0_0.jumpToDungeonViewWithEpisode(arg_13_0, arg_13_1)
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToDungeonViewWithType(arg_14_0, arg_14_1)
-	local var_14_0 = string.splitToNumber(arg_14_1, "#")[2] or JumpEnum.DungeonChapterType.Story
-	local var_14_1 = {}
+function JumpController:jumpToDungeonViewWithType(jumpParam)
+	local jumpArray = string.splitToNumber(jumpParam, "#")
+	local jumpChapterType = jumpArray[2] or JumpEnum.DungeonChapterType.Story
+	local param = {}
 
-	if var_14_0 == JumpEnum.DungeonChapterType.Story then
-		var_14_1.chapterType = DungeonEnum.ChapterType.Normal
-	elseif var_14_0 == JumpEnum.DungeonChapterType.Gold then
-		var_14_1.chapterType = DungeonEnum.ChapterType.Gold
-	elseif var_14_0 == JumpEnum.DungeonChapterType.Resource then
-		var_14_1.chapterType = DungeonEnum.ChapterType.Break
-	elseif var_14_0 == JumpEnum.DungeonChapterType.Explore then
-		var_14_1.chapterType = DungeonEnum.ChapterType.Explore
-	elseif var_14_0 == JumpEnum.DungeonChapterType.WeekWalk then
-		var_14_1.chapterType = DungeonEnum.ChapterType.WeekWalk
+	if jumpChapterType == JumpEnum.DungeonChapterType.Story then
+		param.chapterType = DungeonEnum.ChapterType.Normal
+	elseif jumpChapterType == JumpEnum.DungeonChapterType.Gold then
+		param.chapterType = DungeonEnum.ChapterType.Gold
+	elseif jumpChapterType == JumpEnum.DungeonChapterType.Resource then
+		param.chapterType = DungeonEnum.ChapterType.Break
+	elseif jumpChapterType == JumpEnum.DungeonChapterType.Explore then
+		param.chapterType = DungeonEnum.ChapterType.Explore
+	elseif jumpChapterType == JumpEnum.DungeonChapterType.WeekWalk then
+		param.chapterType = DungeonEnum.ChapterType.WeekWalk
 
 		if ViewMgr.instance:isOpen(ViewName.WeekWalkView) or ViewMgr.instance:isOpen(ViewName.DungeonView) and DungeonModel.instance.curChapterType == DungeonEnum.ChapterType.WeekWalk then
 			ViewMgr.instance:closeView(ViewName.TaskView)
@@ -274,31 +279,31 @@ function var_0_0.jumpToDungeonViewWithType(arg_14_0, arg_14_1)
 
 			return JumpEnum.JumpResult.Success
 		end
-	elseif var_14_0 == JumpEnum.DungeonChapterType.RoleStory then
-		var_14_1.chapterType = DungeonEnum.ChapterType.RoleStory
+	elseif jumpChapterType == JumpEnum.DungeonChapterType.RoleStory then
+		param.chapterType = DungeonEnum.ChapterType.RoleStory
 	end
 
-	table.insert(arg_14_0.closeViewNames, ViewName.HeroInvitationView)
-	table.insert(arg_14_0.closeViewNames, ViewName.HeroInvitationDungeonMapView)
-	table.insert(arg_14_0.closeViewNames, ViewName.DungeonMapView)
-	table.insert(arg_14_0.closeViewNames, ViewName.DungeonMapLevelView)
-	table.insert(arg_14_0.closeViewNames, ViewName.VersionActivity1_5DungeonMapView)
-	table.insert(arg_14_0.closeViewNames, ViewName.VersionActivity1_5DungeonMapLevelView)
-	table.insert(arg_14_0.closeViewNames, ViewName.WeekWalkView)
-	table.insert(arg_14_0.closeViewNames, ViewName.WeekWalkCharacterView)
-	table.insert(arg_14_0.closeViewNames, ViewName.WeekWalkLayerView)
-	table.insert(arg_14_0.closeViewNames, ViewName.WeekWalkLayerRewardView)
-	table.insert(arg_14_0.closeViewNames, ViewName.StoryView)
-	table.insert(arg_14_0.closeViewNames, ViewName.DungeonPuzzleChangeColorView)
+	table.insert(self.closeViewNames, ViewName.HeroInvitationView)
+	table.insert(self.closeViewNames, ViewName.HeroInvitationDungeonMapView)
+	table.insert(self.closeViewNames, ViewName.DungeonMapView)
+	table.insert(self.closeViewNames, ViewName.DungeonMapLevelView)
+	table.insert(self.closeViewNames, ViewName.VersionActivity1_5DungeonMapView)
+	table.insert(self.closeViewNames, ViewName.VersionActivity1_5DungeonMapLevelView)
+	table.insert(self.closeViewNames, ViewName.WeekWalkView)
+	table.insert(self.closeViewNames, ViewName.WeekWalkCharacterView)
+	table.insert(self.closeViewNames, ViewName.WeekWalkLayerView)
+	table.insert(self.closeViewNames, ViewName.WeekWalkLayerRewardView)
+	table.insert(self.closeViewNames, ViewName.StoryView)
+	table.insert(self.closeViewNames, ViewName.DungeonPuzzleChangeColorView)
 
-	local var_14_2 = DungeonController.instance:jumpDungeon(var_14_1)
+	local moduleRemainViewNames = DungeonController.instance:jumpDungeon(param)
 
-	if var_14_2 and #var_14_2 > 0 then
-		for iter_14_0, iter_14_1 in ipairs(var_14_2) do
-			table.insert(arg_14_0.remainViewNames, iter_14_1)
+	if moduleRemainViewNames and #moduleRemainViewNames > 0 then
+		for i, viewName in ipairs(moduleRemainViewNames) do
+			table.insert(self.remainViewNames, viewName)
 		end
 
-		table.insert(arg_14_0.remainViewNames, ViewName.DungeonView)
+		table.insert(self.remainViewNames, ViewName.DungeonView)
 	else
 		return JumpEnum.JumpResult.Fail
 	end
@@ -306,95 +311,117 @@ function var_0_0.jumpToDungeonViewWithType(arg_14_0, arg_14_1)
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToCharacterBackpackViewWithCharacter(arg_15_0, arg_15_1)
-	table.insert(arg_15_0.waitOpenViewNames, ViewName.CharacterBackpackView)
+function JumpController:jumpToCharacterBackpackViewWithCharacter(jumpParam)
+	table.insert(self.waitOpenViewNames, ViewName.CharacterBackpackView)
 	CharacterController.instance:enterCharacterBackpack(JumpEnum.CharacterBackpack.Character)
-	table.insert(arg_15_0.remainViewNames, ViewName.CharacterBackpackView)
+	table.insert(self.remainViewNames, ViewName.CharacterBackpackView)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToCharacterBackpackViewWithEquip(arg_16_0, arg_16_1)
-	table.insert(arg_16_0.waitOpenViewNames, ViewName.BackpackView)
+function JumpController:jumpToCharacterBackpackViewWithEquip(jumpParam)
+	table.insert(self.waitOpenViewNames, ViewName.BackpackView)
 	BackpackController.instance:enterItemBackpack(ItemEnum.CategoryType.Equip)
-	table.insert(arg_16_0.remainViewNames, ViewName.BackpackView)
+	table.insert(self.remainViewNames, ViewName.BackpackView)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToHeroGroupView(arg_17_0, arg_17_1)
-	local var_17_0 = string.splitToNumber(arg_17_1, "#")[2]
-	local var_17_1 = DungeonConfig.instance:getEpisodeCO(var_17_0)
+function JumpController:jumpToHeroGroupView(jumpParam)
+	local jumpArray = string.splitToNumber(jumpParam, "#")
+	local episodeId = jumpArray[2]
+	local config = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-	DungeonFightController.instance:enterFight(var_17_1.chapterId, var_17_0)
+	DungeonFightController.instance:enterFight(config.chapterId, episodeId)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToBackpackView(arg_18_0, arg_18_1)
-	table.insert(arg_18_0.waitOpenViewNames, ViewName.BackpackView)
+function JumpController:jumpToBackpackView(jumpParam)
+	table.insert(self.waitOpenViewNames, ViewName.BackpackView)
 	BackpackController.instance:enterItemBackpack()
-	table.insert(arg_18_0.remainViewNames, ViewName.BackpackView)
+	table.insert(self.remainViewNames, ViewName.BackpackView)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToPlayerClothView(arg_19_0, arg_19_1)
+function JumpController:jumpToBackpackUseTypeView(jumpParam)
+	table.insert(self.waitOpenViewNames, ViewName.BackpackView)
+	BackpackController.instance:enterItemBackpack(ItemEnum.CategoryType.UseType)
+	table.insert(self.remainViewNames, ViewName.BackpackView)
+
+	return JumpEnum.JumpResult.Success
+end
+
+function JumpController:jumpToSkinGiftUseTypeView(jumpParam)
+	table.insert(self.waitOpenViewNames, ViewName.DecorateSkinSelectView)
+
+	local jumpArray = string.splitToNumber(jumpParam, "#")
+	local itemId = jumpArray[2]
+
+	CharacterController.instance:useSkinGiftItem(itemId)
+	table.insert(self.remainViewNames, ViewName.DecorateSkinSelectView)
+
+	return JumpEnum.JumpResult.Success
+end
+
+function JumpController:jumpToPlayerClothView(jumpParam)
 	logError("废弃跳转到主角技能界面")
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToMainView(arg_20_0, arg_20_1)
-	local var_20_0 = string.splitToNumber(arg_20_1, "#")[2]
+function JumpController:jumpToMainView(jumpParam)
+	local jumpArray = string.splitToNumber(jumpParam, "#")
+	local forceOpenMainView = jumpArray[2]
 
 	ViewMgr.instance:closeAllPopupViews()
 	MainController.instance:enterMainScene()
 
-	if var_20_0 == 1 then
+	if forceOpenMainView == 1 then
 		ViewMgr.instance:openView(ViewName.MainView)
 	end
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToTaskView(arg_21_0, arg_21_1)
-	local var_21_0 = string.splitToNumber(arg_21_1, "#")
+function JumpController:jumpToTaskView(jumpParam)
+	local jumpArray = string.splitToNumber(jumpParam, "#")
 
-	table.insert(arg_21_0.waitOpenViewNames, ViewName.TaskView)
-	table.insert(arg_21_0.closeViewNames, ViewName.WeekWalkView)
-	table.insert(arg_21_0.closeViewNames, ViewName.WeekWalkCharacterView)
-	table.insert(arg_21_0.closeViewNames, ViewName.WeekWalkLayerView)
+	table.insert(self.waitOpenViewNames, ViewName.TaskView)
+	table.insert(self.closeViewNames, ViewName.WeekWalkView)
+	table.insert(self.closeViewNames, ViewName.WeekWalkCharacterView)
+	table.insert(self.closeViewNames, ViewName.WeekWalkLayerView)
 
-	local var_21_1
+	local taskType
 
-	if #var_21_0 >= 2 then
-		var_21_1 = var_21_0[2]
+	if #jumpArray >= 2 then
+		taskType = jumpArray[2]
 	end
 
-	TaskController.instance:enterTaskView(var_21_1)
-	table.insert(arg_21_0.remainViewNames, ViewName.TaskView)
+	TaskController.instance:enterTaskView(taskType)
+	table.insert(self.remainViewNames, ViewName.TaskView)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToRoomView(arg_22_0, arg_22_1)
+function JumpController:jumpToRoomView(jumpParam)
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToRoomProductLineView(arg_23_0, arg_23_1)
-	local var_23_0 = RoomController.instance:isRoomScene()
+function JumpController:jumpToRoomProductLineView(jumpParam)
+	local isRoomScene = RoomController.instance:isRoomScene()
 
-	if RoomController.instance:isEditMode() and var_23_0 then
+	if RoomController.instance:isEditMode() and isRoomScene then
 		GameFacade.showToast(RoomEnum.Toast.RoomEditCanNotOpenProductionLevel)
 
 		return JumpEnum.JumpResult.Fail
 	end
 
-	table.insert(arg_23_0.waitOpenViewNames, ViewName.RoomInitBuildingView)
+	table.insert(self.waitOpenViewNames, ViewName.RoomInitBuildingView)
 
 	if not ViewMgr.instance:isOpen(ViewName.RoomFormulaView) then
-		if var_23_0 then
+		if isRoomScene then
 			RoomMapController.instance:openRoomInitBuildingView(0, {
 				partId = 3
 			})
@@ -411,32 +438,32 @@ function var_0_0.jumpToRoomProductLineView(arg_23_0, arg_23_1)
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToTeachNoteView(arg_24_0, arg_24_1)
-	table.insert(arg_24_0.waitOpenViewNames, ViewName.TeachNoteView)
+function JumpController:jumpToTeachNoteView(jumpParam)
+	table.insert(self.waitOpenViewNames, ViewName.TeachNoteView)
 
-	local var_24_0 = TeachNoteModel.instance:getJumpEpisodeId()
+	local episodeId = TeachNoteModel.instance:getJumpEpisodeId()
 
-	TeachNoteController.instance:enterTeachNoteView(var_24_0, true)
-	table.insert(arg_24_0.remainViewNames, ViewName.TeachNoteView)
+	TeachNoteController.instance:enterTeachNoteView(episodeId, true)
+	table.insert(self.remainViewNames, ViewName.TeachNoteView)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToEquipView(arg_25_0, arg_25_1)
-	local var_25_0 = string.splitToNumber(arg_25_1, "#")
+function JumpController:jumpToEquipView(jumpParam)
+	local jumpArray = string.splitToNumber(jumpParam, "#")
 
-	table.insert(arg_25_0.waitOpenViewNames, ViewName.EquipView)
+	table.insert(self.waitOpenViewNames, ViewName.EquipView)
 
-	local var_25_1 = var_25_0[2]
+	local equipId = jumpArray[2]
 
-	if var_25_1 then
-		local var_25_2 = {
-			equipId = var_25_1
-		}
+	if equipId then
+		local param = {}
 
-		EquipController.instance:openEquipView(var_25_2)
-		table.insert(arg_25_0.remainViewNames, ViewName.EquipView)
-		table.insert(arg_25_0.remainViewNames, ViewName.GiftMultipleChoiceView)
+		param.equipId = equipId
+
+		EquipController.instance:openEquipView(param)
+		table.insert(self.remainViewNames, ViewName.EquipView)
+		table.insert(self.remainViewNames, ViewName.GiftMultipleChoiceView)
 	else
 		logError("equip id cant be null ...")
 
@@ -446,122 +473,123 @@ function var_0_0.jumpToEquipView(arg_25_0, arg_25_1)
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToHandbookView(arg_26_0, arg_26_1)
-	local var_26_0 = string.splitToNumber(arg_26_1, "#")
+function JumpController:jumpToHandbookView(jumpParam)
+	local jumpArray = string.splitToNumber(jumpParam, "#")
 
-	table.insert(arg_26_0.waitOpenViewNames, ViewName.HandbookView)
-	table.insert(arg_26_0.closeViewNames, ViewName.HandBookCharacterSwitchView)
-	table.insert(arg_26_0.closeViewNames, ViewName.HandbookEquipView)
-	table.insert(arg_26_0.closeViewNames, ViewName.HandbookStoryView)
-	table.insert(arg_26_0.closeViewNames, ViewName.HandbookCGDetailView)
-	table.insert(arg_26_0.closeViewNames, ViewName.CharacterDataView)
+	table.insert(self.waitOpenViewNames, ViewName.HandbookView)
+	table.insert(self.closeViewNames, ViewName.HandBookCharacterSwitchView)
+	table.insert(self.closeViewNames, ViewName.HandbookEquipView)
+	table.insert(self.closeViewNames, ViewName.HandbookStoryView)
+	table.insert(self.closeViewNames, ViewName.HandbookCGDetailView)
+	table.insert(self.closeViewNames, ViewName.CharacterDataView)
 
-	local var_26_1 = HandbookController.instance:jumpView(var_26_0)
+	local moduleRemainViewNames = HandbookController.instance:jumpView(jumpArray)
 
-	for iter_26_0, iter_26_1 in ipairs(var_26_1) do
-		table.insert(arg_26_0.remainViewNames, iter_26_1)
+	for i, moduleRemainViewName in ipairs(moduleRemainViewNames) do
+		table.insert(self.remainViewNames, moduleRemainViewName)
 	end
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToSocialView(arg_27_0, arg_27_1)
-	local var_27_0 = string.splitToNumber(arg_27_1, "#")
+function JumpController:jumpToSocialView(jumpParam)
+	local jumpArray = string.splitToNumber(jumpParam, "#")
 
-	table.insert(arg_27_0.waitOpenViewNames, ViewName.SocialView)
+	table.insert(self.waitOpenViewNames, ViewName.SocialView)
 
-	local var_27_1
+	local viewParam
 
-	if var_27_0[2] then
-		var_27_1 = {
+	if jumpArray[2] then
+		viewParam = {
 			defaultTabIds = {
-				[2] = var_27_0[2]
+				[2] = jumpArray[2]
 			}
 		}
 	end
 
-	SocialController.instance:openSocialView(var_27_1)
-	table.insert(arg_27_0.remainViewNames, ViewName.SocialView)
+	SocialController.instance:openSocialView(viewParam)
+	table.insert(self.remainViewNames, ViewName.SocialView)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToNoticeView(arg_28_0, arg_28_1)
-	table.insert(arg_28_0.waitOpenViewNames, ViewName.NoticeView)
+function JumpController:jumpToNoticeView(jumpParam)
+	table.insert(self.waitOpenViewNames, ViewName.NoticeView)
 	NoticeController.instance:openNoticeView()
-	table.insert(arg_28_0.remainViewNames, ViewName.NoticeView)
+	table.insert(self.remainViewNames, ViewName.NoticeView)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToSignInView(arg_29_0, arg_29_1)
+function JumpController:jumpToSignInView(jumpParam)
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.SignIn) then
 		GameFacade.showToast(ToastEnum.JumpSignView)
 
 		return JumpEnum.JumpResult.Fail
 	end
 
-	table.insert(arg_29_0.waitOpenViewNames, ViewName.SignInView)
+	table.insert(self.waitOpenViewNames, ViewName.SignInView)
 
-	local var_29_0 = {}
+	local data = {}
 
-	var_29_0.isBirthday = false
+	data.isBirthday = false
 
-	local var_29_1 = string.splitToNumber(arg_29_1, "#")
+	local jumpArray = string.splitToNumber(jumpParam, "#")
 
-	var_29_0.isActiveLifeCicle = var_29_1[2] and var_29_1[2] == 1
+	data.isActiveLifeCicle = jumpArray[2] and jumpArray[2] == 1
 
-	SignInController.instance:openSignInDetailView(var_29_0)
-	table.insert(arg_29_0.remainViewNames, ViewName.SignInView)
+	SignInController.instance:openSignInDetailView(data)
+	table.insert(self.remainViewNames, ViewName.SignInView)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToSignInViewWithBirthDay(arg_30_0, arg_30_1)
+function JumpController:jumpToSignInViewWithBirthDay(jumpParam)
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.SignIn) then
 		GameFacade.showToast(ToastEnum.JumpSignView)
 
 		return JumpEnum.JumpResult.Fail
 	end
 
-	table.insert(arg_30_0.waitOpenViewNames, ViewName.SignInView)
+	table.insert(self.waitOpenViewNames, ViewName.SignInView)
 
-	local var_30_0 = {}
+	local data = {}
 
-	var_30_0.isBirthday = true
+	data.isBirthday = true
 
-	SignInController.instance:openSignInDetailView(var_30_0)
-	table.insert(arg_30_0.remainViewNames, ViewName.SignInView)
-
-	return JumpEnum.JumpResult.Success
-end
-
-function var_0_0.jumpToMailView(arg_31_0, arg_31_1)
-	local var_31_0 = string.splitToNumber(arg_31_1, "#")[2]
-
-	table.insert(arg_31_0.waitOpenViewNames, ViewName.MailView)
-	MailController.instance:enterMailView(var_31_0)
-	table.insert(arg_31_0.remainViewNames, ViewName.MailView)
+	SignInController.instance:openSignInDetailView(data)
+	table.insert(self.remainViewNames, ViewName.SignInView)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToSeasonMainView(arg_32_0, arg_32_1)
-	local var_32_0 = Activity104Model.instance:getCurSeasonId()
-	local var_32_1, var_32_2, var_32_3 = ActivityHelper.getActivityStatusAndToast(var_32_0)
+function JumpController:jumpToMailView(jumpParam)
+	local jumpArray = string.splitToNumber(jumpParam, "#")
+	local mailId = jumpArray[2]
 
-	if var_32_1 ~= ActivityEnum.ActivityStatus.Normal then
-		if var_32_2 then
-			GameFacade.showToastWithTableParam(var_32_2, var_32_3)
+	table.insert(self.waitOpenViewNames, ViewName.MailView)
+	MailController.instance:enterMailView(mailId)
+	table.insert(self.remainViewNames, ViewName.MailView)
+
+	return JumpEnum.JumpResult.Success
+end
+
+function JumpController:jumpToSeasonMainView(jumpParam)
+	local curSeasonId = Activity104Model.instance:getCurSeasonId()
+	local status, toastId, paramList = ActivityHelper.getActivityStatusAndToast(curSeasonId)
+
+	if status ~= ActivityEnum.ActivityStatus.Normal then
+		if toastId then
+			GameFacade.showToastWithTableParam(toastId, paramList)
 		end
 
 		return JumpEnum.JumpResult.Fail
 	end
 
-	local var_32_4 = string.splitToNumber(arg_32_1, "#")
-	local var_32_5 = var_32_4 and var_32_4[2]
+	local paramsList = string.splitToNumber(jumpParam, "#")
+	local jumpId = paramsList and paramsList[2]
 
-	if var_32_5 == Activity104Enum.JumpId.Discount and not Activity104Model.instance:isSpecialOpen() then
+	if jumpId == Activity104Enum.JumpId.Discount and not Activity104Model.instance:isSpecialOpen() then
 		GameFacade.showToast(ToastEnum.SeasonSpecialNotOpen)
 
 		return JumpEnum.JumpResult.Fail
@@ -569,184 +597,191 @@ function var_0_0.jumpToSeasonMainView(arg_32_0, arg_32_1)
 
 	VersionActivity3_0EnterController.instance:openVersionActivityEnterView(function()
 		Activity104Controller.instance:openSeasonMainView({
-			jumpId = var_32_5
+			jumpId = jumpId
 		})
-	end, nil, var_32_0)
+	end, nil, curSeasonId)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToShow(arg_34_0, arg_34_1)
+function JumpController:jumpToShow(jumpParam)
 	return JumpEnum.JumpResult.Fail
 end
 
-function var_0_0.jumpToBpView(arg_35_0, arg_35_1)
-	table.insert(arg_35_0.waitOpenViewNames, ViewName.BpView)
+function JumpController:jumpToBpView(jumpParam)
+	table.insert(self.waitOpenViewNames, ViewName.BpView)
 
-	local var_35_0 = string.splitToNumber(arg_35_1, "#")
-	local var_35_1 = tonumber(var_35_0[2]) == 1
-	local var_35_2 = tonumber(var_35_0[3]) == 1
+	local paramsList = string.splitToNumber(jumpParam, "#")
+	local isSpecial = tonumber(paramsList[2]) == 1
+	local isCharge = tonumber(paramsList[3]) == 1
 
-	BpController.instance:openBattlePassView(var_35_1, nil, var_35_2)
+	BpController.instance:openBattlePassView(isSpecial, nil, isCharge)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToActivityView(arg_36_0, arg_36_1)
-	local var_36_0 = string.splitToNumber(arg_36_1, "#")
-	local var_36_1 = var_36_0[2]
-	local var_36_2 = ActivityHelper.getActivityVersion(var_36_1)
-	local var_36_3 = _G[string.format("VersionActivity%sJumpHandleFunc", var_36_2)]
+function JumpController:jumpToActivityView(jumpParam)
+	local paramsList = string.splitToNumber(jumpParam, "#")
+	local actId = paramsList[2]
+	local version = ActivityHelper.getActivityVersion(actId)
+	local jumpFuncs = _G[string.format("VersionActivity%sJumpHandleFunc", version)]
 
-	if var_36_3 and var_36_3["jumpTo" .. var_36_1] then
-		return var_36_3["jumpTo" .. var_36_1](arg_36_0, var_36_0)
+	if jumpFuncs and jumpFuncs["jumpTo" .. actId] then
+		return jumpFuncs["jumpTo" .. actId](self, paramsList)
 	end
 
-	local var_36_4 = var_0_0.JumpActViewToHandleFunc[var_36_1]
+	local jumpFunc = JumpController.JumpActViewToHandleFunc[actId]
 
-	if var_36_4 then
-		return var_36_4(arg_36_0, var_36_1, var_36_0)
+	if jumpFunc then
+		return jumpFunc(self, actId, paramsList)
 	end
 
-	local var_36_5 = ActivityConfig.instance:getActivityCo(var_36_1).typeId
+	local ActivityCo = ActivityConfig.instance:getActivityCo(actId)
+	local typeId = ActivityCo.typeId
 
-	if var_36_1 == JumpEnum.ActIdEnum.Activity104 then
-		table.insert(arg_36_0.waitOpenViewNames, ViewName.VersionActivityEnterView)
-		table.insert(arg_36_0.waitOpenViewNames, ViewName.SeasonMainView)
+	if actId == JumpEnum.ActIdEnum.Activity104 then
+		table.insert(self.waitOpenViewNames, ViewName.VersionActivityEnterView)
+		table.insert(self.waitOpenViewNames, ViewName.SeasonMainView)
 		VersionActivityController.instance:openVersionActivityEnterViewIfNotOpened(function()
 			Activity104Controller.instance:openSeasonMainView()
 		end)
-	elseif var_36_1 == JumpEnum.ActIdEnum.Act105 then
-		table.insert(arg_36_0.waitOpenViewNames, ViewName.VersionActivityEnterView)
+	elseif actId == JumpEnum.ActIdEnum.Act105 then
+		table.insert(self.waitOpenViewNames, ViewName.VersionActivityEnterView)
 		VersionActivityController.instance:openVersionActivityEnterView()
-	elseif var_36_1 == JumpEnum.ActIdEnum.Act106 then
-		table.insert(arg_36_0.waitOpenViewNames, ViewName.ActivityBeginnerView)
-		ActivityController.instance:openActivityBeginnerView(arg_36_1)
-	elseif var_36_1 == JumpEnum.ActIdEnum.Act107 then
-		table.insert(arg_36_0.waitOpenViewNames, ViewName.VersionActivityEnterView)
-		table.insert(arg_36_0.waitOpenViewNames, ViewName.VersionActivityStoreView)
+	elseif actId == JumpEnum.ActIdEnum.Act106 then
+		table.insert(self.waitOpenViewNames, ViewName.ActivityBeginnerView)
+		ActivityController.instance:openActivityBeginnerView(jumpParam)
+	elseif actId == JumpEnum.ActIdEnum.Act107 then
+		table.insert(self.waitOpenViewNames, ViewName.VersionActivityEnterView)
+		table.insert(self.waitOpenViewNames, ViewName.VersionActivityStoreView)
 		VersionActivityController.instance:openVersionActivityEnterViewIfNotOpened(function()
 			VersionActivityController.instance:openLeiMiTeBeiStoreView()
 		end)
-	elseif var_36_1 == JumpEnum.ActIdEnum.Act108 then
-		table.insert(arg_36_0.waitOpenViewNames, ViewName.VersionActivityEnterView)
-		table.insert(arg_36_0.waitOpenViewNames, ViewName.MeilanniMainView)
+	elseif actId == JumpEnum.ActIdEnum.Act108 then
+		table.insert(self.waitOpenViewNames, ViewName.VersionActivityEnterView)
+		table.insert(self.waitOpenViewNames, ViewName.MeilanniMainView)
 		VersionActivityController.instance:openVersionActivityEnterViewIfNotOpened(function()
 			MeilanniController.instance:openMeilanniMainView({
 				checkStory = true
 			})
 		end)
-	elseif var_36_1 == JumpEnum.ActIdEnum.Act109 then
-		table.insert(arg_36_0.waitOpenViewNames, ViewName.VersionActivityEnterView)
-		table.insert(arg_36_0.waitOpenViewNames, ViewName.Activity109ChessEntry)
+	elseif actId == JumpEnum.ActIdEnum.Act109 then
+		table.insert(self.waitOpenViewNames, ViewName.VersionActivityEnterView)
+		table.insert(self.waitOpenViewNames, ViewName.Activity109ChessEntry)
 		VersionActivityController.instance:openVersionActivityEnterViewIfNotOpened(function()
 			Activity109ChessController.instance:openEntry(VersionActivityEnum.ActivityId.Act109)
 		end)
-	elseif var_36_1 == JumpEnum.ActIdEnum.Act111 then
-		table.insert(arg_36_0.waitOpenViewNames, ViewName.VersionActivityPushBoxLevelView)
+	elseif actId == JumpEnum.ActIdEnum.Act111 then
+		table.insert(self.waitOpenViewNames, ViewName.VersionActivityPushBoxLevelView)
 		PushBoxController.instance:enterPushBoxGame()
-	elseif var_36_1 == JumpEnum.ActIdEnum.Act112 then
-		table.insert(arg_36_0.waitOpenViewNames, ViewName.VersionActivityEnterView)
-		table.insert(arg_36_0.waitOpenViewNames, ViewName.VersionActivityExchangeView)
+	elseif actId == JumpEnum.ActIdEnum.Act112 then
+		table.insert(self.waitOpenViewNames, ViewName.VersionActivityEnterView)
+		table.insert(self.waitOpenViewNames, ViewName.VersionActivityExchangeView)
 		VersionActivityController.instance:openVersionActivityEnterViewIfNotOpened(function()
 			ViewMgr.instance:openView(ViewName.VersionActivityExchangeView)
 		end)
-	elseif var_36_1 == JumpEnum.ActIdEnum.Act113 then
-		table.insert(arg_36_0.waitOpenViewNames, ViewName.VersionActivityEnterView)
+	elseif actId == JumpEnum.ActIdEnum.Act113 then
+		table.insert(self.waitOpenViewNames, ViewName.VersionActivityEnterView)
 		VersionActivity1_6EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
-			if #var_36_0 >= 3 then
-				local var_42_0 = var_36_0[3]
+			if #paramsList >= 3 then
+				local subJumpId = paramsList[3]
 
-				if var_42_0 == JumpEnum.LeiMiTeBeiSubJumpId.DungeonStoryMode then
-					table.insert(arg_36_0.waitOpenViewNames, ViewName.VersionActivityDungeonMapView)
+				if subJumpId == JumpEnum.LeiMiTeBeiSubJumpId.DungeonStoryMode then
+					table.insert(self.waitOpenViewNames, ViewName.VersionActivityDungeonMapView)
 					VersionActivityDungeonController.instance:openVersionActivityDungeonMapView(VersionActivityEnum.DungeonChapterId.LeiMiTeBei)
-				elseif var_42_0 == JumpEnum.LeiMiTeBeiSubJumpId.DungeonHardMode then
-					table.insert(arg_36_0.waitOpenViewNames, ViewName.VersionActivityDungeonMapView)
+				elseif subJumpId == JumpEnum.LeiMiTeBeiSubJumpId.DungeonHardMode then
+					table.insert(self.waitOpenViewNames, ViewName.VersionActivityDungeonMapView)
 
 					if not VersionActivityDungeonBaseController.instance:isOpenActivityHardDungeonChapter(JumpEnum.ActIdEnum.Act113) then
 						VersionActivityDungeonController.instance:openVersionActivityDungeonMapView(VersionActivityEnum.DungeonChapterId.LeiMiTeBei)
 					else
 						VersionActivityDungeonController.instance:openVersionActivityDungeonMapView(VersionActivityEnum.DungeonChapterId.LeiMiTeBeiHard)
 					end
-				elseif var_42_0 == JumpEnum.LeiMiTeBeiSubJumpId.LeiMiTeBeiStore then
-					table.insert(arg_36_0.waitOpenViewNames, ViewName.ReactivityStoreView)
-					ReactivityController.instance:openReactivityStoreView(var_36_1)
+				elseif subJumpId == JumpEnum.LeiMiTeBeiSubJumpId.LeiMiTeBeiStore then
+					table.insert(self.waitOpenViewNames, ViewName.ReactivityStoreView)
+					ReactivityController.instance:openReactivityStoreView(actId)
 				else
-					logWarn("not support subJumpId : " .. arg_36_1)
+					logWarn("not support subJumpId : " .. jumpParam)
 				end
 			else
-				table.insert(arg_36_0.waitOpenViewNames, ViewName.VersionActivityDungeonMapView)
+				table.insert(self.waitOpenViewNames, ViewName.VersionActivityDungeonMapView)
 				VersionActivityDungeonController.instance:openVersionActivityDungeonMapView(VersionActivityEnum.DungeonChapterId.LeiMiTeBei)
 			end
-		end, nil, var_36_1)
-	elseif var_36_1 == ActivityEnum.Activity.Work_SignView_1_8 or var_36_1 == ActivityEnum.Activity.V3a0_SummerSign or var_36_1 == VersionActivity3_1Enum.ActivityId.NationalGift or var_36_1 == ActivityEnum.Activity.V2a0_SummerSign or var_36_1 == ActivityEnum.Activity.V2a1_MoonFestival or var_36_1 == ActivityEnum.Activity.V2a2_RedLeafFestival_PanelView or var_36_1 == VersionActivity2_2Enum.ActivityId.LimitDecorate or var_36_1 == ActivityEnum.Activity.V2a2_TurnBack_H5 or var_36_1 == ActivityEnum.Activity.V2a2_SummonCustomPickNew or var_36_1 == ActivityEnum.Activity.V2a3_NewCultivationGift or var_36_1 == ActivityEnum.Activity.V2a7_Labor_Sign or var_36_1 == ActivityEnum.Activity.V2a9_FreeMonthCard or var_36_1 == ActivityEnum.Activity.V2a8_DragonBoat or var_36_1 == ActivityEnum.Activity.V3a0_SummerSign or var_36_1 == ActivityEnum.Activity.V3a1_AutumnSign or var_36_1 == VersionActivity3_1Enum.ActivityId.BpOperAct or var_36_1 == VersionActivity3_1Enum.ActivityId.NationalGift then
-		if ActivityHelper.getActivityStatus(var_36_1, true) ~= ActivityEnum.ActivityStatus.Normal then
+		end, nil, actId)
+	elseif actId == ActivityEnum.Activity.Work_SignView_1_8 or actId == ActivityEnum.Activity.V3a0_SummerSign or actId == VersionActivity3_1Enum.ActivityId.NationalGift or actId == ActivityEnum.Activity.V2a0_SummerSign or actId == ActivityEnum.Activity.V2a1_MoonFestival or actId == ActivityEnum.Activity.V2a2_RedLeafFestival_PanelView or actId == VersionActivity2_2Enum.ActivityId.LimitDecorate or actId == ActivityEnum.Activity.V2a2_TurnBack_H5 or actId == ActivityEnum.Activity.V2a2_SummonCustomPickNew or actId == ActivityEnum.Activity.V2a3_NewCultivationGift or actId == ActivityEnum.Activity.V2a7_Labor_Sign or actId == ActivityEnum.Activity.V2a9_FreeMonthCard or actId == ActivityEnum.Activity.V2a8_DragonBoat or actId == ActivityEnum.Activity.V3a0_SummerSign or actId == ActivityEnum.Activity.V3a1_AutumnSign or actId == BpModel.instance:getCurVersionOperActId() or actId == VersionActivity3_1Enum.ActivityId.NationalGift then
+		if ActivityHelper.getActivityStatus(actId, true) ~= ActivityEnum.ActivityStatus.Normal then
 			return JumpEnum.JumpResult.Fail
 		end
 
-		table.insert(arg_36_0.waitOpenViewNames, ViewName.ActivityBeginnerView)
-		ActivityModel.instance:setTargetActivityCategoryId(var_36_1)
+		table.insert(self.waitOpenViewNames, ViewName.ActivityBeginnerView)
+		ActivityModel.instance:setTargetActivityCategoryId(actId)
 		ActivityController.instance:openActivityBeginnerView()
-	elseif var_36_5 == ActivityEnum.ActivityTypeID.Act125 then
-		if ActivityHelper.getActivityStatus(var_36_1, true) ~= ActivityEnum.ActivityStatus.Normal then
+	elseif typeId == ActivityEnum.ActivityTypeID.Act125 then
+		if ActivityHelper.getActivityStatus(actId, true) ~= ActivityEnum.ActivityStatus.Normal then
 			return JumpEnum.JumpResult.Fail
 		end
 
-		table.insert(arg_36_0.waitOpenViewNames, ViewName.ActivityBeginnerView)
-		Activity125Model.instance:setSelectEpisodeId(var_36_1, 1)
-		ActivityModel.instance:setTargetActivityCategoryId(var_36_1)
+		table.insert(self.waitOpenViewNames, ViewName.ActivityBeginnerView)
+		Activity125Model.instance:setSelectEpisodeId(actId, 1)
+		ActivityModel.instance:setTargetActivityCategoryId(actId)
 		ActivityController.instance:openActivityBeginnerView()
-	elseif var_36_5 == ActivityEnum.ActivityTypeID.NecrologistStory then
-		if ActivityHelper.getActivityStatus(var_36_1, true) ~= ActivityEnum.ActivityStatus.Normal then
+	elseif typeId == ActivityEnum.ActivityTypeID.NecrologistStory then
+		if ActivityHelper.getActivityStatus(actId, true) ~= ActivityEnum.ActivityStatus.Normal then
 			return JumpEnum.JumpResult.Fail
 		end
 
-		local var_36_6 = RoleStoryModel.instance:getCurActStoryId()
+		local curStoryId = RoleStoryModel.instance:getCurActStoryId()
 
-		NecrologistStoryController.instance:openGameView(var_36_6)
-	elseif var_36_5 == ActivityEnum.ActivityTypeID.Act210 then
-		if ActivityHelper.getActivityStatus(var_36_1, true) ~= ActivityEnum.ActivityStatus.Normal then
+		NecrologistStoryController.instance:openGameView(curStoryId)
+	elseif typeId == ActivityEnum.ActivityTypeID.Act210 then
+		if ActivityHelper.getActivityStatus(actId, true) ~= ActivityEnum.ActivityStatus.Normal then
 			return JumpEnum.JumpResult.Fail
 		end
 
 		GaoSiNiaoController.instance:enterLevelView()
 	else
-		logWarn("not support actId : " .. arg_36_1)
+		logWarn("not support actId : " .. jumpParam)
 	end
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToLeiMiTeBeiDungeonView(arg_43_0, arg_43_1)
-	local var_43_0 = string.splitToNumber(arg_43_1, "#")[2]
+function JumpController:jumpToLeiMiTeBeiDungeonView(jumpParam)
+	local paramsList = string.splitToNumber(jumpParam, "#")
+	local episodeId = paramsList[2]
+	local episodeCo = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-	if not DungeonConfig.instance:getEpisodeCO(var_43_0) then
-		logError("not found episode : " .. arg_43_1)
+	if not episodeCo then
+		logError("not found episode : " .. jumpParam)
 
 		return JumpEnum.JumpResult.Fail
 	end
 
-	if not DungeonModel.instance:getEpisodeInfo(var_43_0) then
+	local episodeInfo = DungeonModel.instance:getEpisodeInfo(episodeId)
+
+	if not episodeInfo then
 		GameFacade.showToast(ToastEnum.WarmUpGotoOrder)
 
 		return JumpEnum.JumpResult.Fail
 	end
 
-	table.insert(arg_43_0.waitOpenViewNames, ViewName.VersionActivityDungeonMapLevelView)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivityDungeonMapLevelView)
 
-	if ReactivityModel.instance:isReactivity(VersionActivityEnum.ActivityId.Act113) then
-		VersionActivityDungeonController.instance:openVersionActivityDungeonMapView(nil, var_43_0, function()
+	local isRetroAcitivity = ReactivityModel.instance:isReactivity(VersionActivityEnum.ActivityId.Act113)
+
+	if isRetroAcitivity then
+		VersionActivityDungeonController.instance:openVersionActivityDungeonMapView(nil, episodeId, function()
 			ViewMgr.instance:openView(ViewName.VersionActivityDungeonMapLevelView, {
 				isJump = true,
-				episodeId = var_43_0
+				episodeId = episodeId
 			})
 		end)
 	else
 		VersionActivityController.instance:openVersionActivityEnterViewIfNotOpened(function()
-			VersionActivityDungeonController.instance:openVersionActivityDungeonMapView(nil, var_43_0, function()
+			VersionActivityDungeonController.instance:openVersionActivityDungeonMapView(nil, episodeId, function()
 				ViewMgr.instance:openView(ViewName.VersionActivityDungeonMapLevelView, {
 					isJump = true,
-					episodeId = var_43_0
+					episodeId = episodeId
 				})
 			end)
 		end)
@@ -755,56 +790,56 @@ function var_0_0.jumpToLeiMiTeBeiDungeonView(arg_43_0, arg_43_1)
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToPushBox(arg_47_0, arg_47_1)
+function JumpController:jumpToPushBox(jumpParam)
 	return
 end
 
-function var_0_0.jumpToAct117(arg_48_0, arg_48_1, arg_48_2)
-	table.insert(arg_48_0.waitOpenViewNames, ViewName.VersionActivity1_2EnterView)
-	table.insert(arg_48_0.waitOpenViewNames, ViewName.ActivityTradeBargain)
-	VersionActivity1_2EnterController.instance:directOpenVersionActivity1_2EnterView(Activity117Controller.openView, Activity117Controller.instance, arg_48_1)
+function JumpController:jumpToAct117(actId, jumpParam)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_2EnterView)
+	table.insert(self.waitOpenViewNames, ViewName.ActivityTradeBargain)
+	VersionActivity1_2EnterController.instance:directOpenVersionActivity1_2EnterView(Activity117Controller.openView, Activity117Controller.instance, actId)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToAct114(arg_49_0, arg_49_1, arg_49_2)
+function JumpController:jumpToAct114(actId, jumpParam)
 	if Activity114Model.instance.serverData.battleEventId > 0 then
-		local var_49_0 = Activity114Config.instance:getEventCoById(Activity114Model.instance.id, Activity114Model.instance.serverData.battleEventId)
+		local eventCo = Activity114Config.instance:getEventCoById(Activity114Model.instance.id, Activity114Model.instance.serverData.battleEventId)
 
-		Activity114Controller.instance:enterActivityFight(var_49_0.config.battleId)
+		Activity114Controller.instance:enterActivityFight(eventCo.config.battleId)
 	else
-		table.insert(arg_49_0.waitOpenViewNames, ViewName.VersionActivity1_2EnterView)
-		table.insert(arg_49_0.waitOpenViewNames, ViewName.Activity114View)
+		table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_2EnterView)
+		table.insert(self.waitOpenViewNames, ViewName.Activity114View)
 		VersionActivity1_2EnterController.instance:directOpenVersionActivity1_2EnterView(function()
-			local var_50_0
+			local viewParams
 
 			if Activity114Model.instance.serverData.isEnterSchool then
-				var_50_0 = {
+				viewParams = {
 					defaultTabIds = {
 						[2] = Activity114Enum.TabIndex.MainView
 					}
 				}
 			end
 
-			ViewMgr.instance:openView(ViewName.Activity114View, var_50_0)
+			ViewMgr.instance:openView(ViewName.Activity114View, viewParams)
 		end)
 	end
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToAct119(arg_51_0, arg_51_1, arg_51_2)
-	if arg_51_1 == VersionActivity1_3Enum.ActivityId.Act307 then
-		table.insert(arg_51_0.waitOpenViewNames, ViewName.VersionActivity1_3EnterView)
-		table.insert(arg_51_0.waitOpenViewNames, ViewName.Activity1_3_119View)
+function JumpController:jumpToAct119(actId, jumpParam)
+	if actId == VersionActivity1_3Enum.ActivityId.Act307 then
+		table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_3EnterView)
+		table.insert(self.waitOpenViewNames, ViewName.Activity1_3_119View)
 		VersionActivity1_3EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
 			Activity1_3_119Controller.instance:openView()
 		end)
 
 		return JumpEnum.JumpResult.Success
 	else
-		table.insert(arg_51_0.waitOpenViewNames, ViewName.VersionActivity1_2EnterView)
-		table.insert(arg_51_0.waitOpenViewNames, ViewName.Activity119View)
+		table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_2EnterView)
+		table.insert(self.waitOpenViewNames, ViewName.Activity119View)
 		VersionActivity1_2EnterController.instance:directOpenVersionActivity1_2EnterView(function()
 			Activity119Controller.instance:openAct119View()
 		end)
@@ -813,54 +848,55 @@ function var_0_0.jumpToAct119(arg_51_0, arg_51_1, arg_51_2)
 	end
 end
 
-function var_0_0.jumpToAct1_2Shop(arg_54_0)
-	table.insert(arg_54_0.waitOpenViewNames, ViewName.VersionActivity1_2StoreView)
+function JumpController:jumpToAct1_2Shop()
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_2StoreView)
 	ViewMgr.instance:openView(ViewName.VersionActivity1_2StoreView)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.ensureActStoryDone(arg_55_0, arg_55_1, arg_55_2, arg_55_3)
-	local var_55_0 = {}
+function JumpController:ensureActStoryDone(actIdList, callback, callbackObj)
+	local storyIdList = {}
 
-	for iter_55_0, iter_55_1 in ipairs(arg_55_1) do
-		if not VersionActivityBaseController.instance:isPlayedActivityVideo(iter_55_1) then
-			local var_55_1 = ActivityConfig.instance:getActivityCo(iter_55_1).storyId
+	for _, actId in ipairs(actIdList) do
+		if not VersionActivityBaseController.instance:isPlayedActivityVideo(actId) then
+			local activityCo = ActivityConfig.instance:getActivityCo(actId)
+			local storyId = activityCo.storyId
 
-			if var_55_1 > 0 then
-				table.insert(var_55_0, var_55_1)
+			if storyId > 0 then
+				table.insert(storyIdList, storyId)
 			end
 		end
 	end
 
-	if #var_55_0 > 0 then
-		StoryController.instance:playStories(var_55_0, nil, arg_55_2, arg_55_3)
+	if #storyIdList > 0 then
+		StoryController.instance:playStories(storyIdList, nil, callback, callbackObj)
 	else
-		arg_55_2(arg_55_3)
+		callback(callbackObj)
 	end
 end
 
-function var_0_0.jumpToAct1_2Dungeon(arg_56_0, arg_56_1, arg_56_2)
-	table.insert(arg_56_0.waitOpenViewNames, ViewName.VersionActivity1_7EnterView)
+function JumpController:jumpToAct1_2Dungeon(actId, paramsList)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_7EnterView)
 	VersionActivity1_7EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
-		table.insert(arg_56_0.waitOpenViewNames, ViewName.VersionActivity1_2DungeonView)
+		table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_2DungeonView)
 
-		if #arg_56_2 >= 3 then
-			local var_57_0 = arg_56_2[3]
+		if #paramsList >= 3 then
+			local subJumpId = paramsList[3]
 
-			if var_57_0 == JumpEnum.Activity1_2DungeonJump.Shop then
-				table.insert(arg_56_0.waitOpenViewNames, ViewName.ReactivityStoreView)
-				VersionActivity1_2DungeonController.instance:openDungeonView(nil, nil, nil, nil, var_57_0)
-			elseif var_57_0 == JumpEnum.Activity1_2DungeonJump.Normal then
+			if subJumpId == JumpEnum.Activity1_2DungeonJump.Shop then
+				table.insert(self.waitOpenViewNames, ViewName.ReactivityStoreView)
+				VersionActivity1_2DungeonController.instance:openDungeonView(nil, nil, nil, nil, subJumpId)
+			elseif subJumpId == JumpEnum.Activity1_2DungeonJump.Normal then
 				VersionActivity1_2DungeonController.instance:openDungeonView()
-			elseif var_57_0 == JumpEnum.Activity1_2DungeonJump.Hard then
+			elseif subJumpId == JumpEnum.Activity1_2DungeonJump.Hard then
 				VersionActivity1_2DungeonController.instance:openDungeonView(VersionActivity1_2DungeonEnum.DungeonChapterId.Activity1_2DungeonHard)
-			elseif var_57_0 == JumpEnum.Activity1_2DungeonJump.Task then
-				table.insert(arg_56_0.waitOpenViewNames, ViewName.ReactivityTaskView)
-				VersionActivity1_2DungeonController.instance:openDungeonView(nil, nil, nil, nil, var_57_0)
-			elseif var_57_0 == JumpEnum.Activity1_2DungeonJump.Jump2Dungeon then
-				VersionActivity1_2DungeonController.instance:openDungeonView(nil, arg_56_2[4], true)
-			elseif var_57_0 == JumpEnum.Activity1_2DungeonJump.Jump2Camp then
+			elseif subJumpId == JumpEnum.Activity1_2DungeonJump.Task then
+				table.insert(self.waitOpenViewNames, ViewName.ReactivityTaskView)
+				VersionActivity1_2DungeonController.instance:openDungeonView(nil, nil, nil, nil, subJumpId)
+			elseif subJumpId == JumpEnum.Activity1_2DungeonJump.Jump2Dungeon then
+				VersionActivity1_2DungeonController.instance:openDungeonView(nil, paramsList[4], true)
+			elseif subJumpId == JumpEnum.Activity1_2DungeonJump.Jump2Camp then
 				VersionActivity1_2DungeonController.instance:openDungeonView(nil, nil, nil, true)
 			end
 		else
@@ -871,19 +907,19 @@ function var_0_0.jumpToAct1_2Dungeon(arg_56_0, arg_56_1, arg_56_2)
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToEnterView1_2(arg_58_0, arg_58_1, arg_58_2)
-	table.insert(arg_58_0.waitOpenViewNames, ViewName.VersionActivity1_2EnterView)
+function JumpController:jumpToEnterView1_2(actId, paramList)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_2EnterView)
 	VersionActivity1_2EnterController.instance:openVersionActivity1_2EnterView()
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToYaXianView(arg_59_0, arg_59_1, arg_59_2)
-	table.insert(arg_59_0.waitOpenViewNames, ViewName.VersionActivity1_2EnterView)
-	table.insert(arg_59_0.waitOpenViewNames, ViewName.YaXianMapView)
-	arg_59_0:ensureActStoryDone({
+function JumpController:jumpToYaXianView(actId, paramList)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_2EnterView)
+	table.insert(self.waitOpenViewNames, ViewName.YaXianMapView)
+	self:ensureActStoryDone({
 		JumpEnum.ActIdEnum.EnterView1_2,
-		arg_59_1
+		actId
 	}, function()
 		VersionActivity1_2EnterController.instance:directOpenVersionActivity1_2EnterView()
 		YaXianController.instance:openYaXianMapView()
@@ -892,51 +928,51 @@ function var_0_0.jumpToYaXianView(arg_59_0, arg_59_1, arg_59_2)
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToEnterView1_3(arg_61_0, arg_61_1, arg_61_2)
-	table.insert(arg_61_0.waitOpenViewNames, ViewName.VersionActivity1_3EnterView)
+function JumpController:jumpToEnterView1_3(actId, paramList)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_3EnterView)
 	VersionActivity1_3EnterController.instance:openVersionActivityEnterView()
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToAct1_3Shop(arg_62_0, arg_62_1, arg_62_2)
-	table.insert(arg_62_0.waitOpenViewNames, ViewName.ReactivityStoreView)
+function JumpController:jumpToAct1_3Shop(actId, paramList)
+	table.insert(self.waitOpenViewNames, ViewName.ReactivityStoreView)
 	ReactivityController.instance:openReactivityStoreView(VersionActivity1_3Enum.ActivityId.Dungeon)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToAct1_3Dungeon(arg_63_0, arg_63_1, arg_63_2)
-	table.insert(arg_63_0.closeViewNames, ViewName.VersionActivity1_3DungeonMapLevelView)
-	table.insert(arg_63_0.waitOpenViewNames, ViewName.VersionActivity1_3EnterView)
+function JumpController:jumpToAct1_3Dungeon(actId, paramList)
+	table.insert(self.closeViewNames, ViewName.VersionActivity1_3DungeonMapLevelView)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_3EnterView)
 	VersionActivity1_8EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
-		if #arg_63_2 >= 3 then
-			local var_64_0 = arg_63_2[3]
+		if #paramList >= 3 then
+			local subJumpId = paramList[3]
 
-			if var_64_0 == JumpEnum.Activity1_3DungeonJump.Normal then
-				table.insert(arg_63_0.closeViewNames, ViewName.VersionActivity1_3BuffView)
-				table.insert(arg_63_0.waitOpenViewNames, ViewName.VersionActivity1_3DungeonMapView)
+			if subJumpId == JumpEnum.Activity1_3DungeonJump.Normal then
+				table.insert(self.closeViewNames, ViewName.VersionActivity1_3BuffView)
+				table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_3DungeonMapView)
 				VersionActivity1_3DungeonController.instance:openVersionActivityDungeonMapView(VersionActivity1_3DungeonEnum.DungeonChapterId.LeiMiTeBei)
-			elseif var_64_0 == JumpEnum.Activity1_3DungeonJump.Hard then
-				table.insert(arg_63_0.waitOpenViewNames, ViewName.VersionActivity1_3DungeonMapView)
-				table.insert(arg_63_0.closeViewNames, ViewName.VersionActivity1_3BuffView)
+			elseif subJumpId == JumpEnum.Activity1_3DungeonJump.Hard then
+				table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_3DungeonMapView)
+				table.insert(self.closeViewNames, ViewName.VersionActivity1_3BuffView)
 
 				if not VersionActivityDungeonBaseController.instance:isOpenActivityHardDungeonChapter(JumpEnum.ActIdEnum.Act1_3Dungeon) then
 					VersionActivity1_3DungeonController.instance:openVersionActivityDungeonMapView(VersionActivity1_3DungeonEnum.DungeonChapterId.LeiMiTeBei)
 				else
 					VersionActivity1_3DungeonController.instance:openVersionActivityDungeonMapView(VersionActivity1_3DungeonEnum.DungeonChapterId.LeiMiTeBeiHard)
 				end
-			elseif var_64_0 == JumpEnum.Activity1_3DungeonJump.Daily then
-				table.insert(arg_63_0.closeViewNames, ViewName.VersionActivity1_3AstrologyView)
-				table.insert(arg_63_0.closeViewNames, ViewName.VersionActivity1_3BuffView)
-				table.insert(arg_63_0.waitOpenViewNames, ViewName.VersionActivity1_3DungeonMapView)
+			elseif subJumpId == JumpEnum.Activity1_3DungeonJump.Daily then
+				table.insert(self.closeViewNames, ViewName.VersionActivity1_3AstrologyView)
+				table.insert(self.closeViewNames, ViewName.VersionActivity1_3BuffView)
+				table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_3DungeonMapView)
 				VersionActivity1_3DungeonController.instance:openVersionActivityDungeonMapView(VersionActivity1_3DungeonEnum.DungeonChapterId.LeiMiTeBei, VersionActivity1_3DungeonEnum.DailyEpisodeId, nil, nil, {
 					showDaily = true
 				})
-			elseif var_64_0 == JumpEnum.Activity1_3DungeonJump.Astrology then
-				table.insert(arg_63_0.waitOpenViewNames, ViewName.VersionActivity1_3DungeonMapView)
-				table.insert(arg_63_0.waitOpenViewNames, ViewName.VersionActivity1_3AstrologyView)
-				table.insert(arg_63_0.closeViewNames, ViewName.VersionActivity1_3BuffView)
+			elseif subJumpId == JumpEnum.Activity1_3DungeonJump.Astrology then
+				table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_3DungeonMapView)
+				table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_3AstrologyView)
+				table.insert(self.closeViewNames, ViewName.VersionActivity1_3BuffView)
 
 				if ViewMgr.instance:isOpen(ViewName.VersionActivity1_3DungeonMapView) then
 					VersionActivity1_3AstrologyController.instance:openVersionActivity1_3AstrologyView()
@@ -945,9 +981,9 @@ function var_0_0.jumpToAct1_3Dungeon(arg_63_0, arg_63_1, arg_63_2)
 						VersionActivity1_3AstrologyController.instance:openVersionActivity1_3AstrologyView()
 					end)
 				end
-			elseif var_64_0 == JumpEnum.Activity1_3DungeonJump.Buff then
-				table.insert(arg_63_0.waitOpenViewNames, ViewName.VersionActivity1_3DungeonMapView)
-				table.insert(arg_63_0.waitOpenViewNames, ViewName.VersionActivity1_3BuffView)
+			elseif subJumpId == JumpEnum.Activity1_3DungeonJump.Buff then
+				table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_3DungeonMapView)
+				table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_3BuffView)
 
 				if ViewMgr.instance:isOpen(ViewName.VersionActivity1_3DungeonMapView) then
 					VersionActivity1_3BuffController.instance:openBuffView()
@@ -957,12 +993,12 @@ function var_0_0.jumpToAct1_3Dungeon(arg_63_0, arg_63_1, arg_63_2)
 					end)
 				end
 			else
-				logWarn("not support subJumpId:" .. tostring(var_64_0))
+				logWarn("not support subJumpId:" .. tostring(subJumpId))
 
 				return JumpEnum.JumpResult.Fail
 			end
 		else
-			table.insert(arg_63_0.waitOpenViewNames, ViewName.VersionActivity1_3DungeonMapView)
+			table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_3DungeonMapView)
 			VersionActivity1_3DungeonController.instance:openVersionActivityDungeonMapView(VersionActivity1_3DungeonEnum.DungeonChapterId.LeiMiTeBei)
 		end
 	end, nil, VersionActivity1_3Enum.ActivityId.Dungeon)
@@ -970,27 +1006,31 @@ function var_0_0.jumpToAct1_3Dungeon(arg_63_0, arg_63_1, arg_63_2)
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToAct1_3DungeonView(arg_67_0, arg_67_1)
-	local var_67_0 = string.splitToNumber(arg_67_1, "#")[2]
+function JumpController:jumpToAct1_3DungeonView(jumpParam)
+	local paramsList = string.splitToNumber(jumpParam, "#")
+	local episodeId = paramsList[2]
+	local episodeCo = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-	if not DungeonConfig.instance:getEpisodeCO(var_67_0) then
-		logError("not found episode : " .. arg_67_1)
+	if not episodeCo then
+		logError("not found episode : " .. jumpParam)
 
 		return JumpEnum.JumpResult.Fail
 	end
 
-	if not DungeonModel.instance:getEpisodeInfo(var_67_0) then
+	local episodeInfo = DungeonModel.instance:getEpisodeInfo(episodeId)
+
+	if not episodeInfo then
 		GameFacade.showToast(ToastEnum.WarmUpGotoOrder)
 
 		return JumpEnum.JumpResult.Fail
 	end
 
-	table.insert(arg_67_0.waitOpenViewNames, ViewName.VersionActivity1_3DungeonMapLevelView)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_3DungeonMapLevelView)
 	VersionActivity1_8EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
-		VersionActivity1_3DungeonController.instance:openVersionActivityDungeonMapView(nil, var_67_0, function()
+		VersionActivity1_3DungeonController.instance:openVersionActivityDungeonMapView(nil, episodeId, function()
 			ViewMgr.instance:openView(ViewName.VersionActivity1_3DungeonMapLevelView, {
 				isJump = true,
-				episodeId = var_67_0
+				episodeId = episodeId
 			})
 		end)
 	end, nil, VersionActivity1_3Enum.ActivityId.Dungeon)
@@ -998,15 +1038,15 @@ function var_0_0.jumpToAct1_3DungeonView(arg_67_0, arg_67_1)
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToAct1_3Act304(arg_70_0, arg_70_1, arg_70_2)
-	table.insert(arg_70_0.waitOpenViewNames, ViewName.VersionActivity1_3EnterView)
+function JumpController:jumpToAct1_3Act304(actId, paramList)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_3EnterView)
 
-	if arg_70_2 and #arg_70_2 >= 3 then
-		Activity122Model.instance:setCurEpisodeId(#arg_70_2[3])
+	if paramList and #paramList >= 3 then
+		Activity122Model.instance:setCurEpisodeId(#paramList[3])
 	end
 
 	VersionActivity1_3EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
-		table.insert(arg_70_0.waitOpenViewNames, ViewName.Activity1_3ChessMapView)
+		table.insert(self.waitOpenViewNames, ViewName.Activity1_3ChessMapView)
 		Activity1_3ChessController.instance:openMapView()
 	end)
 	ViewMgr.instance:closeAllPopupViews({
@@ -1017,185 +1057,183 @@ function var_0_0.jumpToAct1_3Act304(arg_70_0, arg_70_1, arg_70_2)
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToAct1_3Act305(arg_72_0, arg_72_1, arg_72_2)
-	table.insert(arg_72_0.waitOpenViewNames, ViewName.VersionActivity1_3EnterView)
+function JumpController:jumpToAct1_3Act305(actId, paramList)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_3EnterView)
 	VersionActivity1_3EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
-		table.insert(arg_72_0.waitOpenViewNames, ViewName.ArmMainView)
+		table.insert(self.waitOpenViewNames, ViewName.ArmMainView)
 		ArmPuzzlePipeController.instance:openMainView()
 	end)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToAct1_3Act306(arg_74_0, arg_74_1, arg_74_2)
-	table.insert(arg_74_0.waitOpenViewNames, ViewName.VersionActivity1_3EnterView)
+function JumpController:jumpToAct1_3Act306(actId, paramList)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_3EnterView)
 
-	if arg_74_2 and #arg_74_2 >= 3 then
-		Activity120Model.instance:getCurEpisodeId(#arg_74_2[3])
+	if paramList and #paramList >= 3 then
+		Activity120Model.instance:getCurEpisodeId(#paramList[3])
 	end
 
 	VersionActivity1_3EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
-		table.insert(arg_74_0.waitOpenViewNames, ViewName.JiaLaBoNaMapView)
+		table.insert(self.waitOpenViewNames, ViewName.JiaLaBoNaMapView)
 		JiaLaBoNaController.instance:openMapView()
 	end)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToAct1_3Act125(arg_76_0, arg_76_1, arg_76_2)
-	if not ActivityModel.instance:isActOnLine(arg_76_1) then
+function JumpController:jumpToAct1_3Act125(actId, paramList)
+	if not ActivityModel.instance:isActOnLine(actId) then
 		return JumpEnum.JumpResult.Fail
 	end
 
-	table.insert(arg_76_0.waitOpenViewNames, ViewName.ActivityBeginnerView)
-	table.insert(arg_76_0.closeViewNames, ViewName.MainThumbnailView)
-	ActivityModel.instance:setTargetActivityCategoryId(arg_76_1)
-	ActivityController.instance:openActivityBeginnerView(arg_76_2)
+	table.insert(self.waitOpenViewNames, ViewName.ActivityBeginnerView)
+	table.insert(self.closeViewNames, ViewName.MainThumbnailView)
+	ActivityModel.instance:setTargetActivityCategoryId(actId)
+	ActivityController.instance:openActivityBeginnerView(paramList)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToTurnback(arg_77_0, arg_77_1)
+function JumpController:jumpToTurnback(jumpParam)
 	if not TurnbackModel.instance:isNewType() then
-		if not TurnbackModel.instance:canShowTurnbackPop() then
-			return JumpEnum.JumpResult.Fail
-		end
+		local jumpdata = string.splitToNumber(jumpParam, "#")
+		local viewParam = {}
 
-		local var_77_0 = string.splitToNumber(arg_77_1, "#")
-		local var_77_1 = {
-			turnbackId = tonumber(var_77_0[2]),
-			subModuleId = tonumber(var_77_0[3])
-		}
+		viewParam.turnbackId = tonumber(jumpdata[2])
+		viewParam.subModuleId = tonumber(jumpdata[3])
 
-		table.insert(arg_77_0.waitOpenViewNames, ViewName.TurnbackBeginnerView)
-		TurnbackModel.instance:setCurTurnbackId(var_77_1.turnbackId)
-		TurnbackModel.instance:setTargetCategoryId(var_77_1.subModuleId)
-		TurnbackController.instance:openTurnbackBeginnerView(var_77_1)
+		local viewName = string.format("Turnback%sBeginnerView", viewParam.turnbackId)
+
+		table.insert(self.waitOpenViewNames, viewName)
+		TurnbackModel.instance:setCurTurnbackId(viewParam.turnbackId)
+		TurnbackModel.instance:setTargetCategoryId(viewParam.subModuleId)
+		TurnbackController.instance:openTurnbackBeginnerView(viewParam)
 
 		return JumpEnum.JumpResult.Success
 	elseif ViewMgr.instance:isOpen(ViewName.TurnbackNewBeginnerView) then
-		local var_77_2 = string.splitToNumber(arg_77_1, "#")
-		local var_77_3 = {
-			subModuleId = tonumber(var_77_2[3])
-		}
+		local jumpdata = string.splitToNumber(jumpParam, "#")
+		local viewParam = {}
 
-		TurnbackModel.instance:setTargetCategoryId(var_77_3.subModuleId)
+		viewParam.subModuleId = tonumber(jumpdata[3])
+
+		TurnbackModel.instance:setTargetCategoryId(viewParam.subModuleId)
 		TurnbackController.instance:dispatchEvent(TurnbackEvent.RefreshBeginner)
 
 		return JumpEnum.JumpResult.Success
 	end
 end
 
-function var_0_0.jumpToEnterView1_4(arg_78_0, arg_78_1, arg_78_2)
-	table.insert(arg_78_0.waitOpenViewNames, ViewName.VersionActivity1_4EnterView)
+function JumpController:jumpToEnterView1_4(actId, paramList)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_4EnterView)
 	VersionActivity1_4EnterController.instance:openVersionActivityEnterView()
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToAct1_4DungeonStore(arg_79_0, arg_79_1, arg_79_2)
-	table.insert(arg_79_0.waitOpenViewNames, ViewName.VersionActivity1_4EnterView)
+function JumpController:jumpToAct1_4DungeonStore(actId, paramList)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_4EnterView)
 	VersionActivity1_4EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
-		table.insert(arg_79_0.waitOpenViewNames, ViewName.Activity129View)
+		table.insert(self.waitOpenViewNames, ViewName.Activity129View)
 		ViewMgr.instance:openView(ViewName.Activity129View, {
-			actId = arg_79_1
+			actId = actId
 		})
 	end)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToAct1_4Dungeon(arg_81_0, arg_81_1, arg_81_2)
-	table.insert(arg_81_0.waitOpenViewNames, ViewName.VersionActivity1_4EnterView)
+function JumpController:jumpToAct1_4Dungeon(actId, paramList)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_4EnterView)
 	VersionActivity1_4EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
-		table.insert(arg_81_0.waitOpenViewNames, ViewName.VersionActivity1_4DungeonView)
+		table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_4DungeonView)
 		ViewMgr.instance:openView(ViewName.VersionActivity1_4DungeonView, {
-			actId = arg_81_1
+			actId = actId
 		})
 	end)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToAct1_4Task(arg_83_0, arg_83_1, arg_83_2)
-	table.insert(arg_83_0.waitOpenViewNames, ViewName.VersionActivity1_4EnterView)
+function JumpController:jumpToAct1_4Task(actId, paramList)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_4EnterView)
 	VersionActivity1_4EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
-		table.insert(arg_83_0.waitOpenViewNames, ViewName.VersionActivity1_4TaskView)
+		table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_4TaskView)
 		ViewMgr.instance:openView(ViewName.VersionActivity1_4TaskView, {
-			activityId = arg_83_1
+			activityId = actId
 		})
 	end)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToAct1_4Role37(arg_85_0, arg_85_1, arg_85_2)
-	table.insert(arg_85_0.waitOpenViewNames, ViewName.VersionActivity1_4EnterView)
+function JumpController:jumpToAct1_4Role37(actId, paramList)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_4EnterView)
 	VersionActivity1_4EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
-		table.insert(arg_85_0.waitOpenViewNames, ViewName.Activity130LevelView)
+		table.insert(self.waitOpenViewNames, ViewName.Activity130LevelView)
 		Activity130Controller.instance:enterActivity130()
 	end)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToAct1_4Role6(arg_87_0, arg_87_1, arg_87_2)
-	table.insert(arg_87_0.waitOpenViewNames, ViewName.VersionActivity1_4EnterView)
+function JumpController:jumpToAct1_4Role6(actId, paramList)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_4EnterView)
 	VersionActivity1_4EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
-		table.insert(arg_87_0.waitOpenViewNames, ViewName.Activity131LevelView)
+		table.insert(self.waitOpenViewNames, ViewName.Activity131LevelView)
 		Activity131Controller.instance:enterActivity131()
 	end)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToAct1_4Role37Game(arg_89_0, arg_89_1)
-	local var_89_0 = string.splitToNumber(arg_89_1, "#")
-	local var_89_1 = {
-		episodeId = tonumber(var_89_0[2])
-	}
+function JumpController:jumpToAct1_4Role37Game(jumpParam)
+	local jumpdata = string.splitToNumber(jumpParam, "#")
+	local data = {}
+
+	data.episodeId = tonumber(jumpdata[2])
 
 	if ViewMgr.instance:isOpen(ViewName.Activity130LevelView) then
-		if Activity130Model.instance:isEpisodeUnlock(var_89_1.episodeId) then
-			Activity130Controller.instance:dispatchEvent(Activity130Event.EnterEpisode, var_89_1.episodeId)
+		if Activity130Model.instance:isEpisodeUnlock(data.episodeId) then
+			Activity130Controller.instance:dispatchEvent(Activity130Event.EnterEpisode, data.episodeId)
 		else
 			GameFacade.showToast(ToastEnum.DungeonIsLockNormal)
 
 			return JumpEnum.JumpResult.Fail
 		end
 	else
-		Activity130Controller.instance:openActivity130GameView(var_89_1)
+		Activity130Controller.instance:openActivity130GameView(data)
 	end
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToAct1_4Role6Game(arg_90_0, arg_90_1)
-	local var_90_0 = string.splitToNumber(arg_90_1, "#")
-	local var_90_1 = {
-		episodeId = tonumber(var_90_0[2])
-	}
+function JumpController:jumpToAct1_4Role6Game(jumpParam)
+	local jumpdata = string.splitToNumber(jumpParam, "#")
+	local data = {}
+
+	data.episodeId = tonumber(jumpdata[2])
 
 	if ViewMgr.instance:isOpen(ViewName.Activity131LevelView) then
-		if Activity131Model.instance:isEpisodeUnlock(var_90_1.episodeId) then
-			Activity131Controller.instance:dispatchEvent(Activity131Event.EnterEpisode, var_90_1.episodeId)
+		if Activity131Model.instance:isEpisodeUnlock(data.episodeId) then
+			Activity131Controller.instance:dispatchEvent(Activity131Event.EnterEpisode, data.episodeId)
 		else
 			GameFacade.showToast(ToastEnum.DungeonIsLockNormal)
 
 			return JumpEnum.JumpResult.Fail
 		end
 	else
-		Activity131Controller.instance:openActivity131GameView(var_90_1)
+		Activity131Controller.instance:openActivity131GameView(data)
 	end
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToAchievement(arg_91_0, arg_91_1)
-	local var_91_0 = string.split(arg_91_1, "#")
+function JumpController:jumpToAchievement(jumpParam)
+	local jumpData = string.split(jumpParam, "#")
 
-	if #var_91_0 > 1 then
-		AchievementJumpController.instance:jumpToAchievement(var_91_0)
+	if #jumpData > 1 then
+		AchievementJumpController.instance:jumpToAchievement(jumpData)
 
 		return JumpEnum.JumpResult.Success
 	end
@@ -1203,43 +1241,43 @@ function var_0_0.jumpToAchievement(arg_91_0, arg_91_1)
 	return JumpEnum.JumpResult.Fail
 end
 
-function var_0_0.jumpToBossRush(arg_92_0, arg_92_1)
-	local var_92_0 = string.splitToNumber(arg_92_1, "#")
-	local var_92_1 = var_92_0[2]
-	local var_92_2 = var_92_0[3]
-	local var_92_3
+function JumpController:jumpToBossRush(jumpParam)
+	local jumpData = string.splitToNumber(jumpParam, "#")
+	local stage = jumpData[2]
+	local layer = jumpData[3]
+	local viewParam
 
-	if var_92_1 then
-		var_92_3 = {
+	if stage then
+		viewParam = {
 			isOpenLevelDetail = true,
-			stage = var_92_1,
-			layer = var_92_2
+			stage = stage,
+			layer = layer
 		}
 	end
 
-	BossRushController.instance:openMainView(var_92_3)
+	BossRushController.instance:openV3a2MainView(viewParam)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToAct1_5EnterView(arg_93_0, arg_93_1, arg_93_2)
-	table.insert(arg_93_0.waitOpenViewNames, ViewName.VersionActivity1_5EnterView)
+function JumpController:jumpToAct1_5EnterView(jumpParam, paramList)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_5EnterView)
 	VersionActivity1_5EnterController.instance:openVersionActivityEnterView()
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToAct1_5Dungeon(arg_94_0, arg_94_1, arg_94_2)
-	table.insert(arg_94_0.closeViewNames, ViewName.VersionActivity1_5DungeonMapLevelView)
+function JumpController:jumpToAct1_5Dungeon(jumpParam, paramList)
+	table.insert(self.closeViewNames, ViewName.VersionActivity1_5DungeonMapLevelView)
 	VersionActivity2_0EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
-		if #arg_94_2 >= 3 then
-			local var_95_0 = arg_94_2[3]
+		if #paramList >= 3 then
+			local subJumpId = paramList[3]
 
-			if var_95_0 == JumpEnum.Activity1_3DungeonJump.Normal then
-				table.insert(arg_94_0.waitOpenViewNames, ViewName.VersionActivity1_5DungeonMapView)
+			if subJumpId == JumpEnum.Activity1_3DungeonJump.Normal then
+				table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_5DungeonMapView)
 				VersionActivity1_5DungeonController.instance:openVersionActivityDungeonMapView(VersionActivity1_5DungeonEnum.DungeonChapterId.Story)
-			elseif var_95_0 == JumpEnum.Activity1_3DungeonJump.Hard then
-				table.insert(arg_94_0.waitOpenViewNames, ViewName.VersionActivity1_5DungeonMapView)
+			elseif subJumpId == JumpEnum.Activity1_3DungeonJump.Hard then
+				table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_5DungeonMapView)
 
 				if not VersionActivityDungeonBaseController.instance:isOpenActivityHardDungeonChapter(JumpEnum.ActIdEnum.Act1_5Dungeon) then
 					VersionActivity1_5DungeonController.instance:openVersionActivityDungeonMapView(VersionActivity1_5DungeonEnum.DungeonChapterId.Story)
@@ -1247,12 +1285,12 @@ function var_0_0.jumpToAct1_5Dungeon(arg_94_0, arg_94_1, arg_94_2)
 					VersionActivity1_5DungeonController.instance:openVersionActivityDungeonMapView(VersionActivity1_5DungeonEnum.DungeonChapterId.Hard)
 				end
 			else
-				logWarn("not support subJumpId:" .. tostring(var_95_0))
+				logWarn("not support subJumpId:" .. tostring(subJumpId))
 
 				return JumpEnum.JumpResult.Fail
 			end
 		else
-			table.insert(arg_94_0.waitOpenViewNames, ViewName.VersionActivity1_5DungeonMapView)
+			table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_5DungeonMapView)
 			VersionActivity1_5DungeonController.instance:openVersionActivityDungeonMapView(VersionActivity1_5DungeonEnum.DungeonChapterId.Story)
 		end
 	end)
@@ -1260,56 +1298,60 @@ function var_0_0.jumpToAct1_5Dungeon(arg_94_0, arg_94_1, arg_94_2)
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToAct1_5DungeonStore(arg_96_0, arg_96_1, arg_96_2)
+function JumpController:jumpToAct1_5DungeonStore(jumpParam, paramList)
 	VersionActivity2_0EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
-		table.insert(arg_96_0.waitOpenViewNames, ViewName.ReactivityStoreView)
+		table.insert(self.waitOpenViewNames, ViewName.ReactivityStoreView)
 		ReactivityController.instance:openReactivityStoreView(JumpEnum.ActIdEnum.Act1_5Dungeon)
 	end)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToAct1_5PeaceUluGame(arg_98_0, arg_98_1)
-	table.insert(arg_98_0.waitOpenViewNames, ViewName.VersionActivity1_5EnterView)
+function JumpController:jumpToAct1_5PeaceUluGame(jumpParam)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_5EnterView)
 	VersionActivity1_5EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
-		table.insert(arg_98_0.waitOpenViewNames, ViewName.PeaceUluView)
-		PeaceUluController.instance:openPeaceUluView(arg_98_1)
+		table.insert(self.waitOpenViewNames, ViewName.PeaceUluView)
+		PeaceUluController.instance:openPeaceUluView(jumpParam)
 	end)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToAct1_5SportNews(arg_100_0, arg_100_1)
-	table.insert(arg_100_0.waitOpenViewNames, ViewName.VersionActivity1_5EnterView)
+function JumpController:jumpToAct1_5SportNews(jumpParam)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_5EnterView)
 	VersionActivity1_5EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
-		table.insert(arg_100_0.waitOpenViewNames, ViewName.SportsNewsView)
-		SportsNewsController.instance:openSportsNewsMainView(arg_100_1)
+		table.insert(self.waitOpenViewNames, ViewName.SportsNewsView)
+		SportsNewsController.instance:openSportsNewsMainView(jumpParam)
 	end)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToAct1_5DungeonView(arg_102_0, arg_102_1)
-	local var_102_0 = string.splitToNumber(arg_102_1, "#")[2]
+function JumpController:jumpToAct1_5DungeonView(jumpParam)
+	local paramsList = string.splitToNumber(jumpParam, "#")
+	local episodeId = paramsList[2]
+	local episodeCo = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-	if not DungeonConfig.instance:getEpisodeCO(var_102_0) then
-		logError("not found episode : " .. arg_102_1)
+	if not episodeCo then
+		logError("not found episode : " .. jumpParam)
 
 		return JumpEnum.JumpResult.Fail
 	end
 
-	if not DungeonModel.instance:getEpisodeInfo(var_102_0) then
+	local episodeInfo = DungeonModel.instance:getEpisodeInfo(episodeId)
+
+	if not episodeInfo then
 		GameFacade.showToast(ToastEnum.WarmUpGotoOrder)
 
 		return JumpEnum.JumpResult.Fail
 	end
 
-	table.insert(arg_102_0.waitOpenViewNames, ViewName.VersionActivity1_5DungeonMapLevelView)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_5DungeonMapLevelView)
 	VersionActivity2_1EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
-		VersionActivity1_5DungeonController.instance:openVersionActivityDungeonMapView(nil, var_102_0, function()
+		VersionActivity1_5DungeonController.instance:openVersionActivityDungeonMapView(nil, episodeId, function()
 			ViewMgr.instance:openView(ViewName.VersionActivity1_5DungeonMapLevelView, {
 				isJump = true,
-				episodeId = var_102_0
+				episodeId = episodeId
 			})
 		end)
 	end)
@@ -1317,50 +1359,50 @@ function var_0_0.jumpToAct1_5DungeonView(arg_102_0, arg_102_1)
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToActivity142(arg_105_0, arg_105_1)
-	table.insert(arg_105_0.waitOpenViewNames, ViewName.VersionActivity1_5EnterView)
+function JumpController:jumpToActivity142(jumpParam)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_5EnterView)
 	VersionActivity1_5EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
-		table.insert(arg_105_0.waitOpenViewNames, ViewName.Activity142MapView)
+		table.insert(self.waitOpenViewNames, ViewName.Activity142MapView)
 		Activity142Controller.instance:openMapView()
 	end)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToAct1_5AiZiLa(arg_107_0, arg_107_1)
-	table.insert(arg_107_0.waitOpenViewNames, ViewName.VersionActivity1_5EnterView)
-	table.insert(arg_107_0.waitOpenViewNames, ViewName.AiZiLaMapView)
+function JumpController:jumpToAct1_5AiZiLa(jumpParam)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_5EnterView)
+	table.insert(self.waitOpenViewNames, ViewName.AiZiLaMapView)
 	AiZiLaController.instance:openMapView()
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToAct1_6EnterView(arg_108_0, arg_108_1, arg_108_2)
-	table.insert(arg_108_0.waitOpenViewNames, ViewName.VersionActivity1_6EnterView)
+function JumpController:jumpToAct1_6EnterView(jumpParam, paramList)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_6EnterView)
 
-	local var_108_0
+	local subJumpActId
 
-	if #arg_108_2 >= 3 then
-		var_108_0 = arg_108_2[3]
+	if #paramList >= 3 then
+		subJumpActId = paramList[3]
 	end
 
-	VersionActivity1_6EnterController.instance:openVersionActivityEnterView(nil, nil, var_108_0, true)
+	VersionActivity1_6EnterController.instance:openVersionActivityEnterView(nil, nil, subJumpActId, true)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToAct1_6Dungeon(arg_109_0, arg_109_1, arg_109_2)
-	table.insert(arg_109_0.closeViewNames, ViewName.VersionActivity1_6DungeonMapLevelView)
-	table.insert(arg_109_0.waitOpenViewNames, ViewName.VersionActivity1_6EnterView)
+function JumpController:jumpToAct1_6Dungeon(jumpParam, paramList)
+	table.insert(self.closeViewNames, ViewName.VersionActivity1_6DungeonMapLevelView)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_6EnterView)
 	VersionActivity1_6EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
-		if #arg_109_2 >= 3 then
-			local var_110_0 = arg_109_2[3]
+		if #paramList >= 3 then
+			local subJumpId = paramList[3]
 
-			if var_110_0 == JumpEnum.Activity1_3DungeonJump.Normal then
-				table.insert(arg_109_0.waitOpenViewNames, ViewName.VersionActivity1_6DungeonMapView)
+			if subJumpId == JumpEnum.Activity1_3DungeonJump.Normal then
+				table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_6DungeonMapView)
 				VersionActivity1_6DungeonController.instance:openVersionActivityDungeonMapView(VersionActivity1_6DungeonEnum.DungeonChapterId.Story)
-			elseif var_110_0 == JumpEnum.Activity1_3DungeonJump.Hard then
-				table.insert(arg_109_0.waitOpenViewNames, ViewName.VersionActivity1_6DungeonMapView)
+			elseif subJumpId == JumpEnum.Activity1_3DungeonJump.Hard then
+				table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_6DungeonMapView)
 
 				if not VersionActivityDungeonBaseController.instance:isOpenActivityHardDungeonChapter(JumpEnum.ActIdEnum.Act1_6Dungeon) then
 					VersionActivity1_6DungeonController.instance:openVersionActivityDungeonMapView(VersionActivity1_6DungeonEnum.DungeonChapterId.Story)
@@ -1368,12 +1410,12 @@ function var_0_0.jumpToAct1_6Dungeon(arg_109_0, arg_109_1, arg_109_2)
 					VersionActivity1_6DungeonController.instance:openVersionActivityDungeonMapView(VersionActivity1_6DungeonEnum.DungeonChapterId.Hard)
 				end
 			else
-				logWarn("not support subJumpId:" .. tostring(var_110_0))
+				logWarn("not support subJumpId:" .. tostring(subJumpId))
 
 				return JumpEnum.JumpResult.Fail
 			end
 		else
-			table.insert(arg_109_0.waitOpenViewNames, ViewName.VersionActivity1_6DungeonMapView)
+			table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_6DungeonMapView)
 			VersionActivity1_6DungeonController.instance:openVersionActivityDungeonMapView(VersionActivity1_6DungeonEnum.DungeonChapterId.Story)
 		end
 	end)
@@ -1381,27 +1423,31 @@ function var_0_0.jumpToAct1_6Dungeon(arg_109_0, arg_109_1, arg_109_2)
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToAct1_6DungeonView(arg_111_0, arg_111_1)
-	local var_111_0 = string.splitToNumber(arg_111_1, "#")[2]
+function JumpController:jumpToAct1_6DungeonView(jumpParam)
+	local paramsList = string.splitToNumber(jumpParam, "#")
+	local episodeId = paramsList[2]
+	local episodeCo = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-	if not DungeonConfig.instance:getEpisodeCO(var_111_0) then
-		logError("not found episode : " .. arg_111_1)
+	if not episodeCo then
+		logError("not found episode : " .. jumpParam)
 
 		return JumpEnum.JumpResult.Fail
 	end
 
-	if not DungeonModel.instance:getEpisodeInfo(var_111_0) then
+	local episodeInfo = DungeonModel.instance:getEpisodeInfo(episodeId)
+
+	if not episodeInfo then
 		GameFacade.showToast(ToastEnum.WarmUpGotoOrder)
 
 		return JumpEnum.JumpResult.Fail
 	end
 
-	table.insert(arg_111_0.waitOpenViewNames, ViewName.VersionActivity1_6DungeonMapLevelView)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_6DungeonMapLevelView)
 	VersionActivity1_6EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
-		VersionActivity1_6DungeonController.instance:openVersionActivityDungeonMapView(nil, var_111_0, function()
+		VersionActivity1_6DungeonController.instance:openVersionActivityDungeonMapView(nil, episodeId, function()
 			ViewMgr.instance:openView(ViewName.VersionActivity1_6DungeonMapLevelView, {
 				isJump = true,
-				episodeId = var_111_0
+				episodeId = episodeId
 			})
 		end)
 	end)
@@ -1409,18 +1455,18 @@ function var_0_0.jumpToAct1_6DungeonView(arg_111_0, arg_111_1)
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToAct1_6DungeonStore(arg_114_0, arg_114_1, arg_114_2)
-	table.insert(arg_114_0.waitOpenViewNames, ViewName.VersionActivity1_6EnterView)
+function JumpController:jumpToAct1_6DungeonStore(jumpParam, paramList)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_6EnterView)
 	VersionActivity1_6EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
-		table.insert(arg_114_0.waitOpenViewNames, ViewName.VersionActivity1_6StoreView)
+		table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_6StoreView)
 		VersionActivity1_6EnterController.instance:openStoreView()
 	end)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToAct1_6DungeonBoss(arg_116_0, arg_116_1, arg_116_2)
-	table.insert(arg_116_0.waitOpenViewNames, ViewName.VersionActivity1_6EnterView)
+function JumpController:jumpToAct1_6DungeonBoss(jumpParam, paramList)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_6EnterView)
 	VersionActivity1_6EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
 		VersionActivity1_6DungeonController.instance:openVersionActivityDungeonMapView()
 		VersionActivity1_6DungeonController.instance:openDungeonBossView()
@@ -1429,61 +1475,62 @@ function var_0_0.jumpToAct1_6DungeonBoss(arg_116_0, arg_116_1, arg_116_2)
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToAct1_6Rogue(arg_118_0, arg_118_1, arg_118_2)
-	table.insert(arg_118_0.waitOpenViewNames, ViewName.VersionActivity1_6EnterView)
-	VersionActivity1_6EnterController.instance:openVersionActivityEnterViewIfNotOpened(nil, nil, arg_118_1, false)
+function JumpController:jumpToAct1_6Rogue(jumpParam, paramList)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_6EnterView)
+	VersionActivity1_6EnterController.instance:openVersionActivityEnterViewIfNotOpened(nil, nil, jumpParam, false)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToAct1_6QuNiang(arg_119_0, arg_119_1, arg_119_2)
-	table.insert(arg_119_0.waitOpenViewNames, ViewName.VersionActivity1_6EnterView)
+function JumpController:jumpToAct1_6QuNiang(jumpParam, paramList)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_6EnterView)
 	VersionActivity1_6EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
-		table.insert(arg_119_0.waitOpenViewNames, ViewName.ActQuNiangLevelView)
+		table.insert(self.waitOpenViewNames, ViewName.ActQuNiangLevelView)
 		ActQuNiangController.instance:enterActivity()
-	end, nil, arg_119_1, false)
+	end, nil, jumpParam, false)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToAct1_6GeTian(arg_121_0, arg_121_1, arg_121_2)
-	table.insert(arg_121_0.waitOpenViewNames, ViewName.VersionActivity1_6EnterView)
+function JumpController:jumpToAct1_6GeTian(jumpParam, paramList)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity1_6EnterView)
 	VersionActivity1_6EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
-		table.insert(arg_121_0.waitOpenViewNames, ViewName.ActGeTianLevelView)
+		table.insert(self.waitOpenViewNames, ViewName.ActGeTianLevelView)
 		ActGeTianController.instance:enterActivity()
-	end, nil, arg_121_1, false)
+	end, nil, jumpParam, false)
 
 	return JumpEnum.JumpResult.Fail
 end
 
-function var_0_0.jumpToAct1_9WarmUp(arg_123_0, arg_123_1, arg_123_2)
-	table.insert(arg_123_0.waitOpenViewNames, ViewName.ActivityBeginnerView)
+function JumpController:jumpToAct1_9WarmUp(jumpParam, paramList)
+	table.insert(self.waitOpenViewNames, ViewName.ActivityBeginnerView)
 
-	local var_123_0 = arg_123_1
+	local actId = jumpParam
 
-	ActivityModel.instance:setTargetActivityCategoryId(var_123_0)
-	Activity125Model.instance:setSelectEpisodeId(var_123_0, 1)
-	ActivityController.instance:openActivityBeginnerView(arg_123_1)
+	ActivityModel.instance:setTargetActivityCategoryId(actId)
+	Activity125Model.instance:setSelectEpisodeId(actId, 1)
+	ActivityController.instance:openActivityBeginnerView(jumpParam)
 end
 
-function var_0_0.jumpToVersionEnterView(arg_124_0, arg_124_1)
-	local var_124_0 = string.splitToNumber(arg_124_1, "#")[2]
+function JumpController:jumpToVersionEnterView(jumpParam)
+	local paramsList = string.splitToNumber(jumpParam, "#")
+	local actId = paramsList[2]
 
-	if not var_124_0 then
+	if not actId then
 		return JumpEnum.JumpResult.Fail
 	end
 
-	local var_124_1 = ActivityHelper.getActivityVersion(var_124_0)
+	local version = ActivityHelper.getActivityVersion(actId)
 
-	if not var_124_1 then
+	if not version then
 		return JumpEnum.JumpResult.Fail
 	end
 
-	local var_124_2 = string.format("VersionActivity%sEnterController", var_124_1)
-	local var_124_3 = _G[var_124_2] or VersionActivityFixedEnterController
+	local controllerName = string.format("VersionActivity%sEnterController", version)
+	local controller = _G[controllerName] or VersionActivityFixedEnterController
 
-	if var_124_3 then
-		var_124_3.instance:openVersionActivityEnterView(nil, nil, var_124_0)
+	if controller then
+		controller.instance:openVersionActivityEnterView(nil, nil, actId)
 
 		return JumpEnum.JumpResult.Success
 	end
@@ -1491,143 +1538,148 @@ function var_0_0.jumpToVersionEnterView(arg_124_0, arg_124_1)
 	return JumpEnum.JumpResult.Fail
 end
 
-function var_0_0.jumpToRougeMainView(arg_125_0, arg_125_1)
+function JumpController:jumpToRougeMainView(jumpParam)
 	RougeController.instance:openRougeMainView()
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToRougeRewardView(arg_126_0, arg_126_1)
-	table.insert(arg_126_0.waitOpenViewNames, ViewName.RougeMainView)
-	table.insert(arg_126_0.waitOpenViewNames, ViewName.RougeRewardView)
+function JumpController:jumpToRougeRewardView(jumpParam)
+	table.insert(self.waitOpenViewNames, ViewName.RougeMainView)
+	table.insert(self.waitOpenViewNames, ViewName.RougeRewardView)
 
-	local var_126_0 = string.splitToNumber(arg_126_1, "#")
-	local var_126_1 = var_126_0[2]
-	local var_126_2 = var_126_0[3]
+	local paramsList = string.splitToNumber(jumpParam, "#")
+	local arg1 = paramsList[2]
+	local arg2 = paramsList[3]
 
 	RougeController.instance:openRougeMainView(nil, nil, function()
 		ViewMgr.instance:openView(ViewName.RougeRewardView, {
-			version = var_126_1,
-			stage = var_126_2
+			version = arg1,
+			stage = arg2
 		})
 	end)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToSeason123(arg_128_0, arg_128_1)
-	local var_128_0 = Season123Model.instance:getCurSeasonId()
-	local var_128_1 = string.splitToNumber(arg_128_1, "#")
-	local var_128_2 = string.format("VersionActivity%sEnterController", Activity123Enum.SeasonVersionPrefix[var_128_0])
+function JumpController:jumpToSeason123(jumpParam)
+	local actId = Season123Model.instance:getCurSeasonId()
+	local jumpArray = string.splitToNumber(jumpParam, "#")
+	local controllerName = string.format("VersionActivity%sEnterController", Activity123Enum.SeasonVersionPrefix[actId])
 
-	if #var_128_1 > 1 and var_128_1[2] == Activity123Enum.JumpType.Stage and #var_128_1 > 2 then
-		local var_128_3 = var_128_1[3]
+	if #jumpArray > 1 and jumpArray[2] == Activity123Enum.JumpType.Stage and #jumpArray > 2 then
+		local stage = jumpArray[3]
 
-		_G[var_128_2].instance:openVersionActivityEnterView(Season123Controller.openSeasonEntryByJump, {
-			actId = var_128_0,
+		_G[controllerName].instance:openVersionActivityEnterView(Season123Controller.openSeasonEntryByJump, {
+			actId = actId,
 			jumpId = Activity123Enum.JumpId.ForStage,
 			jumpParam = {
-				stage = var_128_3
+				stage = stage
 			}
-		}, var_128_0)
+		}, actId)
 
 		return JumpEnum.JumpResult.Success
 	end
 
-	_G[var_128_2].instance:openVersionActivityEnterView(Season123Controller.openSeasonEntry, Season123Controller.instance, var_128_0)
+	_G[controllerName].instance:openVersionActivityEnterView(Season123Controller.openSeasonEntry, Season123Controller.instance, actId)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToPermanentMainView(arg_129_0, arg_129_1)
+function JumpController:jumpToPermanentMainView(jumpParam)
 	DungeonModel.instance:changeCategory(DungeonEnum.ChapterType.PermanentActivity)
-	table.insert(arg_129_0.waitOpenViewNames, ViewName.DungeonView)
+	table.insert(self.waitOpenViewNames, ViewName.DungeonView)
 	DungeonController.instance:openDungeonView()
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToInvestigateView(arg_130_0, arg_130_1)
-	table.insert(arg_130_0.waitOpenViewNames, ViewName.InvestigateView)
-	table.insert(arg_130_0.closeViewNames, ViewName.InvestigateTaskView)
+function JumpController:jumpToInvestigateView(jumpParam)
+	table.insert(self.waitOpenViewNames, ViewName.InvestigateView)
+	table.insert(self.closeViewNames, ViewName.InvestigateTaskView)
 	InvestigateController.instance:openInvestigateView()
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToInvestigateOpinionTabView(arg_131_0, arg_131_1)
-	local var_131_0 = string.splitToNumber(arg_131_1, "#")[2]
-	local var_131_1 = lua_investigate_info.configDict[var_131_0]
+function JumpController:jumpToInvestigateOpinionTabView(jumpParam)
+	local paramsList = string.splitToNumber(jumpParam, "#")
+	local id = paramsList[2]
+	local mo = lua_investigate_info.configDict[id]
+	local isUnlocked = mo.episode == 0 or DungeonModel.instance:hasPassLevel(mo.episode)
 
-	if not (var_131_1.episode == 0 or DungeonModel.instance:hasPassLevel(var_131_1.episode)) then
+	if not isUnlocked then
 		GameFacade.showToast(ToastEnum.InvestigateTip1)
 
 		return JumpEnum.JumpResult.Fail
 	end
 
-	table.insert(arg_131_0.waitOpenViewNames, ViewName.InvestigateOpinionTabView)
-	InvestigateController.instance:jumpToInvestigateOpinionTabView(var_131_0)
+	table.insert(self.waitOpenViewNames, ViewName.InvestigateOpinionTabView)
+	InvestigateController.instance:jumpToInvestigateOpinionTabView(id)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToDiceHeroLevelView(arg_132_0, arg_132_1)
-	local var_132_0 = string.splitToNumber(arg_132_1, "#")[2]
+function JumpController:jumpToDiceHeroLevelView(jumpParam)
+	local paramsList = string.splitToNumber(jumpParam, "#")
+	local chapterId = paramsList[2]
 
-	if not DiceHeroModel.instance.unlockChapterIds[var_132_0] then
+	if not DiceHeroModel.instance.unlockChapterIds[chapterId] then
 		GameFacade.showToast(ToastEnum.DiceHeroLockChapter)
 
 		return JumpEnum.JumpResult.Fail
 	end
 
-	local var_132_1 = DiceHeroConfig.instance:getLevelCo(var_132_0, 1)
+	local co = DiceHeroConfig.instance:getLevelCo(chapterId, 1)
 
-	if not var_132_1 then
+	if not co then
 		return JumpEnum.JumpResult.Fail
 	end
 
-	table.insert(arg_132_0.waitOpenViewNames, ViewName.DiceHeroLevelView)
+	table.insert(self.waitOpenViewNames, ViewName.DiceHeroLevelView)
 	ViewMgr.instance:openView(ViewName.DiceHeroLevelView, {
-		chapterId = var_132_0,
-		isInfinite = var_132_1.mode == 2
+		chapterId = chapterId,
+		isInfinite = co.mode == 2
 	})
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToRoomFishing(arg_133_0, arg_133_1)
-	if string.splitToNumber(arg_133_1, "#")[2] == 1 then
+function JumpController:jumpToRoomFishing(jumpParam)
+	local paramsList = string.splitToNumber(jumpParam, "#")
+
+	if paramsList[2] == 1 then
 		FishingController.instance:openFishingStoreView()
 	end
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToMainUISwitchInfoViewGiftSet(arg_134_0, arg_134_1)
-	local var_134_0 = string.splitToNumber(arg_134_1, "#")
-	local var_134_1 = var_134_0[2]
-	local var_134_2 = var_134_0[3]
+function JumpController:jumpToMainUISwitchInfoViewGiftSet(jumpParam)
+	local paramsList = string.splitToNumber(jumpParam, "#")
+	local skinUiId = paramsList[2]
+	local sceneId = paramsList[3]
 
-	MainUISwitchController.instance:openMainUISwitchInfoViewGiftSet(var_134_1, var_134_2)
+	MainUISwitchController.instance:openMainUISwitchInfoViewGiftSet(skinUiId, sceneId)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToPackageStoreGoodsView(arg_135_0, arg_135_1)
-	local var_135_0 = string.splitToNumber(arg_135_1, "#")
+function JumpController:jumpToPackageStoreGoodsView(jumpParam)
+	local jumpArray = string.splitToNumber(jumpParam, "#")
 
-	if var_135_0 then
-		local var_135_1 = var_135_0[2]
-		local var_135_2 = StoreModel.instance:getGoodsMO(var_135_1)
+	if jumpArray then
+		local goodsId = jumpArray[2]
+		local packageGoodsMO = StoreModel.instance:getGoodsMO(goodsId)
 
-		if var_135_2 and not var_135_2:isSoldOut() then
-			if not arg_135_0._delayOpenPackageStoreGoodsView then
-				function arg_135_0._delayOpenPackageStoreGoodsView(arg_136_0)
-					StoreController.instance:openPackageStoreGoodsView(arg_136_0)
+		if packageGoodsMO and not packageGoodsMO:isSoldOut() then
+			if not self._delayOpenPackageStoreGoodsView then
+				function self._delayOpenPackageStoreGoodsView(pgMO)
+					StoreController.instance:openPackageStoreGoodsView(pgMO)
 				end
 			end
 
-			TaskDispatcher.runDelay(arg_135_0._delayOpenPackageStoreGoodsView, var_135_2, 0.1)
+			TaskDispatcher.runDelay(self._delayOpenPackageStoreGoodsView, packageGoodsMO, 0.1)
 
 			return JumpEnum.JumpResult.Success
 		end
@@ -1636,22 +1688,24 @@ function var_0_0.jumpToPackageStoreGoodsView(arg_135_0, arg_135_1)
 	return JumpEnum.JumpResult.Fail
 end
 
-function var_0_0.jumpToShelterBuilding(arg_137_0, arg_137_1)
+function JumpController:jumpToShelterBuilding(jumpParam)
 	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.SurvivalShelter then
 		return JumpEnum.JumpResult.Fail
 	end
 
-	local var_137_0 = string.splitToNumber(arg_137_1, "#")[2]
-	local var_137_1 = SurvivalShelterModel.instance:getWeekInfo():getBuildingInfoByBuildingId(var_137_0)
+	local paramsList = string.splitToNumber(jumpParam, "#")
+	local buildingId = paramsList[2]
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local buildingInfo = weekInfo:getBuildingInfoByBuildingId(buildingId)
 
-	if var_137_1 then
-		SurvivalMapHelper.instance:gotoBuilding(var_137_1.id, nil, true)
+	if buildingInfo then
+		SurvivalMapHelper.instance:gotoBuilding(buildingInfo.id, nil, true)
 	end
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToCommandStationTask(arg_138_0, arg_138_1)
+function JumpController:jumpToCommandStationTask(jumpParam)
 	if ViewMgr.instance:isOpen(ViewName.CommandStationTaskView) then
 		return JumpEnum.JumpResult.Success
 	end
@@ -1662,159 +1716,178 @@ function var_0_0.jumpToCommandStationTask(arg_138_0, arg_138_1)
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToTowerView(arg_139_0, arg_139_1)
-	local var_139_0 = string.splitToNumber(arg_139_1, "#")
-	local var_139_1 = var_139_0[2]
-	local var_139_2 = var_139_0[3]
-	local var_139_3 = {
-		towerType = var_139_1,
-		towerId = var_139_2
+function JumpController:jumpToTowerView(jumpParam)
+	local jumpArray = string.splitToNumber(jumpParam, "#")
+	local towerType = jumpArray[2]
+	local towerId = jumpArray[3]
+	local param = {
+		towerType = towerType,
+		towerId = towerId
 	}
 
-	TowerController.instance:jumpView(var_139_3)
+	TowerController.instance:jumpView(param)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToOdyssey(arg_140_0, arg_140_1)
-	local var_140_0 = string.splitToNumber(arg_140_1, "#")
-	local var_140_1 = var_140_0[2]
-	local var_140_2 = var_140_0[3]
+function JumpController:jumpToOdyssey(jumpParam)
+	local jumpArray = string.splitToNumber(jumpParam, "#")
+	local jumpType = jumpArray[2]
+	local jumpElement = jumpArray[3]
 
-	if var_140_1 == OdysseyEnum.JumpType.JumpToMainElement then
-		local var_140_3, var_140_4 = OdysseyDungeonModel.instance:getCurMainElement()
+	if jumpType == OdysseyEnum.JumpType.JumpToMainElement then
+		local curMainMapCo, curMainElementCo = OdysseyDungeonModel.instance:getCurMainElement()
 
-		if var_140_4 then
-			OdysseyDungeonController.instance:jumpToMapElement(var_140_4.id)
+		if curMainElementCo then
+			OdysseyDungeonController.instance:jumpToMapElement(curMainElementCo.id)
 		else
 			OdysseyDungeonController.instance:jumpToHeroPos()
 		end
-	elseif var_140_1 == OdysseyEnum.JumpType.JumpToElementAndOpen then
-		OdysseyDungeonController.instance:jumpToMapElement(var_140_2)
-	elseif var_140_1 == OdysseyEnum.JumpType.JumpToHeroPos then
+	elseif jumpType == OdysseyEnum.JumpType.JumpToElementAndOpen then
+		OdysseyDungeonController.instance:jumpToMapElement(jumpElement)
+	elseif jumpType == OdysseyEnum.JumpType.JumpToHeroPos then
 		OdysseyDungeonController.instance:jumpToHeroPos()
-	elseif var_140_1 == OdysseyEnum.JumpType.JumpToReligion then
+	elseif jumpType == OdysseyEnum.JumpType.JumpToReligion then
 		OdysseyDungeonController.instance:openMembersView()
-	elseif var_140_1 == OdysseyEnum.JumpType.JumpToMyth then
+	elseif jumpType == OdysseyEnum.JumpType.JumpToMyth then
 		OdysseyDungeonController.instance:openMythView()
-	elseif var_140_1 == OdysseyEnum.JumpType.JumpToLevelReward then
+	elseif jumpType == OdysseyEnum.JumpType.JumpToLevelReward then
 		TaskRpc.instance:sendGetTaskInfoRequest({
 			TaskEnum.TaskType.Odyssey
 		}, function()
 			OdysseyTaskModel.instance:setTaskInfoList()
 			OdysseyDungeonController.instance:openLevelRewardView()
 		end)
-	elseif var_140_1 == OdysseyEnum.JumpType.JumpToLibrary then
+	elseif jumpType == OdysseyEnum.JumpType.JumpToLibrary then
 		OdysseyController.instance:openLibraryView(AssassinEnum.LibraryType.Hero)
 	end
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToAssassinLibraryView(arg_142_0, arg_142_1)
-	local var_142_0 = string.splitToNumber(arg_142_1, "#")
-	local var_142_1 = var_142_0[2]
-	local var_142_2 = var_142_0[3]
+function JumpController:jumpToAssassinLibraryView(jumpParam)
+	local jumpArray = string.splitToNumber(jumpParam, "#")
+	local jumpActId = jumpArray[2]
+	local jumpLibraryType = jumpArray[3]
 
-	AssassinController.instance:openAssassinLibraryView(var_142_1, var_142_2)
+	AssassinController.instance:openAssassinLibraryView(jumpActId, jumpLibraryType)
 end
 
-var_0_0.JumpViewToHandleFunc = {
-	[JumpEnum.JumpView.StoreView] = var_0_0.jumpToStoreView,
-	[JumpEnum.JumpView.SummonView] = var_0_0.jumpToSummonView,
-	[JumpEnum.JumpView.SummonViewGroup] = var_0_0.jumpToSummonViewGroup,
-	[JumpEnum.JumpView.DungeonViewWithChapter] = var_0_0.jumpToDungeonViewWithChapter,
-	[JumpEnum.JumpView.DungeonViewWithEpisode] = var_0_0.jumpToDungeonViewWithEpisode,
-	[JumpEnum.JumpView.DungeonViewWithType] = var_0_0.jumpToDungeonViewWithType,
-	[JumpEnum.JumpView.CharacterBackpackViewWithCharacter] = var_0_0.jumpToCharacterBackpackViewWithCharacter,
-	[JumpEnum.JumpView.CharacterBackpackViewWithEquip] = var_0_0.jumpToCharacterBackpackViewWithEquip,
-	[JumpEnum.JumpView.HeroGroupView] = var_0_0.jumpToHeroGroupView,
-	[JumpEnum.JumpView.BackpackView] = var_0_0.jumpToBackpackView,
-	[JumpEnum.JumpView.PlayerClothView] = var_0_0.jumpToPlayerClothView,
-	[JumpEnum.JumpView.MainView] = var_0_0.jumpToMainView,
-	[JumpEnum.JumpView.TaskView] = var_0_0.jumpToTaskView,
-	[JumpEnum.JumpView.RoomView] = var_0_0.jumpToRoomView,
-	[JumpEnum.JumpView.RoomProductLineView] = var_0_0.jumpToRoomProductLineView,
-	[JumpEnum.JumpView.TeachNoteView] = var_0_0.jumpToTeachNoteView,
-	[JumpEnum.JumpView.EquipView] = var_0_0.jumpToEquipView,
-	[JumpEnum.JumpView.HandbookView] = var_0_0.jumpToHandbookView,
-	[JumpEnum.JumpView.SocialView] = var_0_0.jumpToSocialView,
-	[JumpEnum.JumpView.NoticeView] = var_0_0.jumpToNoticeView,
-	[JumpEnum.JumpView.SignInView] = var_0_0.jumpToSignInView,
-	[JumpEnum.JumpView.MailView] = var_0_0.jumpToMailView,
-	[JumpEnum.JumpView.SignInViewWithBirthDay] = var_0_0.jumpToSignInViewWithBirthDay,
-	[JumpEnum.JumpView.SeasonMainView] = var_0_0.jumpToSeasonMainView,
-	[JumpEnum.JumpView.Show] = var_0_0.jumpToShow,
-	[JumpEnum.JumpView.BpView] = var_0_0.jumpToBpView,
-	[JumpEnum.JumpView.ActivityView] = var_0_0.jumpToActivityView,
-	[JumpEnum.JumpView.LeiMiTeBeiDungeonView] = var_0_0.jumpToLeiMiTeBeiDungeonView,
-	[JumpEnum.JumpView.Act1_3DungeonView] = var_0_0.jumpToAct1_3DungeonView,
-	[JumpEnum.JumpView.PushBox] = var_0_0.jumpToPushBox,
-	[JumpEnum.JumpView.Turnback] = var_0_0.jumpToTurnback,
-	[JumpEnum.JumpView.Role37Game] = var_0_0.jumpToAct1_4Role37Game,
-	[JumpEnum.JumpView.Role6Game] = var_0_0.jumpToAct1_4Role6Game,
-	[JumpEnum.JumpView.Achievement] = var_0_0.jumpToAchievement,
-	[JumpEnum.JumpView.RoleStoryActivity] = var_0_0.jumpToRoleStoryActivity,
-	[JumpEnum.JumpView.BossRush] = var_0_0.jumpToBossRush,
-	[JumpEnum.JumpView.Tower] = var_0_0.jumpToTowerView,
-	[JumpEnum.JumpView.Odyssey] = var_0_0.jumpToOdyssey,
-	[JumpEnum.JumpView.AssassinLibraryView] = var_0_0.jumpToAssassinLibraryView,
+function JumpController:jumpToStoreSupplementMonthCardUseView(jumpParam)
+	local currencyParam = {}
+	local item = {
+		isHideAddBtn = true,
+		id = StoreEnum.SupplementMonthCardItemId,
+		type = MaterialEnum.MaterialType.SpecialExpiredItem
+	}
+
+	table.insert(currencyParam, item)
+	SignInController.instance:showPatchpropUseView(MessageBoxIdDefine.SupplementMonthCardUseTip, MsgBoxEnum.BoxType.Yes_No, currencyParam, self._useSupplementMonthCard, nil, nil, self, nil, nil, SignInModel.instance:getCanSupplementMonthCardDays())
+end
+
+function JumpController:_useSupplementMonthCard()
+	SignInRpc.instance:sendSupplementMonthCardRequest()
+end
+
+JumpController.JumpViewToHandleFunc = {
+	[JumpEnum.JumpView.StoreView] = JumpController.jumpToStoreView,
+	[JumpEnum.JumpView.SummonView] = JumpController.jumpToSummonView,
+	[JumpEnum.JumpView.SummonViewGroup] = JumpController.jumpToSummonViewGroup,
+	[JumpEnum.JumpView.DungeonViewWithChapter] = JumpController.jumpToDungeonViewWithChapter,
+	[JumpEnum.JumpView.DungeonViewWithEpisode] = JumpController.jumpToDungeonViewWithEpisode,
+	[JumpEnum.JumpView.DungeonViewWithType] = JumpController.jumpToDungeonViewWithType,
+	[JumpEnum.JumpView.CharacterBackpackViewWithCharacter] = JumpController.jumpToCharacterBackpackViewWithCharacter,
+	[JumpEnum.JumpView.CharacterBackpackViewWithEquip] = JumpController.jumpToCharacterBackpackViewWithEquip,
+	[JumpEnum.JumpView.HeroGroupView] = JumpController.jumpToHeroGroupView,
+	[JumpEnum.JumpView.BackpackView] = JumpController.jumpToBackpackView,
+	[JumpEnum.JumpView.PlayerClothView] = JumpController.jumpToPlayerClothView,
+	[JumpEnum.JumpView.MainView] = JumpController.jumpToMainView,
+	[JumpEnum.JumpView.TaskView] = JumpController.jumpToTaskView,
+	[JumpEnum.JumpView.RoomView] = JumpController.jumpToRoomView,
+	[JumpEnum.JumpView.RoomProductLineView] = JumpController.jumpToRoomProductLineView,
+	[JumpEnum.JumpView.TeachNoteView] = JumpController.jumpToTeachNoteView,
+	[JumpEnum.JumpView.EquipView] = JumpController.jumpToEquipView,
+	[JumpEnum.JumpView.HandbookView] = JumpController.jumpToHandbookView,
+	[JumpEnum.JumpView.SocialView] = JumpController.jumpToSocialView,
+	[JumpEnum.JumpView.NoticeView] = JumpController.jumpToNoticeView,
+	[JumpEnum.JumpView.SignInView] = JumpController.jumpToSignInView,
+	[JumpEnum.JumpView.MailView] = JumpController.jumpToMailView,
+	[JumpEnum.JumpView.SignInViewWithBirthDay] = JumpController.jumpToSignInViewWithBirthDay,
+	[JumpEnum.JumpView.SeasonMainView] = JumpController.jumpToSeasonMainView,
+	[JumpEnum.JumpView.Show] = JumpController.jumpToShow,
+	[JumpEnum.JumpView.BpView] = JumpController.jumpToBpView,
+	[JumpEnum.JumpView.ActivityView] = JumpController.jumpToActivityView,
+	[JumpEnum.JumpView.LeiMiTeBeiDungeonView] = JumpController.jumpToLeiMiTeBeiDungeonView,
+	[JumpEnum.JumpView.Act1_3DungeonView] = JumpController.jumpToAct1_3DungeonView,
+	[JumpEnum.JumpView.PushBox] = JumpController.jumpToPushBox,
+	[JumpEnum.JumpView.Turnback] = JumpController.jumpToTurnback,
+	[JumpEnum.JumpView.Role37Game] = JumpController.jumpToAct1_4Role37Game,
+	[JumpEnum.JumpView.Role6Game] = JumpController.jumpToAct1_4Role6Game,
+	[JumpEnum.JumpView.Achievement] = JumpController.jumpToAchievement,
+	[JumpEnum.JumpView.RoleStoryActivity] = JumpController.jumpToRoleStoryActivity,
+	[JumpEnum.JumpView.BossRush] = JumpController.jumpToBossRush,
+	[JumpEnum.JumpView.Tower] = JumpController.jumpToTowerView,
+	[JumpEnum.JumpView.Odyssey] = JumpController.jumpToOdyssey,
+	[JumpEnum.JumpView.AssassinLibraryView] = JumpController.jumpToAssassinLibraryView,
 	[JumpEnum.JumpView.Challenge] = Act183JumpController.jumpToAct183,
-	[JumpEnum.JumpView.V1a5Dungeon] = var_0_0.jumpToAct1_5DungeonView,
-	[JumpEnum.JumpView.V1a6Dungeon] = var_0_0.jumpToAct1_6DungeonView,
-	[JumpEnum.JumpView.Season123] = var_0_0.jumpToSeason123,
-	[JumpEnum.JumpView.VersionEnterView] = var_0_0.jumpToVersionEnterView,
-	[JumpEnum.JumpView.RougeMainView] = var_0_0.jumpToRougeMainView,
-	[JumpEnum.JumpView.RougeRewardView] = var_0_0.jumpToRougeRewardView,
-	[JumpEnum.JumpView.PermanentMainView] = var_0_0.jumpToPermanentMainView,
-	[JumpEnum.JumpView.InvestigateView] = var_0_0.jumpToInvestigateView,
-	[JumpEnum.JumpView.InvestigateOpinionTabView] = var_0_0.jumpToInvestigateOpinionTabView,
-	[JumpEnum.JumpView.DiceHero] = var_0_0.jumpToDiceHeroLevelView,
-	[JumpEnum.JumpView.RoomFishing] = var_0_0.jumpToRoomFishing,
-	[JumpEnum.JumpView.MainUISwitchInfoViewGiftSet] = var_0_0.jumpToMainUISwitchInfoViewGiftSet,
-	[JumpEnum.JumpView.PackageStoreGoodsView] = var_0_0.jumpToPackageStoreGoodsView,
-	[JumpEnum.JumpView.ShelterBuilding] = var_0_0.jumpToShelterBuilding,
-	[JumpEnum.JumpView.CommandStationTask] = var_0_0.jumpToCommandStationTask
+	[JumpEnum.JumpView.V1a5Dungeon] = JumpController.jumpToAct1_5DungeonView,
+	[JumpEnum.JumpView.V1a6Dungeon] = JumpController.jumpToAct1_6DungeonView,
+	[JumpEnum.JumpView.Season123] = JumpController.jumpToSeason123,
+	[JumpEnum.JumpView.VersionEnterView] = JumpController.jumpToVersionEnterView,
+	[JumpEnum.JumpView.RougeMainView] = JumpController.jumpToRougeMainView,
+	[JumpEnum.JumpView.RougeRewardView] = JumpController.jumpToRougeRewardView,
+	[JumpEnum.JumpView.PermanentMainView] = JumpController.jumpToPermanentMainView,
+	[JumpEnum.JumpView.InvestigateView] = JumpController.jumpToInvestigateView,
+	[JumpEnum.JumpView.InvestigateOpinionTabView] = JumpController.jumpToInvestigateOpinionTabView,
+	[JumpEnum.JumpView.DiceHero] = JumpController.jumpToDiceHeroLevelView,
+	[JumpEnum.JumpView.RoomFishing] = JumpController.jumpToRoomFishing,
+	[JumpEnum.JumpView.MainUISwitchInfoViewGiftSet] = JumpController.jumpToMainUISwitchInfoViewGiftSet,
+	[JumpEnum.JumpView.PackageStoreGoodsView] = JumpController.jumpToPackageStoreGoodsView,
+	[JumpEnum.JumpView.ShelterBuilding] = JumpController.jumpToShelterBuilding,
+	[JumpEnum.JumpView.CommandStationTask] = JumpController.jumpToCommandStationTask,
+	[JumpEnum.JumpView.BackpackUseType] = JumpController.jumpToBackpackUseTypeView,
+	[JumpEnum.JumpView.SkinGiftUseType] = JumpController.jumpToSkinGiftUseTypeView,
+	[JumpEnum.JumpView.StoreSupplementMonthCardUseView] = JumpController.jumpToStoreSupplementMonthCardUseView
 }
-var_0_0.JumpActViewToHandleFunc = {
-	[JumpEnum.ActIdEnum.V2a4_WuErLiXi] = var_0_0.V2a4_WuErLiXi,
-	[JumpEnum.ActIdEnum.V3a0_Reactivity] = var_0_0.V3a0_Reactivity,
-	[JumpEnum.ActIdEnum.Act117] = var_0_0.jumpToAct117,
-	[JumpEnum.ActIdEnum.Act114] = var_0_0.jumpToAct114,
-	[JumpEnum.ActIdEnum.Act119] = var_0_0.jumpToAct119,
-	[JumpEnum.ActIdEnum.Act1_2Dungeon] = var_0_0.jumpToAct1_2Dungeon,
-	[JumpEnum.ActIdEnum.Act1_2Shop] = var_0_0.jumpToAct1_2Shop,
-	[JumpEnum.ActIdEnum.EnterView1_2] = var_0_0.jumpToEnterView1_2,
-	[JumpEnum.ActIdEnum.YaXian] = var_0_0.jumpToYaXianView,
-	[JumpEnum.ActIdEnum.EnterView1_3] = var_0_0.jumpToEnterView1_3,
-	[JumpEnum.ActIdEnum.Act1_3Dungeon] = var_0_0.jumpToAct1_3Dungeon,
-	[JumpEnum.ActIdEnum.Act1_3Shop] = var_0_0.jumpToAct1_3Shop,
-	[JumpEnum.ActIdEnum.Act1_3Act304] = var_0_0.jumpToAct1_3Act304,
-	[JumpEnum.ActIdEnum.Act1_3Act305] = var_0_0.jumpToAct1_3Act305,
-	[JumpEnum.ActIdEnum.Act1_3Act306] = var_0_0.jumpToAct1_3Act306,
-	[JumpEnum.ActIdEnum.Act1_3Act307] = var_0_0.jumpToAct119,
-	[JumpEnum.ActIdEnum.Act1_3Act125] = var_0_0.jumpToAct1_3Act125,
-	[JumpEnum.ActIdEnum.EnterView1_4] = var_0_0.jumpToEnterView1_4,
-	[JumpEnum.ActIdEnum.Act1_4DungeonStore] = var_0_0.jumpToAct1_4DungeonStore,
-	[JumpEnum.ActIdEnum.Act1_4Dungeon] = var_0_0.jumpToAct1_4Dungeon,
-	[JumpEnum.ActIdEnum.Act1_4Task] = var_0_0.jumpToAct1_4Task,
-	[JumpEnum.ActIdEnum.Role37] = var_0_0.jumpToAct1_4Role37,
-	[JumpEnum.ActIdEnum.Role6] = var_0_0.jumpToAct1_4Role6,
-	[JumpEnum.ActIdEnum.EnterView1_5] = var_0_0.jumpToAct1_5EnterView,
-	[JumpEnum.ActIdEnum.Act1_5Dungeon] = var_0_0.jumpToAct1_5Dungeon,
-	[JumpEnum.ActIdEnum.Act1_5Shop] = var_0_0.jumpToAct1_5DungeonStore,
-	[JumpEnum.ActIdEnum.Act1_5PeaceUlu] = var_0_0.jumpToAct1_5PeaceUluGame,
-	[JumpEnum.ActIdEnum.Act1_5SportNews] = var_0_0.jumpToAct1_5SportNews,
-	[JumpEnum.ActIdEnum.Activity142] = var_0_0.jumpToActivity142,
-	[JumpEnum.ActIdEnum.Act1_5AiZiLa] = var_0_0.jumpToAct1_5AiZiLa,
-	[JumpEnum.ActIdEnum.Act1_6EnterView] = var_0_0.jumpToAct1_6EnterView,
-	[JumpEnum.ActIdEnum.Act1_6Dungeon] = var_0_0.jumpToAct1_6Dungeon,
-	[JumpEnum.ActIdEnum.Act1_6DungeonStore] = var_0_0.jumpToAct1_6DungeonStore,
-	[JumpEnum.ActIdEnum.Act1_6DungeonBossRush] = var_0_0.jumpToAct1_6DungeonBoss,
-	[JumpEnum.ActIdEnum.Act1_6Rougue] = var_0_0.jumpToAct1_6Rogue,
-	[JumpEnum.ActIdEnum.Act1_6QuNiang] = var_0_0.jumpToAct1_6QuNiang,
-	[JumpEnum.ActIdEnum.Act1_6GeTian] = var_0_0.jumpToAct1_6GeTian,
-	[JumpEnum.ActIdEnum.Act1_9WarmUp] = var_0_0.jumpToAct1_9WarmUp
+JumpController.JumpActViewToHandleFunc = {
+	[JumpEnum.ActIdEnum.V2a4_WuErLiXi] = JumpController.V2a4_WuErLiXi,
+	[JumpEnum.ActIdEnum.V3a0_Reactivity] = JumpController.V3a0_Reactivity,
+	[JumpEnum.ActIdEnum.Act117] = JumpController.jumpToAct117,
+	[JumpEnum.ActIdEnum.Act114] = JumpController.jumpToAct114,
+	[JumpEnum.ActIdEnum.Act119] = JumpController.jumpToAct119,
+	[JumpEnum.ActIdEnum.Act1_2Dungeon] = JumpController.jumpToAct1_2Dungeon,
+	[JumpEnum.ActIdEnum.Act1_2Shop] = JumpController.jumpToAct1_2Shop,
+	[JumpEnum.ActIdEnum.EnterView1_2] = JumpController.jumpToEnterView1_2,
+	[JumpEnum.ActIdEnum.YaXian] = JumpController.jumpToYaXianView,
+	[JumpEnum.ActIdEnum.EnterView1_3] = JumpController.jumpToEnterView1_3,
+	[JumpEnum.ActIdEnum.Act1_3Dungeon] = JumpController.jumpToAct1_3Dungeon,
+	[JumpEnum.ActIdEnum.Act1_3Shop] = JumpController.jumpToAct1_3Shop,
+	[JumpEnum.ActIdEnum.Act1_3Act304] = JumpController.jumpToAct1_3Act304,
+	[JumpEnum.ActIdEnum.Act1_3Act305] = JumpController.jumpToAct1_3Act305,
+	[JumpEnum.ActIdEnum.Act1_3Act306] = JumpController.jumpToAct1_3Act306,
+	[JumpEnum.ActIdEnum.Act1_3Act307] = JumpController.jumpToAct119,
+	[JumpEnum.ActIdEnum.Act1_3Act125] = JumpController.jumpToAct1_3Act125,
+	[JumpEnum.ActIdEnum.EnterView1_4] = JumpController.jumpToEnterView1_4,
+	[JumpEnum.ActIdEnum.Act1_4DungeonStore] = JumpController.jumpToAct1_4DungeonStore,
+	[JumpEnum.ActIdEnum.Act1_4Dungeon] = JumpController.jumpToAct1_4Dungeon,
+	[JumpEnum.ActIdEnum.Act1_4Task] = JumpController.jumpToAct1_4Task,
+	[JumpEnum.ActIdEnum.Role37] = JumpController.jumpToAct1_4Role37,
+	[JumpEnum.ActIdEnum.Role6] = JumpController.jumpToAct1_4Role6,
+	[JumpEnum.ActIdEnum.EnterView1_5] = JumpController.jumpToAct1_5EnterView,
+	[JumpEnum.ActIdEnum.Act1_5Dungeon] = JumpController.jumpToAct1_5Dungeon,
+	[JumpEnum.ActIdEnum.Act1_5Shop] = JumpController.jumpToAct1_5DungeonStore,
+	[JumpEnum.ActIdEnum.Act1_5PeaceUlu] = JumpController.jumpToAct1_5PeaceUluGame,
+	[JumpEnum.ActIdEnum.Act1_5SportNews] = JumpController.jumpToAct1_5SportNews,
+	[JumpEnum.ActIdEnum.Activity142] = JumpController.jumpToActivity142,
+	[JumpEnum.ActIdEnum.Act1_5AiZiLa] = JumpController.jumpToAct1_5AiZiLa,
+	[JumpEnum.ActIdEnum.Act1_6EnterView] = JumpController.jumpToAct1_6EnterView,
+	[JumpEnum.ActIdEnum.Act1_6Dungeon] = JumpController.jumpToAct1_6Dungeon,
+	[JumpEnum.ActIdEnum.Act1_6DungeonStore] = JumpController.jumpToAct1_6DungeonStore,
+	[JumpEnum.ActIdEnum.Act1_6DungeonBossRush] = JumpController.jumpToAct1_6DungeonBoss,
+	[JumpEnum.ActIdEnum.Act1_6Rougue] = JumpController.jumpToAct1_6Rogue,
+	[JumpEnum.ActIdEnum.Act1_6QuNiang] = JumpController.jumpToAct1_6QuNiang,
+	[JumpEnum.ActIdEnum.Act1_6GeTian] = JumpController.jumpToAct1_6GeTian,
+	[JumpEnum.ActIdEnum.Act1_9WarmUp] = JumpController.jumpToAct1_9WarmUp
 }
 
-return var_0_0
+return JumpController

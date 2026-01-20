@@ -1,71 +1,73 @@
-﻿module("modules.logic.versionactivity1_3.armpipe.config.Activity124Config", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/armpipe/config/Activity124Config.lua
 
-local var_0_0 = class("Activity124Config", BaseConfig)
+module("modules.logic.versionactivity1_3.armpipe.config.Activity124Config", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._act124Map = nil
-	arg_1_0._act124Episode = nil
-	arg_1_0._episodeListDict = {}
-	arg_1_0._chapterIdListDict = {}
+local Activity124Config = class("Activity124Config", BaseConfig)
+
+function Activity124Config:ctor()
+	self._act124Map = nil
+	self._act124Episode = nil
+	self._episodeListDict = {}
+	self._chapterIdListDict = {}
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function Activity124Config:reqConfigNames()
 	return {
 		"activity124_map",
 		"activity124_episode"
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity124_map" then
-		arg_3_0._act124Map = arg_3_2
-	elseif arg_3_1 == "activity124_episode" then
-		arg_3_0._act124Episode = arg_3_2
+function Activity124Config:onConfigLoaded(configName, configTable)
+	if configName == "activity124_map" then
+		self._act124Map = configTable
+	elseif configName == "activity124_episode" then
+		self._act124Episode = configTable
 	end
 end
 
-function var_0_0.getMapCo(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_0._act124Map.configDict[arg_4_1] then
-		return arg_4_0._act124Map.configDict[arg_4_1][arg_4_2]
+function Activity124Config:getMapCo(actId, id)
+	if self._act124Map.configDict[actId] then
+		return self._act124Map.configDict[actId][id]
 	end
 
 	return nil
 end
 
-function var_0_0.getEpisodeCo(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_0._act124Episode.configDict[arg_5_1] then
-		return arg_5_0._act124Episode.configDict[arg_5_1][arg_5_2]
+function Activity124Config:getEpisodeCo(actId, id)
+	if self._act124Episode.configDict[actId] then
+		return self._act124Episode.configDict[actId][id]
 	end
 
 	return nil
 end
 
-function var_0_0.getEpisodeList(arg_6_0, arg_6_1)
-	if arg_6_0._episodeListDict[arg_6_1] then
-		return arg_6_0._episodeListDict[arg_6_1]
+function Activity124Config:getEpisodeList(actId)
+	if self._episodeListDict[actId] then
+		return self._episodeListDict[actId]
 	end
 
-	local var_6_0 = {}
+	local episodeList = {}
 
-	arg_6_0._episodeListDict[arg_6_1] = var_6_0
+	self._episodeListDict[actId] = episodeList
 
-	if arg_6_0._act124Episode and arg_6_0._act124Episode.configDict[arg_6_1] then
-		for iter_6_0, iter_6_1 in pairs(arg_6_0._act124Episode.configDict[arg_6_1]) do
-			table.insert(var_6_0, iter_6_1)
+	if self._act124Episode and self._act124Episode.configDict[actId] then
+		for k, v in pairs(self._act124Episode.configDict[actId]) do
+			table.insert(episodeList, v)
 		end
 
-		table.sort(var_6_0, var_0_0.sortEpisode)
+		table.sort(episodeList, Activity124Config.sortEpisode)
 	end
 
-	return var_6_0
+	return episodeList
 end
 
-function var_0_0.sortEpisode(arg_7_0, arg_7_1)
-	if arg_7_0.episodeId ~= arg_7_1.episodeId then
-		return arg_7_0.episodeId < arg_7_1.episodeId
+function Activity124Config.sortEpisode(item1, item2)
+	if item1.episodeId ~= item2.episodeId then
+		return item1.episodeId < item2.episodeId
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+Activity124Config.instance = Activity124Config.New()
 
-return var_0_0
+return Activity124Config

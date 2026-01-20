@@ -1,31 +1,33 @@
-﻿module("modules.logic.fight.system.work.FightWorkPlayFakeStepTimeline", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkPlayFakeStepTimeline.lua
 
-local var_0_0 = class("FightWorkPlayFakeStepTimeline", FightWorkItem)
+module("modules.logic.fight.system.work.FightWorkPlayFakeStepTimeline", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.timelineName = arg_1_1
-	arg_1_0.fightStepData = arg_1_2
-	arg_1_0.SAFETIME = 30
+local FightWorkPlayFakeStepTimeline = class("FightWorkPlayFakeStepTimeline", FightWorkItem)
+
+function FightWorkPlayFakeStepTimeline:onConstructor(timelineName, fightStepData)
+	self.timelineName = timelineName
+	self.fightStepData = fightStepData
+	self.SAFETIME = 30
 end
 
-function var_0_0.onStart(arg_2_0)
-	arg_2_0:com_registFightEvent(FightEvent.OnSkillPlayFinish, arg_2_0._onSkillPlayFinish, LuaEventSystem.Low)
+function FightWorkPlayFakeStepTimeline:onStart()
+	self:com_registFightEvent(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, LuaEventSystem.Low)
 
-	local var_2_0 = FightHelper.getEntity(arg_2_0.fightStepData.fromId)
+	local entity = FightHelper.getEntity(self.fightStepData.fromId)
 
-	if not var_2_0 then
-		arg_2_0:onDone(true)
+	if not entity then
+		self:onDone(true)
 
 		return
 	end
 
-	var_2_0.skill:playTimeline(arg_2_0.timelineName, arg_2_0.fightStepData)
+	entity.skill:playTimeline(self.timelineName, self.fightStepData)
 end
 
-function var_0_0._onSkillPlayFinish(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	if arg_3_3 == arg_3_0.fightStepData then
-		arg_3_0:onDone(true)
+function FightWorkPlayFakeStepTimeline:_onSkillPlayFinish(entity, curSkillId, fightStepData)
+	if fightStepData == self.fightStepData then
+		self:onDone(true)
 	end
 end
 
-return var_0_0
+return FightWorkPlayFakeStepTimeline

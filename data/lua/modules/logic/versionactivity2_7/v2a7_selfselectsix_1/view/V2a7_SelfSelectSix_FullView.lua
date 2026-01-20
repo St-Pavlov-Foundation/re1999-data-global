@@ -1,163 +1,173 @@
-﻿module("modules.logic.versionactivity2_7.v2a7_selfselectsix_1.view.V2a7_SelfSelectSix_FullView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/v2a7_selfselectsix_1/view/V2a7_SelfSelectSix_FullView.lua
 
-local var_0_0 = class("V2a7_SelfSelectSix_FullView", BaseView)
+module("modules.logic.versionactivity2_7.v2a7_selfselectsix_1.view.V2a7_SelfSelectSix_FullView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btncheck = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_check")
-	arg_1_0._gocanget = gohelper.findChild(arg_1_0.viewGO, "root/reward/#go_canget")
-	arg_1_0._btnClaim = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/reward/#go_canget/#btn_Claim")
-	arg_1_0._gocanuse = gohelper.findChild(arg_1_0.viewGO, "root/reward/#go_canuse")
-	arg_1_0._btnuse = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/reward/#go_canuse/#btn_use")
-	arg_1_0._txtcanuse = gohelper.findChildText(arg_1_0.viewGO, "root/reward/#go_canuse/tips/#txt_canuse")
-	arg_1_0._gouesd = gohelper.findChild(arg_1_0.viewGO, "root/reward/#go_uesd")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "root/simage_fullbg/#txt_desc")
+local V2a7_SelfSelectSix_FullView = class("V2a7_SelfSelectSix_FullView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V2a7_SelfSelectSix_FullView:onInitView()
+	self._btncheck = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_check")
+	self._gocanget = gohelper.findChild(self.viewGO, "root/reward/#go_canget")
+	self._btnClaim = gohelper.findChildButtonWithAudio(self.viewGO, "root/reward/#go_canget/#btn_Claim")
+	self._gocanuse = gohelper.findChild(self.viewGO, "root/reward/#go_canuse")
+	self._btnuse = gohelper.findChildButtonWithAudio(self.viewGO, "root/reward/#go_canuse/#btn_use")
+	self._txtcanuse = gohelper.findChildText(self.viewGO, "root/reward/#go_canuse/tips/#txt_canuse")
+	self._gouesd = gohelper.findChild(self.viewGO, "root/reward/#go_uesd")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "root/simage_fullbg/#txt_desc")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btncheck:AddClickListener(arg_2_0._btncheckOnClick, arg_2_0)
-	arg_2_0._btnClaim:AddClickListener(arg_2_0._btnClaimOnClick, arg_2_0)
-	arg_2_0._btnuse:AddClickListener(arg_2_0._btnuseOnClick, arg_2_0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, arg_2_0.refreshUI, arg_2_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_2_0._onCloseView, arg_2_0)
+function V2a7_SelfSelectSix_FullView:addEvents()
+	self._btncheck:AddClickListener(self._btncheckOnClick, self)
+	self._btnClaim:AddClickListener(self._btnClaimOnClick, self)
+	self._btnuse:AddClickListener(self._btnuseOnClick, self)
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, self.refreshUI, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, self._onCloseView, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btncheck:RemoveClickListener()
-	arg_3_0._btnClaim:RemoveClickListener()
-	arg_3_0._btnuse:RemoveClickListener()
-	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, arg_3_0.refreshUI, arg_3_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_3_0._onCloseView, arg_3_0)
+function V2a7_SelfSelectSix_FullView:removeEvents()
+	self._btncheck:RemoveClickListener()
+	self._btnClaim:RemoveClickListener()
+	self._btnuse:RemoveClickListener()
+	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, self.refreshUI, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, self._onCloseView, self)
 end
 
-function var_0_0._btncheckOnClick(arg_4_0)
-	local var_4_0 = ItemConfig.instance:getItemCo(V2a7_SelfSelectSix_Enum.RewardId)
+function V2a7_SelfSelectSix_FullView:_btncheckOnClick()
+	local itemco = ItemConfig.instance:getItemCo(V2a7_SelfSelectSix_Enum.RewardId)
 
-	if string.nilorempty(var_4_0.effect) then
+	if string.nilorempty(itemco.effect) then
 		return
 	end
 
-	local var_4_1 = string.split(var_4_0.effect, "|")
+	local effectArr = string.split(itemco.effect, "|")
 
-	V2a7_SelfSelectSix_PickChoiceListModel.instance:initData(var_4_1, 1)
+	V2a7_SelfSelectSix_PickChoiceListModel.instance:initData(effectArr, 1)
 
-	local var_4_2 = {
+	local viewParam = {
 		isPreview = true
 	}
 
-	ViewMgr.instance:openView(ViewName.V2a7_SelfSelectSix_PickChoiceView, var_4_2)
+	ViewMgr.instance:openView(ViewName.V2a7_SelfSelectSix_PickChoiceView, viewParam)
 end
 
-function var_0_0._btnClaimOnClick(arg_5_0)
-	if not arg_5_0:checkReceied() and arg_5_0:checkCanGet() then
-		Activity101Rpc.instance:sendGet101BonusRequest(arg_5_0._actId, 1)
+function V2a7_SelfSelectSix_FullView:_btnClaimOnClick()
+	if not self:checkReceied() and self:checkCanGet() then
+		Activity101Rpc.instance:sendGet101BonusRequest(self._actId, 1)
 	end
 end
 
-function var_0_0._btnuseOnClick(arg_6_0)
-	if ItemModel.instance:getItemCount(V2a7_SelfSelectSix_Enum.RewardId) > 0 then
-		local var_6_0 = ItemConfig.instance:getItemCo(V2a7_SelfSelectSix_Enum.RewardId)
+function V2a7_SelfSelectSix_FullView:_btnuseOnClick()
+	local itemcount = ItemModel.instance:getItemCount(V2a7_SelfSelectSix_Enum.RewardId)
 
-		if string.nilorempty(var_6_0.effect) then
+	if itemcount > 0 then
+		local itemco = ItemConfig.instance:getItemCo(V2a7_SelfSelectSix_Enum.RewardId)
+
+		if string.nilorempty(itemco.effect) then
 			return
 		end
 
-		local var_6_1 = string.split(var_6_0.effect, "|")
-		local var_6_2 = {
+		local effectArr = string.split(itemco.effect, "|")
+		local viewParam = {
 			quantity = 1,
-			id = var_6_0.id
+			id = itemco.id
 		}
 
-		V2a7_SelfSelectSix_PickChoiceController.instance:openCustomPickChoiceView(var_6_1, MaterialTipController.onUseSelfSelectSixHeroGift, MaterialTipController, var_6_2, nil, nil, 1)
+		V2a7_SelfSelectSix_PickChoiceController.instance:openCustomPickChoiceView(effectArr, MaterialTipController.onUseSelfSelectSixHeroGift, MaterialTipController, viewParam, nil, nil, 1)
 	end
 end
 
-function var_0_0._editableInitView(arg_7_0)
+function V2a7_SelfSelectSix_FullView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
+function V2a7_SelfSelectSix_FullView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_9_0)
+function V2a7_SelfSelectSix_FullView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.Meilanni.play_ui_mln_day_night)
 
-	local var_9_0 = arg_9_0.viewParam.parent
+	local parentGO = self.viewParam.parent
 
-	arg_9_0._actId = arg_9_0.viewParam.actId
+	self._actId = self.viewParam.actId
 
-	gohelper.addChild(var_9_0, arg_9_0.viewGO)
-	Activity101Rpc.instance:sendGet101InfosRequest(arg_9_0._actId)
+	gohelper.addChild(parentGO, self.viewGO)
+	Activity101Rpc.instance:sendGet101InfosRequest(self._actId)
 
-	arg_9_0._actCo = ActivityConfig.instance:getActivityCo(arg_9_0._actId)
-	arg_9_0._txtdesc.text = arg_9_0._actCo.actDesc
+	self._actCo = ActivityConfig.instance:getActivityCo(self._actId)
+	self._txtdesc.text = self._actCo.actDesc
 
-	arg_9_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_10_0)
-	local var_10_0 = arg_10_0:checkReceied()
-	local var_10_1 = arg_10_0:checkCanUse()
+function V2a7_SelfSelectSix_FullView:refreshUI()
+	local received = self:checkReceied()
+	local canUse = self:checkCanUse()
 
-	gohelper.setActive(arg_10_0._gocanget, not var_10_0)
-	gohelper.setActive(arg_10_0._gocanuse, var_10_0 and var_10_1)
-	gohelper.setActive(arg_10_0._gouesd, var_10_0 and not var_10_1)
+	gohelper.setActive(self._gocanget, not received)
+	gohelper.setActive(self._gocanuse, received and canUse)
+	gohelper.setActive(self._gouesd, received and not canUse)
 
-	if var_10_1 then
-		arg_10_0:_initListModel()
+	if canUse then
+		self:_initListModel()
 
-		local var_10_2, var_10_3 = V2a7_SelfSelectSix_PickChoiceListModel.instance:getLastUnlockEpisodeId()
+		local lastUnlockEpisodeId, allPass = V2a7_SelfSelectSix_PickChoiceListModel.instance:getLastUnlockEpisodeId()
 
-		if var_10_3 then
-			arg_10_0._txtcanuse.text = luaLang("v2a7_newbie_rewardclaim_texts")
+		if allPass then
+			self._txtcanuse.text = luaLang("v2a7_newbie_rewardclaim_texts")
 		else
-			local var_10_4 = DungeonHelper.getEpisodeName(var_10_2)
+			local episodeName = DungeonHelper.getEpisodeName(lastUnlockEpisodeId)
 
-			arg_10_0._txtcanuse.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("v2a7_newbie_storyprocess_locate_eventiterface"), var_10_4)
+			self._txtcanuse.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("v2a7_newbie_storyprocess_locate_eventiterface"), episodeName)
 		end
 	end
 end
 
-function var_0_0._initListModel(arg_11_0)
-	local var_11_0 = ItemConfig.instance:getItemCo(V2a7_SelfSelectSix_Enum.RewardId)
+function V2a7_SelfSelectSix_FullView:_initListModel()
+	local itemco = ItemConfig.instance:getItemCo(V2a7_SelfSelectSix_Enum.RewardId)
 
-	if string.nilorempty(var_11_0.effect) then
+	if string.nilorempty(itemco.effect) then
 		return
 	end
 
-	local var_11_1 = string.split(var_11_0.effect, "|")
+	local effectArr = string.split(itemco.effect, "|")
 
-	V2a7_SelfSelectSix_PickChoiceListModel.instance:initData(var_11_1, 1)
+	V2a7_SelfSelectSix_PickChoiceListModel.instance:initData(effectArr, 1)
 end
 
-function var_0_0._onCloseView(arg_12_0, arg_12_1)
-	if arg_12_1 == ViewName.CharacterGetView then
-		arg_12_0:refreshUI()
+function V2a7_SelfSelectSix_FullView:_onCloseView(viewName)
+	if viewName == ViewName.CharacterGetView then
+		self:refreshUI()
 	end
 end
 
-function var_0_0.checkReceied(arg_13_0)
-	return (ActivityType101Model.instance:isType101RewardGet(arg_13_0._actId, 1))
+function V2a7_SelfSelectSix_FullView:checkReceied()
+	local received = ActivityType101Model.instance:isType101RewardGet(self._actId, 1)
+
+	return received
 end
 
-function var_0_0.checkCanGet(arg_14_0)
-	return (ActivityType101Model.instance:isType101RewardCouldGet(arg_14_0._actId, 1))
+function V2a7_SelfSelectSix_FullView:checkCanGet()
+	local couldGet = ActivityType101Model.instance:isType101RewardCouldGet(self._actId, 1)
+
+	return couldGet
 end
 
-function var_0_0.checkCanUse(arg_15_0)
-	return ItemModel.instance:getItemCount(V2a7_SelfSelectSix_Enum.RewardId) > 0
+function V2a7_SelfSelectSix_FullView:checkCanUse()
+	local itemcount = ItemModel.instance:getItemCount(V2a7_SelfSelectSix_Enum.RewardId)
+
+	return itemcount > 0
 end
 
-function var_0_0.onClose(arg_16_0)
+function V2a7_SelfSelectSix_FullView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_17_0)
+function V2a7_SelfSelectSix_FullView:onDestroyView()
 	return
 end
 
-return var_0_0
+return V2a7_SelfSelectSix_FullView

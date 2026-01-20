@@ -1,70 +1,72 @@
-﻿module("modules.logic.versionactivity3_1.towerdeep.view.TowerDeepOperActTaskItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/towerdeep/view/TowerDeepOperActTaskItem.lua
 
-local var_0_0 = class("TowerDeepOperActTaskItem", LuaCompBase)
+module("modules.logic.versionactivity3_1.towerdeep.view.TowerDeepOperActTaskItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.go = arg_1_1
-	arg_1_0._config = arg_1_2
-	arg_1_0._txttask = gohelper.findChildText(arg_1_0.go, "txt_task")
-	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.go, "go_rewarditem")
-	arg_1_0._goicon = gohelper.findChild(arg_1_0.go, "go_rewarditem/go_icon")
-	arg_1_0._gocanget = gohelper.findChild(arg_1_0.go, "go_rewarditem/go_canget")
-	arg_1_0._goreceive = gohelper.findChild(arg_1_0.go, "go_rewarditem/go_receive")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.go, "go_rewarditem/btn_click")
+local TowerDeepOperActTaskItem = class("TowerDeepOperActTaskItem", LuaCompBase)
 
-	arg_1_0:_initItem()
-	arg_1_0:addEvents()
+function TowerDeepOperActTaskItem:init(go, co)
+	self.go = go
+	self._config = co
+	self._txttask = gohelper.findChildText(self.go, "txt_task")
+	self._gorewarditem = gohelper.findChild(self.go, "go_rewarditem")
+	self._goicon = gohelper.findChild(self.go, "go_rewarditem/go_icon")
+	self._gocanget = gohelper.findChild(self.go, "go_rewarditem/go_canget")
+	self._goreceive = gohelper.findChild(self.go, "go_rewarditem/go_receive")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.go, "go_rewarditem/btn_click")
+
+	self:_initItem()
+	self:addEvents()
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+function TowerDeepOperActTaskItem:addEvents()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
+function TowerDeepOperActTaskItem:removeEvents()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0._btnclickOnClick(arg_4_0)
-	if arg_4_0._config and arg_4_0._canGetReward then
-		TaskRpc.instance:sendFinishTaskRequest(arg_4_0._config.id)
+function TowerDeepOperActTaskItem:_btnclickOnClick()
+	if self._config and self._canGetReward then
+		TaskRpc.instance:sendFinishTaskRequest(self._config.id)
 
 		return
 	end
 
-	if not arg_4_0._bonus or #arg_4_0._bonus <= 0 then
-		local var_4_0 = arg_4_0._config and arg_4_0._config.id
+	if not self._bonus or #self._bonus <= 0 then
+		local taskId = self._config and self._config.id
 
-		logError("打开物品详情界面失败:缺少奖励配置 任务Id = " .. tostring(var_4_0))
+		logError("打开物品详情界面失败:缺少奖励配置 任务Id = " .. tostring(taskId))
 
 		return
 	end
 
-	MaterialTipController.instance:showMaterialInfo(arg_4_0._bonus[1], arg_4_0._bonus[2])
+	MaterialTipController.instance:showMaterialInfo(self._bonus[1], self._bonus[2])
 end
 
-function var_0_0.refresh(arg_5_0)
-	arg_5_0._taskMo = TaskModel.instance:getTaskById(arg_5_0._config.id)
+function TowerDeepOperActTaskItem:refresh()
+	self._taskMo = TaskModel.instance:getTaskById(self._config.id)
 
-	local var_5_0 = arg_5_0._taskMo and arg_5_0._taskMo.finishCount > 0
-	local var_5_1 = arg_5_0._taskMo and arg_5_0._taskMo.progress or 0
+	local hasFinished = self._taskMo and self._taskMo.finishCount > 0
+	local progress = self._taskMo and self._taskMo.progress or 0
 
-	arg_5_0._canGetReward = arg_5_0._taskMo and var_5_1 >= arg_5_0._config.maxProgress and arg_5_0._taskMo.finishCount <= 0
+	self._canGetReward = self._taskMo and progress >= self._config.maxProgress and self._taskMo.finishCount <= 0
 
-	gohelper.setActive(arg_5_0._gocanget, arg_5_0._canGetReward)
-	gohelper.setActive(arg_5_0._goreceive, var_5_0)
+	gohelper.setActive(self._gocanget, self._canGetReward)
+	gohelper.setActive(self._goreceive, hasFinished)
 end
 
-function var_0_0._initItem(arg_6_0)
-	arg_6_0._txttask.text = string.format(arg_6_0._config.desc, arg_6_0._config.maxProgress)
-	arg_6_0._bonus = string.splitToNumber(arg_6_0._config.bonus, "#")
-	arg_6_0._rewardItem = IconMgr.instance:getCommonItemIcon(arg_6_0._goicon)
+function TowerDeepOperActTaskItem:_initItem()
+	self._txttask.text = string.format(self._config.desc, self._config.maxProgress)
+	self._bonus = string.splitToNumber(self._config.bonus, "#")
+	self._rewardItem = IconMgr.instance:getCommonItemIcon(self._goicon)
 
-	arg_6_0._rewardItem:setMOValue(arg_6_0._bonus[1], arg_6_0._bonus[2], arg_6_0._bonus[3], nil, true)
-	arg_6_0._rewardItem:isShowName(false)
+	self._rewardItem:setMOValue(self._bonus[1], self._bonus[2], self._bonus[3], nil, true)
+	self._rewardItem:isShowName(false)
 end
 
-function var_0_0.destroy(arg_7_0)
-	arg_7_0:removeEvents()
+function TowerDeepOperActTaskItem:destroy()
+	self:removeEvents()
 end
 
-return var_0_0
+return TowerDeepOperActTaskItem

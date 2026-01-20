@@ -1,11 +1,13 @@
-﻿module("modules.logic.critter.utils.CritterEnum", package.seeall)
+﻿-- chunkname: @modules/logic/critter/utils/CritterEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.critter.utils.CritterEnum", package.seeall)
 
-var_0_0.InvalidCritterUid = "0"
-var_0_0.MoodFactor = 100
-var_0_0.CritterBuildingChangeBuildingAnimTime = 0.2
-var_0_0.ConstId = {
+local CritterEnum = _M
+
+CritterEnum.InvalidCritterUid = "0"
+CritterEnum.MoodFactor = 100
+CritterEnum.CritterBuildingChangeBuildingAnimTime = 0.2
+CritterEnum.ConstId = {
 	HeroMoveRate = 15,
 	DecomposeResult = 14,
 	CritterTrainKeepTime = 16,
@@ -16,85 +18,85 @@ var_0_0.ConstId = {
 	MaxPreviewCount = 13,
 	DecomposeCountLimit = 17
 }
-var_0_0.AttributeType = {
+CritterEnum.AttributeType = {
 	Patience = 2,
 	Efficiency = 1,
 	MoodRestore = 10001,
 	Lucky = 3
 }
-var_0_0.OrderType = {
+CritterEnum.OrderType = {
 	MoodDown = 4,
 	MoodUp = 3,
 	RareDown = 2,
 	RareUp = 1
 }
-var_0_0.MatureFilterType = {
+CritterEnum.MatureFilterType = {
 	Mature = 2,
 	All = 1,
 	NotMature = 3
 }
-var_0_0.FilterType = {
+CritterEnum.FilterType = {
 	Race = 1,
 	SkillTag = 2
 }
-var_0_0.MatureFilterTypeName = {
-	[var_0_0.MatureFilterType.All] = "critter_mature_filter_all",
-	[var_0_0.MatureFilterType.Mature] = "critter_mature_filter_mature",
-	[var_0_0.MatureFilterType.NotMature] = "critter_mature_filter_not_mature"
+CritterEnum.MatureFilterTypeName = {
+	[CritterEnum.MatureFilterType.All] = "critter_mature_filter_all",
+	[CritterEnum.MatureFilterType.Mature] = "critter_mature_filter_mature",
+	[CritterEnum.MatureFilterType.NotMature] = "critter_mature_filter_not_mature"
 }
-var_0_0.TagType = {
+CritterEnum.TagType = {
 	Common = 2,
 	Race = 3,
 	Base = 1
 }
-var_0_0.DecomposeMaxCount = 100
-var_0_0.CritterDecomposeMinRare = 3
-var_0_0.CritterDecomposeMaxRare = 5
-var_0_0.CritterMaxSeatCount = 6
-var_0_0.CritterScaleInSeatSlot = 0.06
-var_0_0.CritterPressingEffectScaleInSeatSlot = 0.7
-var_0_0.SeatSlotOperation = {
+CritterEnum.DecomposeMaxCount = 100
+CritterEnum.CritterDecomposeMinRare = 3
+CritterEnum.CritterDecomposeMaxRare = 5
+CritterEnum.CritterMaxSeatCount = 6
+CritterEnum.CritterScaleInSeatSlot = 0.06
+CritterEnum.CritterPressingEffectScaleInSeatSlot = 0.7
+CritterEnum.SeatSlotOperation = {
 	Exchange = 1,
 	Change = 0
 }
-var_0_0.OneKeyType = {
+CritterEnum.OneKeyType = {
 	Manufacture = 1,
 	Transport = 2
 }
-var_0_0.EventType = {
+CritterEnum.EventType = {
 	ActiveTime = 2,
 	Special = 3,
 	Normal = 1
 }
-var_0_0.CritterItemEventType = {
+CritterEnum.CritterItemEventType = {
 	SurpriseCollect = 4,
 	TrainEventComplete = 2,
 	HasTrainEvent = 1,
 	NoMoodWork = 3
 }
-var_0_0.NormalEventId = {
+CritterEnum.NormalEventId = {
 	NormalGrow = 101
 }
-var_0_0.NeedActionEventTypeDict = {
-	[var_0_0.EventType.ActiveTime] = true,
-	[var_0_0.EventType.Special] = true
+CritterEnum.NeedActionEventTypeDict = {
+	[CritterEnum.EventType.ActiveTime] = true,
+	[CritterEnum.EventType.Special] = true
 }
-var_0_0.SkilTagType = {
+CritterEnum.SkilTagType = {
 	Common = 2,
 	Race = 3,
 	Base = 1
 }
-var_0_0.PosType = {
+CritterEnum.PosType = {
 	Right = 3,
 	Middle = 2,
 	Left = 1
 }
-var_0_0.PreferenceType = {
+CritterEnum.PreferenceType = {
 	Catalogue = 2,
 	All = 1,
 	Critter = 3
 }
-var_0_0.CatalogueType = {
+CritterEnum.CatalogueType = {
 	SubClass = 3,
 	Class = 2,
 	Genus = 6,
@@ -102,51 +104,51 @@ var_0_0.CatalogueType = {
 	Family = 5,
 	Order = 4
 }
-var_0_0.QualityImageNameMap = {
+CritterEnum.QualityImageNameMap = {
 	"critter_manufacture_quality3",
 	"critter_manufacture_quality3",
 	"critter_manufacture_quality3",
 	"critter_manufacture_quality4",
 	"critter_manufacture_quality5"
 }
-var_0_0.QualityEggImageNameMap = {
+CritterEnum.QualityEggImageNameMap = {
 	"room_summon_egg_1",
 	"room_summon_egg_1",
 	"room_summon_egg_1",
 	"room_summon_egg_2",
 	"room_summon_egg_3"
 }
-var_0_0.QualityEggLightImageNameMap = {
+CritterEnum.QualityEggLightImageNameMap = {
 	"room_summon_egglight_1",
 	"room_summon_egglight_1",
 	"room_summon_egglight_1",
 	"room_summon_egglight_2",
 	"room_summon_egglight_3"
 }
-var_0_0.QualityEggSummomResNameMap = {
+CritterEnum.QualityEggSummomResNameMap = {
 	"roomcrittersummonresult_egg1",
 	"roomcrittersummonresult_egg1",
 	"roomcrittersummonresult_egg1",
 	"roomcrittersummonresult_egg2",
 	"roomcrittersummonresult_egg3"
 }
-var_0_0.LangKey = {
+CritterEnum.LangKey = {
 	AgeChildhood = "critter_age_childhood_txt",
 	AgeAult = "critter_age_adult_txt",
 	HeroTrainLevel = "critter_hero_train_level_txt"
 }
-var_0_0.TrainOPState = {
+CritterEnum.TrainOPState = {
 	PairOP = 2,
 	Normal = 1
 }
-var_0_0.Summon = {
+CritterEnum.Summon = {
 	Ten = 10,
 	One = 1
 }
-var_0_0.OppenFuncGuide = {
+CritterEnum.OppenFuncGuide = {
 	RoomManufacture = 414,
 	RoomTrade = 414,
 	Critter = 414
 }
 
-return var_0_0
+return CritterEnum

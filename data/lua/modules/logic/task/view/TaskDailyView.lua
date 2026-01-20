@@ -1,271 +1,278 @@
-﻿module("modules.logic.task.view.TaskDailyView", package.seeall)
+﻿-- chunkname: @modules/logic/task/view/TaskDailyView.lua
 
-local var_0_0 = class("TaskDailyView", BaseView)
+module("modules.logic.task.view.TaskDailyView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goleft = gohelper.findChild(arg_1_0.viewGO, "#go_left")
-	arg_1_0._goallcomplete = gohelper.findChild(arg_1_0.viewGO, "#go_allcomplete")
-	arg_1_0._gonormaltask = gohelper.findChild(arg_1_0.viewGO, "#go_left/Viewport/#go_normaltask")
-	arg_1_0._gotasklevel = gohelper.findChild(arg_1_0.viewGO, "#go_left/Viewport/#go_normaltask/#go_tasklevel")
-	arg_1_0._goright = gohelper.findChild(arg_1_0.viewGO, "#go_right")
-	arg_1_0._gotaskitemcontent = gohelper.findChild(arg_1_0.viewGO, "#go_right/viewport/#go_taskitemcontent")
-	arg_1_0._txtLeftTime = gohelper.findChildText(arg_1_0.viewGO, "#txtLeftTime")
-	arg_1_0._allCompleteAni = arg_1_0._goallcomplete:GetComponent(typeof(UnityEngine.Animator))
+local TaskDailyView = class("TaskDailyView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function TaskDailyView:onInitView()
+	self._goleft = gohelper.findChild(self.viewGO, "#go_left")
+	self._goallcomplete = gohelper.findChild(self.viewGO, "#go_allcomplete")
+	self._gonormaltask = gohelper.findChild(self.viewGO, "#go_left/Viewport/#go_normaltask")
+	self._gotasklevel = gohelper.findChild(self.viewGO, "#go_left/Viewport/#go_normaltask/#go_tasklevel")
+	self._goright = gohelper.findChild(self.viewGO, "#go_right")
+	self._gotaskitemcontent = gohelper.findChild(self.viewGO, "#go_right/viewport/#go_taskitemcontent")
+	self._txtLeftTime = gohelper.findChildText(self.viewGO, "#txtLeftTime")
+	self._allCompleteAni = self._goallcomplete:GetComponent(typeof(UnityEngine.Animator))
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function TaskDailyView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function TaskDailyView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	gohelper.setActive(arg_4_0._goallcomplete, false)
+function TaskDailyView:_editableInitView()
+	gohelper.setActive(self._goallcomplete, false)
 
-	arg_4_0._tasklevels = {}
-	arg_4_0._taskItems = {}
+	self._tasklevels = {}
+	self._taskItems = {}
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
-	arg_5_0:_refreshDaily()
+function TaskDailyView:onUpdateParam()
+	self:_refreshDaily()
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_6_0._updateDaily, arg_6_0)
-	arg_6_0:addEventCb(TaskController.instance, TaskEvent.SetTaskList, arg_6_0._updateDaily, arg_6_0)
-	arg_6_0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_6_0._updateDaily, arg_6_0)
-	arg_6_0:addEventCb(TaskController.instance, TaskEvent.OnShowTaskFinished, arg_6_0._onShowTaskFinished, arg_6_0)
+function TaskDailyView:onOpen()
+	self:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, self._updateDaily, self)
+	self:addEventCb(TaskController.instance, TaskEvent.SetTaskList, self._updateDaily, self)
+	self:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, self._updateDaily, self)
+	self:addEventCb(TaskController.instance, TaskEvent.OnShowTaskFinished, self._onShowTaskFinished, self)
 
-	local var_6_0 = TaskModel.instance:getMaxStage(TaskEnum.TaskType.Daily)
-	local var_6_1 = TaskModel.instance:getTaskActivityMO(TaskEnum.TaskType.Daily).defineId + 1
-	local var_6_2 = var_6_0 - var_6_1 >= 5 and 160 * (var_6_1 - 1) or 160 * (var_6_0 - 5)
+	local totalStage = TaskModel.instance:getMaxStage(TaskEnum.TaskType.Daily)
+	local curStage = TaskModel.instance:getTaskActivityMO(TaskEnum.TaskType.Daily).defineId + 1
+	local y = totalStage - curStage >= 5 and 160 * (curStage - 1) or 160 * (totalStage - 5)
 
-	transformhelper.setLocalPosXY(arg_6_0._gonormaltask.transform, 0, var_6_2)
+	transformhelper.setLocalPosXY(self._gonormaltask.transform, 0, y)
 
-	local var_6_3 = TaskView.getInitTaskType()
+	local initType = TaskView.getInitTaskType()
+	local count = TaskModel.instance:getRefreshCount()
 
-	if TaskModel.instance:getRefreshCount() == 0 and var_6_3 ~= TaskEnum.TaskType.Daily then
+	if count == 0 and initType ~= TaskEnum.TaskType.Daily then
 		return
 	end
 
-	if #arg_6_0._taskItems < 1 then
-		arg_6_0:_refreshDaily()
+	if #self._taskItems < 1 then
+		self:_refreshDaily()
 	end
 
-	arg_6_0:_showAllComplete()
+	self:_showAllComplete()
 end
 
-function var_0_0._onShowTaskFinished(arg_7_0, arg_7_1)
-	if arg_7_1 == TaskEnum.TaskType.Daily then
+function TaskDailyView:_onShowTaskFinished(taskType)
+	if taskType == TaskEnum.TaskType.Daily then
 		return
 	end
 
-	arg_7_0:_refreshDaily()
+	self:_refreshDaily()
 end
 
-function var_0_0._refreshDaily(arg_8_0)
-	local var_8_0 = TaskModel.instance:getRefreshCount() < 2
+function TaskDailyView:_refreshDaily()
+	local open = TaskModel.instance:getRefreshCount() < 2
 
-	arg_8_0:_refreshLeftTime()
-	TaskDispatcher.cancelTask(arg_8_0._refreshLeftTime, arg_8_0)
-	TaskDispatcher.runRepeat(arg_8_0._refreshLeftTime, arg_8_0, 1)
-	arg_8_0:_refreshTaskLevelItem(var_8_0)
-	arg_8_0:_setCommonTaskItem(var_8_0)
+	self:_refreshLeftTime()
+	TaskDispatcher.cancelTask(self._refreshLeftTime, self)
+	TaskDispatcher.runRepeat(self._refreshLeftTime, self, 1)
+	self:_refreshTaskLevelItem(open)
+	self:_setCommonTaskItem(open)
 end
 
-function var_0_0._updateDaily(arg_9_0)
-	local var_9_0 = TaskModel.instance:getMaxStage(TaskEnum.TaskType.Daily)
-	local var_9_1 = TaskModel.instance:getTaskActivityMO(TaskEnum.TaskType.Daily).defineId + 1
-	local var_9_2 = var_9_0 - var_9_1 >= 5 and 160 * (var_9_1 - 1) or 160 * (var_9_0 - 5)
+function TaskDailyView:_updateDaily()
+	local totalStage = TaskModel.instance:getMaxStage(TaskEnum.TaskType.Daily)
+	local curStage = TaskModel.instance:getTaskActivityMO(TaskEnum.TaskType.Daily).defineId + 1
+	local y = totalStage - curStage >= 5 and 160 * (curStage - 1) or 160 * (totalStage - 5)
 
-	transformhelper.setLocalPosXY(arg_9_0._gonormaltask.transform, 0, var_9_2)
-	TaskDispatcher.cancelTask(arg_9_0._updateItems, arg_9_0)
+	transformhelper.setLocalPosXY(self._gonormaltask.transform, 0, y)
+	TaskDispatcher.cancelTask(self._updateItems, self)
 	UIBlockMgr.instance:startBlock("taskupdateitems")
-	TaskDispatcher.runDelay(arg_9_0._updateItems, arg_9_0, 0.4)
+	TaskDispatcher.runDelay(self._updateItems, self, 0.4)
 end
 
-function var_0_0._updateItems(arg_10_0)
-	arg_10_0:_refreshTaskLevelItem()
-	arg_10_0:_setCommonTaskItem()
-	arg_10_0:_refreshLeftTime()
-	TaskDispatcher.cancelTask(arg_10_0._refreshLeftTime, arg_10_0)
-	TaskDispatcher.runRepeat(arg_10_0._refreshLeftTime, arg_10_0, 1)
-	arg_10_0:_showAllComplete()
+function TaskDailyView:_updateItems()
+	self:_refreshTaskLevelItem()
+	self:_setCommonTaskItem()
+	self:_refreshLeftTime()
+	TaskDispatcher.cancelTask(self._refreshLeftTime, self)
+	TaskDispatcher.runRepeat(self._refreshLeftTime, self, 1)
+	self:_showAllComplete()
 	UIBlockMgr.instance:endBlock("taskupdateitems")
 end
 
-function var_0_0._showAllComplete(arg_11_0)
-	local var_11_0 = TaskModel.instance:isAllRewardGet(TaskEnum.TaskType.Daily)
+function TaskDailyView:_showAllComplete()
+	local allRewardGet = TaskModel.instance:isAllRewardGet(TaskEnum.TaskType.Daily)
 
-	gohelper.setActive(arg_11_0._goallcomplete, var_11_0)
+	gohelper.setActive(self._goallcomplete, allRewardGet)
 
-	if var_11_0 then
-		for iter_11_0, iter_11_1 in pairs(arg_11_0._tasklevels) do
-			iter_11_1:showAllComplete()
+	if allRewardGet then
+		for _, v in pairs(self._tasklevels) do
+			v:showAllComplete()
 		end
 
-		for iter_11_2, iter_11_3 in pairs(arg_11_0._taskItems) do
-			iter_11_3:showAllComplete()
+		for _, v in pairs(self._taskItems) do
+			v:showAllComplete()
 		end
 	end
 end
 
-function var_0_0._refreshLeftTime(arg_12_0)
-	local var_12_0 = TaskModel.instance:getTaskTypeExpireTime(TaskEnum.TaskType.Daily) - ServerTime.now()
+function TaskDailyView:_refreshLeftTime()
+	local leftSecond = TaskModel.instance:getTaskTypeExpireTime(TaskEnum.TaskType.Daily) - ServerTime.now()
 
-	if var_12_0 > 0 then
-		local var_12_1 = TimeUtil.getFormatTime(var_12_0)
+	if leftSecond > 0 then
+		local date = TimeUtil.getFormatTime(leftSecond)
 
-		arg_12_0._txtLeftTime.text = var_12_1 and luaLang("task_remaintime") .. var_12_1 or ""
+		self._txtLeftTime.text = date and luaLang("task_remaintime") .. date or ""
 	else
-		arg_12_0._txtLeftTime.text = luaLang("bp_dateLeft_timeout")
+		self._txtLeftTime.text = luaLang("bp_dateLeft_timeout")
 	end
 end
 
-function var_0_0._refreshTaskLevelItem(arg_13_0, arg_13_1)
-	local var_13_0 = TaskConfig.instance:getTaskActivityBonusConfig(TaskEnum.TaskType.Daily)
+function TaskDailyView:_refreshTaskLevelItem(open)
+	local actCo = TaskConfig.instance:getTaskActivityBonusConfig(TaskEnum.TaskType.Daily)
 
-	for iter_13_0 = 1, #var_13_0 do
-		if not arg_13_0._tasklevels[iter_13_0] then
-			local var_13_1 = gohelper.cloneInPlace(arg_13_0._gotasklevel.gameObject)
+	for i = 1, #actCo do
+		if not self._tasklevels[i] then
+			local child = gohelper.cloneInPlace(self._gotasklevel.gameObject)
 
-			gohelper.setActive(var_13_1, true)
+			gohelper.setActive(child, true)
 
-			arg_13_0._tasklevels[iter_13_0] = TaskListCommonLevelItem.New()
+			self._tasklevels[i] = TaskListCommonLevelItem.New()
 
-			arg_13_0._tasklevels[iter_13_0]:init(var_13_1, arg_13_0._goleft)
+			self._tasklevels[i]:init(child, self._goleft)
 		end
 
-		arg_13_0._tasklevels[iter_13_0]:setItem(iter_13_0, var_13_0[iter_13_0], TaskEnum.TaskType.Daily, arg_13_1)
+		self._tasklevels[i]:setItem(i, actCo[i], TaskEnum.TaskType.Daily, open)
 	end
 
-	arg_13_0:_showAllComplete()
+	self:_showAllComplete()
 
-	if TaskModel.instance:isAllRewardGet(TaskEnum.TaskType.Daily) then
-		if arg_13_1 then
-			arg_13_0._allCompleteAni:Play(UIAnimationName.Open)
+	local isAllRewardGet = TaskModel.instance:isAllRewardGet(TaskEnum.TaskType.Daily)
+
+	if isAllRewardGet then
+		if open then
+			self._allCompleteAni:Play(UIAnimationName.Open)
 		else
-			arg_13_0._allCompleteAni:Play(UIAnimationName.Idle)
+			self._allCompleteAni:Play(UIAnimationName.Idle)
 		end
 	end
 end
 
-function var_0_0._setCommonTaskItem(arg_14_0, arg_14_1)
-	if arg_14_0._taskItems then
-		for iter_14_0, iter_14_1 in pairs(arg_14_0._taskItems) do
-			gohelper.setActive(iter_14_1.go, false)
+function TaskDailyView:_setCommonTaskItem(open)
+	if self._taskItems then
+		for _, v in pairs(self._taskItems) do
+			gohelper.setActive(v.go, false)
 		end
 	end
 
-	local var_14_0 = TaskModel.instance:isAllRewardGet(TaskEnum.TaskType.Daily) and {} or TaskModel.instance:getAllRewardUnreceivedTasks(TaskEnum.TaskType.Daily)
-	local var_14_1 = TaskListModel.instance:getTaskList(TaskEnum.TaskType.Daily)
-	local var_14_2 = #var_14_0 >= 2 and #var_14_1 + 1 or #var_14_1
+	local isAllRewardGet = TaskModel.instance:isAllRewardGet(TaskEnum.TaskType.Daily)
+	local rewardTasks = isAllRewardGet and {} or TaskModel.instance:getAllRewardUnreceivedTasks(TaskEnum.TaskType.Daily)
+	local list = TaskListModel.instance:getTaskList(TaskEnum.TaskType.Daily)
+	local count = #rewardTasks >= 2 and #list + 1 or #list
 
-	if arg_14_1 then
+	if open then
 		UIBlockMgr.instance:startBlock("taskani")
 
-		arg_14_0._repeatCount = 0
+		self._repeatCount = 0
 
-		TaskDispatcher.runRepeat(arg_14_0.showByLine, arg_14_0, 0.04, var_14_2)
+		TaskDispatcher.runRepeat(self.showByLine, self, 0.04, count)
 	else
-		for iter_14_2 = 1, var_14_2 do
-			local var_14_3
+		for i = 1, count do
+			local co
 
-			if #var_14_0 >= 2 and (iter_14_2 ~= 1 or true) then
-				var_14_3 = var_14_1[iter_14_2 - 1]
+			if #rewardTasks >= 2 and (i ~= 1 or true) then
+				co = list[i - 1]
 			else
-				var_14_3 = var_14_1[iter_14_2]
+				co = list[i]
 			end
 
-			arg_14_0:setItem(var_14_3, iter_14_2, false)
+			self:setItem(co, i, false)
 		end
 	end
 end
 
-function var_0_0.showByLine(arg_15_0)
-	arg_15_0._repeatCount = arg_15_0._repeatCount + 1
+function TaskDailyView:showByLine()
+	self._repeatCount = self._repeatCount + 1
 
-	local var_15_0 = TaskModel.instance:isAllRewardGet(TaskEnum.TaskType.Daily) and {} or TaskModel.instance:getAllRewardUnreceivedTasks(TaskEnum.TaskType.Daily)
-	local var_15_1 = TaskListModel.instance:getTaskList(TaskEnum.TaskType.Daily)
-	local var_15_2 = #var_15_0 >= 2 and #var_15_1 + 1 or #var_15_1
-	local var_15_3
+	local isAllRewardGet = TaskModel.instance:isAllRewardGet(TaskEnum.TaskType.Daily)
+	local rewardTasks = isAllRewardGet and {} or TaskModel.instance:getAllRewardUnreceivedTasks(TaskEnum.TaskType.Daily)
+	local list = TaskListModel.instance:getTaskList(TaskEnum.TaskType.Daily)
+	local count = #rewardTasks >= 2 and #list + 1 or #list
+	local co
 
-	if #var_15_0 >= 2 and (arg_15_0._repeatCount ~= 1 or true) then
-		var_15_3 = var_15_1[arg_15_0._repeatCount - 1]
+	if #rewardTasks >= 2 and (self._repeatCount ~= 1 or true) then
+		co = list[self._repeatCount - 1]
 	else
-		var_15_3 = var_15_1[arg_15_0._repeatCount]
+		co = list[self._repeatCount]
 	end
 
-	arg_15_0:setItem(var_15_3, arg_15_0._repeatCount, true)
+	self:setItem(co, self._repeatCount, true)
 
-	if var_15_2 <= arg_15_0._repeatCount then
+	if count <= self._repeatCount then
 		UIBlockMgr.instance:endBlock("taskani")
-		TaskDispatcher.cancelTask(arg_15_0.showByLine, arg_15_0)
-		TaskDispatcher.runDelay(arg_15_0._onStartTaskFinished, arg_15_0, 0.5)
+		TaskDispatcher.cancelTask(self.showByLine, self)
+		TaskDispatcher.runDelay(self._onStartTaskFinished, self, 0.5)
 	end
 end
 
-function var_0_0._onStartTaskFinished(arg_16_0)
-	local var_16_0 = TaskModel.instance:getRefreshCount()
+function TaskDailyView:_onStartTaskFinished()
+	local count = TaskModel.instance:getRefreshCount()
 
-	TaskModel.instance:setRefreshCount(var_16_0 + 1)
+	TaskModel.instance:setRefreshCount(count + 1)
 	TaskController.instance:dispatchEvent(TaskEvent.OnShowTaskFinished, TaskEnum.TaskType.Daily)
 end
 
-function var_0_0.setItem(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	if not arg_17_0._taskItems then
-		arg_17_0._taskItems = {}
+function TaskDailyView:setItem(co, index, open)
+	if not self._taskItems then
+		self._taskItems = {}
 	end
 
-	if arg_17_0._taskItems[arg_17_2] then
-		arg_17_0._taskItems[arg_17_2]:showIdle()
-		arg_17_0._taskItems[arg_17_2]:reset(TaskEnum.TaskType.Daily, arg_17_2, arg_17_1)
+	if self._taskItems[index] then
+		self._taskItems[index]:showIdle()
+		self._taskItems[index]:reset(TaskEnum.TaskType.Daily, index, co)
 	else
-		local var_17_0 = arg_17_0.viewContainer:getSetting().otherRes[1]
-		local var_17_1 = arg_17_0:getResInst(var_17_0, arg_17_0._gotaskitemcontent, "item" .. arg_17_2)
+		local res = self.viewContainer:getSetting().otherRes[1]
+		local go = self:getResInst(res, self._gotaskitemcontent, "item" .. index)
 
-		arg_17_0._taskItems[arg_17_2] = TaskListCommonItem.New()
+		self._taskItems[index] = TaskListCommonItem.New()
 
-		arg_17_0._taskItems[arg_17_2]:init(var_17_1, TaskEnum.TaskType.Daily, arg_17_2, arg_17_1, arg_17_3)
+		self._taskItems[index]:init(go, TaskEnum.TaskType.Daily, index, co, open)
 	end
 
-	gohelper.setSibling(arg_17_0._taskItems[arg_17_2].go, arg_17_2)
+	gohelper.setSibling(self._taskItems[index].go, index)
 end
 
-function var_0_0.onClose(arg_18_0)
+function TaskDailyView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_19_0)
-	TaskDispatcher.cancelTask(arg_19_0.showByLine, arg_19_0)
-	TaskDispatcher.cancelTask(arg_19_0._updateItems, arg_19_0)
-	TaskDispatcher.cancelTask(arg_19_0._refreshLeftTime, arg_19_0)
-	arg_19_0:removeEventCb(TaskController.instance, TaskEvent.SetTaskList, arg_19_0._updateDaily, arg_19_0)
-	arg_19_0:removeEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_19_0._updateDaily, arg_19_0)
-	arg_19_0:removeEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_19_0._updateDaily, arg_19_0)
-	arg_19_0:removeEventCb(TaskController.instance, TaskEvent.OnShowTaskFinished, arg_19_0._onShowTaskFinished, arg_19_0)
+function TaskDailyView:onDestroyView()
+	TaskDispatcher.cancelTask(self.showByLine, self)
+	TaskDispatcher.cancelTask(self._updateItems, self)
+	TaskDispatcher.cancelTask(self._refreshLeftTime, self)
+	self:removeEventCb(TaskController.instance, TaskEvent.SetTaskList, self._updateDaily, self)
+	self:removeEventCb(TaskController.instance, TaskEvent.UpdateTaskList, self._updateDaily, self)
+	self:removeEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, self._updateDaily, self)
+	self:removeEventCb(TaskController.instance, TaskEvent.OnShowTaskFinished, self._onShowTaskFinished, self)
 
-	if arg_19_0._tasklevels then
-		for iter_19_0, iter_19_1 in pairs(arg_19_0._tasklevels) do
-			iter_19_1:destroy()
+	if self._tasklevels then
+		for _, tasklevel in pairs(self._tasklevels) do
+			tasklevel:destroy()
 		end
 
-		arg_19_0._tasklevels = nil
+		self._tasklevels = nil
 	end
 
-	if arg_19_0._taskItems then
-		for iter_19_2, iter_19_3 in ipairs(arg_19_0._taskItems) do
-			iter_19_3:destroy()
+	if self._taskItems then
+		for i, taskItem in ipairs(self._taskItems) do
+			taskItem:destroy()
 		end
 
-		arg_19_0._taskItems = nil
+		self._taskItems = nil
 	end
 end
 
-return var_0_0
+return TaskDailyView

@@ -1,148 +1,151 @@
-﻿module("modules.logic.scene.fight.comp.FightSceneWeatherEffect", package.seeall)
+﻿-- chunkname: @modules/logic/scene/fight/comp/FightSceneWeatherEffect.lua
 
-local var_0_0 = class("FightSceneWeatherEffect", BaseSceneComp)
+module("modules.logic.scene.fight.comp.FightSceneWeatherEffect", package.seeall)
 
-function var_0_0.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0:_setLevelCO(arg_1_2)
-	FightController.instance:registerCallback(FightEvent.SetEntityWeatherEffectVisible, arg_1_0._setEntityWeatherEffectVisible, arg_1_0)
-	FightController.instance:registerCallback(FightEvent.OnSpineLoaded, arg_1_0._onSpineLoaded, arg_1_0)
-	FightController.instance:registerCallback(FightEvent.OnRestartStageBefore, arg_1_0._releaseAllEntityEffect, arg_1_0)
-	FightController.instance:registerCallback(FightEvent.SetEntityAlpha, arg_1_0._onSetEntityAlpha, arg_1_0)
+local FightSceneWeatherEffect = class("FightSceneWeatherEffect", BaseSceneComp)
+
+function FightSceneWeatherEffect:onSceneStart(sceneId, levelId)
+	self:_setLevelCO(levelId)
+	FightController.instance:registerCallback(FightEvent.SetEntityWeatherEffectVisible, self._setEntityWeatherEffectVisible, self)
+	FightController.instance:registerCallback(FightEvent.OnSpineLoaded, self._onSpineLoaded, self)
+	FightController.instance:registerCallback(FightEvent.OnRestartStageBefore, self._releaseAllEntityEffect, self)
+	FightController.instance:registerCallback(FightEvent.SetEntityAlpha, self._onSetEntityAlpha, self)
 end
 
-function var_0_0.onScenePrepared(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0:getCurScene().level:registerCallback(CommonSceneLevelComp.OnLevelLoaded, arg_2_0._onLevelLoaded, arg_2_0)
+function FightSceneWeatherEffect:onScenePrepared(sceneId, levelId)
+	self:getCurScene().level:registerCallback(CommonSceneLevelComp.OnLevelLoaded, self._onLevelLoaded, self)
 end
 
-function var_0_0.onSceneClose(arg_3_0)
+function FightSceneWeatherEffect:onSceneClose()
 	UrpCustom.PPEffectMask.hasRain = false
 
-	FightController.instance:unregisterCallback(FightEvent.SetEntityWeatherEffectVisible, arg_3_0._setEntityWeatherEffectVisible, arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, arg_3_0._onSpineLoaded, arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.OnRestartStageBefore, arg_3_0._releaseAllEntityEffect, arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.SetEntityAlpha, arg_3_0._onSetEntityAlpha, arg_3_0)
-	arg_3_0:getCurScene().level:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, arg_3_0._onLevelLoaded, arg_3_0)
-	arg_3_0:_releaseWeatherEffect()
+	FightController.instance:unregisterCallback(FightEvent.SetEntityWeatherEffectVisible, self._setEntityWeatherEffectVisible, self)
+	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, self._onSpineLoaded, self)
+	FightController.instance:unregisterCallback(FightEvent.OnRestartStageBefore, self._releaseAllEntityEffect, self)
+	FightController.instance:unregisterCallback(FightEvent.SetEntityAlpha, self._onSetEntityAlpha, self)
+	self:getCurScene().level:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, self._onLevelLoaded, self)
+	self:_releaseWeatherEffect()
 end
 
-function var_0_0._onSpineLoaded(arg_4_0, arg_4_1)
-	if not arg_4_1 or not arg_4_0._weatherEffect_url then
+function FightSceneWeatherEffect:_onSpineLoaded(unitSpine)
+	if not unitSpine or not self._weatherEffect_url then
 		return
 	end
 
-	arg_4_0:_setSpineWeatherEffect(arg_4_1)
+	self:_setSpineWeatherEffect(unitSpine)
 end
 
-function var_0_0._onLevelLoaded(arg_5_0, arg_5_1)
-	arg_5_0:_releaseWeatherEffect()
-	arg_5_0:_setLevelCO(arg_5_1)
-	arg_5_0:_setAllSpineWeatherEffect()
+function FightSceneWeatherEffect:_onLevelLoaded(levelId)
+	self:_releaseWeatherEffect()
+	self:_setLevelCO(levelId)
+	self:_setAllSpineWeatherEffect()
 end
 
-function var_0_0._setLevelCO(arg_6_0, arg_6_1)
-	local var_6_0 = lua_scene_level.configDict[arg_6_1].weatherEffect
+function FightSceneWeatherEffect:_setLevelCO(levelId)
+	local levelCO = lua_scene_level.configDict[levelId]
+	local weatherEffect = levelCO.weatherEffect
 
-	if var_6_0 ~= 0 then
-		if var_6_0 == 1 then
-			arg_6_0._weatherEffect_url = "roleeffects/roleeffect_rain_write"
+	if weatherEffect ~= 0 then
+		if weatherEffect == 1 then
+			self._weatherEffect_url = "roleeffects/roleeffect_rain_write"
 			UrpCustom.PPEffectMask.hasRain = true
-		elseif var_6_0 == 2 then
-			arg_6_0._weatherEffect_url = "roleeffects/roleeffect_rain_black"
+		elseif weatherEffect == 2 then
+			self._weatherEffect_url = "roleeffects/roleeffect_rain_black"
 			UrpCustom.PPEffectMask.hasRain = true
 		else
 			UrpCustom.PPEffectMask.hasRain = false
 
-			logError("错误的天气类型:", var_6_0)
+			logError("错误的天气类型:", weatherEffect)
 		end
 	else
 		UrpCustom.PPEffectMask.hasRain = false
 	end
 end
 
-function var_0_0._setAllSpineWeatherEffect(arg_7_0)
-	if not arg_7_0._weatherEffect_url then
+function FightSceneWeatherEffect:_setAllSpineWeatherEffect()
+	if not self._weatherEffect_url then
 		return
 	end
 
-	local var_7_0 = FightHelper.getAllEntitysContainUnitNpc()
+	local entityList = FightHelper.getAllEntitysContainUnitNpc()
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-		if iter_7_1.spine then
-			arg_7_0:_setSpineWeatherEffect(iter_7_1.spine)
+	for _, entity in ipairs(entityList) do
+		if entity.spine then
+			self:_setSpineWeatherEffect(entity.spine)
 		end
 	end
 end
 
-function var_0_0._setSpineWeatherEffect(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_1.unitSpawn
+function FightSceneWeatherEffect:_setSpineWeatherEffect(spine)
+	local target_entity = spine.unitSpawn
 
-	if var_8_0.ingoreRainEffect then
+	if target_entity.ingoreRainEffect then
 		return
 	end
 
-	local var_8_1 = var_8_0.id
+	local entity_id = target_entity.id
 
-	if not var_8_0.effect or arg_8_1._spineGo:GetComponent(typeof(UnityEngine.Renderer)) == nil then
+	if not target_entity.effect or spine._spineGo:GetComponent(typeof(UnityEngine.Renderer)) == nil then
 		return
 	end
 
-	if not arg_8_0.weather_effect then
-		arg_8_0.weather_effect = {}
-		arg_8_0.cache_entity = {}
+	if not self.weather_effect then
+		self.weather_effect = {}
+		self.cache_entity = {}
 	end
 
-	if arg_8_0.cache_entity[var_8_1] then
-		arg_8_0:_releaseOneWeatherEffect(arg_8_0.cache_entity[var_8_1])
+	if self.cache_entity[entity_id] then
+		self:_releaseOneWeatherEffect(self.cache_entity[entity_id])
 	end
 
-	arg_8_0.cache_entity[var_8_1] = var_8_0
-	arg_8_0.weather_effect[var_8_1] = arg_8_0.weather_effect[var_8_1] or var_8_0.effect:addHangEffect(arg_8_0._weatherEffect_url)
+	self.cache_entity[entity_id] = target_entity
+	self.weather_effect[entity_id] = self.weather_effect[entity_id] or target_entity.effect:addHangEffect(self._weatherEffect_url)
 
-	gohelper.addChild(arg_8_1:getSpineGO(), arg_8_0.weather_effect[var_8_1].containerGO)
-	arg_8_0.weather_effect[var_8_1]:setLocalPos(0, 0, 0)
-	arg_8_0.weather_effect[var_8_1]:setActive(false)
-	arg_8_0.weather_effect[var_8_1]:setActive(true)
+	gohelper.addChild(spine:getSpineGO(), self.weather_effect[entity_id].containerGO)
+	self.weather_effect[entity_id]:setLocalPos(0, 0, 0)
+	self.weather_effect[entity_id]:setActive(false)
+	self.weather_effect[entity_id]:setActive(true)
 end
 
-function var_0_0._onSetEntityAlpha(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = FightHelper.getEntity(arg_9_1)
+function FightSceneWeatherEffect:_onSetEntityAlpha(entityId, state)
+	local entity = FightHelper.getEntity(entityId)
 
-	if var_9_0 then
-		arg_9_0:_setEntityWeatherEffectVisible(var_9_0, arg_9_2)
-	end
-end
-
-function var_0_0._setEntityWeatherEffectVisible(arg_10_0, arg_10_1, arg_10_2)
-	if arg_10_0.weather_effect and arg_10_0.weather_effect[arg_10_1.id] then
-		gohelper.setActive(arg_10_0.weather_effect[arg_10_1.id].containerGO, arg_10_2 or false)
+	if entity then
+		self:_setEntityWeatherEffectVisible(entity, state)
 	end
 end
 
-function var_0_0._releaseOneWeatherEffect(arg_11_0, arg_11_1)
-	if arg_11_1 and arg_11_1.effect then
-		arg_11_1.effect:removeEffect(arg_11_0.weather_effect[arg_11_1.id])
-	end
-
-	if arg_11_0.weather_effect and arg_11_0.weather_effect[arg_11_1.id] then
-		arg_11_0.weather_effect[arg_11_1.id] = nil
-		arg_11_0.cache_entity[arg_11_1.id] = nil
+function FightSceneWeatherEffect:_setEntityWeatherEffectVisible(entity, state)
+	if self.weather_effect and self.weather_effect[entity.id] then
+		gohelper.setActive(self.weather_effect[entity.id].containerGO, state or false)
 	end
 end
 
-function var_0_0._releaseAllEntityEffect(arg_12_0)
-	if arg_12_0.weather_effect then
-		for iter_12_0, iter_12_1 in pairs(arg_12_0.weather_effect) do
-			arg_12_0:_releaseOneWeatherEffect(arg_12_0.cache_entity[iter_12_0])
+function FightSceneWeatherEffect:_releaseOneWeatherEffect(entity)
+	if entity and entity.effect then
+		entity.effect:removeEffect(self.weather_effect[entity.id])
+	end
+
+	if self.weather_effect and self.weather_effect[entity.id] then
+		self.weather_effect[entity.id] = nil
+		self.cache_entity[entity.id] = nil
+	end
+end
+
+function FightSceneWeatherEffect:_releaseAllEntityEffect()
+	if self.weather_effect then
+		for k, v in pairs(self.weather_effect) do
+			self:_releaseOneWeatherEffect(self.cache_entity[k])
 		end
 	end
 end
 
-function var_0_0._releaseWeatherEffect(arg_13_0)
-	arg_13_0:_releaseAllEntityEffect()
+function FightSceneWeatherEffect:_releaseWeatherEffect()
+	self:_releaseAllEntityEffect()
 
-	arg_13_0.weather_effect = nil
-	arg_13_0._weatherEffect_url = nil
-	arg_13_0.cache_entity = nil
+	self.weather_effect = nil
+	self._weatherEffect_url = nil
+	self.cache_entity = nil
 end
 
-return var_0_0
+return FightSceneWeatherEffect

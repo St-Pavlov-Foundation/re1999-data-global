@@ -1,54 +1,56 @@
-﻿module("modules.logic.fight.view.FightFailView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightFailView.lua
 
-local var_0_0 = class("FightFailView", BaseView)
+module("modules.logic.fight.view.FightFailView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gocost = gohelper.findChild(arg_1_0.viewGO, "#go_cost")
-	arg_1_0._txtaddActive = gohelper.findChildText(arg_1_0.viewGO, "#go_cost/#txt_addActive")
-	arg_1_0._gofirstfailtxt = gohelper.findChild(arg_1_0.viewGO, "#go_cost/#txt_addActive/#go_firstfailtxt")
-	arg_1_0._goAddActive = gohelper.findChild(arg_1_0.viewGO, "#go_cost/#txt_addActive")
-	arg_1_0._btnData = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_cost/#btn_data")
-	arg_1_0._gocosticon = gohelper.findChild(arg_1_0.viewGO, "#go_cost/#go_costicon")
-	arg_1_0._costitemIcon = gohelper.findChildSingleImage(arg_1_0._gocosticon, "itemIcon")
-	arg_1_0._costcurrencyIcon = gohelper.findChildImage(arg_1_0._gocosticon, "currencyIcon")
-	arg_1_0._gotips = gohelper.findChild(arg_1_0.viewGO, "scroll/Viewport/#go_tips")
-	arg_1_0._golevel = gohelper.findChild(arg_1_0.viewGO, "scroll/Viewport/#go_tips/#go_level")
-	arg_1_0._goinfos = gohelper.findChild(arg_1_0.viewGO, "scroll/Viewport/#go_tips/#go_level/#go_infos")
-	arg_1_0._golevelsubcontainer = gohelper.findChild(arg_1_0.viewGO, "scroll/Viewport/#go_tips/#go_level/#go_infos/#go_levelsubcontainer")
-	arg_1_0._goequipsubcontainer = gohelper.findChild(arg_1_0.viewGO, "scroll/Viewport/#go_tips/#go_level/#go_infos/#go_equipsubcontainer")
-	arg_1_0._gotalentsubcontainer = gohelper.findChild(arg_1_0.viewGO, "scroll/Viewport/#go_tips/#go_level/#go_infos/#go_talentsubcontainer")
-	arg_1_0._imagelevelcareer = gohelper.findChildImage(arg_1_0.viewGO, "scroll/Viewport/#go_tips/#go_level/#go_infos/#go_levelsubcontainer/#image_levelcareer")
-	arg_1_0._txtleveltitle = gohelper.findChildText(arg_1_0.viewGO, "scroll/Viewport/#go_tips/#go_level/#go_infos/#go_levelsubcontainer/#txt_leveltitle")
-	arg_1_0._txtlevelnum = gohelper.findChildText(arg_1_0.viewGO, "scroll/Viewport/#go_tips/#go_level/#go_infos/#go_levelsubcontainer/#txt_levelnum")
-	arg_1_0._imageequipcareer = gohelper.findChildImage(arg_1_0.viewGO, "scroll/Viewport/#go_tips/#go_level/#go_infos/#go_equipsubcontainer/#image_equipcareer")
-	arg_1_0._txtequiptitle = gohelper.findChildText(arg_1_0.viewGO, "scroll/Viewport/#go_tips/#go_level/#go_infos/#go_equipsubcontainer/#txt_equiptitle")
-	arg_1_0._txtequipnum = gohelper.findChildText(arg_1_0.viewGO, "scroll/Viewport/#go_tips/#go_level/#go_infos/#go_equipsubcontainer/#txt_equipnum")
-	arg_1_0._imagetalentcareer = gohelper.findChildImage(arg_1_0.viewGO, "scroll/Viewport/#go_tips/#go_level/#go_infos/#go_talentsubcontainer/#image_talentcareer")
-	arg_1_0._txttalenttitle = gohelper.findChildText(arg_1_0.viewGO, "scroll/Viewport/#go_tips/#go_level/#go_infos/#go_talentsubcontainer/#txt_talenttitle")
-	arg_1_0._txttalentnum = gohelper.findChildText(arg_1_0.viewGO, "scroll/Viewport/#go_tips/#go_level/#go_infos/#go_talentsubcontainer/#txt_talentnum")
-	arg_1_0._gorestrain = gohelper.findChild(arg_1_0.viewGO, "scroll/Viewport/#go_tips/#go_restrain")
-	arg_1_0._goherotipslist = gohelper.findChild(arg_1_0.viewGO, "scroll/Viewport/#go_tips/#go_restrain/#go_herotipslist")
-	arg_1_0._goconditions = gohelper.findChild(arg_1_0.viewGO, "scroll/Viewport/#go_tips/#go_conditions")
-	arg_1_0._goconditionitem = gohelper.findChild(arg_1_0.viewGO, "scroll/Viewport/#go_tips/#go_conditions/#go_item")
-	arg_1_0._gonormaltip = gohelper.findChild(arg_1_0.viewGO, "scroll/Viewport/#go_tips/#go_normaltip")
-	arg_1_0._goteachnote = gohelper.findChild(arg_1_0.viewGO, "scroll/Viewport/#go_tips/#go_teachnote")
+local FightFailView = class("FightFailView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function FightFailView:onInitView()
+	self._gocost = gohelper.findChild(self.viewGO, "#go_cost")
+	self._txtaddActive = gohelper.findChildText(self.viewGO, "#go_cost/#txt_addActive")
+	self._gofirstfailtxt = gohelper.findChild(self.viewGO, "#go_cost/#txt_addActive/#go_firstfailtxt")
+	self._goAddActive = gohelper.findChild(self.viewGO, "#go_cost/#txt_addActive")
+	self._btnData = gohelper.findChildButtonWithAudio(self.viewGO, "#go_cost/#btn_data")
+	self._gocosticon = gohelper.findChild(self.viewGO, "#go_cost/#go_costicon")
+	self._costitemIcon = gohelper.findChildSingleImage(self._gocosticon, "itemIcon")
+	self._costcurrencyIcon = gohelper.findChildImage(self._gocosticon, "currencyIcon")
+	self._gotips = gohelper.findChild(self.viewGO, "scroll/Viewport/#go_tips")
+	self._golevel = gohelper.findChild(self.viewGO, "scroll/Viewport/#go_tips/#go_level")
+	self._goinfos = gohelper.findChild(self.viewGO, "scroll/Viewport/#go_tips/#go_level/#go_infos")
+	self._golevelsubcontainer = gohelper.findChild(self.viewGO, "scroll/Viewport/#go_tips/#go_level/#go_infos/#go_levelsubcontainer")
+	self._goequipsubcontainer = gohelper.findChild(self.viewGO, "scroll/Viewport/#go_tips/#go_level/#go_infos/#go_equipsubcontainer")
+	self._gotalentsubcontainer = gohelper.findChild(self.viewGO, "scroll/Viewport/#go_tips/#go_level/#go_infos/#go_talentsubcontainer")
+	self._imagelevelcareer = gohelper.findChildImage(self.viewGO, "scroll/Viewport/#go_tips/#go_level/#go_infos/#go_levelsubcontainer/#image_levelcareer")
+	self._txtleveltitle = gohelper.findChildText(self.viewGO, "scroll/Viewport/#go_tips/#go_level/#go_infos/#go_levelsubcontainer/#txt_leveltitle")
+	self._txtlevelnum = gohelper.findChildText(self.viewGO, "scroll/Viewport/#go_tips/#go_level/#go_infos/#go_levelsubcontainer/#txt_levelnum")
+	self._imageequipcareer = gohelper.findChildImage(self.viewGO, "scroll/Viewport/#go_tips/#go_level/#go_infos/#go_equipsubcontainer/#image_equipcareer")
+	self._txtequiptitle = gohelper.findChildText(self.viewGO, "scroll/Viewport/#go_tips/#go_level/#go_infos/#go_equipsubcontainer/#txt_equiptitle")
+	self._txtequipnum = gohelper.findChildText(self.viewGO, "scroll/Viewport/#go_tips/#go_level/#go_infos/#go_equipsubcontainer/#txt_equipnum")
+	self._imagetalentcareer = gohelper.findChildImage(self.viewGO, "scroll/Viewport/#go_tips/#go_level/#go_infos/#go_talentsubcontainer/#image_talentcareer")
+	self._txttalenttitle = gohelper.findChildText(self.viewGO, "scroll/Viewport/#go_tips/#go_level/#go_infos/#go_talentsubcontainer/#txt_talenttitle")
+	self._txttalentnum = gohelper.findChildText(self.viewGO, "scroll/Viewport/#go_tips/#go_level/#go_infos/#go_talentsubcontainer/#txt_talentnum")
+	self._gorestrain = gohelper.findChild(self.viewGO, "scroll/Viewport/#go_tips/#go_restrain")
+	self._goherotipslist = gohelper.findChild(self.viewGO, "scroll/Viewport/#go_tips/#go_restrain/#go_herotipslist")
+	self._goconditions = gohelper.findChild(self.viewGO, "scroll/Viewport/#go_tips/#go_conditions")
+	self._goconditionitem = gohelper.findChild(self.viewGO, "scroll/Viewport/#go_tips/#go_conditions/#go_item")
+	self._gonormaltip = gohelper.findChild(self.viewGO, "scroll/Viewport/#go_tips/#go_normaltip")
+	self._goteachnote = gohelper.findChild(self.viewGO, "scroll/Viewport/#go_tips/#go_teachnote")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._click:AddClickListener(arg_2_0._onClickClose, arg_2_0)
-	arg_2_0._btnData:AddClickListener(arg_2_0._onClickData, arg_2_0)
+function FightFailView:addEvents()
+	self._click:AddClickListener(self._onClickClose, self)
+	self._btnData:AddClickListener(self._onClickData, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._click:RemoveClickListener()
-	arg_3_0._btnData:RemoveClickListener()
+function FightFailView:removeEvents()
+	self._click:RemoveClickListener()
+	self._btnData:RemoveClickListener()
 end
 
-var_0_0.CareerToImageName = {
+FightFailView.CareerToImageName = {
 	"zhandou_icon_yan",
 	"zhandou_icon_xing",
 	"zhandou_icon_mu",
@@ -56,360 +58,358 @@ var_0_0.CareerToImageName = {
 	"zhandou_icon_ling",
 	"zhandou_icon_zhi"
 }
-var_0_0.ShowLevelContainerValue = 0.8
-var_0_0.OffsetValue = 1.6
-var_0_0.PercentRedColor = "#b26161"
-var_0_0.PercentWhiteColor = "#e2e2e2"
-var_0_0.TxtRedColor = "#b26161"
-var_0_0.TxtWhiteColor = "#adadad"
-var_0_0.RedImageName = "zhandou_tuoyuan_hong"
-var_0_0.WhiteImageName = "zhandou_tuoyuan_bai"
+FightFailView.ShowLevelContainerValue = 0.8
+FightFailView.OffsetValue = 1.6
+FightFailView.PercentRedColor = "#b26161"
+FightFailView.PercentWhiteColor = "#e2e2e2"
+FightFailView.TxtRedColor = "#b26161"
+FightFailView.TxtWhiteColor = "#adadad"
+FightFailView.RedImageName = "zhandou_tuoyuan_hong"
+FightFailView.WhiteImageName = "zhandou_tuoyuan_bai"
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._click = gohelper.getClick(arg_4_0.viewGO)
+function FightFailView:_editableInitView()
+	self._click = gohelper.getClick(self.viewGO)
 
-	gohelper.setActive(arg_4_0._golevel, false)
-	gohelper.setActive(arg_4_0._gorestrain, false)
-	gohelper.setActive(arg_4_0._goconditions, false)
-	gohelper.setActive(arg_4_0._gonormaltip, false)
-	gohelper.setActive(arg_4_0._goteachnote, false)
+	gohelper.setActive(self._golevel, false)
+	gohelper.setActive(self._gorestrain, false)
+	gohelper.setActive(self._goconditions, false)
+	gohelper.setActive(self._gonormaltip, false)
+	gohelper.setActive(self._goteachnote, false)
 
-	arg_4_0.restrainItem = gohelper.findChild(arg_4_0._goherotipslist, "item")
+	self.restrainItem = gohelper.findChild(self._goherotipslist, "item")
 
-	gohelper.setActive(arg_4_0.restrainItem, false)
-	gohelper.setActive(arg_4_0._goconditionitem, false)
+	gohelper.setActive(self.restrainItem, false)
+	gohelper.setActive(self._goconditionitem, false)
 
-	local var_4_0 = DungeonModel.instance.curSendChapterId
+	local chapterId = DungeonModel.instance.curSendChapterId
 
-	if var_4_0 then
-		local var_4_1 = DungeonConfig.instance:getChapterCO(var_4_0)
+	if chapterId then
+		local chapterCo = DungeonConfig.instance:getChapterCO(chapterId)
 
-		arg_4_0.isSimple = var_4_1 and var_4_1.type == DungeonEnum.ChapterType.Simple
+		self.isSimple = chapterCo and chapterCo.type == DungeonEnum.ChapterType.Simple
 	end
 
-	local var_4_2 = lua_const.configDict[ConstEnum.SimpleEpisodeEffectiveness]
+	local constStr = lua_const.configDict[ConstEnum.SimpleEpisodeEffectiveness]
 
-	arg_4_0.constEffectiveness = string.splitToNumber(var_4_2.value, "#")
+	self.constEffectiveness = string.splitToNumber(constStr.value, "#")
 end
 
-function var_0_0._onClickClose(arg_5_0)
-	arg_5_0:_exitFight()
+function FightFailView:_onClickClose()
+	self:_exitFight()
 end
 
-function var_0_0._onClickData(arg_6_0)
+function FightFailView:_onClickData()
 	ViewMgr.instance:openView(ViewName.FightStatView)
 end
 
-function var_0_0.onOpen(arg_7_0)
+function FightFailView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_settleaccounts_lose)
 	FightController.instance:checkFightQuitTipViewClose()
 
-	arg_7_0.fightParam = FightModel.instance:getFightParam()
-	arg_7_0._episodeId = arg_7_0.fightParam.episodeId
-	arg_7_0._chapterId = arg_7_0.fightParam.chapterId
-	arg_7_0.episodeCo = lua_episode.configDict[arg_7_0._episodeId]
-	arg_7_0.chapterCo = DungeonConfig.instance:getChapterCO(arg_7_0._chapterId)
-	arg_7_0.battleCo = DungeonConfig.instance:getBattleCo(nil, FightModel.instance:getBattleId())
+	self.fightParam = FightModel.instance:getFightParam()
+	self._episodeId = self.fightParam.episodeId
+	self._chapterId = self.fightParam.chapterId
+	self.episodeCo = lua_episode.configDict[self._episodeId]
+	self.chapterCo = DungeonConfig.instance:getChapterCO(self._chapterId)
+	self.battleCo = DungeonConfig.instance:getBattleCo(nil, FightModel.instance:getBattleId())
 
-	NavigateMgr.instance:addEscape(ViewName.FightFailView, arg_7_0._onClickClose, arg_7_0)
+	NavigateMgr.instance:addEscape(ViewName.FightFailView, self._onClickClose, self)
 
-	if arg_7_0:_hideActiveGo() then
-		if arg_7_0.episodeCo then
-			gohelper.setActive(arg_7_0._gocost, true)
+	if self:_hideActiveGo() then
+		if self.episodeCo then
+			gohelper.setActive(self._gocost, true)
 
-			arg_7_0._txtaddActive.text = ""
+			self._txtaddActive.text = ""
 		end
 
-		gohelper.setActive(arg_7_0._gofirstfailtxt, false)
+		gohelper.setActive(self._gofirstfailtxt, false)
 	else
-		local var_7_0 = FightModel.instance:getFightParam()
-		local var_7_1 = var_7_0 and var_7_0.multiplication or 1
+		local fightParam = FightModel.instance:getFightParam()
+		local multiplication = fightParam and fightParam.multiplication or 1
+		local episodeInfo = FightModel.instance.cacheUserDungeonMO or DungeonModel.instance:getEpisodeInfo(self._episodeId)
+		local returnCost = DungeonConfig.instance:getEpisodeFailedReturnCost(self._episodeId, multiplication)
 
-		if not FightModel.instance.cacheUserDungeonMO then
-			local var_7_2 = DungeonModel.instance:getEpisodeInfo(arg_7_0._episodeId)
-		end
+		gohelper.setActive(self._gofirstfailtxt, true)
 
-		local var_7_3 = DungeonConfig.instance:getEpisodeFailedReturnCost(arg_7_0._episodeId, var_7_1)
+		if self.episodeCo then
+			local costList = string.splitToNumber(self.episodeCo.cost, "#")
+			local costType = costList[1]
+			local costId = costList[2]
 
-		gohelper.setActive(arg_7_0._gofirstfailtxt, true)
+			if costType == MaterialEnum.MaterialType.Currency then
+				gohelper.setActive(self._costcurrencyIcon.gameObject, true)
 
-		if arg_7_0.episodeCo then
-			local var_7_4 = string.splitToNumber(arg_7_0.episodeCo.cost, "#")
-			local var_7_5 = var_7_4[1]
-			local var_7_6 = var_7_4[2]
+				local currencyCO = CurrencyConfig.instance:getCurrencyCo(costId)
 
-			if var_7_5 == MaterialEnum.MaterialType.Currency then
-				gohelper.setActive(arg_7_0._costcurrencyIcon.gameObject, true)
+				UISpriteSetMgr.instance:setCurrencyItemSprite(self._costcurrencyIcon, currencyCO.icon .. "_1")
 
-				local var_7_7 = CurrencyConfig.instance:getCurrencyCo(var_7_6)
-
-				UISpriteSetMgr.instance:setCurrencyItemSprite(arg_7_0._costcurrencyIcon, var_7_7.icon .. "_1")
-
-				arg_7_0._txtaddActive.text = string.format(luaLang("fightfail_returncost"), var_7_3)
+				self._txtaddActive.text = string.format(luaLang("fightfail_returncost"), returnCost)
 			else
-				gohelper.setActive(arg_7_0._costitemIcon.gameObject, true)
+				gohelper.setActive(self._costitemIcon.gameObject, true)
 
-				local var_7_8 = ItemModel.instance:getItemSmallIcon(var_7_6)
-				local var_7_9 = ItemModel.instance:getItemConfig(var_7_5, var_7_6)
+				local icon = ItemModel.instance:getItemSmallIcon(costId)
+				local itemConfig = ItemModel.instance:getItemConfig(costType, costId)
 
-				arg_7_0._costitemIcon:LoadImage(var_7_8)
+				self._costitemIcon:LoadImage(icon)
 
-				local var_7_10 = {
-					var_7_9.name,
-					var_7_3
+				local tag = {
+					itemConfig.name,
+					returnCost
 				}
 
-				arg_7_0._txtaddActive.text = GameUtil.getSubPlaceholderLuaLang(luaLang("fightfail_returncost2"), var_7_10)
+				self._txtaddActive.text = GameUtil.getSubPlaceholderLuaLang(luaLang("fightfail_returncost2"), tag)
 			end
 		end
 	end
 
-	arg_7_0:refreshTips()
+	self:refreshTips()
 end
 
-function var_0_0._hideActiveGo(arg_8_0)
-	if arg_8_0.episodeCo and arg_8_0.episodeCo.type == DungeonEnum.EpisodeType.Equip then
+function FightFailView:_hideActiveGo()
+	if self.episodeCo and self.episodeCo.type == DungeonEnum.EpisodeType.Equip then
 		return FightModel.instance:isEnterUseFreeLimit()
 	end
 
-	if arg_8_0.episodeCo and (arg_8_0.episodeCo.type == DungeonEnum.EpisodeType.WeekWalk or arg_8_0.episodeCo.type == DungeonEnum.EpisodeType.Season) then
+	if self.episodeCo and (self.episodeCo.type == DungeonEnum.EpisodeType.WeekWalk or self.episodeCo.type == DungeonEnum.EpisodeType.Season) then
 		return true
 	end
 
-	if (tonumber(DungeonConfig.instance:getEndBattleCost(arg_8_0._episodeId, false)) or 0) <= 0 then
+	local endBattleCost = tonumber(DungeonConfig.instance:getEndBattleCost(self._episodeId, false)) or 0
+
+	if endBattleCost <= 0 then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.refreshTips(arg_9_0)
-	if not arg_9_0.chapterCo or arg_9_0.chapterCo.type == DungeonEnum.ChapterType.TeachNote then
-		arg_9_0:refreshTeachNoteContainer()
+function FightFailView:refreshTips()
+	if not self.chapterCo or self.chapterCo.type == DungeonEnum.ChapterType.TeachNote then
+		self:refreshTeachNoteContainer()
 
 		return
 	end
 
-	local var_9_0, var_9_1 = FightHelper.detectAttributeCounter()
-	local var_9_2
+	local _, counter = FightHelper.detectAttributeCounter()
+	local showHeroCoList
 
-	if #var_9_1 ~= 0 then
-		var_9_2 = arg_9_0:getCounterHeroList(arg_9_0.fightParam:getAllHeroMoList(), var_9_1)
+	if #counter ~= 0 then
+		showHeroCoList = self:getCounterHeroList(self.fightParam:getAllHeroMoList(), counter)
 	end
 
-	local var_9_3 = arg_9_0:getHeroPercent()
-	local var_9_4 = arg_9_0:getEquipPercent()
-	local var_9_5 = arg_9_0:getTalentPercent()
+	local heroPercent = self:getHeroPercent()
+	local equipPercent = self:getEquipPercent()
+	local talentPercent = self:getTalentPercent()
 
-	if var_9_3 < var_0_0.ShowLevelContainerValue or var_9_4 < var_0_0.ShowLevelContainerValue or var_9_5 < var_0_0.ShowLevelContainerValue then
-		arg_9_0:refreshLevelContainer(var_9_3, var_9_4, var_9_5)
-	elseif var_9_2 and #var_9_2 ~= 0 then
-		arg_9_0:refreshRestrainContainer(var_9_2)
+	if heroPercent < FightFailView.ShowLevelContainerValue or equipPercent < FightFailView.ShowLevelContainerValue or talentPercent < FightFailView.ShowLevelContainerValue then
+		self:refreshLevelContainer(heroPercent, equipPercent, talentPercent)
+	elseif showHeroCoList and #showHeroCoList ~= 0 then
+		self:refreshRestrainContainer(showHeroCoList)
 	end
 
-	local var_9_6 = arg_9_0:getShowConditionsCoList()
+	local conditionCoList = self:getShowConditionsCoList()
 
-	if arg_9_0.episodeCo.type == DungeonEnum.EpisodeType.Meilanni then
-		var_9_6 = HeroGroupFightViewRule.meilanniExcludeRules(var_9_6)
+	if self.episodeCo.type == DungeonEnum.EpisodeType.Meilanni then
+		conditionCoList = HeroGroupFightViewRule.meilanniExcludeRules(conditionCoList)
 	end
 
-	if arg_9_0.episodeCo.type == DungeonEnum.EpisodeType.Survival then
-		var_9_6 = SurvivalShelterModel.instance:addExRule(var_9_6)
+	if self.episodeCo.type == DungeonEnum.EpisodeType.Survival then
+		conditionCoList = SurvivalShelterModel.instance:addExRule(conditionCoList)
 	end
 
-	if var_9_6 and #var_9_6 ~= 0 then
-		arg_9_0:refreshConditionsContainer(var_9_6)
+	if conditionCoList and #conditionCoList ~= 0 then
+		self:refreshConditionsContainer(conditionCoList)
 	else
-		arg_9_0:refreshNormalContainer()
+		self:refreshNormalContainer()
 	end
 
-	TaskDispatcher.runDelay(arg_9_0.rebuildLayout, arg_9_0, 0.01)
+	TaskDispatcher.runDelay(self.rebuildLayout, self, 0.01)
 end
 
-function var_0_0.refreshLevelContainer(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	gohelper.setActive(arg_10_0._golevel, true)
+function FightFailView:refreshLevelContainer(heroPercent, equipPercent, talentPercent)
+	gohelper.setActive(self._golevel, true)
 
-	arg_10_0._txtlevelnum.text = tostring(Mathf.Min(Mathf.Floor(Mathf.Pow(arg_10_1, var_0_0.OffsetValue) * 100), 100)) .. "%"
-	arg_10_0._txtequipnum.text = tostring(Mathf.Min(Mathf.Floor(Mathf.Pow(arg_10_2, var_0_0.OffsetValue) * 100), 100)) .. "%"
-	arg_10_0._txttalentnum.text = tostring(Mathf.Min(Mathf.Floor(Mathf.Pow(arg_10_3, var_0_0.OffsetValue) * 100), 100)) .. "%"
+	self._txtlevelnum.text = tostring(Mathf.Min(Mathf.Floor(Mathf.Pow(heroPercent, FightFailView.OffsetValue) * 100), 100)) .. "%"
+	self._txtequipnum.text = tostring(Mathf.Min(Mathf.Floor(Mathf.Pow(equipPercent, FightFailView.OffsetValue) * 100), 100)) .. "%"
+	self._txttalentnum.text = tostring(Mathf.Min(Mathf.Floor(Mathf.Pow(talentPercent, FightFailView.OffsetValue) * 100), 100)) .. "%"
 
-	if arg_10_1 > var_0_0.ShowLevelContainerValue then
-		UISpriteSetMgr.instance:setFightSprite(arg_10_0._imagelevelcareer, var_0_0.WhiteImageName)
-		SLFramework.UGUI.GuiHelper.SetColor(arg_10_0._txtlevelnum, var_0_0.PercentWhiteColor)
-		SLFramework.UGUI.GuiHelper.SetColor(arg_10_0._txtleveltitle, var_0_0.TxtWhiteColor)
+	if heroPercent > FightFailView.ShowLevelContainerValue then
+		UISpriteSetMgr.instance:setFightSprite(self._imagelevelcareer, FightFailView.WhiteImageName)
+		SLFramework.UGUI.GuiHelper.SetColor(self._txtlevelnum, FightFailView.PercentWhiteColor)
+		SLFramework.UGUI.GuiHelper.SetColor(self._txtleveltitle, FightFailView.TxtWhiteColor)
 	else
-		UISpriteSetMgr.instance:setFightSprite(arg_10_0._imagelevelcareer, var_0_0.RedImageName)
-		SLFramework.UGUI.GuiHelper.SetColor(arg_10_0._txtlevelnum, var_0_0.PercentRedColor)
-		SLFramework.UGUI.GuiHelper.SetColor(arg_10_0._txtleveltitle, var_0_0.TxtRedColor)
+		UISpriteSetMgr.instance:setFightSprite(self._imagelevelcareer, FightFailView.RedImageName)
+		SLFramework.UGUI.GuiHelper.SetColor(self._txtlevelnum, FightFailView.PercentRedColor)
+		SLFramework.UGUI.GuiHelper.SetColor(self._txtleveltitle, FightFailView.TxtRedColor)
 	end
 
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Equip) then
-		gohelper.setActive(arg_10_0._goequipsubcontainer, true)
+		gohelper.setActive(self._goequipsubcontainer, true)
 
-		if arg_10_2 > var_0_0.ShowLevelContainerValue then
-			UISpriteSetMgr.instance:setFightSprite(arg_10_0._imageequipcareer, var_0_0.WhiteImageName)
-			SLFramework.UGUI.GuiHelper.SetColor(arg_10_0._txtequipnum, var_0_0.PercentWhiteColor)
-			SLFramework.UGUI.GuiHelper.SetColor(arg_10_0._txtequiptitle, var_0_0.TxtWhiteColor)
+		if equipPercent > FightFailView.ShowLevelContainerValue then
+			UISpriteSetMgr.instance:setFightSprite(self._imageequipcareer, FightFailView.WhiteImageName)
+			SLFramework.UGUI.GuiHelper.SetColor(self._txtequipnum, FightFailView.PercentWhiteColor)
+			SLFramework.UGUI.GuiHelper.SetColor(self._txtequiptitle, FightFailView.TxtWhiteColor)
 		else
-			UISpriteSetMgr.instance:setFightSprite(arg_10_0._imageequipcareer, var_0_0.RedImageName)
-			SLFramework.UGUI.GuiHelper.SetColor(arg_10_0._txtequipnum, var_0_0.PercentRedColor)
-			SLFramework.UGUI.GuiHelper.SetColor(arg_10_0._txtequiptitle, var_0_0.TxtRedColor)
+			UISpriteSetMgr.instance:setFightSprite(self._imageequipcareer, FightFailView.RedImageName)
+			SLFramework.UGUI.GuiHelper.SetColor(self._txtequipnum, FightFailView.PercentRedColor)
+			SLFramework.UGUI.GuiHelper.SetColor(self._txtequiptitle, FightFailView.TxtRedColor)
 		end
 	else
-		gohelper.setActive(arg_10_0._goequipsubcontainer, false)
+		gohelper.setActive(self._goequipsubcontainer, false)
 	end
 
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Talent) then
-		gohelper.setActive(arg_10_0._gotalentsubcontainer, true)
+		gohelper.setActive(self._gotalentsubcontainer, true)
 
-		if arg_10_3 > var_0_0.ShowLevelContainerValue then
-			UISpriteSetMgr.instance:setFightSprite(arg_10_0._imagetalentcareer, var_0_0.WhiteImageName)
-			SLFramework.UGUI.GuiHelper.SetColor(arg_10_0._txttalentnum, var_0_0.PercentWhiteColor)
-			SLFramework.UGUI.GuiHelper.SetColor(arg_10_0._txttalenttitle, var_0_0.TxtWhiteColor)
+		if talentPercent > FightFailView.ShowLevelContainerValue then
+			UISpriteSetMgr.instance:setFightSprite(self._imagetalentcareer, FightFailView.WhiteImageName)
+			SLFramework.UGUI.GuiHelper.SetColor(self._txttalentnum, FightFailView.PercentWhiteColor)
+			SLFramework.UGUI.GuiHelper.SetColor(self._txttalenttitle, FightFailView.TxtWhiteColor)
 		else
-			UISpriteSetMgr.instance:setFightSprite(arg_10_0._imagetalentcareer, var_0_0.RedImageName)
-			SLFramework.UGUI.GuiHelper.SetColor(arg_10_0._txttalentnum, var_0_0.PercentRedColor)
-			SLFramework.UGUI.GuiHelper.SetColor(arg_10_0._txttalenttitle, var_0_0.TxtRedColor)
+			UISpriteSetMgr.instance:setFightSprite(self._imagetalentcareer, FightFailView.RedImageName)
+			SLFramework.UGUI.GuiHelper.SetColor(self._txttalentnum, FightFailView.PercentRedColor)
+			SLFramework.UGUI.GuiHelper.SetColor(self._txttalenttitle, FightFailView.TxtRedColor)
 		end
 	else
-		gohelper.setActive(arg_10_0._gotalentsubcontainer, false)
+		gohelper.setActive(self._gotalentsubcontainer, false)
 	end
 end
 
-function var_0_0.refreshRestrainContainer(arg_11_0, arg_11_1)
-	for iter_11_0, iter_11_1 in ipairs(arg_11_1) do
-		local var_11_0 = gohelper.clone(arg_11_0.restrainItem, arg_11_0._goherotipslist, "item" .. iter_11_0)
-		local var_11_1 = gohelper.findChildImage(var_11_0, "image_career")
-		local var_11_2 = gohelper.findChildText(var_11_0, "txt_herotips")
+function FightFailView:refreshRestrainContainer(showHeroCoList)
+	for i, heroCo in ipairs(showHeroCoList) do
+		local itemGo = gohelper.clone(self.restrainItem, self._goherotipslist, "item" .. i)
+		local careerIcon = gohelper.findChildImage(itemGo, "image_career")
+		local txt = gohelper.findChildText(itemGo, "txt_herotips")
 
-		UISpriteSetMgr.instance:setFightSprite(var_11_1, var_0_0.CareerToImageName[iter_11_1.career])
+		UISpriteSetMgr.instance:setFightSprite(careerIcon, FightFailView.CareerToImageName[heroCo.career])
 
-		var_11_2.text = string.format(luaLang("restrain_text"), iter_11_1.name)
+		txt.text = string.format(luaLang("restrain_text"), heroCo.name)
 
-		gohelper.setActive(var_11_0, true)
+		gohelper.setActive(itemGo, true)
 	end
 
-	gohelper.setActive(arg_11_0._gorestrain, true)
+	gohelper.setActive(self._gorestrain, true)
 end
 
-function var_0_0.refreshConditionsContainer(arg_12_0, arg_12_1)
-	for iter_12_0, iter_12_1 in ipairs(arg_12_1) do
-		local var_12_0 = iter_12_1[1]
-		local var_12_1 = iter_12_1[2]
-		local var_12_2 = lua_rule.configDict[var_12_1]
+function FightFailView:refreshConditionsContainer(conditionList)
+	for i, rule in ipairs(conditionList) do
+		local targetId = rule[1]
+		local ruleId = rule[2]
+		local ruleCo = lua_rule.configDict[ruleId]
 
-		if var_12_2 then
-			local var_12_3 = gohelper.clone(arg_12_0._goconditionitem, arg_12_0._goconditions, "item" .. iter_12_0)
-			local var_12_4 = gohelper.findChildText(var_12_3, "#txt_extratips")
-			local var_12_5 = var_12_2.desc
-			local var_12_6 = SkillHelper.buildDesc(var_12_5, "#FFFFFF", "#FFFFFF")
+		if ruleCo then
+			local itemGo = gohelper.clone(self._goconditionitem, self._goconditions, "item" .. i)
+			local txt = gohelper.findChildText(itemGo, "#txt_extratips")
+			local srcDesc = ruleCo.desc
+			local descContent = SkillHelper.buildDesc(srcDesc, "#FFFFFF", "#FFFFFF")
 
-			var_12_4.text = string.format(luaLang("FightFailView_refreshConditionsContainer_txt_extratips"), luaLang("dungeon_add_rule_target_" .. var_12_0), var_12_6)
+			txt.text = string.format(luaLang("FightFailView_refreshConditionsContainer_txt_extratips"), luaLang("dungeon_add_rule_target_" .. targetId), descContent)
 
-			gohelper.setActive(var_12_3, true)
+			gohelper.setActive(itemGo, true)
 		end
 	end
 
-	gohelper.setActive(arg_12_0._goconditions, true)
+	gohelper.setActive(self._goconditions, true)
 end
 
-function var_0_0.refreshNormalContainer(arg_13_0)
-	gohelper.setActive(arg_13_0._gonormaltip, true)
+function FightFailView:refreshNormalContainer()
+	gohelper.setActive(self._gonormaltip, true)
 end
 
-function var_0_0.refreshTeachNoteContainer(arg_14_0)
-	gohelper.setActive(arg_14_0._goteachnote, true)
+function FightFailView:refreshTeachNoteContainer()
+	gohelper.setActive(self._goteachnote, true)
 end
 
-function var_0_0.getCounterHeroList(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0 = {}
+function FightFailView:getCounterHeroList(heroMoList, careerList)
+	local counterHeroList = {}
 
-	for iter_15_0, iter_15_1 in ipairs(arg_15_1) do
-		for iter_15_2, iter_15_3 in ipairs(arg_15_2) do
-			local var_15_1 = iter_15_1.config
+	for _, heroMo in ipairs(heroMoList) do
+		for _, career in ipairs(careerList) do
+			local heroCo = heroMo.config
 
-			if var_15_1 and var_15_1.career == iter_15_3 then
-				table.insert(var_15_0, var_15_1)
+			if heroCo and heroCo.career == career then
+				table.insert(counterHeroList, heroCo)
 
 				break
 			end
 		end
 	end
 
-	return var_15_0
+	return counterHeroList
 end
 
-function var_0_0.getHeroPercent(arg_16_0)
-	local var_16_0 = EffectivenessConfig.instance:calculateHeroAverageEffectiveness(arg_16_0.fightParam:getMainHeroMoList(), arg_16_0.fightParam:getSubHeroMoList())
-	local var_16_1 = arg_16_0.isSimple and arg_16_0.constEffectiveness[1] or arg_16_0.battleCo.heroEffectiveness
+function FightFailView:getHeroPercent()
+	local heroAverage = EffectivenessConfig.instance:calculateHeroAverageEffectiveness(self.fightParam:getMainHeroMoList(), self.fightParam:getSubHeroMoList())
+	local heroEffectiveness = self.isSimple and self.constEffectiveness[1] or self.battleCo.heroEffectiveness
 
-	return arg_16_0:calculatePercent(var_16_0, var_16_1)
+	return self:calculatePercent(heroAverage, heroEffectiveness)
 end
 
-function var_0_0.getEquipPercent(arg_17_0)
+function FightFailView:getEquipPercent()
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Equip) then
-		return var_0_0.ShowLevelContainerValue + 1
+		return FightFailView.ShowLevelContainerValue + 1
 	end
 
-	local var_17_0 = EffectivenessConfig.instance:calculateEquipAverageEffectiveness(arg_17_0.fightParam:getEquipMoList())
-	local var_17_1 = arg_17_0.isSimple and arg_17_0.constEffectiveness[2] or arg_17_0.battleCo.equipEffectiveness
+	local equipAverage = EffectivenessConfig.instance:calculateEquipAverageEffectiveness(self.fightParam:getEquipMoList())
+	local equipEffectiveness = self.isSimple and self.constEffectiveness[2] or self.battleCo.equipEffectiveness
 
-	return arg_17_0:calculatePercent(var_17_0, var_17_1)
+	return self:calculatePercent(equipAverage, equipEffectiveness)
 end
 
-function var_0_0.getTalentPercent(arg_18_0)
+function FightFailView:getTalentPercent()
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Talent) then
-		return var_0_0.ShowLevelContainerValue + 1
+		return FightFailView.ShowLevelContainerValue + 1
 	end
 
-	local var_18_0 = EffectivenessConfig.instance:calculateTalentAverageEffectiveness(arg_18_0.fightParam:getMainHeroMoList(), arg_18_0.fightParam:getSubHeroMoList())
-	local var_18_1 = arg_18_0.isSimple and arg_18_0.constEffectiveness[3] or arg_18_0.battleCo.talentEffectiveness
+	local talentAverage = EffectivenessConfig.instance:calculateTalentAverageEffectiveness(self.fightParam:getMainHeroMoList(), self.fightParam:getSubHeroMoList())
+	local talentEffectiveness = self.isSimple and self.constEffectiveness[3] or self.battleCo.talentEffectiveness
 
-	return arg_18_0:calculatePercent(var_18_0, var_18_1)
+	return self:calculatePercent(talentAverage, talentEffectiveness)
 end
 
-function var_0_0.calculatePercent(arg_19_0, arg_19_1, arg_19_2)
-	if arg_19_2 <= arg_19_1 then
+function FightFailView:calculatePercent(a, b)
+	if b <= a then
 		return 1
 	else
-		return arg_19_1 / arg_19_2
+		return a / b
 	end
 end
 
-function var_0_0.getShowConditionsCoList(arg_20_0)
-	local var_20_0 = {}
-	local var_20_1 = arg_20_0.battleCo.additionRule
+function FightFailView:getShowConditionsCoList()
+	local conditionList = {}
+	local additionRule = self.battleCo.additionRule
 
-	if not string.nilorempty(var_20_1) then
-		for iter_20_0, iter_20_1 in ipairs(GameUtil.splitString2(var_20_1, true, "|", "#")) do
-			table.insert(var_20_0, iter_20_1)
+	if not string.nilorempty(additionRule) then
+		for _, rule in ipairs(GameUtil.splitString2(additionRule, true, "|", "#")) do
+			table.insert(conditionList, rule)
 		end
 	end
 
-	return var_20_0
+	return conditionList
 end
 
-function var_0_0.rebuildLayout(arg_21_0)
-	ZProj.UGUIHelper.RebuildLayout(arg_21_0._gotips.transform)
+function FightFailView:rebuildLayout()
+	ZProj.UGUIHelper.RebuildLayout(self._gotips.transform)
 end
 
-function var_0_0._exitFight(arg_22_0)
-	arg_22_0:closeThis()
+function FightFailView:_exitFight()
+	self:closeThis()
 	FightController.onResultViewClose()
 end
 
-function var_0_0.onClose(arg_23_0)
+function FightFailView:onClose()
 	return
 end
 
-function var_0_0.onCloseFinish(arg_24_0)
+function FightFailView:onCloseFinish()
 	FightStatModel.instance:clear()
 end
 
-function var_0_0.onDestroy(arg_25_0)
-	if arg_25_0._costitemIcon then
-		arg_25_0._costitemIcon:UnLoadImage()
+function FightFailView:onDestroy()
+	if self._costitemIcon then
+		self._costitemIcon:UnLoadImage()
 	end
 end
 
-return var_0_0
+return FightFailView

@@ -23,5 +23,10 @@
     "buffId": 102310007,
     "behaviour": 5,
     "param": ""
+  },
+  {
+    "buffId": 108300102,
+    "behaviour": 6,
+    "param": ""
   }
 ]

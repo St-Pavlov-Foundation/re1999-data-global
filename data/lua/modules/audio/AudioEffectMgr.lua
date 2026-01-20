@@ -1,144 +1,146 @@
-﻿module("modules.audio.AudioEffectMgr", package.seeall)
+﻿-- chunkname: @modules/audio/AudioEffectMgr.lua
 
-local var_0_0 = class("AudioEffectMgr")
+module("modules.audio.AudioEffectMgr", package.seeall)
 
-var_0_0.OnPlayAudio = 101
+local AudioEffectMgr = class("AudioEffectMgr")
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._pool = AudioItem.createPool()
-	arg_1_0._playingList = {}
+AudioEffectMgr.OnPlayAudio = 101
 
-	LuaEventSystem.addEventMechanism(arg_1_0)
+function AudioEffectMgr:ctor()
+	self._pool = AudioItem.createPool()
+	self._playingList = {}
+
+	LuaEventSystem.addEventMechanism(self)
 end
 
-function var_0_0.setVolume(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	local var_2_0 = arg_2_0._playingList[arg_2_1]
+function AudioEffectMgr:setVolume(audioId, value, transitionTime)
+	local audioItem = self._playingList[audioId]
 
-	if not var_2_0 then
+	if not audioItem then
 		return
 	end
 
-	var_2_0:setVolume(arg_2_2, arg_2_3)
+	audioItem:setVolume(value, transitionTime)
 end
 
-function var_0_0.setSwitch(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	local var_3_0 = arg_3_0._playingList[arg_3_1]
+function AudioEffectMgr:setSwitch(audioId, switchGroup, switchState)
+	local audioItem = self._playingList[audioId]
 
-	if not var_3_0 then
+	if not audioItem then
 		return
 	end
 
-	var_3_0:setSwitch(arg_3_2, arg_3_3)
+	audioItem:setSwitch(switchGroup, switchState)
 end
 
-function var_0_0.playAudio(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	if arg_4_0._playingList[arg_4_1] then
+function AudioEffectMgr:playAudio(audioId, audioParam, audioLang)
+	if self._playingList[audioId] then
 		return
 	end
 
-	arg_4_2 = arg_4_2 or arg_4_0:_getDefaultAudioParam()
-	arg_4_2.audioLang = arg_4_3
+	audioParam = audioParam or self:_getDefaultAudioParam()
+	audioParam.audioLang = audioLang
 
-	local var_4_0 = arg_4_0._pool:getObject()
+	local audioItem = self._pool:getObject()
 
-	arg_4_0._playingList[arg_4_1] = var_4_0
+	self._playingList[audioId] = audioItem
 
-	var_4_0:playAudio(arg_4_1, arg_4_2)
-	arg_4_0:dispatchEvent(var_0_0.OnPlayAudio, arg_4_1, var_4_0)
+	audioItem:playAudio(audioId, audioParam)
+	self:dispatchEvent(AudioEffectMgr.OnPlayAudio, audioId, audioItem)
 end
 
-function var_0_0._getDefaultAudioParam(arg_5_0)
-	arg_5_0._defaultAudioParam = arg_5_0._defaultAudioParam or AudioParam.New()
+function AudioEffectMgr:_getDefaultAudioParam()
+	self._defaultAudioParam = self._defaultAudioParam or AudioParam.New()
 
-	arg_5_0._defaultAudioParam:clear()
+	self._defaultAudioParam:clear()
 
-	arg_5_0._defaultAudioParam.loopNum = 1
-	arg_5_0._defaultAudioParam.fadeInTime = 0
-	arg_5_0._defaultAudioParam.fadeOutTime = 0
+	self._defaultAudioParam.loopNum = 1
+	self._defaultAudioParam.fadeInTime = 0
+	self._defaultAudioParam.fadeOutTime = 0
 
-	return arg_5_0._defaultAudioParam
+	return self._defaultAudioParam
 end
 
-function var_0_0.seekPercent(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = arg_6_0._playingList[arg_6_1]
+function AudioEffectMgr:seekPercent(audioId, percent)
+	local audioItem = self._playingList[audioId]
 
-	if not var_6_0 then
-		var_6_0:seekPercent(arg_6_2)
+	if not audioItem then
+		audioItem:seekPercent(percent)
 	end
 end
 
-function var_0_0.seekMilliSeconds(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = arg_7_0._playingList[arg_7_1]
+function AudioEffectMgr:seekMilliSeconds(audioId, milliSeconds)
+	local audioItem = self._playingList[audioId]
 
-	if var_7_0 then
-		var_7_0:seekMilliSeconds(arg_7_2)
+	if audioItem then
+		audioItem:seekMilliSeconds(milliSeconds)
 	end
 end
 
-function var_0_0.stopAudio(arg_8_0, arg_8_1, arg_8_2)
-	if not arg_8_0._playingList[arg_8_1] then
+function AudioEffectMgr:stopAudio(audioId, fadeOutTime)
+	if not self._playingList[audioId] then
 		return
 	end
 
-	arg_8_0._playingList[arg_8_1]:stopAudio(arg_8_1, arg_8_2)
+	self._playingList[audioId]:stopAudio(audioId, fadeOutTime)
 end
 
-function var_0_0.removePlayingAudio(arg_9_0, arg_9_1)
-	arg_9_0._playingList[arg_9_1] = nil
+function AudioEffectMgr:removePlayingAudio(audioId)
+	self._playingList[audioId] = nil
 end
 
-function var_0_0.isPlaying(arg_10_0, arg_10_1)
-	return arg_10_0._playingList[arg_10_1]
+function AudioEffectMgr:isPlaying(audioId)
+	return self._playingList[audioId]
 end
 
-function var_0_0.getPlayingItemDict(arg_11_0)
-	return arg_11_0._playingList
+function AudioEffectMgr:getPlayingItemDict()
+	return self._playingList
 end
 
-function var_0_0.playAudioByEffectPath(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	local var_12_0 = AudioConfig.instance:getAudioConfig(arg_12_1)
+function AudioEffectMgr:playAudioByEffectPath(effectPath, fadeInTime, fadeOutTime)
+	local config = AudioConfig.instance:getAudioConfig(effectPath)
 
-	if var_12_0 then
-		local var_12_1 = arg_12_0:_getEffectAudioParam(arg_12_2, arg_12_3)
+	if config then
+		local param = self:_getEffectAudioParam(fadeInTime, fadeOutTime)
 
-		arg_12_0:playAudio(var_12_0.audioId, var_12_1)
+		self:playAudio(config.audioId, param)
 
-		return var_12_0.audioId
+		return config.audioId
 	end
 end
 
-function var_0_0._getEffectAudioParam(arg_13_0, arg_13_1, arg_13_2)
-	arg_13_0._effectAudioParam = arg_13_0._effectAudioParam or AudioParam.New()
+function AudioEffectMgr:_getEffectAudioParam(fadeInTime, fadeOutTime)
+	self._effectAudioParam = self._effectAudioParam or AudioParam.New()
 
-	arg_13_0._effectAudioParam:clear()
+	self._effectAudioParam:clear()
 
-	arg_13_0._effectAudioParam.loopNum = 1
-	arg_13_0._effectAudioParam.fadeInTime = arg_13_1
-	arg_13_0._effectAudioParam.fadeOutTime = arg_13_2
+	self._effectAudioParam.loopNum = 1
+	self._effectAudioParam.fadeInTime = fadeInTime
+	self._effectAudioParam.fadeOutTime = fadeOutTime
 
-	return arg_13_0._effectAudioParam
+	return self._effectAudioParam
 end
 
-function var_0_0.stopAudioByEffectPath(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = AudioConfig.instance:getAudioConfig(arg_14_1)
+function AudioEffectMgr:stopAudioByEffectPath(effectPath, fadeOutTime)
+	local config = AudioConfig.instance:getAudioConfig(effectPath)
 
-	if var_14_0 then
-		arg_14_0:stopAudio(var_14_0.audioId, arg_14_2)
+	if config then
+		self:stopAudio(config.audioId, fadeOutTime)
 	end
 end
 
-function var_0_0._onStopAudio(arg_15_0, arg_15_1)
-	if not arg_15_0._playingList[arg_15_1] then
+function AudioEffectMgr:_onStopAudio(audioId)
+	if not self._playingList[audioId] then
 		return
 	end
 
-	local var_15_0 = arg_15_0._playingList[arg_15_1]
+	local audioItem = self._playingList[audioId]
 
-	arg_15_0._pool:putObject(var_15_0)
+	self._pool:putObject(audioItem)
 
-	arg_15_0._playingList[arg_15_1] = nil
+	self._playingList[audioId] = nil
 end
 
-var_0_0.instance = var_0_0.New()
+AudioEffectMgr.instance = AudioEffectMgr.New()
 
-return var_0_0
+return AudioEffectMgr

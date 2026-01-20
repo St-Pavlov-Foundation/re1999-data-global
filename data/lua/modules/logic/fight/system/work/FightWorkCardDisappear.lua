@@ -1,10 +1,12 @@
-﻿module("modules.logic.fight.system.work.FightWorkCardDisappear", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkCardDisappear.lua
 
-local var_0_0 = class("FightWorkCardDisappear", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkCardDisappear", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
+local FightWorkCardDisappear = class("FightWorkCardDisappear", FightEffectBase)
+
+function FightWorkCardDisappear:onStart(context)
 	FightController.instance:dispatchEvent(FightEvent.CardDisappear)
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkCardDisappear

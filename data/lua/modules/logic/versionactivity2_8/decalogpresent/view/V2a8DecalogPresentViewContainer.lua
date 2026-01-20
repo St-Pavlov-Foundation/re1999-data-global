@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity2_8.decalogpresent.view.V2a8DecalogPresentViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/decalogpresent/view/V2a8DecalogPresentViewContainer.lua
 
-local var_0_0 = class("V2a8DecalogPresentViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_8.decalogpresent.view.V2a8DecalogPresentViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local V2a8DecalogPresentViewContainer = class("V2a8DecalogPresentViewContainer", BaseViewContainer)
+
+function V2a8DecalogPresentViewContainer:buildViews()
 	return {
 		V2a8DecalogPresentView.New()
 	}
 end
 
-return var_0_0
+return V2a8DecalogPresentViewContainer

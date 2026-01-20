@@ -1,19 +1,21 @@
-﻿module("modules.logic.versionactivity2_6.xugouji.view.XugoujiCardInfoViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/xugouji/view/XugoujiCardInfoViewContainer.lua
 
-local var_0_0 = class("XugoujiCardInfoViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_6.xugouji.view.XugoujiCardInfoViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local XugoujiCardInfoViewContainer = class("XugoujiCardInfoViewContainer", BaseViewContainer)
+
+function XugoujiCardInfoViewContainer:buildViews()
 	return {
 		XugoujiCardInfoView.New()
 	}
 end
 
-function var_0_0._overrideClickHome(arg_2_0)
+function XugoujiCardInfoViewContainer:_overrideClickHome()
 	NavigateButtonsView.homeClick()
 end
 
-function var_0_0.setVisibleInternal(arg_3_0, arg_3_1)
-	var_0_0.super.setVisibleInternal(arg_3_0, arg_3_1)
+function XugoujiCardInfoViewContainer:setVisibleInternal(isVisible)
+	XugoujiCardInfoViewContainer.super.setVisibleInternal(self, isVisible)
 end
 
-return var_0_0
+return XugoujiCardInfoViewContainer

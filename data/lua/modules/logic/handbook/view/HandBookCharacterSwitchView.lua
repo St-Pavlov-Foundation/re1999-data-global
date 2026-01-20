@@ -1,141 +1,143 @@
-﻿module("modules.logic.handbook.view.HandBookCharacterSwitchView", package.seeall)
+﻿-- chunkname: @modules/logic/handbook/view/HandBookCharacterSwitchView.lua
 
-local var_0_0 = class("HandBookCharacterSwitchView", BaseView)
+module("modules.logic.handbook.view.HandBookCharacterSwitchView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._simagecentericon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_centericon")
-	arg_1_0._simagelefticon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_lefticon")
-	arg_1_0._simagerighticon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_righticon")
-	arg_1_0._simagerighticon2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_righticon2")
-	arg_1_0._simagemask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_mask")
-	arg_1_0._gocharacterswitch = gohelper.findChild(arg_1_0.viewGO, "#go_characterswitch")
-	arg_1_0._simageline = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_line")
-	arg_1_0._simageswitchbg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_characterswitch/#simage_switchbg1")
-	arg_1_0._simageswitchbg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_characterswitch/#simage_switchbg2")
-	arg_1_0._simageswitchbg3 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_characterswitch/#simage_switchbg3")
-	arg_1_0._simageswitchbg4 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_characterswitch/#simage_switchbg4")
-	arg_1_0._simageswitchbg5 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_characterswitch/#simage_switchbg5")
-	arg_1_0._simageswitchbg6 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_characterswitch/#simage_switchbg6")
-	arg_1_0._btncharacter1 = gohelper.findChildClick(arg_1_0.viewGO, "#go_characterswitch/#simage_switchbg1/clickarea")
-	arg_1_0._btncharacter2 = gohelper.findChildClick(arg_1_0.viewGO, "#go_characterswitch/#simage_switchbg2/clickarea")
-	arg_1_0._btncharacter3 = gohelper.findChildClick(arg_1_0.viewGO, "#go_characterswitch/#simage_switchbg3/clickarea")
-	arg_1_0._btncharacter4 = gohelper.findChildClick(arg_1_0.viewGO, "#go_characterswitch/#simage_switchbg4/clickarea")
-	arg_1_0._btncharacter5 = gohelper.findChildClick(arg_1_0.viewGO, "#go_characterswitch/#simage_switchbg5/clickarea")
-	arg_1_0._btncharacter6 = gohelper.findChildClick(arg_1_0.viewGO, "#go_characterswitch/#simage_switchbg6/clickarea")
-	arg_1_0._anim = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._btncollection = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_characterswitch/#btn_collection")
+local HandBookCharacterSwitchView = class("HandBookCharacterSwitchView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function HandBookCharacterSwitchView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._simagecentericon = gohelper.findChildSingleImage(self.viewGO, "#simage_centericon")
+	self._simagelefticon = gohelper.findChildSingleImage(self.viewGO, "#simage_lefticon")
+	self._simagerighticon = gohelper.findChildSingleImage(self.viewGO, "#simage_righticon")
+	self._simagerighticon2 = gohelper.findChildSingleImage(self.viewGO, "#simage_righticon2")
+	self._simagemask = gohelper.findChildSingleImage(self.viewGO, "#simage_mask")
+	self._gocharacterswitch = gohelper.findChild(self.viewGO, "#go_characterswitch")
+	self._simageline = gohelper.findChildSingleImage(self.viewGO, "#simage_line")
+	self._simageswitchbg1 = gohelper.findChildSingleImage(self.viewGO, "#go_characterswitch/#simage_switchbg1")
+	self._simageswitchbg2 = gohelper.findChildSingleImage(self.viewGO, "#go_characterswitch/#simage_switchbg2")
+	self._simageswitchbg3 = gohelper.findChildSingleImage(self.viewGO, "#go_characterswitch/#simage_switchbg3")
+	self._simageswitchbg4 = gohelper.findChildSingleImage(self.viewGO, "#go_characterswitch/#simage_switchbg4")
+	self._simageswitchbg5 = gohelper.findChildSingleImage(self.viewGO, "#go_characterswitch/#simage_switchbg5")
+	self._simageswitchbg6 = gohelper.findChildSingleImage(self.viewGO, "#go_characterswitch/#simage_switchbg6")
+	self._btncharacter1 = gohelper.findChildClick(self.viewGO, "#go_characterswitch/#simage_switchbg1/clickarea")
+	self._btncharacter2 = gohelper.findChildClick(self.viewGO, "#go_characterswitch/#simage_switchbg2/clickarea")
+	self._btncharacter3 = gohelper.findChildClick(self.viewGO, "#go_characterswitch/#simage_switchbg3/clickarea")
+	self._btncharacter4 = gohelper.findChildClick(self.viewGO, "#go_characterswitch/#simage_switchbg4/clickarea")
+	self._btncharacter5 = gohelper.findChildClick(self.viewGO, "#go_characterswitch/#simage_switchbg5/clickarea")
+	self._btncharacter6 = gohelper.findChildClick(self.viewGO, "#go_characterswitch/#simage_switchbg6/clickarea")
+	self._anim = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._btncollection = gohelper.findChildButtonWithAudio(self.viewGO, "#go_characterswitch/#btn_collection")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btncharacter1:AddClickListener(arg_2_0._btncharacter1OnClick, arg_2_0)
-	arg_2_0._btncharacter2:AddClickListener(arg_2_0._btncharacter2OnClick, arg_2_0)
-	arg_2_0._btncharacter3:AddClickListener(arg_2_0._btncharacter3OnClick, arg_2_0)
-	arg_2_0._btncharacter4:AddClickListener(arg_2_0._btncharacter4OnClick, arg_2_0)
-	arg_2_0._btncharacter5:AddClickListener(arg_2_0._btncharacter5OnClick, arg_2_0)
-	arg_2_0._btncharacter6:AddClickListener(arg_2_0._btncharacter6OnClick, arg_2_0)
-	arg_2_0._btncollection:AddClickListener(arg_2_0._btncollectionOnClick, arg_2_0)
+function HandBookCharacterSwitchView:addEvents()
+	self._btncharacter1:AddClickListener(self._btncharacter1OnClick, self)
+	self._btncharacter2:AddClickListener(self._btncharacter2OnClick, self)
+	self._btncharacter3:AddClickListener(self._btncharacter3OnClick, self)
+	self._btncharacter4:AddClickListener(self._btncharacter4OnClick, self)
+	self._btncharacter5:AddClickListener(self._btncharacter5OnClick, self)
+	self._btncharacter6:AddClickListener(self._btncharacter6OnClick, self)
+	self._btncollection:AddClickListener(self._btncollectionOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btncharacter1:RemoveClickListener()
-	arg_3_0._btncharacter2:RemoveClickListener()
-	arg_3_0._btncharacter3:RemoveClickListener()
-	arg_3_0._btncharacter4:RemoveClickListener()
-	arg_3_0._btncharacter5:RemoveClickListener()
-	arg_3_0._btncharacter6:RemoveClickListener()
-	arg_3_0._btncollection:RemoveClickListener()
+function HandBookCharacterSwitchView:removeEvents()
+	self._btncharacter1:RemoveClickListener()
+	self._btncharacter2:RemoveClickListener()
+	self._btncharacter3:RemoveClickListener()
+	self._btncharacter4:RemoveClickListener()
+	self._btncharacter5:RemoveClickListener()
+	self._btncharacter6:RemoveClickListener()
+	self._btncollection:RemoveClickListener()
 end
 
-function var_0_0._btncollectionOnClick(arg_4_0)
-	arg_4_0:_openSubCharacterView(HandbookEnum.HeroType.AllHero)
+function HandBookCharacterSwitchView:_btncollectionOnClick()
+	self:_openSubCharacterView(HandbookEnum.HeroType.AllHero)
 end
 
-function var_0_0._btncharacter1OnClick(arg_5_0)
+function HandBookCharacterSwitchView:_btncharacter1OnClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_notice_open)
-	arg_5_0:_openSubCharacterView(3)
+	self:_openSubCharacterView(3)
 end
 
-function var_0_0._btncharacter2OnClick(arg_6_0)
+function HandBookCharacterSwitchView:_btncharacter2OnClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_notice_open)
-	arg_6_0:_openSubCharacterView(2)
+	self:_openSubCharacterView(2)
 end
 
-function var_0_0._btncharacter3OnClick(arg_7_0)
+function HandBookCharacterSwitchView:_btncharacter3OnClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_notice_open)
-	arg_7_0:_openSubCharacterView(1)
+	self:_openSubCharacterView(1)
 end
 
-function var_0_0._btncharacter4OnClick(arg_8_0)
+function HandBookCharacterSwitchView:_btncharacter4OnClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_notice_open)
-	arg_8_0:_openSubCharacterView(5)
+	self:_openSubCharacterView(5)
 end
 
-function var_0_0._btncharacter5OnClick(arg_9_0)
+function HandBookCharacterSwitchView:_btncharacter5OnClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_notice_open)
-	arg_9_0:_openSubCharacterView(4)
+	self:_openSubCharacterView(4)
 end
 
-function var_0_0._btncharacter6OnClick(arg_10_0)
+function HandBookCharacterSwitchView:_btncharacter6OnClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_notice_open)
-	arg_10_0:_openSubCharacterView(6)
+	self:_openSubCharacterView(6)
 end
 
-function var_0_0._openSubCharacterView(arg_11_0, arg_11_1)
-	HandbookController.instance:dispatchEvent(HandbookController.EventName.OnShowSubCharacterView, arg_11_1)
+function HandBookCharacterSwitchView:_openSubCharacterView(heroType)
+	HandbookController.instance:dispatchEvent(HandbookController.EventName.OnShowSubCharacterView, heroType)
 end
 
-function var_0_0._editableInitView(arg_12_0)
-	arg_12_0._simagebg:LoadImage(ResUrl.getCommonIcon("full/bg_fmand2"))
-	arg_12_0._simagecentericon:LoadImage(ResUrl.getCharacterDataIcon("bg_2_ciecle.png"))
-	arg_12_0._simagelefticon:LoadImage(ResUrl.getCommonIcon("bg_leftdown"))
-	arg_12_0._simagerighticon:LoadImage(ResUrl.getCommonIcon("bg_rightdown"))
-	arg_12_0._simagerighticon2:LoadImage(ResUrl.getCommonIcon("bg_rightup"))
-	arg_12_0._simagemask:LoadImage(ResUrl.getCommonIcon("full/bg_noise2"))
-	arg_12_0._simageline:LoadImage(ResUrl.getHandbookCharacterIcon("line"))
-	arg_12_0._simageswitchbg1:LoadImage(ResUrl.getHandbookCharacterImage("zz3"))
-	arg_12_0._simageswitchbg2:LoadImage(ResUrl.getHandbookCharacterImage("zz1"))
-	arg_12_0._simageswitchbg3:LoadImage(ResUrl.getHandbookCharacterImage("zz2"))
-	arg_12_0._simageswitchbg4:LoadImage(ResUrl.getHandbookCharacterImage("zz4"))
-	arg_12_0._simageswitchbg5:LoadImage(ResUrl.getHandbookCharacterImage("zz5"))
-	arg_12_0._simageswitchbg6:LoadImage(ResUrl.getHandbookCharacterImage("zz6"))
+function HandBookCharacterSwitchView:_editableInitView()
+	self._simagebg:LoadImage(ResUrl.getCommonIcon("full/bg_fmand2"))
+	self._simagecentericon:LoadImage(ResUrl.getCharacterDataIcon("bg_2_ciecle.png"))
+	self._simagelefticon:LoadImage(ResUrl.getCommonIcon("bg_leftdown"))
+	self._simagerighticon:LoadImage(ResUrl.getCommonIcon("bg_rightdown"))
+	self._simagerighticon2:LoadImage(ResUrl.getCommonIcon("bg_rightup"))
+	self._simagemask:LoadImage(ResUrl.getCommonIcon("full/bg_noise2"))
+	self._simageline:LoadImage(ResUrl.getHandbookCharacterIcon("line"))
+	self._simageswitchbg1:LoadImage(ResUrl.getHandbookCharacterImage("zz3"))
+	self._simageswitchbg2:LoadImage(ResUrl.getHandbookCharacterImage("zz1"))
+	self._simageswitchbg3:LoadImage(ResUrl.getHandbookCharacterImage("zz2"))
+	self._simageswitchbg4:LoadImage(ResUrl.getHandbookCharacterImage("zz4"))
+	self._simageswitchbg5:LoadImage(ResUrl.getHandbookCharacterImage("zz5"))
+	self._simageswitchbg6:LoadImage(ResUrl.getHandbookCharacterImage("zz6"))
 end
 
-function var_0_0._playViewOpenAnim(arg_13_0)
-	arg_13_0._anim:Play(UIAnimationName.Open, 0, 0)
+function HandBookCharacterSwitchView:_playViewOpenAnim()
+	self._anim:Play(UIAnimationName.Open, 0, 0)
 end
 
-function var_0_0.onUpdateParam(arg_14_0)
+function HandBookCharacterSwitchView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_15_0)
-	arg_15_0:addEventCb(HandbookController.instance, HandbookController.EventName.PlayCharacterSwitchOpenAnim, arg_15_0._playViewOpenAnim, arg_15_0)
+function HandBookCharacterSwitchView:onOpen()
+	self:addEventCb(HandbookController.instance, HandbookController.EventName.PlayCharacterSwitchOpenAnim, self._playViewOpenAnim, self)
 end
 
-function var_0_0.onClose(arg_16_0)
+function HandBookCharacterSwitchView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_17_0)
-	arg_17_0._simagebg:UnLoadImage()
-	arg_17_0._simagecentericon:UnLoadImage()
-	arg_17_0._simagelefticon:UnLoadImage()
-	arg_17_0._simagerighticon:UnLoadImage()
-	arg_17_0._simagerighticon2:UnLoadImage()
-	arg_17_0._simagemask:UnLoadImage()
-	arg_17_0._simageline:UnLoadImage()
-	arg_17_0._simageswitchbg1:UnLoadImage()
-	arg_17_0._simageswitchbg2:UnLoadImage()
-	arg_17_0._simageswitchbg3:UnLoadImage()
-	arg_17_0._simageswitchbg4:UnLoadImage()
-	arg_17_0._simageswitchbg5:UnLoadImage()
-	arg_17_0._simageswitchbg6:UnLoadImage()
-	arg_17_0:removeEventCb(HandbookController.instance, HandbookController.EventName.PlayCharacterSwitchOpenAnim, arg_17_0._playViewOpenAnim, arg_17_0)
+function HandBookCharacterSwitchView:onDestroyView()
+	self._simagebg:UnLoadImage()
+	self._simagecentericon:UnLoadImage()
+	self._simagelefticon:UnLoadImage()
+	self._simagerighticon:UnLoadImage()
+	self._simagerighticon2:UnLoadImage()
+	self._simagemask:UnLoadImage()
+	self._simageline:UnLoadImage()
+	self._simageswitchbg1:UnLoadImage()
+	self._simageswitchbg2:UnLoadImage()
+	self._simageswitchbg3:UnLoadImage()
+	self._simageswitchbg4:UnLoadImage()
+	self._simageswitchbg5:UnLoadImage()
+	self._simageswitchbg6:UnLoadImage()
+	self:removeEventCb(HandbookController.instance, HandbookController.EventName.PlayCharacterSwitchOpenAnim, self._playViewOpenAnim, self)
 end
 
-return var_0_0
+return HandBookCharacterSwitchView

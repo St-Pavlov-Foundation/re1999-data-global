@@ -1,15 +1,17 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.controller.EliminateMapEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/controller/EliminateMapEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity2_2.eliminate.controller.EliminateMapEvent", package.seeall)
 
-var_0_0.OnSelectChapterChange = GameUtil.getEventId()
-var_0_0.UnlockChapterAnimDone = GameUtil.getEventId()
-var_0_0.OnUpdateEpisodeInfo = GameUtil.getEventId()
-var_0_0.ClickCharacter = GameUtil.getEventId()
-var_0_0.UpdateTask = GameUtil.getEventId()
-var_0_0.SelectChessMen = GameUtil.getEventId()
-var_0_0.ChangeChessMen = GameUtil.getEventId()
-var_0_0.QuickSelectChessMen = GameUtil.getEventId()
-var_0_0.ClickEpisode = GameUtil.getEventId()
+local EliminateMapEvent = _M
 
-return var_0_0
+EliminateMapEvent.OnSelectChapterChange = GameUtil.getEventId()
+EliminateMapEvent.UnlockChapterAnimDone = GameUtil.getEventId()
+EliminateMapEvent.OnUpdateEpisodeInfo = GameUtil.getEventId()
+EliminateMapEvent.ClickCharacter = GameUtil.getEventId()
+EliminateMapEvent.UpdateTask = GameUtil.getEventId()
+EliminateMapEvent.SelectChessMen = GameUtil.getEventId()
+EliminateMapEvent.ChangeChessMen = GameUtil.getEventId()
+EliminateMapEvent.QuickSelectChessMen = GameUtil.getEventId()
+EliminateMapEvent.ClickEpisode = GameUtil.getEventId()
+
+return EliminateMapEvent

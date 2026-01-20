@@ -1,25 +1,27 @@
-﻿module("modules.logic.activity.controller.chessmap.step.ActivityChessStepBase", package.seeall)
+﻿-- chunkname: @modules/logic/activity/controller/chessmap/step/ActivityChessStepBase.lua
 
-local var_0_0 = class("ActivityChessStepBase")
+module("modules.logic.activity.controller.chessmap.step.ActivityChessStepBase", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.originData = arg_1_1
+local ActivityChessStepBase = class("ActivityChessStepBase")
+
+function ActivityChessStepBase:init(stepData)
+	self.originData = stepData
 end
 
-function var_0_0.start(arg_2_0)
+function ActivityChessStepBase:start()
 	return
 end
 
-function var_0_0.finish(arg_3_0)
-	local var_3_0 = ActivityChessGameController.instance.event
+function ActivityChessStepBase:finish()
+	local evtMgr = ActivityChessGameController.instance.event
 
-	if var_3_0 then
-		var_3_0:nextStep()
+	if evtMgr then
+		evtMgr:nextStep()
 	end
 end
 
-function var_0_0.dispose(arg_4_0)
-	arg_4_0.originData = nil
+function ActivityChessStepBase:dispose()
+	self.originData = nil
 end
 
-return var_0_0
+return ActivityChessStepBase

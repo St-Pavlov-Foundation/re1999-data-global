@@ -1,8 +1,10 @@
-﻿module("modules.logic.character.view.CharacterBackpackViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterBackpackViewContainer.lua
 
-local var_0_0 = class("CharacterBackpackViewContainer", BaseViewContainer)
+module("modules.logic.character.view.CharacterBackpackViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local CharacterBackpackViewContainer = class("CharacterBackpackViewContainer", BaseViewContainer)
+
+function CharacterBackpackViewContainer:buildViews()
 	return {
 		TabViewGroup.New(1, "#go_btns"),
 		TabViewGroup.New(2, "#go_container"),
@@ -11,83 +13,85 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-function var_0_0.playCardOpenAnimation(arg_2_0)
-	if arg_2_0._cardScrollView then
-		arg_2_0._cardScrollView:playOpenAnimation()
+function CharacterBackpackViewContainer:playCardOpenAnimation()
+	if self._cardScrollView then
+		self._cardScrollView:playOpenAnimation()
 	end
 end
 
-function var_0_0.playEquipOpenAnimation(arg_3_0)
-	if arg_3_0._equipScrollView then
-		arg_3_0._equipScrollView:playOpenAnimation()
+function CharacterBackpackViewContainer:playEquipOpenAnimation()
+	if self._equipScrollView then
+		self._equipScrollView:playOpenAnimation()
 	end
 end
 
-function var_0_0.buildTabViews(arg_4_0, arg_4_1)
-	if arg_4_1 == 1 then
-		arg_4_0._navigateButtonView = NavigateButtonsView.New({
+function CharacterBackpackViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			false
-		}, nil, arg_4_0._closeCallback, nil, nil, arg_4_0)
+		}, nil, self._closeCallback, nil, nil, self)
 
 		return {
-			arg_4_0._navigateButtonView
+			self._navigateButtonView
 		}
-	elseif arg_4_1 == 2 then
-		local var_4_0 = ListScrollParam.New()
+	elseif tabContainerId == 2 then
+		local scrollParam = ListScrollParam.New()
 
-		var_4_0.scrollGOPath = "#scroll_card"
-		var_4_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-		var_4_0.prefabUrl = arg_4_0._viewSetting.otherRes[1]
-		var_4_0.cellClass = CharacterBackpackCardListItem
-		var_4_0.scrollDir = ScrollEnum.ScrollDirV
-		var_4_0.lineCount = 6
-		var_4_0.cellWidth = 250
-		var_4_0.cellHeight = 555
-		var_4_0.cellSpaceH = 18
-		var_4_0.cellSpaceV = 20
-		var_4_0.startSpace = 9
-		var_4_0.frameUpdateMs = 100
+		scrollParam.scrollGOPath = "#scroll_card"
+		scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+		scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+		scrollParam.cellClass = CharacterBackpackCardListItem
+		scrollParam.scrollDir = ScrollEnum.ScrollDirV
+		scrollParam.lineCount = 6
+		scrollParam.cellWidth = 250
+		scrollParam.cellHeight = 555
+		scrollParam.cellSpaceH = 18
+		scrollParam.cellSpaceV = 20
+		scrollParam.startSpace = 9
+		scrollParam.frameUpdateMs = 100
 
-		local var_4_1 = {}
+		local cardAnimationDelayTimes = {}
 
-		for iter_4_0 = 1, 12 do
-			var_4_1[iter_4_0] = math.ceil((iter_4_0 - 1) % 6) * 0.06
+		for i = 1, 12 do
+			local delayTime = math.ceil((i - 1) % 6) * 0.06
+
+			cardAnimationDelayTimes[i] = delayTime
 		end
 
-		arg_4_0._cardScrollView = LuaListScrollViewWithAnimator.New(CharacterBackpackCardListModel.instance, var_4_0, var_4_1)
+		self._cardScrollView = LuaListScrollViewWithAnimator.New(CharacterBackpackCardListModel.instance, scrollParam, cardAnimationDelayTimes)
 
 		return {
 			MultiView.New({
-				arg_4_0._cardScrollView,
+				self._cardScrollView,
 				CharacterBackpackHeroView.New()
 			})
 		}
 	end
 end
 
-function var_0_0.switchTab(arg_5_0, arg_5_1)
-	arg_5_0:dispatchEvent(ViewEvent.ToSwitchTab, 2, arg_5_1)
+function CharacterBackpackViewContainer:switchTab(tabId)
+	self:dispatchEvent(ViewEvent.ToSwitchTab, 2, tabId)
 end
 
-function var_0_0._closeCallback(arg_6_0)
+function CharacterBackpackViewContainer:_closeCallback()
 	if not ViewMgr.instance:isOpen(ViewName.MainView) then
 		MainController.instance:dispatchEvent(MainEvent.ManuallyOpenMainView)
 	end
 end
 
-function var_0_0.onContainerOpen(arg_7_0)
-	arg_7_0.notPlayAnimation = true
+function CharacterBackpackViewContainer:onContainerOpen()
+	self.notPlayAnimation = true
 end
 
-function var_0_0.onContainerClose(arg_8_0)
-	arg_8_0.notPlayAnimation = false
+function CharacterBackpackViewContainer:onContainerClose()
+	self.notPlayAnimation = false
 end
 
-function var_0_0.onContainerOpenFinish(arg_9_0)
-	arg_9_0._navigateButtonView:resetCloseBtnAudioId(AudioEnum.UI.UI_Rolesclose)
-	arg_9_0._navigateButtonView:resetHomeBtnAudioId(AudioEnum.UI.UI_Rolesclose)
+function CharacterBackpackViewContainer:onContainerOpenFinish()
+	self._navigateButtonView:resetCloseBtnAudioId(AudioEnum.UI.UI_Rolesclose)
+	self._navigateButtonView:resetHomeBtnAudioId(AudioEnum.UI.UI_Rolesclose)
 end
 
-return var_0_0
+return CharacterBackpackViewContainer

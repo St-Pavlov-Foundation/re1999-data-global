@@ -1,18 +1,20 @@
-﻿module("modules.logic.fight.model.mo.FightHeroSpAttributeInfoMO", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/mo/FightHeroSpAttributeInfoMO.lua
 
-local var_0_0 = pureTable("FightHeroSpAttributeInfoMO")
+module("modules.logic.fight.model.mo.FightHeroSpAttributeInfoMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.uid = arg_1_1.uid
-	arg_1_0.attribute = {}
+local FightHeroSpAttributeInfoMO = pureTable("FightHeroSpAttributeInfoMO")
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1.attribute) do
-		local var_1_0 = HeroSpAttributeMO.New()
+function FightHeroSpAttributeInfoMO:init(info)
+	self.uid = info.uid
+	self.attribute = {}
 
-		var_1_0:init(iter_1_1)
+	for i, v in ipairs(info.attribute) do
+		local attrMo = HeroSpAttributeMO.New()
 
-		arg_1_0.attribute[iter_1_0] = var_1_0
+		attrMo:init(v)
+
+		self.attribute[i] = attrMo
 	end
 end
 
-return var_0_0
+return FightHeroSpAttributeInfoMO

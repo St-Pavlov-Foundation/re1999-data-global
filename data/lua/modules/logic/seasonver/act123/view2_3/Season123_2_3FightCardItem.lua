@@ -1,27 +1,29 @@
-﻿module("modules.logic.seasonver.act123.view2_3.Season123_2_3FightCardItem", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view2_3/Season123_2_3FightCardItem.lua
 
-local var_0_0 = class("Season123_2_3FightCardItem", UserDataDispose)
+module("modules.logic.seasonver.act123.view2_3.Season123_2_3FightCardItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+local Season123_2_3FightCardItem = class("Season123_2_3FightCardItem", UserDataDispose)
 
-	arg_1_0.go = arg_1_1
-	arg_1_0.goTop = gohelper.findChild(arg_1_1, "go_top")
-	arg_1_0.imageHead = gohelper.findChildImage(arg_1_1, "go_top/headiconbg/image_headicon")
-	arg_1_0.txtName = gohelper.findChildTextMesh(arg_1_1, "go_top/headiconbg/txt_owner")
-	arg_1_0.goSpecialCardBg = gohelper.findChild(arg_1_1, "bottom/left/go_specialcardbg")
-	arg_1_0.goCardPos = gohelper.findChild(arg_1_1, "bottom/left/go_cardpos")
-	arg_1_0.goSpecialCardName = gohelper.findChild(arg_1_1, "bottom/right/righttop/go_special")
-	arg_1_0.txtSpecialCardName = gohelper.findChildTextMesh(arg_1_0.goSpecialCardName, "txt_specialcardname")
-	arg_1_0.goNormalName = gohelper.findChild(arg_1_1, "bottom/right/righttop/go_normal")
-	arg_1_0.txtNormalCardName = gohelper.findChildTextMesh(arg_1_0.goNormalName, "txt_normalcardname")
-	arg_1_0._goDesc = gohelper.findChild(arg_1_1, "bottom/right/desclist/txt_descitem")
-	arg_1_0.layoutElement = gohelper.findChild(arg_1_1, "bottom"):GetComponent(typeof(UnityEngine.UI.LayoutElement))
+function Season123_2_3FightCardItem:ctor(go)
+	self:__onInit()
+
+	self.go = go
+	self.goTop = gohelper.findChild(go, "go_top")
+	self.imageHead = gohelper.findChildImage(go, "go_top/headiconbg/image_headicon")
+	self.txtName = gohelper.findChildTextMesh(go, "go_top/headiconbg/txt_owner")
+	self.goSpecialCardBg = gohelper.findChild(go, "bottom/left/go_specialcardbg")
+	self.goCardPos = gohelper.findChild(go, "bottom/left/go_cardpos")
+	self.goSpecialCardName = gohelper.findChild(go, "bottom/right/righttop/go_special")
+	self.txtSpecialCardName = gohelper.findChildTextMesh(self.goSpecialCardName, "txt_specialcardname")
+	self.goNormalName = gohelper.findChild(go, "bottom/right/righttop/go_normal")
+	self.txtNormalCardName = gohelper.findChildTextMesh(self.goNormalName, "txt_normalcardname")
+	self._goDesc = gohelper.findChild(go, "bottom/right/desclist/txt_descitem")
+	self.layoutElement = gohelper.findChild(go, "bottom"):GetComponent(typeof(UnityEngine.UI.LayoutElement))
 end
 
-var_0_0.MainRoleItemMinHeight = 390
-var_0_0.NormalRoleItemMinHeight = 315
-var_0_0.RoleCardPos = {
+Season123_2_3FightCardItem.MainRoleItemMinHeight = 390
+Season123_2_3FightCardItem.NormalRoleItemMinHeight = 315
+Season123_2_3FightCardItem.RoleCardPos = {
 	Vector2(-16.5, 0.5),
 	Vector2(-16.5, 0.5),
 	Vector2(-16.5, -6.5),
@@ -29,166 +31,166 @@ var_0_0.RoleCardPos = {
 	Vector2(-16.5, -1)
 }
 
-function var_0_0.setData(arg_2_0, arg_2_1)
-	if not arg_2_1 then
-		gohelper.setActive(arg_2_0.go, false)
+function Season123_2_3FightCardItem:setData(data)
+	if not data then
+		gohelper.setActive(self.go, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_2_0.go, true)
+	gohelper.setActive(self.go, true)
 
-	arg_2_0.equipId = arg_2_1.equipId
-	arg_2_0.heroUid = arg_2_1.heroUid
-	arg_2_0.isMainRole = not arg_2_0.heroUid
+	self.equipId = data.equipId
+	self.heroUid = data.heroUid
+	self.isMainRole = not self.heroUid
 
-	gohelper.setActive(arg_2_0.goSpecialCardBg, arg_2_0.isMainRole)
+	gohelper.setActive(self.goSpecialCardBg, self.isMainRole)
 
-	arg_2_0.layoutElement.minHeight = arg_2_0.isMainRole and var_0_0.MainRoleItemMinHeight or var_0_0.NormalRoleItemMinHeight
+	self.layoutElement.minHeight = self.isMainRole and Season123_2_3FightCardItem.MainRoleItemMinHeight or Season123_2_3FightCardItem.NormalRoleItemMinHeight
 
-	gohelper.setActive(arg_2_0.goTop, arg_2_1.count == 1)
-	arg_2_0:_setName()
-	arg_2_0:_setHead()
-	arg_2_0:_setCard(arg_2_0.equipId)
-	arg_2_0:_setDesc(arg_2_0.equipId)
+	gohelper.setActive(self.goTop, data.count == 1)
+	self:_setName()
+	self:_setHead()
+	self:_setCard(self.equipId)
+	self:_setDesc(self.equipId)
 end
 
-function var_0_0._setName(arg_3_0)
-	if arg_3_0.isMainRole then
-		arg_3_0.txtName.text = luaLang("seasonmainrolecardname")
+function Season123_2_3FightCardItem:_setName()
+	if self.isMainRole then
+		self.txtName.text = luaLang("seasonmainrolecardname")
 	else
-		local var_3_0 = arg_3_0:getHeroMO()
-		local var_3_1 = var_3_0 and var_3_0.config and var_3_0.config.name or ""
+		local mo = self:getHeroMO()
+		local name = mo and mo.config and mo.config.name or ""
 
-		arg_3_0.txtName.text = formatLuaLang("seasoncardnames", var_3_1)
+		self.txtName.text = formatLuaLang("seasoncardnames", name)
 	end
 end
 
-function var_0_0._setHead(arg_4_0)
-	local var_4_0 = Activity123Enum.MainRoleHeadIconID
+function Season123_2_3FightCardItem:_setHead()
+	local headIcon = Activity123Enum.MainRoleHeadIconID
 
-	if not arg_4_0.isMainRole then
-		local var_4_1 = arg_4_0:getHeroMO()
+	if not self.isMainRole then
+		local mo = self:getHeroMO()
 
-		if var_4_1 and var_4_1.skin then
-			local var_4_2 = SkinConfig.instance:getSkinCo(var_4_1.skin)
+		if mo and mo.skin then
+			local skinConfig = SkinConfig.instance:getSkinCo(mo.skin)
 
-			var_4_0 = var_4_2 and var_4_2.headIcon
+			headIcon = skinConfig and skinConfig.headIcon
 		end
 	end
 
-	gohelper.getSingleImage(arg_4_0.imageHead.gameObject):LoadImage(ResUrl.roomHeadIcon(var_4_0))
+	gohelper.getSingleImage(self.imageHead.gameObject):LoadImage(ResUrl.roomHeadIcon(headIcon))
 end
 
-function var_0_0.getHeroMO(arg_5_0)
-	local var_5_0 = Season123Model.instance:getBattleContext()
+function Season123_2_3FightCardItem:getHeroMO()
+	local context = Season123Model.instance:getBattleContext()
 
-	if var_5_0 and var_5_0.stage ~= nil and var_5_0.actId ~= nil then
-		return Season123HeroUtils.getHeroMO(var_5_0.actId, arg_5_0.heroUid, var_5_0.stage)
+	if context and context.stage ~= nil and context.actId ~= nil then
+		return Season123HeroUtils.getHeroMO(context.actId, self.heroUid, context.stage)
 	else
-		return HeroModel.instance:getById(arg_5_0.heroUid)
+		return HeroModel.instance:getById(self.heroUid)
 	end
 end
 
-function var_0_0._setCard(arg_6_0, arg_6_1)
-	if not arg_6_0.cardItem then
-		arg_6_0.cardItem = Season123_2_3CelebrityCardItem.New()
+function Season123_2_3FightCardItem:_setCard(equipId)
+	if not self.cardItem then
+		self.cardItem = Season123_2_3CelebrityCardItem.New()
 
-		arg_6_0.cardItem:init(arg_6_0.goCardPos, arg_6_1, {
+		self.cardItem:init(self.goCardPos, equipId, {
 			noClick = true
 		})
 	else
-		arg_6_0.cardItem:reset(arg_6_1)
+		self.cardItem:reset(equipId)
 	end
 
-	local var_6_0 = Season123Config.instance:getSeasonEquipCo(arg_6_1).rare
-	local var_6_1 = var_0_0.RoleCardPos[tonumber(var_6_0)] or Vector2(0, 0)
+	local rare = Season123Config.instance:getSeasonEquipCo(equipId).rare
+	local targetCardPos = Season123_2_3FightCardItem.RoleCardPos[tonumber(rare)] or Vector2(0, 0)
 
-	recthelper.setAnchor(arg_6_0.goCardPos.transform, var_6_1.x, var_6_1.y)
+	recthelper.setAnchor(self.goCardPos.transform, targetCardPos.x, targetCardPos.y)
 end
 
-function var_0_0._setDesc(arg_7_0, arg_7_1)
-	local var_7_0 = Season123Config.instance:getSeasonEquipCo(arg_7_1)
+function Season123_2_3FightCardItem:_setDesc(equipId)
+	local config = Season123Config.instance:getSeasonEquipCo(equipId)
 
-	if arg_7_0.isMainRole then
-		gohelper.setActive(arg_7_0.goSpecialCardName, true)
-		gohelper.setActive(arg_7_0.goNormalName, false)
+	if self.isMainRole then
+		gohelper.setActive(self.goSpecialCardName, true)
+		gohelper.setActive(self.goNormalName, false)
 
-		arg_7_0.txtSpecialCardName.text = var_7_0.name
+		self.txtSpecialCardName.text = config.name
 	else
-		gohelper.setActive(arg_7_0.goNormalName, true)
-		gohelper.setActive(arg_7_0.goSpecialCardName, false)
+		gohelper.setActive(self.goNormalName, true)
+		gohelper.setActive(self.goSpecialCardName, false)
 
-		arg_7_0.txtNormalCardName.text = var_7_0.name
+		self.txtNormalCardName.text = config.name
 	end
 
-	local var_7_1 = Season123EquipMetaUtils.getSkillEffectStrList(var_7_0)
-	local var_7_2 = Season123EquipMetaUtils.getEquipPropsStrList(var_7_0.attrId)
-	local var_7_3 = {}
+	local dataList = Season123EquipMetaUtils.getSkillEffectStrList(config)
+	local propsList = Season123EquipMetaUtils.getEquipPropsStrList(config.attrId)
+	local list = {}
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_2) do
-		table.insert(var_7_3, iter_7_1)
+	for i, v in ipairs(propsList) do
+		table.insert(list, v)
 	end
 
-	for iter_7_2, iter_7_3 in ipairs(var_7_1) do
-		table.insert(var_7_3, iter_7_3)
+	for i, v in ipairs(dataList) do
+		table.insert(list, v)
 	end
 
-	if not arg_7_0.itemList then
-		arg_7_0.itemList = arg_7_0:getUserDataTb_()
+	if not self.itemList then
+		self.itemList = self:getUserDataTb_()
 	end
 
-	for iter_7_4 = 1, math.max(#arg_7_0.itemList, #var_7_3) do
-		local var_7_4 = var_7_3[iter_7_4]
-		local var_7_5 = arg_7_0.itemList[iter_7_4] or arg_7_0:createDescItem(iter_7_4)
+	for i = 1, math.max(#self.itemList, #list) do
+		local data = list[i]
+		local item = self.itemList[i] or self:createDescItem(i)
 
-		arg_7_0:updateDescItem(var_7_5, var_7_4)
+		self:updateDescItem(item, data)
 	end
 end
 
-function var_0_0.createDescItem(arg_8_0, arg_8_1)
-	local var_8_0 = {}
-	local var_8_1 = gohelper.cloneInPlace(arg_8_0._goDesc, string.format("desc%s", arg_8_1))
+function Season123_2_3FightCardItem:createDescItem(index)
+	local item = {}
+	local go = gohelper.cloneInPlace(self._goDesc, string.format("desc%s", index))
 
-	var_8_0.go = var_8_1
-	var_8_0.txtDesc = var_8_1:GetComponent(typeof(TMPro.TMP_Text))
-	arg_8_0.itemList[arg_8_1] = var_8_0
+	item.go = go
+	item.txtDesc = go:GetComponent(typeof(TMPro.TMP_Text))
+	self.itemList[index] = item
 
-	return var_8_0
+	return item
 end
 
-function var_0_0.updateDescItem(arg_9_0, arg_9_1, arg_9_2)
-	if not arg_9_2 then
-		gohelper.setActive(arg_9_1.go, false)
+function Season123_2_3FightCardItem:updateDescItem(item, skillStr)
+	if not skillStr then
+		gohelper.setActive(item.go, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_9_1.go, true)
+	gohelper.setActive(item.go, true)
 
-	arg_9_1.txtDesc.text = arg_9_2 or ""
+	item.txtDesc.text = skillStr or ""
 end
 
-function var_0_0.destroyDescItem(arg_10_0, arg_10_1)
+function Season123_2_3FightCardItem:destroyDescItem(item)
 	return
 end
 
-function var_0_0.destroy(arg_11_0)
-	if arg_11_0.itemList then
-		for iter_11_0, iter_11_1 in ipairs(arg_11_0.itemList) do
-			arg_11_0:destroyDescItem(iter_11_1)
+function Season123_2_3FightCardItem:destroy()
+	if self.itemList then
+		for i, v in ipairs(self.itemList) do
+			self:destroyDescItem(v)
 		end
 
-		arg_11_0.itemList = nil
+		self.itemList = nil
 	end
 
-	if arg_11_0.cardItem then
-		arg_11_0.cardItem:destroy()
+	if self.cardItem then
+		self.cardItem:destroy()
 
-		arg_11_0.cardItem = nil
+		self.cardItem = nil
 	end
 
-	arg_11_0:__onDispose()
+	self:__onDispose()
 end
 
-return var_0_0
+return Season123_2_3FightCardItem

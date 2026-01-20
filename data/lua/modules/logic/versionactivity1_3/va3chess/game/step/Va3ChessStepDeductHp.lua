@@ -1,24 +1,26 @@
-﻿module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepDeductHp", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/va3chess/game/step/Va3ChessStepDeductHp.lua
 
-local var_0_0 = class("Va3ChessStepDeductHp", Va3ChessStepBase)
+module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepDeductHp", package.seeall)
 
-function var_0_0.start(arg_1_0)
-	arg_1_0:finish()
+local Va3ChessStepDeductHp = class("Va3ChessStepDeductHp", Va3ChessStepBase)
+
+function Va3ChessStepDeductHp:start()
+	self:finish()
 end
 
-function var_0_0.finish(arg_2_0)
-	local var_2_0 = Va3ChessGameController.instance.event
+function Va3ChessStepDeductHp:finish()
+	local evtMgr = Va3ChessGameController.instance.event
 
-	if var_2_0 then
-		var_2_0:setCurEvent(nil)
+	if evtMgr then
+		evtMgr:setCurEvent(nil)
 	end
 
-	local var_2_1 = arg_2_0.originData.hp
+	local hp = self.originData.hp
 
-	Va3ChessGameModel.instance:setHp(var_2_1)
+	Va3ChessGameModel.instance:setHp(hp)
 	Va3ChessGameController.instance:tryResumeSelectObj()
 	Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.CurrentHpUpdate)
-	var_0_0.super.finish(arg_2_0)
+	Va3ChessStepDeductHp.super.finish(self)
 end
 
-return var_0_0
+return Va3ChessStepDeductHp

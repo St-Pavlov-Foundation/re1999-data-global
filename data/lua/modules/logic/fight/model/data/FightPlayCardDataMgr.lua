@@ -1,15 +1,17 @@
-﻿module("modules.logic.fight.model.data.FightPlayCardDataMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightPlayCardDataMgr.lua
 
-local var_0_0 = FightDataClass("FightPlayCardDataMgr", FightDataMgrBase)
+module("modules.logic.fight.model.data.FightPlayCardDataMgr", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0.playCard = {}
-	arg_1_0.enemyPlayCard = {}
-	arg_1_0.enemyAct174PlayCard = {}
+local FightPlayCardDataMgr = FightDataClass("FightPlayCardDataMgr", FightDataMgrBase)
+
+function FightPlayCardDataMgr:onConstructor()
+	self.playCard = {}
+	self.enemyPlayCard = {}
+	self.enemyAct174PlayCard = {}
 end
 
-function var_0_0.setAct174EnemyCard(arg_2_0, arg_2_1)
-	FightDataUtil.coverData(FightCardDataHelper.newPlayCardList(arg_2_1), arg_2_0.enemyAct174PlayCard)
+function FightPlayCardDataMgr:setAct174EnemyCard(cardListProto)
+	FightDataUtil.coverData(FightCardDataHelper.newPlayCardList(cardListProto), self.enemyAct174PlayCard)
 end
 
-return var_0_0
+return FightPlayCardDataMgr

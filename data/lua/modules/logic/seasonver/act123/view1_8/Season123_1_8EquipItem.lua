@@ -1,226 +1,236 @@
-﻿module("modules.logic.seasonver.act123.view1_8.Season123_1_8EquipItem", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view1_8/Season123_1_8EquipItem.lua
 
-local var_0_0 = class("Season123_1_8EquipItem", ListScrollCellExtend)
+module("modules.logic.seasonver.act123.view1_8.Season123_1_8EquipItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	var_0_0.super.init(arg_1_0, arg_1_1)
+local Season123_1_8EquipItem = class("Season123_1_8EquipItem", ListScrollCellExtend)
 
-	arg_1_0._gopos = gohelper.findChild(arg_1_0.viewGO, "go_pos")
-	arg_1_0._gorole = gohelper.findChild(arg_1_0.viewGO, "go_role")
-	arg_1_0._simageroleicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "go_role/image_roleicon")
-	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "go_select")
-	arg_1_0._gonew = gohelper.findChild(arg_1_0.viewGO, "#go_new")
-	arg_1_0._gocount = gohelper.findChild(arg_1_0.viewGO, "go_count")
-	arg_1_0._txtcountvalue = gohelper.findChildText(arg_1_0.viewGO, "go_count/bg/#txt_countvalue")
-	arg_1_0._animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._imageroleicon = gohelper.findChildImage(arg_1_0.viewGO, "go_role/image_roleicon")
+function Season123_1_8EquipItem:init(go)
+	Season123_1_8EquipItem.super.init(self, go)
+
+	self._gopos = gohelper.findChild(self.viewGO, "go_pos")
+	self._gorole = gohelper.findChild(self.viewGO, "go_role")
+	self._simageroleicon = gohelper.findChildSingleImage(self.viewGO, "go_role/image_roleicon")
+	self._goselect = gohelper.findChild(self.viewGO, "go_select")
+	self._gonew = gohelper.findChild(self.viewGO, "#go_new")
+	self._gocount = gohelper.findChild(self.viewGO, "go_count")
+	self._txtcountvalue = gohelper.findChildText(self.viewGO, "go_count/bg/#txt_countvalue")
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._imageroleicon = gohelper.findChildImage(self.viewGO, "go_role/image_roleicon")
 end
 
-function var_0_0.addEvents(arg_2_0)
+function Season123_1_8EquipItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Season123_1_8EquipItem:removeEvents()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
-	arg_4_0._mo = arg_4_1
-	arg_4_0._uid = arg_4_1.id
-	arg_4_0._itemId = arg_4_1.itemId
+function Season123_1_8EquipItem:onUpdateMO(mo)
+	self._mo = mo
+	self._uid = mo.id
+	self._itemId = mo.itemId
 
-	arg_4_0:refreshUI()
-	arg_4_0:checkPlayAnim()
+	self:refreshUI()
+	self:checkPlayAnim()
 end
 
-var_0_0.ColumnCount = 6
-var_0_0.AnimRowCount = 4
-var_0_0.OpenAnimTime = 0.06
-var_0_0.OpenAnimStartTime = 0.05
+Season123_1_8EquipItem.ColumnCount = 6
+Season123_1_8EquipItem.AnimRowCount = 4
+Season123_1_8EquipItem.OpenAnimTime = 0.06
+Season123_1_8EquipItem.OpenAnimStartTime = 0.05
 
-function var_0_0.checkPlayAnim(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0.onDelayPlayOpen, arg_5_0)
+function Season123_1_8EquipItem:checkPlayAnim()
+	TaskDispatcher.cancelTask(self.onDelayPlayOpen, self)
 
-	local var_5_0 = Season123EquipItemListModel.instance:getDelayPlayTime(arg_5_0._mo)
+	local delayTime = Season123EquipItemListModel.instance:getDelayPlayTime(self._mo)
 
-	if var_5_0 == -1 then
-		arg_5_0._animator:Play("idle", 0, 0)
+	if delayTime == -1 then
+		self._animator:Play("idle", 0, 0)
 
-		arg_5_0._animator.speed = 1
+		self._animator.speed = 1
 	else
-		arg_5_0._animator:Play("open", 0, 0)
+		self._animator:Play("open", 0, 0)
 
-		arg_5_0._animator.speed = 0
+		self._animator.speed = 0
 
-		TaskDispatcher.runDelay(arg_5_0.onDelayPlayOpen, arg_5_0, var_5_0)
+		TaskDispatcher.runDelay(self.onDelayPlayOpen, self, delayTime)
 	end
 end
 
-function var_0_0.onDelayPlayOpen(arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0.onDelayPlayOpen, arg_6_0)
-	arg_6_0._animator:Play("open", 0, 0)
+function Season123_1_8EquipItem:onDelayPlayOpen()
+	TaskDispatcher.cancelTask(self.onDelayPlayOpen, self)
+	self._animator:Play("open", 0, 0)
 
-	arg_6_0._animator.speed = 1
+	self._animator.speed = 1
 end
 
-function var_0_0.refreshUI(arg_7_0)
-	local var_7_0 = arg_7_0._uid
-	local var_7_1 = Season123EquipItemListModel.isTrialEquip(var_7_0)
+function Season123_1_8EquipItem:refreshUI()
+	local itemUid = self._uid
+	local isTrialEquip = Season123EquipItemListModel.isTrialEquip(itemUid)
 
-	arg_7_0:refreshIcon(arg_7_0._itemId, var_7_0)
+	self:refreshIcon(self._itemId, itemUid)
 
-	local var_7_2, var_7_3 = Season123EquipItemListModel.instance:getItemEquipedPos(var_7_0)
+	local equipPos, equipSlot = Season123EquipItemListModel.instance:getItemEquipedPos(itemUid)
 
-	gohelper.setActive(arg_7_0._goselect, Season123EquipItemListModel.instance:isItemUidInShowSlot(var_7_0))
-	gohelper.setActive(arg_7_0._gonew, not var_7_1 and not Season123EquipItemListModel.instance.recordNew:contain(var_7_0))
+	gohelper.setActive(self._goselect, Season123EquipItemListModel.instance:isItemUidInShowSlot(itemUid))
+	gohelper.setActive(self._gonew, not isTrialEquip and not Season123EquipItemListModel.instance.recordNew:contain(itemUid))
 
-	if var_7_2 == nil then
-		gohelper.setActive(arg_7_0._gorole, false)
+	if equipPos == nil then
+		gohelper.setActive(self._gorole, false)
 	else
-		local var_7_4 = Season123EquipItemListModel.instance:getPosHeroUid(var_7_2)
+		local heroUid = Season123EquipItemListModel.instance:getPosHeroUid(equipPos)
 
-		if var_7_4 ~= nil and var_7_4 ~= Season123EquipItemListModel.EmptyUid then
-			arg_7_0:refreshEquipedHero(var_7_4)
+		if heroUid ~= nil and heroUid ~= Season123EquipItemListModel.EmptyUid then
+			self:refreshEquipedHero(heroUid)
 		else
-			gohelper.setActive(arg_7_0._gorole, false)
+			gohelper.setActive(self._gorole, false)
 		end
 	end
 
-	arg_7_0:refreshDeckCount()
+	self:refreshDeckCount()
 end
 
-function var_0_0.refreshDeckCount(arg_8_0)
-	local var_8_0 = arg_8_0._uid
-	local var_8_1, var_8_2 = Season123EquipItemListModel.instance:getNeedShowDeckCount(var_8_0)
+function Season123_1_8EquipItem:refreshDeckCount()
+	local itemUid = self._uid
+	local needShow, count = Season123EquipItemListModel.instance:getNeedShowDeckCount(itemUid)
 
-	gohelper.setActive(arg_8_0._gocount, var_8_1)
+	gohelper.setActive(self._gocount, needShow)
 
-	if var_8_1 then
-		arg_8_0._txtcountvalue.text = luaLang("multiple") .. tostring(var_8_2)
+	if needShow then
+		self._txtcountvalue.text = luaLang("multiple") .. tostring(count)
 	end
 end
 
-function var_0_0.refreshEquipedHero(arg_9_0, arg_9_1)
-	local var_9_0 = HeroModel.instance:getById(arg_9_1) or HeroGroupTrialModel.instance:getById(arg_9_1)
+function Season123_1_8EquipItem:refreshEquipedHero(heroUid)
+	local heroMO = HeroModel.instance:getById(heroUid) or HeroGroupTrialModel.instance:getById(heroUid)
 
 	if Season123EquipItemListModel.instance.stage ~= nil then
-		var_9_0 = var_9_0 or Season123HeroUtils.getHeroMO(Season123EquipItemListModel.instance.activityId, arg_9_1, Season123EquipItemListModel.instance.stage)
+		heroMO = heroMO or Season123HeroUtils.getHeroMO(Season123EquipItemListModel.instance.activityId, heroUid, Season123EquipItemListModel.instance.stage)
 	end
 
-	if not var_9_0 then
+	if not heroMO then
 		return
 	end
 
-	local var_9_1 = var_9_0.skin
+	local heroSkinId = heroMO.skin
 
-	gohelper.setActive(arg_9_0._gorole, true)
-	arg_9_0._simageroleicon:LoadImage(ResUrl.getHeadIconSmall(var_9_1))
+	gohelper.setActive(self._gorole, true)
+	self._simageroleicon:LoadImage(ResUrl.getHeadIconSmall(heroSkinId))
 end
 
-function var_0_0.refreshIcon(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_0:checkCreateIcon()
+function Season123_1_8EquipItem:refreshIcon(itemId, itemUid)
+	self:checkCreateIcon()
 
-	if arg_10_1 then
-		arg_10_0.icon:updateData(arg_10_1)
+	if itemId then
+		self.icon:updateData(itemId)
 
-		local var_10_0 = Season123EquipItemListModel.instance:disableBecauseSameCard(arg_10_2)
-		local var_10_1 = Season123EquipItemListModel.instance:disableBecauseRole(arg_10_1)
-		local var_10_2 = Season123EquipItemListModel.instance:disableBecauseCareerNotFit(arg_10_1)
-		local var_10_3 = Season123EquipItemListModel.instance:disableBecausePos(arg_10_1)
-		local var_10_4 = var_10_0 or var_10_2 or var_10_1 or var_10_3
+		local isSameCard = Season123EquipItemListModel.instance:disableBecauseSameCard(itemUid)
+		local isTypeWrong = Season123EquipItemListModel.instance:disableBecauseRole(itemId)
+		local isCareerWrong = Season123EquipItemListModel.instance:disableBecauseCareerNotFit(itemId)
+		local isPosWrong = Season123EquipItemListModel.instance:disableBecausePos(itemId)
+		local needDark = isSameCard or isCareerWrong or isTypeWrong or isPosWrong
 
-		arg_10_0.icon:setColorDark(var_10_4)
-		arg_10_0:setRoleIconDark(var_10_4)
+		self.icon:setColorDark(needDark)
+		self:setRoleIconDark(needDark)
 	end
 end
 
-function var_0_0.checkCreateIcon(arg_11_0)
-	if not arg_11_0.icon then
-		local var_11_0 = arg_11_0._view.viewContainer:getSetting().otherRes[2]
-		local var_11_1 = arg_11_0._view:getResInst(var_11_0, arg_11_0._gopos, "icon")
+function Season123_1_8EquipItem:checkCreateIcon()
+	if not self.icon then
+		local path = self._view.viewContainer:getSetting().otherRes[2]
+		local go = self._view:getResInst(path, self._gopos, "icon")
 
-		arg_11_0.icon = MonoHelper.addNoUpdateLuaComOnceToGo(var_11_1, Season123_1_8CelebrityCardEquip)
+		self.icon = MonoHelper.addNoUpdateLuaComOnceToGo(go, Season123_1_8CelebrityCardEquip)
 
-		arg_11_0.icon:setClickCall(arg_11_0.onClickSelf, arg_11_0)
+		self.icon:setClickCall(self.onClickSelf, self)
 	end
 end
 
-function var_0_0.setRoleIconDark(arg_12_0, arg_12_1)
-	if arg_12_1 then
-		SLFramework.UGUI.GuiHelper.SetColor(arg_12_0._imageroleicon, "#7b7b7b")
+function Season123_1_8EquipItem:setRoleIconDark(value)
+	if value then
+		SLFramework.UGUI.GuiHelper.SetColor(self._imageroleicon, "#7b7b7b")
 	else
-		SLFramework.UGUI.GuiHelper.SetColor(arg_12_0._imageroleicon, "#ffffff")
+		SLFramework.UGUI.GuiHelper.SetColor(self._imageroleicon, "#ffffff")
 	end
 end
 
-function var_0_0.onClickSelf(arg_13_0)
-	local var_13_0 = arg_13_0._uid
+function Season123_1_8EquipItem:onClickSelf()
+	local itemUid = self._uid
 
-	logNormal("onClickSelf : " .. tostring(var_13_0))
-	arg_13_0:checkClickNew(var_13_0)
+	logNormal("onClickSelf : " .. tostring(itemUid))
+	self:checkClickNew(itemUid)
 
-	if arg_13_0:checkCanNotEquipWithToast(var_13_0) then
+	if self:checkCanNotEquipWithToast(itemUid) then
 		return
 	end
 
-	if Season123EquipItemListModel.instance.curEquipMap[Season123EquipItemListModel.instance.curSelectSlot] == var_13_0 then
+	local oldItemUid = Season123EquipItemListModel.instance.curEquipMap[Season123EquipItemListModel.instance.curSelectSlot]
+
+	if oldItemUid == itemUid then
 		return
 	end
 
-	Season123EquipController.instance:equipItemOnlyShow(var_13_0)
+	Season123EquipController.instance:equipItemOnlyShow(itemUid)
 end
 
-function var_0_0.checkClickNew(arg_14_0, arg_14_1)
-	if not Season123EquipItemListModel.instance.recordNew:contain(arg_14_1) then
-		Season123EquipItemListModel.instance.recordNew:add(arg_14_1)
-		gohelper.setActive(arg_14_0._gonew, false)
+function Season123_1_8EquipItem:checkClickNew(itemUid)
+	if not Season123EquipItemListModel.instance.recordNew:contain(itemUid) then
+		Season123EquipItemListModel.instance.recordNew:add(itemUid)
+		gohelper.setActive(self._gonew, false)
 	end
 end
 
-var_0_0.Toast_Same_Card = 2851
-var_0_0.Toast_Wrong_Type = 2852
-var_0_0.Toast_MainRole_Wrong_Type = 2854
-var_0_0.Toast_Other_Hero_Equiped = 2853
-var_0_0.Toast_Career_Wrong = 2859
-var_0_0.Toast_Slot_Lock = 67
-var_0_0.Toast_Pos_Wrong = 70501
+Season123_1_8EquipItem.Toast_Same_Card = 2851
+Season123_1_8EquipItem.Toast_Wrong_Type = 2852
+Season123_1_8EquipItem.Toast_MainRole_Wrong_Type = 2854
+Season123_1_8EquipItem.Toast_Other_Hero_Equiped = 2853
+Season123_1_8EquipItem.Toast_Career_Wrong = 2859
+Season123_1_8EquipItem.Toast_Slot_Lock = 67
+Season123_1_8EquipItem.Toast_Pos_Wrong = 70501
 
-function var_0_0.checkCanNotEquipWithToast(arg_15_0, arg_15_1)
+function Season123_1_8EquipItem:checkCanNotEquipWithToast(itemUid)
 	if Season123EquipItemListModel.instance:slotIsLock(Season123EquipItemListModel.instance.curSelectSlot) then
-		GameFacade.showToast(var_0_0.Toast_Slot_Lock)
+		GameFacade.showToast(Season123_1_8EquipItem.Toast_Slot_Lock)
 
 		return true
 	end
 
-	if Season123EquipItemListModel.instance:disableBecauseSameCard(arg_15_1) then
-		GameFacade.showToast(var_0_0.Toast_Same_Card)
+	local isSameCard = Season123EquipItemListModel.instance:disableBecauseSameCard(itemUid)
+
+	if isSameCard then
+		GameFacade.showToast(Season123_1_8EquipItem.Toast_Same_Card)
 
 		return true
 	end
 
-	local var_15_0 = Season123EquipItemListModel.instance:getEquipMO(arg_15_1)
+	local itemMO = Season123EquipItemListModel.instance:getEquipMO(itemUid)
 
-	if var_15_0 then
-		if Season123EquipItemListModel.instance:disableBecauseRole(var_15_0.itemId) then
+	if itemMO then
+		local isTypeWrong = Season123EquipItemListModel.instance:disableBecauseRole(itemMO.itemId)
+
+		if isTypeWrong then
 			if Season123EquipItemListModel.instance.curPos == Season123EquipItemListModel.MainCharPos then
-				GameFacade.showToast(var_0_0.Toast_MainRole_Wrong_Type)
+				GameFacade.showToast(Season123_1_8EquipItem.Toast_MainRole_Wrong_Type)
 			else
-				GameFacade.showToast(var_0_0.Toast_Wrong_Type)
+				GameFacade.showToast(Season123_1_8EquipItem.Toast_Wrong_Type)
 			end
 
 			return true
 		end
 
-		if Season123EquipItemListModel.instance:disableBecauseCareerNotFit(var_15_0.itemId) then
-			GameFacade.showToast(var_0_0.Toast_Career_Wrong)
+		local isCareerWrong = Season123EquipItemListModel.instance:disableBecauseCareerNotFit(itemMO.itemId)
+
+		if isCareerWrong then
+			GameFacade.showToast(Season123_1_8EquipItem.Toast_Career_Wrong)
 
 			return true
 		end
 
-		local var_15_1, var_15_2 = Season123EquipItemListModel.instance:disableBecausePos(var_15_0.itemId)
+		local isPosWrong, tarPosStr = Season123EquipItemListModel.instance:disableBecausePos(itemMO.itemId)
 
-		if var_15_1 then
-			GameFacade.showToast(var_0_0.Toast_Pos_Wrong, var_15_2)
+		if isPosWrong then
+			GameFacade.showToast(Season123_1_8EquipItem.Toast_Pos_Wrong, tarPosStr)
 
 			return true
 		end
@@ -229,11 +239,11 @@ function var_0_0.checkCanNotEquipWithToast(arg_15_0, arg_15_1)
 	return false
 end
 
-function var_0_0.onDestroyView(arg_16_0)
-	if arg_16_0.icon then
-		arg_16_0.icon:removeEventListeners()
-		arg_16_0.icon:disposeUI()
+function Season123_1_8EquipItem:onDestroyView()
+	if self.icon then
+		self.icon:removeEventListeners()
+		self.icon:disposeUI()
 	end
 end
 
-return var_0_0
+return Season123_1_8EquipItem

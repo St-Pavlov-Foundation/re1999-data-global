@@ -1,18 +1,20 @@
-﻿module("modules.audio.AudioParam", package.seeall)
+﻿-- chunkname: @modules/audio/AudioParam.lua
 
-local var_0_0 = class("AudioParam")
+module("modules.audio.AudioParam", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0:clear()
+local AudioParam = class("AudioParam")
+
+function AudioParam:ctor()
+	self:clear()
 end
 
-function var_0_0.clear(arg_2_0)
-	arg_2_0.loopNum = nil
-	arg_2_0.fadeInTime = nil
-	arg_2_0.fadeOutTime = nil
-	arg_2_0.volume = nil
-	arg_2_0.callback = nil
-	arg_2_0.callbackTarget = nil
+function AudioParam:clear()
+	self.loopNum = nil
+	self.fadeInTime = nil
+	self.fadeOutTime = nil
+	self.volume = nil
+	self.callback = nil
+	self.callbackTarget = nil
 end
 
-return var_0_0
+return AudioParam

@@ -1,23 +1,25 @@
-﻿module("modules.logic.battlepass.view.BpChangeViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/battlepass/view/BpChangeViewContainer.lua
 
-local var_0_0 = class("BpChangeViewContainer", BaseViewContainer)
+module("modules.logic.battlepass.view.BpChangeViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local BpChangeViewContainer = class("BpChangeViewContainer", BaseViewContainer)
+
+function BpChangeViewContainer:buildViews()
 	return {}
 end
 
-function var_0_0.onContainerOpen(arg_2_0)
+function BpChangeViewContainer:onContainerOpen()
 	UIBlockMgr.instance:startBlock("BP_Switch")
-	TaskDispatcher.runDelay(arg_2_0._delayClose, arg_2_0, 1)
+	TaskDispatcher.runDelay(self._delayClose, self, 1)
 end
 
-function var_0_0._delayClose(arg_3_0)
-	arg_3_0:closeThis()
+function BpChangeViewContainer:_delayClose()
+	self:closeThis()
 end
 
-function var_0_0.onContainerClose(arg_4_0)
+function BpChangeViewContainer:onContainerClose()
 	UIBlockMgr.instance:endBlock("BP_Switch")
-	TaskDispatcher.cancelTask(arg_4_0._delayClose, arg_4_0)
+	TaskDispatcher.cancelTask(self._delayClose, self)
 end
 
-return var_0_0
+return BpChangeViewContainer

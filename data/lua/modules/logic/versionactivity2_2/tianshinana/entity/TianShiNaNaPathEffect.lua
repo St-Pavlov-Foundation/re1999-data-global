@@ -1,82 +1,86 @@
-﻿module("modules.logic.versionactivity2_2.tianshinana.entity.TianShiNaNaPathEffect", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/tianshinana/entity/TianShiNaNaPathEffect.lua
 
-local var_0_0 = class("TianShiNaNaPathEffect", LuaCompBase)
+module("modules.logic.versionactivity2_2.tianshinana.entity.TianShiNaNaPathEffect", package.seeall)
 
-function var_0_0.Create(arg_1_0)
-	local var_1_0 = UnityEngine.GameObject.New("Effect")
+local TianShiNaNaPathEffect = class("TianShiNaNaPathEffect", LuaCompBase)
 
-	if arg_1_0 then
-		var_1_0.transform:SetParent(arg_1_0.transform, false)
+function TianShiNaNaPathEffect.Create(parent)
+	local go = UnityEngine.GameObject.New("Effect")
+
+	if parent then
+		go.transform:SetParent(parent.transform, false)
 	end
 
-	return (MonoHelper.addNoUpdateLuaComOnceToGo(var_1_0, var_0_0))
+	local comp = MonoHelper.addNoUpdateLuaComOnceToGo(go, TianShiNaNaPathEffect)
+
+	return comp
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
+function TianShiNaNaPathEffect:init(go)
+	self.go = go
 end
 
-function var_0_0.initData(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5)
-	arg_3_0.x = arg_3_1
-	arg_3_0.y = arg_3_2
-	arg_3_0.type = arg_3_3
-	arg_3_0.delay = arg_3_4
-	arg_3_0.duration = arg_3_5
+function TianShiNaNaPathEffect:initData(x, y, type, delay, duration)
+	self.x = x
+	self.y = y
+	self.type = type
+	self.delay = delay
+	self.duration = duration
 
-	local var_3_0 = TianShiNaNaHelper.nodeToV3(TianShiNaNaHelper.getV2(arg_3_1, arg_3_2))
+	local pos = TianShiNaNaHelper.nodeToV3(TianShiNaNaHelper.getV2(x, y))
 
-	transformhelper.setLocalPos(arg_3_0.go.transform, var_3_0.x, var_3_0.y, var_3_0.z)
+	transformhelper.setLocalPos(self.go.transform, pos.x, pos.y, pos.z)
 
-	if arg_3_4 > 0 then
-		TaskDispatcher.runDelay(arg_3_0.playEffect, arg_3_0, arg_3_4)
+	if delay > 0 then
+		TaskDispatcher.runDelay(self.playEffect, self, delay)
 	else
-		arg_3_0:playEffect()
+		self:playEffect()
 	end
 
-	TaskDispatcher.runDelay(arg_3_0._delayInPool, arg_3_0, arg_3_4 + arg_3_5)
+	TaskDispatcher.runDelay(self._delayInPool, self, delay + duration)
 end
 
-function var_0_0.playEffect(arg_4_0)
-	if not arg_4_0.loader then
-		arg_4_0.loader = PrefabInstantiate.Create(arg_4_0.go)
+function TianShiNaNaPathEffect:playEffect()
+	if not self.loader then
+		self.loader = PrefabInstantiate.Create(self.go)
 
-		local var_4_0 = "scenes/v2a2_m_s12_tsnn_jshd/prefab/path_effect.prefab"
+		local path = "scenes/v2a2_m_s12_tsnn_jshd/prefab/path_effect.prefab"
 
-		arg_4_0.loader:startLoad(var_4_0, arg_4_0._onLoadEnd, arg_4_0)
-	elseif arg_4_0.loader:getInstGO() then
-		arg_4_0:_realPlayEffect()
+		self.loader:startLoad(path, self._onLoadEnd, self)
+	elseif self.loader:getInstGO() then
+		self:_realPlayEffect()
 	end
 end
 
-function var_0_0._onLoadEnd(arg_5_0)
-	local var_5_0 = arg_5_0.loader:getInstGO()
+function TianShiNaNaPathEffect:_onLoadEnd()
+	local instGo = self.loader:getInstGO()
 
-	arg_5_0._goglow = gohelper.findChild(var_5_0, "1x1_glow")
-	arg_5_0._gostar = gohelper.findChild(var_5_0, "vx_star")
+	self._goglow = gohelper.findChild(instGo, "1x1_glow")
+	self._gostar = gohelper.findChild(instGo, "vx_star")
 
-	arg_5_0:_realPlayEffect()
+	self:_realPlayEffect()
 end
 
-function var_0_0._realPlayEffect(arg_6_0)
-	gohelper.setActive(arg_6_0._goglow, false)
-	gohelper.setActive(arg_6_0._gostar, false)
-	gohelper.setActive(arg_6_0._goglow, arg_6_0.type == 1)
-	gohelper.setActive(arg_6_0._gostar, arg_6_0.type == 2)
+function TianShiNaNaPathEffect:_realPlayEffect()
+	gohelper.setActive(self._goglow, false)
+	gohelper.setActive(self._gostar, false)
+	gohelper.setActive(self._goglow, self.type == 1)
+	gohelper.setActive(self._gostar, self.type == 2)
 end
 
-function var_0_0._delayInPool(arg_7_0)
-	TianShiNaNaEffectPool.instance:returnToPool(arg_7_0)
+function TianShiNaNaPathEffect:_delayInPool()
+	TianShiNaNaEffectPool.instance:returnToPool(self)
 end
 
-function var_0_0.onDestroy(arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0.playEffect, arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0._delayInPool, arg_8_0)
+function TianShiNaNaPathEffect:onDestroy()
+	TaskDispatcher.cancelTask(self.playEffect, self)
+	TaskDispatcher.cancelTask(self._delayInPool, self)
 end
 
-function var_0_0.dispose(arg_9_0)
-	TaskDispatcher.cancelTask(arg_9_0.playEffect, arg_9_0)
-	TaskDispatcher.cancelTask(arg_9_0._delayInPool, arg_9_0)
-	gohelper.destroy(arg_9_0.go)
+function TianShiNaNaPathEffect:dispose()
+	TaskDispatcher.cancelTask(self.playEffect, self)
+	TaskDispatcher.cancelTask(self._delayInPool, self)
+	gohelper.destroy(self.go)
 end
 
-return var_0_0
+return TianShiNaNaPathEffect

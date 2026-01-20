@@ -1,177 +1,179 @@
-﻿module("modules.logic.character.view.CharacterBackpackEquipView", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterBackpackEquipView.lua
 
-local var_0_0 = class("CharacterBackpackEquipView", BaseView)
+module("modules.logic.character.view.CharacterBackpackEquipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._scrollequip = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_equip")
-	arg_1_0._goequipsort = gohelper.findChild(arg_1_0.viewGO, "#go_equipsort")
-	arg_1_0._btnequiplv = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_equipsort/bg/#btn_equiplv")
-	arg_1_0._btnequiprare = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_equipsort/bg/#btn_equiprare")
-	arg_1_0._btnequiptime = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_equipsort/bg/#btn_equiptime")
-	arg_1_0._btnfilter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_equipsort/#btn_filter")
-	arg_1_0._txtequipbackpacknum = gohelper.findChildText(arg_1_0.viewGO, "go_num/#txt_equipbackpacknum")
-	arg_1_0._btncompose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "compose/#btn_compose")
-	arg_1_0._simageheart = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_heart")
+local CharacterBackpackEquipView = class("CharacterBackpackEquipView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CharacterBackpackEquipView:onInitView()
+	self._scrollequip = gohelper.findChildScrollRect(self.viewGO, "#scroll_equip")
+	self._goequipsort = gohelper.findChild(self.viewGO, "#go_equipsort")
+	self._btnequiplv = gohelper.findChildButtonWithAudio(self.viewGO, "#go_equipsort/bg/#btn_equiplv")
+	self._btnequiprare = gohelper.findChildButtonWithAudio(self.viewGO, "#go_equipsort/bg/#btn_equiprare")
+	self._btnequiptime = gohelper.findChildButtonWithAudio(self.viewGO, "#go_equipsort/bg/#btn_equiptime")
+	self._btnfilter = gohelper.findChildButtonWithAudio(self.viewGO, "#go_equipsort/#btn_filter")
+	self._txtequipbackpacknum = gohelper.findChildText(self.viewGO, "go_num/#txt_equipbackpacknum")
+	self._btncompose = gohelper.findChildButtonWithAudio(self.viewGO, "compose/#btn_compose")
+	self._simageheart = gohelper.findChildSingleImage(self.viewGO, "#simage_heart")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnequiplv:AddClickListener(arg_2_0._btnequiplvOnClick, arg_2_0)
-	arg_2_0._btnequiprare:AddClickListener(arg_2_0._btnequiprareOnClick, arg_2_0)
-	arg_2_0._btnequiptime:AddClickListener(arg_2_0._btnequiptimeOnClick, arg_2_0)
-	arg_2_0._btncompose:AddClickListener(arg_2_0._btncomposeOnClick, arg_2_0)
-	arg_2_0._btnfilter:AddClickListener(arg_2_0._btnfilterOnClick, arg_2_0)
+function CharacterBackpackEquipView:addEvents()
+	self._btnequiplv:AddClickListener(self._btnequiplvOnClick, self)
+	self._btnequiprare:AddClickListener(self._btnequiprareOnClick, self)
+	self._btnequiptime:AddClickListener(self._btnequiptimeOnClick, self)
+	self._btncompose:AddClickListener(self._btncomposeOnClick, self)
+	self._btnfilter:AddClickListener(self._btnfilterOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnequiplv:RemoveClickListener()
-	arg_3_0._btnequiprare:RemoveClickListener()
-	arg_3_0._btnequiptime:RemoveClickListener()
-	arg_3_0._btncompose:RemoveClickListener()
-	arg_3_0._btnfilter:RemoveClickListener()
+function CharacterBackpackEquipView:removeEvents()
+	self._btnequiplv:RemoveClickListener()
+	self._btnequiprare:RemoveClickListener()
+	self._btnequiptime:RemoveClickListener()
+	self._btncompose:RemoveClickListener()
+	self._btnfilter:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._ani = arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function CharacterBackpackEquipView:_editableInitView()
+	self._ani = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	gohelper.addUIClickAudio(arg_4_0._btnequiplv.gameObject, AudioEnum.UI.UI_transverse_tabs_click)
-	gohelper.addUIClickAudio(arg_4_0._btnequiprare.gameObject, AudioEnum.UI.UI_transverse_tabs_click)
-	gohelper.addUIClickAudio(arg_4_0._btnequiptime.gameObject, AudioEnum.UI.UI_transverse_tabs_click)
-	gohelper.addUIClickAudio(arg_4_0._btncompose.gameObject, AudioEnum.HeroGroupUI.Play_UI_Inking_Open)
-	arg_4_0._simageheart:LoadImage(ResUrl.getCharacterIcon("bg_beijingwenli_xinzang"))
+	gohelper.addUIClickAudio(self._btnequiplv.gameObject, AudioEnum.UI.UI_transverse_tabs_click)
+	gohelper.addUIClickAudio(self._btnequiprare.gameObject, AudioEnum.UI.UI_transverse_tabs_click)
+	gohelper.addUIClickAudio(self._btnequiptime.gameObject, AudioEnum.UI.UI_transverse_tabs_click)
+	gohelper.addUIClickAudio(self._btncompose.gameObject, AudioEnum.HeroGroupUI.Play_UI_Inking_Open)
+	self._simageheart:LoadImage(ResUrl.getCharacterIcon("bg_beijingwenli_xinzang"))
 
-	arg_4_0._equipLvBtns = arg_4_0:getUserDataTb_()
-	arg_4_0._equipLvArrow = arg_4_0:getUserDataTb_()
-	arg_4_0._equipQualityBtns = arg_4_0:getUserDataTb_()
-	arg_4_0._equipQualityArrow = arg_4_0:getUserDataTb_()
+	self._equipLvBtns = self:getUserDataTb_()
+	self._equipLvArrow = self:getUserDataTb_()
+	self._equipQualityBtns = self:getUserDataTb_()
+	self._equipQualityArrow = self:getUserDataTb_()
 
-	for iter_4_0 = 1, 2 do
-		arg_4_0._equipLvBtns[iter_4_0] = gohelper.findChild(arg_4_0._btnequiplv.gameObject, "btn" .. tostring(iter_4_0))
-		arg_4_0._equipLvArrow[iter_4_0] = gohelper.findChild(arg_4_0._equipLvBtns[iter_4_0], "txt/arrow").transform
-		arg_4_0._equipQualityBtns[iter_4_0] = gohelper.findChild(arg_4_0._btnequiprare.gameObject, "btn" .. tostring(iter_4_0))
-		arg_4_0._equipQualityArrow[iter_4_0] = gohelper.findChild(arg_4_0._equipQualityBtns[iter_4_0], "txt/arrow").transform
+	for i = 1, 2 do
+		self._equipLvBtns[i] = gohelper.findChild(self._btnequiplv.gameObject, "btn" .. tostring(i))
+		self._equipLvArrow[i] = gohelper.findChild(self._equipLvBtns[i], "txt/arrow").transform
+		self._equipQualityBtns[i] = gohelper.findChild(self._btnequiprare.gameObject, "btn" .. tostring(i))
+		self._equipQualityArrow[i] = gohelper.findChild(self._equipQualityBtns[i], "txt/arrow").transform
 	end
 
-	gohelper.setActive(arg_4_0._equipLvArrow[1].gameObject, false)
-	gohelper.setActive(arg_4_0._equipQualityArrow[1].gameObject, false)
+	gohelper.setActive(self._equipLvArrow[1].gameObject, false)
+	gohelper.setActive(self._equipQualityArrow[1].gameObject, false)
 
-	arg_4_0.goNotFilter = gohelper.findChild(arg_4_0.viewGO, "#go_equipsort/#btn_filter/#go_notfilter")
-	arg_4_0.goFilter = gohelper.findChild(arg_4_0.viewGO, "#go_equipsort/#btn_filter/#go_filter")
+	self.goNotFilter = gohelper.findChild(self.viewGO, "#go_equipsort/#btn_filter/#go_notfilter")
+	self.goFilter = gohelper.findChild(self.viewGO, "#go_equipsort/#btn_filter/#go_filter")
 
-	arg_4_0:addEventCb(EquipController.instance, EquipEvent.onUpdateEquip, arg_4_0.refreshEquip, arg_4_0)
-	arg_4_0:addEventCb(EquipController.instance, EquipEvent.onDeleteEquip, arg_4_0.refreshEquip, arg_4_0)
-	arg_4_0:addEventCb(EquipController.instance, EquipEvent.OnEquipTypeHasChange, arg_4_0.onEquipTypeHasChange, arg_4_0)
+	self:addEventCb(EquipController.instance, EquipEvent.onUpdateEquip, self.refreshEquip, self)
+	self:addEventCb(EquipController.instance, EquipEvent.onDeleteEquip, self.refreshEquip, self)
+	self:addEventCb(EquipController.instance, EquipEvent.OnEquipTypeHasChange, self.onEquipTypeHasChange, self)
 end
 
-function var_0_0._btncomposeOnClick(arg_5_0)
+function CharacterBackpackEquipView:_btncomposeOnClick()
 	EquipController.instance:openEquipDecomposeView()
 end
 
-function var_0_0._btnequiplvOnClick(arg_6_0)
+function CharacterBackpackEquipView:_btnequiplvOnClick()
 	CharacterBackpackEquipListModel.instance:sortByLevel()
-	arg_6_0:_refreshEquipBtnIcon()
+	self:_refreshEquipBtnIcon()
 end
 
-function var_0_0._btnequiprareOnClick(arg_7_0)
+function CharacterBackpackEquipView:_btnequiprareOnClick()
 	CharacterBackpackEquipListModel.instance:sortByQuality()
-	arg_7_0:_refreshEquipBtnIcon()
+	self:_refreshEquipBtnIcon()
 end
 
-function var_0_0._btnequiptimeOnClick(arg_8_0)
+function CharacterBackpackEquipView:_btnequiptimeOnClick()
 	CharacterBackpackEquipListModel.instance:sortByTime()
-	arg_8_0:_refreshEquipBtnIcon()
+	self:_refreshEquipBtnIcon()
 end
 
-function var_0_0._btnfilterOnClick(arg_9_0)
+function CharacterBackpackEquipView:_btnfilterOnClick()
 	ViewMgr.instance:openView(ViewName.EquipFilterView, {
 		isNotShowObtain = true,
-		viewName = arg_9_0.viewName
+		viewName = self.viewName
 	})
 end
 
-function var_0_0.onUpdateParam(arg_10_0)
+function CharacterBackpackEquipView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_11_0)
-	arg_11_0.filterMo = EquipFilterModel.instance:generateFilterMo(arg_11_0.viewName)
+function CharacterBackpackEquipView:onOpen()
+	self.filterMo = EquipFilterModel.instance:generateFilterMo(self.viewName)
 
-	arg_11_0.viewContainer:setCurrentSelectCategoryId(ItemEnum.CategoryType.Equip)
+	self.viewContainer:setCurrentSelectCategoryId(ItemEnum.CategoryType.Equip)
 
-	arg_11_0._ani.enabled = #arg_11_0.tabContainer._tabAbLoaders < 2
-	arg_11_0._scrollequip.verticalNormalizedPosition = 1
+	self._ani.enabled = #self.tabContainer._tabAbLoaders < 2
+	self._scrollequip.verticalNormalizedPosition = 1
 
-	arg_11_0:refreshEquip()
-	arg_11_0:_refreshEquipBtnIcon()
+	self:refreshEquip()
+	self:_refreshEquipBtnIcon()
 end
 
-function var_0_0._refreshEquipBtnIcon(arg_12_0)
-	local var_12_0 = CharacterBackpackEquipListModel.instance:getBtnTag()
+function CharacterBackpackEquipView:_refreshEquipBtnIcon()
+	local tag = CharacterBackpackEquipListModel.instance:getBtnTag()
 
-	gohelper.setActive(arg_12_0._equipLvBtns[1], var_12_0 ~= 1)
-	gohelper.setActive(arg_12_0._equipLvBtns[2], var_12_0 == 1)
-	gohelper.setActive(arg_12_0._equipQualityBtns[1], var_12_0 ~= 2)
-	gohelper.setActive(arg_12_0._equipQualityBtns[2], var_12_0 == 2)
+	gohelper.setActive(self._equipLvBtns[1], tag ~= 1)
+	gohelper.setActive(self._equipLvBtns[2], tag == 1)
+	gohelper.setActive(self._equipQualityBtns[1], tag ~= 2)
+	gohelper.setActive(self._equipQualityBtns[2], tag == 2)
 
-	local var_12_1, var_12_2, var_12_3 = CharacterBackpackEquipListModel.instance:getRankState()
+	local levelState, qualityState, timeState = CharacterBackpackEquipListModel.instance:getRankState()
 
-	transformhelper.setLocalScale(arg_12_0._equipLvArrow[2], 1, var_12_1, 1)
-	transformhelper.setLocalScale(arg_12_0._equipQualityArrow[2], 1, var_12_2, 1)
+	transformhelper.setLocalScale(self._equipLvArrow[2], 1, levelState, 1)
+	transformhelper.setLocalScale(self._equipQualityArrow[2], 1, qualityState, 1)
 end
 
-function var_0_0.refreshEquip(arg_13_0)
-	local var_13_0 = EquipModel.instance:getEquips()
-	local var_13_1 = {}
+function CharacterBackpackEquipView:refreshEquip()
+	local equipMoList = EquipModel.instance:getEquips()
+	local newList = {}
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
-		if iter_13_1.config and arg_13_0.filterMo:checkIsIncludeTag(iter_13_1.config) then
-			table.insert(var_13_1, iter_13_1)
+	for _, equipMo in ipairs(equipMoList) do
+		if equipMo.config and self.filterMo:checkIsIncludeTag(equipMo.config) then
+			table.insert(newList, equipMo)
 		end
 	end
 
-	CharacterBackpackEquipListModel.instance:setEquipListNew(var_13_1)
-	arg_13_0:_showEquipBackpackNum()
-	arg_13_0:refreshFilterBtn()
+	CharacterBackpackEquipListModel.instance:setEquipListNew(newList)
+	self:_showEquipBackpackNum()
+	self:refreshFilterBtn()
 end
 
-function var_0_0.onEquipTypeHasChange(arg_14_0, arg_14_1)
-	if arg_14_0.viewName ~= arg_14_1 then
+function CharacterBackpackEquipView:onEquipTypeHasChange(viewName)
+	if self.viewName ~= viewName then
 		return
 	end
 
-	arg_14_0._scrollequip.verticalNormalizedPosition = 1
+	self._scrollequip.verticalNormalizedPosition = 1
 
-	arg_14_0:refreshEquip()
+	self:refreshEquip()
 end
 
-function var_0_0._showEquipBackpackNum(arg_15_0)
-	local var_15_0 = CharacterBackpackEquipListModel.instance:getCount()
+function CharacterBackpackEquipView:_showEquipBackpackNum()
+	local count = CharacterBackpackEquipListModel.instance:getCount()
 
-	arg_15_0._txtequipbackpacknum.text = GameUtil.getSubPlaceholderLuaLang(luaLang("CharacterBackpackEquipView_showEquipBackpackNum"), {
+	self._txtequipbackpacknum.text = GameUtil.getSubPlaceholderLuaLang(luaLang("CharacterBackpackEquipView_showEquipBackpackNum"), {
 		luaLang("equip"),
-		var_15_0,
+		count,
 		EquipConfig.instance:getEquipBackpackMaxCount()
 	})
 end
 
-function var_0_0.refreshFilterBtn(arg_16_0)
-	local var_16_0 = arg_16_0.filterMo:isFiltering()
+function CharacterBackpackEquipView:refreshFilterBtn()
+	local isFiltering = self.filterMo:isFiltering()
 
-	gohelper.setActive(arg_16_0.goNotFilter, not var_16_0)
-	gohelper.setActive(arg_16_0.goFilter, var_16_0)
+	gohelper.setActive(self.goNotFilter, not isFiltering)
+	gohelper.setActive(self.goFilter, isFiltering)
 end
 
-function var_0_0.onClose(arg_17_0)
+function CharacterBackpackEquipView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_18_0)
-	EquipFilterModel.instance:clear(arg_18_0.viewName)
+function CharacterBackpackEquipView:onDestroyView()
+	EquipFilterModel.instance:clear(self.viewName)
 	CharacterBackpackEquipListModel.instance:clearEquipList()
-	arg_18_0._simageheart:UnLoadImage()
+	self._simageheart:UnLoadImage()
 end
 
-return var_0_0
+return CharacterBackpackEquipView

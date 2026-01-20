@@ -1,5 +1,8 @@
-﻿module("modules.logic.activity.view.Vxax_LinkageActivity_PanelViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/Vxax_LinkageActivity_PanelViewContainer.lua
 
-local var_0_0 = LinkageActivity_BaseViewContainer.Vxax_LinkageActivity_PanelView_ContainerImpl()
+module("modules.logic.activity.view.Vxax_LinkageActivity_PanelViewContainer", package.seeall)
 
-return (class("Vxax_LinkageActivity_PanelViewContainer", var_0_0))
+local Impl = LinkageActivity_BaseViewContainer.Vxax_LinkageActivity_PanelView_ContainerImpl()
+local Vxax_LinkageActivity_PanelViewContainer = class("Vxax_LinkageActivity_PanelViewContainer", Impl)
+
+return Vxax_LinkageActivity_PanelViewContainer

@@ -1,79 +1,81 @@
-﻿module("modules.logic.dungeon.view.DungeonElementRewardView", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/DungeonElementRewardView.lua
 
-local var_0_0 = class("DungeonElementRewardView", BaseView)
+module("modules.logic.dungeon.view.DungeonElementRewardView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "#go_item")
-	arg_1_0._goreward0 = gohelper.findChild(arg_1_0.viewGO, "reward/#go_reward0")
-	arg_1_0._gocontent0 = gohelper.findChild(arg_1_0.viewGO, "reward/#go_reward0/#go_content0")
+local DungeonElementRewardView = class("DungeonElementRewardView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function DungeonElementRewardView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._goitem = gohelper.findChild(self.viewGO, "#go_item")
+	self._goreward0 = gohelper.findChild(self.viewGO, "reward/#go_reward0")
+	self._gocontent0 = gohelper.findChild(self.viewGO, "reward/#go_reward0/#go_content0")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function DungeonElementRewardView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function DungeonElementRewardView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function DungeonElementRewardView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function DungeonElementRewardView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:showReward(arg_6_0._gocontent0, arg_6_0.viewParam)
+function DungeonElementRewardView:onOpen()
+	self:showReward(self._gocontent0, self.viewParam)
 end
 
-function var_0_0.showReward(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = 80
-	local var_7_1 = 205
+function DungeonElementRewardView:showReward(container, rewardList)
+	local startPosX = 80
+	local width = 205
 
-	recthelper.setWidth(arg_7_1.transform, #arg_7_2 * var_7_1 + 20)
+	recthelper.setWidth(container.transform, #rewardList * width + 20)
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_2) do
-		local var_7_2 = gohelper.clone(arg_7_0._goitem, arg_7_1)
+	for i, reward in ipairs(rewardList) do
+		local item = gohelper.clone(self._goitem, container)
 
-		gohelper.setActive(var_7_2, true)
-		recthelper.setAnchor(var_7_2.transform, var_7_0 + var_7_1 * (iter_7_0 - 1), -75)
+		gohelper.setActive(item, true)
+		recthelper.setAnchor(item.transform, startPosX + width * (i - 1), -75)
 
-		local var_7_3 = gohelper.findChild(var_7_2, "itemicon")
-		local var_7_4 = IconMgr.instance:getCommonPropItemIcon(var_7_3)
-		local var_7_5 = gohelper.findChild(var_7_2.gameObject, "countbg")
+		local itemIconGO = gohelper.findChild(item, "itemicon")
+		local itemIcon = IconMgr.instance:getCommonPropItemIcon(itemIconGO)
+		local countbg = gohelper.findChild(item.gameObject, "countbg")
 
-		var_7_4:setMOValue(iter_7_1[1], iter_7_1[2], iter_7_1[3], nil, true)
-		var_7_4:isShowCount(true)
-		var_7_4:hideEquipLvAndBreak(true)
-		var_7_4:setHideLvAndBreakFlag(true)
-		var_7_4:setCountFontSize(40)
-		var_7_4:SetCountLocalY(43.6)
-		var_7_4:SetCountBgHeight(30)
-		var_7_4:SetCountBgScale(1, 1.3, 1)
-		var_7_4:setHideLvAndBreakFlag(true)
-		var_7_4:hideEquipLvAndBreak(true)
-		var_7_4._itemIcon:setJumpFinishCallback(arg_7_0.jumpFinishCallback, arg_7_0)
-		gohelper.setActive(var_7_5, false)
+		itemIcon:setMOValue(reward[1], reward[2], reward[3], nil, true)
+		itemIcon:isShowCount(true)
+		itemIcon:hideEquipLvAndBreak(true)
+		itemIcon:setHideLvAndBreakFlag(true)
+		itemIcon:setCountFontSize(40)
+		itemIcon:SetCountLocalY(43.6)
+		itemIcon:SetCountBgHeight(30)
+		itemIcon:SetCountBgScale(1, 1.3, 1)
+		itemIcon:setHideLvAndBreakFlag(true)
+		itemIcon:hideEquipLvAndBreak(true)
+		itemIcon._itemIcon:setJumpFinishCallback(self.jumpFinishCallback, self)
+		gohelper.setActive(countbg, false)
 	end
 end
 
-function var_0_0.jumpFinishCallback(arg_8_0)
+function DungeonElementRewardView:jumpFinishCallback()
 	DungeonController.instance:dispatchEvent(DungeonEvent.OnSetEpisodeListVisible, true)
 end
 
-function var_0_0.onClose(arg_9_0)
+function DungeonElementRewardView:onClose()
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_General_OK)
 end
 
-function var_0_0.onDestroyView(arg_10_0)
+function DungeonElementRewardView:onDestroyView()
 	return
 end
 
-return var_0_0
+return DungeonElementRewardView

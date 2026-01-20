@@ -1,191 +1,189 @@
-﻿module("modules.logic.fight.entity.comp.skill.FightTLEventObjFly", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skill/FightTLEventObjFly.lua
 
-local var_0_0 = class("FightTLEventObjFly", FightTimelineTrackItem)
+module("modules.logic.fight.entity.comp.skill.FightTLEventObjFly", package.seeall)
 
-function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.fly_obj = nil
-	arg_1_0.entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
-	arg_1_0.from_entity = arg_1_0.entityMgr:getEntity(arg_1_1.fromId)
-	arg_1_0.to_entity = arg_1_0.entityMgr:getEntity(arg_1_1.toId)
-	arg_1_0.params_arr = arg_1_3
-	arg_1_0._duration = arg_1_2
+local FightTLEventObjFly = class("FightTLEventObjFly", FightTimelineTrackItem)
 
-	local var_1_0 = tonumber(arg_1_3[1])
+function FightTLEventObjFly:onTrackStart(fightStepData, duration, paramsArr)
+	self.fly_obj = nil
+	self.entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+	self.from_entity = self.entityMgr:getEntity(fightStepData.fromId)
+	self.to_entity = self.entityMgr:getEntity(fightStepData.toId)
+	self.params_arr = paramsArr
+	self._duration = duration
 
-	if var_1_0 == 1 then
+	local _type = tonumber(paramsArr[1])
+
+	if _type == 1 then
 		-- block empty
-	elseif var_1_0 == 2 and arg_1_0.from_entity and arg_1_0.from_entity:isMySide() then
-		arg_1_0.fly_obj = arg_1_0.entityMgr:getEntity(arg_1_1.fromId).spine:getSpineGO()
-		arg_1_0._attacker = FightHelper.getEntity(FightEntityScene.MySideId)
+	elseif _type == 2 and self.from_entity and self.from_entity:isMySide() then
+		self.fly_obj = self.entityMgr:getEntity(fightStepData.fromId).spine:getSpineGO()
+		self._attacker = FightHelper.getEntity(FightEntityScene.MySideId)
 
-		arg_1_0.timelineItem.workTimelineItem:_cancelSideRenderOrder()
+		self.timelineItem.workTimelineItem:_cancelSideRenderOrder()
 	end
 
-	if not arg_1_0.fly_obj then
+	if not self.fly_obj then
 		return
 	end
 
-	arg_1_0:calFly(arg_1_1, arg_1_3)
+	self:calFly(fightStepData, paramsArr)
 end
 
-function var_0_0.calFly(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0.fightStepData = arg_2_1
+function FightTLEventObjFly:calFly(fightStepData, paramsArr)
+	self.fightStepData = fightStepData
 
-	local var_2_0 = 0
-	local var_2_1 = 0
-	local var_2_2 = 0
+	local startOffsetX, startOffsetY, startOffsetZ = 0, 0, 0
 
-	if arg_2_2[3] then
-		local var_2_3 = string.split(arg_2_2[3], ",")
+	if paramsArr[3] then
+		local arr = string.split(paramsArr[3], ",")
 
-		var_2_0 = var_2_3[1] and tonumber(var_2_3[1]) or var_2_0
-		var_2_1 = var_2_3[2] and tonumber(var_2_3[2]) or var_2_1
-		var_2_2 = var_2_3[3] and tonumber(var_2_3[3]) or var_2_2
+		startOffsetX = arr[1] and tonumber(arr[1]) or startOffsetX
+		startOffsetY = arr[2] and tonumber(arr[2]) or startOffsetY
+		startOffsetZ = arr[3] and tonumber(arr[3]) or startOffsetZ
 	end
 
-	local var_2_4 = 0
-	local var_2_5 = 0
-	local var_2_6 = 0
+	local endOffsetX, endOffsetY, endOffsetZ = 0, 0, 0
 
-	if arg_2_2[4] then
-		local var_2_7 = string.split(arg_2_2[4], ",")
+	if paramsArr[4] then
+		local arr = string.split(paramsArr[4], ",")
 
-		var_2_4 = var_2_7[1] and tonumber(var_2_7[1]) or var_2_4
-		var_2_5 = var_2_7[2] and tonumber(var_2_7[2]) or var_2_5
-		var_2_6 = var_2_7[3] and tonumber(var_2_7[3]) or var_2_6
+		endOffsetX = arr[1] and tonumber(arr[1]) or endOffsetX
+		endOffsetY = arr[2] and tonumber(arr[2]) or endOffsetY
+		endOffsetZ = arr[3] and tonumber(arr[3]) or endOffsetZ
 	end
 
-	arg_2_0._easeFunc = arg_2_2[5]
-	arg_2_0._y_offset_cruve = arg_2_2[6]
-	arg_2_0._x_move_cruve = arg_2_2[7]
-	arg_2_0._y_move_cruve = arg_2_2[8]
-	arg_2_0._z_move_cruve = arg_2_2[9]
-	arg_2_0._withRotation = arg_2_2[10] and tonumber(arg_2_2[10]) or 0
+	self._easeFunc = paramsArr[5]
+	self._y_offset_cruve = paramsArr[6]
+	self._x_move_cruve = paramsArr[7]
+	self._y_move_cruve = paramsArr[8]
+	self._z_move_cruve = paramsArr[9]
+	self._withRotation = paramsArr[10] and tonumber(paramsArr[10]) or 0
 
-	if arg_2_0.from_entity and not arg_2_0.from_entity:isMySide() then
-		var_2_0 = -var_2_0
+	if self.from_entity and not self.from_entity:isMySide() then
+		startOffsetX = -startOffsetX
 	end
 
-	local var_2_8, var_2_9, var_2_10 = transformhelper.getPos(arg_2_0.fly_obj.transform)
-	local var_2_11 = var_2_8 + var_2_0
-	local var_2_12 = var_2_9 + var_2_1
-	local var_2_13 = var_2_10 + var_2_2
-	local var_2_14 = string.nilorempty(arg_2_2[2]) and 2 or tonumber(arg_2_2[2])
-	local var_2_15
-	local var_2_16
-	local var_2_17
+	local startPosX, startPosY, startPosZ = transformhelper.getPos(self.fly_obj.transform)
+	local startPosX = startPosX + startOffsetX
+	local startPosY = startPosY + startOffsetY
+	local startPosZ = startPosZ + startOffsetZ
+	local flyType = string.nilorempty(paramsArr[2]) and 2 or tonumber(paramsArr[2])
+	local endPosX, endPosY, endPosZ
 
-	if arg_2_1.forcePosX then
-		var_2_15, var_2_16, var_2_17 = arg_2_1.forcePosX, arg_2_1.forcePosY, arg_2_1.forcePosZ
+	if fightStepData.forcePosX then
+		endPosX, endPosY, endPosZ = fightStepData.forcePosX, fightStepData.forcePosY, fightStepData.forcePosZ
 	else
-		var_2_15, var_2_16, var_2_17 = arg_2_0:calEndPos(var_2_14, var_2_4, var_2_5, var_2_6)
+		endPosX, endPosY, endPosZ = self:calEndPos(flyType, endOffsetX, endOffsetY, endOffsetZ)
 	end
 
-	local var_2_18 = arg_2_0._duration * FightModel.instance:getSpeed()
+	local duration1 = self._duration * FightModel.instance:getSpeed()
 
-	arg_2_0._totalFrame = arg_2_0.binder:GetFrameFloatByTime(var_2_18)
-	arg_2_0._startFrame = arg_2_0.binder.CurFrameFloat + 1
+	self._totalFrame = self.binder:GetFrameFloatByTime(duration1)
+	self._startFrame = self.binder.CurFrameFloat + 1
 
-	arg_2_0:_startFly(var_2_11, var_2_12, var_2_13, var_2_15, var_2_16, var_2_17)
+	self:_startFly(startPosX, startPosY, startPosZ, endPosX, endPosY, endPosZ)
 end
 
-function var_0_0._startFly(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5, arg_3_6)
-	arg_3_0:_setCurveMove(arg_3_0.fly_obj, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5, arg_3_6)
+function FightTLEventObjFly:_startFly(startPosX, startPosY, startPosZ, endPosX, endPosY, endPosZ)
+	self:_setCurveMove(self.fly_obj, startPosX, startPosY, startPosZ, endPosX, endPosY, endPosZ)
 end
 
-function var_0_0._setCurveMove(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4, arg_4_5, arg_4_6, arg_4_7)
-	if arg_4_0._withRotation == 1 then
-		arg_4_0:_calcRotation(arg_4_1, arg_4_2, arg_4_3, arg_4_4, arg_4_5, arg_4_6, arg_4_7)
+function FightTLEventObjFly:_setCurveMove(target_obj, startPosX, startPosY, startPosZ, endPosX, endPosY, endPosZ)
+	if self._withRotation == 1 then
+		self:_calcRotation(target_obj, startPosX, startPosY, startPosZ, endPosX, endPosY, endPosZ)
 	end
 
-	arg_4_0.UnitMoverCurve_comp = MonoHelper.getLuaComFromGo(arg_4_1, UnitMoverCurve)
-	arg_4_0.UnitMoverHandler_comp = MonoHelper.getLuaComFromGo(arg_4_1, UnitMoverHandler)
+	self.UnitMoverCurve_comp = MonoHelper.getLuaComFromGo(target_obj, UnitMoverCurve)
+	self.UnitMoverHandler_comp = MonoHelper.getLuaComFromGo(target_obj, UnitMoverHandler)
 
-	local var_4_0 = MonoHelper.addLuaComOnceToGo(arg_4_1, UnitMoverCurve)
-	local var_4_1 = MonoHelper.addLuaComOnceToGo(arg_4_1, UnitMoverHandler)
+	local mover = MonoHelper.addLuaComOnceToGo(target_obj, UnitMoverCurve)
+	local mover_handler = MonoHelper.addLuaComOnceToGo(target_obj, UnitMoverHandler)
 
-	var_4_1:init(arg_4_1)
-	var_4_1:addEventListeners()
-	var_4_0:setXMoveCruve(arg_4_0._x_move_cruve)
-	var_4_0:setYMoveCruve(arg_4_0._y_move_cruve)
-	var_4_0:setZMoveCruve(arg_4_0._z_move_cruve)
-	var_4_0:setCurveParam(arg_4_0._y_offset_cruve)
+	mover_handler:init(target_obj)
+	mover_handler:addEventListeners()
+	mover:setXMoveCruve(self._x_move_cruve)
+	mover:setYMoveCruve(self._y_move_cruve)
+	mover:setZMoveCruve(self._z_move_cruve)
+	mover:setCurveParam(self._y_offset_cruve)
 
-	if not string.nilorempty(arg_4_0._easeFunc) then
-		var_4_0:setEaseType(EaseType.Str2Type(arg_4_0._easeFunc))
+	if not string.nilorempty(self._easeFunc) then
+		mover:setEaseType(EaseType.Str2Type(self._easeFunc))
 	else
-		var_4_0:setEaseType(nil)
+		mover:setEaseType(nil)
 	end
 
-	var_4_0:simpleMove(arg_4_2, arg_4_3, arg_4_4, arg_4_5, arg_4_6, arg_4_7, arg_4_0._duration)
+	mover:simpleMove(startPosX, startPosY, startPosZ, endPosX, endPosY, endPosZ, self._duration)
 end
 
-function var_0_0._onPosChange(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0._moverParamDict and arg_5_0._moverParamDict[arg_5_1]
+function FightTLEventObjFly:_onPosChange(mover)
+	local moverParam = self._moverParamDict and self._moverParamDict[mover]
 
-	if var_5_0 then
-		local var_5_1, var_5_2, var_5_3 = arg_5_1:getPos()
-		local var_5_4 = var_5_0.target_obj
-		local var_5_5 = var_5_0.startPosX
-		local var_5_6 = var_5_0.startPosY
-		local var_5_7 = var_5_0.startPosZ
+	if moverParam then
+		local posX, posY, posZ = mover:getPos()
+		local target_obj = moverParam.target_obj
+		local startPosX = moverParam.startPosX
+		local startPosY = moverParam.startPosY
+		local startPosZ = moverParam.startPosZ
 
-		arg_5_0:_calcRotation(var_5_4, var_5_5, var_5_6, var_5_7, var_5_1, var_5_2, var_5_3)
+		self:_calcRotation(target_obj, startPosX, startPosY, startPosZ, posX, posY, posZ)
 
-		var_5_0.startPosX = var_5_1
-		var_5_0.startPosY = var_5_2
-		var_5_0.startPosZ = var_5_3
+		moverParam.startPosX = posX
+		moverParam.startPosY = posY
+		moverParam.startPosZ = posZ
 	end
 end
 
-function var_0_0._calcRotation(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5, arg_6_6, arg_6_7)
-	local var_6_0 = FightHelper.getEffectLookDir(arg_6_0.from_entity:getSide())
-	local var_6_1 = Quaternion.LookRotation(Vector3.New(arg_6_5 - arg_6_2, arg_6_6 - arg_6_3, arg_6_7 - arg_6_4), Vector3.up)
-	local var_6_2 = Quaternion.AngleAxis(var_6_0, Vector3.up)
-	local var_6_3 = Quaternion.AngleAxis(90, Vector3.up)
+function FightTLEventObjFly:_calcRotation(target_obj, startPosX, startPosY, startPosZ, endPosX, endPosY, endPosZ)
+	local lookDir = FightHelper.getEffectLookDir(self.from_entity:getSide())
+	local lookTargetRotation = Quaternion.LookRotation(Vector3.New(endPosX - startPosX, endPosY - startPosY, endPosZ - startPosZ), Vector3.up)
+	local lookDirRotation = Quaternion.AngleAxis(lookDir, Vector3.up)
+	local originRotation = Quaternion.AngleAxis(90, Vector3.up)
 
-	arg_6_1.transform.rotation = var_6_1 * var_6_2 * var_6_3
+	target_obj.transform.rotation = lookTargetRotation * lookDirRotation * originRotation
 end
 
-function var_0_0.calEndPos(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4)
-	if arg_7_1 == 1 then
-		return arg_7_2, arg_7_3, arg_7_4
-	elseif arg_7_1 == 2 then
-		return arg_7_0:_flyEffectTarget(arg_7_2, arg_7_3, arg_7_4, FightHelper.getEntityWorldCenterPos)
-	elseif arg_7_1 == 3 then
-		return arg_7_0:_flyEffectTarget(arg_7_2, arg_7_3, arg_7_4, false)
+function FightTLEventObjFly:calEndPos(flyType, endOffsetX, endOffsetY, endOffsetZ)
+	if flyType == 1 then
+		return endOffsetX, endOffsetY, endOffsetZ
+	elseif flyType == 2 then
+		return self:_flyEffectTarget(endOffsetX, endOffsetY, endOffsetZ, FightHelper.getEntityWorldCenterPos)
+	elseif flyType == 3 then
+		return self:_flyEffectTarget(endOffsetX, endOffsetY, endOffsetZ, false)
 	else
-		return arg_7_0:_flyEffectTarget(arg_7_2, arg_7_3, arg_7_4, FightHelper.getEntityHangPointPos, arg_7_0.params_arr[2])
+		return self:_flyEffectTarget(endOffsetX, endOffsetY, endOffsetZ, FightHelper.getEntityHangPointPos, self.params_arr[2])
 	end
 end
 
-function var_0_0._flyEffectTarget(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4, arg_8_5)
-	if arg_8_0.to_entity then
-		local var_8_0, var_8_1, var_8_2 = (arg_8_4 or FightHelper.getEntityWorldBottomPos)(arg_8_0.to_entity, arg_8_5)
-		local var_8_3 = var_8_0 + (arg_8_0.to_entity:isMySide() and -arg_8_1 or arg_8_1)
-		local var_8_4 = var_8_1 + arg_8_2
-		local var_8_5 = var_8_2 + arg_8_3
+function FightTLEventObjFly:_flyEffectTarget(endOffsetX, endOffsetY, endOffsetZ, endPosFunc, params)
+	if self.to_entity then
+		local getPosFunc = endPosFunc or FightHelper.getEntityWorldBottomPos
+		local defPosX, defPosY, defPosZ = getPosFunc(self.to_entity, params)
+		local offsetX = self.to_entity:isMySide() and -endOffsetX or endOffsetX
+		local endPosX = defPosX + offsetX
+		local endPosY = defPosY + endOffsetY
+		local endPosZ = defPosZ + endOffsetZ
 
-		return var_8_3, var_8_4, var_8_5
+		return endPosX, endPosY, endPosZ
 	end
 
-	return arg_8_1, arg_8_2, arg_8_3
+	return endOffsetX, endOffsetY, endOffsetZ
 end
 
-function var_0_0.onDestructor(arg_9_0)
-	if not gohelper.isNil(arg_9_0.fly_obj) then
-		if not arg_9_0.UnitMoverHandler_comp then
-			MonoHelper.removeLuaComFromGo(arg_9_0.fly_obj, UnitMoverHandler)
+function FightTLEventObjFly:onDestructor()
+	if not gohelper.isNil(self.fly_obj) then
+		if not self.UnitMoverHandler_comp then
+			MonoHelper.removeLuaComFromGo(self.fly_obj, UnitMoverHandler)
 
-			arg_9_0.UnitMoverHandler_comp = nil
+			self.UnitMoverHandler_comp = nil
 		end
 
-		if not arg_9_0.UnitMoverCurve_comp then
-			MonoHelper.removeLuaComFromGo(arg_9_0.fly_obj, UnitMoverCurve)
+		if not self.UnitMoverCurve_comp then
+			MonoHelper.removeLuaComFromGo(self.fly_obj, UnitMoverCurve)
 
-			arg_9_0.UnitMoverCurve_comp = nil
+			self.UnitMoverCurve_comp = nil
 		end
 	end
 end
 
-return var_0_0
+return FightTLEventObjFly

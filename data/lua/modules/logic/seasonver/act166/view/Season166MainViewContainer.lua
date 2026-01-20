@@ -1,43 +1,45 @@
-﻿module("modules.logic.seasonver.act166.view.Season166MainViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act166/view/Season166MainViewContainer.lua
 
-local var_0_0 = class("Season166MainViewContainer", BaseViewContainer)
+module("modules.logic.seasonver.act166.view.Season166MainViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Season166MainViewContainer = class("Season166MainViewContainer", BaseViewContainer)
 
-	arg_1_0.Season166MainSceneView = Season166MainSceneView.New()
+function Season166MainViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, arg_1_0.Season166MainSceneView)
-	table.insert(var_1_0, Season166MainView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
+	self.Season166MainSceneView = Season166MainSceneView.New()
 
-	return var_1_0
+	table.insert(views, self.Season166MainSceneView)
+	table.insert(views, Season166MainView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_topleft"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function Season166MainViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		}, HelpEnum.HelpId.Season166TrainHelp)
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-function var_0_0.getMainSceneView(arg_3_0)
-	return arg_3_0.Season166MainSceneView
+function Season166MainViewContainer:getMainSceneView()
+	return self.Season166MainSceneView
 end
 
-function var_0_0.setOverrideCloseClick(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0.navigateView:setOverrideClose(arg_4_1, arg_4_2)
+function Season166MainViewContainer:setOverrideCloseClick(overrideCloseFunc, overrideCloseObj)
+	self.navigateView:setOverrideClose(overrideCloseFunc, overrideCloseObj)
 end
 
-function var_0_0.setHelpBtnShowState(arg_5_0, arg_5_1)
-	arg_5_0.navigateView:setHelpVisible(arg_5_1)
+function Season166MainViewContainer:setHelpBtnShowState(showState)
+	self.navigateView:setHelpVisible(showState)
 end
 
-return var_0_0
+return Season166MainViewContainer

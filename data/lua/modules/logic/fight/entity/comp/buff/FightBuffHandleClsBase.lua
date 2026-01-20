@@ -1,33 +1,35 @@
-﻿module("modules.logic.fight.entity.comp.buff.FightBuffHandleClsBase", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/buff/FightBuffHandleClsBase.lua
 
-local var_0_0 = class("FightBuffHandleClsBase")
+module("modules.logic.fight.entity.comp.buff.FightBuffHandleClsBase", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local FightBuffHandleClsBase = class("FightBuffHandleClsBase")
+
+function FightBuffHandleClsBase:ctor()
 	return
 end
 
-function var_0_0.onBuffStart(arg_2_0, arg_2_1, arg_2_2)
+function FightBuffHandleClsBase:onBuffStart(entity, buffMo)
 	return
 end
 
-function var_0_0.onUpdateBuff(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
+function FightBuffHandleClsBase:onUpdateBuff(entityId, effectType, buffId, buffUid)
 	return
 end
 
-function var_0_0.clear(arg_4_0)
+function FightBuffHandleClsBase:clear()
 	return
 end
 
-function var_0_0.onBuffEnd(arg_5_0)
-	arg_5_0:clear()
+function FightBuffHandleClsBase:onBuffEnd()
+	self:clear()
 end
 
-function var_0_0.reset(arg_6_0)
-	arg_6_0:clear()
+function FightBuffHandleClsBase:reset()
+	self:clear()
 end
 
-function var_0_0.dispose(arg_7_0)
-	arg_7_0:clear()
+function FightBuffHandleClsBase:dispose()
+	self:clear()
 end
 
-return var_0_0
+return FightBuffHandleClsBase

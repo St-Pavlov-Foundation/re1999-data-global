@@ -1,49 +1,51 @@
-﻿module("modules.logic.scene.explore.comp.ExploreAudioComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/explore/comp/ExploreAudioComp.lua
 
-local var_0_0 = class("ExploreAudioComp", BaseSceneComp)
+module("modules.logic.scene.explore.comp.ExploreAudioComp", package.seeall)
 
-function var_0_0.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.audioManagerGo = gohelper.find("AudioManager")
-	arg_1_0.focusGo = CameraMgr.instance:getFocusTrs().gameObject
+local ExploreAudioComp = class("ExploreAudioComp", BaseSceneComp)
 
-	gohelper.enableAkListener(arg_1_0.audioManagerGo, false)
-	gohelper.enableAkListener(arg_1_0.focusGo, true)
+function ExploreAudioComp:onSceneStart(sceneId, levelId)
+	self.audioManagerGo = gohelper.find("AudioManager")
+	self.focusGo = CameraMgr.instance:getFocusTrs().gameObject
 
-	arg_1_0._allLoopAudioIds = {}
+	gohelper.enableAkListener(self.audioManagerGo, false)
+	gohelper.enableAkListener(self.focusGo, true)
+
+	self._allLoopAudioIds = {}
 end
 
-function var_0_0.onTriggerAudio(arg_2_0, arg_2_1, arg_2_2)
-	if not arg_2_0._allLoopAudioIds[arg_2_1] then
-		arg_2_0._allLoopAudioIds[arg_2_1] = {}
+function ExploreAudioComp:onTriggerAudio(unitId, playingId)
+	if not self._allLoopAudioIds[unitId] then
+		self._allLoopAudioIds[unitId] = {}
 	end
 
-	arg_2_0._allLoopAudioIds[arg_2_1][arg_2_2] = true
+	self._allLoopAudioIds[unitId][playingId] = true
 end
 
-function var_0_0.stopAudioByUnit(arg_3_0, arg_3_1)
-	if not arg_3_0._allLoopAudioIds[arg_3_1] then
+function ExploreAudioComp:stopAudioByUnit(unitId)
+	if not self._allLoopAudioIds[unitId] then
 		return
 	end
 
-	for iter_3_0 in pairs(arg_3_0._allLoopAudioIds[arg_3_1]) do
-		AudioMgr.instance:stopPlayingID(iter_3_0)
+	for playingId in pairs(self._allLoopAudioIds[unitId]) do
+		AudioMgr.instance:stopPlayingID(playingId)
 	end
 
-	arg_3_0._allLoopAudioIds[arg_3_1] = nil
+	self._allLoopAudioIds[unitId] = nil
 end
 
-function var_0_0.onSceneClose(arg_4_0)
-	for iter_4_0 in pairs(arg_4_0._allLoopAudioIds) do
-		arg_4_0:stopAudioByUnit(iter_4_0)
+function ExploreAudioComp:onSceneClose()
+	for unitId in pairs(self._allLoopAudioIds) do
+		self:stopAudioByUnit(unitId)
 	end
 
-	arg_4_0._allLoopAudioIds = {}
+	self._allLoopAudioIds = {}
 
-	gohelper.enableAkListener(arg_4_0.audioManagerGo, true)
-	gohelper.enableAkListener(arg_4_0.focusGo, false)
+	gohelper.enableAkListener(self.audioManagerGo, true)
+	gohelper.enableAkListener(self.focusGo, false)
 
-	arg_4_0.audioManagerGo = nil
-	arg_4_0.focusGo = nil
+	self.audioManagerGo = nil
+	self.focusGo = nil
 end
 
-return var_0_0
+return ExploreAudioComp

@@ -1,42 +1,44 @@
-﻿module("modules.logic.voyage.controller.VoyageController", package.seeall)
+﻿-- chunkname: @modules/logic/voyage/controller/VoyageController.lua
 
-local var_0_0 = class("VoyageController", BaseController)
+module("modules.logic.voyage.controller.VoyageController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local VoyageController = class("VoyageController", BaseController)
+
+function VoyageController:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._model = VoyageModel.instance
+function VoyageController:reInit()
+	self._model = VoyageModel.instance
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function VoyageController:addConstEvents()
 	return
 end
 
-function var_0_0._onReceiveAct1001GetInfoReply(arg_4_0, arg_4_1)
-	arg_4_0._model:onReceiveAct1001GetInfoReply(arg_4_1)
-	arg_4_0:dispatchEvent(VoyageEvent.OnReceiveAct1001GetInfoReply)
+function VoyageController:_onReceiveAct1001GetInfoReply(msg)
+	self._model:onReceiveAct1001GetInfoReply(msg)
+	self:dispatchEvent(VoyageEvent.OnReceiveAct1001GetInfoReply)
 end
 
-function var_0_0._onReceiveAct1001UpdatePush(arg_5_0, arg_5_1)
-	arg_5_0._model:onReceiveAct1001UpdatePush(arg_5_1)
-	arg_5_0:dispatchEvent(VoyageEvent.OnReceiveAct1001UpdatePush)
+function VoyageController:_onReceiveAct1001UpdatePush(msg)
+	self._model:onReceiveAct1001UpdatePush(msg)
+	self:dispatchEvent(VoyageEvent.OnReceiveAct1001UpdatePush)
 end
 
-function var_0_0.jump(arg_6_0)
-	if arg_6_0._model:hasAnyRewardAvailable() then
+function VoyageController:jump()
+	if self._model:hasAnyRewardAvailable() then
 		MailController.instance:open()
 	else
-		local var_6_0 = {
+		local param = {
 			chapterId = 101
 		}
 
 		DungeonController.instance:enterDungeonView(true)
-		DungeonController.instance:openDungeonChapterView(var_6_0)
+		DungeonController.instance:openDungeonChapterView(param)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+VoyageController.instance = VoyageController.New()
 
-return var_0_0
+return VoyageController

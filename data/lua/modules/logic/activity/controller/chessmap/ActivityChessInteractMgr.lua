@@ -1,32 +1,34 @@
-﻿module("modules.logic.activity.controller.chessmap.ActivityChessInteractMgr", package.seeall)
+﻿-- chunkname: @modules/logic/activity/controller/chessmap/ActivityChessInteractMgr.lua
 
-local var_0_0 = class("ActivityChessInteractMgr")
+module("modules.logic.activity.controller.chessmap.ActivityChessInteractMgr", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._list = {}
-	arg_1_0._dict = {}
+local ActivityChessInteractMgr = class("ActivityChessInteractMgr")
+
+function ActivityChessInteractMgr:ctor()
+	self._list = {}
+	self._dict = {}
 end
 
-function var_0_0.add(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_1.id
+function ActivityChessInteractMgr:add(interactObj)
+	local id = interactObj.id
 
-	arg_2_0:remove(var_2_0)
+	self:remove(id)
 
-	arg_2_0._dict[var_2_0] = arg_2_1
+	self._dict[id] = interactObj
 
-	table.insert(arg_2_0._list, arg_2_1)
+	table.insert(self._list, interactObj)
 end
 
-function var_0_0.remove(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_0._dict[arg_3_1]
+function ActivityChessInteractMgr:remove(id)
+	local interactObj = self._dict[id]
 
-	if var_3_0 then
-		arg_3_0._dict[arg_3_1] = nil
+	if interactObj then
+		self._dict[id] = nil
 
-		for iter_3_0, iter_3_1 in ipairs(arg_3_0._list) do
-			if iter_3_1 == var_3_0 then
-				table.remove(arg_3_0._list, iter_3_0)
-				iter_3_1:dispose()
+		for index, obj in ipairs(self._list) do
+			if obj == interactObj then
+				table.remove(self._list, index)
+				obj:dispose()
 
 				return true
 			end
@@ -36,57 +38,57 @@ function var_0_0.remove(arg_3_0, arg_3_1)
 	return false
 end
 
-function var_0_0.getList(arg_4_0)
-	return arg_4_0._list
+function ActivityChessInteractMgr:getList()
+	return self._list
 end
 
-function var_0_0.get(arg_5_0, arg_5_1)
-	if arg_5_0._dict then
-		return arg_5_0._dict[arg_5_1]
+function ActivityChessInteractMgr:get(id)
+	if self._dict then
+		return self._dict[id]
 	end
 
 	return nil
 end
 
-function var_0_0.removeAll(arg_6_0)
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0._list) do
-		iter_6_1:dispose()
+function ActivityChessInteractMgr:removeAll()
+	for _, obj in ipairs(self._list) do
+		obj:dispose()
 	end
 
-	arg_6_0._list = {}
-	arg_6_0._dict = {}
+	self._list = {}
+	self._dict = {}
 end
 
-function var_0_0.sortRenderOrder(arg_7_0, arg_7_1)
-	if arg_7_0.config and arg_7_1.config then
-		local var_7_0 = ActivityChessEnum.Res2SortOrder[arg_7_0.config.avatar] or 0
-		local var_7_1 = ActivityChessEnum.Res2SortOrder[arg_7_1.config.avatar] or 0
+function ActivityChessInteractMgr.sortRenderOrder(a, b)
+	if a.config and b.config then
+		local aAvatarOrder = ActivityChessEnum.Res2SortOrder[a.config.avatar] or 0
+		local bAvatarOrder = ActivityChessEnum.Res2SortOrder[b.config.avatar] or 0
 
-		if var_7_0 ~= var_7_1 then
-			return var_7_0 < var_7_1
+		if aAvatarOrder ~= bAvatarOrder then
+			return aAvatarOrder < bAvatarOrder
 		end
 	end
 
-	return arg_7_0.id < arg_7_1.id
+	return a.id < b.id
 end
 
-function var_0_0.getRenderOrder(arg_8_0)
-	if arg_8_0.config then
-		return ActivityChessEnum.Res2SortOrder[arg_8_0.config.avatar] or 0
+function ActivityChessInteractMgr.getRenderOrder(obj)
+	if obj.config then
+		return ActivityChessEnum.Res2SortOrder[obj.config.avatar] or 0
 	end
 
 	return 0
 end
 
-function var_0_0.dispose(arg_9_0)
-	if arg_9_0._list then
-		for iter_9_0, iter_9_1 in ipairs(arg_9_0._list) do
-			iter_9_1:dispose()
+function ActivityChessInteractMgr:dispose()
+	if self._list then
+		for _, obj in ipairs(self._list) do
+			obj:dispose()
 		end
 
-		arg_9_0._list = nil
-		arg_9_0._dict = nil
+		self._list = nil
+		self._dict = nil
 	end
 end
 
-return var_0_0
+return ActivityChessInteractMgr

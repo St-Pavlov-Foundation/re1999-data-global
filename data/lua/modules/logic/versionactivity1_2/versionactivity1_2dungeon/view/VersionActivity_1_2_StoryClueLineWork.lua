@@ -1,49 +1,51 @@
-﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity_1_2_StoryClueLineWork", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/versionactivity1_2dungeon/view/VersionActivity_1_2_StoryClueLineWork.lua
 
-local var_0_0 = class("VersionActivity_1_2_StoryClueLineWork", BaseWork)
+module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity_1_2_StoryClueLineWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	arg_1_0._lineTransform = arg_1_1
-	arg_1_0._toValue = arg_1_2
-	arg_1_0._duration = arg_1_3
-	arg_1_0._clueId = arg_1_4
+local VersionActivity_1_2_StoryClueLineWork = class("VersionActivity_1_2_StoryClueLineWork", BaseWork)
+
+function VersionActivity_1_2_StoryClueLineWork:ctor(lineTransform, toValue, duration, clueId)
+	self._lineTransform = lineTransform
+	self._toValue = toValue
+	self._duration = duration
+	self._clueId = clueId
 end
 
-function var_0_0.onStart(arg_2_0)
-	VersionActivity1_2DungeonController.instance:registerCallback(VersionActivity1_2DungeonEvent.skipLineWork, arg_2_0._skipLineWork, arg_2_0)
+function VersionActivity_1_2_StoryClueLineWork:onStart()
+	VersionActivity1_2DungeonController.instance:registerCallback(VersionActivity1_2DungeonEvent.skipLineWork, self._skipLineWork, self)
 
-	arg_2_0._tweenId = ZProj.TweenHelper.DOWidth(arg_2_0._lineTransform, arg_2_0._toValue, arg_2_0._duration, arg_2_0._onTweenEnd, arg_2_0)
+	self._tweenId = ZProj.TweenHelper.DOWidth(self._lineTransform, self._toValue, self._duration, self._onTweenEnd, self)
 
-	local var_2_0
+	local name
 
-	for iter_2_0 = 1, 4 do
-		if VersionActivity_1_2_StoryCollectView._signTypeName[arg_2_0._clueId] == VersionActivity_1_2_StoryCollectView._signTypeName[iter_2_0] then
-			var_2_0 = "play_ui_lvhu_clue_write_" .. iter_2_0
+	for i = 1, 4 do
+		if VersionActivity_1_2_StoryCollectView._signTypeName[self._clueId] == VersionActivity_1_2_StoryCollectView._signTypeName[i] then
+			name = "play_ui_lvhu_clue_write_" .. i
 		end
 	end
 
-	if var_2_0 then
-		AudioMgr.instance:trigger(AudioEnum.UI[var_2_0])
+	if name then
+		AudioMgr.instance:trigger(AudioEnum.UI[name])
 	end
 end
 
-function var_0_0._skipLineWork(arg_3_0)
-	arg_3_0:onDone(true)
-	recthelper.setWidth(arg_3_0._lineTransform, arg_3_0._toValue)
+function VersionActivity_1_2_StoryClueLineWork:_skipLineWork()
+	self:onDone(true)
+	recthelper.setWidth(self._lineTransform, self._toValue)
 end
 
-function var_0_0._onTweenEnd(arg_4_0)
-	arg_4_0:onDone(true)
+function VersionActivity_1_2_StoryClueLineWork:_onTweenEnd()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_5_0)
-	VersionActivity1_2DungeonController.instance:unregisterCallback(VersionActivity1_2DungeonEvent.skipLineWork, arg_5_0._skipLineWork, arg_5_0)
+function VersionActivity_1_2_StoryClueLineWork:clearWork()
+	VersionActivity1_2DungeonController.instance:unregisterCallback(VersionActivity1_2DungeonEvent.skipLineWork, self._skipLineWork, self)
 
-	if arg_5_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_5_0._tweenId)
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_5_0._tweenId = nil
+		self._tweenId = nil
 	end
 end
 
-return var_0_0
+return VersionActivity_1_2_StoryClueLineWork

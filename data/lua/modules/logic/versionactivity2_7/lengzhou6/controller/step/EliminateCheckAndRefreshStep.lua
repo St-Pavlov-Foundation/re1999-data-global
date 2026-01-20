@@ -1,17 +1,19 @@
-﻿module("modules.logic.versionactivity2_7.lengzhou6.controller.step.EliminateCheckAndRefreshStep", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/lengzhou6/controller/step/EliminateCheckAndRefreshStep.lua
 
-local var_0_0 = class("EliminateCheckAndRefreshStep", EliminateChessStepBase)
+module("modules.logic.versionactivity2_7.lengzhou6.controller.step.EliminateCheckAndRefreshStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = LocalEliminateChessModel.instance:canEliminate()
+local EliminateCheckAndRefreshStep = class("EliminateCheckAndRefreshStep", EliminateChessStepBase)
 
-	if var_1_0 == nil or #var_1_0 < 3 then
+function EliminateCheckAndRefreshStep:onStart()
+	local tipInfo = LocalEliminateChessModel.instance:canEliminate()
+
+	if tipInfo == nil or #tipInfo < 3 then
 		LengZhou6EliminateController.instance:dispatchEvent(LengZhou6Event.ClearEliminateEffect)
 		LocalEliminateChessModel.instance:createInitMoveState()
 		LengZhou6EliminateController.instance:createInitMoveStepAndUpdatePos()
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return EliminateCheckAndRefreshStep

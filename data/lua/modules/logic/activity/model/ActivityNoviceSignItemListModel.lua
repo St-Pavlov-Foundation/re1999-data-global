@@ -1,13 +1,15 @@
-﻿module("modules.logic.activity.model.ActivityNoviceSignItemListModel", package.seeall)
+﻿-- chunkname: @modules/logic/activity/model/ActivityNoviceSignItemListModel.lua
 
-local var_0_0 = class("ActivityNoviceSignItemListModel", ListScrollModel)
+module("modules.logic.activity.model.ActivityNoviceSignItemListModel", package.seeall)
 
-function var_0_0.setDayList(arg_1_0, arg_1_1)
-	arg_1_0._moList = arg_1_1 and arg_1_1 or {}
+local ActivityNoviceSignItemListModel = class("ActivityNoviceSignItemListModel", ListScrollModel)
 
-	arg_1_0:setList(arg_1_0._moList)
+function ActivityNoviceSignItemListModel:setDayList(Infos)
+	self._moList = Infos and Infos or {}
+
+	self:setList(self._moList)
 end
 
-var_0_0.instance = var_0_0.New()
+ActivityNoviceSignItemListModel.instance = ActivityNoviceSignItemListModel.New()
 
-return var_0_0
+return ActivityNoviceSignItemListModel

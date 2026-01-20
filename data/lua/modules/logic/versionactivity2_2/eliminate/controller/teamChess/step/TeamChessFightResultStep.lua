@@ -1,31 +1,33 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.TeamChessFightResultStep", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/controller/teamChess/step/TeamChessFightResultStep.lua
 
-local var_0_0 = class("TeamChessFightResultStep", EliminateTeamChessStepBase)
+module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.TeamChessFightResultStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = EliminateLevelModel.instance:getLevelId()
+local TeamChessFightResultStep = class("TeamChessFightResultStep", EliminateTeamChessStepBase)
 
-	EliminateLevelController.instance:dispatchEvent(EliminateChessEvent.TeamChessEnemyDie, var_1_0)
+function TeamChessFightResultStep:onStart()
+	local levelId = EliminateLevelModel.instance:getLevelId()
+
+	EliminateLevelController.instance:dispatchEvent(EliminateChessEvent.TeamChessEnemyDie, levelId)
 
 	if GuideModel.instance:isGuideRunning(22013) then
-		GuideController.instance:registerCallback(GuideEvent.FinishGuideLastStep, arg_1_0._finishStep, arg_1_0)
+		GuideController.instance:registerCallback(GuideEvent.FinishGuideLastStep, self._finishStep, self)
 	else
-		arg_1_0:_Done()
+		self:_Done()
 	end
 end
 
-function var_0_0._finishStep(arg_2_0, arg_2_1)
-	if arg_2_1 ~= 22013 then
+function TeamChessFightResultStep:_finishStep(guideId)
+	if guideId ~= 22013 then
 		return
 	end
 
-	GuideController.instance:unregisterCallback(GuideEvent.FinishGuideLastStep, arg_2_0._finishStep, arg_2_0)
-	arg_2_0:_Done()
+	GuideController.instance:unregisterCallback(GuideEvent.FinishGuideLastStep, self._finishStep, self)
+	self:_Done()
 end
 
-function var_0_0._Done(arg_3_0)
+function TeamChessFightResultStep:_Done()
 	EliminateLevelController.instance:openEliminateResultView()
-	arg_3_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return TeamChessFightResultStep

@@ -1,73 +1,75 @@
-﻿module("modules.logic.fightuiswitch.view.FightUISkinMaterialTipViewBanner", package.seeall)
+﻿-- chunkname: @modules/logic/fightuiswitch/view/FightUISkinMaterialTipViewBanner.lua
 
-local var_0_0 = class("FightUISkinMaterialTipViewBanner", MainSceneSkinMaterialTipViewBanner)
+module("modules.logic.fightuiswitch.view.FightUISkinMaterialTipViewBanner", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	var_0_0.super.onInitView(arg_1_0)
+local FightUISkinMaterialTipViewBanner = class("FightUISkinMaterialTipViewBanner", MainSceneSkinMaterialTipViewBanner)
 
-	arg_1_0._goSceneLogo = gohelper.findChild(arg_1_0.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/image_frame/#go_SceneLogo")
-	arg_1_0._goSceneLogo2 = gohelper.findChild(arg_1_0.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/image_frame/#go_SceneLogo2")
-	arg_1_0._goSceneLogo3 = gohelper.findChild(arg_1_0.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/image_frame/#go_SceneLogo3")
-	arg_1_0._goSceneLogo4 = gohelper.findChild(arg_1_0.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/image_frame/#go_SceneLogo4")
+function FightUISkinMaterialTipViewBanner:onInitView()
+	FightUISkinMaterialTipViewBanner.super.onInitView(self)
+
+	self._goSceneLogo = gohelper.findChild(self.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/image_frame/#go_SceneLogo")
+	self._goSceneLogo2 = gohelper.findChild(self.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/image_frame/#go_SceneLogo2")
+	self._goSceneLogo3 = gohelper.findChild(self.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/image_frame/#go_SceneLogo3")
+	self._goSceneLogo4 = gohelper.findChild(self.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/image_frame/#go_SceneLogo4")
 end
 
-function var_0_0._createInfoItemUserDataTb_(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_0:getUserDataTb_()
+function FightUISkinMaterialTipViewBanner:_createInfoItemUserDataTb_(goItem)
+	local tb = self:getUserDataTb_()
 
-	var_2_0._go = arg_2_1
-	var_2_0._gotag = gohelper.findChild(arg_2_1, "#go_tag")
-	var_2_0._gotag2 = gohelper.findChild(arg_2_1, "#go_tag2")
-	var_2_0._txtdesc = gohelper.findChildText(arg_2_1, "txt_desc")
-	var_2_0._txtname = gohelper.findChildText(arg_2_1, "txt_desc/txt_name")
-	var_2_0._simageinfobg = gohelper.findChildSingleImage(arg_2_1, "#simage_pic")
-	var_2_0._btn = gohelper.findChildButtonWithAudio(arg_2_1, "txt_desc/txt_name/#btn_Info")
-	arg_2_0._infoItemTbList = arg_2_0._infoItemTbList or {}
+	tb._go = goItem
+	tb._gotag = gohelper.findChild(goItem, "#go_tag")
+	tb._gotag2 = gohelper.findChild(goItem, "#go_tag2")
+	tb._txtdesc = gohelper.findChildText(goItem, "txt_desc")
+	tb._txtname = gohelper.findChildText(goItem, "txt_desc/txt_name")
+	tb._simageinfobg = gohelper.findChildSingleImage(goItem, "#simage_pic")
+	tb._btn = gohelper.findChildButtonWithAudio(goItem, "txt_desc/txt_name/#btn_Info")
+	self._infoItemTbList = self._infoItemTbList or {}
 
-	table.insert(arg_2_0._infoItemTbList, var_2_0)
+	table.insert(self._infoItemTbList, tb)
 
-	return var_2_0
+	return tb
 end
 
-function var_0_0._updateInfoItemUI(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	local var_3_0 = arg_3_1
-	local var_3_1 = ItemModel.instance:getItemConfig(arg_3_3, arg_3_2)
+function FightUISkinMaterialTipViewBanner:_updateInfoItemUI(itemUserDataTb, itemId, itemType)
+	local tb = itemUserDataTb
+	local config = ItemModel.instance:getItemConfig(itemType, itemId)
 
-	var_3_0._txtdesc.text = var_3_1.desc
-	var_3_0._txtname.text = var_3_1.name
+	tb._txtdesc.text = config.desc
+	tb._txtname.text = config.name
 
-	gohelper.setActive(var_3_0._gotag, false)
-	gohelper.setActive(var_3_0._gotag2, true)
-	arg_3_0:_addClickFightUI(var_3_0._btn, arg_3_2)
+	gohelper.setActive(tb._gotag, false)
+	gohelper.setActive(tb._gotag2, true)
+	self:_addClickFightUI(tb._btn, itemId)
 
-	local var_3_2 = FightUISwitchModel.instance:getStyleMoByItemId(arg_3_2)
+	local mo = FightUISwitchModel.instance:getStyleMoByItemId(itemId)
 
-	if var_3_2 then
-		var_3_0._uiSkinId = var_3_2.id
+	if mo then
+		tb._uiSkinId = mo.id
 
-		if not string.nilorempty(var_3_2.co.previewImage) then
-			var_3_0._simageinfobg:LoadImage(ResUrl.getMainSceneSwitchIcon(var_3_2.co.previewImage))
+		if not string.nilorempty(mo.co.previewImage) then
+			tb._simageinfobg:LoadImage(ResUrl.getMainSceneSwitchIcon(mo.co.previewImage))
 		end
 	end
 end
 
-function var_0_0.onOpen(arg_4_0)
-	arg_4_0._infoItemDataList = {}
-	arg_4_0._itemSubType = ItemModel.instance:getItemConfig(arg_4_0.viewParam.type, arg_4_0.viewParam.id).subType
+function FightUISkinMaterialTipViewBanner:onOpen()
+	self._infoItemDataList = {}
+	self._itemSubType = ItemModel.instance:getItemConfig(self.viewParam.type, self.viewParam.id).subType
 
-	tabletool.addValues(arg_4_0._infoItemDataList, arg_4_0:_getItemDataList())
-	arg_4_0:_refreshUI()
-	arg_4_0:_startAutoSwitch()
-	gohelper.setActive(arg_4_0._goSceneLogo, false)
-	gohelper.setActive(arg_4_0._goSceneLogo2, false)
-	gohelper.setActive(arg_4_0._goSceneLogo3, false)
-	gohelper.setActive(arg_4_0._goSceneLogo4, true)
+	tabletool.addValues(self._infoItemDataList, self:_getItemDataList())
+	self:_refreshUI()
+	self:_startAutoSwitch()
+	gohelper.setActive(self._goSceneLogo, false)
+	gohelper.setActive(self._goSceneLogo2, false)
+	gohelper.setActive(self._goSceneLogo3, false)
+	gohelper.setActive(self._goSceneLogo4, true)
 end
 
-function var_0_0._addClickFightUI(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_1:RemoveClickListener()
-	arg_5_1:AddClickListener(function()
-		FightUISwitchController.instance:openSceneView(arg_5_2)
-	end, arg_5_0)
+function FightUISkinMaterialTipViewBanner:_addClickFightUI(btn, itemId)
+	btn:RemoveClickListener()
+	btn:AddClickListener(function()
+		FightUISwitchController.instance:openSceneView(itemId)
+	end, self)
 end
 
-return var_0_0
+return FightUISkinMaterialTipViewBanner

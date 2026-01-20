@@ -1,25 +1,27 @@
-﻿module("modules.logic.gm.view.GM_V3a1_GaoSiNiao_LevelViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GM_V3a1_GaoSiNiao_LevelViewContainer.lua
 
-local var_0_0 = class("GM_V3a1_GaoSiNiao_LevelViewContainer", BaseViewContainer)
+module("modules.logic.gm.view.GM_V3a1_GaoSiNiao_LevelViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local GM_V3a1_GaoSiNiao_LevelViewContainer = class("GM_V3a1_GaoSiNiao_LevelViewContainer", BaseViewContainer)
+
+function GM_V3a1_GaoSiNiao_LevelViewContainer:buildViews()
 	return {
 		GM_V3a1_GaoSiNiao_LevelView.New()
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	ViewMgr.instance:closeView(arg_2_0.viewName)
+function GM_V3a1_GaoSiNiao_LevelViewContainer:onContainerClickModalMask()
+	ViewMgr.instance:closeView(self.viewName)
 end
 
-function var_0_0.addEvents(arg_3_0)
-	GMController.instance:registerCallback(GMEvent.V3a1_GaoSiNiao_LevelView_ShowAllTabIdUpdate, arg_3_0._gm_showAllTabIdUpdate, arg_3_0)
-	GMController.instance:registerCallback(GMEvent.V3a1_GaoSiNiao_LevelView_EnableEditModeOnSelect, arg_3_0._gm_enableEditModeOnSelect, arg_3_0)
+function GM_V3a1_GaoSiNiao_LevelViewContainer.addEvents(viewObj)
+	GMController.instance:registerCallback(GMEvent.V3a1_GaoSiNiao_LevelView_ShowAllTabIdUpdate, viewObj._gm_showAllTabIdUpdate, viewObj)
+	GMController.instance:registerCallback(GMEvent.V3a1_GaoSiNiao_LevelView_EnableEditModeOnSelect, viewObj._gm_enableEditModeOnSelect, viewObj)
 end
 
-function var_0_0.removeEvents(arg_4_0)
-	GMController.instance:unregisterCallback(GMEvent.V3a1_GaoSiNiao_LevelView_ShowAllTabIdUpdate, arg_4_0._gm_showAllTabIdUpdate, arg_4_0)
-	GMController.instance:unregisterCallback(GMEvent.V3a1_GaoSiNiao_LevelView_EnableEditModeOnSelect, arg_4_0._gm_enableEditModeOnSelect, arg_4_0)
+function GM_V3a1_GaoSiNiao_LevelViewContainer.removeEvents(viewObj)
+	GMController.instance:unregisterCallback(GMEvent.V3a1_GaoSiNiao_LevelView_ShowAllTabIdUpdate, viewObj._gm_showAllTabIdUpdate, viewObj)
+	GMController.instance:unregisterCallback(GMEvent.V3a1_GaoSiNiao_LevelView_EnableEditModeOnSelect, viewObj._gm_enableEditModeOnSelect, viewObj)
 end
 
-return var_0_0
+return GM_V3a1_GaoSiNiao_LevelViewContainer

@@ -1,11 +1,13 @@
-﻿module("modules.logic.survival.view.map.SurvivalDropSelectViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/SurvivalDropSelectViewContainer.lua
 
-local var_0_0 = class("SurvivalDropSelectViewContainer", BaseViewContainer)
+module("modules.logic.survival.view.map.SurvivalDropSelectViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local SurvivalDropSelectViewContainer = class("SurvivalDropSelectViewContainer", BaseViewContainer)
+
+function SurvivalDropSelectViewContainer:buildViews()
 	return {
 		SurvivalDropSelectView.New()
 	}
 end
 
-return var_0_0
+return SurvivalDropSelectViewContainer

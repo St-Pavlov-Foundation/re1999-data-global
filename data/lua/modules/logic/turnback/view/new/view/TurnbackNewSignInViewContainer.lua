@@ -1,13 +1,15 @@
-﻿module("modules.logic.turnback.view.new.view.TurnbackNewSignInViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/turnback/view/new/view/TurnbackNewSignInViewContainer.lua
 
-local var_0_0 = class("TurnbackNewSignInViewContainer", BaseViewContainer)
+module("modules.logic.turnback.view.new.view.TurnbackNewSignInViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local TurnbackNewSignInViewContainer = class("TurnbackNewSignInViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, TurnbackNewSignInView.New())
+function TurnbackNewSignInViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, TurnbackNewSignInView.New())
+
+	return views
 end
 
-return var_0_0
+return TurnbackNewSignInViewContainer

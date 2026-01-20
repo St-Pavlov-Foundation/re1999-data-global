@@ -1,16 +1,18 @@
-﻿module("modules.logic.character.defines.CharacterExtraEnum", package.seeall)
+﻿-- chunkname: @modules/logic/character/defines/CharacterExtraEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.character.defines.CharacterExtraEnum", package.seeall)
 
-var_0_0.TalentSkillSubCount = 3
-var_0_0.TalentSkillTreeNodeCount = 3
-var_0_0.UnlockTalentPointCountConst = 52
-var_0_0.SkillTreeNodeStatus = {
+local CharacterExtraEnum = _M
+
+CharacterExtraEnum.TalentSkillSubCount = 3
+CharacterExtraEnum.TalentSkillTreeNodeCount = 3
+CharacterExtraEnum.UnlockTalentPointCountConst = 52
+CharacterExtraEnum.SkillTreeNodeStatus = {
 	Light = 3,
 	Lock = 2,
 	Normal = 1
 }
-var_0_0.SkillTreeAnimName = {
+CharacterExtraEnum.SkillTreeAnimName = {
 	Click = "click",
 	OpenTip = "open",
 	Lock = "lock",
@@ -20,33 +22,33 @@ var_0_0.SkillTreeAnimName = {
 	Bottom = "bottom",
 	Normal = "normal"
 }
-var_0_0.EffectCellHeight = 136
-var_0_0.EffectCellSpace = 26
-var_0_0.WeaponType = {
+CharacterExtraEnum.EffectCellHeight = 136
+CharacterExtraEnum.EffectCellSpace = 26
+CharacterExtraEnum.WeaponType = {
 	Second = 2,
 	First = 1
 }
-var_0_0.WeaponStatus = {
+CharacterExtraEnum.WeaponStatus = {
 	Equip = 3,
 	Lock = 2,
 	Normal = 1
 }
-var_0_0.WeaponParams = {
-	[var_0_0.WeaponType.First] = {
+CharacterExtraEnum.WeaponParams = {
+	[CharacterExtraEnum.WeaponType.First] = {
 		RankupShow = "character_rankup_system_2",
 		UnlockConst = 53
 	},
-	[var_0_0.WeaponType.Second] = {
+	[CharacterExtraEnum.WeaponType.Second] = {
 		RankupShow = "character_rankup_system_3",
 		UnlockConst = 54
 	}
 }
-var_0_0.WeaponTypeReddot = "CharacterExtraEnum_WeaponTypeReddot"
-var_0_0.WeaponReddot = "CharacterExtraEnum_WeaponReddot"
-var_0_0.WeaponAnimName = {
+CharacterExtraEnum.WeaponTypeReddot = "CharacterExtraEnum_WeaponTypeReddot"
+CharacterExtraEnum.WeaponReddot = "CharacterExtraEnum_WeaponReddot"
+CharacterExtraEnum.WeaponAnimName = {
 	Switch = "switch",
 	Idle = "idle",
 	Unlock = "unlock"
 }
 
-return var_0_0
+return CharacterExtraEnum

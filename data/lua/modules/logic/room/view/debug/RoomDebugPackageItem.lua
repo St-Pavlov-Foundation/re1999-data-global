@@ -1,138 +1,140 @@
-﻿module("modules.logic.room.view.debug.RoomDebugPackageItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/debug/RoomDebugPackageItem.lua
 
-local var_0_0 = class("RoomDebugPackageItem", ListScrollCellExtend)
+module("modules.logic.room.view.debug.RoomDebugPackageItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtdefineid = gohelper.findChildText(arg_1_0.viewGO, "#txt_defineid")
-	arg_1_0._txtpackageorder = gohelper.findChildText(arg_1_0.viewGO, "#txt_packageorder")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#txt_name")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_click")
-	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "#go_select")
-	arg_1_0._simagebirthhero = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_birthhero")
-	arg_1_0._icon = gohelper.onceAddComponent(gohelper.findChild(arg_1_0.viewGO, "icon"), gohelper.Type_RawImage)
+local RoomDebugPackageItem = class("RoomDebugPackageItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomDebugPackageItem:onInitView()
+	self._txtdefineid = gohelper.findChildText(self.viewGO, "#txt_defineid")
+	self._txtpackageorder = gohelper.findChildText(self.viewGO, "#txt_packageorder")
+	self._txtname = gohelper.findChildText(self.viewGO, "#txt_name")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_click")
+	self._goselect = gohelper.findChild(self.viewGO, "#go_select")
+	self._simagebirthhero = gohelper.findChildSingleImage(self.viewGO, "#simage_birthhero")
+	self._icon = gohelper.onceAddComponent(gohelper.findChild(self.viewGO, "icon"), gohelper.Type_RawImage)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+function RoomDebugPackageItem:addEvents()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
+function RoomDebugPackageItem:removeEvents()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0._btnclickOnClick(arg_4_0)
-	local var_4_0 = UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftControl)
-	local var_4_1 = UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftShift)
-	local var_4_2 = RoomDebugPackageListModel.instance:getSelect()
-	local var_4_3 = RoomMapBlockModel.instance:getFullBlockMOById(arg_4_0._mo.id)
+function RoomDebugPackageItem:_btnclickOnClick()
+	local leftControl = UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftControl)
+	local leftShift = UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftShift)
+	local selectBlockId = RoomDebugPackageListModel.instance:getSelect()
+	local blockMO = RoomMapBlockModel.instance:getFullBlockMOById(self._mo.id)
 
 	if UnityEngine.Input.GetKey(UnityEngine.KeyCode.C) then
-		RoomDebugController.instance:debugSetPackageId(arg_4_0._mo.id, 0)
-	elseif not var_4_0 then
-		if not var_4_1 then
-			RoomDebugPackageListModel.instance:setSelect(arg_4_0._mo.id)
+		RoomDebugController.instance:debugSetPackageId(self._mo.id, 0)
+	elseif not leftControl then
+		if not leftShift then
+			RoomDebugPackageListModel.instance:setSelect(self._mo.id)
 
-			if var_4_3 then
-				local var_4_4 = HexMath.hexToPosition(var_4_3.hexPoint, RoomBlockEnum.BlockSize)
+			if blockMO then
+				local pos = HexMath.hexToPosition(blockMO.hexPoint, RoomBlockEnum.BlockSize)
 
-				arg_4_0._scene.camera:tweenCamera({
-					focusX = var_4_4.x,
-					focusY = var_4_4.y
+				self._scene.camera:tweenCamera({
+					focusX = pos.x,
+					focusY = pos.y
 				})
 			end
 		else
-			RoomDebugController.instance:debugSetMainRes(arg_4_0._mo.id)
+			RoomDebugController.instance:debugSetMainRes(self._mo.id)
 		end
-	elseif not var_4_2 or var_4_2 == arg_4_0._mo.id then
-		RoomDebugController.instance:debugSetPackageOrder(arg_4_0._mo.id)
+	elseif not selectBlockId or selectBlockId == self._mo.id then
+		RoomDebugController.instance:debugSetPackageOrder(self._mo.id)
 	else
 		RoomDebugPackageListModel.instance:clearSelect()
-		RoomDebugController.instance:exchangeOrder(var_4_2, arg_4_0._mo.id)
+		RoomDebugController.instance:exchangeOrder(selectBlockId, self._mo.id)
 	end
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._scene = GameSceneMgr.instance:getCurScene()
-	arg_5_0._isSelect = false
+function RoomDebugPackageItem:_editableInitView()
+	self._scene = GameSceneMgr.instance:getCurScene()
+	self._isSelect = false
 
-	gohelper.addUIClickAudio(arg_5_0._btnclick.gameObject, AudioEnum.UI.UI_Common_Click)
+	gohelper.addUIClickAudio(self._btnclick.gameObject, AudioEnum.UI.UI_Common_Click)
 end
 
-function var_0_0._refreshUI(arg_6_0)
-	arg_6_0._txtdefineid.text = "地块id:" .. arg_6_0._mo.id
-	arg_6_0._txtpackageorder.text = string.format("序号: %s", arg_6_0._mo.packageOrder)
-	arg_6_0._txtname.text = RoomHelper.getBlockPrefabName(arg_6_0._mo.config.prefabPath)
+function RoomDebugPackageItem:_refreshUI()
+	self._txtdefineid.text = "地块id:" .. self._mo.id
+	self._txtpackageorder.text = string.format("序号: %s", self._mo.packageOrder)
+	self._txtname.text = RoomHelper.getBlockPrefabName(self._mo.config.prefabPath)
 
-	arg_6_0:_refreshCharacter(arg_6_0._mo.id)
+	self:_refreshCharacter(self._mo.id)
 end
 
-function var_0_0.onUpdateMO(arg_7_0, arg_7_1)
-	gohelper.setActive(arg_7_0._goselect, arg_7_0._isSelect)
+function RoomDebugPackageItem:onUpdateMO(mo)
+	gohelper.setActive(self._goselect, self._isSelect)
 
-	arg_7_0._mo = arg_7_1
+	self._mo = mo
 
-	arg_7_0:_refreshUI()
-	arg_7_0:_refreshBlock(arg_7_1 and arg_7_1.blockId)
+	self:_refreshUI()
+	self:_refreshBlock(mo and mo.blockId)
 end
 
-function var_0_0.onSelect(arg_8_0, arg_8_1)
-	gohelper.setActive(arg_8_0._goselect, arg_8_1)
+function RoomDebugPackageItem:onSelect(isSelect)
+	gohelper.setActive(self._goselect, isSelect)
 
-	arg_8_0._isSelect = arg_8_1
+	self._isSelect = isSelect
 end
 
-function var_0_0._refreshBlock(arg_9_0, arg_9_1)
-	local var_9_0 = GameSceneMgr.instance:getCurScene()
-	local var_9_1 = arg_9_0._lastOldBlockId
+function RoomDebugPackageItem:_refreshBlock(blockId)
+	local scene = GameSceneMgr.instance:getCurScene()
+	local oldBlockId = self._lastOldBlockId
 
-	arg_9_0._lastOldBlockId = arg_9_1
+	self._lastOldBlockId = blockId
 
-	if var_9_1 then
-		var_9_0.inventorymgr:removeBlockEntity(var_9_1)
+	if oldBlockId then
+		scene.inventorymgr:removeBlockEntity(oldBlockId)
 	end
 
-	gohelper.setActive(arg_9_0._icon, arg_9_1 and true or false)
+	gohelper.setActive(self._icon, blockId and true or false)
 
-	if arg_9_1 then
-		var_9_0.inventorymgr:addBlockEntity(arg_9_1)
+	if blockId then
+		scene.inventorymgr:addBlockEntity(blockId)
 
-		local var_9_2 = var_9_0.inventorymgr:getIndexById(arg_9_1)
+		local index = scene.inventorymgr:getIndexById(blockId)
 
-		OrthCameraRTMgr.instance:setRawImageUvRect(arg_9_0._icon, var_9_2)
+		OrthCameraRTMgr.instance:setRawImageUvRect(self._icon, index)
 	end
 end
 
-function var_0_0.onDestroy(arg_10_0)
-	arg_10_0._simagebirthhero:UnLoadImage()
-	arg_10_0:_refreshBlock(nil)
+function RoomDebugPackageItem:onDestroy()
+	self._simagebirthhero:UnLoadImage()
+	self:_refreshBlock(nil)
 end
 
-function var_0_0._refreshCharacter(arg_11_0, arg_11_1)
-	local var_11_0 = RoomConfig.instance:getSpecialBlockConfig(arg_11_1)
+function RoomDebugPackageItem:_refreshCharacter(blockId)
+	local blockCfg = RoomConfig.instance:getSpecialBlockConfig(blockId)
 
-	gohelper.setActive(arg_11_0._simagebirthhero.gameObject, var_11_0 ~= nil)
+	gohelper.setActive(self._simagebirthhero.gameObject, blockCfg ~= nil)
 
-	if not var_11_0 then
+	if not blockCfg then
 		return
 	end
 
-	local var_11_1 = HeroConfig.instance:getHeroCO(var_11_0.heroId)
+	local heroCfg = HeroConfig.instance:getHeroCO(blockCfg.heroId)
 
-	if not var_11_1 then
+	if not heroCfg then
 		return
 	end
 
-	local var_11_2 = SkinConfig.instance:getSkinCo(var_11_1.skinId)
+	local skinConfig = SkinConfig.instance:getSkinCo(heroCfg.skinId)
 
-	if not var_11_2 then
+	if not skinConfig then
 		return
 	end
 
-	arg_11_0._simagebirthhero:LoadImage(ResUrl.getHeadIconSmall(var_11_2.headIcon))
+	self._simagebirthhero:LoadImage(ResUrl.getHeadIconSmall(skinConfig.headIcon))
 end
 
-return var_0_0
+return RoomDebugPackageItem

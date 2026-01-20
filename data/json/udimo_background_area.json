@@ -1,0 +1,30 @@
+[
+  {
+    "id": 370001,
+    "groupId": 1,
+    "zLevel": "3#3.3#3.6#4#4.3",
+    "yLevel": "-0.85",
+    "xMoveRange": "-3#8"
+  },
+  {
+    "id": 370001,
+    "groupId": 2,
+    "zLevel": "9#10#11#13.5#14#15",
+    "yLevel": "0",
+    "xMoveRange": "-7#8"
+  },
+  {
+    "id": 370001,
+    "groupId": 3,
+    "zLevel": "9#10#11#13.5#14#15",
+    "yLevel": "3#6",
+    "xMoveRange": "-7#8"
+  },
+  {
+    "id": 370001,
+    "groupId": 4,
+    "zLevel": "3#3.3#3.6#4#4.3",
+    "yLevel": "-2.3",
+    "xMoveRange": "-7#8"
+  }
+]

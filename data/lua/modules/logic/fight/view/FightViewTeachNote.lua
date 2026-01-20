@@ -1,83 +1,85 @@
-﻿module("modules.logic.fight.view.FightViewTeachNote", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightViewTeachNote.lua
 
-local var_0_0 = class("FightViewTeachNote", BaseView)
-local var_0_1
-local var_0_2 = 0
+module("modules.logic.fight.view.FightViewTeachNote", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._teachNoteGO = gohelper.findChild(arg_1_0.viewGO, "root/teachnote")
-	arg_1_0._teachNoteAnimator = arg_1_0._teachNoteGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._btnTeachNote = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/teachnote/#btn_help")
-	arg_1_0._btnTeachNoteSkip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/teachnote/#go_skipbtn/btn_skipguide")
-	arg_1_0._btnsGO = gohelper.findChild(arg_1_0.viewGO, "root/btns")
+local FightViewTeachNote = class("FightViewTeachNote", BaseView)
+local failEpisode
+local failCount = 0
 
-	local var_1_0 = gohelper.onceAddComponent(gohelper.findChild(arg_1_0.viewGO, "root/teachnote/#go_skipbtn"), typeof(UnityEngine.Canvas))
-	local var_1_1 = gohelper.onceAddComponent(ViewMgr.instance:getUILayer(UILayerName.Guide), typeof(UnityEngine.Canvas))
+function FightViewTeachNote:onInitView()
+	self._teachNoteGO = gohelper.findChild(self.viewGO, "root/teachnote")
+	self._teachNoteAnimator = self._teachNoteGO:GetComponent(typeof(UnityEngine.Animator))
+	self._btnTeachNote = gohelper.findChildButtonWithAudio(self.viewGO, "root/teachnote/#btn_help")
+	self._btnTeachNoteSkip = gohelper.findChildButtonWithAudio(self.viewGO, "root/teachnote/#go_skipbtn/btn_skipguide")
+	self._btnsGO = gohelper.findChild(self.viewGO, "root/btns")
 
-	var_1_0.overrideSorting = true
-	var_1_0.sortingOrder = var_1_1.sortingOrder + 1
+	local skipCanvas = gohelper.onceAddComponent(gohelper.findChild(self.viewGO, "root/teachnote/#go_skipbtn"), typeof(UnityEngine.Canvas))
+	local guideCanvas = gohelper.onceAddComponent(ViewMgr.instance:getUILayer(UILayerName.Guide), typeof(UnityEngine.Canvas))
+
+	skipCanvas.overrideSorting = true
+	skipCanvas.sortingOrder = guideCanvas.sortingOrder + 1
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnTeachNote:AddClickListener(arg_2_0._onClickTeachNote, arg_2_0)
-	arg_2_0._btnTeachNoteSkip:AddClickListener(arg_2_0._onClickTeachNoteSkip, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.PushEndFight, arg_2_0._pushEndFight, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.StageChanged, arg_2_0._delayCheckShowAnim, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_2_0._onOpenView, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_2_0._delayCheckShowAnim, arg_2_0)
+function FightViewTeachNote:addEvents()
+	self._btnTeachNote:AddClickListener(self._onClickTeachNote, self)
+	self._btnTeachNoteSkip:AddClickListener(self._onClickTeachNoteSkip, self)
+	self:addEventCb(FightController.instance, FightEvent.PushEndFight, self._pushEndFight, self)
+	self:addEventCb(FightController.instance, FightEvent.StageChanged, self._delayCheckShowAnim, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._delayCheckShowAnim, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnTeachNote:RemoveClickListener()
-	arg_3_0._btnTeachNoteSkip:RemoveClickListener()
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.PushEndFight, arg_3_0._pushEndFight, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.StageChanged, arg_3_0._delayCheckShowAnim, arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_3_0._onOpenView, arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_3_0._delayCheckShowAnim, arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0._checkShowAnim, arg_3_0)
+function FightViewTeachNote:removeEvents()
+	self._btnTeachNote:RemoveClickListener()
+	self._btnTeachNoteSkip:RemoveClickListener()
+	self:removeEventCb(FightController.instance, FightEvent.PushEndFight, self._pushEndFight, self)
+	self:removeEventCb(FightController.instance, FightEvent.StageChanged, self._delayCheckShowAnim, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._delayCheckShowAnim, self)
+	TaskDispatcher.cancelTask(self._checkShowAnim, self)
 end
 
-function var_0_0.onOpen(arg_4_0)
-	local var_4_0 = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
-	local var_4_1 = var_4_0 and var_4_0.type == DungeonEnum.EpisodeType.Sp
-	local var_4_2 = arg_4_0:_getGuideId()
-	local var_4_3 = false
+function FightViewTeachNote:onOpen()
+	local episodeCO = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
+	local isSpEpisode = episodeCO and episodeCO.type == DungeonEnum.EpisodeType.Sp
+	local guideId = self:_getGuideId()
+	local hasHelpPage = false
 
-	for iter_4_0, iter_4_1 in ipairs(lua_helppage.configList) do
-		if iter_4_1.unlockGuideId == var_4_2 then
-			var_4_3 = true
+	for _, helpPageCO in ipairs(lua_helppage.configList) do
+		if helpPageCO.unlockGuideId == guideId then
+			hasHelpPage = true
 		end
 	end
 
-	arg_4_0._episodeId = DungeonModel.instance.curSendEpisodeId
-	arg_4_0._isSpAndHasHelpPage = var_4_1 and var_4_3
+	self._episodeId = DungeonModel.instance.curSendEpisodeId
+	self._isSpAndHasHelpPage = isSpEpisode and hasHelpPage
 
-	gohelper.setActive(arg_4_0._teachNoteGO, arg_4_0._isSpAndHasHelpPage)
-	arg_4_0:_checkShowAnim()
+	gohelper.setActive(self._teachNoteGO, self._isSpAndHasHelpPage)
+	self:_checkShowAnim()
 end
 
-function var_0_0._onOpenView(arg_5_0, arg_5_1)
-	if not arg_5_0._isSpAndHasHelpPage then
+function FightViewTeachNote:_onOpenView(viewName)
+	if not self._isSpAndHasHelpPage then
 		return
 	end
 
-	if arg_5_1 == ViewName.GuideView and arg_5_0._teachNoteGO.activeInHierarchy and arg_5_0._teachNoteAnimator.enabled then
-		arg_5_0._teachNoteAnimator.enabled = false
+	if viewName == ViewName.GuideView and self._teachNoteGO.activeInHierarchy and self._teachNoteAnimator.enabled then
+		self._teachNoteAnimator.enabled = false
 	end
 
-	arg_5_0:_checkShowSkip()
+	self:_checkShowSkip()
 end
 
-function var_0_0._delayCheckShowAnim(arg_6_0)
-	if not arg_6_0._isSpAndHasHelpPage then
+function FightViewTeachNote:_delayCheckShowAnim()
+	if not self._isSpAndHasHelpPage then
 		return
 	end
 
-	TaskDispatcher.runDelay(arg_6_0._checkShowAnim, arg_6_0, 0.5)
+	TaskDispatcher.runDelay(self._checkShowAnim, self, 0.5)
 end
 
-function var_0_0._checkShowAnim(arg_7_0)
-	if not arg_7_0._isSpAndHasHelpPage then
+function FightViewTeachNote:_checkShowAnim()
+	if not self._isSpAndHasHelpPage then
 		return
 	end
 
@@ -85,11 +87,11 @@ function var_0_0._checkShowAnim(arg_7_0)
 		return
 	end
 
-	if arg_7_0.viewContainer.fightViewHandCard:isMoveCardFlow() then
+	if self.viewContainer.fightViewHandCard:isMoveCardFlow() then
 		return
 	end
 
-	if arg_7_0.viewContainer.fightViewHandCard:isCombineCardFlow() then
+	if self.viewContainer.fightViewHandCard:isCombineCardFlow() then
 		return
 	end
 
@@ -101,121 +103,123 @@ function var_0_0._checkShowAnim(arg_7_0)
 		return
 	end
 
-	local var_7_0 = FightWorkPlayHandCard.playing > 0
-	local var_7_1 = arg_7_0.viewContainer.fightViewHandCard:isMoveCardFlow()
-	local var_7_2 = arg_7_0.viewContainer.fightViewHandCard:isCombineCardFlow()
-	local var_7_3 = var_7_0 or var_7_1 or var_7_2
-	local var_7_4 = ViewMgr.instance:isOpen(ViewName.GuideView)
-	local var_7_5 = FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Operate
+	local isPlayCard = FightWorkPlayHandCard.playing > 0
+	local isMoveCard = self.viewContainer.fightViewHandCard:isMoveCardFlow()
+	local isCombineCard = self.viewContainer.fightViewHandCard:isCombineCardFlow()
+	local isCardOp = isPlayCard or isMoveCard or isCombineCard
+	local isOpenGuideView = ViewMgr.instance:isOpen(ViewName.GuideView)
+	local isCardStage = FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Operate
 
-	if not var_7_3 and not var_7_4 and var_7_5 and var_0_2 > 0 then
-		arg_7_0._teachNoteAnimator.enabled = true
+	if not isCardOp and not isOpenGuideView and isCardStage and failCount > 0 then
+		self._teachNoteAnimator.enabled = true
 
-		arg_7_0._teachNoteAnimator:Play("fightview_teachnote_loop")
+		self._teachNoteAnimator:Play("fightview_teachnote_loop")
 	end
 
-	arg_7_0:_checkShowSkip()
+	self:_checkShowSkip()
 end
 
-function var_0_0._checkShowSkip(arg_8_0)
-	if not arg_8_0._isSpAndHasHelpPage then
+function FightViewTeachNote:_checkShowSkip()
+	if not self._isSpAndHasHelpPage then
 		return
 	end
 
-	if ViewMgr.instance:isOpen(ViewName.GuideView) and var_0_2 > 0 then
-		gohelper.setActive(arg_8_0._btnTeachNoteSkip.gameObject, true)
-		transformhelper.setLocalScale(arg_8_0._btnsGO.transform, 0, 0, 0)
+	local isOpenGuideView = ViewMgr.instance:isOpen(ViewName.GuideView)
+
+	if isOpenGuideView and failCount > 0 then
+		gohelper.setActive(self._btnTeachNoteSkip.gameObject, true)
+		transformhelper.setLocalScale(self._btnsGO.transform, 0, 0, 0)
 	else
-		gohelper.setActive(arg_8_0._btnTeachNoteSkip.gameObject, false)
-		transformhelper.setLocalScale(arg_8_0._btnsGO.transform, 1, 1, 1)
+		gohelper.setActive(self._btnTeachNoteSkip.gameObject, false)
+		transformhelper.setLocalScale(self._btnsGO.transform, 1, 1, 1)
 	end
 end
 
-function var_0_0._pushEndFight(arg_9_0)
-	if arg_9_0._episodeId ~= var_0_1 then
-		var_0_2 = 0
+function FightViewTeachNote:_pushEndFight()
+	if self._episodeId ~= failEpisode then
+		failCount = 0
 	end
 
-	var_0_1 = arg_9_0._episodeId
+	failEpisode = self._episodeId
 
-	local var_9_0 = FightModel.instance:getRecordMO()
-	local var_9_1 = var_9_0 and var_9_0.fightResult
+	local fightRecordMO = FightModel.instance:getRecordMO()
+	local result = fightRecordMO and fightRecordMO.fightResult
 
-	if var_9_1 == FightEnum.FightResult.Fail or var_9_1 == FightEnum.FightResult.OutOfRoundFail then
-		var_0_2 = var_0_2 + 1
+	if result == FightEnum.FightResult.Fail or result == FightEnum.FightResult.OutOfRoundFail then
+		failCount = failCount + 1
 	else
-		var_0_2 = 0
+		failCount = 0
 	end
 end
 
-function var_0_0._onClickTeachNote(arg_10_0)
+function FightViewTeachNote:_onClickTeachNote()
 	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.Enter) or FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.DistributeCard) then
 		return
 	end
 
-	if ViewMgr.instance:isOpen(ViewName.GuideView) and not GuideUtil.isGuideViewTarget(arg_10_0._btnTeachNote.gameObject) then
+	if ViewMgr.instance:isOpen(ViewName.GuideView) and not GuideUtil.isGuideViewTarget(self._btnTeachNote.gameObject) then
 		return
 	end
 
-	local var_10_0 = arg_10_0:_getGuideId()
+	local guideId = self:_getGuideId()
 
-	if var_10_0 then
-		local var_10_1 = {
+	if guideId then
+		local viewParam = {
 			id = HelpEnum.HelpId.Fight,
 			viewParam = HelpEnum.HelpId.Fight,
-			guideId = var_10_0
+			guideId = guideId
 		}
 
-		ViewMgr.instance:openView(ViewName.HelpView, var_10_1)
+		ViewMgr.instance:openView(ViewName.HelpView, viewParam)
 	else
 		logError("没有正在执行的教学笔记引导，无法打开帮助说明界面")
 	end
 end
 
-function var_0_0._onClickTeachNoteSkip(arg_11_0)
-	local var_11_0 = arg_11_0:_getDoingGuideId()
+function FightViewTeachNote:_onClickTeachNoteSkip()
+	local guideId = self:_getDoingGuideId()
 
-	if var_11_0 then
-		GuideController.instance:oneKeyFinishGuide(var_11_0, false)
-		gohelper.setActive(arg_11_0._btnTeachNoteSkip.gameObject, false)
-		transformhelper.setLocalScale(arg_11_0._btnsGO.transform, 1, 1, 1)
+	if guideId then
+		GuideController.instance:oneKeyFinishGuide(guideId, false)
+		gohelper.setActive(self._btnTeachNoteSkip.gameObject, false)
+		transformhelper.setLocalScale(self._btnsGO.transform, 1, 1, 1)
 	else
 		logError("没有正在执行的教学笔记引导，无法跳过引导")
 	end
 end
 
-function var_0_0._getGuideId(arg_12_0)
-	local var_12_0 = DungeonModel.instance.curSendEpisodeId
-	local var_12_1 = GuideConfig.instance:getGuideList()
+function FightViewTeachNote:_getGuideId()
+	local episodeId = DungeonModel.instance.curSendEpisodeId
+	local guideCOList = GuideConfig.instance:getGuideList()
 
-	for iter_12_0, iter_12_1 in ipairs(var_12_1) do
-		local var_12_2 = FightStrUtil.instance:getSplitCache(iter_12_1.trigger, "#")
-		local var_12_3 = var_12_2[1]
-		local var_12_4 = tonumber(var_12_2[2])
+	for _, oneGuideCO in ipairs(guideCOList) do
+		local triggerParams = FightStrUtil.instance:getSplitCache(oneGuideCO.trigger, "#")
+		local triggerType = triggerParams[1]
+		local triggerParam = tonumber(triggerParams[2])
 
-		if var_12_3 and var_12_3 == "EnterEpisode" and var_12_4 and var_12_4 == var_12_0 and iter_12_1.restart == 1 then
-			return iter_12_1.id
+		if triggerType and triggerType == "EnterEpisode" and triggerParam and triggerParam == episodeId and oneGuideCO.restart == 1 then
+			return oneGuideCO.id
 		end
 	end
 end
 
-function var_0_0._getDoingGuideId(arg_13_0)
-	local var_13_0 = DungeonModel.instance.curSendEpisodeId
-	local var_13_1 = GuideConfig.instance:getGuideList()
+function FightViewTeachNote:_getDoingGuideId()
+	local episodeId = DungeonModel.instance.curSendEpisodeId
+	local guideCOList = GuideConfig.instance:getGuideList()
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_1) do
-		local var_13_2 = FightStrUtil.instance:getSplitCache(iter_13_1.trigger, "#")
-		local var_13_3 = var_13_2[1]
-		local var_13_4 = tonumber(var_13_2[2])
+	for _, oneGuideCO in ipairs(guideCOList) do
+		local triggerParams = FightStrUtil.instance:getSplitCache(oneGuideCO.trigger, "#")
+		local triggerType = triggerParams[1]
+		local triggerParam = tonumber(triggerParams[2])
 
-		if var_13_3 and var_13_3 == "EnterEpisode" and var_13_4 and var_13_4 == var_13_0 and iter_13_1.restart == 1 then
-			local var_13_5 = GuideModel.instance:getById(iter_13_1.id)
+		if triggerType and triggerType == "EnterEpisode" and triggerParam and triggerParam == episodeId and oneGuideCO.restart == 1 then
+			local guideMO = GuideModel.instance:getById(oneGuideCO.id)
 
-			if var_13_5 and (not var_13_5.isFinish or var_13_5.currStepId > 0) then
-				return iter_13_1.id
+			if guideMO and (not guideMO.isFinish or guideMO.currStepId > 0) then
+				return oneGuideCO.id
 			end
 		end
 	end
 end
 
-return var_0_0
+return FightViewTeachNote

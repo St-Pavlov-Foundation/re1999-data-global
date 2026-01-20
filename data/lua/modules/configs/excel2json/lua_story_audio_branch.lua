@@ -1,20 +1,22 @@
-﻿module("modules.configs.excel2json.lua_story_audio_branch", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_story_audio_branch.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_story_audio_branch", package.seeall)
+
+local lua_story_audio_branch = {}
+local fields = {
 	bankName = 3,
 	eventName_Overseas = 4,
 	bankName_Overseas = 5,
 	eventName = 2,
 	id = 1
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_story_audio_branch.onLoad(json)
+	lua_story_audio_branch.configList, lua_story_audio_branch.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_story_audio_branch

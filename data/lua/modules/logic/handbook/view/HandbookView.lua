@@ -1,89 +1,91 @@
-﻿module("modules.logic.handbook.view.HandbookView", package.seeall)
+﻿-- chunkname: @modules/logic/handbook/view/HandbookView.lua
 
-local var_0_0 = class("HandbookView", BaseView)
+module("modules.logic.handbook.view.HandbookView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._btncharacter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btns/#btn_character")
-	arg_1_0._btnequip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btns/#btn_equip")
-	arg_1_0._btnstory = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btns/#btn_story")
-	arg_1_0._btnweekWalk = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btns/#btn_weekWalk")
-	arg_1_0._goSkin = gohelper.findChild(arg_1_0.viewGO, "skin")
-	arg_1_0._goSkinRedDot = gohelper.findChild(arg_1_0.viewGO, "skin/#goRedDot")
-	arg_1_0._btnskin = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btns/#btn_skin")
+local HandbookView = class("HandbookView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function HandbookView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._btncharacter = gohelper.findChildButtonWithAudio(self.viewGO, "btns/#btn_character")
+	self._btnequip = gohelper.findChildButtonWithAudio(self.viewGO, "btns/#btn_equip")
+	self._btnstory = gohelper.findChildButtonWithAudio(self.viewGO, "btns/#btn_story")
+	self._btnweekWalk = gohelper.findChildButtonWithAudio(self.viewGO, "btns/#btn_weekWalk")
+	self._goSkin = gohelper.findChild(self.viewGO, "skin")
+	self._goSkinRedDot = gohelper.findChild(self.viewGO, "skin/#goRedDot")
+	self._btnskin = gohelper.findChildButtonWithAudio(self.viewGO, "btns/#btn_skin")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btncharacter:AddClickListener(arg_2_0._btncharacterOnClick, arg_2_0)
-	arg_2_0._btnequip:AddClickListener(arg_2_0._btnequipOnClick, arg_2_0)
-	arg_2_0._btnstory:AddClickListener(arg_2_0._btnstoryOnClick, arg_2_0)
-	arg_2_0._btnweekWalk:AddClickListener(arg_2_0._btnweekWalkOnClick, arg_2_0)
-	arg_2_0._btnskin:AddClickListener(arg_2_0._btnskinOnClick, arg_2_0)
-	arg_2_0:addEventCb(HandbookController.instance, HandbookEvent.MarkHandbookSkinSuitRedDot, arg_2_0.refreshRedDot, arg_2_0)
+function HandbookView:addEvents()
+	self._btncharacter:AddClickListener(self._btncharacterOnClick, self)
+	self._btnequip:AddClickListener(self._btnequipOnClick, self)
+	self._btnstory:AddClickListener(self._btnstoryOnClick, self)
+	self._btnweekWalk:AddClickListener(self._btnweekWalkOnClick, self)
+	self._btnskin:AddClickListener(self._btnskinOnClick, self)
+	self:addEventCb(HandbookController.instance, HandbookEvent.MarkHandbookSkinSuitRedDot, self.refreshRedDot, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btncharacter:RemoveClickListener()
-	arg_3_0._btnequip:RemoveClickListener()
-	arg_3_0._btnstory:RemoveClickListener()
-	arg_3_0._btnweekWalk:RemoveClickListener()
-	arg_3_0._btnskin:RemoveClickListener()
+function HandbookView:removeEvents()
+	self._btncharacter:RemoveClickListener()
+	self._btnequip:RemoveClickListener()
+	self._btnstory:RemoveClickListener()
+	self._btnweekWalk:RemoveClickListener()
+	self._btnskin:RemoveClickListener()
 end
 
-function var_0_0._btnweekWalkOnClick(arg_4_0)
+function HandbookView:_btnweekWalkOnClick()
 	HandbookController.instance:openHandbookWeekWalkMapView()
 end
 
-function var_0_0._btncharacterOnClick(arg_5_0)
+function HandbookView:_btncharacterOnClick()
 	HandbookController.instance:openCharacterView()
 end
 
-function var_0_0._btnequipOnClick(arg_6_0)
+function HandbookView:_btnequipOnClick()
 	HandbookController.instance:openEquipView()
 end
 
-function var_0_0._btnstoryOnClick(arg_7_0)
+function HandbookView:_btnstoryOnClick()
 	HandbookController.instance:openStoryView()
 end
 
-function var_0_0._btnskinOnClick(arg_8_0)
+function HandbookView:_btnskinOnClick()
 	HandbookController.instance:openHandbookSkinView()
 end
 
-function var_0_0._editableInitView(arg_9_0)
-	arg_9_0._simagebg:LoadImage(ResUrl.getHandbookBg("full/bg"))
-	gohelper.setActive(arg_9_0._btnweekWalk.gameObject, false)
+function HandbookView:_editableInitView()
+	self._simagebg:LoadImage(ResUrl.getHandbookBg("full/bg"))
+	gohelper.setActive(self._btnweekWalk.gameObject, false)
 end
 
-function var_0_0.onOpen(arg_10_0)
-	gohelper.addUIClickAudio(arg_10_0._btncharacter.gameObject, AudioEnum.UI.play_ui_screenplay_photo_open)
-	gohelper.addUIClickAudio(arg_10_0._btnstory.gameObject, AudioEnum.UI.play_ui_screenplay_photo_open)
-	gohelper.addUIClickAudio(arg_10_0._btnequip.gameObject, AudioEnum.UI.play_ui_screenplay_photo_open)
-	gohelper.addUIClickAudio(arg_10_0._btnskin.gameObject, AudioEnum.UI.play_ui_screenplay_photo_open)
+function HandbookView:onOpen()
+	gohelper.addUIClickAudio(self._btncharacter.gameObject, AudioEnum.UI.play_ui_screenplay_photo_open)
+	gohelper.addUIClickAudio(self._btnstory.gameObject, AudioEnum.UI.play_ui_screenplay_photo_open)
+	gohelper.addUIClickAudio(self._btnequip.gameObject, AudioEnum.UI.play_ui_screenplay_photo_open)
+	gohelper.addUIClickAudio(self._btnskin.gameObject, AudioEnum.UI.play_ui_screenplay_photo_open)
 
-	local var_10_0 = VersionValidator.instance:isInReviewing()
+	local isReview = VersionValidator.instance:isInReviewing()
 
-	gohelper.setActive(arg_10_0._goSkin, not var_10_0)
-	gohelper.setActive(arg_10_0._btnskin.gameObject, not var_10_0)
-	arg_10_0:refreshRedDot()
+	gohelper.setActive(self._goSkin, not isReview)
+	gohelper.setActive(self._btnskin.gameObject, not isReview)
+	self:refreshRedDot()
 end
 
-function var_0_0.refreshRedDot(arg_11_0)
-	local var_11_0 = HandbookController.instance:hasAnyHandBookSkinGroupRedDot()
+function HandbookView:refreshRedDot()
+	local hasRedDot = HandbookController.instance:hasAnyHandBookSkinGroupRedDot()
 
-	gohelper.setActive(arg_11_0._goSkinRedDot, var_11_0)
+	gohelper.setActive(self._goSkinRedDot, hasRedDot)
 end
 
-function var_0_0.onClose(arg_12_0)
+function HandbookView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_13_0)
-	arg_13_0._simagebg:UnLoadImage()
+function HandbookView:onDestroyView()
+	self._simagebg:UnLoadImage()
 end
 
-return var_0_0
+return HandbookView

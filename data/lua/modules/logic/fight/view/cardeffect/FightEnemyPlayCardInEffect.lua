@@ -1,32 +1,36 @@
-﻿module("modules.logic.fight.view.cardeffect.FightEnemyPlayCardInEffect", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/cardeffect/FightEnemyPlayCardInEffect.lua
 
-local var_0_0 = class("FightEnemyPlayCardInEffect", BaseWork)
-local var_0_1 = Color.white
+module("modules.logic.fight.view.cardeffect.FightEnemyPlayCardInEffect", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+local FightEnemyPlayCardInEffect = class("FightEnemyPlayCardInEffect", BaseWork)
+local ColorWhite = Color.white
 
-	for iter_1_0 = 1, arg_1_1.enemyNowActPoint do
-		local var_1_0 = gohelper.findChild(arg_1_1.viewGO, string.format("root/enemycards/item%d/op", iter_1_0))
+function FightEnemyPlayCardInEffect:onStart(context)
+	FightEnemyPlayCardInEffect.super.onStart(self, context)
 
-		gohelper.setActive(var_1_0, true)
+	for i = 1, context.enemyNowActPoint do
+		local opGO = gohelper.findChild(context.viewGO, string.format("root/enemycards/item%d/op", i))
 
-		local var_1_1 = gohelper.findChild(arg_1_1.viewGO, string.format("root/enemycards/item%d/empty", iter_1_0))
+		gohelper.setActive(opGO, true)
 
-		gohelper.setActive(var_1_1, true)
+		local emptyGO = gohelper.findChild(context.viewGO, string.format("root/enemycards/item%d/empty", i))
 
-		gohelper.onceAddComponent(var_1_1, gohelper.Type_Image).color = var_0_1
+		gohelper.setActive(emptyGO, true)
+
+		local imgEmpty = gohelper.onceAddComponent(emptyGO, gohelper.Type_Image)
+
+		imgEmpty.color = ColorWhite
 	end
 
-	TaskDispatcher.runDelay(arg_1_0._delayDone, arg_1_0, 0.34)
+	TaskDispatcher.runDelay(self._delayDone, self, 0.34)
 end
 
-function var_0_0.clearWork(arg_2_0)
-	TaskDispatcher.cancelTask(arg_2_0._delayDone, arg_2_0)
+function FightEnemyPlayCardInEffect:clearWork()
+	TaskDispatcher.cancelTask(self._delayDone, self)
 end
 
-function var_0_0._delayDone(arg_3_0)
-	arg_3_0:onDone(true)
+function FightEnemyPlayCardInEffect:_delayDone()
+	self:onDone(true)
 end
 
-return var_0_0
+return FightEnemyPlayCardInEffect

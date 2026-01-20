@@ -1,159 +1,162 @@
-﻿module("modules.logic.versionactivity1_4.dungeon.view.VersionActivity1_4DungeonView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/dungeon/view/VersionActivity1_4DungeonView.lua
 
-local var_0_0 = class("VersionActivity1_4DungeonView", BaseView)
+module("modules.logic.versionactivity1_4.dungeon.view.VersionActivity1_4DungeonView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._goroot = gohelper.findChild(arg_1_0.viewGO, "root")
-	arg_1_0._gopath = gohelper.findChild(arg_1_0.viewGO, "root/#go_path")
-	arg_1_0._gostages = gohelper.findChild(arg_1_0.viewGO, "root/#go_path/#go_stages")
-	arg_1_0._gotitle = gohelper.findChild(arg_1_0.viewGO, "root/#go_title")
-	arg_1_0._simagetitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/#go_title/#simage_title")
-	arg_1_0._gotime = gohelper.findChild(arg_1_0.viewGO, "root/#go_title/#go_time")
-	arg_1_0._txtlimittime = gohelper.findChildText(arg_1_0.viewGO, "root/#go_title/#go_time/#txt_limittime")
-	arg_1_0._btntask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_task")
-	arg_1_0._txttasknum = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/#btn_task/#txt_TaskNum")
-	arg_1_0._goreddotreward = gohelper.findChild(arg_1_0.viewGO, "root/#btn_task/#go_reddotreward")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._stageItemList = {}
-	arg_1_0._animPath = gohelper.findChildComponent(arg_1_0.viewGO, "root/#go_path", typeof(UnityEngine.Animator))
+local VersionActivity1_4DungeonView = class("VersionActivity1_4DungeonView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity1_4DungeonView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._goroot = gohelper.findChild(self.viewGO, "root")
+	self._gopath = gohelper.findChild(self.viewGO, "root/#go_path")
+	self._gostages = gohelper.findChild(self.viewGO, "root/#go_path/#go_stages")
+	self._gotitle = gohelper.findChild(self.viewGO, "root/#go_title")
+	self._simagetitle = gohelper.findChildSingleImage(self.viewGO, "root/#go_title/#simage_title")
+	self._gotime = gohelper.findChild(self.viewGO, "root/#go_title/#go_time")
+	self._txtlimittime = gohelper.findChildText(self.viewGO, "root/#go_title/#go_time/#txt_limittime")
+	self._btntask = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_task")
+	self._txttasknum = gohelper.findChildTextMesh(self.viewGO, "root/#btn_task/#txt_TaskNum")
+	self._goreddotreward = gohelper.findChild(self.viewGO, "root/#btn_task/#go_reddotreward")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._stageItemList = {}
+	self._animPath = gohelper.findChildComponent(self.viewGO, "root/#go_path", typeof(UnityEngine.Animator))
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btntask:AddClickListener(arg_2_0._btntaskOnClick, arg_2_0)
-	arg_2_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_2_0._onCurrencyChange, arg_2_0)
-	arg_2_0:addEventCb(VersionActivity1_4DungeonController.instance, VersionActivity1_4DungeonEvent.OnSelectEpisodeId, arg_2_0.onSelect, arg_2_0)
+function VersionActivity1_4DungeonView:addEvents()
+	self._btntask:AddClickListener(self._btntaskOnClick, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._onCurrencyChange, self)
+	self:addEventCb(VersionActivity1_4DungeonController.instance, VersionActivity1_4DungeonEvent.OnSelectEpisodeId, self.onSelect, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btntask:RemoveClickListener()
-	arg_3_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_3_0._onCurrencyChange, arg_3_0)
-	arg_3_0:removeEventCb(VersionActivity1_4DungeonController.instance, VersionActivity1_4DungeonEvent.OnSelectEpisodeId, arg_3_0.onSelect, arg_3_0)
+function VersionActivity1_4DungeonView:removeEvents()
+	self._btntask:RemoveClickListener()
+	self:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._onCurrencyChange, self)
+	self:removeEventCb(VersionActivity1_4DungeonController.instance, VersionActivity1_4DungeonEvent.OnSelectEpisodeId, self.onSelect, self)
 end
 
-function var_0_0._btntaskOnClick(arg_4_0)
+function VersionActivity1_4DungeonView:_btntaskOnClick()
 	ViewMgr.instance:openView(ViewName.Activity129View, {
 		actId = VersionActivity1_4Enum.ActivityId.DungeonStore
 	})
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._simagebg:LoadImage("singlebg/v1a4_role37_singlebg/v1a4_dungeon_fullbg.png")
+function VersionActivity1_4DungeonView:_editableInitView()
+	self._simagebg:LoadImage("singlebg/v1a4_role37_singlebg/v1a4_dungeon_fullbg.png")
 end
 
-function var_0_0.onSelect(arg_6_0)
-	if VersionActivity1_4DungeonModel.instance:getSelectEpisodeId() then
-		gohelper.setActive(arg_6_0._goroot, false)
-		gohelper.setActive(arg_6_0._gobtns, false)
+function VersionActivity1_4DungeonView:onSelect()
+	local episodeId = VersionActivity1_4DungeonModel.instance:getSelectEpisodeId()
+
+	if episodeId then
+		gohelper.setActive(self._goroot, false)
+		gohelper.setActive(self._gobtns, false)
 	else
-		gohelper.setActive(arg_6_0._goroot, true)
-		gohelper.setActive(arg_6_0._gobtns, true)
-		arg_6_0:refreshStages()
+		gohelper.setActive(self._goroot, true)
+		gohelper.setActive(self._gobtns, true)
+		self:refreshStages()
 	end
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function VersionActivity1_4DungeonView:onUpdateParam()
 	ViewMgr.instance:closeView(ViewName.VersionActivity1_4DungeonEpisodeView)
 end
 
-function var_0_0._onCurrencyChange(arg_8_0, arg_8_1)
-	local var_8_0 = Activity129Config.instance:getConstValue1(VersionActivity1_4Enum.ActivityId.DungeonStore, Activity129Enum.ConstEnum.CostId)
+function VersionActivity1_4DungeonView:_onCurrencyChange(changeIds)
+	local currencyId = Activity129Config.instance:getConstValue1(VersionActivity1_4Enum.ActivityId.DungeonStore, Activity129Enum.ConstEnum.CostId)
 
-	if not arg_8_1[var_8_0] then
+	if not changeIds[currencyId] then
 		return
 	end
 
-	local var_8_1 = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Currency, var_8_0)
+	local quantity = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Currency, currencyId)
 
-	arg_8_0._txttasknum.text = tostring(var_8_1)
+	self._txttasknum.text = tostring(quantity)
 end
 
-function var_0_0.onOpen(arg_9_0)
+function VersionActivity1_4DungeonView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_qiutu_revelation_open)
 
-	arg_9_0.actId = arg_9_0.viewParam.actId
+	self.actId = self.viewParam.actId
 
-	ActivityEnterMgr.instance:enterActivity(arg_9_0.actId)
+	ActivityEnterMgr.instance:enterActivity(self.actId)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
-		arg_9_0.actId
+		self.actId
 	})
-	arg_9_0:refreshStages()
-	TaskDispatcher.runRepeat(arg_9_0._showLeftTime, arg_9_0, 60)
-	arg_9_0:_showLeftTime()
+	self:refreshStages()
+	TaskDispatcher.runRepeat(self._showLeftTime, self, 60)
+	self:_showLeftTime()
 
-	local var_9_0 = Activity129Config.instance:getConstValue1(VersionActivity1_4Enum.ActivityId.DungeonStore, Activity129Enum.ConstEnum.CostId)
-	local var_9_1 = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Currency, var_9_0)
+	local currencyId = Activity129Config.instance:getConstValue1(VersionActivity1_4Enum.ActivityId.DungeonStore, Activity129Enum.ConstEnum.CostId)
+	local quantity = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Currency, currencyId)
 
-	arg_9_0._txttasknum.text = tostring(var_9_1)
+	self._txttasknum.text = tostring(quantity)
 end
 
-function var_0_0.refreshStages(arg_10_0)
-	local var_10_0 = arg_10_0.viewContainer:getSetting().otherRes[1]
-	local var_10_1
-	local var_10_2
-	local var_10_3 = DungeonConfig.instance:getChapterEpisodeCOList(14101)
+function VersionActivity1_4DungeonView:refreshStages()
+	local prefabPath = self.viewContainer:getSetting().otherRes[1]
+	local unlockIndex, openIndex
+	local list = DungeonConfig.instance:getChapterEpisodeCOList(14101)
 
-	for iter_10_0 = 1, math.max(#arg_10_0._stageItemList, #var_10_3) do
-		local var_10_4 = arg_10_0._stageItemList[iter_10_0]
+	for i = 1, math.max(#self._stageItemList, #list) do
+		local item = self._stageItemList[i]
 
-		if not var_10_4 then
-			local var_10_5 = gohelper.findChild(arg_10_0._gostages, "stage" .. iter_10_0)
-			local var_10_6 = arg_10_0:getResInst(var_10_0, var_10_5)
+		if not item then
+			local stageGo = gohelper.findChild(self._gostages, "stage" .. i)
+			local cloneGo = self:getResInst(prefabPath, stageGo)
 
-			var_10_4 = MonoHelper.addNoUpdateLuaComOnceToGo(var_10_6, VersionActivity1_4DungeonItem, arg_10_0, iter_10_0)
-			arg_10_0._stageItemList[iter_10_0] = var_10_4
+			item = MonoHelper.addNoUpdateLuaComOnceToGo(cloneGo, VersionActivity1_4DungeonItem, self, i)
+			self._stageItemList[i] = item
 		end
 
-		local var_10_7, var_10_8 = var_10_4:refreshItem(var_10_3[iter_10_0], iter_10_0)
+		local isUnlock, isOpen = item:refreshItem(list[i], i)
 
-		if var_10_8 then
-			var_10_2 = iter_10_0
+		if isOpen then
+			openIndex = i
 		end
 
-		if var_10_7 then
-			var_10_1 = iter_10_0
+		if isUnlock then
+			unlockIndex = i
 		end
 	end
 
-	TaskDispatcher.cancelTask(arg_10_0.playAnim, arg_10_0)
+	TaskDispatcher.cancelTask(self.playAnim, self)
 
-	if var_10_1 then
-		arg_10_0.animName = "go_0" .. tostring(var_10_1 - 1)
+	if unlockIndex then
+		self.animName = "go_0" .. tostring(unlockIndex - 1)
 
-		TaskDispatcher.runDelay(arg_10_0.playAnim, arg_10_0, 1)
+		TaskDispatcher.runDelay(self.playAnim, self, 1)
 	else
-		var_10_2 = var_10_2 or 1
-		arg_10_0.animName = "idle_0" .. tostring(var_10_2 - 1)
+		openIndex = openIndex or 1
+		self.animName = "idle_0" .. tostring(openIndex - 1)
 
-		arg_10_0:playAnim()
+		self:playAnim()
 	end
 end
 
-function var_0_0.playAnim(arg_11_0)
-	arg_11_0._animPath:Play(arg_11_0.animName)
+function VersionActivity1_4DungeonView:playAnim()
+	self._animPath:Play(self.animName)
 end
 
-function var_0_0._showLeftTime(arg_12_0)
-	local var_12_0 = ActivityModel.instance:getActMO(arg_12_0.actId)
+function VersionActivity1_4DungeonView:_showLeftTime()
+	local actMO = ActivityModel.instance:getActMO(self.actId)
 
-	if not var_12_0 then
+	if not actMO then
 		return
 	end
 
-	arg_12_0._txtlimittime.text = string.format(luaLang("activity_warmup_remain_time"), var_12_0:getRemainTimeStr2ByEndTime())
+	self._txtlimittime.text = string.format(luaLang("activity_warmup_remain_time"), actMO:getRemainTimeStr2ByEndTime())
 end
 
-function var_0_0.onClose(arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0._showLeftTime, arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0.playAnim, arg_13_0)
+function VersionActivity1_4DungeonView:onClose()
+	TaskDispatcher.cancelTask(self._showLeftTime, self)
+	TaskDispatcher.cancelTask(self.playAnim, self)
 end
 
-function var_0_0.onDestroyView(arg_14_0)
-	arg_14_0._simagebg:UnLoadImage()
+function VersionActivity1_4DungeonView:onDestroyView()
+	self._simagebg:UnLoadImage()
 end
 
-return var_0_0
+return VersionActivity1_4DungeonView

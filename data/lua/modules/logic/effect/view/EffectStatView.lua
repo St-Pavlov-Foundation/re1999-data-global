@@ -1,45 +1,47 @@
-﻿module("modules.logic.effect.view.EffectStatView", package.seeall)
+﻿-- chunkname: @modules/logic/effect/view/EffectStatView.lua
 
-local var_0_0 = class("EffectStatView", BaseView)
+module("modules.logic.effect.view.EffectStatView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnOpen = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btnOpen")
-	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btnClose")
-	arg_1_0._contentViewGO = gohelper.findChild(arg_1_0.viewGO, "view")
+local EffectStatView = class("EffectStatView", BaseView)
 
-	gohelper.setActive(arg_1_0._btnOpen.gameObject, true)
-	gohelper.setActive(arg_1_0._btnClose.gameObject, false)
-	gohelper.setActive(arg_1_0._contentViewGO.gameObject, false)
+function EffectStatView:onInitView()
+	self._btnOpen = gohelper.findChildButtonWithAudio(self.viewGO, "btnOpen")
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "btnClose")
+	self._contentViewGO = gohelper.findChild(self.viewGO, "view")
+
+	gohelper.setActive(self._btnOpen.gameObject, true)
+	gohelper.setActive(self._btnClose.gameObject, false)
+	gohelper.setActive(self._contentViewGO.gameObject, false)
 	EffectStatModel.instance:setCameraRootActive()
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnOpen:AddClickListener(arg_2_0._onClickOpen, arg_2_0)
-	arg_2_0._btnClose:AddClickListener(arg_2_0._onClickClose, arg_2_0)
+function EffectStatView:addEvents()
+	self._btnOpen:AddClickListener(self._onClickOpen, self)
+	self._btnClose:AddClickListener(self._onClickClose, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnOpen:RemoveClickListener()
-	arg_3_0._btnClose:RemoveClickListener()
-	TaskDispatcher.cancelTask(arg_3_0._onFrame, arg_3_0)
+function EffectStatView:removeEvents()
+	self._btnOpen:RemoveClickListener()
+	self._btnClose:RemoveClickListener()
+	TaskDispatcher.cancelTask(self._onFrame, self)
 end
 
-function var_0_0._onClickOpen(arg_4_0)
-	gohelper.setActive(arg_4_0._btnOpen.gameObject, false)
-	gohelper.setActive(arg_4_0._btnClose.gameObject, true)
-	gohelper.setActive(arg_4_0._contentViewGO.gameObject, true)
-	TaskDispatcher.runRepeat(arg_4_0._onFrame, arg_4_0, 0.01)
+function EffectStatView:_onClickOpen()
+	gohelper.setActive(self._btnOpen.gameObject, false)
+	gohelper.setActive(self._btnClose.gameObject, true)
+	gohelper.setActive(self._contentViewGO.gameObject, true)
+	TaskDispatcher.runRepeat(self._onFrame, self, 0.01)
 end
 
-function var_0_0._onClickClose(arg_5_0)
-	gohelper.setActive(arg_5_0._btnOpen.gameObject, true)
-	gohelper.setActive(arg_5_0._btnClose.gameObject, false)
-	gohelper.setActive(arg_5_0._contentViewGO.gameObject, false)
-	TaskDispatcher.cancelTask(arg_5_0._onFrame, arg_5_0)
+function EffectStatView:_onClickClose()
+	gohelper.setActive(self._btnOpen.gameObject, true)
+	gohelper.setActive(self._btnClose.gameObject, false)
+	gohelper.setActive(self._contentViewGO.gameObject, false)
+	TaskDispatcher.cancelTask(self._onFrame, self)
 end
 
-function var_0_0._onFrame(arg_6_0)
+function EffectStatView:_onFrame()
 	EffectStatModel.instance:statistic()
 end
 
-return var_0_0
+return EffectStatView

@@ -1,50 +1,52 @@
-﻿module("modules.logic.dungeon.view.jump.DungeonJumpGameViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/jump/DungeonJumpGameViewContainer.lua
 
-local var_0_0 = class("DungeonJumpGameViewContainer", BaseViewContainer)
+module("modules.logic.dungeon.view.jump.DungeonJumpGameViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	arg_1_0._gameView = DungeonJumpGameView.New()
+local DungeonJumpGameViewContainer = class("DungeonJumpGameViewContainer", BaseViewContainer)
+
+function DungeonJumpGameViewContainer:buildViews()
+	self._gameView = DungeonJumpGameView.New()
 
 	return {
-		arg_1_0._gameView,
+		self._gameView,
 		TabViewGroup.New(1, "#go_topleft")
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._navigateButtonView = NavigateButtonsView.New({
+function DungeonJumpGameViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
-		arg_2_0._navigateButtonView:setOverrideClose(arg_2_0.overrideCloseFunc, arg_2_0)
-		arg_2_0._navigateButtonView:setOverrideHome(arg_2_0.onClickHome, arg_2_0)
+		self._navigateButtonView:setOverrideClose(self.overrideCloseFunc, self)
+		self._navigateButtonView:setOverrideHome(self.onClickHome, self)
 
 		return {
-			arg_2_0._navigateButtonView
+			self._navigateButtonView
 		}
 	end
 end
 
-function var_0_0.overrideCloseFunc(arg_3_0)
-	GameFacade.showMessageBox(MessageBoxIdDefine.Activity130PuzzleExit, MsgBoxEnum.BoxType.Yes_No, arg_3_0.closeFunc, nil, nil, arg_3_0)
+function DungeonJumpGameViewContainer:overrideCloseFunc()
+	GameFacade.showMessageBox(MessageBoxIdDefine.Activity130PuzzleExit, MsgBoxEnum.BoxType.Yes_No, self.closeFunc, nil, nil, self)
 end
 
-function var_0_0.closeFunc(arg_4_0)
-	local var_4_0 = arg_4_0._gameView:getCurCellIdx()
+function DungeonJumpGameViewContainer:closeFunc()
+	local curCellIdx = self._gameView:getCurCellIdx()
 
-	DungeonJumpGameController.instance:sandStatData(DungeonMazeEnum.resultStat[3], var_4_0)
+	DungeonJumpGameController.instance:sandStatData(DungeonMazeEnum.resultStat[3], curCellIdx)
 	DungeonJumpGameController.instance:ClearProgress()
-	arg_4_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.onClickHome(arg_5_0)
-	local var_5_0 = arg_5_0._gameView:getCurCellIdx()
+function DungeonJumpGameViewContainer:onClickHome()
+	local curCellIdx = self._gameView:getCurCellIdx()
 
-	DungeonJumpGameController.instance:sandStatData(DungeonMazeEnum.resultStat[3], var_5_0)
+	DungeonJumpGameController.instance:sandStatData(DungeonMazeEnum.resultStat[3], curCellIdx)
 	NavigateButtonsView.homeClick()
 end
 
-return var_0_0
+return DungeonJumpGameViewContainer

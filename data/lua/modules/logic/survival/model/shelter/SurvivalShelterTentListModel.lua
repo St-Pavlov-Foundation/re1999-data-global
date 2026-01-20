@@ -1,180 +1,185 @@
-﻿module("modules.logic.survival.model.shelter.SurvivalShelterTentListModel", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/shelter/SurvivalShelterTentListModel.lua
 
-local var_0_0 = class("SurvivalShelterTentListModel", ListScrollModel)
+module("modules.logic.survival.model.shelter.SurvivalShelterTentListModel", package.seeall)
 
-function var_0_0.initViewParam(arg_1_0, arg_1_1)
-	arg_1_0.selectBuildingId = arg_1_1 and arg_1_1.buildingId or 0
-	arg_1_0.selectPos = nil
-	arg_1_0.selectNpcId = 0
-	arg_1_0._isQuickSelect = false
+local SurvivalShelterTentListModel = class("SurvivalShelterTentListModel", ListScrollModel)
+
+function SurvivalShelterTentListModel:initViewParam(viewParam)
+	self.selectBuildingId = viewParam and viewParam.buildingId or 0
+	self.selectPos = nil
+	self.selectNpcId = 0
+	self._isQuickSelect = false
 end
 
-function var_0_0.isQuickSelect(arg_2_0)
-	return arg_2_0._isQuickSelect
+function SurvivalShelterTentListModel:isQuickSelect()
+	return self._isQuickSelect
 end
 
-function var_0_0.changeQuickSelect(arg_3_0)
-	arg_3_0._isQuickSelect = not arg_3_0._isQuickSelect
+function SurvivalShelterTentListModel:changeQuickSelect()
+	self._isQuickSelect = not self._isQuickSelect
 end
 
-function var_0_0.setSelectBuildingId(arg_4_0, arg_4_1)
-	if arg_4_0.selectBuildingId == arg_4_1 then
+function SurvivalShelterTentListModel:setSelectBuildingId(buildingId)
+	if self.selectBuildingId == buildingId then
 		return
 	end
 
-	arg_4_0.selectBuildingId = arg_4_1
-	arg_4_0.selectPos = nil
+	self.selectBuildingId = buildingId
+	self.selectPos = nil
 
 	return true
 end
 
-function var_0_0.isSelectBuilding(arg_5_0, arg_5_1)
-	return arg_5_0.selectBuildingId == arg_5_1
+function SurvivalShelterTentListModel:isSelectBuilding(buildingId)
+	return self.selectBuildingId == buildingId
 end
 
-function var_0_0.getSelectBuilding(arg_6_0)
-	return arg_6_0.selectBuildingId
+function SurvivalShelterTentListModel:getSelectBuilding()
+	return self.selectBuildingId
 end
 
-function var_0_0.setSelectPos(arg_7_0, arg_7_1)
-	if arg_7_0.selectPos == arg_7_1 then
+function SurvivalShelterTentListModel:setSelectPos(pos)
+	if self.selectPos == pos then
 		return
 	end
 
-	arg_7_0.selectPos = arg_7_1
+	self.selectPos = pos
 
 	return true
 end
 
-function var_0_0.getSelectPos(arg_8_0)
-	return arg_8_0.selectPos
+function SurvivalShelterTentListModel:getSelectPos()
+	return self.selectPos
 end
 
-function var_0_0.setSelectNpc(arg_9_0, arg_9_1)
-	if arg_9_0.selectNpcId == arg_9_1 then
-		arg_9_0.selectNpcId = 0
+function SurvivalShelterTentListModel:setSelectNpc(npcId)
+	if self.selectNpcId == npcId then
+		self.selectNpcId = 0
 	else
-		arg_9_0.selectNpcId = arg_9_1
+		self.selectNpcId = npcId
 	end
 
 	return true
 end
 
-function var_0_0.getSelectNpc(arg_10_0)
-	return arg_10_0.selectNpcId
+function SurvivalShelterTentListModel:getSelectNpc()
+	return self.selectNpcId
 end
 
-function var_0_0.getShowList(arg_11_0)
-	local var_11_0 = {}
-	local var_11_1 = SurvivalShelterModel.instance:getWeekInfo().buildingDict
+function SurvivalShelterTentListModel:getShowList()
+	local list = {}
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local buildingDict = weekInfo.buildingDict
 
-	if var_11_1 then
-		for iter_11_0, iter_11_1 in pairs(var_11_1) do
-			if iter_11_1:isEqualType(SurvivalEnum.BuildingType.Tent) then
-				table.insert(var_11_0, iter_11_1)
+	if buildingDict then
+		for _, v in pairs(buildingDict) do
+			if v:isEqualType(SurvivalEnum.BuildingType.Tent) then
+				table.insert(list, v)
 			end
 		end
 	end
 
-	if #var_11_0 > 1 then
-		table.sort(var_11_0, SurvivalShelterBuildingMo.sort)
+	if #list > 1 then
+		table.sort(list, SurvivalShelterBuildingMo.sort)
 	end
 
-	local var_11_2 = {}
+	local dataList = {}
 
-	for iter_11_2, iter_11_3 in ipairs(var_11_0) do
-		local var_11_3 = {
-			buildingInfo = iter_11_3,
-			npcCount = iter_11_3:getAttr(SurvivalEnum.AttrType.BuildNpcCapNum)
-		}
+	for _, v in ipairs(list) do
+		local data = {}
 
-		var_11_3.npcNum = 0
-		var_11_3.npcList = {}
+		data.buildingInfo = v
+		data.npcCount = v:getAttr(SurvivalEnum.AttrType.BuildNpcCapNum)
+		data.npcNum = 0
+		data.npcList = {}
 
-		for iter_11_4 = 1, var_11_3.npcCount do
-			var_11_3.npcList[iter_11_4 - 1] = 0
+		for i = 1, data.npcCount do
+			data.npcList[i - 1] = 0
 		end
 
-		if iter_11_3.npcs then
-			for iter_11_5, iter_11_6 in pairs(iter_11_3.npcs) do
-				var_11_3.npcList[iter_11_6] = iter_11_5
-				var_11_3.npcNum = var_11_3.npcNum + 1
+		if v.npcs then
+			for npcId, pos in pairs(v.npcs) do
+				data.npcList[pos] = npcId
+				data.npcNum = data.npcNum + 1
 			end
 		end
 
-		table.insert(var_11_2, var_11_3)
+		table.insert(dataList, data)
 	end
 
-	return var_11_2
+	return dataList
 end
 
-function var_0_0.refreshNpcList(arg_12_0, arg_12_1)
-	local var_12_0 = {}
-	local var_12_1 = SurvivalShelterModel.instance:getWeekInfo().npcDict
+function SurvivalShelterTentListModel:refreshNpcList(filterList)
+	local list = {}
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local npcDict = weekInfo.npcDict
 
-	if var_12_1 then
-		for iter_12_0, iter_12_1 in pairs(var_12_1) do
-			if SurvivalBagSortHelper.filterNpc(arg_12_1, iter_12_1) then
-				table.insert(var_12_0, iter_12_1)
+	if npcDict then
+		for _, v in pairs(npcDict) do
+			if SurvivalBagSortHelper.filterNpc(filterList, v) then
+				table.insert(list, v)
 			end
 		end
 	end
 
-	if #var_12_0 > 1 then
-		table.sort(var_12_0, SurvivalShelterNpcMo.sort)
+	if #list > 1 then
+		table.sort(list, SurvivalShelterNpcMo.sort)
 	end
 
-	arg_12_0:setList(var_12_0)
+	self:setList(list)
 end
 
-function var_0_0.quickSelectNpc(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0:getSelectBuilding()
+function SurvivalShelterTentListModel:quickSelectNpc(npcId)
+	local buildingId = self:getSelectBuilding()
 
-	if not var_13_0 then
+	if not buildingId then
 		return
 	end
 
-	local var_13_1 = SurvivalShelterModel.instance:getWeekInfo()
-	local var_13_2 = var_13_1:getBuildingInfo(var_13_0)
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local building = weekInfo:getBuildingInfo(buildingId)
 
-	if not var_13_2 then
+	if not building then
 		return
 	end
 
-	if var_13_1:getNpcPostion(arg_13_1) == var_13_0 then
-		if not arg_13_0:isQuickSelect() then
-			arg_13_0.selectNpcId = 0
+	local tentBuildingId = weekInfo:getNpcPostion(npcId)
+
+	if tentBuildingId == buildingId then
+		if not self:isQuickSelect() then
+			self.selectNpcId = 0
 		end
 
-		SurvivalWeekRpc.instance:sendSurvivalNpcChangePositionRequest(arg_13_1, var_13_0, -1)
+		SurvivalWeekRpc.instance:sendSurvivalNpcChangePositionRequest(npcId, buildingId, -1)
 
 		return
 	end
 
-	local var_13_3 = var_13_2:getAttr(SurvivalEnum.AttrType.BuildNpcCapNum)
-	local var_13_4 = {}
+	local npcCount = building:getAttr(SurvivalEnum.AttrType.BuildNpcCapNum)
+	local dict = {}
 
-	if var_13_2.npcs then
-		for iter_13_0, iter_13_1 in pairs(var_13_2.npcs) do
-			var_13_4[iter_13_1] = iter_13_0
+	if building.npcs then
+		for npcId, pos in pairs(building.npcs) do
+			dict[pos] = npcId
 		end
 	end
 
-	for iter_13_2 = 1, var_13_3 do
-		if not var_13_4[iter_13_2 - 1] then
-			if not arg_13_0:isQuickSelect() then
-				arg_13_0.selectNpcId = 0
+	for i = 1, npcCount do
+		if not dict[i - 1] then
+			if not self:isQuickSelect() then
+				self.selectNpcId = 0
 			end
 
-			SurvivalWeekRpc.instance:sendSurvivalNpcChangePositionRequest(arg_13_1, var_13_0, iter_13_2 - 1)
+			SurvivalWeekRpc.instance:sendSurvivalNpcChangePositionRequest(npcId, buildingId, i - 1)
 
 			return
 		end
 	end
 
-	GameFacade.showToast(ToastEnum.SurvivalTentFull, var_13_2.baseCo.name)
+	GameFacade.showToast(ToastEnum.SurvivalTentFull, building.baseCo.name)
 end
 
-var_0_0.instance = var_0_0.New()
+SurvivalShelterTentListModel.instance = SurvivalShelterTentListModel.New()
 
-return var_0_0
+return SurvivalShelterTentListModel

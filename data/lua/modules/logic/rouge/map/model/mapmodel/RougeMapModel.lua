@@ -1,736 +1,748 @@
-﻿module("modules.logic.rouge.map.model.mapmodel.RougeMapModel", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/model/mapmodel/RougeMapModel.lua
 
-local var_0_0 = class("RougeMapModel")
+module("modules.logic.rouge.map.model.mapmodel.RougeMapModel", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.mapType = arg_1_1
+local RougeMapModel = class("RougeMapModel")
+
+function RougeMapModel:init(type)
+	self.mapType = type
 end
 
-function var_0_0.getMapType(arg_2_0)
-	return arg_2_0.mapType
+function RougeMapModel:getMapType()
+	return self.mapType
 end
 
-function var_0_0.setMapSize(arg_3_0, arg_3_1)
-	arg_3_0.mapSize = arg_3_1
+function RougeMapModel:setMapSize(size)
+	self.mapSize = size
 
-	arg_3_0:calculateMapEpisodeIntervalX()
+	self:calculateMapEpisodeIntervalX()
 end
 
-function var_0_0.getMapSize(arg_4_0)
-	return arg_4_0.mapSize
+function RougeMapModel:getMapSize()
+	return self.mapSize
 end
 
-function var_0_0.calculateMapEpisodeIntervalX(arg_5_0)
-	if not arg_5_0:isNormalLayer() then
-		arg_5_0.mapEpisodeIntervalX = 0
+function RougeMapModel:calculateMapEpisodeIntervalX()
+	if not self:isNormalLayer() then
+		self.mapEpisodeIntervalX = 0
 
 		return
 	end
 
-	arg_5_0.mapStartOffsetX = RougeMapEnum.MapStartOffsetX
+	self.mapStartOffsetX = RougeMapEnum.MapStartOffsetX
 
-	local var_5_0 = arg_5_0.mapSize.x - RougeMapEnum.MapStartOffsetX - RougeMapEnum.MapEndOffsetX
-	local var_5_1 = #arg_5_0:getEpisodeList() - 1
-	local var_5_2 = var_5_0 / var_5_1
+	local x = self.mapSize.x - RougeMapEnum.MapStartOffsetX - RougeMapEnum.MapEndOffsetX
+	local episodeList = self:getEpisodeList()
+	local len = #episodeList - 1
+	local intervalX = x / len
 
-	if var_5_2 > RougeMapEnum.MaxMapEpisodeIntervalX then
-		var_5_2 = RougeMapEnum.MaxMapEpisodeIntervalX
+	if intervalX > RougeMapEnum.MaxMapEpisodeIntervalX then
+		intervalX = RougeMapEnum.MaxMapEpisodeIntervalX
 
-		local var_5_3 = var_5_2 * var_5_1 + RougeMapEnum.MapStartOffsetX + RougeMapEnum.MapEndOffsetX
+		local resultMapWidth = intervalX * len + RougeMapEnum.MapStartOffsetX + RougeMapEnum.MapEndOffsetX
 
-		arg_5_0.mapStartOffsetX = (arg_5_0.mapSize.x - var_5_3) / 2 + RougeMapEnum.MapStartOffsetX
-		arg_5_0.mapSize.x = var_5_3
+		self.mapStartOffsetX = (self.mapSize.x - resultMapWidth) / 2 + RougeMapEnum.MapStartOffsetX
+		self.mapSize.x = resultMapWidth
 	end
 
-	arg_5_0.mapEpisodeIntervalX = RougeMapHelper.retain2decimals(var_5_2)
+	self.mapEpisodeIntervalX = RougeMapHelper.retain2decimals(intervalX)
 end
 
-function var_0_0.getMapStartOffsetX(arg_6_0)
-	return arg_6_0.mapStartOffsetX or RougeMapEnum.MapStartOffsetX
+function RougeMapModel:getMapStartOffsetX()
+	return self.mapStartOffsetX or RougeMapEnum.MapStartOffsetX
 end
 
-function var_0_0.getMapEpisodeIntervalX(arg_7_0)
-	return arg_7_0.mapEpisodeIntervalX
+function RougeMapModel:getMapEpisodeIntervalX()
+	return self.mapEpisodeIntervalX
 end
 
-function var_0_0.setCameraSize(arg_8_0, arg_8_1)
-	arg_8_0.cameraSize = arg_8_1
+function RougeMapModel:setCameraSize(cameraSize)
+	self.cameraSize = cameraSize
 end
 
-function var_0_0.setMapXRange(arg_9_0, arg_9_1, arg_9_2)
-	arg_9_0.minX = arg_9_1
-	arg_9_0.maxX = arg_9_2
+function RougeMapModel:setMapXRange(min, max)
+	self.minX = min
+	self.maxX = max
 end
 
-function var_0_0.getCameraSize(arg_10_0)
-	return arg_10_0.cameraSize
+function RougeMapModel:getCameraSize()
+	return self.cameraSize
 end
 
-function var_0_0.setMapPosX(arg_11_0, arg_11_1)
-	if arg_11_1 < arg_11_0.minX then
-		arg_11_1 = arg_11_0.minX
+function RougeMapModel:setMapPosX(posX)
+	if posX < self.minX then
+		posX = self.minX
 	end
 
-	if arg_11_1 > arg_11_0.maxX then
-		arg_11_1 = arg_11_0.maxX
+	if posX > self.maxX then
+		posX = self.maxX
 	end
 
-	if arg_11_0.mapPosX == arg_11_1 then
+	if self.mapPosX == posX then
 		return
 	end
 
-	arg_11_0.mapPosX = arg_11_1
+	self.mapPosX = posX
 
-	RougeMapController.instance:dispatchEvent(RougeMapEvent.onMapPosChange, arg_11_0.mapPosX)
+	RougeMapController.instance:dispatchEvent(RougeMapEvent.onMapPosChange, self.mapPosX)
 end
 
-function var_0_0.getMapPosX(arg_12_0)
-	return arg_12_0.mapPosX
+function RougeMapModel:getMapPosX()
+	return self.mapPosX
 end
 
-function var_0_0.setFocusScreenPosX(arg_13_0, arg_13_1)
-	arg_13_0.focusScreenPosX = arg_13_1
+function RougeMapModel:setFocusScreenPosX(screenPosX)
+	self.focusScreenPosX = screenPosX
 end
 
-function var_0_0.getFocusScreenPosX(arg_14_0)
-	return arg_14_0.focusScreenPosX
+function RougeMapModel:getFocusScreenPosX()
+	return self.focusScreenPosX
 end
 
-function var_0_0.getLayerId(arg_15_0)
-	return arg_15_0.mapModel and arg_15_0.mapModel.layerId
+function RougeMapModel:getLayerId()
+	return self.mapModel and self.mapModel.layerId
 end
 
-function var_0_0.getLayerCo(arg_16_0)
-	return arg_16_0.mapModel and arg_16_0.mapModel.layerCo
+function RougeMapModel:getLayerCo()
+	return self.mapModel and self.mapModel.layerCo
 end
 
-function var_0_0.isNormalLayer(arg_17_0)
-	return arg_17_0.mapType == RougeMapEnum.MapType.Normal
+function RougeMapModel:isNormalLayer()
+	return self.mapType == RougeMapEnum.MapType.Normal
 end
 
-function var_0_0.isMiddle(arg_18_0)
-	return arg_18_0.mapType == RougeMapEnum.MapType.Middle
+function RougeMapModel:isMiddle()
+	return self.mapType == RougeMapEnum.MapType.Middle
 end
 
-function var_0_0.isPathSelect(arg_19_0)
-	return arg_19_0.mapType == RougeMapEnum.MapType.PathSelect
+function RougeMapModel:isPathSelect()
+	return self.mapType == RougeMapEnum.MapType.PathSelect
 end
 
-function var_0_0.getMiddleLayerId(arg_20_0)
-	return arg_20_0.mapModel and arg_20_0.mapModel.middleLayerId
+function RougeMapModel:getMiddleLayerId()
+	return self.mapModel and self.mapModel.middleLayerId
 end
 
-function var_0_0.getMiddleLayerCo(arg_21_0)
-	return arg_21_0.mapModel and arg_21_0.mapModel.middleCo
+function RougeMapModel:getMiddleLayerCo()
+	return self.mapModel and self.mapModel.middleCo
 end
 
-function var_0_0.getPathSelectCo(arg_22_0)
-	return arg_22_0.mapModel and arg_22_0.mapModel.pathSelectCo
+function RougeMapModel:getPathSelectCo()
+	return self.mapModel and self.mapModel.pathSelectCo
 end
 
-function var_0_0.setWaitLeaveMiddleLayerReply(arg_23_0, arg_23_1)
-	arg_23_0.waitMiddleLayerReply = arg_23_1
+function RougeMapModel:setWaitLeaveMiddleLayerReply(waiting)
+	self.waitMiddleLayerReply = waiting
 end
 
-function var_0_0.updateSimpleMapInfo(arg_24_0, arg_24_1)
-	if arg_24_0.waitMiddleLayerReply then
+function RougeMapModel:updateSimpleMapInfo(info)
+	if self.waitMiddleLayerReply then
 		return
 	end
 
-	if not arg_24_0:_isSameMap(arg_24_1) then
+	if not self:_isSameMap(info) then
 		return
 	end
 
-	if arg_24_0.mapType == RougeMapEnum.MapType.Middle or arg_24_0.mapType == RougeMapEnum.MapType.PathSelect then
-		arg_24_0.mapModel:updateSimpleMapInfo(arg_24_1.middleLayerInfo)
+	if self.mapType == RougeMapEnum.MapType.Middle or self.mapType == RougeMapEnum.MapType.PathSelect then
+		self.mapModel:updateSimpleMapInfo(info.middleLayerInfo)
 	else
-		arg_24_0.mapModel:updateSimpleMapInfo(arg_24_1.layerInfo)
+		self.mapModel:updateSimpleMapInfo(info.layerInfo)
 	end
 
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onUpdateMapInfo)
 end
 
-function var_0_0.updateMapInfo(arg_25_0, arg_25_1)
-	if arg_25_0.waitMiddleLayerReply then
+function RougeMapModel:updateMapInfo(info)
+	if self.waitMiddleLayerReply then
 		return
 	end
 
-	if arg_25_0.inited then
-		if arg_25_0:_isSameMap(arg_25_1) then
-			arg_25_0:_updateMapInfo(arg_25_1)
+	if self.inited then
+		if self:_isSameMap(info) then
+			self:_updateMapInfo(info)
 		else
-			arg_25_0:_changeMapInfo(arg_25_1)
+			self:_changeMapInfo(info)
 		end
 	else
-		arg_25_0:_initMapInfo(arg_25_1)
+		self:_initMapInfo(info)
 	end
 end
 
-function var_0_0._isSameMap(arg_26_0, arg_26_1)
-	if not arg_26_0.inited then
+function RougeMapModel:_isSameMap(info)
+	if not self.inited then
 		return false
 	end
 
-	if arg_26_0.mapType ~= arg_26_0:_getTypeByInfo(arg_26_1) then
+	if self.mapType ~= self:_getTypeByInfo(info) then
 		return false
 	end
 
-	if arg_26_0.mapType == RougeMapEnum.MapType.Normal then
-		return arg_26_0.mapModel.layerId == arg_26_1.layerInfo.layerId
+	if self.mapType == RougeMapEnum.MapType.Normal then
+		return self.mapModel.layerId == info.layerInfo.layerId
 	end
 
-	local var_26_0 = arg_26_1.middleLayerInfo
+	local layerInfo = info.middleLayerInfo
 
-	return arg_26_0.mapModel.layerId == var_26_0.layerId and arg_26_0.mapModel.middleLayerId == var_26_0.middleLayerId
+	return self.mapModel.layerId == layerInfo.layerId and self.mapModel.middleLayerId == layerInfo.middleLayerId
 end
 
-function var_0_0._getTypeByInfo(arg_27_0, arg_27_1)
-	if arg_27_1.mapType ~= RougeMapEnum.MapType.Middle then
-		return arg_27_1.mapType
+function RougeMapModel:_getTypeByInfo(info)
+	if info.mapType ~= RougeMapEnum.MapType.Middle then
+		return info.mapType
 	end
 
-	if arg_27_1.middleLayerInfo.positionIndex == RougeMapEnum.PathSelectIndex then
+	local middleLayerInfo = info.middleLayerInfo
+
+	if middleLayerInfo.positionIndex == RougeMapEnum.PathSelectIndex then
 		return RougeMapEnum.MapType.PathSelect
 	end
 
 	return RougeMapEnum.MapType.Middle
 end
 
-function var_0_0._initMapInfo(arg_28_0, arg_28_1)
-	arg_28_0.inited = true
-	arg_28_0.mapType = arg_28_0:_getTypeByInfo(arg_28_1)
-	arg_28_0.mapModel = RougeMapEnum.MapType2ModelCls[arg_28_0.mapType].New()
+function RougeMapModel:_initMapInfo(info)
+	self.inited = true
+	self.mapType = self:_getTypeByInfo(info)
 
-	if arg_28_0.mapType == RougeMapEnum.MapType.Middle or arg_28_0.mapType == RougeMapEnum.MapType.PathSelect then
-		arg_28_0.mapModel:initMap(arg_28_1.middleLayerInfo)
+	local cls = RougeMapEnum.MapType2ModelCls[self.mapType]
+
+	self.mapModel = cls.New()
+
+	if self.mapType == RougeMapEnum.MapType.Middle or self.mapType == RougeMapEnum.MapType.PathSelect then
+		self.mapModel:initMap(info.middleLayerInfo)
 	else
-		arg_28_0.mapModel:initMap(arg_28_1.layerInfo)
+		self.mapModel:initMap(info.layerInfo)
 	end
 
-	arg_28_0:setMapEntrustInfo(arg_28_1)
-	arg_28_0:initMapInteractive(arg_28_1)
-	arg_28_0:setMapSkillInfo(arg_28_1)
-	arg_28_0:setDLCInfo_103(arg_28_1)
+	self:setMapEntrustInfo(info)
+	self:initMapInteractive(info)
+	self:setMapSkillInfo(info)
+	self:setDLCInfo_103(info)
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onInitMapInfoDone)
 end
 
-function var_0_0._updateMapInfo(arg_29_0, arg_29_1)
-	if arg_29_0.mapType == RougeMapEnum.MapType.Middle or arg_29_0.mapType == RougeMapEnum.MapType.PathSelect then
-		arg_29_0.mapModel:updateMapInfo(arg_29_1.middleLayerInfo)
+function RougeMapModel:_updateMapInfo(info)
+	if self.mapType == RougeMapEnum.MapType.Middle or self.mapType == RougeMapEnum.MapType.PathSelect then
+		self.mapModel:updateMapInfo(info.middleLayerInfo)
 	else
-		arg_29_0.mapModel:updateMapInfo(arg_29_1.layerInfo)
+		self.mapModel:updateMapInfo(info.layerInfo)
 	end
 
-	arg_29_0:setMapEntrustInfo(arg_29_1)
-	arg_29_0:setMapCurInteractive(arg_29_1)
-	arg_29_0:setMapSkillInfo(arg_29_1)
-	arg_29_0:setDLCInfo_103(arg_29_1)
+	self:setMapEntrustInfo(info)
+	self:setMapCurInteractive(info)
+	self:setMapSkillInfo(info)
+	self:setDLCInfo_103(info)
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onUpdateMapInfo)
 end
 
-function var_0_0._changeMapInfo(arg_30_0, arg_30_1)
-	local var_30_0 = arg_30_0:_getTypeByInfo(arg_30_1)
+function RougeMapModel:_changeMapInfo(info)
+	local nextType = self:_getTypeByInfo(info)
+	local changeMapEnum = RougeMapHelper.getChangeMapEnum(self.mapType, nextType)
 
-	if RougeMapHelper.getChangeMapEnum(arg_30_0.mapType, var_30_0) == RougeMapEnum.ChangeMapEnum.NormalToMiddle then
-		arg_30_0._newInfo = arg_30_1
+	if changeMapEnum == RougeMapEnum.ChangeMapEnum.NormalToMiddle then
+		self._newInfo = info
 
-		arg_30_0:clearInteractive()
+		self:clearInteractive()
 
-		if arg_30_0:getMapState() == RougeMapEnum.MapState.Normal then
+		if self:getMapState() == RougeMapEnum.MapState.Normal then
 			RougeMapController.instance:dispatchEvent(RougeMapEvent.onBeforeActorMoveToEnd)
 		end
 
 		return
 	end
 
-	arg_30_0:_initMapInfo(arg_30_1)
-	arg_30_0:dispatchChangeMapEvent()
+	self:_initMapInfo(info)
+	self:dispatchChangeMapEvent()
 end
 
-function var_0_0.updateToNewMapInfo(arg_31_0)
+function RougeMapModel:updateToNewMapInfo()
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onBeforeNormalToMiddle)
-	arg_31_0:setMapState(RougeMapEnum.MapState.SwitchMapAnim)
+	self:setMapState(RougeMapEnum.MapState.SwitchMapAnim)
 
-	if arg_31_0.mapModel then
-		arg_31_0.mapModel:clear()
+	if self.mapModel then
+		self.mapModel:clear()
 	end
 
-	local var_31_0 = arg_31_0._newInfo
+	local info = self._newInfo
 
-	arg_31_0._newInfo = nil
+	self._newInfo = nil
 
-	arg_31_0:_initMapInfo(var_31_0)
-	arg_31_0:dispatchChangeMapEvent()
+	self:_initMapInfo(info)
+	self:dispatchChangeMapEvent()
 end
 
-function var_0_0.dispatchChangeMapEvent(arg_32_0)
+function RougeMapModel:dispatchChangeMapEvent()
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onBeforeChangeMapInfo)
-	TaskDispatcher.runDelay(arg_32_0._dispatchChangeMapEvent, arg_32_0, RougeMapEnum.WaitSwitchMapAnim)
+	TaskDispatcher.runDelay(self._dispatchChangeMapEvent, self, RougeMapEnum.WaitSwitchMapAnim)
 end
 
-function var_0_0._dispatchChangeMapEvent(arg_33_0)
+function RougeMapModel:_dispatchChangeMapEvent()
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onChangeMapInfo)
 end
 
-function var_0_0.needPlayMoveToEndAnim(arg_34_0)
-	return arg_34_0._newInfo ~= nil
+function RougeMapModel:needPlayMoveToEndAnim()
+	return self._newInfo ~= nil
 end
 
-function var_0_0.initMapInteractive(arg_35_0, arg_35_1)
-	if not arg_35_1:HasField("curInteractiveIndex") then
-		arg_35_0:clearInteractive()
+function RougeMapModel:initMapInteractive(info)
+	if not info:HasField("curInteractiveIndex") then
+		self:clearInteractive()
 
 		return
 	end
 
-	arg_35_0.interactiveJson = cjson.decode(arg_35_1.interactiveJson)
+	self.interactiveJson = cjson.decode(info.interactiveJson)
 
-	if arg_35_0:checkDropIsEmpty(arg_35_1.curInteractive) then
-		logError(string.format("触发掉落，但是掉落列表是空! interactive : %s, json : %s", arg_35_1.curInteractive, arg_35_1.interactiveJson))
-		arg_35_0:clearInteractive()
+	if self:checkDropIsEmpty(info.curInteractive) then
+		logError(string.format("触发掉落，但是掉落列表是空! interactive : %s, json : %s", info.curInteractive, info.interactiveJson))
+		self:clearInteractive()
 
 		return
 	end
 
-	arg_35_0.curInteractive = arg_35_1.curInteractive
-	arg_35_0.curInteractType = string.splitToNumber(arg_35_0.curInteractive, "#")[1]
-	arg_35_0.curInteractiveIndex = arg_35_1.curInteractiveIndex
+	self.curInteractive = info.curInteractive
+	self.curInteractType = string.splitToNumber(self.curInteractive, "#")[1]
+	self.curInteractiveIndex = info.curInteractiveIndex
 end
 
-function var_0_0.setMapCurInteractive(arg_36_0, arg_36_1)
-	if not arg_36_1:HasField("curInteractiveIndex") then
-		arg_36_0:clearInteractive()
+function RougeMapModel:setMapCurInteractive(info)
+	if not info:HasField("curInteractiveIndex") then
+		self:clearInteractive()
 
 		return
 	end
 
-	arg_36_0.interactiveJson = cjson.decode(arg_36_1.interactiveJson)
+	self.interactiveJson = cjson.decode(info.interactiveJson)
 
-	if arg_36_0:checkDropIsEmpty(arg_36_1.curInteractive) then
-		logError(string.format("触发掉落，但是掉落列表是空! interactive : %s, json : %s", arg_36_1.curInteractive, arg_36_1.interactiveJson))
-		arg_36_0:clearInteractive()
+	if self:checkDropIsEmpty(info.curInteractive) then
+		logError(string.format("触发掉落，但是掉落列表是空! interactive : %s, json : %s", info.curInteractive, info.interactiveJson))
+		self:clearInteractive()
 
 		return
 	end
 
-	if arg_36_0.curInteractiveIndex == arg_36_1.curInteractiveIndex then
+	if self.curInteractiveIndex == info.curInteractiveIndex then
 		return
 	end
 
-	arg_36_0.curInteractive = arg_36_1.curInteractive
-	arg_36_0.curInteractType = string.splitToNumber(arg_36_0.curInteractive, "#")[1]
-	arg_36_0.curInteractiveIndex = arg_36_1.curInteractiveIndex
+	self.curInteractive = info.curInteractive
+	self.curInteractType = string.splitToNumber(self.curInteractive, "#")[1]
+	self.curInteractiveIndex = info.curInteractiveIndex
 
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.triggerInteract)
 end
 
-function var_0_0.clearInteractive(arg_37_0)
+function RougeMapModel:clearInteractive()
 	logNormal("清理交互数据")
 
-	arg_37_0.curInteractiveIndex = nil
-	arg_37_0.curInteractive = nil
-	arg_37_0.interactiveJson = nil
+	self.curInteractiveIndex = nil
+	self.curInteractive = nil
+	self.interactiveJson = nil
 
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onClearInteract)
 end
 
-function var_0_0.checkDropIsEmpty(arg_38_0, arg_38_1)
-	local var_38_0 = string.splitToNumber(arg_38_1, "#")[1]
+function RougeMapModel:checkDropIsEmpty(curInteractive)
+	local interactArr = string.splitToNumber(curInteractive, "#")
+	local interactType = interactArr[1]
 
-	if var_38_0 == RougeMapEnum.InteractType.Drop or var_38_0 == RougeMapEnum.InteractType.DropGroup or var_38_0 == RougeMapEnum.InteractType.AdvanceDrop then
-		local var_38_1 = arg_38_0.interactiveJson.dropCollectList
+	if interactType == RougeMapEnum.InteractType.Drop or interactType == RougeMapEnum.InteractType.DropGroup or interactType == RougeMapEnum.InteractType.AdvanceDrop then
+		local dropCollectList = self.interactiveJson.dropCollectList
 
-		return not var_38_1 or #var_38_1 < 1
+		return not dropCollectList or #dropCollectList < 1
 	end
 
 	return false
 end
 
-function var_0_0.setMapEntrustInfo(arg_39_0, arg_39_1)
-	if not arg_39_1:HasField("rougeEntrust") then
-		arg_39_0:clearEntrustInfo()
+function RougeMapModel:setMapEntrustInfo(info)
+	if not info:HasField("rougeEntrust") then
+		self:clearEntrustInfo()
 		RougeMapController.instance:dispatchEvent(RougeMapEvent.onEntrustChange)
 
 		return
 	end
 
-	local var_39_0 = arg_39_1.rougeEntrust
-	local var_39_1 = var_39_0.id
-	local var_39_2 = var_39_0.count
+	local entrust = info.rougeEntrust
+	local curEntrustId = entrust.id
+	local curEntrustProgress = entrust.count
 
-	if arg_39_0.entrustId == var_39_1 and arg_39_0.entrustProgress == var_39_2 then
+	if self.entrustId == curEntrustId and self.entrustProgress == curEntrustProgress then
 		return
 	end
 
-	if arg_39_0.entrustId ~= var_39_1 then
+	if self.entrustId ~= curEntrustId then
 		RougeMapController.instance:dispatchEvent(RougeMapEvent.onAcceptEntrust)
 	end
 
-	arg_39_0.entrustId = var_39_1
-	arg_39_0.entrustProgress = var_39_2
+	self.entrustId = curEntrustId
+	self.entrustProgress = curEntrustProgress
 
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onEntrustChange)
 end
 
-function var_0_0.updateEntrustInfo(arg_40_0, arg_40_1)
-	if arg_40_1.id == 0 then
-		arg_40_0:clearEntrustInfo()
+function RougeMapModel:updateEntrustInfo(entrustInfo)
+	if entrustInfo.id == 0 then
+		self:clearEntrustInfo()
 		RougeMapController.instance:dispatchEvent(RougeMapEvent.onEntrustChange)
 
 		return
 	end
 
-	arg_40_0.entrustId = arg_40_1.id
-	arg_40_0.entrustProgress = arg_40_1.count
+	self.entrustId = entrustInfo.id
+	self.entrustProgress = entrustInfo.count
 
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onEntrustChange)
 end
 
-function var_0_0.clearEntrustInfo(arg_41_0)
-	arg_41_0.entrustId = nil
-	arg_41_0.entrustProgress = nil
+function RougeMapModel:clearEntrustInfo()
+	self.entrustId = nil
+	self.entrustProgress = nil
 end
 
-function var_0_0.getEntrustId(arg_42_0)
-	return arg_42_0.entrustId
+function RougeMapModel:getEntrustId()
+	return self.entrustId
 end
 
-function var_0_0.getEntrustProgress(arg_43_0)
-	return arg_43_0.entrustProgress
+function RougeMapModel:getEntrustProgress()
+	return self.entrustProgress
 end
 
-function var_0_0.setMapSkillInfo(arg_44_0, arg_44_1)
-	arg_44_0._mapSkills = {}
-	arg_44_0._mapSkillMap = {}
+function RougeMapModel:setMapSkillInfo(info)
+	self._mapSkills = {}
+	self._mapSkillMap = {}
 
-	for iter_44_0, iter_44_1 in ipairs(arg_44_1.mapSkill) do
-		local var_44_0 = RougeMapSkillMO.New()
+	for _, skillInfo in ipairs(info.mapSkill) do
+		local mapSkillMo = RougeMapSkillMO.New()
 
-		var_44_0:init(iter_44_1)
+		mapSkillMo:init(skillInfo)
 
-		arg_44_0._mapSkillMap[var_44_0.id] = var_44_0
+		self._mapSkillMap[mapSkillMo.id] = mapSkillMo
 
-		table.insert(arg_44_0._mapSkills, var_44_0)
+		table.insert(self._mapSkills, mapSkillMo)
 	end
 end
 
-function var_0_0.setDLCInfo_103(arg_45_0, arg_45_1)
-	arg_45_0.monsterRuleFreshNum = arg_45_1.monsterRuleFreshNum or 0
-	arg_45_0.monsterRuleCanFreshNum = arg_45_1.monsterRuleCanFreshNum or 0
-	arg_45_0.choiceCollection = arg_45_1.choiceCollection or 0
-	arg_45_0.monsterRuleRemainCanFreshNum = arg_45_0.monsterRuleCanFreshNum - arg_45_0.monsterRuleFreshNum
+function RougeMapModel:setDLCInfo_103(info)
+	self.monsterRuleFreshNum = info.monsterRuleFreshNum or 0
+	self.monsterRuleCanFreshNum = info.monsterRuleCanFreshNum or 0
+	self.choiceCollection = info.choiceCollection or 0
+	self.monsterRuleRemainCanFreshNum = self.monsterRuleCanFreshNum - self.monsterRuleFreshNum
 end
 
-function var_0_0.getMonsterRuleRemainCanFreshNum(arg_46_0)
-	return arg_46_0.monsterRuleRemainCanFreshNum or 0
+function RougeMapModel:getMonsterRuleRemainCanFreshNum()
+	return self.monsterRuleRemainCanFreshNum or 0
 end
 
-function var_0_0.getChoiceCollection(arg_47_0)
-	return arg_47_0.choiceCollection
+function RougeMapModel:getChoiceCollection()
+	return self.choiceCollection
 end
 
-function var_0_0.clearMapSkillInfo(arg_48_0)
-	arg_48_0._mapSkills = nil
+function RougeMapModel:clearMapSkillInfo()
+	self._mapSkills = nil
 end
 
-function var_0_0.getMapSkillList(arg_49_0)
-	return arg_49_0._mapSkills
+function RougeMapModel:getMapSkillList()
+	return self._mapSkills
 end
 
-function var_0_0.onUpdateMapSkillInfo(arg_50_0, arg_50_1)
-	local var_50_0 = arg_50_0._mapSkillMap and arg_50_0._mapSkillMap[arg_50_1.id]
+function RougeMapModel:onUpdateMapSkillInfo(skillInfo)
+	local skillMo = self._mapSkillMap and self._mapSkillMap[skillInfo.id]
 
-	if var_50_0 then
-		var_50_0:init(arg_50_1)
+	if skillMo then
+		skillMo:init(skillInfo)
 	end
 end
 
-function var_0_0.getEpisodeList(arg_51_0)
-	return arg_51_0.mapModel and arg_51_0.mapModel:getEpisodeList()
+function RougeMapModel:getEpisodeList()
+	return self.mapModel and self.mapModel:getEpisodeList()
 end
 
-function var_0_0.getNode(arg_52_0, arg_52_1)
-	return arg_52_0.mapModel and arg_52_0.mapModel:getNode(arg_52_1)
+function RougeMapModel:getNode(nodeId)
+	return self.mapModel and self.mapModel:getNode(nodeId)
 end
 
-function var_0_0.getEndNodeId(arg_53_0)
-	return arg_53_0.mapModel and arg_53_0.mapModel:getEndNodeId()
+function RougeMapModel:getEndNodeId()
+	return self.mapModel and self.mapModel:getEndNodeId()
 end
 
-function var_0_0.getCurEpisodeId(arg_54_0)
-	return arg_54_0.mapModel and arg_54_0.mapModel:getCurEpisodeId()
+function RougeMapModel:getCurEpisodeId()
+	return self.mapModel and self.mapModel:getCurEpisodeId()
 end
 
-function var_0_0.getCurNode(arg_55_0)
-	return arg_55_0.mapModel and arg_55_0.mapModel.getCurNode and arg_55_0.mapModel:getCurNode()
+function RougeMapModel:getCurNode()
+	return self.mapModel and self.mapModel.getCurNode and self.mapModel:getCurNode()
 end
 
-function var_0_0.getCurEvent(arg_56_0)
-	if not arg_56_0.mapModel then
+function RougeMapModel:getCurEvent()
+	if not self.mapModel then
 		return
 	end
 
-	local var_56_0 = arg_56_0:getCurNode()
+	local curNode = self:getCurNode()
 
-	return var_56_0 and var_56_0:getEventCo()
+	return curNode and curNode:getEventCo()
 end
 
-function var_0_0.getCurPieceMo(arg_57_0)
-	return arg_57_0.mapModel.getCurPieceMo and arg_57_0.mapModel:getCurPieceMo()
+function RougeMapModel:getCurPieceMo()
+	return self.mapModel.getCurPieceMo and self.mapModel:getCurPieceMo()
 end
 
-function var_0_0.getNodeDict(arg_58_0)
-	return arg_58_0.mapModel and arg_58_0.mapModel:getNodeDict()
+function RougeMapModel:getNodeDict()
+	return self.mapModel and self.mapModel:getNodeDict()
 end
 
-function var_0_0.getCurInteractType(arg_59_0)
-	return arg_59_0.curInteractType
+function RougeMapModel:getCurInteractType()
+	return self.curInteractType
 end
 
-function var_0_0.getCurInteractive(arg_60_0)
-	return arg_60_0.curInteractive
+function RougeMapModel:getCurInteractive()
+	return self.curInteractive
 end
 
-function var_0_0.getCurInteractiveJson(arg_61_0)
-	return arg_61_0.interactiveJson
+function RougeMapModel:getCurInteractiveJson()
+	return self.interactiveJson
 end
 
-function var_0_0.isInteractiving(arg_62_0)
-	return arg_62_0.curInteractive ~= nil
+function RougeMapModel:isInteractiving()
+	return self.curInteractive ~= nil
 end
 
-function var_0_0.getPieceList(arg_63_0)
-	return arg_63_0.mapModel and arg_63_0.mapModel:getPieceList()
+function RougeMapModel:getPieceList()
+	return self.mapModel and self.mapModel:getPieceList()
 end
 
-function var_0_0.getPieceMo(arg_64_0, arg_64_1)
-	return arg_64_0.mapModel and arg_64_0.mapModel:getPieceMo(arg_64_1)
+function RougeMapModel:getPieceMo(pieceIndex)
+	return self.mapModel and self.mapModel:getPieceMo(pieceIndex)
 end
 
-function var_0_0.getMiddleLayerPosByIndex(arg_65_0, arg_65_1)
-	return arg_65_0.mapModel and arg_65_0.mapModel:getMiddleLayerPosByIndex(arg_65_1)
+function RougeMapModel:getMiddleLayerPosByIndex(index)
+	return self.mapModel and self.mapModel:getMiddleLayerPosByIndex(index)
 end
 
-function var_0_0.getPathIndex(arg_66_0, arg_66_1)
-	if not arg_66_0.mapModel then
+function RougeMapModel:getPathIndex(pointIndex)
+	if not self.mapModel then
 		return
 	end
 
-	return arg_66_0:getMiddleLayerPosByIndex(arg_66_1).z
+	local pos = self:getMiddleLayerPosByIndex(pointIndex)
+
+	return pos.z
 end
 
-function var_0_0.getMiddleLayerPathPos(arg_67_0, arg_67_1)
-	return arg_67_0.mapModel and arg_67_0.mapModel:getMiddleLayerPathPos(arg_67_1)
+function RougeMapModel:getMiddleLayerPathPos(index)
+	return self.mapModel and self.mapModel:getMiddleLayerPathPos(index)
 end
 
-function var_0_0.getMiddleLayerPathPosByPathIndex(arg_68_0, arg_68_1)
-	return arg_68_0.mapModel and arg_68_0.mapModel:getMiddleLayerPathPosByPathIndex(arg_68_1)
+function RougeMapModel:getMiddleLayerPathPosByPathIndex(pathIndex)
+	return self.mapModel and self.mapModel:getMiddleLayerPathPosByPathIndex(pathIndex)
 end
 
-function var_0_0.getMiddleLayerLeavePos(arg_69_0)
-	if not arg_69_0.mapModel then
+function RougeMapModel:getMiddleLayerLeavePos()
+	if not self.mapModel then
 		return
 	end
 
-	return arg_69_0.mapModel:getMiddleLayerLeavePos()
+	return self.mapModel:getMiddleLayerLeavePos()
 end
 
-function var_0_0.hadLeavePos(arg_70_0)
-	if not arg_70_0.mapModel then
+function RougeMapModel:hadLeavePos()
+	if not self.mapModel then
 		return
 	end
 
-	return arg_70_0.mapModel:hadLeavePos()
+	return self.mapModel:hadLeavePos()
 end
 
-function var_0_0.getMiddleLayerLeavePathIndex(arg_71_0)
-	return arg_71_0.mapModel and arg_71_0.mapModel:getMiddleLayerLeavePathIndex()
+function RougeMapModel:getMiddleLayerLeavePathIndex()
+	return self.mapModel and self.mapModel:getMiddleLayerLeavePathIndex()
 end
 
-function var_0_0.getCurPosIndex(arg_72_0)
-	return arg_72_0.mapModel and arg_72_0.mapModel:getCurPosIndex()
+function RougeMapModel:getCurPosIndex()
+	return self.mapModel and self.mapModel:getCurPosIndex()
 end
 
-function var_0_0.getMapName(arg_73_0)
-	if not arg_73_0.mapModel then
+function RougeMapModel:getMapName()
+	if not self.mapModel then
 		return
 	end
 
-	if arg_73_0.mapType == RougeMapEnum.MapType.Normal then
-		return arg_73_0.mapModel.layerCo.name
-	elseif arg_73_0.mapType == RougeMapEnum.MapType.Middle then
-		return arg_73_0.mapModel.middleCo.name
-	elseif arg_73_0.mapType == RougeMapEnum.MapType.PathSelect then
-		return arg_73_0.mapModel.pathSelectCo.name
+	if self.mapType == RougeMapEnum.MapType.Normal then
+		return self.mapModel.layerCo.name
+	elseif self.mapType == RougeMapEnum.MapType.Middle then
+		return self.mapModel.middleCo.name
+	elseif self.mapType == RougeMapEnum.MapType.PathSelect then
+		return self.mapModel.pathSelectCo.name
 	end
 end
 
-function var_0_0.getNextLayerList(arg_74_0)
-	return arg_74_0.mapModel and arg_74_0.mapModel:getNextLayerList()
+function RougeMapModel:getNextLayerList()
+	return self.mapModel and self.mapModel:getNextLayerList()
 end
 
-function var_0_0.setEndId(arg_75_0, arg_75_1)
-	arg_75_0.endId = arg_75_1
+function RougeMapModel:setEndId(endId)
+	self.endId = endId
 end
 
-function var_0_0.getEndId(arg_76_0)
-	if arg_76_0.endId then
-		return arg_76_0.endId
+function RougeMapModel:getEndId()
+	if self.endId then
+		return self.endId
 	end
 
 	return RougeMapHelper.getEndId()
 end
 
-function var_0_0.updateSelectLayerId(arg_77_0, arg_77_1)
-	if not arg_77_0.mapModel then
+function RougeMapModel:updateSelectLayerId(layerId)
+	if not self.mapModel then
 		return
 	end
 
-	arg_77_0.mapModel:updateSelectLayerId(arg_77_1)
+	self.mapModel:updateSelectLayerId(layerId)
 end
 
-function var_0_0.getSelectLayerId(arg_78_0)
-	return arg_78_0.mapModel and arg_78_0.mapModel:getSelectLayerId()
+function RougeMapModel:getSelectLayerId()
+	return self.mapModel and self.mapModel:getSelectLayerId()
 end
 
-function var_0_0.getFogNodeList(arg_79_0)
-	if arg_79_0.mapModel and arg_79_0.mapModel.getFogNodeList then
-		return arg_79_0.mapModel:getFogNodeList()
+function RougeMapModel:getFogNodeList()
+	if self.mapModel and self.mapModel.getFogNodeList then
+		return self.mapModel:getFogNodeList()
 	end
 end
 
-function var_0_0.getHoleNodeList(arg_80_0)
-	if arg_80_0.mapModel and arg_80_0.mapModel.getFogNodeList then
-		return arg_80_0.mapModel:getHoleNodeList()
+function RougeMapModel:getHoleNodeList()
+	if self.mapModel and self.mapModel.getFogNodeList then
+		return self.mapModel:getHoleNodeList()
 	end
 end
 
-function var_0_0.isHoleNode(arg_81_0, arg_81_1)
-	if arg_81_0.mapModel and arg_81_0.mapModel.isHoleNode then
-		return arg_81_0.mapModel:isHoleNode(arg_81_1)
+function RougeMapModel:isHoleNode(nodeId)
+	if self.mapModel and self.mapModel.isHoleNode then
+		return self.mapModel:isHoleNode(nodeId)
 	end
 end
 
-function var_0_0.clear(arg_82_0)
-	arg_82_0.inited = nil
-	arg_82_0.mapType = nil
-	arg_82_0.mapEpisodeIntervalX = nil
-	arg_82_0.mapSize = nil
-	arg_82_0.cameraSize = nil
-	arg_82_0.minX = nil
-	arg_82_0.maxX = nil
-	arg_82_0.mapPosX = nil
-	arg_82_0.focusScreenPosX = nil
-	arg_82_0._newInfo = nil
-	arg_82_0.interactiveJson = nil
-	arg_82_0.curInteractive = nil
-	arg_82_0.curInteractType = nil
-	arg_82_0.curInteractiveIndex = nil
-	arg_82_0.entrustId = nil
-	arg_82_0.entrustProgress = nil
-	arg_82_0.endId = nil
-	arg_82_0.loading = nil
-	arg_82_0.curChoiceId = nil
-	arg_82_0.playingDialogue = nil
-	arg_82_0.state = nil
-	arg_82_0.mapState = nil
-	arg_82_0.finalMap = nil
-	arg_82_0.firstEnterMapFlag = nil
+function RougeMapModel:clear()
+	self.inited = nil
+	self.mapType = nil
+	self.mapEpisodeIntervalX = nil
+	self.mapSize = nil
+	self.cameraSize = nil
+	self.minX = nil
+	self.maxX = nil
+	self.mapPosX = nil
+	self.focusScreenPosX = nil
+	self._newInfo = nil
+	self.interactiveJson = nil
+	self.curInteractive = nil
+	self.curInteractType = nil
+	self.curInteractiveIndex = nil
+	self.entrustId = nil
+	self.entrustProgress = nil
+	self.endId = nil
+	self.loading = nil
+	self.curChoiceId = nil
+	self.playingDialogue = nil
+	self.state = nil
+	self.mapState = nil
+	self.finalMap = nil
+	self.firstEnterMapFlag = nil
 
-	TaskDispatcher.cancelTask(arg_82_0._dispatchChangeMapEvent, arg_82_0)
+	TaskDispatcher.cancelTask(self._dispatchChangeMapEvent, self)
 
-	if arg_82_0.mapModel then
-		arg_82_0.mapModel:clear()
+	if self.mapModel then
+		self.mapModel:clear()
 
-		arg_82_0.mapModel = nil
+		self.mapModel = nil
 
 		return
 	end
 
-	if arg_82_0.preMapModel then
-		arg_82_0.preMapModel:clear()
+	if self.preMapModel then
+		self.preMapModel:clear()
 
-		arg_82_0.preMapModel = nil
+		self.preMapModel = nil
 	end
 end
 
-function var_0_0.setLoadingMap(arg_83_0, arg_83_1)
-	arg_83_0.loading = arg_83_1
+function RougeMapModel:setLoadingMap(loading)
+	self.loading = loading
 end
 
-function var_0_0.checkIsLoading(arg_84_0)
-	return arg_84_0.loading
+function RougeMapModel:checkIsLoading()
+	return self.loading
 end
 
-function var_0_0.recordCurChoiceEventSelectId(arg_85_0, arg_85_1)
-	arg_85_0.curChoiceId = arg_85_1
+function RougeMapModel:recordCurChoiceEventSelectId(choiceId)
+	self.curChoiceId = choiceId
 end
 
-function var_0_0.getCurChoiceId(arg_86_0)
-	return arg_86_0.curChoiceId
+function RougeMapModel:getCurChoiceId()
+	return self.curChoiceId
 end
 
-function var_0_0.setPlayingDialogue(arg_87_0, arg_87_1)
-	arg_87_0.playingDialogue = arg_87_1
+function RougeMapModel:setPlayingDialogue(playing)
+	self.playingDialogue = playing
 end
 
-function var_0_0.isPlayingDialogue(arg_88_0)
-	return arg_88_0.playingDialogue
+function RougeMapModel:isPlayingDialogue()
+	return self.playingDialogue
 end
 
-function var_0_0.setChoiceViewState(arg_89_0, arg_89_1)
-	arg_89_0.state = arg_89_1
+function RougeMapModel:setChoiceViewState(state)
+	self.state = state
 end
 
-function var_0_0.getChoiceViewState(arg_90_0)
-	return arg_90_0.state
+function RougeMapModel:getChoiceViewState()
+	return self.state
 end
 
-function var_0_0.setMapState(arg_91_0, arg_91_1)
-	arg_91_0.mapState = arg_91_1
+function RougeMapModel:setMapState(state)
+	self.mapState = state
 end
 
-function var_0_0.getMapState(arg_92_0)
-	return arg_92_0.mapState or RougeMapEnum.MapState.Empty
+function RougeMapModel:getMapState()
+	return self.mapState or RougeMapEnum.MapState.Empty
 end
 
-function var_0_0.setFinalMapInfo(arg_93_0, arg_93_1)
-	arg_93_0.finalMap = arg_93_1
+function RougeMapModel:setFinalMapInfo(info)
+	self.finalMap = info
 end
 
-function var_0_0.getFinalMapInfo(arg_94_0)
-	return arg_94_0.finalMap
+function RougeMapModel:getFinalMapInfo()
+	return self.finalMap
 end
 
-function var_0_0.getExchangeMaxDisplaceNum(arg_95_0)
-	local var_95_0 = RougeMapConfig.instance:getRestExchangeCount()
-	local var_95_1 = RougeModel.instance:getEffectDict()
+function RougeMapModel:getExchangeMaxDisplaceNum()
+	local maxExchangeCount = RougeMapConfig.instance:getRestExchangeCount()
+	local curEffectDict = RougeModel.instance:getEffectDict()
 
-	if var_95_1 then
-		for iter_95_0, iter_95_1 in pairs(var_95_1) do
-			if iter_95_1.type == RougeMapEnum.EffectType.UpdateExchangeDisplaceNum then
-				var_95_0 = var_95_0 + tonumber(iter_95_1.typeParam)
+	if curEffectDict then
+		for _, effectCo in pairs(curEffectDict) do
+			if effectCo.type == RougeMapEnum.EffectType.UpdateExchangeDisplaceNum then
+				maxExchangeCount = maxExchangeCount + tonumber(effectCo.typeParam)
 			end
 		end
 	end
 
-	return var_95_0
+	return maxExchangeCount
 end
 
-function var_0_0.setFirstEnterMap(arg_96_0, arg_96_1)
-	arg_96_0.firstEnterMapFlag = arg_96_1
+function RougeMapModel:setFirstEnterMap(flag)
+	self.firstEnterMapFlag = flag
 end
 
-function var_0_0.getFirstEnterMapFlag(arg_97_0)
-	return arg_97_0.firstEnterMapFlag
+function RougeMapModel:getFirstEnterMapFlag()
+	return self.firstEnterMapFlag
 end
 
-function var_0_0.getLayerChoiceInfo(arg_98_0, arg_98_1)
-	if arg_98_0.mapModel and arg_98_0.mapModel.getLayerChoiceInfo then
-		return arg_98_0.mapModel:getLayerChoiceInfo(arg_98_1)
+function RougeMapModel:getLayerChoiceInfo(layerId)
+	if self.mapModel and self.mapModel.getLayerChoiceInfo then
+		return self.mapModel:getLayerChoiceInfo(layerId)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+RougeMapModel.instance = RougeMapModel.New()
 
-return var_0_0
+return RougeMapModel

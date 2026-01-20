@@ -1,52 +1,54 @@
-﻿module("modules.logic.main.controller.work.MainLimitedRoleEffect", package.seeall)
+﻿-- chunkname: @modules/logic/main/controller/work/MainLimitedRoleEffect.lua
 
-local var_0_0 = class("MainLimitedRoleEffect", BaseWork)
+module("modules.logic.main.controller.work.MainLimitedRoleEffect", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = LimitedRoleController.instance:getNeedPlayLimitedCO()
+local MainLimitedRoleEffect = class("MainLimitedRoleEffect", BaseWork)
 
-	if var_1_0 then
-		local var_1_1 = SettingsModel.instance.limitedRoleMO
+function MainLimitedRoleEffect:onStart(context)
+	local limitedCO = LimitedRoleController.instance:getNeedPlayLimitedCO()
 
-		if var_1_1:isAuto() then
-			if var_1_1:isEveryLogin() or not var_1_1:getTodayHasPlay() then
+	if limitedCO then
+		local settingsMO = SettingsModel.instance.limitedRoleMO
+
+		if settingsMO:isAuto() then
+			if settingsMO:isEveryLogin() or not settingsMO:getTodayHasPlay() then
 				SettingsModel.instance.limitedRoleMO:setTodayHasPlay()
-				LimitedRoleController.instance:registerCallback(LimitedRoleController.VideoState, arg_1_0._onVideoState, arg_1_0)
-				LimitedRoleController.instance:play(LimitedRoleEnum.Stage.FirstLogin, var_1_0, arg_1_0._doneCallback, arg_1_0)
+				LimitedRoleController.instance:registerCallback(LimitedRoleController.VideoState, self._onVideoState, self)
+				LimitedRoleController.instance:play(LimitedRoleEnum.Stage.FirstLogin, limitedCO, self._doneCallback, self)
 			else
 				GameSceneMgr.instance:dispatchEvent(SceneEventName.ManualClose)
-				arg_1_0:onDone(true)
+				self:onDone(true)
 			end
 		else
 			GameSceneMgr.instance:dispatchEvent(SceneEventName.ManualClose)
-			arg_1_0:onDone(true)
+			self:onDone(true)
 		end
 	else
 		GameSceneMgr.instance:dispatchEvent(SceneEventName.ManualClose)
-		arg_1_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._doneCallback(arg_2_0)
+function MainLimitedRoleEffect:_doneCallback()
 	if SDKMgr.instance:isEmulator() then
 		PlayerPrefsHelper.save()
 	end
 
 	GameSceneMgr.instance:dispatchEvent(SceneEventName.ManualClose)
-	arg_2_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0._onVideoState(arg_3_0, arg_3_1)
-	if arg_3_1 == AvProEnum.PlayerStatus.Started then
-		LimitedRoleController.instance:unregisterCallback(LimitedRoleController.VideoState, arg_3_0._onVideoState, arg_3_0)
+function MainLimitedRoleEffect:_onVideoState(state)
+	if state == VideoEnum.PlayerStatus.Started then
+		LimitedRoleController.instance:unregisterCallback(LimitedRoleController.VideoState, self._onVideoState, self)
 		GameSceneMgr.instance:dispatchEvent(SceneEventName.ManualClose)
 	end
 end
 
-function var_0_0.clearWork(arg_4_0)
+function MainLimitedRoleEffect:clearWork()
 	LimitedRoleController.instance:stop()
 	GameSceneMgr.instance:dispatchEvent(SceneEventName.ManualClose)
-	LimitedRoleController.instance:unregisterCallback(LimitedRoleController.VideoState, arg_4_0._onVideoState, arg_4_0)
+	LimitedRoleController.instance:unregisterCallback(LimitedRoleController.VideoState, self._onVideoState, self)
 end
 
-return var_0_0
+return MainLimitedRoleEffect

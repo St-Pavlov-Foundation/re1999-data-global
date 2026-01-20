@@ -1,48 +1,50 @@
-﻿module("modules.logic.versionactivity1_2.common.Stat1_2Controller", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/common/Stat1_2Controller.lua
 
-local var_0_0 = class("Stat1_2Controller")
+module("modules.logic.versionactivity1_2.common.Stat1_2Controller", package.seeall)
 
-function var_0_0.yaXianStatStart(arg_1_0)
-	arg_1_0.yaXianStartTime = ServerTime.now()
+local Stat1_2Controller = class("Stat1_2Controller")
+
+function Stat1_2Controller:yaXianStatStart()
+	self.yaXianStartTime = ServerTime.now()
 end
 
-function var_0_0.yaXianStatEnd(arg_2_0, arg_2_1)
-	if not arg_2_0.yaXianStartTime then
+function Stat1_2Controller:yaXianStatEnd(result)
+	if not self.yaXianStartTime then
 		return
 	end
 
-	if arg_2_0.waitingRpc then
+	if self.waitingRpc then
 		return
 	end
 
-	arg_2_0.useTime = ServerTime.now() - arg_2_0.yaXianStartTime
-	arg_2_0.mapId = YaXianGameModel.instance:getMapId()
-	arg_2_0.round = YaXianGameModel.instance:getRound()
-	arg_2_0.goalNum = YaXianGameModel.instance:getFinishConditionCount()
-	arg_2_0.episodeId = YaXianGameModel.instance:getEpisodeId()
-	arg_2_0.result = arg_2_1
-	arg_2_0.waitingRpc = true
+	self.useTime = ServerTime.now() - self.yaXianStartTime
+	self.mapId = YaXianGameModel.instance:getMapId()
+	self.round = YaXianGameModel.instance:getRound()
+	self.goalNum = YaXianGameModel.instance:getFinishConditionCount()
+	self.episodeId = YaXianGameModel.instance:getEpisodeId()
+	self.result = result
+	self.waitingRpc = true
 
-	Activity115Rpc.instance:sendGetAct115InfoRequest(YaXianEnum.ActivityId, arg_2_0._onReceiveMsg, arg_2_0)
+	Activity115Rpc.instance:sendGetAct115InfoRequest(YaXianEnum.ActivityId, self._onReceiveMsg, self)
 end
 
-function var_0_0._onReceiveMsg(arg_3_0)
-	local var_3_0 = YaXianModel.instance:getEpisodeMo(arg_3_0.episodeId)
-	local var_3_1 = var_3_0 and var_3_0.totalCount or 0
+function Stat1_2Controller:_onReceiveMsg()
+	local episodeMo = YaXianModel.instance:getEpisodeMo(self.episodeId)
+	local challengesNum = episodeMo and episodeMo.totalCount or 0
 
-	arg_3_0.yaXianStartTime = nil
-	arg_3_0.waitingRpc = false
+	self.yaXianStartTime = nil
+	self.waitingRpc = false
 
 	StatController.instance:track(StatEnum.EventName.ExitYaXian, {
-		[StatEnum.EventProperties.UseTime] = arg_3_0.useTime,
-		[StatEnum.EventProperties.MapId] = tostring(arg_3_0.mapId),
-		[StatEnum.EventProperties.ChallengesNum] = var_3_1,
-		[StatEnum.EventProperties.RoundNum] = arg_3_0.round,
-		[StatEnum.EventProperties.GoalNum] = arg_3_0.goalNum,
-		[StatEnum.EventProperties.Result] = arg_3_0.result
+		[StatEnum.EventProperties.UseTime] = self.useTime,
+		[StatEnum.EventProperties.MapId] = tostring(self.mapId),
+		[StatEnum.EventProperties.ChallengesNum] = challengesNum,
+		[StatEnum.EventProperties.RoundNum] = self.round,
+		[StatEnum.EventProperties.GoalNum] = self.goalNum,
+		[StatEnum.EventProperties.Result] = self.result
 	})
 end
 
-var_0_0.instance = var_0_0.New()
+Stat1_2Controller.instance = Stat1_2Controller.New()
 
-return var_0_0
+return Stat1_2Controller

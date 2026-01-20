@@ -1,24 +1,26 @@
-﻿module("modules.logic.notice.model.NoticeContentType", package.seeall)
+﻿-- chunkname: @modules/logic/notice/model/NoticeContentType.lua
 
-local var_0_0 = _M
+module("modules.logic.notice.model.NoticeContentType", package.seeall)
 
-var_0_0.LangType = 0
-var_0_0.TxtTopTitle = 1
-var_0_0.TxtContent = 3
-var_0_0.ImgInner = 4
-var_0_0.ImgTitle = 5
-var_0_0.Align = {}
-var_0_0.Align.Left = 1
-var_0_0.Align.Center = 2
-var_0_0.Align.Right = 3
-var_0_0.LinkType = {}
-var_0_0.LinkType.InnerLink = 1
-var_0_0.LinkType.OutLink = 2
-var_0_0.LinkType.DeepLink = 3
-var_0_0.LinkType.Time = 4
-var_0_0.Anchor = {}
-var_0_0.Anchor.LeftAnchor = Vector2.New(0, 0)
-var_0_0.Anchor.CenterAnchor = Vector2.New(0.5, 0)
-var_0_0.Anchor.RightAnchor = Vector2.New(1, 0)
+local NoticeContentType = _M
 
-return var_0_0
+NoticeContentType.LangType = 0
+NoticeContentType.TxtTopTitle = 1
+NoticeContentType.TxtContent = 3
+NoticeContentType.ImgInner = 4
+NoticeContentType.ImgTitle = 5
+NoticeContentType.Align = {}
+NoticeContentType.Align.Left = 1
+NoticeContentType.Align.Center = 2
+NoticeContentType.Align.Right = 3
+NoticeContentType.LinkType = {}
+NoticeContentType.LinkType.InnerLink = 1
+NoticeContentType.LinkType.OutLink = 2
+NoticeContentType.LinkType.DeepLink = 3
+NoticeContentType.LinkType.Time = 4
+NoticeContentType.Anchor = {}
+NoticeContentType.Anchor.LeftAnchor = Vector2.New(0, 0)
+NoticeContentType.Anchor.CenterAnchor = Vector2.New(0.5, 0)
+NoticeContentType.Anchor.RightAnchor = Vector2.New(1, 0)
+
+return NoticeContentType

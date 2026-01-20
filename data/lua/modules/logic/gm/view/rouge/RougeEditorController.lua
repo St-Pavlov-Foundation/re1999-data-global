@@ -1,15 +1,17 @@
-﻿module("modules.logic.gm.view.rouge.RougeEditorController", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/rouge/RougeEditorController.lua
 
-local var_0_0 = class("RougeEditorController")
+module("modules.logic.gm.view.rouge.RougeEditorController", package.seeall)
 
-function var_0_0._addMapEditorView(arg_1_0)
-	local var_1_0 = "RougeMapEditorView"
+local RougeEditorController = class("RougeEditorController")
 
-	if module_views[var_1_0] then
+function RougeEditorController:_addMapEditorView()
+	local viewName = "RougeMapEditorView"
+
+	if module_views[viewName] then
 		return
 	end
 
-	module_views[var_1_0] = {
+	module_views[viewName] = {
 		destroy = 0,
 		container = "RougeMapEditorViewContainer",
 		bgBlur = 0,
@@ -18,17 +20,17 @@ function var_0_0._addMapEditorView(arg_1_0)
 		viewType = ViewType.Normal,
 		anim = ViewAnim.Default
 	}
-	ViewName[var_1_0] = var_1_0
+	ViewName[viewName] = viewName
 end
 
-function var_0_0._addPathSelectMapEditorView(arg_2_0)
-	local var_2_0 = "RougePathSelectMapEditorView"
+function RougeEditorController:_addPathSelectMapEditorView()
+	local viewName = "RougePathSelectMapEditorView"
 
-	if module_views[var_2_0] then
+	if module_views[viewName] then
 		return
 	end
 
-	module_views[var_2_0] = {
+	module_views[viewName] = {
 		destroy = 0,
 		container = "RougePathSelectMapEditorViewContainer",
 		bgBlur = 0,
@@ -37,28 +39,30 @@ function var_0_0._addPathSelectMapEditorView(arg_2_0)
 		viewType = ViewType.Normal,
 		anim = ViewAnim.Default
 	}
-	ViewName[var_2_0] = var_2_0
+	ViewName[viewName] = viewName
 end
 
-function var_0_0.enterRougeMapEditor(arg_3_0)
-	if arg_3_0.flow then
+function RougeEditorController:enterRougeMapEditor()
+	if self.flow then
 		return
 	end
 
-	arg_3_0:_addMapEditorView()
+	self:_addMapEditorView()
 
-	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Rouge then
-		local var_3_0 = lua_rouge_middle_layer.configList[1]
+	local curSceneType = GameSceneMgr.instance:getCurSceneType()
+
+	if curSceneType ~= SceneType.Rouge then
+		local middleLayerCo = lua_rouge_middle_layer.configList[1]
 
 		RougeMapModel.instance:init(RougeMapEnum.MapType.Edit)
-		RougeMapEditModel.instance:init(var_3_0.id)
+		RougeMapEditModel.instance:init(middleLayerCo.id)
 
-		arg_3_0.flow = FlowSequence.New()
+		self.flow = FlowSequence.New()
 
-		arg_3_0.flow:addWork(OpenSceneWork.New(SceneType.Rouge, 1, var_3_0.id))
-		arg_3_0.flow:addWork(OpenViewWorkByViewName.New(ViewName.RougeMapEditorView))
-		arg_3_0.flow:registerDoneListener(arg_3_0.onFlowDone, arg_3_0)
-		arg_3_0.flow:start()
+		self.flow:addWork(OpenSceneWork.New(SceneType.Rouge, 1, middleLayerCo.id))
+		self.flow:addWork(OpenViewWorkByViewName.New(ViewName.RougeMapEditorView))
+		self.flow:registerDoneListener(self.onFlowDone, self)
+		self.flow:start()
 
 		return
 	end
@@ -66,245 +70,258 @@ function var_0_0.enterRougeMapEditor(arg_3_0)
 	if RougeMapModel.instance:isMiddle() then
 		ViewMgr.instance:openView(ViewName.RougeMapEditorView)
 	else
-		RougeMapController.instance:registerCallback(RougeMapEvent.onLoadMapDone, arg_3_0.onLoadMapDone, arg_3_0)
+		RougeMapController.instance:registerCallback(RougeMapEvent.onLoadMapDone, self.onLoadMapDone, self)
 
 		RougeMapModel.instance.isMiddle = true
 
-		local var_3_1 = GameSceneMgr.instance:getCurScene().map
-		local var_3_2 = lua_rouge_middle_layer.configList[1]
+		local scene = GameSceneMgr.instance:getCurScene()
+		local map = scene.map
+		local middleLayerCo = lua_rouge_middle_layer.configList[1]
 
-		var_3_1:switchMap(RougeMapModel.instance:getLayerId(), var_3_2.id)
+		map:switchMap(RougeMapModel.instance:getLayerId(), middleLayerCo.id)
 	end
 end
 
-function var_0_0.onFlowDone(arg_4_0)
-	arg_4_0.flow = nil
+function RougeEditorController:onFlowDone()
+	self.flow = nil
 end
 
-function var_0_0.onLoadMapDone(arg_5_0)
-	RougeMapController.instance:unregisterCallback(RougeMapEvent.onLoadMapDone, arg_5_0.onMapLoadDone, arg_5_0)
+function RougeEditorController:onLoadMapDone()
+	RougeMapController.instance:unregisterCallback(RougeMapEvent.onLoadMapDone, self.onMapLoadDone, self)
 	ViewMgr.instance:openView(ViewName.RougeMapEditorView)
 end
 
-function var_0_0.enterRougeTestMap(arg_6_0)
-	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Rouge then
+function RougeEditorController:enterRougeTestMap()
+	local curSceneType = GameSceneMgr.instance:getCurSceneType()
+
+	if curSceneType ~= SceneType.Rouge then
 		RougeMapModel.instance:init(RougeMapEnum.MapType.Normal)
 		GameSceneMgr.instance:startScene(SceneType.Rouge, 1, RougeMapModel.instance:getLayerId())
 
 		return
 	end
 
-	GameSceneMgr.instance:getCurScene().map:switchMap(RougeMapModel.instance:getLayerId(), nil)
+	local scene = GameSceneMgr.instance:getCurScene()
+	local map = scene.map
+
+	map:switchMap(RougeMapModel.instance:getLayerId(), nil)
 end
 
-function var_0_0.showNodeClickArea(arg_7_0)
-	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Rouge then
+function RougeEditorController:showNodeClickArea()
+	local curSceneType = GameSceneMgr.instance:getCurSceneType()
+
+	if curSceneType ~= SceneType.Rouge then
 		return
 	end
 
-	if RougeMapModel.instance:getMapType() == RougeMapEnum.MapType.Edit then
+	local mapType = RougeMapModel.instance:getMapType()
+
+	if mapType == RougeMapEnum.MapType.Edit then
 		return
 	end
 
-	if arg_7_0.loadingText then
+	if self.loadingText then
 		return
 	end
 
-	arg_7_0.showing = true
+	self.showing = true
 
-	if arg_7_0.textGo then
-		arg_7_0:_showNodeClickArea()
+	if self.textGo then
+		self:_showNodeClickArea()
 	else
-		arg_7_0.loadingText = true
+		self.loadingText = true
 
-		loadAbAsset(var_0_0.TextPath, false, arg_7_0._onLoadTextCallback, arg_7_0)
+		loadAbAsset(RougeEditorController.TextPath, false, self._onLoadTextCallback, self)
 	end
 end
 
-var_0_0.TextPath = "ui/viewres/gm/rouge/gm_rouge_text.prefab"
+RougeEditorController.TextPath = "ui/viewres/gm/rouge/gm_rouge_text.prefab"
 
-function var_0_0._onLoadTextCallback(arg_8_0, arg_8_1)
-	if arg_8_1.IsLoadSuccess then
-		local var_8_0 = arg_8_0._assetItem
+function RougeEditorController:_onLoadTextCallback(assetItem)
+	if assetItem.IsLoadSuccess then
+		local oldAsstet = self._assetItem
 
-		arg_8_0._assetItem = arg_8_1
+		self._assetItem = assetItem
 
-		arg_8_0._assetItem:Retain()
+		self._assetItem:Retain()
 
-		if var_8_0 then
-			var_8_0:Release()
+		if oldAsstet then
+			oldAsstet:Release()
 		end
 
-		arg_8_0.textGo = arg_8_0._assetItem:GetResource(var_0_0.TextPath)
-		arg_8_0.loadingText = false
+		self.textGo = self._assetItem:GetResource(RougeEditorController.TextPath)
+		self.loadingText = false
 
-		arg_8_0:_showNodeClickArea()
+		self:_showNodeClickArea()
 	end
 end
 
-function var_0_0._showNodeClickArea(arg_9_0)
-	if not arg_9_0.showing then
+function RougeEditorController:_showNodeClickArea()
+	if not self.showing then
 		return
 	end
 
-	arg_9_0:createArea()
-	RougeMapController.instance:registerCallback(RougeMapEvent.onMapPosChange, arg_9_0.onMapPosChange, arg_9_0, LuaEventSystem.Low)
-	TaskDispatcher.runRepeat(arg_9_0.refreshPos, arg_9_0, 0.1)
+	self:createArea()
+	RougeMapController.instance:registerCallback(RougeMapEvent.onMapPosChange, self.onMapPosChange, self, LuaEventSystem.Low)
+	TaskDispatcher.runRepeat(self.refreshPos, self, 0.1)
 end
 
-var_0_0.AreaTextColor = Color.New(1, 0, 0, 1)
+RougeEditorController.AreaTextColor = Color.New(1, 0, 0, 1)
 
-function var_0_0.createArea(arg_10_0)
-	local var_10_0 = ViewMgr.instance:getContainer(ViewName.RougeMapView).viewGO
-	local var_10_1 = arg_10_0.textGo
-	local var_10_2 = gohelper.findChild(var_10_0, "areaContainer") or gohelper.create2d(var_10_0, "areaContainer")
-	local var_10_3 = gohelper.findChild(var_10_0, "centerPointContainer") or gohelper.create2d(var_10_0, "centerPointContainer")
-	local var_10_4 = var_10_2:GetComponent(gohelper.Type_RectTransform)
-	local var_10_5 = var_10_3:GetComponent(gohelper.Type_RectTransform)
+function RougeEditorController:createArea()
+	local viewContainer = ViewMgr.instance:getContainer(ViewName.RougeMapView)
+	local go = viewContainer.viewGO
+	local textGo = self.textGo
+	local areaContainer = gohelper.findChild(go, "areaContainer") or gohelper.create2d(go, "areaContainer")
+	local centerPointContainer = gohelper.findChild(go, "centerPointContainer") or gohelper.create2d(go, "centerPointContainer")
+	local areaRectTr = areaContainer:GetComponent(gohelper.Type_RectTransform)
+	local centerPointRectTr = centerPointContainer:GetComponent(gohelper.Type_RectTransform)
 
-	gohelper.setActive(var_10_2, true)
-	gohelper.setActive(var_10_5, true)
+	gohelper.setActive(areaContainer, true)
+	gohelper.setActive(centerPointRectTr, true)
 
-	arg_10_0.goAreaContainer = var_10_2
-	arg_10_0.goCenterPointContainer = var_10_3
-	arg_10_0.textItemList = {}
+	self.goAreaContainer = areaContainer
+	self.goCenterPointContainer = centerPointContainer
+	self.textItemList = {}
 
-	local var_10_6 = RougeMapController.instance:getMapComp():getMapItemList()
+	local mapComp = RougeMapController.instance:getMapComp()
+	local mapItemList = mapComp:getMapItemList()
 
-	for iter_10_0, iter_10_1 in ipairs(var_10_6) do
-		local var_10_7 = gohelper.findChild(var_10_2, iter_10_0) or gohelper.create2d(var_10_2, iter_10_0)
+	for index, mapItem in ipairs(mapItemList) do
+		local areaGo = gohelper.findChild(areaContainer, index) or gohelper.create2d(areaContainer, index)
 
-		gohelper.setActive(var_10_7, true)
+		gohelper.setActive(areaGo, true)
 
-		local var_10_8 = gohelper.onceAddComponent(var_10_7, gohelper.Type_Image)
+		local image = gohelper.onceAddComponent(areaGo, gohelper.Type_Image)
 
-		ZProj.UGUIHelper.SetColorAlpha(var_10_8, 0.5)
+		ZProj.UGUIHelper.SetColorAlpha(image, 0.5)
 
-		var_10_8.raycastTarget = false
+		image.raycastTarget = false
 
-		local var_10_9 = iter_10_1:getClickArea()
-		local var_10_10 = var_10_9.x
-		local var_10_11 = var_10_9.y
-		local var_10_12 = var_10_9.z
-		local var_10_13 = var_10_9.w
-		local var_10_14, var_10_15 = iter_10_1:getUiPos(var_10_4)
+		local clickArea = mapItem:getClickArea()
+		local width = clickArea.x
+		local height = clickArea.y
+		local offsetX = clickArea.z
+		local offsetY = clickArea.w
+		local posX, posY = mapItem:getUiPos(areaRectTr)
 
-		recthelper.setAnchor(var_10_7.transform, var_10_14 + var_10_12, var_10_15 + var_10_13)
-		recthelper.setSize(var_10_7.transform, var_10_10, var_10_11)
+		recthelper.setAnchor(areaGo.transform, posX + offsetX, posY + offsetY)
+		recthelper.setSize(areaGo.transform, width, height)
 
-		local var_10_16 = gohelper.findChild(var_10_3, iter_10_0) or gohelper.create2d(var_10_3, iter_10_0)
+		local pointGo = gohelper.findChild(centerPointContainer, index) or gohelper.create2d(centerPointContainer, index)
 
-		gohelper.setActive(var_10_16, true)
+		gohelper.setActive(pointGo, true)
 
-		local var_10_17 = gohelper.onceAddComponent(var_10_16, gohelper.Type_Image)
+		image = gohelper.onceAddComponent(pointGo, gohelper.Type_Image)
+		image.color = Color.New(0, 0, 0, 1)
+		image.raycastTarget = false
 
-		var_10_17.color = Color.New(0, 0, 0, 1)
-		var_10_17.raycastTarget = false
+		recthelper.setSize(pointGo.transform, 20, 20)
+		recthelper.setAnchor(pointGo.transform, posX, posY)
 
-		recthelper.setSize(var_10_16.transform, 20, 20)
-		recthelper.setAnchor(var_10_16.transform, var_10_14, var_10_15)
+		local textItem = {}
+		local text = gohelper.findChild(areaGo, "text") or gohelper.clone(textGo, areaGo, "text")
 
-		local var_10_18 = {}
-		local var_10_19 = gohelper.findChild(var_10_7, "text") or gohelper.clone(var_10_1, var_10_7, "text")
+		textItem.text = text:GetComponent(gohelper.Type_TextMesh)
+		textItem.text.color = RougeEditorController.AreaTextColor
+		textItem.areaRectTr = areaGo:GetComponent(gohelper.Type_RectTransform)
+		textItem.mapItem = mapItem
 
-		var_10_18.text = var_10_19:GetComponent(gohelper.Type_TextMesh)
-		var_10_18.text.color = var_0_0.AreaTextColor
-		var_10_18.areaRectTr = var_10_7:GetComponent(gohelper.Type_RectTransform)
-		var_10_18.mapItem = iter_10_1
+		local rectTr = text:GetComponent(gohelper.Type_RectTransform)
 
-		local var_10_20 = var_10_19:GetComponent(gohelper.Type_RectTransform)
-
-		recthelper.setAnchor(var_10_20, 0, 50)
-		table.insert(arg_10_0.textItemList, var_10_18)
-		arg_10_0:refreshOnePos(var_10_18)
+		recthelper.setAnchor(rectTr, 0, 50)
+		table.insert(self.textItemList, textItem)
+		self:refreshOnePos(textItem)
 	end
 end
 
-function var_0_0.refreshPos(arg_11_0)
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0.textItemList) do
-		if not arg_11_0:refreshOnePos(iter_11_1) then
-			TaskDispatcher.cancelTask(arg_11_0.refreshPos, arg_11_0)
+function RougeEditorController:refreshPos()
+	for _, textItem in ipairs(self.textItemList) do
+		if not self:refreshOnePos(textItem) then
+			TaskDispatcher.cancelTask(self.refreshPos, self)
 
 			return
 		end
 	end
 end
 
-function var_0_0.refreshOnePos(arg_12_0, arg_12_1)
-	if gohelper.isNil(arg_12_1.areaRectTr) then
+function RougeEditorController:refreshOnePos(textItem)
+	if gohelper.isNil(textItem.areaRectTr) then
 		return false
 	end
 
-	local var_12_0 = recthelper.getWidth(arg_12_1.areaRectTr)
-	local var_12_1 = recthelper.getHeight(arg_12_1.areaRectTr)
-	local var_12_2, var_12_3 = arg_12_1.mapItem:getUiPos(arg_12_0.goAreaContainer.transform)
-	local var_12_4, var_12_5 = recthelper.getAnchor(arg_12_1.areaRectTr)
-	local var_12_6 = var_12_4 - var_12_2
-	local var_12_7 = var_12_5 - var_12_3
+	local width = recthelper.getWidth(textItem.areaRectTr)
+	local height = recthelper.getHeight(textItem.areaRectTr)
+	local srcAnchorX, srcAnchorY = textItem.mapItem:getUiPos(self.goAreaContainer.transform)
+	local curAnchorX, curAnchorY = recthelper.getAnchor(textItem.areaRectTr)
+	local offsetX = curAnchorX - srcAnchorX
+	local offsetY = curAnchorY - srcAnchorY
 
-	arg_12_1.text.text = string.format("%s, %s, %s, %s", RougeMapHelper.retain2decimals(var_12_0), RougeMapHelper.retain2decimals(var_12_1), RougeMapHelper.retain2decimals(var_12_6), RougeMapHelper.retain2decimals(var_12_7))
+	textItem.text.text = string.format("%s, %s, %s, %s", RougeMapHelper.retain2decimals(width), RougeMapHelper.retain2decimals(height), RougeMapHelper.retain2decimals(offsetX), RougeMapHelper.retain2decimals(offsetY))
 
 	return true
 end
 
-function var_0_0.onMapPosChange(arg_13_0)
-	if not arg_13_0.showing then
+function RougeEditorController:onMapPosChange()
+	if not self.showing then
 		return
 	end
 
-	arg_13_0:createArea()
+	self:createArea()
 end
 
-function var_0_0.hideNodeClickArea(arg_14_0)
-	TaskDispatcher.cancelTask(arg_14_0.refreshPos, arg_14_0)
-	RougeMapController.instance:unregisterCallback(RougeMapEvent.onMapPosChange, arg_14_0.onMapPosChange, arg_14_0)
+function RougeEditorController:hideNodeClickArea()
+	TaskDispatcher.cancelTask(self.refreshPos, self)
+	RougeMapController.instance:unregisterCallback(RougeMapEvent.onMapPosChange, self.onMapPosChange, self)
 
-	if not arg_14_0.showing then
+	if not self.showing then
 		return
 	end
 
-	if gohelper.isNil(arg_14_0.goAreaContainer) then
+	if gohelper.isNil(self.goAreaContainer) then
 		return
 	end
 
-	arg_14_0.showing = false
+	self.showing = false
 
-	gohelper.setActive(arg_14_0.goAreaContainer, false)
+	gohelper.setActive(self.goAreaContainer, false)
 
-	local var_14_0 = arg_14_0.goAreaContainer.transform
-	local var_14_1 = var_14_0.childCount
+	local tr = self.goAreaContainer.transform
+	local count = tr.childCount
 
-	for iter_14_0 = 0, var_14_1 - 1 do
-		local var_14_2 = var_14_0:GetChild(iter_14_0)
+	for i = 0, count - 1 do
+		local go = tr:GetChild(i)
 
-		gohelper.setActive(var_14_2.gameObject, false)
+		gohelper.setActive(go.gameObject, false)
 	end
 
-	gohelper.setActive(arg_14_0.goCenterPointContainer, false)
+	gohelper.setActive(self.goCenterPointContainer, false)
 
-	local var_14_3 = arg_14_0.goCenterPointContainer.transform
-	local var_14_4 = var_14_3.childCount
+	tr = self.goCenterPointContainer.transform
+	count = tr.childCount
 
-	for iter_14_1 = 0, var_14_4 - 1 do
-		local var_14_5 = var_14_3:GetChild(iter_14_1)
+	for i = 0, count - 1 do
+		local go = tr:GetChild(i)
 
-		gohelper.setActive(var_14_5.gameObject, false)
+		gohelper.setActive(go.gameObject, false)
 	end
 end
 
-function var_0_0.getIsShowing(arg_15_0)
-	return arg_15_0.showing
+function RougeEditorController:getIsShowing()
+	return self.showing
 end
 
-function var_0_0.enterPathSelectMapEditorView(arg_16_0)
-	if arg_16_0.flow then
+function RougeEditorController:enterPathSelectMapEditorView()
+	if self.flow then
 		return
 	end
 
-	arg_16_0:_addPathSelectMapEditorView()
+	self:_addPathSelectMapEditorView()
 
-	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Rouge then
-		local var_16_0 = {
+	local curSceneType = GameSceneMgr.instance:getCurSceneType()
+
+	if curSceneType ~= SceneType.Rouge then
+		local info = {
 			mapType = RougeMapEnum.MapType.Middle,
 			middleLayerInfo = {
 				layerId = 101,
@@ -316,14 +333,14 @@ function var_0_0.enterPathSelectMapEditorView(arg_16_0)
 			end
 		}
 
-		RougeMapModel.instance:updateMapInfo(var_16_0)
+		RougeMapModel.instance:updateMapInfo(info)
 
-		arg_16_0.flow = FlowSequence.New()
+		self.flow = FlowSequence.New()
 
-		arg_16_0.flow:addWork(OpenSceneWork.New(SceneType.Rouge, 1, 101))
-		arg_16_0.flow:addWork(OpenViewWorkByViewName.New(ViewName.RougePathSelectMapEditorView))
-		arg_16_0.flow:registerDoneListener(arg_16_0.onFlowDone, arg_16_0)
-		arg_16_0.flow:start()
+		self.flow:addWork(OpenSceneWork.New(SceneType.Rouge, 1, 101))
+		self.flow:addWork(OpenViewWorkByViewName.New(ViewName.RougePathSelectMapEditorView))
+		self.flow:registerDoneListener(self.onFlowDone, self)
+		self.flow:start()
 
 		return
 	end
@@ -333,14 +350,14 @@ function var_0_0.enterPathSelectMapEditorView(arg_16_0)
 	end
 end
 
-function var_0_0.allowAbortFight(arg_18_0, arg_18_1)
-	arg_18_0.allow = arg_18_1
+function RougeEditorController:allowAbortFight(allow)
+	self.allow = allow
 end
 
-function var_0_0.isAllowAbortFight(arg_19_0)
-	return arg_19_0.allow and true or false
+function RougeEditorController:isAllowAbortFight()
+	return self.allow and true or false
 end
 
-var_0_0.instance = var_0_0.New()
+RougeEditorController.instance = RougeEditorController.New()
 
-return var_0_0
+return RougeEditorController

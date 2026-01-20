@@ -1,100 +1,102 @@
-﻿module("modules.logic.gm.view.GMAudioBankView", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GMAudioBankView.lua
 
-local var_0_0 = class("GMAudioBankView", BaseView)
-local var_0_1 = {
+module("modules.logic.gm.view.GMAudioBankView", package.seeall)
+
+local GMAudioBankView = class("GMAudioBankView", BaseView)
+local State = {
 	hide = 3,
 	tweening = 2,
 	show = 1
 }
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._rect = gohelper.findChild(arg_1_0.viewGO, "view").transform
-	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/btnClose")
-	arg_1_0._btnShow = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/btnShow")
-	arg_1_0._btnHide = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/btnHide")
-	arg_1_0._btnSearch = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/title/btnSearch")
-	arg_1_0._inputSearch = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "view/title/InputField")
+function GMAudioBankView:onInitView()
+	self._rect = gohelper.findChild(self.viewGO, "view").transform
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "view/btnClose")
+	self._btnShow = gohelper.findChildButtonWithAudio(self.viewGO, "view/btnShow")
+	self._btnHide = gohelper.findChildButtonWithAudio(self.viewGO, "view/btnHide")
+	self._btnSearch = gohelper.findChildButtonWithAudio(self.viewGO, "view/title/btnSearch")
+	self._inputSearch = gohelper.findChildTextMeshInputField(self.viewGO, "view/title/InputField")
 
 	GMAudioBankViewModel.instance:setList({})
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnClose:AddClickListener(arg_2_0.closeThis, arg_2_0)
-	arg_2_0._btnShow:AddClickListener(arg_2_0._onClickShow, arg_2_0)
-	arg_2_0._btnHide:AddClickListener(arg_2_0._onClickHide, arg_2_0)
-	arg_2_0._btnSearch:AddClickListener(arg_2_0._onClickSearch, arg_2_0)
+function GMAudioBankView:addEvents()
+	self._btnClose:AddClickListener(self.closeThis, self)
+	self._btnShow:AddClickListener(self._onClickShow, self)
+	self._btnHide:AddClickListener(self._onClickHide, self)
+	self._btnSearch:AddClickListener(self._onClickSearch, self)
 end
 
-function var_0_0._onClickShow(arg_3_0)
-	if arg_3_0._state == var_0_1.hide then
-		arg_3_0._state = var_0_1.tweening
-		arg_3_0._tweenId = ZProj.TweenHelper.DOAnchorPosX(arg_3_0._rect, 0, 0.2, arg_3_0._onShow, arg_3_0)
+function GMAudioBankView:_onClickShow()
+	if self._state == State.hide then
+		self._state = State.tweening
+		self._tweenId = ZProj.TweenHelper.DOAnchorPosX(self._rect, 0, 0.2, self._onShow, self)
 	end
 end
 
-function var_0_0._onShow(arg_4_0)
-	arg_4_0._tweenId = nil
-	arg_4_0._state = var_0_1.show
+function GMAudioBankView:_onShow()
+	self._tweenId = nil
+	self._state = State.show
 
-	arg_4_0:_updateBtns()
+	self:_updateBtns()
 end
 
-function var_0_0._onClickHide(arg_5_0)
-	if arg_5_0._state == var_0_1.show then
-		arg_5_0._state = var_0_1.tweening
-		arg_5_0._tweenId = ZProj.TweenHelper.DOAnchorPosX(arg_5_0._rect, -800, 0.2, arg_5_0._onHide, arg_5_0)
+function GMAudioBankView:_onClickHide()
+	if self._state == State.show then
+		self._state = State.tweening
+		self._tweenId = ZProj.TweenHelper.DOAnchorPosX(self._rect, -800, 0.2, self._onHide, self)
 	end
 end
 
-function var_0_0._onHide(arg_6_0)
-	arg_6_0._tweenId = nil
-	arg_6_0._state = var_0_1.hide
+function GMAudioBankView:_onHide()
+	self._tweenId = nil
+	self._state = State.hide
 
-	arg_6_0:_updateBtns()
+	self:_updateBtns()
 end
 
-function var_0_0._updateBtns(arg_7_0)
-	gohelper.setActive(arg_7_0._btnShow.gameObject, arg_7_0._state == var_0_1.hide)
-	gohelper.setActive(arg_7_0._btnHide.gameObject, arg_7_0._state == var_0_1.show)
+function GMAudioBankView:_updateBtns()
+	gohelper.setActive(self._btnShow.gameObject, self._state == State.hide)
+	gohelper.setActive(self._btnHide.gameObject, self._state == State.show)
 end
 
-function var_0_0._onClickSearch(arg_8_0)
-	local var_8_0 = arg_8_0._inputSearch:GetText()
-	local var_8_1 = {}
+function GMAudioBankView:_onClickSearch()
+	local value = self._inputSearch:GetText()
+	local list = {}
 
-	for iter_8_0, iter_8_1 in ipairs(AudioConfig.instance._allAudio) do
-		if iter_8_1.bankName == var_8_0 then
-			table.insert(var_8_1, iter_8_1)
+	for _, audioCO in ipairs(AudioConfig.instance._allAudio) do
+		if audioCO.bankName == value then
+			table.insert(list, audioCO)
 		end
 	end
 
-	GMAudioBankViewModel.instance:setList(var_8_1)
+	GMAudioBankViewModel.instance:setList(list)
 end
 
-function var_0_0.removeEvents(arg_9_0)
-	arg_9_0._btnClose:RemoveClickListener()
-	arg_9_0._btnShow:RemoveClickListener()
-	arg_9_0._btnHide:RemoveClickListener()
-	arg_9_0._btnSearch:RemoveClickListener()
-	arg_9_0._inputSearch:RemoveOnValueChanged()
+function GMAudioBankView:removeEvents()
+	self._btnClose:RemoveClickListener()
+	self._btnShow:RemoveClickListener()
+	self._btnHide:RemoveClickListener()
+	self._btnSearch:RemoveClickListener()
+	self._inputSearch:RemoveOnValueChanged()
 end
 
-function var_0_0.onUpdateParam(arg_10_0)
+function GMAudioBankView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_11_0)
-	arg_11_0._state = var_0_1.show
+function GMAudioBankView:onOpen()
+	self._state = State.show
 
-	arg_11_0:_updateBtns()
+	self:_updateBtns()
 end
 
-function var_0_0.onClose(arg_12_0)
-	if arg_12_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_12_0._tweenId)
+function GMAudioBankView:onClose()
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_12_0._tweenId = nil
+		self._tweenId = nil
 	end
 end
 
-return var_0_0
+return GMAudioBankView

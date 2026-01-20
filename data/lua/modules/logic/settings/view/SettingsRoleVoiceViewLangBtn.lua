@@ -1,117 +1,119 @@
-﻿module("modules.logic.settings.view.SettingsRoleVoiceViewLangBtn", package.seeall)
+﻿-- chunkname: @modules/logic/settings/view/SettingsRoleVoiceViewLangBtn.lua
 
-local var_0_0 = class("SettingsRoleVoiceViewLangBtn", RougeSimpleItemBase)
+module("modules.logic.settings.view.SettingsRoleVoiceViewLangBtn", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnCN = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "click")
-	arg_1_0._goCNUnSelected = gohelper.findChild(arg_1_0.viewGO, "unselected")
-	arg_1_0._info1 = gohelper.findChildText(arg_1_0.viewGO, "unselected/info1")
-	arg_1_0._goCNSelected = gohelper.findChild(arg_1_0.viewGO, "selected")
-	arg_1_0._info2 = gohelper.findChildText(arg_1_0.viewGO, "selected/info2")
-	arg_1_0._goCNSelectPoint = gohelper.findChild(arg_1_0.viewGO, "selected/point")
+local SettingsRoleVoiceViewLangBtn = class("SettingsRoleVoiceViewLangBtn", RougeSimpleItemBase)
 
-	var_0_0.super.onInitView(arg_1_0)
+function SettingsRoleVoiceViewLangBtn:onInitView()
+	self._btnCN = gohelper.findChildButtonWithAudio(self.viewGO, "click")
+	self._goCNUnSelected = gohelper.findChild(self.viewGO, "unselected")
+	self._info1 = gohelper.findChildText(self.viewGO, "unselected/info1")
+	self._goCNSelected = gohelper.findChild(self.viewGO, "selected")
+	self._info2 = gohelper.findChildText(self.viewGO, "selected/info2")
+	self._goCNSelectPoint = gohelper.findChild(self.viewGO, "selected/point")
+
+	SettingsRoleVoiceViewLangBtn.super.onInitView(self)
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnCN:AddClickListener(arg_2_0._btnCNOnClick, arg_2_0)
+function SettingsRoleVoiceViewLangBtn:addEvents()
+	self._btnCN:AddClickListener(self._btnCNOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnCN:RemoveClickListener()
+function SettingsRoleVoiceViewLangBtn:removeEvents()
+	self._btnCN:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	var_0_0.super._editableInitView(arg_4_0)
+function SettingsRoleVoiceViewLangBtn:_editableInitView()
+	SettingsRoleVoiceViewLangBtn.super._editableInitView(self)
 end
 
-function var_0_0.refreshSelected(arg_5_0, arg_5_1)
-	arg_5_0:setSelected(arg_5_1 == arg_5_0:_langId())
+function SettingsRoleVoiceViewLangBtn:refreshSelected(langId)
+	self:setSelected(langId == self:_langId())
 end
 
-function var_0_0._curSelectLang(arg_6_0)
-	return arg_6_0:parent()._curSelectLang or 0
+function SettingsRoleVoiceViewLangBtn:_curSelectLang()
+	return self:parent()._curSelectLang or 0
 end
 
-function var_0_0._useCurLang(arg_7_0)
-	arg_7_0:parent():setcurSelectLang(arg_7_0:_langId())
+function SettingsRoleVoiceViewLangBtn:_useCurLang()
+	self:parent():setcurSelectLang(self:_langId())
 end
 
-function var_0_0.refreshLangOptionDownloadState(arg_8_0)
-	arg_8_0:parent():_refreshLangOptionDownloadState(arg_8_0:_langId(), arg_8_0._goCNUnSelected)
+function SettingsRoleVoiceViewLangBtn:refreshLangOptionDownloadState()
+	self:parent():_refreshLangOptionDownloadState(self:_langId(), self._goCNUnSelected)
 end
 
-function var_0_0._lang(arg_9_0)
-	return arg_9_0._mo.lang
+function SettingsRoleVoiceViewLangBtn:_lang()
+	return self._mo.lang
 end
 
-function var_0_0._langId(arg_10_0)
-	return arg_10_0._mo.langId
+function SettingsRoleVoiceViewLangBtn:_langId()
+	return self._mo.langId
 end
 
-function var_0_0.getLangId(arg_11_0)
-	return arg_11_0._mo.langId
+function SettingsRoleVoiceViewLangBtn:getLangId()
+	return self._mo.langId
 end
 
-function var_0_0._isValid(arg_12_0)
-	return arg_12_0._mo.available
+function SettingsRoleVoiceViewLangBtn:_isValid()
+	return self._mo.available
 end
 
-function var_0_0.setData(arg_13_0, arg_13_1)
-	arg_13_0._mo = arg_13_1
+function SettingsRoleVoiceViewLangBtn:setData(mo)
+	self._mo = mo
 
-	local var_13_0 = luaLang(arg_13_0:_lang())
+	local str = luaLang(self:_lang())
 
-	arg_13_0._info1.text = var_13_0
-	arg_13_0._info2.text = var_13_0
+	self._info1.text = str
+	self._info2.text = str
 
-	arg_13_0:refreshLangOptionDownloadState()
+	self:refreshLangOptionDownloadState()
 end
 
-function var_0_0._btnCNOnClick(arg_14_0)
-	if arg_14_0:isSelected() then
+function SettingsRoleVoiceViewLangBtn:_btnCNOnClick()
+	if self:isSelected() then
 		return
 	end
 
-	if not arg_14_0:_isValid() then
+	if not self:_isValid() then
 		GameFacade.showToast(ToastEnum.CharVoiceLangLost)
 
 		return
 	end
 
-	arg_14_0:_useCurLang()
-	arg_14_0:parent():afterSelectedNewLang()
+	self:_useCurLang()
+	self:parent():afterSelectedNewLang()
 end
 
-function var_0_0.onSelect(arg_15_0, arg_15_1)
-	arg_15_0:_setSelectedActive(arg_15_1)
+function SettingsRoleVoiceViewLangBtn:onSelect(isSelect)
+	self:_setSelectedActive(isSelect)
 
-	arg_15_0._staticData.isSelected = arg_15_1
+	self._staticData.isSelected = isSelect
 end
 
-function var_0_0._setSelectedActive(arg_16_0, arg_16_1)
-	gohelper.setActive(arg_16_0._goCNUnSelected, not arg_16_1)
-	gohelper.setActive(arg_16_0._goCNSelected, arg_16_1)
+function SettingsRoleVoiceViewLangBtn:_setSelectedActive(isActive)
+	gohelper.setActive(self._goCNUnSelected, not isActive)
+	gohelper.setActive(self._goCNSelected, isActive)
 end
 
-function var_0_0._setActive_goCNSelectPoint(arg_17_0, arg_17_1)
-	gohelper.setActive(arg_17_0._goCNSelectPoint, arg_17_1)
+function SettingsRoleVoiceViewLangBtn:_setActive_goCNSelectPoint(isActive)
+	gohelper.setActive(self._goCNSelectPoint, isActive)
 end
 
-function var_0_0.refreshLangOptionSelectState(arg_18_0, arg_18_1, arg_18_2)
-	arg_18_0:_setActive_goCNSelectPoint(arg_18_1 == arg_18_0:_langId() and arg_18_2)
+function SettingsRoleVoiceViewLangBtn:refreshLangOptionSelectState(langId, active)
+	self:_setActive_goCNSelectPoint(langId == self:_langId() and active)
 end
 
-function var_0_0.refreshLangMode(arg_19_0, arg_19_1, arg_19_2)
-	gohelper.setActive(arg_19_0.viewGO, arg_19_2)
+function SettingsRoleVoiceViewLangBtn:refreshLangMode(langId, active)
+	gohelper.setActive(self.viewGO, active)
 
-	if arg_19_2 then
-		arg_19_0:_setSelectedActive(arg_19_1 == arg_19_0:_langId())
+	if active then
+		self:_setSelectedActive(langId == self:_langId())
 	end
 end
 
-function var_0_0.onDestroyView(arg_20_0)
-	var_0_0.super.onDestroyView(arg_20_0)
+function SettingsRoleVoiceViewLangBtn:onDestroyView()
+	SettingsRoleVoiceViewLangBtn.super.onDestroyView(self)
 end
 
-return var_0_0
+return SettingsRoleVoiceViewLangBtn

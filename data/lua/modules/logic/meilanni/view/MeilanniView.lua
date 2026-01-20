@@ -1,93 +1,96 @@
-﻿module("modules.logic.meilanni.view.MeilanniView", package.seeall)
+﻿-- chunkname: @modules/logic/meilanni/view/MeilanniView.lua
 
-local var_0_0 = class("MeilanniView", BaseView)
+module("modules.logic.meilanni.view.MeilanniView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageleftbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_leftbg")
-	arg_1_0._simagerightbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_rightbg")
-	arg_1_0._gofullscreen = gohelper.findChild(arg_1_0.viewGO, "#go_fullscreen")
-	arg_1_0._goeventlist = gohelper.findChild(arg_1_0.viewGO, "#go_eventlist")
-	arg_1_0._scrolldialog = gohelper.findChildScrollRect(arg_1_0.viewGO, "top_right/#scroll_dialog")
-	arg_1_0._goscrollcontent = gohelper.findChild(arg_1_0.viewGO, "top_right/#scroll_dialog/viewport/#go_scrollcontainer/#go_scrollcontent")
-	arg_1_0._goday = gohelper.findChild(arg_1_0.viewGO, "top_right/#go_day")
-	arg_1_0._imageweather = gohelper.findChildImage(arg_1_0.viewGO, "top_right/#go_day/#image_weather")
-	arg_1_0._imageweather1 = gohelper.findChildImage(arg_1_0.viewGO, "top_right/#go_day/#image_weather1")
-	arg_1_0._txtremaintime = gohelper.findChildText(arg_1_0.viewGO, "top_right/#go_day/#txt_remaintime")
-	arg_1_0._gothreat = gohelper.findChild(arg_1_0.viewGO, "#go_threat")
-	arg_1_0._goitem1 = gohelper.findChild(arg_1_0.viewGO, "#go_threat/root/horizontal/#go_item1")
-	arg_1_0._goitem2 = gohelper.findChild(arg_1_0.viewGO, "#go_threat/root/horizontal/#go_item2")
-	arg_1_0._goitem3 = gohelper.findChild(arg_1_0.viewGO, "#go_threat/root/horizontal/#go_item3")
-	arg_1_0._goitem4 = gohelper.findChild(arg_1_0.viewGO, "#go_threat/root/horizontal/#go_item4")
-	arg_1_0._goitem5 = gohelper.findChild(arg_1_0.viewGO, "#go_threat/root/horizontal/#go_item5")
-	arg_1_0._imageenemyicon = gohelper.findChildImage(arg_1_0.viewGO, "#go_threat/root/enemy/#image_enemyicon")
-	arg_1_0._btnenemydetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_threat/root/enemy/#btn_enemydetail")
-	arg_1_0._gostar = gohelper.findChild(arg_1_0.viewGO, "top_right/#go_day/action/actioncount/stars/#go_star")
-	arg_1_0._btnreset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_reset")
-	arg_1_0._goexhibition = gohelper.findChild(arg_1_0.viewGO, "#go_exhibition")
-	arg_1_0._imageexhibitionicon = gohelper.findChildImage(arg_1_0.viewGO, "#go_exhibition/root/exhibition/#image_exhibitionicon")
-	arg_1_0._btnexhibitiondetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_exhibition/root/exhibition/#btn_exhibitiondetail")
-	arg_1_0._txtexhibitionname = gohelper.findChildText(arg_1_0.viewGO, "#go_exhibition/root/#txt_exhibitionname")
-	arg_1_0._simageinfobg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "top_right/#simage_infobg1")
-	arg_1_0._simageinfobg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "top_right/#simage_infobg2")
+local MeilanniView = class("MeilanniView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function MeilanniView:onInitView()
+	self._simageleftbg = gohelper.findChildSingleImage(self.viewGO, "#simage_leftbg")
+	self._simagerightbg = gohelper.findChildSingleImage(self.viewGO, "#simage_rightbg")
+	self._gofullscreen = gohelper.findChild(self.viewGO, "#go_fullscreen")
+	self._goeventlist = gohelper.findChild(self.viewGO, "#go_eventlist")
+	self._scrolldialog = gohelper.findChildScrollRect(self.viewGO, "top_right/#scroll_dialog")
+	self._goscrollcontent = gohelper.findChild(self.viewGO, "top_right/#scroll_dialog/viewport/#go_scrollcontainer/#go_scrollcontent")
+	self._goday = gohelper.findChild(self.viewGO, "top_right/#go_day")
+	self._imageweather = gohelper.findChildImage(self.viewGO, "top_right/#go_day/#image_weather")
+	self._imageweather1 = gohelper.findChildImage(self.viewGO, "top_right/#go_day/#image_weather1")
+	self._txtremaintime = gohelper.findChildText(self.viewGO, "top_right/#go_day/#txt_remaintime")
+	self._gothreat = gohelper.findChild(self.viewGO, "#go_threat")
+	self._goitem1 = gohelper.findChild(self.viewGO, "#go_threat/root/horizontal/#go_item1")
+	self._goitem2 = gohelper.findChild(self.viewGO, "#go_threat/root/horizontal/#go_item2")
+	self._goitem3 = gohelper.findChild(self.viewGO, "#go_threat/root/horizontal/#go_item3")
+	self._goitem4 = gohelper.findChild(self.viewGO, "#go_threat/root/horizontal/#go_item4")
+	self._goitem5 = gohelper.findChild(self.viewGO, "#go_threat/root/horizontal/#go_item5")
+	self._imageenemyicon = gohelper.findChildImage(self.viewGO, "#go_threat/root/enemy/#image_enemyicon")
+	self._btnenemydetail = gohelper.findChildButtonWithAudio(self.viewGO, "#go_threat/root/enemy/#btn_enemydetail")
+	self._gostar = gohelper.findChild(self.viewGO, "top_right/#go_day/action/actioncount/stars/#go_star")
+	self._btnreset = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_reset")
+	self._goexhibition = gohelper.findChild(self.viewGO, "#go_exhibition")
+	self._imageexhibitionicon = gohelper.findChildImage(self.viewGO, "#go_exhibition/root/exhibition/#image_exhibitionicon")
+	self._btnexhibitiondetail = gohelper.findChildButtonWithAudio(self.viewGO, "#go_exhibition/root/exhibition/#btn_exhibitiondetail")
+	self._txtexhibitionname = gohelper.findChildText(self.viewGO, "#go_exhibition/root/#txt_exhibitionname")
+	self._simageinfobg1 = gohelper.findChildSingleImage(self.viewGO, "top_right/#simage_infobg1")
+	self._simageinfobg2 = gohelper.findChildSingleImage(self.viewGO, "top_right/#simage_infobg2")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnenemydetail:AddClickListener(arg_2_0._btnenemydetailOnClick, arg_2_0)
-	arg_2_0._btnreset:AddClickListener(arg_2_0._btnresetOnClick, arg_2_0)
-	arg_2_0._btnexhibitiondetail:AddClickListener(arg_2_0._btnexhibitiondetailOnClick, arg_2_0)
+function MeilanniView:addEvents()
+	self._btnenemydetail:AddClickListener(self._btnenemydetailOnClick, self)
+	self._btnreset:AddClickListener(self._btnresetOnClick, self)
+	self._btnexhibitiondetail:AddClickListener(self._btnexhibitiondetailOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnenemydetail:RemoveClickListener()
-	arg_3_0._btnreset:RemoveClickListener()
-	arg_3_0._btnexhibitiondetail:RemoveClickListener()
+function MeilanniView:removeEvents()
+	self._btnenemydetail:RemoveClickListener()
+	self._btnreset:RemoveClickListener()
+	self._btnexhibitiondetail:RemoveClickListener()
 end
 
-function var_0_0._btnresetOnClick(arg_4_0)
+function MeilanniView:_btnresetOnClick()
 	GameFacade.showMessageBox(MessageBoxIdDefine.MeilanniReset, MsgBoxEnum.BoxType.Yes_No, function()
-		Activity108Rpc.instance:sendResetMapRequest(MeilanniEnum.activityId, arg_4_0._mapId, function()
+		Activity108Rpc.instance:sendResetMapRequest(MeilanniEnum.activityId, self._mapId, function()
 			MeilanniController.instance:statEnd(StatEnum.Result.Reset)
 			MeilanniController.instance:statStart()
 		end)
 	end)
 end
 
-function var_0_0._btnexhibitiondetailOnClick(arg_7_0)
+function MeilanniView:_btnexhibitiondetailOnClick()
 	MeilanniController.instance:openMeilanniEntrustView({
 		showExhibits = true,
-		mapId = arg_7_0._mapId
+		mapId = self._mapId
 	})
 end
 
-function var_0_0._btnenemydetailOnClick(arg_8_0)
+function MeilanniView:_btnenemydetailOnClick()
 	MeilanniController.instance:openMeilanniBossInfoView({
-		mapId = arg_8_0._mapId
+		mapId = self._mapId
 	})
 end
 
-function var_0_0._editableInitView(arg_9_0)
-	arg_9_0._simageleftbg:LoadImage(ResUrl.getMeilanniIcon("heidi_zhehzaoleft"))
-	arg_9_0._simagerightbg:LoadImage(ResUrl.getMeilanniIcon("heidi_zhehzaoright"))
-	arg_9_0._simageinfobg1:LoadImage(ResUrl.getMeilanniIcon("bg_diban"))
-	arg_9_0._simageinfobg2:LoadImage(ResUrl.getMeilanniIcon("bg_diban"))
-	gohelper.addUIClickAudio(arg_9_0._btnenemydetail.gameObject, AudioEnum.UI.play_ui_screenplay_photo_open)
-	gohelper.addUIClickAudio(arg_9_0._btnexhibitiondetail.gameObject, AudioEnum.UI.play_ui_screenplay_photo_open)
-	gohelper.addUIClickAudio(arg_9_0._btnreset.gameObject, AudioEnum.WeekWalk.play_artificial_ui_carddisappear)
+function MeilanniView:_editableInitView()
+	self._simageleftbg:LoadImage(ResUrl.getMeilanniIcon("heidi_zhehzaoleft"))
+	self._simagerightbg:LoadImage(ResUrl.getMeilanniIcon("heidi_zhehzaoright"))
+	self._simageinfobg1:LoadImage(ResUrl.getMeilanniIcon("bg_diban"))
+	self._simageinfobg2:LoadImage(ResUrl.getMeilanniIcon("bg_diban"))
+	gohelper.addUIClickAudio(self._btnenemydetail.gameObject, AudioEnum.UI.play_ui_screenplay_photo_open)
+	gohelper.addUIClickAudio(self._btnexhibitiondetail.gameObject, AudioEnum.UI.play_ui_screenplay_photo_open)
+	gohelper.addUIClickAudio(self._btnreset.gameObject, AudioEnum.WeekWalk.play_artificial_ui_carddisappear)
 end
 
-function var_0_0._checkFinishMapStory(arg_10_0)
-	local var_10_0 = MeilanniConfig.instance:getStoryList(MeilanniEnum.StoryType.finishMap)
+function MeilanniView:_checkFinishMapStory()
+	local storyList = MeilanniConfig.instance:getStoryList(MeilanniEnum.StoryType.finishMap)
 
-	for iter_10_0, iter_10_1 in ipairs(var_10_0) do
-		if iter_10_1[2] == arg_10_0._mapId and MeilanniModel.instance:getMapHighestScore(iter_10_1[2]) > 0 then
-			local var_10_1 = iter_10_1[1].story
+	for i, v in ipairs(storyList) do
+		if v[2] == self._mapId and MeilanniModel.instance:getMapHighestScore(v[2]) > 0 then
+			local config = v[1]
+			local storyId = config.story
 
-			if not StoryModel.instance:isStoryFinished(var_10_1) then
-				StoryController.instance:playStory(var_10_1)
+			if not StoryModel.instance:isStoryFinished(storyId) then
+				StoryController.instance:playStory(storyId)
 
 				return true
 			end
@@ -95,28 +98,28 @@ function var_0_0._checkFinishMapStory(arg_10_0)
 	end
 end
 
-function var_0_0.onOpen(arg_11_0)
-	arg_11_0._mapId = MeilanniModel.instance:getCurMapId()
-	arg_11_0._mapInfo = MeilanniModel.instance:getMapInfo(arg_11_0._mapId)
-	arg_11_0._actPointItemList = arg_11_0:getUserDataTb_()
+function MeilanniView:onOpen()
+	self._mapId = MeilanniModel.instance:getCurMapId()
+	self._mapInfo = MeilanniModel.instance:getMapInfo(self._mapId)
+	self._actPointItemList = self:getUserDataTb_()
 
-	gohelper.setActive(arg_11_0._gostar, false)
+	gohelper.setActive(self._gostar, false)
 
-	arg_11_0._dayAnimator = arg_11_0._goday:GetComponent(typeof(UnityEngine.Animator))
+	self._dayAnimator = self._goday:GetComponent(typeof(UnityEngine.Animator))
 
-	arg_11_0:_updateInfo()
-	arg_11_0:addEventCb(MeilanniController.instance, MeilanniEvent.episodeInfoUpdate, arg_11_0._episodeInfoUpdate, arg_11_0, LuaEventSystem.Low)
-	arg_11_0:addEventCb(MeilanniController.instance, MeilanniEvent.getInfo, arg_11_0._getInfo, arg_11_0)
-	arg_11_0:addEventCb(MeilanniController.instance, MeilanniEvent.resetMap, arg_11_0._resetMap, arg_11_0)
-	arg_11_0:addEventCb(MeilanniController.instance, MeilanniEvent.mapFail, arg_11_0._onMapFail, arg_11_0)
-	arg_11_0:addEventCb(MeilanniController.instance, MeilanniEvent.mapSuccess, arg_11_0._onMapSuccess, arg_11_0)
-	arg_11_0:addEventCb(MeilanniController.instance, MeilanniEvent.updateExcludeRules, arg_11_0._updateExcludeRules, arg_11_0, LuaEventSystem.Low)
-	arg_11_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_11_0._onCloseViewFinish, arg_11_0)
-	arg_11_0:_dimBgm(true)
+	self:_updateInfo()
+	self:addEventCb(MeilanniController.instance, MeilanniEvent.episodeInfoUpdate, self._episodeInfoUpdate, self, LuaEventSystem.Low)
+	self:addEventCb(MeilanniController.instance, MeilanniEvent.getInfo, self._getInfo, self)
+	self:addEventCb(MeilanniController.instance, MeilanniEvent.resetMap, self._resetMap, self)
+	self:addEventCb(MeilanniController.instance, MeilanniEvent.mapFail, self._onMapFail, self)
+	self:addEventCb(MeilanniController.instance, MeilanniEvent.mapSuccess, self._onMapSuccess, self)
+	self:addEventCb(MeilanniController.instance, MeilanniEvent.updateExcludeRules, self._updateExcludeRules, self, LuaEventSystem.Low)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	self:_dimBgm(true)
 end
 
-function var_0_0._dimBgm(arg_12_0, arg_12_1)
-	if arg_12_1 then
+function MeilanniView:_dimBgm(state)
+	if state then
 		AudioMgr.instance:trigger(AudioEnum.ChessGame.muisc_obscure_open)
 	else
 		AudioMgr.instance:trigger(AudioEnum.ChessGame.muisc_obscure_close)
@@ -124,254 +127,263 @@ function var_0_0._dimBgm(arg_12_0, arg_12_1)
 	end
 end
 
-function var_0_0._onCloseViewFinish(arg_13_0, arg_13_1)
-	if arg_13_1 == ViewName.MeilanniSettlementView then
-		if not arg_13_0:_checkFinishMapStory() then
-			arg_13_0:closeThis()
+function MeilanniView:_onCloseViewFinish(viewName)
+	if viewName == ViewName.MeilanniSettlementView then
+		if not self:_checkFinishMapStory() then
+			self:closeThis()
 		else
-			arg_13_0._waitCloseStoryView = true
+			self._waitCloseStoryView = true
 		end
 	end
 
-	if arg_13_1 == ViewName.StoryView and arg_13_0._waitCloseStoryView then
-		arg_13_0:closeThis()
-	elseif arg_13_1 == ViewName.MeilanniBossInfoView and arg_13_0._oldThreat then
-		TaskDispatcher.runDelay(arg_13_0._closeThreatItemAnim, arg_13_0, 0.8)
+	if viewName == ViewName.StoryView and self._waitCloseStoryView then
+		self:closeThis()
+	elseif viewName == ViewName.MeilanniBossInfoView and self._oldThreat then
+		TaskDispatcher.runDelay(self._closeThreatItemAnim, self, 0.8)
 	end
 end
 
-function var_0_0._updateExcludeRules(arg_14_0, arg_14_1)
-	arg_14_0._oldThreat = arg_14_1[3]
+function MeilanniView:_updateExcludeRules(params)
+	self._oldThreat = params[3]
 
-	MeilanniAnimationController.instance:addDelayCall(arg_14_0._openMeilanniBossInfoView, arg_14_0, {
+	MeilanniAnimationController.instance:addDelayCall(self._openMeilanniBossInfoView, self, {
 		showExcludeRules = true,
-		mapId = arg_14_0._mapId,
-		rulesInfo = arg_14_1
+		mapId = self._mapId,
+		rulesInfo = params
 	}, MeilanniEnum.showExcludeRulesTime, MeilanniAnimationController.excludeRulesLayer)
 end
 
-function var_0_0._openMeilanniBossInfoView(arg_15_0, arg_15_1)
-	MeilanniController.instance:openMeilanniBossInfoView(arg_15_1)
+function MeilanniView:_openMeilanniBossInfoView(params)
+	MeilanniController.instance:openMeilanniBossInfoView(params)
 end
 
-function var_0_0._resetMap(arg_16_0)
-	arg_16_0:_updateInfo()
+function MeilanniView:_resetMap()
+	self:_updateInfo()
 end
 
-function var_0_0._getInfo(arg_17_0)
-	if arg_17_0._mapInfo:checkFinish() then
-		MeilanniController.instance:openMeilanniSettlementView(arg_17_0._mapId)
+function MeilanniView:_getInfo()
+	if self._mapInfo:checkFinish() then
+		MeilanniController.instance:openMeilanniSettlementView(self._mapId)
 	end
 end
 
-function var_0_0._episodeInfoUpdate(arg_18_0)
-	arg_18_0:_updateInfo()
+function MeilanniView:_episodeInfoUpdate()
+	self:_updateInfo()
 end
 
-function var_0_0._updateInfo(arg_19_0)
-	MeilanniAnimationController.instance:addDelayCall(arg_19_0._changeDay, arg_19_0, nil, MeilanniEnum.changeWeatherTime, MeilanniAnimationController.changeWeatherLayer)
+function MeilanniView:_updateInfo()
+	MeilanniAnimationController.instance:addDelayCall(self._changeDay, self, nil, MeilanniEnum.changeWeatherTime, MeilanniAnimationController.changeWeatherLayer)
 
-	if MeilanniAnimationController.instance:isPlaying() and arg_19_0:_checkUpdateEnemy() then
-		MeilanniAnimationController.instance:addDelayCall(arg_19_0._updateEnemy, arg_19_0, nil, MeilanniEnum.showEnemyTime, MeilanniAnimationController.enemyLayer)
-	elseif not arg_19_0._oldThreat then
-		arg_19_0:_updateEnemy()
+	if MeilanniAnimationController.instance:isPlaying() and self:_checkUpdateEnemy() then
+		MeilanniAnimationController.instance:addDelayCall(self._updateEnemy, self, nil, MeilanniEnum.showEnemyTime, MeilanniAnimationController.enemyLayer)
+	elseif not self._oldThreat then
+		self:_updateEnemy()
 	end
 end
 
-function var_0_0._changeDay(arg_20_0)
-	arg_20_0:_updateDayInfo()
-	arg_20_0:_updateStars()
-	arg_20_0:_updateExhibits()
+function MeilanniView:_changeDay()
+	self:_updateDayInfo()
+	self:_updateStars()
+	self:_updateExhibits()
 end
 
-function var_0_0._updateExhibits(arg_21_0)
-	local var_21_0 = arg_21_0._mapInfo:getCurEpisodeInfo().episodeConfig.showExhibits == 1
+function MeilanniView:_updateExhibits()
+	local episodeInfo = self._mapInfo:getCurEpisodeInfo()
+	local showExhibits = episodeInfo.episodeConfig.showExhibits == 1
 
-	gohelper.setActive(arg_21_0._goexhibition, var_21_0)
+	gohelper.setActive(self._goexhibition, showExhibits)
 
-	if not var_21_0 then
+	if not showExhibits then
 		return
 	end
 
-	arg_21_0._mapConfig = lua_activity108_map.configDict[arg_21_0._mapId]
-	arg_21_0._txtexhibitionname.text = arg_21_0._mapConfig.title
+	self._mapConfig = lua_activity108_map.configDict[self._mapId]
+	self._txtexhibitionname.text = self._mapConfig.title
 
-	UISpriteSetMgr.instance:setMeilanniSprite(arg_21_0._imageexhibitionicon, arg_21_0._mapConfig.exhibits)
+	UISpriteSetMgr.instance:setMeilanniSprite(self._imageexhibitionicon, self._mapConfig.exhibits)
 end
 
-function var_0_0._updateDayInfo(arg_22_0)
-	local var_22_0 = arg_22_0._mapInfo:getCurEpisodeInfo().episodeConfig
-	local var_22_1 = MeilanniConfig.instance:getLastEpisode(var_22_0.mapId)
+function MeilanniView:_updateDayInfo()
+	local episodeInfo = self._mapInfo:getCurEpisodeInfo()
+	local episodeConfig = episodeInfo.episodeConfig
+	local lastConfig = MeilanniConfig.instance:getLastEpisode(episodeConfig.mapId)
 
-	if var_22_0.mapId <= 102 then
-		arg_22_0._txtremaintime.text = formatLuaLang("meilannidialogitem_countdown", var_22_1.day - var_22_0.day + 1)
+	if episodeConfig.mapId <= 102 then
+		self._txtremaintime.text = formatLuaLang("meilannidialogitem_countdown", lastConfig.day - episodeConfig.day + 1)
 	else
-		arg_22_0._txtremaintime.text = formatLuaLang("meilannidialogitem_countdown2", var_22_0.day)
+		self._txtremaintime.text = formatLuaLang("meilannidialogitem_countdown2", episodeConfig.day)
 	end
 
-	if arg_22_0._prevEpisodeConfig == var_22_0 then
+	if self._prevEpisodeConfig == episodeConfig then
 		return
 	end
 
-	local var_22_2 = var_22_0.period == 2
+	local nightTime = episodeConfig.period == 2
 
-	UISpriteSetMgr.instance:setMeilanniSprite(arg_22_0._imageweather1, var_22_2 and "icon_ws" or "icon_bt")
+	UISpriteSetMgr.instance:setMeilanniSprite(self._imageweather1, nightTime and "icon_ws" or "icon_bt")
 
-	if not var_22_2 then
+	if not nightTime then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_noise_exhibition_hall)
 	else
 		AudioMgr.instance:trigger(AudioEnum.UI.stop_ui_noise_allarea)
 	end
 
-	if arg_22_0._prevEpisodeConfig then
-		gohelper.setActive(arg_22_0._imageweather, true)
-		UISpriteSetMgr.instance:setMeilanniSprite(arg_22_0._imageweather, arg_22_0._prevEpisodeConfig.period == 2 and "icon_ws" or "icon_bt")
-		arg_22_0._dayAnimator:Play("switch", 0, 0)
+	if self._prevEpisodeConfig then
+		gohelper.setActive(self._imageweather, true)
+		UISpriteSetMgr.instance:setMeilanniSprite(self._imageweather, self._prevEpisodeConfig.period == 2 and "icon_ws" or "icon_bt")
+		self._dayAnimator:Play("switch", 0, 0)
 		AudioMgr.instance:trigger(AudioEnum.Meilanni.play_ui_mln_day_night)
 	else
-		gohelper.setActive(arg_22_0._imageweather, false)
+		gohelper.setActive(self._imageweather, false)
 	end
 
-	arg_22_0._prevEpisodeConfig = var_22_0
+	self._prevEpisodeConfig = episodeConfig
 end
 
-function var_0_0._updateStars(arg_23_0)
-	local var_23_0 = arg_23_0._mapInfo:getCurEpisodeInfo()
-	local var_23_1
+function MeilanniView:_updateStars()
+	local episodeInfo = self._mapInfo:getCurEpisodeInfo()
+	local changeEpisode = episodeInfo ~= self._curEpisodeInfo
 
-	var_23_1 = var_23_0 ~= arg_23_0._curEpisodeInfo
-	arg_23_0._curEpisodeInfo = var_23_0
+	self._curEpisodeInfo = episodeInfo
 
-	local var_23_2 = var_23_0.episodeConfig
+	local episodeConfig = episodeInfo.episodeConfig
 
-	for iter_23_0 = 1, var_23_2.actpoint do
-		local var_23_3 = arg_23_0:_getActItem(iter_23_0)
+	for i = 1, episodeConfig.actpoint do
+		local item = self:_getActItem(i)
 
-		gohelper.setActive(var_23_3.go, true)
-		gohelper.setActive(var_23_3.emptyGo, iter_23_0 > var_23_0.leftActPoint)
+		gohelper.setActive(item.go, true)
+		gohelper.setActive(item.emptyGo, i > episodeInfo.leftActPoint)
 
-		if not (iter_23_0 <= var_23_0.leftActPoint) then
-			var_23_3.animator:Play(UIAnimationName.Close)
+		local showFill = i <= episodeInfo.leftActPoint
+
+		if not showFill then
+			item.animator:Play(UIAnimationName.Close)
 		else
-			var_23_3.animator:Play(UIAnimationName.Idle)
+			item.animator:Play(UIAnimationName.Idle)
 		end
 	end
 
-	for iter_23_1 = var_23_2.actpoint + 1, #arg_23_0._actPointItemList do
-		local var_23_4 = arg_23_0:_getActItem(iter_23_1)
+	for i = episodeConfig.actpoint + 1, #self._actPointItemList do
+		local item = self:_getActItem(i)
 
-		gohelper.setActive(var_23_4.go, false)
+		gohelper.setActive(item.go, false)
 	end
 end
 
-function var_0_0._getActItem(arg_24_0, arg_24_1)
-	local var_24_0 = arg_24_0._actPointItemList[arg_24_1]
+function MeilanniView:_getActItem(index)
+	local item = self._actPointItemList[index]
 
-	if not var_24_0 then
-		var_24_0 = arg_24_0:getUserDataTb_()
-		var_24_0.go = gohelper.cloneInPlace(arg_24_0._gostar)
-		var_24_0.animator = var_24_0.go:GetComponent(typeof(UnityEngine.Animator))
-		var_24_0.fillGo = gohelper.findChild(var_24_0.go, "fill")
+	if not item then
+		item = self:getUserDataTb_()
+		item.go = gohelper.cloneInPlace(self._gostar)
+		item.animator = item.go:GetComponent(typeof(UnityEngine.Animator))
+		item.fillGo = gohelper.findChild(item.go, "fill")
 
-		gohelper.setActive(var_24_0.fillGo, true)
+		gohelper.setActive(item.fillGo, true)
 
-		var_24_0.emptyGo = gohelper.findChild(var_24_0.go, "empty")
-		arg_24_0._actPointItemList[arg_24_1] = var_24_0
+		item.emptyGo = gohelper.findChild(item.go, "empty")
+		self._actPointItemList[index] = item
 	end
 
-	return var_24_0
+	return item
 end
 
-function var_0_0._getConfigBattleId(arg_25_0, arg_25_1)
-	for iter_25_0, iter_25_1 in ipairs(arg_25_1) do
-		if iter_25_1[1] == MeilanniEnum.ElementType.Battle then
-			local var_25_0 = iter_25_1[2]
+function MeilanniView:_getConfigBattleId(interactParam)
+	for i, v in ipairs(interactParam) do
+		if v[1] == MeilanniEnum.ElementType.Battle then
+			local param = v[2]
 
-			return tonumber(var_25_0)
+			return tonumber(param)
 		end
 	end
 end
 
-function var_0_0.getMonsterId(arg_26_0)
-	local var_26_0 = lua_battle.configDict[arg_26_0]
-	local var_26_1 = string.splitToNumber(var_26_0.monsterGroupIds, "#")
-	local var_26_2
+function MeilanniView.getMonsterId(battleId)
+	local battleConfig = lua_battle.configDict[battleId]
+	local monsterGroupIds = string.splitToNumber(battleConfig.monsterGroupIds, "#")
+	local id
 
-	for iter_26_0, iter_26_1 in ipairs(var_26_1) do
-		local var_26_3 = lua_monster_group.configDict[iter_26_1]
-		local var_26_4 = string.splitToNumber(var_26_3.monster, "#")
+	for i, groupId in ipairs(monsterGroupIds) do
+		local monsterGroupConfig = lua_monster_group.configDict[groupId]
+		local monsterIds = string.splitToNumber(monsterGroupConfig.monster, "#")
 
-		for iter_26_2, iter_26_3 in ipairs(var_26_4) do
-			var_26_2 = iter_26_3
+		for _, monsterId in ipairs(monsterIds) do
+			id = monsterId
 
-			if FightHelper.isBossId(var_26_3.bossId, iter_26_3) then
-				return iter_26_3
+			if FightHelper.isBossId(monsterGroupConfig.bossId, monsterId) then
+				return monsterId
 			end
 		end
 	end
 
-	return var_26_2
+	return id
 end
 
-function var_0_0._updateEnemy(arg_27_0)
-	local var_27_0 = MeilanniConfig.instance:getLastEvent(arg_27_0._mapId)
-	local var_27_1 = GameUtil.splitString2(var_27_0.interactParam, true, "|", "#")
-	local var_27_2 = arg_27_0:_getConfigBattleId(var_27_1)
-	local var_27_3 = arg_27_0._mapInfo:getCurEpisodeInfo()
-	local var_27_4 = var_27_3.episodeConfig.showBoss == 1
-	local var_27_5 = MeilanniConfig.instance:getLastEpisode(arg_27_0._mapId)
-	local var_27_6 = var_27_3.episodeConfig
+function MeilanniView:_updateEnemy()
+	local lastEventConfig = MeilanniConfig.instance:getLastEvent(self._mapId)
+	local interactParam = GameUtil.splitString2(lastEventConfig.interactParam, true, "|", "#")
+	local battleId = self:_getConfigBattleId(interactParam)
+	local episodeInfo = self._mapInfo:getCurEpisodeInfo()
+	local showEmeny = episodeInfo.episodeConfig.showBoss == 1
+	local lastConfig = MeilanniConfig.instance:getLastEpisode(self._mapId)
+	local episodeConfig = episodeInfo.episodeConfig
 
-	if var_27_4 and arg_27_0._mapInfo.score > 0 and var_27_6.day == var_27_5.day and var_27_3.isFinish then
-		var_27_4 = false
+	if showEmeny and self._mapInfo.score > 0 and episodeConfig.day == lastConfig.day and episodeInfo.isFinish then
+		showEmeny = false
 	end
 
-	gohelper.setActive(arg_27_0._gothreat, var_27_4)
+	gohelper.setActive(self._gothreat, showEmeny)
 
-	if var_27_4 and arg_27_0._showEmeny == false then
-		arg_27_0._gothreat:GetComponent(typeof(UnityEngine.Animator)):Play("open")
+	if showEmeny and self._showEmeny == false then
+		local animator = self._gothreat:GetComponent(typeof(UnityEngine.Animator))
+
+		animator:Play("open")
 	end
 
-	arg_27_0._showEmeny = var_27_4
+	self._showEmeny = showEmeny
 
-	if not var_27_4 then
+	if not showEmeny then
 		return
 	end
 
-	local var_27_7 = arg_27_0._mapInfo:getThreat()
+	local threat = self._mapInfo:getThreat()
 
-	arg_27_0:_showThreatItems(var_27_4, var_27_7)
+	self:_showThreatItems(showEmeny, threat)
 
-	local var_27_8 = var_0_0.getMonsterId(var_27_2)
+	local monsterId = MeilanniView.getMonsterId(battleId)
 
-	if not var_27_8 then
+	if not monsterId then
 		return
 	end
 
-	local var_27_9 = lua_monster.configDict[var_27_8]
-	local var_27_10 = lua_monster_skin.configDict[var_27_9.skinId]
+	local monsterConfig = lua_monster.configDict[monsterId]
+	local skinConfig = lua_monster_skin.configDict[monsterConfig.skinId]
 
-	gohelper.getSingleImage(arg_27_0._imageenemyicon.gameObject):LoadImage(ResUrl.monsterHeadIcon(var_27_10.headIcon))
+	gohelper.getSingleImage(self._imageenemyicon.gameObject):LoadImage(ResUrl.monsterHeadIcon(skinConfig.headIcon))
 end
 
-function var_0_0._checkUpdateEnemy(arg_28_0)
-	local var_28_0 = MeilanniConfig.instance:getLastEvent(arg_28_0._mapId)
-	local var_28_1 = GameUtil.splitString2(var_28_0.interactParam, true, "|", "#")
-	local var_28_2 = arg_28_0:_getConfigBattleId(var_28_1)
+function MeilanniView:_checkUpdateEnemy()
+	local lastEventConfig = MeilanniConfig.instance:getLastEvent(self._mapId)
+	local interactParam = GameUtil.splitString2(lastEventConfig.interactParam, true, "|", "#")
+	local battleId = self:_getConfigBattleId(interactParam)
+	local episodeInfo = self._mapInfo:getCurEpisodeInfo()
+	local showEmeny = episodeInfo.episodeConfig.showBoss == 1
 
-	if not (arg_28_0._mapInfo:getCurEpisodeInfo().episodeConfig.showBoss == 1) then
+	if not showEmeny then
 		return
 	end
 
-	if not var_0_0.getMonsterId(var_28_2) then
+	local monsterId = MeilanniView.getMonsterId(battleId)
+
+	if not monsterId then
 		return
 	end
 
-	return not arg_28_0._showEmeny
+	return not self._showEmeny
 end
 
-function var_0_0._showThreatItems(arg_29_0, arg_29_1, arg_29_2)
-	if not arg_29_1 then
+function MeilanniView:_showThreatItems(showEmeny, threat)
+	if not showEmeny then
 		return
 	end
 
@@ -379,56 +391,56 @@ function var_0_0._showThreatItems(arg_29_0, arg_29_1, arg_29_2)
 		return
 	end
 
-	for iter_29_0 = 1, MeilanniEnum.threatNum do
-		local var_29_0 = arg_29_0["_goitem" .. iter_29_0]
+	for i = 1, MeilanniEnum.threatNum do
+		local item = self["_goitem" .. i]
 
-		gohelper.setActive(var_29_0, iter_29_0 <= arg_29_2)
+		gohelper.setActive(item, i <= threat)
 	end
 end
 
-function var_0_0._closeThreatItemAnim(arg_30_0)
-	local var_30_0 = arg_30_0._mapInfo:getThreat() + 1
-	local var_30_1 = arg_30_0._oldThreat or var_30_0
+function MeilanniView:_closeThreatItemAnim()
+	local threat = self._mapInfo:getThreat() + 1
+	local oldThreat = self._oldThreat or threat
 
-	arg_30_0._oldThreat = nil
+	self._oldThreat = nil
 
-	for iter_30_0 = var_30_0, var_30_1 do
-		local var_30_2 = arg_30_0["_goitem" .. iter_30_0]
+	for i = threat, oldThreat do
+		local item = self["_goitem" .. i]
 
-		if var_30_2 then
-			gohelper.setActive(var_30_2, true)
+		if item then
+			gohelper.setActive(item, true)
 
-			local var_30_3 = var_30_2:GetComponent(typeof(UnityEngine.Animator))
+			local animator = item:GetComponent(typeof(UnityEngine.Animator))
 
-			var_30_3.enabled = true
+			animator.enabled = true
 
-			var_30_3:Play("close", 0, 0)
+			animator:Play("close", 0, 0)
 		end
 	end
 end
 
-function var_0_0._onMapFail(arg_31_0)
+function MeilanniView:_onMapFail()
 	MeilanniController.instance:statEnd(StatEnum.Result.Fail)
 end
 
-function var_0_0._onMapSuccess(arg_32_0)
+function MeilanniView:_onMapSuccess()
 	MeilanniController.instance:statEnd(StatEnum.Result.Success)
 end
 
-function var_0_0.onClose(arg_33_0)
-	if arg_33_0.viewContainer:isManualClose() then
+function MeilanniView:onClose()
+	if self.viewContainer:isManualClose() then
 		MeilanniController.instance:statEnd(StatEnum.Result.Abort)
 	end
 
-	TaskDispatcher.cancelTask(arg_33_0._closeThreatItemAnim, arg_33_0)
-	arg_33_0:_dimBgm(false)
+	TaskDispatcher.cancelTask(self._closeThreatItemAnim, self)
+	self:_dimBgm(false)
 end
 
-function var_0_0.onDestroyView(arg_34_0)
-	arg_34_0._simagerightbg:UnLoadImage()
-	arg_34_0._simageleftbg:UnLoadImage()
-	arg_34_0._simageinfobg1:UnLoadImage()
-	arg_34_0._simageinfobg2:UnLoadImage()
+function MeilanniView:onDestroyView()
+	self._simagerightbg:UnLoadImage()
+	self._simageleftbg:UnLoadImage()
+	self._simageinfobg1:UnLoadImage()
+	self._simageinfobg2:UnLoadImage()
 end
 
-return var_0_0
+return MeilanniView

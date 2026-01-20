@@ -1,47 +1,37 @@
-﻿module("modules.logic.summonsimulationpick.model.SummonSimulationInfoMo", package.seeall)
+﻿-- chunkname: @modules/logic/summonsimulationpick/model/SummonSimulationInfoMo.lua
 
-local var_0_0 = pureTable("SummonSimulationInfoMo")
+module("modules.logic.summonsimulationpick.model.SummonSimulationInfoMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.activityId = 0
-	arg_1_0.leftTimes = 0
-	arg_1_0.saveHeroIds = {}
-	arg_1_0.currentHeroIds = {}
-	arg_1_0.isSelect = false
-	arg_1_0.saveIndex = 0
+local SummonSimulationInfoMo = pureTable("SummonSimulationInfoMo")
+
+function SummonSimulationInfoMo:ctor()
+	self.activityId = 0
+	self.leftTimes = 0
+	self.saveHeroIds = {}
+	self.isSelect = false
+	self.selectIndex = nil
 end
 
-function var_0_0.update(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0.activityId = arg_2_1.activityId
-	arg_2_0.leftTimes = arg_2_1.leftTimes
-	arg_2_0.saveHeroIds = arg_2_1.savedHeroIds
-	arg_2_0.currentHeroIds = arg_2_1.currHeroIds
-	arg_2_0.isSelect = arg_2_1.isSelect
+function SummonSimulationInfoMo:update(info, saveCurrent)
+	self.activityId = info.activityId
+	self.leftTimes = info.leftTimes
 
-	local var_2_0 = SummonSimulationPickModel.instance:getActivityMaxSummonCount(arg_2_0.activityId)
+	tabletool.clear(self.saveHeroIds)
 
-	arg_2_0.maxCount = var_2_0
+	if info.savedHeroIds and #info.savedHeroIds > 0 then
+		for _, heroInfo in ipairs(info.savedHeroIds) do
+			local result = tabletool.copy(heroInfo.heroId)
 
-	local var_2_1 = arg_2_2 and 0 or 1
-
-	arg_2_0.saveIndex = math.max(0, var_2_0 - arg_2_1.leftTimes - var_2_1)
-
-	SummonModel.sortResultByHeroIds(arg_2_0.currentHeroIds)
-	SummonModel.sortResultByHeroIds(arg_2_0.saveHeroIds)
-end
-
-function var_0_0.haveSaveCurrent(arg_3_0)
-	return arg_3_0.saveIndex == arg_3_0.maxCount - arg_3_0.leftTimes or arg_3_0.saveIndex == 0 or #arg_3_0.currentHeroIds <= 0
-end
-
-function var_0_0.haveSelect(arg_4_0)
-	if arg_4_0.leftTimes == arg_4_0.maxCount - 1 then
-		return true
-	elseif arg_4_0.leftTimes == 0 then
-		return false
-	else
-		return arg_4_0:haveSaveCurrent()
+			SummonModel.sortResultByHeroIds(result)
+			table.insert(self.saveHeroIds, result)
+		end
 	end
+
+	local maxCount = SummonSimulationPickModel.instance:getActivityMaxSummonCount(self.activityId)
+
+	self.maxCount = maxCount
+	self.isSelect = info.selectIndex ~= nil and info.selectIndex ~= 0
+	self.selectIndex = info.selectIndex
 end
 
-return var_0_0
+return SummonSimulationInfoMo

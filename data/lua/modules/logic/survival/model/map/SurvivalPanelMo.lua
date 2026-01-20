@@ -1,47 +1,49 @@
-﻿module("modules.logic.survival.model.map.SurvivalPanelMo", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/map/SurvivalPanelMo.lua
 
-local var_0_0 = pureTable("SurvivalPanelMo")
+module("modules.logic.survival.model.map.SurvivalPanelMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.uid = arg_1_1.uid
-	arg_1_0.type = arg_1_1.type
-	arg_1_0.unitId = arg_1_1.unitId
-	arg_1_0.treeId = arg_1_1.treeId
-	arg_1_0.dialogueId = arg_1_1.dialogueId
-	arg_1_0.param = arg_1_1.param
-	arg_1_0.status = arg_1_1.status
-	arg_1_0.canSelectNum = arg_1_1.canSelectNum
-	arg_1_0.items = {}
+local SurvivalPanelMo = pureTable("SurvivalPanelMo")
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1.items) do
-		local var_1_0 = SurvivalBagItemMo.New()
+function SurvivalPanelMo:init(data)
+	self.uid = data.uid
+	self.type = data.type
+	self.unitId = data.unitId
+	self.treeId = data.treeId
+	self.dialogueId = data.dialogueId
+	self.param = data.param
+	self.status = data.status
+	self.canSelectNum = data.canSelectNum
+	self.items = {}
 
-		var_1_0:init(iter_1_1)
+	for i, v in ipairs(data.items) do
+		local itemMo = SurvivalBagItemMo.New()
 
-		if arg_1_0.type == SurvivalEnum.PanelType.Search then
-			var_1_0.source = SurvivalEnum.ItemSource.Search
-			arg_1_0.items[var_1_0.uid] = var_1_0
-		elseif arg_1_0.type == SurvivalEnum.PanelType.DropSelect then
-			var_1_0.source = SurvivalEnum.ItemSource.Drop
-			arg_1_0.items[iter_1_0] = var_1_0
+		itemMo:init(v)
+
+		if self.type == SurvivalEnum.PanelType.Search then
+			itemMo.source = SurvivalEnum.ItemSource.Search
+			self.items[itemMo.uid] = itemMo
+		elseif self.type == SurvivalEnum.PanelType.DropSelect then
+			itemMo.source = SurvivalEnum.ItemSource.Drop
+			self.items[i] = itemMo
 		else
-			arg_1_0.items[iter_1_0] = var_1_0
+			self.items[i] = itemMo
 		end
 	end
 
-	arg_1_0.shop = SurvivalShopMo.New()
+	self.shop = SurvivalShopMo.New()
 
-	arg_1_0.shop:init(arg_1_1.shop)
+	self.shop:init(data.shop)
 
-	arg_1_0.decreesProp = SurvivalDecreesPanelPropMo.New()
+	self.decreesProp = SurvivalDecreesPanelPropMo.New()
 
-	arg_1_0.decreesProp:init(arg_1_1.decreesProp)
+	self.decreesProp:init(data.decreesProp)
 
-	arg_1_0.isFirstSearch = false
+	self.isFirstSearch = false
 end
 
-function var_0_0.getSearchItems(arg_2_0)
-	return arg_2_0.items
+function SurvivalPanelMo:getSearchItems()
+	return self.items
 end
 
-return var_0_0
+return SurvivalPanelMo

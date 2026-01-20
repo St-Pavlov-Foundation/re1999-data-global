@@ -1,130 +1,132 @@
-﻿module("modules.logic.versionactivity2_4.warmup.view.V2a4_WarmUpDialogueItemBase_LR", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/warmup/view/V2a4_WarmUpDialogueItemBase_LR.lua
 
-local var_0_0 = class("V2a4_WarmUpDialogueItemBase_LR", V2a4_WarmUpDialogueItemBase)
-local var_0_1 = SLFramework.AnimatorPlayer
+module("modules.logic.versionactivity2_4.warmup.view.V2a4_WarmUpDialogueItemBase_LR", package.seeall)
 
-function var_0_0.ctor(arg_1_0, ...)
-	var_0_0.super.ctor(arg_1_0, ...)
+local V2a4_WarmUpDialogueItemBase_LR = class("V2a4_WarmUpDialogueItemBase_LR", V2a4_WarmUpDialogueItemBase)
+local csAnimatorPlayer = SLFramework.AnimatorPlayer
+
+function V2a4_WarmUpDialogueItemBase_LR:ctor(...)
+	V2a4_WarmUpDialogueItemBase_LR.super.ctor(self, ...)
 end
 
-function var_0_0._editableInitView(arg_2_0)
-	var_0_0.super._editableInitView(arg_2_0)
+function V2a4_WarmUpDialogueItemBase_LR:_editableInitView()
+	V2a4_WarmUpDialogueItemBase_LR.super._editableInitView(self)
 
-	arg_2_0._bgGo = gohelper.findChild(arg_2_0.viewGO, "content_bg")
-	arg_2_0._bgTrans = arg_2_0._bgGo.transform
-	arg_2_0._txtGo = arg_2_0._txtcontent.gameObject
-	arg_2_0._txtTrans = arg_2_0._txtGo.transform
-	arg_2_0._oriTxtWidth = recthelper.getWidth(arg_2_0._txtTrans)
-	arg_2_0._oriTxtHeight = recthelper.getHeight(arg_2_0._txtTrans)
-	arg_2_0._oriBgWidth = recthelper.getWidth(arg_2_0._bgTrans)
-	arg_2_0._oriBgHeight = recthelper.getHeight(arg_2_0._bgTrans)
-	arg_2_0._animPlayer = var_0_1.Get(arg_2_0.viewGO)
+	self._bgGo = gohelper.findChild(self.viewGO, "content_bg")
+	self._bgTrans = self._bgGo.transform
+	self._txtGo = self._txtcontent.gameObject
+	self._txtTrans = self._txtGo.transform
+	self._oriTxtWidth = recthelper.getWidth(self._txtTrans)
+	self._oriTxtHeight = recthelper.getHeight(self._txtTrans)
+	self._oriBgWidth = recthelper.getWidth(self._bgTrans)
+	self._oriBgHeight = recthelper.getHeight(self._bgTrans)
+	self._animPlayer = csAnimatorPlayer.Get(self.viewGO)
 
-	arg_2_0:setActive_loading(false)
+	self:setActive_loading(false)
 end
 
-function var_0_0.setActive_loading(arg_3_0, arg_3_1)
-	gohelper.setActive(arg_3_0._goloading, arg_3_1)
+function V2a4_WarmUpDialogueItemBase_LR:setActive_loading(isActive)
+	gohelper.setActive(self._goloading, isActive)
 end
 
-function var_0_0.setData(arg_4_0, arg_4_1)
-	var_0_0.super.setData(arg_4_0, arg_4_1)
-	arg_4_0:_openAnim()
+function V2a4_WarmUpDialogueItemBase_LR:setData(mo)
+	V2a4_WarmUpDialogueItemBase_LR.super.setData(self, mo)
+	self:_openAnim()
 
-	local var_4_0 = arg_4_1.dialogCO
-	local var_4_1 = V2a4_WarmUpConfig.instance:getDialogDesc(var_4_0)
+	local dialogCO = mo.dialogCO
+	local str = V2a4_WarmUpConfig.instance:getDialogDesc(dialogCO)
 
-	arg_4_0:setText(var_4_1)
-	arg_4_0:typing(var_4_1)
+	self:setText(str)
+	self:typing(str)
 end
 
-function var_0_0.onFlush(arg_5_0)
-	if arg_5_0._isFlushed then
+function V2a4_WarmUpDialogueItemBase_LR:onFlush()
+	if self._isFlushed then
 		return
 	end
 
-	arg_5_0._isFlushed = true
+	self._isFlushed = true
 
-	TaskDispatcher.cancelTask(arg_5_0.onFlush, arg_5_0)
-	FrameTimerController.onDestroyViewMember(arg_5_0, "_fTimerLoading")
-	arg_5_0:setActive_loading(false)
-	arg_5_0:setActive_Txt(true)
+	TaskDispatcher.cancelTask(self.onFlush, self)
+	FrameTimerController.onDestroyViewMember(self, "_fTimerLoading")
+	self:setActive_loading(false)
+	self:setActive_Txt(true)
 
-	if arg_5_0:isReadyStepEnd() then
-		arg_5_0:stepEnd()
+	if self:isReadyStepEnd() then
+		self:stepEnd()
 	end
 end
 
-function var_0_0._typingStartDelayTimer(arg_6_0)
-	TaskDispatcher.runDelay(arg_6_0.onFlush, arg_6_0, V2a4_WarmUpConfig.instance:getSentenceInBetweenSec())
+function V2a4_WarmUpDialogueItemBase_LR:_typingStartDelayTimer()
+	TaskDispatcher.runDelay(self.onFlush, self, V2a4_WarmUpConfig.instance:getSentenceInBetweenSec())
 end
 
-function var_0_0._typingStartFrameTimer(arg_7_0, arg_7_1)
-	local var_7_0 = math.random(1, GameUtil.clamp(#arg_7_1, 60, 120) * V2a4_WarmUpConfig.instance:getSentenceInBetweenSec())
+function V2a4_WarmUpDialogueItemBase_LR:_typingStartFrameTimer(str)
+	local frameCount = math.random(1, GameUtil.clamp(#str, 60, 120) * V2a4_WarmUpConfig.instance:getSentenceInBetweenSec())
 
-	FrameTimerController.onDestroyViewMember(arg_7_0, "_fTimerLoading")
+	FrameTimerController.onDestroyViewMember(self, "_fTimerLoading")
 
-	arg_7_0._fTimerLoading = FrameTimerController.instance:register(function()
-		if not gohelper.isNil(arg_7_0._txtGo) then
-			arg_7_0:onFlush()
+	self._fTimerLoading = FrameTimerController.instance:register(function()
+		if not gohelper.isNil(self._txtGo) then
+			self:onFlush()
 		end
-	end, var_7_0, 1)
+	end, frameCount, 1)
 
-	arg_7_0._fTimerLoading:Start()
+	self._fTimerLoading:Start()
 end
 
-local var_0_2 = 155
+local kTypingWidth = 155
 
-function var_0_0.typing(arg_9_0, arg_9_1)
-	recthelper.setSize(arg_9_0._bgTrans, var_0_2, arg_9_0._oriBgHeight)
-	arg_9_0:addContentItem(arg_9_0._oriBgHeight)
-	arg_9_0:setActive_loading(true)
-	arg_9_0:_typingStartDelayTimer()
+function V2a4_WarmUpDialogueItemBase_LR:typing(str)
+	recthelper.setSize(self._bgTrans, kTypingWidth, self._oriBgHeight)
+	self:addContentItem(self._oriBgHeight)
+	self:setActive_loading(true)
+	self:_typingStartDelayTimer()
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0.onFlush, arg_10_0)
-	GameUtil.onDestroyViewMember(arg_10_0, "_tmpFadeInWithScroll")
-	FrameTimerController.onDestroyViewMember(arg_10_0, "_fTimerLoading")
-	var_0_0.super.onDestroyView(arg_10_0)
+function V2a4_WarmUpDialogueItemBase_LR:onDestroyView()
+	TaskDispatcher.cancelTask(self.onFlush, self)
+	GameUtil.onDestroyViewMember(self, "_tmpFadeInWithScroll")
+	FrameTimerController.onDestroyViewMember(self, "_fTimerLoading")
+	V2a4_WarmUpDialogueItemBase_LR.super.onDestroyView(self)
 end
 
-function var_0_0.onRefreshLineInfo(arg_11_0)
-	local var_11_0 = arg_11_0:preferredWidthTxt()
-	local var_11_1 = arg_11_0:preferredHeightTxt()
-	local var_11_2 = arg_11_0._oriBgWidth
-	local var_11_3 = arg_11_0._oriBgHeight
+function V2a4_WarmUpDialogueItemBase_LR:onRefreshLineInfo()
+	local curTxtWidth = self:preferredWidthTxt()
+	local curTxtHeight = self:preferredHeightTxt()
+	local curBgWidth = self._oriBgWidth
+	local curBgHeight = self._oriBgHeight
 
-	if var_11_0 <= arg_11_0._oriTxtWidth then
-		var_11_2 = var_11_2 + (var_11_0 - arg_11_0._oriTxtWidth)
+	if curTxtWidth <= self._oriTxtWidth then
+		curBgWidth = curBgWidth + (curTxtWidth - self._oriTxtWidth)
 	else
-		var_11_0 = arg_11_0._oriTxtWidth
-		var_11_3 = var_11_3 + (var_11_1 - arg_11_0._oriTxtHeight)
+		curTxtWidth = self._oriTxtWidth
+		curBgHeight = curBgHeight + (curTxtHeight - self._oriTxtHeight)
 	end
 
-	arg_11_0._curTxtWidth = var_11_0
-	arg_11_0._curTxtHeight = var_11_1
-	arg_11_0._curBgWidth = var_11_2
-	arg_11_0._curBgHeight = var_11_3
+	self._curTxtWidth = curTxtWidth
+	self._curTxtHeight = curTxtHeight
+	self._curBgWidth = curBgWidth
+	self._curBgHeight = curBgHeight
 
-	if arg_11_0._isFlushed then
-		arg_11_0:stepEnd()
+	if self._isFlushed then
+		self:stepEnd()
 	end
 end
 
-function var_0_0.stepEnd(arg_12_0)
-	recthelper.setSize(arg_12_0._txtTrans, arg_12_0._curTxtWidth, arg_12_0._curTxtHeight)
-	recthelper.setSize(arg_12_0._bgTrans, arg_12_0._curBgWidth, arg_12_0._curBgHeight)
-	arg_12_0:addContentItem(arg_12_0._curBgHeight)
-	var_0_0.super.stepEnd(arg_12_0)
+function V2a4_WarmUpDialogueItemBase_LR:stepEnd()
+	recthelper.setSize(self._txtTrans, self._curTxtWidth, self._curTxtHeight)
+	recthelper.setSize(self._bgTrans, self._curBgWidth, self._curBgHeight)
+	self:addContentItem(self._curBgHeight)
+	V2a4_WarmUpDialogueItemBase_LR.super.stepEnd(self)
 end
 
-function var_0_0.setGray(arg_13_0, arg_13_1)
-	arg_13_0:grayscale(arg_13_1, arg_13_0._txtGo, arg_13_0._bgGo)
+function V2a4_WarmUpDialogueItemBase_LR:setGray(isGray)
+	self:grayscale(isGray, self._txtGo, self._bgGo)
 end
 
-function var_0_0._openAnim(arg_14_0, arg_14_1, arg_14_2)
-	arg_14_0._animPlayer:Play(UIAnimationName.Open, arg_14_1, arg_14_2)
+function V2a4_WarmUpDialogueItemBase_LR:_openAnim(cb, cbObj)
+	self._animPlayer:Play(UIAnimationName.Open, cb, cbObj)
 end
 
-return var_0_0
+return V2a4_WarmUpDialogueItemBase_LR

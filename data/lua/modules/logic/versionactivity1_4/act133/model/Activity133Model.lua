@@ -1,93 +1,95 @@
-﻿module("modules.logic.versionactivity1_4.act133.model.Activity133Model", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act133/model/Activity133Model.lua
 
-local var_0_0 = class("Activity133Model", BaseModel)
+module("modules.logic.versionactivity1_4.act133.model.Activity133Model", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.super:ctor()
+local Activity133Model = class("Activity133Model", BaseModel)
 
-	arg_1_0.serverTaskModel = BaseModel.New()
+function Activity133Model:ctor()
+	self.super:ctor()
+
+	self.serverTaskModel = BaseModel.New()
 end
 
-function var_0_0.setActivityInfo(arg_2_0, arg_2_1)
-	arg_2_0.actId = arg_2_1.activityId
-	arg_2_0.hasGetBonusIds = arg_2_1.hasGetBonusIds
+function Activity133Model:setActivityInfo(info)
+	self.actId = info.activityId
+	self.hasGetBonusIds = info.hasGetBonusIds
 
-	arg_2_0:setTasksInfo(arg_2_1.tasks)
+	self:setTasksInfo(info.tasks)
 end
 
-function var_0_0.getTasksInfo(arg_3_0)
-	return arg_3_0.serverTaskModel:getList()
+function Activity133Model:getTasksInfo()
+	return self.serverTaskModel:getList()
 end
 
-function var_0_0.setTasksInfo(arg_4_0, arg_4_1)
-	local var_4_0
+function Activity133Model:setTasksInfo(taskInfoList)
+	local hasChange
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
-		local var_4_1 = arg_4_0.serverTaskModel:getById(iter_4_1.id)
+	for i, info in ipairs(taskInfoList) do
+		local mo = self.serverTaskModel:getById(info.id)
 
-		if var_4_1 then
-			var_4_1:update(iter_4_1)
+		if mo then
+			mo:update(info)
 		else
-			local var_4_2 = Activity133Config.instance:getTaskCo(iter_4_1.id)
+			local co = Activity133Config.instance:getTaskCo(info.id)
 
-			if var_4_2 then
-				local var_4_3 = TaskMo.New()
+			if co then
+				mo = TaskMo.New()
 
-				var_4_3:init(iter_4_1, var_4_2)
-				arg_4_0.serverTaskModel:addAtLast(var_4_3)
+				mo:init(info, co)
+				self.serverTaskModel:addAtLast(mo)
 			end
 		end
 
-		var_4_0 = true
+		hasChange = true
 	end
 
-	if var_4_0 then
-		arg_4_0:sortList()
+	if hasChange then
+		self:sortList()
 	end
 
-	return var_4_0
+	return hasChange
 end
 
-function var_0_0.deleteInfo(arg_5_0, arg_5_1)
-	local var_5_0 = {}
+function Activity133Model:deleteInfo(ids)
+	local removeDict = {}
 
-	for iter_5_0, iter_5_1 in pairs(arg_5_1) do
-		local var_5_1 = arg_5_0.serverTaskModel:getById(iter_5_1)
+	for _, id in pairs(ids) do
+		local mo = self.serverTaskModel:getById(id)
 
-		if var_5_1 then
-			var_5_0[iter_5_1] = var_5_1
+		if mo then
+			removeDict[id] = mo
 		end
 	end
 
-	for iter_5_2, iter_5_3 in pairs(var_5_0) do
-		arg_5_0.serverTaskModel:remove(iter_5_3)
+	for id, mo in pairs(removeDict) do
+		self.serverTaskModel:remove(mo)
 	end
 
-	local var_5_2 = next(var_5_0) and true or false
+	local isChange = next(removeDict) and true or false
 
-	if var_5_2 then
-		arg_5_0:sortList()
+	if isChange then
+		self:sortList()
 	end
 
-	return var_5_2
+	return isChange
 end
 
-function var_0_0.sortList(arg_6_0)
-	arg_6_0.serverTaskModel:sort(function(arg_7_0, arg_7_1)
-		local var_7_0 = arg_7_0.finishCount > 0 and 3 or arg_7_0.progress >= arg_7_0.config.maxProgress and 1 or 2
-		local var_7_1 = arg_7_1.finishCount > 0 and 3 or arg_7_1.progress >= arg_7_1.config.maxProgress and 1 or 2
+function Activity133Model:sortList()
+	self.serverTaskModel:sort(function(a, b)
+		local aValue = a.finishCount > 0 and 3 or a.progress >= a.config.maxProgress and 1 or 2
+		local bValue = b.finishCount > 0 and 3 or b.progress >= b.config.maxProgress and 1 or 2
 
-		if var_7_0 ~= var_7_1 then
-			return var_7_0 < var_7_1
+		if aValue ~= bValue then
+			return aValue < bValue
 		else
-			return arg_7_0.config.id < arg_7_1.config.id
+			return a.config.id < b.config.id
 		end
 	end)
 end
 
-function var_0_0.checkBonusReceived(arg_8_0, arg_8_1)
-	for iter_8_0, iter_8_1 in pairs(arg_8_0.hasGetBonusIds) do
-		if iter_8_1 == arg_8_1 then
+function Activity133Model:checkBonusReceived(bonusId)
+	for _, id in pairs(self.hasGetBonusIds) do
+		if id == bonusId then
 			return true
 		end
 	end
@@ -95,26 +97,26 @@ function var_0_0.checkBonusReceived(arg_8_0, arg_8_1)
 	return false
 end
 
-function var_0_0.getFixedNum(arg_9_0)
-	if arg_9_0.hasGetBonusIds then
-		return #arg_9_0.hasGetBonusIds
+function Activity133Model:getFixedNum()
+	if self.hasGetBonusIds then
+		return #self.hasGetBonusIds
 	end
 
 	return 0
 end
 
-function var_0_0.setSelectID(arg_10_0, arg_10_1)
-	if not arg_10_0._selectid then
-		arg_10_0._selectid = arg_10_1
+function Activity133Model:setSelectID(id)
+	if not self._selectid then
+		self._selectid = id
 	end
 
-	arg_10_0._selectid = arg_10_1
+	self._selectid = id
 end
 
-function var_0_0.getSelectID(arg_11_0)
-	return arg_11_0._selectid
+function Activity133Model:getSelectID()
+	return self._selectid
 end
 
-var_0_0.instance = var_0_0.New()
+Activity133Model.instance = Activity133Model.New()
 
-return var_0_0
+return Activity133Model

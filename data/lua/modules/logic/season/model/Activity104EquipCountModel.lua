@@ -1,119 +1,124 @@
-﻿module("modules.logic.season.model.Activity104EquipCountModel", package.seeall)
+﻿-- chunkname: @modules/logic/season/model/Activity104EquipCountModel.lua
 
-local var_0_0 = class("Activity104EquipCountModel", BaseModel)
+module("modules.logic.season.model.Activity104EquipCountModel", package.seeall)
 
-var_0_0.DefaultId = -1
+local Activity104EquipCountModel = class("Activity104EquipCountModel", BaseModel)
 
-function var_0_0.clear(arg_1_0)
-	arg_1_0._desc2IdMap = nil
-	arg_1_0._optionsList = nil
-	arg_1_0._curId = nil
-	arg_1_0._itemCountDict = nil
+Activity104EquipCountModel.DefaultId = -1
+
+function Activity104EquipCountModel:clear()
+	self._desc2IdMap = nil
+	self._optionsList = nil
+	self._curId = nil
+	self._itemCountDict = nil
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0._curId = var_0_0.DefaultId
-	arg_2_0.activityId = arg_2_1
+function Activity104EquipCountModel:init(activityId)
+	self._curId = Activity104EquipCountModel.DefaultId
+	self.activityId = activityId
 end
 
-function var_0_0.refreshData(arg_3_0, arg_3_1)
-	arg_3_0._index2IdMap = {}
-	arg_3_0._optionsList = {}
+function Activity104EquipCountModel:refreshData(itemList)
+	self._index2IdMap = {}
+	self._optionsList = {}
 
-	local var_3_0 = {}
+	local countDict = {}
 
-	if arg_3_1 then
-		for iter_3_0, iter_3_1 in pairs(arg_3_1) do
-			if not var_3_0[iter_3_1.itemId] then
-				var_3_0[iter_3_1.itemId] = 0
+	if itemList then
+		for _, mo in pairs(itemList) do
+			if not countDict[mo.itemId] then
+				countDict[mo.itemId] = 0
 			end
 
-			var_3_0[iter_3_1.itemId] = var_3_0[iter_3_1.itemId] + 1
+			countDict[mo.itemId] = countDict[mo.itemId] + 1
 		end
 	end
 
-	arg_3_0._itemCountDict = var_3_0
+	self._itemCountDict = countDict
 
-	local var_3_1 = {}
+	local count2ItemDcit = {}
 
-	for iter_3_2, iter_3_3 in pairs(var_3_0) do
-		if not var_3_1[iter_3_3] then
-			var_3_1[iter_3_3] = {}
+	for itemId, count in pairs(countDict) do
+		if not count2ItemDcit[count] then
+			count2ItemDcit[count] = {}
 		end
 
-		var_3_1[iter_3_3][iter_3_2] = true
+		count2ItemDcit[count][itemId] = true
 	end
 
-	local var_3_2 = {}
+	local list = {}
 
-	for iter_3_4, iter_3_5 in pairs(var_3_1) do
-		table.insert(var_3_2, iter_3_4)
+	for count, dict in pairs(count2ItemDcit) do
+		table.insert(list, count)
 	end
 
-	table.sort(var_3_2, function(arg_4_0, arg_4_1)
-		return arg_4_0 < arg_4_1
+	table.sort(list, function(a, b)
+		return a < b
 	end)
 
-	local var_3_3 = 0
+	local index = 0
 
-	for iter_3_6 = 4, 1, -1 do
-		local var_3_4 = iter_3_6
+	for i = 4, 1, -1 do
+		local count = i
 
-		arg_3_0._index2IdMap[var_3_3] = var_3_4
+		self._index2IdMap[index] = count
 
-		table.insert(arg_3_0._optionsList, arg_3_0:getOptionTxt(var_3_4))
+		table.insert(self._optionsList, self:getOptionTxt(count))
 
-		var_3_3 = var_3_3 + 1
+		index = index + 1
 	end
 
-	local var_3_5 = var_0_0.DefaultId
-	local var_3_6 = arg_3_0:getOptionTxt(var_3_5)
+	local defaultId = Activity104EquipCountModel.DefaultId
+	local noTagDesc = self:getOptionTxt(defaultId)
 
-	arg_3_0._index2IdMap[var_3_3] = var_3_5
+	self._index2IdMap[index] = defaultId
 
-	table.insert(arg_3_0._optionsList, var_3_6)
+	table.insert(self._optionsList, noTagDesc)
 end
 
-function var_0_0.getOptionTxt(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_1 == var_0_0.DefaultId then
+function Activity104EquipCountModel:getOptionTxt(id, color)
+	if id == Activity104EquipCountModel.DefaultId then
 		return luaLang("common_all")
 	end
 
-	local var_5_0 = tostring(arg_5_1)
+	local idStr = tostring(id)
 
-	if arg_5_2 then
-		var_5_0 = string.format("<color=%s>%s</color>", arg_5_2, var_5_0)
+	if color then
+		idStr = string.format("<color=%s>%s</color>", color, idStr)
 	end
 
-	return formatLuaLang("season104_compose_filter_txt", var_5_0)
+	return formatLuaLang("season104_compose_filter_txt", idStr)
 end
 
-function var_0_0.getOptions(arg_6_0)
-	return arg_6_0._optionsList
+function Activity104EquipCountModel:getOptions()
+	return self._optionsList
 end
 
-function var_0_0.getSelectIdByIndex(arg_7_0, arg_7_1)
-	return arg_7_0._index2IdMap[arg_7_1]
+function Activity104EquipCountModel:getSelectIdByIndex(index)
+	return self._index2IdMap[index]
 end
 
-function var_0_0.isCardNeedShow(arg_8_0, arg_8_1, arg_8_2)
-	if arg_8_0._curId == var_0_0.DefaultId or not arg_8_0._curId then
+function Activity104EquipCountModel:isCardNeedShow(itemId, curCount)
+	if self._curId == Activity104EquipCountModel.DefaultId or not self._curId then
 		return true
 	end
 
-	return arg_8_2 < (arg_8_0._itemCountDict[arg_8_1] or 0) - arg_8_0._curId
+	local itemCount = self._itemCountDict[itemId] or 0
+	local canShowCount = itemCount - self._curId
+
+	return curCount < canShowCount
 end
 
-function var_0_0.selectIndex(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0:getSelectIdByIndex(arg_9_1)
+function Activity104EquipCountModel:selectIndex(tagIndex)
+	local id = self:getSelectIdByIndex(tagIndex)
 
-	if var_9_0 ~= nil then
-		arg_9_0._curId = var_9_0
+	if id ~= nil then
+		self._curId = id
 	end
 end
 
-function var_0_0.getCurId(arg_10_0)
-	return arg_10_0._curId
+function Activity104EquipCountModel:getCurId()
+	return self._curId
 end
 
-return var_0_0
+return Activity104EquipCountModel

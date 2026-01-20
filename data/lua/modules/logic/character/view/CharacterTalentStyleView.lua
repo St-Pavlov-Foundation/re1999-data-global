@@ -1,680 +1,694 @@
-﻿module("modules.logic.character.view.CharacterTalentStyleView", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterTalentStyleView.lua
 
-local var_0_0 = class("CharacterTalentStyleView", BaseView)
+module("modules.logic.character.view.CharacterTalentStyleView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg")
-	arg_1_0._simagefrontbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_frontbg")
-	arg_1_0._goinspirationItem = gohelper.findChild(arg_1_0.viewGO, "#go_inspirationItem")
-	arg_1_0._gocubeinfo = gohelper.findChild(arg_1_0.viewGO, "#go_cubeinfo")
-	arg_1_0._txtcompareStyleName = gohelper.findChildText(arg_1_0.viewGO, "#go_cubeinfo/panel/compare/title/name/#txt_compareStyleName")
-	arg_1_0._txtcompareLabel = gohelper.findChildText(arg_1_0.viewGO, "#go_cubeinfo/panel/compare/title/desc/go_career/#txt_compareLabel")
-	arg_1_0._gocurrency = gohelper.findChild(arg_1_0.viewGO, "#go_cubeinfo/panel/compare/#go_currency")
-	arg_1_0._txtcurStyleName = gohelper.findChildText(arg_1_0.viewGO, "#go_cubeinfo/panel/cur/title/name/#txt_curStyleName")
-	arg_1_0._txtcurLabel = gohelper.findChildText(arg_1_0.viewGO, "#go_cubeinfo/panel/cur/title/desc/go_career/#txt_curLabel")
-	arg_1_0._gostate = gohelper.findChild(arg_1_0.viewGO, "#go_cubeinfo/#go_state")
-	arg_1_0._btncompare = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_cubeinfo/#go_state/#btn_compare")
-	arg_1_0._btninteam = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_cubeinfo/#go_state/#btn_inteam")
-	arg_1_0._btnfold = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_cubeinfo/#go_state/#btn_fold")
-	arg_1_0._gorequest = gohelper.findChild(arg_1_0.viewGO, "go_unlock/#go_request")
-	arg_1_0._gocaneasycombinetip = gohelper.findChild(arg_1_0.viewGO, "go_unlock/layout/txt_onceCombine")
-	arg_1_0._btnunlock = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_unlock/layout/#btn_unlock")
-	arg_1_0._txtunlockpercent = gohelper.findChildText(arg_1_0.viewGO, "go_unlock/layout/#btn_unlock/#txt_unlockpercent")
-	arg_1_0._btnuse = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_unlock/#btn_use")
-	arg_1_0._gousing = gohelper.findChild(arg_1_0.viewGO, "go_unlock/#go_using")
-	arg_1_0._goreward = gohelper.findChild(arg_1_0.viewGO, "go_unlock/#go_reward")
-	arg_1_0._scrollstyle = gohelper.findChildScrollRect(arg_1_0.viewGO, "go_style/#scroll_style")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_style/#item_style/#btn_click")
-	arg_1_0._txtstyle = gohelper.findChildText(arg_1_0.viewGO, "go_style/#item_style/#txt_style")
-	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "go_style/#item_style/#go_select")
-	arg_1_0._gouse = gohelper.findChild(arg_1_0.viewGO, "go_style/#item_style/#go_use")
-	arg_1_0._gonew = gohelper.findChild(arg_1_0.viewGO, "go_style/#item_style/#go_new")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._gorightbtns = gohelper.findChild(arg_1_0.viewGO, "#go_rightbtns")
+local CharacterTalentStyleView = class("CharacterTalentStyleView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CharacterTalentStyleView:onInitView()
+	self._simagefullbg = gohelper.findChildSingleImage(self.viewGO, "#simage_fullbg")
+	self._simagefrontbg = gohelper.findChildSingleImage(self.viewGO, "#simage_frontbg")
+	self._goinspirationItem = gohelper.findChild(self.viewGO, "#go_inspirationItem")
+	self._gocubeinfo = gohelper.findChild(self.viewGO, "#go_cubeinfo")
+	self._txtcompareStyleName = gohelper.findChildText(self.viewGO, "#go_cubeinfo/panel/compare/title/name/#txt_compareStyleName")
+	self._txtcompareLabel = gohelper.findChildText(self.viewGO, "#go_cubeinfo/panel/compare/title/desc/go_career/#txt_compareLabel")
+	self._gocurrency = gohelper.findChild(self.viewGO, "#go_cubeinfo/panel/compare/#go_currency")
+	self._txtcurStyleName = gohelper.findChildText(self.viewGO, "#go_cubeinfo/panel/cur/title/name/#txt_curStyleName")
+	self._txtcurLabel = gohelper.findChildText(self.viewGO, "#go_cubeinfo/panel/cur/title/desc/go_career/#txt_curLabel")
+	self._gostate = gohelper.findChild(self.viewGO, "#go_cubeinfo/#go_state")
+	self._btncompare = gohelper.findChildButtonWithAudio(self.viewGO, "#go_cubeinfo/#go_state/#btn_compare")
+	self._btninteam = gohelper.findChildButtonWithAudio(self.viewGO, "#go_cubeinfo/#go_state/#btn_inteam")
+	self._btnfold = gohelper.findChildButtonWithAudio(self.viewGO, "#go_cubeinfo/#go_state/#btn_fold")
+	self._gorequest = gohelper.findChild(self.viewGO, "go_unlock/#go_request")
+	self._gocaneasycombinetip = gohelper.findChild(self.viewGO, "go_unlock/layout/txt_onceCombine")
+	self._btnunlock = gohelper.findChildButtonWithAudio(self.viewGO, "go_unlock/layout/#btn_unlock")
+	self._txtunlockpercent = gohelper.findChildText(self.viewGO, "go_unlock/layout/#btn_unlock/#txt_unlockpercent")
+	self._btnuse = gohelper.findChildButtonWithAudio(self.viewGO, "go_unlock/#btn_use")
+	self._gousing = gohelper.findChild(self.viewGO, "go_unlock/#go_using")
+	self._goreward = gohelper.findChild(self.viewGO, "go_unlock/#go_reward")
+	self._scrollstyle = gohelper.findChildScrollRect(self.viewGO, "go_style/#scroll_style")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "go_style/#item_style/#btn_click")
+	self._txtstyle = gohelper.findChildText(self.viewGO, "go_style/#item_style/#txt_style")
+	self._goselect = gohelper.findChild(self.viewGO, "go_style/#item_style/#go_select")
+	self._gouse = gohelper.findChild(self.viewGO, "go_style/#item_style/#go_use")
+	self._gonew = gohelper.findChild(self.viewGO, "go_style/#item_style/#go_new")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._gorightbtns = gohelper.findChild(self.viewGO, "#go_rightbtns")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btncompare:AddClickListener(arg_2_0._btncompareOnClick, arg_2_0)
-	arg_2_0._btninteam:AddClickListener(arg_2_0._btninteamOnClick, arg_2_0)
-	arg_2_0._btnfold:AddClickListener(arg_2_0._btnfoldOnClick, arg_2_0)
-	arg_2_0._btnunlock:AddClickListener(arg_2_0._btnunlockOnClick, arg_2_0)
-	arg_2_0._btnuse:AddClickListener(arg_2_0._btnuseOnClick, arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+function CharacterTalentStyleView:addEvents()
+	self._btncompare:AddClickListener(self._btncompareOnClick, self)
+	self._btninteam:AddClickListener(self._btninteamOnClick, self)
+	self._btnfold:AddClickListener(self._btnfoldOnClick, self)
+	self._btnunlock:AddClickListener(self._btnunlockOnClick, self)
+	self._btnuse:AddClickListener(self._btnuseOnClick, self)
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btncompare:RemoveClickListener()
-	arg_3_0._btninteam:RemoveClickListener()
-	arg_3_0._btnfold:RemoveClickListener()
-	arg_3_0._btnunlock:RemoveClickListener()
-	arg_3_0._btnuse:RemoveClickListener()
-	arg_3_0._btnclick:RemoveClickListener()
+function CharacterTalentStyleView:removeEvents()
+	self._btncompare:RemoveClickListener()
+	self._btninteam:RemoveClickListener()
+	self._btnfold:RemoveClickListener()
+	self._btnunlock:RemoveClickListener()
+	self._btnuse:RemoveClickListener()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0._btnStatOnClick(arg_4_0)
-	local var_4_0 = {
-		heroId = arg_4_0._heroId
+function CharacterTalentStyleView:_btnStatOnClick()
+	local params = {
+		heroId = self._heroId
 	}
 
-	CharacterController.instance:openCharacterTalentStatView(var_4_0)
+	CharacterController.instance:openCharacterTalentStatView(params)
 end
 
-function var_0_0._btnuseOnClick(arg_5_0)
-	local var_5_0 = arg_5_0:_getSelectCubeMo()
+function CharacterTalentStyleView:_btnuseOnClick()
+	local cubeMo = self:_getSelectCubeMo()
 
-	TalentStyleModel.instance:UseStyle(arg_5_0._heroId, var_5_0)
+	TalentStyleModel.instance:UseStyle(self._heroId, cubeMo)
 end
 
-function var_0_0._btncompareOnClick(arg_6_0)
-	arg_6_0:_showComparePanel()
-	arg_6_0:_showCurCubeAttr()
+function CharacterTalentStyleView:_btncompareOnClick()
+	self:_showComparePanel()
+	self:_showCurCubeAttr()
 end
 
-function var_0_0._btninteamOnClick(arg_7_0)
+function CharacterTalentStyleView:_btninteamOnClick()
 	return
 end
 
-function var_0_0._btnfoldOnClick(arg_8_0)
-	arg_8_0:_hideComparePanel()
-	arg_8_0:_showCurCubeAttr()
+function CharacterTalentStyleView:_btnfoldOnClick()
+	self:_hideComparePanel()
+	self:_showCurCubeAttr()
 end
 
-function var_0_0._btnclickOnClick(arg_9_0)
+function CharacterTalentStyleView:_btnclickOnClick()
 	return
 end
 
-function var_0_0._btnunlockOnClick(arg_10_0)
-	local var_10_0 = arg_10_0:_getSelectCubeMo()
-	local var_10_1, var_10_2, var_10_3, var_10_4 = arg_10_0:_isEnoughUnlock()
+function CharacterTalentStyleView:_btnunlockOnClick()
+	local cubeMo = self:_getSelectCubeMo()
+	local list, notEnoughItemName, enough, icon = self:_isEnoughUnlock()
 
-	if var_10_3 then
-		if not var_10_0._isUnlock then
-			var_10_0._isUnlock = true
+	if enough then
+		if not cubeMo._isUnlock then
+			cubeMo._isUnlock = true
 
-			HeroRpc.instance:setUnlockTalentStyleRequest(arg_10_0._heroId, var_10_0._styleId)
+			HeroRpc.instance:setUnlockTalentStyleRequest(self._heroId, cubeMo._styleId)
 		end
-	elseif arg_10_0._canEasyCombine then
-		PopupCacheModel.instance:setViewIgnoreGetPropView(arg_10_0.viewName, true, MaterialEnum.GetApproach.RoomProductChange)
-		RoomProductionHelper.openRoomFormulaMsgBoxView(arg_10_0._easyCombineTable, arg_10_0._lackedItemDataList, RoomProductLineEnum.Line.Spring, nil, nil, arg_10_0._onEasyCombineFinished, arg_10_0)
+	elseif self._canEasyCombine then
+		PopupCacheModel.instance:setViewIgnoreGetPropView(self.viewName, true, MaterialEnum.GetApproach.RoomProductChange)
+		RoomProductionHelper.openRoomFormulaMsgBoxView(self._easyCombineTable, self._lackedItemDataList, RoomProductLineEnum.Line.Spring, nil, nil, self._onEasyCombineFinished, self)
 
 		return
 	else
-		GameFacade.showToastWithIcon(ToastEnum.NotEnoughId, var_10_4, var_10_2)
+		GameFacade.showToastWithIcon(ToastEnum.NotEnoughId, icon, notEnoughItemName)
 	end
 end
 
-function var_0_0._onEasyCombineFinished(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	PopupCacheModel.instance:setViewIgnoreGetPropView(arg_11_0.viewName, false)
+function CharacterTalentStyleView:_onEasyCombineFinished(cmd, resultCode, msg)
+	PopupCacheModel.instance:setViewIgnoreGetPropView(self.viewName, false)
 
-	if arg_11_2 ~= 0 then
+	if resultCode ~= 0 then
 		return
 	end
 
-	arg_11_0:_btnunlockOnClick()
+	self:_btnunlockOnClick()
 end
 
-function var_0_0._addEvents(arg_12_0)
-	arg_12_0:addEventCb(CharacterController.instance, CharacterEvent.onUnlockTalentStyleReply, arg_12_0._onUnlockTalentStyleReply, arg_12_0)
-	arg_12_0:addEventCb(CharacterController.instance, CharacterEvent.onUseTalentStyleReply, arg_12_0._onUseTalentStyleReply, arg_12_0)
-	arg_12_0:addEventCb(CharacterController.instance, CharacterEvent.onSelectTalentStyle, arg_12_0._onSelectTalentStyle, arg_12_0)
-	arg_12_0:addEventCb(CharacterController.instance, CharacterEvent.onHeroTalentStyleStatReply, arg_12_0._onHeroTalentStyleStatReply, arg_12_0)
-	arg_12_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_12_0.currencyChangeEvent, arg_12_0)
-	arg_12_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_12_0.currencyChangeEvent, arg_12_0)
-	arg_12_0._scrollstyle:AddOnValueChanged(arg_12_0._onScrollValueChanged, arg_12_0)
+function CharacterTalentStyleView:_addEvents()
+	self:addEventCb(CharacterController.instance, CharacterEvent.onUnlockTalentStyleReply, self._onUnlockTalentStyleReply, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.onUseTalentStyleReply, self._onUseTalentStyleReply, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.onSelectTalentStyle, self._onSelectTalentStyle, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.onHeroTalentStyleStatReply, self._onHeroTalentStyleStatReply, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self.currencyChangeEvent, self)
+	self:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self.currencyChangeEvent, self)
+	self._scrollstyle:AddOnValueChanged(self._onScrollValueChanged, self)
 
-	local var_12_0 = arg_12_0:_getNavigateView()
+	local nav = self:_getNavigateView()
 
-	if var_12_0 then
-		var_12_0:setOverrideStat(arg_12_0._btnStatOnClick, arg_12_0)
+	if nav then
+		nav:setOverrideStat(self._btnStatOnClick, self)
 	end
 end
 
-function var_0_0._removeEvents(arg_13_0)
-	arg_13_0:removeEventCb(CharacterController.instance, CharacterEvent.onUnlockTalentStyleReply, arg_13_0._onUnlockTalentStyleReply, arg_13_0)
-	arg_13_0:removeEventCb(CharacterController.instance, CharacterEvent.onUseTalentStyleReply, arg_13_0._onUseTalentStyleReply, arg_13_0)
-	arg_13_0:removeEventCb(CharacterController.instance, CharacterEvent.onSelectTalentStyle, arg_13_0._onSelectTalentStyle, arg_13_0)
-	arg_13_0:removeEventCb(CharacterController.instance, CharacterEvent.onHeroTalentStyleStatReply, arg_13_0._onHeroTalentStyleStatReply, arg_13_0)
-	arg_13_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_13_0.currencyChangeEvent, arg_13_0)
-	arg_13_0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_13_0.currencyChangeEvent, arg_13_0)
-	arg_13_0._animEvent:RemoveAllEventListener()
-	arg_13_0._scrollstyle:RemoveOnValueChanged()
+function CharacterTalentStyleView:_removeEvents()
+	self:removeEventCb(CharacterController.instance, CharacterEvent.onUnlockTalentStyleReply, self._onUnlockTalentStyleReply, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.onUseTalentStyleReply, self._onUseTalentStyleReply, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.onSelectTalentStyle, self._onSelectTalentStyle, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.onHeroTalentStyleStatReply, self._onHeroTalentStyleStatReply, self)
+	self:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self.currencyChangeEvent, self)
+	self:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self.currencyChangeEvent, self)
+	self._animEvent:RemoveAllEventListener()
+	self._scrollstyle:RemoveOnValueChanged()
 end
 
-function var_0_0._editableInitView(arg_14_0)
-	local var_14_0 = gohelper.findChild(arg_14_0.viewGO, "#go_cubeinfo/panel")
+function CharacterTalentStyleView:_editableInitView()
+	local goInfo = gohelper.findChild(self.viewGO, "#go_cubeinfo/panel")
 
-	arg_14_0._attrItem = gohelper.findChild(var_14_0, "attributeItem")
-	arg_14_0._curAttrPanel = gohelper.findChild(var_14_0, "cur/panel")
-	arg_14_0._compareAttrPanel = gohelper.findChild(var_14_0, "compare/panel")
-	arg_14_0._objCompareAttrPanel = gohelper.findChild(var_14_0, "compare")
-	arg_14_0._itemCircle = gohelper.findChild(arg_14_0.viewGO, "#go_inspirationItem/item/slot/dec1")
-	arg_14_0._txtunlock = gohelper.findChildText(arg_14_0.viewGO, "go_unlock/#btn_unlock/txt")
-	arg_14_0._gounlock = gohelper.findChild(arg_14_0.viewGO, "go_unlock")
-	arg_14_0._goitemUnlock = gohelper.findChild(arg_14_0.viewGO, "#go_inspirationItem/item/#unlock")
-	arg_14_0._goitemUse = gohelper.findChild(arg_14_0.viewGO, "#go_inspirationItem/item/#use")
-	arg_14_0._animUnlock = SLFramework.AnimatorPlayer.Get(arg_14_0._gounlock)
-	arg_14_0._requestCanvas = arg_14_0._gorequest:GetComponent(typeof(UnityEngine.CanvasGroup))
-	arg_14_0._txtusing = gohelper.findChildText(arg_14_0.viewGO, "go_unlock/#go_using/txt_using")
-	arg_14_0._txtuse = gohelper.findChildText(arg_14_0.viewGO, "go_unlock/#btn_use/txt")
+	self._attrItem = gohelper.findChild(goInfo, "attributeItem")
+	self._curAttrPanel = gohelper.findChild(goInfo, "cur/panel")
+	self._compareAttrPanel = gohelper.findChild(goInfo, "compare/panel")
+	self._objCompareAttrPanel = gohelper.findChild(goInfo, "compare")
+	self._itemCircle = gohelper.findChild(self.viewGO, "#go_inspirationItem/item/slot/dec1")
+	self._txtunlock = gohelper.findChildText(self.viewGO, "go_unlock/#btn_unlock/txt")
+	self._gounlock = gohelper.findChild(self.viewGO, "go_unlock")
+	self._goitemUnlock = gohelper.findChild(self.viewGO, "#go_inspirationItem/item/#unlock")
+	self._goitemUse = gohelper.findChild(self.viewGO, "#go_inspirationItem/item/#use")
+	self._animUnlock = SLFramework.AnimatorPlayer.Get(self._gounlock)
+	self._requestCanvas = self._gorequest:GetComponent(typeof(UnityEngine.CanvasGroup))
+	self._txtusing = gohelper.findChildText(self.viewGO, "go_unlock/#go_using/txt_using")
+	self._txtuse = gohelper.findChildText(self.viewGO, "go_unlock/#btn_use/txt")
 
-	arg_14_0:_hideItemUnlock()
-	arg_14_0:_hideItemUse()
-	gohelper.setActive(arg_14_0._attrItem, false)
+	self:_hideItemUnlock()
+	self:_hideItemUse()
+	gohelper.setActive(self._attrItem, false)
 end
 
-function var_0_0.onUpdateParam(arg_15_0)
+function CharacterTalentStyleView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_16_0)
-	arg_16_0:_addEvents()
+function CharacterTalentStyleView:onOpen()
+	self:_addEvents()
 
-	arg_16_0._isHideNewTag = nil
-	arg_16_0._attrItems = arg_16_0:getUserDataTb_()
+	self._isHideNewTag = nil
+	self._attrItems = self:getUserDataTb_()
 
 	TalentStyleModel.instance:setNewUnlockStyle()
 	TalentStyleModel.instance:setNewSelectStyle()
 
-	arg_16_0._animPlayer = SLFramework.AnimatorPlayer.Get(arg_16_0.viewGO)
-	arg_16_0._animEvent = arg_16_0.viewGO:GetComponent(typeof(ZProj.AnimationEventWrap))
+	self._animPlayer = SLFramework.AnimatorPlayer.Get(self.viewGO)
+	self._animEvent = self.viewGO:GetComponent(typeof(ZProj.AnimationEventWrap))
 
-	arg_16_0._animEvent:AddEventListener("switch", arg_16_0._refreshView, arg_16_0)
+	self._animEvent:AddEventListener("switch", self._refreshView, self)
 
-	if not arg_16_0.viewParam.isJustOpen then
-		arg_16_0._animPlayer:Play("open", nil, arg_16_0)
+	if not self.viewParam.isJustOpen then
+		self._animPlayer:Play("open", nil, self)
 	end
 
-	arg_16_0._heroId = arg_16_0.viewParam.hero_id
-	arg_16_0._heroMo = HeroModel.instance:getByHeroId(arg_16_0._heroId)
+	self._heroId = self.viewParam.hero_id
+	self._heroMo = HeroModel.instance:getByHeroId(self._heroId)
 
-	local var_16_0 = luaLang("talent_style_title_using_cn_" .. arg_16_0._heroMo:getTalentTxtByHeroType())
-	local var_16_1 = luaLang("talent_style_title_use_cn_" .. arg_16_0._heroMo:getTalentTxtByHeroType())
+	local usingStr = luaLang("talent_style_title_using_cn_" .. self._heroMo:getTalentTxtByHeroType())
+	local useStr = luaLang("talent_style_title_use_cn_" .. self._heroMo:getTalentTxtByHeroType())
 
-	arg_16_0._txtusing.text = var_16_0
-	arg_16_0._txtuse.text = var_16_1
+	self._txtusing.text = usingStr
+	self._txtuse.text = useStr
 
-	TalentStyleModel.instance:openView(arg_16_0._heroId)
-	arg_16_0:_initInspirationItem()
+	TalentStyleModel.instance:openView(self._heroId)
+	self:_initInspirationItem()
 
-	arg_16_0._selectCubeMo = TalentStyleModel.instance:getSelectCubeMo(arg_16_0._heroId)
+	self._selectCubeMo = TalentStyleModel.instance:getSelectCubeMo(self._heroId)
 
-	arg_16_0:_hideComparePanel()
-	arg_16_0:_refreshView()
+	self:_hideComparePanel()
+	self:_refreshView()
 
-	local var_16_2 = arg_16_0:_getNavigateView()
+	local nav = self:_getNavigateView()
 
-	if var_16_2 then
-		var_16_2:showStatBtn(false)
+	if nav then
+		nav:showStatBtn(false)
 	end
 
-	HeroRpc.instance:setTalentStyleReadRequest(arg_16_0._heroId)
-	HeroRpc.instance:setHeroTalentStyleStatRequest(arg_16_0._heroId)
+	HeroRpc.instance:setTalentStyleReadRequest(self._heroId)
+	HeroRpc.instance:setHeroTalentStyleStatRequest(self._heroId)
 end
 
-function var_0_0.onClose(arg_17_0)
+function CharacterTalentStyleView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_18_0)
-	arg_18_0:_removeEvents()
-	TaskDispatcher.cancelTask(arg_18_0._hideItemUse, arg_18_0)
-	TaskDispatcher.cancelTask(arg_18_0._hideItemUnlock, arg_18_0)
-	TaskDispatcher.cancelTask(arg_18_0._hideNewTag, arg_18_0)
+function CharacterTalentStyleView:onDestroyView()
+	self:_removeEvents()
+	TaskDispatcher.cancelTask(self._hideItemUse, self)
+	TaskDispatcher.cancelTask(self._hideItemUnlock, self)
+	TaskDispatcher.cancelTask(self._hideNewTag, self)
 end
 
-function var_0_0._refreshView(arg_19_0)
-	TalentStyleListModel.instance:refreshData(arg_19_0._heroId)
-	arg_19_0:_refreshAttribute()
-	arg_19_0:_refreshUnlockItem()
-	arg_19_0:_refreshBtn()
-	arg_19_0:_refreshAttrCompareBtn()
-	arg_19_0:_refreshInspirationItem()
+function CharacterTalentStyleView:_refreshView()
+	TalentStyleListModel.instance:refreshData(self._heroId)
+	self:_refreshAttribute()
+	self:_refreshUnlockItem()
+	self:_refreshBtn()
+	self:_refreshAttrCompareBtn()
+	self:_refreshInspirationItem()
 end
 
-function var_0_0._onScrollValueChanged(arg_20_0)
-	if arg_20_0._isHideNewTag then
+function CharacterTalentStyleView:_onScrollValueChanged()
+	if self._isHideNewTag then
 		return
 	end
 
-	arg_20_0._isHideNewTag = true
+	self._isHideNewTag = true
 
-	TaskDispatcher.runDelay(arg_20_0._hideNewTag, arg_20_0, 0.2)
+	TaskDispatcher.runDelay(self._hideNewTag, self, 0.2)
 end
 
-function var_0_0._hideNewTag(arg_21_0)
-	TalentStyleModel.instance:hideNewState(arg_21_0._heroId)
+function CharacterTalentStyleView:_hideNewTag()
+	TalentStyleModel.instance:hideNewState(self._heroId)
 end
 
-function var_0_0._initInspirationItem(arg_22_0)
-	local var_22_0 = TalentStyleModel.instance:getHeroMainCubeMo(arg_22_0._heroId)
-	local var_22_1 = gohelper.findChild(arg_22_0._goinspirationItem, "item")
+function CharacterTalentStyleView:_initInspirationItem()
+	local mainCubeMo = TalentStyleModel.instance:getHeroMainCubeMo(self._heroId)
+	local item = gohelper.findChild(self._goinspirationItem, "item")
 
-	arg_22_0._slot = gohelper.findChildImage(var_22_1, "slot")
-	arg_22_0._slotAnim = arg_22_0._slot:GetComponent(typeof(UnityEngine.Animator))
-	arg_22_0._cubeIcon = gohelper.findChildImage(var_22_1, "slot/icon")
-	arg_22_0._cubeglow = gohelper.findChildImage(var_22_1, "slot/glow")
+	self._slot = gohelper.findChildImage(item, "slot")
+	self._slotAnim = self._slot:GetComponent(typeof(UnityEngine.Animator))
+	self._cubeIcon = gohelper.findChildImage(item, "slot/icon")
+	self._cubeglow = gohelper.findChildImage(item, "slot/glow")
 
-	local var_22_2 = gohelper.findChildText(var_22_1, "level/level")
-	local var_22_3 = HeroResonanceConfig.instance:getCubeConfig(var_22_0.id)
-	local var_22_4 = string.split(var_22_3.icon, "_")
+	local levelTxt = gohelper.findChildText(item, "level/level")
+	local co = HeroResonanceConfig.instance:getCubeConfig(mainCubeMo.id)
+	local temp_attr = string.split(co.icon, "_")
 
-	arg_22_0._slotSprite = "gz_" .. var_22_4[#var_22_4]
-	var_22_2.text = "Lv." .. var_22_0.level
+	self._slotSprite = "gz_" .. temp_attr[#temp_attr]
+	levelTxt.text = "Lv." .. mainCubeMo.level
 end
 
-local var_0_1 = Color.white
-local var_0_2 = Color(1, 1, 1, 0.5)
+local normalAlpha = Color.white
+local translucent = Color(1, 1, 1, 0.5)
 
-function var_0_0._refreshInspirationItem(arg_23_0)
-	local var_23_0 = TalentStyleModel.instance:getSelectCubeMo(arg_23_0._heroId)
-	local var_23_1 = var_23_0._replaceId
-	local var_23_2 = arg_23_0._heroMo.talentCubeInfos.own_main_cube_id
-	local var_23_3 = HeroResonanceConfig.instance:getCubeConfig(var_23_1)
-	local var_23_4 = arg_23_0._slotSprite
-	local var_23_5 = 1.7
+function CharacterTalentStyleView:_refreshInspirationItem()
+	local cubeMo = TalentStyleModel.instance:getSelectCubeMo(self._heroId)
+	local cubeId = cubeMo._replaceId
+	local mianCubeId = self._heroMo.talentCubeInfos.own_main_cube_id
+	local co = HeroResonanceConfig.instance:getCubeConfig(cubeId)
+	local _slotSpr = self._slotSprite
+	local scale = 1.7
 
-	if var_23_3 then
-		local var_23_6 = var_23_3.icon
-		local var_23_7 = var_23_6
+	if co then
+		local icon = co.icon
+		local iconmk = icon
 
-		if var_23_2 ~= var_23_1 and not string.nilorempty(var_23_6) then
-			var_23_7 = "mk_" .. var_23_6
-			var_23_4 = arg_23_0._slotSprite .. "_2"
+		if mianCubeId ~= cubeId and not string.nilorempty(icon) then
+			iconmk = "mk_" .. icon
+			_slotSpr = self._slotSprite .. "_2"
 		end
 
-		UISpriteSetMgr.instance:setCharacterTalentSprite(arg_23_0._cubeIcon, var_23_7, true)
-		UISpriteSetMgr.instance:setCharacterTalentSprite(arg_23_0._cubeglow, var_23_7, true)
-		UISpriteSetMgr.instance:setCharacterTalentSprite(arg_23_0._slot, var_23_4, true)
-		transformhelper.setLocalScale(arg_23_0._slot.transform, var_23_5, var_23_5, var_23_5)
+		UISpriteSetMgr.instance:setCharacterTalentSprite(self._cubeIcon, iconmk, true)
+		UISpriteSetMgr.instance:setCharacterTalentSprite(self._cubeglow, iconmk, true)
+		UISpriteSetMgr.instance:setCharacterTalentSprite(self._slot, _slotSpr, true)
+		transformhelper.setLocalScale(self._slot.transform, scale, scale, scale)
 	end
 
-	local var_23_8 = var_23_0._isUnlock
-	local var_23_9 = var_23_0._isUse
+	local isUnlock = cubeMo._isUnlock
+	local isUse = cubeMo._isUse
 
-	gohelper.setActive(arg_23_0._itemCircle, var_23_9)
+	gohelper.setActive(self._itemCircle, isUse)
 
-	arg_23_0._cubeIcon.enabled = var_23_9
-	arg_23_0._slotAnim.enabled = var_23_8
+	self._cubeIcon.enabled = isUse
+	self._slotAnim.enabled = isUnlock
 
-	arg_23_0._slotAnim:Play("slot_loop", 0, 0)
+	self._slotAnim:Play("slot_loop", 0, 0)
 
-	arg_23_0._slot.color = var_23_8 and var_0_1 or var_0_2
-	arg_23_0._cubeglow.color = var_23_8 and var_0_1 or var_0_2
+	self._slot.color = isUnlock and normalAlpha or translucent
+	self._cubeglow.color = isUnlock and normalAlpha or translucent
 
-	gohelper.setActive(arg_23_0._cubeIcon.gameObject, var_23_8)
+	gohelper.setActive(self._cubeIcon.gameObject, isUnlock)
 end
 
-function var_0_0._getAttributeDataList(arg_24_0, arg_24_1)
-	if not arg_24_0._cubeAttrDataList then
-		arg_24_0._cubeAttrDataList = {}
+function CharacterTalentStyleView:_getAttributeDataList(cubeId)
+	if not self._cubeAttrDataList then
+		self._cubeAttrDataList = {}
 	end
 
-	if arg_24_0._cubeAttrDataList[arg_24_1] then
-		return arg_24_0._cubeAttrDataList[arg_24_1]
+	if self._cubeAttrDataList[cubeId] then
+		return self._cubeAttrDataList[cubeId]
 	end
 
-	local var_24_0 = TalentStyleModel.instance:getHeroMainCubeMo(arg_24_0._heroId).level
-	local var_24_1 = HeroConfig.instance:getTalentCubeAttrConfig(arg_24_1, var_24_0)
-	local var_24_2 = {}
+	local cubeMo = TalentStyleModel.instance:getHeroMainCubeMo(self._heroId)
+	local level = cubeMo.level
+	local cube_attr_config = HeroConfig.instance:getTalentCubeAttrConfig(cubeId, level)
+	local attrDataList = {}
 
-	arg_24_0._heroMo:getTalentAttrGainSingle(arg_24_1, var_24_2, nil, nil, var_24_0)
+	self._heroMo:getTalentAttrGainSingle(cubeId, attrDataList, nil, nil, level)
 
-	local var_24_3 = {}
+	local temp_list = {}
 
-	for iter_24_0, iter_24_1 in pairs(var_24_2) do
-		table.insert(var_24_3, {
-			key = iter_24_0,
-			value = iter_24_1,
-			is_special = var_24_1.calculateType == 1,
-			config = var_24_1
+	for k, v in pairs(attrDataList) do
+		table.insert(temp_list, {
+			key = k,
+			value = v,
+			is_special = cube_attr_config.calculateType == 1,
+			config = cube_attr_config
 		})
 	end
 
-	table.sort(var_24_3, arg_24_0.sortAttr)
+	table.sort(temp_list, self.sortAttr)
 
-	arg_24_0._cubeAttrDataList[arg_24_1] = var_24_3
+	self._cubeAttrDataList[cubeId] = temp_list
 
-	return var_24_3
+	return temp_list
 end
 
-function var_0_0.sortAttr(arg_25_0, arg_25_1)
-	if arg_25_0.isDelete ~= arg_25_1.isDelete then
-		return arg_25_1.isDelete
+function CharacterTalentStyleView.sortAttr(item1, item2)
+	if item1.isDelete ~= item2.isDelete then
+		return item2.isDelete
 	end
 
-	return HeroConfig.instance:getIDByAttrType(arg_25_0.key) < HeroConfig.instance:getIDByAttrType(arg_25_1.key)
+	return HeroConfig.instance:getIDByAttrType(item1.key) < HeroConfig.instance:getIDByAttrType(item2.key)
 end
 
-function var_0_0._showComparePanel(arg_26_0)
-	local var_26_0 = TalentStyleModel.instance:getHeroUseCubeId(arg_26_0._heroId)
-	local var_26_1 = arg_26_0:_getAttributeDataList(var_26_0)
+function CharacterTalentStyleView:_showComparePanel()
+	local mainId = TalentStyleModel.instance:getHeroUseCubeId(self._heroId)
+	local dataList = self:_getAttributeDataList(mainId)
 
-	arg_26_0:_showAttrItem(2, var_26_1, arg_26_0._compareAttrPanel)
-	gohelper.setActive(arg_26_0._objCompareAttrPanel, true)
+	self:_showAttrItem(2, dataList, self._compareAttrPanel)
+	gohelper.setActive(self._objCompareAttrPanel, true)
 
-	local var_26_2, var_26_3 = TalentStyleModel.instance:getHeroUseCubeMo(arg_26_0._heroId):getStyleTag()
+	local cubeMo = TalentStyleModel.instance:getHeroUseCubeMo(self._heroId)
+	local name, tag = cubeMo:getStyleTag()
 
-	arg_26_0._txtcompareStyleName.text = var_26_2
-	arg_26_0._txtcompareLabel.text = var_26_3
+	self._txtcompareStyleName.text = name
+	self._txtcompareLabel.text = tag
 
-	arg_26_0:_refreshAttrCompareBtn()
+	self:_refreshAttrCompareBtn()
 end
 
-function var_0_0._hideComparePanel(arg_27_0)
-	gohelper.setActive(arg_27_0._objCompareAttrPanel, false)
-	arg_27_0:_refreshAttrCompareBtn()
+function CharacterTalentStyleView:_hideComparePanel()
+	gohelper.setActive(self._objCompareAttrPanel, false)
+	self:_refreshAttrCompareBtn()
 end
 
-function var_0_0._refreshAttrCompareBtn(arg_28_0)
-	local var_28_0 = TalentStyleModel.instance:getSelectStyleId(arg_28_0._heroId) == TalentStyleModel.instance:getHeroUseCubeStyleId(arg_28_0._heroId)
-	local var_28_1 = arg_28_0._objCompareAttrPanel.gameObject.activeSelf
+function CharacterTalentStyleView:_refreshAttrCompareBtn()
+	local selectId = TalentStyleModel.instance:getSelectStyleId(self._heroId)
+	local useId = TalentStyleModel.instance:getHeroUseCubeStyleId(self._heroId)
+	local inteam = selectId == useId
+	local isShow = self._objCompareAttrPanel.gameObject.activeSelf
 
-	if var_28_0 and var_28_1 then
-		gohelper.setActive(arg_28_0._objCompareAttrPanel, false)
+	if inteam and isShow then
+		gohelper.setActive(self._objCompareAttrPanel, false)
 
-		var_28_1 = false
+		isShow = false
 	end
 
-	gohelper.setActive(arg_28_0._gounlock, not var_28_1)
-	gohelper.setActive(arg_28_0._gorightbtns, not var_28_1)
-	gohelper.setActive(arg_28_0._btncompare.gameObject, not var_28_0 and not var_28_1)
-	gohelper.setActive(arg_28_0._btninteam.gameObject, var_28_0)
-	gohelper.setActive(arg_28_0._btnfold.gameObject, var_28_1)
+	gohelper.setActive(self._gounlock, not isShow)
+	gohelper.setActive(self._gorightbtns, not isShow)
+	gohelper.setActive(self._btncompare.gameObject, not inteam and not isShow)
+	gohelper.setActive(self._btninteam.gameObject, inteam)
+	gohelper.setActive(self._btnfold.gameObject, isShow)
 end
 
-function var_0_0._getCurAttributeDataList(arg_29_0, arg_29_1)
-	local var_29_0 = arg_29_0:_getAttributeDataList(arg_29_1)
-	local var_29_1 = TalentStyleModel.instance:getHeroUseCubeId(arg_29_0._heroId)
-	local var_29_2 = tabletool.copy(var_29_0)
+function CharacterTalentStyleView:_getCurAttributeDataList(curId)
+	local dataList = self:_getAttributeDataList(curId)
+	local mainId = TalentStyleModel.instance:getHeroUseCubeId(self._heroId)
+	local showDataList = tabletool.copy(dataList)
 
-	if var_29_1 ~= arg_29_1 and arg_29_0._objCompareAttrPanel.gameObject.activeSelf then
-		local var_29_3 = arg_29_0:_getAttributeDataList(var_29_1)
+	if mainId ~= curId and self._objCompareAttrPanel.gameObject.activeSelf then
+		local mainCubeDataList = self:_getAttributeDataList(mainId)
 
-		for iter_29_0, iter_29_1 in ipairs(var_29_0) do
-			local var_29_4 = arg_29_0:getMainCubeAttrDataByType(var_29_3, iter_29_1.key)
+		for _, data in ipairs(dataList) do
+			local mainData = self:getMainCubeAttrDataByType(mainCubeDataList, data.key)
 
-			if var_29_4 then
-				if iter_29_1.value ~= var_29_4.value then
-					iter_29_1.changeNum = iter_29_1.value - var_29_4.value
+			if mainData then
+				if data.value ~= mainData.value then
+					data.changeNum = data.value - mainData.value
 				end
 			else
-				iter_29_1.isNew = true
+				data.isNew = true
 			end
 		end
 
-		for iter_29_2, iter_29_3 in ipairs(var_29_3) do
-			if not arg_29_0:getMainCubeAttrDataByType(var_29_0, iter_29_3.key) then
-				local var_29_5 = tabletool.copy(iter_29_3)
+		for _, mainData in ipairs(mainCubeDataList) do
+			local data = self:getMainCubeAttrDataByType(dataList, mainData.key)
 
-				var_29_5.isDelete = true
+			if not data then
+				local temp = tabletool.copy(mainData)
 
-				table.insert(var_29_2, var_29_5)
+				temp.isDelete = true
+
+				table.insert(showDataList, temp)
 			end
 		end
 	else
-		for iter_29_4, iter_29_5 in ipairs(var_29_0) do
-			iter_29_5.changeNum = nil
-			iter_29_5.isNew = nil
-			iter_29_5.isDelete = nil
+		for _, data in ipairs(dataList) do
+			data.changeNum = nil
+			data.isNew = nil
+			data.isDelete = nil
 		end
 	end
 
-	table.sort(var_29_2, arg_29_0.sortAttr)
+	table.sort(showDataList, self.sortAttr)
 
-	return var_29_2
+	return showDataList
 end
 
-function var_0_0.getMainCubeAttrDataByType(arg_30_0, arg_30_1, arg_30_2)
-	for iter_30_0, iter_30_1 in ipairs(arg_30_1) do
-		if iter_30_1.key == arg_30_2 then
-			return iter_30_1
+function CharacterTalentStyleView:getMainCubeAttrDataByType(mainCubeDataList, type)
+	for _, mainData in ipairs(mainCubeDataList) do
+		if mainData.key == type then
+			return mainData
 		end
 	end
 end
 
-function var_0_0._getAttrItem(arg_31_0, arg_31_1, arg_31_2, arg_31_3)
-	if not arg_31_0._attrItems[arg_31_1] then
-		local var_31_0 = arg_31_0:getUserDataTb_()
+function CharacterTalentStyleView:_getAttrItem(type, index, parentObj)
+	local items = self._attrItems[type]
 
-		arg_31_0._attrItems[arg_31_1] = var_31_0
+	if not items then
+		items = self:getUserDataTb_()
+		self._attrItems[type] = items
 	end
 
-	local var_31_1 = arg_31_0._attrItems[arg_31_1][arg_31_2]
+	local item = self._attrItems[type][index]
 
-	if not var_31_1 then
-		local var_31_2 = gohelper.clone(arg_31_0._attrItem, arg_31_3, "item_" .. arg_31_2)
+	if not item then
+		local go = gohelper.clone(self._attrItem, parentObj, "item_" .. index)
 
-		var_31_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_31_2, CharacterTalentStyleAttrItem)
-		arg_31_0._attrItems[arg_31_1][arg_31_2] = var_31_1
+		item = MonoHelper.addNoUpdateLuaComOnceToGo(go, CharacterTalentStyleAttrItem)
+		self._attrItems[type][index] = item
 	end
 
-	return var_31_1
+	return item
 end
 
-function var_0_0._showAttrItem(arg_32_0, arg_32_1, arg_32_2, arg_32_3)
-	for iter_32_0, iter_32_1 in ipairs(arg_32_2) do
-		arg_32_0:_getAttrItem(arg_32_1, iter_32_0, arg_32_3):onRefreshMo(iter_32_0, iter_32_1)
+function CharacterTalentStyleView:_showAttrItem(type, dataList, parentObj)
+	for i, data in ipairs(dataList) do
+		local item = self:_getAttrItem(type, i, parentObj)
+
+		item:onRefreshMo(i, data)
 	end
 
-	for iter_32_2 = 1, #arg_32_0._attrItems[arg_32_1] do
-		local var_32_0 = arg_32_0._attrItems[arg_32_1][iter_32_2]
+	for i = 1, #self._attrItems[type] do
+		local item = self._attrItems[type][i]
 
-		gohelper.setActive(var_32_0.viewGO, iter_32_2 <= #arg_32_2)
+		gohelper.setActive(item.viewGO, i <= #dataList)
 	end
 end
 
-function var_0_0._refreshAttribute(arg_33_0)
-	local var_33_0 = arg_33_0:_getSelectCubeMo()
+function CharacterTalentStyleView:_refreshAttribute()
+	local cubeMo = self:_getSelectCubeMo()
 
-	arg_33_0:_showCurCubeAttr()
+	self:_showCurCubeAttr()
 
-	local var_33_1, var_33_2 = var_33_0:getStyleTag()
+	local name, tag = cubeMo:getStyleTag()
 
-	arg_33_0._txtcurStyleName.text = var_33_1
-	arg_33_0._txtcurLabel.text = var_33_2
+	self._txtcurStyleName.text = name
+	self._txtcurLabel.text = tag
 end
 
-function var_0_0._showCurCubeAttr(arg_34_0)
-	local var_34_0 = arg_34_0:_getSelectCubeMo()._replaceId
-	local var_34_1 = arg_34_0:_getCurAttributeDataList(var_34_0)
+function CharacterTalentStyleView:_showCurCubeAttr()
+	local cubeMo = self:_getSelectCubeMo()
+	local selectId = cubeMo._replaceId
+	local dataList = self:_getCurAttributeDataList(selectId)
 
-	arg_34_0:_showAttrItem(1, var_34_1, arg_34_0._curAttrPanel)
+	self:_showAttrItem(1, dataList, self._curAttrPanel)
 end
 
-function var_0_0._refreshBtn(arg_35_0)
-	local var_35_0 = arg_35_0:_getSelectCubeMo()
-	local var_35_1 = var_35_0._isUnlock
-	local var_35_2 = var_35_1 and var_35_0._isUse
+function CharacterTalentStyleView:_refreshBtn()
+	local mo = self:_getSelectCubeMo()
+	local isUnlock = mo._isUnlock
+	local use = isUnlock and mo._isUse
 
-	gohelper.setActive(arg_35_0._btnunlock.gameObject, not var_35_1)
-	gohelper.setActive(arg_35_0._btnuse.gameObject, var_35_1 and not var_35_2)
-	gohelper.setActive(arg_35_0._gousing.gameObject, var_35_1 and var_35_2)
+	gohelper.setActive(self._btnunlock.gameObject, not isUnlock)
+	gohelper.setActive(self._btnuse.gameObject, isUnlock and not use)
+	gohelper.setActive(self._gousing.gameObject, isUnlock and use)
 
-	if not var_35_1 then
-		local var_35_3, var_35_4, var_35_5, var_35_6 = arg_35_0:_isEnoughUnlock()
+	if not isUnlock then
+		local _, _, enough, _ = self:_isEnoughUnlock()
 
-		ZProj.UGUIHelper.SetGrayscale(arg_35_0._btnunlock.gameObject, not var_35_5 and not arg_35_0._canEasyCombine)
+		ZProj.UGUIHelper.SetGrayscale(self._btnunlock.gameObject, not enough and not self._canEasyCombine)
 
-		if var_35_0:isHotUnlock() then
-			local var_35_7 = luaLang("character_talentstyle_unlockpercent")
-			local var_35_8 = string.format("%.1f", var_35_0:getUnlockPercent() * 0.01)
+		if mo:isHotUnlock() then
+			local lang = luaLang("character_talentstyle_unlockpercent")
+			local percent = string.format("%.1f", mo:getUnlockPercent() * 0.01)
 
-			arg_35_0._txtunlockpercent.text = GameUtil.getSubPlaceholderLuaLangOneParam(var_35_7, var_35_8)
+			self._txtunlockpercent.text = GameUtil.getSubPlaceholderLuaLangOneParam(lang, percent)
 		end
 
-		gohelper.setActive(arg_35_0._txtunlockpercent.gameObject, var_35_0:isHotUnlock())
+		gohelper.setActive(self._txtunlockpercent.gameObject, mo:isHotUnlock())
 	end
 
-	gohelper.setActive(arg_35_0._gorequest, not var_35_1)
+	gohelper.setActive(self._gorequest, not isUnlock)
 
-	arg_35_0._requestCanvas.alpha = var_35_1 and 0 or 1
+	self._requestCanvas.alpha = isUnlock and 0 or 1
 end
 
-function var_0_0._refreshUnlockItem(arg_36_0)
-	local var_36_0 = arg_36_0:_getSelectCubeMo()
+function CharacterTalentStyleView:_refreshUnlockItem()
+	local cubeMo = self:_getSelectCubeMo()
 
-	arg_36_0._canEasyCombine = false
+	self._canEasyCombine = false
 
-	if not var_36_0._isUnlock then
-		local var_36_1 = arg_36_0:_isEnoughUnlock()
+	if not cubeMo._isUnlock then
+		local list = self:_isEnoughUnlock()
 
-		arg_36_0._lackedItemDataList = {}
-		arg_36_0._occupyItemDic = {}
+		self._lackedItemDataList = {}
+		self._occupyItemDic = {}
 
-		IconMgr.instance:getCommonPropItemIconList(arg_36_0, arg_36_0._onCostItemShow, var_36_1, arg_36_0._gorequest)
+		IconMgr.instance:getCommonPropItemIconList(self, self._onCostItemShow, list, self._gorequest)
 
-		arg_36_0._canEasyCombine, arg_36_0._easyCombineTable = RoomProductionHelper.canEasyCombineItems(arg_36_0._lackedItemDataList, arg_36_0._occupyItemDic)
-		arg_36_0._occupyItemDic = nil
+		self._canEasyCombine, self._easyCombineTable = RoomProductionHelper.canEasyCombineItems(self._lackedItemDataList, self._occupyItemDic)
+		self._occupyItemDic = nil
 	end
 
-	gohelper.setActive(arg_36_0._gocaneasycombinetip, arg_36_0._canEasyCombine)
+	gohelper.setActive(self._gocaneasycombinetip, self._canEasyCombine)
 end
 
-function var_0_0._isEnoughUnlock(arg_37_0)
-	local var_37_0 = TalentStyleModel.instance:getSelectStyleId(arg_37_0._heroId)
-	local var_37_1 = HeroResonanceConfig.instance:getTalentStyleUnlockConsume(arg_37_0._heroId, var_37_0)
+function CharacterTalentStyleView:_isEnoughUnlock()
+	local style = TalentStyleModel.instance:getSelectStyleId(self._heroId)
+	local consume = HeroResonanceConfig.instance:getTalentStyleUnlockConsume(self._heroId, style)
 
-	if var_37_1 then
-		local var_37_2 = ItemModel.instance:getItemDataListByConfigStr(var_37_1)
-		local var_37_3, var_37_4, var_37_5 = ItemModel.instance:hasEnoughItemsByCellData(var_37_2)
+	if consume then
+		local _list = ItemModel.instance:getItemDataListByConfigStr(consume)
+		local notEnoughItemName, enough, icon = ItemModel.instance:hasEnoughItemsByCellData(_list)
 
-		return var_37_2, var_37_3, var_37_4, var_37_5
+		return _list, notEnoughItemName, enough, icon
 	end
 
 	return nil, "", true, nil
 end
 
-function var_0_0._onCostItemShow(arg_38_0, arg_38_1, arg_38_2, arg_38_3)
-	transformhelper.setLocalScale(arg_38_1.viewGO.transform, 0.59, 0.59, 1)
-	arg_38_1:onUpdateMO(arg_38_2)
-	arg_38_1:setConsume(true)
-	arg_38_1:showStackableNum2()
-	arg_38_1:isShowEffect(true)
-	arg_38_1:setAutoPlay(true)
-	arg_38_1:setCountFontSize(48)
+function CharacterTalentStyleView:_onCostItemShow(cell_component, data, index)
+	transformhelper.setLocalScale(cell_component.viewGO.transform, 0.59, 0.59, 1)
+	cell_component:onUpdateMO(data)
+	cell_component:setConsume(true)
+	cell_component:showStackableNum2()
+	cell_component:isShowEffect(true)
+	cell_component:setAutoPlay(true)
+	cell_component:setCountFontSize(48)
 
-	local var_38_0 = arg_38_2.materilType
-	local var_38_1 = arg_38_2.materilId
-	local var_38_2 = arg_38_2.quantity
-	local var_38_3, var_38_4 = ItemModel.instance:getItemIsEnoughText(arg_38_2)
+	local type = data.materilType
+	local id = data.materilId
+	local costQuantity = data.quantity
+	local enoughText, lackedQuantity = ItemModel.instance:getItemIsEnoughText(data)
 
-	if var_38_4 then
-		table.insert(arg_38_0._lackedItemDataList, {
-			type = var_38_0,
-			id = var_38_1,
-			quantity = var_38_4
+	if lackedQuantity then
+		table.insert(self._lackedItemDataList, {
+			type = type,
+			id = id,
+			quantity = lackedQuantity
 		})
 	else
-		if not arg_38_0._occupyItemDic[var_38_0] then
-			arg_38_0._occupyItemDic[var_38_0] = {}
+		if not self._occupyItemDic[type] then
+			self._occupyItemDic[type] = {}
 		end
 
-		arg_38_0._occupyItemDic[var_38_0][var_38_1] = (arg_38_0._occupyItemDic[var_38_0][var_38_1] or 0) + var_38_2
+		self._occupyItemDic[type][id] = (self._occupyItemDic[type][id] or 0) + costQuantity
 	end
 
-	arg_38_1:setCountText(var_38_3)
-	arg_38_1:setOnBeforeClickCallback(arg_38_0.onBeforeClickItem, arg_38_0)
-	arg_38_1:setRecordFarmItem({
-		type = var_38_0,
-		id = var_38_1,
-		quantity = var_38_2
+	cell_component:setCountText(enoughText)
+	cell_component:setOnBeforeClickCallback(self.onBeforeClickItem, self)
+	cell_component:setRecordFarmItem({
+		type = type,
+		id = id,
+		quantity = costQuantity
 	})
 end
 
-function var_0_0.onBeforeClickItem(arg_39_0, arg_39_1, arg_39_2)
-	local var_39_0 = JumpController.instance:getCurrentOpenedView()
+function CharacterTalentStyleView:onBeforeClickItem(param, commonItemIcon)
+	local openedViewList = JumpController.instance:getCurrentOpenedView()
 
-	for iter_39_0, iter_39_1 in ipairs(var_39_0) do
-		if iter_39_1.viewName == ViewName.CharacterTalentStyleView then
-			iter_39_1.viewParam.isJustOpen = true
+	for _, openView in ipairs(openedViewList) do
+		if openView.viewName == ViewName.CharacterTalentStyleView then
+			openView.viewParam.isJustOpen = true
 
 			break
 		end
 	end
 
-	arg_39_2:setRecordFarmItem({
-		type = arg_39_2._itemType,
-		id = arg_39_2._itemId,
-		quantity = arg_39_2._itemQuantity,
+	commonItemIcon:setRecordFarmItem({
+		type = commonItemIcon._itemType,
+		id = commonItemIcon._itemId,
+		quantity = commonItemIcon._itemQuantity,
 		sceneType = GameSceneMgr.instance:getCurSceneType(),
-		openedViewNameList = var_39_0
+		openedViewNameList = openedViewList
 	})
 end
 
-function var_0_0._getSelectCubeMo(arg_40_0)
-	if not arg_40_0._selectCubeMo then
-		arg_40_0._selectCubeMo = TalentStyleModel.instance:getSelectCubeMo(arg_40_0._heroId)
+function CharacterTalentStyleView:_getSelectCubeMo()
+	if not self._selectCubeMo then
+		local mo = TalentStyleModel.instance:getSelectCubeMo(self._heroId)
+
+		self._selectCubeMo = mo
 	end
 
-	return arg_40_0._selectCubeMo
+	return self._selectCubeMo
 end
 
-function var_0_0._onUnlockTalentStyleReply(arg_41_0, arg_41_1)
-	TalentStyleModel.instance:refreshUnlockList(arg_41_1.heroId)
-	arg_41_0:_hideComparePanel()
-	arg_41_0._animUnlock:Play("unlock", arg_41_0._unlockAnimEnd, arg_41_0)
-	TalentStyleModel.instance:setNewUnlockStyle(arg_41_1.style)
-	TaskDispatcher.cancelTask(arg_41_0._hideItemUnlock, arg_41_0)
-	gohelper.setActive(arg_41_0._goitemUnlock, true)
-	TaskDispatcher.runDelay(arg_41_0._hideItemUnlock, arg_41_0, 1.2)
+function CharacterTalentStyleView:_onUnlockTalentStyleReply(msg)
+	TalentStyleModel.instance:refreshUnlockList(msg.heroId)
+	self:_hideComparePanel()
+	self._animUnlock:Play("unlock", self._unlockAnimEnd, self)
+	TalentStyleModel.instance:setNewUnlockStyle(msg.style)
+	TaskDispatcher.cancelTask(self._hideItemUnlock, self)
+	gohelper.setActive(self._goitemUnlock, true)
+	TaskDispatcher.runDelay(self._hideItemUnlock, self, 1.2)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_resonate_unlock_02)
 end
 
-function var_0_0._unlockAnimEnd(arg_42_0)
-	arg_42_0:_refreshView()
+function CharacterTalentStyleView:_unlockAnimEnd()
+	self:_refreshView()
 end
 
-function var_0_0._hideItemUnlock(arg_43_0)
-	gohelper.setActive(arg_43_0._goitemUnlock, false)
+function CharacterTalentStyleView:_hideItemUnlock()
+	gohelper.setActive(self._goitemUnlock, false)
 end
 
-function var_0_0._hideItemUse(arg_44_0)
-	gohelper.setActive(arg_44_0._goitemUse, false)
+function CharacterTalentStyleView:_hideItemUse()
+	gohelper.setActive(self._goitemUse, false)
 end
 
-function var_0_0._onUseTalentStyleReply(arg_45_0, arg_45_1)
-	arg_45_0:_hideComparePanel()
-	arg_45_0:_refreshView()
-	TaskDispatcher.cancelTask(arg_45_0._hideItemUse, arg_45_0)
-	gohelper.setActive(arg_45_0._goitemUse, true)
+function CharacterTalentStyleView:_onUseTalentStyleReply(msg)
+	self:_hideComparePanel()
+	self:_refreshView()
+	TaskDispatcher.cancelTask(self._hideItemUse, self)
+	gohelper.setActive(self._goitemUse, true)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_resonate_fm)
-	TaskDispatcher.runDelay(arg_45_0._hideItemUse, arg_45_0, 0.6)
+	TaskDispatcher.runDelay(self._hideItemUse, self, 0.6)
 end
 
-function var_0_0._onSelectTalentStyle(arg_46_0, arg_46_1)
-	arg_46_0._selectCubeMo = TalentStyleModel.instance:getSelectCubeMo(arg_46_0._heroId)
+function CharacterTalentStyleView:_onSelectTalentStyle(msg)
+	self._selectCubeMo = TalentStyleModel.instance:getSelectCubeMo(self._heroId)
 
-	arg_46_0._animPlayer:Play("switch", nil, arg_46_0)
+	self._animPlayer:Play("switch", nil, self)
 end
 
-function var_0_0.currencyChangeEvent(arg_47_0)
-	arg_47_0:_refreshUnlockItem()
-	arg_47_0:_refreshBtn()
+function CharacterTalentStyleView:currencyChangeEvent()
+	self:_refreshUnlockItem()
+	self:_refreshBtn()
 end
 
-function var_0_0.playCloseAnim(arg_48_0)
-	arg_48_0._animPlayer:Play("close", arg_48_0.closeThis, arg_48_0)
+function CharacterTalentStyleView:playCloseAnim()
+	self._animPlayer:Play("close", self.closeThis, self)
 end
 
-function var_0_0._onHeroTalentStyleStatReply(arg_49_0, arg_49_1)
-	local var_49_0 = #arg_49_1.stylePercentList > 0
-	local var_49_1 = arg_49_0:_getNavigateView()
+function CharacterTalentStyleView:_onHeroTalentStyleStatReply(msg)
+	local isHasInfo = #msg.stylePercentList > 0
+	local nav = self:_getNavigateView()
 
-	if var_49_1 then
-		var_49_1:showStatBtn(var_49_0)
+	if nav then
+		nav:showStatBtn(isHasInfo)
 	end
 
-	if var_49_0 then
-		TalentStyleListModel.instance:refreshData(arg_49_1.heroId)
+	if isHasInfo then
+		TalentStyleListModel.instance:refreshData(msg.heroId)
 	end
 end
 
-function var_0_0._getNavigateView(arg_50_0)
-	return arg_50_0.viewContainer:getNavigateView()
+function CharacterTalentStyleView:_getNavigateView()
+	return self.viewContainer:getNavigateView()
 end
 
-return var_0_0
+return CharacterTalentStyleView

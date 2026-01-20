@@ -1,29 +1,31 @@
-﻿module("modules.logic.herogrouppreset.define.HeroGroupPresetEnum", package.seeall)
+﻿-- chunkname: @modules/logic/herogrouppreset/define/HeroGroupPresetEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.herogrouppreset.define.HeroGroupPresetEnum", package.seeall)
 
-var_0_0.MaxNum = 10
-var_0_0.MinNum = 1
-var_0_0.ShowType = {
+local HeroGroupPresetEnum = _M
+
+HeroGroupPresetEnum.MaxNum = 10
+HeroGroupPresetEnum.MinNum = 1
+HeroGroupPresetEnum.ShowType = {
 	Fight = 2,
 	Normal = 1
 }
-var_0_0.HeroGroupType = {
+HeroGroupPresetEnum.HeroGroupType = {
 	Common = 2,
 	TowerPermanentAndLimit = 10
 }
-var_0_0.HeroGroupType2SnapshotAllType = {
-	[var_0_0.HeroGroupType.Common] = ModuleEnum.HeroGroupSnapshotType.Common,
-	[var_0_0.HeroGroupType.TowerPermanentAndLimit] = ModuleEnum.HeroGroupSnapshotType.TowerPermanentAndLimit
+HeroGroupPresetEnum.HeroGroupType2SnapshotAllType = {
+	[HeroGroupPresetEnum.HeroGroupType.Common] = ModuleEnum.HeroGroupSnapshotType.Common,
+	[HeroGroupPresetEnum.HeroGroupType.TowerPermanentAndLimit] = ModuleEnum.HeroGroupSnapshotType.TowerPermanentAndLimit
 }
-var_0_0.HeroGroupType2SnapshotType = {
-	[var_0_0.HeroGroupType.TowerPermanentAndLimit] = ModuleEnum.HeroGroupSnapshotType.TowerPermanentAndLimit
+HeroGroupPresetEnum.HeroGroupType2SnapshotType = {
+	[HeroGroupPresetEnum.HeroGroupType.TowerPermanentAndLimit] = ModuleEnum.HeroGroupSnapshotType.TowerPermanentAndLimit
 }
-var_0_0.HeroGroupSnapshotTypeOpen = {
-	[var_0_0.HeroGroupType.TowerPermanentAndLimit] = true
+HeroGroupPresetEnum.HeroGroupSnapshotTypeOpen = {
+	[HeroGroupPresetEnum.HeroGroupType.TowerPermanentAndLimit] = true
 }
-var_0_0.HeroGroupSnapshotTypeShowBoss = {
-	[var_0_0.HeroGroupType.TowerPermanentAndLimit] = true
+HeroGroupPresetEnum.HeroGroupSnapshotTypeShowBoss = {
+	[HeroGroupPresetEnum.HeroGroupType.TowerPermanentAndLimit] = true
 }
 
-return var_0_0
+return HeroGroupPresetEnum

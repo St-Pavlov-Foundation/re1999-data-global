@@ -1,149 +1,161 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotHeroGroupEditListModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/model/V1a6_CachotHeroGroupEditListModel.lua
 
-local var_0_0 = class("V1a6_CachotHeroGroupEditListModel", ListScrollModel)
+module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotHeroGroupEditListModel", package.seeall)
 
-function var_0_0.setMoveHeroId(arg_1_0, arg_1_1)
-	arg_1_0._moveHeroId = arg_1_1
+local V1a6_CachotHeroGroupEditListModel = class("V1a6_CachotHeroGroupEditListModel", ListScrollModel)
+
+function V1a6_CachotHeroGroupEditListModel:setMoveHeroId(id)
+	self._moveHeroId = id
 end
 
-function var_0_0.getMoveHeroIndex(arg_2_0)
-	return arg_2_0._moveHeroIndex
+function V1a6_CachotHeroGroupEditListModel:getMoveHeroIndex()
+	return self._moveHeroIndex
 end
 
-function var_0_0.setHeroGroupEditType(arg_3_0, arg_3_1)
-	arg_3_0._heroGroupEditType = arg_3_1
+function V1a6_CachotHeroGroupEditListModel:setHeroGroupEditType(value)
+	self._heroGroupEditType = value
 end
 
-function var_0_0.getHeroGroupEditType(arg_4_0)
-	return arg_4_0._heroGroupEditType
+function V1a6_CachotHeroGroupEditListModel:getHeroGroupEditType()
+	return self._heroGroupEditType
 end
 
-function var_0_0.setSeatLevel(arg_5_0, arg_5_1)
-	arg_5_0._seatLevel = arg_5_1
+function V1a6_CachotHeroGroupEditListModel:setSeatLevel(value)
+	self._seatLevel = value
 end
 
-function var_0_0.getSeatLevel(arg_6_0)
-	return arg_6_0._seatLevel
+function V1a6_CachotHeroGroupEditListModel:getSeatLevel()
+	return self._seatLevel
 end
 
-function var_0_0.copyCharacterCardList(arg_7_0, arg_7_1)
-	local var_7_0 = CharacterBackpackCardListModel.instance:getCharacterCardList()
+function V1a6_CachotHeroGroupEditListModel:copyCharacterCardList(init)
+	local moList = CharacterBackpackCardListModel.instance:getCharacterCardList()
 
-	if arg_7_0._heroGroupEditType == V1a6_CachotEnum.HeroGroupEditType.Fight then
-		local var_7_1 = V1a6_CachotModel.instance:getTeamInfo()
-		local var_7_2 = var_7_1:getAllHeroIdsMap()
-		local var_7_3 = {}
-		local var_7_4 = {}
+	if self._heroGroupEditType == V1a6_CachotEnum.HeroGroupEditType.Fight then
+		local teamInfo = V1a6_CachotModel.instance:getTeamInfo()
+		local map = teamInfo:getAllHeroIdsMap()
+		local result = {}
+		local deadResult = {}
 
-		for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-			if var_7_2[iter_7_1.heroId] then
-				if var_7_1:getHeroHp(iter_7_1.heroId).life > 0 then
-					table.insert(var_7_3, iter_7_1)
+		for i, v in ipairs(moList) do
+			if map[v.heroId] then
+				local nowHp = teamInfo:getHeroHp(v.heroId)
+
+				if nowHp.life > 0 then
+					table.insert(result, v)
 				else
-					table.insert(var_7_4, iter_7_1)
+					table.insert(deadResult, v)
 				end
 			end
 		end
 
-		tabletool.addValues(var_7_3, var_7_4)
+		tabletool.addValues(result, deadResult)
 
-		var_7_0 = var_7_3
+		moList = result
 	end
 
-	local var_7_5 = {}
-	local var_7_6 = {}
+	local newMOList = {}
+	local repeatHero = {}
 
-	arg_7_0._inTeamHeroUids = {}
+	self._inTeamHeroUids = {}
 
-	local var_7_7 = 1
-	local var_7_8 = 1
-	local var_7_9 = V1a6_CachotHeroSingleGroupModel.instance:getList()
+	local selectIndex = 1
+	local index = 1
+	local alreadyList = V1a6_CachotHeroSingleGroupModel.instance:getList()
 
-	for iter_7_2, iter_7_3 in ipairs(var_7_9) do
-		if iter_7_3.trial or not iter_7_3.aid and tonumber(iter_7_3.heroUid) > 0 and not var_7_6[iter_7_3.heroUid] then
-			if iter_7_3.trial then
-				table.insert(var_7_5, HeroGroupTrialModel.instance:getById(iter_7_3.heroUid))
+	for i, heroSingleGroupMO in ipairs(alreadyList) do
+		if heroSingleGroupMO.trial or not heroSingleGroupMO.aid and tonumber(heroSingleGroupMO.heroUid) > 0 and not repeatHero[heroSingleGroupMO.heroUid] then
+			if heroSingleGroupMO.trial then
+				table.insert(newMOList, HeroGroupTrialModel.instance:getById(heroSingleGroupMO.heroUid))
 			else
-				table.insert(var_7_5, HeroModel.instance:getById(iter_7_3.heroUid))
+				table.insert(newMOList, HeroModel.instance:getById(heroSingleGroupMO.heroUid))
 			end
 
-			if arg_7_0.specialHero == iter_7_3.heroUid then
-				arg_7_0._inTeamHeroUids[iter_7_3.heroUid] = 2
-				var_7_7 = var_7_8
+			if self.specialHero == heroSingleGroupMO.heroUid then
+				self._inTeamHeroUids[heroSingleGroupMO.heroUid] = 2
+				selectIndex = index
 			else
-				arg_7_0._inTeamHeroUids[iter_7_3.heroUid] = 1
-				var_7_8 = var_7_8 + 1
+				self._inTeamHeroUids[heroSingleGroupMO.heroUid] = 1
+				index = index + 1
 			end
 
-			var_7_6[iter_7_3.heroUid] = true
+			repeatHero[heroSingleGroupMO.heroUid] = true
 		end
 	end
 
-	for iter_7_4, iter_7_5 in ipairs(var_7_5) do
-		if arg_7_0._moveHeroId and iter_7_5.heroId == arg_7_0._moveHeroId then
-			arg_7_0._moveHeroId = nil
-			arg_7_0._moveHeroIndex = iter_7_4
+	for i, mo in ipairs(newMOList) do
+		if self._moveHeroId and mo.heroId == self._moveHeroId then
+			self._moveHeroId = nil
+			self._moveHeroIndex = i
 
 			break
 		end
 	end
 
-	local var_7_10 = #var_7_5
-	local var_7_11 = {}
+	local groupHeroNum = #newMOList
+	local deathList = {}
 
-	for iter_7_6, iter_7_7 in ipairs(var_7_0) do
-		if not var_7_6[iter_7_7.uid] then
-			var_7_6[iter_7_7.uid] = true
+	for i, mo in ipairs(moList) do
+		if not repeatHero[mo.uid] then
+			repeatHero[mo.uid] = true
 
-			if arg_7_0.adventure then
-				if WeekWalkModel.instance:getCurMapHeroCd(iter_7_7.heroId) > 0 then
-					table.insert(var_7_11, iter_7_7)
+			if self.adventure then
+				local cd = WeekWalkModel.instance:getCurMapHeroCd(mo.heroId)
+
+				if cd > 0 then
+					table.insert(deathList, mo)
 				else
-					table.insert(var_7_5, iter_7_7)
+					table.insert(newMOList, mo)
 				end
-			elseif arg_7_0._moveHeroId and iter_7_7.heroId == arg_7_0._moveHeroId then
-				arg_7_0._moveHeroId = nil
-				arg_7_0._moveHeroIndex = var_7_10 + 1
+			elseif self._moveHeroId and mo.heroId == self._moveHeroId then
+				self._moveHeroId = nil
+				self._moveHeroIndex = groupHeroNum + 1
 
-				table.insert(var_7_5, arg_7_0._moveHeroIndex, iter_7_7)
-			elseif arg_7_0._heroGroupEditType == V1a6_CachotEnum.HeroGroupEditType.Event then
-				table.insert(var_7_5, #var_7_5 - var_7_10 + 1, iter_7_7)
+				table.insert(newMOList, self._moveHeroIndex, mo)
+			elseif self._heroGroupEditType == V1a6_CachotEnum.HeroGroupEditType.Event then
+				table.insert(newMOList, #newMOList - groupHeroNum + 1, mo)
 			else
-				table.insert(var_7_5, iter_7_7)
+				table.insert(newMOList, mo)
 			end
 		end
 	end
 
-	if arg_7_0.adventure then
-		tabletool.addValues(var_7_5, var_7_11)
+	if self.adventure then
+		tabletool.addValues(newMOList, deathList)
 	end
 
-	arg_7_0:setList(var_7_5)
+	self:setList(newMOList)
 
-	if arg_7_0._heroGroupEditType == V1a6_CachotEnum.HeroGroupEditType.Event and #V1a6_CachotModel.instance:getRogueInfo().teamInfo:getFightHeros() == #var_7_5 then
-		var_7_7 = 0
+	if self._heroGroupEditType == V1a6_CachotEnum.HeroGroupEditType.Event then
+		local rogueInfo = V1a6_CachotModel.instance:getRogueInfo()
+		local teamInfo = rogueInfo.teamInfo
+		local heroList = teamInfo:getFightHeros()
+
+		if #heroList == #newMOList then
+			selectIndex = 0
+		end
 	end
 
-	if arg_7_1 and #var_7_5 > 0 and var_7_7 > 0 and #arg_7_0._scrollViews > 0 then
-		for iter_7_8, iter_7_9 in ipairs(arg_7_0._scrollViews) do
-			iter_7_9:selectCell(var_7_7, true)
+	if init and #newMOList > 0 and selectIndex > 0 and #self._scrollViews > 0 then
+		for _, view in ipairs(self._scrollViews) do
+			view:selectCell(selectIndex, true)
 		end
 
-		if var_7_5[var_7_7] then
-			return var_7_5[var_7_7]
+		if newMOList[selectIndex] then
+			return newMOList[selectIndex]
 		end
 	end
 end
 
-function var_0_0.isRepeatHero(arg_8_0, arg_8_1, arg_8_2)
-	if not arg_8_0._inTeamHeroUids then
+function V1a6_CachotHeroGroupEditListModel:isRepeatHero(heroId, uid)
+	if not self._inTeamHeroUids then
 		return false
 	end
 
-	for iter_8_0 in pairs(arg_8_0._inTeamHeroUids) do
-		local var_8_0 = arg_8_0:getById(iter_8_0)
+	for inTeamUid in pairs(self._inTeamHeroUids) do
+		local mo = self:getById(inTeamUid)
 
-		if var_8_0.heroId == arg_8_1 and arg_8_2 ~= var_8_0.uid then
+		if mo.heroId == heroId and uid ~= mo.uid then
 			return true
 		end
 	end
@@ -151,42 +163,44 @@ function var_0_0.isRepeatHero(arg_8_0, arg_8_1, arg_8_2)
 	return false
 end
 
-function var_0_0.isTrialLimit(arg_9_0)
-	if not arg_9_0._inTeamHeroUids then
+function V1a6_CachotHeroGroupEditListModel:isTrialLimit()
+	if not self._inTeamHeroUids then
 		return false
 	end
 
-	local var_9_0 = 0
+	local curNum = 0
 
-	for iter_9_0 in pairs(arg_9_0._inTeamHeroUids) do
-		if arg_9_0:getById(iter_9_0):isTrial() then
-			var_9_0 = var_9_0 + 1
+	for inTeamUid in pairs(self._inTeamHeroUids) do
+		local mo = self:getById(inTeamUid)
+
+		if mo:isTrial() then
+			curNum = curNum + 1
 		end
 	end
 
-	return var_9_0 >= HeroGroupTrialModel.instance:getLimitNum()
+	return curNum >= HeroGroupTrialModel.instance:getLimitNum()
 end
 
-function var_0_0.cancelAllSelected(arg_10_0)
-	if arg_10_0._scrollViews then
-		for iter_10_0, iter_10_1 in ipairs(arg_10_0._scrollViews) do
-			local var_10_0 = iter_10_1:getFirstSelect()
-			local var_10_1 = arg_10_0:getIndex(var_10_0)
+function V1a6_CachotHeroGroupEditListModel:cancelAllSelected()
+	if self._scrollViews then
+		for _, view in ipairs(self._scrollViews) do
+			local mo = view:getFirstSelect()
+			local index = self:getIndex(mo)
 
-			iter_10_1:selectCell(var_10_1, false)
+			view:selectCell(index, false)
 		end
 	end
 end
 
-function var_0_0.isInTeamHero(arg_11_0, arg_11_1)
-	return arg_11_0._inTeamHeroUids and arg_11_0._inTeamHeroUids[arg_11_1]
+function V1a6_CachotHeroGroupEditListModel:isInTeamHero(uid)
+	return self._inTeamHeroUids and self._inTeamHeroUids[uid]
 end
 
-function var_0_0.setParam(arg_12_0, arg_12_1, arg_12_2)
-	arg_12_0.specialHero = arg_12_1
-	arg_12_0.adventure = arg_12_2
+function V1a6_CachotHeroGroupEditListModel:setParam(heroUid, adventure)
+	self.specialHero = heroUid
+	self.adventure = adventure
 end
 
-var_0_0.instance = var_0_0.New()
+V1a6_CachotHeroGroupEditListModel.instance = V1a6_CachotHeroGroupEditListModel.New()
 
-return var_0_0
+return V1a6_CachotHeroGroupEditListModel

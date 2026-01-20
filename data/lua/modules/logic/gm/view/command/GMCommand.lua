@@ -1,92 +1,101 @@
-﻿module("modules.logic.gm.view.command.GMCommand", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/command/GMCommand.lua
 
-local var_0_0 = class("GMCommand")
+module("modules.logic.gm.view.command.GMCommand", package.seeall)
 
-function var_0_0.processCmd(arg_1_0, ...)
-	if var_0_0[arg_1_0] then
-		var_0_0[arg_1_0](...)
+local GMCommand = class("GMCommand")
+
+function GMCommand.processCmd(cmdName, ...)
+	if GMCommand[cmdName] then
+		GMCommand[cmdName](...)
 	end
 end
 
-function var_0_0.decryptSuccess()
+function GMCommand.decryptSuccess()
 	Role37PuzzleModel.instance:Finish(true)
 end
 
-function var_0_0.dungeon(arg_3_0, arg_3_1)
-	local var_3_0
+function GMCommand.dungeon(chapterIndex, episodeIndex)
+	local episodeId
 
-	arg_3_0 = tonumber(arg_3_0) or 0
-	arg_3_1 = tonumber(arg_3_1)
+	chapterIndex = tonumber(chapterIndex) or 0
+	episodeIndex = tonumber(episodeIndex)
 
-	local var_3_1 = lua_chapter.configDict[100 + arg_3_0]
+	local chapterCo = lua_chapter.configDict[100 + chapterIndex]
 
-	if var_3_1 then
-		local var_3_2 = DungeonConfig.instance:getChapterNonSpEpisodeCOList(var_3_1.id)
+	if chapterCo then
+		local episodeList = DungeonConfig.instance:getChapterNonSpEpisodeCOList(chapterCo.id)
 
-		var_3_0 = var_3_2 and var_3_2[arg_3_1] and var_3_2[arg_3_1].id
+		episodeId = episodeList and episodeList[episodeIndex] and episodeList[episodeIndex].id
 	end
 
-	if var_3_0 then
-		GMRpc.instance:sendGMRequest(string.format("set dungeon %d", var_3_0))
-	end
-end
-
-function var_0_0.weather(arg_4_0)
-	arg_4_0 = tonumber(arg_4_0)
-
-	WeatherController.instance:setReportId(arg_4_0)
-end
-
-function var_0_0.printreport()
-	local var_5_0 = WeatherController.instance._curReport
-
-	if var_5_0 then
-		print("report id:", var_5_0.id)
+	if episodeId then
+		GMRpc.instance:sendGMRequest(string.format("set dungeon %d", episodeId))
 	end
 end
 
-function var_0_0.mainheromode(arg_6_0)
-	local var_6_0 = tonumber(arg_6_0) == 1
-	local var_6_1 = ViewMgr.instance:getContainer(ViewName.MainView)
+function GMCommand.weather(reportId)
+	reportId = tonumber(reportId)
 
-	if var_6_1 then
-		var_6_1:getMainHeroView():debugShowMode(var_6_0)
+	WeatherController.instance:setReportId(reportId)
+end
+
+function GMCommand.printreport()
+	local report = WeatherController.instance._curReport
+
+	if report then
+		print("report id:", report.id)
 	end
 end
 
-function var_0_0.weekwalksettlement(arg_7_0)
+function GMCommand.mainheromode(param)
+	local showInScene = tonumber(param) == 1
+	local mainViewContainer = ViewMgr.instance:getContainer(ViewName.MainView)
+
+	if mainViewContainer then
+		mainViewContainer:getMainHeroView():debugShowMode(showInScene)
+	end
+end
+
+function GMCommand.weekwalksettlement(param)
 	ViewMgr.instance:closeView(ViewName.GMToolView)
 
-	local var_7_0 = tonumber(arg_7_0)
+	local type = tonumber(param)
 
-	if var_7_0 == 1 then
+	if type == 1 then
 		WeekWalkController.instance:openWeekWalkShallowSettlementView()
 	end
 
-	if var_7_0 == 2 then
+	if type == 2 then
 		WeekWalkController.instance:openWeekWalkDeepLayerNoticeView()
 	end
 
-	if var_7_0 == 3 then
-		WeekWalkModel.instance:getInfo().isPopDeepSettle = true
+	if type == 3 then
+		local info = WeekWalkModel.instance:getInfo()
+
+		info.isPopDeepSettle = true
 
 		WeekWalkController.instance:openWeekWalkShallowSettlementView()
 	end
 
-	if var_7_0 == 4 then
+	if type == 4 then
 		WeekWalk_2Controller.instance:openWeekWalk_2DeepLayerNoticeView()
 	end
 
-	if var_7_0 == 5 then
-		WeekWalkModel.instance:getInfo().isPopDeepSettle = true
-		WeekWalk_2Model.instance:getInfo().isPopSettle = true
+	if type == 5 then
+		local info = WeekWalkModel.instance:getInfo()
+
+		info.isPopDeepSettle = true
+
+		local info = WeekWalk_2Model.instance:getInfo()
+
+		info.isPopSettle = true
 
 		WeekWalkController.instance:openWeekWalkShallowSettlementView()
 	end
 end
 
-function var_0_0.finishLayer(arg_8_0, arg_8_1)
-	local var_8_0 = {
+function GMCommand.finishLayer(startIndex, endIndex)
+	local cmdList = {
 		"set weekwalkElement 101 10117 3",
 		"set weekwalkElement 102 30130 1",
 		"set weekwalkElement 103 50117 3",
@@ -99,40 +108,40 @@ function var_0_0.finishLayer(arg_8_0, arg_8_1)
 		"set weekwalkElement 205 40419 1"
 	}
 
-	arg_8_0 = tonumber(arg_8_0)
-	arg_8_1 = tonumber(arg_8_1)
+	startIndex = tonumber(startIndex)
+	endIndex = tonumber(endIndex)
 
-	if arg_8_0 < 1 or arg_8_0 > #var_8_0 then
+	if startIndex < 1 or startIndex > #cmdList then
 		return
 	end
 
-	if arg_8_1 < 1 or arg_8_1 > #var_8_0 then
+	if endIndex < 1 or endIndex > #cmdList then
 		return
 	end
 
-	for iter_8_0 = arg_8_0, arg_8_1 do
-		local var_8_1 = var_8_0[iter_8_0]
+	for i = startIndex, endIndex do
+		local cmd = cmdList[i]
 
-		GMRpc.instance:sendGMRequest(var_8_1)
+		GMRpc.instance:sendGMRequest(cmd)
 	end
 end
 
-function var_0_0.clearTrialData(arg_9_0)
-	if arg_9_0 then
-		local var_9_0 = PlayerPrefsKey.HeroGroupTrial .. tostring(PlayerModel.instance:getMyUserId()) .. arg_9_0
+function GMCommand.clearTrialData(battleId)
+	if battleId then
+		local prefsKey = PlayerPrefsKey.HeroGroupTrial .. tostring(PlayerModel.instance:getMyUserId()) .. battleId
 
-		PlayerPrefsHelper.deleteKey(var_9_0)
+		PlayerPrefsHelper.deleteKey(prefsKey)
 	else
-		for iter_9_0 in pairs(lua_battle.configDict) do
-			local var_9_1 = PlayerPrefsKey.HeroGroupTrial .. tostring(PlayerModel.instance:getMyUserId()) .. iter_9_0
+		for id in pairs(lua_battle.configDict) do
+			local prefsKey = PlayerPrefsKey.HeroGroupTrial .. tostring(PlayerModel.instance:getMyUserId()) .. id
 
-			PlayerPrefsHelper.deleteKey(var_9_1)
+			PlayerPrefsHelper.deleteKey(prefsKey)
 		end
 	end
 end
 
-function var_0_0.enterSurvival(arg_10_0)
-	GMSubViewSurvival.enterSurvival(_, tonumber(arg_10_0))
+function GMCommand.enterSurvival(copyId)
+	GMSubViewSurvival.enterSurvival(_, tonumber(copyId))
 end
 
-return var_0_0
+return GMCommand

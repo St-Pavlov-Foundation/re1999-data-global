@@ -1,116 +1,118 @@
-﻿module("modules.logic.activity.view.ActivityDoubleFestivalSignPaiLianView_1_3", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/ActivityDoubleFestivalSignPaiLianView_1_3.lua
 
-local var_0_0 = class("ActivityDoubleFestivalSignPaiLianView_1_3", Activity101SignViewBase)
+module("modules.logic.activity.view.ActivityDoubleFestivalSignPaiLianView_1_3", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnemptyTop = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_emptyTop")
-	arg_1_0._btnemptyBottom = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_emptyBottom")
-	arg_1_0._btnemptyLeft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_emptyLeft")
-	arg_1_0._btnemptyRight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_emptyRight")
-	arg_1_0._simagePanelBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_PanelBG")
-	arg_1_0._simageTitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_Title")
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Root/image_LimitTimeBG/#txt_LimitTime")
-	arg_1_0._scrollItemList = gohelper.findChildScrollRect(arg_1_0.viewGO, "Root/#scroll_ItemList")
-	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/#btn_Close")
+local ActivityDoubleFestivalSignPaiLianView_1_3 = class("ActivityDoubleFestivalSignPaiLianView_1_3", Activity101SignViewBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ActivityDoubleFestivalSignPaiLianView_1_3:onInitView()
+	self._btnemptyTop = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_emptyTop")
+	self._btnemptyBottom = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_emptyBottom")
+	self._btnemptyLeft = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_emptyLeft")
+	self._btnemptyRight = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_emptyRight")
+	self._simagePanelBG = gohelper.findChildSingleImage(self.viewGO, "Root/#simage_PanelBG")
+	self._simageTitle = gohelper.findChildSingleImage(self.viewGO, "Root/#simage_Title")
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "Root/image_LimitTimeBG/#txt_LimitTime")
+	self._scrollItemList = gohelper.findChildScrollRect(self.viewGO, "Root/#scroll_ItemList")
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "Root/#btn_Close")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	Activity101SignViewBase.addEvents(arg_2_0)
-	arg_2_0._btnemptyTop:AddClickListener(arg_2_0._btnemptyTopOnClick, arg_2_0)
-	arg_2_0._btnemptyBottom:AddClickListener(arg_2_0._btnemptyBottomOnClick, arg_2_0)
-	arg_2_0._btnemptyLeft:AddClickListener(arg_2_0._btnemptyLeftOnClick, arg_2_0)
-	arg_2_0._btnemptyRight:AddClickListener(arg_2_0._btnemptyRightOnClick, arg_2_0)
-	arg_2_0._btnClose:AddClickListener(arg_2_0._btnCloseOnClick, arg_2_0)
+function ActivityDoubleFestivalSignPaiLianView_1_3:addEvents()
+	Activity101SignViewBase.addEvents(self)
+	self._btnemptyTop:AddClickListener(self._btnemptyTopOnClick, self)
+	self._btnemptyBottom:AddClickListener(self._btnemptyBottomOnClick, self)
+	self._btnemptyLeft:AddClickListener(self._btnemptyLeftOnClick, self)
+	self._btnemptyRight:AddClickListener(self._btnemptyRightOnClick, self)
+	self._btnClose:AddClickListener(self._btnCloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	Activity101SignViewBase.removeEvents(arg_3_0)
-	arg_3_0._btnemptyTop:RemoveClickListener()
-	arg_3_0._btnemptyBottom:RemoveClickListener()
-	arg_3_0._btnemptyLeft:RemoveClickListener()
-	arg_3_0._btnemptyRight:RemoveClickListener()
-	arg_3_0._btnClose:RemoveClickListener()
+function ActivityDoubleFestivalSignPaiLianView_1_3:removeEvents()
+	Activity101SignViewBase.removeEvents(self)
+	self._btnemptyTop:RemoveClickListener()
+	self._btnemptyBottom:RemoveClickListener()
+	self._btnemptyLeft:RemoveClickListener()
+	self._btnemptyRight:RemoveClickListener()
+	self._btnClose:RemoveClickListener()
 end
 
-local var_0_1 = ActivityEnum.Activity.DoubleFestivalSign_1_3
+local actId = ActivityEnum.Activity.DoubleFestivalSign_1_3
 
-function var_0_0._btnemptyTopOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function ActivityDoubleFestivalSignPaiLianView_1_3:_btnemptyTopOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnemptyBottomOnClick(arg_5_0)
-	arg_5_0:closeThis()
+function ActivityDoubleFestivalSignPaiLianView_1_3:_btnemptyBottomOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnemptyLeftOnClick(arg_6_0)
-	arg_6_0:closeThis()
+function ActivityDoubleFestivalSignPaiLianView_1_3:_btnemptyLeftOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnemptyRightOnClick(arg_7_0)
-	arg_7_0:closeThis()
+function ActivityDoubleFestivalSignPaiLianView_1_3:_btnemptyRightOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnCloseOnClick(arg_8_0)
-	arg_8_0:closeThis()
+function ActivityDoubleFestivalSignPaiLianView_1_3:_btnCloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_9_0)
-	arg_9_0._txtLimitTime.text = ""
+function ActivityDoubleFestivalSignPaiLianView_1_3:_editableInitView()
+	self._txtLimitTime.text = ""
 
-	arg_9_0._simageTitle:LoadImage(ResUrl.getActivityLangIcon("v1a3_sign_halftitle"))
-	arg_9_0._simagePanelBG:LoadImage(ResUrl.getActivityBg("v1a3_sign_halfbg"))
+	self._simageTitle:LoadImage(ResUrl.getActivityLangIcon("v1a3_sign_halftitle"))
+	self._simagePanelBG:LoadImage(ResUrl.getActivityBg("v1a3_sign_halfbg"))
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0:internal_set_actId(var_0_1)
-	arg_10_0:internal_set_openMode(Activity101SignViewBase.eOpenMode.PaiLian)
-	arg_10_0:internal_onOpen()
-	TaskDispatcher.runRepeat(arg_10_0._refreshTimeTick, arg_10_0, 1)
+function ActivityDoubleFestivalSignPaiLianView_1_3:onOpen()
+	self:internal_set_actId(actId)
+	self:internal_set_openMode(Activity101SignViewBase.eOpenMode.PaiLian)
+	self:internal_onOpen()
+	TaskDispatcher.runRepeat(self._refreshTimeTick, self, 1)
 end
 
-function var_0_0.onClose(arg_11_0)
-	arg_11_0._isFirst = nil
+function ActivityDoubleFestivalSignPaiLianView_1_3:onClose()
+	self._isFirst = nil
 
-	TaskDispatcher.cancelTask(arg_11_0._refreshTimeTick, arg_11_0)
+	TaskDispatcher.cancelTask(self._refreshTimeTick, self)
 end
 
-function var_0_0.onDestroyView(arg_12_0)
-	arg_12_0._simageTitle:UnLoadImage()
-	arg_12_0._simagePanelBG:UnLoadImage()
-	TaskDispatcher.cancelTask(arg_12_0._refreshTimeTick, arg_12_0)
+function ActivityDoubleFestivalSignPaiLianView_1_3:onDestroyView()
+	self._simageTitle:UnLoadImage()
+	self._simagePanelBG:UnLoadImage()
+	TaskDispatcher.cancelTask(self._refreshTimeTick, self)
 end
 
-function var_0_0.onRefresh(arg_13_0)
-	arg_13_0:_refreshList()
-	arg_13_0:_refreshTimeTick()
+function ActivityDoubleFestivalSignPaiLianView_1_3:onRefresh()
+	self:_refreshList()
+	self:_refreshTimeTick()
 end
 
-function var_0_0._refreshTimeTick(arg_14_0)
-	arg_14_0._txtLimitTime.text = arg_14_0:getRemainTimeStr()
+function ActivityDoubleFestivalSignPaiLianView_1_3:_refreshTimeTick()
+	self._txtLimitTime.text = self:getRemainTimeStr()
 end
 
-function var_0_0.updateRewardCouldGetHorizontalScrollPixel(arg_15_0)
-	local var_15_0, var_15_1 = arg_15_0:getRewardCouldGetIndex()
-	local var_15_2 = arg_15_0.viewContainer:getCsListScroll()
-	local var_15_3 = arg_15_0.viewContainer:getListScrollParam()
-	local var_15_4 = var_15_3.cellWidth
-	local var_15_5 = var_15_3.cellSpaceH
+function ActivityDoubleFestivalSignPaiLianView_1_3:updateRewardCouldGetHorizontalScrollPixel()
+	local _, index = self:getRewardCouldGetIndex()
+	local csListView = self.viewContainer:getCsListScroll()
+	local listScrollParam = self.viewContainer:getListScrollParam()
+	local cellWidth = listScrollParam.cellWidth
+	local cellSpaceH = listScrollParam.cellSpaceH
 
-	if var_15_1 <= 4 then
-		var_15_1 = var_15_1 - 4
+	if index <= 4 then
+		index = index - 4
 	else
-		var_15_1 = 10
+		index = 10
 	end
 
-	local var_15_6 = (var_15_4 + var_15_5) * math.max(0, var_15_1)
+	local scrollPixel = (cellWidth + cellSpaceH) * math.max(0, index)
 
-	var_15_2.HorizontalScrollPixel = math.max(0, var_15_6)
+	csListView.HorizontalScrollPixel = math.max(0, scrollPixel)
 
-	var_15_2:UpdateCells(false)
+	csListView:UpdateCells(false)
 end
 
-return var_0_0
+return ActivityDoubleFestivalSignPaiLianView_1_3

@@ -1,65 +1,67 @@
-﻿module("modules.logic.versionactivity1_9.heroinvitation.view.HeroInvitationDungeonMapViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/heroinvitation/view/HeroInvitationDungeonMapViewContainer.lua
 
-local var_0_0 = class("HeroInvitationDungeonMapViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_9.heroinvitation.view.HeroInvitationDungeonMapViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local HeroInvitationDungeonMapViewContainer = class("HeroInvitationDungeonMapViewContainer", BaseViewContainer)
 
-	arg_1_0.mapView = HeroInvitationDungeonMapView.New()
-	arg_1_0.mapSceneElements = HeroInvitationDungeonMapSceneElements.New()
-	arg_1_0.mapScene = HeroInvitationDungeonMapScene.New()
+function HeroInvitationDungeonMapViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, HeroInvitationDungeonMapHoleView.New())
-	table.insert(var_1_0, arg_1_0.mapView)
-	table.insert(var_1_0, arg_1_0.mapSceneElements)
-	table.insert(var_1_0, arg_1_0.mapScene)
-	table.insert(var_1_0, DungeonMapElementReward.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
+	self.mapView = HeroInvitationDungeonMapView.New()
+	self.mapSceneElements = HeroInvitationDungeonMapSceneElements.New()
+	self.mapScene = HeroInvitationDungeonMapScene.New()
 
-	return var_1_0
+	table.insert(views, HeroInvitationDungeonMapHoleView.New())
+	table.insert(views, self.mapView)
+	table.insert(views, self.mapSceneElements)
+	table.insert(views, self.mapScene)
+	table.insert(views, DungeonMapElementReward.New())
+	table.insert(views, TabViewGroup.New(1, "#go_topleft"))
+
+	return views
 end
 
-function var_0_0.getMapScene(arg_2_0)
-	return arg_2_0.mapScene
+function HeroInvitationDungeonMapViewContainer:getMapScene()
+	return self.mapScene
 end
 
-function var_0_0.buildTabViews(arg_3_0, arg_3_1)
-	arg_3_0.navigateView = NavigateButtonsView.New({
+function HeroInvitationDungeonMapViewContainer:buildTabViews(tabContainerId)
+	self.navigateView = NavigateButtonsView.New({
 		true,
 		true,
 		false
 	})
 
 	return {
-		arg_3_0.navigateView
+		self.navigateView
 	}
 end
 
-function var_0_0.onUpdateParamInternal(arg_4_0, arg_4_1)
-	arg_4_0.viewParam = arg_4_1
+function HeroInvitationDungeonMapViewContainer:onUpdateParamInternal(viewParam)
+	self.viewParam = viewParam
 
-	arg_4_0:onContainerUpdateParam()
-	arg_4_0:_setVisible(true)
+	self:onContainerUpdateParam()
+	self:_setVisible(true)
 
-	if arg_4_0._views then
-		for iter_4_0, iter_4_1 in ipairs(arg_4_0._views) do
-			iter_4_1.viewParam = arg_4_1
+	if self._views then
+		for _, item in ipairs(self._views) do
+			item.viewParam = viewParam
 
-			iter_4_1:onUpdateParamInternal()
+			item:onUpdateParamInternal()
 		end
 	end
 end
 
-function var_0_0.setVisibleInternal(arg_5_0, arg_5_1)
-	var_0_0.super.setVisibleInternal(arg_5_0, arg_5_1)
+function HeroInvitationDungeonMapViewContainer:setVisibleInternal(isVisible)
+	HeroInvitationDungeonMapViewContainer.super.setVisibleInternal(self, isVisible)
 
 	if ViewMgr.instance:isOpen(ViewName.StoryBackgroundView) then
-		arg_5_1 = true
+		isVisible = true
 	end
 
-	if arg_5_0.mapScene then
-		arg_5_0.mapScene:setSceneVisible(arg_5_1)
+	if self.mapScene then
+		self.mapScene:setSceneVisible(isVisible)
 	end
 end
 
-return var_0_0
+return HeroInvitationDungeonMapViewContainer

@@ -1,12 +1,14 @@
-﻿module("modules.logic.fight.config.FightHeroSpEffectConfig", package.seeall)
+﻿-- chunkname: @modules/logic/fight/config/FightHeroSpEffectConfig.lua
 
-local var_0_0 = class("FightHeroSpEffectConfig", BaseConfig)
+module("modules.logic.fight.config.FightHeroSpEffectConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local FightHeroSpEffectConfig = class("FightHeroSpEffectConfig", BaseConfig)
+
+function FightHeroSpEffectConfig:ctor()
 	return
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function FightHeroSpEffectConfig:reqConfigNames()
 	return {
 		"fight_sp_effect_kkny_bear_damage",
 		"fight_sp_effect_kkny_heal",
@@ -25,153 +27,200 @@ function var_0_0.reqConfigNames(arg_2_0)
 		"fight_sp_wuerlixi_monster_star_position_offset",
 		"fight_luxi_skin_effect",
 		"fight_sp_sm",
-		"hero3124_buff_talent"
+		"hero3124_buff_talent",
+		"fight_ble_crystal",
+		"fight_ble_crystal_desc",
+		"fight_ble_skill_2_crystal"
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "fight_sp_effect_alf" then
-		arg_3_0.initAlfRandomList = {}
+function FightHeroSpEffectConfig:onConfigLoaded(configName, configTable)
+	if configName == "fight_sp_effect_alf" then
+		self.initAlfRandomList = {}
 
-		for iter_3_0, iter_3_1 in ipairs(arg_3_2.configList) do
-			if iter_3_1.skinId == 0 then
-				table.insert(arg_3_0.initAlfRandomList, iter_3_1)
+		for _, co in ipairs(configTable.configList) do
+			if co.skinId == 0 then
+				table.insert(self.initAlfRandomList, co)
 			end
 		end
 	end
 end
 
-function var_0_0.getBKLEAddBuffEffect(arg_4_0, arg_4_1)
-	if arg_4_0.curSkin ~= arg_4_1 then
-		arg_4_0.curSkin = arg_4_1
+function FightHeroSpEffectConfig:getBKLEAddBuffEffect(skinId)
+	if self.curSkin ~= skinId then
+		self.curSkin = skinId
 
-		arg_4_0:initBKLERandomList(arg_4_1)
+		self:initBKLERandomList(skinId)
 	end
 
-	if #arg_4_0.BKLEEffectList == 0 then
-		arg_4_0:initBKLERandomList(arg_4_1)
+	if #self.BKLEEffectList == 0 then
+		self:initBKLERandomList(skinId)
 	end
 
-	local var_4_0 = #arg_4_0.BKLEEffectList
+	local len = #self.BKLEEffectList
 
-	if var_4_0 <= 1 then
-		return table.remove(arg_4_0.BKLEEffectList, 1)
+	if len <= 1 then
+		return table.remove(self.BKLEEffectList, 1)
 	end
 
-	local var_4_1 = math.random(1, var_4_0)
+	local random = math.random(1, len)
 
-	return table.remove(arg_4_0.BKLEEffectList, var_4_1)
+	return table.remove(self.BKLEEffectList, random)
 end
 
-function var_0_0.initBKLERandomList(arg_5_0, arg_5_1)
-	arg_5_0.BKLEEffectList = arg_5_0.BKLEEffectList or {}
+function FightHeroSpEffectConfig:initBKLERandomList(skinId)
+	self.BKLEEffectList = self.BKLEEffectList or {}
 
-	tabletool.clear(arg_5_0.BKLEEffectList)
+	tabletool.clear(self.BKLEEffectList)
 
-	local var_5_0 = lua_fight_sp_effect_bkle.configDict[arg_5_1]
-	local var_5_1 = FightStrUtil.instance:getSplitCache(var_5_0.path, "|")
+	local co = lua_fight_sp_effect_bkle.configDict[skinId]
+	local list = FightStrUtil.instance:getSplitCache(co.path, "|")
 
-	for iter_5_0, iter_5_1 in pairs(var_5_1) do
-		arg_5_0.BKLEEffectList[iter_5_0] = iter_5_1
+	for k, v in pairs(list) do
+		self.BKLEEffectList[k] = v
 	end
 end
 
-function var_0_0.getLYEffectCo(arg_6_0, arg_6_1)
-	return lua_fight_sp_effect_ly.configDict[arg_6_1] or lua_fight_sp_effect_ly.configDict[1]
+function FightHeroSpEffectConfig:getLYEffectCo(skinId)
+	local co = lua_fight_sp_effect_ly.configDict[skinId]
+
+	co = co or lua_fight_sp_effect_ly.configDict[1]
+
+	return co
 end
 
-function var_0_0.getRandomAlfASFDMissileRes(arg_7_0)
-	local var_7_0 = FightDataHelper.entityMgr:getHeroSkin(FightEnum.HeroId.ALF)
-	local var_7_1 = arg_7_0:getALFRandomList(var_7_0)
-	local var_7_2 = #var_7_1
-	local var_7_3 = math.random(var_7_2)
+function FightHeroSpEffectConfig:getRandomAlfASFDMissileRes()
+	local alfSkinId = FightDataHelper.entityMgr:getHeroSkin(FightEnum.HeroId.ALF)
+	local randomList = self:getALFRandomList(alfSkinId)
+	local len = #randomList
+	local randomValue = math.random(len)
 
-	return table.remove(var_7_1, var_7_3)
+	return table.remove(randomList, randomValue)
 end
 
-function var_0_0.getALFRandomList(arg_8_0, arg_8_1)
-	arg_8_1 = arg_8_1 or 0
+function FightHeroSpEffectConfig:getALFRandomList(skinId)
+	skinId = skinId or 0
 
-	if not arg_8_0.alfRandomDict then
-		arg_8_0.alfRandomDict = {}
+	if not self.alfRandomDict then
+		self.alfRandomDict = {}
 	end
 
-	local var_8_0 = arg_8_0.alfRandomDict[arg_8_1]
+	local randomList = self.alfRandomDict[skinId]
 
-	if not var_8_0 then
-		var_8_0 = {}
-		arg_8_0.alfRandomDict[arg_8_1] = var_8_0
+	if not randomList then
+		randomList = {}
+		self.alfRandomDict[skinId] = randomList
 	end
 
-	for iter_8_0, iter_8_1 in ipairs(lua_fight_sp_effect_alf.configList) do
-		if iter_8_1.skinId == arg_8_1 then
-			table.insert(var_8_0, iter_8_1)
+	for _, co in ipairs(lua_fight_sp_effect_alf.configList) do
+		if co.skinId == skinId then
+			table.insert(randomList, co)
 		end
 	end
 
-	if #var_8_0 < 1 then
-		for iter_8_2, iter_8_3 in ipairs(arg_8_0.initAlfRandomList) do
-			table.insert(var_8_0, iter_8_3)
+	if #randomList < 1 then
+		for _, co in ipairs(self.initAlfRandomList) do
+			table.insert(randomList, co)
 		end
 	end
 
-	return var_8_0
+	return randomList
 end
 
-function var_0_0.isKSDLSpecialBuff(arg_9_0, arg_9_1)
-	if not arg_9_1 then
+function FightHeroSpEffectConfig:isKSDLSpecialBuff(buffId)
+	if not buffId then
 		return false
 	end
 
-	arg_9_0:initKSDLSpecialBuffCo()
+	self:initKSDLSpecialBuffCo()
 
-	return arg_9_0:getKSDLSpecialBuffRank(arg_9_1) ~= nil
+	return self:getKSDLSpecialBuffRank(buffId) ~= nil
 end
 
-function var_0_0.getKSDLSpecialBuffRank(arg_10_0, arg_10_1)
-	if not arg_10_1 then
+function FightHeroSpEffectConfig:getKSDLSpecialBuffRank(buffId)
+	if not buffId then
 		return
 	end
 
-	arg_10_0:initKSDLSpecialBuffCo()
+	self:initKSDLSpecialBuffCo()
 
-	return arg_10_0.ksdlBuffDict[arg_10_1]
+	return self.ksdlBuffDict[buffId]
 end
 
-function var_0_0.initKSDLSpecialBuffCo(arg_11_0)
-	if arg_11_0.ksdlBuffDict then
-		return arg_11_0.ksdlBuffDict
+function FightHeroSpEffectConfig:initKSDLSpecialBuffCo()
+	if self.ksdlBuffDict then
+		return self.ksdlBuffDict
 	end
 
-	arg_11_0.ksdlBuffDict = {}
+	self.ksdlBuffDict = {}
 
-	for iter_11_0, iter_11_1 in ipairs(lua_hero3124_buff_talent.configList) do
-		arg_11_0.ksdlBuffDict[iter_11_1.buffId] = iter_11_1.rank
+	for _, co in ipairs(lua_hero3124_buff_talent.configList) do
+		self.ksdlBuffDict[co.buffId] = co.rank
 	end
 
-	return arg_11_0.ksdlBuffDict
+	return self.ksdlBuffDict
 end
 
-var_0_0.tempEntityMoList = {}
+FightHeroSpEffectConfig.tempEntityMoList = {}
 
-function var_0_0.getAlfCardAddEffect(arg_12_0)
-	local var_12_0 = 0
-	local var_12_1 = var_0_0.tempEntityMoList
-	local var_12_2 = FightDataHelper.entityMgr:getMyNormalList(var_12_1)
+function FightHeroSpEffectConfig:getAlfCardAddEffect()
+	local skinId = 0
+	local entityMoList = FightHeroSpEffectConfig.tempEntityMoList
+	local entityList = FightDataHelper.entityMgr:getMyNormalList(entityMoList)
 
-	for iter_12_0, iter_12_1 in ipairs(var_12_2) do
-		if iter_12_1.modelId == FightEnum.HeroId.ALF then
-			var_12_0 = iter_12_1.skin
+	for _, entityMo in ipairs(entityList) do
+		if entityMo.modelId == FightEnum.HeroId.ALF then
+			skinId = entityMo.skin
 
 			break
 		end
 	end
 
-	local var_12_3 = lua_fight_sp_effect_alf_add_card.configDict[var_12_0] or lua_fight_sp_effect_alf_add_card.configList[1]
+	local co = lua_fight_sp_effect_alf_add_card.configDict[skinId]
 
-	return string.format("ui/viewres/fight/%s.prefab", var_12_3.effect)
+	co = co or lua_fight_sp_effect_alf_add_card.configList[1]
+
+	return string.format("ui/viewres/fight/%s.prefab", co.effect)
 end
 
-var_0_0.instance = var_0_0.New()
+function FightHeroSpEffectConfig:getBLECrystalCo(crystal)
+	local co = lua_fight_ble_crystal.configDict[crystal]
 
-return var_0_0
+	if not co then
+		logError("贝丽尔水晶配置不存在 ：" .. tostring(crystal))
+
+		co = lua_fight_ble_crystal.configList[1]
+	end
+
+	return co
+end
+
+function FightHeroSpEffectConfig:getBLECrystalDescAndTag(crystal, count)
+	local co = fight_ble_crystal_desc.configDict[crystal]
+
+	co = co and co[count]
+
+	if not co then
+		logError(string.format("crystal desc not found! crystal : %s, count : %s", crystal, count))
+
+		co = fight_ble_crystal_desc.configList[1]
+	end
+
+	return co.desc, co.tag
+end
+
+function FightHeroSpEffectConfig:getSkill2CrystalCo(skillId)
+	local co = lua_fight_ble_skill_2_crystal.configDict[skillId]
+
+	if not co then
+		logError("贝丽尔技能id对应水晶配置不存在， skillId：" .. tostring(skillId))
+
+		co = lua_fight_ble_skill_2_crystal.configList[1]
+	end
+
+	return co
+end
+
+FightHeroSpEffectConfig.instance = FightHeroSpEffectConfig.New()
+
+return FightHeroSpEffectConfig

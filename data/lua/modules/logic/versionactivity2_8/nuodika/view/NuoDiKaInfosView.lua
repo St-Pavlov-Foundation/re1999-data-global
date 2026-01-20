@@ -1,119 +1,121 @@
-﻿module("modules.logic.versionactivity2_8.nuodika.view.NuoDiKaInfosView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/nuodika/view/NuoDiKaInfosView.lua
 
-local var_0_0 = class("NuoDiKaInfosView", BaseView)
+module("modules.logic.versionactivity2_8.nuodika.view.NuoDiKaInfosView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#go_content")
-	arg_1_0._goenemy = gohelper.findChild(arg_1_0.viewGO, "#go_content/scroll_content/Viewport/go_content/#go_enemy")
-	arg_1_0._goenemyitem = gohelper.findChild(arg_1_0.viewGO, "#go_content/scroll_content/Viewport/go_content/#go_enemy/#go_enemyitem")
-	arg_1_0._goterrain = gohelper.findChild(arg_1_0.viewGO, "#go_content/scroll_content/Viewport/go_content/#go_terrain")
-	arg_1_0._goterrainitem = gohelper.findChild(arg_1_0.viewGO, "#go_content/scroll_content/Viewport/go_content/#go_terrain/#go_terrainitem")
-	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "#go_content/scroll_content/Viewport/go_content/#go_item")
-	arg_1_0._goitemitem = gohelper.findChild(arg_1_0.viewGO, "#go_content/scroll_content/Viewport/go_content/#go_item/#go_itemitem")
-	arg_1_0._btnclose1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close1")
+local NuoDiKaInfosView = class("NuoDiKaInfosView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function NuoDiKaInfosView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._gocontent = gohelper.findChild(self.viewGO, "#go_content")
+	self._goenemy = gohelper.findChild(self.viewGO, "#go_content/scroll_content/Viewport/go_content/#go_enemy")
+	self._goenemyitem = gohelper.findChild(self.viewGO, "#go_content/scroll_content/Viewport/go_content/#go_enemy/#go_enemyitem")
+	self._goterrain = gohelper.findChild(self.viewGO, "#go_content/scroll_content/Viewport/go_content/#go_terrain")
+	self._goterrainitem = gohelper.findChild(self.viewGO, "#go_content/scroll_content/Viewport/go_content/#go_terrain/#go_terrainitem")
+	self._goitem = gohelper.findChild(self.viewGO, "#go_content/scroll_content/Viewport/go_content/#go_item")
+	self._goitemitem = gohelper.findChild(self.viewGO, "#go_content/scroll_content/Viewport/go_content/#go_item/#go_itemitem")
+	self._btnclose1 = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close1")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnclose1:AddClickListener(arg_2_0._btnclose1OnClick, arg_2_0)
+function NuoDiKaInfosView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnclose1:AddClickListener(self._btnclose1OnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnclose1:RemoveClickListener()
+function NuoDiKaInfosView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btnclose1:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function NuoDiKaInfosView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnclose1OnClick(arg_5_0)
-	arg_5_0:closeThis()
+function NuoDiKaInfosView:_btnclose1OnClick()
+	self:closeThis()
 end
 
-function var_0_0.onClickModalMask(arg_6_0)
-	arg_6_0:closeThis()
+function NuoDiKaInfosView:onClickModalMask()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0._enemyList = {}
-	arg_7_0._itemList = {}
+function NuoDiKaInfosView:_editableInitView()
+	self._enemyList = {}
+	self._itemList = {}
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0:refreshUI()
+function NuoDiKaInfosView:onOpen()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_9_0)
-	arg_9_0:refreshEnemys()
-	arg_9_0:refreshItems()
+function NuoDiKaInfosView:refreshUI()
+	self:refreshEnemys()
+	self:refreshItems()
 end
 
-function var_0_0.refreshEnemys(arg_10_0)
-	for iter_10_0, iter_10_1 in pairs(arg_10_0._enemyList) do
-		iter_10_1:hide()
+function NuoDiKaInfosView:refreshEnemys()
+	for _, v in pairs(self._enemyList) do
+		v:hide()
 	end
 
-	local var_10_0 = NuoDiKaMapModel.instance:getMapEnemys()
+	local enemyCos = NuoDiKaMapModel.instance:getMapEnemys()
 
-	for iter_10_2, iter_10_3 in ipairs(var_10_0) do
-		if not arg_10_0._enemyList[iter_10_3.enemyId] then
-			arg_10_0._enemyList[iter_10_3.enemyId] = NuoDiKaInfoItem.New()
+	for _, co in ipairs(enemyCos) do
+		if not self._enemyList[co.enemyId] then
+			self._enemyList[co.enemyId] = NuoDiKaInfoItem.New()
 
-			local var_10_1 = gohelper.clone(arg_10_0._goenemyitem, arg_10_0._goenemy)
+			local go = gohelper.clone(self._goenemyitem, self._goenemy)
 
-			arg_10_0._enemyList[iter_10_3.enemyId]:init(var_10_1, NuoDiKaEnum.EventType.Enemy)
+			self._enemyList[co.enemyId]:init(go, NuoDiKaEnum.EventType.Enemy)
 		end
 
-		arg_10_0._enemyList[iter_10_3.enemyId]:setItem(iter_10_3)
+		self._enemyList[co.enemyId]:setItem(co)
 	end
 end
 
-function var_0_0.refreshItems(arg_11_0)
-	for iter_11_0, iter_11_1 in pairs(arg_11_0._itemList) do
-		iter_11_1:hide()
+function NuoDiKaInfosView:refreshItems()
+	for _, v in pairs(self._itemList) do
+		v:hide()
 	end
 
-	local var_11_0 = NuoDiKaMapModel.instance:getMapItems()
+	local itemCos = NuoDiKaMapModel.instance:getMapItems()
 
-	for iter_11_2, iter_11_3 in ipairs(var_11_0) do
-		if not arg_11_0._itemList[iter_11_3.itemId] then
-			arg_11_0._itemList[iter_11_3.itemId] = NuoDiKaInfoItem.New()
+	for _, co in ipairs(itemCos) do
+		if not self._itemList[co.itemId] then
+			self._itemList[co.itemId] = NuoDiKaInfoItem.New()
 
-			local var_11_1 = gohelper.clone(arg_11_0._goitemitem, arg_11_0._goitem)
+			local go = gohelper.clone(self._goitemitem, self._goitem)
 
-			arg_11_0._itemList[iter_11_3.itemId]:init(var_11_1, NuoDiKaEnum.EventType.Item)
+			self._itemList[co.itemId]:init(go, NuoDiKaEnum.EventType.Item)
 		end
 
-		arg_11_0._itemList[iter_11_3.itemId]:setItem(iter_11_3)
+		self._itemList[co.itemId]:setItem(co)
 	end
 end
 
-function var_0_0.onClose(arg_12_0)
+function NuoDiKaInfosView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_13_0)
-	if arg_13_0._enemyList then
-		for iter_13_0, iter_13_1 in pairs(arg_13_0._enemyList) do
-			iter_13_1:destory()
+function NuoDiKaInfosView:onDestroyView()
+	if self._enemyList then
+		for _, v in pairs(self._enemyList) do
+			v:destory()
 		end
 
-		arg_13_0._enemyList = nil
+		self._enemyList = nil
 	end
 
-	if arg_13_0._itemList then
-		for iter_13_2, iter_13_3 in pairs(arg_13_0._itemList) do
-			iter_13_3:destory()
+	if self._itemList then
+		for _, v in pairs(self._itemList) do
+			v:destory()
 		end
 
-		arg_13_0._itemList = nil
+		self._itemList = nil
 	end
 end
 
-return var_0_0
+return NuoDiKaInfosView

@@ -1,17 +1,19 @@
-﻿module("modules.logic.versionactivity1_2.trade.define.Activity117Enum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/trade/define/Activity117Enum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_2.trade.define.Activity117Enum", package.seeall)
 
-var_0_0.OpenTab = {
+local Activity117Enum = _M
+
+Activity117Enum.OpenTab = {
 	Reward = 2,
 	Daily = 1
 }
-var_0_0.Status = {
+Activity117Enum.Status = {
 	NotEnough = 2,
 	CanGet = 1,
 	AlreadyGot = 3
 }
-var_0_0.PriceType = {
+Activity117Enum.PriceType = {
 	Bad = 4,
 	LastFail = 5,
 	Talk = 6,
@@ -19,12 +21,12 @@ var_0_0.PriceType = {
 	Best = 1,
 	Better = 2
 }
-var_0_0.BossSkinId = 300601
-var_0_0.MaxBargainTimes = 3
-var_0_0.OrderRoundState = {
+Activity117Enum.BossSkinId = 300601
+Activity117Enum.MaxBargainTimes = 3
+Activity117Enum.OrderRoundState = {
 	Quoting = 2,
 	Old = 1,
 	Quoted = 3
 }
 
-return var_0_0
+return Activity117Enum

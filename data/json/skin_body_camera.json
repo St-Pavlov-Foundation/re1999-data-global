@@ -1,0 +1,16 @@
+[
+  {
+    "id": 313402,
+    "behavior": "CameraBehavior",
+    "res": "313402_ble",
+    "body": [
+      "b_heliu"
+    ],
+    "camera": [
+      "313402_ble_heliu"
+    ],
+    "camera_revert": [
+      "313402_ble_heliu2"
+    ]
+  }
+]

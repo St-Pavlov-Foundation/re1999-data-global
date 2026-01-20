@@ -1,41 +1,43 @@
-﻿module("modules.logic.story.model.StoryHeroLibraryMo", package.seeall)
+﻿-- chunkname: @modules/logic/story/model/StoryHeroLibraryMo.lua
 
-local var_0_0 = pureTable("StoryHeroLibraryMo")
+module("modules.logic.story.model.StoryHeroLibraryMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.index = 0
-	arg_1_0.type = 0
-	arg_1_0.tag = false
-	arg_1_0.name = ""
-	arg_1_0.nameEn = ""
-	arg_1_0.icon = ""
-	arg_1_0.leftParam = ""
-	arg_1_0.midParam = ""
-	arg_1_0.rightParam = ""
-	arg_1_0.live2dLeftParam = ""
-	arg_1_0.live2dMidParam = ""
-	arg_1_0.live2dRightParam = ""
-	arg_1_0.prefab = ""
-	arg_1_0.live2dPrefab = ""
-	arg_1_0.hideNodes = ""
+local StoryHeroLibraryMo = pureTable("StoryHeroLibraryMo")
+
+function StoryHeroLibraryMo:ctor()
+	self.index = 0
+	self.type = 0
+	self.tag = false
+	self.name = ""
+	self.nameEn = ""
+	self.icon = ""
+	self.leftParam = ""
+	self.midParam = ""
+	self.rightParam = ""
+	self.live2dLeftParam = ""
+	self.live2dMidParam = ""
+	self.live2dRightParam = ""
+	self.prefab = ""
+	self.live2dPrefab = ""
+	self.hideNodes = ""
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.index = arg_2_1[1]
-	arg_2_0.type = arg_2_1[2]
-	arg_2_0.tag = arg_2_1[3]
-	arg_2_0.name = arg_2_1[4]
-	arg_2_0.nameEn = arg_2_1[5]
-	arg_2_0.icon = arg_2_1[6]
-	arg_2_0.leftParam = arg_2_1[7]
-	arg_2_0.midParam = arg_2_1[8]
-	arg_2_0.rightParam = arg_2_1[9]
-	arg_2_0.live2dLeftParam = arg_2_1[10]
-	arg_2_0.live2dMidParam = arg_2_1[11]
-	arg_2_0.live2dRightParam = arg_2_1[12]
-	arg_2_0.prefab = arg_2_1[13]
-	arg_2_0.live2dPrefab = arg_2_1[14]
-	arg_2_0.hideNodes = arg_2_1[15]
+function StoryHeroLibraryMo:init(info)
+	self.index = info[1]
+	self.type = info[2]
+	self.tag = info[3]
+	self.name = info[4]
+	self.nameEn = info[5]
+	self.icon = info[6]
+	self.leftParam = info[7]
+	self.midParam = info[8]
+	self.rightParam = info[9]
+	self.live2dLeftParam = info[10]
+	self.live2dMidParam = info[11]
+	self.live2dRightParam = info[12]
+	self.prefab = info[13]
+	self.live2dPrefab = info[14]
+	self.hideNodes = info[15]
 end
 
-return var_0_0
+return StoryHeroLibraryMo

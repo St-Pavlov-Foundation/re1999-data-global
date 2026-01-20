@@ -1,27 +1,29 @@
-﻿module("modules.logic.versionactivity3_0.maLiAnNaAct201.define.Activity201MaLiAnNaEnum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/maLiAnNaAct201/define/Activity201MaLiAnNaEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity3_0.maLiAnNaAct201.define.Activity201MaLiAnNaEnum", package.seeall)
 
-var_0_0.EpisodeStatus = {
+local Activity201MaLiAnNaEnum = _M
+
+Activity201MaLiAnNaEnum.EpisodeStatus = {
 	BeforeStory = 0,
 	MapGame = 1,
 	Finished = 3,
 	AfterStory = 2
 }
-var_0_0.SoldierType = {
+Activity201MaLiAnNaEnum.SoldierType = {
 	hero = 1,
 	soldier = 0
 }
-var_0_0.CampType = {
+Activity201MaLiAnNaEnum.CampType = {
 	Player = 1,
 	Middle = 3,
 	Enemy = 2
 }
-var_0_0.RoadType = {
+Activity201MaLiAnNaEnum.RoadType = {
 	RailWay = 1,
 	HighWay = 2
 }
-var_0_0.SoliderState = {
+Activity201MaLiAnNaEnum.SoliderState = {
 	Moving = 1,
 	Attack = 2,
 	AttackSlot = 6,
@@ -29,27 +31,27 @@ var_0_0.SoliderState = {
 	InSlot = 3,
 	Dead = 4
 }
-var_0_0.ConditionType = {
+Activity201MaLiAnNaEnum.ConditionType = {
 	gameOverAndWin = 4,
 	gameStart = 3,
 	occupySlot = 1,
 	useSkill = 5,
 	soldierHeroDead = 2
 }
-var_0_0.bulletHideRange = 10
-var_0_0.defaultDragRange = 50
-var_0_0.defaultHideRange = 30
-var_0_0.defaultOffsetX = 0
-var_0_0.defaultOffsetY = 0
-var_0_0.defaultHideLineRange = 120
-var_0_0.bulletDamage = 1
-var_0_0.refreshViewInterval = 0.1
-var_0_0.attackTime = 0.5
-var_0_0.attackTime2 = 1
-var_0_0.enemyLineShowTime = 1.5
-var_0_0.MaLiAnNaSoliderEntityDefaultScale = 0.5
-var_0_0.attackSlotTime = 0.1
-var_0_0.SkillAction = {
+Activity201MaLiAnNaEnum.bulletHideRange = 10
+Activity201MaLiAnNaEnum.defaultDragRange = 50
+Activity201MaLiAnNaEnum.defaultHideRange = 30
+Activity201MaLiAnNaEnum.defaultOffsetX = 0
+Activity201MaLiAnNaEnum.defaultOffsetY = 0
+Activity201MaLiAnNaEnum.defaultHideLineRange = 120
+Activity201MaLiAnNaEnum.bulletDamage = 1
+Activity201MaLiAnNaEnum.refreshViewInterval = 0.1
+Activity201MaLiAnNaEnum.attackTime = 0.5
+Activity201MaLiAnNaEnum.attackTime2 = 1
+Activity201MaLiAnNaEnum.enemyLineShowTime = 1.5
+Activity201MaLiAnNaEnum.MaLiAnNaSoliderEntityDefaultScale = 0.5
+Activity201MaLiAnNaEnum.attackSlotTime = 0.1
+Activity201MaLiAnNaEnum.SkillAction = {
 	addSlotSolider = 1,
 	killSolider = 1005,
 	removeSlotSolider = 2,
@@ -60,54 +62,54 @@ var_0_0.SkillAction = {
 	enterSlotAddSolider = 1002,
 	slotShield = 1004
 }
-var_0_0.SkillType = {
+Activity201MaLiAnNaEnum.SkillType = {
 	passive = 1,
 	active = 2
 }
-var_0_0.SkillOpt = {
+Activity201MaLiAnNaEnum.SkillOpt = {
 	add = 1,
 	delete = 0
 }
-var_0_0.SlotType = {
+Activity201MaLiAnNaEnum.SlotType = {
 	trench = 2,
 	bunker = 3,
 	obstacle = 1,
 	normal = 0
 }
-var_0_0.CampImageName = {
-	[var_0_0.CampType.Player] = "v3a0_malianna_game_rolehead1",
-	[var_0_0.CampType.Enemy] = "v3a0_malianna_game_rolehead2",
-	[var_0_0.CampType.Middle] = "v3a0_malianna_game_rolehead3"
+Activity201MaLiAnNaEnum.CampImageName = {
+	[Activity201MaLiAnNaEnum.CampType.Player] = "v3a0_malianna_game_rolehead1",
+	[Activity201MaLiAnNaEnum.CampType.Enemy] = "v3a0_malianna_game_rolehead2",
+	[Activity201MaLiAnNaEnum.CampType.Middle] = "v3a0_malianna_game_rolehead3"
 }
-var_0_0.BulletEffect = {
+Activity201MaLiAnNaEnum.BulletEffect = {
 	"ui/viewres/versionactivity_3_0/v3a0_malianna/v3a0_malianna_effectview.prefab"
 }
-var_0_0.SlotAIFuncType = {
+Activity201MaLiAnNaEnum.SlotAIFuncType = {
 	retreat = 3,
 	attackRoad = 2,
 	helpSlot = 4,
 	attAckSlot = 1
 }
-var_0_0.AllSlotAIFuncType = {
-	var_0_0.SlotAIFuncType.attAckSlot,
-	var_0_0.SlotAIFuncType.attackRoad,
-	var_0_0.SlotAIFuncType.retreat,
-	var_0_0.SlotAIFuncType.helpSlot
+Activity201MaLiAnNaEnum.AllSlotAIFuncType = {
+	Activity201MaLiAnNaEnum.SlotAIFuncType.attAckSlot,
+	Activity201MaLiAnNaEnum.SlotAIFuncType.attackRoad,
+	Activity201MaLiAnNaEnum.SlotAIFuncType.retreat,
+	Activity201MaLiAnNaEnum.SlotAIFuncType.helpSlot
 }
-var_0_0.soliderGenerateIdByCamp = {
+Activity201MaLiAnNaEnum.soliderGenerateIdByCamp = {
 	middleSolider = 13,
 	enemySolider = 12,
 	mySolider = 11
 }
-var_0_0.tipBgByCamp = {
-	[var_0_0.CampType.Player] = "v3a0_malianna_game_tipbg5",
-	[var_0_0.CampType.Enemy] = "v3a0_malianna_game_tipbg6"
+Activity201MaLiAnNaEnum.tipBgByCamp = {
+	[Activity201MaLiAnNaEnum.CampType.Player] = "v3a0_malianna_game_tipbg5",
+	[Activity201MaLiAnNaEnum.CampType.Enemy] = "v3a0_malianna_game_tipbg6"
 }
-var_0_0.tipIconByCamp = {
-	[var_0_0.CampType.Player] = "v3a0_malianna_game_tipicon1",
-	[var_0_0.CampType.Enemy] = "v3a0_malianna_game_tipicon2"
+Activity201MaLiAnNaEnum.tipIconByCamp = {
+	[Activity201MaLiAnNaEnum.CampType.Player] = "v3a0_malianna_game_tipicon1",
+	[Activity201MaLiAnNaEnum.CampType.Enemy] = "v3a0_malianna_game_tipicon2"
 }
-var_0_0.slotAnimName = {
+Activity201MaLiAnNaEnum.slotAnimName = {
 	skill = "skill",
 	my = "occupy_my",
 	enemy = "occupy_enemy",
@@ -117,16 +119,16 @@ var_0_0.slotAnimName = {
 	myIdle = "occupy_my_idle",
 	enemyIdle = "occupy_enemy_idle"
 }
-var_0_0.resultType = {
+Activity201MaLiAnNaEnum.resultType = {
 	success = "成功",
 	cancel = "主动返回",
 	fail = "失败",
 	reset = "重置"
 }
-var_0_0.FailResultType = {
+Activity201MaLiAnNaEnum.FailResultType = {
 	myHeroDead = "英雄剩余血量归零",
 	timeOut = "计时超时",
 	mySlotDead = "己方大本营被攻占"
 }
 
-return var_0_0
+return Activity201MaLiAnNaEnum

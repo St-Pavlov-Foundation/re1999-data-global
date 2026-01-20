@@ -1,158 +1,164 @@
-﻿module("modules.logic.tower.view.assistboss.TowerAssistBossTalentView", package.seeall)
+﻿-- chunkname: @modules/logic/tower/view/assistboss/TowerAssistBossTalentView.lua
 
-local var_0_0 = class("TowerAssistBossTalentView", BaseView)
+module("modules.logic.tower.view.assistboss.TowerAssistBossTalentView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.btnBottomClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Scroll/Viewport/btnBottomClose")
-	arg_1_0.goBottom = gohelper.findChild(arg_1_0.viewGO, "Bottom")
-	arg_1_0._bottomAnim = arg_1_0.goBottom:GetComponent(gohelper.Type_Animator)
-	arg_1_0._bottomCanvasGroup = gohelper.onceAddComponent(arg_1_0.goBottom, typeof(UnityEngine.CanvasGroup))
-	arg_1_0.btnClose = gohelper.findChildButtonWithAudio(arg_1_0.goBottom, "root/btn_Close")
-	arg_1_0.btnCancel = gohelper.findChildButtonWithAudio(arg_1_0.goBottom, "root/btn_cancel")
-	arg_1_0.btnSure = gohelper.findChildButtonWithAudio(arg_1_0.goBottom, "root/btn_sure")
-	arg_1_0.txtCost = gohelper.findChildTextMesh(arg_1_0.goBottom, "root/btn_sure/txtCost")
-	arg_1_0.btnLocked = gohelper.findChildButtonWithAudio(arg_1_0.goBottom, "root/btn_Locked")
-	arg_1_0.txtLock = gohelper.findChildTextMesh(arg_1_0.goBottom, "root/btn_Locked/txtLock")
-	arg_1_0.btnTips = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Tips/image_TitleBG/#btn_Tips")
-	arg_1_0.goTips = gohelper.findChild(arg_1_0.viewGO, "Tips/#go_Tips")
-	arg_1_0.btnCloseTips = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Tips/#go_Tips/#btn_closeMopupTip")
-	arg_1_0.imgTypeIcon = gohelper.findChildImage(arg_1_0.goBottom, "root/Top/TypeIcon/#simage_TypeIcon")
-	arg_1_0.txtType = gohelper.findChildTextMesh(arg_1_0.goBottom, "root/Top/#txt_Type")
-	arg_1_0.txtDesc = gohelper.findChildTextMesh(arg_1_0.goBottom, "root/Scroll View/Viewport/desc")
+local TowerAssistBossTalentView = class("TowerAssistBossTalentView", BaseView)
 
-	SkillHelper.addHyperLinkClick(arg_1_0.txtDesc, arg_1_0._onHyperLinkClick, arg_1_0)
+function TowerAssistBossTalentView:onInitView()
+	self.btnBottomClose = gohelper.findChildButtonWithAudio(self.viewGO, "Scroll/Viewport/btnBottomClose")
+	self.goBottom = gohelper.findChild(self.viewGO, "Bottom")
+	self._bottomAnim = self.goBottom:GetComponent(gohelper.Type_Animator)
+	self._bottomCanvasGroup = gohelper.onceAddComponent(self.goBottom, typeof(UnityEngine.CanvasGroup))
+	self.btnClose = gohelper.findChildButtonWithAudio(self.goBottom, "root/btn_Close")
+	self.btnCancel = gohelper.findChildButtonWithAudio(self.goBottom, "root/btn_cancel")
+	self.btnSure = gohelper.findChildButtonWithAudio(self.goBottom, "root/btn_sure")
+	self.txtCost = gohelper.findChildTextMesh(self.goBottom, "root/btn_sure/txtCost")
+	self.btnLocked = gohelper.findChildButtonWithAudio(self.goBottom, "root/btn_Locked")
+	self.txtLock = gohelper.findChildTextMesh(self.goBottom, "root/btn_Locked/txtLock")
+	self.btnTips = gohelper.findChildButtonWithAudio(self.viewGO, "Tips/image_TitleBG/#btn_Tips")
+	self.goTips = gohelper.findChild(self.viewGO, "Tips/#go_Tips")
+	self.btnCloseTips = gohelper.findChildButtonWithAudio(self.viewGO, "Tips/#go_Tips/#btn_closeMopupTip")
+	self.imgTypeIcon = gohelper.findChildImage(self.goBottom, "root/Top/TypeIcon/#simage_TypeIcon")
+	self.txtType = gohelper.findChildTextMesh(self.goBottom, "root/Top/#txt_Type")
+	self.txtDesc = gohelper.findChildTextMesh(self.goBottom, "root/Scroll View/Viewport/desc")
 
-	arg_1_0.descFixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0.txtDesc.gameObject, FixTmpBreakLine)
-	arg_1_0.bossIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "BOSS/Head/Mask/image_bossIcon")
-	arg_1_0.txtActiveCount = gohelper.findChildTextMesh(arg_1_0.viewGO, "BOSS/layout/#txt_PassLevel")
-	arg_1_0.btnResetAll = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "BOSS/layout/btn_reset")
-	arg_1_0.txtPoint = gohelper.findChildTextMesh(arg_1_0.viewGO, "Tips/txt_point")
-	arg_1_0.btnAttr = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btn_Attr")
-	arg_1_0.isBottomVisible = false
+	SkillHelper.addHyperLinkClick(self.txtDesc, self._onHyperLinkClick, self)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	self.descFixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(self.txtDesc.gameObject, FixTmpBreakLine)
+	self.bossIcon = gohelper.findChildSingleImage(self.viewGO, "BOSS/Head/Mask/image_bossIcon")
+	self.txtActiveCount = gohelper.findChildTextMesh(self.viewGO, "BOSS/layout/#txt_PassLevel")
+	self.btnResetAll = gohelper.findChildButtonWithAudio(self.viewGO, "BOSS/layout/btn_reset")
+	self.txtPoint = gohelper.findChildTextMesh(self.viewGO, "Tips/txt_point")
+	self.btnAttr = gohelper.findChildButtonWithAudio(self.viewGO, "btn_Attr")
+	self.isBottomVisible = false
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnAttr, arg_2_0.onBtnAttr, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnCloseTips, arg_2_0.onBtnCloseTips, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnTips, arg_2_0.onBtnTips, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnClose, arg_2_0.onBtnBottomClose, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnBottomClose, arg_2_0.onBtnBottomClose, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnCancel, arg_2_0.onBtnReset, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnSure, arg_2_0.onBtnSure, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnResetAll, arg_2_0.onBtnResetAll, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnLocked, arg_2_0.onBtnLocked, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.ResetTalent, arg_2_0._onResetTalent, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.ActiveTalent, arg_2_0._onActiveTalent, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.SelectTalentItem, arg_2_0._onSelectTalentItem, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.RefreshTalent, arg_2_0.refreshView, arg_2_0)
+function TowerAssistBossTalentView:addEvents()
+	self:addClickCb(self.btnAttr, self.onBtnAttr, self)
+	self:addClickCb(self.btnCloseTips, self.onBtnCloseTips, self)
+	self:addClickCb(self.btnTips, self.onBtnTips, self)
+	self:addClickCb(self.btnClose, self.onBtnBottomClose, self)
+	self:addClickCb(self.btnBottomClose, self.onBtnBottomClose, self)
+	self:addClickCb(self.btnCancel, self.onBtnReset, self)
+	self:addClickCb(self.btnSure, self.onBtnSure, self)
+	self:addClickCb(self.btnResetAll, self.onBtnResetAll, self)
+	self:addClickCb(self.btnLocked, self.onBtnLocked, self)
+	self:addEventCb(TowerController.instance, TowerEvent.ResetTalent, self._onResetTalent, self)
+	self:addEventCb(TowerController.instance, TowerEvent.ActiveTalent, self._onActiveTalent, self)
+	self:addEventCb(TowerController.instance, TowerEvent.SelectTalentItem, self._onSelectTalentItem, self)
+	self:addEventCb(TowerController.instance, TowerEvent.RefreshTalent, self.refreshView, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeClickCb(arg_3_0.btnAttr)
-	arg_3_0:removeClickCb(arg_3_0.btnCloseTips)
-	arg_3_0:removeClickCb(arg_3_0.btnTips)
-	arg_3_0:removeClickCb(arg_3_0.btnClose)
-	arg_3_0:removeClickCb(arg_3_0.btnBottomClose)
-	arg_3_0:removeClickCb(arg_3_0.btnCancel)
-	arg_3_0:removeClickCb(arg_3_0.btnSure)
-	arg_3_0:removeClickCb(arg_3_0.btnResetAll)
-	arg_3_0:removeClickCb(arg_3_0.btnLocked)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.ResetTalent, arg_3_0._onResetTalent, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.ActiveTalent, arg_3_0._onActiveTalent, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.SelectTalentItem, arg_3_0._onSelectTalentItem, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.RefreshTalent, arg_3_0.refreshView, arg_3_0)
+function TowerAssistBossTalentView:removeEvents()
+	self:removeClickCb(self.btnAttr)
+	self:removeClickCb(self.btnCloseTips)
+	self:removeClickCb(self.btnTips)
+	self:removeClickCb(self.btnClose)
+	self:removeClickCb(self.btnBottomClose)
+	self:removeClickCb(self.btnCancel)
+	self:removeClickCb(self.btnSure)
+	self:removeClickCb(self.btnResetAll)
+	self:removeClickCb(self.btnLocked)
+	self:removeEventCb(TowerController.instance, TowerEvent.ResetTalent, self._onResetTalent, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.ActiveTalent, self._onActiveTalent, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.SelectTalentItem, self._onSelectTalentItem, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.RefreshTalent, self.refreshView, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function TowerAssistBossTalentView:_editableInitView()
 	return
 end
 
-function var_0_0.onBtnLocked(arg_5_0)
-	local var_5_0 = TowerAssistBossTalentListModel.instance:getSelectTalent()
+function TowerAssistBossTalentView:onBtnLocked()
+	local selectId = TowerAssistBossTalentListModel.instance:getSelectTalent()
 
-	if not var_5_0 then
+	if not selectId then
 		return
 	end
 
-	local var_5_1 = arg_5_0.bossMo:getTalentTree()
-	local var_5_2 = var_5_1 and var_5_1:getNode(var_5_0)
+	local talentTree = self.bossMo:getTalentTree()
+	local talentNode = talentTree and talentTree:getNode(selectId)
 
-	if not var_5_2 then
+	if not talentNode then
 		return
 	end
 
-	local var_5_3, var_5_4 = var_5_2:isActiveGroup()
+	local isActiveGroup, activeId = talentNode:isActiveGroup()
 
-	if var_5_3 then
-		local var_5_5 = var_5_1:getNode(var_5_4)
+	if isActiveGroup then
+		local activeNode = talentTree:getNode(activeId)
 
-		GameFacade.showToast(ToastEnum.ToweTalentMutex, var_5_5.config.nodeName)
-	elseif var_5_2:getParentActiveResult() == 0 then
-		GameFacade.showToast(ToastEnum.ToweTalentPreNotActive)
+		GameFacade.showToast(ToastEnum.ToweTalentMutex, activeNode.config.nodeName)
 	else
-		GameFacade.showToast(ToastEnum.ToweTalentPreNotAllActive)
+		local result = talentNode:getParentActiveResult()
+
+		if result == 0 then
+			GameFacade.showToast(ToastEnum.ToweTalentPreNotActive)
+		else
+			GameFacade.showToast(ToastEnum.ToweTalentPreNotAllActive)
+		end
 	end
 end
 
-function var_0_0.onBtnAttr(arg_6_0)
-	if not arg_6_0.bossId then
+function TowerAssistBossTalentView:onBtnAttr()
+	if not self.bossId then
 		return
 	end
 
 	ViewMgr.instance:openView(ViewName.TowerAssistBossTalentTallView, {
-		bossId = arg_6_0.bossId
+		bossId = self.bossId
 	})
 end
 
-function var_0_0.onBtnTips(arg_7_0)
-	gohelper.setActive(arg_7_0.goTips, true)
+function TowerAssistBossTalentView:onBtnTips()
+	gohelper.setActive(self.goTips, true)
 end
 
-function var_0_0.onBtnCloseTips(arg_8_0)
-	gohelper.setActive(arg_8_0.goTips, false)
+function TowerAssistBossTalentView:onBtnCloseTips()
+	gohelper.setActive(self.goTips, false)
 end
 
-function var_0_0.onBtnReset(arg_9_0)
+function TowerAssistBossTalentView:onBtnReset()
 	if TowerAssistBossTalentListModel.instance:getAutoTalentState() then
 		GameFacade.showToast(ToastEnum.TowerBossTalentPlanCantModify)
 
 		return
 	end
 
-	local var_9_0 = TowerAssistBossTalentListModel.instance:getSelectTalent()
+	local talentId = TowerAssistBossTalentListModel.instance:getSelectTalent()
 
-	if TowerAssistBossTalentListModel.instance:isTalentCanReset(var_9_0, true) then
-		TowerRpc.instance:sendTowerResetTalentRequest(arg_9_0.bossId, var_9_0)
+	if TowerAssistBossTalentListModel.instance:isTalentCanReset(talentId, true) then
+		TowerRpc.instance:sendTowerResetTalentRequest(self.bossId, talentId)
 	end
 end
 
-function var_0_0.onBtnResetAll(arg_10_0)
+function TowerAssistBossTalentView:onBtnResetAll()
 	if TowerAssistBossTalentListModel.instance:getAutoTalentState() then
 		return
 	end
 
-	GameFacade.showMessageBox(MessageBoxIdDefine.TowerTalentReset, MsgBoxEnum.BoxType.Yes_No, arg_10_0._sendTowerResetAllTalentRequest, nil, nil, arg_10_0)
+	GameFacade.showMessageBox(MessageBoxIdDefine.TowerTalentReset, MsgBoxEnum.BoxType.Yes_No, self._sendTowerResetAllTalentRequest, nil, nil, self)
 end
 
-function var_0_0._sendTowerResetAllTalentRequest(arg_11_0)
-	TowerRpc.instance:sendTowerResetTalentRequest(arg_11_0.bossId, 0)
+function TowerAssistBossTalentView:_sendTowerResetAllTalentRequest()
+	TowerRpc.instance:sendTowerResetTalentRequest(self.bossId, 0)
 end
 
-function var_0_0.onBtnSure(arg_12_0)
-	local var_12_0 = TowerAssistBossTalentListModel.instance:getSelectTalent()
+function TowerAssistBossTalentView:onBtnSure()
+	local selectId = TowerAssistBossTalentListModel.instance:getSelectTalent()
 
-	if not var_12_0 then
+	if not selectId then
 		return
 	end
 
-	local var_12_1 = arg_12_0.bossMo:getTalentTree()
-	local var_12_2 = var_12_1 and var_12_1:getNode(var_12_0)
+	local talentTree = self.bossMo:getTalentTree()
+	local talentNode = talentTree and talentTree:getNode(selectId)
 
-	if not var_12_2 then
+	if not talentNode then
 		return
 	end
 
@@ -162,187 +168,188 @@ function var_0_0.onBtnSure(arg_12_0)
 		return
 	end
 
-	if var_12_2:isActiveTalent() then
+	if talentNode:isActiveTalent() then
 		return
 	end
 
-	if var_12_2:isActiveGroup() then
+	if talentNode:isActiveGroup() then
 		return
 	end
 
-	if not var_12_2:isParentActive() then
+	if not talentNode:isParentActive() then
 		GameFacade.showToast(ToastEnum.ToweTalentPreNotActive)
 
 		return
 	end
 
-	if not var_12_2:isTalentConsumeEnough() then
+	if not talentNode:isTalentConsumeEnough() then
 		GameFacade.showToast(ToastEnum.ToweTalentPointNotEnough)
 
 		return
 	end
 
-	TowerRpc.instance:sendTowerActiveTalentRequest(arg_12_0.bossId, var_12_0)
+	TowerRpc.instance:sendTowerActiveTalentRequest(self.bossId, selectId)
 	TowerAssistBossTalentListModel.instance:setSelectTalent()
-	arg_12_0:setBottomVisible(false)
+	self:setBottomVisible(false)
 end
 
-function var_0_0.onBtnBottomClose(arg_13_0)
-	if arg_13_0:setBottomVisible(false) then
+function TowerAssistBossTalentView:onBtnBottomClose()
+	if self:setBottomVisible(false) then
 		TowerAssistBossTalentListModel.instance:setSelectTalent()
 	end
 end
 
-function var_0_0.setBottomVisible(arg_14_0, arg_14_1)
-	if arg_14_0.isBottomVisible == arg_14_1 then
+function TowerAssistBossTalentView:setBottomVisible(isVisible)
+	if self.isBottomVisible == isVisible then
 		return
 	end
 
-	arg_14_0.isBottomVisible = arg_14_1
+	self.isBottomVisible = isVisible
 
-	if arg_14_1 then
-		gohelper.setActive(arg_14_0.goBottom, true)
-		arg_14_0._bottomAnim:Play("open")
+	if isVisible then
+		gohelper.setActive(self.goBottom, true)
+		self._bottomAnim:Play("open")
 
-		arg_14_0._bottomCanvasGroup.interactable = true
-		arg_14_0._bottomCanvasGroup.blocksRaycasts = true
+		self._bottomCanvasGroup.interactable = true
+		self._bottomCanvasGroup.blocksRaycasts = true
 
-		gohelper.setActive(arg_14_0.btnAttr, false)
+		gohelper.setActive(self.btnAttr, false)
 	else
-		arg_14_0._bottomAnim:Play("close")
+		self._bottomAnim:Play("close")
 
-		arg_14_0._bottomCanvasGroup.interactable = false
-		arg_14_0._bottomCanvasGroup.blocksRaycasts = false
+		self._bottomCanvasGroup.interactable = false
+		self._bottomCanvasGroup.blocksRaycasts = false
 
-		gohelper.setActive(arg_14_0.btnAttr, true)
+		gohelper.setActive(self.btnAttr, true)
 	end
 
 	return true
 end
 
-function var_0_0._onResetTalent(arg_15_0, arg_15_1)
-	arg_15_0:refreshView()
+function TowerAssistBossTalentView:_onResetTalent(talentId)
+	self:refreshView()
 end
 
-function var_0_0._onActiveTalent(arg_16_0, arg_16_1)
+function TowerAssistBossTalentView:_onActiveTalent(talentId)
 	AudioMgr.instance:trigger(AudioEnum.Tower.play_ui_fight_talent_light)
-	arg_16_0:refreshView()
+	self:refreshView()
 end
 
-function var_0_0._onSelectTalentItem(arg_17_0)
-	arg_17_0:refreshBottom()
+function TowerAssistBossTalentView:_onSelectTalentItem()
+	self:refreshBottom()
 end
 
-function var_0_0.onUpdateParam(arg_18_0)
-	arg_18_0:refreshParam()
-	arg_18_0:refreshView()
+function TowerAssistBossTalentView:onUpdateParam()
+	self:refreshParam()
+	self:refreshView()
 end
 
-function var_0_0.onOpen(arg_19_0)
+function TowerAssistBossTalentView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.Tower.play_ui_fight_enter_talent_tree)
-	arg_19_0:refreshParam()
-	arg_19_0:refreshView()
+	self:refreshParam()
+	self:refreshView()
 end
 
-function var_0_0.refreshParam(arg_20_0)
-	arg_20_0.bossId = arg_20_0.viewParam.bossId
-	arg_20_0.bossMo = TowerAssistBossModel.instance:getBoss(arg_20_0.bossId)
+function TowerAssistBossTalentView:refreshParam()
+	self.bossId = self.viewParam.bossId
+	self.bossMo = TowerAssistBossModel.instance:getBoss(self.bossId)
 end
 
-function var_0_0.refreshView(arg_21_0)
+function TowerAssistBossTalentView:refreshView()
 	TowerAssistBossTalentListModel.instance:refreshList()
-	arg_21_0:refreshBoss()
-	arg_21_0:refreshBottom()
+	self:refreshBoss()
+	self:refreshBottom()
 
-	arg_21_0.txtPoint.text = tostring(arg_21_0.bossMo:getTalentPoint())
+	self.txtPoint.text = tostring(self.bossMo:getTalentPoint())
 end
 
-function var_0_0.refreshBoss(arg_22_0)
-	local var_22_0, var_22_1 = arg_22_0.bossMo:getTalentActiveCount()
-	local var_22_2 = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("towertalent_already_light"), var_22_0, var_22_0 + var_22_1)
+function TowerAssistBossTalentView:refreshBoss()
+	local param1, param2 = self.bossMo:getTalentActiveCount()
+	local str = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("towertalent_already_light"), param1, param1 + param2)
 
-	arg_22_0.txtActiveCount.text = var_22_2
+	self.txtActiveCount.text = str
 
-	local var_22_3 = TowerConfig.instance:getAssistBossConfig(arg_22_0.bossId)
-	local var_22_4 = FightConfig.instance:getSkinCO(var_22_3.skinId)
+	local assistBossConfig = TowerConfig.instance:getAssistBossConfig(self.bossId)
+	local skinConfig = FightConfig.instance:getSkinCO(assistBossConfig.skinId)
 
-	arg_22_0.bossIcon:LoadImage(ResUrl.monsterHeadIcon(var_22_4 and var_22_4.headIcon))
+	self.bossIcon:LoadImage(ResUrl.monsterHeadIcon(skinConfig and skinConfig.headIcon))
 
-	local var_22_5 = TowerAssistBossModel.instance:getById(arg_22_0.bossId)
-	local var_22_6 = TowerAssistBossTalentListModel.instance:getAutoTalentState()
+	local bossMo = TowerAssistBossModel.instance:getById(self.bossId)
+	local isAutoTalentPlan = TowerAssistBossTalentListModel.instance:getAutoTalentState()
 
-	gohelper.setActive(arg_22_0.btnResetAll, var_22_5 ~= nil and not var_22_6)
+	gohelper.setActive(self.btnResetAll, bossMo ~= nil and not isAutoTalentPlan)
 end
 
-function var_0_0.refreshBottom(arg_23_0)
-	local var_23_0 = TowerAssistBossTalentListModel.instance:getSelectTalent()
+function TowerAssistBossTalentView:refreshBottom()
+	local selectId = TowerAssistBossTalentListModel.instance:getSelectTalent()
 
-	if not var_23_0 then
-		arg_23_0:setBottomVisible(false)
+	if not selectId then
+		self:setBottomVisible(false)
 
 		return
 	end
 
-	arg_23_0:setBottomVisible(true)
+	self:setBottomVisible(true)
 
-	local var_23_1 = arg_23_0.bossMo:getTalentTree():getNode(var_23_0)
+	local talentTree = self.bossMo:getTalentTree()
+	local talentNode = talentTree:getNode(selectId)
 
-	if not var_23_1 then
+	if not talentNode then
 		return
 	end
 
-	local var_23_2 = var_23_1.config
-	local var_23_3 = var_23_1:isActiveTalent()
-	local var_23_4 = var_23_1:isActiveGroup()
-	local var_23_5 = var_23_1:isParentActive()
-	local var_23_6 = var_23_1:isLeafNode()
-	local var_23_7 = not var_23_3 and not var_23_4 and var_23_5
+	local config = talentNode.config
+	local isActive = talentNode:isActiveTalent()
+	local isActiveGroup = talentNode:isActiveGroup()
+	local isParentActive = talentNode:isParentActive()
+	local isLeafNode = talentNode:isLeafNode()
+	local canShow = not isActive and not isActiveGroup and isParentActive
 
-	gohelper.setActive(arg_23_0.btnSure, var_23_7)
-	gohelper.setActive(arg_23_0.btnCancel, var_23_6 and var_23_3)
+	gohelper.setActive(self.btnSure, canShow)
+	gohelper.setActive(self.btnCancel, isLeafNode and isActive)
 
-	local var_23_8 = not var_23_3 and (var_23_4 or not var_23_5)
+	local showLock = not isActive and (isActiveGroup or not isParentActive)
 
-	gohelper.setActive(arg_23_0.btnLocked, var_23_8)
+	gohelper.setActive(self.btnLocked, showLock)
 
-	if var_23_8 then
-		local var_23_9 = var_23_1:getParentActiveResult()
+	if showLock then
+		local result = talentNode:getParentActiveResult()
 
-		if var_23_4 then
-			arg_23_0.txtLock.text = luaLang("towertalent_txt_Locked2")
-		elseif var_23_9 == 0 then
-			arg_23_0.txtLock.text = luaLang("towertalent_txt_Locked1")
+		if isActiveGroup then
+			self.txtLock.text = luaLang("towertalent_txt_Locked2")
+		elseif result == 0 then
+			self.txtLock.text = luaLang("towertalent_txt_Locked1")
 		else
-			arg_23_0.txtLock.text = luaLang("towertalent_txt_Locked3")
+			self.txtLock.text = luaLang("towertalent_txt_Locked3")
 		end
 	end
 
-	if not var_23_3 then
-		if var_23_1:isTalentConsumeEnough() then
-			arg_23_0.txtCost.text = string.format("<color=#070706>-%s</color>", var_23_1.config.consume)
+	if not isActive then
+		if talentNode:isTalentConsumeEnough() then
+			self.txtCost.text = string.format("<color=#070706>-%s</color>", talentNode.config.consume)
 		else
-			arg_23_0.txtCost.text = string.format("-%s", var_23_1.config.consume)
+			self.txtCost.text = string.format("-%s", talentNode.config.consume)
 		end
 	end
 
-	TowerConfig.instance:setTalentImg(arg_23_0.imgTypeIcon, var_23_2)
+	TowerConfig.instance:setTalentImg(self.imgTypeIcon, config)
 
-	arg_23_0.txtType.text = var_23_2.nodeName
-	arg_23_0.txtDesc.text = SkillHelper.buildDesc(var_23_2.nodeDesc)
+	self.txtType.text = config.nodeName
+	self.txtDesc.text = SkillHelper.buildDesc(config.nodeDesc)
 
-	arg_23_0.descFixTmpBreakLine:refreshTmpContent(arg_23_0.txtDesc)
+	self.descFixTmpBreakLine:refreshTmpContent(self.txtDesc)
 end
 
-function var_0_0._onHyperLinkClick(arg_24_0, arg_24_1, arg_24_2)
-	CommonBuffTipController.instance:openCommonTipViewWithCustomPos(tonumber(arg_24_1), CommonBuffTipEnum.Anchor[arg_24_0.viewName], CommonBuffTipEnum.Pivot.Down)
+function TowerAssistBossTalentView:_onHyperLinkClick(effId, clickPosition)
+	CommonBuffTipController.instance:openCommonTipViewWithCustomPos(tonumber(effId), CommonBuffTipEnum.Anchor[self.viewName], CommonBuffTipEnum.Pivot.Down)
 end
 
-function var_0_0.onClose(arg_25_0)
+function TowerAssistBossTalentView:onClose()
 	TowerAssistBossTalentListModel.instance:setSelectTalent()
 end
 
-function var_0_0.onDestroyView(arg_26_0)
-	arg_26_0.bossIcon:UnLoadImage()
+function TowerAssistBossTalentView:onDestroyView()
+	self.bossIcon:UnLoadImage()
 end
 
-return var_0_0
+return TowerAssistBossTalentView

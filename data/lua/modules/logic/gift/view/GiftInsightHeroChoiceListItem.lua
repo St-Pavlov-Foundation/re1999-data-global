@@ -1,97 +1,99 @@
-﻿module("modules.logic.gift.view.GiftInsightHeroChoiceListItem", package.seeall)
+﻿-- chunkname: @modules/logic/gift/view/GiftInsightHeroChoiceListItem.lua
 
-local var_0_0 = class("GiftInsightHeroChoiceListItem")
+module("modules.logic.gift.view.GiftInsightHeroChoiceListItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._go = arg_1_1
-	arg_1_0._gorole = gohelper.findChild(arg_1_1, "role")
-	arg_1_0._imageRare = gohelper.findChildImage(arg_1_1, "role/rare")
-	arg_1_0._simageIcon = gohelper.findChildSingleImage(arg_1_1, "role/heroicon")
-	arg_1_0._imageCareer = gohelper.findChildImage(arg_1_1, "role/career")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_1, "role/name")
-	arg_1_0._goexskill = gohelper.findChild(arg_1_1, "role/#go_exskill")
-	arg_1_0._imageexskill = gohelper.findChildImage(arg_1_1, "role/#go_exskill/#image_exskill")
-	arg_1_0._gorank = gohelper.findChild(arg_1_1, "role/Rank")
-	arg_1_0._rankGos = {}
+local GiftInsightHeroChoiceListItem = class("GiftInsightHeroChoiceListItem")
 
-	for iter_1_0 = 1, 3 do
-		local var_1_0 = gohelper.findChild(arg_1_0._gorank, "rank" .. iter_1_0)
+function GiftInsightHeroChoiceListItem:init(go)
+	self._go = go
+	self._gorole = gohelper.findChild(go, "role")
+	self._imageRare = gohelper.findChildImage(go, "role/rare")
+	self._simageIcon = gohelper.findChildSingleImage(go, "role/heroicon")
+	self._imageCareer = gohelper.findChildImage(go, "role/career")
+	self._txtname = gohelper.findChildText(go, "role/name")
+	self._goexskill = gohelper.findChild(go, "role/#go_exskill")
+	self._imageexskill = gohelper.findChildImage(go, "role/#go_exskill/#image_exskill")
+	self._gorank = gohelper.findChild(go, "role/Rank")
+	self._rankGos = {}
 
-		arg_1_0._rankGos[iter_1_0] = var_1_0
+	for i = 1, 3 do
+		local rankGo = gohelper.findChild(self._gorank, "rank" .. i)
+
+		self._rankGos[i] = rankGo
 	end
 
-	arg_1_0._goselect = gohelper.findChild(arg_1_1, "select")
-	arg_1_0._goclick = gohelper.findChild(arg_1_1, "go_click")
-	arg_1_0._clickitem = gohelper.getClick(arg_1_0._goclick)
-	arg_1_0._showUp = true
+	self._goselect = gohelper.findChild(go, "select")
+	self._goclick = gohelper.findChild(go, "go_click")
+	self._clickitem = gohelper.getClick(self._goclick)
+	self._showUp = true
 
-	arg_1_0:_addEvents()
+	self:_addEvents()
 end
 
-function var_0_0._addEvents(arg_2_0)
-	arg_2_0._clickitem:AddClickListener(arg_2_0._onClickItem, arg_2_0)
-	GiftController.instance:registerCallback(GiftEvent.InsightHeroChoose, arg_2_0._refresh, arg_2_0)
+function GiftInsightHeroChoiceListItem:_addEvents()
+	self._clickitem:AddClickListener(self._onClickItem, self)
+	GiftController.instance:registerCallback(GiftEvent.InsightHeroChoose, self._refresh, self)
 end
 
-function var_0_0._removeEvents(arg_3_0)
-	arg_3_0._clickitem:RemoveClickListener()
-	GiftController.instance:unregisterCallback(GiftEvent.InsightHeroChoose, arg_3_0._refresh, arg_3_0)
+function GiftInsightHeroChoiceListItem:_removeEvents()
+	self._clickitem:RemoveClickListener()
+	GiftController.instance:unregisterCallback(GiftEvent.InsightHeroChoose, self._refresh, self)
 end
 
-function var_0_0.hide(arg_4_0)
-	gohelper.setActive(arg_4_0._go, false)
+function GiftInsightHeroChoiceListItem:hide()
+	gohelper.setActive(self._go, false)
 end
 
-function var_0_0.refreshItem(arg_5_0, arg_5_1)
-	gohelper.setActive(arg_5_0._go, true)
+function GiftInsightHeroChoiceListItem:refreshItem(heroMO)
+	gohelper.setActive(self._go, true)
 
-	arg_5_0._heroMO = arg_5_1
+	self._heroMO = heroMO
 
-	arg_5_0:_refresh()
+	self:_refresh()
 end
 
-function var_0_0._onClickItem(arg_6_0)
-	if not arg_6_0._showUp then
+function GiftInsightHeroChoiceListItem:_onClickItem()
+	if not self._showUp then
 		return
 	end
 
-	GiftInsightHeroChoiceModel.instance:setCurHeroId(arg_6_0._heroMO.heroId)
+	GiftInsightHeroChoiceModel.instance:setCurHeroId(self._heroMO.heroId)
 	GiftController.instance:dispatchEvent(GiftEvent.InsightHeroChoose)
 end
 
-function var_0_0._refresh(arg_7_0)
-	local var_7_0 = GiftInsightHeroChoiceModel.instance:getCurHeroId()
+function GiftInsightHeroChoiceListItem:_refresh()
+	local curHeroId = GiftInsightHeroChoiceModel.instance:getCurHeroId()
 
-	gohelper.setActive(arg_7_0._goselect, var_7_0 == arg_7_0._heroMO.heroId)
+	gohelper.setActive(self._goselect, curHeroId == self._heroMO.heroId)
 
-	local var_7_1 = arg_7_0._heroMO and arg_7_0._heroMO.skin
-	local var_7_2 = var_7_1 and lua_skin.configDict[var_7_1]
-	local var_7_3 = ResUrl.getRoomHeadIcon(var_7_2.headIcon)
+	local skinId = self._heroMO and self._heroMO.skin
+	local skinCo = skinId and lua_skin.configDict[skinId]
+	local iconRes = ResUrl.getRoomHeadIcon(skinCo.headIcon)
 
-	arg_7_0._simageIcon:LoadImage(var_7_3)
+	self._simageIcon:LoadImage(iconRes)
 
-	arg_7_0._txtname.text = arg_7_0._heroMO.config.name
+	self._txtname.text = self._heroMO.config.name
 
-	UISpriteSetMgr.instance:setCommonSprite(arg_7_0._imageCareer, "lssx_" .. tostring(arg_7_0._heroMO.config.career))
-	UISpriteSetMgr.instance:setCommonSprite(arg_7_0._imageRare, "equipbar" .. arg_7_0._heroMO.config.rare + 1)
-	gohelper.setActive(arg_7_0._gorank, arg_7_0._heroMO.rank > 1)
+	UISpriteSetMgr.instance:setCommonSprite(self._imageCareer, "lssx_" .. tostring(self._heroMO.config.career))
+	UISpriteSetMgr.instance:setCommonSprite(self._imageRare, "equipbar" .. self._heroMO.config.rare + 1)
+	gohelper.setActive(self._gorank, self._heroMO.rank > 1)
 
-	for iter_7_0 = 1, 3 do
-		gohelper.setActive(arg_7_0._rankGos[iter_7_0], iter_7_0 == arg_7_0._heroMO.rank - 1)
+	for i = 1, 3 do
+		gohelper.setActive(self._rankGos[i], i == self._heroMO.rank - 1)
 	end
 
-	arg_7_0._imageexskill.fillAmount = 0.2 * arg_7_0._heroMO.exSkillLevel
+	self._imageexskill.fillAmount = 0.2 * self._heroMO.exSkillLevel
 end
 
-function var_0_0.showUp(arg_8_0, arg_8_1)
-	arg_8_0._showUp = arg_8_1
+function GiftInsightHeroChoiceListItem:showUp(show)
+	self._showUp = show
 
-	gohelper.setActive(arg_8_0._goneed, arg_8_1)
+	gohelper.setActive(self._goneed, show)
 end
 
-function var_0_0.destroy(arg_9_0)
-	arg_9_0._simageIcon:UnLoadImage()
-	arg_9_0:_removeEvents()
+function GiftInsightHeroChoiceListItem:destroy()
+	self._simageIcon:UnLoadImage()
+	self:_removeEvents()
 end
 
-return var_0_0
+return GiftInsightHeroChoiceListItem

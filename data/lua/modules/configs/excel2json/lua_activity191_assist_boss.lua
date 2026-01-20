@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_activity191_assist_boss", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_activity191_assist_boss.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_activity191_assist_boss", package.seeall)
+
+local lua_activity191_assist_boss = {}
+local fields = {
 	bossId = 1,
 	passiveSkills = 14,
 	powerMax = 10,
@@ -22,16 +24,16 @@ local var_0_1 = {
 	uiForm = 15,
 	bossDesc = 19
 }
-local var_0_2 = {
+local primaryKey = {
 	"bossId"
 }
-local var_0_3 = {
+local mlStringKey = {
 	bossDesc = 2,
 	name = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_activity191_assist_boss.onLoad(json)
+	lua_activity191_assist_boss.configList, lua_activity191_assist_boss.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_activity191_assist_boss

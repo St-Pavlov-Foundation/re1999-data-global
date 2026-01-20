@@ -1,107 +1,110 @@
-﻿module("modules.logic.fight.view.FightCommonalitySlider4", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightCommonalitySlider4.lua
 
-local var_0_0 = class("FightCommonalitySlider4", FightBaseView)
+module("modules.logic.fight.view.FightCommonalitySlider4", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.normal = gohelper.findChild(arg_1_0.viewGO, "normal")
-	arg_1_0.boss = gohelper.findChild(arg_1_0.viewGO, "boss")
-	arg_1_0.lowRoot = gohelper.findChild(arg_1_0.viewGO, "boss/unreleased_low")
-	arg_1_0.highRoot = gohelper.findChild(arg_1_0.viewGO, "boss/unreleased_high")
-	arg_1_0.text = gohelper.findChildText(arg_1_0.viewGO, "boss/#txt_time")
-	arg_1_0.ani = gohelper.onceAddComponent(arg_1_0.boss, typeof(UnityEngine.Animator))
-	arg_1_0.click = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "#btn_click")
+local FightCommonalitySlider4 = class("FightCommonalitySlider4", FightBaseView)
 
-	gohelper.setActive(arg_1_0.normal, false)
-	gohelper.setActive(arg_1_0.boss, true)
+function FightCommonalitySlider4:onInitView()
+	self.normal = gohelper.findChild(self.viewGO, "normal")
+	self.boss = gohelper.findChild(self.viewGO, "boss")
+	self.lowRoot = gohelper.findChild(self.viewGO, "boss/unreleased_low")
+	self.highRoot = gohelper.findChild(self.viewGO, "boss/unreleased_high")
+	self.text = gohelper.findChildText(self.viewGO, "boss/#txt_time")
+	self.ani = gohelper.onceAddComponent(self.boss, typeof(UnityEngine.Animator))
+	self.click = gohelper.findChildClickWithDefaultAudio(self.viewGO, "#btn_click")
+
+	gohelper.setActive(self.normal, false)
+	gohelper.setActive(self.boss, true)
 end
 
-function var_0_0.onConstructor(arg_2_0, arg_2_1)
-	arg_2_0.fightRoot = arg_2_1
+function FightCommonalitySlider4:onConstructor(root)
+	self.fightRoot = root
 end
 
-function var_0_0.onOpen(arg_3_0)
-	arg_3_0:_refreshData()
-	arg_3_0:com_registMsg(FightMsgId.FightProgressValueChange, arg_3_0._refreshData)
-	arg_3_0:com_registMsg(FightMsgId.FightMaxProgressValueChange, arg_3_0._refreshData)
-	arg_3_0:com_registFightEvent(FightEvent.OnRoundSequenceFinish, arg_3_0._refreshData)
-	arg_3_0:com_registFightEvent(FightEvent.OnSkillPlayStart, arg_3_0.onSkillPlayStart)
-	arg_3_0:com_registFightEvent(FightEvent.OnInvokeSkill, arg_3_0.onInvokeSkill)
-	arg_3_0:com_registClick(arg_3_0.click, arg_3_0.onClick)
+function FightCommonalitySlider4:onOpen()
+	self:_refreshData()
+	self:com_registMsg(FightMsgId.FightProgressValueChange, self._refreshData)
+	self:com_registMsg(FightMsgId.FightMaxProgressValueChange, self._refreshData)
+	self:com_registFightEvent(FightEvent.OnRoundSequenceFinish, self._refreshData)
+	self:com_registFightEvent(FightEvent.OnSkillPlayStart, self.onSkillPlayStart)
+	self:com_registFightEvent(FightEvent.OnInvokeSkill, self.onInvokeSkill)
+	self:com_registClick(self.click, self.onClick)
 end
 
-function var_0_0._refreshData(arg_4_0)
-	local var_4_0 = FightDataHelper.fieldMgr.progress
-	local var_4_1 = FightDataHelper.fieldMgr.progressMax - var_4_0
+function FightCommonalitySlider4:_refreshData()
+	local progress = FightDataHelper.fieldMgr.progress
+	local max = FightDataHelper.fieldMgr.progressMax
+	local curValue = max - progress
 
-	arg_4_0.text.text = var_4_1
+	self.text.text = curValue
 
-	if arg_4_0.lastValue ~= var_4_1 then
-		arg_4_0.ani:Play("refresh", 0, 0)
+	if self.lastValue ~= curValue then
+		self.ani:Play("refresh", 0, 0)
 		AudioMgr.instance:trigger(20280007)
 	end
 
-	if arg_4_0.lastValue == 0 and var_4_1 > 0 then
-		arg_4_0.text.text = 0
+	if self.lastValue == 0 and curValue > 0 then
+		self.text.text = 0
 	end
 
-	arg_4_0.lastValue = var_4_1
+	self.lastValue = curValue
 
-	arg_4_0:switchHighLow()
+	self:switchHighLow()
 end
 
-function var_0_0.switchHighLow(arg_5_0)
-	local var_5_0 = false
-	local var_5_1 = FightDataHelper.entityMgr:getMyVertin()
+function FightCommonalitySlider4:switchHighLow()
+	local isHigh = false
+	local vertin = FightDataHelper.entityMgr:getMyVertin()
 
-	if var_5_1 then
-		local var_5_2 = var_5_1:getBuffDic()
+	if vertin then
+		local buffDic = vertin:getBuffDic()
 
-		for iter_5_0, iter_5_1 in pairs(var_5_2) do
-			if iter_5_1.buffId == 110500302 then
-				var_5_0 = true
+		for k, v in pairs(buffDic) do
+			if v.buffId == 110500302 then
+				isHigh = true
 
 				break
 			end
 		end
 	end
 
-	gohelper.setActive(arg_5_0.lowRoot, not var_5_0)
-	gohelper.setActive(arg_5_0.highRoot, var_5_0)
+	gohelper.setActive(self.lowRoot, not isHigh)
+	gohelper.setActive(self.highRoot, isHigh)
 end
 
-function var_0_0.onSkillPlayStart(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
-	if arg_6_4 == "610408_fengxue" then
-		arg_6_0.ani:Play("play", 0, 0)
-		arg_6_0:_refreshData()
+function FightCommonalitySlider4:onSkillPlayStart(entity, skillId, fightStepData, timelineName)
+	if timelineName == "610408_fengxue" then
+		self.ani:Play("play", 0, 0)
+		self:_refreshData()
 	end
 
-	if arg_6_2 == 110240103 or arg_6_2 == 110240104 then
-		arg_6_0:switchHighLow()
-	end
-end
-
-function var_0_0.onInvokeSkill(arg_7_0, arg_7_1)
-	if arg_7_1.skillId == 110240103 or arg_7_1.skillId == 110240104 then
-		arg_7_0:switchHighLow()
+	if skillId == 110240103 or skillId == 110240104 then
+		self:switchHighLow()
 	end
 end
 
-function var_0_0.onClick(arg_8_0)
-	local var_8_0 = lua_skill.configDict[FightDataHelper.fieldMgr.param[FightParamData.ParamKey.ProgressSkill]]
+function FightCommonalitySlider4:onInvokeSkill(fightStepData)
+	if fightStepData.skillId == 110240103 or fightStepData.skillId == 110240104 then
+		self:switchHighLow()
+	end
+end
 
-	if not var_8_0 then
+function FightCommonalitySlider4:onClick()
+	local skillConfig = lua_skill.configDict[FightDataHelper.fieldMgr.param[FightParamData.ParamKey.ProgressSkill]]
+
+	if not skillConfig then
 		return
 	end
 
-	local var_8_1 = var_8_0.name
-	local var_8_2 = FightConfig.instance:getSkillEffectDesc(nil, var_8_0)
-	local var_8_3 = recthelper.uiPosToScreenPos(arg_8_0.viewGO.transform)
+	local title = skillConfig.name
+	local desc = FightConfig.instance:getSkillEffectDesc(nil, skillConfig)
+	local screenPos = recthelper.uiPosToScreenPos(self.viewGO.transform)
 
-	FightCommonTipController.instance:openCommonView(var_8_1, var_8_2, var_8_3, nil, nil, -150, -50)
+	FightCommonTipController.instance:openCommonView(title, desc, screenPos, nil, nil, -150, -50)
 end
 
-function var_0_0.onClose(arg_9_0)
+function FightCommonalitySlider4:onClose()
 	return
 end
 
-return var_0_0
+return FightCommonalitySlider4

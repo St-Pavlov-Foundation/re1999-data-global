@@ -1,68 +1,70 @@
-﻿module("modules.logic.versionactivity1_9.lucy.view.ActLucyTaskView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/lucy/view/ActLucyTaskView.lua
 
-local var_0_0 = class("ActLucyTaskView", BaseView)
+module("modules.logic.versionactivity1_9.lucy.view.ActLucyTaskView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._simagelangtxt = gohelper.findChildSingleImage(arg_1_0.viewGO, "Left/#simage_langtxt")
-	arg_1_0._gotime = gohelper.findChild(arg_1_0.viewGO, "Left/LimitTime/image_LimitTimeBG")
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_LimitTime")
-	arg_1_0._scrollTaskList = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_TaskList")
-	arg_1_0._goBackBtns = gohelper.findChild(arg_1_0.viewGO, "#go_lefttop")
+local ActLucyTaskView = class("ActLucyTaskView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ActLucyTaskView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._simagelangtxt = gohelper.findChildSingleImage(self.viewGO, "Left/#simage_langtxt")
+	self._gotime = gohelper.findChild(self.viewGO, "Left/LimitTime/image_LimitTimeBG")
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_LimitTime")
+	self._scrollTaskList = gohelper.findChildScrollRect(self.viewGO, "#scroll_TaskList")
+	self._goBackBtns = gohelper.findChild(self.viewGO, "#go_lefttop")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function ActLucyTaskView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function ActLucyTaskView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0.actId = VersionActivity1_9Enum.ActivityId.Lucy
+function ActLucyTaskView:_editableInitView()
+	self.actId = VersionActivity1_9Enum.ActivityId.Lucy
 
-	gohelper.setActive(arg_4_0._gotime, false)
+	gohelper.setActive(self._gotime, false)
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function ActLucyTaskView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_6_0._oneClaimReward, arg_6_0)
-	arg_6_0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_6_0._onFinishTask, arg_6_0)
-	RoleActivityTaskListModel.instance:init(arg_6_0.actId)
-	TaskDispatcher.runRepeat(arg_6_0._showLeftTime, arg_6_0, TimeUtil.OneMinuteSecond)
-	arg_6_0:_showLeftTime()
+function ActLucyTaskView:onOpen()
+	self:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, self._oneClaimReward, self)
+	self:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, self._onFinishTask, self)
+	RoleActivityTaskListModel.instance:init(self.actId)
+	TaskDispatcher.runRepeat(self._showLeftTime, self, TimeUtil.OneMinuteSecond)
+	self:_showLeftTime()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_mission_open)
 end
 
-function var_0_0._oneClaimReward(arg_7_0)
+function ActLucyTaskView:_oneClaimReward()
 	RoleActivityTaskListModel.instance:refreshData()
 end
 
-function var_0_0._onFinishTask(arg_8_0, arg_8_1)
-	if RoleActivityTaskListModel.instance:getById(arg_8_1) then
+function ActLucyTaskView:_onFinishTask(taskId)
+	if RoleActivityTaskListModel.instance:getById(taskId) then
 		RoleActivityTaskListModel.instance:refreshData()
 	end
 end
 
-function var_0_0._showLeftTime(arg_9_0)
-	arg_9_0._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(arg_9_0.actId)
+function ActLucyTaskView:_showLeftTime()
+	self._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(self.actId)
 end
 
-function var_0_0.onClose(arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._showLeftTime, arg_10_0)
+function ActLucyTaskView:onClose()
+	TaskDispatcher.cancelTask(self._showLeftTime, self)
 	RoleActivityTaskListModel.instance:clearData()
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function ActLucyTaskView:onDestroyView()
 	return
 end
 
-return var_0_0
+return ActLucyTaskView

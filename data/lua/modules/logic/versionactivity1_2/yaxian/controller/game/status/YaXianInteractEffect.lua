@@ -1,139 +1,141 @@
-﻿module("modules.logic.versionactivity1_2.yaxian.controller.game.status.YaXianInteractEffect", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/yaxian/controller/game/status/YaXianInteractEffect.lua
 
-local var_0_0 = class("YaXianInteractEffect", UserDataDispose)
+module("modules.logic.versionactivity1_2.yaxian.controller.game.status.YaXianInteractEffect", package.seeall)
 
-var_0_0.EffectPath = {
+local YaXianInteractEffect = class("YaXianInteractEffect", UserDataDispose)
+
+YaXianInteractEffect.EffectPath = {
 	[YaXianGameEnum.EffectType.Fight] = YaXianGameEnum.SceneResPath.FightEffect,
 	[YaXianGameEnum.EffectType.Assassinate] = YaXianGameEnum.SceneResPath.AssassinateEffect,
 	[YaXianGameEnum.EffectType.Die] = YaXianGameEnum.SceneResPath.DieEffect,
 	[YaXianGameEnum.EffectType.FightSuccess] = YaXianGameEnum.SceneResPath.FightSuccessEffect,
 	[YaXianGameEnum.EffectType.PlayerAssassinateEffect] = YaXianGameEnum.SceneResPath.PlayerAssassinateEffect
 }
-var_0_0.EffectAudio = {
+YaXianInteractEffect.EffectAudio = {
 	[YaXianGameEnum.EffectType.Assassinate] = AudioEnum.YaXian.Assassinate,
 	[YaXianGameEnum.EffectType.PlayerAssassinateEffect] = AudioEnum.YaXian.Assassinate,
 	[YaXianGameEnum.EffectType.Fight] = AudioEnum.YaXian.Fight,
 	[YaXianGameEnum.EffectType.Die] = AudioEnum.YaXian.Die
 }
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0:__onInit()
+function YaXianInteractEffect:ctor()
+	self:__onInit()
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.interactItem = arg_2_1
-	arg_2_0.interactMo = arg_2_1.interactMo
-	arg_2_0.effectGoContainer = arg_2_1.effectGoContainer
-	arg_2_0.config = arg_2_0.interactMo.config
-	arg_2_0.effectGoDict = arg_2_0:getUserDataTb_()
-	arg_2_0.assetItemList = arg_2_0:getUserDataTb_()
-	arg_2_0.loadedEffectList = {}
+function YaXianInteractEffect:init(interactItem)
+	self.interactItem = interactItem
+	self.interactMo = interactItem.interactMo
+	self.effectGoContainer = interactItem.effectGoContainer
+	self.config = self.interactMo.config
+	self.effectGoDict = self:getUserDataTb_()
+	self.assetItemList = self:getUserDataTb_()
+	self.loadedEffectList = {}
 end
 
-function var_0_0.showEffect(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	if arg_3_0.interactItem:isDelete() then
-		if arg_3_0.doneCallback then
-			arg_3_0.doneCallback(arg_3_0.callbackObj)
+function YaXianInteractEffect:showEffect(effectType, doneCallback, callbackObj)
+	if self.interactItem:isDelete() then
+		if self.doneCallback then
+			self.doneCallback(self.callbackObj)
 		end
 
 		return
 	end
 
-	arg_3_0.showEffectType = arg_3_0:getInputEffectType(arg_3_1)
-	arg_3_0.doneCallback = arg_3_2
-	arg_3_0.callbackObj = arg_3_3
+	self.showEffectType = self:getInputEffectType(effectType)
+	self.doneCallback = doneCallback
+	self.callbackObj = callbackObj
 
-	if not arg_3_0.effectGoDict[arg_3_0.showEffectType] then
-		arg_3_0:loadEffect()
+	if not self.effectGoDict[self.showEffectType] then
+		self:loadEffect()
 
 		return
 	end
 
 	YaXianGameController.instance:dispatchEvent(YaXianEvent.RefreshInteractStatus, false)
-	arg_3_0:_showEffect()
+	self:_showEffect()
 end
 
-function var_0_0.getInputEffectType(arg_4_0, arg_4_1)
-	if arg_4_1 == YaXianGameEnum.EffectType.Assassinate and arg_4_0.config.interactType == YaXianGameEnum.InteractType.Player then
+function YaXianInteractEffect:getInputEffectType(effectType)
+	if effectType == YaXianGameEnum.EffectType.Assassinate and self.config.interactType == YaXianGameEnum.InteractType.Player then
 		return YaXianGameEnum.EffectType.PlayerAssassinateEffect
 	end
 
-	return arg_4_1
+	return effectType
 end
 
-function var_0_0._showEffect(arg_5_0)
-	local var_5_0 = arg_5_0.effectGoDict[arg_5_0.showEffectType]
+function YaXianInteractEffect:_showEffect()
+	local go = self.effectGoDict[self.showEffectType]
 
-	gohelper.setActive(var_5_0, false)
-	gohelper.setActive(var_5_0, true)
-	YaXianGameController.instance:playEffectAudio(var_0_0.EffectAudio[arg_5_0.showEffectType])
-	TaskDispatcher.runDelay(arg_5_0.onEffectDone, arg_5_0, YaXianGameEnum.EffectDuration[arg_5_0.showEffectType] or YaXianGameEnum.DefaultEffectDuration)
+	gohelper.setActive(go, false)
+	gohelper.setActive(go, true)
+	YaXianGameController.instance:playEffectAudio(YaXianInteractEffect.EffectAudio[self.showEffectType])
+	TaskDispatcher.runDelay(self.onEffectDone, self, YaXianGameEnum.EffectDuration[self.showEffectType] or YaXianGameEnum.DefaultEffectDuration)
 end
 
-function var_0_0.onEffectDone(arg_6_0)
-	local var_6_0 = arg_6_0.effectGoDict[arg_6_0.showEffectType]
+function YaXianInteractEffect:onEffectDone()
+	local go = self.effectGoDict[self.showEffectType]
 
-	gohelper.setActive(var_6_0, false)
+	gohelper.setActive(go, false)
 
-	if arg_6_0.showEffectType == YaXianGameEnum.EffectType.Die then
-		YaXianGameController.instance:dispatchEvent(YaXianEvent.DeleteInteractObj, arg_6_0.interactItem.id)
+	if self.showEffectType == YaXianGameEnum.EffectType.Die then
+		YaXianGameController.instance:dispatchEvent(YaXianEvent.DeleteInteractObj, self.interactItem.id)
 	end
 
-	if arg_6_0.doneCallback then
-		arg_6_0.doneCallback(arg_6_0.callbackObj)
+	if self.doneCallback then
+		self.doneCallback(self.callbackObj)
 	end
 end
 
-function var_0_0.loadEffect(arg_7_0)
-	local var_7_0 = arg_7_0.showEffectType
+function YaXianInteractEffect:loadEffect()
+	local effectType = self.showEffectType
 
-	if tabletool.indexOf(arg_7_0.loadedEffectList, var_7_0) then
+	if tabletool.indexOf(self.loadedEffectList, effectType) then
 		return
 	end
 
-	table.insert(arg_7_0.loadedEffectList, var_7_0)
+	table.insert(self.loadedEffectList, effectType)
 
-	local var_7_1 = var_0_0.EffectPath[var_7_0]
+	local path = YaXianInteractEffect.EffectPath[effectType]
 
-	loadAbAsset(var_7_1, true, arg_7_0._onLoadCallback, arg_7_0)
+	loadAbAsset(path, true, self._onLoadCallback, self)
 end
 
-function var_0_0._onLoadCallback(arg_8_0, arg_8_1)
-	if arg_8_1.IsLoadSuccess then
-		table.insert(arg_8_0.assetItemList, arg_8_1)
-		arg_8_1:Retain()
+function YaXianInteractEffect:_onLoadCallback(assetItem)
+	if assetItem.IsLoadSuccess then
+		table.insert(self.assetItemList, assetItem)
+		assetItem:Retain()
 
-		local var_8_0 = gohelper.clone(arg_8_1:GetResource(), arg_8_0.effectGoContainer)
+		local instanceGo = gohelper.clone(assetItem:GetResource(), self.effectGoContainer)
 
-		arg_8_0.effectGoDict[arg_8_0.showEffectType] = var_8_0
+		self.effectGoDict[self.showEffectType] = instanceGo
 
-		gohelper.setActive(var_8_0, false)
-		arg_8_0:showEffect(arg_8_0.showEffectType, arg_8_0.doneCallback, arg_8_0.callbackObj)
+		gohelper.setActive(instanceGo, false)
+		self:showEffect(self.showEffectType, self.doneCallback, self.callbackObj)
 	end
 end
 
-function var_0_0.cancelTask(arg_9_0)
-	local var_9_0 = arg_9_0.effectGoDict[arg_9_0.showEffectType]
+function YaXianInteractEffect:cancelTask()
+	local go = self.effectGoDict[self.showEffectType]
 
-	gohelper.setActive(var_9_0, false)
-	TaskDispatcher.cancelTask(arg_9_0.onEffectDone, arg_9_0)
+	gohelper.setActive(go, false)
+	TaskDispatcher.cancelTask(self.onEffectDone, self)
 end
 
-function var_0_0.dispose(arg_10_0)
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0.loadedEffectList) do
-		removeAssetLoadCb(var_0_0.EffectPath[iter_10_1], arg_10_0._onLoadCallback, arg_10_0)
+function YaXianInteractEffect:dispose()
+	for _, effect in ipairs(self.loadedEffectList) do
+		removeAssetLoadCb(YaXianInteractEffect.EffectPath[effect], self._onLoadCallback, self)
 	end
 
-	if arg_10_0.assetItemList then
-		for iter_10_2, iter_10_3 in ipairs(arg_10_0.assetItemList) do
-			iter_10_3:Release()
+	if self.assetItemList then
+		for _, assetItem in ipairs(self.assetItemList) do
+			assetItem:Release()
 		end
 
-		arg_10_0.assetItemList = nil
+		self.assetItemList = nil
 	end
 
-	arg_10_0:cancelTask()
-	arg_10_0:__onDispose()
+	self:cancelTask()
+	self:__onDispose()
 end
 
-return var_0_0
+return YaXianInteractEffect

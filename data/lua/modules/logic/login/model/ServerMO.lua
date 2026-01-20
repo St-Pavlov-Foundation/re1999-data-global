@@ -1,19 +1,21 @@
-﻿module("modules.logic.login.model.ServerMO", package.seeall)
+﻿-- chunkname: @modules/logic/login/model/ServerMO.lua
 
-local var_0_0 = pureTable("ServerMO")
+module("modules.logic.login.model.ServerMO", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.id = 0
-	arg_1_0.name = nil
-	arg_1_0.state = nil
-	arg_1_0.prefix = nil
+local ServerMO = pureTable("ServerMO")
+
+function ServerMO:ctor()
+	self.id = 0
+	self.name = nil
+	self.state = nil
+	self.prefix = nil
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.id = arg_2_1.id
-	arg_2_0.name = arg_2_1.name
-	arg_2_0.state = arg_2_1.state
-	arg_2_0.prefix = arg_2_1.prefix
+function ServerMO:init(info)
+	self.id = info.id
+	self.name = info.name
+	self.state = info.state
+	self.prefix = info.prefix
 end
 
-return var_0_0
+return ServerMO

@@ -1,9 +1,11 @@
-﻿module("modules.logic.story.model.StoryStepMainHeroMo", package.seeall)
+﻿-- chunkname: @modules/logic/story/model/StoryStepMainHeroMo.lua
 
-local var_0_0 = pureTable("StoryStepMainHeroMo")
+module("modules.logic.story.model.StoryStepMainHeroMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.mouses = {
+local StoryStepMainHeroMo = pureTable("StoryStepMainHeroMo")
+
+function StoryStepMainHeroMo:ctor()
+	self.mouses = {
 		"",
 		"",
 		"",
@@ -13,7 +15,7 @@ function var_0_0.ctor(arg_1_0)
 		"",
 		""
 	}
-	arg_1_0.anims = {
+	self.anims = {
 		"",
 		"",
 		"",
@@ -23,7 +25,7 @@ function var_0_0.ctor(arg_1_0)
 		"",
 		""
 	}
-	arg_1_0.expressions = {
+	self.expressions = {
 		"",
 		"",
 		"",
@@ -35,10 +37,10 @@ function var_0_0.ctor(arg_1_0)
 	}
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.mouses = arg_2_1[1]
-	arg_2_0.anims = arg_2_1[2]
-	arg_2_0.expressions = arg_2_1[3]
+function StoryStepMainHeroMo:init(info)
+	self.mouses = info[1]
+	self.anims = info[2]
+	self.expressions = info[3]
 end
 
-return var_0_0
+return StoryStepMainHeroMo

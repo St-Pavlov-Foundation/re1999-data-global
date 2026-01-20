@@ -1,63 +1,91 @@
-﻿module("modules.logic.character.view.CharacterSkillDescripteNew", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterSkillDescripteNew.lua
 
-local var_0_0 = class("CharacterSkillDescripteNew", CharacterSkillDescripte)
+module("modules.logic.character.view.CharacterSkillDescripteNew", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtlv = gohelper.findChildText(arg_1_0.viewGO, "#txt_skillevel")
-	arg_1_0._goCurlevel = gohelper.findChild(arg_1_0.viewGO, "#go_curlevel")
-	arg_1_0._txtskillDesc = gohelper.findChildText(arg_1_0.viewGO, "#txt_descripte")
+local CharacterSkillDescripteNew = class("CharacterSkillDescripteNew", CharacterSkillDescripte)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CharacterSkillDescripteNew:onInitView()
+	self._txtlv = gohelper.findChildText(self.viewGO, "#txt_skillevel")
+	self._goCurlevel = gohelper.findChild(self.viewGO, "#go_curlevel")
+	self._txtskillDesc = gohelper.findChildText(self.viewGO, "#txt_descripte")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function CharacterSkillDescripteNew:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function CharacterSkillDescripteNew:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0.canvasGroup = gohelper.onceAddComponent(arg_4_0._txtskillDesc.gameObject, gohelper.Type_CanvasGroup)
-	arg_4_0.txtlvcanvasGroup = gohelper.onceAddComponent(arg_4_0._txtlv.gameObject, gohelper.Type_CanvasGroup)
-	arg_4_0.govx = gohelper.findChild(arg_4_0.viewGO, "vx")
+function CharacterSkillDescripteNew:_editableInitView()
+	self.canvasGroup = gohelper.onceAddComponent(self._txtskillDesc.gameObject, gohelper.Type_CanvasGroup)
+	self.txtlvcanvasGroup = gohelper.onceAddComponent(self._txtlv.gameObject, gohelper.Type_CanvasGroup)
+	self.govx = gohelper.findChild(self.viewGO, "vx")
 
-	gohelper.setActive(arg_4_0.govx, false)
+	gohelper.setActive(self.govx, false)
 
-	arg_4_0.vxAni = arg_4_0.govx:GetComponent(typeof(UnityEngine.Animation))
-	arg_4_0.aniLength = arg_4_0.vxAni.clip.length
+	self.vxAni = self.govx:GetComponent(typeof(UnityEngine.Animation))
+	self.aniLength = self.vxAni.clip.length
 end
 
-function var_0_0.updateInfo(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4, arg_5_5)
-	arg_5_0.parentView = arg_5_1
+function CharacterSkillDescripteNew:updateInfo(parentView, heroId, exSkillLevel, nowLevel, fromHeroDetailView, isReshape)
+	self.parentView = parentView
 
-	local var_5_0 = SkillConfig.instance:getherolevelexskillCO(arg_5_2, arg_5_3)
+	local exCo = SkillConfig.instance:getherolevelexskillCO(heroId, exSkillLevel)
 
-	arg_5_0._txtlv.text = arg_5_3
+	self._txtlv.text = exSkillLevel
 
-	gohelper.setActive(arg_5_0._goCurlevel, not arg_5_5 and arg_5_4 + 1 == arg_5_3)
+	gohelper.setActive(self._goCurlevel, not fromHeroDetailView and nowLevel + 1 == exSkillLevel)
 
-	if not var_5_0 then
+	if not exCo then
 		return 0
 	end
 
-	local var_5_1 = var_5_0.desc
+	self._normalDesc = exCo.desc
+	self.canvasGroup.alpha = nowLevel < exSkillLevel and 0.5 or 1
+	self.txtlvcanvasGroup.alpha = nowLevel < exSkillLevel and 0.5 or 1
 
-	arg_5_0.canvasGroup.alpha = arg_5_4 < arg_5_3 and 0.5 or 1
-	arg_5_0.txtlvcanvasGroup.alpha = arg_5_4 < arg_5_3 and 0.5 or 1
+	local heroMo = HeroModel.instance:getByHeroId(heroId)
 
-	local var_5_2 = GameUtil.getTextHeightByLine(arg_5_0._txtskillDesc, var_5_1, 28, -3) + 54
+	if heroMo and heroMo.destinyStoneMo then
+		local co = heroMo.destinyStoneMo:getExpExchangeSkillCo(exSkillLevel)
 
-	recthelper.setHeight(arg_5_0.viewGO.transform, var_5_2)
+		if co then
+			self._reshapeDesc = co.desc
+		end
+	end
 
-	arg_5_0._skillDesc = MonoHelper.addNoUpdateLuaComOnceToGo(arg_5_0._txtskillDesc.gameObject, SkillDescComp)
+	self._heroId = heroId
 
-	arg_5_0._skillDesc:updateInfo(arg_5_0._txtskillDesc, var_5_1, arg_5_2)
+	local height = self:_showReshape(isReshape)
 
-	return var_5_2
+	return height
 end
 
-return var_0_0
+function CharacterSkillDescripteNew:_showReshape(show)
+	local desc = show and self._reshapeDesc or self._normalDesc
+	local height = self:_refeshDesc(desc)
+
+	return height
+end
+
+function CharacterSkillDescripteNew:_refeshDesc(desc)
+	local height = GameUtil.getTextHeightByLine(self._txtskillDesc, desc, 28, -3)
+
+	height = height + 54
+
+	recthelper.setHeight(self.viewGO.transform, height)
+
+	self._skillDesc = self._skillDesc or MonoHelper.addNoUpdateLuaComOnceToGo(self._txtskillDesc.gameObject, SkillDescComp)
+
+	self._skillDesc:updateInfo(self._txtskillDesc, desc, self._heroId)
+
+	return height
+end
+
+return CharacterSkillDescripteNew

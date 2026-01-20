@@ -1,125 +1,127 @@
-﻿module("modules.logic.gm.view.yeshumei.GMYeShuMeiLine", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/yeshumei/GMYeShuMeiLine.lua
 
-local var_0_0 = class("GMYeShuMeiLine", LuaCompBase)
+module("modules.logic.gm.view.yeshumei.GMYeShuMeiLine", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._tr = arg_1_1.transform
-	arg_1_0._btnDelete = gohelper.findChildButton(arg_1_1, "btn/btn_delete")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_1, "#txt_name")
+local GMYeShuMeiLine = class("GMYeShuMeiLine", LuaCompBase)
+
+function GMYeShuMeiLine:init(go)
+	self.go = go
+	self._tr = go.transform
+	self._btnDelete = gohelper.findChildButton(go, "btn/btn_delete")
+	self._txtname = gohelper.findChildText(go, "#txt_name")
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._btnDelete:AddClickListener(arg_2_0._onDeleteClick, arg_2_0)
+function GMYeShuMeiLine:addEventListeners()
+	self._btnDelete:AddClickListener(self._onDeleteClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btnDelete:RemoveClickListener()
+function GMYeShuMeiLine:removeEventListeners()
+	self._btnDelete:RemoveClickListener()
 end
 
-function var_0_0._onDeleteClick(arg_4_0)
-	if arg_4_0._point2 == nil or arg_4_0._point1 == nil and GMYeShuMeiModel.instance:getCurLine() ~= nil then
-		arg_4_0:onDestroy()
-		GMYeShuMeiModel.instance:deleteLines(arg_4_0._lineData.id)
+function GMYeShuMeiLine:_onDeleteClick()
+	if self._point2 == nil or self._point1 == nil and GMYeShuMeiModel.instance:getCurLine() ~= nil then
+		self:onDestroy()
+		GMYeShuMeiModel.instance:deleteLines(self._lineData.id)
 		GMYeShuMeiModel.instance:setCurLine(nil)
 
 		return
 	end
 
-	if arg_4_0._lineData == nil then
+	if self._lineData == nil then
 		return
 	end
 
-	local var_4_0 = arg_4_0._lineData.id
+	local id = self._lineData.id
 
-	GMYeShuMeiModel.instance:deleteLines(var_4_0)
+	GMYeShuMeiModel.instance:deleteLines(id)
 
-	if arg_4_0._deleteCb ~= nil then
-		arg_4_0._deleteCb(arg_4_0._deleteObj, var_4_0)
+	if self._deleteCb ~= nil then
+		self._deleteCb(self._deleteObj, id)
 	end
 end
 
-function var_0_0.initData(arg_5_0, arg_5_1)
-	arg_5_0._lineData = arg_5_1
-	arg_5_0.id = arg_5_1.id
+function GMYeShuMeiLine:initData(data)
+	self._lineData = data
+	self.id = data.id
 end
 
-function var_0_0.updatePoint(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_0._point1 = arg_6_1
-	arg_6_0._point2 = arg_6_2
+function GMYeShuMeiLine:updatePoint(point1, point2)
+	self._point1 = point1
+	self._point2 = point2
 
-	arg_6_0:updateByPoint()
+	self:updateByPoint()
 end
 
-function var_0_0.addPoint(arg_7_0, arg_7_1)
-	if arg_7_0._point1 == nil then
-		arg_7_0._point1 = arg_7_1
+function GMYeShuMeiLine:addPoint(point)
+	if self._point1 == nil then
+		self._point1 = point
 	end
 
-	if arg_7_0._point2 == nil and arg_7_0._point1.id ~= arg_7_1.id then
-		arg_7_0._point2 = arg_7_1
+	if self._point2 == nil and self._point1.id ~= point.id then
+		self._point2 = point
 	end
 
-	arg_7_0:updateByPoint()
+	self:updateByPoint()
 
-	if arg_7_0._point1 ~= nil and arg_7_0._point2 ~= nil then
-		if arg_7_0._okCb ~= nil then
-			arg_7_0._okCb(arg_7_0._okObj, arg_7_0)
+	if self._point1 ~= nil and self._point2 ~= nil then
+		if self._okCb ~= nil then
+			self._okCb(self._okObj, self)
 		end
 
 		GMYeShuMeiModel.instance:setCurLine(nil)
 	end
 end
 
-function var_0_0.updateByPoint(arg_8_0)
-	if arg_8_0._point1 ~= nil and arg_8_0._point2 ~= nil then
-		local var_8_0, var_8_1 = arg_8_0._point1:getLocalPos()
-		local var_8_2, var_8_3 = arg_8_0._point2:getLocalPos()
+function GMYeShuMeiLine:updateByPoint()
+	if self._point1 ~= nil and self._point2 ~= nil then
+		local pos1X, pos1Y = self._point1:getLocalPos()
+		local pos2X, pos2Y = self._point2:getLocalPos()
 
-		arg_8_0:updateItem(var_8_0, var_8_1, var_8_2, var_8_3)
-		arg_8_0._lineData:updatePos(var_8_0, var_8_1, var_8_2, var_8_3)
-		arg_8_0._lineData:updatePoint(arg_8_0._point1.id, arg_8_0._point2.id)
+		self:updateItem(pos1X, pos1Y, pos2X, pos2Y)
+		self._lineData:updatePos(pos1X, pos1Y, pos2X, pos2Y)
+		self._lineData:updatePoint(self._point1.id, self._point2.id)
 
-		local var_8_4 = arg_8_0._getIndexCb(arg_8_0._getIndexObj, arg_8_0._lineData.id)
+		local index = self._getIndexCb(self._getIndexObj, self._lineData.id)
 
-		arg_8_0._txtname.text = string.format("%s - %s", arg_8_0._point1.id, arg_8_0._point2.id)
+		self._txtname.text = string.format("%s - %s", self._point1.id, self._point2.id)
 	end
 end
 
-function var_0_0.addDeleteCb(arg_9_0, arg_9_1, arg_9_2)
-	arg_9_0._deleteCb = arg_9_1
-	arg_9_0._deleteObj = arg_9_2
+function GMYeShuMeiLine:addDeleteCb(cb, obj)
+	self._deleteCb = cb
+	self._deleteObj = obj
 end
 
-function var_0_0.addAddCb(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_0._okCb = arg_10_1
-	arg_10_0._okObj = arg_10_2
+function GMYeShuMeiLine:addAddCb(cb, obj)
+	self._okCb = cb
+	self._okObj = obj
 end
 
-function var_0_0.addGetIndexCb(arg_11_0, arg_11_1, arg_11_2)
-	arg_11_0._getIndexCb = arg_11_1
-	arg_11_0._getIndexObj = arg_11_2
+function GMYeShuMeiLine:addGetIndexCb(cb, obj)
+	self._getIndexCb = cb
+	self._getIndexObj = obj
 end
 
-function var_0_0.updateItem(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4)
-	transformhelper.setLocalPosXY(arg_12_0._tr, arg_12_1, arg_12_2)
+function GMYeShuMeiLine:updateItem(beginX, beginY, endX, endY)
+	transformhelper.setLocalPosXY(self._tr, beginX, beginY)
 
-	local var_12_0 = MathUtil.vec2_length(arg_12_1, arg_12_2, arg_12_3, arg_12_4)
+	local width = MathUtil.vec2_length(beginX, beginY, endX, endY)
 
-	recthelper.setWidth(arg_12_0._tr, var_12_0)
+	recthelper.setWidth(self._tr, width)
 
-	local var_12_1 = MathUtil.calculateV2Angle(arg_12_3, arg_12_4, arg_12_1, arg_12_2)
+	local angle = MathUtil.calculateV2Angle(endX, endY, beginX, beginY)
 
-	transformhelper.setEulerAngles(arg_12_0._tr, 0, 0, var_12_1)
+	transformhelper.setEulerAngles(self._tr, 0, 0, angle)
 
-	local var_12_2 = arg_12_0._getIndexCb(arg_12_0._getIndexObj, arg_12_0._lineData.id)
+	local index = self._getIndexCb(self._getIndexObj, self._lineData.id)
 
-	arg_12_0._txtname.text = string.format("%s - %s", arg_12_0._point1.id, arg_12_0._point2.id)
+	self._txtname.text = string.format("%s - %s", self._point1.id, self._point2.id)
 end
 
-function var_0_0.onDestroy(arg_13_0)
-	gohelper.destroy(arg_13_0.go)
-	GMYeShuMeiModel.instance:deleteLines(arg_13_0.id)
+function GMYeShuMeiLine:onDestroy()
+	gohelper.destroy(self.go)
+	GMYeShuMeiModel.instance:deleteLines(self.id)
 end
 
-return var_0_0
+return GMYeShuMeiLine

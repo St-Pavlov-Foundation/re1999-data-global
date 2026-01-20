@@ -1,148 +1,150 @@
-﻿module("modules.logic.versionactivity2_4.dungeon.view.sudoku.VersionActivity2_4SudokuNumItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/dungeon/view/sudoku/VersionActivity2_4SudokuNumItem.lua
 
-local var_0_0 = class("VersionActivity2_4SudokuNumItem", ListScrollCellExtend)
-local var_0_1 = "#615448"
-local var_0_2 = "#22402d"
-local var_0_3 = "#a86363"
-local var_0_4 = "#991d1d"
-local var_0_5 = typeof(UnityEngine.Animation)
+module("modules.logic.versionactivity2_4.dungeon.view.sudoku.VersionActivity2_4SudokuNumItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._numText = gohelper.findChildText(arg_1_0.viewGO, "#txt_Num")
-	arg_1_0._btn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "clickArea")
-	arg_1_0._go_UnFilledBG = gohelper.findChild(arg_1_0.viewGO, "#go_UnFilledBG")
-	arg_1_0._go_Same = gohelper.findChild(arg_1_0.viewGO, "#go_Same")
-	arg_1_0._go_WrongCircle = gohelper.findChild(arg_1_0.viewGO, "#go_WrongCircle")
-	arg_1_0._go_WrongBG = gohelper.findChild(arg_1_0.viewGO, "#go_WrongBG")
-	arg_1_0._go_CorrectBG = gohelper.findChild(arg_1_0.viewGO, "#go_CorrectBG")
-	arg_1_0._wrongBGAnim = arg_1_0._go_WrongBG:GetComponent(var_0_5)
-	arg_1_0._correctAnim = arg_1_0._go_CorrectBG:GetComponent(var_0_5)
-	arg_1_0._sameAnim = arg_1_0._go_Same:GetComponent(var_0_5)
+local VersionActivity2_4SudokuNumItem = class("VersionActivity2_4SudokuNumItem", ListScrollCellExtend)
+local normalNumColor = "#615448"
+local correctNumColor = "#22402d"
+local wrongNumColor = "#a86363"
+local editableNumWrongColor = "#991d1d"
+local animationType = typeof(UnityEngine.Animation)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity2_4SudokuNumItem:onInitView()
+	self._numText = gohelper.findChildText(self.viewGO, "#txt_Num")
+	self._btn = gohelper.findChildButtonWithAudio(self.viewGO, "clickArea")
+	self._go_UnFilledBG = gohelper.findChild(self.viewGO, "#go_UnFilledBG")
+	self._go_Same = gohelper.findChild(self.viewGO, "#go_Same")
+	self._go_WrongCircle = gohelper.findChild(self.viewGO, "#go_WrongCircle")
+	self._go_WrongBG = gohelper.findChild(self.viewGO, "#go_WrongBG")
+	self._go_CorrectBG = gohelper.findChild(self.viewGO, "#go_CorrectBG")
+	self._wrongBGAnim = self._go_WrongBG:GetComponent(animationType)
+	self._correctAnim = self._go_CorrectBG:GetComponent(animationType)
+	self._sameAnim = self._go_Same:GetComponent(animationType)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btn:AddClickListener(arg_2_0._clickItem, arg_2_0)
+function VersionActivity2_4SudokuNumItem:addEvents()
+	self._btn:AddClickListener(self._clickItem, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btn:RemoveClickListener()
+function VersionActivity2_4SudokuNumItem:removeEvents()
+	self._btn:RemoveClickListener()
 end
 
-function var_0_0._clickItem(arg_4_0)
-	VersionActivity2_4SudokuModel.instance:selectItem(arg_4_0._idx)
-	VersionActivity2_4SudokuController.instance:dispatchEvent(VersionActivity2_4DungeonEvent.SudokuSelectItem, arg_4_0._idx)
+function VersionActivity2_4SudokuNumItem:_clickItem()
+	VersionActivity2_4SudokuModel.instance:selectItem(self._idx)
+	VersionActivity2_4SudokuController.instance:dispatchEvent(VersionActivity2_4DungeonEvent.SudokuSelectItem, self._idx)
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	gohelper.setActive(arg_5_0._go_Same, false)
-	gohelper.setActive(arg_5_0._go_WrongCircle, false)
+function VersionActivity2_4SudokuNumItem:_editableInitView()
+	gohelper.setActive(self._go_Same, false)
+	gohelper.setActive(self._go_WrongCircle, false)
 end
 
-function var_0_0._editableAddEvents(arg_6_0)
+function VersionActivity2_4SudokuNumItem:_editableAddEvents()
 	return
 end
 
-function var_0_0._editableRemoveEvents(arg_7_0)
+function VersionActivity2_4SudokuNumItem:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.setItemData(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4)
-	arg_8_0._num = arg_8_1
-	arg_8_0._idx = arg_8_2
-	arg_8_0._cellIdx = arg_8_3
-	arg_8_0._groupIdx = arg_8_4
-	arg_8_0._editable = not arg_8_0._num or arg_8_0._num == 0
+function VersionActivity2_4SudokuNumItem:setItemData(num, idx, cellIdx, groupIdx)
+	self._num = num
+	self._idx = idx
+	self._cellIdx = cellIdx
+	self._groupIdx = groupIdx
+	self._editable = not self._num or self._num == 0
 
-	arg_8_0:refreshUI()
-	gohelper.setActive(arg_8_0._go_UnFilledBG, not arg_8_0._num or arg_8_0._num == 0)
+	self:refreshUI()
+	gohelper.setActive(self._go_UnFilledBG, not self._num or self._num == 0)
 end
 
-function var_0_0.setItemVaild(arg_9_0, arg_9_1)
-	arg_9_0._valid = arg_9_1
+function VersionActivity2_4SudokuNumItem:setItemVaild(valid)
+	self._valid = valid
 end
 
-function var_0_0.setItemNum(arg_10_0, arg_10_1)
-	arg_10_0._num = arg_10_1
+function VersionActivity2_4SudokuNumItem:setItemNum(num)
+	self._num = num
 end
 
-function var_0_0.getItemNum(arg_11_0)
-	return arg_11_0._num
+function VersionActivity2_4SudokuNumItem:getItemNum()
+	return self._num
 end
 
-function var_0_0.getItemIdx(arg_12_0)
-	return arg_12_0._idx
+function VersionActivity2_4SudokuNumItem:getItemIdx()
+	return self._idx
 end
 
-function var_0_0.isEditable(arg_13_0)
-	return arg_13_0._editable
+function VersionActivity2_4SudokuNumItem:isEditable()
+	return self._editable
 end
 
-function var_0_0.refreshUI(arg_14_0)
-	arg_14_0._numText.text = arg_14_0._num
+function VersionActivity2_4SudokuNumItem:refreshUI()
+	self._numText.text = self._num
 end
 
-function var_0_0.refreshSelectView(arg_15_0, arg_15_1)
-	gohelper.setActive(arg_15_0._go_WrongCircle, arg_15_1)
+function VersionActivity2_4SudokuNumItem:refreshSelectView(isSelected)
+	gohelper.setActive(self._go_WrongCircle, isSelected)
 
-	local var_15_0 = arg_15_0._editable and var_0_4 or var_0_3
-	local var_15_1 = var_0_1
+	local wrongColor = self._editable and editableNumWrongColor or wrongNumColor
+	local numColor = normalNumColor
 
-	if arg_15_0._editable then
-		var_15_1 = arg_15_0._valid and var_0_2 or var_15_0
+	if self._editable then
+		numColor = self._valid and correctNumColor or wrongColor
 	else
-		var_15_1 = var_0_1
+		numColor = normalNumColor
 	end
 
-	SLFramework.UGUI.GuiHelper.SetColor(arg_15_0._numText, var_15_1)
+	SLFramework.UGUI.GuiHelper.SetColor(self._numText, numColor)
 
-	if not arg_15_0._editable then
-		gohelper.setActive(arg_15_0._go_CorrectBG, false)
-		gohelper.setActive(arg_15_0._go_UnFilledBG, false)
-	elseif arg_15_0._num == 0 or arg_15_0._valid then
-		gohelper.setActive(arg_15_0._go_CorrectBG, arg_15_1)
-		gohelper.setActive(arg_15_0._go_UnFilledBG, not arg_15_1)
+	if not self._editable then
+		gohelper.setActive(self._go_CorrectBG, false)
+		gohelper.setActive(self._go_UnFilledBG, false)
+	elseif self._num == 0 or self._valid then
+		gohelper.setActive(self._go_CorrectBG, isSelected)
+		gohelper.setActive(self._go_UnFilledBG, not isSelected)
 	else
-		gohelper.setActive(arg_15_0._go_CorrectBG, false)
-		gohelper.setActive(arg_15_0._go_UnFilledBG, false)
+		gohelper.setActive(self._go_CorrectBG, false)
+		gohelper.setActive(self._go_UnFilledBG, false)
 	end
 end
 
-function var_0_0.refreshValidView(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
-	arg_16_0._wrongBGAnim.enabled = not arg_16_3
-	arg_16_0._correctAnim.enabled = not arg_16_3
+function VersionActivity2_4SudokuNumItem:refreshValidView(valid, show, muteAni)
+	self._wrongBGAnim.enabled = not muteAni
+	self._correctAnim.enabled = not muteAni
 
-	gohelper.setActive(arg_16_0._go_CorrectBG, arg_16_1 and arg_16_2)
-	gohelper.setActive(arg_16_0._go_WrongBG, not arg_16_1 and arg_16_2)
-	gohelper.setActive(arg_16_0._go_UnFilledBG, arg_16_0._editable and not arg_16_2)
+	gohelper.setActive(self._go_CorrectBG, valid and show)
+	gohelper.setActive(self._go_WrongBG, not valid and show)
+	gohelper.setActive(self._go_UnFilledBG, self._editable and not show)
 
-	local var_16_0 = arg_16_0._editable and var_0_4 or var_0_3
-	local var_16_1 = var_0_1
+	local wrongColor = self._editable and editableNumWrongColor or wrongNumColor
+	local numColor = normalNumColor
 
-	if arg_16_0._editable then
-		var_16_1 = arg_16_1 and var_0_2 or var_16_0
+	if self._editable then
+		numColor = valid and correctNumColor or wrongColor
 	else
-		var_16_1 = var_0_1
+		numColor = normalNumColor
 	end
 
-	SLFramework.UGUI.GuiHelper.SetColor(arg_16_0._numText, var_16_1)
+	SLFramework.UGUI.GuiHelper.SetColor(self._numText, numColor)
 end
 
-function var_0_0.refreshSameNumView(arg_17_0, arg_17_1, arg_17_2)
-	gohelper.setActive(arg_17_0._go_Same, arg_17_1)
+function VersionActivity2_4SudokuNumItem:refreshSameNumView(show, muteAni)
+	gohelper.setActive(self._go_Same, show)
 
-	arg_17_0._sameAnim.enabled = not arg_17_2
+	self._sameAnim.enabled = not muteAni
 end
 
-function var_0_0.refreshGuideView(arg_18_0, arg_18_1)
-	gohelper.setActive(arg_18_0._go_UnFilledBG, arg_18_0._editable and not arg_18_1)
+function VersionActivity2_4SudokuNumItem:refreshGuideView(isGuide)
+	gohelper.setActive(self._go_UnFilledBG, self._editable and not isGuide)
 end
 
-function var_0_0.onDestroyView(arg_19_0)
+function VersionActivity2_4SudokuNumItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return VersionActivity2_4SudokuNumItem

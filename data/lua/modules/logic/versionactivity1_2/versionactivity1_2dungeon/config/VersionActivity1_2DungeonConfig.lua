@@ -1,90 +1,94 @@
-﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.config.VersionActivity1_2DungeonConfig", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/versionactivity1_2dungeon/config/VersionActivity1_2DungeonConfig.lua
 
-local var_0_0 = class("VersionActivity1_2DungeonConfig", BaseConfig)
+module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.config.VersionActivity1_2DungeonConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._elements = {}
+local VersionActivity1_2DungeonConfig = class("VersionActivity1_2DungeonConfig", BaseConfig)
+
+function VersionActivity1_2DungeonConfig:ctor()
+	self._elements = {}
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function VersionActivity1_2DungeonConfig:reqConfigNames()
 	return {
 		"activity116_building",
 		"activity116_episode_sp"
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity116_building" then
-		arg_3_0:_initConfig()
+function VersionActivity1_2DungeonConfig:onConfigLoaded(configName, configTable)
+	if configName == "activity116_building" then
+		self:_initConfig()
 	end
 end
 
-function var_0_0._initConfig(arg_4_0)
-	for iter_4_0, iter_4_1 in ipairs(lua_activity116_building.configList) do
-		arg_4_0._elements[iter_4_1.elementId] = arg_4_0._elements[iter_4_1.elementId] or {}
-		arg_4_0._elements[iter_4_1.elementId][iter_4_1.id] = iter_4_1
+function VersionActivity1_2DungeonConfig:_initConfig()
+	for i, v in ipairs(lua_activity116_building.configList) do
+		self._elements[v.elementId] = self._elements[v.elementId] or {}
+		self._elements[v.elementId][v.id] = v
 	end
 end
 
-function var_0_0.getBuildingConfigsByElementID(arg_5_0, arg_5_1)
-	return arg_5_0._elements and arg_5_0._elements[arg_5_1]
+function VersionActivity1_2DungeonConfig:getBuildingConfigsByElementID(element_id)
+	return self._elements and self._elements[element_id]
 end
 
-function var_0_0.get1_2EpisodeMapConfig(arg_6_0, arg_6_1)
-	local var_6_0 = DungeonConfig.instance:getEpisodeCO(arg_6_1)
-	local var_6_1 = arg_6_1 % 100
-	local var_6_2 = DungeonConfig.instance:getChapterEpisodeCOList(VersionActivity1_2DungeonEnum.DungeonChapterId.Activity1_2DungeonNormal1)[1].id
-	local var_6_3 = var_6_2 - var_6_2 % 100 + var_6_1
-	local var_6_4 = DungeonConfig.instance:getEpisodeCO(var_6_3)
+function VersionActivity1_2DungeonConfig:get1_2EpisodeMapConfig(episodeId)
+	local episodeCo = DungeonConfig.instance:getEpisodeCO(episodeId)
+	local num = episodeId % 100
+	local id = DungeonConfig.instance:getChapterEpisodeCOList(VersionActivity1_2DungeonEnum.DungeonChapterId.Activity1_2DungeonNormal1)[1].id
 
-	return DungeonConfig.instance:getChapterMapCfg(var_6_4.chapterId, var_6_4.preEpisode)
+	id = id - id % 100 + num
+	episodeCo = DungeonConfig.instance:getEpisodeCO(id)
+
+	return DungeonConfig.instance:getChapterMapCfg(episodeCo.chapterId, episodeCo.preEpisode)
 end
 
-function var_0_0.getEpisodeIndex(arg_7_0, arg_7_1)
-	local var_7_0 = DungeonConfig.instance:get1_2VersionActivityEpisodeCoList(arg_7_1)
-	local var_7_1 = var_7_0 and DungeonConfig.instance:getEpisodeCO(var_7_0[1]) or DungeonConfig.instance:getEpisodeCO(arg_7_1)
+function VersionActivity1_2DungeonConfig:getEpisodeIndex(episodeId)
+	local episodeList = DungeonConfig.instance:get1_2VersionActivityEpisodeCoList(episodeId)
+	local config = episodeList and DungeonConfig.instance:getEpisodeCO(episodeList[1]) or DungeonConfig.instance:getEpisodeCO(episodeId)
 
-	if var_7_1.chapterId == VersionActivity1_2DungeonEnum.DungeonChapterId.Activity1_2DungeonHard then
-		local var_7_2 = arg_7_1 % 100
-		local var_7_3 = DungeonConfig.instance:getChapterEpisodeCOList(VersionActivity1_2DungeonEnum.DungeonChapterId.Activity1_2DungeonNormal1)[1].id
-		local var_7_4 = var_7_3 - var_7_3 % 100 + var_7_2
+	if config.chapterId == VersionActivity1_2DungeonEnum.DungeonChapterId.Activity1_2DungeonHard then
+		local num = episodeId % 100
+		local id = DungeonConfig.instance:getChapterEpisodeCOList(VersionActivity1_2DungeonEnum.DungeonChapterId.Activity1_2DungeonNormal1)[1].id
 
-		return DungeonConfig.instance:getChapterEpisodeIndexWithSP(VersionActivity1_2DungeonEnum.DungeonChapterId.Activity1_2DungeonNormal1, var_7_4)
+		id = id - id % 100 + num
+
+		return DungeonConfig.instance:getChapterEpisodeIndexWithSP(VersionActivity1_2DungeonEnum.DungeonChapterId.Activity1_2DungeonNormal1, id)
 	else
-		return DungeonConfig.instance:getChapterEpisodeIndexWithSP(var_7_1.chapterId, var_7_1.id)
+		return DungeonConfig.instance:getChapterEpisodeIndexWithSP(config.chapterId, config.id)
 	end
 end
 
-function var_0_0.getConfigByEpisodeId(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0._buildingType4 or arg_8_0:getType4List()
+function VersionActivity1_2DungeonConfig:getConfigByEpisodeId(episodeId)
+	local tarList = self._buildingType4 or self:getType4List()
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_0) do
-		local var_8_1 = string.splitToNumber(iter_8_1.configType, "#")
+	for i, v in ipairs(tarList) do
+		local episodeArr = string.splitToNumber(v.configType, "#")
 
-		for iter_8_2, iter_8_3 in ipairs(var_8_1) do
-			if iter_8_3 == arg_8_1 then
-				return iter_8_1
+		for index, id in ipairs(episodeArr) do
+			if id == episodeId then
+				return v
 			end
 		end
 	end
 end
 
-function var_0_0.getType4List(arg_9_0)
-	if arg_9_0._buildingType4 then
-		return arg_9_0._buildingType4
+function VersionActivity1_2DungeonConfig:getType4List()
+	if self._buildingType4 then
+		return self._buildingType4
 	end
 
-	arg_9_0._buildingType4 = {}
+	self._buildingType4 = {}
 
-	for iter_9_0, iter_9_1 in ipairs(lua_activity116_building.configList) do
-		if iter_9_1.buildingType == 4 then
-			table.insert(arg_9_0._buildingType4, iter_9_1)
+	for i, v in ipairs(lua_activity116_building.configList) do
+		if v.buildingType == 4 then
+			table.insert(self._buildingType4, v)
 		end
 	end
 
-	return arg_9_0._buildingType4
+	return self._buildingType4
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity1_2DungeonConfig.instance = VersionActivity1_2DungeonConfig.New()
 
-return var_0_0
+return VersionActivity1_2DungeonConfig

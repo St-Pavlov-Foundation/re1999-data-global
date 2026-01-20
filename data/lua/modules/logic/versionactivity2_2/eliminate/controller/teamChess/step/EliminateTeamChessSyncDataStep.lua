@@ -1,23 +1,25 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.EliminateTeamChessSyncDataStep", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/controller/teamChess/step/EliminateTeamChessSyncDataStep.lua
 
-local var_0_0 = class("EliminateTeamChessSyncDataStep", EliminateTeamChessStepBase)
+module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.EliminateTeamChessSyncDataStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = false
-	local var_1_1 = EliminateTeamChessModel.instance:getCurTeamChessWar()
-	local var_1_2 = EliminateTeamChessModel.instance:getServerTeamChessWar()
+local EliminateTeamChessSyncDataStep = class("EliminateTeamChessSyncDataStep", EliminateTeamChessStepBase)
 
-	if var_1_2 and var_1_1 then
-		var_1_0 = var_1_1:updateCondition(var_1_2.winCondition, var_1_2.extraWinCondition)
+function EliminateTeamChessSyncDataStep:onStart()
+	local conditionIsChange = false
+	local curTeamChessWar = EliminateTeamChessModel.instance:getCurTeamChessWar()
+	local curServerTeamChessWar = EliminateTeamChessModel.instance:getServerTeamChessWar()
 
-		var_1_1:updateForecastBehavior(var_1_2.enemyCharacter.forecastBehavior)
+	if curServerTeamChessWar and curTeamChessWar then
+		conditionIsChange = curTeamChessWar:updateCondition(curServerTeamChessWar.winCondition, curServerTeamChessWar.extraWinCondition)
+
+		curTeamChessWar:updateForecastBehavior(curServerTeamChessWar.enemyCharacter.forecastBehavior)
 	end
 
-	if var_1_0 then
+	if conditionIsChange then
 		EliminateLevelController.instance:dispatchEvent(EliminateChessEvent.LevelConditionChange)
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return EliminateTeamChessSyncDataStep

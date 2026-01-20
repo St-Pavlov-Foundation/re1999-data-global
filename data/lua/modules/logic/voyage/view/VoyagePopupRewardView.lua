@@ -1,120 +1,122 @@
-﻿module("modules.logic.voyage.view.VoyagePopupRewardView", package.seeall)
+﻿-- chunkname: @modules/logic/voyage/view/VoyagePopupRewardView.lua
 
-local var_0_0 = class("VoyagePopupRewardView", BaseView)
+module("modules.logic.voyage.view.VoyagePopupRewardView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goclickmask = gohelper.findChild(arg_1_0.viewGO, "Root/#go_clickmask")
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_bg")
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "Root/desc_scroll/viewport/#txt_title")
-	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "Root/reward_scroll/viewport/content/#go_normal")
-	arg_1_0._imagenum = gohelper.findChildImage(arg_1_0.viewGO, "Root/reward_scroll/viewport/content/#go_normal/#image_num")
-	arg_1_0._goimgall = gohelper.findChild(arg_1_0.viewGO, "Root/reward_scroll/viewport/content/#go_normal/#go_imgall")
-	arg_1_0._txttaskdesc = gohelper.findChildText(arg_1_0.viewGO, "Root/reward_scroll/viewport/content/#go_normal/#txt_taskdesc")
-	arg_1_0._goRewards = gohelper.findChild(arg_1_0.viewGO, "Root/reward_scroll/viewport/content/#go_normal/scroll_Rewards/Viewport/#go_Rewards")
-	arg_1_0._btnjump = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/#btn_jump")
-	arg_1_0._gomail = gohelper.findChild(arg_1_0.viewGO, "Root/#btn_jump/#go_mail")
-	arg_1_0._godungeon = gohelper.findChild(arg_1_0.viewGO, "Root/#btn_jump/#go_dungeon")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/#btn_close")
+local VoyagePopupRewardView = class("VoyagePopupRewardView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VoyagePopupRewardView:onInitView()
+	self._goclickmask = gohelper.findChild(self.viewGO, "Root/#go_clickmask")
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "Root/#simage_bg")
+	self._txttitle = gohelper.findChildText(self.viewGO, "Root/desc_scroll/viewport/#txt_title")
+	self._gonormal = gohelper.findChild(self.viewGO, "Root/reward_scroll/viewport/content/#go_normal")
+	self._imagenum = gohelper.findChildImage(self.viewGO, "Root/reward_scroll/viewport/content/#go_normal/#image_num")
+	self._goimgall = gohelper.findChild(self.viewGO, "Root/reward_scroll/viewport/content/#go_normal/#go_imgall")
+	self._txttaskdesc = gohelper.findChildText(self.viewGO, "Root/reward_scroll/viewport/content/#go_normal/#txt_taskdesc")
+	self._goRewards = gohelper.findChild(self.viewGO, "Root/reward_scroll/viewport/content/#go_normal/scroll_Rewards/Viewport/#go_Rewards")
+	self._btnjump = gohelper.findChildButtonWithAudio(self.viewGO, "Root/#btn_jump")
+	self._gomail = gohelper.findChild(self.viewGO, "Root/#btn_jump/#go_mail")
+	self._godungeon = gohelper.findChild(self.viewGO, "Root/#btn_jump/#go_dungeon")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "Root/#btn_close")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnjump:AddClickListener(arg_2_0._btnjumpOnClick, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function VoyagePopupRewardView:addEvents()
+	self._btnjump:AddClickListener(self._btnjumpOnClick, self)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnjump:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
+function VoyagePopupRewardView:removeEvents()
+	self._btnjump:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btnjumpOnClick(arg_4_0)
+function VoyagePopupRewardView:_btnjumpOnClick()
 	VoyageController.instance:jump()
 end
 
-function var_0_0._btncloseOnClick(arg_5_0)
-	arg_5_0:closeThis()
+function VoyagePopupRewardView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0:addClickCb(gohelper.getClick(arg_6_0._goclickmask), arg_6_0.closeThis, arg_6_0)
+function VoyagePopupRewardView:_editableInitView()
+	self:addClickCb(gohelper.getClick(self._goclickmask), self.closeThis, self)
 
-	arg_6_0._txttitle.text = VoyageConfig.instance:getTitle()
+	self._txttitle.text = VoyageConfig.instance:getTitle()
 
-	gohelper.setActive(arg_6_0._gomail, false)
-	gohelper.setActive(arg_6_0._godungeon, false)
+	gohelper.setActive(self._gomail, false)
+	gohelper.setActive(self._godungeon, false)
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
-	arg_7_0:_refresh()
+function VoyagePopupRewardView:onUpdateParam()
+	self:_refresh()
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0:_refresh()
-	VoyageController.instance:registerCallback(VoyageEvent.OnReceiveAct1001UpdatePush, arg_8_0._refresh, arg_8_0)
-	VoyageController.instance:registerCallback(VoyageEvent.OnReceiveAct1001GetInfoReply, arg_8_0._refresh, arg_8_0)
+function VoyagePopupRewardView:onOpen()
+	self:_refresh()
+	VoyageController.instance:registerCallback(VoyageEvent.OnReceiveAct1001UpdatePush, self._refresh, self)
+	VoyageController.instance:registerCallback(VoyageEvent.OnReceiveAct1001GetInfoReply, self._refresh, self)
 end
 
-function var_0_0.onClose(arg_9_0)
-	VoyageController.instance:unregisterCallback(VoyageEvent.OnReceiveAct1001GetInfoReply, arg_9_0._refresh, arg_9_0)
-	VoyageController.instance:unregisterCallback(VoyageEvent.OnReceiveAct1001UpdatePush, arg_9_0._refresh, arg_9_0)
+function VoyagePopupRewardView:onClose()
+	VoyageController.instance:unregisterCallback(VoyageEvent.OnReceiveAct1001GetInfoReply, self._refresh, self)
+	VoyageController.instance:unregisterCallback(VoyageEvent.OnReceiveAct1001UpdatePush, self._refresh, self)
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	GameUtil.onDestroyViewMemberList(arg_10_0, "_itemList")
+function VoyagePopupRewardView:onDestroyView()
+	GameUtil.onDestroyViewMemberList(self, "_itemList")
 end
 
-function var_0_0._createOrRefreshList(arg_11_0)
-	arg_11_0:_createItemList()
+function VoyagePopupRewardView:_createOrRefreshList()
+	self:_createItemList()
 
-	for iter_11_0, iter_11_1 in pairs(arg_11_0._itemList) do
-		iter_11_1:onRefresh()
+	for _, item in pairs(self._itemList) do
+		item:onRefresh()
 	end
 end
 
-function var_0_0._createItemList(arg_12_0)
-	if arg_12_0._itemList then
+function VoyagePopupRewardView:_createItemList()
+	if self._itemList then
 		return
 	end
 
-	arg_12_0._itemList = {}
+	self._itemList = {}
 
-	gohelper.setActive(arg_12_0._gonormal, true)
+	gohelper.setActive(self._gonormal, true)
 
-	local var_12_0 = VoyageConfig.instance:getTaskList()
+	local taskList = VoyageConfig.instance:getTaskList()
 
-	for iter_12_0, iter_12_1 in ipairs(var_12_0) do
-		local var_12_1 = arg_12_0:_createItem(VoyagePopupRewardViewItem)
+	for i, v in ipairs(taskList) do
+		local item = self:_createItem(VoyagePopupRewardViewItem)
 
-		var_12_1._index = iter_12_0
-		var_12_1._view = arg_12_0
+		item._index = i
+		item._view = self
 
-		var_12_1:onUpdateMO(iter_12_1)
-		table.insert(arg_12_0._itemList, var_12_1)
+		item:onUpdateMO(v)
+		table.insert(self._itemList, item)
 	end
 
-	gohelper.setActive(arg_12_0._gonormal, false)
+	gohelper.setActive(self._gonormal, false)
 end
 
-function var_0_0._refresh(arg_13_0)
-	arg_13_0:_createOrRefreshList()
-	arg_13_0:_refreshJumpBtn()
+function VoyagePopupRewardView:_refresh()
+	self:_createOrRefreshList()
+	self:_refreshJumpBtn()
 end
 
-function var_0_0._createItem(arg_14_0, arg_14_1)
-	local var_14_0 = gohelper.cloneInPlace(arg_14_0._gonormal, arg_14_1.__name)
+function VoyagePopupRewardView:_createItem(class)
+	local go = gohelper.cloneInPlace(self._gonormal, class.__name)
 
-	return MonoHelper.addNoUpdateLuaComOnceToGo(var_14_0, arg_14_1)
+	return MonoHelper.addNoUpdateLuaComOnceToGo(go, class)
 end
 
-function var_0_0._refreshJumpBtn(arg_15_0)
-	local var_15_0 = VoyageModel.instance:hasAnyRewardAvailable()
+function VoyagePopupRewardView:_refreshJumpBtn()
+	local isAnyRewardAvailable = VoyageModel.instance:hasAnyRewardAvailable()
 
-	gohelper.setActive(arg_15_0._gomail, var_15_0)
-	gohelper.setActive(arg_15_0._godungeon, not var_15_0)
+	gohelper.setActive(self._gomail, isAnyRewardAvailable)
+	gohelper.setActive(self._godungeon, not isAnyRewardAvailable)
 end
 
-return var_0_0
+return VoyagePopupRewardView

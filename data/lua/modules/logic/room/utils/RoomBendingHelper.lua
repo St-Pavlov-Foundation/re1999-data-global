@@ -1,290 +1,296 @@
-﻿module("modules.logic.room.utils.RoomBendingHelper", package.seeall)
+﻿-- chunkname: @modules/logic/room/utils/RoomBendingHelper.lua
 
-local var_0_0 = {}
+module("modules.logic.room.utils.RoomBendingHelper", package.seeall)
 
-var_0_0.bendingAmount = 0
-var_0_0.bendingPosition = Vector3(0, 0, 0)
-var_0_0._bendingPosX = 0
-var_0_0._bendingPosY = 0
-var_0_0._bendingPosZ = 0
+local RoomBendingHelper = {}
 
-function var_0_0.setBendingAmount(arg_1_0)
-	var_0_0.bendingAmount = arg_1_0
+RoomBendingHelper.bendingAmount = 0
+RoomBendingHelper.bendingPosition = Vector3(0, 0, 0)
+RoomBendingHelper._bendingPosX = 0
+RoomBendingHelper._bendingPosY = 0
+RoomBendingHelper._bendingPosZ = 0
+
+function RoomBendingHelper.setBendingAmount(bendingAmount)
+	RoomBendingHelper.bendingAmount = bendingAmount
 end
 
-function var_0_0.setBendingPosition(arg_2_0)
-	var_0_0.bendingPosition = arg_2_0
-	var_0_0._bendingPosX = arg_2_0.x
-	var_0_0._bendingPosY = arg_2_0.y
-	var_0_0._bendingPosZ = arg_2_0.z
+function RoomBendingHelper.setBendingPosition(bendingPosition)
+	RoomBendingHelper.bendingPosition = bendingPosition
+	RoomBendingHelper._bendingPosX = bendingPosition.x
+	RoomBendingHelper._bendingPosY = bendingPosition.y
+	RoomBendingHelper._bendingPosZ = bendingPosition.z
 end
 
-function var_0_0.worldToBendingSimple(arg_3_0)
-	return var_0_0.worldToBending(arg_3_0, true)
+function RoomBendingHelper.worldToBendingSimple(worldPos)
+	return RoomBendingHelper.worldToBending(worldPos, true)
 end
 
-local var_0_1
-local var_0_2
-local var_0_3 = 0
-local var_0_4 = 0
-local var_0_5 = 0
+local cacheCameraPos, cachePosFrame
+local cacheCameraX, cacheCameraY, cacheCameraZ = 0, 0, 0
 
-function var_0_0.getCameraPos()
-	if not var_0_1 or UnityEngine.Time.frameCount ~= var_0_2 then
-		var_0_1 = CameraMgr.instance:getMainCameraTrs().position
-		var_0_2 = UnityEngine.Time.frameCount
-		var_0_3, var_0_4, var_0_5 = var_0_1.x, var_0_1.y, var_0_1.z
+function RoomBendingHelper.getCameraPos()
+	if not cacheCameraPos or UnityEngine.Time.frameCount ~= cachePosFrame then
+		local cameraTrans = CameraMgr.instance:getMainCameraTrs()
+
+		cacheCameraPos = cameraTrans.position
+		cachePosFrame = UnityEngine.Time.frameCount
+		cacheCameraX, cacheCameraY, cacheCameraZ = cacheCameraPos.x, cacheCameraPos.y, cacheCameraPos.z
 	end
 
-	return var_0_1
+	return cacheCameraPos
 end
 
-function var_0_0.getCameraPosXYZ()
-	var_0_0.getCameraPos()
+function RoomBendingHelper.getCameraPosXYZ()
+	RoomBendingHelper.getCameraPos()
 
-	return var_0_3, var_0_4, var_0_5
+	return cacheCameraX, cacheCameraY, cacheCameraZ
 end
 
-local var_0_6
-local var_0_7
+local cacheCameraEuler, cacheEulerFrame
 
-function var_0_0.getCameraEuler()
-	if not var_0_6 or UnityEngine.Time.frameCount ~= var_0_7 then
-		var_0_6 = CameraMgr.instance:getMainCameraTrs().eulerAngles
-		var_0_7 = UnityEngine.Time.frameCount
+function RoomBendingHelper.getCameraEuler()
+	if not cacheCameraEuler or UnityEngine.Time.frameCount ~= cacheEulerFrame then
+		local cameraTrans = CameraMgr.instance:getMainCameraTrs()
+
+		cacheCameraEuler = cameraTrans.eulerAngles
+		cacheEulerFrame = UnityEngine.Time.frameCount
 	end
 
-	return var_0_6
+	return cacheCameraEuler
 end
 
-function var_0_0.worldToBending(arg_7_0, arg_7_1)
-	return var_0_0.worldXYZToBending(arg_7_0.x, arg_7_0.y, arg_7_0.z, arg_7_1)
+function RoomBendingHelper.worldToBending(worldPos, onlyOutPos)
+	return RoomBendingHelper.worldXYZToBending(worldPos.x, worldPos.y, worldPos.z, onlyOutPos)
 end
 
-function var_0_0.worldXYZToBending(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	local var_8_0, var_8_1, var_8_2, var_8_3, var_8_4, var_8_5, var_8_6, var_8_7, var_8_8 = var_0_0.worldXYZToBendingXYZ(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+function RoomBendingHelper.worldXYZToBending(worldX, worldY, worldZ, onlyOutPos)
+	local beX, beY, beZ, roX, roY, roZ, coRoX, coRoY, cRoZ = RoomBendingHelper.worldXYZToBendingXYZ(worldX, worldY, worldZ, onlyOutPos)
 
-	if arg_8_3 then
-		return Vector3(var_8_0, var_8_1, var_8_2)
+	if onlyOutPos then
+		return Vector3(beX, beY, beZ)
 	end
 
-	local var_8_9 = Quaternion.New()
+	local quaternion = Quaternion.New()
 
-	var_8_9:SetEuler(var_8_3, var_8_4, var_8_5)
+	quaternion:SetEuler(roX, roY, roZ)
 
-	return Vector3(var_8_0, var_8_1, var_8_2), var_8_9, Vector3(var_8_6, var_8_7, var_8_8)
+	return Vector3(beX, beY, beZ), quaternion, Vector3(coRoX, coRoY, cRoZ)
 end
 
-function var_0_0.worldToBendingXYZ(arg_9_0, arg_9_1)
-	return var_0_0.worldXYZToBendingXYZ(arg_9_0.x, arg_9_0.y, arg_9_0.z, arg_9_1)
+function RoomBendingHelper.worldToBendingXYZ(worldPos, onlyOutPos)
+	return RoomBendingHelper.worldXYZToBendingXYZ(worldPos.x, worldPos.y, worldPos.z, onlyOutPos)
 end
 
-function var_0_0.worldXYZToBendingXYZ(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	local var_10_0 = var_0_0.getCameraEuler()
-	local var_10_1 = var_10_0.y
-	local var_10_2 = var_0_0._bendingPosX
-	local var_10_3 = var_0_0._bendingPosY
-	local var_10_4 = var_0_0._bendingPosZ
-	local var_10_5 = arg_10_0 - var_10_2
-	local var_10_6 = arg_10_1 - var_10_3
-	local var_10_7 = arg_10_2 - var_10_4
-	local var_10_8 = var_10_5 * math.cos(Mathf.Deg2Rad * var_10_1) - var_10_7 * math.sin(Mathf.Deg2Rad * var_10_1)
-	local var_10_9 = var_10_7 * math.cos(Mathf.Deg2Rad * var_10_1) + var_10_5 * math.sin(Mathf.Deg2Rad * var_10_1)
-	local var_10_10 = var_10_8 * var_10_8 * var_0_0.bendingAmount * 0.08
-	local var_10_11 = var_10_9 * var_10_9 * var_0_0.bendingAmount * 0.08
-	local var_10_12 = var_10_10 + var_10_11
+function RoomBendingHelper.worldXYZToBendingXYZ(worldX, worldY, worldZ, onlyOutXYZ)
+	local eulerAngles = RoomBendingHelper.getCameraEuler()
+	local eulerAngleY = eulerAngles.y
+	local bendX, bendY, bendZ = RoomBendingHelper._bendingPosX, RoomBendingHelper._bendingPosY, RoomBendingHelper._bendingPosZ
+	local diffX, diffY, diffZ = worldX - bendX, worldY - bendY, worldZ - bendZ
+	local toDiffX = diffX * math.cos(Mathf.Deg2Rad * eulerAngleY) - diffZ * math.sin(Mathf.Deg2Rad * eulerAngleY)
+	local toDiffZ = diffZ * math.cos(Mathf.Deg2Rad * eulerAngleY) + diffX * math.sin(Mathf.Deg2Rad * eulerAngleY)
+	local offsetX = toDiffX * toDiffX * RoomBendingHelper.bendingAmount * 0.08
+	local offsetZ = toDiffZ * toDiffZ * RoomBendingHelper.bendingAmount * 0.08
+	local offset = offsetX + offsetZ
 
-	if arg_10_3 then
-		return arg_10_0, arg_10_1 - var_10_12, arg_10_2
+	if onlyOutXYZ then
+		return worldX, worldY - offset, worldZ
 	end
 
-	local var_10_13 = var_10_8 == 0 and 0 or Mathf.Rad2Deg * math.atan(var_10_10 / var_10_8)
-	local var_10_14 = var_10_1
-	local var_10_15 = var_10_9 == 0 and 0 or Mathf.Rad2Deg * math.atan(var_10_11 / var_10_9)
-	local var_10_16 = -var_10_13
-	local var_10_17, var_10_18, var_10_19 = var_0_0.getCameraPosXYZ()
-	local var_10_20 = arg_10_0 - var_10_17
-	local var_10_21 = arg_10_1 - var_10_18
-	local var_10_22 = arg_10_2 - var_10_19
-	local var_10_23 = var_10_20 * math.cos(Mathf.Deg2Rad * var_10_1) - var_10_22 * math.sin(Mathf.Deg2Rad * var_10_1)
-	local var_10_24 = var_10_22 * math.cos(Mathf.Deg2Rad * var_10_1) + var_10_20 * math.sin(Mathf.Deg2Rad * var_10_1)
-	local var_10_25 = var_10_24 == 0 and 0 or Mathf.Rad2Deg * math.atan(var_10_23 / var_10_24)
-	local var_10_26 = var_10_0.x * 0.7
-	local var_10_27 = var_10_25 * 0.5
-	local var_10_28 = 0
+	local rotateX = toDiffX == 0 and 0 or Mathf.Rad2Deg * math.atan(offsetX / toDiffX)
+	local rotateY = eulerAngleY
+	local rotateZ = toDiffZ == 0 and 0 or Mathf.Rad2Deg * math.atan(offsetZ / toDiffZ)
 
-	return arg_10_0, arg_10_1 - var_10_12, arg_10_2, var_10_16, var_10_14, var_10_15, var_10_26, var_10_27, var_10_28
+	rotateX = -rotateX
+
+	local cameraX, cameraY, cameraZ = RoomBendingHelper.getCameraPosXYZ()
+	local dcameraX, dcameraY, dcameraZ = worldX - cameraX, worldY - cameraY, worldZ - cameraZ
+	local diffCameraX = dcameraX * math.cos(Mathf.Deg2Rad * eulerAngleY) - dcameraZ * math.sin(Mathf.Deg2Rad * eulerAngleY)
+	local diffCameraZ = dcameraZ * math.cos(Mathf.Deg2Rad * eulerAngleY) + dcameraX * math.sin(Mathf.Deg2Rad * eulerAngleY)
+	local angle = diffCameraZ == 0 and 0 or Mathf.Rad2Deg * math.atan(diffCameraX / diffCameraZ)
+	local containerRoX, containerRoY, containerRoZ = eulerAngles.x * 0.7, angle * 0.5, 0
+
+	return worldX, worldY - offset, worldZ, rotateX, rotateY, rotateZ, containerRoX, containerRoY, containerRoZ
 end
 
-function var_0_0.bendingToWorld(arg_11_0)
-	local var_11_0 = arg_11_0 - var_0_0.bendingPosition
-	local var_11_1 = var_11_0.z * var_11_0.z * var_0_0.bendingAmount * 0.08
-	local var_11_2 = var_11_0.x * var_11_0.x * var_0_0.bendingAmount * 0.08
+function RoomBendingHelper.bendingToWorld(bendingPos)
+	local bendingPosition = RoomBendingHelper.bendingPosition
+	local diffPos = bendingPos - bendingPosition
+	local offsetZ = diffPos.z * diffPos.z * RoomBendingHelper.bendingAmount * 0.08
+	local offsetX = diffPos.x * diffPos.x * RoomBendingHelper.bendingAmount * 0.08
 
-	return Vector3(arg_11_0.x, arg_11_0.y + var_11_1 + var_11_2, arg_11_0.z)
+	return Vector3(bendingPos.x, bendingPos.y + offsetZ + offsetX, bendingPos.z)
 end
 
-function var_0_0.screenToWorld(arg_12_0)
-	local var_12_0 = var_0_0.screenPosToRay(arg_12_0)
-	local var_12_1 = -var_0_0.bendingAmount * 0.08
-	local var_12_2 = var_0_0.bendingPosition
-	local var_12_3 = var_12_0.origin
+function RoomBendingHelper.screenToWorld(pos)
+	local ray = RoomBendingHelper.screenPosToRay(pos)
+	local curve = -RoomBendingHelper.bendingAmount * 0.08
+	local bendingPosition = RoomBendingHelper.bendingPosition
+	local origin = ray.origin
 
-	var_12_3.y = var_12_3.y - 0.1
+	origin.y = origin.y - 0.1
 
-	local var_12_4 = var_12_0.direction
+	local dir = ray.direction
 
-	if var_12_4.y >= 0 then
+	if dir.y >= 0 then
 		return nil
 	end
 
-	local var_12_5 = var_12_3 - var_12_2
-	local var_12_6 = var_0_0.getCameraEuler().y * Mathf.Deg2Rad
-	local var_12_7 = math.sin(var_12_6)
-	local var_12_8 = math.cos(var_12_6)
-	local var_12_9 = Vector3(var_12_5.x * var_12_8 - var_12_5.z * var_12_7, var_12_5.y, var_12_5.z * var_12_8 + var_12_5.x * var_12_7)
-	local var_12_10 = Vector3(var_12_4.x * var_12_8 - var_12_4.z * var_12_7, var_12_4.y, var_12_4.z * var_12_8 + var_12_4.x * var_12_7)
-	local var_12_11 = var_12_10.x * var_12_10.x + var_12_10.z * var_12_10.z
-	local var_12_12 = 2 * var_12_9.x * var_12_10.x + 2 * var_12_9.z * var_12_10.z - var_12_10.y / var_12_1
-	local var_12_13 = var_12_9.x * var_12_9.x + var_12_9.z * var_12_9.z - var_12_9.y / var_12_1
-	local var_12_14 = 0
+	local diff = origin - bendingPosition
+	local eulerAngles = RoomBendingHelper.getCameraEuler()
+	local rad = eulerAngles.y * Mathf.Deg2Rad
+	local sin_rad = math.sin(rad)
+	local cos_rad = math.cos(rad)
+	local diff = Vector3(diff.x * cos_rad - diff.z * sin_rad, diff.y, diff.z * cos_rad + diff.x * sin_rad)
+	local rotatedDir = Vector3(dir.x * cos_rad - dir.z * sin_rad, dir.y, dir.z * cos_rad + dir.x * sin_rad)
+	local dirDistance = rotatedDir.x * rotatedDir.x + rotatedDir.z * rotatedDir.z
+	local dirYDCurve = 2 * diff.x * rotatedDir.x + 2 * diff.z * rotatedDir.z - rotatedDir.y / curve
+	local originYDCurve = diff.x * diff.x + diff.z * diff.z - diff.y / curve
+	local step = 0
 
-	if var_12_11 == 0 then
-		var_12_14 = -var_12_13 / var_12_12
+	if dirDistance == 0 then
+		step = -originYDCurve / dirYDCurve
 	else
-		local var_12_15 = var_12_12 * var_12_12 - 4 * var_12_11 * var_12_13
+		local delta = dirYDCurve * dirYDCurve - 4 * dirDistance * originYDCurve
 
-		if var_12_15 < 0 then
+		if delta < 0 then
 			return nil
 		end
 
-		local var_12_16 = math.abs(math.sqrt(var_12_15))
-		local var_12_17 = (-var_12_12 + var_12_16) / (2 * var_12_11)
-		local var_12_18 = (-var_12_12 - var_12_16) / (2 * var_12_11)
+		local sqrtDelta = math.abs(math.sqrt(delta))
+		local step1 = (-dirYDCurve + sqrtDelta) / (2 * dirDistance)
+		local step2 = (-dirYDCurve - sqrtDelta) / (2 * dirDistance)
 
-		if math.abs(var_12_17) < math.abs(var_12_18) then
-			var_12_14 = var_12_17
+		if math.abs(step1) < math.abs(step2) then
+			step = step1
 		else
-			var_12_14 = var_12_18
+			step = step2
 		end
 	end
 
-	if var_12_14 <= 0 then
+	if step <= 0 then
 		return nil
 	end
 
-	return (Vector2(var_12_3.x + var_12_14 * var_12_4.x, var_12_3.z + var_12_14 * var_12_4.z))
+	local pos = Vector2(origin.x + step * dir.x, origin.z + step * dir.z)
+
+	return pos
 end
 
-function var_0_0.screenPosToHex(arg_13_0)
-	local var_13_0 = var_0_0.screenToWorld(arg_13_0)
+function RoomBendingHelper.screenPosToHex(pos)
+	local worldPos = RoomBendingHelper.screenToWorld(pos)
 
-	if var_13_0 then
-		return HexMath.positionToRoundHex(var_13_0, RoomBlockEnum.BlockSize)
+	if worldPos then
+		return HexMath.positionToRoundHex(worldPos, RoomBlockEnum.BlockSize)
 	end
 end
 
-function var_0_0.getRaycastEntity(arg_14_0, arg_14_1)
-	local var_14_0 = var_0_0.screenPosToRay(arg_14_0)
-	local var_14_1 = RoomMapBuildingModel.instance:getBuildingMOList()
-	local var_14_2, var_14_3 = UnityEngine.Physics.Raycast(var_14_0.origin, var_14_0.direction, nil, 10, LayerMask.GetMask("SceneOpaque"))
+function RoomBendingHelper.getRaycastEntity(pos, tempOrRevert)
+	local ray = RoomBendingHelper.screenPosToRay(pos)
+	local buildingMOList = RoomMapBuildingModel.instance:getBuildingMOList()
+	local result, hitInfo = UnityEngine.Physics.Raycast(ray.origin, ray.direction, nil, 10, LayerMask.GetMask("SceneOpaque"))
 
-	if not var_14_2 then
+	if not result then
 		return nil
 	end
 
-	local var_14_4 = var_14_3.transform
-	local var_14_5 = GameSceneMgr.instance:getCurScene()
+	local transform = hitInfo.transform
+	local scene = GameSceneMgr.instance:getCurScene()
 
-	for iter_14_0, iter_14_1 in ipairs(var_14_1) do
-		if iter_14_1.buildingState == RoomBuildingEnum.BuildingState.Map or arg_14_1 and (iter_14_1.buildingState == RoomBuildingEnum.BuildingState.Temp or iter_14_1.buildingState == RoomBuildingEnum.BuildingState.Revert) then
-			local var_14_6 = var_14_5.buildingmgr:getBuildingEntity(iter_14_1.id, SceneTag.RoomBuilding)
+	for i, buildingMO in ipairs(buildingMOList) do
+		if buildingMO.buildingState == RoomBuildingEnum.BuildingState.Map or tempOrRevert and (buildingMO.buildingState == RoomBuildingEnum.BuildingState.Temp or buildingMO.buildingState == RoomBuildingEnum.BuildingState.Revert) then
+			local entity = scene.buildingmgr:getBuildingEntity(buildingMO.id, SceneTag.RoomBuilding)
 
-			if var_14_6 and var_14_4:IsChildOf(var_14_6.goTrs) then
-				return RoomEnum.TouchTab.RoomBuilding, iter_14_1.id
+			if entity and transform:IsChildOf(entity.goTrs) then
+				return RoomEnum.TouchTab.RoomBuilding, buildingMO.id
 			end
 		end
 	end
 
-	local var_14_7 = var_14_5.buildingmgr:getInitBuildingGO()
+	local initBuildingGO = scene.buildingmgr:getInitBuildingGO()
 
-	if var_14_7 and var_14_4:IsChildOf(var_14_7.transform) then
+	if initBuildingGO and transform:IsChildOf(initBuildingGO.transform) then
 		return RoomEnum.TouchTab.RoomInitBuilding, 0
 	end
 
-	for iter_14_2, iter_14_3 in ipairs(lua_production_part.configList) do
-		local var_14_8 = var_14_5.buildingmgr:getPartContainerGO(iter_14_2)
+	for partId, partConfig in ipairs(lua_production_part.configList) do
+		local partGO = scene.buildingmgr:getPartContainerGO(partId)
 
-		if var_14_8 and var_14_4:IsChildOf(var_14_8.transform) then
-			return RoomEnum.TouchTab.RoomPartBuilding, iter_14_2
+		if partGO and transform:IsChildOf(partGO.transform) then
+			return RoomEnum.TouchTab.RoomPartBuilding, partId
 		end
 	end
 
-	local var_14_9 = RoomCharacterModel.instance:getList()
+	local characterMOList = RoomCharacterModel.instance:getList()
 
-	for iter_14_4, iter_14_5 in ipairs(var_14_9) do
-		if iter_14_5.characterState == RoomCharacterEnum.CharacterState.Map or arg_14_1 and (iter_14_5.characterState == RoomCharacterEnum.CharacterState.Temp or iter_14_5.characterState == RoomCharacterEnum.CharacterState.Revert) then
-			local var_14_10 = var_14_5.charactermgr:getCharacterEntity(iter_14_5.id, SceneTag.RoomCharacter)
+	for i, characterMO in ipairs(characterMOList) do
+		if characterMO.characterState == RoomCharacterEnum.CharacterState.Map or tempOrRevert and (characterMO.characterState == RoomCharacterEnum.CharacterState.Temp or characterMO.characterState == RoomCharacterEnum.CharacterState.Revert) then
+			local entity = scene.charactermgr:getCharacterEntity(characterMO.id, SceneTag.RoomCharacter)
 
-			if var_14_10 and var_14_4:IsChildOf(var_14_10.goTrs) then
-				return RoomEnum.TouchTab.RoomCharacter, iter_14_5.id
+			if entity and transform:IsChildOf(entity.goTrs) then
+				return RoomEnum.TouchTab.RoomCharacter, characterMO.id
 			end
 		end
 	end
 
-	local var_14_11 = RoomCritterModel.instance:getAllCritterList()
+	local critterMOList = RoomCritterModel.instance:getAllCritterList()
 
-	for iter_14_6, iter_14_7 in ipairs(var_14_11) do
-		local var_14_12 = var_14_5.crittermgr:getCritterEntity(iter_14_7.id, SceneTag.RoomCharacter) or var_14_5.buildingcrittermgr:getCritterEntity(iter_14_7.id, SceneTag.RoomCharacter)
+	for i, critterMO in ipairs(critterMOList) do
+		local entity = scene.crittermgr:getCritterEntity(critterMO.id, SceneTag.RoomCharacter)
 
-		if var_14_12 and var_14_4:IsChildOf(var_14_12.goTrs) then
-			return RoomEnum.TouchTab.RoomCritter, iter_14_7.id
+		entity = entity or scene.buildingcrittermgr:getCritterEntity(critterMO.id, SceneTag.RoomCharacter)
+
+		if entity and transform:IsChildOf(entity.goTrs) then
+			return RoomEnum.TouchTab.RoomCritter, critterMO.id
 		end
 	end
 
-	local var_14_13 = RoomTransportHelper.getSiteBuildingTypeList()
+	local buildingTypeList = RoomTransportHelper.getSiteBuildingTypeList()
 
-	for iter_14_8 = 1, #var_14_13 do
-		local var_14_14 = var_14_13[iter_14_8]
-		local var_14_15 = var_14_5.sitemgr:getSiteEntity(var_14_14)
+	for i = 1, #buildingTypeList do
+		local siteType = buildingTypeList[i]
+		local entity = scene.sitemgr:getSiteEntity(siteType)
 
-		if var_14_15 and var_14_4:IsChildOf(var_14_15.goTrs) then
-			return RoomEnum.TouchTab.RoomTransportSite, var_14_14
+		if entity and transform:IsChildOf(entity.goTrs) then
+			return RoomEnum.TouchTab.RoomTransportSite, siteType
 		end
 
-		local var_14_16 = RoomMapVehicleModel.instance:getVehicleIdBySiteType(var_14_14)
-		local var_14_17 = var_14_5.vehiclemgr:getVehicleEntity(var_14_16)
+		local vehicleUid = RoomMapVehicleModel.instance:getVehicleIdBySiteType(siteType)
+		local vehicleEntity = scene.vehiclemgr:getVehicleEntity(vehicleUid)
 
-		if var_14_17 and var_14_4:IsChildOf(var_14_17.goTrs) then
-			return RoomEnum.TouchTab.RoomTransportSite, var_14_14
+		if vehicleEntity and transform:IsChildOf(vehicleEntity.goTrs) then
+			return RoomEnum.TouchTab.RoomTransportSite, siteType
 		end
 	end
 
 	return nil
 end
 
-function var_0_0.screenPosToRay(arg_15_0)
-	return (GameSceneMgr.instance:getCurScene().camera.camera:ScreenPointToRay(arg_15_0))
+function RoomBendingHelper.screenPosToRay(pos)
+	local scene = GameSceneMgr.instance:getCurScene()
+	local camera = scene.camera.camera
+	local ray = camera:ScreenPointToRay(pos)
+
+	return ray
 end
 
-function var_0_0.worldPosToAnchorPos(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
-	arg_16_2 = arg_16_2 or CameraMgr.instance:getUICamera()
-	arg_16_3 = arg_16_3 or CameraMgr.instance:getMainCamera()
+function RoomBendingHelper.worldPosToAnchorPos(worldPos, planeRectTr, uiCamera, camera3d)
+	uiCamera = uiCamera or CameraMgr.instance:getUICamera()
+	camera3d = camera3d or CameraMgr.instance:getMainCamera()
 
-	local var_16_0 = arg_16_3:WorldToScreenPoint(arg_16_0)
+	local screenPoint = camera3d:WorldToScreenPoint(worldPos)
 
-	if var_16_0.z < 0 then
+	if screenPoint.z < 0 then
 		return nil
 	else
-		local var_16_1 = Vector2.New(0, 0)
-		local var_16_2, var_16_3 = UnityEngine.RectTransformUtility.ScreenPointToLocalPointInRectangle(arg_16_1, var_16_0, arg_16_2, var_16_1)
+		local rectPos = Vector2.New(0, 0)
+		local result, rectPos = UnityEngine.RectTransformUtility.ScreenPointToLocalPointInRectangle(planeRectTr, screenPoint, uiCamera, rectPos)
 
-		if var_16_2 then
-			return var_16_3
+		if result then
+			return rectPos
 		else
 			return nil
 		end
 	end
 end
 
-return var_0_0
+return RoomBendingHelper

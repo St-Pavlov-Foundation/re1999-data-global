@@ -1,33 +1,35 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.task.Act183TaskViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/task/Act183TaskViewContainer.lua
 
-local var_0_0 = class("Act183TaskViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_5.challenge.view.task.Act183TaskViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Act183TaskViewContainer = class("Act183TaskViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, TabViewGroup.New(1, "root/#go_topleft"))
-	table.insert(var_1_0, Act183TaskView.New())
+function Act183TaskViewContainer:buildViews()
+	local views = {}
 
-	local var_1_1 = MixScrollParam.New()
+	table.insert(views, TabViewGroup.New(1, "root/#go_topleft"))
+	table.insert(views, Act183TaskView.New())
 
-	var_1_1.scrollGOPath = "root/right/#scroll_task"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_1.cellClass = Act183TaskItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 1
-	var_1_1.startSpace = 0
-	var_1_1.endSpace = 0
-	arg_1_0._scrollView = LuaMixScrollView.New(Act183TaskListModel.instance, var_1_1)
+	local scrollParam = MixScrollParam.New()
 
-	arg_1_0._scrollView:setDynamicGetItem(arg_1_0._dynamicGetItem, arg_1_0)
-	table.insert(var_1_0, arg_1_0._scrollView)
+	scrollParam.scrollGOPath = "root/right/#scroll_task"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = Act183TaskItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 1
+	scrollParam.startSpace = 0
+	scrollParam.endSpace = 0
+	self._scrollView = LuaMixScrollView.New(Act183TaskListModel.instance, scrollParam)
 
-	return var_1_0
+	self._scrollView:setDynamicGetItem(self._dynamicGetItem, self)
+	table.insert(views, self._scrollView)
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
+function Act183TaskViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -38,20 +40,20 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	end
 end
 
-function var_0_0._dynamicGetItem(arg_3_0, arg_3_1)
-	if not arg_3_1 then
+function Act183TaskViewContainer:_dynamicGetItem(mo)
+	if not mo then
 		return
 	end
 
-	if arg_3_1.type == Act183Enum.TaskListItemType.Head then
-		return "taskheader", Act183TaskHeadItem, arg_3_0._viewSetting.otherRes[2]
-	elseif arg_3_1.type == Act183Enum.TaskListItemType.OneKey then
-		return "onekey", Act183TaskOneKeyItem, arg_3_0._viewSetting.otherRes[3]
+	if mo.type == Act183Enum.TaskListItemType.Head then
+		return "taskheader", Act183TaskHeadItem, self._viewSetting.otherRes[2]
+	elseif mo.type == Act183Enum.TaskListItemType.OneKey then
+		return "onekey", Act183TaskOneKeyItem, self._viewSetting.otherRes[3]
 	end
 end
 
-function var_0_0.getTaskScrollView(arg_4_0)
-	return arg_4_0._scrollView
+function Act183TaskViewContainer:getTaskScrollView()
+	return self._scrollView
 end
 
-return var_0_0
+return Act183TaskViewContainer

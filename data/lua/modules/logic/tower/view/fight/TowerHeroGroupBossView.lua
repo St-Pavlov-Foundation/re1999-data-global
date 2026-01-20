@@ -1,394 +1,416 @@
-﻿module("modules.logic.tower.view.fight.TowerHeroGroupBossView", package.seeall)
+﻿-- chunkname: @modules/logic/tower/view/fight/TowerHeroGroupBossView.lua
 
-local var_0_0 = class("TowerHeroGroupBossView", BaseView)
+module("modules.logic.tower.view.fight.TowerHeroGroupBossView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.goAssistBoss = gohelper.findChild(arg_1_0.viewGO, "herogroupcontain/assistBoss")
-	arg_1_0.goBossRoot = gohelper.findChild(arg_1_0.goAssistBoss, "boss/root")
-	arg_1_0.imgCareer = gohelper.findChildImage(arg_1_0.goBossRoot, "career")
-	arg_1_0.goLev = gohelper.findChild(arg_1_0.goBossRoot, "image_Lv")
-	arg_1_0.txtLev = gohelper.findChildTextMesh(arg_1_0.goBossRoot, "lev")
-	arg_1_0.txtName = gohelper.findChildTextMesh(arg_1_0.goBossRoot, "name")
-	arg_1_0.simageBoss = gohelper.findChildSingleImage(arg_1_0.goBossRoot, "icon")
-	arg_1_0._btnClick = gohelper.findChildButtonWithAudio(arg_1_0.goAssistBoss, "boss/click")
-	arg_1_0.goAdd = gohelper.findChild(arg_1_0.goAssistBoss, "boss/goAdd")
-	arg_1_0.goEmpty = gohelper.findChild(arg_1_0.goAssistBoss, "boss/#go_Empty")
-	arg_1_0._btnAttr = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "herogroupcontain/assistBoss/boss/root/#btn_attr")
-	arg_1_0.btnReset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/#go_replayready/Reset")
-	arg_1_0._goreplayready = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_replayready")
-	arg_1_0._dropherogroup = gohelper.findChildDropdown(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#drop_herogroup")
-	arg_1_0._gotalentPlane = gohelper.findChild(arg_1_0.viewGO, "herogroupcontain/assistBoss/boss/talentPlan")
-	arg_1_0._txtTalentPlan = gohelper.findChildTextMesh(arg_1_0.viewGO, "herogroupcontain/assistBoss/boss/talentPlan/txt_talentPlan")
-	arg_1_0._btnTalentPlan = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "herogroupcontain/assistBoss/boss/talentPlan/btn_talentPlan")
-	arg_1_0.goArrow = gohelper.findChild(arg_1_0.viewGO, "herogroupcontain/assistBoss/boss/talentPlan/#go_Arrow")
+local TowerHeroGroupBossView = class("TowerHeroGroupBossView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function TowerHeroGroupBossView:onInitView()
+	self.goAssistBoss = gohelper.findChild(self.viewGO, "herogroupcontain/assistBoss")
+	self.goBossRoot = gohelper.findChild(self.goAssistBoss, "boss/root")
+	self.imgCareer = gohelper.findChildImage(self.goBossRoot, "career")
+	self.goLev = gohelper.findChild(self.goBossRoot, "image_Lv")
+	self.txtLev = gohelper.findChildTextMesh(self.goBossRoot, "lev")
+	self.txtName = gohelper.findChildTextMesh(self.goBossRoot, "name")
+	self.simageBoss = gohelper.findChildSingleImage(self.goBossRoot, "icon")
+	self._btnClick = gohelper.findChildButtonWithAudio(self.goAssistBoss, "boss/click")
+	self.goAdd = gohelper.findChild(self.goAssistBoss, "boss/goAdd")
+	self.goEmpty = gohelper.findChild(self.goAssistBoss, "boss/#go_Empty")
+	self._btnAttr = gohelper.findChildButtonWithAudio(self.viewGO, "herogroupcontain/assistBoss/boss/root/#btn_attr")
+	self.btnReset = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/#go_replayready/Reset")
+	self._goreplayready = gohelper.findChild(self.viewGO, "#go_container/#go_replayready")
+	self._dropherogroup = gohelper.findChildDropdown(self.viewGO, "#go_container/btnContain/horizontal/#drop_herogroup")
+	self._gotalentPlane = gohelper.findChild(self.viewGO, "herogroupcontain/assistBoss/boss/talentPlan")
+	self._txtTalentPlan = gohelper.findChildTextMesh(self.viewGO, "herogroupcontain/assistBoss/boss/talentPlan/txt_talentPlan")
+	self._btnTalentPlan = gohelper.findChildButtonWithAudio(self.viewGO, "herogroupcontain/assistBoss/boss/talentPlan/btn_talentPlan")
+	self.goArrow = gohelper.findChild(self.viewGO, "herogroupcontain/assistBoss/boss/talentPlan/#go_Arrow")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnClick:AddClickListener(arg_2_0._btnClickOnClick, arg_2_0)
-	arg_2_0._btnAttr:AddClickListener(arg_2_0._btnAttrOnClick, arg_2_0)
-	arg_2_0.btnReset:AddClickListener(arg_2_0._btnResetOnClick, arg_2_0)
-	arg_2_0._btnTalentPlan:AddClickListener(arg_2_0._btnTalentPlanOnClick, arg_2_0)
-	arg_2_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.SelectHeroGroup, arg_2_0._checkRestrictBoss, arg_2_0)
-	arg_2_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, arg_2_0.refreshUI, arg_2_0)
-	arg_2_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, arg_2_0.refreshUI, arg_2_0)
-	arg_2_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyGroupSelectIndex, arg_2_0._checkRestrictBoss, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.OnTowerResetSubEpisode, arg_2_0.onResetSubEpisode, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.ResetTalent, arg_2_0._onResetTalent, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.ActiveTalent, arg_2_0._onActiveTalent, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.TowerUpdate, arg_2_0._onTowerUpdate, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.RefreshTalent, arg_2_0.refreshTalent, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.RenameTalentPlan, arg_2_0.refreshTalent, arg_2_0)
+function TowerHeroGroupBossView:addEvents()
+	self._btnClick:AddClickListener(self._btnClickOnClick, self)
+	self._btnAttr:AddClickListener(self._btnAttrOnClick, self)
+	self.btnReset:AddClickListener(self._btnResetOnClick, self)
+	self._btnTalentPlan:AddClickListener(self._btnTalentPlanOnClick, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.SelectHeroGroup, self._checkRestrictBoss, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, self.refreshUI, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, self.refreshUI, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyGroupSelectIndex, self._checkRestrictBoss, self)
+	self:addEventCb(TowerController.instance, TowerEvent.OnTowerResetSubEpisode, self.onResetSubEpisode, self)
+	self:addEventCb(TowerController.instance, TowerEvent.ResetTalent, self._onResetTalent, self)
+	self:addEventCb(TowerController.instance, TowerEvent.ActiveTalent, self._onActiveTalent, self)
+	self:addEventCb(TowerController.instance, TowerEvent.TowerUpdate, self._onTowerUpdate, self)
+	self:addEventCb(TowerController.instance, TowerEvent.RefreshTalent, self.refreshTalent, self)
+	self:addEventCb(TowerController.instance, TowerEvent.RenameTalentPlan, self.refreshTalent, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnClick:RemoveClickListener()
-	arg_3_0._btnAttr:RemoveClickListener()
-	arg_3_0.btnReset:RemoveClickListener()
-	arg_3_0._btnTalentPlan:RemoveClickListener()
-	arg_3_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.SelectHeroGroup, arg_3_0._checkRestrictBoss, arg_3_0)
-	arg_3_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, arg_3_0.refreshUI, arg_3_0)
-	arg_3_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, arg_3_0.refreshUI, arg_3_0)
-	arg_3_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyGroupSelectIndex, arg_3_0._checkRestrictBoss, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.OnTowerResetSubEpisode, arg_3_0.onResetSubEpisode, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.ResetTalent, arg_3_0._onResetTalent, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.ActiveTalent, arg_3_0._onActiveTalent, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.TowerUpdate, arg_3_0._onTowerUpdate, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.RefreshTalent, arg_3_0.refreshTalent, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.RenameTalentPlan, arg_3_0.refreshTalent, arg_3_0)
+function TowerHeroGroupBossView:removeEvents()
+	self._btnClick:RemoveClickListener()
+	self._btnAttr:RemoveClickListener()
+	self.btnReset:RemoveClickListener()
+	self._btnTalentPlan:RemoveClickListener()
+	self:removeEventCb(HeroGroupController.instance, HeroGroupEvent.SelectHeroGroup, self._checkRestrictBoss, self)
+	self:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, self.refreshUI, self)
+	self:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, self.refreshUI, self)
+	self:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyGroupSelectIndex, self._checkRestrictBoss, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.OnTowerResetSubEpisode, self.onResetSubEpisode, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.ResetTalent, self._onResetTalent, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.ActiveTalent, self._onActiveTalent, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.TowerUpdate, self._onTowerUpdate, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.RefreshTalent, self.refreshTalent, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.RenameTalentPlan, self.refreshTalent, self)
 end
 
-function var_0_0._onTowerUpdate(arg_4_0)
-	local var_4_0 = TowerModel.instance:getRecordFightParam()
+function TowerHeroGroupBossView:_onTowerUpdate()
+	local param = TowerModel.instance:getRecordFightParam()
 
-	TowerController.instance:checkTowerIsEnd(var_4_0.towerType, var_4_0.towerId)
+	TowerController.instance:checkTowerIsEnd(param.towerType, param.towerId)
 end
 
-function var_0_0._btnResetOnClick(arg_5_0)
-	local var_5_0 = TowerModel.instance:getRecordFightParam()
+function TowerHeroGroupBossView:_btnResetOnClick()
+	local param = TowerModel.instance:getRecordFightParam()
 
-	if var_5_0.isHeroGroupLock then
-		if var_5_0.towerType == TowerEnum.TowerType.Limited then
-			local var_5_1 = TowerModel.instance:getTowerInfoById(var_5_0.towerType, var_5_0.towerId):getLayerScore(var_5_0.layerId)
+	if param.isHeroGroupLock then
+		if param.towerType == TowerEnum.TowerType.Limited then
+			local towerInfoMo = TowerModel.instance:getTowerInfoById(param.towerType, param.towerId)
+			local curMaxScore = towerInfoMo:getLayerScore(param.layerId)
 
-			GameFacade.showMessageBox(MessageBoxIdDefine.TowerResetSubEpisode, MsgBoxEnum.BoxType.Yes_No, arg_5_0.sendTowerResetSubEpisodeRequest, nil, nil, arg_5_0, nil, nil, var_5_1)
+			GameFacade.showMessageBox(MessageBoxIdDefine.TowerResetSubEpisode, MsgBoxEnum.BoxType.Yes_No, self.sendTowerResetSubEpisodeRequest, nil, nil, self, nil, nil, curMaxScore)
 		else
-			GameFacade.showMessageBox(MessageBoxIdDefine.TowerResetPermanentEpisode, MsgBoxEnum.BoxType.Yes_No, arg_5_0.sendTowerResetSubEpisodeRequest, nil, nil, arg_5_0)
+			GameFacade.showMessageBox(MessageBoxIdDefine.TowerResetPermanentEpisode, MsgBoxEnum.BoxType.Yes_No, self.sendTowerResetSubEpisodeRequest, nil, nil, self)
 		end
 	end
 end
 
-function var_0_0.sendTowerResetSubEpisodeRequest(arg_6_0)
-	local var_6_0 = TowerModel.instance:getRecordFightParam()
+function TowerHeroGroupBossView:sendTowerResetSubEpisodeRequest()
+	local param = TowerModel.instance:getRecordFightParam()
 
-	if var_6_0.towerType == TowerEnum.TowerType.Limited then
-		TowerRpc.instance:sendTowerResetSubEpisodeRequest(var_6_0.towerType, var_6_0.towerId, var_6_0.layerId, 0)
+	if param.towerType == TowerEnum.TowerType.Limited then
+		TowerRpc.instance:sendTowerResetSubEpisodeRequest(param.towerType, param.towerId, param.layerId, 0)
 	else
-		TowerRpc.instance:sendTowerResetSubEpisodeRequest(var_6_0.towerType, var_6_0.towerId, var_6_0.layerId, var_6_0.episodeId)
+		TowerRpc.instance:sendTowerResetSubEpisodeRequest(param.towerType, param.towerId, param.layerId, param.episodeId)
 	end
 end
 
-function var_0_0._btnAttrOnClick(arg_7_0)
-	if not arg_7_0.bossId or arg_7_0.bossId == 0 then
+function TowerHeroGroupBossView:_btnAttrOnClick()
+	if not self.bossId or self.bossId == 0 then
 		return
 	end
 
 	ViewMgr.instance:openView(ViewName.TowerBossHeroGroupAttributeTipsView, {
-		bossId = arg_7_0.bossId
+		bossId = self.bossId
 	})
 end
 
-function var_0_0._btnClickOnClick(arg_8_0)
-	if not TowerController.instance:isBossTowerOpen() then
-		local var_8_0 = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.BossTowerOpen)
+function TowerHeroGroupBossView:_btnClickOnClick()
+	local bossIsOpen = TowerController.instance:isBossTowerOpen()
 
-		GameFacade.showToast(ToastEnum.TowerBossLockTips, var_8_0)
+	if not bossIsOpen then
+		local layerNum = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.BossTowerOpen)
+
+		GameFacade.showToast(ToastEnum.TowerBossLockTips, layerNum)
 
 		return
 	end
 
-	local var_8_1 = TowerModel.instance:getRecordFightParam()
+	local param = TowerModel.instance:getRecordFightParam()
 
-	if var_8_1.isHeroGroupLock or var_8_1.towerType == TowerEnum.TowerType.Boss then
-		if arg_8_0.bossId and arg_8_0.bossId > 0 then
+	if param.isHeroGroupLock or param.towerType == TowerEnum.TowerType.Boss then
+		if self.bossId and self.bossId > 0 then
 			ViewMgr.instance:openView(ViewName.TowerAssistBossDetailView, {
 				isFromHeroGroup = true,
-				bossId = arg_8_0.bossId
+				bossId = self.bossId
 			})
 		else
 			GameFacade.showToast(ToastEnum.TowerHeroGroupCantEdit)
 		end
 	else
-		TowerController.instance:openAssistBossView(arg_8_0.bossId, true, var_8_1.towerType, var_8_1.towerId)
+		TowerController.instance:openAssistBossView(self.bossId, true, param.towerType, param.towerId)
 	end
 end
 
-function var_0_0._btnTalentPlanOnClick(arg_9_0)
-	if not arg_9_0.bossId then
+function TowerHeroGroupBossView:_btnTalentPlanOnClick()
+	if not self.bossId then
 		return
 	end
 
 	ViewMgr.instance:openView(ViewName.TowerAssistBossTalentView, {
-		bossId = arg_9_0.bossId,
-		isFromHeroGroup = arg_9_0.isFromHeroGroup
+		bossId = self.bossId,
+		isFromHeroGroup = self.isFromHeroGroup
 	})
 end
 
-function var_0_0._onResetTalent(arg_10_0, arg_10_1)
-	arg_10_0:refreshTalent()
+function TowerHeroGroupBossView:_onResetTalent(talentId)
+	self:refreshTalent()
 end
 
-function var_0_0._onActiveTalent(arg_11_0, arg_11_1)
-	arg_11_0:refreshTalent()
+function TowerHeroGroupBossView:_onActiveTalent(talentId)
+	self:refreshTalent()
 end
 
-function var_0_0._editableInitView(arg_12_0)
+function TowerHeroGroupBossView:_editableInitView()
 	return
 end
 
-function var_0_0.onResetSubEpisode(arg_13_0)
+function TowerHeroGroupBossView:onResetSubEpisode()
 	TowerModel.instance:refreshHeroGroupInfo()
-	arg_13_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.onUpdateParam(arg_14_0)
+function TowerHeroGroupBossView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_15_0)
-	arg_15_0:refreshUI()
-	arg_15_0:_checkRestrictBoss()
+function TowerHeroGroupBossView:onOpen()
+	self:refreshUI()
+	self:_checkRestrictBoss()
 end
 
-function var_0_0.refreshUI(arg_16_0)
-	local var_16_0 = HeroGroupModel.instance:getCurGroupMO()
-	local var_16_1 = var_16_0:getAssistBossId()
-	local var_16_2 = TowerModel.instance:getRecordFightParam()
+function TowerHeroGroupBossView:refreshUI()
+	local curGroupMO = HeroGroupModel.instance:getCurGroupMO()
+	local bossId = curGroupMO:getAssistBossId()
+	local param = TowerModel.instance:getRecordFightParam()
 
-	TowerModel.instance:setCurTowerType(var_16_2.towerType)
+	TowerModel.instance:setCurTowerType(param.towerType)
 
-	arg_16_0.isTeach = var_16_2.layerId == 0 and var_16_2.towerType == TowerEnum.TowerType.Boss
+	self.isTeach = param.layerId == 0 and param.towerType == TowerEnum.TowerType.Boss
 
-	gohelper.setActive(arg_16_0._dropherogroup, not var_16_2.isHeroGroupLock and var_16_2.towerType ~= TowerEnum.TowerType.Boss)
-	gohelper.setActive(arg_16_0._goreplayready, var_16_2.isHeroGroupLock)
+	gohelper.setActive(self._dropherogroup, not param.isHeroGroupLock and param.towerType ~= TowerEnum.TowerType.Boss)
+	gohelper.setActive(self._goreplayready, param.isHeroGroupLock)
 
-	if TowerController.instance:isBossTowerOpen() then
-		if var_16_2.towerType == TowerEnum.TowerType.Boss and not arg_16_0.isTeach then
-			local var_16_3 = TowerConfig.instance:getBossTowerConfig(var_16_2.towerId)
-			local var_16_4 = TowerAssistBossModel.instance:getById(var_16_3.bossId)
+	local bossIsOpen = TowerController.instance:isBossTowerOpen()
 
-			var_16_1 = not var_16_4 and 0 or var_16_4:getTempState() and 0 or var_16_3.bossId
+	if bossIsOpen then
+		local isBossTower = param.towerType == TowerEnum.TowerType.Boss
 
-			var_16_0:setAssistBossId(var_16_1)
+		if isBossTower and not self.isTeach then
+			local towerConfig = TowerConfig.instance:getBossTowerConfig(param.towerId)
+			local bossMo = TowerAssistBossModel.instance:getById(towerConfig.bossId)
 
-			var_16_1 = var_16_3.bossId
-		elseif arg_16_0.isTeach then
-			local var_16_5 = TowerConfig.instance:getBossTowerConfig(var_16_2.towerId)
+			bossId = not bossMo and 0 or bossMo:getTempState() and 0 or towerConfig.bossId
 
-			var_16_0:setAssistBossId(var_16_5.bossId)
+			curGroupMO:setAssistBossId(bossId)
 
-			var_16_1 = var_16_5.bossId
+			bossId = towerConfig.bossId
+		elseif self.isTeach then
+			local towerConfig = TowerConfig.instance:getBossTowerConfig(param.towerId)
+
+			curGroupMO:setAssistBossId(towerConfig.bossId)
+
+			bossId = towerConfig.bossId
 		end
 	else
-		var_16_1 = 0
+		bossId = 0
 
-		var_16_0:setAssistBossId(var_16_1)
+		curGroupMO:setAssistBossId(bossId)
 	end
 
-	local var_16_6 = TowerAssistBossModel.instance:getById(var_16_1)
+	local curBossMo = TowerAssistBossModel.instance:getById(bossId)
 
-	if var_16_2.towerType == TowerEnum.TowerType.Normal and (var_16_6 and var_16_6:getTempState() or not var_16_6) then
-		arg_16_0.bossId = 0
+	if param.towerType == TowerEnum.TowerType.Normal and (curBossMo and curBossMo:getTempState() or not curBossMo) then
+		self.bossId = 0
 
-		var_16_0:setAssistBossId(0)
+		curGroupMO:setAssistBossId(0)
 	else
-		arg_16_0.bossId = var_16_1
+		self.bossId = bossId
 	end
 
-	arg_16_0:refreshBoss()
+	self:refreshBoss()
 end
 
-function var_0_0.refreshBoss(arg_17_0)
-	local var_17_0 = TowerConfig.instance:getAssistBossConfig(arg_17_0.bossId)
-	local var_17_1 = TowerModel.instance:getRecordFightParam()
+function TowerHeroGroupBossView:refreshBoss()
+	local bossConfig = TowerConfig.instance:getAssistBossConfig(self.bossId)
+	local param = TowerModel.instance:getRecordFightParam()
 
-	gohelper.setActive(arg_17_0.goEmpty, var_17_0 == nil)
-	gohelper.setActive(arg_17_0._btnAttr, var_17_0 ~= nil)
-	gohelper.setActive(arg_17_0.goBossRoot, var_17_0 ~= nil)
+	gohelper.setActive(self.goEmpty, bossConfig == nil)
+	gohelper.setActive(self._btnAttr, bossConfig ~= nil)
+	gohelper.setActive(self.goBossRoot, bossConfig ~= nil)
 
-	if var_17_0 then
-		arg_17_0.txtName.text = var_17_0.name
+	if bossConfig then
+		self.txtName.text = bossConfig.name
 
-		UISpriteSetMgr.instance:setCommonSprite(arg_17_0.imgCareer, string.format("lssx_%s", var_17_0.career))
+		UISpriteSetMgr.instance:setCommonSprite(self.imgCareer, string.format("lssx_%s", bossConfig.career))
 
-		local var_17_2 = TowerAssistBossModel.instance:getById(arg_17_0.bossId)
-		local var_17_3 = var_17_1.towerType == TowerEnum.TowerType.Limited
+		local bossMo = TowerAssistBossModel.instance:getById(self.bossId)
+		local isLimited = param.towerType == TowerEnum.TowerType.Limited
 
-		if not var_17_2 then
-			if var_17_3 then
-				var_17_2 = TowerAssistBossModel.instance:getTempUnlockTrialBossMO(arg_17_0.bossId)
+		if not bossMo then
+			if isLimited then
+				bossMo = TowerAssistBossModel.instance:getTempUnlockTrialBossMO(self.bossId)
 
-				gohelper.setActive(arg_17_0.goLev, true)
+				gohelper.setActive(self.goLev, true)
 
-				arg_17_0.txtLev.text = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.BalanceBossLevel)
-			elseif var_17_1.towerType == TowerEnum.TowerType.Boss then
-				var_17_2 = TowerAssistBossModel.instance:getTempUnlockTrialBossMO(arg_17_0.bossId)
+				self.txtLev.text = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.BalanceBossLevel)
+			elseif param.towerType == TowerEnum.TowerType.Boss then
+				bossMo = TowerAssistBossModel.instance:getTempUnlockTrialBossMO(self.bossId)
 
-				gohelper.setActive(arg_17_0.goLev, true)
+				gohelper.setActive(self.goLev, true)
 
-				arg_17_0.txtLev.text = 1
+				self.txtLev.text = 1
 
-				if arg_17_0.isTeach then
-					local var_17_4 = tonumber(TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.TeachBossLevel))
-					local var_17_5 = TowerConfig.instance:getBossTeachConfig(var_17_1.towerId, var_17_1.difficulty)
+				if self.isTeach then
+					local curLevel = tonumber(TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.TeachBossLevel))
+					local teachConfig = TowerConfig.instance:getBossTeachConfig(param.towerId, param.difficulty)
 
-					var_17_2:setTrialInfo(var_17_4, var_17_5.planId)
+					bossMo:setTrialInfo(curLevel, teachConfig.planId)
 
-					arg_17_0.txtLev.text = var_17_4
+					self.txtLev.text = curLevel
 				else
-					var_17_2:setTrialInfo(0, 0)
+					bossMo:setTrialInfo(0, 0)
 				end
 
-				var_17_2:refreshTalent()
+				bossMo:refreshTalent()
 			else
-				HeroGroupModel.instance:getCurGroupMO():setAssistBossId(0)
-				gohelper.setActive(arg_17_0.goLev, false)
+				local curGroupMO = HeroGroupModel.instance:getCurGroupMO()
 
-				arg_17_0.txtLev.text = ""
+				curGroupMO:setAssistBossId(0)
+				gohelper.setActive(self.goLev, false)
+
+				self.txtLev.text = ""
 			end
 		else
-			gohelper.setActive(arg_17_0.goLev, true)
+			gohelper.setActive(self.goLev, true)
 
-			local var_17_6 = tonumber(TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.BalanceBossLevel))
-			local var_17_7 = var_17_1.towerType == TowerEnum.TowerType.Limited and var_17_6 > var_17_2.level
+			local limitedTrialLevel = tonumber(TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.BalanceBossLevel))
+			local isLimitedTrial = param.towerType == TowerEnum.TowerType.Limited and limitedTrialLevel > bossMo.level
 
-			if arg_17_0.isTeach then
-				local var_17_8 = tonumber(TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.TeachBossLevel))
-				local var_17_9 = TowerConfig.instance:getBossTeachConfig(var_17_1.towerId, var_17_1.difficulty)
+			if self.isTeach then
+				local curLevel = tonumber(TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.TeachBossLevel))
+				local teachConfig = TowerConfig.instance:getBossTeachConfig(param.towerId, param.difficulty)
 
-				var_17_2:setTrialInfo(var_17_8, var_17_9.planId)
-				var_17_2:refreshTalent()
+				bossMo:setTrialInfo(curLevel, teachConfig.planId)
+				bossMo:refreshTalent()
 
-				arg_17_0.txtLev.text = tostring(var_17_8)
-			elseif var_17_7 then
-				local var_17_10 = var_17_6
-				local var_17_11 = TowerAssistBossModel.instance:getLimitedTrialBossLocalPlan(var_17_2)
+				self.txtLev.text = tostring(curLevel)
+			elseif isLimitedTrial then
+				local curLevel = limitedTrialLevel
+				local defaultPlanId = TowerAssistBossModel.instance:getLimitedTrialBossLocalPlan(bossMo)
 
-				var_17_2:setTrialInfo(var_17_10, var_17_11)
-				var_17_2:refreshTalent()
+				bossMo:setTrialInfo(curLevel, defaultPlanId)
+				bossMo:refreshTalent()
 
-				arg_17_0.txtLev.text = tostring(Mathf.Max(var_17_10, 1))
+				self.txtLev.text = tostring(Mathf.Max(curLevel, 1))
 			else
-				var_17_2:setTrialInfo(0, 0)
-				var_17_2:refreshTalent()
+				bossMo:setTrialInfo(0, 0)
+				bossMo:refreshTalent()
 
-				arg_17_0.txtLev.text = tostring(Mathf.Max(var_17_2.level, 1))
+				self.txtLev.text = tostring(Mathf.Max(bossMo.level, 1))
 			end
 		end
 
-		arg_17_0.simageBoss:LoadImage(var_17_0.bossPic)
+		self.simageBoss:LoadImage(bossConfig.bossPic)
 	end
 
-	local var_17_12 = TowerController.instance:isBossTowerOpen()
-	local var_17_13 = var_17_1.towerType == TowerEnum.TowerType.Boss
-	local var_17_14 = var_17_12 and var_17_0 == nil and not var_17_13 and not var_17_1.isHeroGroupLock
+	local bossIsOpen = TowerController.instance:isBossTowerOpen()
+	local isBossTower = param.towerType == TowerEnum.TowerType.Boss
+	local canShowAdd = bossIsOpen and bossConfig == nil and not isBossTower and not param.isHeroGroupLock
 
-	gohelper.setActive(arg_17_0.goAdd, var_17_14)
-	arg_17_0:refreshTalent()
+	gohelper.setActive(self.goAdd, canShowAdd)
+	self:refreshTalent()
 end
 
-function var_0_0.refreshTalent(arg_18_0)
-	local var_18_0 = TowerModel.instance:getRecordFightParam()
-	local var_18_1 = TowerModel.instance:getCurTowerType()
-	local var_18_2 = tonumber(TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.BalanceBossLevel))
-	local var_18_3 = TowerAssistBossModel.instance:getById(arg_18_0.bossId)
-	local var_18_4 = var_18_3 and var_18_1 and var_18_1 == TowerEnum.TowerType.Limited and var_18_3.trialLevel > 0 and var_18_2 > var_18_3.level
+function TowerHeroGroupBossView:refreshTalent()
+	local param = TowerModel.instance:getRecordFightParam()
+	local curTowerType = TowerModel.instance:getCurTowerType()
+	local limitedTrialLevel = tonumber(TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.BalanceBossLevel))
+	local bossMo = TowerAssistBossModel.instance:getById(self.bossId)
+	local isLimitedTrial = bossMo and curTowerType and curTowerType == TowerEnum.TowerType.Limited and bossMo.trialLevel > 0 and limitedTrialLevel > bossMo.level
+	local bossConfig = TowerConfig.instance:getAssistBossConfig(self.bossId)
 
-	if TowerConfig.instance:getAssistBossConfig(arg_18_0.bossId) and not arg_18_0.isTeach and not var_18_4 then
-		gohelper.setActive(arg_18_0.goArrow, var_18_3 and var_18_3:hasTalentCanActive() or false)
+	if bossConfig and not self.isTeach and not isLimitedTrial then
+		gohelper.setActive(self.goArrow, bossMo and bossMo:hasTalentCanActive() or false)
 	else
-		gohelper.setActive(arg_18_0.goArrow, false)
+		gohelper.setActive(self.goArrow, false)
 	end
 
-	local var_18_5 = 0
-	local var_18_6 = ""
-	local var_18_7 = false
+	local defaultPlanId = 0
+	local talentName = ""
+	local hideTalentPlane = false
 
-	if var_18_3 then
-		if arg_18_0.isTeach then
-			local var_18_8 = var_18_3.trialTalentPlan
+	if bossMo then
+		if self.isTeach then
+			defaultPlanId = bossMo.trialTalentPlan
 
-			var_18_6 = TowerConfig.instance:getTalentPlanConfig(arg_18_0.bossId, var_18_8).planName
-		elseif var_18_4 then
-			local var_18_9 = TowerAssistBossModel.instance:getLimitedTrialBossLocalPlan(var_18_3)
+			local planCo = TowerConfig.instance:getTalentPlanConfig(self.bossId, defaultPlanId)
 
-			var_18_6 = TowerConfig.instance:getTalentPlanConfig(arg_18_0.bossId, var_18_9).planName
-		elseif var_18_0.towerType == TowerEnum.TowerType.Boss and var_18_3:getTempState() then
-			var_18_7 = true
+			talentName = planCo.planName
+		elseif isLimitedTrial then
+			defaultPlanId = TowerAssistBossModel.instance:getLimitedTrialBossLocalPlan(bossMo)
+
+			local planCo = TowerConfig.instance:getTalentPlanConfig(self.bossId, defaultPlanId)
+
+			talentName = planCo.planName
+		elseif param.towerType == TowerEnum.TowerType.Boss and bossMo:getTempState() then
+			hideTalentPlane = true
 		else
-			local var_18_10 = var_18_3:getCurUseTalentPlan()
+			defaultPlanId = bossMo:getCurUseTalentPlan()
 
-			if var_18_10 <= tonumber(TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.CustomTalentPlanCount)) then
-				local var_18_11 = var_18_3:getTalentPlanInfos()
+			local customPlanCount = tonumber(TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.CustomTalentPlanCount))
 
-				for iter_18_0, iter_18_1 in pairs(var_18_11) do
-					if iter_18_1.planId == var_18_10 then
-						var_18_6 = iter_18_1.planName
+			if defaultPlanId <= customPlanCount then
+				local talentPlanInfos = bossMo:getTalentPlanInfos()
+
+				for _, info in pairs(talentPlanInfos) do
+					if info.planId == defaultPlanId then
+						talentName = info.planName
 
 						break
 					end
 				end
 			else
-				var_18_6 = TowerConfig.instance:getTalentPlanConfig(arg_18_0.bossId, var_18_10).planName
+				local planCo = TowerConfig.instance:getTalentPlanConfig(self.bossId, defaultPlanId)
+
+				talentName = planCo.planName
 			end
 		end
 	end
 
-	gohelper.setActive(arg_18_0._gotalentPlane, var_18_3 and not var_18_7)
+	gohelper.setActive(self._gotalentPlane, bossMo and not hideTalentPlane)
 
-	arg_18_0._txtTalentPlan.text = var_18_6
+	self._txtTalentPlan.text = talentName
 end
 
-function var_0_0._checkRestrictBoss(arg_19_0)
-	local var_19_0 = TowerModel.instance:getRecordFightParam()
+function TowerHeroGroupBossView:_checkRestrictBoss()
+	local param = TowerModel.instance:getRecordFightParam()
 
-	if var_19_0.isHeroGroupLock then
+	if param.isHeroGroupLock then
 		return
 	end
 
-	if TowerModel.instance:isBossLocked(arg_19_0.bossId) then
+	if TowerModel.instance:isBossLocked(self.bossId) then
 		return
 	end
 
-	if TowerModel.instance:isBossBan(arg_19_0.bossId) or TowerModel.instance:isLimitTowerBossBan(var_19_0.towerType, var_19_0.towerId, arg_19_0.bossId) then
+	if TowerModel.instance:isBossBan(self.bossId) or TowerModel.instance:isLimitTowerBossBan(param.towerType, param.towerId, self.bossId) then
 		UIBlockMgr.instance:startBlock("removeTowerBoss")
-		TaskDispatcher.runDelay(arg_19_0._removeTowerBoss, arg_19_0, 1.5)
+		TaskDispatcher.runDelay(self._removeTowerBoss, self, 1.5)
 	end
 end
 
-function var_0_0._removeTowerBoss(arg_20_0)
+function TowerHeroGroupBossView:_removeTowerBoss()
 	UIBlockMgr.instance:endBlock("removeTowerBoss")
 
-	local var_20_0 = TowerModel.instance:getRecordFightParam()
+	local param = TowerModel.instance:getRecordFightParam()
 
-	if TowerModel.instance:isBossBan(arg_20_0.bossId) or TowerModel.instance:isLimitTowerBossBan(var_20_0.towerType, var_20_0.towerId, arg_20_0.bossId) then
-		arg_20_0.bossId = 0
+	if TowerModel.instance:isBossBan(self.bossId) or TowerModel.instance:isLimitTowerBossBan(param.towerType, param.towerId, self.bossId) then
+		self.bossId = 0
 
-		HeroGroupModel.instance:getCurGroupMO():setAssistBossId(arg_20_0.bossId)
-		arg_20_0:refreshBoss()
+		local curGroupMO = HeroGroupModel.instance:getCurGroupMO()
+
+		curGroupMO:setAssistBossId(self.bossId)
+		self:refreshBoss()
 	end
 end
 
-function var_0_0.onClose(arg_21_0)
+function TowerHeroGroupBossView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_22_0)
+function TowerHeroGroupBossView:onDestroyView()
 	UIBlockMgr.instance:endBlock("removeTowerBoss")
-	TaskDispatcher.cancelTask(arg_22_0._removeTowerBoss, arg_22_0)
+	TaskDispatcher.cancelTask(self._removeTowerBoss, self)
 end
 
-return var_0_0
+return TowerHeroGroupBossView

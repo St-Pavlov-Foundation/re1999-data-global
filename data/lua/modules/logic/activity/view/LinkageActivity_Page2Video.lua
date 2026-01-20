@@ -1,78 +1,82 @@
-﻿module("modules.logic.activity.view.LinkageActivity_Page2Video", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/LinkageActivity_Page2Video.lua
 
-local var_0_0 = LinkageActivity_Page2VideoBase
-local var_0_1 = class("LinkageActivity_Page2Video", var_0_0)
+module("modules.logic.activity.view.LinkageActivity_Page2Video", package.seeall)
 
-function var_0_1.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local Base = LinkageActivity_Page2VideoBase
+local LinkageActivity_Page2Video = class("LinkageActivity_Page2Video", Base)
+
+function LinkageActivity_Page2Video:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_1.addEvents(arg_2_0)
+function LinkageActivity_Page2Video:addEvents()
 	return
 end
 
-function var_0_1.removeEvents(arg_3_0)
+function LinkageActivity_Page2Video:removeEvents()
 	return
 end
 
-function var_0_1.ctor(arg_4_0, ...)
-	var_0_0.ctor(arg_4_0, ...)
+function LinkageActivity_Page2Video:ctor(...)
+	Base.ctor(self, ...)
 end
 
-function var_0_1.onDestroyView(arg_5_0)
-	local var_5_0 = arg_5_0._mo
+function LinkageActivity_Page2Video:onDestroyView()
+	local mo = self._mo
 
-	if var_5_0 and var_5_0.videoAudioStopId then
-		AudioMgr.instance:trigger(var_5_0.videoAudioStopId)
+	if mo and mo.videoAudioStopId then
+		AudioMgr.instance:trigger(mo.videoAudioStopId)
 	end
 
-	var_0_0.onDestroyView(arg_5_0)
+	Base.onDestroyView(self)
 end
 
-function var_0_1._editableInitView(arg_6_0)
-	var_0_1.super._editableInitView(arg_6_0)
-	arg_6_0:setIsNeedLoadingCover(false)
+function LinkageActivity_Page2Video:_editableInitView()
+	LinkageActivity_Page2Video.super._editableInitView(self)
+	self:setIsNeedLoadingCover(false)
 
-	local var_6_0 = gohelper.findChild(arg_6_0.viewGO, "Video")
+	local videoGO = gohelper.findChild(self.viewGO, "Video")
 
-	arg_6_0:createVideoPlayer(var_6_0)
+	self:createVideoPlayer(videoGO)
 end
 
-function var_0_1.onUpdateMO(arg_7_0, arg_7_1)
-	var_0_0.onUpdateMO(arg_7_0, arg_7_1)
+function LinkageActivity_Page2Video:onUpdateMO(mo)
+	Base.onUpdateMO(self, mo)
 
-	local var_7_0 = langVideoUrl(arg_7_1.videoName)
+	local videoPath = mo.videoName
 
-	arg_7_0:loadVideo(var_7_0)
-	arg_7_0:run()
+	self:loadVideo(videoPath)
+	self:run()
 end
 
-function var_0_1.run(arg_8_0)
-	if not arg_8_0:_isPlaying() then
-		arg_8_0:play()
+function LinkageActivity_Page2Video:run()
+	if not self:_isPlaying() then
+		self:play()
 	end
 end
 
-function var_0_1.play(arg_9_0)
-	local var_9_0 = arg_9_0._mo.videoAudioId
+function LinkageActivity_Page2Video:play()
+	local mo = self._mo
+	local audioId = mo.videoAudioId
 
-	var_0_0.play(arg_9_0, var_9_0, true)
+	Base.play(self, audioId, true)
 end
 
-function var_0_1.stop(arg_10_0)
-	local var_10_0 = arg_10_0._mo.videoAudioStopId
+function LinkageActivity_Page2Video:stop()
+	local mo = self._mo
+	local stopAudioId = mo.videoAudioStopId
 
-	var_0_0.stop(arg_10_0, var_10_0)
+	Base.stop(self, stopAudioId)
 end
 
-function var_0_1.setEnabled(arg_11_0, arg_11_1)
-	if arg_11_1 then
-		arg_11_0:play()
+function LinkageActivity_Page2Video:setEnabled(isEnable)
+	if isEnable then
+		self:play()
 	else
-		arg_11_0:stop()
+		self:stop()
 	end
 end
 
-return var_0_1
+return LinkageActivity_Page2Video

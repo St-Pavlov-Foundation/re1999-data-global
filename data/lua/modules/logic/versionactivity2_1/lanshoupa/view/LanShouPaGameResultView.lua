@@ -1,187 +1,189 @@
-﻿module("modules.logic.versionactivity2_1.lanshoupa.view.LanShouPaGameResultView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_1/lanshoupa/view/LanShouPaGameResultView.lua
 
-local var_0_0 = class("LanShouPaGameResultView", BaseView)
+module("modules.logic.versionactivity2_1.lanshoupa.view.LanShouPaGameResultView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg1")
-	arg_1_0._simagebg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg2")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._gosuccess = gohelper.findChild(arg_1_0.viewGO, "#go_success")
-	arg_1_0._gofail = gohelper.findChild(arg_1_0.viewGO, "#go_fail")
-	arg_1_0._txtclassnum = gohelper.findChildText(arg_1_0.viewGO, "txtFbName/#txt_classnum")
-	arg_1_0._txtclassname = gohelper.findChildText(arg_1_0.viewGO, "txtFbName/#txt_classname")
-	arg_1_0._gotarget = gohelper.findChild(arg_1_0.viewGO, "targets")
-	arg_1_0._gotargetitem = gohelper.findChild(arg_1_0.viewGO, "targets/#go_targetitem")
-	arg_1_0._gobtn = gohelper.findChild(arg_1_0.viewGO, "btn")
-	arg_1_0._btnquitgame = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btn/#btn_quitgame")
-	arg_1_0._btnrestart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btn/#btn_restart")
-	arg_1_0._btnreturn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btn/#btn_return")
+local LanShouPaGameResultView = class("LanShouPaGameResultView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function LanShouPaGameResultView:onInitView()
+	self._simagebg1 = gohelper.findChildSingleImage(self.viewGO, "#simage_bg1")
+	self._simagebg2 = gohelper.findChildSingleImage(self.viewGO, "#simage_bg2")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._gosuccess = gohelper.findChild(self.viewGO, "#go_success")
+	self._gofail = gohelper.findChild(self.viewGO, "#go_fail")
+	self._txtclassnum = gohelper.findChildText(self.viewGO, "txtFbName/#txt_classnum")
+	self._txtclassname = gohelper.findChildText(self.viewGO, "txtFbName/#txt_classname")
+	self._gotarget = gohelper.findChild(self.viewGO, "targets")
+	self._gotargetitem = gohelper.findChild(self.viewGO, "targets/#go_targetitem")
+	self._gobtn = gohelper.findChild(self.viewGO, "btn")
+	self._btnquitgame = gohelper.findChildButtonWithAudio(self.viewGO, "btn/#btn_quitgame")
+	self._btnrestart = gohelper.findChildButtonWithAudio(self.viewGO, "btn/#btn_restart")
+	self._btnreturn = gohelper.findChildButtonWithAudio(self.viewGO, "btn/#btn_return")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnquitgame:AddClickListener(arg_2_0._btnquitgameOnClick, arg_2_0)
-	arg_2_0._btnrestart:AddClickListener(arg_2_0._btnrestartOnClick, arg_2_0)
-	arg_2_0._btnreturn:AddClickListener(arg_2_0._btnreturnOnClick, arg_2_0)
+function LanShouPaGameResultView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnquitgame:AddClickListener(self._btnquitgameOnClick, self)
+	self._btnrestart:AddClickListener(self._btnrestartOnClick, self)
+	self._btnreturn:AddClickListener(self._btnreturnOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnquitgame:RemoveClickListener()
-	arg_3_0._btnrestart:RemoveClickListener()
-	arg_3_0._btnreturn:RemoveClickListener()
+function LanShouPaGameResultView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btnquitgame:RemoveClickListener()
+	self._btnrestart:RemoveClickListener()
+	self._btnreturn:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:exitGame()
+function LanShouPaGameResultView:_btncloseOnClick()
+	self:exitGame()
 end
 
-function var_0_0._btnquitgameOnClick(arg_5_0)
-	arg_5_0:exitGame()
+function LanShouPaGameResultView:_btnquitgameOnClick()
+	self:exitGame()
 end
 
-function var_0_0.exitGame(arg_6_0)
+function LanShouPaGameResultView:exitGame()
 	ChessGameController.instance:dispatchEvent(ChessGameEvent.GameResultQuit)
 
 	if ChessGameModel.instance:getGameState() == ChessGameEnum.GameState.Win then
 		ChessGameController.instance:exitGame()
-		Activity164Model.instance:markEpisodeFinish(arg_6_0._episodeCfg.id)
+		Activity164Model.instance:markEpisodeFinish(self._episodeCfg.id)
 	end
 
 	Activity164Model.instance.currChessGameEpisodeId = 0
 
-	arg_6_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._onEscape(arg_7_0)
-	arg_7_0:exitGame()
+function LanShouPaGameResultView:_onEscape()
+	self:exitGame()
 end
 
-function var_0_0._btnrestartOnClick(arg_8_0)
-	TaskDispatcher.runDelay(var_0_0.resetStartGame, nil, LanShouPaEnum.AnimatorTime.SwithSceneOpen)
-	arg_8_0:closeThis()
+function LanShouPaGameResultView:_btnrestartOnClick()
+	TaskDispatcher.runDelay(LanShouPaGameResultView.resetStartGame, nil, LanShouPaEnum.AnimatorTime.SwithSceneOpen)
+	self:closeThis()
 end
 
-function var_0_0.resetStartGame(arg_9_0)
+function LanShouPaGameResultView:resetStartGame()
 	LanShouPaController.instance:resetStartGame()
 end
 
-function var_0_0.returnPointGame(arg_10_0)
+function LanShouPaGameResultView:returnPointGame()
 	LanShouPaController.instance:returnPointGame(ChessGameEnum.RollBack.CheckPoint)
 end
 
-function var_0_0._btnreturnOnClick(arg_11_0)
+function LanShouPaGameResultView:_btnreturnOnClick()
 	ChessGameController.instance:dispatchEvent(ChessGameEvent.GameLoadingMapStateUpdate, ChessGameEvent.LoadingMapState.Start, true)
-	TaskDispatcher.runDelay(var_0_0.returnPointGame, nil, LanShouPaEnum.AnimatorTime.SwithSceneOpen)
-	arg_11_0:closeThis()
+	TaskDispatcher.runDelay(LanShouPaGameResultView.returnPointGame, nil, LanShouPaEnum.AnimatorTime.SwithSceneOpen)
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_12_0)
-	arg_12_0._simagebg1:LoadImage(ResUrl.getCommonIcon("full/bg_beijingzhezhao"))
+function LanShouPaGameResultView:_editableInitView()
+	self._simagebg1:LoadImage(ResUrl.getCommonIcon("full/bg_beijingzhezhao"))
 
-	arg_12_0._simageFailtitle = gohelper.findChildSingleImage(arg_12_0.viewGO, "#go_fail/titlecn")
+	self._simageFailtitle = gohelper.findChildSingleImage(self.viewGO, "#go_fail/titlecn")
 
-	gohelper.setActive(arg_12_0._gotargetitem, false)
+	gohelper.setActive(self._gotargetitem, false)
 
-	arg_12_0._taskItems = {}
+	self._taskItems = {}
 
-	NavigateMgr.instance:addEscape(arg_12_0.viewName, arg_12_0._onEscape, arg_12_0)
+	NavigateMgr.instance:addEscape(self.viewName, self._onEscape, self)
 end
 
-function var_0_0._onHandleResetCompleted(arg_13_0)
+function LanShouPaGameResultView:_onHandleResetCompleted()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_14_0)
+function LanShouPaGameResultView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_15_0)
-	arg_15_0._isWin = arg_15_0.viewParam
-	arg_15_0._episodeCfg = arg_15_0:_getEpisodeCfg()
+function LanShouPaGameResultView:onOpen()
+	self._isWin = self.viewParam
+	self._episodeCfg = self:_getEpisodeCfg()
 
-	arg_15_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.onClose(arg_16_0)
+function LanShouPaGameResultView:onClose()
 	return
 end
 
-function var_0_0.refreshUI(arg_17_0)
-	if arg_17_0._episodeCfg then
-		arg_17_0._txtclassname.text = arg_17_0._episodeCfg.name
+function LanShouPaGameResultView:refreshUI()
+	if self._episodeCfg then
+		self._txtclassname.text = self._episodeCfg.name
 
-		local var_17_0 = ChessModel.instance:getActId()
-		local var_17_1 = ChessModel.instance:getEpisodeId()
-		local var_17_2 = Activity164Config.instance:getEpisodeIndex(var_17_0, var_17_1)
+		local actId = ChessModel.instance:getActId()
+		local episodeId = ChessModel.instance:getEpisodeId()
+		local index = Activity164Config.instance:getEpisodeIndex(actId, episodeId)
 
-		arg_17_0._txtclassnum.text = "STAGE " .. var_17_2
+		self._txtclassnum.text = "STAGE " .. index
 
-		gohelper.setActive(arg_17_0._gotarget, arg_17_0._isWin)
-		recthelper.setAnchorY(arg_17_0._gobtn.transform, arg_17_0._isWin and -400 or -200)
+		gohelper.setActive(self._gotarget, self._isWin)
+		recthelper.setAnchorY(self._gobtn.transform, self._isWin and -400 or -200)
 
-		if arg_17_0._isWin then
-			arg_17_0:refreshWin()
+		if self._isWin then
+			self:refreshWin()
 		else
-			arg_17_0:refreshLose()
+			self:refreshLose()
 		end
 	end
 end
 
-function var_0_0.refreshWin(arg_18_0)
+function LanShouPaGameResultView:refreshWin()
 	AudioMgr.instance:trigger(AudioEnum.ChessGame.PlayerArrive)
-	gohelper.setActive(arg_18_0._gosuccess, true)
-	gohelper.setActive(arg_18_0._gofail, false)
-	arg_18_0:refreshTaskConditions()
-	gohelper.setActive(arg_18_0._btnquitgame, false)
-	gohelper.setActive(arg_18_0._btnrestart, false)
-	gohelper.setActive(arg_18_0._btnreturn, false)
+	gohelper.setActive(self._gosuccess, true)
+	gohelper.setActive(self._gofail, false)
+	self:refreshTaskConditions()
+	gohelper.setActive(self._btnquitgame, false)
+	gohelper.setActive(self._btnrestart, false)
+	gohelper.setActive(self._btnreturn, false)
 end
 
-function var_0_0.refreshLose(arg_19_0)
+function LanShouPaGameResultView:refreshLose()
 	AudioMgr.instance:trigger(AudioEnum.ChessGame.ChallengeFailed)
-	gohelper.setActive(arg_19_0._gosuccess, false)
-	gohelper.setActive(arg_19_0._gofail, true)
-	gohelper.setActive(arg_19_0._btnclose, false)
-	gohelper.setActive(arg_19_0._btnreturn, true)
-	arg_19_0:refreshTaskConditions()
+	gohelper.setActive(self._gosuccess, false)
+	gohelper.setActive(self._gofail, true)
+	gohelper.setActive(self._btnclose, false)
+	gohelper.setActive(self._btnreturn, true)
+	self:refreshTaskConditions()
 end
 
-function var_0_0._getEpisodeCfg(arg_20_0)
-	local var_20_0 = ChessModel.instance:getActId()
-	local var_20_1 = ChessModel.instance:getEpisodeId()
+function LanShouPaGameResultView:_getEpisodeCfg()
+	local actId = ChessModel.instance:getActId()
+	local episodeId = ChessModel.instance:getEpisodeId()
 
-	if var_20_0 ~= nil and var_20_1 ~= nil then
-		return ChessConfig.instance:getEpisodeCo(var_20_0, var_20_1)
+	if actId ~= nil and episodeId ~= nil then
+		return ChessConfig.instance:getEpisodeCo(actId, episodeId)
 	end
 end
 
-function var_0_0.refreshTaskConditions(arg_21_0)
-	local var_21_0 = arg_21_0._episodeCfg
+function LanShouPaGameResultView:refreshTaskConditions()
+	local episodeCfg = self._episodeCfg
 
-	if not var_21_0 then
+	if not episodeCfg then
 		return
 	end
 
-	local var_21_1 = var_21_0.mainConditionStr
-	local var_21_2 = string.split(var_21_1, "|")
-	local var_21_3 = string.split(var_21_0.mainConditionStr, "|")
-	local var_21_4 = #var_21_2
-	local var_21_5 = arg_21_0:getOrCreateTaskItem(1, arg_21_0._gotargetitem)
+	local conditionsStr = episodeCfg.mainConditionStr
+	local conditions = string.split(conditionsStr, "|")
+	local conditionDesc = string.split(episodeCfg.mainConditionStr, "|")
+	local taskLen = #conditions
+	local taskItem = self:getOrCreateTaskItem(1, self._gotargetitem)
 
-	arg_21_0:refreshTaskItem(var_21_5, var_21_3[var_21_4], true, true)
+	self:refreshTaskItem(taskItem, conditionDesc[taskLen], true, true)
 end
 
-function var_0_0._checkExtStarConditionFinish(arg_22_0, arg_22_1, arg_22_2)
-	local var_22_0 = GameUtil.splitString2(arg_22_1, true, "|", "#")
+function LanShouPaGameResultView:_checkExtStarConditionFinish(str, actId)
+	local params2 = GameUtil.splitString2(str, true, "|", "#")
 
-	if var_22_0 then
-		for iter_22_0, iter_22_1 in ipairs(var_22_0) do
-			if not ChessGameHelper.isClearConditionFinish(iter_22_1, arg_22_2) then
+	if params2 then
+		for i, params in ipairs(params2) do
+			if not ChessGameHelper.isClearConditionFinish(params, actId) then
 				return false
 			end
 		end
@@ -190,39 +192,39 @@ function var_0_0._checkExtStarConditionFinish(arg_22_0, arg_22_1, arg_22_2)
 	return true
 end
 
-function var_0_0.refreshTaskItem(arg_23_0, arg_23_1, arg_23_2, arg_23_3, arg_23_4)
-	gohelper.setActive(arg_23_1.go, true)
+function LanShouPaGameResultView:refreshTaskItem(taskItem, descTxt, isFinish, hasResult)
+	gohelper.setActive(taskItem.go, true)
 
-	arg_23_1.txtTaskDesc.text = arg_23_2
+	taskItem.txtTaskDesc.text = descTxt
 
-	gohelper.setActive(arg_23_1.goResult, arg_23_4)
+	gohelper.setActive(taskItem.goResult, hasResult)
 
-	if arg_23_4 then
-		gohelper.setActive(arg_23_1.goFinish, arg_23_3)
-		gohelper.setActive(arg_23_1.goUnFinish, not arg_23_3)
+	if hasResult then
+		gohelper.setActive(taskItem.goFinish, isFinish)
+		gohelper.setActive(taskItem.goUnFinish, not isFinish)
 	end
 end
 
-function var_0_0.getOrCreateTaskItem(arg_24_0, arg_24_1, arg_24_2)
-	local var_24_0 = arg_24_0._taskItems[arg_24_1]
+function LanShouPaGameResultView:getOrCreateTaskItem(index, go)
+	local item = self._taskItems[index]
 
-	if not var_24_0 then
-		var_24_0 = arg_24_0:getUserDataTb_()
-		var_24_0.go = arg_24_2
-		var_24_0.txtTaskDesc = gohelper.findChildText(var_24_0.go, "txt_taskdesc")
-		var_24_0.goFinish = gohelper.findChild(var_24_0.go, "result/go_finish")
-		var_24_0.goUnFinish = gohelper.findChild(var_24_0.go, "result/go_unfinish")
-		var_24_0.goResult = gohelper.findChild(var_24_0.go, "result")
-		arg_24_0._taskItems[arg_24_1] = var_24_0
+	if not item then
+		item = self:getUserDataTb_()
+		item.go = go
+		item.txtTaskDesc = gohelper.findChildText(item.go, "txt_taskdesc")
+		item.goFinish = gohelper.findChild(item.go, "result/go_finish")
+		item.goUnFinish = gohelper.findChild(item.go, "result/go_unfinish")
+		item.goResult = gohelper.findChild(item.go, "result")
+		self._taskItems[index] = item
 	end
 
-	return var_24_0
+	return item
 end
 
-function var_0_0.onDestroyView(arg_25_0)
-	arg_25_0._simagebg1:UnLoadImage()
-	arg_25_0._simageFailtitle:UnLoadImage()
-	NavigateMgr.instance:removeEscape(arg_25_0.viewName, arg_25_0._onEscape, arg_25_0)
+function LanShouPaGameResultView:onDestroyView()
+	self._simagebg1:UnLoadImage()
+	self._simageFailtitle:UnLoadImage()
+	NavigateMgr.instance:removeEscape(self.viewName, self._onEscape, self)
 end
 
-return var_0_0
+return LanShouPaGameResultView

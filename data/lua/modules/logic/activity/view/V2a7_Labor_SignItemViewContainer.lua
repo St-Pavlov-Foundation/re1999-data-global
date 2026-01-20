@@ -1,19 +1,21 @@
-﻿module("modules.logic.activity.view.V2a7_Labor_SignItemViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/V2a7_Labor_SignItemViewContainer.lua
 
-local var_0_0 = class("V2a7_Labor_SignItemViewContainer", Activity101SignViewBaseContainer)
+module("modules.logic.activity.view.V2a7_Labor_SignItemViewContainer", package.seeall)
 
-function var_0_0.onModifyListScrollParam(arg_1_0, arg_1_1)
-	arg_1_1.cellClass = V2a7_Labor_SignItem
-	arg_1_1.scrollGOPath = "Root/#scroll_ItemList"
-	arg_1_1.cellWidth = 220
-	arg_1_1.cellHeight = 600
-	arg_1_1.cellSpaceH = -16
+local V2a7_Labor_SignItemViewContainer = class("V2a7_Labor_SignItemViewContainer", Activity101SignViewBaseContainer)
+
+function V2a7_Labor_SignItemViewContainer:onModifyListScrollParam(refListScrollParam)
+	refListScrollParam.cellClass = V2a7_Labor_SignItem
+	refListScrollParam.scrollGOPath = "Root/#scroll_ItemList"
+	refListScrollParam.cellWidth = 220
+	refListScrollParam.cellHeight = 600
+	refListScrollParam.cellSpaceH = -16
 end
 
-function var_0_0.onBuildViews(arg_2_0)
+function V2a7_Labor_SignItemViewContainer:onBuildViews()
 	return {
-		(arg_2_0:getMainView())
+		(self:getMainView())
 	}
 end
 
-return var_0_0
+return V2a7_Labor_SignItemViewContainer

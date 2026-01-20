@@ -1,242 +1,246 @@
-﻿module("modules.logic.seasonver.act166.view.Season166ResultPanel", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act166/view/Season166ResultPanel.lua
 
-local var_0_0 = class("Season166ResultPanel", BaseView)
+module("modules.logic.seasonver.act166.view.Season166ResultPanel", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg")
-	arg_1_0._simagemask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg/#simage_mask")
-	arg_1_0._simagelight = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg/#simage_mask/#simage_light")
-	arg_1_0._goFinish = gohelper.findChild(arg_1_0.viewGO, "#simage_fullbg/#go_Finish")
-	arg_1_0._imageBattleFinish = gohelper.findChildImage(arg_1_0.viewGO, "#simage_fullbg/#go_Finish/#image_BattleFinish")
-	arg_1_0._imageBattleFinish2 = gohelper.findChildImage(arg_1_0.viewGO, "#simage_fullbg/#go_Finish/#image_BattleFinish2")
-	arg_1_0._imageBattleFinish3 = gohelper.findChildImage(arg_1_0.viewGO, "#simage_fullbg/#go_Finish/#image_BattleFinish3")
-	arg_1_0._imageBattleFinish4 = gohelper.findChildImage(arg_1_0.viewGO, "#simage_fullbg/#go_Finish/#image_BattleFinish4")
-	arg_1_0._goBaseInfo = gohelper.findChild(arg_1_0.viewGO, "#simage_fullbg/#go_BaseInfo")
-	arg_1_0._goStarRoot = gohelper.findChild(arg_1_0.viewGO, "#simage_fullbg/#go_BaseInfo/#go_StarRoot")
-	arg_1_0._imageStar1 = gohelper.findChildImage(arg_1_0.viewGO, "#simage_fullbg/#go_BaseInfo/#go_StarRoot/star1/#image_Star1")
-	arg_1_0._imageStar2 = gohelper.findChildImage(arg_1_0.viewGO, "#simage_fullbg/#go_BaseInfo/#go_StarRoot/star2/#image_Star2")
-	arg_1_0._imageStar3 = gohelper.findChildImage(arg_1_0.viewGO, "#simage_fullbg/#go_BaseInfo/#go_StarRoot/star3/#image_Star3")
-	arg_1_0._txtScore = gohelper.findChildText(arg_1_0.viewGO, "#simage_fullbg/#go_BaseInfo/#txt_Score")
-	arg_1_0._simageAllFinish = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg/#go_BaseInfo/#simage_AllFinish")
-	arg_1_0._txtScore1 = gohelper.findChildText(arg_1_0.viewGO, "#simage_fullbg/#go_BaseInfo/#simage_AllFinish/#txt_Score1")
-	arg_1_0._goTargetRoot = gohelper.findChild(arg_1_0.viewGO, "#simage_fullbg/#go_BaseInfo/#go_TargetRoot")
-	arg_1_0._goTarget1 = gohelper.findChild(arg_1_0.viewGO, "#simage_fullbg/#go_BaseInfo/#go_TargetRoot/#go_Target1")
-	arg_1_0._txtTarget1 = gohelper.findChildText(arg_1_0.viewGO, "#simage_fullbg/#go_BaseInfo/#go_TargetRoot/#go_Target1/#txt_Target1")
-	arg_1_0._txtIntegral1 = gohelper.findChildText(arg_1_0.viewGO, "#simage_fullbg/#go_BaseInfo/#go_TargetRoot/#go_Target1/#txt_Integral1")
-	arg_1_0._goTarget2 = gohelper.findChild(arg_1_0.viewGO, "#simage_fullbg/#go_BaseInfo/#go_TargetRoot/#go_Target2")
-	arg_1_0._txtTarget2 = gohelper.findChildText(arg_1_0.viewGO, "#simage_fullbg/#go_BaseInfo/#go_TargetRoot/#go_Target2/#txt_Target2")
-	arg_1_0._txtIntegral2 = gohelper.findChildText(arg_1_0.viewGO, "#simage_fullbg/#go_BaseInfo/#go_TargetRoot/#go_Target2/#txt_Integral2")
-	arg_1_0._goTrainInfo = gohelper.findChild(arg_1_0.viewGO, "#simage_fullbg/#go_TrainInfo")
-	arg_1_0._txtTrain = gohelper.findChildText(arg_1_0.viewGO, "#simage_fullbg/#go_TrainInfo/#txt_Train")
-	arg_1_0._goEpisode1 = gohelper.findChild(arg_1_0.viewGO, "#simage_fullbg/#go_TrainInfo/Episode/Episode1/#go_Episode1")
-	arg_1_0._goEpisode2 = gohelper.findChild(arg_1_0.viewGO, "#simage_fullbg/#go_TrainInfo/Episode/Episode2/#go_Episode2")
-	arg_1_0._goEpisode3 = gohelper.findChild(arg_1_0.viewGO, "#simage_fullbg/#go_TrainInfo/Episode/Episode3/#go_Episode3")
-	arg_1_0._goEpisode4 = gohelper.findChild(arg_1_0.viewGO, "#simage_fullbg/#go_TrainInfo/Episode/Episode4/#go_Episode4")
-	arg_1_0._goEpisode5 = gohelper.findChild(arg_1_0.viewGO, "#simage_fullbg/#go_TrainInfo/Episode/Episode5/#go_Episode5")
-	arg_1_0._goEpisode6 = gohelper.findChild(arg_1_0.viewGO, "#simage_fullbg/#go_TrainInfo/Episode/Episode6/#go_Episode6")
-	arg_1_0._txtTip = gohelper.findChildText(arg_1_0.viewGO, "#simage_fullbg/#txt_Tip")
+local Season166ResultPanel = class("Season166ResultPanel", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Season166ResultPanel:onInitView()
+	self._simagefullbg = gohelper.findChildSingleImage(self.viewGO, "#simage_fullbg")
+	self._simagemask = gohelper.findChildSingleImage(self.viewGO, "#simage_fullbg/#simage_mask")
+	self._simagelight = gohelper.findChildSingleImage(self.viewGO, "#simage_fullbg/#simage_mask/#simage_light")
+	self._goFinish = gohelper.findChild(self.viewGO, "#simage_fullbg/#go_Finish")
+	self._imageBattleFinish = gohelper.findChildImage(self.viewGO, "#simage_fullbg/#go_Finish/#image_BattleFinish")
+	self._imageBattleFinish2 = gohelper.findChildImage(self.viewGO, "#simage_fullbg/#go_Finish/#image_BattleFinish2")
+	self._imageBattleFinish3 = gohelper.findChildImage(self.viewGO, "#simage_fullbg/#go_Finish/#image_BattleFinish3")
+	self._imageBattleFinish4 = gohelper.findChildImage(self.viewGO, "#simage_fullbg/#go_Finish/#image_BattleFinish4")
+	self._goBaseInfo = gohelper.findChild(self.viewGO, "#simage_fullbg/#go_BaseInfo")
+	self._goStarRoot = gohelper.findChild(self.viewGO, "#simage_fullbg/#go_BaseInfo/#go_StarRoot")
+	self._imageStar1 = gohelper.findChildImage(self.viewGO, "#simage_fullbg/#go_BaseInfo/#go_StarRoot/star1/#image_Star1")
+	self._imageStar2 = gohelper.findChildImage(self.viewGO, "#simage_fullbg/#go_BaseInfo/#go_StarRoot/star2/#image_Star2")
+	self._imageStar3 = gohelper.findChildImage(self.viewGO, "#simage_fullbg/#go_BaseInfo/#go_StarRoot/star3/#image_Star3")
+	self._txtScore = gohelper.findChildText(self.viewGO, "#simage_fullbg/#go_BaseInfo/#txt_Score")
+	self._simageAllFinish = gohelper.findChildSingleImage(self.viewGO, "#simage_fullbg/#go_BaseInfo/#simage_AllFinish")
+	self._txtScore1 = gohelper.findChildText(self.viewGO, "#simage_fullbg/#go_BaseInfo/#simage_AllFinish/#txt_Score1")
+	self._goTargetRoot = gohelper.findChild(self.viewGO, "#simage_fullbg/#go_BaseInfo/#go_TargetRoot")
+	self._goTarget1 = gohelper.findChild(self.viewGO, "#simage_fullbg/#go_BaseInfo/#go_TargetRoot/#go_Target1")
+	self._txtTarget1 = gohelper.findChildText(self.viewGO, "#simage_fullbg/#go_BaseInfo/#go_TargetRoot/#go_Target1/#txt_Target1")
+	self._txtIntegral1 = gohelper.findChildText(self.viewGO, "#simage_fullbg/#go_BaseInfo/#go_TargetRoot/#go_Target1/#txt_Integral1")
+	self._goTarget2 = gohelper.findChild(self.viewGO, "#simage_fullbg/#go_BaseInfo/#go_TargetRoot/#go_Target2")
+	self._txtTarget2 = gohelper.findChildText(self.viewGO, "#simage_fullbg/#go_BaseInfo/#go_TargetRoot/#go_Target2/#txt_Target2")
+	self._txtIntegral2 = gohelper.findChildText(self.viewGO, "#simage_fullbg/#go_BaseInfo/#go_TargetRoot/#go_Target2/#txt_Integral2")
+	self._goTrainInfo = gohelper.findChild(self.viewGO, "#simage_fullbg/#go_TrainInfo")
+	self._txtTrain = gohelper.findChildText(self.viewGO, "#simage_fullbg/#go_TrainInfo/#txt_Train")
+	self._goEpisode1 = gohelper.findChild(self.viewGO, "#simage_fullbg/#go_TrainInfo/Episode/Episode1/#go_Episode1")
+	self._goEpisode2 = gohelper.findChild(self.viewGO, "#simage_fullbg/#go_TrainInfo/Episode/Episode2/#go_Episode2")
+	self._goEpisode3 = gohelper.findChild(self.viewGO, "#simage_fullbg/#go_TrainInfo/Episode/Episode3/#go_Episode3")
+	self._goEpisode4 = gohelper.findChild(self.viewGO, "#simage_fullbg/#go_TrainInfo/Episode/Episode4/#go_Episode4")
+	self._goEpisode5 = gohelper.findChild(self.viewGO, "#simage_fullbg/#go_TrainInfo/Episode/Episode5/#go_Episode5")
+	self._goEpisode6 = gohelper.findChild(self.viewGO, "#simage_fullbg/#go_TrainInfo/Episode/Episode6/#go_Episode6")
+	self._txtTip = gohelper.findChildText(self.viewGO, "#simage_fullbg/#txt_Tip")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function Season166ResultPanel:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Season166ResultPanel:removeEvents()
 	return
 end
 
-function var_0_0.onClickModalMask(arg_4_0)
-	if arg_4_0.closing then
+function Season166ResultPanel:onClickModalMask()
+	if self.closing then
 		return
 	end
 
-	if arg_4_0._isCanSkip then
-		arg_4_0.closing = true
+	if self._isCanSkip then
+		self.closing = true
 
-		if arg_4_0.episodeType == DungeonEnum.EpisodeType.Season166Base then
-			arg_4_0.anim:Play("close1")
+		if self.episodeType == DungeonEnum.EpisodeType.Season166Base then
+			self.anim:Play("close1")
 		else
-			arg_4_0.anim:Play("close2")
+			self.anim:Play("close2")
 		end
 
-		TaskDispatcher.runDelay(arg_4_0.closeAnimEnd, arg_4_0, 0.17)
+		TaskDispatcher.runDelay(self.closeAnimEnd, self, 0.17)
 	end
 end
 
-function var_0_0.closeAnimEnd(arg_5_0)
+function Season166ResultPanel:closeAnimEnd()
 	ViewMgr.instance:openView(ViewName.Season166ResultView)
-	arg_5_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0.anim = arg_6_0.viewGO:GetComponent(gohelper.Type_Animator)
+function Season166ResultPanel:_editableInitView()
+	self.anim = self.viewGO:GetComponent(gohelper.Type_Animator)
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0._isCanSkip = false
-	arg_7_0.result = Season166Model.instance:getFightResult()
-	arg_7_0.episodeType = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId).type
+function Season166ResultPanel:onOpen()
+	self._isCanSkip = false
+	self.result = Season166Model.instance:getFightResult()
 
-	arg_7_0:refreshUI()
+	local episode_config = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
+
+	self.episodeType = episode_config.type
+
+	self:refreshUI()
 	AudioMgr.instance:trigger(AudioEnum.Season166.play_ui_checkpoint_result)
 end
 
-function var_0_0.onClose(arg_8_0)
+function Season166ResultPanel:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
-	TaskDispatcher.cancelTask(arg_9_0._tweenScore, arg_9_0)
-	TaskDispatcher.cancelTask(arg_9_0._onTweenFinish, arg_9_0)
-	TaskDispatcher.cancelTask(arg_9_0.openAnimEnd, arg_9_0)
-	TaskDispatcher.cancelTask(arg_9_0.closeAnimEnd, arg_9_0)
+function Season166ResultPanel:onDestroyView()
+	TaskDispatcher.cancelTask(self._tweenScore, self)
+	TaskDispatcher.cancelTask(self._onTweenFinish, self)
+	TaskDispatcher.cancelTask(self.openAnimEnd, self)
+	TaskDispatcher.cancelTask(self.closeAnimEnd, self)
 end
 
-function var_0_0.refreshUI(arg_10_0)
-	if arg_10_0.episodeType == DungeonEnum.EpisodeType.Season166Base then
-		gohelper.setActive(arg_10_0._goTrainInfo, false)
-		arg_10_0:refreshBaseInfo()
-		gohelper.setActive(arg_10_0._goBaseInfo, true)
-		arg_10_0.anim:Play("open1")
+function Season166ResultPanel:refreshUI()
+	if self.episodeType == DungeonEnum.EpisodeType.Season166Base then
+		gohelper.setActive(self._goTrainInfo, false)
+		self:refreshBaseInfo()
+		gohelper.setActive(self._goBaseInfo, true)
+		self.anim:Play("open1")
 	else
-		gohelper.setActive(arg_10_0._goBaseInfo, false)
-		arg_10_0:refreshTrainInfo()
-		gohelper.setActive(arg_10_0._goTrainInfo, true)
-		arg_10_0.anim:Play("open2")
+		gohelper.setActive(self._goBaseInfo, false)
+		self:refreshTrainInfo()
+		gohelper.setActive(self._goTrainInfo, true)
+		self.anim:Play("open2")
 	end
 
-	TaskDispatcher.runDelay(arg_10_0.openAnimEnd, arg_10_0, 3)
+	TaskDispatcher.runDelay(self.openAnimEnd, self, 3)
 end
 
-function var_0_0.openAnimEnd(arg_11_0)
-	if arg_11_0.episodeType == DungeonEnum.EpisodeType.Season166Base then
-		if not string.nilorempty(arg_11_0.result.targetInfo) then
-			gohelper.setActive(arg_11_0._goTargetRoot, true)
-			TaskDispatcher.runDelay(arg_11_0._tweenScore, arg_11_0, 1)
+function Season166ResultPanel:openAnimEnd()
+	if self.episodeType == DungeonEnum.EpisodeType.Season166Base then
+		if not string.nilorempty(self.result.targetInfo) then
+			gohelper.setActive(self._goTargetRoot, true)
+			TaskDispatcher.runDelay(self._tweenScore, self, 1)
 		else
-			arg_11_0:_onTweenFinish()
+			self:_onTweenFinish()
 		end
 	else
-		arg_11_0:_onTweenFinish()
+		self:_onTweenFinish()
 	end
 end
 
-function var_0_0.refreshBaseInfo(arg_12_0)
-	gohelper.setActive(arg_12_0._imageBattleFinish, true)
-	gohelper.setActive(arg_12_0._imageBattleFinish2, true)
-	gohelper.setActive(arg_12_0._imageBattleFinish3, false)
-	gohelper.setActive(arg_12_0._imageBattleFinish4, false)
+function Season166ResultPanel:refreshBaseInfo()
+	gohelper.setActive(self._imageBattleFinish, true)
+	gohelper.setActive(self._imageBattleFinish2, true)
+	gohelper.setActive(self._imageBattleFinish3, false)
+	gohelper.setActive(self._imageBattleFinish4, false)
 
-	arg_12_0._txtScore.text = arg_12_0.result.battleScore
-	arg_12_0._txtScore1.text = arg_12_0.result.battleScore
+	self._txtScore.text = self.result.battleScore
+	self._txtScore1.text = self.result.battleScore
 
-	arg_12_0:refreshStar()
-	arg_12_0:refreshTarget()
+	self:refreshStar()
+	self:refreshTarget()
 end
 
-function var_0_0.refreshTrainInfo(arg_13_0)
-	gohelper.setActive(arg_13_0._imageBattleFinish, false)
-	gohelper.setActive(arg_13_0._imageBattleFinish2, false)
-	gohelper.setActive(arg_13_0._imageBattleFinish3, true)
-	gohelper.setActive(arg_13_0._imageBattleFinish4, true)
+function Season166ResultPanel:refreshTrainInfo()
+	gohelper.setActive(self._imageBattleFinish, false)
+	gohelper.setActive(self._imageBattleFinish2, false)
+	gohelper.setActive(self._imageBattleFinish3, true)
+	gohelper.setActive(self._imageBattleFinish4, true)
 
-	local var_13_0 = Season166Config.instance:getSeasonTrainCos(arg_13_0.result.activityId)
+	local trainCfgList = Season166Config.instance:getSeasonTrainCos(self.result.activityId)
 
-	for iter_13_0 = 1, 6 do
-		local var_13_1 = var_13_0[iter_13_0]
+	for i = 1, 6 do
+		local trainCfg = trainCfgList[i]
 
-		if var_13_1 then
-			local var_13_2
-			local var_13_3
+		if trainCfg then
+			local isPass
 
-			if var_13_1.trainId == arg_13_0.result.id then
-				arg_13_0._txtTrain.text = GameUtil.setFirstStrSize(var_13_1.name, 98)
-				var_13_3 = true
+			if trainCfg.trainId == self.result.id then
+				self._txtTrain.text = GameUtil.setFirstStrSize(trainCfg.name, 98)
+				isPass = true
 			else
-				var_13_3 = Season166Model.instance:isTrainPass(arg_13_0.result.activityId, var_13_1.trainId)
+				isPass = Season166Model.instance:isTrainPass(self.result.activityId, trainCfg.trainId)
 			end
 
-			gohelper.setActive(arg_13_0["_goEpisode" .. iter_13_0], var_13_3)
+			gohelper.setActive(self["_goEpisode" .. i], isPass)
 		end
 	end
 end
 
-function var_0_0.refreshStar(arg_14_0)
-	if arg_14_0.episodeType ~= DungeonEnum.EpisodeType.Season166Base then
+function Season166ResultPanel:refreshStar()
+	if self.episodeType ~= DungeonEnum.EpisodeType.Season166Base then
 		return
 	end
 
-	local var_14_0 = Season166BaseSpotModel.instance:getScoreLevelCfg(arg_14_0.result.activityId, arg_14_0.result.id, arg_14_0.result.totalScore)
-	local var_14_1 = var_14_0 and var_14_0.star or 0
+	local scoreLevelCfg = Season166BaseSpotModel.instance:getScoreLevelCfg(self.result.activityId, self.result.id, self.result.totalScore)
+	local starCnt = scoreLevelCfg and scoreLevelCfg.star or 0
 
-	for iter_14_0 = 1, 3 do
-		local var_14_2 = "_imageStar" .. iter_14_0
+	for i = 1, 3 do
+		local key = "_imageStar" .. i
 
-		if var_14_0 and var_14_0.level == 4 then
-			UISpriteSetMgr.instance:setSeason166Sprite(arg_14_0[var_14_2], "season166_result_bulb3")
+		if scoreLevelCfg and scoreLevelCfg.level == 4 then
+			UISpriteSetMgr.instance:setSeason166Sprite(self[key], "season166_result_bulb3")
 		end
 
-		gohelper.setActive(arg_14_0[var_14_2], iter_14_0 <= var_14_1)
+		gohelper.setActive(self[key], i <= starCnt)
 	end
 end
 
-function var_0_0.refreshTarget(arg_15_0)
-	if arg_15_0.episodeType ~= DungeonEnum.EpisodeType.Season166Base then
+function Season166ResultPanel:refreshTarget()
+	if self.episodeType ~= DungeonEnum.EpisodeType.Season166Base then
 		return
 	end
 
-	if not string.nilorempty(arg_15_0.result.targetInfo) then
-		local var_15_0 = GameUtil.splitString2(arg_15_0.result.targetInfo, true)
+	if not string.nilorempty(self.result.targetInfo) then
+		local targetInfos = GameUtil.splitString2(self.result.targetInfo, true)
 
-		gohelper.setActive(arg_15_0._txtScore, #var_15_0 < 2)
-		gohelper.setActive(arg_15_0._simageAllFinish, #var_15_0 == 2)
+		gohelper.setActive(self._txtScore, #targetInfos < 2)
+		gohelper.setActive(self._simageAllFinish, #targetInfos == 2)
 
-		for iter_15_0 = 1, 2 do
-			local var_15_1 = var_15_0[iter_15_0]
+		for i = 1, 2 do
+			local targetInfo = targetInfos[i]
 
-			if var_15_1 then
-				local var_15_2 = var_15_1[1]
-				local var_15_3 = var_15_1[2]
-				local var_15_4 = Season166Config.instance:getSeasonBaseTargetCo(arg_15_0.result.activityId, arg_15_0.result.id, var_15_2)
-				local var_15_5 = Season166Config.instance:getAdditionScoreByParam(var_15_4, var_15_3)
-				local var_15_6 = luaLang("season166_resultpanel_target" .. var_15_2)
-				local var_15_7 = GameUtil.getSubPlaceholderLuaLangOneParam(var_15_6, var_15_3)
+			if targetInfo then
+				local targetId = targetInfo[1]
+				local targetParam = targetInfo[2]
+				local targetCfg = Season166Config.instance:getSeasonBaseTargetCo(self.result.activityId, self.result.id, targetId)
+				local score = Season166Config.instance:getAdditionScoreByParam(targetCfg, targetParam)
+				local text = luaLang("season166_resultpanel_target" .. targetId)
+				local targetDesc = GameUtil.getSubPlaceholderLuaLangOneParam(text, targetParam)
 
-				arg_15_0["_txtTarget" .. iter_15_0].text = var_15_7
-				arg_15_0["_txtIntegral" .. iter_15_0].text = "+" .. var_15_5
+				self["_txtTarget" .. i].text = targetDesc
+				self["_txtIntegral" .. i].text = "+" .. score
 
-				gohelper.setActive(arg_15_0["_goTarget" .. iter_15_0], true)
+				gohelper.setActive(self["_goTarget" .. i], true)
 			else
-				gohelper.setActive(arg_15_0["_goTarget" .. iter_15_0], false)
+				gohelper.setActive(self["_goTarget" .. i], false)
 			end
 		end
 	end
 end
 
-function var_0_0._tweenScore(arg_16_0)
+function Season166ResultPanel:_tweenScore()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_mane_post_1_6_score)
-	gohelper.setActive(arg_16_0._goStarRoot, true)
+	gohelper.setActive(self._goStarRoot, true)
 
-	arg_16_0._tweenId = ZProj.TweenHelper.DOTweenFloat(arg_16_0.result.battleScore, arg_16_0.result.totalScore, 1, arg_16_0._onTweenUpdate, nil, arg_16_0)
+	self._tweenId = ZProj.TweenHelper.DOTweenFloat(self.result.battleScore, self.result.totalScore, 1, self._onTweenUpdate, nil, self)
 
-	TaskDispatcher.runDelay(arg_16_0._onTweenFinish, arg_16_0, 1)
+	TaskDispatcher.runDelay(self._onTweenFinish, self, 1)
 end
 
-function var_0_0._onTweenUpdate(arg_17_0, arg_17_1)
-	if arg_17_0._txtScore and arg_17_0._txtScore1 then
-		arg_17_0._txtScore.text = Mathf.Ceil(arg_17_1)
-		arg_17_0._txtScore1.text = Mathf.Ceil(arg_17_1)
+function Season166ResultPanel:_onTweenUpdate(value)
+	if self._txtScore and self._txtScore1 then
+		self._txtScore.text = Mathf.Ceil(value)
+		self._txtScore1.text = Mathf.Ceil(value)
 	end
 end
 
-function var_0_0._onTweenFinish(arg_18_0)
-	arg_18_0._isCanSkip = true
+function Season166ResultPanel:_onTweenFinish()
+	self._isCanSkip = true
 
-	gohelper.setActive(arg_18_0._txtTip, true)
+	gohelper.setActive(self._txtTip, true)
 end
 
-return var_0_0
+return Season166ResultPanel

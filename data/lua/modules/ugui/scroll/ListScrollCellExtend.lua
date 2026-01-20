@@ -1,57 +1,59 @@
-﻿module("modules.ugui.scroll.ListScrollCellExtend", package.seeall)
+﻿-- chunkname: @modules/ugui/scroll/ListScrollCellExtend.lua
 
-local var_0_0 = class("ListScrollCellExtend", ListScrollCell)
+module("modules.ugui.scroll.ListScrollCellExtend", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
+local ListScrollCellExtend = class("ListScrollCellExtend", ListScrollCell)
+
+function ListScrollCellExtend:onInitView()
 	return
 end
 
-function var_0_0.addEvents(arg_2_0)
+function ListScrollCellExtend:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function ListScrollCellExtend:removeEvents()
 	return
 end
 
-function var_0_0._editableAddEvents(arg_4_0)
+function ListScrollCellExtend:_editableAddEvents()
 	return
 end
 
-function var_0_0._editableRemoveEvents(arg_5_0)
+function ListScrollCellExtend:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.onDestroyView(arg_6_0)
+function ListScrollCellExtend:onDestroyView()
 	return
 end
 
-function var_0_0.init(arg_7_0, arg_7_1)
-	arg_7_0.viewGO = arg_7_1
+function ListScrollCellExtend:init(go)
+	self.viewGO = go
 
-	arg_7_0:onInitView()
+	self:onInitView()
 end
 
-function var_0_0.addEventListeners(arg_8_0)
-	arg_8_0:addEvents()
-	arg_8_0:_editableAddEvents()
+function ListScrollCellExtend:addEventListeners()
+	self:addEvents()
+	self:_editableAddEvents()
 end
 
-function var_0_0.removeEventListeners(arg_9_0)
-	arg_9_0:removeEvents()
-	arg_9_0:_editableRemoveEvents()
+function ListScrollCellExtend:removeEventListeners()
+	self:removeEvents()
+	self:_editableRemoveEvents()
 end
 
-function var_0_0.onUpdateMO(arg_10_0, arg_10_1)
+function ListScrollCellExtend:onUpdateMO(mo)
 	return
 end
 
-function var_0_0.onSelect(arg_11_0, arg_11_1)
+function ListScrollCellExtend:onSelect(isSelect)
 	return
 end
 
-function var_0_0.onDestroy(arg_12_0)
-	arg_12_0:onDestroyView()
+function ListScrollCellExtend:onDestroy()
+	self:onDestroyView()
 end
 
-return var_0_0
+return ListScrollCellExtend

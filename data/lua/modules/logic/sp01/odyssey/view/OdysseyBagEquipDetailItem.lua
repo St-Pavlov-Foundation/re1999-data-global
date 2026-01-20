@@ -1,85 +1,88 @@
-﻿module("modules.logic.sp01.odyssey.view.OdysseyBagEquipDetailItem", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/view/OdysseyBagEquipDetailItem.lua
 
-local var_0_0 = class("OdysseyBagEquipDetailItem", LuaCompBase)
+module("modules.logic.sp01.odyssey.view.OdysseyBagEquipDetailItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0._imagerare = gohelper.findChildImage(arg_1_0.viewGO, "#image_rare")
-	arg_1_0._txtitemName = gohelper.findChildText(arg_1_0.viewGO, "#txt_itemName")
-	arg_1_0._imageSuitIcon = gohelper.findChildImage(arg_1_0.viewGO, "#go_equipSuit/suit/icon")
-	arg_1_0._txtequipType = gohelper.findChildText(arg_1_0.viewGO, "equipType/#txt_equipType")
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_icon")
-	arg_1_0._goequipSuit = gohelper.findChild(arg_1_0.viewGO, "#go_equipSuit")
-	arg_1_0._txtsuitName = gohelper.findChildText(arg_1_0.viewGO, "#go_equipSuit/suit/#txt_suitName")
-	arg_1_0._scrolldesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_desc")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#scroll_desc/Viewport/Content/#txt_desc")
-	arg_1_0._txtdesc1 = gohelper.findChildText(arg_1_0.viewGO, "#scroll_desc/Viewport/Content/#txt_desc1")
-	arg_1_0._btnSuit = gohelper.findChildButton(arg_1_0.viewGO, "#btn_suit")
+local OdysseyBagEquipDetailItem = class("OdysseyBagEquipDetailItem", LuaCompBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function OdysseyBagEquipDetailItem:init(go)
+	self.viewGO = go
+	self._imagerare = gohelper.findChildImage(self.viewGO, "#image_rare")
+	self._txtitemName = gohelper.findChildText(self.viewGO, "#txt_itemName")
+	self._imageSuitIcon = gohelper.findChildImage(self.viewGO, "#go_equipSuit/suit/icon")
+	self._txtequipType = gohelper.findChildText(self.viewGO, "equipType/#txt_equipType")
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "#simage_icon")
+	self._goequipSuit = gohelper.findChild(self.viewGO, "#go_equipSuit")
+	self._txtsuitName = gohelper.findChildText(self.viewGO, "#go_equipSuit/suit/#txt_suitName")
+	self._scrolldesc = gohelper.findChildScrollRect(self.viewGO, "#scroll_desc")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "#scroll_desc/Viewport/Content/#txt_desc")
+	self._txtdesc1 = gohelper.findChildText(self.viewGO, "#scroll_desc/Viewport/Content/#txt_desc1")
+	self._btnSuit = gohelper.findChildButton(self.viewGO, "#btn_suit")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0._editableInitView(arg_2_0)
+function OdysseyBagEquipDetailItem:_editableInitView()
 	return
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	arg_3_0._btnSuit:AddClickListener(arg_3_0.onClickSuit, arg_3_0)
+function OdysseyBagEquipDetailItem:addEventListeners()
+	self._btnSuit:AddClickListener(self.onClickSuit, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	arg_4_0._btnSuit:RemoveClickListener()
+function OdysseyBagEquipDetailItem:removeEventListeners()
+	self._btnSuit:RemoveClickListener()
 end
 
-function var_0_0.onClickSuit(arg_5_0)
-	local var_5_0 = {
-		suitId = arg_5_0.mo.config.suitId,
-		bagType = OdysseyEnum.BagType.Bag,
-		pos = recthelper.uiPosToScreenPos(arg_5_0._btnSuit.transform)
-	}
+function OdysseyBagEquipDetailItem:onClickSuit()
+	local param = {}
 
-	OdysseyController.instance:openSuitTipsView(var_5_0)
+	param.suitId = self.mo.config.suitId
+	param.bagType = OdysseyEnum.BagType.Bag
+	param.pos = recthelper.uiPosToScreenPos(self._btnSuit.transform)
+
+	OdysseyController.instance:openSuitTipsView(param)
 end
 
-function var_0_0.setInfo(arg_6_0, arg_6_1)
-	arg_6_0.mo = arg_6_1
+function OdysseyBagEquipDetailItem:setInfo(mo)
+	self.mo = mo
 
-	arg_6_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_7_0)
-	local var_7_0 = arg_7_0.mo.config
+function OdysseyBagEquipDetailItem:refreshUI()
+	local mo = self.mo
+	local itemConfig = mo.config
 
-	if var_7_0.type == OdysseyEnum.ItemType.Item then
-		arg_7_0._simageicon:LoadImage(ResUrl.getPropItemIcon(var_7_0.icon))
-	elseif var_7_0.type == OdysseyEnum.ItemType.Equip then
-		arg_7_0._simageicon:LoadImage(ResUrl.getSp01OdysseyItemSingleBg(var_7_0.icon))
+	if itemConfig.type == OdysseyEnum.ItemType.Item then
+		self._simageicon:LoadImage(ResUrl.getPropItemIcon(itemConfig.icon))
+	elseif itemConfig.type == OdysseyEnum.ItemType.Equip then
+		self._simageicon:LoadImage(ResUrl.getSp01OdysseyItemSingleBg(itemConfig.icon))
 	end
 
-	UISpriteSetMgr.instance:setSp01OdysseyDungeonSprite(arg_7_0._imagerare, "odyssey_herogroup_quality_" .. var_7_0.rare)
+	UISpriteSetMgr.instance:setSp01OdysseyDungeonSprite(self._imagerare, "odyssey_herogroup_quality_" .. itemConfig.rare)
 
-	arg_7_0._txtdesc.text = var_7_0.skillDesc
-	arg_7_0._txtitemName.text = var_7_0.name
-	arg_7_0._txtdesc1.text = var_7_0.desc
+	self._txtdesc.text = itemConfig.skillDesc
+	self._txtitemName.text = itemConfig.name
+	self._txtdesc1.text = itemConfig.desc
 
-	local var_7_1 = luaLang(OdysseyEnum.EquipTypeLang[var_7_0.rare])
-	local var_7_2 = OdysseyEnum.EquipRareColor[var_7_0.rare]
+	local rareDesc = luaLang(OdysseyEnum.EquipTypeLang[itemConfig.rare])
+	local rareColorStr = OdysseyEnum.EquipRareColor[itemConfig.rare]
 
-	arg_7_0._txtequipType.text = string.format("<color=%s>%s</color>", var_7_2, var_7_1)
+	self._txtequipType.text = string.format("<color=%s>%s</color>", rareColorStr, rareDesc)
 
-	local var_7_3 = OdysseyConfig.instance:getEquipSuitConfig(var_7_0.suitId)
+	local suitConfig = OdysseyConfig.instance:getEquipSuitConfig(itemConfig.suitId)
 
-	UISpriteSetMgr.instance:setSp01OdysseyDungeonSprite(arg_7_0._imageSuitIcon, var_7_3.icon)
+	UISpriteSetMgr.instance:setSp01OdysseyDungeonSprite(self._imageSuitIcon, suitConfig.icon)
 
-	if var_7_3 then
-		arg_7_0._txtsuitName.text = var_7_3.name
+	if suitConfig then
+		self._txtsuitName.text = suitConfig.name
 	end
 end
 
-function var_0_0.onDestroy(arg_8_0)
+function OdysseyBagEquipDetailItem:onDestroy()
 	return
 end
 
-return var_0_0
+return OdysseyBagEquipDetailItem

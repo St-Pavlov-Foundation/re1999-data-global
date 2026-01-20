@@ -1,11 +1,13 @@
-﻿module("modules.logic.character.view.CharacterBackpackSearchFilterViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterBackpackSearchFilterViewContainer.lua
 
-local var_0_0 = class("CharacterBackpackSearchFilterViewContainer", BaseViewContainer)
+module("modules.logic.character.view.CharacterBackpackSearchFilterViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local CharacterBackpackSearchFilterViewContainer = class("CharacterBackpackSearchFilterViewContainer", BaseViewContainer)
+
+function CharacterBackpackSearchFilterViewContainer:buildViews()
 	return {
 		CharacterBackpackSearchFilterView.New()
 	}
 end
 
-return var_0_0
+return CharacterBackpackSearchFilterViewContainer

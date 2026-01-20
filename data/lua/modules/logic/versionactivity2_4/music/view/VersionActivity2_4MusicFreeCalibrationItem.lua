@@ -1,83 +1,85 @@
-﻿module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicFreeCalibrationItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/music/view/VersionActivity2_4MusicFreeCalibrationItem.lua
 
-local var_0_0 = class("VersionActivity2_4MusicFreeCalibrationItem", ListScrollCellExtend)
+module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicFreeCalibrationItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnnote = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_note")
-	arg_1_0._imageopen = gohelper.findChild(arg_1_0.viewGO, "#btn_note/#image_open")
-	arg_1_0._imageicon1 = gohelper.findChildImage(arg_1_0.viewGO, "#btn_note/#image_open/#image_icon1")
-	arg_1_0._txtname1 = gohelper.findChildText(arg_1_0.viewGO, "#btn_note/#image_open/#txt_name1")
-	arg_1_0._imageclose = gohelper.findChildImage(arg_1_0.viewGO, "#btn_note/#image_close")
-	arg_1_0._imageicon2 = gohelper.findChildImage(arg_1_0.viewGO, "#btn_note/#image_close/#image_icon2")
-	arg_1_0._txtname2 = gohelper.findChildText(arg_1_0.viewGO, "#btn_note/#image_close/#txt_name2")
+local VersionActivity2_4MusicFreeCalibrationItem = class("VersionActivity2_4MusicFreeCalibrationItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity2_4MusicFreeCalibrationItem:onInitView()
+	self._btnnote = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_note")
+	self._imageopen = gohelper.findChild(self.viewGO, "#btn_note/#image_open")
+	self._imageicon1 = gohelper.findChildImage(self.viewGO, "#btn_note/#image_open/#image_icon1")
+	self._txtname1 = gohelper.findChildText(self.viewGO, "#btn_note/#image_open/#txt_name1")
+	self._imageclose = gohelper.findChildImage(self.viewGO, "#btn_note/#image_close")
+	self._imageicon2 = gohelper.findChildImage(self.viewGO, "#btn_note/#image_close/#image_icon2")
+	self._txtname2 = gohelper.findChildText(self.viewGO, "#btn_note/#image_close/#txt_name2")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnnote:AddClickListener(arg_2_0._btnnoteOnClick, arg_2_0)
+function VersionActivity2_4MusicFreeCalibrationItem:addEvents()
+	self._btnnote:AddClickListener(self._btnnoteOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnnote:RemoveClickListener()
+function VersionActivity2_4MusicFreeCalibrationItem:removeEvents()
+	self._btnnote:RemoveClickListener()
 end
 
-function var_0_0._btnnoteOnClick(arg_4_0)
-	arg_4_0._isOpen = not arg_4_0._isOpen
+function VersionActivity2_4MusicFreeCalibrationItem:_btnnoteOnClick()
+	self._isOpen = not self._isOpen
 
-	arg_4_0:_updateStatus()
+	self:_updateStatus()
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function VersionActivity2_4MusicFreeCalibrationItem:_editableInitView()
 	return
 end
 
-function var_0_0._editableAddEvents(arg_6_0)
+function VersionActivity2_4MusicFreeCalibrationItem:_editableAddEvents()
 	return
 end
 
-function var_0_0._editableRemoveEvents(arg_7_0)
+function VersionActivity2_4MusicFreeCalibrationItem:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
-	arg_8_0._id = arg_8_1
-	arg_8_0._isOpen = VersionActivity2_4MusicFreeModel.instance:getAccompany(arg_8_1) == VersionActivity2_4MusicEnum.AccompanyStatus.Open
+function VersionActivity2_4MusicFreeCalibrationItem:onUpdateMO(id)
+	self._id = id
+	self._isOpen = VersionActivity2_4MusicFreeModel.instance:getAccompany(id) == VersionActivity2_4MusicEnum.AccompanyStatus.Open
 
-	local var_8_0 = arg_8_0:_getName()
+	local name = self:_getName()
 
-	arg_8_0._txtname1.text = var_8_0
-	arg_8_0._txtname2.text = var_8_0
+	self._txtname1.text = name
+	self._txtname2.text = name
 
-	local var_8_1 = VersionActivity2_4MusicFreeModel.instance:getAccompanyIcon(arg_8_1)
+	local icon = VersionActivity2_4MusicFreeModel.instance:getAccompanyIcon(id)
 
-	UISpriteSetMgr.instance:setMusicSprite(arg_8_0._imageicon1, var_8_1)
-	UISpriteSetMgr.instance:setMusicSprite(arg_8_0._imageicon2, var_8_1)
-	arg_8_0:_updateStatus()
+	UISpriteSetMgr.instance:setMusicSprite(self._imageicon1, icon)
+	UISpriteSetMgr.instance:setMusicSprite(self._imageicon2, icon)
+	self:_updateStatus()
 end
 
-function var_0_0._updateStatus(arg_9_0)
-	gohelper.setActive(arg_9_0._imageopen, arg_9_0._isOpen)
-	gohelper.setActive(arg_9_0._imageclose, not arg_9_0._isOpen)
+function VersionActivity2_4MusicFreeCalibrationItem:_updateStatus()
+	gohelper.setActive(self._imageopen, self._isOpen)
+	gohelper.setActive(self._imageclose, not self._isOpen)
 
-	local var_9_0 = arg_9_0._isOpen and VersionActivity2_4MusicEnum.AccompanyStatus.Open or VersionActivity2_4MusicEnum.AccompanyStatus.Close
+	local value = self._isOpen and VersionActivity2_4MusicEnum.AccompanyStatus.Open or VersionActivity2_4MusicEnum.AccompanyStatus.Close
 
-	VersionActivity2_4MusicFreeModel.instance:setAccompany(arg_9_0._id, var_9_0)
-	AudioMgr.instance:setRTPCValue(VersionActivity2_4MusicEnum.AccompanyTypeName[arg_9_0._id], var_9_0)
+	VersionActivity2_4MusicFreeModel.instance:setAccompany(self._id, value)
+	AudioMgr.instance:setRTPCValue(VersionActivity2_4MusicEnum.AccompanyTypeName[self._id], value)
 end
 
-function var_0_0._getName(arg_10_0)
-	return luaLang("MusicAccompany" .. arg_10_0._id)
+function VersionActivity2_4MusicFreeCalibrationItem:_getName()
+	return luaLang("MusicAccompany" .. self._id)
 end
 
-function var_0_0.onSelect(arg_11_0, arg_11_1)
+function VersionActivity2_4MusicFreeCalibrationItem:onSelect(isSelect)
 	return
 end
 
-function var_0_0.onDestroyView(arg_12_0)
+function VersionActivity2_4MusicFreeCalibrationItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return VersionActivity2_4MusicFreeCalibrationItem

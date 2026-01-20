@@ -1,62 +1,64 @@
-﻿module("modules.logic.fight.buffbehaviours.FightBuffBehaviour_500M_LockLife", package.seeall)
+﻿-- chunkname: @modules/logic/fight/buffbehaviours/FightBuffBehaviour_500M_LockLife.lua
 
-local var_0_0 = class("FightBuffBehaviour_500M_LockLife", FightBuffBehaviourBase)
-local var_0_1 = "ui/viewres/fight/fighttower/fighttowerbosshplock.prefab"
+module("modules.logic.fight.buffbehaviours.FightBuffBehaviour_500M_LockLife", package.seeall)
 
-function var_0_0.onAddBuff(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.hpPointList = {}
+local FightBuffBehaviour_500M_LockLife = class("FightBuffBehaviour_500M_LockLife", FightBuffBehaviourBase)
+local lockLifePath = "ui/viewres/fight/fighttower/fighttowerbosshplock.prefab"
+
+function FightBuffBehaviour_500M_LockLife:onAddBuff(entityId, buffId, buffMo)
+	self.hpPointList = {}
 
 	FightModel.instance:setMultiHpType(FightEnum.MultiHpType.Tower500M)
 
-	arg_1_0.root = gohelper.findChild(arg_1_0.viewGo, "root/bossHpRoot/bossHp/Alpha/bossHp")
-	arg_1_0.loader = PrefabInstantiate.Create(arg_1_0.root)
+	self.root = gohelper.findChild(self.viewGo, "root/bossHpRoot/bossHp/Alpha/bossHp")
+	self.loader = PrefabInstantiate.Create(self.root)
 
-	arg_1_0.loader:startLoad(var_0_1, arg_1_0.onLoadFinish, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, arg_1_0.onBuffUpdate)
+	self.loader:startLoad(lockLifePath, self.onLoadFinish, self)
+	self:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, self.onBuffUpdate)
 end
 
-local var_0_2 = 102310003
+local LockHpBuffId = 102310003
 
-function var_0_0.onBuffUpdate(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_2 ~= var_0_2 then
+function FightBuffBehaviour_500M_LockLife:onBuffUpdate(entityId, buffId)
+	if buffId ~= LockHpBuffId then
 		return
 	end
 
-	arg_2_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.onLoadFinish(arg_3_0)
-	arg_3_0.lockLifeGo = arg_3_0.loader:getInstGO()
-	arg_3_0.goHpLock = gohelper.findChild(arg_3_0.lockLifeGo, "go_hpLock")
-	arg_3_0.goPointItem = gohelper.findChild(arg_3_0.lockLifeGo, "go_hpPoint/#image_point")
-	arg_3_0.goHpPoint = gohelper.findChild(arg_3_0.lockLifeGo, "go_hpPoint")
+function FightBuffBehaviour_500M_LockLife:onLoadFinish()
+	self.lockLifeGo = self.loader:getInstGO()
+	self.goHpLock = gohelper.findChild(self.lockLifeGo, "go_hpLock")
+	self.goPointItem = gohelper.findChild(self.lockLifeGo, "go_hpPoint/#image_point")
+	self.goHpPoint = gohelper.findChild(self.lockLifeGo, "go_hpPoint")
 
-	gohelper.setActive(arg_3_0.goHpLock, false)
-	gohelper.setActive(arg_3_0.goPointItem, false)
-	arg_3_0:refreshUI()
+	gohelper.setActive(self.goHpLock, false)
+	gohelper.setActive(self.goPointItem, false)
+	self:refreshUI()
 	FightController.instance:dispatchEvent(FightEvent.MultiHpTypeChange)
 end
 
-function var_0_0.refreshUI(arg_4_0)
-	arg_4_0.hasLockHpBuff = false
+function FightBuffBehaviour_500M_LockLife:refreshUI()
+	self.hasLockHpBuff = false
 
-	local var_4_0 = FightDataHelper.entityMgr:getAllEntityMO()
+	local entityDict = FightDataHelper.entityMgr:getAllEntityMO()
 
-	for iter_4_0, iter_4_1 in pairs(var_4_0) do
-		local var_4_1 = iter_4_1:getBuffDic()
+	for _, entityMo in pairs(entityDict) do
+		local buffDict = entityMo:getBuffDic()
 
-		for iter_4_2, iter_4_3 in pairs(var_4_1) do
-			if iter_4_3.buffId == var_0_2 then
-				arg_4_0.hasLockHpBuff = true
+		for _, buffMo in pairs(buffDict) do
+			if buffMo.buffId == LockHpBuffId then
+				self.hasLockHpBuff = true
 			end
 		end
 	end
 
-	arg_4_0:refreshPoint()
-	arg_4_0:refreshHP()
+	self:refreshPoint()
+	self:refreshHP()
 end
 
-local var_0_3 = {
+local ImageList = {
 	"fight_tower_hp_0",
 	"fight_tower_hp_1",
 	"fight_tower_hp_2",
@@ -65,101 +67,103 @@ local var_0_3 = {
 	"fight_tower_hp_5"
 }
 
-function var_0_0.refreshPoint(arg_5_0)
-	local var_5_0 = arg_5_0:getBossMo()
+function FightBuffBehaviour_500M_LockLife:refreshPoint()
+	local bossEntityMo = self:getBossMo()
 
-	if not var_5_0 then
-		gohelper.setActive(arg_5_0.goHpPoint, false)
-
-		return
-	end
-
-	local var_5_1 = var_5_0.attrMO.multiHpNum
-
-	if var_5_1 <= 1 then
-		gohelper.setActive(arg_5_0.goHpPoint, false)
+	if not bossEntityMo then
+		gohelper.setActive(self.goHpPoint, false)
 
 		return
 	end
 
-	if arg_5_0.hasLockHpBuff then
-		gohelper.setActive(arg_5_0.goHpPoint, false)
+	local multiHpNum = bossEntityMo.attrMO.multiHpNum
+
+	if multiHpNum <= 1 then
+		gohelper.setActive(self.goHpPoint, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_5_0.goHpPoint, true)
+	if self.hasLockHpBuff then
+		gohelper.setActive(self.goHpPoint, false)
 
-	local var_5_2 = var_5_0.attrMO:getCurMultiHpIndex()
+		return
+	end
 
-	for iter_5_0 = 1, var_5_1 do
-		local var_5_3 = arg_5_0.hpPointList[iter_5_0]
+	gohelper.setActive(self.goHpPoint, true)
 
-		if not var_5_3 then
-			var_5_3 = arg_5_0:getUserDataTb_()
-			var_5_3.go = gohelper.cloneInPlace(arg_5_0.goPointItem)
-			var_5_3.image = var_5_3.go:GetComponent(gohelper.Type_Image)
+	local multiHpIdx = bossEntityMo.attrMO:getCurMultiHpIndex()
+
+	for i = 1, multiHpNum do
+		local hpPointItem = self.hpPointList[i]
+
+		if not hpPointItem then
+			hpPointItem = self:getUserDataTb_()
+			hpPointItem.go = gohelper.cloneInPlace(self.goPointItem)
+			hpPointItem.image = hpPointItem.go:GetComponent(gohelper.Type_Image)
 		end
 
-		gohelper.setActive(var_5_3.go, true)
+		gohelper.setActive(hpPointItem.go, true)
 
-		if iter_5_0 <= var_5_1 - var_5_2 then
-			UISpriteSetMgr.instance:setFightTowerSprite(var_5_3.image, var_0_3[iter_5_0 + 1])
+		local showHp = i <= multiHpNum - multiHpIdx
+
+		if showHp then
+			UISpriteSetMgr.instance:setFightTowerSprite(hpPointItem.image, ImageList[i + 1])
 		else
-			UISpriteSetMgr.instance:setFightTowerSprite(var_5_3.image, var_0_3[1])
+			UISpriteSetMgr.instance:setFightTowerSprite(hpPointItem.image, ImageList[1])
 		end
 	end
 
-	for iter_5_1 = var_5_1 + 1, #arg_5_0.hpPointList do
-		local var_5_4 = arg_5_0.hpPointList[iter_5_1]
+	for i = multiHpNum + 1, #self.hpPointList do
+		local hpPointItem = self.hpPointList[i]
 
-		if var_5_4 then
-			gohelper.setActive(var_5_4.go, false)
+		if hpPointItem then
+			gohelper.setActive(hpPointItem.go, false)
 		end
 	end
 end
 
-function var_0_0.getBossMo(arg_6_0)
-	local var_6_0 = FightModel.instance:getCurMonsterGroupId()
-	local var_6_1 = var_6_0 and lua_monster_group.configDict[var_6_0]
-	local var_6_2 = var_6_1 and not string.nilorempty(var_6_1.bossId) and var_6_1.bossId
+function FightBuffBehaviour_500M_LockLife:getBossMo()
+	local monsterGroupId = FightModel.instance:getCurMonsterGroupId()
+	local monsterGroupCO = monsterGroupId and lua_monster_group.configDict[monsterGroupId]
+	local bossId = monsterGroupCO and not string.nilorempty(monsterGroupCO.bossId) and monsterGroupCO.bossId
 
-	if not var_6_2 then
+	if not bossId then
 		return
 	end
 
-	local var_6_3 = FightDataHelper.entityMgr:getEnemyNormalList()
+	local enemyEntityMOList = FightDataHelper.entityMgr:getEnemyNormalList()
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_3) do
-		if FightHelper.isBossId(var_6_2, iter_6_1.modelId) then
-			return iter_6_1
+	for _, entityMO in ipairs(enemyEntityMOList) do
+		if FightHelper.isBossId(bossId, entityMO.modelId) then
+			return entityMO
 		end
 	end
 end
 
-function var_0_0.refreshHP(arg_7_0)
-	gohelper.setActive(arg_7_0.goHpLock, arg_7_0.hasLockHpBuff)
+function FightBuffBehaviour_500M_LockLife:refreshHP()
+	gohelper.setActive(self.goHpLock, self.hasLockHpBuff)
 end
 
-function var_0_0.onUpdateBuff(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+function FightBuffBehaviour_500M_LockLife:onUpdateBuff(entityId, buffId, buffMo)
 	return
 end
 
-function var_0_0.onRemoveBuff(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	gohelper.destroy(arg_9_0.lockLifeGo)
+function FightBuffBehaviour_500M_LockLife:onRemoveBuff(entityId, buffId, buffMo)
+	gohelper.destroy(self.lockLifeGo)
 	FightModel.instance:setMultiHpType(nil)
 	FightController.instance:dispatchEvent(FightEvent.MultiHpTypeChange)
 end
 
-function var_0_0.onDestroy(arg_10_0)
-	if arg_10_0.loader then
-		arg_10_0.loader:dispose()
+function FightBuffBehaviour_500M_LockLife:onDestroy()
+	if self.loader then
+		self.loader:dispose()
 
-		arg_10_0.loader = nil
+		self.loader = nil
 	end
 
 	FightModel.instance:setMultiHpType(nil)
-	var_0_0.super.onDestroy(arg_10_0)
+	FightBuffBehaviour_500M_LockLife.super.onDestroy(self)
 end
 
-return var_0_0
+return FightBuffBehaviour_500M_LockLife

@@ -1,35 +1,37 @@
-﻿module("modules.logic.gm.view.GM_TaskWeeklyViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GM_TaskWeeklyViewContainer.lua
 
-local var_0_0 = class("GM_TaskWeeklyViewContainer", GM_TaskListCommonItemContainer)
-local var_0_1
+module("modules.logic.gm.view.GM_TaskWeeklyViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local GM_TaskWeeklyViewContainer = class("GM_TaskWeeklyViewContainer", GM_TaskListCommonItemContainer)
+local s_viewObj
+
+function GM_TaskWeeklyViewContainer:buildViews()
 	return {
 		GM_TaskWeeklyView.New()
 	}
 end
 
-function var_0_0._gm_showAllTabIdUpdate(arg_2_0, arg_2_1)
-	assert(var_0_1)
-	var_0_1:_gm_showAllTabIdUpdate(arg_2_1)
+function GM_TaskWeeklyViewContainer:_gm_showAllTabIdUpdate(isOn)
+	assert(s_viewObj)
+	s_viewObj:_gm_showAllTabIdUpdate(isOn)
 end
 
-function var_0_0._gm_enableFinishOnSelect(arg_3_0, arg_3_1)
-	assert(var_0_1)
-	var_0_1:_gm_enableFinishOnSelect(arg_3_1)
+function GM_TaskWeeklyViewContainer:_gm_enableFinishOnSelect(isOn)
+	assert(s_viewObj)
+	s_viewObj:_gm_enableFinishOnSelect(isOn)
 end
 
-function var_0_0._gm_onClickFinishAll(arg_4_0)
-	assert(var_0_1)
-	var_0_1:_gm_onClickFinishAll()
+function GM_TaskWeeklyViewContainer:_gm_onClickFinishAll()
+	assert(s_viewObj)
+	s_viewObj:_gm_onClickFinishAll()
 end
 
-function var_0_0.addEvents(arg_5_0)
-	var_0_1 = assert(arg_5_0)
+function GM_TaskWeeklyViewContainer.addEvents(viewObj)
+	s_viewObj = assert(viewObj)
 end
 
-function var_0_0.removeEvents(arg_6_0)
-	var_0_1 = nil
+function GM_TaskWeeklyViewContainer.removeEvents(viewObj)
+	s_viewObj = nil
 end
 
-return var_0_0
+return GM_TaskWeeklyViewContainer

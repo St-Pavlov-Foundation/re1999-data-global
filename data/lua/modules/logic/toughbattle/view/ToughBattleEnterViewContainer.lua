@@ -1,8 +1,10 @@
-﻿module("modules.logic.toughbattle.view.ToughBattleEnterViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/toughbattle/view/ToughBattleEnterViewContainer.lua
 
-local var_0_0 = class("ToughBattleEnterViewContainer", BaseViewContainer)
+module("modules.logic.toughbattle.view.ToughBattleEnterViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local ToughBattleEnterViewContainer = class("ToughBattleEnterViewContainer", BaseViewContainer)
+
+function ToughBattleEnterViewContainer:buildViews()
 	return {
 		ToughBattleEnterView.New(),
 		TabViewGroup.New(1, "root/#go_btns"),
@@ -10,16 +12,16 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	arg_2_0.navigateView = NavigateButtonsView.New({
+function ToughBattleEnterViewContainer:buildTabViews(tabContainerId)
+	self.navigateView = NavigateButtonsView.New({
 		true,
 		false,
 		false
 	})
 
 	return {
-		arg_2_0.navigateView
+		self.navigateView
 	}
 end
 
-return var_0_0
+return ToughBattleEnterViewContainer

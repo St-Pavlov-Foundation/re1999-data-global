@@ -1,107 +1,110 @@
-﻿module("modules.logic.player.view.ShowCharacterCardItem", package.seeall)
+﻿-- chunkname: @modules/logic/player/view/ShowCharacterCardItem.lua
 
-local var_0_0 = class("ShowCharacterCardItem", ListScrollCell)
+module("modules.logic.player.view.ShowCharacterCardItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._heroGOParent = gohelper.findChild(arg_1_1, "hero")
-	arg_1_0._heroItem = IconMgr.instance:getCommonHeroItem(arg_1_0._heroGOParent)
+local ShowCharacterCardItem = class("ShowCharacterCardItem", ListScrollCell)
 
-	arg_1_0._heroItem:addClickListener(arg_1_0._onItemClick, arg_1_0)
-	arg_1_0._heroItem:setStyle_CharacterBackpack()
+function ShowCharacterCardItem:init(go)
+	self._heroGOParent = gohelper.findChild(go, "hero")
+	self._heroItem = IconMgr.instance:getCommonHeroItem(self._heroGOParent)
 
-	arg_1_0._mask = gohelper.findChild(arg_1_0._gocharactercarditem, "nummask")
-	arg_1_0._masknum = gohelper.findChildText(arg_1_0._gocharactercarditem, "nummask/num")
-	arg_1_0._shownum = 0
+	self._heroItem:addClickListener(self._onItemClick, self)
+	self._heroItem:setStyle_CharacterBackpack()
 
-	arg_1_0:_initObj()
+	self._mask = gohelper.findChild(self._gocharactercarditem, "nummask")
+	self._masknum = gohelper.findChildText(self._gocharactercarditem, "nummask/num")
+	self._shownum = 0
+
+	self:_initObj()
 end
 
-function var_0_0._initObj(arg_2_0)
-	arg_2_0._animator = arg_2_0._heroItem.go:GetComponent(typeof(UnityEngine.Animator))
+function ShowCharacterCardItem:_initObj()
+	self._animator = self._heroItem.go:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function var_0_0.addEventListeners(arg_3_0)
+function ShowCharacterCardItem:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
+function ShowCharacterCardItem:removeEventListeners()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
-	arg_5_0._mo = arg_5_1
+function ShowCharacterCardItem:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_5_0._heroItem:onUpdateMO(arg_5_1)
-	arg_5_0._heroItem:setNewShow(false)
-	arg_5_0:_initShowHeroList()
+	self._heroItem:onUpdateMO(mo)
+	self._heroItem:setNewShow(false)
+	self:_initShowHeroList()
 end
 
-function var_0_0._initShowHeroList(arg_6_0)
-	local var_6_0 = PlayerModel.instance:getShowHeros()
-	local var_6_1 = 0
-	local var_6_2 = arg_6_0:_clecknum(var_6_0)
+function ShowCharacterCardItem:_initShowHeroList()
+	local heros = PlayerModel.instance:getShowHeros()
+	local num = 0
 
-	arg_6_0:_initnum(var_6_2)
+	num = self:_clecknum(heros)
+
+	self:_initnum(num)
 end
 
-function var_0_0._onItemClick(arg_7_0)
-	local var_7_0 = PlayerModel.instance:getShowHeros()
+function ShowCharacterCardItem:_onItemClick()
+	local heros = PlayerModel.instance:getShowHeros()
 
-	if arg_7_0._shownum ~= 0 then
+	if self._shownum ~= 0 then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_hero_card_gone)
-		arg_7_0._heroItem:setChoose(nil)
-		PlayerModel.instance:setShowHero(arg_7_0._shownum, 0)
+		self._heroItem:setChoose(nil)
+		PlayerModel.instance:setShowHero(self._shownum, 0)
 
-		arg_7_0._shownum = 0
+		self._shownum = 0
 	else
-		arg_7_0:_addHeroShow(var_7_0)
+		self:_addHeroShow(heros)
 
-		if arg_7_0._shownum ~= 0 then
+		if self._shownum ~= 0 then
 			AudioMgr.instance:trigger(AudioEnum.UI.play_ui_hero_card_gone)
 		end
 
-		PlayerModel.instance:setShowHero(arg_7_0._shownum, arg_7_0._mo.heroId)
+		PlayerModel.instance:setShowHero(self._shownum, self._mo.heroId)
 	end
 end
 
-function var_0_0._addHeroShow(arg_8_0, arg_8_1)
-	for iter_8_0 = 1, #arg_8_1 do
-		if arg_8_1[iter_8_0] == 0 then
-			arg_8_0:_initnum(iter_8_0)
+function ShowCharacterCardItem:_addHeroShow(heros)
+	for i = 1, #heros do
+		if heros[i] == 0 then
+			self:_initnum(i)
 
 			return
 		end
 	end
 end
 
-function var_0_0._clecknum(arg_9_0, arg_9_1)
-	local var_9_0 = 0
+function ShowCharacterCardItem:_clecknum(heros)
+	local num = 0
 
-	for iter_9_0 = 1, #arg_9_1 do
-		if arg_9_1[iter_9_0] ~= 0 and arg_9_0._mo.heroId == arg_9_1[iter_9_0].heroId then
-			var_9_0 = iter_9_0
+	for i = 1, #heros do
+		if heros[i] ~= 0 and self._mo.heroId == heros[i].heroId then
+			num = i
 		end
 	end
 
-	return var_9_0
+	return num
 end
 
-function var_0_0._initnum(arg_10_0, arg_10_1)
-	if arg_10_1 == 0 then
-		arg_10_0._heroItem:setChoose(nil)
+function ShowCharacterCardItem:_initnum(num)
+	if num == 0 then
+		self._heroItem:setChoose(nil)
 	else
-		arg_10_0._heroItem:setChoose(arg_10_1)
+		self._heroItem:setChoose(num)
 	end
 
-	arg_10_0._shownum = arg_10_1
+	self._shownum = num
 end
 
-function var_0_0.getAnimator(arg_11_0)
-	return arg_11_0._animator
+function ShowCharacterCardItem:getAnimator()
+	return self._animator
 end
 
-function var_0_0.onDestroy(arg_12_0)
+function ShowCharacterCardItem:onDestroy()
 	return
 end
 
-return var_0_0
+return ShowCharacterCardItem

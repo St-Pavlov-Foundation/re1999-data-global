@@ -1,9 +1,11 @@
-﻿module("modules.logic.ressplit.work.ResSplitUIWork", package.seeall)
+﻿-- chunkname: @modules/logic/ressplit/work/ResSplitUIWork.lua
 
-local var_0_0 = class("ResSplitUIWork", BaseWork)
+module("modules.logic.ressplit.work.ResSplitUIWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = {
+local ResSplitUIWork = class("ResSplitUIWork", BaseWork)
+
+function ResSplitUIWork:onStart(context)
+	local saveTypes = {
 		"mainsceneswitch",
 		"minors",
 		"activity",
@@ -62,7 +64,7 @@ function var_0_0.onStart(arg_1_0, arg_1_1)
 		"data_pic",
 		"mainsceneswitch"
 	}
-	local var_1_1 = {
+	local langDic = {
 		"",
 		"/lang/common",
 		"/lang/en",
@@ -71,109 +73,111 @@ function var_0_0.onStart(arg_1_0, arg_1_1)
 		"/lang/tw",
 		"/lang/zh"
 	}
-	local var_1_2 = {}
-	local var_1_3 = {}
-	local var_1_4 = {}
+	local excludeViewDicList = {}
+	local excludeSinglebgDicList = {}
+	local excludeSinglebgLangDicList = {}
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_1) do
-		local var_1_5 = "Assets/ZResourcesLib" .. iter_1_1 .. "/ui/viewres/"
+	for _, lang in ipairs(langDic) do
+		local basePath = "Assets/ZResourcesLib" .. lang .. "/ui/viewres/"
 
-		if SLFramework.FileHelper.IsDirExists(SLFramework.FrameworkSettings.AssetRootDir .. iter_1_1 .. "/ui/viewres/") then
-			local var_1_6 = SLFramework.FileHelper.GetSubdirectories(SLFramework.FrameworkSettings.AssetRootDir .. iter_1_1 .. "/ui/viewres/")
+		if SLFramework.FileHelper.IsDirExists(SLFramework.FrameworkSettings.AssetRootDir .. lang .. "/ui/viewres/") then
+			local allUIViewres = SLFramework.FileHelper.GetSubdirectories(SLFramework.FrameworkSettings.AssetRootDir .. lang .. "/ui/viewres/")
 
-			for iter_1_2 = 0, var_1_6.Length - 1 do
-				local var_1_7 = var_1_6[iter_1_2]
+			for i = 0, allUIViewres.Length - 1 do
+				local path = allUIViewres[i]
 
-				if not string.find(var_1_7, ".meta") then
-					local var_1_8 = false
+				if not string.find(path, ".meta") then
+					local needSave = false
 
-					for iter_1_3, iter_1_4 in pairs(var_1_0) do
-						if var_1_7 == var_1_5 .. iter_1_4 then
-							var_1_8 = true
-
-							break
-						end
-					end
-
-					if var_1_8 == false then
-						local var_1_9 = string.gsub(var_1_7, "Assets/ZResourcesLib/", "") .. "/"
-
-						table.insert(var_1_2, var_1_9)
-					end
-				end
-			end
-		end
-
-		if SLFramework.FileHelper.IsDirExists(SLFramework.FrameworkSettings.AssetRootDir .. iter_1_1 .. "/singlebg/") then
-			local var_1_10 = SLFramework.FileHelper.GetSubdirectories(SLFramework.FrameworkSettings.AssetRootDir .. iter_1_1 .. "/singlebg/")
-			local var_1_11 = "Assets/ZResourcesLib" .. iter_1_1 .. "/singlebg/"
-
-			for iter_1_5 = 0, var_1_10.Length - 1 do
-				local var_1_12 = var_1_10[iter_1_5]
-
-				if not string.find(var_1_12, ".meta") then
-					local var_1_13 = false
-
-					for iter_1_6, iter_1_7 in pairs(var_1_0) do
-						if string.find(var_1_12, var_1_11 .. iter_1_7) then
-							var_1_13 = true
+					for _, n in pairs(saveTypes) do
+						if path == basePath .. n then
+							needSave = true
 
 							break
 						end
 					end
 
-					if var_1_13 == false then
-						local var_1_14 = string.gsub(var_1_12, "Assets/ZResourcesLib/", "") .. "/"
+					if needSave == false then
+						local p = string.gsub(path, "Assets/ZResourcesLib/", "") .. "/"
 
-						table.insert(var_1_3, var_1_14)
+						table.insert(excludeViewDicList, p)
 					end
 				end
 			end
 		end
 
-		if SLFramework.FileHelper.IsDirExists(SLFramework.FrameworkSettings.AssetRootDir .. iter_1_1 .. "/singlebg_lang/") then
-			local var_1_15 = SLFramework.FileHelper.GetSubdirectories(SLFramework.FrameworkSettings.AssetRootDir .. iter_1_1 .. "/singlebg_lang/")
-			local var_1_16 = "Assets/ZResourcesLib" .. iter_1_1 .. "/singlebg_lang/"
+		if SLFramework.FileHelper.IsDirExists(SLFramework.FrameworkSettings.AssetRootDir .. lang .. "/singlebg/") then
+			local allUISinglebgDic = SLFramework.FileHelper.GetSubdirectories(SLFramework.FrameworkSettings.AssetRootDir .. lang .. "/singlebg/")
 
-			for iter_1_8 = 0, var_1_15.Length - 1 do
-				local var_1_17 = var_1_15[iter_1_8]
+			basePath = "Assets/ZResourcesLib" .. lang .. "/singlebg/"
 
-				if not string.find(var_1_17, ".meta") then
-					local var_1_18 = false
+			for i = 0, allUISinglebgDic.Length - 1 do
+				local path = allUISinglebgDic[i]
 
-					for iter_1_9, iter_1_10 in pairs(var_1_0) do
-						if string.find(var_1_17, iter_1_10) then
-							var_1_18 = true
+				if not string.find(path, ".meta") then
+					local needSave = false
+
+					for _, n in pairs(saveTypes) do
+						if string.find(path, basePath .. n) then
+							needSave = true
 
 							break
 						end
 					end
 
-					if var_1_18 == false then
-						local var_1_19 = string.gsub(var_1_17, "Assets/ZResourcesLib/", "") .. "/"
+					if needSave == false then
+						local p = string.gsub(path, "Assets/ZResourcesLib/", "") .. "/"
 
-						table.insert(var_1_4, var_1_19)
+						table.insert(excludeSinglebgDicList, p)
+					end
+				end
+			end
+		end
+
+		if SLFramework.FileHelper.IsDirExists(SLFramework.FrameworkSettings.AssetRootDir .. lang .. "/singlebg_lang/") then
+			local allUISinglebgLangDic = SLFramework.FileHelper.GetSubdirectories(SLFramework.FrameworkSettings.AssetRootDir .. lang .. "/singlebg_lang/")
+
+			basePath = "Assets/ZResourcesLib" .. lang .. "/singlebg_lang/"
+
+			for i = 0, allUISinglebgLangDic.Length - 1 do
+				local path = allUISinglebgLangDic[i]
+
+				if not string.find(path, ".meta") then
+					local needSave = false
+
+					for _, n in pairs(saveTypes) do
+						if string.find(path, n) or string.find(path, "txt_" .. n) then
+							needSave = true
+
+							break
+						end
+					end
+
+					if needSave == false then
+						local p = string.gsub(path, "Assets/ZResourcesLib/", "") .. "/"
+
+						table.insert(excludeSinglebgLangDicList, p)
 					end
 				end
 			end
 		end
 	end
 
-	for iter_1_11, iter_1_12 in pairs(var_1_2) do
-		ResSplitModel.instance:setExclude(ResSplitEnum.Folder, iter_1_12, true)
+	for i, v in pairs(excludeViewDicList) do
+		ResSplitModel.instance:setExclude(ResSplitEnum.Folder, v, true)
 	end
 
-	for iter_1_13, iter_1_14 in pairs(var_1_3) do
-		ResSplitModel.instance:setExclude(ResSplitEnum.SinglebgFolder, iter_1_14, true)
-		ResSplitModel.instance:setExclude(ResSplitEnum.Folder, iter_1_14, true)
+	for i, v in pairs(excludeSinglebgDicList) do
+		ResSplitModel.instance:setExclude(ResSplitEnum.SinglebgFolder, v, true)
+		ResSplitModel.instance:setExclude(ResSplitEnum.Folder, v, true)
 	end
 
-	for iter_1_15, iter_1_16 in pairs(var_1_4) do
-		ResSplitModel.instance:setExclude(ResSplitEnum.SinglebgFolder, iter_1_16, true)
-		ResSplitModel.instance:setExclude(ResSplitEnum.Folder, iter_1_16, true)
+	for i, v in pairs(excludeSinglebgLangDicList) do
+		ResSplitModel.instance:setExclude(ResSplitEnum.SinglebgFolder, v, true)
+		ResSplitModel.instance:setExclude(ResSplitEnum.Folder, v, true)
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return ResSplitUIWork

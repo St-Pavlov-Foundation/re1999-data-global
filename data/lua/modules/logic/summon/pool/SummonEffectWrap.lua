@@ -1,309 +1,315 @@
-﻿module("modules.logic.summon.pool.SummonEffectWrap", package.seeall)
+﻿-- chunkname: @modules/logic/summon/pool/SummonEffectWrap.lua
 
-local var_0_0 = class("SummonEffectWrap", LuaCompBase)
+module("modules.logic.summon.pool.SummonEffectWrap", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.uniqueId = nil
-	arg_1_0.path = nil
-	arg_1_0.containerGO = nil
-	arg_1_0.containerTr = nil
-	arg_1_0.effectGO = nil
-	arg_1_0.hangPointGO = nil
-	arg_1_0._canDestroy = false
-	arg_1_0._animator = nil
-	arg_1_0._animationName = nil
-	arg_1_0._headLoader = nil
-	arg_1_0._frameLoader = nil
-	arg_1_0._active = true
+local SummonEffectWrap = class("SummonEffectWrap", LuaCompBase)
+
+function SummonEffectWrap:ctor()
+	self.uniqueId = nil
+	self.path = nil
+	self.containerGO = nil
+	self.containerTr = nil
+	self.effectGO = nil
+	self.hangPointGO = nil
+	self._canDestroy = false
+	self._animator = nil
+	self._animationName = nil
+	self._headLoader = nil
+	self._frameLoader = nil
+	self._active = true
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.containerGO = arg_2_1
-	arg_2_0.containerTr = arg_2_1.transform
+function SummonEffectWrap:init(go)
+	self.containerGO = go
+	self.containerTr = go.transform
 end
 
-function var_0_0.setAnimationName(arg_3_0, arg_3_1)
-	arg_3_0._animationName = arg_3_1
+function SummonEffectWrap:setAnimationName(animationName)
+	self._animationName = animationName
 end
 
-function var_0_0.play(arg_4_0)
-	if arg_4_0.effectGO then
-		arg_4_0:setActive(true)
+function SummonEffectWrap:play()
+	if self.effectGO then
+		self:setActive(true)
 	end
 
-	if arg_4_0._animator and not string.nilorempty(arg_4_0._animationName) then
-		arg_4_0._animator.enabled = true
+	if self._animator and not string.nilorempty(self._animationName) then
+		self._animator.enabled = true
 
-		arg_4_0._animator:Play(arg_4_0._animationName, 0, 0)
-		arg_4_0._animator:Update(0)
+		self._animator:Play(self._animationName, 0, 0)
+		self._animator:Update(0)
 
-		arg_4_0._animator.speed = 1
-	end
-end
-
-function var_0_0.stop(arg_5_0)
-	if arg_5_0._animator and not string.nilorempty(arg_5_0._animationName) then
-		arg_5_0._animator.enabled = true
-
-		arg_5_0._animator:Play(arg_5_0._animationName, 0, 0)
-		arg_5_0._animator:Update(0)
-
-		arg_5_0._animator.speed = 0
-	end
-
-	if arg_5_0.effectGO then
-		arg_5_0:setActive(false)
+		self._animator.speed = 1
 	end
 end
 
-function var_0_0.setUniqueId(arg_6_0, arg_6_1)
-	arg_6_0.uniqueId = arg_6_1
-end
+function SummonEffectWrap:stop()
+	if self._animator and not string.nilorempty(self._animationName) then
+		self._animator.enabled = true
 
-function var_0_0.setPath(arg_7_0, arg_7_1)
-	arg_7_0.path = arg_7_1
-end
+		self._animator:Play(self._animationName, 0, 0)
+		self._animator:Update(0)
 
-function var_0_0.setEffectGO(arg_8_0, arg_8_1)
-	arg_8_0.effectGO = arg_8_1
-	arg_8_0._animator = arg_8_1:GetComponentInChildren(typeof(UnityEngine.Animator))
-	arg_8_0._timeScaleComp = nil
-	arg_8_0._particleList = nil
-end
+		self._animator.speed = 0
+	end
 
-function var_0_0.setHangPointGO(arg_9_0, arg_9_1)
-	if arg_9_0.hangPointGO ~= arg_9_1 then
-		arg_9_0.hangPointGO = arg_9_1
-
-		arg_9_0.containerGO.transform:SetParent(arg_9_0.hangPointGO.transform, true)
-		transformhelper.setLocalPos(arg_9_0.containerGO.transform, 0, 0, 0)
-		transformhelper.setLocalRotation(arg_9_0.containerGO.transform, 0, 0, 0)
-		transformhelper.setLocalScale(arg_9_0.containerGO.transform, 1, 1, 1)
+	if self.effectGO then
+		self:setActive(false)
 	end
 end
 
-function var_0_0.setActive(arg_10_0, arg_10_1)
-	arg_10_0._active = arg_10_1
+function SummonEffectWrap:setUniqueId(uniqueId)
+	self.uniqueId = uniqueId
+end
 
-	if arg_10_0.containerGO then
-		gohelper.setActive(arg_10_0.containerGO, arg_10_1)
+function SummonEffectWrap:setPath(path)
+	self.path = path
+end
+
+function SummonEffectWrap:setEffectGO(effectGO)
+	self.effectGO = effectGO
+	self._animator = effectGO:GetComponentInChildren(typeof(UnityEngine.Animator))
+	self._timeScaleComp = nil
+	self._particleList = nil
+end
+
+function SummonEffectWrap:setHangPointGO(hangPointGO)
+	if self.hangPointGO ~= hangPointGO then
+		self.hangPointGO = hangPointGO
+
+		self.containerGO.transform:SetParent(self.hangPointGO.transform, true)
+		transformhelper.setLocalPos(self.containerGO.transform, 0, 0, 0)
+		transformhelper.setLocalRotation(self.containerGO.transform, 0, 0, 0)
+		transformhelper.setLocalScale(self.containerGO.transform, 1, 1, 1)
+	end
+end
+
+function SummonEffectWrap:setActive(isActive)
+	self._active = isActive
+
+	if self.containerGO then
+		gohelper.setActive(self.containerGO, isActive)
 	else
-		logError("Effect container is nil, setActive fail: " .. arg_10_0.path)
+		logError("Effect container is nil, setActive fail: " .. self.path)
 	end
 end
 
-function var_0_0.loadHeroIcon(arg_11_0, arg_11_1)
-	local var_11_0 = SummonEnum.UIMaterialPath[arg_11_0.path]
+function SummonEffectWrap:loadHeroIcon(heroId)
+	local materialGOPaths = SummonEnum.UIMaterialPath[self.path]
 
-	if not var_11_0 or #var_11_0 <= 0 then
+	if not materialGOPaths or #materialGOPaths <= 0 then
 		return
 	end
 
-	local var_11_1 = HeroConfig.instance:getHeroCO(arg_11_1).skinId
-	local var_11_2 = var_11_1 and SkinConfig.instance:getSkinCo(var_11_1)
+	local heroConfig = HeroConfig.instance:getHeroCO(heroId)
+	local skinId = heroConfig.skinId
+	local skinConfig = skinId and SkinConfig.instance:getSkinCo(skinId)
 
-	if not var_11_2 then
+	if not skinConfig then
 		return
 	end
 
-	local var_11_3 = ResUrl.getHeadIconSmall(var_11_2.headIcon)
+	local url = ResUrl.getHeadIconSmall(skinConfig.headIcon)
 
-	arg_11_0:loadHeadTex(var_11_3)
+	self:loadHeadTex(url)
 end
 
-function var_0_0.loadEquipIcon(arg_12_0, arg_12_1)
-	local var_12_0 = EquipConfig.instance:getEquipCo(arg_12_1)
+function SummonEffectWrap:loadEquipIcon(equipId)
+	local equipCo = EquipConfig.instance:getEquipCo(equipId)
 
-	if not var_12_0 then
+	if not equipCo then
 		return
 	end
 
-	local var_12_1 = ResUrl.getEquipIconSmall(var_12_0.icon)
+	local url = ResUrl.getEquipIconSmall(equipCo.icon)
 
-	arg_12_0:loadHeadTex(var_12_1)
+	self:loadHeadTex(url)
 end
 
-function var_0_0.setEquipFrame(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_1 and SummonEnum.EquipFloatIconFrameOpened or SummonEnum.EquipFloatIconFrameBeforeOpen
+function SummonEffectWrap:setEquipFrame(isOpen)
+	local url = isOpen and SummonEnum.EquipFloatIconFrameOpened or SummonEnum.EquipFloatIconFrameBeforeOpen
 
-	arg_13_0:_loadFrameTex(var_13_0)
+	self:_loadFrameTex(url)
 end
 
-function var_0_0.loadEquipWaitingClick(arg_14_0)
-	local var_14_0 = SummonEnum.EquipDefaultIconPath
+function SummonEffectWrap:loadEquipWaitingClick()
+	local url = SummonEnum.EquipDefaultIconPath
 
-	arg_14_0:loadHeadTex(var_14_0)
+	self:loadHeadTex(url)
 end
 
-function var_0_0.loadHeadTex(arg_15_0, arg_15_1)
-	if arg_15_0._headLoader then
-		arg_15_0._headLoader:dispose()
+function SummonEffectWrap:loadHeadTex(url)
+	if self._headLoader then
+		self._headLoader:dispose()
 
-		arg_15_0._headLoader = nil
-		arg_15_0._urlHead = nil
+		self._headLoader = nil
+		self._urlHead = nil
 	end
 
-	arg_15_0._urlHead = arg_15_1
-	arg_15_0._headLoader = MultiAbLoader.New()
+	self._urlHead = url
+	self._headLoader = MultiAbLoader.New()
 
-	arg_15_0._headLoader:addPath(arg_15_1)
-	arg_15_0._headLoader:startLoad(arg_15_0._onHeadIconLoaded, arg_15_0)
+	self._headLoader:addPath(url)
+	self._headLoader:startLoad(self._onHeadIconLoaded, self)
 end
 
-function var_0_0._onHeadIconLoaded(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_0._headLoader:getAssetItem(arg_16_0._urlHead)
+function SummonEffectWrap:_onHeadIconLoaded(multiAbLoader)
+	local assetItem = self._headLoader:getAssetItem(self._urlHead)
 
-	if not var_16_0 then
+	if not assetItem then
 		return
 	end
 
-	local var_16_1 = var_16_0:GetResource(arg_16_0._urlHead)
-	local var_16_2 = SummonEnum.UIMaterialPath[arg_16_0.path]
+	local texture = assetItem:GetResource(self._urlHead)
+	local materialGOPaths = SummonEnum.UIMaterialPath[self.path]
 
-	for iter_16_0, iter_16_1 in ipairs(var_16_2) do
-		local var_16_3 = gohelper.findChild(arg_16_0.effectGO, iter_16_1)
+	for i, materialGOPath in ipairs(materialGOPaths) do
+		local materialGO = gohelper.findChild(self.effectGO, materialGOPath)
 
-		if var_16_3 then
-			local var_16_4 = var_16_3:GetComponent(typeof(UnityEngine.MeshRenderer))
+		if materialGO then
+			local renderer = materialGO:GetComponent(typeof(UnityEngine.MeshRenderer))
 
-			if var_16_4 then
-				var_16_4.material:SetTexture("_MainTex", var_16_1)
+			if renderer then
+				renderer.material:SetTexture("_MainTex", texture)
 			end
 		end
 	end
 end
 
-function var_0_0._loadFrameTex(arg_17_0, arg_17_1)
-	if arg_17_0._frameLoader then
-		arg_17_0._frameLoader:dispose()
+function SummonEffectWrap:_loadFrameTex(url)
+	if self._frameLoader then
+		self._frameLoader:dispose()
 
-		arg_17_0._frameLoader = nil
-		arg_17_0._urlFrame = nil
+		self._frameLoader = nil
+		self._urlFrame = nil
 	end
 
-	arg_17_0._urlFrame = arg_17_1
-	arg_17_0._frameLoader = MultiAbLoader.New()
+	self._urlFrame = url
+	self._frameLoader = MultiAbLoader.New()
 
-	arg_17_0._frameLoader:addPath(arg_17_1)
-	arg_17_0._frameLoader:startLoad(arg_17_0._onFrameTexLoaded, arg_17_0)
+	self._frameLoader:addPath(url)
+	self._frameLoader:startLoad(self._onFrameTexLoaded, self)
 end
 
-function var_0_0._onFrameTexLoaded(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_0._frameLoader:getAssetItem(arg_18_0._urlFrame)
+function SummonEffectWrap:_onFrameTexLoaded(multiAbLoader)
+	local assetItem = self._frameLoader:getAssetItem(self._urlFrame)
 
-	if not var_18_0 then
+	if not assetItem then
 		return
 	end
 
-	local var_18_1 = var_18_0:GetResource(arg_18_0._urlFrame)
-	local var_18_2 = SummonEnum.EquipFloatIconFrameNode
-	local var_18_3 = gohelper.findChild(arg_18_0.effectGO, var_18_2)
+	local texture = assetItem:GetResource(self._urlFrame)
+	local materialGOPath = SummonEnum.EquipFloatIconFrameNode
+	local materialGO = gohelper.findChild(self.effectGO, materialGOPath)
 
-	if var_18_3 then
-		local var_18_4 = var_18_3:GetComponent(typeof(UnityEngine.MeshRenderer))
+	if materialGO then
+		local renderer = materialGO:GetComponent(typeof(UnityEngine.MeshRenderer))
 
-		if var_18_4 then
-			var_18_4.material:SetTexture("_MainTex", var_18_1)
+		if renderer then
+			renderer.material:SetTexture("_MainTex", texture)
 		end
 	end
 end
 
-function var_0_0.unloadIcon(arg_19_0)
-	if arg_19_0._headLoader then
-		arg_19_0._headLoader:dispose()
+function SummonEffectWrap:unloadIcon()
+	if self._headLoader then
+		self._headLoader:dispose()
 
-		arg_19_0._headLoader = nil
+		self._headLoader = nil
 	end
 
-	local var_19_0 = SummonEnum.UIMaterialPath[arg_19_0.path]
+	local materialGOPaths = SummonEnum.UIMaterialPath[self.path]
 
-	if not var_19_0 or #var_19_0 <= 0 then
+	if not materialGOPaths or #materialGOPaths <= 0 then
 		return
 	end
 
-	for iter_19_0, iter_19_1 in ipairs(var_19_0) do
-		local var_19_1 = gohelper.findChild(arg_19_0.effectGO, iter_19_1)
+	for i, materialGOPath in ipairs(materialGOPaths) do
+		local materialGO = gohelper.findChild(self.effectGO, materialGOPath)
 
-		if var_19_1 then
-			local var_19_2 = var_19_1:GetComponent(typeof(UnityEngine.MeshRenderer))
+		if materialGO then
+			local renderer = materialGO:GetComponent(typeof(UnityEngine.MeshRenderer))
 
-			if var_19_2 then
-				var_19_2.material:SetTexture("_MainTex", nil)
+			if renderer then
+				renderer.material:SetTexture("_MainTex", nil)
 			end
 		end
 	end
 end
 
-function var_0_0.setSpeed(arg_20_0, arg_20_1)
-	arg_20_0:checkInitSpeedComponents()
-	arg_20_0._timeScaleComp:SetTimeScale(arg_20_1)
+function SummonEffectWrap:setSpeed(value)
+	self:checkInitSpeedComponents()
+	self._timeScaleComp:SetTimeScale(value)
 end
 
-function var_0_0.checkInitSpeedComponents(arg_21_0)
-	if gohelper.isNil(arg_21_0._timeScaleComp) then
-		arg_21_0._timeScaleComp = gohelper.onceAddComponent(arg_21_0.effectGO, typeof(ZProj.EffectTimeScale))
+function SummonEffectWrap:checkInitSpeedComponents()
+	if gohelper.isNil(self._timeScaleComp) then
+		local timeScaleComp = gohelper.onceAddComponent(self.effectGO, typeof(ZProj.EffectTimeScale))
+
+		self._timeScaleComp = timeScaleComp
 	end
 end
 
-function var_0_0.markCanDestroy(arg_22_0)
-	arg_22_0._canDestroy = true
+function SummonEffectWrap:markCanDestroy()
+	self._canDestroy = true
 end
 
-function var_0_0.getIsActive(arg_23_0)
-	return arg_23_0._active == true
+function SummonEffectWrap:getIsActive()
+	return self._active == true
 end
 
-function var_0_0.startParticle(arg_24_0)
-	arg_24_0:checkInitParticle()
+function SummonEffectWrap:startParticle()
+	self:checkInitParticle()
 
-	for iter_24_0, iter_24_1 in ipairs(arg_24_0._particleList) do
-		iter_24_1:Play()
+	for _, ps in ipairs(self._particleList) do
+		ps:Play()
 	end
 end
 
-function var_0_0.stopParticle(arg_25_0)
-	arg_25_0:checkInitParticle()
+function SummonEffectWrap:stopParticle()
+	self:checkInitParticle()
 
-	for iter_25_0, iter_25_1 in ipairs(arg_25_0._particleList) do
-		iter_25_1:Stop()
+	for _, ps in ipairs(self._particleList) do
+		ps:Stop()
 	end
 end
 
-function var_0_0.checkInitParticle(arg_26_0)
-	if not arg_26_0._particleList then
-		arg_26_0._particleList = arg_26_0:getUserDataTb_()
+function SummonEffectWrap:checkInitParticle()
+	if not self._particleList then
+		self._particleList = self:getUserDataTb_()
 
-		if not gohelper.isNil(arg_26_0.effectGO) then
-			local var_26_0 = arg_26_0.effectGO:GetComponentsInChildren(typeof(UnityEngine.ParticleSystem), true):GetEnumerator()
+		if not gohelper.isNil(self.effectGO) then
+			local particles = self.effectGO:GetComponentsInChildren(typeof(UnityEngine.ParticleSystem), true)
+			local iter = particles:GetEnumerator()
 
-			while var_26_0:MoveNext() do
-				table.insert(arg_26_0._particleList, var_26_0.Current)
+			while iter:MoveNext() do
+				table.insert(self._particleList, iter.Current)
 			end
 		end
 	end
 end
 
-function var_0_0.onDestroy(arg_27_0)
-	if not arg_27_0._canDestroy then
-		logError("Effect destroy unexpected: " .. arg_27_0.path)
+function SummonEffectWrap:onDestroy()
+	if not self._canDestroy then
+		logError("Effect destroy unexpected: " .. self.path)
 	end
 
-	arg_27_0.containerGO = nil
-	arg_27_0.effectGO = nil
-	arg_27_0.hangPointGO = nil
-	arg_27_0._particleList = nil
+	self.containerGO = nil
+	self.effectGO = nil
+	self.hangPointGO = nil
+	self._particleList = nil
 
-	if arg_27_0._headLoader then
-		arg_27_0._headLoader:dispose()
+	if self._headLoader then
+		self._headLoader:dispose()
 
-		arg_27_0._headLoader = nil
+		self._headLoader = nil
 	end
 
-	if arg_27_0._frameLoader then
-		arg_27_0._frameLoader:dispose()
+	if self._frameLoader then
+		self._frameLoader:dispose()
 
-		arg_27_0._frameLoader = nil
+		self._frameLoader = nil
 	end
 end
 
-return var_0_0
+return SummonEffectWrap

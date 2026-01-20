@@ -1,27 +1,29 @@
-﻿module("modules.logic.activity.config.Activity172Config", package.seeall)
+﻿-- chunkname: @modules/logic/activity/config/Activity172Config.lua
 
-local var_0_0 = class("Activity172Config", BaseConfig)
+module("modules.logic.activity.config.Activity172Config", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._act172Task = nil
+local Activity172Config = class("Activity172Config", BaseConfig)
+
+function Activity172Config:ctor()
+	self._act172Task = nil
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function Activity172Config:reqConfigNames()
 	return {
 		"activity172_task"
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity172_task" then
-		arg_3_0._act172Task = arg_3_2
+function Activity172Config:onConfigLoaded(configName, configTable)
+	if configName == "activity172_task" then
+		self._act172Task = configTable
 	end
 end
 
-function var_0_0.getAct172TaskById(arg_4_0, arg_4_1)
-	return arg_4_0._act172Task.configDict[arg_4_1]
+function Activity172Config:getAct172TaskById(id)
+	return self._act172Task.configDict[id]
 end
 
-var_0_0.instance = var_0_0.New()
+Activity172Config.instance = Activity172Config.New()
 
-return var_0_0
+return Activity172Config

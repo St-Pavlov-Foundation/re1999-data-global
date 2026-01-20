@@ -1,54 +1,56 @@
-﻿module("modules.logic.investigate.rpc.InvestigateRpc", package.seeall)
+﻿-- chunkname: @modules/logic/investigate/rpc/InvestigateRpc.lua
 
-local var_0_0 = class("InvestigateRpc", BaseRpc)
+module("modules.logic.investigate.rpc.InvestigateRpc", package.seeall)
 
-function var_0_0.sendGetInvestigateRequest(arg_1_0)
-	local var_1_0 = InvestigateModule_pb.GetInvestigateRequest()
+local InvestigateRpc = class("InvestigateRpc", BaseRpc)
 
-	arg_1_0:sendMsg(var_1_0)
+function InvestigateRpc:sendGetInvestigateRequest()
+	local req = InvestigateModule_pb.GetInvestigateRequest()
+
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveGetInvestigateReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 ~= 0 then
+function InvestigateRpc:onReceiveGetInvestigateReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_2_0 = arg_2_2.info
+	local info = msg.info
 
-	InvestigateOpinionModel.instance:initOpinionInfo(var_2_0)
+	InvestigateOpinionModel.instance:initOpinionInfo(info)
 end
 
-function var_0_0.sendPutClueRequest(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = InvestigateModule_pb.PutClueRequest()
+function InvestigateRpc:sendPutClueRequest(id, clueId)
+	local req = InvestigateModule_pb.PutClueRequest()
 
-	var_3_0.id = arg_3_1
-	var_3_0.clueId = arg_3_2
+	req.id = id
+	req.clueId = clueId
 
-	arg_3_0:sendMsg(var_3_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceivePutClueReply(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 ~= 0 then
+function InvestigateRpc:onReceivePutClueReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_4_0 = arg_4_2.id
-	local var_4_1 = arg_4_2.clueId
+	local id = msg.id
+	local clueId = msg.clueId
 
-	InvestigateOpinionModel.instance:setLinkedStatus(var_4_1, true)
-	InvestigateController.instance:dispatchEvent(InvestigateEvent.LinkedOpinionSuccess, var_4_1)
+	InvestigateOpinionModel.instance:setLinkedStatus(clueId, true)
+	InvestigateController.instance:dispatchEvent(InvestigateEvent.LinkedOpinionSuccess, clueId)
 end
 
-function var_0_0.onReceiveInvestigateInfoPush(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_1 ~= 0 then
+function InvestigateRpc:onReceiveInvestigateInfoPush(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_5_0 = arg_5_2.info
+	local info = msg.info
 
-	InvestigateOpinionModel.instance:initOpinionInfo(var_5_0)
+	InvestigateOpinionModel.instance:initOpinionInfo(info)
 end
 
-var_0_0.instance = var_0_0.New()
+InvestigateRpc.instance = InvestigateRpc.New()
 
-return var_0_0
+return InvestigateRpc

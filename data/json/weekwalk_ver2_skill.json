@@ -194,5 +194,33 @@
     "icon": "1031",
     "desc": "language_10091000",
     "rules": "1#104311451"
+  },
+  {
+    "id": 2031,
+    "name": "language_10103578",
+    "icon": "1033",
+    "desc": "language_10098188",
+    "rules": "1#106320131"
+  },
+  {
+    "id": 2032,
+    "name": "language_10103579",
+    "icon": "1034",
+    "desc": "language_10098189",
+    "rules": "1#106320132"
+  },
+  {
+    "id": 2033,
+    "name": "language_10103580",
+    "icon": "1032",
+    "desc": "language_10098190",
+    "rules": "1#106320133"
+  },
+  {
+    "id": 2034,
+    "name": "language_10058221",
+    "icon": "1035",
+    "desc": "language_10098191",
+    "rules": "1#106320134"
   }
 ]

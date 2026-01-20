@@ -1,100 +1,102 @@
-﻿module("modules.logic.versionactivity2_6.dicehero.model.fight.DiceHeroFightSkillCardMo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/dicehero/model/fight/DiceHeroFightSkillCardMo.lua
 
-local var_0_0 = pureTable("DiceHeroFightSkillCardMo")
+module("modules.logic.versionactivity2_6.dicehero.model.fight.DiceHeroFightSkillCardMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.curSelectUids = arg_1_0.curSelectUids or {}
-	arg_1_0.skillId = arg_1_1.skillId
-	arg_1_0.curRoundUse = 0
+local DiceHeroFightSkillCardMo = pureTable("DiceHeroFightSkillCardMo")
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1.roundUseCounts) do
-		if iter_1_1.round == arg_1_2 then
-			arg_1_0.curRoundUse = iter_1_1.count
+function DiceHeroFightSkillCardMo:init(data, curRound)
+	self.curSelectUids = self.curSelectUids or {}
+	self.skillId = data.skillId
+	self.curRoundUse = 0
+
+	for _, roundUseCount in ipairs(data.roundUseCounts) do
+		if roundUseCount.round == curRound then
+			self.curRoundUse = roundUseCount.count
 
 			break
 		end
 	end
 
-	arg_1_0.co = lua_dice_card.configDict[arg_1_0.skillId]
+	self.co = lua_dice_card.configDict[self.skillId]
 
-	if not arg_1_0.co then
-		logError("dice_card配置不存在" .. arg_1_0.skillId)
+	if not self.co then
+		logError("dice_card配置不存在" .. self.skillId)
 	end
 
-	arg_1_0.matchDiceUids = {}
+	self.matchDiceUids = {}
 
-	if arg_1_0.matchNums then
+	if self.matchNums then
 		return
 	end
 
-	arg_1_0.matchNums = {}
-	arg_1_0.matchDiceRules = {}
+	self.matchNums = {}
+	self.matchDiceRules = {}
 
-	local var_1_0 = string.splitToNumber(arg_1_0.co.patternlist, "#") or {}
+	local patternlist = string.splitToNumber(self.co.patternlist, "#") or {}
 
-	for iter_1_2, iter_1_3 in ipairs(var_1_0) do
-		local var_1_1 = lua_dice_pattern.configDict[iter_1_3]
+	for index, patternId in ipairs(patternlist) do
+		local patternCo = lua_dice_pattern.configDict[patternId]
 
-		if not var_1_1 then
-			logError("dice_pattern配置不存在" .. iter_1_3)
+		if not patternCo then
+			logError("dice_pattern配置不存在" .. patternId)
 		end
 
-		local var_1_2 = GameUtil.splitString2(var_1_1.patternList, true) or {}
+		local arr = GameUtil.splitString2(patternCo.patternList, true) or {}
 
-		arg_1_0.matchNums[iter_1_2] = (arg_1_0.matchNums[iter_1_2 - 1] or 0) + #var_1_2
+		self.matchNums[index] = (self.matchNums[index - 1] or 0) + #arr
 
-		for iter_1_4, iter_1_5 in ipairs(var_1_2) do
-			table.insert(arg_1_0.matchDiceRules, iter_1_5)
+		for _, info in ipairs(arr) do
+			table.insert(self.matchDiceRules, info)
 		end
 	end
 end
 
-function var_0_0.initMatchDices(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0.curSelectUids = {}
+function DiceHeroFightSkillCardMo:initMatchDices(diceMos, isMixMatch)
+	self.curSelectUids = {}
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0.matchDiceRules) do
-		local var_2_0 = iter_2_1[1]
-		local var_2_1 = iter_2_1[2]
-		local var_2_2 = DiceHeroConfig.instance:getDiceSuitDict(var_2_0)
-		local var_2_3 = DiceHeroConfig.instance:getDicePointDict(var_2_1)
+	for index, info in ipairs(self.matchDiceRules) do
+		local suit = info[1]
+		local point = info[2]
+		local suitDict = DiceHeroConfig.instance:getDiceSuitDict(suit)
+		local pointDict = DiceHeroConfig.instance:getDicePointDict(point)
 
-		if not var_2_2 then
-			logError("dice_suit配置不存在" .. var_2_0)
+		if not suitDict then
+			logError("dice_suit配置不存在" .. suit)
 		end
 
-		if not var_2_3 then
-			logError("dice_point配置不存在" .. var_2_1)
+		if not pointDict then
+			logError("dice_point配置不存在" .. point)
 		end
 
-		local var_2_4 = {}
+		local list = {}
 
-		for iter_2_2, iter_2_3 in ipairs(arg_2_1) do
-			if arg_2_0:isMatchDice(iter_2_3, var_2_2, var_2_3, arg_2_2) then
-				table.insert(var_2_4, iter_2_3.uid)
+		for _, diceMo in ipairs(diceMos) do
+			if self:isMatchDice(diceMo, suitDict, pointDict, isMixMatch) then
+				table.insert(list, diceMo.uid)
 			end
 		end
 
-		arg_2_0.matchDiceUids[iter_2_0] = var_2_4
+		self.matchDiceUids[index] = list
 	end
 end
 
-function var_0_0.isMatchDice(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	if arg_3_1.deleted or arg_3_1.status == DiceHeroEnum.DiceStatu.HardLock then
+function DiceHeroFightSkillCardMo:isMatchDice(diceMo, suitDict, pointDict, isMixMatch)
+	if diceMo.deleted or diceMo.status == DiceHeroEnum.DiceStatu.HardLock then
 		return false
 	end
 
-	if not arg_3_3[arg_3_1.num] then
+	if not pointDict[diceMo.num] then
 		return false
 	end
 
-	local var_3_0 = DiceHeroConfig.instance:getDiceSuitDict(arg_3_1.suitId)
+	local matchSuit = DiceHeroConfig.instance:getDiceSuitDict(diceMo.suitId)
 
-	for iter_3_0 in pairs(var_3_0) do
-		if arg_3_2[iter_3_0] then
+	for suitId in pairs(matchSuit) do
+		if suitDict[suitId] then
 			return true
 		end
 
-		if arg_3_4 and iter_3_0 == DiceHeroEnum.DiceType.Power then
+		if isMixMatch and suitId == DiceHeroEnum.DiceType.Power then
 			return true
 		end
 	end
@@ -102,118 +104,118 @@ function var_0_0.isMatchDice(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
 	return false
 end
 
-function var_0_0.isMatchMin(arg_4_0, arg_4_1)
-	if #arg_4_0.matchNums == 0 or #arg_4_0.matchDiceUids == 0 then
+function DiceHeroFightSkillCardMo:isMatchMin(isMatchPerfect)
+	if #self.matchNums == 0 or #self.matchDiceUids == 0 then
 		return true, {}
 	end
 
-	local var_4_0 = arg_4_0.matchNums[1]
-	local var_4_1 = {}
-	local var_4_2 = {}
-	local var_4_3 = {}
+	local num = self.matchNums[1]
+	local indexList = {}
+	local lenList = {}
+	local curList = {}
 
-	for iter_4_0 = 1, var_4_0 do
-		local var_4_4 = #arg_4_0.matchDiceUids[iter_4_0]
+	for i = 1, num do
+		local len = #self.matchDiceUids[i]
 
-		if var_4_4 == 0 then
+		if len == 0 then
 			return false
 		end
 
-		var_4_2[iter_4_0] = var_4_4
-		var_4_1[iter_4_0] = 1
+		lenList[i] = len
+		indexList[i] = 1
 	end
 
-	local var_4_5 = {}
+	local all = {}
 
-	while var_4_1[1] <= var_4_2[1] do
-		for iter_4_1 = 1, var_4_0 do
-			var_4_3[iter_4_1] = arg_4_0.matchDiceUids[iter_4_1][var_4_1[iter_4_1]]
+	while indexList[1] <= lenList[1] do
+		for i = 1, num do
+			curList[i] = self.matchDiceUids[i][indexList[i]]
 		end
 
-		for iter_4_2 = var_4_0, 1, -1 do
-			var_4_1[iter_4_2] = var_4_1[iter_4_2] + 1
+		for i = num, 1, -1 do
+			indexList[i] = indexList[i] + 1
 
-			if var_4_1[iter_4_2] > var_4_2[iter_4_2] and iter_4_2 ~= 1 then
-				var_4_1[iter_4_2] = 1
+			if indexList[i] > lenList[i] and i ~= 1 then
+				indexList[i] = 1
 			else
 				break
 			end
 		end
 
-		if not arg_4_0:isRepeat(var_4_3) then
-			if arg_4_1 then
-				table.insert(var_4_5, var_4_3)
+		if not self:isRepeat(curList) then
+			if isMatchPerfect then
+				table.insert(all, curList)
 
-				var_4_3 = {}
+				curList = {}
 			else
-				return true, var_4_3
+				return true, curList
 			end
 		end
 	end
 
-	if var_4_5[1] then
-		if var_4_5[2] then
-			local var_4_6 = DiceHeroFightModel.instance:getGameData().diceBox.dicesByUid
+	if all[1] then
+		if all[2] then
+			local diceByUid = DiceHeroFightModel.instance:getGameData().diceBox.dicesByUid
 
-			if arg_4_0.skillId == 19 then
-				local var_4_7 = 1
-				local var_4_8 = math.huge
+			if self.skillId == 19 then
+				local perfectIndex = 1
+				local perfectPointMin = math.huge
 
-				for iter_4_3, iter_4_4 in ipairs(var_4_5) do
-					local var_4_9 = 0
+				for planIndex, plan in ipairs(all) do
+					local totalPoint = 0
 
-					for iter_4_5, iter_4_6 in ipairs(iter_4_4) do
-						var_4_9 = var_4_9 + var_4_6[iter_4_6].num
+					for index, uid in ipairs(plan) do
+						totalPoint = totalPoint + diceByUid[uid].num
 					end
 
-					if var_4_9 < var_4_8 then
-						var_4_7 = iter_4_3
-						var_4_8 = var_4_9
+					if totalPoint < perfectPointMin then
+						perfectIndex = planIndex
+						perfectPointMin = totalPoint
 					end
 				end
 
-				return true, var_4_5[var_4_7]
+				return true, all[perfectIndex]
 			end
 
-			local var_4_10 = 1
-			local var_4_11 = -1
-			local var_4_12 = 0
+			local perfectIndex = 1
+			local perfectMatchColor = -1
+			local perfectPointMax = 0
 
-			for iter_4_7, iter_4_8 in ipairs(var_4_5) do
-				local var_4_13 = 0
-				local var_4_14 = 0
+			for planIndex, plan in ipairs(all) do
+				local matchColorCount = 0
+				local totalPoint = 0
 
-				for iter_4_9, iter_4_10 in ipairs(iter_4_8) do
-					local var_4_15 = arg_4_0.matchDiceRules[iter_4_9][1]
-					local var_4_16 = var_4_6[iter_4_10].suitId
+				for index, uid in ipairs(plan) do
+					local matchSuit = self.matchDiceRules[index][1]
+					local useSuit = diceByUid[uid].suitId
 
-					if DiceHeroEnum.BaseDiceSuitDict[var_4_15] and DiceHeroEnum.BaseDiceSuitDict[var_4_16] then
-						var_4_13 = var_4_13 + 1
+					if DiceHeroEnum.BaseDiceSuitDict[matchSuit] and DiceHeroEnum.BaseDiceSuitDict[useSuit] then
+						matchColorCount = matchColorCount + 1
 					end
 
-					var_4_14 = var_4_14 + var_4_6[iter_4_10].num
+					totalPoint = totalPoint + diceByUid[uid].num
 				end
 
-				if var_4_11 < var_4_13 or var_4_13 == var_4_11 and var_4_12 < var_4_14 then
-					var_4_10 = iter_4_7
-					var_4_11 = var_4_13
-					var_4_12 = var_4_14
+				if perfectMatchColor < matchColorCount or matchColorCount == perfectMatchColor and perfectPointMax < totalPoint then
+					perfectIndex = planIndex
+					perfectMatchColor = matchColorCount
+					perfectPointMax = totalPoint
 				end
 			end
 
-			return true, var_4_5[var_4_10]
+			return true, all[perfectIndex]
 		else
-			return true, var_4_5[1]
+			return true, all[1]
 		end
 	end
 
 	return false
 end
 
-function var_0_0.isRepeat(arg_5_0, arg_5_1)
-	for iter_5_0 = 1, #arg_5_1 - 1 do
-		for iter_5_1 = iter_5_0 + 1, #arg_5_1 do
-			if arg_5_1[iter_5_0] == arg_5_1[iter_5_1] then
+function DiceHeroFightSkillCardMo:isRepeat(list)
+	for i = 1, #list - 1 do
+		for j = i + 1, #list do
+			if list[i] == list[j] then
 				return true
 			end
 		end
@@ -222,26 +224,28 @@ function var_0_0.isRepeat(arg_5_0, arg_5_1)
 	return false
 end
 
-function var_0_0.canSelect(arg_6_0)
-	if DiceHeroFightModel.instance:getGameData().allyHero:isBanSkillCard(arg_6_0.co.type) then
+function DiceHeroFightSkillCardMo:canSelect()
+	local isBanCard = DiceHeroFightModel.instance:getGameData().allyHero:isBanSkillCard(self.co.type)
+
+	if isBanCard then
 		return false, DiceHeroEnum.CantUseReason.BanSkill
 	end
 
-	if arg_6_0.co.roundLimitCount ~= 0 and arg_6_0.curRoundUse >= arg_6_0.co.roundLimitCount then
+	if self.co.roundLimitCount ~= 0 and self.curRoundUse >= self.co.roundLimitCount then
 		return false, DiceHeroEnum.CantUseReason.NoUseCount
 	end
 
-	if not arg_6_0:isMatchMin() then
+	if not self:isMatchMin() then
 		return false, DiceHeroEnum.CantUseReason.NoDice
 	end
 
 	return true
 end
 
-function var_0_0.addDice(arg_7_0, arg_7_1)
-	for iter_7_0 = 1, #arg_7_0.matchDiceUids do
-		if not arg_7_0.curSelectUids[iter_7_0] and tabletool.indexOf(arg_7_0.matchDiceUids[iter_7_0], arg_7_1) then
-			arg_7_0.curSelectUids[iter_7_0] = arg_7_1
+function DiceHeroFightSkillCardMo:addDice(uid)
+	for i = 1, #self.matchDiceUids do
+		if not self.curSelectUids[i] and tabletool.indexOf(self.matchDiceUids[i], uid) then
+			self.curSelectUids[i] = uid
 
 			DiceHeroController.instance:dispatchEvent(DiceHeroEvent.SkillCardDiceChange)
 
@@ -252,26 +256,26 @@ function var_0_0.addDice(arg_7_0, arg_7_1)
 	return false
 end
 
-function var_0_0.getCanUseDiceUidDict(arg_8_0)
-	local var_8_0 = {}
+function DiceHeroFightSkillCardMo:getCanUseDiceUidDict()
+	local dict = {}
 
-	for iter_8_0 = 1, #arg_8_0.matchDiceUids do
-		if not arg_8_0.curSelectUids[iter_8_0] then
-			for iter_8_1, iter_8_2 in pairs(arg_8_0.matchDiceUids[iter_8_0]) do
-				var_8_0[iter_8_2] = true
+	for i = 1, #self.matchDiceUids do
+		if not self.curSelectUids[i] then
+			for _, uid in pairs(self.matchDiceUids[i]) do
+				dict[uid] = true
 			end
 		end
 	end
 
-	return var_8_0
+	return dict
 end
 
-function var_0_0.removeDice(arg_9_0, arg_9_1)
-	for iter_9_0 = 1, #arg_9_0.matchDiceUids do
-		if arg_9_0.curSelectUids[iter_9_0] == arg_9_1 then
-			arg_9_0.curSelectUids[iter_9_0] = nil
+function DiceHeroFightSkillCardMo:removeDice(uid)
+	for i = 1, #self.matchDiceUids do
+		if self.curSelectUids[i] == uid then
+			self.curSelectUids[i] = nil
 
-			arg_9_0:_refreshDiceIndex()
+			self:_refreshDiceIndex()
 			DiceHeroController.instance:dispatchEvent(DiceHeroEvent.SkillCardDiceChange)
 
 			break
@@ -279,50 +283,54 @@ function var_0_0.removeDice(arg_9_0, arg_9_1)
 	end
 end
 
-function var_0_0._refreshDiceIndex(arg_10_0)
-	local var_10_0 = #arg_10_0.matchDiceUids
+function DiceHeroFightSkillCardMo:_refreshDiceIndex()
+	local len = #self.matchDiceUids
 
-	repeat
-		local var_10_1 = false
+	while true do
+		local isMove = false
 
-		for iter_10_0 = var_10_0, 1, -1 do
-			if arg_10_0.curSelectUids[iter_10_0] then
-				for iter_10_1 = 1, iter_10_0 - 1 do
-					if not arg_10_0.curSelectUids[iter_10_1] and tabletool.indexOf(arg_10_0.matchDiceUids[iter_10_1], arg_10_0.curSelectUids[iter_10_0]) then
-						arg_10_0.curSelectUids[iter_10_0], arg_10_0.curSelectUids[iter_10_1] = arg_10_0.curSelectUids[iter_10_1], arg_10_0.curSelectUids[iter_10_0]
-						var_10_1 = true
+		for i = len, 1, -1 do
+			if self.curSelectUids[i] then
+				for j = 1, i - 1 do
+					if not self.curSelectUids[j] and tabletool.indexOf(self.matchDiceUids[j], self.curSelectUids[i]) then
+						self.curSelectUids[i], self.curSelectUids[j] = self.curSelectUids[j], self.curSelectUids[i]
+						isMove = true
 
 						break
 					end
 				end
 			end
 		end
-	until not var_10_1
+
+		if not isMove then
+			break
+		end
+	end
 end
 
-function var_0_0.clearSelects(arg_11_0)
-	arg_11_0.curSelectUids = {}
+function DiceHeroFightSkillCardMo:clearSelects()
+	self.curSelectUids = {}
 end
 
-function var_0_0.canUse(arg_12_0)
-	if #arg_12_0.matchNums == 0 then
+function DiceHeroFightSkillCardMo:canUse()
+	if #self.matchNums == 0 then
 		return -1, {}
 	end
 
-	local var_12_0 = 0
+	local len = 0
 
-	for iter_12_0 = 1, #arg_12_0.matchDiceUids do
-		if not arg_12_0.curSelectUids[iter_12_0] then
+	for i = 1, #self.matchDiceUids do
+		if not self.curSelectUids[i] then
 			break
 		end
 
-		var_12_0 = iter_12_0
+		len = i
 	end
 
-	for iter_12_1 = #arg_12_0.matchNums, 1, -1 do
-		if var_12_0 >= arg_12_0.matchNums[iter_12_1] then
-			return iter_12_1, {
-				unpack(arg_12_0.curSelectUids, 1, arg_12_0.matchNums[iter_12_1])
+	for i = #self.matchNums, 1, -1 do
+		if len >= self.matchNums[i] then
+			return i, {
+				unpack(self.curSelectUids, 1, self.matchNums[i])
 			}
 		end
 	end
@@ -330,8 +338,8 @@ function var_0_0.canUse(arg_12_0)
 	return false
 end
 
-function var_0_0.clearMatches(arg_13_0)
-	arg_13_0.matchDiceUids = {}
+function DiceHeroFightSkillCardMo:clearMatches()
+	self.matchDiceUids = {}
 end
 
-return var_0_0
+return DiceHeroFightSkillCardMo

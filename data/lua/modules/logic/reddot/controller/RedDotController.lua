@@ -1,85 +1,91 @@
-﻿module("modules.logic.reddot.controller.RedDotController", package.seeall)
+﻿-- chunkname: @modules/logic/reddot/controller/RedDotController.lua
 
-local var_0_0 = class("RedDotController", BaseController)
+module("modules.logic.reddot.controller.RedDotController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local RedDotController = class("RedDotController", BaseController)
+
+function RedDotController:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	TaskDispatcher.cancelTask(arg_2_0._checkExpire, arg_2_0)
+function RedDotController:reInit()
+	TaskDispatcher.cancelTask(self._checkExpire, self)
 end
 
-function var_0_0.onInitFinish(arg_3_0)
+function RedDotController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_4_0)
+function RedDotController:addConstEvents()
 	return
 end
 
-function var_0_0.addNotEventRedDot(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
-	local var_5_0 = MonoHelper.addNoUpdateLuaComOnceToGo(arg_5_1, CommonRedDotIconNoEvent)
+function RedDotController:addNotEventRedDot(parentGo, checkFunc, checkFuncObj, showType)
+	local comp = MonoHelper.addNoUpdateLuaComOnceToGo(parentGo, CommonRedDotIconNoEvent)
 
-	var_5_0:setShowType(arg_5_4)
-	var_5_0:setCheckShowRedDotFunc(arg_5_2, arg_5_3)
+	comp:setShowType(showType)
+	comp:setCheckShowRedDotFunc(checkFunc, checkFuncObj)
 
-	return var_5_0
+	return comp
 end
 
-function var_0_0.addRedDotTag(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5)
-	local var_6_0 = MonoHelper.addNoUpdateLuaComOnceToGo(arg_6_1, CommonRedDotTag)
+function RedDotController:addRedDotTag(parentGo, id, reverse, overrideRefreshFunc, overrideRefreshFuncObj)
+	local tagCom = MonoHelper.addNoUpdateLuaComOnceToGo(parentGo, CommonRedDotTag)
 
-	var_6_0:setId(arg_6_2, arg_6_3)
-	var_6_0:overrideRefreshDotFunc(arg_6_4, arg_6_5)
-	var_6_0:refreshDot()
+	tagCom:setId(id, reverse)
+	tagCom:overrideRefreshDotFunc(overrideRefreshFunc, overrideRefreshFuncObj)
+	tagCom:refreshDot()
 
-	return var_6_0
+	return tagCom
 end
 
-function var_0_0.addRedDot(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4, arg_7_5)
-	return arg_7_0:addMultiRedDot(arg_7_1, {
+function RedDotController:addRedDot(parentGo, id, uid, overrideRefreshFunc, overrideRefreshFuncObj)
+	return self:addMultiRedDot(parentGo, {
 		{
-			id = arg_7_2,
-			uid = arg_7_3
+			id = id,
+			uid = uid
 		}
-	}, arg_7_4, arg_7_5)
+	}, overrideRefreshFunc, overrideRefreshFuncObj)
 end
 
-function var_0_0.addMultiRedDot(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4)
-	local var_8_0 = MonoHelper.getLuaComFromGo(arg_8_1, CommonRedDotIcon) or MonoHelper.addNoUpdateLuaComOnceToGo(arg_8_1, CommonRedDotIcon)
+function RedDotController:addMultiRedDot(parentGo, infoList, overrideRefreshFunc, overrideRefreshFuncObj)
+	local icon = MonoHelper.getLuaComFromGo(parentGo, CommonRedDotIcon)
 
-	var_8_0:setMultiId(arg_8_2)
-	var_8_0:overrideRefreshDotFunc(arg_8_3, arg_8_4)
-	var_8_0:refreshDot()
+	icon = icon or MonoHelper.addNoUpdateLuaComOnceToGo(parentGo, CommonRedDotIcon)
 
-	return var_8_0
+	icon:setMultiId(infoList)
+	icon:overrideRefreshDotFunc(overrideRefreshFunc, overrideRefreshFuncObj)
+	icon:refreshDot()
+
+	return icon
 end
 
-function var_0_0.getRedDotComp(arg_9_0, arg_9_1)
-	return (MonoHelper.getLuaComFromGo(arg_9_1, CommonRedDotIcon))
+function RedDotController:getRedDotComp(parentGo)
+	local icon = MonoHelper.getLuaComFromGo(parentGo, CommonRedDotIcon)
+
+	return icon
 end
 
-function var_0_0.CheckExpireDot(arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._checkExpire, arg_10_0)
-	TaskDispatcher.runRepeat(arg_10_0._checkExpire, arg_10_0, 1)
+function RedDotController:CheckExpireDot()
+	TaskDispatcher.cancelTask(self._checkExpire, self)
+	TaskDispatcher.runRepeat(self._checkExpire, self, 1)
 end
 
-function var_0_0._checkExpire(arg_11_0)
-	local var_11_0 = RedDotModel.instance:getLatestExpireTime()
+function RedDotController:_checkExpire()
+	local time = RedDotModel.instance:getLatestExpireTime()
 
-	if var_11_0 == 0 then
-		TaskDispatcher.cancelTask(arg_11_0._checkExpire, arg_11_0)
+	if time == 0 then
+		TaskDispatcher.cancelTask(self._checkExpire, self)
 
 		return
 	end
 
-	if var_11_0 <= ServerTime.now() then
-		TaskDispatcher.cancelTask(arg_11_0._checkExpire, arg_11_0)
+	if time <= ServerTime.now() then
+		TaskDispatcher.cancelTask(self._checkExpire, self)
 		RedDotRpc.instance:sendGetRedDotInfosRequest()
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+RedDotController.instance = RedDotController.New()
 
-return var_0_0
+return RedDotController

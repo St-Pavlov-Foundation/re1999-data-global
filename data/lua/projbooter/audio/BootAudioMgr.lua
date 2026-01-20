@@ -1,29 +1,31 @@
-﻿module("projbooter.audio.BootAudioMgr", package.seeall)
+﻿-- chunkname: @projbooter/audio/BootAudioMgr.lua
 
-local var_0_0 = class("BootAudioMgr")
+module("projbooter.audio.BootAudioMgr", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local BootAudioMgr = class("BootAudioMgr")
+
+function BootAudioMgr:ctor()
 	return
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0.csharpInst = ZProj.AudioManager.Instance
+function BootAudioMgr:init(onInited, onInitedObj)
+	self.csharpInst = ZProj.AudioManager.Instance
 
-	arg_2_0.csharpInst:BootInit(arg_2_1, arg_2_2)
+	self.csharpInst:BootInit(onInited, onInitedObj)
 end
 
-function var_0_0._onInited(arg_3_0)
+function BootAudioMgr:_onInited()
 	logNormal("BootAudioMgr._onInited -----------")
 end
 
-function var_0_0.dispose(arg_4_0)
-	arg_4_0.csharpInst:BootDispose()
+function BootAudioMgr:dispose()
+	self.csharpInst:BootDispose()
 end
 
-function var_0_0.trigger(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0.csharpInst:TriggerEvent(arg_5_1, arg_5_2)
+function BootAudioMgr:trigger(eventName, bankName)
+	self.csharpInst:TriggerEvent(eventName, bankName)
 end
 
-var_0_0.instance = var_0_0.New()
+BootAudioMgr.instance = BootAudioMgr.New()
 
-return var_0_0
+return BootAudioMgr

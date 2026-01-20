@@ -1,235 +1,255 @@
-﻿module("modules.logic.fight.view.cardeffect.FightCardPlayFlyEffect", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/cardeffect/FightCardPlayFlyEffect.lua
 
-local var_0_0 = class("FightCardPlayFlyEffect", UserDataDispose)
-local var_0_1 = 1
-local var_0_2 = 0.9
-local var_0_3 = 0.9
-local var_0_4 = Vector2.New(0.5, 0.5)
+module("modules.logic.fight.view.cardeffect.FightCardPlayFlyEffect", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	arg_1_0:__onInit()
+local FightCardPlayFlyEffect = class("FightCardPlayFlyEffect", UserDataDispose)
+local TimeFactor = 1
+local TimeFactor2 = 0.9
+local TimeFactor3 = 0.9
+local cardAnchor = Vector2.New(0.5, 0.5)
 
-	local var_1_0 = 0.033 * var_0_1
+function FightCardPlayFlyEffect:ctor(parent_view, card_mo, card_obj, fightBeginRoundOp)
+	self:__onInit()
 
-	arg_1_0._fly_speed = 1 / var_0_2 * FightModel.instance:getUISpeed() * 2
-	arg_1_0._dt = var_1_0 * var_0_3 / FightModel.instance:getUISpeed()
-	arg_1_0._parent_view = arg_1_1
-	arg_1_0._card_mo = arg_1_2
-	arg_1_0._show_index = arg_1_1:getShowIndex(arg_1_4)
-	arg_1_0._card_obj = arg_1_3
-	arg_1_0._fightBeginRoundOp = arg_1_4
-	arg_1_0._card_transform = arg_1_3.transform
-	arg_1_0._fight_view_obj = arg_1_0._parent_view.viewGO
-	arg_1_0.playcardTransform = gohelper.findChild(arg_1_0._fight_view_obj, "root/playcards").transform
+	local dt = 0.033 * TimeFactor
 
-	local var_1_1 = gohelper.onceAddComponent(arg_1_0._card_obj, gohelper.Type_CanvasGroup)
+	self._fly_speed = 1 / TimeFactor2 * FightModel.instance:getUISpeed() * 2
+	self._dt = dt * TimeFactor3 / FightModel.instance:getUISpeed()
+	self._parent_view = parent_view
+	self._card_mo = card_mo
+	self._show_index = parent_view:getShowIndex(fightBeginRoundOp)
+	self._card_obj = card_obj
+	self._fightBeginRoundOp = fightBeginRoundOp
+	self._card_transform = card_obj.transform
+	self._fight_view_obj = self._parent_view.viewGO
+	self.playcardTransform = gohelper.findChild(self._fight_view_obj, "root/playcards").transform
 
-	var_1_1.interactable = false
-	var_1_1.blocksRaycasts = false
+	local canvas = gohelper.onceAddComponent(self._card_obj, gohelper.Type_CanvasGroup)
 
-	arg_1_0._card_transform:SetParent(arg_1_0.playcardTransform, true)
+	canvas.interactable = false
+	canvas.blocksRaycasts = false
 
-	arg_1_0._card_transform.anchorMin = var_0_4
-	arg_1_0._card_transform.anchorMax = var_0_4
+	self._card_transform:SetParent(self.playcardTransform, true)
 
-	local var_1_2 = recthelper.getWidth(arg_1_0.playcardTransform) / 2
+	self._card_transform.anchorMin = cardAnchor
+	self._card_transform.anchorMax = cardAnchor
 
-	recthelper.setAnchorX(arg_1_0._card_transform, recthelper.getAnchorX(arg_1_0._card_transform) + var_1_2)
+	local offsetX = recthelper.getWidth(self.playcardTransform) / 2
+
+	recthelper.setAnchorX(self._card_transform, recthelper.getAnchorX(self._card_transform) + offsetX)
 end
 
-function var_0_0._delayDone(arg_2_0)
+function FightCardPlayFlyEffect:_delayDone()
 	logError("出牌的飞行流程超过了10秒,可能卡住了,先强制结束")
-	arg_2_0:_onPlayFlyCardDone()
+	self:_onPlayFlyCardDone()
 end
 
-function var_0_0._startFly(arg_3_0)
-	TaskDispatcher.runDelay(arg_3_0._delayDone, arg_3_0, 10 / FightModel.instance:getUISpeed())
+function FightCardPlayFlyEffect:_startFly()
+	TaskDispatcher.runDelay(self._delayDone, self, 10 / FightModel.instance:getUISpeed())
 
-	arg_3_0._main_flow = arg_3_0:_buildAniFlow_2_1()
+	self._main_flow = self:_buildAniFlow_2_1()
 
-	arg_3_0._main_flow:registerDoneListener(arg_3_0._onFlowDone, arg_3_0)
-	arg_3_0._main_flow:start()
+	self._main_flow:registerDoneListener(self._onFlowDone, self)
+	self._main_flow:start()
 end
 
-function var_0_0._onFlowDone(arg_4_0)
-	arg_4_0:_onPlayFlyCardDone()
+function FightCardPlayFlyEffect:_onFlowDone()
+	self:_onPlayFlyCardDone()
 end
 
-function var_0_0._onPlayFlyCardDone(arg_5_0)
-	FightController.instance:dispatchEvent(FightEvent.RefreshPlayCardRoundOp, arg_5_0._fightBeginRoundOp)
-	arg_5_0:releaseSelf()
-	arg_5_0._parent_view:onFlyDone(arg_5_0)
-	FightController.instance:dispatchEvent(FightEvent.PlayCardFlayFinish, arg_5_0._fightBeginRoundOp)
+function FightCardPlayFlyEffect:_onPlayFlyCardDone()
+	FightController.instance:dispatchEvent(FightEvent.RefreshPlayCardRoundOp, self._fightBeginRoundOp)
+	self:releaseSelf()
+	self._parent_view:onFlyDone(self)
+	FightController.instance:dispatchEvent(FightEvent.PlayCardFlayFinish, self._fightBeginRoundOp)
 end
 
-function var_0_0._buildAniFlow_2_1(arg_6_0)
-	local var_6_0 = FlowSequence.New()
-	local var_6_1, var_6_2 = recthelper.getAnchor(arg_6_0._card_transform)
-	local var_6_3, var_6_4 = arg_6_0:_getPlayTargetPos()
-	local var_6_5 = Vector3.New(var_6_3 - var_6_1, var_6_4 - var_6_2, 0)
-	local var_6_6 = Quaternion.FromToRotation(Vector3.up, var_6_5).eulerAngles.z
+function FightCardPlayFlyEffect:_buildAniFlow_2_1()
+	local main_sequence = FlowSequence.New()
+	local startX, startY = recthelper.getAnchor(self._card_transform)
+	local targetX, targetY = self:_getPlayTargetPos()
+	local offset_pos = Vector3.New(targetX - startX, targetY - startY, 0)
+	local rotation = Quaternion.FromToRotation(Vector3.up, offset_pos).eulerAngles.z
 
-	if var_6_6 > 180 then
-		var_6_6 = var_6_6 - 360
+	if rotation > 180 then
+		rotation = rotation - 360
 	end
 
-	local var_6_7 = Mathf.Clamp(var_6_6, -25, 25)
-	local var_6_8 = 2
+	rotation = Mathf.Clamp(rotation, -25, 25)
 
-	var_6_0:addWork(TweenWork.New({
+	local frame_num = 2
+
+	main_sequence:addWork(TweenWork.New({
 		type = "DORotate",
 		tox = 0,
 		toy = 0,
-		tr = arg_6_0._card_transform,
-		toz = var_6_7,
-		t = arg_6_0._dt * var_6_8,
+		tr = self._card_transform,
+		toz = rotation,
+		t = self._dt * frame_num,
 		ease = EaseType.linear
 	}))
 
-	local var_6_9 = FlowParallel.New()
-	local var_6_10 = Mathf.Sqrt(Mathf.Pow(var_6_1 - var_6_3, 2) + Mathf.Pow(var_6_2 - var_6_4, 2)) / 2500 / arg_6_0._fly_speed
-	local var_6_11 = 0
-	local var_6_12 = 21
+	local flow_stage_1 = FlowParallel.New()
+	local dist = Mathf.Sqrt(Mathf.Pow(startX - targetX, 2) + Mathf.Pow(startY - targetY, 2))
+	local fly_speed = 2500
+	local flyTime = dist / fly_speed / self._fly_speed
 
-	var_6_9:addWork(TweenWork.New({
-		type = "DOAnchorPos",
-		tr = arg_6_0._card_transform,
-		tox = var_6_3 + var_6_11,
-		toy = var_6_4 + var_6_12,
-		t = var_6_10,
+	self.startAnchorX = recthelper.getAnchorX(self._card_transform)
+	self.startAnchorY = recthelper.getAnchorY(self._card_transform)
+
+	local anchorWork = TweenWork.New({
+		from = 0,
+		type = "DOTweenFloat",
+		to = 1,
+		t = flyTime,
+		frameCb = self.onAnchorTweenFrame,
+		cbObj = self,
 		ease = EaseType.OutQuart
-	}))
+	})
 
-	local var_6_13 = 1.14
-	local var_6_14 = 0.72
+	flow_stage_1:addWork(anchorWork)
 
-	var_6_9:addWork(TweenWork.New({
+	local start_scale = 1.14
+	local end_scale = 0.72
+
+	flow_stage_1:addWork(TweenWork.New({
 		type = "DOScale",
-		tr = arg_6_0._card_transform,
-		from = var_6_13,
-		to = var_6_14,
-		t = var_6_10,
+		tr = self._card_transform,
+		from = start_scale,
+		to = end_scale,
+		t = flyTime,
 		ease = EaseType.Linear
 	}))
 
-	local var_6_15 = FlowSequence.New()
+	local flow_stage_1_revert_rotation = FlowSequence.New()
 
-	var_6_15:addWork(WorkWaitSeconds.New(var_6_10 / 2))
-	var_6_15:addWork(TweenWork.New({
+	flow_stage_1_revert_rotation:addWork(WorkWaitSeconds.New(flyTime / 2))
+	flow_stage_1_revert_rotation:addWork(TweenWork.New({
 		toz = 0,
 		type = "DORotate",
 		tox = 0,
 		toy = 0,
-		tr = arg_6_0._card_transform,
-		t = var_6_10 / 2,
+		tr = self._card_transform,
+		t = flyTime / 2,
 		ease = EaseType.OutCubic
 	}))
-	var_6_9:addWork(var_6_15)
-	var_6_0:addWork(var_6_9)
+	flow_stage_1:addWork(flow_stage_1_revert_rotation)
+	main_sequence:addWork(flow_stage_1)
 
-	local var_6_16 = FlowParallel.New()
-	local var_6_17 = FlowSequence.New()
-	local var_6_18 = 0.5
-	local var_6_19 = 3
+	local flow_stage_3 = FlowParallel.New()
+	local sequence = FlowSequence.New()
+	local tar_scale = 0.5
+	local frame_num = 3
 
-	var_6_17:addWork(TweenWork.New({
+	sequence:addWork(TweenWork.New({
 		type = "DOScale",
-		tr = arg_6_0._card_transform,
-		to = var_6_18,
-		t = var_6_19 * arg_6_0._dt,
+		tr = self._card_transform,
+		to = tar_scale,
+		t = frame_num * self._dt,
 		ease = EaseType.Linear
 	}))
 
-	local var_6_20 = 0.623
-	local var_6_21 = 3
+	local tar_scale = 0.623
+	local frame_num = 3
 
-	var_6_17:addWork(TweenWork.New({
+	sequence:addWork(TweenWork.New({
 		type = "DOScale",
-		tr = arg_6_0._card_transform,
-		to = var_6_20,
-		t = var_6_21 * arg_6_0._dt,
+		tr = self._card_transform,
+		to = tar_scale,
+		t = frame_num * self._dt,
 		ease = EaseType.Linear
 	}))
-	var_6_16:addWork(var_6_17)
+	flow_stage_3:addWork(sequence)
 
-	local var_6_22 = FlowSequence.New()
+	local effect_flow = FlowSequence.New()
 
-	var_6_22:addWork(FunctionWork.New(function()
-		FightController.instance:dispatchEvent(FightEvent.OnPlayHandCard, arg_6_0._card_mo, arg_6_0._waitRemoveCard)
+	effect_flow:addWork(FunctionWork.New(function()
+		FightController.instance:dispatchEvent(FightEvent.OnPlayHandCard, self._card_mo, self._waitRemoveCard)
 
 		if GMFightShowState.cards then
-			local var_7_0 = FightCardDataHelper.getCardSkin()
-			local var_7_1 = FightDataHelper.entityMgr:getById(arg_6_0._card_mo.uid)
-			local var_7_2 = FightCardDataHelper.isBigSkill(arg_6_0._card_mo.skillId)
-			local var_7_3 = FightConfig.instance:getSkillLv(arg_6_0._card_mo.skillId)
-			local var_7_4 = ResUrl.getUIEffect(FightPreloadViewWork.ui_chupai_01)
+			local cardSkin = FightCardDataHelper.getCardSkin()
+			local entityMO = FightDataHelper.entityMgr:getById(self._card_mo.uid)
+			local isBigSkill = FightCardDataHelper.isBigSkill(self._card_mo.skillId)
+			local skillLevel = FightConfig.instance:getSkillLv(self._card_mo.skillId)
+			local url = ResUrl.getUIEffect(FightPreloadViewWork.ui_chupai_01)
 
-			if var_7_0 == 672801 then
-				var_7_4 = ResUrl.getUIEffect(FightPreloadViewWork.ui_chupai_skin01)
+			if cardSkin == 672801 then
+				url = ResUrl.getUIEffect(FightPreloadViewWork.ui_chupai_skin01)
 			end
 
-			local var_7_5 = FightHelper.getPreloadAssetItem(var_7_4)
+			local assetItem = FightHelper.getPreloadAssetItem(url)
 
-			if var_7_3 < FightEnum.UniqueSkillCardLv then
-				local var_7_6 = ResUrl.getUIEffect(FightPreloadViewWork.ui_chupai_02)
+			if skillLevel < FightEnum.UniqueSkillCardLv then
+				url = ResUrl.getUIEffect(FightPreloadViewWork.ui_chupai_02)
 
-				if var_7_0 == 672801 then
-					var_7_6 = ResUrl.getUIEffect(FightPreloadViewWork.ui_chupai_skin01)
+				if cardSkin == 672801 then
+					url = ResUrl.getUIEffect(FightPreloadViewWork.ui_chupai_skin01)
 				end
 
-				local var_7_7 = FightHelper.getPreloadAssetItem(var_7_6)
+				assetItem = FightHelper.getPreloadAssetItem(url)
 
-				gohelper.clone(var_7_7:GetResource(var_7_6), arg_6_0._card_transform.gameObject)
+				gohelper.clone(assetItem:GetResource(url), self._card_transform.gameObject)
 			else
-				local var_7_8 = ResUrl.getUIEffect(FightPreloadViewWork.ui_chupai_03)
+				url = ResUrl.getUIEffect(FightPreloadViewWork.ui_chupai_03)
 
-				if var_7_0 == 672801 then
-					var_7_8 = ResUrl.getUIEffect(FightPreloadViewWork.ui_chupai_skin03)
+				if cardSkin == 672801 then
+					url = ResUrl.getUIEffect(FightPreloadViewWork.ui_chupai_skin03)
 				end
 
-				local var_7_9 = FightHelper.getPreloadAssetItem(var_7_8)
+				assetItem = FightHelper.getPreloadAssetItem(url)
 
-				gohelper.clone(var_7_9:GetResource(var_7_8), arg_6_0._card_transform.gameObject)
+				gohelper.clone(assetItem:GetResource(url), self._card_transform.gameObject)
 			end
 
-			FightController.instance:dispatchEvent(FightEvent.ShowPlayCardEffect, arg_6_0._card_mo, arg_6_0._show_index)
+			FightController.instance:dispatchEvent(FightEvent.ShowPlayCardEffect, self._card_mo, self._show_index)
 		end
 	end))
-	var_6_16:addWork(var_6_22)
-	var_6_0:addWork(var_6_16)
-	var_6_0:addWork(WorkWaitSeconds.New(0.2 / FightModel.instance:getUISpeed()))
+	flow_stage_3:addWork(effect_flow)
+	main_sequence:addWork(flow_stage_3)
+	main_sequence:addWork(WorkWaitSeconds.New(0.2 / FightModel.instance:getUISpeed()))
 
-	return var_6_0
+	return main_sequence
 end
 
-function var_0_0._getPlayTargetPos(arg_8_0)
-	local var_8_0 = FightViewPlayCard.getMaxItemCount()
-	local var_8_1 = arg_8_0._parent_view._playCardItemTransform
-	local var_8_2 = recthelper.getAnchorX(var_8_1)
-	local var_8_3 = FightViewPlayCard.calContentPosX(arg_8_0._show_index, var_8_0, recthelper.getAnchorX(arg_8_0._parent_view._playCardItemTransform))
-	local var_8_4, var_8_5 = FightViewPlayCard.calcCardPosX(arg_8_0._show_index, var_8_0)
-	local var_8_6 = var_8_4 + var_8_3
-	local var_8_7 = var_8_5 + recthelper.getAnchorY(var_8_1) - 21
+function FightCardPlayFlyEffect:onAnchorTweenFrame(value)
+	local targetX, targetY = self:_getPlayTargetPos()
+	local offset_x = 0
+	local offset_y = 21
+	local posX = LuaTween.tween(value, self.startAnchorX, targetX - self.startAnchorX, 1, EaseType.OutQuart)
+	local posY = LuaTween.tween(value, self.startAnchorY, targetY - self.startAnchorY, 1, EaseType.OutQuart)
 
-	return var_8_6, var_8_7
+	recthelper.setAnchor(self._card_transform, posX + offset_x, posY + offset_y)
 end
 
-function var_0_0._destroyCloneCard(arg_9_0)
-	gohelper.destroy(arg_9_0._card_obj)
+function FightCardPlayFlyEffect:_getPlayTargetPos()
+	local count = FightViewPlayCard.getMaxItemCountIncludeExtraMoveAct()
+	local content = self._parent_view._playCardItemTransform
+	local finalContentX = FightViewPlayCard.calContentPosX(self._show_index, count, recthelper.getAnchorX(self._parent_view._playCardItemTransform))
+	local posX, posY = FightViewPlayCard.calcCardPosX(self._show_index, count)
+
+	posX = posX + finalContentX
+	posY = posY + recthelper.getAnchorY(content)
+	posY = posY - 21
+
+	return posX, posY
 end
 
-function var_0_0.releaseSelf(arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._delayDone, arg_10_0)
+function FightCardPlayFlyEffect:_destroyCloneCard()
+	gohelper.destroy(self._card_obj)
+end
 
-	if arg_10_0._main_flow then
-		arg_10_0._main_flow:unregisterDoneListener(arg_10_0._onFlowDone, arg_10_0)
-		arg_10_0._main_flow:stop()
+function FightCardPlayFlyEffect:releaseSelf()
+	TaskDispatcher.cancelTask(self._delayDone, self)
 
-		arg_10_0._main_flow = nil
+	if self._main_flow then
+		self._main_flow:unregisterDoneListener(self._onFlowDone, self)
+		self._main_flow:stop()
+
+		self._main_flow = nil
 	end
 
-	arg_10_0:_destroyCloneCard()
-	arg_10_0:__onDispose()
+	self:_destroyCloneCard()
+	self:__onDispose()
 end
 
-return var_0_0
+return FightCardPlayFlyEffect

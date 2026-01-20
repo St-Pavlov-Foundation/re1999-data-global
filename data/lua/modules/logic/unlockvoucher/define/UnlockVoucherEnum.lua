@@ -1,10 +1,12 @@
-﻿module("modules.logic.unlockvoucher.define.UnlockVoucherEnum", package.seeall)
+﻿-- chunkname: @modules/logic/unlockvoucher/define/UnlockVoucherEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.unlockvoucher.define.UnlockVoucherEnum", package.seeall)
 
-var_0_0.ConstId = {
+local UnlockVoucherEnum = _M
+
+UnlockVoucherEnum.ConstId = {
 	RoomBlockColorReformCostItem = 1,
 	UseGetVoucherItem = 2
 }
 
-return var_0_0
+return UnlockVoucherEnum

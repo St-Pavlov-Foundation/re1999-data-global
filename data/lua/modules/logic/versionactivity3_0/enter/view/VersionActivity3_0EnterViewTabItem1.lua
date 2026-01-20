@@ -1,45 +1,47 @@
-﻿module("modules.logic.versionactivity3_0.enter.view.VersionActivity3_0EnterViewTabItem1", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/enter/view/VersionActivity3_0EnterViewTabItem1.lua
 
-local var_0_0 = class("VersionActivity3_0EnterViewTabItem1", VersionActivity3_0EnterViewTabItemBase)
+module("modules.logic.versionactivity3_0.enter.view.VersionActivity3_0EnterViewTabItem1", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	var_0_0.super._editableInitView(arg_1_0)
+local VersionActivity3_0EnterViewTabItem1 = class("VersionActivity3_0EnterViewTabItem1", VersionActivity3_0EnterViewTabItemBase)
 
-	arg_1_0.simageSelectTabImg = gohelper.findChildSingleImage(arg_1_0.go, "#go_select/#simage_tabimg")
-	arg_1_0.simageUnSelectTabImg = gohelper.findChildSingleImage(arg_1_0.go, "#go_unselect/#simage_tabimg")
+function VersionActivity3_0EnterViewTabItem1:_editableInitView()
+	VersionActivity3_0EnterViewTabItem1.super._editableInitView(self)
+
+	self.simageSelectTabImg = gohelper.findChildSingleImage(self.go, "#go_select/#simage_tabimg")
+	self.simageUnSelectTabImg = gohelper.findChildSingleImage(self.go, "#go_unselect/#simage_tabimg")
 end
 
-function var_0_0._getTagPath(arg_2_0)
+function VersionActivity3_0EnterViewTabItem1:_getTagPath()
 	return "#go_tag"
 end
 
-function var_0_0.afterSetData(arg_3_0)
-	var_0_0.super.afterSetData(arg_3_0)
+function VersionActivity3_0EnterViewTabItem1:afterSetData()
+	VersionActivity3_0EnterViewTabItem1.super.afterSetData(self)
 
-	if not arg_3_0.actId then
+	if not self.actId then
 		return
 	end
 
-	local var_3_0 = VersionActivity3_0Enum.TabSetting
-	local var_3_1 = var_3_0.select.act2TabImg[arg_3_0.actId]
-	local var_3_2 = var_3_0.unselect.act2TabImg[arg_3_0.actId]
+	local tabSetting = VersionActivity3_0Enum.TabSetting
+	local selectImgPath = tabSetting.select.act2TabImg[self.actId]
+	local unselectImgPath = tabSetting.unselect.act2TabImg[self.actId]
 
-	arg_3_0:setTabImg("simageSelectTabImg", var_3_1)
-	arg_3_0:setTabImg("simageUnSelectTabImg", var_3_2)
+	self:setTabImg("simageSelectTabImg", selectImgPath)
+	self:setTabImg("simageUnSelectTabImg", unselectImgPath)
 end
 
-function var_0_0.setTabImg(arg_4_0, arg_4_1, arg_4_2)
-	if string.nilorempty(arg_4_1) or string.nilorempty(arg_4_2) or not arg_4_0[arg_4_1] then
+function VersionActivity3_0EnterViewTabItem1:setTabImg(comName, path)
+	if string.nilorempty(comName) or string.nilorempty(path) or not self[comName] then
 		return
 	end
 
-	arg_4_0[arg_4_1]:LoadImage(arg_4_2)
+	self[comName]:LoadImage(path)
 end
 
-function var_0_0.dispose(arg_5_0)
-	arg_5_0.simageSelectTabImg:UnLoadImage()
-	arg_5_0.simageUnSelectTabImg:UnLoadImage()
-	var_0_0.super.dispose(arg_5_0)
+function VersionActivity3_0EnterViewTabItem1:dispose()
+	self.simageSelectTabImg:UnLoadImage()
+	self.simageUnSelectTabImg:UnLoadImage()
+	VersionActivity3_0EnterViewTabItem1.super.dispose(self)
 end
 
-return var_0_0
+return VersionActivity3_0EnterViewTabItem1

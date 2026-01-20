@@ -1,40 +1,42 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.dungeon.detail.Act183DungeonTeamLeaderTipsComp", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/dungeon/detail/Act183DungeonTeamLeaderTipsComp.lua
 
-local var_0_0 = class("Act183DungeonTeamLeaderTipsComp", Act183DungeonBaseComp)
+module("modules.logic.versionactivity2_5.challenge.view.dungeon.detail.Act183DungeonTeamLeaderTipsComp", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	var_0_0.super.init(arg_1_0, arg_1_1)
+local Act183DungeonTeamLeaderTipsComp = class("Act183DungeonTeamLeaderTipsComp", Act183DungeonBaseComp)
 
-	arg_1_0._txtleadertips = gohelper.findChildText(arg_1_0.go, "txt_LeaderTips")
+function Act183DungeonTeamLeaderTipsComp:init(go)
+	Act183DungeonTeamLeaderTipsComp.super.init(self, go)
 
-	SkillHelper.addHyperLinkClick(arg_1_0._txtleadertips.gameObject)
+	self._txtleadertips = gohelper.findChildText(self.go, "txt_LeaderTips")
+
+	SkillHelper.addHyperLinkClick(self._txtleadertips.gameObject)
 end
 
-function var_0_0.addEventListeners(arg_2_0)
+function Act183DungeonTeamLeaderTipsComp:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
+function Act183DungeonTeamLeaderTipsComp:removeEventListeners()
 	return
 end
 
-function var_0_0.checkIsVisible(arg_4_0)
-	return Act183Helper.isEpisodeHasTeamLeader(arg_4_0._episodeId)
+function Act183DungeonTeamLeaderTipsComp:checkIsVisible()
+	return Act183Helper.isEpisodeHasTeamLeader(self._episodeId)
 end
 
-function var_0_0.show(arg_5_0)
-	var_0_0.super.show(arg_5_0)
-	arg_5_0:refreshLeaderTips()
+function Act183DungeonTeamLeaderTipsComp:show()
+	Act183DungeonTeamLeaderTipsComp.super.show(self)
+	self:refreshLeaderTips()
 end
 
-function var_0_0.refreshLeaderTips(arg_6_0)
-	local var_6_0 = Act183Config.instance:getLeaderSkillDesc(arg_6_0._episodeId)
+function Act183DungeonTeamLeaderTipsComp:refreshLeaderTips()
+	local leaderSkillDesc = Act183Config.instance:getLeaderSkillDesc(self._episodeId)
 
-	arg_6_0._txtleadertips.text = SkillHelper.buildDesc(var_6_0)
+	self._txtleadertips.text = SkillHelper.buildDesc(leaderSkillDesc)
 end
 
-function var_0_0.onDestroy(arg_7_0)
-	var_0_0.super.onDestroy(arg_7_0)
+function Act183DungeonTeamLeaderTipsComp:onDestroy()
+	Act183DungeonTeamLeaderTipsComp.super.onDestroy(self)
 end
 
-return var_0_0
+return Act183DungeonTeamLeaderTipsComp

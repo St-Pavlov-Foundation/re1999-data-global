@@ -1,25 +1,27 @@
-﻿module("modules.logic.fight.entity.comp.monsterCustomComp.FightMonsterSmCustomComp", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/monsterCustomComp/FightMonsterSmCustomComp.lua
 
-local var_0_0 = class("FightMonsterSmCustomComp", FightMonsterCustomCompBase)
+module("modules.logic.fight.entity.comp.monsterCustomComp.FightMonsterSmCustomComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.entity = arg_1_1
+local FightMonsterSmCustomComp = class("FightMonsterSmCustomComp", FightMonsterCustomCompBase)
+
+function FightMonsterSmCustomComp:ctor(entity)
+	self.entity = entity
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
+function FightMonsterSmCustomComp:init(go)
+	self.go = go
 end
 
-function var_0_0.addEventListeners(arg_3_0)
+function FightMonsterSmCustomComp:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
+function FightMonsterSmCustomComp:removeEventListeners()
 	return
 end
 
-function var_0_0.onDestroy(arg_5_0)
+function FightMonsterSmCustomComp:onDestroy()
 	return
 end
 
-return var_0_0
+return FightMonsterSmCustomComp

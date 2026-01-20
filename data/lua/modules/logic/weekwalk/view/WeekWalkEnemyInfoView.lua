@@ -1,168 +1,182 @@
-﻿module("modules.logic.weekwalk.view.WeekWalkEnemyInfoView", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk/view/WeekWalkEnemyInfoView.lua
 
-local var_0_0 = class("WeekWalkEnemyInfoView", BaseView)
+module("modules.logic.weekwalk.view.WeekWalkEnemyInfoView", package.seeall)
 
-function var_0_0.onOpen(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._simagebattlelistbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "go_battlelist/#simage_battlelistbg")
-	arg_1_0._btnreset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_battlelist/#btn_reset", AudioEnum.WeekWalk.play_artificial_ui_resetmap)
-	arg_1_0._mapId = arg_1_0.viewParam.mapId
+local WeekWalkEnemyInfoView = class("WeekWalkEnemyInfoView", BaseView)
 
-	arg_1_0._simagebattlelistbg:LoadImage(ResUrl.getWeekWalkBg("bg_zuodi.png"))
+function WeekWalkEnemyInfoView:onOpen()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._simagebattlelistbg = gohelper.findChildSingleImage(self.viewGO, "go_battlelist/#simage_battlelistbg")
+	self._btnreset = gohelper.findChildButtonWithAudio(self.viewGO, "go_battlelist/#btn_reset", AudioEnum.WeekWalk.play_artificial_ui_resetmap)
+	self._mapId = self.viewParam.mapId
 
-	local var_1_0 = WeekWalkModel.instance:getInfo():getMapInfo(arg_1_0._mapId)
-	local var_1_1 = var_1_0.battleIds
+	self._simagebattlelistbg:LoadImage(ResUrl.getWeekWalkBg("bg_zuodi.png"))
 
-	if not arg_1_0.viewParam.battleId then
-		arg_1_0.viewParam.battleId = var_1_1[1]
+	local info = WeekWalkModel.instance:getInfo()
+	local mapInfo = info:getMapInfo(self._mapId)
+	local battleIds = mapInfo.battleIds
+
+	if not self.viewParam.battleId then
+		self.viewParam.battleId = battleIds[1]
 	end
 
-	arg_1_0._battleIds = var_1_1
-	arg_1_0._mapConfig = WeekWalkConfig.instance:getMapConfig(arg_1_0._mapId)
+	self._battleIds = battleIds
+	self._mapConfig = WeekWalkConfig.instance:getMapConfig(self._mapId)
 
-	if lua_weekwalk_type.configDict[arg_1_0._mapConfig.type].showDetail <= 0 and var_1_0.isFinish <= 0 then
-		gohelper.setActive(arg_1_0._btnreset.gameObject, false)
-		gohelper.setActive(gohelper.findChild(arg_1_0.viewGO, "go_battlelist"), false)
-		arg_1_0:_doUpdateSelectIcon(arg_1_0.viewParam.battleId)
+	local typeConfig = lua_weekwalk_type.configDict[self._mapConfig.type]
+
+	if typeConfig.showDetail <= 0 and mapInfo.isFinish <= 0 then
+		gohelper.setActive(self._btnreset.gameObject, false)
+		gohelper.setActive(gohelper.findChild(self.viewGO, "go_battlelist"), false)
+		self:_doUpdateSelectIcon(self.viewParam.battleId)
 
 		return
 	end
 
-	arg_1_0._gobattlebtntemplate = gohelper.findChild(arg_1_0.viewGO, "go_battlelist/scroll_battle/Viewport/battlelist/#go_battlebtntemplate")
-	arg_1_0._btnList = arg_1_0:getUserDataTb_()
-	arg_1_0._statusList = arg_1_0:getUserDataTb_()
+	self._gobattlebtntemplate = gohelper.findChild(self.viewGO, "go_battlelist/scroll_battle/Viewport/battlelist/#go_battlebtntemplate")
+	self._btnList = self:getUserDataTb_()
+	self._statusList = self:getUserDataTb_()
 
-	local var_1_2 = 5
-	local var_1_3 = math.min(var_1_2, #var_1_0.battleInfos)
-	local var_1_4 = var_1_0:getStarNumConfig()
+	local maxIndex = 5
+	local showIndex = maxIndex
 
-	for iter_1_0 = 1, var_1_3 do
-		local var_1_5 = gohelper.cloneInPlace(arg_1_0._gobattlebtntemplate).gameObject
-		local var_1_6 = gohelper.findChildButton(var_1_5, "btn")
-		local var_1_7 = gohelper.findChildText(var_1_5, "txt")
-		local var_1_8 = gohelper.findChild(var_1_5, "selectIcon")
+	showIndex = math.min(showIndex, #mapInfo.battleInfos)
 
-		var_1_7.text = "0" .. iter_1_0
+	local mapMaxStarNum = mapInfo:getStarNumConfig()
 
-		local var_1_9 = var_1_1[iter_1_0]
-		local var_1_10 = var_1_0:getBattleInfo(var_1_9)
-		local var_1_11 = gohelper.findChild(var_1_5, "star2")
-		local var_1_12 = gohelper.findChild(var_1_5, "star3")
-		local var_1_13 = var_1_4 <= 2 and var_1_11 or var_1_12
+	for i = 1, showIndex do
+		local container = gohelper.cloneInPlace(self._gobattlebtntemplate)
+		local go = container.gameObject
+		local btn = gohelper.findChildButton(go, "btn")
+		local txt = gohelper.findChildText(go, "txt")
+		local selectIcon = gohelper.findChild(go, "selectIcon")
 
-		gohelper.setActive(var_1_11, false)
-		gohelper.setActive(var_1_12, false)
-		gohelper.setActive(var_1_13, true)
+		txt.text = "0" .. i
 
-		local var_1_14 = var_1_13.transform
-		local var_1_15 = var_1_14.childCount
-		local var_1_16 = {
-			var_1_8,
-			var_1_7
+		local battleId = battleIds[i]
+		local battleInfo = mapInfo:getBattleInfo(battleId)
+		local starGo2 = gohelper.findChild(go, "star2")
+		local starGo3 = gohelper.findChild(go, "star3")
+		local starGo = mapMaxStarNum <= 2 and starGo2 or starGo3
+
+		gohelper.setActive(starGo2, false)
+		gohelper.setActive(starGo3, false)
+		gohelper.setActive(starGo, true)
+
+		local transform = starGo.transform
+		local itemCount = transform.childCount
+		local statusTable = {
+			selectIcon,
+			txt
 		}
-		local var_1_17 = 0
+		local adjustIndex = 0
 
-		for iter_1_1 = 1, var_1_15 do
-			local var_1_18 = var_1_14:GetChild(iter_1_1 - 1):GetComponentInChildren(gohelper.Type_Image)
+		for index = 1, itemCount do
+			local child = transform:GetChild(index - 1)
+			local image = child:GetComponentInChildren(gohelper.Type_Image)
 
-			UISpriteSetMgr.instance:setWeekWalkSprite(var_1_18, iter_1_1 <= var_1_10.star and "star_highlight4" or "star_null4", true)
-			table.insert(var_1_16, var_1_18)
+			UISpriteSetMgr.instance:setWeekWalkSprite(image, index <= battleInfo.star and "star_highlight4" or "star_null4", true)
+			table.insert(statusTable, image)
 		end
 
-		var_1_6:AddClickListener(arg_1_0._changeBattleId, arg_1_0, var_1_9)
-		gohelper.addUIClickAudio(var_1_6.gameObject, AudioEnum.WeekWalk.play_artificial_ui_checkpointswitch)
-		gohelper.setActive(var_1_5, true)
-		table.insert(arg_1_0._statusList, var_1_16)
-		table.insert(arg_1_0._btnList, var_1_6)
+		btn:AddClickListener(self._changeBattleId, self, battleId)
+		gohelper.addUIClickAudio(btn.gameObject, AudioEnum.WeekWalk.play_artificial_ui_checkpointswitch)
+		gohelper.setActive(go, true)
+		table.insert(self._statusList, statusTable)
+		table.insert(self._btnList, btn)
 	end
 
-	arg_1_0._btnreset:AddClickListener(arg_1_0._reset, arg_1_0)
+	self._btnreset:AddClickListener(self._reset, self)
 
-	local var_1_19 = WeekWalkConfig.instance:getMapTypeConfig(arg_1_0._mapId).canResetLayer > 0 and ViewMgr.instance:isOpen(ViewName.WeekWalkView)
+	local mapTypeConfig = WeekWalkConfig.instance:getMapTypeConfig(self._mapId)
+	local showReset = mapTypeConfig.canResetLayer > 0 and ViewMgr.instance:isOpen(ViewName.WeekWalkView)
+	local hideResetBtn = self.viewParam.hideResetBtn
 
-	if arg_1_0.viewParam.hideResetBtn then
-		var_1_19 = false
+	if hideResetBtn then
+		showReset = false
 	end
 
-	gohelper.setActive(arg_1_0._btnreset.gameObject, var_1_19 and false)
+	gohelper.setActive(self._btnreset.gameObject, showReset and false)
 
-	if var_1_19 then
+	if showReset then
 		WeekWalkController.instance:dispatchEvent(WeekWalkEvent.GuideShowResetBtn)
 	end
 
-	arg_1_0:_doUpdateSelectIcon(arg_1_0.viewParam.battleId)
+	self:_doUpdateSelectIcon(self.viewParam.battleId)
 end
 
-function var_0_0._reset(arg_2_0)
+function WeekWalkEnemyInfoView:_reset()
 	GameFacade.showMessageBox(MessageBoxIdDefine.WeekWalkResetLayer, MsgBoxEnum.BoxType.Yes_No, function()
-		WeekwalkRpc.instance:sendResetLayerRequest(arg_2_0._mapId)
-		arg_2_0:closeThis()
+		WeekwalkRpc.instance:sendResetLayerRequest(self._mapId)
+		self:closeThis()
 	end)
 end
 
-function var_0_0._changeBattleId(arg_4_0, arg_4_1)
-	if not arg_4_1 then
+function WeekWalkEnemyInfoView:_changeBattleId(battleId)
+	if not battleId then
 		return
 	end
 
-	local var_4_0 = arg_4_0.viewContainer:getEnemyInfoView()
+	local infoView = self.viewContainer:getEnemyInfoView()
 
-	var_4_0._battleId = arg_4_1
+	infoView._battleId = battleId
 
-	var_4_0:_refreshUI()
-	arg_4_0:_updateSelectIcon()
+	infoView:_refreshUI()
+	self:_updateSelectIcon()
 end
 
-function var_0_0._updateSelectIcon(arg_5_0)
-	local var_5_0 = arg_5_0.viewContainer:getEnemyInfoView()
+function WeekWalkEnemyInfoView:_updateSelectIcon()
+	local infoView = self.viewContainer:getEnemyInfoView()
 
-	arg_5_0:_doUpdateSelectIcon(var_5_0._battleId)
+	self:_doUpdateSelectIcon(infoView._battleId)
 end
 
-function var_0_0._doUpdateSelectIcon(arg_6_0, arg_6_1)
-	arg_6_0.viewContainer:getWeekWalkEnemyInfoViewRule():refreshUI(arg_6_1)
+function WeekWalkEnemyInfoView:_doUpdateSelectIcon(battleId)
+	local ruleView = self.viewContainer:getWeekWalkEnemyInfoViewRule()
 
-	if not arg_6_0._statusList then
+	ruleView:refreshUI(battleId)
+
+	if not self._statusList then
 		return
 	end
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0._battleIds) do
-		local var_6_0 = iter_6_1 == arg_6_1
-		local var_6_1 = arg_6_0._statusList[iter_6_0]
+	for i, v in ipairs(self._battleIds) do
+		local isSelected = v == battleId
+		local t = self._statusList[i]
 
-		if not var_6_1 then
+		if not t then
 			break
 		end
 
-		gohelper.setActive(var_6_1[1], var_6_0)
+		gohelper.setActive(t[1], isSelected)
 
-		if var_6_0 then
-			SLFramework.UGUI.GuiHelper.SetColor(var_6_1[2], "#FFFFFF")
-			SLFramework.UGUI.GuiHelper.SetColor(var_6_1[3], "#FFFFFF")
-			SLFramework.UGUI.GuiHelper.SetColor(var_6_1[4], "#FFFFFF")
+		if isSelected then
+			SLFramework.UGUI.GuiHelper.SetColor(t[2], "#FFFFFF")
+			SLFramework.UGUI.GuiHelper.SetColor(t[3], "#FFFFFF")
+			SLFramework.UGUI.GuiHelper.SetColor(t[4], "#FFFFFF")
 		else
-			SLFramework.UGUI.GuiHelper.SetColor(var_6_1[2], "#6c6f64")
-			SLFramework.UGUI.GuiHelper.SetColor(var_6_1[3], "#C1C5B6")
-			SLFramework.UGUI.GuiHelper.SetColor(var_6_1[4], "#C1C5B6")
+			SLFramework.UGUI.GuiHelper.SetColor(t[2], "#6c6f64")
+			SLFramework.UGUI.GuiHelper.SetColor(t[3], "#C1C5B6")
+			SLFramework.UGUI.GuiHelper.SetColor(t[4], "#C1C5B6")
 		end
 
-		if var_6_1[5] then
-			SLFramework.UGUI.GuiHelper.SetColor(var_6_1[5], var_6_0 and "#FFFFFF" or "#C1C5B6")
+		if t[5] then
+			SLFramework.UGUI.GuiHelper.SetColor(t[5], isSelected and "#FFFFFF" or "#C1C5B6")
 		end
 	end
 end
 
-function var_0_0.onDestroyView(arg_7_0)
-	var_0_0.super.onDestroyView(arg_7_0)
+function WeekWalkEnemyInfoView:onDestroyView()
+	WeekWalkEnemyInfoView.super.onDestroyView(self)
 
-	if arg_7_0._btnList then
-		for iter_7_0, iter_7_1 in ipairs(arg_7_0._btnList) do
-			iter_7_1:RemoveClickListener()
+	if self._btnList then
+		for i, v in ipairs(self._btnList) do
+			v:RemoveClickListener()
 		end
 	end
 
-	arg_7_0._btnreset:RemoveClickListener()
-	arg_7_0._simagebattlelistbg:UnLoadImage()
+	self._btnreset:RemoveClickListener()
+	self._simagebattlelistbg:UnLoadImage()
 end
 
-return var_0_0
+return WeekWalkEnemyInfoView

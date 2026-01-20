@@ -1,30 +1,32 @@
-﻿module("modules.logic.character.view.extra.CharacterSkillTalentViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/extra/CharacterSkillTalentViewContainer.lua
 
-local var_0_0 = class("CharacterSkillTalentViewContainer", BaseViewContainer)
+module("modules.logic.character.view.extra.CharacterSkillTalentViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local CharacterSkillTalentViewContainer = class("CharacterSkillTalentViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, CharacterSkillTalentTreeView.New())
-	table.insert(var_1_0, CharacterSkillTalentNodeTipView.New())
-	table.insert(var_1_0, CharacterSkillTalentView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
+function CharacterSkillTalentViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, CharacterSkillTalentTreeView.New())
+	table.insert(views, CharacterSkillTalentNodeTipView.New())
+	table.insert(views, CharacterSkillTalentView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_topleft"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function CharacterSkillTalentViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			true,
 			true
 		}, HelpEnum.HelpId.Hero3124TalentSkillView)
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-return var_0_0
+return CharacterSkillTalentViewContainer

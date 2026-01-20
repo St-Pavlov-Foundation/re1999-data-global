@@ -1,27 +1,32 @@
-﻿module("modules.logic.main.controller.work.MainParallelGuideWork", package.seeall)
+﻿-- chunkname: @modules/logic/main/controller/work/MainParallelGuideWork.lua
 
-local var_0_0 = class("MainParallelGuideWork", BaseWork)
+module("modules.logic.main.controller.work.MainParallelGuideWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	if GuideController.instance:isForbidGuides() then
-		arg_1_0:onDone(true)
+local MainParallelGuideWork = class("MainParallelGuideWork", BaseWork)
+
+function MainParallelGuideWork:onStart(context)
+	local forbidGuides = GuideController.instance:isForbidGuides()
+
+	if forbidGuides then
+		self:onDone(true)
 
 		return
 	end
 
-	local var_1_0 = arg_1_0:_checkDoGuide()
+	local doingMainViewGuide = self:_checkDoGuide()
 
-	arg_1_0:onDone(not var_1_0)
+	self:onDone(not doingMainViewGuide)
 end
 
-function var_0_0._checkDoGuide(arg_2_0)
-	local var_2_0 = tonumber(GuideModel.instance:getFlagValue(GuideModel.GuideFlag.MainViewGuideId))
+function MainParallelGuideWork:_checkDoGuide()
+	local mainViewGuideId = tonumber(GuideModel.instance:getFlagValue(GuideModel.GuideFlag.MainViewGuideId))
 
-	if var_2_0 and var_2_0 > 0 then
-		local var_2_1 = MainViewGuideCondition.getCondition(var_2_0)
+	if mainViewGuideId and mainViewGuideId > 0 then
+		local condition = MainViewGuideCondition.getCondition(mainViewGuideId)
+		local conditionPass = condition == nil and true or condition()
 
-		if var_2_1 == nil and true or var_2_1() then
-			GuideController.instance:dispatchEvent(GuideEvent.DoMainViewGuide, var_2_0)
+		if conditionPass then
+			GuideController.instance:dispatchEvent(GuideEvent.DoMainViewGuide, mainViewGuideId)
 
 			return true
 		end
@@ -30,4 +35,4 @@ function var_0_0._checkDoGuide(arg_2_0)
 	return false
 end
 
-return var_0_0
+return MainParallelGuideWork

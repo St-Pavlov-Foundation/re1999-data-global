@@ -1,114 +1,116 @@
-﻿module("modules.logic.fight.system.work.FightWorkDeadlyPoisonOriginDamage263Parallel", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkDeadlyPoisonOriginDamage263Parallel.lua
 
-local var_0_0 = class("FightWorkDeadlyPoisonOriginDamage263Parallel", FightStepEffectFlow)
+module("modules.logic.fight.system.work.FightWorkDeadlyPoisonOriginDamage263Parallel", package.seeall)
 
-var_0_0.existWrapDict = {}
-var_0_0.targetDict = {}
+local FightWorkDeadlyPoisonOriginDamage263Parallel = class("FightWorkDeadlyPoisonOriginDamage263Parallel", FightStepEffectFlow)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0:getHurtEffect()
-	local var_1_1 = arg_1_0.fightStepData.actEffect
+FightWorkDeadlyPoisonOriginDamage263Parallel.existWrapDict = {}
+FightWorkDeadlyPoisonOriginDamage263Parallel.targetDict = {}
 
-	arg_1_0.targetDict = {}
+function FightWorkDeadlyPoisonOriginDamage263Parallel:onStart()
+	local hurtEffect = self:getHurtEffect()
+	local effectList = self.fightStepData.actEffect
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_1) do
-		if not iter_1_1:isDone() and iter_1_1.effectType == FightEnum.EffectType.FIGHTHURTDETAIL and iter_1_1.hurtInfo.hurtEffect == var_1_0 then
-			arg_1_0:addActEffectData(iter_1_1)
+	self.targetDict = {}
+
+	for _, actEffectData in ipairs(effectList) do
+		if not actEffectData:isDone() and actEffectData.effectType == FightEnum.EffectType.FIGHTHURTDETAIL and actEffectData.hurtInfo.hurtEffect == hurtEffect then
+			self:addActEffectData(actEffectData)
 		end
 	end
 
-	tabletool.clear(var_0_0.existWrapDict)
+	tabletool.clear(FightWorkDeadlyPoisonOriginDamage263Parallel.existWrapDict)
 
-	for iter_1_2, iter_1_3 in pairs(arg_1_0.targetDict) do
-		local var_1_2 = FightHelper.getEntity(iter_1_2)
+	for entityId, seqList in pairs(self.targetDict) do
+		local entity = FightHelper.getEntity(entityId)
 
-		if var_1_2 then
-			local var_1_3 = var_1_2:isMySide()
+		if entity then
+			local isMySide = entity:isMySide()
 
-			for iter_1_4, iter_1_5 in pairs(iter_1_3) do
-				local var_1_4 = iter_1_5[1]
+			for _, damageObj in pairs(seqList) do
+				local damage = damageObj[1]
 
-				if var_1_4 > 0 then
-					local var_1_5 = var_1_3 and -var_1_4 or var_1_4
+				if damage > 0 then
+					local floatNum = isMySide and -damage or damage
 
-					FightFloatMgr.instance:float(iter_1_2, arg_1_0:getFloatType(), var_1_5, nil, iter_1_5[3])
+					FightFloatMgr.instance:float(entityId, self:getFloatType(), floatNum, nil, damageObj[3])
 
-					if var_1_2.nameUI then
-						var_1_2.nameUI:addHp(-var_1_4)
+					if entity.nameUI then
+						entity.nameUI:addHp(-damage)
 					end
 
-					FightController.instance:dispatchEvent(FightEvent.OnHpChange, var_1_2, -var_1_4)
+					FightController.instance:dispatchEvent(FightEvent.OnHpChange, entity, -damage)
 
-					if iter_1_5[2] and not var_0_0.existWrapDict[iter_1_2] then
-						local var_1_6, var_1_7 = arg_1_0:getEffectRes()
-						local var_1_8 = var_1_2.effect:addHangEffect(var_1_6, var_1_7, nil, 1)
+					if damageObj[2] and not FightWorkDeadlyPoisonOriginDamage263Parallel.existWrapDict[entityId] then
+						local effectRes, handPoint = self:getEffectRes()
+						local wrap = entity.effect:addHangEffect(effectRes, handPoint, nil, 1)
 
-						FightRenderOrderMgr.instance:onAddEffectWrap(iter_1_2, var_1_8)
-						var_1_8:setLocalPos(0, 0, 0)
+						FightRenderOrderMgr.instance:onAddEffectWrap(entityId, wrap)
+						wrap:setLocalPos(0, 0, 0)
 
-						var_0_0.existWrapDict[iter_1_2] = true
+						FightWorkDeadlyPoisonOriginDamage263Parallel.existWrapDict[entityId] = true
 					end
 				end
 			end
 		end
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.getEffectRes(arg_2_0)
-	local var_2_0 = arg_2_0.fightStepData.fromId
-	local var_2_1 = var_2_0 and FightDataHelper.entityMgr:getById(var_2_0)
-	local var_2_2 = var_2_1 and var_2_1.skin
-	local var_2_3 = var_2_2 and lua_fight_sp_effect_ddg.configDict[var_2_2]
-	local var_2_4 = "v2a3_ddg/ddg_innate_02"
-	local var_2_5 = ModuleEnum.SpineHangPointRoot
+function FightWorkDeadlyPoisonOriginDamage263Parallel:getEffectRes()
+	local fromId = self.fightStepData.fromId
+	local entityMo = fromId and FightDataHelper.entityMgr:getById(fromId)
+	local skin = entityMo and entityMo.skin
+	local co = skin and lua_fight_sp_effect_ddg.configDict[skin]
+	local effectRes = "v2a3_ddg/ddg_innate_02"
+	local hangPoint = ModuleEnum.SpineHangPointRoot
 
-	if var_2_3 then
-		var_2_4 = var_2_3.posionEffect
-		var_2_5 = var_2_3.posionHang
+	if co then
+		effectRes = co.posionEffect
+		hangPoint = co.posionHang
 	end
 
-	return var_2_4, var_2_5
+	return effectRes, hangPoint
 end
 
-function var_0_0.addActEffectData(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_1.targetId
-	local var_3_1 = arg_3_0.targetDict[var_3_0]
+function FightWorkDeadlyPoisonOriginDamage263Parallel:addActEffectData(actEffectData)
+	local entityId = actEffectData.targetId
+	local seqList = self.targetDict[entityId]
 
-	if not var_3_1 then
-		var_3_1 = {}
-		arg_3_0.targetDict[var_3_0] = var_3_1
+	if not seqList then
+		seqList = {}
+		self.targetDict[entityId] = seqList
 	end
 
-	local var_3_2 = tonumber(arg_3_1.reserveId)
-	local var_3_3 = not string.nilorempty(arg_3_1.reserveStr)
-	local var_3_4 = var_3_1[var_3_2]
+	local index = tonumber(actEffectData.reserveId)
+	local showEffect = not string.nilorempty(actEffectData.reserveStr)
+	local damageObj = seqList[index]
 
-	if not var_3_4 then
-		var_3_4 = {
-			arg_3_1.hurtInfo.damage,
-			var_3_3,
-			arg_3_1.hurtInfo.assassinate
+	if not damageObj then
+		damageObj = {
+			actEffectData.hurtInfo.damage,
+			showEffect,
+			actEffectData.hurtInfo.assassinate
 		}
-		var_3_1[var_3_2] = var_3_4
+		seqList[index] = damageObj
 	else
-		var_3_4[1] = var_3_4[1] + arg_3_1.hurtInfo.damage
+		damageObj[1] = damageObj[1] + actEffectData.hurtInfo.damage
 
-		if arg_3_1.hurtInfo.assassinate then
-			var_3_4[3] = true
+		if actEffectData.hurtInfo.assassinate then
+			damageObj[3] = true
 		end
 	end
 
-	arg_3_1:setDone()
+	actEffectData:setDone()
 end
 
-function var_0_0.getHurtEffect(arg_4_0)
+function FightWorkDeadlyPoisonOriginDamage263Parallel:getHurtEffect()
 	return FightEnum.EffectType.DEADLYPOISONORIGINDAMAGE
 end
 
-function var_0_0.getFloatType(arg_5_0)
+function FightWorkDeadlyPoisonOriginDamage263Parallel:getFloatType()
 	return FightEnum.FloatType.damage_origin
 end
 
-return var_0_0
+return FightWorkDeadlyPoisonOriginDamage263Parallel

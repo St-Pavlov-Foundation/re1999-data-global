@@ -1,555 +1,589 @@
-﻿module("modules.logic.versionactivity1_8.dungeon.model.Activity157Model", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_8/dungeon/model/Activity157Model.lua
 
-local var_0_0 = class("Activity157Model", BaseModel)
-local var_0_1 = 0
-local var_0_2 = 1
+module("modules.logic.versionactivity1_8.dungeon.model.Activity157Model", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:setIsUnlockEntrance(false, true)
-	arg_1_0:setIsSideMissionUnlocked(false, true)
-	arg_1_0:setUnlockComponentByList(nil, true)
-	arg_1_0:setHasGotRewardComponentByList(nil, true)
-	arg_1_0:setProductionInfo(nil, nil, true)
-	arg_1_0:setMissionInfoByList(nil, true)
-	arg_1_0:setInProgressMissionGroup(nil, true)
-	arg_1_0:setHasPlayedAnim()
+local Activity157Model = class("Activity157Model", BaseModel)
+local NOT_PLAYED_ANIM_VALUE = 0
+local PLAYED_ANIM_VALUE = 1
 
-	arg_1_0._hasPlayedAnimDict = nil
+function Activity157Model:onInit()
+	self:setIsUnlockEntrance(false, true)
+	self:setIsSideMissionUnlocked(false, true)
+	self:setUnlockComponentByList(nil, true)
+	self:setHasGotRewardComponentByList(nil, true)
+	self:setProductionInfo(nil, nil, true)
+	self:setMissionInfoByList(nil, true)
+	self:setInProgressMissionGroup(nil, true)
+	self:setHasPlayedAnim()
+
+	self._hasPlayedAnimDict = nil
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:onInit()
+function Activity157Model:reInit()
+	self:onInit()
 end
 
-function var_0_0.setActivityInfo(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_1 and arg_3_1.activityId
-	local var_3_1 = arg_3_0:getActId()
+function Activity157Model:setActivityInfo(msg)
+	local serverActId = msg and msg.activityId
+	local actId = self:getActId()
 
-	if not var_3_0 or var_3_0 ~= var_3_1 then
+	if not serverActId or serverActId ~= actId then
 		return
 	end
 
-	arg_3_0:setIsUnlockEntrance(arg_3_1.haveMap)
-	arg_3_0:setIsSideMissionUnlocked(arg_3_1.isSideMissionUnlocked)
-	arg_3_0:setUnlockComponentByList(arg_3_1.unlockedComponents)
-	arg_3_0:setHasGotRewardComponentByList(arg_3_1.gainRewardComponents)
+	self:setIsUnlockEntrance(msg.haveMap)
+	self:setIsSideMissionUnlocked(msg.isSideMissionUnlocked)
+	self:setUnlockComponentByList(msg.unlockedComponents)
+	self:setHasGotRewardComponentByList(msg.gainRewardComponents)
 
-	local var_3_2 = arg_3_1.productionInfo.productionMaterial.quantity
-	local var_3_3 = arg_3_1.productionInfo.nextRecoverTime
+	local productionNum = msg.productionInfo.productionMaterial.quantity
+	local nextRecoverTime = msg.productionInfo.nextRecoverTime
 
-	arg_3_0:setProductionInfo(var_3_2, var_3_3)
-	arg_3_0:setMissionInfoByList(arg_3_1.missionInfos)
-	arg_3_0:setInProgressMissionGroup(arg_3_1.inProgressSideMissionGroupId)
-	arg_3_0:setSideMissionUnlockTime(arg_3_1.sideMissionUnlockTime)
+	self:setProductionInfo(productionNum, nextRecoverTime)
+	self:setMissionInfoByList(msg.missionInfos)
+	self:setInProgressMissionGroup(msg.inProgressSideMissionGroupId)
+	self:setSideMissionUnlockTime(msg.sideMissionUnlockTime)
 	Activity157Controller.instance:dispatchEvent(Activity157Event.Act157UpdateInfo)
 end
 
-function var_0_0.setIsUnlockEntrance(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0._isUnlockEntrance = arg_4_1
+function Activity157Model:setIsUnlockEntrance(serverIsUnlock, notDispatchEvent)
+	self._isUnlockEntrance = serverIsUnlock
 
-	if arg_4_2 then
+	if notDispatchEvent then
 		return
 	end
 
 	Activity157Controller.instance:dispatchEvent(Activity157Event.Act157RefreshEntrance)
 end
 
-function var_0_0.setIsSideMissionUnlocked(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0._isSideMissionUnlocked = arg_5_1
+function Activity157Model:setIsSideMissionUnlocked(serverIsUnlock, notDispatchEvent)
+	self._isSideMissionUnlocked = serverIsUnlock
 
-	if arg_5_2 then
+	if notDispatchEvent then
 		return
 	end
 
 	Activity157Controller.instance:dispatchEvent(Activity157Event.Act157RefreshSideMission)
 end
 
-function var_0_0.setUnlockComponentByList(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_0._unlockComponentDict = {}
+function Activity157Model:setUnlockComponentByList(serverUnlockedComponents, notDispatchEvent)
+	self._unlockComponentDict = {}
 
-	if arg_6_1 then
-		for iter_6_0, iter_6_1 in ipairs(arg_6_1) do
-			arg_6_0:setComponentUnlock(iter_6_1, true)
+	if serverUnlockedComponents then
+		for _, componentId in ipairs(serverUnlockedComponents) do
+			self:setComponentUnlock(componentId, true)
 		end
 	end
 
-	if arg_6_2 then
+	if notDispatchEvent then
 		return
 	end
 
 	Activity157Controller.instance:dispatchEvent(Activity157Event.Act157RepairComponent)
 end
 
-function var_0_0.setComponentUnlock(arg_7_0, arg_7_1, arg_7_2)
-	if not arg_7_0._unlockComponentDict then
-		arg_7_0._unlockComponentDict = {}
+function Activity157Model:setComponentUnlock(componentId, notDispatchEvent)
+	if not self._unlockComponentDict then
+		self._unlockComponentDict = {}
 	end
 
-	if not arg_7_1 then
+	if not componentId then
 		return
 	end
 
-	arg_7_0._unlockComponentDict[arg_7_1] = true
+	self._unlockComponentDict[componentId] = true
 
-	if arg_7_2 then
+	if notDispatchEvent then
 		return
 	end
 
-	Activity157Controller.instance:dispatchEvent(Activity157Event.Act157RepairComponent, arg_7_1)
+	Activity157Controller.instance:dispatchEvent(Activity157Event.Act157RepairComponent, componentId)
 end
 
-function var_0_0.setHasGotRewardComponentByList(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0._hasGotRewardComponentDict = {}
+function Activity157Model:setHasGotRewardComponentByList(gainRewardComponents, notDispatchEvent)
+	self._hasGotRewardComponentDict = {}
 
-	if arg_8_1 then
-		for iter_8_0, iter_8_1 in ipairs(arg_8_1) do
-			arg_8_0:addHasGotRewardComponent(iter_8_1, true)
+	if gainRewardComponents then
+		for _, componentId in ipairs(gainRewardComponents) do
+			self:addHasGotRewardComponent(componentId, true)
 		end
 	end
 
-	if arg_8_2 then
+	if notDispatchEvent then
 		return
 	end
 
 	Activity157Controller.instance:dispatchEvent(Activity157Event.Act157GetComponentReward)
 end
 
-function var_0_0.addHasGotRewardComponent(arg_9_0, arg_9_1, arg_9_2)
-	if not arg_9_0._hasGotRewardComponentDict then
-		arg_9_0._hasGotRewardComponentDict = {}
+function Activity157Model:addHasGotRewardComponent(componentId, notDispatchEvent)
+	if not self._hasGotRewardComponentDict then
+		self._hasGotRewardComponentDict = {}
 	end
 
-	if not arg_9_1 then
+	if not componentId then
 		return
 	end
 
-	arg_9_0._hasGotRewardComponentDict[arg_9_1] = true
+	self._hasGotRewardComponentDict[componentId] = true
 
-	if arg_9_2 then
+	if notDispatchEvent then
 		return
 	end
 
 	Activity157Controller.instance:dispatchEvent(Activity157Event.Act157GetComponentReward)
 end
 
-function var_0_0.setProductionInfo(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	arg_10_0._productionNum = arg_10_1
-	arg_10_0._nextRecoverTime = arg_10_2
+function Activity157Model:setProductionInfo(productionNum, nextRecoverTime, notDispatchEvent)
+	self._productionNum = productionNum
+	self._nextRecoverTime = nextRecoverTime
 
-	if arg_10_3 then
+	if notDispatchEvent then
 		return
 	end
 
 	Activity157Controller.instance:dispatchEvent(Activity157Event.Act157RefreshFactoryProduction)
 end
 
-function var_0_0.setMissionInfoByList(arg_11_0, arg_11_1, arg_11_2)
-	arg_11_0._missionGroupId2FinishMissions = {}
+function Activity157Model:setMissionInfoByList(serverMissionInfos, notDispatchEvent)
+	self._missionGroupId2FinishMissions = {}
 
-	if not arg_11_1 then
+	if not serverMissionInfos then
 		return
 	end
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_1) do
-		local var_11_0 = iter_11_1.missionGroup
+	for _, missionInfo in ipairs(serverMissionInfos) do
+		local missionGroupId = missionInfo.missionGroup
 
-		for iter_11_2, iter_11_3 in ipairs(iter_11_1.finishedMissionIds) do
-			arg_11_0:addFinishedMission(iter_11_3, var_11_0, true)
+		for _, finishMissionId in ipairs(missionInfo.finishedMissionIds) do
+			self:addFinishedMission(finishMissionId, missionGroupId, true)
 		end
 	end
 
-	if arg_11_2 then
+	if notDispatchEvent then
 		return
 	end
 
 	Activity157Controller.instance:dispatchEvent(Activity157Event.Act157FinishMission)
 end
 
-function var_0_0.setInProgressMissionGroup(arg_12_0, arg_12_1, arg_12_2)
-	arg_12_0._inProcessMissionGroup = arg_12_1
+function Activity157Model:setInProgressMissionGroup(missionGroupId, notDispatchEvent)
+	self._inProcessMissionGroup = missionGroupId
 
-	if arg_12_2 then
+	if notDispatchEvent then
 		return
 	end
 
 	Activity157Controller.instance:dispatchEvent(Activity157Event.Act157ChangeInProgressMissionGroup)
 end
 
-function var_0_0.addFinishedMission(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	if not arg_13_0._missionGroupId2FinishMissions then
-		arg_13_0._missionGroupId2FinishMissions = {}
+function Activity157Model:addFinishedMission(missionId, argsMissionGroupId, notDispatchEvent)
+	if not self._missionGroupId2FinishMissions then
+		self._missionGroupId2FinishMissions = {}
 	end
 
-	if not arg_13_1 then
+	if not missionId then
 		return
 	end
 
-	local var_13_0 = arg_13_0:getActId()
-	local var_13_1 = arg_13_2 or Activity157Config.instance:getMissionGroup(var_13_0, arg_13_1)
+	local actId = self:getActId()
+	local missionGroupId = argsMissionGroupId or Activity157Config.instance:getMissionGroup(actId, missionId)
 
-	if not var_13_1 then
+	if not missionGroupId then
 		return
 	end
 
-	local var_13_2 = arg_13_0._missionGroupId2FinishMissions[var_13_1]
+	local finishMissionDict = self._missionGroupId2FinishMissions[missionGroupId]
 
-	if not var_13_2 then
-		var_13_2 = {}
-		arg_13_0._missionGroupId2FinishMissions[var_13_1] = var_13_2
+	if not finishMissionDict then
+		finishMissionDict = {}
+		self._missionGroupId2FinishMissions[missionGroupId] = finishMissionDict
 	end
 
-	var_13_2[arg_13_1] = true
+	finishMissionDict[missionId] = true
 
-	if arg_13_3 then
+	if notDispatchEvent then
 		return
 	end
 
 	Activity157Controller.instance:dispatchEvent(Activity157Event.Act157FinishMission)
 end
 
-function var_0_0.setSideMissionUnlockTime(arg_14_0, arg_14_1)
-	arg_14_0._sideMissionUnlockTime = arg_14_1
+function Activity157Model:setSideMissionUnlockTime(unlockTime)
+	self._sideMissionUnlockTime = unlockTime
 end
 
-function var_0_0.getActId(arg_15_0)
+function Activity157Model:getActId()
 	return VersionActivity1_8Enum.ActivityId.DungeonReturnToWork
 end
 
-function var_0_0.getIsUnlockEntrance(arg_16_0)
-	return arg_16_0._isUnlockEntrance
+function Activity157Model:getIsUnlockEntrance()
+	return self._isUnlockEntrance
 end
 
-function var_0_0.getIsSideMissionUnlocked(arg_17_0)
-	return arg_17_0._isSideMissionUnlocked
+function Activity157Model:getIsSideMissionUnlocked()
+	return self._isSideMissionUnlocked
 end
 
-function var_0_0.getIsUnlockFactoryBlueprint(arg_18_0)
-	local var_18_0 = arg_18_0:getActId()
-	local var_18_1 = false
-	local var_18_2
+function Activity157Model:getIsUnlockFactoryBlueprint()
+	local actId = self:getActId()
+	local result = false
+	local isRepaired = self:getIsFirstComponentRepair()
 
-	if arg_18_0:getIsFirstComponentRepair() then
-		var_18_2 = true
+	if isRepaired then
+		result = true
 	else
-		local var_18_3 = Activity157Config.instance:getAct157Const(var_18_0, Activity157Enum.ConstId.FirstFactoryComponent)
+		local firstComponentId = Activity157Config.instance:getAct157Const(actId, Activity157Enum.ConstId.FirstFactoryComponent)
 
-		var_18_2 = arg_18_0:isCanRepairComponent(var_18_3)
+		result = self:isCanRepairComponent(firstComponentId)
 	end
 
-	return var_18_2
+	return result
 end
 
-function var_0_0.getIsNeedPlayMissionUnlockAnim(arg_19_0, arg_19_1)
-	local var_19_0 = false
+function Activity157Model:getIsNeedPlayMissionUnlockAnim(missionId)
+	local result = false
 
-	if not arg_19_1 then
-		return var_19_0
+	if not missionId then
+		return result
 	end
 
-	local var_19_1 = arg_19_0:getActId()
-	local var_19_2 = Activity157Config.instance:isSideMission(var_19_1, arg_19_1)
-	local var_19_3 = Activity157Config.instance:isRootMission(var_19_1, arg_19_1)
+	local actId = self:getActId()
+	local isSideMission = Activity157Config.instance:isSideMission(actId, missionId)
+	local isRoot = Activity157Config.instance:isRootMission(actId, missionId)
 
-	if (not var_19_3 or var_19_3 and var_19_2) and arg_19_0:getIsUnlockMission(arg_19_1) then
-		local var_19_4 = VersionActivity1_8DungeonEnum.PlayerPrefsKey.IsPlayedMissionNodeUnlocked .. arg_19_1
+	if not isRoot or isRoot and isSideMission then
+		local isUnlockMission = self:getIsUnlockMission(missionId)
 
-		var_19_0 = not arg_19_0:getHasPlayedAnim(var_19_4)
+		if isUnlockMission then
+			local prefsKey = VersionActivity1_8DungeonEnum.PlayerPrefsKey.IsPlayedMissionNodeUnlocked .. missionId
+
+			result = not self:getHasPlayedAnim(prefsKey)
+		end
 	end
 
-	return var_19_0
+	return result
 end
 
-function var_0_0.getHasPlayedAnim(arg_20_0, arg_20_1)
-	if not arg_20_0._hasPlayedAnimDict then
-		arg_20_0._hasPlayedAnimDict = {}
+function Activity157Model:getHasPlayedAnim(prefsKey)
+	if not self._hasPlayedAnimDict then
+		self._hasPlayedAnimDict = {}
 	end
 
-	if not arg_20_1 then
+	if not prefsKey then
 		return
 	end
 
-	if not arg_20_0._hasPlayedAnimDict[arg_20_1] then
-		arg_20_0._hasPlayedAnimDict[arg_20_1] = VersionActivity1_8DungeonController.instance:getPlayerPrefs(arg_20_1, var_0_1)
+	if not self._hasPlayedAnimDict[prefsKey] then
+		self._hasPlayedAnimDict[prefsKey] = VersionActivity1_8DungeonController.instance:getPlayerPrefs(prefsKey, NOT_PLAYED_ANIM_VALUE)
 	end
 
-	return arg_20_0._hasPlayedAnimDict[arg_20_1] ~= var_0_1
+	local isPlayed = self._hasPlayedAnimDict[prefsKey] ~= NOT_PLAYED_ANIM_VALUE
+
+	return isPlayed
 end
 
-function var_0_0.setHasPlayedAnim(arg_21_0, arg_21_1)
-	if not arg_21_1 then
+function Activity157Model:setHasPlayedAnim(prefsKey)
+	if not prefsKey then
 		return
 	end
 
-	arg_21_0._hasPlayedAnimDict[arg_21_1] = var_0_2
+	self._hasPlayedAnimDict[prefsKey] = PLAYED_ANIM_VALUE
 
-	VersionActivity1_8DungeonController.instance:savePlayerPrefs(arg_21_1, arg_21_0._hasPlayedAnimDict[arg_21_1])
+	VersionActivity1_8DungeonController.instance:savePlayerPrefs(prefsKey, self._hasPlayedAnimDict[prefsKey])
 end
 
-function var_0_0.getFactoryProductionNum(arg_22_0)
-	return arg_22_0._productionNum or 0
+function Activity157Model:getFactoryProductionNum()
+	return self._productionNum or 0
 end
 
-function var_0_0.getFactoryNextRecoverCountdown(arg_23_0)
-	local var_23_0 = ""
+function Activity157Model:getFactoryNextRecoverCountdown()
+	local result = ""
 
-	if arg_23_0._nextRecoverTime and arg_23_0._nextRecoverTime ~= 0 then
-		local var_23_1 = math.max(arg_23_0._nextRecoverTime / 1000 - ServerTime.now(), 0)
+	if self._nextRecoverTime and self._nextRecoverTime ~= 0 then
+		local curRecoverSec = math.max(self._nextRecoverTime / 1000 - ServerTime.now(), 0)
 
-		var_23_0 = TimeUtil.second2TimeString(var_23_1, true)
+		result = TimeUtil.second2TimeString(curRecoverSec, true)
 	end
 
-	return var_23_0
+	return result
 end
 
-function var_0_0.getSideMissionUnlockTime(arg_24_0)
-	local var_24_0 = ""
-	local var_24_1 = true
+function Activity157Model:getSideMissionUnlockTime()
+	local result = ""
+	local isTimeEnd = true
 
-	if arg_24_0._sideMissionUnlockTime and arg_24_0._sideMissionUnlockTime ~= 0 then
-		local var_24_2 = math.max(arg_24_0._sideMissionUnlockTime / 1000 - ServerTime.now(), 0)
+	if self._sideMissionUnlockTime and self._sideMissionUnlockTime ~= 0 then
+		local curRecoverSec = math.max(self._sideMissionUnlockTime / 1000 - ServerTime.now(), 0)
 
-		var_24_0 = TimeUtil.second2TimeString(var_24_2, true)
-		var_24_1 = var_24_2 <= 0
+		result = TimeUtil.second2TimeString(curRecoverSec, true)
+		isTimeEnd = curRecoverSec <= 0
 	end
 
-	return var_24_0, var_24_1
+	return result, isTimeEnd
 end
 
-function var_0_0.isRepairComponent(arg_25_0, arg_25_1)
-	local var_25_0 = false
-	local var_25_1 = tonumber(arg_25_1)
+function Activity157Model:isRepairComponent(componentId)
+	local result = false
+	local numComponentId = tonumber(componentId)
 
-	if var_25_1 and arg_25_0._unlockComponentDict then
-		var_25_0 = arg_25_0._unlockComponentDict[var_25_1] or false
+	if numComponentId and self._unlockComponentDict then
+		result = self._unlockComponentDict[numComponentId] or false
 	end
 
-	return var_25_0
+	return result
 end
 
-function var_0_0.getIsFirstComponentRepair(arg_26_0)
-	local var_26_0 = arg_26_0:getActId()
-	local var_26_1 = Activity157Config.instance:getAct157Const(var_26_0, Activity157Enum.ConstId.FirstFactoryComponent)
+function Activity157Model:getIsFirstComponentRepair()
+	local actId = self:getActId()
+	local firstComponentId = Activity157Config.instance:getAct157Const(actId, Activity157Enum.ConstId.FirstFactoryComponent)
+	local isRepairedFirstComponent = self:isRepairComponent(firstComponentId)
 
-	return (arg_26_0:isRepairComponent(var_26_1))
+	return isRepairedFirstComponent
 end
 
-function var_0_0.isCanRepairComponent(arg_27_0, arg_27_1)
-	local var_27_0 = false
-	local var_27_1 = arg_27_0:getActId()
+function Activity157Model:isCanRepairComponent(componentId)
+	local result = false
+	local actId = self:getActId()
+	local isPreComponentRepaired = self:isPreComponentRepaired(componentId)
 
-	if arg_27_0:isPreComponentRepaired(arg_27_1) then
-		local var_27_2, var_27_3, var_27_4 = Activity157Config.instance:getComponentUnlockCondition(var_27_1, arg_27_1)
-		local var_27_5 = ItemModel.instance:getItemQuantity(var_27_2, var_27_3)
+	if isPreComponentRepaired then
+		local type, id, quantity = Activity157Config.instance:getComponentUnlockCondition(actId, componentId)
+		local curQuantity = ItemModel.instance:getItemQuantity(type, id)
 
-		if var_27_4 then
-			var_27_0 = var_27_4 <= var_27_5
+		if quantity then
+			result = quantity <= curQuantity
 		end
 	end
 
-	return var_27_0
+	return result
 end
 
-function var_0_0.isPreComponentRepaired(arg_28_0, arg_28_1)
-	local var_28_0 = arg_28_0:getActId()
-	local var_28_1 = Activity157Config.instance:getPreComponentId(var_28_0, arg_28_1)
-	local var_28_2 = true
+function Activity157Model:isPreComponentRepaired(argsComponentId)
+	local actId = self:getActId()
+	local preComponentId = Activity157Config.instance:getPreComponentId(actId, argsComponentId)
+	local result = true
 
-	if var_28_1 and var_28_1 ~= 0 then
-		var_28_2 = arg_28_0:isRepairComponent(var_28_1)
+	if preComponentId and preComponentId ~= 0 then
+		result = self:isRepairComponent(preComponentId)
 	end
 
-	return var_28_2
+	return result
 end
 
-function var_0_0.getLastWillBeRepairedComponent(arg_29_0)
-	local var_29_0
-	local var_29_1 = arg_29_0:getActId()
-	local var_29_2 = Activity157Config.instance:getComponentIdList(var_29_1)
+function Activity157Model:getLastWillBeRepairedComponent()
+	local result
+	local actId = self:getActId()
+	local componentIdList = Activity157Config.instance:getComponentIdList(actId)
 
-	for iter_29_0, iter_29_1 in ipairs(var_29_2) do
-		if not arg_29_0:isRepairComponent(iter_29_1) then
-			var_29_0 = iter_29_1
+	for _, componentId in ipairs(componentIdList) do
+		local isRepaired = self:isRepairComponent(componentId)
+
+		if not isRepaired then
+			result = componentId
 
 			break
 		end
 	end
 
-	return var_29_0
+	return result
 end
 
-function var_0_0.getComponentRepairProgress(arg_30_0)
-	local var_30_0 = 0
+function Activity157Model:getComponentRepairProgress()
+	local result = 0
+	local isUnlockFactoryBlueprint = self:getIsUnlockFactoryBlueprint()
 
-	if arg_30_0:getIsUnlockFactoryBlueprint() then
-		local var_30_1 = arg_30_0:getActId()
-		local var_30_2 = 0
-		local var_30_3 = Activity157Config.instance:getComponentIdList(var_30_1)
+	if isUnlockFactoryBlueprint then
+		local actId = self:getActId()
+		local repairCount = 0
+		local componentIdList = Activity157Config.instance:getComponentIdList(actId)
 
-		for iter_30_0, iter_30_1 in ipairs(var_30_3) do
-			if arg_30_0:isRepairComponent(iter_30_1) then
-				var_30_2 = var_30_2 + 1
+		for _, componentId in ipairs(componentIdList) do
+			local isRepaired = self:isRepairComponent(componentId)
+
+			if isRepaired then
+				repairCount = repairCount + 1
 			end
 		end
 
-		var_30_0 = var_30_2 / #var_30_3
+		result = repairCount / #componentIdList
 	end
 
-	return var_30_0
+	return result
 end
 
-function var_0_0.isAllComponentRepair(arg_31_0)
-	return arg_31_0:getComponentRepairProgress() >= 1
+function Activity157Model:isAllComponentRepair()
+	local repairProgress = self:getComponentRepairProgress()
+
+	return repairProgress >= 1
 end
 
-function var_0_0.hasComponentGotReward(arg_32_0, arg_32_1)
-	local var_32_0 = false
+function Activity157Model:hasComponentGotReward(componentId)
+	local result = false
 
-	if arg_32_1 and arg_32_0._hasGotRewardComponentDict then
-		var_32_0 = arg_32_0._hasGotRewardComponentDict[arg_32_1] or false
+	if componentId and self._hasGotRewardComponentDict then
+		result = self._hasGotRewardComponentDict[componentId] or false
 	end
 
-	return var_32_0
+	return result
 end
 
-function var_0_0.getLastHasGotRewardComponent(arg_33_0)
-	local var_33_0
-	local var_33_1 = arg_33_0:getActId()
-	local var_33_2 = Activity157Config.instance:getComponentIdList(var_33_1)
+function Activity157Model:getLastHasGotRewardComponent()
+	local result
+	local actId = self:getActId()
+	local componentIdList = Activity157Config.instance:getComponentIdList(actId)
 
-	for iter_33_0, iter_33_1 in ipairs(var_33_2) do
-		if not arg_33_0:hasComponentGotReward(iter_33_1) then
+	for _, componentId in ipairs(componentIdList) do
+		local hasGotReward = self:hasComponentGotReward(componentId)
+
+		if not hasGotReward then
 			break
 		end
 
-		var_33_0 = iter_33_1
+		result = componentId
 	end
 
-	return var_33_0
+	return result
 end
 
-function var_0_0.getLastArchiveRewardComponent(arg_34_0)
-	local var_34_0
-	local var_34_1 = arg_34_0:getActId()
-	local var_34_2 = Activity157Config.instance:getComponentIdList(var_34_1)
+function Activity157Model:getLastArchiveRewardComponent()
+	local result
+	local actId = self:getActId()
+	local componentIdList = Activity157Config.instance:getComponentIdList(actId)
 
-	for iter_34_0, iter_34_1 in ipairs(var_34_2) do
-		if not arg_34_0:isRepairComponent(iter_34_1) then
+	for _, componentId in ipairs(componentIdList) do
+		local isRepaired = self:isRepairComponent(componentId)
+
+		if not isRepaired then
 			break
 		end
 
-		if not arg_34_0:hasComponentGotReward(iter_34_1) then
-			var_34_0 = iter_34_1
+		local hasGotReward = self:hasComponentGotReward(componentId)
+
+		if not hasGotReward then
+			result = componentId
 		end
 	end
 
-	return var_34_0
+	return result
 end
 
-function var_0_0.isFinishMission(arg_35_0, arg_35_1, arg_35_2)
-	local var_35_0 = false
+function Activity157Model:isFinishMission(missionGroupId, missionId)
+	local result = false
 
-	if arg_35_1 and arg_35_2 then
-		local var_35_1 = {}
+	if missionGroupId and missionId then
+		local finishMissionDict = {}
 
-		if arg_35_0._missionGroupId2FinishMissions then
-			var_35_1 = arg_35_0._missionGroupId2FinishMissions[arg_35_1] or {}
+		if self._missionGroupId2FinishMissions then
+			finishMissionDict = self._missionGroupId2FinishMissions[missionGroupId] or {}
 		end
 
-		var_35_0 = var_35_1[arg_35_2] or false
+		result = finishMissionDict[missionId] or false
 	end
 
-	return var_35_0
+	return result
 end
 
-function var_0_0.isFinishAllMission(arg_36_0, arg_36_1)
-	local var_36_0 = true
-	local var_36_1 = arg_36_0:getActId()
-	local var_36_2 = Activity157Config.instance:getAct157MissionList(var_36_1, arg_36_1)
+function Activity157Model:isFinishAllMission(missionGroupId)
+	local result = true
+	local actId = self:getActId()
+	local missionList = Activity157Config.instance:getAct157MissionList(actId, missionGroupId)
 
-	for iter_36_0, iter_36_1 in ipairs(var_36_2) do
-		if not arg_36_0:isFinishMission(arg_36_1, iter_36_1) then
-			var_36_0 = false
+	for _, missionId in ipairs(missionList) do
+		local isFinish = self:isFinishMission(missionGroupId, missionId)
+
+		if not isFinish then
+			result = false
 
 			break
 		end
 	end
 
-	return var_36_0
+	return result
 end
 
-function var_0_0.getAllActiveNodeGroupList(arg_37_0)
-	local var_37_0 = {}
-	local var_37_1 = arg_37_0:getActId()
-	local var_37_2 = Activity157Config.instance:getAllMissionGroupIdList(var_37_1)
-	local var_37_3 = arg_37_0:getIsFirstComponentRepair()
+function Activity157Model:getAllActiveNodeGroupList()
+	local result = {}
+	local actId = self:getActId()
+	local allMissionGroupIdList = Activity157Config.instance:getAllMissionGroupIdList(actId)
+	local isRepairedFirstComponent = self:getIsFirstComponentRepair()
 
-	for iter_37_0, iter_37_1 in ipairs(var_37_2) do
-		local var_37_4 = Activity157Config.instance:isSideMissionGroup(var_37_1, iter_37_1)
+	for _, missionGroupId in ipairs(allMissionGroupIdList) do
+		local isSideMissionGroup = Activity157Config.instance:isSideMissionGroup(actId, missionGroupId)
 
-		if not var_37_4 or var_37_4 and var_37_3 then
-			var_37_0[#var_37_0 + 1] = iter_37_1
+		if not isSideMissionGroup or isSideMissionGroup and isRepairedFirstComponent then
+			result[#result + 1] = missionGroupId
 		end
 	end
 
-	return var_37_0
+	return result
 end
 
-function var_0_0.getShowMissionIdList(arg_38_0, arg_38_1)
-	local var_38_0 = {}
-	local var_38_1 = arg_38_0:getActId()
-	local var_38_2 = Activity157Config.instance:getAct157MissionList(var_38_1, arg_38_1)
+function Activity157Model:getShowMissionIdList(missionGroupId)
+	local result = {}
+	local actId = self:getActId()
+	local missionList = Activity157Config.instance:getAct157MissionList(actId, missionGroupId)
+	local isSideMissionGroup = Activity157Config.instance:isSideMissionGroup(actId, missionGroupId)
 
-	if not Activity157Config.instance:isSideMissionGroup(var_38_1, arg_38_1) then
-		for iter_38_0, iter_38_1 in ipairs(var_38_2) do
-			local var_38_3 = true
-			local var_38_4 = Activity157Config.instance:getAct157ParentMissionId(var_38_1, iter_38_1)
+	if not isSideMissionGroup then
+		for _, missionId in ipairs(missionList) do
+			local parentMissionIsFinish = true
+			local parentMissionId = Activity157Config.instance:getAct157ParentMissionId(actId, missionId)
 
-			if var_38_4 then
-				var_38_3 = arg_38_0:isFinishMission(arg_38_1, var_38_4)
+			if parentMissionId then
+				parentMissionIsFinish = self:isFinishMission(missionGroupId, parentMissionId)
 			end
 
-			if arg_38_0:getIsUnlockMission(iter_38_1) or var_38_3 then
-				var_38_0[#var_38_0 + 1] = iter_38_1
+			local isUnlockMission = self:getIsUnlockMission(missionId)
+
+			if isUnlockMission or parentMissionIsFinish then
+				result[#result + 1] = missionId
 			end
 		end
 	else
-		for iter_38_2, iter_38_3 in ipairs(var_38_2) do
-			local var_38_5 = arg_38_0:getIsUnlockMission(iter_38_3)
-			local var_38_6 = Activity157Config.instance:isRootMission(var_38_1, iter_38_3)
+		for _, missionId in ipairs(missionList) do
+			local isUnlockMission = self:getIsUnlockMission(missionId)
+			local isRoot = Activity157Config.instance:isRootMission(actId, missionId)
 
-			if var_38_5 or var_38_6 then
-				var_38_0[#var_38_0 + 1] = iter_38_3
+			if isUnlockMission or isRoot then
+				result[#result + 1] = missionId
 			end
 		end
 	end
 
-	return var_38_0
+	return result
 end
 
-function var_0_0.getMissionStatus(arg_39_0, arg_39_1, arg_39_2)
-	local var_39_0 = arg_39_0:getActId()
-	local var_39_1 = Activity157Config.instance:getMissionElementId(var_39_0, arg_39_2)
+function Activity157Model:getMissionStatus(missionGroupId, missionId)
+	local actId = self:getActId()
+	local elementId = Activity157Config.instance:getMissionElementId(actId, missionId)
 
-	if not var_39_1 then
-		logError(string.format("Activity157Model:getMissionStatus error, elementId is nil, actId:%s missionId:%s", var_39_0, arg_39_2))
+	if not elementId then
+		logError(string.format("Activity157Model:getMissionStatus error, elementId is nil, actId:%s missionId:%s", actId, missionId))
 
 		return Activity157Enum.MissionStatus.Locked
 	end
 
-	if arg_39_0:isFinishMission(arg_39_1, arg_39_2) then
+	local isFinish = self:isFinishMission(missionGroupId, missionId)
+
+	if isFinish then
 		return Activity157Enum.MissionStatus.Finish
 	end
 
-	if not DungeonMapModel.instance:getElementById(var_39_1) then
+	local elementData = DungeonMapModel.instance:getElementById(elementId)
+
+	if not elementData then
 		return Activity157Enum.MissionStatus.Locked
 	end
 
-	if DungeonConfig.instance:isDispatchElement(var_39_1) then
-		local var_39_2 = DispatchModel.instance:getDispatchStatus(var_39_1)
+	local isDispatchElement = DungeonConfig.instance:isDispatchElement(elementId)
 
-		if var_39_2 == DispatchEnum.DispatchStatus.Finished then
+	if isDispatchElement then
+		local dispatchStatus = DispatchModel.instance:getDispatchStatus(elementId)
+
+		if dispatchStatus == DispatchEnum.DispatchStatus.Finished then
 			return Activity157Enum.MissionStatus.DispatchFinish
-		elseif var_39_2 == DispatchEnum.DispatchStatus.Dispatching then
+		elseif dispatchStatus == DispatchEnum.DispatchStatus.Dispatching then
 			return Activity157Enum.MissionStatus.Dispatching
 		end
 	end
@@ -557,96 +591,104 @@ function var_0_0.getMissionStatus(arg_39_0, arg_39_1, arg_39_2)
 	return Activity157Enum.MissionStatus.Normal
 end
 
-function var_0_0.getIsUnlockMission(arg_40_0, arg_40_1)
-	local var_40_0 = false
-	local var_40_1 = arg_40_0:getActId()
-	local var_40_2 = Activity157Config.instance:isSideMission(var_40_1, arg_40_1)
+function Activity157Model:getIsUnlockMission(missionId)
+	local result = false
+	local actId = self:getActId()
+	local isSideMission = Activity157Config.instance:isSideMission(actId, missionId)
+	local isUnlockedSideMission = self:getIsSideMissionUnlocked()
 
-	if not arg_40_0:getIsSideMissionUnlocked() and var_40_2 then
-		return var_40_0
+	if not isUnlockedSideMission and isSideMission then
+		return result
 	end
 
-	local var_40_3 = Activity157Config.instance:getMissionGroup(var_40_1, arg_40_1)
-	local var_40_4 = arg_40_0:isFinishMission(var_40_3, arg_40_1)
-	local var_40_5 = Activity157Config.instance:getMissionElementId(var_40_1, arg_40_1)
-	local var_40_6 = var_40_5 and DungeonMapModel.instance:getElementById(var_40_5)
+	local missionGroupId = Activity157Config.instance:getMissionGroup(actId, missionId)
+	local isFinish = self:isFinishMission(missionGroupId, missionId)
+	local elementId = Activity157Config.instance:getMissionElementId(actId, missionId)
+	local elementData = elementId and DungeonMapModel.instance:getElementById(elementId)
 
-	if var_40_4 or var_40_6 then
-		var_40_0 = true
+	if isFinish or elementData then
+		result = true
 	end
 
-	return var_40_0
+	return result
 end
 
-function var_0_0.getMissionUnlockToastId(arg_41_0, arg_41_1, arg_41_2)
-	local var_41_0 = arg_41_0:getActId()
+function Activity157Model:getMissionUnlockToastId(missionId, elementId)
+	local actId = self:getActId()
+	local isSideMission = Activity157Config.instance:isSideMission(actId, missionId)
 
-	if Activity157Config.instance:isSideMission(var_41_0, arg_41_1) and not arg_41_0:getIsSideMissionUnlocked() then
-		return ToastEnum.V1a8Activity157NotUnlockSideMission
+	if isSideMission then
+		local isUnlockedSideMission = self:getIsSideMissionUnlocked()
+
+		if not isUnlockedSideMission then
+			return ToastEnum.V1a8Activity157NotUnlockSideMission
+		end
 	end
 
-	local var_41_1 = arg_41_2 and DungeonConfig.instance:getChapterMapElement(arg_41_2)
-	local var_41_2 = var_41_1 and var_41_1.condition
+	local elementCo = elementId and DungeonConfig.instance:getChapterMapElement(elementId)
+	local condition = elementCo and elementCo.condition
 
-	if string.nilorempty(var_41_2) then
+	if string.nilorempty(condition) then
 		return
 	end
 
-	local var_41_3, var_41_4 = string.match(var_41_2, "(ChapterMapElement=)(%d+)")
-	local var_41_5 = var_41_4 and tonumber(var_41_4)
-	local var_41_6 = var_41_5 and DungeonMapModel.instance:elementIsFinished(var_41_5)
+	local _, strPreElementId = string.match(condition, "(ChapterMapElement=)(%d+)")
+	local preElementId = strPreElementId and tonumber(strPreElementId)
+	local isFinishPreElement = preElementId and DungeonMapModel.instance:elementIsFinished(preElementId)
 
-	if var_41_5 and not var_41_6 then
+	if preElementId and not isFinishPreElement then
 		return ToastEnum.V1a8Activity157MissionLockedByPreMission
 	end
 
-	local var_41_7, var_41_8 = string.match(var_41_2, "(EpisodeFinish=)(%d+)")
-	local var_41_9 = tonumber(var_41_8)
-	local var_41_10 = var_41_9 and DungeonModel.instance:hasPassLevelAndStory(var_41_9)
+	local _, shouldFinishEpisodeId = string.match(condition, "(EpisodeFinish=)(%d+)")
 
-	if var_41_9 and not var_41_10 then
+	shouldFinishEpisodeId = tonumber(shouldFinishEpisodeId)
+
+	local isFinishEpisode = shouldFinishEpisodeId and DungeonModel.instance:hasPassLevelAndStory(shouldFinishEpisodeId)
+
+	if shouldFinishEpisodeId and not isFinishEpisode then
 		return ToastEnum.V1a8Activity157MissionLockedByStory
 	end
 
-	local var_41_11, var_41_12 = string.match(var_41_2, "(Act157ComponentUnlock=)(%d+)")
-	local var_41_13 = var_41_12 and arg_41_0:isRepairComponent(var_41_12)
+	local _, showRepairComponentId = string.match(condition, "(Act157ComponentUnlock=)(%d+)")
+	local isRepair = showRepairComponentId and self:isRepairComponent(showRepairComponentId)
 
-	if var_41_12 and not var_41_13 then
+	if showRepairComponentId and not isRepair then
 		return ToastEnum.V1a8Activity157NotRepairComponent
 	end
 
 	return ToastEnum.ConditionLock
 end
 
-function var_0_0.getInProgressMissionGroup(arg_42_0)
-	return arg_42_0._inProcessMissionGroup
+function Activity157Model:getInProgressMissionGroup()
+	return self._inProcessMissionGroup
 end
 
-function var_0_0.isInProgressOtherMissionGroup(arg_43_0, arg_43_1)
-	local var_43_0 = false
-	local var_43_1 = arg_43_0:getInProgressMissionGroup()
+function Activity157Model:isInProgressOtherMissionGroup(missionGroupId)
+	local result = false
+	local inProgressMissionGroup = self:getInProgressMissionGroup()
 
-	if var_43_1 and var_43_1 ~= 0 then
-		var_43_0 = var_43_1 ~= arg_43_1
+	if inProgressMissionGroup and inProgressMissionGroup ~= 0 then
+		result = inProgressMissionGroup ~= missionGroupId
 	end
 
-	return var_43_0
+	return result
 end
 
-function var_0_0.isInProgressOtherMissionGroupByElementId(arg_44_0, arg_44_1)
-	local var_44_0 = false
-	local var_44_1 = arg_44_0:getActId()
-	local var_44_2 = Activity157Config.instance:getMissionIdByElementId(var_44_1, arg_44_1)
+function Activity157Model:isInProgressOtherMissionGroupByElementId(elementId)
+	local result = false
+	local actId = self:getActId()
+	local act157MissionId = Activity157Config.instance:getMissionIdByElementId(actId, elementId)
 
-	if var_44_2 then
-		local var_44_3 = Activity157Config.instance:getMissionGroup(var_44_1, var_44_2)
+	if act157MissionId then
+		local act157MissionGroupId = Activity157Config.instance:getMissionGroup(actId, act157MissionId)
 
-		var_44_0 = arg_44_0:isInProgressOtherMissionGroup(var_44_3)
+		result = self:isInProgressOtherMissionGroup(act157MissionGroupId)
 	end
 
-	return var_44_0
+	return result
 end
 
-var_0_0.instance = var_0_0.New()
+Activity157Model.instance = Activity157Model.New()
 
-return var_0_0
+return Activity157Model

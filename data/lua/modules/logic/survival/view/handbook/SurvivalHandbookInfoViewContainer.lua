@@ -1,19 +1,23 @@
-﻿module("modules.logic.survival.view.handbook.SurvivalHandbookInfoViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/handbook/SurvivalHandbookInfoViewContainer.lua
 
-local var_0_0 = class("SurvivalHandbookInfoViewContainer", BaseViewContainer)
+module("modules.logic.survival.view.handbook.SurvivalHandbookInfoViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	return {
+local SurvivalHandbookInfoViewContainer = class("SurvivalHandbookInfoViewContainer", BaseViewContainer)
+
+function SurvivalHandbookInfoViewContainer:buildViews()
+	local views = {
 		SurvivalHandbookInfoView.New()
 	}
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function SurvivalHandbookInfoViewContainer:buildTabViews(tabContainerId)
 	return
 end
 
-function var_0_0.onContainerOpenFinish(arg_3_0)
+function SurvivalHandbookInfoViewContainer:onContainerOpenFinish()
 	return
 end
 
-return var_0_0
+return SurvivalHandbookInfoViewContainer

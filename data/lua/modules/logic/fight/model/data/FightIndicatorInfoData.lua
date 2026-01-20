@@ -1,10 +1,12 @@
-﻿module("modules.logic.fight.model.data.FightIndicatorInfoData", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightIndicatorInfoData.lua
 
-local var_0_0 = FightDataClass("FightIndicatorInfoData")
+module("modules.logic.fight.model.data.FightIndicatorInfoData", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1)
-	arg_1_0.inticatorId = arg_1_1.inticatorId
-	arg_1_0.num = arg_1_1.num
+local FightIndicatorInfoData = FightDataClass("FightIndicatorInfoData")
+
+function FightIndicatorInfoData:onConstructor(proto)
+	self.inticatorId = proto.inticatorId
+	self.num = proto.num
 end
 
-return var_0_0
+return FightIndicatorInfoData

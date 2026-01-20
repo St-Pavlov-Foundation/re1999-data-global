@@ -1,0 +1,1346 @@
+[
+  {
+    "id": 308101,
+    "buffId": 30810101,
+    "effect": "v1a7_ysed/ysed_idle_01_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810102,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810110,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810112,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810114,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810103,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810111,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810113,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810115,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810101,
+    "effect": "v1a7_ysed/ysed_idle_01_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810102,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810110,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810112,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810114,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810103,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810111,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810113,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810115,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810101,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_01_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810102,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810110,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810112,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810114,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810103,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810111,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810113,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810115,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308104,
+    "buffId": 30810101,
+    "effect": "v3a2_ysed/ysed_idle_01_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810102,
+    "effect": "v3a2_ysed/ysed_idle_02_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810110,
+    "effect": "v3a2_ysed/ysed_idle_02_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810112,
+    "effect": "v3a2_ysed/ysed_idle_02_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810114,
+    "effect": "v3a2_ysed/ysed_idle_02_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810103,
+    "effect": "v3a2_ysed/ysed_idle_03_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810111,
+    "effect": "v3a2_ysed/ysed_idle_03_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810113,
+    "effect": "v3a2_ysed/ysed_idle_03_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810115,
+    "effect": "v3a2_ysed/ysed_idle_03_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308101,
+    "buffId": 30810261,
+    "effect": "v1a7_ysed/ysed_idle_01_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810305,
+    "effect": "v1a7_ysed/ysed_idle_01_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810306,
+    "effect": "v1a7_ysed/ysed_idle_01_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810307,
+    "effect": "v1a7_ysed/ysed_idle_01_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810308,
+    "effect": "v1a7_ysed/ysed_idle_01_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810411,
+    "effect": "v1a7_ysed/ysed_idle_01_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810412,
+    "effect": "v1a7_ysed/ysed_idle_01_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810413,
+    "effect": "v1a7_ysed/ysed_idle_01_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810414,
+    "effect": "v1a7_ysed/ysed_idle_01_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810415,
+    "effect": "v1a7_ysed/ysed_idle_01_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810416,
+    "effect": "v1a7_ysed/ysed_idle_01_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810231,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810232,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810233,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810234,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810271,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810272,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810273,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810274,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810312,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810313,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810314,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810315,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810421,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810422,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810423,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810424,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810425,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810426,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810241,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810242,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810243,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810244,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810281,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810282,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810283,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810284,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810321,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810322,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810323,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810324,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810431,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810432,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810433,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810434,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810435,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308101,
+    "buffId": 30810436,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810261,
+    "effect": "v1a7_ysed/ysed_idle_01_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810305,
+    "effect": "v1a7_ysed/ysed_idle_01_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810306,
+    "effect": "v1a7_ysed/ysed_idle_01_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810307,
+    "effect": "v1a7_ysed/ysed_idle_01_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810308,
+    "effect": "v1a7_ysed/ysed_idle_01_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810411,
+    "effect": "v1a7_ysed/ysed_idle_01_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810412,
+    "effect": "v1a7_ysed/ysed_idle_01_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810413,
+    "effect": "v1a7_ysed/ysed_idle_01_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810414,
+    "effect": "v1a7_ysed/ysed_idle_01_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810415,
+    "effect": "v1a7_ysed/ysed_idle_01_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810416,
+    "effect": "v1a7_ysed/ysed_idle_01_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810231,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810232,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810233,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810234,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810271,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810272,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810273,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810274,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810312,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810313,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810314,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810315,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810421,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810422,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810423,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810424,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810425,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810426,
+    "effect": "v1a7_ysed/ysed_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810241,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810242,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810243,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810244,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810281,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810282,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810283,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810284,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810321,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810322,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810323,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810324,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810431,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810432,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810433,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810434,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810435,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308102,
+    "buffId": 30810436,
+    "effect": "v1a7_ysed/ysed_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810261,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_01_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810305,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_01_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810306,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_01_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810307,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_01_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810308,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_01_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810411,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_01_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810412,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_01_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810413,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_01_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810414,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_01_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810415,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_01_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810416,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_01_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810231,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810232,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810233,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810234,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810271,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810272,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810273,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810274,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810312,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810313,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810314,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810315,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810421,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810422,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810423,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810424,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810425,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810426,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_02_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810241,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810242,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810243,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810244,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810281,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810282,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810283,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810284,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810321,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810322,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810323,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810324,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810431,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810432,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810433,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810434,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810435,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308103,
+    "buffId": 30810436,
+    "effect": "v2a1_ysed_jscq/ysed_jscq_idle_03_head02",
+    "audio": 0
+  },
+  {
+    "id": 308104,
+    "buffId": 30810261,
+    "effect": "v3a2_ysed/ysed_idle_01_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810305,
+    "effect": "v3a2_ysed/ysed_idle_01_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810306,
+    "effect": "v3a2_ysed/ysed_idle_01_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810307,
+    "effect": "v3a2_ysed/ysed_idle_01_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810308,
+    "effect": "v3a2_ysed/ysed_idle_01_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810411,
+    "effect": "v3a2_ysed/ysed_idle_01_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810412,
+    "effect": "v3a2_ysed/ysed_idle_01_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810413,
+    "effect": "v3a2_ysed/ysed_idle_01_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810414,
+    "effect": "v3a2_ysed/ysed_idle_01_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810415,
+    "effect": "v3a2_ysed/ysed_idle_01_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810416,
+    "effect": "v3a2_ysed/ysed_idle_01_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810231,
+    "effect": "v3a2_ysed/ysed_idle_02_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810232,
+    "effect": "v3a2_ysed/ysed_idle_02_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810233,
+    "effect": "v3a2_ysed/ysed_idle_02_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810234,
+    "effect": "v3a2_ysed/ysed_idle_02_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810271,
+    "effect": "v3a2_ysed/ysed_idle_02_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810272,
+    "effect": "v3a2_ysed/ysed_idle_02_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810273,
+    "effect": "v3a2_ysed/ysed_idle_02_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810274,
+    "effect": "v3a2_ysed/ysed_idle_02_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810312,
+    "effect": "v3a2_ysed/ysed_idle_02_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810313,
+    "effect": "v3a2_ysed/ysed_idle_02_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810314,
+    "effect": "v3a2_ysed/ysed_idle_02_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810315,
+    "effect": "v3a2_ysed/ysed_idle_02_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810421,
+    "effect": "v3a2_ysed/ysed_idle_02_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810422,
+    "effect": "v3a2_ysed/ysed_idle_02_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810423,
+    "effect": "v3a2_ysed/ysed_idle_02_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810424,
+    "effect": "v3a2_ysed/ysed_idle_02_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810425,
+    "effect": "v3a2_ysed/ysed_idle_02_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810426,
+    "effect": "v3a2_ysed/ysed_idle_02_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810241,
+    "effect": "v3a2_ysed/ysed_idle_03_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810242,
+    "effect": "v3a2_ysed/ysed_idle_03_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810243,
+    "effect": "v3a2_ysed/ysed_idle_03_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810244,
+    "effect": "v3a2_ysed/ysed_idle_03_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810281,
+    "effect": "v3a2_ysed/ysed_idle_03_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810282,
+    "effect": "v3a2_ysed/ysed_idle_03_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810283,
+    "effect": "v3a2_ysed/ysed_idle_03_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810284,
+    "effect": "v3a2_ysed/ysed_idle_03_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810321,
+    "effect": "v3a2_ysed/ysed_idle_03_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810322,
+    "effect": "v3a2_ysed/ysed_idle_03_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810323,
+    "effect": "v3a2_ysed/ysed_idle_03_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810324,
+    "effect": "v3a2_ysed/ysed_idle_03_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810431,
+    "effect": "v3a2_ysed/ysed_idle_03_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810432,
+    "effect": "v3a2_ysed/ysed_idle_03_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810433,
+    "effect": "v3a2_ysed/ysed_idle_03_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810434,
+    "effect": "v3a2_ysed/ysed_idle_03_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810435,
+    "effect": "v3a2_ysed/ysed_idle_03_head02",
+    "audio": 430810442
+  },
+  {
+    "id": 308104,
+    "buffId": 30810436,
+    "effect": "v3a2_ysed/ysed_idle_03_head02",
+    "audio": 430810442
+  }
+]

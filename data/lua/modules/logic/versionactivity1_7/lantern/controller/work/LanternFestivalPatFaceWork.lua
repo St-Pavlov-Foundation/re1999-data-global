@@ -1,31 +1,35 @@
-﻿module("modules.logic.versionactivity1_7.lantern.controller.work.LanternFestivalPatFaceWork", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_7/lantern/controller/work/LanternFestivalPatFaceWork.lua
 
-local var_0_0 = class("LanternFestivalPatFaceWork", PatFaceWorkBase)
+module("modules.logic.versionactivity1_7.lantern.controller.work.LanternFestivalPatFaceWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
+local LanternFestivalPatFaceWork = class("LanternFestivalPatFaceWork", PatFaceWorkBase)
+
+function LanternFestivalPatFaceWork:onStart(context)
 	if not ActivityModel.instance:isActOnLine(ActivityEnum.Activity.LanternFestival) then
-		arg_1_0:onDone(true)
+		self:onDone(true)
 
 		return
 	end
 
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_1_0._onShowFinish, arg_1_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onShowFinish, self)
 
-	if LanternFestivalModel.instance:hasPuzzleCouldGetReward() then
+	local hasPuzzleCouldGetReward = LanternFestivalModel.instance:hasPuzzleCouldGetReward()
+
+	if hasPuzzleCouldGetReward then
 		LanternFestivalController.instance:openLanternFestivalView()
 	else
-		arg_1_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._onShowFinish(arg_2_0, arg_2_1)
-	if arg_2_1 == ViewName.LanternFestivalView then
-		arg_2_0:onDone(true)
+function LanternFestivalPatFaceWork:_onShowFinish(viewName)
+	if viewName == ViewName.LanternFestivalView then
+		self:onDone(true)
 	end
 end
 
-function var_0_0.clearWork(arg_3_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_3_0._onShowFinish, arg_3_0)
+function LanternFestivalPatFaceWork:clearWork()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onShowFinish, self)
 end
 
-return var_0_0
+return LanternFestivalPatFaceWork

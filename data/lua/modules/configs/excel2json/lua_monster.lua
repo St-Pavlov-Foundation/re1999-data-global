@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_monster", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_monster.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_monster", package.seeall)
+
+local lua_monster = {}
+local fields = {
 	heartVariantId = 7,
 	highPriorityName = 19,
 	levelEasy = 23,
@@ -26,16 +28,16 @@ local var_0_1 = {
 	template = 2,
 	id = 1
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	highPriorityDes = 2,
 	highPriorityName = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_monster.onLoad(json)
+	lua_monster.configList, lua_monster.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_monster

@@ -1,82 +1,84 @@
-﻿module("modules.logic.seasonver.act123.model.Season123EquipTagModel", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/model/Season123EquipTagModel.lua
 
-local var_0_0 = class("Season123EquipTagModel", BaseModel)
+module("modules.logic.seasonver.act123.model.Season123EquipTagModel", package.seeall)
 
-var_0_0.NoTagId = -1
+local Season123EquipTagModel = class("Season123EquipTagModel", BaseModel)
 
-function var_0_0.clear(arg_1_0)
-	arg_1_0._desc2IdMap = nil
-	arg_1_0._optionsList = nil
-	arg_1_0._curTag = nil
-	arg_1_0._curTagStr = nil
+Season123EquipTagModel.NoTagId = -1
+
+function Season123EquipTagModel:clear()
+	self._desc2IdMap = nil
+	self._optionsList = nil
+	self._curTag = nil
+	self._curTagStr = nil
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0._curTag = var_0_0.NoTagId
-	arg_2_0._curTagStr = tostring(arg_2_0._curTag)
-	arg_2_0.activityId = arg_2_1
+function Season123EquipTagModel:init(activityId)
+	self._curTag = Season123EquipTagModel.NoTagId
+	self._curTagStr = tostring(self._curTag)
+	self.activityId = activityId
 
-	arg_2_0:initConfig()
+	self:initConfig()
 end
 
-function var_0_0.initConfig(arg_3_0)
-	local var_3_0 = Season123Model.instance:getCurSeasonId()
+function Season123EquipTagModel:initConfig()
+	local actId = Season123Model.instance:getCurSeasonId()
 
-	if not var_3_0 then
+	if not actId then
 		return
 	end
 
-	local var_3_1 = Season123Config.instance:getSeasonTagDesc(var_3_0)
+	local cfgList = Season123Config.instance:getSeasonTagDesc(actId)
 
-	arg_3_0._index2IdMap = {}
-	arg_3_0._optionsList = {}
+	self._index2IdMap = {}
+	self._optionsList = {}
 
-	local var_3_2 = luaLang("common_all")
+	local noTagDesc = luaLang("common_all")
 
-	arg_3_0._index2IdMap[0] = var_0_0.NoTagId
+	self._index2IdMap[0] = Season123EquipTagModel.NoTagId
 
-	table.insert(arg_3_0._optionsList, var_3_2)
+	table.insert(self._optionsList, noTagDesc)
 
-	local var_3_3 = {}
+	local list = {}
 
-	if var_3_1 then
-		for iter_3_0, iter_3_1 in pairs(var_3_1) do
-			table.insert(var_3_3, iter_3_1)
+	if cfgList then
+		for _, cfg in pairs(cfgList) do
+			table.insert(list, cfg)
 		end
 	end
 
-	table.sort(var_3_3, function(arg_4_0, arg_4_1)
-		return arg_4_0.order < arg_4_1.order
+	table.sort(list, function(a, b)
+		return a.order < b.order
 	end)
 
-	local var_3_4 = 1
+	local index = 1
 
-	for iter_3_2, iter_3_3 in ipairs(var_3_3) do
-		arg_3_0._index2IdMap[var_3_4] = iter_3_3.id
+	for _, cfg in ipairs(list) do
+		self._index2IdMap[index] = cfg.id
 
-		table.insert(arg_3_0._optionsList, iter_3_3.desc)
+		table.insert(self._optionsList, cfg.desc)
 
-		var_3_4 = var_3_4 + 1
+		index = index + 1
 	end
 end
 
-function var_0_0.getOptions(arg_5_0)
-	return arg_5_0._optionsList
+function Season123EquipTagModel:getOptions()
+	return self._optionsList
 end
 
-function var_0_0.getSelectIdByIndex(arg_6_0, arg_6_1)
-	return arg_6_0._index2IdMap[arg_6_1]
+function Season123EquipTagModel:getSelectIdByIndex(tagIndex)
+	return self._index2IdMap[tagIndex]
 end
 
-function var_0_0.isCardNeedShow(arg_7_0, arg_7_1)
-	if arg_7_0._curTag == var_0_0.NoTagId or not arg_7_0._curTag then
+function Season123EquipTagModel:isCardNeedShow(itemTags)
+	if self._curTag == Season123EquipTagModel.NoTagId or not self._curTag then
 		return true
 	end
 
-	local var_7_0 = string.split(arg_7_1, "#")
+	local tags = string.split(itemTags, "#")
 
-	for iter_7_0, iter_7_1 in pairs(var_7_0) do
-		if arg_7_0._curTagStr == iter_7_1 then
+	for _, tag in pairs(tags) do
+		if self._curTagStr == tag then
 			return true
 		end
 	end
@@ -84,19 +86,19 @@ function var_0_0.isCardNeedShow(arg_7_0, arg_7_1)
 	return false
 end
 
-function var_0_0.selectTagIndex(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0:getSelectIdByIndex(arg_8_1)
+function Season123EquipTagModel:selectTagIndex(tagIndex)
+	local tagId = self:getSelectIdByIndex(tagIndex)
 
-	if var_8_0 ~= nil then
-		arg_8_0._curTag = var_8_0
-		arg_8_0._curTagStr = tostring(arg_8_0._curTag)
+	if tagId ~= nil then
+		self._curTag = tagId
+		self._curTagStr = tostring(self._curTag)
 	else
-		logNormal("tagIndex = " .. tostring(arg_8_1) .. " not found!")
+		logNormal("tagIndex = " .. tostring(tagIndex) .. " not found!")
 	end
 end
 
-function var_0_0.getCurTagId(arg_9_0)
-	return arg_9_0._curTag
+function Season123EquipTagModel:getCurTagId()
+	return self._curTag
 end
 
-return var_0_0
+return Season123EquipTagModel

@@ -1,10 +1,12 @@
-﻿module("modules.versionactivitybase.enterview.view.VersionActivityEnterViewTabEnum", package.seeall)
+﻿-- chunkname: @modules/versionactivitybase/enterview/view/VersionActivityEnterViewTabEnum.lua
 
-local var_0_0 = _M
+module("modules.versionactivitybase.enterview.view.VersionActivityEnterViewTabEnum", package.seeall)
 
-var_0_0.ActTabFlag = {
+local VersionActivityEnterViewTabEnum = _M
+
+VersionActivityEnterViewTabEnum.ActTabFlag = {
 	ShowNewStage = 1,
 	ShowNewAct = 0
 }
 
-return var_0_0
+return VersionActivityEnterViewTabEnum

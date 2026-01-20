@@ -1,196 +1,198 @@
-﻿module("modules.logic.tower.view.TowerHeroTrialView", package.seeall)
+﻿-- chunkname: @modules/logic/tower/view/TowerHeroTrialView.lua
 
-local var_0_0 = class("TowerHeroTrialView", BaseView)
+module("modules.logic.tower.view.TowerHeroTrialView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btncloseFullView = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_closeFullView")
-	arg_1_0._scrollhero = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_hero")
-	arg_1_0._goheroContent = gohelper.findChild(arg_1_0.viewGO, "#scroll_hero/Viewport/#go_heroContent")
-	arg_1_0._goheroItem = gohelper.findChild(arg_1_0.viewGO, "#scroll_hero/Viewport/#go_heroContent/#go_heroItem")
-	arg_1_0._scrolldesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_desc")
-	arg_1_0._godescContent = gohelper.findChild(arg_1_0.viewGO, "#scroll_desc/Viewport/#go_descContent")
-	arg_1_0._godescItem = gohelper.findChild(arg_1_0.viewGO, "#scroll_desc/Viewport/#go_descContent/#go_descItem")
-	arg_1_0._btnrule = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "title/txt/#btn_rule")
-	arg_1_0._goruleTip = gohelper.findChild(arg_1_0.viewGO, "#go_ruleTip")
-	arg_1_0._btncloseRuleTip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_ruleTip/#btn_closeRuleTip")
-	arg_1_0._txtrule = gohelper.findChildText(arg_1_0.viewGO, "#go_ruleTip/#txt_rule")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._imagefacetsIcon = gohelper.findChildImage(arg_1_0.viewGO, "#scroll_desc/Viewport/#go_descContent/#go_descItem/facets/image_facetsIcon")
-	arg_1_0._txtfacets = gohelper.findChildText(arg_1_0.viewGO, "#scroll_desc/Viewport/#go_descContent/#go_descItem/facets/txt_facets")
-	arg_1_0._gofacetsDesc = gohelper.findChild(arg_1_0.viewGO, "#scroll_desc/Viewport/#go_descContent/#go_descItem/go_facetsDesc")
-	arg_1_0._gofacetsDescItem = gohelper.findChild(arg_1_0.viewGO, "#scroll_desc/Viewport/#go_descContent/#go_descItem/go_facetsDesc/txt_facetsDesc")
+local TowerHeroTrialView = class("TowerHeroTrialView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function TowerHeroTrialView:onInitView()
+	self._btncloseFullView = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_closeFullView")
+	self._scrollhero = gohelper.findChildScrollRect(self.viewGO, "#scroll_hero")
+	self._goheroContent = gohelper.findChild(self.viewGO, "#scroll_hero/Viewport/#go_heroContent")
+	self._goheroItem = gohelper.findChild(self.viewGO, "#scroll_hero/Viewport/#go_heroContent/#go_heroItem")
+	self._scrolldesc = gohelper.findChildScrollRect(self.viewGO, "#scroll_desc")
+	self._godescContent = gohelper.findChild(self.viewGO, "#scroll_desc/Viewport/#go_descContent")
+	self._godescItem = gohelper.findChild(self.viewGO, "#scroll_desc/Viewport/#go_descContent/#go_descItem")
+	self._btnrule = gohelper.findChildButtonWithAudio(self.viewGO, "title/txt/#btn_rule")
+	self._goruleTip = gohelper.findChild(self.viewGO, "#go_ruleTip")
+	self._btncloseRuleTip = gohelper.findChildButtonWithAudio(self.viewGO, "#go_ruleTip/#btn_closeRuleTip")
+	self._txtrule = gohelper.findChildText(self.viewGO, "#go_ruleTip/#txt_rule")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._imagefacetsIcon = gohelper.findChildImage(self.viewGO, "#scroll_desc/Viewport/#go_descContent/#go_descItem/facets/image_facetsIcon")
+	self._txtfacets = gohelper.findChildText(self.viewGO, "#scroll_desc/Viewport/#go_descContent/#go_descItem/facets/txt_facets")
+	self._gofacetsDesc = gohelper.findChild(self.viewGO, "#scroll_desc/Viewport/#go_descContent/#go_descItem/go_facetsDesc")
+	self._gofacetsDescItem = gohelper.findChild(self.viewGO, "#scroll_desc/Viewport/#go_descContent/#go_descItem/go_facetsDesc/txt_facetsDesc")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btncloseFullView:AddClickListener(arg_2_0._btncloseFullViewOnClick, arg_2_0)
-	arg_2_0._btnrule:AddClickListener(arg_2_0._btnruleOnClick, arg_2_0)
-	arg_2_0._btncloseRuleTip:AddClickListener(arg_2_0._btncloseRuleTipOnClick, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function TowerHeroTrialView:addEvents()
+	self._btncloseFullView:AddClickListener(self._btncloseFullViewOnClick, self)
+	self._btnrule:AddClickListener(self._btnruleOnClick, self)
+	self._btncloseRuleTip:AddClickListener(self._btncloseRuleTipOnClick, self)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btncloseFullView:RemoveClickListener()
-	arg_3_0._btnrule:RemoveClickListener()
-	arg_3_0._btncloseRuleTip:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
+function TowerHeroTrialView:removeEvents()
+	self._btncloseFullView:RemoveClickListener()
+	self._btnrule:RemoveClickListener()
+	self._btncloseRuleTip:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseFullViewOnClick(arg_4_0)
-	arg_4_0:_btncloseOnClick()
+function TowerHeroTrialView:_btncloseFullViewOnClick()
+	self:_btncloseOnClick()
 end
 
-function var_0_0._btnruleOnClick(arg_5_0)
-	gohelper.setActive(arg_5_0._goruleTip, true)
+function TowerHeroTrialView:_btnruleOnClick()
+	gohelper.setActive(self._goruleTip, true)
 end
 
-function var_0_0._btncloseRuleTipOnClick(arg_6_0)
-	gohelper.setActive(arg_6_0._goruleTip, false)
+function TowerHeroTrialView:_btncloseRuleTipOnClick()
+	gohelper.setActive(self._goruleTip, false)
 end
 
-function var_0_0._btncloseOnClick(arg_7_0)
-	arg_7_0:closeThis()
+function TowerHeroTrialView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0.onHeroTrialItemClick(arg_8_0, arg_8_1)
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0.HeroItemList) do
-		if iter_8_1.trialHeroId == arg_8_1.trialHeroId then
-			gohelper.setActive(iter_8_1.goSelect, true)
+function TowerHeroTrialView:onHeroTrialItemClick(selectHeroItem)
+	for index, heroItem in ipairs(self.HeroItemList) do
+		if heroItem.trialHeroId == selectHeroItem.trialHeroId then
+			gohelper.setActive(heroItem.goSelect, true)
 
-			arg_8_0.curSelectHeroItem = iter_8_1
+			self.curSelectHeroItem = heroItem
 
-			arg_8_0:createOrRefreshDesc()
+			self:createOrRefreshDesc()
 		else
-			gohelper.setActive(iter_8_1.goSelect, false)
+			gohelper.setActive(heroItem.goSelect, false)
 		end
 	end
 end
 
-function var_0_0._editableInitView(arg_9_0)
-	arg_9_0.HeroItemList = arg_9_0:getUserDataTb_()
-	arg_9_0.descItemList = arg_9_0:getUserDataTb_()
+function TowerHeroTrialView:_editableInitView()
+	self.HeroItemList = self:getUserDataTb_()
+	self.descItemList = self:getUserDataTb_()
 end
 
-function var_0_0.onOpen(arg_10_0)
+function TowerHeroTrialView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.Tower.play_ui_fight_bubbles)
-	gohelper.setActive(arg_10_0._goruleTip, false)
-	gohelper.setActive(arg_10_0._goheroItem, false)
-	arg_10_0:refreshUI()
+	gohelper.setActive(self._goruleTip, false)
+	gohelper.setActive(self._goheroItem, false)
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_11_0)
-	arg_11_0.curSeason = TowerModel.instance:getTrialHeroSeason()
-	arg_11_0._txtrule.text = TowerConfig.instance:getTowerConstLangConfig(TowerEnum.ConstId.HeroTrialRule)
+function TowerHeroTrialView:refreshUI()
+	self.curSeason = TowerModel.instance:getTrialHeroSeason()
+	self._txtrule.text = TowerConfig.instance:getTowerConstLangConfig(TowerEnum.ConstId.HeroTrialRule)
 
-	arg_11_0:createOrRefreshTrialHero()
-	arg_11_0:createOrRefreshDesc()
+	self:createOrRefreshTrialHero()
+	self:createOrRefreshDesc()
 end
 
-function var_0_0.createOrRefreshTrialHero(arg_12_0)
-	local var_12_0 = TowerConfig.instance:getHeroTrialConfig(arg_12_0.curSeason)
-	local var_12_1 = string.splitToNumber(var_12_0.heroIds, "|")
+function TowerHeroTrialView:createOrRefreshTrialHero()
+	local trialConfig = TowerConfig.instance:getHeroTrialConfig(self.curSeason)
+	local heroIds = string.splitToNumber(trialConfig.heroIds, "|")
 
-	for iter_12_0, iter_12_1 in ipairs(var_12_1) do
-		local var_12_2 = arg_12_0.HeroItemList[iter_12_0]
+	for index, trialHeroId in ipairs(heroIds) do
+		local heroItem = self.HeroItemList[index]
 
-		if not var_12_2 then
-			var_12_2 = {
-				go = gohelper.clone(arg_12_0._goheroItem, arg_12_0._goheroContent, iter_12_1)
+		if not heroItem then
+			heroItem = {
+				go = gohelper.clone(self._goheroItem, self._goheroContent, trialHeroId)
 			}
-			var_12_2.rare = gohelper.findChildImage(var_12_2.go, "role/rare")
-			var_12_2.heroIcon = gohelper.findChildSingleImage(var_12_2.go, "role/heroicon")
-			var_12_2.career = gohelper.findChildImage(var_12_2.go, "role/career")
-			var_12_2.name = gohelper.findChildText(var_12_2.go, "role/name")
-			var_12_2.nameEn = gohelper.findChildText(var_12_2.go, "role/name/nameEn")
-			var_12_2.goSelect = gohelper.findChild(var_12_2.go, "go_select")
-			var_12_2.btnClick = gohelper.findChildButtonWithAudio(var_12_2.go, "btn_click")
+			heroItem.rare = gohelper.findChildImage(heroItem.go, "role/rare")
+			heroItem.heroIcon = gohelper.findChildSingleImage(heroItem.go, "role/heroicon")
+			heroItem.career = gohelper.findChildImage(heroItem.go, "role/career")
+			heroItem.name = gohelper.findChildText(heroItem.go, "role/name")
+			heroItem.nameEn = gohelper.findChildText(heroItem.go, "role/name/nameEn")
+			heroItem.goSelect = gohelper.findChild(heroItem.go, "go_select")
+			heroItem.btnClick = gohelper.findChildButtonWithAudio(heroItem.go, "btn_click")
 
-			var_12_2.btnClick:AddClickListener(arg_12_0.onHeroTrialItemClick, arg_12_0, var_12_2)
+			heroItem.btnClick:AddClickListener(self.onHeroTrialItemClick, self, heroItem)
 
-			arg_12_0.HeroItemList[iter_12_0] = var_12_2
+			self.HeroItemList[index] = heroItem
 		end
 
-		gohelper.setActive(var_12_2.go, true)
+		gohelper.setActive(heroItem.go, true)
 
-		var_12_2.trialHeroId = iter_12_1
-		var_12_2.trialConfig = lua_hero_trial.configDict[iter_12_1][0]
+		heroItem.trialHeroId = trialHeroId
+		heroItem.trialConfig = lua_hero_trial.configDict[trialHeroId][0]
 
-		local var_12_3 = HeroConfig.instance:getHeroCO(var_12_2.trialConfig.heroId)
-		local var_12_4 = SkinConfig.instance:getSkinCo(var_12_2.trialConfig.skin)
+		local heroConfig = HeroConfig.instance:getHeroCO(heroItem.trialConfig.heroId)
+		local skinConfig = SkinConfig.instance:getSkinCo(heroItem.trialConfig.skin)
 
-		var_12_2.heroIcon:LoadImage(ResUrl.getRoomHeadIcon(var_12_4.headIcon))
+		heroItem.heroIcon:LoadImage(ResUrl.getRoomHeadIcon(skinConfig.headIcon))
 
-		var_12_2.name.text = var_12_3.name
-		var_12_2.nameEn.text = var_12_3.nameEng
+		heroItem.name.text = heroConfig.name
+		heroItem.nameEn.text = heroConfig.nameEng
 
-		UISpriteSetMgr.instance:setCommonSprite(var_12_2.career, "lssx_" .. var_12_3.career)
-		UISpriteSetMgr.instance:setCommonSprite(var_12_2.rare, "bgequip" .. CharacterEnum.Color[var_12_3.rare])
+		UISpriteSetMgr.instance:setCommonSprite(heroItem.career, "lssx_" .. heroConfig.career)
+		UISpriteSetMgr.instance:setCommonSprite(heroItem.rare, "bgequip" .. CharacterEnum.Color[heroConfig.rare])
 	end
 
-	for iter_12_2 = #var_12_1 + 1, #arg_12_0.HeroItemList do
-		gohelper.setActive(arg_12_0.HeroItemList[iter_12_2].go, false)
+	for i = #heroIds + 1, #self.HeroItemList do
+		gohelper.setActive(self.HeroItemList[i].go, false)
 	end
 
-	if not arg_12_0.curSelectHeroItem then
-		arg_12_0.curSelectHeroItem = arg_12_0.HeroItemList[1]
+	if not self.curSelectHeroItem then
+		self.curSelectHeroItem = self.HeroItemList[1]
 
-		gohelper.setActive(arg_12_0.curSelectHeroItem.goSelect, true)
+		gohelper.setActive(self.curSelectHeroItem.goSelect, true)
 	end
 end
 
-function var_0_0.createOrRefreshDesc(arg_13_0)
-	local var_13_0 = arg_13_0.curSelectHeroItem.trialConfig.facetsId
-	local var_13_1 = arg_13_0.curSelectHeroItem.trialConfig.facetslevel
-	local var_13_2 = CharacterDestinyConfig.instance:getDestinyFacetConsumeCo(var_13_0)
+function TowerHeroTrialView:createOrRefreshDesc()
+	local facetsId = self.curSelectHeroItem.trialConfig.facetsId
+	local facetslevel = self.curSelectHeroItem.trialConfig.facetslevel
+	local destinyCo = CharacterDestinyConfig.instance:getDestinyFacetConsumeCo(facetsId)
 
-	if not var_13_2 then
-		logError(arg_13_0.curSelectHeroItem.trialConfig.id .. "角色命石消耗表中狂想配置不存在，请检查： " .. var_13_0)
+	if not destinyCo then
+		logError(self.curSelectHeroItem.trialConfig.id .. "角色命石消耗表中狂想配置不存在，请检查： " .. facetsId)
 
 		return
 	end
 
-	local var_13_3 = CharacterDestinyEnum.SlotTend[var_13_2.tend]
-	local var_13_4 = var_13_3.TitleIconName
+	local tenp = CharacterDestinyEnum.SlotTend[destinyCo.tend]
+	local tendIcon = tenp.TitleIconName
 
-	UISpriteSetMgr.instance:setUiCharacterSprite(arg_13_0._imagefacetsIcon, var_13_4)
+	UISpriteSetMgr.instance:setUiCharacterSprite(self._imagefacetsIcon, tendIcon)
 
-	arg_13_0._txtfacets.color = GameUtil.parseColor(var_13_3.TitleColor)
-	arg_13_0._txtfacets.text = var_13_2.name
+	self._txtfacets.color = GameUtil.parseColor(tenp.TitleColor)
+	self._txtfacets.text = destinyCo.name
 
-	local var_13_5 = {}
+	local facetsDataList = {}
 
-	for iter_13_0 = 1, var_13_1 do
-		local var_13_6 = CharacterDestinyConfig.instance:getDestinyFacets(var_13_0, iter_13_0)
+	for level = 1, facetslevel do
+		local facetsCo = CharacterDestinyConfig.instance:getDestinyFacets(facetsId, level)
 
-		table.insert(var_13_5, var_13_6)
+		table.insert(facetsDataList, facetsCo)
 	end
 
-	gohelper.CreateObjList(arg_13_0, arg_13_0.showFacetsDescItem, var_13_5, arg_13_0._gofacetsDesc, arg_13_0._gofacetsDescItem)
+	gohelper.CreateObjList(self, self.showFacetsDescItem, facetsDataList, self._gofacetsDesc, self._gofacetsDescItem)
 end
 
-function var_0_0.showFacetsDescItem(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	local var_14_0 = arg_14_0:getUserDataTb_()
+function TowerHeroTrialView:showFacetsDescItem(obj, data, index)
+	local txtItem = self:getUserDataTb_()
 
-	var_14_0.txtdesc = arg_14_1:GetComponent(gohelper.Type_TextMesh)
-	var_14_0.txtdesc.text = arg_14_2.desc
-	var_14_0.skillDesc = MonoHelper.addNoUpdateLuaComOnceToGo(arg_14_1, SkillDescComp)
+	txtItem.txtdesc = obj:GetComponent(gohelper.Type_TextMesh)
+	txtItem.txtdesc.text = data.desc
+	txtItem.skillDesc = MonoHelper.addNoUpdateLuaComOnceToGo(obj, SkillDescComp)
 
-	var_14_0.skillDesc:updateInfo(var_14_0.txtdesc, arg_14_2.desc, arg_14_0.curSelectHeroItem.trialConfig.heroId)
-	var_14_0.skillDesc:setTipParam(0, Vector2(-200, 100))
+	txtItem.skillDesc:updateInfo(txtItem.txtdesc, data.desc, self.curSelectHeroItem.trialConfig.heroId)
+	txtItem.skillDesc:setTipParam(0, Vector2(-200, 100))
 end
 
-function var_0_0.onClose(arg_15_0)
-	for iter_15_0, iter_15_1 in ipairs(arg_15_0.HeroItemList) do
-		iter_15_1.btnClick:RemoveClickListener()
-		iter_15_1.heroIcon:UnLoadImage()
+function TowerHeroTrialView:onClose()
+	for _, heroItem in ipairs(self.HeroItemList) do
+		heroItem.btnClick:RemoveClickListener()
+		heroItem.heroIcon:UnLoadImage()
 	end
 end
 
-function var_0_0.onDestroyView(arg_16_0)
+function TowerHeroTrialView:onDestroyView()
 	return
 end
 
-return var_0_0
+return TowerHeroTrialView

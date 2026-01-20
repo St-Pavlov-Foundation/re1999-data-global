@@ -1,182 +1,189 @@
-﻿module("modules.logic.fight.view.FightCardPreDisPlayView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightCardPreDisPlayView.lua
 
-local var_0_0 = class("FightCardPreDisPlayView", BaseViewExtended)
+module("modules.logic.fight.view.FightCardPreDisPlayView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._viewClick = gohelper.getClickWithDefaultAudio(arg_1_0.viewGO)
-	arg_1_0._scrollViewObj = gohelper.findChild(arg_1_0.viewGO, "#scroll_handcards")
-	arg_1_0._cardRoot = gohelper.findChild(arg_1_0.viewGO, "#scroll_handcards/Viewport/handcards")
-	arg_1_0._skillRoot = gohelper.findChild(arg_1_0.viewGO, "Skill")
-	arg_1_0._skillNameText = gohelper.findChildText(arg_1_0.viewGO, "Skill/#txt_SkillName")
-	arg_1_0._skillDesText = gohelper.findChildText(arg_1_0.viewGO, "Skill/Scroll View/Viewport/#txt_SkillDescr")
-	arg_1_0._imageSkillBg = gohelper.findChild(arg_1_0.viewGO, "Skill/image_SkillBG")
+local FightCardPreDisPlayView = class("FightCardPreDisPlayView", BaseViewExtended)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function FightCardPreDisPlayView:onInitView()
+	self._viewClick = gohelper.getClickWithDefaultAudio(self.viewGO)
+	self._scrollViewObj = gohelper.findChild(self.viewGO, "#scroll_handcards")
+	self._cardRoot = gohelper.findChild(self.viewGO, "#scroll_handcards/Viewport/handcards")
+	self._skillRoot = gohelper.findChild(self.viewGO, "Skill")
+	self._skillNameText = gohelper.findChildText(self.viewGO, "Skill/#txt_SkillName")
+	self._skillDesText = gohelper.findChildText(self.viewGO, "Skill/Scroll View/Viewport/#txt_SkillDescr")
+	self._imageSkillBg = gohelper.findChild(self.viewGO, "Skill/image_SkillBG")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._viewClick, arg_2_0._onBtnClose, arg_2_0)
+function FightCardPreDisPlayView:addEvents()
+	self:addClickCb(self._viewClick, self._onBtnClose, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function FightCardPreDisPlayView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function FightCardPreDisPlayView:_editableInitView()
 	return
 end
 
-function var_0_0._onBtnClose(arg_5_0)
-	if arg_5_0._showSkillDesPart then
-		arg_5_0:_cancelSelect()
+function FightCardPreDisPlayView:_onBtnClose()
+	if self._showSkillDesPart then
+		self:_cancelSelect()
 
 		return
 	end
 
-	arg_5_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0._anchor = Vector2.New(1, 0.5)
+function FightCardPreDisPlayView:onOpen()
+	self._anchor = Vector2.New(1, 0.5)
 
-	gohelper.setActive(arg_6_0._skillRoot, false)
-	NavigateMgr.instance:addEscape(arg_6_0.viewContainer.viewName, arg_6_0._onBtnClose, arg_6_0)
+	gohelper.setActive(self._skillRoot, false)
+	NavigateMgr.instance:addEscape(self.viewContainer.viewName, self._onBtnClose, self)
 
-	arg_6_0._cardDataList = arg_6_0.viewParam
+	self._cardDataList = self.viewParam
 
-	arg_6_0:_refreshUI()
+	self:_refreshUI()
 end
 
-function var_0_0._refreshUI(arg_7_0)
-	local var_7_0 = "ui/viewres/fight/fightcarditem.prefab"
+function FightCardPreDisPlayView:_refreshUI()
+	local cardPath = "ui/viewres/fight/fightcarditem.prefab"
 
-	arg_7_0:com_loadAsset(var_7_0, arg_7_0._onLoadFinish)
+	self:com_loadAsset(cardPath, self._onLoadFinish)
 end
 
-function var_0_0._onLoadFinish(arg_8_0, arg_8_1)
-	arg_8_0._cardWidth = 180
-	arg_8_0._halfCardWidth = arg_8_0._cardWidth / 2
-	arg_8_0._cardDistance = arg_8_0._cardWidth + 40
-	arg_8_0._scrollWidth = recthelper.getWidth(arg_8_0._scrollViewObj.transform)
-	arg_8_0._halfScrollWidth = arg_8_0._scrollWidth / 2
+function FightCardPreDisPlayView:_onLoadFinish(loader)
+	self._cardWidth = 180
+	self._halfCardWidth = self._cardWidth / 2
+	self._cardDistance = self._cardWidth + 40
+	self._scrollWidth = recthelper.getWidth(self._scrollViewObj.transform)
+	self._halfScrollWidth = self._scrollWidth / 2
 
-	local var_8_0 = arg_8_1:GetResource()
+	local tarPrefab = loader:GetResource()
 
-	if #arg_8_0._cardDataList > 5 then
-		arg_8_0._posX = -120
+	if #self._cardDataList > 5 then
+		self._posX = -120
 	else
-		arg_8_0._posX = -arg_8_0._halfScrollWidth + (#arg_8_0._cardDataList - 1) * arg_8_0._cardDistance / 2
+		self._posX = -self._halfScrollWidth + (#self._cardDataList - 1) * self._cardDistance / 2
 	end
 
-	arg_8_0._cardObjList = arg_8_0:getUserDataTb_()
+	self._cardObjList = self:getUserDataTb_()
 
-	arg_8_0:com_createObjList(arg_8_0._onItemShow, arg_8_0._cardDataList, arg_8_0._cardRoot, var_8_0)
-	recthelper.setWidth(arg_8_0._cardRoot.transform, -arg_8_0._posX - arg_8_0._halfCardWidth)
+	self:com_createObjList(self._onItemShow, self._cardDataList, self._cardRoot, tarPrefab)
+	recthelper.setWidth(self._cardRoot.transform, -self._posX - self._halfCardWidth)
 end
 
-function var_0_0._onItemShow(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	local var_9_0 = arg_9_1.transform
+function FightCardPreDisPlayView:_onItemShow(obj, data, index)
+	local transform = obj.transform
 
-	var_9_0.anchorMin = arg_9_0._anchor
-	var_9_0.anchorMax = arg_9_0._anchor
+	transform.anchorMin = self._anchor
+	transform.anchorMax = self._anchor
 
-	recthelper.setAnchorX(var_9_0, arg_9_0._posX)
+	recthelper.setAnchorX(transform, self._posX)
 
-	arg_9_0._posX = arg_9_0._posX - arg_9_0._cardDistance
+	self._posX = self._posX - self._cardDistance
 
-	MonoHelper.addNoUpdateLuaComOnceToGo(arg_9_1, FightViewCardItem):updateItem(arg_9_2.uid, arg_9_2.skillId, arg_9_2)
+	local class = MonoHelper.addNoUpdateLuaComOnceToGo(obj, FightViewCardItem)
 
-	local var_9_1 = gohelper.getClickWithDefaultAudio(arg_9_1)
+	class:updateItem(data.uid, data.skillId, data)
 
-	arg_9_0:addClickCb(var_9_1, arg_9_0._onCardClick, arg_9_0, arg_9_3)
-	table.insert(arg_9_0._cardObjList, arg_9_1)
+	local click = gohelper.getClickWithDefaultAudio(obj)
+
+	self:addClickCb(click, self._onCardClick, self, index)
+	table.insert(self._cardObjList, obj)
 end
 
-function var_0_0._onCardClick(arg_10_0, arg_10_1)
-	if arg_10_0._curSelectIndex == arg_10_1 then
+function FightCardPreDisPlayView:_onCardClick(index)
+	if self._curSelectIndex == index then
 		return
 	end
 
-	arg_10_0:_releaseTween()
+	self:_releaseTween()
 
-	if arg_10_0._curSelectIndex then
-		arg_10_0:_cancelSelect()
+	if self._curSelectIndex then
+		self:_cancelSelect()
 	end
 
-	arg_10_0._showSkillDesPart = true
+	self._showSkillDesPart = true
 
-	gohelper.setActive(arg_10_0._skillRoot, true)
+	gohelper.setActive(self._skillRoot, true)
 
-	arg_10_0._curSelectIndex = arg_10_1
-	arg_10_0._curSelectCardInfo = arg_10_0._cardDataList[arg_10_1]
+	self._curSelectIndex = index
+	self._curSelectCardInfo = self._cardDataList[index]
 
-	arg_10_0:_showSkillDes()
+	self:_showSkillDes()
 
-	local var_10_0 = arg_10_0._cardObjList[arg_10_1].transform
+	local cardObj = self._cardObjList[index]
+	local cardTransform = cardObj.transform
 
-	table.insert(arg_10_0._tween, ZProj.TweenHelper.DOAnchorPosY(var_10_0, 27, 0.1))
-	table.insert(arg_10_0._tween, ZProj.TweenHelper.DOScale(var_10_0, 1.2, 1.2, 1, 0.1))
+	table.insert(self._tween, ZProj.TweenHelper.DOAnchorPosY(cardTransform, 27, 0.1))
+	table.insert(self._tween, ZProj.TweenHelper.DOScale(cardTransform, 1.2, 1.2, 1, 0.1))
 
-	local var_10_1 = recthelper.rectToRelativeAnchorPos(var_10_0.position, arg_10_0._scrollViewObj.transform).x
-	local var_10_2 = var_10_1 - arg_10_0._halfCardWidth
-	local var_10_3 = var_10_1 + arg_10_0._halfCardWidth
+	local relativePosX = recthelper.rectToRelativeAnchorPos(cardTransform.position, self._scrollViewObj.transform).x
+	local minX = relativePosX - self._halfCardWidth
+	local maxX = relativePosX + self._halfCardWidth
 
-	if var_10_2 < -arg_10_0._halfScrollWidth then
-		local var_10_4 = var_10_2 + arg_10_0._halfScrollWidth
+	if minX < -self._halfScrollWidth then
+		local offset = minX + self._halfScrollWidth
 
-		recthelper.setAnchorX(arg_10_0._cardRoot.transform, recthelper.getAnchorX(arg_10_0._cardRoot.transform) - var_10_4 + 20)
+		recthelper.setAnchorX(self._cardRoot.transform, recthelper.getAnchorX(self._cardRoot.transform) - offset + 20)
 	end
 
-	if var_10_3 > arg_10_0._halfScrollWidth then
-		local var_10_5 = var_10_3 - arg_10_0._halfScrollWidth
+	if maxX > self._halfScrollWidth then
+		local offset = maxX - self._halfScrollWidth
 
-		recthelper.setAnchorX(arg_10_0._cardRoot.transform, recthelper.getAnchorX(arg_10_0._cardRoot.transform) - var_10_5 - 20)
+		recthelper.setAnchorX(self._cardRoot.transform, recthelper.getAnchorX(self._cardRoot.transform) - offset - 20)
 	end
 end
 
-function var_0_0._releaseTween(arg_11_0)
-	if arg_11_0._tween then
-		for iter_11_0, iter_11_1 in ipairs(arg_11_0._tween) do
-			ZProj.TweenHelper.KillById(iter_11_1)
+function FightCardPreDisPlayView:_releaseTween()
+	if self._tween then
+		for i, v in ipairs(self._tween) do
+			ZProj.TweenHelper.KillById(v)
 		end
 	end
 
-	arg_11_0._tween = {}
+	self._tween = {}
 end
 
-function var_0_0._cancelSelect(arg_12_0)
-	if arg_12_0._curSelectIndex then
-		gohelper.setActive(arg_12_0._skillRoot, false)
-		arg_12_0:_releaseTween()
-		table.insert(arg_12_0._tween, ZProj.TweenHelper.DOAnchorPosY(arg_12_0._cardObjList[arg_12_0._curSelectIndex].transform, 0, 0.1))
-		table.insert(arg_12_0._tween, ZProj.TweenHelper.DOScale(arg_12_0._cardObjList[arg_12_0._curSelectIndex].transform, 1, 1, 1, 0.1))
+function FightCardPreDisPlayView:_cancelSelect()
+	if self._curSelectIndex then
+		gohelper.setActive(self._skillRoot, false)
+		self:_releaseTween()
+		table.insert(self._tween, ZProj.TweenHelper.DOAnchorPosY(self._cardObjList[self._curSelectIndex].transform, 0, 0.1))
+		table.insert(self._tween, ZProj.TweenHelper.DOScale(self._cardObjList[self._curSelectIndex].transform, 1, 1, 1, 0.1))
 
-		arg_12_0._curSelectIndex = nil
-		arg_12_0._showSkillDesPart = false
+		self._curSelectIndex = nil
+		self._showSkillDesPart = false
 	end
 end
 
-function var_0_0._showSkillDes(arg_13_0)
-	local var_13_0 = lua_skill.configDict[arg_13_0._curSelectCardInfo.skillId]
+function FightCardPreDisPlayView:_showSkillDes()
+	local skillConfig = lua_skill.configDict[self._curSelectCardInfo.skillId]
 
-	arg_13_0._skillNameText.text = var_13_0.name
-	arg_13_0._skillDesText.text = FightConfig.instance:getEntitySkillDesc(arg_13_0._curSelectCardInfo.uid, var_13_0)
+	self._skillNameText.text = skillConfig.name
+	self._skillDesText.text = FightConfig.instance:getEntitySkillDesc(self._curSelectCardInfo.uid, skillConfig)
 
-	if arg_13_0._skillDesText.preferredHeight > 80 then
-		recthelper.setHeight(arg_13_0._imageSkillBg.transform, 270)
+	local textHeight = self._skillDesText.preferredHeight
+
+	if textHeight > 80 then
+		recthelper.setHeight(self._imageSkillBg.transform, 270)
 	else
-		recthelper.setHeight(arg_13_0._imageSkillBg.transform, 200)
+		recthelper.setHeight(self._imageSkillBg.transform, 200)
 	end
 end
 
-function var_0_0.onClose(arg_14_0)
-	arg_14_0:_releaseTween()
+function FightCardPreDisPlayView:onClose()
+	self:_releaseTween()
 end
 
-function var_0_0.onDestroyView(arg_15_0)
+function FightCardPreDisPlayView:onDestroyView()
 	return
 end
 
-return var_0_0
+return FightCardPreDisPlayView

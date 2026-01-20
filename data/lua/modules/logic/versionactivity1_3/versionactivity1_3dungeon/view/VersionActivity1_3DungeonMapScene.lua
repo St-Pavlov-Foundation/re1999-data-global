@@ -1,44 +1,46 @@
-﻿module("modules.logic.versionactivity1_3.versionactivity1_3dungeon.view.VersionActivity1_3DungeonMapScene", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/versionactivity1_3dungeon/view/VersionActivity1_3DungeonMapScene.lua
 
-local var_0_0 = class("VersionActivity1_3DungeonMapScene", VersionActivity1_3DungeonBaseMapScene)
+module("modules.logic.versionactivity1_3.versionactivity1_3dungeon.view.VersionActivity1_3DungeonMapScene", package.seeall)
 
-function var_0_0.getInteractiveItem(arg_1_0)
-	return arg_1_0.viewContainer.mapView:openMapInteractiveItem()
+local VersionActivity1_3DungeonMapScene = class("VersionActivity1_3DungeonMapScene", VersionActivity1_3DungeonBaseMapScene)
+
+function VersionActivity1_3DungeonMapScene:getInteractiveItem()
+	return self.viewContainer.mapView:openMapInteractiveItem()
 end
 
-function var_0_0.createInteractiveItem(arg_2_0)
-	var_0_0.super.getInteractiveItem(arg_2_0)
+function VersionActivity1_3DungeonMapScene:createInteractiveItem()
+	VersionActivity1_3DungeonMapScene.super.getInteractiveItem(self)
 end
 
-function var_0_0.showInteractiveItem(arg_3_0)
-	return arg_3_0.viewContainer.mapView:showInteractiveItem() or var_0_0.super.showInteractiveItem(arg_3_0)
+function VersionActivity1_3DungeonMapScene:showInteractiveItem()
+	return self.viewContainer.mapView:showInteractiveItem() or VersionActivity1_3DungeonMapScene.super.showInteractiveItem(self)
 end
 
-function var_0_0._isSameMap(arg_4_0, arg_4_1, arg_4_2)
-	return arg_4_1 == arg_4_2 and arg_4_1 ~= VersionActivity1_3DungeonEnum.DailyEpisodeId
+function VersionActivity1_3DungeonMapScene:_isSameMap(curId, lastId)
+	return curId == lastId and curId ~= VersionActivity1_3DungeonEnum.DailyEpisodeId
 end
 
-function var_0_0.getMapTime(arg_5_0)
-	local var_5_0 = arg_5_0.activityDungeonMo.episodeId
-	local var_5_1 = arg_5_0._lastEpisodeId
+function VersionActivity1_3DungeonMapScene:getMapTime()
+	local curEpisodeId = self.activityDungeonMo.episodeId
+	local lastEpisodeId = self._lastEpisodeId
 
-	if not var_5_1 or var_5_0 == var_5_1 then
+	if not lastEpisodeId or curEpisodeId == lastEpisodeId then
 		return
 	end
 
-	local var_5_2 = VersionActivity1_3DungeonController.instance:isDayTime(var_5_1)
-	local var_5_3 = VersionActivity1_3DungeonController.instance:isDayTime(var_5_0)
+	local lastIsSun = VersionActivity1_3DungeonController.instance:isDayTime(lastEpisodeId)
+	local curIsSun = VersionActivity1_3DungeonController.instance:isDayTime(curEpisodeId)
 
-	if var_5_2 == var_5_3 then
+	if lastIsSun == curIsSun then
 		return
 	end
 
-	return var_5_3 and "sun" or "moon"
+	return curIsSun and "sun" or "moon"
 end
 
-function var_0_0.onOpen(arg_6_0)
-	var_0_0.super.onOpen(arg_6_0)
-	MainCameraMgr.instance:addView(ViewName.VersionActivity1_3DungeonMapView, arg_6_0._initCamera, nil, arg_6_0)
+function VersionActivity1_3DungeonMapScene:onOpen()
+	VersionActivity1_3DungeonMapScene.super.onOpen(self)
+	MainCameraMgr.instance:addView(ViewName.VersionActivity1_3DungeonMapView, self._initCamera, nil, self)
 end
 
-return var_0_0
+return VersionActivity1_3DungeonMapScene

@@ -1,171 +1,177 @@
-﻿module("modules.logic.player.view.PlayerChangeBgListView", package.seeall)
+﻿-- chunkname: @modules/logic/player/view/PlayerChangeBgListView.lua
 
-local var_0_0 = class("PlayerChangeBgListView", BaseView)
+module("modules.logic.player.view.PlayerChangeBgListView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goRoot = gohelper.findChild(arg_1_0.viewGO, "root")
-	arg_1_0._btnHide = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#go_bottom/#btn_hide")
-	arg_1_0._gobottom = gohelper.findChild(arg_1_0.viewGO, "root/#go_bottom")
-	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "root/#go_bottom/bottom/#scroll_bg/Viewport/Content/#go_item")
-	arg_1_0._goitemparent = arg_1_0._goitem.transform.parent.gameObject
-	arg_1_0._golock = gohelper.findChild(arg_1_0.viewGO, "root/#go_bottom/bottom/#go_lock")
-	arg_1_0._gocur = gohelper.findChild(arg_1_0.viewGO, "root/#go_bottom/bottom/#go_curbg")
-	arg_1_0._btnChange = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#go_bottom/bottom/#btn_change")
-	arg_1_0._txtbgname = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/#go_bottom/top/namebg/#txt_bgName")
-	arg_1_0._txtbgdesc = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/#go_bottom/top/#txt_bgdesc")
-	arg_1_0._gobglock = gohelper.findChild(arg_1_0.viewGO, "root/#go_bottom/top/#go_lock")
-	arg_1_0._txtbglock = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/#go_bottom/top/#go_lock/#txt_lock")
-	arg_1_0._anim = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+local PlayerChangeBgListView = class("PlayerChangeBgListView", BaseView)
+
+function PlayerChangeBgListView:onInitView()
+	self._goRoot = gohelper.findChild(self.viewGO, "root")
+	self._btnHide = gohelper.findChildButtonWithAudio(self.viewGO, "root/#go_bottom/#btn_hide")
+	self._gobottom = gohelper.findChild(self.viewGO, "root/#go_bottom")
+	self._goitem = gohelper.findChild(self.viewGO, "root/#go_bottom/bottom/#scroll_bg/Viewport/Content/#go_item")
+	self._goitemparent = self._goitem.transform.parent.gameObject
+	self._golock = gohelper.findChild(self.viewGO, "root/#go_bottom/bottom/#go_lock")
+	self._gocur = gohelper.findChild(self.viewGO, "root/#go_bottom/bottom/#go_curbg")
+	self._btnChange = gohelper.findChildButtonWithAudio(self.viewGO, "root/#go_bottom/bottom/#btn_change")
+	self._txtbgname = gohelper.findChildTextMesh(self.viewGO, "root/#go_bottom/top/namebg/#txt_bgName")
+	self._txtbgdesc = gohelper.findChildTextMesh(self.viewGO, "root/#go_bottom/top/#txt_bgdesc")
+	self._gobglock = gohelper.findChild(self.viewGO, "root/#go_bottom/top/#go_lock")
+	self._txtbglock = gohelper.findChildTextMesh(self.viewGO, "root/#go_bottom/top/#go_lock/#txt_lock")
+	self._anim = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnHide:AddClickListener(arg_2_0._hideRoot, arg_2_0)
-	arg_2_0._btnChange:AddClickListener(arg_2_0._changeBg, arg_2_0)
-	GameStateMgr.instance:registerCallback(GameStateEvent.OnTouchScreen, arg_2_0._onTouchScreen, arg_2_0)
-	PlayerController.instance:registerCallback(PlayerEvent.ChangeBgTab, arg_2_0.onBgTabIndexChange, arg_2_0)
-	PlayerController.instance:registerCallback(PlayerEvent.ChangePlayerinfo, arg_2_0._onPlayerInfoChange, arg_2_0)
+function PlayerChangeBgListView:addEvents()
+	self._btnHide:AddClickListener(self._hideRoot, self)
+	self._btnChange:AddClickListener(self._changeBg, self)
+	GameStateMgr.instance:registerCallback(GameStateEvent.OnTouchScreen, self._onTouchScreen, self)
+	PlayerController.instance:registerCallback(PlayerEvent.ChangeBgTab, self.onBgTabIndexChange, self)
+	PlayerController.instance:registerCallback(PlayerEvent.ChangePlayerinfo, self._onPlayerInfoChange, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnHide:RemoveClickListener()
-	arg_3_0._btnChange:RemoveClickListener()
-	GameStateMgr.instance:unregisterCallback(GameStateEvent.OnTouchScreen, arg_3_0._onTouchScreen, arg_3_0)
-	PlayerController.instance:unregisterCallback(PlayerEvent.ChangeBgTab, arg_3_0.onBgTabIndexChange, arg_3_0)
-	PlayerController.instance:unregisterCallback(PlayerEvent.ChangePlayerinfo, arg_3_0._onPlayerInfoChange, arg_3_0)
+function PlayerChangeBgListView:removeEvents()
+	self._btnHide:RemoveClickListener()
+	self._btnChange:RemoveClickListener()
+	GameStateMgr.instance:unregisterCallback(GameStateEvent.OnTouchScreen, self._onTouchScreen, self)
+	PlayerController.instance:unregisterCallback(PlayerEvent.ChangeBgTab, self.onBgTabIndexChange, self)
+	PlayerController.instance:unregisterCallback(PlayerEvent.ChangePlayerinfo, self._onPlayerInfoChange, self)
 end
 
-function var_0_0.onOpen(arg_4_0)
+function PlayerChangeBgListView:onOpen()
 	PostProcessingMgr.instance:setBlurWeight(1)
 
-	if arg_4_0.viewParam and arg_4_0.viewParam.itemMo then
-		recthelper.setAnchorY(arg_4_0._gobottom.transform, -109)
-		arg_4_0:onSelectBg(arg_4_0.viewParam.bgCo)
+	if self.viewParam and self.viewParam.itemMo then
+		recthelper.setAnchorY(self._gobottom.transform, -109)
+		self:onSelectBg(self.viewParam.bgCo)
 	else
-		recthelper.setAnchorY(arg_4_0._gobottom.transform, 202)
+		recthelper.setAnchorY(self._gobottom.transform, 202)
 
-		local var_4_0 = lua_player_bg.configList
-		local var_4_1 = arg_4_0.viewParam.selectIndex
+		local data = lua_player_bg.configList
+		local selectIndex = self.viewParam.selectIndex
 
-		arg_4_0._selectIndex = var_4_1
+		self._selectIndex = selectIndex
 
-		arg_4_0:onSelectBg(var_4_0[var_4_1])
-		gohelper.CreateObjList(arg_4_0, arg_4_0._createItem, var_4_0, arg_4_0._goitemparent, arg_4_0._goitem, PlayerChangeBgItem)
-		arg_4_0:updateApplyStatus()
+		self:onSelectBg(data[selectIndex])
+		gohelper.CreateObjList(self, self._createItem, data, self._goitemparent, self._goitem, PlayerChangeBgItem)
+		self:updateApplyStatus()
 	end
 
-	arg_4_0:playOpenAnim()
+	self:playOpenAnim()
 end
 
-function var_0_0.updateApplyStatus(arg_5_0)
-	if arg_5_0.viewParam and arg_5_0.viewParam.itemMo then
+function PlayerChangeBgListView:updateApplyStatus()
+	if self.viewParam and self.viewParam.itemMo then
 		return
 	end
 
-	local var_5_0 = lua_player_bg.configList[arg_5_0._selectIndex]
+	local nowSelectData = lua_player_bg.configList[self._selectIndex]
 
-	if not var_5_0 then
+	if not nowSelectData then
 		return
 	end
 
-	local var_5_1 = true
-	local var_5_2 = PlayerModel.instance:getPlayinfo()
+	local isUnlock = true
+	local info = PlayerModel.instance:getPlayinfo()
 
-	if var_5_0.item ~= 0 then
-		var_5_1 = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, var_5_0.item) > 0
+	if nowSelectData.item ~= 0 then
+		local quantity = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, nowSelectData.item)
+
+		isUnlock = quantity > 0
 	end
 
-	gohelper.setActive(arg_5_0._golock, not var_5_1)
-	gohelper.setActive(arg_5_0._gocur, var_5_1 and var_5_2.bg == var_5_0.item)
-	gohelper.setActive(arg_5_0._btnChange, var_5_1 and var_5_2.bg ~= var_5_0.item)
+	gohelper.setActive(self._golock, not isUnlock)
+	gohelper.setActive(self._gocur, isUnlock and info.bg == nowSelectData.item)
+	gohelper.setActive(self._btnChange, isUnlock and info.bg ~= nowSelectData.item)
 end
 
-function var_0_0.onBgTabIndexChange(arg_6_0, arg_6_1)
-	arg_6_0._selectIndex = arg_6_1
+function PlayerChangeBgListView:onBgTabIndexChange(index)
+	self._selectIndex = index
 
-	arg_6_0:onSelectBg(lua_player_bg.configList[arg_6_1])
-	arg_6_0:updateApplyStatus()
+	self:onSelectBg(lua_player_bg.configList[index])
+	self:updateApplyStatus()
 end
 
-function var_0_0._onPlayerInfoChange(arg_7_0)
-	arg_7_0:updateApplyStatus()
+function PlayerChangeBgListView:_onPlayerInfoChange()
+	self:updateApplyStatus()
 end
 
-function var_0_0._changeBg(arg_8_0)
-	local var_8_0 = lua_player_bg.configList[arg_8_0._selectIndex]
+function PlayerChangeBgListView:_changeBg()
+	local nowSelectData = lua_player_bg.configList[self._selectIndex]
 
-	if not var_8_0 then
+	if not nowSelectData then
 		return
 	end
 
-	PlayerRpc.instance:sendSetPlayerBgRequest(var_8_0.item)
+	PlayerRpc.instance:sendSetPlayerBgRequest(nowSelectData.item)
 end
 
-function var_0_0._createItem(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	arg_9_1:initMo(arg_9_2, arg_9_3, arg_9_0._selectIndex)
+function PlayerChangeBgListView:_createItem(obj, data, index)
+	obj:initMo(data, index, self._selectIndex)
 end
 
-function var_0_0.onSelectBg(arg_10_0, arg_10_1)
-	local var_10_0 = true
+function PlayerChangeBgListView:onSelectBg(bgCo)
+	local isUnlock = true
 
-	if arg_10_1.item ~= 0 then
-		var_10_0 = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, arg_10_1.item) > 0
+	if bgCo.item ~= 0 then
+		local quantity = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, bgCo.item)
+
+		isUnlock = quantity > 0
 	end
 
-	arg_10_0._txtbgname.text = arg_10_1.name
+	self._txtbgname.text = bgCo.name
 
-	if var_10_0 then
-		arg_10_0._txtbgdesc.text = arg_10_1.desc
+	if isUnlock then
+		self._txtbgdesc.text = bgCo.desc
 
-		gohelper.setActive(arg_10_0._gobglock, false)
+		gohelper.setActive(self._gobglock, false)
 	else
-		arg_10_0._txtbgdesc.text = ""
-		arg_10_0._txtbglock.text = arg_10_1.lockdesc
+		self._txtbgdesc.text = ""
+		self._txtbglock.text = bgCo.lockdesc
 
-		gohelper.setActive(arg_10_0._gobglock, true)
+		gohelper.setActive(self._gobglock, true)
 	end
 end
 
-function var_0_0.playOpenAnim(arg_11_0)
-	if arg_11_0.viewParam and arg_11_0.viewParam.itemMo then
-		arg_11_0._anim:Play("up")
+function PlayerChangeBgListView:playOpenAnim()
+	if self.viewParam and self.viewParam.itemMo then
+		self._anim:Play("up")
 	else
-		arg_11_0._anim:Play("open")
+		self._anim:Play("open")
 	end
 end
 
-function var_0_0.playCloseAnim(arg_12_0)
-	if arg_12_0.viewParam and arg_12_0.viewParam.itemMo then
-		arg_12_0._anim:Play("down")
+function PlayerChangeBgListView:playCloseAnim()
+	if self.viewParam and self.viewParam.itemMo then
+		self._anim:Play("down")
 	else
-		arg_12_0._anim:Play("close")
+		self._anim:Play("close")
 	end
 end
 
-function var_0_0._hideRoot(arg_13_0)
-	arg_13_0._isHide = true
+function PlayerChangeBgListView:_hideRoot()
+	self._isHide = true
 
-	arg_13_0:playCloseAnim()
+	self:playCloseAnim()
 	PlayerController.instance:dispatchEvent(PlayerEvent.ShowHideRoot, false)
 end
 
-function var_0_0._delayEndBlock(arg_14_0)
+function PlayerChangeBgListView:_delayEndBlock()
 	UIBlockMgr.instance:endBlock("PlayerChangeBgListView_ShowRoot")
 end
 
-function var_0_0.onClose(arg_15_0)
-	TaskDispatcher.cancelTask(arg_15_0._delayEndBlock, arg_15_0)
+function PlayerChangeBgListView:onClose()
+	TaskDispatcher.cancelTask(self._delayEndBlock, self)
 	UIBlockMgr.instance:endBlock("PlayerChangeBgListView_ShowRoot")
 end
 
-function var_0_0._onTouchScreen(arg_16_0)
-	if arg_16_0._isHide then
-		TaskDispatcher.runDelay(arg_16_0._delayEndBlock, arg_16_0, 0.33)
+function PlayerChangeBgListView:_onTouchScreen()
+	if self._isHide then
+		TaskDispatcher.runDelay(self._delayEndBlock, self, 0.33)
 		UIBlockMgr.instance:startBlock("PlayerChangeBgListView_ShowRoot")
-		arg_16_0:playOpenAnim()
+		self:playOpenAnim()
 		PlayerController.instance:dispatchEvent(PlayerEvent.ShowHideRoot, true)
 	end
 
-	arg_16_0._isHide = false
+	self._isHide = false
 end
 
-return var_0_0
+return PlayerChangeBgListView

@@ -1,71 +1,73 @@
-﻿module("modules.logic.fight.view.cardeffect.FightCardLongPressEndEffect", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/cardeffect/FightCardLongPressEndEffect.lua
 
-local var_0_0 = class("FightCardLongPressEndEffect", BaseWork)
+module("modules.logic.fight.view.cardeffect.FightCardLongPressEndEffect", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local FightCardLongPressEndEffect = class("FightCardLongPressEndEffect", BaseWork)
+
+function FightCardLongPressEndEffect:ctor()
 	return
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	var_0_0.super.onStart(arg_2_0, arg_2_1)
+function FightCardLongPressEndEffect:onStart(context)
+	FightCardLongPressEndEffect.super.onStart(self, context)
 
-	arg_2_0._dragItem = arg_2_1.handCardItemList[arg_2_1.index]
-	arg_2_0._cardCount = arg_2_1.cardCount
+	self._dragItem = context.handCardItemList[context.index]
+	self._cardCount = context.cardCount
 
-	gohelper.setAsLastSibling(arg_2_0._dragItem.go)
+	gohelper.setAsLastSibling(self._dragItem.go)
 	FightController.instance:dispatchEvent(FightEvent.CardLongPressEffectEnd)
 
-	local var_2_0, var_2_1, var_2_2 = transformhelper.getLocalScale(arg_2_0._dragItem.tr)
+	local curScale, _, _ = transformhelper.getLocalScale(self._dragItem.tr)
 
-	arg_2_0._sequence = FlowSequence.New()
+	self._sequence = FlowSequence.New()
 
-	arg_2_0._sequence:addWork(TweenWork.New({
+	self._sequence:addWork(TweenWork.New({
 		type = "DOTweenFloat",
 		to = 1,
 		t = 0.05,
-		from = var_2_0,
-		frameCb = arg_2_0._tweenFrameScale,
-		cbObj = arg_2_0
+		from = curScale,
+		frameCb = self._tweenFrameScale,
+		cbObj = self
 	}))
-	arg_2_0._sequence:registerDoneListener(arg_2_0._onWorkDone, arg_2_0)
-	arg_2_0._sequence:start()
+	self._sequence:registerDoneListener(self._onWorkDone, self)
+	self._sequence:start()
 end
 
-function var_0_0._tweenFrameScale(arg_3_0, arg_3_1)
-	arg_3_0._dragScale = arg_3_1
+function FightCardLongPressEndEffect:_tweenFrameScale(value)
+	self._dragScale = value
 
-	arg_3_0:_updateDragHandCards()
+	self:_updateDragHandCards()
 end
 
-function var_0_0._onWorkDone(arg_4_0)
-	arg_4_0._sequence:unregisterDoneListener(arg_4_0._onWorkDone, arg_4_0)
-	arg_4_0:onDone(true)
+function FightCardLongPressEndEffect:_onWorkDone()
+	self._sequence:unregisterDoneListener(self._onWorkDone, self)
+	self:onDone(true)
 end
 
-function var_0_0._updateDragHandCards(arg_5_0)
-	local var_5_0 = arg_5_0.context.index
-	local var_5_1 = arg_5_0._dragItem
-	local var_5_2 = arg_5_0._cardCount
-	local var_5_3 = arg_5_0._dragScale
-	local var_5_4 = arg_5_0.context.handCardItemList
-	local var_5_5 = FightViewHandCard.HandCardHeight * (var_5_3 - 1) / 2
+function FightCardLongPressEndEffect:_updateDragHandCards()
+	local dragIndex = self.context.index
+	local dragItem = self._dragItem
+	local cardCount = self._cardCount
+	local dragScale = self._dragScale
+	local handCardItemList = self.context.handCardItemList
+	local targetPosY = FightViewHandCard.HandCardHeight * (dragScale - 1) / 2
 
-	recthelper.setAnchorY(var_5_1.tr, var_5_5)
-	transformhelper.setLocalScale(var_5_1.tr, var_5_3, var_5_3, 1)
+	recthelper.setAnchorY(dragItem.tr, targetPosY)
+	transformhelper.setLocalScale(dragItem.tr, dragScale, dragScale, 1)
 
-	if var_5_4 then
-		if var_5_2 == nil then
+	if handCardItemList then
+		if cardCount == nil then
 			return
 		end
 
-		for iter_5_0 = 1, var_5_2 do
-			local var_5_6 = var_5_4[iter_5_0]
-			local var_5_7 = recthelper.getAnchorX(var_5_6.tr)
-			local var_5_8 = FightViewHandCard.calcCardPosXDraging(iter_5_0, var_5_2, var_5_0, var_5_3)
+		for i = 1, cardCount do
+			local item = handCardItemList[i]
+			local curPosX = recthelper.getAnchorX(item.tr)
+			local targetPosX = FightViewHandCard.calcCardPosXDraging(i, cardCount, dragIndex, dragScale)
 
-			recthelper.setAnchorX(var_5_6.tr, var_5_8)
+			recthelper.setAnchorX(item.tr, targetPosX)
 		end
 	end
 end
 
-return var_0_0
+return FightCardLongPressEndEffect

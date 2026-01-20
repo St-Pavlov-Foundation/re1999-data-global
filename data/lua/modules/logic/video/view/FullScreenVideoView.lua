@@ -1,120 +1,125 @@
-﻿module("modules.logic.video.view.FullScreenVideoView", package.seeall)
+﻿-- chunkname: @modules/logic/video/view/FullScreenVideoView.lua
 
-local var_0_0 = class("FullScreenVideoView", BaseView)
+module("modules.logic.video.view.FullScreenVideoView", package.seeall)
 
-var_0_0.DefaultMaxDuration = 3
+local FullScreenVideoView = class("FullScreenVideoView", BaseView)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goblackbg = gohelper.findChild(arg_1_0.viewGO, "blackbg")
-	arg_1_0._govideo = gohelper.findChild(arg_1_0.viewGO, "#go_video")
+FullScreenVideoView.DefaultMaxDuration = 3
+
+function FullScreenVideoView:onInitView()
+	self._goblackbg = gohelper.findChild(self.viewGO, "blackbg")
+	self._govideo = gohelper.findChild(self.viewGO, "#go_video")
 end
 
-function var_0_0.onOpen(arg_2_0)
-	arg_2_0.doneCb = arg_2_0.viewParam.doneCb
-	arg_2_0.doneCbObj = arg_2_0.viewParam.doneCbObj
-	arg_2_0.waitViewOpen = arg_2_0.viewParam.waitViewOpen
-	arg_2_0.videoDone = false
+function FullScreenVideoView:onOpen()
+	self.doneCb = self.viewParam.doneCb
+	self.doneCbObj = self.viewParam.doneCbObj
+	self.waitViewOpen = self.viewParam.waitViewOpen
+	self.videoDone = false
 
-	local var_2_0 = arg_2_0.viewParam.getVideoPlayer
+	local getVideoPlayer = self.viewParam.getVideoPlayer
 
-	arg_2_0._setVideoPlayer = arg_2_0.viewParam.setVideoPlayer
+	self._setVideoPlayer = self.viewParam.setVideoPlayer
 
-	if var_2_0 then
-		arg_2_0._videoPlayer, arg_2_0.displayUGUI, arg_2_0.videoGo = var_2_0(arg_2_0.doneCbObj)
+	if getVideoPlayer then
+		self._videoPlayer, self.videoGo = getVideoPlayer(self.doneCbObj)
 
-		gohelper.addChild(arg_2_0._govideo, arg_2_0.videoGo)
-		transformhelper.setLocalScale(arg_2_0.videoGo.transform, 1, 1, 1)
-		gohelper.setActive(arg_2_0.videoGo, true)
-
-		arg_2_0.displayUGUI.enabled = false
+		gohelper.addChild(self._govideo, self.videoGo)
+		transformhelper.setLocalScale(self.videoGo.transform, 1, 1, 1)
+		gohelper.setActive(self.videoGo, true)
 	else
-		arg_2_0._videoPlayer, arg_2_0.displayUGUI, arg_2_0.videoGo = AvProMgr.instance:getVideoPlayer(arg_2_0._govideo)
+		self._videoPlayer, self.videoGo = VideoPlayerMgr.instance:createGoAndVideoPlayer(self._govideo)
 	end
 
-	if arg_2_0.viewParam.videoAudio then
-		AudioMgr.instance:trigger(arg_2_0.viewParam.videoAudio)
+	if self.viewParam.videoAudio then
+		AudioMgr.instance:trigger(self.viewParam.videoAudio)
 	end
 
-	arg_2_0._videoPath = arg_2_0.viewParam.videoPath
+	self._videoPath = self.viewParam.videoPath
 
-	arg_2_0._videoPlayer:Play(arg_2_0.displayUGUI, arg_2_0.viewParam.videoPath, false, arg_2_0.videoStatusUpdate, arg_2_0)
-	gohelper.setActive(arg_2_0._goblackbg, not arg_2_0.viewParam.noShowBlackBg)
+	self._videoPlayer:play(self._videoPath, false, self.videoStatusUpdate, self)
+	gohelper.setActive(self._goblackbg, not self.viewParam.noShowBlackBg)
 
-	arg_2_0.videoGo:GetComponent(typeof(ZProj.UIBgSelfAdapter)).enabled = false
-	arg_2_0._time = arg_2_0.viewParam.videoDuration or var_0_0.DefaultMaxDuration
+	local bgAdapter = self.videoGo:GetComponent(typeof(ZProj.UIBgSelfAdapter))
 
-	TaskDispatcher.runDelay(arg_2_0.onVideoOverTime, arg_2_0, arg_2_0._time)
+	if bgAdapter then
+		bgAdapter.enabled = false
+	end
+
+	self._time = self.viewParam.videoDuration or FullScreenVideoView.DefaultMaxDuration
+
+	TaskDispatcher.runDelay(self.onVideoOverTime, self, self._time)
 end
 
-function var_0_0.videoStatusUpdate(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	if arg_3_2 == AvProEnum.PlayerStatus.FinishedPlaying then
-		arg_3_0:onPlayVideoDone()
-	elseif arg_3_2 == AvProEnum.PlayerStatus.Closing then
-		arg_3_0:onPlayVideoDone()
-	elseif arg_3_2 == AvProEnum.PlayerStatus.Started then
-		TaskDispatcher.cancelTask(arg_3_0.onVideoOverTime, arg_3_0)
-		TaskDispatcher.runDelay(arg_3_0.onVideoOverTime, arg_3_0, arg_3_0._time)
-		VideoController.instance:dispatchEvent(VideoEvent.OnVideoStarted, arg_3_0._videoPath)
-	elseif arg_3_2 == AvProEnum.PlayerStatus.FirstFrameReady then
-		TaskDispatcher.cancelTask(arg_3_0.onVideoOverTime, arg_3_0)
-		TaskDispatcher.runDelay(arg_3_0.onVideoOverTime, arg_3_0, arg_3_0._time)
-		VideoController.instance:dispatchEvent(VideoEvent.OnVideoFirstFrameReady, arg_3_0._videoPath)
+function FullScreenVideoView:videoStatusUpdate(path, status, errorCode)
+	if status == VideoEnum.PlayerStatus.FinishedPlaying then
+		self:onPlayVideoDone()
+	elseif status == VideoEnum.PlayerStatus.Closing then
+		self:onPlayVideoDone()
+	elseif status == VideoEnum.PlayerStatus.Started then
+		TaskDispatcher.cancelTask(self.onVideoOverTime, self)
+		TaskDispatcher.runDelay(self.onVideoOverTime, self, self._time)
+		VideoController.instance:dispatchEvent(VideoEvent.OnVideoStarted, self._videoPath)
+	elseif status == VideoEnum.PlayerStatus.FirstFrameReady then
+		TaskDispatcher.cancelTask(self.onVideoOverTime, self)
+		TaskDispatcher.runDelay(self.onVideoOverTime, self, self._time)
+		VideoController.instance:dispatchEvent(VideoEvent.OnVideoFirstFrameReady, self._videoPath)
 	end
 end
 
-function var_0_0.onPlayVideoDone(arg_4_0)
-	if arg_4_0.videoDone then
+function FullScreenVideoView:onPlayVideoDone()
+	if self.videoDone then
 		return
 	end
 
-	arg_4_0.videoDone = true
+	self.videoDone = true
 
-	TaskDispatcher.cancelTask(arg_4_0.onVideoOverTime, arg_4_0)
+	TaskDispatcher.cancelTask(self.onVideoOverTime, self)
 
-	if not arg_4_0.waitViewOpen or ViewMgr.instance:isOpen(arg_4_0.waitViewOpen) then
-		arg_4_0:closeThis()
+	if not self.waitViewOpen or ViewMgr.instance:isOpen(self.waitViewOpen) then
+		self:closeThis()
 	else
-		ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_4_0._onViewOpen, arg_4_0)
+		ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, self._onViewOpen, self)
 	end
 
-	if arg_4_0.doneCb then
-		arg_4_0.doneCb(arg_4_0.doneCbObj)
+	if self.doneCb then
+		self.doneCb(self.doneCbObj)
 	end
 
 	VideoController.instance:dispatchEvent(VideoEvent.OnVideoPlayFinished)
 end
 
-function var_0_0.onVideoOverTime(arg_5_0)
-	arg_5_0:onPlayVideoDone()
+function FullScreenVideoView:onVideoOverTime()
+	self:onPlayVideoDone()
 end
 
-function var_0_0._onViewOpen(arg_6_0, arg_6_1)
-	if arg_6_0.waitViewOpen == arg_6_1 then
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, arg_6_0._onViewOpen, arg_6_0)
-		arg_6_0:closeThis()
+function FullScreenVideoView:_onViewOpen(viewName)
+	if self.waitViewOpen == viewName then
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, self._onViewOpen, self)
+		self:closeThis()
 	end
 end
 
-function var_0_0.onDestroyView(arg_7_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, arg_7_0._onViewOpen, arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0.onVideoOverTime, arg_7_0)
+function FullScreenVideoView:onDestroyView()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, self._onViewOpen, self)
+	TaskDispatcher.cancelTask(self.onVideoOverTime, self)
 
-	if arg_7_0._setVideoPlayer then
-		arg_7_0._setVideoPlayer(arg_7_0.doneCbObj, arg_7_0._videoPlayer, arg_7_0.displayUGUI, arg_7_0.videoGo)
+	if self._setVideoPlayer then
+		self._setVideoPlayer(self.doneCbObj, self._videoPlayer, self.videoGo)
 
-		arg_7_0._setVideoPlayer = nil
-		arg_7_0._videoPlayer = nil
+		self._setVideoPlayer = nil
+		self._videoPlayer = nil
 	end
 
-	if arg_7_0._videoPlayer then
-		arg_7_0._videoPlayer:Stop()
-		arg_7_0._videoPlayer:Clear()
+	if self._videoPlayer then
+		self._videoPlayer:stop()
+		self._videoPlayer:clear()
 
-		arg_7_0._videoPlayer = nil
+		self._videoPlayer = nil
 	end
 
-	arg_7_0.doneCb = nil
-	arg_7_0.doneCbObj = nil
+	self.doneCb = nil
+	self.doneCbObj = nil
 end
 
-return var_0_0
+return FullScreenVideoView

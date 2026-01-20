@@ -1,43 +1,45 @@
-﻿module("modules.logic.herogroup.view.HeroGroupFightWeekwalk_2ViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/herogroup/view/HeroGroupFightWeekwalk_2ViewContainer.lua
 
-local var_0_0 = class("HeroGroupFightWeekwalk_2ViewContainer", HeroGroupFightViewContainer)
+module("modules.logic.herogroup.view.HeroGroupFightWeekwalk_2ViewContainer", package.seeall)
 
-function var_0_0.addFirstViews(arg_1_0, arg_1_1)
-	var_0_0.super.addFirstViews(arg_1_0, arg_1_1)
-	table.insert(arg_1_1, WeekWalk_2HeroGroupFightLayoutView.New())
+local HeroGroupFightWeekwalk_2ViewContainer = class("HeroGroupFightWeekwalk_2ViewContainer", HeroGroupFightViewContainer)
+
+function HeroGroupFightWeekwalk_2ViewContainer:addFirstViews(views)
+	HeroGroupFightWeekwalk_2ViewContainer.super.addFirstViews(self, views)
+	table.insert(views, WeekWalk_2HeroGroupFightLayoutView.New())
 end
 
-function var_0_0.defineFightView(arg_2_0)
-	arg_2_0._heroGroupFightView = HeroGroupWeekWalk_2FightView.New()
-	arg_2_0._heroGroupFightListView = WeekWalk_2HeroGroupListView.New()
-	arg_2_0._heroGroupLevelView = WeekWalk_2HeroGroupFightView_Level.New()
+function HeroGroupFightWeekwalk_2ViewContainer:defineFightView()
+	self._heroGroupFightView = HeroGroupWeekWalk_2FightView.New()
+	self._heroGroupFightListView = WeekWalk_2HeroGroupListView.New()
+	self._heroGroupLevelView = WeekWalk_2HeroGroupFightView_Level.New()
 end
 
-function var_0_0.addCommonViews(arg_3_0, arg_3_1)
-	table.insert(arg_3_1, arg_3_0._heroGroupFightView)
-	table.insert(arg_3_1, HeroGroupAnimView.New())
-	table.insert(arg_3_1, arg_3_0._heroGroupFightListView.New())
-	table.insert(arg_3_1, arg_3_0._heroGroupLevelView.New())
-	table.insert(arg_3_1, HeroGroupFightWeekWalk_2ViewRule.New())
-	table.insert(arg_3_1, HeroGroupInfoScrollView.New())
-	table.insert(arg_3_1, CheckActivityEndView.New())
-	table.insert(arg_3_1, HeroGroupPresetFightView.New())
-	table.insert(arg_3_1, TabViewGroup.New(1, "#go_container/btnContain/commonBtns"))
-	table.insert(arg_3_1, TabViewGroup.New(2, "#go_righttop/#go_power"))
+function HeroGroupFightWeekwalk_2ViewContainer:addCommonViews(views)
+	table.insert(views, self._heroGroupFightView)
+	table.insert(views, HeroGroupAnimView.New())
+	table.insert(views, self._heroGroupFightListView.New())
+	table.insert(views, self._heroGroupLevelView.New())
+	table.insert(views, HeroGroupFightWeekWalk_2ViewRule.New())
+	table.insert(views, HeroGroupInfoScrollView.New())
+	table.insert(views, CheckActivityEndView.New())
+	table.insert(views, HeroGroupPresetFightView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_container/btnContain/commonBtns"))
+	table.insert(views, TabViewGroup.New(2, "#go_righttop/#go_power"))
 end
 
-function var_0_0.addLastViews(arg_4_0, arg_4_1)
-	table.insert(arg_4_1, HeroGroupFightWeekWalk_2View.New())
-	table.insert(arg_4_1, WeekWalk_2HeroGroupBuffView.New())
+function HeroGroupFightWeekwalk_2ViewContainer:addLastViews(views)
+	table.insert(views, HeroGroupFightWeekWalk_2View.New())
+	table.insert(views, WeekWalk_2HeroGroupBuffView.New())
 
-	arg_4_0.helpView = HelpShowView.New()
+	self.helpView = HelpShowView.New()
 
-	arg_4_0.helpView:setHelpId(HelpEnum.HelpId.WeekWalk_2HeroGroup)
-	table.insert(arg_4_1, arg_4_0.helpView)
+	self.helpView:setHelpId(HelpEnum.HelpId.WeekWalk_2HeroGroup)
+	table.insert(views, self.helpView)
 end
 
-function var_0_0.getHelpId(arg_5_0)
+function HeroGroupFightWeekwalk_2ViewContainer:getHelpId()
 	return HelpEnum.HelpId.WeekWalk_2HeroGroup
 end
 
-return var_0_0
+return HeroGroupFightWeekwalk_2ViewContainer

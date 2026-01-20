@@ -1,60 +1,62 @@
-﻿module("modules.logic.rouge.map.view.fightsucc.RougeFightSuccessHeroItem", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/view/fightsucc/RougeFightSuccessHeroItem.lua
 
-local var_0_0 = class("RougeFightSuccessHeroItem", RougeLuaCompBase)
+module("modules.logic.rouge.map.view.fightsucc.RougeFightSuccessHeroItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	var_0_0.super.init(arg_1_0, arg_1_1)
+local RougeFightSuccessHeroItem = class("RougeFightSuccessHeroItem", RougeLuaCompBase)
 
-	arg_1_0.go = arg_1_1
-	arg_1_0.slider = gohelper.findChildSlider(arg_1_1, "#slider_hp")
-	arg_1_0.simageRole = gohelper.findChildSingleImage(arg_1_1, "hero/#simage_rolehead")
-	arg_1_0.goDead = gohelper.findChild(arg_1_1, "#go_dead")
+function RougeFightSuccessHeroItem:init(go)
+	RougeFightSuccessHeroItem.super.init(self, go)
+
+	self.go = go
+	self.slider = gohelper.findChildSlider(go, "#slider_hp")
+	self.simageRole = gohelper.findChildSingleImage(go, "hero/#simage_rolehead")
+	self.goDead = gohelper.findChild(go, "#go_dead")
 end
 
-function var_0_0.refreshHero(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_1 and arg_2_1.heroId
+function RougeFightSuccessHeroItem:refreshHero(heroMo)
+	local heroId = heroMo and heroMo.heroId
 
-	if var_2_0 ~= 0 then
-		gohelper.setActive(arg_2_0.go, true)
+	if heroId ~= 0 then
+		gohelper.setActive(self.go, true)
 
-		local var_2_1 = arg_2_0:getHeroHeadIcon(var_2_0)
+		local headIcon = self:getHeroHeadIcon(heroId)
 
-		arg_2_0.simageRole:LoadImage(ResUrl.getRoomHeadIcon(var_2_1))
+		self.simageRole:LoadImage(ResUrl.getRoomHeadIcon(headIcon))
 
-		local var_2_2 = RougeModel.instance:getFightResultInfo()
-		local var_2_3 = var_2_2 and var_2_2:getLife(var_2_0)
+		local fightResultInfo = RougeModel.instance:getFightResultInfo()
+		local life = fightResultInfo and fightResultInfo:getLife(heroId)
 
-		if var_2_3 <= 0 then
-			arg_2_0.slider:SetValue(0)
-			gohelper.setActive(arg_2_0.goDead, true)
+		if life <= 0 then
+			self.slider:SetValue(0)
+			gohelper.setActive(self.goDead, true)
 		else
-			arg_2_0.slider:SetValue(var_2_3 / 1000)
-			gohelper.setActive(arg_2_0.goDead, false)
+			self.slider:SetValue(life / 1000)
+			gohelper.setActive(self.goDead, false)
 		end
 
-		arg_2_0:tickUpdateDLCs(arg_2_1)
+		self:tickUpdateDLCs(heroMo)
 	end
 end
 
-function var_0_0.getHeroHeadIcon(arg_3_0, arg_3_1)
-	local var_3_0 = RougeModel.instance:getTeamInfo()
-	local var_3_1 = var_3_0 and var_3_0:isAssistHero(arg_3_1)
-	local var_3_2
+function RougeFightSuccessHeroItem:getHeroHeadIcon(heroId)
+	local teamInfo = RougeModel.instance:getTeamInfo()
+	local isAssist = teamInfo and teamInfo:isAssistHero(heroId)
+	local heroMo
 
-	if var_3_1 then
-		var_3_2 = var_3_0:getAssistHeroMo()
+	if isAssist then
+		heroMo = teamInfo:getAssistHeroMo()
 	else
-		var_3_2 = HeroModel.instance:getByHeroId(arg_3_1)
+		heroMo = HeroModel.instance:getByHeroId(heroId)
 	end
 
-	local var_3_3 = var_3_2 and var_3_2.skin
-	local var_3_4 = var_3_3 and lua_skin.configDict[var_3_3]
+	local skinId = heroMo and heroMo.skin
+	local skinCo = skinId and lua_skin.configDict[skinId]
 
-	return var_3_4 and var_3_4.headIcon or arg_3_1 .. "01"
+	return skinCo and skinCo.headIcon or heroId .. "01"
 end
 
-function var_0_0.onDestroyView(arg_4_0)
-	arg_4_0.simageRole:UnLoadImage()
+function RougeFightSuccessHeroItem:onDestroyView()
+	self.simageRole:UnLoadImage()
 end
 
-return var_0_0
+return RougeFightSuccessHeroItem

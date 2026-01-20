@@ -1,55 +1,58 @@
-﻿module("modules.logic.voyage.view.ActivityGiftForTheVoyageItemBase", package.seeall)
+﻿-- chunkname: @modules/logic/voyage/view/ActivityGiftForTheVoyageItemBase.lua
 
-local var_0_0 = class("ActivityGiftForTheVoyageItemBase", LuaCompBase)
+module("modules.logic.voyage.view.ActivityGiftForTheVoyageItemBase", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.viewGO = arg_1_1
+local ActivityGiftForTheVoyageItemBase = class("ActivityGiftForTheVoyageItemBase", LuaCompBase)
 
-	arg_1_0:onInitView()
-	arg_1_0:addEvents()
+function ActivityGiftForTheVoyageItemBase:init(go)
+	self.viewGO = go
+
+	self:onInitView()
+	self:addEvents()
 end
 
-function var_0_0.onDestroy(arg_2_0)
-	arg_2_0:onDestroyView()
+function ActivityGiftForTheVoyageItemBase:onDestroy()
+	self:onDestroyView()
 end
 
-function var_0_0.onUpdateMO(arg_3_0, arg_3_1)
-	arg_3_0._mo = arg_3_1
+function ActivityGiftForTheVoyageItemBase:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_3_0:onRefresh()
+	self:onRefresh()
 end
 
-function var_0_0._refreshRewardList(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0._mo.id
-	local var_4_1 = VoyageConfig.instance:getRewardStr(var_4_0)
-	local var_4_2 = ItemModel.instance:getItemDataListByConfigStr(var_4_1)
+function ActivityGiftForTheVoyageItemBase:_refreshRewardList(templateGo)
+	local mo = self._mo
+	local id = mo.id
+	local str = VoyageConfig.instance:getRewardStr(id)
+	local item_list = ItemModel.instance:getItemDataListByConfigStr(str)
 
-	IconMgr.instance:getCommonPropItemIconList(arg_4_0, arg_4_0._onRewardItemShow, var_4_2, arg_4_1)
+	IconMgr.instance:getCommonPropItemIconList(self, self._onRewardItemShow, item_list, templateGo)
 end
 
-function var_0_0._onRewardItemShow(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	arg_5_1:onUpdateMO(arg_5_2)
-	arg_5_1:setConsume(true)
-	arg_5_1:isShowEffect(true)
-	arg_5_1:setAutoPlay(true)
-	arg_5_1:setCountFontSize(48)
-	arg_5_1:showStackableNum2()
+function ActivityGiftForTheVoyageItemBase:_onRewardItemShow(cell_component, data, index)
+	cell_component:onUpdateMO(data)
+	cell_component:setConsume(true)
+	cell_component:isShowEffect(true)
+	cell_component:setAutoPlay(true)
+	cell_component:setCountFontSize(48)
+	cell_component:showStackableNum2()
 end
 
-function var_0_0.addEvents(arg_6_0)
+function ActivityGiftForTheVoyageItemBase:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_7_0)
+function ActivityGiftForTheVoyageItemBase:removeEvents()
 	return
 end
 
-function var_0_0.onRefresh(arg_8_0)
+function ActivityGiftForTheVoyageItemBase:onRefresh()
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
-	arg_9_0:removeEvents()
+function ActivityGiftForTheVoyageItemBase:onDestroyView()
+	self:removeEvents()
 end
 
-return var_0_0
+return ActivityGiftForTheVoyageItemBase

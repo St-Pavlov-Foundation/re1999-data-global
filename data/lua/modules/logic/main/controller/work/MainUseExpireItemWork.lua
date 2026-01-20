@@ -1,14 +1,16 @@
-﻿module("modules.logic.main.controller.work.MainUseExpireItemWork", package.seeall)
+﻿-- chunkname: @modules/logic/main/controller/work/MainUseExpireItemWork.lua
 
-local var_0_0 = class("MainUseExpireItemWork", BaseWork)
+module("modules.logic.main.controller.work.MainUseExpireItemWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
+local MainUseExpireItemWork = class("MainUseExpireItemWork", BaseWork)
+
+function MainUseExpireItemWork:onStart(context)
 	ItemRpc.instance:sendAutoUseExpirePowerItemRequest()
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_2_0)
+function MainUseExpireItemWork:clearWork()
 	return
 end
 
-return var_0_0
+return MainUseExpireItemWork

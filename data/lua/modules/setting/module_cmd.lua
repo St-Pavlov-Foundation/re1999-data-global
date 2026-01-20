@@ -1,4 +1,6 @@
-﻿local var_0_0 = {
+﻿-- chunkname: @modules/setting/module_cmd.lua
+
+local module_cmd = {
 	[-12977] = {
 		"Achievement",
 		"GetAchievementInfoRequest",
@@ -282,6 +284,11 @@
 		"Activity113",
 		"GetAct113InfoRequest",
 		"GetAct113InfoReply"
+	},
+	[-27785] = {
+		"Activity113",
+		"GetAct113MilestoneBonusRequest",
+		"GetAct113MilestoneBonusReply"
 	},
 	[5427] = {
 		"Activity114",
@@ -715,6 +722,21 @@
 		"Activity128",
 		"Act128SpFirstHalfSelectItemRequest",
 		"Act128SpFirstHalfSelectItemReply"
+	},
+	[-18168] = {
+		"Activity128",
+		"GetGalleryInfosRequest",
+		"GetGalleryInfosReply"
+	},
+	[31065] = {
+		"Activity128",
+		"Act128GetExpRequest",
+		"Act128GetExpReply"
+	},
+	[-31645] = {
+		"Activity128",
+		"Act128GetMilestoneBonusRequest",
+		"Act128GetMilestoneBonusReply"
 	},
 	[10521] = {
 		"Activity129",
@@ -1683,6 +1705,16 @@
 		"Act182GetRankRewardRequest",
 		"Act182GetRankRewardReply"
 	},
+	[7730] = {
+		"Activity182",
+		"Act182RefreshBossRequest",
+		"Act182RefreshBossReply"
+	},
+	[5446] = {
+		"Activity182",
+		"Act182ChooseCardpackRequest",
+		"Act182ChooseCardpackReply"
+	},
 	[-6229] = {
 		"Activity182",
 		"Act182SaveSnapshotRequest",
@@ -2287,6 +2319,116 @@
 	[28059] = {
 		"Activity212",
 		"Act212BonusPush"
+	},
+	[-26510] = {
+		"Activity215",
+		"GetAct215InfoRequest",
+		"GetAct215InfoReply"
+	},
+	[-13943] = {
+		"Activity215",
+		"SubmitAct215ItemRequest",
+		"SubmitAct215ItemReply"
+	},
+	[2749] = {
+		"Activity215",
+		"GetAct215MilestoneBonusRequest",
+		"GetAct215MilestoneBonusReply"
+	},
+	[25318] = {
+		"Activity215",
+		"Act215InfoPush"
+	},
+	[19667] = {
+		"Activity215",
+		"RefreshAct215LastViewItemRequest",
+		"RefreshAct215LastViewItemReply"
+	},
+	[-14284] = {
+		"Activity216",
+		"GetAct216InfoRequest",
+		"GetAct216InfoReply"
+	},
+	[-26212] = {
+		"Activity216",
+		"FinishAct216TaskRequest",
+		"FinishAct216TaskReply"
+	},
+	[-14840] = {
+		"Activity216",
+		"Act216InfoPush"
+	},
+	[-26481] = {
+		"Activity216",
+		"Act216TaskPush"
+	},
+	[29940] = {
+		"Activity216",
+		"GetAct216OnceBonusRequest",
+		"GetAct216OnceBonusReply"
+	},
+	[27639] = {
+		"Activity217",
+		"Get217InfosRequest",
+		"Get217InfosReply"
+	},
+	[10905] = {
+		"Activity217",
+		"Act217CountChangePush"
+	},
+	[21408] = {
+		"Activity218",
+		"Get218InfoRequest",
+		"Get218InfoReply"
+	},
+	[-4697] = {
+		"Activity218",
+		"Act218FinishGameRequest",
+		"Act218FinishGameReply"
+	},
+	[-10815] = {
+		"Activity218",
+		"Act218AcceptRewardRequest",
+		"Act218AcceptRewardReply"
+	},
+	[-11862] = {
+		"Activity220",
+		"GetAct220InfoRequest",
+		"GetAct220InfoReply"
+	},
+	[4555] = {
+		"Activity220",
+		"Act220SaveEpisodeProgressRequest",
+		"Act220SaveEpisodeProgressReply"
+	},
+	[15816] = {
+		"Activity220",
+		"Act220FinishEpisodeRequest",
+		"Act220FinishEpisodeReply"
+	},
+	[-21482] = {
+		"Activity220",
+		"Act220ChooseEpisodeBranchRequest",
+		"Act220ChooseEpisodeBranchReply"
+	},
+	[23707] = {
+		"Activity220",
+		"Act220EpisodePush"
+	},
+	[-7276] = {
+		"Activity221",
+		"Get221InfoRequest",
+		"Get221InfoReply"
+	},
+	[-25473] = {
+		"Activity221",
+		"Act221SummonRequest",
+		"Act221SummonReply"
+	},
+	[25728] = {
+		"Activity221",
+		"Act221SelectRequest",
+		"Act221SelectReply"
 	},
 	[-14582] = {
 		"Activity",
@@ -3091,6 +3233,11 @@
 		"Dungeon",
 		"MainDramaRewardInfo"
 	},
+	[-24600] = {
+		"Dungeon",
+		"GetMapElementRecordRequest",
+		"GetMapElementRecordReply"
+	},
 	[15973] = {
 		"Equip",
 		"GetEquipInfoRequest",
@@ -3679,6 +3826,10 @@
 		"Hero",
 		"HeroLevelUpUpdatePush"
 	},
+	[13693] = {
+		"Hero",
+		"HeroTalentUpUpdatePush"
+	},
 	[31906] = {
 		"Hero",
 		"HeroTalentStyleStatRequest",
@@ -3810,6 +3961,11 @@
 		"HeroStoryPlotFinishRequest",
 		"HeroStoryPlotFinishReply"
 	},
+	[-8789] = {
+		"HeroStory",
+		"HeroStoryCommonTaskRequest",
+		"HeroStoryCommonTaskReply"
+	},
 	[-7309] = {
 		"Investigate",
 		"GetInvestigateRequest",
@@ -3868,6 +4024,11 @@
 		"UseInsightItemRequest",
 		"UseInsightItemReply"
 	},
+	[-7612] = {
+		"Item",
+		"UseTalentItemRequest",
+		"UseTalentItemReply"
+	},
 	[13187] = {
 		"Mail",
 		"GetAllMailsRequest",
@@ -3904,6 +4065,11 @@
 	[339] = {
 		"Mail",
 		"AutoReadMailPush"
+	},
+	[27872] = {
+		"Mail",
+		"MailLockRequest",
+		"MailLockReply"
 	},
 	[1969] = {
 		"Match3WarChess",
@@ -4829,6 +4995,205 @@
 		"ReadRoomLogNewRequest",
 		"ReadRoomLogNewReply"
 	},
+	[-19643] = {
+		"Rouge2",
+		"GetRouge2InfoRequest",
+		"GetRouge2InfoReply"
+	},
+	[4586] = {
+		"Rouge2",
+		"EnterRouge2SelectDifficultyRequest",
+		"EnterRouge2SelectDifficultyReply"
+	},
+	[-19479] = {
+		"Rouge2",
+		"EnterRouge2SelectCareerRequest",
+		"EnterRouge2SelectCareerReply"
+	},
+	[-28999] = {
+		"Rouge2",
+		"Rouge2AddCareerAttrPointRequest",
+		"Rouge2AddCareerAttrPointReply"
+	},
+	[-10582] = {
+		"Rouge2",
+		"Rouge2EquipCareerActiveSkillRequest",
+		"Rouge2EquipCareerActiveSkillReply"
+	},
+	[26872] = {
+		"Rouge2",
+		"Rouge2RoundMoveRequest",
+		"Rouge2RoundMoveReply"
+	},
+	[-12494] = {
+		"Rouge2",
+		"Rouge2ChoiceEventRequest",
+		"Rouge2ChoiceEventReply"
+	},
+	[23537] = {
+		"Rouge2",
+		"Rouge2BuyGoodsRequest",
+		"Rouge2BuyGoodsReply"
+	},
+	[-28966] = {
+		"Rouge2",
+		"Rouge2StealGoodsRequest",
+		"Rouge2StealGoodsReply"
+	},
+	[-27816] = {
+		"Rouge2",
+		"Rouge2EndShopEventRequest",
+		"Rouge2EndShopEventReply"
+	},
+	[-7090] = {
+		"Rouge2",
+		"Rouge2ShopRefreshRequest",
+		"Rouge2ShopRefreshReply"
+	},
+	[5502] = {
+		"Rouge2",
+		"Rouge2StealGoodsEnterFightRequest",
+		"Rouge2StealGoodsEnterFightReply"
+	},
+	[4058] = {
+		"Rouge2",
+		"Rouge2SelectDropRequest",
+		"Rouge2SelectDropReply"
+	},
+	[31123] = {
+		"Rouge2",
+		"Rouge2SelectLostCollectionRequest",
+		"Rouge2SelectLostCollectionReply"
+	},
+	[4370] = {
+		"Rouge2",
+		"Rouge2SelectBandMemberRequest",
+		"Rouge2SelectBandMemberReply"
+	},
+	[-5580] = {
+		"Rouge2",
+		"Rouge2RemoveBandMemberRequest",
+		"Rouge2RemoveBandMemberReply"
+	},
+	[21989] = {
+		"Rouge2",
+		"Rouge2EndBandRequest",
+		"Rouge2EndBandReply"
+	},
+	[-4728] = {
+		"Rouge2",
+		"Rouge2SelectUpdateCollectionRequest",
+		"Rouge2SelectUpdateCollectionReply"
+	},
+	[-30080] = {
+		"Rouge2",
+		"Rouge2GainCareer1RewardRequest",
+		"Rouge2GainCareer1RewardReply"
+	},
+	[5942] = {
+		"Rouge2",
+		"Rouge2PieceMoveRequest",
+		"Rouge2PieceMoveReply"
+	},
+	[-10197] = {
+		"Rouge2",
+		"Rouge2PieceTalkSelectRequest",
+		"Rouge2PieceTalkSelectReply"
+	},
+	[-24462] = {
+		"Rouge2",
+		"Rouge2LeaveMiddleLayerRequest",
+		"Rouge2LeaveMiddleLayerReply"
+	},
+	[8624] = {
+		"Rouge2",
+		"Rouge2EndRequest",
+		"Rouge2EndReply"
+	},
+	[-27375] = {
+		"Rouge2",
+		"Rouge2AbortRequest",
+		"Rouge2AbortReply"
+	},
+	[9603] = {
+		"Rouge2",
+		"Rouge2MonsterFixAttrRequest",
+		"Rouge2MonsterFixAttrReply"
+	},
+	[22080] = {
+		"Rouge2",
+		"Rouge2LayerMapInfoPush"
+	},
+	[-31227] = {
+		"Rouge2",
+		"Rouge2UpdateCoinPush"
+	},
+	[-7426] = {
+		"Rouge2",
+		"Rouge2UpdateRevivalCoinPush"
+	},
+	[4698] = {
+		"Rouge2",
+		"Rouge2EntrustInfoPush"
+	},
+	[-11355] = {
+		"Rouge2",
+		"Rouge2InfoPush"
+	},
+	[18755] = {
+		"Rouge2",
+		"Rouge2CheckInfoPush"
+	},
+	[21431] = {
+		"Rouge2",
+		"Rouge2AttrUpdatePush"
+	},
+	[8096] = {
+		"Rouge2",
+		"Rouge2BagItemRemovePush"
+	},
+	[-29099] = {
+		"Rouge2",
+		"Rouge2BagItemUpdatePush"
+	},
+	[-28769] = {
+		"Rouge2Outside",
+		"GetRouge2OutsideInfoRequest",
+		"GetRouge2OutsideInfoReply"
+	},
+	[17597] = {
+		"Rouge2Outside",
+		"Rouge2ActiveGeniusRequest",
+		"Rouge2ActiveGeniusReply"
+	},
+	[-31205] = {
+		"Rouge2Outside",
+		"Rouge2RewardRequest",
+		"Rouge2RewardReply"
+	},
+	[31420] = {
+		"Rouge2Outside",
+		"Rouge2UpdateRewardPointPush"
+	},
+	[5113] = {
+		"Rouge2Outside",
+		"Rouge2AlchemyRequest",
+		"Rouge2AlchemyReply"
+	},
+	[-20225] = {
+		"Rouge2Outside",
+		"Rouge2CancelAlchemyRequest",
+		"Rouge2CancelAlchemyReply"
+	},
+	[16545] = {
+		"Rouge2Outside",
+		"Rouge2GetUnlockCollectionsRequest",
+		"Rouge2GetUnlockCollectionsReply"
+	},
+	[30370] = {
+		"Rouge2Outside",
+		"Rouge2UpdateGeniusPointPush"
+	},
 	[-7647] = {
 		"Rouge",
 		"GetRougeInfoRequest",
@@ -5255,6 +5620,11 @@
 		"SignIn",
 		"SignInTotalRewardAllRequest",
 		"SignInTotalRewardAllReply"
+	},
+	[-24282] = {
+		"SignIn",
+		"SupplementMonthCardRequest",
+		"SupplementMonthCardReply"
 	},
 	[-28177] = {
 		"Stat",
@@ -5860,6 +6230,40 @@
 		"RefreshOnlineTaskRequest",
 		"RefreshOnlineTaskReply"
 	},
+	[-30625] = {
+		"Turnback",
+		"GetTurnbackDailyBonusRequest",
+		"GetTurnbackDailyBonusReply"
+	},
+	[-28897] = {
+		"Turnback",
+		"AcceptAllTurnbackBonusPointRequest",
+		"AcceptAllTurnbackBonusPointReply"
+	},
+	[-23079] = {
+		"Udimo",
+		"GetUdimoInfoRequest",
+		"GetUdimoInfoReply"
+	},
+	[922] = {
+		"Udimo",
+		"UseUdimoRequest",
+		"UseUdimoReply"
+	},
+	[18268] = {
+		"Udimo",
+		"UseBackgroundRequest",
+		"UseBackgroundReply"
+	},
+	[-13820] = {
+		"Udimo",
+		"UseDecorationRequest",
+		"UseDecorationReply"
+	},
+	[-13336] = {
+		"Udimo",
+		"WeathInfoPush"
+	},
 	[15277] = {
 		"UnlockVoucher",
 		"GetUnlockVoucherInfoRequest",
@@ -6071,6 +6475,6 @@
 	}
 }
 
-setGlobal("module_cmd", var_0_0)
+setGlobal("module_cmd", module_cmd)
 
-return var_0_0
+return module_cmd

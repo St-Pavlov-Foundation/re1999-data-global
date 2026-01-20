@@ -1,9 +1,11 @@
-﻿module("modules.logic.scene.main.comp.MainSceneGyroComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/main/comp/MainSceneGyroComp.lua
 
-local var_0_0 = class("MainSceneGyroComp", BaseSceneComp)
-local var_0_1 = UnityEngine.Input
-local var_0_2 = UnityEngine.Time
-local var_0_3 = {
+module("modules.logic.scene.main.comp.MainSceneGyroComp", package.seeall)
+
+local MainSceneGyroComp = class("MainSceneGyroComp", BaseSceneComp)
+local Input = UnityEngine.Input
+local Time = UnityEngine.Time
+local config = {
 	{
 		deltaScale = 2.2,
 		angle_x = 1.5,
@@ -12,47 +14,47 @@ local var_0_3 = {
 	}
 }
 
-function var_0_0.onScenePrepared(arg_1_0, arg_1_1, arg_1_2)
-	if not arg_1_0._isRunning then
-		arg_1_0._isRunning = true
+function MainSceneGyroComp:onScenePrepared(sceneId, levelId)
+	if not self._isRunning then
+		self._isRunning = true
 
-		TaskDispatcher.runRepeat(arg_1_0._tick, arg_1_0, 0)
+		TaskDispatcher.runRepeat(self._tick, self, 0)
 		CameraMgr.instance:setUnitCameraSeparate()
 	end
 
-	arg_1_0._aniGoList = {}
+	self._aniGoList = {}
 
-	local var_1_0 = var_0_3[1]
-	local var_1_1 = CameraMgr.instance:getMainCameraTrs()
-	local var_1_2 = var_1_1.localEulerAngles
+	local v = config[1]
+	local transform = CameraMgr.instance:getMainCameraTrs()
+	local initAngles = transform.localEulerAngles
 
-	var_1_0.maxX = var_1_2.x + var_1_0.angle_x
-	var_1_0.minX = var_1_2.x - var_1_0.angle_x
-	var_1_0.maxY = var_1_2.y + var_1_0.angle_y
-	var_1_0.minY = var_1_2.y - var_1_0.angle_y
+	v.maxX = initAngles.x + v.angle_x
+	v.minX = initAngles.x - v.angle_x
+	v.maxY = initAngles.y + v.angle_y
+	v.minY = initAngles.y - v.angle_y
 
-	local var_1_3 = {
-		transform = var_1_1,
-		config = var_1_0,
-		initAngles = var_1_2
+	local goParam = {
+		transform = transform,
+		config = v,
+		initAngles = initAngles
 	}
 
-	table.insert(arg_1_0._aniGoList, var_1_3)
+	table.insert(self._aniGoList, goParam)
 
-	local var_1_4, var_1_5, var_1_6 = ZProj.EngineUtil.GetInputAcceleration(0, 0, 0)
+	local curX, curY, curZ = ZProj.EngineUtil.GetInputAcceleration(0, 0, 0)
 
-	arg_1_0._acceleration = Vector3.New(var_1_4, var_1_5, var_1_6)
-	arg_1_0._curAcceleration = Vector3.New(var_1_4, var_1_5, var_1_6)
-	arg_1_0._deltaPos = Vector3.zero
-	arg_1_0._tempAngle = Vector3.zero
-	arg_1_0._gyroOffset = Vector4.New(0, 0, 0.04)
-	arg_1_0._srcQuaternion = Quaternion.New()
-	arg_1_0._targetQuaternion = Quaternion.New()
-	arg_1_0._gyroOffsetID = UnityEngine.Shader.PropertyToID("_GyroOffset")
+	self._acceleration = Vector3.New(curX, curY, curZ)
+	self._curAcceleration = Vector3.New(curX, curY, curZ)
+	self._deltaPos = Vector3.zero
+	self._tempAngle = Vector3.zero
+	self._gyroOffset = Vector4.New(0, 0, 0.04)
+	self._srcQuaternion = Quaternion.New()
+	self._targetQuaternion = Quaternion.New()
+	self._gyroOffsetID = UnityEngine.Shader.PropertyToID("_GyroOffset")
 end
 
-function var_0_0._tick(arg_2_0)
-	if not arg_2_0._aniGoList then
+function MainSceneGyroComp:_tick()
+	if not self._aniGoList then
 		return
 	end
 
@@ -60,73 +62,68 @@ function var_0_0._tick(arg_2_0)
 		return
 	end
 
-	local var_2_0, var_2_1, var_2_2 = ZProj.EngineUtil.GetInputAcceleration(0, 0, 0)
+	local curX, curY, curZ = ZProj.EngineUtil.GetInputAcceleration(0, 0, 0)
 
-	arg_2_0._gyroOffset.x, arg_2_0._gyroOffset.y = (arg_2_0._gyroOffset.x + var_2_0) * 0.5, (arg_2_0._gyroOffset.y + var_2_1) * 0.5
+	self._gyroOffset.x, self._gyroOffset.y = (self._gyroOffset.x + curX) * 0.5, (self._gyroOffset.y + curY) * 0.5
 
-	UnityEngine.Shader.SetGlobalVector(arg_2_0._gyroOffsetID, arg_2_0._gyroOffset)
-	arg_2_0._curAcceleration:Set(var_2_0, var_2_1, var_2_2)
+	UnityEngine.Shader.SetGlobalVector(self._gyroOffsetID, self._gyroOffset)
+	self._curAcceleration:Set(curX, curY, curZ)
 
-	local var_2_3 = arg_2_0._deltaPos
-	local var_2_4
-	local var_2_5
-	local var_2_6
+	local deltaPos = self._deltaPos
+	local transform, config, angle
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0._aniGoList) do
-		local var_2_7 = iter_2_1.transform
-		local var_2_8 = iter_2_1.config
+	for i, v in ipairs(self._aniGoList) do
+		transform = v.transform
+		config = v.config
+		deltaPos.y = self._curAcceleration.x - self._acceleration.x
+		deltaPos.x = self._curAcceleration.y - self._acceleration.y
+		angle = self:calcAngle(v.initAngles, deltaPos, config.deltaScale)
+		angle.x = angle.x > config.maxX and config.maxX or angle.x
+		angle.x = angle.x < config.minX and config.minX or angle.x
+		angle.y = angle.y > config.maxY and config.maxY or angle.y
+		angle.y = angle.y < config.minY and config.minY or angle.y
 
-		var_2_3.y = arg_2_0._curAcceleration.x - arg_2_0._acceleration.x
-		var_2_3.x = arg_2_0._curAcceleration.y - arg_2_0._acceleration.y
-
-		local var_2_9 = arg_2_0:calcAngle(iter_2_1.initAngles, var_2_3, var_2_8.deltaScale)
-
-		var_2_9.x = var_2_9.x > var_2_8.maxX and var_2_8.maxX or var_2_9.x
-		var_2_9.x = var_2_9.x < var_2_8.minX and var_2_8.minX or var_2_9.x
-		var_2_9.y = var_2_9.y > var_2_8.maxY and var_2_8.maxY or var_2_9.y
-		var_2_9.y = var_2_9.y < var_2_8.minY and var_2_8.minY or var_2_9.y
-
-		transformhelper.setLocalRotationLerp(var_2_7, var_2_9.x, var_2_9.y, var_2_9.z, var_0_2.deltaTime * var_2_8.lerpScale)
+		transformhelper.setLocalRotationLerp(transform, angle.x, angle.y, angle.z, Time.deltaTime * config.lerpScale)
 	end
 end
 
-function var_0_0.calcAngle(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	local var_3_0 = arg_3_0._tempAngle
+function MainSceneGyroComp:calcAngle(initAngles, deltaPos, deltaScale)
+	local temp = self._tempAngle
 
-	var_3_0.x = arg_3_1.x + arg_3_2.x * arg_3_3
-	var_3_0.y = arg_3_1.y + arg_3_2.y * arg_3_3
-	var_3_0.z = arg_3_1.z + arg_3_2.z * arg_3_3
+	temp.x = initAngles.x + deltaPos.x * deltaScale
+	temp.y = initAngles.y + deltaPos.y * deltaScale
+	temp.z = initAngles.z + deltaPos.z * deltaScale
 
-	return var_3_0
+	return temp
 end
 
-function var_0_0.QuaternionLerp(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	arg_4_3 = Mathf.Clamp(arg_4_3, 0, 1)
+function MainSceneGyroComp:QuaternionLerp(q1, q2, t)
+	t = Mathf.Clamp(t, 0, 1)
 
-	if Quaternion.Dot(arg_4_1, arg_4_2) < 0 then
-		arg_4_1.x = arg_4_1.x + arg_4_3 * (-arg_4_2.x - arg_4_1.x)
-		arg_4_1.y = arg_4_1.y + arg_4_3 * (-arg_4_2.y - arg_4_1.y)
-		arg_4_1.z = arg_4_1.z + arg_4_3 * (-arg_4_2.z - arg_4_1.z)
-		arg_4_1.w = arg_4_1.w + arg_4_3 * (-arg_4_2.w - arg_4_1.w)
+	if Quaternion.Dot(q1, q2) < 0 then
+		q1.x = q1.x + t * (-q2.x - q1.x)
+		q1.y = q1.y + t * (-q2.y - q1.y)
+		q1.z = q1.z + t * (-q2.z - q1.z)
+		q1.w = q1.w + t * (-q2.w - q1.w)
 	else
-		arg_4_1.x = arg_4_1.x + (arg_4_2.x - arg_4_1.x) * arg_4_3
-		arg_4_1.y = arg_4_1.y + (arg_4_2.y - arg_4_1.y) * arg_4_3
-		arg_4_1.z = arg_4_1.z + (arg_4_2.z - arg_4_1.z) * arg_4_3
-		arg_4_1.w = arg_4_1.w + (arg_4_2.w - arg_4_1.w) * arg_4_3
+		q1.x = q1.x + (q2.x - q1.x) * t
+		q1.y = q1.y + (q2.y - q1.y) * t
+		q1.z = q1.z + (q2.z - q1.z) * t
+		q1.w = q1.w + (q2.w - q1.w) * t
 	end
 
-	arg_4_1:SetNormalize()
+	q1:SetNormalize()
 
-	return arg_4_1
+	return q1
 end
 
-function var_0_0.onSceneClose(arg_5_0)
-	if arg_5_0._isRunning then
-		arg_5_0._isRunning = false
+function MainSceneGyroComp:onSceneClose()
+	if self._isRunning then
+		self._isRunning = false
 
-		TaskDispatcher.cancelTask(arg_5_0._tick, arg_5_0)
+		TaskDispatcher.cancelTask(self._tick, self)
 		CameraMgr.instance:setUnitCameraCombine()
 	end
 end
 
-return var_0_0
+return MainSceneGyroComp

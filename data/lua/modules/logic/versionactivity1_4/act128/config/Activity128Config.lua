@@ -1,12 +1,14 @@
-﻿module("modules.logic.versionactivity1_4.act128.config.Activity128Config", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act128/config/Activity128Config.lua
 
-local var_0_0 = class("Activity128Config", BaseConfig)
+module("modules.logic.versionactivity1_4.act128.config.Activity128Config", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.__activityId = arg_1_1
+local Activity128Config = class("Activity128Config", BaseConfig)
+
+function Activity128Config:ctor(activityId)
+	self.__activityId = activityId
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function Activity128Config:reqConfigNames()
 	return {
 		"activity128_stage",
 		"activity128_episode",
@@ -23,415 +25,454 @@ function var_0_0.reqConfigNames(arg_2_0)
 		"battle",
 		"episode",
 		"skin",
-		"assassin_style_zongmao"
+		"assassin_style_zongmao",
+		"activity128_gallery",
+		"activity128_level",
+		"activity128_tag",
+		"activity128_conceal_desc"
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity128_stage" then
+function Activity128Config:onConfigLoaded(configName, configTable)
+	if configName == "activity128_stage" then
 		-- block empty
-	elseif arg_3_1 == "activity128_episode" then
+	elseif configName == "activity128_episode" then
 		-- block empty
-	elseif arg_3_1 == "activity128_rewards" then
-		arg_3_0:__getOrCreateStageRewardList()
-	elseif arg_3_1 == "activity128_task" then
-		arg_3_0:__getOrCreateTaskList()
-		arg_3_0:_initActLayer4rewards()
-	elseif arg_3_1 == "activity128_countboss" then
+	elseif configName == "activity128_rewards" then
+		self:__getOrCreateStageRewardList()
+	elseif configName == "activity128_task" then
+		self:__getOrCreateTaskList()
+		self:_initActLayer4rewards()
+	elseif configName == "activity128_countboss" then
 		-- block empty
-	elseif arg_3_1 == "activity128_const" then
+	elseif configName == "activity128_const" then
 		-- block empty
-	elseif arg_3_1 == "activity128_evaluate" then
+	elseif configName == "activity128_evaluate" then
 		-- block empty
-	elseif arg_3_1 == "activity128_enhance" then
+	elseif configName == "activity128_enhance" then
 		-- block empty
 	end
 end
 
-local function var_0_1(arg_4_0)
-	return lua_scene_level.configDict[arg_4_0]
+local function getSceneLevelCO(sceneId)
+	return lua_scene_level.configDict[sceneId]
 end
 
-local function var_0_2(arg_5_0)
-	return var_0_1(arg_5_0).resName
+local function getSceneLevelResName(sceneId)
+	return getSceneLevelCO(sceneId).resName
 end
 
-local function var_0_3(arg_6_0)
-	return lua_battle.configDict[arg_6_0]
+local function getBattleCO(battleId)
+	return lua_battle.configDict[battleId]
 end
 
-local function var_0_4(arg_7_0)
-	return var_0_3(arg_7_0).monsterGroupIds
+local function getMonsterGroupIdsByBattleId(battleId)
+	return getBattleCO(battleId).monsterGroupIds
 end
 
-local function var_0_5(arg_8_0)
-	return lua_monster_group.configDict[arg_8_0]
+local function getMonsterGroupCO(monsterGroupId)
+	return lua_monster_group.configDict[monsterGroupId]
 end
 
-local function var_0_6(arg_9_0)
-	return lua_monster.configDict[arg_9_0]
+local function getMonsterCO(monsterId)
+	return lua_monster.configDict[monsterId]
 end
 
-local function var_0_7(arg_10_0)
-	return lua_episode.configDict[arg_10_0]
+local function getDungeonEpisodeCO(episodeId)
+	return lua_episode.configDict[episodeId]
 end
 
-local function var_0_8(arg_11_0)
-	return lua_monster_template.configDict[arg_11_0]
+local function getMonsterTemplateCO(templateId)
+	return lua_monster_template.configDict[templateId]
 end
 
-local function var_0_9(arg_12_0)
-	return var_0_8(arg_12_0.template)
+local function getMonsterTemplateCOByMonsterCO(monsterCO)
+	return getMonsterTemplateCO(monsterCO.template)
 end
 
-local function var_0_10(arg_13_0)
-	local var_13_0 = var_0_6(arg_13_0)
+local function getMonsterTemplateCOByMonsterId(monsterId)
+	local monsterCO = getMonsterCO(monsterId)
 
-	return var_0_9(var_13_0)
+	return getMonsterTemplateCOByMonsterCO(monsterCO)
 end
 
-local function var_0_11(arg_14_0)
-	return lua_activity128_stage.configDict[arg_14_0]
+local function getStages(activityId)
+	return lua_activity128_stage.configDict[activityId]
 end
 
-local function var_0_12(arg_15_0, arg_15_1)
-	return lua_activity128_stage.configDict[arg_15_0][arg_15_1]
+local function getStageCO(activityId, stage)
+	return lua_activity128_stage.configDict[activityId][stage]
 end
 
-local function var_0_13(arg_16_0, arg_16_1)
-	return lua_activity128_episode.configDict[arg_16_0][arg_16_1]
+local function getEpisodeStages(activityId, stage)
+	return lua_activity128_episode.configDict[activityId][stage]
 end
 
-local function var_0_14(arg_17_0, arg_17_1, arg_17_2)
-	return lua_activity128_episode.configDict[arg_17_0][arg_17_1][arg_17_2]
+local function getEpisodeCO(activityId, stage, layer)
+	return lua_activity128_episode.configDict[activityId][stage][layer]
 end
 
-local function var_0_15(arg_18_0, arg_18_1, arg_18_2)
-	return lua_activity128_episode.configDict[arg_18_0][arg_18_1][arg_18_2]
+local function getAchievementTaskCO(activityId, stage, taskId)
+	return lua_activity128_episode.configDict[activityId][stage][taskId]
 end
 
-local function var_0_16(arg_19_0)
-	return lua_activity128_countboss.configDict[arg_19_0]
+local function getCountBossCO(battleId)
+	return lua_activity128_countboss.configDict[battleId]
 end
 
-local function var_0_17(arg_20_0)
-	return lua_activity128_evaluate.configDict[arg_20_0]
+local function getEvaluateCO(id)
+	return lua_activity128_evaluate.configDict[id]
 end
 
-function var_0_0.__getOrCreateStageRewardList(arg_21_0)
-	local var_21_0 = arg_21_0.__activityId
+function Activity128Config:__getOrCreateStageRewardList()
+	local activityId = self.__activityId
 
-	if arg_21_0.__cumulativeRewards then
-		return arg_21_0.__cumulativeRewards
+	if self.__cumulativeRewards then
+		return self.__cumulativeRewards
 	end
 
-	local var_21_1 = {}
+	local res = {}
 
-	arg_21_0.__cumulativeRewards = var_21_1
+	self.__cumulativeRewards = res
 
-	if lua_activity128_rewards.configDict[var_21_0] then
-		for iter_21_0, iter_21_1 in pairs(lua_activity128_rewards.configDict[var_21_0]) do
-			local var_21_2 = iter_21_1.stage
+	if lua_activity128_rewards.configDict[activityId] then
+		for _, v in pairs(lua_activity128_rewards.configDict[activityId]) do
+			local stage = v.stage
 
-			if not var_21_1[var_21_2] then
-				var_21_1[var_21_2] = {}
+			if not res[stage] then
+				res[stage] = {}
 			end
 
-			table.insert(var_21_1[var_21_2], iter_21_1)
+			table.insert(res[stage], v)
 		end
 	end
 
-	for iter_21_2, iter_21_3 in pairs(var_21_1) do
-		table.sort(iter_21_3, function(arg_22_0, arg_22_1)
-			if arg_22_0.rewardPointNum ~= arg_22_1.rewardPointNum then
-				return arg_22_0.rewardPointNum < arg_22_1.rewardPointNum
+	for _, rewardList in pairs(res) do
+		table.sort(rewardList, function(a, b)
+			if a.rewardPointNum ~= b.rewardPointNum then
+				return a.rewardPointNum < b.rewardPointNum
 			end
 
-			return arg_22_0.id < arg_22_1.id
+			return a.id < b.id
 		end)
 	end
 
-	return var_21_1
+	return res
 end
 
-function var_0_0.__getOrCreateTaskList(arg_23_0)
-	local var_23_0 = arg_23_0.__activityId
+function Activity128Config:__getOrCreateTaskList()
+	local activityId = self.__activityId
 
-	if arg_23_0.__taskList then
-		return arg_23_0.__taskList
+	if self.__taskList then
+		return self.__taskList
 	end
 
-	local var_23_1 = {}
+	local res = {}
 
-	arg_23_0.__taskList = var_23_1
+	self.__taskList = res
 
-	for iter_23_0, iter_23_1 in ipairs(lua_activity128_task.configList) do
-		if iter_23_1.isOnline and var_23_0 == iter_23_1.activityId and iter_23_1.totalTaskType == 0 then
-			var_23_1[#var_23_1 + 1] = iter_23_1
+	for _, v in ipairs(lua_activity128_task.configList) do
+		local isOnline = v.isOnline
+
+		if isOnline and activityId == v.activityId and v.totalTaskType == 0 then
+			res[#res + 1] = v
 		end
 	end
 
-	return var_23_1
+	return res
 end
 
-function var_0_0.getStageRewardList(arg_24_0, arg_24_1)
-	arg_24_0:__getOrCreateStageRewardList()
+function Activity128Config:getStageRewardList(stage)
+	self:__getOrCreateStageRewardList()
 
-	return arg_24_0.__cumulativeRewards[arg_24_1]
+	return self.__cumulativeRewards[stage]
 end
 
-function var_0_0.getAllTaskList(arg_25_0)
-	return arg_25_0:__getOrCreateTaskList()
+function Activity128Config:getAllTaskList()
+	return self:__getOrCreateTaskList()
 end
 
-function var_0_0.getTaskCO(arg_26_0, arg_26_1)
-	return lua_activity128_task.configDict[arg_26_1]
+function Activity128Config:getTaskCO(id)
+	return lua_activity128_task.configDict[id]
 end
 
-function var_0_0.getStages(arg_27_0)
-	return var_0_11(arg_27_0.__activityId)
+function Activity128Config:getStages()
+	return getStages(self.__activityId)
 end
 
-function var_0_0.getStageCO(arg_28_0, arg_28_1)
-	return var_0_12(arg_28_0.__activityId, arg_28_1)
+function Activity128Config:getStageCO(stage)
+	return getStageCO(self.__activityId, stage)
 end
 
-function var_0_0.getStageCOMaxPoints(arg_29_0, arg_29_1)
-	local var_29_0 = arg_29_0:getStageRewardList(arg_29_1)
+function Activity128Config:getStageCOMaxPoints(stage)
+	local stageRewardList = self:getStageRewardList(stage)
+	local maxStageRewardCO = stageRewardList[#stageRewardList]
 
-	return var_29_0[#var_29_0].rewardPointNum
+	return maxStageRewardCO.rewardPointNum
 end
 
-function var_0_0.getEpisodeStages(arg_30_0, arg_30_1)
-	return var_0_13(arg_30_0.__activityId, arg_30_1)
+function Activity128Config:getEpisodeStages(stage)
+	return getEpisodeStages(self.__activityId, stage)
 end
 
-function var_0_0.getEpisodeCO(arg_31_0, arg_31_1, arg_31_2)
-	return var_0_14(arg_31_0.__activityId, arg_31_1, arg_31_2)
+function Activity128Config:getEpisodeCO(stage, layer)
+	return getEpisodeCO(self.__activityId, stage, layer)
 end
 
-function var_0_0.getDungeonEpisodeId(arg_32_0, arg_32_1, arg_32_2)
-	return arg_32_0:getEpisodeCO(arg_32_1, arg_32_2).episodeId
+function Activity128Config:getDungeonEpisodeId(stage, layer)
+	return self:getEpisodeCO(stage, layer).episodeId
 end
 
-function var_0_0.getDungeonEpisodeCO(arg_33_0, arg_33_1, arg_33_2)
-	local var_33_0 = arg_33_0:getDungeonEpisodeId(arg_33_1, arg_33_2)
+function Activity128Config:getDungeonEpisodeCO(stage, layer)
+	local episodeId = self:getDungeonEpisodeId(stage, layer)
 
-	return var_0_7(var_33_0)
+	return getDungeonEpisodeCO(episodeId)
 end
 
-function var_0_0.getDungeonBattleId(arg_34_0, arg_34_1, arg_34_2)
-	return arg_34_0:getDungeonEpisodeCO(arg_34_1, arg_34_2).battleId
+function Activity128Config:getDungeonBattleId(stage, layer)
+	local co = self:getDungeonEpisodeCO(stage, layer)
+
+	return co.battleId
 end
 
-function var_0_0.getDungeonBattleCO(arg_35_0, arg_35_1, arg_35_2)
-	local var_35_0 = arg_35_0:getDungeonBattleId(arg_35_1, arg_35_2)
+function Activity128Config:getDungeonBattleCO(stage, layer)
+	local battleId = self:getDungeonBattleId(stage, layer)
 
-	return var_0_3(var_35_0)
+	return getBattleCO(battleId)
 end
 
-function var_0_0.getDungeonBattleScenceIds(arg_36_0, arg_36_1, arg_36_2)
-	return arg_36_0:getDungeonBattleCO(arg_36_1, arg_36_2).sceneIds
+function Activity128Config:getDungeonBattleScenceIds(stage, layer)
+	return self:getDungeonBattleCO(stage, layer).sceneIds
 end
 
-function var_0_0.getAchievementTaskCO(arg_37_0, arg_37_1, arg_37_2)
-	return var_0_15(arg_37_0.__activityId, arg_37_1, arg_37_2)
+function Activity128Config:getAchievementTaskCO(stage, taskId)
+	return getAchievementTaskCO(self.__activityId, stage, taskId)
 end
 
-function var_0_0.isInfinite(arg_38_0, arg_38_1, arg_38_2)
-	return arg_38_0:getEpisodeCO(arg_38_1, arg_38_2).type == 1
+function Activity128Config:isInfinite(stage, layer)
+	local type = self:getEpisodeCO(stage, layer).type
+
+	return type == 1
 end
 
-function var_0_0.getStageCOOpenDay(arg_39_0, arg_39_1)
-	return arg_39_0:getStageCO(arg_39_1).openDay
+function Activity128Config:getStageCOOpenDay(stage)
+	return self:getStageCO(stage).openDay
 end
 
-function var_0_0.getEpisodeCOOpenDay(arg_40_0, arg_40_1)
-	local var_40_0 = arg_40_0:getEpisodeStages(arg_40_1)
+function Activity128Config:getEpisodeCOOpenDay(stage)
+	local stageEpisode = self:getEpisodeStages(stage)
 
-	if var_40_0 then
-		local var_40_1, var_40_2 = next(var_40_0)
+	if stageEpisode then
+		local key, value = next(stageEpisode)
 
-		if var_40_1 then
-			return var_40_2.openDay
-		end
-	end
-end
-
-function var_0_0.getBattleCOByASL(arg_41_0, arg_41_1, arg_41_2)
-	local var_41_0 = arg_41_0:getDungeonBattleId(arg_41_1, arg_41_2)
-
-	return var_0_3(var_41_0)
-end
-
-function var_0_0.getMonsterGroupBossId(arg_42_0, arg_42_1)
-	return var_0_5(arg_42_1).bossId
-end
-
-function var_0_0.getBattleMaxPoints(arg_43_0, arg_43_1, arg_43_2)
-	local var_43_0 = arg_43_0:getDungeonBattleId(arg_43_1, arg_43_2)
-
-	return var_0_16(var_43_0).maxPoints
-end
-
-function var_0_0.getFinalMonsterId(arg_44_0, arg_44_1, arg_44_2)
-	local var_44_0 = arg_44_0:getDungeonBattleId(arg_44_1, arg_44_2)
-
-	return tonumber(var_0_16(var_44_0).finalMonsterId)
-end
-
-function var_0_0.getDungeonBattleSceneResName(arg_45_0, arg_45_1, arg_45_2)
-	local var_45_0 = arg_45_0:getDungeonBattleId(arg_45_1, arg_45_2)
-	local var_45_1 = var_0_3(var_45_0)
-	local var_45_2 = string.splitToNumber(var_45_1.sceneIds, "#")[1]
-
-	return var_0_2(var_45_2)
-end
-
-function var_0_0.getDungeonBattleMonsterSkinCOs(arg_46_0, arg_46_1, arg_46_2)
-	local var_46_0 = arg_46_0:getDungeonBattleId(arg_46_1, arg_46_2)
-	local var_46_1 = var_0_4(var_46_0)
-	local var_46_2 = string.splitToNumber(var_46_1, "#")[1]
-	local var_46_3 = var_0_5(var_46_2).monster
-	local var_46_4 = string.splitToNumber(var_46_3, "#")
-	local var_46_5 = {}
-
-	for iter_46_0, iter_46_1 in ipairs(var_46_4) do
-		local var_46_6 = var_0_6(iter_46_1).skinId
-
-		var_46_5[#var_46_5 + 1] = FightConfig.instance:getSkinCO(var_46_6)
-	end
-
-	return var_46_5
-end
-
-function var_0_0.getConst(arg_47_0, arg_47_1)
-	local var_47_0 = lua_activity128_const.configDict[arg_47_1]
-
-	return var_47_0.value1, var_47_0.value2
-end
-
-function var_0_0.tryGetStageAndLayerByEpisodeId(arg_48_0, arg_48_1)
-	for iter_48_0, iter_48_1 in ipairs(lua_activity128_episode.configList) do
-		if iter_48_1.episodeId == arg_48_1 then
-			return iter_48_1.stage, iter_48_1.layer
+		if key then
+			return value.openDay
 		end
 	end
 end
 
-function var_0_0.tryGetStageNextLayer(arg_49_0, arg_49_1, arg_49_2)
-	local var_49_0 = arg_49_0:getEpisodeStages(arg_49_1)
+function Activity128Config:getBattleCOByASL(stage, layer)
+	local battleId = self:getDungeonBattleId(stage, layer)
 
-	for iter_49_0, iter_49_1 in ipairs(var_49_0) do
-		local var_49_1 = iter_49_1.layer
+	return getBattleCO(battleId)
+end
 
-		if arg_49_2 + 1 == var_49_1 then
-			return var_49_1
+function Activity128Config:getMonsterGroupBossId(monsterGroupId)
+	return getMonsterGroupCO(monsterGroupId).bossId
+end
+
+function Activity128Config:getBattleMaxPoints(stage, layer)
+	local battleId = self:getDungeonBattleId(stage, layer)
+
+	return getCountBossCO(battleId).maxPoints
+end
+
+function Activity128Config:getFinalMonsterId(stage, layer)
+	local battleId = self:getDungeonBattleId(stage, layer)
+
+	return tonumber(getCountBossCO(battleId).finalMonsterId)
+end
+
+function Activity128Config:getDungeonBattleSceneResName(stage, layer)
+	local battleId = self:getDungeonBattleId(stage, layer)
+	local battleCO = getBattleCO(battleId)
+	local sceneIds = string.splitToNumber(battleCO.sceneIds, "#")
+	local sceneId = sceneIds[1]
+
+	return getSceneLevelResName(sceneId)
+end
+
+function Activity128Config:getDungeonBattleMonsterSkinCOs(stage, layer)
+	local battleId = self:getDungeonBattleId(stage, layer)
+	local monsterGroupIds = getMonsterGroupIdsByBattleId(battleId)
+	local monsterGroupIdList = string.splitToNumber(monsterGroupIds, "#")
+	local monsterGroupId = monsterGroupIdList[1]
+	local monsterIds = getMonsterGroupCO(monsterGroupId).monster
+	local monsterIdList = string.splitToNumber(monsterIds, "#")
+	local res = {}
+
+	for _, monsterId in ipairs(monsterIdList) do
+		local skinId = getMonsterCO(monsterId).skinId
+
+		res[#res + 1] = FightConfig.instance:getSkinCO(skinId)
+	end
+
+	return res
+end
+
+function Activity128Config:getConst(id)
+	local CO = lua_activity128_const.configDict[id]
+
+	return CO.value1, CO.value2
+end
+
+function Activity128Config:tryGetStageAndLayerByEpisodeId(episodeId)
+	for _, v in ipairs(lua_activity128_episode.configList) do
+		if v.episodeId == episodeId then
+			return v.stage, v.layer
 		end
 	end
 end
 
-function var_0_0.getEvaluateConfig(arg_50_0, arg_50_1)
-	return (var_0_17(arg_50_1))
+function Activity128Config:tryGetStageNextLayer(stage, layer)
+	local episodeStages = self:getEpisodeStages(stage)
+
+	for _, layerCO in ipairs(episodeStages) do
+		local nextLayer = layerCO.layer
+
+		if layer + 1 == nextLayer then
+			return nextLayer
+		end
+	end
 end
 
-local var_0_18 = {
+function Activity128Config:getEvaluateConfig(id)
+	local co = getEvaluateCO(id)
+
+	return co
+end
+
+local ETimeFmt = {
 	GEqual_1Day = 1,
 	GEqual_1Hour = 2,
 	GEqual_1Second = 4,
 	GEqual_1Min = 3
 }
-local var_0_19 = {
-	[var_0_18.GEqual_1Day] = "v1a4_bossrushleveldetail_remain_days_hours",
-	[var_0_18.GEqual_1Hour] = "v1a4_bossrushleveldetail_remain_hours",
-	[var_0_18.GEqual_1Min] = "v1a4_bossrushleveldetail_remain_mins",
-	[var_0_18.GEqual_1Second] = "v1a4_bossrushleveldetail_remain_1min"
+local _defaultStyle = {
+	[ETimeFmt.GEqual_1Day] = "v1a4_bossrushleveldetail_remain_days_hours",
+	[ETimeFmt.GEqual_1Hour] = "v1a4_bossrushleveldetail_remain_hours",
+	[ETimeFmt.GEqual_1Min] = "v1a4_bossrushleveldetail_remain_mins",
+	[ETimeFmt.GEqual_1Second] = "v1a4_bossrushleveldetail_remain_1min"
 }
-local var_0_20 = {
-	[var_0_18.GEqual_1Day] = "v1a4_bossrushleveldetail_unlock_days_hours",
-	[var_0_18.GEqual_1Hour] = "v1a4_bossrushleveldetail_unlock_hours",
-	[var_0_18.GEqual_1Min] = "v1a4_bossrushleveldetail_unlock_mins",
-	[var_0_18.GEqual_1Second] = "v1a4_bossrushleveldetail_unlock_1min"
-}
-
-var_0_0.ETimeFmtStyle = {
-	Default = var_0_19,
-	UnLock = var_0_20
+local _unlockStyle = {
+	[ETimeFmt.GEqual_1Day] = "v1a4_bossrushleveldetail_unlock_days_hours",
+	[ETimeFmt.GEqual_1Hour] = "v1a4_bossrushleveldetail_unlock_hours",
+	[ETimeFmt.GEqual_1Min] = "v1a4_bossrushleveldetail_unlock_mins",
+	[ETimeFmt.GEqual_1Second] = "v1a4_bossrushleveldetail_unlock_1min"
 }
 
-function var_0_0.getRemainTimeStrWithFmt(arg_51_0, arg_51_1, arg_51_2)
-	arg_51_2 = arg_51_2 or var_0_0.ETimeFmtStyle.Default
+Activity128Config.ETimeFmtStyle = {
+	Default = _defaultStyle,
+	UnLock = _unlockStyle
+}
 
-	local var_51_0, var_51_1, var_51_2, var_51_3 = TimeUtil.secondsToDDHHMMSS(arg_51_1)
+function Activity128Config:getRemainTimeStrWithFmt(seconds, eTimeFmtStyle)
+	eTimeFmtStyle = eTimeFmtStyle or Activity128Config.ETimeFmtStyle.Default
 
-	if var_51_0 >= 1 then
-		local var_51_4 = {
-			var_51_0,
-			var_51_1
+	local day, hour, min, sec = TimeUtil.secondsToDDHHMMSS(seconds)
+
+	if day >= 1 then
+		local tag = {
+			day,
+			hour
 		}
 
-		return GameUtil.getSubPlaceholderLuaLang(luaLang(arg_51_2[var_0_18.GEqual_1Day]), var_51_4)
+		return GameUtil.getSubPlaceholderLuaLang(luaLang(eTimeFmtStyle[ETimeFmt.GEqual_1Day]), tag)
 	end
 
-	if var_51_1 >= 1 then
-		return formatLuaLang(arg_51_2[var_0_18.GEqual_1Hour], var_51_1)
+	if hour >= 1 then
+		return formatLuaLang(eTimeFmtStyle[ETimeFmt.GEqual_1Hour], hour)
 	end
 
-	if var_51_2 >= 1 then
-		return formatLuaLang(arg_51_2[var_0_18.GEqual_1Min], var_51_2)
+	if min >= 1 then
+		return formatLuaLang(eTimeFmtStyle[ETimeFmt.GEqual_1Min], min)
 	end
 
-	return luaLang(arg_51_2[var_0_18.GEqual_1Second])
+	return luaLang(eTimeFmtStyle[ETimeFmt.GEqual_1Second])
 end
 
-function var_0_0.getRemainTimeStr(arg_52_0, arg_52_1, arg_52_2)
-	local var_52_0 = arg_52_1 - ServerTime.now()
+function Activity128Config:getRemainTimeStr(endServerTs, eTimeFmtStyle)
+	local offsetSecond = endServerTs - ServerTime.now()
 
-	return arg_52_0:getRemainTimeStrWithFmt(var_52_0, arg_52_2)
+	return self:getRemainTimeStrWithFmt(offsetSecond, eTimeFmtStyle)
 end
 
-function var_0_0.checkActivityId(arg_53_0, arg_53_1)
-	return arg_53_0.__activityId == arg_53_1
+function Activity128Config:checkActivityId(activityId)
+	return self.__activityId == activityId
 end
 
-function var_0_0.getActivityId(arg_54_0)
-	return arg_54_0.__activityId
+function Activity128Config:getActivityId()
+	return self.__activityId
 end
 
-function var_0_0.getActRoleEnhance(arg_55_0)
-	return lua_activity128_enhance.configDict[arg_55_0.__activityId]
+function Activity128Config:getActRoleEnhance()
+	return lua_activity128_enhance.configDict[self.__activityId]
 end
 
-function var_0_0._initActLayer4rewards(arg_56_0)
-	arg_56_0.layer4Rewards = {}
+function Activity128Config:_initActLayer4rewards()
+	self.layer4Rewards = {}
 
-	for iter_56_0, iter_56_1 in ipairs(lua_activity128_task.configList) do
-		if iter_56_1.totalTaskType == 1 then
-			local var_56_0 = arg_56_0.layer4Rewards[iter_56_1.activityId]
+	for _, co in ipairs(lua_activity128_task.configList) do
+		if co.totalTaskType == 1 then
+			local actCos = self.layer4Rewards[co.activityId]
 
-			if not var_56_0 then
-				var_56_0 = {}
-				arg_56_0.layer4Rewards[iter_56_1.activityId] = var_56_0
+			if not actCos then
+				actCos = {}
+				self.layer4Rewards[co.activityId] = actCos
 			end
 
-			local var_56_1 = var_56_0[iter_56_1.stage]
+			local stageCos = actCos[co.stage]
 
-			if not var_56_1 then
-				var_56_1 = {}
-				var_56_0[iter_56_1.stage] = var_56_1
+			if not stageCos then
+				stageCos = {}
+				actCos[co.stage] = stageCos
 			end
 
-			table.insert(var_56_1, iter_56_1)
+			table.insert(stageCos, co)
 		end
 	end
 end
 
-function var_0_0.getActLayer4rewards(arg_57_0, arg_57_1)
-	if arg_57_0.layer4Rewards[arg_57_0.__activityId] then
-		return arg_57_0.layer4Rewards[arg_57_0.__activityId][arg_57_1]
+function Activity128Config:getActLayer4rewards(stage)
+	if self.layer4Rewards[self.__activityId] then
+		return self.layer4Rewards[self.__activityId][stage]
 	end
 
 	return {}
 end
 
-return var_0_0
+function Activity128Config:getAllGalleryBossCos()
+	return lua_activity128_gallery.configList
+end
+
+function Activity128Config:getGalleryBossCo(bossType)
+	return lua_activity128_gallery.configDict[bossType]
+end
+
+function Activity128Config:getAllLevelCos()
+	return lua_activity128_level.configList
+end
+
+function Activity128Config:getLevelCo(level)
+	return lua_activity128_level.configDict[level]
+end
+
+function Activity128Config:getTagCo(id)
+	return lua_activity128_tag.configDict[id]
+end
+
+function Activity128Config:getConcealCo(episodeId)
+	return lua_activity128_conceal_desc.configDict[episodeId]
+end
+
+return Activity128Config

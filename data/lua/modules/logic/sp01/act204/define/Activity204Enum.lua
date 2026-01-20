@@ -1,13 +1,15 @@
-﻿module("modules.logic.sp01.act204.define.Activity204Enum", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/act204/define/Activity204Enum.lua
 
-local var_0_0 = _M
+module("modules.logic.sp01.act204.define.Activity204Enum", package.seeall)
 
-var_0_0.VoiceType = {
+local Activity204Enum = _M
+
+Activity204Enum.VoiceType = {
 	EnterView = 1,
 	UpdateMainTask = 3,
 	ClickSkin = 2
 }
-var_0_0.LocalPrefsKey = {
+Activity204Enum.LocalPrefsKey = {
 	MainActivityStageAnim = "MainActivityStageAnim",
 	Question = "Question",
 	GameMark = "GameMark",
@@ -15,34 +17,34 @@ var_0_0.LocalPrefsKey = {
 	SignMark = "SignMark",
 	AvgMark = "Activity205AvgMark"
 }
-var_0_0.ConstId = {
+Activity204Enum.ConstId = {
 	DailyStoneCount = 3,
 	CurrencyId = 1,
 	BubbleActIds = 4
 }
-var_0_0.RewardStatus = {
+Activity204Enum.RewardStatus = {
 	Canget = 2,
 	Hasget = 3,
 	None = 1
 }
-var_0_0.TaskStatus = {
+Activity204Enum.TaskStatus = {
 	None = 2,
 	Hasget = 3,
 	Canget = 1
 }
-var_0_0.EntranceIdList = {
+Activity204Enum.EntranceIdList = {
 	ActivityEnum.Activity.V2a9_LoginSign,
 	ActivityEnum.Activity.V2a9_Act205,
 	ActivityEnum.Activity.V2a9_AssassinChase,
 	ActivityEnum.Activity.V2a9_Act204
 }
-var_0_0.ActId2EntranceCls = {
+Activity204Enum.ActId2EntranceCls = {
 	[ActivityEnum.Activity.V2a9_Act204] = Activity204TaskEntranceItem,
 	[ActivityEnum.Activity.V2a9_Act205] = Activity204OceanEntranceItem,
 	[ActivityEnum.Activity.V2a9_LoginSign] = Activity204EntranceItemBase,
 	[ActivityEnum.Activity.V2a9_AssassinChase] = Activity204ChaseEntranceItem
 }
-var_0_0.ActId2ViewList = {
+Activity204Enum.ActId2ViewList = {
 	[ActivityEnum.Activity.V2a9_Act204] = {
 		ViewName.Activity204TaskView
 	},
@@ -58,7 +60,7 @@ var_0_0.ActId2ViewList = {
 	[ActivityEnum.Activity.V2a9_LoginSign] = {},
 	[ActivityEnum.Activity.V2a9_AssassinChase] = {}
 }
-var_0_0.Act205StageView = {
+Activity204Enum.Act205StageView = {
 	{
 		ViewName.Act205CardSelectView,
 		ViewName.Act205CardShowView,
@@ -70,7 +72,7 @@ var_0_0.Act205StageView = {
 		ViewName.Act205OceanResultView
 	}
 }
-var_0_0.LoginSignSpDayIndex = {
+Activity204Enum.LoginSignSpDayIndex = {
 	nil,
 	true,
 	nil,
@@ -79,6 +81,6 @@ var_0_0.LoginSignSpDayIndex = {
 	nil,
 	true
 }
-var_0_0.RolePath = "rolesstory/rolesprefab/s01_302804_apple_p/302804_apple_p.prefab"
+Activity204Enum.RolePath = "rolesstory/rolesprefab/s01_302804_apple_p/302804_apple_p.prefab"
 
-return var_0_0
+return Activity204Enum

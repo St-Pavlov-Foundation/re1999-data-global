@@ -1,116 +1,120 @@
-﻿module("modules.logic.versionactivity3_1.gaosiniao.model.GaoSiNiaoMapInfo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/gaosiniao/model/GaoSiNiaoMapInfo.lua
 
-local var_0_0 = class("GaoSiNiaoMapInfo")
+module("modules.logic.versionactivity3_1.gaosiniao.model.GaoSiNiaoMapInfo", package.seeall)
 
-function var_0_0.make_bagCO(arg_1_0, arg_1_1, arg_1_2)
-	if false and arg_1_0.version == GaoSiNiaoEnum.Version.V1_0_0 then
+local GaoSiNiaoMapInfo = class("GaoSiNiaoMapInfo")
+
+function GaoSiNiaoMapInfo:make_bagCO(ptype, count)
+	if false and self.version == GaoSiNiaoEnum.Version.V1_0_0 then
 		-- block empty
 	else
 		return {
-			ptype = arg_1_1,
-			count = arg_1_2 or 0
+			ptype = ptype,
+			count = count or 0
 		}
 	end
 end
 
-function var_0_0.make_gridCO(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
-	if false and arg_2_0.version == GaoSiNiaoEnum.Version.V1_0_0 then
+function GaoSiNiaoMapInfo:make_gridCO(gtype, ptype, bMovable, zRot)
+	if false and self.version == GaoSiNiaoEnum.Version.V1_0_0 then
 		-- block empty
 	else
 		return {
-			gtype = arg_2_1,
-			ptype = arg_2_2,
-			bMovable = arg_2_3 or false,
-			zRot = arg_2_4 or 0
+			gtype = gtype,
+			ptype = ptype,
+			bMovable = bMovable or false,
+			zRot = zRot or 0
 		}
 	end
 end
 
-function var_0_0.make_gridCOZot(arg_3_0, arg_3_1, arg_3_2)
-	if false and arg_3_0.version == GaoSiNiaoEnum.Version.V1_0_0 then
+function GaoSiNiaoMapInfo:make_gridCOZot(gtype, zRot)
+	if false and self.version == GaoSiNiaoEnum.Version.V1_0_0 then
 		-- block empty
 	else
 		return {
 			bMovable = false,
-			gtype = arg_3_1,
+			gtype = gtype,
 			ptype = GaoSiNiaoEnum.PathType.None,
-			zRot = arg_3_2 or 0
+			zRot = zRot or 0
 		}
 	end
 end
 
-local var_0_1 = "modules.configs.gaosiniao.map_"
+local kMapModulePath = "modules.configs.gaosiniao.map_"
 
-function var_0_0._getMapRequireLuaPath(arg_4_0)
-	return var_0_1 .. arg_4_0.version
+function GaoSiNiaoMapInfo:_getMapRequireLuaPath()
+	local path = kMapModulePath .. self.version
+
+	return path
 end
 
-function var_0_0._loadMapConfig(arg_5_0)
-	local var_5_0 = arg_5_0:_getMapRequireLuaPath()
+function GaoSiNiaoMapInfo:_loadMapConfig()
+	local path = self:_getMapRequireLuaPath()
 
-	return require(var_5_0)
+	return require(path)
 end
 
-function var_0_0.ctor(arg_6_0, arg_6_1)
-	arg_6_0.version = assert(arg_6_1)
+function GaoSiNiaoMapInfo:ctor(eVersion)
+	self.version = assert(eVersion)
 
-	arg_6_0:clear()
+	self:clear()
 end
 
-function var_0_0.clear(arg_7_0)
-	arg_7_0._mapCO = false
-	arg_7_0.mapId = 0
-	arg_7_0.mapCOList = arg_7_0.mapCOList or arg_7_0:_loadMapConfig()
+function GaoSiNiaoMapInfo:clear()
+	self._mapCO = false
+	self.mapId = 0
+	self.mapCOList = self.mapCOList or self:_loadMapConfig()
 end
 
-function var_0_0.mapCO(arg_8_0)
-	if not arg_8_0._mapCO then
-		for iter_8_0, iter_8_1 in ipairs(arg_8_0.mapCOList) do
-			if iter_8_1.id == arg_8_0.mapId then
-				arg_8_0._mapCO = tabletool.copy(iter_8_1)
+function GaoSiNiaoMapInfo:mapCO()
+	if not self._mapCO then
+		for _, mapCO in ipairs(self.mapCOList) do
+			if mapCO.id == self.mapId then
+				self._mapCO = tabletool.copy(mapCO)
 
 				break
 			end
 		end
 	end
 
-	if isDebugBuild and not arg_8_0._mapCO then
-		logError("Not Found MapCO!! mapId=" .. tostring(arg_8_0.mapId))
+	if isDebugBuild and not self._mapCO then
+		logError("Not Found MapCO!! mapId=" .. tostring(self.mapId))
 	end
 
-	return arg_8_0._mapCO or {}
+	return self._mapCO or {}
 end
 
-function var_0_0.reset(arg_9_0, arg_9_1, arg_9_2)
-	if arg_9_2 then
-		arg_9_0.version = arg_9_2
+function GaoSiNiaoMapInfo:reset(mapId, eVersion)
+	if eVersion then
+		self.version = eVersion
 	end
 
-	arg_9_0:clear()
+	self:clear()
 
-	arg_9_0.mapId = arg_9_1
+	self.mapId = mapId
 
-	return arg_9_0:mapCO()
+	return self:mapCO()
 end
 
-function var_0_0.mapSize(arg_10_0)
-	local var_10_0 = arg_10_0:mapCO() or {}
-	local var_10_1 = var_10_0.width or 0
-	local var_10_2 = var_10_0.height or 0
+function GaoSiNiaoMapInfo:mapSize()
+	local mapCO = self:mapCO() or {}
+	local width = mapCO.width or 0
+	local height = mapCO.height or 0
 
-	return var_10_1, var_10_2
+	return width, height
 end
 
-function var_0_0.bagList(arg_11_0)
-	local var_11_0 = arg_11_0:mapCO()
+function GaoSiNiaoMapInfo:bagList()
+	local mapCO = self:mapCO()
 
-	return var_11_0 and var_11_0.bagList or {}
+	return mapCO and mapCO.bagList or {}
 end
 
-function var_0_0.gridList(arg_12_0)
-	local var_12_0 = arg_12_0:mapCO()
+function GaoSiNiaoMapInfo:gridList()
+	local mapCO = self:mapCO()
 
-	return var_12_0 and var_12_0.gridList or {}
+	return mapCO and mapCO.gridList or {}
 end
 
-return var_0_0
+return GaoSiNiaoMapInfo

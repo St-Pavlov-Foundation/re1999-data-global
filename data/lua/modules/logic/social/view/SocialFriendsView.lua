@@ -1,379 +1,387 @@
-﻿module("modules.logic.social.view.SocialFriendsView", package.seeall)
+﻿-- chunkname: @modules/logic/social/view/SocialFriendsView.lua
 
-local var_0_0 = class("SocialFriendsView", BaseView)
+module("modules.logic.social.view.SocialFriendsView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gohas = gohelper.findChild(arg_1_0.viewGO, "#go_has")
-	arg_1_0._gono = gohelper.findChild(arg_1_0.viewGO, "#go_no")
-	arg_1_0._simagecharbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_has/right/#simage_chartbg")
-	arg_1_0._goSkinbg = gohelper.findChild(arg_1_0.viewGO, "#go_has/right/#go_skinbg")
-	arg_1_0._gomessage = gohelper.findChild(arg_1_0.viewGO, "#go_has/right/#go_message")
-	arg_1_0._btnselect = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_has/right/#go_settingbackground/btn_click")
-	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "#go_has/right/#go_settingbackground/btn_click/selected")
-	arg_1_0._gounselect = gohelper.findChild(arg_1_0.viewGO, "#go_has/right/#go_settingbackground/btn_click/unselect")
-	arg_1_0._gotips = gohelper.findChild(arg_1_0.viewGO, "#go_has/right/#go_settingbackground/go_tips")
-	arg_1_0._btnclosetips = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_has/right/#go_settingbackground/go_tips/#btn_close")
-	arg_1_0._inputsend = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "#go_has/right/#go_message/send/#input_send")
-	arg_1_0._scrollmessage = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_has/right/#go_message/#scroll_message")
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#go_has/right/#go_message/#scroll_message/viewport/#go_content")
-	arg_1_0._btnsend = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_has/right/#go_message/send/#btn_send")
-	arg_1_0._txtcd = gohelper.findChildText(arg_1_0.viewGO, "#go_has/right/#go_message/send/#btn_send/#txt_cd")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#go_has/right/#txt_name")
-	arg_1_0._animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._isSelectBtn = false
-	arg_1_0._isSelfBg = true
-	arg_1_0._isopen = false
-	arg_1_0._selectitemList = {}
-	arg_1_0._currentselectbg = nil
+local SocialFriendsView = class("SocialFriendsView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SocialFriendsView:onInitView()
+	self._gohas = gohelper.findChild(self.viewGO, "#go_has")
+	self._gono = gohelper.findChild(self.viewGO, "#go_no")
+	self._simagecharbg = gohelper.findChildSingleImage(self.viewGO, "#go_has/right/#simage_chartbg")
+	self._goSkinbg = gohelper.findChild(self.viewGO, "#go_has/right/#go_skinbg")
+	self._gomessage = gohelper.findChild(self.viewGO, "#go_has/right/#go_message")
+	self._btnselect = gohelper.findChildButtonWithAudio(self.viewGO, "#go_has/right/#go_settingbackground/btn_click")
+	self._goselect = gohelper.findChild(self.viewGO, "#go_has/right/#go_settingbackground/btn_click/selected")
+	self._gounselect = gohelper.findChild(self.viewGO, "#go_has/right/#go_settingbackground/btn_click/unselect")
+	self._gotips = gohelper.findChild(self.viewGO, "#go_has/right/#go_settingbackground/go_tips")
+	self._btnclosetips = gohelper.findChildButtonWithAudio(self.viewGO, "#go_has/right/#go_settingbackground/go_tips/#btn_close")
+	self._inputsend = gohelper.findChildTextMeshInputField(self.viewGO, "#go_has/right/#go_message/send/#input_send")
+	self._scrollmessage = gohelper.findChildScrollRect(self.viewGO, "#go_has/right/#go_message/#scroll_message")
+	self._gocontent = gohelper.findChild(self.viewGO, "#go_has/right/#go_message/#scroll_message/viewport/#go_content")
+	self._btnsend = gohelper.findChildButtonWithAudio(self.viewGO, "#go_has/right/#go_message/send/#btn_send")
+	self._txtcd = gohelper.findChildText(self.viewGO, "#go_has/right/#go_message/send/#btn_send/#txt_cd")
+	self._txtname = gohelper.findChildText(self.viewGO, "#go_has/right/#txt_name")
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._isSelectBtn = false
+	self._isSelfBg = true
+	self._isopen = false
+	self._selectitemList = {}
+	self._currentselectbg = nil
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnsend:AddClickListener(arg_2_0._btnsendOnClick, arg_2_0)
-	arg_2_0._btnselect:AddClickListener(arg_2_0._btnselectOnClick, arg_2_0)
-	arg_2_0._btnclosetips:AddClickListener(arg_2_0._btnclosetipsOnClick, arg_2_0)
+function SocialFriendsView:addEvents()
+	self._btnsend:AddClickListener(self._btnsendOnClick, self)
+	self._btnselect:AddClickListener(self._btnselectOnClick, self)
+	self._btnclosetips:AddClickListener(self._btnclosetipsOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnsend:RemoveClickListener()
-	arg_3_0._btnselect:RemoveClickListener()
-	arg_3_0._btnclosetips:RemoveClickListener()
+function SocialFriendsView:removeEvents()
+	self._btnsend:RemoveClickListener()
+	self._btnselect:RemoveClickListener()
+	self._btnclosetips:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._friendChatCD = nil
-	arg_4_0._txtcd.text = luaLang("social_chat_send")
+function SocialFriendsView:_editableInitView()
+	self._friendChatCD = nil
+	self._txtcd.text = luaLang("social_chat_send")
 
-	arg_4_0._simagecharbg:LoadImage(ResUrl.getSocialIcon("img_chat_bg.png"))
+	self._simagecharbg:LoadImage(ResUrl.getSocialIcon("img_chat_bg.png"))
 
-	arg_4_0.skinkey = PlayerPrefsKey.SocialFriendsViewSelectOwnSkin .. tostring(PlayerModel.instance:getPlayinfo().userId)
-	arg_4_0._isSelfBg = PlayerPrefsHelper.getNumber(arg_4_0.skinkey, SocialEnum.SelectEnum.Self) == SocialEnum.SelectEnum.Self
+	self.skinkey = PlayerPrefsKey.SocialFriendsViewSelectOwnSkin .. tostring(PlayerModel.instance:getPlayinfo().userId)
+	self._isSelfBg = PlayerPrefsHelper.getNumber(self.skinkey, SocialEnum.SelectEnum.Self) == SocialEnum.SelectEnum.Self
 
-	arg_4_0:_refreshSelect()
+	self:_refreshSelect()
 
-	for iter_4_0 = 1, 2 do
-		local var_4_0 = arg_4_0:getUserDataTb_()
+	for i = 1, 2 do
+		local item = self:getUserDataTb_()
 
-		var_4_0.go = gohelper.findChild(arg_4_0.viewGO, "#go_has/right/#go_settingbackground/go_tips/bg/item" .. iter_4_0)
-		var_4_0.btn = gohelper.findChildButton(var_4_0.go, "#btn_option")
-		var_4_0.goselect = gohelper.findChild(var_4_0.go, "txt_option/selected")
-		var_4_0.gounselect = gohelper.findChild(var_4_0.go, "txt_option/unselect")
-		var_4_0.isSelf = iter_4_0 == SocialEnum.SelectEnum.Self
+		item.go = gohelper.findChild(self.viewGO, "#go_has/right/#go_settingbackground/go_tips/bg/item" .. i)
+		item.btn = gohelper.findChildButton(item.go, "#btn_option")
+		item.goselect = gohelper.findChild(item.go, "txt_option/selected")
+		item.gounselect = gohelper.findChild(item.go, "txt_option/unselect")
+		item.isSelf = i == SocialEnum.SelectEnum.Self
 
-		var_4_0.btn:AddClickListener(arg_4_0.selectUseSkin, arg_4_0, var_4_0.isSelf)
-		table.insert(arg_4_0._selectitemList, var_4_0)
-		gohelper.setActive(var_4_0.goselect, var_4_0.isSelf == arg_4_0._isSelfBg)
-		gohelper.setActive(var_4_0.gounselect, var_4_0.isSelf ~= arg_4_0._isSelfBg)
+		item.btn:AddClickListener(self.selectUseSkin, self, item.isSelf)
+		table.insert(self._selectitemList, item)
+		gohelper.setActive(item.goselect, item.isSelf == self._isSelfBg)
+		gohelper.setActive(item.gounselect, item.isSelf ~= self._isSelfBg)
 	end
 end
 
-function var_0_0._btnselectOnClick(arg_5_0)
-	arg_5_0._isSelectBtn = not arg_5_0._isSelectBtn
+function SocialFriendsView:_btnselectOnClick()
+	self._isSelectBtn = not self._isSelectBtn
 
-	arg_5_0:_refreshSelect()
+	self:_refreshSelect()
 end
 
-function var_0_0._btnclosetipsOnClick(arg_6_0)
-	arg_6_0._isSelectBtn = false
+function SocialFriendsView:_btnclosetipsOnClick()
+	self._isSelectBtn = false
 
-	arg_6_0:_refreshSelect()
+	self:_refreshSelect()
 end
 
-function var_0_0._refreshSelect(arg_7_0)
-	gohelper.setActive(arg_7_0._goselect, arg_7_0._isSelectBtn)
-	gohelper.setActive(arg_7_0._gounselect, not arg_7_0._isSelectBtn)
-	gohelper.setActive(arg_7_0._gotips, arg_7_0._isSelectBtn)
+function SocialFriendsView:_refreshSelect()
+	gohelper.setActive(self._goselect, self._isSelectBtn)
+	gohelper.setActive(self._gounselect, not self._isSelectBtn)
+	gohelper.setActive(self._gotips, self._isSelectBtn)
 end
 
-function var_0_0._loadBg(arg_8_0)
-	local var_8_0 = PlayerCardModel.instance:getPlayerCardSkinId()
+function SocialFriendsView:_loadBg()
+	local skinId = PlayerCardModel.instance:getPlayerCardSkinId()
 
-	if not arg_8_0._isSelfBg then
-		if not arg_8_0._selectFriend then
+	if not self._isSelfBg then
+		if not self._selectFriend then
 			return
 		end
 
-		var_8_0 = SocialModel.instance:getPlayerMO(arg_8_0._selectFriend).bg
+		local playerMO = SocialModel.instance:getPlayerMO(self._selectFriend)
+
+		skinId = playerMO.bg
 	end
 
-	if var_8_0 == arg_8_0._currentselectbg then
+	if skinId == self._currentselectbg then
 		return
 	end
 
-	if arg_8_0._goskinEffect then
-		gohelper.destroy(arg_8_0._goskinEffect)
+	if self._goskinEffect then
+		gohelper.destroy(self._goskinEffect)
 
-		arg_8_0._goskinEffect = nil
+		self._goskinEffect = nil
 	end
 
-	if var_8_0 and var_8_0 ~= 0 then
-		arg_8_0._hasSkin = true
-		arg_8_0._skinPath = string.format("ui/viewres/player/playercard/playercardskinpreview_%s.prefab", var_8_0)
-		arg_8_0._loader = MultiAbLoader.New()
+	if skinId and skinId ~= 0 then
+		self._hasSkin = true
+		self._skinPath = string.format("ui/viewres/player/playercard/playercardskinpreview_%s.prefab", skinId)
+		self._loader = MultiAbLoader.New()
 
-		arg_8_0._loader:addPath(arg_8_0._skinPath)
-		arg_8_0._loader:startLoad(arg_8_0._onLoadFinish, arg_8_0)
+		self._loader:addPath(self._skinPath)
+		self._loader:startLoad(self._onLoadFinish, self)
 	else
-		arg_8_0._hasSkin = false
+		self._hasSkin = false
 	end
 
-	gohelper.setActive(arg_8_0._goSkinbg, arg_8_0._hasSkin)
-	gohelper.setActive(arg_8_0._simagecharbg.gameObject, not arg_8_0._hasSkin)
+	gohelper.setActive(self._goSkinbg, self._hasSkin)
+	gohelper.setActive(self._simagecharbg.gameObject, not self._hasSkin)
 
-	if arg_8_0._isopen and not arg_8_0._hasSkin then
-		arg_8_0._animator.enabled = true
+	if self._isopen and not self._hasSkin then
+		self._animator.enabled = true
 
-		arg_8_0._animator:Play("open", 0, 0)
+		self._animator:Play("open", 0, 0)
 	end
 
-	arg_8_0._currentselectbg = var_8_0
+	self._currentselectbg = skinId
 end
 
-function var_0_0._onLoadFinish(arg_9_0)
-	local var_9_0 = arg_9_0._loader:getAssetItem(arg_9_0._skinPath):GetResource(arg_9_0._skinPath)
+function SocialFriendsView:_onLoadFinish()
+	local assetItem = self._loader:getAssetItem(self._skinPath)
+	local viewPrefab = assetItem:GetResource(self._skinPath)
 
-	arg_9_0._goskinEffect = gohelper.clone(var_9_0, arg_9_0._goSkinbg)
-	arg_9_0._animator.enabled = true
+	self._goskinEffect = gohelper.clone(viewPrefab, self._goSkinbg)
+	self._animator.enabled = true
 
-	arg_9_0._animator:Play("open", 0, 0)
+	self._animator:Play("open", 0, 0)
 end
 
-function var_0_0._btnsendOnClick(arg_10_0)
-	if arg_10_0._friendChatCD then
+function SocialFriendsView:_btnsendOnClick()
+	if self._friendChatCD then
 		GameFacade.showToast(ToastEnum.SocialFriends1)
 
 		return
 	end
 
-	local var_10_0 = arg_10_0._inputsend:GetText()
+	local sendValue = self._inputsend:GetText()
 
-	if string.nilorempty(var_10_0) then
+	if string.nilorempty(sendValue) then
 		GameFacade.showToast(ToastEnum.SocialFriends2)
 
 		return
 	end
 
-	local var_10_1 = string.gsub(var_10_0, " ", "")
+	local replacedSpaceValue = string.gsub(sendValue, " ", "")
 
-	if string.nilorempty(var_10_1) then
+	if string.nilorempty(replacedSpaceValue) then
 		GameFacade.showToast(ToastEnum.SocialFriends2)
-		arg_10_0._inputsend:SetText("")
+		self._inputsend:SetText("")
 
 		return
 	end
 
-	arg_10_0._friendChatCD = SocialEnum.FriendChatCD
-	arg_10_0._txtcd.text = string.format("%ds", math.ceil(arg_10_0._friendChatCD))
-	arg_10_0._tweenId = ZProj.TweenHelper.DOTweenFloat(SocialEnum.FriendChatCD, 0, SocialEnum.FriendChatCD, arg_10_0._onTimeUpdate, arg_10_0._onTimeEnd, arg_10_0, nil, EaseType.Linear)
-	arg_10_0._scrollmessage.verticalNormalizedPosition = 0
+	self._friendChatCD = SocialEnum.FriendChatCD
+	self._txtcd.text = string.format("%ds", math.ceil(self._friendChatCD))
+	self._tweenId = ZProj.TweenHelper.DOTweenFloat(SocialEnum.FriendChatCD, 0, SocialEnum.FriendChatCD, self._onTimeUpdate, self._onTimeEnd, self, nil, EaseType.Linear)
+	self._scrollmessage.verticalNormalizedPosition = 0
 
-	local var_10_2 = 0
-	local var_10_3 = ""
+	local msgType = 0
+	local extData = ""
 
-	if arg_10_0._preSendInfo and arg_10_0._preSendInfo.recipientId == arg_10_0._selectFriend then
-		var_10_2 = arg_10_0._preSendInfo.msgType
-		var_10_3 = arg_10_0._preSendInfo.extData
+	if self._preSendInfo and self._preSendInfo.recipientId == self._selectFriend then
+		msgType = self._preSendInfo.msgType
+		extData = self._preSendInfo.extData
 
-		arg_10_0:_clearPreSendInfo()
+		self:_clearPreSendInfo()
 	end
 
-	ChatRpc.instance:sendSendMsgRequest(SocialEnum.ChannelType.Friend, arg_10_0._selectFriend, var_10_0, var_10_2, var_10_3, arg_10_0._onSendMsgReply, arg_10_0)
+	ChatRpc.instance:sendSendMsgRequest(SocialEnum.ChannelType.Friend, self._selectFriend, sendValue, msgType, extData, self._onSendMsgReply, self)
 end
 
-function var_0_0._onSendMsgReply(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	if arg_11_2 == 0 then
-		arg_11_0._inputsend:SetText("")
+function SocialFriendsView:_onSendMsgReply(cmd, resultCode, msg)
+	if resultCode == 0 then
+		self._inputsend:SetText("")
 
-		local var_11_0 = arg_11_0._preSendInfo
+		local info = self._preSendInfo
 
-		if var_11_0 and arg_11_3.recipientId == var_11_0.recipientId and arg_11_3.msgType == arg_11_3.msgType then
-			arg_11_0:_clearPreSendInfo()
+		if info and msg.recipientId == info.recipientId and msg.msgType == msg.msgType then
+			self:_clearPreSendInfo()
 		end
 	end
 end
 
-function var_0_0._clearPreSendInfo(arg_12_0)
-	arg_12_0._preSendInfo = nil
+function SocialFriendsView:_clearPreSendInfo()
+	self._preSendInfo = nil
 
-	if arg_12_0.viewParam and arg_12_0.viewParam.preSendInfo then
-		arg_12_0.viewParam.preSendInfo = nil
+	if self.viewParam and self.viewParam.preSendInfo then
+		self.viewParam.preSendInfo = nil
 	end
 end
 
-function var_0_0._onTimeUpdate(arg_13_0, arg_13_1)
-	arg_13_0._friendChatCD = arg_13_1
-	arg_13_0._txtcd.text = string.format("%ds", math.ceil(arg_13_0._friendChatCD))
+function SocialFriendsView:_onTimeUpdate(value)
+	self._friendChatCD = value
+	self._txtcd.text = string.format("%ds", math.ceil(self._friendChatCD))
 end
 
-function var_0_0._onTimeEnd(arg_14_0)
-	arg_14_0._friendChatCD = nil
-	arg_14_0._txtcd.text = luaLang("social_chat_send")
-	arg_14_0._tweenId = nil
+function SocialFriendsView:_onTimeEnd()
+	self._friendChatCD = nil
+	self._txtcd.text = luaLang("social_chat_send")
+	self._tweenId = nil
 end
 
-function var_0_0.onOpen(arg_15_0)
-	arg_15_0:addEventCb(SocialController.instance, SocialEvent.FriendsInfoChanged, arg_15_0._refreshUI, arg_15_0)
-	arg_15_0:addEventCb(SocialController.instance, SocialEvent.SelectFriend, arg_15_0._refreshMessageView, arg_15_0)
-	arg_15_0:addEventCb(SocialController.instance, SocialEvent.MessageInfoChanged, arg_15_0._refreshMessageView, arg_15_0)
-	arg_15_0:addEventCb(SocialController.instance, SocialEvent.AddUnknownFriend, arg_15_0._onAddUnknownFriend, arg_15_0)
-	arg_15_0:addEventCb(SocialController.instance, SocialEvent.FriendDescChange, arg_15_0._ondescChange, arg_15_0)
+function SocialFriendsView:onOpen()
+	self:addEventCb(SocialController.instance, SocialEvent.FriendsInfoChanged, self._refreshUI, self)
+	self:addEventCb(SocialController.instance, SocialEvent.SelectFriend, self._refreshMessageView, self)
+	self:addEventCb(SocialController.instance, SocialEvent.MessageInfoChanged, self._refreshMessageView, self)
+	self:addEventCb(SocialController.instance, SocialEvent.AddUnknownFriend, self._onAddUnknownFriend, self)
+	self:addEventCb(SocialController.instance, SocialEvent.FriendDescChange, self._ondescChange, self)
 	SocialListModel.instance:sortFriendList()
 	FriendRpc.instance:sendGetFriendInfoListRequest()
 
-	if arg_15_0._notFirst then
-		arg_15_0:_refreshUI()
+	if self._notFirst then
+		self:_refreshUI()
 	else
-		arg_15_0:_refreshUI(true)
+		self:_refreshUI(true)
 	end
 
-	arg_15_0._notFirst = true
-	arg_15_0._preSendInfo = nil
+	self._notFirst = true
+	self._preSendInfo = nil
 
-	if arg_15_0.viewParam and arg_15_0.viewParam.preSendInfo then
-		arg_15_0._preSendInfo = arg_15_0.viewParam.preSendInfo
+	if self.viewParam and self.viewParam.preSendInfo then
+		self._preSendInfo = self.viewParam.preSendInfo
 
-		arg_15_0._inputsend:SetText(arg_15_0._preSendInfo.content)
+		self._inputsend:SetText(self._preSendInfo.content)
 	end
 
-	arg_15_0:_loadBg()
+	self:_loadBg()
 
-	arg_15_0._isopen = true
+	self._isopen = true
 end
 
-function var_0_0.selectUseSkin(arg_16_0, arg_16_1)
-	if arg_16_1 then
-		arg_16_0._isSelfBg = true
+function SocialFriendsView:selectUseSkin(isSelf)
+	if isSelf then
+		self._isSelfBg = true
 
-		PlayerPrefsHelper.setNumber(arg_16_0.skinkey, SocialEnum.SelectEnum.Self)
+		PlayerPrefsHelper.setNumber(self.skinkey, SocialEnum.SelectEnum.Self)
 	else
-		arg_16_0._isSelfBg = false
+		self._isSelfBg = false
 
-		PlayerPrefsHelper.setNumber(arg_16_0.skinkey, SocialEnum.SelectEnum.Friend)
+		PlayerPrefsHelper.setNumber(self.skinkey, SocialEnum.SelectEnum.Friend)
 	end
 
-	arg_16_0:_loadBg()
+	self:_loadBg()
 
-	for iter_16_0, iter_16_1 in ipairs(arg_16_0._selectitemList) do
-		gohelper.setActive(iter_16_1.goselect, iter_16_1.isSelf == arg_16_0._isSelfBg)
-		gohelper.setActive(iter_16_1.gounselect, iter_16_1.isSelf ~= arg_16_0._isSelfBg)
+	for _, item in ipairs(self._selectitemList) do
+		gohelper.setActive(item.goselect, item.isSelf == self._isSelfBg)
+		gohelper.setActive(item.gounselect, item.isSelf ~= self._isSelfBg)
 	end
 
-	arg_16_0:_btnclosetipsOnClick()
+	self:_btnclosetipsOnClick()
 end
 
-function var_0_0._onAddUnknownFriend(arg_17_0)
+function SocialFriendsView:_onAddUnknownFriend()
 	FriendRpc.instance:sendGetFriendInfoListRequest()
 end
 
-function var_0_0.onClose(arg_18_0)
-	arg_18_0:removeEventCb(SocialController.instance, SocialEvent.FriendsInfoChanged, arg_18_0._refreshUI, arg_18_0)
-	arg_18_0:removeEventCb(SocialController.instance, SocialEvent.SelectFriend, arg_18_0._refreshMessageView, arg_18_0)
-	arg_18_0:removeEventCb(SocialController.instance, SocialEvent.MessageInfoChanged, arg_18_0._refreshMessageView, arg_18_0)
-	arg_18_0:removeEventCb(SocialController.instance, SocialEvent.AddUnknownFriend, arg_18_0._onAddUnknownFriend, arg_18_0)
-	arg_18_0:removeEventCb(SocialController.instance, SocialEvent.FriendDescChange, arg_18_0._ondescChange, arg_18_0)
+function SocialFriendsView:onClose()
+	self:removeEventCb(SocialController.instance, SocialEvent.FriendsInfoChanged, self._refreshUI, self)
+	self:removeEventCb(SocialController.instance, SocialEvent.SelectFriend, self._refreshMessageView, self)
+	self:removeEventCb(SocialController.instance, SocialEvent.MessageInfoChanged, self._refreshMessageView, self)
+	self:removeEventCb(SocialController.instance, SocialEvent.AddUnknownFriend, self._onAddUnknownFriend, self)
+	self:removeEventCb(SocialController.instance, SocialEvent.FriendDescChange, self._ondescChange, self)
 end
 
-function var_0_0._refreshUI(arg_19_0, arg_19_1)
-	local var_19_0 = SocialModel.instance:getFriendsCount()
+function SocialFriendsView:_refreshUI(open)
+	local friendsCount = SocialModel.instance:getFriendsCount()
 
-	if not arg_19_1 then
-		gohelper.setActive(arg_19_0._gohas, var_19_0 > 0)
-		gohelper.setActive(arg_19_0._gono, var_19_0 <= 0)
+	if not open then
+		gohelper.setActive(self._gohas, friendsCount > 0)
+		gohelper.setActive(self._gono, friendsCount <= 0)
 	else
-		gohelper.setActive(arg_19_0._gohas, var_19_0 > 0)
-		gohelper.setActive(arg_19_0._gono, false)
+		gohelper.setActive(self._gohas, friendsCount > 0)
+		gohelper.setActive(self._gono, false)
 	end
 
-	if not SocialModel.instance:getSelectFriend() then
-		local var_19_1 = SocialListModel.instance:getModel(SocialEnum.Type.Friend):getList()
+	local selectFriend = SocialModel.instance:getSelectFriend()
 
-		if var_19_1 and #var_19_1 > 0 then
-			local var_19_2 = var_19_1[1]
+	if not selectFriend then
+		local friendList = SocialListModel.instance:getModel(SocialEnum.Type.Friend):getList()
 
-			SocialModel.instance:setSelectFriend(var_19_2.userId)
+		if friendList and #friendList > 0 then
+			local playerMO = friendList[1]
+
+			SocialModel.instance:setSelectFriend(playerMO.userId)
 		end
 	end
 
-	arg_19_0:_refreshMessageView()
+	self:_refreshMessageView()
 end
 
-function var_0_0._refreshMessageView(arg_20_0)
-	local var_20_0 = SocialModel.instance:getSelectFriend()
+function SocialFriendsView:_refreshMessageView()
+	local selectFriend = SocialModel.instance:getSelectFriend()
 
-	if not var_20_0 then
-		gohelper.setActive(arg_20_0._gomessage, false)
+	if not selectFriend then
+		gohelper.setActive(self._gomessage, false)
 
-		arg_20_0._txtname.text = ""
-		arg_20_0._selectFriend = nil
+		self._txtname.text = ""
+		self._selectFriend = nil
 
 		return
 	end
 
-	gohelper.setActive(arg_20_0._gomessage, true)
-	SocialMessageModel.instance:clearMessageUnread(SocialEnum.ChannelType.Friend, var_20_0)
+	gohelper.setActive(self._gomessage, true)
+	SocialMessageModel.instance:clearMessageUnread(SocialEnum.ChannelType.Friend, selectFriend)
 
-	local var_20_1 = recthelper.getHeight(arg_20_0._scrollmessage.transform) >= recthelper.getHeight(arg_20_0._gocontent.transform) or arg_20_0._scrollmessage.verticalNormalizedPosition <= 0.01 or arg_20_0._selectFriend ~= var_20_0
+	local bottom = recthelper.getHeight(self._scrollmessage.transform) >= recthelper.getHeight(self._gocontent.transform) or self._scrollmessage.verticalNormalizedPosition <= 0.01 or self._selectFriend ~= selectFriend
+	local changed = self._selectFriend ~= selectFriend
 
-	if arg_20_0._selectFriend ~= var_20_0 then
-		arg_20_0._inputsend:SetText("")
+	if changed then
+		self._inputsend:SetText("")
 
-		if arg_20_0._preSendInfo and arg_20_0._preSendInfo.recipientId == arg_20_0._selectFriend then
-			arg_20_0:_clearPreSendInfo()
+		if self._preSendInfo and self._preSendInfo.recipientId == self._selectFriend then
+			self:_clearPreSendInfo()
 		end
 	end
 
-	arg_20_0._selectFriend = var_20_0
+	self._selectFriend = selectFriend
 
-	arg_20_0:_ondescChange()
+	self:_ondescChange()
 
-	local var_20_2 = SocialMessageModel.instance:getSocialMessageMOList(SocialEnum.ChannelType.Friend, arg_20_0._selectFriend)
+	local messageMOList = SocialMessageModel.instance:getSocialMessageMOList(SocialEnum.ChannelType.Friend, self._selectFriend)
 
-	SocialMessageListModel.instance:setMessageList(var_20_2)
+	SocialMessageListModel.instance:setMessageList(messageMOList)
 
-	if var_20_1 then
-		arg_20_0._scrollmessage.verticalNormalizedPosition = 0
+	if bottom then
+		self._scrollmessage.verticalNormalizedPosition = 0
 	end
 
-	arg_20_0:selectUseSkin(arg_20_0._isSelfBg)
+	self:selectUseSkin(self._isSelfBg)
 end
 
-function var_0_0._ondescChange(arg_21_0, arg_21_1)
-	if arg_21_1 and arg_21_1 ~= arg_21_0._selectFriend then
+function SocialFriendsView:_ondescChange(id)
+	if id and id ~= self._selectFriend then
 		return
 	end
 
-	local var_21_0 = SocialModel.instance:getPlayerMO(arg_21_0._selectFriend)
+	local playerMO = SocialModel.instance:getPlayerMO(self._selectFriend)
 
-	if string.nilorempty(var_21_0.desc) then
-		arg_21_0._txtname.text = tostring(var_21_0.name)
+	if string.nilorempty(playerMO.desc) then
+		self._txtname.text = tostring(playerMO.name)
 	else
-		arg_21_0._txtname.text = var_21_0.desc
+		self._txtname.text = playerMO.desc
 	end
 end
 
-function var_0_0.onUpdateParam(arg_22_0)
+function SocialFriendsView:onUpdateParam()
 	return
 end
 
-function var_0_0.onDestroyView(arg_23_0)
-	if arg_23_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_23_0._tweenId)
+function SocialFriendsView:onDestroyView()
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 	end
 
-	if arg_23_0._loader then
-		arg_23_0._loader:dispose()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_23_0._loader = nil
+		self._loader = nil
 	end
 
-	for iter_23_0, iter_23_1 in ipairs(arg_23_0._selectitemList) do
-		iter_23_1.btn:RemoveClickListener()
+	for _, item in ipairs(self._selectitemList) do
+		item.btn:RemoveClickListener()
 	end
 
-	arg_23_0._simagecharbg:UnLoadImage()
+	self._simagecharbg:UnLoadImage()
 end
 
-return var_0_0
+return SocialFriendsView

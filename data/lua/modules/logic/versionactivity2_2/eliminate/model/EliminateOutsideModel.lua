@@ -1,120 +1,122 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.model.EliminateOutsideModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/model/EliminateOutsideModel.lua
 
-local var_0_0 = class("EliminateOutsideModel", BaseModel)
+module("modules.logic.versionactivity2_2.eliminate.model.EliminateOutsideModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local EliminateOutsideModel = class("EliminateOutsideModel", BaseModel)
+
+function EliminateOutsideModel:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._selectedEpisodeId = nil
-	arg_2_0._selectedCharacterId = nil
-	arg_2_0._selectedPieceId = nil
-	arg_2_0._totalStar = 0
-	arg_2_0._gainedTaskId = {}
-	arg_2_0._chapterList = {}
-	arg_2_0._ownedWarChessCharacterId = {}
-	arg_2_0._ownedWarChessPieceId = {}
-	arg_2_0._episodeInfo = {}
+function EliminateOutsideModel:reInit()
+	self._selectedEpisodeId = nil
+	self._selectedCharacterId = nil
+	self._selectedPieceId = nil
+	self._totalStar = 0
+	self._gainedTaskId = {}
+	self._chapterList = {}
+	self._ownedWarChessCharacterId = {}
+	self._ownedWarChessPieceId = {}
+	self._episodeInfo = {}
 end
 
-function var_0_0.initTaskInfo(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0._totalStar = arg_3_1
-	arg_3_0._gainedTaskId = {}
+function EliminateOutsideModel:initTaskInfo(totalStar, gainedTaskId)
+	self._totalStar = totalStar
+	self._gainedTaskId = {}
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_2) do
-		arg_3_0._gainedTaskId[iter_3_1] = iter_3_1
+	for _, id in ipairs(gainedTaskId) do
+		self._gainedTaskId[id] = id
 	end
 end
 
-function var_0_0.initMapInfo(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
-	arg_4_0._ownedWarChessCharacterId = {}
-	arg_4_0._ownedWarChessPieceId = {}
-	arg_4_0._episodeInfo = {}
-	arg_4_0._unlockSlotNum = #arg_4_4
+function EliminateOutsideModel:initMapInfo(ownedWarChessCharacterId, ownedWarChessPieceId, episodeInfo, unlockSlotId)
+	self._ownedWarChessCharacterId = {}
+	self._ownedWarChessPieceId = {}
+	self._episodeInfo = {}
+	self._unlockSlotNum = #unlockSlotId
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
-		arg_4_0._ownedWarChessCharacterId[iter_4_1] = iter_4_1
+	for _, id in ipairs(ownedWarChessCharacterId) do
+		self._ownedWarChessCharacterId[id] = id
 	end
 
-	for iter_4_2, iter_4_3 in ipairs(arg_4_2) do
-		arg_4_0._ownedWarChessPieceId[iter_4_3] = iter_4_3
+	for _, id in ipairs(ownedWarChessPieceId) do
+		self._ownedWarChessPieceId[id] = id
 	end
 
-	for iter_4_4, iter_4_5 in ipairs(arg_4_3) do
-		local var_4_0 = arg_4_0._episodeInfo[iter_4_5.id] or WarEpisodeInfo.New()
+	for _, v in ipairs(episodeInfo) do
+		local mo = self._episodeInfo[v.id] or WarEpisodeInfo.New()
 
-		var_4_0:init(iter_4_5)
+		mo:init(v)
 
-		arg_4_0._episodeInfo[iter_4_5.id] = var_4_0
+		self._episodeInfo[v.id] = mo
 	end
 
-	arg_4_0:_initChapterList()
+	self:_initChapterList()
 	EliminateMapController.instance:dispatchEvent(EliminateMapEvent.OnUpdateEpisodeInfo)
 end
 
-function var_0_0._initChapterList(arg_5_0)
-	arg_5_0._chapterList = {}
+function EliminateOutsideModel:_initChapterList()
+	self._chapterList = {}
 
-	for iter_5_0, iter_5_1 in ipairs(lua_eliminate_episode.configList) do
-		local var_5_0 = arg_5_0._chapterList[iter_5_1.chapterId] or {}
+	for i, v in ipairs(lua_eliminate_episode.configList) do
+		local list = self._chapterList[v.chapterId] or {}
 
-		arg_5_0._chapterList[iter_5_1.chapterId] = var_5_0
+		self._chapterList[v.chapterId] = list
 
-		local var_5_1 = arg_5_0._episodeInfo[iter_5_1.id] or WarEpisodeInfo.New()
+		local mo = self._episodeInfo[v.id] or WarEpisodeInfo.New()
 
-		var_5_1:initFromParam(iter_5_1.id, var_5_1.star or 0)
+		mo:initFromParam(v.id, mo.star or 0)
 
-		arg_5_0._episodeInfo[var_5_1.id] = var_5_1
+		self._episodeInfo[mo.id] = mo
 
-		table.insert(var_5_0, var_5_1)
+		table.insert(list, mo)
 	end
 end
 
-function var_0_0.getChapterList(arg_6_0)
-	return arg_6_0._chapterList
+function EliminateOutsideModel:getChapterList()
+	return self._chapterList
 end
 
-function var_0_0.getUnlockSlotNum(arg_7_0)
-	return arg_7_0._unlockSlotNum
+function EliminateOutsideModel:getUnlockSlotNum()
+	return self._unlockSlotNum
 end
 
-function var_0_0.getTotalStar(arg_8_0)
-	return arg_8_0._totalStar
+function EliminateOutsideModel:getTotalStar()
+	return self._totalStar
 end
 
-function var_0_0.addGainedTask(arg_9_0, arg_9_1)
-	if arg_9_1 == 0 then
-		for iter_9_0, iter_9_1 in ipairs(lua_eliminate_reward.configList) do
-			if arg_9_0._totalStar >= iter_9_1.star then
-				arg_9_0._gainedTaskId[iter_9_1.id] = iter_9_1.id
+function EliminateOutsideModel:addGainedTask(taskId)
+	if taskId == 0 then
+		for i, config in ipairs(lua_eliminate_reward.configList) do
+			if self._totalStar >= config.star then
+				self._gainedTaskId[config.id] = config.id
 			end
 		end
 
 		return
 	end
 
-	arg_9_0._gainedTaskId[arg_9_1] = arg_9_1
+	self._gainedTaskId[taskId] = taskId
 end
 
-function var_0_0.gainedTask(arg_10_0, arg_10_1)
-	return arg_10_0._gainedTaskId[arg_10_1] ~= nil
+function EliminateOutsideModel:gainedTask(taskId)
+	return self._gainedTaskId[taskId] ~= nil
 end
 
-function var_0_0.hasCharacter(arg_11_0, arg_11_1)
-	return arg_11_0._ownedWarChessCharacterId[arg_11_1] ~= nil
+function EliminateOutsideModel:hasCharacter(characterId)
+	return self._ownedWarChessCharacterId[characterId] ~= nil
 end
 
-function var_0_0.hasChessPiece(arg_12_0, arg_12_1)
-	return arg_12_0._ownedWarChessPieceId[arg_12_1] ~= nil
+function EliminateOutsideModel:hasChessPiece(pieceId)
+	return self._ownedWarChessPieceId[pieceId] ~= nil
 end
 
-function var_0_0.hasPassedEpisode(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0._episodeInfo[arg_13_1]
+function EliminateOutsideModel:hasPassedEpisode(episodeId)
+	local mo = self._episodeInfo[episodeId]
 
-	return var_13_0 and var_13_0.star > 0
+	return mo and mo.star > 0
 end
 
-var_0_0.instance = var_0_0.New()
+EliminateOutsideModel.instance = EliminateOutsideModel.New()
 
-return var_0_0
+return EliminateOutsideModel

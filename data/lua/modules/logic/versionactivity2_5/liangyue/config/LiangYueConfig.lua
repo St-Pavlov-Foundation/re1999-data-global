@@ -1,286 +1,289 @@
-﻿module("modules.logic.versionactivity2_5.liangyue.config.LiangYueConfig", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/liangyue/config/LiangYueConfig.lua
 
-local var_0_0 = class("LiangYueConfig", BaseConfig)
+module("modules.logic.versionactivity2_5.liangyue.config.LiangYueConfig", package.seeall)
 
-var_0_0.EPISODE_CONFIG_NAME = "activity184_episode"
-var_0_0.PUZZLE_CONFIG_NAME = "activity184_puzzle_episode"
-var_0_0.ILLUSTRATION_CONFIG_NAME = "activity184_illustration"
-var_0_0.TASK_CONFIG_NAME = "activity184_task"
+local LiangYueConfig = class("LiangYueConfig", BaseConfig)
 
-function var_0_0.reqConfigNames(arg_1_0)
+LiangYueConfig.EPISODE_CONFIG_NAME = "activity184_episode"
+LiangYueConfig.PUZZLE_CONFIG_NAME = "activity184_puzzle_episode"
+LiangYueConfig.ILLUSTRATION_CONFIG_NAME = "activity184_illustration"
+LiangYueConfig.TASK_CONFIG_NAME = "activity184_task"
+
+function LiangYueConfig:reqConfigNames()
 	return {
-		arg_1_0.EPISODE_CONFIG_NAME,
-		arg_1_0.ILLUSTRATION_CONFIG_NAME,
-		arg_1_0.PUZZLE_CONFIG_NAME,
-		arg_1_0.TASK_CONFIG_NAME
+		self.EPISODE_CONFIG_NAME,
+		self.ILLUSTRATION_CONFIG_NAME,
+		self.PUZZLE_CONFIG_NAME,
+		self.TASK_CONFIG_NAME
 	}
 end
 
-function var_0_0.onInit(arg_2_0)
-	arg_2_0._noGameEpisodeDic = {}
-	arg_2_0._afterGameEpisodeDic = {}
-	arg_2_0._taskDict = {}
+function LiangYueConfig:onInit()
+	self._noGameEpisodeDic = {}
+	self._afterGameEpisodeDic = {}
+	self._taskDict = {}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == arg_3_0.EPISODE_CONFIG_NAME then
-		arg_3_0._episodeConfig = arg_3_2
-	elseif arg_3_1 == arg_3_0.TASK_CONFIG_NAME then
-		arg_3_0._taskConfig = arg_3_2
-	elseif arg_3_1 == arg_3_0.ILLUSTRATION_CONFIG_NAME then
-		arg_3_0._illustrationConfig = arg_3_2
+function LiangYueConfig:onConfigLoaded(configName, configTable)
+	if configName == self.EPISODE_CONFIG_NAME then
+		self._episodeConfig = configTable
+	elseif configName == self.TASK_CONFIG_NAME then
+		self._taskConfig = configTable
+	elseif configName == self.ILLUSTRATION_CONFIG_NAME then
+		self._illustrationConfig = configTable
 
-		arg_3_0:initIllustrationConfig()
-	elseif arg_3_1 == arg_3_0.PUZZLE_CONFIG_NAME then
-		arg_3_0._episodePuzzleConfig = arg_3_2
+		self:initIllustrationConfig()
+	elseif configName == self.PUZZLE_CONFIG_NAME then
+		self._episodePuzzleConfig = configTable
 
-		arg_3_0:initPuzzleEpisodeConfig()
+		self:initPuzzleEpisodeConfig()
 	end
 end
 
-function var_0_0.getTaskByActId(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0._taskDict[arg_4_1]
+function LiangYueConfig:getTaskByActId(activityId)
+	local list = self._taskDict[activityId]
 
-	if not var_4_0 then
-		var_4_0 = {}
+	if not list then
+		list = {}
 
-		for iter_4_0, iter_4_1 in ipairs(arg_4_0._taskConfig.configList) do
-			if iter_4_1.activityId == arg_4_1 then
-				table.insert(var_4_0, iter_4_1)
+		for _, co in ipairs(self._taskConfig.configList) do
+			if co.activityId == activityId then
+				table.insert(list, co)
 			end
 		end
 
-		arg_4_0._taskDict[arg_4_1] = var_4_0
+		self._taskDict[activityId] = list
 	end
 
-	return var_4_0
+	return list
 end
 
-function var_0_0.initPuzzleEpisodeConfig(arg_5_0)
-	arg_5_0._episodeStaticIllustrationDic = {}
+function LiangYueConfig:initPuzzleEpisodeConfig()
+	self._episodeStaticIllustrationDic = {}
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0._episodePuzzleConfig.configList) do
-		local var_5_0 = iter_5_1.activityId
+	for _, config in ipairs(self._episodePuzzleConfig.configList) do
+		local actId = config.activityId
 
-		if arg_5_0._episodeStaticIllustrationDic[var_5_0] == nil then
-			local var_5_1 = {}
+		if self._episodeStaticIllustrationDic[actId] == nil then
+			local shapeConfig = {}
 
-			arg_5_0._episodeStaticIllustrationDic[var_5_0] = var_5_1
+			self._episodeStaticIllustrationDic[actId] = shapeConfig
 		end
 
-		if not string.nilorempty(iter_5_1.staticShape) then
-			local var_5_2 = string.split(iter_5_1.staticShape, "|")
-			local var_5_3 = {}
+		if not string.nilorempty(config.staticShape) then
+			local paramList = string.split(config.staticShape, "|")
+			local staticCubeDic = {}
 
-			for iter_5_2, iter_5_3 in ipairs(var_5_2) do
-				local var_5_4 = string.split(iter_5_3, "#")
-				local var_5_5 = string.splitToNumber(var_5_4[1], ",")
-				local var_5_6 = var_5_5[1]
-				local var_5_7 = var_5_5[2]
+			for _, param in ipairs(paramList) do
+				local data = string.split(param, "#")
+				local pos = string.splitToNumber(data[1], ",")
+				local posX = pos[1]
+				local posY = pos[2]
 
-				if var_5_3[var_5_6] and var_5_3[var_5_6][var_5_7] then
-					logError("固定格子位置重复 位置: x:" .. var_5_6 .. "y:" .. var_5_7)
+				if staticCubeDic[posX] and staticCubeDic[posX][posY] then
+					logError("固定格子位置重复 位置: x:" .. posX .. "y:" .. posY)
 				else
-					if not var_5_3[var_5_6] then
-						var_5_3[var_5_6] = {}
+					if not staticCubeDic[posX] then
+						staticCubeDic[posX] = {}
 					end
 
-					var_5_3[var_5_6][var_5_7] = tonumber(var_5_4[2])
+					staticCubeDic[posX][posY] = tonumber(data[2])
 				end
 			end
 
-			arg_5_0._episodeStaticIllustrationDic[var_5_0][iter_5_1.id] = var_5_3
+			self._episodeStaticIllustrationDic[actId][config.id] = staticCubeDic
 		end
 	end
 end
 
-function var_0_0.getFirstEpisodeId(arg_6_0)
-	return arg_6_0._episodeConfig.configList[1]
+function LiangYueConfig:getFirstEpisodeId()
+	return self._episodeConfig.configList[1]
 end
 
-function var_0_0.initIllustrationConfig(arg_7_0)
-	arg_7_0._illustrationShapeDic = {}
-	arg_7_0._illustrationShapeBoxCountDic = {}
+function LiangYueConfig:initIllustrationConfig()
+	self._illustrationShapeDic = {}
+	self._illustrationShapeBoxCountDic = {}
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0._illustrationConfig.configList) do
-		local var_7_0 = iter_7_1.activityId
-		local var_7_1 = iter_7_1.id
+	for _, config in ipairs(self._illustrationConfig.configList) do
+		local activityId = config.activityId
+		local shapeId = config.id
 
-		if not arg_7_0._illustrationShapeDic[var_7_0] then
-			local var_7_2 = {}
+		if not self._illustrationShapeDic[activityId] then
+			local shapeDic = {}
 
-			arg_7_0._illustrationShapeDic[var_7_0] = var_7_2
+			self._illustrationShapeDic[activityId] = shapeDic
 
-			local var_7_3 = {}
+			local shapeBoxCountDic = {}
 
-			arg_7_0._illustrationShapeBoxCountDic[var_7_0] = var_7_3
+			self._illustrationShapeBoxCountDic[activityId] = shapeBoxCountDic
 		end
 
-		if not arg_7_0._illustrationShapeDic[var_7_0][var_7_1] then
-			local var_7_4 = {}
-			local var_7_5 = 0
-			local var_7_6 = string.split(iter_7_1.shape, "#")
+		if not self._illustrationShapeDic[activityId][shapeId] then
+			local shapeDic = {}
+			local boxCount = 0
+			local params = string.split(config.shape, "#")
 
-			for iter_7_2 = 1, #var_7_6 do
-				local var_7_7 = {}
-				local var_7_8 = var_7_6[iter_7_2]
-				local var_7_9 = string.splitToNumber(var_7_8, ",")
+			for y = 1, #params do
+				local rowData = {}
+				local param = params[y]
+				local data = string.splitToNumber(param, ",")
 
-				for iter_7_3 = 1, #var_7_9 do
-					var_7_7[iter_7_3] = var_7_9[iter_7_3]
+				for x = 1, #data do
+					rowData[x] = data[x]
 
-					if var_7_9[iter_7_3] == 1 then
-						var_7_5 = var_7_5 + 1
+					if data[x] == 1 then
+						boxCount = boxCount + 1
 					end
 				end
 
-				var_7_4[iter_7_2] = var_7_7
+				shapeDic[y] = rowData
 			end
 
-			arg_7_0._illustrationShapeDic[var_7_0][var_7_1] = var_7_4
-			arg_7_0._illustrationShapeBoxCountDic[var_7_0][var_7_1] = var_7_5
+			self._illustrationShapeDic[activityId][shapeId] = shapeDic
+			self._illustrationShapeBoxCountDic[activityId][shapeId] = boxCount
 		else
-			logError(string.format("梁月角色活动 插图表id重复 actId:%s id:%s", var_7_0, var_7_1))
+			logError(string.format("梁月角色活动 插图表id重复 actId:%s id:%s", activityId, shapeId))
 		end
 	end
 end
 
-function var_0_0.getEpisodeStaticIllustrationDic(arg_8_0, arg_8_1, arg_8_2)
-	if arg_8_0._episodeStaticIllustrationDic[arg_8_1] then
-		return arg_8_0._episodeStaticIllustrationDic[arg_8_1][arg_8_2]
+function LiangYueConfig:getEpisodeStaticIllustrationDic(activityId, episodeGameId)
+	if self._episodeStaticIllustrationDic[activityId] then
+		return self._episodeStaticIllustrationDic[activityId][episodeGameId]
 	end
 
 	return nil
 end
 
-function var_0_0.getIllustrationShape(arg_9_0, arg_9_1, arg_9_2)
-	if not arg_9_0._illustrationShapeDic[arg_9_1] then
+function LiangYueConfig:getIllustrationShape(activityId, shapeId)
+	if not self._illustrationShapeDic[activityId] then
 		return nil
 	end
 
-	return arg_9_0._illustrationShapeDic[arg_9_1][arg_9_2]
+	return self._illustrationShapeDic[activityId][shapeId]
 end
 
-function var_0_0.getIllustrationShapeCount(arg_10_0, arg_10_1, arg_10_2)
-	if not arg_10_0._illustrationShapeBoxCountDic[arg_10_1] then
+function LiangYueConfig:getIllustrationShapeCount(activityId, shapeId)
+	if not self._illustrationShapeBoxCountDic[activityId] then
 		return nil
 	end
 
-	return arg_10_0._illustrationShapeBoxCountDic[arg_10_1][arg_10_2]
+	return self._illustrationShapeBoxCountDic[activityId][shapeId]
 end
 
-function var_0_0.getIllustrationAttribute(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = arg_11_0:getIllustrationConfigById(arg_11_1, arg_11_2)
+function LiangYueConfig:getIllustrationAttribute(activityId, shapeId)
+	local config = self:getIllustrationConfigById(activityId, shapeId)
 
-	if var_11_0 == nil then
+	if config == nil then
 		return
 	end
 
-	if not arg_11_0._illustrationAttributeConfig then
-		arg_11_0._illustrationAttributeConfig = {}
+	if not self._illustrationAttributeConfig then
+		self._illustrationAttributeConfig = {}
 	end
 
-	if not arg_11_0._illustrationAttributeConfig[arg_11_1] then
-		arg_11_0._illustrationAttributeConfig[arg_11_1] = {}
+	if not self._illustrationAttributeConfig[activityId] then
+		self._illustrationAttributeConfig[activityId] = {}
 	end
 
-	if not arg_11_0._illustrationAttributeConfig[arg_11_1][arg_11_2] then
-		local var_11_1 = {}
-		local var_11_2 = string.split(var_11_0.attribute, "|")
+	if not self._illustrationAttributeConfig[activityId][shapeId] then
+		local data = {}
+		local singleParams = string.split(config.attribute, "|")
 
-		for iter_11_0, iter_11_1 in ipairs(var_11_2) do
-			local var_11_3 = string.splitToNumber(iter_11_1, "#")
-			local var_11_4 = var_11_3[1]
-			local var_11_5 = var_11_3[2]
-			local var_11_6 = var_11_3[3]
-
-			var_11_1[var_11_4] = {
-				var_11_4,
-				var_11_5,
-				var_11_6
+		for _, singleParam in ipairs(singleParams) do
+			local attributeParam = string.splitToNumber(singleParam, "#")
+			local attributeType = attributeParam[1]
+			local calculateType = attributeParam[2]
+			local attribute = attributeParam[3]
+			local singleData = {
+				attributeType,
+				calculateType,
+				attribute
 			}
+
+			data[attributeType] = singleData
 		end
 
-		arg_11_0._illustrationAttributeConfig[arg_11_1][arg_11_2] = var_11_1
+		self._illustrationAttributeConfig[activityId][shapeId] = data
 
-		return var_11_1
+		return data
 	end
 
-	return arg_11_0._illustrationAttributeConfig[arg_11_1][arg_11_2]
+	return self._illustrationAttributeConfig[activityId][shapeId]
 end
 
-function var_0_0.getEpisodeConfigByActAndId(arg_12_0, arg_12_1, arg_12_2)
-	if not arg_12_0._episodeConfig.configDict[arg_12_1] then
+function LiangYueConfig:getEpisodeConfigByActAndId(actId, id)
+	if not self._episodeConfig.configDict[actId] then
 		return nil
 	end
 
-	return arg_12_0._episodeConfig.configDict[arg_12_1][arg_12_2]
+	return self._episodeConfig.configDict[actId][id]
 end
 
-function var_0_0.getEpisodePuzzleConfigByActAndId(arg_13_0, arg_13_1, arg_13_2)
-	if not arg_13_0._episodePuzzleConfig.configDict[arg_13_1] then
+function LiangYueConfig:getEpisodePuzzleConfigByActAndId(actId, id)
+	if not self._episodePuzzleConfig.configDict[actId] then
 		return nil
 	end
 
-	return arg_13_0._episodePuzzleConfig.configDict[arg_13_1][arg_13_2]
+	return self._episodePuzzleConfig.configDict[actId][id]
 end
 
-function var_0_0.getIllustrationConfigById(arg_14_0, arg_14_1, arg_14_2)
-	if not arg_14_0._illustrationConfig.configDict[arg_14_1] then
+function LiangYueConfig:getIllustrationConfigById(activityId, id)
+	if not self._illustrationConfig.configDict[activityId] then
 		return nil
 	end
 
-	return arg_14_0._illustrationConfig.configDict[arg_14_1][arg_14_2]
+	return self._illustrationConfig.configDict[activityId][id]
 end
 
-function var_0_0.getNoGameEpisodeList(arg_15_0, arg_15_1)
-	if not arg_15_0._episodeConfig.configDict[arg_15_1] then
+function LiangYueConfig:getNoGameEpisodeList(activityId)
+	if not self._episodeConfig.configDict[activityId] then
 		return nil
 	end
 
-	if not arg_15_0._noGameEpisodeDic[arg_15_1] then
-		local var_15_0 = {}
-		local var_15_1 = arg_15_0._episodeConfig.configDict[arg_15_1]
+	if not self._noGameEpisodeDic[activityId] then
+		local episodeList = {}
+		local allConfig = self._episodeConfig.configDict[activityId]
 
-		for iter_15_0, iter_15_1 in pairs(var_15_1) do
-			if iter_15_1.puzzleId == 0 then
-				table.insert(var_15_0, iter_15_1)
+		for _, config in pairs(allConfig) do
+			if config.puzzleId == 0 then
+				table.insert(episodeList, config)
 			end
 		end
 
-		table.sort(var_15_0, arg_15_0._sortEpisode)
+		table.sort(episodeList, self._sortEpisode)
 
-		arg_15_0._noGameEpisodeDic[arg_15_1] = var_15_0
+		self._noGameEpisodeDic[activityId] = episodeList
 	end
 
-	return arg_15_0._noGameEpisodeDic[arg_15_1]
+	return self._noGameEpisodeDic[activityId]
 end
 
-function var_0_0._sortEpisode(arg_16_0, arg_16_1)
-	return arg_16_0.episodeId <= arg_16_1.episodeId
+function LiangYueConfig._sortEpisode(a, b)
+	return a.episodeId <= b.episodeId
 end
 
-function var_0_0.getAfterGameEpisodeId(arg_17_0, arg_17_1, arg_17_2)
-	if not arg_17_0._episodeConfig.configDict[arg_17_1] then
+function LiangYueConfig:getAfterGameEpisodeId(activityId, episodeId)
+	if not self._episodeConfig.configDict[activityId] then
 		return nil
 	end
 
-	if not arg_17_0._afterGameEpisodeDic[arg_17_1] then
-		local var_17_0 = {}
-		local var_17_1 = arg_17_0._episodeConfig.configDict[arg_17_1]
+	if not self._afterGameEpisodeDic[activityId] then
+		local dic = {}
+		local allConfig = self._episodeConfig.configDict[activityId]
 
-		for iter_17_0, iter_17_1 in pairs(var_17_1) do
-			if iter_17_1.puzzleId ~= 0 then
-				var_17_0[iter_17_1.preEpisodeId] = iter_17_1.episodeId
+		for _, config in pairs(allConfig) do
+			if config.puzzleId ~= 0 then
+				dic[config.preEpisodeId] = config.episodeId
 			end
 		end
 
-		arg_17_0._afterGameEpisodeDic[arg_17_1] = var_17_0
+		self._afterGameEpisodeDic[activityId] = dic
 	end
 
-	return arg_17_0._afterGameEpisodeDic[arg_17_1][arg_17_2]
+	return self._afterGameEpisodeDic[activityId][episodeId]
 end
 
-var_0_0.instance = var_0_0.New()
+LiangYueConfig.instance = LiangYueConfig.New()
 
-return var_0_0
+return LiangYueConfig

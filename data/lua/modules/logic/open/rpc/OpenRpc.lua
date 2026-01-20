@@ -1,26 +1,28 @@
-﻿module("modules.logic.open.rpc.OpenRpc", package.seeall)
+﻿-- chunkname: @modules/logic/open/rpc/OpenRpc.lua
 
-local var_0_0 = class("OpenRpc", BaseRpc)
+module("modules.logic.open.rpc.OpenRpc", package.seeall)
 
-function var_0_0.onReceiveUpdateOpenPush(arg_1_0, arg_1_1, arg_1_2)
-	if arg_1_1 == 0 then
-		OpenModel.instance:updateOpenInfo(arg_1_2.openInfos)
+local OpenRpc = class("OpenRpc", BaseRpc)
+
+function OpenRpc:onReceiveUpdateOpenPush(resultCode, msg)
+	if resultCode == 0 then
+		OpenModel.instance:updateOpenInfo(msg.openInfos)
 		MainController.instance:dispatchEvent(MainEvent.OnFuncUnlockRefresh)
 
-		local var_1_0 = {}
+		local newIds = {}
 
-		for iter_1_0, iter_1_1 in ipairs(arg_1_2.openInfos) do
-			if iter_1_1.isOpen then
-				table.insert(var_1_0, iter_1_1.id)
+		for i, openInfo in ipairs(msg.openInfos) do
+			if openInfo.isOpen then
+				table.insert(newIds, openInfo.id)
 			end
 		end
 
-		if #var_1_0 > 0 then
-			OpenController.instance:dispatchEvent(OpenEvent.NewFuncUnlock, var_1_0)
+		if #newIds > 0 then
+			OpenController.instance:dispatchEvent(OpenEvent.NewFuncUnlock, newIds)
 		end
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+OpenRpc.instance = OpenRpc.New()
 
-return var_0_0
+return OpenRpc

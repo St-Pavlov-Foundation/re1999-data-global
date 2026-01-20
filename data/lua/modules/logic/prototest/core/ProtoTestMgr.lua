@@ -1,64 +1,66 @@
-﻿module("modules.logic.prototest.core.ProtoTestMgr", package.seeall)
+﻿-- chunkname: @modules/logic/prototest/core/ProtoTestMgr.lua
 
-local var_0_0 = class("ProtoTestMgr")
+module("modules.logic.prototest.core.ProtoTestMgr", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.isShowFiles = false
-	arg_1_0._isRecording = false
-	arg_1_0._preSender = ProtoTestPreSender.New()
+local ProtoTestMgr = class("ProtoTestMgr")
 
-	LuaEventSystem.addEventMechanism(arg_1_0)
+function ProtoTestMgr:ctor()
+	self.isShowFiles = false
+	self._isRecording = false
+	self._preSender = ProtoTestPreSender.New()
+
+	LuaEventSystem.addEventMechanism(self)
 end
 
-function var_0_0.startRecord(arg_2_0)
-	arg_2_0._isRecording = true
+function ProtoTestMgr:startRecord()
+	self._isRecording = true
 
-	LuaSocketMgr.instance:registerPreSender(arg_2_0._preSender)
+	LuaSocketMgr.instance:registerPreSender(self._preSender)
 end
 
-function var_0_0.endRecord(arg_3_0)
-	arg_3_0._isRecording = false
+function ProtoTestMgr:endRecord()
+	self._isRecording = false
 
-	LuaSocketMgr.instance:unregisterPreSender(arg_3_0._preSender)
+	LuaSocketMgr.instance:unregisterPreSender(self._preSender)
 end
 
-function var_0_0.isRecording(arg_4_0)
-	return arg_4_0._isRecording
+function ProtoTestMgr:isRecording()
+	return self._isRecording
 end
 
-function var_0_0.readFromFile(arg_5_0, arg_5_1)
+function ProtoTestMgr:readFromFile(fileName)
 	SLFramework.FileHelper.EnsureDir(ProtoFileHelper.DirPath)
 
-	local var_5_0 = ProtoFileHelper.getFullPathByFileName(arg_5_1)
-	local var_5_1 = SLFramework.FileHelper.ReadText(var_5_0)
-	local var_5_2 = cjson.decode(var_5_1)
-	local var_5_3 = {}
+	local fullPath = ProtoFileHelper.getFullPathByFileName(fileName)
+	local jsonStr = SLFramework.FileHelper.ReadText(fullPath)
+	local jsonTable = cjson.decode(jsonStr)
+	local list = {}
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_2) do
-		local var_5_4 = ProtoTestCaseMO.New()
+	for _, paramJsonTable in ipairs(jsonTable) do
+		local testCaseMO = ProtoTestCaseMO.New()
 
-		var_5_4:deserialize(iter_5_1)
-		table.insert(var_5_3, var_5_4)
+		testCaseMO:deserialize(paramJsonTable)
+		table.insert(list, testCaseMO)
 	end
 
-	return var_5_3
+	return list
 end
 
-function var_0_0.saveToFile(arg_6_0, arg_6_1, arg_6_2)
+function ProtoTestMgr:saveToFile(fileName, testCaseMOList)
 	SLFramework.FileHelper.EnsureDir(ProtoFileHelper.DirPath)
 
-	local var_6_0 = ProtoFileHelper.getFullPathByFileName(arg_6_1)
-	local var_6_1 = {}
+	local fullPath = ProtoFileHelper.getFullPathByFileName(fileName)
+	local tempList = {}
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_2) do
-		table.insert(var_6_1, iter_6_1:serialize())
+	for _, testCaseMO in ipairs(testCaseMOList) do
+		table.insert(tempList, testCaseMO:serialize())
 	end
 
-	local var_6_2 = cjson.encode(var_6_1)
+	local jsonStr = cjson.encode(tempList)
 
-	SLFramework.FileHelper.WriteTextToPath(var_6_0, var_6_2)
+	SLFramework.FileHelper.WriteTextToPath(fullPath, jsonStr)
 end
 
-var_0_0.instance = var_0_0.New()
+ProtoTestMgr.instance = ProtoTestMgr.New()
 
-return var_0_0
+return ProtoTestMgr

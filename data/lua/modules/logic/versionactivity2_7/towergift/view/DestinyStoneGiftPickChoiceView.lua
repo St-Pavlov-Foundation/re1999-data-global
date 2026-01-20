@@ -1,94 +1,98 @@
-﻿module("modules.logic.versionactivity2_7.towergift.view.DestinyStoneGiftPickChoiceView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/towergift/view/DestinyStoneGiftPickChoiceView.lua
 
-local var_0_0 = class("DestinyStoneGiftPickChoiceView", BaseView)
+module("modules.logic.versionactivity2_7.towergift.view.DestinyStoneGiftPickChoiceView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goconfirm = gohelper.findChild(arg_1_0.viewGO, "#btn_confirm")
-	arg_1_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_confirm")
-	arg_1_0._goconfirmgrey = gohelper.findChild(arg_1_0.viewGO, "#btn_confirm_grey")
-	arg_1_0._btnconfirmgrey = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_confirm_grey")
-	arg_1_0._btncancel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_cancel")
-	arg_1_0._scrollstone = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_stone")
+local DestinyStoneGiftPickChoiceView = class("DestinyStoneGiftPickChoiceView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function DestinyStoneGiftPickChoiceView:onInitView()
+	self._goconfirm = gohelper.findChild(self.viewGO, "#btn_confirm")
+	self._btnconfirm = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_confirm")
+	self._goconfirmgrey = gohelper.findChild(self.viewGO, "#btn_confirm_grey")
+	self._btnconfirmgrey = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_confirm_grey")
+	self._btncancel = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_cancel")
+	self._scrollstone = gohelper.findChildScrollRect(self.viewGO, "#scroll_stone")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnconfirm:AddClickListener(arg_2_0._btnconfirmOnClick, arg_2_0)
-	arg_2_0._btncancel:AddClickListener(arg_2_0._btncancelOnClick, arg_2_0)
-	arg_2_0._btnconfirmgrey:AddClickListener(arg_2_0._btnconfirmgreyOnClick, arg_2_0)
-	arg_2_0:addEventCb(DestinyStoneGiftPickChoiceController.instance, DestinyStoneGiftPickChoiceEvent.onCustomPickListChanged, arg_2_0.refreshUI, arg_2_0)
-	arg_2_0:addEventCb(DestinyStoneGiftPickChoiceController.instance, DestinyStoneGiftPickChoiceEvent.hadStoneUp, arg_2_0.onStoneUpFinish, arg_2_0)
+function DestinyStoneGiftPickChoiceView:addEvents()
+	self._btnconfirm:AddClickListener(self._btnconfirmOnClick, self)
+	self._btncancel:AddClickListener(self._btncancelOnClick, self)
+	self._btnconfirmgrey:AddClickListener(self._btnconfirmgreyOnClick, self)
+	self:addEventCb(DestinyStoneGiftPickChoiceController.instance, DestinyStoneGiftPickChoiceEvent.onCustomPickListChanged, self.refreshUI, self)
+	self:addEventCb(DestinyStoneGiftPickChoiceController.instance, DestinyStoneGiftPickChoiceEvent.hadStoneUp, self.onStoneUpFinish, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnconfirm:RemoveClickListener()
-	arg_3_0._btncancel:RemoveClickListener()
-	arg_3_0._btnconfirmgrey:RemoveClickListener()
-	arg_3_0:removeEventCb(DestinyStoneGiftPickChoiceController.instance, DestinyStoneGiftPickChoiceEvent.onCustomPickListChanged, arg_3_0.refreshUI, arg_3_0)
-	arg_3_0:removeEventCb(DestinyStoneGiftPickChoiceController.instance, DestinyStoneGiftPickChoiceEvent.hadStoneUp, arg_3_0.onStoneUpFinish, arg_3_0)
+function DestinyStoneGiftPickChoiceView:removeEvents()
+	self._btnconfirm:RemoveClickListener()
+	self._btncancel:RemoveClickListener()
+	self._btnconfirmgrey:RemoveClickListener()
+	self:removeEventCb(DestinyStoneGiftPickChoiceController.instance, DestinyStoneGiftPickChoiceEvent.onCustomPickListChanged, self.refreshUI, self)
+	self:removeEventCb(DestinyStoneGiftPickChoiceController.instance, DestinyStoneGiftPickChoiceEvent.hadStoneUp, self.onStoneUpFinish, self)
 end
 
-function var_0_0._btnconfirmOnClick(arg_4_0)
-	local var_4_0 = DestinyStoneGiftPickChoiceListModel.instance:getCurrentSelectMo()
+function DestinyStoneGiftPickChoiceView:_btnconfirmOnClick()
+	local currentSelectMo = DestinyStoneGiftPickChoiceListModel.instance:getCurrentSelectMo()
 
-	if var_4_0 then
-		var_4_0.heroMo.destinyStoneMo:setUpStoneId(var_4_0.stoneId)
+	if currentSelectMo then
+		local heroDestinyStoneMO = currentSelectMo.heroMo.destinyStoneMo
 
-		local var_4_1 = {
-			materialId = arg_4_0._materialId,
-			heroMo = var_4_0.heroMo,
-			stoneMo = var_4_0.stoneMo
+		heroDestinyStoneMO:setUpStoneId(currentSelectMo.stoneId)
+
+		local param = {
+			materialId = self._materialId,
+			heroMo = currentSelectMo.heroMo,
+			stoneMo = currentSelectMo.stoneMo
 		}
 
-		ViewMgr.instance:openView(ViewName.CharacterDestinyStoneUpView, var_4_1)
+		ViewMgr.instance:openView(ViewName.CharacterDestinyStoneUpView, param)
 	end
 end
 
-function var_0_0._btncancelOnClick(arg_5_0)
-	arg_5_0:closeThis()
+function DestinyStoneGiftPickChoiceView:_btncancelOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnconfirmgreyOnClick(arg_6_0)
+function DestinyStoneGiftPickChoiceView:_btnconfirmgreyOnClick()
 	GameFacade.showToast(ToastEnum.NoChoiceHeroStoneUp)
 end
 
-function var_0_0.onStoneUpFinish(arg_7_0)
-	arg_7_0:closeThis()
+function DestinyStoneGiftPickChoiceView:onStoneUpFinish()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_8_0)
+function DestinyStoneGiftPickChoiceView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
+function DestinyStoneGiftPickChoiceView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0._materialId = arg_10_0.viewParam and arg_10_0.viewParam.materialId
+function DestinyStoneGiftPickChoiceView:onOpen()
+	self._materialId = self.viewParam and self.viewParam.materialId
 
-	local var_10_0 = arg_10_0.viewParam.ignoreIds
+	local ignoreIds = self.viewParam.ignoreIds
 
-	DestinyStoneGiftPickChoiceListModel.instance:initList(var_10_0)
-	arg_10_0:refreshUI()
+	DestinyStoneGiftPickChoiceListModel.instance:initList(ignoreIds)
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_11_0)
-	local var_11_0 = DestinyStoneGiftPickChoiceListModel.instance:getCurrentSelectMo() ~= nil
+function DestinyStoneGiftPickChoiceView:refreshUI()
+	local isSelect = DestinyStoneGiftPickChoiceListModel.instance:getCurrentSelectMo() ~= nil
 
-	gohelper.setActive(arg_11_0._goconfirm, var_11_0)
-	gohelper.setActive(arg_11_0._goconfirmgrey, not var_11_0)
+	gohelper.setActive(self._goconfirm, isSelect)
+	gohelper.setActive(self._goconfirmgrey, not isSelect)
 end
 
-function var_0_0.onClose(arg_12_0)
+function DestinyStoneGiftPickChoiceView:onClose()
 	DestinyStoneGiftPickChoiceListModel.instance:clearSelect()
 end
 
-function var_0_0.onDestroyView(arg_13_0)
+function DestinyStoneGiftPickChoiceView:onDestroyView()
 	return
 end
 
-return var_0_0
+return DestinyStoneGiftPickChoiceView

@@ -1,83 +1,86 @@
-﻿module("modules.logic.season.comp.SeasonStarProgressComp", package.seeall)
+﻿-- chunkname: @modules/logic/season/comp/SeasonStarProgressComp.lua
 
-local var_0_0 = class("SeasonStarProgressComp", LuaCompBase)
+module("modules.logic.season.comp.SeasonStarProgressComp", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0.transform = arg_1_1.transform
-	arg_1_0.starCount = 7
+local SeasonStarProgressComp = class("SeasonStarProgressComp", LuaCompBase)
+
+function SeasonStarProgressComp:init(go)
+	self.go = go
+	self.transform = go.transform
+	self.starCount = 7
 end
 
-function var_0_0.refreshStar(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	arg_2_0:initItemList(arg_2_1)
-	arg_2_0:refreshItemList(arg_2_2, arg_2_3)
+function SeasonStarProgressComp:refreshStar(starName, curStage, maxStage)
+	self:initItemList(starName)
+	self:refreshItemList(curStage, maxStage)
 end
 
-function var_0_0.initItemList(arg_3_0, arg_3_1)
-	if arg_3_0.itemList then
+function SeasonStarProgressComp:initItemList(starName)
+	if self.itemList then
 		return
 	end
 
-	arg_3_0.itemList = {}
+	self.itemList = {}
 
-	for iter_3_0 = 1, arg_3_0.starCount do
-		arg_3_0.itemList[iter_3_0] = arg_3_0:createItem(iter_3_0, arg_3_1)
+	for i = 1, self.starCount do
+		self.itemList[i] = self:createItem(i, starName)
 	end
 end
 
-function var_0_0.createItem(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = arg_4_0:getUserDataTb_()
+function SeasonStarProgressComp:createItem(index, starName)
+	local item = self:getUserDataTb_()
 
-	var_4_0.index = arg_4_1
+	item.index = index
 
-	if type(arg_4_2) == "string" then
-		var_4_0.go = gohelper.findChild(arg_4_0.go, string.format("%s%s", arg_4_2, arg_4_1))
+	if type(starName) == "string" then
+		item.go = gohelper.findChild(self.go, string.format("%s%s", starName, index))
 	else
-		var_4_0.go = gohelper.cloneInPlace(arg_4_2, string.format("star%s", arg_4_2, arg_4_1))
+		item.go = gohelper.cloneInPlace(starName, string.format("star%s", starName, index))
 	end
 
-	var_4_0.goDark = gohelper.findChild(var_4_0.go, "dark")
-	var_4_0.goLight = gohelper.findChild(var_4_0.go, "light")
-	var_4_0.imgDark = gohelper.findChildImage(var_4_0.go, "dark")
-	var_4_0.imgLight = gohelper.findChildImage(var_4_0.go, "light")
+	item.goDark = gohelper.findChild(item.go, "dark")
+	item.goLight = gohelper.findChild(item.go, "light")
+	item.imgDark = gohelper.findChildImage(item.go, "dark")
+	item.imgLight = gohelper.findChildImage(item.go, "light")
 
-	return var_4_0
+	return item
 end
 
-function var_0_0.refreshItemList(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_0.itemList then
-		for iter_5_0, iter_5_1 in ipairs(arg_5_0.itemList) do
-			arg_5_0:updateItem(iter_5_1, arg_5_1, arg_5_2)
+function SeasonStarProgressComp:refreshItemList(curStage, maxStage)
+	if self.itemList then
+		for i, v in ipairs(self.itemList) do
+			self:updateItem(v, curStage, maxStage)
 		end
 	end
 end
 
-function var_0_0.updateItem(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	if not arg_6_1 then
+function SeasonStarProgressComp:updateItem(item, stage, maxStage)
+	if not item then
 		return
 	end
 
-	local var_6_0 = arg_6_1.index
-	local var_6_1 = var_6_0 == arg_6_3
+	local index = item.index
+	local isMaxStage = index == maxStage
+	local isNotShow = maxStage < index or isMaxStage and stage < index
 
-	if arg_6_3 < var_6_0 or var_6_1 and arg_6_2 < var_6_0 then
-		gohelper.setActive(arg_6_1.go, false)
+	if isNotShow then
+		gohelper.setActive(item.go, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_6_1.go, true)
+	gohelper.setActive(item.go, true)
 
-	local var_6_2 = var_6_0 <= arg_6_2
+	local showLight = index <= stage
 
-	gohelper.setActive(arg_6_1.goLight, var_6_2)
-	gohelper.setActive(arg_6_1.goDark, not var_6_2)
+	gohelper.setActive(item.goLight, showLight)
+	gohelper.setActive(item.goDark, not showLight)
 
-	if var_6_2 then
-		local var_6_3 = var_6_1 and "#B83838" or "#FFFFFF"
+	if showLight then
+		local color = isMaxStage and "#B83838" or "#FFFFFF"
 
-		SLFramework.UGUI.GuiHelper.SetColor(arg_6_1.imgLight, var_6_3)
+		SLFramework.UGUI.GuiHelper.SetColor(item.imgLight, color)
 	end
 end
 
-return var_0_0
+return SeasonStarProgressComp

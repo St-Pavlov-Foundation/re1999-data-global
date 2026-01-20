@@ -1,154 +1,158 @@
-﻿module("modules.logic.gm.view.rouge.RougePathSelectMapEditorView", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/rouge/RougePathSelectMapEditorView.lua
 
-local var_0_0 = class("RougePathSelectMapEditorView", BaseView)
+module("modules.logic.gm.view.rouge.RougePathSelectMapEditorView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gotop = gohelper.findChild(arg_1_0.viewGO, "#go_top")
-	arg_1_0._gocamera = gohelper.findChild(arg_1_0.viewGO, "#go_top/#go_camera")
-	arg_1_0._btncamerareduce = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_top/#go_camera/#btn_reduce")
-	arg_1_0._inputcamera = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "#go_top/#go_camera/#input_camera")
-	arg_1_0._btncameraadd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_top/#go_camera/#btn_add")
-	arg_1_0._btnFocusPosXReduce = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_top/#go_focusposX/#btn_reduce")
-	arg_1_0._inputFocusPosX = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "#go_top/#go_focusposX/#input_posX")
-	arg_1_0._btnFocusPosXAdd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_top/#go_focusposX/#btn_add")
-	arg_1_0._btnFocusPosYReduce = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_top/#go_focusposY/#btn_reduce")
-	arg_1_0._inputFocusPosY = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "#go_top/#go_focusposY/#input_posY")
-	arg_1_0._btnFocusPosYAdd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_top/#go_focusposY/#btn_add")
-	arg_1_0._btnStartPosXReduce = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_top1/#go_startposX/#btn_reduce")
-	arg_1_0._inputStartPosX = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "#go_top1/#go_startposX/#input_posX")
-	arg_1_0._btnStartPosXAdd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_top1/#go_startposX/#btn_add")
-	arg_1_0._btnStartPosYReduce = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_top1/#go_startposY/#btn_reduce")
-	arg_1_0._inputStartPosY = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "#go_top1/#go_startposY/#input_posY")
-	arg_1_0._btnStartPosYAdd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_top1/#go_startposY/#btn_add")
-	arg_1_0._btnEndPosXReduce = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_top1/#go_endposX/#btn_reduce")
-	arg_1_0._inputEndPosX = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "#go_top1/#go_endposX/#input_posX")
-	arg_1_0._btnEndPosXAdd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_top1/#go_endposX/#btn_add")
-	arg_1_0._btnEndPosYReduce = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_top1/#go_endposY/#btn_reduce")
-	arg_1_0._inputEndPosY = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "#go_top1/#go_endposY/#input_posY")
-	arg_1_0._btnEndPosYAdd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_top1/#go_endposY/#btn_add")
-	arg_1_0._btnSelectLinePosXReduce = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_top2/#go_lineposX/#btn_reduce")
-	arg_1_0._inputSelectLinePosX = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "#go_top2/#go_lineposX/#input_posX")
-	arg_1_0._btnSelectLinePosXAdd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_top2/#go_lineposX/#btn_add")
-	arg_1_0._btnSelectLinePosYReduce = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_top2/#go_lineposY/#btn_reduce")
-	arg_1_0._inputSelectLinePosY = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "#go_top2/#go_lineposY/#input_posY")
-	arg_1_0._btnSelectLinePosYAdd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_top2/#go_lineposY/#btn_add")
-	arg_1_0._btnLineIconPosXReduce = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_top2/#go_lineiconposX/#btn_reduce")
-	arg_1_0._inputLineIconPosX = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "#go_top2/#go_lineiconposX/#input_posX")
-	arg_1_0._btnLineIconPosXAdd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_top2/#go_lineiconposX/#btn_add")
-	arg_1_0._btnLineIconPosYReduce = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_top2/#go_lineiconposY/#btn_reduce")
-	arg_1_0._inputLineIconPosY = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "#go_top2/#go_lineiconposY/#input_posY")
-	arg_1_0._btnLineIconPosYAdd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_top2/#go_lineiconposY/#btn_add")
-	arg_1_0.dropMap = gohelper.findChildDropdown(arg_1_0.viewGO, "#go_top/#go_dropmap/#drop_map")
+local RougePathSelectMapEditorView = class("RougePathSelectMapEditorView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougePathSelectMapEditorView:onInitView()
+	self._gotop = gohelper.findChild(self.viewGO, "#go_top")
+	self._gocamera = gohelper.findChild(self.viewGO, "#go_top/#go_camera")
+	self._btncamerareduce = gohelper.findChildButtonWithAudio(self.viewGO, "#go_top/#go_camera/#btn_reduce")
+	self._inputcamera = gohelper.findChildTextMeshInputField(self.viewGO, "#go_top/#go_camera/#input_camera")
+	self._btncameraadd = gohelper.findChildButtonWithAudio(self.viewGO, "#go_top/#go_camera/#btn_add")
+	self._btnFocusPosXReduce = gohelper.findChildButtonWithAudio(self.viewGO, "#go_top/#go_focusposX/#btn_reduce")
+	self._inputFocusPosX = gohelper.findChildTextMeshInputField(self.viewGO, "#go_top/#go_focusposX/#input_posX")
+	self._btnFocusPosXAdd = gohelper.findChildButtonWithAudio(self.viewGO, "#go_top/#go_focusposX/#btn_add")
+	self._btnFocusPosYReduce = gohelper.findChildButtonWithAudio(self.viewGO, "#go_top/#go_focusposY/#btn_reduce")
+	self._inputFocusPosY = gohelper.findChildTextMeshInputField(self.viewGO, "#go_top/#go_focusposY/#input_posY")
+	self._btnFocusPosYAdd = gohelper.findChildButtonWithAudio(self.viewGO, "#go_top/#go_focusposY/#btn_add")
+	self._btnStartPosXReduce = gohelper.findChildButtonWithAudio(self.viewGO, "#go_top1/#go_startposX/#btn_reduce")
+	self._inputStartPosX = gohelper.findChildTextMeshInputField(self.viewGO, "#go_top1/#go_startposX/#input_posX")
+	self._btnStartPosXAdd = gohelper.findChildButtonWithAudio(self.viewGO, "#go_top1/#go_startposX/#btn_add")
+	self._btnStartPosYReduce = gohelper.findChildButtonWithAudio(self.viewGO, "#go_top1/#go_startposY/#btn_reduce")
+	self._inputStartPosY = gohelper.findChildTextMeshInputField(self.viewGO, "#go_top1/#go_startposY/#input_posY")
+	self._btnStartPosYAdd = gohelper.findChildButtonWithAudio(self.viewGO, "#go_top1/#go_startposY/#btn_add")
+	self._btnEndPosXReduce = gohelper.findChildButtonWithAudio(self.viewGO, "#go_top1/#go_endposX/#btn_reduce")
+	self._inputEndPosX = gohelper.findChildTextMeshInputField(self.viewGO, "#go_top1/#go_endposX/#input_posX")
+	self._btnEndPosXAdd = gohelper.findChildButtonWithAudio(self.viewGO, "#go_top1/#go_endposX/#btn_add")
+	self._btnEndPosYReduce = gohelper.findChildButtonWithAudio(self.viewGO, "#go_top1/#go_endposY/#btn_reduce")
+	self._inputEndPosY = gohelper.findChildTextMeshInputField(self.viewGO, "#go_top1/#go_endposY/#input_posY")
+	self._btnEndPosYAdd = gohelper.findChildButtonWithAudio(self.viewGO, "#go_top1/#go_endposY/#btn_add")
+	self._btnSelectLinePosXReduce = gohelper.findChildButtonWithAudio(self.viewGO, "#go_top2/#go_lineposX/#btn_reduce")
+	self._inputSelectLinePosX = gohelper.findChildTextMeshInputField(self.viewGO, "#go_top2/#go_lineposX/#input_posX")
+	self._btnSelectLinePosXAdd = gohelper.findChildButtonWithAudio(self.viewGO, "#go_top2/#go_lineposX/#btn_add")
+	self._btnSelectLinePosYReduce = gohelper.findChildButtonWithAudio(self.viewGO, "#go_top2/#go_lineposY/#btn_reduce")
+	self._inputSelectLinePosY = gohelper.findChildTextMeshInputField(self.viewGO, "#go_top2/#go_lineposY/#input_posY")
+	self._btnSelectLinePosYAdd = gohelper.findChildButtonWithAudio(self.viewGO, "#go_top2/#go_lineposY/#btn_add")
+	self._btnLineIconPosXReduce = gohelper.findChildButtonWithAudio(self.viewGO, "#go_top2/#go_lineiconposX/#btn_reduce")
+	self._inputLineIconPosX = gohelper.findChildTextMeshInputField(self.viewGO, "#go_top2/#go_lineiconposX/#input_posX")
+	self._btnLineIconPosXAdd = gohelper.findChildButtonWithAudio(self.viewGO, "#go_top2/#go_lineiconposX/#btn_add")
+	self._btnLineIconPosYReduce = gohelper.findChildButtonWithAudio(self.viewGO, "#go_top2/#go_lineiconposY/#btn_reduce")
+	self._inputLineIconPosY = gohelper.findChildTextMeshInputField(self.viewGO, "#go_top2/#go_lineiconposY/#input_posY")
+	self._btnLineIconPosYAdd = gohelper.findChildButtonWithAudio(self.viewGO, "#go_top2/#go_lineiconposY/#btn_add")
+	self.dropMap = gohelper.findChildDropdown(self.viewGO, "#go_top/#go_dropmap/#drop_map")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btncamerareduce:AddClickListener(arg_2_0.onClickCameraReduceBtn, arg_2_0)
-	arg_2_0._btncameraadd:AddClickListener(arg_2_0.onClickCameraAddBtn, arg_2_0)
-	arg_2_0._inputcamera:AddOnValueChanged(arg_2_0.onCameraValueChange, arg_2_0)
-	arg_2_0._btnFocusPosXReduce:AddClickListener(arg_2_0.onClickFocusPosXReduceBtn, arg_2_0)
-	arg_2_0._btnFocusPosXAdd:AddClickListener(arg_2_0.onClickFocusPosXAddBtn, arg_2_0)
-	arg_2_0._inputFocusPosX:AddOnValueChanged(arg_2_0.onInputFocusPosXChange, arg_2_0)
-	arg_2_0._btnFocusPosYReduce:AddClickListener(arg_2_0.onClickFocusPosYReduceBtn, arg_2_0)
-	arg_2_0._btnFocusPosYAdd:AddClickListener(arg_2_0.onClickFocusPosYAddBtn, arg_2_0)
-	arg_2_0._inputFocusPosY:AddOnValueChanged(arg_2_0.onInputFocusPosYChange, arg_2_0)
-	arg_2_0._btnStartPosXReduce:AddClickListener(arg_2_0.onClickStartPosXReduceBtn, arg_2_0)
-	arg_2_0._btnStartPosXAdd:AddClickListener(arg_2_0.onClickStartPosXAddBtn, arg_2_0)
-	arg_2_0._inputStartPosX:AddOnValueChanged(arg_2_0.onInputStartPosXChange, arg_2_0)
-	arg_2_0._btnStartPosYReduce:AddClickListener(arg_2_0.onClickStartPosYReduceBtn, arg_2_0)
-	arg_2_0._btnStartPosYAdd:AddClickListener(arg_2_0.onClickStartPosYAddBtn, arg_2_0)
-	arg_2_0._inputStartPosY:AddOnValueChanged(arg_2_0.onInputStartPosYChange, arg_2_0)
-	arg_2_0._btnEndPosXReduce:AddClickListener(arg_2_0.onClickEndPosXReduceBtn, arg_2_0)
-	arg_2_0._btnEndPosXAdd:AddClickListener(arg_2_0.onClickEndPosXAddBtn, arg_2_0)
-	arg_2_0._inputEndPosX:AddOnValueChanged(arg_2_0.onInputEndPosXChange, arg_2_0)
-	arg_2_0._btnEndPosYReduce:AddClickListener(arg_2_0.onClickEndPosYReduceBtn, arg_2_0)
-	arg_2_0._btnEndPosYAdd:AddClickListener(arg_2_0.onClickEndPosYAddBtn, arg_2_0)
-	arg_2_0._inputEndPosY:AddOnValueChanged(arg_2_0.onInputEndPosYChange, arg_2_0)
-	arg_2_0._btnSelectLinePosXReduce:AddClickListener(arg_2_0.onClickLinePosXReduceBtn, arg_2_0)
-	arg_2_0._btnSelectLinePosXAdd:AddClickListener(arg_2_0.onClickLinePosXAddBtn, arg_2_0)
-	arg_2_0._inputSelectLinePosX:AddOnValueChanged(arg_2_0.onInputSelectLinePosXChange, arg_2_0)
-	arg_2_0._btnSelectLinePosYReduce:AddClickListener(arg_2_0.onClickLinePosYReduceBtn, arg_2_0)
-	arg_2_0._btnSelectLinePosYAdd:AddClickListener(arg_2_0.onClickLinePosYAddBtn, arg_2_0)
-	arg_2_0._inputSelectLinePosY:AddOnValueChanged(arg_2_0.onInputSelectLinePosYChange, arg_2_0)
-	arg_2_0._btnLineIconPosXReduce:AddClickListener(arg_2_0.onClickLineIconXReduceBtn, arg_2_0)
-	arg_2_0._btnLineIconPosXAdd:AddClickListener(arg_2_0.onClickLineIconXAddBtn, arg_2_0)
-	arg_2_0._inputLineIconPosX:AddOnValueChanged(arg_2_0.onInputLineIconPosXChange, arg_2_0)
-	arg_2_0._btnLineIconPosYReduce:AddClickListener(arg_2_0.onClickLineIconYReduceBtn, arg_2_0)
-	arg_2_0._btnLineIconPosYAdd:AddClickListener(arg_2_0.onClickLineIconYAddBtn, arg_2_0)
-	arg_2_0._inputLineIconPosY:AddOnValueChanged(arg_2_0.onInputLineIconPosYChange, arg_2_0)
-	arg_2_0.dropMap:AddOnValueChanged(arg_2_0.onDropMapValueChanged, arg_2_0)
+function RougePathSelectMapEditorView:addEvents()
+	self._btncamerareduce:AddClickListener(self.onClickCameraReduceBtn, self)
+	self._btncameraadd:AddClickListener(self.onClickCameraAddBtn, self)
+	self._inputcamera:AddOnValueChanged(self.onCameraValueChange, self)
+	self._btnFocusPosXReduce:AddClickListener(self.onClickFocusPosXReduceBtn, self)
+	self._btnFocusPosXAdd:AddClickListener(self.onClickFocusPosXAddBtn, self)
+	self._inputFocusPosX:AddOnValueChanged(self.onInputFocusPosXChange, self)
+	self._btnFocusPosYReduce:AddClickListener(self.onClickFocusPosYReduceBtn, self)
+	self._btnFocusPosYAdd:AddClickListener(self.onClickFocusPosYAddBtn, self)
+	self._inputFocusPosY:AddOnValueChanged(self.onInputFocusPosYChange, self)
+	self._btnStartPosXReduce:AddClickListener(self.onClickStartPosXReduceBtn, self)
+	self._btnStartPosXAdd:AddClickListener(self.onClickStartPosXAddBtn, self)
+	self._inputStartPosX:AddOnValueChanged(self.onInputStartPosXChange, self)
+	self._btnStartPosYReduce:AddClickListener(self.onClickStartPosYReduceBtn, self)
+	self._btnStartPosYAdd:AddClickListener(self.onClickStartPosYAddBtn, self)
+	self._inputStartPosY:AddOnValueChanged(self.onInputStartPosYChange, self)
+	self._btnEndPosXReduce:AddClickListener(self.onClickEndPosXReduceBtn, self)
+	self._btnEndPosXAdd:AddClickListener(self.onClickEndPosXAddBtn, self)
+	self._inputEndPosX:AddOnValueChanged(self.onInputEndPosXChange, self)
+	self._btnEndPosYReduce:AddClickListener(self.onClickEndPosYReduceBtn, self)
+	self._btnEndPosYAdd:AddClickListener(self.onClickEndPosYAddBtn, self)
+	self._inputEndPosY:AddOnValueChanged(self.onInputEndPosYChange, self)
+	self._btnSelectLinePosXReduce:AddClickListener(self.onClickLinePosXReduceBtn, self)
+	self._btnSelectLinePosXAdd:AddClickListener(self.onClickLinePosXAddBtn, self)
+	self._inputSelectLinePosX:AddOnValueChanged(self.onInputSelectLinePosXChange, self)
+	self._btnSelectLinePosYReduce:AddClickListener(self.onClickLinePosYReduceBtn, self)
+	self._btnSelectLinePosYAdd:AddClickListener(self.onClickLinePosYAddBtn, self)
+	self._inputSelectLinePosY:AddOnValueChanged(self.onInputSelectLinePosYChange, self)
+	self._btnLineIconPosXReduce:AddClickListener(self.onClickLineIconXReduceBtn, self)
+	self._btnLineIconPosXAdd:AddClickListener(self.onClickLineIconXAddBtn, self)
+	self._inputLineIconPosX:AddOnValueChanged(self.onInputLineIconPosXChange, self)
+	self._btnLineIconPosYReduce:AddClickListener(self.onClickLineIconYReduceBtn, self)
+	self._btnLineIconPosYAdd:AddClickListener(self.onClickLineIconYAddBtn, self)
+	self._inputLineIconPosY:AddOnValueChanged(self.onInputLineIconPosYChange, self)
+	self.dropMap:AddOnValueChanged(self.onDropMapValueChanged, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btncamerareduce:RemoveClickListener()
-	arg_3_0._btncameraadd:RemoveClickListener()
-	arg_3_0._inputcamera:RemoveOnValueChanged()
-	arg_3_0._btnFocusPosXReduce:RemoveClickListener()
-	arg_3_0._btnFocusPosXAdd:RemoveClickListener()
-	arg_3_0._btnFocusPosYReduce:RemoveClickListener()
-	arg_3_0._btnFocusPosYAdd:RemoveClickListener()
-	arg_3_0._inputFocusPosX:RemoveOnValueChanged()
-	arg_3_0._inputFocusPosY:RemoveOnValueChanged()
-	arg_3_0._btnStartPosXReduce:RemoveClickListener()
-	arg_3_0._btnStartPosXAdd:RemoveClickListener()
-	arg_3_0._btnStartPosYReduce:RemoveClickListener()
-	arg_3_0._btnStartPosYAdd:RemoveClickListener()
-	arg_3_0._inputStartPosX:RemoveOnValueChanged()
-	arg_3_0._inputStartPosY:RemoveOnValueChanged()
-	arg_3_0._btnEndPosXReduce:RemoveClickListener()
-	arg_3_0._btnEndPosXAdd:RemoveClickListener()
-	arg_3_0._btnEndPosYReduce:RemoveClickListener()
-	arg_3_0._btnEndPosYAdd:RemoveClickListener()
-	arg_3_0._inputEndPosX:RemoveOnValueChanged()
-	arg_3_0._inputEndPosY:RemoveOnValueChanged()
-	arg_3_0._btnSelectLinePosXReduce:RemoveClickListener()
-	arg_3_0._btnSelectLinePosXAdd:RemoveClickListener()
-	arg_3_0._btnSelectLinePosYReduce:RemoveClickListener()
-	arg_3_0._btnSelectLinePosYAdd:RemoveClickListener()
-	arg_3_0._inputSelectLinePosX:RemoveOnValueChanged()
-	arg_3_0._inputSelectLinePosY:RemoveOnValueChanged()
-	arg_3_0._btnLineIconPosXReduce:RemoveClickListener()
-	arg_3_0._btnLineIconPosXAdd:RemoveClickListener()
-	arg_3_0._btnLineIconPosYReduce:RemoveClickListener()
-	arg_3_0._btnLineIconPosYAdd:RemoveClickListener()
-	arg_3_0._inputLineIconPosX:RemoveOnValueChanged()
-	arg_3_0._inputLineIconPosY:RemoveOnValueChanged()
-	arg_3_0.dropMap:RemoveOnValueChanged()
+function RougePathSelectMapEditorView:removeEvents()
+	self._btncamerareduce:RemoveClickListener()
+	self._btncameraadd:RemoveClickListener()
+	self._inputcamera:RemoveOnValueChanged()
+	self._btnFocusPosXReduce:RemoveClickListener()
+	self._btnFocusPosXAdd:RemoveClickListener()
+	self._btnFocusPosYReduce:RemoveClickListener()
+	self._btnFocusPosYAdd:RemoveClickListener()
+	self._inputFocusPosX:RemoveOnValueChanged()
+	self._inputFocusPosY:RemoveOnValueChanged()
+	self._btnStartPosXReduce:RemoveClickListener()
+	self._btnStartPosXAdd:RemoveClickListener()
+	self._btnStartPosYReduce:RemoveClickListener()
+	self._btnStartPosYAdd:RemoveClickListener()
+	self._inputStartPosX:RemoveOnValueChanged()
+	self._inputStartPosY:RemoveOnValueChanged()
+	self._btnEndPosXReduce:RemoveClickListener()
+	self._btnEndPosXAdd:RemoveClickListener()
+	self._btnEndPosYReduce:RemoveClickListener()
+	self._btnEndPosYAdd:RemoveClickListener()
+	self._inputEndPosX:RemoveOnValueChanged()
+	self._inputEndPosY:RemoveOnValueChanged()
+	self._btnSelectLinePosXReduce:RemoveClickListener()
+	self._btnSelectLinePosXAdd:RemoveClickListener()
+	self._btnSelectLinePosYReduce:RemoveClickListener()
+	self._btnSelectLinePosYAdd:RemoveClickListener()
+	self._inputSelectLinePosX:RemoveOnValueChanged()
+	self._inputSelectLinePosY:RemoveOnValueChanged()
+	self._btnLineIconPosXReduce:RemoveClickListener()
+	self._btnLineIconPosXAdd:RemoveClickListener()
+	self._btnLineIconPosYReduce:RemoveClickListener()
+	self._btnLineIconPosYAdd:RemoveClickListener()
+	self._inputLineIconPosX:RemoveOnValueChanged()
+	self._inputLineIconPosY:RemoveOnValueChanged()
+	self.dropMap:RemoveOnValueChanged()
 end
 
-function var_0_0.onDropMapValueChanged(arg_4_0, arg_4_1)
-	if arg_4_0.switchLayering then
-		arg_4_0.dropMap:SetValue(arg_4_0.curLayerIndex - 1)
+function RougePathSelectMapEditorView:onDropMapValueChanged(index)
+	if self.switchLayering then
+		self.dropMap:SetValue(self.curLayerIndex - 1)
 
 		return
 	end
 
-	local var_4_0 = arg_4_0.layerIdList[arg_4_1 + 1]
+	local layerId = self.layerIdList[index + 1]
 
-	if var_4_0 == arg_4_0.curLayerId then
+	if layerId == self.curLayerId then
 		return
 	end
 
-	if not RougeMapConfig.instance:getNextLayerList(var_4_0) then
-		arg_4_0.dropMap:SetValue(arg_4_0.curLayerIndex - 1)
-		GameFacade.showToastString(var_4_0 .. " 层 没有下一层 ")
+	local nextLayerList = RougeMapConfig.instance:getNextLayerList(layerId)
+
+	if not nextLayerList then
+		self.dropMap:SetValue(self.curLayerIndex - 1)
+		GameFacade.showToastString(layerId .. " 层 没有下一层 ")
 
 		return
 	end
 
-	arg_4_0.switchLayering = true
-	arg_4_0.curLayerIndex = arg_4_1 + 1
-	arg_4_0.curLayerId = var_4_0
+	self.switchLayering = true
+	self.curLayerIndex = index + 1
+	self.curLayerId = layerId
 
 	RougeMapModel.instance:updateMapInfo({
 		mapType = RougeMapEnum.MapType.Middle,
 		middleLayerInfo = {
 			layerId = 101,
 			positionIndex = RougeMapEnum.PathSelectIndex,
-			middleLayerId = var_4_0
+			middleLayerId = layerId
 		},
 		HasField = function()
 			return false
@@ -156,424 +160,430 @@ function var_0_0.onDropMapValueChanged(arg_4_0, arg_4_1)
 	})
 end
 
-function var_0_0.onPathSelectMapFocusDone(arg_6_0)
-	arg_6_0.switchLayering = false
+function RougePathSelectMapEditorView:onPathSelectMapFocusDone()
+	self.switchLayering = false
 
-	ViewMgr.instance:openView(arg_6_0.viewName, nil, true)
+	ViewMgr.instance:openView(self.viewName, nil, true)
 
-	arg_6_0.pathSelectCo = RougeMapModel.instance:getPathSelectCo()
-	arg_6_0.map = RougeMapController.instance:getMapComp()
-	arg_6_0.mapViewGo = ViewMgr.instance:getContainer(ViewName.RougeMapView).viewGO
+	self.pathSelectCo = RougeMapModel.instance:getPathSelectCo()
+	self.map = RougeMapController.instance:getMapComp()
+	self.mapViewGo = ViewMgr.instance:getContainer(ViewName.RougeMapView).viewGO
 
-	arg_6_0:initPos()
+	self:initPos()
 end
 
-function var_0_0.onClickCameraReduceBtn(arg_7_0)
-	arg_7_0.cameraSize = arg_7_0.cameraSize - var_0_0.Interval
+function RougePathSelectMapEditorView:onClickCameraReduceBtn()
+	self.cameraSize = self.cameraSize - RougePathSelectMapEditorView.Interval
 
-	arg_7_0:onCameraSizeChange()
+	self:onCameraSizeChange()
 end
 
-function var_0_0.onClickCameraAddBtn(arg_8_0)
-	arg_8_0.cameraSize = arg_8_0.cameraSize + var_0_0.Interval
+function RougePathSelectMapEditorView:onClickCameraAddBtn()
+	self.cameraSize = self.cameraSize + RougePathSelectMapEditorView.Interval
 
-	arg_8_0:onCameraSizeChange()
+	self:onCameraSizeChange()
 end
 
-function var_0_0.onCameraValueChange(arg_9_0, arg_9_1)
-	arg_9_0.cameraSize = arg_9_1
+function RougePathSelectMapEditorView:onCameraValueChange(value)
+	self.cameraSize = value
 
-	arg_9_0:onCameraSizeChange()
+	self:onCameraSizeChange()
 end
 
-function var_0_0.onClickFocusPosXReduceBtn(arg_10_0)
-	arg_10_0.focusPosX = arg_10_0.focusPosX + var_0_0.Interval
+function RougePathSelectMapEditorView:onClickFocusPosXReduceBtn()
+	self.focusPosX = self.focusPosX + RougePathSelectMapEditorView.Interval
 
-	arg_10_0:onFocusPosChange()
+	self:onFocusPosChange()
 end
 
-function var_0_0.onClickFocusPosXAddBtn(arg_11_0)
-	arg_11_0.focusPosX = arg_11_0.focusPosX - var_0_0.Interval
+function RougePathSelectMapEditorView:onClickFocusPosXAddBtn()
+	self.focusPosX = self.focusPosX - RougePathSelectMapEditorView.Interval
 
-	arg_11_0:onFocusPosChange()
+	self:onFocusPosChange()
 end
 
-function var_0_0.onClickFocusPosYReduceBtn(arg_12_0)
-	arg_12_0.focusPosY = arg_12_0.focusPosY + var_0_0.Interval
+function RougePathSelectMapEditorView:onClickFocusPosYReduceBtn()
+	self.focusPosY = self.focusPosY + RougePathSelectMapEditorView.Interval
 
-	arg_12_0:onFocusPosChange()
+	self:onFocusPosChange()
 end
 
-function var_0_0.onClickFocusPosYAddBtn(arg_13_0)
-	arg_13_0.focusPosY = arg_13_0.focusPosY - var_0_0.Interval
+function RougePathSelectMapEditorView:onClickFocusPosYAddBtn()
+	self.focusPosY = self.focusPosY - RougePathSelectMapEditorView.Interval
 
-	arg_13_0:onFocusPosChange()
+	self:onFocusPosChange()
 end
 
-function var_0_0.onInputFocusPosXChange(arg_14_0, arg_14_1)
-	arg_14_1 = tonumber(arg_14_1)
+function RougePathSelectMapEditorView:onInputFocusPosXChange(value)
+	value = tonumber(value)
 
-	if not arg_14_1 then
+	if not value then
 		return
 	end
 
-	arg_14_0.focusPosX = arg_14_1
+	self.focusPosX = value
 
-	arg_14_0:onFocusPosChange()
+	self:onFocusPosChange()
 end
 
-function var_0_0.onInputFocusPosYChange(arg_15_0, arg_15_1)
-	arg_15_1 = tonumber(arg_15_1)
+function RougePathSelectMapEditorView:onInputFocusPosYChange(value)
+	value = tonumber(value)
 
-	if not arg_15_1 then
+	if not value then
 		return
 	end
 
-	arg_15_0.focusPosY = arg_15_1
+	self.focusPosY = value
 
-	arg_15_0:onFocusPosChange()
+	self:onFocusPosChange()
 end
 
-function var_0_0.onClickStartPosXReduceBtn(arg_16_0)
-	arg_16_0.startPosX = arg_16_0.startPosX + var_0_0.Interval
+function RougePathSelectMapEditorView:onClickStartPosXReduceBtn()
+	self.startPosX = self.startPosX + RougePathSelectMapEditorView.Interval
 
-	arg_16_0:onStartPosChange()
+	self:onStartPosChange()
 end
 
-function var_0_0.onClickStartPosXAddBtn(arg_17_0)
-	arg_17_0.startPosX = arg_17_0.startPosX - var_0_0.Interval
+function RougePathSelectMapEditorView:onClickStartPosXAddBtn()
+	self.startPosX = self.startPosX - RougePathSelectMapEditorView.Interval
 
-	arg_17_0:onStartPosChange()
+	self:onStartPosChange()
 end
 
-function var_0_0.onClickStartPosYReduceBtn(arg_18_0)
-	arg_18_0.startPosY = arg_18_0.startPosY + var_0_0.Interval
+function RougePathSelectMapEditorView:onClickStartPosYReduceBtn()
+	self.startPosY = self.startPosY + RougePathSelectMapEditorView.Interval
 
-	arg_18_0:onStartPosChange()
+	self:onStartPosChange()
 end
 
-function var_0_0.onClickStartPosYAddBtn(arg_19_0)
-	arg_19_0.startPosY = arg_19_0.startPosY - var_0_0.Interval
+function RougePathSelectMapEditorView:onClickStartPosYAddBtn()
+	self.startPosY = self.startPosY - RougePathSelectMapEditorView.Interval
 
-	arg_19_0:onStartPosChange()
+	self:onStartPosChange()
 end
 
-function var_0_0.onInputStartPosXChange(arg_20_0, arg_20_1)
-	arg_20_1 = tonumber(arg_20_1)
+function RougePathSelectMapEditorView:onInputStartPosXChange(value)
+	value = tonumber(value)
 
-	if not arg_20_1 then
+	if not value then
 		return
 	end
 
-	arg_20_0.startPosX = arg_20_1
+	self.startPosX = value
 
-	arg_20_0:onStartPosChange()
+	self:onStartPosChange()
 end
 
-function var_0_0.onInputStartPosYChange(arg_21_0, arg_21_1)
-	arg_21_1 = tonumber(arg_21_1)
+function RougePathSelectMapEditorView:onInputStartPosYChange(value)
+	value = tonumber(value)
 
-	if not arg_21_1 then
+	if not value then
 		return
 	end
 
-	arg_21_0.startPosY = arg_21_1
+	self.startPosY = value
 
-	arg_21_0:onStartPosChange()
+	self:onStartPosChange()
 end
 
-function var_0_0.onClickEndPosXReduceBtn(arg_22_0)
-	arg_22_0.endPosX = arg_22_0.endPosX + var_0_0.Interval
+function RougePathSelectMapEditorView:onClickEndPosXReduceBtn()
+	self.endPosX = self.endPosX + RougePathSelectMapEditorView.Interval
 
-	arg_22_0:onEndPosChange()
+	self:onEndPosChange()
 end
 
-function var_0_0.onClickEndPosXAddBtn(arg_23_0)
-	arg_23_0.endPosX = arg_23_0.endPosX - var_0_0.Interval
+function RougePathSelectMapEditorView:onClickEndPosXAddBtn()
+	self.endPosX = self.endPosX - RougePathSelectMapEditorView.Interval
 
-	arg_23_0:onEndPosChange()
+	self:onEndPosChange()
 end
 
-function var_0_0.onClickEndPosYReduceBtn(arg_24_0)
-	arg_24_0.endPosY = arg_24_0.endPosY + var_0_0.Interval
+function RougePathSelectMapEditorView:onClickEndPosYReduceBtn()
+	self.endPosY = self.endPosY + RougePathSelectMapEditorView.Interval
 
-	arg_24_0:onEndPosChange()
+	self:onEndPosChange()
 end
 
-function var_0_0.onClickEndPosYAddBtn(arg_25_0)
-	arg_25_0.endPosY = arg_25_0.endPosY - var_0_0.Interval
+function RougePathSelectMapEditorView:onClickEndPosYAddBtn()
+	self.endPosY = self.endPosY - RougePathSelectMapEditorView.Interval
 
-	arg_25_0:onEndPosChange()
+	self:onEndPosChange()
 end
 
-function var_0_0.onInputEndPosXChange(arg_26_0, arg_26_1)
-	arg_26_1 = tonumber(arg_26_1)
+function RougePathSelectMapEditorView:onInputEndPosXChange(value)
+	value = tonumber(value)
 
-	if not arg_26_1 then
+	if not value then
 		return
 	end
 
-	arg_26_0.endPosX = arg_26_1
+	self.endPosX = value
 
-	arg_26_0:onEndPosChange()
+	self:onEndPosChange()
 end
 
-function var_0_0.onInputEndPosYChange(arg_27_0, arg_27_1)
-	arg_27_1 = tonumber(arg_27_1)
+function RougePathSelectMapEditorView:onInputEndPosYChange(value)
+	value = tonumber(value)
 
-	if not arg_27_1 then
+	if not value then
 		return
 	end
 
-	arg_27_0.endPosY = arg_27_1
+	self.endPosY = value
 
-	arg_27_0:onEndPosChange()
+	self:onEndPosChange()
 end
 
-function var_0_0.onClickLinePosXReduceBtn(arg_28_0)
-	arg_28_0.linePosX = arg_28_0.linePosX + var_0_0.Interval
+function RougePathSelectMapEditorView:onClickLinePosXReduceBtn()
+	self.linePosX = self.linePosX + RougePathSelectMapEditorView.Interval
 
-	arg_28_0:onSelectLinePosChange()
+	self:onSelectLinePosChange()
 end
 
-function var_0_0.onClickLinePosXAddBtn(arg_29_0)
-	arg_29_0.linePosX = arg_29_0.linePosX - var_0_0.Interval
+function RougePathSelectMapEditorView:onClickLinePosXAddBtn()
+	self.linePosX = self.linePosX - RougePathSelectMapEditorView.Interval
 
-	arg_29_0:onSelectLinePosChange()
+	self:onSelectLinePosChange()
 end
 
-function var_0_0.onClickLinePosYReduceBtn(arg_30_0)
-	arg_30_0.linePosY = arg_30_0.linePosY + var_0_0.Interval
+function RougePathSelectMapEditorView:onClickLinePosYReduceBtn()
+	self.linePosY = self.linePosY + RougePathSelectMapEditorView.Interval
 
-	arg_30_0:onSelectLinePosChange()
+	self:onSelectLinePosChange()
 end
 
-function var_0_0.onClickLinePosYAddBtn(arg_31_0)
-	arg_31_0.linePosY = arg_31_0.linePosY - var_0_0.Interval
+function RougePathSelectMapEditorView:onClickLinePosYAddBtn()
+	self.linePosY = self.linePosY - RougePathSelectMapEditorView.Interval
 
-	arg_31_0:onSelectLinePosChange()
+	self:onSelectLinePosChange()
 end
 
-function var_0_0.onInputSelectLinePosXChange(arg_32_0, arg_32_1)
-	arg_32_1 = tonumber(arg_32_1)
+function RougePathSelectMapEditorView:onInputSelectLinePosXChange(value)
+	value = tonumber(value)
 
-	if not arg_32_1 then
+	if not value then
 		return
 	end
 
-	arg_32_0.linePosX = arg_32_1
+	self.linePosX = value
 
-	arg_32_0:onSelectLinePosChange()
+	self:onSelectLinePosChange()
 end
 
-function var_0_0.onInputSelectLinePosYChange(arg_33_0, arg_33_1)
-	arg_33_1 = tonumber(arg_33_1)
+function RougePathSelectMapEditorView:onInputSelectLinePosYChange(value)
+	value = tonumber(value)
 
-	if not arg_33_1 then
+	if not value then
 		return
 	end
 
-	arg_33_0.linePosY = arg_33_1
+	self.linePosY = value
 
-	arg_33_0:onSelectLinePosChange()
+	self:onSelectLinePosChange()
 end
 
-function var_0_0.onClickLineIconXReduceBtn(arg_34_0)
-	arg_34_0.lineIconPosX = arg_34_0.lineIconPosX + var_0_0.Interval
+function RougePathSelectMapEditorView:onClickLineIconXReduceBtn()
+	self.lineIconPosX = self.lineIconPosX + RougePathSelectMapEditorView.Interval
 
-	arg_34_0:onLineIconPosChange()
+	self:onLineIconPosChange()
 end
 
-function var_0_0.onClickLineIconXAddBtn(arg_35_0)
-	arg_35_0.lineIconPosX = arg_35_0.lineIconPosX - var_0_0.Interval
+function RougePathSelectMapEditorView:onClickLineIconXAddBtn()
+	self.lineIconPosX = self.lineIconPosX - RougePathSelectMapEditorView.Interval
 
-	arg_35_0:onLineIconPosChange()
+	self:onLineIconPosChange()
 end
 
-function var_0_0.onClickLineIconYReduceBtn(arg_36_0)
-	arg_36_0.lineIconPosY = arg_36_0.lineIconPosY + var_0_0.Interval
+function RougePathSelectMapEditorView:onClickLineIconYReduceBtn()
+	self.lineIconPosY = self.lineIconPosY + RougePathSelectMapEditorView.Interval
 
-	arg_36_0:onLineIconPosChange()
+	self:onLineIconPosChange()
 end
 
-function var_0_0.onClickLineIconYAddBtn(arg_37_0)
-	arg_37_0.lineIconPosY = arg_37_0.lineIconPosY - var_0_0.Interval
+function RougePathSelectMapEditorView:onClickLineIconYAddBtn()
+	self.lineIconPosY = self.lineIconPosY - RougePathSelectMapEditorView.Interval
 
-	arg_37_0:onLineIconPosChange()
+	self:onLineIconPosChange()
 end
 
-function var_0_0.onInputLineIconPosXChange(arg_38_0, arg_38_1)
-	arg_38_1 = tonumber(arg_38_1)
+function RougePathSelectMapEditorView:onInputLineIconPosXChange(value)
+	value = tonumber(value)
 
-	if not arg_38_1 then
+	if not value then
 		return
 	end
 
-	arg_38_0.lineIconPosX = arg_38_1
+	self.lineIconPosX = value
 
-	arg_38_0:onLineIconPosChange()
+	self:onLineIconPosChange()
 end
 
-function var_0_0.onInputLineIconPosYChange(arg_39_0, arg_39_1)
-	arg_39_1 = tonumber(arg_39_1)
+function RougePathSelectMapEditorView:onInputLineIconPosYChange(value)
+	value = tonumber(value)
 
-	if not arg_39_1 then
+	if not value then
 		return
 	end
 
-	arg_39_0.lineIconPosY = arg_39_1
+	self.lineIconPosY = value
 
-	arg_39_0:onLineIconPosChange()
+	self:onLineIconPosChange()
 end
 
-var_0_0.Interval = 0.01
+RougePathSelectMapEditorView.Interval = 0.01
 
-function var_0_0.onOpen(arg_40_0)
-	arg_40_0:addEventCb(RougeMapController.instance, RougeMapEvent.onPathSelectMapFocusDone, arg_40_0.onPathSelectMapFocusDone, arg_40_0, LuaEventSystem.Low)
-	arg_40_0:addEventCb(RougeMapController.instance, RougeMapEvent.onSelectLayerChange, arg_40_0.onSelectLayerChange, arg_40_0, LuaEventSystem.Low)
+function RougePathSelectMapEditorView:onOpen()
+	self:addEventCb(RougeMapController.instance, RougeMapEvent.onPathSelectMapFocusDone, self.onPathSelectMapFocusDone, self, LuaEventSystem.Low)
+	self:addEventCb(RougeMapController.instance, RougeMapEvent.onSelectLayerChange, self.onSelectLayerChange, self, LuaEventSystem.Low)
 
-	arg_40_0.pathSelectCo = RougeMapModel.instance:getPathSelectCo()
-	arg_40_0.map = RougeMapController.instance:getMapComp()
-	arg_40_0.mapViewGo = ViewMgr.instance:getContainer(ViewName.RougeMapView).viewGO
+	self.pathSelectCo = RougeMapModel.instance:getPathSelectCo()
+	self.map = RougeMapController.instance:getMapComp()
+	self.mapViewGo = ViewMgr.instance:getContainer(ViewName.RougeMapView).viewGO
 
-	arg_40_0:initPos()
-	arg_40_0:initLayerDrop()
+	self:initPos()
+	self:initLayerDrop()
 end
 
-function var_0_0.initPos(arg_41_0)
-	arg_41_0:initCamera()
-	arg_41_0:initFocusPos()
-	arg_41_0:initStartPos()
-	arg_41_0:initEndPos()
-	arg_41_0:initSelectLinePos()
-	arg_41_0:initLineIconPos()
+function RougePathSelectMapEditorView:initPos()
+	self:initCamera()
+	self:initFocusPos()
+	self:initStartPos()
+	self:initEndPos()
+	self:initSelectLinePos()
+	self:initLineIconPos()
 end
 
-function var_0_0.onSelectLayerChange(arg_42_0, arg_42_1)
-	arg_42_0:initSelectLinePos()
-	arg_42_0:initLineIconPos()
+function RougePathSelectMapEditorView:onSelectLayerChange(layerId)
+	self:initSelectLinePos()
+	self:initLineIconPos()
 end
 
-function var_0_0.initCamera(arg_43_0)
-	arg_43_0.cameraSize = arg_43_0.pathSelectCo.focusCameraSize
-	arg_43_0.camera = CameraMgr.instance:getMainCamera()
+function RougePathSelectMapEditorView:initCamera()
+	self.cameraSize = self.pathSelectCo.focusCameraSize
+	self.camera = CameraMgr.instance:getMainCamera()
 
-	arg_43_0:onCameraSizeChange()
+	self:onCameraSizeChange()
 end
 
-function var_0_0.onCameraSizeChange(arg_44_0)
-	arg_44_0.camera.orthographicSize = arg_44_0.cameraSize
+function RougePathSelectMapEditorView:onCameraSizeChange()
+	self.camera.orthographicSize = self.cameraSize
 
-	arg_44_0._inputcamera:SetText(arg_44_0.cameraSize)
+	self._inputcamera:SetText(self.cameraSize)
 end
 
-function var_0_0.initFocusPos(arg_45_0)
-	arg_45_0.focusPosX, arg_45_0.focusPosY = RougeMapHelper.getPos(arg_45_0.pathSelectCo.focusMapPos)
-	arg_45_0.mapTransform = arg_45_0.map.mapTransform
+function RougePathSelectMapEditorView:initFocusPos()
+	self.focusPosX, self.focusPosY = RougeMapHelper.getPos(self.pathSelectCo.focusMapPos)
+	self.mapTransform = self.map.mapTransform
 
-	arg_45_0:onFocusPosChange()
+	self:onFocusPosChange()
 end
 
-function var_0_0.onFocusPosChange(arg_46_0)
-	transformhelper.setLocalPos(arg_46_0.mapTransform, arg_46_0.focusPosX, arg_46_0.focusPosY, RougeMapEnum.OffsetZ.Map)
-	arg_46_0._inputFocusPosX:SetText(arg_46_0.focusPosX)
-	arg_46_0._inputFocusPosY:SetText(arg_46_0.focusPosY)
+function RougePathSelectMapEditorView:onFocusPosChange()
+	transformhelper.setLocalPos(self.mapTransform, self.focusPosX, self.focusPosY, RougeMapEnum.OffsetZ.Map)
+	self._inputFocusPosX:SetText(self.focusPosX)
+	self._inputFocusPosY:SetText(self.focusPosY)
 end
 
-function var_0_0.initStartPos(arg_47_0)
-	arg_47_0.startPosX, arg_47_0.startPosY = RougeMapHelper.getPos(arg_47_0.pathSelectCo.startPos)
-	arg_47_0.rectTrStart = gohelper.findChild(arg_47_0.mapViewGo, "#go_linecontainer/#go_start"):GetComponent(gohelper.Type_RectTransform)
+function RougePathSelectMapEditorView:initStartPos()
+	self.startPosX, self.startPosY = RougeMapHelper.getPos(self.pathSelectCo.startPos)
 
-	arg_47_0:onStartPosChange()
+	local goStart = gohelper.findChild(self.mapViewGo, "#go_linecontainer/#go_start")
+
+	self.rectTrStart = goStart:GetComponent(gohelper.Type_RectTransform)
+
+	self:onStartPosChange()
 end
 
-function var_0_0.onStartPosChange(arg_48_0)
-	recthelper.setAnchor(arg_48_0.rectTrStart, arg_48_0.startPosX, arg_48_0.startPosY)
-	arg_48_0._inputStartPosX:SetText(arg_48_0.startPosX)
-	arg_48_0._inputStartPosY:SetText(arg_48_0.startPosY)
+function RougePathSelectMapEditorView:onStartPosChange()
+	recthelper.setAnchor(self.rectTrStart, self.startPosX, self.startPosY)
+	self._inputStartPosX:SetText(self.startPosX)
+	self._inputStartPosY:SetText(self.startPosY)
 end
 
-function var_0_0.initEndPos(arg_49_0)
-	arg_49_0.endPosX, arg_49_0.endPosY = RougeMapHelper.getPos(arg_49_0.pathSelectCo.endPos)
-	arg_49_0.rectTrEnd = gohelper.findChild(arg_49_0.mapViewGo, "#go_linecontainer/#go_end"):GetComponent(gohelper.Type_RectTransform)
+function RougePathSelectMapEditorView:initEndPos()
+	self.endPosX, self.endPosY = RougeMapHelper.getPos(self.pathSelectCo.endPos)
 
-	arg_49_0:onEndPosChange()
+	local goEnd = gohelper.findChild(self.mapViewGo, "#go_linecontainer/#go_end")
+
+	self.rectTrEnd = goEnd:GetComponent(gohelper.Type_RectTransform)
+
+	self:onEndPosChange()
 end
 
-function var_0_0.onEndPosChange(arg_50_0)
-	recthelper.setAnchor(arg_50_0.rectTrEnd, arg_50_0.endPosX, arg_50_0.endPosY)
-	arg_50_0._inputEndPosX:SetText(arg_50_0.endPosX)
-	arg_50_0._inputEndPosY:SetText(arg_50_0.endPosY)
+function RougePathSelectMapEditorView:onEndPosChange()
+	recthelper.setAnchor(self.rectTrEnd, self.endPosX, self.endPosY)
+	self._inputEndPosX:SetText(self.endPosX)
+	self._inputEndPosY:SetText(self.endPosY)
 end
 
-function var_0_0.initSelectLinePos(arg_51_0)
-	local var_51_0 = RougeMapModel.instance:getSelectLayerId()
-	local var_51_1 = lua_rouge_layer.configDict[var_51_0]
+function RougePathSelectMapEditorView:initSelectLinePos()
+	local selectLayerId = RougeMapModel.instance:getSelectLayerId()
+	local selectLayerCo = lua_rouge_layer.configDict[selectLayerId]
 
-	arg_51_0.linePosX, arg_51_0.linePosY = RougeMapHelper.getPos(var_51_1.pathPos)
+	self.linePosX, self.linePosY = RougeMapHelper.getPos(selectLayerCo.pathPos)
 
-	local var_51_2 = string.format("#go_linecontainer/%s/line", var_51_1.id)
-	local var_51_3 = gohelper.findChild(arg_51_0.mapViewGo, var_51_2)
+	local path = string.format("#go_linecontainer/%s/line", selectLayerCo.id)
+	local line = gohelper.findChild(self.mapViewGo, path)
 
-	if not var_51_3 then
+	if not line then
 		return
 	end
 
-	arg_51_0.rectTrLine = var_51_3:GetComponent(gohelper.Type_RectTransform)
+	self.rectTrLine = line:GetComponent(gohelper.Type_RectTransform)
 
-	arg_51_0:onSelectLinePosChange()
+	self:onSelectLinePosChange()
 end
 
-function var_0_0.onSelectLinePosChange(arg_52_0)
-	arg_52_0._inputSelectLinePosX:SetText(arg_52_0.linePosX)
-	arg_52_0._inputSelectLinePosY:SetText(arg_52_0.linePosY)
-	recthelper.setAnchor(arg_52_0.rectTrLine, arg_52_0.linePosX, arg_52_0.linePosY)
+function RougePathSelectMapEditorView:onSelectLinePosChange()
+	self._inputSelectLinePosX:SetText(self.linePosX)
+	self._inputSelectLinePosY:SetText(self.linePosY)
+	recthelper.setAnchor(self.rectTrLine, self.linePosX, self.linePosY)
 end
 
-function var_0_0.initLineIconPos(arg_53_0)
-	local var_53_0 = RougeMapModel.instance:getSelectLayerId()
-	local var_53_1 = lua_rouge_layer.configDict[var_53_0]
+function RougePathSelectMapEditorView:initLineIconPos()
+	local selectLayerId = RougeMapModel.instance:getSelectLayerId()
+	local selectLayerCo = lua_rouge_layer.configDict[selectLayerId]
 
-	arg_53_0.lineIconPosX, arg_53_0.lineIconPosY = RougeMapHelper.getPos(var_53_1.iconPos)
+	self.lineIconPosX, self.lineIconPosY = RougeMapHelper.getPos(selectLayerCo.iconPos)
 
-	local var_53_2 = string.format("#go_linecontainer/%s/lineIcon", var_53_1.id)
-	local var_53_3 = gohelper.findChild(arg_53_0.mapViewGo, var_53_2)
+	local linePath = string.format("#go_linecontainer/%s/lineIcon", selectLayerCo.id)
+	local lineIcon = gohelper.findChild(self.mapViewGo, linePath)
 
-	if not var_53_3 then
+	if not lineIcon then
 		return
 	end
 
-	arg_53_0.rectTrLineIcon = var_53_3:GetComponent(gohelper.Type_RectTransform)
+	self.rectTrLineIcon = lineIcon:GetComponent(gohelper.Type_RectTransform)
 
-	arg_53_0:onLineIconPosChange()
+	self:onLineIconPosChange()
 end
 
-function var_0_0.onLineIconPosChange(arg_54_0)
-	arg_54_0._inputLineIconPosX:SetText(arg_54_0.lineIconPosX)
-	arg_54_0._inputLineIconPosY:SetText(arg_54_0.lineIconPosY)
-	recthelper.setAnchor(arg_54_0.rectTrLineIcon, arg_54_0.lineIconPosX, arg_54_0.lineIconPosY)
+function RougePathSelectMapEditorView:onLineIconPosChange()
+	self._inputLineIconPosX:SetText(self.lineIconPosX)
+	self._inputLineIconPosY:SetText(self.lineIconPosY)
+	recthelper.setAnchor(self.rectTrLineIcon, self.lineIconPosX, self.lineIconPosY)
 end
 
-function var_0_0.initLayerDrop(arg_55_0)
-	arg_55_0.curLayerId = RougeMapModel.instance:getMiddleLayerId()
-	arg_55_0.curLayerIndex = 1
-	arg_55_0.layerIdList = {}
-	arg_55_0.layerStrList = {}
+function RougePathSelectMapEditorView:initLayerDrop()
+	self.curLayerId = RougeMapModel.instance:getMiddleLayerId()
+	self.curLayerIndex = 1
+	self.layerIdList = {}
+	self.layerStrList = {}
 
-	for iter_55_0, iter_55_1 in ipairs(lua_rouge_middle_layer.configList) do
-		local var_55_0 = iter_55_1.id
+	for index, layerCo in ipairs(lua_rouge_middle_layer.configList) do
+		local layerId = layerCo.id
 
-		table.insert(arg_55_0.layerIdList, var_55_0)
-		table.insert(arg_55_0.layerStrList, tostring(var_55_0))
+		table.insert(self.layerIdList, layerId)
+		table.insert(self.layerStrList, tostring(layerId))
 
-		if var_55_0 == arg_55_0.curLayerId then
-			arg_55_0.curLayerIndex = iter_55_0
+		if layerId == self.curLayerId then
+			self.curLayerIndex = index
 		end
 	end
 
-	arg_55_0.dropMap:ClearOptions()
-	arg_55_0.dropMap:AddOptions(arg_55_0.layerStrList)
-	arg_55_0.dropMap:SetValue(arg_55_0.curLayerIndex - 1)
+	self.dropMap:ClearOptions()
+	self.dropMap:AddOptions(self.layerStrList)
+	self.dropMap:SetValue(self.curLayerIndex - 1)
 end
 
-return var_0_0
+return RougePathSelectMapEditorView

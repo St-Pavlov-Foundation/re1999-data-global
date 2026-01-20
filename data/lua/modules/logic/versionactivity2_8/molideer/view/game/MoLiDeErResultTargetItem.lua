@@ -1,50 +1,52 @@
-﻿module("modules.logic.versionactivity2_8.molideer.view.game.MoLiDeErResultTargetItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/molideer/view/game/MoLiDeErResultTargetItem.lua
 
-local var_0_0 = class("MoLiDeErResultTargetItem", LuaCompBase)
+module("modules.logic.versionactivity2_8.molideer.view.game.MoLiDeErResultTargetItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0._txttaskdesc = gohelper.findChildText(arg_1_0.viewGO, "#txt_taskdesc")
-	arg_1_0._imageIcon = gohelper.findChildImage(arg_1_0.viewGO, "result/#go_finish")
+local MoLiDeErResultTargetItem = class("MoLiDeErResultTargetItem", LuaCompBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function MoLiDeErResultTargetItem:init(go)
+	self.viewGO = go
+	self._txttaskdesc = gohelper.findChildText(self.viewGO, "#txt_taskdesc")
+	self._imageIcon = gohelper.findChildImage(self.viewGO, "result/#go_finish")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0._editableInitView(arg_2_0)
+function MoLiDeErResultTargetItem:_editableInitView()
 	return
 end
 
-function var_0_0.refreshUI(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	local var_3_0 = string.splitToNumber(arg_3_2, "#")
-	local var_3_1 = var_3_0[1]
+function MoLiDeErResultTargetItem:refreshUI(desc, param, isComplete, isMain)
+	local data = string.splitToNumber(param, "#")
+	local type = data[1]
 
-	if var_3_1 == MoLiDeErEnum.TargetType.RoundFinishAll or var_3_1 == MoLiDeErEnum.TargetType.RoundFinishAny then
-		local var_3_2 = MoLiDeErHelper.getRealRound(var_3_0[2], arg_3_4)
+	if type == MoLiDeErEnum.TargetType.RoundFinishAll or type == MoLiDeErEnum.TargetType.RoundFinishAny then
+		local realRound = MoLiDeErHelper.getRealRound(data[2], isMain)
 
-		arg_3_1 = GameUtil.getSubPlaceholderLuaLang(arg_3_1, {
-			var_3_2
+		desc = GameUtil.getSubPlaceholderLuaLang(desc, {
+			realRound
 		})
 	end
 
-	local var_3_3 = arg_3_3 and MoLiDeErEnum.ResultTargetColor.Success or MoLiDeErEnum.ResultTargetColor.Fail
+	local color = isComplete and MoLiDeErEnum.ResultTargetColor.Success or MoLiDeErEnum.ResultTargetColor.Fail
 
-	arg_3_1 = string.format("<color=%s>%s</color>", var_3_3, arg_3_1)
-	arg_3_0._txttaskdesc.text = arg_3_1
+	desc = string.format("<color=%s>%s</color>", color, desc)
+	self._txttaskdesc.text = desc
 
-	local var_3_4 = arg_3_4 and MoLiDeErEnum.TargetId.Main or MoLiDeErEnum.TargetId.Extra
-	local var_3_5 = arg_3_3 and MoLiDeErEnum.ProgressChangeType.Success or MoLiDeErEnum.ProgressChangeType.Percentage
+	local targetId = isMain and MoLiDeErEnum.TargetId.Main or MoLiDeErEnum.TargetId.Extra
+	local progressState = isComplete and MoLiDeErEnum.ProgressChangeType.Success or MoLiDeErEnum.ProgressChangeType.Percentage
 
-	UISpriteSetMgr.instance:setMoLiDeErSprite(arg_3_0._imageIcon, string.format("v2a8_molideer_game_targeticon_0%s_%s", var_3_4, var_3_5))
+	UISpriteSetMgr.instance:setMoLiDeErSprite(self._imageIcon, string.format("v2a8_molideer_game_targeticon_0%s_%s", targetId, progressState))
 end
 
-function var_0_0.setActive(arg_4_0, arg_4_1)
-	gohelper.setActive(arg_4_0.viewGO, arg_4_1)
+function MoLiDeErResultTargetItem:setActive(active)
+	gohelper.setActive(self.viewGO, active)
 end
 
-function var_0_0.onDestroy(arg_5_0)
+function MoLiDeErResultTargetItem:onDestroy()
 	return
 end
 
-return var_0_0
+return MoLiDeErResultTargetItem

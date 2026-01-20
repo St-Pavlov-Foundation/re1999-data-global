@@ -1,10 +1,12 @@
-﻿module("modules.logic.versionactivity2_8.dungeonboss.view.VersionActivity2_8HeroGroupBossViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/dungeonboss/view/VersionActivity2_8HeroGroupBossViewContainer.lua
 
-local var_0_0 = class("VersionActivity2_8HeroGroupBossViewContainer", HeroGroupFightViewContainer)
+module("modules.logic.versionactivity2_8.dungeonboss.view.VersionActivity2_8HeroGroupBossViewContainer", package.seeall)
 
-function var_0_0.defineFightView(arg_1_0)
-	arg_1_0._heroGroupFightView = VersionActivity2_8HeroGroupBossFightView.New()
-	arg_1_0._heroGroupFightListView = HeroGroupListView.New()
+local VersionActivity2_8HeroGroupBossViewContainer = class("VersionActivity2_8HeroGroupBossViewContainer", HeroGroupFightViewContainer)
+
+function VersionActivity2_8HeroGroupBossViewContainer:defineFightView()
+	self._heroGroupFightView = VersionActivity2_8HeroGroupBossFightView.New()
+	self._heroGroupFightListView = HeroGroupListView.New()
 end
 
-return var_0_0
+return VersionActivity2_8HeroGroupBossViewContainer

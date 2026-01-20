@@ -1,380 +1,390 @@
-﻿module("modules.logic.seasonver.act166.view.information.Season166InformationAnalyView", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act166/view/information/Season166InformationAnalyView.lua
 
-local var_0_0 = class("Season166InformationAnalyView", BaseView)
+module("modules.logic.seasonver.act166.view.information.Season166InformationAnalyView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.simageReportPic = gohelper.findChildSingleImage(arg_1_0.viewGO, "Report/image_Line/image_ReportPic")
-	arg_1_0.goLockedPic = gohelper.findChild(arg_1_0.viewGO, "Report/image_Line/#go_Locked/image_ReportLockedPic")
-	arg_1_0.lockedCtrl = arg_1_0.goLockedPic:GetComponent(typeof(ZProj.MaterialPropsCtrl))
-	arg_1_0.simageLockedPic = gohelper.findChildSingleImage(arg_1_0.viewGO, "Report/image_Line/#go_Locked/image_ReportLockedPic")
-	arg_1_0.btnLeft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Left")
-	arg_1_0.btnRight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Right")
-	arg_1_0.reportNameTxt = gohelper.findChildTextMesh(arg_1_0.viewGO, "Detail/#txt_ReportName")
-	arg_1_0.reportNameEnTxt = gohelper.findChildTextMesh(arg_1_0.viewGO, "Detail/#txt_ReportNameEn")
-	arg_1_0.simageDetailPic = gohelper.findChildSingleImage(arg_1_0.viewGO, "Detail/#simage_DetailPic")
-	arg_1_0.btnInvestigate = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Detail/#btn_Investigate")
-	arg_1_0.txtCost = gohelper.findChildTextMesh(arg_1_0.viewGO, "Detail/#btn_Investigate/txt_CostNum")
-	arg_1_0.imgCost = gohelper.findChildImage(arg_1_0.viewGO, "Detail/#btn_Investigate/#image")
-	arg_1_0.goComplete = gohelper.findChild(arg_1_0.viewGO, "Detail/#go_Complete")
-	arg_1_0.goScroll = gohelper.findChild(arg_1_0.viewGO, "Detail/#scorll_Details")
-	arg_1_0.rectScroll = arg_1_0.goScroll.transform
-	arg_1_0.goContent = gohelper.findChild(arg_1_0.viewGO, "Detail/#scorll_Details/Viewport/Content")
-	arg_1_0.rectContent = arg_1_0.goContent.transform
-	arg_1_0.goDesc = gohelper.findChild(arg_1_0.viewGO, "Detail/#scorll_Details/Viewport/Content/#go_Descr")
-	arg_1_0.goRevealTips = gohelper.findChild(arg_1_0.viewGO, "Detail/#scorll_Details/Viewport/Content/#go_RevealTips")
-	arg_1_0.detailItems = {}
-	arg_1_0.recycleItemsDict = {}
-	arg_1_0.itemClsDict = {
+local Season166InformationAnalyView = class("Season166InformationAnalyView", BaseView)
+
+function Season166InformationAnalyView:onInitView()
+	self.simageReportPic = gohelper.findChildSingleImage(self.viewGO, "Report/image_Line/image_ReportPic")
+	self.goLockedPic = gohelper.findChild(self.viewGO, "Report/image_Line/#go_Locked/image_ReportLockedPic")
+	self.lockedCtrl = self.goLockedPic:GetComponent(typeof(ZProj.MaterialPropsCtrl))
+	self.simageLockedPic = gohelper.findChildSingleImage(self.viewGO, "Report/image_Line/#go_Locked/image_ReportLockedPic")
+	self.btnLeft = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Left")
+	self.btnRight = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Right")
+	self.reportNameTxt = gohelper.findChildTextMesh(self.viewGO, "Detail/#txt_ReportName")
+	self.reportNameEnTxt = gohelper.findChildTextMesh(self.viewGO, "Detail/#txt_ReportNameEn")
+	self.simageDetailPic = gohelper.findChildSingleImage(self.viewGO, "Detail/#simage_DetailPic")
+	self.btnInvestigate = gohelper.findChildButtonWithAudio(self.viewGO, "Detail/#btn_Investigate")
+	self.txtCost = gohelper.findChildTextMesh(self.viewGO, "Detail/#btn_Investigate/txt_CostNum")
+	self.imgCost = gohelper.findChildImage(self.viewGO, "Detail/#btn_Investigate/#image")
+	self.goComplete = gohelper.findChild(self.viewGO, "Detail/#go_Complete")
+	self.goScroll = gohelper.findChild(self.viewGO, "Detail/#scorll_Details")
+	self.rectScroll = self.goScroll.transform
+	self.goContent = gohelper.findChild(self.viewGO, "Detail/#scorll_Details/Viewport/Content")
+	self.rectContent = self.goContent.transform
+	self.goDesc = gohelper.findChild(self.viewGO, "Detail/#scorll_Details/Viewport/Content/#go_Descr")
+	self.goRevealTips = gohelper.findChild(self.viewGO, "Detail/#scorll_Details/Viewport/Content/#go_RevealTips")
+	self.detailItems = {}
+	self.recycleItemsDict = {}
+	self.itemClsDict = {
 		Season166InformationAnalyDescItem,
 		Season166InformationAnalyTipsItem
 	}
-	arg_1_0.itemGODict = {
-		arg_1_0.goDesc,
-		arg_1_0.goRevealTips
+	self.itemGODict = {
+		self.goDesc,
+		self.goRevealTips
 	}
 
-	for iter_1_0, iter_1_1 in pairs(arg_1_0.itemGODict) do
-		gohelper.setActive(iter_1_1, false)
+	for k, v in pairs(self.itemGODict) do
+		gohelper.setActive(v, false)
 	end
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnLeft, arg_2_0.onClickLeft, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnRight, arg_2_0.onClickRight, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnInvestigate, arg_2_0.onClickInvestigate, arg_2_0)
-	arg_2_0:addEventCb(Season166Controller.instance, Season166Event.OnInformationUpdate, arg_2_0.onInformationUpdate, arg_2_0)
-	arg_2_0:addEventCb(Season166Controller.instance, Season166Event.OnAnalyInfoSuccess, arg_2_0.onAnalyInfoSuccess, arg_2_0)
-	arg_2_0:addEventCb(Season166Controller.instance, Season166Event.ChangeAnalyInfo, arg_2_0.onChangeAnalyInfo, arg_2_0)
+function Season166InformationAnalyView:addEvents()
+	self:addClickCb(self.btnLeft, self.onClickLeft, self)
+	self:addClickCb(self.btnRight, self.onClickRight, self)
+	self:addClickCb(self.btnInvestigate, self.onClickInvestigate, self)
+	self:addEventCb(Season166Controller.instance, Season166Event.OnInformationUpdate, self.onInformationUpdate, self)
+	self:addEventCb(Season166Controller.instance, Season166Event.OnAnalyInfoSuccess, self.onAnalyInfoSuccess, self)
+	self:addEventCb(Season166Controller.instance, Season166Event.ChangeAnalyInfo, self.onChangeAnalyInfo, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Season166InformationAnalyView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function Season166InformationAnalyView:_editableInitView()
 	return
 end
 
-function var_0_0.onChangeAnalyInfo(arg_5_0, arg_5_1)
-	arg_5_0.infoId = arg_5_1
-	arg_5_0._imgValue = nil
+function Season166InformationAnalyView:onChangeAnalyInfo(infoId)
+	self.infoId = infoId
+	self._imgValue = nil
 
-	arg_5_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.onInformationUpdate(arg_6_0)
-	arg_6_0:refreshUI()
+function Season166InformationAnalyView:onInformationUpdate()
+	self:refreshUI()
 end
 
-function var_0_0.onAnalyInfoSuccess(arg_7_0, arg_7_1)
-	arg_7_0:refreshUI()
-	arg_7_0:playTxtFadeInByStage(arg_7_1.stage)
+function Season166InformationAnalyView:onAnalyInfoSuccess(info)
+	self:refreshUI()
+	self:playTxtFadeInByStage(info.stage)
 end
 
-function var_0_0.onClickLeft(arg_8_0)
-	local var_8_0 = arg_8_0.infoId - 1
+function Season166InformationAnalyView:onClickLeft()
+	local infoId = self.infoId - 1
 
-	if var_8_0 <= 0 then
-		var_8_0 = #Season166Config.instance:getSeasonInfos(arg_8_0.actId)
+	if infoId <= 0 then
+		local list = Season166Config.instance:getSeasonInfos(self.actId)
+
+		infoId = #list
 	end
 
-	arg_8_0:checkChangeInfo(var_8_0)
+	self:checkChangeInfo(infoId)
 end
 
-function var_0_0.onClickRight(arg_9_0)
-	local var_9_0 = arg_9_0.infoId + 1
+function Season166InformationAnalyView:onClickRight()
+	local infoId = self.infoId + 1
+	local list = Season166Config.instance:getSeasonInfos(self.actId)
 
-	if var_9_0 > #Season166Config.instance:getSeasonInfos(arg_9_0.actId) then
-		var_9_0 = 1
+	if infoId > #list then
+		infoId = 1
 	end
 
-	arg_9_0:checkChangeInfo(var_9_0)
+	self:checkChangeInfo(infoId)
 end
 
-function var_0_0.checkChangeInfo(arg_10_0, arg_10_1)
-	if not arg_10_0:checkCanChangeInfo(arg_10_1) then
+function Season166InformationAnalyView:checkChangeInfo(infoId)
+	if not self:checkCanChangeInfo(infoId) then
 		return
 	end
 
-	Season166Controller.instance:dispatchEvent(Season166Event.ChangeAnalyInfo, arg_10_1)
+	Season166Controller.instance:dispatchEvent(Season166Event.ChangeAnalyInfo, infoId)
 end
 
-function var_0_0.checkCanChangeInfo(arg_11_0, arg_11_1)
-	local var_11_0 = Season166Model.instance:getActInfo(arg_11_0.actId)
+function Season166InformationAnalyView:checkCanChangeInfo(infoId)
+	local actInfo = Season166Model.instance:getActInfo(self.actId)
+	local infoMo = actInfo and actInfo:getInformationMO(infoId)
 
-	if not (var_11_0 and var_11_0:getInformationMO(arg_11_1)) then
+	if not infoMo then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0.onClickInvestigate(arg_12_0)
-	local var_12_0 = Season166Model.instance:getActInfo(arg_12_0.actId)
-	local var_12_1 = var_12_0 and var_12_0:getInformationMO(arg_12_0.infoId)
-	local var_12_2 = (Season166Config.instance:getSeasonInfoAnalys(arg_12_0.actId, arg_12_0.infoId) or {})[var_12_1.stage + 1]
+function Season166InformationAnalyView:onClickInvestigate()
+	local actInfo = Season166Model.instance:getActInfo(self.actId)
+	local infoMo = actInfo and actInfo:getInformationMO(self.infoId)
+	local list = Season166Config.instance:getSeasonInfoAnalys(self.actId, self.infoId) or {}
+	local config = list[infoMo.stage + 1]
 
-	if not var_12_2 then
+	if not config then
 		return
 	end
 
-	local var_12_3 = var_12_2.consume
-	local var_12_4 = {}
+	local costCount = config.consume
+	local items = {}
 
-	table.insert(var_12_4, {
+	table.insert(items, {
 		type = MaterialEnum.MaterialType.Currency,
-		id = Season166Config.instance:getSeasonConstNum(arg_12_0.actId, Season166Enum.InfoCostId),
-		quantity = var_12_3
+		id = Season166Config.instance:getSeasonConstNum(self.actId, Season166Enum.InfoCostId),
+		quantity = costCount
 	})
 
-	local var_12_5, var_12_6, var_12_7 = ItemModel.instance:hasEnoughItems(var_12_4)
+	local notEnoughItemName, enough, icon = ItemModel.instance:hasEnoughItems(items)
 
-	if not var_12_6 then
-		GameFacade.showToastWithIcon(ToastEnum.NotEnoughId, var_12_7, var_12_5)
+	if not enough then
+		GameFacade.showToastWithIcon(ToastEnum.NotEnoughId, icon, notEnoughItemName)
 
 		return
 	end
 
-	Activity166Rpc.instance:sendAct166AnalyInfoRequest(arg_12_0.actId, arg_12_0.infoId)
+	Activity166Rpc.instance:sendAct166AnalyInfoRequest(self.actId, self.infoId)
 end
 
-function var_0_0.onUpdateParam(arg_13_0)
+function Season166InformationAnalyView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_14_0)
-	arg_14_0.actId = arg_14_0.viewParam.actId
-	arg_14_0.infoId = arg_14_0.viewParam.infoId
+function Season166InformationAnalyView:onOpen()
+	self.actId = self.viewParam.actId
+	self.infoId = self.viewParam.infoId
 
 	AudioMgr.instance:trigger(AudioEnum.Season166.play_ui_wulu_aizila_forward_paper)
-	arg_14_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_15_0)
-	local var_15_0 = Season166Config.instance:getSeasonInfoConfig(arg_15_0.actId, arg_15_0.infoId)
+function Season166InformationAnalyView:refreshUI()
+	local config = Season166Config.instance:getSeasonInfoConfig(self.actId, self.infoId)
 
-	arg_15_0.simageReportPic:LoadImage(string.format("singlebg/seasonver/%s_1.png", var_15_0.reportRes))
-	arg_15_0.simageLockedPic:LoadImage(string.format("singlebg/seasonver/%s_0.png", var_15_0.reportRes))
+	self.simageReportPic:LoadImage(string.format("singlebg/seasonver/%s_1.png", config.reportRes))
+	self.simageLockedPic:LoadImage(string.format("singlebg/seasonver/%s_0.png", config.reportRes))
 
-	arg_15_0.reportNameTxt.text = var_15_0.name
-	arg_15_0.reportNameEnTxt.text = var_15_0.nameEn
+	self.reportNameTxt.text = config.name
+	self.reportNameEnTxt.text = config.nameEn
 
-	arg_15_0.simageDetailPic:LoadImage(string.format("singlebg/seasonver/%s.png", var_15_0.reportPic))
-	arg_15_0:refreshDetail()
-	arg_15_0:refreshBtn()
+	self.simageDetailPic:LoadImage(string.format("singlebg/seasonver/%s.png", config.reportPic))
+	self:refreshDetail()
+	self:refreshBtn()
 end
 
-function var_0_0.refreshBtn(arg_16_0)
-	local var_16_0 = Season166Config.instance:getSeasonInfos(arg_16_0.actId)
-	local var_16_1 = arg_16_0.infoId - 1
-	local var_16_2 = arg_16_0.infoId + 1
+function Season166InformationAnalyView:refreshBtn()
+	local list = Season166Config.instance:getSeasonInfos(self.actId)
+	local leftId = self.infoId - 1
+	local rightId = self.infoId + 1
 
-	if var_16_1 <= 0 then
-		var_16_1 = #var_16_0
+	if leftId <= 0 then
+		leftId = #list
 	end
 
-	if var_16_2 > #var_16_0 then
-		var_16_2 = 1
+	if rightId > #list then
+		rightId = 1
 	end
 
-	gohelper.setActive(arg_16_0.btnLeft, arg_16_0:checkCanChangeInfo(var_16_1))
-	gohelper.setActive(arg_16_0.btnRight, arg_16_0:checkCanChangeInfo(var_16_2))
+	gohelper.setActive(self.btnLeft, self:checkCanChangeInfo(leftId))
+	gohelper.setActive(self.btnRight, self:checkCanChangeInfo(rightId))
 end
 
-function var_0_0.refreshDetail(arg_17_0)
-	local var_17_0 = Season166Model.instance:getActInfo(arg_17_0.actId)
-	local var_17_1 = var_17_0 and var_17_0:getInformationMO(arg_17_0.infoId)
-	local var_17_2 = Season166Config.instance:getSeasonInfoAnalys(arg_17_0.actId, arg_17_0.infoId) or {}
-	local var_17_3 = Season166Config.instance:getSeasonInfoConfig(arg_17_0.actId, arg_17_0.infoId)
+function Season166InformationAnalyView:refreshDetail()
+	local actInfo = Season166Model.instance:getActInfo(self.actId)
+	local infoMo = actInfo and actInfo:getInformationMO(self.infoId)
+	local list = Season166Config.instance:getSeasonInfoAnalys(self.actId, self.infoId) or {}
+	local infoConfig = Season166Config.instance:getSeasonInfoConfig(self.actId, self.infoId)
 
-	arg_17_0:recycleItems()
+	self:recycleItems()
 
-	local var_17_4 = #var_17_2
-	local var_17_5
-	local var_17_6
+	local analyCount = #list
+	local costCfg, showItem
 
-	arg_17_0:updateItemByData({
+	self:updateItemByData({
 		stage = 0,
-		content = var_17_3.initContent
-	}, var_17_1, false)
+		content = infoConfig.initContent
+	}, infoMo, false)
 
-	for iter_17_0, iter_17_1 in ipairs(var_17_2) do
-		local var_17_7 = arg_17_0:updateItemByData(iter_17_1, var_17_1, var_17_4 == iter_17_0)
+	for i, v in ipairs(list) do
+		local item = self:updateItemByData(v, infoMo, analyCount == i)
 
-		if var_17_1.stage + 1 == iter_17_1.stage then
-			var_17_5 = iter_17_1
-			var_17_6 = var_17_7
+		if infoMo.stage + 1 == v.stage then
+			costCfg = v
+			showItem = item
 		end
 	end
 
-	arg_17_0:refreshCost(var_17_5)
+	self:refreshCost(costCfg)
 
-	local var_17_8 = var_17_2[var_17_4]
+	local lastStageConfig = list[analyCount]
 
-	arg_17_0:setComplete(not var_17_8 or var_17_1.stage >= var_17_8.stage)
-	arg_17_0:setLockedImgValue()
+	self:setComplete(not lastStageConfig or infoMo.stage >= lastStageConfig.stage)
+	self:setLockedImgValue()
 
-	if var_17_6 == nil then
-		var_17_6 = arg_17_0.detailItems[#arg_17_0.detailItems]
+	if showItem == nil then
+		showItem = self.detailItems[#self.detailItems]
 	end
 
-	if var_17_6 then
-		ZProj.UGUIHelper.RebuildLayout(arg_17_0.rectContent)
+	if showItem then
+		ZProj.UGUIHelper.RebuildLayout(self.rectContent)
 
-		local var_17_9 = math.abs(var_17_6:getPosY())
-		local var_17_10 = recthelper.getHeight(arg_17_0.rectScroll)
-		local var_17_11 = math.max(var_17_9 - var_17_10, 0)
+		local contentHeight = math.abs(showItem:getPosY())
+		local scrollHeight = recthelper.getHeight(self.rectScroll)
+		local posY = math.max(contentHeight - scrollHeight, 0)
 
-		recthelper.setAnchorY(arg_17_0.rectContent, var_17_11)
+		recthelper.setAnchorY(self.rectContent, posY)
 	end
 end
 
-function var_0_0.setComplete(arg_18_0, arg_18_1)
-	if arg_18_0.completeValue == arg_18_1 then
+function Season166InformationAnalyView:setComplete(value)
+	if self.completeValue == value then
 		return
 	end
 
-	arg_18_0.completeValue = arg_18_1
+	self.completeValue = value
 
-	gohelper.setActive(arg_18_0.goComplete, arg_18_1)
+	gohelper.setActive(self.goComplete, value)
 
-	if arg_18_1 then
+	if value then
 		AudioMgr.instance:trigger(AudioEnum.Season166.play_ui_wulu_aizila_forward_paper)
 	end
 end
 
-function var_0_0.refreshCost(arg_19_0, arg_19_1)
-	if not arg_19_1 then
-		gohelper.setActive(arg_19_0.btnInvestigate, false)
+function Season166InformationAnalyView:refreshCost(stageConfig)
+	if not stageConfig then
+		gohelper.setActive(self.btnInvestigate, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_19_0.btnInvestigate, true)
+	gohelper.setActive(self.btnInvestigate, true)
 
-	local var_19_0 = Season166Config.instance:getSeasonConstNum(arg_19_0.actId, Season166Enum.InfoCostId)
+	local costId = Season166Config.instance:getSeasonConstNum(self.actId, Season166Enum.InfoCostId)
+	local hasQuantity = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Currency, costId)
+	local enough = hasQuantity >= stageConfig.consume
 
-	if ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Currency, var_19_0) >= arg_19_1.consume then
-		arg_19_0.txtCost.text = string.format("-%s", arg_19_1.consume)
+	if enough then
+		self.txtCost.text = string.format("-%s", stageConfig.consume)
 	else
-		arg_19_0.txtCost.text = formatLuaLang("Season166_2_4InformationAnalyView_consume", arg_19_1.consume)
+		self.txtCost.text = formatLuaLang("Season166_2_4InformationAnalyView_consume", stageConfig.consume)
 	end
 
-	local var_19_1 = CurrencyConfig.instance:getCurrencyCo(var_19_0)
-	local var_19_2 = string.format("%s_1", var_19_1 and var_19_1.icon)
+	local currencyCo = CurrencyConfig.instance:getCurrencyCo(costId)
+	local currencyname = string.format("%s_1", currencyCo and currencyCo.icon)
 
-	UISpriteSetMgr.instance:setCurrencyItemSprite(arg_19_0.imgCost, var_19_2, true)
+	UISpriteSetMgr.instance:setCurrencyItemSprite(self.imgCost, currencyname, true)
 end
 
-function var_0_0.updateItemByData(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
-	local var_20_0 = arg_20_0:getItem(arg_20_1, arg_20_2)
+function Season166InformationAnalyView:updateItemByData(config, info, isEnd)
+	local item = self:getItem(config, info)
 
-	table.insert(arg_20_0.detailItems, var_20_0)
-	var_20_0:setData({
-		config = arg_20_1,
-		info = arg_20_2,
-		isEnd = arg_20_3
+	table.insert(self.detailItems, item)
+	item:setData({
+		config = config,
+		info = info,
+		isEnd = isEnd
 	})
 
-	return var_20_0
+	return item
 end
 
-function var_0_0.getItem(arg_21_0, arg_21_1, arg_21_2)
-	local var_21_0
-	local var_21_1 = arg_21_2.stage >= arg_21_1.stage and 1 or 2
+function Season166InformationAnalyView:getItem(config, info)
+	local itemType
 
-	if arg_21_0.recycleItemsDict[var_21_1] and #arg_21_0.recycleItemsDict[var_21_1] > 0 then
-		return table.remove(arg_21_0.recycleItemsDict[var_21_1])
+	itemType = info.stage >= config.stage and 1 or 2
+
+	if self.recycleItemsDict[itemType] and #self.recycleItemsDict[itemType] > 0 then
+		return table.remove(self.recycleItemsDict[itemType])
 	else
-		local var_21_2 = arg_21_0.itemClsDict[var_21_1]
-		local var_21_3 = arg_21_0.itemGODict[var_21_1]
+		local cls = self.itemClsDict[itemType]
+		local itemGO = self.itemGODict[itemType]
 
-		return MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.cloneInPlace(var_21_3), var_21_2, var_21_1)
+		return MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.cloneInPlace(itemGO), cls, itemType)
 	end
 end
 
-function var_0_0.recycleItems(arg_22_0)
-	for iter_22_0, iter_22_1 in ipairs(arg_22_0.detailItems) do
-		arg_22_0:recycleItem(iter_22_1)
+function Season166InformationAnalyView:recycleItems()
+	for i, v in ipairs(self.detailItems) do
+		self:recycleItem(v)
 	end
 
-	arg_22_0.detailItems = {}
+	self.detailItems = {}
 end
 
-function var_0_0.recycleItem(arg_23_0, arg_23_1)
-	local var_23_0 = arg_23_1.itemType
+function Season166InformationAnalyView:recycleItem(item)
+	local itemType = item.itemType
 
-	if not arg_23_0.recycleItemsDict[var_23_0] then
-		arg_23_0.recycleItemsDict[var_23_0] = {}
+	if not self.recycleItemsDict[itemType] then
+		self.recycleItemsDict[itemType] = {}
 	end
 
-	table.insert(arg_23_0.recycleItemsDict[var_23_0], arg_23_1)
-	arg_23_1:onRecycle()
+	table.insert(self.recycleItemsDict[itemType], item)
+	item:onRecycle()
 end
 
-function var_0_0.playTxtFadeInByStage(arg_24_0, arg_24_1)
-	for iter_24_0, iter_24_1 in ipairs(arg_24_0.detailItems) do
-		iter_24_1:playTxtFadeInByStage(arg_24_1)
+function Season166InformationAnalyView:playTxtFadeInByStage(stage)
+	for i, v in ipairs(self.detailItems) do
+		v:playTxtFadeInByStage(stage)
 	end
 end
 
-function var_0_0.setLockedImgValue(arg_25_0)
-	local var_25_0 = Season166Model.instance:getActInfo(arg_25_0.actId)
-	local var_25_1 = var_25_0 and var_25_0:getInformationMO(arg_25_0.infoId)
-	local var_25_2 = #(Season166Config.instance:getSeasonInfoAnalys(arg_25_0.actId, arg_25_0.infoId) or {})
-	local var_25_3 = var_25_1.stage / var_25_2
+function Season166InformationAnalyView:setLockedImgValue()
+	local actInfo = Season166Model.instance:getActInfo(self.actId)
+	local infoMo = actInfo and actInfo:getInformationMO(self.infoId)
+	local list = Season166Config.instance:getSeasonInfoAnalys(self.actId, self.infoId) or {}
+	local analyCount = #list
+	local value = infoMo.stage / analyCount
 
-	if arg_25_0._imgValue == var_25_3 then
+	if self._imgValue == value then
 		return
 	end
 
-	if arg_25_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_25_0._tweenId)
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_25_0._tweenId = nil
+		self._tweenId = nil
 	end
 
-	if arg_25_0._imgValue == nil then
-		arg_25_0:_setImgValue(var_25_3)
+	if self._imgValue == nil then
+		self:_setImgValue(value)
 	else
-		arg_25_0._tweenId = ZProj.TweenHelper.DOTweenFloat(arg_25_0._imgValue, var_25_3, 1, arg_25_0._setImgValue, arg_25_0.playFinishCallBack, arg_25_0, nil, EaseType.Linear)
+		self._tweenId = ZProj.TweenHelper.DOTweenFloat(self._imgValue, value, 1, self._setImgValue, self.playFinishCallBack, self, nil, EaseType.Linear)
 	end
 
-	arg_25_0._imgValue = var_25_3
+	self._imgValue = value
 end
 
-function var_0_0._setImgValue(arg_26_0, arg_26_1)
-	arg_26_0.lockedCtrl:GetIndexProp(0, 0)
+function Season166InformationAnalyView:_setImgValue(value)
+	self.lockedCtrl:GetIndexProp(0, 0)
 
-	local var_26_0 = arg_26_0.lockedCtrl.vector_01
+	local vector = self.lockedCtrl.vector_01
 
-	arg_26_0.lockedCtrl.vector_01 = Vector4.New(arg_26_1, 0.05, 0, 0)
+	self.lockedCtrl.vector_01 = Vector4.New(value, 0.05, 0, 0)
 
-	arg_26_0.lockedCtrl:SetIndexProp(0, 0)
+	self.lockedCtrl:SetIndexProp(0, 0)
 end
 
-function var_0_0.playFinishCallBack(arg_27_0)
+function Season166InformationAnalyView:playFinishCallBack()
 	return
 end
 
-function var_0_0.onClose(arg_28_0)
+function Season166InformationAnalyView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_29_0)
-	if arg_29_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_29_0._tweenId)
+function Season166InformationAnalyView:onDestroyView()
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_29_0._tweenId = nil
+		self._tweenId = nil
 	end
 
-	arg_29_0.simageLockedPic:UnLoadImage()
-	arg_29_0.simageReportPic:UnLoadImage()
-	arg_29_0.simageDetailPic:UnLoadImage()
+	self.simageLockedPic:UnLoadImage()
+	self.simageReportPic:UnLoadImage()
+	self.simageDetailPic:UnLoadImage()
 end
 
-return var_0_0
+return Season166InformationAnalyView

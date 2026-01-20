@@ -1,30 +1,32 @@
-﻿module("modules.logic.tipdialog.view.TipDialogViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/tipdialog/view/TipDialogViewContainer.lua
 
-local var_0_0 = class("TipDialogViewContainer", BaseViewContainer)
+module("modules.logic.tipdialog.view.TipDialogViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local TipDialogViewContainer = class("TipDialogViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, TipDialogView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_bottomcontent/top_left"))
+function TipDialogViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, TipDialogView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_bottomcontent/top_left"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	arg_2_0._navigateButtonView = NavigateButtonsView.New({
+function TipDialogViewContainer:buildTabViews(tabContainerId)
+	self._navigateButtonView = NavigateButtonsView.New({
 		true,
 		false,
 		false
 	})
 
 	return {
-		arg_2_0._navigateButtonView
+		self._navigateButtonView
 	}
 end
 
-function var_0_0.onContainerOpenFinish(arg_3_0)
-	arg_3_0._navigateButtonView:resetOnCloseViewAudio(AudioEnum.UI.Play_UI_Universal_Click)
+function TipDialogViewContainer:onContainerOpenFinish()
+	self._navigateButtonView:resetOnCloseViewAudio(AudioEnum.UI.Play_UI_Universal_Click)
 end
 
-return var_0_0
+return TipDialogViewContainer

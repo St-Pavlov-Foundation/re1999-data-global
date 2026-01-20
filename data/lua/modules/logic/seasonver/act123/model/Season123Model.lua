@@ -1,295 +1,303 @@
-﻿module("modules.logic.seasonver.act123.model.Season123Model", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/model/Season123Model.lua
 
-local var_0_0 = class("Season123Model", BaseModel)
+module("modules.logic.seasonver.act123.model.Season123Model", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local Season123Model = class("Season123Model", BaseModel)
+
+function Season123Model:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._actInfo = {}
+function Season123Model:reInit()
+	self._actInfo = {}
 end
 
-function var_0_0.setActInfo(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_1.activityId
-	local var_3_1 = arg_3_0._actInfo[var_3_0]
+function Season123Model:setActInfo(msg)
+	local activityId = msg.activityId
+	local actMO = self._actInfo[activityId]
 
-	if not var_3_1 then
-		var_3_1 = Season123MO.New()
-		arg_3_0._actInfo[var_3_0] = var_3_1
-		arg_3_0._curSeasonId = var_3_0
+	if not actMO then
+		actMO = Season123MO.New()
+		self._actInfo[activityId] = actMO
+		self._curSeasonId = activityId
 	end
 
-	var_3_1:updateInfo(arg_3_1)
+	actMO:updateInfo(msg)
 end
 
-function var_0_0.updateActInfoBattle(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_1.activityId
-	local var_4_1 = arg_4_0._actInfo[var_4_0]
+function Season123Model:updateActInfoBattle(msg)
+	local activityId = msg.activityId
+	local actMO = self._actInfo[activityId]
 
-	if var_4_1 then
-		var_4_1:updateInfoBattle(arg_4_1)
+	if actMO then
+		actMO:updateInfoBattle(msg)
 	end
 end
 
-function var_0_0.cleanCurSeasonId(arg_5_0)
-	arg_5_0._curSeasonId = nil
+function Season123Model:cleanCurSeasonId()
+	self._curSeasonId = nil
 end
 
-function var_0_0.getActInfo(arg_6_0, arg_6_1)
-	if not arg_6_1 then
+function Season123Model:getActInfo(activityId)
+	if not activityId then
 		return nil
 	end
 
-	return arg_6_0._actInfo[arg_6_1]
+	return self._actInfo[activityId]
 end
 
-function var_0_0.setBattleContext(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4)
-	arg_7_0._battleContext = Season123BattleContext.New()
+function Season123Model:setBattleContext(actId, stage, layer, episodeId)
+	self._battleContext = Season123BattleContext.New()
 
-	arg_7_0._battleContext:init(arg_7_1, arg_7_2, arg_7_3, arg_7_4)
+	self._battleContext:init(actId, stage, layer, episodeId)
 end
 
-function var_0_0.getBattleContext(arg_8_0)
-	return arg_8_0._battleContext
+function Season123Model:getBattleContext()
+	return self._battleContext
 end
 
-function var_0_0.getSeasonHeroMO(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
-	local var_9_0 = arg_9_0:getActInfo(arg_9_1)
+function Season123Model:getSeasonHeroMO(actId, stage, layer, heroUid)
+	local seasonMO = self:getActInfo(actId)
 
-	if not var_9_0 then
+	if not seasonMO then
 		return nil
 	end
 
-	local var_9_1 = var_9_0.stageMap[arg_9_2]
+	local stageMO = seasonMO.stageMap[stage]
 
-	if not var_9_1 then
+	if not stageMO then
 		return nil
 	end
 
-	local var_9_2 = var_9_1.episodeMap[arg_9_3]
+	local episodeMO = stageMO.episodeMap[layer]
 
-	if not var_9_2 then
+	if not episodeMO then
 		return nil
 	end
 
-	local var_9_3 = var_9_2.heroesMap
+	local heroMap = episodeMO.heroesMap
 
-	if not var_9_3 then
+	if not heroMap then
 		return nil
 	end
 
-	return var_9_3[arg_9_4]
+	return heroMap[heroUid]
 end
 
-function var_0_0.getAssistData(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = arg_10_0:getActInfo(arg_10_1)
+function Season123Model:getAssistData(actId, stage)
+	local seasonMO = self:getActInfo(actId)
 
-	if not var_10_0 then
+	if not seasonMO then
 		return nil
 	end
 
-	local var_10_1
+	local stageMO
 
-	if arg_10_2 == nil then
-		var_10_1 = var_10_0:getCurrentStage()
+	if stage == nil then
+		stageMO = seasonMO:getCurrentStage()
 	else
-		var_10_1 = var_10_0:getStageMO(arg_10_2)
+		stageMO = seasonMO:getStageMO(stage)
 	end
 
-	if not var_10_1 then
+	if not stageMO then
 		return nil
 	end
 
-	return var_10_1:getAssistHeroMO()
+	return stageMO:getAssistHeroMO()
 end
 
-function var_0_0.isSeasonStagePosUnlock(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4)
-	local var_11_0 = arg_11_0:getActInfo(arg_11_1)
+function Season123Model:isSeasonStagePosUnlock(actId, stage, slot, pos)
+	local seasonMO = self:getActInfo(actId)
 
-	if not var_11_0 then
+	if not seasonMO then
 		return
 	end
 
-	local var_11_1 = arg_11_0:getUnlockCardIndex(arg_11_4, arg_11_3)
+	local unlockIndex = self:getUnlockCardIndex(pos, slot)
 
-	return var_11_0:isStageSlotUnlock(arg_11_2, var_11_1) or var_11_0.unlockIndexSet and var_11_0.unlockIndexSet[var_11_1]
+	return seasonMO:isStageSlotUnlock(stage, unlockIndex) or seasonMO.unlockIndexSet and seasonMO.unlockIndexSet[unlockIndex]
 end
 
-function var_0_0.getUnlockCardIndex(arg_12_0, arg_12_1, arg_12_2)
-	if arg_12_1 == Season123EquipHeroItemListModel.MainCharPos then
-		return ModuleEnum.MaxHeroCountInGroup * 2 + arg_12_2
+function Season123Model:getUnlockCardIndex(pos, slot)
+	if pos == Season123EquipHeroItemListModel.MainCharPos then
+		return ModuleEnum.MaxHeroCountInGroup * 2 + slot
 	else
-		return arg_12_1 + 1 + ModuleEnum.MaxHeroCountInGroup * (arg_12_2 - 1)
+		return pos + 1 + ModuleEnum.MaxHeroCountInGroup * (slot - 1)
 	end
 end
 
-function var_0_0.isEpisodeAdvance(arg_13_0, arg_13_1)
+function Season123Model:isEpisodeAdvance(episodeId)
 	return false
 end
 
-function var_0_0.getEpisodeRetail(arg_14_0, arg_14_1)
+function Season123Model:getEpisodeRetail(episodeId)
 	return nil
 end
 
-function var_0_0.getCurSeasonId(arg_15_0)
-	return arg_15_0._curSeasonId
+function Season123Model:getCurSeasonId()
+	return self._curSeasonId
 end
 
-function var_0_0.getAllItemMo(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_0._actInfo[arg_16_1]
+function Season123Model:getAllItemMo(activityId)
+	local seasonMo = self._actInfo[activityId]
 
-	if var_16_0 then
-		return var_16_0:getAllItemMap()
+	if seasonMo then
+		return seasonMo:getAllItemMap()
 	end
 end
 
-function var_0_0.getSeasonAllHeroGroup(arg_17_0, arg_17_1)
-	local var_17_0 = arg_17_0._actInfo[arg_17_1]
+function Season123Model:getSeasonAllHeroGroup(activityId)
+	local seasonMo = self._actInfo[activityId]
 
-	if var_17_0 then
-		return var_17_0.heroGroupSnapshot
+	if seasonMo then
+		return seasonMo.heroGroupSnapshot
 	end
 end
 
-function var_0_0.updateItemMap(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	local var_18_0 = arg_18_0:getAllItemMo(arg_18_1)
+function Season123Model:updateItemMap(actId, addItems, deleteItems)
+	local allItemMap = self:getAllItemMo(actId)
 
-	if GameUtil.getTabLen(arg_18_2) > 0 then
-		for iter_18_0, iter_18_1 in ipairs(arg_18_2) do
-			if Season123Config.instance:getSeasonEquipCo(iter_18_1.itemId) and not var_18_0[iter_18_1.uid] and iter_18_1.uid then
-				local var_18_1 = Season123ItemMO.New()
+	if GameUtil.getTabLen(addItems) > 0 then
+		for index, itemData in ipairs(addItems) do
+			local config = Season123Config.instance:getSeasonEquipCo(itemData.itemId)
 
-				var_18_1:setData(iter_18_1)
+			if config and not allItemMap[itemData.uid] and itemData.uid then
+				local itemMO = Season123ItemMO.New()
 
-				var_18_0[iter_18_1.uid] = var_18_1
+				itemMO:setData(itemData)
+
+				allItemMap[itemData.uid] = itemMO
 			end
 		end
 	end
 
-	if GameUtil.getTabLen(arg_18_3) > 0 then
-		for iter_18_2, iter_18_3 in ipairs(arg_18_3) do
-			if Season123Config.instance:getSeasonEquipCo(iter_18_3.itemId) then
-				var_18_0[iter_18_3.uid] = nil
+	if GameUtil.getTabLen(deleteItems) > 0 then
+		for index, itemData in ipairs(deleteItems) do
+			local config = Season123Config.instance:getSeasonEquipCo(itemData.itemId)
+
+			if config then
+				allItemMap[itemData.uid] = nil
 			end
 		end
 	end
 end
 
-function var_0_0.getSnapshotHeroGroup(arg_19_0, arg_19_1)
-	if arg_19_0._battleContext then
-		local var_19_0 = arg_19_0._battleContext.actId
-		local var_19_1 = arg_19_0:getActInfo(var_19_0)
+function Season123Model:getSnapshotHeroGroup(subId)
+	if self._battleContext then
+		local actId = self._battleContext.actId
+		local seasonMO = self:getActInfo(actId)
 
-		if not var_19_1 then
+		if not seasonMO then
 			return
 		end
 
-		return var_19_1.heroGroupSnapshot[arg_19_1 or var_19_1.heroGroupSnapshotSubId]
+		return seasonMO.heroGroupSnapshot[subId or seasonMO.heroGroupSnapshotSubId]
 	end
 end
 
-function var_0_0.getRetailHeroGroup(arg_20_0, arg_20_1)
-	local var_20_0 = arg_20_0._battleContext.actId
-	local var_20_1 = arg_20_0:getActInfo(var_20_0)
+function Season123Model:getRetailHeroGroup(subId)
+	local actId = self._battleContext.actId
+	local seasonMO = self:getActInfo(actId)
 
-	if not var_20_1 then
+	if not seasonMO then
 		return
 	end
 
-	return var_20_1.retailHeroGroups[arg_20_1 or 1]
+	return seasonMO.retailHeroGroups[subId or 1]
 end
 
-function var_0_0.isEpisodeAfterStory(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
+function Season123Model:isEpisodeAfterStory(actId, stage, layer)
 	return false
 end
 
-function var_0_0.canPlayStageLevelup(arg_22_0, arg_22_1, arg_22_2, arg_22_3, arg_22_4, arg_22_5, arg_22_6)
-	if arg_22_1 ~= 1 then
+function Season123Model:canPlayStageLevelup(fightResult, episodeType, exitFightGroup, actId, stage, layer)
+	if fightResult ~= 1 then
 		return
 	end
 
-	if arg_22_2 ~= DungeonEnum.EpisodeType.Season123 then
+	if episodeType ~= DungeonEnum.EpisodeType.Season123 then
 		return
 	end
 
-	if arg_22_3 then
+	if exitFightGroup then
 		return
 	end
 
-	arg_22_4 = arg_22_4 or arg_22_0:getCurSeasonId()
+	actId = actId or self:getCurSeasonId()
 
-	if arg_22_0:isEpisodeAfterStory(arg_22_4, arg_22_6) then
+	if self:isEpisodeAfterStory(actId, layer) then
 		return
 	end
 
-	local var_22_0 = Season123Config.instance:getSeasonEpisodeCo(arg_22_4, arg_22_5, arg_22_6 + 1)
+	local nextCo = Season123Config.instance:getSeasonEpisodeCo(actId, stage, layer + 1)
 
-	return var_22_0 and var_22_0.stage
+	return nextCo and nextCo.stage
 end
 
-function var_0_0.addCardGetData(arg_23_0, arg_23_1)
-	local var_23_0 = Season123ViewHelper.getViewName(arg_23_0._curSeasonId, "CelebrityCardGetView")
-	local var_23_1 = ViewName[var_23_0]
+function Season123Model:addCardGetData(cardList)
+	local cardGetViewName = Season123ViewHelper.getViewName(self._curSeasonId, "CelebrityCardGetView")
+	local viewName = ViewName[cardGetViewName]
 
-	for iter_23_0 = 1, PopupController.instance._popupList:getSize() do
-		if PopupController.instance._popupList._dataList[iter_23_0][2] == var_23_1 then
-			local var_23_2 = PopupController.instance._popupList._dataList[iter_23_0][3].data
+	for i = 1, PopupController.instance._popupList:getSize() do
+		if PopupController.instance._popupList._dataList[i][2] == viewName then
+			local equipData = PopupController.instance._popupList._dataList[i][3].data
 
-			tabletool.addValues(var_23_2, arg_23_1)
+			tabletool.addValues(equipData, cardList)
 
-			PopupController.instance._popupList._dataList[iter_23_0][3] = {
+			PopupController.instance._popupList._dataList[i][3] = {
 				is_item_id = true,
-				data = var_23_2
+				data = equipData
 			}
 
 			return
 		end
 	end
 
-	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, var_23_1, {
+	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, viewName, {
 		is_item_id = true,
-		data = arg_23_1
+		data = cardList
 	})
 end
 
-function var_0_0.setUnlockAct123EquipIds(arg_24_0, arg_24_1)
-	arg_24_0:getActInfo(arg_24_1.activityId):setUnlockAct123EquipIds(arg_24_1.unlockAct123EquipIds)
+function Season123Model:setUnlockAct123EquipIds(proto)
+	local season123MO = self:getActInfo(proto.activityId)
+
+	season123MO:setUnlockAct123EquipIds(proto.unlockAct123EquipIds)
 end
 
-function var_0_0.isNewEquipBookCard(arg_25_0, arg_25_1)
-	local var_25_0 = arg_25_0:getActInfo(arg_25_0._curSeasonId)
+function Season123Model:isNewEquipBookCard(equipId)
+	local season123MO = self:getActInfo(self._curSeasonId)
 
-	if not var_25_0 then
+	if not season123MO then
 		return
 	end
 
-	return not var_25_0.unlockAct123EquipIds[arg_25_1]
+	return not season123MO.unlockAct123EquipIds[equipId]
 end
 
-function var_0_0.getAllUnlockAct123EquipIds(arg_26_0, arg_26_1)
-	local var_26_0 = arg_26_0:getActInfo(arg_26_1)
+function Season123Model:getAllUnlockAct123EquipIds(actId)
+	local season123MO = self:getActInfo(actId)
 
-	if not var_26_0 then
+	if not season123MO then
 		return
 	end
 
-	return var_26_0.unlockAct123EquipIds
+	return season123MO.unlockAct123EquipIds
 end
 
-function var_0_0.getFightCardDataList(arg_27_0)
-	local var_27_0 = FightModel.instance:getFightParam()
-	local var_27_1 = var_27_0.activity104Equips
+function Season123Model:getFightCardDataList()
+	local fightParam = FightModel.instance:getFightParam()
+	local equips = fightParam.activity104Equips
 
-	return Season123HeroGroupUtils.fiterFightCardDataList(var_27_1, var_27_0.trialHeroList, arg_27_0:getCurSeasonId())
+	return Season123HeroGroupUtils.fiterFightCardDataList(equips, fightParam.trialHeroList, self:getCurSeasonId())
 end
 
-function var_0_0.hasSeason123TaskData(arg_28_0, arg_28_1)
-	local var_28_0 = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Season123)
+function Season123Model:hasSeason123TaskData(actId)
+	local seasonMOTasks = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Season123)
 
-	if var_28_0 then
-		for iter_28_0, iter_28_1 in pairs(var_28_0) do
-			if iter_28_1.config and iter_28_1.config.seasonId == arg_28_1 and iter_28_1.config.isRewardView == Activity123Enum.TaskRewardViewType then
+	if seasonMOTasks then
+		for taskId, taskMO in pairs(seasonMOTasks) do
+			if taskMO.config and taskMO.config.seasonId == actId and taskMO.config.isRewardView == Activity123Enum.TaskRewardViewType then
 				return true
 			end
 		end
@@ -298,36 +306,38 @@ function var_0_0.hasSeason123TaskData(arg_28_0, arg_28_1)
 	end
 end
 
-function var_0_0.updateTaskReward(arg_29_0)
-	for iter_29_0, iter_29_1 in pairs(arg_29_0._actInfo) do
-		iter_29_1:initStageRewardConfig()
+function Season123Model:updateTaskReward()
+	for actId, seasonMO in pairs(self._actInfo) do
+		seasonMO:initStageRewardConfig()
 	end
 end
 
-function var_0_0.checkHasUnlockStory(arg_30_0, arg_30_1)
-	local var_30_0 = "Season123StoryUnlock" .. "#" .. tostring(arg_30_1) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
-	local var_30_1 = PlayerPrefsHelper.getString(var_30_0, "")
-	local var_30_2 = {}
-	local var_30_3 = {}
+function Season123Model:checkHasUnlockStory(actId)
+	local localkey = "Season123StoryUnlock" .. "#" .. tostring(actId) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
+	local saveStr = PlayerPrefsHelper.getString(localkey, "")
+	local saveStateList = {}
+	local saveUnlockStateTab = {}
 
-	if not string.nilorempty(var_30_1) then
-		local var_30_4 = cjson.decode(var_30_1)
+	if not string.nilorempty(saveStr) then
+		saveStateList = cjson.decode(saveStr)
 
-		for iter_30_0, iter_30_1 in ipairs(var_30_4) do
-			local var_30_5 = string.split(iter_30_1, "|")
+		for _, unlockStateStr in ipairs(saveStateList) do
+			local param = string.split(unlockStateStr, "|")
+			local id = tonumber(param[1])
+			local state = param[2] == "true"
 
-			var_30_3[tonumber(var_30_5[1])] = var_30_5[2] == "true"
+			saveUnlockStateTab[id] = state
 		end
 	end
 
-	local var_30_6 = Season123Config.instance:getAllStoryCo(arg_30_1) or {}
+	local allStoryConfig = Season123Config.instance:getAllStoryCo(actId) or {}
 
-	for iter_30_2, iter_30_3 in pairs(var_30_6) do
-		local var_30_7 = var_0_0.instance:getActInfo(arg_30_1).stageMap[iter_30_3.condition]
-		local var_30_8 = var_30_7 and var_30_7.isPass
-		local var_30_9 = Season123ProgressUtils.isStageUnlock(arg_30_1, iter_30_3.condition) and var_30_8 == true
+	for storyId, storyConfig in pairs(allStoryConfig) do
+		local stageMO = Season123Model.instance:getActInfo(actId).stageMap[storyConfig.condition]
+		local isPass = stageMO and stageMO.isPass
+		local isUnlock = Season123ProgressUtils.isStageUnlock(actId, storyConfig.condition) and isPass == true
 
-		if var_30_9 and var_30_3[iter_30_2] ~= var_30_9 then
+		if isUnlock and saveUnlockStateTab[storyId] ~= isUnlock then
 			return true
 		end
 	end
@@ -335,28 +345,30 @@ function var_0_0.checkHasUnlockStory(arg_30_0, arg_30_1)
 	return false
 end
 
-function var_0_0.getSingleBgFolder(arg_31_0)
-	if arg_31_0._curSeasonId then
-		return Activity123Enum.SeasonIconFolder[arg_31_0._curSeasonId]
+function Season123Model:getSingleBgFolder()
+	if self._curSeasonId then
+		local folder = Activity123Enum.SeasonIconFolder[self._curSeasonId]
+
+		return folder
 	end
 end
 
-function var_0_0.setRetailRandomSceneId(arg_32_0, arg_32_1)
-	local var_32_0 = arg_32_1 and arg_32_1.needRandom
+function Season123Model:setRetailRandomSceneId(param)
+	local needRandom = param and param.needRandom
 
-	arg_32_0.retailSceneId = PlayerPrefsHelper.getNumber(arg_32_0:getRetailRandomSceneKey(), -1)
+	self.retailSceneId = PlayerPrefsHelper.getNumber(self:getRetailRandomSceneKey(), -1)
 
-	if arg_32_0.retailSceneId < 0 or var_32_0 then
-		arg_32_0.retailSceneId = math.random(0, 2)
+	if self.retailSceneId < 0 or needRandom then
+		self.retailSceneId = math.random(0, 2)
 
-		PlayerPrefsHelper.setNumber(arg_32_0:getRetailRandomSceneKey(), arg_32_0.retailSceneId)
+		PlayerPrefsHelper.setNumber(self:getRetailRandomSceneKey(), self.retailSceneId)
 	end
 end
 
-function var_0_0.getRetailRandomSceneKey(arg_33_0)
-	return "Season123RetailRandomSceneId" .. "#" .. tostring(arg_33_0._curSeasonId) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
+function Season123Model:getRetailRandomSceneKey()
+	return "Season123RetailRandomSceneId" .. "#" .. tostring(self._curSeasonId) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
 end
 
-var_0_0.instance = var_0_0.New()
+Season123Model.instance = Season123Model.New()
 
-return var_0_0
+return Season123Model

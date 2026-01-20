@@ -1,36 +1,38 @@
-﻿module("modules.logic.versionactivity2_5.feilinshiduo.defines.FeiLinShiDuoEnum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/feilinshiduo/defines/FeiLinShiDuoEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity2_5.feilinshiduo.defines.FeiLinShiDuoEnum", package.seeall)
 
-var_0_0.TestMapId = 101
-var_0_0.GameSceneRootName = "FeiLinShiDuoGame"
-var_0_0.ColorIconName = "colorIcon"
-var_0_0.PlayerMoveSpeed = 250
-var_0_0.PlayerPushBoxSpeed = 125
-var_0_0.SceneMoveSpeed = 0.2
-var_0_0.FallSpeed = 50
-var_0_0.jumpAnimTime = 0.4
-var_0_0.climbSpeed = 150
-var_0_0.MinTimeDeltaTime = 0.04
-var_0_0.SceneDefaultScale = 2
-var_0_0.SlotWidth = 100
-var_0_0.HalfSlotWidth = var_0_0.SlotWidth / 2
-var_0_0.RoleResPath = "roles/v2a5_act185/act185_ui.prefab"
-var_0_0.PlayerScale = 0.3
-var_0_0.startMoveAddSpeed = 0.5
-var_0_0.endMoveAddSpeed = 1
-var_0_0.touchCheckRange = 4
-var_0_0.touchElementRange = 20
-var_0_0.doorTouchCheckRang = 15
-var_0_0.stairsTouchCheckRange = 40
-var_0_0.BlindnessModeKey = "FeiLinShiDuoBlindnessMode"
-var_0_0.checkDir = {
+local FeiLinShiDuoEnum = _M
+
+FeiLinShiDuoEnum.TestMapId = 101
+FeiLinShiDuoEnum.GameSceneRootName = "FeiLinShiDuoGame"
+FeiLinShiDuoEnum.ColorIconName = "colorIcon"
+FeiLinShiDuoEnum.PlayerMoveSpeed = 250
+FeiLinShiDuoEnum.PlayerPushBoxSpeed = 125
+FeiLinShiDuoEnum.SceneMoveSpeed = 0.2
+FeiLinShiDuoEnum.FallSpeed = 50
+FeiLinShiDuoEnum.jumpAnimTime = 0.4
+FeiLinShiDuoEnum.climbSpeed = 150
+FeiLinShiDuoEnum.MinTimeDeltaTime = 0.04
+FeiLinShiDuoEnum.SceneDefaultScale = 2
+FeiLinShiDuoEnum.SlotWidth = 100
+FeiLinShiDuoEnum.HalfSlotWidth = FeiLinShiDuoEnum.SlotWidth / 2
+FeiLinShiDuoEnum.RoleResPath = "roles/v2a5_act185/act185_ui.prefab"
+FeiLinShiDuoEnum.PlayerScale = 0.3
+FeiLinShiDuoEnum.startMoveAddSpeed = 0.5
+FeiLinShiDuoEnum.endMoveAddSpeed = 1
+FeiLinShiDuoEnum.touchCheckRange = 4
+FeiLinShiDuoEnum.touchElementRange = 20
+FeiLinShiDuoEnum.doorTouchCheckRang = 15
+FeiLinShiDuoEnum.stairsTouchCheckRange = 40
+FeiLinShiDuoEnum.BlindnessModeKey = "FeiLinShiDuoBlindnessMode"
+FeiLinShiDuoEnum.checkDir = {
 	Top = 2,
 	Right = 3,
 	Left = 1,
 	Bottom = 4
 }
-var_0_0.ObjectType = {
+FeiLinShiDuoEnum.ObjectType = {
 	Option = 6,
 	ColorPlane = 2,
 	Door = 7,
@@ -42,58 +44,58 @@ var_0_0.ObjectType = {
 	Jump = 5,
 	Stairs = 8
 }
-var_0_0.ColorType = {
+FeiLinShiDuoEnum.ColorType = {
 	Blue = 3,
 	Green = 2,
 	Red = 1,
 	Yellow = 4,
 	None = 0
 }
-var_0_0.ColorStr = {
-	[var_0_0.ColorType.None] = "#808080",
-	[var_0_0.ColorType.Red] = "#995558",
-	[var_0_0.ColorType.Green] = "#648E83",
-	[var_0_0.ColorType.Blue] = "#5D6D97",
-	[var_0_0.ColorType.Yellow] = "#8E8C64"
+FeiLinShiDuoEnum.ColorStr = {
+	[FeiLinShiDuoEnum.ColorType.None] = "#808080",
+	[FeiLinShiDuoEnum.ColorType.Red] = "#995558",
+	[FeiLinShiDuoEnum.ColorType.Green] = "#648E83",
+	[FeiLinShiDuoEnum.ColorType.Blue] = "#5D6D97",
+	[FeiLinShiDuoEnum.ColorType.Yellow] = "#8E8C64"
 }
-var_0_0.playerColor = UnityEngine.Shader.PropertyToID("_Color")
-var_0_0.GroupName = {
-	[var_0_0.ObjectType.Wall] = "Walls",
-	[var_0_0.ObjectType.ColorPlane] = "ColorPlanes",
-	[var_0_0.ObjectType.Box] = "Boxs",
-	[var_0_0.ObjectType.Trap] = "Traps",
-	[var_0_0.ObjectType.Jump] = "Jumps",
-	[var_0_0.ObjectType.Option] = "Options",
-	[var_0_0.ObjectType.Door] = "Doors",
-	[var_0_0.ObjectType.Stairs] = "Stairs",
-	[var_0_0.ObjectType.Start] = "Start",
-	[var_0_0.ObjectType.Target] = "Target"
+FeiLinShiDuoEnum.playerColor = UnityEngine.Shader.PropertyToID("_Color")
+FeiLinShiDuoEnum.GroupName = {
+	[FeiLinShiDuoEnum.ObjectType.Wall] = "Walls",
+	[FeiLinShiDuoEnum.ObjectType.ColorPlane] = "ColorPlanes",
+	[FeiLinShiDuoEnum.ObjectType.Box] = "Boxs",
+	[FeiLinShiDuoEnum.ObjectType.Trap] = "Traps",
+	[FeiLinShiDuoEnum.ObjectType.Jump] = "Jumps",
+	[FeiLinShiDuoEnum.ObjectType.Option] = "Options",
+	[FeiLinShiDuoEnum.ObjectType.Door] = "Doors",
+	[FeiLinShiDuoEnum.ObjectType.Stairs] = "Stairs",
+	[FeiLinShiDuoEnum.ObjectType.Start] = "Start",
+	[FeiLinShiDuoEnum.ObjectType.Target] = "Target"
 }
-var_0_0.ParentName = {
-	[var_0_0.ObjectType.Wall] = "wallItem",
-	[var_0_0.ObjectType.ColorPlane] = "colorplaneItem",
-	[var_0_0.ObjectType.Box] = "boxItem",
-	[var_0_0.ObjectType.Trap] = "trapItem",
-	[var_0_0.ObjectType.Jump] = "jumpItem",
-	[var_0_0.ObjectType.Option] = "optionItem",
-	[var_0_0.ObjectType.Door] = "doorItem",
-	[var_0_0.ObjectType.Stairs] = "stairItem",
-	[var_0_0.ObjectType.Start] = "startItem",
-	[var_0_0.ObjectType.Target] = "targetItem"
+FeiLinShiDuoEnum.ParentName = {
+	[FeiLinShiDuoEnum.ObjectType.Wall] = "wallItem",
+	[FeiLinShiDuoEnum.ObjectType.ColorPlane] = "colorplaneItem",
+	[FeiLinShiDuoEnum.ObjectType.Box] = "boxItem",
+	[FeiLinShiDuoEnum.ObjectType.Trap] = "trapItem",
+	[FeiLinShiDuoEnum.ObjectType.Jump] = "jumpItem",
+	[FeiLinShiDuoEnum.ObjectType.Option] = "optionItem",
+	[FeiLinShiDuoEnum.ObjectType.Door] = "doorItem",
+	[FeiLinShiDuoEnum.ObjectType.Stairs] = "stairItem",
+	[FeiLinShiDuoEnum.ObjectType.Start] = "startItem",
+	[FeiLinShiDuoEnum.ObjectType.Target] = "targetItem"
 }
-var_0_0.ItemName = {
-	[var_0_0.ObjectType.Wall] = "wall",
-	[var_0_0.ObjectType.ColorPlane] = "colorplane",
-	[var_0_0.ObjectType.Box] = "box",
-	[var_0_0.ObjectType.Trap] = "trap",
-	[var_0_0.ObjectType.Jump] = "jump",
-	[var_0_0.ObjectType.Option] = "option",
-	[var_0_0.ObjectType.Door] = "door",
-	[var_0_0.ObjectType.Stairs] = "stair",
-	[var_0_0.ObjectType.Start] = "start",
-	[var_0_0.ObjectType.Target] = "target"
+FeiLinShiDuoEnum.ItemName = {
+	[FeiLinShiDuoEnum.ObjectType.Wall] = "wall",
+	[FeiLinShiDuoEnum.ObjectType.ColorPlane] = "colorplane",
+	[FeiLinShiDuoEnum.ObjectType.Box] = "box",
+	[FeiLinShiDuoEnum.ObjectType.Trap] = "trap",
+	[FeiLinShiDuoEnum.ObjectType.Jump] = "jump",
+	[FeiLinShiDuoEnum.ObjectType.Option] = "option",
+	[FeiLinShiDuoEnum.ObjectType.Door] = "door",
+	[FeiLinShiDuoEnum.ObjectType.Stairs] = "stair",
+	[FeiLinShiDuoEnum.ObjectType.Start] = "start",
+	[FeiLinShiDuoEnum.ObjectType.Target] = "target"
 }
-var_0_0.GuideDataList = {
+FeiLinShiDuoEnum.GuideDataList = {
 	{
 		mapId = 101,
 		guideId = 25101,
@@ -149,4 +151,4 @@ var_0_0.GuideDataList = {
 	}
 }
 
-return var_0_0
+return FeiLinShiDuoEnum

@@ -1,544 +1,548 @@
-﻿module("modules.logic.versionactivity2_1.dungeon.view.map.VersionActivity2_1DungeonMapInteractView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_1/dungeon/view/map/VersionActivity2_1DungeonMapInteractView.lua
 
-local var_0_0 = class("VersionActivity2_1DungeonMapInteractView", BaseView)
+module("modules.logic.versionactivity2_1.dungeon.view.map.VersionActivity2_1DungeonMapInteractView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0, arg_1_1)
-	arg_1_0._gointeractroot = gohelper.findChild(arg_1_0.viewGO, "#go_interactive_root")
-	arg_1_0._gointeractitem = gohelper.findChild(arg_1_0.viewGO, "#go_interactive_root/#go_interactitem")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0._gointeractitem, "#btn_close")
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0._gointeractitem, "rotate/#go_title/#txt_title")
-	arg_1_0._simagedescbg = gohelper.findChildSingleImage(arg_1_0._gointeractitem, "rotate/desc_container/#simage_descbg")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0._gointeractitem, "rotate/desc_container/#txt_desc")
-	arg_1_0._godesc = arg_1_0._txtdesc.gameObject
-	arg_1_0._gochat = gohelper.findChild(arg_1_0.viewGO, "#go_interactive_root/#go_interactitem/rotate/desc_container/#go_chat")
-	arg_1_0._gochatusericon = gohelper.findChild(arg_1_0.viewGO, "#go_interactive_root/#go_interactitem/rotate/desc_container/#go_chat/usericon")
-	arg_1_0._txtchatname = gohelper.findChildText(arg_1_0.viewGO, "#go_interactive_root/#go_interactitem/rotate/desc_container/#go_chat/name")
-	arg_1_0._txtchatdesc = gohelper.findChildText(arg_1_0.viewGO, "#go_interactive_root/#go_interactitem/rotate/desc_container/#go_chat/info")
-	arg_1_0.goRewardContainer = gohelper.findChild(arg_1_0._gointeractitem, "rotate/reward_container")
-	arg_1_0.goRewardContent = gohelper.findChild(arg_1_0._gointeractitem, "rotate/reward_container/#go_rewardContent")
-	arg_1_0.goRewardItem = gohelper.findChild(arg_1_0._gointeractitem, "rotate/reward_container/#go_rewardContent/#go_activityrewarditem")
+local VersionActivity2_1DungeonMapInteractView = class("VersionActivity2_1DungeonMapInteractView", BaseView)
 
-	arg_1_0:initNoneContainer()
-	arg_1_0:initFightContainer()
-	arg_1_0:initDialogueContainer()
-	arg_1_0:initTalkContainer()
+function VersionActivity2_1DungeonMapInteractView:onInitView(go)
+	self._gointeractroot = gohelper.findChild(self.viewGO, "#go_interactive_root")
+	self._gointeractitem = gohelper.findChild(self.viewGO, "#go_interactive_root/#go_interactitem")
+	self._btnclose = gohelper.findChildButtonWithAudio(self._gointeractitem, "#btn_close")
+	self._txttitle = gohelper.findChildText(self._gointeractitem, "rotate/#go_title/#txt_title")
+	self._simagedescbg = gohelper.findChildSingleImage(self._gointeractitem, "rotate/desc_container/#simage_descbg")
+	self._txtdesc = gohelper.findChildText(self._gointeractitem, "rotate/desc_container/#txt_desc")
+	self._godesc = self._txtdesc.gameObject
+	self._gochat = gohelper.findChild(self.viewGO, "#go_interactive_root/#go_interactitem/rotate/desc_container/#go_chat")
+	self._gochatusericon = gohelper.findChild(self.viewGO, "#go_interactive_root/#go_interactitem/rotate/desc_container/#go_chat/usericon")
+	self._txtchatname = gohelper.findChildText(self.viewGO, "#go_interactive_root/#go_interactitem/rotate/desc_container/#go_chat/name")
+	self._txtchatdesc = gohelper.findChildText(self.viewGO, "#go_interactive_root/#go_interactitem/rotate/desc_container/#go_chat/info")
+	self.goRewardContainer = gohelper.findChild(self._gointeractitem, "rotate/reward_container")
+	self.goRewardContent = gohelper.findChild(self._gointeractitem, "rotate/reward_container/#go_rewardContent")
+	self.goRewardItem = gohelper.findChild(self._gointeractitem, "rotate/reward_container/#go_rewardContent/#go_activityrewarditem")
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	self:initNoneContainer()
+	self:initFightContainer()
+	self:initDialogueContainer()
+	self:initTalkContainer()
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.initNoneContainer(arg_2_0)
-	arg_2_0.goNone = gohelper.findChild(arg_2_0._gointeractitem, "rotate/option_container/#go_none")
-	arg_2_0.txtNone = gohelper.findChildText(arg_2_0._gointeractitem, "rotate/option_container/#go_none/#txt_none")
-	arg_2_0.noneBtn = gohelper.findButtonWithAudio(arg_2_0.goNone)
+function VersionActivity2_1DungeonMapInteractView:initNoneContainer()
+	self.goNone = gohelper.findChild(self._gointeractitem, "rotate/option_container/#go_none")
+	self.txtNone = gohelper.findChildText(self._gointeractitem, "rotate/option_container/#go_none/#txt_none")
+	self.noneBtn = gohelper.findButtonWithAudio(self.goNone)
 end
 
-function var_0_0.initFightContainer(arg_3_0)
-	arg_3_0.goFight = gohelper.findChild(arg_3_0._gointeractitem, "rotate/option_container/#go_fight")
-	arg_3_0.goFightTip = gohelper.findChild(arg_3_0._gointeractitem, "rotate/option_container/#go_fight/#go_fighttip")
-	arg_3_0.txtRemainFightNumber = gohelper.findChildText(arg_3_0._gointeractitem, "rotate/option_container/#go_fight/#go_fighttip/#txt_remainfightnumber")
-	arg_3_0.fightTipClickArea = gohelper.findChild(arg_3_0._gointeractitem, "rotate/option_container/#go_fight/#go_fighttip/clickarea")
-	arg_3_0.txtFight = gohelper.findChildText(arg_3_0._gointeractitem, "rotate/option_container/#go_fight/#txt_fight")
-	arg_3_0.goFightCost = gohelper.findChild(arg_3_0._gointeractitem, "rotate/option_container/#go_fight/#go_cost")
-	arg_3_0.txtFightCost = gohelper.findChildText(arg_3_0._gointeractitem, "rotate/option_container/#go_fight/#go_cost/#txt_cost")
-	arg_3_0.simageCostIcon = gohelper.findChildSingleImage(arg_3_0._gointeractitem, "rotate/option_container/#go_fight/#go_cost/#simage_costicon")
-	arg_3_0.fightBtn = gohelper.findButtonWithAudio(arg_3_0.goFight)
+function VersionActivity2_1DungeonMapInteractView:initFightContainer()
+	self.goFight = gohelper.findChild(self._gointeractitem, "rotate/option_container/#go_fight")
+	self.goFightTip = gohelper.findChild(self._gointeractitem, "rotate/option_container/#go_fight/#go_fighttip")
+	self.txtRemainFightNumber = gohelper.findChildText(self._gointeractitem, "rotate/option_container/#go_fight/#go_fighttip/#txt_remainfightnumber")
+	self.fightTipClickArea = gohelper.findChild(self._gointeractitem, "rotate/option_container/#go_fight/#go_fighttip/clickarea")
+	self.txtFight = gohelper.findChildText(self._gointeractitem, "rotate/option_container/#go_fight/#txt_fight")
+	self.goFightCost = gohelper.findChild(self._gointeractitem, "rotate/option_container/#go_fight/#go_cost")
+	self.txtFightCost = gohelper.findChildText(self._gointeractitem, "rotate/option_container/#go_fight/#go_cost/#txt_cost")
+	self.simageCostIcon = gohelper.findChildSingleImage(self._gointeractitem, "rotate/option_container/#go_fight/#go_cost/#simage_costicon")
+	self.fightBtn = gohelper.findButtonWithAudio(self.goFight)
 end
 
-function var_0_0.initDialogueContainer(arg_4_0)
-	arg_4_0.goDialogue = gohelper.findChild(arg_4_0._gointeractitem, "rotate/option_container/#go_dialogue")
-	arg_4_0.txtDialogue = gohelper.findChildText(arg_4_0._gointeractitem, "rotate/option_container/#go_dialogue/#txt_dialogue")
-	arg_4_0.enterDialogueBtn = gohelper.findButtonWithAudio(arg_4_0.goDialogue)
+function VersionActivity2_1DungeonMapInteractView:initDialogueContainer()
+	self.goDialogue = gohelper.findChild(self._gointeractitem, "rotate/option_container/#go_dialogue")
+	self.txtDialogue = gohelper.findChildText(self._gointeractitem, "rotate/option_container/#go_dialogue/#txt_dialogue")
+	self.enterDialogueBtn = gohelper.findButtonWithAudio(self.goDialogue)
 end
 
-function var_0_0.initTalkContainer(arg_5_0)
-	arg_5_0.goTalk = gohelper.findChild(arg_5_0._gointeractitem, "rotate/option_container/#go_talk")
-	arg_5_0._gonext = gohelper.findChild(arg_5_0._gointeractitem, "rotate/option_container/#go_talk/#go_next")
-	arg_5_0._btnnext = gohelper.findChildButtonWithAudio(arg_5_0._gointeractitem, "rotate/option_container/#go_talk/#go_next/#btn_next")
-	arg_5_0._gooptions = gohelper.findChild(arg_5_0._gointeractitem, "rotate/option_container/#go_talk/#go_options")
-	arg_5_0._gotalkitem = gohelper.findChild(arg_5_0._gointeractitem, "rotate/option_container/#go_talk/#go_options/#go_talkitem")
+function VersionActivity2_1DungeonMapInteractView:initTalkContainer()
+	self.goTalk = gohelper.findChild(self._gointeractitem, "rotate/option_container/#go_talk")
+	self._gonext = gohelper.findChild(self._gointeractitem, "rotate/option_container/#go_talk/#go_next")
+	self._btnnext = gohelper.findChildButtonWithAudio(self._gointeractitem, "rotate/option_container/#go_talk/#go_next/#btn_next")
+	self._gooptions = gohelper.findChild(self._gointeractitem, "rotate/option_container/#go_talk/#go_options")
+	self._gotalkitem = gohelper.findChild(self._gointeractitem, "rotate/option_container/#go_talk/#go_options/#go_talkitem")
 
-	gohelper.setActive(arg_5_0._gotalkitem, false)
+	gohelper.setActive(self._gotalkitem, false)
 
-	arg_5_0._gofinishtalk = gohelper.findChild(arg_5_0._gointeractitem, "rotate/option_container/#go_talk/#go_finishtalk")
-	arg_5_0._btnfinishtalk = gohelper.findChildButtonWithAudio(arg_5_0._gointeractitem, "rotate/option_container/#go_talk/#go_finishtalk/#btn_finishtalk")
+	self._gofinishtalk = gohelper.findChild(self._gointeractitem, "rotate/option_container/#go_talk/#go_finishtalk")
+	self._btnfinishtalk = gohelper.findChildButtonWithAudio(self._gointeractitem, "rotate/option_container/#go_talk/#go_finishtalk/#btn_finishtalk")
 end
 
-function var_0_0.addEvents(arg_6_0)
-	arg_6_0._btnclose:AddClickListener(arg_6_0._btncloseOnClick, arg_6_0)
-	arg_6_0.noneBtn:AddClickListener(arg_6_0._onClickNoneBtn, arg_6_0)
-	arg_6_0.fightBtn:AddClickListener(arg_6_0._onClickFightBtn, arg_6_0)
-	arg_6_0.enterDialogueBtn:AddClickListener(arg_6_0._onClickEnterDialogueBtn, arg_6_0)
-	arg_6_0._btnnext:AddClickListener(arg_6_0._btnnextOnClick, arg_6_0)
-	arg_6_0._btnfinishtalk:AddClickListener(arg_6_0._btnfinishtalkOnClick, arg_6_0)
-	arg_6_0:addEventCb(VersionActivity2_1DungeonController.instance, VersionActivity2_1DungeonEvent.OnClickElement, arg_6_0.showInteractUI, arg_6_0)
-	arg_6_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_6_0.onCloseViewFinishCall, arg_6_0)
-	arg_6_0:addEventCb(DialogueController.instance, DialogueEvent.OnDialogueInfoChange, arg_6_0.onDialogueInfoChange, arg_6_0)
-	arg_6_0:addEventCb(JumpController.instance, JumpEvent.BeforeJump, arg_6_0.beforeJump, arg_6_0)
+function VersionActivity2_1DungeonMapInteractView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self.noneBtn:AddClickListener(self._onClickNoneBtn, self)
+	self.fightBtn:AddClickListener(self._onClickFightBtn, self)
+	self.enterDialogueBtn:AddClickListener(self._onClickEnterDialogueBtn, self)
+	self._btnnext:AddClickListener(self._btnnextOnClick, self)
+	self._btnfinishtalk:AddClickListener(self._btnfinishtalkOnClick, self)
+	self:addEventCb(VersionActivity2_1DungeonController.instance, VersionActivity2_1DungeonEvent.OnClickElement, self.showInteractUI, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self.onCloseViewFinishCall, self)
+	self:addEventCb(DialogueController.instance, DialogueEvent.OnDialogueInfoChange, self.onDialogueInfoChange, self)
+	self:addEventCb(JumpController.instance, JumpEvent.BeforeJump, self.beforeJump, self)
 end
 
-function var_0_0.removeEvents(arg_7_0)
-	arg_7_0._btnclose:RemoveClickListener()
-	arg_7_0.noneBtn:RemoveClickListener()
-	arg_7_0.fightBtn:RemoveClickListener()
-	arg_7_0.enterDialogueBtn:RemoveClickListener()
-	arg_7_0._btnnext:RemoveClickListener()
-	arg_7_0._btnfinishtalk:RemoveClickListener()
-	arg_7_0:removeEventCb(VersionActivity2_1DungeonController.instance, VersionActivity2_1DungeonEvent.OnClickElement, arg_7_0.showInteractUI, arg_7_0)
-	arg_7_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_7_0.onCloseViewFinishCall, arg_7_0)
-	arg_7_0:removeEventCb(DialogueController.instance, DialogueEvent.OnDialogueInfoChange, arg_7_0.onDialogueInfoChange, arg_7_0)
-	arg_7_0:removeEventCb(JumpController.instance, JumpEvent.BeforeJump, arg_7_0.beforeJump, arg_7_0)
+function VersionActivity2_1DungeonMapInteractView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self.noneBtn:RemoveClickListener()
+	self.fightBtn:RemoveClickListener()
+	self.enterDialogueBtn:RemoveClickListener()
+	self._btnnext:RemoveClickListener()
+	self._btnfinishtalk:RemoveClickListener()
+	self:removeEventCb(VersionActivity2_1DungeonController.instance, VersionActivity2_1DungeonEvent.OnClickElement, self.showInteractUI, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self.onCloseViewFinishCall, self)
+	self:removeEventCb(DialogueController.instance, DialogueEvent.OnDialogueInfoChange, self.onDialogueInfoChange, self)
+	self:removeEventCb(JumpController.instance, JumpEvent.BeforeJump, self.beforeJump, self)
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0._handleTypeMap = {
-		[DungeonEnum.ElementType.None] = arg_8_0.refreshNoneUI,
-		[DungeonEnum.ElementType.Fight] = arg_8_0.refreshFightUI,
-		[DungeonEnum.ElementType.EnterDialogue] = arg_8_0.refreshDialogueUI,
-		[DungeonEnum.ElementType.Story] = arg_8_0.refreshTalkUI
+function VersionActivity2_1DungeonMapInteractView:_editableInitView()
+	self._handleTypeMap = {
+		[DungeonEnum.ElementType.None] = self.refreshNoneUI,
+		[DungeonEnum.ElementType.Fight] = self.refreshFightUI,
+		[DungeonEnum.ElementType.EnterDialogue] = self.refreshDialogueUI,
+		[DungeonEnum.ElementType.Story] = self.refreshTalkUI
 	}
-	arg_8_0.type2goDict = {
-		[DungeonEnum.ElementType.None] = arg_8_0.goNone,
-		[DungeonEnum.ElementType.Fight] = arg_8_0.goFight,
-		[DungeonEnum.ElementType.EnterDialogue] = arg_8_0.goDialogue,
-		[DungeonEnum.ElementType.Story] = arg_8_0.goTalk
+	self.type2goDict = {
+		[DungeonEnum.ElementType.None] = self.goNone,
+		[DungeonEnum.ElementType.Fight] = self.goFight,
+		[DungeonEnum.ElementType.EnterDialogue] = self.goDialogue,
+		[DungeonEnum.ElementType.Story] = self.goTalk
 	}
-	arg_8_0.rewardItemList = {}
-	arg_8_0._optionBtnList = arg_8_0:getUserDataTb_()
-	arg_8_0.mapSceneElementsView = arg_8_0.viewContainer.mapSceneElements
-	arg_8_0.rootClick = gohelper.findChildClickWithDefaultAudio(arg_8_0._gointeractroot, "close_block")
+	self.rewardItemList = {}
+	self._optionBtnList = self:getUserDataTb_()
+	self.mapSceneElementsView = self.viewContainer.mapSceneElements
+	self.rootClick = gohelper.findChildClickWithDefaultAudio(self._gointeractroot, "close_block")
 
-	arg_8_0.rootClick:AddClickListener(arg_8_0.onClickRoot, arg_8_0)
-	gohelper.setActive(arg_8_0._gointeractitem, false)
-	gohelper.setActive(arg_8_0._gointeractroot, false)
-	gohelper.setActive(arg_8_0.goRewardItem, false)
+	self.rootClick:AddClickListener(self.onClickRoot, self)
+	gohelper.setActive(self._gointeractitem, false)
+	gohelper.setActive(self._gointeractroot, false)
+	gohelper.setActive(self.goRewardItem, false)
 end
 
-function var_0_0.showInteractUI(arg_9_0, arg_9_1)
-	if arg_9_0._show then
+function VersionActivity2_1DungeonMapInteractView:showInteractUI(mapElement)
+	if self._show then
 		return
 	end
 
 	VersionActivity2_1DungeonModel.instance:setShowInteractView(true)
 
-	arg_9_0._mapElement = arg_9_1
-	arg_9_0._config = arg_9_0._mapElement._config
-	arg_9_0._elementGo = arg_9_0._mapElement._go
-	arg_9_0.isFinish = false
+	self._mapElement = mapElement
+	self._config = self._mapElement._config
+	self._elementGo = self._mapElement._go
+	self.isFinish = false
 
-	arg_9_0:show()
-	arg_9_0:refreshUI()
+	self:show()
+	self:refreshUI()
 end
 
-function var_0_0.show(arg_10_0)
-	if arg_10_0._show then
+function VersionActivity2_1DungeonMapInteractView:show()
+	if self._show then
 		return
 	end
 
-	arg_10_0._show = true
+	self._show = true
 
-	gohelper.setActive(arg_10_0._gointeractitem, true)
-	gohelper.setActive(arg_10_0._gointeractroot, true)
+	gohelper.setActive(self._gointeractitem, true)
+	gohelper.setActive(self._gointeractroot, true)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_warnopen)
 end
 
-function var_0_0.hide(arg_11_0)
-	if not arg_11_0._show then
+function VersionActivity2_1DungeonMapInteractView:hide()
+	if not self._show then
 		return
 	end
 
 	VersionActivity2_1DungeonModel.instance:setShowInteractView(nil)
 
-	arg_11_0._show = false
-	arg_11_0.dispatchMo = nil
+	self._show = false
+	self.dispatchMo = nil
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_warnclose)
-	gohelper.setActive(arg_11_0._gointeractitem, false)
-	gohelper.setActive(arg_11_0._gointeractroot, false)
-	TaskDispatcher.cancelTask(arg_11_0.everySecondCall, arg_11_0)
+	gohelper.setActive(self._gointeractitem, false)
+	gohelper.setActive(self._gointeractroot, false)
+	TaskDispatcher.cancelTask(self.everySecondCall, self)
 	VersionActivity2_1DungeonController.instance:dispatchEvent(VersionActivity2_1DungeonEvent.OnHideInteractUI)
 end
 
-function var_0_0.refreshUI(arg_12_0)
-	for iter_12_0, iter_12_1 in pairs(arg_12_0.type2goDict) do
-		gohelper.setActive(iter_12_1, iter_12_0 == arg_12_0._config.type)
+function VersionActivity2_1DungeonMapInteractView:refreshUI()
+	for type, go in pairs(self.type2goDict) do
+		gohelper.setActive(go, type == self._config.type)
 	end
 
-	arg_12_0._txttitle.text = arg_12_0._config.title
+	self._txttitle.text = self._config.title
 
-	local var_12_0 = arg_12_0._handleTypeMap[arg_12_0._config.type]
+	local handleFunc = self._handleTypeMap[self._config.type]
 
-	if var_12_0 then
-		var_12_0(arg_12_0)
+	if handleFunc then
+		handleFunc(self)
 	else
 		logError("element type undefined!")
 	end
 
-	arg_12_0:refreshRewards()
+	self:refreshRewards()
 end
 
-function var_0_0.refreshRewards(arg_13_0)
-	local var_13_0 = arg_13_0._config.retroReward
+function VersionActivity2_1DungeonMapInteractView:refreshRewards()
+	local rewardStr = self._config.retroReward
 
-	if string.nilorempty(var_13_0) then
-		gohelper.setActive(arg_13_0.goRewardContainer, false)
+	if string.nilorempty(rewardStr) then
+		gohelper.setActive(self.goRewardContainer, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_13_0.goRewardContainer, true)
+	gohelper.setActive(self.goRewardContainer, true)
 
-	local var_13_1 = GameUtil.splitString2(var_13_0, true)
+	local rewardList = GameUtil.splitString2(rewardStr, true)
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_1) do
-		local var_13_2 = arg_13_0.rewardItemList[iter_13_0]
+	for index, reward in ipairs(rewardList) do
+		local rewardItem = self.rewardItemList[index]
 
-		if not var_13_2 then
-			var_13_2 = arg_13_0:createRewardItem()
+		if not rewardItem then
+			rewardItem = self:createRewardItem()
 
-			table.insert(arg_13_0.rewardItemList, var_13_2)
+			table.insert(self.rewardItemList, rewardItem)
 		end
 
-		gohelper.setActive(var_13_2.go, true)
-		var_13_2.icon:isShowCount(false)
-		var_13_2.icon:setMOValue(iter_13_1[1], iter_13_1[2], iter_13_1[3])
+		gohelper.setActive(rewardItem.go, true)
+		rewardItem.icon:isShowCount(false)
+		rewardItem.icon:setMOValue(reward[1], reward[2], reward[3])
 
-		var_13_2.txtCount.text = iter_13_1[3]
+		rewardItem.txtCount.text = reward[3]
 	end
 
-	for iter_13_2 = #var_13_1 + 1, #arg_13_0.rewardItemList do
-		gohelper.setActive(arg_13_0.rewardItemList[iter_13_2].go, false)
+	for i = #rewardList + 1, #self.rewardItemList do
+		gohelper.setActive(self.rewardItemList[i].go, false)
 	end
 end
 
-function var_0_0.createRewardItem(arg_14_0)
-	local var_14_0 = arg_14_0:getUserDataTb_()
+function VersionActivity2_1DungeonMapInteractView:createRewardItem()
+	local rewardItem = self:getUserDataTb_()
 
-	var_14_0.go = gohelper.cloneInPlace(arg_14_0.goRewardItem)
-	var_14_0.goIcon = gohelper.findChild(var_14_0.go, "itemicon")
-	var_14_0.goCount = gohelper.findChild(var_14_0.go, "countbg")
-	var_14_0.txtCount = gohelper.findChildText(var_14_0.go, "countbg/count")
-	var_14_0.goRare = gohelper.findChild(var_14_0.go, "rare")
-	var_14_0.icon = IconMgr.instance:getCommonPropItemIcon(var_14_0.goIcon)
+	rewardItem.go = gohelper.cloneInPlace(self.goRewardItem)
+	rewardItem.goIcon = gohelper.findChild(rewardItem.go, "itemicon")
+	rewardItem.goCount = gohelper.findChild(rewardItem.go, "countbg")
+	rewardItem.txtCount = gohelper.findChildText(rewardItem.go, "countbg/count")
+	rewardItem.goRare = gohelper.findChild(rewardItem.go, "rare")
+	rewardItem.icon = IconMgr.instance:getCommonPropItemIcon(rewardItem.goIcon)
 
-	gohelper.setActive(var_14_0.goRare, false)
+	gohelper.setActive(rewardItem.goRare, false)
 
-	return var_14_0
+	return rewardItem
 end
 
-function var_0_0.refreshNoneUI(arg_15_0)
-	arg_15_0.txtNone.text = arg_15_0._config.acceptText
-	arg_15_0._txtdesc.text = arg_15_0._config.desc
+function VersionActivity2_1DungeonMapInteractView:refreshNoneUI()
+	self.txtNone.text = self._config.acceptText
+	self._txtdesc.text = self._config.desc
 
-	arg_15_0:setIsChat(false)
+	self:setIsChat(false)
 end
 
-function var_0_0.setFinishText(arg_16_0)
-	local var_16_0 = arg_16_0._config.finishText
+function VersionActivity2_1DungeonMapInteractView:setFinishText()
+	local finishText = self._config.finishText
 
-	if string.nilorempty(var_16_0) then
-		arg_16_0._txtdesc.text = arg_16_0._config.desc
+	if string.nilorempty(finishText) then
+		self._txtdesc.text = self._config.desc
 	else
-		arg_16_0._txtdesc.text = var_16_0
+		self._txtdesc.text = finishText
 	end
 end
 
-function var_0_0.refreshFightUI(arg_17_0)
-	local var_17_0 = tonumber(arg_17_0._config.param)
+function VersionActivity2_1DungeonMapInteractView:refreshFightUI()
+	local episodeId = tonumber(self._config.param)
 
-	arg_17_0.isFinish = DungeonModel.instance:hasPassLevel(var_17_0)
+	self.isFinish = DungeonModel.instance:hasPassLevel(episodeId)
 
-	if arg_17_0.isFinish then
-		arg_17_0.txtFight.text = luaLang("p_v1a5_news_order_finish")
+	if self.isFinish then
+		self.txtFight.text = luaLang("p_v1a5_news_order_finish")
 
-		arg_17_0:setFinishText()
+		self:setFinishText()
 	else
-		arg_17_0.txtFight.text = arg_17_0._config.acceptText
-		arg_17_0._txtdesc.text = arg_17_0._config.desc
+		self.txtFight.text = self._config.acceptText
+		self._txtdesc.text = self._config.desc
 	end
 
-	arg_17_0:setIsChat(false)
+	self:setIsChat(false)
 end
 
-function var_0_0.refreshDialogueUI(arg_18_0)
-	arg_18_0.dialogueId = tonumber(arg_18_0._config.param)
-	arg_18_0.isFinish = DialogueModel.instance:isFinishDialogue(arg_18_0.dialogueId)
+function VersionActivity2_1DungeonMapInteractView:refreshDialogueUI()
+	self.dialogueId = tonumber(self._config.param)
+	self.isFinish = DialogueModel.instance:isFinishDialogue(self.dialogueId)
 
-	if arg_18_0.isFinish then
-		arg_18_0.txtDialogue.text = luaLang("p_v1a5_news_order_finish")
+	if self.isFinish then
+		self.txtDialogue.text = luaLang("p_v1a5_news_order_finish")
 
-		arg_18_0:setFinishText()
+		self:setFinishText()
 	else
-		arg_18_0.txtDialogue.text = arg_18_0._config.acceptText
-		arg_18_0._txtdesc.text = arg_18_0._config.desc
+		self.txtDialogue.text = self._config.acceptText
+		self._txtdesc.text = self._config.desc
 	end
 
-	arg_18_0:setIsChat(false)
+	self:setIsChat(false)
 end
 
-function var_0_0.refreshTalkUI(arg_19_0)
-	arg_19_0._sectionStack = {}
-	arg_19_0._dialogId = tonumber(arg_19_0._config.param)
+function VersionActivity2_1DungeonMapInteractView:refreshTalkUI()
+	self._sectionStack = {}
+	self._dialogId = tonumber(self._config.param)
 
-	arg_19_0:_playSection(0)
+	self:_playSection(0)
 end
 
-function var_0_0._playSection(arg_20_0, arg_20_1, arg_20_2)
-	arg_20_0:_setSectionData(arg_20_1, arg_20_2)
-	arg_20_0:_playNextDialog()
+function VersionActivity2_1DungeonMapInteractView:_playSection(sectionId, dialogIndex)
+	self:_setSectionData(sectionId, dialogIndex)
+	self:_playNextDialog()
 end
 
-function var_0_0._setSectionData(arg_21_0, arg_21_1, arg_21_2)
-	arg_21_0._sectionList = DungeonConfig.instance:getDialog(arg_21_0._dialogId, arg_21_1)
-	arg_21_0._dialogIndex = arg_21_2 or 1
-	arg_21_0._sectionId = arg_21_1
+function VersionActivity2_1DungeonMapInteractView:_setSectionData(sectionId, dialogIndex)
+	self._sectionList = DungeonConfig.instance:getDialog(self._dialogId, sectionId)
+	self._dialogIndex = dialogIndex or 1
+	self._sectionId = sectionId
 end
 
-function var_0_0._playNextDialog(arg_22_0)
-	local var_22_0 = arg_22_0._sectionList[arg_22_0._dialogIndex]
+function VersionActivity2_1DungeonMapInteractView:_playNextDialog()
+	local config = self._sectionList[self._dialogIndex]
 
-	arg_22_0._dialogIndex = arg_22_0._dialogIndex + 1
+	self._dialogIndex = self._dialogIndex + 1
 
-	if var_22_0.type == "dialog" then
-		arg_22_0:_showDialog("dialog", var_22_0.content, var_22_0.speaker, var_22_0.audio)
+	if config.type == "dialog" then
+		self:_showDialog("dialog", config.content, config.speaker, config.audio)
 	end
 
-	if #arg_22_0._sectionStack > 0 and #arg_22_0._sectionList < arg_22_0._dialogIndex then
-		local var_22_1 = table.remove(arg_22_0._sectionStack)
+	if #self._sectionStack > 0 and #self._sectionList < self._dialogIndex then
+		local prevSectionInfo = table.remove(self._sectionStack)
 
-		arg_22_0:_setSectionData(var_22_1[1], var_22_1[2])
+		self:_setSectionData(prevSectionInfo[1], prevSectionInfo[2])
 	end
 
-	local var_22_2 = false
-	local var_22_3 = arg_22_0._sectionList[arg_22_0._dialogIndex]
+	local showOption = false
+	local nextConfig = self._sectionList[self._dialogIndex]
 
-	if var_22_3 and var_22_3.type == "options" then
-		arg_22_0._dialogIndex = arg_22_0._dialogIndex + 1
+	if nextConfig and nextConfig.type == "options" then
+		self._dialogIndex = self._dialogIndex + 1
 
-		for iter_22_0, iter_22_1 in pairs(arg_22_0._optionBtnList) do
-			gohelper.setActive(iter_22_1[1], false)
+		for _, v in pairs(self._optionBtnList) do
+			gohelper.setActive(v[1], false)
 		end
 
-		local var_22_4 = string.split(var_22_3.content, "#")
-		local var_22_5 = string.split(var_22_3.param, "#")
+		local optionList = string.split(nextConfig.content, "#")
+		local sectionIdList = string.split(nextConfig.param, "#")
 
-		for iter_22_2, iter_22_3 in ipairs(var_22_4) do
-			arg_22_0:_addDialogOption(iter_22_2, var_22_5[iter_22_2], iter_22_3)
+		for i, v in ipairs(optionList) do
+			self:_addDialogOption(i, sectionIdList[i], v)
 		end
 
-		var_22_2 = true
+		showOption = true
 	end
 
-	local var_22_6 = not var_22_3 or var_22_3.type ~= "dialogend"
+	local hasNext = not nextConfig or nextConfig.type ~= "dialogend"
 
-	arg_22_0:_refreshDialogBtnState(var_22_2, var_22_6)
+	self:_refreshDialogBtnState(showOption, hasNext)
 end
 
-function var_0_0._showDialog(arg_23_0, arg_23_1, arg_23_2, arg_23_3, arg_23_4)
-	DungeonMapModel.instance:addDialog(arg_23_1, arg_23_2, arg_23_3, arg_23_4)
-	gohelper.setActive(arg_23_0._gochatusericon, not arg_23_3)
+function VersionActivity2_1DungeonMapInteractView:_showDialog(type, text, speaker, audio)
+	DungeonMapModel.instance:addDialog(type, text, speaker, audio)
+	gohelper.setActive(self._gochatusericon, not speaker)
 
-	local var_23_0 = not string.nilorempty(arg_23_3)
+	local hasSpeaker = not string.nilorempty(speaker)
 
-	arg_23_0._txtchatname.text = var_23_0 and arg_23_3 .. ":" or ""
-	arg_23_0._txtchatdesc.text = arg_23_2
+	self._txtchatname.text = hasSpeaker and speaker .. ":" or ""
+	self._txtchatdesc.text = text
 
-	arg_23_0:setIsChat(true)
+	self:setIsChat(true)
 end
 
-function var_0_0.setIsChat(arg_24_0, arg_24_1)
-	gohelper.setActive(arg_24_0._godesc, not arg_24_1)
-	gohelper.setActive(arg_24_0._gochat, arg_24_1)
+function VersionActivity2_1DungeonMapInteractView:setIsChat(isChat)
+	gohelper.setActive(self._godesc, not isChat)
+	gohelper.setActive(self._gochat, isChat)
 end
 
-function var_0_0._addDialogOption(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
-	local var_25_0 = arg_25_0._optionBtnList[arg_25_1] and arg_25_0._optionBtnList[arg_25_1][1] or gohelper.cloneInPlace(arg_25_0._gotalkitem)
+function VersionActivity2_1DungeonMapInteractView:_addDialogOption(index, sectionId, text)
+	local optionGo = self._optionBtnList[index] and self._optionBtnList[index][1] or gohelper.cloneInPlace(self._gotalkitem)
 
-	gohelper.setActive(var_25_0, true)
+	gohelper.setActive(optionGo, true)
 
-	gohelper.findChildText(var_25_0, "txt_talkitem").text = arg_25_3
+	local optionTxt = gohelper.findChildText(optionGo, "txt_talkitem")
 
-	local var_25_1 = gohelper.findChildButtonWithAudio(var_25_0, "btn_talkitem")
+	optionTxt.text = text
 
-	var_25_1:AddClickListener(arg_25_0._onOptionClick, arg_25_0, {
-		arg_25_2,
-		arg_25_3
+	local btnOption = gohelper.findChildButtonWithAudio(optionGo, "btn_talkitem")
+
+	btnOption:AddClickListener(self._onOptionClick, self, {
+		sectionId,
+		text
 	})
 
-	if not arg_25_0._optionBtnList[arg_25_1] then
-		local var_25_2 = arg_25_0:getUserDataTb_()
+	if not self._optionBtnList[index] then
+		local btnItem = self:getUserDataTb_()
 
-		var_25_2[1] = var_25_0
-		var_25_2[2] = var_25_1
-		arg_25_0._optionBtnList[arg_25_1] = var_25_2
+		btnItem[1] = optionGo
+		btnItem[2] = btnOption
+		self._optionBtnList[index] = btnItem
 	end
 end
 
-function var_0_0._onOptionClick(arg_26_0, arg_26_1)
-	local var_26_0 = arg_26_1[1]
-	local var_26_1 = string.format("<color=#c95318>\"%s\"</color>", arg_26_1[2])
+function VersionActivity2_1DungeonMapInteractView:_onOptionClick(param)
+	local sectionId = param[1]
+	local text = string.format("<color=#c95318>\"%s\"</color>", param[2])
 
-	arg_26_0:_showDialog("option", var_26_1)
+	self:_showDialog("option", text)
 
-	if #arg_26_0._sectionList >= arg_26_0._dialogIndex then
-		table.insert(arg_26_0._sectionStack, {
-			arg_26_0._sectionId,
-			arg_26_0._dialogIndex
+	if #self._sectionList >= self._dialogIndex then
+		table.insert(self._sectionStack, {
+			self._sectionId,
+			self._dialogIndex
 		})
 	end
 
-	DungeonMapModel.instance:addDialogId(var_26_0)
-	arg_26_0:_playSection(var_26_0)
+	DungeonMapModel.instance:addDialogId(sectionId)
+	self:_playSection(sectionId)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuemesh)
 end
 
-function var_0_0._refreshDialogBtnState(arg_27_0, arg_27_1, arg_27_2)
-	gohelper.setActive(arg_27_0._gooptions, arg_27_1)
+function VersionActivity2_1DungeonMapInteractView:_refreshDialogBtnState(showOption, hasNext)
+	gohelper.setActive(self._gooptions, showOption)
 
-	if arg_27_1 then
+	if showOption then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuedisappear)
-		gohelper.setActive(arg_27_0._gonext, false)
-		gohelper.setActive(arg_27_0._gofinishtalk, false)
+		gohelper.setActive(self._gonext, false)
+		gohelper.setActive(self._gofinishtalk, false)
 
-		arg_27_0._curBtnGo = arg_27_0._gooptions
+		self._curBtnGo = self._gooptions
 
 		return
 	end
 
-	arg_27_2 = arg_27_2 and (#arg_27_0._sectionStack > 0 or #arg_27_0._sectionList >= arg_27_0._dialogIndex)
+	hasNext = hasNext and (#self._sectionStack > 0 or #self._sectionList >= self._dialogIndex)
 
-	if arg_27_2 then
-		arg_27_0._curBtnGo = arg_27_0._gonext
+	if hasNext then
+		self._curBtnGo = self._gonext
 
-		gohelper.setActive(arg_27_0._gonext, arg_27_2)
+		gohelper.setActive(self._gonext, hasNext)
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continueappear)
 	else
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuedisappear)
 
-		arg_27_0._curBtnGo = arg_27_0._gofinishtalk
+		self._curBtnGo = self._gofinishtalk
 	end
 
-	gohelper.setActive(arg_27_0._gonext, arg_27_2)
-	gohelper.setActive(arg_27_0._gofinishtalk, not arg_27_2)
+	gohelper.setActive(self._gonext, hasNext)
+	gohelper.setActive(self._gofinishtalk, not hasNext)
 end
 
-function var_0_0.onClickRoot(arg_28_0)
-	arg_28_0:hide()
+function VersionActivity2_1DungeonMapInteractView:onClickRoot()
+	self:hide()
 end
 
-function var_0_0._btncloseOnClick(arg_29_0)
-	arg_29_0:hide()
+function VersionActivity2_1DungeonMapInteractView:_btncloseOnClick()
+	self:hide()
 end
 
-function var_0_0._onClickNoneBtn(arg_30_0)
-	arg_30_0:hide()
+function VersionActivity2_1DungeonMapInteractView:_onClickNoneBtn()
+	self:hide()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuemesh)
-	arg_30_0:finishElement()
+	self:finishElement()
 end
 
-function var_0_0._onClickFightBtn(arg_31_0)
-	arg_31_0:hide()
+function VersionActivity2_1DungeonMapInteractView:_onClickFightBtn()
+	self:hide()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuemesh)
 
-	if arg_31_0.isFinish then
-		arg_31_0:finishElement()
+	if self.isFinish then
+		self:finishElement()
 
 		return
 	end
 
-	local var_31_0 = tonumber(arg_31_0._config.param)
+	local episodeId = tonumber(self._config.param)
 
-	DungeonModel.instance.curLookEpisodeId = var_31_0
+	DungeonModel.instance.curLookEpisodeId = episodeId
 
-	local var_31_1 = DungeonConfig.instance:getEpisodeCO(var_31_0)
+	local config = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-	if not var_31_1 then
-		logError("episode config not exist , episodeId : " .. tostring(var_31_0))
-
-		return
-	end
-
-	VersionActivity2_1DungeonModel.instance:setLastEpisodeId(arg_31_0.activityDungeonMo.episodeId)
-	DungeonFightController.instance:enterFight(var_31_1.chapterId, var_31_0)
-end
-
-function var_0_0._onClickEnterDialogueBtn(arg_32_0)
-	if arg_32_0.isFinish then
-		arg_32_0:hide()
-		arg_32_0:finishElement()
+	if not config then
+		logError("episode config not exist , episodeId : " .. tostring(episodeId))
 
 		return
 	end
 
-	DialogueController.instance:enterDialogue(arg_32_0.dialogueId)
+	VersionActivity2_1DungeonModel.instance:setLastEpisodeId(self.activityDungeonMo.episodeId)
+	DungeonFightController.instance:enterFight(config.chapterId, episodeId)
 end
 
-function var_0_0.finishElement(arg_33_0, arg_33_1)
-	local var_33_0 = arg_33_0._config.id
+function VersionActivity2_1DungeonMapInteractView:_onClickEnterDialogueBtn()
+	if self.isFinish then
+		self:hide()
+		self:finishElement()
 
-	DungeonMapModel.instance:addFinishedElement(var_33_0)
-	DungeonMapModel.instance:removeElement(var_33_0)
-	DungeonRpc.instance:sendMapElementRequest(var_33_0, arg_33_1, arg_33_0.refreshElement, arg_33_0)
+		return
+	end
+
+	DialogueController.instance:enterDialogue(self.dialogueId)
 end
 
-function var_0_0.refreshElement(arg_34_0)
+function VersionActivity2_1DungeonMapInteractView:finishElement(dialogIds)
+	local elementId = self._config.id
+
+	DungeonMapModel.instance:addFinishedElement(elementId)
+	DungeonMapModel.instance:removeElement(elementId)
+	DungeonRpc.instance:sendMapElementRequest(elementId, dialogIds, self.refreshElement, self)
+end
+
+function VersionActivity2_1DungeonMapInteractView:refreshElement()
 	return
 end
 
-function var_0_0._btnnextOnClick(arg_35_0)
-	arg_35_0:_playNextSectionOrDialog()
+function VersionActivity2_1DungeonMapInteractView:_btnnextOnClick()
+	self:_playNextSectionOrDialog()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuemesh)
 end
 
-function var_0_0._playNextSectionOrDialog(arg_36_0)
-	if #arg_36_0._sectionList >= arg_36_0._dialogIndex then
-		arg_36_0:_playNextDialog()
+function VersionActivity2_1DungeonMapInteractView:_playNextSectionOrDialog()
+	if #self._sectionList >= self._dialogIndex then
+		self:_playNextDialog()
 
 		return
 	end
 
-	local var_36_0 = table.remove(arg_36_0._sectionStack)
+	local prevSectionInfo = table.remove(self._sectionStack)
 
-	if not var_36_0 then
+	if not prevSectionInfo then
 		return
 	end
 
-	arg_36_0:_playSection(var_36_0[1], var_36_0[2])
+	self:_playSection(prevSectionInfo[1], prevSectionInfo[2])
 end
 
-function var_0_0._btnfinishtalkOnClick(arg_37_0)
-	arg_37_0:hide()
+function VersionActivity2_1DungeonMapInteractView:_btnfinishtalkOnClick()
+	self:hide()
 
-	local var_37_0 = DungeonMapModel.instance:getDialogId()
+	local dialogIds = DungeonMapModel.instance:getDialogId()
 
-	arg_37_0:finishElement(var_37_0)
+	self:finishElement(dialogIds)
 	DungeonMapModel.instance:clearDialogId()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuemesh)
 end
 
-function var_0_0.onDialogueInfoChange(arg_38_0, arg_38_1)
-	if arg_38_1 == arg_38_0.dialogueId then
-		arg_38_0:refreshDialogueUI()
+function VersionActivity2_1DungeonMapInteractView:onDialogueInfoChange(dialogueId)
+	if dialogueId == self.dialogueId then
+		self:refreshDialogueUI()
 	end
 end
 
-function var_0_0.onCloseViewFinishCall(arg_39_0, arg_39_1)
-	if arg_39_1 == ViewName.DialogueView and arg_39_0.isFinish then
-		arg_39_0:refreshUI()
+function VersionActivity2_1DungeonMapInteractView:onCloseViewFinishCall(viewName)
+	if viewName == ViewName.DialogueView and self.isFinish then
+		self:refreshUI()
 	end
 end
 
-function var_0_0.beforeJump(arg_40_0)
-	arg_40_0:hide()
+function VersionActivity2_1DungeonMapInteractView:beforeJump()
+	self:hide()
 end
 
-function var_0_0.onClose(arg_41_0)
+function VersionActivity2_1DungeonMapInteractView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_42_0)
-	arg_42_0.rootClick:RemoveClickListener()
+function VersionActivity2_1DungeonMapInteractView:onDestroyView()
+	self.rootClick:RemoveClickListener()
 end
 
-return var_0_0
+return VersionActivity2_1DungeonMapInteractView

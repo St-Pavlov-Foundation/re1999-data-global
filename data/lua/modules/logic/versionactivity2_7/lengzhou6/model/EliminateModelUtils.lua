@@ -1,73 +1,75 @@
-﻿module("modules.logic.versionactivity2_7.lengzhou6.model.EliminateModelUtils", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/lengzhou6/model/EliminateModelUtils.lua
 
-local var_0_0 = class("EliminateModelUtils")
+module("modules.logic.versionactivity2_7.lengzhou6.model.EliminateModelUtils", package.seeall)
 
-function var_0_0.mergePointArray(arg_1_0, arg_1_1)
-	local var_1_0 = {}
+local EliminateModelUtils = class("EliminateModelUtils")
 
-	for iter_1_0 = 1, #arg_1_0 do
-		table.insert(var_1_0, arg_1_0[iter_1_0])
+function EliminateModelUtils.mergePointArray(rowPoints, colPoints)
+	local result = {}
+
+	for i = 1, #rowPoints do
+		table.insert(result, rowPoints[i])
 	end
 
-	local var_1_1 = {}
+	local filteredColPoints = {}
 
-	for iter_1_1 = 1, #arg_1_1 do
-		local var_1_2 = arg_1_1[iter_1_1]
-		local var_1_3 = false
+	for i = 1, #colPoints do
+		local colEle = colPoints[i]
+		local isRepeat = false
 
-		for iter_1_2 = 1, #var_1_0 do
-			local var_1_4 = var_1_0[iter_1_2]
+		for j = 1, #result do
+			local rowEle = result[j]
 
-			if var_1_2.x == var_1_4.x and var_1_2.y == var_1_4.y then
-				var_1_3 = true
+			if colEle.x == rowEle.x and colEle.y == rowEle.y then
+				isRepeat = true
 
 				break
 			end
 		end
 
-		if not var_1_3 then
-			table.insert(var_1_1, var_1_2)
+		if not isRepeat then
+			table.insert(filteredColPoints, colEle)
 		end
 	end
 
-	for iter_1_3 = 1, #var_1_1 do
-		table.insert(var_1_0, var_1_1[iter_1_3])
+	for i = 1, #filteredColPoints do
+		table.insert(result, filteredColPoints[i])
 	end
 
-	return var_1_0
+	return result
 end
 
-function var_0_0.exclusivePoint(arg_2_0, arg_2_1)
-	local var_2_0 = {}
+function EliminateModelUtils.exclusivePoint(points, exclusivePoint)
+	local result = {}
 
-	for iter_2_0 = 1, #arg_2_0 do
-		local var_2_1 = arg_2_0[iter_2_0]
+	for i = 1, #points do
+		local point = points[i]
 
-		if var_2_1.x ~= arg_2_1.x or var_2_1.y ~= arg_2_1.y then
-			table.insert(var_2_0, var_2_1)
+		if point.x ~= exclusivePoint.x or point.y ~= exclusivePoint.y then
+			table.insert(result, point)
 		end
 	end
 
-	return var_2_0
+	return result
 end
 
-function var_0_0.getRandomNumberByWeight(arg_3_0)
-	local var_3_0 = 0
+function EliminateModelUtils.getRandomNumberByWeight(weights)
+	local totalWeight = 0
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0) do
-		var_3_0 = var_3_0 + iter_3_1
+	for _, weight in ipairs(weights) do
+		totalWeight = totalWeight + weight
 	end
 
-	local var_3_1 = math.random() * var_3_0
-	local var_3_2 = 0
+	local randomWeight = math.random() * totalWeight
+	local cumulativeWeight = 0
 
-	for iter_3_2, iter_3_3 in ipairs(arg_3_0) do
-		var_3_2 = var_3_2 + iter_3_3
+	for i, weight in ipairs(weights) do
+		cumulativeWeight = cumulativeWeight + weight
 
-		if var_3_1 <= var_3_2 then
-			return iter_3_2
+		if randomWeight <= cumulativeWeight then
+			return i
 		end
 	end
 end
 
-return var_0_0
+return EliminateModelUtils

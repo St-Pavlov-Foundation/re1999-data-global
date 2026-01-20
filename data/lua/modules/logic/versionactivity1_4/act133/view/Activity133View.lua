@@ -1,401 +1,405 @@
-﻿module("modules.logic.versionactivity1_4.act133.view.Activity133View", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act133/view/Activity133View.lua
 
-local var_0_0 = class("Activity133View", BaseView)
+module("modules.logic.versionactivity1_4.act133.view.Activity133View", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
-	arg_1_0._gotopright = gohelper.findChild(arg_1_0.viewGO, "#go_topright")
-	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_reward/Viewport/Content/#go_item")
-	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "#btn_obtain/#go_reddot")
-	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg")
-	arg_1_0._gocheckingmask = gohelper.findChild(arg_1_0.viewGO, "checkingmask")
-	arg_1_0._simagecheckingmask = gohelper.findChildSingleImage(arg_1_0.viewGO, "checkingmask/mask/#simage_checkingmask")
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "checkingmask/detailbg/#txt_title")
-	arg_1_0._txtdetail = gohelper.findChildText(arg_1_0.viewGO, "checkingmask/detailbg/scroll_view/Viewport/Content/#txt_detail")
-	arg_1_0._simagecompleted = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_completed")
-	arg_1_0._com_animator = arg_1_0._simagecompleted.gameObject:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._scrollview = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_view")
-	arg_1_0._imagetitle = gohelper.findChildImage(arg_1_0.viewGO, "#image_title")
-	arg_1_0._txtremaintime = gohelper.findChildText(arg_1_0.viewGO, "#image_title/remaintime/bg/#txt_remaintime")
-	arg_1_0._txtschedule = gohelper.findChildText(arg_1_0.viewGO, "schedule/bg/txt_scheduletitle/#txt_schedule")
-	arg_1_0._imagefill = gohelper.findChildImage(arg_1_0.viewGO, "schedule/fill/#go_fill")
-	arg_1_0._btnobtain = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_obtain")
-	arg_1_0._unlockAniTime = 0.6
-	arg_1_0.tweenDuration = 0.6
-	arg_1_0._completedAnitime = 1
-	arg_1_0._itemList = {}
+local Activity133View = class("Activity133View", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Activity133View:onInitView()
+	self._gotopleft = gohelper.findChild(self.viewGO, "#go_topleft")
+	self._gotopright = gohelper.findChild(self.viewGO, "#go_topright")
+	self._goitem = gohelper.findChild(self.viewGO, "#scroll_reward/Viewport/Content/#go_item")
+	self._goreddot = gohelper.findChild(self.viewGO, "#btn_obtain/#go_reddot")
+	self._simagefullbg = gohelper.findChildSingleImage(self.viewGO, "#simage_fullbg")
+	self._gocheckingmask = gohelper.findChild(self.viewGO, "checkingmask")
+	self._simagecheckingmask = gohelper.findChildSingleImage(self.viewGO, "checkingmask/mask/#simage_checkingmask")
+	self._txttitle = gohelper.findChildText(self.viewGO, "checkingmask/detailbg/#txt_title")
+	self._txtdetail = gohelper.findChildText(self.viewGO, "checkingmask/detailbg/scroll_view/Viewport/Content/#txt_detail")
+	self._simagecompleted = gohelper.findChildSingleImage(self.viewGO, "#simage_completed")
+	self._com_animator = self._simagecompleted.gameObject:GetComponent(typeof(UnityEngine.Animator))
+	self._scrollview = gohelper.findChildScrollRect(self.viewGO, "#scroll_view")
+	self._imagetitle = gohelper.findChildImage(self.viewGO, "#image_title")
+	self._txtremaintime = gohelper.findChildText(self.viewGO, "#image_title/remaintime/bg/#txt_remaintime")
+	self._txtschedule = gohelper.findChildText(self.viewGO, "schedule/bg/txt_scheduletitle/#txt_schedule")
+	self._imagefill = gohelper.findChildImage(self.viewGO, "schedule/fill/#go_fill")
+	self._btnobtain = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_obtain")
+	self._unlockAniTime = 0.6
+	self.tweenDuration = 0.6
+	self._completedAnitime = 1
+	self._itemList = {}
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnobtain:AddClickListener(arg_2_0._btnobtainOnClick, arg_2_0)
+function Activity133View:addEvents()
+	self._btnobtain:AddClickListener(self._btnobtainOnClick, self)
 
-	arg_2_0.maskClick = SLFramework.UGUI.UIClickListener.Get(arg_2_0._simagecheckingmask.gameObject)
+	self.maskClick = SLFramework.UGUI.UIClickListener.Get(self._simagecheckingmask.gameObject)
 
-	arg_2_0.maskClick:AddClickListener(arg_2_0._onClickMask, arg_2_0)
-	arg_2_0:addEventCb(Activity133Controller.instance, Activity133Event.OnSelectCheckNote, arg_2_0._checkNote, arg_2_0)
-	arg_2_0:addEventCb(Activity133Controller.instance, Activity133Event.OnUpdateInfo, arg_2_0.onUpdateParam, arg_2_0)
-	arg_2_0:addEventCb(Activity133Controller.instance, Activity133Event.OnGetBonus, arg_2_0._onGetBouns, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0._onCloseViewFinish, arg_2_0)
+	self.maskClick:AddClickListener(self._onClickMask, self)
+	self:addEventCb(Activity133Controller.instance, Activity133Event.OnSelectCheckNote, self._checkNote, self)
+	self:addEventCb(Activity133Controller.instance, Activity133Event.OnUpdateInfo, self.onUpdateParam, self)
+	self:addEventCb(Activity133Controller.instance, Activity133Event.OnGetBonus, self._onGetBouns, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseViewFinish, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnobtain:RemoveClickListener()
-	arg_3_0.maskClick:RemoveClickListener()
-	arg_3_0:removeEventCb(Activity133Controller.instance, Activity133Event.OnSelectCheckNote, arg_3_0._checkNote, arg_3_0)
-	arg_3_0:removeEventCb(Activity133Controller.instance, Activity133Event.OnUpdateInfo, arg_3_0.onUpdateParam, arg_3_0)
-	arg_3_0:removeEventCb(Activity133Controller.instance, Activity133Event.OnGetBonus, arg_3_0._onGetBouns, arg_3_0)
-	arg_3_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0._onCloseViewFinish, arg_3_0)
+function Activity133View:removeEvents()
+	self._btnobtain:RemoveClickListener()
+	self.maskClick:RemoveClickListener()
+	self:removeEventCb(Activity133Controller.instance, Activity133Event.OnSelectCheckNote, self._checkNote, self)
+	self:removeEventCb(Activity133Controller.instance, Activity133Event.OnUpdateInfo, self.onUpdateParam, self)
+	self:removeEventCb(Activity133Controller.instance, Activity133Event.OnGetBonus, self._onGetBouns, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseViewFinish, self)
 end
 
-function var_0_0._btnobtainOnClick(arg_4_0)
+function Activity133View:_btnobtainOnClick()
 	Activity133Controller.instance:openActivity133TaskView({
-		arg_4_0.actId
+		self.actId
 	})
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._simagefullbg:LoadImage(ResUrl.getActivity133Icon("v1a4_shiprepair_fullbg_0"))
-	arg_5_0._simagecheckingmask:LoadImage(ResUrl.getActivity133Icon("v1a4_shiprepair_fullbg_mask"))
+function Activity133View:_editableInitView()
+	self._simagefullbg:LoadImage(ResUrl.getActivity133Icon("v1a4_shiprepair_fullbg_0"))
+	self._simagecheckingmask:LoadImage(ResUrl.getActivity133Icon("v1a4_shiprepair_fullbg_mask"))
 
-	arg_5_0._focusmaskopen = false
-	arg_5_0._csView = arg_5_0.viewContainer._scrollview
-	arg_5_0._fixitemList = {}
-	arg_5_0.needfixnum = Activity133Config.instance:getNeedFixNum()
+	self._focusmaskopen = false
+	self._csView = self.viewContainer._scrollview
+	self._fixitemList = {}
+	self.needfixnum = Activity133Config.instance:getNeedFixNum()
 
-	for iter_5_0 = 1, arg_5_0.needfixnum do
-		local var_5_0 = arg_5_0:getUserDataTb_()
+	for i = 1, self.needfixnum do
+		local fixitem = self:getUserDataTb_()
 
-		var_5_0.go = gohelper.findChild(arg_5_0.viewGO, "#simage_fullbg/" .. iter_5_0)
+		fixitem.go = gohelper.findChild(self.viewGO, "#simage_fullbg/" .. i)
 
-		gohelper.setActive(var_5_0.go, false)
+		gohelper.setActive(fixitem.go, false)
 
-		var_5_0.hadfix = false
-		var_5_0.id = iter_5_0
+		fixitem.hadfix = false
+		fixitem.id = i
 
-		if var_5_0.go then
-			table.insert(arg_5_0._fixitemList, var_5_0)
+		if fixitem.go then
+			table.insert(self._fixitemList, fixitem)
 		end
 	end
 
-	local var_5_1 = Activity133Config.instance:getFinalBonus()
+	local finnalbonus = Activity133Config.instance:getFinalBonus()
 
-	arg_5_0.finalBonus = GameUtil.splitString2(var_5_1, true)
+	self.finalBonus = GameUtil.splitString2(finnalbonus, true)
 
-	for iter_5_1, iter_5_2 in ipairs(arg_5_0.finalBonus) do
-		local var_5_2 = arg_5_0._itemList[iter_5_1]
+	for i, value in ipairs(self.finalBonus) do
+		local item = self._itemList[i]
 
-		if not var_5_2 then
-			var_5_2 = arg_5_0:getUserDataTb_()
-			var_5_2.go = gohelper.cloneInPlace(arg_5_0._goitem)
+		if not item then
+			item = self:getUserDataTb_()
+			item.go = gohelper.cloneInPlace(self._goitem)
 
-			gohelper.setActive(var_5_2.go, true)
+			gohelper.setActive(item.go, true)
 
-			var_5_2.icon = IconMgr.instance:getCommonPropItemIcon(var_5_2.go)
-			var_5_2.goget = gohelper.findChild(var_5_2.go, "get")
+			item.icon = IconMgr.instance:getCommonPropItemIcon(item.go)
+			item.goget = gohelper.findChild(item.go, "get")
 
-			gohelper.setAsLastSibling(var_5_2.goget)
-			gohelper.setActive(var_5_2.goget, false)
-			table.insert(arg_5_0._itemList, var_5_2)
+			gohelper.setAsLastSibling(item.goget)
+			gohelper.setActive(item.goget, false)
+			table.insert(self._itemList, item)
 		end
 
-		var_5_2.icon:setMOValue(iter_5_2[1], iter_5_2[2], iter_5_2[3], nil, true)
-		var_5_2.icon:SetCountLocalY(45)
-		var_5_2.icon:SetCountBgHeight(30)
-		var_5_2.icon:setCountFontSize(36)
+		item.icon:setMOValue(value[1], value[2], value[3], nil, true)
+		item.icon:SetCountLocalY(45)
+		item.icon:SetCountBgHeight(30)
+		item.icon:setCountFontSize(36)
 	end
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
-	Activity133ListModel.instance:init(arg_6_0._scrollview.gameObject)
-	arg_6_0:_refreshView()
+function Activity133View:onUpdateParam()
+	Activity133ListModel.instance:init(self._scrollview.gameObject)
+	self:_refreshView()
 end
 
-function var_0_0._fixShip(arg_7_0, arg_7_1)
-	if arg_7_1 then
-		local var_7_0 = Activity133ListModel.instance:getList()
-		local var_7_1
+function Activity133View:_fixShip(id)
+	if id then
+		local molist = Activity133ListModel.instance:getList()
+		local iconid
 
-		for iter_7_0, iter_7_1 in pairs(var_7_0) do
-			if iter_7_1.id == arg_7_1 then
-				var_7_1 = iter_7_1.icon
+		for key, mo in pairs(molist) do
+			if mo.id == id then
+				iconid = mo.icon
 			end
 		end
 
-		local var_7_2 = arg_7_0._fixitemList[var_7_1]
+		local item = self._fixitemList[iconid]
 
-		if var_7_2 then
-			gohelper.setActive(var_7_2.go, true)
+		if item then
+			gohelper.setActive(item.go, true)
 
-			local var_7_3 = var_7_2.go:GetComponent(typeof(UnityEngine.Animator))
+			local animator = item.go:GetComponent(typeof(UnityEngine.Animator))
 
-			var_7_3.speed = 1
+			animator.speed = 1
 
-			var_7_3:Play(UIAnimationName.Open, 0, 0)
+			animator:Play(UIAnimationName.Open, 0, 0)
 			AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_light_up)
-			var_7_3:Update(0)
+			animator:Update(0)
 		end
 	end
 
-	arg_7_0:_refreshFixList()
+	self:_refreshFixList()
 end
 
-function var_0_0._refreshView(arg_8_0, arg_8_1)
-	if arg_8_1 then
-		arg_8_0:_refreshFixList()
-		arg_8_0:_checkFixNum()
+function Activity133View:_refreshView(state)
+	if state then
+		self:_refreshFixList()
+		self:_checkFixNum()
 	end
 
-	arg_8_0:_refreshRemainTime()
-	arg_8_0:_checkCompletedItem()
-	arg_8_0:_refreshRedDot()
+	self:_refreshRemainTime()
+	self:_checkCompletedItem()
+	self:_refreshRedDot()
 end
 
-function var_0_0._refreshFixList(arg_9_0)
-	local var_9_0 = Activity133ListModel.instance:getList()
+function Activity133View:_refreshFixList()
+	local molist = Activity133ListModel.instance:getList()
 
-	for iter_9_0, iter_9_1 in pairs(var_9_0) do
-		local var_9_1 = iter_9_1.icon
+	for i, mo in pairs(molist) do
+		local iconid = mo.icon
 
-		if iter_9_1:isReceived() then
-			gohelper.setActive(arg_9_0._fixitemList[var_9_1].go, true)
+		if mo:isReceived() then
+			gohelper.setActive(self._fixitemList[iconid].go, true)
 		else
-			gohelper.setActive(arg_9_0._fixitemList[var_9_1].go, false)
+			gohelper.setActive(self._fixitemList[iconid].go, false)
 		end
 	end
 end
 
-function var_0_0._onCloseViewFinish(arg_10_0, arg_10_1)
-	if arg_10_1 == ViewName.CommonPropView and arg_10_0.fixid then
-		arg_10_0:_fixShip(arg_10_0.fixid)
+function Activity133View:_onCloseViewFinish(viewName)
+	if viewName == ViewName.CommonPropView and self.fixid then
+		self:_fixShip(self.fixid)
 	end
 end
 
-function var_0_0._refreshRedDot(arg_11_0)
-	RedDotController.instance:addRedDot(arg_11_0._goreddot, RedDotEnum.DotNode.Activity1_4Act133Task)
+function Activity133View:_refreshRedDot()
+	RedDotController.instance:addRedDot(self._goreddot, RedDotEnum.DotNode.Activity1_4Act133Task)
 end
 
-function var_0_0._onGetBouns(arg_12_0, arg_12_1)
-	arg_12_0.fixid = arg_12_1.id
+function Activity133View:_onGetBouns(msg)
+	self.fixid = msg.id
 
-	arg_12_0:_checkFixedCompleted()
+	self:_checkFixedCompleted()
 end
 
-function var_0_0._checkFixedCompleted(arg_13_0)
-	local var_13_0 = Activity133Model.instance:getFixedNum()
+function Activity133View:_checkFixedCompleted()
+	local fixednum = Activity133Model.instance:getFixedNum()
 
-	arg_13_0._txtschedule.text = var_13_0 .. "/" .. arg_13_0.needfixnum
+	self._txtschedule.text = fixednum .. "/" .. self.needfixnum
 
-	local var_13_1 = Mathf.Clamp01(var_13_0 / arg_13_0.needfixnum)
+	local value = Mathf.Clamp01(fixednum / self.needfixnum)
 
-	arg_13_0._imagefill.fillAmount = var_13_1
+	self._imagefill.fillAmount = value
 
-	if var_13_1 == 1 then
-		arg_13_0._iscomplete = true
+	if value == 1 then
+		self._iscomplete = true
 
-		function arg_13_0.callback()
-			TaskDispatcher.cancelTask(arg_13_0.callback, arg_13_0)
-			gohelper.setActive(arg_13_0._simagecompleted.gameObject, true)
+		function self.callback()
+			TaskDispatcher.cancelTask(self.callback, self)
+			gohelper.setActive(self._simagecompleted.gameObject, true)
 
-			arg_13_0._com_animator.speed = 1
+			self._com_animator.speed = 1
 
-			arg_13_0._com_animator:Play(UIAnimationName.Open, 0, 0)
+			self._com_animator:Play(UIAnimationName.Open, 0, 0)
 			AudioMgr.instance:trigger(AudioEnum.UI.play_ui_inking_preference_open)
-			arg_13_0._com_animator:Update(0)
-			TaskDispatcher.runDelay(arg_13_0._onCompletedAniFinish, arg_13_0, arg_13_0._completedAnitime)
+			self._com_animator:Update(0)
+			TaskDispatcher.runDelay(self._onCompletedAniFinish, self, self._completedAnitime)
 		end
 
-		TaskDispatcher.runDelay(arg_13_0.callback, arg_13_0, 1.8)
+		TaskDispatcher.runDelay(self.callback, self, 1.8)
 	else
-		gohelper.setActive(arg_13_0._simagecompleted.gameObject, false)
-		arg_13_0:_checkFixNum()
+		gohelper.setActive(self._simagecompleted.gameObject, false)
+		self:_checkFixNum()
 	end
 end
 
-function var_0_0._onCompletedAniFinish(arg_15_0)
-	TaskDispatcher.cancelTask(arg_15_0._onCompletedAniFinish, arg_15_0)
-	arg_15_0:_checkCompletedItem()
+function Activity133View:_onCompletedAniFinish()
+	TaskDispatcher.cancelTask(self._onCompletedAniFinish, self)
+	self:_checkCompletedItem()
 
-	local var_15_0 = {}
+	local co = {}
 
-	for iter_15_0, iter_15_1 in ipairs(arg_15_0.finalBonus) do
-		local var_15_1 = MaterialDataMO.New()
+	for _, reward in ipairs(self.finalBonus) do
+		local o = MaterialDataMO.New()
 
-		var_15_1:initValue(iter_15_1[1], iter_15_1[2], iter_15_1[3], nil, true)
-		table.insert(var_15_0, var_15_1)
+		o:initValue(reward[1], reward[2], reward[3], nil, true)
+		table.insert(co, o)
 	end
 
-	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, var_15_0)
+	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, co)
 end
 
-function var_0_0._checkCompletedItem(arg_16_0)
-	for iter_16_0, iter_16_1 in pairs(arg_16_0._itemList) do
-		gohelper.setActive(iter_16_1.goget, arg_16_0._iscomplete)
+function Activity133View:_checkCompletedItem()
+	for _, item in pairs(self._itemList) do
+		gohelper.setActive(item.goget, self._iscomplete)
 
-		if arg_16_0._iscomplete then
-			iter_16_1.icon:setAlpha(0.45, 0.8)
+		if self._iscomplete then
+			item.icon:setAlpha(0.45, 0.8)
 		else
-			iter_16_1.icon:setAlpha(1, 1)
+			item.icon:setAlpha(1, 1)
 		end
 	end
 end
 
-function var_0_0._checkFixNum(arg_17_0)
-	local var_17_0 = Activity133Model.instance:getFixedNum()
+function Activity133View:_checkFixNum()
+	local fixednum = Activity133Model.instance:getFixedNum()
 
-	arg_17_0._txtschedule.text = var_17_0 .. "/" .. arg_17_0.needfixnum
+	self._txtschedule.text = fixednum .. "/" .. self.needfixnum
 
-	local var_17_1 = Mathf.Clamp01(var_17_0 / arg_17_0.needfixnum)
+	local value = Mathf.Clamp01(fixednum / self.needfixnum)
 
-	arg_17_0._imagefill.fillAmount = var_17_1
+	self._imagefill.fillAmount = value
 
-	if var_17_1 == 1 then
-		arg_17_0._iscomplete = true
+	if value == 1 then
+		self._iscomplete = true
 
-		gohelper.setActive(arg_17_0._simagecompleted.gameObject, true)
+		gohelper.setActive(self._simagecompleted.gameObject, true)
 	else
-		gohelper.setActive(arg_17_0._simagecompleted.gameObject, false)
+		gohelper.setActive(self._simagecompleted.gameObject, false)
 	end
 end
 
-function var_0_0._refreshRemainTime(arg_18_0)
-	local var_18_0 = ActivityModel.instance:getActivityInfo()[arg_18_0.actId]:getRealEndTimeStamp() - ServerTime.now()
-	local var_18_1 = Mathf.Floor(var_18_0 / TimeUtil.OneDaySecond)
-	local var_18_2 = var_18_0 % TimeUtil.OneDaySecond
-	local var_18_3 = Mathf.Floor(var_18_2 / TimeUtil.OneHourSecond)
-	local var_18_4 = var_18_1 .. luaLang("time_day")
+function Activity133View:_refreshRemainTime()
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[self.actId]
+	local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
+	local day = Mathf.Floor(offsetSecond / TimeUtil.OneDaySecond)
+	local hourSecond = offsetSecond % TimeUtil.OneDaySecond
+	local hour = Mathf.Floor(hourSecond / TimeUtil.OneHourSecond)
+	local dayStr = day .. luaLang("time_day")
 
 	if LangSettings.instance:isEn() then
-		var_18_4 = var_18_4 .. " "
+		dayStr = dayStr .. " "
 	end
 
-	local var_18_5 = var_18_4 .. var_18_3 .. luaLang("time_hour2")
+	local remainTime = dayStr .. hour .. luaLang("time_hour2")
 
-	arg_18_0._txtremaintime.text = string.format(luaLang("remain"), var_18_5)
+	self._txtremaintime.text = string.format(luaLang("remain"), remainTime)
 end
 
-function var_0_0._checkNote(arg_19_0, arg_19_1)
-	if arg_19_1 then
-		local var_19_0 = arg_19_1.id
-		local var_19_1, var_19_2 = arg_19_1:getPos()
+function Activity133View:_checkNote(mo)
+	if mo then
+		local id = mo.id
+		local posX, posY = mo:getPos()
 
-		Activity133Model.instance:setSelectID(var_19_0)
+		Activity133Model.instance:setSelectID(id)
 
-		if not arg_19_0._focusmaskopen then
-			arg_19_0._focusmaskopen = true
+		if not self._focusmaskopen then
+			self._focusmaskopen = true
 
-			gohelper.setActive(arg_19_0._gocheckingmask, true)
+			gohelper.setActive(self._gocheckingmask, true)
 		end
 
-		local var_19_3 = Activity133ListModel.instance:getById(var_19_0)
+		local mo = Activity133ListModel.instance:getById(id)
 
 		UIBlockMgr.instance:startBlock("Activity133View")
-		arg_19_0:_moveBg(var_19_1, var_19_2, 2.5, 1)
+		self:_moveBg(posX, posY, 2.5, 1)
 
-		arg_19_0._txttitle.text = var_19_3.title
-		arg_19_0._txtdetail.text = var_19_3.desc
+		self._txttitle.text = mo.title
+		self._txtdetail.text = mo.desc
 
-		gohelper.setActive(arg_19_0._simagecompleted.gameObject, not arg_19_0._focusmaskopen and arg_19_0._iscomplete)
+		gohelper.setActive(self._simagecompleted.gameObject, not self._focusmaskopen and self._iscomplete)
 	else
-		if arg_19_0._focusmaskopen then
-			arg_19_0._focusmaskopen = false
+		if self._focusmaskopen then
+			self._focusmaskopen = false
 
-			gohelper.setActive(arg_19_0._gocheckingmask, false)
+			gohelper.setActive(self._gocheckingmask, false)
 			UIBlockMgr.instance:startBlock("Activity133View")
-			arg_19_0:_moveBg(nil, nil, 1, 0)
+			self:_moveBg(nil, nil, 1, 0)
 
-			local var_19_4 = Activity133Model.instance:getSelectID()
+			local id = Activity133Model.instance:getSelectID()
 
-			arg_19_0._csView:selectCell(var_19_4, false)
+			self._csView:selectCell(id, false)
 		end
 
-		gohelper.setActive(arg_19_0._simagecompleted.gameObject, not arg_19_0._focusmaskopen and arg_19_0._iscomplete)
+		gohelper.setActive(self._simagecompleted.gameObject, not self._focusmaskopen and self._iscomplete)
 	end
 end
 
-function var_0_0._moveBg(arg_20_0, arg_20_1, arg_20_2, arg_20_3, arg_20_4)
-	arg_20_0:playMoveTween(arg_20_1, arg_20_2)
-	arg_20_0:playScaleTween(arg_20_3)
-	arg_20_0:playDoFade(arg_20_4, 0.2)
+function Activity133View:_moveBg(x, y, scale, alpha)
+	self:playMoveTween(x, y)
+	self:playScaleTween(scale)
+	self:playDoFade(alpha, 0.2)
 end
 
-function var_0_0.playDoFade(arg_21_0, arg_21_1, arg_21_2)
-	if arg_21_0._fadeTweenId then
-		ZProj.TweenHelper.KillById(arg_21_0._fadeTweenId)
+function Activity133View:playDoFade(endAlpha, time)
+	if self._fadeTweenId then
+		ZProj.TweenHelper.KillById(self._fadeTweenId)
 
-		arg_21_0._fadeTweenId = nil
+		self._fadeTweenId = nil
 	end
 
-	local var_21_0 = arg_21_0._gocheckingmask:GetComponent(typeof(UnityEngine.CanvasGroup)).alpha
+	local canvasGroup = self._gocheckingmask:GetComponent(typeof(UnityEngine.CanvasGroup))
+	local startAlpha = canvasGroup.alpha
 
-	arg_21_0._fadeTweenId = ZProj.TweenHelper.DOFadeCanvasGroup(arg_21_0._gocheckingmask, var_21_0, arg_21_1, arg_21_2)
+	self._fadeTweenId = ZProj.TweenHelper.DOFadeCanvasGroup(self._gocheckingmask, startAlpha, endAlpha, time)
 end
 
-function var_0_0.playScaleTween(arg_22_0, arg_22_1)
-	if arg_22_0._scaleTweenId then
-		ZProj.TweenHelper.KillById(arg_22_0._scaleTweenId)
+function Activity133View:playScaleTween(to)
+	if self._scaleTweenId then
+		ZProj.TweenHelper.KillById(self._scaleTweenId)
 
-		arg_22_0._scaleTweenId = nil
+		self._scaleTweenId = nil
 	end
 
-	arg_22_0._scaleTweenId = ZProj.TweenHelper.DOScale(arg_22_0._simagefullbg.transform, arg_22_1, arg_22_1, arg_22_1, arg_22_0.tweenDuration, arg_22_0.onTweenFinish, arg_22_0)
+	self._scaleTweenId = ZProj.TweenHelper.DOScale(self._simagefullbg.transform, to, to, to, self.tweenDuration, self.onTweenFinish, self)
 end
 
-function var_0_0.onTweenFinish(arg_23_0)
+function Activity133View:onTweenFinish()
 	UIBlockMgr.instance:endBlock("Activity133View")
 end
 
-function var_0_0.playMoveTween(arg_24_0, arg_24_1, arg_24_2)
-	if arg_24_0._moveTweenId then
-		ZProj.TweenHelper.KillById(arg_24_0._moveTweenId)
+function Activity133View:playMoveTween(x, y)
+	if self._moveTweenId then
+		ZProj.TweenHelper.KillById(self._moveTweenId)
 
-		arg_24_0._moveTweenId = nil
+		self._moveTweenId = nil
 	end
 
-	if arg_24_1 and arg_24_2 then
-		arg_24_0._moveTweenId = ZProj.TweenHelper.DOAnchorPos(arg_24_0._simagefullbg.transform, arg_24_1, arg_24_2, arg_24_0.tweenDuration)
+	if x and y then
+		self._moveTweenId = ZProj.TweenHelper.DOAnchorPos(self._simagefullbg.transform, x, y, self.tweenDuration)
 	else
-		arg_24_0._moveTweenId = ZProj.TweenHelper.DOAnchorPos(arg_24_0._simagefullbg.transform, 0, 0, arg_24_0.tweenDuration)
+		self._moveTweenId = ZProj.TweenHelper.DOAnchorPos(self._simagefullbg.transform, 0, 0, self.tweenDuration)
 	end
 end
 
-function var_0_0._onClickMask(arg_25_0)
-	if arg_25_0._focusmaskopen then
-		arg_25_0._focusmaskopen = false
+function Activity133View:_onClickMask()
+	if self._focusmaskopen then
+		self._focusmaskopen = false
 
-		gohelper.setActive(arg_25_0._gocheckingmask, false)
+		gohelper.setActive(self._gocheckingmask, false)
 
-		local var_25_0 = Activity133Model.instance:getSelectID()
+		local id = Activity133Model.instance:getSelectID()
 
-		arg_25_0:_moveBg(nil, nil, 1, 0)
-		arg_25_0._csView:selectCell(var_25_0, false)
+		self:_moveBg(nil, nil, 1, 0)
+		self._csView:selectCell(id, false)
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_theft_open)
-		gohelper.setActive(arg_25_0._simagecompleted.gameObject, not arg_25_0._focusmaskopen and arg_25_0._iscomplete)
+		gohelper.setActive(self._simagecompleted.gameObject, not self._focusmaskopen and self._iscomplete)
 	end
 end
 
-function var_0_0.onOpen(arg_26_0)
-	arg_26_0.actId = arg_26_0.viewParam.actId
+function Activity133View:onOpen()
+	self.actId = self.viewParam.actId
 
-	ActivityEnterMgr.instance:enterActivity(arg_26_0.actId)
+	ActivityEnterMgr.instance:enterActivity(self.actId)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
-		arg_26_0.actId
+		self.actId
 	})
-	Activity133ListModel.instance:init(arg_26_0._scrollview.gameObject)
+	Activity133ListModel.instance:init(self._scrollview.gameObject)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Task_page)
-	arg_26_0:_refreshView(true)
+	self:_refreshView(true)
 end
 
-function var_0_0.onClose(arg_27_0)
-	TaskDispatcher.cancelTask(arg_27_0._onCompletedAniFinish, arg_27_0)
+function Activity133View:onClose()
+	TaskDispatcher.cancelTask(self._onCompletedAniFinish, self)
 end
 
-function var_0_0.onDestroyView(arg_28_0)
-	arg_28_0._simagefullbg:UnLoadImage()
-	arg_28_0._simagecheckingmask:UnLoadImage()
+function Activity133View:onDestroyView()
+	self._simagefullbg:UnLoadImage()
+	self._simagecheckingmask:UnLoadImage()
 end
 
-return var_0_0
+return Activity133View

@@ -1,110 +1,114 @@
-﻿module("modules.logic.room.model.trade.RoomWholesaleOrderMo", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/trade/RoomWholesaleOrderMo.lua
 
-local var_0_0 = class("RoomWholesaleOrderMo")
+module("modules.logic.room.model.trade.RoomWholesaleOrderMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.orderId = nil
-	arg_1_0.goodId = nil
-	arg_1_0.todaySoldCount = nil
-	arg_1_0.co = nil
+local RoomWholesaleOrderMo = class("RoomWholesaleOrderMo")
+
+function RoomWholesaleOrderMo:ctor()
+	self.orderId = nil
+	self.goodId = nil
+	self.todaySoldCount = nil
+	self.co = nil
 end
 
-function var_0_0.initMo(arg_2_0, arg_2_1)
-	arg_2_0.orderId = arg_2_1.orderId
-	arg_2_0.goodId = arg_2_1.goodId
-	arg_2_0.todaySoldCount = arg_2_1.todaySoldCount
-	arg_2_0.co = ManufactureConfig.instance:getManufactureItemCfg(arg_2_0.goodId)
+function RoomWholesaleOrderMo:initMo(info)
+	self.orderId = info.orderId
+	self.goodId = info.goodId
+	self.todaySoldCount = info.todaySoldCount
+	self.co = ManufactureConfig.instance:getManufactureItemCfg(self.goodId)
 
-	local var_2_0 = arg_2_0:getMaxCount()
+	local maxCount = self:getMaxCount()
 
-	arg_2_0.soldCount = RoomTradeModel.instance:isMaxWeelyOrder() and 0 or math.min(1, var_2_0)
-	arg_2_0.itemCo = ItemModel.instance:getItemConfig(MaterialEnum.MaterialType.Item, arg_2_0.co.itemId)
+	self.soldCount = RoomTradeModel.instance:isMaxWeelyOrder() and 0 or math.min(1, maxCount)
+	self.itemCo = ItemModel.instance:getItemConfig(MaterialEnum.MaterialType.Item, self.co.itemId)
 end
 
-function var_0_0.refreshTodaySoldCount(arg_3_0, arg_3_1)
-	arg_3_0.todaySoldCount = arg_3_1
+function RoomWholesaleOrderMo:refreshTodaySoldCount(count)
+	self.todaySoldCount = count
 end
 
-function var_0_0.getGoodsName(arg_4_0)
-	return arg_4_0.itemCo and arg_4_0.itemCo.name
+function RoomWholesaleOrderMo:getGoodsName()
+	return self.itemCo and self.itemCo.name
 end
 
-function var_0_0.getGoodsIcon(arg_5_0)
-	return arg_5_0.itemCo and arg_5_0.itemCo.icon
+function RoomWholesaleOrderMo:getGoodsIcon()
+	return self.itemCo and self.itemCo.icon
 end
 
-function var_0_0.getMaxCount(arg_6_0)
-	return ManufactureModel.instance:getManufactureItemCount(arg_6_0.goodId, false)
+function RoomWholesaleOrderMo:getMaxCount()
+	return ManufactureModel.instance:getManufactureItemCount(self.goodId, false)
 end
 
-function var_0_0.getMaxCountStr(arg_7_0)
-	local var_7_0 = arg_7_0:getMaxCount()
+function RoomWholesaleOrderMo:getMaxCountStr()
+	local count = self:getMaxCount()
 
-	return GameUtil.numberDisplay(var_7_0)
+	return GameUtil.numberDisplay(count)
 end
 
-function var_0_0.getTodaySoldCount(arg_8_0)
-	return arg_8_0.todaySoldCount
+function RoomWholesaleOrderMo:getTodaySoldCount()
+	return self.todaySoldCount
 end
 
-function var_0_0.getTodaySoldCountStr(arg_9_0)
-	return GameUtil.numberDisplay(arg_9_0.todaySoldCount)
+function RoomWholesaleOrderMo:getTodaySoldCountStr()
+	return GameUtil.numberDisplay(self.todaySoldCount)
 end
 
-function var_0_0.getItem(arg_10_0)
-	local var_10_0 = ManufactureConfig.instance:getManufactureItemCfg(arg_10_0.goodId)
-	local var_10_1 = MaterialEnum.MaterialType.Item
+function RoomWholesaleOrderMo:getItem()
+	local itemCo = ManufactureConfig.instance:getManufactureItemCfg(self.goodId)
+	local type = MaterialEnum.MaterialType.Item
 
-	if var_10_0 then
-		local var_10_2 = var_10_0.itemId
+	if itemCo then
+		local itemId = itemCo.itemId
 
-		return var_10_1, var_10_2
+		return type, itemId
 	end
 end
 
-function var_0_0.getUnitPrice(arg_11_0)
-	local var_11_0 = MaterialEnum.MaterialType.Currency
-	local var_11_1 = CurrencyEnum.CurrencyType.RoomTrade
-	local var_11_2 = arg_11_0.co.wholesalePrice
+function RoomWholesaleOrderMo:getUnitPrice()
+	local type = MaterialEnum.MaterialType.Currency
+	local id = CurrencyEnum.CurrencyType.RoomTrade
+	local price = self.co.wholesalePrice
 
-	return var_11_0, var_11_1, var_11_2
+	return type, id, price
 end
 
-function var_0_0.getPriceRatio(arg_12_0)
-	local var_12_0 = arg_12_0.co.orderPrice
-	local var_12_1 = arg_12_0.co.wholesalePrice
+function RoomWholesaleOrderMo:getPriceRatio()
+	local noraml = self.co.orderPrice
+	local price = self.co.wholesalePrice
 
-	return -math.floor((var_12_0 - var_12_1) / var_12_0 * 100 + 0.5)
+	return -math.floor((noraml - price) / noraml * 100 + 0.5)
 end
 
-function var_0_0.getSoldCount(arg_13_0)
-	local var_13_0 = arg_13_0:getMaxCount()
+function RoomWholesaleOrderMo:getSoldCount()
+	local max = self:getMaxCount()
 
-	return (math.min(var_13_0, arg_13_0.soldCount))
+	max = math.min(max, self.soldCount)
+
+	return max
 end
 
-function var_0_0.getSoldCountStr(arg_14_0)
-	local var_14_0 = arg_14_0:getSoldCount()
+function RoomWholesaleOrderMo:getSoldCountStr()
+	local count = self:getSoldCount()
 
-	return GameUtil.numberDisplay(var_14_0)
+	return GameUtil.numberDisplay(count)
 end
 
-function var_0_0.addSoldCount(arg_15_0, arg_15_1)
-	arg_15_0.soldCount = arg_15_0.soldCount + (arg_15_1 or 1)
-	arg_15_0.soldCount = arg_15_0:getSoldCount()
+function RoomWholesaleOrderMo:addSoldCount(count)
+	self.soldCount = self.soldCount + (count or 1)
+	self.soldCount = self:getSoldCount()
 end
 
-function var_0_0.reduceSoldCount(arg_16_0, arg_16_1)
-	arg_16_0.soldCount = arg_16_0.soldCount - (arg_16_1 or 1)
-	arg_16_0.soldCount = math.max(0, arg_16_0.soldCount)
+function RoomWholesaleOrderMo:reduceSoldCount(count)
+	self.soldCount = self.soldCount - (count or 1)
+	self.soldCount = math.max(0, self.soldCount)
 end
 
-function var_0_0.setSoldCount(arg_17_0, arg_17_1)
-	arg_17_1 = arg_17_1 or 0
+function RoomWholesaleOrderMo:setSoldCount(count)
+	count = count or 0
 
-	local var_17_0 = arg_17_0:getMaxCount()
+	local max = self:getMaxCount()
 
-	arg_17_0.soldCount = GameUtil.clamp(arg_17_1, 0, var_17_0)
+	self.soldCount = GameUtil.clamp(count, 0, max)
 end
 
-return var_0_0
+return RoomWholesaleOrderMo

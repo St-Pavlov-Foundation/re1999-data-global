@@ -1,34 +1,38 @@
-﻿module("modules.logic.weekwalk_2.view.WeekWalk_2LayerRewardViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk_2/view/WeekWalk_2LayerRewardViewContainer.lua
 
-local var_0_0 = class("WeekWalk_2LayerRewardViewContainer", BaseViewContainer)
+module("modules.logic.weekwalk_2.view.WeekWalk_2LayerRewardViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+local WeekWalk_2LayerRewardViewContainer = class("WeekWalk_2LayerRewardViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "right/#scroll_reward"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_1.cellClass = WeekWalk_2LayerRewardItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 1
-	var_1_1.cellWidth = 1500
-	var_1_1.cellHeight = 160
-	var_1_1.cellSpaceH = 0
-	var_1_1.cellSpaceV = 1
-	var_1_1.startSpace = 0
+function WeekWalk_2LayerRewardViewContainer:buildViews()
+	local views = {}
+	local scrollParam = ListScrollParam.New()
 
-	local var_1_2 = {}
+	scrollParam.scrollGOPath = "right/#scroll_reward"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = WeekWalk_2LayerRewardItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 1500
+	scrollParam.cellHeight = 160
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 1
+	scrollParam.startSpace = 0
 
-	for iter_1_0 = 1, 10 do
-		var_1_2[iter_1_0] = (iter_1_0 - 1) * 0.07
+	local animationDelayTimes = {}
+
+	for i = 1, 10 do
+		local delayTime = (i - 1) * 0.07
+
+		animationDelayTimes[i] = delayTime
 	end
 
-	table.insert(var_1_0, WeekWalk_2LayerRewardView.New())
-	table.insert(var_1_0, WeekWalk_2LayerRewardViewMenuView.New())
-	table.insert(var_1_0, LuaListScrollViewWithAnimator.New(WeekWalk_2TaskListModel.instance, var_1_1, var_1_2))
+	table.insert(views, WeekWalk_2LayerRewardView.New())
+	table.insert(views, WeekWalk_2LayerRewardViewMenuView.New())
+	table.insert(views, LuaListScrollViewWithAnimator.New(WeekWalk_2TaskListModel.instance, scrollParam, animationDelayTimes))
 
-	return var_1_0
+	return views
 end
 
-return var_0_0
+return WeekWalk_2LayerRewardViewContainer

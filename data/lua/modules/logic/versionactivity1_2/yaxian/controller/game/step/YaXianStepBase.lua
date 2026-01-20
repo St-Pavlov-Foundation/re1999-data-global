@@ -1,28 +1,30 @@
-﻿module("modules.logic.versionactivity1_2.yaxian.controller.game.step.YaXianStepBase", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/yaxian/controller/game/step/YaXianStepBase.lua
 
-local var_0_0 = class("YaXianStepBase")
+module("modules.logic.versionactivity1_2.yaxian.controller.game.step.YaXianStepBase", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.originData = arg_1_1
-	arg_1_0.index = arg_1_2
-	arg_1_0.originData.index = arg_1_2
-	arg_1_0.stepType = arg_1_0.originData.stepType
+local YaXianStepBase = class("YaXianStepBase")
+
+function YaXianStepBase:init(stepData, index)
+	self.originData = stepData
+	self.index = index
+	self.originData.index = index
+	self.stepType = self.originData.stepType
 end
 
-function var_0_0.start(arg_2_0)
+function YaXianStepBase:start()
 	return
 end
 
-function var_0_0.finish(arg_3_0)
-	local var_3_0 = YaXianGameController.instance.stepMgr
+function YaXianStepBase:finish()
+	local stepMgr = YaXianGameController.instance.stepMgr
 
-	if var_3_0 then
-		var_3_0:nextStep()
+	if stepMgr then
+		stepMgr:nextStep()
 	end
 end
 
-function var_0_0.dispose(arg_4_0)
+function YaXianStepBase:dispose()
 	return
 end
 
-return var_0_0
+return YaXianStepBase

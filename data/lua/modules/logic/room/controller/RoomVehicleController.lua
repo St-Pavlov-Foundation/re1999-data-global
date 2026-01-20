@@ -1,29 +1,31 @@
-﻿module("modules.logic.room.controller.RoomVehicleController", package.seeall)
+﻿-- chunkname: @modules/logic/room/controller/RoomVehicleController.lua
 
-local var_0_0 = class("RoomVehicleController", BaseController)
+module("modules.logic.room.controller.RoomVehicleController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:clear()
+local RoomVehicleController = class("RoomVehicleController", BaseController)
+
+function RoomVehicleController:onInit()
+	self:clear()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clear()
+function RoomVehicleController:reInit()
+	self:clear()
 end
 
-function var_0_0.clear(arg_3_0)
+function RoomVehicleController:clear()
 	RoomMapVehicleModel.instance:clear()
 	RoomMapPathPlanModel.instance:clear()
 end
 
-function var_0_0.init(arg_4_0)
+function RoomVehicleController:init()
 	RoomMapPathPlanModel.instance:initPath()
 	RoomMapVehicleModel.instance:initVehicle()
 end
 
-function var_0_0.addConstEvents(arg_5_0)
+function RoomVehicleController:addConstEvents()
 	return
 end
 
-var_0_0.instance = var_0_0.New()
+RoomVehicleController.instance = RoomVehicleController.New()
 
-return var_0_0
+return RoomVehicleController

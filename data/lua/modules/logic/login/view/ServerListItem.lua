@@ -1,38 +1,40 @@
-﻿module("modules.logic.login.view.ServerListItem", package.seeall)
+﻿-- chunkname: @modules/logic/login/view/ServerListItem.lua
 
-local var_0_0 = class("ServerListItem", ListScrollCell)
+module("modules.logic.login.view.ServerListItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._serverStateGOList = {}
+local ServerListItem = class("ServerListItem", ListScrollCell)
 
-	for iter_1_0 = 0, 2 do
-		arg_1_0._serverStateGOList[iter_1_0] = gohelper.findChild(arg_1_1, "imgState" .. iter_1_0)
+function ServerListItem:init(go)
+	self._serverStateGOList = {}
+
+	for i = 0, 2 do
+		self._serverStateGOList[i] = gohelper.findChild(go, "imgState" .. i)
 	end
 
-	arg_1_0._txtServerName = gohelper.findChildText(arg_1_1, "Text")
-	arg_1_0._click = SLFramework.UGUI.UIClickListener.Get(arg_1_1)
+	self._txtServerName = gohelper.findChildText(go, "Text")
+	self._click = SLFramework.UGUI.UIClickListener.Get(go)
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._click:AddClickListener(arg_2_0._onClick, arg_2_0)
+function ServerListItem:addEventListeners()
+	self._click:AddClickListener(self._onClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._click:RemoveClickListener()
+function ServerListItem:removeEventListeners()
+	self._click:RemoveClickListener()
 end
 
-function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
-	arg_4_0._mo = arg_4_1
-	arg_4_0._txtServerName.text = arg_4_0._mo.name
+function ServerListItem:onUpdateMO(mo)
+	self._mo = mo
+	self._txtServerName.text = self._mo.name
 
-	for iter_4_0 = 0, 2 do
-		gohelper.setActive(arg_4_0._serverStateGOList[iter_4_0], iter_4_0 == arg_4_0._mo.state)
+	for i = 0, 2 do
+		gohelper.setActive(self._serverStateGOList[i], i == self._mo.state)
 	end
 end
 
-function var_0_0._onClick(arg_5_0)
-	LoginController.instance:dispatchEvent(LoginEvent.SelectServerItem, arg_5_0._mo)
-	arg_5_0._view:closeThis()
+function ServerListItem:_onClick()
+	LoginController.instance:dispatchEvent(LoginEvent.SelectServerItem, self._mo)
+	self._view:closeThis()
 end
 
-return var_0_0
+return ServerListItem

@@ -1,46 +1,48 @@
-﻿module("modules.logic.explore.controller.trigger.ExploreTriggerDialogue", package.seeall)
+﻿-- chunkname: @modules/logic/explore/controller/trigger/ExploreTriggerDialogue.lua
 
-local var_0_0 = class("ExploreTriggerDialogue", ExploreTriggerBase)
+module("modules.logic.explore.controller.trigger.ExploreTriggerDialogue", package.seeall)
 
-function var_0_0.handle(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_1 = tonumber(arg_1_1)
+local ExploreTriggerDialogue = class("ExploreTriggerDialogue", ExploreTriggerBase)
 
-	if arg_1_0.isNoFirstDialog then
-		local var_1_0 = {
+function ExploreTriggerDialogue:handle(id, unit)
+	id = tonumber(id)
+
+	if self.isNoFirstDialog then
+		local stepData = {
 			alwaysLast = true,
 			stepType = ExploreEnum.StepType.Dialogue,
-			id = arg_1_1
+			id = id
 		}
 
-		ExploreStepController.instance:insertClientStep(var_1_0)
-		arg_1_0:onDone(true)
+		ExploreStepController.instance:insertClientStep(stepData)
+		self:onDone(true)
 
 		return
 	end
 
-	local var_1_1 = {
-		id = arg_1_1,
-		unit = arg_1_2,
-		callBack = arg_1_0.dialogueAccept,
-		callBackObj = arg_1_0,
-		refuseCallBack = arg_1_0.dialogueRefuse,
-		refuseCallBackObj = arg_1_0
-	}
+	local param = {}
 
-	ViewMgr.instance:openView(ViewName.ExploreInteractView, var_1_1)
+	param.id = id
+	param.unit = unit
+	param.callBack = self.dialogueAccept
+	param.callBackObj = self
+	param.refuseCallBack = self.dialogueRefuse
+	param.refuseCallBackObj = self
+
+	ViewMgr.instance:openView(ViewName.ExploreInteractView, param)
 	ExploreController.instance:getMap():getHero():stopMoving(false)
 end
 
-function var_0_0.dialogueAccept(arg_2_0)
-	arg_2_0:onDone(true)
+function ExploreTriggerDialogue:dialogueAccept()
+	self:onDone(true)
 end
 
-function var_0_0.dialogueRefuse(arg_3_0)
-	arg_3_0:onDone(false)
+function ExploreTriggerDialogue:dialogueRefuse()
+	self:onDone(false)
 end
 
-function var_0_0.clearWork(arg_4_0)
+function ExploreTriggerDialogue:clearWork()
 	ViewMgr.instance:closeView(ViewName.ExploreInteractView)
 end
 
-return var_0_0
+return ExploreTriggerDialogue

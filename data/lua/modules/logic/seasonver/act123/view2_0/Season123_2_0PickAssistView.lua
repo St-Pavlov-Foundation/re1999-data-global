@@ -1,87 +1,91 @@
-﻿module("modules.logic.seasonver.act123.view2_0.Season123_2_0PickAssistView", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view2_0/Season123_2_0PickAssistView.lua
 
-local var_0_0 = class("Season123_2_0PickAssistView", BaseView)
+module("modules.logic.seasonver.act123.view2_0.Season123_2_0PickAssistView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gofilter = gohelper.findChild(arg_1_0.viewGO, "#go_filter")
-	arg_1_0._goattrItem = gohelper.findChild(arg_1_0.viewGO, "#go_filter/#go_attrItem")
-	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "#go_empty")
-	arg_1_0._gorecommendAttr = gohelper.findChild(arg_1_0.viewGO, "#go_recommendAttr")
-	arg_1_0._txtrecommendAttrDesc = gohelper.findChildText(arg_1_0.viewGO, "#go_recommendAttr/txt_recommend")
-	arg_1_0._goattrlist = gohelper.findChild(arg_1_0.viewGO, "#go_recommendAttr/txt_recommend/#go_attrlist")
-	arg_1_0._goattritem = gohelper.findChild(arg_1_0.viewGO, "#go_recommendAttr/txt_recommend/#go_attrlist/#go_recommendAttrItem")
-	arg_1_0._btnrefresh = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bottom/#btn_refresh")
-	arg_1_0._simageprogress = gohelper.findChildImage(arg_1_0.viewGO, "bottom/#btn_refresh/#simage_progress")
-	arg_1_0._godetail = gohelper.findChild(arg_1_0.viewGO, "bottom/#btn_detail")
-	arg_1_0._btndetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bottom/#btn_detail")
-	arg_1_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bottom/#btn_confirm")
+local Season123_2_0PickAssistView = class("Season123_2_0PickAssistView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Season123_2_0PickAssistView:onInitView()
+	self._gofilter = gohelper.findChild(self.viewGO, "#go_filter")
+	self._goattrItem = gohelper.findChild(self.viewGO, "#go_filter/#go_attrItem")
+	self._goempty = gohelper.findChild(self.viewGO, "#go_empty")
+	self._gorecommendAttr = gohelper.findChild(self.viewGO, "#go_recommendAttr")
+	self._txtrecommendAttrDesc = gohelper.findChildText(self.viewGO, "#go_recommendAttr/txt_recommend")
+	self._goattrlist = gohelper.findChild(self.viewGO, "#go_recommendAttr/txt_recommend/#go_attrlist")
+	self._goattritem = gohelper.findChild(self.viewGO, "#go_recommendAttr/txt_recommend/#go_attrlist/#go_recommendAttrItem")
+	self._btnrefresh = gohelper.findChildButtonWithAudio(self.viewGO, "bottom/#btn_refresh")
+	self._simageprogress = gohelper.findChildImage(self.viewGO, "bottom/#btn_refresh/#simage_progress")
+	self._godetail = gohelper.findChild(self.viewGO, "bottom/#btn_detail")
+	self._btndetail = gohelper.findChildButtonWithAudio(self.viewGO, "bottom/#btn_detail")
+	self._btnconfirm = gohelper.findChildButtonWithAudio(self.viewGO, "bottom/#btn_confirm")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnrefresh:AddClickListener(arg_2_0._btnrefreshOnClick, arg_2_0)
-	arg_2_0._btndetail:AddClickListener(arg_2_0._onHeroDetailClick, arg_2_0)
-	arg_2_0._btnconfirm:AddClickListener(arg_2_0._btnconfirmOnClick, arg_2_0)
-	arg_2_0:addEventCb(Season123Controller.instance, Season123Event.BeforeRefreshAssistList, arg_2_0.onBeforeRefreshAssistList, arg_2_0)
-	arg_2_0:addEventCb(Season123Controller.instance, Season123Event.SetCareer, arg_2_0.refreshIsEmpty, arg_2_0)
-	arg_2_0:addEventCb(Season123Controller.instance, Season123Event.RefreshSelectAssistHero, arg_2_0.refreshBtnDetail, arg_2_0)
+function Season123_2_0PickAssistView:addEvents()
+	self._btnrefresh:AddClickListener(self._btnrefreshOnClick, self)
+	self._btndetail:AddClickListener(self._onHeroDetailClick, self)
+	self._btnconfirm:AddClickListener(self._btnconfirmOnClick, self)
+	self:addEventCb(Season123Controller.instance, Season123Event.BeforeRefreshAssistList, self.onBeforeRefreshAssistList, self)
+	self:addEventCb(Season123Controller.instance, Season123Event.SetCareer, self.refreshIsEmpty, self)
+	self:addEventCb(Season123Controller.instance, Season123Event.RefreshSelectAssistHero, self.refreshBtnDetail, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnrefresh:RemoveClickListener()
-	arg_3_0._btndetail:RemoveClickListener()
-	arg_3_0._btnconfirm:RemoveClickListener()
-	arg_3_0:addEventCb(Season123Controller.instance, Season123Event.BeforeRefreshAssistList, arg_3_0.onBeforeRefreshAssistList, arg_3_0)
-	arg_3_0:removeEventCb(Season123Controller.instance, Season123Event.SetCareer, arg_3_0.refreshIsEmpty, arg_3_0)
-	arg_3_0:removeEventCb(Season123Controller.instance, Season123Event.RefreshSelectAssistHero, arg_3_0.refreshBtnDetail, arg_3_0)
+function Season123_2_0PickAssistView:removeEvents()
+	self._btnrefresh:RemoveClickListener()
+	self._btndetail:RemoveClickListener()
+	self._btnconfirm:RemoveClickListener()
+	self:addEventCb(Season123Controller.instance, Season123Event.BeforeRefreshAssistList, self.onBeforeRefreshAssistList, self)
+	self:removeEventCb(Season123Controller.instance, Season123Event.SetCareer, self.refreshIsEmpty, self)
+	self:removeEventCb(Season123Controller.instance, Season123Event.RefreshSelectAssistHero, self.refreshBtnDetail, self)
 end
 
-function var_0_0.onBeforeRefreshAssistList(arg_4_0)
-	if arg_4_0.scrollView then
-		arg_4_0.scrollView._firstUpdate = true
+function Season123_2_0PickAssistView:onBeforeRefreshAssistList()
+	if self.scrollView then
+		self.scrollView._firstUpdate = true
 
-		if not arg_4_0.hasChangedItemDelayTime then
-			arg_4_0.scrollView:changeDelayTime(-arg_4_0.viewContainer.viewOpenAnimTime)
+		if not self.hasChangedItemDelayTime then
+			self.scrollView:changeDelayTime(-self.viewContainer.viewOpenAnimTime)
 
-			arg_4_0.hasChangedItemDelayTime = true
+			self.hasChangedItemDelayTime = true
 		end
 	end
 end
 
-function var_0_0._btnrefreshOnClick(arg_5_0)
+function Season123_2_0PickAssistView:_btnrefreshOnClick()
 	Season123PickAssistController.instance:manualRefreshList()
 end
 
-function var_0_0._onHeroDetailClick(arg_6_0)
-	local var_6_0 = Season123PickAssistListModel.instance:getSelectedMO()
+function Season123_2_0PickAssistView:_onHeroDetailClick()
+	local selectedMO = Season123PickAssistListModel.instance:getSelectedMO()
 
-	if var_6_0 then
-		CharacterController.instance:openCharacterView(var_6_0.heroMO)
+	if selectedMO then
+		CharacterController.instance:openCharacterView(selectedMO.heroMO)
 	end
 end
 
-function var_0_0._btnconfirmOnClick(arg_7_0)
+function Season123_2_0PickAssistView:_btnconfirmOnClick()
 	Season123PickAssistController.instance:pickOver()
-	arg_7_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._btnCareerFilterOnClick(arg_8_0, arg_8_1)
-	if Season123PickAssistController.instance:setCareer(arg_8_1) then
-		arg_8_0:refreshCareerFilterItems()
+function Season123_2_0PickAssistView:_btnCareerFilterOnClick(career)
+	local isDirty = Season123PickAssistController.instance:setCareer(career)
+
+	if isDirty then
+		self:refreshCareerFilterItems()
 	end
 end
 
-function var_0_0._editableInitView(arg_9_0)
-	arg_9_0:_setFilterBtn()
+function Season123_2_0PickAssistView:_editableInitView()
+	self:_setFilterBtn()
 end
 
-function var_0_0._setFilterBtn(arg_10_0)
-	arg_10_0._career2FilterItemDict = {}
+function Season123_2_0PickAssistView:_setFilterBtn()
+	self._career2FilterItemDict = {}
 
-	local var_10_0 = {
+	local careerValueList = {
 		CharacterEnum.CareerType.Yan,
 		CharacterEnum.CareerType.Xing,
 		CharacterEnum.CareerType.Mu,
@@ -90,118 +94,118 @@ function var_0_0._setFilterBtn(arg_10_0)
 		CharacterEnum.CareerType.Zhi
 	}
 
-	arg_10_0.careerTypeCount = #var_10_0
+	self.careerTypeCount = #careerValueList
 
-	gohelper.CreateObjList(arg_10_0, arg_10_0._onInitFilterBtn, var_10_0, arg_10_0._gofilter, arg_10_0._goattrItem)
+	gohelper.CreateObjList(self, self._onInitFilterBtn, careerValueList, self._gofilter, self._goattrItem)
 end
 
-function var_0_0._onInitFilterBtn(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	local var_11_0 = arg_11_0:getUserDataTb_()
+function Season123_2_0PickAssistView:_onInitFilterBtn(obj, careerValue, index)
+	local careerFilterBtnItem = self:getUserDataTb_()
 
-	var_11_0.goSelected = gohelper.findChild(arg_11_1, "#go_selected")
-	var_11_0.attrIcon = gohelper.findChildImage(arg_11_1, "#image_attrIcon")
-	var_11_0.goLine = gohelper.findChild(arg_11_1, "#go_line")
-	var_11_0.btnClick = gohelper.findChildButtonWithAudio(arg_11_1, "#btn_click")
+	careerFilterBtnItem.goSelected = gohelper.findChild(obj, "#go_selected")
+	careerFilterBtnItem.attrIcon = gohelper.findChildImage(obj, "#image_attrIcon")
+	careerFilterBtnItem.goLine = gohelper.findChild(obj, "#go_line")
+	careerFilterBtnItem.btnClick = gohelper.findChildButtonWithAudio(obj, "#btn_click")
 
-	local var_11_1 = arg_11_3 ~= arg_11_0.careerTypeCount
+	local isLast = index ~= self.careerTypeCount
 
-	gohelper.setActive(var_11_0.goLine, var_11_1)
-	gohelper.setActive(var_11_0.goSelected, false)
-	UISpriteSetMgr.instance:setHeroGroupSprite(var_11_0.attrIcon, "career_" .. arg_11_2)
-	var_11_0.btnClick:AddClickListener(arg_11_0._btnCareerFilterOnClick, arg_11_0, arg_11_2)
+	gohelper.setActive(careerFilterBtnItem.goLine, isLast)
+	gohelper.setActive(careerFilterBtnItem.goSelected, false)
+	UISpriteSetMgr.instance:setHeroGroupSprite(careerFilterBtnItem.attrIcon, "career_" .. careerValue)
+	careerFilterBtnItem.btnClick:AddClickListener(self._btnCareerFilterOnClick, self, careerValue)
 
-	arg_11_0._career2FilterItemDict[arg_11_2] = var_11_0
+	self._career2FilterItemDict[careerValue] = careerFilterBtnItem
 end
 
-function var_0_0.onOpen(arg_12_0)
-	arg_12_0.scrollView = arg_12_0.viewContainer and arg_12_0.viewContainer.scrollView
+function Season123_2_0PickAssistView:onOpen()
+	self.scrollView = self.viewContainer and self.viewContainer.scrollView
 
-	Season123PickAssistController.instance:onOpenView(arg_12_0.viewParam.actId, arg_12_0.viewParam.finishCall, arg_12_0.viewParam.finishCallObj, arg_12_0.viewParam.selectedHeroUid)
-	arg_12_0:refreshUI()
-	TaskDispatcher.runRepeat(arg_12_0.refreshCD, arg_12_0, 0.01)
-	arg_12_0:showRecommendCareer()
+	Season123PickAssistController.instance:onOpenView(self.viewParam.actId, self.viewParam.finishCall, self.viewParam.finishCallObj, self.viewParam.selectedHeroUid)
+	self:refreshUI()
+	TaskDispatcher.runRepeat(self.refreshCD, self, 0.01)
+	self:showRecommendCareer()
 end
 
-function var_0_0.showRecommendCareer(arg_13_0)
-	local var_13_0 = Season123Config.instance:getRecommendCareers(Season123PickHeroEntryModel.instance.activityId, Season123PickHeroEntryModel.instance.stage)
+function Season123_2_0PickAssistView:showRecommendCareer()
+	local recommendCareers = Season123Config.instance:getRecommendCareers(Season123PickHeroEntryModel.instance.activityId, Season123PickHeroEntryModel.instance.stage)
 
-	if not var_13_0 then
-		gohelper.setActive(arg_13_0._gorecommendAttr, false)
+	if not recommendCareers then
+		gohelper.setActive(self._gorecommendAttr, false)
 
 		return
 	end
 
-	local var_13_1 = #var_13_0 ~= 0
-	local var_13_2 = var_13_1 and luaLang("herogroupeditview_recommend") or luaLang("herogroupeditview_notrecommend")
+	local hasRecommendCareers = #recommendCareers ~= 0
+	local recommendText = hasRecommendCareers and luaLang("herogroupeditview_recommend") or luaLang("herogroupeditview_notrecommend")
 
-	arg_13_0._txtrecommendAttrDesc.text = var_13_2
+	self._txtrecommendAttrDesc.text = recommendText
 
-	if var_13_1 then
-		gohelper.CreateObjList(arg_13_0, arg_13_0._onRecommendCareerItemShow, var_13_0, arg_13_0._goattrlist, arg_13_0._goattritem)
+	if hasRecommendCareers then
+		gohelper.CreateObjList(self, self._onRecommendCareerItemShow, recommendCareers, self._goattrlist, self._goattritem)
 	end
 
-	gohelper.setActive(arg_13_0._goattrlist, var_13_1)
-	gohelper.setActive(arg_13_0._gorecommendAttr, true)
+	gohelper.setActive(self._goattrlist, hasRecommendCareers)
+	gohelper.setActive(self._gorecommendAttr, true)
 end
 
-function var_0_0._onRecommendCareerItemShow(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	local var_14_0 = gohelper.findChildImage(arg_14_1, "icon")
+function Season123_2_0PickAssistView:_onRecommendCareerItemShow(obj, data, index)
+	local icon = gohelper.findChildImage(obj, "icon")
 
-	UISpriteSetMgr.instance:setHeroGroupSprite(var_14_0, "career_" .. arg_14_2)
+	UISpriteSetMgr.instance:setHeroGroupSprite(icon, "career_" .. data)
 end
 
-function var_0_0.refreshUI(arg_15_0)
-	arg_15_0:refreshCD()
-	arg_15_0:refreshCareerFilterItems()
-	arg_15_0:refreshIsEmpty()
-	arg_15_0:refreshBtnDetail()
+function Season123_2_0PickAssistView:refreshUI()
+	self:refreshCD()
+	self:refreshCareerFilterItems()
+	self:refreshIsEmpty()
+	self:refreshBtnDetail()
 end
 
-function var_0_0.refreshCD(arg_16_0)
-	local var_16_0 = Season123PickAssistController.instance:getRefreshCDRate()
+function Season123_2_0PickAssistView:refreshCD()
+	local cdRate = Season123PickAssistController.instance:getRefreshCDRate()
 
-	arg_16_0._simageprogress.fillAmount = var_16_0
+	self._simageprogress.fillAmount = cdRate
 end
 
-function var_0_0.refreshCareerFilterItems(arg_17_0)
-	for iter_17_0, iter_17_1 in pairs(arg_17_0._career2FilterItemDict) do
-		local var_17_0 = Season123PickAssistListModel.instance:getCareer()
+function Season123_2_0PickAssistView:refreshCareerFilterItems()
+	for career, filterItem in pairs(self._career2FilterItemDict) do
+		local selectedCareer = Season123PickAssistListModel.instance:getCareer()
 
-		gohelper.setActive(iter_17_1.goSelected, iter_17_0 == var_17_0)
+		gohelper.setActive(filterItem.goSelected, career == selectedCareer)
 	end
 end
 
-function var_0_0.refreshIsEmpty(arg_18_0)
-	local var_18_0 = Season123PickAssistListModel.instance:isHasAssistList()
+function Season123_2_0PickAssistView:refreshIsEmpty()
+	local isHasAssistList = Season123PickAssistListModel.instance:isHasAssistList()
 
-	gohelper.setActive(arg_18_0._goempty, not var_18_0)
+	gohelper.setActive(self._goempty, not isHasAssistList)
 end
 
-function var_0_0.refreshBtnDetail(arg_19_0)
-	local var_19_0 = Season123PickAssistListModel.instance:getSelectedMO()
+function Season123_2_0PickAssistView:refreshBtnDetail()
+	local selectedMO = Season123PickAssistListModel.instance:getSelectedMO()
 
-	gohelper.setActive(arg_19_0._godetail, var_19_0)
+	gohelper.setActive(self._godetail, selectedMO)
 end
 
-function var_0_0.onClose(arg_20_0)
-	TaskDispatcher.cancelTask(arg_20_0.refreshCD, arg_20_0)
+function Season123_2_0PickAssistView:onClose()
+	TaskDispatcher.cancelTask(self.refreshCD, self)
 end
 
-function var_0_0.onDestroyView(arg_21_0)
-	arg_21_0:disposeCareerItems()
+function Season123_2_0PickAssistView:onDestroyView()
+	self:disposeCareerItems()
 	Season123PickAssistController.instance:onCloseView()
 end
 
-function var_0_0.disposeCareerItems(arg_22_0)
-	if arg_22_0._career2FilterItemDict then
-		for iter_22_0, iter_22_1 in pairs(arg_22_0._career2FilterItemDict) do
-			if iter_22_1.btnClick then
-				iter_22_1.btnClick:RemoveClickListener()
+function Season123_2_0PickAssistView:disposeCareerItems()
+	if self._career2FilterItemDict then
+		for _, item in pairs(self._career2FilterItemDict) do
+			if item.btnClick then
+				item.btnClick:RemoveClickListener()
 			end
 		end
 
-		arg_22_0._career2FilterItemDict = nil
+		self._career2FilterItemDict = nil
 	end
 end
 
-return var_0_0
+return Season123_2_0PickAssistView

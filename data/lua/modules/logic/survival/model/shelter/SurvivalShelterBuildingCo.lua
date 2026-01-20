@@ -1,33 +1,35 @@
-﻿module("modules.logic.survival.model.shelter.SurvivalShelterBuildingCo", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/shelter/SurvivalShelterBuildingCo.lua
 
-local var_0_0 = pureTable("SurvivalShelterBuildingCo")
+module("modules.logic.survival.model.shelter.SurvivalShelterBuildingCo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.ponitRange = {}
-	arg_1_0.pointRangeList = {}
-	arg_1_0.pos = SurvivalHexNode.New(arg_1_1[1], arg_1_1[2])
-	arg_1_0.id = arg_1_1[3]
-	arg_1_0.cfgId = arg_1_1[4]
-	arg_1_0.dir = arg_1_1[5]
-	arg_1_0.assetPath = arg_1_2[arg_1_1[6]]
-	arg_1_0.exPoints = {}
+local SurvivalShelterBuildingCo = pureTable("SurvivalShelterBuildingCo")
 
-	if arg_1_1[7] then
-		for iter_1_0, iter_1_1 in ipairs(arg_1_1[7]) do
-			local var_1_0 = SurvivalHexNode.New(iter_1_1[1], iter_1_1[2])
+function SurvivalShelterBuildingCo:init(data, allPaths)
+	self.ponitRange = {}
+	self.pointRangeList = {}
+	self.pos = SurvivalHexNode.New(data[1], data[2])
+	self.id = data[3]
+	self.cfgId = data[4]
+	self.dir = data[5]
+	self.assetPath = allPaths[data[6]]
+	self.exPoints = {}
 
-			table.insert(arg_1_0.exPoints, var_1_0)
-			table.insert(arg_1_0.pointRangeList, var_1_0)
-			SurvivalHelper.instance:addNodeToDict(arg_1_0.ponitRange, var_1_0)
+	if data[7] then
+		for _, v in ipairs(data[7]) do
+			local point = SurvivalHexNode.New(v[1], v[2])
+
+			table.insert(self.exPoints, point)
+			table.insert(self.pointRangeList, point)
+			SurvivalHelper.instance:addNodeToDict(self.ponitRange, point)
 		end
 	end
 
-	SurvivalHelper.instance:addNodeToDict(arg_1_0.ponitRange, arg_1_0.pos)
-	table.insert(arg_1_0.pointRangeList, arg_1_0.pos)
+	SurvivalHelper.instance:addNodeToDict(self.ponitRange, self.pos)
+	table.insert(self.pointRangeList, self.pos)
 end
 
-function var_0_0.isInRange(arg_2_0, arg_2_1)
-	return SurvivalHelper.instance:getValueFromDict(arg_2_0.ponitRange, arg_2_1)
+function SurvivalShelterBuildingCo:isInRange(ponit)
+	return SurvivalHelper.instance:getValueFromDict(self.ponitRange, ponit)
 end
 
-return var_0_0
+return SurvivalShelterBuildingCo

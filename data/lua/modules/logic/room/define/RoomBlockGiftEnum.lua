@@ -1,12 +1,14 @@
-﻿module("modules.logic.room.define.RoomBlockGiftEnum", package.seeall)
+﻿-- chunkname: @modules/logic/room/define/RoomBlockGiftEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.room.define.RoomBlockGiftEnum", package.seeall)
 
-var_0_0.SubType = {
+local RoomBlockGiftEnum = _M
+
+RoomBlockGiftEnum.SubType = {
 	MaterialEnum.MaterialType.BlockPackage,
 	MaterialEnum.MaterialType.Building
 }
-var_0_0.SubTypeInfo = {
+RoomBlockGiftEnum.SubTypeInfo = {
 	[MaterialEnum.MaterialType.BlockPackage] = {
 		NumSortTxt = "p_roomblockpackageview_filtrate",
 		SubType = 1,
@@ -36,10 +38,10 @@ var_0_0.SubTypeInfo = {
 		}
 	}
 }
-var_0_0.SortType = {
+RoomBlockGiftEnum.SortType = {
 	Reverse = 2,
 	Order = 1,
 	None = 0
 }
 
-return var_0_0
+return RoomBlockGiftEnum

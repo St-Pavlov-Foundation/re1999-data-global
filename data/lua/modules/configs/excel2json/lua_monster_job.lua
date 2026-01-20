@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_monster_job", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_monster_job.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_monster_job", package.seeall)
+
+local lua_monster_job = {}
+local fields = {
 	technic_equip_base = 16,
 	criDef_init_super = 20,
 	defense_equip_base = 14,
@@ -37,13 +39,13 @@ local var_0_1 = {
 	life_base = 7,
 	dropDmg_reson_super = 34
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_monster_job.onLoad(json)
+	lua_monster_job.configList, lua_monster_job.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_monster_job

@@ -1,204 +1,206 @@
-﻿module("modules.logic.dragonboat.view.DragonBoatFestivalActivityView", package.seeall)
+﻿-- chunkname: @modules/logic/dragonboat/view/DragonBoatFestivalActivityView.lua
 
-local var_0_0 = class("DragonBoatFestivalActivityView", BaseView)
+module("modules.logic.dragonboat.view.DragonBoatFestivalActivityView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagePanelBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_PanelBG")
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Root/Layout/image_LimitTimeBG/#txt_LimitTime")
-	arg_1_0._goDescr = gohelper.findChild(arg_1_0.viewGO, "Root/Layout/image_Descr")
-	arg_1_0._txtDescr = gohelper.findChildText(arg_1_0.viewGO, "Root/Layout/image_Descr/#txt_Descr")
-	arg_1_0._scrollItemList = gohelper.findChildScrollRect(arg_1_0.viewGO, "Root/#scroll_ItemList")
-	arg_1_0._goPuzzlePicClose = gohelper.findChild(arg_1_0.viewGO, "Root/Right/#go_PuzzlePicClose")
-	arg_1_0._goPuzzlePicBG1 = gohelper.findChild(arg_1_0.viewGO, "Root/Right/#go_PuzzlePicClose/#go_PuzzlePicBG1")
-	arg_1_0._goPuzzlePicBG2 = gohelper.findChild(arg_1_0.viewGO, "Root/Right/#go_PuzzlePicClose/#go_PuzzlePicBG2")
-	arg_1_0._goPuzzlePicFG = gohelper.findChild(arg_1_0.viewGO, "Root/Right/#go_PuzzlePicClose/#go_PuzzlePicFG")
-	arg_1_0._goPuzzlePicOpen = gohelper.findChild(arg_1_0.viewGO, "Root/Right/#go_PuzzlePicOpen")
-	arg_1_0._imagePuzzlePic = gohelper.findChildImage(arg_1_0.viewGO, "Root/Right/#go_PuzzlePicOpen/#image_PuzzlePic")
+local DragonBoatFestivalActivityView = class("DragonBoatFestivalActivityView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function DragonBoatFestivalActivityView:onInitView()
+	self._simagePanelBG = gohelper.findChildSingleImage(self.viewGO, "Root/#simage_PanelBG")
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "Root/Layout/image_LimitTimeBG/#txt_LimitTime")
+	self._goDescr = gohelper.findChild(self.viewGO, "Root/Layout/image_Descr")
+	self._txtDescr = gohelper.findChildText(self.viewGO, "Root/Layout/image_Descr/#txt_Descr")
+	self._scrollItemList = gohelper.findChildScrollRect(self.viewGO, "Root/#scroll_ItemList")
+	self._goPuzzlePicClose = gohelper.findChild(self.viewGO, "Root/Right/#go_PuzzlePicClose")
+	self._goPuzzlePicBG1 = gohelper.findChild(self.viewGO, "Root/Right/#go_PuzzlePicClose/#go_PuzzlePicBG1")
+	self._goPuzzlePicBG2 = gohelper.findChild(self.viewGO, "Root/Right/#go_PuzzlePicClose/#go_PuzzlePicBG2")
+	self._goPuzzlePicFG = gohelper.findChild(self.viewGO, "Root/Right/#go_PuzzlePicClose/#go_PuzzlePicFG")
+	self._goPuzzlePicOpen = gohelper.findChild(self.viewGO, "Root/Right/#go_PuzzlePicOpen")
+	self._imagePuzzlePic = gohelper.findChildImage(self.viewGO, "Root/Right/#go_PuzzlePicOpen/#image_PuzzlePic")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function DragonBoatFestivalActivityView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function DragonBoatFestivalActivityView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._goContentRoot = gohelper.findChild(arg_4_0.viewGO, "Root/#scroll_ItemList/Viewport/Content")
-	arg_4_0._mapAnimator = arg_4_0._goPuzzlePicOpen:GetComponent(typeof(UnityEngine.Animator))
-	arg_4_0._items = {}
-	arg_4_0._hasClickReward = false
+function DragonBoatFestivalActivityView:_editableInitView()
+	self._goContentRoot = gohelper.findChild(self.viewGO, "Root/#scroll_ItemList/Viewport/Content")
+	self._mapAnimator = self._goPuzzlePicOpen:GetComponent(typeof(UnityEngine.Animator))
+	self._items = {}
+	self._hasClickReward = false
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function DragonBoatFestivalActivityView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
+function DragonBoatFestivalActivityView:onOpen()
 	DragonBoatFestivalModel.instance:setCurDay(nil)
 
-	local var_6_0 = arg_6_0.viewParam.parent
+	local parentGO = self.viewParam.parent
 
-	gohelper.addChild(var_6_0, arg_6_0.viewGO)
-	arg_6_0:addCustomEvents()
-	arg_6_0._simagePanelBG:LoadImage(ResUrl.getV1a9SignSingleBg("v1a9_dragonboat_panelbg"))
-	arg_6_0:_refreshItems()
-	arg_6_0:_refreshMap()
+	gohelper.addChild(parentGO, self.viewGO)
+	self:addCustomEvents()
+	self._simagePanelBG:LoadImage(ResUrl.getV1a9SignSingleBg("v1a9_dragonboat_panelbg"))
+	self:_refreshItems()
+	self:_refreshMap()
 	AudioMgr.instance:trigger(AudioEnum.DragonBoatFestival.play_ui_jinye_spools_open)
-	arg_6_0._mapAnimator:Play("open", 0, 0)
-	arg_6_0:_getRemainTimeStr()
-	TaskDispatcher.runRepeat(arg_6_0._getRemainTimeStr, arg_6_0, 1)
+	self._mapAnimator:Play("open", 0, 0)
+	self:_getRemainTimeStr()
+	TaskDispatcher.runRepeat(self._getRemainTimeStr, self, 1)
 end
 
-function var_0_0.addCustomEvents(arg_7_0)
-	arg_7_0:addEventCb(DragonBoatFestivalController.instance, DragonBoatFestivalEvent.SelectItem, arg_7_0._onSelectItem, arg_7_0)
-	arg_7_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_7_0._onCloseViewFinish, arg_7_0)
-	arg_7_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshNorSignActivity, arg_7_0._refreshFestivalItem, arg_7_0)
+function DragonBoatFestivalActivityView:addCustomEvents()
+	self:addEventCb(DragonBoatFestivalController.instance, DragonBoatFestivalEvent.SelectItem, self._onSelectItem, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshNorSignActivity, self._refreshFestivalItem, self)
 end
 
-function var_0_0._onCloseViewFinish(arg_8_0, arg_8_1)
-	if arg_8_1 == ViewName.CommonPropView then
-		arg_8_0._hasClickReward = true
+function DragonBoatFestivalActivityView:_onCloseViewFinish(viewName)
+	if viewName == ViewName.CommonPropView then
+		self._hasClickReward = true
 
-		arg_8_0:_onSelectItem()
+		self:_onSelectItem()
 	end
 end
 
-function var_0_0._getRemainTimeStr(arg_9_0)
-	local var_9_0 = ActivityEnum.Activity.DragonBoatFestival
+function DragonBoatFestivalActivityView:_getRemainTimeStr()
+	local actId = ActivityEnum.Activity.DragonBoatFestival
 
-	arg_9_0._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(var_9_0)
+	self._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(actId)
 end
 
-function var_0_0._onSelectItem(arg_10_0)
-	local var_10_0 = DragonBoatFestivalModel.instance:getCurDay()
-	local var_10_1 = DragonBoatFestivalModel.instance:isGiftUnlock(var_10_0)
+function DragonBoatFestivalActivityView:_onSelectItem()
+	local day = DragonBoatFestivalModel.instance:getCurDay()
+	local dayUnlock = DragonBoatFestivalModel.instance:isGiftUnlock(day)
 
-	arg_10_0._hasClickReward = true
+	self._hasClickReward = true
 
-	if not arg_10_0._goPuzzlePicOpen.activeSelf then
-		arg_10_0:_refreshItems()
-		arg_10_0:_refreshMap()
+	if not self._goPuzzlePicOpen.activeSelf then
+		self:_refreshItems()
+		self:_refreshMap()
 
-		if var_10_1 then
+		if dayUnlock then
 			AudioMgr.instance:trigger(AudioEnum.DragonBoatFestival.play_ui_jinye_spools_open)
 			UIBlockMgrExtend.setNeedCircleMv(false)
 			UIBlockMgr.instance:startBlock("mapAni")
-			arg_10_0._mapAnimator:Play("open", 0, 0)
-			TaskDispatcher.runDelay(arg_10_0._openFinished, arg_10_0, 2.33)
+			self._mapAnimator:Play("open", 0, 0)
+			TaskDispatcher.runDelay(self._openFinished, self, 2.33)
 		end
 	else
 		UIBlockMgrExtend.setNeedCircleMv(false)
 		UIBlockMgr.instance:startBlock("mapAni")
 
-		if var_10_1 then
+		if dayUnlock then
 			AudioMgr.instance:trigger(AudioEnum.DragonBoatFestival.play_ui_mln_details_open)
-			arg_10_0._mapAnimator:Play("switch", 0, 0)
-			TaskDispatcher.runDelay(arg_10_0._switchMap, arg_10_0, 0.35)
+			self._mapAnimator:Play("switch", 0, 0)
+			TaskDispatcher.runDelay(self._switchMap, self, 0.35)
 		else
 			AudioMgr.instance:trigger(AudioEnum.DragonBoatFestival.play_ui_mln_details_open)
-			arg_10_0._mapAnimator:Play("close", 0, 0)
-			arg_10_0:_refreshItems()
-			TaskDispatcher.runDelay(arg_10_0._closeFinished, arg_10_0, 1)
+			self._mapAnimator:Play("close", 0, 0)
+			self:_refreshItems()
+			TaskDispatcher.runDelay(self._closeFinished, self, 1)
 		end
 	end
 end
 
-function var_0_0._closeFinished(arg_11_0)
-	arg_11_0:_refreshMap()
+function DragonBoatFestivalActivityView:_closeFinished()
+	self:_refreshMap()
 	UIBlockMgr.instance:endBlock("mapAni")
 	DragonBoatFestivalController.instance:dispatchEvent(DragonBoatFestivalEvent.ShowMapFinished)
 end
 
-function var_0_0._switchMap(arg_12_0)
-	arg_12_0:_refreshItems()
-	arg_12_0:_refreshMap()
-	TaskDispatcher.runDelay(arg_12_0._openFinished, arg_12_0, 0.59)
+function DragonBoatFestivalActivityView:_switchMap()
+	self:_refreshItems()
+	self:_refreshMap()
+	TaskDispatcher.runDelay(self._openFinished, self, 0.59)
 end
 
-function var_0_0._openFinished(arg_13_0)
+function DragonBoatFestivalActivityView:_openFinished()
 	UIBlockMgr.instance:endBlock("mapAni")
 end
 
-function var_0_0._refreshItems(arg_14_0)
-	arg_14_0:_refreshFestivalItem()
+function DragonBoatFestivalActivityView:_refreshItems()
+	self:_refreshFestivalItem()
 
-	local var_14_0 = DragonBoatFestivalModel.instance:getCurDay()
-	local var_14_1 = DragonBoatFestivalConfig.instance:getDragonBoatCo(var_14_0)
-	local var_14_2 = DragonBoatFestivalModel.instance:getMaxUnlockDay()
-	local var_14_3 = DragonBoatFestivalModel.instance:isGiftGet(var_14_2)
+	local day = DragonBoatFestivalModel.instance:getCurDay()
+	local actCo = DragonBoatFestivalConfig.instance:getDragonBoatCo(day)
+	local loginCount = DragonBoatFestivalModel.instance:getMaxUnlockDay()
+	local maxDayGet = DragonBoatFestivalModel.instance:isGiftGet(loginCount)
 
-	if var_14_0 == var_14_2 and not var_14_3 then
-		gohelper.setActive(arg_14_0._goDescr, false)
+	if day == loginCount and not maxDayGet then
+		gohelper.setActive(self._goDescr, false)
 
-		arg_14_0._txtDescr.text = ""
+		self._txtDescr.text = ""
 	else
-		gohelper.setActive(arg_14_0._goDescr, true)
+		gohelper.setActive(self._goDescr, true)
 
-		arg_14_0._txtDescr.text = var_14_1.desc
+		self._txtDescr.text = actCo.desc
 	end
 end
 
-function var_0_0._refreshFestivalItem(arg_15_0)
-	local var_15_0 = arg_15_0.viewContainer:getSetting().otherRes[1]
-	local var_15_1 = ActivityConfig.instance:getNorSignActivityCos(ActivityEnum.Activity.DragonBoatFestival)
+function DragonBoatFestivalActivityView:_refreshFestivalItem()
+	local path = self.viewContainer:getSetting().otherRes[1]
+	local actCos = ActivityConfig.instance:getNorSignActivityCos(ActivityEnum.Activity.DragonBoatFestival)
 
-	for iter_15_0, iter_15_1 in ipairs(var_15_1) do
-		if not arg_15_0._items[iter_15_1.id] then
-			local var_15_2 = arg_15_0:getResInst(var_15_0, arg_15_0._goContentRoot)
-			local var_15_3 = DragonBoatFestivalItem.New()
+	for _, v in ipairs(actCos) do
+		if not self._items[v.id] then
+			local go = self:getResInst(path, self._goContentRoot)
+			local item = DragonBoatFestivalItem.New()
 
-			var_15_3:init(var_15_2, iter_15_1.id)
+			item:init(go, v.id)
 
-			arg_15_0._items[iter_15_1.id] = var_15_3
+			self._items[v.id] = item
 		else
-			arg_15_0._items[iter_15_1.id]:refresh(iter_15_1.id)
+			self._items[v.id]:refresh(v.id)
 		end
 	end
 end
 
-function var_0_0._refreshMap(arg_16_0)
-	local var_16_0 = DragonBoatFestivalModel.instance:getCurDay()
-	local var_16_1 = DragonBoatFestivalModel.instance:getMaxUnlockDay()
-	local var_16_2 = DragonBoatFestivalModel.instance:isGiftGet(var_16_1)
-	local var_16_3 = DragonBoatFestivalConfig.instance:getDragonBoatCo(var_16_0)
-	local var_16_4 = DragonBoatFestivalModel.instance:isGiftUnlock(var_16_0)
+function DragonBoatFestivalActivityView:_refreshMap()
+	local day = DragonBoatFestivalModel.instance:getCurDay()
+	local loginCount = DragonBoatFestivalModel.instance:getMaxUnlockDay()
+	local maxDayGet = DragonBoatFestivalModel.instance:isGiftGet(loginCount)
+	local actCo = DragonBoatFestivalConfig.instance:getDragonBoatCo(day)
+	local dayUnlock = DragonBoatFestivalModel.instance:isGiftUnlock(day)
 
-	if var_16_0 == var_16_1 and not var_16_2 and not arg_16_0._hasClickReward then
-		var_16_4 = false
+	if day == loginCount and not maxDayGet and not self._hasClickReward then
+		dayUnlock = false
 	end
 
-	gohelper.setActive(arg_16_0._goPuzzlePicClose, not var_16_4)
-	gohelper.setActive(arg_16_0._goPuzzlePicOpen, var_16_4)
-	UISpriteSetMgr.instance:setDragonBoatSprite(arg_16_0._imagePuzzlePic, var_16_3.dayicon)
+	gohelper.setActive(self._goPuzzlePicClose, not dayUnlock)
+	gohelper.setActive(self._goPuzzlePicOpen, dayUnlock)
+	UISpriteSetMgr.instance:setDragonBoatSprite(self._imagePuzzlePic, actCo.dayicon)
 end
 
-function var_0_0.onClose(arg_17_0)
-	arg_17_0:removeCustomEvents()
+function DragonBoatFestivalActivityView:onClose()
+	self:removeCustomEvents()
 end
 
-function var_0_0.removeCustomEvents(arg_18_0)
-	arg_18_0:removeEventCb(DragonBoatFestivalController.instance, DragonBoatFestivalEvent.SelectItem, arg_18_0._onSelectItem, arg_18_0)
-	arg_18_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_18_0._onCloseViewFinish, arg_18_0)
-	arg_18_0:removeEventCb(ActivityController.instance, ActivityEvent.RefreshNorSignActivity, arg_18_0._refreshFestivalItem, arg_18_0)
+function DragonBoatFestivalActivityView:removeCustomEvents()
+	self:removeEventCb(DragonBoatFestivalController.instance, DragonBoatFestivalEvent.SelectItem, self._onSelectItem, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	self:removeEventCb(ActivityController.instance, ActivityEvent.RefreshNorSignActivity, self._refreshFestivalItem, self)
 end
 
-function var_0_0.onDestroyView(arg_19_0)
-	TaskDispatcher.cancelTask(arg_19_0._getRemainTimeStr, arg_19_0)
-	TaskDispatcher.cancelTask(arg_19_0._closeToOpen, arg_19_0)
-	TaskDispatcher.cancelTask(arg_19_0._openFinished, arg_19_0)
-	TaskDispatcher.cancelTask(arg_19_0._closeFinished, arg_19_0)
+function DragonBoatFestivalActivityView:onDestroyView()
+	TaskDispatcher.cancelTask(self._getRemainTimeStr, self)
+	TaskDispatcher.cancelTask(self._closeToOpen, self)
+	TaskDispatcher.cancelTask(self._openFinished, self)
+	TaskDispatcher.cancelTask(self._closeFinished, self)
 
-	if arg_19_0._items then
-		for iter_19_0, iter_19_1 in pairs(arg_19_0._items) do
-			iter_19_1:destroy()
+	if self._items then
+		for _, v in pairs(self._items) do
+			v:destroy()
 		end
 	end
 end
 
-return var_0_0
+return DragonBoatFestivalActivityView

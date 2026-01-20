@@ -1,156 +1,160 @@
-﻿module("modules.logic.room.view.manufacture.RoomViewUIManufactureItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/manufacture/RoomViewUIManufactureItem.lua
 
-local var_0_0 = class("RoomViewUIManufactureItem", RoomViewUIBaseItem)
+module("modules.logic.room.view.manufacture.RoomViewUIManufactureItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0)
+local RoomViewUIManufactureItem = class("RoomViewUIManufactureItem", RoomViewUIBaseItem)
 
-	arg_1_0._manufactureType = arg_1_1
+function RoomViewUIManufactureItem:ctor(manufactureType)
+	RoomViewUIManufactureItem.super.ctor(self)
+
+	self._manufactureType = manufactureType
 end
 
-function var_0_0._customOnInit(arg_2_0)
-	arg_2_0._gonone = gohelper.findChild(arg_2_0._gocontainer, "#go_none")
-	arg_2_0._produceAnimator = arg_2_0._gonone:GetComponent(RoomEnum.ComponentType.Animator)
-	arg_2_0._golayoutGet = gohelper.findChild(arg_2_0._gocontainer, "#go_layoutGet")
-	arg_2_0._goget = gohelper.findChild(arg_2_0._gocontainer, "#go_layoutGet/#go_get")
-	arg_2_0._txtbuildingname = gohelper.findChildText(arg_2_0._gocontainer, "bottom/txt_buildingName")
+function RoomViewUIManufactureItem:_customOnInit()
+	self._gonone = gohelper.findChild(self._gocontainer, "#go_none")
+	self._produceAnimator = self._gonone:GetComponent(RoomEnum.ComponentType.Animator)
+	self._golayoutGet = gohelper.findChild(self._gocontainer, "#go_layoutGet")
+	self._goget = gohelper.findChild(self._gocontainer, "#go_layoutGet/#go_get")
+	self._txtbuildingname = gohelper.findChildText(self._gocontainer, "bottom/txt_buildingName")
 
-	local var_2_0 = RoomBuildingEnum.BuildingTypeAreName[arg_2_0._manufactureType]
+	local name = RoomBuildingEnum.BuildingTypeAreName[self._manufactureType]
 
-	arg_2_0._txtbuildingname.text = luaLang(var_2_0)
+	self._txtbuildingname.text = luaLang(name)
 
-	gohelper.setActive(arg_2_0._goget, false)
+	gohelper.setActive(self._goget, false)
 end
 
-function var_0_0._customAddEventListeners(arg_3_0)
-	arg_3_0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, arg_3_0._refreshManufactureItem, arg_3_0)
-	arg_3_0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, arg_3_0._refreshManufactureItem, arg_3_0)
-	arg_3_0:refreshUI(true)
+function RoomViewUIManufactureItem:_customAddEventListeners()
+	self:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, self._refreshManufactureItem, self)
+	self:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, self._refreshManufactureItem, self)
+	self:refreshUI(true)
 end
 
-function var_0_0._customRemoveEventListeners(arg_4_0)
-	arg_4_0:removeEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, arg_4_0._refreshManufactureItem, arg_4_0)
-	arg_4_0:removeEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, arg_4_0._refreshManufactureItem, arg_4_0)
+function RoomViewUIManufactureItem:_customRemoveEventListeners()
+	self:removeEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, self._refreshManufactureItem, self)
+	self:removeEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, self._refreshManufactureItem, self)
 end
 
-function var_0_0._onClick(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_0._canGet then
+function RoomViewUIManufactureItem:_onClick(go, param)
+	if self._canGet then
 		ManufactureController.instance:gainCompleteManufactureItem()
 	else
-		ManufactureController.instance:openManufactureBuildingViewByType(arg_5_0._manufactureType)
+		ManufactureController.instance:openManufactureBuildingViewByType(self._manufactureType)
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 end
 
-function var_0_0.refreshUI(arg_6_0, arg_6_1)
-	arg_6_0:_refreshManufactureItem()
-	arg_6_0:_refreshShow(arg_6_1)
-	arg_6_0:_refreshPosition()
+function RoomViewUIManufactureItem:refreshUI(isInit)
+	self:_refreshManufactureItem()
+	self:_refreshShow(isInit)
+	self:_refreshPosition()
 end
 
-function var_0_0._refreshManufactureItem(arg_7_0)
-	arg_7_0._canGet = false
+function RoomViewUIManufactureItem:_refreshManufactureItem()
+	self._canGet = false
 
-	local var_7_0 = false
-	local var_7_1 = {}
-	local var_7_2 = RoomMapBuildingAreaModel.instance:getAreaMOByBType(arg_7_0._manufactureType)
-	local var_7_3 = var_7_2 and var_7_2:getBuildingMOList(true)
+	local hasRunningBuilding = false
+	local completeManufactureItemList = {}
+	local areaMo = RoomMapBuildingAreaModel.instance:getAreaMOByBType(self._manufactureType)
+	local buildingMOList = areaMo and areaMo:getBuildingMOList(true)
 
-	if var_7_3 then
-		for iter_7_0, iter_7_1 in ipairs(var_7_3) do
-			local var_7_4 = iter_7_1:getNewerCompleteManufactureItem()
-			local var_7_5 = iter_7_1:getManufactureState() == RoomManufactureEnum.ManufactureState.Running
+	if buildingMOList then
+		for _, buildingMO in ipairs(buildingMOList) do
+			local newerCompleteManufactureItem = buildingMO:getNewerCompleteManufactureItem()
+			local manufactureState = buildingMO:getManufactureState()
+			local isRunning = manufactureState == RoomManufactureEnum.ManufactureState.Running
 
-			var_7_0 = var_7_0 or var_7_5
+			hasRunningBuilding = hasRunningBuilding or isRunning
 
-			if var_7_4 then
-				arg_7_0._canGet = true
+			if newerCompleteManufactureItem then
+				self._canGet = true
 
-				table.insert(var_7_1, var_7_4)
+				table.insert(completeManufactureItemList, newerCompleteManufactureItem)
 			end
 		end
 	end
 
-	if arg_7_0._iconList then
-		for iter_7_2, iter_7_3 in ipairs(arg_7_0._iconList) do
-			iter_7_3:UnLoadImage()
+	if self._iconList then
+		for _, icon in ipairs(self._iconList) do
+			icon:UnLoadImage()
 		end
 	end
 
-	arg_7_0._iconList = arg_7_0:getUserDataTb_()
+	self._iconList = self:getUserDataTb_()
 
-	gohelper.CreateObjList(arg_7_0, arg_7_0._onsSetManufactureItem, var_7_1, arg_7_0._golayoutGet, arg_7_0._goget)
-	gohelper.setActive(arg_7_0._gonone, not arg_7_0._canGet)
-	gohelper.setActive(arg_7_0._golayoutGet, arg_7_0._canGet)
+	gohelper.CreateObjList(self, self._onsSetManufactureItem, completeManufactureItemList, self._golayoutGet, self._goget)
+	gohelper.setActive(self._gonone, not self._canGet)
+	gohelper.setActive(self._golayoutGet, self._canGet)
 
-	local var_7_6 = "idle"
+	local animName = "idle"
 
-	if not arg_7_0._canGet and var_7_0 then
-		var_7_6 = "loop"
+	if not self._canGet and hasRunningBuilding then
+		animName = "loop"
 	end
 
-	arg_7_0._produceAnimator:Play(var_7_6, 0, 0)
+	self._produceAnimator:Play(animName, 0, 0)
 end
 
-function var_0_0._onsSetManufactureItem(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	local var_8_0 = gohelper.findChildSingleImage(arg_8_1, "#simage_item")
-	local var_8_1 = ManufactureConfig.instance:getItemId(arg_8_2)
-	local var_8_2, var_8_3 = ItemModel.instance:getItemConfigAndIcon(MaterialEnum.MaterialType.Item, var_8_1)
+function RoomViewUIManufactureItem:_onsSetManufactureItem(obj, data, index)
+	local simageIcon = gohelper.findChildSingleImage(obj, "#simage_item")
+	local itemId = ManufactureConfig.instance:getItemId(data)
+	local _, icon = ItemModel.instance:getItemConfigAndIcon(MaterialEnum.MaterialType.Item, itemId)
 
-	if not string.nilorempty(var_8_3) then
-		var_8_0:LoadImage(var_8_3)
+	if not string.nilorempty(icon) then
+		simageIcon:LoadImage(icon)
 	end
 
-	arg_8_0._iconList[#arg_8_0._iconList + 1] = var_8_0
+	self._iconList[#self._iconList + 1] = simageIcon
 end
 
-function var_0_0._refreshShow(arg_9_0, arg_9_1)
+function RoomViewUIManufactureItem:_refreshShow(isInit)
 	if RoomBuildingController.instance:isBuildingListShow() or RoomCharacterController.instance:isCharacterListShow() then
-		arg_9_0:_setShow(false, arg_9_1)
+		self:_setShow(false, isInit)
 
 		return
 	end
 
-	local var_9_0 = arg_9_0._scene.camera:getCameraState()
+	local cameraState = self._scene.camera:getCameraState()
 
-	if var_9_0 ~= RoomEnum.CameraState.Overlook and var_9_0 ~= RoomEnum.CameraState.OverlookAll then
-		arg_9_0:_setShow(false, arg_9_1)
+	if cameraState ~= RoomEnum.CameraState.Overlook and cameraState ~= RoomEnum.CameraState.OverlookAll then
+		self:_setShow(false, isInit)
 
 		return
 	end
 
 	if RoomMapController.instance:isInRoomInitBuildingViewCamera() then
-		arg_9_0:_setShow(false, arg_9_1)
+		self:_setShow(false, isInit)
 
 		return
 	end
 
-	arg_9_0:_setShow(true, arg_9_1)
+	self:_setShow(true, isInit)
 end
 
-function var_0_0.getUI3DPos(arg_10_0)
-	local var_10_0 = RoomMapBuildingAreaModel.instance:getBuildingUidByType(arg_10_0._manufactureType)
-	local var_10_1 = arg_10_0._scene.buildingmgr:getBuildingEntity(var_10_0, SceneTag.RoomBuilding)
+function RoomViewUIManufactureItem:getUI3DPos()
+	local buildingUid = RoomMapBuildingAreaModel.instance:getBuildingUidByType(self._manufactureType)
+	local buildingEntity = self._scene.buildingmgr:getBuildingEntity(buildingUid, SceneTag.RoomBuilding)
 
-	if not var_10_1 then
-		arg_10_0:_setShow(false, true)
+	if not buildingEntity then
+		self:_setShow(false, true)
 
 		return Vector3.zero
 	end
 
-	local var_10_2 = var_10_1:getHeadGO()
-	local var_10_3 = var_10_1.containerGO
-	local var_10_4 = var_10_2 and var_10_2.transform.position or var_10_3.transform.position
-	local var_10_5 = Vector3(var_10_4.x, var_10_4.y, var_10_4.z)
+	local headGO = buildingEntity:getHeadGO()
+	local containerGo = buildingEntity.containerGO
+	local position = headGO and headGO.transform.position or containerGo.transform.position
+	local worldPos = Vector3(position.x, position.y, position.z)
+	local bendingPos = RoomBendingHelper.worldToBendingSimple(worldPos)
 
-	return (RoomBendingHelper.worldToBendingSimple(var_10_5))
+	return bendingPos
 end
 
-function var_0_0._customOnDestory(arg_11_0)
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0._iconList) do
-		iter_11_1:UnLoadImage()
+function RoomViewUIManufactureItem:_customOnDestory()
+	for _, icon in ipairs(self._iconList) do
+		icon:UnLoadImage()
 	end
 end
 
-return var_0_0
+return RoomViewUIManufactureItem

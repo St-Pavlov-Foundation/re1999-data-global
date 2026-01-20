@@ -1,398 +1,406 @@
-﻿module("modules.logic.versionactivity1_5.aizila.view.game.AiZiLaGameView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/aizila/view/game/AiZiLaGameView.lua
 
-local var_0_0 = class("AiZiLaGameView", BaseView)
+module("modules.logic.versionactivity1_5.aizila.view.game.AiZiLaGameView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "Top/#txt_Title")
-	arg_1_0._txtHeight = gohelper.findChildText(arg_1_0.viewGO, "Top/#txt_Height")
-	arg_1_0._txtRemainingTimesNum = gohelper.findChildText(arg_1_0.viewGO, "LeftTop/RemainingTimes/#txt_RemainingTimesNum")
-	arg_1_0._txtTargetDesc = gohelper.findChildText(arg_1_0.viewGO, "LeftTop/TargetList/TargetItem/#txt_TargetDesc")
-	arg_1_0._btnstate = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "LeftBottm/#btn_state")
-	arg_1_0._btnpack = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "LeftBottm/#btn_pack")
-	arg_1_0._btnequip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "LeftBottm/#btn_equip")
-	arg_1_0._txtInfo = gohelper.findChildText(arg_1_0.viewGO, "RightTop/#txt_Info")
-	arg_1_0._txtdaydesc = gohelper.findChildText(arg_1_0.viewGO, "RightTop/#txt_daydesc")
-	arg_1_0._btnforwardgame = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "RightBottm/#btn_forwardgame")
-	arg_1_0._goCostBG = gohelper.findChild(arg_1_0.viewGO, "RightBottm/#btn_forwardgame/#go_CostBG")
-	arg_1_0._txtforwardCost = gohelper.findChildText(arg_1_0.viewGO, "RightBottm/#btn_forwardgame/#go_CostBG/#txt_forwardCost")
-	arg_1_0._goEnable = gohelper.findChild(arg_1_0.viewGO, "RightBottm/#btn_forwardgame/#go_Enable")
-	arg_1_0._goDisable = gohelper.findChild(arg_1_0.viewGO, "RightBottm/#btn_forwardgame/#go_Disable")
-	arg_1_0._btnexitgame = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "RightBottm/#btn_exitgame")
-	arg_1_0._btnContinue = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "RightBottm/#btn_Continue")
-	arg_1_0._goBackBtns = gohelper.findChild(arg_1_0.viewGO, "#go_BackBtns")
+local AiZiLaGameView = class("AiZiLaGameView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function AiZiLaGameView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._txtTitle = gohelper.findChildText(self.viewGO, "Top/#txt_Title")
+	self._txtHeight = gohelper.findChildText(self.viewGO, "Top/#txt_Height")
+	self._txtRemainingTimesNum = gohelper.findChildText(self.viewGO, "LeftTop/RemainingTimes/#txt_RemainingTimesNum")
+	self._txtTargetDesc = gohelper.findChildText(self.viewGO, "LeftTop/TargetList/TargetItem/#txt_TargetDesc")
+	self._btnstate = gohelper.findChildButtonWithAudio(self.viewGO, "LeftBottm/#btn_state")
+	self._btnpack = gohelper.findChildButtonWithAudio(self.viewGO, "LeftBottm/#btn_pack")
+	self._btnequip = gohelper.findChildButtonWithAudio(self.viewGO, "LeftBottm/#btn_equip")
+	self._txtInfo = gohelper.findChildText(self.viewGO, "RightTop/#txt_Info")
+	self._txtdaydesc = gohelper.findChildText(self.viewGO, "RightTop/#txt_daydesc")
+	self._btnforwardgame = gohelper.findChildButtonWithAudio(self.viewGO, "RightBottm/#btn_forwardgame")
+	self._goCostBG = gohelper.findChild(self.viewGO, "RightBottm/#btn_forwardgame/#go_CostBG")
+	self._txtforwardCost = gohelper.findChildText(self.viewGO, "RightBottm/#btn_forwardgame/#go_CostBG/#txt_forwardCost")
+	self._goEnable = gohelper.findChild(self.viewGO, "RightBottm/#btn_forwardgame/#go_Enable")
+	self._goDisable = gohelper.findChild(self.viewGO, "RightBottm/#btn_forwardgame/#go_Disable")
+	self._btnexitgame = gohelper.findChildButtonWithAudio(self.viewGO, "RightBottm/#btn_exitgame")
+	self._btnContinue = gohelper.findChildButtonWithAudio(self.viewGO, "RightBottm/#btn_Continue")
+	self._goBackBtns = gohelper.findChild(self.viewGO, "#go_BackBtns")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnstate:AddClickListener(arg_2_0._btnstateOnClick, arg_2_0)
-	arg_2_0._btnpack:AddClickListener(arg_2_0._btnpackOnClick, arg_2_0)
-	arg_2_0._btnequip:AddClickListener(arg_2_0._btnequipOnClick, arg_2_0)
-	arg_2_0._btnforwardgame:AddClickListener(arg_2_0._btnforwardgameOnClick, arg_2_0)
-	arg_2_0._btnexitgame:AddClickListener(arg_2_0._btnexitgameOnClick, arg_2_0)
-	arg_2_0._btnContinue:AddClickListener(arg_2_0._btnContinueOnClick, arg_2_0)
+function AiZiLaGameView:addEvents()
+	self._btnstate:AddClickListener(self._btnstateOnClick, self)
+	self._btnpack:AddClickListener(self._btnpackOnClick, self)
+	self._btnequip:AddClickListener(self._btnequipOnClick, self)
+	self._btnforwardgame:AddClickListener(self._btnforwardgameOnClick, self)
+	self._btnexitgame:AddClickListener(self._btnexitgameOnClick, self)
+	self._btnContinue:AddClickListener(self._btnContinueOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnstate:RemoveClickListener()
-	arg_3_0._btnpack:RemoveClickListener()
-	arg_3_0._btnequip:RemoveClickListener()
-	arg_3_0._btnforwardgame:RemoveClickListener()
-	arg_3_0._btnexitgame:RemoveClickListener()
-	arg_3_0._btnContinue:RemoveClickListener()
+function AiZiLaGameView:removeEvents()
+	self._btnstate:RemoveClickListener()
+	self._btnpack:RemoveClickListener()
+	self._btnequip:RemoveClickListener()
+	self._btnforwardgame:RemoveClickListener()
+	self._btnexitgame:RemoveClickListener()
+	self._btnContinue:RemoveClickListener()
 end
 
-function var_0_0._btnContinueOnClick(arg_4_0)
-	if arg_4_0:isLockOp() then
+function AiZiLaGameView:_btnContinueOnClick()
+	if self:isLockOp() then
 		return
 	end
 
 	ViewMgr.instance:openView(ViewName.AiZiLaGameEventView)
 end
 
-function var_0_0._btnstateOnClick(arg_5_0)
-	if arg_5_0:isLockOp() then
+function AiZiLaGameView:_btnstateOnClick()
+	if self:isLockOp() then
 		return
 	end
 
 	ViewMgr.instance:openView(ViewName.AiZiLaGameStateView)
 end
 
-function var_0_0._btnpackOnClick(arg_6_0)
-	if arg_6_0:isLockOp() then
+function AiZiLaGameView:_btnpackOnClick()
+	if self:isLockOp() then
 		return
 	end
 
 	ViewMgr.instance:openView(ViewName.AiZiLaGamePackView)
 end
 
-function var_0_0._btnequipOnClick(arg_7_0)
-	if arg_7_0:isLockOp() then
+function AiZiLaGameView:_btnequipOnClick()
+	if self:isLockOp() then
 		return
 	end
 
 	ViewMgr.instance:openView(ViewName.AiZiLaEquipView)
 end
 
-function var_0_0._btnforwardgameOnClick(arg_8_0)
-	if arg_8_0:isLockOp() then
+function AiZiLaGameView:_btnforwardgameOnClick()
+	if self:isLockOp() then
 		return
 	end
 
-	local var_8_0 = arg_8_0:_getMO()
+	local episodeMO = self:_getMO()
 
-	if not var_8_0 then
+	if not episodeMO then
 		GameFacade.showToast(ToastEnum.V1a5AiZiLaActionPointLack)
 
 		return
 	end
 
-	arg_8_0._isNeedShowBtnForwrdGame = false
+	self._isNeedShowBtnForwrdGame = false
 
-	if arg_8_0:_isNotForwardGame() then
+	if self:_isNotForwardGame() then
 		ViewMgr.instance:openView(ViewName.AiZiLaGameEventView)
-		arg_8_0:refreshUI()
+		self:refreshUI()
 
 		return
 	end
 
-	if arg_8_0:_getCostActionPoint() > var_8_0.actionPoint then
+	local costNum = self:_getCostActionPoint()
+
+	if costNum > episodeMO.actionPoint then
 		GameFacade.showToast(ToastEnum.V1a5AiZiLaActionPointLack)
 
 		return
 	end
 
-	arg_8_0:_setLockOpTime(0.2)
+	self:_setLockOpTime(0.2)
 	AiZiLaGameController.instance:forwardGame()
 end
 
-function var_0_0._btnexitgameOnClick(arg_9_0)
-	if arg_9_0:isLockOp() then
+function AiZiLaGameView:_btnexitgameOnClick()
+	if self:isLockOp() then
 		return
 	end
 
 	AiZiLaGameController.instance:exitGame()
 end
 
-function var_0_0._editableInitView(arg_10_0)
-	arg_10_0._goforwardgame = arg_10_0._btnforwardgame.gameObject
-	arg_10_0._animator = arg_10_0.viewGO:GetComponent(AiZiLaEnum.ComponentType.Animator)
-	arg_10_0._animatorTop = gohelper.findChildComponent(arg_10_0.viewGO, "Top", AiZiLaEnum.ComponentType.Animator)
-	arg_10_0._govxcost = gohelper.findChild(arg_10_0.viewGO, "LeftTop/RemainingTimes/vx_cost")
-	arg_10_0._goRightBottm = gohelper.findChild(arg_10_0.viewGO, "RightBottm")
-	arg_10_0._goRightTop = gohelper.findChild(arg_10_0.viewGO, "RightTop")
-	arg_10_0._goTop = gohelper.findChild(arg_10_0.viewGO, "Top")
-	arg_10_0._txtExit = gohelper.findChildText(arg_10_0.viewGO, "RightBottm/#btn_exitgame/txt_Exit")
+function AiZiLaGameView:_editableInitView()
+	self._goforwardgame = self._btnforwardgame.gameObject
+	self._animator = self.viewGO:GetComponent(AiZiLaEnum.ComponentType.Animator)
+	self._animatorTop = gohelper.findChildComponent(self.viewGO, "Top", AiZiLaEnum.ComponentType.Animator)
+	self._govxcost = gohelper.findChild(self.viewGO, "LeftTop/RemainingTimes/vx_cost")
+	self._goRightBottm = gohelper.findChild(self.viewGO, "RightBottm")
+	self._goRightTop = gohelper.findChild(self.viewGO, "RightTop")
+	self._goTop = gohelper.findChild(self.viewGO, "Top")
+	self._txtExit = gohelper.findChildText(self.viewGO, "RightBottm/#btn_exitgame/txt_Exit")
 end
 
-function var_0_0.onUpdateParam(arg_11_0)
+function AiZiLaGameView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_12_0)
-	if arg_12_0.viewContainer then
-		NavigateMgr.instance:addEscape(arg_12_0.viewContainer.viewName, arg_12_0._btnexitgameOnClick, arg_12_0)
+function AiZiLaGameView:onOpen()
+	if self.viewContainer then
+		NavigateMgr.instance:addEscape(self.viewContainer.viewName, self._btnexitgameOnClick, self)
 	end
 
-	local var_12_0 = not GuideController.instance:isForbidGuides() and GuideModel.instance:isGuideRunning(AiZiLaEnum.Guide.FirstEnter)
+	local hasGuide = not GuideController.instance:isForbidGuides() and GuideModel.instance:isGuideRunning(AiZiLaEnum.Guide.FirstEnter)
 
-	arg_12_0:_setLockOpTime(var_12_0 and 4 or 0.6)
-	arg_12_0:addEventCb(AiZiLaController.instance, AiZiLaEvent.ExitGame, arg_12_0.closeThis, arg_12_0)
-	arg_12_0:addEventCb(AiZiLaGameController.instance, AiZiLaEvent.RefreshGameEpsiode, arg_12_0._onRefreshGameEpsiode, arg_12_0)
-	arg_12_0:addEventCb(ViewMgr.instance, ViewEvent.DestroyViewFinish, arg_12_0._onDestroyViewFinish, arg_12_0)
-	arg_12_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_12_0._onOpenView, arg_12_0)
+	self:_setLockOpTime(hasGuide and 4 or 0.6)
+	self:addEventCb(AiZiLaController.instance, AiZiLaEvent.ExitGame, self.closeThis, self)
+	self:addEventCb(AiZiLaGameController.instance, AiZiLaEvent.RefreshGameEpsiode, self._onRefreshGameEpsiode, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.DestroyViewFinish, self._onDestroyViewFinish, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
 
-	arg_12_0._isNeedShowBtnForwrdGame = true
+	self._isNeedShowBtnForwrdGame = true
 
-	arg_12_0:_refreshParam()
-	arg_12_0:refreshUI()
-	arg_12_0:_setCurElevation(AiZiLaGameModel.instance:getElevation())
-	arg_12_0:_refreshActionPointUI()
-	arg_12_0:_playAnimtor(arg_12_0._animatorTop, UIAnimationName.Open)
+	self:_refreshParam()
+	self:refreshUI()
+	self:_setCurElevation(AiZiLaGameModel.instance:getElevation())
+	self:_refreshActionPointUI()
+	self:_playAnimtor(self._animatorTop, UIAnimationName.Open)
 	AudioMgr.instance:trigger(AudioEnum.V1a5AiZiLa.play_ui_wulu_aizila_level_enter)
 end
 
-function var_0_0.onClose(arg_13_0)
+function AiZiLaGameView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_14_0)
-	arg_14_0:_killTween()
-	arg_14_0._simageFullBG:UnLoadImage()
+function AiZiLaGameView:onDestroyView()
+	self:_killTween()
+	self._simageFullBG:UnLoadImage()
 end
 
-function var_0_0._onRefreshGameEpsiode(arg_15_0)
-	arg_15_0._isHasNeedRefresh = true
+function AiZiLaGameView:_onRefreshGameEpsiode()
+	self._isHasNeedRefresh = true
 
-	arg_15_0:refreshUI()
-	arg_15_0:_refreshActionPointUI()
+	self:refreshUI()
+	self:_refreshActionPointUI()
 end
 
-function var_0_0._onOpenView(arg_16_0, arg_16_1)
-	arg_16_0:_refreshGoShow()
+function AiZiLaGameView:_onOpenView(viewName)
+	self:_refreshGoShow()
 end
 
-function var_0_0._onDestroyViewFinish(arg_17_0, arg_17_1)
-	arg_17_0:_refreshGoShow()
+function AiZiLaGameView:_onDestroyViewFinish(viewName)
+	self:_refreshGoShow()
 
-	if arg_17_0._isHasNeedRefresh and arg_17_1 == ViewName.AiZiLaGameEventResult then
-		arg_17_0._isHasNeedRefresh = false
+	if self._isHasNeedRefresh and viewName == ViewName.AiZiLaGameEventResult then
+		self._isHasNeedRefresh = false
 
-		arg_17_0:refreshUI()
-		arg_17_0:_refreshAnimUI()
+		self:refreshUI()
+		self:_refreshAnimUI()
 
-		if arg_17_0:_getMO():isPass() then
+		local episodeMO = self:_getMO()
+
+		if episodeMO:isPass() then
 			AiZiLaController.instance:dispatchEvent(AiZiLaEvent.CloseGameEventResult)
 		end
 	end
 end
 
-function var_0_0._refreshGoShow(arg_18_0)
-	local var_18_0 = not (ViewMgr.instance:isOpen(ViewName.AiZiLaGameEventResult) or ViewMgr.instance:isOpen(ViewName.AiZiLaGameEventView)) and true or false
+function AiZiLaGameView:_refreshGoShow()
+	local isHide = ViewMgr.instance:isOpen(ViewName.AiZiLaGameEventResult) or ViewMgr.instance:isOpen(ViewName.AiZiLaGameEventView)
+	local isShow = not isHide and true or false
 
-	if arg_18_0._lastIsShow ~= var_18_0 then
-		arg_18_0._lastIsShow = var_18_0
+	if self._lastIsShow ~= isShow then
+		self._lastIsShow = isShow
 
-		gohelper.setActive(arg_18_0._goTop, var_18_0)
-		gohelper.setActive(arg_18_0._goRightBottm, var_18_0)
-		gohelper.setActive(arg_18_0._goRightTop, var_18_0)
+		gohelper.setActive(self._goTop, isShow)
+		gohelper.setActive(self._goRightBottm, isShow)
+		gohelper.setActive(self._goRightTop, isShow)
 	end
 end
 
-function var_0_0._refreshParam(arg_19_0)
-	local var_19_0 = arg_19_0:_getMO()
-	local var_19_1 = var_19_0 and var_19_0:getTargetIds() or {}
+function AiZiLaGameView:_refreshParam()
+	local episodeMO = self:_getMO()
+	local targetIds = episodeMO and episodeMO:getTargetIds() or {}
 
-	arg_19_0._minEle = arg_19_0:getElevation(var_19_1[1]) or 0
-	arg_19_0._targetEle = arg_19_0:getElevation(var_19_1[2]) or 0
-	arg_19_0._maxEle = arg_19_0:getElevation(var_19_1[#var_19_1]) or 0
-	arg_19_0._showElevation = arg_19_0._showElevation or arg_19_0._minEle
+	self._minEle = self:getElevation(targetIds[1]) or 0
+	self._targetEle = self:getElevation(targetIds[2]) or 0
+	self._maxEle = self:getElevation(targetIds[#targetIds]) or 0
+	self._showElevation = self._showElevation or self._minEle
 end
 
-function var_0_0.needPlayRiseAnim(arg_20_0)
-	local var_20_0 = AiZiLaGameModel.instance:getElevation()
+function AiZiLaGameView:needPlayRiseAnim()
+	local curEle = AiZiLaGameModel.instance:getElevation()
 
-	return arg_20_0._showElevation and var_20_0 > arg_20_0._showElevation
+	return self._showElevation and curEle > self._showElevation
 end
 
-function var_0_0.refreshUI(arg_21_0)
-	local var_21_0 = arg_21_0:_getMO()
+function AiZiLaGameView:refreshUI()
+	local episodeMO = self:_getMO()
 
-	if not var_21_0 then
+	if not episodeMO then
 		return
 	end
 
-	local var_21_1 = var_21_0:getConfig()
+	local episodeCfg = episodeMO:getConfig()
 
-	if var_21_1 and arg_21_0._lastEpisodeId ~= var_21_1.episodeId and not string.nilorempty(var_21_1.bgPath) then
-		arg_21_0._lastEpisodeId = var_21_1.episodeId
+	if episodeCfg and self._lastEpisodeId ~= episodeCfg.episodeId and not string.nilorempty(episodeCfg.bgPath) then
+		self._lastEpisodeId = episodeCfg.episodeId
 
-		arg_21_0._simageFullBG:LoadImage(string.format("%s.png", var_21_1.bgPath))
+		self._simageFullBG:LoadImage(string.format("%s.png", episodeCfg.bgPath))
 	end
 
-	arg_21_0._txtInfo.text = var_21_1 and var_21_1.name
-	arg_21_0._txtdaydesc.text = formatLuaLang("v1a5_aizila_day_explore", var_21_0.day)
+	self._txtInfo.text = episodeCfg and episodeCfg.name
+	self._txtdaydesc.text = formatLuaLang("v1a5_aizila_day_explore", episodeMO.day)
 
-	local var_21_2 = true
+	local isShowNext = true
 
-	if arg_21_0:_isNotForwardGame() and not arg_21_0._isNeedShowBtnForwrdGame then
-		var_21_2 = false
+	if self:_isNotForwardGame() and not self._isNeedShowBtnForwrdGame then
+		isShowNext = false
 	end
 
-	gohelper.setActive(arg_21_0._btnContinue, not var_21_2)
-	gohelper.setActive(arg_21_0._btnforwardgame, var_21_2)
-	gohelper.setActive(arg_21_0._btnContinue, not var_21_2)
+	gohelper.setActive(self._btnContinue, not isShowNext)
+	gohelper.setActive(self._btnforwardgame, isShowNext)
+	gohelper.setActive(self._btnContinue, not isShowNext)
 
-	if var_21_2 then
-		local var_21_3 = arg_21_0:_getCostActionPoint()
+	if isShowNext then
+		local costAction = self:_getCostActionPoint()
 
-		gohelper.setActive(arg_21_0._txtforwardCost, var_21_3 > 0)
+		gohelper.setActive(self._txtforwardCost, costAction > 0)
 
-		local var_21_4 = var_21_0.actionPoint and var_21_3 > var_21_0.actionPoint
-		local var_21_5 = formatLuaLang("v1a5_aizila_action_point_cost", -var_21_3)
+		local isgray = episodeMO.actionPoint and costAction > episodeMO.actionPoint
+		local costStr = formatLuaLang("v1a5_aizila_action_point_cost", -costAction)
 
-		if var_21_4 then
-			var_21_5 = string.format("<color=#dc5f56>%s</color>", var_21_5)
+		if isgray then
+			costStr = string.format("<color=#dc5f56>%s</color>", costStr)
 		end
 
-		arg_21_0._txtforwardCost.text = var_21_5
+		self._txtforwardCost.text = costStr
 
-		gohelper.setActive(arg_21_0._goEnable, not var_21_4)
-		gohelper.setActive(arg_21_0._goDisable, var_21_4)
-		ZProj.UGUIHelper.SetGrayscale(arg_21_0._goforwardgame, var_21_4)
+		gohelper.setActive(self._goEnable, not isgray)
+		gohelper.setActive(self._goDisable, isgray)
+		ZProj.UGUIHelper.SetGrayscale(self._goforwardgame, isgray)
 	end
 
-	local var_21_6 = var_21_0:isCanSafe()
+	local isSafe = episodeMO:isCanSafe()
 
-	if arg_21_0._lastIsSafe ~= var_21_6 then
-		arg_21_0._txtExit.text = luaLang(var_21_6 and "v1a5_aizila_safe_exit_game" or "v1a5_aizila_exit_game")
+	if self._lastIsSafe ~= isSafe then
+		self._txtExit.text = luaLang(isSafe and "v1a5_aizila_safe_exit_game" or "v1a5_aizila_exit_game")
 	end
 end
 
-function var_0_0._refreshActionPointUI(arg_22_0)
-	local var_22_0 = arg_22_0:_getMO()
-	local var_22_1 = var_22_0 and var_22_0.actionPoint or 0
-	local var_22_2 = math.max(0, var_22_1)
+function AiZiLaGameView:_refreshActionPointUI()
+	local episodeMO = self:_getMO()
+	local actionPoint = episodeMO and episodeMO.actionPoint or 0
 
-	if arg_22_0._lastActionPoint and var_22_2 < arg_22_0._lastActionPoint then
-		gohelper.setActive(arg_22_0._govxcost, false)
-		gohelper.setActive(arg_22_0._govxcost, true)
+	actionPoint = math.max(0, actionPoint)
+
+	if self._lastActionPoint and actionPoint < self._lastActionPoint then
+		gohelper.setActive(self._govxcost, false)
+		gohelper.setActive(self._govxcost, true)
 	end
 
-	arg_22_0._lastActionPoint = var_22_2
-	arg_22_0._txtRemainingTimesNum.text = formatLuaLang("v1a5_aizila_action_point_tag", var_22_2)
+	self._lastActionPoint = actionPoint
+	self._txtRemainingTimesNum.text = formatLuaLang("v1a5_aizila_action_point_tag", actionPoint)
 end
 
-function var_0_0._refreshAnimUI(arg_23_0)
-	local var_23_0 = AiZiLaGameModel.instance:getElevation()
+function AiZiLaGameView:_refreshAnimUI()
+	local curEle = AiZiLaGameModel.instance:getElevation()
 
-	arg_23_0:_killTween()
+	self:_killTween()
 
-	if var_23_0 > arg_23_0._showElevation then
-		local var_23_1 = "rise"
+	if curEle > self._showElevation then
+		local animName = "rise"
 
-		arg_23_0:_playAnimtor(arg_23_0._animator, var_23_1)
-		arg_23_0:_playAnimtor(arg_23_0._animatorTop, var_23_1)
+		self:_playAnimtor(self._animator, animName)
+		self:_playAnimtor(self._animatorTop, animName)
 
-		arg_23_0._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 1, arg_23_0._tweenFrameCallback, arg_23_0._tweenFinishCallback, arg_23_0, {
-			startEle = arg_23_0._showElevation,
-			endEle = var_23_0
+		self._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 1, self._tweenFrameCallback, self._tweenFinishCallback, self, {
+			startEle = self._showElevation,
+			endEle = curEle
 		})
 
-		TaskDispatcher.runDelay(arg_23_0._refreshActionPointUI, arg_23_0, 2.4)
-		arg_23_0:_setLockOpTime(AiZiLaEnum.AnimatorTime.MapViewRise)
+		TaskDispatcher.runDelay(self._refreshActionPointUI, self, 2.4)
+		self:_setLockOpTime(AiZiLaEnum.AnimatorTime.MapViewRise)
 		AudioMgr.instance:trigger(AudioEnum.V1a5AiZiLa.ui_wulu_aizila_elevationl_up)
 	else
-		arg_23_0:_setCurElevation(var_23_0)
-		arg_23_0:_refreshActionPointUI()
+		self:_setCurElevation(curEle)
+		self:_refreshActionPointUI()
 	end
 end
 
-function var_0_0._killTween(arg_24_0)
-	if arg_24_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_24_0._tweenId)
+function AiZiLaGameView:_killTween()
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_24_0._tweenId = nil
+		self._tweenId = nil
 
-		TaskDispatcher.cancelTask(arg_24_0._refreshActionPointUI, arg_24_0)
+		TaskDispatcher.cancelTask(self._refreshActionPointUI, self)
 	end
 end
 
-function var_0_0._tweenFrameCallback(arg_25_0, arg_25_1, arg_25_2)
-	local var_25_0 = arg_25_1 * (arg_25_2.endEle - arg_25_2.startEle) + arg_25_2.startEle
+function AiZiLaGameView:_tweenFrameCallback(value, param)
+	local ele = value * (param.endEle - param.startEle) + param.startEle
 
-	if arg_25_1 >= 0.99 then
-		var_25_0 = arg_25_2.endEle
+	if value >= 0.99 then
+		ele = param.endEle
 	end
 
-	arg_25_0:_setCurElevation(math.floor(var_25_0))
+	self:_setCurElevation(math.floor(ele))
 end
 
-function var_0_0._tweenFinishCallback(arg_26_0, arg_26_1, arg_26_2)
+function AiZiLaGameView:_tweenFinishCallback(value, param)
 	return
 end
 
-function var_0_0._setCurElevation(arg_27_0, arg_27_1)
-	arg_27_1 = math.max(arg_27_0._minEle, arg_27_1)
-	arg_27_0._showElevation = arg_27_1
-	arg_27_0._txtTargetDesc.text = string.format("<color=#ffa632>%sm</color>/%sm", arg_27_1, arg_27_0._targetEle)
-	arg_27_0._txtHeight.text = GameUtil.getSubPlaceholderLuaLang(luaLang("aizilagameview_height"), {
-		arg_27_1,
-		arg_27_0._maxEle
+function AiZiLaGameView:_setCurElevation(curEle)
+	curEle = math.max(self._minEle, curEle)
+	self._showElevation = curEle
+	self._txtTargetDesc.text = string.format("<color=#ffa632>%sm</color>/%sm", curEle, self._targetEle)
+	self._txtHeight.text = GameUtil.getSubPlaceholderLuaLang(luaLang("aizilagameview_height"), {
+		curEle,
+		self._maxEle
 	})
 end
 
-function var_0_0._playAnimtor(arg_28_0, arg_28_1, arg_28_2)
-	if arg_28_1 then
-		arg_28_1.enabled = true
+function AiZiLaGameView:_playAnimtor(animator, animName)
+	if animator then
+		animator.enabled = true
 
-		arg_28_1:Play(arg_28_2, 0, 0)
+		animator:Play(animName, 0, 0)
 	end
 end
 
-function var_0_0._getCostActionPoint(arg_29_0)
-	local var_29_0 = arg_29_0:_getMO()
+function AiZiLaGameView:_getCostActionPoint()
+	local episodeMO = self:_getMO()
 
-	if not var_29_0 then
+	if not episodeMO then
 		return 0
 	end
 
-	return var_29_0:getCostActionPoint()
+	return episodeMO:getCostActionPoint()
 end
 
-function var_0_0._isNotForwardGame(arg_30_0)
-	local var_30_0 = arg_30_0:_getMO()
+function AiZiLaGameView:_isNotForwardGame()
+	local episodeMO = self:_getMO()
 
-	if var_30_0 then
-		return var_30_0.eventId ~= 0 and (var_30_0.optionResultId == 0 or var_30_0.option == 0)
+	if episodeMO then
+		return episodeMO.eventId ~= 0 and (episodeMO.optionResultId == 0 or episodeMO.option == 0)
 	end
 
 	return false
 end
 
-function var_0_0.getElevation(arg_31_0, arg_31_1)
-	local var_31_0 = AiZiLaConfig.instance:getEpisodeShowTargetCo(arg_31_1)
+function AiZiLaGameView:getElevation(showtargetId)
+	local cfg = AiZiLaConfig.instance:getEpisodeShowTargetCo(showtargetId)
 
-	return var_31_0 and var_31_0.elevation or 0
+	return cfg and cfg.elevation or 0
 end
 
-function var_0_0._getMO(arg_32_0)
+function AiZiLaGameView:_getMO()
 	return AiZiLaGameModel.instance:getEpisodeMO()
 end
 
-function var_0_0._setLockOpTime(arg_33_0, arg_33_1)
-	arg_33_0._lockTime = Time.time + arg_33_1
+function AiZiLaGameView:_setLockOpTime(lockTime)
+	self._lockTime = Time.time + lockTime
 end
 
-function var_0_0.isLockOp(arg_34_0)
-	if arg_34_0._lockTime and Time.time < arg_34_0._lockTime then
+function AiZiLaGameView:isLockOp()
+	if self._lockTime and Time.time < self._lockTime then
 		return true
 	end
 
 	return false
 end
 
-return var_0_0
+return AiZiLaGameView

@@ -1,191 +1,194 @@
-﻿module("modules.logic.gm.view.rouge.GMSubViewResource", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/rouge/GMSubViewResource.lua
 
-local var_0_0 = class("GMSubViewResource", GMSubViewBase)
+module("modules.logic.gm.view.rouge.GMSubViewResource", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.tabName = "资源"
+local GMSubViewResource = class("GMSubViewResource", GMSubViewBase)
+
+function GMSubViewResource:ctor()
+	self.tabName = "资源"
 end
 
-function var_0_0.addLineIndex(arg_2_0)
-	arg_2_0.lineIndex = arg_2_0.lineIndex + 1
+function GMSubViewResource:addLineIndex()
+	self.lineIndex = self.lineIndex + 1
 end
 
-function var_0_0.getLineGroup(arg_3_0)
-	return "L" .. arg_3_0.lineIndex
+function GMSubViewResource:getLineGroup()
+	return "L" .. self.lineIndex
 end
 
-function var_0_0.addFilterVerticalGroup(arg_4_0, arg_4_1)
-	arg_4_0.verticalId = arg_4_0.verticalId or 0
-	arg_4_0.verticalId = arg_4_0.verticalId + 1
+function GMSubViewResource:addFilterVerticalGroup(count)
+	self.verticalId = self.verticalId or 0
+	self.verticalId = self.verticalId + 1
 
-	local var_4_0 = arg_4_0:addVerticalGroup(arg_4_0:getLineGroup(), arg_4_0.verticalId, var_0_0.FilterItemSize.Width, arg_4_0.filterGroupHeight)
-	local var_4_1 = arg_4_0:getUserDataTb_()
+	local verticalGo = self:addVerticalGroup(self:getLineGroup(), self.verticalId, GMSubViewResource.FilterItemSize.Width, self.filterGroupHeight)
+	local inputList = self:getUserDataTb_()
 
-	for iter_4_0 = 1, arg_4_1 do
-		table.insert(var_4_1, arg_4_0:addVerticalInput(var_4_0, "", "正则表达式"))
+	for i = 1, count do
+		table.insert(inputList, self:addVerticalInput(verticalGo, "", "正则表达式"))
 	end
 
-	return var_4_1
+	return inputList
 end
 
-var_0_0.FilterItemSize = {
+GMSubViewResource.FilterItemSize = {
 	Height = 80,
 	Width = 500
 }
 
-function var_0_0.addVerticalInput(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	local var_5_0 = gohelper.clone(arg_5_0._goInputTextTemplate, arg_5_1, "InputText")
+function GMSubViewResource:addVerticalInput(verticalGo, defaultValue, holderValue)
+	local inputTextGo = gohelper.clone(self._goInputTextTemplate, verticalGo, "InputText")
 
-	gohelper.setActive(var_5_0, true)
+	gohelper.setActive(inputTextGo, true)
 
-	local var_5_1 = gohelper.findChildText(var_5_0, "Text")
-	local var_5_2 = gohelper.findChildText(var_5_0, "Placeholder")
+	local contentText = gohelper.findChildText(inputTextGo, "Text")
+	local placeHolderText = gohelper.findChildText(inputTextGo, "Placeholder")
 
-	arg_5_0._setFontSize(var_5_1, nil, 30)
-	arg_5_0._setRectTransSize(var_5_0, nil, var_0_0.FilterItemSize.Width, var_0_0.FilterItemSize.Height)
+	self._setFontSize(contentText, nil, 30)
+	self._setRectTransSize(inputTextGo, nil, GMSubViewResource.FilterItemSize.Width, GMSubViewResource.FilterItemSize.Height)
 
-	local var_5_3 = SLFramework.UGUI.InputFieldWrap.Get(var_5_0)
-	local var_5_4 = tolua.findtype("UnityEngine.UI.InputField+LineType")
-	local var_5_5 = System.Enum.Parse(var_5_4, "MultiLineSubmit")
+	local inputField = SLFramework.UGUI.InputFieldWrap.Get(inputTextGo)
+	local type_linetype = tolua.findtype("UnityEngine.UI.InputField+LineType")
+	local MultiLineSubmit = System.Enum.Parse(type_linetype, "MultiLineSubmit")
 
-	var_5_3.inputField.lineType = var_5_5
-	var_5_2.text = arg_5_3 or ""
+	inputField.inputField.lineType = MultiLineSubmit
+	placeHolderText.text = holderValue or ""
 
-	var_5_3:SetText(arg_5_2 or "")
-	var_5_3:AddOnValueChanged(arg_5_0.onInputFilterValueChange, arg_5_0)
+	inputField:SetText(defaultValue or "")
+	inputField:AddOnValueChanged(self.onInputFilterValueChange, self)
 
-	arg_5_0._inputTexts[#arg_5_0._inputTexts + 1] = var_5_3
+	self._inputTexts[#self._inputTexts + 1] = inputField
 
-	return var_5_3
+	return inputField
 end
 
-function var_0_0.initViewContent(arg_6_0)
-	if arg_6_0._inited then
+function GMSubViewResource:initViewContent()
+	if self._inited then
 		return
 	end
 
-	arg_6_0.lineIndex = 1
-	arg_6_0.startToggle = arg_6_0:addToggle(arg_6_0:getLineGroup(), "开启资源慢加载", arg_6_0.onStartToggleChange, arg_6_0)
-	arg_6_0.strategyList = {
+	self.lineIndex = 1
+	self.startToggle = self:addToggle(self:getLineGroup(), "开启资源慢加载", self.onStartToggleChange, self)
+	self.strategyList = {
 		DelayLoadResMgr.DelayStrategyEnum.Multiple,
 		DelayLoadResMgr.DelayStrategyEnum.Fixed
 	}
-	arg_6_0.strategyNameList = {}
+	self.strategyNameList = {}
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0.strategyList) do
-		table.insert(arg_6_0.strategyNameList, DelayLoadResMgr.DelayStrategyName[iter_6_1])
+	for _, strategy in ipairs(self.strategyList) do
+		table.insert(self.strategyNameList, DelayLoadResMgr.DelayStrategyName[strategy])
 	end
 
-	arg_6_0.strategyDrop = arg_6_0:addDropDown(arg_6_0:getLineGroup(), "延时策略", arg_6_0.strategyNameList, arg_6_0.onStrategyDropValueChange, arg_6_0)
-	arg_6_0.strategyInput = arg_6_0:addInputText(arg_6_0:getLineGroup(), "", "延迟数值", arg_6_0.onStrategyInputValueChange, arg_6_0)
+	self.strategyDrop = self:addDropDown(self:getLineGroup(), "延时策略", self.strategyNameList, self.onStrategyDropValueChange, self)
+	self.strategyInput = self:addInputText(self:getLineGroup(), "", "延迟数值", self.onStrategyInputValueChange, self)
 
-	arg_6_0:addLineIndex()
-	arg_6_0:addLabel(arg_6_0:getLineGroup(), "默认全部文件都会开开启慢加载，如果设置了任意'启用慢加载'， 那么只有匹配的文件才会启用慢加载。'禁用慢加载文件'优先级最高", {
+	self:addLineIndex()
+	self:addLabel(self:getLineGroup(), "默认全部文件都会开开启慢加载，如果设置了任意'启用慢加载'， 那么只有匹配的文件才会启用慢加载。'禁用慢加载文件'优先级最高", {
 		w = 1200,
 		fsize = 25,
 		h = 160
 	})
-	arg_6_0:addLineIndex()
+	self:addLineIndex()
 
-	arg_6_0.filterGroupHeight = 500
-	arg_6_0.filterGroupHeight = 500
+	self.filterGroupHeight = 500
+	self.filterGroupHeight = 500
 
-	local var_6_0 = {
+	local topLeftParam = {
 		w = 50,
-		h = arg_6_0.filterGroupHeight,
+		h = self.filterGroupHeight,
 		align = TMPro.TextAlignmentOptions.Top
 	}
 
-	arg_6_0:addHorizontalGroup(arg_6_0:getLineGroup(), nil, arg_6_0.filterGroupHeight)
-	arg_6_0:addLabel(arg_6_0:getLineGroup(), "启用慢加载文件", var_6_0)
+	self:addHorizontalGroup(self:getLineGroup(), nil, self.filterGroupHeight)
+	self:addLabel(self:getLineGroup(), "启用慢加载文件", topLeftParam)
 
-	arg_6_0.enablePatternInputList = arg_6_0:addFilterVerticalGroup(5)
+	self.enablePatternInputList = self:addFilterVerticalGroup(5)
 
-	arg_6_0:addLabel(arg_6_0:getLineGroup(), "禁用慢加载文件", var_6_0)
+	self:addLabel(self:getLineGroup(), "禁用慢加载文件", topLeftParam)
 
-	arg_6_0.disablePatternInputList = arg_6_0:addFilterVerticalGroup(5)
+	self.disablePatternInputList = self:addFilterVerticalGroup(5)
 
-	arg_6_0:initUIValue()
-	var_0_0.super.initViewContent(arg_6_0)
+	self:initUIValue()
+	GMSubViewResource.super.initViewContent(self)
 end
 
-function var_0_0.initUIValue(arg_7_0)
-	arg_7_0.startToggle.isOn = DelayLoadResMgr.instance:isStartDelayLoad()
+function GMSubViewResource:initUIValue()
+	self.startToggle.isOn = DelayLoadResMgr.instance:isStartDelayLoad()
 
-	local var_7_0 = DelayLoadResMgr.instance:getDelayStrategy()
+	local curStrategy = DelayLoadResMgr.instance:getDelayStrategy()
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0.strategyList) do
-		if var_7_0 == iter_7_1 then
-			arg_7_0.strategyDrop:SetValue(iter_7_0 - 1)
+	for i, strategy in ipairs(self.strategyList) do
+		if curStrategy == strategy then
+			self.strategyDrop:SetValue(i - 1)
 		end
 	end
 
-	local var_7_1 = DelayLoadResMgr.instance:getDelayStrategyValue()
+	local value = DelayLoadResMgr.instance:getDelayStrategyValue()
 
-	arg_7_0.strategyInput:SetText(var_7_1)
+	self.strategyInput:SetText(value)
 
-	arg_7_0.enablePatternList = tabletool.copy(DelayLoadResMgr.instance:getEnablePatternList())
-	arg_7_0.disablePatternList = tabletool.copy(DelayLoadResMgr.instance:getDisablePatternList())
+	self.enablePatternList = tabletool.copy(DelayLoadResMgr.instance:getEnablePatternList())
+	self.disablePatternList = tabletool.copy(DelayLoadResMgr.instance:getDisablePatternList())
 
-	for iter_7_2, iter_7_3 in ipairs(arg_7_0.enablePatternList) do
-		arg_7_0.enablePatternInputList[iter_7_2]:SetText(iter_7_3)
+	for i, pattern in ipairs(self.enablePatternList) do
+		self.enablePatternInputList[i]:SetText(pattern)
 	end
 
-	for iter_7_4, iter_7_5 in ipairs(arg_7_0.disablePatternList) do
-		arg_7_0.disablePatternInputList[iter_7_4]:SetText(iter_7_5)
+	for i, pattern in ipairs(self.disablePatternList) do
+		self.disablePatternInputList[i]:SetText(pattern)
 	end
 end
 
-function var_0_0.onInputFilterValueChange(arg_8_0)
-	if not arg_8_0._inited then
+function GMSubViewResource:onInputFilterValueChange()
+	if not self._inited then
 		return
 	end
 
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0.enablePatternInputList) do
-		arg_8_0.enablePatternList[iter_8_0] = iter_8_1:GetText()
+	for i, input in ipairs(self.enablePatternInputList) do
+		self.enablePatternList[i] = input:GetText()
 	end
 
-	for iter_8_2, iter_8_3 in ipairs(arg_8_0.disablePatternInputList) do
-		arg_8_0.disablePatternList[iter_8_2] = iter_8_3:GetText()
+	for i, input in ipairs(self.disablePatternInputList) do
+		self.disablePatternList[i] = input:GetText()
 	end
 
-	DelayLoadResMgr.instance:setEnablePatternList(arg_8_0.enablePatternList)
-	DelayLoadResMgr.instance:setDisablePatternList(arg_8_0.disablePatternList)
+	DelayLoadResMgr.instance:setEnablePatternList(self.enablePatternList)
+	DelayLoadResMgr.instance:setDisablePatternList(self.disablePatternList)
 end
 
-function var_0_0.onStartToggleChange(arg_9_0)
-	if not arg_9_0._inited then
+function GMSubViewResource:onStartToggleChange()
+	if not self._inited then
 		return
 	end
 
-	if arg_9_0.startToggle.isOn then
+	if self.startToggle.isOn then
 		DelayLoadResMgr.instance:startDelayLoad()
 	else
 		DelayLoadResMgr.instance:stopDelayLoad()
 	end
 end
 
-function var_0_0.onStrategyDropValueChange(arg_10_0, arg_10_1)
-	if not arg_10_0._inited then
+function GMSubViewResource:onStrategyDropValueChange(index)
+	if not self._inited then
 		return
 	end
 
-	DelayLoadResMgr.instance:setDelayStrategy(arg_10_0.strategyList[arg_10_1 + 1])
+	DelayLoadResMgr.instance:setDelayStrategy(self.strategyList[index + 1])
 end
 
-function var_0_0.onStrategyInputValueChange(arg_11_0)
-	if not arg_11_0._inited then
+function GMSubViewResource:onStrategyInputValueChange()
+	if not self._inited then
 		return
 	end
 
-	local var_11_0 = arg_11_0.strategyInput:GetText()
-	local var_11_1 = tonumber(var_11_0)
+	local value = self.strategyInput:GetText()
 
-	if not var_11_1 then
+	value = tonumber(value)
+
+	if not value then
 		return
 	end
 
-	DelayLoadResMgr.instance:setDelayStrategyValue(var_11_1)
+	DelayLoadResMgr.instance:setDelayStrategyValue(value)
 end
 
-return var_0_0
+return GMSubViewResource

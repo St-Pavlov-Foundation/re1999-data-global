@@ -1,47 +1,49 @@
-﻿module("modules.logic.player.controller.PlayerController", package.seeall)
+﻿-- chunkname: @modules/logic/player/controller/PlayerController.lua
 
-local var_0_0 = class("PlayerController", BaseController)
+module("modules.logic.player.controller.PlayerController", package.seeall)
 
-function var_0_0.enterSelectScene(arg_1_0)
+local PlayerController = class("PlayerController", BaseController)
+
+function PlayerController:enterSelectScene()
 	ViewMgr.instance:openView(ViewName.PlayerView)
 end
 
-function var_0_0.openPlayerView(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	local var_2_0 = {
-		playerInfo = arg_2_1,
-		playerSelf = arg_2_2,
-		heroCover = arg_2_3
-	}
+function PlayerController:openPlayerView(playerInfo, playerSelf, heroCover)
+	local param = {}
 
-	ViewMgr.instance:openView(ViewName.PlayerView, var_2_0)
+	param.playerInfo = playerInfo
+	param.playerSelf = playerSelf
+	param.heroCover = heroCover
+
+	ViewMgr.instance:openView(ViewName.PlayerView, param)
 end
 
-function var_0_0.openSelfPlayerView(arg_3_0)
-	local var_3_0 = PlayerModel.instance:getPlayinfo()
+function PlayerController:openSelfPlayerView()
+	local playerInfo = PlayerModel.instance:getPlayinfo()
 
-	arg_3_0:openPlayerView(var_3_0, true)
+	self:openPlayerView(playerInfo, true)
 end
 
-function var_0_0.onInit(arg_4_0)
+function PlayerController:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_5_0)
+function PlayerController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_6_0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_6_0._OnDailyRefresh, arg_6_0)
+function PlayerController:addConstEvents()
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self._OnDailyRefresh, self)
 end
 
-function var_0_0._OnDailyRefresh(arg_7_0)
+function PlayerController:_OnDailyRefresh()
 	PlayerModel.instance:checkCanRenameReset()
 	PlayerRpc.instance:sendMarkMainThumbnailRequest()
-	PlayerRpc.instance:sendGetPlayerInfoRequest(arg_7_0._onDailyRefreshGetPlayerInfo, arg_7_0)
+	PlayerRpc.instance:sendGetPlayerInfoRequest(self._onDailyRefreshGetPlayerInfo, self)
 	logNormal("每日五点刷新， 发送获取player信息的请求， PlayerRpc")
 end
 
-function var_0_0.updateAssistRewardCount(arg_8_0)
+function PlayerController:updateAssistRewardCount()
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Friend) then
 		return
 	end
@@ -49,12 +51,14 @@ function var_0_0.updateAssistRewardCount(arg_8_0)
 	PlayerRpc.instance:sendGetAssistBonusRequest()
 end
 
-function var_0_0.getAssistReward(arg_9_0)
+function PlayerController:getAssistReward()
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Friend) then
 		return
 	end
 
-	if not PlayerModel.instance:isHasAssistReward() then
+	local isHasAssistReward = PlayerModel.instance:isHasAssistReward()
+
+	if not isHasAssistReward then
 		GameFacade.showToast(ToastEnum.NoRewardCanGet)
 
 		return
@@ -63,14 +67,14 @@ function var_0_0.getAssistReward(arg_9_0)
 	PlayerRpc.instance:sendReceiveAssistBonusRequest()
 end
 
-function var_0_0.reInit(arg_10_0)
+function PlayerController:reInit()
 	return
 end
 
-function var_0_0._onDailyRefreshGetPlayerInfo(arg_11_0)
-	arg_11_0:dispatchEvent(PlayerEvent.OnDailyRefresh)
+function PlayerController:_onDailyRefreshGetPlayerInfo()
+	self:dispatchEvent(PlayerEvent.OnDailyRefresh)
 end
 
-var_0_0.instance = var_0_0.New()
+PlayerController.instance = PlayerController.New()
 
-return var_0_0
+return PlayerController

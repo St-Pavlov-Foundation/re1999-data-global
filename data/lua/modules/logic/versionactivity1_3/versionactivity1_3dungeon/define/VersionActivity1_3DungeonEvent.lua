@@ -1,9 +1,11 @@
-﻿module("modules.logic.versionactivity1_3.versionactivity1_3dungeon.define.VersionActivity1_3DungeonEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/versionactivity1_3dungeon/define/VersionActivity1_3DungeonEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_3.versionactivity1_3dungeon.define.VersionActivity1_3DungeonEvent", package.seeall)
 
-var_0_0.SelectChangeDaily = 1
-var_0_0.LoadSameScene = 2
-var_0_0.OpenDailyInteractiveItem = 3
+local VersionActivity1_3DungeonEvent = _M
 
-return var_0_0
+VersionActivity1_3DungeonEvent.SelectChangeDaily = 1
+VersionActivity1_3DungeonEvent.LoadSameScene = 2
+VersionActivity1_3DungeonEvent.OpenDailyInteractiveItem = 3
+
+return VersionActivity1_3DungeonEvent

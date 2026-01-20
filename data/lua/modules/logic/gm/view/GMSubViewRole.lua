@@ -1,198 +1,219 @@
-﻿module("modules.logic.gm.view.GMSubViewRole", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GMSubViewRole.lua
 
-local var_0_0 = class("GMSubViewRole", GMSubViewBase)
+module("modules.logic.gm.view.GMSubViewRole", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.tabName = "角色"
+local GMSubViewRole = class("GMSubViewRole", GMSubViewBase)
+
+function GMSubViewRole:ctor()
+	self.tabName = "角色"
 end
 
-function var_0_0.initViewContent(arg_2_0)
-	if arg_2_0._inited then
+function GMSubViewRole:initViewContent()
+	if self._inited then
 		return
 	end
 
-	GMSubViewBase.initViewContent(arg_2_0)
+	GMSubViewBase.initViewContent(self)
 
-	arg_2_0._loginOpenMainThumbnail = arg_2_0:addToggle("L0", "登录打开缩略页")
-	arg_2_0._loginOpenMainThumbnail.isOn = PlayerPrefsHelper.getNumber(PlayerPrefsKey.GMToolViewOpenMainThumbnail, 0) == 1
+	self._loginOpenMainThumbnail = self:addToggle("L0", "登录打开缩略页")
+	self._loginOpenMainThumbnail.isOn = PlayerPrefsHelper.getNumber(PlayerPrefsKey.GMToolViewOpenMainThumbnail, 0) == 1
 
-	arg_2_0._loginOpenMainThumbnail:AddOnValueChanged(arg_2_0._onMainThumbnailToggleChanged, arg_2_0)
+	self._loginOpenMainThumbnail:AddOnValueChanged(self._onMainThumbnailToggleChanged, self)
 
-	arg_2_0._inpDuration = arg_2_0:addInputText("L1", "", "刷新间隔", nil, nil, {
+	self._inpDuration = self:addInputText("L1", "", "刷新间隔", nil, nil, {
 		w = 200
 	})
-	arg_2_0._inpSkins = arg_2_0:addInputText("L1", "", "皮肤id#皮肤id", nil, nil, {
+	self._inpSkins = self:addInputText("L1", "", "皮肤id#皮肤id", nil, nil, {
 		w = 600
 	})
 
-	arg_2_0:addButton("L1", "主界面测试皮肤", arg_2_0._onClickShowAllSkins, arg_2_0)
+	self:addButton("L1", "主界面测试皮肤", self._onClickShowAllSkins, self)
 
-	arg_2_0._playVoiceToggle = arg_2_0:addToggle("L1", "播放语音")
+	self._playVoiceToggle = self:addToggle("L1", "播放语音")
 
-	arg_2_0:addButton("L2", "停止测试皮肤", arg_2_0._onStopShowAllSkins, arg_2_0)
-	arg_2_0:addButton("L3", "梦游结算界面测试皮肤", arg_2_0._onClickShowWeekWalk_2AllSkins, arg_2_0)
-	arg_2_0:addButton("L4", "诺谛卡技能替换红点存储重置", arg_2_0._resetNuodiKaReplaceSkill, arg_2_0)
+	self:addButton("L2", "停止测试皮肤", self._onStopShowAllSkins, self)
+	self:addButton("L3", "梦游结算界面测试皮肤", self._onClickShowWeekWalk_2AllSkins, self)
+	self:addButton("L4", "诺谛卡技能替换红点存储重置", self._resetNuodiKaReplaceSkill, self)
 
-	arg_2_0._voiceId = arg_2_0:addInputText("L5", "", "主界面角色语音", nil, nil, {
+	self._voiceId = self:addInputText("L5", "", "主界面角色语音", nil, nil, {
 		w = 500
 	})
 
-	arg_2_0:addButton("L5", "播放语音", arg_2_0._onClickPlayVoice, arg_2_0)
-	arg_2_0:addTitleSplitLine("快速养成")
-	arg_2_0:addButton("L6", "全角色获得", arg_2_0.onClickGetAllHero, arg_2_0)
-	arg_2_0:addButton("L6", "全角色一键拉满（等级,共鸣，塑造）", arg_2_0.onClickUpgradeAllToMax, arg_2_0)
-	arg_2_0:addButton("L7", "全角色升至最高等级", arg_2_0.onClickUpgradeMaxLevel, arg_2_0)
-	arg_2_0:addButton("L7", "全角色升至最高共鸣", arg_2_0.onClickUpgradeMaxTalent, arg_2_0)
-	arg_2_0:addButton("L7", "全角色升至最高塑造", arg_2_0.onClickUpgradeMaxExLevel, arg_2_0)
-	arg_2_0:addButton("L8", "全满级心相获得（满等级，满增幅等级）", arg_2_0.onClickGetAllEquip, arg_2_0)
+	self:addButton("L5", "播放语音", self._onClickPlayVoice, self)
+	self:addTitleSplitLine("快速养成")
+	self:addButton("L6", "全角色获得", self.onClickGetAllHero, self)
+	self:addButton("L6", "全角色一键拉满（等级,共鸣，塑造）", self.onClickUpgradeAllToMax, self)
+	self:addButton("L7", "全角色升至最高等级", self.onClickUpgradeMaxLevel, self)
+	self:addButton("L7", "全角色升至最高共鸣", self.onClickUpgradeMaxTalent, self)
+	self:addButton("L7", "全角色升至最高塑造", self.onClickUpgradeMaxExLevel, self)
+	self:addButton("L8", "全满级心相获得（满等级，满增幅等级）", self.onClickGetAllEquip, self)
+	self:addTitleSplitLine("狂想")
+
+	self._destinyHeroId = self:addInputText("L9", "", "角色ID", nil, nil, {
+		w = 200
+	})
+
+	self:addButton("L9", "重置", self._destinyReset, self)
+	self:addLabel("L9", "（角色ID传0表示角色命石表中所有角色）")
+
+	self._destinyStage = self:addInputText("L10", "", "槽位阶段", nil, nil, {
+		w = 200
+	})
+	self._destinyNode = self:addInputText("L10", "", "槽位节点", nil, nil, {
+		w = 200
+	})
+
+	self:addButton("L10", "设置", self._setDestinyLevel, self)
+	self:addButton("L10", "升至最高", self._setDestinyMaxLevel, self)
+	self:addButton("L10", "解锁命石", self._unlockDestinyStone, self)
 end
 
-function var_0_0.onClickGetAllEquip(arg_3_0)
+function GMSubViewRole:onClickGetAllEquip()
 	GMRpc.instance:sendGMRequest("add equip 0#60#5")
 end
 
-function var_0_0.onClickUpgradeEquipAllToMax(arg_4_0)
-	arg_4_0.upgradeEquipAllToMaxFlow = FlowSequence.New()
+function GMSubViewRole:onClickUpgradeEquipAllToMax()
+	self.upgradeEquipAllToMaxFlow = FlowSequence.New()
 
-	arg_4_0.upgradeEquipAllToMaxFlow:addWork(GmUpgradeEquipAllToMax.New())
-	arg_4_0.upgradeEquipAllToMaxFlow:start()
+	self.upgradeEquipAllToMaxFlow:addWork(GmUpgradeEquipAllToMax.New())
+	self.upgradeEquipAllToMaxFlow:start()
 end
 
-function var_0_0.onClickGetAllHero(arg_5_0)
+function GMSubViewRole:onClickGetAllHero()
 	GMRpc.instance:sendGMRequest("add hero all 1")
 end
 
-function var_0_0.onClickUpgradeMaxLevel(arg_6_0)
-	arg_6_0.upgradeMaxLevelFlow = FlowSequence.New()
+function GMSubViewRole:onClickUpgradeMaxLevel()
+	self.upgradeMaxLevelFlow = FlowSequence.New()
 
-	arg_6_0.upgradeMaxLevelFlow:addWork(GmUpgradeAllHeroToMaxLevel.New())
-	arg_6_0.upgradeMaxLevelFlow:start()
+	self.upgradeMaxLevelFlow:addWork(GmUpgradeAllHeroToMaxLevel.New())
+	self.upgradeMaxLevelFlow:start()
 end
 
-function var_0_0.onClickUpgradeMaxTalent(arg_7_0)
-	arg_7_0.upgradeMaxTalentFlow = FlowSequence.New()
+function GMSubViewRole:onClickUpgradeMaxTalent()
+	self.upgradeMaxTalentFlow = FlowSequence.New()
 
-	arg_7_0.upgradeMaxTalentFlow:addWork(GmUpgradeAllHeroToMaxTalent.New())
-	arg_7_0.upgradeMaxTalentFlow:start()
+	self.upgradeMaxTalentFlow:addWork(GmUpgradeAllHeroToMaxTalent.New())
+	self.upgradeMaxTalentFlow:start()
 end
 
-function var_0_0.onClickUpgradeMaxExLevel(arg_8_0)
-	arg_8_0.upgradeMaxExLevelFlow = FlowSequence.New()
+function GMSubViewRole:onClickUpgradeMaxExLevel()
+	self.upgradeMaxExLevelFlow = FlowSequence.New()
 
-	arg_8_0.upgradeMaxExLevelFlow:addWork(GmUpgradeAllHeroToMaxExLevel.New())
-	arg_8_0.upgradeMaxExLevelFlow:start()
+	self.upgradeMaxExLevelFlow:addWork(GmUpgradeAllHeroToMaxExLevel.New())
+	self.upgradeMaxExLevelFlow:start()
 end
 
-function var_0_0.onClickUpgradeAllToMax(arg_9_0)
-	arg_9_0.upgradeAllToMaxFlow = FlowSequence.New()
+function GMSubViewRole:onClickUpgradeAllToMax()
+	self.upgradeAllToMaxFlow = FlowSequence.New()
 
-	arg_9_0.upgradeAllToMaxFlow:addWork(GmUpgradeAllHeroAllToMax.New())
-	arg_9_0.upgradeAllToMaxFlow:start()
+	self.upgradeAllToMaxFlow:addWork(GmUpgradeAllHeroAllToMax.New())
+	self.upgradeAllToMaxFlow:start()
 end
 
-function var_0_0._onClickPlayVoice(arg_10_0)
-	arg_10_0:closeThis()
+function GMSubViewRole:_onClickPlayVoice()
+	self:closeThis()
 
-	local var_10_0 = tonumber(arg_10_0._voiceId:GetText())
+	local id = tonumber(self._voiceId:GetText())
 
-	CharacterController.instance:dispatchEvent(CharacterEvent.MainHeroGmPlayVoice, var_10_0)
+	CharacterController.instance:dispatchEvent(CharacterEvent.MainHeroGmPlayVoice, id)
 end
 
-function var_0_0._onMainThumbnailToggleChanged(arg_11_0)
-	local var_11_0 = arg_11_0._loginOpenMainThumbnail.isOn and 1 or 0
+function GMSubViewRole:_onMainThumbnailToggleChanged()
+	local value = self._loginOpenMainThumbnail.isOn and 1 or 0
 
-	PlayerPrefsHelper.setNumber(PlayerPrefsKey.GMToolViewOpenMainThumbnail, var_11_0)
-	GameFacade.showToast(2674, var_11_0 == 1 and "设置登录打开缩略页开启" or "设置登录打开缩略页关闭")
+	PlayerPrefsHelper.setNumber(PlayerPrefsKey.GMToolViewOpenMainThumbnail, value)
+	GameFacade.showToast(2674, value == 1 and "设置登录打开缩略页开启" or "设置登录打开缩略页关闭")
 end
 
-function var_0_0._onStopShowAllSkins(arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0._checkSkinAndVoice, arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0._checkWeekWalk_2Skin, arg_12_0)
+function GMSubViewRole:_onStopShowAllSkins()
+	TaskDispatcher.cancelTask(self._checkSkinAndVoice, self)
+	TaskDispatcher.cancelTask(self._checkWeekWalk_2Skin, self)
 end
 
-function var_0_0._onClickShowWeekWalk_2AllSkins(arg_13_0)
-	local var_13_0 = tonumber(arg_13_0._inpDuration:GetText()) or 1.5
+function GMSubViewRole:_onClickShowWeekWalk_2AllSkins()
+	local time = tonumber(self._inpDuration:GetText()) or 1.5
 
-	print(string.format("====开始播放,间隔为：%ss====", var_13_0))
-	gohelper.setActive(arg_13_0._subViewGo, false)
+	print(string.format("====开始播放,间隔为：%ss====", time))
+	gohelper.setActive(self._subViewGo, false)
 
-	arg_13_0._index = 1
-	arg_13_0._skinList = {}
+	self._index = 1
+	self._skinList = {}
 
-	if not arg_13_0:_initInputSkins() then
-		for iter_13_0, iter_13_1 in ipairs(lua_skin.configList) do
-			if HeroConfig.instance:getHeroCO(iter_13_1.characterId) then
-				table.insert(arg_13_0._skinList, iter_13_1)
+	if not self:_initInputSkins() then
+		for i, v in ipairs(lua_skin.configList) do
+			if HeroConfig.instance:getHeroCO(v.characterId) then
+				table.insert(self._skinList, v)
 			end
 		end
 	end
 
-	arg_13_0._skinNum = #arg_13_0._skinList
+	self._skinNum = #self._skinList
 
-	TaskDispatcher.cancelTask(arg_13_0._checkWeekWalk_2Skin, arg_13_0)
-	TaskDispatcher.runRepeat(arg_13_0._checkWeekWalk_2Skin, arg_13_0, var_13_0)
+	TaskDispatcher.cancelTask(self._checkWeekWalk_2Skin, self)
+	TaskDispatcher.runRepeat(self._checkWeekWalk_2Skin, self, time)
 end
 
-function var_0_0._checkWeekWalk_2Skin(arg_14_0)
-	if arg_14_0._index > arg_14_0._skinNum then
+function GMSubViewRole:_checkWeekWalk_2Skin()
+	if self._index > self._skinNum then
 		print("====结束播放====")
-		gohelper.setActive(arg_14_0._subViewGo, true)
-		TaskDispatcher.cancelTask(arg_14_0._checkWeekWalk_2Skin, arg_14_0)
+		gohelper.setActive(self._subViewGo, true)
+		TaskDispatcher.cancelTask(self._checkWeekWalk_2Skin, self)
 
 		return
 	end
 
-	local var_14_0 = arg_14_0._skinList[arg_14_0._index]
+	local skinCo = self._skinList[self._index]
 
-	print(string.format("==========================================auto showSkin %s skinId:%s progress:%s/%s", var_14_0.name, var_14_0.id, arg_14_0._index, arg_14_0._skinNum))
+	print(string.format("==========================================auto showSkin %s skinId:%s progress:%s/%s", skinCo.name, skinCo.id, self._index, self._skinNum))
 
-	arg_14_0._index = arg_14_0._index + 1
+	self._index = self._index + 1
 
-	WeekWalk_2Controller.instance:dispatchEvent(WeekWalk_2Event.OnShowSkin, var_14_0.id, true)
+	WeekWalk_2Controller.instance:dispatchEvent(WeekWalk_2Event.OnShowSkin, skinCo.id, true)
 end
 
-function var_0_0._onClickShowAllSkins(arg_15_0)
-	local var_15_0 = tonumber(arg_15_0._inpDuration:GetText()) or 1.5
+function GMSubViewRole:_onClickShowAllSkins()
+	local time = tonumber(self._inpDuration:GetText()) or 1.5
 
-	print(string.format("====开始播放,间隔为：%ss====", var_15_0))
-	gohelper.setActive(arg_15_0._subViewGo, false)
+	print(string.format("====开始播放,间隔为：%ss====", time))
+	gohelper.setActive(self._subViewGo, false)
 
-	arg_15_0._index = 1
-	arg_15_0._skinList = {}
+	self._index = 1
+	self._skinList = {}
 
-	if not arg_15_0:_initInputSkins() then
-		for iter_15_0, iter_15_1 in ipairs(lua_skin.configList) do
-			if HeroConfig.instance:getHeroCO(iter_15_1.characterId) then
-				table.insert(arg_15_0._skinList, iter_15_1)
+	if not self:_initInputSkins() then
+		for i, v in ipairs(lua_skin.configList) do
+			if HeroConfig.instance:getHeroCO(v.characterId) then
+				table.insert(self._skinList, v)
 			end
 		end
 	end
 
-	arg_15_0._skinNum = #arg_15_0._skinList
+	self._skinNum = #self._skinList
 
-	TaskDispatcher.cancelTask(arg_15_0._checkSkinAndVoice, arg_15_0)
-	TaskDispatcher.runRepeat(arg_15_0._checkSkinAndVoice, arg_15_0, var_15_0)
-	arg_15_0:_showSkin()
+	TaskDispatcher.cancelTask(self._checkSkinAndVoice, self)
+	TaskDispatcher.runRepeat(self._checkSkinAndVoice, self, time)
+	self:_showSkin()
 end
 
-function var_0_0._initInputSkins(arg_16_0)
-	local var_16_0 = arg_16_0._inpSkins:GetText()
+function GMSubViewRole:_initInputSkins()
+	local inputSkins = self._inpSkins:GetText()
 
-	if string.nilorempty(var_16_0) then
+	if string.nilorempty(inputSkins) then
 		return
 	end
 
-	local var_16_1 = string.splitToNumber(var_16_0, "#")
+	local list = string.splitToNumber(inputSkins, "#")
 
-	if #var_16_1 == 1 then
-		local var_16_2 = var_16_1[1]
+	if #list == 1 then
+		local skinId = list[1]
 
-		for iter_16_0, iter_16_1 in ipairs(lua_skin.configList) do
-			if HeroConfig.instance:getHeroCO(iter_16_1.characterId) then
-				table.insert(arg_16_0._skinList, iter_16_1)
+		for i, v in ipairs(lua_skin.configList) do
+			if HeroConfig.instance:getHeroCO(v.characterId) then
+				table.insert(self._skinList, v)
 
-				if iter_16_1.id == var_16_2 then
-					arg_16_0._index = #arg_16_0._skinList
+				if v.id == skinId then
+					self._index = #self._skinList
 				end
 			end
 		end
@@ -200,114 +221,187 @@ function var_0_0._initInputSkins(arg_16_0)
 		return true
 	end
 
-	for iter_16_2, iter_16_3 in ipairs(var_16_1) do
-		local var_16_3 = lua_skin.configDict[iter_16_3]
+	for i, v in ipairs(list) do
+		local config = lua_skin.configDict[v]
 
-		table.insert(arg_16_0._skinList, var_16_3)
+		table.insert(self._skinList, config)
 	end
 
 	return true
 end
 
-function var_0_0._showSkin(arg_17_0)
-	local var_17_0 = arg_17_0._skinList[arg_17_0._index]
+function GMSubViewRole:_showSkin()
+	local skinCo = self._skinList[self._index]
 
-	print(string.format("==========================================auto showSkin %s skinId:%s progress:%s/%s", var_17_0.name, var_17_0.id, arg_17_0._index, arg_17_0._skinNum))
+	print(string.format("==========================================auto showSkin %s skinId:%s progress:%s/%s", skinCo.name, skinCo.id, self._index, self._skinNum))
 
-	arg_17_0._index = arg_17_0._index + 1
+	self._index = self._index + 1
 
-	MainController.instance:dispatchEvent(MainEvent.ChangeMainHeroSkin, var_17_0, true)
+	MainController.instance:dispatchEvent(MainEvent.ChangeMainHeroSkin, skinCo, true)
 
-	arg_17_0._skinCo = var_17_0
+	self._skinCo = skinCo
 
-	if arg_17_0._playVoiceToggle.isOn then
-		arg_17_0._voiceList = arg_17_0:_getCharacterVoicesCO(var_17_0.characterId, var_17_0.id)
-		arg_17_0._voiceLen = arg_17_0._voiceList and #arg_17_0._voiceList or 0
+	if self._playVoiceToggle.isOn then
+		self._voiceList = self:_getCharacterVoicesCO(skinCo.characterId, skinCo.id)
+		self._voiceLen = self._voiceList and #self._voiceList or 0
 	end
 end
 
-function var_0_0._checkSkinAndVoice(arg_18_0)
-	if arg_18_0:_checkPlayVoice() then
+function GMSubViewRole:_checkSkinAndVoice()
+	if self:_checkPlayVoice() then
 		return
 	end
 
-	arg_18_0:_checkShowSkin()
+	self:_checkShowSkin()
 end
 
-function var_0_0._checkShowSkin(arg_19_0)
-	if arg_19_0._index > arg_19_0._skinNum then
+function GMSubViewRole:_checkShowSkin()
+	if self._index > self._skinNum then
 		print("====结束播放====")
-		gohelper.setActive(arg_19_0._subViewGo, true)
-		TaskDispatcher.cancelTask(arg_19_0._checkSkinAndVoice, arg_19_0)
+		gohelper.setActive(self._subViewGo, true)
+		TaskDispatcher.cancelTask(self._checkSkinAndVoice, self)
 
 		return
 	end
 
-	arg_19_0:_showSkin()
+	self:_showSkin()
 end
 
-function var_0_0._checkPlayVoice(arg_20_0)
-	if not arg_20_0._voiceList or #arg_20_0._voiceList == 0 then
+function GMSubViewRole:_checkPlayVoice()
+	if not self._voiceList or #self._voiceList == 0 then
 		return
 	end
 
-	local var_20_0 = table.remove(arg_20_0._voiceList, 1)
+	local config = table.remove(self._voiceList, 1)
 
-	print(string.format("======auto playVoice skinId:%s audio:%s name:%s progress:%s/%s", arg_20_0._skinCo.id, var_20_0.audio, var_20_0.name, arg_20_0._voiceLen - #arg_20_0._voiceList, arg_20_0._voiceLen))
-	ViewMgr.instance:getContainer(ViewName.MainView):getMainHeroView():onlyPlayVoice(var_20_0)
+	print(string.format("======auto playVoice skinId:%s audio:%s name:%s progress:%s/%s", self._skinCo.id, config.audio, config.name, self._voiceLen - #self._voiceList, self._voiceLen))
+
+	local mainViewContainer = ViewMgr.instance:getContainer(ViewName.MainView)
+	local mainHeroView = mainViewContainer:getMainHeroView()
+
+	mainHeroView:onlyPlayVoice(config)
 
 	return true
 end
 
-function var_0_0._getCharacterVoicesCO(arg_21_0, arg_21_1, arg_21_2)
-	local var_21_0 = {}
-	local var_21_1 = lua_character_voice.configDict[arg_21_1]
+function GMSubViewRole:_getCharacterVoicesCO(heroId, targetSkinId)
+	local voicesCO = {}
+	local configs = lua_character_voice.configDict[heroId]
 
-	if var_21_1 then
-		for iter_21_0, iter_21_1 in pairs(var_21_1) do
-			if CharacterDataConfig.instance:_checkSkin(iter_21_1, arg_21_2) then
-				table.insert(var_21_0, iter_21_1)
+	if configs then
+		for audioId, config in pairs(configs) do
+			if CharacterDataConfig.instance:_checkSkin(config, targetSkinId) then
+				table.insert(voicesCO, config)
 			end
 		end
 	end
 
-	return var_21_0
+	return voicesCO
 end
 
-function var_0_0._resetNuodiKaReplaceSkill(arg_22_0)
-	local var_22_0 = 3120
+function GMSubViewRole:_resetNuodiKaReplaceSkill()
+	local heroId = 3120
 
-	CharacterModel.instance:setPropKeyValueNuodikaReddot(var_22_0, 0)
-	GameUtil.playerPrefsGetNumberByUserId(CharacterModel.AnimKey_ReplaceSkillPlay .. var_22_0, 0)
+	CharacterModel.instance:setPropKeyValueNuodikaReddot(heroId, 0)
+	GameUtil.playerPrefsGetNumberByUserId(CharacterModel.AnimKey_ReplaceSkillPlay .. heroId, 0)
 end
 
-function var_0_0.onDestroyView(arg_23_0)
-	TaskDispatcher.cancelTask(arg_23_0._checkSkinAndVoice, arg_23_0)
-	TaskDispatcher.cancelTask(arg_23_0._checkWeekWalk_2Skin, arg_23_0)
+function GMSubViewRole:onDestroyView()
+	TaskDispatcher.cancelTask(self._checkSkinAndVoice, self)
+	TaskDispatcher.cancelTask(self._checkWeekWalk_2Skin, self)
 
-	if arg_23_0.upgradeMaxLevelFlow then
-		arg_23_0.upgradeMaxLevelFlow:destroy()
+	if self.upgradeMaxLevelFlow then
+		self.upgradeMaxLevelFlow:destroy()
 
-		arg_23_0.upgradeMaxLevelFlow = nil
+		self.upgradeMaxLevelFlow = nil
 	end
 
-	if arg_23_0.upgradeMaxTalentFlow then
-		arg_23_0.upgradeMaxTalentFlow:destroy()
+	if self.upgradeMaxTalentFlow then
+		self.upgradeMaxTalentFlow:destroy()
 
-		arg_23_0.upgradeMaxTalentFlow = nil
+		self.upgradeMaxTalentFlow = nil
 	end
 
-	if arg_23_0.upgradeMaxExLevelFlow then
-		arg_23_0.upgradeMaxExLevelFlow:destroy()
+	if self.upgradeMaxExLevelFlow then
+		self.upgradeMaxExLevelFlow:destroy()
 
-		arg_23_0.upgradeMaxExLevelFlow = nil
+		self.upgradeMaxExLevelFlow = nil
 	end
 
-	if arg_23_0.upgradeAllToMaxFlow then
-		arg_23_0.upgradeAllToMaxFlow:destroy()
+	if self.upgradeAllToMaxFlow then
+		self.upgradeAllToMaxFlow:destroy()
 
-		arg_23_0.upgradeAllToMaxFlow = nil
+		self.upgradeAllToMaxFlow = nil
 	end
 end
 
-return var_0_0
+function GMSubViewRole:_destinyReset()
+	local heroId = self._destinyHeroId:GetText()
+
+	if string.nilorempty(heroId) then
+		return
+	end
+
+	local input = string.format("destinyReset %s", heroId)
+
+	GMRpc.instance:sendGMRequest(input)
+end
+
+function GMSubViewRole:_setDestinyLevel()
+	local heroId = self._destinyHeroId:GetText()
+
+	if string.nilorempty(heroId) then
+		return
+	end
+
+	local stage = self._destinyStage:GetText()
+
+	if string.nilorempty(stage) then
+		return
+	end
+
+	local node = self._destinyStage:GetText()
+
+	if string.nilorempty(node) then
+		return
+	end
+
+	local input = string.format("setDestinyLevel %s %s %s", heroId, stage, node)
+
+	GMRpc.instance:sendGMRequest(input)
+end
+
+function GMSubViewRole:_setDestinyMaxLevel()
+	local heroId = tonumber(self._destinyHeroId:GetText())
+
+	if string.nilorempty(heroId) then
+		return
+	end
+
+	local heroMo = HeroModel.instance:getByHeroId(heroId)
+	local destinyStoneMo = heroMo.destinyStoneMo
+
+	if not destinyStoneMo then
+		return
+	end
+
+	local maxStage = destinyStoneMo.maxRank
+	local maxNode = destinyStoneMo.maxLevel[maxStage]
+	local input = string.format("setDestinyLevel %s %s %s", heroId, maxStage, maxNode)
+
+	GMRpc.instance:sendGMRequest(input)
+end
+
+function GMSubViewRole:_unlockDestinyStone()
+	local heroId = tonumber(self._destinyHeroId:GetText())
+
+	if string.nilorempty(heroId) then
+		return
+	end
+
+	local input = string.format("unlockDestinyStone %s", heroId)
+
+	GMRpc.instance:sendGMRequest(input)
+end
+
+return GMSubViewRole

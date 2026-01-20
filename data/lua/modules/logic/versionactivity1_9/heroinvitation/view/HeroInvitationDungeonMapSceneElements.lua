@@ -1,351 +1,356 @@
-﻿module("modules.logic.versionactivity1_9.heroinvitation.view.HeroInvitationDungeonMapSceneElements", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/heroinvitation/view/HeroInvitationDungeonMapSceneElements.lua
 
-local var_0_0 = class("HeroInvitationDungeonMapSceneElements", DungeonMapSceneElements)
+module("modules.logic.versionactivity1_9.heroinvitation.view.HeroInvitationDungeonMapSceneElements", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	var_0_0.super.onInitView(arg_1_0)
+local HeroInvitationDungeonMapSceneElements = class("HeroInvitationDungeonMapSceneElements", DungeonMapSceneElements)
 
-	arg_1_0.goItem = gohelper.findChild(arg_1_0.viewGO, "#go_arrow/#go_item")
-	arg_1_0.allFinish = HeroInvitationModel.instance:isAllFinish()
+function HeroInvitationDungeonMapSceneElements:onInitView()
+	HeroInvitationDungeonMapSceneElements.super.onInitView(self)
+
+	self.goItem = gohelper.findChild(self.viewGO, "#go_arrow/#go_item")
+	self.allFinish = HeroInvitationModel.instance:isAllFinish()
 end
 
-function var_0_0.addEvents(arg_2_0)
-	var_0_0.super.addEvents(arg_2_0)
-	arg_2_0:addEventCb(HeroInvitationController.instance, HeroInvitationEvent.StateChange, arg_2_0.updateState, arg_2_0)
-	arg_2_0:addEventCb(HeroInvitationController.instance, HeroInvitationEvent.UpdateInfo, arg_2_0.updateHeroInvitation, arg_2_0)
+function HeroInvitationDungeonMapSceneElements:addEvents()
+	HeroInvitationDungeonMapSceneElements.super.addEvents(self)
+	self:addEventCb(HeroInvitationController.instance, HeroInvitationEvent.StateChange, self.updateState, self)
+	self:addEventCb(HeroInvitationController.instance, HeroInvitationEvent.UpdateInfo, self.updateHeroInvitation, self)
 end
 
-function var_0_0.updateState(arg_3_0)
-	if arg_3_0._mapCfg then
-		arg_3_0:_showElements(arg_3_0._mapCfg.id)
+function HeroInvitationDungeonMapSceneElements:updateState()
+	if self._mapCfg then
+		self:_showElements(self._mapCfg.id)
 	end
 end
 
-function var_0_0.updateHeroInvitation(arg_4_0)
-	if HeroInvitationModel.instance:isAllFinish() == arg_4_0.allFinish then
+function HeroInvitationDungeonMapSceneElements:updateHeroInvitation()
+	local allFinish = HeroInvitationModel.instance:isAllFinish()
+
+	if allFinish == self.allFinish then
 		return
 	end
 
-	if arg_4_0._mapCfg then
-		arg_4_0:_showElements(arg_4_0._mapCfg.id)
+	if self._mapCfg then
+		self:_showElements(self._mapCfg.id)
 	end
 end
 
-function var_0_0._addElement(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_1.id
-	local var_5_1 = arg_5_0._elementList[var_5_0]
-	local var_5_2 = false
+function HeroInvitationDungeonMapSceneElements:_addElement(elementConfig)
+	local elementId = elementConfig.id
+	local elementComp = self._elementList[elementId]
+	local create = false
 
-	if not var_5_1 then
-		local var_5_3 = UnityEngine.GameObject.New(tostring(var_5_0))
+	if not elementComp then
+		local go = UnityEngine.GameObject.New(tostring(elementId))
 
-		gohelper.addChild(arg_5_0._elementRoot, var_5_3)
+		gohelper.addChild(self._elementRoot, go)
 
-		var_5_1 = MonoHelper.addLuaComOnceToGo(var_5_3, HeroInvitationDungeonMapElement, {
-			arg_5_1,
-			arg_5_0._mapScene,
-			arg_5_0
+		elementComp = MonoHelper.addLuaComOnceToGo(go, HeroInvitationDungeonMapElement, {
+			elementConfig,
+			self._mapScene,
+			self
 		})
-		arg_5_0._elementList[var_5_0] = var_5_1
-		var_5_2 = true
+		self._elementList[elementId] = elementComp
+		create = true
 	end
 
-	if var_5_1:showArrow() then
-		arg_5_0:createArrowItem(var_5_0)
-		arg_5_0:_updateArrow(var_5_1)
+	if elementComp:showArrow() then
+		self:createArrowItem(elementId)
+		self:_updateArrow(elementComp)
 	end
 
-	DungeonController.instance:dispatchEvent(DungeonMapElementEvent.OnElementAdd, var_5_0)
+	DungeonController.instance:dispatchEvent(DungeonMapElementEvent.OnElementAdd, elementId)
 
-	if arg_5_0._inRemoveElementId == var_5_0 then
-		var_5_1:setWenHaoGoVisible(true)
-		arg_5_0:_removeElement(var_5_0)
+	if self._inRemoveElementId == elementId then
+		elementComp:setWenHaoGoVisible(true)
+		self:_removeElement(elementId)
 	else
-		local var_5_4 = DungeonMapModel.instance:elementIsFinished(var_5_0)
+		local isFinish = DungeonMapModel.instance:elementIsFinished(elementId)
 
-		var_5_1:setWenHaoGoVisible(arg_5_0.allFinish or not var_5_4)
+		elementComp:setWenHaoGoVisible(self.allFinish or not isFinish)
 
-		if not var_5_2 and arg_5_0.allFinish then
-			var_5_1:setWenHaoAnim(DungeonMapElement.InAnimName)
+		if not create and self.allFinish then
+			elementComp:setWenHaoAnim(DungeonMapElement.InAnimName)
 		end
 	end
 end
 
-function var_0_0._getElements(arg_6_0, arg_6_1)
-	local var_6_0 = DungeonConfig.instance:getMapElements(arg_6_1)
+function HeroInvitationDungeonMapSceneElements:_getElements(mapId)
+	local list = DungeonConfig.instance:getMapElements(mapId)
 
-	arg_6_0.allFinish = HeroInvitationModel.instance:isAllFinish()
+	self.allFinish = HeroInvitationModel.instance:isAllFinish()
 
-	local var_6_1 = {}
+	local elements = {}
 
-	if var_6_0 then
-		for iter_6_0, iter_6_1 in ipairs(var_6_0) do
-			local var_6_2 = HeroInvitationModel.instance:getInvitationStateByElementId(iter_6_1.id)
+	if list then
+		for i, v in ipairs(list) do
+			local state = HeroInvitationModel.instance:getInvitationStateByElementId(v.id)
 
-			if var_6_2 ~= HeroInvitationEnum.InvitationState.TimeLocked and var_6_2 ~= HeroInvitationEnum.InvitationState.ElementLocked and (arg_6_0.allFinish or DungeonMapModel.instance:getElementById(iter_6_1.id) or DungeonMapModel.instance:elementIsFinished(iter_6_1.id)) then
-				table.insert(var_6_1, iter_6_1)
+			if state ~= HeroInvitationEnum.InvitationState.TimeLocked and state ~= HeroInvitationEnum.InvitationState.ElementLocked and (self.allFinish or DungeonMapModel.instance:getElementById(v.id) or DungeonMapModel.instance:elementIsFinished(v.id)) then
+				table.insert(elements, v)
 			end
 		end
 	end
 
-	return var_6_1
+	return elements
 end
 
-function var_0_0._removeElement(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0._elementList[arg_7_1]
+function HeroInvitationDungeonMapSceneElements:_removeElement(id)
+	local elementComp = self._elementList[id]
 
-	if not var_7_0 then
-		arg_7_0._inRemoveElementId = arg_7_1
+	if not elementComp then
+		self._inRemoveElementId = id
 
 		return
 	end
 
 	DungeonMapModel.instance.directFocusElement = true
 
-	DungeonController.instance:dispatchEvent(DungeonMapElementEvent.OnFocusElement, arg_7_1)
+	DungeonController.instance:dispatchEvent(DungeonMapElementEvent.OnFocusElement, id)
 
 	DungeonMapModel.instance.directFocusElement = false
-	arg_7_0._inRemoveElementId = nil
-	arg_7_0._inRemoveElement = true
+	self._inRemoveElementId = nil
+	self._inRemoveElement = true
 
-	if var_7_0 then
-		var_7_0:setFinishAndDotDestroy()
+	if elementComp then
+		elementComp:setFinishAndDotDestroy()
 	end
 
-	local var_7_1 = arg_7_0._arrowList[arg_7_1]
+	local arrowItem = self._arrowList[id]
 
-	if var_7_1 then
-		arg_7_0:destoryArrowItem(var_7_1)
+	if arrowItem then
+		self:destoryArrowItem(arrowItem)
 
-		arg_7_0._arrowList[arg_7_1] = nil
-	end
-end
-
-function var_0_0.onRemoveElementFinish(arg_8_0)
-	arg_8_0._inRemoveElement = false
-
-	if arg_8_0._mapCfg then
-		arg_8_0:_showElements(arg_8_0._mapCfg.id)
+		self._arrowList[id] = nil
 	end
 end
 
-function var_0_0._showElements(arg_9_0, arg_9_1)
-	if arg_9_0._inRemoveElement then
+function HeroInvitationDungeonMapSceneElements:onRemoveElementFinish()
+	self._inRemoveElement = false
+
+	if self._mapCfg then
+		self:_showElements(self._mapCfg.id)
+	end
+end
+
+function HeroInvitationDungeonMapSceneElements:_showElements(mapId)
+	if self._inRemoveElement then
 		return
 	end
 
-	if gohelper.isNil(arg_9_0._sceneGo) or arg_9_0._lockShowElementAnim then
+	if gohelper.isNil(self._sceneGo) or self._lockShowElementAnim then
 		return
 	end
 
-	if arg_9_0._inRemoveElementId then
-		local var_9_0 = arg_9_0:_getElements(arg_9_1)
-		local var_9_1 = {}
-		local var_9_2 = {}
+	if self._inRemoveElementId then
+		local elementsList = self:_getElements(mapId)
+		local animElements = {}
+		local normalElements = {}
 
-		for iter_9_0, iter_9_1 in ipairs(var_9_0) do
-			if iter_9_1.id <= arg_9_0._inRemoveElementId then
-				if iter_9_1.showCamera == 1 and not arg_9_0._skipShowElementAnim and arg_9_0._forceShowElementAnim then
-					table.insert(var_9_1, iter_9_1.id)
+		for i, config in ipairs(elementsList) do
+			if config.id <= self._inRemoveElementId then
+				if config.showCamera == 1 and not self._skipShowElementAnim and self._forceShowElementAnim then
+					table.insert(animElements, config.id)
 				else
-					table.insert(var_9_2, iter_9_1)
+					table.insert(normalElements, config)
 				end
 			end
 		end
 
-		arg_9_0:_showElementAnim(var_9_1, var_9_2)
+		self:_showElementAnim(animElements, normalElements)
 	else
-		local var_9_3 = arg_9_0:_getElements(arg_9_1)
-		local var_9_4 = DungeonMapModel.instance:getNewElements()
-		local var_9_5 = {}
-		local var_9_6 = {}
+		local elementsList = self:_getElements(mapId)
+		local newElements = DungeonMapModel.instance:getNewElements()
+		local animElements = {}
+		local normalElements = {}
 
-		for iter_9_2, iter_9_3 in ipairs(var_9_3) do
-			if iter_9_3.showCamera == 1 and not arg_9_0._skipShowElementAnim and (var_9_4 and tabletool.indexOf(var_9_4, iter_9_3.id) or arg_9_0._forceShowElementAnim) then
-				table.insert(var_9_5, iter_9_3.id)
+		for i, config in ipairs(elementsList) do
+			if config.showCamera == 1 and not self._skipShowElementAnim and (newElements and tabletool.indexOf(newElements, config.id) or self._forceShowElementAnim) then
+				table.insert(animElements, config.id)
 			else
-				table.insert(var_9_6, iter_9_3)
+				table.insert(normalElements, config)
 			end
 		end
 
-		arg_9_0:_showElementAnim(var_9_5, var_9_6)
+		self:_showElementAnim(animElements, normalElements)
 		DungeonMapModel.instance:clearNewElements()
 	end
 end
 
-function var_0_0.clickElement(arg_10_0, arg_10_1)
-	if arg_10_0:_isShowElementAnim() then
+function HeroInvitationDungeonMapSceneElements:clickElement(id)
+	if self:_isShowElementAnim() then
 		return
 	end
 
-	local var_10_0 = arg_10_0._elementList[tonumber(arg_10_1)]
+	local mapElement = self._elementList[tonumber(id)]
 
-	if not var_10_0 then
+	if not mapElement then
 		return
 	end
 
-	local var_10_1 = var_10_0._config
+	local config = mapElement._config
 
-	arg_10_0:_focusElementById(var_10_1.id)
+	self:_focusElementById(config.id)
 
-	local var_10_2 = HeroInvitationConfig.instance:getInvitationConfigByElementId(var_10_1.id)
+	local invitationConfig = HeroInvitationConfig.instance:getInvitationConfigByElementId(config.id)
 
-	if DungeonMapModel.instance:elementIsFinished(var_10_1.id) then
-		local var_10_3 = var_10_2.restoryId
-		local var_10_4 = {}
+	if DungeonMapModel.instance:elementIsFinished(config.id) then
+		local storyId = invitationConfig.restoryId
+		local param = {}
 
-		var_10_4.blur = true
-		var_10_4.hideStartAndEndDark = true
+		param.blur = true
+		param.hideStartAndEndDark = true
 
-		StoryController.instance:playStory(var_10_3, var_10_4)
+		StoryController.instance:playStory(storyId, param)
 	else
-		local var_10_5 = var_10_2.storyId
-		local var_10_6 = {}
+		local storyId = invitationConfig.storyId
+		local param = {}
 
-		var_10_6.blur = true
-		var_10_6.hideStartAndEndDark = true
+		param.blur = true
+		param.hideStartAndEndDark = true
 
-		StoryController.instance:playStory(var_10_5, var_10_6, function()
-			DungeonRpc.instance:sendMapElementRequest(var_10_1.id)
+		StoryController.instance:playStory(storyId, param, function()
+			DungeonRpc.instance:sendMapElementRequest(config.id)
 		end)
 	end
 end
 
-function var_0_0.hideMapHeroIcon(arg_12_0)
-	for iter_12_0, iter_12_1 in pairs(arg_12_0._arrowList) do
-		arg_12_0:destoryArrowItem(iter_12_1)
+function HeroInvitationDungeonMapSceneElements:hideMapHeroIcon()
+	for k, v in pairs(self._arrowList) do
+		self:destoryArrowItem(v)
 	end
 
-	arg_12_0._arrowList = arg_12_0:getUserDataTb_()
+	self._arrowList = self:getUserDataTb_()
 end
 
-function var_0_0.createArrowItem(arg_13_0, arg_13_1)
-	if arg_13_0._arrowList[arg_13_1] then
-		return arg_13_0._arrowList[arg_13_1]
+function HeroInvitationDungeonMapSceneElements:createArrowItem(elementId)
+	if self._arrowList[elementId] then
+		return self._arrowList[elementId]
 	end
 
-	local var_13_0 = arg_13_0:getUserDataTb_()
+	local item = self:getUserDataTb_()
 
-	var_13_0.elementId = arg_13_1
-	var_13_0.go = gohelper.cloneInPlace(arg_13_0.goItem, tostring(arg_13_1))
+	item.elementId = elementId
+	item.go = gohelper.cloneInPlace(self.goItem, tostring(elementId))
 
-	gohelper.setActive(var_13_0.go, false)
+	gohelper.setActive(item.go, false)
 
-	var_13_0.arrowGO = gohelper.findChild(var_13_0.go, "arrow")
-	var_13_0.rotationTrans = var_13_0.arrowGO.transform
-	var_13_0.goHeroIcon = gohelper.findChild(var_13_0.go, "heroicon")
-	var_13_0.heroHeadImage = gohelper.findChildSingleImage(var_13_0.go, "heroicon/#simage_herohead")
-	var_13_0.click = gohelper.getClickWithDefaultAudio(var_13_0.heroHeadImage.gameObject)
+	item.arrowGO = gohelper.findChild(item.go, "arrow")
+	item.rotationTrans = item.arrowGO.transform
+	item.goHeroIcon = gohelper.findChild(item.go, "heroicon")
+	item.heroHeadImage = gohelper.findChildSingleImage(item.go, "heroicon/#simage_herohead")
+	item.click = gohelper.getClickWithDefaultAudio(item.heroHeadImage.gameObject)
 
-	var_13_0.click:AddClickListener(arg_13_0.onClickHeroHeadIcon, arg_13_0, var_13_0)
+	item.click:AddClickListener(self.onClickHeroHeadIcon, self, item)
 
-	local var_13_1, var_13_2, var_13_3 = transformhelper.getLocalRotation(var_13_0.rotationTrans)
+	local rx, ry, rz = transformhelper.getLocalRotation(item.rotationTrans)
 
-	var_13_0.initRotation = {
-		var_13_1,
-		var_13_2,
-		var_13_3
+	item.initRotation = {
+		rx,
+		ry,
+		rz
 	}
-	arg_13_0._arrowList[arg_13_1] = var_13_0
+	self._arrowList[elementId] = item
 
-	local var_13_4 = HeroInvitationConfig.instance:getInvitationConfigByElementId(arg_13_1)
+	local config = HeroInvitationConfig.instance:getInvitationConfigByElementId(elementId)
 
-	var_13_0.heroHeadImage:LoadImage(ResUrl.getHeadIconSmall(var_13_4.head))
+	item.heroHeadImage:LoadImage(ResUrl.getHeadIconSmall(config.head))
 
-	return var_13_0
+	return item
 end
 
-function var_0_0.destoryArrowItem(arg_14_0, arg_14_1)
-	if not arg_14_1 then
+function HeroInvitationDungeonMapSceneElements:destoryArrowItem(item)
+	if not item then
 		return
 	end
 
-	arg_14_1.click:RemoveClickListener()
-	arg_14_1.heroHeadImage:UnLoadImage()
-	gohelper.destroy(arg_14_1.go)
+	item.click:RemoveClickListener()
+	item.heroHeadImage:UnLoadImage()
+	gohelper.destroy(item.go)
 end
 
-function var_0_0.onClickHeroHeadIcon(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_1.elementId
+function HeroInvitationDungeonMapSceneElements:onClickHeroHeadIcon(item)
+	local elementId = item.elementId
 
-	DungeonController.instance:dispatchEvent(DungeonMapElementEvent.OnFocusElement, var_15_0)
+	DungeonController.instance:dispatchEvent(DungeonMapElementEvent.OnFocusElement, elementId)
 end
 
-function var_0_0._updateArrow(arg_16_0, arg_16_1)
-	if not arg_16_1:showArrow() then
+function HeroInvitationDungeonMapSceneElements:_updateArrow(elementComp)
+	if not elementComp:showArrow() then
 		return
 	end
 
-	local var_16_0 = arg_16_1._transform
-	local var_16_1 = CameraMgr.instance:getMainCamera():WorldToViewportPoint(var_16_0.position)
-	local var_16_2 = var_16_1.x
-	local var_16_3 = var_16_1.y
-	local var_16_4 = DungeonMapModel.instance:elementIsFinished(arg_16_1:getElementId())
-	local var_16_5 = var_16_2 >= 0 and var_16_2 <= 1 and var_16_3 >= 0 and var_16_3 <= 1
-	local var_16_6 = arg_16_0._arrowList[arg_16_1:getElementId()]
+	local t = elementComp._transform
+	local camera = CameraMgr.instance:getMainCamera()
+	local pos = camera:WorldToViewportPoint(t.position)
+	local x = pos.x
+	local y = pos.y
+	local isFinish = DungeonMapModel.instance:elementIsFinished(elementComp:getElementId())
+	local isShow = x >= 0 and x <= 1 and y >= 0 and y <= 1
+	local arrowItem = self._arrowList[elementComp:getElementId()]
 
-	if not var_16_6 then
+	if not arrowItem then
 		return
 	end
 
-	gohelper.setActive(var_16_6.go, not var_16_4 and not var_16_5)
+	gohelper.setActive(arrowItem.go, not isFinish and not isShow)
 
-	if var_16_5 or var_16_4 then
+	if isShow or isFinish then
 		return
 	end
 
-	local var_16_7 = math.max(0.05, math.min(var_16_2, 0.95))
-	local var_16_8 = math.max(0.1, math.min(var_16_3, 0.9))
+	local viewportX = math.max(0.05, math.min(x, 0.95))
+	local viewportY = math.max(0.1, math.min(y, 0.9))
 
-	if var_16_8 > 0.85 and var_16_7 < 0.15 then
-		var_16_8 = 0.85
+	if viewportY > 0.85 and viewportX < 0.15 then
+		viewportY = 0.85
 	end
 
-	local var_16_9 = recthelper.getWidth(arg_16_0._goarrow.transform)
-	local var_16_10 = recthelper.getHeight(arg_16_0._goarrow.transform)
+	local width = recthelper.getWidth(self._goarrow.transform)
+	local height = recthelper.getHeight(self._goarrow.transform)
 
-	recthelper.setAnchor(var_16_6.go.transform, var_16_9 * (var_16_7 - 0.5), var_16_10 * (var_16_8 - 0.5))
+	recthelper.setAnchor(arrowItem.go.transform, width * (viewportX - 0.5), height * (viewportY - 0.5))
 
-	local var_16_11 = var_16_6.initRotation
+	local initRotation = arrowItem.initRotation
 
-	if var_16_2 >= 0 and var_16_2 <= 1 then
-		if var_16_3 < 0 then
-			transformhelper.setLocalRotation(var_16_6.rotationTrans, var_16_11[1], var_16_11[2], 180)
-
-			return
-		elseif var_16_3 > 1 then
-			transformhelper.setLocalRotation(var_16_6.rotationTrans, var_16_11[1], var_16_11[2], 0)
+	if x >= 0 and x <= 1 then
+		if y < 0 then
+			transformhelper.setLocalRotation(arrowItem.rotationTrans, initRotation[1], initRotation[2], 180)
 
 			return
-		end
-	end
-
-	if var_16_3 >= 0 and var_16_3 <= 1 then
-		if var_16_2 < 0 then
-			transformhelper.setLocalRotation(var_16_6.rotationTrans, var_16_11[1], var_16_11[2], 90)
-
-			return
-		elseif var_16_2 > 1 then
-			transformhelper.setLocalRotation(var_16_6.rotationTrans, var_16_11[1], var_16_11[2], 270)
+		elseif y > 1 then
+			transformhelper.setLocalRotation(arrowItem.rotationTrans, initRotation[1], initRotation[2], 0)
 
 			return
 		end
 	end
 
-	local var_16_12 = Mathf.Deg(Mathf.Atan2(var_16_3, var_16_2)) - 90
+	if y >= 0 and y <= 1 then
+		if x < 0 then
+			transformhelper.setLocalRotation(arrowItem.rotationTrans, initRotation[1], initRotation[2], 90)
 
-	transformhelper.setLocalRotation(var_16_6.rotationTrans, var_16_11[1], var_16_11[2], var_16_12)
-end
+			return
+		elseif x > 1 then
+			transformhelper.setLocalRotation(arrowItem.rotationTrans, initRotation[1], initRotation[2], 270)
 
-function var_0_0._disposeOldMap(arg_17_0)
-	for iter_17_0, iter_17_1 in pairs(arg_17_0._elementList) do
-		iter_17_1:onDestroy()
+			return
+		end
 	end
 
-	arg_17_0._elementList = arg_17_0:getUserDataTb_()
+	local angle = Mathf.Deg(Mathf.Atan2(y, x)) - 90
 
-	arg_17_0:hideMapHeroIcon()
-	arg_17_0:_stopShowSequence()
+	transformhelper.setLocalRotation(arrowItem.rotationTrans, initRotation[1], initRotation[2], angle)
 end
 
-return var_0_0
+function HeroInvitationDungeonMapSceneElements:_disposeOldMap()
+	for k, v in pairs(self._elementList) do
+		v:onDestroy()
+	end
+
+	self._elementList = self:getUserDataTb_()
+
+	self:hideMapHeroIcon()
+	self:_stopShowSequence()
+end
+
+return HeroInvitationDungeonMapSceneElements

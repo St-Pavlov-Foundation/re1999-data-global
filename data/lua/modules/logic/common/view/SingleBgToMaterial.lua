@@ -1,51 +1,55 @@
-﻿module("modules.logic.common.view.SingleBgToMaterial", package.seeall)
+﻿-- chunkname: @modules/logic/common/view/SingleBgToMaterial.lua
 
-local var_0_0 = class("SingleBgToMaterial", LuaCompBase)
+module("modules.logic.common.view.SingleBgToMaterial", package.seeall)
 
-function var_0_0.loadMaterial(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.materialPath = string.format("ui/materials/dynamic/%s.mat", arg_1_2)
-	arg_1_0.image = arg_1_1.gameObject:GetComponent(gohelper.Type_Image)
+local SingleBgToMaterial = class("SingleBgToMaterial", LuaCompBase)
 
-	if string.nilorempty(arg_1_0.materialPath) then
-		logError("materialPath is not exit:" .. arg_1_0.materialPath)
+function SingleBgToMaterial:loadMaterial(image, path)
+	self.materialPath = string.format("ui/materials/dynamic/%s.mat", path)
+	self.image = image.gameObject:GetComponent(gohelper.Type_Image)
+
+	if string.nilorempty(self.materialPath) then
+		logError("materialPath is not exit:" .. self.materialPath)
 
 		return
 	end
 
-	if not arg_1_1 then
+	if not image then
 		logError("image is nil:")
 
 		return
 	end
 
-	arg_1_0.materialLoader = MultiAbLoader.New()
+	self.materialLoader = MultiAbLoader.New()
 
-	arg_1_0.materialLoader:addPath(arg_1_0.materialPath)
-	arg_1_0.materialLoader:startLoad(arg_1_0.buildMaterial, arg_1_0)
+	self.materialLoader:addPath(self.materialPath)
+	self.materialLoader:startLoad(self.buildMaterial, self)
 end
 
-function var_0_0.buildMaterial(arg_2_0)
-	arg_2_0.material = arg_2_0.materialLoader:getAssetItem(arg_2_0.materialPath):GetResource(arg_2_0.materialPath)
-	arg_2_0.materialGO = UnityEngine.Object.Instantiate(arg_2_0.material)
-	arg_2_0.image.material = arg_2_0.materialGO
+function SingleBgToMaterial:buildMaterial()
+	local assetItem = self.materialLoader:getAssetItem(self.materialPath)
 
-	arg_2_0:loadFinish()
+	self.material = assetItem:GetResource(self.materialPath)
+	self.materialGO = UnityEngine.Object.Instantiate(self.material)
+	self.image.material = self.materialGO
+
+	self:loadFinish()
 end
 
-function var_0_0.dispose(arg_3_0)
-	if arg_3_0.materialLoader then
-		arg_3_0.materialLoader:dispose()
+function SingleBgToMaterial:dispose()
+	if self.materialLoader then
+		self.materialLoader:dispose()
 	end
 end
 
-function var_0_0.finishLoadCallBack(arg_4_0, arg_4_1)
-	arg_4_0.callback = arg_4_1
+function SingleBgToMaterial:finishLoadCallBack(callback)
+	self.callback = callback
 end
 
-function var_0_0.loadFinish(arg_5_0)
-	if arg_5_0.callback then
-		arg_5_0.callback(arg_5_0)
+function SingleBgToMaterial:loadFinish()
+	if self.callback then
+		self.callback(self)
 	end
 end
 
-return var_0_0
+return SingleBgToMaterial

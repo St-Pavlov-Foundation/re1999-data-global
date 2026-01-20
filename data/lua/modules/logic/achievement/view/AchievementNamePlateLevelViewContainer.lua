@@ -1,13 +1,15 @@
-﻿module("modules.logic.achievement.view.AchievementNamePlateLevelViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/achievement/view/AchievementNamePlateLevelViewContainer.lua
 
-local var_0_0 = class("AchievementNamePlateLevelViewContainer", BaseViewContainer)
+module("modules.logic.achievement.view.AchievementNamePlateLevelViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local AchievementNamePlateLevelViewContainer = class("AchievementNamePlateLevelViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, AchievementNamePlateLevelView.New())
+function AchievementNamePlateLevelViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, AchievementNamePlateLevelView.New())
+
+	return views
 end
 
-return var_0_0
+return AchievementNamePlateLevelViewContainer

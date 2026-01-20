@@ -1,41 +1,43 @@
-﻿module("modules.logic.fight.system.work.FightWorkSkillOrBuffFocusMonster", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkSkillOrBuffFocusMonster.lua
 
-local var_0_0 = class("FightWorkSkillOrBuffFocusMonster", BaseWork)
+module("modules.logic.fight.system.work.FightWorkSkillOrBuffFocusMonster", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.fightStepData = arg_1_1
+local FightWorkSkillOrBuffFocusMonster = class("FightWorkSkillOrBuffFocusMonster", BaseWork)
+
+function FightWorkSkillOrBuffFocusMonster:ctor(fightStepData)
+	self.fightStepData = fightStepData
 end
 
-function var_0_0.onStart(arg_2_0)
-	local var_2_0 = arg_2_0:isSkillFocus(arg_2_0.fightStepData)
+function FightWorkSkillOrBuffFocusMonster:onStart()
+	local entityId = self:isSkillFocus(self.fightStepData)
 
-	if var_2_0 then
+	if entityId then
 		ViewMgr.instance:openView(ViewName.FightTechniqueGuideView, {
-			entity = FightDataHelper.entityMgr:getById(var_2_0),
-			config = arg_2_0.monster_guide_focus_config
+			entity = FightDataHelper.entityMgr:getById(entityId),
+			config = self.monster_guide_focus_config
 		})
-		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_2_0._onCloseViewFinish, arg_2_0)
+		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 	else
-		arg_2_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._onCloseViewFinish(arg_3_0, arg_3_1)
-	if arg_3_1 == ViewName.FightTechniqueGuideView then
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_3_0._onCloseViewFinish, arg_3_0)
-		TaskDispatcher.runDelay(arg_3_0._delayDone, arg_3_0, FightWorkFocusMonster.EaseTime)
+function FightWorkSkillOrBuffFocusMonster:_onCloseViewFinish(viewName)
+	if viewName == ViewName.FightTechniqueGuideView then
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+		TaskDispatcher.runDelay(self._delayDone, self, FightWorkFocusMonster.EaseTime)
 	end
 end
 
-function var_0_0._delayDone(arg_4_0)
-	arg_4_0:onDone(true)
+function FightWorkSkillOrBuffFocusMonster:_delayDone()
+	self:onDone(true)
 end
 
-function var_0_0.isSkillFocus(arg_5_0, arg_5_1)
-	local var_5_0 = FightModel.instance:getFightParam()
-	local var_5_1 = FightHelper.getEntity(arg_5_1.fromId)
+function FightWorkSkillOrBuffFocusMonster:isSkillFocus(fightStepData)
+	local fightParam = FightModel.instance:getFightParam()
+	local entity = FightHelper.getEntity(fightStepData.fromId)
 
-	if not var_5_1 or not var_5_1:getMO() then
+	if not entity or not entity:getMO() then
 		return
 	end
 
@@ -43,55 +45,55 @@ function var_0_0.isSkillFocus(arg_5_0, arg_5_1)
 		return
 	end
 
-	if DungeonModel.instance:hasPassLevel(var_5_0.episodeId) then
+	if DungeonModel.instance:hasPassLevel(fightParam.episodeId) then
 		return
 	end
 
-	if not lua_monster_guide_focus.configDict[var_5_0.episodeId] then
+	if not lua_monster_guide_focus.configDict[fightParam.episodeId] then
 		return
 	end
 
-	local var_5_2 = FightConfig.instance:getMonsterGuideFocusConfig(var_5_0.episodeId, arg_5_1.actType, arg_5_1.actId, var_5_1:getMO().modelId)
+	local config = FightConfig.instance:getMonsterGuideFocusConfig(fightParam.episodeId, fightStepData.actType, fightStepData.actId, entity:getMO().modelId)
 
-	if not var_5_2 then
-		for iter_5_0, iter_5_1 in ipairs(arg_5_1.actEffect) do
-			if iter_5_1.effectType == FightEnum.EffectType.BUFFADD then
-				local var_5_3 = FightDataHelper.entityMgr:getById(iter_5_1.targetId)
+	if not config then
+		for i, v in ipairs(fightStepData.actEffect) do
+			if v.effectType == FightEnum.EffectType.BUFFADD then
+				local target_entity_mo = FightDataHelper.entityMgr:getById(v.targetId)
 
-				if var_5_3 then
-					var_5_2 = FightConfig.instance:getMonsterGuideFocusConfig(var_5_0.episodeId, FightWorkFocusMonster.invokeType.Buff, iter_5_1.buff.buffId, var_5_3.modelId)
+				if target_entity_mo then
+					config = FightConfig.instance:getMonsterGuideFocusConfig(fightParam.episodeId, FightWorkFocusMonster.invokeType.Buff, v.buff.buffId, target_entity_mo.modelId)
 
-					if var_5_2 then
+					if config then
 						break
 					end
 				end
 			end
 		end
 
-		if not var_5_2 then
+		if not config then
 			return
 		end
 	end
 
-	arg_5_0.monster_guide_focus_config = var_5_2
+	self.monster_guide_focus_config = config
 
-	local var_5_4 = var_0_0.getPlayerPrefKey(var_5_2)
+	local key = FightWorkSkillOrBuffFocusMonster.getPlayerPrefKey(config)
 
-	if PlayerPrefsHelper.hasKey(var_5_4) then
+	if PlayerPrefsHelper.hasKey(key) then
 		return
 	end
 
-	return arg_5_1.fromId
+	return fightStepData.fromId
 end
 
-function var_0_0.getPlayerPrefKey(arg_6_0)
-	local var_6_0 = PlayerModel.instance:getPlayinfo()
+function FightWorkSkillOrBuffFocusMonster.getPlayerPrefKey(config)
+	local playerInfo = PlayerModel.instance:getPlayinfo()
 
-	return string.format("%s_%s_%s_%s_%s_%s", PlayerPrefsKey.FightFocusSkillOrBuffMonster, var_6_0.userId, tostring(arg_6_0.id), tostring(arg_6_0.invokeType), tostring(arg_6_0.param), tostring(arg_6_0.monster))
+	return string.format("%s_%s_%s_%s_%s_%s", PlayerPrefsKey.FightFocusSkillOrBuffMonster, playerInfo.userId, tostring(config.id), tostring(config.invokeType), tostring(config.param), tostring(config.monster))
 end
 
-function var_0_0.clearWork(arg_7_0)
+function FightWorkSkillOrBuffFocusMonster:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkSkillOrBuffFocusMonster

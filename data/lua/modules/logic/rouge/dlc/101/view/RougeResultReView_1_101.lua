@@ -1,48 +1,50 @@
-﻿module("modules.logic.rouge.dlc.101.view.RougeResultReView_1_101", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/dlc/101/view/RougeResultReView_1_101.lua
 
-local var_0_0 = class("RougeResultReView_1_101", BaseViewExtended)
+module("modules.logic.rouge.dlc.101.view.RougeResultReView_1_101", package.seeall)
 
-var_0_0.AssetUrl = "ui/viewres/rouge/dlc/101/rougelimiteritem.prefab"
-var_0_0.ParentObjPath = "Left/#go_dlc/#go_dlc_101/#go_limiterroot"
-var_0_0.LimiterDifficultyFontSize = 144
+local RougeResultReView_1_101 = class("RougeResultReView_1_101", BaseViewExtended)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._golimiteritem = gohelper.findChild(arg_1_0.viewGO, "#go_dlc_101")
+RougeResultReView_1_101.AssetUrl = "ui/viewres/rouge/dlc/101/rougelimiteritem.prefab"
+RougeResultReView_1_101.ParentObjPath = "Left/#go_dlc/#go_dlc_101/#go_limiterroot"
+RougeResultReView_1_101.LimiterDifficultyFontSize = 144
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeResultReView_1_101:onInitView()
+	self._golimiteritem = gohelper.findChild(self.viewGO, "#go_dlc_101")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RougeResultReView_1_101:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RougeResultReView_1_101:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function RougeResultReView_1_101:_editableInitView()
 	return
 end
 
-function var_0_0.onOpen(arg_5_0)
-	local var_5_0 = arg_5_0._reviewInfo and arg_5_0._reviewInfo:getLimiterRiskValue() or 0
+function RougeResultReView_1_101:onOpen()
+	local riskValue = self._reviewInfo and self._reviewInfo:getLimiterRiskValue() or 0
 
-	arg_5_0._buffEntry = MonoHelper.addNoUpdateLuaComOnceToGo(arg_5_0.viewGO, RougeResultReViewLimiterBuff, var_5_0)
+	self._buffEntry = MonoHelper.addNoUpdateLuaComOnceToGo(self.viewGO, RougeResultReViewLimiterBuff, riskValue)
 
-	arg_5_0._buffEntry:setDifficultyTxtFontSize(var_0_0.LimiterDifficultyFontSize)
-	arg_5_0._buffEntry:setDifficultyVisible(false)
-	arg_5_0._buffEntry:refreshUI()
-	arg_5_0._buffEntry:setInteractable(false)
+	self._buffEntry:setDifficultyTxtFontSize(RougeResultReView_1_101.LimiterDifficultyFontSize)
+	self._buffEntry:setDifficultyVisible(false)
+	self._buffEntry:refreshUI()
+	self._buffEntry:setInteractable(false)
 end
 
-function var_0_0.onRefreshViewParam(arg_6_0, arg_6_1)
-	arg_6_0._reviewInfo = arg_6_1 and arg_6_1.reviewInfo
+function RougeResultReView_1_101:onRefreshViewParam(viewParam)
+	self._reviewInfo = viewParam and viewParam.reviewInfo
 end
 
-function var_0_0.onDestroyView(arg_7_0)
+function RougeResultReView_1_101:onDestroyView()
 	return
 end
 
-return var_0_0
+return RougeResultReView_1_101

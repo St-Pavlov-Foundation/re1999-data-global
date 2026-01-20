@@ -1,18 +1,20 @@
-﻿module("modules.logic.scene.summon.work.VirtualSummonBehaviorFlow_WorkBase", package.seeall)
+﻿-- chunkname: @modules/logic/scene/summon/work/VirtualSummonBehaviorFlow_WorkBase.lua
 
-local var_0_0 = class("VirtualSummonBehaviorFlow_WorkBase", BaseWork)
-local var_0_1 = 3
+module("modules.logic.scene.summon.work.VirtualSummonBehaviorFlow_WorkBase", package.seeall)
 
-function var_0_0.startBlock(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = arg_1_1 or arg_1_0.class.__cname
+local VirtualSummonBehaviorFlow_WorkBase = class("VirtualSummonBehaviorFlow_WorkBase", BaseWork)
+local kTimeout = 3
 
-	UIBlockHelper.instance:startBlock(var_1_0, arg_1_2 or var_0_1)
+function VirtualSummonBehaviorFlow_WorkBase:startBlock(optKey, optTimeout)
+	local blockKey = optKey or self.class.__cname
 
-	return var_1_0
+	UIBlockHelper.instance:startBlock(blockKey, optTimeout or kTimeout)
+
+	return blockKey
 end
 
-function var_0_0.endBlock(arg_2_0, arg_2_1)
-	UIBlockHelper.instance:startBlock(arg_2_1 or arg_2_0.class.__cname)
+function VirtualSummonBehaviorFlow_WorkBase:endBlock(blockKey)
+	UIBlockHelper.instance:startBlock(blockKey or self.class.__cname)
 end
 
-return var_0_0
+return VirtualSummonBehaviorFlow_WorkBase

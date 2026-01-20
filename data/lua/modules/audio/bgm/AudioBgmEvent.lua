@@ -1,8 +1,10 @@
-﻿module("modules.audio.bgm.AudioBgmEvent", package.seeall)
+﻿-- chunkname: @modules/audio/bgm/AudioBgmEvent.lua
 
-local var_0_0 = {}
+module("modules.audio.bgm.AudioBgmEvent", package.seeall)
 
-var_0_0.onPlayBgm = 1
-var_0_0.onStopBgm = 2
+local AudioBgmEvent = {}
 
-return var_0_0
+AudioBgmEvent.onPlayBgm = 1
+AudioBgmEvent.onStopBgm = 2
+
+return AudioBgmEvent

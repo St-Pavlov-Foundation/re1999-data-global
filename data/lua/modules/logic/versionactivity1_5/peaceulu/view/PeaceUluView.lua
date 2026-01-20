@@ -1,196 +1,200 @@
-﻿module("modules.logic.versionactivity1_5.peaceulu.view.PeaceUluView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/peaceulu/view/PeaceUluView.lua
 
-local var_0_0 = class("PeaceUluView", BaseView)
+module("modules.logic.versionactivity1_5.peaceulu.view.PeaceUluView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg")
-	arg_1_0._golightspinecontrol = gohelper.findChild(arg_1_0.viewGO, "#go_role/#go_lightspinecontrol")
-	arg_1_0._gospinescale = gohelper.findChild(arg_1_0.viewGO, "#go_role/#go_spine_scale")
-	arg_1_0._golightspine = gohelper.findChild(arg_1_0.viewGO, "#go_role/#go_spine_scale/lightspine/#go_lightspine")
-	arg_1_0._txtanacn = gohelper.findChildText(arg_1_0.viewGO, "bottom/#txt_Dialouge")
-	arg_1_0._txtanaen = gohelper.findChildText(arg_1_0.viewGO, "bottom/#txt_Dialouge/#txt_DialougeEn")
-	arg_1_0._gocontentbg = gohelper.findChild(arg_1_0.viewGO, "bottom")
-	arg_1_0._gobubble = gohelper.findChild(arg_1_0.viewGO, "#go_Bubble")
-	arg_1_0._txtbubble = gohelper.findChildText(arg_1_0.viewGO, "#go_Bubble/node/#scroll_bubble/Viewport/Content/#txt_BubbleTips")
-	arg_1_0._gotopright = gohelper.findChild(arg_1_0.viewGO, "#go_topright")
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
-	arg_1_0._animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0.tweenDuration = 0.3
+local PeaceUluView = class("PeaceUluView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function PeaceUluView:onInitView()
+	self._simagefullbg = gohelper.findChildSingleImage(self.viewGO, "#simage_fullbg")
+	self._golightspinecontrol = gohelper.findChild(self.viewGO, "#go_role/#go_lightspinecontrol")
+	self._gospinescale = gohelper.findChild(self.viewGO, "#go_role/#go_spine_scale")
+	self._golightspine = gohelper.findChild(self.viewGO, "#go_role/#go_spine_scale/lightspine/#go_lightspine")
+	self._txtanacn = gohelper.findChildText(self.viewGO, "bottom/#txt_Dialouge")
+	self._txtanaen = gohelper.findChildText(self.viewGO, "bottom/#txt_Dialouge/#txt_DialougeEn")
+	self._gocontentbg = gohelper.findChild(self.viewGO, "bottom")
+	self._gobubble = gohelper.findChild(self.viewGO, "#go_Bubble")
+	self._txtbubble = gohelper.findChildText(self.viewGO, "#go_Bubble/node/#scroll_bubble/Viewport/Content/#txt_BubbleTips")
+	self._gotopright = gohelper.findChild(self.viewGO, "#go_topright")
+	self._gotopleft = gohelper.findChild(self.viewGO, "#go_topleft")
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self.tweenDuration = 0.3
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(PeaceUluController.instance, PeaceUluEvent.onSwitchTab, arg_2_0._toSwitchTab, arg_2_0)
-	arg_2_0:addEventCb(PeaceUluController.instance, PeaceUluEvent.OnUpdateInfo, arg_2_0._checkVoice, arg_2_0)
-	arg_2_0:addEventCb(PeaceUluController.instance, PeaceUluEvent.playVoice, arg_2_0.playVoice, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0._onCloseViewFinish, arg_2_0)
+function PeaceUluView:addEvents()
+	self:addEventCb(PeaceUluController.instance, PeaceUluEvent.onSwitchTab, self._toSwitchTab, self)
+	self:addEventCb(PeaceUluController.instance, PeaceUluEvent.OnUpdateInfo, self._checkVoice, self)
+	self:addEventCb(PeaceUluController.instance, PeaceUluEvent.playVoice, self.playVoice, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseViewFinish, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(PeaceUluController.instance, PeaceUluEvent.onSwitchTab, arg_3_0._toSwitchTab, arg_3_0)
-	arg_3_0:removeEventCb(PeaceUluController.instance, PeaceUluEvent.OnUpdateInfo, arg_3_0._checkVoice, arg_3_0)
-	arg_3_0:removeEventCb(PeaceUluController.instance, PeaceUluEvent.playVoice, arg_3_0.playVoice, arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0._onCloseViewFinish, arg_3_0)
+function PeaceUluView:removeEvents()
+	self:removeEventCb(PeaceUluController.instance, PeaceUluEvent.onSwitchTab, self._toSwitchTab, self)
+	self:removeEventCb(PeaceUluController.instance, PeaceUluEvent.OnUpdateInfo, self._checkVoice, self)
+	self:removeEventCb(PeaceUluController.instance, PeaceUluEvent.playVoice, self.playVoice, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseViewFinish, self)
 end
 
-function var_0_0.onOpen(arg_4_0)
-	arg_4_0.jumpparam = arg_4_0.viewParam.param
+function PeaceUluView:onOpen()
+	self.jumpparam = self.viewParam.param
 
-	arg_4_0:_updateHero(PeaceUluEnum.RoleID.Idle)
+	self:_updateHero(PeaceUluEnum.RoleID.Idle)
 	AudioMgr.instance:trigger(AudioEnum.ui_activity_1_5_wulu.play_ui_wulu_arena_open)
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._click = SLFramework.UGUI.UIClickListener.Get(arg_5_0._golightspinecontrol)
+function PeaceUluView:_editableInitView()
+	self._click = SLFramework.UGUI.UIClickListener.Get(self._golightspinecontrol)
 
-	arg_5_0._click:AddClickListener(arg_5_0._onClickHero, arg_5_0)
-	gohelper.setActive(arg_5_0._gocontentbg, false)
-	gohelper.setActive(arg_5_0._gobubble, false)
+	self._click:AddClickListener(self._onClickHero, self)
+	gohelper.setActive(self._gocontentbg, false)
+	gohelper.setActive(self._gobubble, false)
 end
 
-function var_0_0._updateHero(arg_6_0, arg_6_1)
-	arg_6_0._skinId = arg_6_1
+function PeaceUluView:_updateHero(skinId)
+	self._skinId = skinId
 
-	local var_6_0 = HeroConfig.instance:getHeroCO(arg_6_0._heroId)
-	local var_6_1 = SkinConfig.instance:getSkinCo(arg_6_0._skinId)
+	local heroConfig = HeroConfig.instance:getHeroCO(self._heroId)
+	local skinCo = SkinConfig.instance:getSkinCo(self._skinId)
 
-	arg_6_0._heroId = var_6_1.characterId
-	arg_6_0._heroSkinConfig = var_6_1
+	self._heroId = skinCo.characterId
+	self._heroSkinConfig = skinCo
 
-	if not arg_6_0._uiSpine then
-		arg_6_0._uiSpine = GuiModelAgent.Create(arg_6_0._golightspine, true)
+	if not self._uiSpine then
+		self._uiSpine = GuiModelAgent.Create(self._golightspine, true)
 	end
 
-	arg_6_0._uiSpine:setResPath(var_6_1, arg_6_0._onLightSpineLoaded, arg_6_0)
+	self._uiSpine:setResPath(skinCo, self._onLightSpineLoaded, self)
 end
 
-function var_0_0._playVoice(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	if not arg_7_0._uiSpine or not arg_7_1 then
+function PeaceUluView:_playVoice(config, isFirst, callback)
+	if not self._uiSpine or not config then
 		return
 	end
 
-	if arg_7_0._uiSpine:isPlayingVoice() then
-		arg_7_0._uiSpine:stopVoice()
+	if self._uiSpine:isPlayingVoice() then
+		self._uiSpine:stopVoice()
 	end
 
-	if arg_7_2 then
-		gohelper.setActive(arg_7_0._gobubble, false)
-		arg_7_0._uiSpine:playVoice(arg_7_1, arg_7_3, arg_7_0._txtanacn, arg_7_0._txtanaen, arg_7_0._gocontentbg)
+	if isFirst then
+		gohelper.setActive(self._gobubble, false)
+		self._uiSpine:playVoice(config, callback, self._txtanacn, self._txtanaen, self._gocontentbg)
 	else
-		arg_7_0._uiSpine:playVoice(arg_7_1, arg_7_3, arg_7_0._txtbubble, nil, arg_7_0._gobubble, true)
+		self._uiSpine:playVoice(config, callback, self._txtbubble, nil, self._gobubble, true)
 	end
 end
 
-function var_0_0._onLightSpineLoaded(arg_8_0)
-	arg_8_0._uiSpine:setModelVisible(true)
+function PeaceUluView:_onLightSpineLoaded()
+	self._uiSpine:setModelVisible(true)
 
-	arg_8_0._l2d = arg_8_0._uiSpine:_getLive2d()
+	self._l2d = self._uiSpine:_getLive2d()
 
-	function arg_8_0._opencallack()
-		TaskDispatcher.cancelTask(arg_8_0._opencallack, arg_8_0)
+	function self._opencallack()
+		TaskDispatcher.cancelTask(self._opencallack, self)
 
-		local var_9_0 = arg_8_0:_getVoiceCoByType(PeaceUluEnum.VoiceType.FirstEnterView)
+		local voiceCo = self:_getVoiceCoByType(PeaceUluEnum.VoiceType.FirstEnterView)
 
-		gohelper.setActive(arg_8_0._gobubble, true)
-		arg_8_0:_playVoice(var_9_0)
+		gohelper.setActive(self._gobubble, true)
+		self:_playVoice(voiceCo)
 	end
 
-	TaskDispatcher.runDelay(arg_8_0._opencallack, arg_8_0, 0.2)
+	TaskDispatcher.runDelay(self._opencallack, self, 0.2)
 
-	if arg_8_0.jumpparam == VersionActivity1_5Enum.ActivityId.PeaceUlu then
+	if self.jumpparam == VersionActivity1_5Enum.ActivityId.PeaceUlu then
 		PeaceUluController.instance:dispatchEvent(PeaceUluEvent.onSwitchTab, PeaceUluEnum.TabIndex.Game)
 	end
 end
 
-function var_0_0._toSwitchTab(arg_10_0, arg_10_1)
-	gohelper.setActive(arg_10_0._gobubble, false)
+function PeaceUluView:_toSwitchTab(tabIndex)
+	gohelper.setActive(self._gobubble, false)
 
-	if arg_10_0._uiSpine:isPlayingVoice() then
-		arg_10_0._uiSpine:stopVoice()
+	if self._uiSpine:isPlayingVoice() then
+		self._uiSpine:stopVoice()
 	end
 
-	if arg_10_1 == PeaceUluEnum.TabIndex.Game then
-		arg_10_0._animator:Play("startin", 0, 0)
-		arg_10_0._animator:Update(0)
-	elseif arg_10_1 == PeaceUluEnum.TabIndex.Main then
-		arg_10_0._animator:Play("open", 0, 0)
-		arg_10_0._animator:Update(0)
+	if tabIndex == PeaceUluEnum.TabIndex.Game then
+		self._animator:Play("startin", 0, 0)
+		self._animator:Update(0)
+	elseif tabIndex == PeaceUluEnum.TabIndex.Main then
+		self._animator:Play("open", 0, 0)
+		self._animator:Update(0)
 
-		local var_10_0 = arg_10_0._animator:GetCurrentAnimatorStateInfo(0).length
+		local currentAnimatorStateInfo = self._animator:GetCurrentAnimatorStateInfo(0)
+		local length = currentAnimatorStateInfo.length
 
-		arg_10_0._animator:Play("open", 0, 0.3333333333333333 * var_10_0)
-		arg_10_0._animator:Update(0)
+		self._animator:Play("open", 0, 0.3333333333333333 * length)
+		self._animator:Update(0)
 	end
 end
 
-function var_0_0._getVoiceCoByType(arg_11_0, arg_11_1)
-	local var_11_0 = PeaceUluConfig.instance:getVoiceConfigByType(arg_11_1)
-	local var_11_1 = PeaceUluVoiceCo.New()
+function PeaceUluView:_getVoiceCoByType(voiceType)
+	local config = PeaceUluConfig.instance:getVoiceConfigByType(voiceType)
+	local voiceCo = PeaceUluVoiceCo.New()
 
-	var_11_1:init({
-		content = var_11_0.content,
-		motion = var_11_0.motion,
-		displayTime = var_11_0.displayTime or 2
+	voiceCo:init({
+		content = config.content,
+		motion = config.motion,
+		displayTime = config.displayTime or 2
 	})
 
-	return var_11_1
+	return voiceCo
 end
 
-function var_0_0.playVoice(arg_12_0, arg_12_1)
-	if not arg_12_1 then
+function PeaceUluView:playVoice(voiceType)
+	if not voiceType then
 		return
 	end
 
-	local var_12_0 = arg_12_0:_getVoiceCoByType(arg_12_1)
+	local voiceCo = self:_getVoiceCoByType(voiceType)
 
-	arg_12_0:_playVoice(var_12_0)
+	self:_playVoice(voiceCo)
 end
 
-function var_0_0._checkVoice(arg_13_0)
-	local var_13_0 = PeaceUluModel.instance:getGameHaveTimes() ~= 0 or PeaceUluModel.instance:checkCanRemove()
+function PeaceUluView:_checkVoice()
+	local haveTimes = PeaceUluModel.instance:getGameHaveTimes()
+	local state = haveTimes ~= 0 or PeaceUluModel.instance:checkCanRemove()
 
-	if PeaceUluTaskModel.instance:checkAllTaskFinished() and var_13_0 then
-		local var_13_1 = arg_13_0:_getVoiceCoByType(PeaceUluEnum.VoiceType.CanRemoveButFinish)
+	if PeaceUluTaskModel.instance:checkAllTaskFinished() and state then
+		local voiceCo = self:_getVoiceCoByType(PeaceUluEnum.VoiceType.CanRemoveButFinish)
 
-		arg_13_0:_playVoice(var_13_1)
+		self:_playVoice(voiceCo)
 	end
 end
 
-function var_0_0._onCloseViewFinish(arg_14_0, arg_14_1)
-	if arg_14_1 == ViewName.CommonPropView and PeaceUluModel.instance:checkBonusIds() then
-		local function var_14_0()
+function PeaceUluView:_onCloseViewFinish(viewName)
+	if viewName == ViewName.CommonPropView and PeaceUluModel.instance:checkBonusIds() then
+		local function callback()
 			PeaceUluModel.instance:cleanBonusIds()
 		end
 
-		local var_14_1 = arg_14_0:_getVoiceCoByType(PeaceUluEnum.VoiceType.GetReward)
+		local voiceCo = self:_getVoiceCoByType(PeaceUluEnum.VoiceType.GetReward)
 
-		arg_14_0:_playVoice(var_14_1, false, var_14_0)
-	elseif arg_14_1 == ViewName.CommonPropView and PeaceUluModel.instance:checkTaskId() then
-		if arg_14_0._uiSpine:isPlayingVoice() then
+		self:_playVoice(voiceCo, false, callback)
+	elseif viewName == ViewName.CommonPropView and PeaceUluModel.instance:checkTaskId() then
+		if self._uiSpine:isPlayingVoice() then
 			return
 		end
 
-		local function var_14_2()
+		local function callback()
 			PeaceUluModel.instance:cleanTaskId()
 		end
 
-		local var_14_3 = arg_14_0:_getVoiceCoByType(PeaceUluEnum.VoiceType.RemoveTask)
+		local voiceCo = self:_getVoiceCoByType(PeaceUluEnum.VoiceType.RemoveTask)
 
-		arg_14_0:_playVoice(var_14_3, false, var_14_2)
+		self:_playVoice(voiceCo, false, callback)
 	end
 end
 
-function var_0_0.onClose(arg_17_0)
-	TaskDispatcher.cancelTask(arg_17_0._enterGameView, arg_17_0)
-	TaskDispatcher.cancelTask(arg_17_0._opencallack, arg_17_0)
-	arg_17_0._click:RemoveClickListener()
+function PeaceUluView:onClose()
+	TaskDispatcher.cancelTask(self._enterGameView, self)
+	TaskDispatcher.cancelTask(self._opencallack, self)
+	self._click:RemoveClickListener()
 end
 
-function var_0_0.onDestroyView(arg_18_0)
+function PeaceUluView:onDestroyView()
 	return
 end
 
-return var_0_0
+return PeaceUluView

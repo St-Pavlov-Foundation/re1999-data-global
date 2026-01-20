@@ -1,111 +1,116 @@
-﻿module("modules.logic.tower.model.TowerTimeLimitLevelModel", package.seeall)
+﻿-- chunkname: @modules/logic/tower/model/TowerTimeLimitLevelModel.lua
 
-local var_0_0 = class("TowerTimeLimitLevelModel", BaseModel)
+module("modules.logic.tower.model.TowerTimeLimitLevelModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local TowerTimeLimitLevelModel = class("TowerTimeLimitLevelModel", BaseModel)
 
-	arg_1_0.entranceDifficultyMap = {}
+function TowerTimeLimitLevelModel:onInit()
+	self:reInit()
+
+	self.entranceDifficultyMap = {}
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0.curSelectEntrance = 0
+function TowerTimeLimitLevelModel:reInit()
+	self.curSelectEntrance = 0
 end
 
-function var_0_0.cleanData(arg_3_0)
-	arg_3_0:reInit()
+function TowerTimeLimitLevelModel:cleanData()
+	self:reInit()
 end
 
-function var_0_0.initDifficultyMulti(arg_4_0)
-	arg_4_0.difficultyMultiMap = {}
+function TowerTimeLimitLevelModel:initDifficultyMulti()
+	self.difficultyMultiMap = {}
 
-	local var_4_0 = {
+	local difficultyMultiTab = {
 		TowerEnum.ConstId.TimeLimitEasyMulti,
 		TowerEnum.ConstId.TimeLimitNormalMulti,
 		TowerEnum.ConstId.TimeLimitHardMulti
 	}
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_0) do
-		local var_4_1 = TowerConfig.instance:getTowerConstConfig(iter_4_1)
+	for index, difficultyMulti in ipairs(difficultyMultiTab) do
+		local difficultyMultiValue = TowerConfig.instance:getTowerConstConfig(difficultyMulti)
 
-		arg_4_0.difficultyMultiMap[iter_4_0] = var_4_1
+		self.difficultyMultiMap[index] = difficultyMultiValue
 	end
 end
 
-function var_0_0.getDifficultyMulti(arg_5_0, arg_5_1)
-	return arg_5_0.difficultyMultiMap[arg_5_1]
+function TowerTimeLimitLevelModel:getDifficultyMulti(difficultyId)
+	return self.difficultyMultiMap[difficultyId]
 end
 
-function var_0_0.setCurSelectEntrance(arg_6_0, arg_6_1)
-	arg_6_0.curSelectEntrance = arg_6_1
+function TowerTimeLimitLevelModel:setCurSelectEntrance(entranceId)
+	self.curSelectEntrance = entranceId
 end
 
-function var_0_0.getCurOpenTimeLimitTower(arg_7_0)
-	local var_7_0 = TowerModel.instance:getTowerOpenList(TowerEnum.TowerType.Limited) or {}
+function TowerTimeLimitLevelModel:getCurOpenTimeLimitTower()
+	local towerOpenList = TowerModel.instance:getTowerOpenList(TowerEnum.TowerType.Limited) or {}
 
-	for iter_7_0, iter_7_1 in pairs(var_7_0) do
-		if iter_7_1.status == TowerEnum.TowerStatus.Open then
-			return iter_7_1
+	for _, openInfoMo in pairs(towerOpenList) do
+		if openInfoMo.status == TowerEnum.TowerStatus.Open then
+			return openInfoMo
 		end
 	end
 end
 
-function var_0_0.getEntranceBossUsedMap(arg_8_0, arg_8_1)
-	local var_8_0 = {}
-	local var_8_1 = TowerModel.instance:getTowerInfoById(TowerEnum.TowerType.Limited, arg_8_1)
+function TowerTimeLimitLevelModel:getEntranceBossUsedMap(seasonId)
+	local entranceBossUseMap = {}
+	local towerInfoMo = TowerModel.instance:getTowerInfoById(TowerEnum.TowerType.Limited, seasonId)
 
-	for iter_8_0 = 1, 3 do
-		local var_8_2 = TowerConfig.instance:getTowerLimitedTimeCoList(arg_8_1, iter_8_0)[1].layerId
-		local var_8_3 = var_8_1:getLayerSubEpisodeList(var_8_2)
+	for entranceId = 1, 3 do
+		local towerCoList = TowerConfig.instance:getTowerLimitedTimeCoList(seasonId, entranceId)
+		local layerId = towerCoList[1].layerId
+		local subEpisodeMoList = towerInfoMo:getLayerSubEpisodeList(layerId)
+		local assistBossId = subEpisodeMoList and subEpisodeMoList[1].assistBossId or 0
 
-		var_8_0[iter_8_0] = var_8_3 and var_8_3[1].assistBossId or 0
+		entranceBossUseMap[entranceId] = assistBossId
 	end
 
-	return var_8_0
+	return entranceBossUseMap
 end
 
-function var_0_0.localSaveKey(arg_9_0)
+function TowerTimeLimitLevelModel:localSaveKey()
 	return TowerEnum.LocalPrefsKey.LastEntranceDifficulty
 end
 
-function var_0_0.initEntranceDifficulty(arg_10_0, arg_10_1)
-	for iter_10_0 = 1, 3 do
-		arg_10_0.entranceDifficultyMap[iter_10_0] = arg_10_0:getLastEntranceDifficulty(iter_10_0, arg_10_1)
+function TowerTimeLimitLevelModel:initEntranceDifficulty(towerOpenInfo)
+	for entranceId = 1, 3 do
+		self.entranceDifficultyMap[entranceId] = self:getLastEntranceDifficulty(entranceId, towerOpenInfo)
 	end
 end
 
-function var_0_0.getEntranceDifficulty(arg_11_0, arg_11_1)
-	return arg_11_0.entranceDifficultyMap[arg_11_1]
+function TowerTimeLimitLevelModel:getEntranceDifficulty(entranceId)
+	return self.entranceDifficultyMap[entranceId]
 end
 
-function var_0_0.setEntranceDifficulty(arg_12_0, arg_12_1, arg_12_2)
-	arg_12_0.entranceDifficultyMap[arg_12_1] = arg_12_2
+function TowerTimeLimitLevelModel:setEntranceDifficulty(entranceId, difficulty)
+	self.entranceDifficultyMap[entranceId] = difficulty
 end
 
-function var_0_0.getLastEntranceDifficulty(arg_13_0, arg_13_1, arg_13_2)
-	return TowerModel.instance:getLocalPrefsState(arg_13_0:localSaveKey(), arg_13_1, arg_13_2, TowerEnum.Difficulty.Easy)
+function TowerTimeLimitLevelModel:getLastEntranceDifficulty(entranceId, towerOpenInfo)
+	return TowerModel.instance:getLocalPrefsState(self:localSaveKey(), entranceId, towerOpenInfo, TowerEnum.Difficulty.Easy)
 end
 
-function var_0_0.saveLastEntranceDifficulty(arg_14_0, arg_14_1)
-	for iter_14_0 = 1, 3 do
-		local var_14_0 = arg_14_0.entranceDifficultyMap[iter_14_0]
+function TowerTimeLimitLevelModel:saveLastEntranceDifficulty(towerOpenInfo)
+	for entranceId = 1, 3 do
+		local difficultyId = self.entranceDifficultyMap[entranceId]
 
-		TowerModel.instance:setLocalPrefsState(arg_14_0:localSaveKey(), iter_14_0, arg_14_1, var_14_0)
+		TowerModel.instance:setLocalPrefsState(self:localSaveKey(), entranceId, towerOpenInfo, difficultyId)
 	end
 end
 
-function var_0_0.getHistoryHighScore(arg_15_0)
-	local var_15_0 = arg_15_0:getCurOpenTimeLimitTower()
+function TowerTimeLimitLevelModel:getHistoryHighScore()
+	local curOpenMo = self:getCurOpenTimeLimitTower()
 
-	if not var_15_0 then
+	if not curOpenMo then
 		return 0
 	end
 
-	local var_15_1 = var_15_0 and var_15_0.towerId or 1
+	local seasonId = curOpenMo and curOpenMo.towerId or 1
+	local towerMo = TowerModel.instance:getTowerInfoById(TowerEnum.TowerType.Limited, seasonId)
 
-	return TowerModel.instance:getTowerInfoById(TowerEnum.TowerType.Limited, var_15_1):getHistoryHighScore()
+	return towerMo:getHistoryHighScore()
 end
 
-var_0_0.instance = var_0_0.New()
+TowerTimeLimitLevelModel.instance = TowerTimeLimitLevelModel.New()
 
-return var_0_0
+return TowerTimeLimitLevelModel

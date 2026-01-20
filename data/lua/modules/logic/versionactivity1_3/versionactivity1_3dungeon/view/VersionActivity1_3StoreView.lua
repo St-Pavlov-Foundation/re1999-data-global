@@ -1,117 +1,120 @@
-﻿module("modules.logic.versionactivity1_3.versionactivity1_3dungeon.view.VersionActivity1_3StoreView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/versionactivity1_3dungeon/view/VersionActivity1_3StoreView.lua
 
-local var_0_0 = class("VersionActivity1_3StoreView", BaseView)
+module("modules.logic.versionactivity1_3.versionactivity1_3dungeon.view.VersionActivity1_3StoreView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "title/#txt_time")
-	arg_1_0._scrollstore = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_store")
-	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "#scroll_store/Viewport/#go_Content")
-	arg_1_0._gostoreItem = gohelper.findChild(arg_1_0.viewGO, "#scroll_store/Viewport/#go_Content/#go_storeItem")
-	arg_1_0._gostoregoodsitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_store/Viewport/#go_Content/#go_storeItem/#go_storegoodsitem")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._gorighttop = gohelper.findChild(arg_1_0.viewGO, "#go_righttop")
+local VersionActivity1_3StoreView = class("VersionActivity1_3StoreView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity1_3StoreView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._txttime = gohelper.findChildText(self.viewGO, "title/#txt_time")
+	self._scrollstore = gohelper.findChildScrollRect(self.viewGO, "#scroll_store")
+	self._goContent = gohelper.findChild(self.viewGO, "#scroll_store/Viewport/#go_Content")
+	self._gostoreItem = gohelper.findChild(self.viewGO, "#scroll_store/Viewport/#go_Content/#go_storeItem")
+	self._gostoregoodsitem = gohelper.findChild(self.viewGO, "#scroll_store/Viewport/#go_Content/#go_storeItem/#go_storegoodsitem")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._gorighttop = gohelper.findChild(self.viewGO, "#go_righttop")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._scrollstore:AddOnValueChanged(arg_2_0._onScrollValueChanged, arg_2_0)
+function VersionActivity1_3StoreView:addEvents()
+	self._scrollstore:AddOnValueChanged(self._onScrollValueChanged, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._scrollstore:RemoveOnValueChanged()
+function VersionActivity1_3StoreView:removeEvents()
+	self._scrollstore:RemoveOnValueChanged()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._simagebg:LoadImage("singlebg/v1a3_store_singlebg/v1a3_store_fullbg.png")
-	gohelper.setActive(arg_4_0._gostoreItem, false)
+function VersionActivity1_3StoreView:_editableInitView()
+	self._simagebg:LoadImage("singlebg/v1a3_store_singlebg/v1a3_store_fullbg.png")
+	gohelper.setActive(self._gostoreItem, false)
 
-	arg_4_0.storeItemList = arg_4_0:getUserDataTb_()
+	self.storeItemList = self:getUserDataTb_()
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function VersionActivity1_3StoreView:onUpdateParam()
 	return
 end
 
-function var_0_0._onScrollValueChanged(arg_6_0)
-	if #arg_6_0.storeItemList > 0 then
-		for iter_6_0, iter_6_1 in ipairs(arg_6_0.storeItemList) do
-			if iter_6_0 == 1 then
-				iter_6_1:refreshTagClip(arg_6_0._scrollstore)
+function VersionActivity1_3StoreView:_onScrollValueChanged()
+	if #self.storeItemList > 0 then
+		for k, v in ipairs(self.storeItemList) do
+			if k == 1 then
+				v:refreshTagClip(self._scrollstore)
 			end
 		end
 	end
 end
 
-function var_0_0.onOpen(arg_7_0)
+function VersionActivity1_3StoreView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_souvenir_open)
-	TaskDispatcher.runRepeat(arg_7_0.refreshTime, arg_7_0, TimeUtil.OneMinuteSecond)
-	arg_7_0:refreshTime()
-	arg_7_0:refreshStoreContent()
-	arg_7_0:_onScrollValueChanged()
+	TaskDispatcher.runRepeat(self.refreshTime, self, TimeUtil.OneMinuteSecond)
+	self:refreshTime()
+	self:refreshStoreContent()
+	self:_onScrollValueChanged()
 end
 
-function var_0_0.refreshStoreContent(arg_8_0)
-	local var_8_0 = ActivityStoreConfig.instance:getActivityStoreGroupDict(VersionActivity1_3Enum.ActivityId.DungeonStore)
-	local var_8_1
+function VersionActivity1_3StoreView:refreshStoreContent()
+	local storeGroupDict = ActivityStoreConfig.instance:getActivityStoreGroupDict(VersionActivity1_3Enum.ActivityId.DungeonStore)
+	local storeItem
 
-	for iter_8_0 = 1, #var_8_0 do
-		local var_8_2 = arg_8_0.storeItemList[iter_8_0]
+	for i = 1, #storeGroupDict do
+		storeItem = self.storeItemList[i]
 
-		if not var_8_2 then
-			var_8_2 = VersionActivity1_3StoreItem.New()
+		if not storeItem then
+			storeItem = VersionActivity1_3StoreItem.New()
 
-			var_8_2:onInitView(gohelper.cloneInPlace(arg_8_0._gostoreItem))
-			table.insert(arg_8_0.storeItemList, var_8_2)
+			storeItem:onInitView(gohelper.cloneInPlace(self._gostoreItem))
+			table.insert(self.storeItemList, storeItem)
 		end
 
-		var_8_2:updateInfo(iter_8_0, var_8_0[iter_8_0])
+		storeItem:updateInfo(i, storeGroupDict[i])
 	end
 end
 
-function var_0_0.refreshTime(arg_9_0)
-	local var_9_0 = ActivityModel.instance:getActivityInfo()[VersionActivity1_3Enum.ActivityId.DungeonStore]:getRealEndTimeStamp() - ServerTime.now()
-	local var_9_1 = Mathf.Floor(var_9_0 / TimeUtil.OneDaySecond)
-	local var_9_2 = var_9_0 % TimeUtil.OneDaySecond
-	local var_9_3 = Mathf.Floor(var_9_2 / TimeUtil.OneHourSecond)
+function VersionActivity1_3StoreView:refreshTime()
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[VersionActivity1_3Enum.ActivityId.DungeonStore]
+	local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
+	local day = Mathf.Floor(offsetSecond / TimeUtil.OneDaySecond)
+	local hourSecond = offsetSecond % TimeUtil.OneDaySecond
+	local hour = Mathf.Floor(hourSecond / TimeUtil.OneHourSecond)
 
-	if var_9_1 >= 1 then
-		arg_9_0._txttime.text = string.format(luaLang("remain"), string.format("%s%s%s%s", var_9_1, luaLang("time_day"), var_9_3, luaLang("time_hour2")))
+	if day >= 1 then
+		self._txttime.text = string.format(luaLang("remain"), string.format("%s%s%s%s", day, luaLang("time_day"), hour, luaLang("time_hour2")))
 
 		return
 	end
 
-	if var_9_3 >= 1 then
-		arg_9_0._txttime.text = string.format(luaLang("remain"), var_9_3 .. luaLang("time_hour2"))
+	if hour >= 1 then
+		self._txttime.text = string.format(luaLang("remain"), hour .. luaLang("time_hour2"))
 
 		return
 	end
 
-	local var_9_4 = var_9_2 % TimeUtil.OneHourSecond
-	local var_9_5 = Mathf.Floor(var_9_4 / TimeUtil.OneMinuteSecond)
+	local minuteSecond = hourSecond % TimeUtil.OneHourSecond
+	local minute = Mathf.Floor(minuteSecond / TimeUtil.OneMinuteSecond)
 
-	if var_9_5 >= 1 then
-		arg_9_0._txttime.text = string.format(luaLang("remain"), var_9_5 .. luaLang("time_minute2"))
+	if minute >= 1 then
+		self._txttime.text = string.format(luaLang("remain"), minute .. luaLang("time_minute2"))
 
 		return
 	end
 
-	arg_9_0._txttime.text = string.format(luaLang("remain"), "<1" .. luaLang("time_minute2"))
+	self._txttime.text = string.format(luaLang("remain"), "<1" .. luaLang("time_minute2"))
 end
 
-function var_0_0.onClose(arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0.refreshTime, arg_10_0)
+function VersionActivity1_3StoreView:onClose()
+	TaskDispatcher.cancelTask(self.refreshTime, self)
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	arg_11_0._simagebg:UnLoadImage()
+function VersionActivity1_3StoreView:onDestroyView()
+	self._simagebg:UnLoadImage()
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0.storeItemList) do
-		iter_11_1:onDestroy()
+	for _, storeItem in ipairs(self.storeItemList) do
+		storeItem:onDestroy()
 	end
 end
 
-return var_0_0
+return VersionActivity1_3StoreView

@@ -1,11 +1,15 @@
-﻿module("modules.logic.minors.view.DateOfBirthVerifyViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/minors/view/DateOfBirthVerifyViewContainer.lua
 
-local var_0_0 = class("DateOfBirthVerifyViewContainer", BaseViewContainer)
+module("modules.logic.minors.view.DateOfBirthVerifyViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	return {
+local DateOfBirthVerifyViewContainer = class("DateOfBirthVerifyViewContainer", BaseViewContainer)
+
+function DateOfBirthVerifyViewContainer:buildViews()
+	local views = {
 		(DateOfBirthVerifyView.New())
 	}
+
+	return views
 end
 
-return var_0_0
+return DateOfBirthVerifyViewContainer

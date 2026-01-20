@@ -1,54 +1,56 @@
-﻿module("modules.logic.rouge.view.comp.RougeRoleSkillItemComp", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/comp/RougeRoleSkillItemComp.lua
 
-local var_0_0 = class("RougeRoleSkillItemComp", LuaCompBase)
+module("modules.logic.rouge.view.comp.RougeRoleSkillItemComp", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._go = arg_1_1
-	arg_1_0._assitSkillIcon = gohelper.findChildSingleImage(arg_1_0._go, "imgIcon")
-	arg_1_0._assitSkillTagIcon = gohelper.findChildSingleImage(arg_1_0._go, "tag/tagIcon")
-	arg_1_0._click = gohelper.findChildButtonWithAudio(arg_1_0._go, "bg")
+local RougeRoleSkillItemComp = class("RougeRoleSkillItemComp", LuaCompBase)
 
-	arg_1_0._click:AddClickListener(arg_1_0._onClick, arg_1_0)
+function RougeRoleSkillItemComp:init(go)
+	self._go = go
+	self._assitSkillIcon = gohelper.findChildSingleImage(self._go, "imgIcon")
+	self._assitSkillTagIcon = gohelper.findChildSingleImage(self._go, "tag/tagIcon")
+	self._click = gohelper.findChildButtonWithAudio(self._go, "bg")
+
+	self._click:AddClickListener(self._onClick, self)
 end
 
-function var_0_0.setClickCallback(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._callback = arg_2_1
-	arg_2_0._target = arg_2_2
+function RougeRoleSkillItemComp:setClickCallback(callback, target)
+	self._callback = callback
+	self._target = target
 end
 
-function var_0_0.setHeroId(arg_3_0, arg_3_1)
-	arg_3_0._heroId = arg_3_1
+function RougeRoleSkillItemComp:setHeroId(heroId)
+	self._heroId = heroId
 end
 
-function var_0_0._onClick(arg_4_0)
-	if arg_4_0._callback then
-		arg_4_0._callback(arg_4_0._target)
+function RougeRoleSkillItemComp:_onClick()
+	if self._callback then
+		self._callback(self._target)
 	end
 end
 
-function var_0_0.setSelected(arg_5_0, arg_5_1)
-	arg_5_0._frameGo = arg_5_0._frameGo or gohelper.findChild(arg_5_0._go, "selectframe")
+function RougeRoleSkillItemComp:setSelected(value)
+	self._frameGo = self._frameGo or gohelper.findChild(self._go, "selectframe")
 
-	arg_5_0._frameGo:SetActive(arg_5_1)
+	self._frameGo:SetActive(value)
 end
 
-function var_0_0.getSkillCO(arg_6_0)
-	return arg_6_0._skillCO
+function RougeRoleSkillItemComp:getSkillCO()
+	return self._skillCO
 end
 
-function var_0_0.refresh(arg_7_0, arg_7_1)
-	arg_7_0._skillCO = arg_7_1
+function RougeRoleSkillItemComp:refresh(skillCO)
+	self._skillCO = skillCO
 
-	arg_7_0._assitSkillIcon:LoadImage(ResUrl.getSkillIcon(arg_7_1.icon))
-	arg_7_0._assitSkillTagIcon:LoadImage(ResUrl.getAttributeIcon("attribute_" .. arg_7_1.showTag))
+	self._assitSkillIcon:LoadImage(ResUrl.getSkillIcon(skillCO.icon))
+	self._assitSkillTagIcon:LoadImage(ResUrl.getAttributeIcon("attribute_" .. skillCO.showTag))
 
-	if arg_7_0._heroId then
-		RougeModel.instance:getTeamInfo():setSupportSkill(arg_7_0._heroId, arg_7_1.id)
+	if self._heroId then
+		RougeModel.instance:getTeamInfo():setSupportSkill(self._heroId, skillCO.id)
 	end
 end
 
-function var_0_0.onDestroy(arg_8_0)
-	arg_8_0._click:RemoveClickListener()
+function RougeRoleSkillItemComp:onDestroy()
+	self._click:RemoveClickListener()
 end
 
-return var_0_0
+return RougeRoleSkillItemComp

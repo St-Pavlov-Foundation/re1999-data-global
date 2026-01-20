@@ -1,23 +1,25 @@
-﻿module("modules.logic.versionactivity1_6.dungeon.view.boss.VersionActivity1_6_BossInfoRuleView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/dungeon/view/boss/VersionActivity1_6_BossInfoRuleView.lua
 
-local var_0_0 = class("VersionActivity1_6_BossInfoRuleView", WeekWalkEnemyInfoViewRule)
+module("modules.logic.versionactivity1_6.dungeon.view.boss.VersionActivity1_6_BossInfoRuleView", package.seeall)
 
-function var_0_0._addRuleItem(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = gohelper.clone(arg_1_0._goruletemp, arg_1_0._gorulelist, arg_1_1.id)
+local VersionActivity1_6_BossInfoRuleView = class("VersionActivity1_6_BossInfoRuleView", WeekWalkEnemyInfoViewRule)
 
-	table.insert(arg_1_0._childGoList, var_1_0)
-	gohelper.setActive(var_1_0, true)
+function VersionActivity1_6_BossInfoRuleView:_addRuleItem(ruleCo, targetId)
+	local go = gohelper.clone(self._goruletemp, self._gorulelist, ruleCo.id)
 
-	local var_1_1 = gohelper.findChildImage(var_1_0, "#image_tagicon")
+	table.insert(self._childGoList, go)
+	gohelper.setActive(go, true)
 
-	UISpriteSetMgr.instance:setCommonSprite(var_1_1, "wz_" .. arg_1_2)
+	local tagicon = gohelper.findChildImage(go, "#image_tagicon")
 
-	local var_1_2 = gohelper.findChildImage(var_1_0, "")
+	UISpriteSetMgr.instance:setCommonSprite(tagicon, "wz_" .. targetId)
 
-	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(var_1_2, arg_1_1.icon)
+	local simage = gohelper.findChildImage(go, "")
 
-	var_1_1.maskable = true
-	var_1_2.maskable = true
+	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(simage, ruleCo.icon)
+
+	tagicon.maskable = true
+	simage.maskable = true
 end
 
-return var_0_0
+return VersionActivity1_6_BossInfoRuleView

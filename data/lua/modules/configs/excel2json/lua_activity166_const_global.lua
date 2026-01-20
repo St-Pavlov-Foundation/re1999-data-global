@@ -1,20 +1,22 @@
-﻿module("modules.configs.excel2json.lua_activity166_const_global", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_activity166_const_global.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_activity166_const_global", package.seeall)
+
+local lua_activity166_const_global = {}
+local fields = {
 	value = 2,
 	id = 1,
 	value2 = 3
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	value2 = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_activity166_const_global.onLoad(json)
+	lua_activity166_const_global.configList, lua_activity166_const_global.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_activity166_const_global

@@ -1,47 +1,49 @@
-﻿module("modules.logic.scene.common.CommonSceneCtrlComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/common/CommonSceneCtrlComp.lua
 
-local var_0_0 = class("CommonSceneCtrlComp", BaseSceneComp)
+module("modules.logic.scene.common.CommonSceneCtrlComp", package.seeall)
 
-var_0_0.CtrlComp = {
+local CommonSceneCtrlComp = class("CommonSceneCtrlComp", BaseSceneComp)
+
+CommonSceneCtrlComp.CtrlComp = {
 	DynamicShadow = SceneLuaCompSpineDynamicShadow
 }
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:getCurScene().level:registerCallback(CommonSceneLevelComp.OnLevelLoaded, arg_1_0._onLevelLoaded, arg_1_0)
+function CommonSceneCtrlComp:onInit()
+	self:getCurScene().level:registerCallback(CommonSceneLevelComp.OnLevelLoaded, self._onLevelLoaded, self)
 end
 
-function var_0_0.onSceneStart(arg_2_0, arg_2_1, arg_2_2)
+function CommonSceneCtrlComp:onSceneStart(sceneId, levelId)
 	return
 end
 
-function var_0_0.onSceneClose(arg_3_0)
+function CommonSceneCtrlComp:onSceneClose()
 	return
 end
 
-function var_0_0._onLevelLoaded(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0:getCurScene().level
-	local var_4_1 = var_4_0 and var_4_0:getSceneGo()
-	local var_4_2 = arg_4_1 and lua_scene_level.configDict[arg_4_1]
-	local var_4_3 = var_4_2 and lua_scene_ctrl.configDict[var_4_2.resName]
+function CommonSceneCtrlComp:_onLevelLoaded(levelId)
+	local levelComp = self:getCurScene().level
+	local sceneGO = levelComp and levelComp:getSceneGo()
+	local sceneLevelCO = levelId and lua_scene_level.configDict[levelId]
+	local coDict = sceneLevelCO and lua_scene_ctrl.configDict[sceneLevelCO.resName]
 
-	if var_4_3 and not gohelper.isNil(var_4_1) then
-		for iter_4_0, iter_4_1 in pairs(var_4_3) do
-			local var_4_4 = var_0_0.CtrlComp[iter_4_1.ctrlName]
+	if coDict and not gohelper.isNil(sceneGO) then
+		for _, ctrlCO in pairs(coDict) do
+			local ctrlComp = CommonSceneCtrlComp.CtrlComp[ctrlCO.ctrlName]
 
-			if var_4_4 then
-				local var_4_5 = {
-					iter_4_1.param1,
-					iter_4_1.param2,
-					iter_4_1.param3,
-					iter_4_1.param4
+			if ctrlComp then
+				local ctorParam = {
+					ctrlCO.param1,
+					ctrlCO.param2,
+					ctrlCO.param3,
+					ctrlCO.param4
 				}
 
-				MonoHelper.addLuaComOnceToGo(var_4_1, var_4_4, var_4_5)
+				MonoHelper.addLuaComOnceToGo(sceneGO, ctrlComp, ctorParam)
 			else
-				logError("ctrlComp not exist: " .. iter_4_1.ctrlName)
+				logError("ctrlComp not exist: " .. ctrlCO.ctrlName)
 			end
 		end
 	end
 end
 
-return var_0_0
+return CommonSceneCtrlComp

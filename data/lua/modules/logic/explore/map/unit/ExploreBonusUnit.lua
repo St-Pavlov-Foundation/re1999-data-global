@@ -1,60 +1,62 @@
-﻿module("modules.logic.explore.map.unit.ExploreBonusUnit", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/unit/ExploreBonusUnit.lua
 
-local var_0_0 = class("ExploreBonusUnit", ExploreBaseMoveUnit)
+module("modules.logic.explore.map.unit.ExploreBonusUnit", package.seeall)
 
-function var_0_0.canTrigger(arg_1_0)
-	if arg_1_0.mo:isInteractActiveState() then
+local ExploreBonusUnit = class("ExploreBonusUnit", ExploreBaseMoveUnit)
+
+function ExploreBonusUnit:canTrigger()
+	if self.mo:isInteractActiveState() then
 		return false
 	end
 
-	return var_0_0.super.canTrigger(arg_1_0)
+	return ExploreBonusUnit.super.canTrigger(self)
 end
 
-function var_0_0.playAnim(arg_2_0, arg_2_1)
-	var_0_0.super.playAnim(arg_2_0, arg_2_1)
+function ExploreBonusUnit:playAnim(animName)
+	ExploreBonusUnit.super.playAnim(self, animName)
 
-	if arg_2_1 == ExploreAnimEnum.AnimName.nToA then
+	if animName == ExploreAnimEnum.AnimName.nToA then
 		PopupController.instance:setPause("ExploreBonusUnit_EXIT", true)
 
-		local var_2_0 = ExploreController.instance:getMap():getHero()
+		local hero = ExploreController.instance:getMap():getHero()
 
-		var_2_0:onCheckDir(var_2_0.nodePos, arg_2_0.nodePos)
-		var_2_0:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.OpenChest, true, true)
-		arg_2_0.animComp:setShowEffect(false)
+		hero:onCheckDir(hero.nodePos, self.nodePos)
+		hero:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.OpenChest, true, true)
+		self.animComp:setShowEffect(false)
 	end
 end
 
-function var_0_0.onAnimEnd(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == ExploreAnimEnum.AnimName.nToA then
+function ExploreBonusUnit:onAnimEnd(preAnim, nowAnim)
+	if preAnim == ExploreAnimEnum.AnimName.nToA then
 		AudioMgr.instance:trigger(AudioEnum.Summon.stop_ui_callfor_cordage02)
 		PopupController.instance:setPause("ExploreBonusUnit_EXIT", false)
 
-		if arg_3_0:checkHavePopup() then
-			ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_3_0.checkHavePopup, arg_3_0)
+		if self:checkHavePopup() then
+			ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self.checkHavePopup, self)
 		end
 	end
 
-	var_0_0.super.onAnimEnd(arg_3_0, arg_3_1, arg_3_2)
+	ExploreBonusUnit.super.onAnimEnd(self, preAnim, nowAnim)
 end
 
-function var_0_0.checkHavePopup(arg_4_0)
+function ExploreBonusUnit:checkHavePopup()
 	if PopupController.instance:getPopupCount() > 0 or ViewMgr.instance:isOpen(ViewName.ExploreGetItemView) or ViewMgr.instance:isOpen(ViewName.CommonPropView) then
 		return true
 	else
-		arg_4_0:onPopupEnd()
+		self:onPopupEnd()
 	end
 end
 
-function var_0_0.onPopupEnd(arg_5_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_5_0.checkHavePopup, arg_5_0)
-	arg_5_0.animComp:setShowEffect(true)
-	arg_5_0.animComp:_setCurAnimName(ExploreAnimEnum.AnimName.active)
+function ExploreBonusUnit:onPopupEnd()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self.checkHavePopup, self)
+	self.animComp:setShowEffect(true)
+	self.animComp:_setCurAnimName(ExploreAnimEnum.AnimName.active)
 end
 
-function var_0_0.onDestroy(arg_6_0, ...)
+function ExploreBonusUnit:onDestroy(...)
 	PopupController.instance:setPause("ExploreBonusUnit_EXIT", false)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_6_0.checkHavePopup, arg_6_0)
-	var_0_0.super.onDestroy(arg_6_0, ...)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self.checkHavePopup, self)
+	ExploreBonusUnit.super.onDestroy(self, ...)
 end
 
-return var_0_0
+return ExploreBonusUnit

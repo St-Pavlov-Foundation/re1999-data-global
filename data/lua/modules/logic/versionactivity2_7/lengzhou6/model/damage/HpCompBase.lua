@@ -1,17 +1,19 @@
-﻿module("modules.logic.versionactivity2_7.lengzhou6.model.damage.HpCompBase", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/lengzhou6/model/damage/HpCompBase.lua
 
-local var_0_0 = class("HpCompBase")
+module("modules.logic.versionactivity2_7.lengzhou6.model.damage.HpCompBase", package.seeall)
 
-function var_0_0.reset(arg_1_0)
+local HpCompBase = class("HpCompBase")
+
+function HpCompBase:reset()
 	return
 end
 
-function var_0_0.damage(arg_2_0, arg_2_1)
+function HpCompBase:damage(eliminateRecordData)
 	return
 end
 
-function var_0_0.treatment(arg_3_0, arg_3_1)
+function HpCompBase:treatment(eliminateRecordData)
 	return
 end
 
-return var_0_0
+return HpCompBase

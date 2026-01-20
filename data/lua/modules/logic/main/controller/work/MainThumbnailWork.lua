@@ -1,8 +1,10 @@
-﻿module("modules.logic.main.controller.work.MainThumbnailWork", package.seeall)
+﻿-- chunkname: @modules/logic/main/controller/work/MainThumbnailWork.lua
 
-local var_0_0 = class("MainThumbnailWork", BaseWork)
+module("modules.logic.main.controller.work.MainThumbnailWork", package.seeall)
 
-function var_0_0._checkShow()
+local MainThumbnailWork = class("MainThumbnailWork", BaseWork)
+
+function MainThumbnailWork._checkShow()
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.MainThumbnail) then
 		return false
 	end
@@ -18,52 +20,52 @@ function var_0_0._checkShow()
 	return true
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	if not var_0_0._checkShow() then
-		arg_2_0:onDone(true)
+function MainThumbnailWork:onStart(context)
+	if not MainThumbnailWork._checkShow() then
+		self:onDone(true)
 
 		return
 	end
 
 	if ViewMgr.instance:isOpenFinish(ViewName.MainView) then
-		arg_2_0:_startMainThumbnailView()
+		self:_startMainThumbnailView()
 
 		return
 	end
 
-	TaskDispatcher.cancelTask(arg_2_0._overtimeHandler, arg_2_0)
-	TaskDispatcher.runDelay(arg_2_0._overtimeHandler, arg_2_0, 3)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_2_0._onOpenViewFinsh, arg_2_0)
+	TaskDispatcher.cancelTask(self._overtimeHandler, self)
+	TaskDispatcher.runDelay(self._overtimeHandler, self, 3)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, self._onOpenViewFinsh, self)
 end
 
-function var_0_0._overtimeHandler(arg_3_0)
-	arg_3_0:_startMainThumbnailView()
+function MainThumbnailWork:_overtimeHandler()
+	self:_startMainThumbnailView()
 end
 
-function var_0_0._onOpenViewFinsh(arg_4_0, arg_4_1)
-	if arg_4_1 == ViewName.MainView then
-		arg_4_0:_startMainThumbnailView()
+function MainThumbnailWork:_onOpenViewFinsh(viewName)
+	if viewName == ViewName.MainView then
+		self:_startMainThumbnailView()
 	end
 end
 
-function var_0_0._startMainThumbnailView(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0._overtimeHandler, arg_5_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_5_0._onOpenViewFinsh, arg_5_0)
+function MainThumbnailWork:_startMainThumbnailView()
+	TaskDispatcher.cancelTask(self._overtimeHandler, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, self._onOpenViewFinsh, self)
 	MainController.instance:dispatchEvent(MainEvent.OnShowMainThumbnailView)
-	MainController.instance:registerCallback(MainEvent.OnMainThumbnailGreetingFinish, arg_5_0._onMainThumbnailGreetingFinish, arg_5_0)
+	MainController.instance:registerCallback(MainEvent.OnMainThumbnailGreetingFinish, self._onMainThumbnailGreetingFinish, self)
 	MainController.instance:openMainThumbnailView({
 		needPlayGreeting = true
 	})
 end
 
-function var_0_0._onMainThumbnailGreetingFinish(arg_6_0)
-	arg_6_0:onDone(true)
+function MainThumbnailWork:_onMainThumbnailGreetingFinish()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0._overtimeHandler, arg_7_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_7_0._onOpenViewFinsh, arg_7_0)
-	MainController.instance:unregisterCallback(MainEvent.OnMainThumbnailGreetingFinish, arg_7_0._onMainThumbnailGreetingFinish, arg_7_0)
+function MainThumbnailWork:clearWork()
+	TaskDispatcher.cancelTask(self._overtimeHandler, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, self._onOpenViewFinsh, self)
+	MainController.instance:unregisterCallback(MainEvent.OnMainThumbnailGreetingFinish, self._onMainThumbnailGreetingFinish, self)
 end
 
-return var_0_0
+return MainThumbnailWork

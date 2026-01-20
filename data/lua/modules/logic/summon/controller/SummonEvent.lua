@@ -1,40 +1,42 @@
-﻿module("modules.logic.summon.controller.SummonEvent", package.seeall)
+﻿-- chunkname: @modules/logic/summon/controller/SummonEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.summon.controller.SummonEvent", package.seeall)
 
-var_0_0.onSummonReply = 1
-var_0_0.onSummonFailed = 2
-var_0_0.summonShowBlackScreen = 5
-var_0_0.summonCloseBlackScreen = 6
-var_0_0.summonMainCloseImmediately = 7
-var_0_0.summonShowExitAnim = 8
-var_0_0.onViewCanPlayEnterAnim = 11
-var_0_0.onSummonAnimShowGuide = 104
-var_0_0.onSummonAnimEnterDraw = 100
-var_0_0.onSummonDraw = 101
-var_0_0.onSummonAnimRareEffect = 102
-var_0_0.onSummonAnimEnd = 103
-var_0_0.onRemainTimeCountdown = 110
-var_0_0.onSummonResultClose = 201
-var_0_0.onSummonEquipEnd = 202
-var_0_0.onSummonEquipSingleFinish = 203
-var_0_0.onSummonPoolDetailCategoryClick = 301
-var_0_0.onSummonTabSet = 401
-var_0_0.onSummonInfoGot = 402
-var_0_0.onSummonSkip = 403
-var_0_0.GuideEquipPool = 501
-var_0_0.guideScrollShowEquipPool = 502
-var_0_0.LuckyBagViewOpen = 503
-var_0_0.onGetSummonPoolHistoryData = 601
-var_0_0.onSummonPoolHistorySummonRequest = 602
-var_0_0.onSummonPoolHistorySelect = 603
-var_0_0.onNewPoolChanged = 701
-var_0_0.onLuckyBagOpened = 801
-var_0_0.onLuckyListChanged = 802
-var_0_0.onCustomPicked = 901
-var_0_0.onCustomPickListChanged = 902
-var_0_0.onSummonScenePrepared = 1001
-var_0_0.onSummonProgressRewards = 2001
-var_0_0.onReceiveSummonReply = 2002
+local SummonEvent = _M
 
-return var_0_0
+SummonEvent.onSummonReply = 1
+SummonEvent.onSummonFailed = 2
+SummonEvent.summonShowBlackScreen = 5
+SummonEvent.summonCloseBlackScreen = 6
+SummonEvent.summonMainCloseImmediately = 7
+SummonEvent.summonShowExitAnim = 8
+SummonEvent.onViewCanPlayEnterAnim = 11
+SummonEvent.onSummonAnimShowGuide = 104
+SummonEvent.onSummonAnimEnterDraw = 100
+SummonEvent.onSummonDraw = 101
+SummonEvent.onSummonAnimRareEffect = 102
+SummonEvent.onSummonAnimEnd = 103
+SummonEvent.onRemainTimeCountdown = 110
+SummonEvent.onSummonResultClose = 201
+SummonEvent.onSummonEquipEnd = 202
+SummonEvent.onSummonEquipSingleFinish = 203
+SummonEvent.onSummonPoolDetailCategoryClick = 301
+SummonEvent.onSummonTabSet = 401
+SummonEvent.onSummonInfoGot = 402
+SummonEvent.onSummonSkip = 403
+SummonEvent.GuideEquipPool = 501
+SummonEvent.guideScrollShowEquipPool = 502
+SummonEvent.LuckyBagViewOpen = 503
+SummonEvent.onGetSummonPoolHistoryData = 601
+SummonEvent.onSummonPoolHistorySummonRequest = 602
+SummonEvent.onSummonPoolHistorySelect = 603
+SummonEvent.onNewPoolChanged = 701
+SummonEvent.onLuckyBagOpened = 801
+SummonEvent.onLuckyListChanged = 802
+SummonEvent.onCustomPicked = 901
+SummonEvent.onCustomPickListChanged = 902
+SummonEvent.onSummonScenePrepared = 1001
+SummonEvent.onSummonProgressRewards = 2001
+SummonEvent.onReceiveSummonReply = 2002
+
+return SummonEvent

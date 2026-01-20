@@ -1,21 +1,23 @@
-﻿module("modules.configs.excel2json.lua_fight_6_buff_effect", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_fight_6_buff_effect.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_fight_6_buff_effect", package.seeall)
+
+local lua_fight_6_buff_effect = {}
+local fields = {
 	audioId = 5,
 	effectHang = 4,
 	buffId = 2,
 	effect = 3,
 	id = 1
 }
-local var_0_2 = {
+local primaryKey = {
 	"id",
 	"buffId"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_fight_6_buff_effect.onLoad(json)
+	lua_fight_6_buff_effect.configList, lua_fight_6_buff_effect.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_fight_6_buff_effect

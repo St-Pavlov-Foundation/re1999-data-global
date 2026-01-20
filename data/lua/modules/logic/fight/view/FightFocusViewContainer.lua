@@ -1,50 +1,52 @@
-﻿module("modules.logic.fight.view.FightFocusViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightFocusViewContainer.lua
 
-local var_0_0 = class("FightFocusViewContainer", BaseViewContainer)
+module("modules.logic.fight.view.FightFocusViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local FightFocusViewContainer = class("FightFocusViewContainer", BaseViewContainer)
+
+function FightFocusViewContainer:buildViews()
 	return {
 		FightFocusView.New(),
 		TabViewGroup.New(1, "fightinfocontainer/skilltipview")
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	arg_2_0:closeThis()
+function FightFocusViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-function var_0_0.buildTabViews(arg_3_0, arg_3_1)
-	if arg_3_1 == 1 then
-		arg_3_0._skillTipView = SkillTipView.New()
+function FightFocusViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._skillTipView = SkillTipView.New()
 
 		return {
-			arg_3_0._skillTipView
+			self._skillTipView
 		}
 	end
 end
 
-function var_0_0.switchTab(arg_4_0, arg_4_1)
-	arg_4_0:dispatchEvent(ViewEvent.ToSwitchTab, 1, arg_4_1)
+function FightFocusViewContainer:switchTab(tabId)
+	self:dispatchEvent(ViewEvent.ToSwitchTab, 1, tabId)
 end
 
-function var_0_0.showSkillTipView(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	arg_5_0._skillTipView:showInfo(arg_5_1, arg_5_2, arg_5_3)
+function FightFocusViewContainer:showSkillTipView(info, isCharacter, entityId)
+	self._skillTipView:showInfo(info, isCharacter, entityId)
 end
 
-function var_0_0.hideSkillTipView(arg_6_0)
-	arg_6_0._skillTipView:hideInfo()
+function FightFocusViewContainer:hideSkillTipView()
+	self._skillTipView:hideInfo()
 end
 
-function var_0_0.playOpenTransition(arg_7_0)
-	var_0_0.super.playOpenTransition(arg_7_0, {
+function FightFocusViewContainer:playOpenTransition()
+	FightFocusViewContainer.super.playOpenTransition(self, {
 		anim = "open"
 	})
 end
 
-function var_0_0.playCloseTransition(arg_8_0)
-	var_0_0.super.playCloseTransition(arg_8_0, {
+function FightFocusViewContainer:playCloseTransition()
+	FightFocusViewContainer.super.playCloseTransition(self, {
 		anim = "close"
 	})
 end
 
-return var_0_0
+return FightFocusViewContainer

@@ -260,7 +260,7 @@
   {
     "id": 107040108,
     "step": 1,
-    "content": "language_10094161",
+    "content": "language_10083632",
     "animType": 0
   },
   {
@@ -1742,7 +1742,7 @@
   {
     "id": 111000014,
     "step": 1,
-    "content": "language_10094162",
+    "content": "language_10083869",
     "animType": 0
   },
   {
@@ -3830,7 +3830,7 @@
   {
     "id": 207010603,
     "step": 1,
-    "content": "language_10094256",
+    "content": "language_10103593",
     "animType": 0
   },
   {
@@ -4124,7 +4124,7 @@
   {
     "id": 207010903,
     "step": 1,
-    "content": "language_10094305",
+    "content": "language_10103594",
     "animType": 0
   },
   {
@@ -4160,7 +4160,7 @@
   {
     "id": 207011003,
     "step": 1,
-    "content": "language_10094311",
+    "content": "language_10103595",
     "animType": 0
   },
   {
@@ -4556,7 +4556,7 @@
   {
     "id": 207011801,
     "step": 1,
-    "content": "language_10094377",
+    "content": "language_10103596",
     "animType": 0
   },
   {
@@ -5828,19 +5828,19 @@
   {
     "id": 207040304,
     "step": 1,
-    "content": "language_10094589",
+    "content": "language_10103597",
     "animType": 0
   },
   {
     "id": 207040305,
     "step": 1,
-    "content": "language_10094590",
+    "content": "language_10103598",
     "animType": 0
   },
   {
     "id": 207040305,
     "step": 2,
-    "content": "language_10094591",
+    "content": "language_10103599",
     "animType": 0
   },
   {
@@ -6055,7 +6055,7 @@
   },
   {
     "id": 207040703,
-    "step": 1,
+    "step": 2,
     "content": "language_10094627",
     "animType": 0
   },
@@ -6159,12 +6159,6 @@
     "id": 207040712,
     "step": 1,
     "content": "language_10094644",
-    "animType": 0
-  },
-  {
-    "id": 207040713,
-    "step": 1,
-    "content": "language_10094645",
     "animType": 0
   },
   {

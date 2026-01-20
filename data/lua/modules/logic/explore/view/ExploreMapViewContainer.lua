@@ -1,11 +1,13 @@
-﻿module("modules.logic.explore.view.ExploreMapViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/explore/view/ExploreMapViewContainer.lua
 
-local var_0_0 = class("ExploreMapViewContainer", BaseViewContainer)
+module("modules.logic.explore.view.ExploreMapViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local ExploreMapViewContainer = class("ExploreMapViewContainer", BaseViewContainer)
+
+function ExploreMapViewContainer:buildViews()
 	return {
 		ExploreMapView.New()
 	}
 end
 
-return var_0_0
+return ExploreMapViewContainer

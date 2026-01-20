@@ -1,74 +1,78 @@
-﻿module("modules.logic.fight.model.restart.FightRestartAbandonType.FightRestartAbandonType29", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/restart/FightRestartAbandonType/FightRestartAbandonType29.lua
 
-local var_0_0 = class("FightRestartAbandonType29", FightRestartAbandonTypeBase)
+module("modules.logic.fight.model.restart.FightRestartAbandonType.FightRestartAbandonType29", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	arg_1_0:__onInit()
+local FightRestartAbandonType29 = class("FightRestartAbandonType29", FightRestartAbandonTypeBase)
 
-	arg_1_0._fight_work = arg_1_1
+function FightRestartAbandonType29:ctor(fight_work, fightParam, episode_config, chapter_config)
+	self:__onInit()
+
+	self._fight_work = fight_work
 end
 
-function var_0_0.canRestart(arg_2_0)
-	local var_2_0 = RougeModel.instance:getRougeRetryNum() < RougeMapConfig.instance:getFightRetryNum()
+function FightRestartAbandonType29:canRestart()
+	local retryNum = RougeModel.instance:getRougeRetryNum()
+	local maxRetryNum = RougeMapConfig.instance:getFightRetryNum()
+	local canRestart = retryNum < maxRetryNum
 
-	if not var_2_0 then
+	if not canRestart then
 		GameFacade.showToast(ToastEnum.RougeNoEnoughRetryNum)
 	end
 
-	return var_2_0
+	return canRestart
 end
 
-function var_0_0.confirmNotice(arg_3_0)
-	FightController.instance:registerCallback(FightEvent.PushEndFight, arg_3_0._onPushEndFight, arg_3_0, LuaEventSystem.High)
+function FightRestartAbandonType29:confirmNotice()
+	FightController.instance:registerCallback(FightEvent.PushEndFight, self._onPushEndFight, self, LuaEventSystem.High)
 
-	local var_3_0 = RougeMapConfig.instance:getFightRetryNum()
-	local var_3_1 = RougeModel.instance:getRougeRetryNum()
+	local maxNum = RougeMapConfig.instance:getFightRetryNum()
+	local curRetryNum = RougeModel.instance:getRougeRetryNum()
 
-	GameFacade.showMessageBox(MessageBoxIdDefine.RougeFightRestartConfirm, MsgBoxEnum.BoxType.Yes_No, arg_3_0.yesCallback, arg_3_0.noCallback, nil, arg_3_0, arg_3_0, nil, var_3_0 - var_3_1)
+	GameFacade.showMessageBox(MessageBoxIdDefine.RougeFightRestartConfirm, MsgBoxEnum.BoxType.Yes_No, self.yesCallback, self.noCallback, nil, self, self, nil, maxNum - curRetryNum)
 end
 
-function var_0_0._onPushEndFight(arg_4_0)
+function FightRestartAbandonType29:_onPushEndFight()
 	FightGameMgr.restartMgr:cancelRestart()
 	ViewMgr.instance:closeView(ViewName.MessageBoxView)
 end
 
-function var_0_0.yesCallback(arg_5_0)
-	FightController.instance:unregisterCallback(FightEvent.PushEndFight, arg_5_0._onPushEndFight, arg_5_0)
+function FightRestartAbandonType29:yesCallback()
+	FightController.instance:unregisterCallback(FightEvent.PushEndFight, self._onPushEndFight, self)
 
-	if arg_5_0.IS_DEAD then
+	if self.IS_DEAD then
 		ToastController.instance:showToast(-80)
 
 		return
 	end
 
-	arg_5_0:startAbandon()
+	self:startAbandon()
 end
 
-function var_0_0.noCallback(arg_6_0)
-	FightController.instance:unregisterCallback(FightEvent.PushEndFight, arg_6_0._onPushEndFight, arg_6_0)
+function FightRestartAbandonType29:noCallback()
+	FightController.instance:unregisterCallback(FightEvent.PushEndFight, self._onPushEndFight, self)
 	FightGameMgr.restartMgr:cancelRestart()
 end
 
-function var_0_0.startAbandon(arg_7_0)
-	DungeonFightController.instance:registerCallback(DungeonEvent.OnEndDungeonReply, arg_7_0._startRequestFight, arg_7_0)
+function FightRestartAbandonType29:startAbandon()
+	DungeonFightController.instance:registerCallback(DungeonEvent.OnEndDungeonReply, self._startRequestFight, self)
 	DungeonFightController.instance:sendEndFightRequest(true)
 end
 
-function var_0_0._startRequestFight(arg_8_0, arg_8_1)
-	DungeonFightController.instance:unregisterCallback(DungeonEvent.OnEndDungeonReply, arg_8_0._startRequestFight, arg_8_0)
+function FightRestartAbandonType29:_startRequestFight(resultCode)
+	DungeonFightController.instance:unregisterCallback(DungeonEvent.OnEndDungeonReply, self._startRequestFight, self)
 
-	if arg_8_1 ~= 0 then
+	if resultCode ~= 0 then
 		FightGameMgr.restartMgr:restartFightFail()
 
 		return
 	end
 
-	arg_8_0._fight_work:onDone(true)
+	self._fight_work:onDone(true)
 end
 
-function var_0_0.releaseSelf(arg_9_0)
-	DungeonFightController.instance:unregisterCallback(DungeonEvent.OnEndDungeonReply, arg_9_0._startRequestFight, arg_9_0)
-	arg_9_0:__onDispose()
+function FightRestartAbandonType29:releaseSelf()
+	DungeonFightController.instance:unregisterCallback(DungeonEvent.OnEndDungeonReply, self._startRequestFight, self)
+	self:__onDispose()
 end
 
-return var_0_0
+return FightRestartAbandonType29

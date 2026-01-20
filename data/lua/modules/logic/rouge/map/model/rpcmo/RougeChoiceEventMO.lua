@@ -1,39 +1,41 @@
-﻿module("modules.logic.rouge.map.model.rpcmo.RougeChoiceEventMO", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/model/rpcmo/RougeChoiceEventMO.lua
 
-local var_0_0 = class("RougeChoiceEventMO", RougeBaseEventMO)
+module("modules.logic.rouge.map.model.rpcmo.RougeChoiceEventMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	var_0_0.super.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0:updateCanChoiceSet()
+local RougeChoiceEventMO = class("RougeChoiceEventMO", RougeBaseEventMO)
 
-	arg_1_0.choiceSelect = arg_1_0.jsonData.choiceSelect
+function RougeChoiceEventMO:init(eventCo, data)
+	RougeChoiceEventMO.super.init(self, eventCo, data)
+	self:updateCanChoiceSet()
+
+	self.choiceSelect = self.jsonData.choiceSelect
 end
 
-function var_0_0.update(arg_2_0, arg_2_1, arg_2_2)
-	var_0_0.super.update(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0:updateCanChoiceSet()
+function RougeChoiceEventMO:update(eventCo, data)
+	RougeChoiceEventMO.super.update(self, eventCo, data)
+	self:updateCanChoiceSet()
 
-	arg_2_0.choiceSelect = arg_2_0.jsonData.choiceSelect
+	self.choiceSelect = self.jsonData.choiceSelect
 end
 
-function var_0_0.updateCanChoiceSet(arg_3_0)
-	arg_3_0.canChoiceList = arg_3_0.jsonData.canChoiceSet
+function RougeChoiceEventMO:updateCanChoiceSet()
+	self.canChoiceList = self.jsonData.canChoiceSet
 
-	if arg_3_0.canChoiceList then
-		table.sort(arg_3_0.canChoiceList, arg_3_0.sortChoice)
+	if self.canChoiceList then
+		table.sort(self.canChoiceList, self.sortChoice)
 	end
 end
 
-function var_0_0.getChoiceIdList(arg_4_0)
-	return arg_4_0.canChoiceList
+function RougeChoiceEventMO:getChoiceIdList()
+	return self.canChoiceList
 end
 
-function var_0_0.sortChoice(arg_5_0, arg_5_1)
-	return arg_5_0 < arg_5_1
+function RougeChoiceEventMO.sortChoice(a, b)
+	return a < b
 end
 
-function var_0_0.__tostring(arg_6_0)
-	return var_0_0.super.__tostring(arg_6_0)
+function RougeChoiceEventMO:__tostring()
+	return RougeChoiceEventMO.super.__tostring(self)
 end
 
-return var_0_0
+return RougeChoiceEventMO

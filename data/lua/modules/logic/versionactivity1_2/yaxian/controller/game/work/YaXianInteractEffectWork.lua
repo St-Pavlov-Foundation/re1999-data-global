@@ -1,22 +1,24 @@
-﻿module("modules.logic.versionactivity1_2.yaxian.controller.game.work.YaXianInteractEffectWork", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/yaxian/controller/game/work/YaXianInteractEffectWork.lua
 
-local var_0_0 = class("YaXianInteractEffectWork", BaseWork)
+module("modules.logic.versionactivity1_2.yaxian.controller.game.work.YaXianInteractEffectWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.interactItem = YaXianGameController.instance:getInteractItem(arg_1_1)
-	arg_1_0.effectType = arg_1_2
+local YaXianInteractEffectWork = class("YaXianInteractEffectWork", BaseWork)
+
+function YaXianInteractEffectWork:ctor(killInteractId, effectType)
+	self.interactItem = YaXianGameController.instance:getInteractItem(killInteractId)
+	self.effectType = effectType
 end
 
-function var_0_0.onStart(arg_2_0)
-	arg_2_0.interactItem:showEffect(arg_2_0.effectType, arg_2_0.effectDoneCallback, arg_2_0)
+function YaXianInteractEffectWork:onStart()
+	self.interactItem:showEffect(self.effectType, self.effectDoneCallback, self)
 end
 
-function var_0_0.effectDoneCallback(arg_3_0)
-	arg_3_0:onDone(true)
+function YaXianInteractEffectWork:effectDoneCallback()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	arg_4_0.interactItem:cancelEffectTask()
+function YaXianInteractEffectWork:clearWork()
+	self.interactItem:cancelEffectTask()
 end
 
-return var_0_0
+return YaXianInteractEffectWork

@@ -1,25 +1,27 @@
-﻿module("modules.logic.main.view.MainThumbnailBannerSelectItem", package.seeall)
+﻿-- chunkname: @modules/logic/main/view/MainThumbnailBannerSelectItem.lua
 
-local var_0_0 = class("MainThumbnailBannerSelectItem", LuaCompBase)
+module("modules.logic.main.view.MainThumbnailBannerSelectItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._go = arg_1_1.go
-	arg_1_0._pageIndex = arg_1_1.index
-	arg_1_0._normalGo = gohelper.findChild(arg_1_0._go, "#go_nomalstar")
-	arg_1_0._selectedGo = gohelper.findChild(arg_1_0._go, "#go_lightstar")
+local MainThumbnailBannerSelectItem = class("MainThumbnailBannerSelectItem", LuaCompBase)
 
-	transformhelper.setLocalPos(arg_1_0._go.transform, arg_1_1.pos, 0, 0)
+function MainThumbnailBannerSelectItem:init(param)
+	self._go = param.go
+	self._pageIndex = param.index
+	self._normalGo = gohelper.findChild(self._go, "#go_nomalstar")
+	self._selectedGo = gohelper.findChild(self._go, "#go_lightstar")
+
+	transformhelper.setLocalPos(self._go.transform, param.pos, 0, 0)
 end
 
-function var_0_0.updateItem(arg_2_0, arg_2_1, arg_2_2)
-	local var_2_0 = arg_2_0._pageIndex == arg_2_1
+function MainThumbnailBannerSelectItem:updateItem(index, maxIndex)
+	local isTarget = self._pageIndex == index
 
-	gohelper.setActive(arg_2_0._selectedGo, var_2_0 and arg_2_2 > 1)
-	gohelper.setActive(arg_2_0._normalGo, not var_2_0 and arg_2_2 > 1)
+	gohelper.setActive(self._selectedGo, isTarget and maxIndex > 1)
+	gohelper.setActive(self._normalGo, not isTarget and maxIndex > 1)
 end
 
-function var_0_0.destroy(arg_3_0)
+function MainThumbnailBannerSelectItem:destroy()
 	return
 end
 
-return var_0_0
+return MainThumbnailBannerSelectItem

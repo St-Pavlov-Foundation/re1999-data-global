@@ -1,164 +1,165 @@
-﻿module("modules.logic.fight.view.FightTechniqueView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightTechniqueView.lua
 
-local var_0_0 = class("FightTechniqueView", BaseView)
+module("modules.logic.fight.view.FightTechniqueView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._golefttop = gohelper.findChild(arg_1_0.viewGO, "#go_lefttop")
-	arg_1_0._gocategorycontent = gohelper.findChild(arg_1_0.viewGO, "left/scroll_category/viewport/#go_categorycontent")
-	arg_1_0._gostorecategoryitem = gohelper.findChild(arg_1_0.viewGO, "left/scroll_category/viewport/#go_categorycontent/#go_storecategoryitem")
-	arg_1_0._gocenter = gohelper.findChild(arg_1_0.viewGO, "#go_center")
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_center/#simage_icon")
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+local FightTechniqueView = class("FightTechniqueView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function FightTechniqueView:onInitView()
+	self._golefttop = gohelper.findChild(self.viewGO, "#go_lefttop")
+	self._gocategorycontent = gohelper.findChild(self.viewGO, "left/scroll_category/viewport/#go_categorycontent")
+	self._gostorecategoryitem = gohelper.findChild(self.viewGO, "left/scroll_category/viewport/#go_categorycontent/#go_storecategoryitem")
+	self._gocenter = gohelper.findChild(self.viewGO, "#go_center")
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "#go_center/#simage_icon")
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_2_0._onOpenView, arg_2_0)
+function FightTechniqueView:addEvents()
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, self._onOpenView, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, arg_3_0._onOpenView, arg_3_0)
+function FightTechniqueView:removeEvents()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, self._onOpenView, self)
 end
 
-function var_0_0._onOpenView(arg_4_0, arg_4_1)
-	if arg_4_1 == ViewName.GuideView then
-		arg_4_0:closeThis()
+function FightTechniqueView:_onOpenView(viewName)
+	if viewName == ViewName.GuideView then
+		self:closeThis()
 	end
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._simagebg:LoadImage(ResUrl.getTechniqueBg("banner_di"))
+function FightTechniqueView:_editableInitView()
+	self._simagebg:LoadImage(ResUrl.getTechniqueBg("banner_di"))
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
-	local var_6_0 = arg_6_0.viewParam and arg_6_0.viewParam.defaultShowId
+function FightTechniqueView:onUpdateParam()
+	local defaultConfigId = self.viewParam and self.viewParam.defaultShowId
 
-	if var_6_0 then
-		local var_6_1 = lua_fight_technique.configDict[var_6_0]
+	if defaultConfigId then
+		local defaultShowConfig = lua_fight_technique.configDict[defaultConfigId]
 
-		if var_6_1 then
-			local var_6_2 = var_6_1.mainTitleId
-			local var_6_3 = tabletool.indexOf(arg_6_0.btn_data_list[var_6_2], var_6_1)
+		if defaultShowConfig then
+			local defaultMainIndex = defaultShowConfig.mainTitleId
+			local defaultSubIndex = tabletool.indexOf(self.btn_data_list[defaultMainIndex], defaultShowConfig)
 
-			if arg_6_0.cur_select_main_index == var_6_2 then
-				arg_6_0.cur_select_sub_index = nil
+			if self.cur_select_main_index == defaultMainIndex then
+				self.cur_select_sub_index = nil
 
-				arg_6_0:_onSubBtnClick(var_6_3)
-				arg_6_0:_btn_tween_open_end()
+				self:_onSubBtnClick(defaultSubIndex)
+				self:_btn_tween_open_end()
 			else
-				arg_6_0:_onBtnClick({
-					index = var_6_2,
-					subIndex = var_6_3
+				self:_onBtnClick({
+					index = defaultMainIndex,
+					subIndex = defaultSubIndex
 				})
 			end
 		end
 	end
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0.btn_data_list = {}
+function FightTechniqueView:onOpen()
+	self.btn_data_list = {}
 
-	local var_7_0 = arg_7_0.viewParam and arg_7_0.viewParam.isGMShowAll or false
-	local var_7_1 = arg_7_0.viewParam and arg_7_0.viewParam.defaultShowId
-	local var_7_2 = {}
-	local var_7_3
+	local isGMShowAll = self.viewParam and self.viewParam.isGMShowAll or false
+	local defaultConfigId = self.viewParam and self.viewParam.defaultShowId
+	local temp_tab = {}
+	local defaultShowConfig
 
-	for iter_7_0, iter_7_1 in ipairs(lua_fight_technique.configList) do
-		if iter_7_1.mainTitleId ~= 0 then
-			if not var_7_2[iter_7_1.mainTitleId] then
-				var_7_2[iter_7_1.mainTitleId] = {}
+	for _, config in ipairs(lua_fight_technique.configList) do
+		if config.mainTitleId ~= 0 then
+			if not temp_tab[config.mainTitleId] then
+				temp_tab[config.mainTitleId] = {}
 			end
 
-			if arg_7_0:checkIsNeedShowTechnique(iter_7_1, var_7_0) then
-				table.insert(var_7_2[iter_7_1.mainTitleId], iter_7_1)
+			if self:checkIsNeedShowTechnique(config, isGMShowAll) then
+				table.insert(temp_tab[config.mainTitleId], config)
 
-				if var_7_1 == iter_7_1.id then
-					var_7_3 = iter_7_1
+				if defaultConfigId == config.id then
+					defaultShowConfig = config
 				end
 			end
 		end
 	end
 
-	for iter_7_2, iter_7_3 in pairs(var_7_2) do
-		table.sort(var_7_2[iter_7_2], var_0_0.sortSubTechniqueConfig)
+	for k, _ in pairs(temp_tab) do
+		table.sort(temp_tab[k], FightTechniqueView.sortSubTechniqueConfig)
 
-		if #var_7_2[iter_7_2] > 0 then
-			table.insert(arg_7_0.btn_data_list, var_7_2[iter_7_2])
+		if #temp_tab[k] > 0 then
+			table.insert(self.btn_data_list, temp_tab[k])
 		end
 	end
 
-	table.sort(arg_7_0.btn_data_list, var_0_0.sortTechniqueConfig)
+	table.sort(self.btn_data_list, FightTechniqueView.sortTechniqueConfig)
 
-	arg_7_0.btn_list = arg_7_0:getUserDataTb_()
-	arg_7_0.sub_btn_height = {}
-	arg_7_0.btn_sub_list = arg_7_0:getUserDataTb_()
+	self.btn_list = self:getUserDataTb_()
+	self.sub_btn_height = {}
+	self.btn_sub_list = self:getUserDataTb_()
 
-	gohelper.CreateObjList(arg_7_0, arg_7_0._onBtnShow, arg_7_0.btn_data_list, arg_7_0._gocategorycontent, arg_7_0._gostorecategoryitem)
+	gohelper.CreateObjList(self, self._onBtnShow, self.btn_data_list, self._gocategorycontent, self._gostorecategoryitem)
 
-	if #arg_7_0.btn_data_list > 0 then
-		local var_7_4 = 1
-		local var_7_5 = 1
+	if #self.btn_data_list > 0 then
+		local defaultMainIndex = 1
+		local defaultSubIndex = 1
 
-		if var_7_3 then
-			var_7_4 = var_7_3.mainTitleId
-			var_7_5 = tabletool.indexOf(arg_7_0.btn_data_list[var_7_4], var_7_3)
+		if defaultShowConfig then
+			defaultMainIndex = defaultShowConfig.mainTitleId
+			defaultSubIndex = tabletool.indexOf(self.btn_data_list[defaultMainIndex], defaultShowConfig)
 
-			arg_7_0:_onBtnClick({
-				index = var_7_4,
-				subIndex = var_7_5
+			self:_onBtnClick({
+				index = defaultMainIndex,
+				subIndex = defaultSubIndex
 			})
 		else
-			recthelper.setHeight(arg_7_0.btn_list[1].transform, 130)
-			recthelper.setHeight(arg_7_0.btn_list[1].transform:Find("go_childcategory").transform, 0)
+			recthelper.setHeight(self.btn_list[1].transform, 130)
+			recthelper.setHeight(self.btn_list[1].transform:Find("go_childcategory").transform, 0)
 
-			arg_7_0.cur_select_main_index = var_7_4
-			arg_7_0.cur_select_sub_index = nil
+			self.cur_select_main_index = defaultMainIndex
+			self.cur_select_sub_index = nil
 
-			arg_7_0:_detectBtnState()
-			arg_7_0:_onSubBtnClick(var_7_5)
-			gohelper.setActive(arg_7_0.btn_list[1].transform:Find("go_line").gameObject, false)
-			arg_7_0:_btn_tween_open_end()
+			self:_detectBtnState()
+			self:_onSubBtnClick(defaultSubIndex)
+			gohelper.setActive(self.btn_list[1].transform:Find("go_line").gameObject, false)
+			self:_btn_tween_open_end()
 
-			arg_7_0.cur_select_main_index = nil
+			self.cur_select_main_index = nil
 		end
 	end
 
 	FightAudioMgr.instance:obscureBgm(true)
 end
 
-function var_0_0.checkIsNeedShowTechnique(arg_8_0, arg_8_1, arg_8_2)
-	if arg_8_1 then
-		local var_8_0 = true
-		local var_8_1 = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
-		local var_8_2 = true
-		local var_8_3 = false
+function FightTechniqueView:checkIsNeedShowTechnique(techniqueCo, isGMShowAll)
+	if techniqueCo then
+		local isShow = true
+		local episode_config = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
+		local canShowEpisodeType, notShowEpisodeType = true, false
 
-		if not string.nilorempty(arg_8_1.displayType) then
-			var_8_2 = arg_8_0:checkCurEpisodeTypeIsMatch(arg_8_1.displayType)
+		if not string.nilorempty(techniqueCo.displayType) then
+			canShowEpisodeType = self:checkCurEpisodeTypeIsMatch(techniqueCo.displayType)
 		end
 
-		if not string.nilorempty(arg_8_1.noDisplayType) then
-			var_8_3 = arg_8_0:checkCurEpisodeTypeIsMatch(arg_8_1.noDisplayType)
+		if not string.nilorempty(techniqueCo.noDisplayType) then
+			notShowEpisodeType = self:checkCurEpisodeTypeIsMatch(techniqueCo.noDisplayType)
 		end
 
-		local var_8_4 = var_8_2 and not var_8_3
-		local var_8_5 = arg_8_2 or string.nilorempty(arg_8_1.condition) or FightViewTechniqueModel.instance:isUnlock(arg_8_1.id)
+		local isMatchEpisodeCondition = canShowEpisodeType and not notShowEpisodeType
+		local isMatchOtherCondition = isGMShowAll or string.nilorempty(techniqueCo.condition) or FightViewTechniqueModel.instance:isUnlock(techniqueCo.id)
 
-		return var_8_4 and var_8_5
+		return isMatchEpisodeCondition and isMatchOtherCondition
 	end
 end
 
-function var_0_0.checkCurEpisodeTypeIsMatch(arg_9_0, arg_9_1)
-	local var_9_0 = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
-	local var_9_1 = var_9_0 and var_9_0.type
-	local var_9_2 = string.split(arg_9_1, "#")
+function FightTechniqueView:checkCurEpisodeTypeIsMatch(episodeTypeStr)
+	local episode_config = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
+	local curEpisodeType = episode_config and episode_config.type
+	local episodeTypes = string.split(episodeTypeStr, "#")
 
-	if var_9_2 then
-		for iter_9_0, iter_9_1 in ipairs(var_9_2) do
-			if tonumber(iter_9_1) == var_9_1 then
+	if episodeTypes then
+		for _, episodeType in ipairs(episodeTypes) do
+			if tonumber(episodeType) == curEpisodeType then
 				return true
 			end
 		end
@@ -167,187 +168,189 @@ function var_0_0.checkCurEpisodeTypeIsMatch(arg_9_0, arg_9_1)
 	return false
 end
 
-function var_0_0._onBtnShow(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	local var_10_0 = arg_10_1.transform
-	local var_10_1 = gohelper.getClickWithAudio(var_10_0:Find("clickArea").gameObject, AudioEnum.UI.UI_transverse_tabs_click)
-	local var_10_2 = var_10_0:Find("go_unselected/txt_itemcn1"):GetComponent(gohelper.Type_TextMesh)
-	local var_10_3 = var_10_0:Find("go_unselected/txt_itemen1"):GetComponent(gohelper.Type_TextMesh)
-	local var_10_4 = var_10_0:Find("go_selected/txt_itemcn2"):GetComponent(gohelper.Type_TextMesh)
-	local var_10_5 = var_10_0:Find("go_selected/txt_itemen2"):GetComponent(gohelper.Type_TextMesh)
+function FightTechniqueView:_onBtnShow(obj, data, index)
+	local transform = obj.transform
+	local clickArea = gohelper.getClickWithAudio(transform:Find("clickArea").gameObject, AudioEnum.UI.UI_transverse_tabs_click)
+	local txt_itemcn1 = transform:Find("go_unselected/txt_itemcn1"):GetComponent(gohelper.Type_TextMesh)
+	local txt_itemen1 = transform:Find("go_unselected/txt_itemen1"):GetComponent(gohelper.Type_TextMesh)
+	local txt_itemcn2 = transform:Find("go_selected/txt_itemcn2"):GetComponent(gohelper.Type_TextMesh)
+	local txt_itemen2 = transform:Find("go_selected/txt_itemen2"):GetComponent(gohelper.Type_TextMesh)
 
-	var_10_2.text = arg_10_2[1].mainTitle_cn
-	var_10_3.text = arg_10_2[1].mainTitle_en
-	var_10_4.text = arg_10_2[1].mainTitle_cn
-	var_10_5.text = arg_10_2[1].mainTitle_en
-	arg_10_0.sub_belong_index = arg_10_3
-	arg_10_0.sub_btn_pos_y = -60
+	txt_itemcn1.text = data[1].mainTitle_cn
+	txt_itemen1.text = data[1].mainTitle_en
+	txt_itemcn2.text = data[1].mainTitle_cn
+	txt_itemen2.text = data[1].mainTitle_en
+	self.sub_belong_index = index
+	self.sub_btn_pos_y = -60
 
-	gohelper.CreateObjList(arg_10_0, arg_10_0._onSubBtnShow, arg_10_2, var_10_0:Find("go_childcategory").gameObject, var_10_0:Find("go_childcategory/go_childitem").gameObject)
+	gohelper.CreateObjList(self, self._onSubBtnShow, data, transform:Find("go_childcategory").gameObject, transform:Find("go_childcategory/go_childitem").gameObject)
 
-	arg_10_0.sub_btn_height[arg_10_3] = math.abs(arg_10_0.sub_btn_pos_y + 70)
+	self.sub_btn_height[index] = math.abs(self.sub_btn_pos_y + 70)
 
-	table.insert(arg_10_0.btn_list, arg_10_1)
-	arg_10_0:removeClickCb(var_10_1)
-	arg_10_0:addClickCb(var_10_1, arg_10_0._onBtnClick, arg_10_0, {
-		index = arg_10_3
+	table.insert(self.btn_list, obj)
+	self:removeClickCb(clickArea)
+	self:addClickCb(clickArea, self._onBtnClick, self, {
+		index = index
 	})
 end
 
-function var_0_0._onBtnClick(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_1.index
-	local var_11_1 = arg_11_1.subIndex or 1
+function FightTechniqueView:_onBtnClick(param)
+	local index = param.index
+	local subIndex = param.subIndex or 1
 
-	if arg_11_0.cur_select_main_index == var_11_0 then
-		if arg_11_0._btn_ani then
-			ZProj.TweenHelper.KillById(arg_11_0._btn_ani)
+	if self.cur_select_main_index == index then
+		if self._btn_ani then
+			ZProj.TweenHelper.KillById(self._btn_ani)
 		end
 
-		arg_11_0._btn_ani = ZProj.TweenHelper.DOTweenFloat(1, 0, 0.3, arg_11_0._onBtnAniFrameCallback, arg_11_0._btn_tween_end, arg_11_0)
+		self._btn_ani = ZProj.TweenHelper.DOTweenFloat(1, 0, 0.3, self._onBtnAniFrameCallback, self._btn_tween_end, self)
 
 		return
 	end
 
-	if arg_11_0.cur_select_main_index then
-		recthelper.setHeight(arg_11_0.btn_list[arg_11_0.cur_select_main_index].transform, 130)
-		recthelper.setHeight(arg_11_0.btn_list[arg_11_0.cur_select_main_index].transform:Find("go_childcategory").transform, 0)
+	if self.cur_select_main_index then
+		recthelper.setHeight(self.btn_list[self.cur_select_main_index].transform, 130)
+		recthelper.setHeight(self.btn_list[self.cur_select_main_index].transform:Find("go_childcategory").transform, 0)
 	end
 
-	arg_11_0.cur_select_main_index = var_11_0
-	arg_11_0.cur_select_sub_index = nil
+	self.cur_select_main_index = index
+	self.cur_select_sub_index = nil
 
-	arg_11_0:_detectBtnState()
-	arg_11_0:_onSubBtnClick(var_11_1)
+	self:_detectBtnState()
+	self:_onSubBtnClick(subIndex)
 
-	if arg_11_0._btn_ani then
-		ZProj.TweenHelper.KillById(arg_11_0._btn_ani)
+	if self._btn_ani then
+		ZProj.TweenHelper.KillById(self._btn_ani)
 	end
 
-	gohelper.setActive(arg_11_0.btn_list[arg_11_0.cur_select_main_index].transform:Find("go_line").gameObject, true)
+	gohelper.setActive(self.btn_list[self.cur_select_main_index].transform:Find("go_line").gameObject, true)
 
-	arg_11_0._btn_ani = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.3, arg_11_0._onBtnAniFrameCallback, arg_11_0._btn_tween_open_end, arg_11_0)
+	self._btn_ani = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.3, self._onBtnAniFrameCallback, self._btn_tween_open_end, self)
 end
 
-function var_0_0._onBtnAniFrameCallback(arg_12_0, arg_12_1)
-	recthelper.setHeight(arg_12_0.btn_list[arg_12_0.cur_select_main_index].transform, 130 + arg_12_0.sub_btn_height[arg_12_0.cur_select_main_index] * arg_12_1)
-	recthelper.setHeight(arg_12_0.btn_list[arg_12_0.cur_select_main_index].transform:Find("go_childcategory").transform, arg_12_0.sub_btn_height[arg_12_0.cur_select_main_index] * arg_12_1)
+function FightTechniqueView:_onBtnAniFrameCallback(value)
+	recthelper.setHeight(self.btn_list[self.cur_select_main_index].transform, 130 + self.sub_btn_height[self.cur_select_main_index] * value)
+	recthelper.setHeight(self.btn_list[self.cur_select_main_index].transform:Find("go_childcategory").transform, self.sub_btn_height[self.cur_select_main_index] * value)
 end
 
-function var_0_0.scrollItemIsVisible(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0 = arg_13_1.transform:InverseTransformPoint(arg_13_2.transform.position).y + recthelper.getHeight(arg_13_2.transform) / 2
+function FightTechniqueView:scrollItemIsVisible(scroll_view, target_obj)
+	local target_pos_y = scroll_view.transform:InverseTransformPoint(target_obj.transform.position).y + recthelper.getHeight(target_obj.transform) / 2
 
-	if var_13_0 >= 65 or var_13_0 <= -785 then
-		recthelper.setAnchorY(arg_13_0._gocategorycontent.transform, 130 * (arg_13_0.cur_select_main_index - 1) - 60)
+	if target_pos_y >= 65 or target_pos_y <= -785 then
+		recthelper.setAnchorY(self._gocategorycontent.transform, 130 * (self.cur_select_main_index - 1) - 60)
 	end
 end
 
-function var_0_0._btn_tween_open_end(arg_14_0)
-	arg_14_0:scrollItemIsVisible(gohelper.findChild(arg_14_0.viewGO, "left/scroll_category"), arg_14_0.btn_list[arg_14_0.cur_select_main_index])
+function FightTechniqueView:_btn_tween_open_end()
+	self:scrollItemIsVisible(gohelper.findChild(self.viewGO, "left/scroll_category"), self.btn_list[self.cur_select_main_index])
 end
 
-function var_0_0._btn_tween_end(arg_15_0)
-	gohelper.setActive(arg_15_0.btn_list[arg_15_0.cur_select_main_index].transform:Find("go_line").gameObject, false)
+function FightTechniqueView:_btn_tween_end()
+	gohelper.setActive(self.btn_list[self.cur_select_main_index].transform:Find("go_line").gameObject, false)
 
-	arg_15_0.cur_select_main_index = nil
+	self.cur_select_main_index = nil
 end
 
-function var_0_0._detectBtnState(arg_16_0)
-	if arg_16_0.btn_list then
-		for iter_16_0, iter_16_1 in ipairs(arg_16_0.btn_list) do
-			local var_16_0 = iter_16_1 == arg_16_0.btn_list[arg_16_0.cur_select_main_index]
-			local var_16_1 = iter_16_1.transform
+function FightTechniqueView:_detectBtnState()
+	if self.btn_list then
+		for i, v in ipairs(self.btn_list) do
+			local select = v == self.btn_list[self.cur_select_main_index]
+			local transform = v.transform
 
-			gohelper.setActive(var_16_1:Find("go_line").gameObject, var_16_0)
-			gohelper.setActive(var_16_1:Find("go_unselected").gameObject, not var_16_0)
-			gohelper.setActive(var_16_1:Find("go_selected").gameObject, var_16_0)
-			gohelper.setActive(var_16_1:Find("go_childcategory").gameObject, var_16_0)
+			gohelper.setActive(transform:Find("go_line").gameObject, select)
+			gohelper.setActive(transform:Find("go_unselected").gameObject, not select)
+			gohelper.setActive(transform:Find("go_selected").gameObject, select)
+			gohelper.setActive(transform:Find("go_childcategory").gameObject, select)
 		end
 	end
 end
 
-function var_0_0._onSubBtnShow(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	local var_17_0 = arg_17_1.transform
+function FightTechniqueView:_onSubBtnShow(obj, data, index)
+	local transform = obj.transform
 
-	recthelper.setAnchorY(var_17_0, arg_17_0.sub_btn_pos_y)
+	recthelper.setAnchorY(transform, self.sub_btn_pos_y)
 
-	arg_17_0.sub_btn_pos_y = arg_17_0.sub_btn_pos_y - 110
+	self.sub_btn_pos_y = self.sub_btn_pos_y - 110
 
-	local var_17_1 = gohelper.getClickWithAudio(var_17_0:Find("clickArea").gameObject, AudioEnum.UI.UI_transverse_tabs_click)
-	local var_17_2 = var_17_0:Find("go_unselected/txt_itemcn1"):GetComponent(gohelper.Type_TextMesh)
-	local var_17_3 = var_17_0:Find("go_unselected/txt_itemen1"):GetComponent(gohelper.Type_TextMesh)
-	local var_17_4 = var_17_0:Find("go_selected/txt_itemcn2"):GetComponent(gohelper.Type_TextMesh)
-	local var_17_5 = var_17_0:Find("go_selected/txt_itemen2"):GetComponent(gohelper.Type_TextMesh)
+	local clickArea = gohelper.getClickWithAudio(transform:Find("clickArea").gameObject, AudioEnum.UI.UI_transverse_tabs_click)
+	local txt_itemcn1 = transform:Find("go_unselected/txt_itemcn1"):GetComponent(gohelper.Type_TextMesh)
+	local txt_itemen1 = transform:Find("go_unselected/txt_itemen1"):GetComponent(gohelper.Type_TextMesh)
+	local txt_itemcn2 = transform:Find("go_selected/txt_itemcn2"):GetComponent(gohelper.Type_TextMesh)
+	local txt_itemen2 = transform:Find("go_selected/txt_itemen2"):GetComponent(gohelper.Type_TextMesh)
 
-	var_17_2.text = arg_17_2.title_cn
-	var_17_3.text = arg_17_2.title_en
-	var_17_4.text = arg_17_2.title_cn
-	var_17_5.text = arg_17_2.title_en
+	txt_itemcn1.text = data.title_cn
+	txt_itemen1.text = data.title_en
+	txt_itemcn2.text = data.title_cn
+	txt_itemen2.text = data.title_en
 
-	if not arg_17_0.btn_sub_list[arg_17_0.sub_belong_index] then
-		arg_17_0.btn_sub_list[arg_17_0.sub_belong_index] = {}
+	if not self.btn_sub_list[self.sub_belong_index] then
+		self.btn_sub_list[self.sub_belong_index] = {}
 	end
 
-	table.insert(arg_17_0.btn_sub_list[arg_17_0.sub_belong_index], arg_17_1)
-	arg_17_0:removeClickCb(var_17_1)
-	arg_17_0:addClickCb(var_17_1, arg_17_0._onSubBtnClick, arg_17_0, arg_17_3)
+	table.insert(self.btn_sub_list[self.sub_belong_index], obj)
+	self:removeClickCb(clickArea)
+	self:addClickCb(clickArea, self._onSubBtnClick, self, index)
 end
 
-function var_0_0._onSubBtnClick(arg_18_0, arg_18_1)
-	if arg_18_0.cur_select_sub_index == arg_18_1 then
+function FightTechniqueView:_onSubBtnClick(index)
+	if self.cur_select_sub_index == index then
 		return
 	end
 
-	arg_18_0.cur_select_sub_index = arg_18_1
-	arg_18_0.cur_select_data = arg_18_0.btn_data_list[arg_18_0.cur_select_main_index][arg_18_1]
+	self.cur_select_sub_index = index
+	self.cur_select_data = self.btn_data_list[self.cur_select_main_index][index]
 
-	arg_18_0:_detectSubBtnState()
-	arg_18_0:_refreshContentData()
+	self:_detectSubBtnState()
+	self:_refreshContentData()
 end
 
-function var_0_0._detectSubBtnState(arg_19_0)
-	if arg_19_0.btn_sub_list then
-		for iter_19_0, iter_19_1 in ipairs(arg_19_0.btn_sub_list[arg_19_0.cur_select_main_index]) do
-			local var_19_0 = iter_19_1 == arg_19_0.btn_sub_list[arg_19_0.cur_select_main_index][arg_19_0.cur_select_sub_index]
-			local var_19_1 = iter_19_1.transform
+function FightTechniqueView:_detectSubBtnState()
+	if self.btn_sub_list then
+		for i, v in ipairs(self.btn_sub_list[self.cur_select_main_index]) do
+			local select = v == self.btn_sub_list[self.cur_select_main_index][self.cur_select_sub_index]
+			local transform = v.transform
 
-			gohelper.setActive(var_19_1:Find("go_unselected").gameObject, not var_19_0)
-			gohelper.setActive(var_19_1:Find("go_selected").gameObject, var_19_0)
+			gohelper.setActive(transform:Find("go_unselected").gameObject, not select)
+			gohelper.setActive(transform:Find("go_selected").gameObject, select)
 		end
 	end
 end
 
-function var_0_0.sortTechniqueConfig(arg_20_0, arg_20_1)
-	return arg_20_0[1].mainTitleId < arg_20_1[1].mainTitleId
+function FightTechniqueView.sortTechniqueConfig(item1, item2)
+	return item1[1].mainTitleId < item2[1].mainTitleId
 end
 
-function var_0_0.sortSubTechniqueConfig(arg_21_0, arg_21_1)
-	return arg_21_0.subTitleId < arg_21_1.subTitleId
+function FightTechniqueView.sortSubTechniqueConfig(item1, item2)
+	return item1.subTitleId < item2.subTitleId
 end
 
-function var_0_0._refreshContentData(arg_22_0)
-	if not (arg_22_0.viewParam and arg_22_0.viewParam.isGMShowAll or false) then
-		FightViewTechniqueModel.instance:readTechnique(arg_22_0.cur_select_data.id)
+function FightTechniqueView:_refreshContentData()
+	local isGMShowAll = self.viewParam and self.viewParam.isGMShowAll or false
+
+	if not isGMShowAll then
+		FightViewTechniqueModel.instance:readTechnique(self.cur_select_data.id)
 	end
 
-	arg_22_0._simageicon:LoadImage(ResUrl.getTechniqueLangIcon(arg_22_0.cur_select_data.picture1))
+	self._simageicon:LoadImage(ResUrl.getTechniqueLangIcon(self.cur_select_data.picture1))
 
-	local var_22_0 = string.split(arg_22_0.cur_select_data.content1, "|")
+	local string_list = string.split(self.cur_select_data.content1, "|")
 
-	for iter_22_0, iter_22_1 in pairs(lua_fight_technique.configDict) do
-		local var_22_1 = gohelper.findChild(arg_22_0.viewGO, "#go_center/content/" .. iter_22_1.id)
+	for k, v in pairs(lua_fight_technique.configDict) do
+		local obj = gohelper.findChild(self.viewGO, "#go_center/content/" .. v.id)
 
-		if var_22_1 then
-			gohelper.setActive(var_22_1, iter_22_1.id == arg_22_0.cur_select_data.id)
+		if obj then
+			gohelper.setActive(obj, v.id == self.cur_select_data.id)
 
-			if arg_22_0.cur_select_data.id == iter_22_1.id then
-				for iter_22_2, iter_22_3 in ipairs(var_22_0) do
-					iter_22_3 = string.gsub(iter_22_3, "%{", string.format("<color=%s>", "#ff906a"))
-					iter_22_3 = string.gsub(iter_22_3, "%}", "</color>")
+			if self.cur_select_data.id == v.id then
+				for i, str in ipairs(string_list) do
+					str = string.gsub(str, "%{", string.format("<color=%s>", "#ff906a"))
+					str = string.gsub(str, "%}", "</color>")
 
-					local var_22_2 = var_22_1:GetComponentsInChildren(gohelper.Type_TextMesh)
+					local textTab = obj:GetComponentsInChildren(gohelper.Type_TextMesh)
 
-					for iter_22_4 = 0, var_22_2.Length - 1 do
-						if var_22_2[iter_22_4].gameObject.name == "txt_" .. iter_22_2 then
-							var_22_2[iter_22_4].text = iter_22_3
+					for index = 0, textTab.Length - 1 do
+						if textTab[index].gameObject.name == "txt_" .. i then
+							textTab[index].text = str
 						end
 					end
 				end
@@ -356,17 +359,17 @@ function var_0_0._refreshContentData(arg_22_0)
 	end
 end
 
-function var_0_0.onClose(arg_23_0)
-	if arg_23_0._btn_ani then
-		ZProj.TweenHelper.KillById(arg_23_0._btn_ani)
+function FightTechniqueView:onClose()
+	if self._btn_ani then
+		ZProj.TweenHelper.KillById(self._btn_ani)
 	end
 
 	FightAudioMgr.instance:obscureBgm(false)
 end
 
-function var_0_0.onDestroyView(arg_24_0)
-	arg_24_0._simageicon:UnLoadImage()
-	arg_24_0._simagebg:UnLoadImage()
+function FightTechniqueView:onDestroyView()
+	self._simageicon:UnLoadImage()
+	self._simagebg:UnLoadImage()
 end
 
-return var_0_0
+return FightTechniqueView

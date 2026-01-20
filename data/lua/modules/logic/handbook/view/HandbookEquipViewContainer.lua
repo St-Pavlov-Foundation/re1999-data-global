@@ -1,65 +1,67 @@
-﻿module("modules.logic.handbook.view.HandbookEquipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/handbook/view/HandbookEquipViewContainer.lua
 
-local var_0_0 = class("HandbookEquipViewContainer", BaseViewContainer)
+module("modules.logic.handbook.view.HandbookEquipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local HandbookEquipViewContainer = class("HandbookEquipViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, HandbookEquipView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
+function HandbookEquipViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, HandbookEquipView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_btns"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function HandbookEquipViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-function var_0_0.onContainerInit(arg_3_0)
-	arg_3_0:checkConfigValid()
+function HandbookEquipViewContainer:onContainerInit()
+	self:checkConfigValid()
 end
 
-function var_0_0.onContainerOpenFinish(arg_4_0)
-	arg_4_0.navigateView:resetCloseBtnAudioId(AudioEnum.UI.Play_UI_CloseHouse)
-	arg_4_0.navigateView:resetHomeBtnAudioId(AudioEnum.UI.UI_checkpoint_story_close)
+function HandbookEquipViewContainer:onContainerOpenFinish()
+	self.navigateView:resetCloseBtnAudioId(AudioEnum.UI.Play_UI_CloseHouse)
+	self.navigateView:resetHomeBtnAudioId(AudioEnum.UI.UI_checkpoint_story_close)
 end
 
-function var_0_0.checkConfigValid(arg_5_0)
+function HandbookEquipViewContainer:checkConfigValid()
 	if not SLFramework.FrameworkSettings.IsEditor then
 		return
 	end
 
-	local var_5_0 = {}
+	local handbookEquipIdDict = {}
 
-	for iter_5_0, iter_5_1 in ipairs(lua_handbook_equip.configList) do
-		var_5_0[iter_5_1.equipId] = true
+	for _, handbookEquipCo in ipairs(lua_handbook_equip.configList) do
+		handbookEquipIdDict[handbookEquipCo.equipId] = true
 	end
 
-	local var_5_1 = {}
+	local equipDict = {}
 
-	for iter_5_2, iter_5_3 in ipairs(lua_equip.configList) do
-		var_5_1[iter_5_3.id] = true
+	for _, equipCo in ipairs(lua_equip.configList) do
+		equipDict[equipCo.id] = true
 	end
 
-	for iter_5_4, iter_5_5 in pairs(var_5_1) do
-		if not var_5_0[iter_5_4] then
-			local var_5_2 = lua_equip.configDict[iter_5_4]
+	for equipId, _ in pairs(equipDict) do
+		if not handbookEquipIdDict[equipId] then
+			local equipCo = lua_equip.configDict[equipId]
 
-			if string.nilorempty(var_5_2.canShowHandbook) then
-				logError("图鉴心相表未配置装备id : " .. iter_5_4)
+			if string.nilorempty(equipCo.canShowHandbook) then
+				logError("图鉴心相表未配置装备id : " .. equipId)
 			end
 		end
 	end
 end
 
-return var_0_0
+return HandbookEquipViewContainer

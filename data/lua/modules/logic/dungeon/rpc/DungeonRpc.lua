@@ -1,219 +1,245 @@
-﻿module("modules.logic.dungeon.rpc.DungeonRpc", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/rpc/DungeonRpc.lua
 
-local var_0_0 = class("DungeonRpc", BaseRpc)
+module("modules.logic.dungeon.rpc.DungeonRpc", package.seeall)
 
-function var_0_0.sendGetDungeonRequest(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = DungeonModule_pb.GetDungeonRequest()
+local DungeonRpc = class("DungeonRpc", BaseRpc)
 
-	return arg_1_0:sendMsg(var_1_0, arg_1_1, arg_1_2)
+function DungeonRpc:sendGetDungeonRequest(callback, callbackObj)
+	local req = DungeonModule_pb.GetDungeonRequest()
+
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveGetDungeonReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 ~= 0 then
+function DungeonRpc:onReceiveGetDungeonReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_2_0 = arg_2_2.lastHeroGroup
-	local var_2_1 = arg_2_2.mapIds
-	local var_2_2 = arg_2_2.elements
-	local var_2_3 = arg_2_2.rewardPointInfo
-	local var_2_4 = arg_2_2.rewardPoint
-	local var_2_5 = arg_2_2.equipSpChapters
-	local var_2_6 = arg_2_2.chapterTypeNums
-	local var_2_7 = arg_2_2.finishElements
+	local lastHeroGroup = msg.lastHeroGroup
+	local mapIds = msg.mapIds
+	local elements = msg.elements
+	local rewardPointInfo = msg.rewardPointInfo
+	local rewardPoint = msg.rewardPoint
+	local equipSpChapters = msg.equipSpChapters
+	local chapterTypeNums = msg.chapterTypeNums
+	local finishElements = msg.finishElements
 
-	DungeonMapModel.instance:addFinishedElements(var_2_7)
-	DungeonMapModel.instance:updateMapIds(var_2_1)
-	DungeonMapModel.instance:addElements(var_2_2)
-	DungeonMapModel.instance:initRewardPointInfo(var_2_3)
-	DungeonMapModel.instance:initEquipSpChapters(var_2_5)
-	DungeonMapModel.instance:initMapPuzzleStatus(arg_2_2.finishPuzzles)
-	DungeonModel.instance:setChapterTypeNums(var_2_6)
+	DungeonMapModel.instance:addFinishedElements(finishElements)
+	DungeonMapModel.instance:updateMapIds(mapIds)
+	DungeonMapModel.instance:addElements(elements)
+	DungeonMapModel.instance:initRewardPointInfo(rewardPointInfo)
+	DungeonMapModel.instance:initEquipSpChapters(equipSpChapters)
+	DungeonMapModel.instance:initMapPuzzleStatus(msg.finishPuzzles)
+	DungeonModel.instance:setChapterTypeNums(chapterTypeNums)
 
-	DungeonModel.instance.dungeonInfoCount = arg_2_2.dungeonInfoSize
+	DungeonModel.instance.dungeonInfoCount = msg.dungeonInfoSize
 
-	if arg_2_2.dungeonInfoSize <= 0 then
+	if msg.dungeonInfoSize <= 0 then
 		DungeonModel.instance:initDungeonInfoList({})
 		DungeonController.instance:dispatchEvent(DungeonEvent.OnUpdateDungeonInfo)
 	end
 end
 
-function var_0_0.onReceiveDungeonInfosPush(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = arg_3_2.dungeonInfos
+function DungeonRpc:onReceiveDungeonInfosPush(resultCode, msg)
+	local dungeonInfoList = msg.dungeonInfos
 
-	if #var_3_0 <= 0 then
+	if #dungeonInfoList <= 0 then
 		return
 	end
 
-	if DungeonModel.instance:initDungeonInfoList(var_3_0) then
+	local isAll = DungeonModel.instance:initDungeonInfoList(dungeonInfoList)
+
+	if isAll then
 		DungeonController.instance:dispatchEvent(DungeonEvent.OnUpdateDungeonInfo)
 	end
 end
 
-function var_0_0.onReceiveDungeonUpdatePush(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 ~= 0 then
+function DungeonRpc:onReceiveDungeonUpdatePush(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_4_0 = arg_4_2.dungeonInfo
-	local var_4_1 = arg_4_2.chapterTypeNums
+	local dungeonInfo = msg.dungeonInfo
+	local chapterTypeNums = msg.chapterTypeNums
 
-	DungeonController.instance:checkFirstPass(var_4_0)
-	DungeonModel.instance:setChapterTypeNums(var_4_1)
+	DungeonController.instance:checkFirstPass(dungeonInfo)
+	DungeonModel.instance:setChapterTypeNums(chapterTypeNums)
 
 	if DungeonModel.instance.initAllDungeonInfo then
 		DungeonController.instance:onStartLevelOrStoryChange()
 	end
 
-	DungeonModel.instance:updateDungeonInfo(var_4_0)
+	DungeonModel.instance:updateDungeonInfo(dungeonInfo)
 	DungeonController.instance:onEndLevelOrStoryChange()
-	DungeonController.instance:dispatchEvent(DungeonEvent.OnUpdateDungeonInfo, var_4_0)
+	DungeonController.instance:dispatchEvent(DungeonEvent.OnUpdateDungeonInfo, dungeonInfo)
 end
 
-function var_0_0.packStartDungeonRequest(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4, arg_5_5, arg_5_6, arg_5_7, arg_5_8)
-	arg_5_1.chapterId = arg_5_2
-	arg_5_1.episodeId = arg_5_3
+function DungeonRpc:packStartDungeonRequest(req, chapterId, episodeId, fightParam, multiplication, endAdventure, useRecord, isRestart)
+	req.chapterId = chapterId
+	req.episodeId = episodeId
 
-	if arg_5_8 then
-		arg_5_1.isRestart = arg_5_8
+	if isRestart then
+		req.isRestart = isRestart
 	end
 
-	if arg_5_4 then
+	if fightParam then
 		if HeroGroupBalanceHelper.getIsBalanceMode() then
-			arg_5_1.isBalance = true
+			req.isBalance = true
 		end
 
-		arg_5_4:setReqFightGroup(arg_5_1)
-		FightModel.instance:recordFightGroup(arg_5_1.fightGroup)
+		fightParam:setReqFightGroup(req)
+		FightModel.instance:recordFightGroup(req.fightGroup)
 
-		local var_5_0 = arg_5_4:getCurEpisodeConfig()
+		local episode_config = fightParam:getCurEpisodeConfig()
 
-		if var_5_0 and not Activity104Model.instance:isSeasonEpisodeType(var_5_0.type) and not Season123Controller.canUse123EquipEpisodeType(var_5_0.type) then
-			for iter_5_0 = #arg_5_1.fightGroup.activity104Equips, 1, -1 do
-				table.remove(arg_5_1.fightGroup.activity104Equips, iter_5_0)
+		if episode_config and not Activity104Model.instance:isSeasonEpisodeType(episode_config.type) and not Season123Controller.canUse123EquipEpisodeType(episode_config.type) then
+			for i = #req.fightGroup.activity104Equips, 1, -1 do
+				table.remove(req.fightGroup.activity104Equips, i)
 			end
 		end
 
-		if var_5_0 and var_5_0.type == DungeonEnum.EpisodeType.Rouge then
-			arg_5_1.params = tostring(RougeConfig1.instance:season())
-		elseif var_5_0 and var_5_0.type == DungeonEnum.EpisodeType.WeekWalk_2 then
-			arg_5_1.params = WeekWalk_2Model.instance:getFightParam()
-		elseif var_5_0 and var_5_0.type == DungeonEnum.EpisodeType.Act183 then
-			arg_5_1.params = Act183Helper.generateStartDungeonParams(var_5_0.id)
+		if episode_config and episode_config.type == DungeonEnum.EpisodeType.Rouge then
+			req.params = tostring(RougeConfig1.instance:season())
+		elseif episode_config and episode_config.type == DungeonEnum.EpisodeType.WeekWalk_2 then
+			req.params = WeekWalk_2Model.instance:getFightParam()
+		elseif episode_config and episode_config.type == DungeonEnum.EpisodeType.Act183 then
+			req.params = Act183Helper.generateStartDungeonParams(episode_config.id)
 		end
 
-		DungeonController.instance:dispatchEvent(DungeonEvent.OnStartDungeonExtraParams, arg_5_1, var_5_0)
+		DungeonController.instance:dispatchEvent(DungeonEvent.OnStartDungeonExtraParams, req, episode_config)
 	end
 
-	arg_5_1.multiplication = arg_5_5 or 1
+	req.multiplication = multiplication or 1
 
-	if arg_5_7 == true then
-		arg_5_1.useRecord = arg_5_7
+	if useRecord == true then
+		req.useRecord = useRecord
 	end
 
-	VersionActivityDungeonBaseController.instance:resetIsFirstPassEpisode(arg_5_3)
+	VersionActivityDungeonBaseController.instance:resetIsFirstPassEpisode(episodeId)
 end
 
-function var_0_0.sendStartDungeonRequest(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5, arg_6_6, arg_6_7)
-	if not arg_6_5 then
-		DungeonModel.instance:SetSendChapterEpisodeId(arg_6_1, arg_6_2)
+function DungeonRpc:sendStartDungeonRequest(chapterId, episodeId, fightParam, multiplication, endAdventure, useRecord, isRestart)
+	if not endAdventure then
+		DungeonModel.instance:SetSendChapterEpisodeId(chapterId, episodeId)
 	end
 
-	local var_6_0 = DungeonModule_pb.StartDungeonRequest()
+	local req = DungeonModule_pb.StartDungeonRequest()
 
-	arg_6_0:packStartDungeonRequest(var_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5, arg_6_6, arg_6_7)
-	logNormal(string.format("aaaaaaaaaaaaaaaaaaa StartDungeonRequest chapter_%d episode_%d %s", arg_6_1 or "nil", arg_6_2 or "nil", debug.traceback("", 2)))
-	arg_6_0:sendMsg(var_6_0)
+	self:packStartDungeonRequest(req, chapterId, episodeId, fightParam, multiplication, endAdventure, useRecord, isRestart)
+	logNormal(string.format("aaaaaaaaaaaaaaaaaaa StartDungeonRequest chapter_%d episode_%d %s", chapterId or "nil", episodeId or "nil", debug.traceback("", 2)))
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveStartDungeonReply(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
+function DungeonRpc:onReceiveStartDungeonReply(resultCode, msg)
+	local co = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
 
-	if var_7_0 and DungeonModel.isBattleEpisode(var_7_0) then
-		DungeonFightController.instance:onReceiveStartDungeonReply(arg_7_1, arg_7_2)
+	if co and DungeonModel.isBattleEpisode(co) then
+		DungeonFightController.instance:onReceiveStartDungeonReply(resultCode, msg)
 	end
 end
 
-function var_0_0.sendEndDungeonRequest(arg_8_0, arg_8_1)
-	local var_8_0 = DungeonModule_pb.EndDungeonRequest()
+function DungeonRpc:sendEndDungeonRequest(isAbort)
+	local req = DungeonModule_pb.EndDungeonRequest()
 
-	var_8_0.isAbort = arg_8_1
+	req.isAbort = isAbort
 
-	arg_8_0:sendMsg(var_8_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveEndDungeonReply(arg_9_0, arg_9_1, arg_9_2)
-	DungeonFightController.instance:onReceiveEndDungeonReply(arg_9_1, arg_9_2)
-	DungeonFightController.instance:dispatchEvent(DungeonEvent.OnEndDungeonReply, arg_9_1)
+function DungeonRpc:onReceiveEndDungeonReply(resultCode, msg)
+	DungeonFightController.instance:onReceiveEndDungeonReply(resultCode, msg)
+	DungeonFightController.instance:dispatchEvent(DungeonEvent.OnEndDungeonReply, resultCode)
 end
 
-function var_0_0.onReceiveEndDungeonPush(arg_10_0, arg_10_1, arg_10_2)
-	if arg_10_1 ~= 0 then
+function DungeonRpc:onReceiveEndDungeonPush(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	FightResultModel.instance:onEndDungeonPush(arg_10_2)
-	DungeonController.instance:onReceiveEndDungeonReply(arg_10_1, arg_10_2)
-	DungeonController.instance:dispatchEvent(DungeonEvent.OnEndDungeonPush, arg_10_2)
+	FightResultModel.instance:onEndDungeonPush(msg)
+	DungeonController.instance:onReceiveEndDungeonReply(resultCode, msg)
+	DungeonController.instance:dispatchEvent(DungeonEvent.OnEndDungeonPush, msg)
 end
 
-function var_0_0.sendMapElementRequest(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4)
-	local var_11_0 = DungeonModule_pb.MapElementRequest()
+function DungeonRpc:sendMapElementRequest(elementId, dialogIds, cb, cbObj)
+	local req = DungeonModule_pb.MapElementRequest()
 
-	var_11_0.elementId = arg_11_1
+	req.elementId = elementId
 
-	if arg_11_2 then
-		for iter_11_0, iter_11_1 in ipairs(arg_11_2) do
-			table.insert(var_11_0.dialogIds, tonumber(iter_11_1))
+	if dialogIds then
+		for _, dialogId in ipairs(dialogIds) do
+			table.insert(req.dialogIds, tonumber(dialogId))
 		end
 	end
 
-	arg_11_0:sendMsg(var_11_0, arg_11_3, arg_11_4)
+	self:sendMsg(req, cb, cbObj)
 end
 
-function var_0_0.onReceiveMapElementReply(arg_12_0, arg_12_1, arg_12_2)
-	if arg_12_1 ~= 0 then
+function DungeonRpc:sendMapElementWithRecordRequest(elementId, dialogIds, record, cb, cbObj)
+	local req = DungeonModule_pb.MapElementRequest()
+
+	req.elementId = elementId
+
+	if record then
+		req.record = record
+	end
+
+	if dialogIds then
+		for _, dialogId in ipairs(dialogIds) do
+			table.insert(req.dialogIds, tonumber(dialogId))
+		end
+	end
+
+	self:sendMsg(req, cb, cbObj)
+end
+
+function DungeonRpc:onReceiveMapElementReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_12_0 = arg_12_2.elementId
+	local elementId = msg.elementId
 
 	DungeonModel.instance:startCheckUnlockChapter()
-	DungeonMapModel.instance:addFinishedElement(var_12_0)
-	DungeonMapModel.instance:removeElement(var_12_0)
-	DungeonController.instance:dispatchEvent(DungeonEvent.OnRemoveElement, var_12_0)
+	DungeonMapModel.instance:addFinishedElement(elementId)
+	DungeonMapModel.instance:removeElement(elementId)
+	DungeonController.instance:dispatchEvent(DungeonEvent.OnRemoveElement, elementId)
 
-	local var_12_1 = lua_chapter_map_element.configDict[var_12_0]
+	local record = msg.record
 
-	DungeonController.instance:dispatchEvent(DungeonEvent.OnUpdateMapElementState, var_12_1.mapId)
+	DungeonMapModel.instance:updateRecordInfo(elementId, record)
+
+	local eleConfig = lua_chapter_map_element.configDict[elementId]
+
+	DungeonController.instance:dispatchEvent(DungeonEvent.OnUpdateMapElementState, eleConfig.mapId)
 end
 
-function var_0_0.onReceiveChapterMapUpdatePush(arg_13_0, arg_13_1, arg_13_2)
-	if arg_13_1 ~= 0 then
+function DungeonRpc:onReceiveChapterMapUpdatePush(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_13_0 = arg_13_2.mapIds
+	local mapIds = msg.mapIds
 
-	DungeonMapModel.instance:updateMapIds(var_13_0)
+	DungeonMapModel.instance:updateMapIds(mapIds)
 	DungeonController.instance:dispatchEvent(DungeonEvent.OnChapterMapUpdate)
 end
 
-function var_0_0.onReceiveChapterMapElementUpdatePush(arg_14_0, arg_14_1, arg_14_2)
-	if arg_14_1 ~= 0 then
+function DungeonRpc:onReceiveChapterMapElementUpdatePush(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_14_0 = arg_14_2.elements
+	local elements = msg.elements
 
-	DungeonMapModel.instance:setNewElements(var_14_0)
-	DungeonMapModel.instance:addElements(var_14_0)
-	DungeonController.instance:dispatchEvent(DungeonEvent.OnAddElements, var_14_0)
+	DungeonMapModel.instance:setNewElements(elements)
+	DungeonMapModel.instance:addElements(elements)
+	DungeonController.instance:dispatchEvent(DungeonEvent.OnAddElements, elements)
 
-	for iter_14_0, iter_14_1 in ipairs(var_14_0) do
-		local var_14_1 = lua_chapter_map_element.configDict[iter_14_1]
+	for i, elementId in ipairs(elements) do
+		local eleConfig = lua_chapter_map_element.configDict[elementId]
 
-		DungeonController.instance:dispatchEvent(DungeonEvent.OnUpdateMapElementState, var_14_1.mapId)
+		DungeonController.instance:dispatchEvent(DungeonEvent.OnUpdateMapElementState, eleConfig.mapId)
 	end
 
 	if DungeonMapModel.instance.playAfterStory then
@@ -223,59 +249,59 @@ function var_0_0.onReceiveChapterMapElementUpdatePush(arg_14_0, arg_14_1, arg_14
 	end
 end
 
-function var_0_0.sendGetPointRewardRequest(arg_15_0, arg_15_1)
-	local var_15_0 = DungeonModule_pb.GetPointRewardRequest()
+function DungeonRpc:sendGetPointRewardRequest(idList)
+	local req = DungeonModule_pb.GetPointRewardRequest()
 
-	for iter_15_0, iter_15_1 in ipairs(arg_15_1) do
-		table.insert(var_15_0.id, iter_15_1)
+	for i, v in ipairs(idList) do
+		table.insert(req.id, v)
 	end
 
-	arg_15_0:sendMsg(var_15_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveGetPointRewardReply(arg_16_0, arg_16_1, arg_16_2)
-	if arg_16_1 ~= 0 then
+function DungeonRpc:onReceiveGetPointRewardReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_16_0 = arg_16_2.id
+	local idList = msg.id
 
-	DungeonMapModel.instance:addPointRewardIds(var_16_0)
+	DungeonMapModel.instance:addPointRewardIds(idList)
 	DungeonController.instance:dispatchEvent(DungeonEvent.OnGetPointReward)
 end
 
-function var_0_0.sendGetEpisodeHeroRecommendRequest(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	local var_17_0 = DungeonModule_pb.GetEpisodeHeroRecommendRequest()
+function DungeonRpc:sendGetEpisodeHeroRecommendRequest(episodeId, callback, callbackObj)
+	local req = DungeonModule_pb.GetEpisodeHeroRecommendRequest()
 
-	var_17_0.episodeId = arg_17_1
+	req.episodeId = episodeId
 
-	arg_17_0:sendMsg(var_17_0, arg_17_2, arg_17_3)
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveGetEpisodeHeroRecommendReply(arg_18_0, arg_18_1, arg_18_2)
-	if arg_18_1 ~= 0 then
+function DungeonRpc:onReceiveGetEpisodeHeroRecommendReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 end
 
-function var_0_0.onReceiveEquipSpDungeonUpdatePush(arg_19_0, arg_19_1, arg_19_2)
-	if arg_19_1 ~= 0 then
+function DungeonRpc:onReceiveEquipSpDungeonUpdatePush(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_19_0 = arg_19_2.isDelete
-	local var_19_1 = arg_19_2.chapterId
+	local isDelete = msg.isDelete
+	local chapterId = msg.chapterId
 
-	DungeonMapModel.instance:updateEquipSpChapter(var_19_1, var_19_0)
+	DungeonMapModel.instance:updateEquipSpChapter(chapterId, isDelete)
 
-	if not var_19_0 then
+	if not isDelete then
 		PopupController.instance:addPopupView(PopupEnum.PriorityType.SpecialEquipOpenTip, ViewName.MessageBoxView, {
 			messageBoxId = MessageBoxIdDefine.SpecialEquipOpenTip,
 			msgBoxType = MsgBoxEnum.BoxType.Yes_No,
 			yesCallback = function()
-				local var_20_0 = DungeonConfig.instance:getChapterEpisodeCOList(var_19_1)
+				local list = DungeonConfig.instance:getChapterEpisodeCOList(chapterId)
 
-				DungeonModel.instance.curSendEpisodeId = var_20_0[1].id
+				DungeonModel.instance.curSendEpisodeId = list[1].id
 
 				FightController.instance:dispatchEvent(FightEvent.OnResultViewClose)
 				ViewMgr.instance:closeView(ViewName.FightSuccView)
@@ -284,187 +310,207 @@ function var_0_0.onReceiveEquipSpDungeonUpdatePush(arg_19_0, arg_19_1, arg_19_2)
 	end
 end
 
-function var_0_0.onReceiveRewardPointUpdatePush(arg_21_0, arg_21_1, arg_21_2)
-	if arg_21_1 ~= 0 then
+function DungeonRpc:onReceiveRewardPointUpdatePush(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_21_0 = arg_21_2.chapterId
-	local var_21_1 = arg_21_2.value
+	local chapterId = msg.chapterId
+	local value = msg.value
 
-	DungeonMapModel.instance:updateRewardPoint(var_21_0, var_21_1)
+	DungeonMapModel.instance:updateRewardPoint(chapterId, value)
 	DungeonController.instance:dispatchEvent(DungeonEvent.OnUpdateRewardPoint)
 end
 
-function var_0_0.sendInstructionDungeonInfoRequest(arg_22_0, arg_22_1, arg_22_2)
-	local var_22_0 = DungeonModule_pb.InstructionDungeonInfoRequest()
+function DungeonRpc:sendInstructionDungeonInfoRequest(callback, callbackObj)
+	local req = DungeonModule_pb.InstructionDungeonInfoRequest()
 
-	arg_22_0:sendMsg(var_22_0, arg_22_1, arg_22_2)
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveInstructionDungeonInfoReply(arg_23_0, arg_23_1, arg_23_2)
-	if arg_23_1 == 0 then
-		TeachNoteModel.instance:setTeachNoteInfo(arg_23_2)
+function DungeonRpc:onReceiveInstructionDungeonInfoReply(resultCode, msg)
+	if resultCode == 0 then
+		TeachNoteModel.instance:setTeachNoteInfo(msg)
 		TeachNoteController.instance:dispatchEvent(TeachNoteEvent.GetServerTopicInfo)
 	end
 end
 
-function var_0_0.sendInstructionDungeonOpenRequest(arg_24_0, arg_24_1)
-	local var_24_0 = DungeonModule_pb.InstructionDungeonOpenRequest()
+function DungeonRpc:sendInstructionDungeonOpenRequest(ids)
+	local req = DungeonModule_pb.InstructionDungeonOpenRequest()
 
-	for iter_24_0, iter_24_1 in ipairs(arg_24_1) do
-		table.insert(var_24_0.openId, iter_24_1)
+	for i, v in ipairs(ids) do
+		table.insert(req.openId, v)
 	end
 
-	arg_24_0:sendMsg(var_24_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveInstructionDungeonOpenReply(arg_25_0, arg_25_1, arg_25_2)
-	if arg_25_1 == 0 then
+function DungeonRpc:onReceiveInstructionDungeonOpenReply(resultCode, msg)
+	if resultCode == 0 then
 		TeachNoteController.instance:dispatchEvent(TeachNoteEvent.GetServerSetOpenSuccess)
 	end
 end
 
-function var_0_0.onReceiveInstructionDungeonInfoPush(arg_26_0, arg_26_1, arg_26_2)
-	if arg_26_1 == 0 then
-		TeachNoteModel.instance:setTeachNoteInfo(arg_26_2)
+function DungeonRpc:onReceiveInstructionDungeonInfoPush(resultCode, msg)
+	if resultCode == 0 then
+		TeachNoteModel.instance:setTeachNoteInfo(msg)
 		TeachNoteController.instance:dispatchEvent(TeachNoteEvent.GetServerTopicInfo)
 	end
 end
 
-function var_0_0.sendInstructionDungeonRewardRequest(arg_27_0, arg_27_1)
-	local var_27_0 = DungeonModule_pb.InstructionDungeonRewardRequest()
+function DungeonRpc:sendInstructionDungeonRewardRequest(topicId)
+	local req = DungeonModule_pb.InstructionDungeonRewardRequest()
 
-	var_27_0.topicId = arg_27_1
+	req.topicId = topicId
 
-	arg_27_0:sendMsg(var_27_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveInstructionDungeonRewardReply(arg_28_0, arg_28_1, arg_28_2)
-	if arg_28_1 == 0 then
+function DungeonRpc:onReceiveInstructionDungeonRewardReply(resultCode, msg)
+	if resultCode == 0 then
 		TeachNoteController.instance:dispatchEvent(TeachNoteEvent.GetServerTopicReward)
 	end
 end
 
-function var_0_0.sendInstructionDungeonFinalRewardRequest(arg_29_0)
-	local var_29_0 = DungeonModule_pb.InstructionDungeonFinalRewardRequest()
+function DungeonRpc:sendInstructionDungeonFinalRewardRequest()
+	local req = DungeonModule_pb.InstructionDungeonFinalRewardRequest()
 
-	arg_29_0:sendMsg(var_29_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveInstructionDungeonFinalRewardReply(arg_30_0, arg_30_1, arg_30_2)
-	if arg_30_1 == 0 then
+function DungeonRpc:onReceiveInstructionDungeonFinalRewardReply(resultCode, msg)
+	if resultCode == 0 then
 		TeachNoteController.instance:dispatchEvent(TeachNoteEvent.GetServerTeachNoteFinalReward)
 	end
 end
 
-function var_0_0.sendCoverDungeonRecordRequest(arg_31_0, arg_31_1)
-	local var_31_0 = DungeonModule_pb.CoverDungeonRecordRequest()
+function DungeonRpc:sendCoverDungeonRecordRequest(isCover)
+	local req = DungeonModule_pb.CoverDungeonRecordRequest()
 
-	var_31_0.isCover = arg_31_1
+	req.isCover = isCover
 
-	arg_31_0:sendMsg(var_31_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveCoverDungeonRecordReply(arg_32_0, arg_32_1, arg_32_2)
-	if arg_32_1 == 0 then
-		DungeonController.instance:dispatchEvent(DungeonEvent.OnCoverDungeonRecordReply, arg_32_2.isCover)
+function DungeonRpc:onReceiveCoverDungeonRecordReply(resultCode, msg)
+	if resultCode == 0 then
+		DungeonController.instance:dispatchEvent(DungeonEvent.OnCoverDungeonRecordReply, msg.isCover)
 	end
 end
 
-function var_0_0.sendPuzzleFinishRequest(arg_33_0, arg_33_1)
-	local var_33_0 = DungeonModule_pb.PuzzleFinishRequest()
+function DungeonRpc:sendPuzzleFinishRequest(elementId)
+	local req = DungeonModule_pb.PuzzleFinishRequest()
 
-	var_33_0.elementId = arg_33_1
+	req.elementId = elementId
 
-	arg_33_0:sendMsg(var_33_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceivePuzzleFinishReply(arg_34_0, arg_34_1, arg_34_2)
-	if arg_34_1 == 0 then
-		DungeonMapModel.instance:setPuzzleStatus(arg_34_2.elementId)
-		DungeonController.instance:dispatchEvent(DungeonEvent.OnPuzzleFinish, arg_34_2.elementId)
+function DungeonRpc:onReceivePuzzleFinishReply(resultCode, msg)
+	if resultCode == 0 then
+		DungeonMapModel.instance:setPuzzleStatus(msg.elementId)
+		DungeonController.instance:dispatchEvent(DungeonEvent.OnPuzzleFinish, msg.elementId)
 	end
 end
 
-function var_0_0.sendRefreshAssistRequest(arg_35_0, arg_35_1, arg_35_2, arg_35_3)
-	local var_35_0 = DungeonModule_pb.RefreshAssistRequest()
+function DungeonRpc:sendRefreshAssistRequest(assistType, callback, callbackObj)
+	local req = DungeonModule_pb.RefreshAssistRequest()
 
-	var_35_0.assistType = arg_35_1
+	req.assistType = assistType
 
-	return arg_35_0:sendMsg(var_35_0, arg_35_2, arg_35_3)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveRefreshAssistReply(arg_36_0, arg_36_1, arg_36_2)
-	if arg_36_1 == 0 then
-		DungeonAssistModel.instance:setAssistHeroCareersByServerData(arg_36_2.assistType, arg_36_2.assistHeroCareers)
+function DungeonRpc:onReceiveRefreshAssistReply(resultCode, msg)
+	if resultCode == 0 then
+		DungeonAssistModel.instance:setAssistHeroCareersByServerData(msg.assistType, msg.assistHeroCareers)
 	end
 end
 
-function var_0_0.sendGetMainDramaRewardRequest(arg_37_0)
-	local var_37_0 = DungeonModule_pb.GetMainDramaRewardRequest()
+function DungeonRpc:sendGetMainDramaRewardRequest()
+	local req = DungeonModule_pb.GetMainDramaRewardRequest()
 
-	arg_37_0:sendMsg(var_37_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveGetMainDramaRewardReply(arg_38_0, arg_38_1, arg_38_2)
-	if arg_38_1 == 0 then
-		local var_38_0 = {}
+function DungeonRpc:onReceiveGetMainDramaRewardReply(resultCode, msg)
+	if resultCode == 0 then
+		local dataList = {}
 
-		for iter_38_0, iter_38_1 in ipairs(arg_38_2.bonus) do
-			local var_38_1 = MaterialDataMO.New()
+		for _, bonu in ipairs(msg.bonus) do
+			local materialData = MaterialDataMO.New()
 
-			var_38_1:initValue(iter_38_1.materilType, iter_38_1.materilId, iter_38_1.quantity)
-			table.insert(var_38_0, var_38_1)
+			materialData:initValue(bonu.materilType, bonu.materilId, bonu.quantity)
+			table.insert(dataList, materialData)
 		end
 
-		PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, var_38_0)
+		PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, dataList)
 		DungeonModel.instance:setCanGetDramaReward(false)
 		DungeonController.instance:dispatchEvent(DungeonEvent.OnDramaRewardStatusChange)
 	end
 end
 
-function var_0_0.onReceiveMainDramaRewardInfo(arg_39_0, arg_39_1, arg_39_2)
-	if arg_39_1 == 0 then
+function DungeonRpc:onReceiveMainDramaRewardInfo(resultCode, msg)
+	if resultCode == 0 then
 		DungeonModel.instance:setCanGetDramaReward(true)
 		DungeonController.instance:dispatchEvent(DungeonEvent.OnDramaRewardStatusChange)
 	end
 end
 
-function var_0_0.sendSavePuzzleProgressRequest(arg_40_0, arg_40_1, arg_40_2)
-	local var_40_0 = DungeonModule_pb.SavePuzzleProgressRequest()
+function DungeonRpc:sendSavePuzzleProgressRequest(elementId, progressStr)
+	local req = DungeonModule_pb.SavePuzzleProgressRequest()
 
-	var_40_0.elementId = arg_40_1
-	var_40_0.progress = arg_40_2
+	req.elementId = elementId
+	req.progress = progressStr
 
-	arg_40_0:sendMsg(var_40_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveSavePuzzleProgressReply(arg_41_0, arg_41_1, arg_41_2)
-	if arg_41_1 ~= 0 then
+function DungeonRpc:onReceiveSavePuzzleProgressReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 end
 
-function var_0_0.sendGetPuzzleProgressRequest(arg_42_0, arg_42_1, arg_42_2, arg_42_3)
-	local var_42_0 = DungeonModule_pb.GetPuzzleProgressRequest()
+function DungeonRpc:sendGetPuzzleProgressRequest(elementId, callback, callbackObj)
+	local req = DungeonModule_pb.GetPuzzleProgressRequest()
 
-	var_42_0.elementId = arg_42_1
+	req.elementId = elementId
 
-	arg_42_0:sendMsg(var_42_0, arg_42_2, arg_42_3)
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveGetPuzzleProgressReply(arg_43_0, arg_43_1, arg_43_2)
-	if arg_43_1 ~= 0 then
+function DungeonRpc:onReceiveGetPuzzleProgressReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_43_0 = arg_43_2.elementId
-	local var_43_1 = arg_43_2.progress
+	local elementId = msg.elementId
+	local progress = msg.progress
 
-	PuzzleMazeDrawController.instance:onGetPuzzleDrawProgress(var_43_0, var_43_1)
+	PuzzleMazeDrawController.instance:onGetPuzzleDrawProgress(elementId, progress)
 end
 
-var_0_0.instance = var_0_0.New()
+function DungeonRpc:sendGetMapElementRecordRequest(elementIds)
+	local req = DungeonModule_pb.GetMapElementRecordRequest()
 
-return var_0_0
+	for i, v in ipairs(elementIds) do
+		table.insert(req.elementIds, v)
+	end
+
+	self:sendMsg(req)
+end
+
+function DungeonRpc:onReceiveGetMapElementRecordReply(resultCode, msg)
+	if resultCode ~= 0 then
+		return
+	end
+
+	local recordInfos = msg.recordInfos
+
+	DungeonMapModel.instance:updateRecordInfos(recordInfos)
+end
+
+DungeonRpc.instance = DungeonRpc.New()
+
+return DungeonRpc

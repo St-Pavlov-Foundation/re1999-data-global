@@ -1,108 +1,115 @@
-﻿module("modules.logic.fight.system.work.FightWorkBeforeStartNoticeView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkBeforeStartNoticeView.lua
 
-local var_0_0 = class("FightWorkBeforeStartNoticeView", BaseWork)
+module("modules.logic.fight.system.work.FightWorkBeforeStartNoticeView", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local FightWorkBeforeStartNoticeView = class("FightWorkBeforeStartNoticeView", BaseWork)
+
+function FightWorkBeforeStartNoticeView:ctor()
 	return
 end
 
-function var_0_0.onStart(arg_2_0)
+function FightWorkBeforeStartNoticeView:onStart()
 	if not FightDataHelper.stateMgr.isReplay and ViewMgr.instance:isOpen(ViewName.FightQuitTipView) then
-		FightController.instance:registerCallback(FightEvent.OnFightQuitTipViewClose, arg_2_0.bootLogic, arg_2_0)
+		FightController.instance:registerCallback(FightEvent.OnFightQuitTipViewClose, self.bootLogic, self)
 	else
-		arg_2_0:bootLogic()
+		self:bootLogic()
 	end
 end
 
-function var_0_0.bootLogic(arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.OnFightQuitTipViewClose, arg_3_0.bootLogic, arg_3_0)
+function FightWorkBeforeStartNoticeView:bootLogic()
+	FightController.instance:unregisterCallback(FightEvent.OnFightQuitTipViewClose, self.bootLogic, self)
 
-	if var_0_0.canShowTips() and not FightDataHelper.stateMgr:getIsAuto() then
+	if FightWorkBeforeStartNoticeView.canShowTips() and not FightDataHelper.stateMgr:getIsAuto() then
 		FightController.instance:dispatchEvent(FightEvent.SetPlayCardPartOutScreen)
-		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_3_0._onCloseViewFinish, arg_3_0)
+		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 		FightController.instance:openFightSpecialTipView(true)
 	else
-		arg_3_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._onCloseViewFinish(arg_4_0, arg_4_1)
-	if arg_4_1 == ViewName.FightSpecialTipView or tabletool.indexOf(SeasonFightHandler.SeasonFightRuleTipViewList, arg_4_1) then
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_4_0._onCloseViewFinish, arg_4_0)
-		arg_4_0:onDone(true)
+function FightWorkBeforeStartNoticeView:_onCloseViewFinish(viewName)
+	if viewName == ViewName.FightSpecialTipView or tabletool.indexOf(SeasonFightHandler.SeasonFightRuleTipViewList, viewName) then
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+		self:onDone(true)
 	end
 end
 
-function var_0_0.canShowTips()
+function FightWorkBeforeStartNoticeView.canShowTips()
 	if not GMFightShowState.roundSpecialView then
 		return false
 	end
 
-	local var_5_0 = FightModel.instance:getFightParam()
-	local var_5_1
-	local var_5_2 = DungeonConfig.instance:getEpisodeCO(var_5_0.episodeId)
+	local fightParam = FightModel.instance:getFightParam()
+	local show_tips
+	local episode_config = DungeonConfig.instance:getEpisodeCO(fightParam.episodeId)
 
-	if var_5_2 and not string.nilorempty(var_5_2.battleDesc) then
-		var_5_1 = true
+	if episode_config and not string.nilorempty(episode_config.battleDesc) then
+		show_tips = true
 	end
 
-	local var_5_3 = lua_battle.configDict[var_5_0.battleId]
-	local var_5_4 = var_5_2 and var_5_2.type
+	local battleConfig = lua_battle.configDict[fightParam.battleId]
+	local episodeType = episode_config and episode_config.type
 
-	if var_5_3 and not string.nilorempty(var_5_3.additionRule) then
-		local var_5_5 = var_5_3.additionRule
+	if battleConfig and not string.nilorempty(battleConfig.additionRule) then
+		local additionRule = battleConfig.additionRule
 
-		if var_5_4 == DungeonEnum.EpisodeType.Meilanni then
-			local var_5_6 = GameUtil.splitString2(var_5_5, true, "|", "#")
-			local var_5_7 = HeroGroupFightViewRule.meilanniExcludeRules(var_5_6)
+		if episodeType == DungeonEnum.EpisodeType.Meilanni then
+			local data_list = GameUtil.splitString2(additionRule, true, "|", "#")
 
-			var_5_1 = var_5_1 or var_5_7 and #var_5_7 > 0
+			data_list = HeroGroupFightViewRule.meilanniExcludeRules(data_list)
+			show_tips = show_tips or data_list and #data_list > 0
 		else
-			var_5_1 = SeasonFightHandler.canSeasonShowTips(var_5_5, var_5_4)
+			show_tips = SeasonFightHandler.canSeasonShowTips(additionRule, episodeType)
 		end
 	else
-		if var_5_4 == DungeonEnum.EpisodeType.Rouge then
-			local var_5_8 = RougeMapModel.instance:getCurNode()
-			local var_5_9 = var_5_8 and var_5_8.eventMo
-			local var_5_10 = var_5_9 and var_5_9:getSurpriseAttackList()
+		if episodeType == DungeonEnum.EpisodeType.Rouge then
+			local curNode = RougeMapModel.instance:getCurNode()
+			local eventMo = curNode and curNode.eventMo
+			local surpriseAttackList = eventMo and eventMo:getSurpriseAttackList()
 
-			var_5_1 = var_5_10 and #var_5_10 > 0
+			show_tips = surpriseAttackList and #surpriseAttackList > 0
 		end
 
-		if var_5_4 == DungeonEnum.EpisodeType.Survival then
-			local var_5_11 = SurvivalShelterModel.instance:addExRule({})
+		if episodeType == DungeonEnum.EpisodeType.Survival then
+			local data_list = SurvivalShelterModel.instance:addExRule({})
 
-			var_5_1 = var_5_1 or #var_5_11 > 0
-		end
-	end
-
-	local var_5_12 = FightDataHelper.fieldMgr.customData
-
-	if var_5_12 then
-		local var_5_13 = var_5_12[FightCustomData.CustomDataType.WeekwalkVer2]
-
-		if var_5_13 and cjson.decode(var_5_13).ruleMap then
-			var_5_1 = true
-		end
-
-		local var_5_14 = var_5_12[FightCustomData.CustomDataType.Act183]
-
-		if var_5_14 then
-			if var_5_14.currRules and #var_5_14.currRules > 0 then
-				var_5_1 = true
-			end
-
-			if var_5_14.transferRules and #var_5_14.transferRules > 0 then
-				var_5_1 = true
-			end
+			show_tips = show_tips or #data_list > 0
 		end
 	end
 
-	local var_5_15 = GuideModel.instance:isDoingFirstGuide()
-	local var_5_16 = GuideController.instance:isForbidGuides()
-	local var_5_17 = FightDataHelper.stateMgr.isReplay
+	local customData = FightDataHelper.fieldMgr.customData
 
-	if var_5_1 and (not var_5_15 or var_5_16) and not var_5_17 then
+	if customData then
+		local dataWeekwalkVer2 = customData[FightCustomData.CustomDataType.WeekwalkVer2]
+
+		if dataWeekwalkVer2 then
+			local jsonData = cjson.decode(dataWeekwalkVer2)
+			local ruleMap = jsonData.ruleMap
+
+			if ruleMap then
+				show_tips = true
+			end
+		end
+
+		local customData183 = customData[FightCustomData.CustomDataType.Act183]
+
+		if customData183 then
+			if customData183.currRules and #customData183.currRules > 0 then
+				show_tips = true
+			end
+
+			if customData183.transferRules and #customData183.transferRules > 0 then
+				show_tips = true
+			end
+		end
+	end
+
+	local firstGuide = GuideModel.instance:isDoingFirstGuide()
+	local forbidGuides = GuideController.instance:isForbidGuides()
+	local isReplay = FightDataHelper.stateMgr.isReplay
+
+	if show_tips and (not firstGuide or forbidGuides) and not isReplay then
 		return true
 	else
 		return false
@@ -111,10 +118,10 @@ function var_0_0.canShowTips()
 	return false
 end
 
-function var_0_0.clearWork(arg_6_0)
-	FightController.instance:unregisterCallback(FightEvent.OnFightQuitTipViewClose, arg_6_0.bootLogic, arg_6_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_6_0._onCloseViewFinish, arg_6_0)
+function FightWorkBeforeStartNoticeView:clearWork()
+	FightController.instance:unregisterCallback(FightEvent.OnFightQuitTipViewClose, self.bootLogic, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 	FightController.instance:dispatchEvent(FightEvent.SetPlayCardPartOriginPos)
 end
 
-return var_0_0
+return FightWorkBeforeStartNoticeView

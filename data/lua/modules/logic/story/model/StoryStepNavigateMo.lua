@@ -1,10 +1,12 @@
-﻿module("modules.logic.story.model.StoryStepNavigateMo", package.seeall)
+﻿-- chunkname: @modules/logic/story/model/StoryStepNavigateMo.lua
 
-local var_0_0 = pureTable("StoryStepNavigateMo")
+module("modules.logic.story.model.StoryStepNavigateMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.navigateType = 1
-	arg_1_0.navigateTxts = {
+local StoryStepNavigateMo = pureTable("StoryStepNavigateMo")
+
+function StoryStepNavigateMo:ctor()
+	self.navigateType = 1
+	self.navigateTxts = {
 		"",
 		"",
 		"",
@@ -14,15 +16,15 @@ function var_0_0.ctor(arg_1_0)
 		"",
 		""
 	}
-	arg_1_0.navigateChapterEn = ""
-	arg_1_0.navigateLogo = ""
+	self.navigateChapterEn = ""
+	self.navigateLogo = ""
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.navigateType = arg_2_1[1]
-	arg_2_0.navigateTxts = arg_2_1[2]
-	arg_2_0.navigateChapterEn = arg_2_1[3]
-	arg_2_0.navigateLogo = arg_2_1[4]
+function StoryStepNavigateMo:init(info)
+	self.navigateType = info[1]
+	self.navigateTxts = info[2]
+	self.navigateChapterEn = info[3]
+	self.navigateLogo = info[4]
 end
 
-return var_0_0
+return StoryStepNavigateMo

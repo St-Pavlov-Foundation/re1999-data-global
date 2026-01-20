@@ -1,33 +1,35 @@
-﻿module("modules.logic.fight.fightcomponent.FightClickComponent", package.seeall)
+﻿-- chunkname: @modules/logic/fight/fightcomponent/FightClickComponent.lua
 
-local var_0_0 = class("FightClickComponent", FightBaseClass)
+module("modules.logic.fight.fightcomponent.FightClickComponent", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0._clickDic = {}
+local FightClickComponent = class("FightClickComponent", FightBaseClass)
+
+function FightClickComponent:onConstructor()
+	self._clickDic = {}
 end
 
-function var_0_0.registClick(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
-	local var_2_0 = arg_2_1:GetInstanceID()
+function FightClickComponent:registClick(click, callback, handle, param)
+	local id = click:GetInstanceID()
 
-	arg_2_0._clickDic[var_2_0] = arg_2_1
+	self._clickDic[id] = click
 
-	arg_2_1:AddClickListener(arg_2_2, arg_2_3, arg_2_4)
+	click:AddClickListener(callback, handle, param)
 end
 
-function var_0_0.removeClick(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_1:GetInstanceID()
+function FightClickComponent:removeClick(click)
+	local id = click:GetInstanceID()
 
-	if arg_3_0._clickDic[var_3_0] then
-		arg_3_0._clickDic[var_3_0]:RemoveClickListener()
+	if self._clickDic[id] then
+		self._clickDic[id]:RemoveClickListener()
 
-		arg_3_0._clickDic[var_3_0] = nil
+		self._clickDic[id] = nil
 	end
 end
 
-function var_0_0.onDestructor(arg_4_0)
-	for iter_4_0, iter_4_1 in pairs(arg_4_0._clickDic) do
-		iter_4_1:RemoveClickListener()
+function FightClickComponent:onDestructor()
+	for k, v in pairs(self._clickDic) do
+		v:RemoveClickListener()
 	end
 end
 
-return var_0_0
+return FightClickComponent

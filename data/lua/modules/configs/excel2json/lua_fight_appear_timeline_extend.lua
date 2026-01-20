@@ -1,17 +1,19 @@
-﻿module("modules.configs.excel2json.lua_fight_appear_timeline_extend", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_fight_appear_timeline_extend.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_fight_appear_timeline_extend", package.seeall)
+
+local lua_fight_appear_timeline_extend = {}
+local fields = {
 	groupId = 1,
 	monsterIdList = 2
 }
-local var_0_2 = {
+local primaryKey = {
 	"groupId"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_fight_appear_timeline_extend.onLoad(json)
+	lua_fight_appear_timeline_extend.configList, lua_fight_appear_timeline_extend.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_fight_appear_timeline_extend

@@ -1,154 +1,156 @@
-﻿module("modules.logic.sp01.odyssey.view.OdysseySuitTipView", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/view/OdysseySuitTipView.lua
 
-local var_0_0 = class("OdysseySuitTipView", BaseView)
+module("modules.logic.sp01.odyssey.view.OdysseySuitTipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._gosuitTip = gohelper.findChild(arg_1_0.viewGO, "#go_suitTip")
-	arg_1_0._goequipSuit = gohelper.findChild(arg_1_0.viewGO, "#go_suitTip/#go_equipSuit")
-	arg_1_0._gouneffect = gohelper.findChild(arg_1_0.viewGO, "#go_suitTip/#go_equipSuit/#go_uneffect")
-	arg_1_0._txtsuitName = gohelper.findChildText(arg_1_0.viewGO, "#go_suitTip/#go_equipSuit/#go_uneffect/#txt_suitName")
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "#go_suitTip/#go_equipSuit/#go_uneffect/#image_icon")
-	arg_1_0._goeffect = gohelper.findChild(arg_1_0.viewGO, "#go_suitTip/#go_equipSuit/#go_effect")
-	arg_1_0._txtsuitNameEffect = gohelper.findChildText(arg_1_0.viewGO, "#go_suitTip/#go_equipSuit/#go_effect/#txt_suitNameEffect")
-	arg_1_0._imageiconEffect = gohelper.findChildImage(arg_1_0.viewGO, "#go_suitTip/#go_equipSuit/#go_effect/#image_iconEffect")
-	arg_1_0._goactiveBg = gohelper.findChild(arg_1_0.viewGO, "#go_suitTip/#go_equipSuit/#go_effect/#go_activeBg")
-	arg_1_0._scrolldesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_suitTip/#scroll_desc")
-	arg_1_0._txtdesc1 = gohelper.findChildText(arg_1_0.viewGO, "#go_suitTip/#scroll_desc/Viewport/Content/#txt_desc1")
-	arg_1_0._txtdesc2 = gohelper.findChildText(arg_1_0.viewGO, "#go_suitTip/#scroll_desc/Viewport/Content/#txt_desc2")
+local OdysseySuitTipView = class("OdysseySuitTipView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function OdysseySuitTipView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._gosuitTip = gohelper.findChild(self.viewGO, "#go_suitTip")
+	self._goequipSuit = gohelper.findChild(self.viewGO, "#go_suitTip/#go_equipSuit")
+	self._gouneffect = gohelper.findChild(self.viewGO, "#go_suitTip/#go_equipSuit/#go_uneffect")
+	self._txtsuitName = gohelper.findChildText(self.viewGO, "#go_suitTip/#go_equipSuit/#go_uneffect/#txt_suitName")
+	self._imageicon = gohelper.findChildImage(self.viewGO, "#go_suitTip/#go_equipSuit/#go_uneffect/#image_icon")
+	self._goeffect = gohelper.findChild(self.viewGO, "#go_suitTip/#go_equipSuit/#go_effect")
+	self._txtsuitNameEffect = gohelper.findChildText(self.viewGO, "#go_suitTip/#go_equipSuit/#go_effect/#txt_suitNameEffect")
+	self._imageiconEffect = gohelper.findChildImage(self.viewGO, "#go_suitTip/#go_equipSuit/#go_effect/#image_iconEffect")
+	self._goactiveBg = gohelper.findChild(self.viewGO, "#go_suitTip/#go_equipSuit/#go_effect/#go_activeBg")
+	self._scrolldesc = gohelper.findChildScrollRect(self.viewGO, "#go_suitTip/#scroll_desc")
+	self._txtdesc1 = gohelper.findChildText(self.viewGO, "#go_suitTip/#scroll_desc/Viewport/Content/#txt_desc1")
+	self._txtdesc2 = gohelper.findChildText(self.viewGO, "#go_suitTip/#scroll_desc/Viewport/Content/#txt_desc2")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function OdysseySuitTipView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function OdysseySuitTipView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-var_0_0.TipHalfWidth = 430
-var_0_0.TipOffsetY = -100
+OdysseySuitTipView.TipHalfWidth = 430
+OdysseySuitTipView.TipOffsetY = -100
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function OdysseySuitTipView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._descItem = arg_5_0:getUserDataTb_()
+function OdysseySuitTipView:_editableInitView()
+	self._descItem = self:getUserDataTb_()
 
-	gohelper.setActive(arg_5_0._txtdesc2.gameObject, false)
+	gohelper.setActive(self._txtdesc2.gameObject, false)
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function OdysseySuitTipView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	local var_7_0 = arg_7_0.viewParam
-	local var_7_1 = var_7_0.suitId
-	local var_7_2 = var_7_0.level
-	local var_7_3 = var_7_0.bagType
-	local var_7_4 = OdysseyConfig.instance:getEquipSuitConfig(var_7_1)
-	local var_7_5 = OdysseyHeroGroupModel.instance:getCurHeroGroup()
+function OdysseySuitTipView:onOpen()
+	local param = self.viewParam
+	local suitId = param.suitId
+	local suitLevel = param.level
+	local bagType = param.bagType
+	local suitConfig = OdysseyConfig.instance:getEquipSuitConfig(suitId)
+	local curFormInfo = OdysseyHeroGroupModel.instance:getCurHeroGroup()
 
-	if var_7_2 == nil then
-		local var_7_6 = var_7_5:getOdysseyEquipSuit(var_7_1)
+	if suitLevel == nil then
+		local suitInfo = curFormInfo:getOdysseyEquipSuit(suitId)
 
-		var_7_2 = var_7_6 and var_7_6.level or 0
+		suitLevel = suitInfo and suitInfo.level or 0
 	end
 
-	local var_7_7 = var_7_3 == OdysseyEnum.BagType.Bag or var_7_2 > 0
-	local var_7_8 = not var_7_7 and arg_7_0._txtsuitName or arg_7_0._txtsuitNameEffect
-	local var_7_9 = not var_7_7 and arg_7_0._imageicon or arg_7_0._imageiconEffect
+	local active = bagType == OdysseyEnum.BagType.Bag or suitLevel > 0
+	local nameText = not active and self._txtsuitName or self._txtsuitNameEffect
+	local iconImage = not active and self._imageicon or self._imageiconEffect
 
-	var_7_8.text = var_7_4.name
+	nameText.text = suitConfig.name
 
-	UISpriteSetMgr.instance:setSp01OdysseyDungeonSprite(var_7_9, var_7_4.icon)
+	UISpriteSetMgr.instance:setSp01OdysseyDungeonSprite(iconImage, suitConfig.icon)
 
-	arg_7_0._txtdesc1.text = var_7_4.desc
+	self._txtdesc1.text = suitConfig.desc
 
-	gohelper.setActive(arg_7_0._goeffect, var_7_7)
-	gohelper.setActive(arg_7_0._gouneffect, not var_7_7)
-	gohelper.setActive(arg_7_0._goactiveBg, var_7_3 ~= OdysseyEnum.BagType.Bag)
+	gohelper.setActive(self._goeffect, active)
+	gohelper.setActive(self._gouneffect, not active)
+	gohelper.setActive(self._goactiveBg, bagType ~= OdysseyEnum.BagType.Bag)
 
-	local var_7_10 = OdysseyConfig.instance:getEquipSuitAllEffect(var_7_1)
-	local var_7_11 = arg_7_0._descItem
-	local var_7_12 = #var_7_11
-	local var_7_13 = #var_7_10
+	local suitConfigList = OdysseyConfig.instance:getEquipSuitAllEffect(suitId)
+	local suitItem = self._descItem
+	local suitItemCount = #suitItem
+	local suitCount = #suitConfigList
 
-	for iter_7_0 = 1, var_7_13 do
-		local var_7_14 = var_7_10[iter_7_0]
-		local var_7_15
+	for i = 1, suitCount do
+		local config = suitConfigList[i]
+		local textItem
 
-		if var_7_12 < iter_7_0 then
-			local var_7_16 = gohelper.clone(arg_7_0._txtdesc2.gameObject, arg_7_0._txtdesc2.gameObject.transform.parent.gameObject)
+		if suitItemCount < i then
+			local textItemGo = gohelper.clone(self._txtdesc2.gameObject, self._txtdesc2.gameObject.transform.parent.gameObject)
 
-			var_7_15 = gohelper.findChildText(var_7_16, "")
+			textItem = gohelper.findChildText(textItemGo, "")
 
-			table.insert(var_7_11, var_7_15)
+			table.insert(suitItem, textItem)
 		else
-			var_7_15 = var_7_11[iter_7_0]
+			textItem = suitItem[i]
 		end
 
-		gohelper.setActive(var_7_15, true)
+		gohelper.setActive(textItem, true)
 
-		local var_7_17 = var_7_3 == OdysseyEnum.BagType.Bag or var_7_2 >= var_7_14.level
+		local singleActive = bagType == OdysseyEnum.BagType.Bag or suitLevel >= config.level
 
-		var_7_15.text = SkillHelper.buildDesc(var_7_14.effect)
+		textItem.text = SkillHelper.buildDesc(config.effect)
 
-		local var_7_18 = MonoHelper.addNoUpdateLuaComOnceToGo(var_7_15.gameObject, FixTmpBreakLine)
+		local fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(textItem.gameObject, FixTmpBreakLine)
 
-		SkillHelper.addHyperLinkClick(var_7_15, arg_7_0._onHyperLinkClick, arg_7_0)
-		var_7_18:refreshTmpContent(var_7_15)
+		SkillHelper.addHyperLinkClick(textItem, self._onHyperLinkClick, self)
+		fixTmpBreakLine:refreshTmpContent(textItem)
 
-		if var_7_17 then
-			var_7_15.text = string.format("<color=%s>%s</color>", OdysseyEnum.SuitDescColor.Active, var_7_15.text)
-		end
-	end
-
-	if var_7_13 < var_7_12 then
-		for iter_7_1 = var_7_13 + 1, var_7_12 do
-			gohelper.setActive(var_7_11[iter_7_1], false)
+		if singleActive then
+			textItem.text = string.format("<color=%s>%s</color>", OdysseyEnum.SuitDescColor.Active, textItem.text)
 		end
 	end
 
-	if var_7_0.pos then
-		local var_7_19, var_7_20 = recthelper.screenPosToAnchorPos2(var_7_0.pos, arg_7_0.viewGO.transform)
-		local var_7_21 = var_7_19 - var_0_0.TipHalfWidth
-		local var_7_22 = math.max(0, var_7_20 + var_0_0.TipOffsetY)
+	if suitCount < suitItemCount then
+		for i = suitCount + 1, suitItemCount do
+			gohelper.setActive(suitItem[i], false)
+		end
+	end
 
-		arg_7_0:setTipPos(var_7_21, var_7_22)
-		gohelper.fitScreenOffset(arg_7_0._gosuitTip.transform)
+	if param.pos then
+		local posX, posY = recthelper.screenPosToAnchorPos2(param.pos, self.viewGO.transform)
+		local tipPosX = posX - OdysseySuitTipView.TipHalfWidth
+		local tipPosY = math.max(0, posY + OdysseySuitTipView.TipOffsetY)
+
+		self:setTipPos(tipPosX, tipPosY)
+		gohelper.fitScreenOffset(self._gosuitTip.transform)
 	end
 end
 
-function var_0_0._onHyperLinkClick(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = recthelper.getAnchorX(arg_8_0._gosuitTip.transform)
-	local var_8_1
+function OdysseySuitTipView:_onHyperLinkClick(effId, clickPosition)
+	local positionX = recthelper.getAnchorX(self._gosuitTip.transform)
+	local tipPos
 
-	if var_8_0 >= 0 then
-		var_8_1 = Vector2.New(var_8_0 - 825, 175)
+	if positionX >= 0 then
+		tipPos = Vector2.New(positionX - 825, 175)
 	else
-		var_8_1 = Vector2.New(var_8_0 + 255, 175)
+		tipPos = Vector2.New(positionX + 255, 175)
 	end
 
-	CommonBuffTipController.instance:openCommonTipViewWithCustomPos(tonumber(arg_8_1), var_8_1)
+	CommonBuffTipController.instance:openCommonTipViewWithCustomPos(tonumber(effId), tipPos)
 end
 
-function var_0_0.setTipPos(arg_9_0, arg_9_1, arg_9_2)
-	transformhelper.setLocalPosXY(arg_9_0._gosuitTip.transform, arg_9_1, arg_9_2)
+function OdysseySuitTipView:setTipPos(x, y)
+	transformhelper.setLocalPosXY(self._gosuitTip.transform, x, y)
 end
 
-function var_0_0.onClose(arg_10_0)
+function OdysseySuitTipView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function OdysseySuitTipView:onDestroyView()
 	return
 end
 
-return var_0_0
+return OdysseySuitTipView

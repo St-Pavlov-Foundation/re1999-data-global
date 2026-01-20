@@ -1,8 +1,10 @@
-﻿module("modules.logic.reactivity.view.ReactivityStoreViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/reactivity/view/ReactivityStoreViewContainer.lua
 
-local var_0_0 = class("ReactivityStoreViewContainer", BaseViewContainer)
+module("modules.logic.reactivity.view.ReactivityStoreViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local ReactivityStoreViewContainer = class("ReactivityStoreViewContainer", BaseViewContainer)
+
+function ReactivityStoreViewContainer:buildViews()
 	return {
 		ReactivityStoreView.New(),
 		TabViewGroup.New(1, "#go_btns"),
@@ -10,8 +12,8 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
+function ReactivityStoreViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -21,30 +23,36 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 		}
 	end
 
-	if arg_2_1 == 2 then
-		local var_2_0 = ReactivityModel.instance:getActivityCurrencyId(arg_2_0.viewParam.actId)
-		local var_2_1 = CurrencyView.New({
-			var_2_0
+	if tabContainerId == 2 then
+		local currencyId = ReactivityModel.instance:getActivityCurrencyId(self.viewParam.actId)
+		local currencyView = CurrencyView.New({
+			currencyId
 		})
 
-		var_2_1.foreHideBtn = true
+		currencyView.foreHideBtn = true
 
 		return {
-			var_2_1
+			currencyView
 		}
 	end
 end
 
-function var_0_0.playOpenTransition(arg_3_0)
-	arg_3_0:startViewOpenBlock()
-	arg_3_0.viewGO:GetComponent(typeof(UnityEngine.Animation)):Play("activitystore_open")
-	TaskDispatcher.runDelay(arg_3_0.onPlayOpenTransitionFinish, arg_3_0, 0.5)
+function ReactivityStoreViewContainer:playOpenTransition()
+	self:startViewOpenBlock()
+
+	local animation = self.viewGO:GetComponent(typeof(UnityEngine.Animation))
+
+	animation:Play("activitystore_open")
+	TaskDispatcher.runDelay(self.onPlayOpenTransitionFinish, self, 0.5)
 end
 
-function var_0_0.playCloseTransition(arg_4_0)
-	arg_4_0:startViewCloseBlock()
-	arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animation)):Play("activitystore_close")
-	TaskDispatcher.runDelay(arg_4_0.onPlayCloseTransitionFinish, arg_4_0, 0.167)
+function ReactivityStoreViewContainer:playCloseTransition()
+	self:startViewCloseBlock()
+
+	local animation = self.viewGO:GetComponent(typeof(UnityEngine.Animation))
+
+	animation:Play("activitystore_close")
+	TaskDispatcher.runDelay(self.onPlayCloseTransitionFinish, self, 0.167)
 end
 
-return var_0_0
+return ReactivityStoreViewContainer

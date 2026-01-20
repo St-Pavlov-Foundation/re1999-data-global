@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity3_1.nationalgift.view.NationalGiftBuyTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/nationalgift/view/NationalGiftBuyTipViewContainer.lua
 
-local var_0_0 = class("NationalGiftBuyTipViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity3_1.nationalgift.view.NationalGiftBuyTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local NationalGiftBuyTipViewContainer = class("NationalGiftBuyTipViewContainer", BaseViewContainer)
+
+function NationalGiftBuyTipViewContainer:buildViews()
 	return {
 		NationalGiftBuyTipView.New()
 	}
 end
 
-return var_0_0
+return NationalGiftBuyTipViewContainer

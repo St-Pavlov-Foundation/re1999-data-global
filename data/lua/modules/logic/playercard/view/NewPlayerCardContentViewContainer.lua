@@ -1,59 +1,63 @@
-﻿module("modules.logic.playercard.view.NewPlayerCardContentViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/playercard/view/NewPlayerCardContentViewContainer.lua
 
-local var_0_0 = class("NewPlayerCardContentViewContainer", BaseViewContainer)
+module("modules.logic.playercard.view.NewPlayerCardContentViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local NewPlayerCardContentViewContainer = class("NewPlayerCardContentViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, NewPlayerCardContentView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_lefttop"))
-	arg_1_0:buildThemeScrollView(var_1_0)
+function NewPlayerCardContentViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, NewPlayerCardContentView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_lefttop"))
+	self:buildThemeScrollView(views)
+
+	return views
 end
 
-function var_0_0.buildThemeScrollView(arg_2_0, arg_2_1)
-	local var_2_0 = ListScrollParam.New()
+function NewPlayerCardContentViewContainer:buildThemeScrollView(views)
+	local scrollParam = ListScrollParam.New()
 
-	var_2_0.scrollGOPath = "bottom/#scroll_theme"
-	var_2_0.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_2_0.prefabUrl = "bottom/#scroll_theme/viewport/Content/#go_themeitem"
-	var_2_0.cellClass = PlayerCardThemeItem
-	var_2_0.scrollDir = ScrollEnum.ScrollDirH
-	var_2_0.lineCount = 1
-	var_2_0.cellWidth = 404
-	var_2_0.cellHeight = 172
-	var_2_0.cellSpaceH = -26
-	var_2_0.cellSpaceV = 0
-	var_2_0.startSpace = 49
-	var_2_0.endSpace = 0
-	arg_2_0.scrollView = LuaListScrollView.New(PlayerCardThemeListModel.instance, var_2_0)
+	scrollParam.scrollGOPath = "bottom/#scroll_theme"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "bottom/#scroll_theme/viewport/Content/#go_themeitem"
+	scrollParam.cellClass = PlayerCardThemeItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirH
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 404
+	scrollParam.cellHeight = 172
+	scrollParam.cellSpaceH = -26
+	scrollParam.cellSpaceV = 0
+	scrollParam.startSpace = 49
+	scrollParam.endSpace = 0
+	self.scrollView = LuaListScrollView.New(PlayerCardThemeListModel.instance, scrollParam)
 
-	table.insert(arg_2_1, arg_2_0.scrollView)
+	table.insert(views, self.scrollView)
 end
 
-function var_0_0.buildTabViews(arg_3_0, arg_3_1)
-	if arg_3_1 == 1 then
-		arg_3_0.navigateView = NavigateButtonsView.New({
+function NewPlayerCardContentViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
-		arg_3_0.navigateView:setOverrideClose(arg_3_0._overrideClose, arg_3_0)
+		self.navigateView:setOverrideClose(self._overrideClose, self)
 
 		return {
-			arg_3_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-function var_0_0._overrideClose(arg_4_0)
-	if not PlayerCardModel.instance:getIsOpenSkinView() then
-		arg_4_0:closeThis()
+function NewPlayerCardContentViewContainer:_overrideClose()
+	local isopen = PlayerCardModel.instance:getIsOpenSkinView()
+
+	if not isopen then
+		self:closeThis()
 	else
 		PlayerCardController.instance:dispatchEvent(PlayerCardEvent.OnCloseBottomView)
 	end
 end
 
-return var_0_0
+return NewPlayerCardContentViewContainer

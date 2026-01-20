@@ -1,14 +1,16 @@
-﻿module("modules.logic.critter.model.CritterIncubateMO", package.seeall)
+﻿-- chunkname: @modules/logic/critter/model/CritterIncubateMO.lua
 
-local var_0_0 = pureTable("CritterIncubateMO")
-local var_0_1 = {}
+module("modules.logic.critter.model.CritterIncubateMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_1 = arg_1_1 or var_0_1
+local CritterIncubateMO = pureTable("CritterIncubateMO")
+local _TEMP_EMPTY_TB = {}
+
+function CritterIncubateMO:init(info)
+	info = info or _TEMP_EMPTY_TB
 end
 
-function var_0_0.getTempChildMOList(arg_2_0)
+function CritterIncubateMO:getTempChildMOList()
 	return
 end
 
-return var_0_0
+return CritterIncubateMO

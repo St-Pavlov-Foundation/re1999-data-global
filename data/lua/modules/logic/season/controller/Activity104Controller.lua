@@ -1,126 +1,130 @@
-﻿module("modules.logic.season.controller.Activity104Controller", package.seeall)
+﻿-- chunkname: @modules/logic/season/controller/Activity104Controller.lua
 
-local var_0_0 = class("Activity104Controller", BaseController)
+module("modules.logic.season.controller.Activity104Controller", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local Activity104Controller = class("Activity104Controller", BaseController)
+
+function Activity104Controller:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function Activity104Controller:onInitFinish()
 	return
 end
 
-function var_0_0.openSeasonMainView(arg_3_0, arg_3_1)
-	local var_3_0 = Activity104Model.instance:getCurSeasonId()
-	local var_3_1, var_3_2, var_3_3 = ActivityHelper.getActivityStatusAndToast(var_3_0)
+function Activity104Controller:openSeasonMainView(param)
+	local actId = Activity104Model.instance:getCurSeasonId()
+	local status, toastId, paramList = ActivityHelper.getActivityStatusAndToast(actId)
 
-	if var_3_1 ~= ActivityEnum.ActivityStatus.Normal then
-		if var_3_2 then
-			GameFacade.showToastWithTableParam(var_3_2, var_3_3)
+	if status ~= ActivityEnum.ActivityStatus.Normal then
+		if toastId then
+			GameFacade.showToastWithTableParam(toastId, paramList)
 		end
 
 		return
 	end
 
-	local function var_3_4()
-		local var_4_0 = SeasonConfig.instance:getStoryIds(var_3_0)
+	local function func()
+		local storyIds = SeasonConfig.instance:getStoryIds(actId)
 
-		if var_4_0[1] ~= 0 and not StoryModel.instance:isStoryFinished(var_4_0[1]) then
-			StoryController.instance:playStories(var_4_0, nil, arg_3_0.onStoryBack, arg_3_0, arg_3_1)
+		if storyIds[1] ~= 0 and not StoryModel.instance:isStoryFinished(storyIds[1]) then
+			StoryController.instance:playStories(storyIds, nil, self.onStoryBack, self, param)
 
 			return
 		end
 
-		SeasonViewHelper.openView(var_3_0, Activity104Enum.ViewName.MainView, arg_3_1)
+		SeasonViewHelper.openView(actId, Activity104Enum.ViewName.MainView, param)
 	end
 
-	if Activity104Model.instance:tryGetActivityInfo(var_3_0, var_3_4) then
-		var_3_4()
+	if Activity104Model.instance:tryGetActivityInfo(actId, func) then
+		func()
 	end
 end
 
-function var_0_0.onStoryBack(arg_5_0, arg_5_1)
-	local var_5_0 = Activity104Model.instance:getCurSeasonId()
+function Activity104Controller:onStoryBack(param)
+	local actId = Activity104Model.instance:getCurSeasonId()
 
-	Activity104Rpc.instance:sendMarkActivity104StoryRequest(var_5_0)
-	var_0_0.instance:openSeasonMainView(arg_5_1)
+	Activity104Rpc.instance:sendMarkActivity104StoryRequest(actId)
+	Activity104Controller.instance:openSeasonMainView(param)
 end
 
-function var_0_0.openSeasonMarketView(arg_6_0, arg_6_1)
-	local var_6_0 = Activity104Model.instance:getCurSeasonId()
+function Activity104Controller:openSeasonMarketView(param)
+	local actId = Activity104Model.instance:getCurSeasonId()
 
-	SeasonViewHelper.openView(var_6_0, Activity104Enum.ViewName.MarketView, arg_6_1)
+	SeasonViewHelper.openView(actId, Activity104Enum.ViewName.MarketView, param)
 end
 
-function var_0_0.openSeasonSpecialMarketView(arg_7_0, arg_7_1)
-	local var_7_0 = Activity104Model.instance:getCurSeasonId()
+function Activity104Controller:openSeasonSpecialMarketView(param)
+	local actId = Activity104Model.instance:getCurSeasonId()
 
-	SeasonViewHelper.openView(var_7_0, Activity104Enum.ViewName.SpecialMarketView, arg_7_1)
+	SeasonViewHelper.openView(actId, Activity104Enum.ViewName.SpecialMarketView, param)
 end
 
-function var_0_0.openSeasonTaskView(arg_8_0)
-	local var_8_0 = Activity104Model.instance:getCurSeasonId()
+function Activity104Controller:openSeasonTaskView()
+	local actId = Activity104Model.instance:getCurSeasonId()
 
-	SeasonViewHelper.openView(var_8_0, Activity104Enum.ViewName.TaskView)
+	SeasonViewHelper.openView(actId, Activity104Enum.ViewName.TaskView)
 end
 
-function var_0_0.openSeasonCardBook(arg_9_0)
-	local var_9_0 = Activity104Model.instance:getCurSeasonId()
+function Activity104Controller:openSeasonCardBook()
+	local actId = Activity104Model.instance:getCurSeasonId()
 
-	SeasonViewHelper.openView(var_9_0, Activity104Enum.ViewName.EquipBookView)
+	SeasonViewHelper.openView(actId, Activity104Enum.ViewName.EquipBookView)
 end
 
-function var_0_0.openSeasonEquipView(arg_10_0, arg_10_1)
-	local var_10_0 = Activity104Model.instance:getCurSeasonId()
+function Activity104Controller:openSeasonEquipView(param)
+	local actId = Activity104Model.instance:getCurSeasonId()
 
-	SeasonViewHelper.openView(var_10_0, Activity104Enum.ViewName.EquipView, arg_10_1)
+	SeasonViewHelper.openView(actId, Activity104Enum.ViewName.EquipView, param)
 end
 
-function var_0_0.openSeasonEquipHeroView(arg_11_0, arg_11_1)
-	local var_11_0 = Activity104Model.instance:getCurSeasonId()
+function Activity104Controller:openSeasonEquipHeroView(param)
+	local actId = Activity104Model.instance:getCurSeasonId()
 
-	SeasonViewHelper.openView(var_11_0, Activity104Enum.ViewName.EquipHeroView, arg_11_1)
+	SeasonViewHelper.openView(actId, Activity104Enum.ViewName.EquipHeroView, param)
 end
 
-function var_0_0.openSeasonFightRuleTipView(arg_12_0, arg_12_1)
-	local var_12_0 = Activity104Model.instance:getCurSeasonId()
+function Activity104Controller:openSeasonFightRuleTipView(param)
+	local actId = Activity104Model.instance:getCurSeasonId()
 
-	SeasonViewHelper.openView(var_12_0, Activity104Enum.ViewName.FightRuleTipView, arg_12_1)
+	SeasonViewHelper.openView(actId, Activity104Enum.ViewName.FightRuleTipView, param)
 end
 
-function var_0_0.openSeasonRetailView(arg_13_0, arg_13_1)
-	local var_13_0 = Activity104Model.instance:getCurSeasonId()
+function Activity104Controller:openSeasonRetailView(param)
+	local actId = Activity104Model.instance:getCurSeasonId()
 
-	SeasonViewHelper.openView(var_13_0, Activity104Enum.ViewName.RetailView, arg_13_1)
+	SeasonViewHelper.openView(actId, Activity104Enum.ViewName.RetailView, param)
 end
 
-function var_0_0.openSeasonRetailLevelInfoView(arg_14_0, arg_14_1)
-	local var_14_0 = Activity104Model.instance:getCurSeasonId()
+function Activity104Controller:openSeasonRetailLevelInfoView(param)
+	local actId = Activity104Model.instance:getCurSeasonId()
 
-	SeasonViewHelper.openView(var_14_0, Activity104Enum.ViewName.RetailLevelInfoView, arg_14_1)
+	SeasonViewHelper.openView(actId, Activity104Enum.ViewName.RetailLevelInfoView, param)
 end
 
-function var_0_0.openSeasonHeroGroupFightView(arg_15_0, arg_15_1)
-	local var_15_0 = Activity104Model.instance:getCurSeasonId()
+function Activity104Controller:openSeasonHeroGroupFightView(param)
+	local actId = Activity104Model.instance:getCurSeasonId()
 
-	SeasonViewHelper.openView(var_15_0, Activity104Enum.ViewName.HeroGroupFightView, arg_15_1)
+	SeasonViewHelper.openView(actId, Activity104Enum.ViewName.HeroGroupFightView, param)
 end
 
-function var_0_0.openSeasonSettlementView(arg_16_0, arg_16_1)
-	local var_16_0 = Activity104Model.instance:getCurSeasonId()
+function Activity104Controller:openSeasonSettlementView(param)
+	local actId = Activity104Model.instance:getCurSeasonId()
 
-	SeasonViewHelper.openView(var_16_0, Activity104Enum.ViewName.SettlementView, arg_16_1)
+	SeasonViewHelper.openView(actId, Activity104Enum.ViewName.SettlementView, param)
 end
 
-function var_0_0.openSeasonFightSuccView(arg_17_0, arg_17_1)
-	local var_17_0 = Activity104Model.instance:getCurSeasonId()
+function Activity104Controller:openSeasonFightSuccView(param)
+	local actId = Activity104Model.instance:getCurSeasonId()
 
-	SeasonViewHelper.openView(var_17_0, Activity104Enum.ViewName.FightSuccView, arg_17_1)
+	SeasonViewHelper.openView(actId, Activity104Enum.ViewName.FightSuccView, param)
 end
 
-function var_0_0.openSeasonEquipSelectChoiceView(arg_18_0, arg_18_1, arg_18_2)
-	if not arg_18_2 then
-		if not OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.SeasonRetail) then
+function Activity104Controller:openSeasonEquipSelectChoiceView(param, forceOpen)
+	if not forceOpen then
+		local isOpen = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.SeasonRetail)
+
+		if not isOpen then
 			return
 		end
 
@@ -129,14 +133,16 @@ function var_0_0.openSeasonEquipSelectChoiceView(arg_18_0, arg_18_1, arg_18_2)
 		end
 	end
 
-	local var_18_0 = Activity104Model.instance:getCurSeasonId()
+	local actId = Activity104Model.instance:getCurSeasonId()
 
-	SeasonViewHelper.openView(var_18_0, Activity104Enum.ViewName.EquipSelfChoiceView, arg_18_1)
+	SeasonViewHelper.openView(actId, Activity104Enum.ViewName.EquipSelfChoiceView, param)
 end
 
-function var_0_0.checkShowEquipSelfChoiceView(arg_19_0, arg_19_1)
-	if not arg_19_1 then
-		if not OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.SeasonRetail) then
+function Activity104Controller:checkShowEquipSelfChoiceView(forceOpen)
+	if not forceOpen then
+		local isOpen = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.SeasonRetail)
+
+		if not isOpen then
 			return
 		end
 
@@ -145,104 +151,104 @@ function var_0_0.checkShowEquipSelfChoiceView(arg_19_0, arg_19_1)
 		end
 	end
 
-	local var_19_0 = Activity104Model.instance:getCurSeasonId()
-	local var_19_1 = Activity104Model.instance:getOptionalAct104Equips(var_19_0)
+	local actId = Activity104Model.instance:getCurSeasonId()
+	local optionalItems = Activity104Model.instance:getOptionalAct104Equips(actId)
 
-	if #var_19_1 > 0 then
-		local var_19_2 = SeasonViewHelper.getViewName(var_19_0, Activity104Enum.ViewName.EquipSelfChoiceView)
+	if #optionalItems > 0 then
+		local viewName = SeasonViewHelper.getViewName(actId, Activity104Enum.ViewName.EquipSelfChoiceView)
 
-		for iter_19_0 = 1, #var_19_1 do
-			PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, var_19_2, {
-				actId = var_19_0,
-				costItemUid = var_19_1[iter_19_0].uid
+		for i = 1, #optionalItems do
+			PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, viewName, {
+				actId = actId,
+				costItemUid = optionalItems[i].uid
 			})
 		end
 	end
 end
 
-function var_0_0.openSeasonCelebrityCardTipView(arg_20_0, arg_20_1)
-	local var_20_0 = Activity104Model.instance:getCurSeasonId()
+function Activity104Controller:openSeasonCelebrityCardTipView(param)
+	local actId = Activity104Model.instance:getCurSeasonId()
 
-	SeasonViewHelper.openView(var_20_0, Activity104Enum.ViewName.CelebrityCardTipView, arg_20_1)
+	SeasonViewHelper.openView(actId, Activity104Enum.ViewName.CelebrityCardTipView, param)
 end
 
-function var_0_0.openSeasonAdditionRuleTipView(arg_21_0, arg_21_1)
-	local var_21_0 = Activity104Model.instance:getCurSeasonId()
+function Activity104Controller:openSeasonAdditionRuleTipView(param)
+	local actId = Activity104Model.instance:getCurSeasonId()
 
-	SeasonViewHelper.openView(var_21_0, Activity104Enum.ViewName.AdditionRuleTipView, arg_21_1)
+	SeasonViewHelper.openView(actId, Activity104Enum.ViewName.AdditionRuleTipView, param)
 end
 
-function var_0_0.openSeasonCelebrityCardGetlView(arg_22_0, arg_22_1)
-	local var_22_0 = Activity104Model.instance:getCurSeasonId()
+function Activity104Controller:openSeasonCelebrityCardGetlView(param)
+	local actId = Activity104Model.instance:getCurSeasonId()
 
-	SeasonViewHelper.openView(var_22_0, Activity104Enum.ViewName.CelebrityCardGetlView, arg_22_1)
+	SeasonViewHelper.openView(actId, Activity104Enum.ViewName.CelebrityCardGetlView, param)
 end
 
-function var_0_0.openSeasonFightFailView(arg_23_0, arg_23_1)
-	local var_23_0 = Activity104Model.instance:getCurSeasonId()
+function Activity104Controller:openSeasonFightFailView(param)
+	local actId = Activity104Model.instance:getCurSeasonId()
 
-	SeasonViewHelper.openView(var_23_0, Activity104Enum.ViewName.FightFailView, arg_23_1)
+	SeasonViewHelper.openView(actId, Activity104Enum.ViewName.FightFailView, param)
 end
 
-function var_0_0.openSeasonSumView(arg_24_0, arg_24_1)
-	local var_24_0 = Activity104Model.instance:getCurSeasonId()
+function Activity104Controller:openSeasonSumView(param)
+	local actId = Activity104Model.instance:getCurSeasonId()
 
-	SeasonViewHelper.openView(var_24_0, Activity104Enum.ViewName.SumView, arg_24_1)
+	SeasonViewHelper.openView(actId, Activity104Enum.ViewName.SumView, param)
 end
 
-function var_0_0.openSeasonStoreView(arg_25_0)
-	local var_25_0 = Activity104Model.instance:getCurSeasonId()
-	local var_25_1 = SeasonViewHelper.getViewName(var_25_0, Activity104Enum.ViewName.StoreView)
-	local var_25_2 = Activity104Enum.SeasonStore[var_25_0]
+function Activity104Controller:openSeasonStoreView()
+	local actId = Activity104Model.instance:getCurSeasonId()
+	local viewName = SeasonViewHelper.getViewName(actId, Activity104Enum.ViewName.StoreView)
+	local storeActId = Activity104Enum.SeasonStore[actId]
 
-	arg_25_0:enterVersionActivityView(var_25_1, var_25_2, function()
-		Activity107Rpc.instance:sendGet107GoodsInfoRequest(var_25_2, function()
-			ViewMgr.instance:openView(var_25_1, {
-				actId = var_25_2
+	self:enterVersionActivityView(viewName, storeActId, function()
+		Activity107Rpc.instance:sendGet107GoodsInfoRequest(storeActId, function()
+			ViewMgr.instance:openView(viewName, {
+				actId = storeActId
 			})
 		end)
 	end)
 end
 
-function var_0_0.openSeasonStoryView(arg_28_0, arg_28_1)
-	local var_28_0 = Activity104Model.instance:getCurSeasonId()
+function Activity104Controller:openSeasonStoryView(param)
+	local actId = Activity104Model.instance:getCurSeasonId()
 
-	SeasonViewHelper.openView(var_28_0, Activity104Enum.ViewName.StoryView, arg_28_1)
+	SeasonViewHelper.openView(actId, Activity104Enum.ViewName.StoryView, param)
 end
 
-function var_0_0.openSeasonStoryPagePopView(arg_29_0, arg_29_1)
-	local var_29_0 = Activity104Model.instance:getCurSeasonId()
+function Activity104Controller:openSeasonStoryPagePopView(param)
+	local actId = Activity104Model.instance:getCurSeasonId()
 
-	SeasonViewHelper.openView(var_29_0, Activity104Enum.ViewName.StoryPagePopView, arg_29_1)
+	SeasonViewHelper.openView(actId, Activity104Enum.ViewName.StoryPagePopView, param)
 end
 
-function var_0_0.closeSeasonView(arg_30_0, arg_30_1, arg_30_2, arg_30_3)
-	local var_30_0 = Activity104Model.instance:getCurSeasonId()
-	local var_30_1 = SeasonViewHelper.getViewName(var_30_0, arg_30_1)
+function Activity104Controller:closeSeasonView(viewName, isImmediate, closeManually)
+	local actId = Activity104Model.instance:getCurSeasonId()
+	local realViewName = SeasonViewHelper.getViewName(actId, viewName)
 
-	ViewMgr.instance:closeView(var_30_1, arg_30_2, arg_30_3)
+	ViewMgr.instance:closeView(realViewName, isImmediate, closeManually)
 end
 
-function var_0_0.enterVersionActivityView(arg_31_0, arg_31_1, arg_31_2, arg_31_3, arg_31_4)
-	local var_31_0, var_31_1, var_31_2 = ActivityHelper.getActivityStatusAndToast(arg_31_2)
+function Activity104Controller:enterVersionActivityView(viewName, actId, callback, callbackObj)
+	local status, toastId, toastParam = ActivityHelper.getActivityStatusAndToast(actId)
 
-	if var_31_0 ~= ActivityEnum.ActivityStatus.Normal then
-		if var_31_1 then
-			GameFacade.showToast(var_31_1, var_31_2)
+	if status ~= ActivityEnum.ActivityStatus.Normal then
+		if toastId then
+			GameFacade.showToast(toastId, toastParam)
 		end
 
 		return
 	end
 
-	if arg_31_3 then
-		arg_31_3(arg_31_4, arg_31_1, arg_31_2)
+	if callback then
+		callback(callbackObj, viewName, actId)
 
 		return
 	end
 
-	ViewMgr.instance:openView(arg_31_1)
+	ViewMgr.instance:openView(viewName)
 end
 
-var_0_0.instance = var_0_0.New()
+Activity104Controller.instance = Activity104Controller.New()
 
-return var_0_0
+return Activity104Controller

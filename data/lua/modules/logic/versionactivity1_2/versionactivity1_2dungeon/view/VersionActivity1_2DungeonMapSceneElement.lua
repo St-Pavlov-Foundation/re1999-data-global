@@ -1,145 +1,153 @@
-﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity1_2DungeonMapSceneElement", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/versionactivity1_2dungeon/view/VersionActivity1_2DungeonMapSceneElement.lua
 
-local var_0_0 = class("VersionActivity1_2DungeonMapSceneElement", DungeonMapSceneElements)
-local var_0_1 = {
+module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity1_2DungeonMapSceneElement", package.seeall)
+
+local VersionActivity1_2DungeonMapSceneElement = class("VersionActivity1_2DungeonMapSceneElement", DungeonMapSceneElements)
+local SetFlagGuideIds = {
 	12101,
 	12102,
 	12104,
 	12105
 }
-local var_0_2 = {
+local ForceShowElementIds = {
 	12101011
 }
 
-function var_0_0.addEvents(arg_1_0)
-	var_0_0.super.addEvents(arg_1_0)
-	arg_1_0:addEventCb(VersionActivity1_2DungeonController.instance, VersionActivity1_2DungeonEvent.onReceiveAct116InfoUpdatePush, arg_1_0._onReceiveAct116InfoUpdatePush, arg_1_0)
+function VersionActivity1_2DungeonMapSceneElement:addEvents()
+	VersionActivity1_2DungeonMapSceneElement.super.addEvents(self)
+	self:addEventCb(VersionActivity1_2DungeonController.instance, VersionActivity1_2DungeonEvent.onReceiveAct116InfoUpdatePush, self._onReceiveAct116InfoUpdatePush, self)
 end
 
-function var_0_0._OnRemoveElement(arg_2_0, arg_2_1)
-	if not arg_2_0._elementList then
+function VersionActivity1_2DungeonMapSceneElement:_OnRemoveElement(id)
+	if not self._elementList then
 		return
 	end
 
-	if not arg_2_0._elementList[arg_2_1] then
+	if not self._elementList[id] then
 		return
 	end
 
-	var_0_0.super._OnRemoveElement(arg_2_0, arg_2_1)
+	VersionActivity1_2DungeonMapSceneElement.super._OnRemoveElement(self, id)
 end
 
-function var_0_0._addElement(arg_3_0, arg_3_1)
-	if arg_3_1.id == 12101091 then
+function VersionActivity1_2DungeonMapSceneElement:_addElement(elementConfig)
+	if elementConfig.id == 12101091 then
 		return
 	end
 
-	if arg_3_0._elementList[arg_3_1.id] then
+	if self._elementList[elementConfig.id] then
 		return
 	end
 
-	local var_3_0 = UnityEngine.GameObject.New(tostring(arg_3_1.id))
+	local go = UnityEngine.GameObject.New(tostring(elementConfig.id))
 
-	gohelper.setActive(var_3_0, arg_3_0:_checkShowDailyElement(arg_3_1.id))
-	gohelper.addChild(arg_3_0._elementRoot, var_3_0)
+	gohelper.setActive(go, self:_checkShowDailyElement(elementConfig.id))
+	gohelper.addChild(self._elementRoot, go)
 
-	local var_3_1 = MonoHelper.addLuaComOnceToGo(var_3_0, VersionActivity1_2DungeonMapElement, {
-		arg_3_1,
-		arg_3_0._mapScene,
-		arg_3_0
+	local elementComp = MonoHelper.addLuaComOnceToGo(go, VersionActivity1_2DungeonMapElement, {
+		elementConfig,
+		self._mapScene,
+		self
 	})
 
-	arg_3_0._elementList[arg_3_1.id] = var_3_1
+	self._elementList[elementConfig.id] = elementComp
 
-	if var_3_1:showArrow() then
-		local var_3_2 = arg_3_0.viewContainer:getSetting().otherRes[5]
-		local var_3_3 = arg_3_0:getResInst(var_3_2, arg_3_0._goarrow)
-		local var_3_4 = gohelper.findChild(var_3_3, "mesh")
-		local var_3_5, var_3_6, var_3_7 = transformhelper.getLocalRotation(var_3_4.transform)
-		local var_3_8 = gohelper.getClick(gohelper.findChild(var_3_3, "click"))
+	if elementComp:showArrow() then
+		local itemPath = self.viewContainer:getSetting().otherRes[5]
+		local itemGo = self:getResInst(itemPath, self._goarrow)
+		local rotationGo = gohelper.findChild(itemGo, "mesh")
+		local rx, ry, rz = transformhelper.getLocalRotation(rotationGo.transform)
+		local arrowClick = gohelper.getClick(gohelper.findChild(itemGo, "click"))
 
-		var_3_8:AddClickListener(arg_3_0._arrowClick, arg_3_0, arg_3_1.id)
+		arrowClick:AddClickListener(self._arrowClick, self, elementConfig.id)
 
-		arg_3_0._arrowList[arg_3_1.id] = {
-			go = var_3_3,
-			rotationTrans = var_3_4.transform,
+		self._arrowList[elementConfig.id] = {
+			go = itemGo,
+			rotationTrans = rotationGo.transform,
 			initRotation = {
-				var_3_5,
-				var_3_6,
-				var_3_7
+				rx,
+				ry,
+				rz
 			},
-			arrowClick = var_3_8
+			arrowClick = arrowClick
 		}
 
-		arg_3_0:_updateArrow(var_3_1)
+		self:_updateArrow(elementComp)
 	end
 end
 
-function var_0_0._onReceiveAct116InfoUpdatePush(arg_4_0)
-	if arg_4_0._elementList then
-		for iter_4_0, iter_4_1 in ipairs(arg_4_0._elementList) do
-			gohelper.setActive(iter_4_1._go, arg_4_0:_checkShowDailyElement(iter_4_1._config.id))
+function VersionActivity1_2DungeonMapSceneElement:_onReceiveAct116InfoUpdatePush()
+	if self._elementList then
+		for i, v in ipairs(self._elementList) do
+			gohelper.setActive(v._go, self:_checkShowDailyElement(v._config.id))
 		end
 	end
 
-	arg_4_0.viewContainer.mapScene:_showDailyBtn()
+	self.viewContainer.mapScene:_showDailyBtn()
 end
 
-function var_0_0._showElements(arg_5_0, arg_5_1)
-	if not arg_5_0._sceneGo or arg_5_0._lockShowElementAnim then
+function VersionActivity1_2DungeonMapSceneElement:_showElements(mapId)
+	if not self._sceneGo or self._lockShowElementAnim then
 		return
 	end
 
-	local var_5_0 = DungeonMapModel.instance:getElements(arg_5_1)
+	local elementsList = DungeonMapModel.instance:getElements(mapId)
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_0) do
-		if iter_5_1.type == DungeonEnum.ElementType.Activity1_2Building_Upgrade and not VersionActivity1_2DungeonModel.instance:getElementData(iter_5_1.id) then
-			Activity116Rpc.instance:sendGet116InfosRequest()
+	for i, v in ipairs(elementsList) do
+		if v.type == DungeonEnum.ElementType.Activity1_2Building_Upgrade then
+			local buildingData = VersionActivity1_2DungeonModel.instance:getElementData(v.id)
 
-			break
+			if not buildingData then
+				Activity116Rpc.instance:sendGet116InfosRequest()
+
+				break
+			end
 		end
 	end
 
-	local var_5_1 = DungeonMapModel.instance:getNewElements()
-	local var_5_2 = {}
-	local var_5_3 = {}
+	local newElements = DungeonMapModel.instance:getNewElements()
+	local animElements = {}
+	local normalElements = {}
 
-	for iter_5_2, iter_5_3 in ipairs(var_5_0) do
-		if iter_5_3.showCamera == 1 and not arg_5_0._skipShowElementAnim and (var_5_1 and tabletool.indexOf(var_5_1, iter_5_3.id) or arg_5_0._forceShowElementAnim) then
-			table.insert(var_5_2, iter_5_3.id)
+	for i, config in ipairs(elementsList) do
+		if config.showCamera == 1 and not self._skipShowElementAnim and (newElements and tabletool.indexOf(newElements, config.id) or self._forceShowElementAnim) then
+			table.insert(animElements, config.id)
 		else
-			table.insert(var_5_3, iter_5_3)
+			table.insert(normalElements, config)
 		end
 	end
 
-	arg_5_0:_showElementAnim(var_5_2, var_5_3)
+	self:_showElementAnim(animElements, normalElements)
 	DungeonMapModel.instance:clearNewElements()
 end
 
-function var_0_0._checkShowDailyElement(arg_6_0, arg_6_1)
-	if lua_chapter_map_element.configDict[arg_6_1].type == DungeonEnum.ElementType.DailyEpisode then
-		return VersionActivity1_2DungeonModel.instance:getDailyEpisodeConfigByElementId(arg_6_1)
+function VersionActivity1_2DungeonMapSceneElement:_checkShowDailyElement(elementId)
+	local elementConfig = lua_chapter_map_element.configDict[elementId]
+
+	if elementConfig.type == DungeonEnum.ElementType.DailyEpisode then
+		return VersionActivity1_2DungeonModel.instance:getDailyEpisodeConfigByElementId(elementId)
 	end
 
 	return true
 end
 
-function var_0_0.setElementDown(arg_7_0, arg_7_1)
-	if not gohelper.isNil(arg_7_0._mapScene._uiGo) then
+function VersionActivity1_2DungeonMapSceneElement:setElementDown(item)
+	if not gohelper.isNil(self._mapScene._uiGo) then
 		return
 	end
 
-	arg_7_0.curSelectId = arg_7_1._config.id
-	arg_7_0._elementMouseDown = arg_7_1
+	self.curSelectId = item._config.id
+	self._elementMouseDown = item
 end
 
-function var_0_0._onFinishGuide(arg_8_0, arg_8_1)
-	if (arg_8_0._lockShowElementAnim or arg_8_0._forceShowElementId ~= nil and tabletool.indexOf(var_0_2, arg_8_0._forceShowElementId)) and tabletool.indexOf(var_0_1, arg_8_1) then
-		arg_8_0._lockShowElementAnim = nil
-		arg_8_0._forceShowElementId = nil
+function VersionActivity1_2DungeonMapSceneElement:_onFinishGuide(guideId)
+	if (self._lockShowElementAnim or self._forceShowElementId ~= nil and tabletool.indexOf(ForceShowElementIds, self._forceShowElementId)) and tabletool.indexOf(SetFlagGuideIds, guideId) then
+		self._lockShowElementAnim = nil
+		self._forceShowElementId = nil
 
-		GuideModel.instance:clearFlagByGuideId(arg_8_1)
-		arg_8_0:_initElements()
+		GuideModel.instance:clearFlagByGuideId(guideId)
+		self:_initElements()
 	end
 end
 
-return var_0_0
+return VersionActivity1_2DungeonMapSceneElement

@@ -60,7 +60,7 @@
     "day": 1,
     "bonus": "10#11#1|1#620103#1",
     "characterId": 3027,
-    "name": "无线电小姐",
+    "name": "language_10005357",
     "content": "language_10065765"
   },
   {
@@ -68,7 +68,7 @@
     "day": 2,
     "bonus": "2#2#100|1#620102#20",
     "characterId": 3033,
-    "name": "TTT",
+    "name": "language_10005367",
     "content": "language_10065766"
   },
   {
@@ -76,7 +76,7 @@
     "day": 3,
     "bonus": "1#530001#1|1#120013#1",
     "characterId": 3055,
-    "name": "斯普特尼克",
+    "name": "language_10006125",
     "content": "language_10065767"
   },
   {
@@ -84,7 +84,7 @@
     "day": 4,
     "bonus": "1#620103#1|1#620102#20",
     "characterId": 3052,
-    "name": "新巴别塔",
+    "name": "language_10005369",
     "content": "language_10065768"
   },
   {
@@ -92,7 +92,7 @@
     "day": 5,
     "bonus": "1#530001#1|1#180003#1",
     "characterId": 3088,
-    "name": "塞梅尔维斯",
+    "name": "language_10024711",
     "content": "language_10065769"
   },
   {
@@ -100,7 +100,7 @@
     "day": 6,
     "bonus": "10#11#1|1#620102#20",
     "characterId": 3012,
-    "name": "弄臣",
+    "name": "language_10005340",
     "content": "language_10065770"
   },
   {
@@ -108,7 +108,63 @@
     "day": 7,
     "bonus": "2#2#200|10#11#1|1#620103#1|2#3#10000|2#5#10000",
     "characterId": 3065,
-    "name": "马库斯",
+    "name": "language_10035464",
     "content": "language_10065771"
+  },
+  {
+    "turnbackId": 3,
+    "day": 1,
+    "bonus": "1#510010#1|1#120013#1",
+    "characterId": 3023,
+    "name": "language_10005348",
+    "content": "language_10098675"
+  },
+  {
+    "turnbackId": 3,
+    "day": 2,
+    "bonus": "1#753202#1|1#620102#20",
+    "characterId": 3066,
+    "name": "language_10017972",
+    "content": "language_10098676"
+  },
+  {
+    "turnbackId": 3,
+    "day": 3,
+    "bonus": "2#2#100|10#11#1",
+    "characterId": 3087,
+    "name": "language_10037139",
+    "content": "language_10098677"
+  },
+  {
+    "turnbackId": 3,
+    "day": 4,
+    "bonus": "1#620103#1|1#180003#1",
+    "characterId": 3053,
+    "name": "language_10005245",
+    "content": "language_10098678"
+  },
+  {
+    "turnbackId": 3,
+    "day": 5,
+    "bonus": "1#620103#1|10#11#1",
+    "characterId": 3100,
+    "name": "language_10055457",
+    "content": "language_10098679"
+  },
+  {
+    "turnbackId": 3,
+    "day": 6,
+    "bonus": "1#620103#1|1#620102#10",
+    "characterId": 3065,
+    "name": "language_10035464",
+    "content": "language_10098680"
+  },
+  {
+    "turnbackId": 3,
+    "day": 7,
+    "bonus": "1#753201#1|2#2#200|10#11#1|1#510010#1",
+    "characterId": 3007,
+    "name": "language_10005337",
+    "content": "language_10098681"
   }
 ]

@@ -1,0 +1,42 @@
+[
+  {
+    "id": 380004,
+    "name": "language_10103828",
+    "img": "udimo_pic_4",
+    "isDefault": 1,
+    "defaultUse": 1,
+    "pos": 1,
+    "resource": "v3a2_m_s19_ytm/prefabs/v3a2_m_s19_ytm_03_zsw_01_1",
+    "airPoints": "-5.32#3.97|-3.75#4.45|-2.3#4.7"
+  },
+  {
+    "id": 380001,
+    "name": "language_10103829",
+    "img": "udimo_pic_3",
+    "isDefault": 1,
+    "defaultUse": 1,
+    "pos": 2,
+    "resource": "v3a2_m_s19_ytm/prefabs/v3a2_m_s19_ytm_03_zsw_02_1",
+    "airPoints": ""
+  },
+  {
+    "id": 380002,
+    "name": "language_10103830",
+    "img": "udimo_pic_2",
+    "isDefault": 1,
+    "defaultUse": 0,
+    "pos": 2,
+    "resource": "v3a2_m_s19_ytm/prefabs/v3a2_m_s19_ytm_03_zsw_02_2",
+    "airPoints": ""
+  },
+  {
+    "id": 380003,
+    "name": "language_10103831",
+    "img": "udimo_pic_1",
+    "isDefault": 1,
+    "defaultUse": 0,
+    "pos": 2,
+    "resource": "v3a2_m_s19_ytm/prefabs/v3a2_m_s19_ytm_03_zsw_02_3",
+    "airPoints": "3.42#2.33"
+  }
+]

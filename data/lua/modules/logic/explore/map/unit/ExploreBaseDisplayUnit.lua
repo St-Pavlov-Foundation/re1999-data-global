@@ -1,479 +1,487 @@
-﻿module("modules.logic.explore.map.unit.ExploreBaseDisplayUnit", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/unit/ExploreBaseDisplayUnit.lua
 
-local var_0_0 = class("ExploreBaseDisplayUnit", ExploreBaseUnit)
+module("modules.logic.explore.map.unit.ExploreBaseDisplayUnit", package.seeall)
 
-var_0_0.PairAnim = {
+local ExploreBaseDisplayUnit = class("ExploreBaseDisplayUnit", ExploreBaseUnit)
+
+ExploreBaseDisplayUnit.PairAnim = {
 	[ExploreAnimEnum.AnimName.nToA] = ExploreAnimEnum.AnimName.aToN
 }
 
-function var_0_0.initComponents(arg_1_0)
-	arg_1_0:addComp("clickComp", ExploreUnitClickComp)
-	arg_1_0:addComp("animComp", ExploreUnitAnimComp)
-	arg_1_0:addComp("animEffectComp", ExploreUnitAnimEffectComp)
-	arg_1_0:addComp("uiComp", ExploreUnitUIComp)
-	arg_1_0:addComp("outLineComp", ExploreOutLineComp)
-	arg_1_0:addComp("hangComp", ExploreHangComp)
+function ExploreBaseDisplayUnit:initComponents()
+	self:addComp("clickComp", ExploreUnitClickComp)
+	self:addComp("animComp", ExploreUnitAnimComp)
+	self:addComp("animEffectComp", ExploreUnitAnimEffectComp)
+	self:addComp("uiComp", ExploreUnitUIComp)
+	self:addComp("outLineComp", ExploreOutLineComp)
+	self:addComp("hangComp", ExploreHangComp)
 end
 
-function var_0_0.beginRotate(arg_2_0)
+function ExploreBaseDisplayUnit:beginRotate()
 	return
 end
 
-function var_0_0.endRotate(arg_3_0)
+function ExploreBaseDisplayUnit:endRotate()
 	return
 end
 
-function var_0_0.doRotate(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4, arg_4_5)
-	arg_4_0._rotateEndCb = arg_4_4
-	arg_4_0._rotateEndCallObj = arg_4_5
+function ExploreBaseDisplayUnit:doRotate(from, to, rotateTime, endCallBack, endCallObj)
+	self._rotateEndCb = endCallBack
+	self._rotateEndCallObj = endCallObj
 
-	if arg_4_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_4_0._tweenId, true)
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId, true)
 	end
 
-	arg_4_0._tweenId = ZProj.TweenHelper.DOTweenFloat(arg_4_1, arg_4_2, arg_4_3, arg_4_0._onFrameRotate, arg_4_0._onRotateTweenFinish, arg_4_0)
+	self._tweenId = ZProj.TweenHelper.DOTweenFloat(from, to, rotateTime, self._onFrameRotate, self._onRotateTweenFinish, self)
 end
 
-function var_0_0._onFrameRotate(arg_5_0, arg_5_1)
-	arg_5_0.mo.unitDir = ExploreHelper.getDir(arg_5_1)
+function ExploreBaseDisplayUnit:_onFrameRotate(value)
+	self.mo.unitDir = ExploreHelper.getDir(value)
 
-	arg_5_0:updateRotationRoot()
-	arg_5_0:onRotation()
+	self:updateRotationRoot()
+	self:onRotation()
 end
 
-function var_0_0._onRotateTweenFinish(arg_6_0)
-	arg_6_0._tweenId = nil
+function ExploreBaseDisplayUnit:_onRotateTweenFinish()
+	self._tweenId = nil
 
-	if arg_6_0._rotateEndCb then
-		arg_6_0._rotateEndCb(arg_6_0._rotateEndCallObj)
+	if self._rotateEndCb then
+		self._rotateEndCb(self._rotateEndCallObj)
 	end
 
-	arg_6_0._rotateEndCb = nil
-	arg_6_0._rotateEndCallObj = nil
+	self._rotateEndCb = nil
+	self._rotateEndCallObj = nil
 
-	arg_6_0:onRotateFinish()
+	self:onRotateFinish()
 end
 
-function var_0_0.onRotateFinish(arg_7_0)
+function ExploreBaseDisplayUnit:onRotateFinish()
 	return
 end
 
-function var_0_0.onEnter(arg_8_0)
-	if arg_8_0.animComp and arg_8_0.animComp._curAnim == ExploreAnimEnum.AnimName.exit then
-		arg_8_0.animComp:playAnim(arg_8_0:getIdleAnim(), true)
+function ExploreBaseDisplayUnit:onEnter()
+	if self.animComp and self.animComp._curAnim == ExploreAnimEnum.AnimName.exit then
+		self.animComp:playAnim(self:getIdleAnim(), true)
 	end
 
-	if arg_8_0.clickComp then
-		arg_8_0.clickComp:setEnable(true)
+	if self.clickComp then
+		self.clickComp:setEnable(true)
 	end
 
-	var_0_0.super.onEnter(arg_8_0)
+	ExploreBaseDisplayUnit.super.onEnter(self)
 end
 
-function var_0_0.setExit(arg_9_0)
-	if arg_9_0:isEnter() then
-		arg_9_0._playedEnter = false
+function ExploreBaseDisplayUnit:setExit()
+	if self:isEnter() then
+		self._playedEnter = false
 
-		arg_9_0.mo:setEnter(false)
-		logWarn(string.format("[-]%s:%s退出地图", arg_9_0.__cname, arg_9_0.id))
+		self.mo:setEnter(false)
+		logWarn(string.format("[-]%s:%s退出地图", self.__cname, self.id))
 
-		if arg_9_0._isEnter == false then
-			arg_9_0:setActive(false)
-			arg_9_0:checkLight()
+		if self._isEnter == false then
+			self:setActive(false)
+			self:checkLight()
 		else
-			if arg_9_0.clickComp then
-				arg_9_0.clickComp:setEnable(false)
+			if self.clickComp then
+				self.clickComp:setEnable(false)
 			end
 
-			arg_9_0:playAnim(ExploreAnimEnum.AnimName.exit)
+			self:playAnim(ExploreAnimEnum.AnimName.exit)
 		end
 
-		arg_9_0._isEnter = false
+		self._isEnter = false
 
-		arg_9_0:checkShowIcon()
-		arg_9_0:onExit()
+		self:checkShowIcon()
+		self:onExit()
 	else
-		logWarn("重复退出" .. arg_9_0.id .. arg_9_0.__cname)
+		logWarn("重复退出" .. self.id .. self.__cname)
 	end
 end
 
-function var_0_0.playAnim(arg_10_0, arg_10_1)
-	if not arg_10_0._displayGo or not arg_10_0:isInFOV() then
-		ExploreController.instance:dispatchEvent(ExploreEvent.OnUnitAnimEnd, arg_10_0.id, arg_10_1)
+function ExploreBaseDisplayUnit:playAnim(animName)
+	if not self._displayGo or not self:isInFOV() then
+		ExploreController.instance:dispatchEvent(ExploreEvent.OnUnitAnimEnd, self.id, animName)
 	else
-		arg_10_0.animComp:playAnim(arg_10_1)
+		self.animComp:playAnim(animName)
 	end
 end
 
-function var_0_0.isPairAnim(arg_11_0, arg_11_1, arg_11_2)
-	return arg_11_0.PairAnim[arg_11_1] == arg_11_2 or arg_11_0.PairAnim[arg_11_2] == arg_11_1
+function ExploreBaseDisplayUnit:isPairAnim(preAnim, nowAnim)
+	return self.PairAnim[preAnim] == nowAnim or self.PairAnim[nowAnim] == preAnim
 end
 
-function var_0_0.onAnimEnd(arg_12_0, arg_12_1, arg_12_2)
-	if arg_12_1 == ExploreAnimEnum.AnimName.exit then
-		arg_12_0:setActive(false)
-		arg_12_0:_releaseDisplayGo()
-		arg_12_0:checkLight()
+function ExploreBaseDisplayUnit:onAnimEnd(preAnim, nowAnim)
+	if preAnim == ExploreAnimEnum.AnimName.exit then
+		self:setActive(false)
+		self:_releaseDisplayGo()
+		self:checkLight()
 	end
 end
 
-function var_0_0.onInit(arg_13_0)
+function ExploreBaseDisplayUnit:onInit()
 	return
 end
 
-function var_0_0._setupMO(arg_14_0)
-	arg_14_0:setupRes()
-	arg_14_0:setupMO()
-	arg_14_0:updateRotation()
-	arg_14_0:updateRotationRoot()
-	arg_14_0:checkShowIcon()
+function ExploreBaseDisplayUnit:_setupMO()
+	self:setupRes()
+	self:setupMO()
+	self:updateRotation()
+	self:updateRotationRoot()
+	self:checkShowIcon()
 end
 
-function var_0_0.setupRes(arg_15_0)
-	arg_15_0:setResPath(arg_15_0.mo.showRes)
+function ExploreBaseDisplayUnit:setupRes()
+	self:setResPath(self.mo.showRes)
 end
 
-function var_0_0.setResPath(arg_16_0, arg_16_1)
-	if not arg_16_0:isEnter() or arg_16_0:isInFOV() == false then
+function ExploreBaseDisplayUnit:setResPath(url)
+	if not self:isEnter() or self:isInFOV() == false then
 		return
 	end
 
-	if arg_16_1 == "explore/prefabs/unit/ice.prefab" or arg_16_1 == "" then
-		arg_16_1 = nil
+	if url == "explore/prefabs/unit/ice.prefab" or url == "" then
+		url = nil
 	end
 
-	if arg_16_1 and arg_16_0._resPath ~= arg_16_1 then
-		arg_16_0._resPath = arg_16_1
-		arg_16_0._assetId = ResMgr.getAbAsset(arg_16_0._resPath, arg_16_0._onResLoaded, arg_16_0, arg_16_0._assetId)
+	if url and self._resPath ~= url then
+		self._resPath = url
+		self._assetId = ResMgr.getAbAsset(self._resPath, self._onResLoaded, self, self._assetId)
 
-		if arg_16_0._assetId then
-			arg_16_0:getMap():addUnitNeedLoadedNum(1)
+		if self._assetId then
+			self:getMap():addUnitNeedLoadedNum(1)
 		end
-	elseif arg_16_1 and arg_16_0._resPath == arg_16_1 and arg_16_0._displayGo == nil then
-		arg_16_0._assetId = ResMgr.getAbAsset(arg_16_0._resPath, arg_16_0._onResLoaded, arg_16_0, arg_16_0._assetId)
+	elseif url and self._resPath == url and self._displayGo == nil then
+		self._assetId = ResMgr.getAbAsset(self._resPath, self._onResLoaded, self, self._assetId)
 
-		if arg_16_0._assetId then
-			arg_16_0:getMap():addUnitNeedLoadedNum(1)
+		if self._assetId then
+			self:getMap():addUnitNeedLoadedNum(1)
 		end
 	else
-		arg_16_0:onResLoaded()
+		self:onResLoaded()
 	end
 end
 
-function var_0_0.getMap(arg_17_0)
+function ExploreBaseDisplayUnit:getMap()
 	return ExploreController.instance:getMap()
 end
 
-function var_0_0.setInteractActive(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_0.mo:getStatus()
-	local var_18_1 = ExploreHelper.setBit(var_18_0, ExploreEnum.InteractIndex.ActiveState, arg_18_1)
+function ExploreBaseDisplayUnit:setInteractActive(isActive)
+	local status = self.mo:getStatus()
 
-	arg_18_0.mo:setStatus(var_18_1)
+	status = ExploreHelper.setBit(status, ExploreEnum.InteractIndex.ActiveState, isActive)
+
+	self.mo:setStatus(status)
 end
 
-function var_0_0.getResPath(arg_19_0)
-	return arg_19_0._resPath
+function ExploreBaseDisplayUnit:getResPath()
+	return self._resPath
 end
 
-function var_0_0._onResLoaded(arg_20_0, arg_20_1)
-	if not arg_20_1.IsLoadSuccess then
+function ExploreBaseDisplayUnit:_onResLoaded(assetMO)
+	if not assetMO.IsLoadSuccess then
 		return
 	end
 
-	arg_20_0:_releaseDisplayGo()
+	self:_releaseDisplayGo()
 
-	if arg_20_0:isActive() then
-		arg_20_0._displayGo = arg_20_1:getInstance(nil, nil, arg_20_0.go)
-		arg_20_0._displayTr = arg_20_0._displayGo.transform
-		arg_20_0._rotateRoot = arg_20_0._displayTr:Find("#go_rotate")
+	if self:isActive() then
+		self._displayGo = assetMO:getInstance(nil, nil, self.go)
+		self._displayTr = self._displayGo.transform
+		self._rotateRoot = self._displayTr:Find("#go_rotate")
 
-		if arg_20_0.mo then
-			transformhelper.setLocalPos(arg_20_0._displayTr, arg_20_0.mo.resPosition[1], arg_20_0.mo.resPosition[2], arg_20_0.mo.resPosition[3])
+		if self.mo then
+			transformhelper.setLocalPos(self._displayTr, self.mo.resPosition[1], self.mo.resPosition[2], self.mo.resPosition[3])
 		end
 
-		local var_20_0 = arg_20_0:getCompList()
+		local compList = self:getCompList()
 
-		for iter_20_0, iter_20_1 in ipairs(var_20_0) do
-			if iter_20_1.setup then
-				iter_20_1:setup(arg_20_0._displayGo)
+		for _, comp in ipairs(compList) do
+			if comp.setup then
+				comp:setup(self._displayGo)
 			end
 		end
 
-		arg_20_0:updateRotation()
-		arg_20_0:updateRotationRoot()
-		arg_20_0:onResLoaded()
-		arg_20_0:_checkContainerNeedUpdate()
+		self:updateRotation()
+		self:updateRotationRoot()
+		self:onResLoaded()
+		self:_checkContainerNeedUpdate()
 
-		if not arg_20_0._akComp and ExploreConfig.instance:getAssetNeedAkGo(arg_20_0._resPath) then
-			gohelper.addAkGameObject(arg_20_0.go)
+		if not self._akComp and ExploreConfig.instance:getAssetNeedAkGo(self._resPath) then
+			gohelper.addAkGameObject(self.go)
 
-			arg_20_0._akComp = true
+			self._akComp = true
 		end
 
-		if not arg_20_0._playedEnter and arg_20_0.animComp and arg_20_0.animComp.haveAnim and arg_20_0.animComp:haveAnim(ExploreAnimEnum.AnimName.enter) then
-			arg_20_0:markPlayedEnter()
-			arg_20_0.animComp:playAnim(ExploreAnimEnum.AnimName.enter)
+		if not self._playedEnter and self.animComp and self.animComp.haveAnim and self.animComp:haveAnim(ExploreAnimEnum.AnimName.enter) then
+			self:markPlayedEnter()
+			self.animComp:playAnim(ExploreAnimEnum.AnimName.enter)
 		end
 
-		arg_20_0:setOutLight(arg_20_0._showOutLine)
+		self:setOutLight(self._showOutLine)
 	end
 end
 
-function var_0_0._checkContainerNeedUpdate(arg_21_0)
-	local var_21_0 = false
+function ExploreBaseDisplayUnit:_checkContainerNeedUpdate()
+	local needUpdate = false
 
-	if arg_21_0.animComp and arg_21_0.animComp.animator then
-		var_21_0 = true
+	if self.animComp and self.animComp.animator then
+		needUpdate = true
 	end
 
-	arg_21_0._luamonoContainer.enabled = var_21_0
+	self._luamonoContainer.enabled = needUpdate
 end
 
-function var_0_0.onMapInit(arg_22_0)
-	arg_22_0:markPlayedEnter()
+function ExploreBaseDisplayUnit:onMapInit()
+	self:markPlayedEnter()
 end
 
-function var_0_0.markPlayedEnter(arg_23_0)
-	arg_23_0._playedEnter = true
+function ExploreBaseDisplayUnit:markPlayedEnter()
+	self._playedEnter = true
 end
 
-function var_0_0.updateRotation(arg_24_0)
-	if not arg_24_0._displayTr or not arg_24_0.mo then
+function ExploreBaseDisplayUnit:updateRotation()
+	if not self._displayTr or not self.mo then
 		return
 	end
 
-	transformhelper.setLocalRotation(arg_24_0._displayTr, arg_24_0.mo.resRotation[1], arg_24_0.mo.resRotation[2], arg_24_0.mo.resRotation[3])
+	transformhelper.setLocalRotation(self._displayTr, self.mo.resRotation[1], self.mo.resRotation[2], self.mo.resRotation[3])
 end
 
-function var_0_0.getEffectRoot(arg_25_0)
-	return arg_25_0._rotateRoot or arg_25_0._displayTr or arg_25_0.trans
+function ExploreBaseDisplayUnit:getEffectRoot()
+	return self._rotateRoot or self._displayTr or self.trans
 end
 
-function var_0_0.updateRotationRoot(arg_26_0)
-	if not arg_26_0._rotateRoot or not arg_26_0.mo then
+function ExploreBaseDisplayUnit:updateRotationRoot()
+	if not self._rotateRoot or not self.mo then
 		return
 	end
 
-	transformhelper.setLocalRotation(arg_26_0._rotateRoot, 0, arg_26_0.mo.unitDir - arg_26_0.mo.resRotation[2], 0)
+	transformhelper.setLocalRotation(self._rotateRoot, 0, self.mo.unitDir - self.mo.resRotation[2], 0)
 end
 
-function var_0_0.onActiveChange(arg_27_0, arg_27_1)
-	if arg_27_1 then
-		arg_27_0:playAnim(ExploreAnimEnum.AnimName.nToA)
+function ExploreBaseDisplayUnit:onActiveChange(nowActive)
+	if nowActive then
+		self:playAnim(ExploreAnimEnum.AnimName.nToA)
 	else
-		arg_27_0:playAnim(ExploreAnimEnum.AnimName.aToN)
+		self:playAnim(ExploreAnimEnum.AnimName.aToN)
 	end
 
-	var_0_0.super.onActiveChange(arg_27_0, arg_27_1)
+	ExploreBaseDisplayUnit.super.onActiveChange(self, nowActive)
 end
 
-function var_0_0.onInteractChange(arg_28_0, arg_28_1)
-	if arg_28_1 then
-		arg_28_0:playAnim(ExploreAnimEnum.AnimName.uToN)
+function ExploreBaseDisplayUnit:onInteractChange(nowInteract)
+	if nowInteract then
+		self:playAnim(ExploreAnimEnum.AnimName.uToN)
 	else
-		arg_28_0:playAnim(ExploreAnimEnum.AnimName.nToU)
+		self:playAnim(ExploreAnimEnum.AnimName.nToU)
 	end
 
-	var_0_0.super.onInteractChange(arg_28_0, arg_28_1)
+	ExploreBaseDisplayUnit.super.onInteractChange(self, nowInteract)
 end
 
-function var_0_0.forceOutLine(arg_29_0, arg_29_1)
-	arg_29_0._isForceOutLight = arg_29_1
+function ExploreBaseDisplayUnit:forceOutLine(isForceOutLight)
+	self._isForceOutLight = isForceOutLight
 
-	arg_29_0:setOutLight(arg_29_0._showOutLine)
+	self:setOutLight(self._showOutLine)
 end
 
-function var_0_0.setOutLight(arg_30_0, arg_30_1)
-	if not arg_30_0._displayGo or not arg_30_0.outLineComp then
+function ExploreBaseDisplayUnit:setOutLight(isOutLight)
+	if not self._displayGo or not self.outLineComp then
 		return
 	end
 
-	arg_30_0.outLineComp:setOutLight(arg_30_0._isForceOutLight or arg_30_1)
+	self.outLineComp:setOutLight(self._isForceOutLight or isOutLight)
 end
 
-function var_0_0.onRoleNear(arg_31_0)
-	var_0_0.super.onRoleNear(arg_31_0)
+function ExploreBaseDisplayUnit:onRoleNear()
+	ExploreBaseDisplayUnit.super.onRoleNear(self)
 
-	if arg_31_0.mo.isStrong then
+	if self.mo.isStrong then
 		return
 	end
 
-	arg_31_0:checkShowIcon()
+	self:checkShowIcon()
 end
 
-function var_0_0.onRoleFar(arg_32_0)
-	var_0_0.super.onRoleFar(arg_32_0)
+function ExploreBaseDisplayUnit:onRoleFar()
+	ExploreBaseDisplayUnit.super.onRoleFar(self)
 
-	if arg_32_0.mo.isStrong then
+	if self.mo.isStrong then
 		return
 	end
 
-	arg_32_0:checkShowIcon()
+	self:checkShowIcon()
 end
 
-function var_0_0.isCustomShowOutLine(arg_33_0)
+function ExploreBaseDisplayUnit:isCustomShowOutLine()
 	return false
 end
 
-function var_0_0.checkShowIcon(arg_34_0)
-	if not arg_34_0.mo then
+function ExploreBaseDisplayUnit:checkShowIcon()
+	if not self.mo then
 		return
 	end
 
-	local var_34_0 = lua_explore_unit.configDict[arg_34_0.mo.customIconType or arg_34_0.mo.type]
+	local co = lua_explore_unit.configDict[self.mo.customIconType or self.mo.type]
 
-	if var_34_0 then
-		local var_34_1 = false
+	if co then
+		local showOutLine = false
 
-		if arg_34_0.mo.isStrong then
-			var_34_1 = true
-		elseif arg_34_0._roleNear and var_34_0.isShow == 1 then
-			var_34_1 = true
+		if self.mo.isStrong then
+			showOutLine = true
+		elseif self._roleNear and co.isShow == 1 then
+			showOutLine = true
 		end
 
-		local var_34_2 = arg_34_0:canTrigger()
+		local canTrigger = self:canTrigger()
 
-		if var_34_1 and not var_34_2 and not arg_34_0:isCustomShowOutLine() and not arg_34_0.mo.isCanMove or not arg_34_0:isEnter() then
-			var_34_1 = false
+		if showOutLine and not canTrigger and not self:isCustomShowOutLine() and not self.mo.isCanMove or not self:isEnter() then
+			showOutLine = false
 		end
 
-		if not string.nilorempty(var_34_0.mapActiveIcon) and arg_34_0.mo:isInteractActiveState() then
-			ExploreMapModel.instance:setSmallMapIconById(arg_34_0.id, arg_34_0.mo.nodeKey, var_34_0.mapActiveIcon)
-		elseif not string.nilorempty(var_34_0.mapIcon) or not string.nilorempty(var_34_0.mapIcon2) then
-			local var_34_3 = arg_34_0.mo.isStrong and var_34_0.mapIcon2 or var_34_0.mapIcon
-			local var_34_4 = arg_34_0:processMapIcon(var_34_3)
+		if not string.nilorempty(co.mapActiveIcon) and self.mo:isInteractActiveState() then
+			ExploreMapModel.instance:setSmallMapIconById(self.id, self.mo.nodeKey, co.mapActiveIcon)
+		elseif not string.nilorempty(co.mapIcon) or not string.nilorempty(co.mapIcon2) then
+			local icon = self.mo.isStrong and co.mapIcon2 or co.mapIcon
 
-			if var_34_0.mapIconShow == 1 then
-				ExploreMapModel.instance:setSmallMapIconById(arg_34_0.id, arg_34_0.mo.nodeKey, var_34_4)
+			icon = self:processMapIcon(icon)
+
+			if co.mapIconShow == 1 then
+				ExploreMapModel.instance:setSmallMapIconById(self.id, self.mo.nodeKey, icon)
 			else
-				ExploreMapModel.instance:setSmallMapIconById(arg_34_0.id, arg_34_0.mo.nodeKey, var_34_2 and var_34_4 or nil)
+				ExploreMapModel.instance:setSmallMapIconById(self.id, self.mo.nodeKey, canTrigger and icon or nil)
 			end
 		else
-			ExploreMapModel.instance:setSmallMapIconById(arg_34_0.id, arg_34_0.mo.nodeKey, nil)
+			ExploreMapModel.instance:setSmallMapIconById(self.id, self.mo.nodeKey, nil)
 		end
 
-		arg_34_0._showOutLine = var_34_1
+		self._showOutLine = showOutLine
 
-		arg_34_0:setOutLight(var_34_1)
+		self:setOutLight(showOutLine)
 	end
 end
 
-function var_0_0.processMapIcon(arg_35_0, arg_35_1)
-	return arg_35_1
+function ExploreBaseDisplayUnit:processMapIcon(icon)
+	return icon
 end
 
-function var_0_0.hideMapIcon(arg_36_0)
-	if not arg_36_0.mo then
+function ExploreBaseDisplayUnit:hideMapIcon()
+	if not self.mo then
 		return
 	end
 
-	local var_36_0 = lua_explore_unit.configDict[arg_36_0.mo.customIconType or arg_36_0.mo.type]
+	local co = lua_explore_unit.configDict[self.mo.customIconType or self.mo.type]
 
-	if not var_36_0 or string.nilorempty(var_36_0.mapIcon) and string.nilorempty(var_36_0.mapIcon2) and string.nilorempty(var_36_0.mapActiveIcon) then
+	if not co or string.nilorempty(co.mapIcon) and string.nilorempty(co.mapIcon2) and string.nilorempty(co.mapActiveIcon) then
 		return
 	end
 
-	ExploreMapModel.instance:setSmallMapIconById(arg_36_0.id, arg_36_0.mo.nodeKey, nil)
+	ExploreMapModel.instance:setSmallMapIconById(self.id, self.mo.nodeKey, nil)
 end
 
-function var_0_0.onInFOVChange(arg_37_0, arg_37_1)
-	arg_37_0:setActive(arg_37_1)
+function ExploreBaseDisplayUnit:onInFOVChange(v)
+	self:setActive(v)
 
-	if arg_37_1 then
-		arg_37_0:setupRes()
-		TaskDispatcher.cancelTask(arg_37_0._releaseDisplayGo, arg_37_0)
+	if v then
+		self:setupRes()
+		TaskDispatcher.cancelTask(self._releaseDisplayGo, self)
 	else
-		TaskDispatcher.runDelay(arg_37_0._releaseDisplayGo, arg_37_0, ExploreConstValue.CHECK_INTERVAL.UnitObjDestory)
+		TaskDispatcher.runDelay(self._releaseDisplayGo, self, ExploreConstValue.CHECK_INTERVAL.UnitObjDestory)
 	end
 end
 
-function var_0_0.setActive(arg_38_0, ...)
-	var_0_0.super.setActive(arg_38_0, ...)
+function ExploreBaseDisplayUnit:setActive(...)
+	ExploreBaseDisplayUnit.super.setActive(self, ...)
 
-	if not ... and arg_38_0.animEffectComp and arg_38_0.animEffectComp.destoryEffectIfOnce then
-		arg_38_0.animEffectComp:destoryEffectIfOnce()
+	if not ... and self.animEffectComp and self.animEffectComp.destoryEffectIfOnce then
+		self.animEffectComp:destoryEffectIfOnce()
 	end
 end
 
-function var_0_0.onNodeChange(arg_39_0, arg_39_1, arg_39_2)
-	arg_39_0:checkLight()
+function ExploreBaseDisplayUnit:onNodeChange(preNode, nowNode)
+	self:checkLight()
 end
 
-function var_0_0.setEmitLight(arg_40_0, arg_40_1)
-	arg_40_0._isNoEmitLight = arg_40_1
+function ExploreBaseDisplayUnit:setEmitLight(isNoEmit)
+	self._isNoEmitLight = isNoEmit
 end
 
-function var_0_0.getIsNoEmitLight(arg_41_0)
-	return arg_41_0._isNoEmitLight
+function ExploreBaseDisplayUnit:getIsNoEmitLight()
+	return self._isNoEmitLight
 end
 
-function var_0_0.checkLight(arg_42_0)
-	local var_42_0 = arg_42_0:getLightRecvType()
+function ExploreBaseDisplayUnit:checkLight()
+	local lightType = self:getLightRecvType()
 
-	if var_42_0 == ExploreEnum.LightRecvType.Photic or var_42_0 == ExploreEnum.LightRecvType.Custom then
+	if lightType == ExploreEnum.LightRecvType.Photic or lightType == ExploreEnum.LightRecvType.Custom then
 		return
 	end
 
-	if not ExploreController.instance:getMap():isInitDone() then
+	local map = ExploreController.instance:getMap()
+
+	if not map:isInitDone() then
 		return
 	end
 
-	ExploreController.instance:getMapLight():updateLightsByUnit(arg_42_0)
+	local mapLight = ExploreController.instance:getMapLight()
+
+	mapLight:updateLightsByUnit(self)
 end
 
-function var_0_0.getIdleAnim(arg_43_0)
-	local var_43_0 = arg_43_0.mo
+function ExploreBaseDisplayUnit:getIdleAnim()
+	local mo = self.mo
 
-	if not var_43_0:isInteractEnabled() then
+	if not mo:isInteractEnabled() then
 		return ExploreAnimEnum.AnimName.unable
-	elseif not var_43_0:isInteractActiveState() then
+	elseif not mo:isInteractActiveState() then
 		return ExploreAnimEnum.AnimName.normal
 	else
 		return ExploreAnimEnum.AnimName.active
 	end
 end
 
-function var_0_0.onResLoaded(arg_44_0)
+function ExploreBaseDisplayUnit:onResLoaded()
 	return
 end
 
-function var_0_0._releaseDisplayGo(arg_45_0)
-	arg_45_0:clearComp()
+function ExploreBaseDisplayUnit:_releaseDisplayGo()
+	self:clearComp()
 
-	if arg_45_0._assetId and not arg_45_0:isRole() then
-		arg_45_0:getMap():addUnitNeedLoadedNum(-1)
+	if self._assetId and not self:isRole() then
+		self:getMap():addUnitNeedLoadedNum(-1)
 	end
 
-	ResMgr.removeCallBack(arg_45_0._assetId)
-	ResMgr.ReleaseObj(arg_45_0._displayGo)
+	ResMgr.removeCallBack(self._assetId)
+	ResMgr.ReleaseObj(self._displayGo)
 
-	arg_45_0._displayGo = nil
-	arg_45_0._displayTr = nil
-	arg_45_0._rotateRoot = nil
-	arg_45_0._assetId = nil
+	self._displayGo = nil
+	self._displayTr = nil
+	self._rotateRoot = nil
+	self._assetId = nil
 
-	arg_45_0:_checkContainerNeedUpdate()
+	self:_checkContainerNeedUpdate()
 end
 
-function var_0_0.clearComp(arg_46_0)
-	local var_46_0 = arg_46_0:getCompList()
+function ExploreBaseDisplayUnit:clearComp()
+	local compList = self:getCompList()
 
-	for iter_46_0, iter_46_1 in ipairs(var_46_0) do
-		if iter_46_1.clear then
-			iter_46_1:clear()
+	for _, comp in ipairs(compList) do
+		if comp.clear then
+			comp:clear()
 		end
 	end
 end
 
-function var_0_0.onDestroy(arg_47_0)
-	arg_47_0:_releaseDisplayGo()
-	TaskDispatcher.cancelTask(arg_47_0._releaseDisplayGo, arg_47_0)
+function ExploreBaseDisplayUnit:onDestroy()
+	self:_releaseDisplayGo()
+	TaskDispatcher.cancelTask(self._releaseDisplayGo, self)
 
-	if arg_47_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_47_0._tweenId, true)
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId, true)
 
-		arg_47_0._tweenId = nil
+		self._tweenId = nil
 	end
 end
 
-return var_0_0
+return ExploreBaseDisplayUnit

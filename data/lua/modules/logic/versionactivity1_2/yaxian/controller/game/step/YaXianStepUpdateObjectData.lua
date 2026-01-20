@@ -1,44 +1,50 @@
-﻿module("modules.logic.versionactivity1_2.yaxian.controller.game.step.YaXianStepUpdateObjectData", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/yaxian/controller/game/step/YaXianStepUpdateObjectData.lua
 
-local var_0_0 = class("YaXianStepUpdateObjectData", YaXianStepBase)
+module("modules.logic.versionactivity1_2.yaxian.controller.game.step.YaXianStepUpdateObjectData", package.seeall)
 
-function var_0_0.start(arg_1_0)
-	local var_1_0 = arg_1_0.originData.object
+local YaXianStepUpdateObjectData = class("YaXianStepUpdateObjectData", YaXianStepBase)
 
-	arg_1_0.interactId = var_1_0.id
+function YaXianStepUpdateObjectData:start()
+	local updateObjDict = self.originData.object
 
-	local var_1_1 = var_1_0.data
+	self.interactId = updateObjDict.id
 
-	logNormal("start update object data : " .. arg_1_0.interactId)
+	local data = updateObjDict.data
 
-	local var_1_2 = YaXianGameModel.instance:getInteractMo(arg_1_0.interactId)
+	logNormal("start update object data : " .. self.interactId)
 
-	if var_1_2 then
-		var_1_2:updateDataByTableData(var_1_1)
+	local interactMo = YaXianGameModel.instance:getInteractMo(self.interactId)
 
-		if var_1_2.config.interactType == YaXianGameEnum.InteractType.Player then
-			arg_1_0:handleUpdateSkillInfo(var_1_1 and var_1_1.skills)
-			arg_1_0:handleUpdateEffects(var_1_1 and var_1_1.effects)
+	if interactMo then
+		interactMo:updateDataByTableData(data)
+
+		if interactMo.config.interactType == YaXianGameEnum.InteractType.Player then
+			self:handleUpdateSkillInfo(data and data.skills)
+			self:handleUpdateEffects(data and data.effects)
 		end
 	end
 
-	arg_1_0:finish()
+	self:finish()
 end
 
-function var_0_0.handleUpdateSkillInfo(arg_2_0, arg_2_1)
-	if YaXianGameModel.instance:updateSkillInfoAndCheckHasChange(arg_2_1) then
+function YaXianStepUpdateObjectData:handleUpdateSkillInfo(skills)
+	local hasChange = YaXianGameModel.instance:updateSkillInfoAndCheckHasChange(skills)
+
+	if hasChange then
 		YaXianGameController.instance:dispatchEvent(YaXianEvent.OnUpdateSkillInfo)
 	end
 end
 
-function var_0_0.handleUpdateEffects(arg_3_0, arg_3_1)
-	if YaXianGameModel.instance:updateEffectsAndCheckHasChange(arg_3_1) then
+function YaXianStepUpdateObjectData:handleUpdateEffects(effects)
+	local hasChange = YaXianGameModel.instance:updateEffectsAndCheckHasChange(effects)
+
+	if hasChange then
 		YaXianGameController.instance:dispatchEvent(YaXianEvent.OnUpdateEffectInfo)
 	end
 end
 
-function var_0_0.dispose(arg_4_0)
+function YaXianStepUpdateObjectData:dispose()
 	return
 end
 
-return var_0_0
+return YaXianStepUpdateObjectData

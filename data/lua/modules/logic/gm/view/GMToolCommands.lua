@@ -1,205 +1,213 @@
-﻿local var_0_0 = {}
-local var_0_1 = false
-local var_0_2 = ""
-local var_0_3 = {
+﻿-- chunkname: @modules/logic/gm/view/GMToolCommands.lua
+
+local GMToolCommands = {}
+local sIsCapture = false
+local sInputLower = ""
+local kCmdPrefixLowerCaseList = {
 	"boxlang",
 	"showui"
 }
 
-function var_0_0._callByPerfix(arg_1_0, arg_1_1)
-	if not var_0_2:find(arg_1_0) then
+function GMToolCommands._callByPerfix(prefix, input)
+	if not sInputLower:find(prefix) then
 		return
 	end
 
-	local var_1_0 = tostring(arg_1_1:sub(#arg_1_0 + 1))
-	local var_1_1 = string.trim(var_1_0)
+	local inputNoPrefix = tostring(input:sub(#prefix + 1))
 
-	var_0_0[arg_1_0](var_1_1)
+	inputNoPrefix = string.trim(inputNoPrefix)
+
+	GMToolCommands[prefix](inputNoPrefix)
 end
 
-function var_0_0.sendGM(arg_2_0)
-	arg_2_0 = string.trim(arg_2_0)
+function GMToolCommands.sendGM(input_)
+	input_ = string.trim(input_)
 
-	if string.nilorempty(arg_2_0) then
+	if string.nilorempty(input_) then
 		return
 	end
 
-	GMCommandHistoryModel.instance:addCommandHistory(arg_2_0)
+	GMCommandHistoryModel.instance:addCommandHistory(input_)
 
-	var_0_1 = false
-	var_0_2 = string.lower(arg_2_0)
+	sIsCapture = false
+	sInputLower = string.lower(input_)
 
-	for iter_2_0, iter_2_1 in ipairs(var_0_3) do
-		var_0_0._callByPerfix(iter_2_1, arg_2_0)
+	for _, prefix in ipairs(kCmdPrefixLowerCaseList) do
+		GMToolCommands._callByPerfix(prefix, input_)
 
-		if var_0_1 then
+		if sIsCapture then
 			break
 		end
 	end
 
-	return var_0_1
+	return sIsCapture
 end
 
-function var_0_0.boxlang(arg_3_0)
-	local var_3_0 = string.split(arg_3_0, " ")
-	local var_3_1 = ""
-	local var_3_2 = ""
+function GMToolCommands.boxlang(inputNoPrefix)
+	local idList = string.split(inputNoPrefix, " ")
+	local msg = ""
+	local consoleMsg = ""
 
-	for iter_3_0, iter_3_1 in ipairs(var_3_0) do
-		if not string.nilorempty(iter_3_1) then
-			local var_3_3
+	for _, id in ipairs(idList) do
+		if not string.nilorempty(id) then
+			local item
 
-			if iter_3_1:find("language_") then
-				var_3_3 = LangConfig.instance:getLangTxt(nil, iter_3_1)
+			if id:find("language_") then
+				item = LangConfig.instance:getLangTxt(nil, id)
 			else
-				var_3_3 = luaLang(iter_3_1)
+				item = luaLang(id)
 			end
 
-			if var_3_1 ~= "" then
-				var_3_1 = var_3_1 .. "\n"
+			if msg ~= "" then
+				msg = msg .. "\n"
 			end
 
-			if var_3_2 ~= "" then
-				var_3_2 = var_3_2 .. "\n"
+			if consoleMsg ~= "" then
+				consoleMsg = consoleMsg .. "\n"
 			end
 
-			var_3_1 = var_3_1 .. var_3_3
-			var_3_2 = var_3_2 .. string.format("%s\n\t%s", iter_3_1, var_3_3)
+			msg = msg .. item
+			consoleMsg = consoleMsg .. string.format("%s\n\t%s", id, item)
 		end
 	end
 
-	if not string.nilorempty(var_3_1) then
-		var_3_2 = "\n" .. var_3_2
+	if not string.nilorempty(msg) then
+		consoleMsg = "\n" .. consoleMsg
 
-		MessageBoxController.instance:showMsgBoxByStr(var_3_1, MsgBoxEnum.BoxType.Yes, function()
-			logNormal(var_3_2)
+		MessageBoxController.instance:showMsgBoxByStr(msg, MsgBoxEnum.BoxType.Yes, function()
+			logNormal(consoleMsg)
 		end, nil)
 
-		var_0_1 = true
+		sIsCapture = true
 	end
 end
 
-local function var_0_4(arg_5_0)
-	function SettingsModel.initResolutionRationDataList(arg_6_0)
+local function _showui_SettingsModel_initResolutionRationDataList(ctx)
+	function SettingsModel:initResolutionRationDataList()
 		SettingsModel.instance:initRateAndSystemSize()
 
-		local var_6_0 = arg_5_0.skipIndex
+		local skipIndex = ctx.skipIndex
 
-		arg_6_0._resolutionRatioDataList = {}
+		self._resolutionRatioDataList = {}
 
-		local var_6_1 = UnityEngine.Screen.currentResolution.width
+		local resolution = UnityEngine.Screen.currentResolution
+		local rWidth = resolution.width
 
-		if arg_6_0._resolutionRatioDataList and #arg_6_0._resolutionRatioDataList >= 1 and arg_6_0._resolutionRatioDataList[1] == var_6_1 then
-			return
-		end
+		if self._resolutionRatioDataList and #self._resolutionRatioDataList >= 1 then
+			local oldMaxWidth = self._resolutionRatioDataList[1]
 
-		local var_6_2 = math.floor(var_6_1 / arg_6_0._curRate)
-
-		arg_6_0:_appendResolutionData(var_6_1, var_6_2, true)
-
-		for iter_6_0, iter_6_1 in ipairs(SettingsModel.ResolutionRatioWidthList) do
-			if var_6_0 < iter_6_0 then
-				local var_6_3 = math.floor(iter_6_1 / arg_6_0._curRate)
-
-				arg_6_0:_appendResolutionData(iter_6_1, var_6_3, false)
+			if oldMaxWidth == rWidth then
+				return
 			end
 		end
 
-		local var_6_4, var_6_5 = arg_6_0:getCurrentDropDownIndex()
+		local fullScreenHeight = math.floor(rWidth / self._curRate)
 
-		if var_6_5 then
-			local var_6_6, var_6_7, var_6_8 = arg_6_0:getCurrentResolutionWHAndIsFull()
+		self:_appendResolutionData(rWidth, fullScreenHeight, true)
 
-			arg_6_0:_appendResolutionData(var_6_6, var_6_7, var_6_8)
+		for i, width in ipairs(SettingsModel.ResolutionRatioWidthList) do
+			if skipIndex < i then
+				local height = math.floor(width / self._curRate)
+
+				self:_appendResolutionData(width, height, false)
+			end
+		end
+
+		local _, isNotFound = self:getCurrentDropDownIndex()
+
+		if isNotFound then
+			local nowW, nowH, isFullScreen = self:getCurrentResolutionWHAndIsFull()
+
+			self:_appendResolutionData(nowW, nowH, isFullScreen)
 		end
 	end
 end
 
-local function var_0_5()
-	function SettingsGraphicsView._editableInitView(arg_8_0)
-		arg_8_0:_refreshDropdownList()
-		gohelper.setActive(arg_8_0._drop.gameObject, true)
-		gohelper.setActive(arg_8_0._goscreen.gameObject, true)
-		gohelper.setActive(arg_8_0._goenergy.gameObject, false)
+local function _showui_SettingsGraphicsView_editableInitView()
+	function SettingsGraphicsView:_editableInitView()
+		self:_refreshDropdownList()
+		gohelper.setActive(self._drop.gameObject, true)
+		gohelper.setActive(self._goscreen.gameObject, true)
+		gohelper.setActive(self._goenergy.gameObject, false)
 
 		if SDKNativeUtil.isShowShareButton() then
-			gohelper.setActive(arg_8_0._goscreenshot, true)
+			gohelper.setActive(self._goscreenshot, true)
 		else
-			gohelper.setActive(arg_8_0._goscreenshot, false)
+			gohelper.setActive(self._goscreenshot, false)
 		end
 
-		gohelper.addUIClickAudio(arg_8_0._btnframerateswitch.gameObject, AudioEnum.UI.UI_Mission_switch)
+		gohelper.addUIClickAudio(self._btnframerateswitch.gameObject, AudioEnum.UI.UI_Mission_switch)
 	end
 end
 
-function var_0_0.showui(arg_9_0)
-	local var_9_0 = false
-	local var_9_1 = string.split(arg_9_0, " ")
-	local var_9_2 = var_9_1[1]
+function GMToolCommands.showui(inputNoPrefix)
+	local isCustomOpenFunc = false
+	local cmdList = string.split(inputNoPrefix, " ")
+	local viewNameKey = cmdList[1]
 
-	if not var_9_2 then
+	if not viewNameKey then
 		return
 	end
 
-	local var_9_3 = ViewName[var_9_2]
+	local viewName = ViewName[viewNameKey]
 
-	if not var_9_3 then
-		logNormal("no define ViewName." .. var_9_2)
+	if not viewName then
+		logNormal("no define ViewName." .. viewNameKey)
 
 		return
 	end
 
-	local var_9_4
+	local param
 
-	if var_9_3 == ViewName.SettingsPCSystemView or var_9_3 == ViewName.SettingsView then
-		local var_9_5 = var_9_1[2]
-		local var_9_6 = 0
+	if viewName == ViewName.SettingsPCSystemView or viewName == ViewName.SettingsView then
+		local maxResoletion = cmdList[2]
+		local skipIndex = 0
 
-		if var_9_5 then
-			local var_9_7 = string.lower(var_9_5)
+		if maxResoletion then
+			maxResoletion = string.lower(maxResoletion)
 
-			if var_9_7 == "8k" then
-				var_9_6 = 1
-			elseif var_9_7 == "4k" then
-				var_9_6 = 2
-			elseif var_9_7 == "2k" then
-				var_9_6 = 3
-			elseif var_9_7 == "1k" then
-				var_9_6 = 4
+			if maxResoletion == "8k" then
+				skipIndex = 1
+			elseif maxResoletion == "4k" then
+				skipIndex = 2
+			elseif maxResoletion == "2k" then
+				skipIndex = 3
+			elseif maxResoletion == "1k" then
+				skipIndex = 4
 			else
-				logNormal("not support " .. var_9_7)
+				logNormal("not support " .. maxResoletion)
 			end
 		end
 
-		local var_9_8 = {
-			skipIndex = var_9_6
+		local ctx = {
+			skipIndex = skipIndex
 		}
 
-		var_0_4(var_9_8)
+		_showui_SettingsModel_initResolutionRationDataList(ctx)
 
 		function SettingsModel.setResolutionRatio()
 			return
 		end
 	end
 
-	if var_9_3 == ViewName.SettingsView then
-		var_9_0 = true
+	if viewName == ViewName.SettingsView then
+		isCustomOpenFunc = true
 
 		function BootNativeUtil.isWindows()
 			return true
 		end
 
-		var_0_5()
+		_showui_SettingsGraphicsView_editableInitView()
 		SettingsController.instance:openView()
 	end
 
-	if not var_9_0 then
-		ViewMgr.instance:openView(var_9_3, var_9_4)
+	if not isCustomOpenFunc then
+		ViewMgr.instance:openView(viewName, param)
 	end
 
-	var_0_1 = true
+	sIsCapture = true
 end
 
 require("modules/logic/gm/GMTool")
 
-return var_0_0
+return GMToolCommands

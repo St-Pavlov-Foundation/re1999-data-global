@@ -1,130 +1,136 @@
-﻿module("modules.logic.explore.map.unit.ExplorePrismUnit", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/unit/ExplorePrismUnit.lua
 
-local var_0_0 = class("ExplorePrismUnit", ExploreBaseLightUnit)
+module("modules.logic.explore.map.unit.ExplorePrismUnit", package.seeall)
 
-function var_0_0.getLightRecvType(arg_1_0)
+local ExplorePrismUnit = class("ExplorePrismUnit", ExploreBaseLightUnit)
+
+function ExplorePrismUnit:getLightRecvType()
 	return ExploreEnum.LightRecvType.Custom
 end
 
-function var_0_0.onLightEnter(arg_2_0, arg_2_1)
-	if not arg_2_0.mo:isInteractEnabled() then
+function ExplorePrismUnit:onLightEnter(lightMO)
+	if not self.mo:isInteractEnabled() then
 		return
 	end
 
-	local var_2_0 = ExploreController.instance:getMapLight()
+	local mapLight = ExploreController.instance:getMapLight()
 
-	var_2_0:beginCheckStatusChange(arg_2_0.id, arg_2_0:haveLight())
-	arg_2_0:addLights()
-	var_2_0:endCheckStatus()
+	mapLight:beginCheckStatusChange(self.id, self:haveLight())
+	self:addLights()
+	mapLight:endCheckStatus()
 end
 
-function var_0_0.onInteractChange(arg_3_0, arg_3_1)
-	var_0_0.super.onInteractChange(arg_3_0, arg_3_1)
+function ExplorePrismUnit:onInteractChange(nowInteract)
+	ExplorePrismUnit.super.onInteractChange(self, nowInteract)
 
-	if arg_3_0.animComp._curAnim ~= ExploreAnimEnum.AnimName.uToN then
-		local var_3_0 = ExploreController.instance:getMapLight()
+	if self.animComp._curAnim ~= ExploreAnimEnum.AnimName.uToN then
+		local mapLight = ExploreController.instance:getMapLight()
 
-		var_3_0:beginCheckStatusChange(arg_3_0.id, arg_3_0:haveLight())
-		arg_3_0:checkLight()
-		var_3_0:endCheckStatus()
+		mapLight:beginCheckStatusChange(self.id, self:haveLight())
+		self:checkLight()
+		mapLight:endCheckStatus()
 	else
 		ExploreModel.instance:setStepPause(true)
 	end
 end
 
-function var_0_0.onAnimEnd(arg_4_0, arg_4_1, arg_4_2)
-	var_0_0.super.onAnimEnd(arg_4_0, arg_4_1, arg_4_2)
+function ExplorePrismUnit:onAnimEnd(preAnim, nowAnim)
+	ExplorePrismUnit.super.onAnimEnd(self, preAnim, nowAnim)
 
-	if arg_4_1 == ExploreAnimEnum.AnimName.uToN then
-		local var_4_0 = ExploreController.instance:getMapLight()
+	if preAnim == ExploreAnimEnum.AnimName.uToN then
+		local mapLight = ExploreController.instance:getMapLight()
 
-		var_4_0:beginCheckStatusChange(arg_4_0.id, arg_4_0:haveLight())
-		arg_4_0:checkLight()
-		var_4_0:endCheckStatus()
+		mapLight:beginCheckStatusChange(self.id, self:haveLight())
+		self:checkLight()
+		mapLight:endCheckStatus()
 		ExploreModel.instance:setStepPause(false)
 	end
 end
 
-function var_0_0.onLightExit(arg_5_0)
-	local var_5_0 = ExploreController.instance:getMapLight()
+function ExplorePrismUnit:onLightExit()
+	local mapLight = ExploreController.instance:getMapLight()
 
-	var_5_0:beginCheckStatusChange(arg_5_0.id, arg_5_0:haveLight())
-	arg_5_0:removeLights()
-	var_5_0:endCheckStatus()
+	mapLight:beginCheckStatusChange(self.id, self:haveLight())
+	self:removeLights()
+	mapLight:endCheckStatus()
 end
 
-function var_0_0.setEmitLight(arg_6_0, arg_6_1)
-	var_0_0.super.setEmitLight(arg_6_0, arg_6_1)
+function ExplorePrismUnit:setEmitLight(isNoEmit)
+	ExplorePrismUnit.super.setEmitLight(self, isNoEmit)
 
-	if arg_6_1 then
-		local var_6_0 = ExploreController.instance:getMapLight()
+	if isNoEmit then
+		local mapLight = ExploreController.instance:getMapLight()
 
-		var_6_0:removeUnitEmitLight(arg_6_0)
-		arg_6_0:removeLights()
-		var_6_0:updateLightsByUnit(arg_6_0)
-		arg_6_0:playAnim(arg_6_0:getIdleAnim())
+		mapLight:removeUnitEmitLight(self)
+		self:removeLights()
+		mapLight:updateLightsByUnit(self)
+		self:playAnim(self:getIdleAnim())
 	else
-		arg_6_0:checkLight()
+		self:checkLight()
 	end
 end
 
-function var_0_0.checkLight(arg_7_0)
-	if not ExploreController.instance:getMap():isInitDone() then
+function ExplorePrismUnit:checkLight()
+	local map = ExploreController.instance:getMap()
+
+	if not map:isInitDone() then
 		return
 	end
 
-	local var_7_0 = ExploreController.instance:getMapLight()
+	local mapLight = ExploreController.instance:getMapLight()
 
-	if not arg_7_0.mo:isInteractEnabled() then
-		var_7_0:removeUnitEmitLight(arg_7_0)
-		arg_7_0:removeLights()
-		var_7_0:updateLightsByUnit(arg_7_0)
+	if not self.mo:isInteractEnabled() then
+		mapLight:removeUnitEmitLight(self)
+		self:removeLights()
+		mapLight:updateLightsByUnit(self)
 
 		return
 	end
 
-	local var_7_1 = arg_7_0:haveLight()
+	local haveLight = self:haveLight()
 
-	var_7_0:beginCheckStatusChange(arg_7_0.id, arg_7_0:haveLight())
-	var_7_0:removeUnitEmitLight(arg_7_0)
-	var_7_0:updateLightsByUnit(arg_7_0)
-	arg_7_0:removeLights()
+	mapLight:beginCheckStatusChange(self.id, self:haveLight())
+	mapLight:removeUnitEmitLight(self)
+	mapLight:updateLightsByUnit(self)
+	self:removeLights()
 
-	if arg_7_0:isHaveIlluminant() and not arg_7_0._isNoEmitLight then
-		arg_7_0:addLights()
+	if self:isHaveIlluminant() and not self._isNoEmitLight then
+		self:addLights()
 	end
 
-	var_7_0:endCheckStatus()
+	mapLight:endCheckStatus()
 end
 
-function var_0_0.haveLight(arg_8_0)
-	return arg_8_0.lightComp:haveLight()
+function ExplorePrismUnit:haveLight()
+	return self.lightComp:haveLight()
 end
 
-function var_0_0.onBallLightChange(arg_9_0)
-	arg_9_0:checkLight()
+function ExplorePrismUnit:onBallLightChange()
+	self:checkLight()
 end
 
-function var_0_0.addLights(arg_10_0)
-	arg_10_0.lightComp:addLight(arg_10_0.mo.unitDir)
+function ExplorePrismUnit:addLights()
+	self.lightComp:addLight(self.mo.unitDir)
 end
 
-function var_0_0.removeLights(arg_11_0)
-	arg_11_0.lightComp:removeAllLight()
+function ExplorePrismUnit:removeLights()
+	self.lightComp:removeAllLight()
 end
 
-function var_0_0.isCustomShowOutLine(arg_12_0)
-	local var_12_0 = not arg_12_0.mo:isInteractEnabled()
+function ExplorePrismUnit:isCustomShowOutLine()
+	local showIcon = not self.mo:isInteractEnabled()
 
-	return var_12_0, var_12_0 and "explore/common/sprite/prefabs/msts_icon_xiuli.prefab"
+	return showIcon, showIcon and "explore/common/sprite/prefabs/msts_icon_xiuli.prefab"
 end
 
-function var_0_0.isHaveIlluminant(arg_13_0)
-	return ExploreController.instance:getMapLight():haveLight(arg_13_0)
+function ExplorePrismUnit:isHaveIlluminant()
+	local mapLight = ExploreController.instance:getMapLight()
+
+	return mapLight:haveLight(self)
 end
 
-function var_0_0.getFixItemId(arg_14_0)
-	return arg_14_0.mo.fixItemId
+function ExplorePrismUnit:getFixItemId()
+	return self.mo.fixItemId
 end
 
-return var_0_0
+return ExplorePrismUnit

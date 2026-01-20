@@ -1,9 +1,11 @@
-﻿module("modules.logic.scene.shelter.comp.SurvivalShelterSceneAmbientComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/shelter/comp/SurvivalShelterSceneAmbientComp.lua
 
-local var_0_0 = class("SurvivalShelterSceneAmbientComp", SurvivalSceneAmbientComp)
+module("modules.logic.scene.shelter.comp.SurvivalShelterSceneAmbientComp", package.seeall)
 
-function var_0_0.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
-	SurvivalController.instance:registerCallback(SurvivalEvent.SceneLightLoaded, arg_1_0._onLightLoaded, arg_1_0)
+local SurvivalShelterSceneAmbientComp = class("SurvivalShelterSceneAmbientComp", SurvivalSceneAmbientComp)
+
+function SurvivalShelterSceneAmbientComp:onSceneStart(sceneId, levelId)
+	SurvivalController.instance:registerCallback(SurvivalEvent.SceneLightLoaded, self._onLightLoaded, self)
 end
 
-return var_0_0
+return SurvivalShelterSceneAmbientComp

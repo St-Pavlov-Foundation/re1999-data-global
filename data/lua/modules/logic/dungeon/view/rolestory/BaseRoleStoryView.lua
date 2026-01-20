@@ -1,151 +1,154 @@
-﻿module("modules.logic.dungeon.view.rolestory.BaseRoleStoryView", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/rolestory/BaseRoleStoryView.lua
 
-local var_0_0 = class("BaseRoleStoryView", UserDataDispose)
+module("modules.logic.dungeon.view.rolestory.BaseRoleStoryView", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+local BaseRoleStoryView = class("BaseRoleStoryView", UserDataDispose)
 
-	arg_1_0.parentGO = arg_1_1
-	arg_1_0.isShow = false
+function BaseRoleStoryView:ctor(parentGO)
+	self:__onInit()
 
-	arg_1_0:onInit()
+	self.parentGO = parentGO
+	self.isShow = false
+
+	self:onInit()
 end
 
-function var_0_0._loadPrefab(arg_2_0)
-	if arg_2_0._loader then
+function BaseRoleStoryView:_loadPrefab()
+	if self._loader then
 		return
 	end
 
-	if not arg_2_0.resPathList then
+	if not self.resPathList then
 		return
 	end
 
-	local var_2_0 = {}
+	local allResPath = {}
 
-	for iter_2_0, iter_2_1 in pairs(arg_2_0.resPathList) do
-		table.insert(var_2_0, iter_2_1)
+	for k, v in pairs(self.resPathList) do
+		table.insert(allResPath, v)
 	end
 
-	arg_2_0._abLoader = MultiAbLoader.New()
+	self._abLoader = MultiAbLoader.New()
 
-	arg_2_0._abLoader:setPathList(var_2_0)
-	arg_2_0._abLoader:startLoad(arg_2_0._onLoaded, arg_2_0)
+	self._abLoader:setPathList(allResPath)
+	self._abLoader:startLoad(self._onLoaded, self)
 end
 
-function var_0_0._onLoaded(arg_3_0)
-	local var_3_0 = arg_3_0._abLoader:getAssetItem(arg_3_0.resPathList.mainRes):GetResource(arg_3_0.resPathList.mainRes)
+function BaseRoleStoryView:_onLoaded()
+	local assetItem = self._abLoader:getAssetItem(self.resPathList.mainRes)
+	local mainPrefab = assetItem:GetResource(self.resPathList.mainRes)
 
-	arg_3_0.viewGO = gohelper.clone(var_3_0, arg_3_0.parentGO, arg_3_0.viewName)
+	self.viewGO = gohelper.clone(mainPrefab, self.parentGO, self.viewName)
 
-	if not arg_3_0.viewGO then
+	if not self.viewGO then
 		return
 	end
 
-	arg_3_0:onInitView()
-	arg_3_0:addEvents()
+	self:onInitView()
+	self:addEvents()
 
-	if arg_3_0.isShow then
-		arg_3_0:show(true)
+	if self.isShow then
+		self:show(true)
 	else
-		arg_3_0:hide(true)
+		self:hide(true)
 	end
 end
 
-function var_0_0.getResInst(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	local var_4_0 = arg_4_0._abLoader:getAssetItem(arg_4_1)
+function BaseRoleStoryView:getResInst(resPath, parentGO, name)
+	local assetItem = self._abLoader:getAssetItem(resPath)
 
-	if var_4_0 then
-		local var_4_1 = var_4_0:GetResource(arg_4_1)
+	if assetItem then
+		local prefab = assetItem:GetResource(resPath)
 
-		if var_4_1 then
-			return gohelper.clone(var_4_1, arg_4_2, arg_4_3)
+		if prefab then
+			return gohelper.clone(prefab, parentGO, name)
 		else
-			logError(arg_4_0.__cname .. " prefab not exist: " .. arg_4_1)
+			logError(self.__cname .. " prefab not exist: " .. resPath)
 		end
 	else
-		logError(arg_4_0.__cname .. " resource not load: " .. arg_4_1)
+		logError(self.__cname .. " resource not load: " .. resPath)
 	end
 
 	return nil
 end
 
-function var_0_0.show(arg_5_0, arg_5_1)
-	if arg_5_0.isShow and not arg_5_1 then
+function BaseRoleStoryView:show(force)
+	if self.isShow and not force then
 		return
 	end
 
-	arg_5_0.isShow = true
+	self.isShow = true
 
-	if not arg_5_0.viewGO then
-		arg_5_0:_loadPrefab()
+	if not self.viewGO then
+		self:_loadPrefab()
 
 		return
 	end
 
-	gohelper.setActive(arg_5_0.viewGO, true)
-	arg_5_0:onShow()
+	gohelper.setActive(self.viewGO, true)
+	self:onShow()
 end
 
-function var_0_0.hide(arg_6_0, arg_6_1)
-	if not arg_6_0.isShow and not arg_6_1 then
+function BaseRoleStoryView:hide(force)
+	if not self.isShow and not force then
 		return
 	end
 
-	arg_6_0.isShow = false
+	self.isShow = false
 
-	if not arg_6_0.viewGO then
+	if not self.viewGO then
 		return
 	end
 
-	gohelper.setActive(arg_6_0.viewGO, false)
-	arg_6_0:onHide()
+	gohelper.setActive(self.viewGO, false)
+	self:onHide()
 end
 
-function var_0_0.destory(arg_7_0)
-	arg_7_0:removeEvents()
-	arg_7_0:onDestroyView()
+function BaseRoleStoryView:destory()
+	self:removeEvents()
+	self:onDestroyView()
 
-	if arg_7_0._abLoader then
-		arg_7_0._abLoader:dispose()
+	if self._abLoader then
+		self._abLoader:dispose()
 
-		arg_7_0._abLoader = nil
+		self._abLoader = nil
 	end
 
-	if arg_7_0.viewGO then
-		gohelper.destroy(arg_7_0.viewGO)
+	if self.viewGO then
+		gohelper.destroy(self.viewGO)
 
-		arg_7_0.viewGO = nil
+		self.viewGO = nil
 	end
 
-	arg_7_0:__onDispose()
+	self:__onDispose()
 end
 
-function var_0_0.onInit(arg_8_0)
+function BaseRoleStoryView:onInit()
 	return
 end
 
-function var_0_0.onInitView(arg_9_0)
+function BaseRoleStoryView:onInitView()
 	return
 end
 
-function var_0_0.addEvents(arg_10_0)
+function BaseRoleStoryView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_11_0)
+function BaseRoleStoryView:removeEvents()
 	return
 end
 
-function var_0_0.onShow(arg_12_0)
+function BaseRoleStoryView:onShow()
 	return
 end
 
-function var_0_0.onHide(arg_13_0)
+function BaseRoleStoryView:onHide()
 	return
 end
 
-function var_0_0.onDestroyView(arg_14_0)
+function BaseRoleStoryView:onDestroyView()
 	return
 end
 
-return var_0_0
+return BaseRoleStoryView

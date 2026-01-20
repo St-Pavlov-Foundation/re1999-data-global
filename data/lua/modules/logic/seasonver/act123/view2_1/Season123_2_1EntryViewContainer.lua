@@ -1,8 +1,10 @@
-﻿module("modules.logic.seasonver.act123.view2_1.Season123_2_1EntryViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view2_1/Season123_2_1EntryViewContainer.lua
 
-local var_0_0 = class("Season123_2_1EntryViewContainer", BaseViewContainer)
+module("modules.logic.seasonver.act123.view2_1.Season123_2_1EntryViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local Season123_2_1EntryViewContainer = class("Season123_2_1EntryViewContainer", BaseViewContainer)
+
+function Season123_2_1EntryViewContainer:buildViews()
 	return {
 		Season123_2_1CheckCloseView.New(),
 		Season123_2_1EntryView.New(),
@@ -11,27 +13,27 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._navigateButtonView = NavigateButtonsView.New({
+function Season123_2_1EntryViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			true
 		})
 
-		arg_2_0._navigateButtonView:setHelpId(HelpEnum.HelpId.Season2_1MainViewHelp)
+		self._navigateButtonView:setHelpId(HelpEnum.HelpId.Season2_1MainViewHelp)
 
 		return {
-			arg_2_0._navigateButtonView
+			self._navigateButtonView
 		}
 	end
 end
 
-function var_0_0.onContainerInit(arg_3_0)
+function Season123_2_1EntryViewContainer:onContainerInit()
 	ActivityEnterMgr.instance:enterActivity(VersionActivity1_7Enum.ActivityId.Season)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
 		VersionActivity1_7Enum.ActivityId.Season
 	})
 end
 
-return var_0_0
+return Season123_2_1EntryViewContainer

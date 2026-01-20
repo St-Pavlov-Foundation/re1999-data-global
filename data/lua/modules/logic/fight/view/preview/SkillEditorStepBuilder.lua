@@ -1,354 +1,395 @@
-﻿module("modules.logic.fight.view.preview.SkillEditorStepBuilder", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/preview/SkillEditorStepBuilder.lua
 
-local var_0_0 = class("SkillEditorStepBuilder")
-local var_0_1 = false
+module("modules.logic.fight.view.preview.SkillEditorStepBuilder", package.seeall)
 
-function var_0_0.buildFightStepDataList(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = FightHelper.getEntity(arg_1_1):getSide()
-	local var_1_1 = var_1_0 == FightEnum.EntitySide.MySide and FightEnum.EntitySide.EnemySide or FightEnum.EntitySide.MySide
-	local var_1_2 = FightStepData.New()
+local SkillEditorStepBuilder = class("SkillEditorStepBuilder")
+local enableLog = false
 
-	var_1_2.editorPlaySkill = true
-	var_1_2.actType = 1
-	var_1_2.fromId = arg_1_1
-	var_1_2.toId = arg_1_2
-	var_1_2.actId = arg_1_0
-	var_1_2.actEffect = {}
+function SkillEditorStepBuilder.buildFightStepDataList(skillId, attackerId, targetId)
+	local side = FightHelper.getEntity(attackerId):getSide()
+	local oppositeSide = side == FightEnum.EntitySide.MySide and FightEnum.EntitySide.EnemySide or FightEnum.EntitySide.MySide
+	local fightStepData = FightStepData.New()
 
-	local var_1_3 = lua_skill.configDict[arg_1_0]
+	fightStepData.editorPlaySkill = true
+	fightStepData.actType = 1
+	fightStepData.fromId = attackerId
+	fightStepData.toId = targetId
+	fightStepData.actId = skillId
+	fightStepData.actEffect = {}
 
-	if var_0_1 then
-		var_0_0._logBehavior(var_1_3)
+	local skillCO = lua_skill.configDict[skillId]
+
+	if enableLog then
+		SkillEditorStepBuilder._logBehavior(skillCO)
 	end
 
-	local var_1_4
+	local randomTargetId
 
-	if var_1_3.damageRate > 0 then
-		var_1_4 = var_0_0._buildDamage(var_1_3, var_1_2, arg_1_1, arg_1_2, var_1_0, var_1_1)
+	if skillCO.damageRate > 0 then
+		randomTargetId = SkillEditorStepBuilder._buildDamage(skillCO, fightStepData, attackerId, targetId, side, oppositeSide)
 	end
 
-	var_0_0._buildSkillEffectHealOrDmg(var_1_3, var_1_2, arg_1_1, arg_1_2, var_1_0, var_1_1, var_1_4)
-	var_0_0._buildBehaviorBuffs(var_1_3, var_1_2.actEffect, arg_1_1, arg_1_2, var_1_0, var_1_1, var_1_4)
-	var_0_0._checkRemoveBuffs(var_1_3, var_1_2.actEffect, arg_1_1, arg_1_2, var_1_0, var_1_1, var_1_4)
-	var_0_0._buildSummoned(var_1_3, var_1_2.actEffect, arg_1_1, arg_1_2, var_1_0, var_1_1, var_1_4)
-	var_0_0._buildMagicCircle(var_1_3, var_1_2.actEffect, arg_1_1, arg_1_2, var_1_0, var_1_1, var_1_4)
-	var_0_0._checkRegainPowerAfterAct(var_1_3, var_1_2.actEffect, arg_1_1, arg_1_2, var_1_0, var_1_1)
+	SkillEditorStepBuilder._buildSkillEffectHealOrDmg(skillCO, fightStepData, attackerId, targetId, side, oppositeSide, randomTargetId)
+	SkillEditorStepBuilder._buildBehaviorBuffs(skillCO, fightStepData.actEffect, attackerId, targetId, side, oppositeSide, randomTargetId)
+	SkillEditorStepBuilder._checkRemoveBuffs(skillCO, fightStepData.actEffect, attackerId, targetId, side, oppositeSide, randomTargetId)
+	SkillEditorStepBuilder._buildSummoned(skillCO, fightStepData.actEffect, attackerId, targetId, side, oppositeSide, randomTargetId)
+	SkillEditorStepBuilder._buildMagicCircle(skillCO, fightStepData.actEffect, attackerId, targetId, side, oppositeSide, randomTargetId)
+	SkillEditorStepBuilder._checkRegainPowerAfterAct(skillCO, fightStepData.actEffect, attackerId, targetId, side, oppositeSide)
 
-	local var_1_5 = {
-		var_1_2
+	local fightStepDataList = {
+		fightStepData
 	}
-	local var_1_6 = var_0_0._checkBuildAddPowerStep(var_1_3, var_1_2.actEffect, arg_1_1, arg_1_2, var_1_0, var_1_1)
+	local addPowerStepData = SkillEditorStepBuilder._checkBuildAddPowerStep(skillCO, fightStepData.actEffect, attackerId, targetId, side, oppositeSide)
 
-	if var_1_6 then
-		table.insert(var_1_5, var_1_6)
+	if addPowerStepData then
+		table.insert(fightStepDataList, addPowerStepData)
 	end
 
-	return var_1_5
+	return fightStepDataList
 end
 
-function var_0_0._logBehavior(arg_2_0)
-	for iter_2_0 = 1, FightEnum.MaxBehavior do
-		local var_2_0 = arg_2_0["behavior" .. iter_2_0]
-		local var_2_1 = arg_2_0["conditionTarget" .. iter_2_0]
-		local var_2_2 = arg_2_0["behaviorTarget" .. iter_2_0]
+function SkillEditorStepBuilder._logBehavior(skillCO)
+	for i = 1, FightEnum.MaxBehavior do
+		local behavior = skillCO["behavior" .. i]
+		local conditionTarget = skillCO["conditionTarget" .. i]
+		local behaviorTarget = skillCO["behaviorTarget" .. i]
 
-		if not string.nilorempty(var_2_0) then
-			local var_2_3 = arg_2_0["condition" .. iter_2_0]
-			local var_2_4 = ""
-			local var_2_5 = ""
+		if not string.nilorempty(behavior) then
+			local condition = skillCO["condition" .. i]
+			local behaviorStr = ""
+			local conditionStr = ""
 
-			if not string.nilorempty(var_2_0) then
-				local var_2_6 = string.splitToNumber(var_2_0, "#")[1]
-				local var_2_7 = var_2_6 and lua_skill_behavior.configDict[var_2_6]
-				local var_2_8 = var_2_7 and var_2_7.type or ""
+			if not string.nilorempty(behavior) then
+				local behaviorId = string.splitToNumber(behavior, "#")[1]
+				local behaviorCO = behaviorId and lua_skill_behavior.configDict[behaviorId]
+				local behaviorType = behaviorCO and behaviorCO.type or ""
 
-				var_2_4 = "behavior: " .. var_2_0 .. " " .. var_2_8
+				behaviorStr = "behavior: " .. behavior .. " " .. behaviorType
 			end
 
-			if not string.nilorempty(var_2_3) then
-				local var_2_9 = string.splitToNumber(var_2_3, "#")[1]
-				local var_2_10 = var_2_9 and lua_skill_behavior_condition.configDict[var_2_9]
-				local var_2_11 = var_2_10 and var_2_10.type or ""
+			if not string.nilorempty(condition) then
+				local conditionId = string.splitToNumber(condition, "#")[1]
+				local conditionCO = conditionId and lua_skill_behavior_condition.configDict[conditionId]
+				local conditionType = conditionCO and conditionCO.type or ""
 
-				var_2_5 = "condition: " .. var_2_3 .. " " .. var_2_11
+				conditionStr = "condition: " .. condition .. " " .. conditionType
 			end
 
-			logError("\n" .. var_2_4 .. "    " .. var_2_5 .. "    condTarget_" .. var_2_1 .. "    behaTarget_" .. var_2_2)
+			logError("\n" .. behaviorStr .. "    " .. conditionStr .. "    condTarget_" .. conditionTarget .. "    behaTarget_" .. behaviorTarget)
 		end
 	end
 end
 
-function var_0_0._buildDamage(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5)
-	local var_3_0
-	local var_3_1 = FightEnum.EffectType
+function SkillEditorStepBuilder._buildDamage(skillCO, fightStepData, attackerId, targetId, side, oppositeSide)
+	local randomTargetId
+	local ET = FightEnum.EffectType
 
-	if FightEnum.LogicTargetClassify.Special[arg_3_0.logicTarget] then
-		logError(arg_3_0.id .. " 未能正确构建技能步骤，技能对象未实现：" .. arg_3_0.logicTarget)
-	elseif FightEnum.LogicTargetClassify.Single[arg_3_0.logicTarget] then
-		local var_3_2, var_3_3 = var_0_0._getDmgTypeAndNum(var_3_1.DAMAGE)
+	if FightEnum.LogicTargetClassify.Special[skillCO.logicTarget] then
+		logError(skillCO.id .. " 未能正确构建技能步骤，技能对象未实现：" .. skillCO.logicTarget)
+	elseif FightEnum.LogicTargetClassify.Single[skillCO.logicTarget] then
+		local et, num = SkillEditorStepBuilder._getDmgTypeAndNum(ET.DAMAGE)
 
-		var_0_0._buildActEffect(arg_3_1.actEffect, arg_3_3, var_3_2, var_3_3, arg_3_4)
-	elseif FightEnum.LogicTargetClassify.SingleAndRandom[arg_3_0.logicTarget] then
-		local var_3_4 = arg_3_0.targetLimit == FightEnum.TargetLimit.EnemySide
-		local var_3_5, var_3_6 = var_0_0._getDmgTypeAndNum(var_3_1.DAMAGE)
+		SkillEditorStepBuilder._buildActEffect(fightStepData.actEffect, targetId, et, num, side)
+	elseif FightEnum.LogicTargetClassify.SingleAndRandom[skillCO.logicTarget] then
+		local isAttack = skillCO.targetLimit == FightEnum.TargetLimit.EnemySide
+		local et, num = SkillEditorStepBuilder._getDmgTypeAndNum(ET.DAMAGE)
 
-		var_0_0._buildActEffect(arg_3_1.actEffect, arg_3_3, var_3_5, var_3_6, arg_3_4)
+		SkillEditorStepBuilder._buildActEffect(fightStepData.actEffect, targetId, et, num, side)
 
-		local var_3_7 = FightHelper.getSideEntitys(var_3_4 and arg_3_5 or arg_3_4)
+		local entityList = FightHelper.getSideEntitys(isAttack and oppositeSide or side)
 
-		for iter_3_0, iter_3_1 in ipairs(var_3_7) do
-			if iter_3_1.id == arg_3_3 then
-				table.remove(var_3_7, iter_3_0)
+		for i, entity in ipairs(entityList) do
+			if entity.id == targetId then
+				table.remove(entityList, i)
 
 				break
 			end
 		end
 
-		if #var_3_7 > 0 then
-			local var_3_8 = var_3_7[math.random(#var_3_7)]
-			local var_3_9, var_3_10 = var_0_0._getDmgTypeAndNum(var_3_1.DAMAGE)
+		if #entityList > 0 then
+			local randomIndex = math.random(#entityList)
+			local randomEntity = entityList[randomIndex]
 
-			var_0_0._buildActEffect(arg_3_1.actEffect, var_3_8.id, var_3_9, var_3_10, arg_3_4)
+			et, num = SkillEditorStepBuilder._getDmgTypeAndNum(ET.DAMAGE)
 
-			var_3_0 = var_3_8.id
+			SkillEditorStepBuilder._buildActEffect(fightStepData.actEffect, randomEntity.id, et, num, side)
+
+			randomTargetId = randomEntity.id
 		end
-	elseif FightEnum.LogicTargetClassify.EnemySideAll[arg_3_0.logicTarget] then
-		local var_3_11 = FightDataHelper.entityMgr:getNormalList(arg_3_5)
+	elseif FightEnum.LogicTargetClassify.EnemySideAll[skillCO.logicTarget] then
+		local defMOList = FightDataHelper.entityMgr:getNormalList(oppositeSide)
 
-		for iter_3_2, iter_3_3 in ipairs(var_3_11) do
-			local var_3_12, var_3_13 = var_0_0._getDmgTypeAndNum(var_3_1.DAMAGE)
+		for _, entityMO in ipairs(defMOList) do
+			local et, num = SkillEditorStepBuilder._getDmgTypeAndNum(ET.DAMAGE)
 
-			var_0_0._buildActEffect(arg_3_1.actEffect, iter_3_3.id, var_3_12, var_3_13, arg_3_4)
+			SkillEditorStepBuilder._buildActEffect(fightStepData.actEffect, entityMO.id, et, num, side)
 		end
-	elseif FightEnum.LogicTargetClassify.EnemySideindex[arg_3_0.logicTarget] then
-		local var_3_14 = arg_3_0.logicTarget - 225
-		local var_3_15 = FightDataHelper.entityMgr:getNormalList(arg_3_5)
+	elseif FightEnum.LogicTargetClassify.EnemySideindex[skillCO.logicTarget] then
+		local index = tonumber(skillCO.logicTarget) - 225
+		local defMOList = FightDataHelper.entityMgr:getNormalList(oppositeSide)
 
-		table.sort(var_3_15, function(arg_4_0, arg_4_1)
-			return arg_4_0.position < arg_4_1.position
+		table.sort(defMOList, function(item1, item2)
+			return item1.position < item2.position
 		end)
 
-		for iter_3_4, iter_3_5 in ipairs(var_3_15) do
-			if iter_3_4 == var_3_14 then
-				local var_3_16, var_3_17 = var_0_0._getDmgTypeAndNum(var_3_1.DAMAGE)
+		for entityIndex, entityMO in ipairs(defMOList) do
+			if entityIndex == index then
+				local et, num = SkillEditorStepBuilder._getDmgTypeAndNum(ET.DAMAGE)
 
-				var_0_0._buildActEffect(arg_3_1.actEffect, iter_3_5.id, var_3_16, var_3_17, arg_3_4)
+				SkillEditorStepBuilder._buildActEffect(fightStepData.actEffect, entityMO.id, et, num, side)
 			end
 		end
-	elseif FightEnum.LogicTargetClassify.MySideAll[arg_3_0.logicTarget] then
-		local var_3_18 = FightDataHelper.entityMgr:getNormalList(arg_3_4)
+	elseif FightEnum.LogicTargetClassify.MySideAll[skillCO.logicTarget] then
+		local atkMOList = FightDataHelper.entityMgr:getNormalList(side)
 
-		for iter_3_6, iter_3_7 in ipairs(var_3_18) do
-			local var_3_19, var_3_20 = var_0_0._getDmgTypeAndNum(var_3_1.DAMAGE)
+		for _, entityMO in ipairs(atkMOList) do
+			local et, num = SkillEditorStepBuilder._getDmgTypeAndNum(ET.DAMAGE)
 
-			var_0_0._buildActEffect(arg_3_1.actEffect, iter_3_7.id, var_3_19, var_3_20, arg_3_4)
+			SkillEditorStepBuilder._buildActEffect(fightStepData.actEffect, entityMO.id, et, num, side)
 		end
-	elseif FightEnum.LogicTargetClassify.Me[arg_3_0.logicTarget] then
-		local var_3_21, var_3_22 = var_0_0._getDmgTypeAndNum(var_3_1.DAMAGE)
+	elseif FightEnum.LogicTargetClassify.Me[skillCO.logicTarget] then
+		local et, num = SkillEditorStepBuilder._getDmgTypeAndNum(ET.DAMAGE)
 
-		var_0_0._buildActEffect(arg_3_1.actEffect, arg_3_2, var_3_21, var_3_22, arg_3_4)
-	elseif FightEnum.LogicTargetClassify.EnemyMostHp[arg_3_0.logicTarget] then
-		local var_3_23 = FightDataHelper.entityMgr:getNormalList(arg_3_5)
-		local var_3_24
-		local var_3_25 = 0
+		SkillEditorStepBuilder._buildActEffect(fightStepData.actEffect, attackerId, et, num, side)
+	elseif FightEnum.LogicTargetClassify.EnemyMostHp[skillCO.logicTarget] then
+		local defMOList = FightDataHelper.entityMgr:getNormalList(oppositeSide)
+		local tar_entity_mo
+		local max_num = 0
 
-		for iter_3_8, iter_3_9 in ipairs(var_3_23) do
-			if var_3_25 < iter_3_9.currentHp then
-				var_3_25 = iter_3_9.currentHp
-				var_3_24 = iter_3_9
+		for _, entityMO in ipairs(defMOList) do
+			if max_num < entityMO.currentHp then
+				max_num = entityMO.currentHp
+				tar_entity_mo = entityMO
 			end
 		end
 
-		if var_3_24 then
-			local var_3_26
+		if tar_entity_mo then
+			local isAttack = skillCO.targetLimit == FightEnum.TargetLimit.EnemySide
+			local et, num = SkillEditorStepBuilder._getDmgTypeAndNum(ET.DAMAGE)
 
-			var_3_26 = arg_3_0.targetLimit == FightEnum.TargetLimit.EnemySide
-
-			local var_3_27, var_3_28 = var_0_0._getDmgTypeAndNum(var_3_1.DAMAGE)
-
-			var_0_0._buildActEffect(arg_3_1.actEffect, var_3_24.id, var_3_27, var_3_28, arg_3_4)
+			SkillEditorStepBuilder._buildActEffect(fightStepData.actEffect, tar_entity_mo.id, et, num, side)
 		end
-	elseif FightEnum.LogicTargetClassify.EnemyWith101Buff[arg_3_0.logicTarget] then
-		local var_3_29 = FightDataHelper.entityMgr:getNormalList(arg_3_5)
+	elseif FightEnum.LogicTargetClassify.EnemyWith101Buff[skillCO.logicTarget] then
+		local defMOList = FightDataHelper.entityMgr:getNormalList(oppositeSide)
 
-		for iter_3_10, iter_3_11 in ipairs(var_3_29) do
-			local var_3_30 = iter_3_11:getBuffList()
-			local var_3_31 = false
+		for _, entityMO in ipairs(defMOList) do
+			local buffs = entityMO:getBuffList()
+			local has101Buff = false
 
-			for iter_3_12, iter_3_13 in ipairs(var_3_30) do
-				local var_3_32 = lua_skill_buff.configDict[iter_3_13.buffId]
+			for _, buffMO in ipairs(buffs) do
+				local buffCO = lua_skill_buff.configDict[buffMO.buffId]
 
-				if var_3_32 and not string.nilorempty(var_3_32.features) then
-					local var_3_33 = GameUtil.splitString2(var_3_32.features, true)
+				if buffCO and not string.nilorempty(buffCO.features) then
+					local featureSp = GameUtil.splitString2(buffCO.features, true)
 
-					for iter_3_14, iter_3_15 in ipairs(var_3_33) do
-						local var_3_34 = iter_3_15[1]
-						local var_3_35 = var_3_34 and lua_buff_act.configDict[var_3_34]
+					for _, oneFeatureSp in ipairs(featureSp) do
+						local featureId = oneFeatureSp[1]
+						local buffActCO1 = featureId and lua_buff_act.configDict[featureId]
+						local feature = buffActCO1 and buffActCO1.type
 
-						if (var_3_35 and var_3_35.type) == "MonsterLabel" and iter_3_15[2] == 101 then
-							var_3_31 = true
+						if feature == "MonsterLabel" and oneFeatureSp[2] == 101 then
+							has101Buff = true
 
 							break
 						end
 					end
 				end
 
-				if var_3_31 then
+				if has101Buff then
 					break
 				end
 			end
 
-			if var_3_31 then
-				local var_3_36, var_3_37 = var_0_0._getDmgTypeAndNum(var_3_1.DAMAGE)
+			if has101Buff then
+				local et, num = SkillEditorStepBuilder._getDmgTypeAndNum(ET.DAMAGE)
 
-				var_0_0._buildActEffect(arg_3_1.actEffect, iter_3_11.id, var_3_36, var_3_37, arg_3_4)
+				SkillEditorStepBuilder._buildActEffect(fightStepData.actEffect, entityMO.id, et, num, side)
 			end
 		end
-	elseif FightEnum.LogicTargetClassify.EnemyWith795Feature[arg_3_0.logicTarget] then
-		local var_3_38 = FightDataHelper.entityMgr:getNormalList(arg_3_5)
-		local var_3_39 = {}
+	elseif FightEnum.LogicTargetClassify.EnemyWith795Feature[skillCO.logicTarget] then
+		local defMOList = FightDataHelper.entityMgr:getNormalList(oppositeSide)
+		local featureEntityList = {}
 
-		for iter_3_16, iter_3_17 in ipairs(var_3_38) do
-			if iter_3_17:hasBuffFeature(FightEnum.BuffFeature.None) then
-				table.insert(var_3_39, iter_3_17)
+		for _, entityMO in ipairs(defMOList) do
+			if entityMO:hasBuffFeature(FightEnum.BuffFeature.None) then
+				table.insert(featureEntityList, entityMO)
 			end
 		end
 
-		if #var_3_39 > 0 then
-			local var_3_40 = math.random(1, #var_3_39)
-			local var_3_41, var_3_42 = var_0_0._getDmgTypeAndNum(var_3_1.DAMAGE)
+		if #featureEntityList > 0 then
+			local index = math.random(1, #featureEntityList)
+			local et, num = SkillEditorStepBuilder._getDmgTypeAndNum(ET.DAMAGE)
 
-			var_0_0._buildActEffect(arg_3_1.actEffect, var_3_39[var_3_40].id, var_3_41, var_3_42, arg_3_4)
+			SkillEditorStepBuilder._buildActEffect(fightStepData.actEffect, featureEntityList[index].id, et, num, side)
 		else
-			local var_3_43 = math.random(1, #var_3_38)
-			local var_3_44, var_3_45 = var_0_0._getDmgTypeAndNum(var_3_1.DAMAGE)
+			local index = math.random(1, #defMOList)
+			local et, num = SkillEditorStepBuilder._getDmgTypeAndNum(ET.DAMAGE)
 
-			var_0_0._buildActEffect(arg_3_1.actEffect, var_3_38[var_3_43].id, var_3_44, var_3_45, arg_3_4)
+			SkillEditorStepBuilder._buildActEffect(fightStepData.actEffect, defMOList[index].id, et, num, side)
 		end
-	elseif arg_3_0.logicTarget == 245 then
-		local var_3_46 = FightDataHelper.entityMgr:getNormalList(arg_3_5)
+	elseif skillCO.logicTarget == "245" then
+		local defMOList = FightDataHelper.entityMgr:getNormalList(oppositeSide)
 
-		for iter_3_18, iter_3_19 in ipairs(var_3_46) do
-			for iter_3_20, iter_3_21 in pairs(iter_3_19.buffDic) do
-				local var_3_47 = lua_skill_buff.configDict[iter_3_21.buffId]
+		for _, entityMO in ipairs(defMOList) do
+			for k, buffData in pairs(entityMO.buffDic) do
+				local buffConfig = lua_skill_buff.configDict[buffData.buffId]
 
-				if var_3_47 and var_3_47.typeId == 31320113 then
-					local var_3_48, var_3_49 = var_0_0._getDmgTypeAndNum(var_3_1.DAMAGE)
+				if buffConfig and buffConfig.typeId == 31320113 then
+					local et, num = SkillEditorStepBuilder._getDmgTypeAndNum(ET.DAMAGE)
 
-					var_0_0._buildActEffect(arg_3_1.actEffect, iter_3_19.id, var_3_48, var_3_49, arg_3_4)
+					SkillEditorStepBuilder._buildActEffect(fightStepData.actEffect, entityMO.id, et, num, side)
 
-					return iter_3_19.id
+					return entityMO.id
 				end
 			end
 		end
 
-		for iter_3_22, iter_3_23 in ipairs(var_3_46) do
-			if FightHelper.checkIsBossByMonsterId(iter_3_23.modelId) then
-				local var_3_50, var_3_51 = var_0_0._getDmgTypeAndNum(var_3_1.DAMAGE)
+		for _, entityMO in ipairs(defMOList) do
+			if FightHelper.checkIsBossByMonsterId(entityMO.modelId) then
+				local et, num = SkillEditorStepBuilder._getDmgTypeAndNum(ET.DAMAGE)
 
-				var_0_0._buildActEffect(arg_3_1.actEffect, iter_3_23.id, var_3_50, var_3_51, arg_3_4)
+				SkillEditorStepBuilder._buildActEffect(fightStepData.actEffect, entityMO.id, et, num, side)
 
-				return iter_3_23.id
+				return entityMO.id
 			end
 		end
 
-		table.sort(var_3_46, function(arg_5_0, arg_5_1)
-			return arg_5_0.currentHp < arg_5_1.currentHp
+		table.sort(defMOList, function(item1, item2)
+			return item1.currentHp < item2.currentHp
 		end)
 
-		local var_3_52, var_3_53 = var_0_0._getDmgTypeAndNum(var_3_1.DAMAGE)
+		local et, num = SkillEditorStepBuilder._getDmgTypeAndNum(ET.DAMAGE)
 
-		var_0_0._buildActEffect(arg_3_1.actEffect, var_3_46[1].id, var_3_52, var_3_53, arg_3_4)
+		SkillEditorStepBuilder._buildActEffect(fightStepData.actEffect, defMOList[1].id, et, num, side)
 
-		return var_3_46[1].id
+		return defMOList[1].id
+	elseif string.sub(skillCO.logicTarget, 1, 4) == "247#" then
+		local arr = string.split(skillCO.logicTarget, "#")
+		local buffTypeId = tonumber(arr[2])
+		local defMOList = FightDataHelper.entityMgr:getNormalList(oppositeSide)
+
+		for _, entityMO in ipairs(defMOList) do
+			for k, buffData in pairs(entityMO.buffDic) do
+				local buffConfig = lua_skill_buff.configDict[buffData.buffId]
+
+				if buffConfig and buffConfig.typeId == buffTypeId then
+					local et, num = SkillEditorStepBuilder._getDmgTypeAndNum(ET.DAMAGE)
+
+					SkillEditorStepBuilder._buildActEffect(fightStepData.actEffect, entityMO.id, et, num, side)
+
+					return entityMO.id
+				end
+			end
+		end
+
+		for _, entityMO in ipairs(defMOList) do
+			if FightHelper.checkIsBossByMonsterId(entityMO.modelId) then
+				local et, num = SkillEditorStepBuilder._getDmgTypeAndNum(ET.DAMAGE)
+
+				SkillEditorStepBuilder._buildActEffect(fightStepData.actEffect, entityMO.id, et, num, side)
+
+				return entityMO.id
+			end
+		end
+
+		table.sort(defMOList, function(item1, item2)
+			return item1.currentHp < item2.currentHp
+		end)
+
+		local et, num = SkillEditorStepBuilder._getDmgTypeAndNum(ET.DAMAGE)
+
+		SkillEditorStepBuilder._buildActEffect(fightStepData.actEffect, defMOList[1].id, et, num, side)
+
+		return defMOList[1].id
 	end
 
-	return var_3_0
+	return randomTargetId
 end
 
-local var_0_2 = {
+local filterDamgeKey = {
 	ConsumeBuffUpSkillDamageRate = true
 }
 
-function var_0_0._buildSkillEffectHealOrDmg(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5, arg_6_6)
-	local var_6_0 = FightEnum.EffectType.HEAL
-	local var_6_1 = FightEnum.EffectType.DAMAGE
-	local var_6_2 = FightEnum.EffectType.ORIGINDAMAGE
-	local var_6_3 = FightEnum.EffectType.ADDITIONALDAMAGE
+function SkillEditorStepBuilder._buildSkillEffectHealOrDmg(skillCO, fightStepData, attackerId, targetId, side, oppositeSide, randomTargetId)
+	local ET_HEAL = FightEnum.EffectType.HEAL
+	local ET_DAMAGE = FightEnum.EffectType.DAMAGE
+	local ET_ORIGINDAMAGE = FightEnum.EffectType.ORIGINDAMAGE
+	local ET_ADDITIONALDAMAGE = FightEnum.EffectType.ADDITIONALDAMAGE
 
-	for iter_6_0 = 1, FightEnum.MaxBehavior do
-		local var_6_4 = arg_6_0["behavior" .. iter_6_0]
-		local var_6_5 = arg_6_0["condition" .. iter_6_0]
-		local var_6_6 = arg_6_0["conditionTarget" .. iter_6_0]
-		local var_6_7 = var_0_0._checkBehaviorCondition(var_6_5, var_6_6, arg_6_2, arg_6_3)
+	for i = 1, FightEnum.MaxBehavior do
+		local behavior = skillCO["behavior" .. i]
+		local condition = skillCO["condition" .. i]
+		local conditionTarget = skillCO["conditionTarget" .. i]
+		local condSatisfy = SkillEditorStepBuilder._checkBehaviorCondition(condition, conditionTarget, attackerId, targetId)
 
-		if not string.nilorempty(var_6_4) and var_6_7 then
-			local var_6_8 = string.splitToNumber(var_6_4, "#")[1]
-			local var_6_9 = var_6_8 and lua_skill_behavior.configDict[var_6_8]
+		if not string.nilorempty(behavior) and condSatisfy then
+			local spRes = string.splitToNumber(behavior, "#")
+			local behaviorId = spRes[1]
+			local behaviorCO = behaviorId and lua_skill_behavior.configDict[behaviorId]
 
-			if var_6_9 then
-				local var_6_10 = arg_6_0["behaviorTarget" .. iter_6_0]
-				local var_6_11 = arg_6_0["conditionTarget" .. iter_6_0]
-				local var_6_12 = var_6_10
+			if behaviorCO then
+				local behaviorTarget = skillCO["behaviorTarget" .. i]
+				local conditionTarget = skillCO["conditionTarget" .. i]
+				local logicTarget = behaviorTarget
 
-				if var_6_10 == 0 then
-					var_6_12 = arg_6_0.logicTarget
-				elseif var_6_10 == 999 then
-					var_6_12 = var_6_11 ~= 0 and var_6_11 or arg_6_0.logicTarget
+				if behaviorTarget == "0" then
+					logicTarget = skillCO.logicTarget
+				elseif behaviorTarget == "999" then
+					logicTarget = conditionTarget ~= "0" and conditionTarget or skillCO.logicTarget
 				end
 
-				if string.find(string.lower(var_6_9.type), "origindamage") then
-					var_0_0._buildOneSkillEffectHealOrDmg(arg_6_0, iter_6_0, var_6_8, var_6_12, var_6_2, arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5, arg_6_6)
-				elseif string.find(string.lower(var_6_9.type), "additionaldamage") then
-					var_0_0._buildOneSkillEffectHealOrDmg(arg_6_0, iter_6_0, var_6_8, var_6_12, var_6_3, arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5, arg_6_6)
-				elseif string.find(string.lower(var_6_9.type), "heal") then
-					var_0_0._buildOneSkillEffectHealOrDmg(arg_6_0, iter_6_0, var_6_8, var_6_12, var_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5, arg_6_6)
-				elseif (string.find(string.lower(var_6_9.type), "damage") or string.find(string.lower(var_6_9.type), "lostlife")) and not var_0_2[var_6_9.type] then
-					var_0_0._buildOneSkillEffectHealOrDmg(arg_6_0, iter_6_0, var_6_8, var_6_12, var_6_1, arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5, arg_6_6)
+				if string.find(string.lower(behaviorCO.type), "origindamage") then
+					SkillEditorStepBuilder._buildOneSkillEffectHealOrDmg(skillCO, i, behaviorId, logicTarget, ET_ORIGINDAMAGE, fightStepData, attackerId, targetId, side, oppositeSide, randomTargetId)
+				elseif string.find(string.lower(behaviorCO.type), "additionaldamage") then
+					SkillEditorStepBuilder._buildOneSkillEffectHealOrDmg(skillCO, i, behaviorId, logicTarget, ET_ADDITIONALDAMAGE, fightStepData, attackerId, targetId, side, oppositeSide, randomTargetId)
+				elseif string.find(string.lower(behaviorCO.type), "heal") then
+					SkillEditorStepBuilder._buildOneSkillEffectHealOrDmg(skillCO, i, behaviorId, logicTarget, ET_HEAL, fightStepData, attackerId, targetId, side, oppositeSide, randomTargetId)
+				elseif (string.find(string.lower(behaviorCO.type), "damage") or string.find(string.lower(behaviorCO.type), "lostlife")) and not filterDamgeKey[behaviorCO.type] then
+					SkillEditorStepBuilder._buildOneSkillEffectHealOrDmg(skillCO, i, behaviorId, logicTarget, ET_DAMAGE, fightStepData, attackerId, targetId, side, oppositeSide, randomTargetId)
 				end
 			end
 		end
 	end
 end
 
-function var_0_0._buildOneSkillEffectHealOrDmg(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4, arg_7_5, arg_7_6, arg_7_7, arg_7_8, arg_7_9, arg_7_10)
-	local var_7_0 = var_0_0._getBehaviorTargetIds(arg_7_5.actEffect, arg_7_0, arg_7_1, arg_7_6, arg_7_7, arg_7_8, arg_7_9, arg_7_10)
-	local var_7_1, var_7_2 = var_0_0._getDmgTypeAndNum(arg_7_4)
+function SkillEditorStepBuilder._buildOneSkillEffectHealOrDmg(skillCO, behaviorIndex, behaviorId, logicTarget, effectType, fightStepData, attackerId, targetId, side, oppositeSide, randomTargetId)
+	local targetIds = SkillEditorStepBuilder._getBehaviorTargetIds(fightStepData.actEffect, skillCO, behaviorIndex, attackerId, targetId, side, oppositeSide, randomTargetId)
+	local et, num = SkillEditorStepBuilder._getDmgTypeAndNum(effectType)
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-		var_0_0._buildActEffect(arg_7_5.actEffect, iter_7_1, var_7_1, var_7_2, arg_7_8).configEffect = arg_7_2
+	for _, targetId in ipairs(targetIds) do
+		SkillEditorStepBuilder._buildActEffect(fightStepData.actEffect, targetId, et, num, side).configEffect = behaviorId
 	end
 end
 
-var_0_0.customDamage = nil
-var_0_0.defaultDamage = 1234
-var_0_0.defaultCrit = 2468
+SkillEditorStepBuilder.customDamage = nil
+SkillEditorStepBuilder.defaultDamage = 1234
+SkillEditorStepBuilder.defaultCrit = 2468
 
-function var_0_0._getDmgTypeAndNum(arg_8_0)
-	local var_8_0 = arg_8_0
-	local var_8_1 = SkillEditorSideView.isCrit
-	local var_8_2 = 0
+function SkillEditorStepBuilder._getDmgTypeAndNum(effectType)
+	local t = effectType
+	local isCritOn = SkillEditorSideView.isCrit
+	local num = 0
 
-	if var_0_0.customDamage then
-		var_8_2 = var_0_0.customDamage
+	if SkillEditorStepBuilder.customDamage then
+		num = SkillEditorStepBuilder.customDamage
 	else
-		var_8_2 = var_8_1 and var_0_0.defaultCrit or var_0_0.defaultDamage
+		num = isCritOn and SkillEditorStepBuilder.defaultCrit or SkillEditorStepBuilder.defaultDamage
 	end
 
-	if arg_8_0 == FightEnum.EffectType.ORIGINDAMAGE then
-		var_8_0 = var_8_1 and FightEnum.EffectType.ORIGINCRIT or FightEnum.EffectType.ORIGINDAMAGE
-	elseif arg_8_0 == FightEnum.EffectType.ADDITIONALDAMAGE then
-		var_8_0 = var_8_1 and FightEnum.EffectType.ADDITIONALDAMAGECRIT or FightEnum.EffectType.ADDITIONALDAMAGE
-	elseif arg_8_0 == FightEnum.EffectType.DAMAGE then
-		var_8_0 = var_8_1 and FightEnum.EffectType.CRIT or FightEnum.EffectType.DAMAGE
-	elseif arg_8_0 == FightEnum.EffectType.HEAL then
-		var_8_0 = var_8_1 and FightEnum.EffectType.HEALCRIT or FightEnum.EffectType.HEAL
+	if effectType == FightEnum.EffectType.ORIGINDAMAGE then
+		t = isCritOn and FightEnum.EffectType.ORIGINCRIT or FightEnum.EffectType.ORIGINDAMAGE
+	elseif effectType == FightEnum.EffectType.ADDITIONALDAMAGE then
+		t = isCritOn and FightEnum.EffectType.ADDITIONALDAMAGECRIT or FightEnum.EffectType.ADDITIONALDAMAGE
+	elseif effectType == FightEnum.EffectType.DAMAGE then
+		t = isCritOn and FightEnum.EffectType.CRIT or FightEnum.EffectType.DAMAGE
+	elseif effectType == FightEnum.EffectType.HEAL then
+		t = isCritOn and FightEnum.EffectType.HEALCRIT or FightEnum.EffectType.HEAL
 	end
 
-	return var_8_0, var_8_2
+	return t, num
 end
 
-local var_0_3 = {
+local DirectDamageType = {
 	[FightEnum.EffectType.MISS] = true,
 	[FightEnum.EffectType.DAMAGE] = true,
 	[FightEnum.EffectType.CRIT] = true,
@@ -356,73 +397,74 @@ local var_0_3 = {
 	[FightEnum.EffectType.SHIELD] = true
 }
 
-function var_0_0._buildActEffect(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
-	local var_9_0 = FightActEffectData.New()
+function SkillEditorStepBuilder._buildActEffect(actEffect, targetId, effectType, effectNum, fromSide)
+	local actEffectData = FightActEffectData.New()
 
-	var_9_0.targetId = arg_9_1
-	var_9_0.effectType = arg_9_2
-	var_9_0.effectNum = arg_9_3
-	var_9_0.fromSide = arg_9_4
+	actEffectData.targetId = targetId
+	actEffectData.effectType = effectType
+	actEffectData.effectNum = effectNum
+	actEffectData.fromSide = fromSide
 
-	if var_0_3[arg_9_2] then
-		var_9_0.configEffect = FightEnum.DirectDamageType
+	if DirectDamageType[effectType] then
+		actEffectData.configEffect = FightEnum.DirectDamageType
 	end
 
-	table.insert(arg_9_0, var_9_0)
+	table.insert(actEffect, actEffectData)
 
-	local var_9_1 = FightDataHelper.entityMgr:getById(arg_9_1)
+	local targetEntityMO = FightDataHelper.entityMgr:getById(targetId)
 
-	if arg_9_2 == FightEnum.EffectType.DAMAGE and var_9_1.shieldValue > 0 then
-		var_9_0.effectType = FightEnum.EffectType.SHIELD
-		var_9_0.effectNum = Mathf.Clamp(var_9_1.shieldValue - arg_9_3, 0, var_9_1.shieldValue)
-		var_9_0.configEffect = 0
+	if effectType == FightEnum.EffectType.DAMAGE and targetEntityMO.shieldValue > 0 then
+		actEffectData.effectType = FightEnum.EffectType.SHIELD
+		actEffectData.effectNum = Mathf.Clamp(targetEntityMO.shieldValue - effectNum, 0, targetEntityMO.shieldValue)
+		actEffectData.configEffect = 0
 
-		local var_9_2 = FightActEffectData.New()
+		local extraActEffectData = FightActEffectData.New()
 
-		var_9_2.targetId = arg_9_1
-		var_9_2.effectType = arg_9_2
-		var_9_2.effectNum = arg_9_3 < var_9_1.shieldValue and 0 or arg_9_3 - var_9_1.shieldValue
-		var_9_2.fromSide = arg_9_4
+		extraActEffectData.targetId = targetId
+		extraActEffectData.effectType = effectType
+		extraActEffectData.effectNum = effectNum < targetEntityMO.shieldValue and 0 or effectNum - targetEntityMO.shieldValue
+		extraActEffectData.fromSide = fromSide
 
-		if var_0_3[arg_9_2] then
-			var_9_2.configEffect = FightEnum.DirectDamageType
+		if DirectDamageType[effectType] then
+			extraActEffectData.configEffect = FightEnum.DirectDamageType
 		end
 
-		table.insert(arg_9_0, var_9_2)
+		table.insert(actEffect, extraActEffectData)
 
-		if arg_9_3 >= var_9_1.shieldValue then
-			local var_9_3 = FightActEffectData.New()
+		if effectNum >= targetEntityMO.shieldValue then
+			local delShieldActEffectData = FightActEffectData.New()
 
-			var_9_3.targetId = arg_9_1
-			var_9_3.effectType = FightEnum.EffectType.SHIELDDEL
-			var_9_3.effectNum = 0
-			var_9_3.fromSide = arg_9_4
-			var_9_3.configEffect = 0
+			delShieldActEffectData.targetId = targetId
+			delShieldActEffectData.effectType = FightEnum.EffectType.SHIELDDEL
+			delShieldActEffectData.effectNum = 0
+			delShieldActEffectData.fromSide = fromSide
+			delShieldActEffectData.configEffect = 0
 
-			table.insert(arg_9_0, var_9_3)
+			table.insert(actEffect, delShieldActEffectData)
 
-			local var_9_4 = var_9_1:getBuffDic()
+			local buffDic = targetEntityMO:getBuffDic()
 
-			for iter_9_0, iter_9_1 in pairs(var_9_4) do
-				local var_9_5 = lua_skill_buff.configDict[iter_9_1.buffId]
+			for _, buffMO in pairs(buffDic) do
+				local buffCO = lua_skill_buff.configDict[buffMO.buffId]
 
-				if var_9_5 and not string.nilorempty(var_9_5.features) then
-					local var_9_6 = GameUtil.splitString2(var_9_5.features, true)
+				if buffCO and not string.nilorempty(buffCO.features) then
+					local featureSp = GameUtil.splitString2(buffCO.features, true)
 
-					for iter_9_2, iter_9_3 in ipairs(var_9_6) do
-						local var_9_7 = iter_9_3[1]
-						local var_9_8 = var_9_7 and lua_buff_act.configDict[var_9_7]
+					for _, oneFeatureSp in ipairs(featureSp) do
+						local featureId = oneFeatureSp[1]
+						local buffActCO1 = featureId and lua_buff_act.configDict[featureId]
+						local feature = buffActCO1 and buffActCO1.type
 
-						if (var_9_8 and var_9_8.type) == "Shield" then
-							local var_9_9 = FightActEffectData.New()
+						if feature == "Shield" then
+							local delShieldBuffActEffectData = FightActEffectData.New()
 
-							var_9_9.targetId = iter_9_1.entityId
-							var_9_9.effectType = FightEnum.EffectType.BUFFDEL
-							var_9_9.effectNum = 0
-							var_9_9.buff = iter_9_1
-							var_9_9.configEffect = 0
+							delShieldBuffActEffectData.targetId = buffMO.entityId
+							delShieldBuffActEffectData.effectType = FightEnum.EffectType.BUFFDEL
+							delShieldBuffActEffectData.effectNum = 0
+							delShieldBuffActEffectData.buff = buffMO
+							delShieldBuffActEffectData.configEffect = 0
 
-							table.insert(arg_9_0, var_9_9)
+							table.insert(actEffect, delShieldBuffActEffectData)
 
 							break
 						end
@@ -432,194 +474,202 @@ function var_0_0._buildActEffect(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
 		end
 	end
 
-	return var_9_0
+	return actEffectData
 end
 
-local var_0_4 = {}
+local addBuffs = {}
 
-function var_0_0._buildBehaviorBuffs(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4, arg_10_5, arg_10_6)
-	var_0_4 = {}
+function SkillEditorStepBuilder._buildBehaviorBuffs(skillCO, actEffect, attackerId, targetId, side, oppositeSide, randomTargetId)
+	addBuffs = {}
 
-	for iter_10_0 = 1, FightEnum.MaxBehavior do
-		local var_10_0 = arg_10_0["behavior" .. iter_10_0]
-		local var_10_1 = arg_10_0["condition" .. iter_10_0]
-		local var_10_2 = arg_10_0["conditionTarget" .. iter_10_0]
-		local var_10_3 = var_0_0._checkBehaviorCondition(var_10_1, var_10_2, arg_10_2, arg_10_3)
+	for i = 1, FightEnum.MaxBehavior do
+		local behavior = skillCO["behavior" .. i]
+		local condition = skillCO["condition" .. i]
+		local conditionTarget = skillCO["conditionTarget" .. i]
+		local condSatisfy = SkillEditorStepBuilder._checkBehaviorCondition(condition, conditionTarget, attackerId, targetId)
 
-		if not string.nilorempty(var_10_0) and var_10_3 then
-			local var_10_4 = string.splitToNumber(var_10_0, "#")
+		if not string.nilorempty(behavior) and condSatisfy then
+			local spRes = string.splitToNumber(behavior, "#")
 
-			if var_10_4[1] == 1 then
-				local var_10_5 = var_10_4[2]
-				local var_10_6 = var_10_4[3] or 1
-				local var_10_7 = var_0_0._getBehaviorTargetIds(arg_10_1, arg_10_0, iter_10_0, arg_10_2, arg_10_3, arg_10_4, arg_10_5, arg_10_6)
+			if spRes[1] == 1 then
+				local buffId = spRes[2]
+				local count = spRes[3] or 1
+				local targetIds = SkillEditorStepBuilder._getBehaviorTargetIds(actEffect, skillCO, i, attackerId, targetId, side, oppositeSide, randomTargetId)
 
-				var_0_0._buildOneBehaviorBuffs(arg_10_0, arg_10_1, var_10_5, var_10_6, var_10_7, arg_10_2, arg_10_3, arg_10_4)
-			elseif var_10_4[1] == 20021 or var_10_4[1] == 20022 or var_10_4[1] == 20023 then
-				local var_10_8 = lua_skill_buff.configDict[var_10_4[2]]
+				SkillEditorStepBuilder._buildOneBehaviorBuffs(skillCO, actEffect, buffId, count, targetIds, attackerId, targetId, side)
+			elseif spRes[1] == 20021 or spRes[1] == 20022 or spRes[1] == 20023 then
+				local buffCO = lua_skill_buff.configDict[spRes[2]]
 
-				if var_10_8 then
-					local var_10_9 = string.split(var_10_8.features, "#")
-					local var_10_10 = var_10_4[3] or 1
+				if buffCO then
+					local buffIds = string.split(buffCO.features, "#")
+					local count = spRes[3] or 1
 
-					for iter_10_1 = 1, var_10_10 do
-						local var_10_11 = math.random(1, #var_10_9)
-						local var_10_12 = table.remove(var_10_9, var_10_11)
-						local var_10_13 = string.splitToNumber(var_10_12, ",")[1]
-						local var_10_14 = var_0_0._getBehaviorTargetIds(arg_10_1, arg_10_0, iter_10_0, arg_10_2, arg_10_3, arg_10_4, arg_10_5, arg_10_6)
+					for _ = 1, count do
+						local random = math.random(1, #buffIds)
+						local buffId = table.remove(buffIds, random)
 
-						var_0_0._buildOneBehaviorBuffs(arg_10_0, arg_10_1, var_10_13, 1, var_10_14, arg_10_2, arg_10_3, arg_10_4)
+						buffId = string.splitToNumber(buffId, ",")[1]
+
+						local targetIds = SkillEditorStepBuilder._getBehaviorTargetIds(actEffect, skillCO, i, attackerId, targetId, side, oppositeSide, randomTargetId)
+
+						SkillEditorStepBuilder._buildOneBehaviorBuffs(skillCO, actEffect, buffId, 1, targetIds, attackerId, targetId, side)
 					end
 				else
-					logError("buff config not exist: " .. var_10_4[2])
+					logError("buff config not exist: " .. spRes[2])
 				end
 			end
 		end
 	end
 end
 
-function var_0_0._buildOneBehaviorBuffs(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4, arg_11_5, arg_11_6, arg_11_7)
-	for iter_11_0, iter_11_1 in ipairs(arg_11_4) do
-		for iter_11_2 = 1, arg_11_3 do
-			local var_11_0 = lua_skill_buff.configDict[arg_11_2]
-			local var_11_1 = var_0_0._getExistBuffMO(iter_11_1, arg_11_2)
-			local var_11_2 = FightDef_pb.BuffInfo()
+function SkillEditorStepBuilder._buildOneBehaviorBuffs(skillCO, actEffect, buffId, count, targetIds, attackerId, targetId, side)
+	for _, oneTargetId in ipairs(targetIds) do
+		for i = 1, count do
+			local buffCO = lua_skill_buff.configDict[buffId]
+			local existBuffMO = SkillEditorStepBuilder._getExistBuffMO(oneTargetId, buffId)
+			local buffProto = FightDef_pb.BuffInfo()
 
-			var_11_2.buffId = arg_11_2
-			var_11_2.duration = var_11_1 and var_11_1.duration + var_11_0.duringTime or var_11_0.duringTime
-			var_11_2.count = var_11_1 and var_11_1.count + var_11_0.effectCount or var_11_0.effectCount
-			var_11_2.uid = var_11_1 and var_11_1.uid or SkillEditorBuffSelectView.genBuffUid()
+			buffProto.buffId = buffId
+			buffProto.duration = existBuffMO and existBuffMO.duration + buffCO.duringTime or buffCO.duringTime
+			buffProto.count = existBuffMO and existBuffMO.count + buffCO.effectCount or buffCO.effectCount
+			buffProto.uid = existBuffMO and existBuffMO.uid or SkillEditorBuffSelectView.genBuffUid()
 
-			local var_11_3 = FightBuffInfoData.New(var_11_2, iter_11_1)
-			local var_11_4 = FightActEffectData.New()
+			local buffMO = FightBuffInfoData.New(buffProto, oneTargetId)
+			local actEffectData = FightActEffectData.New()
 
-			var_11_4.targetId = iter_11_1
-			var_11_4.effectType = var_11_1 and FightEnum.EffectType.BUFFUPDATE or FightEnum.EffectType.BUFFADD
-			var_11_4.effectNum = 1
-			var_11_4.fromSide = arg_11_7
-			var_11_4.buff = var_11_3
+			actEffectData.targetId = oneTargetId
+			actEffectData.effectType = existBuffMO and FightEnum.EffectType.BUFFUPDATE or FightEnum.EffectType.BUFFADD
+			actEffectData.effectNum = 1
+			actEffectData.fromSide = side
+			actEffectData.buff = buffMO
 
-			table.insert(var_0_4, var_11_3)
-			table.insert(arg_11_1, var_11_4)
-			var_0_0._buildBuffShield(var_11_3, arg_11_1, arg_11_5, arg_11_6, arg_11_7)
+			table.insert(addBuffs, buffMO)
+			table.insert(actEffect, actEffectData)
+			SkillEditorStepBuilder._buildBuffShield(buffMO, actEffect, attackerId, targetId, side)
 		end
 	end
 end
 
-function var_0_0._getExistBuffMO(arg_12_0, arg_12_1)
-	local var_12_0 = FightHelper.getEntity(arg_12_0)
+function SkillEditorStepBuilder._getExistBuffMO(targetId, buffId)
+	local entity = FightHelper.getEntity(targetId)
 
-	if not var_12_0 then
+	if not entity then
 		return
 	end
 
-	local var_12_1 = lua_skill_buff.configDict[arg_12_1]
-	local var_12_2 = var_12_1 and lua_skill_bufftype.configDict[var_12_1.typeId]
-	local var_12_3 = var_12_2 and var_12_2.includeTypes
-	local var_12_4 = var_12_3 and string.splitToNumber(var_12_3, "#")[1]
+	local buffCO = lua_skill_buff.configDict[buffId]
+	local buffTypeCO = buffCO and lua_skill_bufftype.configDict[buffCO.typeId]
+	local includeTypes = buffTypeCO and buffTypeCO.includeTypes
+	local includeType = includeTypes and string.splitToNumber(includeTypes, "#")[1]
 
-	if not var_12_4 then
+	if not includeType then
 		return
 	end
 
-	local var_12_5 = var_12_0:getMO():getBuffList()
+	local entityBuffs = entity:getMO():getBuffList()
 
-	if var_12_4 == 2 or var_12_4 == 10 or var_12_4 == 11 or var_12_4 == 12 then
-		for iter_12_0 = #var_0_4, 1, -1 do
-			local var_12_6 = var_0_4[iter_12_0]
+	if includeType == 2 or includeType == 10 or includeType == 11 or includeType == 12 then
+		for i = #addBuffs, 1, -1 do
+			local addBuffMO = addBuffs[i]
 
-			if var_12_6.entityId == arg_12_0 and var_12_6.buffId == arg_12_1 then
-				return var_12_6
+			if addBuffMO.entityId == targetId and addBuffMO.buffId == buffId then
+				return addBuffMO
 			end
 		end
 
-		for iter_12_1, iter_12_2 in ipairs(var_12_5) do
-			if iter_12_2.buffId == arg_12_1 then
-				return iter_12_2
-			end
-		end
-	end
-end
-
-function var_0_0._buildBuffShield(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4)
-	local var_13_0 = lua_skill_buff.configDict[arg_13_0.buffId]
-
-	if var_13_0 and not string.nilorempty(var_13_0.features) then
-		local var_13_1 = GameUtil.splitString2(var_13_0.features, true)
-
-		for iter_13_0, iter_13_1 in ipairs(var_13_1) do
-			local var_13_2 = iter_13_1[1]
-			local var_13_3 = var_13_2 and lua_buff_act.configDict[var_13_2]
-
-			if (var_13_3 and var_13_3.type) == "Shield" then
-				local var_13_4 = (tonumber(iter_13_1[4]) or 1000) * 0.001
-				local var_13_5 = FightActEffectData.New()
-
-				var_13_5.targetId = arg_13_0.entityId
-				var_13_5.effectType = FightEnum.EffectType.SHIELD
-
-				local var_13_6 = FightHelper.getEntity(arg_13_3)
-
-				var_13_5.effectNum = var_13_6 and math.ceil(var_13_4 * var_13_6:getMO().attrMO.hp) or 100
-				var_13_5.fromSide = arg_13_4
-
-				table.insert(arg_13_1, var_13_5)
+		for _, buffMO in ipairs(entityBuffs) do
+			if buffMO.buffId == buffId then
+				return buffMO
 			end
 		end
 	end
 end
 
-function var_0_0._checkRemoveBuffs(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4, arg_14_5, arg_14_6)
-	var_0_0._checkRemoveBuff(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4, arg_14_5, arg_14_6)
-	var_0_0._checkRemove3070Buff1(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4, arg_14_5)
-	var_0_0._checkRemove3070Buff2(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4, arg_14_5)
+function SkillEditorStepBuilder._buildBuffShield(buffMO, actEffect, attackerId, targetId, side)
+	local buffCO = lua_skill_buff.configDict[buffMO.buffId]
+
+	if buffCO and not string.nilorempty(buffCO.features) then
+		local featureSp = GameUtil.splitString2(buffCO.features, true)
+
+		for _, oneFeatureSp in ipairs(featureSp) do
+			local featureId = oneFeatureSp[1]
+			local buffActCO1 = featureId and lua_buff_act.configDict[featureId]
+			local feature = buffActCO1 and buffActCO1.type
+
+			if feature == "Shield" then
+				local percent = (tonumber(oneFeatureSp[4]) or 1000) * 0.001
+				local actEffectData = FightActEffectData.New()
+
+				actEffectData.targetId = buffMO.entityId
+				actEffectData.effectType = FightEnum.EffectType.SHIELD
+
+				local targetEntity = FightHelper.getEntity(targetId)
+
+				actEffectData.effectNum = targetEntity and math.ceil(percent * targetEntity:getMO().attrMO.hp) or 100
+				actEffectData.fromSide = side
+
+				table.insert(actEffect, actEffectData)
+			end
+		end
+	end
 end
 
-function var_0_0._checkRemoveBuff(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5, arg_15_6)
-	for iter_15_0 = 1, FightEnum.MaxBehavior do
-		local var_15_0 = arg_15_0["behavior" .. iter_15_0]
-		local var_15_1 = arg_15_0["condition" .. iter_15_0]
-		local var_15_2 = arg_15_0["conditionTarget" .. iter_15_0]
-		local var_15_3 = var_0_0._checkBehaviorCondition(var_15_1, var_15_2, arg_15_2, arg_15_3)
+function SkillEditorStepBuilder._checkRemoveBuffs(skillCO, actEffect, attackerId, targetId, side, oppositeSide, randomTargetId)
+	SkillEditorStepBuilder._checkRemoveBuff(skillCO, actEffect, attackerId, targetId, side, oppositeSide, randomTargetId)
+	SkillEditorStepBuilder._checkRemove3070Buff1(skillCO, actEffect, attackerId, targetId, side, oppositeSide)
+	SkillEditorStepBuilder._checkRemove3070Buff2(skillCO, actEffect, attackerId, targetId, side, oppositeSide)
+end
 
-		if not string.nilorempty(var_15_0) and var_15_3 then
-			local var_15_4 = string.splitToNumber(var_15_0, "#")[1]
-			local var_15_5 = arg_15_0["behaviorTarget" .. iter_15_0]
-			local var_15_6 = arg_15_0["conditionTarget" .. iter_15_0]
-			local var_15_7 = var_0_0._getBehaviorTargetIds(arg_15_1, arg_15_0, iter_15_0, arg_15_2, arg_15_3, arg_15_4, arg_15_5, arg_15_6)
-			local var_15_8 = var_15_4 and lua_skill_behavior.configDict[var_15_4]
+function SkillEditorStepBuilder._checkRemoveBuff(skillCO, actEffect, attackerId, targetId, side, oppositeSide, randomTargetId)
+	for i = 1, FightEnum.MaxBehavior do
+		local behavior = skillCO["behavior" .. i]
+		local condition = skillCO["condition" .. i]
+		local conditionTarget = skillCO["conditionTarget" .. i]
+		local condSatisfy = SkillEditorStepBuilder._checkBehaviorCondition(condition, conditionTarget, attackerId, targetId)
 
-			if var_15_8 and string.find(var_15_8.type, "Disperse") == 1 then
-				for iter_15_1, iter_15_2 in ipairs(var_15_7) do
-					local var_15_9 = FightDataHelper.entityMgr:getById(iter_15_2)
+		if not string.nilorempty(behavior) and condSatisfy then
+			local spRes = string.splitToNumber(behavior, "#")
+			local behaviorId = spRes[1]
+			local behaviorTarget = skillCO["behaviorTarget" .. i]
+			local conditionTarget = skillCO["conditionTarget" .. i]
+			local effectTargetIds = SkillEditorStepBuilder._getBehaviorTargetIds(actEffect, skillCO, i, attackerId, targetId, side, oppositeSide, randomTargetId)
+			local behaviorCO = behaviorId and lua_skill_behavior.configDict[behaviorId]
 
-					for iter_15_3, iter_15_4 in pairs(var_15_9:getBuffDic()) do
-						if lua_skill_buff.configDict[iter_15_4.buffId].isGoodBuff == 1 then
-							local var_15_10 = FightActEffectData.New()
+			if behaviorCO and string.find(behaviorCO.type, "Disperse") == 1 then
+				for _, effectTargetId in ipairs(effectTargetIds) do
+					local entityMO = FightDataHelper.entityMgr:getById(effectTargetId)
 
-							var_15_10.targetId = var_15_9.id
-							var_15_10.effectType = FightEnum.EffectType.BUFFDEL
-							var_15_10.buff = iter_15_4
+					for _, buffMO in pairs(entityMO:getBuffDic()) do
+						local buffCO = lua_skill_buff.configDict[buffMO.buffId]
 
-							table.insert(arg_15_1, 1, var_15_10)
+						if buffCO.isGoodBuff == 1 then
+							local actEffectData = FightActEffectData.New()
+
+							actEffectData.targetId = entityMO.id
+							actEffectData.effectType = FightEnum.EffectType.BUFFDEL
+							actEffectData.buff = buffMO
+
+							table.insert(actEffect, 1, actEffectData)
 						end
 					end
 				end
 			end
 
-			if var_15_8 and string.find(var_15_8.type, "Purify") == 1 then
-				for iter_15_5, iter_15_6 in ipairs(var_15_7) do
-					local var_15_11 = FightDataHelper.entityMgr:getById(iter_15_6)
+			if behaviorCO and string.find(behaviorCO.type, "Purify") == 1 then
+				for _, effectTargetId in ipairs(effectTargetIds) do
+					local entityMO = FightDataHelper.entityMgr:getById(effectTargetId)
 
-					for iter_15_7, iter_15_8 in pairs(var_15_11:getBuffDic()) do
-						if lua_skill_buff.configDict[iter_15_8.buffId].isGoodBuff == 2 then
-							local var_15_12 = FightActEffectData.New()
+					for _, buffMO in pairs(entityMO:getBuffDic()) do
+						local buffCO = lua_skill_buff.configDict[buffMO.buffId]
 
-							var_15_12.targetId = var_15_11.id
-							var_15_12.effectType = FightEnum.EffectType.BUFFDEL
-							var_15_12.buff = iter_15_8
+						if buffCO.isGoodBuff == 2 then
+							local actEffectData = FightActEffectData.New()
 
-							table.insert(arg_15_1, 1, var_15_12)
+							actEffectData.targetId = entityMO.id
+							actEffectData.effectType = FightEnum.EffectType.BUFFDEL
+							actEffectData.buff = buffMO
+
+							table.insert(actEffect, 1, actEffectData)
 						end
 					end
 				end
@@ -628,135 +678,142 @@ function var_0_0._checkRemoveBuff(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15
 	end
 end
 
-function var_0_0._checkRemove3070Buff1(arg_16_0, arg_16_1, arg_16_2, arg_16_3, arg_16_4, arg_16_5)
-	if FightDataHelper.entityMgr:getById(arg_16_2).modelId ~= 3070 or FightCardDataHelper.isBigSkill(arg_16_0.id) then
+function SkillEditorStepBuilder._checkRemove3070Buff1(skillCO, actEffect, attackerId, targetId, side, oppositeSide)
+	local entityMO = FightDataHelper.entityMgr:getById(attackerId)
+
+	if entityMO.modelId ~= 3070 or FightCardDataHelper.isBigSkill(skillCO.id) then
 		return
 	end
 
-	local var_16_0 = FightDataHelper.entityMgr:getById(arg_16_2)
-	local var_16_1 = 0
-	local var_16_2 = 0
-	local var_16_3 = {}
-	local var_16_4 = {}
+	local entityMO = FightDataHelper.entityMgr:getById(attackerId)
+	local existBallCount = 0
+	local addBallCount = 0
+	local allBallBuffMOs = {}
+	local existBallBuffMOs = {}
 
-	for iter_16_0, iter_16_1 in pairs(var_16_0:getBuffDic()) do
-		local var_16_5 = lua_skill_buff.configDict[iter_16_1.buffId]
+	for _, buffMO in pairs(entityMO:getBuffDic()) do
+		local buffCO = lua_skill_buff.configDict[buffMO.buffId]
 
-		if FightEntitySpecialEffect3070_Ball.buffTypeId2EffectPath[var_16_5.typeId] then
-			var_16_1 = var_16_1 + 1
+		if FightEntitySpecialEffect3070_Ball.buffTypeId2EffectPath[buffCO.typeId] then
+			existBallCount = existBallCount + 1
 
-			table.insert(var_16_3, iter_16_1)
-			table.insert(var_16_4, iter_16_1)
+			table.insert(allBallBuffMOs, buffMO)
+			table.insert(existBallBuffMOs, buffMO)
 		end
 	end
 
-	for iter_16_2, iter_16_3 in ipairs(arg_16_1) do
-		if iter_16_3.effectType == FightEnum.EffectType.BUFFADD then
-			local var_16_6 = lua_skill_buff.configDict[iter_16_3.buff.buffId]
+	for _, actEffectData in ipairs(actEffect) do
+		if actEffectData.effectType == FightEnum.EffectType.BUFFADD then
+			local buffCO = lua_skill_buff.configDict[actEffectData.buff.buffId]
 
-			if FightEntitySpecialEffect3070_Ball.buffTypeId2EffectPath[var_16_6.typeId] then
-				var_16_2 = var_16_2 + 1
+			if FightEntitySpecialEffect3070_Ball.buffTypeId2EffectPath[buffCO.typeId] then
+				addBallCount = addBallCount + 1
 
-				table.insert(var_16_3, iter_16_3.buff)
+				table.insert(allBallBuffMOs, actEffectData.buff)
 			end
 		end
 	end
 
-	if #var_16_4 > 0 then
-		local var_16_7 = 4
+	if #existBallBuffMOs > 0 then
+		local limitNum = 4
 
-		for iter_16_4, iter_16_5 in ipairs(var_16_3) do
-			local var_16_8 = lua_skill_buff.configDict[iter_16_5.buffId]
-			local var_16_9 = lua_skill_bufftype.configDict[var_16_8.typeId]
-			local var_16_10 = string.splitToNumber(var_16_9.includeTypes, "#")[2]
+		for _, oneBuffMO in ipairs(allBallBuffMOs) do
+			local buffConfig = lua_skill_buff.configDict[oneBuffMO.buffId]
+			local buffTypeConfig = lua_skill_bufftype.configDict[buffConfig.typeId]
+			local limit = string.splitToNumber(buffTypeConfig.includeTypes, "#")[2]
 
-			var_16_7 = var_16_10 < var_16_7 and var_16_10 or var_16_7
+			limitNum = limit < limitNum and limit or limitNum
 		end
 
-		local var_16_11 = var_16_1 + var_16_2 - var_16_7
+		local removeCount = existBallCount + addBallCount - limitNum
 
-		var_16_11 = var_16_1 < var_16_11 and var_16_1 or var_16_11
+		removeCount = existBallCount < removeCount and existBallCount or removeCount
 
-		for iter_16_6 = 1, var_16_11 do
-			local var_16_12 = FightActEffectData.New()
+		table.sort(existBallBuffMOs, function(buff1, buff2)
+			return tonumber(buff1.uid) < tonumber(buff2.uid)
+		end)
 
-			var_16_12.targetId = arg_16_2
-			var_16_12.effectType = FightEnum.EffectType.BUFFDEL
-			var_16_12.buff = var_16_4[iter_16_6]
+		for i = 1, removeCount do
+			local actEffectData = FightActEffectData.New()
 
-			table.insert(arg_16_1, 1, var_16_12)
-		end
-	end
-end
+			actEffectData.targetId = attackerId
+			actEffectData.effectType = FightEnum.EffectType.BUFFDEL
+			actEffectData.buff = existBallBuffMOs[i]
 
-function var_0_0._checkRemove3070Buff2(arg_17_0, arg_17_1, arg_17_2, arg_17_3, arg_17_4, arg_17_5)
-	local var_17_0 = FightDataHelper.entityMgr:getById(arg_17_2)
-
-	if var_17_0.modelId ~= 3070 or not FightCardDataHelper.isBigSkill(arg_17_0.id) then
-		return
-	end
-
-	local var_17_1 = 0
-	local var_17_2 = 0
-	local var_17_3
-
-	for iter_17_0, iter_17_1 in pairs(var_17_0:getBuffDic()) do
-		local var_17_4 = lua_skill_buff.configDict[iter_17_1.buffId]
-
-		if FightEntitySpecialEffect3070_Ball.buffTypeId2EffectPath[var_17_4.typeId] then
-			local var_17_5 = FightActEffectData.New()
-
-			var_17_5.targetId = arg_17_2
-			var_17_5.effectType = FightEnum.EffectType.BUFFDEL
-			var_17_5.buff = iter_17_1
-
-			table.insert(arg_17_1, 1, var_17_5)
+			table.insert(actEffect, 1, actEffectData)
 		end
 	end
 end
 
-function var_0_0._checkBuildAddPowerStep(arg_18_0, arg_18_1, arg_18_2, arg_18_3, arg_18_4, arg_18_5)
-	local var_18_0 = FightHelper.getEntity(arg_18_2)
+function SkillEditorStepBuilder._checkRemove3070Buff2(skillCO, actEffect, attackerId, targetId, side, oppositeSide)
+	local entityMO = FightDataHelper.entityMgr:getById(attackerId)
 
-	if not var_18_0:getMO():isCharacter() then
+	if entityMO.modelId ~= 3070 or not FightCardDataHelper.isBigSkill(skillCO.id) then
 		return
 	end
 
-	local var_18_1 = SkillConfig.instance:getpassiveskillsCO(var_18_0:getMO().modelId)
+	local existBallCount = 0
+	local addBallCount = 0
+	local firstBallBuffMO
 
-	if not var_18_1 then
+	for _, buffMO in pairs(entityMO:getBuffDic()) do
+		local buffCO = lua_skill_buff.configDict[buffMO.buffId]
+
+		if FightEntitySpecialEffect3070_Ball.buffTypeId2EffectPath[buffCO.typeId] then
+			local actEffectData = FightActEffectData.New()
+
+			actEffectData.targetId = attackerId
+			actEffectData.effectType = FightEnum.EffectType.BUFFDEL
+			actEffectData.buff = buffMO
+
+			table.insert(actEffect, 1, actEffectData)
+		end
+	end
+end
+
+function SkillEditorStepBuilder._checkBuildAddPowerStep(skillCO, actEffect, attackerId, targetId, side, oppositeSide)
+	local entity = FightHelper.getEntity(attackerId)
+
+	if not entity:getMO():isCharacter() then
 		return
 	end
 
-	for iter_18_0, iter_18_1 in ipairs(var_18_1) do
-		local var_18_2 = iter_18_1 and lua_skill.configDict[iter_18_1.skillPassive]
+	local passiveSkillLevelCOs = SkillConfig.instance:getpassiveskillsCO(entity:getMO().modelId)
 
-		if var_18_2 then
-			for iter_18_2 = 1, FightEnum.MaxBehavior do
-				local var_18_3 = var_18_2["condition" .. iter_18_2]
-				local var_18_4 = var_18_2["behavior" .. iter_18_2]
-				local var_18_5 = var_18_2["conditionTarget" .. iter_18_2]
-				local var_18_6 = var_18_2["behaviorTarget" .. iter_18_2]
+	if not passiveSkillLevelCOs then
+		return
+	end
 
-				if not string.nilorempty(var_18_3) and not string.nilorempty(var_18_4) and var_18_5 == 103 and var_18_6 == 103 then
-					local var_18_7 = string.splitToNumber(var_18_3, "#")
-					local var_18_8 = string.splitToNumber(var_18_4, "#")
-					local var_18_9 = var_18_7[1]
-					local var_18_10 = var_18_8[1]
-					local var_18_11 = var_18_9 and lua_skill_behavior_condition.configDict[var_18_9]
-					local var_18_12 = var_18_10 and lua_skill_behavior.configDict[var_18_10]
+	for _, passiveSkillLevelCO in ipairs(passiveSkillLevelCOs) do
+		local passiveSkillCO = passiveSkillLevelCO and lua_skill.configDict[passiveSkillLevelCO.skillPassive]
 
-					if var_18_12 and var_18_12.type == "ChangePower" then
-						if var_18_11 and var_18_11.type == "ActiveUseSkill" then
-							local var_18_13 = var_18_7[2] or 1
+		if passiveSkillCO then
+			for i = 1, FightEnum.MaxBehavior do
+				local condition = passiveSkillCO["condition" .. i]
+				local behavior = passiveSkillCO["behavior" .. i]
+				local conditionTarget = passiveSkillCO["conditionTarget" .. i]
+				local behaviorTarget = passiveSkillCO["behaviorTarget" .. i]
 
-							if FightConfig.instance:getSkillLv(arg_18_0.id) == var_18_13 then
-								local var_18_14 = var_18_8[2] or 1
+				if not string.nilorempty(condition) and not string.nilorempty(behavior) and conditionTarget == "103" and behaviorTarget == "103" then
+					local spRes1 = string.splitToNumber(condition, "#")
+					local spRes2 = string.splitToNumber(behavior, "#")
+					local conditionId = spRes1[1]
+					local behaviorId = spRes2[1]
+					local conditionCO = conditionId and lua_skill_behavior_condition.configDict[conditionId]
+					local behaviorCO = behaviorId and lua_skill_behavior.configDict[behaviorId]
 
-								return var_0_0._buildOneAddPowerStep(var_18_2.id, arg_18_2, arg_18_3, var_18_14)
+					if behaviorCO and behaviorCO.type == "ChangePower" then
+						if conditionCO and conditionCO.type == "ActiveUseSkill" then
+							local conditionSkillLv = spRes1[2] or 1
+							local skillLv = FightConfig.instance:getSkillLv(skillCO.id)
+
+							if skillLv == conditionSkillLv then
+								local addPower = spRes2[2] or 1
+
+								return SkillEditorStepBuilder._buildOneAddPowerStep(passiveSkillCO.id, attackerId, targetId, addPower)
 							end
 						else
-							return var_0_0._buildOneAddPowerStep(var_18_2.id, arg_18_2, arg_18_3, 1)
+							return SkillEditorStepBuilder._buildOneAddPowerStep(passiveSkillCO.id, attackerId, targetId, 1)
 						end
 					end
 				end
@@ -765,226 +822,84 @@ function var_0_0._checkBuildAddPowerStep(arg_18_0, arg_18_1, arg_18_2, arg_18_3,
 	end
 end
 
-function var_0_0._buildOneAddPowerStep(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
-	local var_19_0 = FightStepData.New()
+function SkillEditorStepBuilder._buildOneAddPowerStep(skillId, attackerId, targetId, addPower)
+	local fightStepData = FightStepData.New()
 
-	var_19_0.editorPlaySkill = true
-	var_19_0.actType = 1
-	var_19_0.fromId = arg_19_1
-	var_19_0.toId = arg_19_2
-	var_19_0.actId = arg_19_0
-	var_19_0.actEffect = {
+	fightStepData.editorPlaySkill = true
+	fightStepData.actType = 1
+	fightStepData.fromId = attackerId
+	fightStepData.toId = targetId
+	fightStepData.actId = skillId
+	fightStepData.actEffect = {
 		FightActEffectData.New()
 	}
-	var_19_0.actEffect[1].targetId = arg_19_1
-	var_19_0.actEffect[1].effectType = FightEnum.EffectType.POWERCHANGE
-	var_19_0.actEffect[1].effectNum = arg_19_3
-	var_19_0.actEffect[1].configEffect = 1
-	var_19_0.actEffect[1].buffActId = 0
+	fightStepData.actEffect[1].targetId = attackerId
+	fightStepData.actEffect[1].effectType = FightEnum.EffectType.POWERCHANGE
+	fightStepData.actEffect[1].effectNum = addPower
+	fightStepData.actEffect[1].configEffect = 1
+	fightStepData.actEffect[1].buffActId = 0
 
-	return var_19_0
+	return fightStepData
 end
 
-function var_0_0._buildMagicCircle(arg_20_0, arg_20_1, arg_20_2, arg_20_3, arg_20_4, arg_20_5, arg_20_6)
-	for iter_20_0 = 1, FightEnum.MaxBehavior do
-		local var_20_0 = arg_20_0["behavior" .. iter_20_0]
-		local var_20_1 = arg_20_0["condition" .. iter_20_0]
-		local var_20_2 = true
+function SkillEditorStepBuilder._buildMagicCircle(skillCO, actEffect, attackerId, targetId, side, oppositeSide, randomTargetId)
+	for i = 1, FightEnum.MaxBehavior do
+		local behavior = skillCO["behavior" .. i]
+		local condition = skillCO["condition" .. i]
+		local condSatisfy = true
 
-		if not string.nilorempty(var_20_1) then
-			local var_20_3 = string.splitToNumber(var_20_1, "#")[1]
-			local var_20_4 = var_20_3 and lua_skill_behavior_condition.configDict[var_20_3]
+		if not string.nilorempty(condition) then
+			local conditionId = string.splitToNumber(condition, "#")[1]
+			local conditionCO = conditionId and lua_skill_behavior_condition.configDict[conditionId]
 
-			var_20_2 = var_20_4 and var_20_4.type == "None"
+			condSatisfy = conditionCO and conditionCO.type == "None"
 		end
 
-		if not string.nilorempty(var_20_0) and var_20_2 then
-			local var_20_5 = string.splitToNumber(var_20_0, "#")
-			local var_20_6 = tonumber(var_20_5[1])
-			local var_20_7 = var_20_6 and lua_skill_behavior.configDict[var_20_6]
+		if not string.nilorempty(behavior) and condSatisfy then
+			local spRes = string.splitToNumber(behavior, "#")
+			local behaviorId = tonumber(spRes[1])
+			local behaviorCO = behaviorId and lua_skill_behavior.configDict[behaviorId]
 
-			if var_20_7 then
-				if var_20_7.type == "AddMagicCircle" then
-					local var_20_8 = FightModel.instance:getMagicCircleInfo()
+			if behaviorCO then
+				if behaviorCO.type == "AddMagicCircle" then
+					local magicData = FightModel.instance:getMagicCircleInfo()
 
-					if var_20_8.magicCircleId then
-						local var_20_9 = FightActEffectData.New()
+					if magicData.magicCircleId then
+						local actEffectData = FightActEffectData.New()
 
-						var_20_9.targetId = 0
-						var_20_9.effectType = FightEnum.EffectType.MAGICCIRCLEDELETE
-						var_20_9.reserveId = var_20_8.magicCircleId
+						actEffectData.targetId = 0
+						actEffectData.effectType = FightEnum.EffectType.MAGICCIRCLEDELETE
+						actEffectData.reserveId = magicData.magicCircleId
 
-						table.insert(arg_20_1, var_20_9)
+						table.insert(actEffect, actEffectData)
 					end
 
-					local var_20_10 = lua_magic_circle.configDict[tonumber(var_20_5[2])]
+					local magicCircleConfig = lua_magic_circle.configDict[tonumber(spRes[2])]
 
-					if var_20_10 then
-						local var_20_11 = FightActEffectData.New()
+					if magicCircleConfig then
+						local actEffectData = FightActEffectData.New()
 
-						var_20_11.targetId = 0
-						var_20_11.effectType = FightEnum.EffectType.MAGICCIRCLEADD
-						var_20_11.magicCircle = {
-							magicCircleId = var_20_10.id,
-							round = var_20_10.round,
-							createUid = arg_20_2
+						actEffectData.targetId = 0
+						actEffectData.effectType = FightEnum.EffectType.MAGICCIRCLEADD
+						actEffectData.magicCircle = {
+							magicCircleId = magicCircleConfig.id,
+							round = magicCircleConfig.round,
+							createUid = attackerId
 						}
 
-						table.insert(arg_20_1, var_20_11)
+						table.insert(actEffect, actEffectData)
 					end
-				elseif var_20_7.type == "ChangeSummonedLevel" then
-					local var_20_12 = FightModel.instance:getMagicCircleInfo()
+				elseif behaviorCO.type == "ChangeSummonedLevel" then
+					local magicData = FightModel.instance:getMagicCircleInfo()
 
-					if var_20_12.magicCircleId then
-						local var_20_13 = FightActEffectData.New()
+					if magicData.magicCircleId then
+						local actEffectData = FightActEffectData.New()
 
-						var_20_13.targetId = 0
-						var_20_13.effectType = FightEnum.EffectType.MAGICCIRCLEDELETE
-						var_20_13.reserveId = var_20_12.magicCircleId
+						actEffectData.targetId = 0
+						actEffectData.effectType = FightEnum.EffectType.MAGICCIRCLEDELETE
+						actEffectData.reserveId = magicData.magicCircleId
 
-						table.insert(arg_20_1, var_20_13)
-					end
-				end
-			end
-		end
-	end
-end
-
-function var_0_0._buildSummoned(arg_21_0, arg_21_1, arg_21_2, arg_21_3, arg_21_4, arg_21_5, arg_21_6)
-	local var_21_0 = {}
-	local var_21_1 = {}
-
-	for iter_21_0 = 1, FightEnum.MaxBehavior do
-		local var_21_2 = arg_21_0["behavior" .. iter_21_0]
-		local var_21_3 = arg_21_0["condition" .. iter_21_0]
-		local var_21_4 = true
-
-		if not string.nilorempty(var_21_3) then
-			local var_21_5 = string.splitToNumber(var_21_3, "#")[1]
-			local var_21_6 = var_21_5 and lua_skill_behavior_condition.configDict[var_21_5]
-
-			var_21_4 = var_21_6 and var_21_6.type == "None"
-		end
-
-		if not string.nilorempty(var_21_2) and var_21_4 then
-			local var_21_7 = string.splitToNumber(var_21_2, "#")
-			local var_21_8 = arg_21_0["behaviorTarget" .. iter_21_0]
-			local var_21_9 = arg_21_0["conditionTarget" .. iter_21_0]
-			local var_21_10 = var_21_8
-
-			if var_21_8 == 0 then
-				local var_21_11 = arg_21_0.logicTarget
-			elseif var_21_8 == 999 then
-				local var_21_12
-
-				var_21_12 = var_21_9 ~= 0 and var_21_9 or arg_21_0.logicTarget
-			end
-
-			local var_21_13 = tonumber(var_21_7[1])
-			local var_21_14 = var_21_13 and lua_skill_behavior.configDict[var_21_13]
-
-			if var_21_14 then
-				local var_21_15 = arg_21_0["behaviorTarget" .. iter_21_0]
-				local var_21_16 = arg_21_0["conditionTarget" .. iter_21_0]
-				local var_21_17 = var_21_15
-
-				if var_21_15 == 0 then
-					var_21_17 = arg_21_0.logicTarget
-				elseif var_21_15 == 999 then
-					var_21_17 = var_21_16 ~= 0 and var_21_16 or arg_21_0.logicTarget
-				end
-
-				if var_21_14.type == "AddSummoned" then
-					local var_21_18 = var_0_0._getTargetIds(var_21_17, arg_21_2, arg_21_3, arg_21_4, arg_21_5, arg_21_6)
-
-					for iter_21_1, iter_21_2 in ipairs(var_21_18) do
-						local var_21_19 = tonumber(var_21_7[2])
-						local var_21_20 = tonumber(var_21_7[4]) or 1
-
-						for iter_21_3 = 1, var_21_20 do
-							local var_21_21 = FightConfig.instance:getSummonedConfig(var_21_19, 1).stanceId
-							local var_21_22 = lua_fight_summoned_stance.configDict[var_21_21]
-							local var_21_23 = 0
-
-							for iter_21_4 = 1, 20 do
-								local var_21_24 = var_21_22["pos" .. iter_21_4]
-
-								var_21_23 = var_21_24 and #var_21_24 > 0 and var_21_23 + 1 or var_21_23
-							end
-
-							local var_21_25 = FightHelper.getEntity(iter_21_2)
-							local var_21_26 = var_21_25 and var_21_25:getMO()
-							local var_21_27 = var_21_26 and var_21_26.summonedInfo.dataDic or var_21_26:getSummonedInfo():getDataDic()
-
-							if var_21_23 > tabletool.len(var_21_27) + tabletool.len(var_21_0) then
-								local var_21_28 = {
-									summonedId = var_21_19,
-									level = tonumber(var_21_7[3]),
-									uid = SkillEditorBuffSelectView.genBuffUid(),
-									fromUid = arg_21_2
-								}
-								local var_21_29 = FightActEffectData.New()
-
-								var_21_29.targetId = iter_21_2
-								var_21_29.effectType = FightEnum.EffectType.SUMMONEDADD
-								var_21_29.effectNum = 0
-								var_21_29.configEffect = 0
-								var_21_29.buffActId = 0
-								var_21_29.reserveId = var_21_28.uid
-								var_21_29.reserveStr = ""
-								var_21_29.summoned = var_21_28
-
-								table.insert(arg_21_1, var_21_29)
-
-								var_21_1[var_21_28.uid] = var_21_28.level
-								var_21_0[var_21_28.uid] = var_21_28
-
-								var_0_0._buildSummonedDelete(var_21_28, arg_21_1, arg_21_2, iter_21_2, arg_21_4)
-							end
-						end
-					end
-				elseif var_21_14.type == "ChangeSummonedLevel" then
-					local var_21_30 = var_0_0._getTargetIds(var_21_17, arg_21_2, arg_21_3, arg_21_4, arg_21_5, arg_21_6)
-
-					for iter_21_5, iter_21_6 in ipairs(var_21_30) do
-						local var_21_31 = tonumber(var_21_7[2])
-						local var_21_32 = FightHelper.getEntity(iter_21_6)
-						local var_21_33 = var_21_32 and var_21_32:getMO()
-						local var_21_34 = var_21_33 and var_21_33.summonedInfo.dataDic or {}
-						local var_21_35 = tabletool.copy(var_21_34)
-
-						for iter_21_7, iter_21_8 in pairs(var_21_0) do
-							var_21_35[iter_21_7] = iter_21_8
-						end
-
-						for iter_21_9, iter_21_10 in pairs(var_21_35) do
-							if iter_21_10.summonedId == var_21_31 then
-								local var_21_36 = {}
-								local var_21_37 = var_21_1[iter_21_10.uid] or iter_21_10.level
-
-								var_21_36.summonedId = var_21_31
-								var_21_36.level = tonumber(var_21_7[3])
-								var_21_36.uid = iter_21_10.uid
-								var_21_36.fromUid = arg_21_2
-
-								local var_21_38 = FightActEffectData.New()
-
-								var_21_38.targetId = iter_21_6
-								var_21_38.effectType = FightEnum.EffectType.SUMMONEDLEVELUP
-								var_21_38.effectNum = var_21_36.level - var_21_37
-								var_21_38.configEffect = 0
-								var_21_38.buffActId = 0
-								var_21_38.reserveId = var_21_36.uid
-								var_21_38.reserveStr = ""
-								var_21_38.summoned = var_21_36
-
-								table.insert(arg_21_1, var_21_38)
-
-								var_21_1[iter_21_10.uid] = var_21_36.level
-
-								var_0_0._buildSummonedDelete(var_21_36, arg_21_1, arg_21_2, iter_21_6, arg_21_4)
-							end
-						end
+						table.insert(actEffect, actEffectData)
 					end
 				end
 			end
@@ -992,116 +907,271 @@ function var_0_0._buildSummoned(arg_21_0, arg_21_1, arg_21_2, arg_21_3, arg_21_4
 	end
 end
 
-function var_0_0._buildSummonedDelete(arg_22_0, arg_22_1, arg_22_2, arg_22_3, arg_22_4)
-	local var_22_0 = FightConfig.instance:getSummonedConfig(arg_22_0.summonedId, arg_22_0.level)
+function SkillEditorStepBuilder._buildSummoned(skillCO, actEffect, attackerId, targetId, side, oppositeSide, randomTargetId)
+	local addSummon = {}
+	local oldSummonedLevel = {}
 
-	if var_22_0 and arg_22_0.level >= var_22_0.maxLevel then
-		local var_22_1 = FightActEffectData.New()
+	for i = 1, FightEnum.MaxBehavior do
+		local behavior = skillCO["behavior" .. i]
+		local condition = skillCO["condition" .. i]
+		local condSatisfy = true
 
-		var_22_1.targetId = arg_22_3
-		var_22_1.effectType = FightEnum.EffectType.SUMMONEDDELETE
-		var_22_1.effectNum = 0
-		var_22_1.configEffect = 0
-		var_22_1.buffActId = 0
-		var_22_1.reserveId = arg_22_0.uid
-		var_22_1.reserveStr = ""
+		if not string.nilorempty(condition) then
+			local conditionId = string.splitToNumber(condition, "#")[1]
+			local conditionCO = conditionId and lua_skill_behavior_condition.configDict[conditionId]
 
-		table.insert(arg_22_1, var_22_1)
-	end
-end
-
-function var_0_0._getTargetIds(arg_23_0, arg_23_1, arg_23_2, arg_23_3, arg_23_4, arg_23_5)
-	if FightEnum.LogicTargetClassify.Single[arg_23_0] then
-		return {
-			arg_23_2
-		}
-	elseif FightEnum.LogicTargetClassify.SingleAndRandom[arg_23_0] then
-		return {
-			arg_23_2,
-			arg_23_5
-		}
-	elseif FightEnum.LogicTargetClassify.MySideAll[arg_23_0] then
-		local var_23_0 = {}
-		local var_23_1 = FightDataHelper.entityMgr:getNormalList(arg_23_3)
-
-		for iter_23_0, iter_23_1 in ipairs(var_23_1) do
-			table.insert(var_23_0, iter_23_1.id)
-
-			return var_23_0
+			condSatisfy = conditionCO and conditionCO.type == "None"
 		end
-	elseif FightEnum.LogicTargetClassify.Me[arg_23_0] then
+
+		if not string.nilorempty(behavior) and condSatisfy then
+			local spRes = string.splitToNumber(behavior, "#")
+			local behaviorTarget = skillCO["behaviorTarget" .. i]
+			local conditionTarget = skillCO["conditionTarget" .. i]
+			local targetType = behaviorTarget
+
+			if behaviorTarget == "0" then
+				targetType = skillCO.logicTarget
+			elseif behaviorTarget == "999" then
+				targetType = conditionTarget ~= "0" and conditionTarget or skillCO.logicTarget
+			end
+
+			local behaviorId = tonumber(spRes[1])
+			local behaviorCO = behaviorId and lua_skill_behavior.configDict[behaviorId]
+
+			if behaviorCO then
+				local behaviorTarget = skillCO["behaviorTarget" .. i]
+				local conditionTarget = skillCO["conditionTarget" .. i]
+				local logicTarget = behaviorTarget
+
+				if behaviorTarget == "0" then
+					logicTarget = skillCO.logicTarget
+				elseif behaviorTarget == "999" then
+					logicTarget = conditionTarget ~= "0" and conditionTarget or skillCO.logicTarget
+				end
+
+				if behaviorCO.type == "AddSummoned" then
+					local targetIds = SkillEditorStepBuilder._getTargetIds(logicTarget, attackerId, targetId, side, oppositeSide, randomTargetId)
+
+					for _, targetId in ipairs(targetIds) do
+						local summonedId = tonumber(spRes[2])
+						local summonCount = tonumber(spRes[4]) or 1
+
+						for _ = 1, summonCount do
+							local config = FightConfig.instance:getSummonedConfig(summonedId, 1)
+							local stanceId = config.stanceId
+							local stanceConfig = lua_fight_summoned_stance.configDict[stanceId]
+							local maxCount = 0
+
+							for j = 1, 20 do
+								local stanceInfo = stanceConfig["pos" .. j]
+
+								maxCount = stanceInfo and #stanceInfo > 0 and maxCount + 1 or maxCount
+							end
+
+							local entity = FightHelper.getEntity(targetId)
+							local entityMO = entity and entity:getMO()
+							local dataDic = entityMO and entityMO.summonedInfo.dataDic or entityMO:getSummonedInfo():getDataDic()
+							local canAddSummoned = maxCount > tabletool.len(dataDic) + tabletool.len(addSummon)
+
+							if canAddSummoned then
+								local summonedInfo = {}
+
+								summonedInfo.summonedId = summonedId
+								summonedInfo.level = tonumber(spRes[3])
+								summonedInfo.uid = SkillEditorBuffSelectView.genBuffUid()
+								summonedInfo.fromUid = attackerId
+
+								local actEffectData = FightActEffectData.New()
+
+								actEffectData.targetId = targetId
+								actEffectData.effectType = FightEnum.EffectType.SUMMONEDADD
+								actEffectData.effectNum = 0
+								actEffectData.configEffect = 0
+								actEffectData.buffActId = 0
+								actEffectData.reserveId = summonedInfo.uid
+								actEffectData.reserveStr = ""
+								actEffectData.summoned = summonedInfo
+
+								table.insert(actEffect, actEffectData)
+
+								oldSummonedLevel[summonedInfo.uid] = summonedInfo.level
+								addSummon[summonedInfo.uid] = summonedInfo
+
+								SkillEditorStepBuilder._buildSummonedDelete(summonedInfo, actEffect, attackerId, targetId, side)
+							end
+						end
+					end
+				elseif behaviorCO.type == "ChangeSummonedLevel" then
+					local targetIds = SkillEditorStepBuilder._getTargetIds(logicTarget, attackerId, targetId, side, oppositeSide, randomTargetId)
+
+					for _, targetId in ipairs(targetIds) do
+						local summonedId = tonumber(spRes[2])
+						local entity = FightHelper.getEntity(targetId)
+						local entityMO = entity and entity:getMO()
+						local dataDic = entityMO and entityMO.summonedInfo.dataDic or {}
+						local allSummon = tabletool.copy(dataDic)
+
+						for uid, one in pairs(addSummon) do
+							allSummon[uid] = one
+						end
+
+						for _, oldSummonedInfo in pairs(allSummon) do
+							if oldSummonedInfo.summonedId == summonedId then
+								local summonedInfo = {}
+								local oldLevel = oldSummonedLevel[oldSummonedInfo.uid] or oldSummonedInfo.level
+
+								summonedInfo.summonedId = summonedId
+								summonedInfo.level = tonumber(spRes[3])
+								summonedInfo.uid = oldSummonedInfo.uid
+								summonedInfo.fromUid = attackerId
+
+								local actEffectData = FightActEffectData.New()
+
+								actEffectData.targetId = targetId
+								actEffectData.effectType = FightEnum.EffectType.SUMMONEDLEVELUP
+								actEffectData.effectNum = summonedInfo.level - oldLevel
+								actEffectData.configEffect = 0
+								actEffectData.buffActId = 0
+								actEffectData.reserveId = summonedInfo.uid
+								actEffectData.reserveStr = ""
+								actEffectData.summoned = summonedInfo
+
+								table.insert(actEffect, actEffectData)
+
+								oldSummonedLevel[oldSummonedInfo.uid] = summonedInfo.level
+
+								SkillEditorStepBuilder._buildSummonedDelete(summonedInfo, actEffect, attackerId, targetId, side)
+							end
+						end
+					end
+				end
+			end
+		end
+	end
+end
+
+function SkillEditorStepBuilder._buildSummonedDelete(summonedInfo, actEffect, attackerId, targetId, side)
+	local summonedCO = FightConfig.instance:getSummonedConfig(summonedInfo.summonedId, summonedInfo.level)
+
+	if summonedCO and summonedInfo.level >= summonedCO.maxLevel then
+		local actEffectData = FightActEffectData.New()
+
+		actEffectData.targetId = targetId
+		actEffectData.effectType = FightEnum.EffectType.SUMMONEDDELETE
+		actEffectData.effectNum = 0
+		actEffectData.configEffect = 0
+		actEffectData.buffActId = 0
+		actEffectData.reserveId = summonedInfo.uid
+		actEffectData.reserveStr = ""
+
+		table.insert(actEffect, actEffectData)
+	end
+end
+
+function SkillEditorStepBuilder._getTargetIds(logicTarget, attackerId, targetId, side, oppositeSide, randomTargetId)
+	if FightEnum.LogicTargetClassify.Single[logicTarget] then
 		return {
-			arg_23_1
+			targetId
+		}
+	elseif FightEnum.LogicTargetClassify.SingleAndRandom[logicTarget] then
+		return {
+			targetId,
+			randomTargetId
+		}
+	elseif FightEnum.LogicTargetClassify.MySideAll[logicTarget] then
+		local ret = {}
+		local atkMOList = FightDataHelper.entityMgr:getNormalList(side)
+
+		for _, entityMO in ipairs(atkMOList) do
+			table.insert(ret, entityMO.id)
+
+			return ret
+		end
+	elseif FightEnum.LogicTargetClassify.Me[logicTarget] then
+		return {
+			attackerId
 		}
 	end
 end
 
-local var_0_5 = 3065
+local Hero_MaKuSi = 3065
 
-function var_0_0._checkRegainPowerAfterAct(arg_24_0, arg_24_1, arg_24_2, arg_24_3, arg_24_4, arg_24_5)
-	local var_24_0
-	local var_24_1 = FightHelper.getSideEntitys(arg_24_5, false)
+function SkillEditorStepBuilder._checkRegainPowerAfterAct(skillCO, actEffect, attackerId, targetId, side, apositeside)
+	local realTargetId
+	local defenderEntitys = FightHelper.getSideEntitys(apositeside, false)
 
-	for iter_24_0, iter_24_1 in ipairs(var_24_1) do
-		if iter_24_1:getMO() and iter_24_1:getMO().modelId == var_0_5 then
-			var_24_0 = iter_24_1.id
+	for _, defenderEntity in ipairs(defenderEntitys) do
+		if defenderEntity:getMO() and defenderEntity:getMO().modelId == Hero_MaKuSi then
+			realTargetId = defenderEntity.id
 
 			break
 		end
 	end
 
-	if not var_24_0 then
+	if not realTargetId then
 		return
 	end
 
-	local var_24_2 = FightHelper.getEntity(arg_24_2):getMO():getBuffList()
+	local entity = FightHelper.getEntity(attackerId)
+	local entityBuffs = entity:getMO():getBuffList()
 
-	for iter_24_2, iter_24_3 in ipairs(var_24_2) do
-		local var_24_3 = lua_skill_buff.configDict[iter_24_3.buffId]
-		local var_24_4 = var_24_3 and var_24_3.features
+	for _, buffMO in ipairs(entityBuffs) do
+		local buffCO = lua_skill_buff.configDict[buffMO.buffId]
+		local features = buffCO and buffCO.features
 
-		if not string.nilorempty(var_24_4) then
-			local var_24_5 = GameUtil.splitString2(var_24_4, true)
+		if not string.nilorempty(features) then
+			local featuresSplit = GameUtil.splitString2(features, true)
 
-			for iter_24_4, iter_24_5 in ipairs(var_24_5) do
-				local var_24_6 = iter_24_5[1] and lua_buff_act.configDict[iter_24_5[1]]
+			for _, oneFeature in ipairs(featuresSplit) do
+				local buffActCO = oneFeature[1] and lua_buff_act.configDict[oneFeature[1]]
 
-				if var_24_6 and var_24_6.type == "RegainPowerAfterAct" then
-					local var_24_7 = FightActEffectData.New()
+				if buffActCO and buffActCO.type == "RegainPowerAfterAct" then
+					local actEffectData = FightActEffectData.New()
 
-					var_24_7.targetId = var_24_0
-					var_24_7.effectType = FightEnum.EffectType.POWERCHANGE
-					var_24_7.effectNum = iter_24_5[2] or 1
-					var_24_7.configEffect = 1
-					var_24_7.buffActId = 0
+					actEffectData.targetId = realTargetId
+					actEffectData.effectType = FightEnum.EffectType.POWERCHANGE
+					actEffectData.effectNum = oneFeature[2] or 1
+					actEffectData.configEffect = 1
+					actEffectData.buffActId = 0
 
-					table.insert(arg_24_1, var_24_7)
+					table.insert(actEffect, actEffectData)
 				end
 			end
 		end
 	end
 end
 
-function var_0_0._checkBehaviorCondition(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
-	if string.nilorempty(arg_25_0) then
+function SkillEditorStepBuilder._checkBehaviorCondition(condition, conditionTarget, attackerId, targetId)
+	if string.nilorempty(condition) then
 		return true
 	end
 
-	local var_25_0 = string.splitToNumber(arg_25_0, "#")
-	local var_25_1 = var_25_0[1]
-	local var_25_2 = var_25_0[2]
-	local var_25_3 = var_25_1 and lua_skill_behavior_condition.configDict[var_25_1]
+	local condition, count = string.gsub(condition, "[!！]", "")
+	local state = SkillEditorStepBuilder.behaviorConditionByStr(condition, conditionTarget, attackerId, targetId)
 
-	if not var_25_3 or var_25_3.type == "None" then
+	if count > 0 then
+		return not state
+	end
+
+	return state
+end
+
+function SkillEditorStepBuilder.behaviorConditionByStr(condition, conditionTarget, attackerId, targetId)
+	local conditionSp = string.splitToNumber(condition, "#")
+	local conditionId = conditionSp[1]
+	local conditionParam = conditionSp[2]
+	local conditionCO = conditionId and lua_skill_behavior_condition.configDict[conditionId]
+
+	if not conditionCO or conditionCO.type == "None" then
 		return true
 	end
 
-	local var_25_4 = FightEnum.LogicTargetClassify.Me[arg_25_1] and arg_25_2 or arg_25_3
-	local var_25_5 = FightHelper.getEntity(var_25_4)
+	local conditionTargetId = FightEnum.LogicTargetClassify.Me[conditionTarget] and attackerId or targetId
+	local conditionEntity = FightHelper.getEntity(conditionTargetId)
 
-	if var_25_3.type == "NoBuffId" and var_25_5 then
-		for iter_25_0, iter_25_1 in pairs(var_25_5:getMO():getBuffDic()) do
-			if iter_25_1.buffId == var_25_2 then
+	if conditionCO.type == "NoBuffId" and conditionEntity then
+		for _, buffMO in pairs(conditionEntity:getMO():getBuffDic()) do
+			if buffMO.buffId == conditionParam then
 				return false
 			end
 		end
@@ -1109,9 +1179,9 @@ function var_0_0._checkBehaviorCondition(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
 		return true
 	end
 
-	if var_25_3.type == "HasBuffId" and var_25_5 then
-		for iter_25_2, iter_25_3 in pairs(var_25_5:getMO():getBuffDic()) do
-			if iter_25_3.buffId == var_25_2 then
+	if conditionCO.type == "HasBuffId" and conditionEntity then
+		for _, buffMO in pairs(conditionEntity:getMO():getBuffDic()) do
+			if buffMO.buffId == conditionParam then
 				return true
 			end
 		end
@@ -1122,138 +1192,139 @@ function var_0_0._checkBehaviorCondition(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
 	return true
 end
 
-function var_0_0._getBehaviorTargetIds(arg_26_0, arg_26_1, arg_26_2, arg_26_3, arg_26_4, arg_26_5, arg_26_6, arg_26_7)
-	local var_26_0 = arg_26_1.logicTarget
-	local var_26_1 = arg_26_1["behaviorTarget" .. arg_26_2]
-	local var_26_2 = arg_26_1["conditionTarget" .. arg_26_2]
-	local var_26_3 = var_26_1
+function SkillEditorStepBuilder._getBehaviorTargetIds(actEffect, skillCO, behaviorIndex, attackerId, targetId, side, oppositeSide, randomTargetId)
+	local logicTarget = skillCO.logicTarget
+	local behaviorTarget = skillCO["behaviorTarget" .. behaviorIndex]
+	local conditionTarget = skillCO["conditionTarget" .. behaviorIndex]
+	local targetType = behaviorTarget
 
-	if var_26_1 == 0 then
-		var_26_3 = var_26_0
-	elseif var_26_1 == 999 then
-		var_26_3 = var_26_2 ~= 0 and var_26_2 or var_26_0
+	if behaviorTarget == "0" then
+		targetType = logicTarget
+	elseif behaviorTarget == "999" then
+		targetType = conditionTarget ~= "0" and conditionTarget or logicTarget
 	end
 
-	local function var_26_4(arg_27_0, arg_27_1)
-		if not tabletool.indexOf(arg_27_0, arg_27_1) then
-			table.insert(arg_27_0, arg_27_1)
+	local function insertTarget(ids, id)
+		if not tabletool.indexOf(ids, id) then
+			table.insert(ids, id)
 		end
 	end
 
-	local var_26_5 = {}
+	local targetIds = {}
 
-	if var_26_3 == FightEnum.CondTargetHpMin then
-		local var_26_6 = arg_26_3
-		local var_26_7 = 1
-		local var_26_8 = FightDataHelper.entityMgr:getNormalList(arg_26_5)
+	if targetType == FightEnum.CondTargetHpMin then
+		local minHpTargetId = attackerId
+		local minHpPercent = 1
+		local atkMOList = FightDataHelper.entityMgr:getNormalList(side)
 
-		for iter_26_0, iter_26_1 in ipairs(var_26_8) do
-			local var_26_9 = iter_26_1.currentHp / iter_26_1.attrMO.hp
+		for _, entityMO in ipairs(atkMOList) do
+			local hpPercent = entityMO.currentHp / entityMO.attrMO.hp
 
-			if var_26_9 < var_26_7 then
-				var_26_6 = iter_26_1.id
-				var_26_7 = var_26_9
+			if hpPercent < minHpPercent then
+				minHpTargetId = entityMO.id
+				minHpPercent = hpPercent
 			end
 		end
 
-		var_26_4(var_26_5, var_26_6)
-	elseif FightEnum.LogicTargetClassify.Special[var_26_3] then
-		var_26_4(var_26_5, arg_26_4)
-	elseif FightEnum.LogicTargetClassify.Single[var_26_3] then
-		var_26_4(var_26_5, arg_26_4)
-	elseif FightEnum.LogicTargetClassify.SingleAndRandom[var_26_3] then
-		var_26_4(var_26_5, arg_26_4)
+		insertTarget(targetIds, minHpTargetId)
+	elseif FightEnum.LogicTargetClassify.Special[targetType] then
+		insertTarget(targetIds, targetId)
+	elseif FightEnum.LogicTargetClassify.Single[targetType] then
+		insertTarget(targetIds, targetId)
+	elseif FightEnum.LogicTargetClassify.SingleAndRandom[targetType] then
+		insertTarget(targetIds, targetId)
 
-		if arg_26_7 then
-			var_26_4(var_26_5, arg_26_7)
+		if randomTargetId then
+			insertTarget(targetIds, randomTargetId)
 		else
-			local var_26_10 = arg_26_1.targetLimit == FightEnum.TargetLimit.EnemySide
-			local var_26_11 = FightHelper.getSideEntitys(var_26_10 and arg_26_6 or arg_26_5)
+			local isAttack = skillCO.targetLimit == FightEnum.TargetLimit.EnemySide
+			local entityList = FightHelper.getSideEntitys(isAttack and oppositeSide or side)
 
-			for iter_26_2, iter_26_3 in ipairs(var_26_11) do
-				if iter_26_3.id == arg_26_4 then
-					table.remove(var_26_11, iter_26_2)
+			for i, entity in ipairs(entityList) do
+				if entity.id == targetId then
+					table.remove(entityList, i)
 
 					break
 				end
 			end
 
-			if #var_26_11 > 0 then
-				local var_26_12 = var_26_11[math.random(#var_26_11)]
+			if #entityList > 0 then
+				local randomIndex = math.random(#entityList)
+				local randomEntity = entityList[randomIndex]
 
-				arg_26_7 = var_26_12.id
+				randomTargetId = randomEntity.id
 
-				var_26_4(var_26_5, var_26_12.id)
+				insertTarget(targetIds, randomEntity.id)
 			end
 		end
-	elseif FightEnum.LogicTargetClassify.EnemySideAll[var_26_3] then
-		local var_26_13 = FightDataHelper.entityMgr:getNormalList(arg_26_6)
+	elseif FightEnum.LogicTargetClassify.EnemySideAll[targetType] then
+		local defMOList = FightDataHelper.entityMgr:getNormalList(oppositeSide)
 
-		for iter_26_4, iter_26_5 in ipairs(var_26_13) do
-			var_26_4(var_26_5, iter_26_5.id)
+		for _, entityMO in ipairs(defMOList) do
+			insertTarget(targetIds, entityMO.id)
 		end
-	elseif FightEnum.LogicTargetClassify.EnemySideindex[var_26_3] then
-		local var_26_14 = var_26_3 - 225
-		local var_26_15 = FightDataHelper.entityMgr:getNormalList(arg_26_6)
+	elseif FightEnum.LogicTargetClassify.EnemySideindex[targetType] then
+		local index = targetType - 225
+		local defMOList = FightDataHelper.entityMgr:getNormalList(oppositeSide)
 
-		table.sort(var_26_15, function(arg_28_0, arg_28_1)
-			return arg_28_0.position < arg_28_1.position
+		table.sort(defMOList, function(item1, item2)
+			return item1.position < item2.position
 		end)
 
-		for iter_26_6, iter_26_7 in ipairs(var_26_15) do
-			if iter_26_6 == var_26_14 then
-				var_26_4(var_26_5, iter_26_7.id)
+		for entityIndex, entityMO in ipairs(defMOList) do
+			if entityIndex == index then
+				insertTarget(targetIds, entityMO.id)
 			end
 		end
-	elseif FightEnum.LogicTargetClassify.MySideAll[var_26_3] then
-		local var_26_16 = FightDataHelper.entityMgr:getNormalList(arg_26_5)
+	elseif FightEnum.LogicTargetClassify.MySideAll[targetType] then
+		local atkMOList = FightDataHelper.entityMgr:getNormalList(side)
 
-		for iter_26_8, iter_26_9 in ipairs(var_26_16) do
-			var_26_4(var_26_5, iter_26_9.id)
+		for _, entityMO in ipairs(atkMOList) do
+			insertTarget(targetIds, entityMO.id)
 		end
-	elseif FightEnum.LogicTargetClassify.Me[var_26_3] then
-		var_26_4(var_26_5, arg_26_3)
-	elseif FightEnum.LogicTargetClassify.SecondaryTarget[var_26_3] then
-		if arg_26_1.logicTarget == 202 then
-			local var_26_17 = FightDataHelper.entityMgr:getNormalList(arg_26_6)
+	elseif FightEnum.LogicTargetClassify.Me[targetType] then
+		insertTarget(targetIds, attackerId)
+	elseif FightEnum.LogicTargetClassify.SecondaryTarget[targetType] then
+		if skillCO.logicTarget == "202" then
+			local defMOList = FightDataHelper.entityMgr:getNormalList(oppositeSide)
 
-			for iter_26_10, iter_26_11 in ipairs(var_26_17) do
-				if iter_26_11.id ~= arg_26_4 then
-					var_26_4(var_26_5, iter_26_11.id)
+			for _, entityMO in ipairs(defMOList) do
+				if entityMO.id ~= targetId then
+					insertTarget(targetIds, entityMO.id)
 				end
 			end
 		end
-	elseif FightEnum.LogicTargetClassify.StanceAndBefore[var_26_3] then
-		local var_26_18 = FightDataHelper.entityMgr:getById(arg_26_3)
-		local var_26_19 = FightDataHelper.entityMgr:getNormalList(arg_26_5)
+	elseif FightEnum.LogicTargetClassify.StanceAndBefore[targetType] then
+		local attacker = FightDataHelper.entityMgr:getById(attackerId)
+		local atkMOList = FightDataHelper.entityMgr:getNormalList(side)
 
-		for iter_26_12, iter_26_13 in ipairs(var_26_19) do
-			if iter_26_13.position <= var_26_18.position then
-				var_26_4(var_26_5, iter_26_13.id)
+		for _, entityMO in ipairs(atkMOList) do
+			if entityMO.position <= attacker.position then
+				insertTarget(targetIds, entityMO.id)
 			end
 		end
-	elseif FightEnum.LogicTargetClassify.StanceAndAfter[var_26_3] then
-		local var_26_20 = FightDataHelper.entityMgr:getById(arg_26_3)
-		local var_26_21 = FightDataHelper.entityMgr:getNormalList(arg_26_5)
+	elseif FightEnum.LogicTargetClassify.StanceAndAfter[targetType] then
+		local attacker = FightDataHelper.entityMgr:getById(attackerId)
+		local atkMOList = FightDataHelper.entityMgr:getNormalList(side)
 
-		for iter_26_14, iter_26_15 in ipairs(var_26_21) do
-			if iter_26_15.position >= var_26_20.position then
-				var_26_4(var_26_5, iter_26_15.id)
+		for _, entityMO in ipairs(atkMOList) do
+			if entityMO.position >= attacker.position then
+				insertTarget(targetIds, entityMO.id)
 			end
 		end
-	elseif FightEnum.LogicTargetClassify.Position[var_26_3] then
-		local var_26_22 = FightHelper.getEnemySideEntitys(arg_26_3)
+	elseif FightEnum.LogicTargetClassify.Position[targetType] then
+		local list = FightHelper.getEnemySideEntitys(attackerId)
 
-		for iter_26_16, iter_26_17 in ipairs(var_26_22) do
-			local var_26_23 = iter_26_17:getMO()
+		for i, v in ipairs(list) do
+			local entityMO = v:getMO()
 
-			if var_26_23 and var_26_23.position == FightEnum.LogicTargetClassify.Position[var_26_3] then
-				var_26_4(var_26_5, iter_26_17.id)
+			if entityMO and entityMO.position == FightEnum.LogicTargetClassify.Position[targetType] then
+				insertTarget(targetIds, v.id)
 			end
 		end
 	end
 
-	return var_26_5, arg_26_7
+	return targetIds, randomTargetId
 end
 
-return var_0_0
+return SkillEditorStepBuilder

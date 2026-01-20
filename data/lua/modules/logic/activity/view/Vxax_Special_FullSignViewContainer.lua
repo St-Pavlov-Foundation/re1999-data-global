@@ -1,5 +1,8 @@
-﻿module("modules.logic.activity.view.Vxax_Special_FullSignViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/Vxax_Special_FullSignViewContainer.lua
 
-local var_0_0 = Vxax_Special_SignItemViewContainer.Vxax_Special_FullSignView_ContainerImpl()
+module("modules.logic.activity.view.Vxax_Special_FullSignViewContainer", package.seeall)
 
-return (class("Vxax_Special_FullSignViewContainer", var_0_0))
+local Impl = Vxax_Special_SignItemViewContainer.Vxax_Special_FullSignView_ContainerImpl()
+local Vxax_Special_FullSignViewContainer = class("Vxax_Special_FullSignViewContainer", Impl)
+
+return Vxax_Special_FullSignViewContainer

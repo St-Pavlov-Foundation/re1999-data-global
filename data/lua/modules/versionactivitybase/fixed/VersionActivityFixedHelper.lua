@@ -1,364 +1,381 @@
-﻿module("modules.versionactivitybase.fixed.VersionActivityFixedHelper", package.seeall)
+﻿-- chunkname: @modules/versionactivitybase/fixed/VersionActivityFixedHelper.lua
 
-local var_0_0 = class("VersionActivityFixedHelper")
-local var_0_1 = {
+module("modules.versionactivitybase.fixed.VersionActivityFixedHelper", package.seeall)
+
+local VersionActivityFixedHelper = class("VersionActivityFixedHelper")
+local _version = {
 	big = 3,
-	small = 1
+	small = 2
 }
-local var_0_2
-local var_0_3 = "%s_%s"
-local var_0_4 = "V%sa%s"
-local var_0_5 = "v%sa%s"
+local _versionTable
+local foramt1 = "%s_%s"
+local foramt2 = "V%sa%s"
+local foramt3 = "v%sa%s"
 
-local function var_0_6(arg_1_0, arg_1_1)
-	return arg_1_0 or var_0_1.big, arg_1_1 or var_0_1.small
+local function _getVersion(big, small)
+	return big or _version.big, small or _version.small
 end
 
-local function var_0_7(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	arg_2_2, arg_2_3 = var_0_6(arg_2_2, arg_2_3)
+local function _getVersionFuncForamt(funcName, foramt, big, small)
+	big, small = _getVersion(big, small)
 
-	local var_2_0 = string.format(arg_2_1, arg_2_2, arg_2_3)
+	local _format = string.format(foramt, big, small)
 
-	return string.format(arg_2_0, var_2_0)
+	return string.format(funcName, _format)
 end
 
-local function var_0_8(arg_3_0, arg_3_1)
-	arg_3_0, arg_3_1 = var_0_6(arg_3_0, arg_3_1)
+local function _getVersionTable(big, small)
+	big, small = _getVersion(big, small)
 
-	if not var_0_2 then
-		var_0_2 = {}
+	if not _versionTable then
+		_versionTable = {}
 	end
 
-	if not var_0_2[arg_3_0] then
-		var_0_2[arg_3_0] = {}
+	if not _versionTable[big] then
+		_versionTable[big] = {}
 	end
 
-	if not var_0_2[arg_3_0][arg_3_1] then
-		var_0_2[arg_3_0][arg_3_1] = {}
+	if not _versionTable[big][small] then
+		_versionTable[big][small] = {}
 	end
 
-	return var_0_2[arg_3_0][arg_3_1]
+	return _versionTable[big][small]
 end
 
-function var_0_0.setMainActivitySprite(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
-	arg_4_3, arg_4_4 = var_0_6(arg_4_3, arg_4_4)
+function VersionActivityFixedHelper.setMainActivitySprite(image, name, setNativeSize, big, small)
+	big, small = _getVersion(big, small)
 
-	local var_4_0 = var_0_8(arg_4_3, arg_4_4)._MainActivitySpriteFunc
+	local table = _getVersionTable(big, small)
+	local func = table._MainActivitySpriteFunc
 
-	if not var_4_0 then
-		var_4_0 = var_0_7("set%sMainActivitySprite", var_0_4, arg_4_3, arg_4_4)
-		var_0_2[arg_4_3][arg_4_4]._MainActivitySpriteFunc = var_4_0
+	if not func then
+		func = _getVersionFuncForamt("set%sMainActivitySprite", foramt2, big, small)
+		_versionTable[big][small]._MainActivitySpriteFunc = func
 	end
 
-	UISpriteSetMgr.instance[var_4_0](UISpriteSetMgr.instance, arg_4_0, arg_4_1, arg_4_2)
+	UISpriteSetMgr.instance[func](UISpriteSetMgr.instance, image, name, setNativeSize)
 end
 
-function var_0_0.setDungeonSprite(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
-	arg_5_3, arg_5_4 = var_0_6(arg_5_3, arg_5_4)
+function VersionActivityFixedHelper.setDungeonSprite(image, name, setNativeSize, big, small)
+	big, small = _getVersion(big, small)
 
-	local var_5_0 = var_0_8(arg_5_3, arg_5_4)._DungeonSpriteFunc
+	local table = _getVersionTable(big, small)
+	local func = table._DungeonSpriteFunc
 
-	if not var_5_0 then
-		var_5_0 = var_0_7("set%sDungeonSprite", var_0_4, arg_5_3, arg_5_4)
-		var_0_2[arg_5_3][arg_5_4]._DungeonSpriteFunc = var_5_0
+	if not func then
+		func = _getVersionFuncForamt("set%sDungeonSprite", foramt2, big, small)
+		_versionTable[big][small]._DungeonSpriteFunc = func
 	end
 
-	UISpriteSetMgr.instance[var_5_0](UISpriteSetMgr.instance, arg_5_0, arg_5_1, arg_5_2)
+	UISpriteSetMgr.instance[func](UISpriteSetMgr.instance, image, name, setNativeSize)
 end
 
-function var_0_0.getVersionActivityEnum(arg_6_0, arg_6_1)
-	arg_6_0, arg_6_1 = var_0_6(arg_6_0, arg_6_1)
+function VersionActivityFixedHelper.getVersionActivityEnum(big, small)
+	big, small = _getVersion(big, small)
 
-	local var_6_0 = var_0_8(arg_6_0, arg_6_1)._Enum
+	local table = _getVersionTable(big, small)
+	local func = table._Enum
 
-	if not var_6_0 then
-		local var_6_1 = var_0_7("VersionActivity%sEnum", var_0_3, arg_6_0, arg_6_1)
+	if not func then
+		local title = _getVersionFuncForamt("VersionActivity%sEnum", foramt1, big, small)
 
-		var_6_0 = _G[var_6_1]
-		var_0_2[arg_6_0][arg_6_1]._Enum = var_6_0
+		func = _G[title]
+		_versionTable[big][small]._Enum = func
 	end
 
-	return var_6_0
+	return func
 end
 
-function var_0_0.getVersionActivityEnterViewName(arg_7_0, arg_7_1)
-	arg_7_0, arg_7_1 = var_0_6(arg_7_0, arg_7_1)
+function VersionActivityFixedHelper.getVersionActivityEnterViewName(big, small)
+	big, small = _getVersion(big, small)
 
-	local var_7_0 = var_0_8(arg_7_0, arg_7_1)._EnterViewName
+	local table = _getVersionTable(big, small)
+	local func = table._EnterViewName
 
-	if not var_7_0 then
-		local var_7_1 = var_0_7("VersionActivity%sEnterView", var_0_3, arg_7_0, arg_7_1)
+	if not func then
+		local title = _getVersionFuncForamt("VersionActivity%sEnterView", foramt1, big, small)
 
-		var_7_0 = ViewName[var_7_1]
-		var_0_2[arg_7_0][arg_7_1]._EnterViewName = var_7_0
+		func = ViewName[title]
+		_versionTable[big][small]._EnterViewName = func
 	end
 
-	return var_7_0
+	return func
 end
 
-function var_0_0.getVersionActivityStoreViewName(arg_8_0, arg_8_1)
-	arg_8_0, arg_8_1 = var_0_6(arg_8_0, arg_8_1)
+function VersionActivityFixedHelper.getVersionActivityStoreViewName(big, small)
+	big, small = _getVersion(big, small)
 
-	local var_8_0 = var_0_8(arg_8_0, arg_8_1)._StoreViewName
+	local table = _getVersionTable(big, small)
+	local func = table._StoreViewName
 
-	if not var_8_0 then
-		local var_8_1 = var_0_7("VersionActivity%sStoreView", var_0_3, arg_8_0, arg_8_1)
+	if not func then
+		local title = _getVersionFuncForamt("VersionActivity%sStoreView", foramt1, big, small)
 
-		var_8_0 = ViewName[var_8_1]
-		var_0_2[arg_8_0][arg_8_1]._StoreViewName = var_8_0
+		func = ViewName[title]
+		_versionTable[big][small]._StoreViewName = func
 	end
 
-	return var_8_0
+	return func
 end
 
-function var_0_0.getVersionActivityTaskViewName(arg_9_0, arg_9_1)
-	arg_9_0, arg_9_1 = var_0_6(arg_9_0, arg_9_1)
+function VersionActivityFixedHelper.getVersionActivityTaskViewName(big, small)
+	big, small = _getVersion(big, small)
 
-	local var_9_0 = var_0_8(arg_9_0, arg_9_1)._TaskViewName
+	local table = _getVersionTable(big, small)
+	local func = table._TaskViewName
 
-	if not var_9_0 then
-		local var_9_1 = var_0_7("VersionActivity%sTaskView", var_0_3, arg_9_0, arg_9_1)
+	if not func then
+		local title = _getVersionFuncForamt("VersionActivity%sTaskView", foramt1, big, small)
 
-		var_9_0 = ViewName[var_9_1]
-		var_0_2[arg_9_0][arg_9_1]._TaskViewName = var_9_0
+		func = ViewName[title]
+		_versionTable[big][small]._TaskViewName = func
 	end
 
-	return var_9_0
+	return func
 end
 
-function var_0_0.getVersionActivityDungeonEnum(arg_10_0, arg_10_1)
-	arg_10_0, arg_10_1 = var_0_6(arg_10_0, arg_10_1)
+function VersionActivityFixedHelper.getVersionActivityDungeonEnum(big, small)
+	big, small = _getVersion(big, small)
 
-	local var_10_0 = var_0_8(arg_10_0, arg_10_1)._DungeonEnum
+	local table = _getVersionTable(big, small)
+	local func = table._DungeonEnum
 
-	if not var_10_0 then
-		local var_10_1 = var_0_7("VersionActivity%sDungeonEnum", var_0_3, arg_10_0, arg_10_1)
+	if not func then
+		local title = _getVersionFuncForamt("VersionActivity%sDungeonEnum", foramt1, big, small)
 
-		var_10_0 = _G[var_10_1]
-		var_0_2[arg_10_0][arg_10_1]._DungeonEnum = var_10_0
+		func = _G[title]
+		_versionTable[big][small]._DungeonEnum = func
 	end
 
-	return var_10_0
+	return func
 end
 
-function var_0_0.getVersionActivityDungeonMapViewName(arg_11_0, arg_11_1)
-	arg_11_0, arg_11_1 = var_0_6(arg_11_0, arg_11_1)
+function VersionActivityFixedHelper.getVersionActivityDungeonMapViewName(big, small)
+	big, small = _getVersion(big, small)
 
-	local var_11_0 = var_0_8(arg_11_0, arg_11_1)._DungeonMapViewName
+	local table = _getVersionTable(big, small)
+	local func = table._DungeonMapViewName
 
-	if not var_11_0 then
-		local var_11_1 = var_0_7("VersionActivity%sDungeonMapView", var_0_3, arg_11_0, arg_11_1)
+	if not func then
+		local title = _getVersionFuncForamt("VersionActivity%sDungeonMapView", foramt1, big, small)
 
-		var_11_0 = ViewName[var_11_1]
-		var_0_2[arg_11_0][arg_11_1]._DungeonMapViewName = var_11_0
+		func = ViewName[title]
+		_versionTable[big][small]._DungeonMapViewName = func
 	end
 
-	return var_11_0
+	return func
 end
 
-function var_0_0.getVersionActivityDungeonMapLevelViewName(arg_12_0, arg_12_1)
-	arg_12_0, arg_12_1 = var_0_6(arg_12_0, arg_12_1)
+function VersionActivityFixedHelper.getVersionActivityDungeonMapLevelViewName(big, small)
+	big, small = _getVersion(big, small)
 
-	local var_12_0 = var_0_8(arg_12_0, arg_12_1)._DungeonMapLevelView
+	local table = _getVersionTable(big, small)
+	local func = table._DungeonMapLevelView
 
-	if not var_12_0 then
-		local var_12_1 = var_0_7("VersionActivity%sDungeonMapLevelView", var_0_3, arg_12_0, arg_12_1)
+	if not func then
+		local title = _getVersionFuncForamt("VersionActivity%sDungeonMapLevelView", foramt1, big, small)
 
-		var_12_0 = ViewName[var_12_1]
-		var_0_2[arg_12_0][arg_12_1]._DungeonMapLevelView = var_12_0
+		func = ViewName[title]
+		_versionTable[big][small]._DungeonMapLevelView = func
 	end
 
-	return var_12_0
+	return func
 end
 
-function var_0_0.getVersionActivityDungeonEnterReddotId(arg_13_0, arg_13_1)
-	arg_13_0, arg_13_1 = var_0_6(arg_13_0, arg_13_1)
+function VersionActivityFixedHelper.getVersionActivityDungeonEnterReddotId(big, small)
+	big, small = _getVersion(big, small)
 
-	local var_13_0 = var_0_8(arg_13_0, arg_13_1)._DungeonEnter
+	local table = _getVersionTable(big, small)
+	local func = table._DungeonEnter
 
-	if not var_13_0 then
-		local var_13_1 = var_0_7("%sDungeonEnter", var_0_4, arg_13_0, arg_13_1)
+	if not func then
+		local title = _getVersionFuncForamt("%sDungeonEnter", foramt2, big, small)
 
-		var_13_0 = RedDotEnum.DotNode[var_13_1]
-		var_0_2[arg_13_0][arg_13_1]._DungeonEnter = var_13_0
+		func = RedDotEnum.DotNode[title]
+		_versionTable[big][small]._DungeonEnter = func
 	end
 
-	return var_13_0
+	return func
 end
 
-function var_0_0.getVersionActivityDungeonTaskReddotId(arg_14_0, arg_14_1)
-	arg_14_0, arg_14_1 = var_0_6(arg_14_0, arg_14_1)
+function VersionActivityFixedHelper.getVersionActivityDungeonTaskReddotId(big, small)
+	big, small = _getVersion(big, small)
 
-	local var_14_0 = var_0_8(arg_14_0, arg_14_1)._DungeonTask
+	local table = _getVersionTable(big, small)
+	local func = table._DungeonTask
 
-	if not var_14_0 then
-		local var_14_1 = var_0_7("%sDungeonTask", var_0_4, arg_14_0, arg_14_1)
+	if not func then
+		local title = _getVersionFuncForamt("%sDungeonTask", foramt2, big, small)
 
-		var_14_0 = RedDotEnum.DotNode[var_14_1]
-		var_0_2[arg_14_0][arg_14_1]._DungeonTask = var_14_0
+		func = RedDotEnum.DotNode[title]
+		_versionTable[big][small]._DungeonTask = func
 	end
 
-	return var_14_0
+	return func
 end
 
-function var_0_0.getVersionActivityCurrencyType(arg_15_0, arg_15_1)
-	arg_15_0, arg_15_1 = var_0_6(arg_15_0, arg_15_1)
+function VersionActivityFixedHelper.getVersionActivityCurrencyType(big, small)
+	big, small = _getVersion(big, small)
 
-	local var_15_0 = var_0_8(arg_15_0, arg_15_1)._CurrencyType
+	local table = _getVersionTable(big, small)
+	local func = table._CurrencyType
 
-	if not var_15_0 then
-		local var_15_1 = var_0_7("%sDungeon", var_0_4, arg_15_0, arg_15_1)
+	if not func then
+		local title = _getVersionFuncForamt("%sDungeon", foramt2, big, small)
 
-		var_15_0 = CurrencyEnum.CurrencyType[var_15_1]
-		var_0_2[arg_15_0][arg_15_1]._CurrencyType = var_15_0
+		func = CurrencyEnum.CurrencyType[title]
+		_versionTable[big][small]._CurrencyType = func
 	end
 
-	return var_15_0
+	return func
 end
 
-function var_0_0.getVersionActivityAudioBgmLayer(arg_16_0, arg_16_1)
-	arg_16_0, arg_16_1 = var_0_6(arg_16_0, arg_16_1)
+function VersionActivityFixedHelper.getVersionActivityAudioBgmLayer(big, small)
+	big, small = _getVersion(big, small)
 
-	local var_16_0 = var_0_8(arg_16_0, arg_16_1)._AudioBgmLayer
+	local table = _getVersionTable(big, small)
+	local func = table._AudioBgmLayer
 
-	if not var_16_0 then
-		local var_16_1 = var_0_7("VersionActivity%sMain", var_0_3, arg_16_0, arg_16_1)
+	if not func then
+		local title = _getVersionFuncForamt("VersionActivity%sMain", foramt1, big, small)
 
-		var_16_0 = AudioBgmEnum.Layer[var_16_1]
-		var_0_2[arg_16_0][arg_16_1]._AudioBgmLayer = var_16_0
+		func = AudioBgmEnum.Layer[title]
+		_versionTable[big][small]._AudioBgmLayer = func
 	end
 
-	return var_16_0
+	return func
 end
 
-function var_0_0.getVersionActivityStoreRareIcon(arg_17_0, arg_17_1)
-	arg_17_0, arg_17_1 = var_0_6(arg_17_0, arg_17_1)
+function VersionActivityFixedHelper.getVersionActivityStoreRareIcon(big, small)
+	big, small = _getVersion(big, small)
 
-	local var_17_0 = var_0_8(arg_17_0, arg_17_1)._StoreRareIcon
+	local table = _getVersionTable(big, small)
+	local func = table._StoreRareIcon
 
-	if not var_17_0 then
-		var_17_0 = var_0_7("%s_store_quality_", var_0_5, arg_17_0, arg_17_1)
-		var_0_2[arg_17_0][arg_17_1]._StoreRareIcon = var_17_0
+	if not func then
+		func = _getVersionFuncForamt("%s_store_quality_", foramt3, big, small)
+		_versionTable[big][small]._StoreRareIcon = func
 	end
 
-	return var_17_0
+	return func
 end
 
-function var_0_0._getFixed(arg_18_0, arg_18_1, arg_18_2)
-	arg_18_0, arg_18_1 = var_0_6(arg_18_0, arg_18_1)
+function VersionActivityFixedHelper._getFixed(big, small, name)
+	big, small = _getVersion(big, small)
 
-	local var_18_0 = var_0_8(arg_18_0, arg_18_1)[arg_18_2]
+	local table = _getVersionTable(big, small)
+	local func = table[name]
 
-	if not var_18_0 then
-		local var_18_1 = "VersionActivity%s" .. arg_18_2
-		local var_18_2 = var_0_7(var_18_1, var_0_3, arg_18_0, arg_18_1)
-		local var_18_3 = string.format(var_18_1, "Fixed")
+	if not func then
+		local _format = "VersionActivity%s" .. name
+		local title = _getVersionFuncForamt(_format, foramt1, big, small)
+		local fixedTitle = string.format(_format, "Fixed")
 
-		var_18_0 = _G[var_18_2] or _G[var_18_3]
-		var_0_2[arg_18_0][arg_18_1][arg_18_2] = var_18_0
+		func = _G[title] or _G[fixedTitle]
+		_versionTable[big][small][name] = func
 	end
 
-	return var_18_0
+	return func
 end
 
-function var_0_0.getVersionActivityEnterController(arg_19_0, arg_19_1)
-	return var_0_0._getFixed(arg_19_0, arg_19_1, "EnterController")
+function VersionActivityFixedHelper.getVersionActivityEnterController(big, small)
+	return VersionActivityFixedHelper._getFixed(big, small, "EnterController")
 end
 
-function var_0_0.getVersionActivityDungeonController(arg_20_0, arg_20_1)
-	return var_0_0._getFixed(arg_20_0, arg_20_1, "DungeonController")
+function VersionActivityFixedHelper.getVersionActivityDungeonController(big, small)
+	return VersionActivityFixedHelper._getFixed(big, small, "DungeonController")
 end
 
-function var_0_0.getVersionActivityDungeonMapElement(arg_21_0, arg_21_1)
-	return var_0_0._getFixed(arg_21_0, arg_21_1, "DungeonMapElement")
+function VersionActivityFixedHelper.getVersionActivityDungeonMapElement(big, small)
+	return VersionActivityFixedHelper._getFixed(big, small, "DungeonMapElement")
 end
 
-function var_0_0.getVersionActivityDungeonMapHoleView(arg_22_0, arg_22_1)
-	return var_0_0._getFixed(arg_22_0, arg_22_1, "DungeonMapHoleView")
+function VersionActivityFixedHelper.getVersionActivityDungeonMapHoleView(big, small)
+	return VersionActivityFixedHelper._getFixed(big, small, "DungeonMapHoleView")
 end
 
-function var_0_0.getVersionActivityDungeonMapScene(arg_23_0, arg_23_1)
-	return var_0_0._getFixed(arg_23_0, arg_23_1, "DungeonMapScene")
+function VersionActivityFixedHelper.getVersionActivityDungeonMapScene(big, small)
+	return VersionActivityFixedHelper._getFixed(big, small, "DungeonMapScene")
 end
 
-function var_0_0.getVersionActivityDungeonMapSceneElements(arg_24_0, arg_24_1)
-	return var_0_0._getFixed(arg_24_0, arg_24_1, "DungeonMapSceneElements")
+function VersionActivityFixedHelper.getVersionActivityDungeonMapSceneElements(big, small)
+	return VersionActivityFixedHelper._getFixed(big, small, "DungeonMapSceneElements")
 end
 
-function var_0_0.getVersionActivityDungeonMapChapterLayout(arg_25_0, arg_25_1)
-	return var_0_0._getFixed(arg_25_0, arg_25_1, "DungeonMapChapterLayout")
+function VersionActivityFixedHelper.getVersionActivityDungeonMapChapterLayout(big, small)
+	return VersionActivityFixedHelper._getFixed(big, small, "DungeonMapChapterLayout")
 end
 
-function var_0_0.getVersionActivityDungeonMapEpisodeItem(arg_26_0, arg_26_1)
-	return var_0_0._getFixed(arg_26_0, arg_26_1, "DungeonMapEpisodeItem")
+function VersionActivityFixedHelper.getVersionActivityDungeonMapEpisodeItem(big, small)
+	return VersionActivityFixedHelper._getFixed(big, small, "DungeonMapEpisodeItem")
 end
 
-function var_0_0.getVersionActivityDungeonMapEpisodeView(arg_27_0, arg_27_1)
-	return var_0_0._getFixed(arg_27_0, arg_27_1, "DungeonMapEpisodeView")
+function VersionActivityFixedHelper.getVersionActivityDungeonMapEpisodeView(big, small)
+	return VersionActivityFixedHelper._getFixed(big, small, "DungeonMapEpisodeView")
 end
 
-function var_0_0.getVersionActivityDungeonMapFinishElement(arg_28_0, arg_28_1)
-	return var_0_0._getFixed(arg_28_0, arg_28_1, "DungeonMapFinishElement")
+function VersionActivityFixedHelper.getVersionActivityDungeonMapFinishElement(big, small)
+	return VersionActivityFixedHelper._getFixed(big, small, "DungeonMapFinishElement")
 end
 
-function var_0_0.getVersionActivityDungeonMapInteractView(arg_29_0, arg_29_1)
-	return var_0_0._getFixed(arg_29_0, arg_29_1, "DungeonMapInteractView")
+function VersionActivityFixedHelper.getVersionActivityDungeonMapInteractView(big, small)
+	return VersionActivityFixedHelper._getFixed(big, small, "DungeonMapInteractView")
 end
 
-function var_0_0.getVersionActivityDungeonMapView(arg_30_0, arg_30_1)
-	return var_0_0._getFixed(arg_30_0, arg_30_1, "DungeonMapView")
+function VersionActivityFixedHelper.getVersionActivityDungeonMapView(big, small)
+	return VersionActivityFixedHelper._getFixed(big, small, "DungeonMapView")
 end
 
-function var_0_0.getVersionActivityDungeonMapLevelView(arg_31_0, arg_31_1)
-	return var_0_0._getFixed(arg_31_0, arg_31_1, "DungeonMapLevelView")
+function VersionActivityFixedHelper.getVersionActivityDungeonMapLevelView(big, small)
+	return VersionActivityFixedHelper._getFixed(big, small, "DungeonMapLevelView")
 end
 
-function var_0_0.getVersionActivityStoreGoodsItem(arg_32_0, arg_32_1)
-	return var_0_0._getFixed(arg_32_0, arg_32_1, "StoreGoodsItem")
+function VersionActivityFixedHelper.getVersionActivityStoreGoodsItem(big, small)
+	return VersionActivityFixedHelper._getFixed(big, small, "StoreGoodsItem")
 end
 
-function var_0_0.getVersionActivityStoreItem(arg_33_0, arg_33_1)
-	return var_0_0._getFixed(arg_33_0, arg_33_1, "StoreItem")
+function VersionActivityFixedHelper.getVersionActivityStoreItem(big, small)
+	return VersionActivityFixedHelper._getFixed(big, small, "StoreItem")
 end
 
-function var_0_0.getVersionActivityStoreView(arg_34_0, arg_34_1)
-	return var_0_0._getFixed(arg_34_0, arg_34_1, "StoreView")
+function VersionActivityFixedHelper.getVersionActivityStoreView(big, small)
+	return VersionActivityFixedHelper._getFixed(big, small, "StoreView")
 end
 
-function var_0_0.getVersionActivityTaskItem(arg_35_0, arg_35_1)
-	return var_0_0._getFixed(arg_35_0, arg_35_1, "TaskItem")
+function VersionActivityFixedHelper.getVersionActivityTaskItem(big, small)
+	return VersionActivityFixedHelper._getFixed(big, small, "TaskItem")
 end
 
-function var_0_0.getVersionActivityTaskView(arg_36_0, arg_36_1)
-	return var_0_0._getFixed(arg_36_0, arg_36_1, "TaskView")
+function VersionActivityFixedHelper.getVersionActivityTaskView(big, small)
+	return VersionActivityFixedHelper._getFixed(big, small, "TaskView")
 end
 
-function var_0_0.getVersionActivityDungeonEnterView(arg_37_0, arg_37_1)
-	return var_0_0._getFixed(arg_37_0, arg_37_1, "DungeonEnterView")
+function VersionActivityFixedHelper.getVersionActivityDungeonEnterView(big, small)
+	return VersionActivityFixedHelper._getFixed(big, small, "DungeonEnterView")
 end
 
-function var_0_0.getVersionActivitySubAnimatorComp(arg_38_0, arg_38_1)
-	return var_0_0._getFixed(arg_38_0, arg_38_1, "SubAnimatorComp")
+function VersionActivityFixedHelper.getVersionActivitySubAnimatorComp(big, small)
+	return VersionActivityFixedHelper._getFixed(big, small, "SubAnimatorComp")
 end
 
-function var_0_0.getVersionActivityEnterBgmView(arg_39_0, arg_39_1)
-	return var_0_0._getFixed(arg_39_0, arg_39_1, "EnterBgmView")
+function VersionActivityFixedHelper.getVersionActivityEnterBgmView(big, small)
+	return VersionActivityFixedHelper._getFixed(big, small, "EnterBgmView")
 end
 
-function var_0_0.getVersionActivityEnterView(arg_40_0, arg_40_1)
-	return var_0_0._getFixed(arg_40_0, arg_40_1, "EnterView")
+function VersionActivityFixedHelper.getVersionActivityEnterView(big, small)
+	return VersionActivityFixedHelper._getFixed(big, small, "EnterView")
 end
 
-function var_0_0.getVersionActivityEnterViewTabItem1(arg_41_0, arg_41_1)
-	return var_0_0._getFixed(arg_41_0, arg_41_1, "EnterViewTabItem1")
+function VersionActivityFixedHelper.getVersionActivityEnterViewTabItem1(big, small)
+	return VersionActivityFixedHelper._getFixed(big, small, "EnterViewTabItem1")
 end
 
-function var_0_0.getVersionActivityEnterViewTabItem2(arg_42_0, arg_42_1)
-	return var_0_0._getFixed(arg_42_0, arg_42_1, "EnterViewTabItem2")
+function VersionActivityFixedHelper.getVersionActivityEnterViewTabItem2(big, small)
+	return VersionActivityFixedHelper._getFixed(big, small, "EnterViewTabItem2")
 end
 
-function var_0_0.isTargetVersion(arg_43_0, arg_43_1)
-	return var_0_1.big == arg_43_0 and var_0_1.small == arg_43_1
+function VersionActivityFixedHelper.isTargetVersion(big, small)
+	return _version.big == big and _version.small == small
 end
 
-return var_0_0
+return VersionActivityFixedHelper

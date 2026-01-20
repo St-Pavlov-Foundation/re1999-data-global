@@ -1,40 +1,44 @@
-﻿module("modules.logic.versionactivity1_6.goldenmilletpresent.model.GoldenMilletPresentModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/goldenmilletpresent/model/GoldenMilletPresentModel.lua
 
-local var_0_0 = class("GoldenMilletPresentModel", BaseModel)
+module("modules.logic.versionactivity1_6.goldenmilletpresent.model.GoldenMilletPresentModel", package.seeall)
 
-function var_0_0.getGoldenMilletPresentActId(arg_1_0)
+local GoldenMilletPresentModel = class("GoldenMilletPresentModel", BaseModel)
+
+function GoldenMilletPresentModel:getGoldenMilletPresentActId()
 	return ActivityEnum.Activity.V2a5_GoldenMilletPresent
 end
 
-function var_0_0.isGoldenMilletPresentOpen(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_0:getGoldenMilletPresentActId()
-	local var_2_1 = ActivityType101Model.instance:isOpen(var_2_0)
+function GoldenMilletPresentModel:isGoldenMilletPresentOpen(notOpenToast)
+	local actId = self:getGoldenMilletPresentActId()
+	local result = ActivityType101Model.instance:isOpen(actId)
 
-	if not var_2_1 and arg_2_1 then
+	if not result and notOpenToast then
 		GameFacade.showToast(ToastEnum.BattlePass)
 	end
 
-	return var_2_1
+	return result
 end
 
-function var_0_0.haveReceivedSkin(arg_3_0)
-	local var_3_0 = arg_3_0:getGoldenMilletPresentActId()
+function GoldenMilletPresentModel:haveReceivedSkin()
+	local actId = self:getGoldenMilletPresentActId()
+	local canReceive = ActivityType101Model.instance:isType101RewardCouldGet(actId, GoldenMilletEnum.REWARD_INDEX)
 
-	return not ActivityType101Model.instance:isType101RewardCouldGet(var_3_0, GoldenMilletEnum.REWARD_INDEX)
+	return not canReceive
 end
 
-function var_0_0.isShowRedDot(arg_4_0)
-	local var_4_0 = false
+function GoldenMilletPresentModel:isShowRedDot()
+	local result = false
+	local isOpen = self:isGoldenMilletPresentOpen()
 
-	if arg_4_0:isGoldenMilletPresentOpen() then
-		local var_4_1 = arg_4_0:getGoldenMilletPresentActId()
+	if isOpen then
+		local actId = self:getGoldenMilletPresentActId()
 
-		var_4_0 = ActivityType101Model.instance:isType101RewardCouldGetAnyOne(var_4_1)
+		result = ActivityType101Model.instance:isType101RewardCouldGetAnyOne(actId)
 	end
 
-	return var_4_0
+	return result
 end
 
-var_0_0.instance = var_0_0.New()
+GoldenMilletPresentModel.instance = GoldenMilletPresentModel.New()
 
-return var_0_0
+return GoldenMilletPresentModel

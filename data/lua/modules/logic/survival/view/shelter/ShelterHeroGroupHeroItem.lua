@@ -1,231 +1,233 @@
-﻿module("modules.logic.survival.view.shelter.ShelterHeroGroupHeroItem", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/ShelterHeroGroupHeroItem.lua
 
-local var_0_0 = class("ShelterHeroGroupHeroItem", HeroGroupHeroItem)
+module("modules.logic.survival.view.shelter.ShelterHeroGroupHeroItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	local var_1_0 = gohelper.findChild(arg_1_1, "heroitemani")
+local ShelterHeroGroupHeroItem = class("ShelterHeroGroupHeroItem", HeroGroupHeroItem)
 
-	arg_1_0._gohp = gohelper.findChild(arg_1_1, "heroitemani/#go_hp")
-	arg_1_0._healthPart = MonoHelper.addNoUpdateLuaComOnceToGo(var_1_0, SurvivalHeroHealthPart)
+function ShelterHeroGroupHeroItem:init(go)
+	local root = gohelper.findChild(go, "heroitemani")
 
-	var_0_0.super.init(arg_1_0, arg_1_1)
+	self._gohp = gohelper.findChild(go, "heroitemani/#go_hp")
+	self._healthPart = MonoHelper.addNoUpdateLuaComOnceToGo(root, SurvivalHeroHealthPart)
+
+	ShelterHeroGroupHeroItem.super.init(self, go)
 end
 
-function var_0_0.onUpdateMO(arg_2_0, arg_2_1)
-	arg_2_0._commonHeroCard:setGrayScale(false)
+function ShelterHeroGroupHeroItem:onUpdateMO(mo)
+	self._commonHeroCard:setGrayScale(false)
 
-	local var_2_0 = HeroGroupModel.instance.episodeId
-	local var_2_1 = HeroGroupModel.instance.battleId
-	local var_2_2 = var_2_1 and lua_battle.configDict[var_2_1]
+	local episodeId = HeroGroupModel.instance.episodeId
+	local battleId = HeroGroupModel.instance.battleId
+	local battleCO = battleId and lua_battle.configDict[battleId]
 
-	arg_2_0.mo = arg_2_1
-	arg_2_0._posIndex = arg_2_0.mo.id - 1
-	arg_2_0._heroMO = arg_2_1:getHeroMO()
-	arg_2_0.monsterCO = arg_2_1:getMonsterCO()
-	arg_2_0.trialCO = arg_2_1:getTrialCO()
+	self.mo = mo
+	self._posIndex = self.mo.id - 1
+	self._heroMO = mo:getHeroMO()
+	self.monsterCO = mo:getMonsterCO()
+	self.trialCO = mo:getTrialCO()
 
-	gohelper.setActive(arg_2_0._replayReady, HeroGroupModel.instance:getCurGroupMO().isReplay)
+	gohelper.setActive(self._replayReady, HeroGroupModel.instance:getCurGroupMO().isReplay)
 
-	local var_2_3
+	local replay_data
 
 	if HeroGroupModel.instance:getCurGroupMO().isReplay then
-		var_2_3 = HeroGroupModel.instance:getCurGroupMO().replay_hero_data[arg_2_0.mo.heroUid]
+		replay_data = HeroGroupModel.instance:getCurGroupMO().replay_hero_data[self.mo.heroUid]
 	end
 
-	SLFramework.UGUI.GuiHelper.SetColor(arg_2_0._lvnumen, "#E9E9E9")
+	SLFramework.UGUI.GuiHelper.SetColor(self._lvnumen, "#E9E9E9")
 
-	for iter_2_0 = 1, 3 do
-		SLFramework.UGUI.GuiHelper.SetColor(arg_2_0._goRankList[iter_2_0], "#F6F3EC")
+	for i = 1, 3 do
+		SLFramework.UGUI.GuiHelper.SetColor(self._goRankList[i], "#F6F3EC")
 	end
 
-	gohelper.setActive(arg_2_0._gohp, arg_2_0._heroMO)
+	gohelper.setActive(self._gohp, self._heroMO)
 
-	if arg_2_0._heroMO then
-		arg_2_0._healthPart:setHeroId(arg_2_0._heroMO.heroId)
+	if self._heroMO then
+		self._healthPart:setHeroId(self._heroMO.heroId)
 	end
 
-	if arg_2_0._heroMO then
-		local var_2_4 = HeroModel.instance:getByHeroId(arg_2_0._heroMO.heroId)
-		local var_2_5 = FightConfig.instance:getSkinCO(var_2_3 and var_2_3.skin or var_2_4.skin)
+	if self._heroMO then
+		local heroSkin = HeroModel.instance:getByHeroId(self._heroMO.heroId)
+		local skinConfig = FightConfig.instance:getSkinCO(replay_data and replay_data.skin or heroSkin.skin)
 
-		arg_2_0._commonHeroCard:onUpdateMO(var_2_5)
+		self._commonHeroCard:onUpdateMO(skinConfig)
 
-		if arg_2_0.isLock or arg_2_0.isAid or arg_2_0.isRoleNumLock or not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Equip) then
-			recthelper.setHeight(arg_2_0._goblackmask.transform, 125)
+		if self.isLock or self.isAid or self.isRoleNumLock or not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Equip) then
+			recthelper.setHeight(self._goblackmask.transform, 125)
 		else
-			recthelper.setHeight(arg_2_0._goblackmask.transform, 300)
+			recthelper.setHeight(self._goblackmask.transform, 300)
 		end
 
-		UISpriteSetMgr.instance:setCommonSprite(arg_2_0._careericon, "lssx_" .. tostring(arg_2_0._heroMO.config.career))
+		UISpriteSetMgr.instance:setCommonSprite(self._careericon, "lssx_" .. tostring(self._heroMO.config.career))
 
-		local var_2_6 = var_2_3 and var_2_3.level or arg_2_0._heroMO.level
-		local var_2_7 = SurvivalBalanceHelper.getHeroBalanceLv(arg_2_0._heroMO.heroId)
-		local var_2_8
+		local lv = replay_data and replay_data.level or self._heroMO.level
+		local roleLv = SurvivalBalanceHelper.getHeroBalanceLv(self._heroMO.heroId)
+		local isBalanceLv
 
-		if var_2_6 < var_2_7 then
-			var_2_6 = var_2_7
-			var_2_8 = true
+		if lv < roleLv then
+			lv = roleLv
+			isBalanceLv = true
 		end
 
-		local var_2_9, var_2_10 = HeroConfig.instance:getShowLevel(var_2_6)
+		local hero_level, hero_rank = HeroConfig.instance:getShowLevel(lv)
 
-		if var_2_8 then
-			SLFramework.UGUI.GuiHelper.SetColor(arg_2_0._lvnumen, SurvivalBalanceHelper.BalanceColor)
+		if isBalanceLv then
+			SLFramework.UGUI.GuiHelper.SetColor(self._lvnumen, SurvivalBalanceHelper.BalanceColor)
 
-			arg_2_0._lvnum.text = "<color=" .. SurvivalBalanceHelper.BalanceColor .. ">" .. var_2_9
+			self._lvnum.text = "<color=" .. SurvivalBalanceHelper.BalanceColor .. ">" .. hero_level
 
-			for iter_2_1 = 1, 3 do
-				SLFramework.UGUI.GuiHelper.SetColor(arg_2_0._goRankList[iter_2_1], SurvivalBalanceHelper.BalanceIconColor)
+			for i = 1, 3 do
+				SLFramework.UGUI.GuiHelper.SetColor(self._goRankList[i], SurvivalBalanceHelper.BalanceIconColor)
 			end
 		else
-			arg_2_0._lvnum.text = var_2_9
+			self._lvnum.text = hero_level
 		end
 
-		for iter_2_2 = 1, 3 do
-			local var_2_11 = arg_2_0._goRankList[iter_2_2]
+		for i = 1, 3 do
+			local rankGO = self._goRankList[i]
 
-			gohelper.setActive(var_2_11, iter_2_2 == var_2_10 - 1)
+			gohelper.setActive(rankGO, i == hero_rank - 1)
 		end
 
-		gohelper.setActive(arg_2_0._goStars, true)
+		gohelper.setActive(self._goStars, true)
 
-		for iter_2_3 = 1, 6 do
-			local var_2_12 = arg_2_0._goStarList[iter_2_3]
+		for i = 1, 6 do
+			local starGO = self._goStarList[i]
 
-			gohelper.setActive(var_2_12, iter_2_3 <= CharacterEnum.Star[arg_2_0._heroMO.config.rare])
+			gohelper.setActive(starGO, i <= CharacterEnum.Star[self._heroMO.config.rare])
 		end
-	elseif arg_2_0.monsterCO then
-		local var_2_13 = FightConfig.instance:getSkinCO(arg_2_0.monsterCO.skinId)
+	elseif self.monsterCO then
+		local skinConfig = FightConfig.instance:getSkinCO(self.monsterCO.skinId)
 
-		arg_2_0._commonHeroCard:onUpdateMO(var_2_13)
-		UISpriteSetMgr.instance:setCommonSprite(arg_2_0._careericon, "lssx_" .. tostring(arg_2_0.monsterCO.career))
+		self._commonHeroCard:onUpdateMO(skinConfig)
+		UISpriteSetMgr.instance:setCommonSprite(self._careericon, "lssx_" .. tostring(self.monsterCO.career))
 
-		local var_2_14, var_2_15 = HeroConfig.instance:getShowLevel(arg_2_0.monsterCO.level)
+		local showLevel, rank = HeroConfig.instance:getShowLevel(self.monsterCO.level)
 
-		arg_2_0._lvnum.text = var_2_14
+		self._lvnum.text = showLevel
 
-		for iter_2_4 = 1, 3 do
-			local var_2_16 = arg_2_0._goRankList[iter_2_4]
+		for i = 1, 3 do
+			local rankGO = self._goRankList[i]
 
-			gohelper.setActive(var_2_16, iter_2_4 == var_2_15 - 1)
+			gohelper.setActive(rankGO, i == rank - 1)
 		end
 
-		gohelper.setActive(arg_2_0._goStars, false)
-	elseif arg_2_0.trialCO then
-		local var_2_17 = HeroConfig.instance:getHeroCO(arg_2_0.trialCO.heroId)
-		local var_2_18
+		gohelper.setActive(self._goStars, false)
+	elseif self.trialCO then
+		local heroCo = HeroConfig.instance:getHeroCO(self.trialCO.heroId)
+		local skinConfig
 
-		if arg_2_0.trialCO.skin > 0 then
-			var_2_18 = SkinConfig.instance:getSkinCo(arg_2_0.trialCO.skin)
+		if self.trialCO.skin > 0 then
+			skinConfig = SkinConfig.instance:getSkinCo(self.trialCO.skin)
 		else
-			var_2_18 = SkinConfig.instance:getSkinCo(var_2_17.skinId)
+			skinConfig = SkinConfig.instance:getSkinCo(heroCo.skinId)
 		end
 
-		if arg_2_0.isLock or arg_2_0.isAid or arg_2_0.isRoleNumLock or not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Equip) then
-			recthelper.setHeight(arg_2_0._goblackmask.transform, 125)
+		if self.isLock or self.isAid or self.isRoleNumLock or not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Equip) then
+			recthelper.setHeight(self._goblackmask.transform, 125)
 		else
-			recthelper.setHeight(arg_2_0._goblackmask.transform, 300)
+			recthelper.setHeight(self._goblackmask.transform, 300)
 		end
 
-		arg_2_0._commonHeroCard:onUpdateMO(var_2_18)
-		UISpriteSetMgr.instance:setCommonSprite(arg_2_0._careericon, "lssx_" .. tostring(var_2_17.career))
+		self._commonHeroCard:onUpdateMO(skinConfig)
+		UISpriteSetMgr.instance:setCommonSprite(self._careericon, "lssx_" .. tostring(heroCo.career))
 
-		local var_2_19, var_2_20 = HeroConfig.instance:getShowLevel(arg_2_0.trialCO.level)
+		local showLevel, rank = HeroConfig.instance:getShowLevel(self.trialCO.level)
 
-		arg_2_0._lvnum.text = var_2_19
+		self._lvnum.text = showLevel
 
-		for iter_2_5 = 1, 3 do
-			local var_2_21 = arg_2_0._goRankList[iter_2_5]
+		for i = 1, 3 do
+			local rankGO = self._goRankList[i]
 
-			gohelper.setActive(var_2_21, iter_2_5 == var_2_20 - 1)
+			gohelper.setActive(rankGO, i == rank - 1)
 		end
 
-		gohelper.setActive(arg_2_0._goStars, true)
+		gohelper.setActive(self._goStars, true)
 
-		for iter_2_6 = 1, 6 do
-			local var_2_22 = arg_2_0._goStarList[iter_2_6]
+		for i = 1, 6 do
+			local starGO = self._goStarList[i]
 
-			gohelper.setActive(var_2_22, iter_2_6 <= CharacterEnum.Star[var_2_17.rare])
-		end
-	end
-
-	if arg_2_0._heroItemContainer then
-		arg_2_0._heroItemContainer.compColor[arg_2_0._lvnumen] = arg_2_0._lvnumen.color
-
-		for iter_2_7 = 1, 3 do
-			arg_2_0._heroItemContainer.compColor[arg_2_0._goRankList[iter_2_7]] = arg_2_0._goRankList[iter_2_7].color
+			gohelper.setActive(starGO, i <= CharacterEnum.Star[heroCo.rare])
 		end
 	end
 
-	arg_2_0.isLock = false
-	arg_2_0.isAidLock = arg_2_0.mo.aid and arg_2_0.mo.aid == -1
-	arg_2_0.isAid = arg_2_0.mo.aid ~= nil
-	arg_2_0.isTrialLock = (arg_2_0.mo.trial and arg_2_0.mo.trialPos) ~= nil
+	if self._heroItemContainer then
+		self._heroItemContainer.compColor[self._lvnumen] = self._lvnumen.color
 
-	local var_2_23 = HeroGroupModel.instance:getBattleRoleNum()
+		for i = 1, 3 do
+			self._heroItemContainer.compColor[self._goRankList[i]] = self._goRankList[i].color
+		end
+	end
 
-	arg_2_0.isRoleNumLock = false
-	arg_2_0.isEmpty = arg_2_1:isEmpty()
+	self.isLock = false
+	self.isAidLock = self.mo.aid and self.mo.aid == -1
+	self.isAid = self.mo.aid ~= nil
+	self.isTrialLock = (self.mo.trial and self.mo.trialPos) ~= nil
 
-	gohelper.setActive(arg_2_0._heroGO, (arg_2_0._heroMO ~= nil or arg_2_0.monsterCO ~= nil or arg_2_0.trialCO ~= nil) and not arg_2_0.isLock and not arg_2_0.isRoleNumLock)
-	gohelper.setActive(arg_2_0._noneGO, arg_2_0._heroMO == nil and arg_2_0.monsterCO == nil and arg_2_0.trialCO == nil or arg_2_0.isLock or arg_2_0.isAidLock or arg_2_0.isRoleNumLock)
-	gohelper.setActive(arg_2_0._addGO, arg_2_0._heroMO == nil and arg_2_0.monsterCO == nil and arg_2_0.trialCO == nil and not arg_2_0.isLock and not arg_2_0.isAidLock and not arg_2_0.isRoleNumLock)
-	gohelper.setActive(arg_2_0._lockGO, arg_2_0:selfIsLock())
-	gohelper.setActive(arg_2_0._aidGO, arg_2_0.mo.aid and arg_2_0.mo.aid ~= -1)
+	local roleNum = HeroGroupModel.instance:getBattleRoleNum()
 
-	if var_2_2 then
-		gohelper.setActive(arg_2_0._subGO, not arg_2_0.isLock and not arg_2_0.isAidLock and not arg_2_0.isRoleNumLock and arg_2_0.mo.id > var_2_2.playerMax)
+	self.isRoleNumLock = false
+	self.isEmpty = mo:isEmpty()
+
+	gohelper.setActive(self._heroGO, (self._heroMO ~= nil or self.monsterCO ~= nil or self.trialCO ~= nil) and not self.isLock and not self.isRoleNumLock)
+	gohelper.setActive(self._noneGO, self._heroMO == nil and self.monsterCO == nil and self.trialCO == nil or self.isLock or self.isAidLock or self.isRoleNumLock)
+	gohelper.setActive(self._addGO, self._heroMO == nil and self.monsterCO == nil and self.trialCO == nil and not self.isLock and not self.isAidLock and not self.isRoleNumLock)
+	gohelper.setActive(self._lockGO, self:selfIsLock())
+	gohelper.setActive(self._aidGO, self.mo.aid and self.mo.aid ~= -1)
+
+	if battleCO then
+		gohelper.setActive(self._subGO, not self.isLock and not self.isAidLock and not self.isRoleNumLock and self.mo.id > battleCO.playerMax)
 	else
-		gohelper.setActive(arg_2_0._subGO, not arg_2_0.isLock and not arg_2_0.isAidLock and not arg_2_0.isRoleNumLock and arg_2_0.mo.id == ModuleEnum.MaxHeroCountInGroup)
+		gohelper.setActive(self._subGO, not self.isLock and not self.isAidLock and not self.isRoleNumLock and self.mo.id == ModuleEnum.MaxHeroCountInGroup)
 	end
 
-	if arg_2_0.trialCO then
-		gohelper.setActive(arg_2_0._trialTagGO, true)
+	if self.trialCO then
+		gohelper.setActive(self._trialTagGO, true)
 
-		arg_2_0._trialTagTxt.text = luaLang("herogroup_trial_tag0")
+		self._trialTagTxt.text = luaLang("herogroup_trial_tag0")
 	else
-		gohelper.setActive(arg_2_0._trialTagGO, false)
+		gohelper.setActive(self._trialTagGO, false)
 	end
 
-	arg_2_0:_refreshTagsPos()
+	self:_refreshTagsPos()
 
-	if not HeroSingleGroupModel.instance:isTemp() and arg_2_0.isRoleNumLock and arg_2_0._heroMO ~= nil and arg_2_0.monsterCO == nil then
-		HeroSingleGroupModel.instance:remove(arg_2_0._heroMO.id)
+	if not HeroSingleGroupModel.instance:isTemp() and self.isRoleNumLock and self._heroMO ~= nil and self.monsterCO == nil then
+		HeroSingleGroupModel.instance:remove(self._heroMO.id)
 	end
 
-	arg_2_0:initEquips()
-	arg_2_0:showCounterSign()
+	self:initEquips()
+	self:showCounterSign()
 
-	if arg_2_0._playDeathAnim then
-		arg_2_0._playDeathAnim = nil
+	if self._playDeathAnim then
+		self._playDeathAnim = nil
 
-		arg_2_0:playAnim(UIAnimationName.Open)
+		self:playAnim(UIAnimationName.Open)
 	end
 
-	arg_2_0:_showMojingTip()
+	self:_showMojingTip()
 
-	if arg_2_0._gorecommended.activeSelf or arg_2_0._gocounter.activeSelf then
-		recthelper.setAnchorY(arg_2_0._gohp.transform, -288)
+	if self._gorecommended.activeSelf or self._gocounter.activeSelf then
+		recthelper.setAnchorY(self._gohp.transform, -288)
 	else
-		recthelper.setAnchorY(arg_2_0._gohp.transform, -275)
+		recthelper.setAnchorY(self._gohp.transform, -275)
 	end
 end
 
-function var_0_0.selfIsLock(arg_3_0)
+function ShelterHeroGroupHeroItem:selfIsLock()
 	return false
 end
 
-function var_0_0.setScale(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	arg_4_0._scaleX = arg_4_1 or 1
-	arg_4_0._scaleY = arg_4_2 or 1
-	arg_4_0._scaleZ = arg_4_3 or 1
+function ShelterHeroGroupHeroItem:setScale(scaleX, scaleY, scaleZ)
+	self._scaleX = scaleX or 1
+	self._scaleY = scaleY or 1
+	self._scaleZ = scaleZ or 1
 
-	transformhelper.setLocalScale(arg_4_0.go.transform, arg_4_0._scaleX, arg_4_0._scaleY, arg_4_0._scaleZ)
+	transformhelper.setLocalScale(self.go.transform, self._scaleX, self._scaleY, self._scaleZ)
 end
 
-function var_0_0.onItemEndDrag(arg_5_0, arg_5_1, arg_5_2)
-	ZProj.TweenHelper.DOScale(arg_5_0.go.transform, arg_5_0._scaleX, arg_5_0._scaleY, arg_5_0._scaleZ, 0.2, nil, nil, nil, EaseType.Linear)
-	arg_5_0:_setHeroItemPressState(false)
+function ShelterHeroGroupHeroItem:onItemEndDrag(index, dragToIndex)
+	ZProj.TweenHelper.DOScale(self.go.transform, self._scaleX, self._scaleY, self._scaleZ, 0.2, nil, nil, nil, EaseType.Linear)
+	self:_setHeroItemPressState(false)
 end
 
-return var_0_0
+return ShelterHeroGroupHeroItem

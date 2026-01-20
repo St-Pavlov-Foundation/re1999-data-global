@@ -1,99 +1,101 @@
-﻿module("modules.logic.room.view.RoomView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomView.lua
 
-local var_0_0 = class("RoomView", BaseView)
+module("modules.logic.room.view.RoomView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local RoomView = class("RoomView", BaseView)
+
+function RoomView:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnRecord:AddClickListener(arg_2_0._btnRecordOnClick, arg_2_0)
-	arg_2_0._btnCritter:AddClickListener(arg_2_0._btnCritterOnClick, arg_2_0)
-	arg_2_0._btnOverview:AddClickListener(arg_2_0._btnOverviewOnClick, arg_2_0)
-	arg_2_0._btnTrade:AddClickListener(arg_2_0._btnTradeOnClick, arg_2_0)
-	arg_2_0._btnWarehouse:AddClickListener(arg_2_0._btnWarehouseOnClick, arg_2_0)
-	arg_2_0._btnfishing:AddClickListener(arg_2_0._btnfishingOnClick, arg_2_0)
+function RoomView:addEvents()
+	self._btnRecord:AddClickListener(self._btnRecordOnClick, self)
+	self._btnCritter:AddClickListener(self._btnCritterOnClick, self)
+	self._btnOverview:AddClickListener(self._btnOverviewOnClick, self)
+	self._btnTrade:AddClickListener(self._btnTradeOnClick, self)
+	self._btnWarehouse:AddClickListener(self._btnWarehouseOnClick, self)
+	self._btnfishing:AddClickListener(self._btnfishingOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnRecord:RemoveClickListener()
-	arg_3_0._btnCritter:RemoveClickListener()
-	arg_3_0._btnOverview:RemoveClickListener()
-	arg_3_0._btnTrade:RemoveClickListener()
-	arg_3_0._btnWarehouse:RemoveClickListener()
-	arg_3_0._btnfishing:RemoveClickListener()
+function RoomView:removeEvents()
+	self._btnRecord:RemoveClickListener()
+	self._btnCritter:RemoveClickListener()
+	self._btnOverview:RemoveClickListener()
+	self._btnTrade:RemoveClickListener()
+	self._btnWarehouse:RemoveClickListener()
+	self._btnfishing:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._goreturnroot = gohelper.findChild(arg_4_0.viewGO, "navigatebuttonscontainer")
-	arg_4_0._gonormalroot = gohelper.findChild(arg_4_0.viewGO, "go_normalroot")
-	arg_4_0._simagemaskbg = gohelper.findChildSingleImage(arg_4_0.viewGO, "go_normalroot/#simage_maskbg")
-	arg_4_0._simagemaskbg.spriteMeshType = UnityEngine.SpriteMeshType.Tight
-	arg_4_0._btnedit = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "go_normalroot/btn_edit")
-	arg_4_0._gobtncamera = gohelper.findChild(arg_4_0.viewGO, "go_normalroot/btn_camera")
-	arg_4_0._btncharacter = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "go_normalroot/btn_character")
-	arg_4_0._btntracking = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "go_normalroot/btn_tracking")
-	arg_4_0._imagetracking = gohelper.findChildImage(arg_4_0.viewGO, "go_normalroot/btn_tracking")
-	arg_4_0._txttracking = gohelper.findChildText(arg_4_0.viewGO, "go_normalroot/btn_tracking/txt")
-	arg_4_0._btndialog = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "go_normalroot/btn_dialog")
-	arg_4_0._btnhide = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "go_normalroot/btn_hide")
-	arg_4_0._btnstore = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "go_normalroot/btn_store")
-	arg_4_0._gobtnfishingResources = gohelper.findChild(arg_4_0.viewGO, "go_normalroot/btn_fishingResource")
-	arg_4_0._btnlayoutplan = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "go_normalroot/btn_layoutplan")
-	arg_4_0._btnlayoutcopy = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "go_normalroot/btn_copy")
-	arg_4_0._gobtnexpandManufacture = gohelper.findChild(arg_4_0.viewGO, "go_normalroot/layout/btn_expandManufacture")
-	arg_4_0._btnexpandManufacture = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "go_normalroot/layout/btn_expandManufacture/btn")
-	arg_4_0._manufactureAnimator = gohelper.findChildComponent(arg_4_0.viewGO, "go_normalroot/layout/btn_expandManufacture", RoomEnum.ComponentType.Animator)
-	arg_4_0._goManufactureEntranceReddot = gohelper.findChild(arg_4_0.viewGO, "go_normalroot/layout/btn_expandManufacture/#go_reddot")
-	arg_4_0._btnRecord = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "go_normalroot/layout/btn_expandManufacture/go_manuExpand/layout/btn_record")
-	arg_4_0._goRecordReddot = gohelper.findChild(arg_4_0.viewGO, "go_normalroot/layout/btn_expandManufacture/go_manuExpand/layout/btn_record/#go_reddot")
-	arg_4_0._btnCritter = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "go_normalroot/layout/btn_expandManufacture/go_manuExpand/layout/btn_critter")
-	arg_4_0._goCritterReddot = gohelper.findChild(arg_4_0.viewGO, "go_normalroot/layout/btn_expandManufacture/go_manuExpand/layout/btn_critter/#go_reddot")
-	arg_4_0._btnOverview = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "go_normalroot/layout/btn_expandManufacture/go_manuExpand/layout/btn_overview")
-	arg_4_0._goOverviewReddot = gohelper.findChild(arg_4_0.viewGO, "go_normalroot/layout/btn_expandManufacture/go_manuExpand/layout/btn_overview/#go_reddot")
-	arg_4_0._btnTrade = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "go_normalroot/layout/btn_expandManufacture/go_manuExpand/layout/btn_trade")
-	arg_4_0._goTradeReddot = gohelper.findChild(arg_4_0.viewGO, "go_normalroot/layout/btn_expandManufacture/go_manuExpand/layout/btn_trade/#go_reddot")
-	arg_4_0._btnWarehouse = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "go_normalroot/layout/btn_expandManufacture/go_manuExpand/layout/btn_warehouse")
-	arg_4_0._goWarehouseReddot = gohelper.findChild(arg_4_0.viewGO, "go_normalroot/layout/btn_expandManufacture/go_manuExpand/layout/btn_warehouse/#go_reddot")
-	arg_4_0._warehouseAnimator = arg_4_0._btnWarehouse:GetComponent(typeof(UnityEngine.Animator))
-	arg_4_0._btnfishing = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "go_normalroot/layout/btn_fishing")
-	arg_4_0._gobuildingreddot = gohelper.findChild(arg_4_0.viewGO, "go_normalroot/btn_building/go_buildingreddot")
-	arg_4_0._goeditreddot = gohelper.findChild(arg_4_0.viewGO, "go_normalroot/btn_edit/go_editreddot")
-	arg_4_0._blockoptab = gohelper.findChild(arg_4_0.viewGO, "blockop_tab")
-	arg_4_0._golayoutplanUnlock = gohelper.findChild(arg_4_0.viewGO, "go_normalroot/btn_layoutplan/icon")
-	arg_4_0._golayoutplanLock = gohelper.findChild(arg_4_0.viewGO, "go_normalroot/btn_layoutplan/go_lock")
-	arg_4_0._golayoutcopyUnlock = gohelper.findChild(arg_4_0.viewGO, "go_normalroot/btn_copy/icon")
-	arg_4_0._golayoutcopyLock = gohelper.findChild(arg_4_0.viewGO, "go_normalroot/btn_copy/go_lock")
-	arg_4_0._gologtip = gohelper.findChild(arg_4_0.viewGO, "go_normalroot/go_logtips")
-	arg_4_0._simagesticker = gohelper.findChildSingleImage(arg_4_0.viewGO, "go_normalroot/go_logtips/#simage_stickers")
-	arg_4_0._txtlogdesc = gohelper.findChildText(arg_4_0.viewGO, "go_normalroot/go_logtips/#scroll_des/viewport/content/#txt_Desc")
-	arg_4_0._btngoto = gohelper.findChildButton(arg_4_0.viewGO, "go_normalroot/go_logtips/#btn_goto")
+function RoomView:_editableInitView()
+	self._goreturnroot = gohelper.findChild(self.viewGO, "navigatebuttonscontainer")
+	self._gonormalroot = gohelper.findChild(self.viewGO, "go_normalroot")
+	self._simagemaskbg = gohelper.findChildSingleImage(self.viewGO, "go_normalroot/#simage_maskbg")
+	self._simagemaskbg.spriteMeshType = UnityEngine.SpriteMeshType.Tight
+	self._btnedit = gohelper.findChildButtonWithAudio(self.viewGO, "go_normalroot/btn_edit")
+	self._gobtncamera = gohelper.findChild(self.viewGO, "go_normalroot/btn_camera")
+	self._btncharacter = gohelper.findChildButtonWithAudio(self.viewGO, "go_normalroot/btn_character")
+	self._btntracking = gohelper.findChildButtonWithAudio(self.viewGO, "go_normalroot/btn_tracking")
+	self._imagetracking = gohelper.findChildImage(self.viewGO, "go_normalroot/btn_tracking")
+	self._txttracking = gohelper.findChildText(self.viewGO, "go_normalroot/btn_tracking/txt")
+	self._btndialog = gohelper.findChildButtonWithAudio(self.viewGO, "go_normalroot/btn_dialog")
+	self._btnhide = gohelper.findChildButtonWithAudio(self.viewGO, "go_normalroot/btn_hide")
+	self._btnstore = gohelper.findChildButtonWithAudio(self.viewGO, "go_normalroot/btn_store")
+	self._gobtnfishingResources = gohelper.findChild(self.viewGO, "go_normalroot/btn_fishingResource")
+	self._btnlayoutplan = gohelper.findChildButtonWithAudio(self.viewGO, "go_normalroot/btn_layoutplan")
+	self._btnlayoutcopy = gohelper.findChildButtonWithAudio(self.viewGO, "go_normalroot/btn_copy")
+	self._gobtnexpandManufacture = gohelper.findChild(self.viewGO, "go_normalroot/layout/btn_expandManufacture")
+	self._btnexpandManufacture = gohelper.findChildButtonWithAudio(self.viewGO, "go_normalroot/layout/btn_expandManufacture/btn")
+	self._manufactureAnimator = gohelper.findChildComponent(self.viewGO, "go_normalroot/layout/btn_expandManufacture", RoomEnum.ComponentType.Animator)
+	self._goManufactureEntranceReddot = gohelper.findChild(self.viewGO, "go_normalroot/layout/btn_expandManufacture/#go_reddot")
+	self._btnRecord = gohelper.findChildButtonWithAudio(self.viewGO, "go_normalroot/layout/btn_expandManufacture/go_manuExpand/layout/btn_record")
+	self._goRecordReddot = gohelper.findChild(self.viewGO, "go_normalroot/layout/btn_expandManufacture/go_manuExpand/layout/btn_record/#go_reddot")
+	self._btnCritter = gohelper.findChildButtonWithAudio(self.viewGO, "go_normalroot/layout/btn_expandManufacture/go_manuExpand/layout/btn_critter")
+	self._goCritterReddot = gohelper.findChild(self.viewGO, "go_normalroot/layout/btn_expandManufacture/go_manuExpand/layout/btn_critter/#go_reddot")
+	self._btnOverview = gohelper.findChildButtonWithAudio(self.viewGO, "go_normalroot/layout/btn_expandManufacture/go_manuExpand/layout/btn_overview")
+	self._goOverviewReddot = gohelper.findChild(self.viewGO, "go_normalroot/layout/btn_expandManufacture/go_manuExpand/layout/btn_overview/#go_reddot")
+	self._btnTrade = gohelper.findChildButtonWithAudio(self.viewGO, "go_normalroot/layout/btn_expandManufacture/go_manuExpand/layout/btn_trade")
+	self._goTradeReddot = gohelper.findChild(self.viewGO, "go_normalroot/layout/btn_expandManufacture/go_manuExpand/layout/btn_trade/#go_reddot")
+	self._btnWarehouse = gohelper.findChildButtonWithAudio(self.viewGO, "go_normalroot/layout/btn_expandManufacture/go_manuExpand/layout/btn_warehouse")
+	self._goWarehouseReddot = gohelper.findChild(self.viewGO, "go_normalroot/layout/btn_expandManufacture/go_manuExpand/layout/btn_warehouse/#go_reddot")
+	self._warehouseAnimator = self._btnWarehouse:GetComponent(typeof(UnityEngine.Animator))
+	self._btnfishing = gohelper.findChildButtonWithAudio(self.viewGO, "go_normalroot/layout/btn_fishing")
+	self._gobuildingreddot = gohelper.findChild(self.viewGO, "go_normalroot/btn_building/go_buildingreddot")
+	self._goeditreddot = gohelper.findChild(self.viewGO, "go_normalroot/btn_edit/go_editreddot")
+	self._blockoptab = gohelper.findChild(self.viewGO, "blockop_tab")
+	self._golayoutplanUnlock = gohelper.findChild(self.viewGO, "go_normalroot/btn_layoutplan/icon")
+	self._golayoutplanLock = gohelper.findChild(self.viewGO, "go_normalroot/btn_layoutplan/go_lock")
+	self._golayoutcopyUnlock = gohelper.findChild(self.viewGO, "go_normalroot/btn_copy/icon")
+	self._golayoutcopyLock = gohelper.findChild(self.viewGO, "go_normalroot/btn_copy/go_lock")
+	self._gologtip = gohelper.findChild(self.viewGO, "go_normalroot/go_logtips")
+	self._simagesticker = gohelper.findChildSingleImage(self.viewGO, "go_normalroot/go_logtips/#simage_stickers")
+	self._txtlogdesc = gohelper.findChildText(self.viewGO, "go_normalroot/go_logtips/#scroll_des/viewport/content/#txt_Desc")
+	self._btngoto = gohelper.findChildButton(self.viewGO, "go_normalroot/go_logtips/#btn_goto")
 
-	arg_4_0._btnedit:AddClickListener(arg_4_0._btneditOnClick, arg_4_0)
-	arg_4_0._btncharacter:AddClickListener(arg_4_0._btncharacterOnClick, arg_4_0)
-	arg_4_0._btntracking:AddClickListener(arg_4_0._btntrackingOnClick, arg_4_0)
-	arg_4_0._btndialog:AddClickListener(arg_4_0._btndialogOnClick, arg_4_0)
-	arg_4_0._btnhide:AddClickListener(arg_4_0._btnhideOnClick, arg_4_0)
-	arg_4_0._btnstore:AddClickListener(arg_4_0._btnstoreOnClick, arg_4_0)
-	arg_4_0._btnlayoutplan:AddClickListener(arg_4_0._btnlayoutplanOnClick, arg_4_0)
-	arg_4_0._btnlayoutcopy:AddClickListener(arg_4_0._btnlayoutcopyOnClick, arg_4_0)
-	arg_4_0._btnexpandManufacture:AddClickListener(arg_4_0._btnexpandManufactureOnClick, arg_4_0)
-	arg_4_0._btngoto:AddClickListener(arg_4_0._openLogView, arg_4_0)
+	self._btnedit:AddClickListener(self._btneditOnClick, self)
+	self._btncharacter:AddClickListener(self._btncharacterOnClick, self)
+	self._btntracking:AddClickListener(self._btntrackingOnClick, self)
+	self._btndialog:AddClickListener(self._btndialogOnClick, self)
+	self._btnhide:AddClickListener(self._btnhideOnClick, self)
+	self._btnstore:AddClickListener(self._btnstoreOnClick, self)
+	self._btnlayoutplan:AddClickListener(self._btnlayoutplanOnClick, self)
+	self._btnlayoutcopy:AddClickListener(self._btnlayoutcopyOnClick, self)
+	self._btnexpandManufacture:AddClickListener(self._btnexpandManufactureOnClick, self)
+	self._btngoto:AddClickListener(self._openLogView, self)
 
-	arg_4_0._scene = GameSceneMgr.instance:getCurScene()
-	arg_4_0._rootCanvasGroup = arg_4_0.viewGO:GetComponent(typeof(UnityEngine.CanvasGroup))
-	arg_4_0._animator = arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_4_0._canvasGroup = arg_4_0._gonormalroot:GetComponent(typeof(UnityEngine.CanvasGroup))
-	arg_4_0._layoutplanAnimator = gohelper.findChildComponent(arg_4_0.viewGO, "go_normalroot/btn_layoutplan", typeof(UnityEngine.Animator))
+	self._scene = GameSceneMgr.instance:getCurScene()
+	self._rootCanvasGroup = self.viewGO:GetComponent(typeof(UnityEngine.CanvasGroup))
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._canvasGroup = self._gonormalroot:GetComponent(typeof(UnityEngine.CanvasGroup))
+	self._layoutplanAnimator = gohelper.findChildComponent(self.viewGO, "go_normalroot/btn_layoutplan", typeof(UnityEngine.Animator))
 
 	if RoomInventoryBlockModel.instance:openSelectOp() then
-		gohelper.setActive(gohelper.findChild(arg_4_0.viewGO, "go_normalroot/go_inventory"), false)
-		gohelper.setActive(gohelper.findChild(arg_4_0.viewGO, "go_normalroot/go_inventorytask"), false)
+		gohelper.setActive(gohelper.findChild(self.viewGO, "go_normalroot/go_inventory"), false)
+		gohelper.setActive(gohelper.findChild(self.viewGO, "go_normalroot/go_inventorytask"), false)
 	end
 
-	arg_4_0._showHideViewNameDict = {
+	self._showHideViewNameDict = {
 		[ViewName.RoomCharacterPlaceView] = true,
 		[ViewName.RoomInitBuildingView] = true,
 		[ViewName.RoomManufactureBuildingView] = true,
@@ -101,58 +103,58 @@ function var_0_0._editableInitView(arg_4_0)
 		[ViewName.RoomTransportSiteView] = true,
 		[ViewName.RoomInteractBuildingView] = true
 	}
-	arg_4_0._showHideViewNameList = {}
+	self._showHideViewNameList = {}
 
-	for iter_4_0, iter_4_1 in pairs(arg_4_0._showHideViewNameDict) do
-		table.insert(arg_4_0._showHideViewNameList, iter_4_0)
+	for checkViewName, _ in pairs(self._showHideViewNameDict) do
+		table.insert(self._showHideViewNameList, checkViewName)
 	end
 
-	arg_4_0:_updateNavigateButtonShow()
-	gohelper.removeUIClickAudio(arg_4_0._btncharacter.gameObject)
-	gohelper.addUIClickAudio(arg_4_0._btnlayoutplan.gameObject, AudioEnum.Room.play_ui_home_yield_open)
+	self:_updateNavigateButtonShow()
+	gohelper.removeUIClickAudio(self._btncharacter.gameObject)
+	gohelper.addUIClickAudio(self._btnlayoutplan.gameObject, AudioEnum.Room.play_ui_home_yield_open)
 
-	arg_4_0._PcBtnLocation = gohelper.findChild(arg_4_0.viewGO, "go_normalroot/btn_tracking/#go_pcbtn")
-	arg_4_0._PcBuy = gohelper.findChild(arg_4_0.viewGO, "go_normalroot/btn_store/#go_pcbtn")
-	arg_4_0._PcBtnLayout = gohelper.findChild(arg_4_0.viewGO, "go_normalroot/btn_layoutplan/#go_pcbtn")
-	arg_4_0._PcBtnPlace = gohelper.findChild(arg_4_0.viewGO, "go_normalroot/btn_character/#go_pcbtn")
-	arg_4_0._PcBtnEdit = gohelper.findChild(arg_4_0.viewGO, "go_normalroot/btn_edit/#go_pcbtn")
-	arg_4_0._PcBtnHide = gohelper.findChild(arg_4_0.viewGO, "go_normalroot/btn_hide/#go_pcbtn")
+	self._PcBtnLocation = gohelper.findChild(self.viewGO, "go_normalroot/btn_tracking/#go_pcbtn")
+	self._PcBuy = gohelper.findChild(self.viewGO, "go_normalroot/btn_store/#go_pcbtn")
+	self._PcBtnLayout = gohelper.findChild(self.viewGO, "go_normalroot/btn_layoutplan/#go_pcbtn")
+	self._PcBtnPlace = gohelper.findChild(self.viewGO, "go_normalroot/btn_character/#go_pcbtn")
+	self._PcBtnEdit = gohelper.findChild(self.viewGO, "go_normalroot/btn_edit/#go_pcbtn")
+	self._PcBtnHide = gohelper.findChild(self.viewGO, "go_normalroot/btn_hide/#go_pcbtn")
 
-	arg_4_0:_refreshLayoutPlan()
-	arg_4_0:showKeyTips()
+	self:_refreshLayoutPlan()
+	self:showKeyTips()
 end
 
-function var_0_0.showKeyTips(arg_5_0)
-	PCInputController.instance:showkeyTips(arg_5_0._PcBtnLocation, PCInputModel.Activity.room, PCInputModel.RoomActivityFun.guting)
-	PCInputController.instance:showkeyTips(arg_5_0._PcBuy, PCInputModel.Activity.room, PCInputModel.RoomActivityFun.buy)
-	PCInputController.instance:showkeyTips(arg_5_0._PcBtnLayout, PCInputModel.Activity.room, PCInputModel.RoomActivityFun.layout)
-	PCInputController.instance:showkeyTips(arg_5_0._PcBtnPlace, PCInputModel.Activity.room, PCInputModel.RoomActivityFun.place)
-	PCInputController.instance:showkeyTips(arg_5_0._PcBtnEdit, PCInputModel.Activity.room, PCInputModel.RoomActivityFun.edit)
-	PCInputController.instance:showkeyTips(arg_5_0._PcBtnHide, PCInputModel.Activity.room, PCInputModel.RoomActivityFun.hide)
+function RoomView:showKeyTips()
+	PCInputController.instance:showkeyTips(self._PcBtnLocation, PCInputModel.Activity.room, PCInputModel.RoomActivityFun.guting)
+	PCInputController.instance:showkeyTips(self._PcBuy, PCInputModel.Activity.room, PCInputModel.RoomActivityFun.buy)
+	PCInputController.instance:showkeyTips(self._PcBtnLayout, PCInputModel.Activity.room, PCInputModel.RoomActivityFun.layout)
+	PCInputController.instance:showkeyTips(self._PcBtnPlace, PCInputModel.Activity.room, PCInputModel.RoomActivityFun.place)
+	PCInputController.instance:showkeyTips(self._PcBtnEdit, PCInputModel.Activity.room, PCInputModel.RoomActivityFun.edit)
+	PCInputController.instance:showkeyTips(self._PcBtnHide, PCInputModel.Activity.room, PCInputModel.RoomActivityFun.hide)
 end
 
-function var_0_0._btneditOnClick(arg_6_0)
-	local var_6_0 = RoomLayoutModel.instance:getById(RoomEnum.LayoutUsedPlanId)
+function RoomView:_btneditOnClick()
+	local layoutMO = RoomLayoutModel.instance:getById(RoomEnum.LayoutUsedPlanId)
 
-	if var_6_0 and var_6_0:isSharing() then
-		GameFacade.showMessageBox(MessageBoxIdDefine.RoomEditShareLayoutPlan, MsgBoxEnum.BoxType.Yes_No, arg_6_0._onEnterRoomEdit, nil, nil, arg_6_0, nil, nil)
+	if layoutMO and layoutMO:isSharing() then
+		GameFacade.showMessageBox(MessageBoxIdDefine.RoomEditShareLayoutPlan, MsgBoxEnum.BoxType.Yes_No, self._onEnterRoomEdit, nil, nil, self, nil, nil)
 
 		return
 	end
 
-	arg_6_0:_onEnterRoomEdit()
+	self:_onEnterRoomEdit()
 end
 
-function var_0_0._onEnterRoomEdit(arg_7_0)
+function RoomView:_onEnterRoomEdit()
 	RoomController.instance:enterRoom(RoomEnum.GameMode.Edit)
 end
 
-function var_0_0._btncharacterOnClick(arg_8_0)
+function RoomView:_btncharacterOnClick()
 	if RoomEnum.UseAStarPath and ZProj.AStarPathBridge.IsAStarInProgress() then
-		arg_8_0.MaxCheckAStarCount = 5
-		arg_8_0._checkAStarCount = 0
+		self.MaxCheckAStarCount = 5
+		self._checkAStarCount = 0
 
-		TaskDispatcher.runRepeat(arg_8_0._checkAStarFinish, arg_8_0, 0.5, arg_8_0.MaxCheckAStarCount)
+		TaskDispatcher.runRepeat(self._checkAStarFinish, self, 0.5, self.MaxCheckAStarCount)
 		UIBlockMgr.instance:startBlock(UIBlockKey.RoomAStarScan)
 		logNormal("astar扫描中，完成后再打开角色界面")
 	else
@@ -160,70 +162,69 @@ function var_0_0._btncharacterOnClick(arg_8_0)
 	end
 end
 
-function var_0_0._checkAStarFinish(arg_9_0)
-	arg_9_0._checkAStarCount = arg_9_0._checkAStarCount + 1
+function RoomView:_checkAStarFinish()
+	self._checkAStarCount = self._checkAStarCount + 1
 
-	if arg_9_0._checkAStarCount >= arg_9_0.MaxCheckAStarCount or not ZProj.AStarPathBridge.IsAStarInProgress() then
+	if self._checkAStarCount >= self.MaxCheckAStarCount or not ZProj.AStarPathBridge.IsAStarInProgress() then
 		logNormal("astar扫描完成，打开角色界面")
-		TaskDispatcher.cancelTask(arg_9_0._checkAStarFinish, arg_9_0)
+		TaskDispatcher.cancelTask(self._checkAStarFinish, self)
 		UIBlockMgr.instance:endBlock(UIBlockKey.RoomAStarScan)
 		RoomCharacterController.instance:setCharacterListShow(true)
 	end
 end
 
-function var_0_0._btntrackingOnClick(arg_10_0)
-	local var_10_0 = RoomEnum.CameraState.Overlook
-	local var_10_1 = 0
-	local var_10_2 = 0
-	local var_10_3 = FishingModel.instance:isInFishing()
+function RoomView:_btntrackingOnClick()
+	local targetState = RoomEnum.CameraState.Overlook
+	local targetX, targetY = 0, 0
+	local isInFishing = FishingModel.instance:isInFishing()
 
-	if var_10_3 then
-		local var_10_4 = RoomMapBuildingModel.instance:getBuildingListByType(RoomBuildingEnum.BuildingType.Fishing)
+	if isInFishing then
+		local buildingList = RoomMapBuildingModel.instance:getBuildingListByType(RoomBuildingEnum.BuildingType.Fishing)
 
-		if var_10_4 then
-			for iter_10_0, iter_10_1 in ipairs(var_10_4) do
-				local var_10_5 = iter_10_1:getBelongUserId()
-				local var_10_6 = PlayerModel.instance:getMyUserId()
+		if buildingList then
+			for _, buildingMO in ipairs(buildingList) do
+				local belongUserId = buildingMO:getBelongUserId()
+				local myUserId = PlayerModel.instance:getMyUserId()
 
-				if var_10_5 and var_10_5 == var_10_6 then
-					local var_10_7 = HexMath.hexToPosition(iter_10_1.hexPoint, RoomBlockEnum.BlockSize)
+				if belongUserId and belongUserId == myUserId then
+					local pos = HexMath.hexToPosition(buildingMO.hexPoint, RoomBlockEnum.BlockSize)
 
-					var_10_1 = var_10_7.x
-					var_10_2 = var_10_7.y
+					targetX = pos.x
+					targetY = pos.y
 
 					break
 				end
 			end
 		end
 
-		var_10_0 = RoomEnum.CameraState.OverlookAll
+		targetState = RoomEnum.CameraState.OverlookAll
 	end
 
-	local var_10_8 = arg_10_0._scene.camera:getCameraFocus()
+	local cameraFocus = self._scene.camera:getCameraFocus()
 
-	if arg_10_0._scene.camera:getCameraState() == var_10_0 and math.abs(var_10_8.x - var_10_1) < 0.1 and math.abs(var_10_8.y - var_10_2) < 0.1 then
-		local var_10_9 = ToastEnum.ClickRoomTracking
+	if self._scene.camera:getCameraState() == targetState and math.abs(cameraFocus.x - targetX) < 0.1 and math.abs(cameraFocus.y - targetY) < 0.1 then
+		local toastId = ToastEnum.ClickRoomTracking
 
-		if var_10_3 then
-			var_10_9 = ToastEnum.ClickRoomFishingTracking
+		if isInFishing then
+			toastId = ToastEnum.ClickRoomFishingTracking
 		end
 
-		GameFacade.showToast(var_10_9)
+		GameFacade.showToast(toastId)
 
 		return
 	end
 
-	arg_10_0._scene.camera:switchCameraState(var_10_0, {
-		focusX = var_10_1,
-		focusY = var_10_2
+	self._scene.camera:switchCameraState(targetState, {
+		focusX = targetX,
+		focusY = targetY
 	})
 end
 
-function var_0_0._btndialogOnClick(arg_11_0)
+function RoomView:_btndialogOnClick()
 	RoomCharacterController.instance:trynextDialogInteraction()
 end
 
-function var_0_0._btnhideOnClick(arg_12_0)
+function RoomView:_btnhideOnClick()
 	if RoomMapController.instance:isUIHide() then
 		RoomMapController.instance:setUIHide(false)
 	else
@@ -231,278 +232,282 @@ function var_0_0._btnhideOnClick(arg_12_0)
 	end
 end
 
-function var_0_0._btnstoreOnClick(arg_13_0)
-	if StoreController.instance:checkAndOpenStoreView(StoreEnum.StoreId.RoomStore) then
+function RoomView:_btnstoreOnClick()
+	local isCanOpen = StoreController.instance:checkAndOpenStoreView(StoreEnum.StoreId.RoomStore)
+
+	if isCanOpen then
 		RoomMapController.instance:dispatchEvent(RoomEvent.BlockAtmosphereEffect)
 	end
 end
 
-function var_0_0._btnlayoutplanOnClick(arg_14_0)
-	if RoomLayoutController.instance:openView() then
+function RoomView:_btnlayoutplanOnClick()
+	local isCanOpen = RoomLayoutController.instance:openView()
+
+	if isCanOpen then
 		RoomMapController.instance:dispatchEvent(RoomEvent.BlockAtmosphereEffect)
 	end
 end
 
-function var_0_0._btnlayoutcopyOnClick(arg_15_0)
+function RoomView:_btnlayoutcopyOnClick()
 	if RoomLayoutController.instance:isOpen(true) then
 		RoomLayoutController.instance:openCopyView()
 	end
 end
 
-function var_0_0._btnexpandManufactureOnClick(arg_16_0)
-	local var_16_0 = ManufactureModel.instance:getExpandManufactureBtn()
+function RoomView:_btnexpandManufactureOnClick()
+	local oldManuExpand = ManufactureModel.instance:getExpandManufactureBtn()
 
-	ManufactureModel.instance:setExpandManufactureBtn(not var_16_0)
-	arg_16_0:_refreshManufactureExpand(true)
+	ManufactureModel.instance:setExpandManufactureBtn(not oldManuExpand)
+	self:_refreshManufactureExpand(true)
 end
 
-function var_0_0._btnRecordOnClick(arg_17_0)
+function RoomView:_btnRecordOnClick()
 	ManufactureController.instance:openRoomRecordView()
 end
 
-function var_0_0._btnCritterOnClick(arg_18_0)
+function RoomView:_btnCritterOnClick()
 	ManufactureController.instance:openCritterBuildingView()
 end
 
-function var_0_0._btnOverviewOnClick(arg_19_0)
+function RoomView:_btnOverviewOnClick()
 	ManufactureController.instance:openOverView()
 end
 
-function var_0_0._btnTradeOnClick(arg_20_0)
+function RoomView:_btnTradeOnClick()
 	ManufactureController.instance:openRoomTradeView()
 end
 
-function var_0_0._btnWarehouseOnClick(arg_21_0)
+function RoomView:_btnWarehouseOnClick()
 	ManufactureController.instance:openRoomBackpackView()
 end
 
-function var_0_0._btnfishingOnClick(arg_22_0)
+function RoomView:_btnfishingOnClick()
 	FishingController.instance:enterFishingMode()
 end
 
-function var_0_0._show(arg_23_0, arg_23_1)
-	if arg_23_0:_isHasNeedHideView() then
+function RoomView:_show(viewName)
+	if self:_isHasNeedHideView() then
 		return
 	end
 
-	if arg_23_0:_isCheckHideView(arg_23_1) then
-		arg_23_0:_hideView()
+	if self:_isCheckHideView(viewName) then
+		self:_hideView()
 	else
-		arg_23_0._animator:Play("show")
+		self._animator:Play("show")
 	end
 end
 
-function var_0_0._hide(arg_24_0, arg_24_1)
-	if arg_24_0:_isHasNeedHideView() then
+function RoomView:_hide(viewName)
+	if self:_isHasNeedHideView() then
 		return
 	end
 
-	arg_24_0._animator:Play("hide")
+	self._animator:Play("hide")
 end
 
-function var_0_0._resetYesCallback()
+function RoomView._resetYesCallback()
 	RoomMapController.instance:resetRoom()
 end
 
-function var_0_0._confirmYesCallback()
+function RoomView._confirmYesCallback()
 	RoomMapController.instance:confirmRoom()
 end
 
-function var_0_0._revertYesCallback(arg_27_0)
+function RoomView:_revertYesCallback()
 	RoomMapController.instance:revertRoom()
 end
 
-function var_0_0._listViewShowChanged(arg_28_0)
-	arg_28_0:_refreshBtnShow()
+function RoomView:_listViewShowChanged()
+	self:_refreshBtnShow()
 end
 
-function var_0_0._updateCharacterInteractionUI(arg_29_0)
-	arg_29_0:_refreshBtnShow()
-	arg_29_0:_updateNavigateButtonShow()
+function RoomView:_updateCharacterInteractionUI()
+	self:_refreshBtnShow()
+	self:_updateNavigateButtonShow()
 end
 
-function var_0_0._updateNavigateButtonShow(arg_30_0, arg_30_1)
-	local var_30_0 = RoomBuildingController.instance:isBuildingListShow()
-	local var_30_1 = RoomDebugController.instance:isDebugPlaceListShow()
-	local var_30_2 = RoomDebugController.instance:isDebugPackageListShow()
-	local var_30_3 = RoomDebugController.instance:isDebugBuildingListShow()
-	local var_30_4 = RoomMapBlockModel.instance:isBackMore()
-	local var_30_5 = RoomWaterReformModel.instance:isWaterReform()
-	local var_30_6 = RoomCharacterHelper.isInDialogInteraction()
-	local var_30_7 = RoomMapController.instance:isInRoomInitBuildingViewCamera()
-	local var_30_8 = RoomTransportController.instance:isTransportPathShow() or RoomTransportController.instance:isTransportSitShow()
-	local var_30_9 = ViewMgr.instance:isOpen(ViewName.RoomInteractBuildingView)
-	local var_30_10
-	local var_30_11
+function RoomView:_updateNavigateButtonShow(param)
+	local isBuildingListShow = RoomBuildingController.instance:isBuildingListShow()
+	local isDebugPlaceListShow = RoomDebugController.instance:isDebugPlaceListShow()
+	local isDebugPackageListShow = RoomDebugController.instance:isDebugPackageListShow()
+	local isDebugBuildingListShow = RoomDebugController.instance:isDebugBuildingListShow()
+	local isBackBlockShow = RoomMapBlockModel.instance:isBackMore()
+	local isWaterReform = RoomWaterReformModel.instance:isWaterReform()
+	local isInDialogInteraction = RoomCharacterHelper.isInDialogInteraction()
+	local isRoomInitBuildingViewShow = RoomMapController.instance:isInRoomInitBuildingViewCamera()
+	local isTransportPath = RoomTransportController.instance:isTransportPathShow() or RoomTransportController.instance:isTransportSitShow()
+	local isInteractBuildingShow = ViewMgr.instance:isOpen(ViewName.RoomInteractBuildingView)
+	local isCritterBuildingShow, isManufactureBuildingShow
 
-	if arg_30_1 and type(arg_30_1) == "table" then
-		var_30_10 = arg_30_1.inCritterBuildingView or ViewMgr.instance:isOpen(ViewName.RoomCritterBuildingView)
-		var_30_11 = arg_30_1.inManufactureBuildingView or ViewMgr.instance:isOpen(ViewName.RoomManufactureBuildingView)
+	if param and type(param) == "table" then
+		isCritterBuildingShow = param.inCritterBuildingView or ViewMgr.instance:isOpen(ViewName.RoomCritterBuildingView)
+		isManufactureBuildingShow = param.inManufactureBuildingView or ViewMgr.instance:isOpen(ViewName.RoomManufactureBuildingView)
 	else
-		var_30_10 = ViewMgr.instance:isOpen(ViewName.RoomCritterBuildingView)
-		var_30_11 = ViewMgr.instance:isOpen(ViewName.RoomManufactureBuildingView)
+		isCritterBuildingShow = ViewMgr.instance:isOpen(ViewName.RoomCritterBuildingView)
+		isManufactureBuildingShow = ViewMgr.instance:isOpen(ViewName.RoomManufactureBuildingView)
 	end
 
-	arg_30_0.viewContainer:setNavigateButtonShow(not var_30_1 and not var_30_2 and not var_30_3 and not var_30_4 and not var_30_6 and not var_30_7 and not var_30_5 and not var_30_8 and not var_30_9 and not var_30_10 and not var_30_11)
+	self.viewContainer:setNavigateButtonShow(not isDebugPlaceListShow and not isDebugPackageListShow and not isDebugBuildingListShow and not isBackBlockShow and not isInDialogInteraction and not isRoomInitBuildingViewShow and not isWaterReform and not isTransportPath and not isInteractBuildingShow and not isCritterBuildingShow and not isManufactureBuildingShow)
 end
 
-function var_0_0._addBtnAudio(arg_31_0)
-	gohelper.addUIClickAudio(arg_31_0._btnedit.gameObject, AudioEnum.UI.UI_vertical_first_tabs_click)
+function RoomView:_addBtnAudio()
+	gohelper.addUIClickAudio(self._btnedit.gameObject, AudioEnum.UI.UI_vertical_first_tabs_click)
 end
 
-function var_0_0._refreshBtnShow(arg_32_0)
-	local var_32_0 = RoomBuildingController.instance:isBuildingListShow()
-	local var_32_1 = RoomDebugController.instance:isDebugPlaceListShow()
-	local var_32_2 = RoomDebugController.instance:isDebugPackageListShow()
-	local var_32_3 = RoomDebugController.instance:isDebugBuildingListShow()
-	local var_32_4 = RoomCharacterController.instance:isCharacterListShow()
-	local var_32_5 = var_32_0 or var_32_1 or var_32_2 or var_32_3 or var_32_4
-	local var_32_6 = RoomCharacterHelper.isInDialogInteraction()
-	local var_32_7 = RoomController.instance:isObMode()
-	local var_32_8 = RoomController.instance:isFishingMode()
+function RoomView:_refreshBtnShow()
+	local isBuildingListShow = RoomBuildingController.instance:isBuildingListShow()
+	local isDebugPlaceListShow = RoomDebugController.instance:isDebugPlaceListShow()
+	local isDebugPackageListShow = RoomDebugController.instance:isDebugPackageListShow()
+	local isDebugBuildingListShow = RoomDebugController.instance:isDebugBuildingListShow()
+	local isCharacterListShow = RoomCharacterController.instance:isCharacterListShow()
+	local isListShow = isBuildingListShow or isDebugPlaceListShow or isDebugPackageListShow or isDebugBuildingListShow or isCharacterListShow
+	local isInDialogInteraction = RoomCharacterHelper.isInDialogInteraction()
+	local isObMode = RoomController.instance:isObMode()
+	local isFishingMode = RoomController.instance:isFishingMode()
 
-	gohelper.setActive(arg_32_0._simagemaskbg, not RoomController.instance:isEditMode())
-	gohelper.setActive(arg_32_0._btnedit.gameObject, var_32_7 and not var_32_6 and (not var_32_5 or var_32_4))
+	gohelper.setActive(self._simagemaskbg, not RoomController.instance:isEditMode())
+	gohelper.setActive(self._btnedit.gameObject, isObMode and not isInDialogInteraction and (not isListShow or isCharacterListShow))
 
-	if arg_32_0._btnedit.gameObject.activeSelf then
-		RedDotController.instance:addRedDot(arg_32_0._goeditreddot, RedDotEnum.DotNode.RoomEditBtn)
+	if self._btnedit.gameObject.activeSelf then
+		RedDotController.instance:addRedDot(self._goeditreddot, RedDotEnum.DotNode.RoomEditBtn)
 	end
 
-	gohelper.setActive(arg_32_0._btnhide.gameObject, var_32_7 and not var_32_4 and not var_32_6)
-	gohelper.setActive(arg_32_0._btncharacter.gameObject, var_32_7 and not var_32_6 and (not var_32_5 or var_32_4))
-	gohelper.setActive(arg_32_0._gobtncamera, (var_32_7 or var_32_8) and not var_32_6 and (not var_32_5 or var_32_4) or RoomController.instance:isVisitMode() or RoomController.instance:isDebugMode())
-	gohelper.setActive(arg_32_0._btntracking.gameObject, (var_32_7 or var_32_8) and not var_32_6 and (not var_32_5 or var_32_4))
+	gohelper.setActive(self._btnhide.gameObject, isObMode and not isCharacterListShow and not isInDialogInteraction)
+	gohelper.setActive(self._btncharacter.gameObject, isObMode and not isInDialogInteraction and (not isListShow or isCharacterListShow))
+	gohelper.setActive(self._gobtncamera, (isObMode or isFishingMode) and not isInDialogInteraction and (not isListShow or isCharacterListShow) or RoomController.instance:isVisitMode() or RoomController.instance:isDebugMode())
+	gohelper.setActive(self._btntracking.gameObject, (isObMode or isFishingMode) and not isInDialogInteraction and (not isListShow or isCharacterListShow))
 
-	local var_32_9 = "p_roomview_tracking"
-	local var_32_10 = "xw_dingweishuniu_icon1"
+	local trackLangId = "p_roomview_tracking"
+	local trackIcon = "xw_dingweishuniu_icon1"
 
-	if var_32_8 then
-		var_32_9 = "p_roomview_fishing_tracking"
-		var_32_10 = "roomfish_locatebn"
+	if isFishingMode then
+		trackLangId = "p_roomview_fishing_tracking"
+		trackIcon = "roomfish_locatebn"
 	end
 
-	arg_32_0._txttracking.text = luaLang(var_32_9)
+	self._txttracking.text = luaLang(trackLangId)
 
-	UISpriteSetMgr.instance:setRoomSprite(arg_32_0._imagetracking, var_32_10, true)
-	gohelper.setActive(arg_32_0._btndialog.gameObject, var_32_7 and var_32_6 and not var_32_5)
-	gohelper.setActive(arg_32_0._btnstore.gameObject, var_32_7 and not var_32_6 and (not var_32_5 or var_32_4))
-	gohelper.setActive(arg_32_0._gobtnfishingResources, var_32_8 and not var_32_6 and (not var_32_5 or var_32_4))
+	UISpriteSetMgr.instance:setRoomSprite(self._imagetracking, trackIcon, true)
+	gohelper.setActive(self._btndialog.gameObject, isObMode and isInDialogInteraction and not isListShow)
+	gohelper.setActive(self._btnstore.gameObject, isObMode and not isInDialogInteraction and (not isListShow or isCharacterListShow))
+	gohelper.setActive(self._gobtnfishingResources, isFishingMode and not isInDialogInteraction and (not isListShow or isCharacterListShow))
 
-	local var_32_11 = not var_32_6 and var_32_7
+	local showLayoutplan = not isInDialogInteraction and isObMode
 
-	arg_32_0._isShowLayoutplan = var_32_11 and not var_32_5
+	self._isShowLayoutplan = showLayoutplan and not isListShow
 
-	gohelper.setActive(arg_32_0._btnlayoutplan, var_32_11 and (not var_32_5 or var_32_4))
+	gohelper.setActive(self._btnlayoutplan, showLayoutplan and (not isListShow or isCharacterListShow))
 
-	local var_32_12 = ViewMgr.instance:isOpen(ViewName.RoomInteractBuildingView)
+	local isInteractBuildingShow = ViewMgr.instance:isOpen(ViewName.RoomInteractBuildingView)
+	local notReview = not VersionValidator.instance:isInReviewing()
 
-	arg_32_0._isShowManufactureBtn = not VersionValidator.instance:isInReviewing() and var_32_7 and not var_32_5 and not var_32_6 and not var_32_12
+	self._isShowManufactureBtn = notReview and isObMode and not isListShow and not isInDialogInteraction and not isInteractBuildingShow
 
-	arg_32_0:_checkManufactureUnlock()
+	self:_checkManufactureUnlock()
 
-	arg_32_0._isShowRoomFishingBtn = var_32_7 and not var_32_5 and not var_32_6 and not var_32_12
+	self._isShowRoomFishingBtn = isObMode and not isListShow and not isInDialogInteraction and not isInteractBuildingShow
 
-	arg_32_0:_checkRoomFishingShow()
+	self:_checkRoomFishingShow()
 
-	local var_32_13 = RoomModel.instance:getVisitParam()
+	local visitParam = RoomModel.instance:getVisitParam()
 
-	gohelper.setActive(arg_32_0._btnlayoutcopy, not RoomEnum.IsCloseLayouCopy and RoomController.instance:isVisitMode() and var_32_13 and var_32_13.userId and SocialModel.instance:isMyFriendByUserId(var_32_13.userId))
+	gohelper.setActive(self._btnlayoutcopy, not RoomEnum.IsCloseLayouCopy and RoomController.instance:isVisitMode() and visitParam and visitParam.userId and SocialModel.instance:isMyFriendByUserId(visitParam.userId))
 
 	if RoomController.instance:isDebugMode() then
 		ViewMgr.instance:openView(ViewName.RoomDebugView)
 	end
 
-	if arg_32_0._isShowLayoutplan then
-		arg_32_0:_layoutPlanUnLockAnim()
+	if self._isShowLayoutplan then
+		self:_layoutPlanUnLockAnim()
 	end
 
 	if VersionValidator.instance:isInReviewing() then
-		gohelper.setActive(arg_32_0._btnstore, false)
+		gohelper.setActive(self._btnstore, false)
 	end
 
-	arg_32_0:_refreshTradeBtn()
+	self:_refreshTradeBtn()
 end
 
-function var_0_0._switchScene(arg_33_0)
-	arg_33_0._animator:Play("xiaoshi", 0, 0)
+function RoomView:_switchScene()
+	self._animator:Play("xiaoshi", 0, 0)
 end
 
-function var_0_0._onSelectBlockOpTab(arg_34_0, arg_34_1)
-	if not arg_34_1 then
+function RoomView:_onSelectBlockOpTab(tabIndex)
+	if not tabIndex then
 		return
 	end
 
-	local var_34_0 = false
+	local isValid = false
 
-	for iter_34_0, iter_34_1 in pairs(RoomEnum.RoomViewBlockOpMode) do
-		if iter_34_1 == arg_34_1 then
-			var_34_0 = true
+	for _, modeIndex in pairs(RoomEnum.RoomViewBlockOpMode) do
+		if modeIndex == tabIndex then
+			isValid = true
 
 			break
 		end
 	end
 
-	if var_34_0 then
-		arg_34_0.viewContainer:selectBlockOpTab(arg_34_1)
+	if isValid then
+		self.viewContainer:selectBlockOpTab(tabIndex)
 	end
 end
 
-function var_0_0.onOpen(arg_35_0)
-	arg_35_0:_refreshBtnShow()
-	arg_35_0:_addBtnAudio()
-	arg_35_0:addEventCb(RoomBuildingController.instance, RoomEvent.BuildingListShowChanged, arg_35_0._listViewShowChanged, arg_35_0)
-	arg_35_0:addEventCb(RoomDebugController.instance, RoomEvent.DebugPlaceListShowChanged, arg_35_0._listViewShowChanged, arg_35_0)
-	arg_35_0:addEventCb(RoomDebugController.instance, RoomEvent.DebugPackageListShowChanged, arg_35_0._listViewShowChanged, arg_35_0)
-	arg_35_0:addEventCb(RoomDebugController.instance, RoomEvent.DebugBuildingListShowChanged, arg_35_0._listViewShowChanged, arg_35_0)
-	arg_35_0:addEventCb(RoomCharacterController.instance, RoomEvent.CharacterListShowChanged, arg_35_0._listViewShowChanged, arg_35_0)
-	arg_35_0:addEventCb(RoomMapController.instance, RoomEvent.BackBlockShowChanged, arg_35_0._listViewShowChanged, arg_35_0)
-	arg_35_0:addEventCb(RoomWaterReformController.instance, RoomEvent.WaterReformShowChanged, arg_35_0._listViewShowChanged, arg_35_0)
-	arg_35_0:addEventCb(RoomMapController.instance, RoomEvent.InteractBuildingShowChanged, arg_35_0._listViewShowChanged, arg_35_0)
-	arg_35_0:addEventCb(RoomMapController.instance, RoomEvent.BackBlockShowChanged, arg_35_0._updateNavigateButtonShow, arg_35_0)
-	arg_35_0:addEventCb(RoomWaterReformController.instance, RoomEvent.WaterReformShowChanged, arg_35_0._updateNavigateButtonShow, arg_35_0)
-	arg_35_0:addEventCb(RoomBuildingController.instance, RoomEvent.RefreshNavigateButton, arg_35_0._updateNavigateButtonShow, arg_35_0)
-	arg_35_0:addEventCb(RoomBuildingController.instance, RoomEvent.BuildingListShowChanged, arg_35_0._updateNavigateButtonShow, arg_35_0)
-	arg_35_0:addEventCb(RoomDebugController.instance, RoomEvent.DebugPlaceListShowChanged, arg_35_0._updateNavigateButtonShow, arg_35_0)
-	arg_35_0:addEventCb(RoomDebugController.instance, RoomEvent.DebugPackageListShowChanged, arg_35_0._updateNavigateButtonShow, arg_35_0)
-	arg_35_0:addEventCb(RoomDebugController.instance, RoomEvent.DebugBuildingListShowChanged, arg_35_0._updateNavigateButtonShow, arg_35_0)
-	arg_35_0:addEventCb(RoomCharacterController.instance, RoomEvent.CharacterListShowChanged, arg_35_0._updateNavigateButtonShow, arg_35_0)
-	arg_35_0:addEventCb(RoomMapController.instance, RoomEvent.TransportPathViewShowChanged, arg_35_0._updateNavigateButtonShow, arg_35_0)
-	arg_35_0:addEventCb(RoomMapController.instance, RoomEvent.TransportSiteViewShowChanged, arg_35_0._updateNavigateButtonShow, arg_35_0)
-	arg_35_0:addEventCb(RoomMapController.instance, RoomEvent.InteractBuildingShowChanged, arg_35_0._updateNavigateButtonShow, arg_35_0)
-	arg_35_0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingViewChange, arg_35_0._updateNavigateButtonShow, arg_35_0)
-	arg_35_0:addEventCb(CritterController.instance, CritterEvent.CritterBuildingViewChange, arg_35_0._updateNavigateButtonShow, arg_35_0)
-	arg_35_0:addEventCb(RoomController.instance, RoomEvent.SwitchScene, arg_35_0._switchScene, arg_35_0)
-	arg_35_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_35_0._onOpenView, arg_35_0)
-	arg_35_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_35_0._onCloseView, arg_35_0)
-	arg_35_0:addEventCb(RoomMapController.instance, RoomEvent.WillOpenRoomInitBuildingView, arg_35_0._willOpenRoomInitBuildingView, arg_35_0)
-	arg_35_0:addEventCb(RoomCharacterController.instance, RoomEvent.UpdateCharacterInteractionUI, arg_35_0._updateCharacterInteractionUI, arg_35_0)
-	arg_35_0:addEventCb(RoomMapController.instance, RoomEvent.ShowUI, arg_35_0._show, arg_35_0)
-	arg_35_0:addEventCb(RoomMapController.instance, RoomEvent.HideUI, arg_35_0._hide, arg_35_0)
-	arg_35_0:addEventCb(RoomMapController.instance, RoomEvent.UpdateRoomLevel, arg_35_0._updateRoomLevel, arg_35_0)
-	arg_35_0:addEventCb(RoomMapController.instance, RoomEvent.SelectRoomViewBlockOpTab, arg_35_0._onSelectBlockOpTab, arg_35_0)
-	arg_35_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyHide, arg_35_0._btnhideOnClick, arg_35_0)
-	arg_35_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyEdit, arg_35_0._btneditOnClick, arg_35_0)
-	arg_35_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyPlace, arg_35_0._btncharacterOnClick, arg_35_0)
-	arg_35_0:addEventCb(PCInputController.instance, PCInputEvent.Notifylocate, arg_35_0._btntrackingOnClick, arg_35_0)
-	arg_35_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyBuy, arg_35_0._btnstoreOnClick, arg_35_0)
-	arg_35_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyLayout, arg_35_0._btnlayoutplanOnClick, arg_35_0)
-	arg_35_0:addEventCb(CritterController.instance, CritterEvent.onEnterCritterBuildingView, arg_35_0._hideView, arg_35_0)
-	arg_35_0:addEventCb(ManufactureController.instance, ManufactureEvent.OnEnterManufactureBuildingView, arg_35_0._hideView, arg_35_0)
-	arg_35_0:addEventCb(RoomController.instance, RoomEvent.NewLog, arg_35_0._showLogTips, arg_35_0)
-	OpenController.instance:registerCallback(OpenEvent.NewFuncUnlock, arg_35_0._onNewFuncUnlock, arg_35_0)
-	arg_35_0:addEventCb(RoomTradeController.instance, RoomTradeEvent.OnTradeLevelUpReply, arg_35_0._refreshTradeBtn, arg_35_0)
-	arg_35_0:addEventCb(RoomController.instance, RoomEvent.ManufactureExpand, arg_35_0._onManufactureExpand, arg_35_0)
+function RoomView:onOpen()
+	self:_refreshBtnShow()
+	self:_addBtnAudio()
+	self:addEventCb(RoomBuildingController.instance, RoomEvent.BuildingListShowChanged, self._listViewShowChanged, self)
+	self:addEventCb(RoomDebugController.instance, RoomEvent.DebugPlaceListShowChanged, self._listViewShowChanged, self)
+	self:addEventCb(RoomDebugController.instance, RoomEvent.DebugPackageListShowChanged, self._listViewShowChanged, self)
+	self:addEventCb(RoomDebugController.instance, RoomEvent.DebugBuildingListShowChanged, self._listViewShowChanged, self)
+	self:addEventCb(RoomCharacterController.instance, RoomEvent.CharacterListShowChanged, self._listViewShowChanged, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.BackBlockShowChanged, self._listViewShowChanged, self)
+	self:addEventCb(RoomWaterReformController.instance, RoomEvent.WaterReformShowChanged, self._listViewShowChanged, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.InteractBuildingShowChanged, self._listViewShowChanged, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.BackBlockShowChanged, self._updateNavigateButtonShow, self)
+	self:addEventCb(RoomWaterReformController.instance, RoomEvent.WaterReformShowChanged, self._updateNavigateButtonShow, self)
+	self:addEventCb(RoomBuildingController.instance, RoomEvent.RefreshNavigateButton, self._updateNavigateButtonShow, self)
+	self:addEventCb(RoomBuildingController.instance, RoomEvent.BuildingListShowChanged, self._updateNavigateButtonShow, self)
+	self:addEventCb(RoomDebugController.instance, RoomEvent.DebugPlaceListShowChanged, self._updateNavigateButtonShow, self)
+	self:addEventCb(RoomDebugController.instance, RoomEvent.DebugPackageListShowChanged, self._updateNavigateButtonShow, self)
+	self:addEventCb(RoomDebugController.instance, RoomEvent.DebugBuildingListShowChanged, self._updateNavigateButtonShow, self)
+	self:addEventCb(RoomCharacterController.instance, RoomEvent.CharacterListShowChanged, self._updateNavigateButtonShow, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.TransportPathViewShowChanged, self._updateNavigateButtonShow, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.TransportSiteViewShowChanged, self._updateNavigateButtonShow, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.InteractBuildingShowChanged, self._updateNavigateButtonShow, self)
+	self:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingViewChange, self._updateNavigateButtonShow, self)
+	self:addEventCb(CritterController.instance, CritterEvent.CritterBuildingViewChange, self._updateNavigateButtonShow, self)
+	self:addEventCb(RoomController.instance, RoomEvent.SwitchScene, self._switchScene, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.WillOpenRoomInitBuildingView, self._willOpenRoomInitBuildingView, self)
+	self:addEventCb(RoomCharacterController.instance, RoomEvent.UpdateCharacterInteractionUI, self._updateCharacterInteractionUI, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.ShowUI, self._show, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.HideUI, self._hide, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.UpdateRoomLevel, self._updateRoomLevel, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.SelectRoomViewBlockOpTab, self._onSelectBlockOpTab, self)
+	self:addEventCb(PCInputController.instance, PCInputEvent.NotifyHide, self._btnhideOnClick, self)
+	self:addEventCb(PCInputController.instance, PCInputEvent.NotifyEdit, self._btneditOnClick, self)
+	self:addEventCb(PCInputController.instance, PCInputEvent.NotifyPlace, self._btncharacterOnClick, self)
+	self:addEventCb(PCInputController.instance, PCInputEvent.Notifylocate, self._btntrackingOnClick, self)
+	self:addEventCb(PCInputController.instance, PCInputEvent.NotifyBuy, self._btnstoreOnClick, self)
+	self:addEventCb(PCInputController.instance, PCInputEvent.NotifyLayout, self._btnlayoutplanOnClick, self)
+	self:addEventCb(CritterController.instance, CritterEvent.onEnterCritterBuildingView, self._hideView, self)
+	self:addEventCb(ManufactureController.instance, ManufactureEvent.OnEnterManufactureBuildingView, self._hideView, self)
+	self:addEventCb(RoomController.instance, RoomEvent.NewLog, self._showLogTips, self)
+	OpenController.instance:registerCallback(OpenEvent.NewFuncUnlock, self._onNewFuncUnlock, self)
+	self:addEventCb(RoomTradeController.instance, RoomTradeEvent.OnTradeLevelUpReply, self._refreshTradeBtn, self)
+	self:addEventCb(RoomController.instance, RoomEvent.ManufactureExpand, self._onManufactureExpand, self)
 
 	if RoomController.instance:isObMode() then
 		RoomRpc.instance:sendGetRoomLogRequest()
 	end
 
 	if ViewMgr.instance:isOpen(ViewName.RoomInitBuildingView) then
-		arg_35_0:_hideView()
+		self:_hideView()
 	end
 
-	arg_35_0:_refreshManufactureExpand()
-	arg_35_0:_addReddot()
+	self:_refreshManufactureExpand()
+	self:_addReddot()
 	Activity186Model.instance:checkReadTasks({
 		Activity186Enum.ReadTaskId.Task1,
 		Activity186Enum.ReadTaskId.Task2,
@@ -510,55 +515,55 @@ function var_0_0.onOpen(arg_35_0)
 	})
 end
 
-function var_0_0.onOpenFinish(arg_36_0)
-	arg_36_0:_refreshTradeBtn()
+function RoomView:onOpenFinish()
+	self:_refreshTradeBtn()
 end
 
-function var_0_0._addReddot(arg_37_0)
-	RedDotController.instance:addRedDot(arg_37_0._goManufactureEntranceReddot, RedDotEnum.DotNode.ManufactureEntrance)
-	RedDotController.instance:addRedDot(arg_37_0._goRecordReddot, RedDotEnum.DotNode.RecordEntrance)
-	RedDotController.instance:addRedDot(arg_37_0._goCritterReddot, RedDotEnum.DotNode.CritterEntrance)
-	RedDotController.instance:addRedDot(arg_37_0._goOverviewReddot, RedDotEnum.DotNode.OverviewEntrance)
-	RedDotController.instance:addRedDot(arg_37_0._goTradeReddot, RedDotEnum.DotNode.TradeEntrance)
-	RedDotController.instance:addRedDot(arg_37_0._goWarehouseReddot, RedDotEnum.DotNode.RoomBackpackEntrance)
+function RoomView:_addReddot()
+	RedDotController.instance:addRedDot(self._goManufactureEntranceReddot, RedDotEnum.DotNode.ManufactureEntrance)
+	RedDotController.instance:addRedDot(self._goRecordReddot, RedDotEnum.DotNode.RecordEntrance)
+	RedDotController.instance:addRedDot(self._goCritterReddot, RedDotEnum.DotNode.CritterEntrance)
+	RedDotController.instance:addRedDot(self._goOverviewReddot, RedDotEnum.DotNode.OverviewEntrance)
+	RedDotController.instance:addRedDot(self._goTradeReddot, RedDotEnum.DotNode.TradeEntrance)
+	RedDotController.instance:addRedDot(self._goWarehouseReddot, RedDotEnum.DotNode.RoomBackpackEntrance)
 end
 
-function var_0_0._onOpenView(arg_38_0, arg_38_1)
-	if arg_38_0:_isCheckHideView(arg_38_1) then
-		arg_38_0:_hideView()
+function RoomView:_onOpenView(viewName)
+	if self:_isCheckHideView(viewName) then
+		self:_hideView()
 	end
 end
 
-function var_0_0._onCloseView(arg_39_0, arg_39_1)
-	if arg_39_0:_isCheckHideView(arg_39_1) and not arg_39_0:_isHasNeedHideView() then
-		arg_39_0:_showView()
-		arg_39_0:_layoutPlanUnLockAnim()
-		arg_39_0:_checkManufactureUnlock()
+function RoomView:_onCloseView(viewName)
+	if self:_isCheckHideView(viewName) and not self:_isHasNeedHideView() then
+		self:_showView()
+		self:_layoutPlanUnLockAnim()
+		self:_checkManufactureUnlock()
 	end
 
-	if arg_39_1 == ViewName.RoomManufactureGetView then
-		local var_39_0 = ViewMgr.instance:isOpen(ViewName.RoomOverView)
-		local var_39_1 = ViewMgr.instance:isOpen(ViewName.RoomManufactureBuildingView)
-		local var_39_2 = ManufactureModel.instance:getExpandManufactureBtn()
+	if viewName == ViewName.RoomManufactureGetView then
+		local isOpenOverView = ViewMgr.instance:isOpen(ViewName.RoomOverView)
+		local isOpenManufactureView = ViewMgr.instance:isOpen(ViewName.RoomManufactureBuildingView)
+		local isExpand = ManufactureModel.instance:getExpandManufactureBtn()
 
-		if arg_39_0._isShowManufactureBtn and not var_39_0 and not var_39_1 and var_39_2 then
-			arg_39_0._warehouseAnimator:Play("charge", 0, 0)
+		if self._isShowManufactureBtn and not isOpenOverView and not isOpenManufactureView and isExpand then
+			self._warehouseAnimator:Play("charge", 0, 0)
 			AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_shouji2)
 		end
 	end
 end
 
-function var_0_0._isCheckHideView(arg_40_0, arg_40_1)
-	if arg_40_0._showHideViewNameDict[arg_40_1] then
+function RoomView:_isCheckHideView(viewName)
+	if self._showHideViewNameDict[viewName] then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0._isHasNeedHideView(arg_41_0)
-	for iter_41_0 = 1, #arg_41_0._showHideViewNameList do
-		if ViewMgr.instance:isOpen(arg_41_0._showHideViewNameList[iter_41_0]) then
+function RoomView:_isHasNeedHideView()
+	for i = 1, #self._showHideViewNameList do
+		if ViewMgr.instance:isOpen(self._showHideViewNameList[i]) then
 			return true
 		end
 	end
@@ -566,172 +571,176 @@ function var_0_0._isHasNeedHideView(arg_41_0)
 	return false
 end
 
-function var_0_0._willOpenRoomInitBuildingView(arg_42_0)
-	arg_42_0:_hideView()
+function RoomView:_willOpenRoomInitBuildingView()
+	self:_hideView()
 end
 
-function var_0_0._updateRoomLevel(arg_43_0)
-	arg_43_0:_refreshLayoutPlan()
+function RoomView:_updateRoomLevel()
+	self:_refreshLayoutPlan()
 end
 
-function var_0_0._refreshLayoutPlan(arg_44_0)
-	local var_44_0 = RoomLayoutController.instance:isOpen()
+function RoomView:_refreshLayoutPlan()
+	local isOpen = RoomLayoutController.instance:isOpen()
 
-	gohelper.setActive(arg_44_0._golayoutplanUnlock, var_44_0)
-	gohelper.setActive(arg_44_0._golayoutplanLock, not var_44_0)
-	gohelper.setActive(arg_44_0._golayoutcopyUnlock, var_44_0)
-	gohelper.setActive(arg_44_0._golayoutcopyLock, not var_44_0)
-	arg_44_0:_layoutPlanUnLockAnim()
+	gohelper.setActive(self._golayoutplanUnlock, isOpen)
+	gohelper.setActive(self._golayoutplanLock, not isOpen)
+	gohelper.setActive(self._golayoutcopyUnlock, isOpen)
+	gohelper.setActive(self._golayoutcopyLock, not isOpen)
+	self:_layoutPlanUnLockAnim()
 end
 
-function var_0_0._layoutPlanUnLockAnim(arg_45_0)
-	if arg_45_0._isShowLayoutplan and RoomLayoutController.instance:isOpen() and not RoomLayoutModel.instance:getPlayUnLock() and not ViewMgr.instance:isOpen(ViewName.RoomInitBuildingView) then
-		arg_45_0._layoutplanAnimator:Play("unlock", 0, 0)
+function RoomView:_layoutPlanUnLockAnim()
+	if self._isShowLayoutplan and RoomLayoutController.instance:isOpen() and not RoomLayoutModel.instance:getPlayUnLock() and not ViewMgr.instance:isOpen(ViewName.RoomInitBuildingView) then
+		self._layoutplanAnimator:Play("unlock", 0, 0)
 		RoomLayoutModel.instance:setPlayUnLock(true)
 	end
 end
 
-function var_0_0._refreshManufactureExpand(arg_46_0, arg_46_1)
-	arg_46_0._warehouseAnimator:Play("idle", 0, 0)
+function RoomView:_refreshManufactureExpand(playAnim)
+	self._warehouseAnimator:Play("idle", 0, 0)
 
-	local var_46_0 = ManufactureModel.instance:getExpandManufactureBtn() and UIAnimationName.Open or UIAnimationName.Close
+	local isExpand = ManufactureModel.instance:getExpandManufactureBtn()
+	local animName = isExpand and UIAnimationName.Open or UIAnimationName.Close
 
-	if arg_46_1 then
-		arg_46_0._manufactureAnimator:Play(var_46_0, 0, 0)
+	if playAnim then
+		self._manufactureAnimator:Play(animName, 0, 0)
 	else
-		arg_46_0._manufactureAnimator:Play(var_46_0, 0, 1)
+		self._manufactureAnimator:Play(animName, 0, 1)
 	end
 end
 
-function var_0_0._hideView(arg_47_0)
-	arg_47_0._animator:Play(UIAnimationName.Close)
+function RoomView:_hideView()
+	self._animator:Play(UIAnimationName.Close)
 end
 
-function var_0_0._showView(arg_48_0)
-	arg_48_0._animator:Play(UIAnimationName.Open)
+function RoomView:_showView()
+	self._animator:Play(UIAnimationName.Open)
 end
 
-function var_0_0._refreshTradeBtn(arg_49_0)
-	local var_49_0 = 0
+function RoomView:_refreshTradeBtn()
+	local curLevel = 0
+	local isManufactureUnlock = ManufactureModel.instance:isManufactureUnlock()
 
-	if ManufactureModel.instance:isManufactureUnlock() then
-		var_49_0 = ManufactureModel.instance:getTradeLevel()
+	if isManufactureUnlock then
+		curLevel = ManufactureModel.instance:getTradeLevel()
 	end
 
-	local var_49_1 = var_49_0 >= RoomTradeTaskModel.instance:getOpenOrderLevel()
+	local openLevel = RoomTradeTaskModel.instance:getOpenOrderLevel()
+	local isShow = openLevel <= curLevel
 
-	gohelper.setActive(arg_49_0._btnTrade.gameObject, var_49_1)
+	gohelper.setActive(self._btnTrade.gameObject, isShow)
 
-	if var_49_1 and RoomTradeModel.instance:isCanPlayTradeEnterBtnUnlockAnim() then
-		if not arg_49_0._tradeBtnAnimator then
-			arg_49_0._tradeBtnAnimator = SLFramework.AnimatorPlayer.Get(arg_49_0._btnTrade.gameObject)
+	if isShow and RoomTradeModel.instance:isCanPlayTradeEnterBtnUnlockAnim() then
+		if not self._tradeBtnAnimator then
+			self._tradeBtnAnimator = SLFramework.AnimatorPlayer.Get(self._btnTrade.gameObject)
 		end
 
-		arg_49_0._tradeBtnAnimator:Play(RoomTradeEnum.TradeAnim.Unlock, nil, arg_49_0)
+		self._tradeBtnAnimator:Play(RoomTradeEnum.TradeAnim.Unlock, nil, self)
 		RoomTradeModel.instance:setPlayTradeEnterBtnUnlockAnim()
 	end
 end
 
-function var_0_0._showLogTips(arg_50_0, arg_50_1)
-	arg_50_0._haveLog = true
+function RoomView:_showLogTips(logInfo)
+	self._haveLog = true
 
-	gohelper.setActive(arg_50_0._gologtip, true)
+	gohelper.setActive(self._gologtip, true)
 
-	local var_50_0 = string.split(arg_50_1.config.extraBonus, "#")[2]
+	local temp = string.split(logInfo.config.extraBonus, "#")
+	local stickerpath = temp[2]
 
-	if var_50_0 then
-		arg_50_0._simagesticker:LoadImage(ResUrl.getPropItemIcon(var_50_0))
+	if stickerpath then
+		self._simagesticker:LoadImage(ResUrl.getPropItemIcon(stickerpath))
 	end
 
-	arg_50_0._txtlogdesc.text = arg_50_1.logConfigList[1].content
+	self._txtlogdesc.text = logInfo.logConfigList[1].content
 
-	TaskDispatcher.runDelay(arg_50_0._closeLogTips, arg_50_0, 6)
+	TaskDispatcher.runDelay(self._closeLogTips, self, 6)
 end
 
-function var_0_0._closeLogTips(arg_51_0)
-	arg_51_0._haveLog = false
+function RoomView:_closeLogTips()
+	self._haveLog = false
 
-	gohelper.setActive(arg_51_0._gologtip, false)
+	gohelper.setActive(self._gologtip, false)
 	RoomRpc.instance:sendReadRoomLogNewRequest()
 end
 
-function var_0_0._openLogView(arg_52_0)
+function RoomView:_openLogView()
 	ViewMgr.instance:openView(ViewName.RoomRecordView, RoomRecordEnum.View.Log)
-	arg_52_0:_closeLogTips()
+	self:_closeLogTips()
 end
 
-function var_0_0._onManufactureExpand(arg_53_0, arg_53_1)
-	local var_53_0 = tonumber(arg_53_1)
+function RoomView:_onManufactureExpand(param)
+	local mode = tonumber(param)
 
-	if var_53_0 == 1 then
+	if mode == 1 then
 		ManufactureModel.instance:setExpandManufactureBtn(false)
-		arg_53_0:_refreshManufactureExpand()
-	elseif var_53_0 == 2 then
+		self:_refreshManufactureExpand()
+	elseif mode == 2 then
 		ManufactureModel.instance:setExpandManufactureBtn(true)
-		arg_53_0:_refreshManufactureExpand()
-	elseif var_53_0 == 3 then
+		self:_refreshManufactureExpand()
+	elseif mode == 3 then
 		-- block empty
 	end
 end
 
-function var_0_0._onNewFuncUnlock(arg_54_0)
-	arg_54_0:_checkManufactureUnlock()
-	arg_54_0:_checkRoomFishingShow()
+function RoomView:_onNewFuncUnlock()
+	self:_checkManufactureUnlock()
+	self:_checkRoomFishingShow()
 end
 
-function var_0_0._checkManufactureUnlock(arg_55_0)
+function RoomView:_checkManufactureUnlock()
 	ManufactureController.instance:getManufactureServerInfo()
 
-	local var_55_0 = ManufactureModel.instance:isManufactureUnlock()
+	local isUnlock = ManufactureModel.instance:isManufactureUnlock()
 
-	gohelper.setActive(arg_55_0._gobtnexpandManufacture, var_55_0 and arg_55_0._isShowManufactureBtn)
-	arg_55_0:_refreshManufactureExpand()
+	gohelper.setActive(self._gobtnexpandManufacture, isUnlock and self._isShowManufactureBtn)
+	self:_refreshManufactureExpand()
 
-	local var_55_1 = ManufactureModel.instance:getPlayManufactureUnlock()
-	local var_55_2 = ViewMgr.instance:isOpen(ViewName.RoomInitBuildingView)
+	local isPlay = ManufactureModel.instance:getPlayManufactureUnlock()
+	local isOpenInitBuildingView = ViewMgr.instance:isOpen(ViewName.RoomInitBuildingView)
 
-	if arg_55_0._isShowManufactureBtn and var_55_0 and not var_55_1 and not var_55_2 then
-		arg_55_0._manufactureAnimator:Play("unlock", 0, 0)
+	if self._isShowManufactureBtn and isUnlock and not isPlay and not isOpenInitBuildingView then
+		self._manufactureAnimator:Play("unlock", 0, 0)
 		ManufactureModel.instance:setPlayManufactureUnlock(true)
 	end
 end
 
-function var_0_0._checkRoomFishingShow(arg_56_0)
-	local var_56_0 = FishingModel.instance:isUnlockRoomFishing()
+function RoomView:_checkRoomFishingShow()
+	local isUnlock = FishingModel.instance:isUnlockRoomFishing()
 
-	gohelper.setActive(arg_56_0._btnfishing, var_56_0 and arg_56_0._isShowRoomFishingBtn)
+	gohelper.setActive(self._btnfishing, isUnlock and self._isShowRoomFishingBtn)
 end
 
-function var_0_0.onClose(arg_57_0)
-	TaskDispatcher.cancelTask(arg_57_0._checkAStarFinish, arg_57_0)
-	TaskDispatcher.cancelTask(arg_57_0._closeLogTips, arg_57_0)
+function RoomView:onClose()
+	TaskDispatcher.cancelTask(self._checkAStarFinish, self)
+	TaskDispatcher.cancelTask(self._closeLogTips, self)
 	UIBlockMgr.instance:endBlock(UIBlockKey.RoomAStarScan)
 	ViewMgr.instance:closeView(ViewName.RoomDebugView)
-	arg_57_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyHide, arg_57_0._btnhideOnClick, arg_57_0)
-	arg_57_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyEdit, arg_57_0._btneditOnClick, arg_57_0)
-	arg_57_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyPlace, arg_57_0._btncharacterOnClick, arg_57_0)
-	arg_57_0:removeEventCb(PCInputController.instance, PCInputEvent.Notifylocate, arg_57_0._btntrackingOnClick, arg_57_0)
-	arg_57_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyBuy, arg_57_0._btnstoreOnClick, arg_57_0)
-	arg_57_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyLayout, arg_57_0._btnlayoutplanOnClick, arg_57_0)
-	arg_57_0:removeEventCb(CritterController.instance, CritterEvent.onEnterCritterBuildingView, arg_57_0._hideView, arg_57_0)
-	arg_57_0:removeEventCb(RoomController.instance, RoomEvent.NewLog, arg_57_0._showLogTips, arg_57_0)
-	OpenController.instance:unregisterCallback(OpenEvent.NewFuncUnlock, arg_57_0._onNewFuncUnlock, arg_57_0)
-	arg_57_0:removeEventCb(RoomTradeController.instance, RoomTradeEvent.OnTradeLevelUpReply, arg_57_0._refreshTradeBtn, arg_57_0)
-	arg_57_0:removeEventCb(RoomController.instance, RoomEvent.ManufactureExpand, arg_57_0._onManufactureExpand, arg_57_0)
+	self:removeEventCb(PCInputController.instance, PCInputEvent.NotifyHide, self._btnhideOnClick, self)
+	self:removeEventCb(PCInputController.instance, PCInputEvent.NotifyEdit, self._btneditOnClick, self)
+	self:removeEventCb(PCInputController.instance, PCInputEvent.NotifyPlace, self._btncharacterOnClick, self)
+	self:removeEventCb(PCInputController.instance, PCInputEvent.Notifylocate, self._btntrackingOnClick, self)
+	self:removeEventCb(PCInputController.instance, PCInputEvent.NotifyBuy, self._btnstoreOnClick, self)
+	self:removeEventCb(PCInputController.instance, PCInputEvent.NotifyLayout, self._btnlayoutplanOnClick, self)
+	self:removeEventCb(CritterController.instance, CritterEvent.onEnterCritterBuildingView, self._hideView, self)
+	self:removeEventCb(RoomController.instance, RoomEvent.NewLog, self._showLogTips, self)
+	OpenController.instance:unregisterCallback(OpenEvent.NewFuncUnlock, self._onNewFuncUnlock, self)
+	self:removeEventCb(RoomTradeController.instance, RoomTradeEvent.OnTradeLevelUpReply, self._refreshTradeBtn, self)
+	self:removeEventCb(RoomController.instance, RoomEvent.ManufactureExpand, self._onManufactureExpand, self)
 end
 
-function var_0_0.onDestroyView(arg_58_0)
-	arg_58_0._simagemaskbg:UnLoadImage()
-	arg_58_0._btnedit:RemoveClickListener()
-	arg_58_0._btncharacter:RemoveClickListener()
-	arg_58_0._btntracking:RemoveClickListener()
-	arg_58_0._btndialog:RemoveClickListener()
-	arg_58_0._btnhide:RemoveClickListener()
-	arg_58_0._btnstore:RemoveClickListener()
-	arg_58_0._btnlayoutplan:RemoveClickListener()
-	arg_58_0._btnlayoutcopy:RemoveClickListener()
-	arg_58_0._btnexpandManufacture:RemoveClickListener()
-	arg_58_0._btngoto:RemoveClickListener()
+function RoomView:onDestroyView()
+	self._simagemaskbg:UnLoadImage()
+	self._btnedit:RemoveClickListener()
+	self._btncharacter:RemoveClickListener()
+	self._btntracking:RemoveClickListener()
+	self._btndialog:RemoveClickListener()
+	self._btnhide:RemoveClickListener()
+	self._btnstore:RemoveClickListener()
+	self._btnlayoutplan:RemoveClickListener()
+	self._btnlayoutcopy:RemoveClickListener()
+	self._btnexpandManufacture:RemoveClickListener()
+	self._btngoto:RemoveClickListener()
 end
 
-return var_0_0
+return RoomView

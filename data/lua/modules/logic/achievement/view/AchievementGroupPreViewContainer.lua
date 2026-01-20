@@ -1,11 +1,13 @@
-﻿module("modules.logic.achievement.view.AchievementGroupPreViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/achievement/view/AchievementGroupPreViewContainer.lua
 
-local var_0_0 = class("AchievementGroupPreViewContainer", BaseViewContainer)
+module("modules.logic.achievement.view.AchievementGroupPreViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local AchievementGroupPreViewContainer = class("AchievementGroupPreViewContainer", BaseViewContainer)
+
+function AchievementGroupPreViewContainer:buildViews()
 	return {
 		AchievementGroupPreView.New()
 	}
 end
 
-return var_0_0
+return AchievementGroupPreViewContainer

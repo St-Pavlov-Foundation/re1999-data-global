@@ -1,51 +1,53 @@
-﻿module("modules.logic.versionactivity1_5.act142.view.game.Activity142GameViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/act142/view/game/Activity142GameViewContainer.lua
 
-local var_0_0 = class("Activity142GameViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_5.act142.view.game.Activity142GameViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Activity142GameViewContainer = class("Activity142GameViewContainer", BaseViewContainer)
 
-	arg_1_0._gameView = Activity142GameView.New()
+function Activity142GameViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, arg_1_0._gameView)
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_BackBtns"))
-	table.insert(var_1_0, TabViewGroup.New(2, "gamescene"))
+	self._gameView = Activity142GameView.New()
 
-	return var_1_0
+	table.insert(views, self._gameView)
+	table.insert(views, TabViewGroup.New(1, "#go_BackBtns"))
+	table.insert(views, TabViewGroup.New(2, "gamescene"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		local var_2_0 = NavigateButtonsView.New({
+function Activity142GameViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		local navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
-		var_2_0:setHelpId(HelpEnum.HelpId.Activity142)
-		var_2_0:setOverrideClose(arg_2_0.overrideOnCloseClick, arg_2_0)
+		navigateView:setHelpId(HelpEnum.HelpId.Activity142)
+		navigateView:setOverrideClose(self.overrideOnCloseClick, self)
 
 		return {
-			var_2_0
+			navigateView
 		}
-	elseif arg_2_1 == 2 then
+	elseif tabContainerId == 2 then
 		return {
 			Activity142GameScene.New()
 		}
 	end
 end
 
-function var_0_0.overrideOnCloseClick(arg_3_0)
+function Activity142GameViewContainer:overrideOnCloseClick()
 	if Va3ChessGameController.instance:isNeedBlock() then
 		return
 	end
 
-	GameFacade.showMessageBox(MessageBoxIdDefine.QuitPushBoxEpisode, MsgBoxEnum.BoxType.Yes_No, arg_3_0.yesCloseView, nil, nil, arg_3_0)
+	GameFacade.showMessageBox(MessageBoxIdDefine.QuitPushBoxEpisode, MsgBoxEnum.BoxType.Yes_No, self.yesCloseView, nil, nil, self)
 end
 
-function var_0_0.yesCloseView(arg_4_0)
+function Activity142GameViewContainer:yesCloseView()
 	Activity142StatController.instance:statAbort()
-	arg_4_0:closeThis()
+	self:closeThis()
 end
 
-return var_0_0
+return Activity142GameViewContainer

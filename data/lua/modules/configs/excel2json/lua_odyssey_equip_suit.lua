@@ -1,22 +1,24 @@
-﻿module("modules.configs.excel2json.lua_odyssey_equip_suit", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_odyssey_equip_suit.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_odyssey_equip_suit", package.seeall)
+
+local lua_odyssey_equip_suit = {}
+local fields = {
 	id = 1,
 	name = 2,
 	icon = 4,
 	desc = 3
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	desc = 2,
 	name = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_odyssey_equip_suit.onLoad(json)
+	lua_odyssey_equip_suit.configList, lua_odyssey_equip_suit.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_odyssey_equip_suit

@@ -1,152 +1,160 @@
-﻿module("modules.logic.room.entity.comp.base.RoomBaseFollowPathComp", package.seeall)
+﻿-- chunkname: @modules/logic/room/entity/comp/base/RoomBaseFollowPathComp.lua
 
-local var_0_0 = class("RoomBaseFollowPathComp", LuaCompBase)
+module("modules.logic.room.entity.comp.base.RoomBaseFollowPathComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.entity = arg_1_1
-	arg_1_0._tbFollowerList = {}
-	arg_1_0._tbPools = {}
-	arg_1_0._isMoveing = false
+local RoomBaseFollowPathComp = class("RoomBaseFollowPathComp", LuaCompBase)
+
+function RoomBaseFollowPathComp:ctor(entity)
+	self.entity = entity
+	self._tbFollowerList = {}
+	self._tbPools = {}
+	self._isMoveing = false
 end
 
-function var_0_0.addPathPos(arg_2_0, arg_2_1)
-	for iter_2_0 = #arg_2_0._tbFollowerList, 1, -1 do
-		local var_2_0 = arg_2_0._tbFollowerList[iter_2_0]
+function RoomBaseFollowPathComp:addPathPos(pos)
+	local count = #self._tbFollowerList
 
-		if var_2_0.follower then
-			var_2_0.follower:addPathPos(arg_2_1)
+	for i = count, 1, -1 do
+		local tb = self._tbFollowerList[i]
+
+		if tb.follower then
+			tb.follower:addPathPos(pos)
 		else
-			arg_2_0:_push(var_2_0)
-			table.remove(arg_2_0._tbFollowerList, iter_2_0)
+			self:_push(tb)
+			table.remove(self._tbFollowerList, i)
 		end
 	end
 end
 
-function var_0_0.addFollower(arg_3_0, arg_3_1)
-	if arg_3_0.__willDestroy or not arg_3_1 or arg_3_1:isWillDestory() then
+function RoomBaseFollowPathComp:addFollower(followerComp)
+	if self.__willDestroy or not followerComp or followerComp:isWillDestory() then
 		return
 	end
 
-	if not arg_3_0:_findIndexOf(arg_3_1) then
-		local var_3_0 = arg_3_0:_pop(arg_3_1)
+	if not self:_findIndexOf(followerComp) then
+		local tb = self:_pop(followerComp)
 
-		table.insert(arg_3_0._tbFollowerList, var_3_0)
-		arg_3_1:setFollowPath(arg_3_0)
+		table.insert(self._tbFollowerList, tb)
+		followerComp:setFollowPath(self)
 	end
 end
 
-function var_0_0.removeFollower(arg_4_0, arg_4_1)
-	if arg_4_1 and #arg_4_0._tbFollowerList > 0 then
-		local var_4_0 = tabletool.indexOf(arg_4_0._tbFollowerList, arg_4_1)
+function RoomBaseFollowPathComp:removeFollower(followerComp)
+	if followerComp and #self._tbFollowerList > 0 then
+		local index = tabletool.indexOf(self._tbFollowerList, followerComp)
 
-		if var_4_0 then
-			arg_4_0._tbFollowerList[var_4_0].follower = nil
+		if index then
+			self._tbFollowerList[index].follower = nil
 
-			arg_4_1:clearFollowPath()
+			followerComp:clearFollowPath()
 		end
 	end
 end
 
-function var_0_0._pop(arg_5_0, arg_5_1)
-	local var_5_0
+function RoomBaseFollowPathComp:_pop(followerComp)
+	local tb
 
-	if #arg_5_0._tbPools > 0 then
-		var_5_0 = arg_5_0._tbPools[#arg_5_0._tbPools]
+	if #self._tbPools > 0 then
+		tb = self._tbPools[#self._tbPools]
 
-		table.remove(arg_5_0._tbPools, #arg_5_0._tbPools)
+		table.remove(self._tbPools, #self._tbPools)
 	else
-		var_5_0 = {}
+		tb = {}
 	end
 
-	var_5_0.follower = arg_5_1
+	tb.follower = followerComp
 
-	return var_5_0
+	return tb
 end
 
-function var_0_0._push(arg_6_0, arg_6_1)
-	if arg_6_1 then
-		arg_6_1.follower = nil
+function RoomBaseFollowPathComp:_push(tb)
+	if tb then
+		tb.follower = nil
 
-		table.insert(arg_6_0._tbPools, arg_6_1)
+		table.insert(self._tbPools, tb)
 	end
 end
 
-function var_0_0._findIndexOf(arg_7_0, arg_7_1)
-	local var_7_0 = #arg_7_0._tbFollowerList
+function RoomBaseFollowPathComp:_findIndexOf(followerComp)
+	local count = #self._tbFollowerList
 
-	for iter_7_0 = 1, var_7_0 do
-		if arg_7_0._tbFollowerList[iter_7_0].follower == arg_7_1 then
-			return iter_7_0
+	for i = 1, count do
+		if self._tbFollowerList[i].follower == followerComp then
+			return i
 		end
 	end
 end
 
-function var_0_0.stopMove(arg_8_0)
-	for iter_8_0 = #arg_8_0._tbFollowerList, 1, -1 do
-		local var_8_0 = arg_8_0._tbFollowerList[iter_8_0]
+function RoomBaseFollowPathComp:stopMove()
+	local count = #self._tbFollowerList
 
-		if var_8_0.follower then
-			var_8_0.follower:stopMove()
+	for i = count, 1, -1 do
+		local tb = self._tbFollowerList[i]
+
+		if tb.follower then
+			tb.follower:stopMove()
 		else
-			arg_8_0:_push(var_8_0)
-			table.remove(arg_8_0._tbFollowerList, iter_8_0)
+			self:_push(tb)
+			table.remove(self._tbFollowerList, i)
 		end
 	end
 
-	arg_8_0._isMoveing = false
+	self._isMoveing = false
 
-	arg_8_0:onStopMove()
+	self:onStopMove()
 end
 
-function var_0_0.moveByPathData(arg_9_0)
-	if not arg_9_0._isMoveing then
-		arg_9_0._isMoveing = true
+function RoomBaseFollowPathComp:moveByPathData()
+	if not self._isMoveing then
+		self._isMoveing = true
 
-		arg_9_0:onStartMove()
+		self:onStartMove()
 	end
 
-	for iter_9_0 = #arg_9_0._tbFollowerList, 1, -1 do
-		local var_9_0 = arg_9_0._tbFollowerList[iter_9_0]
+	local count = #self._tbFollowerList
 
-		if var_9_0.follower then
-			var_9_0.follower:moveByPathData()
+	for i = count, 1, -1 do
+		local tb = self._tbFollowerList[i]
+
+		if tb.follower then
+			tb.follower:moveByPathData()
 		else
-			arg_9_0:_push(var_9_0)
-			table.remove(arg_9_0._tbFollowerList, iter_9_0)
+			self:_push(tb)
+			table.remove(self._tbFollowerList, i)
 		end
 	end
 end
 
-function var_0_0.getCount(arg_10_0)
-	return #arg_10_0._tbFollowerList
+function RoomBaseFollowPathComp:getCount()
+	return #self._tbFollowerList
 end
 
-function var_0_0.onStopMove(arg_11_0)
+function RoomBaseFollowPathComp:onStopMove()
 	return
 end
 
-function var_0_0.onStartMove(arg_12_0)
+function RoomBaseFollowPathComp:onStartMove()
 	return
 end
 
-function var_0_0.isWillDestory(arg_13_0)
-	return arg_13_0.__willDestroy
+function RoomBaseFollowPathComp:isWillDestory()
+	return self.__willDestroy
 end
 
-function var_0_0.beforeDestroy(arg_14_0)
-	arg_14_0.__willDestroy = true
+function RoomBaseFollowPathComp:beforeDestroy()
+	self.__willDestroy = true
 
-	if arg_14_0._tbFollowerList and #arg_14_0._tbFollowerList > 0 then
-		local var_14_0 = arg_14_0._tbFollowerList
+	if self._tbFollowerList and #self._tbFollowerList > 0 then
+		local tbList = self._tbFollowerList
 
-		arg_14_0._tbFollowerList = {}
+		self._tbFollowerList = {}
 
-		for iter_14_0, iter_14_1 in ipairs(var_14_0) do
-			if iter_14_1.follower then
-				iter_14_1.follower:clearFollowPath()
+		for i, tb in ipairs(tbList) do
+			if tb.follower then
+				tb.follower:clearFollowPath()
 			end
 		end
 	end
 end
 
-return var_0_0
+return RoomBaseFollowPathComp

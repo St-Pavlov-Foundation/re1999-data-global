@@ -1,417 +1,427 @@
-﻿module("modules.logic.bgmswitch.view.BGMSwitchMechineView", package.seeall)
+﻿-- chunkname: @modules/logic/bgmswitch/view/BGMSwitchMechineView.lua
 
-local var_0_0 = class("BGMSwitchMechineView", BaseView)
+module("modules.logic.bgmswitch.view.BGMSwitchMechineView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gomechine = gohelper.findChild(arg_1_0.viewGO, "#go_mechine")
-	arg_1_0._mechineAni = arg_1_0._gomechine:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._simagemechine = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_mechine/#simage_mechine")
-	arg_1_0._btnoff = gohelper.findChildButton(arg_1_0.viewGO, "#go_mechine/#simage_mechine/#btn_off")
-	arg_1_0._btnon1 = gohelper.findChildButton(arg_1_0.viewGO, "#go_mechine/#simage_mechine/#btn_on1")
-	arg_1_0._btnon2 = gohelper.findChildButton(arg_1_0.viewGO, "#go_mechine/#simage_mechine/#btn_on2")
-	arg_1_0._btnon3 = gohelper.findChildButton(arg_1_0.viewGO, "#go_mechine/#simage_mechine/#btn_on3")
-	arg_1_0._btnmid = gohelper.findChildButton(arg_1_0.viewGO, "#go_mechine/#simage_mechine/#btn_mid")
-	arg_1_0._goturnOn = gohelper.findChild(arg_1_0.viewGO, "#go_mechine/#go_turnOn")
-	arg_1_0._gochatwindow = gohelper.findChild(arg_1_0.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow")
-	arg_1_0._goplay = gohelper.findChild(arg_1_0.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_play")
-	arg_1_0._playAni = arg_1_0._goplay:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._txtplaytitle = gohelper.findChildText(arg_1_0.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_play/#txt_playtitle")
-	arg_1_0._goplayname = gohelper.findChild(arg_1_0.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_play/#go_playname")
-	arg_1_0._txtplayname = gohelper.findChildText(arg_1_0.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_play/#go_playname/#txt_playname")
-	arg_1_0._txtplaynameen = gohelper.findChildText(arg_1_0.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_play/#go_playname/#txt_playname/#txt_playnameen")
-	arg_1_0._sliderplay = gohelper.findChildSlider(arg_1_0.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_play/#slider_play")
-	arg_1_0._imgEffect = gohelper.findChildImage(arg_1_0.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_play/#playeffect")
-	arg_1_0._txtplayprogresstime = gohelper.findChildText(arg_1_0.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_play/#slider_play/#txt_playprogresstime")
-	arg_1_0._txtplayprogresslength = gohelper.findChildText(arg_1_0.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_play/#slider_play/#txt_playprogresslength")
-	arg_1_0._golike = gohelper.findChild(arg_1_0.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/like/#go_playlike")
-	arg_1_0._golikeBg = gohelper.findChild(arg_1_0.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/like/image_LikeBG")
-	arg_1_0._godesc = gohelper.findChild(arg_1_0.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_desc")
-	arg_1_0._descAni = arg_1_0._godesc:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._txtdesctitle = gohelper.findChildText(arg_1_0.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_desc/#txt_desctitle")
-	arg_1_0._txtdescname = gohelper.findChildText(arg_1_0.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_desc/#txt_descname")
-	arg_1_0._txtdescnameen = gohelper.findChildText(arg_1_0.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_desc/#txt_descname/#txt_descnameen")
-	arg_1_0._scrolldesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_desc/#scroll_desc")
-	arg_1_0._txtDescr = gohelper.findChildText(arg_1_0.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_desc/#scroll_desc/Viewport/#txt_Descr")
-	arg_1_0._gocomment = gohelper.findChild(arg_1_0.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_comment")
-	arg_1_0._commentAni = arg_1_0._gocomment:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._scrollcomment = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_comment/#scroll_comment")
-	arg_1_0._gocommentItem = gohelper.findChild(arg_1_0.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_comment/#scroll_comment/Viewport/commentitem")
-	arg_1_0._goxuehuaping = gohelper.findChild(arg_1_0.viewGO, "#go_mechine/#go_xuehuaping")
-	arg_1_0._gointerface = gohelper.findChild(arg_1_0.viewGO, "#go_mechine/#go_interference")
-	arg_1_0._goturnOnEffect = gohelper.findChild(arg_1_0.viewGO, "#go_mechine/turnon_effect")
-	arg_1_0._gocontrol = gohelper.findChild(arg_1_0.viewGO, "#go_mechine/#go_control")
-	arg_1_0._gopowerlight = gohelper.findChild(arg_1_0.viewGO, "#go_mechine/#btn_power/light")
-	arg_1_0._gochannelbtns = gohelper.findChild(arg_1_0.viewGO, "#go_mechine/#go_channelbtns")
-	arg_1_0._sliderChannel = gohelper.findChildSlider(arg_1_0.viewGO, "#go_mechine/#slider_Channel")
-	arg_1_0._goswtichbtns = gohelper.findChild(arg_1_0.viewGO, "#go_mechine/#go_swtichbtns")
-	arg_1_0._btnswitchleft = gohelper.findChildButton(arg_1_0.viewGO, "#go_mechine/#go_swtichbtns/#btn_switchleft")
-	arg_1_0._goswitchleftselected = gohelper.findChild(arg_1_0.viewGO, "#go_mechine/#go_swtichbtns/#btn_switchleft/#go_switchleftselected")
-	arg_1_0._goswitchleftunselected = gohelper.findChild(arg_1_0.viewGO, "#go_mechine/#go_swtichbtns/#btn_switchleft/#go_switchleftunselected")
-	arg_1_0._btnswitchright = gohelper.findChildButton(arg_1_0.viewGO, "#go_mechine/#go_swtichbtns/#btn_switchright")
-	arg_1_0._goswitchrightselected = gohelper.findChild(arg_1_0.viewGO, "#go_mechine/#go_swtichbtns/#btn_switchright/#go_switchrightselected")
-	arg_1_0._goswitchrightunselected = gohelper.findChild(arg_1_0.viewGO, "#go_mechine/#go_swtichbtns/#btn_switchright/#go_switchrightunselected")
-	arg_1_0._gotap = gohelper.findChild(arg_1_0.viewGO, "#go_mechine/#go_tap")
-	arg_1_0._tapAni = arg_1_0._gotap:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._gotapicon = gohelper.findChild(arg_1_0.viewGO, "#go_mechine/#go_tap/#go_tapicon")
-	arg_1_0._imagetape1 = gohelper.findChildImage(arg_1_0.viewGO, "#go_mechine/#go_tap/#go_tapicon/#image_tap1")
-	arg_1_0._imagetape2 = gohelper.findChildImage(arg_1_0.viewGO, "#go_mechine/#go_tap/#go_tapicon/#image_tap2")
-	arg_1_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_1_0._sliderChannel.gameObject)
-	arg_1_0._click = SLFramework.UGUI.UIClickListener.Get(arg_1_0._sliderChannel.gameObject)
-	arg_1_0._controlAni = arg_1_0._gocontrol:GetComponent(typeof(UnityEngine.Animator))
+local BGMSwitchMechineView = class("BGMSwitchMechineView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function BGMSwitchMechineView:onInitView()
+	self._gomechine = gohelper.findChild(self.viewGO, "#go_mechine")
+	self._mechineAni = self._gomechine:GetComponent(typeof(UnityEngine.Animator))
+	self._simagemechine = gohelper.findChildSingleImage(self.viewGO, "#go_mechine/#simage_mechine")
+	self._btnoff = gohelper.findChildButton(self.viewGO, "#go_mechine/#simage_mechine/#btn_off")
+	self._btnon1 = gohelper.findChildButton(self.viewGO, "#go_mechine/#simage_mechine/#btn_on1")
+	self._btnon2 = gohelper.findChildButton(self.viewGO, "#go_mechine/#simage_mechine/#btn_on2")
+	self._btnon3 = gohelper.findChildButton(self.viewGO, "#go_mechine/#simage_mechine/#btn_on3")
+	self._btnmid = gohelper.findChildButton(self.viewGO, "#go_mechine/#simage_mechine/#btn_mid")
+	self._goturnOn = gohelper.findChild(self.viewGO, "#go_mechine/#go_turnOn")
+	self._gochatwindow = gohelper.findChild(self.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow")
+	self._goplay = gohelper.findChild(self.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_play")
+	self._playAni = self._goplay:GetComponent(typeof(UnityEngine.Animator))
+	self._txtplaytitle = gohelper.findChildText(self.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_play/#txt_playtitle")
+	self._goplayname = gohelper.findChild(self.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_play/#go_playname")
+	self._txtplayname = gohelper.findChildText(self.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_play/#go_playname/#txt_playname")
+	self._txtplaynameen = gohelper.findChildText(self.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_play/#go_playname/#txt_playname/#txt_playnameen")
+	self._sliderplay = gohelper.findChildSlider(self.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_play/#slider_play")
+	self._imgEffect = gohelper.findChildImage(self.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_play/#playeffect")
+	self._txtplayprogresstime = gohelper.findChildText(self.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_play/#slider_play/#txt_playprogresstime")
+	self._txtplayprogresslength = gohelper.findChildText(self.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_play/#slider_play/#txt_playprogresslength")
+	self._golike = gohelper.findChild(self.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/like/#go_playlike")
+	self._golikeBg = gohelper.findChild(self.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/like/image_LikeBG")
+	self._godesc = gohelper.findChild(self.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_desc")
+	self._descAni = self._godesc:GetComponent(typeof(UnityEngine.Animator))
+	self._txtdesctitle = gohelper.findChildText(self.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_desc/#txt_desctitle")
+	self._txtdescname = gohelper.findChildText(self.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_desc/#txt_descname")
+	self._txtdescnameen = gohelper.findChildText(self.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_desc/#txt_descname/#txt_descnameen")
+	self._scrolldesc = gohelper.findChildScrollRect(self.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_desc/#scroll_desc")
+	self._txtDescr = gohelper.findChildText(self.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_desc/#scroll_desc/Viewport/#txt_Descr")
+	self._gocomment = gohelper.findChild(self.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_comment")
+	self._commentAni = self._gocomment:GetComponent(typeof(UnityEngine.Animator))
+	self._scrollcomment = gohelper.findChildScrollRect(self.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_comment/#scroll_comment")
+	self._gocommentItem = gohelper.findChild(self.viewGO, "#go_mechine/#go_turnOn/#go_chatwindow/#go_comment/#scroll_comment/Viewport/commentitem")
+	self._goxuehuaping = gohelper.findChild(self.viewGO, "#go_mechine/#go_xuehuaping")
+	self._gointerface = gohelper.findChild(self.viewGO, "#go_mechine/#go_interference")
+	self._goturnOnEffect = gohelper.findChild(self.viewGO, "#go_mechine/turnon_effect")
+	self._gocontrol = gohelper.findChild(self.viewGO, "#go_mechine/#go_control")
+	self._gopowerlight = gohelper.findChild(self.viewGO, "#go_mechine/#btn_power/light")
+	self._gochannelbtns = gohelper.findChild(self.viewGO, "#go_mechine/#go_channelbtns")
+	self._sliderChannel = gohelper.findChildSlider(self.viewGO, "#go_mechine/#slider_Channel")
+	self._goswtichbtns = gohelper.findChild(self.viewGO, "#go_mechine/#go_swtichbtns")
+	self._btnswitchleft = gohelper.findChildButton(self.viewGO, "#go_mechine/#go_swtichbtns/#btn_switchleft")
+	self._goswitchleftselected = gohelper.findChild(self.viewGO, "#go_mechine/#go_swtichbtns/#btn_switchleft/#go_switchleftselected")
+	self._goswitchleftunselected = gohelper.findChild(self.viewGO, "#go_mechine/#go_swtichbtns/#btn_switchleft/#go_switchleftunselected")
+	self._btnswitchright = gohelper.findChildButton(self.viewGO, "#go_mechine/#go_swtichbtns/#btn_switchright")
+	self._goswitchrightselected = gohelper.findChild(self.viewGO, "#go_mechine/#go_swtichbtns/#btn_switchright/#go_switchrightselected")
+	self._goswitchrightunselected = gohelper.findChild(self.viewGO, "#go_mechine/#go_swtichbtns/#btn_switchright/#go_switchrightunselected")
+	self._gotap = gohelper.findChild(self.viewGO, "#go_mechine/#go_tap")
+	self._tapAni = self._gotap:GetComponent(typeof(UnityEngine.Animator))
+	self._gotapicon = gohelper.findChild(self.viewGO, "#go_mechine/#go_tap/#go_tapicon")
+	self._imagetape1 = gohelper.findChildImage(self.viewGO, "#go_mechine/#go_tap/#go_tapicon/#image_tap1")
+	self._imagetape2 = gohelper.findChildImage(self.viewGO, "#go_mechine/#go_tap/#go_tapicon/#image_tap2")
+	self._drag = SLFramework.UGUI.UIDragListener.Get(self._sliderChannel.gameObject)
+	self._click = SLFramework.UGUI.UIClickListener.Get(self._sliderChannel.gameObject)
+	self._controlAni = self._gocontrol:GetComponent(typeof(UnityEngine.Animator))
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnoff:AddClickListener(arg_2_0._btnoffOnClick, arg_2_0)
-	arg_2_0._btnon1:AddClickListener(arg_2_0._btnon1OnClick, arg_2_0)
-	arg_2_0._btnon2:AddClickListener(arg_2_0._btnon2OnClick, arg_2_0)
-	arg_2_0._btnon3:AddClickListener(arg_2_0._btnon3OnClick, arg_2_0)
-	arg_2_0._btnmid:AddClickListener(arg_2_0._btnmidOnClick, arg_2_0)
-	arg_2_0._btnswitchleft:AddClickListener(arg_2_0._btnswitchleftOnClick, arg_2_0)
-	arg_2_0._btnswitchright:AddClickListener(arg_2_0._btnswitchrightOnClick, arg_2_0)
-	arg_2_0._drag:AddDragEndListener(arg_2_0._onSliderEnd, arg_2_0)
-	arg_2_0._click:AddClickUpListener(arg_2_0._onSlideClick, arg_2_0)
-	arg_2_0:addEventCb(BGMSwitchController.instance, BGMSwitchEvent.BgmDevicePlayNoise, arg_2_0._showNoiseViewByGuide, arg_2_0)
-	arg_2_0:addEventCb(BGMSwitchController.instance, BGMSwitchEvent.BGMDeviceShowNormalView, arg_2_0._showNormalViewByGuide, arg_2_0)
-	arg_2_0:addEventCb(BGMSwitchController.instance, BGMSwitchEvent.ItemSelected, arg_2_0._onBgmItemSelected, arg_2_0)
-	arg_2_0:addEventCb(BGMSwitchController.instance, BGMSwitchEvent.BgmProgressEnd, arg_2_0._progressFinished, arg_2_0)
-	arg_2_0:addEventCb(BGMSwitchController.instance, BGMSwitchEvent.BgmSwitched, arg_2_0._onBgmSwitched, arg_2_0)
-	arg_2_0:addEventCb(BGMSwitchController.instance, BGMSwitchEvent.BgmFavorite, arg_2_0._onBgmFavorite, arg_2_0)
+function BGMSwitchMechineView:addEvents()
+	self._btnoff:AddClickListener(self._btnoffOnClick, self)
+	self._btnon1:AddClickListener(self._btnon1OnClick, self)
+	self._btnon2:AddClickListener(self._btnon2OnClick, self)
+	self._btnon3:AddClickListener(self._btnon3OnClick, self)
+	self._btnmid:AddClickListener(self._btnmidOnClick, self)
+	self._btnswitchleft:AddClickListener(self._btnswitchleftOnClick, self)
+	self._btnswitchright:AddClickListener(self._btnswitchrightOnClick, self)
+	self._drag:AddDragEndListener(self._onSliderEnd, self)
+	self._click:AddClickUpListener(self._onSlideClick, self)
+	self:addEventCb(BGMSwitchController.instance, BGMSwitchEvent.BgmDevicePlayNoise, self._showNoiseViewByGuide, self)
+	self:addEventCb(BGMSwitchController.instance, BGMSwitchEvent.BGMDeviceShowNormalView, self._showNormalViewByGuide, self)
+	self:addEventCb(BGMSwitchController.instance, BGMSwitchEvent.ItemSelected, self._onBgmItemSelected, self)
+	self:addEventCb(BGMSwitchController.instance, BGMSwitchEvent.BgmProgressEnd, self._progressFinished, self)
+	self:addEventCb(BGMSwitchController.instance, BGMSwitchEvent.BgmSwitched, self._onBgmSwitched, self)
+	self:addEventCb(BGMSwitchController.instance, BGMSwitchEvent.BgmFavorite, self._onBgmFavorite, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnoff:RemoveClickListener()
-	arg_3_0._btnon1:RemoveClickListener()
-	arg_3_0._btnon2:RemoveClickListener()
-	arg_3_0._btnon3:RemoveClickListener()
-	arg_3_0._btnmid:RemoveClickListener()
-	arg_3_0._btnswitchleft:RemoveClickListener()
-	arg_3_0._btnswitchright:RemoveClickListener()
-	arg_3_0._drag:RemoveDragEndListener()
-	arg_3_0._click:RemoveClickUpListener()
-	arg_3_0:removeEventCb(BGMSwitchController.instance, BGMSwitchEvent.BgmDevicePlayNoise, arg_3_0._showNoiseViewByGuide, arg_3_0)
-	arg_3_0:removeEventCb(BGMSwitchController.instance, BGMSwitchEvent.BGMDeviceShowNormalView, arg_3_0._showNormalViewByGuide, arg_3_0)
-	arg_3_0:removeEventCb(BGMSwitchController.instance, BGMSwitchEvent.ItemSelected, arg_3_0._onBgmItemSelected, arg_3_0)
-	arg_3_0:removeEventCb(BGMSwitchController.instance, BGMSwitchEvent.BgmProgressEnd, arg_3_0._progressFinished, arg_3_0)
-	arg_3_0:removeEventCb(BGMSwitchController.instance, BGMSwitchEvent.BgmSwitched, arg_3_0._onBgmSwitched, arg_3_0)
-	arg_3_0:removeEventCb(BGMSwitchController.instance, BGMSwitchEvent.BgmFavorite, arg_3_0._onBgmFavorite, arg_3_0)
+function BGMSwitchMechineView:removeEvents()
+	self._btnoff:RemoveClickListener()
+	self._btnon1:RemoveClickListener()
+	self._btnon2:RemoveClickListener()
+	self._btnon3:RemoveClickListener()
+	self._btnmid:RemoveClickListener()
+	self._btnswitchleft:RemoveClickListener()
+	self._btnswitchright:RemoveClickListener()
+	self._drag:RemoveDragEndListener()
+	self._click:RemoveClickUpListener()
+	self:removeEventCb(BGMSwitchController.instance, BGMSwitchEvent.BgmDevicePlayNoise, self._showNoiseViewByGuide, self)
+	self:removeEventCb(BGMSwitchController.instance, BGMSwitchEvent.BGMDeviceShowNormalView, self._showNormalViewByGuide, self)
+	self:removeEventCb(BGMSwitchController.instance, BGMSwitchEvent.ItemSelected, self._onBgmItemSelected, self)
+	self:removeEventCb(BGMSwitchController.instance, BGMSwitchEvent.BgmProgressEnd, self._progressFinished, self)
+	self:removeEventCb(BGMSwitchController.instance, BGMSwitchEvent.BgmSwitched, self._onBgmSwitched, self)
+	self:removeEventCb(BGMSwitchController.instance, BGMSwitchEvent.BgmFavorite, self._onBgmFavorite, self)
 end
 
-local var_0_1 = {
+local sliderReference = {
 	0.15,
 	0.5,
 	0.85
 }
 
-function var_0_0._btnoffOnClick(arg_4_0)
-	local var_4_0 = BGMSwitchModel.instance:getMechineGear()
+function BGMSwitchMechineView:_btnoffOnClick()
+	local gear = BGMSwitchModel.instance:getMechineGear()
 
-	if var_4_0 == BGMSwitchEnum.Gear.OFF then
+	if gear == BGMSwitchEnum.Gear.OFF then
 		return
 	end
 
-	arg_4_0:_switchGearTo(var_4_0, BGMSwitchEnum.Gear.OFF)
+	self:_switchGearTo(gear, BGMSwitchEnum.Gear.OFF)
 	BGMSwitchModel.instance:setMechineGear(BGMSwitchEnum.Gear.OFF)
 	UIBlockMgrExtend.setNeedCircleMv(false)
 	UIBlockMgr.instance:startBlock("gearswitch")
 
-	local var_4_1 = 0.267 * (BGMSwitchEnum.Gear.OFF + (4 - var_4_0))
+	local delayTime = 0.267 * (BGMSwitchEnum.Gear.OFF + (4 - gear))
 
-	TaskDispatcher.runDelay(arg_4_0._switchGearAniFinished, arg_4_0, var_4_1)
+	TaskDispatcher.runDelay(self._switchGearAniFinished, self, delayTime)
 end
 
-function var_0_0._btnon1OnClick(arg_5_0)
-	local var_5_0 = BGMSwitchModel.instance:getMechineGear()
+function BGMSwitchMechineView:_btnon1OnClick()
+	local gear = BGMSwitchModel.instance:getMechineGear()
 
-	if var_5_0 == BGMSwitchEnum.Gear.On1 then
+	if gear == BGMSwitchEnum.Gear.On1 then
 		return
 	end
 
-	arg_5_0._beforeGear = var_5_0
+	self._beforeGear = gear
 
-	arg_5_0:_switchGearTo(var_5_0, BGMSwitchEnum.Gear.On1)
+	self:_switchGearTo(gear, BGMSwitchEnum.Gear.On1)
 	BGMSwitchModel.instance:setMechineGear(BGMSwitchEnum.Gear.On1)
 	UIBlockMgrExtend.setNeedCircleMv(false)
 	UIBlockMgr.instance:startBlock("gearswitch")
 
-	local var_5_1 = var_5_0 < BGMSwitchEnum.Gear.On1 and 0.267 * (BGMSwitchEnum.Gear.On1 - var_5_0) or 0.267 * (BGMSwitchEnum.Gear.On1 + (4 - var_5_0))
+	local delayTime = gear < BGMSwitchEnum.Gear.On1 and 0.267 * (BGMSwitchEnum.Gear.On1 - gear) or 0.267 * (BGMSwitchEnum.Gear.On1 + (4 - gear))
 
-	TaskDispatcher.runDelay(arg_5_0._switchGearAniFinished, arg_5_0, var_5_1)
+	TaskDispatcher.runDelay(self._switchGearAniFinished, self, delayTime)
 end
 
-function var_0_0._btnon2OnClick(arg_6_0)
-	local var_6_0 = BGMSwitchModel.instance:getMechineGear()
+function BGMSwitchMechineView:_btnon2OnClick()
+	local gear = BGMSwitchModel.instance:getMechineGear()
 
-	if var_6_0 == BGMSwitchEnum.Gear.On2 then
+	if gear == BGMSwitchEnum.Gear.On2 then
 		return
 	end
 
-	arg_6_0._beforeGear = var_6_0
+	self._beforeGear = gear
 
-	arg_6_0:_switchGearTo(var_6_0, BGMSwitchEnum.Gear.On2)
+	self:_switchGearTo(gear, BGMSwitchEnum.Gear.On2)
 	BGMSwitchModel.instance:setMechineGear(BGMSwitchEnum.Gear.On2)
 	UIBlockMgrExtend.setNeedCircleMv(false)
 	UIBlockMgr.instance:startBlock("gearswitch")
 
-	local var_6_1 = var_6_0 < BGMSwitchEnum.Gear.On2 and 0.267 * (BGMSwitchEnum.Gear.On2 - var_6_0) or 0.267 * (BGMSwitchEnum.Gear.On2 + (4 - var_6_0))
+	local delayTime = gear < BGMSwitchEnum.Gear.On2 and 0.267 * (BGMSwitchEnum.Gear.On2 - gear) or 0.267 * (BGMSwitchEnum.Gear.On2 + (4 - gear))
 
-	TaskDispatcher.runDelay(arg_6_0._switchGearAniFinished, arg_6_0, var_6_1)
+	TaskDispatcher.runDelay(self._switchGearAniFinished, self, delayTime)
 end
 
-function var_0_0._btnon3OnClick(arg_7_0)
-	local var_7_0 = BGMSwitchModel.instance:getMechineGear()
+function BGMSwitchMechineView:_btnon3OnClick()
+	local gear = BGMSwitchModel.instance:getMechineGear()
 
-	if var_7_0 == BGMSwitchEnum.Gear.On3 then
+	if gear == BGMSwitchEnum.Gear.On3 then
 		return
 	end
 
-	arg_7_0._beforeGear = var_7_0
+	self._beforeGear = gear
 
-	arg_7_0:_switchGearTo(var_7_0, BGMSwitchEnum.Gear.On3)
+	self:_switchGearTo(gear, BGMSwitchEnum.Gear.On3)
 	BGMSwitchModel.instance:setMechineGear(BGMSwitchEnum.Gear.On3)
 	UIBlockMgrExtend.setNeedCircleMv(false)
 	UIBlockMgr.instance:startBlock("gearswitch")
 
-	local var_7_1 = 0.267 * (BGMSwitchEnum.Gear.On3 - var_7_0)
+	local delayTime = 0.267 * (BGMSwitchEnum.Gear.On3 - gear)
 
-	TaskDispatcher.runDelay(arg_7_0._switchGearAniFinished, arg_7_0, var_7_1)
+	TaskDispatcher.runDelay(self._switchGearAniFinished, self, delayTime)
 end
 
-function var_0_0._btnmidOnClick(arg_8_0)
-	local var_8_0 = GuideModel.instance:isGuideRunning(BGMSwitchEnum.BGMGuideId)
+function BGMSwitchMechineView:_btnmidOnClick()
+	local isInBGMGuide = GuideModel.instance:isGuideRunning(BGMSwitchEnum.BGMGuideId)
 
-	if var_8_0 then
-		local var_8_1 = BGMSwitchController.instance:getBgmAudioId()
+	if isInBGMGuide then
+		local audioId = BGMSwitchController.instance:getBgmAudioId()
 
-		arg_8_0._bgmCo = BGMSwitchConfig.instance:getBGMSwitchCoByAudioId(var_8_1)
+		self._bgmCo = BGMSwitchConfig.instance:getBGMSwitchCoByAudioId(audioId)
 	end
 
-	local var_8_2 = BGMSwitchModel.instance:getMechineGear()
+	local gear = BGMSwitchModel.instance:getMechineGear()
 
-	arg_8_0._beforeGear = var_8_2
+	self._beforeGear = gear
 
-	local var_8_3 = var_8_2 >= BGMSwitchEnum.Gear.On3 and BGMSwitchEnum.Gear.OFF or var_8_2 + 1
+	local afterGear = gear >= BGMSwitchEnum.Gear.On3 and BGMSwitchEnum.Gear.OFF or gear + 1
 
-	arg_8_0:_switchGearTo(var_8_2, var_8_3)
-	BGMSwitchModel.instance:setMechineGear(var_8_3)
+	self:_switchGearTo(gear, afterGear)
+	BGMSwitchModel.instance:setMechineGear(afterGear)
 	UIBlockMgrExtend.setNeedCircleMv(false)
 
-	if var_8_0 then
+	if isInBGMGuide then
 		return
 	end
 
 	UIBlockMgr.instance:startBlock("gearswitch")
-	TaskDispatcher.runDelay(arg_8_0._switchGearAniFinished, arg_8_0, 0.267)
+	TaskDispatcher.runDelay(self._switchGearAniFinished, self, 0.267)
 end
 
-function var_0_0._switchGearAniFinished(arg_9_0)
-	if arg_9_0._beforeGear == BGMSwitchEnum.Gear.OFF then
-		arg_9_0._mechineAni:Play("turnon")
+function BGMSwitchMechineView:_switchGearAniFinished()
+	if self._beforeGear == BGMSwitchEnum.Gear.OFF then
+		self._mechineAni:Play("turnon")
 	end
 
-	arg_9_0._beforeGear = nil
+	self._beforeGear = nil
 
 	UIBlockMgr.instance:endBlock("gearswitch")
 
-	if BGMSwitchModel.instance:getMechineGear() == BGMSwitchEnum.Gear.OFF then
-		arg_9_0._mechineAni:Play("turnoff")
+	local gear = BGMSwitchModel.instance:getMechineGear()
+
+	if gear == BGMSwitchEnum.Gear.OFF then
+		self._mechineAni:Play("turnoff")
 	end
 
 	BGMSwitchController.instance:dispatchEvent(BGMSwitchEvent.SelectPlayGear)
-	arg_9_0:setOnlyUpdateInfo(false)
-	arg_9_0:_refreshView()
+	self:setOnlyUpdateInfo(false)
+	self:_refreshView()
 end
 
-function var_0_0._switchGearTo(arg_10_0, arg_10_1, arg_10_2)
-	if arg_10_1 == arg_10_2 then
+function BGMSwitchMechineView:_switchGearTo(beforeGear, afterGear)
+	if beforeGear == afterGear then
 		return
 	end
 
-	local var_10_0 = BGMSwitchModel.instance:isRandomMode()
+	local isRandom = BGMSwitchModel.instance:isRandomMode()
+	local isInBGMGuide = GuideModel.instance:isGuideRunning(BGMSwitchEnum.BGMGuideId)
 
-	if not GuideModel.instance:isGuideRunning(BGMSwitchEnum.BGMGuideId) then
+	if not isInBGMGuide then
 		StatController.instance:track(StatEnum.EventName.Tuning, {
-			[StatEnum.EventProperties.AudioId] = tostring(arg_10_0._bgmCo.id),
-			[StatEnum.EventProperties.AudioName] = arg_10_0._bgmCo.audioName,
-			[StatEnum.EventProperties.BeforeGearPosition] = tostring(arg_10_1),
-			[StatEnum.EventProperties.AfterGearPosition] = tostring(arg_10_2),
-			[StatEnum.EventProperties.PlayMode] = var_10_0 and "Random" or "LoopOne",
+			[StatEnum.EventProperties.AudioId] = tostring(self._bgmCo.id),
+			[StatEnum.EventProperties.AudioName] = self._bgmCo.audioName,
+			[StatEnum.EventProperties.BeforeGearPosition] = tostring(beforeGear),
+			[StatEnum.EventProperties.AfterGearPosition] = tostring(afterGear),
+			[StatEnum.EventProperties.PlayMode] = isRandom and "Random" or "LoopOne",
 			[StatEnum.EventProperties.AudioSheet] = BGMSwitchConfig.instance:getBgmNames(BGMSwitchModel.instance:getUnfilteredAllBgmsSorted())
 		})
 	end
 
-	if arg_10_1 == BGMSwitchEnum.Gear.OFF then
-		arg_10_0._controlAni:Play("left")
-	elseif arg_10_1 == BGMSwitchEnum.Gear.On1 then
-		arg_10_0._controlAni:Play("up")
-	elseif arg_10_1 == BGMSwitchEnum.Gear.On2 then
-		arg_10_0._controlAni:Play("right")
-	elseif arg_10_1 == BGMSwitchEnum.Gear.On3 then
-		arg_10_0._controlAni:Play("down")
+	if beforeGear == BGMSwitchEnum.Gear.OFF then
+		self._controlAni:Play("left")
+	elseif beforeGear == BGMSwitchEnum.Gear.On1 then
+		self._controlAni:Play("up")
+	elseif beforeGear == BGMSwitchEnum.Gear.On2 then
+		self._controlAni:Play("right")
+	elseif beforeGear == BGMSwitchEnum.Gear.On3 then
+		self._controlAni:Play("down")
 	end
 
-	if arg_10_2 == BGMSwitchEnum.Gear.On1 then
-		arg_10_0._tapAni:Play("idle", 0, 0)
-		arg_10_0:resetBgmProgressShow()
+	if afterGear == BGMSwitchEnum.Gear.On1 then
+		self._tapAni:Play("idle", 0, 0)
+		self:resetBgmProgressShow()
 	else
-		arg_10_0:_stopProgressTask()
+		self:_stopProgressTask()
 	end
 
-	if arg_10_1 < arg_10_2 then
-		for iter_10_0 = 1, 4 do
-			if arg_10_1 < iter_10_0 and iter_10_0 <= arg_10_2 then
-				arg_10_0._controlAni:SetBool("unlock" .. tostring(iter_10_0), true)
+	if beforeGear < afterGear then
+		for i = 1, 4 do
+			if beforeGear < i and i <= afterGear then
+				self._controlAni:SetBool("unlock" .. tostring(i), true)
 			else
-				arg_10_0._controlAni:SetBool("unlock" .. tostring(iter_10_0), false)
+				self._controlAni:SetBool("unlock" .. tostring(i), false)
 			end
 		end
 	else
-		for iter_10_1 = 1, 4 do
-			if iter_10_1 <= arg_10_2 or arg_10_1 < iter_10_1 then
-				arg_10_0._controlAni:SetBool("unlock" .. tostring(iter_10_1), true)
+		for i = 1, 4 do
+			if i <= afterGear or beforeGear < i then
+				self._controlAni:SetBool("unlock" .. tostring(i), true)
 			else
-				arg_10_0._controlAni:SetBool("unlock" .. tostring(iter_10_1), false)
+				self._controlAni:SetBool("unlock" .. tostring(i), false)
 			end
 		end
 	end
 
-	BGMSwitchAudioTrigger.switchGearTo(arg_10_1, arg_10_2)
+	BGMSwitchAudioTrigger.switchGearTo(beforeGear, afterGear)
 end
 
-function var_0_0._btnswitchleftOnClick(arg_11_0)
-	local var_11_0 = BGMSwitchModel.instance:getCurBgm()
+function BGMSwitchMechineView:_btnswitchleftOnClick()
+	local prevBgmId = BGMSwitchModel.instance:getCurBgm()
 
 	BGMSwitchModel.instance:nextBgm(-1, false)
-	BGMSwitchController.instance:dispatchEvent(BGMSwitchEvent.ItemSelected, var_11_0)
+	BGMSwitchController.instance:dispatchEvent(BGMSwitchEvent.ItemSelected, prevBgmId)
 
-	local var_11_1 = BGMSwitchModel.instance:isRandomMode()
-	local var_11_2 = BGMSwitchModel.instance:getCurrentUsingBgmList()
+	local isRandom = BGMSwitchModel.instance:isRandomMode()
+	local currSelBgmList = BGMSwitchModel.instance:getCurrentUsingBgmList()
 
 	StatController.instance:track(StatEnum.EventName.SwitchBGM, {
-		[StatEnum.EventProperties.AudioId] = tostring(arg_11_0._bgmCo.id),
-		[StatEnum.EventProperties.AudioName] = arg_11_0._bgmCo.audioName,
-		[StatEnum.EventProperties.BeforeSwitchAudio] = BGMSwitchConfig.instance:getBgmName(var_11_0),
+		[StatEnum.EventProperties.AudioId] = tostring(self._bgmCo.id),
+		[StatEnum.EventProperties.AudioName] = self._bgmCo.audioName,
+		[StatEnum.EventProperties.BeforeSwitchAudio] = BGMSwitchConfig.instance:getBgmName(prevBgmId),
 		[StatEnum.EventProperties.OperationType] = "click Last",
-		[StatEnum.EventProperties.PlayMode] = var_11_1 and "Random" or "LoopOne",
-		[StatEnum.EventProperties.AudioSheet] = BGMSwitchConfig.instance:getBgmNames(var_11_2)
+		[StatEnum.EventProperties.PlayMode] = isRandom and "Random" or "LoopOne",
+		[StatEnum.EventProperties.AudioSheet] = BGMSwitchConfig.instance:getBgmNames(currSelBgmList)
 	})
 	BGMSwitchAudioTrigger.play_ui_replay_buttoncut()
 	BGMSwitchAudioTrigger.play_ui_replay_tapswitch()
 end
 
-function var_0_0._btnswitchrightOnClick(arg_12_0)
-	local var_12_0 = BGMSwitchModel.instance:getCurBgm()
+function BGMSwitchMechineView:_btnswitchrightOnClick()
+	local prevBgmId = BGMSwitchModel.instance:getCurBgm()
 
 	BGMSwitchModel.instance:nextBgm(1, false)
-	BGMSwitchController.instance:dispatchEvent(BGMSwitchEvent.ItemSelected, var_12_0)
+	BGMSwitchController.instance:dispatchEvent(BGMSwitchEvent.ItemSelected, prevBgmId)
 
-	local var_12_1 = BGMSwitchModel.instance:isRandomMode()
-	local var_12_2 = BGMSwitchModel.instance:getCurrentUsingBgmList()
+	local isRandom = BGMSwitchModel.instance:isRandomMode()
+	local currSelBgmList = BGMSwitchModel.instance:getCurrentUsingBgmList()
 
 	StatController.instance:track(StatEnum.EventName.SwitchBGM, {
-		[StatEnum.EventProperties.AudioId] = tostring(arg_12_0._bgmCo.id),
-		[StatEnum.EventProperties.AudioName] = arg_12_0._bgmCo.audioName,
-		[StatEnum.EventProperties.BeforeSwitchAudio] = BGMSwitchConfig.instance:getBgmName(var_12_0),
+		[StatEnum.EventProperties.AudioId] = tostring(self._bgmCo.id),
+		[StatEnum.EventProperties.AudioName] = self._bgmCo.audioName,
+		[StatEnum.EventProperties.BeforeSwitchAudio] = BGMSwitchConfig.instance:getBgmName(prevBgmId),
 		[StatEnum.EventProperties.OperationType] = "click Next",
-		[StatEnum.EventProperties.PlayMode] = var_12_1 and "Random" or "LoopOne",
-		[StatEnum.EventProperties.AudioSheet] = BGMSwitchConfig.instance:getBgmNames(var_12_2)
+		[StatEnum.EventProperties.PlayMode] = isRandom and "Random" or "LoopOne",
+		[StatEnum.EventProperties.AudioSheet] = BGMSwitchConfig.instance:getBgmNames(currSelBgmList)
 	})
 	BGMSwitchAudioTrigger.play_ui_replay_buttoncut()
 	BGMSwitchAudioTrigger.play_ui_replay_tapswitch()
 end
 
-function var_0_0.setOnlyUpdateInfo(arg_13_0, arg_13_1)
-	arg_13_0._onlyUpdateInfo = arg_13_1
+function BGMSwitchMechineView:setOnlyUpdateInfo(state)
+	self._onlyUpdateInfo = state
 end
 
-function var_0_0.getOnlyUpdateInfo(arg_14_0)
-	return arg_14_0._onlyUpdateInfo
+function BGMSwitchMechineView:getOnlyUpdateInfo()
+	return self._onlyUpdateInfo
 end
 
-function var_0_0._onBgmSwitched(arg_15_0, arg_15_1)
-	if arg_15_1 and arg_15_0._bgmCo and arg_15_1 ~= arg_15_0._bgmCo.id then
+function BGMSwitchMechineView:_onBgmSwitched(refreshBgmId)
+	if refreshBgmId and self._bgmCo and refreshBgmId ~= self._bgmCo.id then
 		return
 	end
 
-	arg_15_0:_refreshView()
+	self:_refreshView()
 end
 
-function var_0_0._onBgmFavorite(arg_16_0, arg_16_1)
-	if arg_16_1 == arg_16_0._bgmCo.id then
-		arg_16_0:_refreshView()
+function BGMSwitchMechineView:_onBgmFavorite(bgmId)
+	if bgmId == self._bgmCo.id then
+		self:_refreshView()
 	end
 end
 
-function var_0_0._onBgmItemSelected(arg_17_0, arg_17_1)
-	arg_17_0:setOnlyUpdateInfo(false)
+function BGMSwitchMechineView:_onBgmItemSelected(beforeBgmId)
+	self:setOnlyUpdateInfo(false)
 
-	local var_17_0 = BGMSwitchModel.instance:getCurBgm()
+	local bgmId = BGMSwitchModel.instance:getCurBgm()
+	local gear = BGMSwitchModel.instance:getMechineGear()
 
-	if BGMSwitchModel.instance:getMechineGear() ~= BGMSwitchEnum.Gear.On1 then
-		arg_17_0._bgmCo = BGMSwitchConfig.instance:getBGMSwitchCO(var_17_0)
+	if gear ~= BGMSwitchEnum.Gear.On1 then
+		self._bgmCo = BGMSwitchConfig.instance:getBGMSwitchCO(bgmId)
 
-		arg_17_0:_refreshBottom()
+		self:_refreshBottom()
 
 		return
 	end
 
-	if BGMSwitchModel.instance:isValidBgmId(var_17_0) then
-		arg_17_0._bgmCo = BGMSwitchConfig.instance:getBGMSwitchCO(var_17_0)
+	if BGMSwitchModel.instance:isValidBgmId(bgmId) then
+		self._bgmCo = BGMSwitchConfig.instance:getBGMSwitchCO(bgmId)
 
-		UISpriteSetMgr.instance:setBgmSwitchToggleSprite(arg_17_0._imagetape2, arg_17_0._bgmCo.audioicon)
+		UISpriteSetMgr.instance:setBgmSwitchToggleSprite(self._imagetape2, self._bgmCo.audioicon)
 
-		if arg_17_1 then
-			arg_17_0._tapAni:Play("switch", 0, 0)
+		if beforeBgmId then
+			self._tapAni:Play("switch", 0, 0)
 		else
-			arg_17_0._tapAni:Play("loop", 0, 0)
+			self._tapAni:Play("loop", 0, 0)
 		end
 
-		arg_17_0:_stopProgressTask()
-		TaskDispatcher.runDelay(arg_17_0._refreshView, arg_17_0, 0.67)
+		self:_stopProgressTask()
+		TaskDispatcher.runDelay(self._refreshView, self, 0.67)
 	else
-		local var_17_1 = BGMSwitchModel.instance:getNextBgm(1, false)
+		bgmId = BGMSwitchModel.instance:getNextBgm(1, false)
 
-		if BGMSwitchModel.instance:isValidBgmId(var_17_1) then
-			arg_17_0._bgmCo = BGMSwitchConfig.instance:getBGMSwitchCO(var_17_1)
+		if BGMSwitchModel.instance:isValidBgmId(bgmId) then
+			self._bgmCo = BGMSwitchConfig.instance:getBGMSwitchCO(bgmId)
 
-			arg_17_0:_refreshView()
+			self:_refreshView()
 		end
 	end
 end
 
-function var_0_0._onSlideClick(arg_18_0)
-	if BGMSwitchModel.instance:getMechineGear() == BGMSwitchEnum.Gear.OFF then
+function BGMSwitchMechineView:_onSlideClick()
+	local gear = BGMSwitchModel.instance:getMechineGear()
+
+	if gear == BGMSwitchEnum.Gear.OFF then
 		return
 	end
 
-	arg_18_0:calAndSetShowTypeBySliderProgress()
+	self:calAndSetShowTypeBySliderProgress()
 end
 
-function var_0_0._onSliderEnd(arg_19_0)
-	if BGMSwitchModel.instance:getMechineGear() == BGMSwitchEnum.Gear.OFF then
+function BGMSwitchMechineView:_onSliderEnd()
+	local gear = BGMSwitchModel.instance:getMechineGear()
+
+	if gear == BGMSwitchEnum.Gear.OFF then
 		return
 	end
 
-	arg_19_0:calAndSetShowTypeBySliderProgress()
+	self:calAndSetShowTypeBySliderProgress()
 end
 
-function var_0_0.calAndSetShowTypeBySliderProgress(arg_20_0)
-	local var_20_0 = BGMSwitchEnum.BGMDetailShowType.Progress
-	local var_20_1 = arg_20_0._sliderChannel:GetValue()
+function BGMSwitchMechineView:calAndSetShowTypeBySliderProgress()
+	local showType = BGMSwitchEnum.BGMDetailShowType.Progress
+	local value = self._sliderChannel:GetValue()
 
-	if var_20_1 < var_0_1[BGMSwitchEnum.BGMDetailShowType.Progress] + 0.5 * (var_0_1[BGMSwitchEnum.BGMDetailShowType.Introduce] - var_0_1[BGMSwitchEnum.BGMDetailShowType.Progress]) then
-		var_20_0 = BGMSwitchEnum.BGMDetailShowType.Progress
-	elseif var_20_1 < var_0_1[BGMSwitchEnum.BGMDetailShowType.Introduce] + 0.5 * (var_0_1[BGMSwitchEnum.BGMDetailShowType.Comment] - var_0_1[BGMSwitchEnum.BGMDetailShowType.Introduce]) then
-		var_20_0 = BGMSwitchEnum.BGMDetailShowType.Introduce
+	if value < sliderReference[BGMSwitchEnum.BGMDetailShowType.Progress] + 0.5 * (sliderReference[BGMSwitchEnum.BGMDetailShowType.Introduce] - sliderReference[BGMSwitchEnum.BGMDetailShowType.Progress]) then
+		showType = BGMSwitchEnum.BGMDetailShowType.Progress
+	elseif value < sliderReference[BGMSwitchEnum.BGMDetailShowType.Introduce] + 0.5 * (sliderReference[BGMSwitchEnum.BGMDetailShowType.Comment] - sliderReference[BGMSwitchEnum.BGMDetailShowType.Introduce]) then
+		showType = BGMSwitchEnum.BGMDetailShowType.Introduce
 	else
-		var_20_0 = BGMSwitchEnum.BGMDetailShowType.Comment
+		showType = BGMSwitchEnum.BGMDetailShowType.Comment
 	end
 
-	BGMSwitchModel.instance:setAudioCurShowType(var_20_0)
-	arg_20_0:updateSliderChannelByShowType()
+	BGMSwitchModel.instance:setAudioCurShowType(showType)
+	self:updateSliderChannelByShowType()
 
 	if BGMSwitchModel.instance:machineGearIsInSnowflakeScene() then
 		BGMSwitchController.instance:dispatchEvent(BGMSwitchEvent.SlideValueUpdate)
@@ -423,346 +433,348 @@ function var_0_0.calAndSetShowTypeBySliderProgress(arg_20_0)
 		return
 	end
 
-	gohelper.setActive(arg_20_0._goturnOn, var_20_0 ~= BGMSwitchEnum.BGMDetailShowType.None)
-	gohelper.setActive(arg_20_0._goplay, var_20_0 == BGMSwitchEnum.BGMDetailShowType.Progress)
-	gohelper.setActive(arg_20_0._godesc, var_20_0 == BGMSwitchEnum.BGMDetailShowType.Introduce)
-	gohelper.setActive(arg_20_0._gocomment, var_20_0 == BGMSwitchEnum.BGMDetailShowType.Comment)
+	gohelper.setActive(self._goturnOn, showType ~= BGMSwitchEnum.BGMDetailShowType.None)
+	gohelper.setActive(self._goplay, showType == BGMSwitchEnum.BGMDetailShowType.Progress)
+	gohelper.setActive(self._godesc, showType == BGMSwitchEnum.BGMDetailShowType.Introduce)
+	gohelper.setActive(self._gocomment, showType == BGMSwitchEnum.BGMDetailShowType.Comment)
 end
 
-function var_0_0.onOpen(arg_21_0)
-	local var_21_0 = BGMSwitchModel.instance:getMechineGear()
+function BGMSwitchMechineView:onOpen()
+	local gear = BGMSwitchModel.instance:getMechineGear()
 
-	if var_21_0 == BGMSwitchEnum.Gear.OFF then
-		arg_21_0._controlAni:Play("left")
-	elseif var_21_0 == BGMSwitchEnum.Gear.On1 then
-		arg_21_0._controlAni:Play("up")
-	elseif var_21_0 == BGMSwitchEnum.Gear.On2 then
-		arg_21_0._controlAni:Play("right")
-	elseif var_21_0 == BGMSwitchEnum.Gear.On3 then
-		arg_21_0._controlAni:Play("down")
+	if gear == BGMSwitchEnum.Gear.OFF then
+		self._controlAni:Play("left")
+	elseif gear == BGMSwitchEnum.Gear.On1 then
+		self._controlAni:Play("up")
+	elseif gear == BGMSwitchEnum.Gear.On2 then
+		self._controlAni:Play("right")
+	elseif gear == BGMSwitchEnum.Gear.On3 then
+		self._controlAni:Play("down")
 	end
 
-	local var_21_1 = BGMSwitchEnum.BGMDetailShowType.Progress
+	local showType = BGMSwitchEnum.BGMDetailShowType.Progress
 
-	BGMSwitchModel.instance:setAudioCurShowType(var_21_1)
+	BGMSwitchModel.instance:setAudioCurShowType(showType)
 
-	local var_21_2 = BGMSwitchController.instance:getMainBgmAudioId()
+	local audioId = BGMSwitchController.instance:getMainBgmAudioId()
 
-	arg_21_0._bgmCo = BGMSwitchConfig.instance:getBGMSwitchCoByAudioId(var_21_2)
+	self._bgmCo = BGMSwitchConfig.instance:getBGMSwitchCoByAudioId(audioId)
 
-	arg_21_0:setOnlyUpdateInfo(true)
-	arg_21_0:_refreshView()
+	self:setOnlyUpdateInfo(true)
+	self:_refreshView()
 end
 
-function var_0_0._refreshView(arg_22_0)
-	arg_22_0._commentAni:Play("switch", 0, 0)
-	arg_22_0._descAni:Play("switch", 0, 0)
-	arg_22_0._playAni:Play("switch", 0, 0)
-	arg_22_0:_refreshTop()
-	arg_22_0:_refreshBottom()
+function BGMSwitchMechineView:_refreshView()
+	self._commentAni:Play("switch", 0, 0)
+	self._descAni:Play("switch", 0, 0)
+	self._playAni:Play("switch", 0, 0)
+	self:_refreshTop()
+	self:_refreshBottom()
 end
 
-function var_0_0._refreshTop(arg_23_0)
-	arg_23_0._commentCount = 0
+function BGMSwitchMechineView:_refreshTop()
+	self._commentCount = 0
 
-	local var_23_0 = BGMSwitchModel.instance:getMechineGear()
+	local gear = BGMSwitchModel.instance:getMechineGear()
 
-	gohelper.setActive(arg_23_0._goturnOnEffect, true)
+	gohelper.setActive(self._goturnOnEffect, true)
 
-	if var_23_0 == BGMSwitchEnum.Gear.OFF then
-		arg_23_0:_showGearOff()
-	elseif var_23_0 == BGMSwitchEnum.Gear.On1 then
-		arg_23_0:_showGearOn1()
-	elseif var_23_0 == BGMSwitchEnum.Gear.On2 then
-		arg_23_0:_showGearOn2()
-	elseif var_23_0 == BGMSwitchEnum.Gear.On3 then
-		arg_23_0:_showGearOn3()
+	if gear == BGMSwitchEnum.Gear.OFF then
+		self:_showGearOff()
+	elseif gear == BGMSwitchEnum.Gear.On1 then
+		self:_showGearOn1()
+	elseif gear == BGMSwitchEnum.Gear.On2 then
+		self:_showGearOn2()
+	elseif gear == BGMSwitchEnum.Gear.On3 then
+		self:_showGearOn3()
 	end
 
-	arg_23_0:updateSliderChannelByShowType()
+	self:updateSliderChannelByShowType()
 end
 
-function var_0_0._showGearOff(arg_24_0)
-	arg_24_0:_stopBgm()
-	gohelper.setActive(arg_24_0._goturnOn, false)
-	gohelper.setActive(arg_24_0._goxuehuaping, false)
+function BGMSwitchMechineView:_showGearOff()
+	self:_stopBgm()
+	gohelper.setActive(self._goturnOn, false)
+	gohelper.setActive(self._goxuehuaping, false)
 end
 
-function var_0_0._showGearOn1(arg_25_0)
-	if arg_25_0._bgmCo then
-		arg_25_0._lastBgmId = arg_25_0._bgmCo.id
+function BGMSwitchMechineView:_showGearOn1()
+	if self._bgmCo then
+		self._lastBgmId = self._bgmCo.id
 	end
 
-	local var_25_0 = BGMSwitchModel.instance:getAudioCurShowType()
+	local showType = BGMSwitchModel.instance:getAudioCurShowType()
 
-	gohelper.setActive(arg_25_0._goxuehuaping, false)
-	arg_25_0:_showAudioProgress()
-	arg_25_0:_showAudioIntroduce()
-	arg_25_0:_showAudioComment()
-	arg_25_0:_showAudioLike()
-	gohelper.setActive(arg_25_0._goturnOn, var_25_0 ~= BGMSwitchEnum.BGMDetailShowType.None)
-	gohelper.setActive(arg_25_0._goplay, var_25_0 == BGMSwitchEnum.BGMDetailShowType.Progress)
-	gohelper.setActive(arg_25_0._godesc, var_25_0 == BGMSwitchEnum.BGMDetailShowType.Introduce)
-	gohelper.setActive(arg_25_0._gocomment, var_25_0 == BGMSwitchEnum.BGMDetailShowType.Comment)
+	gohelper.setActive(self._goxuehuaping, false)
+	self:_showAudioProgress()
+	self:_showAudioIntroduce()
+	self:_showAudioComment()
+	self:_showAudioLike()
+	gohelper.setActive(self._goturnOn, showType ~= BGMSwitchEnum.BGMDetailShowType.None)
+	gohelper.setActive(self._goplay, showType == BGMSwitchEnum.BGMDetailShowType.Progress)
+	gohelper.setActive(self._godesc, showType == BGMSwitchEnum.BGMDetailShowType.Introduce)
+	gohelper.setActive(self._gocomment, showType == BGMSwitchEnum.BGMDetailShowType.Comment)
 end
 
-function var_0_0.updateSliderChannelByShowType(arg_26_0)
-	arg_26_0._sliderChannel:SetValue(var_0_1[BGMSwitchModel.instance:getAudioCurShowType()])
+function BGMSwitchMechineView:updateSliderChannelByShowType()
+	self._sliderChannel:SetValue(sliderReference[BGMSwitchModel.instance:getAudioCurShowType()])
 end
 
-function var_0_0._showAudioProgress(arg_27_0)
-	local var_27_0 = BGMSwitchModel.instance:isRandomMode()
-	local var_27_1 = BGMSwitchModel.instance:getUsedBgmIdFromServer()
+function BGMSwitchMechineView:_showAudioProgress()
+	local isRandom = BGMSwitchModel.instance:isRandomMode()
+	local bgmIdFromServer = BGMSwitchModel.instance:getUsedBgmIdFromServer()
 
-	if var_27_0 then
-		arg_27_0._txtplaytitle.text = BGMSwitchModel.instance:isRandomBgmId(var_27_1) and luaLang("bgmswitchview_randomplay") or luaLang("bgmswitchview_randomplisten")
+	if isRandom then
+		self._txtplaytitle.text = BGMSwitchModel.instance:isRandomBgmId(bgmIdFromServer) and luaLang("bgmswitchview_randomplay") or luaLang("bgmswitchview_randomplisten")
 	else
-		arg_27_0._txtplaytitle.text = arg_27_0._bgmCo.id == var_27_1 and luaLang("bgmswitchview_play") or luaLang("bgmswitchview_listentest")
+		self._txtplaytitle.text = self._bgmCo.id == bgmIdFromServer and luaLang("bgmswitchview_play") or luaLang("bgmswitchview_listentest")
 	end
 
-	arg_27_0:_playNameAnim()
+	self:_playNameAnim()
 
-	if not arg_27_0:getOnlyUpdateInfo() then
-		arg_27_0:setOnlyUpdateInfo(true)
-		arg_27_0:_forcePlayBgm()
+	if not self:getOnlyUpdateInfo() then
+		self:setOnlyUpdateInfo(true)
+		self:_forcePlayBgm()
 	end
 
-	local var_27_2 = BGMSwitchModel.instance:getReportBgmAudioLength(arg_27_0._bgmCo)
-	local var_27_3 = Mathf.Floor(var_27_2 / 60)
-	local var_27_4 = Mathf.Floor(var_27_2 % 60)
+	local audioLength = BGMSwitchModel.instance:getReportBgmAudioLength(self._bgmCo)
+	local min = Mathf.Floor(audioLength / 60)
+	local sec = Mathf.Floor(audioLength % 60)
 
-	arg_27_0:_processUpdate(0)
+	self:_processUpdate(0)
 
-	arg_27_0._txtplayprogresslength.text = string.format("%d:%02d", var_27_3, var_27_4)
+	self._txtplayprogresslength.text = string.format("%d:%02d", min, sec)
 
-	arg_27_0:_stopProgressTask()
-	TaskDispatcher.runRepeat(arg_27_0._progressUpdate, arg_27_0, 0.03)
+	self:_stopProgressTask()
+	TaskDispatcher.runRepeat(self._progressUpdate, self, 0.03)
 end
 
-function var_0_0._playNameAnim(arg_28_0)
-	arg_28_0._txtplayname.text = arg_28_0._bgmCo.audioName
-	arg_28_0._txtplaynameen.text = arg_28_0._bgmCo.audioNameEn
+function BGMSwitchMechineView:_playNameAnim()
+	self._txtplayname.text = self._bgmCo.audioName
+	self._txtplaynameen.text = self._bgmCo.audioNameEn
 
-	if arg_28_0._moveTweenId then
-		ZProj.TweenHelper.KillById(arg_28_0._moveTweenId)
+	if self._moveTweenId then
+		ZProj.TweenHelper.KillById(self._moveTweenId)
 
-		arg_28_0._moveTweenId = nil
+		self._moveTweenId = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_28_0._playNameAnimOnce, arg_28_0)
-	TaskDispatcher.runDelay(arg_28_0._playNameAnimOnce, arg_28_0, 0.01)
+	TaskDispatcher.cancelTask(self._playNameAnimOnce, self)
+	TaskDispatcher.runDelay(self._playNameAnimOnce, self, 0.01)
 end
 
-function var_0_0._playNameAnimOnce(arg_29_0)
-	local var_29_0 = recthelper.getWidth(arg_29_0._txtplayname.transform)
-	local var_29_1 = recthelper.getWidth(arg_29_0._goplayname.transform)
-	local var_29_2, var_29_3, var_29_4 = transformhelper.getLocalPos(arg_29_0._txtplayname.transform)
+function BGMSwitchMechineView:_playNameAnimOnce()
+	local nameWidth = recthelper.getWidth(self._txtplayname.transform)
+	local contentWidth = recthelper.getWidth(self._goplayname.transform)
+	local _, y, _ = transformhelper.getLocalPos(self._txtplayname.transform)
 
-	if var_29_1 <= var_29_0 then
-		local var_29_5 = 0.5 * (var_29_0 + var_29_1)
-		local var_29_6 = -0.5 * (var_29_0 + var_29_1)
-		local var_29_7 = 0.01 * (var_29_5 - var_29_6)
+	if contentWidth <= nameWidth then
+		local startPos = 0.5 * (nameWidth + contentWidth)
+		local endPos = -0.5 * (nameWidth + contentWidth)
+		local duration = 0.01 * (startPos - endPos)
 
-		transformhelper.setLocalPos(arg_29_0._txtplayname.transform, var_29_5, var_29_3, 0)
+		transformhelper.setLocalPos(self._txtplayname.transform, startPos, y, 0)
 
-		arg_29_0._moveTweenId = ZProj.TweenHelper.DOLocalMoveX(arg_29_0._txtplayname.transform, var_29_6, var_29_7, arg_29_0._playNameAnimFinished, arg_29_0, nil, EaseType.Linear)
+		self._moveTweenId = ZProj.TweenHelper.DOLocalMoveX(self._txtplayname.transform, endPos, duration, self._playNameAnimFinished, self, nil, EaseType.Linear)
 	else
-		transformhelper.setLocalPos(arg_29_0._txtplayname.transform, 0, var_29_3, 0)
+		transformhelper.setLocalPos(self._txtplayname.transform, 0, y, 0)
 	end
 end
 
-function var_0_0._playNameAnimFinished(arg_30_0)
-	TaskDispatcher.runDelay(arg_30_0._playNameAnimOnce, arg_30_0, 0.5)
+function BGMSwitchMechineView:_playNameAnimFinished()
+	TaskDispatcher.runDelay(self._playNameAnimOnce, self, 0.5)
 end
 
-function var_0_0.resetBgmProgressShow(arg_31_0)
-	arg_31_0:_processUpdate(0)
+function BGMSwitchMechineView:resetBgmProgressShow()
+	self:_processUpdate(0)
 
-	arg_31_0._txtplayprogresstime.text = string.format("%d:%02d", 0, 0)
+	self._txtplayprogresstime.text = string.format("%d:%02d", 0, 0)
 end
 
-function var_0_0._processUpdate(arg_32_0, arg_32_1)
-	arg_32_0._sliderplay:SetValue(arg_32_1)
+function BGMSwitchMechineView:_processUpdate(value)
+	self._sliderplay:SetValue(value)
 
-	arg_32_0._imgEffect.fillAmount = arg_32_1
+	self._imgEffect.fillAmount = value
 end
 
-function var_0_0._progressUpdate(arg_33_0)
-	local var_33_0 = BGMSwitchController.instance:getProgress()
+function BGMSwitchMechineView:_progressUpdate()
+	local playTime = BGMSwitchController.instance:getProgress()
 
-	if var_33_0 and var_33_0 >= 0 then
-		local var_33_1 = var_33_0 / BGMSwitchModel.instance:getReportBgmAudioLength(arg_33_0._bgmCo)
+	if playTime and playTime >= 0 then
+		local audioLength = BGMSwitchModel.instance:getReportBgmAudioLength(self._bgmCo)
+		local value = playTime / audioLength
 
-		arg_33_0:_processUpdate(var_33_1)
+		self:_processUpdate(value)
 
-		local var_33_2 = Mathf.Floor(var_33_0 / 60)
-		local var_33_3 = Mathf.Floor(var_33_0 % 60)
+		local min = Mathf.Floor(playTime / 60)
+		local sec = Mathf.Floor(playTime % 60)
 
-		arg_33_0._txtplayprogresstime.text = string.format("%d:%02d", var_33_2, var_33_3)
+		self._txtplayprogresstime.text = string.format("%d:%02d", min, sec)
 	else
-		arg_33_0._txtplayprogresstime.text = string.format("%d:%02d", 0, 0)
+		self._txtplayprogresstime.text = string.format("%d:%02d", 0, 0)
 	end
 end
 
-function var_0_0._stopBgm(arg_34_0)
+function BGMSwitchMechineView:_stopBgm()
 	BGMSwitchController.instance:stopMainBgm()
 end
 
-function var_0_0._pauseBgm(arg_35_0)
+function BGMSwitchMechineView:_pauseBgm()
 	BGMSwitchController.instance:pauseMainBgm()
 end
 
-function var_0_0._playBgm(arg_36_0, arg_36_1)
-	BGMSwitchController.instance:playMainBgm(arg_36_0._bgmCo.audio, false, arg_36_1)
+function BGMSwitchMechineView:_playBgm(bStopPrevBgmImmediately)
+	BGMSwitchController.instance:playMainBgm(self._bgmCo.audio, false, bStopPrevBgmImmediately)
 end
 
-function var_0_0._forcePlayBgm(arg_37_0)
-	BGMSwitchController.instance:playMainBgm(arg_37_0._bgmCo.audio, true, true)
+function BGMSwitchMechineView:_forcePlayBgm()
+	BGMSwitchController.instance:playMainBgm(self._bgmCo.audio, true, true)
 end
 
-function var_0_0._progressFinished(arg_38_0)
-	if BGMSwitchModel.instance:isRandomMode() then
-		local var_38_0 = BGMSwitchModel.instance:getCurBgm()
-		local var_38_1 = BGMSwitchModel.instance:nextBgm(1, false)
+function BGMSwitchMechineView:_progressFinished()
+	local isRandom = BGMSwitchModel.instance:isRandomMode()
 
-		arg_38_0._bgmCo = BGMSwitchConfig.instance:getBGMSwitchCO(var_38_1)
+	if isRandom then
+		local prevBgmId = BGMSwitchModel.instance:getCurBgm()
+		local nextBgm = BGMSwitchModel.instance:nextBgm(1, false)
 
-		arg_38_0:_playBgm(true)
-		arg_38_0:_refreshView()
+		self._bgmCo = BGMSwitchConfig.instance:getBGMSwitchCO(nextBgm)
+
+		self:_playBgm(true)
+		self:_refreshView()
 		BGMSwitchController.instance:dispatchEvent(BGMSwitchEvent.RandomFinished)
 
-		local var_38_2 = BGMSwitchModel.instance:isRandomMode()
-		local var_38_3 = BGMSwitchModel.instance:getCurrentUsingBgmList()
+		local isRandom = BGMSwitchModel.instance:isRandomMode()
+		local currSelBgmList = BGMSwitchModel.instance:getCurrentUsingBgmList()
 
 		StatController.instance:track(StatEnum.EventName.SwitchBGM, {
-			[StatEnum.EventProperties.AudioId] = tostring(arg_38_0._bgmCo.id),
-			[StatEnum.EventProperties.AudioName] = arg_38_0._bgmCo.audioName,
-			[StatEnum.EventProperties.BeforeSwitchAudio] = BGMSwitchConfig.instance:getBgmName(var_38_0),
+			[StatEnum.EventProperties.AudioId] = tostring(self._bgmCo.id),
+			[StatEnum.EventProperties.AudioName] = self._bgmCo.audioName,
+			[StatEnum.EventProperties.BeforeSwitchAudio] = BGMSwitchConfig.instance:getBgmName(prevBgmId),
 			[StatEnum.EventProperties.OperationType] = "playing complete, auto next",
-			[StatEnum.EventProperties.PlayMode] = var_38_2 and "Random" or "LoopOne",
-			[StatEnum.EventProperties.AudioSheet] = BGMSwitchConfig.instance:getBgmNames(var_38_3)
+			[StatEnum.EventProperties.PlayMode] = isRandom and "Random" or "LoopOne",
+			[StatEnum.EventProperties.AudioSheet] = BGMSwitchConfig.instance:getBgmNames(currSelBgmList)
 		})
 	end
 end
 
-function var_0_0._showAudioIntroduce(arg_39_0)
-	arg_39_0._txtdescname.text = arg_39_0._bgmCo.audioName
-	arg_39_0._txtdescnameen.text = arg_39_0._bgmCo.audioNameEn
-	arg_39_0._txtDescr.text = arg_39_0._bgmCo.audioIntroduce
+function BGMSwitchMechineView:_showAudioIntroduce()
+	self._txtdescname.text = self._bgmCo.audioName
+	self._txtdescnameen.text = self._bgmCo.audioNameEn
+	self._txtDescr.text = self._bgmCo.audioIntroduce
 end
 
-function var_0_0._showAudioLike(arg_40_0)
-	local var_40_0 = BGMSwitchModel.instance:isBgmFavorite(arg_40_0._bgmCo.id)
+function BGMSwitchMechineView:_showAudioLike()
+	local isLove = BGMSwitchModel.instance:isBgmFavorite(self._bgmCo.id)
 
-	gohelper.setActive(arg_40_0._golike, var_40_0)
-	gohelper.setActive(arg_40_0._golikeBg, not var_40_0)
+	gohelper.setActive(self._golike, isLove)
+	gohelper.setActive(self._golikeBg, not isLove)
 end
 
-function var_0_0._showAudioComment(arg_41_0)
-	if not arg_41_0._commentItems then
-		arg_41_0._commentItems = {}
+function BGMSwitchMechineView:_showAudioComment()
+	if not self._commentItems then
+		self._commentItems = {}
 	end
 
-	local var_41_0 = string.split(arg_41_0._bgmCo.audioEvaluates, "|")
+	local comments = string.split(self._bgmCo.audioEvaluates, "|")
 
-	for iter_41_0, iter_41_1 in pairs(arg_41_0._commentItems) do
-		gohelper.setActive(iter_41_1.go, false)
+	for _, item in pairs(self._commentItems) do
+		gohelper.setActive(item.go, false)
 	end
 
-	for iter_41_2, iter_41_3 in ipairs(var_41_0) do
-		local var_41_1 = string.split(iter_41_3, "#")
+	for index, comment in ipairs(comments) do
+		local evaluates = string.split(comment, "#")
 
-		if not arg_41_0._commentItems[iter_41_2] then
-			local var_41_2 = {
-				go = gohelper.cloneInPlace(arg_41_0._gocommentItem, iter_41_2)
-			}
+		if not self._commentItems[index] then
+			local item = {}
 
-			var_41_2.txtName = gohelper.findChildText(var_41_2.go, "name")
-			var_41_2.txtDesc = gohelper.findChildText(var_41_2.go, "desc")
-			arg_41_0._commentItems[iter_41_2] = var_41_2
+			item.go = gohelper.cloneInPlace(self._gocommentItem, index)
+			item.txtName = gohelper.findChildText(item.go, "name")
+			item.txtDesc = gohelper.findChildText(item.go, "desc")
+			self._commentItems[index] = item
 		end
 
-		gohelper.setActive(arg_41_0._commentItems[iter_41_2].go, true)
+		gohelper.setActive(self._commentItems[index].go, true)
 
-		arg_41_0._commentItems[iter_41_2].txtName.text = var_41_1[1]
-		arg_41_0._commentItems[iter_41_2].txtDesc.text = var_41_1[2]
+		self._commentItems[index].txtName.text = evaluates[1]
+		self._commentItems[index].txtDesc.text = evaluates[2]
 	end
 end
 
-function var_0_0._showGearOn2(arg_42_0)
-	arg_42_0:_stopBgm()
-	gohelper.setActive(arg_42_0._goturnOn, false)
-	gohelper.setActive(arg_42_0._goxuehuaping, true)
+function BGMSwitchMechineView:_showGearOn2()
+	self:_stopBgm()
+	gohelper.setActive(self._goturnOn, false)
+	gohelper.setActive(self._goxuehuaping, true)
 end
 
-function var_0_0._showGearOn3(arg_43_0)
-	arg_43_0:_stopBgm()
-	gohelper.setActive(arg_43_0._goturnOn, false)
-	gohelper.setActive(arg_43_0._goxuehuaping, true)
+function BGMSwitchMechineView:_showGearOn3()
+	self:_stopBgm()
+	gohelper.setActive(self._goturnOn, false)
+	gohelper.setActive(self._goxuehuaping, true)
 end
 
-function var_0_0._showNormalViewByGuide(arg_44_0)
-	local var_44_0 = BGMSwitchController.instance:getBgmAudioId()
+function BGMSwitchMechineView:_showNormalViewByGuide()
+	local audioId = BGMSwitchController.instance:getBgmAudioId()
 
-	arg_44_0._bgmCo = BGMSwitchConfig.instance:getBGMSwitchCoByAudioId(var_44_0)
+	self._bgmCo = BGMSwitchConfig.instance:getBGMSwitchCoByAudioId(audioId)
 
-	local var_44_1 = BGMSwitchModel.instance:getMechineGear()
+	local gear = BGMSwitchModel.instance:getMechineGear()
 
-	arg_44_0:_switchGearTo(var_44_1, BGMSwitchEnum.Gear.On1)
+	self:_switchGearTo(gear, BGMSwitchEnum.Gear.On1)
 	BGMSwitchModel.instance:setMechineGear(BGMSwitchEnum.Gear.On1)
 	UIBlockMgrExtend.setNeedCircleMv(false)
 	UIBlockMgr.instance:startBlock("gearswitch")
 
-	local var_44_2 = var_44_1 < BGMSwitchEnum.Gear.On2 and 0.267 * (BGMSwitchEnum.Gear.On2 - var_44_1) or 0.267 * (BGMSwitchEnum.Gear.On2 + (4 - var_44_1))
+	local delayTime = gear < BGMSwitchEnum.Gear.On2 and 0.267 * (BGMSwitchEnum.Gear.On2 - gear) or 0.267 * (BGMSwitchEnum.Gear.On2 + (4 - gear))
 
-	TaskDispatcher.runDelay(arg_44_0._switchGearAniFinished, arg_44_0, var_44_2)
+	TaskDispatcher.runDelay(self._switchGearAniFinished, self, delayTime)
 end
 
-function var_0_0._showNoiseViewByGuide(arg_45_0)
-	arg_45_0:_pauseBgm()
-	gohelper.setActive(arg_45_0._goturnOn, false)
-	gohelper.setActive(arg_45_0._goxuehuaping, false)
-	gohelper.setActive(arg_45_0._gointerface, true)
+function BGMSwitchMechineView:_showNoiseViewByGuide()
+	self:_pauseBgm()
+	gohelper.setActive(self._goturnOn, false)
+	gohelper.setActive(self._goxuehuaping, false)
+	gohelper.setActive(self._gointerface, true)
 end
 
-function var_0_0._refreshBottom(arg_46_0)
-	local var_46_0 = BGMSwitchModel.instance:getMechineGear()
+function BGMSwitchMechineView:_refreshBottom()
+	local gear = BGMSwitchModel.instance:getMechineGear()
 
-	gohelper.setActive(arg_46_0._gopowerlight, var_46_0 ~= BGMSwitchEnum.Gear.OFF)
+	gohelper.setActive(self._gopowerlight, gear ~= BGMSwitchEnum.Gear.OFF)
 
-	if not arg_46_0:getOnlyUpdateInfo() then
-		if var_46_0 == BGMSwitchEnum.Gear.On1 and arg_46_0._bgmCo then
-			arg_46_0._tapAni:Play("loop", 0, 0)
+	if not self:getOnlyUpdateInfo() then
+		if gear == BGMSwitchEnum.Gear.On1 and self._bgmCo then
+			self._tapAni:Play("loop", 0, 0)
 		else
-			arg_46_0._tapAni:Play("idle", 0, 0)
+			self._tapAni:Play("idle", 0, 0)
 		end
 	end
 
-	if arg_46_0._bgmCo then
-		gohelper.setActive(arg_46_0._gotapicon, true)
-		UISpriteSetMgr.instance:setBgmSwitchToggleSprite(arg_46_0._imagetape1, arg_46_0._bgmCo.audioicon)
-		UISpriteSetMgr.instance:setBgmSwitchToggleSprite(arg_46_0._imagetape2, arg_46_0._bgmCo.audioicon)
+	if self._bgmCo then
+		gohelper.setActive(self._gotapicon, true)
+		UISpriteSetMgr.instance:setBgmSwitchToggleSprite(self._imagetape1, self._bgmCo.audioicon)
+		UISpriteSetMgr.instance:setBgmSwitchToggleSprite(self._imagetape2, self._bgmCo.audioicon)
 	else
-		gohelper.setActive(arg_46_0._gotap, false)
+		gohelper.setActive(self._gotap, false)
 	end
 end
 
-function var_0_0.onClose(arg_47_0)
+function BGMSwitchMechineView:onClose()
 	BGMSwitchController.instance:backMainBgm()
 	BGMSwitchController.instance:dispatchEvent(BGMSwitchEvent.BGMSwitchClose)
-	TaskDispatcher.cancelTask(arg_47_0._refreshView, arg_47_0)
-	TaskDispatcher.cancelTask(arg_47_0._switchGearAniFinished, arg_47_0)
-	arg_47_0:_stopProgressTask()
+	TaskDispatcher.cancelTask(self._refreshView, self)
+	TaskDispatcher.cancelTask(self._switchGearAniFinished, self)
+	self:_stopProgressTask()
 end
 
-function var_0_0._stopProgressTask(arg_48_0)
-	TaskDispatcher.cancelTask(arg_48_0._progressUpdate, arg_48_0)
+function BGMSwitchMechineView:_stopProgressTask()
+	TaskDispatcher.cancelTask(self._progressUpdate, self)
 end
 
-function var_0_0.onDestroyView(arg_49_0)
-	if arg_49_0._beforeBgm then
-		arg_49_0._beforeBgm = nil
+function BGMSwitchMechineView:onDestroyView()
+	if self._beforeBgm then
+		self._beforeBgm = nil
 	end
 end
 
-return var_0_0
+return BGMSwitchMechineView

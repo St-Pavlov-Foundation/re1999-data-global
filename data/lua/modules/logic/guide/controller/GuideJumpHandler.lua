@@ -1,41 +1,44 @@
-﻿module("modules.logic.guide.controller.GuideJumpHandler", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/GuideJumpHandler.lua
 
-local var_0_0 = class("GuideJumpHandler")
-local var_0_1 = {
+module("modules.logic.guide.controller.GuideJumpHandler", package.seeall)
+
+local GuideJumpHandler = class("GuideJumpHandler")
+local NeedFinishingAction = {
 	"113#OnGuideFightEndContinue",
 	"116#"
 }
 
-function var_0_0.ctor(arg_1_0)
-	GuideController.instance:registerCallback(GuideEvent.OneKeyFinishGuides, arg_1_0._onOneKeyFinishGuides, arg_1_0)
+function GuideJumpHandler:ctor()
+	GuideController.instance:registerCallback(GuideEvent.OneKeyFinishGuides, self._onOneKeyFinishGuides, self)
 end
 
-function var_0_0.reInit(arg_2_0)
+function GuideJumpHandler:reInit()
 	return
 end
 
-function var_0_0._onOneKeyFinishGuides(arg_3_0, arg_3_1)
-	arg_3_0._guideSteps = {}
+function GuideJumpHandler:_onOneKeyFinishGuides(guideIds)
+	self._guideSteps = {}
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
-		local var_3_0 = GuideModel.instance:getById(iter_3_1).currStepId
-		local var_3_1 = GuideConfig.instance:getNextStepId(iter_3_1, var_3_0)
+	for _, guideId in ipairs(guideIds) do
+		local guideMO = GuideModel.instance:getById(guideId)
+		local stepId = guideMO.currStepId
+		local nextStepId = GuideConfig.instance:getNextStepId(guideId, stepId)
 
-		while var_3_1 > 0 do
-			local var_3_2 = GuideConfig.instance:getStepCO(iter_3_1, var_3_1)
-			local var_3_3 = string.split(var_3_2.action, "|")
+		while nextStepId > 0 do
+			local nextStepCO = GuideConfig.instance:getStepCO(guideId, nextStepId)
+			local actionStrs = string.split(nextStepCO.action, "|")
 
-			for iter_3_2 = 1, #var_3_3 do
-				local var_3_4 = var_3_3[iter_3_2]
+			for i = 1, #actionStrs do
+				local actionStr = actionStrs[i]
 
-				for iter_3_3, iter_3_4 in ipairs(var_0_1) do
-					if string.find(var_3_4, iter_3_4) == 1 then
-						local var_3_5 = GuideActionBuilder.buildAction(iter_3_1, var_3_0, var_3_4)
+				for _, actionPrefix in ipairs(NeedFinishingAction) do
+					if string.find(actionStr, actionPrefix) == 1 then
+						local action = GuideActionBuilder.buildAction(guideId, stepId, actionStr)
 
-						if var_3_5 then
-							var_3_5:onStart()
-							var_3_5:clearWork()
-							logError("跳过指引，执行必要的收尾动作 guide_" .. iter_3_1 .. "_" .. var_3_1 .. " " .. var_3_4)
+						if action then
+							action:onStart()
+							action:clearWork()
+							logError("跳过指引，执行必要的收尾动作 guide_" .. guideId .. "_" .. nextStepId .. " " .. actionStr)
 						end
 
 						break
@@ -43,9 +46,9 @@ function var_0_0._onOneKeyFinishGuides(arg_3_0, arg_3_1)
 				end
 			end
 
-			var_3_1 = GuideConfig.instance:getNextStepId(iter_3_1, var_3_1)
+			nextStepId = GuideConfig.instance:getNextStepId(guideId, nextStepId)
 		end
 	end
 end
 
-return var_0_0
+return GuideJumpHandler

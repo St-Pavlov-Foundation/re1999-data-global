@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_activity203_ai", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_activity203_ai.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_activity203_ai", package.seeall)
+
+local lua_activity203_ai = {}
+local fields = {
 	gaptime = 3,
 	assist_weight = 10,
 	negative_move_weight = 8,
@@ -16,14 +18,14 @@ local var_0_1 = {
 	id = 1,
 	hero_or_soldier = 12
 }
-local var_0_2 = {
+local primaryKey = {
 	"id",
 	"ai_index"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_activity203_ai.onLoad(json)
+	lua_activity203_ai.configList, lua_activity203_ai.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_activity203_ai

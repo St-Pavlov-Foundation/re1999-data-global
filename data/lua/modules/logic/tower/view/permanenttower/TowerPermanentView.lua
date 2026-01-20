@@ -1,126 +1,132 @@
-﻿module("modules.logic.tower.view.permanenttower.TowerPermanentView", package.seeall)
+﻿-- chunkname: @modules/logic/tower/view/permanenttower/TowerPermanentView.lua
 
-local var_0_0 = class("TowerPermanentView", BaseView)
+module("modules.logic.tower.view.permanenttower.TowerPermanentView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
-	arg_1_0._scrollcategory = gohelper.findChildScrollRect(arg_1_0.viewGO, "Left/#scroll_category")
-	arg_1_0._goViewport = gohelper.findChild(arg_1_0.viewGO, "Left/#scroll_category/Viewport")
-	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "Left/#scroll_category/Viewport/#go_Content")
-	arg_1_0._goStageInfo = gohelper.findChild(arg_1_0.viewGO, "Left/#go_stageInfo")
-	arg_1_0._txtCurStage = gohelper.findChildText(arg_1_0.viewGO, "Left/#go_stageInfo/#txt_curStage")
-	arg_1_0._btnCurStageFold = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#go_stageInfo/#btn_curStageFold")
-	arg_1_0._gonormalEpisode = gohelper.findChild(arg_1_0.viewGO, "episode/#go_normalEpisode")
-	arg_1_0._gonormalItem = gohelper.findChild(arg_1_0.viewGO, "episode/#go_normalEpisode/#go_normalItem")
-	arg_1_0._goeliteEpisode = gohelper.findChild(arg_1_0.viewGO, "episode/#go_eliteEpisode")
-	arg_1_0._gocompleted = gohelper.findChild(arg_1_0.viewGO, "episode/layout/#go_completed")
-	arg_1_0._animCompleted = arg_1_0._gocompleted:GetComponent(gohelper.Type_Animator)
-	arg_1_0._goschedule = gohelper.findChild(arg_1_0.viewGO, "episode/layout/#go_schedule")
-	arg_1_0._txtschedule = gohelper.findChildText(arg_1_0.viewGO, "episode/layout/#go_schedule/bg/#txt_Schedule")
-	arg_1_0._goreward = gohelper.findChild(arg_1_0.viewGO, "#go_reward")
-	arg_1_0._gorewardItem = gohelper.findChild(arg_1_0.viewGO, "#go_reward/#go_rewardItem")
-	arg_1_0._simageEnterBg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_Enter/#simage_EnterBG")
-	arg_1_0._txtEnterTitle = gohelper.findChildText(arg_1_0.viewGO, "#go_Enter/Title/txt_Title")
-	arg_1_0._txtEnterTitleEn = gohelper.findChildText(arg_1_0.viewGO, "#go_Enter/Title/txt_TitleEn")
-	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "Title/txt_Title")
-	arg_1_0._txtTitleEn = gohelper.findChildText(arg_1_0.viewGO, "Title/txt_TitleEn")
-	arg_1_0._viewAnim = arg_1_0.viewGO:GetComponent(gohelper.Type_Animator)
-	arg_1_0._godeep = gohelper.findChild(arg_1_0.viewGO, "#go_deep")
-	arg_1_0._goepisode = gohelper.findChild(arg_1_0.viewGO, "episode")
-	arg_1_0._gotitle = gohelper.findChild(arg_1_0.viewGO, "Title")
-	arg_1_0._gorewardBg = gohelper.findChild(arg_1_0.viewGO, "image_RewardBG")
-	arg_1_0._goright = gohelper.findChild(arg_1_0.viewGO, "right")
-	arg_1_0._goenterDeepGuide = gohelper.findChild(arg_1_0.viewGO, "#go_EnterDeepGuide")
-	arg_1_0.enterDeepGuideAnim = arg_1_0._goenterDeepGuide:GetComponent(gohelper.Type_Animator)
-	arg_1_0._godeepLayer = gohelper.findChild(arg_1_0.viewGO, "Left/#go_deepLayer")
-	arg_1_0._godeepNormal = gohelper.findChild(arg_1_0.viewGO, "Left/#go_deepLayer/#go_deepNormal")
-	arg_1_0._godeepSelect = gohelper.findChild(arg_1_0.viewGO, "Left/#go_deepLayer/#go_deepSelect")
-	arg_1_0._btndeepLayer = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#go_deepLayer/#btn_deepLayer")
+local TowerPermanentView = class("TowerPermanentView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function TowerPermanentView:onInitView()
+	self._gotopleft = gohelper.findChild(self.viewGO, "#go_topleft")
+	self._scrollcategory = gohelper.findChildScrollRect(self.viewGO, "Left/#scroll_category")
+	self._goViewport = gohelper.findChild(self.viewGO, "Left/#scroll_category/Viewport")
+	self._goContent = gohelper.findChild(self.viewGO, "Left/#scroll_category/Viewport/#go_Content")
+	self._goStageInfo = gohelper.findChild(self.viewGO, "Left/#go_stageInfo")
+	self._txtCurStage = gohelper.findChildText(self.viewGO, "Left/#go_stageInfo/#txt_curStage")
+	self._btnCurStageFold = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#go_stageInfo/#btn_curStageFold")
+	self._gonormalEpisode = gohelper.findChild(self.viewGO, "episode/#go_normalEpisode")
+	self._gonormalItem = gohelper.findChild(self.viewGO, "episode/#go_normalEpisode/#go_normalItem")
+	self._goeliteEpisode = gohelper.findChild(self.viewGO, "episode/#go_eliteEpisode")
+	self._gocompleted = gohelper.findChild(self.viewGO, "episode/layout/#go_completed")
+	self._animCompleted = self._gocompleted:GetComponent(gohelper.Type_Animator)
+	self._goschedule = gohelper.findChild(self.viewGO, "episode/layout/#go_schedule")
+	self._txtschedule = gohelper.findChildText(self.viewGO, "episode/layout/#go_schedule/bg/#txt_Schedule")
+	self._goreward = gohelper.findChild(self.viewGO, "#go_reward")
+	self._gorewardItem = gohelper.findChild(self.viewGO, "#go_reward/#go_rewardItem")
+	self._simageEnterBg = gohelper.findChildSingleImage(self.viewGO, "#go_Enter/#simage_EnterBG")
+	self._txtEnterTitle = gohelper.findChildText(self.viewGO, "#go_Enter/Title/txt_Title")
+	self._txtEnterTitleEn = gohelper.findChildText(self.viewGO, "#go_Enter/Title/txt_TitleEn")
+	self._txtTitle = gohelper.findChildText(self.viewGO, "Title/txt_Title")
+	self._txtTitleEn = gohelper.findChildText(self.viewGO, "Title/txt_TitleEn")
+	self._viewAnim = self.viewGO:GetComponent(gohelper.Type_Animator)
+	self._godeep = gohelper.findChild(self.viewGO, "#go_deep")
+	self._goepisode = gohelper.findChild(self.viewGO, "episode")
+	self._gotitle = gohelper.findChild(self.viewGO, "Title")
+	self._gorewardBg = gohelper.findChild(self.viewGO, "image_RewardBG")
+	self._goright = gohelper.findChild(self.viewGO, "right")
+	self._goenterDeepGuide = gohelper.findChild(self.viewGO, "#go_EnterDeepGuide")
+	self.enterDeepGuideAnim = self._goenterDeepGuide:GetComponent(gohelper.Type_Animator)
+	self._godeepLayer = gohelper.findChild(self.viewGO, "Left/#go_deepLayer")
+	self._godeepNormal = gohelper.findChild(self.viewGO, "Left/#go_deepLayer/#go_deepNormal")
+	self._godeepSelect = gohelper.findChild(self.viewGO, "Left/#go_deepLayer/#go_deepSelect")
+	self._btndeepLayer = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#go_deepLayer/#btn_deepLayer")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._scrollcategory:AddOnValueChanged(arg_2_0._onScrollChange, arg_2_0)
-	arg_2_0._btnCurStageFold:AddClickListener(arg_2_0._btnCurStageFoldOnClick, arg_2_0)
-	arg_2_0._btndeepLayer:AddClickListener(arg_2_0._btndeepLayerOnClick, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.SelectPermanentAltitude, arg_2_0.selectPermanentAltitude, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.OnSelectDeepLayer, arg_2_0.refreshUI, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.OnTowerResetSubEpisode, arg_2_0.refreshEpisode, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.DailyReresh, arg_2_0.onDailyRefresh, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.OnCloseEnterDeepGuideView, arg_2_0.enterDeepGuideFinish, arg_2_0)
+function TowerPermanentView:addEvents()
+	self._scrollcategory:AddOnValueChanged(self._onScrollChange, self)
+	self._btnCurStageFold:AddClickListener(self._btnCurStageFoldOnClick, self)
+	self._btndeepLayer:AddClickListener(self._btndeepLayerOnClick, self)
+	self:addEventCb(TowerController.instance, TowerEvent.SelectPermanentAltitude, self.selectPermanentAltitude, self)
+	self:addEventCb(TowerController.instance, TowerEvent.OnSelectDeepLayer, self.refreshUI, self)
+	self:addEventCb(TowerController.instance, TowerEvent.OnTowerResetSubEpisode, self.refreshEpisode, self)
+	self:addEventCb(TowerController.instance, TowerEvent.DailyReresh, self.onDailyRefresh, self)
+	self:addEventCb(TowerController.instance, TowerEvent.OnCloseEnterDeepGuideView, self.enterDeepGuideFinish, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._scrollcategory:RemoveOnValueChanged()
-	arg_3_0._btnCurStageFold:RemoveClickListener()
-	arg_3_0._btndeepLayer:RemoveClickListener()
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.SelectPermanentAltitude, arg_3_0.selectPermanentAltitude, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.OnSelectDeepLayer, arg_3_0.refreshUI, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.OnTowerResetSubEpisode, arg_3_0.refreshEpisode, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.DailyReresh, arg_3_0.onDailyRefresh, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.OnCloseEnterDeepGuideView, arg_3_0.enterDeepGuideFinish, arg_3_0)
+function TowerPermanentView:removeEvents()
+	self._scrollcategory:RemoveOnValueChanged()
+	self._btnCurStageFold:RemoveClickListener()
+	self._btndeepLayer:RemoveClickListener()
+	self:removeEventCb(TowerController.instance, TowerEvent.SelectPermanentAltitude, self.selectPermanentAltitude, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.OnSelectDeepLayer, self.refreshUI, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.OnTowerResetSubEpisode, self.refreshEpisode, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.DailyReresh, self.onDailyRefresh, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.OnCloseEnterDeepGuideView, self.enterDeepGuideFinish, self)
 end
 
-var_0_0.maxStageCount = 6
-var_0_0.showNextStageTitleTime = 0.4
-var_0_0.selectNextStageTime = 0.7
-var_0_0.selectNextLayerTime = 1
-var_0_0.animBlockName = "TowerPermanentViewAnimBlock"
+TowerPermanentView.maxStageCount = 6
+TowerPermanentView.showNextStageTitleTime = 0.4
+TowerPermanentView.selectNextStageTime = 0.7
+TowerPermanentView.selectNextLayerTime = 1
+TowerPermanentView.animBlockName = "TowerPermanentViewAnimBlock"
 
-function var_0_0._btnEliteEpisodeItemClick(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_0.curSelectEpisodeIndex == arg_4_1 then
+function TowerPermanentView:_btnEliteEpisodeItemClick(episodeIndex, isAuto)
+	if self.curSelectEpisodeIndex == episodeIndex then
 		return
 	end
 
-	local var_4_0 = arg_4_0.episodeIdList[arg_4_1]
-	local var_4_1 = arg_4_0.eliteItemTab[arg_4_0.layerConfig.layerId]
+	local selectEpisodeId = self.episodeIdList[episodeIndex]
+	local eliteEpisodeList = self.eliteItemTab[self.layerConfig.layerId]
 
-	arg_4_0.curSelectEpisodeIndex = arg_4_1
+	self.curSelectEpisodeIndex = episodeIndex
 
-	for iter_4_0, iter_4_1 in pairs(var_4_1) do
-		iter_4_1.isSelect = iter_4_0 == arg_4_1
+	for index, episodeItem in pairs(eliteEpisodeList) do
+		episodeItem.isSelect = index == episodeIndex
 
-		gohelper.setActive(iter_4_1.goSelect, iter_4_1.isSelect)
-		gohelper.setActive(iter_4_1.imageSelectFinishIcon.gameObject, iter_4_1.isFinish)
-		gohelper.setActive(iter_4_1.goFinish, iter_4_1.isFinish and not iter_4_1.isSelect)
+		gohelper.setActive(episodeItem.goSelect, episodeItem.isSelect)
+		gohelper.setActive(episodeItem.imageSelectFinishIcon.gameObject, episodeItem.isFinish)
+		gohelper.setActive(episodeItem.goFinish, episodeItem.isFinish and not episodeItem.isSelect)
 	end
 
-	TowerPermanentModel.instance:setCurSelectEpisodeId(var_4_0)
+	TowerPermanentModel.instance:setCurSelectEpisodeId(selectEpisodeId)
 
-	if not arg_4_2 then
-		arg_4_0._viewAnim:Play("switchright", 0, 0)
+	if not isAuto then
+		self._viewAnim:Play("switchright", 0, 0)
 		AudioMgr.instance:trigger(AudioEnum.Tower.play_ui_fight_ripple)
 	else
 		TowerController.instance:dispatchEvent(TowerEvent.SelectPermanentEpisode)
 	end
 end
 
-function var_0_0._btnNormalEpisodeItemClick(arg_5_0, arg_5_1)
-	arg_5_0.normalEpisodeItem.isSelect = true
+function TowerPermanentView:_btnNormalEpisodeItemClick(episodeId)
+	self.normalEpisodeItem.isSelect = true
 
-	gohelper.setActive(arg_5_0.normalEpisodeItem.goSelect, arg_5_0.normalEpisodeItem.isSelect)
-	TowerPermanentModel.instance:setCurSelectEpisodeId(arg_5_1)
+	gohelper.setActive(self.normalEpisodeItem.goSelect, self.normalEpisodeItem.isSelect)
+	TowerPermanentModel.instance:setCurSelectEpisodeId(episodeId)
 	TowerController.instance:dispatchEvent(TowerEvent.SelectPermanentEpisode)
 end
 
-function var_0_0._btnCurStageFoldOnClick(arg_6_0)
-	arg_6_0.scrollCategoryRect.velocity = Vector2(0, 0)
+function TowerPermanentView:_btnCurStageFoldOnClick()
+	self.scrollCategoryRect.velocity = Vector2(0, 0)
 
-	local var_6_0 = TowerPermanentModel.instance:getCurSelectStage()
+	local curStage = TowerPermanentModel.instance:getCurSelectStage()
 
-	TowerController.instance:dispatchEvent(TowerEvent.FoldCurStage, var_6_0)
+	TowerController.instance:dispatchEvent(TowerEvent.FoldCurStage, curStage)
 end
 
-function var_0_0._btndeepLayerOnClick(arg_7_0)
-	if TowerPermanentDeepModel.instance:getIsSelectDeepCategory() then
+function TowerPermanentView:_btndeepLayerOnClick()
+	local isSelectDeepCategory = TowerPermanentDeepModel.instance:getIsSelectDeepCategory()
+
+	if isSelectDeepCategory then
 		return
 	end
 
-	if not TowerPermanentDeepModel.instance:getIsInDeepLayerState() then
-		arg_7_0._viewAnim:Play("openenterdeep", 0, 0)
+	local isInDeepLayer = TowerPermanentDeepModel.instance:getIsInDeepLayerState()
+
+	if not isInDeepLayer then
+		self._viewAnim:Play("openenterdeep", 0, 0)
 		AudioMgr.instance:trigger(AudioEnum.Tower.play_ui_fight_bubbles)
 		AudioMgr.instance:trigger(AudioEnum.Tower.play_ui_mingdi_boss_enter)
 	end
@@ -129,307 +135,309 @@ function var_0_0._btndeepLayerOnClick(arg_7_0)
 	TowerPermanentDeepModel.instance:setIsSelectDeepCategory(true)
 	TowerController.instance:dispatchEvent(TowerEvent.OnSelectDeepLayer)
 
-	local var_7_0 = TowerPermanentModel.instance:getCurUnfoldStage()
-	local var_7_1, var_7_2 = TowerPermanentModel.instance:getNewtStageAndLayer()
+	local curStage = TowerPermanentModel.instance:getCurUnfoldStage()
+	local maxStage, maxLayerIndex = TowerPermanentModel.instance:getNewtStageAndLayer()
 
-	if var_7_0 == var_7_1 then
-		arg_7_0._scrollcategory.verticalNormalizedPosition = 0
+	if curStage == maxStage then
+		self._scrollcategory.verticalNormalizedPosition = 0
 	else
-		arg_7_0._scrollcategory.verticalNormalizedPosition = 1
+		self._scrollcategory.verticalNormalizedPosition = 1
 
 		TowerPermanentModel.instance:onModelUpdate()
-		TowerController.instance:dispatchEvent(TowerEvent.FoldCurStage, var_7_0)
+		TowerController.instance:dispatchEvent(TowerEvent.FoldCurStage, curStage)
 	end
 end
 
-function var_0_0.onDailyRefresh(arg_8_0)
+function TowerPermanentView:onDailyRefresh()
 	if TowerPermanentModel.instance:isNewStage() then
-		arg_8_0._scrollcategory.verticalNormalizedPosition = 1
+		self._scrollcategory.verticalNormalizedPosition = 1
 
 		TowerPermanentModel.instance:onModelUpdate()
 
-		local var_8_0 = TowerPermanentModel.instance:getCurUnfoldStage()
+		local curStage = TowerPermanentModel.instance:getCurUnfoldStage()
 
-		TowerController.instance:dispatchEvent(TowerEvent.FoldCurStage, var_8_0)
+		TowerController.instance:dispatchEvent(TowerEvent.FoldCurStage, curStage)
 	end
 
-	arg_8_0.scrollCategoryRect.velocity = Vector2(0, 0)
+	self.scrollCategoryRect.velocity = Vector2(0, 0)
 
-	arg_8_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0._editableInitView(arg_9_0)
-	arg_9_0._rectContent = arg_9_0._goContent:GetComponent(gohelper.Type_RectTransform)
-	arg_9_0._viewportMask2D = arg_9_0._goViewport:GetComponent(gohelper.Type_RectMask2D)
-	arg_9_0.scrollCategoryRect = arg_9_0._scrollcategory:GetComponent(typeof(UnityEngine.UI.ScrollRect))
-	arg_9_0._animEventWrap = arg_9_0.viewGO:GetComponent(typeof(ZProj.AnimationEventWrap))
+function TowerPermanentView:_editableInitView()
+	self._rectContent = self._goContent:GetComponent(gohelper.Type_RectTransform)
+	self._viewportMask2D = self._goViewport:GetComponent(gohelper.Type_RectMask2D)
+	self.scrollCategoryRect = self._scrollcategory:GetComponent(typeof(UnityEngine.UI.ScrollRect))
+	self._animEventWrap = self.viewGO:GetComponent(typeof(ZProj.AnimationEventWrap))
 
-	arg_9_0._animEventWrap:AddEventListener("switch", arg_9_0.refreshUI, arg_9_0)
+	self._animEventWrap:AddEventListener("switch", self.refreshUI, self)
 
-	arg_9_0._bgAnim = gohelper.findChild(arg_9_0.viewGO, "Bg"):GetComponent(gohelper.Type_Animator)
-	arg_9_0.deepLayerAnim = gohelper.findChildComponent(arg_9_0.viewGO, "Left/#go_deepLayer/#go_deepNormal", gohelper.Type_Animation)
-	arg_9_0.eliteItemTab = arg_9_0:getUserDataTb_()
-	arg_9_0.eliteItemPosTab = arg_9_0:getUserDataTb_()
-	arg_9_0.rewardTab = arg_9_0:getUserDataTb_()
-	arg_9_0.eliteBgAnimTab = arg_9_0:getUserDataTb_()
+	self._bgAnim = gohelper.findChild(self.viewGO, "Bg"):GetComponent(gohelper.Type_Animator)
+	self.deepLayerAnim = gohelper.findChildComponent(self.viewGO, "Left/#go_deepLayer/#go_deepNormal", gohelper.Type_Animation)
+	self.eliteItemTab = self:getUserDataTb_()
+	self.eliteItemPosTab = self:getUserDataTb_()
+	self.rewardTab = self:getUserDataTb_()
+	self.eliteBgAnimTab = self:getUserDataTb_()
 
-	gohelper.setActive(arg_9_0._goeliteItem, false)
-	gohelper.setActive(arg_9_0._gorewardItem, false)
+	gohelper.setActive(self._goeliteItem, false)
+	gohelper.setActive(self._gorewardItem, false)
 
-	arg_9_0.tempDeepGuideFinish = false
+	self.tempDeepGuideFinish = false
 
-	for iter_9_0 = 1, var_0_0.maxStageCount do
-		local var_9_0 = {
-			go = gohelper.findChild(arg_9_0.viewGO, "Bg/" .. iter_9_0 .. "/#go_Elitebg")
-		}
+	for i = 1, TowerPermanentView.maxStageCount do
+		local eliteAnimItem = {}
 
-		arg_9_0.eliteBgAnimTab[iter_9_0] = var_9_0
+		eliteAnimItem.go = gohelper.findChild(self.viewGO, "Bg/" .. i .. "/#go_Elitebg")
+		self.eliteBgAnimTab[i] = eliteAnimItem
 
-		gohelper.setActive(var_9_0.go, false)
+		gohelper.setActive(eliteAnimItem.go, false)
 	end
 
-	for iter_9_1 = 2, var_0_0.maxStageCount do
-		local var_9_1 = {
-			go = gohelper.findChild(arg_9_0.viewGO, "episode/#go_eliteEpisode/#go_elite" .. iter_9_1),
-			posTab = {}
-		}
+	for i = 2, TowerPermanentView.maxStageCount do
+		local eliteItemPos = {}
 
-		for iter_9_2 = 1, iter_9_1 do
-			local var_9_2 = gohelper.findChild(var_9_1.go, "go_pos" .. iter_9_2)
+		eliteItemPos.go = gohelper.findChild(self.viewGO, "episode/#go_eliteEpisode/#go_elite" .. i)
+		eliteItemPos.posTab = {}
 
-			var_9_1.posTab[iter_9_2] = var_9_2
+		for j = 1, i do
+			local posItem = gohelper.findChild(eliteItemPos.go, "go_pos" .. j)
+
+			eliteItemPos.posTab[j] = posItem
 		end
 
-		arg_9_0.eliteItemPosTab[iter_9_1] = var_9_1
+		self.eliteItemPosTab[i] = eliteItemPos
 	end
 
-	arg_9_0:initNormalEpisodeItem()
+	self:initNormalEpisodeItem()
 	TowerPermanentModel.instance:setCurSelectEpisodeId(0)
 
-	arg_9_0.deepGuideId = TowerDeepConfig.instance:getConstConfigValue(TowerDeepEnum.ConstId.FirstEnterDeepGuideId)
+	self.deepGuideId = TowerDeepConfig.instance:getConstConfigValue(TowerDeepEnum.ConstId.FirstEnterDeepGuideId)
 end
 
-function var_0_0.initNormalEpisodeItem(arg_10_0)
-	arg_10_0.normalEpisodeItem = arg_10_0:getUserDataTb_()
-	arg_10_0.normalEpisodeItem.go = arg_10_0._gonormalItem
-	arg_10_0.normalEpisodeItem.imageIcon = gohelper.findChildImage(arg_10_0.normalEpisodeItem.go, "image_icon")
-	arg_10_0.normalEpisodeItem.goSelect = gohelper.findChild(arg_10_0.normalEpisodeItem.go, "go_select")
-	arg_10_0.normalEpisodeItem.imageSelectIcon = gohelper.findChildImage(arg_10_0.normalEpisodeItem.go, "go_select/image_selectIcon")
-	arg_10_0.normalEpisodeItem.imageSelectFinishIcon = gohelper.findChildImage(arg_10_0.normalEpisodeItem.go, "go_select/image_selectFinishIcon")
-	arg_10_0.normalEpisodeItem.goFinish = gohelper.findChild(arg_10_0.normalEpisodeItem.go, "go_finish")
-	arg_10_0.normalEpisodeItem.imageFinishIcon = gohelper.findChildImage(arg_10_0.normalEpisodeItem.go, "go_finish/image_finishIcon")
-	arg_10_0.normalEpisodeItem.txtName = gohelper.findChildText(arg_10_0.normalEpisodeItem.go, "txt_name")
-	arg_10_0.normalEpisodeItem.btnClick = gohelper.findChildButtonWithAudio(arg_10_0.normalEpisodeItem.go, "btn_click")
-	arg_10_0.normalEpisodeItem.goFinishEffect = gohelper.findChild(arg_10_0.normalEpisodeItem.go, "go_finishEffect")
+function TowerPermanentView:initNormalEpisodeItem()
+	self.normalEpisodeItem = self:getUserDataTb_()
+	self.normalEpisodeItem.go = self._gonormalItem
+	self.normalEpisodeItem.imageIcon = gohelper.findChildImage(self.normalEpisodeItem.go, "image_icon")
+	self.normalEpisodeItem.goSelect = gohelper.findChild(self.normalEpisodeItem.go, "go_select")
+	self.normalEpisodeItem.imageSelectIcon = gohelper.findChildImage(self.normalEpisodeItem.go, "go_select/image_selectIcon")
+	self.normalEpisodeItem.imageSelectFinishIcon = gohelper.findChildImage(self.normalEpisodeItem.go, "go_select/image_selectFinishIcon")
+	self.normalEpisodeItem.goFinish = gohelper.findChild(self.normalEpisodeItem.go, "go_finish")
+	self.normalEpisodeItem.imageFinishIcon = gohelper.findChildImage(self.normalEpisodeItem.go, "go_finish/image_finishIcon")
+	self.normalEpisodeItem.txtName = gohelper.findChildText(self.normalEpisodeItem.go, "txt_name")
+	self.normalEpisodeItem.btnClick = gohelper.findChildButtonWithAudio(self.normalEpisodeItem.go, "btn_click")
+	self.normalEpisodeItem.goFinishEffect = gohelper.findChild(self.normalEpisodeItem.go, "go_finishEffect")
 end
 
-function var_0_0.onUpdateParam(arg_11_0)
+function TowerPermanentView:onUpdateParam()
 	return
 end
 
-function var_0_0._onScrollChange(arg_12_0, arg_12_1)
-	local var_12_0 = TowerPermanentModel.instance:getCurSelectStage()
-	local var_12_1 = TowerPermanentModel.instance:getStageCount()
+function TowerPermanentView:_onScrollChange(value)
+	local curStage = TowerPermanentModel.instance:getCurSelectStage()
+	local maxStage = TowerPermanentModel.instance:getStageCount()
 
-	gohelper.setActive(arg_12_0._btnCurStageFold.gameObject, var_12_0 < var_12_1)
+	gohelper.setActive(self._btnCurStageFold.gameObject, curStage < maxStage)
 
-	local var_12_2 = recthelper.getAnchorY(arg_12_0._rectContent) > (var_12_0 - 1) * TowerEnum.PermanentUI.StageTitleH
+	local curContentPosY = recthelper.getAnchorY(self._rectContent)
+	local canShowStageInfo = curContentPosY > (curStage - 1) * TowerEnum.PermanentUI.StageTitleH
 
-	gohelper.setActive(arg_12_0._goStageInfo, var_12_2)
+	gohelper.setActive(self._goStageInfo, canShowStageInfo)
 
-	local var_12_3 = TowerConfig.instance:getTowerPermanentTimeCo(var_12_0)
+	local timeTowerConfig = TowerConfig.instance:getTowerPermanentTimeCo(curStage)
 
-	arg_12_0._txtCurStage.text = var_12_3.name
+	self._txtCurStage.text = timeTowerConfig.name
 
-	local var_12_4 = var_12_2 and TowerEnum.PermanentUI.StageTitleH or 0
+	local maskTopPadding = canShowStageInfo and TowerEnum.PermanentUI.StageTitleH or 0
 
-	arg_12_0._viewportMask2D.padding = Vector4(0, 0, -150, var_12_4)
+	self._viewportMask2D.padding = Vector4(0, 0, -150, maskTopPadding)
 end
 
-function var_0_0.onOpen(arg_13_0)
-	arg_13_0.jumpParam = arg_13_0.viewParam or {}
+function TowerPermanentView:onOpen()
+	self.jumpParam = self.viewParam or {}
 
-	gohelper.setActive(arg_13_0._goStageInfo, false)
-	arg_13_0:refreshUI()
+	gohelper.setActive(self._goStageInfo, false)
+	self:refreshUI()
 
-	if arg_13_0.canShowDeep then
-		local var_13_0, var_13_1 = TowerPermanentModel.instance:getRealSelectStage()
+	if self.canShowDeep then
+		local realSelectStage, realSelectLayerIndex = TowerPermanentModel.instance:getRealSelectStage()
 
-		arg_13_0:scrollMoveToTargetLayer(var_13_0, var_13_1)
+		self:scrollMoveToTargetLayer(realSelectStage, realSelectLayerIndex)
 	else
-		arg_13_0:scrollMoveToTargetLayer()
+		self:scrollMoveToTargetLayer()
 	end
 
-	if tabletool.len(arg_13_0.jumpParam) > 0 then
-		arg_13_0._viewAnim:Play("opennormal", 0, 0)
-	elseif arg_13_0.isDeepLayerUnlock and not arg_13_0.isEnterDeepGuideFinish then
+	if tabletool.len(self.jumpParam) > 0 then
+		self._viewAnim:Play("opennormal", 0, 0)
+	elseif self.isDeepLayerUnlock and not self.isEnterDeepGuideFinish then
 		-- block empty
 	else
-		arg_13_0._viewAnim:Play(arg_13_0.canShowDeep and "openenterdeep" or "openenter", 0, 0)
+		self._viewAnim:Play(self.canShowDeep and "openenterdeep" or "openenter", 0, 0)
 		AudioMgr.instance:trigger(AudioEnum.Tower.play_ui_fight_bubbles)
 
-		if arg_13_0.canShowDeep then
+		if self.canShowDeep then
 			AudioMgr.instance:trigger(AudioEnum.Tower.play_ui_mingdi_boss_enter)
 		end
 	end
 
-	local var_13_2 = TowerModel.instance:getCurPermanentMo()
-	local var_13_3 = TowerPermanentModel.instance:getLocalPassLayer()
+	local curPermanentMo = TowerModel.instance:getCurPermanentMo()
+	local localPassLayer = TowerPermanentModel.instance:getLocalPassLayer()
 
-	if not var_13_3 or var_13_3 == -1 then
-		TowerPermanentModel.instance:setLocalPassLayer(var_13_2.passLayerId)
+	if not localPassLayer or localPassLayer == -1 then
+		TowerPermanentModel.instance:setLocalPassLayer(curPermanentMo.passLayerId)
 	end
 
-	if arg_13_0.jumpParam and arg_13_0.jumpParam.episodeId and arg_13_0.layerConfig and arg_13_0.layerConfig.isElite == 1 then
-		for iter_13_0, iter_13_1 in ipairs(arg_13_0.episodeIdList) do
-			if iter_13_1 == arg_13_0.jumpParam.episodeId then
-				arg_13_0:_btnEliteEpisodeItemClick(iter_13_0, true)
+	if self.jumpParam and self.jumpParam.episodeId and self.layerConfig and self.layerConfig.isElite == 1 then
+		for index, episodeId in ipairs(self.episodeIdList) do
+			if episodeId == self.jumpParam.episodeId then
+				self:_btnEliteEpisodeItemClick(index, true)
 
 				break
 			end
 		end
 
-		local var_13_4 = TowerPermanentModel.instance:getFirstUnFinishEipsode(arg_13_0.jumpParam.layerId)
+		local unfinishEpisodeMo = TowerPermanentModel.instance:getFirstUnFinishEipsode(self.jumpParam.layerId)
 
-		if var_13_4 then
-			arg_13_0.nextUnfinishEpisodeId = var_13_4.episodeId
+		if unfinishEpisodeMo then
+			self.nextUnfinishEpisodeId = unfinishEpisodeMo.episodeId
 
-			TaskDispatcher.runDelay(arg_13_0.selectNextEpisode, arg_13_0, 1)
-			UIBlockMgr.instance:startBlock(var_0_0.animBlockName)
+			TaskDispatcher.runDelay(self.selectNextEpisode, self, 1)
+			UIBlockMgr.instance:startBlock(TowerPermanentView.animBlockName)
 			UIBlockMgrExtend.setNeedCircleMv(false)
 		end
 	end
 
-	if arg_13_0.jumpParam and arg_13_0.jumpParam.episodeId and TowerPermanentModel.instance:isNewPassLayer() then
-		UIBlockMgr.instance:startBlock(var_0_0.animBlockName)
+	if self.jumpParam and self.jumpParam.episodeId and TowerPermanentModel.instance:isNewPassLayer() then
+		UIBlockMgr.instance:startBlock(TowerPermanentView.animBlockName)
 		UIBlockMgrExtend.setNeedCircleMv(false)
-		gohelper.setActive(arg_13_0._gocompleted, false)
+		gohelper.setActive(self._gocompleted, false)
 
-		local var_13_5, var_13_6, var_13_7 = TowerPermanentModel.instance:isNewStage()
+		local isNewStage, maxStage, lastStage = TowerPermanentModel.instance:isNewStage()
 
-		if var_13_7 == var_13_6 and var_13_7 > 1 then
-			arg_13_0._bgAnim:Play(var_13_7 - 1 .. "to" .. var_13_7, 0, 1)
+		if lastStage == maxStage and lastStage > 1 then
+			self._bgAnim:Play(lastStage - 1 .. "to" .. lastStage, 0, 1)
 		end
 
-		for iter_13_2, iter_13_3 in pairs(arg_13_0.rewardTab) do
-			gohelper.setActive(iter_13_3.goHasGet, false)
+		for index, rewardItem in pairs(self.rewardTab) do
+			gohelper.setActive(rewardItem.goHasGet, false)
 		end
 
-		TaskDispatcher.runDelay(arg_13_0.playFinishEffect, arg_13_0, 1)
+		TaskDispatcher.runDelay(self.playFinishEffect, self, 1)
 	end
 end
 
-function var_0_0.playFinishEffect(arg_14_0)
-	gohelper.setActive(arg_14_0._gocompleted, arg_14_0.isAllFinish)
-	gohelper.setActive(arg_14_0._goschedule, arg_14_0.layerConfig.isElite == 1 and not arg_14_0.isAllFinish)
-	arg_14_0._animCompleted:Play("in", 0, 0)
+function TowerPermanentView:playFinishEffect()
+	gohelper.setActive(self._gocompleted, self.isAllFinish)
+	gohelper.setActive(self._goschedule, self.layerConfig.isElite == 1 and not self.isAllFinish)
+	self._animCompleted:Play("in", 0, 0)
 	AudioMgr.instance:trigger(AudioEnum.Tower.play_ui_fight_complete)
 
-	for iter_14_0, iter_14_1 in pairs(arg_14_0.rewardTab) do
-		gohelper.setActive(iter_14_1.goHasGet, true)
-		iter_14_1.animHasGet:Play("go_hasget_in", 0, 0)
+	for index, rewardItem in pairs(self.rewardTab) do
+		gohelper.setActive(rewardItem.goHasGet, true)
+		rewardItem.animHasGet:Play("go_hasget_in", 0, 0)
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.Tower.play_ui_fight_award)
-	TowerController.instance:dispatchEvent(TowerEvent.PermanentTowerFinishLayer, arg_14_0.jumpParam.layerId)
+	TowerController.instance:dispatchEvent(TowerEvent.PermanentTowerFinishLayer, self.jumpParam.layerId)
 
-	if arg_14_0.isDeepLayerUnlock and not arg_14_0.isEnterDeepGuideFinish then
-		gohelper.setActive(arg_14_0._godeepLayer, true)
-		arg_14_0.deepLayerAnim:Play()
-		TaskDispatcher.runDelay(arg_14_0.enterDeepGuide, arg_14_0, 1)
+	if self.isDeepLayerUnlock and not self.isEnterDeepGuideFinish then
+		gohelper.setActive(self._godeepLayer, true)
+		self.deepLayerAnim:Play()
+		TaskDispatcher.runDelay(self.enterDeepGuide, self, 1)
 	else
-		local var_14_0, var_14_1, var_14_2 = TowerPermanentModel.instance:isNewStage()
+		local isNewStage, maxStage, lastStage = TowerPermanentModel.instance:isNewStage()
 
-		arg_14_0.isNewStageInfo = {
-			isNewStage = var_14_0,
-			maxStage = var_14_1
+		self.isNewStageInfo = {
+			isNewStage = isNewStage,
+			maxStage = maxStage
 		}
 
-		if var_14_0 then
-			arg_14_0._bgAnim:Play(var_14_2 .. "to" .. var_14_1, 0, 0)
+		if isNewStage then
+			self._bgAnim:Play(lastStage .. "to" .. maxStage, 0, 0)
 
-			if TowerConfig.instance:getPermanentEpisodeCo(arg_14_0.jumpParam.layerId).isElite == 1 then
-				gohelper.setActive(arg_14_0.eliteBgAnimTab[var_14_2].go, true)
+			local permanentEpisodeCo = TowerConfig.instance:getPermanentEpisodeCo(self.jumpParam.layerId)
+
+			if permanentEpisodeCo.isElite == 1 then
+				gohelper.setActive(self.eliteBgAnimTab[lastStage].go, true)
 			end
-		elseif var_14_2 == var_14_1 and var_14_2 > 1 then
-			arg_14_0._bgAnim:Play(var_14_2 - 1 .. "to" .. var_14_2, 0, 1)
+		elseif lastStage == maxStage and lastStage > 1 then
+			self._bgAnim:Play(lastStage - 1 .. "to" .. lastStage, 0, 1)
 		end
 
-		arg_14_0:setNewStageAndLayer(var_14_0)
+		self:setNewStageAndLayer(isNewStage)
 
-		local var_14_3 = TowerModel.instance:getCurPermanentMo()
+		local curPermanentMo = TowerModel.instance:getCurPermanentMo()
 
-		TowerPermanentModel.instance:setLocalPassLayer(var_14_3.passLayerId)
+		TowerPermanentModel.instance:setLocalPassLayer(curPermanentMo.passLayerId)
 	end
 end
 
-function var_0_0.enterDeepGuide(arg_15_0)
-	arg_15_0:doEnterDeepGuide(true)
+function TowerPermanentView:enterDeepGuide()
+	self:doEnterDeepGuide(true)
 end
 
-function var_0_0.setNewStageAndLayer(arg_16_0, arg_16_1)
-	local var_16_0, var_16_1 = TowerPermanentModel.instance:getNewtStageAndLayer()
+function TowerPermanentView:setNewStageAndLayer(isNewStage)
+	local maxStage, maxLayerIndex = TowerPermanentModel.instance:getNewtStageAndLayer()
 
-	arg_16_0.animPermanentEpisodeCo = TowerConfig.instance:getPermanentEpisodeLayerCo(var_16_0, var_16_1)
+	self.animPermanentEpisodeCo = TowerConfig.instance:getPermanentEpisodeLayerCo(maxStage, maxLayerIndex)
 
-	if arg_16_1 then
-		arg_16_0:refreshEnterTitle(var_16_0)
-		TaskDispatcher.runDelay(arg_16_0.showNextStageTitleAnim, arg_16_0, var_0_0.showNextStageTitleTime)
-		TaskDispatcher.runDelay(arg_16_0._btnCurStageFoldOnClick, arg_16_0, var_0_0.selectNextStageTime)
-		TaskDispatcher.runDelay(arg_16_0.permanentSelectNextLayer, arg_16_0, var_0_0.selectNextStageTime + var_0_0.selectNextLayerTime)
+	if isNewStage then
+		self:refreshEnterTitle(maxStage)
+		TaskDispatcher.runDelay(self.showNextStageTitleAnim, self, TowerPermanentView.showNextStageTitleTime)
+		TaskDispatcher.runDelay(self._btnCurStageFoldOnClick, self, TowerPermanentView.selectNextStageTime)
+		TaskDispatcher.runDelay(self.permanentSelectNextLayer, self, TowerPermanentView.selectNextStageTime + TowerPermanentView.selectNextLayerTime)
 	else
-		TaskDispatcher.runDelay(arg_16_0.permanentSelectNextLayer, arg_16_0, var_0_0.selectNextLayerTime)
+		TaskDispatcher.runDelay(self.permanentSelectNextLayer, self, TowerPermanentView.selectNextLayerTime)
 	end
 end
 
-function var_0_0.showNextStageTitleAnim(arg_17_0)
-	if arg_17_0.isNewStageInfo and arg_17_0.isNewStageInfo.isNewStage then
-		arg_17_0._viewAnim:Play("switchfloor", 0, 0)
+function TowerPermanentView:showNextStageTitleAnim()
+	if self.isNewStageInfo and self.isNewStageInfo.isNewStage then
+		self._viewAnim:Play("switchfloor", 0, 0)
 		AudioMgr.instance:trigger(AudioEnum.Tower.play_ui_fight_bubbles)
 	end
 end
 
-function var_0_0.selectNextEpisode(arg_18_0)
-	if arg_18_0.nextUnfinishEpisodeId > 0 then
-		for iter_18_0, iter_18_1 in ipairs(arg_18_0.episodeIdList) do
-			if iter_18_1 == arg_18_0.nextUnfinishEpisodeId then
-				arg_18_0:_btnEliteEpisodeItemClick(iter_18_0, false)
+function TowerPermanentView:selectNextEpisode()
+	if self.nextUnfinishEpisodeId > 0 then
+		for index, episodeId in ipairs(self.episodeIdList) do
+			if episodeId == self.nextUnfinishEpisodeId then
+				self:_btnEliteEpisodeItemClick(index, false)
 
 				break
 			end
 		end
 	end
 
-	UIBlockMgr.instance:endBlock(var_0_0.animBlockName)
+	UIBlockMgr.instance:endBlock(TowerPermanentView.animBlockName)
 	UIBlockMgrExtend.setNeedCircleMv(true)
 end
 
-function var_0_0.permanentSelectNextLayer(arg_19_0)
-	UIBlockMgr.instance:endBlock(var_0_0.animBlockName)
+function TowerPermanentView:permanentSelectNextLayer()
+	UIBlockMgr.instance:endBlock(TowerPermanentView.animBlockName)
 	UIBlockMgrExtend.setNeedCircleMv(true)
-	TowerController.instance:dispatchEvent(TowerEvent.PermanentSelectNextLayer, arg_19_0.animPermanentEpisodeCo)
+	TowerController.instance:dispatchEvent(TowerEvent.PermanentSelectNextLayer, self.animPermanentEpisodeCo)
 end
 
-function var_0_0.selectPermanentAltitude(arg_20_0)
-	arg_20_0.curSelectEpisodeIndex = 0
+function TowerPermanentView:selectPermanentAltitude()
+	self.curSelectEpisodeIndex = 0
 
-	if not arg_20_0.isNewStageInfo or tabletool.len(arg_20_0.isNewStageInfo) == 0 or not arg_20_0.isNewStageInfo.isNewStage then
-		arg_20_0._viewAnim:Play(UIAnimationName.Switch, 0, 0)
+	if not self.isNewStageInfo or tabletool.len(self.isNewStageInfo) == 0 or not self.isNewStageInfo.isNewStage then
+		self._viewAnim:Play(UIAnimationName.Switch, 0, 0)
 	else
-		arg_20_0.isNewStageInfo = nil
+		self.isNewStageInfo = nil
 
-		arg_20_0:refreshUI()
+		self:refreshUI()
 	end
 end
 
-function var_0_0.selectUnfinishEpisode(arg_21_0)
-	if arg_21_0.layerConfig.isElite == 1 then
-		local var_21_0 = TowerPermanentModel.instance:getFirstUnFinishEipsode(arg_21_0.layerConfig.layerId)
+function TowerPermanentView:selectUnfinishEpisode()
+	if self.layerConfig.isElite == 1 then
+		local unfinishEpisodeMo = TowerPermanentModel.instance:getFirstUnFinishEipsode(self.layerConfig.layerId)
 
-		if var_21_0 then
-			for iter_21_0, iter_21_1 in ipairs(arg_21_0.episodeIdList) do
-				if iter_21_1 == var_21_0.episodeId then
-					arg_21_0:_btnEliteEpisodeItemClick(iter_21_0, true)
+		if unfinishEpisodeMo then
+			for index, episodeId in ipairs(self.episodeIdList) do
+				if episodeId == unfinishEpisodeMo.episodeId then
+					self:_btnEliteEpisodeItemClick(index, true)
 
 					break
 				end
@@ -438,253 +446,255 @@ function var_0_0.selectUnfinishEpisode(arg_21_0)
 	end
 end
 
-function var_0_0.refreshUI(arg_22_0)
-	arg_22_0:refreshDeepLayer()
+function TowerPermanentView:refreshUI()
+	self:refreshDeepLayer()
 
-	if not arg_22_0.canShowDeep then
-		arg_22_0:refreshEpisode()
-		arg_22_0:refreshReward()
-		arg_22_0:selectUnfinishEpisode()
-		arg_22_0:refreshStageItemEffect()
-		arg_22_0:refreshEnterTitle()
-		arg_22_0:doEnterDeepGuide()
+	if not self.canShowDeep then
+		self:refreshEpisode()
+		self:refreshReward()
+		self:selectUnfinishEpisode()
+		self:refreshStageItemEffect()
+		self:refreshEnterTitle()
+		self:doEnterDeepGuide()
 	end
 end
 
-function var_0_0.refreshDeepLayer(arg_23_0)
-	arg_23_0.isDeepLayerUnlock = TowerPermanentDeepModel.instance:checkDeepLayerUnlock()
-	arg_23_0.isEnterDeepGuideFinish = TowerPermanentDeepModel.instance:checkEnterDeepLayerGuideFinish() or arg_23_0.tempDeepGuideFinish
-	arg_23_0.isInDeepLayer = TowerPermanentDeepModel.instance:getIsInDeepLayerState()
-	arg_23_0.canShowDeep = arg_23_0.isDeepLayerUnlock and arg_23_0.isEnterDeepGuideFinish and arg_23_0.isInDeepLayer
+function TowerPermanentView:refreshDeepLayer()
+	self.isDeepLayerUnlock = TowerPermanentDeepModel.instance:checkDeepLayerUnlock()
+	self.isEnterDeepGuideFinish = TowerPermanentDeepModel.instance:checkEnterDeepLayerGuideFinish() or self.tempDeepGuideFinish
+	self.isInDeepLayer = TowerPermanentDeepModel.instance:getIsInDeepLayerState()
+	self.canShowDeep = self.isDeepLayerUnlock and self.isEnterDeepGuideFinish and self.isInDeepLayer
 
-	gohelper.setActive(arg_23_0._godeep, arg_23_0.canShowDeep)
-	gohelper.setActive(arg_23_0._goepisode, not arg_23_0.canShowDeep)
-	gohelper.setActive(arg_23_0._gotitle, not arg_23_0.canShowDeep)
-	gohelper.setActive(arg_23_0._gorewardBg, not arg_23_0.canShowDeep)
-	gohelper.setActive(arg_23_0._goreward, not arg_23_0.canShowDeep)
-	gohelper.setActive(arg_23_0._goright, not arg_23_0.canShowDeep)
+	gohelper.setActive(self._godeep, self.canShowDeep)
+	gohelper.setActive(self._goepisode, not self.canShowDeep)
+	gohelper.setActive(self._gotitle, not self.canShowDeep)
+	gohelper.setActive(self._gorewardBg, not self.canShowDeep)
+	gohelper.setActive(self._goreward, not self.canShowDeep)
+	gohelper.setActive(self._goright, not self.canShowDeep)
 
-	local var_23_0 = TowerPermanentDeepModel.instance:getIsSelectDeepCategory()
+	local isSelectDeepCategory = TowerPermanentDeepModel.instance:getIsSelectDeepCategory()
 
-	gohelper.setActive(arg_23_0._godeepSelect, var_23_0)
-	gohelper.setActive(arg_23_0._godeepNormal, not var_23_0)
+	gohelper.setActive(self._godeepSelect, isSelectDeepCategory)
+	gohelper.setActive(self._godeepNormal, not isSelectDeepCategory)
 end
 
-function var_0_0.doEnterDeepGuide(arg_24_0, arg_24_1)
-	arg_24_0.isEnterDeepGuideFinish = TowerPermanentDeepModel.instance:checkEnterDeepLayerGuideFinish()
+function TowerPermanentView:doEnterDeepGuide(isForceGuide)
+	self.isEnterDeepGuideFinish = TowerPermanentDeepModel.instance:checkEnterDeepLayerGuideFinish()
 
-	if arg_24_0.isDeepLayerUnlock and not arg_24_0.isEnterDeepGuideFinish and (not arg_24_0.jumpParam or not arg_24_0.jumpParam.episodeId or arg_24_1) then
-		arg_24_0:_btndeepLayerOnClick()
-		TaskDispatcher.runDelay(arg_24_0.realEnterDeepGuide, arg_24_0, 1.5)
+	if self.isDeepLayerUnlock and not self.isEnterDeepGuideFinish and (not self.jumpParam or not self.jumpParam.episodeId or isForceGuide) then
+		self:_btndeepLayerOnClick()
+		TaskDispatcher.runDelay(self.realEnterDeepGuide, self, 1.5)
 	end
 end
 
-function var_0_0.realEnterDeepGuide(arg_25_0)
-	gohelper.setActive(arg_25_0._goenterDeepGuide, true)
-	UIBlockMgr.instance:endBlock(var_0_0.animBlockName)
+function TowerPermanentView:realEnterDeepGuide()
+	gohelper.setActive(self._goenterDeepGuide, true)
+	UIBlockMgr.instance:endBlock(TowerPermanentView.animBlockName)
 	UIBlockMgrExtend.setNeedCircleMv(true)
-	TaskDispatcher.runDelay(arg_25_0.sendOnEnterDeepGuide, arg_25_0, 0.2)
+	TaskDispatcher.runDelay(self.sendOnEnterDeepGuide, self, 0.2)
 end
 
-function var_0_0.sendOnEnterDeepGuide(arg_26_0)
+function TowerPermanentView:sendOnEnterDeepGuide()
 	TowerController.instance:dispatchEvent(TowerEvent.OnEnterDeepGuide)
 end
 
-function var_0_0.enterDeepGuideFinish(arg_27_0)
-	arg_27_0.enterDeepGuideAnim:Play("close", 0, 0)
-	arg_27_0.enterDeepGuideAnim:Update(0)
-	TaskDispatcher.runDelay(arg_27_0.hideEnterDeepGuide, arg_27_0, 0.5)
+function TowerPermanentView:enterDeepGuideFinish()
+	self.enterDeepGuideAnim:Play("close", 0, 0)
+	self.enterDeepGuideAnim:Update(0)
+	TaskDispatcher.runDelay(self.hideEnterDeepGuide, self, 0.5)
 
-	arg_27_0.tempDeepGuideFinish = true
+	self.tempDeepGuideFinish = true
 
-	arg_27_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.hideEnterDeepGuide(arg_28_0)
-	gohelper.setActive(arg_28_0._goenterDeepGuide, false)
+function TowerPermanentView:hideEnterDeepGuide()
+	gohelper.setActive(self._goenterDeepGuide, false)
 end
 
-function var_0_0.refreshStageItemEffect(arg_29_0)
-	for iter_29_0 = 1, var_0_0.maxStageCount do
-		gohelper.setActive(arg_29_0.eliteBgAnimTab[iter_29_0].go, iter_29_0 == arg_29_0.curStage and arg_29_0.layerConfig.isElite == 1)
+function TowerPermanentView:refreshStageItemEffect()
+	for i = 1, TowerPermanentView.maxStageCount do
+		gohelper.setActive(self.eliteBgAnimTab[i].go, i == self.curStage and self.layerConfig.isElite == 1)
 	end
 end
 
-function var_0_0.refreshEnterTitle(arg_30_0, arg_30_1)
-	local var_30_0 = arg_30_1 or arg_30_0.curStage
-	local var_30_1 = TowerConfig.instance:getTowerPermanentTimeCo(var_30_0)
+function TowerPermanentView:refreshEnterTitle(stage)
+	local showStage = stage or self.curStage
+	local timeTowerConfig = TowerConfig.instance:getTowerPermanentTimeCo(showStage)
 
-	arg_30_0._txtEnterTitle.text = var_30_1.name
-	arg_30_0._txtEnterTitleEn.text = var_30_1.nameEn
+	self._txtEnterTitle.text = timeTowerConfig.name
+	self._txtEnterTitleEn.text = timeTowerConfig.nameEn
 
-	arg_30_0._simageEnterBg:LoadImage(ResUrl.getTowerIcon("permanent/towerpermanent_bg" .. Mathf.Min(var_30_0, TowerDeepEnum.MaxNormalBgStage)))
+	self._simageEnterBg:LoadImage(ResUrl.getTowerIcon("permanent/towerpermanent_bg" .. Mathf.Min(showStage, TowerDeepEnum.MaxNormalBgStage)))
 end
 
-function var_0_0.refreshEpisode(arg_31_0)
-	local var_31_0, var_31_1 = TowerPermanentModel.instance:getRealSelectStage()
+function TowerPermanentView:refreshEpisode()
+	local realSelectStage, realSelectLayerIndex = TowerPermanentModel.instance:getRealSelectStage()
 
-	arg_31_0.curStage = TowerPermanentModel.instance:getCurSelectStage()
-	arg_31_0.curLayerIndex = TowerPermanentModel.instance:getCurSelectLayer()
-	arg_31_0.realSelectLayerIndex = var_31_1
-	arg_31_0.realselectStage = var_31_0
-	arg_31_0.layerConfig = TowerConfig.instance:getPermanentEpisodeLayerCo(arg_31_0.realselectStage, arg_31_0.realSelectLayerIndex)
-	arg_31_0.isAllFinish = arg_31_0.layerConfig.layerId <= TowerPermanentModel.instance.curPassLayer
-	arg_31_0.episodeIdList = string.splitToNumber(arg_31_0.layerConfig.episodeIds, "|")
+	self.curStage = TowerPermanentModel.instance:getCurSelectStage()
+	self.curLayerIndex = TowerPermanentModel.instance:getCurSelectLayer()
+	self.realSelectLayerIndex = realSelectLayerIndex
+	self.realselectStage = realSelectStage
+	self.layerConfig = TowerConfig.instance:getPermanentEpisodeLayerCo(self.realselectStage, self.realSelectLayerIndex)
+	self.isAllFinish = self.layerConfig.layerId <= TowerPermanentModel.instance.curPassLayer
+	self.episodeIdList = string.splitToNumber(self.layerConfig.episodeIds, "|")
 
-	local var_31_2 = #arg_31_0.episodeIdList
-	local var_31_3 = arg_31_0.layerConfig.isElite == 1
+	local episodeCount = #self.episodeIdList
+	local isElite = self.layerConfig.isElite == 1
 
-	gohelper.setActive(arg_31_0._gonormalEpisode, not var_31_3)
-	gohelper.setActive(arg_31_0._goeliteEpisode, var_31_3)
-	gohelper.setActive(arg_31_0._goschedule, var_31_3 and not arg_31_0.isAllFinish)
+	gohelper.setActive(self._gonormalEpisode, not isElite)
+	gohelper.setActive(self._goeliteEpisode, isElite)
+	gohelper.setActive(self._goschedule, isElite and not self.isAllFinish)
 
-	local var_31_4 = TowerConfig.instance:getTowerPermanentTimeCo(arg_31_0.curStage)
+	local timeTowerConfig = TowerConfig.instance:getTowerPermanentTimeCo(self.curStage)
 
-	arg_31_0._txtTitle.text = var_31_4.name
-	arg_31_0._txtTitleEn.text = var_31_4.nameEn
+	self._txtTitle.text = timeTowerConfig.name
+	self._txtTitleEn.text = timeTowerConfig.nameEn
 
-	if arg_31_0.curStage > 1 then
-		arg_31_0._bgAnim:Play(arg_31_0.curStage - 1 .. "to" .. arg_31_0.curStage, 0, 1)
+	if self.curStage > 1 then
+		self._bgAnim:Play(self.curStage - 1 .. "to" .. self.curStage, 0, 1)
 	else
-		arg_31_0._bgAnim:Play("1idle", 0, 1)
+		self._bgAnim:Play("1idle", 0, 1)
 	end
 
-	if var_31_3 then
-		local var_31_5 = TowerModel.instance:getCurPermanentMo()
-		local var_31_6 = var_31_5:getSubEpisodePassCount(arg_31_0.layerConfig.layerId)
+	if isElite then
+		local curPermanentMo = TowerModel.instance:getCurPermanentMo()
+		local passCount = curPermanentMo:getSubEpisodePassCount(self.layerConfig.layerId)
 
-		arg_31_0._txtschedule.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("towerpermanentresultview_schedule"), var_31_6, #arg_31_0.episodeIdList)
+		self._txtschedule.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("towerpermanentresultview_schedule"), passCount, #self.episodeIdList)
 
-		for iter_31_0, iter_31_1 in ipairs(arg_31_0.episodeIdList) do
-			local var_31_7 = arg_31_0.viewContainer:getTowerPermanentPoolView():createOrGetEliteEpisodeItem(iter_31_0, arg_31_0._btnEliteEpisodeItemClick, arg_31_0)
+		for index, episodeId in ipairs(self.episodeIdList) do
+			local episodeItem = self.viewContainer:getTowerPermanentPoolView():createOrGetEliteEpisodeItem(index, self._btnEliteEpisodeItemClick, self)
 
-			if not arg_31_0.eliteItemTab[arg_31_0.layerConfig.layerId] then
-				arg_31_0.eliteItemTab[arg_31_0.layerConfig.layerId] = {}
+			if not self.eliteItemTab[self.layerConfig.layerId] then
+				self.eliteItemTab[self.layerConfig.layerId] = {}
 			end
 
-			arg_31_0.eliteItemTab[arg_31_0.layerConfig.layerId][iter_31_0] = var_31_7
+			self.eliteItemTab[self.layerConfig.layerId][index] = episodeItem
 
-			gohelper.setActive(var_31_7.go, true)
+			gohelper.setActive(episodeItem.go, true)
 
-			local var_31_8 = arg_31_0.eliteItemPosTab[var_31_2].posTab[iter_31_0]
+			local parentGO = self.eliteItemPosTab[episodeCount].posTab[index]
 
-			var_31_7.go.transform:SetParent(var_31_8.transform, false)
-			recthelper.setAnchor(var_31_7.go.transform, 0, 0)
+			episodeItem.go.transform:SetParent(parentGO.transform, false)
+			recthelper.setAnchor(episodeItem.go.transform, 0, 0)
 
-			local var_31_9 = var_31_5:getSubEpisodeMoByEpisodeId(iter_31_1)
+			local subEpisodeMo = curPermanentMo:getSubEpisodeMoByEpisodeId(episodeId)
 
-			var_31_7.isFinish = var_31_9 and var_31_9.status == TowerEnum.PassEpisodeState.Pass
+			episodeItem.isFinish = subEpisodeMo and subEpisodeMo.status == TowerEnum.PassEpisodeState.Pass
 
-			gohelper.setActive(var_31_7.goFinish, var_31_7.isFinish)
+			gohelper.setActive(episodeItem.goFinish, episodeItem.isFinish)
 
-			var_31_7.txtName.text = GameUtil.getRomanNums(iter_31_0)
+			episodeItem.txtName.text = GameUtil.getRomanNums(index)
 
-			gohelper.setActive(var_31_7.imageSelectIcon.gameObject, not var_31_7.isFinish)
-			gohelper.setActive(var_31_7.imageSelectFinishIcon.gameObject, var_31_7.isFinish)
-			gohelper.setActive(var_31_7.goFinishEffect, var_31_7.isFinish)
-			UISpriteSetMgr.instance:setTowerPermanentSprite(var_31_7.imageIcon, arg_31_0:getEliteEpisodeIconName(iter_31_0, TowerEnum.PermanentEliteEpisodeState.Normal), true)
-			UISpriteSetMgr.instance:setTowerPermanentSprite(var_31_7.imageSelectIcon, arg_31_0:getEliteEpisodeIconName(iter_31_0, TowerEnum.PermanentEliteEpisodeState.NormalSelect), true)
-			UISpriteSetMgr.instance:setTowerPermanentSprite(var_31_7.imageSelectFinishIcon, arg_31_0:getEliteEpisodeIconName(iter_31_0, TowerEnum.PermanentEliteEpisodeState.FinishSelect), true)
-			UISpriteSetMgr.instance:setTowerPermanentSprite(var_31_7.imageFinishIcon, arg_31_0:getEliteEpisodeIconName(iter_31_0, TowerEnum.PermanentEliteEpisodeState.Finish), true)
+			gohelper.setActive(episodeItem.imageSelectIcon.gameObject, not episodeItem.isFinish)
+			gohelper.setActive(episodeItem.imageSelectFinishIcon.gameObject, episodeItem.isFinish)
+			gohelper.setActive(episodeItem.goFinishEffect, episodeItem.isFinish)
+			UISpriteSetMgr.instance:setTowerPermanentSprite(episodeItem.imageIcon, self:getEliteEpisodeIconName(index, TowerEnum.PermanentEliteEpisodeState.Normal), true)
+			UISpriteSetMgr.instance:setTowerPermanentSprite(episodeItem.imageSelectIcon, self:getEliteEpisodeIconName(index, TowerEnum.PermanentEliteEpisodeState.NormalSelect), true)
+			UISpriteSetMgr.instance:setTowerPermanentSprite(episodeItem.imageSelectFinishIcon, self:getEliteEpisodeIconName(index, TowerEnum.PermanentEliteEpisodeState.FinishSelect), true)
+			UISpriteSetMgr.instance:setTowerPermanentSprite(episodeItem.imageFinishIcon, self:getEliteEpisodeIconName(index, TowerEnum.PermanentEliteEpisodeState.Finish), true)
 		end
 
-		arg_31_0.viewContainer:getTowerPermanentPoolView():recycleEliteEpisodeItem(arg_31_0.episodeIdList)
+		self.viewContainer:getTowerPermanentPoolView():recycleEliteEpisodeItem(self.episodeIdList)
 
-		for iter_31_2 = 2, 5 do
-			gohelper.setActive(arg_31_0.eliteItemPosTab[iter_31_2].go, iter_31_2 == var_31_2)
+		for i = 2, 5 do
+			gohelper.setActive(self.eliteItemPosTab[i].go, i == episodeCount)
 		end
 
-		if arg_31_0.curSelectEpisodeIndex and arg_31_0.curSelectEpisodeIndex > 0 then
-			arg_31_0:_btnEliteEpisodeItemClick(arg_31_0.curSelectEpisodeIndex, true)
+		if self.curSelectEpisodeIndex and self.curSelectEpisodeIndex > 0 then
+			self:_btnEliteEpisodeItemClick(self.curSelectEpisodeIndex, true)
 		else
-			arg_31_0:_btnEliteEpisodeItemClick(1, true)
+			self:_btnEliteEpisodeItemClick(1, true)
 		end
 	else
-		UISpriteSetMgr.instance:setTowerPermanentSprite(arg_31_0.normalEpisodeItem.imageIcon, arg_31_0:getEliteEpisodeIconName(1, TowerEnum.PermanentEliteEpisodeState.Normal), true)
-		UISpriteSetMgr.instance:setTowerPermanentSprite(arg_31_0.normalEpisodeItem.imageSelectIcon, arg_31_0:getEliteEpisodeIconName(1, TowerEnum.PermanentEliteEpisodeState.NormalSelect), true)
-		UISpriteSetMgr.instance:setTowerPermanentSprite(arg_31_0.normalEpisodeItem.imageSelectFinishIcon, arg_31_0:getEliteEpisodeIconName(1, TowerEnum.PermanentEliteEpisodeState.FinishSelect), true)
-		UISpriteSetMgr.instance:setTowerPermanentSprite(arg_31_0.normalEpisodeItem.imageFinishIcon, arg_31_0:getEliteEpisodeIconName(1, TowerEnum.PermanentEliteEpisodeState.Finish), true)
+		UISpriteSetMgr.instance:setTowerPermanentSprite(self.normalEpisodeItem.imageIcon, self:getEliteEpisodeIconName(1, TowerEnum.PermanentEliteEpisodeState.Normal), true)
+		UISpriteSetMgr.instance:setTowerPermanentSprite(self.normalEpisodeItem.imageSelectIcon, self:getEliteEpisodeIconName(1, TowerEnum.PermanentEliteEpisodeState.NormalSelect), true)
+		UISpriteSetMgr.instance:setTowerPermanentSprite(self.normalEpisodeItem.imageSelectFinishIcon, self:getEliteEpisodeIconName(1, TowerEnum.PermanentEliteEpisodeState.FinishSelect), true)
+		UISpriteSetMgr.instance:setTowerPermanentSprite(self.normalEpisodeItem.imageFinishIcon, self:getEliteEpisodeIconName(1, TowerEnum.PermanentEliteEpisodeState.Finish), true)
 
-		arg_31_0.normalEpisodeItem.txtName.text = "ST - " .. arg_31_0.realSelectLayerIndex
+		self.normalEpisodeItem.txtName.text = "ST - " .. self.realSelectLayerIndex
 
-		gohelper.setActive(arg_31_0.normalEpisodeItem.goSelect, true)
-		gohelper.setActive(arg_31_0.normalEpisodeItem.imageSelectIcon.gameObject, not arg_31_0.isAllFinish)
-		gohelper.setActive(arg_31_0.normalEpisodeItem.imageSelectFinishIcon.gameObject, arg_31_0.isAllFinish)
-		gohelper.setActive(arg_31_0.normalEpisodeItem.goFinishEffect, arg_31_0.isAllFinish)
-		gohelper.setActive(arg_31_0.normalEpisodeItem.goFinish, false)
-		arg_31_0.normalEpisodeItem.btnClick:AddClickListener(arg_31_0._btnNormalEpisodeItemClick, arg_31_0, arg_31_0.episodeIdList[1])
-		arg_31_0:_btnNormalEpisodeItemClick(arg_31_0.episodeIdList[1])
+		gohelper.setActive(self.normalEpisodeItem.goSelect, true)
+		gohelper.setActive(self.normalEpisodeItem.imageSelectIcon.gameObject, not self.isAllFinish)
+		gohelper.setActive(self.normalEpisodeItem.imageSelectFinishIcon.gameObject, self.isAllFinish)
+		gohelper.setActive(self.normalEpisodeItem.goFinishEffect, self.isAllFinish)
+		gohelper.setActive(self.normalEpisodeItem.goFinish, false)
+		self.normalEpisodeItem.btnClick:AddClickListener(self._btnNormalEpisodeItemClick, self, self.episodeIdList[1])
+		self:_btnNormalEpisodeItemClick(self.episodeIdList[1])
 	end
 
-	gohelper.setActive(arg_31_0._gocompleted, arg_31_0.isAllFinish)
+	gohelper.setActive(self._gocompleted, self.isAllFinish)
 end
 
-function var_0_0.getEliteEpisodeIconName(arg_32_0, arg_32_1, arg_32_2)
-	return string.format("towerpermanent_stage_%d_%d", arg_32_1, arg_32_2)
+function TowerPermanentView:getEliteEpisodeIconName(index, state)
+	return string.format("towerpermanent_stage_%d_%d", index, state)
 end
 
-function var_0_0.refreshReward(arg_33_0)
-	local var_33_0 = string.split(arg_33_0.layerConfig.firstReward, "|")
+function TowerPermanentView:refreshReward()
+	local rewardList = string.split(self.layerConfig.firstReward, "|")
 
-	gohelper.CreateObjList(arg_33_0, arg_33_0.rewardItemShow, var_33_0, arg_33_0._goreward, arg_33_0._gorewardItem)
+	gohelper.CreateObjList(self, self.rewardItemShow, rewardList, self._goreward, self._gorewardItem)
 end
 
-function var_0_0.rewardItemShow(arg_34_0, arg_34_1, arg_34_2, arg_34_3)
-	local var_34_0 = arg_34_0.rewardTab[arg_34_3]
+function TowerPermanentView:rewardItemShow(obj, data, index)
+	local rewardItem = self.rewardTab[index]
 
-	if not var_34_0 then
-		var_34_0 = {
-			itemPos = gohelper.findChild(arg_34_1, "go_rewardPos"),
-			goHasGet = gohelper.findChild(arg_34_1, "go_rewardGet"),
-			animHasGet = gohelper.findChild(arg_34_1, "go_rewardGet/icon/go_hasget"):GetComponent(gohelper.Type_Animator)
+	if not rewardItem then
+		rewardItem = {
+			itemPos = gohelper.findChild(obj, "go_rewardPos"),
+			goHasGet = gohelper.findChild(obj, "go_rewardGet"),
+			animHasGet = gohelper.findChild(obj, "go_rewardGet/icon/go_hasget"):GetComponent(gohelper.Type_Animator)
 		}
-		var_34_0.item = IconMgr.instance:getCommonPropItemIcon(var_34_0.itemPos)
-		arg_34_0.rewardTab[arg_34_3] = var_34_0
+		rewardItem.item = IconMgr.instance:getCommonPropItemIcon(rewardItem.itemPos)
+		self.rewardTab[index] = rewardItem
 	end
 
-	local var_34_1 = string.splitToNumber(arg_34_2, "#")
+	local itemCo = string.splitToNumber(data, "#")
 
-	var_34_0.item:setMOValue(var_34_1[1], var_34_1[2], var_34_1[3])
-	var_34_0.item:setHideLvAndBreakFlag(true)
-	var_34_0.item:hideEquipLvAndBreak(true)
-	var_34_0.item:setCountFontSize(51)
-	gohelper.setActive(var_34_0.goHasGet, arg_34_0.isAllFinish)
+	rewardItem.item:setMOValue(itemCo[1], itemCo[2], itemCo[3])
+	rewardItem.item:setHideLvAndBreakFlag(true)
+	rewardItem.item:hideEquipLvAndBreak(true)
+	rewardItem.item:setCountFontSize(51)
+	gohelper.setActive(rewardItem.goHasGet, self.isAllFinish)
 end
 
-function var_0_0.scrollMoveToTargetLayer(arg_35_0, arg_35_1, arg_35_2)
-	local var_35_0 = arg_35_1 or arg_35_0.realselectStage
-	local var_35_1 = arg_35_2 or arg_35_0.realSelectLayerIndex
-	local var_35_2 = (var_35_0 - 1) * TowerEnum.PermanentUI.StageTitleH + (var_35_1 - 1) * (TowerEnum.PermanentUI.SingleItemH + TowerEnum.PermanentUI.ItemSpaceH)
-	local var_35_3 = TowerPermanentModel.instance:getCurContentTotalHeight() - (arg_35_0.isDeepLayerUnlock and TowerEnum.PermanentUI.DeepScrollH or TowerEnum.PermanentUI.ScrollH) + 1
-	local var_35_4 = Mathf.Min(var_35_2, var_35_3)
+function TowerPermanentView:scrollMoveToTargetLayer(stage, layerIndex)
+	local targetStage = stage or self.realselectStage
+	local targetLayerIndex = layerIndex or self.realSelectLayerIndex
+	local moveAnchorY = (targetStage - 1) * TowerEnum.PermanentUI.StageTitleH + (targetLayerIndex - 1) * (TowerEnum.PermanentUI.SingleItemH + TowerEnum.PermanentUI.ItemSpaceH)
+	local contentH = TowerPermanentModel.instance:getCurContentTotalHeight()
+	local MaxMoveY = contentH - (self.isDeepLayerUnlock and TowerEnum.PermanentUI.DeepScrollH or TowerEnum.PermanentUI.ScrollH) + 1
 
-	recthelper.setAnchorY(arg_35_0._goContent.transform, var_35_4)
-	arg_35_0:_onScrollChange()
+	moveAnchorY = Mathf.Min(moveAnchorY, MaxMoveY)
+
+	recthelper.setAnchorY(self._goContent.transform, moveAnchorY)
+	self:_onScrollChange()
 end
 
-function var_0_0.onClose(arg_36_0)
-	if arg_36_0.normalEpisodeItem.btnClick then
-		arg_36_0.normalEpisodeItem.btnClick:RemoveClickListener()
+function TowerPermanentView:onClose()
+	if self.normalEpisodeItem.btnClick then
+		self.normalEpisodeItem.btnClick:RemoveClickListener()
 	end
 
-	TaskDispatcher.cancelTask(arg_36_0.showNextStageTitleAnim, arg_36_0)
-	TaskDispatcher.cancelTask(arg_36_0._btnCurStageFoldOnClick, arg_36_0)
-	TaskDispatcher.cancelTask(arg_36_0.permanentSelectNextLayer, arg_36_0)
-	TaskDispatcher.cancelTask(arg_36_0.playFinishEffect, arg_36_0)
-	TaskDispatcher.cancelTask(arg_36_0.selectNextEpisode, arg_36_0)
-	TaskDispatcher.cancelTask(arg_36_0.sendOnEnterDeepGuide, arg_36_0)
-	TaskDispatcher.cancelTask(arg_36_0.enterDeepGuide, arg_36_0)
-	TaskDispatcher.cancelTask(arg_36_0.realEnterDeepGuide, arg_36_0)
-	TaskDispatcher.cancelTask(arg_36_0.hideEnterDeepGuide, arg_36_0)
-	UIBlockMgr.instance:endBlock(var_0_0.animBlockName)
+	TaskDispatcher.cancelTask(self.showNextStageTitleAnim, self)
+	TaskDispatcher.cancelTask(self._btnCurStageFoldOnClick, self)
+	TaskDispatcher.cancelTask(self.permanentSelectNextLayer, self)
+	TaskDispatcher.cancelTask(self.playFinishEffect, self)
+	TaskDispatcher.cancelTask(self.selectNextEpisode, self)
+	TaskDispatcher.cancelTask(self.sendOnEnterDeepGuide, self)
+	TaskDispatcher.cancelTask(self.enterDeepGuide, self)
+	TaskDispatcher.cancelTask(self.realEnterDeepGuide, self)
+	TaskDispatcher.cancelTask(self.hideEnterDeepGuide, self)
+	UIBlockMgr.instance:endBlock(TowerPermanentView.animBlockName)
 	UIBlockMgrExtend.setNeedCircleMv(true)
 end
 
-function var_0_0.onDestroyView(arg_37_0)
+function TowerPermanentView:onDestroyView()
 	TowerPermanentModel.instance:cleanData()
-	arg_37_0._simageEnterBg:UnLoadImage()
-	arg_37_0._animEventWrap:RemoveAllEventListener()
+	self._simageEnterBg:UnLoadImage()
+	self._animEventWrap:RemoveAllEventListener()
 	TowerModel.instance:cleanTrialData()
 end
 
-return var_0_0
+return TowerPermanentView

@@ -1,65 +1,67 @@
-﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity_1_2_HeroGroupBuildView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/versionactivity1_2dungeon/view/VersionActivity_1_2_HeroGroupBuildView.lua
 
-local var_0_0 = class("VersionActivity_1_2_HeroGroupBuildView", BaseViewExtended)
+module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity_1_2_HeroGroupBuildView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._facilitycontain = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/facilitycontain")
-	arg_1_0._txtplacedcount = gohelper.findChildText(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/facilitycontain/info/#txt_placedcount")
-	arg_1_0._btnfacilitydetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/facilitycontain/info/#txt_placedcount/#btn_facilitydetail", AudioEnum.TeachNote.play_ui_activity_switch)
+local VersionActivity_1_2_HeroGroupBuildView = class("VersionActivity_1_2_HeroGroupBuildView", BaseViewExtended)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity_1_2_HeroGroupBuildView:onInitView()
+	self._facilitycontain = gohelper.findChild(self.viewGO, "#go_container/#scroll_info/infocontain/facilitycontain")
+	self._txtplacedcount = gohelper.findChildText(self.viewGO, "#go_container/#scroll_info/infocontain/facilitycontain/info/#txt_placedcount")
+	self._btnfacilitydetail = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/#scroll_info/infocontain/facilitycontain/info/#txt_placedcount/#btn_facilitydetail", AudioEnum.TeachNote.play_ui_activity_switch)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnfacilitydetail:AddClickListener(arg_2_0._onBtnDetail, arg_2_0)
+function VersionActivity_1_2_HeroGroupBuildView:addEvents()
+	self._btnfacilitydetail:AddClickListener(self._onBtnDetail, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnfacilitydetail:RemoveClickListener()
+function VersionActivity_1_2_HeroGroupBuildView:removeEvents()
+	self._btnfacilitydetail:RemoveClickListener()
 end
 
-function var_0_0._onBtnDetail(arg_4_0)
-	if #arg_4_0._gainList == 0 then
+function VersionActivity_1_2_HeroGroupBuildView:_onBtnDetail()
+	if #self._gainList == 0 then
 		GameFacade.showToast(ToastEnum.Act114BuildingIsEmpty)
 	else
 		ViewMgr.instance:openView(ViewName.VersionActivity_1_2_FacilityTipsView)
 	end
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function VersionActivity_1_2_HeroGroupBuildView:_editableInitView()
 	return
 end
 
-function var_0_0.onRefreshViewParam(arg_6_0)
+function VersionActivity_1_2_HeroGroupBuildView:onRefreshViewParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	local var_7_0 = DungeonModel.instance:hasPassLevelAndStory(1210105)
-	local var_7_1 = FightModel.instance:getFightParam()
+function VersionActivity_1_2_HeroGroupBuildView:onOpen()
+	local isOpen = DungeonModel.instance:hasPassLevelAndStory(1210105)
+	local fightParam = FightModel.instance:getFightParam()
 
-	if var_7_1 then
-		local var_7_2 = DungeonConfig.instance:getEpisodeCO(var_7_1.episodeId)
+	if fightParam then
+		local episodeConfig = DungeonConfig.instance:getEpisodeCO(fightParam.episodeId)
 
-		if var_7_2 and var_7_2.chapterId == 12102 then
-			var_7_0 = false
+		if episodeConfig and episodeConfig.chapterId == 12102 then
+			isOpen = false
 		end
 	end
 
-	gohelper.setActive(arg_7_0._facilitycontain, var_7_0)
+	gohelper.setActive(self._facilitycontain, isOpen)
 
-	arg_7_0._gainList = VersionActivity1_2DungeonModel.instance:getBuildingGainList()
-	arg_7_0._txtplacedcount.text = formatLuaLang("versionactivity_1_2_herogroupview_placedcount", #arg_7_0._gainList)
+	self._gainList = VersionActivity1_2DungeonModel.instance:getBuildingGainList()
+	self._txtplacedcount.text = formatLuaLang("versionactivity_1_2_herogroupview_placedcount", #self._gainList)
 end
 
-function var_0_0.onClose(arg_8_0)
+function VersionActivity_1_2_HeroGroupBuildView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
+function VersionActivity_1_2_HeroGroupBuildView:onDestroyView()
 	return
 end
 
-return var_0_0
+return VersionActivity_1_2_HeroGroupBuildView

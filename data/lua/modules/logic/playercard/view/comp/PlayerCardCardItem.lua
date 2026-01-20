@@ -1,310 +1,316 @@
-﻿module("modules.logic.playercard.view.comp.PlayerCardCardItem", package.seeall)
+﻿-- chunkname: @modules/logic/playercard/view/comp/PlayerCardCardItem.lua
 
-local var_0_0 = class("PlayerCardCardItem", ListScrollCell)
+module("modules.logic.playercard.view.comp.PlayerCardCardItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0)
+local PlayerCardCardItem = class("PlayerCardCardItem", ListScrollCell)
 
-	arg_1_0.compType = arg_1_1 and arg_1_1.compType
-	arg_1_0.cardIndex = arg_1_1 and arg_1_1.index
+function PlayerCardCardItem:ctor(param)
+	PlayerCardCardItem.super.ctor(self)
+
+	self.compType = param and param.compType
+	self.cardIndex = param and param.index
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.viewGO = arg_2_1
-	arg_2_0.imageBg = gohelper.findChildImage(arg_2_0.viewGO, "#image_bg")
-	arg_2_0.goEmpty = gohelper.findChild(arg_2_0.viewGO, "empty")
-	arg_2_0.goEmptyAdd = gohelper.findChild(arg_2_0.goEmpty, "#btn_add")
-	arg_2_0.goEmptyImg = gohelper.findChild(arg_2_0.goEmpty, "img_empty")
-	arg_2_0.goNormal = gohelper.findChild(arg_2_0.viewGO, "normal")
-	arg_2_0.txtCardName = gohelper.findChildTextMesh(arg_2_0.goNormal, "#txt_cardname")
-	arg_2_0.txtEnName = gohelper.findChildTextMesh(arg_2_0.goNormal, "#txt_en")
-	arg_2_0.txtDesc = gohelper.findChildTextMesh(arg_2_0.goNormal, "#txt_dec")
-	arg_2_0.goNormalChange = gohelper.findChild(arg_2_0.goNormal, "#btn_change")
-	arg_2_0.goSelect = gohelper.findChild(arg_2_0.viewGO, "select")
-	arg_2_0.txtIndex = gohelper.findChildTextMesh(arg_2_0.goSelect, "#txt_order")
-	arg_2_0.btnChange = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "#btn_change")
-	arg_2_0.goSelectedEff = gohelper.findChild(arg_2_0.viewGO, "selected_eff")
+function PlayerCardCardItem:init(go)
+	self.viewGO = go
+	self.imageBg = gohelper.findChildImage(self.viewGO, "#image_bg")
+	self.goEmpty = gohelper.findChild(self.viewGO, "empty")
+	self.goEmptyAdd = gohelper.findChild(self.goEmpty, "#btn_add")
+	self.goEmptyImg = gohelper.findChild(self.goEmpty, "img_empty")
+	self.goNormal = gohelper.findChild(self.viewGO, "normal")
+	self.txtCardName = gohelper.findChildTextMesh(self.goNormal, "#txt_cardname")
+	self.txtEnName = gohelper.findChildTextMesh(self.goNormal, "#txt_en")
+	self.txtDesc = gohelper.findChildTextMesh(self.goNormal, "#txt_dec")
+	self.goNormalChange = gohelper.findChild(self.goNormal, "#btn_change")
+	self.goSelect = gohelper.findChild(self.viewGO, "select")
+	self.txtIndex = gohelper.findChildTextMesh(self.goSelect, "#txt_order")
+	self.btnChange = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_change")
+	self.goSelectedEff = gohelper.findChild(self.viewGO, "selected_eff")
 
-	arg_2_0:initCard()
-	arg_2_0:setVisible(true)
+	self:initCard()
+	self:setVisible(true)
 end
 
-function var_0_0.setVisible(arg_3_0, arg_3_1)
-	if arg_3_0.isVisible == arg_3_1 then
+function PlayerCardCardItem:setVisible(isVisible)
+	if self.isVisible == isVisible then
 		return
 	end
 
-	arg_3_0.isVisible = arg_3_1
+	self.isVisible = isVisible
 
-	gohelper.setActive(arg_3_0.viewGO, arg_3_1)
+	gohelper.setActive(self.viewGO, isVisible)
 end
 
-function var_0_0.playSelelctEffect(arg_4_0)
-	gohelper.setActive(arg_4_0.goSelectedEff, false)
-	gohelper.setActive(arg_4_0.goSelectedEff, true)
+function PlayerCardCardItem:playSelelctEffect()
+	gohelper.setActive(self.goSelectedEff, false)
+	gohelper.setActive(self.goSelectedEff, true)
 	PlayerCardController.instance:playChangeEffectAudio()
 end
 
-function var_0_0.initCard(arg_5_0)
-	for iter_5_0, iter_5_1 in pairs(PlayerCardEnum.CardKey) do
-		local var_5_0 = arg_5_0[string.format("_initCard" .. iter_5_1)]
+function PlayerCardCardItem:initCard()
+	for k, v in pairs(PlayerCardEnum.CardKey) do
+		local funcName = string.format("_initCard" .. v)
+		local func = self[funcName]
 
-		if var_5_0 then
-			var_5_0(arg_5_0)
+		if func then
+			func(self)
 		end
 	end
 end
 
-function var_0_0._initCard3(arg_6_0)
-	arg_6_0.goRole = gohelper.findChild(arg_6_0.goNormal, "#go_role")
-	arg_6_0._collectionFulls = arg_6_0:getUserDataTb_()
+function PlayerCardCardItem:_initCard3()
+	self.goRole = gohelper.findChild(self.goNormal, "#go_role")
+	self._collectionFulls = self:getUserDataTb_()
 
-	for iter_6_0 = 1, 5 do
-		arg_6_0._collectionFulls[iter_6_0] = gohelper.findChildImage(arg_6_0.goRole, string.format("collection/collection%s/#image_full", iter_6_0))
+	for i = 1, 5 do
+		self._collectionFulls[i] = gohelper.findChildImage(self.goRole, string.format("collection/collection%s/#image_full", i))
 	end
 end
 
-function var_0_0._initCard4(arg_7_0)
-	arg_7_0.goRoom = gohelper.findChild(arg_7_0.goNormal, "#go_room")
-	arg_7_0.txtLand = gohelper.findChildTextMesh(arg_7_0.goRoom, "#txt_num1")
-	arg_7_0.txtBuilding = gohelper.findChildTextMesh(arg_7_0.goRoom, "#txt_num2")
+function PlayerCardCardItem:_initCard4()
+	self.goRoom = gohelper.findChild(self.goNormal, "#go_room")
+	self.txtLand = gohelper.findChildTextMesh(self.goRoom, "#txt_num1")
+	self.txtBuilding = gohelper.findChildTextMesh(self.goRoom, "#txt_num2")
 end
 
-function var_0_0._initCard6(arg_8_0)
-	arg_8_0.goExplore = gohelper.findChild(arg_8_0.goNormal, "#go_explore")
-	arg_8_0.exportItem = {}
+function PlayerCardCardItem:_initCard6()
+	self.goExplore = gohelper.findChild(self.goNormal, "#go_explore")
+	self.exportItem = {}
 
-	for iter_8_0 = 1, 3 do
-		local var_8_0 = arg_8_0:getUserDataTb_()
+	for i = 1, 3 do
+		local item = self:getUserDataTb_()
 
-		var_8_0.txtExplore = gohelper.findChildTextMesh(arg_8_0.goExplore, "#txt_num" .. tostring(iter_8_0))
-		var_8_0.image = gohelper.findChildImage(arg_8_0.goExplore, string.format("#txt_num%s/icon", iter_8_0))
-		arg_8_0.exportItem[iter_8_0] = var_8_0
+		item.txtExplore = gohelper.findChildTextMesh(self.goExplore, "#txt_num" .. tostring(i))
+		item.image = gohelper.findChildImage(self.goExplore, string.format("#txt_num%s/icon", i))
+		self.exportItem[i] = item
 	end
 end
 
-function var_0_0.refreshView(arg_9_0, arg_9_1, arg_9_2)
-	if arg_9_0.notIsFirst and arg_9_0.cardConfig ~= arg_9_2 then
-		arg_9_0:playSelelctEffect()
+function PlayerCardCardItem:refreshView(info, config)
+	if self.notIsFirst and self.cardConfig ~= config then
+		self:playSelelctEffect()
 	end
 
-	arg_9_0.notIsFirst = true
-	arg_9_0.cardInfo = arg_9_1
-	arg_9_0.cardConfig = arg_9_2
+	self.notIsFirst = true
+	self.cardInfo = info
+	self.cardConfig = config
 
-	if arg_9_0.cardConfig then
-		UISpriteSetMgr.instance:setPlayerInfoSprite(arg_9_0.imageBg, "player_card_" .. arg_9_2.id, true)
-		gohelper.setActive(arg_9_0.goEmpty, false)
-		gohelper.setActive(arg_9_0.goNormal, true)
+	if self.cardConfig then
+		UISpriteSetMgr.instance:setPlayerInfoSprite(self.imageBg, "player_card_" .. config.id, true)
+		gohelper.setActive(self.goEmpty, false)
+		gohelper.setActive(self.goNormal, true)
 
-		local var_9_0 = arg_9_0:isPlayerSelf() and arg_9_0.compType == PlayerCardEnum.CompType.Normal and arg_9_0.cardIndex == 4
+		local canChange = self:isPlayerSelf() and self.compType == PlayerCardEnum.CompType.Normal and self.cardIndex == 4
 
-		gohelper.setActive(arg_9_0.goNormalChange, var_9_0)
+		gohelper.setActive(self.goNormalChange, canChange)
 
-		arg_9_0.txtCardName.text = arg_9_2.name
-		arg_9_0.txtEnName.text = arg_9_2.nameEn
+		self.txtCardName.text = config.name
+		self.txtEnName.text = config.nameEn
 
-		arg_9_0:refreshCard()
+		self:refreshCard()
 	else
-		gohelper.setActive(arg_9_0.goEmpty, true)
-		gohelper.setActive(arg_9_0.goNormal, false)
+		gohelper.setActive(self.goEmpty, true)
+		gohelper.setActive(self.goNormal, false)
 
-		local var_9_1 = arg_9_0:isPlayerSelf() and arg_9_0.compType == PlayerCardEnum.CompType.Normal
+		local canAdd = self:isPlayerSelf() and self.compType == PlayerCardEnum.CompType.Normal
 
-		gohelper.setActive(arg_9_0.goEmptyAdd, var_9_1)
-		gohelper.setActive(arg_9_0.goEmptyImg, not var_9_1)
-		UISpriteSetMgr.instance:setPlayerInfoSprite(arg_9_0.imageBg, "player_card_0", true)
+		gohelper.setActive(self.goEmptyAdd, canAdd)
+		gohelper.setActive(self.goEmptyImg, not canAdd)
+		UISpriteSetMgr.instance:setPlayerInfoSprite(self.imageBg, "player_card_0", true)
 	end
 end
 
-function var_0_0.onUpdateMO(arg_10_0, arg_10_1)
-	arg_10_0:refreshView(arg_10_1.info, arg_10_1.config)
+function PlayerCardCardItem:onUpdateMO(mo)
+	self:refreshView(mo.info, mo.config)
 
-	local var_10_0 = PlayerCardProgressModel.instance:getSelectIndex(arg_10_1.id)
+	local index = PlayerCardProgressModel.instance:getSelectIndex(mo.id)
 
-	if var_10_0 then
-		gohelper.setActive(arg_10_0.goSelect, true)
+	if index then
+		gohelper.setActive(self.goSelect, true)
 
-		arg_10_0.txtIndex.text = tostring(var_10_0)
+		self.txtIndex.text = tostring(index)
 	else
-		gohelper.setActive(arg_10_0.goSelect, false)
+		gohelper.setActive(self.goSelect, false)
 	end
 end
 
-function var_0_0.getConfig(arg_11_0)
-	return arg_11_0.cardConfig
+function PlayerCardCardItem:getConfig()
+	return self.cardConfig
 end
 
-function var_0_0.isPlayerSelf(arg_12_0)
-	return arg_12_0.cardInfo and arg_12_0.cardInfo:isSelf()
+function PlayerCardCardItem:isPlayerSelf()
+	return self.cardInfo and self.cardInfo:isSelf()
 end
 
-function var_0_0.getPlayerInfo(arg_13_0)
-	return arg_13_0.cardInfo and arg_13_0.cardInfo:getPlayerInfo()
+function PlayerCardCardItem:getPlayerInfo()
+	return self.cardInfo and self.cardInfo:getPlayerInfo()
 end
 
-function var_0_0.refreshCard(arg_14_0)
-	arg_14_0:resetCard()
+function PlayerCardCardItem:refreshCard()
+	self:resetCard()
 
-	local var_14_0 = arg_14_0[string.format("_refreshCard" .. arg_14_0.cardConfig.id)]
+	local funcName = string.format("_refreshCard" .. self.cardConfig.id)
+	local func = self[funcName]
 
-	if var_14_0 then
-		var_14_0(arg_14_0)
+	if func then
+		func(self)
 	end
 end
 
-function var_0_0.resetCard(arg_15_0)
-	gohelper.setActive(arg_15_0.goRole, false)
-	gohelper.setActive(arg_15_0.goRoom, false)
-	gohelper.setActive(arg_15_0.goExplore, false)
+function PlayerCardCardItem:resetCard()
+	gohelper.setActive(self.goRole, false)
+	gohelper.setActive(self.goRoom, false)
+	gohelper.setActive(self.goExplore, false)
 
-	arg_15_0.txtDesc.text = ""
+	self.txtDesc.text = ""
 end
 
-function var_0_0._refreshCard1(arg_16_0)
-	local var_16_0 = arg_16_0:getPlayerInfo()
+function PlayerCardCardItem:_refreshCard1()
+	local info = self:getPlayerInfo()
 
-	arg_16_0.txtDesc.text = TimeUtil.timestampToString3(ServerTime.timeInLocal(var_16_0.registerTime / 1000))
+	self.txtDesc.text = TimeUtil.timestampToString3(ServerTime.timeInLocal(info.registerTime / 1000))
 end
 
-function var_0_0._refreshCard2(arg_17_0)
-	local var_17_0 = arg_17_0:getPlayerInfo()
+function PlayerCardCardItem:_refreshCard2()
+	local info = self:getPlayerInfo()
 
-	arg_17_0.txtDesc.text = formatLuaLang("cachotprogressview_remainDay", var_17_0.totalLoginDays)
+	self.txtDesc.text = formatLuaLang("cachotprogressview_remainDay", info.totalLoginDays)
 end
 
-function var_0_0._refreshCard3(arg_18_0)
-	gohelper.setActive(arg_18_0.goRole, true)
+function PlayerCardCardItem:_refreshCard3()
+	gohelper.setActive(self.goRole, true)
 
-	local var_18_0 = arg_18_0:getPlayerInfo()
-	local var_18_1 = HeroConfig.instance:getAnyOnlineRareCharacterCount(1)
-	local var_18_2 = HeroConfig.instance:getAnyOnlineRareCharacterCount(2)
-	local var_18_3 = HeroConfig.instance:getAnyOnlineRareCharacterCount(3)
-	local var_18_4 = HeroConfig.instance:getAnyOnlineRareCharacterCount(4)
-	local var_18_5 = HeroConfig.instance:getAnyOnlineRareCharacterCount(5)
-	local var_18_6 = math.min(var_18_1 > 0 and var_18_0.heroRareNNCount / var_18_1 or 1, 1)
-	local var_18_7 = math.min(var_18_2 > 0 and var_18_0.heroRareNCount / var_18_2 or 1, 1)
-	local var_18_8 = math.min(var_18_3 > 0 and var_18_0.heroRareRCount / var_18_3 or 1, 1)
-	local var_18_9 = math.min(var_18_4 > 0 and var_18_0.heroRareSRCount / var_18_4 or 1, 1)
-	local var_18_10 = math.min(var_18_5 > 0 and var_18_0.heroRareSSRCount / var_18_5 or 1, 1)
+	local info = self:getPlayerInfo()
+	local AllRareNNHeroCount = HeroConfig.instance:getAnyOnlineRareCharacterCount(1)
+	local AllRareNHeroCount = HeroConfig.instance:getAnyOnlineRareCharacterCount(2)
+	local AllRareRHeroCount = HeroConfig.instance:getAnyOnlineRareCharacterCount(3)
+	local AllRareSRHeroCount = HeroConfig.instance:getAnyOnlineRareCharacterCount(4)
+	local AllRareSSRHeroCount = HeroConfig.instance:getAnyOnlineRareCharacterCount(5)
+	local heroRareNNPercent = math.min(AllRareNNHeroCount > 0 and info.heroRareNNCount / AllRareNNHeroCount or 1, 1)
+	local heroRareNPercent = math.min(AllRareNHeroCount > 0 and info.heroRareNCount / AllRareNHeroCount or 1, 1)
+	local heroRareRPercent = math.min(AllRareRHeroCount > 0 and info.heroRareRCount / AllRareRHeroCount or 1, 1)
+	local heroRareSRPercent = math.min(AllRareSRHeroCount > 0 and info.heroRareSRCount / AllRareSRHeroCount or 1, 1)
+	local heroRareSSRPercent = math.min(AllRareSSRHeroCount > 0 and info.heroRareSSRCount / AllRareSSRHeroCount or 1, 1)
 
-	arg_18_0._collectionFulls[1].fillAmount = var_18_6
-	arg_18_0._collectionFulls[2].fillAmount = var_18_7
-	arg_18_0._collectionFulls[3].fillAmount = var_18_8
-	arg_18_0._collectionFulls[4].fillAmount = var_18_9
-	arg_18_0._collectionFulls[5].fillAmount = var_18_10
+	self._collectionFulls[1].fillAmount = heroRareNNPercent
+	self._collectionFulls[2].fillAmount = heroRareNPercent
+	self._collectionFulls[3].fillAmount = heroRareRPercent
+	self._collectionFulls[4].fillAmount = heroRareSRPercent
+	self._collectionFulls[5].fillAmount = heroRareSSRPercent
 end
 
-function var_0_0._refreshCard4(arg_19_0)
-	gohelper.setActive(arg_19_0.goRoom, true)
+function PlayerCardCardItem:_refreshCard4()
+	gohelper.setActive(self.goRoom, true)
 
-	local var_19_0 = arg_19_0.cardInfo.roomCollection
-	local var_19_1 = string.splitToNumber(var_19_0, "#")
-	local var_19_2 = var_19_1 and var_19_1[1]
+	local roomCollection = self.cardInfo.roomCollection
+	local arr = string.splitToNumber(roomCollection, "#")
+	local landNum = arr and arr[1]
 
-	if var_19_2 then
-		arg_19_0.txtLand.text = var_19_2
+	if landNum then
+		self.txtLand.text = landNum
 	else
-		arg_19_0.txtLand.text = PlayerCardEnum.EmptyString
+		self.txtLand.text = PlayerCardEnum.EmptyString
 	end
 
-	local var_19_3 = var_19_1 and var_19_1[2]
+	local buildingNum = arr and arr[2]
 
-	if var_19_3 then
-		arg_19_0.txtBuilding.text = var_19_3
+	if buildingNum then
+		self.txtBuilding.text = buildingNum
 	else
-		arg_19_0.txtBuilding.text = PlayerCardEnum.EmptyString
+		self.txtBuilding.text = PlayerCardEnum.EmptyString
 	end
 end
 
-function var_0_0._refreshCard5(arg_20_0)
-	local var_20_0 = arg_20_0.cardInfo.weekwalkDeepLayerId
+function PlayerCardCardItem:_refreshCard5()
+	local layerId = self.cardInfo.weekwalkDeepLayerId
 
-	if var_20_0 == -1 then
-		arg_20_0.txtDesc.text = PlayerCardEnum.EmptyString2
+	if layerId == -1 then
+		self.txtDesc.text = PlayerCardEnum.EmptyString2
 	else
-		local var_20_1 = WeekWalkConfig.instance:getMapConfig(var_20_0)
-		local var_20_2 = lua_weekwalk_scene.configDict[var_20_1 and var_20_1.sceneId]
+		local mapConfig = WeekWalkConfig.instance:getMapConfig(layerId)
+		local sceneConfig = lua_weekwalk_scene.configDict[mapConfig and mapConfig.sceneId]
 
-		if var_20_2 then
-			arg_20_0.txtDesc.text = var_20_2.battleName
+		if sceneConfig then
+			self.txtDesc.text = sceneConfig.battleName
 		else
-			arg_20_0.txtDesc.text = PlayerCardEnum.EmptyString2
+			self.txtDesc.text = PlayerCardEnum.EmptyString2
 		end
 	end
 end
 
-function var_0_0._refreshCard6(arg_21_0)
-	gohelper.setActive(arg_21_0.goExplore, true)
+function PlayerCardCardItem:_refreshCard6()
+	gohelper.setActive(self.goExplore, true)
 
-	local var_21_0 = arg_21_0.cardInfo.exploreCollection
-	local var_21_1 = GameUtil.splitString2(var_21_0, true) or {}
+	local exploreCollection = self.cardInfo.exploreCollection
+	local arr = GameUtil.splitString2(exploreCollection, true) or {}
 
-	arg_21_0:_refreshExportItem(1, var_21_1[3], "dungeon_secretroom_btn_triangle")
-	arg_21_0:_refreshExportItem(2, var_21_1[2], "dungeon_secretroom_btn_sandglass")
-	arg_21_0:_refreshExportItem(3, var_21_1[1], "dungeon_secretroom_btn_box")
+	self:_refreshExportItem(1, arr[3], "dungeon_secretroom_btn_triangle")
+	self:_refreshExportItem(2, arr[2], "dungeon_secretroom_btn_sandglass")
+	self:_refreshExportItem(3, arr[1], "dungeon_secretroom_btn_box")
 end
 
-function var_0_0._refreshCard7(arg_22_0)
-	local var_22_0 = arg_22_0.cardInfo.rougeDifficulty
+function PlayerCardCardItem:_refreshCard7()
+	local rougeDifficulty = self.cardInfo.rougeDifficulty
 
-	if var_22_0 == -1 then
-		arg_22_0.txtDesc.text = PlayerCardEnum.EmptyString2
+	if rougeDifficulty == -1 then
+		self.txtDesc.text = PlayerCardEnum.EmptyString2
 	else
-		arg_22_0.txtDesc.text = formatLuaLang("playercard_rougedesc", var_22_0)
+		self.txtDesc.text = formatLuaLang("playercard_rougedesc", rougeDifficulty)
 	end
 end
 
-function var_0_0._refreshCard8(arg_23_0)
-	local var_23_0 = arg_23_0.cardInfo.act128SSSCount
+function PlayerCardCardItem:_refreshCard8()
+	local act128SSSCount = self.cardInfo.act128SSSCount
 
-	if var_23_0 == -1 then
-		arg_23_0.txtDesc.text = PlayerCardEnum.EmptyString2
+	if act128SSSCount == -1 then
+		self.txtDesc.text = PlayerCardEnum.EmptyString2
 	else
-		arg_23_0.txtDesc.text = formatLuaLang("times2", var_23_0)
+		self.txtDesc.text = formatLuaLang("times2", act128SSSCount)
 	end
 end
 
-function var_0_0._refreshExportItem(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
-	local var_24_0 = arg_24_2 and arg_24_2[1]
-	local var_24_1 = arg_24_2 and arg_24_2[2]
-	local var_24_2 = arg_24_0.exportItem[arg_24_1]
+function PlayerCardCardItem:_refreshExportItem(index, data, imageKey)
+	local num = data and data[1]
+	local fullNum = data and data[2]
+	local item = self.exportItem[index]
 
-	if var_24_0 then
-		var_24_2.txtExplore.text = var_24_0
+	if num then
+		item.txtExplore.text = num
 	else
-		var_24_2.txtExplore.text = PlayerCardEnum.EmptyString
+		item.txtExplore.text = PlayerCardEnum.EmptyString
 	end
 
-	if var_24_0 and var_24_1 and var_24_1 <= var_24_0 then
-		UISpriteSetMgr.instance:setExploreSprite(var_24_2.image, arg_24_3 .. "1", true)
+	local isFull = num and fullNum and fullNum <= num
+
+	if isFull then
+		UISpriteSetMgr.instance:setExploreSprite(item.image, imageKey .. "1", true)
 	else
-		UISpriteSetMgr.instance:setExploreSprite(var_24_2.image, arg_24_3 .. "2", true)
+		UISpriteSetMgr.instance:setExploreSprite(item.image, imageKey .. "2", true)
 	end
 end
 
-function var_0_0.addEventListeners(arg_25_0)
-	arg_25_0.btnChange:AddClickListener(arg_25_0.btnChangeOnClick, arg_25_0)
+function PlayerCardCardItem:addEventListeners()
+	self.btnChange:AddClickListener(self.btnChangeOnClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_26_0)
-	arg_26_0.btnChange:RemoveClickListener()
+function PlayerCardCardItem:removeEventListeners()
+	self.btnChange:RemoveClickListener()
 end
 
-function var_0_0.btnChangeOnClick(arg_27_0)
-	if not arg_27_0:isPlayerSelf() then
+function PlayerCardCardItem:btnChangeOnClick()
+	if not self:isPlayerSelf() then
 		return
 	end
 
-	if arg_27_0.compType == PlayerCardEnum.CompType.Normal then
+	if self.compType == PlayerCardEnum.CompType.Normal then
 		ViewMgr.instance:openView(ViewName.PlayerCardShowView)
-	elseif arg_27_0.cardConfig then
-		PlayerCardProgressModel.instance:clickItem(arg_27_0.cardConfig.id)
+	elseif self.cardConfig then
+		PlayerCardProgressModel.instance:clickItem(self.cardConfig.id)
 	end
 end
 
-function var_0_0.onDestroy(arg_28_0)
+function PlayerCardCardItem:onDestroy()
 	return
 end
 
-return var_0_0
+return PlayerCardCardItem

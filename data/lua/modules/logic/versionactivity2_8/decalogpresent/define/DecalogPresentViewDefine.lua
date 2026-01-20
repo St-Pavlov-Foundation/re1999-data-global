@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity2_8.decalogpresent.define.DecalogPresentViewDefine", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/decalogpresent/define/DecalogPresentViewDefine.lua
 
-local var_0_0 = class("DecalogPresentViewDefine")
+module("modules.logic.versionactivity2_8.decalogpresent.define.DecalogPresentViewDefine", package.seeall)
 
-function var_0_0.init(arg_1_0)
-	var_0_0.initV2a8(arg_1_0)
+local DecalogPresentViewDefine = class("DecalogPresentViewDefine")
+
+function DecalogPresentViewDefine.init(module_views)
+	DecalogPresentViewDefine.initV2a8(module_views)
 end
 
-function var_0_0.initV2a8(arg_2_0)
-	arg_2_0.V2a8DecalogPresentView = {
+function DecalogPresentViewDefine.initV2a8(module_views)
+	module_views.V2a8DecalogPresentView = {
 		destroy = 0,
 		container = "V2a8DecalogPresentViewContainer",
 		bgBlur = 1,
@@ -16,7 +18,7 @@ function var_0_0.initV2a8(arg_2_0)
 		viewType = ViewType.Modal,
 		anim = ViewAnim.Default
 	}
-	arg_2_0.V2a8DecalogPresentFullView = {
+	module_views.V2a8DecalogPresentFullView = {
 		destroy = 0,
 		container = "V2a8DecalogPresentFullViewContainer",
 		mainRes = "ui/viewres/versionactivity_2_8/v2a8_versionsummon/v2a8_versionsummonfull.prefab",
@@ -25,4 +27,4 @@ function var_0_0.initV2a8(arg_2_0)
 	}
 end
 
-return var_0_0
+return DecalogPresentViewDefine

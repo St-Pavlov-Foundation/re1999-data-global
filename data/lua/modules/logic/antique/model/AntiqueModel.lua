@@ -1,61 +1,63 @@
-﻿module("modules.logic.antique.model.AntiqueModel", package.seeall)
+﻿-- chunkname: @modules/logic/antique/model/AntiqueModel.lua
 
-local var_0_0 = class("AntiqueModel", BaseModel)
+module("modules.logic.antique.model.AntiqueModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._antiqueList = {}
+local AntiqueModel = class("AntiqueModel", BaseModel)
+
+function AntiqueModel:onInit()
+	self._antiqueList = {}
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._antiqueList = {}
+function AntiqueModel:reInit()
+	self._antiqueList = {}
 end
 
-function var_0_0.getAntique(arg_3_0, arg_3_1)
-	return arg_3_0._antiqueList[arg_3_1]
+function AntiqueModel:getAntique(id)
+	return self._antiqueList[id]
 end
 
-function var_0_0.getAntiqueList(arg_4_0)
-	return arg_4_0._antiqueList
+function AntiqueModel:getAntiqueList()
+	return self._antiqueList
 end
 
-function var_0_0.setAntiqueInfo(arg_5_0, arg_5_1)
-	arg_5_0._antiqueList = {}
+function AntiqueModel:setAntiqueInfo(infos)
+	self._antiqueList = {}
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
-		local var_5_0 = AntiqueMo.New()
+	for _, v in ipairs(infos) do
+		local mo = AntiqueMo.New()
 
-		var_5_0:init(iter_5_1)
+		mo:init(v)
 
-		arg_5_0._antiqueList[tonumber(iter_5_1.antiqueId)] = var_5_0
+		self._antiqueList[tonumber(v.antiqueId)] = mo
 	end
 end
 
-function var_0_0.updateAntiqueInfo(arg_6_0, arg_6_1)
-	for iter_6_0, iter_6_1 in ipairs(arg_6_1) do
-		if not arg_6_0._antiqueList[iter_6_1.antiqueId] then
-			local var_6_0 = AntiqueMo.New()
+function AntiqueModel:updateAntiqueInfo(infos)
+	for _, v in ipairs(infos) do
+		if not self._antiqueList[v.antiqueId] then
+			local mo = AntiqueMo.New()
 
-			var_6_0:init(iter_6_1)
+			mo:init(v)
 
-			arg_6_0._antiqueList[tonumber(iter_6_1.antiqueId)] = var_6_0
+			self._antiqueList[tonumber(v.antiqueId)] = mo
 		else
-			arg_6_0._antiqueList[iter_6_1.antiqueId]:reset(iter_6_1)
+			self._antiqueList[v.antiqueId]:reset(v)
 		end
 	end
 end
 
-function var_0_0.getAntiqueGetTime(arg_7_0, arg_7_1)
-	return arg_7_0._antiqueList[arg_7_1] or 0
+function AntiqueModel:getAntiqueGetTime(antiqueId)
+	return self._antiqueList[antiqueId] or 0
 end
 
-function var_0_0.getAntiques(arg_8_0)
-	return arg_8_0._antiqueList
+function AntiqueModel:getAntiques()
+	return self._antiqueList
 end
 
-function var_0_0.isAntiqueUnlock(arg_9_0)
-	return next(arg_9_0._antiqueList)
+function AntiqueModel:isAntiqueUnlock()
+	return next(self._antiqueList)
 end
 
-var_0_0.instance = var_0_0.New()
+AntiqueModel.instance = AntiqueModel.New()
 
-return var_0_0
+return AntiqueModel

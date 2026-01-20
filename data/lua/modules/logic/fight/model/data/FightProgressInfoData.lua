@@ -1,30 +1,32 @@
-﻿module("modules.logic.fight.model.data.FightProgressInfoData", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightProgressInfoData.lua
 
-local var_0_0 = FightDataClass("FightProgressInfoData")
+module("modules.logic.fight.model.data.FightProgressInfoData", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1)
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1) do
-		local var_1_0 = {}
-		local var_1_1 = iter_1_1.id
+local FightProgressInfoData = FightDataClass("FightProgressInfoData")
 
-		var_1_0.id = var_1_1
-		var_1_0.max = iter_1_1.max
-		var_1_0.value = iter_1_1.value
-		var_1_0.showId = iter_1_1.showId
-		arg_1_0[var_1_1] = var_1_0
+function FightProgressInfoData:onConstructor(progressList)
+	for i, v in ipairs(progressList) do
+		local tab = {}
+		local id = v.id
+
+		tab.id = id
+		tab.max = v.max
+		tab.value = v.value
+		tab.showId = v.showId
+		self[id] = tab
 	end
 end
 
-function var_0_0.getDataByShowId(arg_2_0, arg_2_1)
-	if not arg_2_1 then
+function FightProgressInfoData:getDataByShowId(showId)
+	if not showId then
 		return
 	end
 
-	for iter_2_0, iter_2_1 in pairs(arg_2_0) do
-		if iter_2_1.showId == arg_2_1 then
-			return iter_2_1
+	for _, data in pairs(self) do
+		if data.showId == showId then
+			return data
 		end
 	end
 end
 
-return var_0_0
+return FightProgressInfoData

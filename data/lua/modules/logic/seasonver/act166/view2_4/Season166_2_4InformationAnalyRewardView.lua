@@ -1,216 +1,227 @@
-﻿module("modules.logic.seasonver.act166.view2_4.Season166_2_4InformationAnalyRewardView", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act166/view2_4/Season166_2_4InformationAnalyRewardView.lua
 
-local var_0_0 = class("Season166_2_4InformationAnalyRewardView", BaseView)
+module("modules.logic.seasonver.act166.view2_4.Season166_2_4InformationAnalyRewardView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.rewardItems = {}
-	arg_1_0.goReward = gohelper.findChild(arg_1_0.viewGO, "Bottom/SliderPoint/#go_rewards")
+local Season166_2_4InformationAnalyRewardView = class("Season166_2_4InformationAnalyRewardView", BaseView)
 
-	gohelper.setActive(arg_1_0.goReward, false)
+function Season166_2_4InformationAnalyRewardView:onInitView()
+	self.rewardItems = {}
+	self.goReward = gohelper.findChild(self.viewGO, "Bottom/SliderPoint/#go_rewards")
 
-	arg_1_0.slider = gohelper.findChildSlider(arg_1_0.viewGO, "Bottom/Slider")
+	gohelper.setActive(self.goReward, false)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	self.slider = gohelper.findChildSlider(self.viewGO, "Bottom/Slider")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(Season166Controller.instance, Season166Event.OnAnalyInfoSuccess, arg_2_0.onAnalyInfoSuccess, arg_2_0)
-	arg_2_0:addEventCb(Season166Controller.instance, Season166Event.OnInformationUpdate, arg_2_0.onInformationUpdate, arg_2_0)
-	arg_2_0:addEventCb(Season166Controller.instance, Season166Event.OnGetInfoBonus, arg_2_0.onGetInfoBonus, arg_2_0)
-	arg_2_0:addEventCb(Season166Controller.instance, Season166Event.ChangeAnalyInfo, arg_2_0.onChangeAnalyInfo, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_2_0.onCloseViewFinish, arg_2_0)
+function Season166_2_4InformationAnalyRewardView:addEvents()
+	self:addEventCb(Season166Controller.instance, Season166Event.OnAnalyInfoSuccess, self.onAnalyInfoSuccess, self)
+	self:addEventCb(Season166Controller.instance, Season166Event.OnInformationUpdate, self.onInformationUpdate, self)
+	self:addEventCb(Season166Controller.instance, Season166Event.OnGetInfoBonus, self.onGetInfoBonus, self)
+	self:addEventCb(Season166Controller.instance, Season166Event.ChangeAnalyInfo, self.onChangeAnalyInfo, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self.onCloseViewFinish, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Season166_2_4InformationAnalyRewardView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function Season166_2_4InformationAnalyRewardView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function Season166_2_4InformationAnalyRewardView:onUpdateParam()
 	return
 end
 
-function var_0_0.onAnalyInfoSuccess(arg_6_0)
-	arg_6_0:refreshUI()
+function Season166_2_4InformationAnalyRewardView:onAnalyInfoSuccess()
+	self:refreshUI()
 end
 
-function var_0_0.onChangeAnalyInfo(arg_7_0, arg_7_1)
-	arg_7_0.infoId = arg_7_1
+function Season166_2_4InformationAnalyRewardView:onChangeAnalyInfo(infoId)
+	self.infoId = infoId
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0.rewardItems) do
-		iter_7_1.activieStatus = nil
-		iter_7_1.hasGet = nil
+	for i, v in ipairs(self.rewardItems) do
+		v.activieStatus = nil
+		v.hasGet = nil
 	end
 
-	arg_7_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.onInformationUpdate(arg_8_0)
-	arg_8_0:refreshUI()
+function Season166_2_4InformationAnalyRewardView:onInformationUpdate()
+	self:refreshUI()
 end
 
-function var_0_0.onGetInfoBonus(arg_9_0)
+function Season166_2_4InformationAnalyRewardView:onGetInfoBonus()
 	return
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0.actId = arg_10_0.viewParam.actId
-	arg_10_0.infoId = arg_10_0.viewParam.infoId
+function Season166_2_4InformationAnalyRewardView:onOpen()
+	self.actId = self.viewParam.actId
+	self.infoId = self.viewParam.infoId
 
-	arg_10_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_11_0)
-	if not arg_11_0.actId then
+function Season166_2_4InformationAnalyRewardView:refreshUI()
+	if not self.actId then
 		return
 	end
 
-	arg_11_0:refreshReward()
+	self:refreshReward()
 end
 
-function var_0_0.refreshReward(arg_12_0)
+function Season166_2_4InformationAnalyRewardView:refreshReward()
 	if ViewMgr.instance:isOpen(ViewName.CommonPropView) then
 		return
 	end
 
-	local var_12_0 = Season166Model.instance:getActInfo(arg_12_0.actId):getInformationMO(arg_12_0.infoId)
-	local var_12_1 = Season166Config.instance:getSeasonInfoAnalys(arg_12_0.actId, arg_12_0.infoId) or {}
+	local actInfo = Season166Model.instance:getActInfo(self.actId)
+	local infoMo = actInfo:getInformationMO(self.infoId)
+	local list = Season166Config.instance:getSeasonInfoAnalys(self.actId, self.infoId) or {}
 
-	for iter_12_0 = 1, math.max(#var_12_1, #arg_12_0.rewardItems) do
-		local var_12_2 = arg_12_0.rewardItems[iter_12_0] or arg_12_0:createRewardItem(iter_12_0)
+	for i = 1, math.max(#list, #self.rewardItems) do
+		local item = self.rewardItems[i]
 
-		arg_12_0:refreshRewardItem(var_12_2, var_12_1[iter_12_0])
+		item = item or self:createRewardItem(i)
+
+		self:refreshRewardItem(item, list[i])
 	end
 
-	local var_12_3 = #var_12_1
-	local var_12_4 = var_12_0 and var_12_0.stage or 0
-	local var_12_5 = Mathf.Clamp01((var_12_4 - 1) / (var_12_3 - 1))
+	local count = #list
+	local curCount = infoMo and infoMo.stage or 0
+	local value = Mathf.Clamp01((curCount - 1) / (count - 1))
 
-	arg_12_0.slider:SetValue(var_12_5)
+	self.slider:SetValue(value)
 end
 
-function var_0_0.onGetReward(arg_13_0, arg_13_1)
-	if not arg_13_1.config then
+function Season166_2_4InformationAnalyRewardView:onGetReward(item)
+	if not item.config then
 		return
 	end
 
-	local var_13_0 = arg_13_1.config
-	local var_13_1 = Season166Model.instance:getActInfo(var_13_0.activityId):getInformationMO(var_13_0.infoId)
+	local config = item.config
+	local actInfo = Season166Model.instance:getActInfo(config.activityId)
+	local infoMo = actInfo:getInformationMO(config.infoId)
 
-	if not var_13_1 then
+	if not infoMo then
 		return
 	end
 
-	if var_13_1.bonusStage >= var_13_0.stage then
-		arg_13_0:showInfo(var_13_0)
+	local hasGet = infoMo.bonusStage >= config.stage
+
+	if hasGet then
+		self:showInfo(config)
 
 		return
 	end
 
-	if var_13_1.stage >= var_13_0.stage then
-		Activity166Rpc.instance:sendAct166ReceiveInfoBonusRequest(arg_13_0.actId, arg_13_0.infoId)
+	if infoMo.stage >= config.stage then
+		Activity166Rpc.instance:sendAct166ReceiveInfoBonusRequest(self.actId, self.infoId)
 	else
-		arg_13_0:showInfo(var_13_0)
+		self:showInfo(config)
 	end
 end
 
-function var_0_0.showInfo(arg_14_0, arg_14_1)
-	local var_14_0 = GameUtil.splitString2(arg_14_1.bonus, true)[1]
+function Season166_2_4InformationAnalyRewardView:showInfo(config)
+	local bounds = GameUtil.splitString2(config.bonus, true)
+	local rewardCfg = bounds[1]
 
-	MaterialTipController.instance:showMaterialInfo(var_14_0[1], var_14_0[2], nil, nil, true)
+	MaterialTipController.instance:showMaterialInfo(rewardCfg[1], rewardCfg[2], nil, nil, true)
 end
 
-function var_0_0.createRewardItem(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_0:getUserDataTb_()
+function Season166_2_4InformationAnalyRewardView:createRewardItem(index)
+	local item = self:getUserDataTb_()
 
-	var_15_0.go = gohelper.cloneInPlace(arg_15_0.goReward, string.format("reward%s", arg_15_1))
-	var_15_0.goStatus0 = gohelper.findChild(var_15_0.go, "image_status0")
-	var_15_0.goStatus = gohelper.findChild(var_15_0.go, "#image_status")
-	var_15_0.goReward = gohelper.findChild(var_15_0.go, "#go_reward_template")
-	var_15_0.imgBg = gohelper.findChildImage(var_15_0.goReward, "image_bg")
-	var_15_0.imgCircle = gohelper.findChildImage(var_15_0.goReward, "image_circle")
-	var_15_0.goHasGet = gohelper.findChild(var_15_0.goReward, "go_hasget")
-	var_15_0.goIcon = gohelper.findChild(var_15_0.goReward, "go_icon")
-	var_15_0.txtCount = gohelper.findChildTextMesh(var_15_0.goReward, "txt_rewardcount")
-	var_15_0.goCanget = gohelper.findChild(var_15_0.goReward, "go_canget")
-	var_15_0.btn = gohelper.findButtonWithAudio(var_15_0.go)
+	item.go = gohelper.cloneInPlace(self.goReward, string.format("reward%s", index))
+	item.goStatus0 = gohelper.findChild(item.go, "image_status0")
+	item.goStatus = gohelper.findChild(item.go, "#image_status")
+	item.goReward = gohelper.findChild(item.go, "#go_reward_template")
+	item.imgBg = gohelper.findChildImage(item.goReward, "image_bg")
+	item.imgCircle = gohelper.findChildImage(item.goReward, "image_circle")
+	item.goHasGet = gohelper.findChild(item.goReward, "go_hasget")
+	item.goIcon = gohelper.findChild(item.goReward, "go_icon")
+	item.txtCount = gohelper.findChildTextMesh(item.goReward, "txt_rewardcount")
+	item.goCanget = gohelper.findChild(item.goReward, "go_canget")
+	item.btn = gohelper.findButtonWithAudio(item.go)
 
-	var_15_0.btn:AddClickListener(arg_15_0.onGetReward, arg_15_0, var_15_0)
+	item.btn:AddClickListener(self.onGetReward, self, item)
 
-	var_15_0.animStatus = var_15_0.goStatus:GetComponent(typeof(UnityEngine.Animator))
-	var_15_0.animHasGet = var_15_0.goHasGet:GetComponent(typeof(UnityEngine.Animator))
-	arg_15_0.rewardItems[arg_15_1] = var_15_0
+	item.animStatus = item.goStatus:GetComponent(typeof(UnityEngine.Animator))
+	item.animHasGet = item.goHasGet:GetComponent(typeof(UnityEngine.Animator))
+	self.rewardItems[index] = item
 
-	return var_15_0
+	return item
 end
 
-function var_0_0.refreshRewardItem(arg_16_0, arg_16_1, arg_16_2)
-	arg_16_1.config = arg_16_2
+function Season166_2_4InformationAnalyRewardView:refreshRewardItem(item, config)
+	item.config = config
 
-	if not arg_16_2 then
-		gohelper.setActive(arg_16_1.go, false)
+	if not config then
+		gohelper.setActive(item.go, false)
 
 		return
 	end
 
-	local var_16_0 = Season166Model.instance:getActInfo(arg_16_2.activityId):getInformationMO(arg_16_2.infoId)
-	local var_16_1 = var_16_0 and var_16_0.bonusStage >= arg_16_2.stage or false
-	local var_16_2 = var_16_0 and var_16_0.stage >= arg_16_2.stage or false
+	local actInfo = Season166Model.instance:getActInfo(config.activityId)
+	local infoMo = actInfo:getInformationMO(config.infoId)
+	local hasGet = infoMo and infoMo.bonusStage >= config.stage or false
+	local activieStatus = infoMo and infoMo.stage >= config.stage or false
 
-	gohelper.setActive(arg_16_1.go, true)
-	gohelper.setActive(arg_16_1.goHasGet, var_16_1)
-	gohelper.setActive(arg_16_1.goStatus, var_16_2)
-	gohelper.setActive(arg_16_1.goCanget, not var_16_1 and var_16_2)
+	gohelper.setActive(item.go, true)
+	gohelper.setActive(item.goHasGet, hasGet)
+	gohelper.setActive(item.goStatus, activieStatus)
+	gohelper.setActive(item.goCanget, not hasGet and activieStatus)
 
-	local var_16_3 = GameUtil.splitString2(arg_16_2.bonus, true)[1]
-	local var_16_4 = ItemModel.instance:getItemConfig(var_16_3[1], var_16_3[2])
+	local bounds = GameUtil.splitString2(config.bonus, true)
+	local rewardCfg = bounds[1]
+	local itemCfg = ItemModel.instance:getItemConfig(rewardCfg[1], rewardCfg[2])
 
-	UISpriteSetMgr.instance:setUiFBSprite(arg_16_1.imgBg, "bg_pinjidi_" .. var_16_4.rare)
-	UISpriteSetMgr.instance:setUiFBSprite(arg_16_1.imgCircle, "bg_pinjidi_lanse_" .. var_16_4.rare)
+	UISpriteSetMgr.instance:setUiFBSprite(item.imgBg, "bg_pinjidi_" .. itemCfg.rare)
+	UISpriteSetMgr.instance:setUiFBSprite(item.imgCircle, "bg_pinjidi_lanse_" .. itemCfg.rare)
 
-	arg_16_1.txtCount.text = string.format("x%s", var_16_3[3])
+	item.txtCount.text = string.format("x%s", rewardCfg[3])
 
-	if var_16_3 then
-		if not arg_16_1.itemIcon then
-			arg_16_1.itemIcon = IconMgr.instance:getCommonPropItemIcon(arg_16_1.goIcon)
+	if rewardCfg then
+		if not item.itemIcon then
+			item.itemIcon = IconMgr.instance:getCommonPropItemIcon(item.goIcon)
 		end
 
-		arg_16_1.itemIcon:setMOValue(var_16_3[1], var_16_3[2], var_16_3[3], nil, true)
-		arg_16_1.itemIcon:isShowQuality(false)
-		arg_16_1.itemIcon:isShowCount(false)
+		item.itemIcon:setMOValue(rewardCfg[1], rewardCfg[2], rewardCfg[3], nil, true)
+		item.itemIcon:isShowQuality(false)
+		item.itemIcon:isShowCount(false)
 	end
 
-	if var_16_1 and arg_16_1.hasGet == false then
-		arg_16_1.animHasGet:Play("open")
+	if hasGet and item.hasGet == false then
+		item.animHasGet:Play("open")
 	end
 
-	if var_16_2 and arg_16_1.activieStatus == false then
-		arg_16_1.animStatus:Play("open")
+	if activieStatus and item.activieStatus == false then
+		item.animStatus:Play("open")
 	end
 
-	arg_16_1.activieStatus = var_16_2
-	arg_16_1.hasGet = var_16_1
+	item.activieStatus = activieStatus
+	item.hasGet = hasGet
 end
 
-function var_0_0.onCloseViewFinish(arg_17_0, arg_17_1)
-	if arg_17_1 == ViewName.CommonPropView then
-		arg_17_0:refreshReward()
+function Season166_2_4InformationAnalyRewardView:onCloseViewFinish(viewName)
+	if viewName == ViewName.CommonPropView then
+		self:refreshReward()
 	end
 end
 
-function var_0_0.onClose(arg_18_0)
+function Season166_2_4InformationAnalyRewardView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_19_0)
-	for iter_19_0, iter_19_1 in ipairs(arg_19_0.rewardItems) do
-		iter_19_1.btn:RemoveClickListener()
+function Season166_2_4InformationAnalyRewardView:onDestroyView()
+	for i, v in ipairs(self.rewardItems) do
+		v.btn:RemoveClickListener()
 	end
 end
 
-return var_0_0
+return Season166_2_4InformationAnalyRewardView

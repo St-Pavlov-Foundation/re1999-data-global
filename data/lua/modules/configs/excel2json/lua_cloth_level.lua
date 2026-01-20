@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_cloth_level", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_cloth_level.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_cloth_level", package.seeall)
+
+local lua_cloth_level = {}
+local fields = {
 	usePower1 = 14,
 	passiveSkills = 12,
 	usePower3 = 22,
@@ -28,16 +30,16 @@ local var_0_1 = {
 	initial = 8,
 	cd1 = 15
 }
-local var_0_2 = {
+local primaryKey = {
 	"id",
 	"level"
 }
-local var_0_3 = {
+local mlStringKey = {
 	desc = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_cloth_level.onLoad(json)
+	lua_cloth_level.configList, lua_cloth_level.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_cloth_level

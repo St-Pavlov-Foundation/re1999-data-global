@@ -1,36 +1,38 @@
-﻿module("modules.logic.rouge.model.rpcmo.RougeUnlockSkillMO", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/model/rpcmo/RougeUnlockSkillMO.lua
 
-local var_0_0 = pureTable("RougeUnlockSkillMO")
+module("modules.logic.rouge.model.rpcmo.RougeUnlockSkillMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.type = arg_1_1.type
-	arg_1_0.idMap = arg_1_0:_listToMap(arg_1_1.ids)
+local RougeUnlockSkillMO = pureTable("RougeUnlockSkillMO")
+
+function RougeUnlockSkillMO:init(info)
+	self.type = info.type
+	self.idMap = self:_listToMap(info.ids)
 end
 
-function var_0_0._listToMap(arg_2_0, arg_2_1)
-	if not arg_2_1 then
+function RougeUnlockSkillMO:_listToMap(list)
+	if not list then
 		return {}
 	end
 
-	local var_2_0 = {}
+	local map = {}
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_1) do
-		var_2_0[iter_2_1] = iter_2_1
+	for _, v in ipairs(list) do
+		map[v] = v
 	end
 
-	return var_2_0
+	return map
 end
 
-function var_0_0.isSkillUnlock(arg_3_0, arg_3_1)
-	return arg_3_0.idMap and arg_3_0.idMap[arg_3_1] ~= nil
+function RougeUnlockSkillMO:isSkillUnlock(skillId)
+	return self.idMap and self.idMap[skillId] ~= nil
 end
 
-function var_0_0.onNewSkillUnlock(arg_4_0, arg_4_1)
-	if not arg_4_1 then
+function RougeUnlockSkillMO:onNewSkillUnlock(skillId)
+	if not skillId then
 		return
 	end
 
-	arg_4_0.idMap[arg_4_1] = true
+	self.idMap[skillId] = true
 end
 
-return var_0_0
+return RougeUnlockSkillMO

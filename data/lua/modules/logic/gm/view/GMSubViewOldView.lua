@@ -1,26 +1,28 @@
-﻿module("modules.logic.gm.view.GMSubViewOldView", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GMSubViewOldView.lua
 
-local var_0_0 = Color.New(0.88, 0.84, 0.5, 1)
-local var_0_1 = Color.New(0.75, 0.75, 0.75, 0.75)
-local var_0_2 = class("GMSubViewOldView", GMSubViewBase)
+module("modules.logic.gm.view.GMSubViewOldView", package.seeall)
 
-function var_0_2.onOpen(arg_1_0)
-	arg_1_0:addSubViewGo("ALL")
+local tabOnColor = Color.New(0.88, 0.84, 0.5, 1)
+local tabOffColor = Color.New(0.75, 0.75, 0.75, 0.75)
+local GMSubViewOldView = class("GMSubViewOldView", GMSubViewBase)
+
+function GMSubViewOldView:onOpen()
+	self:addSubViewGo("ALL")
 end
 
-function var_0_2._onToggleValueChanged(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_2 then
-		if not arg_2_0._subViewContent then
-			arg_2_0:initViewContent()
+function GMSubViewOldView:_onToggleValueChanged(toggleId, isOn)
+	if isOn then
+		if not self._subViewContent then
+			self:initViewContent()
 		end
 
-		arg_2_0.viewContainer:selectToggle(arg_2_0._toggleWrap)
+		self.viewContainer:selectToggle(self._toggleWrap)
 	end
 
-	gohelper.setActive(arg_2_0._mainViewBg, arg_2_2)
-	gohelper.setActive(arg_2_0._mainViewPort, arg_2_2)
+	gohelper.setActive(self._mainViewBg, isOn)
+	gohelper.setActive(self._mainViewPort, isOn)
 
-	arg_2_0._toggleImage.color = arg_2_2 and var_0_0 or var_0_1
+	self._toggleImage.color = isOn and tabOnColor or tabOffColor
 end
 
-return var_0_2
+return GMSubViewOldView

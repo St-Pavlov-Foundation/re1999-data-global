@@ -1,8 +1,10 @@
-﻿module("modules.logic.room.define.RoomJumpEnum", package.seeall)
+﻿-- chunkname: @modules/logic/room/define/RoomJumpEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.room.define.RoomJumpEnum", package.seeall)
 
-var_0_0.JumpView = {
+local RoomJumpEnum = _M
+
+RoomJumpEnum.JumpView = {
 	Critter = 2,
 	RoomRecordView = 1,
 	Manufacture = 3,
@@ -14,10 +16,10 @@ var_0_0.JumpView = {
 	Backpack = 5,
 	BuildingLevelUp = 8
 }
-var_0_0.ManufactureBuildingType = {
+RoomJumpEnum.ManufactureBuildingType = {
 	Manufacture = 3,
 	Collect = 1,
 	Process = 2
 }
 
-return var_0_0
+return RoomJumpEnum

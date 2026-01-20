@@ -1,479 +1,481 @@
-﻿module("modules.logic.gm.view.GMToolView", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GMToolView.lua
 
-local var_0_0 = class("GMToolView", BaseView)
+module("modules.logic.gm.view.GMToolView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btnClose")
-	arg_1_0._btnOK1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item1/btnOK")
-	arg_1_0._btnCommand = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item1/btnCommand")
-	arg_1_0._inp1 = gohelper.findChildInputField(arg_1_0.viewGO, "viewport/content/item1/inpText")
-	arg_1_0._inp21 = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "viewport/content/item2/inpItem")
-	arg_1_0._inp22 = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "viewport/content/item2/inpNum")
-	arg_1_0._btnOK2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item2/btnOK")
-	arg_1_0._txtServerTime = gohelper.findChildText(arg_1_0.viewGO, "viewport/content/item3/txtServerTime")
-	arg_1_0._txtLocalTime = gohelper.findChildText(arg_1_0.viewGO, "viewport/content/item3/txtLocalTime")
-	arg_1_0._scroll = gohelper.findChildScrollRect(arg_1_0.viewGO, "viewport")
-	arg_1_0._btnOK4 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item4/btnOK")
-	arg_1_0._toggleEar = gohelper.findChildToggle(arg_1_0.viewGO, "viewport/content/item4/earToggle")
-	arg_1_0._btnQualityLow = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item5/btnQualityLow")
-	arg_1_0._btnQualityMid = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item5/btnQualityMid")
-	arg_1_0._btnQualityHigh = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item5/btnQualityHigh")
-	arg_1_0._btnQualityNo = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item5/btnQualityNo")
-	arg_1_0._btnPP = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item5/btnPP")
-	arg_1_0._btnSetting = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item5/btnSetting")
-	arg_1_0._txtBtnPP = gohelper.findChildText(arg_1_0.viewGO, "viewport/content/item5/btnPP/Text")
-	arg_1_0._txtAccountId = gohelper.findChildText(arg_1_0.viewGO, "viewport/content/item40/Text")
-	arg_1_0._btnNewbiePrepare = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item40/btnNewbiePrepare")
-	arg_1_0._imgQualitys = {
-		arg_1_0._btnQualityNo.gameObject:GetComponent(gohelper.Type_Image),
-		arg_1_0._btnQualityHigh.gameObject:GetComponent(gohelper.Type_Image),
-		arg_1_0._btnQualityMid.gameObject:GetComponent(gohelper.Type_Image),
-		arg_1_0._btnQualityLow.gameObject:GetComponent(gohelper.Type_Image)
+local GMToolView = class("GMToolView", BaseView)
+
+function GMToolView:onInitView()
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "btnClose")
+	self._btnOK1 = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item1/btnOK")
+	self._btnCommand = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item1/btnCommand")
+	self._inp1 = gohelper.findChildInputField(self.viewGO, "viewport/content/item1/inpText")
+	self._inp21 = gohelper.findChildTextMeshInputField(self.viewGO, "viewport/content/item2/inpItem")
+	self._inp22 = gohelper.findChildTextMeshInputField(self.viewGO, "viewport/content/item2/inpNum")
+	self._btnOK2 = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item2/btnOK")
+	self._txtServerTime = gohelper.findChildText(self.viewGO, "viewport/content/item3/txtServerTime")
+	self._txtLocalTime = gohelper.findChildText(self.viewGO, "viewport/content/item3/txtLocalTime")
+	self._scroll = gohelper.findChildScrollRect(self.viewGO, "viewport")
+	self._btnOK4 = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item4/btnOK")
+	self._toggleEar = gohelper.findChildToggle(self.viewGO, "viewport/content/item4/earToggle")
+	self._btnQualityLow = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item5/btnQualityLow")
+	self._btnQualityMid = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item5/btnQualityMid")
+	self._btnQualityHigh = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item5/btnQualityHigh")
+	self._btnQualityNo = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item5/btnQualityNo")
+	self._btnPP = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item5/btnPP")
+	self._btnSetting = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item5/btnSetting")
+	self._txtBtnPP = gohelper.findChildText(self.viewGO, "viewport/content/item5/btnPP/Text")
+	self._txtAccountId = gohelper.findChildText(self.viewGO, "viewport/content/item40/Text")
+	self._btnNewbiePrepare = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item40/btnNewbiePrepare")
+	self._imgQualitys = {
+		self._btnQualityNo.gameObject:GetComponent(gohelper.Type_Image),
+		self._btnQualityHigh.gameObject:GetComponent(gohelper.Type_Image),
+		self._btnQualityMid.gameObject:GetComponent(gohelper.Type_Image),
+		self._btnQualityLow.gameObject:GetComponent(gohelper.Type_Image)
 	}
-	arg_1_0._txtSpeed = gohelper.findChildText(arg_1_0.viewGO, "viewport/content/item6/Text")
-	arg_1_0._sliderSpeed = gohelper.findChildSlider(arg_1_0.viewGO, "viewport/content/item6/Slider")
-	arg_1_0._btnClearPlayerPrefs = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item7/btnClearPlayerPrefs")
-	arg_1_0._btnBlockLog = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item7/btnBlockLog")
-	arg_1_0._btnProtoTestView = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item8/Button")
-	arg_1_0._btnfastaddhero = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item8/#btn_addhero")
-	arg_1_0._inpTestFight = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "viewport/content/item9/inpText")
-	arg_1_0._btnTestFight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item9/btnTestFight")
-	arg_1_0._btnTestFightId = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item9/btnTestFightId")
-	arg_1_0._btnPostProcess = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item10/Button")
-	arg_1_0._btnEffectStat = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item10/btnEffectStat")
-	arg_1_0._btnIgnoreSomeMsgLog = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item11/Button")
-	arg_1_0._btnFightJoin = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item11/btnFightJoin")
-	arg_1_0._inpSpeed1 = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "viewport/content/item11/inpSpeed1")
-	arg_1_0._inpSpeed2 = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "viewport/content/item11/inpSpeed2")
-	arg_1_0._btnCurSpeed = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item11/btnCurSpeed")
-	arg_1_0._btnHideDebug = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item12/Button")
-	arg_1_0._btnShowError = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item12/btnError")
-	arg_1_0._inpJump = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "viewport/content/item13/inpText")
-	arg_1_0._btnJumpOK = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item13/btnOK")
-	arg_1_0._inpGuide = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "viewport/content/item14/inpText")
-	arg_1_0._btnGuideStart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item14/btnStart")
-	arg_1_0._btnGuideFinish = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item14/btnFinish")
-	arg_1_0._btnGuideForbid = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item14/btnForbid")
-	arg_1_0._btnGuideReset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item14/btnReset")
-	arg_1_0._inpStory = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "viewport/content/item15/inpstorytxt")
-	arg_1_0._btnStorySkip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item15/btnstoryskip")
-	arg_1_0._btnStoryOK = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item15/btnstoryok")
-	arg_1_0._inpEpisode = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "viewport/content/item18/inpText")
-	arg_1_0._btnEpisodeOK = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item18/btnOK")
-	arg_1_0._btnSkinOffsetAdjust = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item20/Button")
-	arg_1_0._btnFightFocusAdjust = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item20/Button1")
-	arg_1_0._toggleSkipPatFace = gohelper.findChildToggle(arg_1_0.viewGO, "viewport/content/skipPatFace/toggleSkipPatFace")
-	arg_1_0._btnGuideEditor = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/guideEditor/Button")
-	arg_1_0._btnHelpViewBrowse = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/guideEditor/btnHelpViewBrowse")
-	arg_1_0._btnGuideStatus = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item14/btnGuideStatus")
-	arg_1_0._inpScreenWidth = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "viewport/content/item24/inpTextWidth")
-	arg_1_0._inpScreenHeight = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "viewport/content/item24/inpTextHeight")
-	arg_1_0._btnConfirm = gohelper.getClick(gohelper.findChild(arg_1_0.viewGO, "viewport/content/item24/btnConfirm"))
-	arg_1_0._dropSkinGetView = gohelper.findChildDropdown(arg_1_0.viewGO, "viewport/content/item25/Dropdown")
-	arg_1_0._btnOpenSeasonView = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item27/ButtonSeason")
-	arg_1_0._btnOpenHuaRongView = gohelper.getClick(gohelper.findChild(arg_1_0.viewGO, "viewport/content/item27_2/huarong"))
-	arg_1_0._inpChangeColor = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "viewport/content/item27_2/changecolor/inpchangecolortxt")
-	arg_1_0._btnChangeColorOK = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item27_2/changecolor/btnchangecolorok")
-	arg_1_0._btnFightSimulate = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item333/btnOK")
-	arg_1_0._btnResetCards = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item333/btnOK2")
-	arg_1_0._btnFightEntity = gohelper.getClick(gohelper.cloneInPlace(arg_1_0._btnFightSimulate.gameObject))
-	gohelper.findChildText(arg_1_0._btnFightEntity.gameObject, "Text").text = "战中外挂"
+	self._txtSpeed = gohelper.findChildText(self.viewGO, "viewport/content/item6/Text")
+	self._sliderSpeed = gohelper.findChildSlider(self.viewGO, "viewport/content/item6/Slider")
+	self._btnClearPlayerPrefs = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item7/btnClearPlayerPrefs")
+	self._btnBlockLog = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item7/btnBlockLog")
+	self._btnProtoTestView = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item8/Button")
+	self._btnfastaddhero = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item8/#btn_addhero")
+	self._inpTestFight = gohelper.findChildTextMeshInputField(self.viewGO, "viewport/content/item9/inpText")
+	self._btnTestFight = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item9/btnTestFight")
+	self._btnTestFightId = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item9/btnTestFightId")
+	self._btnPostProcess = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item10/Button")
+	self._btnEffectStat = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item10/btnEffectStat")
+	self._btnIgnoreSomeMsgLog = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item11/Button")
+	self._btnFightJoin = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item11/btnFightJoin")
+	self._inpSpeed1 = gohelper.findChildTextMeshInputField(self.viewGO, "viewport/content/item11/inpSpeed1")
+	self._inpSpeed2 = gohelper.findChildTextMeshInputField(self.viewGO, "viewport/content/item11/inpSpeed2")
+	self._btnCurSpeed = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item11/btnCurSpeed")
+	self._btnHideDebug = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item12/Button")
+	self._btnShowError = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item12/btnError")
+	self._inpJump = gohelper.findChildTextMeshInputField(self.viewGO, "viewport/content/item13/inpText")
+	self._btnJumpOK = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item13/btnOK")
+	self._inpGuide = gohelper.findChildTextMeshInputField(self.viewGO, "viewport/content/item14/inpText")
+	self._btnGuideStart = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item14/btnStart")
+	self._btnGuideFinish = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item14/btnFinish")
+	self._btnGuideForbid = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item14/btnForbid")
+	self._btnGuideReset = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item14/btnReset")
+	self._inpStory = gohelper.findChildTextMeshInputField(self.viewGO, "viewport/content/item15/inpstorytxt")
+	self._btnStorySkip = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item15/btnstoryskip")
+	self._btnStoryOK = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item15/btnstoryok")
+	self._inpEpisode = gohelper.findChildTextMeshInputField(self.viewGO, "viewport/content/item18/inpText")
+	self._btnEpisodeOK = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item18/btnOK")
+	self._btnSkinOffsetAdjust = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item20/Button")
+	self._btnFightFocusAdjust = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item20/Button1")
+	self._toggleSkipPatFace = gohelper.findChildToggle(self.viewGO, "viewport/content/skipPatFace/toggleSkipPatFace")
+	self._btnGuideEditor = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/guideEditor/Button")
+	self._btnHelpViewBrowse = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/guideEditor/btnHelpViewBrowse")
+	self._btnGuideStatus = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item14/btnGuideStatus")
+	self._inpScreenWidth = gohelper.findChildTextMeshInputField(self.viewGO, "viewport/content/item24/inpTextWidth")
+	self._inpScreenHeight = gohelper.findChildTextMeshInputField(self.viewGO, "viewport/content/item24/inpTextHeight")
+	self._btnConfirm = gohelper.getClick(gohelper.findChild(self.viewGO, "viewport/content/item24/btnConfirm"))
+	self._dropSkinGetView = gohelper.findChildDropdown(self.viewGO, "viewport/content/item25/Dropdown")
+	self._btnOpenSeasonView = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item27/ButtonSeason")
+	self._btnOpenHuaRongView = gohelper.getClick(gohelper.findChild(self.viewGO, "viewport/content/item27_2/huarong"))
+	self._inpChangeColor = gohelper.findChildTextMeshInputField(self.viewGO, "viewport/content/item27_2/changecolor/inpchangecolortxt")
+	self._btnChangeColorOK = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item27_2/changecolor/btnchangecolorok")
+	self._btnFightSimulate = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item333/btnOK")
+	self._btnResetCards = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item333/btnOK2")
+	self._btnFightEntity = gohelper.getClick(gohelper.cloneInPlace(self._btnFightSimulate.gameObject))
+	gohelper.findChildText(self._btnFightEntity.gameObject, "Text").text = "战中外挂"
 
-	recthelper.setWidth(arg_1_0._btnFightEntity.transform, 200)
-	recthelper.setWidth(arg_1_0._btnFightSimulate.transform, 200)
-	recthelper.setWidth(arg_1_0._btnResetCards.transform, 200)
-	recthelper.setAnchorX(arg_1_0._btnFightEntity.transform, 0)
-	recthelper.setAnchorX(arg_1_0._btnFightSimulate.transform, -220)
-	recthelper.setAnchorX(arg_1_0._btnResetCards.transform, 220)
+	recthelper.setWidth(self._btnFightEntity.transform, 200)
+	recthelper.setWidth(self._btnFightSimulate.transform, 200)
+	recthelper.setWidth(self._btnResetCards.transform, 200)
+	recthelper.setAnchorX(self._btnFightEntity.transform, 0)
+	recthelper.setAnchorX(self._btnFightSimulate.transform, -220)
+	recthelper.setAnchorX(self._btnResetCards.transform, 220)
 
-	arg_1_0._dropHeroFaith = gohelper.findChildDropdown(arg_1_0.viewGO, "viewport/content/item34/Dropdown")
-	arg_1_0._btnHeroFaith = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item34/btnOK")
-	arg_1_0._dropHeroLevel = gohelper.findChildDropdown(arg_1_0.viewGO, "viewport/content/item36/Dropdown")
-	arg_1_0._btnHeroLevel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item36/btnOK")
-	arg_1_0._inpHeroLevel = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "viewport/content/item36/inpNum")
-	arg_1_0._dropWeather = gohelper.findChildDropdown(arg_1_0.viewGO, "viewport/content/item38/Dropdown")
-	arg_1_0._btnGetAllHero = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item35/Button1")
-	arg_1_0._btnDeleteAllHeroInfo = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item35/Button2")
-	arg_1_0._btnHideGM = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item37/Button1")
-	arg_1_0._txtGM = gohelper.findChildText(arg_1_0.viewGO, "viewport/content/item37/Button1/Text")
-	arg_1_0._btnUnLockAllEpisode = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item37/Button2")
-	arg_1_0._btnExplore = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item39/Button1")
-	arg_1_0._inpExplore = gohelper.findChildInputField(arg_1_0.viewGO, "viewport/content/item39/inpText")
-	arg_1_0._btnshowHero = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item40/Button1")
-	arg_1_0._btnshowUI = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item40/Button2")
-	arg_1_0._btnshowId = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item42/btn_userid")
-	arg_1_0._btnwatermark = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item42/btn_watermark")
-	arg_1_0._txtshowHero = gohelper.findChildText(arg_1_0.viewGO, "viewport/content/item40/Button1/Text")
-	arg_1_0._txtshowUI = gohelper.findChildText(arg_1_0.viewGO, "viewport/content/item40/Button2/Text")
-	arg_1_0._txtshowId = gohelper.findChildText(arg_1_0.viewGO, "viewport/content/item42/btn_userid/Text")
-	arg_1_0._txtwatermark = gohelper.findChildText(arg_1_0.viewGO, "viewport/content/item42/btn_watermark/Text")
-	arg_1_0._btncopytalentdata = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item41/btn_copy_talent_data")
-	arg_1_0._btnprintallentitybuff = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item41/btn_print_all_entity_buff")
-	arg_1_0._btnReplaceSummonHero = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item46/Button1")
-	arg_1_0._inpHeroList = gohelper.findChildInputField(arg_1_0.viewGO, "viewport/content/item46/inpText")
+	self._dropHeroFaith = gohelper.findChildDropdown(self.viewGO, "viewport/content/item34/Dropdown")
+	self._btnHeroFaith = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item34/btnOK")
+	self._dropHeroLevel = gohelper.findChildDropdown(self.viewGO, "viewport/content/item36/Dropdown")
+	self._btnHeroLevel = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item36/btnOK")
+	self._inpHeroLevel = gohelper.findChildTextMeshInputField(self.viewGO, "viewport/content/item36/inpNum")
+	self._dropWeather = gohelper.findChildDropdown(self.viewGO, "viewport/content/item38/Dropdown")
+	self._btnGetAllHero = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item35/Button1")
+	self._btnDeleteAllHeroInfo = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item35/Button2")
+	self._btnHideGM = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item37/Button1")
+	self._txtGM = gohelper.findChildText(self.viewGO, "viewport/content/item37/Button1/Text")
+	self._btnUnLockAllEpisode = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item37/Button2")
+	self._btnExplore = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item39/Button1")
+	self._inpExplore = gohelper.findChildInputField(self.viewGO, "viewport/content/item39/inpText")
+	self._btnshowHero = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item40/Button1")
+	self._btnshowUI = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item40/Button2")
+	self._btnshowId = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item42/btn_userid")
+	self._btnwatermark = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item42/btn_watermark")
+	self._txtshowHero = gohelper.findChildText(self.viewGO, "viewport/content/item40/Button1/Text")
+	self._txtshowUI = gohelper.findChildText(self.viewGO, "viewport/content/item40/Button2/Text")
+	self._txtshowId = gohelper.findChildText(self.viewGO, "viewport/content/item42/btn_userid/Text")
+	self._txtwatermark = gohelper.findChildText(self.viewGO, "viewport/content/item42/btn_watermark/Text")
+	self._btncopytalentdata = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item41/btn_copy_talent_data")
+	self._btnprintallentitybuff = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item41/btn_print_all_entity_buff")
+	self._btnReplaceSummonHero = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item46/Button1")
+	self._inpHeroList = gohelper.findChildInputField(self.viewGO, "viewport/content/item46/inpText")
 
-	arg_1_0._inpHeroList:SetText("3039;3052;3017;3010;3015;3013;3031;3006;3040;3012")
+	self._inpHeroList:SetText("3039;3052;3017;3010;3015;3013;3031;3006;3040;3012")
 
-	arg_1_0._btnCrash1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/crash/btnCrash1")
-	arg_1_0._btnCrash2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/crash/btnCrash2")
-	arg_1_0._btnCrash3 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/crash/btnCrash3")
-	arg_1_0._btnEnterView = gohelper.findChildButton(arg_1_0.viewGO, "viewport/content/item50/Button")
-	arg_1_0._inpViewName = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "viewport/content/item50/InputField (TMP)")
+	self._btnCrash1 = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/crash/btnCrash1")
+	self._btnCrash2 = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/crash/btnCrash2")
+	self._btnCrash3 = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/crash/btnCrash3")
+	self._btnEnterView = gohelper.findChildButton(self.viewGO, "viewport/content/item50/Button")
+	self._inpViewName = gohelper.findChildTextMeshInputField(self.viewGO, "viewport/content/item50/InputField (TMP)")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._scroll:AddOnValueChanged(arg_2_0._onScrollValueChanged, arg_2_0)
-	arg_2_0._btnClose:AddClickListener(arg_2_0.closeThis, arg_2_0)
-	arg_2_0._btnOK1:AddClickListener(arg_2_0._onClickBtnOK1, arg_2_0)
-	arg_2_0._btnCommand:AddClickListener(arg_2_0._onClickBtnCommand, arg_2_0)
-	arg_2_0._btnOK2:AddClickListener(arg_2_0._onClickBtnOK2, arg_2_0)
-	arg_2_0._btnOK4:AddClickListener(arg_2_0._onClickBtnOK4, arg_2_0)
-	arg_2_0._toggleEar:AddOnValueChanged(arg_2_0._onEarToggleValueChange, arg_2_0)
-	arg_2_0._btnQualityLow:AddClickListener(arg_2_0._onClickBtnQualityLow, arg_2_0)
-	arg_2_0._btnQualityMid:AddClickListener(arg_2_0._onClickBtnQualityMid, arg_2_0)
-	arg_2_0._btnQualityHigh:AddClickListener(arg_2_0._onClickBtnQualityHigh, arg_2_0)
-	arg_2_0._btnQualityNo:AddClickListener(arg_2_0._onClickBtnQualityNo, arg_2_0)
-	arg_2_0._btnPP:AddClickListener(arg_2_0._onClickBtnPP, arg_2_0)
-	arg_2_0._btnSetting:AddClickListener(arg_2_0._onClickBtnSetting, arg_2_0)
-	SLFramework.UGUI.UIClickListener.Get(arg_2_0._txtSpeed.gameObject):AddClickListener(arg_2_0._onClickSpeedText, arg_2_0)
+function GMToolView:addEvents()
+	self._scroll:AddOnValueChanged(self._onScrollValueChanged, self)
+	self._btnClose:AddClickListener(self.closeThis, self)
+	self._btnOK1:AddClickListener(self._onClickBtnOK1, self)
+	self._btnCommand:AddClickListener(self._onClickBtnCommand, self)
+	self._btnOK2:AddClickListener(self._onClickBtnOK2, self)
+	self._btnOK4:AddClickListener(self._onClickBtnOK4, self)
+	self._toggleEar:AddOnValueChanged(self._onEarToggleValueChange, self)
+	self._btnQualityLow:AddClickListener(self._onClickBtnQualityLow, self)
+	self._btnQualityMid:AddClickListener(self._onClickBtnQualityMid, self)
+	self._btnQualityHigh:AddClickListener(self._onClickBtnQualityHigh, self)
+	self._btnQualityNo:AddClickListener(self._onClickBtnQualityNo, self)
+	self._btnPP:AddClickListener(self._onClickBtnPP, self)
+	self._btnSetting:AddClickListener(self._onClickBtnSetting, self)
+	SLFramework.UGUI.UIClickListener.Get(self._txtSpeed.gameObject):AddClickListener(self._onClickSpeedText, self)
 
-	if arg_2_0._btnNewbiePrepare then
-		arg_2_0._btnNewbiePrepare:AddClickListener(arg_2_0._onClickBtnNewbiePrepare, arg_2_0)
+	if self._btnNewbiePrepare then
+		self._btnNewbiePrepare:AddClickListener(self._onClickBtnNewbiePrepare, self)
 	end
 
-	arg_2_0._sliderSpeed:AddOnValueChanged(arg_2_0._onSpeedChange, arg_2_0)
-	arg_2_0._btnClearPlayerPrefs:AddClickListener(arg_2_0._onClickBtnClearPlayerPrefs, arg_2_0)
-	arg_2_0._btnBlockLog:AddClickListener(arg_2_0._onClickBtnBlockLog, arg_2_0)
-	arg_2_0._btnProtoTestView:AddClickListener(arg_2_0._onClickBtnProtoTestView, arg_2_0)
-	arg_2_0._btnfastaddhero:AddClickListener(arg_2_0._onClickBtnFastAddHero, arg_2_0)
-	arg_2_0._btnTestFight:AddClickListener(arg_2_0._onClickTestFight, arg_2_0)
-	arg_2_0._btnTestFightId:AddClickListener(arg_2_0._onClickTestFightId, arg_2_0)
-	arg_2_0._btnPostProcess:AddClickListener(arg_2_0._onClickPostProcess, arg_2_0)
-	arg_2_0._btnEffectStat:AddClickListener(arg_2_0._onClickEffectStat, arg_2_0)
-	arg_2_0._btnIgnoreSomeMsgLog:AddClickListener(arg_2_0._onClickIgnoreSomeMsgLog, arg_2_0)
-	arg_2_0._btnFightJoin:AddClickListener(arg_2_0._onClickFightJoin, arg_2_0)
-	arg_2_0._btnHideDebug:AddClickListener(arg_2_0._onClickHideBug, arg_2_0)
-	arg_2_0._btnShowError:AddClickListener(arg_2_0._onClickShowError, arg_2_0)
-	arg_2_0._btnSkinOffsetAdjust:AddClickListener(arg_2_0._onClickSkinOffsetAdjust, arg_2_0)
-	arg_2_0._btnFightFocusAdjust:AddClickListener(arg_2_0._onClickFightFocusAdjust, arg_2_0)
+	self._sliderSpeed:AddOnValueChanged(self._onSpeedChange, self)
+	self._btnClearPlayerPrefs:AddClickListener(self._onClickBtnClearPlayerPrefs, self)
+	self._btnBlockLog:AddClickListener(self._onClickBtnBlockLog, self)
+	self._btnProtoTestView:AddClickListener(self._onClickBtnProtoTestView, self)
+	self._btnfastaddhero:AddClickListener(self._onClickBtnFastAddHero, self)
+	self._btnTestFight:AddClickListener(self._onClickTestFight, self)
+	self._btnTestFightId:AddClickListener(self._onClickTestFightId, self)
+	self._btnPostProcess:AddClickListener(self._onClickPostProcess, self)
+	self._btnEffectStat:AddClickListener(self._onClickEffectStat, self)
+	self._btnIgnoreSomeMsgLog:AddClickListener(self._onClickIgnoreSomeMsgLog, self)
+	self._btnFightJoin:AddClickListener(self._onClickFightJoin, self)
+	self._btnHideDebug:AddClickListener(self._onClickHideBug, self)
+	self._btnShowError:AddClickListener(self._onClickShowError, self)
+	self._btnSkinOffsetAdjust:AddClickListener(self._onClickSkinOffsetAdjust, self)
+	self._btnFightFocusAdjust:AddClickListener(self._onClickFightFocusAdjust, self)
 
-	if arg_2_0._toggleSkipPatFace then
-		arg_2_0._toggleSkipPatFace:AddOnValueChanged(arg_2_0._onSkipPatFaceToggleValueChange, arg_2_0, "123")
+	if self._toggleSkipPatFace then
+		self._toggleSkipPatFace:AddOnValueChanged(self._onSkipPatFaceToggleValueChange, self, "123")
 	end
 
-	arg_2_0._btnGuideEditor:AddClickListener(arg_2_0._onClickGuideEditor, arg_2_0)
-	arg_2_0._btnHelpViewBrowse:AddClickListener(arg_2_0._onClickHelpViewBrowse, arg_2_0)
-	arg_2_0._btnGuideStatus:AddClickListener(arg_2_0._onClickGuideStatus, arg_2_0)
-	arg_2_0._btnJumpOK:AddClickListener(arg_2_0._onClickJumpOK, arg_2_0)
-	arg_2_0._btnEpisodeOK:AddClickListener(arg_2_0._onClickEpisodeOK, arg_2_0)
-	arg_2_0._btnGuideStart:AddClickListener(arg_2_0._onClickGuideStart, arg_2_0)
-	arg_2_0._btnGuideFinish:AddClickListener(arg_2_0._onClickGuideFinish, arg_2_0)
-	arg_2_0._btnGuideForbid:AddClickListener(arg_2_0._onClickGuideForbid, arg_2_0)
-	arg_2_0._btnGuideReset:AddClickListener(arg_2_0._onClickGuideReset, arg_2_0)
-	arg_2_0._btnStorySkip:AddClickListener(arg_2_0._onClickStorySkip, arg_2_0)
-	arg_2_0._btnStoryOK:AddClickListener(arg_2_0._onClickStoryOK, arg_2_0)
-	arg_2_0._btnChangeColorOK:AddClickListener(arg_2_0._onClickChangeColorOK, arg_2_0)
-	arg_2_0._btnFightSimulate:AddClickListener(arg_2_0._onClickFightSimulate, arg_2_0)
-	arg_2_0._btnFightEntity:AddClickListener(arg_2_0._onClickFightEntity, arg_2_0)
-	arg_2_0._btnResetCards:AddClickListener(arg_2_0._onClickResetCards, arg_2_0)
-	arg_2_0._btnHeroFaith:AddClickListener(arg_2_0._onClickHeroFaithOk, arg_2_0)
-	arg_2_0._btnHeroLevel:AddClickListener(arg_2_0._onClickHeroLevelOk, arg_2_0)
-	arg_2_0._dropSkinGetView:AddOnValueChanged(arg_2_0._onSkinGetValueChanged, arg_2_0)
-	arg_2_0._dropHeroFaith:AddOnValueChanged(arg_2_0._onHeroFaithSelectChanged, arg_2_0)
-	arg_2_0._dropHeroLevel:AddOnValueChanged(arg_2_0._onHeroLevelSelectChanged, arg_2_0)
-	arg_2_0._btnGetAllHero:AddClickListener(arg_2_0._onClickGetAllHeroBtn, arg_2_0)
-	arg_2_0._btnDeleteAllHeroInfo:AddClickListener(arg_2_0._onClickDeleteAllHeroInfoBtn, arg_2_0)
-	arg_2_0._btnHideGM:AddClickListener(arg_2_0._onClickHideGMBtn, arg_2_0)
-	arg_2_0._btnUnLockAllEpisode:AddClickListener(arg_2_0._onClickUnLockAllEpisode, arg_2_0)
-	arg_2_0._btnOpenHuaRongView:AddClickListener(arg_2_0._onClickOpenHuaRongViewBtn, arg_2_0)
-	arg_2_0._btnOpenSeasonView:AddClickListener(arg_2_0._onClickOpenSeasonViewBtn, arg_2_0)
+	self._btnGuideEditor:AddClickListener(self._onClickGuideEditor, self)
+	self._btnHelpViewBrowse:AddClickListener(self._onClickHelpViewBrowse, self)
+	self._btnGuideStatus:AddClickListener(self._onClickGuideStatus, self)
+	self._btnJumpOK:AddClickListener(self._onClickJumpOK, self)
+	self._btnEpisodeOK:AddClickListener(self._onClickEpisodeOK, self)
+	self._btnGuideStart:AddClickListener(self._onClickGuideStart, self)
+	self._btnGuideFinish:AddClickListener(self._onClickGuideFinish, self)
+	self._btnGuideForbid:AddClickListener(self._onClickGuideForbid, self)
+	self._btnGuideReset:AddClickListener(self._onClickGuideReset, self)
+	self._btnStorySkip:AddClickListener(self._onClickStorySkip, self)
+	self._btnStoryOK:AddClickListener(self._onClickStoryOK, self)
+	self._btnChangeColorOK:AddClickListener(self._onClickChangeColorOK, self)
+	self._btnFightSimulate:AddClickListener(self._onClickFightSimulate, self)
+	self._btnFightEntity:AddClickListener(self._onClickFightEntity, self)
+	self._btnResetCards:AddClickListener(self._onClickResetCards, self)
+	self._btnHeroFaith:AddClickListener(self._onClickHeroFaithOk, self)
+	self._btnHeroLevel:AddClickListener(self._onClickHeroLevelOk, self)
+	self._dropSkinGetView:AddOnValueChanged(self._onSkinGetValueChanged, self)
+	self._dropHeroFaith:AddOnValueChanged(self._onHeroFaithSelectChanged, self)
+	self._dropHeroLevel:AddOnValueChanged(self._onHeroLevelSelectChanged, self)
+	self._btnGetAllHero:AddClickListener(self._onClickGetAllHeroBtn, self)
+	self._btnDeleteAllHeroInfo:AddClickListener(self._onClickDeleteAllHeroInfoBtn, self)
+	self._btnHideGM:AddClickListener(self._onClickHideGMBtn, self)
+	self._btnUnLockAllEpisode:AddClickListener(self._onClickUnLockAllEpisode, self)
+	self._btnOpenHuaRongView:AddClickListener(self._onClickOpenHuaRongViewBtn, self)
+	self._btnOpenSeasonView:AddClickListener(self._onClickOpenSeasonViewBtn, self)
 
 	if not SLFramework.FrameworkSettings.IsEditor and BootNativeUtil.isWindows() then
-		arg_2_0._btnConfirm:AddClickListener(arg_2_0._onClickScreenSize, arg_2_0)
+		self._btnConfirm:AddClickListener(self._onClickScreenSize, self)
 	end
 
-	arg_2_0._btnExplore:AddClickListener(arg_2_0._onClickExplore, arg_2_0)
-	arg_2_0._inpSpeed1:AddOnEndEdit(arg_2_0._onEndEdit1, arg_2_0)
-	arg_2_0._inpSpeed2:AddOnEndEdit(arg_2_0._onEndEdit2, arg_2_0)
-	arg_2_0._btnshowHero:AddClickListener(arg_2_0._onClickShowHero, arg_2_0)
-	arg_2_0._btnshowUI:AddClickListener(arg_2_0._onClickShowUI, arg_2_0)
-	arg_2_0._btnshowId:AddClickListener(arg_2_0._onClickShowID, arg_2_0)
-	arg_2_0._btnwatermark:AddClickListener(arg_2_0._onClickWaterMark, arg_2_0)
-	arg_2_0._btnCurSpeed:AddClickListener(arg_2_0._onClickCurSpeed, arg_2_0)
-	arg_2_0._btncopytalentdata:AddClickListener(arg_2_0._onBtnCopyTalentData, arg_2_0)
-	arg_2_0._btnReplaceSummonHero:AddClickListener(arg_2_0._OnBtnReplaceSummonHeroClick, arg_2_0)
+	self._btnExplore:AddClickListener(self._onClickExplore, self)
+	self._inpSpeed1:AddOnEndEdit(self._onEndEdit1, self)
+	self._inpSpeed2:AddOnEndEdit(self._onEndEdit2, self)
+	self._btnshowHero:AddClickListener(self._onClickShowHero, self)
+	self._btnshowUI:AddClickListener(self._onClickShowUI, self)
+	self._btnshowId:AddClickListener(self._onClickShowID, self)
+	self._btnwatermark:AddClickListener(self._onClickWaterMark, self)
+	self._btnCurSpeed:AddClickListener(self._onClickCurSpeed, self)
+	self._btncopytalentdata:AddClickListener(self._onBtnCopyTalentData, self)
+	self._btnReplaceSummonHero:AddClickListener(self._OnBtnReplaceSummonHeroClick, self)
 
-	if arg_2_0._btnprintallentitybuff then
-		arg_2_0._btnprintallentitybuff:AddClickListener(arg_2_0._onBtnPrintAllEntityBuff, arg_2_0)
+	if self._btnprintallentitybuff then
+		self._btnprintallentitybuff:AddClickListener(self._onBtnPrintAllEntityBuff, self)
 	end
 
-	arg_2_0:_AddClickListener(arg_2_0._btnCrash1, arg_2_0._testJavaCrash, arg_2_0)
-	arg_2_0:_AddClickListener(arg_2_0._btnCrash2, arg_2_0._testOcCrash, arg_2_0)
-	arg_2_0:_AddClickListener(arg_2_0._btnCrash3, arg_2_0._testNativeCrash, arg_2_0)
-	arg_2_0._btnEnterView:AddClickListener(arg_2_0._onClickEnterView, arg_2_0)
+	self:_AddClickListener(self._btnCrash1, self._testJavaCrash, self)
+	self:_AddClickListener(self._btnCrash2, self._testOcCrash, self)
+	self:_AddClickListener(self._btnCrash3, self._testNativeCrash, self)
+	self._btnEnterView:AddClickListener(self._onClickEnterView, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._scroll:RemoveOnValueChanged()
-	arg_3_0._btnClose:RemoveClickListener()
-	arg_3_0._btnOK1:RemoveClickListener()
-	arg_3_0._btnCommand:RemoveClickListener()
-	arg_3_0._btnOK2:RemoveClickListener()
-	arg_3_0._btnOK4:RemoveClickListener()
-	arg_3_0._toggleEar:RemoveOnValueChanged()
-	arg_3_0._btnQualityLow:RemoveClickListener()
-	arg_3_0._btnQualityMid:RemoveClickListener()
-	arg_3_0._btnQualityHigh:RemoveClickListener()
-	arg_3_0._btnQualityNo:RemoveClickListener()
-	arg_3_0._btnPP:RemoveClickListener()
+function GMToolView:removeEvents()
+	self._scroll:RemoveOnValueChanged()
+	self._btnClose:RemoveClickListener()
+	self._btnOK1:RemoveClickListener()
+	self._btnCommand:RemoveClickListener()
+	self._btnOK2:RemoveClickListener()
+	self._btnOK4:RemoveClickListener()
+	self._toggleEar:RemoveOnValueChanged()
+	self._btnQualityLow:RemoveClickListener()
+	self._btnQualityMid:RemoveClickListener()
+	self._btnQualityHigh:RemoveClickListener()
+	self._btnQualityNo:RemoveClickListener()
+	self._btnPP:RemoveClickListener()
 
-	if arg_3_0._btnNewbiePrepare then
-		arg_3_0._btnNewbiePrepare:RemoveClickListener()
+	if self._btnNewbiePrepare then
+		self._btnNewbiePrepare:RemoveClickListener()
 	end
 
-	arg_3_0._btnSetting:RemoveClickListener()
-	SLFramework.UGUI.UIClickListener.Get(arg_3_0._txtSpeed.gameObject):RemoveClickListener()
-	arg_3_0._sliderSpeed:RemoveOnValueChanged()
-	arg_3_0._btnClearPlayerPrefs:RemoveClickListener()
-	arg_3_0._btnBlockLog:RemoveClickListener()
-	arg_3_0._btnProtoTestView:RemoveClickListener()
-	arg_3_0._btnfastaddhero:RemoveClickListener()
-	arg_3_0._btnTestFight:RemoveClickListener()
-	arg_3_0._btnTestFightId:RemoveClickListener()
-	arg_3_0._btnPostProcess:RemoveClickListener()
-	arg_3_0._btnEffectStat:RemoveClickListener()
-	arg_3_0._btnIgnoreSomeMsgLog:RemoveClickListener()
-	arg_3_0._btnFightJoin:RemoveClickListener()
-	arg_3_0._btnHideDebug:RemoveClickListener()
-	arg_3_0._btnShowError:RemoveClickListener()
-	arg_3_0._btnSkinOffsetAdjust:RemoveClickListener()
-	arg_3_0._btnFightFocusAdjust:RemoveClickListener()
+	self._btnSetting:RemoveClickListener()
+	SLFramework.UGUI.UIClickListener.Get(self._txtSpeed.gameObject):RemoveClickListener()
+	self._sliderSpeed:RemoveOnValueChanged()
+	self._btnClearPlayerPrefs:RemoveClickListener()
+	self._btnBlockLog:RemoveClickListener()
+	self._btnProtoTestView:RemoveClickListener()
+	self._btnfastaddhero:RemoveClickListener()
+	self._btnTestFight:RemoveClickListener()
+	self._btnTestFightId:RemoveClickListener()
+	self._btnPostProcess:RemoveClickListener()
+	self._btnEffectStat:RemoveClickListener()
+	self._btnIgnoreSomeMsgLog:RemoveClickListener()
+	self._btnFightJoin:RemoveClickListener()
+	self._btnHideDebug:RemoveClickListener()
+	self._btnShowError:RemoveClickListener()
+	self._btnSkinOffsetAdjust:RemoveClickListener()
+	self._btnFightFocusAdjust:RemoveClickListener()
 
-	if arg_3_0._toggleSkipPatFace then
-		arg_3_0._toggleSkipPatFace:RemoveOnValueChanged()
+	if self._toggleSkipPatFace then
+		self._toggleSkipPatFace:RemoveOnValueChanged()
 	end
 
-	arg_3_0._btnGuideEditor:RemoveClickListener()
-	arg_3_0._btnHelpViewBrowse:RemoveClickListener()
-	arg_3_0._btnGuideStatus:RemoveClickListener()
-	arg_3_0._btnJumpOK:RemoveClickListener()
-	arg_3_0._btnGuideStart:RemoveClickListener()
-	arg_3_0._btnGuideFinish:RemoveClickListener()
-	arg_3_0._btnGuideForbid:RemoveClickListener()
-	arg_3_0._btnGuideReset:RemoveClickListener()
-	arg_3_0._btnStorySkip:RemoveClickListener()
-	arg_3_0._btnStoryOK:RemoveClickListener()
-	arg_3_0._btnChangeColorOK:RemoveClickListener()
-	arg_3_0._btnFightSimulate:RemoveClickListener()
-	arg_3_0._btnFightEntity:RemoveClickListener()
-	arg_3_0._btnResetCards:RemoveClickListener()
-	arg_3_0._btnEpisodeOK:RemoveClickListener()
-	arg_3_0._btnHeroFaith:RemoveClickListener()
-	arg_3_0._btnHeroLevel:RemoveClickListener()
-	arg_3_0._dropSkinGetView:RemoveOnValueChanged()
-	arg_3_0._dropHeroFaith:RemoveOnValueChanged()
-	arg_3_0._dropHeroLevel:RemoveOnValueChanged()
-	arg_3_0._dropWeather:RemoveOnValueChanged()
-	arg_3_0._btnGetAllHero:RemoveClickListener()
-	arg_3_0._btnDeleteAllHeroInfo:RemoveClickListener()
-	arg_3_0._btnHideGM:RemoveClickListener()
-	arg_3_0._btnUnLockAllEpisode:RemoveClickListener()
-	arg_3_0._btnOpenHuaRongView:RemoveClickListener()
-	arg_3_0._btnOpenSeasonView:RemoveClickListener()
+	self._btnGuideEditor:RemoveClickListener()
+	self._btnHelpViewBrowse:RemoveClickListener()
+	self._btnGuideStatus:RemoveClickListener()
+	self._btnJumpOK:RemoveClickListener()
+	self._btnGuideStart:RemoveClickListener()
+	self._btnGuideFinish:RemoveClickListener()
+	self._btnGuideForbid:RemoveClickListener()
+	self._btnGuideReset:RemoveClickListener()
+	self._btnStorySkip:RemoveClickListener()
+	self._btnStoryOK:RemoveClickListener()
+	self._btnChangeColorOK:RemoveClickListener()
+	self._btnFightSimulate:RemoveClickListener()
+	self._btnFightEntity:RemoveClickListener()
+	self._btnResetCards:RemoveClickListener()
+	self._btnEpisodeOK:RemoveClickListener()
+	self._btnHeroFaith:RemoveClickListener()
+	self._btnHeroLevel:RemoveClickListener()
+	self._dropSkinGetView:RemoveOnValueChanged()
+	self._dropHeroFaith:RemoveOnValueChanged()
+	self._dropHeroLevel:RemoveOnValueChanged()
+	self._dropWeather:RemoveOnValueChanged()
+	self._btnGetAllHero:RemoveClickListener()
+	self._btnDeleteAllHeroInfo:RemoveClickListener()
+	self._btnHideGM:RemoveClickListener()
+	self._btnUnLockAllEpisode:RemoveClickListener()
+	self._btnOpenHuaRongView:RemoveClickListener()
+	self._btnOpenSeasonView:RemoveClickListener()
 
 	if not SLFramework.FrameworkSettings.IsEditor and BootNativeUtil.isWindows() then
-		arg_3_0._btnConfirm:RemoveClickListener()
+		self._btnConfirm:RemoveClickListener()
 	end
 
-	arg_3_0._btnExplore:RemoveClickListener()
-	arg_3_0._inpSpeed1:RemoveOnEndEdit()
-	arg_3_0._inpSpeed2:RemoveOnEndEdit()
-	arg_3_0._btnshowHero:RemoveClickListener()
-	arg_3_0._btnshowUI:RemoveClickListener()
-	arg_3_0._btnshowId:RemoveClickListener()
-	arg_3_0._btnwatermark:RemoveClickListener()
-	arg_3_0._btnCurSpeed:RemoveClickListener()
-	arg_3_0._btncopytalentdata:RemoveClickListener()
-	arg_3_0._btnReplaceSummonHero:RemoveClickListener()
+	self._btnExplore:RemoveClickListener()
+	self._inpSpeed1:RemoveOnEndEdit()
+	self._inpSpeed2:RemoveOnEndEdit()
+	self._btnshowHero:RemoveClickListener()
+	self._btnshowUI:RemoveClickListener()
+	self._btnshowId:RemoveClickListener()
+	self._btnwatermark:RemoveClickListener()
+	self._btnCurSpeed:RemoveClickListener()
+	self._btncopytalentdata:RemoveClickListener()
+	self._btnReplaceSummonHero:RemoveClickListener()
 
-	if arg_3_0._btnprintallentitybuff then
-		arg_3_0._btnprintallentitybuff:RemoveClickListener()
+	if self._btnprintallentitybuff then
+		self._btnprintallentitybuff:RemoveClickListener()
 	end
 
-	arg_3_0:_RemoveClickListener(arg_3_0._btnCrash1)
-	arg_3_0:_RemoveClickListener(arg_3_0._btnCrash2)
-	arg_3_0:_RemoveClickListener(arg_3_0._btnCrash3)
-	arg_3_0._btnEnterView:RemoveClickListener()
+	self:_RemoveClickListener(self._btnCrash1)
+	self:_RemoveClickListener(self._btnCrash2)
+	self:_RemoveClickListener(self._btnCrash3)
+	self._btnEnterView:RemoveClickListener()
 end
 
-function var_0_0._AddClickListener(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	if arg_4_1 then
-		arg_4_1:AddClickListener(arg_4_2, arg_4_3)
-	end
-end
-
-function var_0_0._RemoveClickListener(arg_5_0, arg_5_1)
-	if arg_5_1 then
-		arg_5_1:RemoveClickListener()
+function GMToolView:_AddClickListener(btn, callback, cbObj)
+	if btn then
+		btn:AddClickListener(callback, cbObj)
 	end
 end
 
-function var_0_0._AddOnValueChanged(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	if arg_6_1 then
-		arg_6_1:AddOnValueChanged(arg_6_2, arg_6_3)
+function GMToolView:_RemoveClickListener(btn)
+	if btn then
+		btn:RemoveClickListener()
 	end
 end
 
-function var_0_0._RemoveOnValueChanged(arg_7_0, arg_7_1)
-	if arg_7_1 then
-		arg_7_1:RemoveOnValueChanged()
+function GMToolView:_AddOnValueChanged(slider, callback, cbObj)
+	if slider then
+		slider:AddOnValueChanged(callback, cbObj)
 	end
 end
 
-function var_0_0.onDestroyView(arg_8_0)
+function GMToolView:_RemoveOnValueChanged(slider)
+	if slider then
+		slider:RemoveOnValueChanged()
+	end
+end
+
+function GMToolView:onDestroyView()
 	return
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0.initDone = false
-	arg_9_0.selectHeroLevelId = 0
-	arg_9_0.selectHeroFaithId = 0
-	arg_9_0._prePlayingAudioId = 0
-	arg_9_0.showHero = PlayerPrefsHelper.getNumber(PlayerPrefsKey.ShowHeroKey, 1) == 1 and true or false
-	arg_9_0.showUI = PlayerPrefsHelper.getNumber(PlayerPrefsKey.ShowUIKey, 1) == 1 and true or false
-	arg_9_0.showID = PlayerPrefsHelper.getNumber(PlayerPrefsKey.ShowIDKey, 1) == 1 and true or false
-	arg_9_0.showWaterMark = OpenConfig.instance:isShowWaterMarkConfig()
+function GMToolView:onOpen()
+	self.initDone = false
+	self.selectHeroLevelId = 0
+	self.selectHeroFaithId = 0
+	self._prePlayingAudioId = 0
+	self.showHero = PlayerPrefsHelper.getNumber(PlayerPrefsKey.ShowHeroKey, 1) == 1 and true or false
+	self.showUI = PlayerPrefsHelper.getNumber(PlayerPrefsKey.ShowUIKey, 1) == 1 and true or false
+	self.showID = PlayerPrefsHelper.getNumber(PlayerPrefsKey.ShowIDKey, 1) == 1 and true or false
+	self.showWaterMark = OpenConfig.instance:isShowWaterMarkConfig()
 
-	arg_9_0:_showHero()
-	arg_9_0:_showUI()
-	arg_9_0:_showID()
-	arg_9_0:_showWaterMark()
+	self:_showHero()
+	self:_showUI()
+	self:_showID()
+	self:_showWaterMark()
 
-	arg_9_0._txtAccountId.text = "账号:" .. (LoginModel.instance.userName or "nil")
-	arg_9_0._scroll.verticalNormalizedPosition = PlayerPrefsHelper.getNumber(PlayerPrefsKey.GMToolViewScroll, 1)
+	self._txtAccountId.text = "账号:" .. (LoginModel.instance.userName or "nil")
+	self._scroll.verticalNormalizedPosition = PlayerPrefsHelper.getNumber(PlayerPrefsKey.GMToolViewScroll, 1)
 
-	arg_9_0._inp1:SetText(PlayerPrefsHelper.getString(PlayerPrefsKey.GMToolViewGeneral, ""))
-	arg_9_0._inpViewName:SetText(PlayerPrefsHelper.getString(PlayerPrefsKey.GMToolViewOpenView, ""))
-	arg_9_0._inp21:SetText(PlayerPrefsHelper.getString(PlayerPrefsKey.GMToolViewAddItem1, ""))
-	arg_9_0._inp22:SetText(PlayerPrefsHelper.getString(PlayerPrefsKey.GMToolViewAddItem2, ""))
-	arg_9_0._inpTestFight:SetText(PlayerPrefsHelper.getString(PlayerPrefsKey.GMToolViewTestFight, ""))
-	arg_9_0._inpJump:SetText(PlayerPrefsHelper.getString(PlayerPrefsKey.GMToolViewJump, ""))
-	arg_9_0._inpGuide:SetText(PlayerPrefsHelper.getString(PlayerPrefsKey.GMToolViewGuide, ""))
-	arg_9_0._inpEpisode:SetText(PlayerPrefsHelper.getString(PlayerPrefsKey.GMToolViewEpisode, ""))
-	arg_9_0._inpStory:SetText(PlayerPrefsHelper.getString(PlayerPrefsKey.GMToolViewStory, ""))
+	self._inp1:SetText(PlayerPrefsHelper.getString(PlayerPrefsKey.GMToolViewGeneral, ""))
+	self._inpViewName:SetText(PlayerPrefsHelper.getString(PlayerPrefsKey.GMToolViewOpenView, ""))
+	self._inp21:SetText(PlayerPrefsHelper.getString(PlayerPrefsKey.GMToolViewAddItem1, ""))
+	self._inp22:SetText(PlayerPrefsHelper.getString(PlayerPrefsKey.GMToolViewAddItem2, ""))
+	self._inpTestFight:SetText(PlayerPrefsHelper.getString(PlayerPrefsKey.GMToolViewTestFight, ""))
+	self._inpJump:SetText(PlayerPrefsHelper.getString(PlayerPrefsKey.GMToolViewJump, ""))
+	self._inpGuide:SetText(PlayerPrefsHelper.getString(PlayerPrefsKey.GMToolViewGuide, ""))
+	self._inpEpisode:SetText(PlayerPrefsHelper.getString(PlayerPrefsKey.GMToolViewEpisode, ""))
+	self._inpStory:SetText(PlayerPrefsHelper.getString(PlayerPrefsKey.GMToolViewStory, ""))
 
-	local var_9_0 = SDKMgr.instance:isEarphoneContact()
+	local earMode = SDKMgr.instance:isEarphoneContact()
 
-	arg_9_0._toggleEar.isOn = var_9_0
+	self._toggleEar.isOn = earMode
 
-	if arg_9_0._toggleSkipPatFace then
-		local var_9_1 = PatFaceModel.instance:getIsSkipPatFace()
+	if self._toggleSkipPatFace then
+		local isSkip = PatFaceModel.instance:getIsSkipPatFace()
 
-		arg_9_0._toggleSkipPatFace.isOn = var_9_1
+		self._toggleSkipPatFace.isOn = isSkip
 	end
 
-	TaskDispatcher.runRepeat(arg_9_0._updateServerTime, arg_9_0, 0.2)
-	arg_9_0:_updateQualityBtn()
-	arg_9_0:_updateSpeedText()
-	arg_9_0:_refreshPP()
-	arg_9_0:_updateHeartBeatLogText()
-	arg_9_0:_updateLogStateText()
-	arg_9_0:_initScreenSize()
-	arg_9_0:_initSkinViewSelect()
-	arg_9_0:_initHeroFaithSelect()
-	arg_9_0:_initHeroLevelSelect()
-	arg_9_0:_initWeatherSelect()
-	arg_9_0:_refreshGMBtnText()
+	TaskDispatcher.runRepeat(self._updateServerTime, self, 0.2)
+	self:_updateQualityBtn()
+	self:_updateSpeedText()
+	self:_refreshPP()
+	self:_updateHeartBeatLogText()
+	self:_updateLogStateText()
+	self:_initScreenSize()
+	self:_initSkinViewSelect()
+	self:_initHeroFaithSelect()
+	self:_initHeroLevelSelect()
+	self:_initWeatherSelect()
+	self:_refreshGMBtnText()
 
-	arg_9_0.initDone = true
+	self.initDone = true
 
-	arg_9_0:_updateFightJoinText()
-	arg_9_0:_updateFightSpeedText()
+	self:_updateFightJoinText()
+	self:_updateFightSpeedText()
 end
 
-function var_0_0.onClose(arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._updateServerTime, arg_10_0, 0.2)
+function GMToolView:onClose()
+	TaskDispatcher.cancelTask(self._updateServerTime, self, 0.2)
 end
 
-function var_0_0._onScrollValueChanged(arg_11_0, arg_11_1, arg_11_2)
-	PlayerPrefsHelper.setNumber(PlayerPrefsKey.GMToolViewScroll, arg_11_2)
+function GMToolView:_onScrollValueChanged(x, y)
+	PlayerPrefsHelper.setNumber(PlayerPrefsKey.GMToolViewScroll, y)
 end
 
-function var_0_0._updateServerTime(arg_12_0)
-	local var_12_0 = os.date("!*t", ServerTime.now() + ServerTime.serverUtcOffset())
+function GMToolView:_updateServerTime()
+	local t = os.date("!*t", ServerTime.now() + ServerTime.serverUtcOffset())
 
-	arg_12_0._txtServerTime.text = string.format("%04d-%02d-%02d %02d:%02d:%02d", var_12_0.year, var_12_0.month, var_12_0.day, var_12_0.hour, var_12_0.min, var_12_0.sec)
-	arg_12_0._txtLocalTime.text = os.date("%Y-%m-%d %H:%M:%S", os.time())
+	self._txtServerTime.text = string.format("%04d-%02d-%02d %02d:%02d:%02d", t.year, t.month, t.day, t.hour, t.min, t.sec)
+	self._txtLocalTime.text = os.date("%Y-%m-%d %H:%M:%S", os.time())
 end
 
-function var_0_0._onClickBtnOK1(arg_13_0)
-	local var_13_0 = arg_13_0._inp1:GetText()
+function GMToolView:_onClickBtnOK1()
+	local input = self._inp1:GetText()
 
-	PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewGeneral, var_13_0)
+	PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewGeneral, input)
 
-	local var_13_1 = 0
-	local var_13_2
+	local delay = 0
+	local setDungeonCmd
 
-	for iter_13_0 in var_13_0:gmatch("[^\r\n]+") do
-		if not string.nilorempty(iter_13_0) then
-			if string.find(iter_13_0, "set dungeon") then
-				var_13_2 = iter_13_0
+	for oneLine in input:gmatch("[^\r\n]+") do
+		if not string.nilorempty(oneLine) then
+			if string.find(oneLine, "set dungeon") then
+				setDungeonCmd = oneLine
 			else
-				if var_13_1 == 0 then
-					arg_13_0:_sendGM(iter_13_0)
+				if delay == 0 then
+					self:_sendGM(oneLine)
 				else
 					TaskDispatcher.runDelay(function()
-						arg_13_0:_sendGM(iter_13_0)
-					end, nil, var_13_1)
+						self:_sendGM(oneLine)
+					end, nil, delay)
 				end
 
-				var_13_1 = var_13_1 + 0.1
+				delay = delay + 0.1
 			end
 		end
 	end
 
-	if var_13_2 then
-		if var_13_1 == 0 then
-			arg_13_0:_sendGM(var_13_2)
+	if setDungeonCmd then
+		if delay == 0 then
+			self:_sendGM(setDungeonCmd)
 		else
 			TaskDispatcher.runDelay(function()
-				arg_13_0:_sendGM(var_13_2)
-			end, nil, var_13_1)
+				self:_sendGM(setDungeonCmd)
+			end, nil, delay)
 		end
 	end
 end
 
-function var_0_0._sendGM(arg_16_0, arg_16_1)
-	GameFacade.showToast(ToastEnum.IconId, arg_16_1)
+function GMToolView:_sendGM(input)
+	GameFacade.showToast(ToastEnum.IconId, input)
 
-	if arg_16_1:find("bossrush") then
-		BossRushController_Test.instance:_test(arg_16_1)
-
-		return
-	end
-
-	GMCommandHistoryModel.instance:addCommandHistory(arg_16_1)
-
-	if string.find(arg_16_1, "#") == 1 then
-		local var_16_0 = string.split(arg_16_1, " ")
-
-		arg_16_0:_clientGM(var_16_0)
+	if input:find("bossrush") then
+		BossRushController_Test.instance:_test(input)
 
 		return
 	end
 
-	GMRpc.instance:sendGMRequest(arg_16_1)
-	arg_16_0:_onServerGM(arg_16_1)
+	GMCommandHistoryModel.instance:addCommandHistory(input)
+
+	if string.find(input, "#") == 1 then
+		local param = string.split(input, " ")
+
+		self:_clientGM(param)
+
+		return
+	end
+
+	GMRpc.instance:sendGMRequest(input)
+	self:_onServerGM(input)
 end
 
-function var_0_0._onServerGM(arg_17_0, arg_17_1)
-	if string.find(arg_17_1, "delete%sexplore") then
+function GMToolView:_onServerGM(input)
+	if string.find(input, "delete%sexplore") then
 		PlayerPrefsHelper.deleteKey(PlayerPrefsKey.ExploreRedDotData .. PlayerModel.instance:getMyUserId())
 		ExploreSimpleModel.instance:reInit()
 		ExploreRpc.instance:sendGetExploreSimpleInfoRequest()
 	end
 
-	if string.find(arg_17_1, "diceFightWin") then
+	if string.find(input, "diceFightWin") then
 		TaskDispatcher.runDelay(function()
 			if DiceHeroFightModel.instance.finishResult ~= DiceHeroEnum.GameStatu.None then
 				ViewMgr.instance:openView(ViewName.DiceHeroResultView, {
@@ -483,17 +485,17 @@ function var_0_0._onServerGM(arg_17_0, arg_17_1)
 
 				DiceHeroFightModel.instance.finishResult = DiceHeroEnum.GameStatu.None
 			end
-		end, arg_17_0, 0.5)
+		end, self, 0.5)
 	end
 end
 
-function var_0_0._clientGM(arg_19_0, arg_19_1)
-	local var_19_0 = arg_19_1[1]:sub(2)
+function GMToolView:_clientGM(param)
+	local cmdName = param[1]:sub(2)
 
-	GMCommand.processCmd(var_19_0, unpack(arg_19_1, 2))
+	GMCommand.processCmd(cmdName, unpack(param, 2))
 end
 
-function var_0_0._onClickBtnCommand(arg_20_0)
+function GMToolView:_onClickBtnCommand()
 	if UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftControl) then
 		UnityEngine.Application.OpenURL("http://doc.sl.com/pages/viewpage.action?pageId=3342342")
 
@@ -503,239 +505,244 @@ function var_0_0._onClickBtnCommand(arg_20_0)
 	GMController.instance:dispatchEvent(GMCommandView.OpenCommand)
 end
 
-function var_0_0._onClickBtnOK2(arg_21_0)
-	local var_21_0 = arg_21_0._inp21:GetText()
-	local var_21_1 = arg_21_0._inp22:GetText()
-	local var_21_2 = string.split(var_21_0, "#")
-	local var_21_3 = var_21_2[1]
-	local var_21_4 = tonumber(var_21_2[2])
-	local var_21_5 = 1
+function GMToolView:_onClickBtnOK2()
+	local itemTypeIdStr = self._inp21:GetText()
+	local numStr = self._inp22:GetText()
+	local itemTypeIdStrs = string.split(itemTypeIdStr, "#")
+	local itemType = itemTypeIdStrs[1]
+	local itemId = tonumber(itemTypeIdStrs[2])
+	local num = 1
 
-	if not string.nilorempty(var_21_1) then
-		var_21_5 = tonumber(var_21_1)
+	if not string.nilorempty(numStr) then
+		num = tonumber(numStr)
 	end
 
-	if var_21_5 and var_21_5 < 0 then
-		GameFacade.showToast(ToastEnum.GMTool1, var_21_4)
-		GMRpc.instance:sendGMRequest(string.format("delete material %d#%d#%d", var_21_3, var_21_4, -var_21_5))
+	if num and num < 0 then
+		GameFacade.showToast(ToastEnum.GMTool1, itemId)
+		GMRpc.instance:sendGMRequest(string.format("delete material %d#%d#%d", itemType, itemId, -num))
 
 		return
 	end
 
-	if tonumber(var_21_3) == MaterialEnum.MaterialType.Hero then
-		GameFacade.showToast(ToastEnum.GMTool2, var_21_4)
-		GMRpc.instance:sendGMRequest(string.format("add material %d#%d#%d", MaterialEnum.MaterialType.Hero, var_21_4, var_21_5))
-	elseif var_21_3 == GMAddItemView.LevelType then
-		GameFacade.showToast(ToastEnum.GMTool3, var_21_5)
-		GMRpc.instance:sendGMRequest(string.format("set level %d", var_21_5))
-	elseif tonumber(var_21_3) == MaterialEnum.MaterialType.Exp then
-		GameFacade.showToast(ToastEnum.GMTool4, var_21_5)
-		GMRpc.instance:sendGMRequest(string.format("add material 3#0#%d", var_21_5))
-	elseif var_21_2[1] == GMAddItemView.HeroAttr then
-		local var_21_6 = string.splitToNumber(var_21_1, "#")
-		local var_21_7 = var_21_6[1] or 1
-		local var_21_8 = var_21_6[2] or 100
-		local var_21_9 = var_21_6[3] or 100
-		local var_21_10 = var_21_6[4] or 2
+	if tonumber(itemType) == MaterialEnum.MaterialType.Hero then
+		GameFacade.showToast(ToastEnum.GMTool2, itemId)
+		GMRpc.instance:sendGMRequest(string.format("add material %d#%d#%d", MaterialEnum.MaterialType.Hero, itemId, num))
+	elseif itemType == GMAddItemView.LevelType then
+		GameFacade.showToast(ToastEnum.GMTool3, num)
+		GMRpc.instance:sendGMRequest(string.format("set level %d", num))
+	elseif tonumber(itemType) == MaterialEnum.MaterialType.Exp then
+		GameFacade.showToast(ToastEnum.GMTool4, num)
+		GMRpc.instance:sendGMRequest(string.format("add material 3#0#%d", num))
+	elseif itemTypeIdStrs[1] == GMAddItemView.HeroAttr then
+		local sp = string.splitToNumber(numStr, "#")
+		local p1 = sp[1] or 1
+		local p2 = sp[2] or 100
+		local p3 = sp[3] or 100
+		local p4 = sp[4] or 2
 
-		GameFacade.showToast(ToastEnum.GMToolFastAddHero, string.format(" 等级%d 洞悉%d 共鸣%d 塑造%d", var_21_7, var_21_8, var_21_9, var_21_10))
-		GMRpc.instance:sendGMRequest(string.format("add heroAttr %d#%d#%d#%d#%d", var_21_4, var_21_7, var_21_8, var_21_9, var_21_10))
+		GameFacade.showToast(ToastEnum.GMToolFastAddHero, string.format(" 等级%d 洞悉%d 共鸣%d 塑造%d", p1, p2, p3, p4))
+		GMRpc.instance:sendGMRequest(string.format("add heroAttr %d#%d#%d#%d#%d", itemId, p1, p2, p3, p4))
 	else
-		GameFacade.showToast(ToastEnum.GMTool5, var_21_4)
-		GMRpc.instance:sendGMRequest(string.format("add material %d#%d#%d", var_21_3, var_21_4, var_21_5))
+		GameFacade.showToast(ToastEnum.GMTool5, itemId)
+		GMRpc.instance:sendGMRequest(string.format("add material %d#%d#%d", itemType, itemId, num))
 	end
 
-	PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewAddItem1, var_21_0)
-	PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewAddItem2, var_21_1)
+	PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewAddItem1, itemTypeIdStr)
+	PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewAddItem2, numStr)
 end
 
-function var_0_0._onClickBtnOK4(arg_22_0)
+function GMToolView:_onClickBtnOK4()
 	GMRpc.instance:sendGMRequest("logout")
 	LoginController.instance:logout()
 end
 
-function var_0_0._updateQualityBtn(arg_23_0)
-	local var_23_0 = PlayerPrefsHelper.getNumber(PlayerPrefsKey.GMToolViewQuality, ModuleEnum.Performance.Undefine)
+function GMToolView:_updateQualityBtn()
+	local qualitySetting = PlayerPrefsHelper.getNumber(PlayerPrefsKey.GMToolViewQuality, ModuleEnum.Performance.Undefine)
 
-	for iter_23_0, iter_23_1 in ipairs(arg_23_0._imgQualitys) do
-		iter_23_1.color = iter_23_0 == var_23_0 + 1 and Color.green or Color.white
+	for i, imgQuality in ipairs(self._imgQualitys) do
+		imgQuality.color = i == qualitySetting + 1 and Color.green or Color.white
 	end
 end
 
-function var_0_0._onClickBtnQualityLow(arg_24_0)
+function GMToolView:_onClickBtnQualityLow()
 	PlayerPrefsHelper.setNumber(PlayerPrefsKey.GMToolViewQuality, ModuleEnum.Performance.Low)
 	GameGlobalMgr.instance:getScreenState():setLocalQuality(ModuleEnum.Performance.Low)
 	FightEffectPool.dispose()
-	arg_24_0:_updateQualityBtn()
+	self:_updateQualityBtn()
 end
 
-function var_0_0._onClickBtnQualityMid(arg_25_0)
+function GMToolView:_onClickBtnQualityMid()
 	PlayerPrefsHelper.setNumber(PlayerPrefsKey.GMToolViewQuality, ModuleEnum.Performance.Middle)
 	GameGlobalMgr.instance:getScreenState():setLocalQuality(ModuleEnum.Performance.Middle)
 	FightEffectPool.dispose()
-	arg_25_0:_updateQualityBtn()
+	self:_updateQualityBtn()
 end
 
-function var_0_0._onClickBtnQualityHigh(arg_26_0)
+function GMToolView:_onClickBtnQualityHigh()
 	PlayerPrefsHelper.setNumber(PlayerPrefsKey.GMToolViewQuality, ModuleEnum.Performance.High)
 	GameGlobalMgr.instance:getScreenState():setLocalQuality(ModuleEnum.Performance.High)
 	FightEffectPool.dispose()
-	arg_26_0:_updateQualityBtn()
+	self:_updateQualityBtn()
 end
 
-function var_0_0._onClickBtnQualityNo(arg_27_0)
+function GMToolView:_onClickBtnQualityNo()
 	PlayerPrefsHelper.setNumber(PlayerPrefsKey.GMToolViewQuality, ModuleEnum.Performance.Undefine)
 	GameGlobalMgr.instance:getScreenState():setLocalQuality(ModuleEnum.Performance.Undefine)
 	FightEffectPool.dispose()
-	arg_27_0:_updateQualityBtn()
+	self:_updateQualityBtn()
 end
 
-function var_0_0._onClickBtnPP(arg_28_0)
+function GMToolView:_onClickBtnPP()
 	GMPostProcessModel.instance.ppType = (GMPostProcessModel.instance.ppType + 1) % 4
 
-	arg_28_0:_refreshPP()
+	self:_refreshPP()
 end
 
-function var_0_0._onClickBtnSetting(arg_29_0)
-	arg_29_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_29_0._onOpenSettingFinish, arg_29_0)
+function GMToolView:_onClickBtnSetting()
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, self._onOpenSettingFinish, self)
 	SettingsController.instance:openView()
 end
 
-function var_0_0._onClickBtnNewbiePrepare(arg_30_0)
-	arg_30_0:_sendGM("gmSet onekey")
+function GMToolView:_onClickBtnNewbiePrepare()
+	self:_sendGM("gmSet onekey")
 end
 
-function var_0_0._onOpenSettingFinish(arg_31_0, arg_31_1)
-	if arg_31_1 == ViewName.SettingsView then
-		arg_31_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_31_0._onOpenSettingFinish, arg_31_0)
-		ViewMgr.instance:getContainer(ViewName.SettingsView):switchTab(3)
+function GMToolView:_onOpenSettingFinish(viewName)
+	if viewName == ViewName.SettingsView then
+		self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, self._onOpenSettingFinish, self)
+
+		local viewContainer = ViewMgr.instance:getContainer(ViewName.SettingsView)
+
+		viewContainer:switchTab(3)
 	end
 end
 
-function var_0_0._refreshPP(arg_32_0)
+function GMToolView:_refreshPP()
 	if GMPostProcessModel.instance.ppType == 0 then
 		PostProcessingMgr.instance:setUIActive(false)
 		PostProcessingMgr.instance:setUnitActive(false)
 
-		arg_32_0._txtBtnPP.text = "OFF"
+		self._txtBtnPP.text = "OFF"
 	elseif GMPostProcessModel.instance.ppType == 1 then
 		PostProcessingMgr.instance:setUIActive(true)
 		PostProcessingMgr.instance:setUnitActive(false)
 
-		arg_32_0._txtBtnPP.text = "UI"
+		self._txtBtnPP.text = "UI"
 	elseif GMPostProcessModel.instance.ppType == 2 then
 		PostProcessingMgr.instance:setUIActive(false)
 		PostProcessingMgr.instance:setUnitActive(true)
 
-		arg_32_0._txtBtnPP.text = "Unit"
+		self._txtBtnPP.text = "Unit"
 	else
 		PostProcessingMgr.instance:setUIActive(true)
 		PostProcessingMgr.instance:setUnitActive(true)
 
-		arg_32_0._txtBtnPP.text = "ALL"
+		self._txtBtnPP.text = "ALL"
 	end
 end
 
-function var_0_0._updateSpeedText(arg_33_0)
-	local var_33_0 = GameTimeMgr.instance:getTimeScale(GameTimeMgr.TimeScaleType.GM)
+function GMToolView:_updateSpeedText()
+	local value = GameTimeMgr.instance:getTimeScale(GameTimeMgr.TimeScaleType.GM)
 
-	arg_33_0._sliderSpeed:SetValue(var_33_0)
+	self._sliderSpeed:SetValue(value)
 
-	arg_33_0._txtSpeed.text = string.format("Speed %s%.2f", luaLang("multiple"), var_33_0)
+	self._txtSpeed.text = string.format("Speed %s%.2f", luaLang("multiple"), value)
 end
 
-function var_0_0._onClickSpeedText(arg_34_0)
-	arg_34_0:_onSpeedChange(nil, 1)
+function GMToolView:_onClickSpeedText()
+	self:_onSpeedChange(nil, 1)
 end
 
-function var_0_0._onSpeedChange(arg_35_0, arg_35_1, arg_35_2)
-	arg_35_0._sliderSpeed:SetValue(arg_35_2)
+function GMToolView:_onSpeedChange(param, value)
+	self._sliderSpeed:SetValue(value)
 
-	arg_35_0._txtSpeed.text = string.format("Speed %s%.2f", luaLang("multiple"), arg_35_2)
+	self._txtSpeed.text = string.format("Speed %s%.2f", luaLang("multiple"), value)
 
-	GameTimeMgr.instance:setTimeScale(GameTimeMgr.TimeScaleType.GM, arg_35_2)
+	GameTimeMgr.instance:setTimeScale(GameTimeMgr.TimeScaleType.GM, value)
 end
 
-function var_0_0._onClickBtnClearPlayerPrefs(arg_36_0)
+function GMToolView:_onClickBtnClearPlayerPrefs()
 	PlayerPrefsHelper.deleteAll()
 	GameFacade.showToast(ToastEnum.GMToolClearPlayerPrefs)
 end
 
-function var_0_0._onClickBtnBlockLog(arg_37_0)
-	local var_37_0 = not getGlobal("canLogNormal")
+function GMToolView:_onClickBtnBlockLog()
+	local newLogState = not getGlobal("canLogNormal")
 
-	setGlobal("canLogNormal", var_37_0)
-	setGlobal("canLogWarn", var_37_0)
-	setGlobal("canLogError", var_37_0)
+	setGlobal("canLogNormal", newLogState)
+	setGlobal("canLogWarn", newLogState)
+	setGlobal("canLogError", newLogState)
 
-	SLFramework.SLLogger.CanLogNormal = var_37_0
-	SLFramework.SLLogger.CanLogWarn = var_37_0
-	SLFramework.SLLogger.CanLogError = var_37_0
-	GuideController.EnableLog = var_37_0
+	SLFramework.SLLogger.CanLogNormal = newLogState
+	SLFramework.SLLogger.CanLogWarn = newLogState
+	SLFramework.SLLogger.CanLogError = newLogState
+	GuideController.EnableLog = newLogState
 
-	arg_37_0:_updateLogStateText()
+	self:_updateLogStateText()
 end
 
-function var_0_0._updateLogStateText(arg_38_0)
-	gohelper.findChildText(arg_38_0._btnBlockLog.gameObject, "Text").text = getGlobal("canLogNormal") and "屏蔽所有log" or "恢复所有log"
+function GMToolView:_updateLogStateText()
+	local txt = gohelper.findChildText(self._btnBlockLog.gameObject, "Text")
+
+	txt.text = getGlobal("canLogNormal") and "屏蔽所有log" or "恢复所有log"
 end
 
-function var_0_0._onClickBtnProtoTestView(arg_39_0)
-	arg_39_0:closeThis()
+function GMToolView:_onClickBtnProtoTestView()
+	self:closeThis()
 	ViewMgr.instance:openView(ViewName.ProtoTestView)
 end
 
-function var_0_0._onClickTestFight(arg_40_0)
-	local var_40_0 = arg_40_0._inpTestFight:GetText()
+function GMToolView:_onClickTestFight()
+	local inputText = self._inpTestFight:GetText()
 
-	if not string.nilorempty(var_40_0) then
-		local var_40_1 = string.splitToNumber(var_40_0, "#")
+	if not string.nilorempty(inputText) then
+		local temp = string.splitToNumber(inputText, "#")
 
-		if #var_40_1 > 0 then
-			PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewTestFight, var_40_0)
+		if #temp > 0 then
+			PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewTestFight, inputText)
 			HeroGroupModel.instance:setParam(nil, nil, nil)
 
-			local var_40_2
-			local var_40_3 = HeroGroupPresetHeroGroupChangeController.instance:getHeroGroupList(HeroGroupPresetEnum.HeroGroupType.Common)
+			local curGroupMO
+			local groupList = HeroGroupPresetHeroGroupChangeController.instance:getHeroGroupList(HeroGroupPresetEnum.HeroGroupType.Common)
 
-			for iter_40_0, iter_40_1 in ipairs(var_40_3) do
-				local var_40_4 = 0
+			for i, v in ipairs(groupList) do
+				local count = 0
 
-				for iter_40_2, iter_40_3 in ipairs(iter_40_1.heroList) do
-					if iter_40_3 ~= "0" then
-						var_40_4 = var_40_4 + 1
+				for index, heroId in ipairs(v.heroList) do
+					if heroId ~= "0" then
+						count = count + 1
 					end
 				end
 
-				if var_40_4 > 0 then
-					var_40_2 = iter_40_1
+				if count > 0 then
+					curGroupMO = v
 
 					break
 				end
 			end
 
-			if not var_40_2 then
+			if not curGroupMO then
 				logError("current HeroGroupMO is nil")
 				GameFacade.showMessageBox(MessageBoxIdDefine.HeroGroupPleaseAdd, MsgBoxEnum.BoxType.Yes)
 
 				return
 			end
 
-			local var_40_5, var_40_6 = var_40_2:getMainList()
-			local var_40_7, var_40_8 = var_40_2:getSubList()
-			local var_40_9 = var_40_2:getAllHeroEquips()
+			local main, mainCount = curGroupMO:getMainList()
+			local sub, subCount = curGroupMO:getSubList()
+			local equips = curGroupMO:getAllHeroEquips()
 
-			arg_40_0:closeThis()
+			self:closeThis()
 
-			local var_40_10 = FightParam.New()
+			local fightParam = FightParam.New()
 
-			var_40_10.monsterGroupIds = var_40_1
-			var_40_10.isTestFight = true
+			fightParam.monsterGroupIds = temp
+			fightParam.isTestFight = true
 
-			var_40_10:setSceneLevel(10601)
-			var_40_10:setMySide(var_40_2.clothId, var_40_5, var_40_7, var_40_9)
-			FightModel.instance:setFightParam(var_40_10)
-			FightController.instance:sendTestFight(var_40_10)
+			fightParam:setSceneLevel(10601)
+			fightParam:setMySide(curGroupMO.clothId, main, sub, equips)
+			FightModel.instance:setFightParam(fightParam)
+			FightController.instance:sendTestFight(fightParam)
 
 			return
 		end
@@ -744,74 +751,75 @@ function var_0_0._onClickTestFight(arg_40_0)
 	logError("please input monsterGroupIds, split with '#'")
 end
 
-function var_0_0._onClickTestFightId(arg_41_0)
-	local var_41_0 = arg_41_0._inpTestFight:GetText()
-	local var_41_1 = tonumber(var_41_0)
+function GMToolView:_onClickTestFightId()
+	local inputText = self._inpTestFight:GetText()
+	local battleId = tonumber(inputText)
+	local battleCO = battleId and lua_battle.configDict[battleId]
 
-	if var_41_1 and lua_battle.configDict[var_41_1] then
-		local var_41_2 = FightController.instance:setFightParamByBattleId(var_41_1)
+	if battleCO then
+		local fightParam = FightController.instance:setFightParamByBattleId(battleId)
 
-		HeroGroupModel.instance:setParam(var_41_1, nil, nil)
+		HeroGroupModel.instance:setParam(battleId, nil, nil)
 
-		local var_41_3
-		local var_41_4 = HeroGroupPresetHeroGroupChangeController.instance:getHeroGroupList(HeroGroupPresetEnum.HeroGroupType.Common)
+		local curGroupMO
+		local groupList = HeroGroupPresetHeroGroupChangeController.instance:getHeroGroupList(HeroGroupPresetEnum.HeroGroupType.Common)
 
-		for iter_41_0, iter_41_1 in ipairs(var_41_4) do
-			local var_41_5 = 0
+		for i, v in ipairs(groupList) do
+			local count = 0
 
-			for iter_41_2, iter_41_3 in ipairs(iter_41_1.heroList) do
-				if iter_41_3 ~= "0" then
-					var_41_5 = var_41_5 + 1
+			for index, heroId in ipairs(v.heroList) do
+				if heroId ~= "0" then
+					count = count + 1
 				end
 			end
 
-			if var_41_5 > 0 then
-				var_41_3 = iter_41_1
+			if count > 0 then
+				curGroupMO = v
 
 				break
 			end
 		end
 
-		if not var_41_3 then
+		if not curGroupMO then
 			logError("current HeroGroupMO is nil")
 			GameFacade.showMessageBox(MessageBoxIdDefine.HeroGroupPleaseAdd, MsgBoxEnum.BoxType.Yes)
 
 			return
 		end
 
-		local var_41_6, var_41_7 = var_41_3:getMainList()
-		local var_41_8, var_41_9 = var_41_3:getSubList()
-		local var_41_10 = var_41_3:getAllHeroEquips()
+		local main, mainCount = curGroupMO:getMainList()
+		local sub, subCount = curGroupMO:getSubList()
+		local equips = curGroupMO:getAllHeroEquips()
 
-		PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewTestFight, var_41_0)
-		arg_41_0:closeThis()
+		PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewTestFight, inputText)
+		self:closeThis()
 
-		for iter_41_4, iter_41_5 in ipairs(lua_episode.configList) do
-			if iter_41_5.battleId == var_41_1 then
-				var_41_2.episodeId = iter_41_5.id
-				FightResultModel.instance.episodeId = iter_41_5.id
+		for i, v in ipairs(lua_episode.configList) do
+			if v.battleId == battleId then
+				fightParam.episodeId = v.id
+				FightResultModel.instance.episodeId = v.id
 
-				DungeonModel.instance:SetSendChapterEpisodeId(iter_41_5.chapterId, iter_41_5.id)
+				DungeonModel.instance:SetSendChapterEpisodeId(v.chapterId, v.id)
 
 				break
 			end
 		end
 
-		if not var_41_2.episodeId then
-			var_41_2.episodeId = 10101
+		if not fightParam.episodeId then
+			fightParam.episodeId = 10101
 		end
 
-		var_41_2:setMySide(var_41_3.clothId, var_41_6, var_41_8, var_41_10)
-		FightController.instance:sendTestFightId(var_41_2)
+		fightParam:setMySide(curGroupMO.clothId, main, sub, equips)
+		FightController.instance:sendTestFightId(fightParam)
 	end
 end
 
-function var_0_0._onClickPostProcess(arg_42_0)
-	arg_42_0:closeThis()
+function GMToolView:_onClickPostProcess()
+	self:closeThis()
 	ViewMgr.instance:openView(ViewName.GMPostProcessView)
 end
 
-function var_0_0._onClickEffectStat(arg_43_0)
+function GMToolView:_onClickEffectStat()
 	if ViewMgr.instance:isOpen(ViewName.SkillEffectStatView) then
 		ViewMgr.instance:closeView(ViewName.SkillEffectStatView)
 	else
@@ -819,230 +827,232 @@ function var_0_0._onClickEffectStat(arg_43_0)
 	end
 end
 
-function var_0_0._onClickIgnoreSomeMsgLog(arg_44_0)
+function GMToolView:_onClickIgnoreSomeMsgLog()
 	if LuaSocketMgr.instance._ignoreSomeCmdLog then
 		GMController.instance:resumeHeartBeatLog()
 	else
 		GMController.instance:ignoreHeartBeatLog()
 	end
 
-	arg_44_0:_updateHeartBeatLogText()
+	self:_updateHeartBeatLogText()
 end
 
-function var_0_0._updateHeartBeatLogText(arg_45_0)
-	local var_45_0 = LuaSocketMgr.instance._ignoreSomeCmdLog and "恢复心跳打印" or "屏蔽心跳打印"
+function GMToolView:_updateHeartBeatLogText()
+	local str = LuaSocketMgr.instance._ignoreSomeCmdLog and "恢复心跳打印" or "屏蔽心跳打印"
 
-	gohelper.findChildText(arg_45_0.viewGO, "viewport/content/item11/Button/Text").text = var_45_0
+	gohelper.findChildText(self.viewGO, "viewport/content/item11/Button/Text").text = str
 end
 
-function var_0_0._onClickFightJoin(arg_46_0)
+function GMToolView:_onClickFightJoin()
 	FightModel.instance:switchGMFightJoin()
-	arg_46_0:_updateFightJoinText()
+	self:_updateFightJoinText()
 end
 
-function var_0_0._updateFightJoinText(arg_47_0)
-	local var_47_0 = FightModel.instance:isGMFightJoin() and "关闭战斗衔接" or "启用战斗衔接"
+function GMToolView:_updateFightJoinText()
+	local str = FightModel.instance:isGMFightJoin() and "关闭战斗衔接" or "启用战斗衔接"
 
-	gohelper.findChildText(arg_47_0.viewGO, "viewport/content/item11/btnFightJoin/Text").text = var_47_0
+	gohelper.findChildText(self.viewGO, "viewport/content/item11/btnFightJoin/Text").text = str
 end
 
-function var_0_0._onEndEdit1(arg_48_0, arg_48_1)
-	arg_48_0:_setFightSpeed()
+function GMToolView:_onEndEdit1(inputStr)
+	self:_setFightSpeed()
 end
 
-function var_0_0._onEndEdit2(arg_49_0, arg_49_1)
-	arg_49_0:_setFightSpeed()
+function GMToolView:_onEndEdit2(inputStr)
+	self:_setFightSpeed()
 end
 
-function var_0_0._onClickCurSpeed(arg_50_0)
-	local var_50_0 = FightModel.instance._normalSpeed
-	local var_50_1 = FightModel.instance._replaySpeed
-	local var_50_2 = FightModel.instance._replayUISpeed
+function GMToolView:_onClickCurSpeed()
+	local normal = FightModel.instance._normalSpeed
+	local replay = FightModel.instance._replaySpeed
+	local replayUI = FightModel.instance._replayUISpeed
 
-	logError("手动战斗速度：一倍" .. var_50_0[1] .. " 二倍" .. var_50_0[2])
-	logError("战斗回溯速度：一倍" .. var_50_1[1] .. " 二倍" .. var_50_1[2])
-	logError("战斗回溯UI速：一倍" .. var_50_2[1] .. " 二倍" .. var_50_2[2])
+	logError("手动战斗速度：一倍" .. normal[1] .. " 二倍" .. normal[2])
+	logError("战斗回溯速度：一倍" .. replay[1] .. " 二倍" .. replay[2])
+	logError("战斗回溯UI速：一倍" .. replayUI[1] .. " 二倍" .. replayUI[2])
 	logError("玩家选择速度：" .. FightModel.instance:getUserSpeed())
 	logError("当前战斗速度：" .. FightModel.instance:getSpeed())
 	logError("当前战斗UI速：" .. FightModel.instance:getUISpeed())
 end
 
-function var_0_0._setFightSpeed(arg_51_0)
-	local var_51_0 = tonumber(arg_51_0._inpSpeed1:GetText()) or 1
-	local var_51_1 = tonumber(arg_51_0._inpSpeed2:GetText()) or 1
+function GMToolView:_setFightSpeed()
+	local normalSpeed = tonumber(self._inpSpeed1:GetText()) or 1
+	local replaySpeed = tonumber(self._inpSpeed2:GetText()) or 1
 
-	FightModel.instance:setGMSpeed(var_51_0, var_51_1)
+	FightModel.instance:setGMSpeed(normalSpeed, replaySpeed)
 	FightController.instance:dispatchEvent(FightEvent.OnUpdateSpeed)
 end
 
-function var_0_0._updateFightSpeedText(arg_52_0)
-	local var_52_0 = FightModel.instance:getNormalSpeed()
-	local var_52_1 = FightModel.instance:getReplaySpeed()
+function GMToolView:_updateFightSpeedText()
+	local normalSpeed = FightModel.instance:getNormalSpeed()
+	local replaySpeed = FightModel.instance:getReplaySpeed()
 
-	arg_52_0._inpSpeed1:SetText(tostring(var_52_0))
-	arg_52_0._inpSpeed2:SetText(tostring(var_52_1))
+	self._inpSpeed1:SetText(tostring(normalSpeed))
+	self._inpSpeed2:SetText(tostring(replaySpeed))
 end
 
-function var_0_0._onClickHideBug(arg_53_0)
-	local var_53_0 = PlayerPrefsHelper.getNumber(PlayerPrefsKey.GMToolViewDebugView, 0) == 1
+function GMToolView:_onClickHideBug()
+	local isShow = PlayerPrefsHelper.getNumber(PlayerPrefsKey.GMToolViewDebugView, 0) == 1
 
-	PlayerPrefsHelper.setNumber(PlayerPrefsKey.GMToolViewDebugView, var_53_0 and 0 or 1)
-	gohelper.setActive(GMController.debugViewGO, not var_53_0)
+	PlayerPrefsHelper.setNumber(PlayerPrefsKey.GMToolViewDebugView, isShow and 0 or 1)
+	gohelper.setActive(GMController.debugViewGO, not isShow)
 end
 
-function var_0_0._onClickShowError(arg_54_0)
+function GMToolView:_onClickShowError()
 	GMLogController.instance:cancelBlock()
 end
 
-function var_0_0._onClickSkinOffsetAdjust(arg_55_0)
+function GMToolView:_onClickSkinOffsetAdjust()
 	if MainSceneSwitchModel.instance:getCurSceneId() ~= 1 then
 		logError("请在箱中布景把主场景切换为《浪潮之初》才能调整皮肤偏移！")
 
 		return
 	end
 
-	arg_55_0:closeThis()
+	self:closeThis()
 	ViewMgr.instance:openView(ViewName.SkinOffsetAdjustView)
 end
 
-function var_0_0._onClickFightFocusAdjust(arg_56_0)
+function GMToolView:_onClickFightFocusAdjust()
 	if not ViewMgr.instance:isOpen(ViewName.FightFocusView) then
 		return
 	end
 
-	arg_56_0:closeThis()
+	self:closeThis()
 	ViewMgr.instance:openView(ViewName.FightFocusCameraAdjustView)
 end
 
-function var_0_0._onSkipPatFaceToggleValueChange(arg_57_0, arg_57_1, arg_57_2)
-	if not arg_57_0.initDone then
+function GMToolView:_onSkipPatFaceToggleValueChange(param, isOn)
+	if not self.initDone then
 		return
 	end
 
-	PatFaceModel.instance:setIsSkipPatFace(arg_57_2 and true or false)
+	PatFaceModel.instance:setIsSkipPatFace(isOn and true or false)
 end
 
-function var_0_0._onClickGuideEditor(arg_58_0)
-	arg_58_0:closeThis()
+function GMToolView:_onClickGuideEditor()
+	self:closeThis()
 	ViewMgr.instance:openView(ViewName.GuideStepEditor)
 end
 
-function var_0_0._onClickHelpViewBrowse(arg_59_0)
-	arg_59_0:closeThis()
+function GMToolView:_onClickHelpViewBrowse()
+	self:closeThis()
 	ViewMgr.instance:openView(ViewName.GMHelpViewBrowseView)
 end
 
-function var_0_0._onClickGuideStatus(arg_60_0)
-	arg_60_0:closeThis()
+function GMToolView:_onClickGuideStatus()
+	self:closeThis()
 	ViewMgr.instance:openView(ViewName.GMGuideStatusView)
 end
 
-function var_0_0._onClickJumpOK(arg_61_0)
-	local var_61_0 = arg_61_0._inpJump:GetText()
+function GMToolView:_onClickJumpOK()
+	local input = self._inpJump:GetText()
 
-	PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewJump, var_61_0)
-	arg_61_0:closeThis()
+	PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewJump, input)
+	self:closeThis()
 
-	local var_61_1 = tonumber(var_61_0)
+	local jumpId = tonumber(input)
 
-	if var_61_1 then
-		GameFacade.jump(var_61_1)
+	if jumpId then
+		GameFacade.jump(jumpId)
 	else
-		GameFacade.jumpByStr(var_61_0)
+		GameFacade.jumpByStr(input)
 	end
 end
 
-function var_0_0._onClickEpisodeOK(arg_62_0)
-	local var_62_0 = arg_62_0._inpEpisode:GetText()
+function GMToolView:_onClickEpisodeOK()
+	local input = self._inpEpisode:GetText()
 
-	PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewEpisode, var_62_0)
+	PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewEpisode, input)
 
-	local var_62_1 = string.splitToNumber(var_62_0, "#")
-	local var_62_2 = tonumber(var_62_1[1])
-	local var_62_3 = DungeonConfig.instance:getEpisodeCO(var_62_2)
+	local paramList = string.splitToNumber(input, "#")
+	local episodeId = tonumber(paramList[1])
+	local config = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-	if var_62_3 then
-		arg_62_0:closeThis()
+	if config then
+		self:closeThis()
 
-		if DungeonModel.isBattleEpisode(var_62_3) then
-			DungeonFightController.instance:enterFight(var_62_3.chapterId, var_62_3.id)
+		if DungeonModel.isBattleEpisode(config) then
+			DungeonFightController.instance:enterFight(config.chapterId, config.id)
 		else
-			logError("GMToolView 不支持该类型的关卡" .. var_62_2)
+			logError("GMToolView 不支持该类型的关卡" .. episodeId)
 		end
 	else
 		logError("GMToolView 关卡id不正确")
 	end
 end
 
-function var_0_0._onClickGuideStart(arg_63_0)
-	arg_63_0:closeThis()
+function GMToolView:_onClickGuideStart()
+	self:closeThis()
 
-	local var_63_0 = arg_63_0._inpGuide:GetText()
+	local text = self._inpGuide:GetText()
 
-	PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewGuide, var_63_0)
+	PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewGuide, text)
 
-	local var_63_1 = string.splitToNumber(var_63_0, "#")
-	local var_63_2 = tonumber(var_63_1[1])
-	local var_63_3 = tonumber(var_63_1[2]) or 0
+	local paramList = string.splitToNumber(text, "#")
+	local guideId = tonumber(paramList[1])
+	local guideStep = tonumber(paramList[2]) or 0
 
-	print(string.format("input guideId:%s,guideStep:%s", var_63_2, var_63_3))
+	print(string.format("input guideId:%s,guideStep:%s", guideId, guideStep))
 
-	local var_63_4 = GuideModel.instance:getById(var_63_2)
+	local guideMO = GuideModel.instance:getById(guideId)
 
-	GuideModel.instance:gmStartGuide(var_63_2, var_63_3)
+	GuideModel.instance:gmStartGuide(guideId, guideStep)
 
-	if var_63_4 then
-		GuideStepController.instance:clearFlow(var_63_2)
+	if guideMO then
+		GuideStepController.instance:clearFlow(guideId)
 
-		var_63_4.isJumpPass = false
+		guideMO.isJumpPass = false
 
-		GMRpc.instance:sendGMRequest("delete guide " .. var_63_2)
+		GMRpc.instance:sendGMRequest("delete guide " .. guideId)
 
-		;({}).guideInfos = {
-			{
-				guideId = var_63_2,
-				stepId = var_63_3
+		local t = {
+			guideInfos = {
+				{
+					guideId = guideId,
+					stepId = guideStep
+				}
 			}
 		}
 
-		GuideRpc.instance:sendFinishGuideRequest(var_63_2, var_63_3)
-		logNormal(string.format("<color=#FFA500>set guideId:%s,guideStep:%s</color>", var_63_2, var_63_3))
-	elseif var_63_2 then
-		GuideController.instance:startGudie(var_63_2)
-		logNormal("<color=#FFA500>start guide " .. var_63_2 .. "</color>")
+		GuideRpc.instance:sendFinishGuideRequest(guideId, guideStep)
+		logNormal(string.format("<color=#FFA500>set guideId:%s,guideStep:%s</color>", guideId, guideStep))
+	elseif guideId then
+		GuideController.instance:startGudie(guideId)
+		logNormal("<color=#FFA500>start guide " .. guideId .. "</color>")
 	end
 end
 
-function var_0_0._onClickGuideFinish(arg_64_0)
-	local var_64_0 = arg_64_0._inpGuide:GetText()
+function GMToolView:_onClickGuideFinish()
+	local inputStr = self._inpGuide:GetText()
 
-	PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewGuide, var_64_0)
+	PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewGuide, inputStr)
 
-	if not string.nilorempty(var_64_0) then
-		local var_64_1 = tonumber(var_64_0)
+	if not string.nilorempty(inputStr) then
+		local guideId = tonumber(inputStr)
 
-		if var_64_1 then
-			local var_64_2 = GuideModel.instance:getById(var_64_1)
+		if guideId then
+			local guideMO = GuideModel.instance:getById(guideId)
 
-			arg_64_0:closeThis()
-			logNormal("GM one key finish guide " .. var_64_1)
+			self:closeThis()
+			logNormal("GM one key finish guide " .. guideId)
 
-			local var_64_3 = GuideConfig.instance:getStepList(var_64_1)
+			local stepList = GuideConfig.instance:getStepList(guideId)
 
-			for iter_64_0 = #var_64_3, 1, -1 do
-				local var_64_4 = var_64_3[iter_64_0]
+			for j = #stepList, 1, -1 do
+				local stepCO = stepList[j]
 
-				if var_64_4.keyStep == 1 then
-					GuideRpc.instance:sendFinishGuideRequest(var_64_1, var_64_4.stepId)
+				if stepCO.keyStep == 1 then
+					GuideRpc.instance:sendFinishGuideRequest(guideId, stepCO.stepId)
 
 					break
 				end
 			end
 		else
-			local var_64_5 = string.split(var_64_0, "#")
+			local guideStep = string.split(inputStr, "#")
 
-			logNormal("GM one key finish guide " .. var_64_0)
-			GuideRpc.instance:sendFinishGuideRequest(tonumber(var_64_5[1]), tonumber(var_64_5[2]))
+			logNormal("GM one key finish guide " .. inputStr)
+			GuideRpc.instance:sendFinishGuideRequest(tonumber(guideStep[1]), tonumber(guideStep[2]))
 		end
 	else
 		logNormal("GM one key finish guides")
@@ -1051,185 +1061,185 @@ function var_0_0._onClickGuideFinish(arg_64_0)
 	end
 end
 
-function var_0_0._onClickGuideForbid(arg_65_0)
-	local var_65_0 = GuideController.instance:isForbidGuides()
+function GMToolView:_onClickGuideForbid()
+	local isForbid = GuideController.instance:isForbidGuides()
 
-	GuideController.instance:forbidGuides(not var_65_0)
+	GuideController.instance:forbidGuides(not isForbid)
 end
 
-function var_0_0._onClickGuideReset(arg_66_0)
-	local var_66_0 = arg_66_0._inpGuide:GetText()
+function GMToolView:_onClickGuideReset()
+	local text = self._inpGuide:GetText()
 
-	PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewGuide, var_66_0)
+	PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewGuide, text)
 
-	local var_66_1 = string.splitToNumber(var_66_0, "#")
-	local var_66_2 = tonumber(var_66_1[1])
-	local var_66_3 = GuideConfig.instance:getGuideCO(var_66_2)
+	local paramList = string.splitToNumber(text, "#")
+	local guideId = tonumber(paramList[1])
+	local guideCfg = GuideConfig.instance:getGuideCO(guideId)
 
-	if var_66_3 then
-		print(string.format("reset guideId:%s", var_66_2))
-		GuideStepController.instance:clearFlow(var_66_2)
-		GMRpc.instance:sendGMRequest("delete guide " .. var_66_2)
+	if guideCfg then
+		print(string.format("reset guideId:%s", guideId))
+		GuideStepController.instance:clearFlow(guideId)
+		GMRpc.instance:sendGMRequest("delete guide " .. guideId)
 
-		local var_66_4 = string.split(var_66_3.trigger, "#")
-		local var_66_5 = var_66_4[1]
+		local temp = string.split(guideCfg.trigger, "#")
+		local type = temp[1]
 
-		arg_66_0:_resetEpisode(var_66_4[1], var_66_4[2])
+		self:_resetEpisode(temp[1], temp[2])
 
-		local var_66_6 = GameUtil.splitString2(var_66_3.invalid, false, "|", "#")
+		local invalidList = GameUtil.splitString2(guideCfg.invalid, false, "|", "#")
 
-		if not var_66_6 then
+		if not invalidList then
 			return
 		end
 
-		for iter_66_0, iter_66_1 in ipairs(var_66_6) do
+		for _, one in ipairs(invalidList) do
 			-- block empty
 		end
 	end
 end
 
-function var_0_0._resetEpisode(arg_67_0, arg_67_1, arg_67_2)
-	if arg_67_1 == "EpisodeFinish" or arg_67_1 == "EnterEpisode" then
-		arg_67_0:_doResetEpisode(tonumber(arg_67_2))
+function GMToolView:_resetEpisode(type, episodeId)
+	if type == "EpisodeFinish" or type == "EnterEpisode" then
+		self:_doResetEpisode(tonumber(episodeId))
 
 		return
 	end
 
-	local var_67_0 = lua_open.configDict[tonumber(arg_67_2)]
+	local openConfig = lua_open.configDict[tonumber(episodeId)]
 
-	if var_67_0 then
-		arg_67_0:_doResetEpisode(var_67_0.episodeId)
+	if openConfig then
+		self:_doResetEpisode(openConfig.episodeId)
 	end
 end
 
-function var_0_0._doResetEpisode(arg_68_0, arg_68_1)
-	local var_68_0 = lua_episode.configDict[arg_68_1]
+function GMToolView:_doResetEpisode(episodeId)
+	local episodeCfg = lua_episode.configDict[episodeId]
 
-	if not var_68_0 then
+	if not episodeCfg then
 		return
 	end
 
-	GMRpc.instance:sendGMRequest(string.format("set dungeon %s 0", arg_68_1))
+	GMRpc.instance:sendGMRequest(string.format("set dungeon %s 0", episodeId))
 
-	if var_68_0.beforeStory > 0 then
-		print(arg_68_1 .. " delete beforeStory")
-		GMRpc.instance:sendGMRequest(string.format("delete story %s", var_68_0.beforeStory))
+	if episodeCfg.beforeStory > 0 then
+		print(episodeId .. " delete beforeStory")
+		GMRpc.instance:sendGMRequest(string.format("delete story %s", episodeCfg.beforeStory))
 	end
 
-	if var_68_0.afterStory > 0 then
-		print(arg_68_1 .. " delete afterStory")
-		GMRpc.instance:sendGMRequest(string.format("delete story %s", var_68_0.afterStory))
+	if episodeCfg.afterStory > 0 then
+		print(episodeId .. " delete afterStory")
+		GMRpc.instance:sendGMRequest(string.format("delete story %s", episodeCfg.afterStory))
 	end
 end
 
-function var_0_0._onClickStoryOK(arg_69_0)
-	arg_69_0:closeThis()
+function GMToolView:_onClickStoryOK()
+	self:closeThis()
 
-	local var_69_0 = arg_69_0._inpStory:GetText()
+	local txt = self._inpStory:GetText()
 
-	if not string.nilorempty(var_69_0) then
-		local var_69_1 = string.splitToNumber(var_69_0, "#")
-		local var_69_2 = var_69_1[1]
-		local var_69_3 = var_69_1[2]
+	if not string.nilorempty(txt) then
+		local results = string.splitToNumber(txt, "#")
+		local storyId = results[1]
+		local stepId = results[2]
 
-		if var_69_2 then
-			PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewStory, var_69_2)
+		if storyId then
+			PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewStory, storyId)
 
-			if var_69_3 then
-				StoryController.instance:playStoryByStartStep(var_69_2, var_69_3)
+			if stepId then
+				StoryController.instance:playStoryByStartStep(storyId, stepId)
 			else
-				local var_69_4 = {}
+				local param = {}
 
-				var_69_4.isReplay = true
-				var_69_4.mark = false
+				param.isReplay = true
+				param.mark = false
 
-				StoryController.instance:playStory(var_69_2, var_69_4)
+				StoryController.instance:playStory(storyId, param)
 			end
 		end
 	end
 end
 
-function var_0_0._onClickStorySkip(arg_70_0)
+function GMToolView:_onClickStorySkip()
 	if ViewMgr.instance:isOpen(ViewName.StoryView) then
 		StoryController.instance:playFinished()
 	end
 end
 
-function var_0_0._onClickChangeColorOK(arg_71_0)
-	arg_71_0:closeThis()
+function GMToolView:_onClickChangeColorOK()
+	self:closeThis()
 
-	local var_71_0 = arg_71_0._inpChangeColor:GetText()
+	local input = self._inpChangeColor:GetText()
 
-	if not string.nilorempty(var_71_0) then
-		local var_71_1 = tonumber(var_71_0)
+	if not string.nilorempty(input) then
+		local lvId = tonumber(input)
 
-		if var_71_1 then
-			DungeonPuzzleChangeColorController.instance:enterDecryptChangeColor(var_71_1)
+		if lvId then
+			DungeonPuzzleChangeColorController.instance:enterDecryptChangeColor(lvId)
 		end
 	end
 end
 
-function var_0_0._onClickFightSimulate(arg_72_0)
-	arg_72_0:closeThis()
+function GMToolView:_onClickFightSimulate()
+	self:closeThis()
 	ViewMgr.instance:openView(ViewName.GMFightSimulateView)
 end
 
-function var_0_0._onClickFightEntity(arg_73_0)
-	arg_73_0:closeThis()
+function GMToolView:_onClickFightEntity()
+	self:closeThis()
 	ViewMgr.instance:openView(ViewName.GMFightEntityView)
 end
 
-function var_0_0._onClickResetCards(arg_74_0)
+function GMToolView:_onClickResetCards()
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Fight then
-		arg_74_0:closeThis()
+		self:closeThis()
 		ViewMgr.instance:openView(ViewName.GMResetCardsView)
 	else
 		GameFacade.showToast(ToastEnum.IconId, "not in fight")
 	end
 end
 
-function var_0_0._initScreenSize(arg_75_0)
+function GMToolView:_initScreenSize()
 	if BootNativeUtil.isWindows() then
-		arg_75_0._inpScreenWidth:SetText(SettingsModel.instance._screenWidth)
-		arg_75_0._inpScreenHeight:SetText(SettingsModel.instance._screenHeight)
+		self._inpScreenWidth:SetText(SettingsModel.instance._screenWidth)
+		self._inpScreenHeight:SetText(SettingsModel.instance._screenHeight)
 	else
-		gohelper.setActive(arg_75_0._inpScreenWidth.gameObject.transform.parent.gameObject, false)
+		gohelper.setActive(self._inpScreenWidth.gameObject.transform.parent.gameObject, false)
 	end
 end
 
-function var_0_0._formatSize(arg_76_0, arg_76_1, arg_76_2)
-	local var_76_0 = tonumber(arg_76_1)
+function GMToolView:_formatSize(sizeStr, defaultValue)
+	local val = tonumber(sizeStr)
 
-	if not var_76_0 then
-		return arg_76_2
+	if not val then
+		return defaultValue
 	end
 
-	if var_76_0 < 1 then
-		return arg_76_2
+	if val < 1 then
+		return defaultValue
 	end
 
-	return var_76_0
+	return val
 end
 
-function var_0_0._onClickExplore(arg_77_0)
-	local var_77_0 = arg_77_0._inpExplore:GetText() or ""
-	local var_77_1 = string.match(var_77_0, "(%d+)$")
-	local var_77_2 = tonumber(var_77_1) or 101
+function GMToolView:_onClickExplore()
+	local str = self._inpExplore:GetText() or ""
+	local oldId = string.match(str, "(%d+)$")
+	local mapId = tonumber(oldId) or 101
 
-	if not ExploreSimpleModel.instance:getMapIsUnLock(var_77_2) then
-		local var_77_3
-		local var_77_4 = 5
-		local var_77_5 = 3
-		local var_77_6 = DungeonConfig.instance:getChapterCOListByType(DungeonEnum.ChapterType.Normal)
+	if not ExploreSimpleModel.instance:getMapIsUnLock(mapId) then
+		local episodeId
+		local chapterIndex = 5
+		local episodeIndex = 3
+		local list = DungeonConfig.instance:getChapterCOListByType(DungeonEnum.ChapterType.Normal)
 
-		if var_77_6[var_77_4] then
-			local var_77_7 = DungeonConfig.instance:getChapterNonSpEpisodeCOList(var_77_6[var_77_4].id)
+		if list[chapterIndex] then
+			local episodeList = DungeonConfig.instance:getChapterNonSpEpisodeCOList(list[chapterIndex].id)
 
-			var_77_3 = var_77_7 and var_77_7[var_77_5] and var_77_7[var_77_5].id
+			episodeId = episodeList and episodeList[episodeIndex] and episodeList[episodeIndex].id
 		end
 
-		if var_77_3 then
-			GMRpc.instance:sendGMRequest(string.format("set dungeon %d", var_77_3))
+		if episodeId then
+			GMRpc.instance:sendGMRequest(string.format("set dungeon %d", episodeId))
 		end
 
 		if not DungeonMapModel.instance:elementIsFinished(1050302) then
@@ -1240,232 +1250,232 @@ function var_0_0._onClickExplore(arg_77_0)
 		ExploreRpc.instance:sendGetExploreSimpleInfoRequest()
 	end
 
-	ExploreController.instance:enterExploreScene(var_77_2)
+	ExploreController.instance:enterExploreScene(mapId)
 
-	local var_77_8 = ExploreConfig.instance:getMapIdConfig(var_77_2)
+	local mapCo = ExploreConfig.instance:getMapIdConfig(mapId)
 
-	if var_77_8 then
-		ExploreSimpleModel.instance:setLastSelectMap(var_77_8.chapterId, var_77_8.episodeId)
+	if mapCo then
+		ExploreSimpleModel.instance:setLastSelectMap(mapCo.chapterId, mapCo.episodeId)
 	end
 end
 
-function var_0_0._onClickScreenSize(arg_78_0)
-	local var_78_0 = arg_78_0._inpScreenWidth:GetText()
-	local var_78_1 = arg_78_0._inpScreenHeight:GetText()
-	local var_78_2 = arg_78_0:_formatSize(var_78_0, SettingsModel.instance._screenWidth)
-	local var_78_3 = arg_78_0:_formatSize(var_78_1, SettingsModel.instance._screenHeight)
+function GMToolView:_onClickScreenSize()
+	local width = self._inpScreenWidth:GetText()
+	local height = self._inpScreenHeight:GetText()
 
-	arg_78_0._inpScreenWidth:SetText(var_78_2)
-	arg_78_0._inpScreenHeight:SetText(var_78_3)
-	SettingsModel.instance:_setScreenWidthAndHeight(string.format("%d * %d", var_78_2, var_78_3))
+	width = self:_formatSize(width, SettingsModel.instance._screenWidth)
+	height = self:_formatSize(height, SettingsModel.instance._screenHeight)
+
+	self._inpScreenWidth:SetText(width)
+	self._inpScreenHeight:SetText(height)
+	SettingsModel.instance:_setScreenWidthAndHeight(string.format("%d * %d", width, height))
 end
 
-function var_0_0._initHaveHeroNameList(arg_79_0)
-	if arg_79_0.haveHeroList then
+function GMToolView:_initHaveHeroNameList()
+	if self.haveHeroList then
 		return
 	end
 
-	arg_79_0.haveHeroList = {}
+	self.haveHeroList = {}
 
-	table.insert(arg_79_0.haveHeroList, "英雄选择")
+	table.insert(self.haveHeroList, "英雄选择")
 
-	for iter_79_0, iter_79_1 in ipairs(HeroModel.instance:getList()) do
-		local var_79_0 = iter_79_1.config.name .. "#" .. tostring(iter_79_1.heroId)
+	for _, heroMo in ipairs(HeroModel.instance:getList()) do
+		local str = heroMo.config.name .. "#" .. tostring(heroMo.heroId)
 
-		table.insert(arg_79_0.haveHeroList, var_79_0)
+		table.insert(self.haveHeroList, str)
 	end
 end
 
-function var_0_0._initSkinViewSelect(arg_80_0)
-	arg_80_0:_initHaveHeroNameList()
-	arg_80_0._dropSkinGetView:ClearOptions()
-	arg_80_0._dropSkinGetView:AddOptions(arg_80_0.haveHeroList)
+function GMToolView:_initSkinViewSelect()
+	self:_initHaveHeroNameList()
+	self._dropSkinGetView:ClearOptions()
+	self._dropSkinGetView:AddOptions(self.haveHeroList)
 end
 
-function var_0_0._initHeroFaithSelect(arg_81_0)
-	arg_81_0:_initHaveHeroNameList()
-	arg_81_0._dropHeroFaith:ClearOptions()
-	arg_81_0._dropHeroFaith:AddOptions(arg_81_0.haveHeroList)
+function GMToolView:_initHeroFaithSelect()
+	self:_initHaveHeroNameList()
+	self._dropHeroFaith:ClearOptions()
+	self._dropHeroFaith:AddOptions(self.haveHeroList)
 end
 
-function var_0_0._initHeroLevelSelect(arg_82_0)
-	arg_82_0:_initHaveHeroNameList()
-	arg_82_0._dropHeroLevel:ClearOptions()
-	arg_82_0._dropHeroLevel:AddOptions(arg_82_0.haveHeroList)
+function GMToolView:_initHeroLevelSelect()
+	self:_initHaveHeroNameList()
+	self._dropHeroLevel:ClearOptions()
+	self._dropHeroLevel:AddOptions(self.haveHeroList)
 end
 
-function var_0_0._sortCharacterInteractionFunc(arg_83_0, arg_83_1)
-	if arg_83_0.behaviour ~= arg_83_1.behaviour then
-		return arg_83_0.behaviour < arg_83_1.behaviour
+function GMToolView._sortCharacterInteractionFunc(a, b)
+	if a.behaviour ~= b.behaviour then
+		return a.behaviour < b.behaviour
 	end
 end
 
-function var_0_0._initCharacterInteractionSelect(arg_84_0)
-	if not arg_84_0.characterInteractionList then
-		arg_84_0.characterInteractionList = {}
+function GMToolView:_initCharacterInteractionSelect()
+	if not self.characterInteractionList then
+		self.characterInteractionList = {}
 
-		for iter_84_0, iter_84_1 in ipairs(lua_room_character_interaction.configList) do
-			local var_84_0 = RoomCharacterModel.instance:getCharacterMOById(iter_84_1.heroId)
+		for _, cfg in ipairs(lua_room_character_interaction.configList) do
+			local roomCharacterMO = RoomCharacterModel.instance:getCharacterMOById(cfg.heroId)
 
-			if var_84_0 and var_84_0.characterState == RoomCharacterEnum.CharacterState.Map then
-				table.insert(arg_84_0.characterInteractionList, iter_84_1)
+			if roomCharacterMO and roomCharacterMO.characterState == RoomCharacterEnum.CharacterState.Map then
+				table.insert(self.characterInteractionList, cfg)
 			end
 		end
 
-		table.sort(arg_84_0.characterInteractionList, var_0_0._sortCharacterInteractionFunc)
+		table.sort(self.characterInteractionList, GMToolView._sortCharacterInteractionFunc)
 	end
 
-	local var_84_1 = {}
-	local var_84_2 = {
+	local interStr = {}
+	local typeName = {
 		[RoomCharacterEnum.InteractionType.Dialog] = "对话",
 		[RoomCharacterEnum.InteractionType.Building] = "建筑"
 	}
 
-	table.insert(var_84_1, "英雄-交互#id选择")
+	table.insert(interStr, "英雄-交互#id选择")
 
-	for iter_84_2, iter_84_3 in ipairs(arg_84_0.characterInteractionList) do
-		if var_84_2[iter_84_3.behaviour] then
-			local var_84_3 = HeroConfig.instance:getHeroCO(iter_84_3.heroId)
-			local var_84_4 = string.format("%s-%s#%s", var_84_3.name or iter_84_3.heroId, var_84_2[iter_84_3.behaviour], iter_84_3.id)
+	for _, cfg in ipairs(self.characterInteractionList) do
+		if typeName[cfg.behaviour] then
+			local heroCo = HeroConfig.instance:getHeroCO(cfg.heroId)
+			local str = string.format("%s-%s#%s", heroCo.name or cfg.heroId, typeName[cfg.behaviour], cfg.id)
 
-			table.insert(var_84_1, var_84_4)
+			table.insert(interStr, str)
 		end
 	end
 
-	if arg_84_0._dropRoomInteraction then
-		arg_84_0._dropRoomInteraction:ClearOptions()
-		arg_84_0._dropRoomInteraction:AddOptions(var_84_1)
+	if self._dropRoomInteraction then
+		self._dropRoomInteraction:ClearOptions()
+		self._dropRoomInteraction:AddOptions(interStr)
 	end
 end
 
-function var_0_0._initRoomWeatherSelect(arg_85_0)
-	arg_85_0.roomWeatherIdList = {}
+function GMToolView:_initRoomWeatherSelect()
+	self.roomWeatherIdList = {}
 
-	local var_85_0 = RoomConfig.instance:getSceneAmbientConfigList()
+	local ambientCfgList = RoomConfig.instance:getSceneAmbientConfigList()
 
-	for iter_85_0, iter_85_1 in ipairs(var_85_0) do
-		table.insert(arg_85_0.roomWeatherIdList, iter_85_1.id)
+	for i, cfg in ipairs(ambientCfgList) do
+		table.insert(self.roomWeatherIdList, cfg.id)
 	end
 
-	local var_85_1 = {
+	local interStr = {
 		"请选择天气"
 	}
 
-	tabletool.addValues(var_85_1, arg_85_0.roomWeatherIdList)
+	tabletool.addValues(interStr, self.roomWeatherIdList)
 
-	if arg_85_0._dropRoomWeather then
-		arg_85_0._dropRoomWeather:ClearOptions()
-		arg_85_0._dropRoomWeather:AddOptions(var_85_1)
+	if self._dropRoomWeather then
+		self._dropRoomWeather:ClearOptions()
+		self._dropRoomWeather:AddOptions(interStr)
 	end
 end
 
-function var_0_0._onSkinGetValueChanged(arg_86_0, arg_86_1)
-	if not arg_86_0.haveHeroList then
+function GMToolView:_onSkinGetValueChanged(index)
+	if not self.haveHeroList then
 		return
 	end
 
-	if arg_86_1 == 0 then
+	if index == 0 then
 		return
 	end
 
-	local var_86_0 = string.split(arg_86_0.haveHeroList[arg_86_1 + 1], "#")[2]
+	local heroId = string.split(self.haveHeroList[index + 1], "#")[2]
 
-	if not var_86_0 then
-		logError("not found : " .. arg_86_0.haveHeroList[arg_86_1 + 1])
+	if not heroId then
+		logError("not found : " .. self.haveHeroList[index + 1])
 	end
 
-	local var_86_1 = {
-		heroId = tonumber(var_86_0)
-	}
+	local param = {}
 
-	var_86_1.newRank = 3
-	var_86_1.isRank = true
+	param.heroId = tonumber(heroId)
+	param.newRank = 3
+	param.isRank = true
 
-	PopupController.instance:addPopupView(PopupEnum.PriorityType.GainCharacterView, ViewName.CharacterGetView, var_86_1)
+	PopupController.instance:addPopupView(PopupEnum.PriorityType.GainCharacterView, ViewName.CharacterGetView, param)
 end
 
-function var_0_0._onHeroFaithSelectChanged(arg_87_0, arg_87_1)
-	if not arg_87_0.haveHeroList then
+function GMToolView:_onHeroFaithSelectChanged(index)
+	if not self.haveHeroList then
 		return
 	end
 
-	if arg_87_1 == 0 then
+	if index == 0 then
 		return
 	end
 
-	local var_87_0 = string.split(arg_87_0.haveHeroList[arg_87_1 + 1], "#")[2]
+	local heroId = string.split(self.haveHeroList[index + 1], "#")[2]
 
-	if not var_87_0 then
-		logError("not found : " .. arg_87_0.haveHeroList[arg_87_1 + 1])
+	if not heroId then
+		logError("not found : " .. self.haveHeroList[index + 1])
 	end
 
-	arg_87_0.selectHeroFaithId = tonumber(var_87_0)
+	self.selectHeroFaithId = tonumber(heroId)
 end
 
-function var_0_0._onHeroLevelSelectChanged(arg_88_0, arg_88_1)
-	if not arg_88_0.haveHeroList then
+function GMToolView:_onHeroLevelSelectChanged(index)
+	if not self.haveHeroList then
 		return
 	end
 
-	if arg_88_1 == 0 then
+	if index == 0 then
 		return
 	end
 
-	local var_88_0 = string.split(arg_88_0.haveHeroList[arg_88_1 + 1], "#")[2]
+	local heroId = string.split(self.haveHeroList[index + 1], "#")[2]
 
-	if not var_88_0 then
-		logError("not found : " .. arg_88_0.haveHeroList[arg_88_1 + 1])
+	if not heroId then
+		logError("not found : " .. self.haveHeroList[index + 1])
 	end
 
-	arg_88_0.selectHeroLevelId = tonumber(var_88_0)
+	self.selectHeroLevelId = tonumber(heroId)
 end
 
-function var_0_0._onClickHeroFaithOk(arg_89_0)
-	if arg_89_0.selectHeroFaithId == 0 then
+function GMToolView:_onClickHeroFaithOk()
+	if self.selectHeroFaithId == 0 then
 		return
 	end
 
-	GameFacade.showToast(ToastEnum.GMTool5, arg_89_0.selectHeroFaithId)
-	GMRpc.instance:sendGMRequest(string.format("add material %d#%d#%d", 6, arg_89_0.selectHeroFaithId, HeroConfig.instance.maxFaith))
+	GameFacade.showToast(ToastEnum.GMTool5, self.selectHeroFaithId)
+	GMRpc.instance:sendGMRequest(string.format("add material %d#%d#%d", 6, self.selectHeroFaithId, HeroConfig.instance.maxFaith))
 end
 
-function var_0_0._onClickHeroLevelOk(arg_90_0)
-	if arg_90_0.selectHeroLevelId == 0 then
+function GMToolView:_onClickHeroLevelOk()
+	if self.selectHeroLevelId == 0 then
 		return
 	end
 
-	local var_90_0 = arg_90_0._inpHeroLevel:GetText()
+	local level = self._inpHeroLevel:GetText()
 
-	GameFacade.showToast(ToastEnum.GMToolFastAddHero, string.format(" 等级%d 洞悉%d 共鸣%d 塑造%d", var_90_0, 100, 100, 2))
-	GMRpc.instance:sendGMRequest(string.format("add heroAttr %d#%d#%d#%d#%d", arg_90_0.selectHeroLevelId, var_90_0, 100, 100, 2))
+	GameFacade.showToast(ToastEnum.GMToolFastAddHero, string.format(" 等级%d 洞悉%d 共鸣%d 塑造%d", level, 100, 100, 2))
+	GMRpc.instance:sendGMRequest(string.format("add heroAttr %d#%d#%d#%d#%d", self.selectHeroLevelId, level, 100, 100, 2))
 end
 
-function var_0_0._initWeatherSelect(arg_91_0)
-	arg_91_0.weatherReportIdList = {}
+function GMToolView:_initWeatherSelect()
+	self.weatherReportIdList = {}
 
-	for iter_91_0, iter_91_1 in ipairs(lua_weather_report.configList) do
-		local var_91_0 = BGMSwitchProgress.WeatherLight[iter_91_1.lightMode]
-		local var_91_1 = BGMSwitchProgress.WeatherEffect[iter_91_1.effect]
-		local var_91_2 = string.format("%d %s-%s", iter_91_1.id, var_91_0, var_91_1)
+	for _, reportCo in ipairs(lua_weather_report.configList) do
+		local lightName = BGMSwitchProgress.WeatherLight[reportCo.lightMode]
+		local effectName = BGMSwitchProgress.WeatherEffect[reportCo.effect]
+		local reportStr = string.format("%d %s-%s", reportCo.id, lightName, effectName)
 
-		table.insert(arg_91_0.weatherReportIdList, var_91_2)
+		table.insert(self.weatherReportIdList, reportStr)
 	end
 
-	arg_91_0._dropWeather:ClearOptions()
-	arg_91_0._dropWeather:AddOptions(arg_91_0.weatherReportIdList)
+	self._dropWeather:ClearOptions()
+	self._dropWeather:AddOptions(self.weatherReportIdList)
 
 	if WeatherController.instance._curReport then
-		arg_91_0._dropWeather:SetValue(WeatherController.instance._curReport.id - 1)
+		self._dropWeather:SetValue(WeatherController.instance._curReport.id - 1)
 	end
 
-	arg_91_0._dropWeather:AddOnValueChanged(arg_91_0._onWeatherChange, arg_91_0)
+	self._dropWeather:AddOnValueChanged(self._onWeatherChange, self)
 end
 
-function var_0_0._onWeatherChange(arg_92_0, arg_92_1)
-	WeatherController.instance:setReportId(arg_92_1 + 1)
+function GMToolView:_onWeatherChange(index)
+	WeatherController.instance:setReportId(index + 1)
 end
 
-function var_0_0._onClickGetAllHeroBtn(arg_93_0)
+function GMToolView:_onClickGetAllHeroBtn()
 	HeroRpc.instance.preventGainView = true
 
 	GMRpc.instance:sendGMRequest("add hero all 1")
@@ -1475,7 +1485,7 @@ function var_0_0._onClickGetAllHeroBtn(arg_93_0)
 	end, nil, 5)
 end
 
-function var_0_0._onClickDeleteAllHeroInfoBtn(arg_95_0)
+function GMToolView:_onClickDeleteAllHeroInfoBtn()
 	MessageBoxController.instance:showMsgBoxByStr("确定要删除账号吗？", MsgBoxEnum.BoxType.Yes_No, function()
 		GMRpc.instance:sendGMRequest("delete account", function()
 			LoginController.instance:logout()
@@ -1483,248 +1493,253 @@ function var_0_0._onClickDeleteAllHeroInfoBtn(arg_95_0)
 	end)
 end
 
-function var_0_0._refreshGMBtnText(arg_98_0)
-	if not arg_98_0.showGMBtn then
-		arg_98_0.showGMBtn = PlayerPrefsHelper.getNumber(PlayerPrefsKey.GMToolViewShowGMBtn, 1)
+function GMToolView:_refreshGMBtnText()
+	if not self.showGMBtn then
+		self.showGMBtn = PlayerPrefsHelper.getNumber(PlayerPrefsKey.GMToolViewShowGMBtn, 1)
 	end
 
-	if arg_98_0.showGMBtn == 1 then
-		arg_98_0._txtGM.text = "隐藏GM按钮"
+	if self.showGMBtn == 1 then
+		self._txtGM.text = "隐藏GM按钮"
 	else
-		arg_98_0._txtGM.text = "显示GM按钮"
+		self._txtGM.text = "显示GM按钮"
 	end
 end
 
-function var_0_0._onClickHideGMBtn(arg_99_0)
-	arg_99_0.showGMBtn = arg_99_0.showGMBtn == 1 and 0 or 1
+function GMToolView:_onClickHideGMBtn()
+	self.showGMBtn = self.showGMBtn == 1 and 0 or 1
 
-	arg_99_0:_refreshGMBtnText()
-	PlayerPrefsHelper.setNumber(PlayerPrefsKey.GMToolViewShowGMBtn, arg_99_0.showGMBtn)
+	self:_refreshGMBtnText()
+	PlayerPrefsHelper.setNumber(PlayerPrefsKey.GMToolViewShowGMBtn, self.showGMBtn)
 	MainController.instance:dispatchEvent(MainEvent.OnChangeGMBtnStatus)
 end
 
-function var_0_0._onClickUnLockAllEpisode(arg_100_0)
+function GMToolView:_onClickUnLockAllEpisode()
 	GMRpc.instance:sendGMRequest("set dungeon all")
 end
 
-function var_0_0._onClickOpenHuaRongViewBtn(arg_101_0)
+function GMToolView:_onClickOpenHuaRongViewBtn()
 	ViewMgr.instance:openView(ViewName.DungeonHuaRongView)
 end
 
-function var_0_0._onClickOpenSeasonViewBtn(arg_102_0)
-	Act205Controller.instance:openGameStartView(Act205Enum.ActId)
+function GMToolView:_onClickOpenSeasonViewBtn()
+	local viewParam = {}
+
+	viewParam.episodeId = 1322902
+
+	HuiDiaoLanModel.instance:setCurEpisodeId(viewParam.episodeId)
+	HuiDiaoLanGameController.instance:openGameView(viewParam)
 end
 
-function var_0_0._onEarToggleValueChange(arg_103_0)
-	if not arg_103_0.initDone then
+function GMToolView:_onEarToggleValueChange()
+	if not self.initDone then
 		return
 	end
 
-	local var_103_0 = SDKMgr.instance:isEarphoneContact()
+	local isEarConnect = SDKMgr.instance:isEarphoneContact()
 
-	arg_103_0._toggleEar.isOn = var_103_0
+	self._toggleEar.isOn = isEarConnect
 end
 
-function var_0_0._onClickShowHero(arg_104_0)
+function GMToolView:_onClickShowHero()
 	if not ViewMgr.instance:isOpen(ViewName.MainView) then
 		return
 	end
 
-	arg_104_0.showHero = not arg_104_0.showHero
+	self.showHero = not self.showHero
 
-	arg_104_0:_showHero()
+	self:_showHero()
 end
 
-function var_0_0._showHero(arg_105_0)
+function GMToolView:_showHero()
 	if not ViewMgr.instance:isOpen(ViewName.MainView) then
 		return
 	end
 
-	if not arg_105_0.heroNodes then
-		local var_105_0 = ViewMgr.instance:getContainer(ViewName.MainView)
+	if not self.heroNodes then
+		local mainViewContainer = ViewMgr.instance:getContainer(ViewName.MainView)
 
-		arg_105_0.heroNodes = {}
+		self.heroNodes = {}
 
-		table.insert(arg_105_0.heroNodes, gohelper.findChild(var_105_0.viewGO, "#go_spine_scale"))
-		table.insert(arg_105_0.heroNodes, gohelper.findChild(var_105_0.viewGO, "#go_lightspinecontrol"))
+		table.insert(self.heroNodes, gohelper.findChild(mainViewContainer.viewGO, "#go_spine_scale"))
+		table.insert(self.heroNodes, gohelper.findChild(mainViewContainer.viewGO, "#go_lightspinecontrol"))
 	end
 
-	for iter_105_0, iter_105_1 in pairs(arg_105_0.heroNodes) do
-		gohelper.setActive(iter_105_1, arg_105_0.showHero)
+	for _, node in pairs(self.heroNodes) do
+		gohelper.setActive(node, self.showHero)
 	end
 
-	arg_105_0._txtshowHero.text = arg_105_0.showHero and "隐藏主界面角色" or "显示主界面角色"
+	self._txtshowHero.text = self.showHero and "隐藏主界面角色" or "显示主界面角色"
 
-	PlayerPrefsHelper.setNumber(PlayerPrefsKey.ShowHeroKey, arg_105_0.showHero and 1 or 0)
+	PlayerPrefsHelper.setNumber(PlayerPrefsKey.ShowHeroKey, self.showHero and 1 or 0)
 end
 
-function var_0_0._onClickShowUI(arg_106_0)
+function GMToolView:_onClickShowUI()
 	if not ViewMgr.instance:isOpen(ViewName.MainView) then
 		return
 	end
 
-	arg_106_0.showUI = not arg_106_0.showUI
+	self.showUI = not self.showUI
 
-	arg_106_0:_showUI()
+	self:_showUI()
 end
 
-function var_0_0._showUI(arg_107_0)
+function GMToolView:_showUI()
 	if not ViewMgr.instance:isOpen(ViewName.MainView) then
 		return
 	end
 
-	if not arg_107_0.uiNodes then
-		arg_107_0.uiNodes = {}
+	if not self.uiNodes then
+		self.uiNodes = {}
 
-		table.insert(arg_107_0.uiNodes, arg_107_0:getIDCanvasNode())
+		table.insert(self.uiNodes, self:getIDCanvasNode())
 
-		local var_107_0 = ViewMgr.instance:getContainer(ViewName.MainView)
+		local mainViewContainer = ViewMgr.instance:getContainer(ViewName.MainView)
 
-		table.insert(arg_107_0.uiNodes, gohelper.findChild(var_107_0.viewGO, "left"))
-		table.insert(arg_107_0.uiNodes, gohelper.findChild(var_107_0.viewGO, "left_top"))
-		table.insert(arg_107_0.uiNodes, gohelper.findChild(var_107_0.viewGO, "#go_righttop"))
-		table.insert(arg_107_0.uiNodes, gohelper.findChild(var_107_0.viewGO, "right"))
-		table.insert(arg_107_0.uiNodes, gohelper.findChild(var_107_0.viewGO, "bottom"))
+		table.insert(self.uiNodes, gohelper.findChild(mainViewContainer.viewGO, "left"))
+		table.insert(self.uiNodes, gohelper.findChild(mainViewContainer.viewGO, "left_top"))
+		table.insert(self.uiNodes, gohelper.findChild(mainViewContainer.viewGO, "#go_righttop"))
+		table.insert(self.uiNodes, gohelper.findChild(mainViewContainer.viewGO, "right"))
+		table.insert(self.uiNodes, gohelper.findChild(mainViewContainer.viewGO, "bottom"))
 	end
 
-	for iter_107_0, iter_107_1 in pairs(arg_107_0.uiNodes) do
-		gohelper.setActive(iter_107_1, arg_107_0.showUI)
+	for _, node in pairs(self.uiNodes) do
+		gohelper.setActive(node, self.showUI)
 	end
 
-	arg_107_0._txtshowUI.text = arg_107_0.showUI and "隐藏主界面UI" or "显示主界面UI"
+	self._txtshowUI.text = self.showUI and "隐藏主界面UI" or "显示主界面UI"
 
-	PlayerPrefsHelper.setNumber(PlayerPrefsKey.ShowUIKey, arg_107_0.showUI and 1 or 0)
+	PlayerPrefsHelper.setNumber(PlayerPrefsKey.ShowUIKey, self.showUI and 1 or 0)
 
-	arg_107_0.showID = arg_107_0.showUI
+	self.showID = self.showUI
 
-	arg_107_0:_showID()
+	self:_showID()
 end
 
-function var_0_0._onClickShowID(arg_108_0)
-	arg_108_0.showID = not arg_108_0.showID
+function GMToolView:_onClickShowID()
+	self.showID = not self.showID
 
-	arg_108_0:_showID()
+	self:_showID()
 end
 
-function var_0_0._showID(arg_109_0)
-	gohelper.setActive(arg_109_0:getIDCanvasNode(), arg_109_0.showID)
+function GMToolView:_showID()
+	gohelper.setActive(self:getIDCanvasNode(), self.showID)
 
-	arg_109_0._txtshowId.text = arg_109_0.showID and "隐藏左下角ID" or "显示左下角ID"
+	self._txtshowId.text = self.showID and "隐藏左下角ID" or "显示左下角ID"
 
-	PlayerPrefsHelper.setNumber(PlayerPrefsKey.ShowIDKey, arg_109_0.showID and 1 or 0)
+	PlayerPrefsHelper.setNumber(PlayerPrefsKey.ShowIDKey, self.showID and 1 or 0)
 end
 
-function var_0_0._onClickWaterMark(arg_110_0)
-	arg_110_0.showWaterMark = not arg_110_0.showWaterMark
+function GMToolView:_onClickWaterMark()
+	self.showWaterMark = not self.showWaterMark
 
-	arg_110_0:_showWaterMark()
+	self:_showWaterMark()
 end
 
-function var_0_0._showWaterMark(arg_111_0)
-	local var_111_0 = ViewMgr.instance:getContainer(ViewName.WaterMarkView)
+function GMToolView:_showWaterMark()
+	local waterMarkViewContainer = ViewMgr.instance:getContainer(ViewName.WaterMarkView)
 
-	if var_111_0 then
-		if arg_111_0.showWaterMark then
-			var_111_0.waterMarkView:showWaterMark()
+	if waterMarkViewContainer then
+		if self.showWaterMark then
+			waterMarkViewContainer.waterMarkView:showWaterMark()
 		else
-			var_111_0.waterMarkView:hideWaterMark()
+			waterMarkViewContainer.waterMarkView:hideWaterMark()
 		end
 
-		arg_111_0._txtwatermark.text = arg_111_0.showWaterMark and "隐藏水印" or "显示水印"
+		self._txtwatermark.text = self.showWaterMark and "隐藏水印" or "显示水印"
 	end
 end
 
-function var_0_0.getIDCanvasNode(arg_112_0)
-	if not arg_112_0.goIDRoot then
-		arg_112_0.goIDRoot = gohelper.find("IDCanvas")
+function GMToolView:getIDCanvasNode()
+	if not self.goIDRoot then
+		self.goIDRoot = gohelper.find("IDCanvas")
 	end
 
-	if not arg_112_0.goIDPopup then
-		arg_112_0.goIDPopup = gohelper.findChild(arg_112_0.goIDRoot, "POPUP")
+	if not self.goIDPopup then
+		self.goIDPopup = gohelper.findChild(self.goIDRoot, "POPUP")
 	end
 
-	return arg_112_0.goIDPopup
+	return self.goIDPopup
 end
 
-function var_0_0._onBtnCopyTalentData(arg_113_0)
+function GMToolView:_onBtnCopyTalentData()
 	CharacterController.instance:dispatchEvent(CharacterEvent.CopyTalentData)
 end
 
-function var_0_0._onBtnPrintAllEntityBuff(arg_114_0)
+function GMToolView:_onBtnPrintAllEntityBuff()
 	logError("打印角色的当前buffid~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
-	local var_114_0 = FightHelper.getAllEntitys()
+	local entityList = FightHelper.getAllEntitys()
 
-	for iter_114_0, iter_114_1 in ipairs(var_114_0) do
-		local var_114_1 = iter_114_1:getMO()
+	for i, v in ipairs(entityList) do
+		local entityMO = v:getMO()
 
-		logError("角色id或者怪物id: " .. var_114_1.modelId)
+		logError("角色id或者怪物id: " .. entityMO.modelId)
 
-		local var_114_2 = var_114_1:getBuffList()
+		local buffList = entityMO:getBuffList()
 
-		for iter_114_2, iter_114_3 in ipairs(var_114_2) do
-			logError("携带buffid: " .. iter_114_3.buffId)
+		for index, buffMO in ipairs(buffList) do
+			logError("携带buffid: " .. buffMO.buffId)
 		end
 	end
 end
 
-function var_0_0._onClickBtnFastAddHero(arg_115_0)
-	arg_115_0:closeThis()
+function GMToolView:_onClickBtnFastAddHero()
+	self:closeThis()
 	ViewMgr.instance:openView(ViewName.GMToolFastAddHeroView)
 end
 
-function var_0_0._OnBtnReplaceSummonHeroClick(arg_116_0)
-	local var_116_0 = arg_116_0._inpHeroList:GetText()
+function GMToolView:_OnBtnReplaceSummonHeroClick()
+	local heroListStr = self._inpHeroList:GetText()
 
-	if string.nilorempty(var_116_0) then
+	if string.nilorempty(heroListStr) then
 		return
 	end
 
-	local var_116_1 = string.splitToNumber(var_116_0, ";")
-	local var_116_2 = {}
-	local var_116_3
+	local heroList = string.splitToNumber(heroListStr, ";")
+	local summonResult = {}
+	local result
 
-	for iter_116_0, iter_116_1 in ipairs(var_116_1) do
-		local var_116_4 = {
+	for i, heroId in ipairs(heroList) do
+		result = {
 			isNew = true,
 			duplicateCount = 1,
-			heroId = iter_116_1
+			heroId = heroId
 		}
 
-		table.insert(var_116_2, var_116_4)
+		table.insert(summonResult, result)
 	end
 
-	local var_116_5 = SummonController.summonSuccess
+	local func = SummonController.summonSuccess
 
-	function SummonController.summonSuccess(arg_117_0, arg_117_1)
-		var_116_5(arg_117_0, var_116_2)
+	function SummonController:summonSuccess(_)
+		func(self, summonResult)
 	end
 end
 
-function var_0_0._testJavaCrash(arg_118_0)
+function GMToolView:_testJavaCrash()
 	CrashSightAgent.TestJavaCrash()
 end
 
-function var_0_0._testOcCrash(arg_119_0)
+function GMToolView:_testOcCrash()
 	CrashSightAgent.TestOcCrash()
 end
 
-function var_0_0._testNativeCrash(arg_120_0)
+function GMToolView:_testNativeCrash()
 	CrashSightAgent.TestNativeCrash()
 end
 
-function var_0_0._onClickEnterView(arg_121_0)
-	local var_121_0 = arg_121_0._inpViewName:GetText()
+function GMToolView:_onClickEnterView()
+	local viewName = self._inpViewName:GetText()
 
-	if string.nilorempty(var_121_0) then
+	if string.nilorempty(viewName) then
 		GameFacade.showToastString("请输入界面名字")
-	elseif ViewName[var_121_0] then
-		arg_121_0:closeThis()
-		ViewMgr.instance:openView(ViewName[var_121_0])
-		PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewOpenView, var_121_0)
+	elseif ViewName[viewName] then
+		self:closeThis()
+		ViewMgr.instance:openView(ViewName[viewName])
+		PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewOpenView, viewName)
 	else
-		GameFacade.showToastString(string.format("界面%s不存在", var_121_0))
+		GameFacade.showToastString(string.format("界面%s不存在", viewName))
 	end
 end
 
-return var_0_0
+return GMToolView

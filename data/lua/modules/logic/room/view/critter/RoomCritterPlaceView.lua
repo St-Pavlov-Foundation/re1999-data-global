@@ -1,233 +1,236 @@
-﻿module("modules.logic.room.view.critter.RoomCritterPlaceView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/critter/RoomCritterPlaceView.lua
 
-local var_0_0 = class("RoomCritterPlaceView", BaseView)
+module("modules.logic.room.view.critter.RoomCritterPlaceView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gocritterview1 = gohelper.findChild(arg_1_0.viewGO, "#go_critterview1")
-	arg_1_0._btnunfold = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_critterview1/critterscroll/#btn_unfold")
-	arg_1_0._gocritterview2 = gohelper.findChild(arg_1_0.viewGO, "#go_critterview2")
-	arg_1_0._btnfold = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_critterview2/critterscroll/#btn_fold")
+local RoomCritterPlaceView = class("RoomCritterPlaceView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomCritterPlaceView:onInitView()
+	self._gocritterview1 = gohelper.findChild(self.viewGO, "#go_critterview1")
+	self._btnunfold = gohelper.findChildButtonWithAudio(self.viewGO, "#go_critterview1/critterscroll/#btn_unfold")
+	self._gocritterview2 = gohelper.findChild(self.viewGO, "#go_critterview2")
+	self._btnfold = gohelper.findChildButtonWithAudio(self.viewGO, "#go_critterview2/critterscroll/#btn_fold")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnunfold:AddClickListener(arg_2_0._btnunfoldOnClick, arg_2_0)
-	arg_2_0._btnfold:AddClickListener(arg_2_0._btnfoldOnClick, arg_2_0, true)
-	arg_2_0:addEventCb(CritterController.instance, CritterEvent.CritterListOnDragBeginListener, arg_2_0._onListDragBeginListener, arg_2_0)
-	arg_2_0:addEventCb(CritterController.instance, CritterEvent.CritterListOnDragListener, arg_2_0._onListDragListener, arg_2_0)
-	arg_2_0:addEventCb(CritterController.instance, CritterEvent.CritterListOnDragEndListener, arg_2_0._onListDragEndListener, arg_2_0)
-	arg_2_0:addEventCb(CritterController.instance, CritterEvent.CritterBuildingChangeRestingCritter, arg_2_0._onRestingCritterChange, arg_2_0)
-	arg_2_0:addEventCb(CritterController.instance, CritterEvent.CritterBuildingViewChangeBuilding, arg_2_0._onChangeRestBuilding, arg_2_0)
+function RoomCritterPlaceView:addEvents()
+	self._btnunfold:AddClickListener(self._btnunfoldOnClick, self)
+	self._btnfold:AddClickListener(self._btnfoldOnClick, self, true)
+	self:addEventCb(CritterController.instance, CritterEvent.CritterListOnDragBeginListener, self._onListDragBeginListener, self)
+	self:addEventCb(CritterController.instance, CritterEvent.CritterListOnDragListener, self._onListDragListener, self)
+	self:addEventCb(CritterController.instance, CritterEvent.CritterListOnDragEndListener, self._onListDragEndListener, self)
+	self:addEventCb(CritterController.instance, CritterEvent.CritterBuildingChangeRestingCritter, self._onRestingCritterChange, self)
+	self:addEventCb(CritterController.instance, CritterEvent.CritterBuildingViewChangeBuilding, self._onChangeRestBuilding, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnunfold:RemoveClickListener()
-	arg_3_0._btnfold:RemoveClickListener()
-	arg_3_0:removeEventCb(CritterController.instance, CritterEvent.CritterListOnDragBeginListener, arg_3_0._onListDragBeginListener, arg_3_0)
-	arg_3_0:removeEventCb(CritterController.instance, CritterEvent.CritterListOnDragListener, arg_3_0._onListDragListener, arg_3_0)
-	arg_3_0:removeEventCb(CritterController.instance, CritterEvent.CritterListOnDragEndListener, arg_3_0._onListDragEndListener, arg_3_0)
-	arg_3_0:removeEventCb(CritterController.instance, CritterEvent.CritterBuildingChangeRestingCritter, arg_3_0._onRestingCritterChange, arg_3_0)
-	arg_3_0:removeEventCb(CritterController.instance, CritterEvent.CritterBuildingViewChangeBuilding, arg_3_0._onChangeRestBuilding, arg_3_0)
+function RoomCritterPlaceView:removeEvents()
+	self._btnunfold:RemoveClickListener()
+	self._btnfold:RemoveClickListener()
+	self:removeEventCb(CritterController.instance, CritterEvent.CritterListOnDragBeginListener, self._onListDragBeginListener, self)
+	self:removeEventCb(CritterController.instance, CritterEvent.CritterListOnDragListener, self._onListDragListener, self)
+	self:removeEventCb(CritterController.instance, CritterEvent.CritterListOnDragEndListener, self._onListDragEndListener, self)
+	self:removeEventCb(CritterController.instance, CritterEvent.CritterBuildingChangeRestingCritter, self._onRestingCritterChange, self)
+	self:removeEventCb(CritterController.instance, CritterEvent.CritterBuildingViewChangeBuilding, self._onChangeRestBuilding, self)
 end
 
-function var_0_0._btnunfoldOnClick(arg_4_0)
-	arg_4_0._isFold = false
-	arg_4_0._canvasGroup1.blocksRaycasts = false
-	arg_4_0._canvasGroup2.blocksRaycasts = true
-	arg_4_0._critterView1.scrollCritter.horizontalNormalizedPosition = 0
-	arg_4_0._critterView2.scrollCritter.verticalNormalizedPosition = 1
+function RoomCritterPlaceView:_btnunfoldOnClick()
+	self._isFold = false
+	self._canvasGroup1.blocksRaycasts = false
+	self._canvasGroup2.blocksRaycasts = true
+	self._critterView1.scrollCritter.horizontalNormalizedPosition = 0
+	self._critterView2.scrollCritter.verticalNormalizedPosition = 1
 
-	arg_4_0:playAnim("switchup")
+	self:playAnim("switchup")
 
-	local var_4_0 = arg_4_0:getViewBuilding()
+	local curBuildingUid = self:getViewBuilding()
 
-	RoomCritterPlaceListModel.instance:setCritterPlaceList(var_4_0)
+	RoomCritterPlaceListModel.instance:setCritterPlaceList(curBuildingUid)
 
-	arg_4_0._scrollRect = arg_4_0._critterView2.scrollCritter.gameObject:GetComponent(typeof(UnityEngine.UI.ScrollRect))
+	self._scrollRect = self._critterView2.scrollCritter.gameObject:GetComponent(typeof(UnityEngine.UI.ScrollRect))
 
 	CritterController.instance:dispatchEvent(CritterEvent.CritterBuildingSetCanOperateRestingCritter, false)
 end
 
-function var_0_0._btnfoldOnClick(arg_5_0, arg_5_1)
-	arg_5_0._isFold = true
-	arg_5_0._canvasGroup1.blocksRaycasts = true
-	arg_5_0._canvasGroup2.blocksRaycasts = false
-	arg_5_0._critterView1.scrollCritter.horizontalNormalizedPosition = 0
-	arg_5_0._critterView2.scrollCritter.verticalNormalizedPosition = 1
+function RoomCritterPlaceView:_btnfoldOnClick(playAnim)
+	self._isFold = true
+	self._canvasGroup1.blocksRaycasts = true
+	self._canvasGroup2.blocksRaycasts = false
+	self._critterView1.scrollCritter.horizontalNormalizedPosition = 0
+	self._critterView2.scrollCritter.verticalNormalizedPosition = 1
 
-	if arg_5_1 then
-		arg_5_0:playAnim("switchdown")
+	if playAnim then
+		self:playAnim("switchdown")
 	end
 
-	local var_5_0 = arg_5_0:getViewBuilding()
+	local curBuildingUid = self:getViewBuilding()
 
-	RoomCritterPlaceListModel.instance:setCritterPlaceList(var_5_0)
+	RoomCritterPlaceListModel.instance:setCritterPlaceList(curBuildingUid)
 
-	arg_5_0._scrollRect = arg_5_0._critterView1.scrollCritter.gameObject:GetComponent(typeof(UnityEngine.UI.ScrollRect))
+	self._scrollRect = self._critterView1.scrollCritter.gameObject:GetComponent(typeof(UnityEngine.UI.ScrollRect))
 
 	CritterController.instance:dispatchEvent(CritterEvent.CritterBuildingSetCanOperateRestingCritter, true)
 end
 
-function var_0_0._btnsortOnClick(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_1.orderDown
+function RoomCritterPlaceView:_btnsortOnClick(sortItem)
+	local newOrder = sortItem.orderDown
+	local order = RoomCritterPlaceListModel.instance:getOrder()
 
-	if RoomCritterPlaceListModel.instance:getOrder() == arg_6_1.orderDown then
-		var_6_0 = arg_6_1.orderUp
+	if order == sortItem.orderDown then
+		newOrder = sortItem.orderUp
 	end
 
-	local var_6_1 = arg_6_0:getViewBuilding()
+	local curBuildingUid = self:getViewBuilding()
 
-	RoomCritterPlaceListModel.instance:setOrder(var_6_0)
-	RoomCritterPlaceListModel.instance:setCritterPlaceList(var_6_1)
-	arg_6_0:refreshSort()
+	RoomCritterPlaceListModel.instance:setOrder(newOrder)
+	RoomCritterPlaceListModel.instance:setCritterPlaceList(curBuildingUid)
+	self:refreshSort()
 end
 
-function var_0_0._onListDragBeginListener(arg_7_0, arg_7_1)
-	arg_7_0._scrollRect:OnBeginDrag(arg_7_1)
+function RoomCritterPlaceView:_onListDragBeginListener(pointerEventData)
+	self._scrollRect:OnBeginDrag(pointerEventData)
 end
 
-function var_0_0._onListDragListener(arg_8_0, arg_8_1)
-	arg_8_0._scrollRect:OnDrag(arg_8_1)
+function RoomCritterPlaceView:_onListDragListener(pointerEventData)
+	self._scrollRect:OnDrag(pointerEventData)
 end
 
-function var_0_0._onListDragEndListener(arg_9_0, arg_9_1)
-	arg_9_0._scrollRect:OnEndDrag(arg_9_1)
+function RoomCritterPlaceView:_onListDragEndListener(pointerEventData)
+	self._scrollRect:OnEndDrag(pointerEventData)
 end
 
-function var_0_0._onRestingCritterChange(arg_10_0)
-	local var_10_0 = arg_10_0:getViewBuilding()
+function RoomCritterPlaceView:_onRestingCritterChange()
+	local curBuildingUid = self:getViewBuilding()
 
-	RoomCritterPlaceListModel.instance:setCritterPlaceList(var_10_0)
+	RoomCritterPlaceListModel.instance:setCritterPlaceList(curBuildingUid)
 end
 
-function var_0_0._onChangeRestBuilding(arg_11_0, arg_11_1)
-	if not arg_11_1 then
+function RoomCritterPlaceView:_onChangeRestBuilding(newBuildingUid)
+	if not newBuildingUid then
 		return
 	end
 
-	arg_11_0.viewContainer:setContainerViewBuildingUid(arg_11_1)
-	arg_11_0:playAnim(UIAnimationName.Close)
-	TaskDispatcher.cancelTask(arg_11_0._changeFinish, arg_11_0)
-	TaskDispatcher.runDelay(arg_11_0._changeFinish, arg_11_0, CritterEnum.CritterBuildingChangeBuildingAnimTime)
+	self.viewContainer:setContainerViewBuildingUid(newBuildingUid)
+	self:playAnim(UIAnimationName.Close)
+	TaskDispatcher.cancelTask(self._changeFinish, self)
+	TaskDispatcher.runDelay(self._changeFinish, self, CritterEnum.CritterBuildingChangeBuildingAnimTime)
 end
 
-function var_0_0._changeFinish(arg_12_0)
-	local var_12_0 = arg_12_0:getViewBuilding()
+function RoomCritterPlaceView:_changeFinish()
+	local curBuildingUid = self:getViewBuilding()
 
-	RoomCritterPlaceListModel.instance:setCritterPlaceList(var_12_0)
-	arg_12_0:playAnim(UIAnimationName.Open)
+	RoomCritterPlaceListModel.instance:setCritterPlaceList(curBuildingUid)
+	self:playAnim(UIAnimationName.Open)
 end
 
-function var_0_0._editableInitView(arg_13_0)
-	arg_13_0._canvasGroup1 = arg_13_0._gocritterview1:GetComponent(typeof(UnityEngine.CanvasGroup))
-	arg_13_0._canvasGroup2 = arg_13_0._gocritterview2:GetComponent(typeof(UnityEngine.CanvasGroup))
-	arg_13_0._critterView1 = arg_13_0:getUserDataTb_()
-	arg_13_0._critterView2 = arg_13_0:getUserDataTb_()
+function RoomCritterPlaceView:_editableInitView()
+	self._canvasGroup1 = self._gocritterview1:GetComponent(typeof(UnityEngine.CanvasGroup))
+	self._canvasGroup2 = self._gocritterview2:GetComponent(typeof(UnityEngine.CanvasGroup))
+	self._critterView1 = self:getUserDataTb_()
+	self._critterView2 = self:getUserDataTb_()
 
-	arg_13_0:initCritterView(arg_13_0._critterView1, arg_13_0._gocritterview1, 1)
-	arg_13_0:initCritterView(arg_13_0._critterView2, arg_13_0._gocritterview2, 2)
+	self:initCritterView(self._critterView1, self._gocritterview1, 1)
+	self:initCritterView(self._critterView2, self._gocritterview2, 2)
 
-	arg_13_0._animator = arg_13_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function var_0_0.initCritterView(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	arg_14_1.scrollCritter = gohelper.findChildScrollRect(arg_14_2, "critterscroll")
-	arg_14_1.gomood = gohelper.findChild(arg_14_2, "crittersort/leftbtn/#btn_moodrank")
-	arg_14_1.gorare = gohelper.findChild(arg_14_2, "crittersort/leftbtn/#btn_rarerank")
-	arg_14_1.sortMoodItem = arg_14_0:getUserDataTb_()
-	arg_14_1.sortRareItem = arg_14_0:getUserDataTb_()
+function RoomCritterPlaceView:initCritterView(critterView, goCritterView, index)
+	critterView.scrollCritter = gohelper.findChildScrollRect(goCritterView, "critterscroll")
+	critterView.gomood = gohelper.findChild(goCritterView, "crittersort/leftbtn/#btn_moodrank")
+	critterView.gorare = gohelper.findChild(goCritterView, "crittersort/leftbtn/#btn_rarerank")
+	critterView.sortMoodItem = self:getUserDataTb_()
+	critterView.sortRareItem = self:getUserDataTb_()
 
-	arg_14_0:_initSortItem(arg_14_1.sortMoodItem, arg_14_1.gomood, CritterEnum.OrderType.MoodUp, CritterEnum.OrderType.MoodDown)
-	arg_14_0:_initSortItem(arg_14_1.sortRareItem, arg_14_1.gorare, CritterEnum.OrderType.RareUp, CritterEnum.OrderType.RareDown)
+	self:_initSortItem(critterView.sortMoodItem, critterView.gomood, CritterEnum.OrderType.MoodUp, CritterEnum.OrderType.MoodDown)
+	self:_initSortItem(critterView.sortRareItem, critterView.gorare, CritterEnum.OrderType.RareUp, CritterEnum.OrderType.RareDown)
 end
 
-function var_0_0._initSortItem(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4)
-	arg_15_1.btnsort = gohelper.findChildButtonWithAudio(arg_15_2, "")
-	arg_15_1.go1 = gohelper.findChild(arg_15_2, "btn1")
-	arg_15_1.go2 = gohelper.findChild(arg_15_2, "btn2")
-	arg_15_1.goarrow = gohelper.findChild(arg_15_2, "btn2/arrow")
-	arg_15_1.orderUp = arg_15_3
-	arg_15_1.orderDown = arg_15_4
+function RoomCritterPlaceView:_initSortItem(sortItem, go, orderUp, orderDown)
+	sortItem.btnsort = gohelper.findChildButtonWithAudio(go, "")
+	sortItem.go1 = gohelper.findChild(go, "btn1")
+	sortItem.go2 = gohelper.findChild(go, "btn2")
+	sortItem.goarrow = gohelper.findChild(go, "btn2/arrow")
+	sortItem.orderUp = orderUp
+	sortItem.orderDown = orderDown
 
-	arg_15_1.btnsort:AddClickListener(arg_15_0._btnsortOnClick, arg_15_0, arg_15_1)
+	sortItem.btnsort:AddClickListener(self._btnsortOnClick, self, sortItem)
 end
 
-function var_0_0.onUpdateParam(arg_16_0)
+function RoomCritterPlaceView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_17_0)
-	arg_17_0:_btnfoldOnClick()
-	arg_17_0:refreshSort()
+function RoomCritterPlaceView:onOpen()
+	self:_btnfoldOnClick()
+	self:refreshSort()
 end
 
-function var_0_0.refreshSort(arg_18_0)
-	arg_18_0:_refreshSortItemSort(arg_18_0._critterView1.sortMoodItem)
-	arg_18_0:_refreshSortItemSort(arg_18_0._critterView1.sortRareItem)
-	arg_18_0:_refreshSortItemSort(arg_18_0._critterView2.sortMoodItem)
-	arg_18_0:_refreshSortItemSort(arg_18_0._critterView2.sortRareItem)
+function RoomCritterPlaceView:refreshSort()
+	self:_refreshSortItemSort(self._critterView1.sortMoodItem)
+	self:_refreshSortItemSort(self._critterView1.sortRareItem)
+	self:_refreshSortItemSort(self._critterView2.sortMoodItem)
+	self:_refreshSortItemSort(self._critterView2.sortRareItem)
 end
 
-function var_0_0._refreshSortItemSort(arg_19_0, arg_19_1)
-	local var_19_0 = RoomCritterPlaceListModel.instance:getOrder()
+function RoomCritterPlaceView:_refreshSortItemSort(sortItem)
+	local order = RoomCritterPlaceListModel.instance:getOrder()
 
-	arg_19_0:_setSort(arg_19_1, var_19_0 == arg_19_1.orderUp or var_19_0 == arg_19_1.orderDown, var_19_0 == arg_19_1.orderUp)
+	self:_setSort(sortItem, order == sortItem.orderUp or order == sortItem.orderDown, order == sortItem.orderUp)
 end
 
-function var_0_0._setSort(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
-	if arg_20_2 then
-		gohelper.setActive(arg_20_1.go1, false)
-		gohelper.setActive(arg_20_1.go2, true)
-		arg_20_0:_setReverse(arg_20_1.goarrow.transform, arg_20_3)
+function RoomCritterPlaceView:_setSort(sortItem, select, reverse)
+	if select then
+		gohelper.setActive(sortItem.go1, false)
+		gohelper.setActive(sortItem.go2, true)
+		self:_setReverse(sortItem.goarrow.transform, reverse)
 	else
-		gohelper.setActive(arg_20_1.go1, true)
-		gohelper.setActive(arg_20_1.go2, false)
+		gohelper.setActive(sortItem.go1, true)
+		gohelper.setActive(sortItem.go2, false)
 	end
 end
 
-function var_0_0._setReverse(arg_21_0, arg_21_1, arg_21_2)
-	local var_21_0, var_21_1, var_21_2 = transformhelper.getLocalScale(arg_21_1)
+function RoomCritterPlaceView:_setReverse(transform, reverse)
+	local scaleX, scaleY, scaleZ = transformhelper.getLocalScale(transform)
 
-	if arg_21_2 then
-		transformhelper.setLocalScale(arg_21_1, var_21_0, -math.abs(var_21_1), var_21_2)
+	if reverse then
+		transformhelper.setLocalScale(transform, scaleX, -math.abs(scaleY), scaleZ)
 	else
-		transformhelper.setLocalScale(arg_21_1, var_21_0, math.abs(var_21_1), var_21_2)
+		transformhelper.setLocalScale(transform, scaleX, math.abs(scaleY), scaleZ)
 	end
 end
 
-function var_0_0.playAnim(arg_22_0, arg_22_1)
-	arg_22_0._animator.enabled = true
+function RoomCritterPlaceView:playAnim(animName)
+	self._animator.enabled = true
 
-	arg_22_0._animator:Play(arg_22_1)
+	self._animator:Play(animName)
 end
 
-function var_0_0.getViewBuilding(arg_23_0)
-	local var_23_0, var_23_1 = arg_23_0.viewContainer:getContainerViewBuilding(true)
+function RoomCritterPlaceView:getViewBuilding()
+	local viewBuildingUid, viewBuildingMO = self.viewContainer:getContainerViewBuilding(true)
 
-	return var_23_0, var_23_1
+	return viewBuildingUid, viewBuildingMO
 end
 
-function var_0_0.onClose(arg_24_0)
+function RoomCritterPlaceView:onClose()
 	CritterController.instance:dispatchEvent(CritterEvent.CritterBuildingShowView)
 	RoomCritterPlaceListModel.instance:clearData()
-	TaskDispatcher.cancelTask(arg_24_0._changeFinish, arg_24_0)
+	TaskDispatcher.cancelTask(self._changeFinish, self)
 end
 
-function var_0_0.onDestroyView(arg_25_0)
-	arg_25_0:_critterViewOnDestroy(arg_25_0._critterView1)
-	arg_25_0:_critterViewOnDestroy(arg_25_0._critterView2)
+function RoomCritterPlaceView:onDestroyView()
+	self:_critterViewOnDestroy(self._critterView1)
+	self:_critterViewOnDestroy(self._critterView2)
 end
 
-function var_0_0._critterViewOnDestroy(arg_26_0, arg_26_1)
-	arg_26_0:_sortItemOnDestroy(arg_26_1.sortMoodItem)
-	arg_26_0:_sortItemOnDestroy(arg_26_1.sortRareItem)
+function RoomCritterPlaceView:_critterViewOnDestroy(critterView)
+	self:_sortItemOnDestroy(critterView.sortMoodItem)
+	self:_sortItemOnDestroy(critterView.sortRareItem)
 end
 
-function var_0_0._sortItemOnDestroy(arg_27_0, arg_27_1)
-	arg_27_1.btnsort:RemoveClickListener()
+function RoomCritterPlaceView:_sortItemOnDestroy(sortItem)
+	sortItem.btnsort:RemoveClickListener()
 end
 
-return var_0_0
+return RoomCritterPlaceView

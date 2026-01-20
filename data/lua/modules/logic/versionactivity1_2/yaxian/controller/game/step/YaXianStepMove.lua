@@ -1,41 +1,43 @@
-﻿module("modules.logic.versionactivity1_2.yaxian.controller.game.step.YaXianStepMove", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/yaxian/controller/game/step/YaXianStepMove.lua
 
-local var_0_0 = class("YaXianStepMove", YaXianStepBase)
+module("modules.logic.versionactivity1_2.yaxian.controller.game.step.YaXianStepMove", package.seeall)
 
-function var_0_0.start(arg_1_0)
-	local var_1_0 = YaXianGameController.instance:getInteractItem(arg_1_0.originData.id)
+local YaXianStepMove = class("YaXianStepMove", YaXianStepBase)
 
-	if not var_1_0 then
-		logError("not found interactObj, id : " .. tostring(arg_1_0.originData.id))
-		arg_1_0:finish()
+function YaXianStepMove:start()
+	local interactItem = YaXianGameController.instance:getInteractItem(self.originData.id)
+
+	if not interactItem then
+		logError("not found interactObj, id : " .. tostring(self.originData.id))
+		self:finish()
 	end
 
-	arg_1_0.interactItem = var_1_0
+	self.interactItem = interactItem
 
-	local var_1_1 = var_1_0:getHandler()
+	local handle = interactItem:getHandler()
 
-	if var_1_1 then
-		var_1_1:moveToFromMoveStep(arg_1_0.originData, arg_1_0.finish, arg_1_0)
+	if handle then
+		handle:moveToFromMoveStep(self.originData, self.finish, self)
 
 		return
 	end
 
-	logError("interact not found handle, interactId : " .. arg_1_0.originData.id)
-	arg_1_0:finish()
+	logError("interact not found handle, interactId : " .. self.originData.id)
+	self:finish()
 end
 
-function var_0_0.finish(arg_2_0)
-	var_0_0.super.finish(arg_2_0)
+function YaXianStepMove:finish()
+	YaXianStepMove.super.finish(self)
 end
 
-function var_0_0.dispose(arg_3_0)
-	if arg_3_0.interactItem then
-		local var_3_0 = arg_3_0.interactItem:getHandler()
+function YaXianStepMove:dispose()
+	if self.interactItem then
+		local handle = self.interactItem:getHandler()
 
-		if var_3_0 then
-			var_3_0:stopAllAction()
+		if handle then
+			handle:stopAllAction()
 		end
 	end
 end
 
-return var_0_0
+return YaXianStepMove

@@ -1,8 +1,10 @@
-﻿module("modules.logic.sp01.assassin2.define.VersionActivity2_9DungeonEnum", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/define/VersionActivity2_9DungeonEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.sp01.assassin2.define.VersionActivity2_9DungeonEnum", package.seeall)
 
-var_0_0.DungeonChapterId = {
+local VersionActivity2_9DungeonEnum = _M
+
+VersionActivity2_9DungeonEnum.DungeonChapterId = {
 	ElementFight = 305101,
 	Story = 305101,
 	Hard = 305101,
@@ -10,7 +12,7 @@ var_0_0.DungeonChapterId = {
 	Story2 = 305301,
 	Story3 = 305401
 }
-var_0_0.BlockKey = {
+VersionActivity2_9DungeonEnum.BlockKey = {
 	MapLevelViewPlayUnlockAnim = "VersionActivity2_9_MapLevelViewPlayUnlockAnim",
 	MapViewPlayCloseAnim = "VersionActivity2_9_MapViewPlayCloseAnim",
 	MapViewPlayOpenAnim = "VersionActivity2_9_MapViewPlayOpenAnim",
@@ -18,81 +20,81 @@ var_0_0.BlockKey = {
 	OpenTaskView = "VersionActivity2_9_OpenTaskView",
 	FocusNewElement = "VersionActivity2_9_FocusNewElement"
 }
-var_0_0.PlayerPrefsKey = {
+VersionActivity2_9DungeonEnum.PlayerPrefsKey = {
 	HasPlayedUnlockHardModeBtnAnim = "HasPlayedUnlockHardModeBtnAnim",
 	ActivityDungeonSpecialEpisodeLastSelectMode = "ActivityDungeonSpecialEpisodeLastSelectMode",
 	ActivityDungeonSpecialEpisodeLastUnLockMode = "ActivityDungeonSpecialEpisodeLastUnLockMode"
 }
-var_0_0.SceneRootName = "VersionActivity2_9DungeonMapScene"
-var_0_0.EpisodeItemMinWidth = 300
-var_0_0.DungeonMapCameraSize = 5
-var_0_0.MaxHoleNum = 5
-var_0_0.HoleHalfWidth = 3.5
-var_0_0.HoleHalfHeight = 1.75
-var_0_0.HoleAnimDuration = 0.33
-var_0_0.HoleAnimMaxZ = 3
-var_0_0.HoleAnimMinZ = 0
-var_0_0.OutSideAreaPos = {
+VersionActivity2_9DungeonEnum.SceneRootName = "VersionActivity2_9DungeonMapScene"
+VersionActivity2_9DungeonEnum.EpisodeItemMinWidth = 300
+VersionActivity2_9DungeonEnum.DungeonMapCameraSize = 5
+VersionActivity2_9DungeonEnum.MaxHoleNum = 5
+VersionActivity2_9DungeonEnum.HoleHalfWidth = 3.5
+VersionActivity2_9DungeonEnum.HoleHalfHeight = 1.75
+VersionActivity2_9DungeonEnum.HoleAnimDuration = 0.33
+VersionActivity2_9DungeonEnum.HoleAnimMaxZ = 3
+VersionActivity2_9DungeonEnum.HoleAnimMinZ = 0
+VersionActivity2_9DungeonEnum.OutSideAreaPos = {
 	X = -1000,
 	Y = -1000
 }
-var_0_0.SpaceSceneEpisodeIndexs = {
+VersionActivity2_9DungeonEnum.SpaceSceneEpisodeIndexs = {
 	18,
 	19
 }
-var_0_0.SceneLoadObj = "ui/viewres/versionactivity_2_7/v2a7_enter/v2a7_m_s08_hddt.prefab"
-var_0_0.SceneLoadAnim = "explore/camera_anim/hddt_camer.controller"
-var_0_0.GotoSpaceAnimName = "switch1"
-var_0_0.returnAnimName = "switch2"
-var_0_0.DragEndAnimTime = 1.2
-var_0_0.DragSpeed = 1
-var_0_0.SceneAnimType = {
+VersionActivity2_9DungeonEnum.SceneLoadObj = "ui/viewres/versionactivity_2_7/v2a7_enter/v2a7_m_s08_hddt.prefab"
+VersionActivity2_9DungeonEnum.SceneLoadAnim = "explore/camera_anim/hddt_camer.controller"
+VersionActivity2_9DungeonEnum.GotoSpaceAnimName = "switch1"
+VersionActivity2_9DungeonEnum.returnAnimName = "switch2"
+VersionActivity2_9DungeonEnum.DragEndAnimTime = 1.2
+VersionActivity2_9DungeonEnum.DragSpeed = 1
+VersionActivity2_9DungeonEnum.SceneAnimType = {
 	Normal = 3,
 	ReturnEarth = 2,
 	GotoSpace = 1
 }
-var_0_0.EpisodeMode2Icon = {
+VersionActivity2_9DungeonEnum.EpisodeMode2Icon = {
 	[VersionActivityDungeonBaseEnum.DungeonMode.Story] = "v2a9_dungeonmap_icon_1",
 	[VersionActivityDungeonBaseEnum.DungeonMode.Story2] = "v2a9_dungeonmap_icon_2",
 	[VersionActivityDungeonBaseEnum.DungeonMode.Story3] = "v2a9_dungeonmap_icon_3"
 }
-var_0_0.EpisodeMode2Bg = {
+VersionActivity2_9DungeonEnum.EpisodeMode2Bg = {
 	[VersionActivityDungeonBaseEnum.DungeonMode.Story] = "v2a9_dungeon_progress2_1",
 	[VersionActivityDungeonBaseEnum.DungeonMode.Story2] = "v2a9_dungeon_progress2_2",
 	[VersionActivityDungeonBaseEnum.DungeonMode.Story3] = "v2a9_dungeon_progress2_3"
 }
-var_0_0.LittleGameType = {
+VersionActivity2_9DungeonEnum.LittleGameType = {
 	Point = 3,
 	Eye = 1,
 	Line = 2
 }
-var_0_0.LittleGameType2EpisdoeConstId = {
-	[var_0_0.LittleGameType.Eye] = AssassinEnum.ConstId.EpisodeId_EyeGame,
-	[var_0_0.LittleGameType.Line] = AssassinEnum.ConstId.EpisodeId_LineGame,
-	[var_0_0.LittleGameType.Point] = AssassinEnum.ConstId.EpisodeId_PointGame
+VersionActivity2_9DungeonEnum.LittleGameType2EpisdoeConstId = {
+	[VersionActivity2_9DungeonEnum.LittleGameType.Eye] = AssassinEnum.ConstId.EpisodeId_EyeGame,
+	[VersionActivity2_9DungeonEnum.LittleGameType.Line] = AssassinEnum.ConstId.EpisodeId_LineGame,
+	[VersionActivity2_9DungeonEnum.LittleGameType.Point] = AssassinEnum.ConstId.EpisodeId_PointGame
 }
-var_0_0.LittleGameType2AfterStoryConstId = {
-	[var_0_0.LittleGameType.Eye] = AssassinEnum.ConstId.AfterStoryId_EyeGame,
-	[var_0_0.LittleGameType.Line] = AssassinEnum.ConstId.AfterStoryId_LineGame,
-	[var_0_0.LittleGameType.Point] = AssassinEnum.ConstId.AfterStoryId_PointGame
+VersionActivity2_9DungeonEnum.LittleGameType2AfterStoryConstId = {
+	[VersionActivity2_9DungeonEnum.LittleGameType.Eye] = AssassinEnum.ConstId.AfterStoryId_EyeGame,
+	[VersionActivity2_9DungeonEnum.LittleGameType.Line] = AssassinEnum.ConstId.AfterStoryId_LineGame,
+	[VersionActivity2_9DungeonEnum.LittleGameType.Point] = AssassinEnum.ConstId.AfterStoryId_PointGame
 }
-var_0_0.LoadWorkType = {
+VersionActivity2_9DungeonEnum.LoadWorkType = {
 	Layout = 2,
 	Scene = 1
 }
-var_0_0.FightGoalItemResUrl = "ui/viewres/sp01/assassin2/v2a9_fightgoalitem.prefab"
-var_0_0.EpisodeMaxProgress = 1
-var_0_0.EpisodeSelectDuration = 0.5
-var_0_0.Map_Visible_Tween_Time = 0.2
-var_0_0.Map_Hide_Root_PosY = -20
-var_0_0.TWEEN_TIME = 0.2
-var_0_0.MapTweenStopLerp = 0.1
-var_0_0.MapStopVelocityRate = 0.3
-var_0_0.MapScrollOffsetRate = 0.8
-var_0_0.Time_FocuysNewEpisode = 0.8
-var_0_0.MapBgAudioName = "s01_bg"
-var_0_0.MapMaxPosXRange = 162.3
-var_0_0.MapFocusScale = 2.3
-var_0_0.PixelPerUnit = 100
-var_0_0.MapStartWorldPos = Vector3(0, 0, 0)
-var_0_0.DNANodeClickSize = Vector2(2, 5)
+VersionActivity2_9DungeonEnum.FightGoalItemResUrl = "ui/viewres/sp01/assassin2/v2a9_fightgoalitem.prefab"
+VersionActivity2_9DungeonEnum.EpisodeMaxProgress = 1
+VersionActivity2_9DungeonEnum.EpisodeSelectDuration = 0.5
+VersionActivity2_9DungeonEnum.Map_Visible_Tween_Time = 0.2
+VersionActivity2_9DungeonEnum.Map_Hide_Root_PosY = -20
+VersionActivity2_9DungeonEnum.TWEEN_TIME = 0.2
+VersionActivity2_9DungeonEnum.MapTweenStopLerp = 0.1
+VersionActivity2_9DungeonEnum.MapStopVelocityRate = 0.3
+VersionActivity2_9DungeonEnum.MapScrollOffsetRate = 0.8
+VersionActivity2_9DungeonEnum.Time_FocuysNewEpisode = 0.8
+VersionActivity2_9DungeonEnum.MapBgAudioName = "s01_bg"
+VersionActivity2_9DungeonEnum.MapMaxPosXRange = 162.3
+VersionActivity2_9DungeonEnum.MapFocusScale = 2.3
+VersionActivity2_9DungeonEnum.PixelPerUnit = 100
+VersionActivity2_9DungeonEnum.MapStartWorldPos = Vector3(0, 0, 0)
+VersionActivity2_9DungeonEnum.DNANodeClickSize = Vector2(2, 5)

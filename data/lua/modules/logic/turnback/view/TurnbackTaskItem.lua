@@ -1,118 +1,120 @@
-﻿module("modules.logic.turnback.view.TurnbackTaskItem", package.seeall)
+﻿-- chunkname: @modules/logic/turnback/view/TurnbackTaskItem.lua
 
-local var_0_0 = class("TurnbackTaskItem", ListScrollCell)
+module("modules.logic.turnback.view.TurnbackTaskItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._gocommon = gohelper.findChild(arg_1_1, "#go_common")
-	arg_1_0._goline = gohelper.findChild(arg_1_1, "#go_common/#go_line")
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_1, "#go_common/#simage_bg")
-	arg_1_0._txttaskdes = gohelper.findChildText(arg_1_1, "#go_common/info/#txt_taskdes")
-	arg_1_0._txtprocess = gohelper.findChildText(arg_1_1, "#go_common/info/#txt_process")
-	arg_1_0._scrollreward = gohelper.findChild(arg_1_1, "#go_common/#scroll_reward"):GetComponent(typeof(ZProj.LimitedScrollRect))
-	arg_1_0._gorewardContent = gohelper.findChild(arg_1_1, "#go_common/#scroll_reward/Viewport/#go_rewardContent")
-	arg_1_0._gonotget = gohelper.findChild(arg_1_1, "#go_common/#go_notget")
-	arg_1_0._btngoto = gohelper.findChildButtonWithAudio(arg_1_1, "#go_common/#go_notget/#btn_goto")
-	arg_1_0._btncanget = gohelper.findChildButtonWithAudio(arg_1_1, "#go_common/#go_notget/#btn_canget")
-	arg_1_0._godoing = gohelper.findChild(arg_1_1, "#go_common/#go_notget/#go_doing")
-	arg_1_0._goget = gohelper.findChild(arg_1_1, "#go_common/#go_get")
-	arg_1_0._goreddot = gohelper.findChild(arg_1_1, "#go_common/#go_reddot")
-	arg_1_0._animator = arg_1_0.go:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._rewardTab = {}
+local TurnbackTaskItem = class("TurnbackTaskItem", ListScrollCell)
+
+function TurnbackTaskItem:init(go)
+	self.go = go
+	self._gocommon = gohelper.findChild(go, "#go_common")
+	self._goline = gohelper.findChild(go, "#go_common/#go_line")
+	self._simagebg = gohelper.findChildSingleImage(go, "#go_common/#simage_bg")
+	self._txttaskdes = gohelper.findChildText(go, "#go_common/info/#txt_taskdes")
+	self._txtprocess = gohelper.findChildText(go, "#go_common/info/#txt_process")
+	self._scrollreward = gohelper.findChild(go, "#go_common/#scroll_reward"):GetComponent(typeof(ZProj.LimitedScrollRect))
+	self._gorewardContent = gohelper.findChild(go, "#go_common/#scroll_reward/Viewport/#go_rewardContent")
+	self._gonotget = gohelper.findChild(go, "#go_common/#go_notget")
+	self._btngoto = gohelper.findChildButtonWithAudio(go, "#go_common/#go_notget/#btn_goto")
+	self._btncanget = gohelper.findChildButtonWithAudio(go, "#go_common/#go_notget/#btn_canget")
+	self._godoing = gohelper.findChild(go, "#go_common/#go_notget/#go_doing")
+	self._goget = gohelper.findChild(go, "#go_common/#go_get")
+	self._goreddot = gohelper.findChild(go, "#go_common/#go_reddot")
+	self._animator = self.go:GetComponent(typeof(UnityEngine.Animator))
+	self._rewardTab = {}
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._btngoto:AddClickListener(arg_2_0._btngotoOnClick, arg_2_0)
-	arg_2_0._btncanget:AddClickListener(arg_2_0._btncangetOnClick, arg_2_0)
+function TurnbackTaskItem:addEventListeners()
+	self._btngoto:AddClickListener(self._btngotoOnClick, self)
+	self._btncanget:AddClickListener(self._btncangetOnClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btngoto:RemoveClickListener()
-	arg_3_0._btncanget:RemoveClickListener()
+function TurnbackTaskItem:removeEventListeners()
+	self._btngoto:RemoveClickListener()
+	self._btncanget:RemoveClickListener()
 end
 
-function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
-	if arg_4_1 == nil then
+function TurnbackTaskItem:onUpdateMO(mo)
+	if mo == nil then
 		return
 	end
 
-	arg_4_0.mo = arg_4_1
-	arg_4_0._scrollreward.parentGameObject = arg_4_0._view._csListScroll.gameObject
+	self.mo = mo
+	self._scrollreward.parentGameObject = self._view._csListScroll.gameObject
 
-	local var_4_0 = arg_4_0.mo.progress < arg_4_0.mo.config.maxProgress and "<color=#d97373>%s/%s</color>" or "%s/%s"
+	local formatStr = self.mo.progress < self.mo.config.maxProgress and "<color=#d97373>%s/%s</color>" or "%s/%s"
 
-	arg_4_0._txttaskdes.text = arg_4_0.mo.config.desc
-	arg_4_0._txtprocess.text = string.format(var_4_0, arg_4_0.mo.progress, arg_4_0.mo.config.maxProgress)
+	self._txttaskdes.text = self.mo.config.desc
+	self._txtprocess.text = string.format(formatStr, self.mo.progress, self.mo.config.maxProgress)
 
-	gohelper.setActive(arg_4_0._goline, arg_4_0._index ~= 1)
+	gohelper.setActive(self._goline, self._index ~= 1)
 
-	local var_4_1 = arg_4_0.mo.progress
-	local var_4_2 = arg_4_0.mo.config.maxProgress
+	local curPro = self.mo.progress
+	local maxPro = self.mo.config.maxProgress
 
-	gohelper.setActive(arg_4_0._btngoto.gameObject, var_4_1 < var_4_2 and arg_4_0.mo.config.jumpId > 0)
-	gohelper.setActive(arg_4_0._godoing.gameObject, var_4_1 < var_4_2 and arg_4_0.mo.config.jumpId == 0)
-	gohelper.setActive(arg_4_0._btncanget.gameObject, var_4_2 <= var_4_1 and arg_4_0.mo.finishCount == 0)
-	gohelper.setActive(arg_4_0._goreddot, false)
-	gohelper.setActive(arg_4_0._goget, arg_4_0.mo.finishCount > 0)
+	gohelper.setActive(self._btngoto.gameObject, curPro < maxPro and self.mo.config.jumpId > 0)
+	gohelper.setActive(self._godoing.gameObject, curPro < maxPro and self.mo.config.jumpId == 0)
+	gohelper.setActive(self._btncanget.gameObject, maxPro <= curPro and self.mo.finishCount == 0)
+	gohelper.setActive(self._goreddot, false)
+	gohelper.setActive(self._goget, self.mo.finishCount > 0)
 
-	local var_4_3 = string.split(arg_4_0.mo.config.bonus, "|")
+	local rewards = string.split(self.mo.config.bonus, "|")
 
-	for iter_4_0 = 1, #var_4_3 do
-		local var_4_4 = arg_4_0._rewardTab[iter_4_0]
+	for i = 1, #rewards do
+		local item = self._rewardTab[i]
 
-		if not var_4_4 then
-			var_4_4 = IconMgr.instance:getCommonPropItemIcon(arg_4_0._gorewardContent)
+		if not item then
+			item = IconMgr.instance:getCommonPropItemIcon(self._gorewardContent)
 
-			table.insert(arg_4_0._rewardTab, var_4_4)
+			table.insert(self._rewardTab, item)
 		end
 
-		local var_4_5 = string.split(var_4_3[iter_4_0], "#")
+		local itemCo = string.split(rewards[i], "#")
 
-		var_4_4:setMOValue(var_4_5[1], var_4_5[2], var_4_5[3])
-		var_4_4:setPropItemScale(0.6)
-		var_4_4:setHideLvAndBreakFlag(true)
-		var_4_4:hideEquipLvAndBreak(true)
-		var_4_4:setCountFontSize(51)
-		gohelper.setActive(var_4_4.go, true)
+		item:setMOValue(itemCo[1], itemCo[2], itemCo[3])
+		item:setPropItemScale(0.6)
+		item:setHideLvAndBreakFlag(true)
+		item:hideEquipLvAndBreak(true)
+		item:setCountFontSize(51)
+		gohelper.setActive(item.go, true)
 	end
 
-	for iter_4_1 = #var_4_3 + 1, #arg_4_0._rewardTab do
-		gohelper.setActive(arg_4_0._rewardTab[iter_4_1].go, false)
+	for i = #rewards + 1, #self._rewardTab do
+		gohelper.setActive(self._rewardTab[i].go, false)
 	end
 
-	arg_4_0._scrollreward.horizontalNormalizedPosition = 0
+	self._scrollreward.horizontalNormalizedPosition = 0
 
-	arg_4_0._animator:Play(UIAnimationName.Idle, 0, 0)
+	self._animator:Play(UIAnimationName.Idle, 0, 0)
 end
 
-function var_0_0._btngotoOnClick(arg_5_0)
-	local var_5_0 = arg_5_0.mo.config.jumpId
+function TurnbackTaskItem:_btngotoOnClick()
+	local jumpId = self.mo.config.jumpId
 
-	if var_5_0 ~= 0 then
-		GameFacade.jump(var_5_0)
+	if jumpId ~= 0 then
+		GameFacade.jump(jumpId)
 	end
 end
 
-function var_0_0._btncangetOnClick(arg_6_0)
+function TurnbackTaskItem:_btncangetOnClick()
 	if not TurnbackModel.instance:isInOpenTime() then
 		return
 	end
 
 	UIBlockMgr.instance:startBlock("TurnbackTaskItemFinish")
-	TaskDispatcher.runDelay(arg_6_0.finishTask, arg_6_0, TurnbackEnum.TaskMaskTime)
-	TurnbackController.instance:dispatchEvent(TurnbackEvent.OnTaskRewardGetFinish, arg_6_0._index)
-	arg_6_0._animator:Play(UIAnimationName.Finish, 0, 0)
+	TaskDispatcher.runDelay(self.finishTask, self, TurnbackEnum.TaskMaskTime)
+	TurnbackController.instance:dispatchEvent(TurnbackEvent.OnTaskRewardGetFinish, self._index)
+	self._animator:Play(UIAnimationName.Finish, 0, 0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_task_slide)
 end
 
-function var_0_0.finishTask(arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0.finishTask, arg_7_0)
+function TurnbackTaskItem:finishTask()
+	TaskDispatcher.cancelTask(self.finishTask, self)
 	UIBlockMgr.instance:endBlock("TurnbackTaskItemFinish")
-	TaskRpc.instance:sendFinishTaskRequest(arg_7_0.mo.id)
+	TaskRpc.instance:sendFinishTaskRequest(self.mo.id)
 end
 
-function var_0_0.onDestroy(arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0.finishTask, arg_8_0)
+function TurnbackTaskItem:onDestroy()
+	TaskDispatcher.cancelTask(self.finishTask, self)
 end
 
-return var_0_0
+return TurnbackTaskItem

@@ -1,186 +1,189 @@
-﻿module("modules.logic.survival.view.handbook.SurvivalHandbookEventItem", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/handbook/SurvivalHandbookEventItem.lua
 
-local var_0_0 = class("SurvivalHandbookEventItem", LuaCompBase)
+module("modules.logic.survival.view.handbook.SurvivalHandbookEventItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0.animGo = gohelper.findComponentAnim(arg_1_1)
-	arg_1_0.empty = gohelper.findChild(arg_1_1, "#empty")
-	arg_1_0.normal = gohelper.findChild(arg_1_1, "#normal")
-	arg_1_0.txt_Title = gohelper.findChildTextMesh(arg_1_1, "#normal/Title/#txt_Title")
-	arg_1_0.image_model_obj = gohelper.findChild(arg_1_1, "#normal/#image_model")
-	arg_1_0.image_model = arg_1_0.image_model_obj:GetComponent(gohelper.Type_RawImage)
-	arg_1_0.txt_Descr = gohelper.findChildTextMesh(arg_1_1, "#normal/scroll_overseas/viewport_overseas/#txt_Descr")
-	arg_1_0.btnLeftArrow = gohelper.findChildButtonWithAudio(arg_1_1, "#normal/#btnLeftArrow")
-	arg_1_0.btnRightArrow = gohelper.findChildButtonWithAudio(arg_1_1, "#normal/#btnRightArrow")
-	arg_1_0.txt_Num = gohelper.findChildTextMesh(arg_1_1, "#normal/#txt_Num")
-	arg_1_0.refreshFlow = FlowSequence.New()
+local SurvivalHandbookEventItem = class("SurvivalHandbookEventItem", LuaCompBase)
 
-	arg_1_0.refreshFlow:addWork(TimerWork.New(0.167))
-	arg_1_0.refreshFlow:addWork(FunctionWork.New(arg_1_0.refreshDesc, arg_1_0))
+function SurvivalHandbookEventItem:init(go)
+	self.go = go
+	self.animGo = gohelper.findComponentAnim(go)
+	self.empty = gohelper.findChild(go, "#empty")
+	self.normal = gohelper.findChild(go, "#normal")
+	self.txt_Title = gohelper.findChildTextMesh(go, "#normal/Title/#txt_Title")
+	self.image_model_obj = gohelper.findChild(go, "#normal/#image_model")
+	self.image_model = self.image_model_obj:GetComponent(gohelper.Type_RawImage)
+	self.txt_Descr = gohelper.findChildTextMesh(go, "#normal/scroll_overseas/viewport_overseas/#txt_Descr")
+	self.btnLeftArrow = gohelper.findChildButtonWithAudio(go, "#normal/#btnLeftArrow")
+	self.btnRightArrow = gohelper.findChildButtonWithAudio(go, "#normal/#btnRightArrow")
+	self.txt_Num = gohelper.findChildTextMesh(go, "#normal/#txt_Num")
+	self.refreshFlow = FlowSequence.New()
+
+	self.refreshFlow:addWork(TimerWork.New(0.167))
+	self.refreshFlow:addWork(FunctionWork.New(self.refreshDesc, self))
 end
 
-function var_0_0.getItemAnimators(arg_2_0)
+function SurvivalHandbookEventItem:getItemAnimators()
 	return {
-		arg_2_0.animGo
+		self.animGo
 	}
 end
 
-function var_0_0.onStart(arg_3_0)
-	arg_3_0.curSelectIndex = 1
+function SurvivalHandbookEventItem:onStart()
+	self.curSelectIndex = 1
 end
 
-function var_0_0.addEventListeners(arg_4_0)
-	arg_4_0:addClickCb(arg_4_0.btnLeftArrow, arg_4_0.onClickLeft, arg_4_0)
-	arg_4_0:addClickCb(arg_4_0.btnRightArrow, arg_4_0.onClickRight, arg_4_0)
+function SurvivalHandbookEventItem:addEventListeners()
+	self:addClickCb(self.btnLeftArrow, self.onClickLeft, self)
+	self:addClickCb(self.btnRightArrow, self.onClickRight, self)
 end
 
-function var_0_0.removeEventListeners(arg_5_0)
-	arg_5_0:removeClickCb(arg_5_0.btnLeftArrow)
-	arg_5_0:removeClickCb(arg_5_0.btnRightArrow)
+function SurvivalHandbookEventItem:removeEventListeners()
+	self:removeClickCb(self.btnLeftArrow)
+	self:removeClickCb(self.btnRightArrow)
 end
 
-function var_0_0.onDestroyView(arg_6_0)
-	arg_6_0.refreshFlow:clearWork()
+function SurvivalHandbookEventItem:onDestroyView()
+	self.refreshFlow:clearWork()
 end
 
-function var_0_0.setSurvivalHandbookEventComp(arg_7_0, arg_7_1)
-	arg_7_0.survivalHandBookEventComp = arg_7_1
+function SurvivalHandbookEventItem:setSurvivalHandbookEventComp(survivalHandBookEventComp)
+	self.survivalHandBookEventComp = survivalHandBookEventComp
 end
 
-function var_0_0.updateMo(arg_8_0, arg_8_1)
-	arg_8_0.mo = arg_8_1
+function SurvivalHandbookEventItem:updateMo(mo)
+	self.mo = mo
 
-	if not arg_8_0.mo.isUnlock then
-		gohelper.setActive(arg_8_0.empty, true)
-		gohelper.setActive(arg_8_0.normal, false)
+	if not self.mo.isUnlock then
+		gohelper.setActive(self.empty, true)
+		gohelper.setActive(self.normal, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_8_0.empty, false)
-	gohelper.setActive(arg_8_0.normal, true)
+	gohelper.setActive(self.empty, false)
+	gohelper.setActive(self.normal, true)
 
-	arg_8_0.txt_Title.text = arg_8_1:getName()
+	self.txt_Title.text = mo:getName()
 
-	if not arg_8_0.survivalUI3DRender then
-		local var_8_0 = recthelper.getWidth(arg_8_0.image_model.transform)
-		local var_8_1 = recthelper.getHeight(arg_8_0.image_model.transform)
+	if not self.survivalUI3DRender then
+		local width = recthelper.getWidth(self.image_model.transform)
+		local height = recthelper.getHeight(self.image_model.transform)
 
-		arg_8_0.survivalUI3DRender = arg_8_0.survivalHandBookEventComp:popSurvivalUI3DRender(var_8_0, var_8_1)
-		arg_8_0.image_model.texture = arg_8_0.survivalUI3DRender:getRenderTexture()
+		self.survivalUI3DRender = self.survivalHandBookEventComp:popSurvivalUI3DRender(width, height)
+		self.image_model.texture = self.survivalUI3DRender:getRenderTexture()
 	end
 
-	if not arg_8_0.survival3DModelMO then
-		arg_8_0.survival3DModelMO = Survival3DModelMO.New()
+	if not self.survival3DModelMO then
+		self.survival3DModelMO = Survival3DModelMO.New()
 	end
 
-	local var_8_2 = arg_8_0.mo:getEventShowId()
+	local eventId = self.mo:getEventShowId()
 
-	arg_8_0.survival3DModelMO:setDataByEventID(var_8_2)
-	arg_8_0.survivalUI3DRender:setSurvival3DModelMO(arg_8_0.survival3DModelMO)
+	self.survival3DModelMO:setDataByEventID(eventId)
+	self.survivalUI3DRender:setSurvival3DModelMO(self.survival3DModelMO)
 
-	local var_8_3 = arg_8_1:getDesc()
+	local desc = mo:getDesc()
 
-	arg_8_0.descIndex = 1
-	arg_8_0.textMeshProW = recthelper.getWidth(arg_8_0.txt_Descr.rectTransform)
-	arg_8_0.textMeshProH = recthelper.getHeight(arg_8_0.txt_Descr.rectTransform)
-	arg_8_0.descList = {}
+	self.descIndex = 1
+	self.textMeshProW = recthelper.getWidth(self.txt_Descr.rectTransform)
+	self.textMeshProH = recthelper.getHeight(self.txt_Descr.rectTransform)
+	self.descList = {}
 
 	if SettingsModel.instance:isOverseas() then
-		arg_8_0.descList[1] = var_8_3
+		self.descList[1] = desc
 	else
-		local var_8_4 = var_8_3
-		local var_8_5 = 0
-		local var_8_6 = GameUtil.utf8len(var_8_4)
+		local curStr = desc
+		local curIndex = 0
+		local len = GameUtil.utf8len(curStr)
 
-		for iter_8_0 = 1, var_8_6 - 1 do
-			var_8_5 = var_8_5 + 1
+		for i = 1, len - 1 do
+			curIndex = curIndex + 1
 
-			local var_8_7 = GameUtil.utf8sub(var_8_4, 1, var_8_5)
-			local var_8_8 = arg_8_0.txt_Descr:GetPreferredValues(var_8_7, arg_8_0.textMeshProW, arg_8_0.textMeshProH)
-			local var_8_9 = var_8_8.x
+			local newStr = GameUtil.utf8sub(curStr, 1, curIndex)
+			local sizeDesc = self.txt_Descr:GetPreferredValues(newStr, self.textMeshProW, self.textMeshProH)
+			local newW = sizeDesc.x
+			local newH = sizeDesc.y
 
-			if var_8_8.y > arg_8_0.textMeshProH then
-				local var_8_10 = GameUtil.utf8sub(var_8_4, 1, var_8_5 - 1)
+			if newH > self.textMeshProH then
+				local insertStr = GameUtil.utf8sub(curStr, 1, curIndex - 1)
 
-				table.insert(arg_8_0.descList, var_8_10)
+				table.insert(self.descList, insertStr)
 
-				var_8_4 = GameUtil.utf8sub(var_8_4, var_8_5, var_8_6 - var_8_5 + 1)
-				var_8_5 = 1
-			elseif iter_8_0 == var_8_6 - 1 then
-				local var_8_11 = GameUtil.utf8sub(var_8_4, 1, var_8_5 + 1)
+				curStr = GameUtil.utf8sub(curStr, curIndex, len - curIndex + 1)
+				curIndex = 1
+			elseif i == len - 1 then
+				local insertStr = GameUtil.utf8sub(curStr, 1, curIndex + 1)
 
-				table.insert(arg_8_0.descList, var_8_11)
+				table.insert(self.descList, insertStr)
 			end
 		end
 	end
 
-	arg_8_0:refreshDesc()
+	self:refreshDesc()
 end
 
-function var_0_0.onDisable(arg_9_0)
-	if arg_9_0.survivalUI3DRender then
-		arg_9_0.survivalHandBookEventComp:pushSurvivalUI3DRender(arg_9_0.survivalUI3DRender)
+function SurvivalHandbookEventItem:onDisable()
+	if self.survivalUI3DRender then
+		self.survivalHandBookEventComp:pushSurvivalUI3DRender(self.survivalUI3DRender)
 
-		arg_9_0.survivalUI3DRender = nil
+		self.survivalUI3DRender = nil
 	end
 end
 
-function var_0_0.onDestroy(arg_10_0)
-	if arg_10_0.survivalUI3DRender then
-		UI3DRenderController.instance.removeSurvivalUI3DRender(arg_10_0.survivalUI3DRender)
+function SurvivalHandbookEventItem:onDestroy()
+	if self.survivalUI3DRender then
+		UI3DRenderController.instance.removeSurvivalUI3DRender(self.survivalUI3DRender)
 
-		arg_10_0.survivalUI3DRender = nil
+		self.survivalUI3DRender = nil
 	end
 end
 
-function var_0_0.onClickLeft(arg_11_0)
-	if arg_11_0.descIndex > 1 then
-		arg_11_0.descIndex = arg_11_0.descIndex - 1
+function SurvivalHandbookEventItem:onClickLeft()
+	if self.descIndex > 1 then
+		self.descIndex = self.descIndex - 1
 	end
 
-	arg_11_0.animGo:Play(UIAnimationName.Switch, 0, 0)
-	arg_11_0.refreshFlow:clearWork()
-	arg_11_0.refreshFlow:start()
+	self.animGo:Play(UIAnimationName.Switch, 0, 0)
+	self.refreshFlow:clearWork()
+	self.refreshFlow:start()
 end
 
-function var_0_0.onClickRight(arg_12_0)
-	if arg_12_0.descIndex < #arg_12_0.descList then
-		arg_12_0.descIndex = arg_12_0.descIndex + 1
+function SurvivalHandbookEventItem:onClickRight()
+	if self.descIndex < #self.descList then
+		self.descIndex = self.descIndex + 1
 	end
 
-	arg_12_0.animGo:Play(UIAnimationName.Switch, 0, 0)
-	arg_12_0.refreshFlow:clearWork()
-	arg_12_0.refreshFlow:start()
+	self.animGo:Play(UIAnimationName.Switch, 0, 0)
+	self.refreshFlow:clearWork()
+	self.refreshFlow:start()
 end
 
-function var_0_0.refreshBtnArrow(arg_13_0)
-	if arg_13_0.descIndex <= 1 then
-		gohelper.setActive(arg_13_0.btnLeftArrow, false)
+function SurvivalHandbookEventItem:refreshBtnArrow()
+	if self.descIndex <= 1 then
+		gohelper.setActive(self.btnLeftArrow, false)
 	else
-		gohelper.setActive(arg_13_0.btnLeftArrow, true)
+		gohelper.setActive(self.btnLeftArrow, true)
 	end
 
-	if arg_13_0.descIndex >= #arg_13_0.descList then
-		gohelper.setActive(arg_13_0.btnRightArrow, false)
+	if self.descIndex >= #self.descList then
+		gohelper.setActive(self.btnRightArrow, false)
 	else
-		gohelper.setActive(arg_13_0.btnRightArrow, true)
+		gohelper.setActive(self.btnRightArrow, true)
 	end
 
-	if #arg_13_0.descList > 1 then
-		gohelper.setActive(arg_13_0.txt_Num.gameObject, true)
+	if #self.descList > 1 then
+		gohelper.setActive(self.txt_Num.gameObject, true)
 
-		arg_13_0.txt_Num.text = string.format("%s/%s", arg_13_0.descIndex, #arg_13_0.descList)
+		self.txt_Num.text = string.format("%s/%s", self.descIndex, #self.descList)
 	else
-		gohelper.setActive(arg_13_0.txt_Num.gameObject, false)
+		gohelper.setActive(self.txt_Num.gameObject, false)
 	end
 end
 
-function var_0_0.refreshDesc(arg_14_0)
-	arg_14_0:refreshBtnArrow()
+function SurvivalHandbookEventItem:refreshDesc()
+	self:refreshBtnArrow()
 
-	arg_14_0.txt_Descr.text = arg_14_0.descList[arg_14_0.descIndex]
+	self.txt_Descr.text = self.descList[self.descIndex]
 end
 
-return var_0_0
+return SurvivalHandbookEventItem

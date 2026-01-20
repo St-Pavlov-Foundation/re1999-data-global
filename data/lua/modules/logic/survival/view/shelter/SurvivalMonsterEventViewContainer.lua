@@ -1,11 +1,13 @@
-﻿module("modules.logic.survival.view.shelter.SurvivalMonsterEventViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/SurvivalMonsterEventViewContainer.lua
 
-local var_0_0 = class("SurvivalMonsterEventViewContainer", BaseViewContainer)
+module("modules.logic.survival.view.shelter.SurvivalMonsterEventViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local SurvivalMonsterEventViewContainer = class("SurvivalMonsterEventViewContainer", BaseViewContainer)
+
+function SurvivalMonsterEventViewContainer:buildViews()
 	return {
 		SurvivalMonsterEventView.New()
 	}
 end
 
-return var_0_0
+return SurvivalMonsterEventViewContainer

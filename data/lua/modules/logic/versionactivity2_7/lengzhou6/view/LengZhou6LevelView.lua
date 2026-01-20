@@ -1,264 +1,271 @@
-﻿module("modules.logic.versionactivity2_7.lengzhou6.view.LengZhou6LevelView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/lengzhou6/view/LengZhou6LevelView.lua
 
-local var_0_0 = class("LengZhou6LevelView", BaseView)
-local var_0_1 = -300
-local var_0_2 = 0.15
+module("modules.logic.versionactivity2_7.lengzhou6.view.LengZhou6LevelView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._gostoryPath = gohelper.findChild(arg_1_0.viewGO, "#go_storyPath")
-	arg_1_0._gostoryScroll = gohelper.findChild(arg_1_0.viewGO, "#go_storyPath/#go_storyScroll")
-	arg_1_0._gostoryStages = gohelper.findChild(arg_1_0.viewGO, "#go_storyPath/#go_storyScroll/#go_storyStages")
-	arg_1_0._gostage1 = gohelper.findChild(arg_1_0.viewGO, "#go_storyPath/#go_storyScroll/#go_storyStages/#go_stage1")
-	arg_1_0._gostage2 = gohelper.findChild(arg_1_0.viewGO, "#go_storyPath/#go_storyScroll/#go_storyStages/#go_stage2")
-	arg_1_0._gostage3 = gohelper.findChild(arg_1_0.viewGO, "#go_storyPath/#go_storyScroll/#go_storyStages/#go_stage3")
-	arg_1_0._gostage4 = gohelper.findChild(arg_1_0.viewGO, "#go_storyPath/#go_storyScroll/#go_storyStages/#go_stage4")
-	arg_1_0._gostage5 = gohelper.findChild(arg_1_0.viewGO, "#go_storyPath/#go_storyScroll/#go_storyStages/#go_stage5")
-	arg_1_0._gostage6 = gohelper.findChild(arg_1_0.viewGO, "#go_storyPath/#go_storyScroll/#go_storyStages/#go_stage6")
-	arg_1_0._gostage7 = gohelper.findChild(arg_1_0.viewGO, "#go_storyPath/#go_storyScroll/#go_storyStages/#go_stage7")
-	arg_1_0._gostage8 = gohelper.findChild(arg_1_0.viewGO, "#go_storyPath/#go_storyScroll/#go_storyStages/#go_stage8")
-	arg_1_0._gostage9 = gohelper.findChild(arg_1_0.viewGO, "#go_storyPath/#go_storyScroll/#go_storyStages/#go_stage9")
-	arg_1_0._goTitle = gohelper.findChild(arg_1_0.viewGO, "#go_Title")
-	arg_1_0._simagetitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_Title/#simage_title")
-	arg_1_0._gotime = gohelper.findChild(arg_1_0.viewGO, "#go_Title/#go_time")
-	arg_1_0._txtlimittime = gohelper.findChildText(arg_1_0.viewGO, "#go_Title/#go_time/#txt_limittime")
-	arg_1_0._btnTask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Task")
-	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "#btn_Task/#go_reddot")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
+local LengZhou6LevelView = class("LengZhou6LevelView", BaseView)
+local RIGHT_OFFSET = -300
+local PATH_ANIM_TIME = 0.15
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function LengZhou6LevelView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._gostoryPath = gohelper.findChild(self.viewGO, "#go_storyPath")
+	self._gostoryScroll = gohelper.findChild(self.viewGO, "#go_storyPath/#go_storyScroll")
+	self._gostoryStages = gohelper.findChild(self.viewGO, "#go_storyPath/#go_storyScroll/#go_storyStages")
+	self._gostage1 = gohelper.findChild(self.viewGO, "#go_storyPath/#go_storyScroll/#go_storyStages/#go_stage1")
+	self._gostage2 = gohelper.findChild(self.viewGO, "#go_storyPath/#go_storyScroll/#go_storyStages/#go_stage2")
+	self._gostage3 = gohelper.findChild(self.viewGO, "#go_storyPath/#go_storyScroll/#go_storyStages/#go_stage3")
+	self._gostage4 = gohelper.findChild(self.viewGO, "#go_storyPath/#go_storyScroll/#go_storyStages/#go_stage4")
+	self._gostage5 = gohelper.findChild(self.viewGO, "#go_storyPath/#go_storyScroll/#go_storyStages/#go_stage5")
+	self._gostage6 = gohelper.findChild(self.viewGO, "#go_storyPath/#go_storyScroll/#go_storyStages/#go_stage6")
+	self._gostage7 = gohelper.findChild(self.viewGO, "#go_storyPath/#go_storyScroll/#go_storyStages/#go_stage7")
+	self._gostage8 = gohelper.findChild(self.viewGO, "#go_storyPath/#go_storyScroll/#go_storyStages/#go_stage8")
+	self._gostage9 = gohelper.findChild(self.viewGO, "#go_storyPath/#go_storyScroll/#go_storyStages/#go_stage9")
+	self._goTitle = gohelper.findChild(self.viewGO, "#go_Title")
+	self._simagetitle = gohelper.findChildSingleImage(self.viewGO, "#go_Title/#simage_title")
+	self._gotime = gohelper.findChild(self.viewGO, "#go_Title/#go_time")
+	self._txtlimittime = gohelper.findChildText(self.viewGO, "#go_Title/#go_time/#txt_limittime")
+	self._btnTask = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Task")
+	self._goreddot = gohelper.findChild(self.viewGO, "#btn_Task/#go_reddot")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnTask:AddClickListener(arg_2_0._btnTaskOnClick, arg_2_0)
-	arg_2_0._drag:AddDragBeginListener(arg_2_0._onDragBegin, arg_2_0)
-	arg_2_0._drag:AddDragEndListener(arg_2_0._onDragEnd, arg_2_0)
-	arg_2_0._touch:AddClickDownListener(arg_2_0._onClickDown, arg_2_0)
+function LengZhou6LevelView:addEvents()
+	self._btnTask:AddClickListener(self._btnTaskOnClick, self)
+	self._drag:AddDragBeginListener(self._onDragBegin, self)
+	self._drag:AddDragEndListener(self._onDragEnd, self)
+	self._touch:AddClickDownListener(self._onClickDown, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnTask:RemoveClickListener()
-	arg_3_0._drag:RemoveDragBeginListener()
-	arg_3_0._drag:RemoveDragEndListener()
-	arg_3_0._touch:RemoveClickDownListener()
+function LengZhou6LevelView:removeEvents()
+	self._btnTask:RemoveClickListener()
+	self._drag:RemoveDragBeginListener()
+	self._drag:RemoveDragEndListener()
+	self._touch:RemoveClickDownListener()
 end
 
-function var_0_0._btnTaskOnClick(arg_4_0)
+function LengZhou6LevelView:_btnTaskOnClick()
 	LengZhou6Controller.instance:openTaskView()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._taskAnimator = gohelper.findChild(arg_5_0.viewGO, "#btn_Task/ani"):GetComponent(typeof(UnityEngine.Animator))
+function LengZhou6LevelView:_editableInitView()
+	local taskAni = gohelper.findChild(self.viewGO, "#btn_Task/ani")
 
-	RedDotController.instance:addRedDot(arg_5_0._goreddot, RedDotEnum.DotNode.V2a7LengZhou6Task, nil, arg_5_0._refreshRedDot, arg_5_0)
+	self._taskAnimator = taskAni:GetComponent(typeof(UnityEngine.Animator))
 
-	arg_5_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_5_0._gostoryPath)
-	arg_5_0._touch = SLFramework.UGUI.UIClickListener.Get(arg_5_0._gostoryPath)
-	arg_5_0._scrollStory = arg_5_0._gostoryPath:GetComponent(gohelper.Type_ScrollRect)
-	arg_5_0._audioScroll = MonoHelper.addLuaComOnceToGo(arg_5_0._gostoryPath, DungeonMapEpisodeAudio, arg_5_0._scrollStory)
-	arg_5_0._transstoryScroll = arg_5_0._gostoryScroll.transform
-	arg_5_0._ani = arg_5_0.viewGO:GetComponent(gohelper.Type_Animator)
+	RedDotController.instance:addRedDot(self._goreddot, RedDotEnum.DotNode.V2a7LengZhou6Task, nil, self._refreshRedDot, self)
 
-	local var_5_0 = recthelper.getWidth(ViewMgr.instance:getUIRoot().transform)
+	self._drag = SLFramework.UGUI.UIDragListener.Get(self._gostoryPath)
+	self._touch = SLFramework.UGUI.UIClickListener.Get(self._gostoryPath)
+	self._scrollStory = self._gostoryPath:GetComponent(gohelper.Type_ScrollRect)
+	self._audioScroll = MonoHelper.addLuaComOnceToGo(self._gostoryPath, DungeonMapEpisodeAudio, self._scrollStory)
+	self._transstoryScroll = self._gostoryScroll.transform
+	self._ani = self.viewGO:GetComponent(gohelper.Type_Animator)
 
-	arg_5_0._offsetX = (var_5_0 - var_0_1) / 2
-	arg_5_0.minContentAnchorX = -recthelper.getWidth(arg_5_0._transstoryScroll) + var_5_0
+	local width = recthelper.getWidth(ViewMgr.instance:getUIRoot().transform)
+
+	self._offsetX = (width - RIGHT_OFFSET) / 2
+
+	local scrollWidth = recthelper.getWidth(self._transstoryScroll)
+
+	self.minContentAnchorX = -scrollWidth + width
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0.actId = LengZhou6Model.instance:getAct190Id()
+function LengZhou6LevelView:onOpen()
+	self.actId = LengZhou6Model.instance:getAct190Id()
 
-	arg_6_0:addEventCb(LengZhou6Controller.instance, LengZhou6Event.OnClickEpisode, arg_6_0._onClickEpisode, arg_6_0)
-	arg_6_0:addEventCb(LengZhou6Controller.instance, LengZhou6Event.OnReceiveEpisodeInfo, arg_6_0._refreshEpisode, arg_6_0)
-	arg_6_0:addEventCb(LengZhou6Controller.instance, LengZhou6Event.OnFinishEpisode, arg_6_0._onFinishEpisode, arg_6_0)
-	arg_6_0:addEventCb(LengZhou6Controller.instance, LengZhou6Event.OnClickCloseGameView, arg_6_0._onClickCloseGameView, arg_6_0)
-	TaskDispatcher.runRepeat(arg_6_0.showLeftTime, arg_6_0, TimeUtil.OneMinuteSecond)
-	arg_6_0:showLeftTime()
+	self:addEventCb(LengZhou6Controller.instance, LengZhou6Event.OnClickEpisode, self._onClickEpisode, self)
+	self:addEventCb(LengZhou6Controller.instance, LengZhou6Event.OnReceiveEpisodeInfo, self._refreshEpisode, self)
+	self:addEventCb(LengZhou6Controller.instance, LengZhou6Event.OnFinishEpisode, self._onFinishEpisode, self)
+	self:addEventCb(LengZhou6Controller.instance, LengZhou6Event.OnClickCloseGameView, self._onClickCloseGameView, self)
+	TaskDispatcher.runRepeat(self.showLeftTime, self, TimeUtil.OneMinuteSecond)
+	self:showLeftTime()
 	AudioMgr.instance:trigger(AudioEnum2_7.LengZhou6.play_ui_yuzhou_lzl_open)
-	TaskDispatcher.runDelay(arg_6_0.updateStage, arg_6_0, 0.5)
-	arg_6_0:initStage()
+	TaskDispatcher.runDelay(self.updateStage, self, 0.5)
+	self:initStage()
 end
 
-function var_0_0.initStage(arg_7_0)
-	arg_7_0._allEpisodeItemList = arg_7_0:getUserDataTb_()
+function LengZhou6LevelView:initStage()
+	self._allEpisodeItemList = self:getUserDataTb_()
 
-	local var_7_0 = LengZhou6Model.instance:getAllEpisodeIds()
-	local var_7_1 = arg_7_0.viewContainer:getSetting().otherRes[1]
+	local allEpisodeIds = LengZhou6Model.instance:getAllEpisodeIds()
+	local path = self.viewContainer:getSetting().otherRes[1]
 
-	for iter_7_0 = 1, #var_7_0 do
-		local var_7_2 = var_7_0[iter_7_0]
-		local var_7_3 = arg_7_0["_gostage" .. iter_7_0]
-		local var_7_4 = arg_7_0:getResInst(var_7_1, var_7_3, var_7_2)
-		local var_7_5 = MonoHelper.addNoUpdateLuaComOnceToGo(var_7_4, LengZhou6LevelItem)
+	for i = 1, #allEpisodeIds do
+		local episodeId = allEpisodeIds[i]
+		local parent = self["_gostage" .. i]
+		local itemGO = self:getResInst(path, parent, episodeId)
+		local episodeItem = MonoHelper.addNoUpdateLuaComOnceToGo(itemGO, LengZhou6LevelItem)
 
-		var_7_5:initEpisodeId(iter_7_0, var_7_2)
-		table.insert(arg_7_0._allEpisodeItemList, var_7_5)
-		gohelper.setActive(var_7_4, false)
+		episodeItem:initEpisodeId(i, episodeId)
+		table.insert(self._allEpisodeItemList, episodeItem)
+		gohelper.setActive(itemGO, false)
 	end
 end
 
-function var_0_0._refreshEpisode(arg_8_0)
+function LengZhou6LevelView:_refreshEpisode()
 	return
 end
 
-function var_0_0.updateStage(arg_9_0)
-	arg_9_0:focusNewestLevelItem()
-	TaskDispatcher.cancelTask(arg_9_0.updateStage, arg_9_0)
+function LengZhou6LevelView:updateStage()
+	self:focusNewestLevelItem()
+	TaskDispatcher.cancelTask(self.updateStage, self)
 
-	if arg_9_0._allEpisodeItemList ~= nil then
-		for iter_9_0, iter_9_1 in pairs(arg_9_0._allEpisodeItemList) do
-			iter_9_1:updateInfo(false)
+	if self._allEpisodeItemList ~= nil then
+		for _, item in pairs(self._allEpisodeItemList) do
+			item:updateInfo(false)
 		end
 	end
 end
 
-function var_0_0.showLeftTime(arg_10_0)
-	arg_10_0._txtlimittime.text = ActivityHelper.getActivityRemainTimeStr(LengZhou6Model.instance:getCurActId())
+function LengZhou6LevelView:showLeftTime()
+	self._txtlimittime.text = ActivityHelper.getActivityRemainTimeStr(LengZhou6Model.instance:getCurActId())
 end
 
-function var_0_0.onClose(arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0.showLeftTime, arg_11_0)
+function LengZhou6LevelView:onClose()
+	TaskDispatcher.cancelTask(self.showLeftTime, self)
 end
 
-function var_0_0._refreshRedDot(arg_12_0, arg_12_1)
-	arg_12_1:defaultRefreshDot()
+function LengZhou6LevelView:_refreshRedDot(reddot)
+	reddot:defaultRefreshDot()
 
-	local var_12_0 = arg_12_1.show
+	local showRedDot = reddot.show
 
-	arg_12_0._taskAnimator:Play(var_12_0 and "loop" or "idle")
+	self._taskAnimator:Play(showRedDot and "loop" or "idle")
 end
 
-function var_0_0._onDragBegin(arg_13_0)
-	arg_13_0._audioScroll:onDragBegin()
+function LengZhou6LevelView:_onDragBegin()
+	self._audioScroll:onDragBegin()
 end
 
-function var_0_0._onDragEnd(arg_14_0)
-	arg_14_0._audioScroll:onDragEnd()
+function LengZhou6LevelView:_onDragEnd()
+	self._audioScroll:onDragEnd()
 end
 
-function var_0_0._onClickDown(arg_15_0)
-	arg_15_0._audioScroll:onClickDown()
+function LengZhou6LevelView:_onClickDown()
+	self._audioScroll:onClickDown()
 end
 
-function var_0_0._onClickEpisode(arg_16_0, arg_16_1, arg_16_2)
-	if arg_16_0.actId ~= arg_16_1 then
+function LengZhou6LevelView:_onClickEpisode(actId, episodeId)
+	if self.actId ~= actId then
 		return
 	end
 
-	arg_16_0:onFocusEnd(arg_16_2)
+	self:onFocusEnd(episodeId)
 end
 
-function var_0_0._onClickCloseGameView(arg_17_0)
-	arg_17_0:playOpen1Ani()
+function LengZhou6LevelView:_onClickCloseGameView()
+	self:playOpen1Ani()
 end
 
-function var_0_0.playOpen1Ani(arg_18_0)
-	if arg_18_0._ani then
+function LengZhou6LevelView:playOpen1Ani()
+	if self._ani then
 		AudioMgr.instance:trigger(AudioEnum2_7.LengZhou6.play_ui_yuzhou_lzl_open)
-		arg_18_0._ani:Play("open1", 0, 0)
+		self._ani:Play("open1", 0, 0)
 	end
 end
 
-function var_0_0._onFinishEpisode(arg_19_0, arg_19_1)
-	if arg_19_1 == nil then
+function LengZhou6LevelView:_onFinishEpisode(episodeId)
+	if episodeId == nil then
 		return
 	end
 
-	arg_19_0._waitFinishAnimEpisode = arg_19_1
+	self._waitFinishAnimEpisode = episodeId
 
-	arg_19_0:playOpen1Ani()
-	TaskDispatcher.runDelay(arg_19_0._onFinishEpisode2, arg_19_0, 1)
+	self:playOpen1Ani()
+	TaskDispatcher.runDelay(self._onFinishEpisode2, self, 1)
 end
 
-function var_0_0._onFinishEpisode2(arg_20_0)
-	arg_20_0:focusNewestLevelItem()
-	arg_20_0:playEpisodeFinishAnim()
+function LengZhou6LevelView:_onFinishEpisode2()
+	self:focusNewestLevelItem()
+	self:playEpisodeFinishAnim()
 	UIBlockHelper.instance:endBlock(LengZhou6Enum.BlockKey.OneClickResetLevel)
 end
 
-function var_0_0.getNewestLevelItem(arg_21_0)
-	local var_21_0 = arg_21_0._allEpisodeItemList[1]
-	local var_21_1 = LengZhou6Model.instance:getNewestEpisodeId(arg_21_0.actId)
+function LengZhou6LevelView:getNewestLevelItem()
+	local result = self._allEpisodeItemList[1]
+	local newestEpisodeId = LengZhou6Model.instance:getNewestEpisodeId(self.actId)
 
-	for iter_21_0, iter_21_1 in ipairs(arg_21_0._allEpisodeItemList) do
-		if iter_21_1._episodeId == var_21_1 then
-			var_21_0 = iter_21_1
+	for _, episodeItem in ipairs(self._allEpisodeItemList) do
+		if episodeItem._episodeId == newestEpisodeId then
+			result = episodeItem
 
 			break
 		end
 	end
 
-	return var_21_0
+	return result
 end
 
-function var_0_0.focusNewestLevelItem(arg_22_0, arg_22_1)
-	local var_22_0 = arg_22_0:getNewestLevelItem()
+function LengZhou6LevelView:focusNewestLevelItem(moveTime)
+	local levelItem = self:getNewestLevelItem()
 
-	if not var_22_0 then
+	if not levelItem then
 		return
 	end
 
-	local var_22_1 = recthelper.getAnchorX(var_22_0.viewGO.transform.parent)
-	local var_22_2 = arg_22_0._offsetX - var_22_1
+	local contentAnchorX = recthelper.getAnchorX(levelItem.viewGO.transform.parent)
+	local offsetX = self._offsetX - contentAnchorX
 
-	if var_22_2 > 0 then
-		var_22_2 = 0
-	elseif var_22_2 < arg_22_0.minContentAnchorX then
-		var_22_2 = arg_22_0.minContentAnchorX
+	if offsetX > 0 then
+		offsetX = 0
+	elseif offsetX < self.minContentAnchorX then
+		offsetX = self.minContentAnchorX
 	end
 
-	ZProj.TweenHelper.DOAnchorPosX(arg_22_0._transstoryScroll, var_22_2, arg_22_1 or 0, arg_22_0.onFocusEnd, arg_22_0)
+	ZProj.TweenHelper.DOAnchorPosX(self._transstoryScroll, offsetX, moveTime or 0, self.onFocusEnd, self)
 end
 
-function var_0_0.playEpisodeFinishAnim(arg_23_0)
-	if not arg_23_0._waitFinishAnimEpisode then
+function LengZhou6LevelView:playEpisodeFinishAnim()
+	if not self._waitFinishAnimEpisode then
 		return
 	end
 
-	for iter_23_0, iter_23_1 in ipairs(arg_23_0._allEpisodeItemList) do
-		if iter_23_1._episodeId == arg_23_0._waitFinishAnimEpisode then
-			arg_23_0._finishEpisodeIndex = iter_23_0
+	for i, episodeItem in ipairs(self._allEpisodeItemList) do
+		if episodeItem._episodeId == self._waitFinishAnimEpisode then
+			self._finishEpisodeIndex = i
 
-			if not iter_23_1:finishStateEnd() then
-				iter_23_1:updateInfo(true)
-				TaskDispatcher.runDelay(arg_23_0._playEpisodeUnlockAnim, arg_23_0, var_0_2)
+			if not episodeItem:finishStateEnd() then
+				episodeItem:updateInfo(true)
+				TaskDispatcher.runDelay(self._playEpisodeUnlockAnim, self, PATH_ANIM_TIME)
 			else
-				iter_23_1:updateInfo(false)
+				episodeItem:updateInfo(false)
 
-				arg_23_0._finishEpisodeIndex = nil
+				self._finishEpisodeIndex = nil
 			end
 		end
 	end
 
-	arg_23_0._waitFinishAnimEpisode = nil
+	self._waitFinishAnimEpisode = nil
 end
 
-function var_0_0._playEpisodeUnlockAnim(arg_24_0)
-	if not arg_24_0._finishEpisodeIndex then
+function LengZhou6LevelView:_playEpisodeUnlockAnim()
+	if not self._finishEpisodeIndex then
 		return
 	end
 
-	local var_24_0 = arg_24_0._allEpisodeItemList[arg_24_0._finishEpisodeIndex + 1]
+	local nextEpisodeItem = self._allEpisodeItemList[self._finishEpisodeIndex + 1]
 
-	if var_24_0 then
-		var_24_0:updateInfo(true)
+	if nextEpisodeItem then
+		nextEpisodeItem:updateInfo(true)
 	end
 
-	arg_24_0._finishEpisodeIndex = nil
+	self._finishEpisodeIndex = nil
 end
 
-function var_0_0.onFocusEnd(arg_25_0, arg_25_1)
-	if not arg_25_1 then
+function LengZhou6LevelView:onFocusEnd(episodeId)
+	if not episodeId then
 		return
 	end
 
-	LengZhou6Controller.instance:enterEpisode(arg_25_1)
+	LengZhou6Controller.instance:enterEpisode(episodeId)
 end
 
-function var_0_0.onDestroyView(arg_26_0)
-	TaskDispatcher.cancelTask(arg_26_0.updateStage, arg_26_0)
+function LengZhou6LevelView:onDestroyView()
+	TaskDispatcher.cancelTask(self.updateStage, self)
 end
 
-return var_0_0
+return LengZhou6LevelView

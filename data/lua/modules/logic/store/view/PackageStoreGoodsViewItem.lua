@@ -1,63 +1,65 @@
-﻿module("modules.logic.store.view.PackageStoreGoodsViewItem", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/PackageStoreGoodsViewItem.lua
 
-local var_0_0 = class("PackageStoreGoodsViewItem", LuaCompBase)
+module("modules.logic.store.view.PackageStoreGoodsViewItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+local PackageStoreGoodsViewItem = class("PackageStoreGoodsViewItem", LuaCompBase)
 
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0._gogoods = gohelper.findChild(arg_1_0.viewGO, "go_goods")
-	arg_1_0._goicon = gohelper.findChild(arg_1_0.viewGO, "go_goods/#go_icon")
+function PackageStoreGoodsViewItem:init(go)
+	self:__onInit()
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	self.viewGO = go
+	self._gogoods = gohelper.findChild(self.viewGO, "go_goods")
+	self._goicon = gohelper.findChild(self.viewGO, "go_goods/#go_icon")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function PackageStoreGoodsViewItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function PackageStoreGoodsViewItem:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function PackageStoreGoodsViewItem:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
-	local var_5_0 = tonumber(arg_5_1[1])
-	local var_5_1 = arg_5_1[2]
-	local var_5_2 = arg_5_1[3]
-	local var_5_3, var_5_4 = ItemModel.instance:getItemConfigAndIcon(var_5_0, var_5_1, true)
+function PackageStoreGoodsViewItem:onUpdateMO(productParams)
+	local materialType = tonumber(productParams[1])
+	local materialId = productParams[2]
+	local quantity = productParams[3]
+	local itemConfig, itemIcon = ItemModel.instance:getItemConfigAndIcon(materialType, materialId, true)
 
-	if not arg_5_0._itemIcon then
-		arg_5_0._itemIcon = IconMgr.instance:getCommonPropItemIcon(arg_5_0._goicon)
+	if not self._itemIcon then
+		self._itemIcon = IconMgr.instance:getCommonPropItemIcon(self._goicon)
 	end
 
-	arg_5_0._itemIcon:setMOValue(var_5_0, var_5_1, var_5_2, nil, true)
-	arg_5_0._itemIcon:hideExpEquipState()
-	arg_5_0._itemIcon:isShowName(false)
+	self._itemIcon:setMOValue(materialType, materialId, quantity, nil, true)
+	self._itemIcon:hideExpEquipState()
+	self._itemIcon:isShowName(false)
 
-	if arg_5_0._itemIcon:isEquipIcon() then
-		arg_5_0._itemIcon:isShowEquipAndItemCount(true)
+	if self._itemIcon:isEquipIcon() then
+		self._itemIcon:isShowEquipAndItemCount(true)
 	end
 
-	arg_5_0._itemIcon:setCountFontSize(36)
-	arg_5_0._itemIcon:hideEquipLvAndBreak(true)
-	arg_5_0._itemIcon:showEquipRefineContainer(false)
-	arg_5_0._itemIcon:setScale(0.7)
-	arg_5_0._itemIcon:SetCountLocalY(43.6)
-	arg_5_0._itemIcon:SetCountBgHeight(25)
+	self._itemIcon:setCountFontSize(36)
+	self._itemIcon:hideEquipLvAndBreak(true)
+	self._itemIcon:showEquipRefineContainer(false)
+	self._itemIcon:setScale(0.7)
+	self._itemIcon:SetCountLocalY(43.6)
+	self._itemIcon:SetCountBgHeight(25)
 end
 
-function var_0_0.setActive(arg_6_0, arg_6_1)
-	gohelper.setActive(arg_6_0.viewGO, arg_6_1)
+function PackageStoreGoodsViewItem:setActive(v)
+	gohelper.setActive(self.viewGO, v)
 end
 
-function var_0_0.onDestroyView(arg_7_0)
-	arg_7_0:__onDispose()
+function PackageStoreGoodsViewItem:onDestroyView()
+	self:__onDispose()
 end
 
-return var_0_0
+return PackageStoreGoodsViewItem

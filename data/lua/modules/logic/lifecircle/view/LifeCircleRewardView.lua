@@ -1,29 +1,31 @@
-﻿module("modules.logic.lifecircle.view.LifeCircleRewardView", package.seeall)
+﻿-- chunkname: @modules/logic/lifecircle/view/LifeCircleRewardView.lua
 
-local var_0_0 = class("LifeCircleRewardView", BaseView)
+module("modules.logic.lifecircle.view.LifeCircleRewardView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtDays = gohelper.findChildText(arg_1_0.viewGO, "TitleBG/#txt_Days")
-	arg_1_0._simageIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_Icon")
-	arg_1_0._goReward = gohelper.findChild(arg_1_0.viewGO, "#go_Reward")
-	arg_1_0._scrollitem = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_Reward/#scroll_Reward")
-	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "#go_Reward/#scroll_Reward/Viewport/#go_Content")
+local LifeCircleRewardView = class("LifeCircleRewardView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function LifeCircleRewardView:onInitView()
+	self._txtDays = gohelper.findChildText(self.viewGO, "TitleBG/#txt_Days")
+	self._simageIcon = gohelper.findChildSingleImage(self.viewGO, "#simage_Icon")
+	self._goReward = gohelper.findChild(self.viewGO, "#go_Reward")
+	self._scrollitem = gohelper.findChildScrollRect(self.viewGO, "#go_Reward/#scroll_Reward")
+	self._goContent = gohelper.findChild(self.viewGO, "#go_Reward/#scroll_Reward/Viewport/#go_Content")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._click:AddClickListener(arg_2_0.closeThis, arg_2_0)
+function LifeCircleRewardView:addEvents()
+	self._click:AddClickListener(self.closeThis, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._click:RemoveClickListener()
+function LifeCircleRewardView:removeEvents()
+	self._click:RemoveClickListener()
 end
 
-local var_0_1 = SLFramework.AnimatorPlayer
-local var_0_2 = {
+local csAnimatorPlayer = SLFramework.AnimatorPlayer
+local State = {
 	ShowingRewards = 3,
 	ShownRewards = 4,
 	OpeningBox = 1,
@@ -31,164 +33,167 @@ local var_0_2 = {
 	None = 0
 }
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._state = var_0_2.None
-	arg_4_0._contentGrid = arg_4_0._goContent:GetComponent(gohelper.Type_GridLayoutGroup)
-	arg_4_0._click = gohelper.getClick(arg_4_0.viewGO)
-	arg_4_0._animatorPlayer = var_0_1.Get(arg_4_0.viewGO)
-	arg_4_0._animSelf = arg_4_0._animatorPlayer.animator
-	arg_4_0._scrollitemTrans = arg_4_0._scrollitem.transform
-	arg_4_0._goContentTrans = arg_4_0._goContent.transform
+function LifeCircleRewardView:_editableInitView()
+	self._state = State.None
+	self._contentGrid = self._goContent:GetComponent(gohelper.Type_GridLayoutGroup)
+	self._click = gohelper.getClick(self.viewGO)
+	self._animatorPlayer = csAnimatorPlayer.Get(self.viewGO)
+	self._animSelf = self._animatorPlayer.animator
+	self._scrollitemTrans = self._scrollitem.transform
+	self._goContentTrans = self._goContent.transform
 
-	local var_4_0 = arg_4_0._contentGrid.cellSize
-	local var_4_1 = arg_4_0._contentGrid.spacing
+	local v2CellSize = self._contentGrid.cellSize
+	local v2spacing = self._contentGrid.spacing
 
-	arg_4_0._w = recthelper.getWidth(arg_4_0._scrollitemTrans)
-	arg_4_0._h = recthelper.getHeight(arg_4_0._scrollitemTrans)
-	arg_4_0._colCount = arg_4_0._contentGrid.constraintCount
-	arg_4_0._itemHeight = var_4_0.y
-	arg_4_0._spacingY = var_4_1.y
+	self._w = recthelper.getWidth(self._scrollitemTrans)
+	self._h = recthelper.getHeight(self._scrollitemTrans)
+	self._colCount = self._contentGrid.constraintCount
+	self._itemHeight = v2CellSize.y
+	self._spacingY = v2spacing.y
 
-	NavigateMgr.instance:addEscape(arg_4_0.viewName, arg_4_0.closeThis, arg_4_0)
-	arg_4_0:_setActive_goReward(false)
+	NavigateMgr.instance:addEscape(self.viewName, self.closeThis, self)
+	self:_setActive_goReward(false)
 end
 
-function var_0_0.closeThis(arg_5_0)
-	if arg_5_0._state == var_0_2.None then
-		arg_5_0:_moveState()
+function LifeCircleRewardView:closeThis()
+	if self._state == State.None then
+		self:_moveState()
 	end
 
-	if not arg_5_0:_allowCloseView() then
+	if not self:_allowCloseView() then
 		return
 	end
 
-	var_0_0.super.closeThis(arg_5_0)
+	LifeCircleRewardView.super.closeThis(self)
 end
 
-function var_0_0.onClickModalMask(arg_6_0)
-	arg_6_0:closeThis()
+function LifeCircleRewardView:onClickModalMask()
+	self:closeThis()
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function LifeCircleRewardView:onUpdateParam()
 	CommonPropListItem.hasOpen = false
-	arg_7_0._contentGrid.enabled = false
+	self._contentGrid.enabled = false
 
-	arg_7_0:_setPropItems()
+	self:_setPropItems()
 
-	arg_7_0._txtDays.text = arg_7_0:_loginDayCount()
+	self._txtDays.text = self:_loginDayCount()
 end
 
-function var_0_0._loginDayCount(arg_8_0)
-	return arg_8_0.viewParam.loginDayCount or 0
+function LifeCircleRewardView:_loginDayCount()
+	return self.viewParam.loginDayCount or 0
 end
 
-function var_0_0._materialDataMOList(arg_9_0)
-	return arg_9_0.viewParam.materialDataMOList or {}
+function LifeCircleRewardView:_materialDataMOList()
+	return self.viewParam.materialDataMOList or {}
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0:onUpdateParam()
+function LifeCircleRewardView:onOpen()
+	self:onUpdateParam()
 end
 
-function var_0_0.onOpenFinish(arg_11_0)
+function LifeCircleRewardView:onOpenFinish()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_tangren_qiandao_open_25251110)
 end
 
-function var_0_0.onClose(arg_12_0)
-	FrameTimerController.onDestroyViewMember(arg_12_0, "_fTimer")
+function LifeCircleRewardView:onClose()
+	FrameTimerController.onDestroyViewMember(self, "_fTimer")
 	CommonPropListModel.instance:clear()
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_General_shutdown)
 
 	CommonPropListItem.hasOpen = false
 
-	TaskDispatcher.cancelTask(arg_12_0._moveState, arg_12_0)
-	NavigateMgr.instance:removeEscape(arg_12_0.viewName)
+	TaskDispatcher.cancelTask(self._moveState, self)
+	NavigateMgr.instance:removeEscape(self.viewName)
 end
 
-function var_0_0.onDestroyView(arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0._moveState, arg_13_0)
+function LifeCircleRewardView:onDestroyView()
+	TaskDispatcher.cancelTask(self._moveState, self)
 end
 
-function var_0_0._setPropItems(arg_14_0)
-	CommonPropListModel.instance:setPropList(arg_14_0:_materialDataMOList())
+function LifeCircleRewardView:_setPropItems()
+	CommonPropListModel.instance:setPropList(self:_materialDataMOList())
 
-	local var_14_0 = arg_14_0:_getContentHeight()
+	local h = self:_getContentHeight()
 
-	recthelper.setSize(arg_14_0._goContentTrans, arg_14_0._w, var_14_0)
+	recthelper.setSize(self._goContentTrans, self._w, h)
 
-	arg_14_0._contentGrid.enabled = true
+	self._contentGrid.enabled = true
 
-	local var_14_1 = true
+	local _magicEnabled = true
 
-	FrameTimerController.onDestroyViewMember(arg_14_0, "_fTimer")
+	FrameTimerController.onDestroyViewMember(self, "_fTimer")
 
-	arg_14_0._fTimer = FrameTimerController.instance:register(function()
-		arg_14_0._contentGrid.enabled = var_14_1
-		var_14_1 = not var_14_1
+	self._fTimer = FrameTimerController.instance:register(function()
+		self._contentGrid.enabled = _magicEnabled
+		_magicEnabled = not _magicEnabled
 	end, 5, 2)
 
-	arg_14_0._fTimer:Start()
+	self._fTimer:Start()
 end
 
-function var_0_0._setActive_goReward(arg_16_0, arg_16_1)
-	gohelper.setActive(arg_16_0._goReward, arg_16_1)
+function LifeCircleRewardView:_setActive_goReward(isActive)
+	gohelper.setActive(self._goReward, isActive)
 end
 
-function var_0_0._playAnim(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	arg_17_0._animatorPlayer:Play(arg_17_1, arg_17_2, arg_17_3)
+function LifeCircleRewardView:_playAnim(name, cb, cbObj)
+	self._animatorPlayer:Play(name, cb, cbObj)
 end
 
-function var_0_0._moveState(arg_18_0)
-	arg_18_0:_setState(arg_18_0._state + 1)
+function LifeCircleRewardView:_moveState()
+	self:_setState(self._state + 1)
 end
 
-function var_0_0._setState(arg_19_0, arg_19_1)
-	if arg_19_1 <= arg_19_0._state then
+function LifeCircleRewardView:_setState(newState)
+	if newState <= self._state then
 		return
 	end
 
-	arg_19_0._state = arg_19_1
+	self._state = newState
 
-	if arg_19_1 == var_0_2.OpeningBox then
-		arg_19_0:_onOpenBoxAnim()
-	elseif arg_19_1 == var_0_2.OpenedBox then
-		arg_19_0:_onOpenedBox()
-	elseif arg_19_1 == var_0_2.ShowingRewards then
-		arg_19_0:_onShowingRewards()
-	elseif arg_19_1 == var_0_2.ShownRewards then
+	if newState == State.OpeningBox then
+		self:_onOpenBoxAnim()
+	elseif newState == State.OpenedBox then
+		self:_onOpenedBox()
+	elseif newState == State.ShowingRewards then
+		self:_onShowingRewards()
+	elseif newState == State.ShownRewards then
 		-- block empty
 	end
 end
 
-function var_0_0._onOpenBoxAnim(arg_20_0)
+function LifeCircleRewardView:_onOpenBoxAnim()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_tangren_qiandao_leiji_25251111)
-	arg_20_0:_playAnim(UIAnimationName.Click, arg_20_0._moveState, arg_20_0)
+	self:_playAnim(UIAnimationName.Click, self._moveState, self)
 end
 
-function var_0_0._onOpenedBox(arg_21_0)
+function LifeCircleRewardView:_onOpenedBox()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_rewards_rare_2000081)
-	arg_21_0:_setActive_goReward(true)
-	arg_21_0:_moveState()
+	self:_setActive_goReward(true)
+	self:_moveState()
 end
 
-function var_0_0._onShowingRewards(arg_22_0)
-	TaskDispatcher.cancelTask(arg_22_0._moveState, arg_22_0)
-	TaskDispatcher.runDelay(arg_22_0._moveState, arg_22_0, 0.8)
+function LifeCircleRewardView:_onShowingRewards()
+	TaskDispatcher.cancelTask(self._moveState, self)
+	TaskDispatcher.runDelay(self._moveState, self, 0.8)
 end
 
-function var_0_0._allowCloseView(arg_23_0)
-	return arg_23_0._state >= var_0_2.ShownRewards
+function LifeCircleRewardView:_allowCloseView()
+	return self._state >= State.ShownRewards
 end
 
-function var_0_0._getContentHeight(arg_24_0)
-	local var_24_0 = #CommonPropListModel.instance:getList()
-	local var_24_1 = arg_24_0._colCount
-	local var_24_2 = arg_24_0._itemHeight
-	local var_24_3 = arg_24_0._spacingY
-	local var_24_4 = math.max(1, math.ceil(var_24_0 / var_24_1))
-	local var_24_5 = math.max(arg_24_0._h, arg_24_0._contentGrid.preferredHeight)
+function LifeCircleRewardView:_getContentHeight()
+	local list = CommonPropListModel.instance:getList()
+	local itemCount = #list
+	local constraintCount = self._colCount
+	local itemHeight = self._itemHeight
+	local spacingY = self._spacingY
+	local lineCount = math.max(1, math.ceil(itemCount / constraintCount))
+	local h = math.max(self._h, self._contentGrid.preferredHeight)
 
-	return (math.max(var_24_5, (var_24_4 - 1) * var_24_3 + var_24_2 * var_24_4))
+	h = math.max(h, (lineCount - 1) * spacingY + itemHeight * lineCount)
+
+	return h
 end
 
-return var_0_0
+return LifeCircleRewardView

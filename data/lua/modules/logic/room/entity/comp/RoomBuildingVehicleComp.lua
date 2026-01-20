@@ -1,45 +1,50 @@
-﻿module("modules.logic.room.entity.comp.RoomBuildingVehicleComp", package.seeall)
+﻿-- chunkname: @modules/logic/room/entity/comp/RoomBuildingVehicleComp.lua
 
-local var_0_0 = class("RoomBuildingVehicleComp", LuaCompBase)
+module("modules.logic.room.entity.comp.RoomBuildingVehicleComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.entity = arg_1_1
+local RoomBuildingVehicleComp = class("RoomBuildingVehicleComp", LuaCompBase)
+
+function RoomBuildingVehicleComp:ctor(entity)
+	self.entity = entity
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
-	arg_2_0._vehicleType = arg_2_0:getBuilingMO().config.vehicleType
+function RoomBuildingVehicleComp:init(go)
+	self.go = go
 
-	arg_2_0:_onSwitchModel()
+	local buildingMO = self:getBuilingMO()
+
+	self._vehicleType = buildingMO.config.vehicleType
+
+	self:_onSwitchModel()
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	RoomController.instance:registerCallback(RoomEvent.OnSwitchModeDone, arg_3_0._onSwitchModel, arg_3_0)
+function RoomBuildingVehicleComp:addEventListeners()
+	RoomController.instance:registerCallback(RoomEvent.OnSwitchModeDone, self._onSwitchModel, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	RoomController.instance:unregisterCallback(RoomEvent.OnSwitchModeDone, arg_4_0._onSwitchModel, arg_4_0)
+function RoomBuildingVehicleComp:removeEventListeners()
+	RoomController.instance:unregisterCallback(RoomEvent.OnSwitchModeDone, self._onSwitchModel, self)
 end
 
-function var_0_0.beforeDestroy(arg_5_0)
-	arg_5_0:removeEventListeners()
+function RoomBuildingVehicleComp:beforeDestroy()
+	self:removeEventListeners()
 end
 
-function var_0_0._onSwitchModel(arg_6_0)
-	local var_6_0 = RoomController.instance:isEditMode()
+function RoomBuildingVehicleComp:_onSwitchModel()
+	local show = RoomController.instance:isEditMode()
 
-	if not var_6_0 and not arg_6_0.entity:getVehicleMO() then
-		var_6_0 = true
+	if not show and not self.entity:getVehicleMO() then
+		show = true
 	end
 
-	if arg_6_0._vehicleType == 1 then
-		gohelper.setActive(arg_6_0.entity.containerGO, var_6_0)
-		gohelper.setActive(arg_6_0.entity.staticContainerGO, var_6_0)
+	if self._vehicleType == 1 then
+		gohelper.setActive(self.entity.containerGO, show)
+		gohelper.setActive(self.entity.staticContainerGO, show)
 	end
 end
 
-function var_0_0.getBuilingMO(arg_7_0)
-	return arg_7_0.entity:getMO()
+function RoomBuildingVehicleComp:getBuilingMO()
+	return self.entity:getMO()
 end
 
-return var_0_0
+return RoomBuildingVehicleComp

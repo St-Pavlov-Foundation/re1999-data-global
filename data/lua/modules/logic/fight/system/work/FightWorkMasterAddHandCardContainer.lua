@@ -1,17 +1,19 @@
-﻿module("modules.logic.fight.system.work.FightWorkMasterAddHandCardContainer", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkMasterAddHandCardContainer.lua
 
-local var_0_0 = class("FightWorkMasterAddHandCardContainer", FightStepEffectFlow)
-local var_0_1 = {
+module("modules.logic.fight.system.work.FightWorkMasterAddHandCardContainer", package.seeall)
+
+local FightWorkMasterAddHandCardContainer = class("FightWorkMasterAddHandCardContainer", FightStepEffectFlow)
+local parallelEffectType = {
 	[FightEnum.EffectType.EXPOINTCHANGE] = true,
 	[FightEnum.EffectType.POWERCHANGE] = true
 }
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0:playAdjacentParallelEffect(var_0_1, true)
+function FightWorkMasterAddHandCardContainer:onStart()
+	self:playAdjacentParallelEffect(parallelEffectType, true)
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkMasterAddHandCardContainer:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkMasterAddHandCardContainer

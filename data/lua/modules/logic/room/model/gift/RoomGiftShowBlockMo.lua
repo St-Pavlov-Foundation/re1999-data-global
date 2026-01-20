@@ -1,26 +1,31 @@
-﻿module("modules.logic.room.model.gift.RoomGiftShowBlockMo", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/gift/RoomGiftShowBlockMo.lua
 
-local var_0_0 = pureTable("RoomGiftShowBlockMo")
+module("modules.logic.room.model.gift.RoomGiftShowBlockMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1.id
-	arg_1_0.packageId = arg_1_1.id
-	arg_1_0.config = arg_1_1
-	arg_1_0.rare = arg_1_0.config.rare or 0
-	arg_1_0.subTypeIndex = 1
-	arg_1_0.subType = RoomBlockGiftEnum.SubType[arg_1_0.subTypeIndex]
-	arg_1_0.itemCofig = ItemModel.instance:getItemConfig(arg_1_0.subType, arg_1_1.id)
-	arg_1_0.isSelect = false
+local RoomGiftShowBlockMo = pureTable("RoomGiftShowBlockMo")
+
+function RoomGiftShowBlockMo:init(co)
+	self.id = co.id
+	self.packageId = co.id
+	self.config = co
+	self.rare = self.config.rare or 0
+	self.subTypeIndex = 1
+	self.subType = RoomBlockGiftEnum.SubType[self.subTypeIndex]
+	self.itemCofig = ItemModel.instance:getItemConfig(self.subType, co.id)
+	self.isSelect = false
 end
 
-function var_0_0.getBlockNum(arg_2_0)
-	local var_2_0 = RoomConfig.instance:getBlockListByPackageId(arg_2_0.id)
+function RoomGiftShowBlockMo:getBlockNum()
+	local blockList = RoomConfig.instance:getBlockListByPackageId(self.id)
+	local blockNum = blockList and #blockList or 0
 
-	return var_2_0 and #var_2_0 or 0
+	return blockNum
 end
 
-function var_0_0.isCollect(arg_3_0)
-	return ItemModel.instance:getItemQuantity(arg_3_0.subType, arg_3_0.id) > 0
+function RoomGiftShowBlockMo:isCollect()
+	local quantity = ItemModel.instance:getItemQuantity(self.subType, self.id)
+
+	return quantity > 0
 end
 
-return var_0_0
+return RoomGiftShowBlockMo

@@ -1,28 +1,30 @@
-﻿module("modules.logic.versionactivity1_6.dungeon.view.skill.VersionActivity1_6SkillLvUpViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/dungeon/view/skill/VersionActivity1_6SkillLvUpViewContainer.lua
 
-local var_0_0 = class("VersionActivity1_6SkillLvUpViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_6.dungeon.view.skill.VersionActivity1_6SkillLvUpViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local VersionActivity1_6SkillLvUpViewContainer = class("VersionActivity1_6SkillLvUpViewContainer", BaseViewContainer)
+
+function VersionActivity1_6SkillLvUpViewContainer:buildViews()
 	return {
 		VersionActivity1_6SkillLvUpView.New(),
 		TabViewGroup.New(1, "#go_BackBtns")
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	arg_2_0.navigateView = NavigateButtonsView.New({
+function VersionActivity1_6SkillLvUpViewContainer:buildTabViews(tabContainerId)
+	self.navigateView = NavigateButtonsView.New({
 		true,
 		true,
 		false
 	})
 
 	return {
-		arg_2_0.navigateView
+		self.navigateView
 	}
 end
 
-function var_0_0.onContainerInit(arg_3_0)
+function VersionActivity1_6SkillLvUpViewContainer:onContainerInit()
 	return
 end
 
-return var_0_0
+return VersionActivity1_6SkillLvUpViewContainer

@@ -1,140 +1,145 @@
-﻿module("modules.logic.survival.view.shelter.SummaryAct.SurvivalSummaryActView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/SummaryAct/SurvivalSummaryActView.lua
 
-local var_0_0 = class("SurvivalSummaryActView", BaseView)
+module("modules.logic.survival.view.shelter.SummaryAct.SurvivalSummaryActView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Close")
-	arg_1_0._goplayerbubble = gohelper.findChild(arg_1_0.viewGO, "Bubble/#go_player_Bubble")
-	arg_1_0._txtBubble = gohelper.findChildText(arg_1_0.viewGO, "Bubble/#go_player_Bubble/root/#txt_Bubble")
-	arg_1_0.SurvivalSummaryNpcHUD = gohelper.findChild(arg_1_0.viewGO, "Bubble/npc/#go_SurvivalSummaryNpcHUD")
+local SurvivalSummaryActView = class("SurvivalSummaryActView", BaseView)
 
-	gohelper.setActive(arg_1_0.SurvivalSummaryNpcHUD, false)
+function SurvivalSummaryActView:onInitView()
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Close")
+	self._goplayerbubble = gohelper.findChild(self.viewGO, "Bubble/#go_player_Bubble")
+	self._txtBubble = gohelper.findChildText(self.viewGO, "Bubble/#go_player_Bubble/root/#txt_Bubble")
+	self.SurvivalSummaryNpcHUD = gohelper.findChild(self.viewGO, "Bubble/npc/#go_SurvivalSummaryNpcHUD")
 
-	arg_1_0.reputationList = gohelper.findChild(arg_1_0.viewGO, "reputationList")
-	arg_1_0.reputationItem = gohelper.findChild(arg_1_0.reputationList, "Viewport/Content/reputationItem")
+	gohelper.setActive(self.SurvivalSummaryNpcHUD, false)
 
-	gohelper.setActive(arg_1_0.reputationItem, false)
-	arg_1_0:createReputationListComp()
+	self.reputationList = gohelper.findChild(self.viewGO, "reputationList")
+	self.reputationItem = gohelper.findChild(self.reputationList, "Viewport/Content/reputationItem")
+
+	gohelper.setActive(self.reputationItem, false)
+	self:createReputationListComp()
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnClose:AddClickListener(arg_2_0._btnCloseOnClick, arg_2_0)
+function SurvivalSummaryActView:addEvents()
+	self._btnClose:AddClickListener(self._btnCloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnClose:RemoveClickListener()
+function SurvivalSummaryActView:removeEvents()
+	self._btnClose:RemoveClickListener()
 end
 
-function var_0_0._btnCloseOnClick(arg_4_0)
-	if not arg_4_0.isClickClose and (not arg_4_0.popupFlow or arg_4_0.popupFlow:isFlowDone()) then
-		if arg_4_0.survivalSummaryActNpcWork then
-			arg_4_0.survivalSummaryActNpcWork:playCloseAnim()
+function SurvivalSummaryActView:_btnCloseOnClick()
+	if not self.isClickClose and (not self.popupFlow or self.popupFlow:isFlowDone()) then
+		if self.survivalSummaryActNpcWork then
+			self.survivalSummaryActNpcWork:playCloseAnim()
 		end
 
-		TaskDispatcher.runDelay(arg_4_0.closeThis, arg_4_0, 0.2)
+		TaskDispatcher.runDelay(self.closeThis, self, 0.2)
 
-		arg_4_0.isClickClose = true
+		self.isClickClose = true
 
 		return
 	end
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0.isClickClose = nil
-	arg_5_0.npcDataList = SurvivalMapHelper.instance:getScene().actProgress.npcDataList
+function SurvivalSummaryActView:onOpen()
+	self.isClickClose = nil
 
-	local var_5_0 = ""
+	local scene = SurvivalMapHelper.instance:getScene()
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0.npcDataList) do
-		var_5_0 = string.format("%s,%s", var_5_0, iter_5_1.config.name)
+	self.npcDataList = scene.actProgress.npcDataList
+
+	local name = ""
+
+	for i, data in ipairs(self.npcDataList) do
+		name = string.format("%s,%s", name, data.config.name)
 	end
 
-	local var_5_1 = {}
+	local tmpTbl = {}
 
-	for iter_5_2, iter_5_3 in ipairs(arg_5_0.npcDataList) do
-		table.insert(var_5_1, iter_5_3.config.name)
+	for _, data in ipairs(self.npcDataList) do
+		table.insert(tmpTbl, data.config.name)
 	end
 
-	local var_5_2 = table.concat(var_5_1, luaLang("sep_overseas"))
-
-	arg_5_0._txtBubble.text = GameUtil.getSubPlaceholderLuaLang(luaLang("SurvivalSummaryActView_1"), {
-		#arg_5_0.npcDataList,
-		var_5_2
+	name = table.concat(tmpTbl, luaLang("sep_overseas"))
+	self._txtBubble.text = GameUtil.getSubPlaceholderLuaLang(luaLang("SurvivalSummaryActView_1"), {
+		#self.npcDataList,
+		name
 	})
-	arg_5_0.popupFlow = SurvivalDecreeVoteFlowSequence.New()
+	self.popupFlow = SurvivalDecreeVoteFlowSequence.New()
 
-	arg_5_0.popupFlow:registerDoneListener(arg_5_0.onDone, arg_5_0)
-	arg_5_0:buildPlayerWork()
-	arg_5_0:buildNpcWork()
-	arg_5_0:buildDelay(2)
-	arg_5_0.popupFlow:start()
-	arg_5_0:refreshReputationListComp()
+	self.popupFlow:registerDoneListener(self.onDone, self)
+	self:buildPlayerWork()
+	self:buildNpcWork()
+	self:buildDelay(2)
+	self.popupFlow:start()
+	self:refreshReputationListComp()
 	SurvivalController.instance:dispatchEvent(SurvivalEvent.GuideSurvivalSummaryActStart)
 end
 
-function var_0_0.onClose(arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0.closeThis, arg_6_0)
+function SurvivalSummaryActView:onClose()
+	TaskDispatcher.cancelTask(self.closeThis, self)
 end
 
-function var_0_0.onDestroyView(arg_7_0)
-	if arg_7_0.popupFlow then
-		arg_7_0.popupFlow:destroy()
+function SurvivalSummaryActView:onDestroyView()
+	if self.popupFlow then
+		self.popupFlow:destroy()
 
-		arg_7_0.popupFlow = nil
+		self.popupFlow = nil
 	end
 
 	SurvivalController.instance:exitMap()
 end
 
-function var_0_0.buildPlayerWork(arg_8_0)
-	local var_8_0 = {
-		goBubble = arg_8_0._goplayerbubble
+function SurvivalSummaryActView:buildPlayerWork()
+	local param = {
+		goBubble = self._goplayerbubble
 	}
 
-	arg_8_0.popupFlow:addWork(SurvivalSummaryActBuildPlayerWork.New(var_8_0))
+	self.popupFlow:addWork(SurvivalSummaryActBuildPlayerWork.New(param))
 end
 
-function var_0_0.buildNpcWork(arg_9_0)
-	local var_9_0 = {
-		SurvivalSummaryNpcHUD = arg_9_0.SurvivalSummaryNpcHUD
+function SurvivalSummaryActView:buildNpcWork()
+	local param = {
+		SurvivalSummaryNpcHUD = self.SurvivalSummaryNpcHUD
 	}
 
-	arg_9_0.survivalSummaryActNpcWork = SurvivalSummaryActNpcWork.New(var_9_0)
+	self.survivalSummaryActNpcWork = SurvivalSummaryActNpcWork.New(param)
 
-	arg_9_0.popupFlow:addWork(arg_9_0.survivalSummaryActNpcWork)
+	self.popupFlow:addWork(self.survivalSummaryActNpcWork)
 end
 
-function var_0_0.buildDelay(arg_10_0, arg_10_1)
-	local var_10_0 = {
-		time = arg_10_1
+function SurvivalSummaryActView:buildDelay(time)
+	local param = {
+		time = time
 	}
 
-	arg_10_0.popupFlow:addWork(SurvivalDecreeVoteShowWork.New(var_10_0))
+	self.popupFlow:addWork(SurvivalDecreeVoteShowWork.New(param))
 end
 
-function var_0_0.onDone(arg_11_0)
+function SurvivalSummaryActView:onDone()
 	SurvivalController.instance:dispatchEvent(SurvivalEvent.GuideSurvivalSummaryActAnimFinish)
 end
 
-function var_0_0.createReputationListComp(arg_12_0)
-	local var_12_0 = SurvivalSimpleListParam.New()
+function SurvivalSummaryActView:createReputationListComp()
+	local scrollParam = SurvivalSimpleListParam.New()
 
-	var_12_0.cellClass = SurvivalSummaryActReputationItem
-	var_12_0.lineCount = 1
-	var_12_0.cellWidth = 452
-	var_12_0.cellHeight = 138
-	var_12_0.cellSpaceH = 0
-	var_12_0.cellSpaceV = 0
+	scrollParam.cellClass = SurvivalSummaryActReputationItem
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 452
+	scrollParam.cellHeight = 138
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 0
 
-	local var_12_1 = arg_12_0.reputationItem
+	local res = self.reputationItem
 
-	arg_12_0.listComp = SurvivalHelper.instance:createLuaSimpleListComp(arg_12_0.reputationList.gameObject, var_12_0, var_12_1, arg_12_0.viewContainer)
+	self.listComp = SurvivalHelper.instance:createLuaSimpleListComp(self.reputationList.gameObject, scrollParam, res, self.viewContainer)
 end
 
-function var_0_0.refreshReputationListComp(arg_13_0)
-	local var_13_0 = SurvivalMapHelper.instance:getScene().actProgress.buildReputationInfos
+function SurvivalSummaryActView:refreshReputationListComp()
+	local scene = SurvivalMapHelper.instance:getScene()
+	local reputationInfos = scene.actProgress.buildReputationInfos
 
-	arg_13_0.listComp:setList(var_13_0)
+	self.listComp:setList(reputationInfos)
 end
 
-return var_0_0
+return SurvivalSummaryActView

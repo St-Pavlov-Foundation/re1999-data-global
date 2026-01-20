@@ -1,3 +1,7 @@
-﻿module("modules.logic.explore.map.unit.ExploreItemUnit", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/unit/ExploreItemUnit.lua
 
-return (class("ExploreItemUnit", ExploreBaseDisplayUnit))
+module("modules.logic.explore.map.unit.ExploreItemUnit", package.seeall)
+
+local ExploreItemUnit = class("ExploreItemUnit", ExploreBaseDisplayUnit)
+
+return ExploreItemUnit

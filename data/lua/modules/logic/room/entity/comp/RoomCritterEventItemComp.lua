@@ -1,169 +1,171 @@
-﻿module("modules.logic.room.entity.comp.RoomCritterEventItemComp", package.seeall)
+﻿-- chunkname: @modules/logic/room/entity/comp/RoomCritterEventItemComp.lua
 
-local var_0_0 = class("RoomCritterEventItemComp", LuaCompBase)
+module("modules.logic.room.entity.comp.RoomCritterEventItemComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._faithFill = 0
-	arg_1_0.entity = arg_1_1
-	arg_1_0._eventType2ResDict = {
+local RoomCritterEventItemComp = class("RoomCritterEventItemComp", LuaCompBase)
+
+function RoomCritterEventItemComp:ctor(entity)
+	self._faithFill = 0
+	self.entity = entity
+	self._eventType2ResDict = {
 		[CritterEnum.CritterItemEventType.HasTrainEvent] = RoomScenePreloader.ResCritterEvent.HasTrainEvent,
 		[CritterEnum.CritterItemEventType.TrainEventComplete] = RoomScenePreloader.ResCritterEvent.TrainEventComplete,
 		[CritterEnum.CritterItemEventType.NoMoodWork] = RoomScenePreloader.ResCritterEvent.NoMoodWork,
 		[CritterEnum.CritterItemEventType.SurpriseCollect] = RoomScenePreloader.ResCritterEvent.SurpriseCollect
 	}
-	arg_1_0._showCameraStateDict = {
+	self._showCameraStateDict = {
 		[RoomEnum.CameraState.Normal] = true,
 		[RoomEnum.CameraState.Overlook] = true
 	}
-	arg_1_0._offsetX = 0
-	arg_1_0._offsetY = 0
-	arg_1_0._offsetZ = 0
-	arg_1_0._eventType2SkowKeyDict = {}
+	self._offsetX = 0
+	self._offsetY = 0
+	self._offsetZ = 0
+	self._eventType2SkowKeyDict = {}
 
-	local var_1_0 = 0
+	local inx = 0
 
-	for iter_1_0, iter_1_1 in pairs(arg_1_0._eventType2ResDict) do
-		arg_1_0._eventType2SkowKeyDict[iter_1_0] = "critter_event_" .. iter_1_0
+	for k, v in pairs(self._eventType2ResDict) do
+		self._eventType2SkowKeyDict[k] = "critter_event_" .. k
 	end
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
-	arg_2_0._goTrs = arg_2_1.transform
-	arg_2_0._scene = GameSceneMgr.instance:getCurScene()
+function RoomCritterEventItemComp:init(go)
+	self.go = go
+	self._goTrs = go.transform
+	self._scene = GameSceneMgr.instance:getCurScene()
 
-	arg_2_0:startCheckTrainEventTask()
+	self:startCheckTrainEventTask()
 end
 
-function var_0_0.getMO(arg_3_0)
-	return arg_3_0.entity:getMO()
+function RoomCritterEventItemComp:getMO()
+	return self.entity:getMO()
 end
 
-function var_0_0.addEventListeners(arg_4_0)
-	RoomCharacterController.instance:registerCallback(RoomEvent.UpdateCharacterMove, arg_4_0._characterPositionChanged, arg_4_0)
-	CritterController.instance:registerCallback(CritterEvent.CritterInfoPushReply, arg_4_0.startCheckTrainEventTask, arg_4_0)
-	RoomCharacterController.instance:registerCallback(RoomEvent.RefreshSpineShow, arg_4_0.startCheckTrainEventTask, arg_4_0)
-	RoomMapController.instance:registerCallback(RoomEvent.CameraStateUpdate, arg_4_0.startCheckTrainEventTask, arg_4_0)
+function RoomCritterEventItemComp:addEventListeners()
+	RoomCharacterController.instance:registerCallback(RoomEvent.UpdateCharacterMove, self._characterPositionChanged, self)
+	CritterController.instance:registerCallback(CritterEvent.CritterInfoPushReply, self.startCheckTrainEventTask, self)
+	RoomCharacterController.instance:registerCallback(RoomEvent.RefreshSpineShow, self.startCheckTrainEventTask, self)
+	RoomMapController.instance:registerCallback(RoomEvent.CameraStateUpdate, self.startCheckTrainEventTask, self)
 end
 
-function var_0_0.removeEventListeners(arg_5_0)
-	RoomCharacterController.instance:unregisterCallback(RoomEvent.UpdateCharacterMove, arg_5_0._characterPositionChanged, arg_5_0)
-	CritterController.instance:unregisterCallback(CritterEvent.CritterInfoPushReply, arg_5_0.startCheckTrainEventTask, arg_5_0)
-	RoomCharacterController.instance:unregisterCallback(RoomEvent.RefreshSpineShow, arg_5_0.startCheckTrainEventTask, arg_5_0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.CameraStateUpdate, arg_5_0.startCheckTrainEventTask, arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0._onRunCheckTrainEventTask, arg_5_0)
+function RoomCritterEventItemComp:removeEventListeners()
+	RoomCharacterController.instance:unregisterCallback(RoomEvent.UpdateCharacterMove, self._characterPositionChanged, self)
+	CritterController.instance:unregisterCallback(CritterEvent.CritterInfoPushReply, self.startCheckTrainEventTask, self)
+	RoomCharacterController.instance:unregisterCallback(RoomEvent.RefreshSpineShow, self.startCheckTrainEventTask, self)
+	RoomMapController.instance:unregisterCallback(RoomEvent.CameraStateUpdate, self.startCheckTrainEventTask, self)
+	TaskDispatcher.cancelTask(self._onRunCheckTrainEventTask, self)
 
-	arg_5_0._isHasCheckTrainEventTask = false
+	self._isHasCheckTrainEventTask = false
 end
 
-function var_0_0._characterPositionChanged(arg_6_0)
-	local var_6_0 = arg_6_0._scene.camera:getCameraState()
+function RoomCritterEventItemComp:_characterPositionChanged()
+	local cameraState = self._scene.camera:getCameraState()
 
-	if arg_6_0._lastCameraState ~= var_6_0 then
-		arg_6_0._lastCameraState = var_6_0
+	if self._lastCameraState ~= cameraState then
+		self._lastCameraState = cameraState
 
-		arg_6_0:startCheckTrainEventTask()
+		self:startCheckTrainEventTask()
 	end
 
-	arg_6_0:_updateParticlePosOffset()
+	self:_updateParticlePosOffset()
 end
 
-function var_0_0._refreshShowIcom(arg_7_0)
-	local var_7_0 = arg_7_0:_getShowEventType()
+function RoomCritterEventItemComp:_refreshShowIcom()
+	local eventType = self:_getShowEventType()
 
-	arg_7_0:_showByEventType(var_7_0)
+	self:_showByEventType(eventType)
 end
 
-function var_0_0.startCheckTrainEventTask(arg_8_0)
-	if not arg_8_0._isHasCheckTrainEventTask then
-		arg_8_0._isHasCheckTrainEventTask = true
+function RoomCritterEventItemComp:startCheckTrainEventTask()
+	if not self._isHasCheckTrainEventTask then
+		self._isHasCheckTrainEventTask = true
 
-		TaskDispatcher.runDelay(arg_8_0._onRunCheckTrainEventTask, arg_8_0, 0.1)
+		TaskDispatcher.runDelay(self._onRunCheckTrainEventTask, self, 0.1)
 	end
 end
 
-function var_0_0._onRunCheckTrainEventTask(arg_9_0)
-	arg_9_0._isHasCheckTrainEventTask = false
+function RoomCritterEventItemComp:_onRunCheckTrainEventTask()
+	self._isHasCheckTrainEventTask = false
 
-	arg_9_0:_refreshShowIcom()
+	self:_refreshShowIcom()
 end
 
-function var_0_0._getShowEventType(arg_10_0)
+function RoomCritterEventItemComp:_getShowEventType()
 	if not RoomController.instance:isObMode() then
 		return nil
 	end
 
-	local var_10_0 = arg_10_0._scene.camera:getCameraState()
+	local cameraState = self._scene.camera:getCameraState()
 
-	if not arg_10_0._showCameraStateDict[var_10_0] or RoomMapController.instance:isInRoomInitBuildingViewCamera() then
+	if not self._showCameraStateDict[cameraState] or RoomMapController.instance:isInRoomInitBuildingViewCamera() then
 		return nil
 	end
 
-	local var_10_1 = CritterModel.instance:getCritterMOByUid(arg_10_0.entity.id)
+	local critterMO = CritterModel.instance:getCritterMOByUid(self.entity.id)
 
-	return CritterHelper.getEventTypeByCritterMO(var_10_1)
+	return CritterHelper.getEventTypeByCritterMO(critterMO)
 end
 
-function var_0_0._showByEventType(arg_11_0, arg_11_1)
-	arg_11_0._curShowEventType = arg_11_1
+function RoomCritterEventItemComp:_showByEventType(eventType)
+	self._curShowEventType = eventType
 
-	local var_11_0 = arg_11_0.entity.effect
+	local effect = self.entity.effect
 
-	for iter_11_0, iter_11_1 in pairs(arg_11_0._eventType2SkowKeyDict) do
-		var_11_0:setActiveByKey(iter_11_1, iter_11_0 == arg_11_1)
+	for eType, effectKey in pairs(self._eventType2SkowKeyDict) do
+		effect:setActiveByKey(effectKey, eType == eventType)
 	end
 
-	local var_11_1 = arg_11_0._eventType2SkowKeyDict[arg_11_1]
+	local showKey = self._eventType2SkowKeyDict[eventType]
 
-	if arg_11_0._eventType2ResDict[arg_11_1] and not var_11_0:isHasEffectGOByKey(var_11_1) then
-		var_11_0:addParams({
-			[var_11_1] = {
-				res = arg_11_0._eventType2ResDict[arg_11_1]
+	if self._eventType2ResDict[eventType] and not effect:isHasEffectGOByKey(showKey) then
+		effect:addParams({
+			[showKey] = {
+				res = self._eventType2ResDict[eventType]
 			}
 		})
-		var_11_0:refreshEffect()
+		effect:refreshEffect()
 	end
 end
 
-function var_0_0._updateParticlePosOffset(arg_12_0)
-	local var_12_0 = arg_12_0.entity.effect
-	local var_12_1 = arg_12_0._eventType2SkowKeyDict[arg_12_0._curShowEventType]
+function RoomCritterEventItemComp:_updateParticlePosOffset()
+	local effect = self.entity.effect
+	local effectKey = self._eventType2SkowKeyDict[self._curShowEventType]
 
-	if not var_12_1 or not var_12_0:isHasEffectGOByKey(var_12_1) then
+	if not effectKey or not effect:isHasEffectGOByKey(effectKey) then
 		return
 	end
 
-	local var_12_2 = arg_12_0.entity.critterspine:getMountheadGOTrs()
+	local headGOTrs = self.entity.critterspine:getMountheadGOTrs()
 
-	if not var_12_2 then
+	if not headGOTrs then
 		return
 	end
 
-	local var_12_3, var_12_4, var_12_5 = transformhelper.getPos(var_12_2)
-	local var_12_6, var_12_7, var_12_8 = transformhelper.getPos(arg_12_0.entity.containerGOTrs)
-	local var_12_9 = var_12_3 - var_12_6
-	local var_12_10 = var_12_4 - var_12_7 + 0.08
-	local var_12_11 = var_12_5 - var_12_8
-	local var_12_12 = 0.001
+	local x, y, z = transformhelper.getPos(headGOTrs)
+	local x1, y1, z1 = transformhelper.getPos(self.entity.containerGOTrs)
+	local ofx = x - x1
+	local ofy = y - y1 + 0.08
+	local ofz = z - z1
+	local abs = 0.001
 
-	if var_12_12 < math.abs(var_12_9 - arg_12_0._offsetX) or var_12_12 < math.abs(var_12_10 - arg_12_0._offsetY) or var_12_12 < math.abs(var_12_11 - arg_12_0._offsetZ) or arg_12_0._lastInx ~= arg_12_0._curShowEventType then
-		arg_12_0._offsetX = var_12_9
-		arg_12_0._offsetY = var_12_10
-		arg_12_0._offsetZ = var_12_11
-		arg_12_0._lastInx = arg_12_0._curShowEventType
+	if abs < math.abs(ofx - self._offsetX) or abs < math.abs(ofy - self._offsetY) or abs < math.abs(ofz - self._offsetZ) or self._lastInx ~= self._curShowEventType then
+		self._offsetX = ofx
+		self._offsetY = ofy
+		self._offsetZ = ofz
+		self._lastInx = self._curShowEventType
 
-		transformhelper.setLocalPos(var_12_0:getEffectGOTrs(var_12_1), arg_12_0._offsetX, 0, arg_12_0._offsetZ)
+		transformhelper.setLocalPos(effect:getEffectGOTrs(effectKey), self._offsetX, 0, self._offsetZ)
 
-		local var_12_13 = var_12_0:getComponentsByKey(var_12_1, RoomEnum.ComponentName.Renderer)
-		local var_12_14 = arg_12_0._scene.mapmgr:getPropertyBlock()
+		local list = effect:getComponentsByKey(effectKey, RoomEnum.ComponentName.Renderer)
+		local mpb = self._scene.mapmgr:getPropertyBlock()
 
-		var_12_14:Clear()
-		var_12_14:SetVector("_ParticlePosOffset", Vector4.New(0, arg_12_0._offsetY, 0, 0))
+		mpb:Clear()
+		mpb:SetVector("_ParticlePosOffset", Vector4.New(0, self._offsetY, 0, 0))
 
-		for iter_12_0, iter_12_1 in ipairs(var_12_13) do
-			iter_12_1:SetPropertyBlock(var_12_14)
+		for _, renderer in ipairs(list) do
+			renderer:SetPropertyBlock(mpb)
 		end
 	end
 end
 
-return var_0_0
+return RoomCritterEventItemComp

@@ -1,33 +1,35 @@
-﻿module("modules.logic.versionactivity3_1.gaosiniao.work.GaoSiNiaoWork_JustCompleteGame", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/gaosiniao/work/GaoSiNiaoWork_JustCompleteGame.lua
 
-local var_0_0 = class("GaoSiNiaoWork_JustCompleteGame", GaoSiNiaoWorkBase)
+module("modules.logic.versionactivity3_1.gaosiniao.work.GaoSiNiaoWork_JustCompleteGame", package.seeall)
 
-function var_0_0.s_create(arg_1_0)
-	local var_1_0 = var_0_0.New()
+local GaoSiNiaoWork_JustCompleteGame = class("GaoSiNiaoWork_JustCompleteGame", GaoSiNiaoWorkBase)
 
-	var_1_0._episodeId = arg_1_0
+function GaoSiNiaoWork_JustCompleteGame.s_create(episodeId)
+	local work = GaoSiNiaoWork_JustCompleteGame.New()
 
-	return var_1_0
+	work._episodeId = episodeId
+
+	return work
 end
 
-function var_0_0.onStart(arg_2_0)
-	arg_2_0:clearWork()
-	GaoSiNiaoController.instance:completeGame(arg_2_0._episodeId, nil, arg_2_0._onCompleteGameDone, arg_2_0)
-	TaskDispatcher.runDelay(arg_2_0._onTimeout, arg_2_0, 10)
+function GaoSiNiaoWork_JustCompleteGame:onStart()
+	self:clearWork()
+	GaoSiNiaoController.instance:completeGame(self._episodeId, nil, self._onCompleteGameDone, self)
+	TaskDispatcher.runDelay(self._onTimeout, self, 10)
 end
 
-function var_0_0._onCompleteGameDone(arg_3_0)
-	GaoSiNiaoBattleModel.instance:setServerCompleted(true, arg_3_0._episodeId)
-	arg_3_0:onSucc()
+function GaoSiNiaoWork_JustCompleteGame:_onCompleteGameDone()
+	GaoSiNiaoBattleModel.instance:setServerCompleted(true, self._episodeId)
+	self:onSucc()
 end
 
-function var_0_0._onTimeout(arg_4_0)
-	arg_4_0:onFail()
+function GaoSiNiaoWork_JustCompleteGame:_onTimeout()
+	self:onFail()
 end
 
-function var_0_0.clearWork(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0._onTimeout, arg_5_0)
-	var_0_0.super.clearWork(arg_5_0)
+function GaoSiNiaoWork_JustCompleteGame:clearWork()
+	TaskDispatcher.cancelTask(self._onTimeout, self)
+	GaoSiNiaoWork_JustCompleteGame.super.clearWork(self)
 end
 
-return var_0_0
+return GaoSiNiaoWork_JustCompleteGame

@@ -1,11 +1,13 @@
-﻿module("modules.logic.sp01.odyssey.model.OdysseyEquipSuitMo", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/model/OdysseyEquipSuitMo.lua
 
-local var_0_0 = pureTable("OdysseyEquipSuitMo")
+module("modules.logic.sp01.odyssey.model.OdysseyEquipSuitMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.suitId = arg_1_1
-	arg_1_0.config = arg_1_2
-	arg_1_0.type = arg_1_3
+local OdysseyEquipSuitMo = pureTable("OdysseyEquipSuitMo")
+
+function OdysseyEquipSuitMo:init(suitId, config, type)
+	self.suitId = suitId
+	self.config = config
+	self.type = type
 end
 
-return var_0_0
+return OdysseyEquipSuitMo

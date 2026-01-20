@@ -1,29 +1,31 @@
-﻿module("modules.logic.notice.model.NoticeType", package.seeall)
+﻿-- chunkname: @modules/logic/notice/model/NoticeType.lua
 
-local var_0_0 = _M
+module("modules.logic.notice.model.NoticeType", package.seeall)
 
-var_0_0.All = 0
-var_0_0.Activity = 1
-var_0_0.Game = 2
-var_0_0.System = 3
-var_0_0.Playing = 4
-var_0_0.BeforeLogin = 5
-var_0_0.Information = 6
-var_0_0.NoticeList = {
-	var_0_0.Activity,
-	var_0_0.Game,
-	var_0_0.System,
-	var_0_0.Information
+local NoticeType = _M
+
+NoticeType.All = 0
+NoticeType.Activity = 1
+NoticeType.Game = 2
+NoticeType.System = 3
+NoticeType.Playing = 4
+NoticeType.BeforeLogin = 5
+NoticeType.Information = 6
+NoticeType.NoticeList = {
+	NoticeType.Activity,
+	NoticeType.Game,
+	NoticeType.System,
+	NoticeType.Information
 }
 
-function var_0_0.getTypeIndex(arg_1_0)
-	for iter_1_0, iter_1_1 in ipairs(var_0_0.NoticeList) do
-		if arg_1_0 == iter_1_1 then
-			return iter_1_0
+function NoticeType.getTypeIndex(type)
+	for i, innerType in ipairs(NoticeType.NoticeList) do
+		if type == innerType then
+			return i
 		end
 	end
 
 	return 1
 end
 
-return var_0_0
+return NoticeType

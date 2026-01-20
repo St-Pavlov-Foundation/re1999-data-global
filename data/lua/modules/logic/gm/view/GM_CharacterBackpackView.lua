@@ -1,208 +1,210 @@
-﻿module("modules.logic.gm.view.GM_CharacterBackpackView", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GM_CharacterBackpackView.lua
 
-local var_0_0 = class("GM_CharacterBackpackView", BaseView)
-local var_0_1 = "#FFFF00"
+module("modules.logic.gm.view.GM_CharacterBackpackView", package.seeall)
 
-function var_0_0.register()
-	var_0_0.CharacterBackpackView_register(CharacterBackpackView)
-	var_0_0.CharacterBackpackCardListItem_register(CharacterBackpackCardListItem)
+local GM_CharacterBackpackView = class("GM_CharacterBackpackView", BaseView)
+local kYellow = "#FFFF00"
+
+function GM_CharacterBackpackView.register()
+	GM_CharacterBackpackView.CharacterBackpackView_register(CharacterBackpackView)
+	GM_CharacterBackpackView.CharacterBackpackCardListItem_register(CharacterBackpackCardListItem)
 end
 
-function var_0_0.CharacterBackpackView_register(arg_2_0)
-	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "_editableInitView")
-	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "addEvents")
-	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "removeEvents")
+function GM_CharacterBackpackView.CharacterBackpackView_register(T)
+	GMMinusModel.instance:saveOriginalFunc(T, "_editableInitView")
+	GMMinusModel.instance:saveOriginalFunc(T, "addEvents")
+	GMMinusModel.instance:saveOriginalFunc(T, "removeEvents")
 
-	function arg_2_0._editableInitView(arg_3_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_3_0, "_editableInitView", ...)
-		GMMinusModel.instance:addBtnGM(arg_3_0)
+	function T:_editableInitView(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "_editableInitView", ...)
+		GMMinusModel.instance:addBtnGM(self)
 	end
 
-	function arg_2_0.addEvents(arg_4_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_4_0, "addEvents", ...)
-		GMMinusModel.instance:btnGM_AddClickListener(arg_4_0)
-		GM_CharacterBackpackViewContainer.addEvents(arg_4_0)
+	function T:addEvents(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "addEvents", ...)
+		GMMinusModel.instance:btnGM_AddClickListener(self)
+		GM_CharacterBackpackViewContainer.addEvents(self)
 	end
 
-	function arg_2_0.removeEvents(arg_5_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_5_0, "removeEvents", ...)
-		GMMinusModel.instance:btnGM_RemoveClickListener(arg_5_0)
-		GM_CharacterBackpackViewContainer.removeEvents(arg_5_0)
+	function T:removeEvents(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "removeEvents", ...)
+		GMMinusModel.instance:btnGM_RemoveClickListener(self)
+		GM_CharacterBackpackViewContainer.removeEvents(self)
 	end
 
-	function arg_2_0._gm_showAllTabIdUpdate(arg_6_0)
+	function T:_gm_showAllTabIdUpdate()
 		CharacterController.instance:dispatchEvent(CharacterEvent.HeroUpdatePush)
 	end
 
-	function arg_2_0._gm_enableCheckFaceOnSelect(arg_7_0)
-		GM_CharacterView.s_AutoCheckFaceOnOpen = var_0_0.s_enableCheckSelectedFace
+	function T:_gm_enableCheckFaceOnSelect()
+		GM_CharacterView.s_AutoCheckFaceOnOpen = GM_CharacterBackpackView.s_enableCheckSelectedFace
 	end
 
-	function arg_2_0._gm_enableCheckMouthOnSelect(arg_8_0)
-		GM_CharacterView.s_AutoCheckMouthOnOpen = var_0_0.s_enableCheckSelectedMouth
+	function T:_gm_enableCheckMouthOnSelect()
+		GM_CharacterView.s_AutoCheckMouthOnOpen = GM_CharacterBackpackView.s_enableCheckSelectedMouth
 	end
 
-	function arg_2_0._gm_enableCheckContentOnSelect(arg_9_0)
-		GM_CharacterView.s_AutoCheckContentOnOpen = var_0_0.s_enableCheckSelectedContent
+	function T:_gm_enableCheckContentOnSelect()
+		GM_CharacterView.s_AutoCheckContentOnOpen = GM_CharacterBackpackView.s_enableCheckSelectedContent
 	end
 
-	function arg_2_0._gm_enableCheckMotionOnSelect(arg_10_0)
-		GM_CharacterView.s_AutoCheckMotionOnOpen = var_0_0.s_enableCheckSelectedMotion
+	function T:_gm_enableCheckMotionOnSelect()
+		GM_CharacterView.s_AutoCheckMotionOnOpen = GM_CharacterBackpackView.s_enableCheckSelectedMotion
 	end
 end
 
-function var_0_0.CharacterBackpackCardListItem_register(arg_11_0)
-	GMMinusModel.instance:saveOriginalFunc(arg_11_0, "onUpdateMO")
-	GMMinusModel.instance:saveOriginalFunc(arg_11_0, "_onItemClick")
+function GM_CharacterBackpackView.CharacterBackpackCardListItem_register(T)
+	GMMinusModel.instance:saveOriginalFunc(T, "onUpdateMO")
+	GMMinusModel.instance:saveOriginalFunc(T, "_onItemClick")
 
-	function arg_11_0.onUpdateMO(arg_12_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_12_0, "onUpdateMO", ...)
+	function T.onUpdateMO(selfObj, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(selfObj, "onUpdateMO", ...)
 
-		if var_0_0.s_ShowAllTabId then
-			local var_12_0 = arg_12_0._mo
+		if GM_CharacterBackpackView.s_ShowAllTabId then
+			local mo = selfObj._mo
 
-			arg_12_0._heroItem._nameCnTxt.text = gohelper.getRichColorText(var_12_0.config.id, var_0_1)
+			selfObj._heroItem._nameCnTxt.text = gohelper.getRichColorText(mo.config.id, kYellow)
 		end
 	end
 
-	function arg_11_0._onItemClick(arg_13_0, ...)
-		if var_0_0.s_enableCheckSelectedFace then
+	function T._onItemClick(selfObj, ...)
+		if GM_CharacterBackpackView.s_enableCheckSelectedFace then
 			GM_CharacterView.s_AutoCheckFaceOnOpen = true
 		end
 
-		if var_0_0.s_enableCheckSelectedMouth then
+		if GM_CharacterBackpackView.s_enableCheckSelectedMouth then
 			GM_CharacterView.s_AutoCheckMouthOnOpen = true
 		end
 
-		if var_0_0.s_enableCheckSelectedContent then
+		if GM_CharacterBackpackView.s_enableCheckSelectedContent then
 			GM_CharacterView.s_AutoCheckContentOnOpen = true
 		end
 
-		if var_0_0.s_enableCheckSelectedMotion then
+		if GM_CharacterBackpackView.s_enableCheckSelectedMotion then
 			GM_CharacterView.s_AutoCheckMotionOnOpen = true
 		end
 
-		GMMinusModel.instance:callOriginalSelfFunc(arg_13_0, "_onItemClick", ...)
+		GMMinusModel.instance:callOriginalSelfFunc(selfObj, "_onItemClick", ...)
 	end
 end
 
-function var_0_0.onInitView(arg_14_0)
-	arg_14_0._btnClose = gohelper.findChildButtonWithAudio(arg_14_0.viewGO, "btnClose")
-	arg_14_0._item1Toggle = gohelper.findChildToggle(arg_14_0.viewGO, "viewport/content/item1/Toggle")
-	arg_14_0._item2Toggle = gohelper.findChildToggle(arg_14_0.viewGO, "viewport/content/item2/Toggle")
-	arg_14_0._item3Toggle = gohelper.findChildToggle(arg_14_0.viewGO, "viewport/content/item3/Toggle")
-	arg_14_0._item4Toggle = gohelper.findChildToggle(arg_14_0.viewGO, "viewport/content/item4/Toggle")
-	arg_14_0._item5Toggle = gohelper.findChildToggle(arg_14_0.viewGO, "viewport/content/item5/Toggle")
+function GM_CharacterBackpackView:onInitView()
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "btnClose")
+	self._item1Toggle = gohelper.findChildToggle(self.viewGO, "viewport/content/item1/Toggle")
+	self._item2Toggle = gohelper.findChildToggle(self.viewGO, "viewport/content/item2/Toggle")
+	self._item3Toggle = gohelper.findChildToggle(self.viewGO, "viewport/content/item3/Toggle")
+	self._item4Toggle = gohelper.findChildToggle(self.viewGO, "viewport/content/item4/Toggle")
+	self._item5Toggle = gohelper.findChildToggle(self.viewGO, "viewport/content/item5/Toggle")
 end
 
-function var_0_0.addEvents(arg_15_0)
-	arg_15_0._btnClose:AddClickListener(arg_15_0.closeThis, arg_15_0)
-	arg_15_0._item1Toggle:AddOnValueChanged(arg_15_0._onItem1ToggleValueChanged, arg_15_0)
-	arg_15_0._item2Toggle:AddOnValueChanged(arg_15_0._onItem2ToggleValueChanged, arg_15_0)
-	arg_15_0._item3Toggle:AddOnValueChanged(arg_15_0._onItem3ToggleValueChanged, arg_15_0)
-	arg_15_0._item4Toggle:AddOnValueChanged(arg_15_0._onItem4ToggleValueChanged, arg_15_0)
-	arg_15_0._item5Toggle:AddOnValueChanged(arg_15_0._onItem5ToggleValueChanged, arg_15_0)
+function GM_CharacterBackpackView:addEvents()
+	self._btnClose:AddClickListener(self.closeThis, self)
+	self._item1Toggle:AddOnValueChanged(self._onItem1ToggleValueChanged, self)
+	self._item2Toggle:AddOnValueChanged(self._onItem2ToggleValueChanged, self)
+	self._item3Toggle:AddOnValueChanged(self._onItem3ToggleValueChanged, self)
+	self._item4Toggle:AddOnValueChanged(self._onItem4ToggleValueChanged, self)
+	self._item5Toggle:AddOnValueChanged(self._onItem5ToggleValueChanged, self)
 end
 
-function var_0_0.removeEvents(arg_16_0)
-	arg_16_0._btnClose:RemoveClickListener()
-	arg_16_0._item1Toggle:RemoveOnValueChanged()
-	arg_16_0._item2Toggle:RemoveOnValueChanged()
-	arg_16_0._item3Toggle:RemoveOnValueChanged()
-	arg_16_0._item4Toggle:RemoveOnValueChanged()
-	arg_16_0._item5Toggle:RemoveOnValueChanged()
+function GM_CharacterBackpackView:removeEvents()
+	self._btnClose:RemoveClickListener()
+	self._item1Toggle:RemoveOnValueChanged()
+	self._item2Toggle:RemoveOnValueChanged()
+	self._item3Toggle:RemoveOnValueChanged()
+	self._item4Toggle:RemoveOnValueChanged()
+	self._item5Toggle:RemoveOnValueChanged()
 end
 
-function var_0_0.onOpen(arg_17_0)
-	arg_17_0:_refreshItem1()
-	arg_17_0:_refreshItem2()
-	arg_17_0:_refreshItem3()
-	arg_17_0:_refreshItem4()
-	arg_17_0:_refreshItem5()
+function GM_CharacterBackpackView:onOpen()
+	self:_refreshItem1()
+	self:_refreshItem2()
+	self:_refreshItem3()
+	self:_refreshItem4()
+	self:_refreshItem5()
 end
 
-function var_0_0.onDestroyView(arg_18_0)
+function GM_CharacterBackpackView:onDestroyView()
 	return
 end
 
-var_0_0.s_ShowAllTabId = false
+GM_CharacterBackpackView.s_ShowAllTabId = false
 
-function var_0_0._refreshItem1(arg_19_0)
-	local var_19_0 = var_0_0.s_ShowAllTabId
+function GM_CharacterBackpackView:_refreshItem1()
+	local isOn = GM_CharacterBackpackView.s_ShowAllTabId
 
-	arg_19_0._item1Toggle.isOn = var_19_0
+	self._item1Toggle.isOn = isOn
 end
 
-function var_0_0._onItem1ToggleValueChanged(arg_20_0)
-	local var_20_0 = arg_20_0._item1Toggle.isOn
+function GM_CharacterBackpackView:_onItem1ToggleValueChanged()
+	local isOn = self._item1Toggle.isOn
 
-	var_0_0.s_ShowAllTabId = var_20_0
+	GM_CharacterBackpackView.s_ShowAllTabId = isOn
 
-	GMController.instance:dispatchEvent(GMEvent.CharacterBackpackView_ShowAllTabIdUpdate, var_20_0)
+	GMController.instance:dispatchEvent(GMEvent.CharacterBackpackView_ShowAllTabIdUpdate, isOn)
 end
 
-var_0_0.s_enableCheckSelectedFace = false
+GM_CharacterBackpackView.s_enableCheckSelectedFace = false
 
-function var_0_0._refreshItem2(arg_21_0)
-	local var_21_0 = var_0_0.s_enableCheckSelectedFace
+function GM_CharacterBackpackView:_refreshItem2()
+	local isOn = GM_CharacterBackpackView.s_enableCheckSelectedFace
 
-	arg_21_0._item2Toggle.isOn = var_21_0
+	self._item2Toggle.isOn = isOn
 end
 
-function var_0_0._onItem2ToggleValueChanged(arg_22_0)
-	local var_22_0 = arg_22_0._item2Toggle.isOn
+function GM_CharacterBackpackView:_onItem2ToggleValueChanged()
+	local isOn = self._item2Toggle.isOn
 
-	var_0_0.s_enableCheckSelectedFace = var_22_0
+	GM_CharacterBackpackView.s_enableCheckSelectedFace = isOn
 
-	GMController.instance:dispatchEvent(GMEvent.CharacterBackpackView_EnableCheckFaceOnSelect, var_22_0)
+	GMController.instance:dispatchEvent(GMEvent.CharacterBackpackView_EnableCheckFaceOnSelect, isOn)
 end
 
-var_0_0.s_enableCheckSelectedMouth = false
+GM_CharacterBackpackView.s_enableCheckSelectedMouth = false
 
-function var_0_0._refreshItem3(arg_23_0)
-	local var_23_0 = var_0_0.s_enableCheckSelectedMouth
+function GM_CharacterBackpackView:_refreshItem3()
+	local isOn = GM_CharacterBackpackView.s_enableCheckSelectedMouth
 
-	arg_23_0._item3Toggle.isOn = var_23_0
+	self._item3Toggle.isOn = isOn
 end
 
-function var_0_0._onItem3ToggleValueChanged(arg_24_0)
-	local var_24_0 = arg_24_0._item3Toggle.isOn
+function GM_CharacterBackpackView:_onItem3ToggleValueChanged()
+	local isOn = self._item3Toggle.isOn
 
-	var_0_0.s_enableCheckSelectedMouth = var_24_0
+	GM_CharacterBackpackView.s_enableCheckSelectedMouth = isOn
 
-	GMController.instance:dispatchEvent(GMEvent.CharacterBackpackView_EnableCheckMouthOnSelect, var_24_0)
+	GMController.instance:dispatchEvent(GMEvent.CharacterBackpackView_EnableCheckMouthOnSelect, isOn)
 end
 
-var_0_0.s_enableCheckSelectedContent = false
+GM_CharacterBackpackView.s_enableCheckSelectedContent = false
 
-function var_0_0._refreshItem4(arg_25_0)
-	local var_25_0 = var_0_0.s_enableCheckSelectedContent
+function GM_CharacterBackpackView:_refreshItem4()
+	local isOn = GM_CharacterBackpackView.s_enableCheckSelectedContent
 
-	arg_25_0._item4Toggle.isOn = var_25_0
+	self._item4Toggle.isOn = isOn
 end
 
-function var_0_0._onItem4ToggleValueChanged(arg_26_0)
-	local var_26_0 = arg_26_0._item4Toggle.isOn
+function GM_CharacterBackpackView:_onItem4ToggleValueChanged()
+	local isOn = self._item4Toggle.isOn
 
-	var_0_0.s_enableCheckSelectedContent = var_26_0
+	GM_CharacterBackpackView.s_enableCheckSelectedContent = isOn
 
-	GMController.instance:dispatchEvent(GMEvent.CharacterBackpackView_EnableCheckContentOnSelect, var_26_0)
+	GMController.instance:dispatchEvent(GMEvent.CharacterBackpackView_EnableCheckContentOnSelect, isOn)
 end
 
-var_0_0.s_enableCheckSelectedMotion = false
+GM_CharacterBackpackView.s_enableCheckSelectedMotion = false
 
-function var_0_0._refreshItem5(arg_27_0)
-	local var_27_0 = var_0_0.s_enableCheckSelectedMotion
+function GM_CharacterBackpackView:_refreshItem5()
+	local isOn = GM_CharacterBackpackView.s_enableCheckSelectedMotion
 
-	arg_27_0._item5Toggle.isOn = var_27_0
+	self._item5Toggle.isOn = isOn
 end
 
-function var_0_0._onItem5ToggleValueChanged(arg_28_0)
-	local var_28_0 = arg_28_0._item5Toggle.isOn
+function GM_CharacterBackpackView:_onItem5ToggleValueChanged()
+	local isOn = self._item5Toggle.isOn
 
-	var_0_0.s_enableCheckSelectedMotion = var_28_0
+	GM_CharacterBackpackView.s_enableCheckSelectedMotion = isOn
 
-	GMController.instance:dispatchEvent(GMEvent.CharacterBackpackView_EnableCheckMotionOnSelect, var_28_0)
+	GMController.instance:dispatchEvent(GMEvent.CharacterBackpackView_EnableCheckMotionOnSelect, isOn)
 end
 
-return var_0_0
+return GM_CharacterBackpackView

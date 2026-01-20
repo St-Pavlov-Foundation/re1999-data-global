@@ -1,61 +1,63 @@
-﻿module("projbooter.ui.BootNoticeView", package.seeall)
+﻿-- chunkname: @projbooter/ui/BootNoticeView.lua
 
-local var_0_0 = class("BootNoticeView")
+module("projbooter.ui.BootNoticeView", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._callback = arg_1_1
-	arg_1_0._callbackObj = arg_1_2
-	arg_1_0._go = BootResMgr.instance:getNoticeViewGo()
+local BootNoticeView = class("BootNoticeView")
 
-	arg_1_0._go:SetActive(true)
+function BootNoticeView:init(callback, callbackObj)
+	self._callback = callback
+	self._callbackObj = callbackObj
+	self._go = BootResMgr.instance:getNoticeViewGo()
 
-	arg_1_0._rootTr = arg_1_0._go.transform
+	self._go:SetActive(true)
 
-	local var_1_0 = typeof(UnityEngine.UI.Text)
+	self._rootTr = self._go.transform
 
-	arg_1_0._txtTitle = arg_1_0._rootTr:Find("top/title"):GetComponent(var_1_0)
-	arg_1_0._txtContent = arg_1_0._rootTr:Find("#scroll_desc/viewport/content/desc"):GetComponent(var_1_0)
-	arg_1_0._btnGo = arg_1_0._rootTr:Find("btnOk").gameObject
-	arg_1_0._okBtn = SLFramework.UGUI.ButtonWrap.Get(arg_1_0._btnGo)
+	local txtType = typeof(UnityEngine.UI.Text)
 
-	arg_1_0._okBtn:AddClickListener(arg_1_0._onClickOkBtn, arg_1_0)
-	arg_1_0._go.transform:SetAsLastSibling()
-	arg_1_0:_setNotice()
+	self._txtTitle = self._rootTr:Find("top/title"):GetComponent(txtType)
+	self._txtContent = self._rootTr:Find("#scroll_desc/viewport/content/desc"):GetComponent(txtType)
+	self._btnGo = self._rootTr:Find("btnOk").gameObject
+	self._okBtn = SLFramework.UGUI.ButtonWrap.Get(self._btnGo)
+
+	self._okBtn:AddClickListener(self._onClickOkBtn, self)
+	self._go.transform:SetAsLastSibling()
+	self:_setNotice()
 end
 
-function var_0_0._setNotice(arg_2_0)
-	arg_2_0._txtTitle.text = NoticeModel.instance:getBeforeLoginNoticeTitle()
-	arg_2_0._txtContent.text = NoticeModel.instance:getBeforeLoginNoticeContent()
+function BootNoticeView:_setNotice()
+	self._txtTitle.text = NoticeModel.instance:getBeforeLoginNoticeTitle()
+	self._txtContent.text = NoticeModel.instance:getBeforeLoginNoticeContent()
 end
 
-function var_0_0._onClickOkBtn(arg_3_0)
-	if arg_3_0._callback == nil then
+function BootNoticeView:_onClickOkBtn()
+	if self._callback == nil then
 		return
 	end
 
-	arg_3_0._callback(arg_3_0._callbackObj)
+	self._callback(self._callbackObj)
 
-	arg_3_0._callback = nil
-	arg_3_0._callbackObj = nil
+	self._callback = nil
+	self._callbackObj = nil
 
-	arg_3_0:dispose()
+	self:dispose()
 end
 
-function var_0_0.dispose(arg_4_0)
-	if arg_4_0._okBtn then
-		arg_4_0._okBtn:RemoveClickListener()
-		UnityEngine.GameObject.Destroy(arg_4_0._go)
+function BootNoticeView:dispose()
+	if self._okBtn then
+		self._okBtn:RemoveClickListener()
+		UnityEngine.GameObject.Destroy(self._go)
 
-		arg_4_0._go = nil
+		self._go = nil
 	end
 
-	for iter_4_0, iter_4_1 in pairs(arg_4_0) do
-		if type(iter_4_1) == "userdata" then
-			rawset(arg_4_0, iter_4_0, nil)
+	for key, value in pairs(self) do
+		if type(value) == "userdata" then
+			rawset(self, key, nil)
 		end
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+BootNoticeView.instance = BootNoticeView.New()
 
-return var_0_0
+return BootNoticeView

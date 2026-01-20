@@ -1,152 +1,154 @@
-﻿module("modules.logic.sp01.library.AssassinLibraryView", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/library/AssassinLibraryView.lua
 
-local var_0_0 = class("AssassinLibraryView", BaseView)
-local var_0_1 = 1
-local var_0_2 = 1
+module("modules.logic.sp01.library.AssassinLibraryView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._scrollcategory = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/#scroll_category")
-	arg_1_0._gobanneritem = gohelper.findChild(arg_1_0.viewGO, "root/#scroll_category/Viewport/Content/#go_banneritem")
-	arg_1_0._gocontainer = gohelper.findChild(arg_1_0.viewGO, "root/#go_container")
-	arg_1_0._gocontainer1 = gohelper.findChild(arg_1_0.viewGO, "root/#go_container/#go_container1")
-	arg_1_0._gocontainer2 = gohelper.findChild(arg_1_0.viewGO, "root/#go_container/#go_container2")
-	arg_1_0._btnclick = gohelper.getClick(arg_1_0._scrollcategory.gameObject)
-	arg_1_0._gocamera = gohelper.findChild(arg_1_0.viewGO, "#go_camera")
+local AssassinLibraryView = class("AssassinLibraryView", BaseView)
+local DefaultSelectActIndex = 1
+local DefaultSelectTypeIndex = 1
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function AssassinLibraryView:onInitView()
+	self._scrollcategory = gohelper.findChildScrollRect(self.viewGO, "root/#scroll_category")
+	self._gobanneritem = gohelper.findChild(self.viewGO, "root/#scroll_category/Viewport/Content/#go_banneritem")
+	self._gocontainer = gohelper.findChild(self.viewGO, "root/#go_container")
+	self._gocontainer1 = gohelper.findChild(self.viewGO, "root/#go_container/#go_container1")
+	self._gocontainer2 = gohelper.findChild(self.viewGO, "root/#go_container/#go_container2")
+	self._btnclick = gohelper.getClick(self._scrollcategory.gameObject)
+	self._gocamera = gohelper.findChild(self.viewGO, "#go_camera")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(AssassinController.instance, AssassinEvent.OnSelectLibLibType, arg_2_0._onSelectLibLibType, arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+function AssassinLibraryView:addEvents()
+	self:addEventCb(AssassinController.instance, AssassinEvent.OnSelectLibLibType, self._onSelectLibLibType, self)
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
+function AssassinLibraryView:removeEvents()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0._btnclickOnClick(arg_4_0, arg_4_1, arg_4_2)
-	for iter_4_0, iter_4_1 in pairs(arg_4_0._actItemTab) do
-		if iter_4_1:tryClickSelf(arg_4_2, arg_4_0._eventCamera) then
+function AssassinLibraryView:_btnclickOnClick(_, clickPosition)
+	for _, actItem in pairs(self._actItemTab) do
+		if actItem:tryClickSelf(clickPosition, self._eventCamera) then
 			return
 		end
 	end
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._actItemTab = arg_5_0:getUserDataTb_()
+function AssassinLibraryView:_editableInitView()
+	self._actItemTab = self:getUserDataTb_()
 
-	gohelper.setActive(arg_5_0._gobanneritem, false)
-	arg_5_0:initEventCamera()
+	gohelper.setActive(self._gobanneritem, false)
+	self:initEventCamera()
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:initActItemList()
+function AssassinLibraryView:onOpen()
+	self:initActItemList()
 	OdysseyStatHelper.instance:initViewStartTime()
 	AudioMgr.instance:trigger(AudioEnum2_9.AssassinLibrary.play_ui_openlibrary)
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
-	arg_7_0:_initParams()
+function AssassinLibraryView:onUpdateParam()
+	self:_initParams()
 end
 
-function var_0_0.initEventCamera(arg_8_0)
-	arg_8_0._eventCamera = arg_8_0._gocamera:GetComponent("Camera")
+function AssassinLibraryView:initEventCamera()
+	self._eventCamera = self._gocamera:GetComponent("Camera")
 
-	local var_8_0 = AssassinEnum.LibraryCategoryCameraParams.cameraPos.x
-	local var_8_1 = AssassinEnum.LibraryCategoryCameraParams.cameraPos.y
-	local var_8_2 = AssassinEnum.LibraryCategoryCameraParams.cameraPos.z
+	local cameraWorldPosX = AssassinEnum.LibraryCategoryCameraParams.cameraPos.x
+	local cameraWorldPosY = AssassinEnum.LibraryCategoryCameraParams.cameraPos.y
+	local cameraWorldPosZ = AssassinEnum.LibraryCategoryCameraParams.cameraPos.z
 
-	transformhelper.setPos(arg_8_0._gocamera.transform, var_8_0, var_8_1, var_8_2)
-	transformhelper.setLocalScale(arg_8_0._gocamera.transform, 1, 1, 1)
+	transformhelper.setPos(self._gocamera.transform, cameraWorldPosX, cameraWorldPosY, cameraWorldPosZ)
+	transformhelper.setLocalScale(self._gocamera.transform, 1, 1, 1)
 
-	arg_8_0._eventCamera.orthographic = false
-	arg_8_0._eventCamera.fieldOfView = AssassinEnum.LibraryCategoryCameraParams.perspFOV
+	self._eventCamera.orthographic = false
+	self._eventCamera.fieldOfView = AssassinEnum.LibraryCategoryCameraParams.perspFOV
 
-	gohelper.setActive(arg_8_0._gocamera, false)
+	gohelper.setActive(self._gocamera, false)
 end
 
-function var_0_0.initActItemList(arg_9_0)
-	local var_9_0 = AssassinConfig.instance:getLibraryActIdList()
+function AssassinLibraryView:initActItemList()
+	local actIdList = AssassinConfig.instance:getLibraryActIdList()
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
-		local var_9_1 = arg_9_0:_getOrCreateActItem(iter_9_1)
+	for index, actId in ipairs(actIdList) do
+		local actItem = self:_getOrCreateActItem(actId)
 
-		var_9_1:setActId(iter_9_1)
+		actItem:setActId(actId)
 
-		if iter_9_0 == var_0_1 then
-			arg_9_0._defaultActId = iter_9_1
-			arg_9_0._defaultLibType = var_9_1:getLibType(var_0_2)
+		if index == DefaultSelectActIndex then
+			self._defaultActId = actId
+			self._defaultLibType = actItem:getLibType(DefaultSelectTypeIndex)
 		end
 	end
 
-	arg_9_0:_initParams()
+	self:_initParams()
 end
 
-function var_0_0._initParams(arg_10_0)
-	local var_10_0 = arg_10_0.viewParam and arg_10_0.viewParam.actId
-	local var_10_1 = arg_10_0.viewParam and arg_10_0.viewParam.libraryType
+function AssassinLibraryView:_initParams()
+	local viewParam_actId = self.viewParam and self.viewParam.actId
+	local viewParam_libraryType = self.viewParam and self.viewParam.libraryType
 
-	arg_10_0._defaultActId = var_10_0 or arg_10_0._defaultActId
-	arg_10_0._defaultLibType = var_10_1 or arg_10_0._defaultLibType
+	self._defaultActId = viewParam_actId or self._defaultActId
+	self._defaultLibType = viewParam_libraryType or self._defaultLibType
 
-	arg_10_0:_foldOutSelectActItem()
-	AssassinController.instance:dispatchEvent(AssassinEvent.OnSelectLibLibType, arg_10_0._defaultActId, arg_10_0._defaultLibType)
+	self:_foldOutSelectActItem()
+	AssassinController.instance:dispatchEvent(AssassinEvent.OnSelectLibLibType, self._defaultActId, self._defaultLibType)
 end
 
-function var_0_0._foldOutSelectActItem(arg_11_0)
-	local var_11_0 = arg_11_0._actItemTab and arg_11_0._actItemTab[arg_11_0._defaultActId]
+function AssassinLibraryView:_foldOutSelectActItem()
+	local libraryActItem = self._actItemTab and self._actItemTab[self._defaultActId]
 
-	if not var_11_0 then
+	if not libraryActItem then
 		return
 	end
 
-	var_11_0:setFold(true)
+	libraryActItem:setFold(true)
 end
 
-function var_0_0._getOrCreateActItem(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0._actItemTab[arg_12_1]
+function AssassinLibraryView:_getOrCreateActItem(actId)
+	local actItem = self._actItemTab[actId]
 
-	if not var_12_0 then
-		local var_12_1 = gohelper.cloneInPlace(arg_12_0._gobanneritem, arg_12_1)
+	if not actItem then
+		local go = gohelper.cloneInPlace(self._gobanneritem, actId)
 
-		var_12_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_12_1, AssassinLibraryActCategoryItem)
-		arg_12_0._actItemTab[arg_12_1] = var_12_0
+		actItem = MonoHelper.addNoUpdateLuaComOnceToGo(go, AssassinLibraryActCategoryItem)
+		self._actItemTab[actId] = actItem
 	end
 
-	return var_12_0
+	return actItem
 end
 
-function var_0_0._onSelectLibLibType(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0 = arg_13_0._actItemTab[arg_13_1]
+function AssassinLibraryView:_onSelectLibLibType(actId, libType)
+	local actItem = self._actItemTab[actId]
 
-	if not var_13_0 then
-		logError(string.format("刺客信条资料库页签不存在 actId = %s, libType = %s", arg_13_1, arg_13_2))
+	if not actItem then
+		logError(string.format("刺客信条资料库页签不存在 actId = %s, libType = %s", actId, libType))
 
 		return
 	end
 
-	if arg_13_0._selectActItem then
-		arg_13_0._selectActItem:onSelect(false)
+	if self._selectActItem then
+		self._selectActItem:onSelect(false)
 	end
 
-	var_13_0:onSelect(true, arg_13_2)
+	actItem:onSelect(true, libType)
 
-	arg_13_0._selectActItem = var_13_0
+	self._selectActItem = actItem
 
-	AssassinLibraryModel.instance:switch(arg_13_1, arg_13_2)
-	AssassinLibraryModel.instance:readTypeLibrarys(arg_13_1, arg_13_2)
-	arg_13_0.viewContainer:switchLibType(arg_13_2)
+	AssassinLibraryModel.instance:switch(actId, libType)
+	AssassinLibraryModel.instance:readTypeLibrarys(actId, libType)
+	self.viewContainer:switchLibType(libType)
 end
 
-function var_0_0.onClose(arg_14_0)
+function AssassinLibraryView:onClose()
 	OdysseyStatHelper.instance:sendOdysseyViewStayTime("AssassinLibraryView")
 end
 
-function var_0_0.onDestroyView(arg_15_0)
+function AssassinLibraryView:onDestroyView()
 	return
 end
 
-return var_0_0
+return AssassinLibraryView

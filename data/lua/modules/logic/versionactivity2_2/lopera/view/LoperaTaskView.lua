@@ -1,82 +1,84 @@
-﻿module("modules.logic.versionactivity2_2.lopera.view.LoperaTaskView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/lopera/view/LoperaTaskView.lua
 
-local var_0_0 = class("LoperaTaskView", BaseView)
+module("modules.logic.versionactivity2_2.lopera.view.LoperaTaskView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._simagelangtxt = gohelper.findChildSingleImage(arg_1_0.viewGO, "Left/#simage_langtxt")
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_LimitTime")
-	arg_1_0._scrollTaskList = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_TaskList")
-	arg_1_0._goBackBtns = gohelper.findChild(arg_1_0.viewGO, "#go_BackBtns")
+local LoperaTaskView = class("LoperaTaskView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function LoperaTaskView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._simagelangtxt = gohelper.findChildSingleImage(self.viewGO, "Left/#simage_langtxt")
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_LimitTime")
+	self._scrollTaskList = gohelper.findChildScrollRect(self.viewGO, "#scroll_TaskList")
+	self._goBackBtns = gohelper.findChild(self.viewGO, "#go_BackBtns")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function LoperaTaskView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function LoperaTaskView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function LoperaTaskView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function LoperaTaskView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_6_0._oneClaimReward, arg_6_0)
-	arg_6_0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_6_0._onFinishTask, arg_6_0)
+function LoperaTaskView:onOpen()
+	self:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, self._oneClaimReward, self)
+	self:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, self._onFinishTask, self)
 	Activity168TaskListModel.instance:clear()
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.Activity168
-	}, arg_6_0._oneClaimReward, arg_6_0)
-	TaskDispatcher.runRepeat(arg_6_0._showLeftTime, arg_6_0, 60)
-	arg_6_0:_showLeftTime()
+	}, self._oneClaimReward, self)
+	TaskDispatcher.runRepeat(self._showLeftTime, self, 60)
+	self:_showLeftTime()
 end
 
-function var_0_0._oneClaimReward(arg_7_0)
+function LoperaTaskView:_oneClaimReward()
 	Activity168TaskListModel.instance:init(VersionActivity2_2Enum.ActivityId.Lopera)
 end
 
-function var_0_0._onFinishTask(arg_8_0, arg_8_1)
-	if Activity168TaskListModel.instance:getById(arg_8_1) then
+function LoperaTaskView:_onFinishTask(taskId)
+	if Activity168TaskListModel.instance:getById(taskId) then
 		Activity168TaskListModel.instance:init(VersionActivity2_2Enum.ActivityId.Lopera)
 	end
 end
 
-function var_0_0._showLeftTime(arg_9_0)
-	arg_9_0._txtLimitTime.text = arg_9_0:getLimitTimeStr()
+function LoperaTaskView:_showLeftTime()
+	self._txtLimitTime.text = self:getLimitTimeStr()
 end
 
-function var_0_0.getLimitTimeStr()
-	local var_10_0 = ActivityModel.instance:getActMO(VersionActivity2_2Enum.ActivityId.Lopera)
+function LoperaTaskView.getLimitTimeStr()
+	local actInfoMo = ActivityModel.instance:getActMO(VersionActivity2_2Enum.ActivityId.Lopera)
 
-	if not var_10_0 then
+	if not actInfoMo then
 		return ""
 	end
 
-	local var_10_1 = var_10_0:getRealEndTimeStamp() - ServerTime.now()
+	local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
 
-	if var_10_1 > 0 then
-		return TimeUtil.SecondToActivityTimeFormat(var_10_1)
+	if offsetSecond > 0 then
+		return TimeUtil.SecondToActivityTimeFormat(offsetSecond)
 	end
 
 	return ""
 end
 
-function var_0_0.onClose(arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0._showLeftTime, arg_11_0)
+function LoperaTaskView:onClose()
+	TaskDispatcher.cancelTask(self._showLeftTime, self)
 end
 
-function var_0_0.onDestroyView(arg_12_0)
-	arg_12_0._simageFullBG:UnLoadImage()
+function LoperaTaskView:onDestroyView()
+	self._simageFullBG:UnLoadImage()
 end
 
-return var_0_0
+return LoperaTaskView

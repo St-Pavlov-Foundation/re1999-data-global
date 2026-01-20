@@ -1,22 +1,24 @@
-﻿module("modules.logic.fight.entity.comp.FightFocusHpKillLineComp", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/FightFocusHpKillLineComp.lua
 
-local var_0_0 = class("FightFocusHpKillLineComp", FightHpKillLineComp)
+module("modules.logic.fight.entity.comp.FightFocusHpKillLineComp", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+local FightFocusHpKillLineComp = class("FightFocusHpKillLineComp", FightHpKillLineComp)
 
-	arg_1_0.loadStatus = FightHpKillLineComp.LoadStatus.NotLoaded
-	arg_1_0.containerGo = arg_1_1
-	arg_1_0.containerWidth = recthelper.getWidth(arg_1_0.containerGo:GetComponent(gohelper.Type_RectTransform))
+function FightFocusHpKillLineComp:init(containerGo)
+	self:__onInit()
 
-	arg_1_0:loadRes()
+	self.loadStatus = FightHpKillLineComp.LoadStatus.NotLoaded
+	self.containerGo = containerGo
+	self.containerWidth = recthelper.getWidth(self.containerGo:GetComponent(gohelper.Type_RectTransform))
+
+	self:loadRes()
 end
 
-function var_0_0.refreshByEntityMo(arg_2_0, arg_2_1)
-	arg_2_0.entityMo = arg_2_1
-	arg_2_0.entityId = arg_2_1.id
+function FightFocusHpKillLineComp:refreshByEntityMo(entityMo)
+	self.entityMo = entityMo
+	self.entityId = entityMo.id
 
-	arg_2_0:updateKillLine()
+	self:updateKillLine()
 end
 
-return var_0_0
+return FightFocusHpKillLineComp

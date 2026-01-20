@@ -1,27 +1,29 @@
-﻿module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepCreateObject", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/va3chess/game/step/Va3ChessStepCreateObject.lua
 
-local var_0_0 = class("Va3ChessStepCreateObject", Va3ChessStepBase)
+module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepCreateObject", package.seeall)
 
-function var_0_0.start(arg_1_0)
-	local var_1_0 = arg_1_0.originData.id
+local Va3ChessStepCreateObject = class("Va3ChessStepCreateObject", Va3ChessStepBase)
 
-	Va3ChessGameModel.instance:removeObjectById(var_1_0)
-	Va3ChessGameController.instance:deleteInteractObj(var_1_0)
+function Va3ChessStepCreateObject:start()
+	local objId = self.originData.id
 
-	local var_1_1 = Va3ChessGameModel.instance:getActId()
-	local var_1_2 = Va3ChessGameModel.instance:addObject(var_1_1, arg_1_0.originData)
+	Va3ChessGameModel.instance:removeObjectById(objId)
+	Va3ChessGameController.instance:deleteInteractObj(objId)
 
-	var_1_2:setHaveBornEff(true)
-	Va3ChessGameController.instance:addInteractObj(var_1_2)
-	logNormal("create object finish !" .. tostring(var_1_2.id))
+	local actId = Va3ChessGameModel.instance:getActId()
+	local mo = Va3ChessGameModel.instance:addObject(actId, self.originData)
 
-	local var_1_3 = Va3ChessConfig.instance:getInteractObjectCo(var_1_1, var_1_0)
+	mo:setHaveBornEff(true)
+	Va3ChessGameController.instance:addInteractObj(mo)
+	logNormal("create object finish !" .. tostring(mo.id))
 
-	if var_1_3 and var_1_3.createAudioId and var_1_3.createAudioId ~= 0 then
-		AudioMgr.instance:trigger(var_1_3.createAudioId)
+	local intactCfg = Va3ChessConfig.instance:getInteractObjectCo(actId, objId)
+
+	if intactCfg and intactCfg.createAudioId and intactCfg.createAudioId ~= 0 then
+		AudioMgr.instance:trigger(intactCfg.createAudioId)
 	end
 
-	arg_1_0:finish()
+	self:finish()
 end
 
-return var_0_0
+return Va3ChessStepCreateObject

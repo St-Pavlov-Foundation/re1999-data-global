@@ -1,167 +1,171 @@
-﻿module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicFreeAccompanyView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/music/view/VersionActivity2_4MusicFreeAccompanyView.lua
 
-local var_0_0 = class("VersionActivity2_4MusicFreeAccompanyView", BaseView)
+module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicFreeAccompanyView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gotime = gohelper.findChild(arg_1_0.viewGO, "root/#go_time")
-	arg_1_0._inputvalue = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "root/#go_time/valuebg/#input_value")
-	arg_1_0._btnsub = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#go_time/#btn_sub")
-	arg_1_0._btnadd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#go_time/#btn_add")
-	arg_1_0._godynamics = gohelper.findChild(arg_1_0.viewGO, "root/centercir/#go_dynamics")
-	arg_1_0._gocenter = gohelper.findChild(arg_1_0.viewGO, "root/centercir/#go_center")
-	arg_1_0._gostate = gohelper.findChild(arg_1_0.viewGO, "root/centercir/#go_state")
-	arg_1_0._gostate1 = gohelper.findChild(arg_1_0.viewGO, "root/centercir/#go_state/#go_state1")
-	arg_1_0._gostate2 = gohelper.findChild(arg_1_0.viewGO, "root/centercir/#go_state/#go_state2")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/centercir/#btn_click")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_close")
+local VersionActivity2_4MusicFreeAccompanyView = class("VersionActivity2_4MusicFreeAccompanyView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity2_4MusicFreeAccompanyView:onInitView()
+	self._gotime = gohelper.findChild(self.viewGO, "root/#go_time")
+	self._inputvalue = gohelper.findChildTextMeshInputField(self.viewGO, "root/#go_time/valuebg/#input_value")
+	self._btnsub = gohelper.findChildButtonWithAudio(self.viewGO, "root/#go_time/#btn_sub")
+	self._btnadd = gohelper.findChildButtonWithAudio(self.viewGO, "root/#go_time/#btn_add")
+	self._godynamics = gohelper.findChild(self.viewGO, "root/centercir/#go_dynamics")
+	self._gocenter = gohelper.findChild(self.viewGO, "root/centercir/#go_center")
+	self._gostate = gohelper.findChild(self.viewGO, "root/centercir/#go_state")
+	self._gostate1 = gohelper.findChild(self.viewGO, "root/centercir/#go_state/#go_state1")
+	self._gostate2 = gohelper.findChild(self.viewGO, "root/centercir/#go_state/#go_state2")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "root/centercir/#btn_click")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_close")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnsub:AddClickListener(arg_2_0._btnsubOnClick, arg_2_0)
-	arg_2_0._btnadd:AddClickListener(arg_2_0._btnaddOnClick, arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function VersionActivity2_4MusicFreeAccompanyView:addEvents()
+	self._btnsub:AddClickListener(self._btnsubOnClick, self)
+	self._btnadd:AddClickListener(self._btnaddOnClick, self)
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnsub:RemoveClickListener()
-	arg_3_0._btnadd:RemoveClickListener()
-	arg_3_0._btnclick:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
+function VersionActivity2_4MusicFreeAccompanyView:removeEvents()
+	self._btnsub:RemoveClickListener()
+	self._btnadd:RemoveClickListener()
+	self._btnclick:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btnclickOnClick(arg_4_0)
-	if not arg_4_0._audioStartScale then
+function VersionActivity2_4MusicFreeAccompanyView:_btnclickOnClick()
+	if not self._audioStartScale then
 		return
 	end
 
-	local var_4_0 = (arg_4_0._audioStartScale - arg_4_0._dynamicScale) * arg_4_0._time * 1000
+	local deltaTime = (self._audioStartScale - self._dynamicScale) * self._time * 1000
 
-	arg_4_0._curValue = math.ceil(var_4_0)
+	self._curValue = math.ceil(deltaTime)
 
-	if arg_4_0._curValue < 0 then
-		arg_4_0._curValue = 0
+	if self._curValue < 0 then
+		self._curValue = 0
 	end
 
-	arg_4_0._audioStartScale = nil
+	self._audioStartScale = nil
 
-	arg_4_0:_checkLimit()
+	self:_checkLimit()
 end
 
-function var_0_0._btnsubOnClick(arg_5_0)
-	arg_5_0._curValue = arg_5_0._curValue - arg_5_0._stepValue
+function VersionActivity2_4MusicFreeAccompanyView:_btnsubOnClick()
+	self._curValue = self._curValue - self._stepValue
 
-	arg_5_0:_checkLimit()
+	self:_checkLimit()
 end
 
-function var_0_0._btnaddOnClick(arg_6_0)
-	arg_6_0._curValue = arg_6_0._curValue + arg_6_0._stepValue
+function VersionActivity2_4MusicFreeAccompanyView:_btnaddOnClick()
+	self._curValue = self._curValue + self._stepValue
 
-	arg_6_0:_checkLimit()
+	self:_checkLimit()
 end
 
-function var_0_0._btncloseOnClick(arg_7_0)
-	arg_7_0:closeThis()
+function VersionActivity2_4MusicFreeAccompanyView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0.onClickModalMask(arg_8_0)
-	arg_8_0:closeThis()
+function VersionActivity2_4MusicFreeAccompanyView:onClickModalMask()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_9_0)
+function VersionActivity2_4MusicFreeAccompanyView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_10_0)
+function VersionActivity2_4MusicFreeAccompanyView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_11_0)
-	arg_11_0._minValue = 0
-	arg_11_0._maxValue = 2000
-	arg_11_0._stepValue = 1
-	arg_11_0._curValue = Activity179Model.instance:getCalibration() * 1000
-	arg_11_0._time = 2
-	arg_11_0._audioId = 20240027
-	arg_11_0._centerScale = 3
-	arg_11_0._startScale = 1
-	arg_11_0._endScale = 0
-	arg_11_0._audioScale = 0.75
-	arg_11_0._audioOffsetTime = (arg_11_0._startScale - arg_11_0._audioScale) * arg_11_0._time * 1000
+function VersionActivity2_4MusicFreeAccompanyView:onOpen()
+	self._minValue = 0
+	self._maxValue = 2000
+	self._stepValue = 1
+	self._curValue = Activity179Model.instance:getCalibration() * 1000
+	self._time = 2
+	self._audioId = 20240027
+	self._centerScale = 3
+	self._startScale = 1
+	self._endScale = 0
+	self._audioScale = 0.75
+	self._audioOffsetTime = (self._startScale - self._audioScale) * self._time * 1000
 
-	arg_11_0:_checkLimit()
-	arg_11_0._inputvalue:AddOnEndEdit(arg_11_0._onEndEdit, arg_11_0)
-	arg_11_0:_startCalibration()
+	self:_checkLimit()
+	self._inputvalue:AddOnEndEdit(self._onEndEdit, self)
+	self:_startCalibration()
 end
 
-function var_0_0._updateInputValue(arg_12_0)
-	arg_12_0._inputvalue:SetText(arg_12_0._curValue)
+function VersionActivity2_4MusicFreeAccompanyView:_updateInputValue()
+	self._inputvalue:SetText(self._curValue)
 end
 
-function var_0_0._onEndEdit(arg_13_0)
-	arg_13_0._curValue = tonumber(arg_13_0._inputvalue:GetText()) or 0
+function VersionActivity2_4MusicFreeAccompanyView:_onEndEdit()
+	self._curValue = tonumber(self._inputvalue:GetText()) or 0
 
-	arg_13_0:_checkLimit()
+	self:_checkLimit()
 end
 
-function var_0_0._checkLimit(arg_14_0)
-	arg_14_0._curValue = math.max(arg_14_0._minValue, math.min(arg_14_0._maxValue, arg_14_0._curValue))
+function VersionActivity2_4MusicFreeAccompanyView:_checkLimit()
+	self._curValue = math.max(self._minValue, math.min(self._maxValue, self._curValue))
 
-	Activity179Model.instance:setCalibration(arg_14_0._curValue)
+	Activity179Model.instance:setCalibration(self._curValue)
 
-	local var_14_0 = arg_14_0._curValue + arg_14_0._audioOffsetTime
+	local value = self._curValue + self._audioOffsetTime
 
-	arg_14_0:_updateInputValue()
+	self:_updateInputValue()
 
-	local var_14_1 = (arg_14_0._maxValue - var_14_0) / arg_14_0._maxValue * arg_14_0._centerScale
+	local scale = (self._maxValue - value) / self._maxValue
 
-	transformhelper.setLocalScale(arg_14_0._gocenter.transform, var_14_1, var_14_1, var_14_1)
+	scale = scale * self._centerScale
+
+	transformhelper.setLocalScale(self._gocenter.transform, scale, scale, scale)
 end
 
-function var_0_0._startCalibration(arg_15_0)
-	if arg_15_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_15_0._tweenId)
+function VersionActivity2_4MusicFreeAccompanyView:_startCalibration()
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_15_0._tweenId = nil
+		self._tweenId = nil
 	end
 
-	arg_15_0._audioStartScale = nil
-	arg_15_0._dynamicScale = arg_15_0._startScale
-	arg_15_0._tweenId = ZProj.TweenHelper.DOTweenFloat(arg_15_0._startScale, arg_15_0._endScale, arg_15_0._time, arg_15_0._frameCallback, arg_15_0._tweenFinish, arg_15_0)
+	self._audioStartScale = nil
+	self._dynamicScale = self._startScale
+	self._tweenId = ZProj.TweenHelper.DOTweenFloat(self._startScale, self._endScale, self._time, self._frameCallback, self._tweenFinish, self)
 end
 
-function var_0_0._frameCallback(arg_16_0, arg_16_1)
-	if arg_16_0._dynamicScale >= arg_16_0._audioScale and arg_16_1 <= arg_16_0._audioScale then
-		AudioMgr.instance:trigger(arg_16_0._audioId)
+function VersionActivity2_4MusicFreeAccompanyView:_frameCallback(value)
+	if self._dynamicScale >= self._audioScale and value <= self._audioScale then
+		AudioMgr.instance:trigger(self._audioId)
 
-		arg_16_0._audioStartScale = arg_16_1
+		self._audioStartScale = value
 	end
 
-	arg_16_0._dynamicScale = arg_16_1
+	self._dynamicScale = value
 
-	transformhelper.setLocalScale(arg_16_0._godynamics.transform, arg_16_1, arg_16_1, arg_16_1)
+	transformhelper.setLocalScale(self._godynamics.transform, value, value, value)
 end
 
-function var_0_0._tweenFinish(arg_17_0)
-	arg_17_0:_startCalibration()
+function VersionActivity2_4MusicFreeAccompanyView:_tweenFinish()
+	self:_startCalibration()
 end
 
-function var_0_0.onClose(arg_18_0)
-	arg_18_0._inputvalue:RemoveOnEndEdit()
+function VersionActivity2_4MusicFreeAccompanyView:onClose()
+	self._inputvalue:RemoveOnEndEdit()
 
-	if arg_18_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_18_0._tweenId)
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_18_0._tweenId = nil
+		self._tweenId = nil
 	end
 end
 
-function var_0_0.onDestroyView(arg_19_0)
+function VersionActivity2_4MusicFreeAccompanyView:onDestroyView()
 	return
 end
 
-return var_0_0
+return VersionActivity2_4MusicFreeAccompanyView

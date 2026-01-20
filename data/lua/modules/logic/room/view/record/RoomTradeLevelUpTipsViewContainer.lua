@@ -1,13 +1,15 @@
-﻿module("modules.logic.room.view.record.RoomTradeLevelUpTipsViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/record/RoomTradeLevelUpTipsViewContainer.lua
 
-local var_0_0 = class("RoomTradeLevelUpTipsViewContainer", BaseViewContainer)
+module("modules.logic.room.view.record.RoomTradeLevelUpTipsViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoomTradeLevelUpTipsViewContainer = class("RoomTradeLevelUpTipsViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RoomTradeLevelUpTipsView.New())
+function RoomTradeLevelUpTipsViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RoomTradeLevelUpTipsView.New())
+
+	return views
 end
 
-return var_0_0
+return RoomTradeLevelUpTipsViewContainer

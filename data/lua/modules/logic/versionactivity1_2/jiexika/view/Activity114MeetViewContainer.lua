@@ -1,15 +1,17 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.view.Activity114MeetViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/view/Activity114MeetViewContainer.lua
 
-local var_0_0 = class("Activity114MeetViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_2.jiexika.view.Activity114MeetViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local Activity114MeetViewContainer = class("Activity114MeetViewContainer", BaseViewContainer)
+
+function Activity114MeetViewContainer:buildViews()
 	return {
 		Activity114MeetView.New()
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	arg_2_0:closeThis()
+function Activity114MeetViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return Activity114MeetViewContainer

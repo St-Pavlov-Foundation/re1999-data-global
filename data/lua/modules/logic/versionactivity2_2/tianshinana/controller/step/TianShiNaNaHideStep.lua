@@ -1,10 +1,12 @@
-﻿module("modules.logic.versionactivity2_2.tianshinana.controller.step.TianShiNaNaHideStep", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/tianshinana/controller/step/TianShiNaNaHideStep.lua
 
-local var_0_0 = class("TianShiNaNaHideStep", TianShiNaNaStepBase)
+module("modules.logic.versionactivity2_2.tianshinana.controller.step.TianShiNaNaHideStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	TianShiNaNaModel.instance:removeUnit(arg_1_0._data.id)
-	arg_1_0:onDone(true)
+local TianShiNaNaHideStep = class("TianShiNaNaHideStep", TianShiNaNaStepBase)
+
+function TianShiNaNaHideStep:onStart(context)
+	TianShiNaNaModel.instance:removeUnit(self._data.id)
+	self:onDone(true)
 end
 
-return var_0_0
+return TianShiNaNaHideStep

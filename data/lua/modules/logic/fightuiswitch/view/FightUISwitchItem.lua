@@ -1,59 +1,61 @@
-﻿module("modules.logic.fightuiswitch.view.FightUISwitchItem", package.seeall)
+﻿-- chunkname: @modules/logic/fightuiswitch/view/FightUISwitchItem.lua
 
-local var_0_0 = class("FightUISwitchItem", MainSceneSwitchItem)
+module("modules.logic.fightuiswitch.view.FightUISwitchItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "#go_normal")
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_normal/#simage_icon")
-	arg_1_0._goLocked = gohelper.findChild(arg_1_0.viewGO, "#go_normal/#go_Locked")
-	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "#go_normal/#go_reddot")
-	arg_1_0._goTag = gohelper.findChild(arg_1_0.viewGO, "#go_Tag")
-	arg_1_0._goselected = gohelper.findChild(arg_1_0.viewGO, "#go_selected")
+local FightUISwitchItem = class("FightUISwitchItem", MainSceneSwitchItem)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function FightUISwitchItem:onInitView()
+	self._gonormal = gohelper.findChild(self.viewGO, "#go_normal")
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "#go_normal/#simage_icon")
+	self._goLocked = gohelper.findChild(self.viewGO, "#go_normal/#go_Locked")
+	self._goreddot = gohelper.findChild(self.viewGO, "#go_normal/#go_reddot")
+	self._goTag = gohelper.findChild(self.viewGO, "#go_Tag")
+	self._goselected = gohelper.findChild(self.viewGO, "#go_selected")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function FightUISwitchItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function FightUISwitchItem:removeEvents()
 	return
 end
 
-function var_0_0._onClick(arg_4_0)
-	if arg_4_0._isSelect then
+function FightUISwitchItem:_onClick()
+	if self._isSelect then
 		return
 	end
 
-	FightUISwitchModel.instance:onSelect(arg_4_0._mo)
+	FightUISwitchModel.instance:onSelect(self._mo)
 	AudioMgr.instance:trigger(AudioEnum.MainSceneSkin.play_ui_main_switch_scene)
 end
 
-function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
-	arg_5_0._mo = arg_5_1
+function FightUISwitchItem:onUpdateMO(mo)
+	self._mo = mo
 
-	if arg_5_1 then
-		gohelper.setActive(arg_5_0._goLocked, not arg_5_1:isUnlock())
-		gohelper.setActive(arg_5_0._goTag, arg_5_1:isUse())
+	if mo then
+		gohelper.setActive(self._goLocked, not mo:isUnlock())
+		gohelper.setActive(self._goTag, mo:isUse())
 
-		local var_5_0 = arg_5_1:getConfig()
+		local co = mo:getConfig()
 
-		arg_5_0._simageicon:LoadImage(ResUrl.getMainSceneSwitchIcon(var_5_0.image))
+		self._simageicon:LoadImage(ResUrl.getMainSceneSwitchIcon(co.image))
 
-		local var_5_1 = FightUISwitchListModel.instance:getSelectMo() == arg_5_1
+		local isSelected = FightUISwitchListModel.instance:getSelectMo() == mo
 
-		arg_5_0:onSelect(var_5_1)
-		ZProj.UGUIHelper.SetGrayscale(arg_5_0._simageicon.gameObject, not arg_5_1:isUnlock())
+		self:onSelect(isSelected)
+		ZProj.UGUIHelper.SetGrayscale(self._simageicon.gameObject, not mo:isUnlock())
 	end
 end
 
-function var_0_0.onSelect(arg_6_0, arg_6_1)
-	if arg_6_0._mo then
-		var_0_0.super.onSelect(arg_6_0, arg_6_1)
+function FightUISwitchItem:onSelect(isSelect)
+	if self._mo then
+		FightUISwitchItem.super.onSelect(self, isSelect)
 	end
 end
 
-return var_0_0
+return FightUISwitchItem

@@ -1,83 +1,88 @@
-﻿module("modules.logic.fight.view.FightQuitTipView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightQuitTipView.lua
 
-local var_0_0 = class("FightQuitTipView", BaseView)
-local var_0_1 = {
+module("modules.logic.fight.view.FightQuitTipView", package.seeall)
+
+local FightQuitTipView = class("FightQuitTipView", BaseView)
+local Status = {
 	Tip = 1,
 	Confirm = 2
 }
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagemaskbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_quitshowview/center/layout/#simage_maskbg")
-	arg_1_0._simagetipbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_quittipview/#simage_tipbg")
-	arg_1_0._goquitshowview = gohelper.findChild(arg_1_0.viewGO, "#go_quitshowview")
-	arg_1_0._goquittipview = gohelper.findChild(arg_1_0.viewGO, "#go_quittipview")
-	arg_1_0._gopasstarget = gohelper.findChild(arg_1_0.viewGO, "#go_quitshowview/center/layout/passtarget")
-	arg_1_0._goconditionitem = gohelper.findChild(arg_1_0.viewGO, "#go_quitshowview/center/layout/passtarget/#go_conditionitem")
-	arg_1_0._goconditionitemdesc = gohelper.findChild(arg_1_0.viewGO, "#go_quitshowview/center/layout/passtarget/#go_conditionitem/desc")
-	arg_1_0._goquitfight = gohelper.findChild(arg_1_0.viewGO, "#go_quittipview/tipcontent/#go_quitfight")
-	arg_1_0._goadditiondetail = gohelper.findChild(arg_1_0.viewGO, "#go_quitshowview/#go_additiondetail")
-	arg_1_0._btncloserule = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_quitshowview/#go_additiondetail/#btn_closerule")
-	arg_1_0._goruleDescList = gohelper.findChild(arg_1_0.viewGO, "#go_quitshowview/#go_additiondetail/bg/#go_ruleDescList")
-	arg_1_0._goruleitem = gohelper.findChild(arg_1_0.viewGO, "#go_quitshowview/#go_additiondetail/bg/#go_ruleDescList/#go_ruleitem")
-	arg_1_0._btnquitgame = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_quitshowview/center/btn/#btn_quitgame")
-	arg_1_0._btnrestart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_quitshowview/center/btn/#btn_restart")
-	arg_1_0._btnfighttechnical = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_quitshowview/center/btn/#btn_fighttechnical")
-	arg_1_0._btnrouge = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_quitshowview/center/btn/#btn_rouge")
-	arg_1_0._gocareercontent = gohelper.findChild(arg_1_0.viewGO, "#go_quitshowview/center/layout/careerContent/#go_careercontent")
-	arg_1_0._btncontinuegame = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_quitshowview/center/btn/#btn_continuegame")
-	arg_1_0._btnsure = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_quittipview/#btn_sure")
-	arg_1_0._btnno = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_quittipview/#btn_no")
-	arg_1_0._simagenumline = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_quittipview/num")
+function FightQuitTipView:onInitView()
+	self._simagemaskbg = gohelper.findChildSingleImage(self.viewGO, "#go_quitshowview/center/layout/#simage_maskbg")
+	self._simagetipbg = gohelper.findChildSingleImage(self.viewGO, "#go_quittipview/#simage_tipbg")
+	self._goquitshowview = gohelper.findChild(self.viewGO, "#go_quitshowview")
+	self._goquittipview = gohelper.findChild(self.viewGO, "#go_quittipview")
+	self._gopasstarget = gohelper.findChild(self.viewGO, "#go_quitshowview/center/layout/passtarget")
+	self._goconditionitem = gohelper.findChild(self.viewGO, "#go_quitshowview/center/layout/passtarget/#go_conditionitem")
+	self._goconditionitemdesc = gohelper.findChild(self.viewGO, "#go_quitshowview/center/layout/passtarget/#go_conditionitem/desc")
+	self._goquitfight = gohelper.findChild(self.viewGO, "#go_quittipview/tipcontent/#go_quitfight")
+	self._goadditiondetail = gohelper.findChild(self.viewGO, "#go_quitshowview/#go_additiondetail")
+	self._btncloserule = gohelper.findChildButtonWithAudio(self.viewGO, "#go_quitshowview/#go_additiondetail/#btn_closerule")
+	self._goruleDescList = gohelper.findChild(self.viewGO, "#go_quitshowview/#go_additiondetail/bg/#go_ruleDescList")
+	self._goruleitem = gohelper.findChild(self.viewGO, "#go_quitshowview/#go_additiondetail/bg/#go_ruleDescList/#go_ruleitem")
+	self._btnquitgame = gohelper.findChildButtonWithAudio(self.viewGO, "#go_quitshowview/center/btn/#btn_quitgame")
+	self._btnrestart = gohelper.findChildButtonWithAudio(self.viewGO, "#go_quitshowview/center/btn/#btn_restart")
+	self._btnfighttechnical = gohelper.findChildButtonWithAudio(self.viewGO, "#go_quitshowview/center/btn/#btn_fighttechnical")
+	self._btnrouge = gohelper.findChildButtonWithAudio(self.viewGO, "#go_quitshowview/center/btn/#btn_rouge")
+	self._btnrouge2 = gohelper.findChildButtonWithAudio(self.viewGO, "#go_quitshowview/center/btn/#btn_rouge2")
+	self._gocareercontent = gohelper.findChild(self.viewGO, "#go_quitshowview/center/layout/careerContent/#go_careercontent")
+	self._btncontinuegame = gohelper.findChildButtonWithAudio(self.viewGO, "#go_quitshowview/center/btn/#btn_continuegame")
+	self._btnsure = gohelper.findChildButtonWithAudio(self.viewGO, "#go_quittipview/#btn_sure")
+	self._btnno = gohelper.findChildButtonWithAudio(self.viewGO, "#go_quittipview/#btn_no")
+	self._simagenumline = gohelper.findChildSingleImage(self.viewGO, "#go_quittipview/num")
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnquitgame:AddClickListener(arg_2_0._btnyesOnClick, arg_2_0)
-	arg_2_0._btnrestart:AddClickListener(arg_2_0._btnRestart, arg_2_0)
-	arg_2_0._btnfighttechnical:AddClickListener(arg_2_0._btnfighttechnicalOnClick, arg_2_0)
-	arg_2_0._btnrouge:AddClickListener(arg_2_0._btnrougeOnClick, arg_2_0)
-	arg_2_0._btncontinuegame:AddClickListener(arg_2_0._onBtnContinueGame, arg_2_0)
-	arg_2_0._btncloserule:AddClickListener(arg_2_0._onBtnContinueGame, arg_2_0)
-	arg_2_0._btnsure:AddClickListener(arg_2_0._btnsureOnClick, arg_2_0)
-	arg_2_0._btnno:AddClickListener(arg_2_0._btnnoOnClick, arg_2_0)
-	arg_2_0._btncloserule:AddClickListener(arg_2_0._btncloseruleOnClick, arg_2_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_2_0._onOpenView, arg_2_0)
-	arg_2_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyCommonCancel, arg_2_0._btnnoOnClick, arg_2_0)
-	arg_2_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyCommonConfirm, arg_2_0._onKeyExit, arg_2_0)
+function FightQuitTipView:addEvents()
+	self._btnquitgame:AddClickListener(self._btnyesOnClick, self)
+	self._btnrestart:AddClickListener(self._btnRestart, self)
+	self._btnfighttechnical:AddClickListener(self._btnfighttechnicalOnClick, self)
+	self._btnrouge:AddClickListener(self._btnrougeOnClick, self)
+	self._btnrouge2:AddClickListener(self._btnrouge2OnClick, self)
+	self._btncontinuegame:AddClickListener(self._onBtnContinueGame, self)
+	self._btncloserule:AddClickListener(self._onBtnContinueGame, self)
+	self._btnsure:AddClickListener(self._btnsureOnClick, self)
+	self._btnno:AddClickListener(self._btnnoOnClick, self)
+	self._btncloserule:AddClickListener(self._btncloseruleOnClick, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, self._onOpenView, self)
+	self:addEventCb(PCInputController.instance, PCInputEvent.NotifyCommonCancel, self._btnnoOnClick, self)
+	self:addEventCb(PCInputController.instance, PCInputEvent.NotifyCommonConfirm, self._onKeyExit, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnquitgame:RemoveClickListener()
-	arg_3_0._btnrestart:RemoveClickListener()
-	arg_3_0._btnfighttechnical:RemoveClickListener()
-	arg_3_0._btnrouge:RemoveClickListener()
-	arg_3_0._btncontinuegame:RemoveClickListener()
-	arg_3_0._btnsure:RemoveClickListener()
-	arg_3_0._btnno:RemoveClickListener()
-	arg_3_0._btncloserule:RemoveClickListener()
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, arg_3_0._onOpenView, arg_3_0)
-	arg_3_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyCommonCancel, arg_3_0._btnnoOnClick, arg_3_0)
-	arg_3_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyCommonConfirm, arg_3_0._onKeyExit, arg_3_0)
+function FightQuitTipView:removeEvents()
+	self._btnquitgame:RemoveClickListener()
+	self._btnrestart:RemoveClickListener()
+	self._btnfighttechnical:RemoveClickListener()
+	self._btnrouge:RemoveClickListener()
+	self._btnrouge2:RemoveClickListener()
+	self._btncontinuegame:RemoveClickListener()
+	self._btnsure:RemoveClickListener()
+	self._btnno:RemoveClickListener()
+	self._btncloserule:RemoveClickListener()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, self._onOpenView, self)
+	self:removeEventCb(PCInputController.instance, PCInputEvent.NotifyCommonCancel, self._btnnoOnClick, self)
+	self:removeEventCb(PCInputController.instance, PCInputEvent.NotifyCommonConfirm, self._onKeyExit, self)
 end
 
-function var_0_0._onOpenView(arg_4_0, arg_4_1)
-	if arg_4_1 == ViewName.GuideView then
-		arg_4_0:closeThis()
+function FightQuitTipView:_onOpenView(viewName)
+	if viewName == ViewName.GuideView then
+		self:closeThis()
 	end
 end
 
-function var_0_0._btnyesOnClick(arg_5_0)
-	arg_5_0.status = var_0_1.Confirm
+function FightQuitTipView:_btnyesOnClick()
+	self.status = Status.Confirm
 
-	arg_5_0:_refreshUI()
-	gohelper.setActive(arg_5_0._goquitshowview, false)
-	arg_5_0:_setQuitText()
+	self:_refreshUI()
+	gohelper.setActive(self._goquitshowview, false)
+	self:_setQuitText()
 end
 
-function var_0_0._btnRestart(arg_6_0)
+function FightQuitTipView:_btnRestart()
 	if FightDataHelper.stateMgr.isReplay then
 		return false
 	end
@@ -91,66 +96,62 @@ function var_0_0._btnRestart(arg_6_0)
 	FightGameMgr.restartMgr:restart()
 end
 
-function var_0_0._setQuitText(arg_7_0)
-	if arg_7_0._descTxt then
+function FightQuitTipView:_setQuitText()
+	if self._descTxt then
 		return
 	end
 
-	arg_7_0._descTxt = gohelper.findChildText(arg_7_0._goquitfight, "desc")
+	self._descTxt = gohelper.findChildText(self._goquitfight, "desc")
 
-	local var_7_0 = DungeonConfig.instance:getEpisodeCO(arg_7_0._episodeId)
+	local config = DungeonConfig.instance:getEpisodeCO(self._episodeId)
 
-	if var_7_0 then
-		if var_7_0.type == DungeonEnum.EpisodeType.WeekWalk or var_7_0.type == DungeonEnum.EpisodeType.Season then
-			arg_7_0._descTxt.text = luaLang("quit_fight_weekwalk")
-
-			return
-		elseif var_7_0.type == DungeonEnum.EpisodeType.Cachot then
-			arg_7_0._descTxt.text = luaLang("cachot_quit_fight")
+	if config then
+		if config.type == DungeonEnum.EpisodeType.WeekWalk or config.type == DungeonEnum.EpisodeType.Season then
+			self._descTxt.text = luaLang("quit_fight_weekwalk")
 
 			return
-		elseif var_7_0.type == DungeonEnum.EpisodeType.Rouge then
-			arg_7_0._descTxt.text = luaLang("rouge_quit_fight_confirm")
+		elseif config.type == DungeonEnum.EpisodeType.Cachot then
+			self._descTxt.text = luaLang("cachot_quit_fight")
+
+			return
+		elseif config.type == DungeonEnum.EpisodeType.Rouge then
+			self._descTxt.text = luaLang("rouge_quit_fight_confirm")
 
 			return
 		end
 	end
 
-	local var_7_1 = var_7_0 and DungeonConfig.instance:getChapterCO(var_7_0.chapterId)
+	local chapterConfig = config and DungeonConfig.instance:getChapterCO(config.chapterId)
 
-	if var_7_1 and var_7_1.enterAfterFreeLimit > 0 and DungeonModel.instance:getChapterRemainingNum(var_7_1.type) > 0 then
-		arg_7_0._descTxt.text = lua_language_coder.configDict.quit_fight_equip_1.lang
-
-		return
-	end
-
-	if (tonumber(DungeonConfig.instance:getEndBattleCost(arg_7_0._episodeId, false)) or 0) <= 0 then
-		arg_7_0._descTxt.text = lua_language_coder.configDict.quit_fight_weekwalk.lang
+	if chapterConfig and chapterConfig.enterAfterFreeLimit > 0 and DungeonModel.instance:getChapterRemainingNum(chapterConfig.type) > 0 then
+		self._descTxt.text = lua_language_coder.configDict.quit_fight_equip_1.lang
 
 		return
 	end
 
-	if arg_7_0._episodeId then
-		local var_7_2 = DungeonModel.instance:getEpisodeInfo(arg_7_0._episodeId)
+	local endBattleCost = tonumber(DungeonConfig.instance:getEndBattleCost(self._episodeId, false)) or 0
+
+	if endBattleCost <= 0 then
+		self._descTxt.text = lua_language_coder.configDict.quit_fight_weekwalk.lang
+
+		return
 	end
 
-	local var_7_3 = FightModel.instance:getFightParam()
+	local episodeInfo = self._episodeId and DungeonModel.instance:getEpisodeInfo(self._episodeId)
+	local fightParam = FightModel.instance:getFightParam()
+	local multiplication = fightParam and fightParam.multiplication or 1
 
-	if not var_7_3 or not var_7_3.multiplication then
-		local var_7_4 = 1
-	end
-
-	arg_7_0._descTxt.text = luaLang("confirm_quit")
+	self._descTxt.text = luaLang("confirm_quit")
 end
 
-function var_0_0._onKeyExit(arg_8_0)
-	if arg_8_0._goquitshowview and not ViewMgr.instance:isOpen(ViewName.MessageBoxView) then
-		arg_8_0:_btnsureOnClick()
+function FightQuitTipView:_onKeyExit()
+	if self._goquitshowview and not ViewMgr.instance:isOpen(ViewName.MessageBoxView) then
+		self:_btnsureOnClick()
 	end
 end
 
-function var_0_0._btnsureOnClick(arg_9_0)
-	arg_9_0:closeThis()
+function FightQuitTipView:_btnsureOnClick()
+	self:closeThis()
 
 	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.DouQuQu) then
 		FightSystem.instance:dispose()
@@ -169,109 +170,114 @@ function var_0_0._btnsureOnClick(arg_9_0)
 	end
 end
 
-function var_0_0._btnnoOnClick(arg_10_0)
-	arg_10_0.status = var_0_1.Tip
+function FightQuitTipView:_btnnoOnClick()
+	self.status = Status.Tip
 
-	arg_10_0:_refreshUI()
-	gohelper.setActive(arg_10_0._goquitshowview, true)
+	self:_refreshUI()
+	gohelper.setActive(self._goquitshowview, true)
 end
 
-function var_0_0._onBtnContinueGame(arg_11_0)
-	arg_11_0:closeThis()
+function FightQuitTipView:_onBtnContinueGame()
+	self:closeThis()
 	FightController.instance:dispatchEvent(FightEvent.OnFightQuitTipViewClose)
 end
 
-function var_0_0._btncloseruleOnClick(arg_12_0)
-	gohelper.setActive(arg_12_0._goadditiondetail, false)
+function FightQuitTipView:_btncloseruleOnClick()
+	gohelper.setActive(self._goadditiondetail, false)
 end
 
-function var_0_0._btnfighttechnicalOnClick(arg_13_0)
+function FightQuitTipView:_btnfighttechnicalOnClick()
 	FightController.instance:openFightTechniqueView()
 end
 
-function var_0_0._btnrougeOnClick(arg_14_0)
+function FightQuitTipView:_btnrougeOnClick()
 	FightController.instance:openFightTechniqueView()
 end
 
-function var_0_0._editableInitView(arg_15_0)
-	arg_15_0._simagetipbg:LoadImage(ResUrl.getMessageIcon("bg_tanchuang"))
-	arg_15_0._simagemaskbg:LoadImage(ResUrl.getFightIcon("img_zanting_bg.png"))
-	arg_15_0._simagenumline:LoadImage(ResUrl.getMessageIcon("bg_num"))
-
-	arg_15_0._episodeId = DungeonModel.instance.curSendEpisodeId
-	arg_15_0._chapterId = DungeonModel.instance.curSendChapterId
-
-	local var_15_0 = DungeonConfig.instance:getChapterCO(arg_15_0._chapterId)
-
-	arg_15_0._hardMode = var_15_0 and var_15_0.type == DungeonEnum.ChapterType.Hard
-	arg_15_0._weekwalkMode = var_15_0 and var_15_0.type == DungeonEnum.ChapterType.WeekWalk
-	arg_15_0._rougeMode = var_15_0 and var_15_0.type == DungeonEnum.ChapterType.Rouge
-
-	if arg_15_0._hardMode then
-		arg_15_0._episodeId = DungeonConfig.instance:getHardEpisode(arg_15_0._episodeId).id
-	end
-
-	gohelper.setActive(arg_15_0._goruleitem, false)
-	gohelper.setActive(arg_15_0._goadditiondetail, false)
-
-	arg_15_0._ruleItemsImage = arg_15_0:getUserDataTb_()
-	arg_15_0._ruleItemsDescImage = arg_15_0:getUserDataTb_()
-
-	for iter_15_0 = 1, 6 do
-		local var_15_1 = gohelper.findChildImage(arg_15_0._gocareercontent, "career" .. iter_15_0)
-
-		UISpriteSetMgr.instance:setCommonSprite(var_15_1, "lssx_" .. iter_15_0)
-	end
-
-	gohelper.addUIClickAudio(arg_15_0._btnquitgame.gameObject, AudioEnum.UI.Play_UI_Rolesback)
-	gohelper.addUIClickAudio(arg_15_0._btncontinuegame.gameObject, AudioEnum.UI.Play_UI_Tags)
-	gohelper.addUIClickAudio(arg_15_0._btnsure.gameObject, AudioEnum.UI.Play_UI_Rolesout)
-	gohelper.addUIClickAudio(arg_15_0._btnno.gameObject, AudioEnum.UI.Play_UI_Tags)
-
-	local var_15_2 = gohelper.findChild(arg_15_0._btnsure.gameObject, "#go_pcbtn")
-	local var_15_3 = gohelper.findChild(arg_15_0._btnno.gameObject, "#go_pcbtn")
-
-	PCInputController.instance:showkeyTips(var_15_2, nil, nil, "Return")
-	PCInputController.instance:showkeyTips(var_15_3, nil, nil, "Esc")
+function FightQuitTipView:_btnrouge2OnClick()
+	ViewMgr.instance:openView(ViewName.FightRouge2TechniqueView)
 end
 
-function var_0_0.onUpdateParam(arg_16_0)
+function FightQuitTipView:_editableInitView()
+	self._simagetipbg:LoadImage(ResUrl.getMessageIcon("bg_tanchuang"))
+	self._simagemaskbg:LoadImage(ResUrl.getFightIcon("img_zanting_bg.png"))
+	self._simagenumline:LoadImage(ResUrl.getMessageIcon("bg_num"))
+
+	self._episodeId = DungeonModel.instance.curSendEpisodeId
+	self._chapterId = DungeonModel.instance.curSendChapterId
+
+	local chapterCo = DungeonConfig.instance:getChapterCO(self._chapterId)
+
+	self._hardMode = chapterCo and chapterCo.type == DungeonEnum.ChapterType.Hard
+	self._weekwalkMode = chapterCo and chapterCo.type == DungeonEnum.ChapterType.WeekWalk
+	self._rougeMode = chapterCo and chapterCo.type == DungeonEnum.ChapterType.Rouge
+
+	if self._hardMode then
+		self._episodeId = DungeonConfig.instance:getHardEpisode(self._episodeId).id
+	end
+
+	gohelper.setActive(self._goruleitem, false)
+	gohelper.setActive(self._goadditiondetail, false)
+
+	self._ruleItemsImage = self:getUserDataTb_()
+	self._ruleItemsDescImage = self:getUserDataTb_()
+
+	for i = 1, 6 do
+		local career = gohelper.findChildImage(self._gocareercontent, "career" .. i)
+
+		UISpriteSetMgr.instance:setCommonSprite(career, "lssx_" .. i)
+	end
+
+	gohelper.addUIClickAudio(self._btnquitgame.gameObject, AudioEnum.UI.Play_UI_Rolesback)
+	gohelper.addUIClickAudio(self._btncontinuegame.gameObject, AudioEnum.UI.Play_UI_Tags)
+	gohelper.addUIClickAudio(self._btnsure.gameObject, AudioEnum.UI.Play_UI_Rolesout)
+	gohelper.addUIClickAudio(self._btnno.gameObject, AudioEnum.UI.Play_UI_Tags)
+
+	local btnsureTips = gohelper.findChild(self._btnsure.gameObject, "#go_pcbtn")
+	local btnnoTips = gohelper.findChild(self._btnno.gameObject, "#go_pcbtn")
+
+	PCInputController.instance:showkeyTips(btnsureTips, nil, nil, "Return")
+	PCInputController.instance:showkeyTips(btnnoTips, nil, nil, "Esc")
+end
+
+function FightQuitTipView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_17_0)
-	if arg_17_0:episodeNeedHideRestart() then
-		gohelper.setActive(arg_17_0._btnrestart.gameObject, false)
+function FightQuitTipView:onOpen()
+	if self:episodeNeedHideRestart() then
+		gohelper.setActive(self._btnrestart.gameObject, false)
 	else
-		gohelper.setActive(arg_17_0._btnrestart.gameObject, not FightDataHelper.stateMgr.isReplay)
+		gohelper.setActive(self._btnrestart.gameObject, not FightDataHelper.stateMgr.isReplay)
 	end
 
-	arg_17_0.status = var_0_1.Tip
+	self.status = Status.Tip
 
-	arg_17_0:_loadCondition()
-	arg_17_0:_refreshUI()
+	self:_loadCondition()
+	self:_refreshUI()
 
-	local var_17_0 = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.FightTechnique)
+	local isOpenShow = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.FightTechnique)
 
-	gohelper.setActive(arg_17_0._btnfighttechnical.gameObject, var_17_0 and not arg_17_0._rougeMode)
-	gohelper.setActive(arg_17_0._btnrouge.gameObject, var_17_0 and arg_17_0._rougeMode)
-	NavigateMgr.instance:addEscape(ViewName.FightQuitTipView, arg_17_0._onBtnContinueGame, arg_17_0)
+	gohelper.setActive(self._btnfighttechnical.gameObject, isOpenShow and not self._rougeMode)
+	gohelper.setActive(self._btnrouge.gameObject, isOpenShow and self._rougeMode)
+	gohelper.setActive(self._btnrouge2.gameObject, FightDataHelper.fieldMgr:isRouge2())
+	NavigateMgr.instance:addEscape(ViewName.FightQuitTipView, self._onBtnContinueGame, self)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_fight_keeporquit)
 	FightAudioMgr.instance:obscureBgm(true)
 end
 
-function var_0_0.episodeNeedHideRestart(arg_18_0)
-	local var_18_0 = DungeonConfig.instance:getEpisodeCO(arg_18_0._episodeId)
+function FightQuitTipView:episodeNeedHideRestart()
+	local episodeConfig = DungeonConfig.instance:getEpisodeCO(self._episodeId)
 
-	if var_18_0 and arg_18_0:checkNeedHideRestartEpisodeType(var_18_0.type) then
+	if episodeConfig and self:checkNeedHideRestartEpisodeType(episodeConfig.type) then
 		return true
 	end
 
-	if var_18_0 then
-		local var_18_1 = DungeonConfig.instance:getChapterCO(var_18_0.chapterId)
-		local var_18_2 = FightRestartSequence.RestartType2Type[var_18_1.type] or var_18_1.type
+	if episodeConfig then
+		local chapterConfig = DungeonConfig.instance:getChapterCO(episodeConfig.chapterId)
+		local play_type = FightRestartSequence.RestartType2Type[chapterConfig.type] or chapterConfig.type
 
-		if var_18_1 and not _G["FightRestartAbandonType" .. var_18_2] then
+		if chapterConfig and not _G["FightRestartAbandonType" .. play_type] then
 			return true
 		end
 	end
@@ -279,587 +285,609 @@ function var_0_0.episodeNeedHideRestart(arg_18_0)
 	return false
 end
 
-function var_0_0.checkNeedHideRestartEpisodeType(arg_19_0, arg_19_1)
-	if not arg_19_0._hideRestartEpisodeTypes then
-		arg_19_0._hideRestartEpisodeTypes = {
+function FightQuitTipView:checkNeedHideRestartEpisodeType(episodeType)
+	if not self._hideRestartEpisodeTypes then
+		self._hideRestartEpisodeTypes = {
 			[DungeonEnum.EpisodeType.Dog] = true,
 			[DungeonEnum.EpisodeType.Act1_6DungeonBoss] = true
 		}
 	end
 
-	return arg_19_0._hideRestartEpisodeTypes[arg_19_1]
+	return self._hideRestartEpisodeTypes[episodeType]
 end
 
-function var_0_0._refreshUI(arg_20_0)
-	local var_20_0 = arg_20_0.status == var_0_1.Tip
+function FightQuitTipView:_refreshUI()
+	local isTiping = self.status == Status.Tip
 
-	gohelper.setActive(arg_20_0._goquitshowview, var_20_0)
-	gohelper.setActive(arg_20_0._goquittipview, not var_20_0)
+	gohelper.setActive(self._goquitshowview, isTiping)
+	gohelper.setActive(self._goquittipview, not isTiping)
 end
 
-function var_0_0._loadCondition(arg_21_0)
+function FightQuitTipView:_loadCondition()
 	if FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.WeekwalkVer2] then
-		arg_21_0:_refreshWeekwalkVer2Condition()
+		self:_refreshWeekwalkVer2Condition()
 
 		return
 	end
 
-	local var_21_0 = FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.Odyssey]
+	local customData = FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.Odyssey]
 
-	if var_21_0 and var_21_0.elementId and var_21_0.elementId ~= 0 and arg_21_0:refreshOdysseyTask(var_21_0) then
+	if customData and customData.elementId and customData.elementId ~= 0 and self:refreshOdysseyTask(customData) then
 		return
 	end
 
-	local var_21_1 = DungeonModel.instance:getEpisodeInfo(arg_21_0._episodeId)
-	local var_21_2 = DungeonConfig.instance:getEpisodeCO(arg_21_0._episodeId)
+	local episodeInfo = DungeonModel.instance:getEpisodeInfo(self._episodeId)
+	local episodeConfig = DungeonConfig.instance:getEpisodeCO(self._episodeId)
 
-	if var_21_2 then
-		if var_21_2.type == DungeonEnum.EpisodeType.RoleStoryChallenge then
-			gohelper.setActive(arg_21_0._gopasstarget, false)
+	if episodeConfig then
+		if episodeConfig.type == DungeonEnum.EpisodeType.RoleStoryChallenge then
+			gohelper.setActive(self._gopasstarget, false)
 
 			return
-		elseif SeasonFightHandler.loadSeasonCondition(var_21_2.type, arg_21_0._gopasstarget, arg_21_0._goconditionitemdesc, arg_21_0._goconditionitem) then
+		elseif SeasonFightHandler.loadSeasonCondition(episodeConfig.type, self._gopasstarget, self._goconditionitemdesc, self._goconditionitem) then
 			return
-		elseif VersionActivity2_9DungeonHelper.loadFightCondition(arg_21_0, arg_21_0._episodeId, arg_21_0._gopasstarget) then
+		elseif VersionActivity2_9DungeonHelper.loadFightCondition(self, self._episodeId, self._gopasstarget) then
 			return
 		end
 	end
 
-	local var_21_3 = DungeonConfig.instance:getFirstEpisodeWinConditionText(nil, FightModel.instance:getBattleId())
+	local condition = DungeonConfig.instance:getFirstEpisodeWinConditionText(nil, FightModel.instance:getBattleId())
 
 	if BossRushController.instance:isInBossRushInfiniteFight() then
-		var_21_3 = luaLang("v1a4_bossrushleveldetail_txt_target")
+		condition = luaLang("v1a4_bossrushleveldetail_txt_target")
 	end
 
-	arg_21_0:_setConditionText(arg_21_0._goconditionitemdesc, var_21_3, false)
-	arg_21_0:_setStarStatus(arg_21_0._goconditionitemdesc, false)
+	local episodeId = FightDataHelper.fieldMgr.episodeId
+	local episodeConfig = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-	if not var_21_1 or not var_21_2 then
+	if episodeConfig and episodeConfig.type == DungeonEnum.EpisodeType.V3_2ZongMao then
+		condition = luaLang("v1a4_bossrushleveldetail_txt_target")
+	end
+
+	self:_setConditionText(self._goconditionitemdesc, condition, false)
+	self:_setStarStatus(self._goconditionitemdesc, false)
+
+	if not episodeInfo or not episodeConfig then
 		return
 	end
 
-	local var_21_4 = DungeonModel.instance.curSendChapterId
+	local chapterId = DungeonModel.instance.curSendChapterId
 
-	if var_21_4 then
-		local var_21_5 = DungeonConfig.instance:getChapterCO(var_21_4)
+	if chapterId then
+		local chapterCo = DungeonConfig.instance:getChapterCO(chapterId)
 
-		if var_21_5 and var_21_5.type == DungeonEnum.ChapterType.Simple then
+		if chapterCo and chapterCo.type == DungeonEnum.ChapterType.Simple then
 			return
 		end
 	end
 
 	if FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.Act183] then
-		arg_21_0:refresh183Condition()
+		self:refresh183Condition()
 
 		return
 	end
 
-	local var_21_6 = DungeonConfig.instance:getEpisodeAdvancedConditionText(arg_21_0._episodeId, FightModel.instance:getBattleId())
+	local advancedConditionText = DungeonConfig.instance:getEpisodeAdvancedConditionText(self._episodeId, FightModel.instance:getBattleId())
 
-	if not LuaUtil.isEmptyStr(var_21_6) then
-		local var_21_7 = gohelper.clone(arg_21_0._goconditionitemdesc, arg_21_0._goconditionitem, "platnumdesc")
-		local var_21_8 = arg_21_0:checkPlatCondition(DungeonConfig.instance:getEpisodeAdvancedCondition2(arg_21_0._episodeId, 1, FightModel.instance:getBattleId()))
-		local var_21_9 = ""
+	if not LuaUtil.isEmptyStr(advancedConditionText) then
+		local conditionItem = gohelper.clone(self._goconditionitemdesc, self._goconditionitem, "platnumdesc")
+		local platHighLight = self:checkPlatCondition(DungeonConfig.instance:getEpisodeAdvancedCondition2(self._episodeId, 1, FightModel.instance:getBattleId()))
+		local progress = ""
 
 		if not FightModel.instance.needFightReconnect then
-			local var_21_10 = DungeonConfig.instance:getEpisodeAdvancedCondition(arg_21_0._episodeId, FightModel.instance:getBattleId())
-			local var_21_11 = lua_condition.configDict[tonumber(var_21_10)]
-			local var_21_12 = var_21_11 and tonumber(var_21_11.type)
+			local platConditionId = DungeonConfig.instance:getEpisodeAdvancedCondition(self._episodeId, FightModel.instance:getBattleId())
+			local conditionCO = lua_condition.configDict[tonumber(platConditionId)]
+			local conditionType = conditionCO and tonumber(conditionCO.type)
 
-			if var_21_12 and var_21_12 == 7 then
-				var_21_9 = string.format(" (%d/%s)", arg_21_0:_getPlatinumProgress7(), var_21_11.attr)
-			elseif var_21_12 and var_21_12 == 8 then
-				var_21_9 = string.format(" (%d/%s)", arg_21_0:_getPlatinumProgress8(), var_21_11.attr)
-			elseif var_21_12 and var_21_12 == 9 then
-				var_21_9 = string.format(" (%d%%/%s%%)", arg_21_0:_getPlatinumProgress9(), tostring(tonumber(var_21_11.attr) / 10))
+			if conditionType and conditionType == 7 then
+				progress = string.format(" (%d/%s)", self:_getPlatinumProgress7(), conditionCO.attr)
+			elseif conditionType and conditionType == 8 then
+				progress = string.format(" (%d/%s)", self:_getPlatinumProgress8(), conditionCO.attr)
+			elseif conditionType and conditionType == 9 then
+				progress = string.format(" (%d%%/%s%%)", self:_getPlatinumProgress9(), tostring(tonumber(conditionCO.attr) / 10))
 			end
 		end
 
-		arg_21_0:_setConditionText(var_21_7, var_21_6 .. var_21_9, var_21_8)
-		arg_21_0:_setStarStatus(var_21_7, var_21_8)
+		self:_setConditionText(conditionItem, advancedConditionText .. progress, platHighLight)
+		self:_setStarStatus(conditionItem, platHighLight)
 	end
 
-	local var_21_13 = DungeonConfig.instance:getEpisodeAdvancedCondition2Text(arg_21_0._episodeId, FightModel.instance:getBattleId())
+	local advancedConditionText2 = DungeonConfig.instance:getEpisodeAdvancedCondition2Text(self._episodeId, FightModel.instance:getBattleId())
 
-	if not LuaUtil.isEmptyStr(var_21_13) then
-		local var_21_14 = gohelper.clone(arg_21_0._goconditionitemdesc, arg_21_0._goconditionitem, "platnumdesc2")
-		local var_21_15 = arg_21_0:checkPlatCondition(DungeonConfig.instance:getEpisodeAdvancedCondition2(arg_21_0._episodeId, 2, FightModel.instance:getBattleId()))
+	if not LuaUtil.isEmptyStr(advancedConditionText2) then
+		local conditionItem = gohelper.clone(self._goconditionitemdesc, self._goconditionitem, "platnumdesc2")
+		local platHighLight = self:checkPlatCondition(DungeonConfig.instance:getEpisodeAdvancedCondition2(self._episodeId, 2, FightModel.instance:getBattleId()))
 
-		arg_21_0:_setConditionText(var_21_14, var_21_13, var_21_15)
-		arg_21_0:_setStarStatus(var_21_14, var_21_15)
+		self:_setConditionText(conditionItem, advancedConditionText2, platHighLight)
+		self:_setStarStatus(conditionItem, platHighLight)
 	end
 end
 
-function var_0_0._getPlatinumProgress7(arg_22_0)
-	local var_22_0 = FightDataHelper.roundMgr.dataList
-	local var_22_1 = 0
+function FightQuitTipView:_getPlatinumProgress7()
+	local roundDataMgr = FightDataHelper.roundMgr
+	local roundDataList = roundDataMgr.dataList
+	local maxUniqueSkillCount = 0
 
-	for iter_22_0, iter_22_1 in ipairs(var_22_0) do
-		local var_22_2 = 0
+	for _, roundData in ipairs(roundDataList) do
+		local uniqueSkillCount = 0
 
-		for iter_22_2, iter_22_3 in ipairs(iter_22_1.fightStep) do
-			if iter_22_3.hasPlay and iter_22_3.actType == FightEnum.ActType.SKILL then
-				local var_22_3 = FightDataHelper.entityMgr:getById(iter_22_3.fromId)
+		for _, fightStepData in ipairs(roundData.fightStep) do
+			if fightStepData.hasPlay and fightStepData.actType == FightEnum.ActType.SKILL then
+				local entityMO = FightDataHelper.entityMgr:getById(fightStepData.fromId)
 
-				if var_22_3 and var_22_3.side == FightEnum.EntitySide.MySide and FightCardDataHelper.isBigSkill(iter_22_3.actId) then
-					var_22_2 = var_22_2 + 1
+				if entityMO and entityMO.side == FightEnum.EntitySide.MySide and FightCardDataHelper.isBigSkill(fightStepData.actId) then
+					uniqueSkillCount = uniqueSkillCount + 1
 				end
 			end
 		end
 
-		var_22_1 = math.max(var_22_1, var_22_2)
+		maxUniqueSkillCount = math.max(maxUniqueSkillCount, uniqueSkillCount)
 	end
 
-	return var_22_1
+	return maxUniqueSkillCount
 end
 
-local var_0_2 = {
+local DamageType = {
 	[FightEnum.EffectType.DAMAGE] = true,
 	[FightEnum.EffectType.CRIT] = true,
 	[FightEnum.EffectType.BEATBACK] = true,
 	[FightEnum.EffectType.DAMAGEEXTRA] = true
 }
 
-function var_0_0._getPlatinumProgress8(arg_23_0)
-	local var_23_0 = FightDataHelper.roundMgr.dataList
-	local var_23_1 = 0
+function FightQuitTipView:_getPlatinumProgress8()
+	local roundDataMgr = FightDataHelper.roundMgr
+	local roundDataList = roundDataMgr.dataList
+	local maxStepDamage = 0
 
-	for iter_23_0, iter_23_1 in ipairs(var_23_0) do
-		for iter_23_2, iter_23_3 in ipairs(iter_23_1.fightStep) do
-			local var_23_2 = FightDataHelper.entityMgr:getById(iter_23_3.fromId)
+	for _, roundData in ipairs(roundDataList) do
+		for _, fightStepData in ipairs(roundData.fightStep) do
+			local entityMO = FightDataHelper.entityMgr:getById(fightStepData.fromId)
 
-			if iter_23_3.hasPlay and var_23_2 and var_23_2.side == FightEnum.EntitySide.MySide then
-				local var_23_3 = 0
+			if fightStepData.hasPlay and entityMO and entityMO.side == FightEnum.EntitySide.MySide then
+				local stepDamage = 0
 
-				for iter_23_4, iter_23_5 in ipairs(iter_23_3.actEffect) do
-					local var_23_4 = FightDataHelper.entityMgr:getById(iter_23_5.targetId)
+				for _, actEffectData in ipairs(fightStepData.actEffect) do
+					local targetEntityMO = FightDataHelper.entityMgr:getById(actEffectData.targetId)
 
-					if var_23_4 and var_23_4.side == FightEnum.EntitySide.EnemySide then
-						if var_0_2[iter_23_5.effectType] then
-							var_23_3 = var_23_3 + iter_23_5.effectNum
-						elseif iter_23_5.effectType == FightEnum.EffectType.SHIELDDEL then
-							var_23_3 = var_23_3 + iter_23_5.effectNum
-						elseif iter_23_5.effectType == FightEnum.EffectType.SHIELD and iter_23_5.entity then
-							var_23_3 = var_23_3 + iter_23_5.entity.shieldValue - iter_23_5.effectNum
+					if targetEntityMO and targetEntityMO.side == FightEnum.EntitySide.EnemySide then
+						if DamageType[actEffectData.effectType] then
+							stepDamage = stepDamage + actEffectData.effectNum
+						elseif actEffectData.effectType == FightEnum.EffectType.SHIELDDEL then
+							stepDamage = stepDamage + actEffectData.effectNum
+						elseif actEffectData.effectType == FightEnum.EffectType.SHIELD and actEffectData.entity then
+							stepDamage = stepDamage + actEffectData.entity.shieldValue - actEffectData.effectNum
 						end
 					end
 				end
 
-				var_23_1 = math.max(var_23_1, var_23_3)
+				maxStepDamage = math.max(maxStepDamage, stepDamage)
 			end
 		end
 	end
 
-	return var_23_1
+	return maxStepDamage
 end
 
-function var_0_0._getPlatinumProgress9(arg_24_0)
-	local var_24_0 = FightDataHelper.entityMgr:getMyNormalList()
-	local var_24_1 = #FightDataHelper.entityMgr:getDeadList(FightEnum.EntitySide.MySide)
-	local var_24_2 = 0
+function FightQuitTipView:_getPlatinumProgress9()
+	local mySideList = FightDataHelper.entityMgr:getMyNormalList()
+	local mySideDeadCount = #FightDataHelper.entityMgr:getDeadList(FightEnum.EntitySide.MySide)
+	local totalPercent = 0
 
-	for iter_24_0, iter_24_1 in ipairs(var_24_0) do
-		var_24_2 = var_24_2 + iter_24_1.currentHp / iter_24_1.attrMO.hp
+	for _, entityMO in ipairs(mySideList) do
+		totalPercent = totalPercent + entityMO.currentHp / entityMO.attrMO.hp
 	end
 
-	local var_24_3 = var_24_2 / (#var_24_0 + var_24_1)
+	local percent = totalPercent / (#mySideList + mySideDeadCount)
 
-	return math.floor(var_24_3 * 100)
+	return math.floor(percent * 100)
 end
 
-function var_0_0._setConditionText(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
-	local var_25_0 = arg_25_1:GetComponent(gohelper.Type_Text) or arg_25_1:GetComponent(gohelper.Type_TextMesh)
+function FightQuitTipView:_setConditionText(go, text, highLight)
+	local textCom = go:GetComponent(gohelper.Type_Text) or go:GetComponent(gohelper.Type_TextMesh)
 
-	if arg_25_3 then
-		var_25_0.text = gohelper.getRichColorText(arg_25_2, "#E6E2DF")
+	if highLight then
+		textCom.text = gohelper.getRichColorText(text, "#E6E2DF")
 	else
-		var_25_0.text = gohelper.getRichColorText(arg_25_2, "#A7A6A6")
+		textCom.text = gohelper.getRichColorText(text, "#A7A6A6")
 	end
 end
 
-function var_0_0._setStarStatus(arg_26_0, arg_26_1, arg_26_2)
-	local var_26_0 = gohelper.findChildImage(arg_26_1, "star")
-	local var_26_1 = arg_26_0._hardMode and "zhuxianditu_kn_xingxing_002" or "zhuxianditu_pt_xingxing_001"
-	local var_26_2 = "#87898C"
+function FightQuitTipView:_setStarStatus(go, highLight)
+	local star = gohelper.findChildImage(go, "star")
+	local starImage = self._hardMode and "zhuxianditu_kn_xingxing_002" or "zhuxianditu_pt_xingxing_001"
+	local starColor = "#87898C"
 
-	if arg_26_2 then
-		var_26_2 = arg_26_0._hardMode and "#FF4343" or "#F77040"
+	if highLight then
+		starColor = self._hardMode and "#FF4343" or "#F77040"
 	end
 
-	UISpriteSetMgr.instance:setCommonSprite(var_26_0, var_26_1)
-	SLFramework.UGUI.GuiHelper.SetColor(var_26_0, var_26_2)
+	UISpriteSetMgr.instance:setCommonSprite(star, starImage)
+	SLFramework.UGUI.GuiHelper.SetColor(star, starColor)
 end
 
-function var_0_0.checkPlatCondition(arg_27_0, arg_27_1)
-	local var_27_0 = lua_condition.configDict[tonumber(arg_27_1)]
+function FightQuitTipView:checkPlatCondition(platConditionId)
+	local condition = lua_condition.configDict[tonumber(platConditionId)]
 
-	if not var_27_0 then
+	if not condition then
 		return true
 	end
 
-	local var_27_1 = #FightDataHelper.entityMgr:getDeadList(FightEnum.EntitySide.MySide)
-	local var_27_2 = FightModel.instance:getCurRoundId()
+	local deadHeroCount = #FightDataHelper.entityMgr:getDeadList(FightEnum.EntitySide.MySide)
+	local curRound = FightModel.instance:getCurRoundId()
 
-	if tonumber(var_27_0.type) == 1 then
-		return var_27_1 < tonumber(var_27_0.attr)
-	elseif tonumber(var_27_0.type) == 2 then
-		return var_27_2 <= tonumber(var_27_0.attr)
-	elseif tonumber(var_27_0.type) == 3 then
-		return var_27_1 == 0 and var_27_2 <= tonumber(var_27_0.attr)
-	elseif tonumber(var_27_0.type) == 4 then
+	if tonumber(condition.type) == 1 then
+		return deadHeroCount < tonumber(condition.attr)
+	elseif tonumber(condition.type) == 2 then
+		return curRound <= tonumber(condition.attr)
+	elseif tonumber(condition.type) == 3 then
+		return deadHeroCount == 0 and curRound <= tonumber(condition.attr)
+	elseif tonumber(condition.type) == 4 then
 		return false
-	elseif tonumber(var_27_0.type) == 5 then
+	elseif tonumber(condition.type) == 5 then
 		return false
-	elseif tonumber(var_27_0.type) == 6 then
+	elseif tonumber(condition.type) == 6 then
 		return false
-	elseif tonumber(var_27_0.type) == 7 then
-		return arg_27_0:_getPlatinumProgress7() >= tonumber(var_27_0.attr)
-	elseif tonumber(var_27_0.type) == 8 then
-		return arg_27_0:_getPlatinumProgress8() >= tonumber(var_27_0.attr)
-	elseif tonumber(var_27_0.type) == 9 then
-		return arg_27_0:_getPlatinumProgress9() >= tonumber(var_27_0.attr) / 10
+	elseif tonumber(condition.type) == 7 then
+		return self:_getPlatinumProgress7() >= tonumber(condition.attr)
+	elseif tonumber(condition.type) == 8 then
+		return self:_getPlatinumProgress8() >= tonumber(condition.attr)
+	elseif tonumber(condition.type) == 9 then
+		return self:_getPlatinumProgress9() >= tonumber(condition.attr) / 10
 	else
 		return true
 	end
 end
 
-function var_0_0._addEmptyRuleItem(arg_28_0)
-	local var_28_0 = gohelper.clone(arg_28_0._goruletemp, arg_28_0._gorulelist, "none")
+function FightQuitTipView:_addEmptyRuleItem()
+	local go = gohelper.clone(self._goruletemp, self._gorulelist, "none")
 
-	gohelper.setActive(var_28_0, true)
+	gohelper.setActive(go, true)
 
-	local var_28_1 = gohelper.findChildImage(var_28_0, "#image_tagicon")
+	local tagicon = gohelper.findChildImage(go, "#image_tagicon")
 
-	gohelper.setActive(var_28_1.gameObject, false)
+	gohelper.setActive(tagicon.gameObject, false)
 
-	local var_28_2 = gohelper.findChildImage(var_28_0, "")
+	local simage = gohelper.findChildImage(go, "")
 
-	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(var_28_2, "none")
+	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(simage, "none")
 end
 
-function var_0_0._addRuleItem(arg_29_0, arg_29_1, arg_29_2)
-	local var_29_0 = gohelper.clone(arg_29_0._goruletemp, arg_29_0._gorulelist, arg_29_1.id)
+function FightQuitTipView:_addRuleItem(ruleCo, targetId)
+	local go = gohelper.clone(self._goruletemp, self._gorulelist, ruleCo.id)
 
-	gohelper.setActive(var_29_0, true)
+	gohelper.setActive(go, true)
 
-	local var_29_1 = gohelper.findChildImage(var_29_0, "#image_tagicon")
+	local tagicon = gohelper.findChildImage(go, "#image_tagicon")
 
-	gohelper.setActive(var_29_1.gameObject, true)
-	UISpriteSetMgr.instance:setCommonSprite(var_29_1, "wz_" .. arg_29_2)
+	gohelper.setActive(tagicon.gameObject, true)
+	UISpriteSetMgr.instance:setCommonSprite(tagicon, "wz_" .. targetId)
 
-	local var_29_2 = gohelper.findChildImage(var_29_0, "")
+	local simage = gohelper.findChildImage(go, "")
 
-	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(var_29_2, arg_29_1.icon)
+	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(simage, ruleCo.icon)
 end
 
-function var_0_0._addRuleItemDesc(arg_30_0, arg_30_1, arg_30_2, arg_30_3)
-	local var_30_0 = {
+function FightQuitTipView:_addRuleItemDesc(ruleCo, targetId, needLoadLine)
+	local tagColor = {
 		"#6680bd",
 		"#d05b4c",
 		"#c7b376"
 	}
-	local var_30_1 = gohelper.clone(arg_30_0._goruleitem, arg_30_0._goruleDescList, arg_30_1.id)
-	local var_30_2 = gohelper.findChildImage(var_30_1, "icon")
+	local go = gohelper.clone(self._goruleitem, self._goruleDescList, ruleCo.id)
+	local icon = gohelper.findChildImage(go, "icon")
 
-	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(var_30_2, arg_30_1.icon)
+	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(icon, ruleCo.icon)
 
-	local var_30_3 = gohelper.findChild(var_30_1, "#go_line")
+	local lineImg = gohelper.findChild(go, "#go_line")
 
-	gohelper.setActive(var_30_3, arg_30_3)
+	gohelper.setActive(lineImg, needLoadLine)
 
-	local var_30_4 = gohelper.findChildImage(var_30_1, "tag")
+	local tag = gohelper.findChildImage(go, "tag")
 
-	UISpriteSetMgr.instance:setCommonSprite(var_30_4, "wz_" .. arg_30_2)
+	UISpriteSetMgr.instance:setCommonSprite(tag, "wz_" .. targetId)
 
-	local var_30_5 = gohelper.findChildText(var_30_1, "desc")
-	local var_30_6 = string.gsub(arg_30_1.desc, "%【(.-)%】", "<color=#6680bd>【%1】</color>")
+	local desc = gohelper.findChildText(go, "desc")
+	local descContent = string.gsub(ruleCo.desc, "%【(.-)%】", "<color=#6680bd>【%1】</color>")
 
-	var_30_5.text = SkillConfig.instance:fmtTagDescColor(luaLang("dungeon_add_rule_target_" .. arg_30_2), var_30_6, var_30_0[arg_30_2])
+	desc.text = SkillConfig.instance:fmtTagDescColor(luaLang("dungeon_add_rule_target_" .. targetId), descContent, tagColor[targetId])
 
-	gohelper.setActive(var_30_1, true)
+	gohelper.setActive(go, true)
 end
 
-function var_0_0._showRuleDesc(arg_31_0)
-	local var_31_0 = FightModel.instance:getFightParam()
-	local var_31_1 = DungeonConfig.instance:getEpisodeCO(var_31_0.episodeId)
+function FightQuitTipView:_showRuleDesc()
+	local fightParam = FightModel.instance:getFightParam()
+	local episode_config = DungeonConfig.instance:getEpisodeCO(fightParam.episodeId)
 
-	if var_31_1 and not string.nilorempty(var_31_1.battleDesc) then
-		gohelper.setActive(arg_31_0._goadditiontip, true)
-		gohelper.setActive(arg_31_0._goaddition, true)
-		gohelper.setActive(arg_31_0._goruledesc, true)
-		gohelper.setActive(arg_31_0._gorulelist, false)
-		gohelper.setActive(arg_31_0._ruleclick.gameObject, false)
+	if episode_config and not string.nilorempty(episode_config.battleDesc) then
+		gohelper.setActive(self._goadditiontip, true)
+		gohelper.setActive(self._goaddition, true)
+		gohelper.setActive(self._goruledesc, true)
+		gohelper.setActive(self._gorulelist, false)
+		gohelper.setActive(self._ruleclick.gameObject, false)
 
-		arg_31_0._txtruledesc1.text = var_31_1.battleDesc
+		self._txtruledesc1.text = episode_config.battleDesc
 	else
-		gohelper.setActive(arg_31_0._goaddition, false)
+		gohelper.setActive(self._goaddition, false)
 	end
 end
 
-function var_0_0._ruleListClickFunc(arg_32_0)
-	gohelper.setActive(arg_32_0._goadditiondetail, true)
+function FightQuitTipView:_ruleListClickFunc()
+	gohelper.setActive(self._goadditiondetail, true)
 end
 
-function var_0_0.refreshOdysseyTask(arg_33_0, arg_33_1)
-	local var_33_0 = arg_33_1.elementId
-	local var_33_1 = lua_odyssey_fight_element.configDict[var_33_0]
+function FightQuitTipView:refreshOdysseyTask(customData)
+	local elementId = customData.elementId
+	local config = lua_odyssey_fight_element.configDict[elementId]
 
-	if not var_33_1 then
+	if not config then
 		return
 	end
 
-	if var_33_1.type ~= 6 then
+	if config.type ~= 6 then
 		return
 	end
 
-	local var_33_2 = var_33_1.param
-	local var_33_3 = GameUtil.splitString2(var_33_2, true)
+	local param = config.param
+	local arr = GameUtil.splitString2(param, true)
 
-	table.sort(var_33_3, function(arg_34_0, arg_34_1)
-		return arg_34_0[1] < arg_34_1[1]
+	table.sort(arr, function(a, b)
+		return a[1] < b[1]
 	end)
 
-	local var_33_4 = {}
+	local taskList = {}
 
-	for iter_33_0, iter_33_1 in ipairs(var_33_3) do
-		local var_33_5 = iter_33_1[2]
-		local var_33_6 = lua_odyssey_fight_task_desc.configDict[var_33_5]
+	for i, v in ipairs(arr) do
+		local taskId = v[2]
+		local taskConfig = lua_odyssey_fight_task_desc.configDict[taskId]
 
-		if var_33_6 then
-			table.insert(var_33_4, var_33_6)
+		if taskConfig then
+			table.insert(taskList, taskConfig)
 		end
 	end
 
-	for iter_33_2, iter_33_3 in ipairs(var_33_4) do
-		local var_33_7 = gohelper.clone(arg_33_0._goconditionitemdesc, arg_33_0._goconditionitem, "platnumdesc")
+	for i, v in ipairs(taskList) do
+		local conditionItem = gohelper.clone(self._goconditionitemdesc, self._goconditionitem, "platnumdesc")
 
-		arg_33_0:showOdysseyTask(var_33_7, iter_33_3, iter_33_2)
+		self:showOdysseyTask(conditionItem, v, i)
 	end
 
-	gohelper.setActive(arg_33_0._goconditionitemdesc, false)
+	gohelper.setActive(self._goconditionitemdesc, false)
 
-	gohelper.onceAddComponent(arg_33_0._goconditionitem, gohelper.Type_VerticalLayoutGroup).spacing = 60
-	gohelper.findChildComponent(arg_33_0.viewGO, "#go_quitshowview/center/layout/passtarget/#go_conditionitem/passtargetTip", typeof(UnityEngine.UI.LayoutElement)).minHeight = 35
+	local comp = gohelper.onceAddComponent(self._goconditionitem, gohelper.Type_VerticalLayoutGroup)
+
+	comp.spacing = 60
+	comp = gohelper.findChildComponent(self.viewGO, "#go_quitshowview/center/layout/passtarget/#go_conditionitem/passtargetTip", typeof(UnityEngine.UI.LayoutElement))
+	comp.minHeight = 35
 
 	return true
 end
 
-function var_0_0.showOdysseyTask(arg_35_0, arg_35_1, arg_35_2, arg_35_3)
-	gohelper.findChildText(arg_35_1, "").text = arg_35_2.desc
+function FightQuitTipView:showOdysseyTask(obj, taskConfig, index)
+	local text = gohelper.findChildText(obj, "")
 
-	gohelper.setActive(gohelper.findChild(arg_35_1, "star"), false)
+	text.text = taskConfig.desc
 
-	local var_35_0 = gohelper.findChildImage(arg_35_1, "star_weekwalkheart")
+	gohelper.setActive(gohelper.findChild(obj, "star"), false)
 
-	transformhelper.setLocalScale(var_35_0.transform, 0.8, 0.8, 0.8)
-	gohelper.setActive(var_35_0.gameObject, true)
-	UISpriteSetMgr.instance:setSp01OdysseyDungeonSprite(var_35_0, "pingji_x_" .. arg_35_3)
+	local icon = gohelper.findChildImage(obj, "star_weekwalkheart")
+
+	transformhelper.setLocalScale(icon.transform, 0.8, 0.8, 0.8)
+	gohelper.setActive(icon.gameObject, true)
+	UISpriteSetMgr.instance:setSp01OdysseyDungeonSprite(icon, "pingji_x_" .. index)
 end
 
-function var_0_0._refreshWeekwalkVer2Condition(arg_36_0)
-	local var_36_0 = FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.WeekwalkVer2]
+function FightQuitTipView:_refreshWeekwalkVer2Condition()
+	local cupJson = FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.WeekwalkVer2]
 
-	var_36_0 = var_36_0 and cjson.decode(var_36_0)
+	cupJson = cupJson and cjson.decode(cupJson)
 
-	if not var_36_0 then
+	if not cupJson then
 		return
 	end
 
-	if not var_36_0.cupIds then
+	if not cupJson.cupIds then
 		return
 	end
 
-	local var_36_1 = {}
+	local dataList = {}
 
-	for iter_36_0, iter_36_1 in ipairs(var_36_0.cupIds) do
-		table.insert(var_36_1, iter_36_1)
+	for k, v in ipairs(cupJson.cupIds) do
+		table.insert(dataList, v)
 	end
 
-	table.sort(var_36_1, var_0_0.sortWeekWalkVer2Task)
+	table.sort(dataList, FightQuitTipView.sortWeekWalkVer2Task)
 
-	for iter_36_2, iter_36_3 in ipairs(var_36_1) do
-		local var_36_2 = gohelper.clone(arg_36_0._goconditionitemdesc, arg_36_0._goconditionitem, "platnumdesc")
+	for i, v in ipairs(dataList) do
+		local conditionItem = gohelper.clone(self._goconditionitemdesc, self._goconditionitem, "platnumdesc")
 
-		arg_36_0:_showWeekWalkVer2OneTaskGroup(var_36_2, iter_36_3, iter_36_2)
+		self:_showWeekWalkVer2OneTaskGroup(conditionItem, v, i)
 	end
 
-	gohelper.setActive(arg_36_0._goconditionitemdesc, false)
+	gohelper.setActive(self._goconditionitemdesc, false)
 end
 
-function var_0_0._showWeekWalkVer2OneTaskGroup(arg_37_0, arg_37_1, arg_37_2, arg_37_3)
-	local var_37_0 = lua_weekwalk_ver2_cup.configDict[arg_37_2]
-	local var_37_1 = gohelper.findChildText(arg_37_1, "")
-	local var_37_2 = GameUtil.splitString2(var_37_0.cupTask, true)
+function FightQuitTipView:_showWeekWalkVer2OneTaskGroup(obj, data, index)
+	local config = lua_weekwalk_ver2_cup.configDict[data]
+	local text = gohelper.findChildText(obj, "")
+	local cupTask = GameUtil.splitString2(config.cupTask, true)
 
-	table.sort(var_37_2, var_0_0.sortWeekWalkVer2CupList)
+	table.sort(cupTask, FightQuitTipView.sortWeekWalkVer2CupList)
 
-	local var_37_3
-	local var_37_4
-	local var_37_5 = FightDataHelper.fieldMgr.fightTaskBox.tasks
+	local curCup, lastCup
+	local fightTaskBox = FightDataHelper.fieldMgr.fightTaskBox
+	local tasks = fightTaskBox.tasks
 
-	for iter_37_0, iter_37_1 in ipairs(var_37_2) do
-		local var_37_6 = 0
+	for i, list in ipairs(cupTask) do
+		local finishCount = 0
 
-		for iter_37_2 = 2, #iter_37_1 do
-			local var_37_7 = var_37_5[iter_37_1[iter_37_2]]
+		for index = 2, #list do
+			local taskId = list[index]
+			local task = tasks[taskId]
 
-			if var_37_7 then
-				if var_37_7.status ~= FightTaskBoxData.TaskStatus.Finished then
-					var_37_3 = iter_37_1[1]
+			if task then
+				if task.status ~= FightTaskBoxData.TaskStatus.Finished then
+					curCup = list[1]
 
 					break
 				end
 
-				if var_37_7.status == FightTaskBoxData.TaskStatus.Finished then
-					var_37_6 = var_37_6 + 1
+				if task.status == FightTaskBoxData.TaskStatus.Finished then
+					finishCount = finishCount + 1
 				end
 			end
 		end
 
-		if var_37_6 == #iter_37_1 - 1 then
-			var_37_4 = iter_37_1[1]
+		if finishCount == #list - 1 then
+			lastCup = list[1]
 		end
 
-		if var_37_3 then
+		if curCup then
 			break
 		end
 	end
 
-	local var_37_8 = var_0_0._getWeekWalkVer2CupProgressDesc(var_37_3, var_37_0) or ""
+	local progressDesc = FightQuitTipView._getWeekWalkVer2CupProgressDesc(curCup, config) or ""
 
-	var_37_1.text = var_37_0.desc .. var_37_8
+	text.text = config.desc .. progressDesc
 
-	gohelper.setActive(gohelper.findChild(arg_37_1, "star"), false)
+	gohelper.setActive(gohelper.findChild(obj, "star"), false)
 
-	local var_37_9 = gohelper.findChild(arg_37_1, "star_weekwalkheart")
+	local star_weekwalkheart = gohelper.findChild(obj, "star_weekwalkheart")
 
-	gohelper.setActive(var_37_9, true)
+	gohelper.setActive(star_weekwalkheart, true)
 
-	local var_37_10 = gohelper.findChildImage(arg_37_1, "star_weekwalkheart")
+	local cupImage = gohelper.findChildImage(obj, "star_weekwalkheart")
 
-	var_37_4 = var_37_4 or 0
-	var_37_10.enabled = false
+	lastCup = lastCup or 0
+	cupImage.enabled = false
 
-	local var_37_11 = arg_37_0:getResInst(arg_37_0.viewContainer._viewSetting.otherRes.weekwalkheart_star, var_37_10.gameObject)
+	local iconEffect = self:getResInst(self.viewContainer._viewSetting.otherRes.weekwalkheart_star, cupImage.gameObject)
 
-	WeekWalk_2Helper.setCupEffectByResult(var_37_11, var_37_4)
+	WeekWalk_2Helper.setCupEffectByResult(iconEffect, lastCup)
 end
 
-function var_0_0._getWeekWalkVer2CupProgressDesc(arg_38_0, arg_38_1)
-	if not arg_38_0 then
+function FightQuitTipView._getWeekWalkVer2CupProgressDesc(curCup, config)
+	if not curCup then
 		return
 	end
 
-	local var_38_0 = arg_38_1.progressDesc
+	local progressDesc = config.progressDesc
 
-	if string.nilorempty(var_38_0) then
+	if string.nilorempty(progressDesc) then
 		return
 	end
 
-	local var_38_1 = GameUtil.splitString2(var_38_0)
-	local var_38_2
+	local arr = GameUtil.splitString2(progressDesc)
+	local progressStr
 
-	for iter_38_0, iter_38_1 in ipairs(var_38_1) do
-		if tonumber(iter_38_1[1]) == arg_38_0 then
-			var_38_2 = iter_38_1[2]
+	for i, v in ipairs(arr) do
+		if tonumber(v[1]) == curCup then
+			progressStr = v[2]
 
 			break
 		end
 	end
 
-	if not var_38_2 then
+	if not progressStr then
 		return
 	end
 
-	local var_38_3 = arg_38_1.paramOfProgressDesc
+	local paramOfProgressDesc = config.paramOfProgressDesc
 
-	if string.nilorempty(var_38_3) then
+	if string.nilorempty(paramOfProgressDesc) then
 		return
 	end
 
-	local var_38_4 = GameUtil.splitString2(var_38_3)
-	local var_38_5
+	local progressArr = GameUtil.splitString2(paramOfProgressDesc)
+	local progressParam
 
-	for iter_38_2, iter_38_3 in ipairs(var_38_4) do
-		if tonumber(iter_38_3[1]) == arg_38_0 then
-			var_38_5 = iter_38_3
+	for index, param in ipairs(progressArr) do
+		if tonumber(param[1]) == curCup then
+			progressParam = param
 
 			break
 		end
 	end
 
-	if not var_38_5 then
+	if not progressParam then
 		return
 	end
 
-	local var_38_6 = FightDataHelper.fieldMgr.fightTaskBox.tasks
-	local var_38_7 = {}
-	local var_38_8 = GameUtil.splitString2(var_38_5[2], true, "_", "&")
+	local fightTaskBox = FightDataHelper.fieldMgr.fightTaskBox
+	local tasks = fightTaskBox.tasks
+	local paramList = {}
+	local checkTaskList = GameUtil.splitString2(progressParam[2], true, "_", "&")
 
-	for iter_38_4, iter_38_5 in ipairs(var_38_8) do
-		local var_38_9 = var_38_6[iter_38_5[1]]
+	for _, list in ipairs(checkTaskList) do
+		local taskId = list[1]
+		local task = tasks[taskId]
 
-		if var_38_9 then
-			for iter_38_6, iter_38_7 in ipairs(var_38_9.values) do
-				if iter_38_7.index == iter_38_5[2] then
-					if iter_38_5[3] == 1 then
-						local var_38_10 = math.ceil(iter_38_7.progress / iter_38_7.maxProgress * 100)
+		if task then
+			for i, value in ipairs(task.values) do
+				if value.index == list[2] then
+					if list[3] == 1 then
+						local progress = math.ceil(value.progress / value.maxProgress * 100)
 
-						table.insert(var_38_7, var_38_10 .. "%")
-					elseif iter_38_5[3] == 2 then
-						local var_38_11 = math.floor(iter_38_7.progress / iter_38_7.maxProgress * 100)
+						table.insert(paramList, progress .. "%")
+					elseif list[3] == 2 then
+						local progress = math.floor(value.progress / value.maxProgress * 100)
 
-						table.insert(var_38_7, var_38_11 .. "%")
+						table.insert(paramList, progress .. "%")
 					else
-						table.insert(var_38_7, iter_38_7.progress)
+						table.insert(paramList, value.progress)
 					end
 				end
 			end
 		end
 	end
 
-	return (GameUtil.getSubPlaceholderLuaLang(var_38_2, var_38_7))
+	progressStr = GameUtil.getSubPlaceholderLuaLang(progressStr, paramList)
+
+	return progressStr
 end
 
-function var_0_0.sortWeekWalkVer2CupList(arg_39_0, arg_39_1)
-	return arg_39_0[1] < arg_39_1[1]
+function FightQuitTipView.sortWeekWalkVer2CupList(item1, item2)
+	return item1[1] < item2[1]
 end
 
-function var_0_0.sortWeekWalkVer2Task(arg_40_0, arg_40_1)
-	local var_40_0 = lua_weekwalk_ver2_cup.configDict[arg_40_0]
-	local var_40_1 = lua_weekwalk_ver2_cup.configDict[arg_40_1]
+function FightQuitTipView.sortWeekWalkVer2Task(item1, item2)
+	local config1 = lua_weekwalk_ver2_cup.configDict[item1]
+	local config2 = lua_weekwalk_ver2_cup.configDict[item2]
 
-	return var_40_0.cupNo < var_40_1.cupNo
+	return config1.cupNo < config2.cupNo
 end
 
-function var_0_0.refresh183Condition(arg_41_0)
-	gohelper.onceAddComponent(arg_41_0._gopasstarget, gohelper.Type_VerticalLayoutGroup).padding.bottom = -60
+function FightQuitTipView:refresh183Condition()
+	local layoutGroup = gohelper.onceAddComponent(self._gopasstarget, gohelper.Type_VerticalLayoutGroup)
+	local padding = layoutGroup.padding
 
-	local var_41_0 = FightDataHelper.fieldMgr.episodeId
-	local var_41_1 = DungeonConfig.instance:getEpisodeAdvancedCondition(var_41_0)
+	padding.bottom = -60
 
-	if LuaUtil.isEmptyStr(var_41_1) == false then
-		local var_41_2 = string.splitToNumber(var_41_1, "|")
+	local episodeId = FightDataHelper.fieldMgr.episodeId
+	local advancedCondition = DungeonConfig.instance:getEpisodeAdvancedCondition(episodeId)
 
-		for iter_41_0, iter_41_1 in ipairs(var_41_2) do
-			local var_41_3 = lua_condition.configDict[iter_41_1]
-			local var_41_4 = gohelper.clone(arg_41_0._goconditionitemdesc, arg_41_0._goconditionitem, "platnumdesc")
-			local var_41_5 = arg_41_0:checkPlatCondition(iter_41_1)
+	if LuaUtil.isEmptyStr(advancedCondition) == false then
+		local conditionList = string.splitToNumber(advancedCondition, "|")
 
-			arg_41_0:_setConditionText(var_41_4, var_41_3.desc, var_41_5)
-			arg_41_0:_setStarStatus(var_41_4, var_41_5)
+		for _, conditionId in ipairs(conditionList) do
+			local conditionConfig = lua_condition.configDict[conditionId]
+			local conditionItem = gohelper.clone(self._goconditionitemdesc, self._goconditionitem, "platnumdesc")
+			local platHighLight = self:checkPlatCondition(conditionId)
+
+			self:_setConditionText(conditionItem, conditionConfig.desc, platHighLight)
+			self:_setStarStatus(conditionItem, platHighLight)
 		end
 	end
 end
 
-function var_0_0.onClose(arg_42_0)
+function FightQuitTipView:onClose()
 	FightAudioMgr.instance:obscureBgm(false)
 end
 
-function var_0_0.onDestroyView(arg_43_0)
-	arg_43_0._simagetipbg:UnLoadImage()
-	arg_43_0._simagemaskbg:UnLoadImage()
-	arg_43_0._simagenumline:UnLoadImage()
+function FightQuitTipView:onDestroyView()
+	self._simagetipbg:UnLoadImage()
+	self._simagemaskbg:UnLoadImage()
+	self._simagenumline:UnLoadImage()
 end
 
-return var_0_0
+return FightQuitTipView

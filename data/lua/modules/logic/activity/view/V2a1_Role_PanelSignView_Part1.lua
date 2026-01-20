@@ -1,10 +1,12 @@
-﻿module("modules.logic.activity.view.V2a1_Role_PanelSignView_Part1", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/V2a1_Role_PanelSignView_Part1.lua
 
-local var_0_0 = class("V2a1_Role_PanelSignView_Part1", V2a1_Role_PanelSignView)
+module("modules.logic.activity.view.V2a1_Role_PanelSignView_Part1", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	arg_1_0._simagePanelBG:LoadImage(ResUrl.getV2a1SignSingleBg("v2a1_sign_panelbg1"))
-	arg_1_0._simageTitle:LoadImage(ResUrl.getV2a1SignSingleBgLang("v2a1_sign_title1"))
+local V2a1_Role_PanelSignView_Part1 = class("V2a1_Role_PanelSignView_Part1", V2a1_Role_PanelSignView)
+
+function V2a1_Role_PanelSignView_Part1:_editableInitView()
+	self._simagePanelBG:LoadImage(ResUrl.getV2a1SignSingleBg("v2a1_sign_panelbg1"))
+	self._simageTitle:LoadImage(ResUrl.getV2a1SignSingleBgLang("v2a1_sign_title1"))
 end
 
-return var_0_0
+return V2a1_Role_PanelSignView_Part1

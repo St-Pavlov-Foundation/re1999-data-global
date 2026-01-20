@@ -1,21 +1,23 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.EliminateTeamChessStepBase", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/controller/teamChess/step/EliminateTeamChessStepBase.lua
 
-local var_0_0 = class("EliminateTeamChessStepBase", BaseWork)
+module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.EliminateTeamChessStepBase", package.seeall)
 
-function var_0_0.initData(arg_1_0, arg_1_1)
-	arg_1_0._data = arg_1_1
+local EliminateTeamChessStepBase = class("EliminateTeamChessStepBase", BaseWork)
+
+function EliminateTeamChessStepBase:initData(data)
+	self._data = data
 end
 
-function var_0_0.onStart(arg_2_0)
-	arg_2_0:onDone(true)
+function EliminateTeamChessStepBase:onStart()
+	self:onDone(true)
 end
 
-function var_0_0._onDone(arg_3_0)
-	arg_3_0:onDone(true)
+function EliminateTeamChessStepBase:_onDone()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._onDone, arg_4_0)
+function EliminateTeamChessStepBase:clearWork()
+	TaskDispatcher.cancelTask(self._onDone, self)
 end
 
-return var_0_0
+return EliminateTeamChessStepBase

@@ -1,32 +1,34 @@
-﻿module("modules.logic.tower.view.fight.TowerDeepHeroGroupFightViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/tower/view/fight/TowerDeepHeroGroupFightViewContainer.lua
 
-local var_0_0 = class("TowerDeepHeroGroupFightViewContainer", HeroGroupFightViewContainer)
+module("modules.logic.tower.view.fight.TowerDeepHeroGroupFightViewContainer", package.seeall)
 
-function var_0_0.addLastViews(arg_1_0, arg_1_1)
-	table.insert(arg_1_1, TowerHeroGroupBossView.New())
-	table.insert(arg_1_1, TowerDeepHeroGroupInfoView.New())
+local TowerDeepHeroGroupFightViewContainer = class("TowerDeepHeroGroupFightViewContainer", HeroGroupFightViewContainer)
+
+function TowerDeepHeroGroupFightViewContainer:addLastViews(views)
+	table.insert(views, TowerHeroGroupBossView.New())
+	table.insert(views, TowerDeepHeroGroupInfoView.New())
 end
 
-function var_0_0.defineFightView(arg_2_0)
-	arg_2_0._heroGroupFightView = TowerDeepHeroGroupFightView.New()
-	arg_2_0._heroGroupFightListView = TowerHeroGroupListView.New()
+function TowerDeepHeroGroupFightViewContainer:defineFightView()
+	self._heroGroupFightView = TowerDeepHeroGroupFightView.New()
+	self._heroGroupFightListView = TowerHeroGroupListView.New()
 end
 
-function var_0_0.getFightLevelView(arg_3_0)
+function TowerDeepHeroGroupFightViewContainer:getFightLevelView()
 	return TowerDeepHeroGroupFightViewLevel.New()
 end
 
-function var_0_0.getHelpId(arg_4_0)
+function TowerDeepHeroGroupFightViewContainer:getHelpId()
 	return HelpEnum.HelpId.TowerDeep
 end
 
-function var_0_0._closeCallback(arg_5_0)
-	arg_5_0:closeThis()
+function TowerDeepHeroGroupFightViewContainer:_closeCallback()
+	self:closeThis()
 	MainController.instance:enterMainScene(true, false)
 end
 
-function var_0_0.defaultOverrideCloseCheck(arg_6_0, arg_6_1, arg_6_2)
+function TowerDeepHeroGroupFightViewContainer:defaultOverrideCloseCheck(reallyClose, reallyCloseObj)
 	return true
 end
 
-return var_0_0
+return TowerDeepHeroGroupFightViewContainer

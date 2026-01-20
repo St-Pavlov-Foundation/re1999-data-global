@@ -1,26 +1,28 @@
-﻿module("modules.logic.bgmswitch.define.BGMSwitchEvent", package.seeall)
+﻿-- chunkname: @modules/logic/bgmswitch/define/BGMSwitchEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.bgmswitch.define.BGMSwitchEvent", package.seeall)
 
-var_0_0.ItemSelected = GameUtil.getEventId()
-var_0_0.FilterClassSelect = GameUtil.getEventId()
-var_0_0.SetPlayingBgm = GameUtil.getEventId()
-var_0_0.RandomFinished = GameUtil.getEventId()
-var_0_0.SelectPlayGear = GameUtil.getEventId()
-var_0_0.FilterItemSelect = GameUtil.getEventId()
-var_0_0.BgmSwitched = GameUtil.getEventId()
-var_0_0.BgmFavorite = GameUtil.getEventId()
-var_0_0.BgmUpdated = GameUtil.getEventId()
-var_0_0.BGMSwitchClose = GameUtil.getEventId()
-var_0_0.BgmMarkRead = GameUtil.getEventId()
-var_0_0.ClickBgmEntranceInGuide = GameUtil.getEventId()
-var_0_0.BgmDevicePlayNoise = GameUtil.getEventId()
-var_0_0.PlayShakingAni = GameUtil.getEventId()
-var_0_0.BGMDeviceShowNormalView = GameUtil.getEventId()
-var_0_0.ToggleEggForGuide = GameUtil.getEventId()
-var_0_0.SwitchGearByGuide = GameUtil.getEventId()
-var_0_0.OnPlayMainBgm = GameUtil.getEventId()
-var_0_0.SlideValueUpdate = GameUtil.getEventId()
-var_0_0.BgmProgressEnd = GameUtil.getEventId()
+local BGMSwitchEvent = _M
 
-return var_0_0
+BGMSwitchEvent.ItemSelected = GameUtil.getEventId()
+BGMSwitchEvent.FilterClassSelect = GameUtil.getEventId()
+BGMSwitchEvent.SetPlayingBgm = GameUtil.getEventId()
+BGMSwitchEvent.RandomFinished = GameUtil.getEventId()
+BGMSwitchEvent.SelectPlayGear = GameUtil.getEventId()
+BGMSwitchEvent.FilterItemSelect = GameUtil.getEventId()
+BGMSwitchEvent.BgmSwitched = GameUtil.getEventId()
+BGMSwitchEvent.BgmFavorite = GameUtil.getEventId()
+BGMSwitchEvent.BgmUpdated = GameUtil.getEventId()
+BGMSwitchEvent.BGMSwitchClose = GameUtil.getEventId()
+BGMSwitchEvent.BgmMarkRead = GameUtil.getEventId()
+BGMSwitchEvent.ClickBgmEntranceInGuide = GameUtil.getEventId()
+BGMSwitchEvent.BgmDevicePlayNoise = GameUtil.getEventId()
+BGMSwitchEvent.PlayShakingAni = GameUtil.getEventId()
+BGMSwitchEvent.BGMDeviceShowNormalView = GameUtil.getEventId()
+BGMSwitchEvent.ToggleEggForGuide = GameUtil.getEventId()
+BGMSwitchEvent.SwitchGearByGuide = GameUtil.getEventId()
+BGMSwitchEvent.OnPlayMainBgm = GameUtil.getEventId()
+BGMSwitchEvent.SlideValueUpdate = GameUtil.getEventId()
+BGMSwitchEvent.BgmProgressEnd = GameUtil.getEventId()
+
+return BGMSwitchEvent

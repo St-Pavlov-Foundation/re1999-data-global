@@ -1,9 +1,11 @@
-﻿module("modules.logic.sp01.versionsummon.view.V2a9_VersionSummonFull_Part2ViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/versionsummon/view/V2a9_VersionSummonFull_Part2ViewContainer.lua
 
-local var_0_0 = class("V2a9_VersionSummonFull_Part2ViewContainer", V2a9_VersionSummon_BaseViewContainer)
+module("modules.logic.sp01.versionsummon.view.V2a9_VersionSummonFull_Part2ViewContainer", package.seeall)
 
-function var_0_0.onGetMainViewClassType(arg_1_0)
+local V2a9_VersionSummonFull_Part2ViewContainer = class("V2a9_VersionSummonFull_Part2ViewContainer", V2a9_VersionSummon_BaseViewContainer)
+
+function V2a9_VersionSummonFull_Part2ViewContainer:onGetMainViewClassType()
 	return V2a9_VersionSummonFull_Part2
 end
 
-return var_0_0
+return V2a9_VersionSummonFull_Part2ViewContainer

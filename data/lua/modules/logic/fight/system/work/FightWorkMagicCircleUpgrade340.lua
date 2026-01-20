@@ -1,16 +1,18 @@
-﻿module("modules.logic.fight.system.work.FightWorkMagicCircleUpgrade340", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkMagicCircleUpgrade340.lua
 
-local var_0_0 = class("FightWorkMagicCircleUpgrade340", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkMagicCircleUpgrade340", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = FightModel.instance:getMagicCircleInfo()
+local FightWorkMagicCircleUpgrade340 = class("FightWorkMagicCircleUpgrade340", FightEffectBase)
 
-	if var_1_0 then
-		var_1_0:refreshData(arg_1_0.actEffectData.magicCircle)
-		FightController.instance:dispatchEvent(FightEvent.UpgradeMagicCircile, var_1_0)
+function FightWorkMagicCircleUpgrade340:onStart()
+	local magicData = FightModel.instance:getMagicCircleInfo()
+
+	if magicData then
+		magicData:refreshData(self.actEffectData.magicCircle)
+		FightController.instance:dispatchEvent(FightEvent.UpgradeMagicCircile, magicData)
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkMagicCircleUpgrade340

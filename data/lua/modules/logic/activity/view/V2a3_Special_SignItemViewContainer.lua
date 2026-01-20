@@ -1,60 +1,62 @@
-﻿module("modules.logic.activity.view.V2a3_Special_SignItemViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/V2a3_Special_SignItemViewContainer.lua
 
-local var_0_0 = class("V2a3_Special_SignItemViewContainer", BaseViewContainer)
+module("modules.logic.activity.view.V2a3_Special_SignItemViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local V2a3_Special_SignItemViewContainer = class("V2a3_Special_SignItemViewContainer", BaseViewContainer)
+
+function V2a3_Special_SignItemViewContainer:buildViews()
 	assert(false, "please override this function")
 end
 
-function var_0_0.view(arg_2_0)
+function V2a3_Special_SignItemViewContainer:view()
 	assert(false, "please override this function")
 end
 
-function var_0_0.actId(arg_3_0)
-	return arg_3_0.viewParam.actId
+function V2a3_Special_SignItemViewContainer:actId()
+	return self.viewParam.actId
 end
 
-function var_0_0.itemCo2TIQ(arg_4_0, arg_4_1)
-	if string.nilorempty(arg_4_1) then
+function V2a3_Special_SignItemViewContainer:itemCo2TIQ(itemCo)
+	if string.nilorempty(itemCo) then
 		return
 	end
 
-	local var_4_0 = string.split(arg_4_1, "#")
+	local strList = string.split(itemCo, "#")
 
-	assert(#var_4_0 >= 2, "[V2a3_Special_SignItemViewContainer] invalid itemCo=" .. tostring(arg_4_1))
+	assert(#strList >= 2, "[V2a3_Special_SignItemViewContainer] invalid itemCo=" .. tostring(itemCo))
 
-	local var_4_1 = string.split(arg_4_1, "#")
-	local var_4_2 = tonumber(var_4_1[1])
-	local var_4_3 = tonumber(var_4_1[2])
-	local var_4_4 = tonumber(var_4_1[3])
+	local list = string.split(itemCo, "#")
+	local type = tonumber(list[1])
+	local id = tonumber(list[2])
+	local quantity = tonumber(list[3])
 
-	return var_4_2, var_4_3, var_4_4
+	return type, id, quantity
 end
 
-function var_0_0.getItemConfig(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = ItemConfigGetDefine.instance:getItemConfigFunc(arg_5_1)
+function V2a3_Special_SignItemViewContainer:getItemConfig(materialType, id)
+	local func = ItemConfigGetDefine.instance:getItemConfigFunc(materialType)
 
-	assert(var_5_0, "[V2a3_Special_SignItemViewContainer] ItemIconGetDefine-getItemConfigFunc unsupported materialType: " .. tostring(arg_5_1))
+	assert(func, "[V2a3_Special_SignItemViewContainer] ItemIconGetDefine-getItemConfigFunc unsupported materialType: " .. tostring(materialType))
 
-	local var_5_1 = var_5_0(arg_5_2)
+	local config = func(id)
 
-	assert(var_5_1, "[V2a3_Special_SignItemViewContainer] item config not found materialType=" .. tostring(arg_5_1) .. " id=" .. tostring(arg_5_2))
+	assert(config, "[V2a3_Special_SignItemViewContainer] item config not found materialType=" .. tostring(materialType) .. " id=" .. tostring(id))
 
-	return var_5_1
+	return config
 end
 
-function var_0_0.getItemIconResUrl(arg_6_0, arg_6_1, arg_6_2)
-	if not arg_6_1 or not arg_6_2 then
+function V2a3_Special_SignItemViewContainer:getItemIconResUrl(materialType, id)
+	if not materialType or not id then
 		return ""
 	end
 
-	local var_6_0 = ItemIconGetDefine.instance:getItemIconFunc(arg_6_1)
+	local func = ItemIconGetDefine.instance:getItemIconFunc(materialType)
 
-	assert(var_6_0, "[V2a3_Special_SignItemViewContainer] ItemIconGetDefine-getItemIconFunc unsupported materialType: " .. tostring(arg_6_1))
+	assert(func, "[V2a3_Special_SignItemViewContainer] ItemIconGetDefine-getItemIconFunc unsupported materialType: " .. tostring(materialType))
 
-	local var_6_1 = arg_6_0:getItemConfig(arg_6_1, arg_6_2)
+	local config = self:getItemConfig(materialType, id)
 
-	return var_6_0(var_6_1) or ""
+	return func(config) or ""
 end
 
-return var_0_0
+return V2a3_Special_SignItemViewContainer

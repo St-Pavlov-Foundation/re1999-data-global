@@ -1,272 +1,282 @@
-﻿module("modules.logic.pay.model.PayModel_OverseasImpl", package.seeall)
+﻿-- chunkname: @modules/logic/pay/model/PayModel_OverseasImpl.lua
 
-local var_0_0 = LuaUtil.class("PayModel_OverseasImpl", PayModelBase)
+module("modules.logic.pay.model.PayModel_OverseasImpl", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local PayModel_OverseasImpl = LuaUtil.class("PayModel_OverseasImpl", PayModelBase)
+
+function PayModel_OverseasImpl:ctor()
 	assert(false, "PayModel_OverseasImpl is an abstract class, please use PayModel instead.")
 end
 
-function var_0_0.onInit(arg_2_0)
-	var_0_0.super.onInit(arg_2_0)
+function PayModel_OverseasImpl:onInit()
+	PayModel_OverseasImpl.super.onInit(self)
 
-	arg_2_0._productInfos = {}
-	arg_2_0._hasInitProductInfo = false
+	self._productInfos = {}
+	self._hasInitProductInfo = false
 end
 
-function var_0_0.reInit(arg_3_0)
-	var_0_0.super.reInit(arg_3_0)
+function PayModel_OverseasImpl:reInit()
+	PayModel_OverseasImpl.super.reInit(self)
 
-	arg_3_0._productInfos = {}
-	arg_3_0._hasInitProductInfo = false
+	self._productInfos = {}
+	self._hasInitProductInfo = false
 end
 
-function var_0_0.hasInitProductInfo(arg_4_0)
+function PayModel_OverseasImpl:hasInitProductInfo()
 	if BootNativeUtil.isWindows() and GameChannelConfig.isGpGlobal() == false then
 		return true
 	end
 
-	return arg_4_0._hasInitProductInfo
+	return self._hasInitProductInfo
 end
 
-function var_0_0.setProductInfo(arg_5_0, arg_5_1)
-	if string.nilorempty(arg_5_1) == false and arg_5_1 ~= "null" then
-		local var_5_0 = cjson.decode(arg_5_1)
+function PayModel_OverseasImpl:setProductInfo(infoStr)
+	if string.nilorempty(infoStr) == false and infoStr ~= "null" then
+		local allJson = cjson.decode(infoStr)
 
-		for iter_5_0, iter_5_1 in pairs(var_5_0) do
+		for _, v in pairs(allJson) do
 			if BootNativeUtil.isWindows() then
-				local var_5_1 = tonumber(iter_5_1.productId)
+				local goodsId = tonumber(v.productId)
 
-				if var_5_1 and GameChannelConfig.isLongCheng() == false and GameChannelConfig.isGpJapan() == false then
-					arg_5_0._productInfos[var_5_1] = iter_5_1
+				if goodsId and GameChannelConfig.isLongCheng() == false and GameChannelConfig.isGpJapan() == false then
+					self._productInfos[goodsId] = v
 				end
 
-				arg_5_0._hasInitProductInfo = true
+				self._hasInitProductInfo = true
 			else
-				local var_5_2 = StoreConfig.instance:getStoreChargeConfigByProductID(iter_5_1.productId)
+				local configList = StoreConfig.instance:getStoreChargeConfigByProductID(v.productId)
 
-				for iter_5_2, iter_5_3 in ipairs(var_5_2) do
-					arg_5_0._hasInitProductInfo = true
+				for i, config in ipairs(configList) do
+					self._hasInitProductInfo = true
 
 					if GameChannelConfig.isLongCheng() == false and GameChannelConfig.isGpJapan() == false then
-						arg_5_0._productInfos[iter_5_3.id] = iter_5_1
+						self._productInfos[config.id] = v
 					end
 				end
 
-				if #var_5_2 == 0 then
-					logError("找不到对应充值商品：" .. iter_5_1.productId)
+				if #configList == 0 then
+					logError("找不到对应充值商品：" .. v.productId)
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.setOrderInfo(arg_6_0, arg_6_1)
-	var_0_0.super.setOrderInfo(arg_6_0, arg_6_1)
+function PayModel_OverseasImpl:setOrderInfo(info)
+	PayModel_OverseasImpl.super.setOrderInfo(self, info)
 
-	arg_6_0._orderInfo.currency = arg_6_1.currency
+	self._orderInfo.currency = info.currency
 end
 
-function var_0_0.getGamePayInfo(arg_7_0)
-	local var_7_0 = var_0_0.super.getGamePayInfo(arg_7_0)
+function PayModel_OverseasImpl:getGamePayInfo()
+	local payInfo = PayModel_OverseasImpl.super.getGamePayInfo(self)
 
-	var_7_0.currency = arg_7_0._orderInfo.currency
-	var_7_0.amount = math.ceil(100 * StoreConfig.instance:getBaseChargeGoodsPrice(arg_7_0._orderInfo.id))
+	payInfo.currency = self._orderInfo.currency
+	payInfo.amount = math.ceil(100 * StoreConfig.instance:getBaseChargeGoodsPrice(self._orderInfo.id))
 
 	if SLFramework.FrameworkSettings.IsEditor then
-		var_7_0.productId = ""
+		payInfo.productId = ""
 	else
-		local var_7_1 = SDKMgr.instance:getChannelId()
-		local var_7_2 = StoreConfig.instance:getStoreChargeConfig(arg_7_0._orderInfo.id, BootNativeUtil.getPackageName() .. "_" .. var_7_1, true)
+		local channelId = SDKMgr.instance:getChannelId()
+		local channelIdChargeConfig = StoreConfig.instance:getStoreChargeConfig(self._orderInfo.id, BootNativeUtil.getPackageName() .. "_" .. channelId, true)
 
-		if var_7_2 then
-			var_7_0.productId = var_7_2.appStoreProductID
+		if channelIdChargeConfig then
+			payInfo.productId = channelIdChargeConfig.appStoreProductID
 		else
-			var_7_0.productId = StoreConfig.instance:getStoreChargeConfig(arg_7_0._orderInfo.id, BootNativeUtil.getPackageName()).appStoreProductID
+			payInfo.productId = StoreConfig.instance:getStoreChargeConfig(self._orderInfo.id, BootNativeUtil.getPackageName()).appStoreProductID
 		end
 	end
 
-	var_7_0.originCurrency = arg_7_0:getProductOriginCurrency(arg_7_0._orderInfo.id)
-	var_7_0.originAmount = arg_7_0:getProductOriginAmount(arg_7_0._orderInfo.id)
+	payInfo.originCurrency = self:getProductOriginCurrency(self._orderInfo.id)
+	payInfo.originAmount = self:getProductOriginAmount(self._orderInfo.id)
 
-	return var_7_0
+	return payInfo
 end
 
-function var_0_0.getProductInfo(arg_8_0, arg_8_1)
-	return arg_8_0._productInfos[arg_8_1]
+function PayModel_OverseasImpl:getProductInfo(id)
+	return self._productInfos[id]
 end
 
-function var_0_0.getProductPrice(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0:getProductOriginPriceSymbol(arg_9_1)
-	local var_9_1, var_9_2 = arg_9_0:getProductOriginPriceNum(arg_9_1)
+function PayModel_OverseasImpl:getProductPrice(id)
+	local symbol = self:getProductOriginPriceSymbol(id)
+	local num, numStr = self:getProductOriginPriceNum(id)
 
-	return string.format("%s%s", var_9_0, var_9_2)
+	return string.format("%s%s", symbol, numStr)
 end
 
-function var_0_0.getProductOriginCurrency(arg_10_0, arg_10_1)
-	if arg_10_0._productInfos[arg_10_1] and arg_10_0._productInfos[arg_10_1].priceCurrencyCode then
-		return arg_10_0._productInfos[arg_10_1].priceCurrencyCode
+function PayModel_OverseasImpl:getProductOriginCurrency(id)
+	if self._productInfos[id] and self._productInfos[id].priceCurrencyCode then
+		return self._productInfos[id].priceCurrencyCode
 	else
-		return StoreConfig.instance:getChargeGoodsCurrencyCode(arg_10_1)
+		return StoreConfig.instance:getChargeGoodsCurrencyCode(id)
 	end
 end
 
-function var_0_0.getProductInfoPrice(arg_11_0, arg_11_1)
-	if arg_11_0._productInfos[arg_11_1] and arg_11_0._productInfos[arg_11_1].price then
-		return arg_11_0._productInfos[arg_11_1].price
+function PayModel_OverseasImpl:getProductInfoPrice(id)
+	if self._productInfos[id] and self._productInfos[id].price then
+		return self._productInfos[id].price
 	else
-		local var_11_0 = StoreConfig.instance:getChargeGoodsConfig(arg_11_1)
-		local var_11_1 = "$"
-		local var_11_2 = StoreConfig.instance:getChargeGoodsCurrencyCode(arg_11_1)
+		local chargeConfig = StoreConfig.instance:getChargeGoodsConfig(id)
+		local symbol = "$"
+		local currencyCode = StoreConfig.instance:getChargeGoodsCurrencyCode(id)
 
-		if PayEnum.CurrencySymbol[var_11_2] then
-			var_11_1 = PayEnum.CurrencySymbol[var_11_2]
+		if PayEnum.CurrencySymbol[currencyCode] then
+			symbol = PayEnum.CurrencySymbol[currencyCode]
 		end
 
-		local var_11_3 = StoreConfig.instance:getChargeGoodsPrice(arg_11_1)
+		local price = StoreConfig.instance:getChargeGoodsPrice(id)
 
 		if SDKModel.instance:isDmm() then
-			return string.format("%spt", var_11_3)
+			return string.format("%spt", price)
 		else
-			return string.format("%s%s", var_11_1, var_11_3)
+			return string.format("%s%s", symbol, price)
 		end
 	end
 end
 
-function var_0_0._getConfigProductInfoPrice(arg_12_0, arg_12_1)
-	local var_12_0 = StoreConfig.instance:getChargeGoodsConfig(arg_12_1)
-	local var_12_1 = "$"
-	local var_12_2 = StoreConfig.instance:getChargeGoodsCurrencyCode(arg_12_1)
+function PayModel_OverseasImpl:_getConfigProductInfoPrice(id)
+	local chargeConfig = StoreConfig.instance:getChargeGoodsConfig(id)
+	local symbol = "$"
+	local currencyCode = StoreConfig.instance:getChargeGoodsCurrencyCode(id)
 
-	if PayEnum.CurrencySymbol[var_12_2] then
-		var_12_1 = PayEnum.CurrencySymbol[var_12_2]
+	if PayEnum.CurrencySymbol[currencyCode] then
+		symbol = PayEnum.CurrencySymbol[currencyCode]
 	end
 
-	local var_12_3 = StoreConfig.instance:getChargeGoodsPrice(arg_12_1)
+	local price = StoreConfig.instance:getChargeGoodsPrice(id)
 
-	return string.format("%s%s", var_12_1, var_12_3)
+	return string.format("%s%s", symbol, price)
 end
 
-function var_0_0.getProductOriginAmountMicro(arg_13_0, arg_13_1)
-	return arg_13_0._productInfos[arg_13_1].priceAmountMicros
+function PayModel_OverseasImpl:getProductOriginAmountMicro(id)
+	return self._productInfos[id].priceAmountMicros
 end
 
-function var_0_0.getProductOriginPriceSymbol(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_0:getProductInfoPrice(arg_14_1)
-	local var_14_1 = string.find(var_14_0, "%d")
+function PayModel_OverseasImpl:getProductOriginPriceSymbol(id)
+	local str = self:getProductInfoPrice(id)
+	local index = string.find(str, "%d")
 
-	if not var_14_1 then
-		logError("getProductOriginPriceSymbol fail:" .. var_14_0)
+	if not index then
+		logError("getProductOriginPriceSymbol fail:" .. str)
 
-		var_14_0 = arg_14_0:_getConfigProductInfoPrice(arg_14_1)
-		var_14_1 = string.find(var_14_0, "%d")
+		str = self:_getConfigProductInfoPrice(id)
+		index = string.find(str, "%d")
 	end
 
-	return string.sub(var_14_0, 0, var_14_1 - 1)
+	return string.sub(str, 0, index - 1)
 end
 
-function var_0_0.getProductOriginPriceNum(arg_15_0, arg_15_1)
-	arg_15_0._tmpNum = 0
-	arg_15_0._tmpNumStr = "0"
-	arg_15_0._tmpIsNoDecimalsCurrency = false
+function PayModel_OverseasImpl:getProductOriginPriceNum(id)
+	self._tmpNum = 0
+	self._tmpNumStr = "0"
+	self._tmpIsNoDecimalsCurrency = false
 
-	if not callWithCatch(arg_15_0._getProductOriginPriceNum, arg_15_0, arg_15_1) then
-		local var_15_0 = arg_15_0:_getConfigProductInfoPrice(arg_15_1)
-		local var_15_1 = arg_15_0:getProductOriginCurrency(arg_15_1)
-		local var_15_2 = string.find(var_15_0, "%d")
-		local var_15_3 = string.sub(var_15_0, var_15_2, string.len(var_15_0))
-		local var_15_4 = string.reverse(var_15_3)
-		local var_15_5 = string.find(var_15_4, "%d")
-		local var_15_6 = string.len(var_15_4) - var_15_5
-		local var_15_7 = string.sub(var_15_3, 1, var_15_6 + 1)
+	if not callWithCatch(self._getProductOriginPriceNum, self, id) then
+		local str = self:_getConfigProductInfoPrice(id)
+		local code = self:getProductOriginCurrency(id)
+		local index = string.find(str, "%d")
+		local numStr = string.sub(str, index, string.len(str))
+		local reverseStr = string.reverse(numStr)
+		local lastIndex = string.find(reverseStr, "%d")
 
-		arg_15_0._tmpNum = string.gsub(var_15_7, ",", "")
-		arg_15_0._tmpNum = tonumber(arg_15_0._tmpNum)
-		arg_15_0._tmpNumStr = var_15_3
-		arg_15_0._tmpIsNoDecimalsCurrency = arg_15_0:isNoDecimalsCurrency(var_15_1)
+		lastIndex = string.len(reverseStr) - lastIndex
 
-		if arg_15_0._tmpIsNoDecimalsCurrency then
-			arg_15_0._tmpNumStr = math.floor(arg_15_0._tmpNum)
+		local numStr2 = string.sub(numStr, 1, lastIndex + 1)
+
+		self._tmpNum = string.gsub(numStr2, ",", "")
+		self._tmpNum = tonumber(self._tmpNum)
+		self._tmpNumStr = numStr
+		self._tmpIsNoDecimalsCurrency = self:isNoDecimalsCurrency(code)
+
+		if self._tmpIsNoDecimalsCurrency then
+			self._tmpNumStr = math.floor(self._tmpNum)
 		end
 	end
 
-	if string.nilorempty(arg_15_0._tmpNum) then
-		arg_15_0._tmpNum = 0
+	if string.nilorempty(self._tmpNum) then
+		self._tmpNum = 0
 	end
 
-	return arg_15_0._tmpNum, arg_15_0._tmpNumStr, arg_15_0._tmpIsNoDecimalsCurrency
+	return self._tmpNum, self._tmpNumStr, self._tmpIsNoDecimalsCurrency
 end
 
-function var_0_0._getProductOriginPriceNum(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_0:getProductInfoPrice(arg_16_1)
-	local var_16_1 = arg_16_0:getProductOriginCurrency(arg_16_1)
-	local var_16_2 = string.find(var_16_0, "%d")
-	local var_16_3 = string.sub(var_16_0, var_16_2, string.len(var_16_0))
-	local var_16_4 = string.reverse(var_16_3)
-	local var_16_5 = string.find(var_16_4, "%d")
-	local var_16_6 = string.len(var_16_4) - var_16_5
-	local var_16_7 = string.sub(var_16_3, 1, var_16_6 + 1)
-	local var_16_8 = string.gsub(var_16_7, ",", "")
+function PayModel_OverseasImpl:_getProductOriginPriceNum(id)
+	local str = self:getProductInfoPrice(id)
+	local code = self:getProductOriginCurrency(id)
+	local index = string.find(str, "%d")
+	local numStr = string.sub(str, index, string.len(str))
+	local reverseStr = string.reverse(numStr)
+	local lastIndex = string.find(reverseStr, "%d")
 
-	arg_16_0._tmpNum = tonumber(var_16_8)
-	arg_16_0._tmpIsNoDecimalsCurrency = arg_16_0:isNoDecimalsCurrency(var_16_1)
-	arg_16_0._tmpNumStr = var_16_3
+	lastIndex = string.len(reverseStr) - lastIndex
 
-	if arg_16_0._tmpIsNoDecimalsCurrency and SDKModel.instance:isDmm() == false then
-		arg_16_0._tmpNumStr = math.floor(var_16_8)
+	local numStr2 = string.sub(numStr, 1, lastIndex + 1)
+	local num = string.gsub(numStr2, ",", "")
+
+	self._tmpNum = tonumber(num)
+	self._tmpIsNoDecimalsCurrency = self:isNoDecimalsCurrency(code)
+	self._tmpNumStr = numStr
+
+	if self._tmpIsNoDecimalsCurrency and SDKModel.instance:isDmm() == false then
+		self._tmpNumStr = math.floor(num)
 	end
 end
 
-function var_0_0.getProductOriginAmount(arg_17_0, arg_17_1)
-	arg_17_0._tmpAmount = 0
+function PayModel_OverseasImpl:getProductOriginAmount(id)
+	self._tmpAmount = 0
 
-	if not callWithCatch(arg_17_0._getProductOriginAmount, arg_17_0, arg_17_1) then
-		arg_17_0._tmpAmount = 0
+	if not callWithCatch(self._getProductOriginAmount, self, id) then
+		self._tmpAmount = 0
 
-		logError("getProductOriginAmount fail:" .. arg_17_0:getProductInfoPrice(arg_17_1))
+		logError("getProductOriginAmount fail:" .. self:getProductInfoPrice(id))
 	end
 
-	if string.nilorempty(arg_17_0._tmpAmount) then
-		arg_17_0._tmpAmount = 0
+	if string.nilorempty(self._tmpAmount) then
+		self._tmpAmount = 0
 
-		logError("getProductOriginAmount fail:" .. arg_17_0:getProductInfoPrice(arg_17_1))
+		logError("getProductOriginAmount fail:" .. self:getProductInfoPrice(id))
 	end
 
-	return arg_17_0._tmpAmount
+	return self._tmpAmount
 end
 
-function var_0_0._getProductOriginAmount(arg_18_0, arg_18_1)
-	if BootNativeUtil.isWindows() and arg_18_0:getProductInfo(arg_18_1) then
-		local var_18_0 = arg_18_0:getProductOriginAmountMicro(arg_18_1)
+function PayModel_OverseasImpl:_getProductOriginAmount(id)
+	if BootNativeUtil.isWindows() and self:getProductInfo(id) then
+		local originAmountMicro = self:getProductOriginAmountMicro(id)
 
-		if var_18_0 then
-			arg_18_0._tmpAmount = var_18_0
+		if originAmountMicro then
+			self._tmpAmount = originAmountMicro
 		else
-			arg_18_0._tmpAmount = 0
+			self._tmpAmount = 0
 		end
 
 		return
 	end
 
-	local var_18_1 = arg_18_0:getProductInfoPrice(arg_18_1)
-	local var_18_2 = string.find(var_18_1, "%d")
-	local var_18_3 = string.sub(var_18_1, var_18_2, string.len(var_18_1))
-	local var_18_4 = string.reverse(var_18_3)
-	local var_18_5 = string.find(var_18_4, "%d")
-	local var_18_6 = string.len(var_18_4) - var_18_5
-	local var_18_7 = string.sub(var_18_3, 1, var_18_6 + 1)
-	local var_18_8 = string.gsub(var_18_7, ",", "")
-	local var_18_9 = tonumber(var_18_8) * 100
-	local var_18_10 = string.find(var_18_9, "%.")
+	local str = self:getProductInfoPrice(id)
+	local index = string.find(str, "%d")
+	local num = string.sub(str, index, string.len(str))
+	local reverseStr = string.reverse(num)
+	local lastIndex = string.find(reverseStr, "%d")
 
-	if var_18_10 then
-		var_18_9 = string.sub(var_18_9, 0, var_18_10 - 1)
-		var_18_9 = tonumber(var_18_9)
+	lastIndex = string.len(reverseStr) - lastIndex
+
+	local numStr2 = string.sub(num, 1, lastIndex + 1)
+
+	num = string.gsub(numStr2, ",", "")
+	num = tonumber(num)
+	num = num * 100
+	index = string.find(num, "%.")
+
+	if index then
+		num = string.sub(num, 0, index - 1)
+		num = tonumber(num)
 	else
-		var_18_9 = string.sub(var_18_9, 0, string.len(var_18_9))
-		var_18_9 = tonumber(var_18_9)
+		num = string.sub(num, 0, string.len(num))
+		num = tonumber(num)
 	end
 
-	arg_18_0._tmpAmount = var_18_9
+	self._tmpAmount = num
 end
 
-return var_0_0
+return PayModel_OverseasImpl

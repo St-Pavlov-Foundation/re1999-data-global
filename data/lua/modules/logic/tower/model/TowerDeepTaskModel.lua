@@ -1,186 +1,190 @@
-﻿module("modules.logic.tower.model.TowerDeepTaskModel", package.seeall)
+﻿-- chunkname: @modules/logic/tower/model/TowerDeepTaskModel.lua
 
-local var_0_0 = class("TowerDeepTaskModel", MixScrollModel)
+module("modules.logic.tower.model.TowerDeepTaskModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0.tempTaskModel = BaseModel.New()
-	arg_1_0.ColumnCount = 1
-	arg_1_0.OpenAnimTime = 0.06
-	arg_1_0.OpenAnimStartTime = 0
-	arg_1_0.AnimRowCount = 6
-	arg_1_0.succRwardTaskMo = nil
+local TowerDeepTaskModel = class("TowerDeepTaskModel", MixScrollModel)
 
-	arg_1_0:reInit()
+function TowerDeepTaskModel:onInit()
+	self.tempTaskModel = BaseModel.New()
+	self.ColumnCount = 1
+	self.OpenAnimTime = 0.06
+	self.OpenAnimStartTime = 0
+	self.AnimRowCount = 6
+	self.succRwardTaskMo = nil
+
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0.tempTaskModel:clear()
-	var_0_0.super.clear(arg_2_0)
+function TowerDeepTaskModel:reInit()
+	self.tempTaskModel:clear()
+	TowerDeepTaskModel.super.clear(self)
 
-	arg_2_0.taskList = {}
+	self.taskList = {}
 end
 
-function var_0_0.setTaskInfoList(arg_3_0)
-	local var_3_0 = {}
-	local var_3_1 = TowerDeepConfig.instance:getConstConfigValue(TowerDeepEnum.ConstId.RewardTaskId)
-	local var_3_2 = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.TowerPermanentDeep) or {}
+function TowerDeepTaskModel:setTaskInfoList()
+	local list = {}
+	local succRewardTaskId = TowerDeepConfig.instance:getConstConfigValue(TowerDeepEnum.ConstId.RewardTaskId)
+	local taskMoDict = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.TowerPermanentDeep) or {}
 
-	for iter_3_0, iter_3_1 in pairs(var_3_2) do
-		if not iter_3_1.config then
-			local var_3_3 = TowerDeepConfig.instance:getTaskConfig(iter_3_1.id)
+	for taskId, taskMo in pairs(taskMoDict) do
+		if not taskMo.config then
+			local config = TowerDeepConfig.instance:getTaskConfig(taskMo.id)
 
-			if not var_3_3 then
-				logError("爬塔深层任务配置表id不存在,请检查: " .. tostring(iter_3_1.id))
+			if not config then
+				logError("爬塔深层任务配置表id不存在,请检查: " .. tostring(taskMo.id))
 			end
 
-			iter_3_1:init(iter_3_1, var_3_3)
+			taskMo:init(taskMo, config)
 		end
 
-		if iter_3_1.id == var_3_1 then
-			arg_3_0.succRwardTaskMo = iter_3_1
+		if taskMo.id == succRewardTaskId then
+			self.succRwardTaskMo = taskMo
 		else
-			table.insert(var_3_0, iter_3_1)
+			table.insert(list, taskMo)
 		end
 	end
 
-	arg_3_0.tempTaskModel:setList(var_3_0)
-	arg_3_0:sortList()
+	self.tempTaskModel:setList(list)
+	self:sortList()
 end
 
-function var_0_0.updateTaskInfo(arg_4_0, arg_4_1)
-	local var_4_0 = false
+function TowerDeepTaskModel:updateTaskInfo(taskInfoList)
+	local isChange = false
 
-	if GameUtil.getTabLen(arg_4_0.tempTaskModel:getList()) == 0 then
+	if GameUtil.getTabLen(self.tempTaskModel:getList()) == 0 then
 		return
 	end
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
-		if iter_4_1.type == TaskEnum.TaskType.TowerPermanentDeep then
-			local var_4_1 = arg_4_0.tempTaskModel:getById(iter_4_1.id)
+	for _, info in ipairs(taskInfoList) do
+		if info.type == TaskEnum.TaskType.TowerPermanentDeep then
+			local mo = self.tempTaskModel:getById(info.id)
 
-			if not var_4_1 then
-				local var_4_2 = TowerDeepConfig.instance:getTaskConfig(iter_4_1.id)
+			if not mo then
+				local config = TowerDeepConfig.instance:getTaskConfig(info.id)
 
-				if var_4_2 then
-					var_4_1 = TaskMo.New()
+				if config then
+					mo = TaskMo.New()
 
-					var_4_1:init(iter_4_1, var_4_2)
-					arg_4_0.tempTaskModel:addAtLast(var_4_1)
+					mo:init(info, config)
+					self.tempTaskModel:addAtLast(mo)
 				else
-					logError("爬塔深层任务配置表id不存在: " .. tostring(iter_4_1.id))
+					logError("爬塔深层任务配置表id不存在: " .. tostring(info.id))
 				end
 			else
-				var_4_1:update(iter_4_1)
+				mo:update(info)
 			end
 
-			var_4_0 = true
+			isChange = true
 		end
 	end
 
-	if var_4_0 then
-		arg_4_0:sortList()
+	if isChange then
+		self:sortList()
 	end
 
-	return var_4_0
+	return isChange
 end
 
-function var_0_0.sortList(arg_5_0)
-	if tabletool.len(arg_5_0.tempTaskModel:getList()) > 0 then
-		table.sort(arg_5_0.tempTaskModel:getList(), var_0_0.sortFunc)
+function TowerDeepTaskModel:sortList()
+	if tabletool.len(self.tempTaskModel:getList()) > 0 then
+		table.sort(self.tempTaskModel:getList(), TowerDeepTaskModel.sortFunc)
 	end
 end
 
-function var_0_0.sortFunc(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0.progress >= arg_6_0.config.maxProgress and arg_6_0.finishCount > 0 and 3 or arg_6_0.hasFinished and 1 or 2
-	local var_6_1 = arg_6_1.progress >= arg_6_1.config.maxProgress and arg_6_1.finishCount > 0 and 3 or arg_6_1.hasFinished and 1 or 2
+function TowerDeepTaskModel.sortFunc(a, b)
+	local aValue = a.progress >= a.config.maxProgress and a.finishCount > 0 and 3 or a.hasFinished and 1 or 2
+	local bValue = b.progress >= b.config.maxProgress and b.finishCount > 0 and 3 or b.hasFinished and 1 or 2
 
-	if var_6_0 ~= var_6_1 then
-		return var_6_0 < var_6_1
+	if aValue ~= bValue then
+		return aValue < bValue
 	else
-		return arg_6_0.config.id < arg_6_1.config.id
+		return a.config.id < b.config.id
 	end
 end
 
-function var_0_0.refreshList(arg_7_0)
-	local var_7_0 = tabletool.copy(arg_7_0.tempTaskModel:getList())
+function TowerDeepTaskModel:refreshList()
+	local list = tabletool.copy(self.tempTaskModel:getList())
+	local rewardCount = self:getTaskItemCanGetCount(list)
 
-	if arg_7_0:getTaskItemCanGetCount(var_7_0) > 1 then
-		table.insert(var_7_0, 1, {
+	if rewardCount > 1 then
+		table.insert(list, 1, {
 			id = 0,
 			canGetAll = true
 		})
 	end
 
-	arg_7_0:setList(var_7_0)
+	self:setList(list)
 	TowerController.instance:dispatchEvent(TowerEvent.TowerDeepRefreshTask)
 end
 
-function var_0_0.getAllCanGetList(arg_8_0)
-	local var_8_0 = {}
+function TowerDeepTaskModel:getAllCanGetList()
+	local idList = {}
 
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0.tempTaskModel:getList()) do
-		if iter_8_1.config and arg_8_0:isTaskCanGet(iter_8_1) then
-			table.insert(var_8_0, iter_8_1.id)
+	for _, taskMo in ipairs(self.tempTaskModel:getList()) do
+		if taskMo.config and self:isTaskCanGet(taskMo) then
+			table.insert(idList, taskMo.id)
 		end
 	end
 
-	return var_8_0
+	return idList
 end
 
-function var_0_0.getTaskItemCanGetCount(arg_9_0, arg_9_1)
-	local var_9_0 = 0
+function TowerDeepTaskModel:getTaskItemCanGetCount(list)
+	local count = 0
 
-	for iter_9_0, iter_9_1 in pairs(arg_9_1) do
-		if arg_9_0:isTaskCanGet(iter_9_1) then
-			var_9_0 = var_9_0 + 1
+	for _, taskMo in pairs(list) do
+		if self:isTaskCanGet(taskMo) then
+			count = count + 1
 		end
 	end
 
-	return var_9_0
+	return count
 end
 
-function var_0_0.isTaskFinished(arg_10_0, arg_10_1)
-	return arg_10_1.finishCount > 0 and arg_10_1.progress >= arg_10_1.config.maxProgress
+function TowerDeepTaskModel:isTaskFinished(taskMo)
+	return taskMo.finishCount > 0 and taskMo.progress >= taskMo.config.maxProgress
 end
 
-function var_0_0.isTaskCanGet(arg_11_0, arg_11_1)
-	return arg_11_1.progress >= arg_11_1.config.maxProgress and arg_11_1.finishCount == 0
+function TowerDeepTaskModel:isTaskCanGet(taskMo)
+	return taskMo.progress >= taskMo.config.maxProgress and taskMo.finishCount == 0
 end
 
-function var_0_0.getSuccRewardTaskMo(arg_12_0)
-	return arg_12_0.succRwardTaskMo
+function TowerDeepTaskModel:getSuccRewardTaskMo()
+	return self.succRwardTaskMo
 end
 
-function var_0_0.isSuccRewardHasGet(arg_13_0)
-	return arg_13_0.succRwardTaskMo and arg_13_0:isTaskFinished(arg_13_0.succRwardTaskMo)
+function TowerDeepTaskModel:isSuccRewardHasGet()
+	return self.succRwardTaskMo and self:isTaskFinished(self.succRwardTaskMo)
 end
 
-function var_0_0.getDelayPlayTime(arg_14_0, arg_14_1)
-	if arg_14_1 == nil then
+function TowerDeepTaskModel:getDelayPlayTime(mo)
+	if mo == nil then
 		return -1
 	end
 
-	local var_14_0 = Time.time
+	local curTime = Time.time
 
-	if arg_14_0._itemStartAnimTime == nil then
-		arg_14_0._itemStartAnimTime = var_14_0 + arg_14_0.OpenAnimStartTime
+	if self._itemStartAnimTime == nil then
+		self._itemStartAnimTime = curTime + self.OpenAnimStartTime
 	end
 
-	local var_14_1 = arg_14_0:getIndex(arg_14_1)
+	local index = self:getIndex(mo)
 
-	if not var_14_1 or var_14_1 > arg_14_0.AnimRowCount * arg_14_0.ColumnCount then
+	if not index or index > self.AnimRowCount * self.ColumnCount then
 		return -1
 	end
 
-	local var_14_2 = math.floor((var_14_1 - 1) / arg_14_0.ColumnCount) * arg_14_0.OpenAnimTime + arg_14_0.OpenAnimStartTime
+	local delayTime = math.floor((index - 1) / self.ColumnCount) * self.OpenAnimTime + self.OpenAnimStartTime
+	local passTime = curTime - self._itemStartAnimTime
 
-	if var_14_0 - arg_14_0._itemStartAnimTime - var_14_2 > 0.1 then
+	if passTime - delayTime > 0.1 then
 		return -1
 	else
-		return var_14_2
+		return delayTime
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+TowerDeepTaskModel.instance = TowerDeepTaskModel.New()
 
-return var_0_0
+return TowerDeepTaskModel

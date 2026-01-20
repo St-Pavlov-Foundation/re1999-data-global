@@ -1,85 +1,87 @@
-﻿module("modules.logic.fight.mgr.FightEntrustEntityMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/mgr/FightEntrustEntityMgr.lua
 
-local var_0_0 = class("FightEntrustEntityMgr", FightBaseClass)
+module("modules.logic.fight.mgr.FightEntrustEntityMgr", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0.entityDic = {}
-	arg_1_0.entityVisible = {}
-	arg_1_0.entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+local FightEntrustEntityMgr = class("FightEntrustEntityMgr", FightBaseClass)
 
-	arg_1_0:com_registFightEvent(FightEvent.EntrustTempEntity, arg_1_0._onEntrustTempEntity)
-	arg_1_0:com_registFightEvent(FightEvent.OnRestartStageBefore, arg_1_0._onRestartStageBefore)
-	arg_1_0:com_registFightEvent(FightEvent.OnSkillPlayStart, arg_1_0._onSkillPlayStart)
-	arg_1_0:com_registFightEvent(FightEvent.OnSkillPlayFinish, arg_1_0._onSkillPlayFinish)
-	arg_1_0:com_registFightEvent(FightEvent.OnCameraFocusChanged, arg_1_0._onCameraFocusChanged)
-	arg_1_0:com_registFightEvent(FightEvent.ReleaseAllEntrustedEntity, arg_1_0._releaseAllEntity)
+function FightEntrustEntityMgr:onConstructor()
+	self.entityDic = {}
+	self.entityVisible = {}
+	self.entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+
+	self:com_registFightEvent(FightEvent.EntrustTempEntity, self._onEntrustTempEntity)
+	self:com_registFightEvent(FightEvent.OnRestartStageBefore, self._onRestartStageBefore)
+	self:com_registFightEvent(FightEvent.OnSkillPlayStart, self._onSkillPlayStart)
+	self:com_registFightEvent(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish)
+	self:com_registFightEvent(FightEvent.OnCameraFocusChanged, self._onCameraFocusChanged)
+	self:com_registFightEvent(FightEvent.ReleaseAllEntrustedEntity, self._releaseAllEntity)
 end
 
-function var_0_0._onEntrustTempEntity(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_1.id
+function FightEntrustEntityMgr:_onEntrustTempEntity(tempEntity)
+	local entityId = tempEntity.id
 
-	if arg_2_0.entityDic[var_2_0] then
-		arg_2_0:_releaseEntity(arg_2_0.entityDic[var_2_0])
+	if self.entityDic[entityId] then
+		self:_releaseEntity(self.entityDic[entityId])
 	end
 
-	arg_2_0.entityDic[var_2_0] = arg_2_1
-	arg_2_0.entityVisible[var_2_0] = 0
+	self.entityDic[entityId] = tempEntity
+	self.entityVisible[entityId] = 0
 
-	arg_2_1.spine:play(arg_2_1.spine._curAnimState, true)
+	tempEntity.spine:play(tempEntity.spine._curAnimState, true)
 end
 
-function var_0_0._onSkillPlayStart(arg_3_0)
-	for iter_3_0, iter_3_1 in pairs(arg_3_0.entityDic) do
-		arg_3_0.entityVisible[iter_3_1.id] = (arg_3_0.entityVisible[iter_3_1.id] or 0) + 1
+function FightEntrustEntityMgr:_onSkillPlayStart()
+	for k, v in pairs(self.entityDic) do
+		self.entityVisible[v.id] = (self.entityVisible[v.id] or 0) + 1
 
-		iter_3_1:setVisibleByPos(false)
+		v:setVisibleByPos(false)
 	end
 end
 
-function var_0_0._onSkillPlayFinish(arg_4_0)
-	for iter_4_0, iter_4_1 in pairs(arg_4_0.entityDic) do
-		if arg_4_0.entityVisible[iter_4_1.id] then
-			arg_4_0.entityVisible[iter_4_1.id] = arg_4_0.entityVisible[iter_4_1.id] - 1
+function FightEntrustEntityMgr:_onSkillPlayFinish()
+	for k, v in pairs(self.entityDic) do
+		if self.entityVisible[v.id] then
+			self.entityVisible[v.id] = self.entityVisible[v.id] - 1
 
-			if arg_4_0.entityVisible[iter_4_1.id] < 0 then
-				arg_4_0.entityVisible[iter_4_1.id] = 0
+			if self.entityVisible[v.id] < 0 then
+				self.entityVisible[v.id] = 0
 			end
 		end
 
-		if arg_4_0.entityVisible[iter_4_1.id] == 0 then
-			iter_4_1:setVisibleByPos(true)
-			arg_4_0.entityMgr:adjustSpineLookRotation(iter_4_1)
+		if self.entityVisible[v.id] == 0 then
+			v:setVisibleByPos(true)
+			self.entityMgr:adjustSpineLookRotation(v)
 		end
 	end
 end
 
-function var_0_0._onCameraFocusChanged(arg_5_0, arg_5_1)
-	if arg_5_1 then
-		arg_5_0:_onSkillPlayStart()
+function FightEntrustEntityMgr:_onCameraFocusChanged(state)
+	if state then
+		self:_onSkillPlayStart()
 	else
-		arg_5_0:_onSkillPlayFinish()
+		self:_onSkillPlayFinish()
 	end
 end
 
-function var_0_0._releaseEntity(arg_6_0, arg_6_1)
-	arg_6_0.entityMgr:removeUnit(arg_6_1:getTag(), arg_6_1.id)
+function FightEntrustEntityMgr:_releaseEntity(entity)
+	self.entityMgr:removeUnit(entity:getTag(), entity.id)
 
-	arg_6_0.entityDic[arg_6_1.id] = nil
-	arg_6_0.entityVisible[arg_6_1.id] = nil
+	self.entityDic[entity.id] = nil
+	self.entityVisible[entity.id] = nil
 end
 
-function var_0_0._releaseAllEntity(arg_7_0)
-	for iter_7_0, iter_7_1 in pairs(arg_7_0.entityDic) do
-		arg_7_0:_releaseEntity(iter_7_1)
+function FightEntrustEntityMgr:_releaseAllEntity()
+	for k, entity in pairs(self.entityDic) do
+		self:_releaseEntity(entity)
 	end
 end
 
-function var_0_0._onRestartStageBefore(arg_8_0)
-	arg_8_0:_releaseAllEntity()
+function FightEntrustEntityMgr:_onRestartStageBefore()
+	self:_releaseAllEntity()
 end
 
-function var_0_0.onDestructor(arg_9_0)
-	arg_9_0:_releaseAllEntity()
+function FightEntrustEntityMgr:onDestructor()
+	self:_releaseAllEntity()
 end
 
-return var_0_0
+return FightEntrustEntityMgr

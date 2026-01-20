@@ -1,7 +1,9 @@
-﻿module("modules.logic.activity.model.show.ActivityGuestBindViewListModel", package.seeall)
+﻿-- chunkname: @modules/logic/activity/model/show/ActivityGuestBindViewListModel.lua
 
-local var_0_0 = class("ActivityGuestBindViewListModel", ListScrollModel)
+module("modules.logic.activity.model.show.ActivityGuestBindViewListModel", package.seeall)
 
-var_0_0.instance = var_0_0.New()
+local ActivityGuestBindViewListModel = class("ActivityGuestBindViewListModel", ListScrollModel)
 
-return var_0_0
+ActivityGuestBindViewListModel.instance = ActivityGuestBindViewListModel.New()
+
+return ActivityGuestBindViewListModel

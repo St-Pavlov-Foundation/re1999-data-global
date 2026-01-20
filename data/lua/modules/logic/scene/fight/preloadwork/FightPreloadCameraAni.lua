@@ -1,29 +1,31 @@
-﻿module("modules.logic.scene.fight.preloadwork.FightPreloadCameraAni", package.seeall)
+﻿-- chunkname: @modules/logic/scene/fight/preloadwork/FightPreloadCameraAni.lua
 
-local var_0_0 = class("FightPreloadCameraAni", BaseWork)
+module("modules.logic.scene.fight.preloadwork.FightPreloadCameraAni", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
+local FightPreloadCameraAni = class("FightPreloadCameraAni", BaseWork)
+
+function FightPreloadCameraAni:onStart(context)
 	if not GameResMgr.IsFromEditorDir then
-		arg_1_0._loader = MultiAbLoader.New()
+		self._loader = MultiAbLoader.New()
 
-		arg_1_0._loader:addPath(ResUrl.getCameraAnimABUrl())
-		arg_1_0._loader:startLoad(arg_1_0._onLoadFinish, arg_1_0)
+		self._loader:addPath(ResUrl.getCameraAnimABUrl())
+		self._loader:startLoad(self._onLoadFinish, self)
 	else
-		arg_1_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._onLoadFinish(arg_2_0, arg_2_1)
-	arg_2_0.context.callback(arg_2_0.context.callbackObj, arg_2_1:getFirstAssetItem())
-	arg_2_0:onDone(true)
+function FightPreloadCameraAni:_onLoadFinish(loader)
+	self.context.callback(self.context.callbackObj, loader:getFirstAssetItem())
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
-	if arg_3_0._loader then
-		arg_3_0._loader:dispose()
+function FightPreloadCameraAni:clearWork()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_3_0._loader = nil
+		self._loader = nil
 	end
 end
 
-return var_0_0
+return FightPreloadCameraAni

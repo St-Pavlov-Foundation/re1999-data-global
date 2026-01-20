@@ -1,273 +1,283 @@
-﻿module("modules.logic.achievement.view.AchievementMainViewFocus", package.seeall)
+﻿-- chunkname: @modules/logic/achievement/view/AchievementMainViewFocus.lua
 
-local var_0_0 = class("AchievementMainViewFocus", BaseView)
+module("modules.logic.achievement.view.AchievementMainViewFocus", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local AchievementMainViewFocus = class("AchievementMainViewFocus", BaseView)
+
+function AchievementMainViewFocus:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(AchievementMainController.instance, AchievementEvent.OnSwitchCategory, arg_2_0.onSwitchCategory, arg_2_0)
-	arg_2_0:addEventCb(AchievementMainController.instance, AchievementEvent.OnSwitchViewType, arg_2_0.onSwitchViewType, arg_2_0)
+function AchievementMainViewFocus:addEvents()
+	self:addEventCb(AchievementMainController.instance, AchievementEvent.OnSwitchCategory, self.onSwitchCategory, self)
+	self:addEventCb(AchievementMainController.instance, AchievementEvent.OnSwitchViewType, self.onSwitchViewType, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(AchievementMainController.instance, AchievementEvent.OnSwitchCategory, arg_3_0.onSwitchCategory, arg_3_0)
-	arg_3_0:removeEventCb(AchievementMainController.instance, AchievementEvent.OnSwitchViewType, arg_3_0.onSwitchViewType, arg_3_0)
+function AchievementMainViewFocus:removeEvents()
+	self:removeEventCb(AchievementMainController.instance, AchievementEvent.OnSwitchCategory, self.onSwitchCategory, self)
+	self:removeEventCb(AchievementMainController.instance, AchievementEvent.OnSwitchViewType, self.onSwitchViewType, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function AchievementMainViewFocus:_editableInitView()
 	return
 end
 
-function var_0_0.onDestroyView(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0.focus2OriginAchievement, arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0.triggerAchievementUnLockAduio, arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0.setHasPlayOpenAnim, arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0.onFocusNewestUpgradeGroupSucc, arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0._blockSwtichCategory, arg_5_0)
+function AchievementMainViewFocus:onDestroyView()
+	TaskDispatcher.cancelTask(self.focus2OriginAchievement, self)
+	TaskDispatcher.cancelTask(self.triggerAchievementUnLockAduio, self)
+	TaskDispatcher.cancelTask(self.setHasPlayOpenAnim, self)
+	TaskDispatcher.cancelTask(self.onFocusNewestUpgradeGroupSucc, self)
+	TaskDispatcher.cancelTask(self._blockSwtichCategory, self)
 
-	if arg_5_0._scrollFocusTweenId then
-		ZProj.TweenHelper.KillById(arg_5_0._scrollFocusTweenId)
+	if self._scrollFocusTweenId then
+		ZProj.TweenHelper.KillById(self._scrollFocusTweenId)
 
-		arg_5_0._scrollFocusTweenId = nil
+		self._scrollFocusTweenId = nil
 	end
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:checkIsNeedFocusAchievement()
+function AchievementMainViewFocus:onOpen()
+	self:checkIsNeedFocusAchievement()
 end
 
-function var_0_0.onClose(arg_7_0)
+function AchievementMainViewFocus:onClose()
 	UIBlockMgrExtend.setNeedCircleMv(true)
 	UIBlockMgr.instance:endBlock("AchievementMainViewFocus_Focus")
 	UIBlockMgr.instance:endBlock("AchievementMainViewFocus_FocusOrigin")
 	UIBlockMgr.instance:endBlock("AchievementMainViewFocus_SwitchCategory")
 end
 
-local var_0_1 = 2
+local playGroupUpgradeEffectTime = 2
 
-function var_0_0.checkIsNeedFocusAchievement(arg_8_0)
+function AchievementMainViewFocus:checkIsNeedFocusAchievement()
 	UIBlockMgrExtend.setNeedCircleMv(false)
 	UIBlockMgr.instance:startBlock("AchievementMainViewFocus_FocusOrigin")
 
-	local var_8_0 = arg_8_0:checkIsNeedFocusNewest() and var_0_1 or 0
+	local isSucc = self:checkIsNeedFocusNewest()
+	local delayFocusOrignAchievementTime = isSucc and playGroupUpgradeEffectTime or 0
 
-	TaskDispatcher.cancelTask(arg_8_0.focus2OriginAchievement, arg_8_0)
-	TaskDispatcher.runDelay(arg_8_0.focus2OriginAchievement, arg_8_0, var_8_0)
+	TaskDispatcher.cancelTask(self.focus2OriginAchievement, self)
+	TaskDispatcher.runDelay(self.focus2OriginAchievement, self, delayFocusOrignAchievementTime)
 end
 
-function var_0_0.checkIsNeedFocusNewest(arg_9_0)
-	return arg_9_0:try2FocusNewestUpgradeGroup() or arg_9_0:try2FocusNewestUnlockAchievement()
+function AchievementMainViewFocus:checkIsNeedFocusNewest()
+	local isSucc = self:try2FocusNewestUpgradeGroup()
+
+	isSucc = isSucc or self:try2FocusNewestUnlockAchievement()
+
+	return isSucc
 end
 
-function var_0_0.focus2OriginAchievement(arg_10_0)
+function AchievementMainViewFocus:focus2OriginAchievement()
 	UIBlockMgr.instance:endBlock("AchievementMainViewFocus_FocusOrigin")
 
-	local var_10_0 = arg_10_0.viewParam and arg_10_0.viewParam.achievementType
-	local var_10_1 = arg_10_0.viewParam and arg_10_0.viewParam.focusDataId
-	local var_10_2 = false
+	local achievementType = self.viewParam and self.viewParam.achievementType
+	local focusDataId = self.viewParam and self.viewParam.focusDataId
+	local isSucc = false
 
-	if var_10_0 and var_10_1 and var_10_1 ~= 0 then
-		var_10_2 = arg_10_0:try2FocusAchievement(var_10_0, var_10_1)
+	if achievementType and focusDataId and focusDataId ~= 0 then
+		isSucc = self:try2FocusAchievement(achievementType, focusDataId)
 	else
-		arg_10_0:setHasPlayOpenAnim()
+		self:setHasPlayOpenAnim()
 	end
 
-	return var_10_2
+	return isSucc
 end
 
-function var_0_0.onSwitchCategory(arg_11_0)
-	if not arg_11_0:checkIsNeedFocusNewest() then
-		arg_11_0:resetViewScrollPixel()
+function AchievementMainViewFocus:onSwitchCategory()
+	local isSucc = self:checkIsNeedFocusNewest()
+
+	if not isSucc then
+		self:resetViewScrollPixel()
 	end
 
 	UIBlockMgr.instance:startBlock("AchievementMainViewFocus_SwitchCategory")
 	UIBlockMgrExtend.setNeedCircleMv(false)
-	TaskDispatcher.runDelay(arg_11_0._blockSwtichCategory, arg_11_0, 0.5)
+	TaskDispatcher.runDelay(self._blockSwtichCategory, self, 0.5)
 end
 
-function var_0_0._blockSwtichCategory(arg_12_0)
+function AchievementMainViewFocus:_blockSwtichCategory()
 	UIBlockMgr.instance:endBlock("AchievementMainViewFocus_SwitchCategory")
 	UIBlockMgrExtend.setNeedCircleMv(true)
 end
 
-function var_0_0.onSwitchViewType(arg_13_0)
-	if not arg_13_0:checkIsNeedFocusNewest() then
-		arg_13_0:resetViewScrollPixel()
+function AchievementMainViewFocus:onSwitchViewType()
+	local isSucc = self:checkIsNeedFocusNewest()
+
+	if not isSucc then
+		self:resetViewScrollPixel()
 	end
 end
 
-function var_0_0.try2FocusAchievement(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = AchievementMainCommonModel.instance:getCurrentViewType()
-	local var_14_1, var_14_2, var_14_3 = AchievementMainCommonModel.instance:getViewAchievementIndex(var_14_0, arg_14_1, arg_14_2)
-	local var_14_4 = 0
+function AchievementMainViewFocus:try2FocusAchievement(achievementType, dataId)
+	local viewType = AchievementMainCommonModel.instance:getCurrentViewType()
+	local isSucc, achievementIndex, scrollPixel = AchievementMainCommonModel.instance:getViewAchievementIndex(viewType, achievementType, dataId)
+	local duration = 0
 
-	if var_14_1 then
-		var_14_4 = arg_14_0:scrollView2TargetPixel(var_14_0, var_14_3, var_14_2)
+	if isSucc then
+		duration = self:scrollView2TargetPixel(viewType, scrollPixel, achievementIndex)
 	else
-		logError(string.format("focus achievement failed, achievementType = %s, dataId = %s", arg_14_1, arg_14_2))
+		logError(string.format("focus achievement failed, achievementType = %s, dataId = %s", achievementType, dataId))
 	end
 
-	return var_14_1, var_14_4
+	return isSucc, duration
 end
 
-local var_0_2 = 0.0001
-local var_0_3 = 0
-local var_0_4 = 1
+local scrollPerPixleDuration = 0.0001
+local minScrollFocsuDuration = 0
+local maxScrollFocusDuration = 1
 
-function var_0_0.scrollView2TargetPixel(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
+function AchievementMainViewFocus:scrollView2TargetPixel(viewType, scrollPixel, achievementIndex)
 	UIBlockMgr.instance:startBlock("AchievementMainViewFocus_Focus")
 	AchievementMainCommonModel.instance:markCurrentScrollFocusing(true)
 
-	if arg_15_0._scrollFocusTweenId then
-		ZProj.TweenHelper.KillById(arg_15_0._scrollFocusTweenId)
+	if self._scrollFocusTweenId then
+		ZProj.TweenHelper.KillById(self._scrollFocusTweenId)
 	end
 
-	local var_15_0 = arg_15_0.viewContainer:getScrollView(arg_15_1)
-	local var_15_1 = var_15_0 and var_15_0:getCsScroll()
+	local luaScrollView = self.viewContainer:getScrollView(viewType)
+	local csScroll = luaScrollView and luaScrollView:getCsScroll()
 
-	arg_15_0._curFocusAchievementIndex = arg_15_3
+	self._curFocusAchievementIndex = achievementIndex
 
-	local var_15_2 = 0
+	local duration = 0
 
-	if var_15_0 and var_15_1 then
-		arg_15_0._curFocusCsScroll = var_15_1
+	if luaScrollView and csScroll then
+		self._curFocusCsScroll = csScroll
 
-		local var_15_3 = var_15_1.VerticalScrollPixel
-		local var_15_4 = arg_15_2 or 0
-		local var_15_5 = math.abs(var_15_4 - var_15_3)
+		local originVScrollPixel = csScroll.VerticalScrollPixel
+		local targetVScrollPixel = scrollPixel or 0
+		local scrollDistance = math.abs(targetVScrollPixel - originVScrollPixel)
 
-		var_15_2 = var_15_5 * var_0_2
-		var_15_2 = Mathf.Clamp(var_15_2, var_0_3, var_0_4)
+		duration = scrollDistance * scrollPerPixleDuration
+		duration = Mathf.Clamp(duration, minScrollFocsuDuration, maxScrollFocusDuration)
 
-		if var_15_5 <= 0 then
-			arg_15_0:_onFocusTweenFrameCallback(var_15_4)
-			arg_15_0:_onFocusTweenFinishCallback()
+		if scrollDistance <= 0 then
+			self:_onFocusTweenFrameCallback(targetVScrollPixel)
+			self:_onFocusTweenFinishCallback()
 		else
-			arg_15_0._scrollFocusTweenId = ZProj.TweenHelper.DOTweenFloat(var_15_3, var_15_4, var_15_2, arg_15_0._onFocusTweenFrameCallback, arg_15_0._onFocusTweenFinishCallback, arg_15_0)
+			self._scrollFocusTweenId = ZProj.TweenHelper.DOTweenFloat(originVScrollPixel, targetVScrollPixel, duration, self._onFocusTweenFrameCallback, self._onFocusTweenFinishCallback, self)
 		end
 	end
 
-	return var_15_2
+	return duration
 end
 
-function var_0_0._onFocusTweenFrameCallback(arg_16_0, arg_16_1)
-	if arg_16_0._curFocusCsScroll then
-		arg_16_0._curFocusCsScroll.VerticalScrollPixel = arg_16_1
+function AchievementMainViewFocus:_onFocusTweenFrameCallback(scrollPixel)
+	if self._curFocusCsScroll then
+		self._curFocusCsScroll.VerticalScrollPixel = scrollPixel
 	end
 end
 
-local var_0_5 = 0.05
+local delayDispatchFocusFinishedEventTime = 0.05
 
-function var_0_0._onFocusTweenFinishCallback(arg_17_0)
-	local var_17_0 = Mathf.Clamp(arg_17_0._curFocusAchievementIndex - 1, 1, arg_17_0._curFocusAchievementIndex)
+function AchievementMainViewFocus:_onFocusTweenFinishCallback()
+	local scrollViewTopIndex = Mathf.Clamp(self._curFocusAchievementIndex - 1, 1, self._curFocusAchievementIndex)
 
-	AchievementMainTileModel.instance:markScrollFocusIndex(var_17_0)
-	TaskDispatcher.cancelTask(arg_17_0.setHasPlayOpenAnim, arg_17_0)
-	TaskDispatcher.runDelay(arg_17_0.setHasPlayOpenAnim, arg_17_0, var_0_5)
+	AchievementMainTileModel.instance:markScrollFocusIndex(scrollViewTopIndex)
+	TaskDispatcher.cancelTask(self.setHasPlayOpenAnim, self)
+	TaskDispatcher.runDelay(self.setHasPlayOpenAnim, self, delayDispatchFocusFinishedEventTime)
 	UIBlockMgr.instance:endBlock("AchievementMainViewFocus_Focus")
 	UIBlockMgrExtend.setNeedCircleMv(true)
 end
 
-function var_0_0.setHasPlayOpenAnim(arg_18_0)
+function AchievementMainViewFocus:setHasPlayOpenAnim()
 	AchievementMainCommonModel.instance:markCurrentScrollFocusing(false)
 
-	local var_18_0 = AchievementMainCommonModel.instance:getCurrentViewType()
+	local curViewType = AchievementMainCommonModel.instance:getCurrentViewType()
 
-	AchievementMainController.instance:dispatchEvent(AchievementEvent.OnFocusAchievementFinished, var_18_0)
+	AchievementMainController.instance:dispatchEvent(AchievementEvent.OnFocusAchievementFinished, curViewType)
 	AchievementMainTileModel.instance:setHasPlayOpenAnim(true)
 end
 
-function var_0_0.try2FocusNewestUpgradeGroup(arg_19_0)
-	local var_19_0 = arg_19_0:getNewestUpgradeGroup()
-	local var_19_1 = false
-	local var_19_2 = 0
+function AchievementMainViewFocus:try2FocusNewestUpgradeGroup()
+	local matchGroupId = self:getNewestUpgradeGroup()
+	local isSucc = false
+	local duration = 0
 
-	if var_19_0 and var_19_0 ~= 0 then
-		local var_19_3
+	if matchGroupId and matchGroupId ~= 0 then
+		isSucc, duration = self:try2FocusAchievement(AchievementEnum.AchievementType.Group, matchGroupId)
 
-		var_19_1, var_19_3 = arg_19_0:try2FocusAchievement(AchievementEnum.AchievementType.Group, var_19_0)
+		if isSucc then
+			self._focusUpgradeGroupId = matchGroupId
 
-		if var_19_1 then
-			arg_19_0._focusUpgradeGroupId = var_19_0
+			AchievementMainCommonModel.instance:markGroupPlayUpgradeEffect(matchGroupId)
 
-			AchievementMainCommonModel.instance:markGroupPlayUpgradeEffect(var_19_0)
+			local delayExcuteTime = duration + delayDispatchFocusFinishedEventTime + 0.1
 
-			local var_19_4 = var_19_3 + var_0_5 + 0.1
-
-			TaskDispatcher.cancelTask(arg_19_0.onFocusNewestUpgradeGroupSucc, arg_19_0)
-			TaskDispatcher.runDelay(arg_19_0.onFocusNewestUpgradeGroupSucc, arg_19_0, var_19_4)
+			TaskDispatcher.cancelTask(self.onFocusNewestUpgradeGroupSucc, self)
+			TaskDispatcher.runDelay(self.onFocusNewestUpgradeGroupSucc, self, delayExcuteTime)
 		end
 	end
 
-	return var_19_1
+	return isSucc
 end
 
-function var_0_0.onFocusNewestUpgradeGroupSucc(arg_20_0)
-	AchievementController.instance:dispatchEvent(AchievementEvent.OnGroupUpGrade, arg_20_0._focusUpgradeGroupId)
-	arg_20_0:triggerAchievementUnLockAduio()
+function AchievementMainViewFocus:onFocusNewestUpgradeGroupSucc()
+	AchievementController.instance:dispatchEvent(AchievementEvent.OnGroupUpGrade, self._focusUpgradeGroupId)
+	self:triggerAchievementUnLockAduio()
 end
 
-function var_0_0.getNewestUpgradeGroup(arg_21_0)
-	local var_21_0 = AchievementMainCommonModel.instance:getCurrentCategory()
-	local var_21_1 = AchievementMainCommonModel.instance:getCurrentFilterType()
+function AchievementMainViewFocus:getNewestUpgradeGroup()
+	local curSelectCategory = AchievementMainCommonModel.instance:getCurrentCategory()
+	local curFilterType = AchievementMainCommonModel.instance:getCurrentFilterType()
+	local newestUpgradeGroupId = AchievementMainCommonModel.instance:getNewestUpgradeGroupId(curSelectCategory, curFilterType)
 
-	return (AchievementMainCommonModel.instance:getNewestUpgradeGroupId(var_21_0, var_21_1))
+	return newestUpgradeGroupId
 end
 
-function var_0_0.try2FocusNewestUnlockAchievement(arg_22_0)
-	local var_22_0 = arg_22_0:getNewestUnlockAchievement()
-	local var_22_1 = false
-	local var_22_2 = 0
+function AchievementMainViewFocus:try2FocusNewestUnlockAchievement()
+	local matchAchievementId = self:getNewestUnlockAchievement()
+	local isSucc = false
+	local duration = 0
 
-	if var_22_0 and var_22_0 ~= 0 then
-		local var_22_3 = AchievementConfig.instance:getAchievement(var_22_0)
-		local var_22_4 = AchievementMainCommonModel.instance:getCurrentViewType()
-		local var_22_5 = AchievementEnum.AchievementType.Single
-		local var_22_6 = var_22_0
+	if matchAchievementId and matchAchievementId ~= 0 then
+		local achievementCfg = AchievementConfig.instance:getAchievement(matchAchievementId)
+		local curViewType = AchievementMainCommonModel.instance:getCurrentViewType()
+		local achievementType = AchievementEnum.AchievementType.Single
+		local matchData = matchAchievementId
 
-		if var_22_4 == AchievementEnum.ViewType.Tile and AchievementUtils.isActivityGroup(var_22_0) then
-			var_22_5 = AchievementEnum.AchievementType.Group
-			var_22_6 = var_22_3.groupId
+		if curViewType == AchievementEnum.ViewType.Tile and AchievementUtils.isActivityGroup(matchAchievementId) then
+			achievementType = AchievementEnum.AchievementType.Group
+			matchData = achievementCfg.groupId
 		end
 
-		local var_22_7
+		isSucc, duration = self:try2FocusAchievement(achievementType, matchData)
 
-		var_22_1, var_22_7 = arg_22_0:try2FocusAchievement(var_22_5, var_22_6)
+		if isSucc then
+			local dealyTriggerAuidoTime = duration + delayDispatchFocusFinishedEventTime
 
-		if var_22_1 then
-			local var_22_8 = var_22_7 + var_0_5
-
-			TaskDispatcher.cancelTask(arg_22_0.triggerAchievementUnLockAduio, arg_22_0)
-			TaskDispatcher.runDelay(arg_22_0.triggerAchievementUnLockAduio, arg_22_0, var_22_8)
+			TaskDispatcher.cancelTask(self.triggerAchievementUnLockAduio, self)
+			TaskDispatcher.runDelay(self.triggerAchievementUnLockAduio, self, dealyTriggerAuidoTime)
 		end
 	end
 
-	return var_22_1
+	return isSucc
 end
 
-function var_0_0.triggerAchievementUnLockAduio(arg_23_0)
+function AchievementMainViewFocus:triggerAchievementUnLockAduio()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_achieve_medal)
 end
 
-function var_0_0.getNewestUnlockAchievement(arg_24_0)
-	local var_24_0 = AchievementMainCommonModel.instance:getCurrentCategory()
-	local var_24_1 = AchievementMainCommonModel.instance:getCurrentFilterType()
+function AchievementMainViewFocus:getNewestUnlockAchievement()
+	local curSelectCategory = AchievementMainCommonModel.instance:getCurrentCategory()
+	local curFilterType = AchievementMainCommonModel.instance:getCurrentFilterType()
+	local newestUnlockAchievementId = AchievementMainCommonModel.instance:getNewestUnlockAchievementId(curSelectCategory, curFilterType)
 
-	return (AchievementMainCommonModel.instance:getNewestUnlockAchievementId(var_24_0, var_24_1))
+	return newestUnlockAchievementId
 end
 
-function var_0_0.resetViewScrollPixel(arg_25_0)
-	for iter_25_0, iter_25_1 in pairs(AchievementEnum.ViewType) do
-		local var_25_0 = arg_25_0.viewContainer:getScrollView(iter_25_1)
+function AchievementMainViewFocus:resetViewScrollPixel()
+	for _, viewType in pairs(AchievementEnum.ViewType) do
+		local luaScrollView = self.viewContainer:getScrollView(viewType)
+		local csScroll = luaScrollView and luaScrollView:getCsScroll()
 
-		;(var_25_0 and var_25_0:getCsScroll()).VerticalScrollPixel = 0
+		csScroll.VerticalScrollPixel = 0
 
-		arg_25_0:scrollView2TargetPixel(iter_25_1, 0, 1)
+		self:scrollView2TargetPixel(viewType, 0, 1)
 	end
 end
 
-return var_0_0
+return AchievementMainViewFocus

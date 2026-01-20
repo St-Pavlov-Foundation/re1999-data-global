@@ -1,78 +1,81 @@
-﻿module("modules.logic.weekwalk_2.model.rpcmo.WeekwalkVer2InfoMO", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk_2/model/rpcmo/WeekwalkVer2InfoMO.lua
 
-local var_0_0 = pureTable("WeekwalkVer2InfoMO")
+module("modules.logic.weekwalk_2.model.rpcmo.WeekwalkVer2InfoMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.timeId = arg_1_1.timeId
-	arg_1_0.startTime = arg_1_1.startTime / 1000
-	arg_1_0.endTime = arg_1_1.endTime / 1000
-	arg_1_0.popRule = arg_1_1.popRule
-	arg_1_0.layerInfos = GameUtil.rpcInfosToMap(arg_1_1.layerInfos, WeekwalkVer2LayerInfoMO)
-	arg_1_0.prevSettle = nil
+local WeekwalkVer2InfoMO = pureTable("WeekwalkVer2InfoMO")
 
-	if arg_1_1:HasField("prevSettle") then
-		arg_1_0.prevSettle = WeekwalkVer2PrevSettleInfoMO.New()
+function WeekwalkVer2InfoMO:init(info)
+	self.timeId = info.timeId
+	self.startTime = info.startTime / 1000
+	self.endTime = info.endTime / 1000
+	self.popRule = info.popRule
+	self.layerInfos = GameUtil.rpcInfosToMap(info.layerInfos, WeekwalkVer2LayerInfoMO)
+	self.prevSettle = nil
 
-		arg_1_0.prevSettle:init(arg_1_1.prevSettle)
+	if info:HasField("prevSettle") then
+		self.prevSettle = WeekwalkVer2PrevSettleInfoMO.New()
+
+		self.prevSettle:init(info.prevSettle)
 	end
 
-	arg_1_0.isPopSettle = arg_1_0.prevSettle and arg_1_0.prevSettle.show
-	arg_1_0.snapshotInfos = GameUtil.rpcInfosToMap(arg_1_1.snapshotInfos or {}, WeekwalkVer2SnapshotInfoMO, "no")
-	arg_1_0._layerInfosMap = {}
+	self.isPopSettle = self.prevSettle and self.prevSettle.show
+	self.snapshotInfos = GameUtil.rpcInfosToMap(info.snapshotInfos or {}, WeekwalkVer2SnapshotInfoMO, "no")
+	self._layerInfosMap = {}
 
-	for iter_1_0, iter_1_1 in pairs(arg_1_0.layerInfos) do
-		arg_1_0._layerInfosMap[iter_1_1:getLayer()] = iter_1_1
+	for k, v in pairs(self.layerInfos) do
+		self._layerInfosMap[v:getLayer()] = v
 	end
 
-	local var_1_0 = lua_weekwalk_ver2_time.configDict[arg_1_0.timeId]
+	local config = lua_weekwalk_ver2_time.configDict[self.timeId]
 
-	arg_1_0.issueId = var_1_0 and var_1_0.issueId
+	self.issueId = config and config.issueId
 
-	if not arg_1_0.issueId then
-		logError("WeekwalkVer2InfoMO weekwalk_ver2_time configDict not find timeId:" .. tostring(arg_1_0.timeId))
+	if not self.issueId then
+		logError("WeekwalkVer2InfoMO weekwalk_ver2_time configDict not find timeId:" .. tostring(self.timeId))
 	end
 end
 
-function var_0_0.getOptionSkills(arg_2_0)
-	if arg_2_0._skillList and arg_2_0._skillList._timeId == arg_2_0.timeId then
-		return arg_2_0._skillList
+function WeekwalkVer2InfoMO:getOptionSkills()
+	if self._skillList and self._skillList._timeId == self.timeId then
+		return self._skillList
 	end
 
-	local var_2_0 = lua_weekwalk_ver2_time.configDict[arg_2_0.timeId]
+	local timeConfig = lua_weekwalk_ver2_time.configDict[self.timeId]
+	local skillList = string.splitToNumber(timeConfig.optionalSkills, "#")
 
-	arg_2_0._skillList = string.splitToNumber(var_2_0.optionalSkills, "#")
-	arg_2_0._skillList._timeId = arg_2_0.timeId
+	self._skillList = skillList
+	self._skillList._timeId = self.timeId
 
-	return arg_2_0._skillList
+	return self._skillList
 end
 
-function var_0_0.getHeroGroupSkill(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_0.snapshotInfos[arg_3_1]
+function WeekwalkVer2InfoMO:getHeroGroupSkill(index)
+	local snapshotInfo = self.snapshotInfos[index]
 
-	return var_3_0 and var_3_0:getChooseSkillId()
+	return snapshotInfo and snapshotInfo:getChooseSkillId()
 end
 
-function var_0_0.setHeroGroupSkill(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = arg_4_0.snapshotInfos[arg_4_1]
+function WeekwalkVer2InfoMO:setHeroGroupSkill(index, skillIds)
+	local snapshotInfo = self.snapshotInfos[index]
 
-	if not var_4_0 then
-		var_4_0 = WeekwalkVer2SnapshotInfoMO.New()
-		var_4_0.no = arg_4_1
-		arg_4_0.snapshotInfos[arg_4_1] = var_4_0
+	if not snapshotInfo then
+		snapshotInfo = WeekwalkVer2SnapshotInfoMO.New()
+		snapshotInfo.no = index
+		self.snapshotInfos[index] = snapshotInfo
 	end
 
-	var_4_0:setChooseSkillId(arg_4_2)
+	snapshotInfo:setChooseSkillId(skillIds)
 end
 
-function var_0_0.isOpen(arg_5_0)
-	local var_5_0 = ServerTime.now()
+function WeekwalkVer2InfoMO:isOpen()
+	local time = ServerTime.now()
 
-	return var_5_0 >= arg_5_0.startTime and var_5_0 <= arg_5_0.endTime
+	return time >= self.startTime and time <= self.endTime
 end
 
-function var_0_0.allLayerPass(arg_6_0)
-	for iter_6_0, iter_6_1 in pairs(arg_6_0.layerInfos) do
-		if not iter_6_1.allPass then
+function WeekwalkVer2InfoMO:allLayerPass()
+	for k, v in pairs(self.layerInfos) do
+		if not v.allPass then
 			return false
 		end
 	end
@@ -80,26 +83,28 @@ function var_0_0.allLayerPass(arg_6_0)
 	return true
 end
 
-function var_0_0.setLayerInfo(arg_7_0, arg_7_1)
-	arg_7_0.layerInfos[arg_7_1.id]:init(arg_7_1)
+function WeekwalkVer2InfoMO:setLayerInfo(layerInfo)
+	local info = self.layerInfos[layerInfo.id]
+
+	info:init(layerInfo)
 end
 
-function var_0_0.getLayerInfo(arg_8_0, arg_8_1)
-	return arg_8_0.layerInfos[arg_8_1]
+function WeekwalkVer2InfoMO:getLayerInfo(id)
+	return self.layerInfos[id]
 end
 
-function var_0_0.getLayerInfoByLayerIndex(arg_9_0, arg_9_1)
-	return arg_9_0._layerInfosMap[arg_9_1]
+function WeekwalkVer2InfoMO:getLayerInfoByLayerIndex(index)
+	return self._layerInfosMap[index]
 end
 
-function var_0_0.getNotFinishedMap(arg_10_0)
-	for iter_10_0 = WeekWalk_2Enum.MaxLayer, 1, -1 do
-		local var_10_0 = arg_10_0._layerInfosMap[iter_10_0]
+function WeekwalkVer2InfoMO:getNotFinishedMap()
+	for i = WeekWalk_2Enum.MaxLayer, 1, -1 do
+		local layerInfo = self._layerInfosMap[i]
 
-		if var_10_0 and var_10_0.unlock then
-			return var_10_0, iter_10_0
+		if layerInfo and layerInfo.unlock then
+			return layerInfo, i
 		end
 	end
 end
 
-return var_0_0
+return WeekwalkVer2InfoMO

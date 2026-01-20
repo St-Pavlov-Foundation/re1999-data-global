@@ -1,978 +1,993 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.controller.V1a6_CachotStatController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/controller/V1a6_CachotStatController.lua
 
-local var_0_0 = class("V1a6_CachotStatController", BaseController)
+module("modules.logic.versionactivity1_6.v1a6_cachot.controller.V1a6_CachotStatController", package.seeall)
 
-var_0_0.FailReasonEnum = {
+local V1a6_CachotStatController = class("V1a6_CachotStatController", BaseController)
+
+V1a6_CachotStatController.FailReasonEnum = {
 	FightFail = 1,
 	EventFail = 2,
 	AbortFight = 3,
 	GM = 4
 }
 
-local var_0_1 = {
-	[var_0_0.FailReasonEnum.FightFail] = "战斗全员阵亡失败-%s",
-	[var_0_0.FailReasonEnum.EventFail] = "战斗外事件导致失败-%s",
-	[var_0_0.FailReasonEnum.AbortFight] = "战斗主动退出-%s"
+local FailReason = {
+	[V1a6_CachotStatController.FailReasonEnum.FightFail] = "战斗全员阵亡失败-%s",
+	[V1a6_CachotStatController.FailReasonEnum.EventFail] = "战斗外事件导致失败-%s",
+	[V1a6_CachotStatController.FailReasonEnum.AbortFight] = "战斗主动退出-%s"
 }
 
-function var_0_0.onInit(arg_1_0)
+function V1a6_CachotStatController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clearStatEnd()
-	arg_2_0:clearInitHeroGroup()
+function V1a6_CachotStatController:reInit()
+	self:clearStatEnd()
+	self:clearInitHeroGroup()
 end
 
-function var_0_0.initObjPool(arg_3_0)
-	arg_3_0.objPool = arg_3_0.objPool or {}
+function V1a6_CachotStatController:initObjPool()
+	self.objPool = self.objPool or {}
 end
 
-function var_0_0.getNewObj(arg_4_0)
-	arg_4_0:initObjPool()
+function V1a6_CachotStatController:getNewObj()
+	self:initObjPool()
 
-	if arg_4_0.objPool and #arg_4_0.objPool > 1 then
-		return table.remove(arg_4_0.objPool)
+	if self.objPool and #self.objPool > 1 then
+		return table.remove(self.objPool)
 	end
 
 	return {}
 end
 
-function var_0_0.copyValueList(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0:getNewObj()
+function V1a6_CachotStatController:copyValueList(list)
+	local newList = self:getNewObj()
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
-		table.insert(var_5_0, iter_5_1)
+	for _, value in ipairs(list) do
+		table.insert(newList, value)
 	end
 
-	return var_5_0
+	return newList
 end
 
-function var_0_0.copyValueDict(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0:getNewObj()
+function V1a6_CachotStatController:copyValueDict(dict)
+	local newDict = self:getNewObj()
 
-	for iter_6_0, iter_6_1 in pairs(arg_6_1) do
-		var_6_0[iter_6_0] = iter_6_1
+	for key, value in pairs(dict) do
+		newDict[key] = value
 	end
 
-	return var_6_0
+	return newDict
 end
 
-function var_0_0.recycleObj(arg_7_0, arg_7_1)
-	if not arg_7_1 then
+function V1a6_CachotStatController:recycleObj(obj)
+	if not obj then
 		return
 	end
 
-	arg_7_0:initObjPool()
-	tabletool.clear(arg_7_1)
-	table.insert(arg_7_0.objPool, arg_7_1)
+	self:initObjPool()
+	tabletool.clear(obj)
+	table.insert(self.objPool, obj)
 end
 
-function var_0_0.recycleObjList(arg_8_0, arg_8_1)
-	if not arg_8_1 then
+function V1a6_CachotStatController:recycleObjList(objList)
+	if not objList then
 		return
 	end
 
-	for iter_8_0, iter_8_1 in ipairs(arg_8_1) do
-		arg_8_0:recycleObj(iter_8_1)
+	for _, obj in ipairs(objList) do
+		self:recycleObj(obj)
 	end
 
-	arg_8_0:recycleObj(arg_8_1)
+	self:recycleObj(objList)
 end
 
-function var_0_0.clearObjPool(arg_9_0)
-	arg_9_0.objPool = nil
+function V1a6_CachotStatController:clearObjPool()
+	self.objPool = nil
 end
 
-function var_0_0.statStart(arg_10_0)
-	arg_10_0.startTime = ServerTime.now()
+function V1a6_CachotStatController:statStart()
+	self.startTime = ServerTime.now()
 end
 
-function var_0_0.statReset(arg_11_0)
-	arg_11_0.statEnum = StatEnum.Result.Reset
+function V1a6_CachotStatController:statReset()
+	self.statEnum = StatEnum.Result.Reset
 end
 
-function var_0_0.statAbort(arg_12_0)
-	arg_12_0:removeRpcCallback()
+function V1a6_CachotStatController:statAbort()
+	self:removeRpcCallback()
 
-	arg_12_0.callbackId = RogueRpc.instance:sendRogueReturnRequest(V1a6_CachotEnum.ActivityId, arg_12_0.onReceiveRogueReturnInfo, arg_12_0)
+	self.callbackId = RogueRpc.instance:sendRogueReturnRequest(V1a6_CachotEnum.ActivityId, self.onReceiveRogueReturnInfo, self)
 end
 
-function var_0_0.onReceiveRogueReturnInfo(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	arg_13_0.callbackId = nil
+function V1a6_CachotStatController:onReceiveRogueReturnInfo(cmd, resultCode, msg)
+	self.callbackId = nil
 
-	if arg_13_2 ~= 0 then
-		arg_13_0:clearStatEnd()
+	if resultCode ~= 0 then
+		self:clearStatEnd()
 
 		return
 	end
 
-	local var_13_0 = arg_13_0.rogueEndInfo or RogueEndingInfoMO.New()
+	local rogueEndInfoMo = self.rogueEndInfo or RogueEndingInfoMO.New()
 
-	var_13_0:init(arg_13_3.endPush)
-	arg_13_0:_statEnd(StatEnum.Result.Abort, "", var_13_0)
+	rogueEndInfoMo:init(msg.endPush)
+	self:_statEnd(StatEnum.Result.Abort, "", rogueEndInfoMo)
 end
 
-function var_0_0.removeRpcCallback(arg_14_0)
-	if arg_14_0.callbackId then
-		RogueRpc.instance:removeCallbackById(arg_14_0.callbackId)
+function V1a6_CachotStatController:removeRpcCallback()
+	if self.callbackId then
+		RogueRpc.instance:removeCallbackById(self.callbackId)
 
-		arg_14_0.callbackId = nil
+		self.callbackId = nil
 	end
 end
 
-function var_0_0.statEnd(arg_15_0)
-	local var_15_0 = V1a6_CachotModel.instance:getRogueEndingInfo()
-	local var_15_1
-	local var_15_2
-	local var_15_3
+function V1a6_CachotStatController:statEnd()
+	local rogueEndInfoMo = V1a6_CachotModel.instance:getRogueEndingInfo()
+	local result, failReason
 
-	if arg_15_0.statEnum == StatEnum.Result.Reset then
-		arg_15_0.startTime = ServerTime.now()
-		var_15_1 = StatEnum.Result.Reset
-		var_15_3 = ""
+	if self.statEnum == StatEnum.Result.Reset then
+		self.startTime = ServerTime.now()
+		result = StatEnum.Result.Reset
+		failReason = ""
 	else
-		var_15_1 = var_15_0:isFinish() and StatEnum.Result.Success or StatEnum.Result.Fail
-		var_15_3 = arg_15_0:getFailReason()
+		result = rogueEndInfoMo:isFinish() and StatEnum.Result.Success or StatEnum.Result.Fail
+		failReason = self:getFailReason()
 	end
 
-	arg_15_0:_statEnd(var_15_1, var_15_3, var_15_0)
+	self:_statEnd(result, failReason, rogueEndInfoMo)
 end
 
-function var_0_0._statEnd(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
-	if not arg_16_0.startTime then
+function V1a6_CachotStatController:_statEnd(result, failReason, rogueEndInfoMo)
+	if not self.startTime then
 		return
 	end
 
-	local var_16_0 = arg_16_0:getRogueInfoMo()
-	local var_16_1, var_16_2 = arg_16_0:getCollectList()
-	local var_16_3, var_16_4 = arg_16_0:getHeroGroupList()
-	local var_16_5 = arg_16_0:copyValueList(arg_16_3:getFinishEventList())
+	local rogueInfoMo = self:getRogueInfoMo()
+	local collectionNameList, collectionObjList = self:getCollectList()
+	local currentHeroNameList, currentHeroObjList = self:getHeroGroupList()
+	local finishEventList = self:copyValueList(rogueEndInfoMo:getFinishEventList())
 
 	StatController.instance:track(StatEnum.EventName.ExitCachot, {
-		[StatEnum.EventProperties.UseTime] = ServerTime.now() - arg_16_0.startTime,
-		[StatEnum.EventProperties.Difficulty] = arg_16_3:getDifficulty(),
-		[StatEnum.EventProperties.DungeonResult] = arg_16_1,
-		[StatEnum.EventProperties.InterruptReason] = arg_16_2,
-		[StatEnum.EventProperties.CompletedEventNum] = arg_16_3:getFinishEventNum(),
-		[StatEnum.EventProperties.CompletedEventId] = var_16_5,
-		[StatEnum.EventProperties.CompletedRoomEnum] = arg_16_3:getRoomNum(),
-		[StatEnum.EventProperties.CompletedLayers] = arg_16_3:getLayer(),
-		[StatEnum.EventProperties.DungeonPoints] = arg_16_3:getScore(),
-		[StatEnum.EventProperties.IsDoublePoints] = arg_16_3:isDoubleScore(),
-		[StatEnum.EventProperties.InitialHeroGroup] = arg_16_0.initHeroNameList,
-		[StatEnum.EventProperties.InitialHeroGroupArray] = arg_16_0.initHeroObjList,
-		[StatEnum.EventProperties.HeroGroup] = var_16_3,
-		[StatEnum.EventProperties.HeroGroupArray] = var_16_4,
-		[StatEnum.EventProperties.CollectList] = var_16_1,
-		[StatEnum.EventProperties.CollectArray] = var_16_2,
-		[StatEnum.EventProperties.HeartBeat] = var_16_0 and var_16_0.heart or nil,
-		[StatEnum.EventProperties.DungeonGold] = var_16_0 and var_16_0.coin or nil,
-		[StatEnum.EventProperties.DungeonTokens] = var_16_0 and var_16_0.currency or nil
+		[StatEnum.EventProperties.UseTime] = ServerTime.now() - self.startTime,
+		[StatEnum.EventProperties.Difficulty] = rogueEndInfoMo:getDifficulty(),
+		[StatEnum.EventProperties.DungeonResult] = result,
+		[StatEnum.EventProperties.InterruptReason] = failReason,
+		[StatEnum.EventProperties.CompletedEventNum] = rogueEndInfoMo:getFinishEventNum(),
+		[StatEnum.EventProperties.CompletedEventId] = finishEventList,
+		[StatEnum.EventProperties.CompletedRoomEnum] = rogueEndInfoMo:getRoomNum(),
+		[StatEnum.EventProperties.CompletedLayers] = rogueEndInfoMo:getLayer(),
+		[StatEnum.EventProperties.DungeonPoints] = rogueEndInfoMo:getScore(),
+		[StatEnum.EventProperties.IsDoublePoints] = rogueEndInfoMo:isDoubleScore(),
+		[StatEnum.EventProperties.InitialHeroGroup] = self.initHeroNameList,
+		[StatEnum.EventProperties.InitialHeroGroupArray] = self.initHeroObjList,
+		[StatEnum.EventProperties.HeroGroup] = currentHeroNameList,
+		[StatEnum.EventProperties.HeroGroupArray] = currentHeroObjList,
+		[StatEnum.EventProperties.CollectList] = collectionNameList,
+		[StatEnum.EventProperties.CollectArray] = collectionObjList,
+		[StatEnum.EventProperties.HeartBeat] = rogueInfoMo and rogueInfoMo.heart or nil,
+		[StatEnum.EventProperties.DungeonGold] = rogueInfoMo and rogueInfoMo.coin or nil,
+		[StatEnum.EventProperties.DungeonTokens] = rogueInfoMo and rogueInfoMo.currency or nil
 	})
-	arg_16_0:recycleObj(var_16_5)
-	arg_16_0:recycleObj(var_16_1)
-	arg_16_0:recycleObj(var_16_3)
-	arg_16_0:recycleObjList(var_16_2)
-	arg_16_0:recycleObjList(var_16_4)
-	arg_16_0:clearStatEnd()
+	self:recycleObj(finishEventList)
+	self:recycleObj(collectionNameList)
+	self:recycleObj(currentHeroNameList)
+	self:recycleObjList(collectionObjList)
+	self:recycleObjList(currentHeroObjList)
+	self:clearStatEnd()
 end
 
-function var_0_0.clearStatEnd(arg_17_0)
-	arg_17_0.statEnum = nil
-	arg_17_0.startTime = nil
+function V1a6_CachotStatController:clearStatEnd()
+	self.statEnum = nil
+	self.startTime = nil
 
-	arg_17_0:removeRpcCallback()
+	self:removeRpcCallback()
 end
 
-function var_0_0.recordInitHeroGroupByEnterRogue(arg_18_0)
-	arg_18_0:recycleObj(arg_18_0.initHeroNameList)
-	arg_18_0:recycleObjList(arg_18_0.initHeroObjList)
+function V1a6_CachotStatController:recordInitHeroGroupByEnterRogue()
+	self:recycleObj(self.initHeroNameList)
+	self:recycleObjList(self.initHeroObjList)
 
-	arg_18_0.initHeroNameList, arg_18_0.initHeroObjList = arg_18_0:getHeroGroupList(true)
+	self.initHeroNameList, self.initHeroObjList = self:getHeroGroupList(true)
 end
 
-function var_0_0.recordInitHeroGroup(arg_19_0)
+function V1a6_CachotStatController:recordInitHeroGroup()
 	if not LoginController.instance:isEnteredGame() then
 		return
 	end
 
-	local var_19_0 = V1a6_CachotModel.instance:getRogueStateInfo()
-	local var_19_1 = var_19_0.lastGroup
-	local var_19_2 = var_19_0.lastBackupGroup
-	local var_19_3 = arg_19_0:getNewObj()
-	local var_19_4 = arg_19_0:getNewObj()
-	local var_19_5 = var_19_0.difficulty or 1
+	local rogueStateInfoMo = V1a6_CachotModel.instance:getRogueStateInfo()
+	local lastMainGroup = rogueStateInfoMo.lastGroup
+	local lastBackupGroup = rogueStateInfoMo.lastBackupGroup
+	local heroNameList = self:getNewObj()
+	local heroObjList = self:getNewObj()
+	local difficulty = rogueStateInfoMo.difficulty or 1
 
-	if not var_19_0.difficulty or var_19_0.difficulty == 0 then
-		var_19_5 = 1
+	if not rogueStateInfoMo.difficulty or rogueStateInfoMo.difficulty == 0 then
+		difficulty = 1
 	end
 
-	local var_19_6 = lua_rogue_difficulty.configDict[var_19_5]
+	local rogueDifficultyCo = lua_rogue_difficulty.configDict[difficulty]
 
-	if not var_19_6 then
-		logError("not found rouge difficulty co : " .. tostring(var_19_5))
+	if not rogueDifficultyCo then
+		logError("not found rouge difficulty co : " .. tostring(difficulty))
 	end
 
-	local var_19_7 = string.splitToNumber(var_19_6.initLevel, "#")
+	local seatLevelList = string.splitToNumber(rogueDifficultyCo.initLevel, "#")
 
-	arg_19_0:addGroupData(var_19_1, var_19_3, var_19_4, var_19_7)
-	arg_19_0:addGroupData(var_19_2, var_19_3, var_19_4)
-	arg_19_0:recycleObj(arg_19_0.initHeroNameList)
-	arg_19_0:recycleObjList(arg_19_0.initHeroObjList)
+	self:addGroupData(lastMainGroup, heroNameList, heroObjList, seatLevelList)
+	self:addGroupData(lastBackupGroup, heroNameList, heroObjList)
+	self:recycleObj(self.initHeroNameList)
+	self:recycleObjList(self.initHeroObjList)
 
-	arg_19_0.initHeroNameList = var_19_3
-	arg_19_0.initHeroObjList = var_19_4
+	self.initHeroNameList = heroNameList
+	self.initHeroObjList = heroObjList
 end
 
-function var_0_0.clearInitHeroGroup(arg_20_0)
-	arg_20_0:recycleObj(arg_20_0.initHeroNameList)
-	arg_20_0:recycleObjList(arg_20_0.initHeroObjList)
+function V1a6_CachotStatController:clearInitHeroGroup()
+	self:recycleObj(self.initHeroNameList)
+	self:recycleObjList(self.initHeroObjList)
 
-	arg_20_0.initHeroNameList = nil
-	arg_20_0.initHeroObjList = nil
+	self.initHeroNameList = nil
+	self.initHeroObjList = nil
 end
 
-function var_0_0.addGroupData(arg_21_0, arg_21_1, arg_21_2, arg_21_3, arg_21_4)
-	for iter_21_0, iter_21_1 in ipairs(arg_21_1.heroList) do
-		if iter_21_1 ~= "0" then
-			local var_21_0 = HeroModel.instance:getById(iter_21_1)
+function V1a6_CachotStatController:addGroupData(group, heroNameList, heroObjList, seatLevelList)
+	for index, heroUid in ipairs(group.heroList) do
+		if heroUid ~= "0" then
+			local heroMo = HeroModel.instance:getById(heroUid)
 
-			if var_21_0 then
-				local var_21_1 = arg_21_1:getFirstEquipMo(iter_21_0)
-				local var_21_2, var_21_3 = arg_21_0:buildHeroObj(var_21_0, var_21_1, arg_21_4 and arg_21_4[iter_21_0] or nil)
+			if heroMo then
+				local equipMo = group:getFirstEquipMo(index)
+				local name, obj = self:buildHeroObj(heroMo, equipMo, seatLevelList and seatLevelList[index] or nil)
 
-				var_21_3.remain_HP = "100"
+				obj.remain_HP = "100"
 
-				table.insert(arg_21_2, var_21_2)
-				table.insert(arg_21_3, var_21_3)
+				table.insert(heroNameList, name)
+				table.insert(heroObjList, obj)
 			end
 		end
 	end
 end
 
-function var_0_0.bakeRogueInfoMo(arg_22_0)
-	arg_22_0.rogueInfoMo = V1a6_CachotModel.instance:getRogueInfo()
+function V1a6_CachotStatController:bakeRogueInfoMo()
+	self.rogueInfoMo = V1a6_CachotModel.instance:getRogueInfo()
 end
 
-function var_0_0.getRogueInfoMo(arg_23_0)
-	return arg_23_0.rogueInfoMo
+function V1a6_CachotStatController:getRogueInfoMo()
+	return self.rogueInfoMo
 end
 
-function var_0_0.clearRogueInfoMo(arg_24_0)
-	arg_24_0.rogueInfoMo = nil
+function V1a6_CachotStatController:clearRogueInfoMo()
+	self.rogueInfoMo = nil
 end
 
-function var_0_0.getRunningEvents(arg_25_0)
-	local var_25_0 = arg_25_0:getRogueInfoMo()
+function V1a6_CachotStatController:getRunningEvents()
+	local rogueInfoMo = self:getRogueInfoMo()
 
-	if not var_25_0 then
+	if not rogueInfoMo then
 		return ""
 	end
 
-	local var_25_1 = var_25_0:getSelectEvents()
+	local selectEventMoList = rogueInfoMo:getSelectEvents()
 
-	if not var_25_1 or #var_25_1 < 1 then
+	if not selectEventMoList or #selectEventMoList < 1 then
 		return ""
 	end
 
-	local var_25_2 = arg_25_0:getNewObj()
+	local eventIdList = self:getNewObj()
 
-	for iter_25_0, iter_25_1 in ipairs(var_25_1) do
-		if iter_25_1.status == V1a6_CachotEnum.EventStatus.Start then
-			table.insert(var_25_2, iter_25_1.eventId)
+	for _, eventMo in ipairs(selectEventMoList) do
+		if eventMo.status == V1a6_CachotEnum.EventStatus.Start then
+			table.insert(eventIdList, eventMo.eventId)
 		end
 	end
 
-	local var_25_3 = table.concat(var_25_2, "-")
+	local result = table.concat(eventIdList, "-")
 
-	arg_25_0:recycleObj(var_25_2)
+	self:recycleObj(eventIdList)
 
-	return var_25_3
+	return result
 end
 
-function var_0_0.getFailReason(arg_26_0)
-	local var_26_0 = V1a6_CachotModel.instance:getRogueEndingInfo()
+function V1a6_CachotStatController:getFailReason()
+	local rogueEndInfoMo = V1a6_CachotModel.instance:getRogueEndingInfo()
 
-	if not var_26_0 then
+	if not rogueEndInfoMo then
 		return nil
 	end
 
-	if var_26_0:isFinish() then
+	if rogueEndInfoMo:isFinish() then
 		return nil
 	end
 
-	local var_26_1 = var_0_1[var_26_0:getFailReason()] or var_0_1[var_0_0.FailReasonEnum.FightFail]
-	local var_26_2 = arg_26_0:getRunningEvents()
+	local failReason = FailReason[rogueEndInfoMo:getFailReason()]
 
-	return string.format(var_26_1, var_26_2)
+	failReason = failReason or FailReason[V1a6_CachotStatController.FailReasonEnum.FightFail]
+
+	local eventStr = self:getRunningEvents()
+
+	return string.format(failReason, eventStr)
 end
 
-function var_0_0.getCollectList(arg_27_0)
-	local var_27_0 = V1a6_CachotModel.instance:getRogueInfo()
+function V1a6_CachotStatController:getCollectList()
+	local rogueInfoMo = V1a6_CachotModel.instance:getRogueInfo()
 
-	if not var_27_0 then
+	if not rogueInfoMo then
 		return nil, nil
 	end
 
-	local var_27_1 = var_27_0.collections
-	local var_27_2 = var_27_0.collectionMap
-	local var_27_3 = arg_27_0:getNewObj()
-	local var_27_4 = arg_27_0:getNewObj()
-	local var_27_5 = arg_27_0:getNewObj()
+	local collectionMoDict = rogueInfoMo.collections
+	local allCollectionMoMap = rogueInfoMo.collectionMap
+	local nameList = self:getNewObj()
+	local objList = self:getNewObj()
+	local existDict = self:getNewObj()
 
-	for iter_27_0, iter_27_1 in pairs(var_27_1) do
-		local var_27_6 = V1a6_CachotCollectionConfig.instance:getCollectionConfig(iter_27_1.cfgId)
+	for _, collectMo in pairs(collectionMoDict) do
+		local config = V1a6_CachotCollectionConfig.instance:getCollectionConfig(collectMo.cfgId)
 
-		if var_27_6 then
-			table.insert(var_27_3, var_27_6.name)
+		if config then
+			table.insert(nameList, config.name)
 
-			var_27_5[iter_27_1.id] = true
+			existDict[collectMo.id] = true
 
-			local var_27_7 = arg_27_0:getNewObj()
+			local obj = self:getNewObj()
 
-			var_27_7.collection_name = var_27_6.name
-			var_27_7.collection_num = 1
+			obj.collection_name = config.name
+			obj.collection_num = 1
 
-			if iter_27_1.leftUid ~= 0 then
-				local var_27_8 = var_27_2[iter_27_1.leftUid]
+			if collectMo.leftUid ~= 0 then
+				local tempMo = allCollectionMoMap[collectMo.leftUid]
 
-				if var_27_8 then
-					var_27_5[var_27_8.id] = true
-					var_27_7.enchant_collection_left_name = V1a6_CachotCollectionConfig.instance:getCollectionConfig(var_27_8.cfgId).name
-					var_27_7.enchant_collection_left_num = 1
+				if tempMo then
+					existDict[tempMo.id] = true
+					config = V1a6_CachotCollectionConfig.instance:getCollectionConfig(tempMo.cfgId)
+					obj.enchant_collection_left_name = config.name
+					obj.enchant_collection_left_num = 1
 				else
-					logError(string.format("collectMo.id : '%s' not found left uid : '%s'", iter_27_1.id, iter_27_1.leftUid))
+					logError(string.format("collectMo.id : '%s' not found left uid : '%s'", collectMo.id, collectMo.leftUid))
 				end
 			end
 
-			if iter_27_1.rightUid ~= 0 then
-				local var_27_9 = var_27_2[iter_27_1.rightUid]
+			if collectMo.rightUid ~= 0 then
+				local tempMo = allCollectionMoMap[collectMo.rightUid]
 
-				if var_27_9 then
-					var_27_5[var_27_9.id] = true
-					var_27_7.enchant_collection_right_name = V1a6_CachotCollectionConfig.instance:getCollectionConfig(var_27_9.cfgId).name
-					var_27_7.enchant_collection_right_num = 1
+				if tempMo then
+					existDict[tempMo.id] = true
+					config = V1a6_CachotCollectionConfig.instance:getCollectionConfig(tempMo.cfgId)
+					obj.enchant_collection_right_name = config.name
+					obj.enchant_collection_right_num = 1
 				else
-					logError(string.format("collectMo.id : '%s' not found right uid : '%s'", iter_27_1.id, iter_27_1.rightUid))
+					logError(string.format("collectMo.id : '%s' not found right uid : '%s'", collectMo.id, collectMo.rightUid))
 				end
 			end
 
-			table.insert(var_27_4, var_27_7)
+			table.insert(objList, obj)
 		end
 	end
 
-	return var_27_3, var_27_4
+	return nameList, objList
 end
 
-function var_0_0.getHeroGroupList(arg_28_0, arg_28_1)
-	local var_28_0 = V1a6_CachotModel.instance:getRogueInfo()
+function V1a6_CachotStatController:getHeroGroupList(isRecordInit)
+	local rogueInfoMo = V1a6_CachotModel.instance:getRogueInfo()
 
-	if not var_28_0 then
+	if not rogueInfoMo then
 		return nil, nil
 	end
 
-	local var_28_1 = var_28_0.teamInfo
-	local var_28_2 = arg_28_0:getNewObj()
-	local var_28_3 = arg_28_0:getNewObj()
-	local var_28_4 = var_28_1:getGroupHeros()
-	local var_28_5 = var_28_1:getGroupEquips()
-	local var_28_6 = var_28_1.groupBoxStar
+	local teamInfo = rogueInfoMo.teamInfo
+	local heroNameList = self:getNewObj()
+	local heroObjList = self:getNewObj()
+	local heroSingleGroupMoList = teamInfo:getGroupHeros()
+	local equipMoList = teamInfo:getGroupEquips()
+	local groupBoxStar = teamInfo.groupBoxStar
 
-	for iter_28_0, iter_28_1 in ipairs(var_28_4) do
-		local var_28_7 = HeroModel.instance:getById(iter_28_1.heroUid)
+	for index, heroSingleGroupMO in ipairs(heroSingleGroupMoList) do
+		local heroMo = HeroModel.instance:getById(heroSingleGroupMO.heroUid)
 
-		if var_28_7 then
-			local var_28_8 = var_28_5[iter_28_0]
-			local var_28_9 = var_28_6[iter_28_0]
-			local var_28_10, var_28_11 = arg_28_0:buildHeroObj(var_28_7, var_28_8, var_28_9)
+		if heroMo then
+			local equipMo = equipMoList[index]
+			local seatLevel = groupBoxStar[index]
+			local name, obj = self:buildHeroObj(heroMo, equipMo, seatLevel)
 
-			var_28_11.remain_HP = var_28_1.lifeMap[var_28_7.heroId].lifePercent
+			obj.remain_HP = teamInfo.lifeMap[heroMo.heroId].lifePercent
 
-			if not arg_28_1 then
-				var_28_11.field_level = var_28_9
+			if not isRecordInit then
+				obj.field_level = seatLevel
 			end
 
-			table.insert(var_28_2, var_28_10)
-			table.insert(var_28_3, var_28_11)
+			table.insert(heroNameList, name)
+			table.insert(heroObjList, obj)
 		end
 	end
 
-	local var_28_12 = var_28_1:getSupportHeros()
+	local supportHeroSingleGroupMoList = teamInfo:getSupportHeros()
 
-	for iter_28_2, iter_28_3 in ipairs(var_28_12) do
-		local var_28_13 = HeroModel.instance:getById(iter_28_3.heroUid)
+	for index, heroSingleGroupMO in ipairs(supportHeroSingleGroupMoList) do
+		local heroMo = HeroModel.instance:getById(heroSingleGroupMO.heroUid)
 
-		if var_28_13 then
-			local var_28_14 = var_28_5[iter_28_2 + 4]
-			local var_28_15, var_28_16 = arg_28_0:buildHeroObj(var_28_13, var_28_14, nil)
+		if heroMo then
+			local equipMo = equipMoList[index + 4]
+			local name, obj = self:buildHeroObj(heroMo, equipMo, nil)
 
-			var_28_16.remain_HP = var_28_1.lifeMap[var_28_13.heroId].lifePercent
+			obj.remain_HP = teamInfo.lifeMap[heroMo.heroId].lifePercent
 
-			if not arg_28_1 then
-				var_28_16.field_level = 0
+			if not isRecordInit then
+				obj.field_level = 0
 			end
 
-			table.insert(var_28_2, var_28_15)
-			table.insert(var_28_3, var_28_16)
+			table.insert(heroNameList, name)
+			table.insert(heroObjList, obj)
 		end
 	end
 
-	return var_28_2, var_28_3
+	return heroNameList, heroObjList
 end
 
-function var_0_0.buildHeroObj(arg_29_0, arg_29_1, arg_29_2, arg_29_3)
-	local var_29_0 = HeroConfig.instance:getHeroCO(arg_29_1.heroId)
-	local var_29_1, var_29_2 = V1a6_CachotTeamModel.instance:getHeroMaxLevel(arg_29_1, arg_29_3)
-	local var_29_3, var_29_4 = HeroConfig.instance:getShowLevel(var_29_1)
-	local var_29_5
-	local var_29_6
-	local var_29_7
+function V1a6_CachotStatController:buildHeroObj(heroMo, equipMo, seatLevel)
+	local heroCo = HeroConfig.instance:getHeroCO(heroMo.heroId)
+	local level, talentLevel = V1a6_CachotTeamModel.instance:getHeroMaxLevel(heroMo, seatLevel)
+	local _, rankLevel = HeroConfig.instance:getShowLevel(level)
+	local equipMaxLevel, equipRefine, equipName
 
-	if arg_29_2 then
-		var_29_5 = V1a6_CachotTeamModel.instance:getEquipMaxLevel(arg_29_2, arg_29_3)
-		var_29_6 = arg_29_2.refineLv
-		var_29_7 = arg_29_2.config.name
+	if equipMo then
+		equipMaxLevel = V1a6_CachotTeamModel.instance:getEquipMaxLevel(equipMo, seatLevel)
+		equipRefine = equipMo.refineLv
+		equipName = equipMo.config.name
 	else
-		var_29_5 = 0
-		var_29_6 = 0
-		var_29_7 = ""
+		equipMaxLevel = 0
+		equipRefine = 0
+		equipName = ""
 	end
 
-	local var_29_8 = arg_29_0:getNewObj()
+	local obj = self:getNewObj()
 
-	var_29_8.hero_name = var_29_0.name
-	var_29_8.hero_level = var_29_1
-	var_29_8.hero_rank = var_29_4
-	var_29_8.breakthrough = arg_29_1.exSkillLevel
-	var_29_8.talent = var_29_2
-	var_29_8.EquipName = var_29_7
-	var_29_8.EquipLevel = var_29_5
-	var_29_8.equip_refine = var_29_6
+	obj.hero_name = heroCo.name
+	obj.hero_level = level
+	obj.hero_rank = rankLevel
+	obj.breakthrough = heroMo.exSkillLevel
+	obj.talent = talentLevel
+	obj.EquipName = equipName
+	obj.EquipLevel = equipMaxLevel
+	obj.equip_refine = equipRefine
 
-	return var_29_0.name, var_29_8
+	return heroCo.name, obj
 end
 
-function var_0_0.clearStartEventDict(arg_30_0)
-	if arg_30_0.startEventDict then
-		for iter_30_0, iter_30_1 in pairs(arg_30_0.startEventDict) do
-			arg_30_0:recycleObj(iter_30_1)
+function V1a6_CachotStatController:clearStartEventDict()
+	if self.startEventDict then
+		for _, eventObj in pairs(self.startEventDict) do
+			self:recycleObj(eventObj)
 		end
 
-		tabletool.clear(arg_30_0.startEventDict)
+		tabletool.clear(self.startEventDict)
 	end
 end
 
-function var_0_0.recycleEventObj(arg_31_0, arg_31_1)
-	if not arg_31_0.startEventDict then
+function V1a6_CachotStatController:recycleEventObj(eventId)
+	if not self.startEventDict then
 		return
 	end
 
-	if arg_31_0.startEventDict[arg_31_1] then
-		arg_31_0:recycleObj(arg_31_0.startEventDict[arg_31_1])
+	if self.startEventDict[eventId] then
+		self:recycleObj(self.startEventDict[eventId])
 
-		arg_31_0.startEventDict[arg_31_1] = nil
+		self.startEventDict[eventId] = nil
 	end
 end
 
-function var_0_0.initEventStartHandle(arg_32_0)
-	if not arg_32_0.startEventHandleDict then
-		arg_32_0.startEventHandleDict = {
-			[V1a6_CachotEnum.EventType.HeroPosUpgrade] = arg_32_0.onStartHeroPosUpgradeEvent
+function V1a6_CachotStatController:initEventStartHandle()
+	if not self.startEventHandleDict then
+		self.startEventHandleDict = {
+			[V1a6_CachotEnum.EventType.HeroPosUpgrade] = self.onStartHeroPosUpgradeEvent
 		}
 	end
 end
 
-function var_0_0.onStartHeroPosUpgradeEvent(arg_33_0, arg_33_1)
-	local var_33_0 = arg_33_0:getNewObj()
-	local var_33_1 = V1a6_CachotModel.instance:getRogueInfo().teamInfo
+function V1a6_CachotStatController:onStartHeroPosUpgradeEvent(event)
+	local obj = self:getNewObj()
+	local rogueInfo = V1a6_CachotModel.instance:getRogueInfo()
+	local teamInfo = rogueInfo.teamInfo
 
-	var_33_0.groupBoxStar = arg_33_0:copyValueList(var_33_1.groupBoxStar)
+	obj.groupBoxStar = self:copyValueList(teamInfo.groupBoxStar)
 
-	return var_33_0
+	return obj
 end
 
-function var_0_0.statStartEvent(arg_34_0, arg_34_1)
-	if not arg_34_1 then
+function V1a6_CachotStatController:statStartEvent(event)
+	if not event then
 		return
 	end
 
-	if arg_34_1.status ~= V1a6_CachotEnum.EventStatus.Start then
+	if event.status ~= V1a6_CachotEnum.EventStatus.Start then
 		return
 	end
 
-	arg_34_0.startEventDict = arg_34_0.startEventDict or {}
+	self.startEventDict = self.startEventDict or {}
 
-	if arg_34_0.startEventDict[arg_34_1.eventId] then
+	if self.startEventDict[event.eventId] then
 		return
 	end
 
-	arg_34_0:initEventStartHandle()
+	self:initEventStartHandle()
 
-	local var_34_0 = lua_rogue_event.configDict[arg_34_1.eventId]
-	local var_34_1 = arg_34_0.startEventHandleDict[var_34_0.type]
+	local eventCo = lua_rogue_event.configDict[event.eventId]
+	local startHandleFunc = self.startEventHandleDict[eventCo.type]
 
-	if not var_34_1 then
+	if not startHandleFunc then
 		return
 	end
 
-	arg_34_0.startEventDict[arg_34_1.eventId] = var_34_1(arg_34_0, arg_34_1)
+	self.startEventDict[event.eventId] = startHandleFunc(self, event)
 end
 
-function var_0_0.getObtainHeroNameList(arg_35_0, arg_35_1)
-	if not arg_35_1 then
+function V1a6_CachotStatController:getObtainHeroNameList(event)
+	if not event then
 		return
 	end
 
-	if lua_rogue_event.configDict[arg_35_1.eventId].type ~= V1a6_CachotEnum.EventType.CharacterGet then
+	local eventConfig = lua_rogue_event.configDict[event.eventId]
+
+	if eventConfig.type ~= V1a6_CachotEnum.EventType.CharacterGet then
 		return
 	end
 
-	arg_35_0.obtainHeroList = arg_35_0.obtainHeroList or {}
+	self.obtainHeroList = self.obtainHeroList or {}
 
-	tabletool.clear(arg_35_0.obtainHeroList)
+	tabletool.clear(self.obtainHeroList)
 
-	local var_35_0 = HeroConfig.instance:getHeroCO(arg_35_1.option)
+	local heroCo = HeroConfig.instance:getHeroCO(event.option)
 
-	if not var_35_0 then
-		if arg_35_1.option ~= 0 then
-			logError("not config hero , heroId : " .. tostring(arg_35_1.option))
+	if not heroCo then
+		if event.option ~= 0 then
+			logError("not config hero , heroId : " .. tostring(event.option))
 		end
 
 		return nil
 	end
 
-	table.insert(arg_35_0.obtainHeroList, var_35_0.name)
+	table.insert(self.obtainHeroList, heroCo.name)
 
-	return arg_35_0.obtainHeroList
+	return self.obtainHeroList
 end
 
-function var_0_0.getSeatUpList(arg_36_0, arg_36_1)
-	if not arg_36_1 then
+function V1a6_CachotStatController:getSeatUpList(event)
+	if not event then
 		return
 	end
 
-	if lua_rogue_event.configDict[arg_36_1.eventId].type ~= V1a6_CachotEnum.EventType.HeroPosUpgrade then
+	local eventConfig = lua_rogue_event.configDict[event.eventId]
+
+	if eventConfig.type ~= V1a6_CachotEnum.EventType.HeroPosUpgrade then
 		return
 	end
 
-	if not arg_36_0.startEventDict then
+	if not self.startEventDict then
 		return
 	end
 
-	local var_36_0 = arg_36_0.startEventDict[arg_36_1.eventId]
+	local beforeObj = self.startEventDict[event.eventId]
 
-	if not var_36_0 then
+	if not beforeObj then
 		return
 	end
 
-	local var_36_1 = arg_36_0:getNewObj()
-	local var_36_2 = V1a6_CachotModel.instance:getRogueInfo().teamInfo
+	local list = self:getNewObj()
+	local rogueInfo = V1a6_CachotModel.instance:getRogueInfo()
+	local teamInfo = rogueInfo.teamInfo
 
-	for iter_36_0, iter_36_1 in ipairs(var_36_2.groupBoxStar) do
-		if iter_36_1 ~= var_36_0.groupBoxStar[iter_36_0] then
-			local var_36_3 = arg_36_0:getNewObj()
+	for seatId, level in ipairs(teamInfo.groupBoxStar) do
+		if level ~= beforeObj.groupBoxStar[seatId] then
+			local obj = self:getNewObj()
 
-			var_36_3.field_id = iter_36_0
-			var_36_3.field_before_level = var_36_0.groupBoxStar[iter_36_0]
-			var_36_3.field_after_level = iter_36_1
+			obj.field_id = seatId
+			obj.field_before_level = beforeObj.groupBoxStar[seatId]
+			obj.field_after_level = level
 
-			table.insert(var_36_1, var_36_3)
+			table.insert(list, obj)
 		end
 	end
 
-	arg_36_0:recycleEventObj(arg_36_1.eventId)
+	self:recycleEventObj(event.eventId)
 
-	if #var_36_1 > 0 then
-		return var_36_1
+	if #list > 0 then
+		return list
 	end
 
-	arg_36_0:recycleObjList(var_36_1)
+	self:recycleObjList(list)
 end
 
-function var_0_0.getStoryOptionId(arg_37_0, arg_37_1)
-	if not arg_37_1 then
+function V1a6_CachotStatController:getStoryOptionId(event)
+	if not event then
 		return
 	end
 
-	if lua_rogue_event.configDict[arg_37_1.eventId].type ~= V1a6_CachotEnum.EventType.ChoiceSelect then
+	local eventConfig = lua_rogue_event.configDict[event.eventId]
+
+	if eventConfig.type ~= V1a6_CachotEnum.EventType.ChoiceSelect then
 		return
 	end
 
-	return tostring(arg_37_1.option)
+	return tostring(event.option)
 end
 
-function var_0_0.getPromptOptionId(arg_38_0, arg_38_1)
-	if not arg_38_1 then
+function V1a6_CachotStatController:getPromptOptionId(event)
+	if not event then
 		return
 	end
 
-	local var_38_0 = lua_rogue_event.configDict[arg_38_1.eventId]
+	local eventConfig = lua_rogue_event.configDict[event.eventId]
 
-	if var_38_0.type ~= V1a6_CachotEnum.EventType.Tip then
+	if eventConfig.type ~= V1a6_CachotEnum.EventType.Tip then
 		return
 	end
 
-	return tostring(var_38_0.eventId)
+	return tostring(eventConfig.eventId)
 end
 
-function var_0_0.initChangeLifeHeroNameList(arg_39_0)
-	arg_39_0.changeLifeHeroNameList = arg_39_0.changeLifeHeroNameList or {}
+function V1a6_CachotStatController:initChangeLifeHeroNameList()
+	self.changeLifeHeroNameList = self.changeLifeHeroNameList or {}
 
-	tabletool.clear(arg_39_0.changeLifeHeroNameList)
+	tabletool.clear(self.changeLifeHeroNameList)
 end
 
-function var_0_0.setChangeLife(arg_40_0, arg_40_1)
-	arg_40_0:initChangeLifeHeroNameList()
+function V1a6_CachotStatController:setChangeLife(heroLifeList)
+	self:initChangeLifeHeroNameList()
 
-	for iter_40_0, iter_40_1 in ipairs(arg_40_1) do
-		local var_40_0 = HeroConfig.instance:getHeroCO(iter_40_1.heroId)
+	for _, life in ipairs(heroLifeList) do
+		local heroCo = HeroConfig.instance:getHeroCO(life.heroId)
 
-		if var_40_0 then
-			table.insert(arg_40_0.changeLifeHeroNameList, var_40_0.name)
+		if heroCo then
+			table.insert(self.changeLifeHeroNameList, heroCo.name)
 		end
 	end
 end
 
-function var_0_0.initBloodReturnHeroNameList(arg_41_0)
-	arg_41_0.bloodReturnHeroNameList = arg_41_0.bloodReturnHeroNameList or {}
+function V1a6_CachotStatController:initBloodReturnHeroNameList()
+	self.bloodReturnHeroNameList = self.bloodReturnHeroNameList or {}
 
-	tabletool.clear(arg_41_0.bloodReturnHeroNameList)
+	tabletool.clear(self.bloodReturnHeroNameList)
 end
 
-function var_0_0.getBloodReturnHeroNameList(arg_42_0, arg_42_1)
-	if not arg_42_1 then
+function V1a6_CachotStatController:getBloodReturnHeroNameList(event)
+	if not event then
 		return
 	end
 
-	local var_42_0 = lua_rogue_event.configDict[arg_42_1.eventId]
+	local eventConfig = lua_rogue_event.configDict[event.eventId]
 
-	if var_42_0.type ~= V1a6_CachotEnum.EventType.CharacterCure then
+	if eventConfig.type ~= V1a6_CachotEnum.EventType.CharacterCure then
 		return
 	end
 
-	local var_42_1 = lua_rogue_event_life.configDict[var_42_0.eventId]
+	local lifeConfig = lua_rogue_event_life.configDict[eventConfig.eventId]
 
-	if not var_42_1 then
+	if not lifeConfig then
 		return
 	end
 
-	local var_42_2 = string.splitToNumber(var_42_1.num, "#")[1]
+	local numArr = string.splitToNumber(lifeConfig.num, "#")
+	local type = numArr[1]
 
-	if var_42_2 == V1a6_CachotEnum.CureEventType.Single then
-		local var_42_3 = HeroConfig.instance:getHeroCO(arg_42_1.option)
+	if type == V1a6_CachotEnum.CureEventType.Single then
+		local heroCo = HeroConfig.instance:getHeroCO(event.option)
 
-		if var_42_3 then
-			arg_42_0:initBloodReturnHeroNameList()
-			table.insert(arg_42_0.bloodReturnHeroNameList, var_42_3.name)
+		if heroCo then
+			self:initBloodReturnHeroNameList()
+			table.insert(self.bloodReturnHeroNameList, heroCo.name)
 
-			return arg_42_0.bloodReturnHeroNameList
+			return self.bloodReturnHeroNameList
 		else
-			logError("not find heroid  config : " .. tostring(arg_42_1.option))
+			logError("not find heroid  config : " .. tostring(event.option))
 
 			return nil
 		end
-	elseif var_42_2 == V1a6_CachotEnum.CureEventType.Random then
-		return arg_42_0.changeLifeHeroNameList
-	elseif var_42_2 == V1a6_CachotEnum.CureEventType.All then
-		return arg_42_0.changeLifeHeroNameList
+	elseif type == V1a6_CachotEnum.CureEventType.Random then
+		return self.changeLifeHeroNameList
+	elseif type == V1a6_CachotEnum.CureEventType.All then
+		return self.changeLifeHeroNameList
 	else
-		logError("not handle type : " .. tostring(var_42_1.num))
+		logError("not handle type : " .. tostring(lifeConfig.num))
 
 		return nil
 	end
 end
 
-function var_0_0.initReviveHeroNameList(arg_43_0)
-	arg_43_0.reviveHeroNameList = arg_43_0.reviveHeroNameList or {}
+function V1a6_CachotStatController:initReviveHeroNameList()
+	self.reviveHeroNameList = self.reviveHeroNameList or {}
 
-	tabletool.clear(arg_43_0.reviveHeroNameList)
+	tabletool.clear(self.reviveHeroNameList)
 end
 
-function var_0_0.getReviveHeroNameList(arg_44_0, arg_44_1)
-	if not arg_44_1 then
+function V1a6_CachotStatController:getReviveHeroNameList(event)
+	if not event then
 		return
 	end
 
-	local var_44_0 = lua_rogue_event.configDict[arg_44_1.eventId]
+	local eventConfig = lua_rogue_event.configDict[event.eventId]
 
-	if var_44_0.type ~= V1a6_CachotEnum.EventType.CharacterRebirth then
+	if eventConfig.type ~= V1a6_CachotEnum.EventType.CharacterRebirth then
 		return
 	end
 
-	local var_44_1 = lua_rogue_event_revive.configDict[var_44_0.eventId]
+	local reviveConfig = lua_rogue_event_revive.configDict[eventConfig.eventId]
 
-	if not var_44_1 then
+	if not reviveConfig then
 		return
 	end
 
-	local var_44_2 = string.splitToNumber(var_44_1.num, "#")[1]
+	local numArr = string.splitToNumber(reviveConfig.num, "#")
+	local type = numArr[1]
 
-	if var_44_2 == V1a6_CachotEnum.CureEventType.Single then
-		local var_44_3 = HeroConfig.instance:getHeroCO(arg_44_1.option)
+	if type == V1a6_CachotEnum.CureEventType.Single then
+		local heroCo = HeroConfig.instance:getHeroCO(event.option)
 
-		if var_44_3 then
-			arg_44_0:initReviveHeroNameList()
-			table.insert(arg_44_0.reviveHeroNameList, var_44_3.name)
+		if heroCo then
+			self:initReviveHeroNameList()
+			table.insert(self.reviveHeroNameList, heroCo.name)
 
-			return arg_44_0.reviveHeroNameList
+			return self.reviveHeroNameList
 		else
-			logError("not find heroid  config : " .. tostring(arg_44_1.option))
+			logError("not find heroid  config : " .. tostring(event.option))
 
 			return nil
 		end
-	elseif var_44_2 == V1a6_CachotEnum.CureEventType.Random then
-		return arg_44_0.changeLifeHeroNameList
-	elseif var_44_2 == V1a6_CachotEnum.CureEventType.All then
-		return arg_44_0.changeLifeHeroNameList
+	elseif type == V1a6_CachotEnum.CureEventType.Random then
+		return self.changeLifeHeroNameList
+	elseif type == V1a6_CachotEnum.CureEventType.All then
+		return self.changeLifeHeroNameList
 	else
-		logError("not handle type : " .. tostring(var_44_1.num))
+		logError("not handle type : " .. tostring(reviveConfig.num))
 
 		return nil
 	end
 end
 
-function var_0_0.addBuyGoods(arg_45_0, arg_45_1, arg_45_2, arg_45_3)
-	if not arg_45_1 then
+function V1a6_CachotStatController:addBuyGoods(event, collectionNameList, collectionObjList)
+	if not event then
 		return
 	end
 
-	if lua_rogue_event.configDict[arg_45_1.eventId].type ~= V1a6_CachotEnum.EventType.Store then
+	local eventConfig = lua_rogue_event.configDict[event.eventId]
+
+	if eventConfig.type ~= V1a6_CachotEnum.EventType.Store then
 		return
 	end
 
-	local var_45_0 = cjson.decode(arg_45_1.eventData)
+	local data = cjson.decode(event.eventData)
 
-	if not var_45_0 then
+	if not data then
 		return
 	end
 
-	local var_45_1 = var_45_0.buy
+	local buyGoodsList = data.buy
 
-	if not var_45_1 then
+	if not buyGoodsList then
 		return
 	end
 
-	arg_45_2 = arg_45_2 or arg_45_0:getNewObj()
-	arg_45_3 = arg_45_3 or arg_45_0:getNewObj()
+	collectionNameList = collectionNameList or self:getNewObj()
+	collectionObjList = collectionObjList or self:getNewObj()
 
-	for iter_45_0, iter_45_1 in ipairs(var_45_1) do
-		local var_45_2 = lua_rogue_goods.configDict[iter_45_1]
+	for _, goodsId in ipairs(buyGoodsList) do
+		local goodsCo = lua_rogue_goods.configDict[goodsId]
 
-		if var_45_2 and var_45_2.creator ~= 0 then
-			local var_45_3 = V1a6_CachotCollectionConfig.instance:getCollectionConfig(var_45_2.creator)
+		if goodsCo and goodsCo.creator ~= 0 then
+			local collectCo = V1a6_CachotCollectionConfig.instance:getCollectionConfig(goodsCo.creator)
 
-			if var_45_3 then
-				table.insert(arg_45_2, var_45_3.name)
+			if collectCo then
+				table.insert(collectionNameList, collectCo.name)
 
-				local var_45_4 = arg_45_0:getNewObj()
+				local obj = self:getNewObj()
 
-				var_45_4.collection_name = var_45_3.name
-				var_45_4.collection_num = 1
+				obj.collection_name = collectCo.name
+				obj.collection_num = 1
 
-				table.insert(arg_45_3, var_45_4)
+				table.insert(collectionObjList, obj)
 			end
 		end
 	end
 end
 
-function var_0_0.statFinishEvent(arg_46_0, arg_46_1)
-	if not arg_46_1 or arg_46_1.status ~= V1a6_CachotEnum.EventStatus.Finish then
+function V1a6_CachotStatController:statFinishEvent(event)
+	if not event or event.status ~= V1a6_CachotEnum.EventStatus.Finish then
 		return
 	end
 
-	local var_46_0 = V1a6_CachotModel.instance:getRogueInfo()
-	local var_46_1 = V1a6_CachotRoomConfig.instance:getCoByRoomId(var_46_0.room)
-	local var_46_2 = lua_rogue_event.configDict[arg_46_1.eventId]
-	local var_46_3, var_46_4 = arg_46_0:getCollectList()
-	local var_46_5, var_46_6 = arg_46_0:getHeroGroupList()
-	local var_46_7 = arg_46_0:getSeatUpList(arg_46_1)
+	local rogueInfo = V1a6_CachotModel.instance:getRogueInfo()
+	local roomConfig = V1a6_CachotRoomConfig.instance:getCoByRoomId(rogueInfo.room)
+	local eventConfig = lua_rogue_event.configDict[event.eventId]
+	local collectionNameList, collectionObjList = self:getCollectList()
+	local currentHeroNameList, currentHeroObjList = self:getHeroGroupList()
+	local seatInfoList = self:getSeatUpList(event)
 
-	arg_46_0:addBuyGoods(arg_46_1, var_46_3, var_46_4)
+	self:addBuyGoods(event, collectionNameList, collectionObjList)
 	StatController.instance:track(StatEnum.EventName.CompleteCachotEvent, {
-		[StatEnum.EventProperties.Difficulty] = var_46_0.difficulty,
-		[StatEnum.EventProperties.Layer] = var_46_0.layer,
-		[StatEnum.EventProperties.RoomId] = var_46_1.id,
-		[StatEnum.EventProperties.RoomName] = var_46_1.name,
-		[StatEnum.EventProperties.DungeonEventId] = tostring(var_46_2.id),
-		[StatEnum.EventProperties.DungeonEventName] = var_46_2.title,
-		[StatEnum.EventProperties.DungeonEventType] = tostring(var_46_2.type),
-		[StatEnum.EventProperties.InitialHeroGroup] = arg_46_0.initHeroNameList,
-		[StatEnum.EventProperties.InitialHeroGroupArray] = arg_46_0.initHeroObjList,
-		[StatEnum.EventProperties.HeroGroup] = var_46_5,
-		[StatEnum.EventProperties.HeroGroupArray] = var_46_6,
-		[StatEnum.EventProperties.CollectList] = var_46_3,
-		[StatEnum.EventProperties.CollectArray] = var_46_4,
-		[StatEnum.EventProperties.HeartBeat] = var_46_0.heart,
-		[StatEnum.EventProperties.DungeonGold] = var_46_0.coin,
-		[StatEnum.EventProperties.DungeonTokens] = var_46_0.currency,
-		[StatEnum.EventProperties.CachotObtainHero] = arg_46_0:getObtainHeroNameList(arg_46_1),
-		[StatEnum.EventProperties.FieldUp] = var_46_7,
-		[StatEnum.EventProperties.StoryOptionId] = arg_46_0:getStoryOptionId(arg_46_1),
-		[StatEnum.EventProperties.PromptOptionId] = arg_46_0:getPromptOptionId(arg_46_1),
-		[StatEnum.EventProperties.BloodReturnHero] = arg_46_0:getBloodReturnHeroNameList(arg_46_1),
-		[StatEnum.EventProperties.ReviveHero] = arg_46_0:getReviveHeroNameList(arg_46_1)
+		[StatEnum.EventProperties.Difficulty] = rogueInfo.difficulty,
+		[StatEnum.EventProperties.Layer] = rogueInfo.layer,
+		[StatEnum.EventProperties.RoomId] = roomConfig.id,
+		[StatEnum.EventProperties.RoomName] = roomConfig.name,
+		[StatEnum.EventProperties.DungeonEventId] = tostring(eventConfig.id),
+		[StatEnum.EventProperties.DungeonEventName] = eventConfig.title,
+		[StatEnum.EventProperties.DungeonEventType] = tostring(eventConfig.type),
+		[StatEnum.EventProperties.InitialHeroGroup] = self.initHeroNameList,
+		[StatEnum.EventProperties.InitialHeroGroupArray] = self.initHeroObjList,
+		[StatEnum.EventProperties.HeroGroup] = currentHeroNameList,
+		[StatEnum.EventProperties.HeroGroupArray] = currentHeroObjList,
+		[StatEnum.EventProperties.CollectList] = collectionNameList,
+		[StatEnum.EventProperties.CollectArray] = collectionObjList,
+		[StatEnum.EventProperties.HeartBeat] = rogueInfo.heart,
+		[StatEnum.EventProperties.DungeonGold] = rogueInfo.coin,
+		[StatEnum.EventProperties.DungeonTokens] = rogueInfo.currency,
+		[StatEnum.EventProperties.CachotObtainHero] = self:getObtainHeroNameList(event),
+		[StatEnum.EventProperties.FieldUp] = seatInfoList,
+		[StatEnum.EventProperties.StoryOptionId] = self:getStoryOptionId(event),
+		[StatEnum.EventProperties.PromptOptionId] = self:getPromptOptionId(event),
+		[StatEnum.EventProperties.BloodReturnHero] = self:getBloodReturnHeroNameList(event),
+		[StatEnum.EventProperties.ReviveHero] = self:getReviveHeroNameList(event)
 	})
-	arg_46_0:recycleObj(var_46_5)
-	arg_46_0:recycleObj(var_46_3)
-	arg_46_0:recycleObjList(var_46_6)
-	arg_46_0:recycleObjList(var_46_4)
-	arg_46_0:recycleObjList(var_46_7)
+	self:recycleObj(currentHeroNameList)
+	self:recycleObj(collectionNameList)
+	self:recycleObjList(currentHeroObjList)
+	self:recycleObjList(collectionObjList)
+	self:recycleObjList(seatInfoList)
 end
 
-function var_0_0.statEnterRoom(arg_47_0)
-	arg_47_0.enterRoomTime = ServerTime.now()
+function V1a6_CachotStatController:statEnterRoom()
+	self.enterRoomTime = ServerTime.now()
 
-	local var_47_0 = V1a6_CachotModel.instance:getRogueInfo()
+	local rogueInfo = V1a6_CachotModel.instance:getRogueInfo()
 
-	arg_47_0.beforeCoin = var_47_0.coin
-	arg_47_0.beforeCurrency = var_47_0.currency
-	arg_47_0.beforeCollectionDict = arg_47_0:copyValueDict(var_47_0.collectionMap)
+	self.beforeCoin = rogueInfo.coin
+	self.beforeCurrency = rogueInfo.currency
+	self.beforeCollectionDict = self:copyValueDict(rogueInfo.collectionMap)
 end
 
-function var_0_0.getCostAndReward(arg_48_0)
-	if not arg_48_0.enterRoomTime then
+function V1a6_CachotStatController:getCostAndReward()
+	if not self.enterRoomTime then
 		return
 	end
 
-	local var_48_0 = arg_48_0:getNewObj()
-	local var_48_1 = arg_48_0:getNewObj()
-	local var_48_2 = V1a6_CachotModel.instance:getRogueInfo()
+	local cost = self:getNewObj()
+	local reward = self:getNewObj()
+	local rogueInfo = V1a6_CachotModel.instance:getRogueInfo()
 
-	if arg_48_0.beforeCoin ~= var_48_2.coin then
-		local var_48_3 = ItemConfig.instance:getItemConfig(MaterialEnum.MaterialType.Currency, V1a6_CachotEnum.CoinId)
-		local var_48_4 = arg_48_0:getNewObj()
+	if self.beforeCoin ~= rogueInfo.coin then
+		local itemConfig = ItemConfig.instance:getItemConfig(MaterialEnum.MaterialType.Currency, V1a6_CachotEnum.CoinId)
+		local obj = self:getNewObj()
 
-		var_48_4.materialtype = MaterialEnum.MaterialType.Currency
-		var_48_4.materialname = var_48_3.name
+		obj.materialtype = MaterialEnum.MaterialType.Currency
+		obj.materialname = itemConfig.name
 
-		if arg_48_0.beforeCoin > var_48_2.coin then
-			var_48_4.materialnum = arg_48_0.beforeCoin - var_48_2.coin
+		if self.beforeCoin > rogueInfo.coin then
+			obj.materialnum = self.beforeCoin - rogueInfo.coin
 
-			table.insert(var_48_0, var_48_4)
+			table.insert(cost, obj)
 		else
-			var_48_4.materialnum = var_48_2.coin - arg_48_0.beforeCoin
+			obj.materialnum = rogueInfo.coin - self.beforeCoin
 
-			table.insert(var_48_1, var_48_4)
+			table.insert(reward, obj)
 		end
 	end
 
-	if arg_48_0.beforeCurrency ~= var_48_2.currency then
-		local var_48_5 = ItemConfig.instance:getItemConfig(MaterialEnum.MaterialType.Currency, V1a6_CachotEnum.CurrencyId)
-		local var_48_6 = arg_48_0:getNewObj()
+	if self.beforeCurrency ~= rogueInfo.currency then
+		local itemConfig = ItemConfig.instance:getItemConfig(MaterialEnum.MaterialType.Currency, V1a6_CachotEnum.CurrencyId)
+		local obj = self:getNewObj()
 
-		var_48_6.materialtype = MaterialEnum.MaterialType.Currency
-		var_48_6.materialname = var_48_5.name
+		obj.materialtype = MaterialEnum.MaterialType.Currency
+		obj.materialname = itemConfig.name
 
-		if arg_48_0.beforeCurrency > var_48_2.currency then
-			var_48_6.materialnum = arg_48_0.beforeCurrency - var_48_2.currency
+		if self.beforeCurrency > rogueInfo.currency then
+			obj.materialnum = self.beforeCurrency - rogueInfo.currency
 
-			table.insert(var_48_0, var_48_6)
+			table.insert(cost, obj)
 		else
-			var_48_6.materialnum = var_48_2.currency - arg_48_0.beforeCurrency
+			obj.materialnum = rogueInfo.currency - self.beforeCurrency
 
-			table.insert(var_48_1, var_48_6)
+			table.insert(reward, obj)
 		end
 	end
 
-	local var_48_7 = var_48_2.collectionMap
+	local currentCollectionDict = rogueInfo.collectionMap
 
-	for iter_48_0, iter_48_1 in pairs(var_48_7) do
-		if not arg_48_0.beforeCollectionDict[iter_48_0] then
-			local var_48_8 = V1a6_CachotCollectionConfig.instance:getCollectionConfig(iter_48_1.cfgId)
-			local var_48_9 = arg_48_0:getNewObj()
+	for uid, collectMo in pairs(currentCollectionDict) do
+		if not self.beforeCollectionDict[uid] then
+			local config = V1a6_CachotCollectionConfig.instance:getCollectionConfig(collectMo.cfgId)
+			local obj = self:getNewObj()
 
-			var_48_9.materialtype = MaterialEnum.MaterialType.None
-			var_48_9.materialname = var_48_8.name
-			var_48_9.materialnum = 1
+			obj.materialtype = MaterialEnum.MaterialType.None
+			obj.materialname = config.name
+			obj.materialnum = 1
 
-			table.insert(var_48_1, var_48_9)
+			table.insert(reward, obj)
 		end
 	end
 
-	for iter_48_2, iter_48_3 in pairs(arg_48_0.beforeCollectionDict) do
-		if not var_48_7[iter_48_2] then
-			local var_48_10 = V1a6_CachotCollectionConfig.instance:getCollectionConfig(iter_48_3.cfgId)
-			local var_48_11 = arg_48_0:getNewObj()
+	for uid, collectMo in pairs(self.beforeCollectionDict) do
+		if not currentCollectionDict[uid] then
+			local config = V1a6_CachotCollectionConfig.instance:getCollectionConfig(collectMo.cfgId)
+			local obj = self:getNewObj()
 
-			var_48_11.materialtype = MaterialEnum.MaterialType.None
-			var_48_11.materialname = var_48_10.name
-			var_48_11.materialnum = 1
+			obj.materialtype = MaterialEnum.MaterialType.None
+			obj.materialname = config.name
+			obj.materialnum = 1
 
-			table.insert(var_48_0, var_48_11)
+			table.insert(cost, obj)
 		end
 	end
 
-	return var_48_0, var_48_1
+	return cost, reward
 end
 
-function var_0_0.statFinishRoom(arg_49_0, arg_49_1, arg_49_2)
-	if not arg_49_0.enterRoomTime then
+function V1a6_CachotStatController:statFinishRoom(roomId, layer)
+	if not self.enterRoomTime then
 		return
 	end
 
-	local var_49_0 = V1a6_CachotRoomConfig.instance:getCoByRoomId(arg_49_1)
+	local roomConfig = V1a6_CachotRoomConfig.instance:getCoByRoomId(roomId)
 
-	if not var_49_0 then
+	if not roomConfig then
 		return
 	end
 
-	local var_49_1 = V1a6_CachotModel.instance:getRogueInfo()
-	local var_49_2, var_49_3 = arg_49_0:getCollectList()
-	local var_49_4, var_49_5 = arg_49_0:getHeroGroupList()
-	local var_49_6, var_49_7 = arg_49_0:getCostAndReward()
+	local rogueInfo = V1a6_CachotModel.instance:getRogueInfo()
+	local collectionNameList, collectionObjList = self:getCollectList()
+	local currentHeroNameList, currentHeroObjList = self:getHeroGroupList()
+	local cost, reward = self:getCostAndReward()
 
 	StatController.instance:track(StatEnum.EventName.ExitCachotRoom, {
-		[StatEnum.EventProperties.UseTime] = ServerTime.now() - arg_49_0.enterRoomTime,
-		[StatEnum.EventProperties.Difficulty] = var_49_1.difficulty,
-		[StatEnum.EventProperties.Layer] = arg_49_2,
-		[StatEnum.EventProperties.RoomId] = var_49_0.id,
-		[StatEnum.EventProperties.RoomName] = var_49_0.name,
-		[StatEnum.EventProperties.InitialHeroGroup] = arg_49_0.initHeroNameList,
-		[StatEnum.EventProperties.InitialHeroGroupArray] = arg_49_0.initHeroObjList,
-		[StatEnum.EventProperties.HeroGroup] = var_49_4,
-		[StatEnum.EventProperties.HeroGroupArray] = var_49_5,
-		[StatEnum.EventProperties.CollectList] = var_49_2,
-		[StatEnum.EventProperties.CollectArray] = var_49_3,
-		[StatEnum.EventProperties.HeartBeat] = var_49_1.heart,
-		[StatEnum.EventProperties.DungeonGold] = var_49_1.coin,
-		[StatEnum.EventProperties.DungeonTokens] = var_49_1.currency,
-		[StatEnum.EventProperties.CachotCost] = var_49_6,
-		[StatEnum.EventProperties.CachotReward] = var_49_7
+		[StatEnum.EventProperties.UseTime] = ServerTime.now() - self.enterRoomTime,
+		[StatEnum.EventProperties.Difficulty] = rogueInfo.difficulty,
+		[StatEnum.EventProperties.Layer] = layer,
+		[StatEnum.EventProperties.RoomId] = roomConfig.id,
+		[StatEnum.EventProperties.RoomName] = roomConfig.name,
+		[StatEnum.EventProperties.InitialHeroGroup] = self.initHeroNameList,
+		[StatEnum.EventProperties.InitialHeroGroupArray] = self.initHeroObjList,
+		[StatEnum.EventProperties.HeroGroup] = currentHeroNameList,
+		[StatEnum.EventProperties.HeroGroupArray] = currentHeroObjList,
+		[StatEnum.EventProperties.CollectList] = collectionNameList,
+		[StatEnum.EventProperties.CollectArray] = collectionObjList,
+		[StatEnum.EventProperties.HeartBeat] = rogueInfo.heart,
+		[StatEnum.EventProperties.DungeonGold] = rogueInfo.coin,
+		[StatEnum.EventProperties.DungeonTokens] = rogueInfo.currency,
+		[StatEnum.EventProperties.CachotCost] = cost,
+		[StatEnum.EventProperties.CachotReward] = reward
 	})
 
-	arg_49_0.enterRoomTime = nil
+	self.enterRoomTime = nil
 
-	arg_49_0:clearStartEventDict()
-	arg_49_0:recycleObj(var_49_2)
-	arg_49_0:recycleObj(var_49_4)
-	arg_49_0:recycleObjList(var_49_3)
-	arg_49_0:recycleObjList(var_49_5)
-	arg_49_0:recycleObjList(var_49_6)
-	arg_49_0:recycleObjList(var_49_7)
+	self:clearStartEventDict()
+	self:recycleObj(collectionNameList)
+	self:recycleObj(currentHeroNameList)
+	self:recycleObjList(collectionObjList)
+	self:recycleObjList(currentHeroObjList)
+	self:recycleObjList(cost)
+	self:recycleObjList(reward)
 end
 
-function var_0_0.statUnlockCollection(arg_50_0, arg_50_1)
-	if not arg_50_1 then
+function V1a6_CachotStatController:statUnlockCollection(collectionList)
+	if not collectionList then
 		return
 	end
 
-	local var_50_0 = arg_50_0:getNewObj()
+	local obj = self:getNewObj()
 
-	for iter_50_0, iter_50_1 in ipairs(arg_50_1) do
-		tabletool.clear(var_50_0)
+	for _, collectionId in ipairs(collectionList) do
+		tabletool.clear(obj)
 
-		local var_50_1 = V1a6_CachotCollectionConfig.instance:getCollectionConfig(iter_50_1)
+		local config = V1a6_CachotCollectionConfig.instance:getCollectionConfig(collectionId)
 
-		var_50_0[StatEnum.EventProperties.CollectionId] = iter_50_1
-		var_50_0[StatEnum.EventProperties.CollectionName] = var_50_1 and var_50_1.name or ""
+		obj[StatEnum.EventProperties.CollectionId] = collectionId
+		obj[StatEnum.EventProperties.CollectionName] = config and config.name or ""
 
-		StatController.instance:track(StatEnum.EventName.UnlockCachotCollection, var_50_0)
+		StatController.instance:track(StatEnum.EventName.UnlockCachotCollection, obj)
 	end
 
-	arg_50_0:recycleObj(var_50_0)
+	self:recycleObj(obj)
 end
 
-var_0_0.instance = var_0_0.New()
+V1a6_CachotStatController.instance = V1a6_CachotStatController.New()
 
-return var_0_0
+return V1a6_CachotStatController

@@ -1,119 +1,121 @@
-﻿module("modules.logic.fight.entity.comp.FightNameUISeasonGuard", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/FightNameUISeasonGuard.lua
 
-local var_0_0 = class("FightNameUISeasonGuard", UserDataDispose)
+module("modules.logic.fight.entity.comp.FightNameUISeasonGuard", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+local FightNameUISeasonGuard = class("FightNameUISeasonGuard", UserDataDispose)
 
-	arg_1_0._parentView = arg_1_1
-	arg_1_0._entity = arg_1_0._parentView.entity
+function FightNameUISeasonGuard:ctor(parentView)
+	self:__onInit()
+
+	self._parentView = parentView
+	self._entity = self._parentView.entity
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.viewGO = arg_2_1
+function FightNameUISeasonGuard:init(viewGO)
+	self.viewGO = viewGO
 
-	gohelper.setActive(arg_2_1, true)
+	gohelper.setActive(viewGO, true)
 
-	arg_2_0._shieldText = gohelper.findChildText(arg_2_1, "#txt_Shield")
-	arg_2_0._aniPlayer = SLFramework.AnimatorPlayer.Get(arg_2_1)
-	arg_2_0._ani = gohelper.onceAddComponent(arg_2_1, typeof(UnityEngine.Animator))
+	self._shieldText = gohelper.findChildText(viewGO, "#txt_Shield")
+	self._aniPlayer = SLFramework.AnimatorPlayer.Get(viewGO)
+	self._ani = gohelper.onceAddComponent(viewGO, typeof(UnityEngine.Animator))
 
-	arg_2_0:_refreshUI()
-	FightController.instance:registerCallback(FightEvent.EntityGuardChange, arg_2_0._onEntityGuardChange, arg_2_0)
+	self:_refreshUI()
+	FightController.instance:registerCallback(FightEvent.EntityGuardChange, self._onEntityGuardChange, self)
 
-	arg_2_0._btnGuardTran = gohelper.findChild(arg_2_1, "btn_guard").transform
-	arg_2_0._btnGuard = gohelper.findChildClick(arg_2_0.viewGO, "btn_guard")
+	self._btnGuardTran = gohelper.findChild(viewGO, "btn_guard").transform
+	self._btnGuard = gohelper.findChildClick(self.viewGO, "btn_guard")
 
-	arg_2_0:addClickCb(arg_2_0._btnGuard, arg_2_0._onBtnGuardClick, arg_2_0)
-	FightController.instance:registerCallback(FightEvent.StageChanged, arg_2_0._onStageChanged, arg_2_0)
+	self:addClickCb(self._btnGuard, self._onBtnGuardClick, self)
+	FightController.instance:registerCallback(FightEvent.StageChanged, self._onStageChanged, self)
 end
 
-function var_0_0._onBtnGuardClick(arg_3_0)
+function FightNameUISeasonGuard:_onBtnGuardClick()
 	if not FightDataHelper.stageMgr:isFree() then
 		return
 	end
 
-	local var_3_0 = ViewMgr.instance:getUILayer(UILayerName.Hud)
-	local var_3_1, var_3_2 = recthelper.rectToRelativeAnchorPos2(arg_3_0._btnGuardTran.position, var_3_0.transform)
+	local hud = ViewMgr.instance:getUILayer(UILayerName.Hud)
+	local rectPos1X, rectPos1Y = recthelper.rectToRelativeAnchorPos2(self._btnGuardTran.position, hud.transform)
 
-	FightController.instance:dispatchEvent(FightEvent.ShowSeasonGuardIntro, arg_3_0._entity.id, var_3_1, var_3_2)
+	FightController.instance:dispatchEvent(FightEvent.ShowSeasonGuardIntro, self._entity.id, rectPos1X, rectPos1Y)
 end
 
-function var_0_0._onEntityGuardChange(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	if arg_4_1 == arg_4_0._entity.id then
-		arg_4_0:_refreshUI()
+function FightNameUISeasonGuard:_onEntityGuardChange(entityId, offset, final)
+	if entityId == self._entity.id then
+		self:_refreshUI()
 
-		if arg_4_2 == -1 then
-			arg_4_0:_playAni("shake1")
-		elseif arg_4_2 < -1 then
-			arg_4_0:_playAni("shake2")
+		if offset == -1 then
+			self:_playAni("shake1")
+		elseif offset < -1 then
+			self:_playAni("shake2")
 		else
-			arg_4_0:_refreshAni()
+			self:_refreshAni()
 		end
 	end
 end
 
-function var_0_0._refreshAni(arg_5_0)
-	if not arg_5_0.viewGO then
+function FightNameUISeasonGuard:_refreshAni()
+	if not self.viewGO then
 		return
 	end
 
-	local var_5_0 = arg_5_0._entity:getMO()
+	local entityMO = self._entity:getMO()
 
-	if not var_5_0 then
-		gohelper.setActive(arg_5_0.viewGO, false)
+	if not entityMO then
+		gohelper.setActive(self.viewGO, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_5_0.viewGO, true)
+	gohelper.setActive(self.viewGO, true)
 
-	if var_5_0.guard == 1 then
-		if arg_5_0._curAniName == "idle3" then
-			arg_5_0:_playAni("idle3_out")
+	if entityMO.guard == 1 then
+		if self._curAniName == "idle3" then
+			self:_playAni("idle3_out")
 		else
-			arg_5_0:_playIdle("idle2")
+			self:_playIdle("idle2")
 		end
-	elseif var_5_0.guard > 1 then
-		if arg_5_0._curAniName == "idle3" then
-			arg_5_0:_playAni("idle3_out")
+	elseif entityMO.guard > 1 then
+		if self._curAniName == "idle3" then
+			self:_playAni("idle3_out")
 		else
-			arg_5_0:_playIdle("idle")
+			self:_playIdle("idle")
 		end
-	elseif arg_5_0._curAniName ~= "idle3" and arg_5_0._curAniName ~= "idle3_in" then
-		arg_5_0:_playAni("idle3_in")
+	elseif self._curAniName ~= "idle3" and self._curAniName ~= "idle3_in" then
+		self:_playAni("idle3_in")
 	else
-		arg_5_0:_playIdle("idle3")
+		self:_playIdle("idle3")
 	end
 end
 
-function var_0_0._playIdle(arg_6_0, arg_6_1)
-	arg_6_0._curAniName = arg_6_1
-	arg_6_0._ani.enabled = true
+function FightNameUISeasonGuard:_playIdle(name)
+	self._curAniName = name
+	self._ani.enabled = true
 
-	arg_6_0._ani:Play(arg_6_1)
+	self._ani:Play(name)
 end
 
-function var_0_0._playAni(arg_7_0, arg_7_1)
-	arg_7_0._curAniName = arg_7_1
+function FightNameUISeasonGuard:_playAni(name)
+	self._curAniName = name
 
-	arg_7_0._aniPlayer:Play(arg_7_1, arg_7_0._refreshAni, arg_7_0)
+	self._aniPlayer:Play(name, self._refreshAni, self)
 end
 
-function var_0_0._refreshUI(arg_8_0)
-	local var_8_0 = arg_8_0._entity:getMO()
+function FightNameUISeasonGuard:_refreshUI()
+	local entityMO = self._entity:getMO()
 
-	arg_8_0._shieldText.text = var_8_0.guard
+	self._shieldText.text = entityMO.guard
 end
 
-function var_0_0._onStageChanged(arg_9_0)
-	arg_9_0:_refreshAni()
+function FightNameUISeasonGuard:_onStageChanged()
+	self:_refreshAni()
 end
 
-function var_0_0.releaseSelf(arg_10_0)
-	FightController.instance:unregisterCallback(FightEvent.EntityGuardChange, arg_10_0._onEntityGuardChange, arg_10_0)
-	FightController.instance:unregisterCallback(FightEvent.StageChanged, arg_10_0._onStageChanged, arg_10_0)
-	arg_10_0:__onDispose()
+function FightNameUISeasonGuard:releaseSelf()
+	FightController.instance:unregisterCallback(FightEvent.EntityGuardChange, self._onEntityGuardChange, self)
+	FightController.instance:unregisterCallback(FightEvent.StageChanged, self._onStageChanged, self)
+	self:__onDispose()
 end
 
-return var_0_0
+return FightNameUISeasonGuard

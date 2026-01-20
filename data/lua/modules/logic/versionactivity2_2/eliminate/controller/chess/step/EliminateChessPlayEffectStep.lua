@@ -1,35 +1,37 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.controller.chess.step.EliminateChessPlayEffectStep", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/controller/chess/step/EliminateChessPlayEffectStep.lua
 
-local var_0_0 = class("EliminateChessPlayEffectStep", EliminateChessStepBase)
+module("modules.logic.versionactivity2_2.eliminate.controller.chess.step.EliminateChessPlayEffectStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0, var_1_1, var_1_2 = EliminateChessModel.instance:getRecordCurNeedShowEffectAndXYAndClear()
+local EliminateChessPlayEffectStep = class("EliminateChessPlayEffectStep", EliminateChessStepBase)
 
-	arg_1_0.effectType = var_1_2
+function EliminateChessPlayEffectStep:onStart()
+	local x, y, effectType = EliminateChessModel.instance:getRecordCurNeedShowEffectAndXYAndClear()
 
-	if var_1_0 == nil or var_1_1 == nil or arg_1_0.effectType == nil then
-		arg_1_0:onDone(true)
+	self.effectType = effectType
 
-		return
-	end
-
-	local var_1_3 = EliminateChessItemController.instance:getChessItem(var_1_0, var_1_1)
-
-	if not var_1_3 then
-		logError("步骤 PlayEffect 棋子：" .. var_1_0, var_1_1 .. "不存在")
-		arg_1_0:onDone(true)
+	if x == nil or y == nil or self.effectType == nil then
+		self:onDone(true)
 
 		return
 	end
 
-	local var_1_4, var_1_5 = var_1_3:getGoPos()
+	local chess = EliminateChessItemController.instance:getChessItem(x, y)
 
-	EliminateChessController.instance:dispatchEvent(EliminateChessEvent.PlayEliminateEffect, arg_1_0.effectType, var_1_0, var_1_1, var_1_4, var_1_5, true, arg_1_0._onPlayEnd, arg_1_0)
+	if not chess then
+		logError("步骤 PlayEffect 棋子：" .. x, y .. "不存在")
+		self:onDone(true)
+
+		return
+	end
+
+	local worldX, worldY = chess:getGoPos()
+
+	EliminateChessController.instance:dispatchEvent(EliminateChessEvent.PlayEliminateEffect, self.effectType, x, y, worldX, worldY, true, self._onPlayEnd, self)
 end
 
-function var_0_0._onPlayEnd(arg_2_0)
-	EliminateChessController.instance:dispatchEvent(EliminateChessEvent.PlayEliminateEffect, arg_2_0.effectType, nil, nil, 0, 0, false, nil, nil)
-	arg_2_0:onDone(true)
+function EliminateChessPlayEffectStep:_onPlayEnd()
+	EliminateChessController.instance:dispatchEvent(EliminateChessEvent.PlayEliminateEffect, self.effectType, nil, nil, 0, 0, false, nil, nil)
+	self:onDone(true)
 end
 
-return var_0_0
+return EliminateChessPlayEffectStep

@@ -1,256 +1,262 @@
-﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity1_2DungeonMapElement", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/versionactivity1_2dungeon/view/VersionActivity1_2DungeonMapElement.lua
 
-local var_0_0 = class("VersionActivity1_2DungeonMapElement", DungeonMapElement)
+module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity1_2DungeonMapElement", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._config = arg_1_1[1]
-	arg_1_0._mapScene = arg_1_1[2]
-	arg_1_0._sceneElements = arg_1_1[3]
+local VersionActivity1_2DungeonMapElement = class("VersionActivity1_2DungeonMapElement", DungeonMapElement)
+
+function VersionActivity1_2DungeonMapElement:ctor(param)
+	self._config = param[1]
+	self._mapScene = param[2]
+	self._sceneElements = param[3]
 end
 
-function var_0_0.getElementId(arg_2_0)
-	return arg_2_0._config.id
+function VersionActivity1_2DungeonMapElement:getElementId()
+	return self._config.id
 end
 
-function var_0_0.init(arg_3_0, arg_3_1)
-	arg_3_0._wenhaoGo = arg_3_0:getUserDataTb_()
-	arg_3_0._finishGo = arg_3_0:getUserDataTb_()
-	arg_3_0._go = arg_3_1
-	arg_3_0._transform = arg_3_1.transform
+function VersionActivity1_2DungeonMapElement:init(go)
+	self._wenhaoGo = self:getUserDataTb_()
+	self._finishGo = self:getUserDataTb_()
+	self._go = go
+	self._transform = go.transform
 
-	local var_3_0 = string.splitToNumber(arg_3_0._config.pos, "#")
+	local pos = string.splitToNumber(self._config.pos, "#")
 
-	transformhelper.setLocalPos(arg_3_0._transform, var_3_0[1] or 0, var_3_0[2] or 0, var_3_0[3] or 0)
+	transformhelper.setLocalPos(self._transform, pos[1] or 0, pos[2] or 0, pos[3] or 0)
 
-	if arg_3_0._resLoader then
+	if self._resLoader then
 		return
 	end
 
-	arg_3_0._resLoader = MultiAbLoader.New()
+	self._resLoader = MultiAbLoader.New()
 
-	arg_3_0._resLoader:addPath(arg_3_0._config.res)
+	self._resLoader:addPath(self._config.res)
 
-	arg_3_0._effectPath = {}
+	self._effectPath = {}
 
-	if not string.nilorempty(arg_3_0._config.effect) then
-		table.insert(arg_3_0._effectPath, arg_3_0._config.effect)
-		arg_3_0._resLoader:addPath(arg_3_0._config.effect)
+	if not string.nilorempty(self._config.effect) then
+		table.insert(self._effectPath, self._config.effect)
+		self._resLoader:addPath(self._config.effect)
 	end
 
-	if arg_3_0._config.type == DungeonEnum.ElementType.Activity1_2Building_Trap then
-		local var_3_1 = "scenes/m_s08_hddt/prefab/lhem_icon_qh.prefab"
+	if self._config.type == DungeonEnum.ElementType.Activity1_2Building_Trap then
+		local url = "scenes/m_s08_hddt/prefab/lhem_icon_qh.prefab"
 
-		table.insert(arg_3_0._effectPath, var_3_1)
-		arg_3_0._resLoader:addPath(var_3_1)
-	elseif arg_3_0._config.type == DungeonEnum.ElementType.Activity1_2Building_Upgrade then
-		local var_3_2 = "scenes/m_s08_hddt/prefab/lhem_icon_ck.prefab"
+		table.insert(self._effectPath, url)
+		self._resLoader:addPath(url)
+	elseif self._config.type == DungeonEnum.ElementType.Activity1_2Building_Upgrade then
+		local url = "scenes/m_s08_hddt/prefab/lhem_icon_ck.prefab"
 
-		table.insert(arg_3_0._effectPath, var_3_2)
-		arg_3_0._resLoader:addPath(var_3_2)
+		table.insert(self._effectPath, url)
+		self._resLoader:addPath(url)
 	end
 
-	arg_3_0._resLoader:startLoad(arg_3_0._onResLoaded, arg_3_0)
+	self._resLoader:startLoad(self._onResLoaded, self)
 end
 
-function var_0_0.hide(arg_4_0)
-	gohelper.setActive(arg_4_0._go, false)
+function VersionActivity1_2DungeonMapElement:hide()
+	gohelper.setActive(self._go, false)
 end
 
-function var_0_0.show(arg_5_0)
-	gohelper.setActive(arg_5_0._go, true)
+function VersionActivity1_2DungeonMapElement:show()
+	gohelper.setActive(self._go, true)
 end
 
-function var_0_0.hasEffect(arg_6_0)
-	return arg_6_0._effectPath
+function VersionActivity1_2DungeonMapElement:hasEffect()
+	return self._effectPath
 end
 
-function var_0_0.showArrow(arg_7_0)
-	if arg_7_0._config.type == DungeonEnum.ElementType.DailyEpisode then
-		return arg_7_0._go.activeInHierarchy
+function VersionActivity1_2DungeonMapElement:showArrow()
+	if self._config.type == DungeonEnum.ElementType.DailyEpisode then
+		return self._go.activeInHierarchy
 	end
 
-	return arg_7_0._config.showArrow == 1
+	return self._config.showArrow == 1
 end
 
-function var_0_0.isValid(arg_8_0)
-	return not gohelper.isNil(arg_8_0._go)
+function VersionActivity1_2DungeonMapElement:isValid()
+	return not gohelper.isNil(self._go)
 end
 
-function var_0_0.setWenHaoVisible(arg_9_0, arg_9_1)
-	if arg_9_1 then
-		arg_9_0:setWenHaoAnim("wenhao_a_001_in")
+function VersionActivity1_2DungeonMapElement:setWenHaoVisible(value)
+	if value then
+		self:setWenHaoAnim("wenhao_a_001_in")
 	else
-		local var_9_0 = "wenhao_a_001_out"
+		local outName = "wenhao_a_001_out"
 
-		if (arg_9_0._config.type == DungeonEnum.ElementType.Activity1_2Fight or VersionActivity1_2DungeonConfig.instance:getBuildingConfigsByElementID(arg_9_0._config.id)) and arg_9_0._sceneElements.curSelectId == arg_9_0._config.id then
-			var_9_0 = "click"
-			arg_9_0._sceneElements.curSelectId = nil
+		if (self._config.type == DungeonEnum.ElementType.Activity1_2Fight or VersionActivity1_2DungeonConfig.instance:getBuildingConfigsByElementID(self._config.id)) and self._sceneElements.curSelectId == self._config.id then
+			outName = "click"
+			self._sceneElements.curSelectId = nil
 		end
 
-		arg_9_0:setWenHaoAnim(var_9_0)
+		self:setWenHaoAnim(outName)
 	end
 end
 
-function var_0_0.setWenHaoAnim(arg_10_0, arg_10_1)
-	arg_10_0._wenhaoAnimName = arg_10_1
+function VersionActivity1_2DungeonMapElement:setWenHaoAnim(name)
+	self._wenhaoAnimName = name
 
-	if #arg_10_0._wenhaoGo > 0 then
-		for iter_10_0, iter_10_1 in ipairs(arg_10_0._wenhaoGo) do
-			if not gohelper.isNil(iter_10_1) and iter_10_1.activeInHierarchy then
-				SLFramework.AnimatorPlayer.Get(iter_10_1):Play(arg_10_1, arg_10_0._wenHaoAnimDone, arg_10_0)
+	if #self._wenhaoGo > 0 then
+		for i, v in ipairs(self._wenhaoGo) do
+			if not gohelper.isNil(v) and v.activeInHierarchy then
+				SLFramework.AnimatorPlayer.Get(v):Play(name, self._wenHaoAnimDone, self)
 			end
 		end
 	end
 end
 
-function var_0_0._wenHaoAnimDone(arg_11_0)
-	if arg_11_0._wenhaoAnimName == "finish" then
-		gohelper.destroy(arg_11_0._go)
-		DungeonController.instance:dispatchEvent(DungeonMapElementEvent.OnFinishAndDisposeElement, arg_11_0._config)
+function VersionActivity1_2DungeonMapElement:_wenHaoAnimDone()
+	if self._wenhaoAnimName == "finish" then
+		gohelper.destroy(self._go)
+		DungeonController.instance:dispatchEvent(DungeonMapElementEvent.OnFinishAndDisposeElement, self._config)
 	end
 end
 
-function var_0_0._destroyGo(arg_12_0)
-	gohelper.destroy(arg_12_0._go)
+function VersionActivity1_2DungeonMapElement:_destroyGo()
+	gohelper.destroy(self._go)
 end
 
-function var_0_0._destroyItemGo(arg_13_0)
-	gohelper.destroy(arg_13_0._itemGo)
+function VersionActivity1_2DungeonMapElement:_destroyItemGo()
+	gohelper.destroy(self._itemGo)
 end
 
-function var_0_0.setFinish(arg_14_0)
-	if #arg_14_0._wenhaoGo == 0 then
-		arg_14_0:_destroyGo()
+function VersionActivity1_2DungeonMapElement:setFinish()
+	if #self._wenhaoGo == 0 then
+		self:_destroyGo()
 
 		return
 	end
 
-	arg_14_0:removeEventListeners()
-	arg_14_0:setWenHaoAnim("finish")
+	self:removeEventListeners()
+	self:setWenHaoAnim("finish")
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_elementdisappear)
-	TaskDispatcher.runDelay(arg_14_0._destroyItemGo, arg_14_0, 0.77)
-	TaskDispatcher.runDelay(arg_14_0._destroyGo, arg_14_0, 1.6)
+	TaskDispatcher.runDelay(self._destroyItemGo, self, 0.77)
+	TaskDispatcher.runDelay(self._destroyGo, self, 1.6)
 end
 
-function var_0_0.setFinishAndDotDestroy(arg_15_0)
-	if #arg_15_0._wenhaoGo == 0 then
+function VersionActivity1_2DungeonMapElement:setFinishAndDotDestroy()
+	if #self._wenhaoGo == 0 then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_elementdisappear)
 
-	if #arg_15_0._finishGo > 0 then
-		for iter_15_0, iter_15_1 in ipairs(arg_15_0._finishGo) do
-			gohelper.setActive(iter_15_1, true)
+	if #self._finishGo > 0 then
+		for i, v in ipairs(self._finishGo) do
+			gohelper.setActive(v, true)
 
-			if iter_15_1.activeInHierarchy then
-				SLFramework.AnimatorPlayer.Get(iter_15_1):Play(UIAnimationName.Open, arg_15_0.setFinishAndDotDestroyAnimationDone, arg_15_0)
+			if v.activeInHierarchy then
+				SLFramework.AnimatorPlayer.Get(v):Play(UIAnimationName.Open, self.setFinishAndDotDestroyAnimationDone, self)
 			end
 		end
 	else
-		arg_15_0:dispose()
+		self:dispose()
 	end
 end
 
-function var_0_0.setFinishAndDotDestroyAnimationDone(arg_16_0)
-	arg_16_0.animatorPlayer:Play(UIAnimationName.Idle, function()
+function VersionActivity1_2DungeonMapElement:setFinishAndDotDestroyAnimationDone()
+	self.animatorPlayer:Play(UIAnimationName.Idle, function()
 		return
-	end, arg_16_0)
-	arg_16_0:dispose()
+	end, self)
+	self:dispose()
 end
 
-function var_0_0.onDown(arg_18_0)
-	arg_18_0:_onDown()
+function VersionActivity1_2DungeonMapElement:onDown()
+	self:_onDown()
 end
 
-function var_0_0._onDown(arg_19_0)
-	arg_19_0._sceneElements:setElementDown(arg_19_0)
+function VersionActivity1_2DungeonMapElement:_onDown()
+	self._sceneElements:setElementDown(self)
 end
 
-function var_0_0.onClick(arg_20_0)
+function VersionActivity1_2DungeonMapElement:onClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_lvhu_building_click)
-	arg_20_0._sceneElements:clickElement(arg_20_0._config.id)
+	self._sceneElements:clickElement(self._config.id)
 end
 
-function var_0_0._onResLoaded(arg_21_0)
-	local var_21_0 = arg_21_0._resLoader:getAssetItem(arg_21_0._config.res):GetResource(arg_21_0._config.res)
+function VersionActivity1_2DungeonMapElement:_onResLoaded()
+	local assetItem = self._resLoader:getAssetItem(self._config.res)
+	local mainPrefab = assetItem:GetResource(self._config.res)
 
-	arg_21_0._itemGo = gohelper.clone(var_21_0, arg_21_0._go)
+	self._itemGo = gohelper.clone(mainPrefab, self._go)
 
-	local var_21_1 = arg_21_0._config.resScale
+	local resScale = self._config.resScale
 
-	if var_21_1 and var_21_1 ~= 0 then
-		transformhelper.setLocalScale(arg_21_0._itemGo.transform, var_21_1, var_21_1, 1)
+	if resScale and resScale ~= 0 then
+		transformhelper.setLocalScale(self._itemGo.transform, resScale, resScale, 1)
 	end
 
-	gohelper.setLayer(arg_21_0._itemGo, UnityLayer.Scene, true)
-	DungeonMapElement.addBoxColliderListener(arg_21_0._itemGo, arg_21_0._onDown, arg_21_0)
-	transformhelper.setLocalPos(arg_21_0._itemGo.transform, 0, 0, -1)
+	gohelper.setLayer(self._itemGo, UnityLayer.Scene, true)
+	DungeonMapElement.addBoxColliderListener(self._itemGo, self._onDown, self)
+	transformhelper.setLocalPos(self._itemGo.transform, 0, 0, -1)
 
-	if #arg_21_0._effectPath > 0 then
-		for iter_21_0, iter_21_1 in ipairs(arg_21_0._effectPath) do
-			local var_21_2 = UnityEngine.GameObject.New("effect" .. iter_21_0)
+	if #self._effectPath > 0 then
+		for i, v in ipairs(self._effectPath) do
+			local parentRoot = UnityEngine.GameObject.New("effect" .. i)
 
-			gohelper.addChild(arg_21_0._go, var_21_2)
+			gohelper.addChild(self._go, parentRoot)
 
-			local var_21_3 = string.splitToNumber(arg_21_0._config.tipOffsetPos, "#")
+			local offsetPos = string.splitToNumber(self._config.tipOffsetPos, "#")
 
-			arg_21_0._offsetX = var_21_3[1] or 0
-			arg_21_0._offsetY = var_21_3[2] or 0
+			self._offsetX = offsetPos[1] or 0
+			self._offsetY = offsetPos[2] or 0
 
-			local var_21_4 = arg_21_0._effectPath[iter_21_0]
-			local var_21_5 = arg_21_0._resLoader:getAssetItem(var_21_4):GetResource(var_21_4)
-			local var_21_6 = gohelper.clone(var_21_5, var_21_2, "root")
+			local effectPath = self._effectPath[i]
+			local assetItem = self._resLoader:getAssetItem(effectPath)
+			local mainPrefab = assetItem:GetResource(effectPath)
+			local tarObj = gohelper.clone(mainPrefab, parentRoot, "root")
 
-			DungeonMapElement.addBoxColliderListener(var_21_6, arg_21_0._onDown, arg_21_0)
-			transformhelper.setLocalPos(var_21_6.transform, arg_21_0._offsetX, arg_21_0._offsetY, -3)
+			DungeonMapElement.addBoxColliderListener(tarObj, self._onDown, self)
+			transformhelper.setLocalPos(tarObj.transform, self._offsetX, self._offsetY, -3)
 
-			local var_21_7 = gohelper.findChildComponent(var_21_6, "ani", typeof(UnityEngine.Animator))
+			local loopAni = gohelper.findChildComponent(tarObj, "ani", typeof(UnityEngine.Animator))
 
-			if var_21_7 then
-				local var_21_8 = math.random(0, 100)
+			if loopAni then
+				local random = math.random(0, 100)
 
-				var_21_7:Play("lhem_icon_loop", 0, var_21_8 / 100)
+				loopAni:Play("lhem_icon_loop", 0, random / 100)
 			end
 
-			local var_21_9 = gohelper.findChild(var_21_6, "ani/yuanjian_new_07/gou")
+			local finishGo = gohelper.findChild(tarObj, "ani/yuanjian_new_07/gou")
 
-			gohelper.setActive(var_21_9, false)
+			gohelper.setActive(finishGo, false)
 
-			if var_21_9 then
-				table.insert(arg_21_0._finishGo, var_21_9)
+			if finishGo then
+				table.insert(self._finishGo, finishGo)
 			end
 
-			if arg_21_0._mapScene:showInteractiveItem() then
-				arg_21_0:setWenHaoVisible(false)
-			elseif arg_21_0._wenhaoAnimName then
-				arg_21_0:setWenHaoAnim(arg_21_0._wenhaoAnimName)
+			if self._mapScene:showInteractiveItem() then
+				self:setWenHaoVisible(false)
+			elseif self._wenhaoAnimName then
+				self:setWenHaoAnim(self._wenhaoAnimName)
 			end
 
-			if string.find(var_21_4, "hddt_front_lubiao_a_002") then
-				local var_21_10 = gohelper.findChild(var_21_6, "ani/plane"):GetComponent(typeof(UnityEngine.Renderer)).material
-				local var_21_11 = var_21_10:GetVector("_Frame")
+			if string.find(effectPath, "hddt_front_lubiao_a_002") then
+				local plane = gohelper.findChild(tarObj, "ani/plane")
+				local renderer = plane:GetComponent(typeof(UnityEngine.Renderer))
+				local mat = renderer.material
+				local vec4 = mat:GetVector("_Frame")
 
-				var_21_11.w = DungeonEnum.ElementTypeIconIndex[string.format("%s0", arg_21_0._config.type)]
+				vec4.w = DungeonEnum.ElementTypeIconIndex[string.format("%s0", self._config.type)]
 
-				var_21_10:SetVector("_Frame", var_21_11)
+				mat:SetVector("_Frame", vec4)
 			end
 
-			table.insert(arg_21_0._wenhaoGo, var_21_6)
+			table.insert(self._wenhaoGo, tarObj)
 
-			for iter_21_2 = 1, 2 do
-				local var_21_12 = gohelper.findChild(var_21_6, string.format("ani/icon%d/anim/biaoti/txt", iter_21_2))
+			for index = 1, 2 do
+				local txtObj = gohelper.findChild(tarObj, string.format("ani/icon%d/anim/biaoti/txt", index))
 
-				if var_21_12 then
-					local var_21_13 = var_21_12:GetComponent(typeof(TMPro.TextMeshPro))
+				if txtObj then
+					local txt = txtObj:GetComponent(typeof(TMPro.TextMeshPro))
 
-					var_21_13.text = arg_21_0._config.title
+					txt.text = self._config.title
 
-					if arg_21_0._config.type == DungeonEnum.ElementType.DailyEpisode then
-						local var_21_14 = VersionActivity1_2DungeonModel.instance:getDailyEpisodeConfigByElementId(arg_21_0._config.id)
+					if self._config.type == DungeonEnum.ElementType.DailyEpisode then
+						local episodeConfig = VersionActivity1_2DungeonModel.instance:getDailyEpisodeConfigByElementId(self._config.id)
 
-						if var_21_14 then
-							var_21_13.text = var_21_14.name
+						if episodeConfig then
+							txt.text = episodeConfig.name
 						end
 					end
 				end
@@ -258,19 +264,19 @@ function var_0_0._onResLoaded(arg_21_0)
 		end
 	end
 
-	VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.addElementItem, arg_21_0._config.id)
+	VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.addElementItem, self._config.id)
 
-	local var_21_15 = FightModel.instance:getFightParam()
-	local var_21_16 = var_21_15 and var_21_15.episodeId
+	local fightParam = FightModel.instance:getFightParam()
+	local lastFightEpisodeId = fightParam and fightParam.episodeId
 
-	if var_21_16 then
-		local var_21_17 = DungeonConfig.instance:getEpisodeCO(var_21_16)
+	if lastFightEpisodeId then
+		local episodeConfig = DungeonConfig.instance:getEpisodeCO(lastFightEpisodeId)
 
-		if var_21_17 and var_21_17.chapterId == 12701 then
+		if episodeConfig and episodeConfig.chapterId == 12701 then
 			return
 		end
 
-		if arg_21_0._config.param == tostring(var_21_16) then
+		if self._config.param == tostring(lastFightEpisodeId) then
 			DungeonMapModel.instance.lastElementBattleId = nil
 
 			if GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.SkipClickElement) then
@@ -279,96 +285,98 @@ function var_0_0._onResLoaded(arg_21_0)
 
 			DungeonMapModel.instance.directFocusElement = true
 
-			arg_21_0:onClick()
+			self:onClick()
 
 			DungeonMapModel.instance.directFocusElement = false
 		end
 	end
 end
 
-function var_0_0._onSetEpisodeListVisible(arg_22_0, arg_22_1)
-	arg_22_0:setWenHaoVisible(arg_22_1)
+function VersionActivity1_2DungeonMapElement:_onSetEpisodeListVisible(value)
+	self:setWenHaoVisible(value)
 end
 
-function var_0_0._afterCollectLastShow(arg_23_0)
+function VersionActivity1_2DungeonMapElement:_afterCollectLastShow()
 	return
 end
 
-function var_0_0.addEventListeners(arg_24_0)
-	DungeonController.instance:registerCallback(DungeonEvent.OnSetEpisodeListVisible, arg_24_0._onSetEpisodeListVisible, arg_24_0)
-	arg_24_0:addEventCb(VersionActivity1_2DungeonController.instance, VersionActivity1_2DungeonEvent.afterCollectLastShow, arg_24_0._afterCollectLastShow, arg_24_0)
+function VersionActivity1_2DungeonMapElement:addEventListeners()
+	DungeonController.instance:registerCallback(DungeonEvent.OnSetEpisodeListVisible, self._onSetEpisodeListVisible, self)
+	self:addEventCb(VersionActivity1_2DungeonController.instance, VersionActivity1_2DungeonEvent.afterCollectLastShow, self._afterCollectLastShow, self)
 end
 
-function var_0_0.removeEventListeners(arg_25_0)
-	DungeonController.instance:unregisterCallback(DungeonEvent.OnSetEpisodeListVisible, arg_25_0._onSetEpisodeListVisible, arg_25_0)
+function VersionActivity1_2DungeonMapElement:removeEventListeners()
+	DungeonController.instance:unregisterCallback(DungeonEvent.OnSetEpisodeListVisible, self._onSetEpisodeListVisible, self)
 end
 
-function var_0_0.onStart(arg_26_0)
+function VersionActivity1_2DungeonMapElement:onStart()
 	return
 end
 
-function var_0_0.addBoxCollider2D(arg_27_0)
-	local var_27_0 = ZProj.BoxColliderClickListener.Get(arg_27_0)
-	local var_27_1 = gohelper.onceAddComponent(arg_27_0, typeof(UnityEngine.BoxCollider2D))
+function VersionActivity1_2DungeonMapElement.addBoxCollider2D(go)
+	local clickListener = ZProj.BoxColliderClickListener.Get(go)
+	local box = gohelper.onceAddComponent(go, typeof(UnityEngine.BoxCollider2D))
 
-	var_27_1.enabled = true
-	var_27_1.size = Vector2(1.5, 1.5)
+	box.enabled = true
+	box.size = Vector2(1.5, 1.5)
 
-	var_27_0:SetIgnoreUI(true)
+	clickListener:SetIgnoreUI(true)
 
-	return var_27_0
+	return clickListener
 end
 
-function var_0_0.addBoxColliderListener(arg_28_0, arg_28_1, arg_28_2)
-	DungeonMapElement.addBoxCollider2D(arg_28_0):AddClickListener(arg_28_1, arg_28_2)
+function VersionActivity1_2DungeonMapElement.addBoxColliderListener(go, callback, callbackTarget)
+	local clickListener = DungeonMapElement.addBoxCollider2D(go)
+
+	clickListener:AddClickListener(callback, callbackTarget)
 end
 
-function var_0_0.dispose(arg_29_0)
-	arg_29_0._itemGo = nil
-	arg_29_0._go = nil
-	arg_29_0.animatorPlayer = nil
+function VersionActivity1_2DungeonMapElement:dispose()
+	self._itemGo = nil
+	self._go = nil
+	self.animatorPlayer = nil
 
-	if arg_29_0._resLoader then
-		arg_29_0._resLoader:dispose()
+	if self._resLoader then
+		self._resLoader:dispose()
 
-		arg_29_0._resLoader = nil
+		self._resLoader = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_29_0._destroyItemGo, arg_29_0)
-	TaskDispatcher.cancelTask(arg_29_0._destroyGo, arg_29_0)
+	TaskDispatcher.cancelTask(self._destroyItemGo, self)
+	TaskDispatcher.cancelTask(self._destroyGo, self)
 end
 
-function var_0_0.onDestroy(arg_30_0)
-	if arg_30_0._itemGo then
-		gohelper.destroy(arg_30_0._itemGo)
+function VersionActivity1_2DungeonMapElement:onDestroy()
+	if self._itemGo then
+		gohelper.destroy(self._itemGo)
 
-		arg_30_0._itemGo = nil
+		self._itemGo = nil
 	end
 
-	if arg_30_0._wenhaoGo then
-		for iter_30_0, iter_30_1 in ipairs(arg_30_0._wenhaoGo) do
-			gohelper.destroy(iter_30_1)
+	if self._wenhaoGo then
+		for i, v in ipairs(self._wenhaoGo) do
+			gohelper.destroy(v)
 		end
 	end
 
-	if arg_30_0._go then
-		gohelper.destroy(arg_30_0._go)
+	if self._go then
+		gohelper.destroy(self._go)
 
-		arg_30_0._go = nil
+		self._go = nil
 	end
 
-	if arg_30_0._resLoader then
-		arg_30_0._resLoader:dispose()
+	if self._resLoader then
+		self._resLoader:dispose()
 
-		arg_30_0._resLoader = nil
+		self._resLoader = nil
 	end
 
-	if arg_30_0.animatorPlayer then
-		arg_30_0.animatorPlayer = nil
+	if self.animatorPlayer then
+		self.animatorPlayer = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_30_0._destroyItemGo, arg_30_0)
-	TaskDispatcher.cancelTask(arg_30_0._destroyGo, arg_30_0)
+	TaskDispatcher.cancelTask(self._destroyItemGo, self)
+	TaskDispatcher.cancelTask(self._destroyGo, self)
 end
 
-return var_0_0
+return VersionActivity1_2DungeonMapElement

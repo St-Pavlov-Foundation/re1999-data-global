@@ -1,58 +1,60 @@
-﻿module("modules.logic.fight.view.cardeffect.FightCardDisplayHideAllEffect", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/cardeffect/FightCardDisplayHideAllEffect.lua
 
-local var_0_0 = class("FightCardDisplayHideAllEffect", BaseWork)
-local var_0_1 = 1
-local var_0_2 = var_0_1 * 0.033
+module("modules.logic.fight.view.cardeffect.FightCardDisplayHideAllEffect", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+local FightCardDisplayHideAllEffect = class("FightCardDisplayHideAllEffect", BaseWork)
+local TimeFactor = 1
+local dt = TimeFactor * 0.033
 
-	arg_1_0._dt = var_0_2 / FightModel.instance:getUISpeed()
+function FightCardDisplayHideAllEffect:onStart(context)
+	FightCardDisplayHideAllEffect.super.onStart(self, context)
 
-	local var_1_0 = FlowParallel.New()
+	self._dt = dt / FightModel.instance:getUISpeed()
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1.hideSkillItemGOs) do
-		if iter_1_1.activeSelf then
-			var_1_0:addWork(TweenWork.New({
+	local cardFlow = FlowParallel.New()
+
+	for index, itemGO in ipairs(context.hideSkillItemGOs) do
+		if itemGO.activeSelf then
+			cardFlow:addWork(TweenWork.New({
 				from = 1,
 				type = "DOFadeCanvasGroup",
 				to = 0,
-				go = iter_1_1,
-				t = arg_1_0._dt * 10
+				go = itemGO,
+				t = self._dt * 10
 			}))
-			var_1_0:addWork(FunctionWork.New(arg_1_0._hideLockObj, arg_1_0, iter_1_0))
+			cardFlow:addWork(FunctionWork.New(self._hideLockObj, self, index))
 		end
 	end
 
-	arg_1_0._flow = FlowSequence.New()
+	self._flow = FlowSequence.New()
 
-	arg_1_0._flow:addWork(WorkWaitSeconds.New(0.5))
-	arg_1_0._flow:addWork(var_1_0)
-	arg_1_0._flow:registerDoneListener(arg_1_0._onWorkDone, arg_1_0)
-	arg_1_0._flow:start()
+	self._flow:addWork(WorkWaitSeconds.New(0.5))
+	self._flow:addWork(cardFlow)
+	self._flow:registerDoneListener(self._onWorkDone, self)
+	self._flow:start()
 end
 
-function var_0_0._hideLockObj(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_0.context.hideSkillItemGOs[arg_2_1]
+function FightCardDisplayHideAllEffect:_hideLockObj(index)
+	local obj = self.context.hideSkillItemGOs[index]
 
-	if var_2_0 then
-		local var_2_1 = gohelper.findChild(var_2_0.transform.parent.gameObject, "lock")
+	if obj then
+		local lock = gohelper.findChild(obj.transform.parent.gameObject, "lock")
 
-		gohelper.setActive(var_2_1, false)
+		gohelper.setActive(lock, false)
 	end
 end
 
-function var_0_0.onStop(arg_3_0)
-	var_0_0.super.onStop(arg_3_0)
-	arg_3_0._flow:unregisterDoneListener(arg_3_0._onWorkDone, arg_3_0)
+function FightCardDisplayHideAllEffect:onStop()
+	FightCardDisplayHideAllEffect.super.onStop(self)
+	self._flow:unregisterDoneListener(self._onWorkDone, self)
 
-	if arg_3_0._flow.status == WorkStatus.Running then
-		arg_3_0._flow:stop()
+	if self._flow.status == WorkStatus.Running then
+		self._flow:stop()
 	end
 end
 
-function var_0_0._onWorkDone(arg_4_0)
-	arg_4_0:onDone(true)
+function FightCardDisplayHideAllEffect:_onWorkDone()
+	self:onDone(true)
 end
 
-return var_0_0
+return FightCardDisplayHideAllEffect

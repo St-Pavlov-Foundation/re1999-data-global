@@ -1,12 +1,14 @@
-﻿module("modules.logic.seasonver.act123.view1_8.Season123_1_8EntryOverviewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view1_8/Season123_1_8EntryOverviewContainer.lua
 
-local var_0_0 = class("Season123_1_8EntryOverviewContainer", BaseViewContainer)
+module("modules.logic.seasonver.act123.view1_8.Season123_1_8EntryOverviewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local Season123_1_8EntryOverviewContainer = class("Season123_1_8EntryOverviewContainer", BaseViewContainer)
+
+function Season123_1_8EntryOverviewContainer:buildViews()
 	return {
 		Season123_1_8CheckCloseView.New(),
 		Season123_1_8EntryOverview.New()
 	}
 end
 
-return var_0_0
+return Season123_1_8EntryOverviewContainer

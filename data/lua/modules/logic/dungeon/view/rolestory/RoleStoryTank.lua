@@ -1,78 +1,95 @@
-﻿module("modules.logic.dungeon.view.rolestory.RoleStoryTank", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/rolestory/RoleStoryTank.lua
 
-local var_0_0 = class("RoleStoryTank", UserDataDispose)
+module("modules.logic.dungeon.view.rolestory.RoleStoryTank", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+local RoleStoryTank = class("RoleStoryTank", UserDataDispose)
 
-	arg_1_0._rootGo = arg_1_1
-	arg_1_0._txtTaskDesc = gohelper.findChildTextMesh(arg_1_0._rootGo, "bg/taskDesc")
-	arg_1_0._imageIcon = gohelper.findChildImage(arg_1_0._rootGo, "bg/icon")
-	arg_1_0._btnTaskReward = gohelper.findChildButtonWithAudio(arg_1_0._rootGo, "bg/reward/btnReward")
-	arg_1_0._goRewardFinished = gohelper.findChild(arg_1_0._rootGo, "bg/reward/#go_rewardFinished")
-	arg_1_0._goRewardRed = gohelper.findChild(arg_1_0._rootGo, "bg/reward/btnReward/reddoticon")
+function RoleStoryTank:ctor(rootGO)
+	self:__onInit()
 
-	arg_1_0:addClickCb(arg_1_0._btnTaskReward, arg_1_0._btntaskOnClick, arg_1_0)
-	arg_1_0:addEventCb(RoleStoryController.instance, RoleStoryEvent.WeekTaskChange, arg_1_0.refreshTask, arg_1_0)
-	arg_1_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_1_0._onCurrencyChange, arg_1_0)
+	self._rootGo = rootGO
+	self._txtTaskDesc = gohelper.findChildTextMesh(self._rootGo, "bg/taskDesc")
+	self._imageIcon = gohelper.findChildImage(self._rootGo, "bg/icon")
+	self._btnTaskReward = gohelper.findChildButtonWithAudio(self._rootGo, "bg/reward/btnReward")
+	self._goRewardFinished = gohelper.findChild(self._rootGo, "bg/reward/#go_rewardFinished")
+	self._goRewardRed = gohelper.findChild(self._rootGo, "bg/reward/btnReward/reddoticon")
+
+	self:addClickCb(self._btnTaskReward, self._btntaskOnClick, self)
+	self:addEventCb(RoleStoryController.instance, RoleStoryEvent.WeekTaskChange, self.refreshTask, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._onCurrencyChange, self)
 end
 
-function var_0_0.onOpen(arg_2_0)
-	arg_2_0:refreshTask()
-	arg_2_0:checkGetTask()
+function RoleStoryTank:onOpen()
+	self:refreshTask()
+	self:checkGetTask()
 end
 
-function var_0_0._onCurrencyChange(arg_3_0)
-	arg_3_0:refreshTask()
+function RoleStoryTank:_onCurrencyChange()
+	self:refreshTask()
 end
 
-function var_0_0.refreshTask(arg_4_0)
-	UISpriteSetMgr.instance:setCurrencyItemSprite(arg_4_0._imageIcon, "216_1")
+function RoleStoryTank:refreshTask()
+	UISpriteSetMgr.instance:setCurrencyItemSprite(self._imageIcon, "216_1")
 
-	local var_4_0 = RoleStoryModel.instance:getWeekHasGet()
-	local var_4_1 = RoleStoryModel.instance:getWeekProgress()
-	local var_4_2 = 1
+	local hasGet = RoleStoryModel.instance:getWeekHasGet()
+	local cur = RoleStoryModel.instance:getWeekProgress()
+	local max = 1
 
-	if var_4_2 <= var_4_1 then
-		arg_4_0._txtTaskDesc.text = formatLuaLang("rolestory_weektask_desc", string.format(" <color=#D26636>(%s/%s)</color>", var_4_1, var_4_2))
+	if max <= cur then
+		self._txtTaskDesc.text = formatLuaLang("rolestory_weektask_desc", string.format(" <color=#D26636>(%s/%s)</color>", cur, max))
 	else
-		arg_4_0._txtTaskDesc.text = formatLuaLang("rolestory_weektask_desc", string.format(" (%s<color=#D26636>/%s</color>)", var_4_1, var_4_2))
+		self._txtTaskDesc.text = formatLuaLang("rolestory_weektask_desc", string.format(" (%s<color=#D26636>/%s</color>)", cur, max))
 	end
 
-	local var_4_3 = 1
+	local state = 1
 
-	if var_4_0 then
-		var_4_3 = 3
-	elseif var_4_2 <= var_4_1 then
-		var_4_3 = 2
+	if hasGet then
+		state = 3
+	elseif max <= cur then
+		state = 2
 	end
 
-	gohelper.setActive(arg_4_0._goRewardFinished, var_4_3 == 3)
-	gohelper.setActive(arg_4_0._btnTaskReward, var_4_3 == 2)
+	gohelper.setActive(self._goRewardFinished, state == 3)
+	gohelper.setActive(self._btnTaskReward, state == 2)
 
-	if var_4_3 == 2 then
-		local var_4_4 = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Currency, CurrencyEnum.CurrencyType.RoleStory)
-		local var_4_5 = CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.RoleStory).maxLimit
+	if state == 2 then
+		local quantity = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Currency, CurrencyEnum.CurrencyType.RoleStory)
+		local currencyCO = CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.RoleStory)
+		local maxCount = currencyCO.maxLimit
 
-		gohelper.setActive(arg_4_0._goRewardRed, var_4_4 < var_4_5)
+		gohelper.setActive(self._goRewardRed, quantity < maxCount)
 	else
-		gohelper.setActive(arg_4_0._goRewardRed, false)
+		gohelper.setActive(self._goRewardRed, false)
 	end
 end
 
-function var_0_0.checkGetTask(arg_5_0)
-	local var_5_0 = RoleStoryModel.instance:getWeekHasGet()
+function RoleStoryTank:checkGetTask()
+	local hasGet = RoleStoryModel.instance:getWeekHasGet()
+	local cur = RoleStoryModel.instance:getWeekProgress()
+	local max = 1
 
-	if RoleStoryModel.instance:getWeekProgress() >= 1 and not var_5_0 and ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Currency, CurrencyEnum.CurrencyType.RoleStory) < CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.RoleStory).maxLimit then
-		HeroStoryRpc.instance:sendHeroStoryWeekTaskGetRequest()
+	if max <= cur and not hasGet then
+		local quantity = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Currency, CurrencyEnum.CurrencyType.RoleStory)
+		local currencyCO = CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.RoleStory)
+		local maxCount = currencyCO.maxLimit
+
+		if quantity < maxCount then
+			HeroStoryRpc.instance:sendHeroStoryWeekTaskGetRequest()
+		end
 	end
 end
 
-function var_0_0._btntaskOnClick(arg_6_0)
-	local var_6_0 = RoleStoryModel.instance:getWeekHasGet()
+function RoleStoryTank:_btntaskOnClick()
+	local hasGet = RoleStoryModel.instance:getWeekHasGet()
+	local cur = RoleStoryModel.instance:getWeekProgress()
+	local max = 1
 
-	if RoleStoryModel.instance:getWeekProgress() >= 1 and not var_6_0 then
-		if ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Currency, CurrencyEnum.CurrencyType.RoleStory) >= CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.RoleStory).maxLimit then
+	if max <= cur and not hasGet then
+		local quantity = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Currency, CurrencyEnum.CurrencyType.RoleStory)
+		local currencyCO = CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.RoleStory)
+		local maxCount = currencyCO.maxLimit
+
+		if maxCount <= quantity then
 			GameFacade.showToast(ToastEnum.RoleStoryTickMaxCount)
 		else
 			HeroStoryRpc.instance:sendHeroStoryWeekTaskGetRequest()
@@ -80,10 +97,10 @@ function var_0_0._btntaskOnClick(arg_6_0)
 	end
 end
 
-function var_0_0.onDestroy(arg_7_0)
-	arg_7_0:__onDispose()
+function RoleStoryTank:onDestroy()
+	self:__onDispose()
 end
 
-var_0_0.prefabPath = "ui/viewres/dungeon/rolestory/rolestorytank.prefab"
+RoleStoryTank.prefabPath = "ui/viewres/dungeon/rolestory/rolestorytank.prefab"
 
-return var_0_0
+return RoleStoryTank

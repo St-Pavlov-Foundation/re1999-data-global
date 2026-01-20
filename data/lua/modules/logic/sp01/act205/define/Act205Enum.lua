@@ -1,14 +1,16 @@
-﻿module("modules.logic.sp01.act205.define.Act205Enum", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/act205/define/Act205Enum.lua
 
-local var_0_0 = _M
+module("modules.logic.sp01.act205.define.Act205Enum", package.seeall)
 
-var_0_0.ActId = ActivityEnum.Activity.V2a9_Act205
-var_0_0.GameStageId = {
+local Act205Enum = _M
+
+Act205Enum.ActId = ActivityEnum.Activity.V2a9_Act205
+Act205Enum.GameStageId = {
 	Ocean = 2,
 	Chase = 3,
 	Card = 1
 }
-var_0_0.ConstId = {
+Act205Enum.ConstId = {
 	CardGameEnemyCardCount = 9,
 	CardGamePlayerCardCount = 8,
 	MinimumGuaranteeCard = 10,
@@ -16,31 +18,31 @@ var_0_0.ConstId = {
 	CardGameBasePoint = 7,
 	OceanGameFailTimesToWin = 5
 }
-var_0_0.CardGameFailPoint = 1
-var_0_0.CardGameCacheDataPrefsKey = "Act205CardGameCacheDataKey"
-var_0_0.SpEffType = {
+Act205Enum.CardGameFailPoint = 1
+Act205Enum.CardGameCacheDataPrefsKey = "Act205CardGameCacheDataKey"
+Act205Enum.SpEffType = {
 	All = 1,
 	Half = 2
 }
-var_0_0.CardType = {
+Act205Enum.CardType = {
 	Role = 1,
 	Weapon = 2
 }
-var_0_0.CardPKResult = {
+Act205Enum.CardPKResult = {
 	BeRestrained = -1,
 	Draw = 0,
 	Restrain = 1
 }
-var_0_0.CardGameCacheKey = {
+Act205Enum.CardGameCacheKey = {
 	PlayerCard = "Act205CardGamePlayerCard",
 	EnemyCard = "Act205CardGameEnemyCard"
 }
-var_0_0.saveLocalOceanGoldKey = "Act205OceanGameGold"
-var_0_0.saveLocalOceanDiceKey = "Act205OceanGameDice"
-var_0_0.oceanGoldHardType = {
+Act205Enum.saveLocalOceanGoldKey = "Act205OceanGameGold"
+Act205Enum.saveLocalOceanDiceKey = "Act205OceanGameDice"
+Act205Enum.oceanGoldHardType = {
 	Hard = 2,
 	Normal = 1
 }
-var_0_0.oceanDiceMaxCount = 3
+Act205Enum.oceanDiceMaxCount = 3
 
-return var_0_0
+return Act205Enum

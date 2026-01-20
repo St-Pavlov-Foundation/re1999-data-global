@@ -1,104 +1,109 @@
-﻿module("modules.logic.turnback.view.TurnbackSignInView", package.seeall)
+﻿-- chunkname: @modules/logic/turnback/view/TurnbackSignInView.lua
 
-local var_0_0 = class("TurnbackSignInView", BaseView)
+module("modules.logic.turnback.view.TurnbackSignInView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "tips/#txt_desc")
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "tips/#txt_time")
-	arg_1_0._scrolldaylist = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_daylist")
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#scroll_daylist/Viewport/#go_content")
-	arg_1_0._rectMask2d = gohelper.findChild(arg_1_0.viewGO, "#scroll_daylist/Viewport"):GetComponent(typeof(UnityEngine.UI.RectMask2D))
-	arg_1_0._mask = gohelper.findChild(arg_1_0.viewGO, "#scroll_daylist/Viewport"):GetComponent(typeof(UnityEngine.UI.Mask))
-	arg_1_0._maskImage = gohelper.findChild(arg_1_0.viewGO, "#scroll_daylist/Viewport"):GetComponent(gohelper.Type_Image)
+local TurnbackSignInView = class("TurnbackSignInView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function TurnbackSignInView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "tips/#txt_desc")
+	self._txttime = gohelper.findChildText(self.viewGO, "tips/#txt_time")
+	self._scrolldaylist = gohelper.findChildScrollRect(self.viewGO, "#scroll_daylist")
+	self._gocontent = gohelper.findChild(self.viewGO, "#scroll_daylist/Viewport/#go_content")
+	self._rectMask2d = gohelper.findChild(self.viewGO, "#scroll_daylist/Viewport"):GetComponent(typeof(UnityEngine.UI.RectMask2D))
+	self._mask = gohelper.findChild(self.viewGO, "#scroll_daylist/Viewport"):GetComponent(typeof(UnityEngine.UI.Mask))
+	self._maskImage = gohelper.findChild(self.viewGO, "#scroll_daylist/Viewport"):GetComponent(gohelper.Type_Image)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshSignInScroll, arg_2_0._refreshScrollPos, arg_2_0)
-	arg_2_0:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshRemainTime, arg_2_0._refreshRemainTime, arg_2_0)
-	arg_2_0:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshView, arg_2_0._refreshUI, arg_2_0)
-	arg_2_0._scrolldaylist:AddOnValueChanged(arg_2_0._onScrollValueChange, arg_2_0)
+function TurnbackSignInView:addEvents()
+	self:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshSignInScroll, self._refreshScrollPos, self)
+	self:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshRemainTime, self._refreshRemainTime, self)
+	self:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshView, self._refreshUI, self)
+	self._scrolldaylist:AddOnValueChanged(self._onScrollValueChange, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(TurnbackController.instance, TurnbackEvent.RefreshSignInScroll, arg_3_0._refreshScrollPos, arg_3_0)
-	arg_3_0:removeEventCb(TurnbackController.instance, TurnbackEvent.RefreshRemainTime, arg_3_0._refreshRemainTime, arg_3_0)
-	arg_3_0:removeEventCb(TurnbackController.instance, TurnbackEvent.RefreshView, arg_3_0._refreshUI, arg_3_0)
-	arg_3_0._scrolldaylist:RemoveOnValueChanged()
+function TurnbackSignInView:removeEvents()
+	self:removeEventCb(TurnbackController.instance, TurnbackEvent.RefreshSignInScroll, self._refreshScrollPos, self)
+	self:removeEventCb(TurnbackController.instance, TurnbackEvent.RefreshRemainTime, self._refreshRemainTime, self)
+	self:removeEventCb(TurnbackController.instance, TurnbackEvent.RefreshView, self._refreshUI, self)
+	self._scrolldaylist:RemoveOnValueChanged()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._simagebg:LoadImage(ResUrl.getTurnbackIcon("turnback_signfullbg"))
+function TurnbackSignInView:_editableInitView()
+	self._simagebg:LoadImage(ResUrl.getTurnbackIcon("turnback_signfullbg"))
 end
 
-function var_0_0.onOpen(arg_5_0)
-	local var_5_0 = arg_5_0.viewParam.parent
+function TurnbackSignInView:onOpen()
+	local parentGO = self.viewParam.parent
 
-	arg_5_0.viewConfig = TurnbackConfig.instance:getTurnbackSubModuleCo(arg_5_0.viewParam.actId)
+	self.viewConfig = TurnbackConfig.instance:getTurnbackSubModuleCo(self.viewParam.actId)
 
-	gohelper.addChild(var_5_0, arg_5_0.viewGO)
-	arg_5_0:_refreshUI()
+	gohelper.addChild(parentGO, self.viewGO)
+	self:_refreshUI()
 	TurnbackSignInModel.instance:setOpenTimeStamp()
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Task_page)
 end
 
-function var_0_0._refreshUI(arg_6_0)
-	arg_6_0._txtdesc.text = arg_6_0.viewConfig.actDesc
+function TurnbackSignInView:_refreshUI()
+	self._txtdesc.text = self.viewConfig.actDesc
 
-	arg_6_0:_refreshRemainTime()
-	arg_6_0:_refreshScrollPos()
-	arg_6_0:_refreshMaskShowState()
+	self:_refreshRemainTime()
+	self:_refreshScrollPos()
+	self:_refreshMaskShowState()
 end
 
-function var_0_0._refreshRemainTime(arg_7_0)
-	arg_7_0._txttime.text = TurnbackController.instance:refreshRemainTime()
+function TurnbackSignInView:_refreshRemainTime()
+	self._txttime.text = TurnbackController.instance:refreshRemainTime()
 end
 
-function var_0_0._refreshScrollPos(arg_8_0)
-	local var_8_0 = TurnbackSignInModel.instance:getTheFirstCanGetIndex()
-	local var_8_1 = TurnbackModel.instance:getCurSignInDay()
-	local var_8_2 = GameUtil.getTabLen(TurnbackSignInModel.instance:getSignInInfoMoList())
-	local var_8_3 = arg_8_0.viewContainer._scrollView:getCsListScroll()
-	local var_8_4 = arg_8_0.viewContainer._scrollParam
-	local var_8_5 = var_8_4.cellWidth
-	local var_8_6 = var_8_4.cellSpaceH
-	local var_8_7 = 0
-	local var_8_8 = var_8_2 - 7
-	local var_8_9 = var_8_5 + var_8_6
+function TurnbackSignInView:_refreshScrollPos()
+	local cangetIndex = TurnbackSignInModel.instance:getTheFirstCanGetIndex()
+	local curSignInDay = TurnbackModel.instance:getCurSignInDay()
+	local totalCount = GameUtil.getTabLen(TurnbackSignInModel.instance:getSignInInfoMoList())
+	local csListView = self.viewContainer._scrollView:getCsListScroll()
+	local listScrollParam = self.viewContainer._scrollParam
+	local cellWidth = listScrollParam.cellWidth
+	local cellSpaceH = listScrollParam.cellSpaceH
+	local offset = 0
+	local itemInViewCount = 7
+	local finalPassIndex = totalCount - itemInViewCount
+	local totalCellWidth = cellWidth + cellSpaceH
 
-	if var_8_0 ~= 0 then
-		var_8_7 = var_8_8 < var_8_0 - 1 and var_8_9 * (var_8_8 + 1) or var_8_9 * math.max(0, var_8_0 - 2)
+	if cangetIndex ~= 0 then
+		offset = finalPassIndex < cangetIndex - 1 and totalCellWidth * (finalPassIndex + 1) or totalCellWidth * math.max(0, cangetIndex - 2)
 	else
-		var_8_7 = var_8_8 < var_8_1 and var_8_9 * (var_8_8 + 1) or var_8_9 * (var_8_1 - 1)
+		offset = finalPassIndex < curSignInDay and totalCellWidth * (finalPassIndex + 1) or totalCellWidth * (curSignInDay - 1)
 	end
 
-	var_8_3.HorizontalScrollPixel = math.max(0, var_8_7)
+	csListView.HorizontalScrollPixel = math.max(0, offset)
 
-	var_8_3:UpdateCells(true)
+	csListView:UpdateCells(true)
 end
 
-function var_0_0._onScrollValueChange(arg_9_0)
-	arg_9_0._rectMask2d.enabled = arg_9_0._scrolldaylist.horizontalNormalizedPosition < 0.95
+function TurnbackSignInView:_onScrollValueChange()
+	self._rectMask2d.enabled = self._scrolldaylist.horizontalNormalizedPosition < 0.95
 end
 
-function var_0_0._refreshMaskShowState(arg_10_0)
-	local var_10_0 = recthelper.getWidth(arg_10_0._scrolldaylist.gameObject.transform) < recthelper.getWidth(arg_10_0._gocontent.transform)
+function TurnbackSignInView:_refreshMaskShowState()
+	local scrollWidth = recthelper.getWidth(self._scrolldaylist.gameObject.transform)
+	local contentWidth = recthelper.getWidth(self._gocontent.transform)
+	local showState = scrollWidth < contentWidth
 
-	arg_10_0._rectMask2d.enabled = var_10_0
-	arg_10_0._mask.enabled = var_10_0
-	arg_10_0._maskImage.enabled = var_10_0
+	self._rectMask2d.enabled = showState
+	self._mask.enabled = showState
+	self._maskImage.enabled = showState
 end
 
-function var_0_0.onClose(arg_11_0)
-	arg_11_0._simagebg:UnLoadImage()
+function TurnbackSignInView:onClose()
+	self._simagebg:UnLoadImage()
 end
 
-function var_0_0.onDestroyView(arg_12_0)
+function TurnbackSignInView:onDestroyView()
 	return
 end
 
-return var_0_0
+return TurnbackSignInView

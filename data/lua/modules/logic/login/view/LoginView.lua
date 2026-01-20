@@ -1,180 +1,182 @@
-﻿module("modules.logic.login.view.LoginView", package.seeall)
+﻿-- chunkname: @modules/logic/login/view/LoginView.lua
 
-local var_0_0 = class("LoginView", BaseView)
-local var_0_1 = -8
-local var_0_2 = 3
-local var_0_3 = 10
+module("modules.logic.login.view.LoginView", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._loginFlow = nil
-	arg_1_0._httpStartGameFlow = nil
+local LoginView = class("LoginView", BaseView)
+local ResultCodeSdkExpired = -8
+local profilerTogglePressTimeDebug = 3
+local profilerTogglePressTime = 10
+
+function LoginView:ctor()
+	self._loginFlow = nil
+	self._httpStartGameFlow = nil
 end
 
-function var_0_0.onInitView(arg_2_0)
-	arg_2_0._serverGO = gohelper.findChild(arg_2_0.viewGO, "server")
-	arg_2_0._txtServerName = gohelper.findChildText(arg_2_0._serverGO, "Text")
-	arg_2_0._txt_version = gohelper.findChildText(arg_2_0.viewGO, "#txt_version")
-	arg_2_0._serverStateGOList = {}
+function LoginView:onInitView()
+	self._serverGO = gohelper.findChild(self.viewGO, "server")
+	self._txtServerName = gohelper.findChildText(self._serverGO, "Text")
+	self._txt_version = gohelper.findChildText(self.viewGO, "#txt_version")
+	self._serverStateGOList = {}
 
-	for iter_2_0 = 0, 2 do
-		local var_2_0 = gohelper.findChild(arg_2_0.viewGO, "server/imgState" .. iter_2_0)
+	for i = 0, 2 do
+		local stateGO = gohelper.findChild(self.viewGO, "server/imgState" .. i)
 
-		arg_2_0._serverStateGOList[iter_2_0] = var_2_0
+		self._serverStateGOList[i] = stateGO
 	end
 
-	arg_2_0._btnServerList = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "server/btnServerList")
-	arg_2_0._btnLogin = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "center_text/btnLogin")
-	arg_2_0._btnPolicy = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "rightbtn_group/#btn_policy")
-	arg_2_0._btnAccount = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "rightbtn_group/#btn_account")
-	arg_2_0._btnNotice = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "rightbtn_group/#btn_notice")
-	arg_2_0._goBtnNotice = gohelper.findChild(arg_2_0.viewGO, "rightbtn_group/#btn_notice")
-	arg_2_0._btnNoticeLongPress = SLFramework.UGUI.UILongPressListener.Get(arg_2_0._goBtnNotice)
-	arg_2_0._btnFix = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "rightbtn_group/#btn_fix")
-	arg_2_0._btnScan = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "rightbtn_group/#btn_scan")
-	arg_2_0._btnSet = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "rightbtn_group/#btn_set")
-	arg_2_0._btnQuit = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "rightbtn_group/#btn_switch")
-	arg_2_0._originBgGo = gohelper.find("UIRoot/OriginBg")
-	arg_2_0._goClickMask = gohelper.findChild(arg_2_0.viewGO, "click_mask")
-	arg_2_0._goEffect = gohelper.findChild(arg_2_0.viewGO, "imgBg/effect")
-	arg_2_0._imgLogo = gohelper.findChildSingleImage(arg_2_0.viewGO, "logo")
-	arg_2_0._btnAgeFit = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "leftbtn/#btn_agefit")
-	arg_2_0._btnexit = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "rightbtn_group/#btn_exit")
+	self._btnServerList = gohelper.findChildButtonWithAudio(self.viewGO, "server/btnServerList")
+	self._btnLogin = gohelper.findChildButtonWithAudio(self.viewGO, "center_text/btnLogin")
+	self._btnPolicy = gohelper.findChildButtonWithAudio(self.viewGO, "rightbtn_group/#btn_policy")
+	self._btnAccount = gohelper.findChildButtonWithAudio(self.viewGO, "rightbtn_group/#btn_account")
+	self._btnNotice = gohelper.findChildButtonWithAudio(self.viewGO, "rightbtn_group/#btn_notice")
+	self._goBtnNotice = gohelper.findChild(self.viewGO, "rightbtn_group/#btn_notice")
+	self._btnNoticeLongPress = SLFramework.UGUI.UILongPressListener.Get(self._goBtnNotice)
+	self._btnFix = gohelper.findChildButtonWithAudio(self.viewGO, "rightbtn_group/#btn_fix")
+	self._btnScan = gohelper.findChildButtonWithAudio(self.viewGO, "rightbtn_group/#btn_scan")
+	self._btnSet = gohelper.findChildButtonWithAudio(self.viewGO, "rightbtn_group/#btn_set")
+	self._btnQuit = gohelper.findChildButtonWithAudio(self.viewGO, "rightbtn_group/#btn_switch")
+	self._originBgGo = gohelper.find("UIRoot/OriginBg")
+	self._goClickMask = gohelper.findChild(self.viewGO, "click_mask")
+	self._goEffect = gohelper.findChild(self.viewGO, "imgBg/effect")
+	self._imgLogo = gohelper.findChildSingleImage(self.viewGO, "logo")
+	self._btnAgeFit = gohelper.findChildButtonWithAudio(self.viewGO, "leftbtn/#btn_agefit")
+	self._btnexit = gohelper.findChildButtonWithAudio(self.viewGO, "rightbtn_group/#btn_exit")
 end
 
-function var_0_0.addEvents(arg_3_0)
-	arg_3_0._btnServerList:AddClickListener(arg_3_0._onClickServerList, arg_3_0)
-	arg_3_0._btnLogin:AddClickListener(arg_3_0._onClickLogin, arg_3_0)
-	arg_3_0._btnAccount:AddClickListener(arg_3_0._onClickAccount, arg_3_0)
-	arg_3_0._btnNotice:AddClickListener(arg_3_0._onClickNotice, arg_3_0)
-	arg_3_0._btnFix:AddClickListener(arg_3_0._onClickFix, arg_3_0)
-	arg_3_0._btnScan:AddClickListener(arg_3_0._onClickScan, arg_3_0)
-	arg_3_0._btnPolicy:AddClickListener(arg_3_0._onClickPolicy, arg_3_0)
-	arg_3_0._btnAgeFit:AddClickListener(arg_3_0._onClickAgeFit, arg_3_0)
-	arg_3_0._btnexit:AddClickListener(arg_3_0.exit, arg_3_0)
-	arg_3_0:addEventCb(LoginController.instance, LoginEvent.SelectServerItem, arg_3_0._onSelectServerItem, arg_3_0)
-	arg_3_0:addEventCb(LoginController.instance, LoginEvent.OnSdkLoginReturn, arg_3_0._onSdkLoginReturn, arg_3_0)
-	arg_3_0:addEventCb(LoginController.instance, LoginEvent.SystemLoginFail, arg_3_0._onSystemLoginFail, arg_3_0)
-	arg_3_0:addEventCb(LoginController.instance, LoginEvent.OnLogout, arg_3_0._onLoginOut, arg_3_0)
-	arg_3_0:addEventCb(LoginController.instance, LoginEvent.OnLoginBgLoaded, arg_3_0._onBgLoaded, arg_3_0)
-	arg_3_0._btnNoticeLongPress:SetLongPressTime({
-		isDebugBuild and var_0_2 or var_0_3,
+function LoginView:addEvents()
+	self._btnServerList:AddClickListener(self._onClickServerList, self)
+	self._btnLogin:AddClickListener(self._onClickLogin, self)
+	self._btnAccount:AddClickListener(self._onClickAccount, self)
+	self._btnNotice:AddClickListener(self._onClickNotice, self)
+	self._btnFix:AddClickListener(self._onClickFix, self)
+	self._btnScan:AddClickListener(self._onClickScan, self)
+	self._btnPolicy:AddClickListener(self._onClickPolicy, self)
+	self._btnAgeFit:AddClickListener(self._onClickAgeFit, self)
+	self._btnexit:AddClickListener(self.exit, self)
+	self:addEventCb(LoginController.instance, LoginEvent.SelectServerItem, self._onSelectServerItem, self)
+	self:addEventCb(LoginController.instance, LoginEvent.OnSdkLoginReturn, self._onSdkLoginReturn, self)
+	self:addEventCb(LoginController.instance, LoginEvent.SystemLoginFail, self._onSystemLoginFail, self)
+	self:addEventCb(LoginController.instance, LoginEvent.OnLogout, self._onLoginOut, self)
+	self:addEventCb(LoginController.instance, LoginEvent.OnLoginBgLoaded, self._onBgLoaded, self)
+	self._btnNoticeLongPress:SetLongPressTime({
+		isDebugBuild and profilerTogglePressTimeDebug or profilerTogglePressTime,
 		1
 	})
-	arg_3_0._btnNoticeLongPress:AddLongPressListener(arg_3_0._onNoticeLongPress, arg_3_0)
-	arg_3_0._btnQuit:AddClickListener(arg_3_0._onClickQuit, arg_3_0)
-	arg_3_0._btnSet:AddClickListener(arg_3_0._onClickSet, arg_3_0)
+	self._btnNoticeLongPress:AddLongPressListener(self._onNoticeLongPress, self)
+	self._btnQuit:AddClickListener(self._onClickQuit, self)
+	self._btnSet:AddClickListener(self._onClickSet, self)
 end
 
-function var_0_0.removeEvents(arg_4_0)
-	arg_4_0._btnServerList:RemoveClickListener()
-	arg_4_0._btnLogin:RemoveClickListener()
-	arg_4_0._btnAccount:RemoveClickListener()
-	arg_4_0._btnNotice:RemoveClickListener()
-	arg_4_0._btnFix:RemoveClickListener()
-	arg_4_0._btnScan:RemoveClickListener()
-	arg_4_0._btnPolicy:RemoveClickListener()
-	arg_4_0._btnAgeFit:RemoveClickListener()
-	arg_4_0._btnexit:RemoveClickListener()
-	arg_4_0._btnQuit:RemoveClickListener()
-	arg_4_0._btnSet:RemoveClickListener()
-	arg_4_0._btnNoticeLongPress:RemoveLongPressListener()
-	TaskDispatcher.cancelTask(arg_4_0._delayForLogout, arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._endSdkBlock, arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._onLoginTimeout, arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._startLoginFlow, arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._login, arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._sdkRelogin, arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._startGameAfterCanvasFade, arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._onOpenAnimDone, arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._onClickLogin, arg_4_0)
+function LoginView:removeEvents()
+	self._btnServerList:RemoveClickListener()
+	self._btnLogin:RemoveClickListener()
+	self._btnAccount:RemoveClickListener()
+	self._btnNotice:RemoveClickListener()
+	self._btnFix:RemoveClickListener()
+	self._btnScan:RemoveClickListener()
+	self._btnPolicy:RemoveClickListener()
+	self._btnAgeFit:RemoveClickListener()
+	self._btnexit:RemoveClickListener()
+	self._btnQuit:RemoveClickListener()
+	self._btnSet:RemoveClickListener()
+	self._btnNoticeLongPress:RemoveLongPressListener()
+	TaskDispatcher.cancelTask(self._delayForLogout, self)
+	TaskDispatcher.cancelTask(self._endSdkBlock, self)
+	TaskDispatcher.cancelTask(self._onLoginTimeout, self)
+	TaskDispatcher.cancelTask(self._startLoginFlow, self)
+	TaskDispatcher.cancelTask(self._login, self)
+	TaskDispatcher.cancelTask(self._sdkRelogin, self)
+	TaskDispatcher.cancelTask(self._startGameAfterCanvasFade, self)
+	TaskDispatcher.cancelTask(self._onOpenAnimDone, self)
+	TaskDispatcher.cancelTask(self._onClickLogin, self)
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0._sdkLoginSucc = SDKMgr.instance:isLoginSuccess()
+function LoginView:onOpen()
+	self._sdkLoginSucc = SDKMgr.instance:isLoginSuccess()
 
 	BootResMgr.instance:dispose()
 	GameSceneMgr.instance:dispatchEvent(SceneEventName.CloseLoading)
-	TaskDispatcher.runDelay(arg_5_0._onOpenAnimDone, arg_5_0, 0.333)
-	arg_5_0._imgLogo:LoadImage(ResUrl.getLoginBgLangIcon("bg_logo"), arg_5_0._onLogoLoaded, arg_5_0)
-	gohelper.addUIClickAudio(arg_5_0._btnLogin.gameObject, AudioEnum.UI.UI_Common_Click)
+	TaskDispatcher.runDelay(self._onOpenAnimDone, self, 0.333)
+	self._imgLogo:LoadImage(ResUrl.getLoginBgLangIcon("bg_logo"), self._onLogoLoaded, self)
+	gohelper.addUIClickAudio(self._btnLogin.gameObject, AudioEnum.UI.UI_Common_Click)
 
-	arg_5_0._serverMO = ServerMO.New()
-	arg_5_0._serverMO.id = 1
-	arg_5_0._serverMO.name = ""
-	arg_5_0._serverMO.state = 0
+	self._serverMO = ServerMO.New()
+	self._serverMO.id = 1
+	self._serverMO.name = ""
+	self._serverMO.state = 0
 
-	local var_5_0 = UnityEngine.Application.version
-	local var_5_1 = SLFramework.GameUpdate.HotUpdateInfoMgr.LocalResVersionStr
-	local var_5_2 = BootNativeUtil.getAppVersion()
+	local versionName = UnityEngine.Application.version
+	local resourceName = SLFramework.GameUpdate.HotUpdateInfoMgr.LocalResVersionStr
+	local buildId = BootNativeUtil.getAppVersion()
 
-	arg_5_0._txt_version.text = string.format("V%s-%s-%s", var_5_0, var_5_1, tostring(var_5_2))
+	self._txt_version.text = string.format("V%s-%s-%s", versionName, resourceName, tostring(buildId))
 
-	arg_5_0:_updateServerInfo()
+	self:_updateServerInfo()
 
-	local var_5_3 = tostring(SDKMgr.instance:getChannelId()) == "102"
+	local isQQ = tostring(SDKMgr.instance:getChannelId()) == "102"
 
-	gohelper.setActive(arg_5_0._btnAgeFit.gameObject, not var_5_3 and SettingsModel.instance:isZhRegion())
-	gohelper.setActive(arg_5_0._goClickMask, false)
-	NavigateMgr.instance:addEscape(arg_5_0.viewName, arg_5_0._onEscapeBtnClick, arg_5_0, false)
+	gohelper.setActive(self._btnAgeFit.gameObject, not isQQ and SettingsModel.instance:isZhRegion())
+	gohelper.setActive(self._goClickMask, false)
+	NavigateMgr.instance:addEscape(self.viewName, self._onEscapeBtnClick, self, false)
 
-	if arg_5_0.viewParam and arg_5_0.viewParam.isModuleLogout then
-		if arg_5_0.viewParam.isSdkLogout then
-			arg_5_0:_showEnterGameBtn(false, var_5_3)
+	if self.viewParam and self.viewParam.isModuleLogout then
+		if self.viewParam.isSdkLogout then
+			self:_showEnterGameBtn(false, isQQ)
 		else
-			arg_5_0:_showEnterGameBtn(true)
-			arg_5_0:_startLoginFlow()
+			self:_showEnterGameBtn(true)
+			self:_startLoginFlow()
 		end
 	else
-		arg_5_0:_showEnterGameBtn(false, var_5_3)
+		self:_showEnterGameBtn(false, isQQ)
 	end
 
-	gohelper.setActive(arg_5_0._btnexit, BootNativeUtil.isWindows() and false)
+	gohelper.setActive(self._btnexit, BootNativeUtil.isWindows() and false)
 end
 
-function var_0_0._onOpenAnimDone(arg_6_0)
-	arg_6_0._openAnimDone = true
+function LoginView:_onOpenAnimDone()
+	self._openAnimDone = true
 
-	arg_6_0:_checkOpenDone()
+	self:_checkOpenDone()
 end
 
-function var_0_0._onLogoLoaded(arg_7_0)
-	arg_7_0._logoLoaded = true
+function LoginView:_onLogoLoaded()
+	self._logoLoaded = true
 
-	arg_7_0:_checkOpenDone()
+	self:_checkOpenDone()
 end
 
-function var_0_0._onBgLoaded(arg_8_0)
-	if not arg_8_0._bgLoaded then
-		arg_8_0._bgLoaded = true
+function LoginView:_onBgLoaded()
+	if not self._bgLoaded then
+		self._bgLoaded = true
 
-		arg_8_0:_checkOpenDone()
-	end
-end
-
-function var_0_0._checkOpenDone(arg_9_0)
-	if arg_9_0._openAnimDone and arg_9_0._logoLoaded and arg_9_0._bgLoaded then
-		TaskDispatcher.runDelay(arg_9_0._login, arg_9_0, 0.01)
+		self:_checkOpenDone()
 	end
 end
 
-function var_0_0._login(arg_10_0)
-	local var_10_0 = "LoginView:ShowSettingsPCSystemView"
+function LoginView:_checkOpenDone()
+	if self._openAnimDone and self._logoLoaded and self._bgLoaded then
+		TaskDispatcher.runDelay(self._login, self, 0.01)
+	end
+end
 
-	if BootNativeUtil.isWindows() and UnityEngine.PlayerPrefs.HasKey(var_10_0) == false then
-		UnityEngine.PlayerPrefs.SetFloat(var_10_0, 1)
+function LoginView:_login()
+	local key = "LoginView:ShowSettingsPCSystemView"
 
-		local var_10_1 = {
-			closeCallback = arg_10_0._login2,
-			closeCallbackObj = arg_10_0
-		}
+	if BootNativeUtil.isWindows() and UnityEngine.PlayerPrefs.HasKey(key) == false then
+		UnityEngine.PlayerPrefs.SetFloat(key, 1)
 
-		ViewMgr.instance:openView(ViewName.SettingsPCSystemView, var_10_1)
+		local param = {}
+
+		param.closeCallback = self._login2
+		param.closeCallbackObj = self
+
+		ViewMgr.instance:openView(ViewName.SettingsPCSystemView, param)
 	else
-		arg_10_0:_login2()
+		self:_login2()
 	end
 end
 
-function var_0_0._login2(arg_11_0)
+function LoginView:_login2()
 	if SDKMgr.instance:useSimulateLogin() then
 		ViewMgr.instance:closeView(ViewName.ServerListView)
 		ViewMgr.instance:openView(ViewName.SimulateLoginView)
@@ -183,7 +185,7 @@ function var_0_0._login2(arg_11_0)
 	end
 end
 
-function var_0_0._startSdkBlock(arg_12_0)
+function LoginView:_startSdkBlock()
 	if BootNativeUtil.isWindows() then
 		UIBlockMgrExtend.setNeedCircleMv(false)
 	else
@@ -193,86 +195,86 @@ function var_0_0._startSdkBlock(arg_12_0)
 	UIBlockMgr.instance:startBlock(UIBlockKey.SdkLogin)
 end
 
-function var_0_0._endSdkBlock(arg_13_0)
+function LoginView:_endSdkBlock()
 	UIBlockMgrExtend.CircleMvDelay = nil
 
 	UIBlockMgr.instance:endBlock(UIBlockKey.SdkLogin)
 	UIBlockMgrExtend.setNeedCircleMv(true)
 end
 
-function var_0_0._logout(arg_14_0, arg_14_1)
+function LoginView:_logout(userManualLogout)
 	if SDKMgr.instance:useSimulateLogin() then
 		ViewMgr.instance:openView(ViewName.SimulateLoginView)
 	else
-		arg_14_0._webLoginSuccess = nil
+		self._webLoginSuccess = nil
 
-		LoginController.instance:sdkLogout(arg_14_1)
+		LoginController.instance:sdkLogout(userManualLogout)
 	end
 end
 
-function var_0_0.exit(arg_15_0)
+function LoginView:exit()
 	GameFacade.showMessageBox(MessageBoxIdDefine.exitGame, MsgBoxEnum.BoxType.Yes_No, function()
 		ProjBooter.instance:quitGame()
 	end)
 end
 
-function var_0_0.onClose(arg_17_0)
-	arg_17_0:_clearState()
+function LoginView:onClose()
+	self:_clearState()
 end
 
-function var_0_0.onUpdateParam(arg_18_0)
-	arg_18_0:_showEnterGameBtn(true)
-	arg_18_0:_startLoginFlow()
+function LoginView:onUpdateParam()
+	self:_showEnterGameBtn(true)
+	self:_startLoginFlow()
 end
 
-function var_0_0._startLoginFlow(arg_19_0)
-	if arg_19_0._loginFlow then
+function LoginView:_startLoginFlow()
+	if self._loginFlow then
 		return
 	end
 
-	arg_19_0._loginFlow = FlowSequence.New()
+	self._loginFlow = FlowSequence.New()
 
 	if SDKMgr.instance:useSimulateLogin() then
-		arg_19_0._loginFlow:addWork(SimulateLoginWork.New())
+		self._loginFlow:addWork(SimulateLoginWork.New())
 	end
 
-	arg_19_0._loginFlow:addWork(CheckVersionWork.New())
-	arg_19_0._loginFlow:addWork(WebLoginWork.New())
-	arg_19_0._loginFlow:registerDoneListener(arg_19_0._onLoginDone, arg_19_0)
-	arg_19_0._loginFlow:start({
+	self._loginFlow:addWork(CheckVersionWork.New())
+	self._loginFlow:addWork(WebLoginWork.New())
+	self._loginFlow:registerDoneListener(self._onLoginDone, self)
+	self._loginFlow:start({
 		useBackupUrl = LoginModel.instance:getUseBackup()
 	})
 	UIBlockMgr.instance:startBlock(UIBlockKey.WebLogin)
 end
 
-function var_0_0._onLoginDone(arg_20_0, arg_20_1)
-	if not arg_20_0._loginFlow then
+function LoginView:_onLoginDone(isSuccess)
+	if not self._loginFlow then
 		UIBlockMgr.instance:endBlock(UIBlockKey.WebLogin)
-		arg_20_0:_clearState()
+		self:_clearState()
 	end
 
-	if arg_20_1 then
+	if isSuccess then
 		UIBlockMgr.instance:endBlock(UIBlockKey.WebLogin)
-		arg_20_0:_trackEventHostSwitchLogin()
+		self:_trackEventHostSwitchLogin()
 		LoginModel.instance:resetFailCount()
-		arg_20_0:_endSdkBlock()
+		self:_endSdkBlock()
 
-		arg_20_0._serverMO = arg_20_0._loginFlow.context.serverMO
-		arg_20_0._webLoginSuccess = arg_20_0._loginFlow.context.webLoginSuccess
+		self._serverMO = self._loginFlow.context.serverMO
+		self._webLoginSuccess = self._loginFlow.context.webLoginSuccess
 
-		arg_20_0:_updateServerInfo()
+		self:_updateServerInfo()
 		SDKDataTrackMgr.instance:trackChooseServerEvent()
 
 		if SLFramework.FrameworkSettings.IsEditor then
-			arg_20_0:_requestServerList(arg_20_0._toSelectEditorLastLoginServer)
+			self:_requestServerList(self._toSelectEditorLastLoginServer)
 		elseif not isDebugBuild then
-			arg_20_0:_requestServerList(arg_20_0._toSelectDefaultLoginServer)
+			self:_requestServerList(self._toSelectDefaultLoginServer)
 		end
 
 		UIBlockMgrExtend.instance:setTips()
-	elseif arg_20_0._loginFlow.context.resultCode == var_0_1 then
+	elseif self._loginFlow.context.resultCode == ResultCodeSdkExpired then
 		UIBlockMgr.instance:endBlock(UIBlockKey.WebLogin)
-		arg_20_0:_onSdkExpired()
+		self:_onSdkExpired()
 	else
 		LoginModel.instance:inverseUseBackup()
 		LoginModel.instance:incFailCount()
@@ -283,61 +285,61 @@ function var_0_0._onLoginDone(arg_20_0, arg_20_1)
 			GameFacade.showMessageBox(MessageBoxIdDefine.NoServerList, MsgBoxEnum.BoxType.Yes)
 			UIBlockMgrExtend.instance:setTips()
 		else
-			arg_20_0:_failWebLoginAgain()
+			self:_failWebLoginAgain()
 			UIBlockMgrExtend.instance:setTips(LoginModel.instance:getFailCountBlockStr())
 		end
 	end
 
-	arg_20_0._loginFlow:unregisterDoneListener(arg_20_0._onLoginDone, arg_20_0)
+	self._loginFlow:unregisterDoneListener(self._onLoginDone, self)
 
-	arg_20_0._loginFlow = nil
+	self._loginFlow = nil
 end
 
-function var_0_0._failWebLoginAgain(arg_21_0)
-	if arg_21_0._sdkLoginSucc then
-		TaskDispatcher.runDelay(arg_21_0._startLoginFlow, arg_21_0, 1)
+function LoginView:_failWebLoginAgain()
+	if self._sdkLoginSucc then
+		TaskDispatcher.runDelay(self._startLoginFlow, self, 1)
 	else
 		UIBlockMgr.instance:endBlock(UIBlockKey.WebLogin)
-		TaskDispatcher.runDelay(arg_21_0._login, arg_21_0, 1)
+		TaskDispatcher.runDelay(self._login, self, 1)
 	end
 end
 
-function var_0_0._clearState(arg_22_0)
-	TaskDispatcher.cancelTask(arg_22_0._onLoginTimeout, arg_22_0)
+function LoginView:_clearState()
+	TaskDispatcher.cancelTask(self._onLoginTimeout, self)
 	UIBlockMgr.instance:endBlock(UIBlockKey.HttpLogin)
 	UIBlockMgr.instance:endBlock(UIBlockKey.WebLogin)
-	arg_22_0:_endSdkBlock()
+	self:_endSdkBlock()
 
-	if arg_22_0._loginFlow then
-		arg_22_0._loginFlow:stop()
-		arg_22_0._loginFlow:unregisterDoneListener(arg_22_0._onLoginDone, arg_22_0)
+	if self._loginFlow then
+		self._loginFlow:stop()
+		self._loginFlow:unregisterDoneListener(self._onLoginDone, self)
 
-		arg_22_0._loginFlow = nil
+		self._loginFlow = nil
 	end
 
-	if arg_22_0._httpStartGameFlow then
-		arg_22_0._httpStartGameFlow:stop()
+	if self._httpStartGameFlow then
+		self._httpStartGameFlow:stop()
 
-		arg_22_0._httpStartGameFlow = nil
+		self._httpStartGameFlow = nil
 	end
 
-	if arg_22_0._serverListRequestId then
-		SLFramework.SLWebRequest.Instance:Stop(arg_22_0._serverListRequestId)
+	if self._serverListRequestId then
+		SLFramework.SLWebRequestClient.Instance:Stop(self._serverListRequestId)
 
-		arg_22_0._serverListRequestId = nil
+		self._serverListRequestId = nil
 	end
 end
 
-function var_0_0._onClickServerList(arg_23_0)
+function LoginView:_onClickServerList()
 	ViewMgr.instance:openView(ViewName.ServerListView, {
 		useBackupUrl = LoginModel.instance:getUseBackup()
 	})
 end
 
-function var_0_0._onClickLogin(arg_24_0)
+function LoginView:_onClickLogin()
 	SDKDataTrackMgr.instance:track(SDKDataTrackMgr.EventName.start_game)
 
-	if arg_24_0._delayLogout then
+	if self._delayLogout then
 		logWarn("LoginView:_onClickLogin, delayLogout")
 
 		return
@@ -345,110 +347,110 @@ function var_0_0._onClickLogin(arg_24_0)
 
 	if not GameChannelConfig.isSlsdk() and not SDKMgr.instance:isLogin() then
 		logNormal("LoginView:_onClickLogin,isLogin flag is false")
-		arg_24_0:_delayForLogout()
-		arg_24_0:_login()
+		self:_delayForLogout()
+		self:_login()
 
 		return
 	end
 
-	if not arg_24_0._webLoginSuccess then
+	if not self._webLoginSuccess then
 		logWarn("LoginView:_onClickLogin, not web login, try again!")
-		arg_24_0:_startLoginFlow()
+		self:_startLoginFlow()
 
 		return
 	end
 
 	UIBlockMgr.instance:startBlock(UIBlockKey.HttpLogin)
 
-	local var_24_0 = arg_24_0.viewGO:GetComponent(typeof(UnityEngine.CanvasGroup))
+	local canvasGroup = self.viewGO:GetComponent(typeof(UnityEngine.CanvasGroup))
 
-	if var_24_0 then
-		var_24_0.alpha = 1
+	if canvasGroup then
+		canvasGroup.alpha = 1
 	end
 
-	TaskDispatcher.cancelTask(arg_24_0._onLoginTimeout, arg_24_0)
-	TaskDispatcher.runDelay(arg_24_0._onLoginTimeout, arg_24_0, 60)
+	TaskDispatcher.cancelTask(self._onLoginTimeout, self)
+	TaskDispatcher.runDelay(self._onLoginTimeout, self, 60)
 
-	arg_24_0._httpStartGameFlow = FlowSequence.New()
+	self._httpStartGameFlow = FlowSequence.New()
 
-	arg_24_0._httpStartGameFlow:addWork(CheckVersionWork.New(arg_24_0._restartHttpStartGame, arg_24_0))
-	arg_24_0._httpStartGameFlow:addWork(HttpStartGameWork.New())
-	arg_24_0._httpStartGameFlow:registerDoneListener(arg_24_0._onHttpStartGameDone, arg_24_0)
-	arg_24_0._httpStartGameFlow:start({
+	self._httpStartGameFlow:addWork(CheckVersionWork.New(self._restartHttpStartGame, self))
+	self._httpStartGameFlow:addWork(HttpStartGameWork.New())
+	self._httpStartGameFlow:registerDoneListener(self._onHttpStartGameDone, self)
+	self._httpStartGameFlow:start({
 		useBackupUrl = LoginModel.instance:getUseBackup(),
-		lastServerMO = arg_24_0._serverMO
+		lastServerMO = self._serverMO
 	})
 end
 
-function var_0_0._restartHttpStartGame(arg_25_0)
+function LoginView:_restartHttpStartGame()
 	logNormal("LoginView:_restartHttpStartGame")
-	arg_25_0:_clearState()
-	arg_25_0:_onClickLogin()
+	self:_clearState()
+	self:_onClickLogin()
 end
 
-function var_0_0._onHttpStartGameDone(arg_26_0, arg_26_1)
-	if arg_26_1 then
-		arg_26_0:_trackEventHostSwitchIpRequest()
+function LoginView:_onHttpStartGameDone(isSuccess)
+	if isSuccess then
+		self:_trackEventHostSwitchIpRequest()
 		LoginModel.instance:resetFailCount()
 
 		if SLFramework.FrameworkSettings.IsEditor then
-			PlayerPrefsHelper.setNumber(PlayerPrefsKey.LastLoginServerForPC, arg_26_0._serverMO.id)
+			PlayerPrefsHelper.setNumber(PlayerPrefsKey.LastLoginServerForPC, self._serverMO.id)
 		end
 
-		gohelper.setActive(arg_26_0._originBgGo, false)
-		gohelper.setActive(arg_26_0._goClickMask, true)
+		gohelper.setActive(self._originBgGo, false)
+		gohelper.setActive(self._goClickMask, true)
 
-		local var_26_0 = arg_26_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+		local viewAnimator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-		if var_26_0 then
-			var_26_0:Play(UIAnimationName.Close)
+		if viewAnimator then
+			viewAnimator:Play(UIAnimationName.Close)
 		end
 
-		TaskDispatcher.runDelay(arg_26_0._startGameAfterCanvasFade, arg_26_0, 0.4)
+		TaskDispatcher.runDelay(self._startGameAfterCanvasFade, self, 0.4)
 		UIBlockMgrExtend.instance:setTips()
-		arg_26_0:_clearState()
+		self:_clearState()
 	else
-		local var_26_1 = arg_26_0._httpStartGameFlow and arg_26_0._httpStartGameFlow.context and arg_26_0._httpStartGameFlow.context.resultCode
+		local resultCode = self._httpStartGameFlow and self._httpStartGameFlow.context and self._httpStartGameFlow.context.resultCode
 
-		if var_26_1 and var_26_1 == var_0_1 then
-			arg_26_0:_onSdkExpired()
-			arg_26_0:_clearState()
-		elseif arg_26_0._httpStartGameFlow and not arg_26_0._httpStartGameFlow.context.dontReconnect then
+		if resultCode and resultCode == ResultCodeSdkExpired then
+			self:_onSdkExpired()
+			self:_clearState()
+		elseif self._httpStartGameFlow and not self._httpStartGameFlow.context.dontReconnect then
 			LoginModel.instance:inverseUseBackup()
 			LoginModel.instance:incFailCount()
 
 			if LoginModel.instance:isFailNeedAlert() then
 				LoginModel.instance:resetFailAlertCount()
 				GameFacade.showMessageBox(MessageBoxIdDefine.LoginLostConnect2, MsgBoxEnum.BoxType.Yes_No, function()
-					arg_26_0:_onClickLogin()
+					self:_onClickLogin()
 				end)
 				UIBlockMgrExtend.instance:setTips()
-				arg_26_0:_clearState()
+				self:_clearState()
 			else
-				TaskDispatcher.runDelay(arg_26_0._onClickLogin, arg_26_0, 0.01)
+				TaskDispatcher.runDelay(self._onClickLogin, self, 0.01)
 				UIBlockMgrExtend.instance:setTips(LoginModel.instance:getFailCountBlockStr())
 			end
 		else
-			arg_26_0:_clearState()
+			self:_clearState()
 		end
 	end
 end
 
-function var_0_0._onSdkExpired(arg_28_0)
+function LoginView:_onSdkExpired()
 	logWarn("登录信息已过期，需重新调起sdk登录")
-	arg_28_0:_showEnterGameBtn(false)
+	self:_showEnterGameBtn(false)
 	GameFacade.showMessageBox(MessageBoxIdDefine.SdkTimeoutRelogin, MsgBoxEnum.BoxType.Yes, function()
-		TaskDispatcher.runDelay(arg_28_0._sdkRelogin, arg_28_0, 0.3)
+		TaskDispatcher.runDelay(self._sdkRelogin, self, 0.3)
 	end)
 end
 
-function var_0_0._startGameAfterCanvasFade(arg_30_0)
+function LoginView:_startGameAfterCanvasFade()
 	LoginController.instance:startLogin()
 end
 
-function var_0_0._onEscapeBtnClick(arg_31_0)
+function LoginView:_onEscapeBtnClick()
 	if SLFramework.FrameworkSettings.IsEditor then
-		arg_31_0:_onClickAccount()
+		self:_onClickAccount()
 
 		return
 	end
@@ -456,107 +458,107 @@ function var_0_0._onEscapeBtnClick(arg_31_0)
 	SDKMgr.instance:exitSdk()
 end
 
-function var_0_0.onClickModalMask(arg_32_0)
-	arg_32_0:_onClickLogin()
+function LoginView:onClickModalMask()
+	self:_onClickLogin()
 end
 
-function var_0_0._onLoginTimeout(arg_33_0)
-	arg_33_0:_clearState()
+function LoginView:_onLoginTimeout()
+	self:_clearState()
 	logWarn("http登录超时，请稍后重试")
 end
 
-function var_0_0._onClickAccount(arg_34_0)
+function LoginView:_onClickAccount()
 	GameFacade.showMessageBox(MessageBoxIdDefine.LogoutThisDevice, MsgBoxEnum.BoxType.Yes_No, function()
-		arg_34_0._delayLogout = true
-		arg_34_0._isUserManualLogout = true
+		self._delayLogout = true
+		self._isUserManualLogout = true
 
-		arg_34_0:_showEnterGameBtn(false)
-		TaskDispatcher.runDelay(arg_34_0._delayForLogout, arg_34_0, 0.45)
+		self:_showEnterGameBtn(false)
+		TaskDispatcher.runDelay(self._delayForLogout, self, 0.45)
 	end)
 end
 
-function var_0_0._delayForLogout(arg_36_0)
-	local var_36_0 = arg_36_0._isUserManualLogout
+function LoginView:_delayForLogout()
+	local isUserManualLogout = self._isUserManualLogout
 
-	arg_36_0._isUserManualLogout = false
-	arg_36_0._delayLogout = false
+	self._isUserManualLogout = false
+	self._delayLogout = false
 
-	arg_36_0:_showEnterGameBtn(false)
-	arg_36_0:_logout(var_36_0)
+	self:_showEnterGameBtn(false)
+	self:_logout(isUserManualLogout)
 end
 
-function var_0_0._onClickNotice(arg_37_0)
+function LoginView:_onClickNotice()
 	if VersionValidator.instance:isInReviewing() then
 		logWarn("in reviewing ...")
 
 		return
 	end
 
-	if arg_37_0._noticeBtnPressed and not arg_37_0._noticeBtnClickable then
-		arg_37_0._noticeBtnClickable = true
+	if self._noticeBtnPressed and not self._noticeBtnClickable then
+		self._noticeBtnClickable = true
 
 		return
 	else
-		arg_37_0._noticeBtnPressed = false
-		arg_37_0._noticeBtnClickable = true
+		self._noticeBtnPressed = false
+		self._noticeBtnClickable = true
 	end
 
 	NoticeController.instance:openNoticeView()
 end
 
-function var_0_0._onClickQuit(arg_38_0)
-	GameFacade.showMessageBox(MessageBoxIdDefine.QuitGame, MsgBoxEnum.BoxType.Yes_No, arg_38_0._quitGame)
+function LoginView:_onClickQuit()
+	GameFacade.showMessageBox(MessageBoxIdDefine.QuitGame, MsgBoxEnum.BoxType.Yes_No, self._quitGame)
 end
 
-function var_0_0._quitGame(arg_39_0)
+function LoginView:_quitGame()
 	UnityEngine.Application.Quit()
 end
 
-function var_0_0._onClickSet(arg_40_0)
+function LoginView:_onClickSet()
 	ViewMgr.instance:openView(ViewName.SettingsPCSystemView)
 end
 
-function var_0_0._onClickFix(arg_41_0)
-	if arg_41_0._noticeBtnPressed then
+function LoginView:_onClickFix()
+	if self._noticeBtnPressed then
 		logNormal("begin init ProfilerCmdFileCheck")
 		GMController.instance:initProfilerCmdFileCheck()
 
-		arg_41_0._noticeBtnPressed = false
+		self._noticeBtnPressed = false
 	else
 		ViewMgr.instance:openView(ViewName.FixResTipView, {
-			callback = arg_41_0.reallyFix,
-			callbackObj = arg_41_0
+			callback = self.reallyFix,
+			callbackObj = self
 		})
 	end
 end
 
-function var_0_0._onNoticeLongPress(arg_42_0)
-	arg_42_0._noticeBtnPressed = true
-	arg_42_0._noticeBtnClickable = false
+function LoginView:_onNoticeLongPress()
+	self._noticeBtnPressed = true
+	self._noticeBtnClickable = false
 
 	BenchmarkApi.AndroidLog("_onNoticeLongPress")
 	logNormal("_onNoticeLongPress")
 end
 
-function var_0_0._onClickPolicy(arg_43_0)
+function LoginView:_onClickPolicy()
 	SDKMgr.instance:showAgreement()
 end
 
-function var_0_0._onClickAgeFit(arg_44_0)
+function LoginView:_onClickAgeFit()
 	ViewMgr.instance:openView(ViewName.SdkFitAgeTipView)
 end
 
-function var_0_0.reallyFix(arg_45_0)
+function LoginView:reallyFix()
 	PlayerPrefsHelper.deleteAll()
 	ZProj.GameHelper.DeleteAllCache()
 
 	if BootNativeUtil.isWindows() then
-		local var_45_0 = UnityEngine.Application.persistentDataPath
-		local var_45_1 = System.Collections.Generic.List_string.New()
+		local persistentDataPath = UnityEngine.Application.persistentDataPath
+		local ignoreFiles = System.Collections.Generic.List_string.New()
 
-		var_45_1:Add(var_45_0 .. "/logicLog")
-		var_45_1:Add(var_45_0 .. "/Player.log")
-		SLFramework.FileHelper.ClearDirWithIgnore(var_45_0, nil, var_45_1)
+		ignoreFiles:Add(persistentDataPath .. "/logicLog")
+		ignoreFiles:Add(persistentDataPath .. "/Player.log")
+		SLFramework.FileHelper.ClearDirWithIgnore(persistentDataPath, nil, ignoreFiles)
 	end
 
 	MessageBoxController.instance:setEnableClickAudio(false)
@@ -573,145 +575,144 @@ function var_0_0.reallyFix(arg_45_0)
 	end)
 end
 
-function var_0_0._onClickScan(arg_47_0)
+function LoginView:_onClickScan()
 	SDKMgr.instance:pcLoginForQrCode()
 end
 
-function var_0_0._updateServerInfo(arg_48_0)
-	arg_48_0._txtServerName.text = arg_48_0._serverMO and arg_48_0._serverMO.name or ""
+function LoginView:_updateServerInfo()
+	self._txtServerName.text = self._serverMO and self._serverMO.name or ""
 
-	if arg_48_0._serverMO then
-		for iter_48_0 = 0, 2 do
-			gohelper.setActive(arg_48_0._serverStateGOList[iter_48_0], iter_48_0 == arg_48_0._serverMO.state)
+	if self._serverMO then
+		for i = 0, 2 do
+			gohelper.setActive(self._serverStateGOList[i], i == self._serverMO.state)
 		end
 	end
 end
 
-function var_0_0._showEnterGameBtn(arg_49_0, arg_49_1, arg_49_2)
-	local var_49_0 = SLFramework.FrameworkSettings.IsEditor or isDebugBuild
+function LoginView:_showEnterGameBtn(isShow, hideStartForQQ)
+	local needShowServerGO = SLFramework.FrameworkSettings.IsEditor or isDebugBuild
 
-	arg_49_0._isShowEnterGameBtn = arg_49_1
+	self._isShowEnterGameBtn = isShow
 
-	gohelper.setActive(arg_49_0._serverGO, arg_49_1 and var_49_0)
-	gohelper.setActive(arg_49_0._btnLogin.gameObject, arg_49_1 and not arg_49_2)
+	gohelper.setActive(self._serverGO, isShow and needShowServerGO)
+	gohelper.setActive(self._btnLogin.gameObject, isShow and not hideStartForQQ)
 
 	if SLFramework.FrameworkSettings.IsEditor then
-		gohelper.setActive(arg_49_0._btnLogin.gameObject, arg_49_1)
+		gohelper.setActive(self._btnLogin.gameObject, isShow)
 	end
 
-	arg_49_0:_showAccountBtn(arg_49_1)
+	self:_showAccountBtn(isShow)
 end
 
-function var_0_0._showAccountBtn(arg_50_0, arg_50_1)
-	gohelper.setActive(arg_50_0._btnAccount.gameObject, arg_50_1 and SDKModel.instance:isDmm() == false)
+function LoginView:_showAccountBtn(isShow)
+	gohelper.setActive(self._btnAccount.gameObject, isShow and SDKModel.instance:isDmm() == false)
 
-	local var_50_0 = not VersionValidator.instance:isInReviewing()
-	local var_50_1 = not GameFacade.isExternalTest()
-	local var_50_2 = not SDKMgr.getShowNotice or SDKMgr.instance:getShowNotice()
+	local notReview = not VersionValidator.instance:isInReviewing()
+	local notExternalTest = not GameFacade.isExternalTest()
+	local sdkShowNotice = not SDKMgr.getShowNotice or SDKMgr.instance:getShowNotice()
 
-	gohelper.setActive(arg_50_0._btnNotice.gameObject, arg_50_1 and var_50_0 and var_50_1 and var_50_2)
-	gohelper.setActive(arg_50_0._btnFix.gameObject, arg_50_1)
-	gohelper.setActive(arg_50_0._btnScan.gameObject, arg_50_1 and SDKMgr.instance:isShowPcLoginButton())
-	gohelper.setActive(arg_50_0._btnPolicy.gameObject, arg_50_1 and SDKMgr.instance:isShowAgreementButton())
-	gohelper.setActive(arg_50_0._btnQuit.gameObject, arg_50_1 and BootNativeUtil.isWindows())
-	gohelper.setActive(arg_50_0._btnSet.gameObject, arg_50_1 and BootNativeUtil.isWindows())
+	gohelper.setActive(self._btnNotice.gameObject, isShow and notReview and notExternalTest and sdkShowNotice)
+	gohelper.setActive(self._btnFix.gameObject, isShow)
+	gohelper.setActive(self._btnScan.gameObject, isShow and SDKMgr.instance:isShowPcLoginButton())
+	gohelper.setActive(self._btnPolicy.gameObject, isShow and SDKMgr.instance:isShowAgreementButton())
+	gohelper.setActive(self._btnQuit.gameObject, isShow and BootNativeUtil.isWindows())
+	gohelper.setActive(self._btnSet.gameObject, isShow and BootNativeUtil.isWindows())
 
-	arg_50_0._isShowAccountBtn = arg_50_1
+	self._isShowAccountBtn = isShow
 end
 
-function var_0_0._onSelectServerItem(arg_51_0, arg_51_1)
-	arg_51_0._serverMO = arg_51_1
+function LoginView:_onSelectServerItem(serverMO)
+	self._serverMO = serverMO
 
-	arg_51_0:_updateServerInfo()
+	self:_updateServerInfo()
 end
 
-function var_0_0._onSdkLoginReturn(arg_52_0, arg_52_1, arg_52_2)
-	arg_52_0:_endSdkBlock()
-	arg_52_0:_startSdkBlock()
-	TaskDispatcher.cancelTask(arg_52_0._endSdkBlock, arg_52_0)
-	TaskDispatcher.runDelay(arg_52_0._endSdkBlock, arg_52_0, 0.5)
+function LoginView:_onSdkLoginReturn(isSuccess, msg)
+	self:_endSdkBlock()
+	self:_startSdkBlock()
+	TaskDispatcher.cancelTask(self._endSdkBlock, self)
+	TaskDispatcher.runDelay(self._endSdkBlock, self, 0.5)
 
-	if not arg_52_1 then
-		arg_52_0:_showAccountBtn(true)
+	if not isSuccess then
+		self:_showAccountBtn(true)
 
-		arg_52_0._sdkLoginSucc = nil
+		self._sdkLoginSucc = nil
 	else
-		arg_52_0._sdkLoginSucc = true
+		self._sdkLoginSucc = true
 	end
 end
 
-function var_0_0._onSystemLoginFail(arg_53_0)
-	arg_53_0:_clearState()
+function LoginView:_onSystemLoginFail()
+	self:_clearState()
 end
 
-function var_0_0._onLoginOut(arg_54_0)
-	arg_54_0._sdkLoginSucc = nil
+function LoginView:_onLoginOut()
+	self._sdkLoginSucc = nil
 
-	arg_54_0:_showEnterGameBtn(false)
+	self:_showEnterGameBtn(false)
 end
 
-function var_0_0._sdkRelogin(arg_55_0)
-	arg_55_0._sdkLoginSucc = nil
+function LoginView:_sdkRelogin()
+	self._sdkLoginSucc = nil
 
-	arg_55_0:_showEnterGameBtn(false)
-	arg_55_0:_logout()
+	self:_showEnterGameBtn(false)
+	self:_logout()
 end
 
-function var_0_0._requestServerList(arg_56_0, arg_56_1)
-	local var_56_0 = LoginController.instance:get_getServerListUrl(LoginModel.instance:getUseBackup())
-	local var_56_1 = {}
+function LoginView:_requestServerList(callback)
+	local url = LoginController.instance:get_getServerListUrl(LoginModel.instance:getUseBackup())
+	local data = {}
 
-	table.insert(var_56_1, string.format("sessionId=%s", LoginModel.instance.sessionId))
-	table.insert(var_56_1, string.format("zoneId=%s", 0))
+	table.insert(data, string.format("sessionId=%s", LoginModel.instance.sessionId))
+	table.insert(data, string.format("zoneId=%s", 0))
 
-	local var_56_2 = var_56_0 .. "?" .. table.concat(var_56_1, "&")
-
-	arg_56_0._onServerListCallback = arg_56_1
-	arg_56_0._serverListRequestId = SLFramework.SLWebRequest.Instance:Get(var_56_2, arg_56_0._onServerListRespone, arg_56_0)
+	url = url .. "?" .. table.concat(data, "&")
+	self._onServerListCallback = callback
+	self._serverListRequestId = SLFramework.SLWebRequestClient.Instance:Get(url, self._onServerListRespone, self)
 end
 
-function var_0_0._onServerListRespone(arg_57_0, arg_57_1, arg_57_2)
-	arg_57_0._serverListRequestId = nil
+function LoginView:_onServerListRespone(isSuccess, msg)
+	self._serverListRequestId = nil
 
-	if not arg_57_1 then
+	if not isSuccess then
 		return
 	end
 
-	if string.nilorempty(arg_57_2) then
+	if string.nilorempty(msg) then
 		return
 	end
 
-	local var_57_0 = cjson.decode(arg_57_2)
+	local data = cjson.decode(msg)
 
-	if not var_57_0 or not var_57_0.resultCode or var_57_0.resultCode ~= 0 or not var_57_0.zoneInfos then
+	if not data or not data.resultCode or data.resultCode ~= 0 or not data.zoneInfos then
 		return
 	end
 
-	if arg_57_0._onServerListCallback then
-		local var_57_1 = arg_57_0._onServerListCallback
+	if self._onServerListCallback then
+		local callback = self._onServerListCallback
 
-		arg_57_0._onServerListCallback = nil
+		self._onServerListCallback = nil
 
-		var_57_1(arg_57_0, arg_57_2, var_57_0)
+		callback(self, msg, data)
 	end
 end
 
-function var_0_0._toSelectEditorLastLoginServer(arg_58_0, arg_58_1, arg_58_2)
-	local var_58_0 = PlayerPrefsHelper.getNumber(PlayerPrefsKey.LastLoginServerForPC, nil)
+function LoginView:_toSelectEditorLastLoginServer(msg, data)
+	local lastLoginServerId = PlayerPrefsHelper.getNumber(PlayerPrefsKey.LastLoginServerForPC, nil)
 
-	if var_58_0 then
-		ServerListModel.instance:setServerList(arg_58_2.zoneInfos)
+	if lastLoginServerId then
+		ServerListModel.instance:setServerList(data.zoneInfos)
 
-		for iter_58_0, iter_58_1 in ipairs(arg_58_2.zoneInfos) do
-			if iter_58_1.id == var_58_0 then
-				arg_58_0._serverMO = {
-					id = iter_58_1.id,
-					name = iter_58_1.name,
-					prefix = iter_58_1.prefix,
-					state = iter_58_1.state
+		for i, zone in ipairs(data.zoneInfos) do
+			if zone.id == lastLoginServerId then
+				self._serverMO = {
+					id = zone.id,
+					name = zone.name,
+					prefix = zone.prefix,
+					state = zone.state
 				}
 
-				arg_58_0:_updateServerInfo()
+				self:_updateServerInfo()
 
 				break
 			end
@@ -719,61 +720,61 @@ function var_0_0._toSelectEditorLastLoginServer(arg_58_0, arg_58_1, arg_58_2)
 	end
 end
 
-function var_0_0._toSelectDefaultLoginServer(arg_59_0, arg_59_1, arg_59_2)
-	ServerListModel.instance:setServerList(arg_59_2.zoneInfos)
+function LoginView:_toSelectDefaultLoginServer(msg, data)
+	ServerListModel.instance:setServerList(data.zoneInfos)
 
-	for iter_59_0, iter_59_1 in ipairs(arg_59_2.zoneInfos) do
-		if iter_59_1.default == true then
-			arg_59_0._serverMO = {
-				id = iter_59_1.id,
-				name = iter_59_1.name,
-				prefix = iter_59_1.prefix,
-				state = iter_59_1.state
+	for i, zone in ipairs(data.zoneInfos) do
+		if zone.default == true then
+			self._serverMO = {
+				id = zone.id,
+				name = zone.name,
+				prefix = zone.prefix,
+				state = zone.state
 			}
 
-			arg_59_0:_updateServerInfo()
+			self:_updateServerInfo()
 
 			break
 		end
 	end
 end
 
-function var_0_0._trackEventHostSwitchLogin(arg_60_0)
+function LoginView:_trackEventHostSwitchLogin()
 	if LoginModel.instance:getFailCount() > 0 then
-		local var_60_0 = LoginController.instance:get_httpWebLoginUrl(LoginModel.instance:getUseBackup())
+		local domain = LoginController.instance:get_httpWebLoginUrl(LoginModel.instance:getUseBackup())
 
 		StatController.instance:track(StatEnum.EventName.EventHostSwitch, {
 			[StatEnum.EventProperties.GameScene] = "scene_login",
-			[StatEnum.EventProperties.CurrentHost] = var_60_0,
+			[StatEnum.EventProperties.CurrentHost] = domain,
 			[StatEnum.EventProperties.SwitchCount] = LoginModel.instance:getFailCount()
 		})
 	end
 end
 
-function var_0_0._trackEventHostSwitchIpRequest(arg_61_0)
+function LoginView:_trackEventHostSwitchIpRequest()
 	if LoginModel.instance:getFailCount() > 0 then
-		local var_61_0 = LoginController.instance:get_startGameUrl(LoginModel.instance:getUseBackup())
+		local domain = LoginController.instance:get_startGameUrl(LoginModel.instance:getUseBackup())
 
 		StatController.instance:track(StatEnum.EventName.EventHostSwitch, {
 			[StatEnum.EventProperties.GameScene] = "scene_iprequest",
-			[StatEnum.EventProperties.CurrentHost] = var_61_0,
+			[StatEnum.EventProperties.CurrentHost] = domain,
 			[StatEnum.EventProperties.SwitchCount] = LoginModel.instance:getFailCount()
 		})
 	end
 end
 
-function var_0_0.onDestroyView(arg_62_0)
-	arg_62_0._openAnimDone = nil
-	arg_62_0._logoLoaded = nil
-	arg_62_0._bgLoaded = nil
+function LoginView:onDestroyView()
+	self._openAnimDone = nil
+	self._logoLoaded = nil
+	self._bgLoaded = nil
 
-	if arg_62_0._originBgGo then
-		gohelper.destroy(arg_62_0._originBgGo)
+	if self._originBgGo then
+		gohelper.destroy(self._originBgGo)
 
-		arg_62_0._originBgGo = nil
+		self._originBgGo = nil
 	end
 
-	arg_62_0._imgLogo:UnLoadImage()
+	self._imgLogo:UnLoadImage()
 end
 
-return var_0_0
+return LoginView

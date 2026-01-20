@@ -1,203 +1,210 @@
-﻿module("modules.logic.versionactivity2_7.act191.view.item.Act191CharacterSkillDesc", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/act191/view/item/Act191CharacterSkillDesc.lua
 
-local var_0_0 = class("Act191CharacterSkillDesc", BaseChildView)
+module("modules.logic.versionactivity2_7.act191.view.item.Act191CharacterSkillDesc", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtlv = gohelper.findChildText(arg_1_0.viewGO, "#txt_skillevel")
-	arg_1_0._goCurlevel = gohelper.findChild(arg_1_0.viewGO, "#go_curlevel")
-	arg_1_0._txtskillDesc = gohelper.findChildText(arg_1_0.viewGO, "#txt_descripte")
+local Act191CharacterSkillDesc = class("Act191CharacterSkillDesc", BaseChildView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Act191CharacterSkillDesc:onInitView()
+	self._txtlv = gohelper.findChildText(self.viewGO, "#txt_skillevel")
+	self._goCurlevel = gohelper.findChild(self.viewGO, "#go_curlevel")
+	self._txtskillDesc = gohelper.findChildText(self.viewGO, "#txt_descripte")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function Act191CharacterSkillDesc:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Act191CharacterSkillDesc:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0.canvasGroup = gohelper.onceAddComponent(arg_4_0._txtskillDesc.gameObject, gohelper.Type_CanvasGroup)
-	arg_4_0.txtlvcanvasGroup = gohelper.onceAddComponent(arg_4_0._txtlv.gameObject, gohelper.Type_CanvasGroup)
-	arg_4_0.govx = gohelper.findChild(arg_4_0.viewGO, "vx")
+function Act191CharacterSkillDesc:_editableInitView()
+	self.canvasGroup = gohelper.onceAddComponent(self._txtskillDesc.gameObject, gohelper.Type_CanvasGroup)
+	self.txtlvcanvasGroup = gohelper.onceAddComponent(self._txtlv.gameObject, gohelper.Type_CanvasGroup)
+	self.govx = gohelper.findChild(self.viewGO, "vx")
 
-	gohelper.setActive(arg_4_0.govx, false)
+	gohelper.setActive(self.govx, false)
 
-	arg_4_0.vxAni = arg_4_0.govx:GetComponent(typeof(UnityEngine.Animation))
-	arg_4_0.aniLength = arg_4_0.vxAni.clip.length
+	self.vxAni = self.govx:GetComponent(typeof(UnityEngine.Animation))
+	self.aniLength = self.vxAni.clip.length
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function Act191CharacterSkillDesc:onUpdateParam()
 	return
 end
 
-function var_0_0.updateInfo(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	arg_6_0.config = arg_6_2
+function Act191CharacterSkillDesc:updateInfo(parentView, config, exSkillLevel)
+	self.config = config
 
-	local var_6_0 = arg_6_0.config.exLevel
+	local nowLevel = self.config.exLevel
 
-	arg_6_0.parentView = arg_6_1
+	self.parentView = parentView
 
-	local var_6_1 = Activity191Config.instance:getHeroLevelExSkillCo(arg_6_0.config.id, arg_6_3)
+	local exCo = Activity191Config.instance:getHeroLevelExSkillCo(self.config.id, exSkillLevel)
 
-	arg_6_0._txtlv.text = arg_6_3
-	arg_6_0._needUseSkillEffDescList = {}
-	arg_6_0._needUseSkillEffDescList2 = {}
+	self._txtlv.text = exSkillLevel
+	self._needUseSkillEffDescList = {}
+	self._needUseSkillEffDescList2 = {}
 
-	local var_6_2, var_6_3, var_6_4 = Activity191Config.instance:getExSkillDesc(var_6_1, arg_6_0.config.id)
+	local desc, skillName, skillIndex = Activity191Config.instance:getExSkillDesc(exCo, self.config.id)
 
-	arg_6_0._skillIndex = var_6_4
+	self._skillIndex = skillIndex
+	desc = string.gsub(desc, "▩(%d)%%s", "CharacterSkillDescripte_skillNameDesc")
+	desc = SkillHelper.addLink(desc)
+	desc = self:addNumColor(desc)
+	desc = SkillHelper.addBracketColor(desc, "#7e99d0")
 
-	local var_6_5 = string.gsub(var_6_2, "▩(%d)%%s", "CharacterSkillDescripte_skillNameDesc")
-	local var_6_6 = SkillHelper.addLink(var_6_5)
-	local var_6_7 = arg_6_0:addNumColor(var_6_6)
-	local var_6_8 = SkillHelper.addBracketColor(var_6_7, "#7e99d0")
-	local var_6_9 = arg_6_0:_buildSkillNameLinkTag(var_6_3)
-	local var_6_10 = string.gsub(var_6_8, "CharacterSkillDescripte_skillNameDesc", var_6_9)
+	local skillNameDesc = self:_buildSkillNameLinkTag(skillName)
 
-	gohelper.setActive(arg_6_0._goCurlevel, false)
+	desc = string.gsub(desc, "CharacterSkillDescripte_skillNameDesc", skillNameDesc)
 
-	arg_6_0.canvasGroup.alpha = var_6_0 < arg_6_3 and 0.5 or 1
-	arg_6_0.txtlvcanvasGroup.alpha = var_6_0 < arg_6_3 and 0.5 or 1
-	arg_6_0._hyperLinkClick = arg_6_0._txtskillDesc:GetComponent(typeof(ZProj.TMPHyperLinkClick))
+	gohelper.setActive(self._goCurlevel, false)
 
-	arg_6_0._hyperLinkClick:SetClickListener(arg_6_0._onHyperLinkClick, arg_6_0)
+	self.canvasGroup.alpha = nowLevel < exSkillLevel and 0.5 or 1
+	self.txtlvcanvasGroup.alpha = nowLevel < exSkillLevel and 0.5 or 1
+	self._hyperLinkClick = self._txtskillDesc:GetComponent(typeof(ZProj.TMPHyperLinkClick))
 
-	local var_6_11 = GameUtil.getTextHeightByLine(arg_6_0._txtskillDesc, var_6_10, 28, -3) + 54
+	self._hyperLinkClick:SetClickListener(self._onHyperLinkClick, self)
 
-	recthelper.setHeight(arg_6_0.viewGO.transform, var_6_11)
+	local height = GameUtil.getTextHeightByLine(self._txtskillDesc, desc, 28, -3)
 
-	arg_6_0._txtskillDesc.text = var_6_10
-	arg_6_0._fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(arg_6_0._txtskillDesc.gameObject, FixTmpBreakLine)
+	height = height + 54
 
-	arg_6_0._fixTmpBreakLine:refreshTmpContent(arg_6_0._txtskillDesc)
+	recthelper.setHeight(self.viewGO.transform, height)
 
-	return var_6_11
+	self._txtskillDesc.text = desc
+	self._fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(self._txtskillDesc.gameObject, FixTmpBreakLine)
+
+	self._fixTmpBreakLine:refreshTmpContent(self._txtskillDesc)
+
+	return height
 end
 
-function var_0_0.addNumColor(arg_7_0, arg_7_1)
-	arg_7_1 = arg_7_0:filterRichText(arg_7_1)
+function Act191CharacterSkillDesc:addNumColor(desc)
+	desc = self:filterRichText(desc)
 
-	local var_7_0 = SkillHelper.getColorFormat("#deaa79", "%1")
+	local colorFormat = SkillHelper.getColorFormat("#deaa79", "%1")
 
-	arg_7_1 = string.gsub(arg_7_1, "[+-]?[%d%./%%]+", var_7_0)
-	arg_7_1 = arg_7_0:revertRichText(arg_7_1)
+	desc = string.gsub(desc, "[+-]?[%d%./%%]+", colorFormat)
+	desc = self:revertRichText(desc)
 
-	return arg_7_1
+	return desc
 end
 
-function var_0_0.replaceColorFunc(arg_8_0)
-	if string.find(arg_8_0, "[<>]") then
-		return arg_8_0
+function Act191CharacterSkillDesc.replaceColorFunc(text)
+	if string.find(text, "[<>]") then
+		return text
 	end
 end
 
-var_0_0.richTextList = {}
-var_0_0.replaceText = "▩replace▩"
-var_0_0.replaceIndex = 0
+Act191CharacterSkillDesc.richTextList = {}
+Act191CharacterSkillDesc.replaceText = "▩replace▩"
+Act191CharacterSkillDesc.replaceIndex = 0
 
-function var_0_0.filterRichText(arg_9_0, arg_9_1)
-	tabletool.clear(var_0_0.richTextList)
+function Act191CharacterSkillDesc:filterRichText(desc)
+	tabletool.clear(Act191CharacterSkillDesc.richTextList)
 
-	arg_9_1 = string.gsub(arg_9_1, "(<.->)", arg_9_0._filterRichText)
+	desc = string.gsub(desc, "(<.->)", self._filterRichText)
 
-	return arg_9_1
+	return desc
 end
 
-function var_0_0._filterRichText(arg_10_0)
-	table.insert(var_0_0.richTextList, arg_10_0)
+function Act191CharacterSkillDesc._filterRichText(richText)
+	table.insert(Act191CharacterSkillDesc.richTextList, richText)
 
-	return var_0_0.replaceText
+	return Act191CharacterSkillDesc.replaceText
 end
 
-function var_0_0.revertRichText(arg_11_0, arg_11_1)
-	var_0_0.replaceIndex = 0
-	arg_11_1 = string.gsub(arg_11_1, var_0_0.replaceText, arg_11_0._revertRichText)
+function Act191CharacterSkillDesc:revertRichText(desc)
+	Act191CharacterSkillDesc.replaceIndex = 0
+	desc = string.gsub(desc, Act191CharacterSkillDesc.replaceText, self._revertRichText)
 
-	tabletool.clear(var_0_0.richTextList)
+	tabletool.clear(Act191CharacterSkillDesc.richTextList)
 
-	return arg_11_1
+	return desc
 end
 
-function var_0_0._revertRichText(arg_12_0)
-	var_0_0.replaceIndex = var_0_0.replaceIndex + 1
+function Act191CharacterSkillDesc._revertRichText(text)
+	Act191CharacterSkillDesc.replaceIndex = Act191CharacterSkillDesc.replaceIndex + 1
 
-	return var_0_0.richTextList[var_0_0.replaceIndex] or ""
+	return Act191CharacterSkillDesc.richTextList[Act191CharacterSkillDesc.replaceIndex] or ""
 end
 
-function var_0_0._onHyperLinkClick(arg_13_0, arg_13_1, arg_13_2)
+function Act191CharacterSkillDesc:_onHyperLinkClick(data, clickPosition)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
 
-	if arg_13_1 ~= "skillIndex" then
-		CommonBuffTipController.instance:openCommonTipViewWithCustomPos(tonumber(arg_13_1), CommonBuffTipEnum.Anchor[ViewName.CharacterExSkillView], CommonBuffTipEnum.Pivot.Right)
-	elseif arg_13_0._skillIndex == 0 then
-		if arg_13_0.config.type == Activity191Enum.CharacterType.Hero then
-			local var_13_0 = {
-				id = arg_13_0.config.id,
-				tipPos = Vector2.New(-292, -51.1),
-				anchorParams = {
-					Vector2.New(1, 0.5),
-					Vector2.New(1, 0.5)
-				}
+	if data ~= "skillIndex" then
+		CommonBuffTipController.instance:openCommonTipViewWithCustomPos(tonumber(data), CommonBuffTipEnum.Anchor[ViewName.CharacterExSkillView], CommonBuffTipEnum.Pivot.Right)
+	elseif self._skillIndex == 0 then
+		if self.config.type == Activity191Enum.CharacterType.Hero then
+			local info = {}
+
+			info.id = self.config.id
+			info.tipPos = Vector2.New(-292, -51.1)
+			info.anchorParams = {
+				Vector2.New(1, 0.5),
+				Vector2.New(1, 0.5)
 			}
+			info.buffTipsX = -776
 
-			var_13_0.buffTipsX = -776
-
-			ViewMgr.instance:openView(ViewName.Act191CharacterTipView, var_13_0)
+			ViewMgr.instance:openView(ViewName.Act191CharacterTipView, info)
 		end
 	else
-		local var_13_1 = {}
-		local var_13_2 = Activity191Config.instance:getHeroSkillIdDic(arg_13_0.config.id)
+		local info = {}
+		local skillDict = Activity191Config.instance:getHeroSkillIdDic(self.config.id)
 
-		var_13_1.super = arg_13_0._skillIndex == 3
-		var_13_1.skillIdList = var_13_2[arg_13_0._skillIndex]
-		var_13_1.monsterName = arg_13_0.config.name
-		var_13_1.heroId = arg_13_0.config.roleId
-		var_13_1.skillIndex = arg_13_0._skillIndex
+		info.super = self._skillIndex == 3
+		info.skillIdList = skillDict[self._skillIndex]
+		info.monsterName = self.config.name
+		info.heroId = self.config.roleId
+		info.skillIndex = self._skillIndex
 
-		ViewMgr.instance:openView(ViewName.SkillTipView, var_13_1)
+		ViewMgr.instance:openView(ViewName.SkillTipView, info)
 	end
 end
 
-function var_0_0._buildSkillNameLinkTag(arg_14_0, arg_14_1)
-	local var_14_0 = "<link=\"skillIndex\"><color=#7e99d0>%s</color></link>"
-	local var_14_1 = string.format(var_14_0, GameConfig:GetCurLangType() == LangSettings.en and "%s" or "【%s】")
+function Act191CharacterSkillDesc:_buildSkillNameLinkTag(skillName)
+	local skillNameFormat = "<link=\"skillIndex\"><color=#7e99d0>%s</color></link>"
 
-	return (string.format(var_14_1, arg_14_1))
+	skillNameFormat = string.format(skillNameFormat, GameConfig:GetCurLangType() == LangSettings.en and "%s" or "【%s】")
+
+	local desc = string.format(skillNameFormat, skillName)
+
+	return desc
 end
 
-function var_0_0.playHeroExSkillUPAnimation(arg_15_0)
-	gohelper.setActive(arg_15_0.govx, true)
-	TaskDispatcher.runDelay(arg_15_0.onAnimationDone, arg_15_0, arg_15_0.aniLength)
+function Act191CharacterSkillDesc:playHeroExSkillUPAnimation()
+	gohelper.setActive(self.govx, true)
+	TaskDispatcher.runDelay(self.onAnimationDone, self, self.aniLength)
 end
 
-function var_0_0.onAnimationDone(arg_16_0)
-	gohelper.setActive(arg_16_0.govx, false)
+function Act191CharacterSkillDesc:onAnimationDone()
+	gohelper.setActive(self.govx, false)
 end
 
-function var_0_0.jumpAnimation(arg_17_0)
-	local var_17_0 = 0.782608695652174
+function Act191CharacterSkillDesc:jumpAnimation()
+	local normalizedTime = 0.782608695652174
 
-	TaskDispatcher.cancelTask(arg_17_0.onAnimationDone, arg_17_0)
-	TaskDispatcher.runDelay(arg_17_0.onAnimationDone, arg_17_0, arg_17_0.aniLength * (1 - var_17_0))
-	ZProj.GameHelper.SetAnimationStateNormalizedTime(arg_17_0.vxAni, "item_vx_in", var_17_0)
+	TaskDispatcher.cancelTask(self.onAnimationDone, self)
+	TaskDispatcher.runDelay(self.onAnimationDone, self, self.aniLength * (1 - normalizedTime))
+	ZProj.GameHelper.SetAnimationStateNormalizedTime(self.vxAni, "item_vx_in", normalizedTime)
 end
 
-function var_0_0.onOpen(arg_18_0)
+function Act191CharacterSkillDesc:onOpen()
 	return
 end
 
-function var_0_0.onClose(arg_19_0)
-	TaskDispatcher.cancelTask(arg_19_0.onAnimationDone, arg_19_0)
-	arg_19_0.vxAni:Stop()
+function Act191CharacterSkillDesc:onClose()
+	TaskDispatcher.cancelTask(self.onAnimationDone, self)
+	self.vxAni:Stop()
 end
 
-function var_0_0.onDestroyView(arg_20_0)
+function Act191CharacterSkillDesc:onDestroyView()
 	return
 end
 
-return var_0_0
+return Act191CharacterSkillDesc

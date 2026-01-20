@@ -1,16 +1,18 @@
-﻿module("modules.logic.versionactivity1_3.va3chess.model.Va3ChessModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/va3chess/model/Va3ChessModel.lua
 
-local var_0_0 = class("Va3ChessModel", BaseModel)
+module("modules.logic.versionactivity1_3.va3chess.model.Va3ChessModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local Va3ChessModel = class("Va3ChessModel", BaseModel)
+
+function Va3ChessModel:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function Va3ChessModel:reInit()
 	return
 end
 
-function var_0_0._registerModelIns(arg_3_0)
+function Va3ChessModel:_registerModelIns()
 	return {
 		[Va3ChessEnum.ActivityId.Act120] = Activity120Model.instance,
 		[Va3ChessEnum.ActivityId.Act122] = Activity122Model.instance,
@@ -18,82 +20,82 @@ function var_0_0._registerModelIns(arg_3_0)
 	}
 end
 
-function var_0_0._getModelIns(arg_4_0, arg_4_1)
-	if not arg_4_0._acModelInsMap then
-		arg_4_0._acModelInsMap = arg_4_0:_registerModelIns()
+function Va3ChessModel:_getModelIns(actId)
+	if not self._acModelInsMap then
+		self._acModelInsMap = self:_registerModelIns()
 
-		local var_4_0 = {
+		local funcNames = {
 			"getEpisodeData"
 		}
 
-		for iter_4_0, iter_4_1 in pairs(arg_4_0._acModelInsMap) do
-			for iter_4_2, iter_4_3 in ipairs(var_4_0) do
-				if not iter_4_1[iter_4_3] or type(iter_4_1[iter_4_3]) ~= "function" then
-					logError(string.format("[%s] can not find function [%s]", iter_4_1.__cname, iter_4_3))
+		for _, insCls in pairs(self._acModelInsMap) do
+			for __, funName in ipairs(funcNames) do
+				if not insCls[funName] or type(insCls[funName]) ~= "function" then
+					logError(string.format("[%s] can not find function [%s]", insCls.__cname, funName))
 				end
 			end
 		end
 	end
 
-	local var_4_1 = arg_4_0._acModelInsMap[arg_4_1]
+	local modelIns = self._acModelInsMap[actId]
 
-	if not var_4_1 then
-		logError(string.format("棋盘小游戏Model没注册，activityId[%s]", arg_4_1))
+	if not modelIns then
+		logError(string.format("棋盘小游戏Model没注册，activityId[%s]", actId))
 	end
 
-	return var_4_1
+	return modelIns
 end
 
-function var_0_0.setEpisodeId(arg_5_0, arg_5_1)
-	arg_5_0._currentEpisodeId = arg_5_1
+function Va3ChessModel:setEpisodeId(episodeId)
+	self._currentEpisodeId = episodeId
 
-	if not arg_5_1 then
-		arg_5_0._currentMapId = nil
+	if not episodeId then
+		self._currentMapId = nil
 
 		return
 	end
 
-	local var_5_0 = Va3ChessConfig.instance:getEpisodeCo(arg_5_0._activityId, arg_5_1)
+	local episodeCfg = Va3ChessConfig.instance:getEpisodeCo(self._activityId, episodeId)
 
-	if var_5_0 then
-		if var_5_0.mapId then
-			arg_5_0._currentMapId = var_5_0.mapId
-		elseif var_5_0.mapIds then
-			local var_5_1 = string.split(var_5_0.mapIds, "#")
+	if episodeCfg then
+		if episodeCfg.mapId then
+			self._currentMapId = episodeCfg.mapId
+		elseif episodeCfg.mapIds then
+			local mapIds = string.split(episodeCfg.mapIds, "#")
 
-			arg_5_0._currentMapId = tonumber(var_5_1[1])
+			self._currentMapId = tonumber(mapIds[1])
 		end
 	else
-		logError("activity109_episode not found! id = " .. tostring(arg_5_1) .. ", in act = " .. tostring(arg_5_0._activityId))
+		logError("activity109_episode not found! id = " .. tostring(episodeId) .. ", in act = " .. tostring(self._activityId))
 
-		arg_5_0._currentMapId = nil
+		self._currentMapId = nil
 	end
 end
 
-function var_0_0.setActId(arg_6_0, arg_6_1)
-	arg_6_0._activityId = arg_6_1
+function Va3ChessModel:setActId(actId)
+	self._activityId = actId
 end
 
-function var_0_0.getActId(arg_7_0)
-	return arg_7_0._activityId
+function Va3ChessModel:getActId()
+	return self._activityId
 end
 
-function var_0_0.getEpisodeId(arg_8_0)
-	return arg_8_0._currentEpisodeId
+function Va3ChessModel:getEpisodeId()
+	return self._currentEpisodeId
 end
 
-function var_0_0.getMapId(arg_9_0)
-	return arg_9_0._currentMapId
+function Va3ChessModel:getMapId()
+	return self._currentMapId
 end
 
-function var_0_0.getEpisodeData(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0:_getModelIns(arg_10_0._activityId)
+function Va3ChessModel:getEpisodeData(episodeId)
+	local modelIns = self:_getModelIns(self._activityId)
 
-	if var_10_0 then
-		return var_10_0:getEpisodeData(arg_10_1)
+	if modelIns then
+		return modelIns:getEpisodeData(episodeId)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+Va3ChessModel.instance = Va3ChessModel.New()
 
-return var_0_0
+return Va3ChessModel

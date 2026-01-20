@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_bp", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_bp.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_bp", package.seeall)
+
+local lua_bp = {}
+local fields = {
 	isSp = 17,
 	name = 7,
 	chargeId2 = 3,
@@ -13,6 +15,7 @@ local var_0_1 = {
 	activityId = 21,
 	bpId = 1,
 	showBonusDate = 16,
+	specialBonus = 22,
 	chargeId1to2 = 4,
 	bpviewpos = 14,
 	showBonus = 15,
@@ -24,17 +27,17 @@ local var_0_1 = {
 	payStatus2AddLevel = 8,
 	expUpShow = 19
 }
-local var_0_2 = {
+local primaryKey = {
 	"bpId"
 }
-local var_0_3 = {
+local mlStringKey = {
 	bpSkinNametxt = 3,
 	name = 1,
 	bpSkinDesc = 2
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_bp.onLoad(json)
+	lua_bp.configList, lua_bp.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_bp

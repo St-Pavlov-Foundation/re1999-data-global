@@ -1,28 +1,30 @@
-﻿module("modules.logic.versionactivity1_2.dreamtail.controller.Activity119Controller", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/dreamtail/controller/Activity119Controller.lua
 
-local var_0_0 = class("Activity119Controller", BaseController)
+module("modules.logic.versionactivity1_2.dreamtail.controller.Activity119Controller", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local Activity119Controller = class("Activity119Controller", BaseController)
+
+function Activity119Controller:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function Activity119Controller:onInitFinish()
 	return
 end
 
-function var_0_0.reInit(arg_3_0)
+function Activity119Controller:reInit()
 	return
 end
 
-function var_0_0.addConstEvents(arg_4_0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, arg_4_0._get119TaskInfo, arg_4_0)
+function Activity119Controller:addConstEvents()
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, self._get119TaskInfo, self)
 end
 
-function var_0_0._get119TaskInfo(arg_5_0, arg_5_1)
-	if arg_5_1 then
-		local var_5_0 = ActivityConfig.instance:getActivityCo(arg_5_1)
+function Activity119Controller:_get119TaskInfo(activityId)
+	if activityId then
+		local activityCO = ActivityConfig.instance:getActivityCo(activityId)
 
-		if var_5_0 and var_5_0.typeId ~= ActivityEnum.ActivityTypeID.DreamTail then
+		if activityCO and activityCO.typeId ~= ActivityEnum.ActivityTypeID.DreamTail then
 			return
 		end
 	end
@@ -32,10 +34,10 @@ function var_0_0._get119TaskInfo(arg_5_0, arg_5_1)
 	})
 end
 
-function var_0_0.openAct119View(arg_6_0)
+function Activity119Controller:openAct119View()
 	ViewMgr.instance:openView(ViewName.Activity119View)
 end
 
-var_0_0.instance = var_0_0.New()
+Activity119Controller.instance = Activity119Controller.New()
 
-return var_0_0
+return Activity119Controller

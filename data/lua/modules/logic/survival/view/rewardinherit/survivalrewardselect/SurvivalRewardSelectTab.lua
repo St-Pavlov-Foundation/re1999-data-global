@@ -1,54 +1,56 @@
-﻿module("modules.logic.survival.view.rewardinherit.survivalrewardselect.SurvivalRewardSelectTab", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/rewardinherit/survivalrewardselect/SurvivalRewardSelectTab.lua
 
-local var_0_0 = class("SurvivalRewardSelectTab", LuaCompBase)
+module("modules.logic.survival.view.rewardinherit.survivalrewardselect.SurvivalRewardSelectTab", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "#go_select")
-	arg_1_0._gonum = gohelper.findChild(arg_1_0.viewGO, "#go_num")
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "#go_num/#txt_num")
-	arg_1_0._btntab = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_tab")
+local SurvivalRewardSelectTab = class("SurvivalRewardSelectTab", LuaCompBase)
+
+function SurvivalRewardSelectTab:init(go)
+	self.viewGO = go
+	self._goselect = gohelper.findChild(self.viewGO, "#go_select")
+	self._gonum = gohelper.findChild(self.viewGO, "#go_num")
+	self._txtnum = gohelper.findChildText(self.viewGO, "#go_num/#txt_num")
+	self._btntab = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_tab")
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._btntab, arg_2_0.onClickBtnClick, arg_2_0)
+function SurvivalRewardSelectTab:addEventListeners()
+	self:addClickCb(self._btntab, self.onClickBtnClick, self)
 end
 
-function var_0_0.setData(arg_3_0, arg_3_1)
-	if arg_3_1 == nil then
+function SurvivalRewardSelectTab:setData(data)
+	if data == nil then
 		return
 	end
 
-	arg_3_0.index = arg_3_1.index
-	arg_3_0.handbookType = arg_3_1.handbookType
-	arg_3_0.onClickTabCallBack = arg_3_1.onClickTabCallBack
-	arg_3_0.onClickTabContext = arg_3_1.onClickTabContext
+	self.index = data.index
+	self.handbookType = data.handbookType
+	self.onClickTabCallBack = data.onClickTabCallBack
+	self.onClickTabContext = data.onClickTabContext
 
-	arg_3_0:refreshAmount()
+	self:refreshAmount()
 end
 
-function var_0_0.refreshAmount(arg_4_0)
-	local var_4_0 = SurvivalRewardInheritModel.instance:getSelectNum(arg_4_0.handbookType, nil)
+function SurvivalRewardSelectTab:refreshAmount()
+	local amount = SurvivalRewardInheritModel.instance:getSelectNum(self.handbookType, nil)
 
-	if var_4_0 > 0 then
-		gohelper.setActive(arg_4_0._gonum, true)
+	if amount > 0 then
+		gohelper.setActive(self._gonum, true)
 
-		arg_4_0._txtnum.text = var_4_0
+		self._txtnum.text = amount
 	else
-		gohelper.setActive(arg_4_0._gonum, false)
+		gohelper.setActive(self._gonum, false)
 	end
 end
 
-function var_0_0.onClickBtnClick(arg_5_0)
-	if arg_5_0.onClickTabCallBack then
-		arg_5_0.onClickTabCallBack(arg_5_0.onClickTabContext, arg_5_0)
+function SurvivalRewardSelectTab:onClickBtnClick()
+	if self.onClickTabCallBack then
+		self.onClickTabCallBack(self.onClickTabContext, self)
 	end
 end
 
-function var_0_0.setSelect(arg_6_0, arg_6_1)
-	arg_6_0.isSelect = arg_6_1
+function SurvivalRewardSelectTab:setSelect(value)
+	self.isSelect = value
 
-	gohelper.setActive(arg_6_0._goselect, arg_6_0.isSelect)
+	gohelper.setActive(self._goselect, self.isSelect)
 end
 
-return var_0_0
+return SurvivalRewardSelectTab

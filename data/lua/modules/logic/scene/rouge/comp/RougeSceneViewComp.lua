@@ -1,8 +1,10 @@
-﻿module("modules.logic.scene.rouge.comp.RougeSceneViewComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/rouge/comp/RougeSceneViewComp.lua
 
-local var_0_0 = class("RougeSceneViewComp", BaseSceneComp)
+module("modules.logic.scene.rouge.comp.RougeSceneViewComp", package.seeall)
 
-function var_0_0.onScenePrepared(arg_1_0, arg_1_1, arg_1_2)
+local RougeSceneViewComp = class("RougeSceneViewComp", BaseSceneComp)
+
+function RougeSceneViewComp:onScenePrepared(sceneId, levelId)
 	if not ViewMgr.instance:isOpen(ViewName.RougeMapView) then
 		ViewMgr.instance:openView(ViewName.RougeMapView)
 	end
@@ -10,9 +12,9 @@ function var_0_0.onScenePrepared(arg_1_0, arg_1_1, arg_1_2)
 	ViewMgr.instance:openView(ViewName.RougeMapTipView)
 end
 
-function var_0_0.onSceneClose(arg_2_0, arg_2_1, arg_2_2)
+function RougeSceneViewComp:onSceneClose(sceneId, levelId)
 	ViewMgr.instance:closeAllPopupViews()
 	ViewMgr.instance:closeView(ViewName.RougeMapTipView)
 end
 
-return var_0_0
+return RougeSceneViewComp

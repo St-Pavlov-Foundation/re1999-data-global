@@ -1,76 +1,78 @@
-﻿module("modules.logic.explore.view.unit.ExploreUnitDialogueView", package.seeall)
+﻿-- chunkname: @modules/logic/explore/view/unit/ExploreUnitDialogueView.lua
 
-local var_0_0 = class("ExploreUnitDialogueView", ExploreUnitBaseView)
+module("modules.logic.explore.view.unit.ExploreUnitDialogueView", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._offsetY2d = 200
+local ExploreUnitDialogueView = class("ExploreUnitDialogueView", ExploreUnitBaseView)
 
-	var_0_0.super.ctor(arg_1_0, arg_1_1, "ui/viewres/explore/explorebubbleview.prefab")
+function ExploreUnitDialogueView:ctor(unit)
+	self._offsetY2d = 200
+
+	ExploreUnitDialogueView.super.ctor(self, unit, "ui/viewres/explore/explorebubbleview.prefab")
 end
 
-function var_0_0.onInit(arg_2_0)
-	arg_2_0.txt = gohelper.findChildTextMesh(arg_2_0.viewGO, "go_btns/tip")
-	arg_2_0._anim = arg_2_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function ExploreUnitDialogueView:onInit()
+	self.txt = gohelper.findChildTextMesh(self.viewGO, "go_btns/tip")
+	self._anim = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	GameStateMgr.instance:registerCallback(GameStateEvent.OnTouchScreenUp, arg_3_0._onTouchScreen, arg_3_0)
+function ExploreUnitDialogueView:addEventListeners()
+	GameStateMgr.instance:registerCallback(GameStateEvent.OnTouchScreenUp, self._onTouchScreen, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	GameStateMgr.instance:unregisterCallback(GameStateEvent.OnTouchScreenUp, arg_4_0._onTouchScreen, arg_4_0)
+function ExploreUnitDialogueView:removeEventListeners()
+	GameStateMgr.instance:unregisterCallback(GameStateEvent.OnTouchScreenUp, self._onTouchScreen, self)
 end
 
-function var_0_0._onTouchScreen(arg_5_0)
-	if arg_5_0._tweenId then
+function ExploreUnitDialogueView:_onTouchScreen()
+	if self._tweenId then
 		return
 	end
 
-	arg_5_0._anim:Play("close")
+	self._anim:Play("close")
 	AudioMgr.instance:trigger(AudioEnum.Explore.BubbleHide)
 
-	arg_5_0._tweenId = ZProj.TweenHelper.DOScale(arg_5_0.viewGO.transform, 0, 0, 0, 0.5, arg_5_0.closeThis, arg_5_0)
+	self._tweenId = ZProj.TweenHelper.DOScale(self.viewGO.transform, 0, 0, 0, 0.5, self.closeThis, self)
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0.txt.text = ""
+function ExploreUnitDialogueView:onOpen()
+	self.txt.text = ""
 
-	transformhelper.setLocalScale(arg_6_0.viewGO.transform, 0, 0, 0)
+	transformhelper.setLocalScale(self.viewGO.transform, 0, 0, 0)
 
-	arg_6_0._tweenId = ZProj.TweenHelper.DOScale(arg_6_0.viewGO.transform, 1, 1, 1, 0.5, arg_6_0.onTweenOpenEnd, arg_6_0)
+	self._tweenId = ZProj.TweenHelper.DOScale(self.viewGO.transform, 1, 1, 1, 0.5, self.onTweenOpenEnd, self)
 
-	if arg_6_0._id then
-		arg_6_0:setDialogueId(arg_6_0._id)
+	if self._id then
+		self:setDialogueId(self._id)
 	end
 
-	arg_6_0._anim:Play("open")
+	self._anim:Play("open")
 	AudioMgr.instance:trigger(AudioEnum.Explore.BubbleShow)
 end
 
-function var_0_0.onTweenOpenEnd(arg_7_0)
-	arg_7_0._tweenId = nil
+function ExploreUnitDialogueView:onTweenOpenEnd()
+	self._tweenId = nil
 end
 
-function var_0_0.setDialogueId(arg_8_0, arg_8_1)
-	arg_8_0._id = arg_8_1
+function ExploreUnitDialogueView:setDialogueId(id)
+	self._id = id
 
-	if not arg_8_0.txt then
+	if not self.txt then
 		return
 	end
 
-	local var_8_0 = lua_explore_bubble.configDict[arg_8_1].content
+	local desc = lua_explore_bubble.configDict[id].content
 
-	arg_8_0.txt.text = var_8_0
+	self.txt.text = desc
 end
 
-function var_0_0.onDestroy(arg_9_0)
-	if arg_9_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_9_0._tweenId)
+function ExploreUnitDialogueView:onDestroy()
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_9_0._tweenId = nil
+		self._tweenId = nil
 	end
 
-	var_0_0.super.onDestroy(arg_9_0)
+	ExploreUnitDialogueView.super.onDestroy(self)
 end
 
-return var_0_0
+return ExploreUnitDialogueView

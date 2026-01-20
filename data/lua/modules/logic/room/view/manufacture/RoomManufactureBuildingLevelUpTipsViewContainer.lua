@@ -1,13 +1,15 @@
-﻿module("modules.logic.room.view.manufacture.RoomManufactureBuildingLevelUpTipsViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/manufacture/RoomManufactureBuildingLevelUpTipsViewContainer.lua
 
-local var_0_0 = class("RoomManufactureBuildingLevelUpTipsViewContainer", BaseViewContainer)
+module("modules.logic.room.view.manufacture.RoomManufactureBuildingLevelUpTipsViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoomManufactureBuildingLevelUpTipsViewContainer = class("RoomManufactureBuildingLevelUpTipsViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RoomManufactureBuildingLevelUpTipsView.New())
+function RoomManufactureBuildingLevelUpTipsViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RoomManufactureBuildingLevelUpTipsView.New())
+
+	return views
 end
 
-return var_0_0
+return RoomManufactureBuildingLevelUpTipsViewContainer

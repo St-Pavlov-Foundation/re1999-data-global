@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_eliminate_battle_enemybehavior", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_eliminate_battle_enemybehavior.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_eliminate_battle_enemybehavior", package.seeall)
+
+local lua_eliminate_battle_enemybehavior = {}
+local fields = {
 	prob3 = 9,
 	list3 = 8,
 	prob2 = 7,
@@ -12,14 +14,14 @@ local var_0_1 = {
 	list2 = 6,
 	id = 1
 }
-local var_0_2 = {
+local primaryKey = {
 	"id",
 	"behavior"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_eliminate_battle_enemybehavior.onLoad(json)
+	lua_eliminate_battle_enemybehavior.configList, lua_eliminate_battle_enemybehavior.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_eliminate_battle_enemybehavior

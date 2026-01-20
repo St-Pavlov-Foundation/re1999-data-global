@@ -1,160 +1,162 @@
-﻿module("modules.logic.currency.view.PowerMakerPatFaceView", package.seeall)
+﻿-- chunkname: @modules/logic/currency/view/PowerMakerPatFaceView.lua
 
-local var_0_0 = class("PowerMakerPatFaceView", BaseView)
+module("modules.logic.currency.view.PowerMakerPatFaceView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btntouchClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_touchClose")
-	arg_1_0._txtdesc1 = gohelper.findChildText(arg_1_0.viewGO, "desc/#txt_desc_1")
-	arg_1_0._txtdesc2 = gohelper.findChildText(arg_1_0.viewGO, "desc/#txt_desc_2")
-	arg_1_0._txtdesc3 = gohelper.findChildText(arg_1_0.viewGO, "desc/#txt_desc_3")
-	arg_1_0._goleftitem = gohelper.findChild(arg_1_0.viewGO, "#go_leftitem")
-	arg_1_0._gorightitem = gohelper.findChild(arg_1_0.viewGO, "#go_rightitem")
-	arg_1_0._txtoverflowcount = gohelper.findChildText(arg_1_0.viewGO, "#go_rightitem/#txt_overflowcount")
-	arg_1_0._txtoverfloweffect = gohelper.findChildText(arg_1_0.viewGO, "#go_rightitem/#txt_overfloweffect")
-	arg_1_0._btnoverflowitem = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_rightitem/#btn_overflowitem")
-	arg_1_0._gooverflowdeatline = gohelper.findChild(arg_1_0.viewGO, "#go_rightitem/#go_overflowdeadline")
-	arg_1_0._txtoverflowtime = gohelper.findChildText(arg_1_0.viewGO, "#go_rightitem/#go_overflowdeadline/#txt_overflowtime")
-	arg_1_0._txtoverflowicon = gohelper.findChildImage(arg_1_0.viewGO, "#go_rightitem/#go_overflowdeadline/#txt_overflowtime/overflowtimeicon")
-	arg_1_0._btnbuy = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_buy")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+local PowerMakerPatFaceView = class("PowerMakerPatFaceView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function PowerMakerPatFaceView:onInitView()
+	self._btntouchClose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_touchClose")
+	self._txtdesc1 = gohelper.findChildText(self.viewGO, "desc/#txt_desc_1")
+	self._txtdesc2 = gohelper.findChildText(self.viewGO, "desc/#txt_desc_2")
+	self._txtdesc3 = gohelper.findChildText(self.viewGO, "desc/#txt_desc_3")
+	self._goleftitem = gohelper.findChild(self.viewGO, "#go_leftitem")
+	self._gorightitem = gohelper.findChild(self.viewGO, "#go_rightitem")
+	self._txtoverflowcount = gohelper.findChildText(self.viewGO, "#go_rightitem/#txt_overflowcount")
+	self._txtoverfloweffect = gohelper.findChildText(self.viewGO, "#go_rightitem/#txt_overfloweffect")
+	self._btnoverflowitem = gohelper.findChildButtonWithAudio(self.viewGO, "#go_rightitem/#btn_overflowitem")
+	self._gooverflowdeatline = gohelper.findChild(self.viewGO, "#go_rightitem/#go_overflowdeadline")
+	self._txtoverflowtime = gohelper.findChildText(self.viewGO, "#go_rightitem/#go_overflowdeadline/#txt_overflowtime")
+	self._txtoverflowicon = gohelper.findChildImage(self.viewGO, "#go_rightitem/#go_overflowdeadline/#txt_overflowtime/overflowtimeicon")
+	self._btnbuy = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_buy")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btntouchClose:AddClickListener(arg_2_0._btntouchCloseOnClick, arg_2_0)
-	arg_2_0._btnoverflowitem:AddClickListener(arg_2_0._btnoverflowitemOnClick, arg_2_0)
-	arg_2_0._btnbuy:AddClickListener(arg_2_0._btnbuyOnClick, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function PowerMakerPatFaceView:addEvents()
+	self._btntouchClose:AddClickListener(self._btntouchCloseOnClick, self)
+	self._btnoverflowitem:AddClickListener(self._btnoverflowitemOnClick, self)
+	self._btnbuy:AddClickListener(self._btnbuyOnClick, self)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btntouchClose:RemoveClickListener()
-	arg_3_0._btnoverflowitem:RemoveClickListener()
-	arg_3_0._btnbuy:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
+function PowerMakerPatFaceView:removeEvents()
+	self._btntouchClose:RemoveClickListener()
+	self._btnoverflowitem:RemoveClickListener()
+	self._btnbuy:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btnoverflowitemOnClick(arg_4_0)
+function PowerMakerPatFaceView:_btnoverflowitemOnClick()
 	return
 end
 
-function var_0_0._btntouchCloseOnClick(arg_5_0)
+function PowerMakerPatFaceView:_btntouchCloseOnClick()
 	return
 end
 
-function var_0_0._btnbuyOnClick(arg_6_0)
+function PowerMakerPatFaceView:_btnbuyOnClick()
 	CurrencyController.instance:openPowerView()
-	arg_6_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._btncloseOnClick(arg_7_0)
-	arg_7_0:closeThis()
+function PowerMakerPatFaceView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_8_0)
+function PowerMakerPatFaceView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
+function PowerMakerPatFaceView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0:_refreshPowerMakerInfo()
-	arg_10_0:_ofMakerFlyPower()
+function PowerMakerPatFaceView:onOpen()
+	self:_refreshPowerMakerInfo()
+	self:_ofMakerFlyPower()
 end
 
-function var_0_0._refreshPowerMakerInfo(arg_11_0)
-	arg_11_0._ofMakerInfo = ItemPowerModel.instance:getPowerMakerInfo()
+function PowerMakerPatFaceView:_refreshPowerMakerInfo()
+	self._ofMakerInfo = ItemPowerModel.instance:getPowerMakerInfo()
 
-	if not arg_11_0._ofMakerInfo then
+	if not self._ofMakerInfo then
 		return
 	end
 
-	local var_11_0 = luaLang("PowerMakerPatFaceView_desc_1")
-	local var_11_1 = TimeUtil.SecondToActivityTimeFormat(arg_11_0._ofMakerInfo.logoutSecond)
+	local descLang1 = luaLang("PowerMakerPatFaceView_desc_1")
+	local timeStr = TimeUtil.SecondToActivityTimeFormat(self._ofMakerInfo.logoutSecond)
 
-	arg_11_0._txtdesc1.text = GameUtil.getSubPlaceholderLuaLangOneParam(var_11_0, var_11_1)
+	self._txtdesc1.text = GameUtil.getSubPlaceholderLuaLangOneParam(descLang1, timeStr)
 
-	local var_11_2 = luaLang("PowerMakerPatFaceView_desc_2")
+	local descLang2 = luaLang("PowerMakerPatFaceView_desc_2")
 
-	arg_11_0._txtdesc2.text = GameUtil.getSubPlaceholderLuaLangOneParam(var_11_2, arg_11_0._ofMakerInfo.makeCount)
+	self._txtdesc2.text = GameUtil.getSubPlaceholderLuaLangOneParam(descLang2, self._ofMakerInfo.makeCount)
 
-	local var_11_3 = MaterialEnum.PowerId.OverflowPowerId
-	local var_11_4 = ItemPowerModel.instance:getPowerCount(var_11_3)
-	local var_11_5 = ItemConfig.instance:getPowerItemCo(var_11_3)
-	local var_11_6 = ItemPowerModel.instance:getPowerMinExpireTimeOffset(var_11_3)
+	local powerId = MaterialEnum.PowerId.OverflowPowerId
+	local count = ItemPowerModel.instance:getPowerCount(powerId)
+	local powerConfig = ItemConfig.instance:getPowerItemCo(powerId)
+	local limitSec = ItemPowerModel.instance:getPowerMinExpireTimeOffset(powerId)
 
-	arg_11_0:refreshTxtCount(arg_11_0._txtoverflowcount, var_11_4)
-	arg_11_0:refreshTxtEffect(arg_11_0._txtoverfloweffect, var_11_5.effect)
-	arg_11_0:refreshDeadLine(arg_11_0._gooverflowdeatline, arg_11_0._txtoverflowtime, arg_11_0._txtoverflowicon, var_11_6, var_11_4)
+	self:refreshTxtCount(self._txtoverflowcount, count)
+	self:refreshTxtEffect(self._txtoverfloweffect, powerConfig.effect)
+	self:refreshDeadLine(self._gooverflowdeatline, self._txtoverflowtime, self._txtoverflowicon, limitSec, count)
 end
 
-function var_0_0.refreshTxtCount(arg_12_0, arg_12_1, arg_12_2)
-	arg_12_1.text = GameUtil.numberDisplay(arg_12_2)
+function PowerMakerPatFaceView:refreshTxtCount(textComp, count)
+	textComp.text = GameUtil.numberDisplay(count)
 end
 
-function var_0_0.refreshTxtEffect(arg_13_0, arg_13_1, arg_13_2)
-	arg_13_1.text = GameUtil.getSubPlaceholderLuaLang(luaLang("powerview_addpower"), {
-		arg_13_2
+function PowerMakerPatFaceView:refreshTxtEffect(textComp, effect)
+	textComp.text = GameUtil.getSubPlaceholderLuaLang(luaLang("powerview_addpower"), {
+		effect
 	})
 end
 
-function var_0_0.refreshDeadLine(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4, arg_14_5)
-	if not arg_14_4 or arg_14_4 <= 0 then
-		gohelper.setActive(arg_14_1, false)
+function PowerMakerPatFaceView:refreshDeadLine(goDeadline, textComp, icon, limitSec, count)
+	if not limitSec or limitSec <= 0 then
+		gohelper.setActive(goDeadline, false)
 
 		return
 	end
 
-	if arg_14_5 and arg_14_5 <= 0 then
-		gohelper.setActive(arg_14_1, false)
+	if count and count <= 0 then
+		gohelper.setActive(goDeadline, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_14_1, true)
+	gohelper.setActive(goDeadline, true)
 
-	if arg_14_4 <= TimeUtil.OneDaySecond then
-		SLFramework.UGUI.GuiHelper.SetColor(arg_14_3, "#EA6868")
+	if limitSec <= TimeUtil.OneDaySecond then
+		SLFramework.UGUI.GuiHelper.SetColor(icon, "#EA6868")
 
-		arg_14_2.text = string.format("<color=#EA6868>%s%s</color>", TimeUtil.secondToRoughTime(arg_14_4))
+		textComp.text = string.format("<color=#EA6868>%s%s</color>", TimeUtil.secondToRoughTime(limitSec))
 	else
-		SLFramework.UGUI.GuiHelper.SetColor(arg_14_3, "#FFFFFF")
+		SLFramework.UGUI.GuiHelper.SetColor(icon, "#FFFFFF")
 
-		arg_14_2.text = string.format("<color=#FFFFFF>%s%s</color>", TimeUtil.secondToRoughTime(arg_14_4))
+		textComp.text = string.format("<color=#FFFFFF>%s%s</color>", TimeUtil.secondToRoughTime(limitSec))
 	end
 end
 
-function var_0_0._ofMakerFlyPower(arg_15_0)
-	local var_15_0 = arg_15_0._ofMakerInfo.makeCount
+function PowerMakerPatFaceView:_ofMakerFlyPower()
+	local makeCount = self._ofMakerInfo.makeCount
 
-	if var_15_0 <= 0 then
+	if makeCount <= 0 then
 		return
 	end
 
-	if not arg_15_0._ofMakerFlyGroup then
-		local var_15_1 = gohelper.findChild(arg_15_0.viewGO, "flygroup")
+	if not self._ofMakerFlyGroup then
+		local go = gohelper.findChild(self.viewGO, "flygroup")
 
-		arg_15_0._ofMakerFlyGroup = MonoHelper.addNoUpdateLuaComOnceToGo(var_15_1, PowerItemFlyGroup)
+		self._ofMakerFlyGroup = MonoHelper.addNoUpdateLuaComOnceToGo(go, PowerItemFlyGroup)
 	end
 
-	arg_15_0._ofMakerFlyGroup:flyItems(var_15_0)
+	self._ofMakerFlyGroup:flyItems(makeCount)
 
-	arg_15_0._ofMakerInfo.makeCount = 0
+	self._ofMakerInfo.makeCount = 0
 end
 
-function var_0_0.onClose(arg_16_0)
-	if arg_16_0._ofMakerFlyGroup then
-		arg_16_0._ofMakerFlyGroup:cancelTask()
+function PowerMakerPatFaceView:onClose()
+	if self._ofMakerFlyGroup then
+		self._ofMakerFlyGroup:cancelTask()
 	end
 end
 
-function var_0_0.onDestroyView(arg_17_0)
+function PowerMakerPatFaceView:onDestroyView()
 	return
 end
 
-return var_0_0
+return PowerMakerPatFaceView

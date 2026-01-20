@@ -1,7 +1,9 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.model.Activity114CheckAttrModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/model/Activity114CheckAttrModel.lua
 
-local var_0_0 = class("Activity114CheckAttrModel", ListScrollModel)
+module("modules.logic.versionactivity1_2.jiexika.model.Activity114CheckAttrModel", package.seeall)
 
-var_0_0.instance = var_0_0.New()
+local Activity114CheckAttrModel = class("Activity114CheckAttrModel", ListScrollModel)
 
-return var_0_0
+Activity114CheckAttrModel.instance = Activity114CheckAttrModel.New()
+
+return Activity114CheckAttrModel

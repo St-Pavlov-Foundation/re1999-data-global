@@ -1,556 +1,574 @@
-﻿module("modules.logic.meilanni.view.MeilanniDialogView", package.seeall)
+﻿-- chunkname: @modules/logic/meilanni/view/MeilanniDialogView.lua
 
-local var_0_0 = class("MeilanniDialogView", BaseView)
+module("modules.logic.meilanni.view.MeilanniDialogView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._scrolldialog = gohelper.findChildScrollRect(arg_1_0.viewGO, "top_right/#scroll_dialog")
-	arg_1_0._goscrollcontainer = gohelper.findChild(arg_1_0.viewGO, "top_right/#scroll_dialog/viewport/#go_scrollcontainer")
-	arg_1_0._goscrollcontent = gohelper.findChild(arg_1_0.viewGO, "top_right/#scroll_dialog/viewport/#go_scrollcontainer/#go_scrollcontent")
-	arg_1_0._goblock = gohelper.findChild(arg_1_0.viewGO, "#go_block")
-	arg_1_0._goblockhelp = gohelper.findChild(arg_1_0.viewGO, "top_left_block/#go_block_help")
+local MeilanniDialogView = class("MeilanniDialogView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function MeilanniDialogView:onInitView()
+	self._scrolldialog = gohelper.findChildScrollRect(self.viewGO, "top_right/#scroll_dialog")
+	self._goscrollcontainer = gohelper.findChild(self.viewGO, "top_right/#scroll_dialog/viewport/#go_scrollcontainer")
+	self._goscrollcontent = gohelper.findChild(self.viewGO, "top_right/#scroll_dialog/viewport/#go_scrollcontainer/#go_scrollcontent")
+	self._goblock = gohelper.findChild(self.viewGO, "#go_block")
+	self._goblockhelp = gohelper.findChild(self.viewGO, "top_left_block/#go_block_help")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function MeilanniDialogView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function MeilanniDialogView:removeEvents()
 	return
 end
 
-function var_0_0._btnresetOnClick(arg_4_0)
+function MeilanniDialogView:_btnresetOnClick()
 	return
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	local var_5_0 = gohelper.findChild(arg_5_0.viewGO, "top_right/#scroll_dialog/viewport")
+function MeilanniDialogView:_editableInitView()
+	local viewport = gohelper.findChild(self.viewGO, "top_right/#scroll_dialog/viewport")
 
-	arg_5_0._viewportHeight = recthelper.getHeight(var_5_0.transform)
+	self._viewportHeight = recthelper.getHeight(viewport.transform)
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function MeilanniDialogView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0._dialogItemMap = arg_7_0:getUserDataTb_()
-	arg_7_0._dialogItemList = arg_7_0:getUserDataTb_()
-	arg_7_0._mapId = MeilanniModel.instance:getCurMapId()
-	arg_7_0._mapInfo = MeilanniModel.instance:getMapInfo(arg_7_0._mapId)
+function MeilanniDialogView:onOpen()
+	self._dialogItemMap = self:getUserDataTb_()
+	self._dialogItemList = self:getUserDataTb_()
+	self._mapId = MeilanniModel.instance:getCurMapId()
+	self._mapInfo = MeilanniModel.instance:getMapInfo(self._mapId)
 
-	arg_7_0:addEventCb(MeilanniController.instance, MeilanniEvent.clickEventItem, arg_7_0._clickEventItem, arg_7_0)
-	arg_7_0:addEventCb(MeilanniController.instance, MeilanniEvent.episodeInfoUpdate, arg_7_0._episodeInfoUpdate, arg_7_0)
-	arg_7_0:addEventCb(MeilanniController.instance, MeilanniEvent.dialogChange, arg_7_0._dialogChange, arg_7_0)
-	arg_7_0:addEventCb(MeilanniController.instance, MeilanniEvent.resetDialogPos, arg_7_0._resetDialogPos, arg_7_0)
-	arg_7_0:addEventCb(MeilanniController.instance, MeilanniEvent.dialogClose, arg_7_0._dialogClose, arg_7_0)
-	arg_7_0:addEventCb(MeilanniController.instance, MeilanniEvent.resetMap, arg_7_0._resetMap, arg_7_0)
-	arg_7_0:addEventCb(MeilanniAnimationController.instance, MeilanniEvent.dialogListAnimChange, arg_7_0._dialogListAnimChange, arg_7_0)
-	arg_7_0:_showAllEpisodeHistory()
+	self:addEventCb(MeilanniController.instance, MeilanniEvent.clickEventItem, self._clickEventItem, self)
+	self:addEventCb(MeilanniController.instance, MeilanniEvent.episodeInfoUpdate, self._episodeInfoUpdate, self)
+	self:addEventCb(MeilanniController.instance, MeilanniEvent.dialogChange, self._dialogChange, self)
+	self:addEventCb(MeilanniController.instance, MeilanniEvent.resetDialogPos, self._resetDialogPos, self)
+	self:addEventCb(MeilanniController.instance, MeilanniEvent.dialogClose, self._dialogClose, self)
+	self:addEventCb(MeilanniController.instance, MeilanniEvent.resetMap, self._resetMap, self)
+	self:addEventCb(MeilanniAnimationController.instance, MeilanniEvent.dialogListAnimChange, self._dialogListAnimChange, self)
+	self:_showAllEpisodeHistory()
 end
 
-function var_0_0._dialogListAnimChange(arg_8_0, arg_8_1)
-	gohelper.setActive(arg_8_0._goblock, arg_8_1)
-	gohelper.setActive(arg_8_0._goblockhelp, arg_8_1)
-	TaskDispatcher.cancelTask(arg_8_0._hideBlock, arg_8_0)
+function MeilanniDialogView:_dialogListAnimChange(isPlay)
+	gohelper.setActive(self._goblock, isPlay)
+	gohelper.setActive(self._goblockhelp, isPlay)
+	TaskDispatcher.cancelTask(self._hideBlock, self)
 
-	if arg_8_1 then
-		TaskDispatcher.runDelay(arg_8_0._hideBlock, arg_8_0, 20)
+	if isPlay then
+		TaskDispatcher.runDelay(self._hideBlock, self, 20)
 	else
-		arg_8_0:_dialogChange()
+		self:_dialogChange()
 	end
 end
 
-function var_0_0._hideBlock(arg_9_0)
-	gohelper.setActive(arg_9_0._goblock, false)
-	gohelper.setActive(arg_9_0._goblockhelp, false)
+function MeilanniDialogView:_hideBlock()
+	gohelper.setActive(self._goblock, false)
+	gohelper.setActive(self._goblockhelp, false)
 end
 
-function var_0_0._resetMap(arg_10_0)
-	arg_10_0._dialogItemMap = arg_10_0:getUserDataTb_()
-	arg_10_0._dialogItemList = arg_10_0:getUserDataTb_()
-	arg_10_0._episodeInfo = nil
+function MeilanniDialogView:_resetMap()
+	self._dialogItemMap = self:getUserDataTb_()
+	self._dialogItemList = self:getUserDataTb_()
+	self._episodeInfo = nil
 
-	gohelper.destroyAllChildren(arg_10_0._goscrollcontent)
-	recthelper.setHeight(arg_10_0._goscrollcontainer.transform, arg_10_0._viewportHeight)
+	gohelper.destroyAllChildren(self._goscrollcontent)
+	recthelper.setHeight(self._goscrollcontainer.transform, self._viewportHeight)
 
-	arg_10_0._scrolldialog.verticalNormalizedPosition = 1
+	self._scrolldialog.verticalNormalizedPosition = 1
 
-	arg_10_0:_showAllEpisodeHistory()
+	self:_showAllEpisodeHistory()
 end
 
-function var_0_0._dialogClose(arg_11_0)
-	arg_11_0:_delayRefreshDialog(0.1)
+function MeilanniDialogView:_dialogClose()
+	self:_delayRefreshDialog(0.1)
 end
 
-function var_0_0._dialogChange(arg_12_0, arg_12_1)
-	arg_12_0:_delayRefreshDialog(0.1)
+function MeilanniDialogView:_dialogChange(dialogItem)
+	self:_delayRefreshDialog(0.1)
 end
 
-function var_0_0._delayRefreshDialog(arg_13_0, arg_13_1)
-	TaskDispatcher.cancelTask(arg_13_0._refreshDialog, arg_13_0)
-	TaskDispatcher.runDelay(arg_13_0._refreshDialog, arg_13_0, arg_13_1)
+function MeilanniDialogView:_delayRefreshDialog(time)
+	TaskDispatcher.cancelTask(self._refreshDialog, self)
+	TaskDispatcher.runDelay(self._refreshDialog, self, time)
 end
 
-function var_0_0._resetDialogPos(arg_14_0)
-	if arg_14_0._tweenFloatId then
+function MeilanniDialogView:_resetDialogPos()
+	if self._tweenFloatId then
 		return
 	end
 
-	local var_14_0 = arg_14_0._scrolldialog.verticalNormalizedPosition
-	local var_14_1 = 0
+	local from = self._scrolldialog.verticalNormalizedPosition
+	local to = 0
 
-	arg_14_0:_tweenScroll(var_14_0, var_14_1, arg_14_0._tweenFrame)
+	self:_tweenScroll(from, to, self._tweenFrame)
 end
 
-function var_0_0._refreshDialog(arg_15_0)
-	local var_15_0 = recthelper.getHeight(arg_15_0._goscrollcontent.transform)
+function MeilanniDialogView:_refreshDialog()
+	local contentHeight = recthelper.getHeight(self._goscrollcontent.transform)
 
-	recthelper.setHeight(arg_15_0._goscrollcontainer.transform, var_15_0)
-	arg_15_0:_adjustContainerHeight()
+	recthelper.setHeight(self._goscrollcontainer.transform, contentHeight)
+	self:_adjustContainerHeight()
 
-	local var_15_1 = recthelper.getHeight(arg_15_0._goscrollcontainer.transform)
+	local containerHeight = recthelper.getHeight(self._goscrollcontainer.transform)
 
-	if arg_15_0._prevHeight then
+	if self._prevHeight then
 		if MeilanniAnimationController.instance:isPlaying() then
-			var_15_1 = math.max(var_15_1, arg_15_0._prevHeight)
-		elseif var_15_1 < arg_15_0._prevHeight and arg_15_0._prevHeight - var_15_1 <= 160 then
-			var_15_1 = arg_15_0._prevHeight
+			containerHeight = math.max(containerHeight, self._prevHeight)
+		elseif containerHeight < self._prevHeight and self._prevHeight - containerHeight <= 160 then
+			containerHeight = self._prevHeight
 		end
 	end
 
-	recthelper.setHeight(arg_15_0._goscrollcontainer.transform, var_15_1)
+	recthelper.setHeight(self._goscrollcontainer.transform, containerHeight)
 
-	arg_15_0._prevHeight = var_15_1
+	self._prevHeight = containerHeight
 
-	arg_15_0:_startTween()
+	self:_startTween()
 end
 
-function var_0_0._startTween(arg_16_0)
-	local var_16_0 = recthelper.getHeight(arg_16_0._goscrollcontent.transform)
+function MeilanniDialogView:_startTween()
+	local contentHeight = recthelper.getHeight(self._goscrollcontent.transform)
 
-	if var_16_0 <= arg_16_0._viewportHeight then
-		local var_16_1 = recthelper.getAnchorY(arg_16_0._goscrollcontainer.transform)
-		local var_16_2 = math.max(var_16_0 - arg_16_0._viewportHeight, 0)
+	if contentHeight <= self._viewportHeight then
+		local from = recthelper.getAnchorY(self._goscrollcontainer.transform)
+		local to = math.max(contentHeight - self._viewportHeight, 0)
 
-		arg_16_0:_tweenScroll(var_16_1, var_16_2, arg_16_0._tweenFrameAnchorY)
+		self:_tweenScroll(from, to, self._tweenFrameAnchorY)
 	else
-		local var_16_3 = arg_16_0._scrolldialog.verticalNormalizedPosition
-		local var_16_4 = 0
+		local from = self._scrolldialog.verticalNormalizedPosition
+		local to = 0
 
-		arg_16_0:_tweenScroll(var_16_3, var_16_4, arg_16_0._tweenFrame)
+		self:_tweenScroll(from, to, self._tweenFrame)
 	end
 end
 
-function var_0_0._tweenScroll(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	if not arg_17_0._firstTween then
-		arg_17_0._firstTween = true
+function MeilanniDialogView:_tweenScroll(from, to, frameHandler)
+	if not self._firstTween then
+		self._firstTween = true
 
-		arg_17_0:_tweenFinish()
+		self:_tweenFinish()
 
 		return
 	end
 
-	if arg_17_1 == arg_17_2 then
+	if from == to then
 		return
 	end
 
-	if arg_17_0._tweenFloatId then
-		ZProj.TweenHelper.KillById(arg_17_0._tweenFloatId)
+	if self._tweenFloatId then
+		ZProj.TweenHelper.KillById(self._tweenFloatId)
 	end
 
-	arg_17_0._tweenFloatId = ZProj.TweenHelper.DOTweenFloat(arg_17_1, arg_17_2, 0.8, arg_17_3, arg_17_0._tweenFinish, arg_17_0, nil, EaseType.OutQuint)
+	self._tweenFloatId = ZProj.TweenHelper.DOTweenFloat(from, to, 0.8, frameHandler, self._tweenFinish, self, nil, EaseType.OutQuint)
 end
 
-function var_0_0._tweenFrameAnchorY(arg_18_0, arg_18_1)
-	recthelper.setAnchorY(arg_18_0._goscrollcontainer.transform, arg_18_1)
+function MeilanniDialogView:_tweenFrameAnchorY(value)
+	recthelper.setAnchorY(self._goscrollcontainer.transform, value)
 end
 
-function var_0_0._tweenFrame(arg_19_0, arg_19_1)
-	arg_19_0._scrolldialog.verticalNormalizedPosition = arg_19_1
+function MeilanniDialogView:_tweenFrame(value)
+	self._scrolldialog.verticalNormalizedPosition = value
 end
 
-function var_0_0._tweenFinish(arg_20_0)
-	arg_20_0._scrolldialog.verticalNormalizedPosition = 0
-	arg_20_0._tweenFloatId = nil
+function MeilanniDialogView:_tweenFinish()
+	self._scrolldialog.verticalNormalizedPosition = 0
+	self._tweenFloatId = nil
 end
 
-function var_0_0._adjustContainerHeight(arg_21_0)
-	local var_21_0
+function MeilanniDialogView:_adjustContainerHeight()
+	local topDialogItem
 
-	for iter_21_0 = #arg_21_0._dialogItemList, 1, -1 do
-		local var_21_1 = arg_21_0._dialogItemList[iter_21_0]
+	for i = #self._dialogItemList, 1, -1 do
+		local dialogItem = self._dialogItemList[i]
 
-		if gohelper.isNil(var_21_1.viewGO) or not var_21_1:getEpisodeInfo() then
-			table.remove(arg_21_0._dialogItemList, iter_21_0)
-		elseif var_21_1:isTopDialog() then
-			var_21_0 = var_21_1
+		if gohelper.isNil(dialogItem.viewGO) or not dialogItem:getEpisodeInfo() then
+			table.remove(self._dialogItemList, i)
+		else
+			local isTopDialog = dialogItem:isTopDialog()
 
-			break
+			if isTopDialog then
+				topDialogItem = dialogItem
+
+				break
+			end
 		end
 	end
 
-	if var_21_0 then
-		local var_21_2 = var_21_0.viewGO.transform
-		local var_21_3 = recthelper.getAnchorY(var_21_2)
-		local var_21_4 = math.abs(var_21_3) + arg_21_0._viewportHeight
-		local var_21_5 = recthelper.getHeight(arg_21_0._goscrollcontainer.transform)
-		local var_21_6 = math.max(var_21_4, var_21_5)
+	if topDialogItem then
+		local tr = topDialogItem.viewGO.transform
+		local y = recthelper.getAnchorY(tr)
+		local targetHeight = math.abs(y) + self._viewportHeight
+		local containerHeight = recthelper.getHeight(self._goscrollcontainer.transform)
+		local value = math.max(targetHeight, containerHeight)
 
-		recthelper.setHeight(arg_21_0._goscrollcontainer.transform, var_21_6)
+		recthelper.setHeight(self._goscrollcontainer.transform, value)
 	end
 end
 
-function var_0_0._episodeInfoUpdate(arg_22_0, arg_22_1)
-	local var_22_0 = arg_22_0._mapInfo:getCurEpisodeInfo()
+function MeilanniDialogView:_episodeInfoUpdate(eventId)
+	local episodeInfo = self._mapInfo:getCurEpisodeInfo()
 
-	if arg_22_0._episodeInfo then
-		if arg_22_1 then
-			MeilanniAnimationController.instance:addDelayCall(arg_22_0._showEventHistoryDelay, arg_22_0, {
-				arg_22_0._mapInfo:getEpisodeInfo(arg_22_0._episodeInfo.episodeId),
-				arg_22_1
+	if self._episodeInfo then
+		if eventId then
+			MeilanniAnimationController.instance:addDelayCall(self._showEventHistoryDelay, self, {
+				self._mapInfo:getEpisodeInfo(self._episodeInfo.episodeId),
+				eventId
 			}, MeilanniEnum.selectedTime, MeilanniAnimationController.historyLayer)
 		end
 
-		if arg_22_0._episodeInfo.isFinish and arg_22_0._episodeInfo.confirm then
-			if arg_22_0:_checkShowEpisodeSkipDialogs(arg_22_0._episodeInfo) then
-				MeilanniAnimationController.instance:addDelayCall(arg_22_0._delayCallShowEpisodeSkipDialogs, arg_22_0, arg_22_0._episodeInfo, MeilanniEnum.skipTime, MeilanniAnimationController.epilogueLayer)
+		if self._episodeInfo.isFinish and self._episodeInfo.confirm then
+			if self:_checkShowEpisodeSkipDialogs(self._episodeInfo) then
+				MeilanniAnimationController.instance:addDelayCall(self._delayCallShowEpisodeSkipDialogs, self, self._episodeInfo, MeilanniEnum.skipTime, MeilanniAnimationController.epilogueLayer)
 			end
 
-			if arg_22_0:_checkShowEpilogue(arg_22_0._episodeInfo) then
-				MeilanniAnimationController.instance:addDelayCall(arg_22_0._showEpilogue, arg_22_0, arg_22_0._episodeInfo, MeilanniEnum.epilogueTime, MeilanniAnimationController.epilogueLayer)
+			if self:_checkShowEpilogue(self._episodeInfo) then
+				MeilanniAnimationController.instance:addDelayCall(self._showEpilogue, self, self._episodeInfo, MeilanniEnum.epilogueTime, MeilanniAnimationController.epilogueLayer)
 			end
 		end
 	end
 
-	if arg_22_0:_checkShowPreface(var_22_0) then
-		MeilanniAnimationController.instance:addDelayCall(arg_22_0._showPreface, arg_22_0, var_22_0, MeilanniEnum.prefaceTime, MeilanniAnimationController.prefaceLayer)
+	if self:_checkShowPreface(episodeInfo) then
+		MeilanniAnimationController.instance:addDelayCall(self._showPreface, self, episodeInfo, MeilanniEnum.prefaceTime, MeilanniAnimationController.prefaceLayer)
 	end
 
-	if arg_22_0:_showConfirm(var_22_0) then
-		MeilanniAnimationController.instance:addDelayCall(arg_22_0._delayCallCheckConfirm, arg_22_0, var_22_0, MeilanniEnum.confirmTime, MeilanniAnimationController.prefaceLayer)
+	if self:_showConfirm(episodeInfo) then
+		MeilanniAnimationController.instance:addDelayCall(self._delayCallCheckConfirm, self, episodeInfo, MeilanniEnum.confirmTime, MeilanniAnimationController.prefaceLayer)
 	end
 
-	MeilanniAnimationController.instance:addDelayCall(arg_22_0._dispatchGuideDayEvent, arg_22_0, nil, 0, MeilanniAnimationController.prefaceLayer)
+	MeilanniAnimationController.instance:addDelayCall(self._dispatchGuideDayEvent, self, nil, 0, MeilanniAnimationController.prefaceLayer)
 	MeilanniAnimationController.instance:endAnimation(MeilanniAnimationController.endLayer)
 end
 
-function var_0_0._delayCallCheckConfirm(arg_23_0, arg_23_1)
-	arg_23_0:_showEndDialog(arg_23_1)
+function MeilanniDialogView:_delayCallCheckConfirm(episodeInfo)
+	self:_showEndDialog(episodeInfo)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_checkpoint_Insight_close)
 end
 
-function var_0_0._checkConfirm(arg_24_0, arg_24_1)
-	if arg_24_0:_showConfirm(arg_24_1) then
-		arg_24_0:_showEndDialog(arg_24_1)
+function MeilanniDialogView:_checkConfirm(episodeInfo)
+	if self:_showConfirm(episodeInfo) then
+		self:_showEndDialog(episodeInfo)
 	end
 end
 
-function var_0_0._showConfirm(arg_25_0, arg_25_1)
-	if arg_25_1 and arg_25_1.isFinish and not arg_25_1.confirm then
+function MeilanniDialogView:_showConfirm(episodeInfo)
+	if episodeInfo and episodeInfo.isFinish and not episodeInfo.confirm then
 		return true
 	end
 
-	local var_25_0 = MeilanniModel.instance:getMapInfo(arg_25_0._mapId)
+	local mapInfo = MeilanniModel.instance:getMapInfo(self._mapId)
 
-	if not arg_25_1.isFinish and not arg_25_1.confirm and var_25_0.score <= 0 then
+	if not episodeInfo.isFinish and not episodeInfo.confirm and mapInfo.score <= 0 then
 		return true
 	end
 end
 
-function var_0_0._dispatchGuideDayEvent(arg_26_0)
-	local var_26_0 = arg_26_0._mapInfo:getCurEpisodeInfo()
+function MeilanniDialogView:_dispatchGuideDayEvent()
+	local episodeInfo = self._mapInfo:getCurEpisodeInfo()
 
-	if not var_26_0 then
+	if not episodeInfo then
 		return
 	end
 
-	if var_26_0.episodeId == 10101 then
+	if episodeInfo.episodeId == 10101 then
 		MeilanniController.instance:dispatchEvent(MeilanniEvent.guideEnterMapDay1)
-	elseif var_26_0.episodeId == 10102 then
+	elseif episodeInfo.episodeId == 10102 then
 		MeilanniController.instance:dispatchEvent(MeilanniEvent.guideEnterMapDay2)
 	end
 end
 
-function var_0_0._clickEventItem(arg_27_0, arg_27_1)
-	local var_27_0 = arg_27_1._info
-	local var_27_1 = var_27_0.eventId
-	local var_27_2 = var_27_0:getType()
+function MeilanniDialogView:_clickEventItem(eventItem)
+	local elementInfo = eventItem._info
+	local id = elementInfo.eventId
+	local type = elementInfo:getType()
 
-	if var_27_2 == MeilanniEnum.ElementType.Battle then
-		MeilanniController.instance:startBattle(var_27_1)
-	elseif var_27_2 == MeilanniEnum.ElementType.Dialog then
-		local var_27_3 = arg_27_0._mapInfo:getCurEpisodeInfo()
+	if type == MeilanniEnum.ElementType.Battle then
+		MeilanniController.instance:startBattle(id)
+	elseif type == MeilanniEnum.ElementType.Dialog then
+		local episodeInfo = self._mapInfo:getCurEpisodeInfo()
 
-		if var_27_3.leftActPoint - var_27_3.specialEventNum <= 0 and var_27_0.config.type == 0 then
+		if episodeInfo.leftActPoint - episodeInfo.specialEventNum <= 0 and elementInfo.config.type == 0 then
 			GameFacade.showToast(ToastEnum.MeilanniDialog)
 
 			return
 		end
 
-		arg_27_1:setSelected(true)
-		MeilanniController.instance:dispatchEvent(MeilanniEvent.setElementsVisible, false, arg_27_1)
-		arg_27_0:_playDialog(arg_27_1)
+		eventItem:setSelected(true)
+		MeilanniController.instance:dispatchEvent(MeilanniEvent.setElementsVisible, false, eventItem)
+		self:_playDialog(eventItem)
 	end
 end
 
-function var_0_0._playDialog(arg_28_0, arg_28_1)
-	local var_28_0 = arg_28_0._mapInfo:getCurEpisodeInfo()
-	local var_28_1 = arg_28_0:_getCacheDialogItem(var_28_0, arg_28_1._eventId)
+function MeilanniDialogView:_playDialog(eventItem)
+	local episodeInfo = self._mapInfo:getCurEpisodeInfo()
+	local dialogItem = self:_getCacheDialogItem(episodeInfo, eventItem._eventId)
 
-	var_28_1:playDialog(arg_28_1)
+	dialogItem:playDialog(eventItem)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_checkpoint_Insight_close)
 
-	var_28_1.viewGO.name = string.format("meilannidialogitem_%s_%s", var_28_0.episodeId, arg_28_1._eventId)
+	dialogItem.viewGO.name = string.format("meilannidialogitem_%s_%s", episodeInfo.episodeId, eventItem._eventId)
 end
 
-function var_0_0._getCacheDialogItem(arg_29_0, arg_29_1, arg_29_2)
-	local var_29_0 = arg_29_0._dialogItemMap[arg_29_2]
+function MeilanniDialogView:_getCacheDialogItem(episodeInfo, eventId)
+	local dialogItem = self._dialogItemMap[eventId]
 
-	if var_29_0 and gohelper.isNil(var_29_0.viewGO) then
-		var_29_0 = nil
+	if dialogItem and gohelper.isNil(dialogItem.viewGO) then
+		dialogItem = nil
 	end
 
-	var_29_0 = var_29_0 or arg_29_0:_getDialogItem(arg_29_1)
-	arg_29_0._dialogItemMap[arg_29_2] = var_29_0
+	dialogItem = dialogItem or self:_getDialogItem(episodeInfo)
+	self._dialogItemMap[eventId] = dialogItem
 
-	return var_29_0
+	return dialogItem
 end
 
-function var_0_0._showEmeny(arg_30_0, arg_30_1)
-	if arg_30_0._episodeInfo and arg_30_1.episodeId == arg_30_0._episodeInfo.episodeId then
+function MeilanniDialogView:_showEmeny(episodeInfo)
+	if self._episodeInfo and episodeInfo.episodeId == self._episodeInfo.episodeId then
 		return
 	end
 
-	local var_30_0 = arg_30_0._episodeInfo
+	local prevEpisodeInfo = self._episodeInfo
+	local showEmeny = episodeInfo.episodeConfig.showBoss == 1
 
-	if arg_30_1.episodeConfig.showBoss == 1 and var_30_0 and var_30_0.episodeConfig.showBoss ~= 1 then
-		TaskDispatcher.cancelTask(arg_30_0._showBossInfoView, arg_30_0)
-		TaskDispatcher.runDelay(arg_30_0._showBossInfoView, arg_30_0, 0.8)
+	if showEmeny and prevEpisodeInfo and prevEpisodeInfo.episodeConfig.showBoss ~= 1 then
+		TaskDispatcher.cancelTask(self._showBossInfoView, self)
+		TaskDispatcher.runDelay(self._showBossInfoView, self, 0.8)
 	end
 end
 
-function var_0_0._showBossInfoView(arg_31_0)
+function MeilanniDialogView:_showBossInfoView()
 	MeilanniController.instance:openMeilanniBossInfoView({
-		mapId = arg_31_0._mapId
+		mapId = self._mapId
 	})
 end
 
-function var_0_0._showPreface(arg_32_0, arg_32_1)
-	if arg_32_0._episodeInfo and arg_32_1.episodeId == arg_32_0._episodeInfo.episodeId then
+function MeilanniDialogView:_showPreface(episodeInfo)
+	if self._episodeInfo and episodeInfo.episodeId == self._episodeInfo.episodeId then
 		return
 	end
 
-	arg_32_0._episodeInfo = arg_32_1
+	self._episodeInfo = episodeInfo
 
-	local var_32_0 = arg_32_1.episodeConfig
+	local episodeConfig = episodeInfo.episodeConfig
 
-	if string.nilorempty(var_32_0.preface) then
+	if string.nilorempty(episodeConfig.preface) then
 		return
 	end
 
-	local var_32_1 = arg_32_0:_getDialogItem(arg_32_1)
+	local dialogItem = self:_getDialogItem(episodeInfo)
 
-	var_32_1:playDesc(var_32_0.preface)
+	dialogItem:playDesc(episodeConfig.preface)
 
-	var_32_1.viewGO.name = string.format("meilannidialogitem_%s_preface", arg_32_1.episodeId)
+	dialogItem.viewGO.name = string.format("meilannidialogitem_%s_preface", episodeInfo.episodeId)
 end
 
-function var_0_0._checkShowPreface(arg_33_0, arg_33_1)
-	if arg_33_0._episodeInfo and arg_33_1.episodeId == arg_33_0._episodeInfo.episodeId then
+function MeilanniDialogView:_checkShowPreface(episodeInfo)
+	if self._episodeInfo and episodeInfo.episodeId == self._episodeInfo.episodeId then
 		return
 	end
 
-	local var_33_0 = arg_33_1.episodeConfig
+	local episodeConfig = episodeInfo.episodeConfig
 
-	if string.nilorempty(var_33_0.preface) then
-		return
-	end
-
-	return true
-end
-
-function var_0_0._showEpilogue(arg_34_0, arg_34_1)
-	if not arg_34_0:_checkShowEpilogue(arg_34_1) then
-		return
-	end
-
-	local var_34_0 = arg_34_1.episodeConfig
-
-	arg_34_0:_getDialogItem(arg_34_1):showEpilogue(var_34_0.epilogue)
-end
-
-function var_0_0._checkShowEpilogue(arg_35_0, arg_35_1)
-	if not arg_35_1 then
-		return
-	end
-
-	local var_35_0 = arg_35_1.episodeConfig
-
-	if string.nilorempty(var_35_0.epilogue) then
+	if string.nilorempty(episodeConfig.preface) then
 		return
 	end
 
 	return true
 end
 
-function var_0_0._showDialogHistory(arg_36_0, arg_36_1, arg_36_2, arg_36_3, arg_36_4)
-	arg_36_0:_getCacheDialogItem(arg_36_1, arg_36_2.eventId):showHistory(arg_36_2, arg_36_3, arg_36_4)
+function MeilanniDialogView:_showEpilogue(episodeInfo)
+	if not self:_checkShowEpilogue(episodeInfo) then
+		return
+	end
+
+	local episodeConfig = episodeInfo.episodeConfig
+	local dialogItem = self:_getDialogItem(episodeInfo)
+
+	dialogItem:showEpilogue(episodeConfig.epilogue)
 end
 
-function var_0_0._showSkipDialog(arg_37_0, arg_37_1, arg_37_2, arg_37_3, arg_37_4)
-	arg_37_0:_getDialogItem(arg_37_1):showSkipDialog(arg_37_2, arg_37_3, arg_37_4)
+function MeilanniDialogView:_checkShowEpilogue(episodeInfo)
+	if not episodeInfo then
+		return
+	end
+
+	local episodeConfig = episodeInfo.episodeConfig
+
+	if string.nilorempty(episodeConfig.epilogue) then
+		return
+	end
+
+	return true
 end
 
-function var_0_0._showEndDialog(arg_38_0, arg_38_1, arg_38_2, arg_38_3, arg_38_4)
-	arg_38_0:_getDialogItem(arg_38_1):showEndDialog(arg_38_2)
+function MeilanniDialogView:_showDialogHistory(episodeInfo, eventInfo, index, eventIndex)
+	local dialogItem = self:_getCacheDialogItem(episodeInfo, eventInfo.eventId)
+
+	dialogItem:showHistory(eventInfo, index, eventIndex)
 end
 
-function var_0_0._getDialogItem(arg_39_0, arg_39_1)
-	local var_39_0 = arg_39_0.viewContainer:getSetting().otherRes[2]
-	local var_39_1 = arg_39_0:getResInst(var_39_0, arg_39_0._goscrollcontent)
-	local var_39_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_39_1, MeilanniDialogItem)
+function MeilanniDialogView:_showSkipDialog(episodeInfo, eventInfo, index, eventIndex)
+	local dialogItem = self:_getDialogItem(episodeInfo)
 
-	var_39_2:setEpisodeInfo(arg_39_1)
-	table.insert(arg_39_0._dialogItemList, var_39_2)
-
-	return var_39_2
+	dialogItem:showSkipDialog(eventInfo, index, eventIndex)
 end
 
-function var_0_0._showAllEpisodeHistory(arg_40_0)
-	local var_40_0 = #arg_40_0._mapInfo.episodeInfos
+function MeilanniDialogView:_showEndDialog(episodeInfo, eventInfo, index, eventIndex)
+	local dialogItem = self:_getDialogItem(episodeInfo)
+
+	dialogItem:showEndDialog(eventInfo)
+end
+
+function MeilanniDialogView:_getDialogItem(episodeInfo)
+	local itemPath = self.viewContainer:getSetting().otherRes[2]
+	local itemGo = self:getResInst(itemPath, self._goscrollcontent)
+	local dialogItem = MonoHelper.addNoUpdateLuaComOnceToGo(itemGo, MeilanniDialogItem)
+
+	dialogItem:setEpisodeInfo(episodeInfo)
+	table.insert(self._dialogItemList, dialogItem)
+
+	return dialogItem
+end
+
+function MeilanniDialogView:_showAllEpisodeHistory()
+	local num = #self._mapInfo.episodeInfos
 
 	MeilanniModel.instance:setDialogItemFadeIndex(-1)
 
-	for iter_40_0, iter_40_1 in ipairs(arg_40_0._mapInfo.episodeInfos) do
-		if iter_40_0 == var_40_0 then
+	for i, v in ipairs(self._mapInfo.episodeInfos) do
+		if i == num then
 			MeilanniModel.instance:setDialogItemFadeIndex(0)
-			arg_40_0:_showEpisodeHistory(iter_40_1)
-			arg_40_0:_checkConfirm(iter_40_1)
+			self:_showEpisodeHistory(v)
+			self:_checkConfirm(v)
 		else
-			arg_40_0:_showEpisodeHistory(iter_40_1)
+			self:_showEpisodeHistory(v)
 		end
 	end
 
 	MeilanniModel.instance:setDialogItemFadeIndex(nil)
-	arg_40_0:_dispatchGuideDayEvent()
+	self:_dispatchGuideDayEvent()
 end
 
-function var_0_0._showEpisodeHistory(arg_41_0, arg_41_1)
-	arg_41_0:_showPreface(arg_41_1)
+function MeilanniDialogView:_showEpisodeHistory(episodeInfo)
+	self:_showPreface(episodeInfo)
 
-	local var_41_0
-	local var_41_1 = 1
+	local prevEventId
+	local eventIndex = 1
 
-	for iter_41_0, iter_41_1 in ipairs(arg_41_1.historylist) do
-		local var_41_2 = iter_41_1.eventId
-		local var_41_3 = iter_41_1.index
-		local var_41_4 = arg_41_1:getEventInfo(var_41_2)
+	for i, episodeHistory in ipairs(episodeInfo.historylist) do
+		local eventId = episodeHistory.eventId
+		local index = episodeHistory.index
+		local eventInfo = episodeInfo:getEventInfo(eventId)
+		local interactParam = eventInfo.interactParam[index + 1]
+		local interactType = interactParam[1]
 
-		if var_41_4.interactParam[var_41_3 + 1][1] == MeilanniEnum.ElementType.Dialog then
-			arg_41_0:_showDialogHistory(arg_41_1, var_41_4, var_41_3, var_41_1)
+		if interactType == MeilanniEnum.ElementType.Dialog then
+			self:_showDialogHistory(episodeInfo, eventInfo, index, eventIndex)
 
-			if var_41_0 ~= var_41_2 then
-				var_41_0 = var_41_2
-				var_41_1 = var_41_1 + 1
+			if prevEventId ~= eventId then
+				prevEventId = eventId
+				eventIndex = eventIndex + 1
 			end
 		end
 	end
 
-	if arg_41_1.isFinish and arg_41_1.confirm then
-		arg_41_0:_showEpisodeSkipDialogs(arg_41_1)
-		arg_41_0:_showEpilogue(arg_41_1)
+	if episodeInfo.isFinish and episodeInfo.confirm then
+		self:_showEpisodeSkipDialogs(episodeInfo)
+		self:_showEpilogue(episodeInfo)
 	end
 end
 
-function var_0_0._showEventHistoryDelay(arg_42_0, arg_42_1)
-	arg_42_0:_showEventHistory(arg_42_1[1], arg_42_1[2])
+function MeilanniDialogView:_showEventHistoryDelay(param)
+	self:_showEventHistory(param[1], param[2])
 end
 
-function var_0_0._showEventHistory(arg_43_0, arg_43_1, arg_43_2)
-	if not arg_43_2 then
+function MeilanniDialogView:_showEventHistory(episodeInfo, targetEventId)
+	if not targetEventId then
 		return
 	end
 
-	local var_43_0 = arg_43_0._dialogItemMap[arg_43_2]
+	local dialogItem = self._dialogItemMap[targetEventId]
 
-	if var_43_0 then
-		var_43_0:clearConfig()
+	if dialogItem then
+		dialogItem:clearConfig()
 	end
 
-	for iter_43_0, iter_43_1 in ipairs(arg_43_1.historylist) do
-		local var_43_1 = iter_43_1.eventId
+	for i, episodeHistory in ipairs(episodeInfo.historylist) do
+		local eventId = episodeHistory.eventId
 
-		if var_43_1 == arg_43_2 then
-			local var_43_2 = iter_43_1.index
-			local var_43_3 = arg_43_1:getEventInfo(var_43_1)
+		if eventId == targetEventId then
+			local index = episodeHistory.index
+			local eventInfo = episodeInfo:getEventInfo(eventId)
+			local interactParam = eventInfo.interactParam[index + 1]
+			local interactType = interactParam[1]
 
-			if var_43_3.interactParam[var_43_2 + 1][1] == MeilanniEnum.ElementType.Dialog then
-				arg_43_0:_showDialogHistory(arg_43_1, var_43_3, var_43_2)
+			if interactType == MeilanniEnum.ElementType.Dialog then
+				self:_showDialogHistory(episodeInfo, eventInfo, index)
 			end
 		end
 	end
 end
 
-function var_0_0._delayCallShowEpisodeSkipDialogs(arg_44_0, arg_44_1)
+function MeilanniDialogView:_delayCallShowEpisodeSkipDialogs(episodeInfo)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_checkpoint_Insight_close)
-	arg_44_0:_showEpisodeSkipDialogs(arg_44_1)
-	arg_44_0:_delayRefreshDialog(0)
+	self:_showEpisodeSkipDialogs(episodeInfo)
+	self:_delayRefreshDialog(0)
 end
 
-function var_0_0._showEpisodeSkipDialogs(arg_45_0, arg_45_1)
-	if not arg_45_1.isFinish then
+function MeilanniDialogView:_showEpisodeSkipDialogs(episodeInfo)
+	if not episodeInfo.isFinish then
 		return
 	end
 
-	local var_45_0 = arg_45_1.historyLen + 1
+	local eventIndex = episodeInfo.historyLen + 1
 
-	for iter_45_0, iter_45_1 in ipairs(arg_45_1.events) do
-		if not iter_45_1.isFinish and iter_45_1:getSkipDialog() then
-			arg_45_0:_showSkipDialog(arg_45_1, iter_45_1, nil, var_45_0)
+	for i, eventInfo in ipairs(episodeInfo.events) do
+		if not eventInfo.isFinish and eventInfo:getSkipDialog() then
+			self:_showSkipDialog(episodeInfo, eventInfo, nil, eventIndex)
 
-			var_45_0 = var_45_0 + 1
+			eventIndex = eventIndex + 1
 		end
 	end
 end
 
-function var_0_0._checkShowEpisodeSkipDialogs(arg_46_0, arg_46_1)
-	if not arg_46_1.isFinish then
+function MeilanniDialogView:_checkShowEpisodeSkipDialogs(episodeInfo)
+	if not episodeInfo.isFinish then
 		return
 	end
 
-	local var_46_0 = arg_46_1.historyLen + 1
+	local eventIndex = episodeInfo.historyLen + 1
 
-	for iter_46_0, iter_46_1 in ipairs(arg_46_1.events) do
-		if not iter_46_1.isFinish and iter_46_1:getSkipDialog() then
+	for i, eventInfo in ipairs(episodeInfo.events) do
+		if not eventInfo.isFinish and eventInfo:getSkipDialog() then
 			return true
 		end
 	end
 end
 
-function var_0_0.onClose(arg_47_0)
-	arg_47_0:removeEventCb(MeilanniController.instance, MeilanniEvent.clickEventItem, arg_47_0._clickEventItem, arg_47_0)
-	arg_47_0:removeEventCb(MeilanniController.instance, MeilanniEvent.episodeInfoUpdate, arg_47_0._episodeInfoUpdate, arg_47_0)
-	arg_47_0:removeEventCb(MeilanniController.instance, MeilanniEvent.dialogChange, arg_47_0._dialogChange, arg_47_0)
-	arg_47_0:removeEventCb(MeilanniController.instance, MeilanniEvent.resetDialogPos, arg_47_0._resetDialogPos, arg_47_0)
-	arg_47_0:removeEventCb(MeilanniController.instance, MeilanniEvent.dialogClose, arg_47_0._dialogClose, arg_47_0)
-	arg_47_0:removeEventCb(MeilanniController.instance, MeilanniEvent.resetMap, arg_47_0._resetMap, arg_47_0)
-	TaskDispatcher.cancelTask(arg_47_0._refreshDialog, arg_47_0)
-	TaskDispatcher.cancelTask(arg_47_0._showBossInfoView, arg_47_0)
-	TaskDispatcher.cancelTask(arg_47_0._hideBlock, arg_47_0)
+function MeilanniDialogView:onClose()
+	self:removeEventCb(MeilanniController.instance, MeilanniEvent.clickEventItem, self._clickEventItem, self)
+	self:removeEventCb(MeilanniController.instance, MeilanniEvent.episodeInfoUpdate, self._episodeInfoUpdate, self)
+	self:removeEventCb(MeilanniController.instance, MeilanniEvent.dialogChange, self._dialogChange, self)
+	self:removeEventCb(MeilanniController.instance, MeilanniEvent.resetDialogPos, self._resetDialogPos, self)
+	self:removeEventCb(MeilanniController.instance, MeilanniEvent.dialogClose, self._dialogClose, self)
+	self:removeEventCb(MeilanniController.instance, MeilanniEvent.resetMap, self._resetMap, self)
+	TaskDispatcher.cancelTask(self._refreshDialog, self)
+	TaskDispatcher.cancelTask(self._showBossInfoView, self)
+	TaskDispatcher.cancelTask(self._hideBlock, self)
 
-	if arg_47_0._tweenFloatId then
-		ZProj.TweenHelper.KillById(arg_47_0._tweenFloatId)
+	if self._tweenFloatId then
+		ZProj.TweenHelper.KillById(self._tweenFloatId)
 	end
 
 	MeilanniAnimationController.instance:close()
 end
 
-function var_0_0.onDestroyView(arg_48_0)
+function MeilanniDialogView:onDestroyView()
 	return
 end
 
-return var_0_0
+return MeilanniDialogView

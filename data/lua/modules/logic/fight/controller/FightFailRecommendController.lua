@@ -1,108 +1,111 @@
-﻿module("modules.logic.fight.controller.FightFailRecommendController", package.seeall)
+﻿-- chunkname: @modules/logic/fight/controller/FightFailRecommendController.lua
 
-local var_0_0 = class("FightFailRecommendController", BaseController)
-local var_0_1 = 2
+module("modules.logic.fight.controller.FightFailRecommendController", package.seeall)
 
-function var_0_0.addConstEvents(arg_1_0)
-	FightController.instance:registerCallback(FightEvent.RespBeginFight, arg_1_0._respBeginFight, arg_1_0)
-	FightController.instance:registerCallback(FightEvent.PushEndFight, arg_1_0._pushEndFight, arg_1_0)
+local FightFailRecommendController = class("FightFailRecommendController", BaseController)
+local FailCountRecommend = 2
+
+function FightFailRecommendController:addConstEvents()
+	FightController.instance:registerCallback(FightEvent.RespBeginFight, self._respBeginFight, self)
+	FightController.instance:registerCallback(FightEvent.PushEndFight, self._pushEndFight, self)
 end
 
-function var_0_0.onClickRecommend(arg_2_0)
-	local var_2_0 = arg_2_0:_getKey()
+function FightFailRecommendController:onClickRecommend()
+	local key = self:_getKey()
 
-	PlayerPrefsHelper.deleteKey(var_2_0)
+	PlayerPrefsHelper.deleteKey(key)
 end
 
-function var_0_0.needShowRecommend(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_0:_getKey()
-	local var_3_1 = PlayerPrefsHelper.getString(var_3_0, "")
-	local var_3_2 = string.splitToNumber(var_3_1, "#")
-	local var_3_3 = var_3_2 and var_3_2[1]
+function FightFailRecommendController:needShowRecommend(episodeId)
+	local key = self:_getKey()
+	local saveFailEpisodeData = PlayerPrefsHelper.getString(key, "")
+	local temp = string.splitToNumber(saveFailEpisodeData, "#")
+	local failEpisode = temp and temp[1]
 
-	if not var_3_3 or var_3_3 ~= arg_3_1 then
+	if not failEpisode or failEpisode ~= episodeId then
 		return false
 	end
 
-	local var_3_4 = var_3_2 and var_3_2[2]
+	local failCount = temp and temp[2]
 
-	return var_3_4 and var_3_4 >= var_0_1
+	return failCount and failCount >= FailCountRecommend
 end
 
-function var_0_0._respBeginFight(arg_4_0)
-	local var_4_0 = FightModel.instance:getFightParam()
+function FightFailRecommendController:_respBeginFight()
+	local fightParam = FightModel.instance:getFightParam()
 
-	arg_4_0._isReplay = var_4_0 and var_4_0.isReplay
+	self._isReplay = fightParam and fightParam.isReplay
 
-	if arg_4_0._isReplay then
+	if self._isReplay then
 		return
 	end
 
-	local var_4_1 = var_4_0 and var_4_0.episodeId
-	local var_4_2 = arg_4_0:_getKey()
-	local var_4_3 = PlayerPrefsHelper.getString(var_4_2, "")
-	local var_4_4 = string.splitToNumber(var_4_3, "#")
-	local var_4_5 = var_4_4 and var_4_4[1]
+	local episodeId = fightParam and fightParam.episodeId
+	local key = self:_getKey()
+	local saveFailEpisodeData = PlayerPrefsHelper.getString(key, "")
+	local temp = string.splitToNumber(saveFailEpisodeData, "#")
+	local failEpisode = temp and temp[1]
 
-	if var_4_5 and var_4_1 ~= var_4_5 then
-		PlayerPrefsHelper.deleteKey(var_4_2)
+	if failEpisode and episodeId ~= failEpisode then
+		PlayerPrefsHelper.deleteKey(key)
 	end
 end
 
-function var_0_0._pushEndFight(arg_5_0)
-	local var_5_0 = FightModel.instance:getFightParam()
+function FightFailRecommendController:_pushEndFight()
+	local fightParam = FightModel.instance:getFightParam()
 
-	arg_5_0._isReplay = var_5_0 and var_5_0.isReplay
+	self._isReplay = fightParam and fightParam.isReplay
 
-	if arg_5_0._isReplay then
-		arg_5_0._isReplay = nil
+	if self._isReplay then
+		self._isReplay = nil
 
 		return
 	end
 
-	local var_5_1 = FightModel.instance:getRecordMO()
-	local var_5_2 = var_5_1 and var_5_1.fightResult ~= FightEnum.FightResult.Succ
-	local var_5_3 = arg_5_0:_getKey()
+	local fightRecordMO = FightModel.instance:getRecordMO()
+	local isFail = fightRecordMO and fightRecordMO.fightResult ~= FightEnum.FightResult.Succ
+	local key = self:_getKey()
 
-	if var_5_2 then
-		local var_5_4
-		local var_5_5 = FightModel.instance:getFightParam()
-		local var_5_6 = var_5_5 and var_5_5.episodeId
+	if isFail then
+		local episodeId
+		local fightParam = FightModel.instance:getFightParam()
 
-		if not var_5_6 then
-			local var_5_7 = FightModel.instance:getFightReason()
+		episodeId = fightParam and fightParam.episodeId
 
-			var_5_6 = var_5_7 and var_5_7.episodeId
+		if not episodeId then
+			local fightReason = FightModel.instance:getFightReason()
 
-			if not var_5_6 then
+			episodeId = fightReason and fightReason.episodeId
+
+			if not episodeId then
 				return
 			end
 		end
 
-		local var_5_8 = PlayerPrefsHelper.getString(var_5_3, "")
-		local var_5_9 = string.splitToNumber(var_5_8, "#")
-		local var_5_10 = var_5_9 and var_5_9[1]
-		local var_5_11 = var_5_9 and var_5_9[2]
+		local saveFailEpisodeData = PlayerPrefsHelper.getString(key, "")
+		local temp = string.splitToNumber(saveFailEpisodeData, "#")
+		local failEpisode = temp and temp[1]
+		local failCount = temp and temp[2]
 
-		if var_5_10 and var_5_10 == var_5_6 then
-			var_5_11 = var_5_11 and var_5_11 + 1 or 1
+		if failEpisode and failEpisode == episodeId then
+			failCount = failCount and failCount + 1 or 1
 		else
-			var_5_10 = var_5_6
-			var_5_11 = 1
+			failEpisode = episodeId
+			failCount = 1
 		end
 
-		if var_5_10 then
-			PlayerPrefsHelper.setString(var_5_3, var_5_10 .. "#" .. var_5_11)
+		if failEpisode then
+			PlayerPrefsHelper.setString(key, failEpisode .. "#" .. failCount)
 		end
 	else
-		PlayerPrefsHelper.deleteKey(var_5_3)
+		PlayerPrefsHelper.deleteKey(key)
 	end
 end
 
-function var_0_0._getKey(arg_6_0)
+function FightFailRecommendController:_getKey()
 	return PlayerModel.instance:getMyUserId() .. "_" .. PlayerPrefsKey.FightFailEpisode
 end
 
-var_0_0.instance = var_0_0.New()
+FightFailRecommendController.instance = FightFailRecommendController.New()
 
-return var_0_0
+return FightFailRecommendController

@@ -1,16 +1,18 @@
-﻿module("modules.logic.fight.system.work.FightWorkDialogueBeforeRoundStart", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkDialogueBeforeRoundStart.lua
 
-local var_0_0 = class("FightWorkDialogueBeforeRoundStart", FightWorkItem)
+module("modules.logic.fight.system.work.FightWorkDialogueBeforeRoundStart", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0:com_registWorkDoneFlowSequence()
+local FightWorkDialogueBeforeRoundStart = class("FightWorkDialogueBeforeRoundStart", FightWorkItem)
 
-	var_1_0:addWork(Work2FightWork.New(FightWorkNormalDialog, FightViewDialog.Type.HaveBuffAndHaveDamageSkill_onlyCheckOnce))
-	var_1_0:start()
+function FightWorkDialogueBeforeRoundStart:onStart()
+	local flow = self:com_registWorkDoneFlowSequence()
+
+	flow:addWork(Work2FightWork.New(FightWorkNormalDialog, FightViewDialog.Type.HaveBuffAndHaveDamageSkill_onlyCheckOnce))
+	flow:start()
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkDialogueBeforeRoundStart:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkDialogueBeforeRoundStart

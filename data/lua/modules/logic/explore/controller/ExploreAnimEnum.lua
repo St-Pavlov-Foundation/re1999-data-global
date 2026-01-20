@@ -1,8 +1,10 @@
-﻿module("modules.logic.explore.controller.ExploreAnimEnum", package.seeall)
+﻿-- chunkname: @modules/logic/explore/controller/ExploreAnimEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.explore.controller.ExploreAnimEnum", package.seeall)
 
-var_0_0.AnimName = {
+local ExploreAnimEnum = _M
+
+ExploreAnimEnum.AnimName = {
 	unable = "unable",
 	nToA = "nToA",
 	count3to4 = "count3to4",
@@ -25,48 +27,48 @@ var_0_0.AnimName = {
 	count1to0 = "count1to0",
 	active = "active"
 }
-var_0_0.LoopAnims = {
-	[var_0_0.AnimName.unable] = true,
-	[var_0_0.AnimName.normal] = true,
-	[var_0_0.AnimName.active] = true,
-	[var_0_0.AnimName.active2] = true,
-	[var_0_0.AnimName.count1] = true,
-	[var_0_0.AnimName.count2] = true,
-	[var_0_0.AnimName.count3] = true
+ExploreAnimEnum.LoopAnims = {
+	[ExploreAnimEnum.AnimName.unable] = true,
+	[ExploreAnimEnum.AnimName.normal] = true,
+	[ExploreAnimEnum.AnimName.active] = true,
+	[ExploreAnimEnum.AnimName.active2] = true,
+	[ExploreAnimEnum.AnimName.count1] = true,
+	[ExploreAnimEnum.AnimName.count2] = true,
+	[ExploreAnimEnum.AnimName.count3] = true
 }
-var_0_0.AnimHashToName = {}
-var_0_0.AnimNameToHash = {}
+ExploreAnimEnum.AnimHashToName = {}
+ExploreAnimEnum.AnimNameToHash = {}
 
-for iter_0_0 in pairs(var_0_0.AnimName) do
-	local var_0_1 = UnityEngine.Animator.StringToHash(iter_0_0)
+for name in pairs(ExploreAnimEnum.AnimName) do
+	local hash = UnityEngine.Animator.StringToHash(name)
 
-	var_0_0.AnimHashToName[var_0_1] = iter_0_0
-	var_0_0.AnimNameToHash[iter_0_0] = var_0_1
+	ExploreAnimEnum.AnimHashToName[hash] = name
+	ExploreAnimEnum.AnimNameToHash[name] = hash
 end
 
-var_0_0.NextAnimName = {
-	enter = var_0_0.AnimName.normal,
-	uToN = var_0_0.AnimName.normal,
-	nToU = var_0_0.AnimName.unable,
-	nToA = var_0_0.AnimName.active,
-	aToN = var_0_0.AnimName.normal,
-	exit = var_0_0.AnimName.exit
+ExploreAnimEnum.NextAnimName = {
+	enter = ExploreAnimEnum.AnimName.normal,
+	uToN = ExploreAnimEnum.AnimName.normal,
+	nToU = ExploreAnimEnum.AnimName.unable,
+	nToA = ExploreAnimEnum.AnimName.active,
+	aToN = ExploreAnimEnum.AnimName.normal,
+	exit = ExploreAnimEnum.AnimName.exit
 }
-var_0_0.RoleAnimName = {
+ExploreAnimEnum.RoleAnimName = {
 	idle = "idle",
 	move = "move_slow"
 }
-var_0_0.RoleAnimKey = {
+ExploreAnimEnum.RoleAnimKey = {
 	IsIce = "isIce",
 	MoveDir = "moveDir",
 	MoveState = "moveState",
 	Status = "status"
 }
-var_0_0.RoleMoveState = {
+ExploreAnimEnum.RoleMoveState = {
 	Idle = 0,
 	Move = 1
 }
-var_0_0.RoleAnimStatus = {
+ExploreAnimEnum.RoleAnimStatus = {
 	MoveBack = 14,
 	CreateUnit = 6,
 	Fix = 11,
@@ -85,38 +87,38 @@ var_0_0.RoleAnimStatus = {
 	CarryPut = 13,
 	None = 0
 }
-var_0_0.RoleAnimLen = {
-	[var_0_0.RoleAnimStatus.Carry] = 1.067,
-	[var_0_0.RoleAnimStatus.Pull] = 0,
-	[var_0_0.RoleAnimStatus.Fall] = 0,
-	[var_0_0.RoleAnimStatus.Glide] = 0,
-	[var_0_0.RoleAnimStatus.OpenChest] = 1.167,
-	[var_0_0.RoleAnimStatus.CreateUnit] = 2,
-	[var_0_0.RoleAnimStatus.UseItem] = 1.333,
-	[var_0_0.RoleAnimStatus.NoUseItem] = 0.933,
-	[var_0_0.RoleAnimStatus.Entry] = 1.467,
-	[var_0_0.RoleAnimStatus.Interact] = 0.8,
-	[var_0_0.RoleAnimStatus.Fix] = 2.167,
-	[var_0_0.RoleAnimStatus.CarryPick] = 0.8,
-	[var_0_0.RoleAnimStatus.CarryPut] = 0.8,
-	[var_0_0.RoleAnimStatus.Finish] = 1.8,
-	[var_0_0.RoleAnimStatus.RotateInteract] = 0.4
+ExploreAnimEnum.RoleAnimLen = {
+	[ExploreAnimEnum.RoleAnimStatus.Carry] = 1.067,
+	[ExploreAnimEnum.RoleAnimStatus.Pull] = 0,
+	[ExploreAnimEnum.RoleAnimStatus.Fall] = 0,
+	[ExploreAnimEnum.RoleAnimStatus.Glide] = 0,
+	[ExploreAnimEnum.RoleAnimStatus.OpenChest] = 1.167,
+	[ExploreAnimEnum.RoleAnimStatus.CreateUnit] = 2,
+	[ExploreAnimEnum.RoleAnimStatus.UseItem] = 1.333,
+	[ExploreAnimEnum.RoleAnimStatus.NoUseItem] = 0.933,
+	[ExploreAnimEnum.RoleAnimStatus.Entry] = 1.467,
+	[ExploreAnimEnum.RoleAnimStatus.Interact] = 0.8,
+	[ExploreAnimEnum.RoleAnimStatus.Fix] = 2.167,
+	[ExploreAnimEnum.RoleAnimStatus.CarryPick] = 0.8,
+	[ExploreAnimEnum.RoleAnimStatus.CarryPut] = 0.8,
+	[ExploreAnimEnum.RoleAnimStatus.Finish] = 1.8,
+	[ExploreAnimEnum.RoleAnimStatus.RotateInteract] = 0.4
 }
-var_0_0.RoleHangPointType = {
+ExploreAnimEnum.RoleHangPointType = {
 	Hand_Right = 2,
 	Hand_Left = 1
 }
-var_0_0.RoleHangPointPath = {
-	[var_0_0.RoleHangPointType.Hand_Left] = "Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/hand_l",
-	[var_0_0.RoleHangPointType.Hand_Right] = "Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/hand_r"
+ExploreAnimEnum.RoleHangPointPath = {
+	[ExploreAnimEnum.RoleHangPointType.Hand_Left] = "Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 L Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/hand_l",
+	[ExploreAnimEnum.RoleHangPointType.Hand_Right] = "Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/hand_r"
 }
-var_0_0.UseBatonAnim = {
-	[var_0_0.RoleAnimStatus.OpenChest] = var_0_0.RoleHangPointType.Hand_Left,
-	[var_0_0.RoleAnimStatus.CreateUnit] = var_0_0.RoleHangPointType.Hand_Right
+ExploreAnimEnum.UseBatonAnim = {
+	[ExploreAnimEnum.RoleAnimStatus.OpenChest] = ExploreAnimEnum.RoleHangPointType.Hand_Left,
+	[ExploreAnimEnum.RoleAnimStatus.CreateUnit] = ExploreAnimEnum.RoleHangPointType.Hand_Right
 }
-var_0_0.RoleSpeed = {
+ExploreAnimEnum.RoleSpeed = {
 	walk = 0.6,
 	run = 0.39
 }
 
-return var_0_0
+return ExploreAnimEnum

@@ -1,24 +1,28 @@
-﻿module("modules.logic.tower.view.fight.TowerDeepHeroGroupFightView", package.seeall)
+﻿-- chunkname: @modules/logic/tower/view/fight/TowerDeepHeroGroupFightView.lua
 
-local var_0_0 = class("TowerDeepHeroGroupFightView", TowerHeroGroupFightView)
+module("modules.logic.tower.view.fight.TowerDeepHeroGroupFightView", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	var_0_0.super._editableInitView(arg_1_0)
+local TowerDeepHeroGroupFightView = class("TowerDeepHeroGroupFightView", TowerHeroGroupFightView)
+
+function TowerDeepHeroGroupFightView:_editableInitView()
+	TowerDeepHeroGroupFightView.super._editableInitView(self)
 end
 
-function var_0_0._enterFight(arg_2_0)
+function TowerDeepHeroGroupFightView:_enterFight()
 	if HeroGroupModel.instance.episodeId then
-		arg_2_0._closeWithEnteringFight = true
+		self._closeWithEnteringFight = true
 
-		if FightController.instance:setFightHeroSingleGroup() then
-			arg_2_0.viewContainer:dispatchEvent(HeroGroupEvent.BeforeEnterFight)
+		local result = FightController.instance:setFightHeroSingleGroup()
 
-			local var_2_0 = FightModel.instance:getFightParam()
+		if result then
+			self.viewContainer:dispatchEvent(HeroGroupEvent.BeforeEnterFight)
 
-			var_2_0.isReplay = false
-			var_2_0.multiplication = 1
+			local fightParam = FightModel.instance:getFightParam()
 
-			DungeonFightController.instance:sendStartDungeonRequest(var_2_0.chapterId, var_2_0.episodeId, var_2_0, 1)
+			fightParam.isReplay = false
+			fightParam.multiplication = 1
+
+			DungeonFightController.instance:sendStartDungeonRequest(fightParam.chapterId, fightParam.episodeId, fightParam, 1)
 			AudioMgr.instance:trigger(AudioEnum.UI.Stop_HeroNormalVoc)
 		end
 	else
@@ -26,4 +30,4 @@ function var_0_0._enterFight(arg_2_0)
 	end
 end
 
-return var_0_0
+return TowerDeepHeroGroupFightView

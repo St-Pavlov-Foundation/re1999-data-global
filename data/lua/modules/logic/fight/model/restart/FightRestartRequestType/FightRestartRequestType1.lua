@@ -1,23 +1,25 @@
-﻿module("modules.logic.fight.model.restart.FightRestartRequestType.FightRestartRequestType1", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/restart/FightRestartRequestType/FightRestartRequestType1.lua
 
-local var_0_0 = class("FightRestartRequestType1", UserDataDispose)
+module("modules.logic.fight.model.restart.FightRestartRequestType.FightRestartRequestType1", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	arg_1_0:__onInit()
+local FightRestartRequestType1 = class("FightRestartRequestType1", UserDataDispose)
 
-	arg_1_0._fight_work = arg_1_1
-	arg_1_0._fightParam = arg_1_2
-	arg_1_0._episode_config = arg_1_3
-	arg_1_0._chapter_config = arg_1_4
+function FightRestartRequestType1:ctor(fight_work, fightParam, episode_config, chapter_config)
+	self:__onInit()
+
+	self._fight_work = fight_work
+	self._fightParam = fightParam
+	self._episode_config = episode_config
+	self._chapter_config = chapter_config
 end
 
-function var_0_0.requestFight(arg_2_0)
-	arg_2_0._fight_work:onDone(true)
+function FightRestartRequestType1:requestFight()
+	self._fight_work:onDone(true)
 	DungeonFightController.instance:restartStage()
 end
 
-function var_0_0.releaseSelf(arg_3_0)
-	arg_3_0:__onDispose()
+function FightRestartRequestType1:releaseSelf()
+	self:__onDispose()
 end
 
-return var_0_0
+return FightRestartRequestType1

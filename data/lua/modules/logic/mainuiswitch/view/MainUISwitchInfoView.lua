@@ -1,156 +1,157 @@
-﻿module("modules.logic.mainuiswitch.view.MainUISwitchInfoView", package.seeall)
+﻿-- chunkname: @modules/logic/mainuiswitch/view/MainUISwitchInfoView.lua
 
-local var_0_0 = class("MainUISwitchInfoView", BaseView)
+module("modules.logic.mainuiswitch.view.MainUISwitchInfoView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gomiddle = gohelper.findChild(arg_1_0.viewGO, "middle")
-	arg_1_0._gomainUI = gohelper.findChild(arg_1_0.viewGO, "middle/#go_mainUI")
-	arg_1_0._btnequip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/start/#btn_equip")
-	arg_1_0._goshowing = gohelper.findChild(arg_1_0.viewGO, "right/start/#go_showing")
-	arg_1_0._goLocked = gohelper.findChild(arg_1_0.viewGO, "right/start/#go_Locked")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/start/#btn_close")
-	arg_1_0._scrollcard = gohelper.findChildScrollRect(arg_1_0.viewGO, "right/mask/#scroll_card")
-	arg_1_0._goSceneName = gohelper.findChild(arg_1_0.viewGO, "left/LayoutGroup/#go_SceneName")
-	arg_1_0._txtSceneName = gohelper.findChildText(arg_1_0.viewGO, "left/LayoutGroup/#go_SceneName/#txt_SceneName")
-	arg_1_0._txtTime = gohelper.findChildText(arg_1_0.viewGO, "left/LayoutGroup/#go_SceneName/#txt_SceneName/#txt_Time")
-	arg_1_0._btnnamecheck = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left/LayoutGroup/#go_SceneName/#btn_namecheck")
-	arg_1_0._txtSceneDescr = gohelper.findChildText(arg_1_0.viewGO, "left/#txt_SceneDescr")
-	arg_1_0._btnshow = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_show")
-	arg_1_0._goSceneLogo4 = gohelper.findChild(arg_1_0.viewGO, "left/#go_SceneLogo4")
+local MainUISwitchInfoView = class("MainUISwitchInfoView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function MainUISwitchInfoView:onInitView()
+	self._gomiddle = gohelper.findChild(self.viewGO, "middle")
+	self._gomainUI = gohelper.findChild(self.viewGO, "middle/#go_mainUI")
+	self._btnequip = gohelper.findChildButtonWithAudio(self.viewGO, "right/start/#btn_equip")
+	self._goshowing = gohelper.findChild(self.viewGO, "right/start/#go_showing")
+	self._goLocked = gohelper.findChild(self.viewGO, "right/start/#go_Locked")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "right/start/#btn_close")
+	self._scrollcard = gohelper.findChildScrollRect(self.viewGO, "right/mask/#scroll_card")
+	self._goSceneName = gohelper.findChild(self.viewGO, "left/LayoutGroup/#go_SceneName")
+	self._txtSceneName = gohelper.findChildText(self.viewGO, "left/LayoutGroup/#go_SceneName/#txt_SceneName")
+	self._txtTime = gohelper.findChildText(self.viewGO, "left/LayoutGroup/#go_SceneName/#txt_SceneName/#txt_Time")
+	self._btnnamecheck = gohelper.findChildButtonWithAudio(self.viewGO, "left/LayoutGroup/#go_SceneName/#btn_namecheck")
+	self._txtSceneDescr = gohelper.findChildText(self.viewGO, "left/#txt_SceneDescr")
+	self._btnshow = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_show")
+	self._goSceneLogo4 = gohelper.findChild(self.viewGO, "left/#go_SceneLogo4")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnequip:AddClickListener(arg_2_0._btnequipOnClick, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnnamecheck:AddClickListener(arg_2_0._btnHideOnClick, arg_2_0)
-	arg_2_0._btnshow:AddClickListener(arg_2_0._btnshowOnClick, arg_2_0)
+function MainUISwitchInfoView:addEvents()
+	self._btnequip:AddClickListener(self._btnequipOnClick, self)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnnamecheck:AddClickListener(self._btnHideOnClick, self)
+	self._btnshow:AddClickListener(self._btnshowOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnequip:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnnamecheck:RemoveClickListener()
-	arg_3_0._btnshow:RemoveClickListener()
+function MainUISwitchInfoView:removeEvents()
+	self._btnequip:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
+	self._btnnamecheck:RemoveClickListener()
+	self._btnshow:RemoveClickListener()
 end
 
-function var_0_0._btnHideOnClick(arg_4_0)
-	if arg_4_0._hideTime and Time.time - arg_4_0._hideTime < 0.2 then
+function MainUISwitchInfoView:_btnHideOnClick()
+	if self._hideTime and Time.time - self._hideTime < 0.2 then
 		return
 	end
 
-	arg_4_0._hideTime = Time.time
-	arg_4_0._showUI = not arg_4_0._showUI
+	self._hideTime = Time.time
+	self._showUI = not self._showUI
 
-	gohelper.setActive(arg_4_0._goleft, arg_4_0._showUI and arg_4_0._isCanShowLeft)
-	gohelper.setActive(arg_4_0._goright, arg_4_0._showUI)
-	gohelper.setActive(arg_4_0._btnshow.gameObject, not arg_4_0._showUI)
-	MainUISwitchController.instance:dispatchEvent(MainUISwitchEvent.PreviewSwitchUIVisible, arg_4_0._showUI)
+	gohelper.setActive(self._goleft, self._showUI and self._isCanShowLeft)
+	gohelper.setActive(self._goright, self._showUI)
+	gohelper.setActive(self._btnshow.gameObject, not self._showUI)
+	MainUISwitchController.instance:dispatchEvent(MainUISwitchEvent.PreviewSwitchUIVisible, self._showUI)
 end
 
-function var_0_0._btnshowOnClick(arg_5_0)
-	if not arg_5_0._showUI and MainUISwitchController.instance:isClickEagle() then
+function MainUISwitchInfoView:_btnshowOnClick()
+	if not self._showUI and MainUISwitchController.instance:isClickEagle() then
 		MainUISwitchController.instance:dispatchEvent(MainUISwitchEvent.ClickEagle)
 
 		return
 	end
 
-	arg_5_0:_btnHideOnClick()
+	self:_btnHideOnClick()
 end
 
-function var_0_0._btnequipOnClick(arg_6_0)
-	MainUISwitchController.instance:setCurMainUIStyle(arg_6_0._selectSkinId, arg_6_0._showSceneStatus, arg_6_0)
+function MainUISwitchInfoView:_btnequipOnClick()
+	MainUISwitchController.instance:setCurMainUIStyle(self._selectSkinId, self._showSceneStatus, self)
 end
 
-function var_0_0._showSceneStatus(arg_7_0)
-	local var_7_0 = MainUISwitchModel.getUIStatus(arg_7_0._selectSkinId) == MainSceneSwitchEnum.SceneStutas.Unlock
-	local var_7_1 = arg_7_0._selectSkinId == MainUISwitchModel.instance:getCurUseUI()
+function MainUISwitchInfoView:_showSceneStatus()
+	local sceneStatus = MainUISwitchModel.getUIStatus(self._selectSkinId)
+	local isUnlock = sceneStatus == MainSceneSwitchEnum.SceneStutas.Unlock
+	local isEquip = self._selectSkinId == MainUISwitchModel.instance:getCurUseUI()
 
-	gohelper.setActive(arg_7_0._btnequip, var_7_0 and not var_7_1)
-	gohelper.setActive(arg_7_0._goshowing, var_7_0 and var_7_1)
-	gohelper.setActive(arg_7_0._goLocked, not var_7_0)
-	arg_7_0:_updateSceneInfo()
+	gohelper.setActive(self._btnequip, isUnlock and not isEquip)
+	gohelper.setActive(self._goshowing, isUnlock and isEquip)
+	gohelper.setActive(self._goLocked, not isUnlock)
+	self:_updateSceneInfo()
 end
 
-function var_0_0._btncloseOnClick(arg_8_0)
-	arg_8_0:closeThis()
+function MainUISwitchInfoView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_9_0)
-	arg_9_0._rootAnimator = arg_9_0.viewGO:GetComponent("Animator")
-	arg_9_0._goleft = gohelper.findChild(arg_9_0.viewGO, "left")
-	arg_9_0._goright = gohelper.findChild(arg_9_0.viewGO, "right")
+function MainUISwitchInfoView:_editableInitView()
+	self._rootAnimator = self.viewGO:GetComponent("Animator")
+	self._goleft = gohelper.findChild(self.viewGO, "left")
+	self._goright = gohelper.findChild(self.viewGO, "right")
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0._showUI = true
-	arg_10_0._selectSkinId = arg_10_0.viewParam.SkinId
-	arg_10_0._isCanShowLeft = true
+function MainUISwitchInfoView:onOpen()
+	self._showUI = true
+	self._selectSkinId = self.viewParam.SkinId
+	self._isCanShowLeft = true
 
-	if arg_10_0.viewParam and arg_10_0.viewParam.isNotShowLeft == true then
-		arg_10_0._isCanShowLeft = false
+	if self.viewParam and self.viewParam.isNotShowLeft == true then
+		self._isCanShowLeft = false
 	end
 
-	arg_10_0:_showSceneStatus()
+	self:_showSceneStatus()
 
-	if not arg_10_0.viewParam.noInfoEffect then
-		arg_10_0._rootAnimator:Play("info", 0, 0)
+	if not self.viewParam.noInfoEffect then
+		self._rootAnimator:Play("info", 0, 0)
 		AudioMgr.instance:trigger(AudioEnum.MainSceneSkin.play_ui_main_get_scene)
 	end
 
-	if not arg_10_0._goblurmask then
-		arg_10_0._goblurmask = arg_10_0:getResInst(arg_10_0.viewContainer:getSetting().otherRes[2], arg_10_0._gomiddle)
+	if not self._goblurmask then
+		self._goblurmask = self:getResInst(self.viewContainer:getSetting().otherRes[2], self._gomiddle)
 	end
 
-	if not arg_10_0.viewParam or not arg_10_0.viewParam.sceneId then
-		local var_10_0 = MainSceneSwitchModel.instance:getCurSceneId()
-	end
+	local sceneId = self.viewParam and self.viewParam.sceneId or MainSceneSwitchModel.instance:getCurSceneId()
 
-	gohelper.setActive(arg_10_0._goleft, arg_10_0._showUI and arg_10_0._isCanShowLeft)
+	gohelper.setActive(self._goleft, self._showUI and self._isCanShowLeft)
 end
 
-function var_0_0._updateSceneInfo(arg_11_0)
-	local var_11_0 = lua_scene_ui.configDict[arg_11_0._selectSkinId]
+function MainUISwitchInfoView:_updateSceneInfo()
+	local config = lua_scene_ui.configDict[self._selectSkinId]
 
-	if not var_11_0 then
+	if not config then
 		return
 	end
 
 	MainSceneSwitchController.instance:dispatchEvent(MainSceneSwitchEvent.ShowPreviewSceneInfo, MainSceneSwitchModel.instance:getCurSceneId())
 
-	local var_11_1 = var_11_0.itemId
-	local var_11_2 = lua_item.configDict[var_11_1]
+	local itemId = config.itemId
+	local itemConfig = lua_item.configDict[itemId]
 
-	if not var_11_2 then
+	if not itemConfig then
 		return
 	end
 
-	arg_11_0._txtSceneName.text = var_11_2.name
-	arg_11_0._txtSceneDescr.text = var_11_2.desc
+	self._txtSceneName.text = itemConfig.name
+	self._txtSceneDescr.text = itemConfig.desc
 
-	if var_11_0.defaultUnlock == 1 then
-		local var_11_3 = PlayerModel.instance:getPlayinfo()
-		local var_11_4 = TimeUtil.timestampToString5(ServerTime.timeInLocal(var_11_3.registerTime / 1000))
+	if config.defaultUnlock == 1 then
+		local info = PlayerModel.instance:getPlayinfo()
+		local time = TimeUtil.timestampToString5(ServerTime.timeInLocal(info.registerTime / 1000))
 
-		arg_11_0._txtTime.text = string.format(luaLang("receive_time"), var_11_4)
+		self._txtTime.text = string.format(luaLang("receive_time"), time)
 	else
-		local var_11_5 = ItemModel.instance:getById(var_11_1)
+		local itemMo = ItemModel.instance:getById(itemId)
 
-		if var_11_5 and var_11_5.quantity > 0 and var_11_5.lastUpdateTime then
-			local var_11_6 = TimeUtil.timestampToString5(ServerTime.timeInLocal(var_11_5.lastUpdateTime / 1000))
+		if itemMo and itemMo.quantity > 0 and itemMo.lastUpdateTime then
+			local time = TimeUtil.timestampToString5(ServerTime.timeInLocal(itemMo.lastUpdateTime / 1000))
 
-			arg_11_0._txtTime.text = string.format(luaLang("receive_time"), var_11_6)
+			self._txtTime.text = string.format(luaLang("receive_time"), time)
 		else
-			arg_11_0._txtTime.text = ""
+			self._txtTime.text = ""
 		end
 	end
 end
 
-function var_0_0.onClose(arg_12_0)
+function MainUISwitchInfoView:onClose()
 	return
 end
 
-return var_0_0
+return MainUISwitchInfoView

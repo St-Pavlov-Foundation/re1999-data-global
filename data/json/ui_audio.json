@@ -12538,5 +12538,785 @@
     "id": 316008,
     "eventName": "play_ui_mingdi_ysm_finish",
     "bankName": "ui_activity_3_1_mingdi_yeshumei"
+  },
+  {
+    "id": 320001,
+    "eventName": "play_ui_fight_crystalopen3_2",
+    "bankName": "fight_ui_sfx_berylux3_2"
+  },
+  {
+    "id": 320002,
+    "eventName": "play_ui_fight_crystalclick3_2",
+    "bankName": "fight_ui_sfx_berylux3_2"
+  },
+  {
+    "id": 320003,
+    "eventName": "play_ui_fight_crystalinlaid_pur3_2",
+    "bankName": "fight_ui_sfx_berylux3_2"
+  },
+  {
+    "id": 320004,
+    "eventName": "play_ui_fight_crystalinlaid_grn3_2",
+    "bankName": "fight_ui_sfx_berylux3_2"
+  },
+  {
+    "id": 320005,
+    "eventName": "play_ui_fight_crystalinlaid_bl3_2",
+    "bankName": "fight_ui_sfx_berylux3_2"
+  },
+  {
+    "id": 320006,
+    "eventName": "play_ui_fight_crystalreset3_2",
+    "bankName": "fight_ui_sfx_berylux3_2"
+  },
+  {
+    "id": 320007,
+    "eventName": "play_ui_fight_crystalcomp3_2",
+    "bankName": "fight_ui_sfx_berylux3_2"
+  },
+  {
+    "id": 320008,
+    "eventName": "play_ui_fight_crystalburn3_2",
+    "bankName": "fight_ui_sfx_berylux3_2"
+  },
+  {
+    "id": 320009,
+    "eventName": "play_ui_fight_powerup_3_2",
+    "bankName": "fight_ui_sfx3_2"
+  },
+  {
+    "id": 320010,
+    "eventName": "play_ui_fight_powerdown_3_2",
+    "bankName": "fight_ui_sfx3_2"
+  },
+  {
+    "id": 320011,
+    "eventName": "play_ui_shengyan_pailian",
+    "bankName": "ui_activity_3_2_shengyan_pailian"
+  },
+  {
+    "id": 320012,
+    "eventName": "play_hero3134_mainsfx_adm_action",
+    "bankName": "hero3134_mainsfx"
+  },
+  {
+    "id": 320013,
+    "eventName": "stop_hero3134_mainsfx_adm_action",
+    "bankName": "hero3134_mainsfx"
+  },
+  {
+    "id": 320014,
+    "eventName": "play_hero310003_mainsfx_adm_action",
+    "bankName": "hero310003_mainsfx"
+  },
+  {
+    "id": 320015,
+    "eventName": "stop_hero310003_mainsfx_adm_action",
+    "bankName": "hero310003_mainsfx"
+  },
+  {
+    "id": 320016,
+    "eventName": "play_ui_diqiu_yure_success",
+    "bankName": "ui_activity_2_4_diqiu_yure"
+  },
+  {
+    "id": 320017,
+    "eventName": "play_ui_shengyan_yishi_unlock",
+    "bankName": "ui_activity_3_2_shengyan_yishi_matilda"
+  },
+  {
+    "id": 320018,
+    "eventName": "play_ui_shengyan_yishi_rewards",
+    "bankName": "ui_activity_3_2_shengyan_yishi_matilda"
+  },
+  {
+    "id": 320019,
+    "eventName": "play_ui_shengyan_yishi_click",
+    "bankName": "ui_activity_3_2_shengyan_yishi_matilda"
+  },
+  {
+    "id": 320020,
+    "eventName": "play_ui_shengyan_yishi_result",
+    "bankName": "ui_activity_3_2_shengyan_yishi_matilda"
+  },
+  {
+    "id": 320021,
+    "eventName": "play_ui_checkpoint_noise_skyparis_common_loop",
+    "bankName": "activtiy_shengyan_combataudio_noise"
+  },
+  {
+    "id": 320022,
+    "eventName": "play_ui_checkpoint_noise_skyparis_boss_loop",
+    "bankName": "activtiy_shengyan_combataudio_noise"
+  },
+  {
+    "id": 320023,
+    "eventName": "play_ui_checkpoint_noise_ballroom_loop",
+    "bankName": "activtiy_shengyan_combataudio_noise"
+  },
+  {
+    "id": 320024,
+    "eventName": "play_ui_checkpoint_noise_tomb_loop",
+    "bankName": "activtiy_shengyan_combataudio_noise"
+  },
+  {
+    "id": 320025,
+    "eventName": "play_ui_checkpoint_noise_parisstreet_loop",
+    "bankName": "activtiy_shengyan_combataudio_noise"
+  },
+  {
+    "id": 320026,
+    "eventName": "play_ui_checkpoint_noise_workshop_loop",
+    "bankName": "activtiy_shengyan_combataudio_noise"
+  },
+  {
+    "id": 20320011,
+    "eventName": "play_replay_music_theme_3_2",
+    "bankName": "ui_replay_mainmusic3_2"
+  },
+  {
+    "id": 20320101,
+    "eventName": "play_ui_utim_open",
+    "bankName": "ui_utim_3_2"
+  },
+  {
+    "id": 20320102,
+    "eventName": "play_ui_utim_xinxi",
+    "bankName": "ui_utim_3_2"
+  },
+  {
+    "id": 20320103,
+    "eventName": "play_ui_utim_shua",
+    "bankName": "ui_utim_3_2"
+  },
+  {
+    "id": 20320104,
+    "eventName": "play_ui_utim_ruzhu",
+    "bankName": "ui_utim_3_2"
+  },
+  {
+    "id": 20320105,
+    "eventName": "play_ui_utim_beijing",
+    "bankName": "ui_utim_3_2"
+  },
+  {
+    "id": 20320106,
+    "eventName": "play_ui_utim_zhuanban",
+    "bankName": "ui_utim_3_2"
+  },
+  {
+    "id": 20320107,
+    "eventName": "play_ui_utim_dianan",
+    "bankName": "ui_utim_3_2"
+  },
+  {
+    "id": 20320108,
+    "eventName": "play_ui_utim_tiqi",
+    "bankName": "ui_utim_3_2"
+  },
+  {
+    "id": 20320109,
+    "eventName": "play_ui_utim_songkai",
+    "bankName": "ui_utim_3_2"
+  },
+  {
+    "id": 20320110,
+    "eventName": "play_ui_utim_daiji",
+    "bankName": "ui_utim_3_2"
+  },
+  {
+    "id": 20320111,
+    "eventName": "play_ui_utim_daiji3",
+    "bankName": "ui_utim_3_2"
+  },
+  {
+    "id": 20320112,
+    "eventName": "play_ui_utim_rain1_loop",
+    "bankName": "ui_utim_3_2"
+  },
+  {
+    "id": 20320113,
+    "eventName": "stop_ui_utim_rain1_loop",
+    "bankName": "ui_utim_3_2"
+  },
+  {
+    "id": 20320114,
+    "eventName": "play_ui_utim_rain2_loop",
+    "bankName": "ui_utim_3_2"
+  },
+  {
+    "id": 20320115,
+    "eventName": "stop_ui_utim_rain2_loop",
+    "bankName": "ui_utim_3_2"
+  },
+  {
+    "id": 20320116,
+    "eventName": "play_ui_zongmao_jiesuo",
+    "bankName": "ui_zongmao_3_2"
+  },
+  {
+    "id": 20320117,
+    "eventName": "play_ui_zongmao_jiafen_loop",
+    "bankName": "ui_zongmao_3_2"
+  },
+  {
+    "id": 20320118,
+    "eventName": "stop_ui_zongmao_jiafen_loop",
+    "bankName": "ui_zongmao_3_2"
+  },
+  {
+    "id": 20320119,
+    "eventName": "play_ui_note_course_unlock",
+    "bankName": "main_ui"
+  },
+  {
+    "id": 20320120,
+    "eventName": "play_ui_shengyan_box_open",
+    "bankName": "ui_activity_3_2_shengyan_box_carnival"
+  },
+  {
+    "id": 20320121,
+    "eventName": "play_ui_tangren_qiandao_open",
+    "bankName": "ui_activity_2_5_tangren_qiandao"
+  },
+  {
+    "id": 20320122,
+    "eventName": "play_ui_shengyan_box_xunyou_open",
+    "bankName": "ui_activity_3_2_shengyan_box_carnival"
+  },
+  {
+    "id": 20320123,
+    "eventName": "play_ui_tangren_qiandao_open",
+    "bankName": "ui_activity_2_5_tangren_qiandao"
+  },
+  {
+    "id": 20320124,
+    "eventName": "play_ui_shengyan_box_shijie_complete",
+    "bankName": "ui_activity_3_2_shengyan_box_carnival"
+  },
+  {
+    "id": 20320125,
+    "eventName": "play_ui_shengyan_box_shijie_reward",
+    "bankName": "ui_activity_3_2_shengyan_box_carnival"
+  },
+  {
+    "id": 20320126,
+    "eventName": "play_ui_tangren_yuanxiao_open",
+    "bankName": "ui_activity_2_5_tangren"
+  },
+  {
+    "id": 20320127,
+    "eventName": "play_ui_shengyan_box_songjin_open",
+    "bankName": "ui_activity_3_2_shengyan_box_carnival"
+  },
+  {
+    "id": 20320128,
+    "eventName": "play_ui_tujianskin_group_switch_1",
+    "bankName": "ui_tujianskin_2_8"
+  },
+  {
+    "id": 20320129,
+    "eventName": "play_ui_shengyan_box_songjin_game",
+    "bankName": "ui_activity_3_2_shengyan_box_carnival"
+  },
+  {
+    "id": 20320130,
+    "eventName": "play_ui_shengyan_box_songjin_draw",
+    "bankName": "ui_activity_3_2_shengyan_box_carnival"
+  },
+  {
+    "id": 20320131,
+    "eventName": "play_ui_shengyan_box_songjin_withdraw",
+    "bankName": "ui_activity_3_2_shengyan_box_carnival"
+  },
+  {
+    "id": 20320132,
+    "eventName": "play_ui_shengyan_box_songjin_flip",
+    "bankName": "ui_activity_3_2_shengyan_box_carnival"
+  },
+  {
+    "id": 20320133,
+    "eventName": "play_ui_shengyan_box_songjin_shuffle",
+    "bankName": "ui_activity_3_2_shengyan_box_carnival"
+  },
+  {
+    "id": 20320134,
+    "eventName": "play_ui_shengyan_box_songjin_win",
+    "bankName": "ui_activity_3_2_shengyan_box_carnival"
+  },
+  {
+    "id": 20320135,
+    "eventName": "play_artificial_ui_unlockdream",
+    "bankName": "artificial_ui"
+  },
+  {
+    "id": 20320136,
+    "eventName": "play_ui_shengyan_box_songjin_fail",
+    "bankName": "ui_activity_3_2_shengyan_box_carnival"
+  },
+  {
+    "id": 20320140,
+    "eventName": "play_ui_shengyan_box_songjin_click",
+    "bankName": "ui_activity_3_2_shengyan_box_carnival"
+  },
+  {
+    "id": 20320141,
+    "eventName": "play_ui_fight_zmux_man",
+    "bankName": "fight_ui_sfx_zmux3_2"
+  },
+  {
+    "id": 20320142,
+    "eventName": "play_ui_fight_zmux_0",
+    "bankName": "fight_ui_sfx_zmux3_2"
+  },
+  {
+    "id": 20320143,
+    "eventName": "play_ui_fight_zmux_huihe1",
+    "bankName": "fight_ui_sfx_zmux3_2"
+  },
+  {
+    "id": 20320144,
+    "eventName": "play_ui_fight_zmux_huihe2",
+    "bankName": "fight_ui_sfx_zmux3_2"
+  },
+  {
+    "id": 20320201,
+    "eventName": "play_ui_shengyan_open_1",
+    "bankName": "ui_activity_3_2_shengyan"
+  },
+  {
+    "id": 20320202,
+    "eventName": "play_ui_shengyan_open_2",
+    "bankName": "ui_activity_3_2_shengyan"
+  },
+  {
+    "id": 20320301,
+    "eventName": "play_ui_shengyan_beilier_open_1",
+    "bankName": "ui_activity_3_2_shengyan_beilier"
+  },
+  {
+    "id": 20320302,
+    "eventName": "play_ui_shengyan_beilier_open_2",
+    "bankName": "ui_activity_3_2_shengyan_beilier"
+  },
+  {
+    "id": 20320303,
+    "eventName": "play_ui_shengyan_beilier_open_sp",
+    "bankName": "ui_activity_3_2_shengyan_beilier"
+  },
+  {
+    "id": 20320401,
+    "eventName": "play_ui_shengyan_guardian_list",
+    "bankName": "ui_activity_3_2_shengyan_zizouqi"
+  },
+  {
+    "id": 20320402,
+    "eventName": "play_ui_shengyan_card_pack",
+    "bankName": "ui_activity_3_2_shengyan_zizouqi"
+  },
+  {
+    "id": 20320403,
+    "eventName": "play_ui_shengyan_fire_bullet",
+    "bankName": "ui_activity_3_2_shengyan_zizouqi"
+  },
+  {
+    "id": 20320404,
+    "eventName": "play_ui_shengyan_gold_coins",
+    "bankName": "ui_activity_3_2_shengyan_zizouqi"
+  },
+  {
+    "id": 20320405,
+    "eventName": "play_ui_shengyan_explode",
+    "bankName": "ui_activity_3_2_shengyan_zizouqi"
+  },
+  {
+    "id": 320027,
+    "eventName": "play_ui_shengyan_tarot_special_exhibition",
+    "bankName": "ui_activity_3_2_shengyan"
+  },
+  {
+    "id": 320028,
+    "eventName": "play_ui_shengyan_item_appeared",
+    "bankName": "ui_activity_3_2_shengyan"
+  },
+  {
+    "id": 320029,
+    "eventName": "play_ui_shengyan_pull_drawer",
+    "bankName": "ui_activity_3_2_shengyan"
+  },
+  {
+    "id": 320030,
+    "eventName": "play_ui_shengyan_unsheathe_dagger",
+    "bankName": "ui_activity_3_2_shengyan"
+  },
+  {
+    "id": 20320501,
+    "eventName": "play_ui_shengyan_hdl_syn1",
+    "bankName": "ui_activity_3_2_shengyan_huidiaolan"
+  },
+  {
+    "id": 20320502,
+    "eventName": "play_ui_shengyan_hdl_syn2",
+    "bankName": "ui_activity_3_2_shengyan_huidiaolan"
+  },
+  {
+    "id": 20320503,
+    "eventName": "play_ui_shengyan_hdl_move",
+    "bankName": "ui_activity_3_2_shengyan_huidiaolan"
+  },
+  {
+    "id": 20320504,
+    "eventName": "play_ui_shengyan_hdl_occur",
+    "bankName": "ui_activity_3_2_shengyan_huidiaolan"
+  },
+  {
+    "id": 20320505,
+    "eventName": "play_ui_shengyan_hdl_win1",
+    "bankName": "ui_activity_3_2_shengyan_huidiaolan"
+  },
+  {
+    "id": 20320506,
+    "eventName": "play_ui_shengyan_hdl_circle",
+    "bankName": "ui_activity_3_2_shengyan_huidiaolan"
+  },
+  {
+    "id": 20320507,
+    "eventName": "play_ui_shengyan_hdl_change",
+    "bankName": "ui_activity_3_2_shengyan_huidiaolan"
+  },
+  {
+    "id": 20320508,
+    "eventName": "play_ui_shengyan_hdl_swap",
+    "bankName": "ui_activity_3_2_shengyan_huidiaolan"
+  },
+  {
+    "id": 20320509,
+    "eventName": "play_ui_shengyan_hdl_win2",
+    "bankName": "ui_activity_3_2_shengyan_huidiaolan"
+  },
+  {
+    "id": 20320510,
+    "eventName": "play_ui_shengyan_hdl_level",
+    "bankName": "ui_activity_3_2_shengyan_huidiaolan"
+  },
+  {
+    "id": 20320601,
+    "eventName": "play_ui_dungeon3_2_fightnote",
+    "bankName": "ui_dungeon3_2_fightux"
+  },
+  {
+    "id": 20320602,
+    "eventName": "play_ui_dungeon3_2_fightactive",
+    "bankName": "ui_dungeon3_2_fightux"
+  },
+  {
+    "id": 20320603,
+    "eventName": "play_ui_dungeon3_2_fightcard",
+    "bankName": "ui_dungeon3_2_fightux"
+  },
+  {
+    "id": 20320604,
+    "eventName": "play_ui_dungeon3_2_fightopen",
+    "bankName": "ui_dungeon3_2_fightux"
+  },
+  {
+    "id": 20320605,
+    "eventName": "play_ui_dungeon3_2_fightclose",
+    "bankName": "ui_dungeon3_2_fightux"
+  },
+  {
+    "id": 20320606,
+    "eventName": "play_ui_dungeon3_2_fighttime",
+    "bankName": "ui_dungeon3_2_fightux"
+  },
+  {
+    "id": 20320607,
+    "eventName": "play_ui_dungeon3_2_fightup",
+    "bankName": "ui_dungeon3_2_fightux"
+  },
+  {
+    "id": 20320608,
+    "eventName": "play_ui_dungeon3_2_start_1",
+    "bankName": "ui_dungeon3_2_outlying"
+  },
+  {
+    "id": 20320609,
+    "eventName": "play_ui_dungeon3_2_start_2_1",
+    "bankName": "ui_dungeon3_2_outlying"
+  },
+  {
+    "id": 20320610,
+    "eventName": "play_ui_dungeon3_2_start_2_2",
+    "bankName": "ui_dungeon3_2_outlying"
+  },
+  {
+    "id": 20320611,
+    "eventName": "play_ui_dungeon3_2_alchemy",
+    "bankName": "ui_dungeon3_2_outlying"
+  },
+  {
+    "id": 20320612,
+    "eventName": "play_ui_dungeon3_2_alchemyidea",
+    "bankName": "ui_dungeon3_2_outlying"
+  },
+  {
+    "id": 20320613,
+    "eventName": "play_ui_dungeon3_2_choose_4",
+    "bankName": "ui_dungeon3_2_outlying"
+  },
+  {
+    "id": 20320614,
+    "eventName": "play_ui_dungeon3_2_add",
+    "bankName": "ui_dungeon3_2_infield"
+  },
+  {
+    "id": 20320615,
+    "eventName": "play_ui_dungeon3_2_cancel",
+    "bankName": "ui_dungeon3_2_infield"
+  },
+  {
+    "id": 20320616,
+    "eventName": "play_ui_dungeon3_2_click",
+    "bankName": "ui_dungeon3_2_infield"
+  },
+  {
+    "id": 20320617,
+    "eventName": "play_ui_dungeon3_2_alchemyideasuc",
+    "bankName": "ui_dungeon3_2_outlying"
+  },
+  {
+    "id": 20320618,
+    "eventName": "play_ui_dungeon3_2_ideadetails",
+    "bankName": "ui_dungeon3_2_outlying"
+  },
+  {
+    "id": 20320619,
+    "eventName": "play_ui_dungeon3_2_guide",
+    "bankName": "ui_dungeon3_2_outlying"
+  },
+  {
+    "id": 20320620,
+    "eventName": "play_ui_dungeon3_2_guideorch",
+    "bankName": "ui_dungeon3_2_outlying"
+  },
+  {
+    "id": 20320621,
+    "eventName": "play_ui_dungeon3_2_orchclick",
+    "bankName": "ui_dungeon3_2_infield"
+  },
+  {
+    "id": 20320622,
+    "eventName": "play_ui_dungeon3_2_lose",
+    "bankName": "ui_dungeon3_2_outlying"
+  },
+  {
+    "id": 20320623,
+    "eventName": "play_ui_dungeon3_2_featurette_1",
+    "bankName": "ui_dungeon3_2_outlying"
+  },
+  {
+    "id": 20320624,
+    "eventName": "play_ui_dungeon3_2_featurette_2",
+    "bankName": "ui_dungeon3_2_outlying"
+  },
+  {
+    "id": 20320625,
+    "eventName": "play_ui_dungeon3_2_featurette_3",
+    "bankName": "ui_dungeon3_2_outlying"
+  },
+  {
+    "id": 20320626,
+    "eventName": "play_ui_dungeon3_2_rating",
+    "bankName": "ui_dungeon3_2_outlying"
+  },
+  {
+    "id": 20320627,
+    "eventName": "play_ui_dungeon3_2_report",
+    "bankName": "ui_dungeon3_2_outlying"
+  },
+  {
+    "id": 20320628,
+    "eventName": "play_ui_dungeon3_2_over",
+    "bankName": "ui_dungeon3_2_outlying"
+  },
+  {
+    "id": 20320629,
+    "eventName": "play_ui_dungeon3_2_featureup",
+    "bankName": "ui_dungeon3_2_infield"
+  },
+  {
+    "id": 20320630,
+    "eventName": "play_ui_dungeon3_2_start_3_1",
+    "bankName": "ui_dungeon3_2_infield"
+  },
+  {
+    "id": 20320631,
+    "eventName": "play_ui_dungeon3_2_start_3_2",
+    "bankName": "ui_dungeon3_2_infield"
+  },
+  {
+    "id": 20320632,
+    "eventName": "play_ui_dungeon3_2_whoosh",
+    "bankName": "ui_dungeon3_2_infield"
+  },
+  {
+    "id": 20320633,
+    "eventName": "play_ui_dungeon3_2_orchfirst",
+    "bankName": "ui_dungeon3_2_infield"
+  },
+  {
+    "id": 20320634,
+    "eventName": "play_ui_dungeon3_2_orchclick",
+    "bankName": "ui_dungeon3_2_infield"
+  },
+  {
+    "id": 20320635,
+    "eventName": "play_ui_dungeon3_2loading_loop",
+    "bankName": "ui_dungeon3_2_infield"
+  },
+  {
+    "id": 20320636,
+    "eventName": "stop_ui_dungeon3_2loading_loop",
+    "bankName": "ui_dungeon3_2_infield"
+  },
+  {
+    "id": 20320637,
+    "eventName": "play_ui_dungeon3_2_choose_1",
+    "bankName": "ui_dungeon3_2_infield"
+  },
+  {
+    "id": 20320638,
+    "eventName": "play_ui_dungeon3_2_choose_2",
+    "bankName": "ui_dungeon3_2_infield"
+  },
+  {
+    "id": 20320639,
+    "eventName": "play_ui_dungeon3_2_diceroll",
+    "bankName": "ui_dungeon3_2_infield"
+  },
+  {
+    "id": 20320640,
+    "eventName": "play_ui_dungeon3_2_dicefix",
+    "bankName": "ui_dungeon3_2_infield"
+  },
+  {
+    "id": 20320641,
+    "eventName": "play_ui_dungeon3_2_dicevs",
+    "bankName": "ui_dungeon3_2_infield"
+  },
+  {
+    "id": 20320642,
+    "eventName": "play_ui_dungeon3_2_dicesucc",
+    "bankName": "ui_dungeon3_2_infield"
+  },
+  {
+    "id": 20320643,
+    "eventName": "play_ui_dungeon3_2_dicefall",
+    "bankName": "ui_dungeon3_2_infield"
+  },
+  {
+    "id": 20320644,
+    "eventName": "play_ui_dungeon3_2_mysteryup",
+    "bankName": "ui_dungeon3_2_infield"
+  },
+  {
+    "id": 20320645,
+    "eventName": "play_ui_dungeon3_2_choose_3",
+    "bankName": "ui_dungeon3_2_infield"
+  },
+  {
+    "id": 20320646,
+    "eventName": "play_ui_dungeon3_2_attributeup",
+    "bankName": "ui_dungeon3_2_infield"
+  },
+  {
+    "id": 20320647,
+    "eventName": "play_ui_dungeon3_2_featureup",
+    "bankName": "ui_dungeon3_2_infield"
+  },
+  {
+    "id": 20320648,
+    "eventName": "play_ui_dungeon3_2_click",
+    "bankName": "ui_dungeon3_2_infield"
+  },
+  {
+    "id": 20320649,
+    "eventName": "play_ui_dungeon3_2_hero_menu",
+    "bankName": "ui_dungeon3_2_infield"
+  },
+  {
+    "id": 20320650,
+    "eventName": "play_ui_dungeon3_2_slide_1",
+    "bankName": "ui_dungeon3_2_infield"
+  },
+  {
+    "id": 20320651,
+    "eventName": "play_ui_dungeon3_2_slide_2",
+    "bankName": "ui_dungeon3_2_infield"
+  },
+  {
+    "id": 20320652,
+    "eventName": "play_ui_dungeon3_2_add",
+    "bankName": "ui_dungeon3_2_infield"
+  },
+  {
+    "id": 20320653,
+    "eventName": "play_ui_dungeon3_2_cancel",
+    "bankName": "ui_dungeon3_2_infield"
+  },
+  {
+    "id": 20320654,
+    "eventName": "play_ui_dungeon3_2_click",
+    "bankName": "ui_dungeon3_2_infield"
+  },
+  {
+    "id": 20320655,
+    "eventName": "play_ui_dungeon3_2_choosetime",
+    "bankName": "ui_dungeon3_2_infield"
+  },
+  {
+    "id": 20320656,
+    "eventName": "play_ui_dungeon3_2_timecome",
+    "bankName": "ui_dungeon3_2_infield"
+  },
+  {
+    "id": 20320657,
+    "eventName": "play_ui_dungeon3_2_orchchimes",
+    "bankName": "ui_dungeon3_2_infield"
+  },
+  {
+    "id": 20320658,
+    "eventName": "play_ui_dungeon3_2_orchslapstick",
+    "bankName": "ui_dungeon3_2_infield"
+  },
+  {
+    "id": 20320659,
+    "eventName": "play_ui_dungeon3_2_orchpizz",
+    "bankName": "ui_dungeon3_2_infield"
+  },
+  {
+    "id": 20320660,
+    "eventName": "play_ui_dungeon3_2_orchcym",
+    "bankName": "ui_dungeon3_2_infield"
+  },
+  {
+    "id": 20320661,
+    "eventName": "play_ui_dungeon3_2_win",
+    "bankName": "ui_dungeon3_2_outlying"
+  },
+  {
+    "id": 20320662,
+    "eventName": "play_ui_dungeon3_2_collectible",
+    "bankName": "ui_dungeon3_2_outlying"
+  },
+  {
+    "id": 20320663,
+    "eventName": "play_artificial_ui_mapfinish",
+    "bankName": "artificial_ui"
+  },
+  {
+    "id": 20320664,
+    "eventName": "stop_ui_dungeon3_2_diceroll",
+    "bankName": "ui_dungeon3_2_infield"
   }
 ]

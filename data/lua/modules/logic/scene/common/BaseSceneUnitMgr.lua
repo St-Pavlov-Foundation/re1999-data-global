@@ -1,96 +1,98 @@
-﻿module("modules.logic.scene.common.BaseSceneUnitMgr", package.seeall)
+﻿-- chunkname: @modules/logic/scene/common/BaseSceneUnitMgr.lua
 
-local var_0_0 = class("BaseSceneUnitMgr", BaseSceneComp)
+module("modules.logic.scene.common.BaseSceneUnitMgr", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0, arg_1_1)
+local BaseSceneUnitMgr = class("BaseSceneUnitMgr", BaseSceneComp)
 
-	arg_1_0._tagUnitDict = {}
-	arg_1_0._containerGO = arg_1_0:getCurScene():getSceneContainerGO()
+function BaseSceneUnitMgr:ctor(scene)
+	BaseSceneUnitMgr.super.ctor(self, scene)
+
+	self._tagUnitDict = {}
+	self._containerGO = self:getCurScene():getSceneContainerGO()
 end
 
-function var_0_0.onSceneClose(arg_2_0)
-	arg_2_0:removeAllUnits()
+function BaseSceneUnitMgr:onSceneClose()
+	self:removeAllUnits()
 end
 
-function var_0_0.addUnit(arg_3_0, arg_3_1)
-	gohelper.addChild(arg_3_0._containerGO, arg_3_1.go)
+function BaseSceneUnitMgr:addUnit(unit)
+	gohelper.addChild(self._containerGO, unit.go)
 
-	local var_3_0 = arg_3_1.go.tag
-	local var_3_1 = arg_3_0._tagUnitDict[var_3_0]
+	local tag = unit.go.tag
+	local tagUnits = self._tagUnitDict[tag]
 
-	if not var_3_1 then
-		var_3_1 = {}
-		arg_3_0._tagUnitDict[var_3_0] = var_3_1
+	if not tagUnits then
+		tagUnits = {}
+		self._tagUnitDict[tag] = tagUnits
 	end
 
-	var_3_1[arg_3_1.id] = arg_3_1
+	tagUnits[unit.id] = unit
 end
 
-function var_0_0.removeUnit(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = arg_4_0._tagUnitDict[arg_4_1]
+function BaseSceneUnitMgr:removeUnit(unitTag, unitId)
+	local tagUnits = self._tagUnitDict[unitTag]
 
-	if var_4_0 then
-		local var_4_1 = var_4_0[arg_4_2]
+	if tagUnits then
+		local unit = tagUnits[unitId]
 
-		if var_4_1 then
-			var_4_0[arg_4_2] = nil
+		if unit then
+			tagUnits[unitId] = nil
 
-			arg_4_0:destroyUnit(var_4_1)
+			self:destroyUnit(unit)
 		end
 	end
 end
 
-function var_0_0.removeUnitData(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_0._tagUnitDict[arg_5_1] and arg_5_0._tagUnitDict[arg_5_1][arg_5_2] then
-		local var_5_0 = arg_5_0._tagUnitDict[arg_5_1][arg_5_2]
+function BaseSceneUnitMgr:removeUnitData(unitTag, unitId)
+	if self._tagUnitDict[unitTag] and self._tagUnitDict[unitTag][unitId] then
+		local unit = self._tagUnitDict[unitTag][unitId]
 
-		arg_5_0._tagUnitDict[arg_5_1][arg_5_2] = nil
+		self._tagUnitDict[unitTag][unitId] = nil
 
-		return var_5_0
+		return unit
 	end
 end
 
-function var_0_0.removeUnits(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0._tagUnitDict[arg_6_1]
+function BaseSceneUnitMgr:removeUnits(unitTag)
+	local tagUnits = self._tagUnitDict[unitTag]
 
-	if var_6_0 then
-		for iter_6_0, iter_6_1 in pairs(var_6_0) do
-			var_6_0[iter_6_0] = nil
+	if tagUnits then
+		for id, unit in pairs(tagUnits) do
+			tagUnits[id] = nil
 
-			arg_6_0:destroyUnit(iter_6_1)
+			self:destroyUnit(unit)
 		end
 	end
 end
 
-function var_0_0.removeAllUnits(arg_7_0)
-	for iter_7_0, iter_7_1 in pairs(arg_7_0._tagUnitDict) do
-		for iter_7_2, iter_7_3 in pairs(iter_7_1) do
-			iter_7_1[iter_7_2] = nil
+function BaseSceneUnitMgr:removeAllUnits()
+	for _, tagUnits in pairs(self._tagUnitDict) do
+		for id, unit in pairs(tagUnits) do
+			tagUnits[id] = nil
 
-			arg_7_0:destroyUnit(iter_7_3)
+			self:destroyUnit(unit)
 		end
 	end
 end
 
-function var_0_0.getUnit(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = arg_8_0._tagUnitDict[arg_8_1]
+function BaseSceneUnitMgr:getUnit(unitTag, unitId)
+	local tagUnits = self._tagUnitDict[unitTag]
 
-	if var_8_0 then
-		return var_8_0[arg_8_2]
+	if tagUnits then
+		return tagUnits[unitId]
 	end
 end
 
-function var_0_0.getTagUnitDict(arg_9_0, arg_9_1)
-	return arg_9_0._tagUnitDict[arg_9_1]
+function BaseSceneUnitMgr:getTagUnitDict(unitTag)
+	return self._tagUnitDict[unitTag]
 end
 
-function var_0_0.destroyUnit(arg_10_0, arg_10_1)
-	if arg_10_1.beforeDestroy then
-		arg_10_1:beforeDestroy()
+function BaseSceneUnitMgr:destroyUnit(unit)
+	if unit.beforeDestroy then
+		unit:beforeDestroy()
 	end
 
-	gohelper.destroy(arg_10_1.go)
+	gohelper.destroy(unit.go)
 end
 
-return var_0_0
+return BaseSceneUnitMgr

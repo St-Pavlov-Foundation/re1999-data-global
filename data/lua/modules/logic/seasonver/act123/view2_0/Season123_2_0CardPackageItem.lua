@@ -1,69 +1,71 @@
-﻿module("modules.logic.seasonver.act123.view2_0.Season123_2_0CardPackageItem", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view2_0/Season123_2_0CardPackageItem.lua
 
-local var_0_0 = class("Season123_2_0CardPackageItem", ListScrollCellExtend)
+module("modules.logic.seasonver.act123.view2_0.Season123_2_0CardPackageItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	var_0_0.super.init(arg_1_0, arg_1_1)
+local Season123_2_0CardPackageItem = class("Season123_2_0CardPackageItem", ListScrollCellExtend)
 
-	arg_1_0._gopos = gohelper.findChild(arg_1_0.viewGO, "go_itempos/go_pos")
-	arg_1_0._gocount = gohelper.findChild(arg_1_0.viewGO, "go_itempos/go_count")
-	arg_1_0._txtcountvalue = gohelper.findChildText(arg_1_0.viewGO, "go_itempos/go_count/bg/#txt_countvalue")
-	arg_1_0._animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function Season123_2_0CardPackageItem:init(go)
+	Season123_2_0CardPackageItem.super.init(self, go)
+
+	self._gopos = gohelper.findChild(self.viewGO, "go_itempos/go_pos")
+	self._gocount = gohelper.findChild(self.viewGO, "go_itempos/go_count")
+	self._txtcountvalue = gohelper.findChildText(self.viewGO, "go_itempos/go_count/bg/#txt_countvalue")
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function var_0_0.addEventListeners(arg_2_0)
+function Season123_2_0CardPackageItem:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
+function Season123_2_0CardPackageItem:removeEventListeners()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
-	arg_4_0._mo = arg_4_1
+function Season123_2_0CardPackageItem:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_4_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_5_0)
-	arg_5_0:checkCreateIcon()
-	arg_5_0.icon:updateData(arg_5_0._mo.itemId)
-	arg_5_0.icon:setIndexLimitShowState(true)
+function Season123_2_0CardPackageItem:refreshUI()
+	self:checkCreateIcon()
+	self.icon:updateData(self._mo.itemId)
+	self.icon:setIndexLimitShowState(true)
 
-	if arg_5_0._mo.count > 0 then
-		gohelper.setActive(arg_5_0._gocount, true)
+	if self._mo.count > 0 then
+		gohelper.setActive(self._gocount, true)
 
-		arg_5_0._txtcountvalue.text = luaLang("multiple") .. tostring(arg_5_0._mo.count)
+		self._txtcountvalue.text = luaLang("multiple") .. tostring(self._mo.count)
 	else
-		gohelper.setActive(arg_5_0._gocount, false)
+		gohelper.setActive(self._gocount, false)
 	end
 end
 
-function var_0_0.checkCreateIcon(arg_6_0)
-	if not arg_6_0.icon then
-		local var_6_0 = arg_6_0._view.viewContainer:getSetting().otherRes[2]
-		local var_6_1 = arg_6_0._view:getResInst(var_6_0, arg_6_0._gopos, "icon")
+function Season123_2_0CardPackageItem:checkCreateIcon()
+	if not self.icon then
+		local path = self._view.viewContainer:getSetting().otherRes[2]
+		local go = self._view:getResInst(path, self._gopos, "icon")
 
-		arg_6_0.icon = MonoHelper.addNoUpdateLuaComOnceToGo(var_6_1, Season123_2_0CelebrityCardEquip)
+		self.icon = MonoHelper.addNoUpdateLuaComOnceToGo(go, Season123_2_0CelebrityCardEquip)
 
-		arg_6_0.icon:setClickCall(arg_6_0.onClickSelf, arg_6_0)
+		self.icon:setClickCall(self.onClickSelf, self)
 	end
 end
 
-function var_0_0.onClickSelf(arg_7_0)
-	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.Season123EquipCard, arg_7_0._mo.itemId)
+function Season123_2_0CardPackageItem:onClickSelf()
+	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.Season123EquipCard, self._mo.itemId)
 end
 
-function var_0_0.getAnimator(arg_8_0)
-	arg_8_0._animator.enabled = true
+function Season123_2_0CardPackageItem:getAnimator()
+	self._animator.enabled = true
 
-	return arg_8_0._animator
+	return self._animator
 end
 
-function var_0_0.onDestroyView(arg_9_0)
-	if arg_9_0.icon then
-		arg_9_0.icon:disposeUI()
+function Season123_2_0CardPackageItem:onDestroyView()
+	if self.icon then
+		self.icon:disposeUI()
 	end
 end
 
-return var_0_0
+return Season123_2_0CardPackageItem

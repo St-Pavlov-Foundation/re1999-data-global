@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_survival_talent", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_survival_talent.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_survival_talent", package.seeall)
+
+local lua_survival_talent = {}
+local fields = {
 	versions = 4,
 	name = 6,
 	groupId = 2,
@@ -11,17 +13,17 @@ local var_0_1 = {
 	pos = 3,
 	desc2 = 8
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	desc2 = 3,
 	name = 1,
 	desc1 = 2
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_survival_talent.onLoad(json)
+	lua_survival_talent.configList, lua_survival_talent.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_survival_talent

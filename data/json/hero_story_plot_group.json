@@ -9,6 +9,7 @@
     "weather": 1,
     "roleName": "language_10017913",
     "storyPic": "rolestory_pic_01",
+    "preId": 0,
     "isEnd": ""
   },
   {
@@ -21,6 +22,7 @@
     "weather": 1,
     "roleName": "language_10017913",
     "storyPic": "rolestory_pic_01",
+    "preId": 303701,
     "isEnd": ""
   },
   {
@@ -33,6 +35,7 @@
     "weather": 6,
     "roleName": "language_10017913",
     "storyPic": "rolestory_pic_01",
+    "preId": 303702,
     "isEnd": ""
   },
   {
@@ -45,6 +48,7 @@
     "weather": 7,
     "roleName": "language_10017913",
     "storyPic": "rolestory_pic_01",
+    "preId": 303703,
     "isEnd": ""
   },
   {
@@ -57,6 +61,7 @@
     "weather": 6,
     "roleName": "language_10017913",
     "storyPic": "rolestory_pic_01",
+    "preId": 303704,
     "isEnd": ""
   },
   {
@@ -69,6 +74,7 @@
     "weather": 2,
     "roleName": "language_10017913",
     "storyPic": "rolestory_pic_01",
+    "preId": 303705,
     "isEnd": ""
   },
   {
@@ -81,6 +87,111 @@
     "weather": 1,
     "roleName": "language_10017913",
     "storyPic": "rolestory_pic_01",
+    "preId": 303706,
+    "isEnd": "1"
+  },
+  {
+    "id": 304101,
+    "storyId": 27,
+    "storyName": "language_10098660",
+    "storyNameEn": "Unexpected, but Fated",
+    "time": 8.0,
+    "place": "language_10098234",
+    "weather": 1,
+    "roleName": "language_10005368",
+    "storyPic": "rolestory_pic_01",
+    "preId": 0,
+    "isEnd": ""
+  },
+  {
+    "id": 304102,
+    "storyId": 27,
+    "storyName": "language_10098661",
+    "storyNameEn": "The Ideal Candidate",
+    "time": 10.0,
+    "place": "language_10098288",
+    "weather": 1,
+    "roleName": "language_10005368",
+    "storyPic": "rolestory_pic_01",
+    "preId": 304101,
+    "isEnd": ""
+  },
+  {
+    "id": 304103,
+    "storyId": 27,
+    "storyName": "language_10098662",
+    "storyNameEn": "Before the Fall",
+    "time": 10.25,
+    "place": "language_10098326",
+    "weather": 1,
+    "roleName": "language_10005368",
+    "storyPic": "rolestory_pic_01",
+    "preId": 304102,
+    "isEnd": ""
+  },
+  {
+    "id": 304104,
+    "storyId": 27,
+    "storyName": "language_10098663",
+    "storyNameEn": "Curiosity Unspoiled",
+    "time": 10.75,
+    "place": "language_10098383",
+    "weather": 1,
+    "roleName": "language_10005368",
+    "storyPic": "rolestory_pic_01",
+    "preId": 304103,
+    "isEnd": ""
+  },
+  {
+    "id": 304105,
+    "storyId": 27,
+    "storyName": "language_10098664",
+    "storyNameEn": "An Unconventional Answer",
+    "time": 11.25,
+    "place": "language_10000174",
+    "weather": 1,
+    "roleName": "language_10005368",
+    "storyPic": "rolestory_pic_01",
+    "preId": 304104,
+    "isEnd": ""
+  },
+  {
+    "id": 304106,
+    "storyId": 27,
+    "storyName": "language_10098665",
+    "storyNameEn": "The Reflections She Sees",
+    "time": 11.5,
+    "place": "language_10000174",
+    "weather": 1,
+    "roleName": "language_10005368",
+    "storyPic": "rolestory_pic_01",
+    "preId": 304105,
+    "isEnd": ""
+  },
+  {
+    "id": 304107,
+    "storyId": 27,
+    "storyName": "language_10098666",
+    "storyNameEn": "Seizing the Opportunity",
+    "time": 11.75,
+    "place": "language_10000174",
+    "weather": 1,
+    "roleName": "language_10005368",
+    "storyPic": "rolestory_pic_01",
+    "preId": 304106,
+    "isEnd": ""
+  },
+  {
+    "id": 304108,
+    "storyId": 27,
+    "storyName": "language_10098667",
+    "storyNameEn": "The Undefined Good",
+    "time": 17.0,
+    "place": "language_10098610",
+    "weather": 1,
+    "roleName": "language_10005368",
+    "storyPic": "rolestory_pic_01",
+    "preId": 304107,
     "isEnd": "1"
   }
 ]

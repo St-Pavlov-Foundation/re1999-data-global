@@ -1,25 +1,27 @@
-﻿module("modules.logic.fight.view.FightItemSkillInfosBtnView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightItemSkillInfosBtnView.lua
 
-local var_0_0 = class("FightItemSkillInfosBtnView", FightBaseView)
+module("modules.logic.fight.view.FightItemSkillInfosBtnView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.click = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "Root/bottomLeft/#btn_skill")
+local FightItemSkillInfosBtnView = class("FightItemSkillInfosBtnView", FightBaseView)
+
+function FightItemSkillInfosBtnView:onInitView()
+	self.click = gohelper.findChildClickWithDefaultAudio(self.viewGO, "Root/bottomLeft/#btn_skill")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:com_registClick(arg_2_0.click, arg_2_0.onClick)
-	arg_2_0:com_registMsg(FightMsgId.CheckGuideFightItemPlayerSkillGroup, arg_2_0.onCheckGuideFightItemPlayerSkillGroup)
+function FightItemSkillInfosBtnView:addEvents()
+	self:com_registClick(self.click, self.onClick)
+	self:com_registMsg(FightMsgId.CheckGuideFightItemPlayerSkillGroup, self.onCheckGuideFightItemPlayerSkillGroup)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function FightItemSkillInfosBtnView:removeEvents()
 	return
 end
 
-function var_0_0.onCheckGuideFightItemPlayerSkillGroup(arg_4_0)
+function FightItemSkillInfosBtnView:onCheckGuideFightItemPlayerSkillGroup()
 	GuideController.instance:dispatchEvent(GuideEvent.TriggerActive, GuideEnum.EventTrigger.FightItemPlayerSkillGroup)
 end
 
-function var_0_0.onClick(arg_5_0)
+function FightItemSkillInfosBtnView:onClick()
 	if not FightDataHelper.stageMgr:isFree() then
 		return
 	end
@@ -27,8 +29,8 @@ function var_0_0.onClick(arg_5_0)
 	ViewMgr.instance:openView(ViewName.FightItemSkillInfosView)
 end
 
-function var_0_0.onOpen(arg_6_0)
+function FightItemSkillInfosBtnView:onOpen()
 	return
 end
 
-return var_0_0
+return FightItemSkillInfosBtnView

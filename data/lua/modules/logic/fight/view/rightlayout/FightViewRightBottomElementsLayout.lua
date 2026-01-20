@@ -1,69 +1,71 @@
-﻿module("modules.logic.fight.view.rightlayout.FightViewRightBottomElementsLayout", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/rightlayout/FightViewRightBottomElementsLayout.lua
 
-local var_0_0 = class("FightViewRightBottomElementsLayout", BaseView)
+module("modules.logic.fight.view.rightlayout.FightViewRightBottomElementsLayout", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.goRightBottomRoot = gohelper.findChild(arg_1_0.viewGO, "root/right_elements/bottom")
+local FightViewRightBottomElementsLayout = class("FightViewRightBottomElementsLayout", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function FightViewRightBottomElementsLayout:onInitView()
+	self.goRightBottomRoot = gohelper.findChild(self.viewGO, "root/right_elements/bottom")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.RightBottomElements_ShowElement, arg_2_0.showElement, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.RightBottomElements_HideElement, arg_2_0.hideElement, arg_2_0)
+function FightViewRightBottomElementsLayout:addEvents()
+	self:addEventCb(FightController.instance, FightEvent.RightBottomElements_ShowElement, self.showElement, self)
+	self:addEventCb(FightController.instance, FightEvent.RightBottomElements_HideElement, self.hideElement, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function FightViewRightBottomElementsLayout:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0.showElementDict = {}
-	arg_4_0.elementGoDict = arg_4_0:getUserDataTb_()
+function FightViewRightBottomElementsLayout:_editableInitView()
+	self.showElementDict = {}
+	self.elementGoDict = self:getUserDataTb_()
 
-	for iter_4_0, iter_4_1 in pairs(FightRightBottomElementEnum.Elements) do
-		local var_4_0 = gohelper.findChild(arg_4_0.goRightBottomRoot, FightRightBottomElementEnum.ElementsNodeName[iter_4_1])
+	for _, element in pairs(FightRightBottomElementEnum.Elements) do
+		local goElement = gohelper.findChild(self.goRightBottomRoot, FightRightBottomElementEnum.ElementsNodeName[element])
 
-		arg_4_0.elementGoDict[iter_4_1] = var_4_0
+		self.elementGoDict[element] = goElement
 
-		gohelper.setAsLastSibling(var_4_0)
-		gohelper.setActive(var_4_0, false)
+		gohelper.setAsLastSibling(goElement)
+		gohelper.setActive(goElement, false)
 
-		local var_4_1 = var_4_0:GetComponent(gohelper.Type_RectTransform)
-		local var_4_2 = FightRightBottomElementEnum.ElementsSizeDict[iter_4_1]
+		local rectTr = goElement:GetComponent(gohelper.Type_RectTransform)
+		local size = FightRightBottomElementEnum.ElementsSizeDict[element]
 
-		recthelper.setSize(var_4_1, var_4_2.x, var_4_2.y)
+		recthelper.setSize(rectTr, size.x, size.y)
 	end
 end
 
-function var_0_0.getElementContainer(arg_5_0, arg_5_1)
-	return arg_5_0.elementGoDict[arg_5_1]
+function FightViewRightBottomElementsLayout:getElementContainer(element)
+	return self.elementGoDict[element]
 end
 
-function var_0_0.showElement(arg_6_0, arg_6_1)
-	arg_6_0.showElementDict[arg_6_1] = true
+function FightViewRightBottomElementsLayout:showElement(element)
+	self.showElementDict[element] = true
 
-	arg_6_0:refreshLayout()
+	self:refreshLayout()
 end
 
-function var_0_0.hideElement(arg_7_0, arg_7_1)
-	arg_7_0.showElementDict[arg_7_1] = nil
+function FightViewRightBottomElementsLayout:hideElement(element)
+	self.showElementDict[element] = nil
 
-	arg_7_0:refreshLayout()
+	self:refreshLayout()
 end
 
-function var_0_0.refreshLayout(arg_8_0)
-	for iter_8_0, iter_8_1 in ipairs(FightRightBottomElementEnum.Priority) do
-		local var_8_0 = arg_8_0.showElementDict[iter_8_1]
+function FightViewRightBottomElementsLayout:refreshLayout()
+	for _, element in ipairs(FightRightBottomElementEnum.Priority) do
+		local isShow = self.showElementDict[element]
 
-		gohelper.setActive(arg_8_0.elementGoDict[iter_8_1], var_8_0)
+		gohelper.setActive(self.elementGoDict[element], isShow)
 
-		if var_8_0 then
-			gohelper.setAsFirstSibling(arg_8_0.elementGoDict[iter_8_1])
+		if isShow then
+			gohelper.setAsFirstSibling(self.elementGoDict[element])
 		end
 	end
 end
 
-return var_0_0
+return FightViewRightBottomElementsLayout

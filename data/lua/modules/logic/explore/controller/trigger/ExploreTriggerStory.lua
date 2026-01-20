@@ -1,16 +1,18 @@
-﻿module("modules.logic.explore.controller.trigger.ExploreTriggerStory", package.seeall)
+﻿-- chunkname: @modules/logic/explore/controller/trigger/ExploreTriggerStory.lua
 
-local var_0_0 = class("ExploreTriggerStory", ExploreTriggerBase)
+module("modules.logic.explore.controller.trigger.ExploreTriggerStory", package.seeall)
 
-function var_0_0.handle(arg_1_0, arg_1_1)
-	arg_1_1 = tonumber(arg_1_1)
+local ExploreTriggerStory = class("ExploreTriggerStory", ExploreTriggerBase)
 
-	logNormal("触发剧情：" .. arg_1_1)
-	StoryController.instance:playStory(arg_1_1, nil, arg_1_0.playStoryEnd, arg_1_0)
+function ExploreTriggerStory:handle(id)
+	id = tonumber(id)
+
+	logNormal("触发剧情：" .. id)
+	StoryController.instance:playStory(id, nil, self.playStoryEnd, self)
 end
 
-function var_0_0.playStoryEnd(arg_2_0)
-	arg_2_0:onDone(true)
+function ExploreTriggerStory:playStoryEnd()
+	self:onDone(true)
 end
 
-return var_0_0
+return ExploreTriggerStory

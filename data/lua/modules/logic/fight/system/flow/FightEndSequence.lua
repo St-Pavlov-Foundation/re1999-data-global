@@ -1,3 +1,7 @@
-﻿module("modules.logic.fight.system.flow.FightEndSequence", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/flow/FightEndSequence.lua
 
-return (class("FightEndSequence", BaseFightSequence))
+module("modules.logic.fight.system.flow.FightEndSequence", package.seeall)
+
+local FightEndSequence = class("FightEndSequence", BaseFightSequence)
+
+return FightEndSequence

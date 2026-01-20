@@ -1,50 +1,54 @@
-﻿module("modules.logic.sp01.assassin2.outside.model.AssassinStealthGameGridMO", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/outside/model/AssassinStealthGameGridMO.lua
 
-local var_0_0 = class("AssassinStealthGameGridMO")
+module("modules.logic.sp01.assassin2.outside.model.AssassinStealthGameGridMO", package.seeall)
 
-function var_0_0.updateData(arg_1_0, arg_1_1)
-	arg_1_0.gridId = arg_1_1.gridId
-	arg_1_0.hasFog = arg_1_1.hasFog
+local AssassinStealthGameGridMO = class("AssassinStealthGameGridMO")
 
-	arg_1_0:updateTrapList(arg_1_1.traps)
+function AssassinStealthGameGridMO:updateData(gridData)
+	self.gridId = gridData.gridId
+	self.hasFog = gridData.hasFog
 
-	arg_1_0.tracePoint = arg_1_1.tracePoint
+	self:updateTrapList(gridData.traps)
+
+	self.tracePoint = gridData.tracePoint
 end
 
-function var_0_0.updateTrapList(arg_2_0, arg_2_1)
-	arg_2_0._trapDict = {}
+function AssassinStealthGameGridMO:updateTrapList(trapDataList)
+	self._trapDict = {}
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_1) do
-		arg_2_0._trapDict[iter_2_1.id] = iter_2_1.duration
+	for _, trapData in ipairs(trapDataList) do
+		self._trapDict[trapData.id] = trapData.duration
 	end
 end
 
-function var_0_0.hasTrapType(arg_3_0, arg_3_1)
-	local var_3_0 = false
+function AssassinStealthGameGridMO:hasTrapType(targetTrapType)
+	local result = false
 
-	if arg_3_0._trapDict then
-		for iter_3_0, iter_3_1 in pairs(arg_3_0._trapDict) do
-			if AssassinConfig.instance:getAssassinTrapType(iter_3_0) == arg_3_1 then
-				var_3_0 = true
+	if self._trapDict then
+		for trapId, _ in pairs(self._trapDict) do
+			local trapType = AssassinConfig.instance:getAssassinTrapType(trapId)
+
+			if trapType == targetTrapType then
+				result = true
 
 				break
 			end
 		end
 	end
 
-	return var_3_0
+	return result
 end
 
-function var_0_0.hasTrap(arg_4_0, arg_4_1)
-	return arg_4_0._trapDict and arg_4_0._trapDict[arg_4_1]
+function AssassinStealthGameGridMO:hasTrap(trapId)
+	return self._trapDict and self._trapDict[trapId]
 end
 
-function var_0_0.getHasFog(arg_5_0)
-	return arg_5_0.hasFog > 0 and true or false
+function AssassinStealthGameGridMO:getHasFog()
+	return self.hasFog > 0 and true or false
 end
 
-function var_0_0.getTracePointIndex(arg_6_0)
-	return arg_6_0.tracePoint
+function AssassinStealthGameGridMO:getTracePointIndex()
+	return self.tracePoint
 end
 
-return var_0_0
+return AssassinStealthGameGridMO

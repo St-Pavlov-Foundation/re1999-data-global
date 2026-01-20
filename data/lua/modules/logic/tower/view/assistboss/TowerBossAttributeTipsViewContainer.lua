@@ -1,18 +1,20 @@
-﻿module("modules.logic.tower.view.assistboss.TowerBossAttributeTipsViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/tower/view/assistboss/TowerBossAttributeTipsViewContainer.lua
 
-local var_0_0 = class("TowerBossAttributeTipsViewContainer", BaseViewContainer)
+module("modules.logic.tower.view.assistboss.TowerBossAttributeTipsViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local TowerBossAttributeTipsViewContainer = class("TowerBossAttributeTipsViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, TowerBossAttributeTipsView.New())
+function TowerBossAttributeTipsViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, TowerBossAttributeTipsView.New())
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
+function TowerBossAttributeTipsViewContainer:onContainerClickModalMask()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	arg_2_0:closeThis()
+	self:closeThis()
 end
 
-return var_0_0
+return TowerBossAttributeTipsViewContainer

@@ -1,108 +1,113 @@
-﻿module("modules.logic.main.controller.work.SimpleGiftWorkBase", package.seeall)
+﻿-- chunkname: @modules/logic/main/controller/work/SimpleGiftWorkBase.lua
 
-local var_0_0 = class("SimpleGiftWorkBase", BaseWork)
-local var_0_1 = 0
+module("modules.logic.main.controller.work.SimpleGiftWorkBase", package.seeall)
 
-local function var_0_2(arg_1_0)
-	if not arg_1_0._viewNames then
-		arg_1_0._viewNames = assert(arg_1_0:onGetViewNames())
+local SimpleGiftWorkBase = class("SimpleGiftWorkBase", BaseWork)
+local startIndex = 0
+
+local function _initViewNames(self)
+	if not self._viewNames then
+		self._viewNames = assert(self:onGetViewNames())
 	end
 end
 
-local function var_0_3(arg_2_0)
-	if not arg_2_0._actIds then
-		arg_2_0._actIds = assert(arg_2_0:onGetActIds())
+local function _initActIds(self)
+	if not self._actIds then
+		self._actIds = assert(self:onGetActIds())
 	end
 end
 
-local var_0_4 = _G.class("SimpleGiftWorkBase_WorkContext")
+local WorkContext = _G.class("SimpleGiftWorkBase_WorkContext")
 
-function var_0_4.ctor(arg_3_0)
-	arg_3_0.bAutoWorkNext = true
+function WorkContext:ctor()
+	self.bAutoWorkNext = true
 end
 
-function var_0_0.ctor(arg_4_0, arg_4_1)
-	arg_4_0._patFaceId = arg_4_1
-	arg_4_0._patViewName = PatFaceConfig.instance:getPatFaceViewName(arg_4_0._patFaceId)
-	arg_4_0._patStoryId = PatFaceConfig.instance:getPatFaceStoryId(arg_4_0._patFaceId)
+function SimpleGiftWorkBase:ctor(patFaceId)
+	self._patFaceId = patFaceId
+	self._patViewName = PatFaceConfig.instance:getPatFaceViewName(self._patFaceId)
+	self._patStoryId = PatFaceConfig.instance:getPatFaceStoryId(self._patFaceId)
 end
 
-function var_0_0.onStart(arg_5_0)
-	var_0_2(arg_5_0)
-	var_0_3(arg_5_0)
+function SimpleGiftWorkBase:onStart()
+	_initViewNames(self)
+	_initActIds(self)
 
-	var_0_1 = 0
+	startIndex = 0
 
-	if arg_5_0:_isExistGuide() then
-		arg_5_0:_endBlock()
-		GuideController.instance:registerCallback(GuideEvent.FinishGuideLastStep, arg_5_0._work, arg_5_0)
+	if self:_isExistGuide() then
+		self:_endBlock()
+		GuideController.instance:registerCallback(GuideEvent.FinishGuideLastStep, self._work, self)
 	else
-		arg_5_0:_work()
+		self:_work()
 	end
 
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_5_0._onOpenViewFinish, arg_5_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_5_0._onCloseViewFinish, arg_5_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 end
 
-function var_0_0._onOpenViewFinish(arg_6_0, arg_6_1)
-	if arg_6_1 ~= arg_6_0._viewName then
+function SimpleGiftWorkBase:_onOpenViewFinish(viewName)
+	if viewName ~= self._viewName then
 		return
 	end
 
-	arg_6_0:_endBlock()
+	self:_endBlock()
 end
 
-function var_0_0._onCloseViewFinish(arg_7_0, arg_7_1)
-	if arg_7_1 ~= arg_7_0._viewName then
+function SimpleGiftWorkBase:_onCloseViewFinish(viewName)
+	if viewName ~= self._viewName then
 		return
 	end
 
-	if ViewMgr.instance:isOpen(arg_7_0._viewName) then
+	if ViewMgr.instance:isOpen(self._viewName) then
 		return
 	end
 
-	arg_7_0:_work()
+	self:_work()
 end
 
-function var_0_0.clearWork(arg_8_0)
-	arg_8_0:_endBlock()
-	GuideController.instance:unregisterCallback(GuideEvent.FinishGuideLastStep, arg_8_0._work, arg_8_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_8_0._onCloseViewFinish, arg_8_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_8_0._onOpenViewFinish, arg_8_0)
+function SimpleGiftWorkBase:clearWork()
+	self:_endBlock()
+	GuideController.instance:unregisterCallback(GuideEvent.FinishGuideLastStep, self._work, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
 
-	arg_8_0._actId = nil
-	arg_8_0._viewName = nil
+	self._actId = nil
+	self._viewName = nil
 end
 
-function var_0_0._pop(arg_9_0)
-	var_0_1 = var_0_1 + 1
+function SimpleGiftWorkBase:_pop()
+	startIndex = startIndex + 1
 
-	local var_9_0 = arg_9_0._viewNames[var_0_1]
+	local viewName = self._viewNames[startIndex]
+	local actId = self._actIds[startIndex]
 
-	return arg_9_0._actIds[var_0_1], var_9_0
+	return actId, viewName
 end
 
-function var_0_0._work(arg_10_0)
-	arg_10_0:_startBlock()
+function SimpleGiftWorkBase:_work()
+	self:_startBlock()
 
-	arg_10_0._actId, arg_10_0._viewName = arg_10_0:_pop()
+	self._actId, self._viewName = self:_pop()
 
-	if not arg_10_0._actId then
-		arg_10_0:onDone(true)
+	local actId = self._actId
+
+	if not actId then
+		self:onDone(true)
 
 		return
 	end
 
-	local var_10_0 = var_0_4.New()
+	local refWorkContext = WorkContext.New()
 
-	arg_10_0:onWork(var_10_0)
+	self:onWork(refWorkContext)
 
-	if var_10_0.bAutoWorkNext then
-		arg_10_0:_work()
+	if refWorkContext.bAutoWorkNext then
+		self:_work()
 	end
 end
 
-function var_0_0._isExistGuide(arg_11_0)
+function SimpleGiftWorkBase:_isExistGuide()
 	if GuideModel.instance:isDoingClickGuide() and not GuideController.instance:isForbidGuides() then
 		return true
 	end
@@ -114,36 +119,36 @@ function var_0_0._isExistGuide(arg_11_0)
 	return false
 end
 
-function var_0_0._endBlock(arg_12_0)
-	if not arg_12_0:_isBlock() then
+function SimpleGiftWorkBase:_endBlock()
+	if not self:_isBlock() then
 		return
 	end
 
 	UIBlockMgr.instance:endBlock()
 end
 
-function var_0_0._startBlock(arg_13_0)
-	if arg_13_0:_isBlock() then
+function SimpleGiftWorkBase:_startBlock()
+	if self:_isBlock() then
 		return
 	end
 
 	UIBlockMgr.instance:startBlock()
 end
 
-function var_0_0._isBlock(arg_14_0)
+function SimpleGiftWorkBase:_isBlock()
 	return UIBlockMgr.instance:isBlock() and true or false
 end
 
-function var_0_0.onGetViewNames(arg_15_0)
+function SimpleGiftWorkBase:onGetViewNames()
 	assert(false, "please override this function, and return a table")
 end
 
-function var_0_0.onGetActIds(arg_16_0)
+function SimpleGiftWorkBase:onGetActIds()
 	assert(false, "please override this function, and return a table")
 end
 
-function var_0_0.onWork(arg_17_0, arg_17_1)
+function SimpleGiftWorkBase:onWork(refWorkContext)
 	assert(false, "please override this function")
 end
 
-return var_0_0
+return SimpleGiftWorkBase

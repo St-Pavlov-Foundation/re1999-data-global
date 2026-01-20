@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity1_4.puzzle.controller.Role37PuzzleController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/puzzle/controller/Role37PuzzleController.lua
 
-local var_0_0 = class("Role37PuzzleController", BaseController)
+module("modules.logic.versionactivity1_4.puzzle.controller.Role37PuzzleController", package.seeall)
 
-function var_0_0.openPuzzleResultView(arg_1_0)
+local Role37PuzzleController = class("Role37PuzzleController", BaseController)
+
+function Role37PuzzleController:openPuzzleResultView()
 	ViewMgr.instance:openView(ViewName.Role37PuzzleResultView)
 end
 
-var_0_0.instance = var_0_0.New()
+Role37PuzzleController.instance = Role37PuzzleController.New()
 
-return var_0_0
+return Role37PuzzleController

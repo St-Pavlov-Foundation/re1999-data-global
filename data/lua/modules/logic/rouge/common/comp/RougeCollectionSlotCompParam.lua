@@ -1,20 +1,24 @@
-﻿module("modules.logic.rouge.common.comp.RougeCollectionSlotCompParam", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/common/comp/RougeCollectionSlotCompParam.lua
 
-local var_0_0 = pureTable("RougeCollectionSlotCompParam")
+module("modules.logic.rouge.common.comp.RougeCollectionSlotCompParam", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.cellWidth = 20
-	arg_1_0.cellHeight = 20
-	arg_1_0.isNeedShowIcon = false
-	arg_1_0.cellLineNameMap = {
+local RougeCollectionSlotCompParam = pureTable("RougeCollectionSlotCompParam")
+
+function RougeCollectionSlotCompParam:ctor()
+	self.cellWidth = 20
+	self.cellHeight = 20
+	self.isNeedShowIcon = false
+	self.cellLineNameMap = {
 		[RougeEnum.LineState.Grey] = "rouge_bagline_yellow",
 		[RougeEnum.LineState.Green] = "rouge_bagline_green"
 	}
-	arg_1_0.cls = RougeCollectionCompCellItem
+	self.cls = RougeCollectionCompCellItem
 end
 
-function var_0_0.getLine(arg_2_0, arg_2_1)
-	return arg_2_0.cellLineNameMap and arg_2_0.cellLineNameMap[arg_2_1]
+function RougeCollectionSlotCompParam:getLine(lineState)
+	local line = self.cellLineNameMap and self.cellLineNameMap[lineState]
+
+	return line
 end
 
-return var_0_0
+return RougeCollectionSlotCompParam

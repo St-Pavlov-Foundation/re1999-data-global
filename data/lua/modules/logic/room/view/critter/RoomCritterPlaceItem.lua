@@ -1,171 +1,173 @@
-﻿module("modules.logic.room.view.critter.RoomCritterPlaceItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/critter/RoomCritterPlaceItem.lua
 
-local var_0_0 = class("RoomCritterPlaceItem", ListScrollCellExtend)
+module("modules.logic.room.view.critter.RoomCritterPlaceItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goicon = gohelper.findChild(arg_1_0.viewGO, "#go_icon")
-	arg_1_0._goclick = gohelper.findChild(arg_1_0.viewGO, "#go_click")
-	arg_1_0._goratio = gohelper.findChild(arg_1_0.viewGO, "#go_ratio")
-	arg_1_0._txtratio = gohelper.findChildText(arg_1_0.viewGO, "#go_ratio/#txt_ratio")
-	arg_1_0._uiclick = gohelper.getClickWithDefaultAudio(arg_1_0._goclick)
-	arg_1_0._uidrag = SLFramework.UGUI.UIDragListener.Get(arg_1_0._goclick)
+local RoomCritterPlaceItem = class("RoomCritterPlaceItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomCritterPlaceItem:onInitView()
+	self._goicon = gohelper.findChild(self.viewGO, "#go_icon")
+	self._goclick = gohelper.findChild(self.viewGO, "#go_click")
+	self._goratio = gohelper.findChild(self.viewGO, "#go_ratio")
+	self._txtratio = gohelper.findChildText(self.viewGO, "#go_ratio/#txt_ratio")
+	self._uiclick = gohelper.getClickWithDefaultAudio(self._goclick)
+	self._uidrag = SLFramework.UGUI.UIDragListener.Get(self._goclick)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._uiclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
-	arg_2_0._uiclick:AddClickDownListener(arg_2_0._btnclickOnClickDown, arg_2_0)
-	arg_2_0._uidrag:AddDragBeginListener(arg_2_0._onDragBegin, arg_2_0)
-	arg_2_0._uidrag:AddDragListener(arg_2_0._onDrag, arg_2_0)
-	arg_2_0._uidrag:AddDragEndListener(arg_2_0._onDragEnd, arg_2_0)
+function RoomCritterPlaceItem:addEvents()
+	self._uiclick:AddClickListener(self._btnclickOnClick, self)
+	self._uiclick:AddClickDownListener(self._btnclickOnClickDown, self)
+	self._uidrag:AddDragBeginListener(self._onDragBegin, self)
+	self._uidrag:AddDragListener(self._onDrag, self)
+	self._uidrag:AddDragEndListener(self._onDragEnd, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._uiclick:RemoveClickListener()
-	arg_3_0._uiclick:RemoveClickDownListener()
-	arg_3_0._uidrag:RemoveDragBeginListener()
-	arg_3_0._uidrag:RemoveDragListener()
-	arg_3_0._uidrag:RemoveDragEndListener()
+function RoomCritterPlaceItem:removeEvents()
+	self._uiclick:RemoveClickListener()
+	self._uiclick:RemoveClickDownListener()
+	self._uidrag:RemoveDragBeginListener()
+	self._uidrag:RemoveDragListener()
+	self._uidrag:RemoveDragEndListener()
 end
 
-function var_0_0._btnclickOnClickDown(arg_4_0)
-	arg_4_0._isDragUI = false
+function RoomCritterPlaceItem:_btnclickOnClickDown()
+	self._isDragUI = false
 end
 
-function var_0_0._btnclickOnClick(arg_5_0)
-	if arg_5_0._isDragUI then
+function RoomCritterPlaceItem:_btnclickOnClick()
+	if self._isDragUI then
 		return
 	end
 
-	local var_5_0 = arg_5_0:getViewBuilding()
-	local var_5_1 = arg_5_0:getCritterId()
+	local curBuildingUid = self:getViewBuilding()
+	local critterUid = self:getCritterId()
 
-	CritterController.instance:clickCritterPlaceItem(var_5_0, var_5_1)
+	CritterController.instance:clickCritterPlaceItem(curBuildingUid, critterUid)
 end
 
-function var_0_0._onDragBegin(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_0._isDragUI = true
+function RoomCritterPlaceItem:_onDragBegin(param, pointerEventData)
+	self._isDragUI = true
 
-	CritterController.instance:dispatchEvent(CritterEvent.CritterListOnDragBeginListener, arg_6_2)
+	CritterController.instance:dispatchEvent(CritterEvent.CritterListOnDragBeginListener, pointerEventData)
 end
 
-function var_0_0._onDrag(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_0._isDragUI = true
+function RoomCritterPlaceItem:_onDrag(param, pointerEventData)
+	self._isDragUI = true
 
-	CritterController.instance:dispatchEvent(CritterEvent.CritterListOnDragListener, arg_7_2)
+	CritterController.instance:dispatchEvent(CritterEvent.CritterListOnDragListener, pointerEventData)
 end
 
-function var_0_0._onDragEnd(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0._isDragUI = false
+function RoomCritterPlaceItem:_onDragEnd(param, pointerEventData)
+	self._isDragUI = false
 
-	CritterController.instance:dispatchEvent(CritterEvent.CritterListOnDragEndListener, arg_8_2)
+	CritterController.instance:dispatchEvent(CritterEvent.CritterListOnDragEndListener, pointerEventData)
 end
 
-function var_0_0._editableInitView(arg_9_0)
-	arg_9_0._goarrow = gohelper.findChild(arg_9_0.viewGO, "#go_ratio/#txt_ratio/arrow")
-	arg_9_0._isDragUI = false
-	arg_9_0._dragStartY = 250 * UnityEngine.Screen.height / 1080
+function RoomCritterPlaceItem:_editableInitView()
+	self._goarrow = gohelper.findChild(self.viewGO, "#go_ratio/#txt_ratio/arrow")
+	self._isDragUI = false
+	self._dragStartY = 250 * UnityEngine.Screen.height / 1080
 end
 
-function var_0_0._editableAddEvents(arg_10_0)
-	arg_10_0:addEventCb(CritterController.instance, CritterEvent.CritterUpdateAttrPreview, arg_10_0._onAttrPreviewUpdate, arg_10_0)
+function RoomCritterPlaceItem:_editableAddEvents()
+	self:addEventCb(CritterController.instance, CritterEvent.CritterUpdateAttrPreview, self._onAttrPreviewUpdate, self)
 end
 
-function var_0_0._editableRemoveEvents(arg_11_0)
-	arg_11_0:removeEventCb(CritterController.instance, CritterEvent.CritterUpdateAttrPreview, arg_11_0._onAttrPreviewUpdate, arg_11_0)
+function RoomCritterPlaceItem:_editableRemoveEvents()
+	self:removeEventCb(CritterController.instance, CritterEvent.CritterUpdateAttrPreview, self._onAttrPreviewUpdate, self)
 end
 
-function var_0_0._onAttrPreviewUpdate(arg_12_0, arg_12_1)
-	if arg_12_0._mo and arg_12_1[arg_12_0._mo:getId()] then
-		arg_12_0:setCritter()
+function RoomCritterPlaceItem:_onAttrPreviewUpdate(critterUidDict)
+	if self._mo and critterUidDict[self._mo:getId()] then
+		self:setCritter()
 	end
 end
 
-function var_0_0.onUpdateMO(arg_13_0, arg_13_1)
-	arg_13_0._mo = arg_13_1
+function RoomCritterPlaceItem:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_13_0:setCritter()
-	arg_13_0:refresh()
+	self:setCritter()
+	self:refresh()
 end
 
-function var_0_0.setCritter(arg_14_0)
-	local var_14_0, var_14_1 = arg_14_0:getCritterId()
+function RoomCritterPlaceItem:setCritter()
+	local critterUid, critterId = self:getCritterId()
 
-	if not arg_14_0.critterIcon then
-		arg_14_0.critterIcon = IconMgr.instance:getCommonCritterIcon(arg_14_0._goicon)
+	if not self.critterIcon then
+		self.critterIcon = IconMgr.instance:getCommonCritterIcon(self._goicon)
 
-		arg_14_0.critterIcon:setSelectUIVisible(true)
+		self.critterIcon:setSelectUIVisible(true)
 	end
 
-	arg_14_0.critterIcon:setMOValue(var_14_0, var_14_1)
-	arg_14_0.critterIcon:showMood()
+	self.critterIcon:setMOValue(critterUid, critterId)
+	self.critterIcon:showMood()
 
-	local var_14_2, var_14_3 = arg_14_0:getViewBuilding()
-	local var_14_4 = ManufactureModel.instance:getCritterRestingBuilding(var_14_0)
+	local curBuildingUid, viewBuildingMO = self:getViewBuilding()
+	local restingBuildingUid = ManufactureModel.instance:getCritterRestingBuilding(critterUid)
 
-	arg_14_0.critterIcon:setIsShowBuildingIcon(var_14_4 ~= var_14_2)
+	self.critterIcon:setIsShowBuildingIcon(restingBuildingUid ~= curBuildingUid)
 
-	local var_14_5 = false
+	local showMoodRatio = false
 
-	if var_14_4 then
-		local var_14_6 = RoomMapBuildingModel.instance:getBuildingMOById(var_14_4)
-		local var_14_7 = var_14_6 and var_14_6.buildingId
-		local var_14_8 = CritterHelper.getPreViewAttrValue(CritterEnum.AttributeType.MoodRestore, var_14_0, var_14_7, false)
+	if restingBuildingUid then
+		local buildingMO = RoomMapBuildingModel.instance:getBuildingMOById(restingBuildingUid)
+		local buildingId = buildingMO and buildingMO.buildingId
+		local value = CritterHelper.getPreViewAttrValue(CritterEnum.AttributeType.MoodRestore, critterUid, buildingId, false)
 
-		if var_14_8 > 0 then
-			arg_14_0._txtratio.text = "+" .. CritterHelper.formatAttrValue(CritterEnum.AttributeType.MoodRestore, var_14_8)
-			var_14_5 = true
+		if value > 0 then
+			self._txtratio.text = "+" .. CritterHelper.formatAttrValue(CritterEnum.AttributeType.MoodRestore, value)
+			showMoodRatio = true
 		end
 
-		local var_14_9 = var_14_3 and var_14_3.config and var_14_3.config.buildingType
-		local var_14_10 = var_14_8 > arg_14_0:getBuildingMoodValue(var_14_9)
+		local buildingType = viewBuildingMO and viewBuildingMO.config and viewBuildingMO.config.buildingType
+		local buildingMoodValue = self:getBuildingMoodValue(buildingType)
+		local isUp = buildingMoodValue < value
 
-		gohelper.setActive(arg_14_0._goarrow, var_14_10)
-		SLFramework.UGUI.GuiHelper.SetColor(arg_14_0._txtratio, var_14_10 and "#D9A06F" or "#D4C399")
+		gohelper.setActive(self._goarrow, isUp)
+		SLFramework.UGUI.GuiHelper.SetColor(self._txtratio, isUp and "#D9A06F" or "#D4C399")
 	end
 
-	gohelper.setActive(arg_14_0._goratio, var_14_5)
+	gohelper.setActive(self._goratio, showMoodRatio)
 end
 
-function var_0_0.getBuildingMoodValue(arg_15_0, arg_15_1)
-	return CritterHelper.getPatienceChangeValue(arg_15_1)
+function RoomCritterPlaceItem:getBuildingMoodValue(buildingType)
+	return CritterHelper.getPatienceChangeValue(buildingType)
 end
 
-function var_0_0.refresh(arg_16_0)
+function RoomCritterPlaceItem:refresh()
 	return
 end
 
-function var_0_0.onSelect(arg_17_0, arg_17_1)
-	if arg_17_0.critterIcon then
-		arg_17_0.critterIcon:onSelect(arg_17_1)
+function RoomCritterPlaceItem:onSelect(isSelect)
+	if self.critterIcon then
+		self.critterIcon:onSelect(isSelect)
 	end
 
-	arg_17_0._isSelect = arg_17_1
+	self._isSelect = isSelect
 end
 
-function var_0_0.getCritterId(arg_18_0)
-	local var_18_0
-	local var_18_1
+function RoomCritterPlaceItem:getCritterId()
+	local critterUid, critterId
 
-	if arg_18_0._mo then
-		var_18_0 = arg_18_0._mo:getId()
-		var_18_1 = arg_18_0._mo:getDefineId()
+	if self._mo then
+		critterUid = self._mo:getId()
+		critterId = self._mo:getDefineId()
 	end
 
-	return var_18_0, var_18_1
+	return critterUid, critterId
 end
 
-function var_0_0.getViewBuilding(arg_19_0)
-	local var_19_0, var_19_1 = arg_19_0._view.viewContainer:getContainerViewBuilding(true)
+function RoomCritterPlaceItem:getViewBuilding()
+	local viewBuildingUid, viewBuildingMO = self._view.viewContainer:getContainerViewBuilding(true)
 
-	return var_19_0, var_19_1
+	return viewBuildingUid, viewBuildingMO
 end
 
-function var_0_0.onDestroy(arg_20_0)
+function RoomCritterPlaceItem:onDestroy()
 	return
 end
 
-return var_0_0
+return RoomCritterPlaceItem

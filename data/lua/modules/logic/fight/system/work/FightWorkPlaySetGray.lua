@@ -1,27 +1,30 @@
-﻿module("modules.logic.fight.system.work.FightWorkPlaySetGray", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkPlaySetGray.lua
 
-local var_0_0 = class("FightWorkPlaySetGray", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkPlaySetGray", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	if not FightCardDataHelper.cardChangeIsMySide(arg_1_0.actEffectData) then
-		arg_1_0:onDone(true)
+local FightWorkPlaySetGray = class("FightWorkPlaySetGray", FightEffectBase)
+
+function FightWorkPlaySetGray:onStart()
+	if not FightCardDataHelper.cardChangeIsMySide(self.actEffectData) then
+		self:onDone(true)
 
 		return
 	end
 
-	local var_1_0 = arg_1_0.actEffectData.effectNum
-	local var_1_1 = FightPlayCardModel.instance:getUsedCards()[var_1_0]
+	local index = self.actEffectData.effectNum
+	local usedCards = FightPlayCardModel.instance:getUsedCards()
+	local usedCard = usedCards[index]
 
-	if var_1_1 then
-		FightDataUtil.coverData(arg_1_0.actEffectData.cardInfo, var_1_1)
-		FightController.instance:dispatchEvent(FightEvent.PlayCardAroundSetGray, var_1_0)
+	if usedCard then
+		FightDataUtil.coverData(self.actEffectData.cardInfo, usedCard)
+		FightController.instance:dispatchEvent(FightEvent.PlayCardAroundSetGray, index)
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkPlaySetGray:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkPlaySetGray

@@ -1,30 +1,32 @@
-﻿module("modules.logic.versionactivity2_7.towergift.view.CharacterDestinyStoneUpViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/towergift/view/CharacterDestinyStoneUpViewContainer.lua
 
-local var_0_0 = class("CharacterDestinyStoneUpViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_7.towergift.view.CharacterDestinyStoneUpViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local CharacterDestinyStoneUpViewContainer = class("CharacterDestinyStoneUpViewContainer", BaseViewContainer)
 
-	arg_1_0._stoneView = CharacterDestinyStoneUpView.New()
+function CharacterDestinyStoneUpViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, arg_1_0._stoneView)
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
+	self._stoneView = CharacterDestinyStoneUpView.New()
 
-	return var_1_0
+	table.insert(views, self._stoneView)
+	table.insert(views, TabViewGroup.New(1, "#go_topleft"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function CharacterDestinyStoneUpViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-return var_0_0
+return CharacterDestinyStoneUpViewContainer

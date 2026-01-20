@@ -1,78 +1,82 @@
-﻿module("modules.logic.versionactivity2_2.act169.view.SummonNewCustomPickChoiceViewList", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/act169/view/SummonNewCustomPickChoiceViewList.lua
 
-local var_0_0 = class("SummonNewCustomPickChoiceViewList", BaseView)
+module("modules.logic.versionactivity2_2.act169.view.SummonNewCustomPickChoiceViewList", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local SummonNewCustomPickChoiceViewList = class("SummonNewCustomPickChoiceViewList", BaseView)
+
+function SummonNewCustomPickChoiceViewList:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0._editableInitView(arg_2_0)
-	arg_2_0._ownHeroes = {}
-	arg_2_0._gocontent = gohelper.findChild(arg_2_0.viewGO, "#scroll_rule/Viewport/content")
-	arg_2_0._tfcontent = arg_2_0._gocontent.transform
-	arg_2_0._goitem = gohelper.findChild(arg_2_0.viewGO, "#scroll_rule/Viewport/content/selfselectsixchoiceitem")
+function SummonNewCustomPickChoiceViewList:_editableInitView()
+	self._ownHeroes = {}
+	self._gocontent = gohelper.findChild(self.viewGO, "#scroll_rule/Viewport/content")
+	self._tfcontent = self._gocontent.transform
+	self._goitem = gohelper.findChild(self.viewGO, "#scroll_rule/Viewport/content/selfselectsixchoiceitem")
 
-	gohelper.setActive(arg_2_0._goitem, false)
+	gohelper.setActive(self._goitem, false)
 end
 
-function var_0_0.onOpen(arg_3_0)
+function SummonNewCustomPickChoiceViewList:onOpen()
 	logNormal("SummonNewCustomPickChoiceViewList onOpen")
 	SummonNewCustomPickChoiceListModel.instance:clearSelectIds()
-	arg_3_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_4_0)
-	arg_4_0:refreshList()
+function SummonNewCustomPickChoiceViewList:refreshUI()
+	self:refreshList()
 end
 
-function var_0_0.refreshList(arg_5_0)
-	arg_5_0:refreshItems(SummonNewCustomPickChoiceListModel.instance.ownList, arg_5_0._ownHeroes, arg_5_0._gocontent)
-	ZProj.UGUIHelper.RebuildLayout(arg_5_0._tfcontent)
+function SummonNewCustomPickChoiceViewList:refreshList()
+	self:refreshItems(SummonNewCustomPickChoiceListModel.instance.ownList, self._ownHeroes, self._gocontent)
+	ZProj.UGUIHelper.RebuildLayout(self._tfcontent)
 end
 
-function var_0_0.refreshItems(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	if arg_6_1 and #arg_6_1 > 0 then
-		gohelper.setActive(arg_6_3, true)
+function SummonNewCustomPickChoiceViewList:refreshItems(datas, items, goRoot)
+	if datas and #datas > 0 then
+		gohelper.setActive(goRoot, true)
 
-		for iter_6_0, iter_6_1 in ipairs(arg_6_1) do
-			arg_6_0:getOrCreateItem(iter_6_0, arg_6_2, arg_6_3).component:onUpdateMO(iter_6_1)
+		for index, mo in ipairs(datas) do
+			local item = self:getOrCreateItem(index, items, goRoot)
+
+			item.component:onUpdateMO(mo)
 		end
 	else
-		gohelper.setActive(arg_6_3, false)
+		gohelper.setActive(goRoot, false)
 	end
 end
 
-function var_0_0.getOrCreateItem(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	local var_7_0 = arg_7_2[arg_7_1]
+function SummonNewCustomPickChoiceViewList:getOrCreateItem(index, items, goRoot)
+	local item = items[index]
 
-	if not var_7_0 then
-		var_7_0 = arg_7_0:getUserDataTb_()
-		var_7_0.go = gohelper.clone(arg_7_0._goitem, arg_7_3, "item" .. tostring(arg_7_1))
+	if not item then
+		item = self:getUserDataTb_()
+		item.go = gohelper.clone(self._goitem, goRoot, "item" .. tostring(index))
 
-		gohelper.setActive(var_7_0.go, true)
+		gohelper.setActive(item.go, true)
 
-		var_7_0.component = MonoHelper.addNoUpdateLuaComOnceToGo(var_7_0.go, SummonNewCustomPickChoiceItem)
+		item.component = MonoHelper.addNoUpdateLuaComOnceToGo(item.go, SummonNewCustomPickChoiceItem)
 
-		var_7_0.component:init(var_7_0.go)
-		var_7_0.component:addEvents()
-		var_7_0.component:setClickCallBack(function(arg_8_0)
-			SummonNewCustomPickChoiceController.instance:setSelect(arg_8_0)
+		item.component:init(item.go)
+		item.component:addEvents()
+		item.component:setClickCallBack(function(heroId)
+			SummonNewCustomPickChoiceController.instance:setSelect(heroId)
 		end)
 
-		arg_7_2[arg_7_1] = var_7_0
+		items[index] = item
 	end
 
-	return var_7_0
+	return item
 end
 
-function var_0_0.addEvents(arg_9_0)
-	arg_9_0:addEventCb(SummonNewCustomPickChoiceController.instance, SummonNewCustomPickEvent.OnCustomPickListChanged, arg_9_0.refreshUI, arg_9_0)
+function SummonNewCustomPickChoiceViewList:addEvents()
+	self:addEventCb(SummonNewCustomPickChoiceController.instance, SummonNewCustomPickEvent.OnCustomPickListChanged, self.refreshUI, self)
 end
 
-function var_0_0.removeEvents(arg_10_0)
-	arg_10_0:removeEventCb(SummonNewCustomPickChoiceController.instance, SummonNewCustomPickEvent.OnCustomPickListChanged, arg_10_0.refreshUI, arg_10_0)
+function SummonNewCustomPickChoiceViewList:removeEvents()
+	self:removeEventCb(SummonNewCustomPickChoiceController.instance, SummonNewCustomPickEvent.OnCustomPickListChanged, self.refreshUI, self)
 end
 
-return var_0_0
+return SummonNewCustomPickChoiceViewList

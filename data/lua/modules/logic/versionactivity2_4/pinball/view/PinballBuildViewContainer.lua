@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity2_4.pinball.view.PinballBuildViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/pinball/view/PinballBuildViewContainer.lua
 
-local var_0_0 = class("PinballBuildViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_4.pinball.view.PinballBuildViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local PinballBuildViewContainer = class("PinballBuildViewContainer", BaseViewContainer)
+
+function PinballBuildViewContainer:buildViews()
 	return {
 		PinballBuildView.New()
 	}
 end
 
-return var_0_0
+return PinballBuildViewContainer

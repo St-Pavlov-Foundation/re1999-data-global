@@ -1,30 +1,32 @@
-﻿module("modules.logic.versionactivity1_2.yaxian.model.game.YaXianGameStatusMo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/yaxian/model/game/YaXianGameStatusMo.lua
 
-local var_0_0 = pureTable("YaXianGameStatusMo")
+module("modules.logic.versionactivity1_2.yaxian.model.game.YaXianGameStatusMo", package.seeall)
 
-function var_0_0.NewFunc()
-	return var_0_0.New()
+local YaXianGameStatusMo = pureTable("YaXianGameStatusMo")
+
+function YaXianGameStatusMo.NewFunc()
+	return YaXianGameStatusMo.New()
 end
 
-function var_0_0.resetFunc(arg_2_0)
-	arg_2_0.status = nil
-	arg_2_0.directionList = nil
+function YaXianGameStatusMo:resetFunc()
+	self.status = nil
+	self.directionList = nil
 end
 
-function var_0_0.releaseFunc(arg_3_0)
-	arg_3_0:resetFunc()
+function YaXianGameStatusMo:releaseFunc()
+	self:resetFunc()
 end
 
-function var_0_0.addStatus(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0.status = arg_4_1
+function YaXianGameStatusMo:addStatus(status, direction)
+	self.status = status
 
-	if arg_4_2 then
-		arg_4_0.directionList = arg_4_0.directionList or {}
+	if direction then
+		self.directionList = self.directionList or {}
 
-		if not tabletool.indexOf(arg_4_0.directionList, arg_4_2) then
-			table.insert(arg_4_0.directionList, arg_4_2)
+		if not tabletool.indexOf(self.directionList, direction) then
+			table.insert(self.directionList, direction)
 		end
 	end
 end
 
-return var_0_0
+return YaXianGameStatusMo

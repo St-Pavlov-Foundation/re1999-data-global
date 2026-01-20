@@ -1,28 +1,30 @@
-﻿module("modules.logic.investigate.model.InvestigateEnum", package.seeall)
+﻿-- chunkname: @modules/logic/investigate/model/InvestigateEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.investigate.model.InvestigateEnum", package.seeall)
 
-var_0_0.OpinionStatus = {
+local InvestigateEnum = _M
+
+InvestigateEnum.OpinionStatus = {
 	Locked = 1,
 	Linked = 4,
 	Unlinked = 2,
 	UnlinkedExtend = 3,
 	LinkedExtend = 5
 }
-var_0_0.OpinionTab = {
+InvestigateEnum.OpinionTab = {
 	Extend = 2,
 	Normal = 1
 }
-var_0_0.OnceActionType = {
+InvestigateEnum.OnceActionType = {
 	ReddotClue = 4,
 	StoryBtn = 3,
 	InfoUnlock = 1,
 	ClueUnlock = 2
 }
-var_0_0.ExtendAnimName = {
+InvestigateEnum.ExtendAnimName = {
 	Right = "right",
 	Middle = "middle",
 	Left = "left"
 }
 
-return var_0_0
+return InvestigateEnum

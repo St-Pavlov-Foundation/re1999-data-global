@@ -1,38 +1,40 @@
-﻿module("modules.logic.fight.system.work.FightWorkMagicCircleDelete", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkMagicCircleDelete.lua
 
-local var_0_0 = class("FightWorkMagicCircleDelete", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkMagicCircleDelete", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = FightModel.instance:getMagicCircleInfo()
+local FightWorkMagicCircleDelete = class("FightWorkMagicCircleDelete", FightEffectBase)
 
-	if var_1_0 then
-		local var_1_1 = tonumber(arg_1_0.actEffectData.reserveId)
+function FightWorkMagicCircleDelete:onStart()
+	local magicData = FightModel.instance:getMagicCircleInfo()
 
-		if var_1_0:deleteData(var_1_1) then
-			local var_1_2 = lua_magic_circle.configDict[var_1_1]
+	if magicData then
+		local magicCircleId = tonumber(self.actEffectData.reserveId)
 
-			if var_1_2 then
-				local var_1_3 = math.max(var_1_2.closeTime / 1000, 0.3)
+		if magicData:deleteData(magicCircleId) then
+			local config = lua_magic_circle.configDict[magicCircleId]
 
-				arg_1_0:com_registTimer(arg_1_0._delayDone, var_1_3 / FightModel.instance:getSpeed())
-				FightController.instance:dispatchEvent(FightEvent.DeleteMagicCircile, var_1_1, arg_1_0.fightStepData.fromId)
+			if config then
+				local delayTime = math.max(config.closeTime / 1000, 0.3)
+
+				self:com_registTimer(self._delayDone, delayTime / FightModel.instance:getSpeed())
+				FightController.instance:dispatchEvent(FightEvent.DeleteMagicCircile, magicCircleId, self.fightStepData.fromId)
 
 				return
 			end
 
-			logError("术阵表找不到id:" .. var_1_1)
+			logError("术阵表找不到id:" .. magicCircleId)
 		end
 	end
 
-	arg_1_0:_delayDone()
+	self:_delayDone()
 end
 
-function var_0_0._delayDone(arg_2_0)
-	arg_2_0:onDone(true)
+function FightWorkMagicCircleDelete:_delayDone()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
+function FightWorkMagicCircleDelete:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkMagicCircleDelete

@@ -1,20 +1,22 @@
-﻿module("modules.logic.chessgame.game.step.ChessStepUpdateRound", package.seeall)
+﻿-- chunkname: @modules/logic/chessgame/game/step/ChessStepUpdateRound.lua
 
-local var_0_0 = class("ChessStepUpdateRound", BaseWork)
+module("modules.logic.chessgame.game.step.ChessStepUpdateRound", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.originData = arg_1_1
+local ChessStepUpdateRound = class("ChessStepUpdateRound", BaseWork)
+
+function ChessStepUpdateRound:init(stepData)
+	self.originData = stepData
 end
 
-function var_0_0.onStart(arg_2_0)
-	arg_2_0:finish()
+function ChessStepUpdateRound:onStart()
+	self:finish()
 end
 
-function var_0_0.finish(arg_3_0)
-	local var_3_0 = ChessGameController.instance.eventMgr
-	local var_3_1 = arg_3_0.originData.currRound
+function ChessStepUpdateRound:finish()
+	local evtMgr = ChessGameController.instance.eventMgr
+	local curRound = self.originData.currRound
 
-	ChessGameModel.instance:setRound(var_3_1)
+	ChessGameModel.instance:setRound(curRound)
 
 	if not ChessGameModel.instance:isTalking() then
 		ChessGameController.instance:tryResumeSelectObj()
@@ -22,12 +24,12 @@ function var_0_0.finish(arg_3_0)
 
 	ChessGameController.instance:dispatchEvent(ChessGameEvent.CurrentRoundUpdate)
 
-	if var_3_0 then
-		var_3_0:setCurEvent(nil)
+	if evtMgr then
+		evtMgr:setCurEvent(nil)
 	end
 
 	ChessGameController.instance:forceRefreshObjSelectedView()
-	arg_3_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return ChessStepUpdateRound

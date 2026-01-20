@@ -1,65 +1,67 @@
-﻿module("modules.logic.equip.view.EquipChooseView", package.seeall)
+﻿-- chunkname: @modules/logic/equip/view/EquipChooseView.lua
 
-local var_0_0 = class("EquipChooseView", BaseView)
+module("modules.logic.equip.view.EquipChooseView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._scrollequip = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_equip")
-	arg_1_0._gostrengthenbtns = gohelper.findChild(arg_1_0.viewGO, "topright/#go_strengthenbtns")
-	arg_1_0._btnfastadd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "topright/#go_strengthenbtns/fast/#btn_fastadd")
-	arg_1_0._btnupgrade = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "topright/#go_strengthenbtns/start/#btn_upgrade")
+local EquipChooseView = class("EquipChooseView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function EquipChooseView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._scrollequip = gohelper.findChildScrollRect(self.viewGO, "#scroll_equip")
+	self._gostrengthenbtns = gohelper.findChild(self.viewGO, "topright/#go_strengthenbtns")
+	self._btnfastadd = gohelper.findChildButtonWithAudio(self.viewGO, "topright/#go_strengthenbtns/fast/#btn_fastadd")
+	self._btnupgrade = gohelper.findChildButtonWithAudio(self.viewGO, "topright/#go_strengthenbtns/start/#btn_upgrade")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnfastadd:AddClickListener(arg_2_0._btnfastaddOnClick, arg_2_0)
-	arg_2_0._btnupgrade:AddClickListener(arg_2_0._btnupgradeOnClick, arg_2_0)
+function EquipChooseView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnfastadd:AddClickListener(self._btnfastaddOnClick, self)
+	self._btnupgrade:AddClickListener(self._btnupgradeOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnfastadd:RemoveClickListener()
-	arg_3_0._btnupgrade:RemoveClickListener()
+function EquipChooseView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btnfastadd:RemoveClickListener()
+	self._btnupgrade:RemoveClickListener()
 end
 
-function var_0_0._btnfastaddOnClick(arg_4_0)
+function EquipChooseView:_btnfastaddOnClick()
 	EquipController.instance:dispatchEvent(EquipEvent.onStrengthenFast)
 end
 
-function var_0_0._btnupgradeOnClick(arg_5_0)
+function EquipChooseView:_btnupgradeOnClick()
 	EquipController.instance:dispatchEvent(EquipEvent.onStrengthenUpgrade)
 end
 
-function var_0_0._btncloseOnClick(arg_6_0)
-	arg_6_0:closeThis()
+function EquipChooseView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_7_0)
+function EquipChooseView:_editableInitView()
 	EquipChooseListModel.instance:setEquipList()
 end
 
-function var_0_0._refreshBtns(arg_8_0)
+function EquipChooseView:_refreshBtns()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
+function EquipChooseView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_10_0)
+function EquipChooseView:onOpen()
 	return
 end
 
-function var_0_0.onClose(arg_11_0)
+function EquipChooseView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_12_0)
+function EquipChooseView:onDestroyView()
 	return
 end
 
-return var_0_0
+return EquipChooseView

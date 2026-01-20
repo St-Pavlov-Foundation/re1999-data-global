@@ -1,48 +1,50 @@
-﻿module("modules.logic.handbook.view.HandbookSkinSuitDetailView2_8", package.seeall)
+﻿-- chunkname: @modules/logic/handbook/view/HandbookSkinSuitDetailView2_8.lua
 
-local var_0_0 = class("HandbookSkinSuitDetailView2_8", HandbookSkinSuitDetailViewBase)
-local var_0_1 = 20018
+module("modules.logic.handbook.view.HandbookSkinSuitDetailView2_8", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	HandbookSkinSuitDetailViewBase.onInitView(arg_1_0)
+local HandbookSkinSuitDetailView2_8 = class("HandbookSkinSuitDetailView2_8", HandbookSkinSuitDetailViewBase)
+local skinSuitId = 20018
+
+function HandbookSkinSuitDetailView2_8:onInitView()
+	HandbookSkinSuitDetailViewBase.onInitView(self)
 end
 
-function var_0_0._editableInitView(arg_2_0)
-	arg_2_0.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_2_0.viewGO)
-	arg_2_0._viewMatCtrl = arg_2_0.viewGO:GetComponent(typeof(ZProj.MaterialPropsCtrl))
+function HandbookSkinSuitDetailView2_8:_editableInitView()
+	self.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(self.viewGO)
+	self._viewMatCtrl = self.viewGO:GetComponent(typeof(ZProj.MaterialPropsCtrl))
 end
 
-function var_0_0.onOpen(arg_3_0)
-	HandbookSkinSuitDetailViewBase.onOpen(arg_3_0)
+function HandbookSkinSuitDetailView2_8:onOpen()
+	HandbookSkinSuitDetailViewBase.onOpen(self)
 
-	if arg_3_0._viewMatCtrl then
-		arg_3_0._viewMatCtrl.vector_02 = Vector4.New(1, 1, 0.18, 0)
+	if self._viewMatCtrl then
+		self._viewMatCtrl.vector_02 = Vector4.New(1, 1, 0.18, 0)
 
-		if arg_3_0._isSuitSwitch then
+		if self._isSuitSwitch then
 			-- block empty
 		end
 	end
 
-	arg_3_0:_getPhotoRootGo(#arg_3_0._skinIdList)
-	arg_3_0:_refreshSkinItems()
-	arg_3_0:_refreshDesc()
-	arg_3_0:_refreshBg()
+	self:_getPhotoRootGo(#self._skinIdList)
+	self:_refreshSkinItems()
+	self:_refreshDesc()
+	self:_refreshBg()
 end
 
-function var_0_0.refreshUI(arg_4_0)
+function HandbookSkinSuitDetailView2_8:refreshUI()
 	return
 end
 
-function var_0_0.refreshBtnStatus(arg_5_0)
+function HandbookSkinSuitDetailView2_8:refreshBtnStatus()
 	return
 end
 
-function var_0_0._refreshBg(arg_6_0)
+function HandbookSkinSuitDetailView2_8:_refreshBg()
 	return
 end
 
-function var_0_0.onDestroyView(arg_7_0)
+function HandbookSkinSuitDetailView2_8:onDestroyView()
 	return
 end
 
-return var_0_0
+return HandbookSkinSuitDetailView2_8

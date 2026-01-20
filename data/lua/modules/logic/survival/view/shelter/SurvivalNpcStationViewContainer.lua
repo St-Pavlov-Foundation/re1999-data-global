@@ -1,35 +1,37 @@
-﻿module("modules.logic.survival.view.shelter.SurvivalNpcStationViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/SurvivalNpcStationViewContainer.lua
 
-local var_0_0 = class("SurvivalNpcStationViewContainer", BaseViewContainer)
+module("modules.logic.survival.view.shelter.SurvivalNpcStationViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+local SurvivalNpcStationViewContainer = class("SurvivalNpcStationViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "Panel/Right/#scroll_List"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_1.prefabUrl = "Panel/Right/#scroll_List/Viewport/Content/#go_Item"
-	var_1_1.cellClass = SurvivalMonsterEventNpcItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 1
-	var_1_1.cellWidth = 800
-	var_1_1.cellHeight = 336
-	var_1_1.cellSpaceH = 0
-	var_1_1.cellSpaceV = 0
-	var_1_1.startSpace = 0
-	arg_1_0.scrollView = LuaListScrollViewWithAnimator.New(SurvivalShelterNpcMonsterListModel.instance, var_1_1)
-	arg_1_0._survivalNpcStationView = SurvivalNpcStationView.New()
+function SurvivalNpcStationViewContainer:buildViews()
+	local views = {}
+	local scrollParam1 = ListScrollParam.New()
 
-	table.insert(var_1_0, arg_1_0.scrollView)
-	table.insert(var_1_0, arg_1_0._survivalNpcStationView)
+	scrollParam1.scrollGOPath = "Panel/Right/#scroll_List"
+	scrollParam1.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam1.prefabUrl = "Panel/Right/#scroll_List/Viewport/Content/#go_Item"
+	scrollParam1.cellClass = SurvivalMonsterEventNpcItem
+	scrollParam1.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam1.lineCount = 1
+	scrollParam1.cellWidth = 800
+	scrollParam1.cellHeight = 336
+	scrollParam1.cellSpaceH = 0
+	scrollParam1.cellSpaceV = 0
+	scrollParam1.startSpace = 0
+	self.scrollView = LuaListScrollViewWithAnimator.New(SurvivalShelterNpcMonsterListModel.instance, scrollParam1)
+	self._survivalNpcStationView = SurvivalNpcStationView.New()
 
-	return var_1_0
+	table.insert(views, self.scrollView)
+	table.insert(views, self._survivalNpcStationView)
+
+	return views
 end
 
-function var_0_0.refreshView(arg_2_0)
-	if arg_2_0._survivalNpcStationView then
-		arg_2_0._survivalNpcStationView:refreshView()
+function SurvivalNpcStationViewContainer:refreshView()
+	if self._survivalNpcStationView then
+		self._survivalNpcStationView:refreshView()
 	end
 end
 
-return var_0_0
+return SurvivalNpcStationViewContainer

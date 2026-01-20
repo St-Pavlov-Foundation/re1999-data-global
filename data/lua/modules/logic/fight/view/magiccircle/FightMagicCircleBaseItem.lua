@@ -1,67 +1,69 @@
-﻿module("modules.logic.fight.view.magiccircle.FightMagicCircleBaseItem", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/magiccircle/FightMagicCircleBaseItem.lua
 
-local var_0_0 = class("FightMagicCircleBaseItem", UserDataDispose)
+module("modules.logic.fight.view.magiccircle.FightMagicCircleBaseItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+local FightMagicCircleBaseItem = class("FightMagicCircleBaseItem", UserDataDispose)
 
-	arg_1_0.go = arg_1_1
-	arg_1_0.destroyed = nil
-	arg_1_0._aniPlayer = SLFramework.AnimatorPlayer.Get(arg_1_0.go)
-	arg_1_0._ani = arg_1_0.go:GetComponent(gohelper.Type_Animator)
+function FightMagicCircleBaseItem:init(go)
+	self:__onInit()
 
-	arg_1_0:initView()
+	self.go = go
+	self.destroyed = nil
+	self._aniPlayer = SLFramework.AnimatorPlayer.Get(self.go)
+	self._ani = self.go:GetComponent(gohelper.Type_Animator)
+
+	self:initView()
 end
 
-function var_0_0.destroy(arg_2_0)
-	arg_2_0.destroyed = true
+function FightMagicCircleBaseItem:destroy()
+	self.destroyed = true
 
-	if arg_2_0._aniPlayer then
-		arg_2_0._aniPlayer:Stop()
+	if self._aniPlayer then
+		self._aniPlayer:Stop()
 	end
 
-	arg_2_0:hideGo()
-	arg_2_0:__onDispose()
+	self:hideGo()
+	self:__onDispose()
 end
 
-function var_0_0.getUIType(arg_3_0)
+function FightMagicCircleBaseItem:getUIType()
 	return FightEnum.MagicCircleUIType.Normal
 end
 
-function var_0_0.hideGo(arg_4_0)
-	gohelper.setActive(arg_4_0.go, false)
+function FightMagicCircleBaseItem:hideGo()
+	gohelper.setActive(self.go, false)
 end
 
-function var_0_0.showGo(arg_5_0)
-	gohelper.setActive(arg_5_0.go, true)
+function FightMagicCircleBaseItem:showGo()
+	gohelper.setActive(self.go, true)
 end
 
-function var_0_0.initView(arg_6_0)
+function FightMagicCircleBaseItem:initView()
 	return
 end
 
-function var_0_0.onCreateMagic(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_0:showGo()
-	arg_7_0:playAnim("open")
-	arg_7_0:refreshUI(arg_7_1, arg_7_2)
+function FightMagicCircleBaseItem:onCreateMagic(magicMo, magicConfig)
+	self:showGo()
+	self:playAnim("open")
+	self:refreshUI(magicMo, magicConfig)
 end
 
-function var_0_0.onUpdateMagic(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	arg_8_0:refreshUI(arg_8_1, arg_8_2, arg_8_3)
+function FightMagicCircleBaseItem:onUpdateMagic(magicMo, magicConfig, fromId)
+	self:refreshUI(magicMo, magicConfig, fromId)
 end
 
-function var_0_0.onRemoveMagic(arg_9_0)
-	arg_9_0:destroy()
+function FightMagicCircleBaseItem:onRemoveMagic()
+	self:destroy()
 end
 
-function var_0_0.playAnim(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	arg_10_0._ani.speed = FightModel.instance:getSpeed()
+function FightMagicCircleBaseItem:playAnim(animName, callback, callbackObj)
+	self._ani.speed = FightModel.instance:getSpeed()
 
-	arg_10_0._aniPlayer:Play(arg_10_1, arg_10_2, arg_10_3)
+	self._aniPlayer:Play(animName, callback, callbackObj)
 end
 
-function var_0_0.refreshUI(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+function FightMagicCircleBaseItem:refreshUI(magicMo, magicConfig, fromId)
 	return
 end
 
-return var_0_0
+return FightMagicCircleBaseItem

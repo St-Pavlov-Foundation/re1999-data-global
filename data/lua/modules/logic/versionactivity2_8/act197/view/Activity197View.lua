@@ -1,231 +1,235 @@
-﻿module("modules.logic.versionactivity2_8.act197.view.Activity197View", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/act197/view/Activity197View.lua
 
-local var_0_0 = class("Activity197View", BaseView)
+module("modules.logic.versionactivity2_8.act197.view.Activity197View", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg")
-	arg_1_0._simagepage = gohelper.findChildSingleImage(arg_1_0.viewGO, "Left/#simage_page")
-	arg_1_0._goleft = gohelper.findChild(arg_1_0.viewGO, "Left")
-	arg_1_0._gopointcontent = gohelper.findChild(arg_1_0.viewGO, "Left/Point")
-	arg_1_0._gopointitem = gohelper.findChild(arg_1_0.viewGO, "Left/Point/#go_pointitem")
-	arg_1_0._scrollreward = gohelper.findChildScrollRect(arg_1_0.viewGO, "Left/#scroll_reward")
-	arg_1_0._gorewarditemcontent = gohelper.findChild(arg_1_0.viewGO, "Left/#scroll_reward/Viewport/Content/")
-	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.viewGO, "Left/#scroll_reward/Viewport/Content/#go_rewarditem")
-	arg_1_0._txtindex = gohelper.findChildText(arg_1_0.viewGO, "Left/indexBG/#txt_index")
-	arg_1_0._btnKey = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_Summon")
-	arg_1_0._txtusekey = gohelper.findChildText(arg_1_0.viewGO, "Left/#btn_Summon/#txt_usepower")
-	arg_1_0._btnswitchLeft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_switchLeft")
-	arg_1_0._btnswitchRight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_switchRight")
-	arg_1_0._simageTitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "Right/#simage_Title")
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Right/LimitTime/#txt_LimitTime")
-	arg_1_0._scrollDesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "Right/#scroll_Desc")
-	arg_1_0._txtDec = gohelper.findChildText(arg_1_0.viewGO, "Right/#scroll_Desc/Viewport/#txt_Dec")
-	arg_1_0._imageboxprogress = gohelper.findChildImage(arg_1_0.viewGO, "Right/Computer/go_Unknown_Progress/#image_progress")
-	arg_1_0._goprogressunknown = gohelper.findChild(arg_1_0.viewGO, "Right/Computer/go_Unknown_Progress/image_dec2")
-	arg_1_0._imageprogress = gohelper.findChildImage(arg_1_0.viewGO, "Right/Progress/#image_progress")
-	arg_1_0._btnSearch = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/Progress/#btn_Search")
-	arg_1_0._txtusebubble = gohelper.findChildText(arg_1_0.viewGO, "Right/Progress/#btn_Search/#txt_usepower")
-	arg_1_0._goExtraTips = gohelper.findChild(arg_1_0.viewGO, "#go_ExtraTips")
-	arg_1_0._txtTips = gohelper.findChildText(arg_1_0.viewGO, "#go_ExtraTips/#txt_Tips")
-	arg_1_0._govxkey = gohelper.findChild(arg_1_0.viewGO, "vx_glow")
-	arg_1_0._govxbubble = gohelper.findChild(arg_1_0.viewGO, "vx_light")
-	arg_1_0._govxFresh = gohelper.findChild(arg_1_0.viewGO, "Left/vx_fresh")
-	arg_1_0._leftAnimator = arg_1_0._goleft:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._goCanGet = gohelper.findChild(arg_1_0.viewGO, "Right/Computer/go_Canget")
-	arg_1_0._btnCanGet = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/Computer/go_Canget/#btn_canget")
-	arg_1_0._goHasGet = gohelper.findChild(arg_1_0.viewGO, "Right/Computer/go_Hasget")
-	arg_1_0._goUnknown = gohelper.findChild(arg_1_0.viewGO, "Right/Computer/go_Unknown")
-	arg_1_0._goUnknownProgress = gohelper.findChild(arg_1_0.viewGO, "Right/Computer/go_Unknown_Progress")
-	arg_1_0._btntoptips = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_tips")
-	arg_1_0._gotoptips = gohelper.findChild(arg_1_0.viewGO, "#btn_tips/go_tips")
-	arg_1_0._btnclosetoptips = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_tips/go_tips/#btn_close")
-	arg_1_0._btnbottomtips = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/Progress/#btn_tips")
-	arg_1_0._gobottomtips = gohelper.findChild(arg_1_0.viewGO, "Right/Progress/#btn_tips/go_tips")
-	arg_1_0._btnclosebottomtips = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/Progress/#btn_tips/go_tips/#btn_close")
-	arg_1_0._goreddotKey = gohelper.findChild(arg_1_0.viewGO, "Left/#btn_Summon/#go_reddot")
-	arg_1_0._goreddotBubble = gohelper.findChild(arg_1_0.viewGO, "Right/Progress/#btn_Search/#go_reddot")
-	arg_1_0._goreddotComputer = gohelper.findChild(arg_1_0.viewGO, "Right/Computer/#go_reddot")
-	arg_1_0._switchTime = 0.3
-	arg_1_0._vxfreshTime = 0.6
-	arg_1_0._vxItemGlowTime = 0.8
-	arg_1_0._showTipsTime = 2
-	arg_1_0._showtoptips = false
-	arg_1_0._showbottomtips = false
-	arg_1_0._isPlayAnim = false
-	arg_1_0._sendMsgTime = 10
+local Activity197View = class("Activity197View", BaseView)
 
-	gohelper.setActive(arg_1_0._gotoptips, false)
+function Activity197View:onInitView()
+	self._simagefullbg = gohelper.findChildSingleImage(self.viewGO, "#simage_fullbg")
+	self._simagepage = gohelper.findChildSingleImage(self.viewGO, "Left/#simage_page")
+	self._goleft = gohelper.findChild(self.viewGO, "Left")
+	self._gopointcontent = gohelper.findChild(self.viewGO, "Left/Point")
+	self._gopointitem = gohelper.findChild(self.viewGO, "Left/Point/#go_pointitem")
+	self._scrollreward = gohelper.findChildScrollRect(self.viewGO, "Left/#scroll_reward")
+	self._gorewarditemcontent = gohelper.findChild(self.viewGO, "Left/#scroll_reward/Viewport/Content/")
+	self._gorewarditem = gohelper.findChild(self.viewGO, "Left/#scroll_reward/Viewport/Content/#go_rewarditem")
+	self._txtindex = gohelper.findChildText(self.viewGO, "Left/indexBG/#txt_index")
+	self._btnKey = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_Summon")
+	self._txtusekey = gohelper.findChildText(self.viewGO, "Left/#btn_Summon/#txt_usepower")
+	self._btnswitchLeft = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_switchLeft")
+	self._btnswitchRight = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_switchRight")
+	self._simageTitle = gohelper.findChildSingleImage(self.viewGO, "Right/#simage_Title")
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "Right/LimitTime/#txt_LimitTime")
+	self._scrollDesc = gohelper.findChildScrollRect(self.viewGO, "Right/#scroll_Desc")
+	self._txtDec = gohelper.findChildText(self.viewGO, "Right/#scroll_Desc/Viewport/#txt_Dec")
+	self._imageboxprogress = gohelper.findChildImage(self.viewGO, "Right/Computer/go_Unknown_Progress/#image_progress")
+	self._goprogressunknown = gohelper.findChild(self.viewGO, "Right/Computer/go_Unknown_Progress/image_dec2")
+	self._imageprogress = gohelper.findChildImage(self.viewGO, "Right/Progress/#image_progress")
+	self._btnSearch = gohelper.findChildButtonWithAudio(self.viewGO, "Right/Progress/#btn_Search")
+	self._txtusebubble = gohelper.findChildText(self.viewGO, "Right/Progress/#btn_Search/#txt_usepower")
+	self._goExtraTips = gohelper.findChild(self.viewGO, "#go_ExtraTips")
+	self._txtTips = gohelper.findChildText(self.viewGO, "#go_ExtraTips/#txt_Tips")
+	self._govxkey = gohelper.findChild(self.viewGO, "vx_glow")
+	self._govxbubble = gohelper.findChild(self.viewGO, "vx_light")
+	self._govxFresh = gohelper.findChild(self.viewGO, "Left/vx_fresh")
+	self._leftAnimator = self._goleft:GetComponent(typeof(UnityEngine.Animator))
+	self._goCanGet = gohelper.findChild(self.viewGO, "Right/Computer/go_Canget")
+	self._btnCanGet = gohelper.findChildButtonWithAudio(self.viewGO, "Right/Computer/go_Canget/#btn_canget")
+	self._goHasGet = gohelper.findChild(self.viewGO, "Right/Computer/go_Hasget")
+	self._goUnknown = gohelper.findChild(self.viewGO, "Right/Computer/go_Unknown")
+	self._goUnknownProgress = gohelper.findChild(self.viewGO, "Right/Computer/go_Unknown_Progress")
+	self._btntoptips = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_tips")
+	self._gotoptips = gohelper.findChild(self.viewGO, "#btn_tips/go_tips")
+	self._btnclosetoptips = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_tips/go_tips/#btn_close")
+	self._btnbottomtips = gohelper.findChildButtonWithAudio(self.viewGO, "Right/Progress/#btn_tips")
+	self._gobottomtips = gohelper.findChild(self.viewGO, "Right/Progress/#btn_tips/go_tips")
+	self._btnclosebottomtips = gohelper.findChildButtonWithAudio(self.viewGO, "Right/Progress/#btn_tips/go_tips/#btn_close")
+	self._goreddotKey = gohelper.findChild(self.viewGO, "Left/#btn_Summon/#go_reddot")
+	self._goreddotBubble = gohelper.findChild(self.viewGO, "Right/Progress/#btn_Search/#go_reddot")
+	self._goreddotComputer = gohelper.findChild(self.viewGO, "Right/Computer/#go_reddot")
+	self._switchTime = 0.3
+	self._vxfreshTime = 0.6
+	self._vxItemGlowTime = 0.8
+	self._showTipsTime = 2
+	self._showtoptips = false
+	self._showbottomtips = false
+	self._isPlayAnim = false
+	self._sendMsgTime = 10
 
-	arg_1_0._animComputer = gohelper.findChild(arg_1_0.viewGO, "Right/Computer/go_Unknown_Progress"):GetComponent(typeof(UnityEngine.Animator))
+	gohelper.setActive(self._gotoptips, false)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	self._animComputer = gohelper.findChild(self.viewGO, "Right/Computer/go_Unknown_Progress"):GetComponent(typeof(UnityEngine.Animator))
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnKey:AddClickListener(arg_2_0._btnKeyOnClick, arg_2_0)
-	arg_2_0._btnswitchLeft:AddClickListener(arg_2_0._btnswitchLeftOnClick, arg_2_0)
-	arg_2_0._btnswitchRight:AddClickListener(arg_2_0._btnswitchRightOnClick, arg_2_0)
-	arg_2_0._btnCanGet:AddClickListener(arg_2_0._btnCanGetOnClick, arg_2_0)
-	arg_2_0._btnSearch:AddClickListener(arg_2_0._btnSearchOnClick, arg_2_0)
-	arg_2_0._btntoptips:AddClickListener(arg_2_0._btntoptipsOnClick, arg_2_0)
-	arg_2_0._btnclosetoptips:AddClickListener(arg_2_0._btnclosetoptipsOnClick, arg_2_0)
-	arg_2_0._btnbottomtips:AddClickListener(arg_2_0._btnbottomtipsOnClick, arg_2_0)
-	arg_2_0._btnclosebottomtips:AddClickListener(arg_2_0._btnclosebottomtipsOnClick, arg_2_0)
-	arg_2_0:addEventCb(Activity197Controller.instance, Activity197Event.UpdateSingleItem, arg_2_0.updateSingleRewardItem, arg_2_0)
-	arg_2_0:addEventCb(Activity197Controller.instance, Activity197Event.onReceiveAct197Explore, arg_2_0._refreshBtn, arg_2_0)
-	arg_2_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_2_0._refreshBtn, arg_2_0)
-	arg_2_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_2_0.onRefreshActivity, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_2_0._onRewardRefresh, arg_2_0)
-	arg_2_0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_2_0._onFinishTask, arg_2_0)
+function Activity197View:addEvents()
+	self._btnKey:AddClickListener(self._btnKeyOnClick, self)
+	self._btnswitchLeft:AddClickListener(self._btnswitchLeftOnClick, self)
+	self._btnswitchRight:AddClickListener(self._btnswitchRightOnClick, self)
+	self._btnCanGet:AddClickListener(self._btnCanGetOnClick, self)
+	self._btnSearch:AddClickListener(self._btnSearchOnClick, self)
+	self._btntoptips:AddClickListener(self._btntoptipsOnClick, self)
+	self._btnclosetoptips:AddClickListener(self._btnclosetoptipsOnClick, self)
+	self._btnbottomtips:AddClickListener(self._btnbottomtipsOnClick, self)
+	self._btnclosebottomtips:AddClickListener(self._btnclosebottomtipsOnClick, self)
+	self:addEventCb(Activity197Controller.instance, Activity197Event.UpdateSingleItem, self.updateSingleRewardItem, self)
+	self:addEventCb(Activity197Controller.instance, Activity197Event.onReceiveAct197Explore, self._refreshBtn, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._refreshBtn, self)
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self.onRefreshActivity, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onRewardRefresh, self)
+	self:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, self._onFinishTask, self)
 
-	arg_2_0._redDotKey = RedDotController.instance:addNotEventRedDot(arg_2_0._goreddotKey, arg_2_0.checkKeyReddot, arg_2_0)
-	arg_2_0._redDotBubble = RedDotController.instance:addNotEventRedDot(arg_2_0._goreddotBubble, arg_2_0.checkBubbleReddot, arg_2_0)
-	arg_2_0._redDotComputer = RedDotController.instance:addRedDot(arg_2_0._goreddotComputer, RedDotEnum.DotNode.ActiveActivityProgressReward)
+	self._redDotKey = RedDotController.instance:addNotEventRedDot(self._goreddotKey, self.checkKeyReddot, self)
+	self._redDotBubble = RedDotController.instance:addNotEventRedDot(self._goreddotBubble, self.checkBubbleReddot, self)
+	self._redDotComputer = RedDotController.instance:addRedDot(self._goreddotComputer, RedDotEnum.DotNode.ActiveActivityProgressReward)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnKey:RemoveClickListener()
-	arg_3_0._btnswitchLeft:RemoveClickListener()
-	arg_3_0._btnswitchRight:RemoveClickListener()
-	arg_3_0._btnSearch:RemoveClickListener()
-	arg_3_0._btnCanGet:RemoveClickListener()
-	arg_3_0._btntoptips:RemoveClickListener()
-	arg_3_0._btnclosetoptips:RemoveClickListener()
-	arg_3_0._btnbottomtips:RemoveClickListener()
-	arg_3_0._btnclosebottomtips:RemoveClickListener()
-	arg_3_0:removeEventCb(Activity197Controller.instance, Activity197Event.UpdateSingleItem, arg_3_0.updateSingleRewardItem, arg_3_0)
-	arg_3_0:removeEventCb(Activity197Controller.instance, Activity197Event.onReceiveAct197Explore, arg_3_0._refreshBtn, arg_3_0)
-	arg_3_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_3_0._refreshBtn, arg_3_0)
+function Activity197View:removeEvents()
+	self._btnKey:RemoveClickListener()
+	self._btnswitchLeft:RemoveClickListener()
+	self._btnswitchRight:RemoveClickListener()
+	self._btnSearch:RemoveClickListener()
+	self._btnCanGet:RemoveClickListener()
+	self._btntoptips:RemoveClickListener()
+	self._btnclosetoptips:RemoveClickListener()
+	self._btnbottomtips:RemoveClickListener()
+	self._btnclosebottomtips:RemoveClickListener()
+	self:removeEventCb(Activity197Controller.instance, Activity197Event.UpdateSingleItem, self.updateSingleRewardItem, self)
+	self:removeEventCb(Activity197Controller.instance, Activity197Event.onReceiveAct197Explore, self._refreshBtn, self)
+	self:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._refreshBtn, self)
 end
 
-function var_0_0._btntoptipsOnClick(arg_4_0)
-	arg_4_0._showtoptips = not arg_4_0._showtoptips
+function Activity197View:_btntoptipsOnClick()
+	self._showtoptips = not self._showtoptips
 
-	gohelper.setActive(arg_4_0._gotoptips, arg_4_0._showtoptips)
+	gohelper.setActive(self._gotoptips, self._showtoptips)
 end
 
-function var_0_0._btnclosetoptipsOnClick(arg_5_0)
-	arg_5_0._showtoptips = false
+function Activity197View:_btnclosetoptipsOnClick()
+	self._showtoptips = false
 
-	gohelper.setActive(arg_5_0._gotoptips, arg_5_0._showtoptips)
+	gohelper.setActive(self._gotoptips, self._showtoptips)
 end
 
-function var_0_0._btnbottomtipsOnClick(arg_6_0)
-	arg_6_0._showbottomtips = not arg_6_0._showbottomtips
+function Activity197View:_btnbottomtipsOnClick()
+	self._showbottomtips = not self._showbottomtips
 
-	gohelper.setActive(arg_6_0._gobottomtips, arg_6_0._showbottomtips)
+	gohelper.setActive(self._gobottomtips, self._showbottomtips)
 end
 
-function var_0_0._btnclosebottomtipsOnClick(arg_7_0)
-	arg_7_0._showbottomtips = false
+function Activity197View:_btnclosebottomtipsOnClick()
+	self._showbottomtips = false
 
-	gohelper.setActive(arg_7_0._gobottomtips, arg_7_0._showbottomtips)
+	gohelper.setActive(self._gobottomtips, self._showbottomtips)
 end
 
-function var_0_0._btnswitchLeftOnClick(arg_8_0)
-	if arg_8_0._isPlayAnim then
+function Activity197View:_btnswitchLeftOnClick()
+	if self._isPlayAnim then
 		return
 	end
 
-	local var_8_0 = arg_8_0._currentPoolId - 1
+	local poolId = self._currentPoolId - 1
 
-	if var_8_0 < 1 then
+	if poolId < 1 then
 		return
 	end
 
-	arg_8_0._currentPoolId = var_8_0
+	self._currentPoolId = poolId
 
-	arg_8_0._leftAnimator:Play("left", 0, 0)
+	self._leftAnimator:Play("left", 0, 0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
-	TaskDispatcher.runDelay(arg_8_0._onSwitchAnimFinish, arg_8_0, arg_8_0._switchTime)
+	TaskDispatcher.runDelay(self._onSwitchAnimFinish, self, self._switchTime)
 end
 
-function var_0_0._btnswitchRightOnClick(arg_9_0)
-	if arg_9_0._isPlayAnim then
+function Activity197View:_btnswitchRightOnClick()
+	if self._isPlayAnim then
 		return
 	end
 
-	local var_9_0 = arg_9_0._currentPoolId + 1
+	local poolId = self._currentPoolId + 1
 
-	if var_9_0 > Activity197Config.instance:getPoolCount() then
+	if poolId > Activity197Config.instance:getPoolCount() then
 		return
 	end
 
-	if Activity197Model.instance:checkPoolOpen(var_9_0) then
-		arg_9_0._currentPoolId = var_9_0
+	if Activity197Model.instance:checkPoolOpen(poolId) then
+		self._currentPoolId = poolId
 
-		arg_9_0._leftAnimator:Play("right", 0, 0)
+		self._leftAnimator:Play("right", 0, 0)
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
-		TaskDispatcher.runDelay(arg_9_0._onSwitchAnimFinish, arg_9_0, arg_9_0._switchTime)
+		TaskDispatcher.runDelay(self._onSwitchAnimFinish, self, self._switchTime)
 	else
 		GameFacade.showToast(ToastEnum.GetBigRewardUnlock)
 	end
 end
 
-function var_0_0._onSwitchAnimFinish(arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._onSwitchAnimFinish, arg_10_0)
-	arg_10_0:_refreshUI()
+function Activity197View:_onSwitchAnimFinish()
+	TaskDispatcher.cancelTask(self._onSwitchAnimFinish, self)
+	self:_refreshUI()
 
-	arg_10_0._isPlayAnim = false
+	self._isPlayAnim = false
 end
 
-function var_0_0._btnSearchOnClick(arg_11_0)
-	if arg_11_0._isPlayAnim then
+function Activity197View:_btnSearchOnClick()
+	if self._isPlayAnim then
 		return
 	end
 
 	if Activity197Model.instance:canExplore() then
-		arg_11_0:showGetKetProgress()
+		self:showGetKetProgress()
 	else
-		local var_11_0 = CurrencyConfig.instance:getCurrencyCo(Activity197Enum.BulbCurrency).name
+		local name = CurrencyConfig.instance:getCurrencyCo(Activity197Enum.BulbCurrency).name
 
-		GameFacade.showToast(ToastEnum.V1a6CachotToast13, var_11_0)
+		GameFacade.showToast(ToastEnum.V1a6CachotToast13, name)
 	end
 end
 
-function var_0_0._btnKeyOnClick(arg_12_0)
-	if arg_12_0._isPlayAnim then
+function Activity197View:_btnKeyOnClick()
+	if self._isPlayAnim then
 		return
 	end
 
-	if Activity197Model.instance:checkPoolGetAllReward(arg_12_0._currentPoolId) then
+	if Activity197Model.instance:checkPoolGetAllReward(self._currentPoolId) then
 		GameFacade.showToast(ToastEnum.HasReceiveAllReward)
 	elseif Activity197Model.instance:canRummage() then
-		arg_12_0:_getRewardAnim()
+		self:_getRewardAnim()
 	else
-		local var_12_0 = CurrencyConfig.instance:getCurrencyCo(Activity197Enum.KeyCurrency).name
+		local name = CurrencyConfig.instance:getCurrencyCo(Activity197Enum.KeyCurrency).name
 
-		GameFacade.showToast(ToastEnum.V1a6CachotToast13, var_12_0)
+		GameFacade.showToast(ToastEnum.V1a6CachotToast13, name)
 	end
 end
 
-function var_0_0._btnClickTopNode(arg_13_0, arg_13_1)
-	if arg_13_0._isPlayAnim then
+function Activity197View:_btnClickTopNode(poolId)
+	if self._isPlayAnim then
 		return
 	end
 
-	if arg_13_0._currentPoolId == arg_13_1 then
+	if self._currentPoolId == poolId then
 		return
 	end
 
-	if Activity197Model.instance:checkPoolOpen(arg_13_1) then
-		local var_13_0 = arg_13_1 > arg_13_0._currentPoolId
+	local isopen = Activity197Model.instance:checkPoolOpen(poolId)
 
-		Activity197Model.instance:setCurrentPoolId(arg_13_1)
+	if isopen then
+		local isleft = poolId > self._currentPoolId
 
-		arg_13_0._currentPoolId = arg_13_1
+		Activity197Model.instance:setCurrentPoolId(poolId)
 
-		if var_13_0 then
-			arg_13_0._leftAnimator:Play("left", 0, 0)
-			TaskDispatcher.runDelay(arg_13_0._onSwitchAnimFinish, arg_13_0, arg_13_0._switchTime)
+		self._currentPoolId = poolId
+
+		if isleft then
+			self._leftAnimator:Play("left", 0, 0)
+			TaskDispatcher.runDelay(self._onSwitchAnimFinish, self, self._switchTime)
 		else
-			arg_13_0._leftAnimator:Play("right", 0, 0)
-			TaskDispatcher.runDelay(arg_13_0._onSwitchAnimFinish, arg_13_0, arg_13_0._switchTime)
+			self._leftAnimator:Play("right", 0, 0)
+			TaskDispatcher.runDelay(self._onSwitchAnimFinish, self, self._switchTime)
 		end
 
-		arg_13_0._isPlayAnim = false
+		self._isPlayAnim = false
 	else
 		GameFacade.showToast(ToastEnum.GetBigRewardUnlock)
 	end
@@ -233,419 +237,424 @@ function var_0_0._btnClickTopNode(arg_13_0, arg_13_1)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
 end
 
-function var_0_0._btnCanGetOnClick(arg_14_0)
-	local var_14_0 = Activity197Config.instance:getStageConfig(arg_14_0._actId, 1)
-	local var_14_1 = var_14_0 and var_14_0.globalTaskId or 0
+function Activity197View:_btnCanGetOnClick()
+	local co = Activity197Config.instance:getStageConfig(self._actId, 1)
+	local globalTaskId = co and co.globalTaskId or 0
 
-	TaskRpc.instance:sendFinishTaskRequest(var_14_1)
+	TaskRpc.instance:sendFinishTaskRequest(globalTaskId)
 end
 
-function var_0_0._editableInitView(arg_15_0)
-	arg_15_0._isShowTip = false
+function Activity197View:_editableInitView()
+	self._isShowTip = false
 
-	gohelper.setActive(arg_15_0._gopointitem, false)
-	gohelper.setActive(arg_15_0._gorewarditem, false)
-	gohelper.setActive(arg_15_0._goExtraTips, false)
+	gohelper.setActive(self._gopointitem, false)
+	gohelper.setActive(self._gorewarditem, false)
+	gohelper.setActive(self._goExtraTips, false)
 
-	arg_15_0._imageboxprogress.fillAmount = 0
-	arg_15_0._imageprogress.fillAmount = 0
+	self._imageboxprogress.fillAmount = 0
+	self._imageprogress.fillAmount = 0
 
-	arg_15_0:_initTopNode()
-	arg_15_0:_initRewardItems()
+	self:_initTopNode()
+	self:_initRewardItems()
 end
 
-function var_0_0._initTopNode(arg_16_0)
-	arg_16_0._topnodeList = {}
+function Activity197View:_initTopNode()
+	self._topnodeList = {}
 
-	local var_16_0 = Activity197Config.instance:getPoolList()
+	local poolList = Activity197Config.instance:getPoolList()
 
-	for iter_16_0, iter_16_1 in ipairs(var_16_0) do
-		if not arg_16_0._topnodeList[iter_16_0] then
-			local var_16_1 = arg_16_0:getUserDataTb_()
+	for index, poolId in ipairs(poolList) do
+		local item = self._topnodeList[index]
 
-			var_16_1.poolId = iter_16_1
-			var_16_1.go = gohelper.clone(arg_16_0._gopointitem, arg_16_0._gopointcontent, "pool" .. iter_16_0)
-			var_16_1.golocked = gohelper.findChild(var_16_1.go, "locked")
-			var_16_1.gounlock = gohelper.findChild(var_16_1.go, "unlock")
-			var_16_1.goselect = gohelper.findChild(var_16_1.go, "unlock/go_select")
-			var_16_1.gogetall = gohelper.findChild(var_16_1.go, "unlock/go_allGet")
-			var_16_1.btn = gohelper.findChildButton(var_16_1.go, "btn")
+		if not item then
+			item = self:getUserDataTb_()
+			item.poolId = poolId
+			item.go = gohelper.clone(self._gopointitem, self._gopointcontent, "pool" .. index)
+			item.golocked = gohelper.findChild(item.go, "locked")
+			item.gounlock = gohelper.findChild(item.go, "unlock")
+			item.goselect = gohelper.findChild(item.go, "unlock/go_select")
+			item.gogetall = gohelper.findChild(item.go, "unlock/go_allGet")
+			item.btn = gohelper.findChildButton(item.go, "btn")
 
-			var_16_1.btn:AddClickListener(arg_16_0._btnClickTopNode, arg_16_0, var_16_1.poolId)
+			item.btn:AddClickListener(self._btnClickTopNode, self, item.poolId)
 
-			var_16_1.anim = var_16_1.go:GetComponent(typeof(UnityEngine.Animator))
+			item.anim = item.go:GetComponent(typeof(UnityEngine.Animator))
 
-			gohelper.setActive(var_16_1.go, true)
-			table.insert(arg_16_0._topnodeList, var_16_1)
+			gohelper.setActive(item.go, true)
+			table.insert(self._topnodeList, item)
 		end
 	end
 end
 
-function var_0_0._initRewardItems(arg_17_0)
-	arg_17_0._rewardItems = {}
+function Activity197View:_initRewardItems()
+	self._rewardItems = {}
 
-	for iter_17_0 = 1, 12 do
-		if not arg_17_0._rewardItems[iter_17_0] then
-			local var_17_0 = arg_17_0:getUserDataTb_()
+	for index = 1, 12 do
+		local item = self._rewardItems[index]
 
-			var_17_0.gainId = iter_17_0
-			var_17_0.go = gohelper.clone(arg_17_0._gorewarditem, arg_17_0._gorewarditemcontent, "reward" .. iter_17_0)
-			var_17_0.goreceive = gohelper.findChild(var_17_0.go, "go_receive")
-			var_17_0.gohasget = gohelper.findChild(var_17_0.go, "go_receive/go_hasget")
-			var_17_0.goitem = gohelper.findChild(var_17_0.go, "go_icon")
-			var_17_0.gofirstPrice = gohelper.findChild(var_17_0.go, "go_firstPrice")
-			var_17_0.goitemcomp = IconMgr.instance:getCommonPropItemIcon(var_17_0.goitem)
-			var_17_0.vxglow = gohelper.findChild(var_17_0.go, "vx_glow")
-			var_17_0.animHasGet = var_17_0.gohasget:GetComponent(typeof(UnityEngine.Animator))
+		if not item then
+			item = self:getUserDataTb_()
+			item.gainId = index
+			item.go = gohelper.clone(self._gorewarditem, self._gorewarditemcontent, "reward" .. index)
+			item.goreceive = gohelper.findChild(item.go, "go_receive")
+			item.gohasget = gohelper.findChild(item.go, "go_receive/go_hasget")
+			item.goitem = gohelper.findChild(item.go, "go_icon")
+			item.gofirstPrice = gohelper.findChild(item.go, "go_firstPrice")
+			item.goitemcomp = IconMgr.instance:getCommonPropItemIcon(item.goitem)
+			item.vxglow = gohelper.findChild(item.go, "vx_glow")
+			item.animHasGet = item.gohasget:GetComponent(typeof(UnityEngine.Animator))
 
-			gohelper.setActive(var_17_0.gofirstPrice, iter_17_0 == 1)
-			gohelper.setActive(var_17_0.go, true)
-			table.insert(arg_17_0._rewardItems, var_17_0)
+			gohelper.setActive(item.gofirstPrice, index == 1)
+			gohelper.setActive(item.go, true)
+			table.insert(self._rewardItems, item)
 		end
 	end
 end
 
-function var_0_0._onFinishTask(arg_18_0)
-	arg_18_0:_refreshComputer()
+function Activity197View:_onFinishTask()
+	self:_refreshComputer()
 
-	arg_18_0._imageprogress.fillAmount = 1
+	self._imageprogress.fillAmount = 1
 
 	RedDotRpc.instance:sendGetRedDotInfosRequest({
 		RedDotEnum.DotNode.ActiveActivityProgressReward,
 		RedDotEnum.DotNode.ActiveActivity
 	})
-	arg_18_0:_refreshRedDot()
+	self:_refreshRedDot()
 end
 
-function var_0_0.onOpen(arg_19_0)
-	arg_19_0._actId = arg_19_0.viewParam.actId
-	arg_19_0._lastOpenPoolId = 1
-	arg_19_0._currentPoolId = Activity197Model.instance:getLastOpenPoolId()
+function Activity197View:onOpen()
+	self._actId = self.viewParam.actId
+	self._lastOpenPoolId = 1
+	self._currentPoolId = Activity197Model.instance:getLastOpenPoolId()
 
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.Activity173
-	}, arg_19_0._onSendTaskBack, arg_19_0)
+	}, self._onSendTaskBack, self)
 	AudioMgr.instance:trigger(AudioEnum.ui_mail.play_ui_mail_open_1)
-	arg_19_0:_getLastPoolId()
-	arg_19_0:_refreshUI()
-	arg_19_0:_checkNeedShowBubbleVx()
+	self:_getLastPoolId()
+	self:_refreshUI()
+	self:_checkNeedShowBubbleVx()
 end
 
-function var_0_0._getLastPoolId(arg_20_0)
-	for iter_20_0, iter_20_1 in ipairs(arg_20_0._topnodeList) do
-		if Activity197Model.instance:checkPoolOpen(iter_20_1.poolId) then
-			arg_20_0._lastOpenPoolId = iter_20_1.poolId
+function Activity197View:_getLastPoolId()
+	for _, node in ipairs(self._topnodeList) do
+		local isopen = Activity197Model.instance:checkPoolOpen(node.poolId)
+
+		if isopen then
+			self._lastOpenPoolId = node.poolId
 		end
 	end
 end
 
-function var_0_0._refreshUI(arg_21_0)
-	arg_21_0._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(arg_21_0._actId)
+function Activity197View:_refreshUI()
+	self._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(self._actId)
 
-	local var_21_0 = string.format("%03d", arg_21_0._currentPoolId)
+	local index = string.format("%03d", self._currentPoolId)
 
-	arg_21_0._txtindex.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("anniversary_activity_name"), var_21_0)
+	self._txtindex.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("anniversary_activity_name"), index)
 
-	local var_21_1 = arg_21_0._currentPoolId == Activity197Config.instance:getPoolCount()
-	local var_21_2 = arg_21_0._currentPoolId == 1
+	local isLast = self._currentPoolId == Activity197Config.instance:getPoolCount()
+	local isFirst = self._currentPoolId == 1
 
-	gohelper.setActive(arg_21_0._btnswitchRight.gameObject, not var_21_1)
-	gohelper.setActive(arg_21_0._btnswitchLeft.gameObject, not var_21_2)
-	arg_21_0:_refreshTopNodeList()
-	arg_21_0:_refreshRewardItems()
-	arg_21_0:_refreshProgress()
-	arg_21_0:_refreshBtn()
+	gohelper.setActive(self._btnswitchRight.gameObject, not isLast)
+	gohelper.setActive(self._btnswitchLeft.gameObject, not isFirst)
+	self:_refreshTopNodeList()
+	self:_refreshRewardItems()
+	self:_refreshProgress()
+	self:_refreshBtn()
 end
 
-function var_0_0._refreshRedDot(arg_22_0)
-	if arg_22_0._redDotKey then
-		arg_22_0._redDotKey:refreshRedDot()
+function Activity197View:_refreshRedDot()
+	if self._redDotKey then
+		self._redDotKey:refreshRedDot()
 	end
 
-	if arg_22_0._redDotBubble then
-		arg_22_0._redDotBubble:refreshRedDot()
+	if self._redDotBubble then
+		self._redDotBubble:refreshRedDot()
 	end
 end
 
-function var_0_0._refreshComputer(arg_23_0)
-	local var_23_0 = Activity197Model.instance:checkBigRewardCanGet()
-	local var_23_1 = Activity197Model.instance:checkBigRewardHasGet()
+function Activity197View:_refreshComputer()
+	local canGet = Activity197Model.instance:checkBigRewardCanGet()
+	local hasGet = Activity197Model.instance:checkBigRewardHasGet()
 
-	gohelper.setActive(arg_23_0._goCanGet, var_23_0)
-	gohelper.setActive(arg_23_0._goHasGet, var_23_1)
-	gohelper.setActive(arg_23_0._goUnknown, not var_23_0 and not var_23_1)
-	gohelper.setActive(arg_23_0._goUnknownProgress, not var_23_0 and not var_23_1)
+	gohelper.setActive(self._goCanGet, canGet)
+	gohelper.setActive(self._goHasGet, hasGet)
+	gohelper.setActive(self._goUnknown, not canGet and not hasGet)
+	gohelper.setActive(self._goUnknownProgress, not canGet and not hasGet)
 end
 
-function var_0_0._refreshTopNodeList(arg_24_0)
-	for iter_24_0, iter_24_1 in ipairs(arg_24_0._topnodeList) do
-		local var_24_0 = Activity197Model.instance:checkPoolOpen(iter_24_1.poolId)
+function Activity197View:_refreshTopNodeList()
+	for _, node in ipairs(self._topnodeList) do
+		local isopen = Activity197Model.instance:checkPoolOpen(node.poolId)
 
-		if var_24_0 and iter_24_1.poolId > arg_24_0._lastOpenPoolId then
-			arg_24_0._lastOpenPoolId = iter_24_1.poolId
+		if isopen and node.poolId > self._lastOpenPoolId then
+			self._lastOpenPoolId = node.poolId
 
-			iter_24_1.anim:Play("unlock", 0, 0)
+			node.anim:Play("unlock", 0, 0)
 
-			arg_24_0._txtTips.text = luaLang("anniversary_activity_tip2")
-			arg_24_0._currentPoolId = arg_24_0._lastOpenPoolId
+			self._txtTips.text = luaLang("anniversary_activity_tip2")
+			self._currentPoolId = self._lastOpenPoolId
 
-			arg_24_0._leftAnimator:Play("right", 0, 0)
-			TaskDispatcher.runDelay(arg_24_0._onSwitchAnimFinish, arg_24_0, arg_24_0._switchTime)
-			arg_24_0:showGetKeyTip()
+			self._leftAnimator:Play("right", 0, 0)
+			TaskDispatcher.runDelay(self._onSwitchAnimFinish, self, self._switchTime)
+			self:showGetKeyTip()
 		end
 
-		gohelper.setActive(iter_24_1.gounlock, var_24_0)
-		gohelper.setActive(iter_24_1.golocked, not var_24_0)
+		gohelper.setActive(node.gounlock, isopen)
+		gohelper.setActive(node.golocked, not isopen)
 
-		local var_24_1 = iter_24_1.poolId == arg_24_0._currentPoolId
+		local isSelect = node.poolId == self._currentPoolId
 
-		gohelper.setActive(iter_24_1.goselect, var_24_1)
+		gohelper.setActive(node.goselect, isSelect)
 
-		local var_24_2 = Activity197Model.instance:checkPoolGetAllReward(iter_24_1.poolId)
+		local allGet = Activity197Model.instance:checkPoolGetAllReward(node.poolId)
 
-		if var_24_2 and not iter_24_1.allGet then
-			iter_24_1.allGet = true
+		if allGet and not node.allGet then
+			node.allGet = true
 
-			iter_24_1.anim:Play("finish", 0, 0)
+			node.anim:Play("finish", 0, 0)
 
-			arg_24_0._currentPoolId = arg_24_0._lastOpenPoolId
+			self._currentPoolId = self._lastOpenPoolId
 
-			arg_24_0._leftAnimator:Play("right", 0, 0)
-			TaskDispatcher.runDelay(arg_24_0._onSwitchAnimFinish, arg_24_0, arg_24_0._switchTime)
+			self._leftAnimator:Play("right", 0, 0)
+			TaskDispatcher.runDelay(self._onSwitchAnimFinish, self, self._switchTime)
 		end
 
-		gohelper.setActive(iter_24_1.gogetall, var_24_2)
+		gohelper.setActive(node.gogetall, allGet)
 	end
 end
 
-function var_0_0._refreshRewardItems(arg_25_0)
-	local var_25_0 = Activity197Config.instance:getPoolConfigById(arg_25_0._currentPoolId)
+function Activity197View:_refreshRewardItems()
+	local configList = Activity197Config.instance:getPoolConfigById(self._currentPoolId)
 
-	for iter_25_0, iter_25_1 in ipairs(arg_25_0._rewardItems) do
-		local var_25_1 = var_25_0[iter_25_0]
+	for index, rewardItem in ipairs(self._rewardItems) do
+		local co = configList[index]
 
-		if var_25_1 and not string.nilorempty(var_25_1.bonus) then
-			local var_25_2 = string.splitToNumber(var_25_1.bonus, "#")
+		if co and not string.nilorempty(co.bonus) then
+			local bonus = string.splitToNumber(co.bonus, "#")
 
-			iter_25_1.goitemcomp:setMOValue(var_25_2[1], var_25_2[2], var_25_2[3], nil, true)
+			rewardItem.goitemcomp:setMOValue(bonus[1], bonus[2], bonus[3], nil, true)
 		end
 
-		local var_25_3 = Activity197Model.instance:checkRewardReceied(arg_25_0._currentPoolId, iter_25_0)
+		local state = Activity197Model.instance:checkRewardReceied(self._currentPoolId, index)
 
-		gohelper.setActive(iter_25_1.goreceive, var_25_3)
+		gohelper.setActive(rewardItem.goreceive, state)
 	end
 end
 
-function var_0_0.updateSingleRewardItem(arg_26_0, arg_26_1)
-	local var_26_0 = arg_26_1.poolId
-	local var_26_1 = arg_26_1.gainId
+function Activity197View:updateSingleRewardItem(param)
+	local poolId = param.poolId
+	local index = param.gainId
 
-	if var_26_0 ~= arg_26_0._currentPoolId then
+	if poolId ~= self._currentPoolId then
 		return
 	end
 
-	local var_26_2 = arg_26_0._rewardItems[var_26_1]
+	local item = self._rewardItems[index]
 
-	function arg_26_0._onvxglowFinish()
-		local var_27_0 = Activity197Model.instance:checkRewardReceied(arg_26_0._currentPoolId, var_26_1)
+	function self._onvxglowFinish()
+		local state = Activity197Model.instance:checkRewardReceied(self._currentPoolId, index)
 
-		gohelper.setActive(var_26_2.goreceive, var_27_0)
-		var_26_2.animHasGet:Play("open", 0, 0)
-		arg_26_0:_refreshTopNodeList()
+		gohelper.setActive(item.goreceive, state)
+		item.animHasGet:Play("open", 0, 0)
+		self:_refreshTopNodeList()
 	end
 
-	gohelper.setActive(var_26_2.vxglow, true)
+	gohelper.setActive(item.vxglow, true)
 	AudioMgr.instance:trigger(AudioEnum.Va3Aact120.play_ui_molu_jlbn_level_pass)
 
-	function arg_26_0._delayFunc()
-		TaskDispatcher.cancelTask(arg_26_0._delayFunc, arg_26_0)
-		gohelper.setActive(var_26_2.vxglow, false)
+	function self._delayFunc()
+		TaskDispatcher.cancelTask(self._delayFunc, self)
+		gohelper.setActive(item.vxglow, false)
 		Activity197Controller.instance:popupRewardView()
 
-		arg_26_0._isPlayAnim = false
+		self._isPlayAnim = false
 	end
 
-	arg_26_0:_refreshRedDot()
-	TaskDispatcher.runDelay(arg_26_0._delayFunc, arg_26_0, arg_26_0._vxItemGlowTime)
+	self:_refreshRedDot()
+	TaskDispatcher.runDelay(self._delayFunc, self, self._vxItemGlowTime)
 end
 
-function var_0_0._onRewardRefresh(arg_29_0)
-	if arg_29_0._onvxglowFinish then
-		arg_29_0._onvxglowFinish(arg_29_0)
+function Activity197View:_onRewardRefresh()
+	if self._onvxglowFinish then
+		self._onvxglowFinish(self)
 
-		arg_29_0._onvxglowFinish = nil
+		self._onvxglowFinish = nil
 	end
 
-	if arg_29_0._needShowTip then
-		arg_29_0:showGetKeyTip()
+	if self._needShowTip then
+		self:showGetKeyTip()
 
-		arg_29_0._needShowTip = false
+		self._needShowTip = false
 	end
 end
 
-function var_0_0._refreshProgress(arg_30_0)
-	if not Activity197Model.instance:checkStageOpen(arg_30_0._actId) then
+function Activity197View:_refreshProgress()
+	if not Activity197Model.instance:checkStageOpen(self._actId) then
 		return
 	end
 
-	local var_30_0 = Activity197Config.instance:getStageConfig(arg_30_0._actId, 1)
+	local co = Activity197Config.instance:getStageConfig(self._actId, 1)
+	local lastStageEndTime = TimeUtil.stringToTimestamp(co.endTime)
 
-	arg_30_0.remainsearchtime = TimeUtil.stringToTimestamp(var_30_0.endTime) - ServerTime.now()
+	self.remainsearchtime = lastStageEndTime - ServerTime.now()
 
-	arg_30_0:_updateStageProgress()
-	TaskDispatcher.cancelTask(arg_30_0._sendTaskRpc, arg_30_0)
+	self:_updateStageProgress()
+	TaskDispatcher.cancelTask(self._sendTaskRpc, self)
 
-	local var_30_1 = not Activity197Model.instance:checkBigRewardHasGet() and not Activity197Model.instance:checkBigRewardCanGet()
+	local cansend = not Activity197Model.instance:checkBigRewardHasGet() and not Activity197Model.instance:checkBigRewardCanGet()
 
-	if arg_30_0.remainsearchtime > 0 and var_30_1 then
-		TaskDispatcher.runRepeat(arg_30_0._sendTaskRpc, arg_30_0, arg_30_0._sendMsgTime)
+	if self.remainsearchtime > 0 and cansend then
+		TaskDispatcher.runRepeat(self._sendTaskRpc, self, self._sendMsgTime)
 	end
 end
 
-function var_0_0._sendTaskRpc(arg_31_0)
+function Activity197View:_sendTaskRpc()
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.Activity173
-	}, arg_31_0._onSendTaskBack, arg_31_0)
+	}, self._onSendTaskBack, self)
 end
 
-function var_0_0._onSendTaskBack(arg_32_0)
-	arg_32_0:_refreshProgress()
+function Activity197View:_onSendTaskBack()
+	self:_refreshProgress()
 end
 
-function var_0_0._updateStageProgress(arg_33_0)
+function Activity197View:_updateStageProgress()
 	if Activity197Model.instance:checkBigRewardHasGet() then
-		arg_33_0:_refreshComputer()
+		self:_refreshComputer()
 
-		arg_33_0._imageprogress.fillAmount = 1
+		self._imageprogress.fillAmount = 1
 
 		return
 	end
 
 	if Activity197Model.instance:checkBigRewardCanGet() then
-		arg_33_0:_refreshComputer()
-		arg_33_0:_refreshRedDot()
+		self:_refreshComputer()
+		self:_refreshRedDot()
 
-		arg_33_0._imageprogress.fillAmount = 1
+		self._imageprogress.fillAmount = 1
 
-		TaskDispatcher.cancelTask(arg_33_0._sendTaskRpc, arg_33_0)
+		TaskDispatcher.cancelTask(self._sendTaskRpc, self)
 	else
-		arg_33_0._imageprogress.fillAmount = Activity197Model.instance:getStageProgress(arg_33_0._actId)
+		self._imageprogress.fillAmount = Activity197Model.instance:getStageProgress(self._actId)
 	end
 end
 
-function var_0_0._refreshBtn(arg_34_0)
-	local var_34_0 = Activity197Config.instance:getRummageConsume()
+function Activity197View:_refreshBtn()
+	local rummageConsume = Activity197Config.instance:getRummageConsume()
 
-	arg_34_0._txtusekey.text = "-" .. var_34_0
+	self._txtusekey.text = "-" .. rummageConsume
 
-	local var_34_1 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.BulbCurrency)
-	local var_34_2 = var_34_1 and var_34_1.quantity or 0
+	local currency2 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.BulbCurrency)
+	local bulbCount = currency2 and currency2.quantity or 0
 
-	arg_34_0._txtusebubble.text = "×" .. GameUtil.numberDisplay(var_34_2)
+	self._txtusebubble.text = "×" .. GameUtil.numberDisplay(bulbCount)
 
-	local var_34_3 = Activity197Model.instance:checkPoolGetAllReward(arg_34_0._currentPoolId)
+	local allGet = Activity197Model.instance:checkPoolGetAllReward(self._currentPoolId)
 
-	gohelper.setActive(arg_34_0._btnKey.gameObject, not var_34_3)
-	arg_34_0:_refreshRedDot()
+	gohelper.setActive(self._btnKey.gameObject, not allGet)
+	self:_refreshRedDot()
 end
 
-function var_0_0.showGetKeyTip(arg_35_0)
-	arg_35_0._isShowTip = true
+function Activity197View:showGetKeyTip()
+	self._isShowTip = true
 
-	arg_35_0:_refreshBtn()
+	self:_refreshBtn()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_screenplay_open)
-	gohelper.setActive(arg_35_0._goExtraTips, arg_35_0._isShowTip)
-	TaskDispatcher.runDelay(arg_35_0.closeGetKeyTip, arg_35_0, arg_35_0._showTipsTime)
+	gohelper.setActive(self._goExtraTips, self._isShowTip)
+	TaskDispatcher.runDelay(self.closeGetKeyTip, self, self._showTipsTime)
 end
 
-function var_0_0.closeGetKeyTip(arg_36_0)
-	TaskDispatcher.cancelTask(arg_36_0.showGetKeyTip, arg_36_0)
+function Activity197View:closeGetKeyTip()
+	TaskDispatcher.cancelTask(self.showGetKeyTip, self)
 
-	arg_36_0._isShowTip = false
+	self._isShowTip = false
 
-	gohelper.setActive(arg_36_0._goExtraTips, arg_36_0._isShowTip)
+	gohelper.setActive(self._goExtraTips, self._isShowTip)
 end
 
-function var_0_0.showGetKetProgress(arg_37_0)
-	arg_37_0._isPlayAnim = true
+function Activity197View:showGetKetProgress()
+	self._isPlayAnim = true
 
-	gohelper.setActive(arg_37_0._goUnknown, false)
-	gohelper.setActive(arg_37_0._goUnknownProgress, true)
-	arg_37_0._animComputer:Play("open", 0, 0)
+	gohelper.setActive(self._goUnknown, false)
+	gohelper.setActive(self._goUnknownProgress, true)
+	self._animComputer:Play("open", 0, 0)
 
-	local var_37_0 = Activity197Model.instance:checkBigRewardCanGet()
-	local var_37_1 = Activity197Model.instance:checkBigRewardHasGet()
+	local canGet = Activity197Model.instance:checkBigRewardCanGet()
+	local hasGet = Activity197Model.instance:checkBigRewardHasGet()
 
-	gohelper.setActive(arg_37_0._goprogressunknown, not var_37_0 and not var_37_1)
+	gohelper.setActive(self._goprogressunknown, not canGet and not hasGet)
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2TianShiNaNa.play_ui_youyu_death)
 
-	arg_37_0._txtTips.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("anniversary_activitytip_1"), Activity197Model.instance:getOnceExploreKeyCount())
+	self._txtTips.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("anniversary_activitytip_1"), Activity197Model.instance:getOnceExploreKeyCount())
 
-	TaskDispatcher.runDelay(arg_37_0.flyKeyAnim, arg_37_0, arg_37_0._showTipsTime)
+	TaskDispatcher.runDelay(self.flyKeyAnim, self, self._showTipsTime)
 end
 
-function var_0_0.flyKeyAnim(arg_38_0)
-	TaskDispatcher.cancelTask(arg_38_0.flyKeyAnim, arg_38_0)
+function Activity197View:flyKeyAnim()
+	TaskDispatcher.cancelTask(self.flyKeyAnim, self)
 
-	local var_38_0 = Activity197Model.instance:checkBigRewardCanGet()
-	local var_38_1 = Activity197Model.instance:checkBigRewardHasGet()
+	local canGet = Activity197Model.instance:checkBigRewardCanGet()
+	local hasGet = Activity197Model.instance:checkBigRewardHasGet()
 
-	if var_38_0 or var_38_1 then
-		gohelper.setActive(arg_38_0._goCanGet, var_38_0)
-		gohelper.setActive(arg_38_0._goHasGet, var_38_1)
-		gohelper.setActive(arg_38_0._goUnknown, not var_38_0 and not var_38_1)
-		gohelper.setActive(arg_38_0._goUnknownProgress, not var_38_0 and not var_38_1)
+	if canGet or hasGet then
+		gohelper.setActive(self._goCanGet, canGet)
+		gohelper.setActive(self._goHasGet, hasGet)
+		gohelper.setActive(self._goUnknown, not canGet and not hasGet)
+		gohelper.setActive(self._goUnknownProgress, not canGet and not hasGet)
 	else
-		gohelper.setActive(arg_38_0._goUnknown, true)
-		gohelper.setActive(arg_38_0._goUnknownProgress, false)
+		gohelper.setActive(self._goUnknown, true)
+		gohelper.setActive(self._goUnknownProgress, false)
 	end
 
-	Activity197Rpc.instance:sendAct197ExploreReqvest(arg_38_0._actId, Activity197Enum.FindType.All)
-	gohelper.setActive(arg_38_0._govxkey, true)
-	TaskDispatcher.runDelay(arg_38_0._vxkeyAnim, arg_38_0, 0.5)
+	Activity197Rpc.instance:sendAct197ExploreReqvest(self._actId, Activity197Enum.FindType.All)
+	gohelper.setActive(self._govxkey, true)
+	TaskDispatcher.runDelay(self._vxkeyAnim, self, 0.5)
 end
 
-function var_0_0._vxkeyAnim(arg_39_0)
-	TaskDispatcher.cancelTask(arg_39_0._vxkeyAnim, arg_39_0)
-	gohelper.setActive(arg_39_0._govxkey, false)
+function Activity197View:_vxkeyAnim()
+	TaskDispatcher.cancelTask(self._vxkeyAnim, self)
+	gohelper.setActive(self._govxkey, false)
 
-	arg_39_0._needShowTip = true
-	arg_39_0._isPlayAnim = false
+	self._needShowTip = true
+	self._isPlayAnim = false
 end
 
-function var_0_0._getRewardAnim(arg_40_0)
-	arg_40_0._isPlayAnim = true
+function Activity197View:_getRewardAnim()
+	self._isPlayAnim = true
 
-	gohelper.setActive(arg_40_0._govxFresh, true)
+	gohelper.setActive(self._govxFresh, true)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_doom_disappear)
-	TaskDispatcher.runDelay(arg_40_0._vxFreshAnim, arg_40_0, arg_40_0._vxfreshTime)
+	TaskDispatcher.runDelay(self._vxFreshAnim, self, self._vxfreshTime)
 end
 
-function var_0_0._vxFreshAnim(arg_41_0)
-	TaskDispatcher.cancelTask(arg_41_0._vxFreshAnim, arg_41_0)
-	gohelper.setActive(arg_41_0._govxFresh, false)
-	Activity197Rpc.instance:sendAct197RummageRequest(arg_41_0._actId, arg_41_0._currentPoolId)
+function Activity197View:_vxFreshAnim()
+	TaskDispatcher.cancelTask(self._vxFreshAnim, self)
+	gohelper.setActive(self._govxFresh, false)
+	Activity197Rpc.instance:sendAct197RummageRequest(self._actId, self._currentPoolId)
 end
 
-function var_0_0._checkNeedShowBubbleVx(arg_42_0)
+function Activity197View:_checkNeedShowBubbleVx()
 	if Activity197Model.instance:getShowBubbleVx() then
-		TaskDispatcher.runDelay(arg_42_0._showBubbleVx, arg_42_0, 0.5)
+		TaskDispatcher.runDelay(self._showBubbleVx, self, 0.5)
 	end
 end
 
-function var_0_0._showBubbleVx(arg_43_0)
-	TaskDispatcher.cancelTask(arg_43_0._showBubbleVx, arg_43_0)
-	gohelper.setActive(arg_43_0._govxbubble, true)
-	TaskDispatcher.runDelay(arg_43_0._vxBubbleAnim, arg_43_0, 0.5)
+function Activity197View:_showBubbleVx()
+	TaskDispatcher.cancelTask(self._showBubbleVx, self)
+	gohelper.setActive(self._govxbubble, true)
+	TaskDispatcher.runDelay(self._vxBubbleAnim, self, 0.5)
 end
 
-function var_0_0._vxBubbleAnim(arg_44_0)
-	TaskDispatcher.cancelTask(arg_44_0._vxBubbleAnim, arg_44_0)
-	gohelper.setActive(arg_44_0._govxbubble, false)
+function Activity197View:_vxBubbleAnim()
+	TaskDispatcher.cancelTask(self._vxBubbleAnim, self)
+	gohelper.setActive(self._govxbubble, false)
 	Activity197Model.instance:resetShowBubbleVx()
 end
 
-function var_0_0.checkKeyReddot(arg_45_0)
+function Activity197View:checkKeyReddot()
 	if Activity197Model.instance:checkAllPoolRewardGet() then
 		return false
 	end
@@ -653,7 +662,7 @@ function var_0_0.checkKeyReddot(arg_45_0)
 	return Activity197Model.instance:canRummage()
 end
 
-function var_0_0.checkBubbleReddot(arg_46_0)
+function Activity197View:checkBubbleReddot()
 	if Activity197Model.instance:checkAllPoolRewardGet() then
 		return false
 	end
@@ -661,35 +670,35 @@ function var_0_0.checkBubbleReddot(arg_46_0)
 	return Activity197Model.instance:canExplore()
 end
 
-function var_0_0.onClose(arg_47_0)
-	TaskDispatcher.cancelTask(arg_47_0._sendTaskRpc, arg_47_0)
-	TaskDispatcher.cancelTask(arg_47_0._onSwitchAnimFinish, arg_47_0)
-	TaskDispatcher.cancelTask(arg_47_0._vxkeyAnim, arg_47_0)
-	TaskDispatcher.cancelTask(arg_47_0._vxFreshAnim, arg_47_0)
-	TaskDispatcher.cancelTask(arg_47_0._delayFunc, arg_47_0)
-	TaskDispatcher.cancelTask(arg_47_0._vxBubbleAnim, arg_47_0)
-	TaskDispatcher.cancelTask(arg_47_0._showBubbleVx, arg_47_0)
+function Activity197View:onClose()
+	TaskDispatcher.cancelTask(self._sendTaskRpc, self)
+	TaskDispatcher.cancelTask(self._onSwitchAnimFinish, self)
+	TaskDispatcher.cancelTask(self._vxkeyAnim, self)
+	TaskDispatcher.cancelTask(self._vxFreshAnim, self)
+	TaskDispatcher.cancelTask(self._delayFunc, self)
+	TaskDispatcher.cancelTask(self._vxBubbleAnim, self)
+	TaskDispatcher.cancelTask(self._showBubbleVx, self)
 
-	if arg_47_0._topnodeList and #arg_47_0._topnodeList > 0 then
-		for iter_47_0, iter_47_1 in ipairs(arg_47_0._topnodeList) do
-			iter_47_1.btn:RemoveClickListener()
+	if self._topnodeList and #self._topnodeList > 0 then
+		for _, node in ipairs(self._topnodeList) do
+			node.btn:RemoveClickListener()
 		end
 	end
 end
 
-function var_0_0.onDestroyView(arg_48_0)
-	TaskDispatcher.cancelTask(arg_48_0._sendTaskRpc, arg_48_0)
-	TaskDispatcher.cancelTask(arg_48_0.showGetKeyTip, arg_48_0)
+function Activity197View:onDestroyView()
+	TaskDispatcher.cancelTask(self._sendTaskRpc, self)
+	TaskDispatcher.cancelTask(self.showGetKeyTip, self)
 end
 
-function var_0_0.onRefreshActivity(arg_49_0)
-	local var_49_0 = ActivityHelper.getActivityStatus(arg_49_0._actId)
+function Activity197View:onRefreshActivity()
+	local status = ActivityHelper.getActivityStatus(self._actId)
 
-	if var_49_0 == ActivityEnum.ActivityStatus.NotOnLine or var_49_0 == ActivityEnum.ActivityStatus.Expired then
+	if status == ActivityEnum.ActivityStatus.NotOnLine or status == ActivityEnum.ActivityStatus.Expired then
 		MessageBoxController.instance:showSystemMsgBox(MessageBoxIdDefine.EndActivity, MsgBoxEnum.BoxType.Yes, ActivityLiveMgr.yesCallback)
 
 		return
 	end
 end
 
-return var_0_0
+return Activity197View

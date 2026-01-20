@@ -1,653 +1,665 @@
-﻿module("modules.logic.store.view.StoreSkinPreviewView", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/StoreSkinPreviewView.lua
 
-local var_0_0 = class("StoreSkinPreviewView", BaseView)
+module("modules.logic.store.view.StoreSkinPreviewView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._gozs = gohelper.findChild(arg_1_0.viewGO, "zs")
-	arg_1_0._goskincontainer = gohelper.findChild(arg_1_0.viewGO, "characterSpine/#go_skincontainer")
-	arg_1_0._simageskin = gohelper.findChildSingleImage(arg_1_0.viewGO, "characterSpine/#go_skincontainer/#simage_skin")
-	arg_1_0._simagel2d = gohelper.findChildSingleImage(arg_1_0.viewGO, "characterSpine/#go_skincontainer/#go_spinecontainer/#simage_l2d")
-	arg_1_0._gobigspine = gohelper.findChild(arg_1_0.viewGO, "characterSpine/#go_skincontainer/#go_spinecontainer/#go_spine")
-	arg_1_0._gospinecontainer = gohelper.findChild(arg_1_0.viewGO, "characterSpine/#go_skincontainer/#go_spinecontainer")
-	arg_1_0._gosmallspine = gohelper.findChild(arg_1_0.viewGO, "smalldynamiccontainer/#go_smallspine")
-	arg_1_0._simagebgmask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bgmask")
-	arg_1_0._simagesignature = gohelper.findChildSingleImage(arg_1_0.viewGO, "desc/#simage_signature")
-	arg_1_0._txtindex = gohelper.findChildText(arg_1_0.viewGO, "desc/#txt_index")
-	arg_1_0._txtcharacterName = gohelper.findChildText(arg_1_0.viewGO, "desc/#txt_characterName")
-	arg_1_0._txtskinName = gohelper.findChildText(arg_1_0.viewGO, "desc/#txt_skinName")
-	arg_1_0._txtskinNameEn = gohelper.findChildText(arg_1_0.viewGO, "desc/#txt_skinName/#txt_skinNameEn")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "desc/#txt_desc")
-	arg_1_0._btnshowDetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "desc/#txt_characterName/#btn_showDetail")
-	arg_1_0._btnswitch = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "desc/#btn_switch")
-	arg_1_0._btnvideo = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "desc/#btn_video")
-	arg_1_0._txtswitch = gohelper.findChildText(arg_1_0.viewGO, "desc/#btn_switch/#txt_switch")
-	arg_1_0._go2d = gohelper.findChild(arg_1_0.viewGO, "desc/#btn_switch/#go_2d")
-	arg_1_0._gol2d = gohelper.findChild(arg_1_0.viewGO, "desc/#btn_switch/#go_l2d")
-	arg_1_0._simageshowbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "container/#simage_showbg")
-	arg_1_0._scrollskinSwitch = gohelper.findChildScrollRect(arg_1_0.viewGO, "container/skinSwitch/#scroll_skinSwitch")
-	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "container/skinSwitch/#scroll_skinSwitch/Viewport/#go_Content")
-	arg_1_0._gopreEmpty = gohelper.findChild(arg_1_0.viewGO, "container/skinSwitch/#scroll_skinSwitch/Viewport/#go_Content/#go_preEmpty")
-	arg_1_0._goskinItem = gohelper.findChild(arg_1_0.viewGO, "container/skinSwitch/#scroll_skinSwitch/Viewport/#go_Content/#go_skinItem")
-	arg_1_0._btnbuy = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "container/skinSwitch/dressState/#btn_buy")
-	arg_1_0._gotxtbuy = gohelper.findChild(arg_1_0.viewGO, "container/skinSwitch/dressState/#btn_buy/#go_txtbuy")
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "container/skinSwitch/dressState/#btn_buy/#go_txtbuy/price/#image_icon")
-	arg_1_0._txtprice = gohelper.findChildText(arg_1_0.viewGO, "container/skinSwitch/dressState/#btn_buy/#go_txtbuy/price/#txt_price")
-	arg_1_0._gohas = gohelper.findChild(arg_1_0.viewGO, "container/skinSwitch/dressState/#go_has")
-	arg_1_0._gobtntopleft = gohelper.findChild(arg_1_0.viewGO, "#go_btntopleft")
-	arg_1_0._goskinCard = gohelper.findChild(arg_1_0.viewGO, "container/skinSwitch/#go_skinCard")
-	arg_1_0._btntag = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "desc/#btn_tag")
+local StoreSkinPreviewView = class("StoreSkinPreviewView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function StoreSkinPreviewView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._gozs = gohelper.findChild(self.viewGO, "zs")
+	self._goskincontainer = gohelper.findChild(self.viewGO, "characterSpine/#go_skincontainer")
+	self._simageskin = gohelper.findChildSingleImage(self.viewGO, "characterSpine/#go_skincontainer/#simage_skin")
+	self._simagel2d = gohelper.findChildSingleImage(self.viewGO, "characterSpine/#go_skincontainer/#go_spinecontainer/#simage_l2d")
+	self._gobigspine = gohelper.findChild(self.viewGO, "characterSpine/#go_skincontainer/#go_spinecontainer/#go_spine")
+	self._gospinecontainer = gohelper.findChild(self.viewGO, "characterSpine/#go_skincontainer/#go_spinecontainer")
+	self._gosmallspine = gohelper.findChild(self.viewGO, "smalldynamiccontainer/#go_smallspine")
+	self._simagebgmask = gohelper.findChildSingleImage(self.viewGO, "#simage_bgmask")
+	self._simagesignature = gohelper.findChildSingleImage(self.viewGO, "desc/#simage_signature")
+	self._txtindex = gohelper.findChildText(self.viewGO, "desc/#txt_index")
+	self._txtcharacterName = gohelper.findChildText(self.viewGO, "desc/#txt_characterName")
+	self._txtskinName = gohelper.findChildText(self.viewGO, "desc/#txt_skinName")
+	self._txtskinNameEn = gohelper.findChildText(self.viewGO, "desc/#txt_skinName/#txt_skinNameEn")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "desc/#txt_desc")
+	self._btnshowDetail = gohelper.findChildButtonWithAudio(self.viewGO, "desc/#txt_characterName/#btn_showDetail")
+	self._btnswitch = gohelper.findChildButtonWithAudio(self.viewGO, "desc/#btn_switch")
+	self._btnvideo = gohelper.findChildButtonWithAudio(self.viewGO, "desc/#btn_video")
+	self._txtswitch = gohelper.findChildText(self.viewGO, "desc/#btn_switch/#txt_switch")
+	self._go2d = gohelper.findChild(self.viewGO, "desc/#btn_switch/#go_2d")
+	self._gol2d = gohelper.findChild(self.viewGO, "desc/#btn_switch/#go_l2d")
+	self._simageshowbg = gohelper.findChildSingleImage(self.viewGO, "container/#simage_showbg")
+	self._scrollskinSwitch = gohelper.findChildScrollRect(self.viewGO, "container/skinSwitch/#scroll_skinSwitch")
+	self._goContent = gohelper.findChild(self.viewGO, "container/skinSwitch/#scroll_skinSwitch/Viewport/#go_Content")
+	self._gopreEmpty = gohelper.findChild(self.viewGO, "container/skinSwitch/#scroll_skinSwitch/Viewport/#go_Content/#go_preEmpty")
+	self._goskinItem = gohelper.findChild(self.viewGO, "container/skinSwitch/#scroll_skinSwitch/Viewport/#go_Content/#go_skinItem")
+	self._btnbuy = gohelper.findChildButtonWithAudio(self.viewGO, "container/skinSwitch/dressState/#btn_buy")
+	self._gotxtbuy = gohelper.findChild(self.viewGO, "container/skinSwitch/dressState/#btn_buy/#go_txtbuy")
+	self._imageicon = gohelper.findChildImage(self.viewGO, "container/skinSwitch/dressState/#btn_buy/#go_txtbuy/price/#image_icon")
+	self._txtprice = gohelper.findChildText(self.viewGO, "container/skinSwitch/dressState/#btn_buy/#go_txtbuy/price/#txt_price")
+	self._gohas = gohelper.findChild(self.viewGO, "container/skinSwitch/dressState/#go_has")
+	self._gobtntopleft = gohelper.findChild(self.viewGO, "#go_btntopleft")
+	self._goskinCard = gohelper.findChild(self.viewGO, "container/skinSwitch/#go_skinCard")
+	self._btntag = gohelper.findChildButtonWithAudio(self.viewGO, "desc/#btn_tag")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnshowDetail:AddClickListener(arg_2_0._btnshowDetailOnClick, arg_2_0)
-	arg_2_0._btnswitch:AddClickListener(arg_2_0._btnswitchOnClick, arg_2_0)
-	arg_2_0._btnvideo:AddClickListener(arg_2_0._btnvideoOnClick, arg_2_0)
-	arg_2_0._btnbuy:AddClickListener(arg_2_0._btnbuyOnClick, arg_2_0)
-	arg_2_0._btntag:AddClickListener(arg_2_0._btntagOnClick, arg_2_0)
+function StoreSkinPreviewView:addEvents()
+	self._btnshowDetail:AddClickListener(self._btnshowDetailOnClick, self)
+	self._btnswitch:AddClickListener(self._btnswitchOnClick, self)
+	self._btnvideo:AddClickListener(self._btnvideoOnClick, self)
+	self._btnbuy:AddClickListener(self._btnbuyOnClick, self)
+	self._btntag:AddClickListener(self._btntagOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnshowDetail:RemoveClickListener()
-	arg_3_0._btnswitch:RemoveClickListener()
-	arg_3_0._btnvideo:RemoveClickListener()
-	arg_3_0._btnbuy:RemoveClickListener()
-	arg_3_0._btntag:RemoveClickListener()
+function StoreSkinPreviewView:removeEvents()
+	self._btnshowDetail:RemoveClickListener()
+	self._btnswitch:RemoveClickListener()
+	self._btnvideo:RemoveClickListener()
+	self._btnbuy:RemoveClickListener()
+	self._btntag:RemoveClickListener()
 end
 
-function var_0_0._btnswitchOnClick(arg_4_0)
-	arg_4_0._showLive2d = arg_4_0._showLive2d == false
+function StoreSkinPreviewView:_btnswitchOnClick()
+	self._showLive2d = self._showLive2d == false
 
-	gohelper.setActive(arg_4_0._go2d, arg_4_0._showLive2d)
-	gohelper.setActive(arg_4_0._gol2d, arg_4_0._showLive2d == false)
-	gohelper.setActive(arg_4_0._gozs, arg_4_0._showLive2d)
+	gohelper.setActive(self._go2d, self._showLive2d)
+	gohelper.setActive(self._gol2d, self._showLive2d == false)
+	gohelper.setActive(self._gozs, self._showLive2d)
 
-	arg_4_0._txtswitch.text = arg_4_0._showLive2d and luaLang("storeskinpreviewview_btnswitch") or "L2D"
+	self._txtswitch.text = self._showLive2d and luaLang("storeskinpreviewview_btnswitch") or "L2D"
 
 	UnityEngine.Shader.EnableKeyword("_CLIPALPHA_ON")
-	arg_4_0._animatorPlayer:Play("switch", arg_4_0._disableClipAlpha, arg_4_0)
-	TaskDispatcher.runDelay(arg_4_0._refreshBigSkin, arg_4_0, 0.16)
-	gohelper.setActive(arg_4_0._gozs, arg_4_0._showLive2d)
+	self._animatorPlayer:Play("switch", self._disableClipAlpha, self)
+	TaskDispatcher.runDelay(self._refreshBigSkin, self, 0.16)
+	gohelper.setActive(self._gozs, self._showLive2d)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_switch_skin_l2d)
 end
 
-function var_0_0._btnvideoOnClick(arg_5_0)
-	logNormal("播放视频,当前皮肤id:" .. arg_5_0.skinCo.id)
+function StoreSkinPreviewView:_btnvideoOnClick()
+	logNormal("播放视频,当前皮肤id:" .. self.skinCo.id)
 
-	local var_5_0 = WebViewController.instance:getVideoUrl(arg_5_0.skinCo.characterId)
+	local url = WebViewController.instance:getVideoUrl(self.skinCo.characterId)
+	local version = UnityEngine.Application.version
 
-	if UnityEngine.Application.version == "2.6.0" and GameChannelConfig.isLongCheng() and BootNativeUtil.isAndroid() then
-		GameUtil.openURL(var_5_0)
+	if version == "2.6.0" and GameChannelConfig.isLongCheng() and BootNativeUtil.isAndroid() then
+		GameUtil.openURL(url)
 
 		return
 	end
 
-	WebViewController.instance:openWebView(var_5_0, false, nil, nil, 0, nil, 0, 0, nil, true)
+	WebViewController.instance:openWebView(url, false, nil, nil, 0, nil, 0, 0, nil, true)
 end
 
-local var_0_1 = ZProj.TweenHelper
+local csTweenHelper = ZProj.TweenHelper
 
-function var_0_0._btnshowDetailOnClick(arg_6_0)
-	CharacterController.instance:openCharacterSkinFullScreenView(arg_6_0.skinCo)
+function StoreSkinPreviewView:_btnshowDetailOnClick()
+	CharacterController.instance:openCharacterSkinFullScreenView(self.skinCo)
 end
 
-function var_0_0._btntagOnClick(arg_7_0)
+function StoreSkinPreviewView:_btntagOnClick()
 	ViewMgr.instance:openView(ViewName.CharacterSkinTagView, {
-		skinCo = arg_7_0.skinCo
+		skinCo = self.skinCo
 	})
 end
 
-function var_0_0._btnbuyOnClick(arg_8_0)
-	local var_8_0 = StoreClothesGoodsItemListModel.instance:getList()
-	local var_8_1 = arg_8_0._allSkinList[arg_8_0._currentSelectSkinIndex]
+function StoreSkinPreviewView:_btnbuyOnClick()
+	local allSkinList = StoreClothesGoodsItemListModel.instance:getList()
+	local mo = self._allSkinList[self._currentSelectSkinIndex]
 
-	if var_8_1 and StoreModel.instance:getGoodsMO(var_8_1.goodsId) then
+	if mo and StoreModel.instance:getGoodsMO(mo.goodsId) then
 		ViewMgr.instance:openView(ViewName.StoreSkinGoodsView, {
-			goodsMO = var_8_1
+			goodsMO = mo
 		})
 	else
 		GameFacade.showToast(ToastEnum.StoreSkinPreview)
 	end
 end
 
-function var_0_0._btnnotgetOnClick(arg_9_0)
+function StoreSkinPreviewView:_btnnotgetOnClick()
 	return
 end
 
-function var_0_0._editableInitView(arg_10_0)
-	arg_10_0._showLive2d = true
-	arg_10_0._goSpine = GuiSpine.Create(arg_10_0._gosmallspine, false)
+function StoreSkinPreviewView:_editableInitView()
+	self._showLive2d = true
+	self._goSpine = GuiSpine.Create(self._gosmallspine, false)
 
-	gohelper.setActive(arg_10_0._go2d, arg_10_0._showLive2d)
-	gohelper.setActive(arg_10_0._gol2d, arg_10_0._showLive2d == false)
+	gohelper.setActive(self._go2d, self._showLive2d)
+	gohelper.setActive(self._gol2d, self._showLive2d == false)
 
-	arg_10_0._txtswitch.text = arg_10_0._showLive2d and "L2D" or luaLang("storeskinpreviewview_btnswitch")
-	arg_10_0._itemObjects = {}
+	self._txtswitch.text = self._showLive2d and "L2D" or luaLang("storeskinpreviewview_btnswitch")
+	self._itemObjects = {}
 
-	local var_10_0 = gohelper.findChild(arg_10_0.viewGO, "drag")
+	local goDrag = gohelper.findChild(self.viewGO, "drag")
 
-	arg_10_0._drag = SLFramework.UGUI.UIDragListener.Get(var_10_0)
+	self._drag = SLFramework.UGUI.UIDragListener.Get(goDrag)
 
-	arg_10_0._drag:AddDragBeginListener(arg_10_0._onViewDragBegin, arg_10_0)
-	arg_10_0._drag:AddDragListener(arg_10_0._onViewDrag, arg_10_0)
-	arg_10_0._drag:AddDragEndListener(arg_10_0._onViewDragEnd, arg_10_0)
+	self._drag:AddDragBeginListener(self._onViewDragBegin, self)
+	self._drag:AddDragListener(self._onViewDrag, self)
+	self._drag:AddDragEndListener(self._onViewDragEnd, self)
 
-	arg_10_0._preDragAnchorPositionX = 0
-	arg_10_0._itemWidth = recthelper.getWidth(arg_10_0._goskinItem.transform)
-	arg_10_0._scrollOneItemTime = 0.5
-	arg_10_0._scrollRate = arg_10_0._itemWidth / arg_10_0._scrollOneItemTime
-	arg_10_0._tweeningId = 0
-	arg_10_0._currentSelectSkinIndex = 0
-	arg_10_0._preSelectSkinIndex = 0
-	arg_10_0._minAnchorPositionX = 0
-	arg_10_0._minChangeAnchorPositionX = 100
+	self._preDragAnchorPositionX = 0
+	self._itemWidth = recthelper.getWidth(self._goskinItem.transform)
+	self._scrollOneItemTime = 0.5
+	self._scrollRate = self._itemWidth / self._scrollOneItemTime
+	self._tweeningId = 0
+	self._currentSelectSkinIndex = 0
+	self._preSelectSkinIndex = 0
+	self._minAnchorPositionX = 0
+	self._minChangeAnchorPositionX = 100
 
-	arg_10_0._simagebg:LoadImage(ResUrl.getCharacterSkinIcon("full/pifubeijing_012"))
-	arg_10_0._simageshowbg:LoadImage(ResUrl.getCharacterSkinIcon("img_yulan_bg"))
-	arg_10_0._simagebgmask:LoadImage(ResUrl.getCharacterSkinIcon("mask"))
+	self._simagebg:LoadImage(ResUrl.getCharacterSkinIcon("full/pifubeijing_012"))
+	self._simageshowbg:LoadImage(ResUrl.getCharacterSkinIcon("img_yulan_bg"))
+	self._simagebgmask:LoadImage(ResUrl.getCharacterSkinIcon("mask"))
 
-	arg_10_0.cardImage = gohelper.findChildSingleImage(arg_10_0._goskinCard, "skinmask/skinicon")
-	arg_10_0._skincontainerCanvasGroup = gohelper.findChild(arg_10_0.viewGO, "characterSpine/#go_skincontainer"):GetComponent(typeof(UnityEngine.CanvasGroup))
-	arg_10_0._animator = arg_10_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_10_0._animatorPlayer = SLFramework.AnimatorPlayer.Get(arg_10_0.viewGO)
+	self.cardImage = gohelper.findChildSingleImage(self._goskinCard, "skinmask/skinicon")
+	self._skincontainerCanvasGroup = gohelper.findChild(self.viewGO, "characterSpine/#go_skincontainer"):GetComponent(typeof(UnityEngine.CanvasGroup))
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._animatorPlayer = SLFramework.AnimatorPlayer.Get(self.viewGO)
 end
 
-function var_0_0.onUpdateParam(arg_11_0)
-	arg_11_0:refreshView()
+function StoreSkinPreviewView:onUpdateParam()
+	self:refreshView()
 end
 
-function var_0_0.onOpen(arg_12_0)
+function StoreSkinPreviewView:onOpen()
 	UnityEngine.Shader.EnableKeyword("_CLIPALPHA_ON")
-	arg_12_0:refreshView()
+	self:refreshView()
 end
 
-function var_0_0.onOpenFinish(arg_13_0)
-	arg_13_0:_disableClipAlpha()
+function StoreSkinPreviewView:onOpenFinish()
+	self:_disableClipAlpha()
 end
 
-function var_0_0.refreshView(arg_14_0)
-	arg_14_0.goodsMO = arg_14_0.viewParam.goodsMO
+function StoreSkinPreviewView:refreshView()
+	self.goodsMO = self.viewParam.goodsMO
 
-	local var_14_0 = arg_14_0.goodsMO.config.product
-	local var_14_1 = string.splitToNumber(var_14_0, "#")[2]
+	local product = self.goodsMO.config.product
+	local productInfo = string.splitToNumber(product, "#")
+	local skinId = productInfo[2]
 
-	arg_14_0.skinCo = SkinConfig.instance:getSkinCo(var_14_1)
+	self.skinCo = SkinConfig.instance:getSkinCo(skinId)
 
-	arg_14_0:_refreshSkinList()
-	arg_14_0:_reallyRefreshView(arg_14_0.skinCo)
+	self:_refreshSkinList()
+	self:_reallyRefreshView(self.skinCo)
 end
 
-function var_0_0._reallyRefreshView(arg_15_0, arg_15_1)
-	arg_15_0.skinCo = arg_15_1
+function StoreSkinPreviewView:_reallyRefreshView(skinCo)
+	self.skinCo = skinCo
 
-	if arg_15_0._uiSpine then
-		arg_15_0._uiSpine:onDestroy()
+	if self._uiSpine then
+		self._uiSpine:onDestroy()
 
-		arg_15_0._uiSpine = nil
+		self._uiSpine = nil
 	end
 
-	arg_15_0._simageskin:UnLoadImage()
-	arg_15_0._simagel2d:UnLoadImage()
-	StoreController.instance:dispatchEvent(StoreEvent.OnSwitchSpine, arg_15_0.skinCo.id)
-	gohelper.setActive(arg_15_0._btnswitch, arg_15_0.skinCo.showSwitchBtn == 1)
+	self._simageskin:UnLoadImage()
+	self._simagel2d:UnLoadImage()
+	StoreController.instance:dispatchEvent(StoreEvent.OnSwitchSpine, self.skinCo.id)
+	gohelper.setActive(self._btnswitch, self.skinCo.showSwitchBtn == 1)
 
-	arg_15_0._showLive2d = true
+	self._showLive2d = true
 
-	gohelper.setActive(arg_15_0._go2d, arg_15_0._showLive2d)
-	gohelper.setActive(arg_15_0._gol2d, arg_15_0._showLive2d == false)
+	gohelper.setActive(self._go2d, self._showLive2d)
+	gohelper.setActive(self._gol2d, self._showLive2d == false)
 
-	arg_15_0._txtswitch.text = arg_15_0._showLive2d and luaLang("storeskinpreviewview_btnswitch") or "L2D"
+	self._txtswitch.text = self._showLive2d and luaLang("storeskinpreviewview_btnswitch") or "L2D"
 
-	local var_15_0 = arg_15_1.live2dbg
+	local live2dbg = skinCo.live2dbg
 
-	if not string.nilorempty(var_15_0) then
-		gohelper.setActive(arg_15_0._simagel2d.gameObject, arg_15_0._showLive2d)
-		gohelper.setActive(arg_15_0._gozs, arg_15_0._showLive2d)
-		arg_15_0._simagel2d:LoadImage(ResUrl.getCharacterSkinLive2dBg(var_15_0))
-	else
-		gohelper.setActive(arg_15_0._simagel2d.gameObject, false)
-		gohelper.setActive(arg_15_0._gozs, false)
-	end
-
-	local var_15_1 = not VersionValidator.instance:isInReviewing() and arg_15_1.isSkinVideo
-
-	logNormal("当前皮肤id:" .. " 是否可以播放视频: " .. tostring(var_15_1))
-	gohelper.setActive(arg_15_0._btnvideo, var_15_1)
-	arg_15_0:_refreshBigSkin()
-	arg_15_0:_refreshSkinInfo()
-	arg_15_0:_refreshSpine()
-	arg_15_0:_refreshStatus()
-end
-
-function var_0_0._refreshBigSkin(arg_16_0)
-	gohelper.setActive(arg_16_0._gospinecontainer, arg_16_0._showLive2d)
-	gohelper.setActive(arg_16_0._simageskin.gameObject, arg_16_0._showLive2d == false)
-
-	if arg_16_0._showLive2d then
-		if arg_16_0._uiSpine == nil then
-			arg_16_0._uiSpine = GuiModelAgent.Create(arg_16_0._gobigspine, true)
-
-			arg_16_0._uiSpine:setResPath(arg_16_0.skinCo, arg_16_0._onUISpineLoaded, arg_16_0)
+	if not string.nilorempty(live2dbg) then
+		if VersionValidator.instance:isInReviewing() then
+			gohelper.setActive(self._simagel2d.gameObject, false)
 		else
-			arg_16_0:_onUISpineLoaded()
+			gohelper.setActive(self._simagel2d.gameObject, self._showLive2d)
+			gohelper.setActive(self._gozs, self._showLive2d)
+			self._simagel2d:LoadImage(ResUrl.getCharacterSkinLive2dBg(live2dbg))
+		end
+	else
+		gohelper.setActive(self._simagel2d.gameObject, false)
+		gohelper.setActive(self._gozs, false)
+	end
+
+	local isReview = VersionValidator.instance:isInReviewing()
+	local showVideo = not isReview and skinCo.isSkinVideo
+
+	logNormal("当前皮肤id:" .. " 是否可以播放视频: " .. tostring(showVideo))
+	gohelper.setActive(self._btnvideo, showVideo)
+	self:_refreshBigSkin()
+	self:_refreshSkinInfo()
+	self:_refreshSpine()
+	self:_refreshStatus()
+end
+
+function StoreSkinPreviewView:_refreshBigSkin()
+	gohelper.setActive(self._gospinecontainer, self._showLive2d)
+	gohelper.setActive(self._simageskin.gameObject, self._showLive2d == false)
+
+	if self._showLive2d then
+		if self._uiSpine == nil then
+			self._uiSpine = GuiModelAgent.Create(self._gobigspine, true)
+
+			self._uiSpine:setResPath(self.skinCo, self._onUISpineLoaded, self)
+		else
+			self:_onUISpineLoaded()
 		end
 
-		arg_16_0._txtswitch.text = luaLang("storeskinpreviewview_btnswitch")
+		self._txtswitch.text = luaLang("storeskinpreviewview_btnswitch")
 	else
-		arg_16_0._simageskin:LoadImage(ResUrl.getHeadIconImg(arg_16_0.skinCo.id), arg_16_0._loadedImage, arg_16_0)
+		self._simageskin:LoadImage(ResUrl.getHeadIconImg(self.skinCo.id), self._loadedImage, self)
 
-		arg_16_0._txtswitch.text = "L2D"
+		self._txtswitch.text = "L2D"
 	end
 end
 
-function var_0_0._onViewDragBegin(arg_17_0, arg_17_1, arg_17_2)
-	arg_17_0._startPos = arg_17_2.position.x
+function StoreSkinPreviewView:_onViewDragBegin(param, pointerEventData)
+	self._startPos = pointerEventData.position.x
 
 	UnityEngine.Shader.EnableKeyword("_CLIPALPHA_ON")
-	arg_17_0._animatorPlayer:Play(UIAnimationName.SwitchClose, arg_17_0._onAnimDone, arg_17_0)
+	self._animatorPlayer:Play(UIAnimationName.SwitchClose, self._onAnimDone, self)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_common_pause)
 end
 
-function var_0_0._onAnimDone(arg_18_0)
+function StoreSkinPreviewView:_onAnimDone()
 	return
 end
 
-function var_0_0._onViewDrag(arg_19_0, arg_19_1, arg_19_2)
-	local var_19_0 = arg_19_2.position.x
-	local var_19_1 = 1
-	local var_19_2 = recthelper.getAnchorX(arg_19_0._goskincontainer.transform) + arg_19_2.delta.x * var_19_1
+function StoreSkinPreviewView:_onViewDrag(param, pointerEventData)
+	local curPos = pointerEventData.position.x
+	local moveSmooth = 1
+	local curSpineRootPosX = recthelper.getAnchorX(self._goskincontainer.transform)
 
-	recthelper.setAnchorX(arg_19_0._goskincontainer.transform, var_19_2)
+	curSpineRootPosX = curSpineRootPosX + pointerEventData.delta.x * moveSmooth
 
-	local var_19_3 = 0.007
+	recthelper.setAnchorX(self._goskincontainer.transform, curSpineRootPosX)
 
-	arg_19_0._skincontainerCanvasGroup.alpha = 1 - Mathf.Abs(arg_19_0._startPos - var_19_0) * var_19_3
+	local alphaSmooth = 0.007
+
+	self._skincontainerCanvasGroup.alpha = 1 - Mathf.Abs(self._startPos - curPos) * alphaSmooth
 end
 
-function var_0_0._onViewDragEnd(arg_20_0, arg_20_1, arg_20_2)
-	local var_20_0 = arg_20_2.position.x
-	local var_20_1
-	local var_20_2 = true
+function StoreSkinPreviewView:_onViewDragEnd(param, pointerEventData)
+	local endPos = pointerEventData.position.x
+	local newSelectSkinIndex
+	local isLeftIn = true
 
-	if var_20_0 > arg_20_0._startPos and var_20_0 - arg_20_0._startPos >= 100 then
-		var_20_1 = arg_20_0._currentSelectSkinIndex - 1
+	if endPos > self._startPos and endPos - self._startPos >= 100 then
+		newSelectSkinIndex = self._currentSelectSkinIndex - 1
 
-		if var_20_1 == 0 then
-			var_20_1 = #arg_20_0._allSkinList
+		if newSelectSkinIndex == 0 then
+			newSelectSkinIndex = #self._allSkinList
 		end
-	elseif var_20_0 < arg_20_0._startPos and arg_20_0._startPos - var_20_0 >= 100 then
-		var_20_1 = arg_20_0._currentSelectSkinIndex + 1
+	elseif endPos < self._startPos and self._startPos - endPos >= 100 then
+		newSelectSkinIndex = self._currentSelectSkinIndex + 1
 
-		if var_20_1 > #arg_20_0._allSkinList then
-			var_20_1 = 1
+		if newSelectSkinIndex > #self._allSkinList then
+			newSelectSkinIndex = 1
 		end
 
-		var_20_2 = false
+		isLeftIn = false
 	end
 
 	UnityEngine.Shader.EnableKeyword("_CLIPALPHA_ON")
 
-	arg_20_0._skincontainerCanvasGroup.alpha = 1
+	self._skincontainerCanvasGroup.alpha = 1
 
-	if var_20_2 then
-		arg_20_0._animatorPlayer:Play("switch_openleft", arg_20_0._disableClipAlpha, arg_20_0)
+	if isLeftIn then
+		self._animatorPlayer:Play("switch_openleft", self._disableClipAlpha, self)
 	else
-		arg_20_0._animatorPlayer:Play("switch_openright", arg_20_0._disableClipAlpha, arg_20_0)
+		self._animatorPlayer:Play("switch_openright", self._disableClipAlpha, self)
 	end
 
-	if var_20_1 then
-		arg_20_0._currentSelectSkinIndex = var_20_1
+	if newSelectSkinIndex then
+		self._currentSelectSkinIndex = newSelectSkinIndex
 
-		local var_20_3 = arg_20_0._allSkinList[arg_20_0._currentSelectSkinIndex].config.product
-		local var_20_4 = string.splitToNumber(var_20_3, "#")[2]
-		local var_20_5 = SkinConfig.instance:getSkinCo(var_20_4)
+		local goodsMO = self._allSkinList[self._currentSelectSkinIndex]
+		local product = goodsMO.config.product
+		local productInfo = string.splitToNumber(product, "#")
+		local skinId = productInfo[2]
+		local skinCo = SkinConfig.instance:getSkinCo(skinId)
 
-		arg_20_0:_reallyRefreshView(var_20_5)
+		self:_reallyRefreshView(skinCo)
 	else
-		arg_20_0:_loadedImage()
+		self:_loadedImage()
 	end
 end
 
-function var_0_0._onDragBegin(arg_21_0)
-	var_0_1.KillById(arg_21_0._tweeningId)
+function StoreSkinPreviewView:_onDragBegin()
+	csTweenHelper.KillById(self._tweeningId)
 
-	arg_21_0._preDragAnchorPositionX = recthelper.getAnchorX(arg_21_0._goContent.transform)
+	self._preDragAnchorPositionX = recthelper.getAnchorX(self._goContent.transform)
 end
 
-function var_0_0._onDrag(arg_22_0)
-	local var_22_0 = recthelper.getAnchorX(arg_22_0._goContent.transform)
-	local var_22_1 = math.abs(var_22_0 - arg_22_0._preDragAnchorPositionX)
-	local var_22_2 = arg_22_0._currentSelectSkinIndex
+function StoreSkinPreviewView:_onDrag()
+	local endAnchorPositionX = recthelper.getAnchorX(self._goContent.transform)
+	local distance = math.abs(endAnchorPositionX - self._preDragAnchorPositionX)
+	local _currentSelectSkinIndex = self._currentSelectSkinIndex
 
-	if var_22_1 > arg_22_0._minChangeAnchorPositionX then
-		if var_22_0 < arg_22_0._minAnchorPositionX then
-			var_22_0 = arg_22_0._minAnchorPositionX
+	if distance > self._minChangeAnchorPositionX then
+		if endAnchorPositionX < self._minAnchorPositionX then
+			endAnchorPositionX = self._minAnchorPositionX
 		end
 
-		if var_22_0 > 0 then
-			var_22_0 = 0
+		if endAnchorPositionX > 0 then
+			endAnchorPositionX = 0
 		end
 
-		local var_22_3 = 0
+		local temp = 0
 
-		if var_22_0 < arg_22_0._preDragAnchorPositionX then
-			local var_22_4 = 1
+		if endAnchorPositionX < self._preDragAnchorPositionX then
+			temp = 1
+			_currentSelectSkinIndex = math.ceil(math.abs(endAnchorPositionX) / self._itemWidth) + 1
 
-			var_22_2 = math.ceil(math.abs(var_22_0) / arg_22_0._itemWidth) + 1
-
-			if var_22_2 > #arg_22_0._itemObjects then
-				var_22_2 = #arg_22_0._itemObjects
+			if _currentSelectSkinIndex > #self._itemObjects then
+				_currentSelectSkinIndex = #self._itemObjects
 			end
-		elseif var_22_0 > arg_22_0._preDragAnchorPositionX then
-			local var_22_5 = 2
+		elseif endAnchorPositionX > self._preDragAnchorPositionX then
+			temp = 2
+			_currentSelectSkinIndex = math.ceil(math.abs(endAnchorPositionX) / self._itemWidth)
 
-			var_22_2 = math.ceil(math.abs(var_22_0) / arg_22_0._itemWidth)
-
-			if var_22_2 < 1 then
-				var_22_2 = 1
+			if _currentSelectSkinIndex < 1 then
+				_currentSelectSkinIndex = 1
 			end
 		end
 	end
 
-	if var_22_2 then
-		local var_22_6 = arg_22_0._itemObjects[var_22_2]
+	if _currentSelectSkinIndex then
+		local item = self._itemObjects[_currentSelectSkinIndex]
 
-		for iter_22_0, iter_22_1 in ipairs(arg_22_0._itemObjects) do
-			local var_22_7 = var_22_2 == iter_22_0 and 1 or 0.8
+		for i, v in ipairs(self._itemObjects) do
+			local scale = _currentSelectSkinIndex == i and 1 or 0.8
 
-			transformhelper.setLocalScale(iter_22_1.transSkinmask, var_22_7, var_22_7, var_22_7)
+			transformhelper.setLocalScale(v.transSkinmask, scale, scale, scale)
 		end
 	end
 end
 
-function var_0_0._onDragEnd(arg_23_0)
-	local var_23_0 = recthelper.getAnchorX(arg_23_0._goContent.transform)
-	local var_23_1 = math.abs(var_23_0 - arg_23_0._preDragAnchorPositionX)
+function StoreSkinPreviewView:_onDragEnd()
+	local endAnchorPositionX = recthelper.getAnchorX(self._goContent.transform)
+	local distance = math.abs(endAnchorPositionX - self._preDragAnchorPositionX)
 
-	if var_23_1 <= arg_23_0._minChangeAnchorPositionX then
-		arg_23_0._tweeningId = var_0_1.DOAnchorPosX(arg_23_0._goContent.transform, arg_23_0._preDragAnchorPositionX, var_23_1 / arg_23_0._scrollRate, arg_23_0.onCompleteTween, arg_23_0)
+	if distance <= self._minChangeAnchorPositionX then
+		self._tweeningId = csTweenHelper.DOAnchorPosX(self._goContent.transform, self._preDragAnchorPositionX, distance / self._scrollRate, self.onCompleteTween, self)
 	else
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_rolesopen)
 
-		if var_23_0 < arg_23_0._minAnchorPositionX then
-			var_23_0 = arg_23_0._minAnchorPositionX
+		if endAnchorPositionX < self._minAnchorPositionX then
+			endAnchorPositionX = self._minAnchorPositionX
 		end
 
-		if var_23_0 > 0 then
-			var_23_0 = 0
+		if endAnchorPositionX > 0 then
+			endAnchorPositionX = 0
 		end
 
-		local var_23_2 = 0
+		distance = 0
+		self._preSelectSkinIndex = self._currentSelectSkinIndex
 
-		arg_23_0._preSelectSkinIndex = arg_23_0._currentSelectSkinIndex
+		if endAnchorPositionX < self._preDragAnchorPositionX then
+			self._currentSelectSkinIndex = math.ceil(math.abs(endAnchorPositionX) / self._itemWidth) + 1
 
-		if var_23_0 < arg_23_0._preDragAnchorPositionX then
-			arg_23_0._currentSelectSkinIndex = math.ceil(math.abs(var_23_0) / arg_23_0._itemWidth) + 1
-
-			if arg_23_0._currentSelectSkinIndex > #arg_23_0._itemObjects then
-				arg_23_0._currentSelectSkinIndex = #arg_23_0._itemObjects
+			if self._currentSelectSkinIndex > #self._itemObjects then
+				self._currentSelectSkinIndex = #self._itemObjects
 			end
 
-			var_23_2 = math.abs(var_23_0) % arg_23_0._itemWidth
+			distance = math.abs(endAnchorPositionX) % self._itemWidth
 
-			if var_23_2 == 0 then
-				arg_23_0:onCompleteTween()
+			if distance == 0 then
+				self:onCompleteTween()
 
-				local var_23_3 = arg_23_0._itemObjects[arg_23_0._currentSelectSkinIndex]
+				local item = self._itemObjects[self._currentSelectSkinIndex]
 
-				arg_23_0:_reallyRefreshView(var_23_3.skinCo)
+				self:_reallyRefreshView(item.skinCo)
 
 				return
 			end
 
-			var_23_2 = arg_23_0._itemWidth - var_23_2
-		elseif var_23_0 > arg_23_0._preDragAnchorPositionX then
-			arg_23_0._currentSelectSkinIndex = math.ceil(math.abs(var_23_0) / arg_23_0._itemWidth)
+			distance = self._itemWidth - distance
+		elseif endAnchorPositionX > self._preDragAnchorPositionX then
+			self._currentSelectSkinIndex = math.ceil(math.abs(endAnchorPositionX) / self._itemWidth)
 
-			if arg_23_0._currentSelectSkinIndex < 1 then
-				arg_23_0._currentSelectSkinIndex = 1
+			if self._currentSelectSkinIndex < 1 then
+				self._currentSelectSkinIndex = 1
 			end
 
-			var_23_2 = math.abs(var_23_0) % arg_23_0._itemWidth
+			distance = math.abs(endAnchorPositionX) % self._itemWidth
 		end
 
-		local var_23_4 = arg_23_0._itemObjects[arg_23_0._currentSelectSkinIndex]
+		local item = self._itemObjects[self._currentSelectSkinIndex]
 
-		arg_23_0:_reallyRefreshView(var_23_4.skinCo)
+		self:_reallyRefreshView(item.skinCo)
 
-		arg_23_0._tweeningId = var_0_1.DOAnchorPosX(arg_23_0._goContent.transform, -(arg_23_0._currentSelectSkinIndex - 1) * arg_23_0._itemWidth, var_23_2 / arg_23_0._scrollRate, arg_23_0.onCompleteTween, arg_23_0)
+		self._tweeningId = csTweenHelper.DOAnchorPosX(self._goContent.transform, -(self._currentSelectSkinIndex - 1) * self._itemWidth, distance / self._scrollRate, self.onCompleteTween, self)
 	end
 
-	if arg_23_0._currentSelectSkinIndex then
-		local var_23_5 = arg_23_0._itemObjects[arg_23_0._currentSelectSkinIndex]
+	if self._currentSelectSkinIndex then
+		local item = self._itemObjects[self._currentSelectSkinIndex]
 
-		for iter_23_0, iter_23_1 in ipairs(arg_23_0._itemObjects) do
-			local var_23_6 = arg_23_0._currentSelectSkinIndex == iter_23_0 and 1 or 0.8
+		for i, v in ipairs(self._itemObjects) do
+			local scale = self._currentSelectSkinIndex == i and 1 or 0.8
 
-			transformhelper.setLocalScale(iter_23_1.transSkinmask, var_23_6, var_23_6, var_23_6)
+			transformhelper.setLocalScale(v.transSkinmask, scale, scale, scale)
 		end
 	end
 end
 
-function var_0_0.onCompleteTween(arg_24_0)
-	arg_24_0._tweeningId = 0
+function StoreSkinPreviewView:onCompleteTween()
+	self._tweeningId = 0
 
-	gohelper.setActive(arg_24_0._itemObjects[arg_24_0._preSelectSkinIndex].goSelectedBg, false)
-	gohelper.setActive(arg_24_0._itemObjects[arg_24_0._preSelectSkinIndex].goNotSelectedBg, true)
-	gohelper.setActive(arg_24_0._itemObjects[arg_24_0._currentSelectSkinIndex].goSelectedBg, true)
-	gohelper.setActive(arg_24_0._itemObjects[arg_24_0._currentSelectSkinIndex].goNotSelectedBg, false)
+	gohelper.setActive(self._itemObjects[self._preSelectSkinIndex].goSelectedBg, false)
+	gohelper.setActive(self._itemObjects[self._preSelectSkinIndex].goNotSelectedBg, true)
+	gohelper.setActive(self._itemObjects[self._currentSelectSkinIndex].goSelectedBg, true)
+	gohelper.setActive(self._itemObjects[self._currentSelectSkinIndex].goNotSelectedBg, false)
 end
 
-function var_0_0._refreshSkinInfo(arg_25_0)
-	local var_25_0 = HeroConfig.instance:getHeroCO(arg_25_0.skinCo.characterId)
+function StoreSkinPreviewView:_refreshSkinInfo()
+	local heroConfig = HeroConfig.instance:getHeroCO(self.skinCo.characterId)
 
-	arg_25_0._simagesignature:LoadImage(ResUrl.getSignature(var_25_0.signature))
+	self._simagesignature:LoadImage(ResUrl.getSignature(heroConfig.signature))
 
-	arg_25_0._txtindex.text = ""
-	arg_25_0._txtcharacterName.text = var_25_0.name
+	self._txtindex.text = ""
+	self._txtcharacterName.text = heroConfig.name
 
-	gohelper.setActive(arg_25_0._txtskinName.gameObject, true)
-	gohelper.setActive(arg_25_0._txtskinNameEn.gameObject, true)
+	gohelper.setActive(self._txtskinName.gameObject, true)
+	gohelper.setActive(self._txtskinNameEn.gameObject, true)
 
-	arg_25_0._txtskinName.text = arg_25_0.skinCo.characterSkin
-	arg_25_0._txtskinNameEn.text = arg_25_0.skinCo.characterSkinNameEng
-	arg_25_0._txtdesc.text = arg_25_0.skinCo.skinDescription
+	self._txtskinName.text = self.skinCo.characterSkin
+	self._txtskinNameEn.text = self.skinCo.characterSkinNameEng
+	self._txtdesc.text = self.skinCo.skinDescription
 
-	arg_25_0.cardImage:LoadImage(ResUrl.getHeadSkinSmall(arg_25_0.skinCo.id))
-	gohelper.setActive(arg_25_0._btntag.gameObject, string.nilorempty(arg_25_0.skinCo.storeTag) == false)
+	self.cardImage:LoadImage(ResUrl.getHeadSkinSmall(self.skinCo.id))
+	gohelper.setActive(self._btntag.gameObject, string.nilorempty(self.skinCo.storeTag) == false)
 end
 
-function var_0_0._onUISpineLoaded(arg_26_0)
-	local var_26_0 = arg_26_0.skinCo.skinViewLive2dOffset
+function StoreSkinPreviewView:_onUISpineLoaded()
+	local offsetStr = self.skinCo.skinViewLive2dOffset
 
-	if string.nilorempty(var_26_0) then
-		var_26_0 = arg_26_0.skinCo.characterViewOffset
+	if string.nilorempty(offsetStr) then
+		offsetStr = self.skinCo.characterViewOffset
 	end
 
-	recthelper.setAnchor(arg_26_0._goskincontainer.transform, 0, 0)
+	recthelper.setAnchor(self._goskincontainer.transform, 0, 0)
 
-	local var_26_1 = SkinConfig.instance:getSkinOffset(var_26_0)
+	local offsets = SkinConfig.instance:getSkinOffset(offsetStr)
 
-	recthelper.setAnchor(arg_26_0._gobigspine.transform, tonumber(var_26_1[1]), tonumber(var_26_1[2]))
-	transformhelper.setLocalScale(arg_26_0._gobigspine.transform, tonumber(var_26_1[3]), tonumber(var_26_1[3]), tonumber(var_26_1[3]))
+	recthelper.setAnchor(self._gobigspine.transform, tonumber(offsets[1]), tonumber(offsets[2]))
+	transformhelper.setLocalScale(self._gobigspine.transform, tonumber(offsets[3]), tonumber(offsets[3]), tonumber(offsets[3]))
 end
 
-function var_0_0._loadedImage(arg_27_0)
-	ZProj.UGUIHelper.SetImageSize(arg_27_0._simageskin.gameObject)
+function StoreSkinPreviewView:_loadedImage()
+	ZProj.UGUIHelper.SetImageSize(self._simageskin.gameObject)
 
-	local var_27_0 = arg_27_0.skinCo.skinViewImgOffset
+	local offsetStr = self.skinCo.skinViewImgOffset
 
-	recthelper.setAnchor(arg_27_0._goskincontainer.transform, 0, 0)
+	recthelper.setAnchor(self._goskincontainer.transform, 0, 0)
 
-	if not string.nilorempty(var_27_0) then
-		local var_27_1 = string.splitToNumber(var_27_0, "#")
+	if not string.nilorempty(offsetStr) then
+		local offsets = string.splitToNumber(offsetStr, "#")
 
-		recthelper.setAnchor(arg_27_0._simageskin.transform, tonumber(var_27_1[1]), tonumber(var_27_1[2]))
-		transformhelper.setLocalScale(arg_27_0._simageskin.transform, tonumber(var_27_1[3]), tonumber(var_27_1[3]), tonumber(var_27_1[3]))
+		recthelper.setAnchor(self._simageskin.transform, tonumber(offsets[1]), tonumber(offsets[2]))
+		transformhelper.setLocalScale(self._simageskin.transform, tonumber(offsets[3]), tonumber(offsets[3]), tonumber(offsets[3]))
 	else
-		recthelper.setAnchor(arg_27_0._simageskin.transform, -150, -150)
-		transformhelper.setLocalScale(arg_27_0._simageskin.transform, 0.6, 0.6, 0.6)
+		recthelper.setAnchor(self._simageskin.transform, -150, -150)
+		transformhelper.setLocalScale(self._simageskin.transform, 0.6, 0.6, 0.6)
 	end
 end
 
-function var_0_0._refreshSpine(arg_28_0)
-	arg_28_0._goSpine:stopVoice()
-	arg_28_0._goSpine:setResPath(ResUrl.getSpineUIPrefab(arg_28_0.skinCo.spine), arg_28_0._onSpineLoaded, arg_28_0, true)
+function StoreSkinPreviewView:_refreshSpine()
+	self._goSpine:stopVoice()
+	self._goSpine:setResPath(ResUrl.getSpineUIPrefab(self.skinCo.spine), self._onSpineLoaded, self, true)
 
-	local var_28_0 = SkinConfig.instance:getSkinOffset(arg_28_0.skinCo.skinSpineOffset)
+	local offsets = SkinConfig.instance:getSkinOffset(self.skinCo.skinSpineOffset)
 
-	recthelper.setAnchor(arg_28_0._gosmallspine.transform, tonumber(var_28_0[1]), tonumber(var_28_0[2]))
-	transformhelper.setLocalScale(arg_28_0._gosmallspine.transform, tonumber(var_28_0[3]), tonumber(var_28_0[3]), tonumber(var_28_0[3]))
+	recthelper.setAnchor(self._gosmallspine.transform, tonumber(offsets[1]), tonumber(offsets[2]))
+	transformhelper.setLocalScale(self._gosmallspine.transform, tonumber(offsets[3]), tonumber(offsets[3]), tonumber(offsets[3]))
 end
 
-function var_0_0._refreshStatus(arg_29_0)
-	local var_29_0 = arg_29_0._allSkinList[arg_29_0._currentSelectSkinIndex]
-	local var_29_1 = var_29_0:alreadyHas()
+function StoreSkinPreviewView:_refreshStatus()
+	local goodsMO = self._allSkinList[self._currentSelectSkinIndex]
+	local alreadyHas = goodsMO:alreadyHas()
 
-	gohelper.setActive(arg_29_0._btnbuy.gameObject, var_29_1 == false)
-	gohelper.setActive(arg_29_0._gohas, var_29_1)
+	gohelper.setActive(self._btnbuy.gameObject, alreadyHas == false)
+	gohelper.setActive(self._gohas, alreadyHas)
 
-	if var_29_1 == false then
-		local var_29_2 = string.splitToNumber(var_29_0.config.cost, "#")
+	if alreadyHas == false then
+		local costInfo = string.splitToNumber(goodsMO.config.cost, "#")
 
-		arg_29_0._costType = var_29_2[1]
-		arg_29_0._costId = var_29_2[2]
-		arg_29_0._costQuantity = var_29_2[3]
-		arg_29_0._txtprice.text = arg_29_0._costQuantity
+		self._costType = costInfo[1]
+		self._costId = costInfo[2]
+		self._costQuantity = costInfo[3]
+		self._txtprice.text = self._costQuantity
 
-		local var_29_3, var_29_4 = ItemModel.instance:getItemConfigAndIcon(arg_29_0._costType, arg_29_0._costId)
-		local var_29_5 = var_29_3.icon
-		local var_29_6 = string.format("%s_1", var_29_5)
+		local costConfig, costIcon = ItemModel.instance:getItemConfigAndIcon(self._costType, self._costId)
+		local id = costConfig.icon
+		local str = string.format("%s_1", id)
 
-		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_29_0._imageicon, var_29_6)
+		UISpriteSetMgr.instance:setCurrencyItemSprite(self._imageicon, str)
 	end
 end
 
-function var_0_0._refreshSkinList(arg_30_0)
-	arg_30_0._allSkinList = StoreClothesGoodsItemListModel.instance:getList()
+function StoreSkinPreviewView:_refreshSkinList()
+	self._allSkinList = StoreClothesGoodsItemListModel.instance:getList()
 
-	for iter_30_0, iter_30_1 in ipairs(arg_30_0._allSkinList) do
-		if arg_30_0.goodsMO.goodsId == iter_30_1.goodsId then
-			arg_30_0._currentSelectSkinIndex = iter_30_0
+	for index, goodsMO in ipairs(self._allSkinList) do
+		if self.goodsMO.goodsId == goodsMO.goodsId then
+			self._currentSelectSkinIndex = index
 		end
 	end
 end
 
-function var_0_0._initSkinItem(arg_31_0, arg_31_1, arg_31_2, arg_31_3)
-	local var_31_0 = {
-		goodsMO = arg_31_3
-	}
-	local var_31_1 = arg_31_3.config.product
-	local var_31_2 = string.splitToNumber(var_31_1, "#")[2]
+function StoreSkinPreviewView:_initSkinItem(itemGo, index, goodsMO)
+	local item = {}
 
-	var_31_0.skinCo = SkinConfig.instance:getSkinCo(var_31_2)
+	item.goodsMO = goodsMO
 
-	local var_31_3 = gohelper.findChildSingleImage(arg_31_1, "skinmask/skinicon")
+	local product = goodsMO.config.product
+	local productInfo = string.splitToNumber(product, "#")
+	local skinId = productInfo[2]
 
-	var_31_0.image = var_31_3
-	gohelper.findChildText(arg_31_1, "skinIndex/txtSkinIndex").text = string.format("%02d", arg_31_2)
+	item.skinCo = SkinConfig.instance:getSkinCo(skinId)
 
-	var_31_3:LoadImage(ResUrl.getHeadSkinSmall(var_31_0.skinCo.id))
+	local itemImage = gohelper.findChildSingleImage(itemGo, "skinmask/skinicon")
 
-	var_31_0.goSelectedBg = gohelper.findChild(arg_31_1, "skinIndex/selectBg")
-	var_31_0.transSkinmask = gohelper.findChild(arg_31_1, "skinmask").transform
-	var_31_0.goNotSelectedBg = gohelper.findChild(arg_31_1, "skinIndex/notSelectBg")
+	item.image = itemImage
+	gohelper.findChildText(itemGo, "skinIndex/txtSkinIndex").text = string.format("%02d", index)
 
-	local var_31_4 = gohelper.getClick(var_31_3.gameObject)
+	itemImage:LoadImage(ResUrl.getHeadSkinSmall(item.skinCo.id))
 
-	var_31_4:AddClickListener(arg_31_0._onItemClick, arg_31_0, arg_31_2)
+	item.goSelectedBg = gohelper.findChild(itemGo, "skinIndex/selectBg")
+	item.transSkinmask = gohelper.findChild(itemGo, "skinmask").transform
+	item.goNotSelectedBg = gohelper.findChild(itemGo, "skinIndex/notSelectBg")
 
-	var_31_0.click = var_31_4
+	local click = gohelper.getClick(itemImage.gameObject)
 
-	gohelper.setActive(var_31_0.goSelectedBg, arg_31_0.goodsMO == arg_31_3)
-	gohelper.setActive(var_31_0.goNotSelectedBg, arg_31_0.goodsMO == arg_31_3)
+	click:AddClickListener(self._onItemClick, self, index)
 
-	local var_31_5 = 0.8
+	item.click = click
 
-	if arg_31_0.goodsMO == arg_31_3 then
-		var_31_5 = 1
-		arg_31_0._currentSelectSkinIndex = arg_31_2
-		arg_31_0._preSelectSkinIndex = arg_31_2
+	gohelper.setActive(item.goSelectedBg, self.goodsMO == goodsMO)
+	gohelper.setActive(item.goNotSelectedBg, self.goodsMO == goodsMO)
+
+	local scale = 0.8
+
+	if self.goodsMO == goodsMO then
+		scale = 1
+		self._currentSelectSkinIndex = index
+		self._preSelectSkinIndex = index
 	end
 
-	transformhelper.setLocalScale(var_31_0.transSkinmask, var_31_5, var_31_5, var_31_5)
-	gohelper.setActive(arg_31_1, true)
-	table.insert(arg_31_0._itemObjects, var_31_0)
+	transformhelper.setLocalScale(item.transSkinmask, scale, scale, scale)
+	gohelper.setActive(itemGo, true)
+	table.insert(self._itemObjects, item)
 end
 
-function var_0_0._onItemClick(arg_32_0, arg_32_1)
-	if arg_32_0._currentSelectSkinIndex == arg_32_1 then
+function StoreSkinPreviewView:_onItemClick(index)
+	if self._currentSelectSkinIndex == index then
 		return
 	end
 
-	var_0_1.KillById(arg_32_0._tweeningId)
+	csTweenHelper.KillById(self._tweeningId)
 
-	arg_32_0._preSelectSkinIndex = arg_32_0._currentSelectSkinIndex
-	arg_32_0._currentSelectSkinIndex = arg_32_1
+	self._preSelectSkinIndex = self._currentSelectSkinIndex
+	self._currentSelectSkinIndex = index
 
-	local var_32_0 = arg_32_0._itemObjects[arg_32_0._currentSelectSkinIndex]
+	local item = self._itemObjects[self._currentSelectSkinIndex]
 
-	arg_32_0:_reallyRefreshView(var_32_0.skinCo)
+	self:_reallyRefreshView(item.skinCo)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_character_skin_switch)
 
-	for iter_32_0, iter_32_1 in ipairs(arg_32_0._itemObjects) do
-		local var_32_1 = arg_32_0._currentSelectSkinIndex == iter_32_0 and 1 or 0.8
+	for i, v in ipairs(self._itemObjects) do
+		local scale = self._currentSelectSkinIndex == i and 1 or 0.8
 
-		transformhelper.setLocalScale(iter_32_1.transSkinmask, var_32_1, var_32_1, var_32_1)
+		transformhelper.setLocalScale(v.transSkinmask, scale, scale, scale)
 	end
 
-	arg_32_0._tweeningId = var_0_1.DOAnchorPosX(arg_32_0._goContent.transform, -(arg_32_0._currentSelectSkinIndex - 1) * arg_32_0._itemWidth, 0.5, arg_32_0.onCompleteTween, arg_32_0)
+	self._tweeningId = csTweenHelper.DOAnchorPosX(self._goContent.transform, -(self._currentSelectSkinIndex - 1) * self._itemWidth, 0.5, self.onCompleteTween, self)
 end
 
-function var_0_0._onSpineLoaded(arg_33_0)
+function StoreSkinPreviewView:_onSpineLoaded()
 	return
 end
 
-function var_0_0.onClose(arg_34_0)
-	arg_34_0._simageskin:UnLoadImage()
-	arg_34_0._simagesignature:UnLoadImage()
-	arg_34_0._simagel2d:UnLoadImage()
+function StoreSkinPreviewView:onClose()
+	self._simageskin:UnLoadImage()
+	self._simagesignature:UnLoadImage()
+	self._simagel2d:UnLoadImage()
 
-	for iter_34_0, iter_34_1 in ipairs(arg_34_0._itemObjects) do
-		iter_34_1.image:UnLoadImage()
-		iter_34_1.click:RemoveClickListener()
+	for i, item in ipairs(self._itemObjects) do
+		item.image:UnLoadImage()
+		item.click:RemoveClickListener()
 	end
 
-	arg_34_0._drag:RemoveDragBeginListener()
-	arg_34_0._drag:RemoveDragEndListener()
-	arg_34_0._drag:RemoveDragListener()
+	self._drag:RemoveDragBeginListener()
+	self._drag:RemoveDragEndListener()
+	self._drag:RemoveDragListener()
 	UnityEngine.Shader.EnableKeyword("_CLIPALPHA_ON")
-	TaskDispatcher.cancelTask(arg_34_0._refreshBigSkin)
+	TaskDispatcher.cancelTask(self._refreshBigSkin)
 end
 
-function var_0_0.onCloseFinish(arg_35_0)
-	arg_35_0:_disableClipAlpha()
+function StoreSkinPreviewView:onCloseFinish()
+	self:_disableClipAlpha()
 end
 
-function var_0_0.onDestroyView(arg_36_0)
-	if arg_36_0._goSpine then
-		arg_36_0._goSpine:stopVoice()
+function StoreSkinPreviewView:onDestroyView()
+	if self._goSpine then
+		self._goSpine:stopVoice()
 
-		arg_36_0._goSpine = nil
+		self._goSpine = nil
 	end
 
-	if arg_36_0._uiSpine then
-		arg_36_0._uiSpine:onDestroy()
+	if self._uiSpine then
+		self._uiSpine:onDestroy()
 
-		arg_36_0._uiSpine = nil
+		self._uiSpine = nil
 	end
 
-	arg_36_0._simagebg:UnLoadImage()
-	arg_36_0._simageshowbg:UnLoadImage()
-	arg_36_0:_disableClipAlpha()
+	self._simagebg:UnLoadImage()
+	self._simageshowbg:UnLoadImage()
+	self:_disableClipAlpha()
 end
 
-function var_0_0._disableClipAlpha(arg_37_0)
+function StoreSkinPreviewView:_disableClipAlpha()
 	UnityEngine.Shader.DisableKeyword("_CLIPALPHA_ON")
 end
 
-return var_0_0
+return StoreSkinPreviewView

@@ -1,189 +1,196 @@
-﻿module("modules.logic.versionactivity2_5.liangyue.view.LiangYueLevelItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/liangyue/view/LiangYueLevelItem.lua
 
-local var_0_0 = class("LiangYueLevelItem", LuaCompBase)
+module("modules.logic.versionactivity2_5.liangyue.view.LiangYueLevelItem", package.seeall)
 
-function var_0_0.onInit(arg_1_0, arg_1_1)
-	arg_1_0._go = arg_1_1
-	arg_1_0._goGet = gohelper.findChild(arg_1_0._go, "unlock/#go_afterPuzzleEpisode/#go_Get")
-	arg_1_0._gostagenormal = gohelper.findChild(arg_1_0._go, "unlock/#go_stagenormal")
-	arg_1_0._gostagefinished = gohelper.findChild(arg_1_0._go, "unlock/#go_stagefinished")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0._go, "unlock/#btn_click")
-	arg_1_0._gostagelock = gohelper.findChild(arg_1_0._go, "unlock/#go_stagelock")
-	arg_1_0._txtstagename = gohelper.findChildText(arg_1_0._go, "unlock/#txt_stagename")
-	arg_1_0._txtstageNum = gohelper.findChildText(arg_1_0._go, "unlock/#txt_stageNum")
-	arg_1_0._goAfterPuzzleItem = gohelper.findChild(arg_1_0._go, "unlock/#go_afterPuzzleEpisode")
-	arg_1_0._btnAfterPuzzle = gohelper.findChildButton(arg_1_0._go, "unlock/#go_afterPuzzleEpisode/#btn_puzzle")
-	arg_1_0._goStarFinish1 = gohelper.findChild(arg_1_0._go, "unlock/star1/#go_star")
-	arg_1_0._goStarFinish2 = gohelper.findChild(arg_1_0._go, "unlock/star2/#go_star")
-	arg_1_0._episodeAnim = gohelper.findChildAnim(arg_1_0._go, "")
-	arg_1_0._episodeGameAnim = gohelper.findChildAnim(arg_1_0._go, "unlock/#go_afterPuzzleEpisode")
-	arg_1_0._episodeGameFinishAnim = gohelper.findChildAnim(arg_1_0._go, "unlock/#go_afterPuzzleEpisode/#go_Get/go_hasget")
+local LiangYueLevelItem = class("LiangYueLevelItem", LuaCompBase)
+
+function LiangYueLevelItem:onInit(go)
+	self._go = go
+	self._goGet = gohelper.findChild(self._go, "unlock/#go_afterPuzzleEpisode/#go_Get")
+	self._gostagenormal = gohelper.findChild(self._go, "unlock/#go_stagenormal")
+	self._gostagefinished = gohelper.findChild(self._go, "unlock/#go_stagefinished")
+	self._btnclick = gohelper.findChildButtonWithAudio(self._go, "unlock/#btn_click")
+	self._gostagelock = gohelper.findChild(self._go, "unlock/#go_stagelock")
+	self._txtstagename = gohelper.findChildText(self._go, "unlock/#txt_stagename")
+	self._txtstageNum = gohelper.findChildText(self._go, "unlock/#txt_stageNum")
+	self._goAfterPuzzleItem = gohelper.findChild(self._go, "unlock/#go_afterPuzzleEpisode")
+	self._btnAfterPuzzle = gohelper.findChildButton(self._go, "unlock/#go_afterPuzzleEpisode/#btn_puzzle")
+	self._goStarFinish1 = gohelper.findChild(self._go, "unlock/star1/#go_star")
+	self._goStarFinish2 = gohelper.findChild(self._go, "unlock/star2/#go_star")
+	self._episodeAnim = gohelper.findChildAnim(self._go, "")
+	self._episodeGameAnim = gohelper.findChildAnim(self._go, "unlock/#go_afterPuzzleEpisode")
+	self._episodeGameFinishAnim = gohelper.findChildAnim(self._go, "unlock/#go_afterPuzzleEpisode/#go_Get/go_hasget")
 end
 
-function var_0_0.setInfo(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0.index = arg_2_1
-	arg_2_0.actId = arg_2_2.activityId
-	arg_2_0.episodeId = arg_2_2.episodeId
-	arg_2_0.config = arg_2_2
-	arg_2_0.preEpisodeId = arg_2_2.preEpisodeId
-	arg_2_0.gameEpisodeId = LiangYueConfig.instance:getAfterGameEpisodeId(arg_2_0.actId, arg_2_2.episodeId)
+function LiangYueLevelItem:setInfo(index, config)
+	self.index = index
+	self.actId = config.activityId
+	self.episodeId = config.episodeId
+	self.config = config
+	self.preEpisodeId = config.preEpisodeId
+	self.gameEpisodeId = LiangYueConfig.instance:getAfterGameEpisodeId(self.actId, config.episodeId)
 
-	arg_2_0:refreshUI()
-	arg_2_0:refreshStoryState(true)
-	arg_2_0:refreshGameState(true)
+	self:refreshUI()
+	self:refreshStoryState(true)
+	self:refreshGameState(true)
 end
 
-function var_0_0.refreshUI(arg_3_0)
-	local var_3_0 = arg_3_0.config
-	local var_3_1 = arg_3_0.actId
+function LiangYueLevelItem:refreshUI()
+	local config = self.config
+	local actId = self.actId
 
-	arg_3_0._txtstagename.text = var_3_0.name
-	arg_3_0._txtstageNum.text = string.format("0%s", arg_3_0.index)
-	arg_3_0.isPreFinish, arg_3_0.isFinish = var_3_0.preEpisodeId == 0 or LiangYueModel.instance:isEpisodeFinish(var_3_1, var_3_0.preEpisodeId), LiangYueModel.instance:isEpisodeFinish(var_3_1, var_3_0.episodeId)
+	self._txtstagename.text = config.name
+	self._txtstageNum.text = string.format("0%s", self.index)
+
+	local isPreFinish = config.preEpisodeId == 0 or LiangYueModel.instance:isEpisodeFinish(actId, config.preEpisodeId)
+	local isFinish = LiangYueModel.instance:isEpisodeFinish(actId, config.episodeId)
+
+	self.isFinish = isFinish
+	self.isPreFinish = isPreFinish
 end
 
-function var_0_0.refreshStoryState(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0.isFinish
-	local var_4_1 = arg_4_0.isPreFinish
+function LiangYueLevelItem:refreshStoryState(playAnim)
+	local isFinish = self.isFinish
+	local isPreFinish = self.isPreFinish
 
-	gohelper.setActive(arg_4_0._gostagelock, not var_4_1)
-	gohelper.setActive(arg_4_0._gostagenormal, var_4_1 and not var_4_0)
-	gohelper.setActive(arg_4_0._gostagefinished, var_4_0)
-	gohelper.setActive(arg_4_0._goStarFinish1, var_4_0)
-	gohelper.setActive(arg_4_0._goStarFinish2, var_4_0)
+	gohelper.setActive(self._gostagelock, not isPreFinish)
+	gohelper.setActive(self._gostagenormal, isPreFinish and not isFinish)
+	gohelper.setActive(self._gostagefinished, isFinish)
+	gohelper.setActive(self._goStarFinish1, isFinish)
+	gohelper.setActive(self._goStarFinish2, isFinish)
 
-	if not arg_4_1 then
+	if not playAnim then
 		return
 	end
 
-	local var_4_2 = 1
+	local animTime = 1
 
-	if var_4_0 then
-		arg_4_0:playEpisodeAnim(LiangYueEnum.EpisodeAnim.FinishIdle, var_4_2)
-	elseif var_4_1 then
-		arg_4_0:playEpisodeAnim(LiangYueEnum.EpisodeAnim.Unlock, var_4_2)
+	if isFinish then
+		self:playEpisodeAnim(LiangYueEnum.EpisodeAnim.FinishIdle, animTime)
+	elseif isPreFinish then
+		self:playEpisodeAnim(LiangYueEnum.EpisodeAnim.Unlock, animTime)
 	else
-		arg_4_0:playEpisodeAnim(LiangYueEnum.EpisodeAnim.Empty, var_4_2)
+		self:playEpisodeAnim(LiangYueEnum.EpisodeAnim.Empty, animTime)
 	end
 end
 
-function var_0_0.setLockState(arg_5_0)
-	gohelper.setActive(arg_5_0._gostagelock, true)
-	gohelper.setActive(arg_5_0._gostagenormal, false)
-	gohelper.setActive(arg_5_0._gostagefinished, false)
-	gohelper.setActive(arg_5_0._goStarFinish1, false)
-	gohelper.setActive(arg_5_0._goStarFinish2, false)
+function LiangYueLevelItem:setLockState()
+	gohelper.setActive(self._gostagelock, true)
+	gohelper.setActive(self._gostagenormal, false)
+	gohelper.setActive(self._gostagefinished, false)
+	gohelper.setActive(self._goStarFinish1, false)
+	gohelper.setActive(self._goStarFinish2, false)
 end
 
-function var_0_0.refreshGameState(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0.isFinish
-	local var_6_1 = arg_6_0.gameEpisodeId ~= nil
+function LiangYueLevelItem:refreshGameState(playAnim)
+	local isFinish = self.isFinish
+	local haveAfterEpisode = self.gameEpisodeId ~= nil
 
-	gohelper.setActive(arg_6_0._goAfterPuzzleItem, var_6_1 and var_6_0)
+	gohelper.setActive(self._goAfterPuzzleItem, haveAfterEpisode and isFinish)
 
-	local var_6_2 = LiangYueModel.instance:isEpisodeFinish(arg_6_0.actId, arg_6_0.gameEpisodeId)
+	local finishAfterEpisode = LiangYueModel.instance:isEpisodeFinish(self.actId, self.gameEpisodeId)
 
-	gohelper.setActive(arg_6_0._goGet, var_6_2)
+	gohelper.setActive(self._goGet, finishAfterEpisode)
 
-	local var_6_3 = 1
+	local animTime = 1
 
-	if not var_6_1 or not arg_6_1 then
+	if not haveAfterEpisode or not playAnim then
 		return
 	end
 
-	arg_6_0:playGameEpisodeRewardAnim(LiangYueEnum.EpisodeGameFinishAnim.Idle, var_6_3)
+	self:playGameEpisodeRewardAnim(LiangYueEnum.EpisodeGameFinishAnim.Idle, animTime)
 
-	if var_6_2 then
-		arg_6_0:playGameEpisodeAnim(LiangYueEnum.EpisodeGameAnim.FinishIdle, var_6_3)
-	elseif var_6_0 then
-		arg_6_0:playGameEpisodeAnim(LiangYueEnum.EpisodeGameAnim.Open, var_6_3)
+	if finishAfterEpisode then
+		self:playGameEpisodeAnim(LiangYueEnum.EpisodeGameAnim.FinishIdle, animTime)
+	elseif isFinish then
+		self:playGameEpisodeAnim(LiangYueEnum.EpisodeGameAnim.Open, animTime)
 	else
-		arg_6_0:playGameEpisodeAnim(LiangYueEnum.EpisodeGameAnim.Idle, var_6_3)
+		self:playGameEpisodeAnim(LiangYueEnum.EpisodeGameAnim.Idle, animTime)
 	end
 end
 
-function var_0_0.playGameEpisodeAnim(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_0._episodeGameAnim:Play(arg_7_1, 0, arg_7_2)
+function LiangYueLevelItem:playGameEpisodeAnim(animName, animTime)
+	self._episodeGameAnim:Play(animName, 0, animTime)
 end
 
-function var_0_0.playEpisodeAnim(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0._episodeAnim:Play(arg_8_1, 0, arg_8_2)
+function LiangYueLevelItem:playEpisodeAnim(animName, animTime)
+	self._episodeAnim:Play(animName, 0, animTime)
 end
 
-function var_0_0.playGameEpisodeRewardAnim(arg_9_0, arg_9_1, arg_9_2)
-	arg_9_0._episodeGameFinishAnim:Play(arg_9_1, 0, arg_9_2)
+function LiangYueLevelItem:playGameEpisodeRewardAnim(animName, animTime)
+	self._episodeGameFinishAnim:Play(animName, 0, animTime)
 end
 
-function var_0_0.addEventListeners(arg_10_0)
-	arg_10_0._btnclick:AddClickListener(arg_10_0._btnclickOnClick, arg_10_0)
-	arg_10_0._btnAfterPuzzle:AddClickListener(arg_10_0._btnafterPuzzleOnClick, arg_10_0)
+function LiangYueLevelItem:addEventListeners()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
+	self._btnAfterPuzzle:AddClickListener(self._btnafterPuzzleOnClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_11_0)
-	arg_11_0._btnclick:RemoveClickListener()
-	arg_11_0._btnAfterPuzzle:RemoveClickListener()
+function LiangYueLevelItem:removeEventListeners()
+	self._btnclick:RemoveClickListener()
+	self._btnAfterPuzzle:RemoveClickListener()
 end
 
-function var_0_0._btnclickOnClick(arg_12_0)
-	local var_12_0 = arg_12_0.actId
-	local var_12_1 = ActivityModel.instance:getActMO(var_12_0)
+function LiangYueLevelItem:_btnclickOnClick()
+	local actId = self.actId
+	local mo = ActivityModel.instance:getActMO(actId)
 
-	if var_12_1 == nil then
-		logError("not such activity id: " .. var_12_0)
+	if mo == nil then
+		logError("not such activity id: " .. actId)
 
 		return
 	end
 
-	if not var_12_1:isOpen() or var_12_1:isExpired() then
+	if not mo:isOpen() or mo:isExpired() then
 		GameFacade.showToast(ToastEnum.ActivityNotInOpenTime)
 
 		return
 	end
 
-	if arg_12_0.config.preEpisodeId ~= 0 and not LiangYueModel.instance:isEpisodeFinish(var_12_0, arg_12_0.config.preEpisodeId) then
+	if self.config.preEpisodeId ~= 0 and not LiangYueModel.instance:isEpisodeFinish(actId, self.config.preEpisodeId) then
 		GameFacade.showToast(ToastEnum.Act184PuzzleNotOpen)
 
 		return
 	end
 
-	local var_12_2 = arg_12_0.config.episodeId
+	local episodeId = self.config.episodeId
 
-	LiangYueController.instance:dispatchEvent(LiangYueEvent.OnClickStoryItem, arg_12_0.index, var_12_2, false)
+	LiangYueController.instance:dispatchEvent(LiangYueEvent.OnClickStoryItem, self.index, episodeId, false)
 end
 
-function var_0_0._btnafterPuzzleOnClick(arg_13_0)
-	local var_13_0 = arg_13_0.actId
-	local var_13_1 = ActivityModel.instance:getActMO(var_13_0)
+function LiangYueLevelItem:_btnafterPuzzleOnClick()
+	local actId = self.actId
+	local mo = ActivityModel.instance:getActMO(actId)
 
-	if var_13_1 == nil then
-		logError("not such activity id: " .. var_13_0)
+	if mo == nil then
+		logError("not such activity id: " .. actId)
 
 		return
 	end
 
-	if not var_13_1:isOpen() or var_13_1:isExpired() then
+	if not mo:isOpen() or mo:isExpired() then
 		GameFacade.showToast(ToastEnum.ActivityNotInOpenTime)
 
 		return
 	end
 
-	if not arg_13_0.gameEpisodeId then
+	if not self.gameEpisodeId then
 		logError("have no gameEpisodeId")
 
 		return
 	end
 
-	if not LiangYueModel.instance:isEpisodeFinish(var_13_0, arg_13_0.config.episodeId) then
+	if not LiangYueModel.instance:isEpisodeFinish(actId, self.config.episodeId) then
 		GameFacade.showToast(ToastEnum.Act184PuzzleNotOpen)
 
 		return
 	end
 
-	LiangYueController.instance:dispatchEvent(LiangYueEvent.OnClickStoryItem, arg_13_0.index, arg_13_0.gameEpisodeId, true)
+	LiangYueController.instance:dispatchEvent(LiangYueEvent.OnClickStoryItem, self.index, self.gameEpisodeId, true)
 end
 
-function var_0_0.onDestroy(arg_14_0)
+function LiangYueLevelItem:onDestroy()
 	return
 end
 
-return var_0_0
+return LiangYueLevelItem

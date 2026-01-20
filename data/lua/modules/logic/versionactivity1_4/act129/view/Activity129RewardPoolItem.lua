@@ -1,75 +1,80 @@
-﻿module("modules.logic.versionactivity1_4.act129.view.Activity129RewardPoolItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act129/view/Activity129RewardPoolItem.lua
 
-local var_0_0 = class("Activity129RewardPoolItem", LuaCompBase)
+module("modules.logic.versionactivity1_4.act129.view.Activity129RewardPoolItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.goItem = arg_1_1.goItem
-	arg_1_0.itemList = arg_1_1.itemList
-	arg_1_0.rare = arg_1_1.rare
+local Activity129RewardPoolItem = class("Activity129RewardPoolItem", LuaCompBase)
+
+function Activity129RewardPoolItem:ctor(param)
+	self.goItem = param.goItem
+	self.itemList = param.itemList
+	self.rare = param.rare
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
-	arg_2_0.goGrid = gohelper.findChild(arg_2_0.go, "Grid")
+function Activity129RewardPoolItem:init(go)
+	self.go = go
+	self.goGrid = gohelper.findChild(self.go, "Grid")
 end
 
-function var_0_0.setDict(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	if not arg_3_1 then
-		gohelper.setActive(arg_3_0.go, false)
+function Activity129RewardPoolItem:setDict(dict, actId, poolId)
+	if not dict then
+		gohelper.setActive(self.go, false)
 
 		return
 	end
 
-	arg_3_0.actId = arg_3_2
-	arg_3_0.poolId = arg_3_3
-	arg_3_0.isNull = true
-	arg_3_0.count = 0
+	self.actId = actId
+	self.poolId = poolId
+	self.isNull = true
+	self.count = 0
 
-	local var_3_0 = 1
+	local index = 1
 
-	for iter_3_0, iter_3_1 in pairs(arg_3_1) do
-		for iter_3_2, iter_3_3 in ipairs(iter_3_1) do
-			arg_3_0:tryAddReward(iter_3_3, iter_3_0, var_3_0)
+	for rare, list in pairs(dict) do
+		for _, v in ipairs(list) do
+			self:tryAddReward(v, rare, index)
 
-			var_3_0 = var_3_0 + 1
+			index = index + 1
 		end
 	end
 
-	gohelper.setActive(arg_3_0.go, not arg_3_0.isNull)
-	arg_3_0:caleHeight()
+	gohelper.setActive(self.go, not self.isNull)
+	self:caleHeight()
 end
 
-function var_0_0.caleHeight(arg_4_0)
-	local var_4_0 = math.ceil(arg_4_0.count / 4) * 200 + 75
+function Activity129RewardPoolItem:caleHeight()
+	local line = math.ceil(self.count / 4)
+	local height = line * 200 + 75
 
-	recthelper.setHeight(arg_4_0.go.transform, var_4_0)
+	recthelper.setHeight(self.go.transform, height)
 end
 
-function var_0_0.tryAddReward(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	if arg_5_0.rare ~= arg_5_2 then
+function Activity129RewardPoolItem:tryAddReward(reward, rare, index)
+	if self.rare ~= rare then
 		return
 	end
 
-	local var_5_0 = arg_5_0.itemList[arg_5_3] or arg_5_0:createReward(arg_5_3)
+	local item = self.itemList[index]
 
-	gohelper.addChild(arg_5_0.goGrid, var_5_0.go)
-	var_5_0:setData(arg_5_1, arg_5_0.actId, arg_5_0.poolId, arg_5_2)
+	item = item or self:createReward(index)
 
-	arg_5_0.isNull = false
-	arg_5_0.count = arg_5_0.count + 1
+	gohelper.addChild(self.goGrid, item.go)
+	item:setData(reward, self.actId, self.poolId, rare)
+
+	self.isNull = false
+	self.count = self.count + 1
 end
 
-function var_0_0.createReward(arg_6_0, arg_6_1)
-	local var_6_0 = gohelper.clone(arg_6_0.goItem, arg_6_0.goGrid)
-	local var_6_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_6_0, Activity129RewardItem)
+function Activity129RewardPoolItem:createReward(index)
+	local go = gohelper.clone(self.goItem, self.goGrid)
+	local item = MonoHelper.addNoUpdateLuaComOnceToGo(go, Activity129RewardItem)
 
-	arg_6_0.itemList[arg_6_1] = var_6_1
+	self.itemList[index] = item
 
-	return var_6_1
+	return item
 end
 
-function var_0_0.onDestroy(arg_7_0)
+function Activity129RewardPoolItem:onDestroy()
 	return
 end
 
-return var_0_0
+return Activity129RewardPoolItem

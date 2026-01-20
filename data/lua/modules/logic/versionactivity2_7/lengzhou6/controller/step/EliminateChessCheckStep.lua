@@ -1,12 +1,14 @@
-﻿module("modules.logic.versionactivity2_7.lengzhou6.controller.step.EliminateChessCheckStep", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/lengzhou6/controller/step/EliminateChessCheckStep.lua
 
-local var_0_0 = class("EliminateChessCheckStep", EliminateChessStepBase)
+module("modules.logic.versionactivity2_7.lengzhou6.controller.step.EliminateChessCheckStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0._data
+local EliminateChessCheckStep = class("EliminateChessCheckStep", EliminateChessStepBase)
 
-	LengZhou6EliminateController.instance:eliminateCheck(var_1_0)
-	arg_1_0:onDone(true)
+function EliminateChessCheckStep:onStart()
+	local isRound = self._data
+
+	LengZhou6EliminateController.instance:eliminateCheck(isRound)
+	self:onDone(true)
 end
 
-return var_0_0
+return EliminateChessCheckStep

@@ -1,7 +1,9 @@
-﻿module("modules.logic.bossrush.model.BossRushCumulativeRewardsViewListModel", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/model/BossRushCumulativeRewardsViewListModel.lua
 
-local var_0_0 = class("BossRushCumulativeRewardsViewListModel", ListScrollModel)
+module("modules.logic.bossrush.model.BossRushCumulativeRewardsViewListModel", package.seeall)
 
-var_0_0.instance = var_0_0.New()
+local BossRushCumulativeRewardsViewListModel = class("BossRushCumulativeRewardsViewListModel", ListScrollModel)
 
-return var_0_0
+BossRushCumulativeRewardsViewListModel.instance = BossRushCumulativeRewardsViewListModel.New()
+
+return BossRushCumulativeRewardsViewListModel

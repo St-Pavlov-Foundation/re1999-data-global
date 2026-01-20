@@ -1,12 +1,16 @@
-﻿module("modules.logic.survival.controller.work.step.SurvivalMagmaStatusUpdateWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/step/SurvivalMagmaStatusUpdateWork.lua
 
-local var_0_0 = class("SurvivalMagmaStatusUpdateWork", SurvivalStepBaseWork)
+module("modules.logic.survival.controller.work.step.SurvivalMagmaStatusUpdateWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	SurvivalMapModel.instance:getSceneMo().sceneProp.magmaStatus = arg_1_0._stepMo.paramInt[1] or SurvivalEnum.MagmaStatus.Normal
+local SurvivalMagmaStatusUpdateWork = class("SurvivalMagmaStatusUpdateWork", SurvivalStepBaseWork)
+
+function SurvivalMagmaStatusUpdateWork:onStart(context)
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
+
+	sceneMo.sceneProp.magmaStatus = self._stepMo.paramInt[1] or SurvivalEnum.MagmaStatus.Normal
 
 	SurvivalController.instance:dispatchEvent(SurvivalEvent.OnMagmaStatusUpdate)
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return SurvivalMagmaStatusUpdateWork

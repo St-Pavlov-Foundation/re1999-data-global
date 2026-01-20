@@ -1,28 +1,30 @@
-﻿module("modules.logic.versionactivity2_7.act191.view.Act191ShopViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/act191/view/Act191ShopViewContainer.lua
 
-local var_0_0 = class("Act191ShopViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_7.act191.view.Act191ShopViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Act191ShopViewContainer = class("Act191ShopViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Act191ShopView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
+function Act191ShopViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Act191ShopView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_topleft"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function Act191ShopViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-return var_0_0
+return Act191ShopViewContainer

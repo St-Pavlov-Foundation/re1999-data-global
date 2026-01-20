@@ -1,168 +1,180 @@
-﻿module("modules.logic.versionactivity2_1.lanshoupa.view.LanShouPaMapViewStageItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_1/lanshoupa/view/LanShouPaMapViewStageItem.lua
 
-local var_0_0 = class("LanShouPaMapViewStageItem", LuaCompBase)
+module("modules.logic.versionactivity2_1.lanshoupa.view.LanShouPaMapViewStageItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0._animator = arg_1_1:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._imagepoint = gohelper.findChildImage(arg_1_0.viewGO, "#image_point")
-	arg_1_0._gounlock = gohelper.findChild(arg_1_0.viewGO, "unlock")
-	arg_1_0._imagestageline = gohelper.findChildImage(arg_1_0.viewGO, "unlock/#image_stageline")
-	arg_1_0._gostagefinish = gohelper.findChild(arg_1_0.viewGO, "unlock/#go_stagefinish")
-	arg_1_0._gostagenormal = gohelper.findChild(arg_1_0.viewGO, "unlock/#go_stagenormal")
-	arg_1_0._gogame = gohelper.findChild(arg_1_0.viewGO, "unlock/#go_stagenormal/#go_Game")
-	arg_1_0._gostory = gohelper.findChild(arg_1_0.viewGO, "unlock/#go_stagenormal/#go_Story")
-	arg_1_0._imageline = gohelper.findChildImage(arg_1_0.viewGO, "unlock/#image_line")
-	arg_1_0._imageangle = gohelper.findChildImage(arg_1_0.viewGO, "unlock/#image_angle")
-	arg_1_0._txtstagename = gohelper.findChildText(arg_1_0.viewGO, "unlock/info/#txt_stagename")
-	arg_1_0._txtstagenum = gohelper.findChildText(arg_1_0.viewGO, "unlock/info/#txt_stagename/#txt_stageNum")
-	arg_1_0._gostar = gohelper.findChild(arg_1_0.viewGO, "unlock/info/#txt_stagename/#go_star")
-	arg_1_0._gohasstar = gohelper.findChild(arg_1_0._gostar, "has/#image_Star")
-	arg_1_0._btnreview = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "unlock/info/#txt_stagename/#btn_review")
-	arg_1_0._imagechess = gohelper.findChildImage(arg_1_0.viewGO, "unlock/#image_chess")
-	arg_1_0._chessAnimator = gohelper.findChild(arg_1_0._imagechess.gameObject, "ani"):GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "unlock/#btn_click")
+local LanShouPaMapViewStageItem = class("LanShouPaMapViewStageItem", LuaCompBase)
 
-	arg_1_0:_addEvents()
+function LanShouPaMapViewStageItem:init(go)
+	self.viewGO = go
+	self._animator = go:GetComponent(typeof(UnityEngine.Animator))
+	self._imagepoint = gohelper.findChildImage(self.viewGO, "#image_point")
+	self._gounlock = gohelper.findChild(self.viewGO, "unlock")
+	self._imagestageline = gohelper.findChildImage(self.viewGO, "unlock/#image_stageline")
+	self._gostagefinish = gohelper.findChild(self.viewGO, "unlock/#go_stagefinish")
+	self._gostagenormal = gohelper.findChild(self.viewGO, "unlock/#go_stagenormal")
+	self._gogame = gohelper.findChild(self.viewGO, "unlock/#go_stagenormal/#go_Game")
+	self._gostory = gohelper.findChild(self.viewGO, "unlock/#go_stagenormal/#go_Story")
+	self._imageline = gohelper.findChildImage(self.viewGO, "unlock/#image_line")
+	self._imageangle = gohelper.findChildImage(self.viewGO, "unlock/#image_angle")
+	self._txtstagename = gohelper.findChildText(self.viewGO, "unlock/info/#txt_stagename")
+	self._txtstagenum = gohelper.findChildText(self.viewGO, "unlock/info/#txt_stagename/#txt_stageNum")
+	self._gostar = gohelper.findChild(self.viewGO, "unlock/info/#txt_stagename/#go_star")
+	self._gohasstar = gohelper.findChild(self._gostar, "has/#image_Star")
+	self._btnreview = gohelper.findChildButtonWithAudio(self.viewGO, "unlock/info/#txt_stagename/#btn_review")
+	self._imagechess = gohelper.findChildImage(self.viewGO, "unlock/#image_chess")
+	self._chessAnimator = gohelper.findChild(self._imagechess.gameObject, "ani"):GetComponent(typeof(UnityEngine.Animator))
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "unlock/#btn_click")
+
+	self:_addEvents()
 end
 
-function var_0_0.refreshItem(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._actId = VersionActivity2_1Enum.ActivityId.LanShouPa
-	arg_2_0._index = arg_2_2
-	arg_2_0._config = arg_2_1
-	arg_2_0._episodeId = arg_2_0._config.id
+function LanShouPaMapViewStageItem:refreshItem(co, index)
+	self._actId = VersionActivity2_1Enum.ActivityId.LanShouPa
+	self._index = index
+	self._config = co
+	self._episodeId = self._config.id
 
-	local var_2_0 = Activity164Model.instance:getCurEpisodeId() or LanShouPaEnum.episodeId
+	local curEpisodeId = Activity164Model.instance:getCurEpisodeId() or LanShouPaEnum.episodeId
 
-	arg_2_0._txtstagename.text = arg_2_0._config.name
-	arg_2_0._txtstagenum.text = string.format("STAGE %02d", arg_2_2)
+	self._txtstagename.text = self._config.name
+	self._txtstagenum.text = string.format("STAGE %02d", index)
 
-	local var_2_1 = arg_2_0._config.mapIds ~= 0
-	local var_2_2 = arg_2_2 <= Activity164Model.instance:getUnlockCount()
-	local var_2_3 = Activity164Config.instance:getStoryList(arg_2_0._actId, arg_2_0._episodeId)
+	local isChessStage = self._config.mapIds ~= 0
+	local isFinish = index <= Activity164Model.instance:getUnlockCount()
+	local storyCos = Activity164Config.instance:getStoryList(self._actId, self._episodeId)
 
-	gohelper.setActive(arg_2_0._btnreview.gameObject, var_2_1 and var_2_2 and var_2_3 and #var_2_3 > 0)
-	gohelper.setActive(arg_2_0._imagechess.gameObject, arg_2_0._episodeId == var_2_0)
-	gohelper.setActive(arg_2_0._gounlock, Activity164Model.instance:getUnlockCount() >= arg_2_2 - 1)
-	gohelper.setActive(arg_2_0._gostagefinish, var_2_1)
-	gohelper.setActive(arg_2_0._gostagenormal, true)
-	gohelper.setActive(arg_2_0._gohasstar, var_2_2)
-	gohelper.setActive(arg_2_0._gogame, var_2_1)
-	gohelper.setActive(arg_2_0._gostory, not var_2_1)
+	gohelper.setActive(self._btnreview.gameObject, isChessStage and isFinish and storyCos and #storyCos > 0)
+	gohelper.setActive(self._imagechess.gameObject, self._episodeId == curEpisodeId)
+	gohelper.setActive(self._gounlock, Activity164Model.instance:getUnlockCount() >= index - 1)
+	gohelper.setActive(self._gostagefinish, isChessStage)
+	gohelper.setActive(self._gostagenormal, true)
+	gohelper.setActive(self._gohasstar, isFinish)
+	gohelper.setActive(self._gogame, isChessStage)
+	gohelper.setActive(self._gostory, not isChessStage)
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	arg_3_0._btnclick:AddClickListener(arg_3_0._btnclickOnClick, arg_3_0)
-	arg_3_0._btnreview:AddClickListener(arg_3_0._btnReviewOnClick, arg_3_0)
+function LanShouPaMapViewStageItem:addEventListeners()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
+	self._btnreview:AddClickListener(self._btnReviewOnClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	if arg_4_0._btnclick then
-		arg_4_0._btnclick:RemoveClickListener()
-		arg_4_0._btnreview:RemoveClickListener()
+function LanShouPaMapViewStageItem:removeEventListeners()
+	if self._btnclick then
+		self._btnclick:RemoveClickListener()
+		self._btnreview:RemoveClickListener()
 	end
 end
 
-function var_0_0._btnclickOnClick(arg_5_0)
-	if Activity164Model.instance:getCurEpisodeId() == arg_5_0._episodeId then
-		arg_5_0:_realPlayStory()
+function LanShouPaMapViewStageItem:_btnclickOnClick()
+	local curEpisodeId = Activity164Model.instance:getCurEpisodeId()
+
+	if curEpisodeId == self._episodeId then
+		self:_realPlayStory()
 	else
-		LanShouPaController.instance:dispatchEvent(LanShouPaEvent.EpisodeClick, arg_5_0._episodeId)
-		UIBlockHelper.instance:startBlock("LanShouPaMapViewStageItemEpisodeClick", 0.5, arg_5_0.viewName)
-		TaskDispatcher.runDelay(arg_5_0._delayPlayChessOpenAnim, arg_5_0, 0.25)
+		LanShouPaController.instance:dispatchEvent(LanShouPaEvent.EpisodeClick, self._episodeId)
+		UIBlockHelper.instance:startBlock("LanShouPaMapViewStageItemEpisodeClick", 0.5, self.viewName)
+		TaskDispatcher.runDelay(self._delayPlayChessOpenAnim, self, 0.25)
 	end
 end
 
-function var_0_0._delayPlayChessOpenAnim(arg_6_0)
-	if not arg_6_0._imagechess then
+function LanShouPaMapViewStageItem:_delayPlayChessOpenAnim()
+	if not self._imagechess then
 		return
 	end
 
-	gohelper.setActive(arg_6_0._imagechess, true)
+	gohelper.setActive(self._imagechess, true)
 
-	if Activity164Model.instance:getCurEpisodeId() > arg_6_0._episodeId then
-		arg_6_0._chessAnimator:Play("open_left", 0, 0)
+	local curEpisodeId = Activity164Model.instance:getCurEpisodeId()
+
+	if curEpisodeId > self._episodeId then
+		self._chessAnimator:Play("open_left", 0, 0)
 	else
-		arg_6_0._chessAnimator:Play("open_right", 0, 0)
+		self._chessAnimator:Play("open_right", 0, 0)
 	end
 
-	Activity164Model.instance:setCurEpisodeId(arg_6_0._episodeId)
-	TaskDispatcher.runDelay(arg_6_0._realPlayStory, arg_6_0, 0.25)
+	Activity164Model.instance:setCurEpisodeId(self._episodeId)
+	TaskDispatcher.runDelay(self._realPlayStory, self, 0.25)
 end
 
-function var_0_0._realPlayStory(arg_7_0)
-	if not arg_7_0._config then
+function LanShouPaMapViewStageItem:_realPlayStory()
+	if not self._config then
 		return
 	end
 
-	local var_7_0 = VersionActivity2_1Enum.ActivityId.LanShouPa
-	local var_7_1 = Activity164Config.instance:getEpisodeCoList(var_7_0)
+	local actId = VersionActivity2_1Enum.ActivityId.LanShouPa
+	local episodeCfgList = Activity164Config.instance:getEpisodeCoList(actId)
 
-	GameUtil.playerPrefsSetStringByUserId(PlayerPrefsKey.Version2_1LanShouPaSelect .. var_7_0, tostring(tabletool.indexOf(var_7_1, arg_7_0._config)))
+	GameUtil.playerPrefsSetStringByUserId(PlayerPrefsKey.Version2_1LanShouPaSelect .. actId, tostring(tabletool.indexOf(episodeCfgList, self._config)))
 
-	if arg_7_0._config.storyBefore == 0 or arg_7_0._config.mapIds ~= 0 and Activity164Model.instance.currChessGameEpisodeId == arg_7_0._episodeId then
-		arg_7_0:_storyEnd()
+	local isSkipStory = self._config.storyBefore == 0 or self._config.mapIds ~= 0 and Activity164Model.instance.currChessGameEpisodeId == self._episodeId
+
+	if isSkipStory then
+		self:_storyEnd()
 	else
-		StoryController.instance:playStory(arg_7_0._config.storyBefore, nil, arg_7_0._storyEnd, arg_7_0)
+		StoryController.instance:playStory(self._config.storyBefore, nil, self._storyEnd, self)
 	end
 end
 
-function var_0_0._btnReviewOnClick(arg_8_0)
-	if arg_8_0._config.mapIds ~= 0 then
-		LanShouPaController.instance:openStoryView(arg_8_0._episodeId)
+function LanShouPaMapViewStageItem:_btnReviewOnClick()
+	local isChessStage = self._config.mapIds ~= 0
+
+	if isChessStage then
+		LanShouPaController.instance:openStoryView(self._episodeId)
 	else
-		StoryController.instance:playStory(arg_8_0._config.storyBefore, nil, arg_8_0._storyEnd, arg_8_0)
+		StoryController.instance:playStory(self._config.storyBefore, nil, self._storyEnd, self)
 	end
 end
 
-function var_0_0._storyEnd(arg_9_0)
-	if arg_9_0._config.mapIds ~= 0 then
-		Activity164Model.instance.currChessGameEpisodeId = arg_9_0._episodeId
+function LanShouPaMapViewStageItem:_storyEnd()
+	local isChessStage = self._config.mapIds ~= 0
 
-		LanShouPaController.instance:enterChessGame(arg_9_0._actId, arg_9_0._episodeId)
+	if isChessStage then
+		Activity164Model.instance.currChessGameEpisodeId = self._episodeId
+
+		LanShouPaController.instance:enterChessGame(self._actId, self._episodeId)
 		LanShouPaController.instance:dispatchEvent(LanShouPaEvent.StartEnterGameView)
 	else
-		Activity164Model.instance:markEpisodeFinish(arg_9_0._episodeId)
+		Activity164Model.instance:markEpisodeFinish(self._episodeId)
 	end
 end
 
-function var_0_0._addEvents(arg_10_0)
-	LanShouPaController.instance:registerCallback(LanShouPaEvent.EpisodeClick, arg_10_0._playChooseEpisode, arg_10_0)
+function LanShouPaMapViewStageItem:_addEvents()
+	LanShouPaController.instance:registerCallback(LanShouPaEvent.EpisodeClick, self._playChooseEpisode, self)
 end
 
-function var_0_0._removeEvents(arg_11_0)
-	LanShouPaController.instance:unregisterCallback(LanShouPaEvent.EpisodeClick, arg_11_0._playChooseEpisode, arg_11_0)
+function LanShouPaMapViewStageItem:_removeEvents()
+	LanShouPaController.instance:unregisterCallback(LanShouPaEvent.EpisodeClick, self._playChooseEpisode, self)
 end
 
-function var_0_0.onPlayFinish(arg_12_0)
-	arg_12_0:refreshItem(arg_12_0._config, arg_12_0._index)
-	arg_12_0._animator:Play("finish", 0, 0)
+function LanShouPaMapViewStageItem:onPlayFinish()
+	self:refreshItem(self._config, self._index)
+	self._animator:Play("finish", 0, 0)
 	AudioEffectMgr.instance:playAudio(AudioEnum.UI.play_ui_activity_hero37_checkpoint_tongguan)
 end
 
-function var_0_0.onPlayUnlock(arg_13_0)
-	arg_13_0:refreshItem(arg_13_0._config, arg_13_0._index)
-	arg_13_0._animator:Play("unlock", 0, 0)
+function LanShouPaMapViewStageItem:onPlayUnlock()
+	self:refreshItem(self._config, self._index)
+	self._animator:Play("unlock", 0, 0)
 	AudioEffectMgr.instance:playAudio(AudioEnum.UI.play_ui_activity_hero37_checkpoint_tongguan)
 end
 
-function var_0_0._playChooseEpisode(arg_14_0, arg_14_1)
-	local var_14_0 = Activity164Model.instance:getCurEpisodeId()
+function LanShouPaMapViewStageItem:_playChooseEpisode(episodeId)
+	local curEpisodeId = Activity164Model.instance:getCurEpisodeId()
 
-	if arg_14_0._episodeId == var_14_0 then
+	if self._episodeId == curEpisodeId then
 		AudioEffectMgr.instance:playAudio(AudioEnum.UI.play_ui_activity_hero37_checkpoint_unlock)
 
-		if arg_14_1 < arg_14_0._episodeId then
-			arg_14_0._chessAnimator:Play("close_left", 0, 0)
+		if episodeId < self._episodeId then
+			self._chessAnimator:Play("close_left", 0, 0)
 		else
-			arg_14_0._chessAnimator:Play("close_right", 0, 0)
+			self._chessAnimator:Play("close_right", 0, 0)
 		end
 	end
 end
 
-function var_0_0.onDestroyView(arg_15_0)
-	arg_15_0:_removeEvents()
-	arg_15_0:removeEventListeners()
+function LanShouPaMapViewStageItem:onDestroyView()
+	self:_removeEvents()
+	self:removeEventListeners()
 end
 
-return var_0_0
+return LanShouPaMapViewStageItem

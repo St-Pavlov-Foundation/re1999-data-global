@@ -1,76 +1,81 @@
-﻿module("modules.logic.rouge.map.view.collectionabandon.RougeMapCollectionLossLeftItem", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/view/collectionabandon/RougeMapCollectionLossLeftItem.lua
 
-local var_0_0 = class("RougeMapCollectionLossLeftItem", ListScrollCell)
+module("modules.logic.rouge.map.view.collectionabandon.RougeMapCollectionLossLeftItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0.click = gohelper.getClickWithDefaultAudio(arg_1_0.go)
-	arg_1_0.goGrid = gohelper.findChild(arg_1_0.go, "#go_grid")
-	arg_1_0.goGridItem = gohelper.findChild(arg_1_0.go, "#go_grid/#go_griditem")
-	arg_1_0.simageIcon = gohelper.findChildSingleImage(arg_1_0.go, "#simage_icon")
-	arg_1_0.txtName = gohelper.findChildText(arg_1_0.go, "right/#txt_name")
-	arg_1_0.txtDesc = gohelper.findChildText(arg_1_0.go, "right/Scroll View/Viewport/Content/#txt_desc")
-	arg_1_0.click = gohelper.findChildClickWithDefaultAudio(arg_1_0.go, "#btn_click")
+local RougeMapCollectionLossLeftItem = class("RougeMapCollectionLossLeftItem", ListScrollCell)
 
-	arg_1_0.click:AddClickListener(arg_1_0.onClickSelf, arg_1_0)
+function RougeMapCollectionLossLeftItem:init(go)
+	self.go = go
+	self.click = gohelper.getClickWithDefaultAudio(self.go)
+	self.goGrid = gohelper.findChild(self.go, "#go_grid")
+	self.goGridItem = gohelper.findChild(self.go, "#go_grid/#go_griditem")
+	self.simageIcon = gohelper.findChildSingleImage(self.go, "#simage_icon")
+	self.txtName = gohelper.findChildText(self.go, "right/#txt_name")
+	self.txtDesc = gohelper.findChildText(self.go, "right/Scroll View/Viewport/Content/#txt_desc")
+	self.click = gohelper.findChildClickWithDefaultAudio(self.go, "#btn_click")
 
-	arg_1_0.goIconAbandon = gohelper.findChild(arg_1_0.go, "right/right_icon/#go_icon_abandon")
-	arg_1_0.goIconExchange = gohelper.findChild(arg_1_0.go, "right/right_icon/#go_icon_exchange")
-	arg_1_0.goIconStorage = gohelper.findChild(arg_1_0.go, "right/right_icon/#go_icon_storage")
-	arg_1_0.gridItemList = arg_1_0:getUserDataTb_()
+	self.click:AddClickListener(self.onClickSelf, self)
 
-	arg_1_0:addEventCb(RougeController.instance, RougeEvent.SwitchCollectionInfoType, arg_1_0._onSwitchCollectionInfoType, arg_1_0)
+	self.goIconAbandon = gohelper.findChild(self.go, "right/right_icon/#go_icon_abandon")
+	self.goIconExchange = gohelper.findChild(self.go, "right/right_icon/#go_icon_exchange")
+	self.goIconStorage = gohelper.findChild(self.go, "right/right_icon/#go_icon_storage")
+	self.gridItemList = self:getUserDataTb_()
+
+	self:addEventCb(RougeController.instance, RougeEvent.SwitchCollectionInfoType, self._onSwitchCollectionInfoType, self)
 end
 
-function var_0_0.onClickSelf(arg_2_0)
+function RougeMapCollectionLossLeftItem:onClickSelf()
 	if not RougeLossCollectionListModel.instance:checkCanSelect() then
 		return
 	end
 
-	gohelper.setActive(arg_2_0.go, false)
-	arg_2_0._view.viewContainer:getListRemoveComp():removeByIndex(arg_2_0._index, arg_2_0.onRemoveAnimDone, arg_2_0)
+	gohelper.setActive(self.go, false)
+
+	local removeComp = self._view.viewContainer:getListRemoveComp()
+
+	removeComp:removeByIndex(self._index, self.onRemoveAnimDone, self)
 end
 
-function var_0_0.onRemoveAnimDone(arg_3_0)
-	RougeLossCollectionListModel.instance:selectMo(arg_3_0.mo)
+function RougeMapCollectionLossLeftItem:onRemoveAnimDone()
+	RougeLossCollectionListModel.instance:selectMo(self.mo)
 end
 
-function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
-	arg_4_0.mo = arg_4_1
-	arg_4_0.collectionId = arg_4_0.mo.collectionId
-	arg_4_0.uid = arg_4_0.mo.uid
+function RougeMapCollectionLossLeftItem:onUpdateMO(mo)
+	self.mo = mo
+	self.collectionId = self.mo.collectionId
+	self.uid = self.mo.uid
 
-	gohelper.setActive(arg_4_0.go, true)
-	RougeCollectionHelper.loadShapeGrid(arg_4_0.collectionId, arg_4_0.goGrid, arg_4_0.goGridItem, arg_4_0.gridItemList)
-	arg_4_0.simageIcon:LoadImage(RougeCollectionHelper.getCollectionIconUrl(arg_4_0.collectionId))
+	gohelper.setActive(self.go, true)
+	RougeCollectionHelper.loadShapeGrid(self.collectionId, self.goGrid, self.goGridItem, self.gridItemList)
+	self.simageIcon:LoadImage(RougeCollectionHelper.getCollectionIconUrl(self.collectionId))
 
-	arg_4_0.txtName.text = RougeCollectionConfig.instance:getCollectionName(arg_4_0.collectionId)
+	self.txtName.text = RougeCollectionConfig.instance:getCollectionName(self.collectionId)
 
-	arg_4_0:refreshIcon()
-	arg_4_0:refreshDesc()
+	self:refreshIcon()
+	self:refreshDesc()
 end
 
-function var_0_0.refreshIcon(arg_5_0)
-	local var_5_0 = RougeLossCollectionListModel.instance:getLossType()
+function RougeMapCollectionLossLeftItem:refreshIcon()
+	local type = RougeLossCollectionListModel.instance:getLossType()
 
-	gohelper.setActive(arg_5_0.goIconAbandon, var_5_0 == RougeMapEnum.LossType.Abandon or var_5_0 == RougeMapEnum.LossType.Copy)
-	gohelper.setActive(arg_5_0.goIconExchange, var_5_0 == RougeMapEnum.LossType.Exchange)
-	gohelper.setActive(arg_5_0.goIconStorage, var_5_0 == RougeMapEnum.LossType.Storage)
+	gohelper.setActive(self.goIconAbandon, type == RougeMapEnum.LossType.Abandon or type == RougeMapEnum.LossType.Copy)
+	gohelper.setActive(self.goIconExchange, type == RougeMapEnum.LossType.Exchange)
+	gohelper.setActive(self.goIconStorage, type == RougeMapEnum.LossType.Storage)
 end
 
-function var_0_0.refreshDesc(arg_6_0)
-	local var_6_0 = RougeCollectionDescHelper.getShowDescTypesWithoutText()
+function RougeMapCollectionLossLeftItem:refreshDesc()
+	local showTypes = RougeCollectionDescHelper.getShowDescTypesWithoutText()
 
-	RougeCollectionDescHelper.setCollectionDescInfos3(arg_6_0.collectionId, nil, arg_6_0.txtDesc, var_6_0)
+	RougeCollectionDescHelper.setCollectionDescInfos3(self.collectionId, nil, self.txtDesc, showTypes)
 end
 
-function var_0_0._onSwitchCollectionInfoType(arg_7_0)
-	arg_7_0:refreshDesc()
+function RougeMapCollectionLossLeftItem:_onSwitchCollectionInfoType()
+	self:refreshDesc()
 end
 
-function var_0_0.onDestroy(arg_8_0)
-	arg_8_0.click:RemoveClickListener()
-	arg_8_0.simageIcon:UnLoadImage()
+function RougeMapCollectionLossLeftItem:onDestroy()
+	self.click:RemoveClickListener()
+	self.simageIcon:UnLoadImage()
 end
 
-return var_0_0
+return RougeMapCollectionLossLeftItem

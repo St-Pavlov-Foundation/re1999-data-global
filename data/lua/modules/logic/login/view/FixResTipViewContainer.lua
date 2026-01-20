@@ -1,11 +1,13 @@
-﻿module("modules.logic.login.view.FixResTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/login/view/FixResTipViewContainer.lua
 
-local var_0_0 = class("FixResTipViewContainer", BaseViewContainer)
+module("modules.logic.login.view.FixResTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local FixResTipViewContainer = class("FixResTipViewContainer", BaseViewContainer)
+
+function FixResTipViewContainer:buildViews()
 	return {
 		FixResTipView.New()
 	}
 end
 
-return var_0_0
+return FixResTipViewContainer

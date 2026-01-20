@@ -1,41 +1,43 @@
-﻿module("modules.ugui.CommonItem", package.seeall)
+﻿-- chunkname: @modules/ugui/CommonItem.lua
 
-local var_0_0 = class("CommonItem", LuaCompBase)
+module("modules.ugui.CommonItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	var_0_0.super.init(arg_1_0, arg_1_1)
+local CommonItem = class("CommonItem", LuaCompBase)
+
+function CommonItem:init(go)
+	CommonItem.super.init(self, go)
 	logNormal("CommonItem:init...")
 
-	arg_1_0._gameObj = arg_1_1
+	self._gameObj = go
 end
 
-function LuaCompBase.addEventListeners(arg_2_0)
+function LuaCompBase:addEventListeners()
 	logNormal("CommonItem:addEventListeners...")
 end
 
-function LuaCompBase.removeEventListeners(arg_3_0)
+function LuaCompBase:removeEventListeners()
 	logNormal("CommonItem:removeEventListeners...")
 end
 
-function var_0_0.onStart(arg_4_0)
+function CommonItem:onStart()
 	logNormal("CommonItem:onStart...")
 
-	arg_4_0._updateCount = 0
+	self._updateCount = 0
 end
 
-function var_0_0.onUpdate(arg_5_0)
-	arg_5_0._updateCount = arg_5_0._updateCount + 1
+function CommonItem:onUpdate()
+	self._updateCount = self._updateCount + 1
 
-	logNormal("CommonItem:onUpdate... self._updateCount = " .. arg_5_0._updateCount)
+	logNormal("CommonItem:onUpdate... self._updateCount = " .. self._updateCount)
 
-	if arg_5_0._updateCount >= 10 then
-		MonoHelper.removeLuaComFromGo(arg_5_0._gameObj, var_0_0)
+	if self._updateCount >= 10 then
+		MonoHelper.removeLuaComFromGo(self._gameObj, CommonItem)
 		logNormal("CommonItem:onUpdate remove CommonItem-----")
 	end
 end
 
-function var_0_0.onDestroy(arg_6_0)
+function CommonItem:onDestroy()
 	logNormal("CommonItem:onDestroy...")
 end
 
-return var_0_0
+return CommonItem

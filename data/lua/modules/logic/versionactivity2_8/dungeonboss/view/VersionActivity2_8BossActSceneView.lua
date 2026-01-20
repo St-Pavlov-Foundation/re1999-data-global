@@ -1,17 +1,20 @@
-﻿module("modules.logic.versionactivity2_8.dungeonboss.view.VersionActivity2_8BossActSceneView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/dungeonboss/view/VersionActivity2_8BossActSceneView.lua
 
-local var_0_0 = class("VersionActivity2_8BossActSceneView", VersionActivity2_8BossStorySceneView)
+module("modules.logic.versionactivity2_8.dungeonboss.view.VersionActivity2_8BossActSceneView", package.seeall)
 
-function var_0_0._startChangeMap(arg_1_0)
-	local var_1_0 = var_0_0.getMap()
+local VersionActivity2_8BossActSceneView = class("VersionActivity2_8BossActSceneView", VersionActivity2_8BossStorySceneView)
 
-	arg_1_0:_changeMap(var_1_0)
+function VersionActivity2_8BossActSceneView:_startChangeMap()
+	local map = VersionActivity2_8BossActSceneView.getMap()
+
+	self:_changeMap(map)
 end
 
-function var_0_0.getMap()
-	local var_2_0 = 11026
+function VersionActivity2_8BossActSceneView.getMap()
+	local mapId = 11026
+	local map = lua_chapter_map.configDict[mapId]
 
-	return lua_chapter_map.configDict[var_2_0]
+	return map
 end
 
-return var_0_0
+return VersionActivity2_8BossActSceneView

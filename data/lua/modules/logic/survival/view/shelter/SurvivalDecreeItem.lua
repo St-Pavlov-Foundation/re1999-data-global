@@ -1,34 +1,36 @@
-﻿module("modules.logic.survival.view.shelter.SurvivalDecreeItem", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/SurvivalDecreeItem.lua
 
-local var_0_0 = class("SurvivalDecreeItem", ListScrollCellExtend)
+module("modules.logic.survival.view.shelter.SurvivalDecreeItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.goHas = gohelper.findChild(arg_1_0.viewGO, "#go_Has")
-	arg_1_0.goDescer = gohelper.findChild(arg_1_0.viewGO, "#go_Has/#scroll_Descr")
-	arg_1_0.goDescItem = gohelper.findChild(arg_1_0.viewGO, "#go_Has/#scroll_Descr/Viewport/Content/goItem")
-	arg_1_0.btnVote = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_Has/#btn_Vote")
-	arg_1_0.goFinished = gohelper.findChild(arg_1_0.viewGO, "#go_Has/#btn_Finished")
-	arg_1_0.goAdd = gohelper.findChild(arg_1_0.viewGO, "#go_Add")
-	arg_1_0.btnAdd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_Add/#btn_Add")
-	arg_1_0.goLocked = gohelper.findChild(arg_1_0.viewGO, "#go_Locked")
-	arg_1_0.txtLocked = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_Locked/#go_Tips/#txt_Tips")
-	arg_1_0.goAnnouncement = gohelper.findChild(arg_1_0.viewGO, "#go_Announcement")
-	arg_1_0.itemList = {}
-	arg_1_0.anim = arg_1_0.viewGO:GetComponent(gohelper.Type_Animator)
-	arg_1_0.tagList = {}
+local SurvivalDecreeItem = class("SurvivalDecreeItem", ListScrollCellExtend)
+
+function SurvivalDecreeItem:onInitView()
+	self.goHas = gohelper.findChild(self.viewGO, "#go_Has")
+	self.goDescer = gohelper.findChild(self.viewGO, "#go_Has/#scroll_Descr")
+	self.goDescItem = gohelper.findChild(self.viewGO, "#go_Has/#scroll_Descr/Viewport/Content/goItem")
+	self.btnVote = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Has/#btn_Vote")
+	self.goFinished = gohelper.findChild(self.viewGO, "#go_Has/#btn_Finished")
+	self.goAdd = gohelper.findChild(self.viewGO, "#go_Add")
+	self.btnAdd = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Add/#btn_Add")
+	self.goLocked = gohelper.findChild(self.viewGO, "#go_Locked")
+	self.txtLocked = gohelper.findChildTextMesh(self.viewGO, "#go_Locked/#go_Tips/#txt_Tips")
+	self.goAnnouncement = gohelper.findChild(self.viewGO, "#go_Announcement")
+	self.itemList = {}
+	self.anim = self.viewGO:GetComponent(gohelper.Type_Animator)
+	self.tagList = {}
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnAdd, arg_2_0.onClickAdd, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnVote, arg_2_0.onClickVote, arg_2_0)
+function SurvivalDecreeItem:addEvents()
+	self:addClickCb(self.btnAdd, self.onClickAdd, self)
+	self:addClickCb(self.btnVote, self.onClickVote, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeClickCb(arg_3_0.btnAdd)
-	arg_3_0:removeClickCb(arg_3_0.btnVote)
+function SurvivalDecreeItem:removeEvents()
+	self:removeClickCb(self.btnAdd)
+	self:removeClickCb(self.btnVote)
 end
 
-function var_0_0.onClickAdd(arg_4_0)
+function SurvivalDecreeItem:onClickAdd()
 	if SurvivalShelterModel.instance:getWeekInfo():getDecreeBox():isCurAllPolicyNotFinish() then
 		GameFacade.showMessageBox(MessageBoxIdDefine.SurvivalDecreeNewTip, MsgBoxEnum.BoxType.Yes_No, function()
 			SurvivalController.instance:openDecreeSelectView()
@@ -38,218 +40,224 @@ function var_0_0.onClickAdd(arg_4_0)
 	end
 end
 
-function var_0_0.onClickVote(arg_6_0)
+function SurvivalDecreeItem:onClickVote()
 	ViewMgr.instance:closeView(ViewName.SurvivalDecreeView)
 
-	local var_6_0 = SurvivalShelterModel.instance:getWeekInfo():getBuildingInfoByBuildType(SurvivalEnum.BuildingType.Explore)
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local buildingInfo = weekInfo:getBuildingInfoByBuildType(SurvivalEnum.BuildingType.Explore)
 
-	if var_6_0 then
-		SurvivalMapHelper.instance:gotoBuilding(var_6_0.id)
+	if buildingInfo then
+		SurvivalMapHelper.instance:gotoBuilding(buildingInfo.id)
 	end
 end
 
-function var_0_0.updateItem(arg_7_0, arg_7_1)
-	arg_7_0.decreeIndex = arg_7_1
+function SurvivalDecreeItem:updateItem(index)
+	self.decreeIndex = index
 
-	local var_7_0 = SurvivalShelterModel.instance:getWeekInfo():getDecreeBox():getDecreeInfo(arg_7_1)
+	local info = SurvivalShelterModel.instance:getWeekInfo():getDecreeBox():getDecreeInfo(index)
 
-	arg_7_0:onUpdateMO(var_7_0)
+	self:onUpdateMO(info)
 end
 
-function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
-	arg_8_0.mo = arg_8_1
+function SurvivalDecreeItem:onUpdateMO(mo)
+	self.mo = mo
 
-	arg_8_0:refreshView()
+	self:refreshView()
 end
 
-function var_0_0.refreshView(arg_9_0)
-	local var_9_0 = arg_9_0.mo and arg_9_0.mo:getCurStatus() or SurvivalEnum.ShelterDecreeStatus.Normal
-	local var_9_1 = SurvivalShelterModel.instance:getWeekInfo()
-	local var_9_2 = var_9_1:getAttr(SurvivalEnum.AttrType.DecreeNum) < arg_9_0.decreeIndex
-	local var_9_3 = var_9_0 == SurvivalEnum.ShelterDecreeStatus.Normal
-	local var_9_4 = not var_9_2 and not var_9_3
-	local var_9_5 = not var_9_2 and var_9_3
+function SurvivalDecreeItem:refreshView()
+	local curStatus = self.mo and self.mo:getCurStatus() or SurvivalEnum.ShelterDecreeStatus.Normal
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local decreeNum = weekInfo:getAttr(SurvivalEnum.AttrType.DecreeNum)
+	local isLocked = decreeNum < self.decreeIndex
+	local isEmpty = curStatus == SurvivalEnum.ShelterDecreeStatus.Normal
+	local isShowHas = not isLocked and not isEmpty
+	local isShowAdd = not isLocked and isEmpty
 
-	gohelper.setActive(arg_9_0.goHas, var_9_4)
-	gohelper.setActive(arg_9_0.goAdd, var_9_5)
-	gohelper.setActive(arg_9_0.goLocked, var_9_2)
-	gohelper.setActive(arg_9_0.goAnnouncement, false)
+	gohelper.setActive(self.goHas, isShowHas)
+	gohelper.setActive(self.goAdd, isShowAdd)
+	gohelper.setActive(self.goLocked, isLocked)
+	gohelper.setActive(self.goAnnouncement, false)
 
-	if var_9_4 then
-		arg_9_0:refreshHas()
+	if isShowHas then
+		self:refreshHas()
 	end
 
-	if var_9_2 then
-		local var_9_6 = var_9_1:getBuildingInfoByBuildType(SurvivalEnum.BuildingType.Decree)
-		local var_9_7 = var_9_6 and var_9_6.baseCo
-		local var_9_8 = var_9_7 and var_9_7.name or ""
+	if isLocked then
+		local buildingInfo = weekInfo:getBuildingInfoByBuildType(SurvivalEnum.BuildingType.Decree)
+		local buildingConfig = buildingInfo and buildingInfo.baseCo
+		local buildingName = buildingConfig and buildingConfig.name or ""
 
-		arg_9_0.txtLocked.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("survivalbuildingmanageview_buildinglock_reason2"), var_9_8, arg_9_0.decreeIndex)
+		self.txtLocked.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("survivalbuildingmanageview_buildinglock_reason2"), buildingName, self.decreeIndex)
 	end
 end
 
-function var_0_0.refreshHas(arg_10_0)
-	local var_10_0 = arg_10_0.mo:getCurStatus() == SurvivalEnum.ShelterDecreeStatus.Finish
+function SurvivalDecreeItem:refreshHas()
+	local curStatus = self.mo:getCurStatus()
+	local isFinish = curStatus == SurvivalEnum.ShelterDecreeStatus.Finish
 
-	gohelper.setActive(arg_10_0.btnVote, not var_10_0)
-	gohelper.setActive(arg_10_0.goFinished, var_10_0)
-	gohelper.setActive(arg_10_0.goAnnouncement, not var_10_0)
+	gohelper.setActive(self.btnVote, not isFinish)
+	gohelper.setActive(self.goFinished, isFinish)
+	gohelper.setActive(self.goAnnouncement, not isFinish)
 
-	local var_10_1 = arg_10_0.mo:getCurPolicyGroup():getPolicyList()
+	local list = self.mo:getCurPolicyGroup():getPolicyList()
 
-	for iter_10_0 = 1, math.max(#var_10_1, #arg_10_0.itemList) do
-		local var_10_2 = arg_10_0:getItem(iter_10_0)
+	for i = 1, math.max(#list, #self.itemList) do
+		local item = self:getItem(i)
 
-		arg_10_0:updateDescItem(var_10_2, var_10_1[iter_10_0], var_10_0)
+		self:updateDescItem(item, list[i], isFinish)
 	end
 
-	arg_10_0:refreshTagList(var_10_1, var_10_0)
+	self:refreshTagList(list, isFinish)
 end
 
-function var_0_0.getItem(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0.itemList[arg_11_1]
+function SurvivalDecreeItem:getItem(index)
+	local item = self.itemList[index]
 
-	if not var_11_0 then
-		local var_11_1 = gohelper.cloneInPlace(arg_11_0.goDescItem, tostring(arg_11_1))
+	if not item then
+		local go = gohelper.cloneInPlace(self.goDescItem, tostring(index))
 
-		var_11_0 = arg_11_0:getUserDataTb_()
-		var_11_0.go = var_11_1
-		var_11_0.itemList = {}
+		item = self:getUserDataTb_()
+		item.go = go
+		item.itemList = {}
 
-		for iter_11_0 = 1, 2 do
-			local var_11_2 = arg_11_0:getUserDataTb_()
+		for i = 1, 2 do
+			local descItem = self:getUserDataTb_()
 
-			var_11_2.go = gohelper.findChild(var_11_1, string.format("#go_%s", iter_11_0))
-			var_11_2.txtDesc = gohelper.findChildTextMesh(var_11_2.go, "#txt_Descr")
-			var_11_2.txtNum = gohelper.findChildTextMesh(var_11_2.go, "#go_Like/#go_Like/#txt_Num")
-			var_11_2.goLike = gohelper.findChild(var_11_2.go, "#go_Like")
-			var_11_0.itemList[iter_11_0] = var_11_2
+			descItem.go = gohelper.findChild(go, string.format("#go_%s", i))
+			descItem.txtDesc = gohelper.findChildTextMesh(descItem.go, "#txt_Descr")
+			descItem.txtNum = gohelper.findChildTextMesh(descItem.go, "#go_Like/#go_Like/#txt_Num")
+			descItem.goLike = gohelper.findChild(descItem.go, "#go_Like")
+			item.itemList[i] = descItem
 		end
 
-		var_11_0.imageIcon = gohelper.findChildImage(arg_11_0.viewGO, string.format("#go_Has/Upper/image_Icon%s", arg_11_1))
-		arg_11_0.itemList[arg_11_1] = var_11_0
+		item.imageIcon = gohelper.findChildImage(self.viewGO, string.format("#go_Has/Upper/image_Icon%s", index))
+		self.itemList[index] = item
 	end
 
-	return var_11_0
+	return item
 end
 
-function var_0_0.updateDescItem(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	gohelper.setActive(arg_12_1.go, arg_12_2 ~= nil)
+function SurvivalDecreeItem:updateDescItem(item, data, isFinish)
+	gohelper.setActive(item.go, data ~= nil)
 
-	if not arg_12_2 then
+	if not data then
 		return
 	end
 
-	local var_12_0 = SurvivalConfig.instance:getDecreeCo(arg_12_2.id)
-	local var_12_1 = arg_12_2:isFinish() and 1 or 2
+	local config = SurvivalConfig.instance:getDecreeCo(data.id)
+	local curIndex = data:isFinish() and 1 or 2
 
-	for iter_12_0 = 1, 2 do
-		local var_12_2 = arg_12_1.itemList[iter_12_0]
+	for i = 1, 2 do
+		local descItem = item.itemList[i]
 
-		gohelper.setActive(var_12_2.go, iter_12_0 == var_12_1)
+		gohelper.setActive(descItem.go, i == curIndex)
 
-		if iter_12_0 == var_12_1 then
-			gohelper.setActive(var_12_2.goLike, not arg_12_3)
+		if i == curIndex then
+			gohelper.setActive(descItem.goLike, not isFinish)
 
-			var_12_2.txtNum.text = string.format("%s/%s", arg_12_2.currVoteNum, arg_12_2.needVoteNum)
-			var_12_2.txtDesc.text = string.format(luaLang("SurvivalDecreeSelectItem_descItem_txtDesc"), var_12_0 and var_12_0.name or "", var_12_0 and var_12_0.desc or "")
+			descItem.txtNum.text = string.format("%s/%s", data.currVoteNum, data.needVoteNum)
+			descItem.txtDesc.text = string.format(luaLang("SurvivalDecreeSelectItem_descItem_txtDesc"), config and config.name or "", config and config.desc or "")
 		end
 	end
 
-	if arg_12_1.imageIcon and var_12_0 and var_12_0.icon then
-		UISpriteSetMgr.instance:setSurvivalSprite(arg_12_1.imageIcon, var_12_0.icon, true)
+	if item.imageIcon and config and config.icon then
+		UISpriteSetMgr.instance:setSurvivalSprite(item.imageIcon, config.icon, true)
 	end
 end
 
-function var_0_0.playSwitchAnim(arg_13_0)
-	if not arg_13_0.mo then
+function SurvivalDecreeItem:playSwitchAnim()
+	if not self.mo then
 		return
 	end
 
-	if arg_13_0.mo:getCurStatus() == arg_13_0.mo:getRealStatus() then
+	local curStatus = self.mo:getCurStatus()
+	local realStatus = self.mo:getRealStatus()
+
+	if curStatus == realStatus then
 		return
 	end
 
-	arg_13_0.anim:Play("switch", 0, 0)
-	arg_13_0.mo:updateCurStatus()
-	TaskDispatcher.runDelay(arg_13_0.refreshView, arg_13_0, 0.2)
-	TaskDispatcher.runDelay(arg_13_0.onPlaySwitchAnimEnd, arg_13_0, 0.6)
+	self.anim:Play("switch", 0, 0)
+	self.mo:updateCurStatus()
+	TaskDispatcher.runDelay(self.refreshView, self, 0.2)
+	TaskDispatcher.runDelay(self.onPlaySwitchAnimEnd, self, 0.6)
 end
 
-function var_0_0.onPlaySwitchAnimEnd(arg_14_0)
+function SurvivalDecreeItem:onPlaySwitchAnimEnd()
 	if PopupController.instance:isPause() then
 		AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_fuleyuan_binansuo_decision)
 		PopupController.instance:setPause(ViewName.SurvivalDecreeVoteView, false)
 	end
 end
 
-function var_0_0.refreshTagList(arg_15_0, arg_15_1, arg_15_2)
-	if arg_15_2 then
+function SurvivalDecreeItem:refreshTagList(list, isFinish)
+	if isFinish then
 		return
 	end
 
-	local var_15_0 = {}
-	local var_15_1 = {}
+	local tagList = {}
+	local tagDict = {}
 
-	for iter_15_0, iter_15_1 in ipairs(arg_15_1) do
-		local var_15_2 = SurvivalConfig.instance:getDecreeCo(iter_15_1.id)
-		local var_15_3 = string.splitToNumber(var_15_2 and var_15_2.tags, "#")
+	for i, v in ipairs(list) do
+		local config = SurvivalConfig.instance:getDecreeCo(v.id)
+		local tags = string.splitToNumber(config and config.tags, "#")
 
-		if var_15_3 then
-			for iter_15_2, iter_15_3 in ipairs(var_15_3) do
-				var_15_1[iter_15_3] = 1
+		if tags then
+			for _, tag in ipairs(tags) do
+				tagDict[tag] = 1
 			end
 		end
 	end
 
-	for iter_15_4, iter_15_5 in pairs(var_15_1) do
-		table.insert(var_15_0, iter_15_4)
+	for k, v in pairs(tagDict) do
+		table.insert(tagList, k)
 	end
 
-	table.sort(var_15_0, function(arg_16_0, arg_16_1)
-		return arg_16_0 < arg_16_1
+	table.sort(tagList, function(a, b)
+		return a < b
 	end)
 
-	local var_15_4 = 3
+	local maxItem = 3
 
-	for iter_15_6 = 1, var_15_4 do
-		local var_15_5 = arg_15_0:getTagItem(iter_15_6)
-		local var_15_6 = var_15_0[iter_15_6]
-		local var_15_7 = lua_survival_tag.configDict[var_15_6]
+	for i = 1, maxItem do
+		local item = self:getTagItem(i)
+		local tagId = tagList[i]
+		local tagConfig = lua_survival_tag.configDict[tagId]
 
-		gohelper.setActive(var_15_5.go, var_15_7 ~= nil)
+		gohelper.setActive(item.go, tagConfig ~= nil)
 
-		if var_15_7 then
-			var_15_5.txtType.text = var_15_7.name
+		if tagConfig then
+			item.txtType.text = tagConfig.name
 
-			local var_15_8 = SurvivalConst.ShelterTagColor[var_15_7.color]
+			local colorStr = SurvivalConst.ShelterTagColor[tagConfig.color]
 
-			if var_15_8 then
-				SLFramework.UGUI.GuiHelper.SetColor(var_15_5.imageType, var_15_8)
+			if colorStr then
+				SLFramework.UGUI.GuiHelper.SetColor(item.imageType, colorStr)
 			end
 		end
 	end
 end
 
-function var_0_0.getTagItem(arg_17_0, arg_17_1)
-	local var_17_0 = arg_17_0.tagList[arg_17_1]
+function SurvivalDecreeItem:getTagItem(index)
+	local item = self.tagList[index]
 
-	if not var_17_0 then
-		local var_17_1 = gohelper.findChild(arg_17_0.viewGO, string.format("#go_Has/#btn_Vote/#go_tag%s", arg_17_1))
+	if not item then
+		local go = gohelper.findChild(self.viewGO, string.format("#go_Has/#btn_Vote/#go_tag%s", index))
 
-		var_17_0 = arg_17_0:getUserDataTb_()
-		var_17_0.go = var_17_1
-		var_17_0.imageType = gohelper.findChildImage(var_17_1, "#image_Type")
-		var_17_0.txtType = gohelper.findChildTextMesh(var_17_1, "#txt_Type")
-		arg_17_0.tagList[arg_17_1] = var_17_0
+		item = self:getUserDataTb_()
+		item.go = go
+		item.imageType = gohelper.findChildImage(go, "#image_Type")
+		item.txtType = gohelper.findChildTextMesh(go, "#txt_Type")
+		self.tagList[index] = item
 	end
 
-	return var_17_0
+	return item
 end
 
-function var_0_0.onDestroyView(arg_18_0)
-	TaskDispatcher.cancelTask(arg_18_0.refreshView, arg_18_0)
-	TaskDispatcher.cancelTask(arg_18_0.onPlaySwitchAnimEnd, arg_18_0)
+function SurvivalDecreeItem:onDestroyView()
+	TaskDispatcher.cancelTask(self.refreshView, self)
+	TaskDispatcher.cancelTask(self.onPlaySwitchAnimEnd, self)
 end
 
-return var_0_0
+return SurvivalDecreeItem

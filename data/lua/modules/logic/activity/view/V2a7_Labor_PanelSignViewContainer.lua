@@ -1,9 +1,11 @@
-﻿module("modules.logic.activity.view.V2a7_Labor_PanelSignViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/V2a7_Labor_PanelSignViewContainer.lua
 
-local var_0_0 = class("V2a7_Labor_PanelSignViewContainer", V2a7_Labor_SignItemViewContainer)
+module("modules.logic.activity.view.V2a7_Labor_PanelSignViewContainer", package.seeall)
 
-function var_0_0.onGetMainViewClassType(arg_1_0)
+local V2a7_Labor_PanelSignViewContainer = class("V2a7_Labor_PanelSignViewContainer", V2a7_Labor_SignItemViewContainer)
+
+function V2a7_Labor_PanelSignViewContainer:onGetMainViewClassType()
 	return V2a7_Labor_PanelSignView
 end
 
-return var_0_0
+return V2a7_Labor_PanelSignViewContainer

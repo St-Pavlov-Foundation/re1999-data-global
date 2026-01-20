@@ -1,168 +1,170 @@
-﻿module("modules.logic.versionactivity1_5.aizila.view.AiZiLaEpsiodeDetailView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/aizila/view/AiZiLaEpsiodeDetailView.lua
 
-local var_0_0 = class("AiZiLaEpsiodeDetailView", BaseView)
+module("modules.logic.versionactivity1_5.aizila.view.AiZiLaEpsiodeDetailView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._simagePanelBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "LevelPanel/#simage_PanelBG")
-	arg_1_0._txtTitleNum = gohelper.findChildText(arg_1_0.viewGO, "LevelPanel/#txt_TitleNum")
-	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "LevelPanel/#txt_Title")
-	arg_1_0._simageLevelPic = gohelper.findChildSingleImage(arg_1_0.viewGO, "LevelPanel/#simage_LevelPic")
-	arg_1_0._scrollDescr = gohelper.findChildScrollRect(arg_1_0.viewGO, "LevelPanel/#scroll_Descr")
-	arg_1_0._txtDescr = gohelper.findChildText(arg_1_0.viewGO, "LevelPanel/#scroll_Descr/Viewport/Content/#txt_Descr")
-	arg_1_0._simagePanelBGMask = gohelper.findChildSingleImage(arg_1_0.viewGO, "LevelPanel/#simage_PanelBGMask")
-	arg_1_0._scrollrewards = gohelper.findChildScrollRect(arg_1_0.viewGO, "LevelPanel/Reward/#scroll_rewards")
-	arg_1_0._gorewards = gohelper.findChild(arg_1_0.viewGO, "LevelPanel/Reward/#scroll_rewards/Viewport/#go_rewards")
-	arg_1_0._btnStart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "LevelPanel/Reward/Btn/#btn_Start")
-	arg_1_0._gotarget = gohelper.findChild(arg_1_0.viewGO, "LevelPanel/#go_target")
-	arg_1_0._gotargetItem = gohelper.findChild(arg_1_0.viewGO, "LevelPanel/#go_target/#go_targetItem")
-	arg_1_0._goTargetSelect = gohelper.findChild(arg_1_0.viewGO, "LevelPanel/#go_target/#go_targetItem/#go_TargetSelect")
-	arg_1_0._txttargetName = gohelper.findChildText(arg_1_0.viewGO, "LevelPanel/#go_target/#go_targetItem/target/#txt_targetName")
-	arg_1_0._txttergetHeight = gohelper.findChildText(arg_1_0.viewGO, "LevelPanel/#go_target/#go_targetItem/target/#txt_tergetHeight")
-	arg_1_0._goBackBtns = gohelper.findChild(arg_1_0.viewGO, "#go_BackBtns")
+local AiZiLaEpsiodeDetailView = class("AiZiLaEpsiodeDetailView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function AiZiLaEpsiodeDetailView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._simagePanelBG = gohelper.findChildSingleImage(self.viewGO, "LevelPanel/#simage_PanelBG")
+	self._txtTitleNum = gohelper.findChildText(self.viewGO, "LevelPanel/#txt_TitleNum")
+	self._txtTitle = gohelper.findChildText(self.viewGO, "LevelPanel/#txt_Title")
+	self._simageLevelPic = gohelper.findChildSingleImage(self.viewGO, "LevelPanel/#simage_LevelPic")
+	self._scrollDescr = gohelper.findChildScrollRect(self.viewGO, "LevelPanel/#scroll_Descr")
+	self._txtDescr = gohelper.findChildText(self.viewGO, "LevelPanel/#scroll_Descr/Viewport/Content/#txt_Descr")
+	self._simagePanelBGMask = gohelper.findChildSingleImage(self.viewGO, "LevelPanel/#simage_PanelBGMask")
+	self._scrollrewards = gohelper.findChildScrollRect(self.viewGO, "LevelPanel/Reward/#scroll_rewards")
+	self._gorewards = gohelper.findChild(self.viewGO, "LevelPanel/Reward/#scroll_rewards/Viewport/#go_rewards")
+	self._btnStart = gohelper.findChildButtonWithAudio(self.viewGO, "LevelPanel/Reward/Btn/#btn_Start")
+	self._gotarget = gohelper.findChild(self.viewGO, "LevelPanel/#go_target")
+	self._gotargetItem = gohelper.findChild(self.viewGO, "LevelPanel/#go_target/#go_targetItem")
+	self._goTargetSelect = gohelper.findChild(self.viewGO, "LevelPanel/#go_target/#go_targetItem/#go_TargetSelect")
+	self._txttargetName = gohelper.findChildText(self.viewGO, "LevelPanel/#go_target/#go_targetItem/target/#txt_targetName")
+	self._txttergetHeight = gohelper.findChildText(self.viewGO, "LevelPanel/#go_target/#go_targetItem/target/#txt_tergetHeight")
+	self._goBackBtns = gohelper.findChild(self.viewGO, "#go_BackBtns")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnStart:AddClickListener(arg_2_0._btnStartOnClick, arg_2_0)
+function AiZiLaEpsiodeDetailView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnStart:AddClickListener(self._btnStartOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnStart:RemoveClickListener()
+function AiZiLaEpsiodeDetailView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btnStart:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function AiZiLaEpsiodeDetailView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnStartOnClick(arg_5_0)
-	if arg_5_0._episodeCfg then
-		arg_5_0:playViewAnimator("go")
-		AiZiLaGameController.instance:enterGame(arg_5_0._episodeCfg.episodeId)
+function AiZiLaEpsiodeDetailView:_btnStartOnClick()
+	if self._episodeCfg then
+		self:playViewAnimator("go")
+		AiZiLaGameController.instance:enterGame(self._episodeCfg.episodeId)
 	end
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._animator = arg_6_0.viewGO:GetComponent(AiZiLaEnum.ComponentType.Animator)
-	arg_6_0._targetTbList = {
-		arg_6_0:_createTargetTB(arg_6_0._gotargetItem)
+function AiZiLaEpsiodeDetailView:_editableInitView()
+	self._animator = self.viewGO:GetComponent(AiZiLaEnum.ComponentType.Animator)
+	self._targetTbList = {
+		self:_createTargetTB(self._gotargetItem)
 	}
 
-	for iter_6_0 = #arg_6_0._targetTbList + 1, 3 do
-		local var_6_0 = gohelper.cloneInPlace(arg_6_0._gotargetItem)
+	for i = #self._targetTbList + 1, 3 do
+		local goclone = gohelper.cloneInPlace(self._gotargetItem)
 
-		table.insert(arg_6_0._targetTbList, arg_6_0:_createTargetTB(var_6_0))
+		table.insert(self._targetTbList, self:_createTargetTB(goclone))
 	end
 
-	arg_6_0._goodsItemGo = arg_6_0:getResInst(AiZiLaGoodsItem.prefabPath, arg_6_0.viewGO)
+	self._goodsItemGo = self:getResInst(AiZiLaGoodsItem.prefabPath, self.viewGO)
 
-	gohelper.setActive(arg_6_0._goodsItemGo, false)
+	gohelper.setActive(self._goodsItemGo, false)
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function AiZiLaEpsiodeDetailView:onUpdateParam()
 	return
 end
 
-function var_0_0.playViewAnimator(arg_8_0, arg_8_1)
-	if arg_8_0._animator then
-		arg_8_0._animator.enabled = true
+function AiZiLaEpsiodeDetailView:playViewAnimator(animName)
+	if self._animator then
+		self._animator.enabled = true
 
-		arg_8_0._animator:Play(arg_8_1, 0, 0)
+		self._animator:Play(animName, 0, 0)
 	end
 end
 
-function var_0_0.onOpen(arg_9_0)
-	if arg_9_0.viewContainer then
-		NavigateMgr.instance:addEscape(arg_9_0.viewContainer.viewName, arg_9_0._btncloseOnClick, arg_9_0)
+function AiZiLaEpsiodeDetailView:onOpen()
+	if self.viewContainer then
+		NavigateMgr.instance:addEscape(self.viewContainer.viewName, self._btncloseOnClick, self)
 	end
 
-	local var_9_0 = arg_9_0.viewParam.episodeId
-	local var_9_1 = arg_9_0.viewParam.actId
+	local episodeId = self.viewParam.episodeId
+	local actId = self.viewParam.actId
 
-	arg_9_0._episodeCfg = AiZiLaConfig.instance:getEpisodeCo(var_9_1, var_9_0)
+	self._episodeCfg = AiZiLaConfig.instance:getEpisodeCo(actId, episodeId)
 
-	if arg_9_0._episodeCfg then
-		arg_9_0._simageFullBG:LoadImage(string.format("%s.png", arg_9_0._episodeCfg.bgPath))
-		arg_9_0._simageLevelPic:LoadImage(string.format("%s.png", arg_9_0._episodeCfg.picture))
+	if self._episodeCfg then
+		self._simageFullBG:LoadImage(string.format("%s.png", self._episodeCfg.bgPath))
+		self._simageLevelPic:LoadImage(string.format("%s.png", self._episodeCfg.picture))
 
-		arg_9_0._rewardDataList = AiZiLaHelper.getEpisodeReward(arg_9_0._episodeCfg.showBonus)
+		self._rewardDataList = AiZiLaHelper.getEpisodeReward(self._episodeCfg.showBonus)
 	end
 
-	arg_9_0._rewardDataList = arg_9_0._rewardDataList or {}
+	self._rewardDataList = self._rewardDataList or {}
 
-	arg_9_0:refreshUI()
+	self:refreshUI()
 	AudioMgr.instance:trigger(AudioEnum.V1a5AiZiLa.ui_wulu_aizila_level_open)
 end
 
-function var_0_0.onClose(arg_10_0)
+function AiZiLaEpsiodeDetailView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	arg_11_0._simageFullBG:UnLoadImage()
-	arg_11_0._simageLevelPic:UnLoadImage()
+function AiZiLaEpsiodeDetailView:onDestroyView()
+	self._simageFullBG:UnLoadImage()
+	self._simageLevelPic:UnLoadImage()
 end
 
-function var_0_0.refreshUI(arg_12_0)
-	if arg_12_0._episodeCfg then
-		arg_12_0._txtTitleNum.text = arg_12_0._episodeCfg.nameen
-		arg_12_0._txtTitle.text = arg_12_0._episodeCfg.name
-		arg_12_0._txtDescr.text = arg_12_0._episodeCfg.desc
+function AiZiLaEpsiodeDetailView:refreshUI()
+	if self._episodeCfg then
+		self._txtTitleNum.text = self._episodeCfg.nameen
+		self._txtTitle.text = self._episodeCfg.name
+		self._txtDescr.text = self._episodeCfg.desc
 	end
 
-	gohelper.CreateObjList(arg_12_0, arg_12_0._onShowRewardItem, arg_12_0._rewardDataList, arg_12_0._gorewards, arg_12_0._goodsItemGo, AiZiLaGoodsItem)
-	arg_12_0:_refreshTargetTB()
+	gohelper.CreateObjList(self, self._onShowRewardItem, self._rewardDataList, self._gorewards, self._goodsItemGo, AiZiLaGoodsItem)
+	self:_refreshTargetTB()
 end
 
-function var_0_0._onShowRewardItem(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	arg_13_1:setShowCount(false)
-	arg_13_1:onUpdateMO(arg_13_2)
+function AiZiLaEpsiodeDetailView:_onShowRewardItem(cell_component, data, index)
+	cell_component:setShowCount(false)
+	cell_component:onUpdateMO(data)
 end
 
-function var_0_0._createTargetTB(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_0:getUserDataTb_()
+function AiZiLaEpsiodeDetailView:_createTargetTB(go)
+	local tb = self:getUserDataTb_()
 
-	var_14_0.go = arg_14_1
-	var_14_0._goTargetSelect = gohelper.findChild(arg_14_1, "#go_TargetSelect")
-	var_14_0._txttargetName = gohelper.findChildText(arg_14_1, "target/#txt_targetName")
-	var_14_0._txttergetHeight = gohelper.findChildText(arg_14_1, "target/#txt_tergetHeight")
+	tb.go = go
+	tb._goTargetSelect = gohelper.findChild(go, "#go_TargetSelect")
+	tb._txttargetName = gohelper.findChildText(go, "target/#txt_targetName")
+	tb._txttergetHeight = gohelper.findChildText(go, "target/#txt_tergetHeight")
 
-	return var_14_0
+	return tb
 end
 
-function var_0_0._updateTargetTB(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	if arg_15_1.targetId ~= arg_15_2 then
-		arg_15_1.targetId = arg_15_2
+function AiZiLaEpsiodeDetailView:_updateTargetTB(tb, targetId, isSelect)
+	if tb.targetId ~= targetId then
+		tb.targetId = targetId
 
-		local var_15_0 = AiZiLaConfig.instance:getEpisodeShowTargetCo(arg_15_1.targetId)
+		local cfg = AiZiLaConfig.instance:getEpisodeShowTargetCo(tb.targetId)
 
-		gohelper.setActive(arg_15_1.go, var_15_0)
+		gohelper.setActive(tb.go, cfg)
 
-		if var_15_0 then
-			arg_15_1._txttargetName.text = var_15_0.name
-			arg_15_1._txttergetHeight.text = string.format("%sm", var_15_0.elevation)
+		if cfg then
+			tb._txttargetName.text = cfg.name
+			tb._txttergetHeight.text = string.format("%sm", cfg.elevation)
 
-			SLFramework.UGUI.GuiHelper.SetColor(arg_15_1._txttargetName, var_15_0.colorStr)
-			SLFramework.UGUI.GuiHelper.SetColor(arg_15_1._txttergetHeight, var_15_0.colorStr)
+			SLFramework.UGUI.GuiHelper.SetColor(tb._txttargetName, cfg.colorStr)
+			SLFramework.UGUI.GuiHelper.SetColor(tb._txttergetHeight, cfg.colorStr)
 		end
 	end
 end
 
-function var_0_0._refreshTargetTB(arg_16_0)
-	local var_16_0 = arg_16_0._episodeCfg and string.splitToNumber(arg_16_0._episodeCfg.showTargets, "|")
+function AiZiLaEpsiodeDetailView:_refreshTargetTB()
+	local targetIds = self._episodeCfg and string.splitToNumber(self._episodeCfg.showTargets, "|")
 
-	for iter_16_0 = 1, #arg_16_0._targetTbList do
-		local var_16_1 = arg_16_0._targetTbList[iter_16_0]
-		local var_16_2 = var_16_0 and var_16_0[iter_16_0]
+	for i = 1, #self._targetTbList do
+		local targetTb = self._targetTbList[i]
+		local targetId = targetIds and targetIds[i]
 
-		arg_16_0:_updateTargetTB(var_16_1, var_16_2)
+		self:_updateTargetTB(targetTb, targetId)
 	end
 end
 
-return var_0_0
+return AiZiLaEpsiodeDetailView

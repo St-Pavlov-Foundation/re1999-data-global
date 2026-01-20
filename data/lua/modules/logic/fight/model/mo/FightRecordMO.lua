@@ -1,14 +1,16 @@
-﻿module("modules.logic.fight.model.mo.FightRecordMO", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/mo/FightRecordMO.lua
 
-local var_0_0 = pureTable("FightRecordMO")
+module("modules.logic.fight.model.mo.FightRecordMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.fightId = arg_1_1.fightId
-	arg_1_0.fightName = arg_1_1.fightName
-	arg_1_0.fightTime = arg_1_1.fightTime
-	arg_1_0.fightResult = arg_1_1.fightResult
+local FightRecordMO = pureTable("FightRecordMO")
 
-	FightStatModel.instance:setAtkStatInfo(arg_1_1.attackStatistics)
+function FightRecordMO:init(info)
+	self.fightId = info.fightId
+	self.fightName = info.fightName
+	self.fightTime = info.fightTime
+	self.fightResult = info.fightResult
+
+	FightStatModel.instance:setAtkStatInfo(info.attackStatistics)
 end
 
-return var_0_0
+return FightRecordMO

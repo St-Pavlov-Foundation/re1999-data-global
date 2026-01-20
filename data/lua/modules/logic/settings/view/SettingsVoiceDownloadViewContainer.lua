@@ -1,13 +1,15 @@
-﻿module("modules.logic.settings.view.SettingsVoiceDownloadViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/settings/view/SettingsVoiceDownloadViewContainer.lua
 
-local var_0_0 = class("SettingsVoiceDownloadViewContainer", BaseViewContainer)
+module("modules.logic.settings.view.SettingsVoiceDownloadViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local SettingsVoiceDownloadViewContainer = class("SettingsVoiceDownloadViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, SettingsVoiceDownloadView.New())
+function SettingsVoiceDownloadViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, SettingsVoiceDownloadView.New())
+
+	return views
 end
 
-return var_0_0
+return SettingsVoiceDownloadViewContainer

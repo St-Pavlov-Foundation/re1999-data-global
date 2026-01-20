@@ -1,55 +1,57 @@
-﻿module("modules.logic.playercard.view.PlayerCardAnimatorView", package.seeall)
+﻿-- chunkname: @modules/logic/playercard/view/PlayerCardAnimatorView.lua
 
-local var_0_0 = class("PlayerCardAnimatorView", BaseView)
+module("modules.logic.playercard.view.PlayerCardAnimatorView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0.goBottom = gohelper.findChild(arg_1_0.viewGO, "Bottom")
-	arg_1_0.goBg = gohelper.findChild(arg_1_0.goBottom, "bg")
+local PlayerCardAnimatorView = class("PlayerCardAnimatorView", BaseView)
+
+function PlayerCardAnimatorView:onInitView()
+	self.animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self.goBottom = gohelper.findChild(self.viewGO, "Bottom")
+	self.goBg = gohelper.findChild(self.goBottom, "bg")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.CloseLayout, arg_2_0.onCloseLayout, arg_2_0)
-	arg_2_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.ShowTheme, arg_2_0.onShowTheme, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_2_0.onOpenView, arg_2_0)
+function PlayerCardAnimatorView:addEvents()
+	self:addEventCb(PlayerCardController.instance, PlayerCardEvent.CloseLayout, self.onCloseLayout, self)
+	self:addEventCb(PlayerCardController.instance, PlayerCardEvent.ShowTheme, self.onShowTheme, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self.onOpenView, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function PlayerCardAnimatorView:removeEvents()
 	return
 end
 
-function var_0_0.onShowTheme(arg_4_0)
-	arg_4_0.animator:Play("switch1", 0, 0)
+function PlayerCardAnimatorView:onShowTheme()
+	self.animator:Play("switch1", 0, 0)
 
-	arg_4_0._inThemeView = true
+	self._inThemeView = true
 
-	gohelper.setActive(arg_4_0.goBottom, true)
+	gohelper.setActive(self.goBottom, true)
 end
 
-function var_0_0.closeThemeView(arg_5_0)
-	arg_5_0.animator:Play("switch2", 0, 0)
+function PlayerCardAnimatorView:closeThemeView()
+	self.animator:Play("switch2", 0, 0)
 
-	arg_5_0._inThemeView = false
+	self._inThemeView = false
 
-	gohelper.setActive(arg_5_0.goBottom, false)
+	gohelper.setActive(self.goBottom, false)
 end
 
-function var_0_0.onOpenView(arg_6_0, arg_6_1)
-	if arg_6_1 == ViewName.PlayerCardLayoutView then
-		arg_6_0.animator:Play("layout1", 0, 0)
+function PlayerCardAnimatorView:onOpenView(viewName)
+	if viewName == ViewName.PlayerCardLayoutView then
+		self.animator:Play("layout1", 0, 0)
 	end
 end
 
-function var_0_0.onCloseLayout(arg_7_0)
-	arg_7_0.animator:Play("layout2", 0, 0)
+function PlayerCardAnimatorView:onCloseLayout()
+	self.animator:Play("layout2", 0, 0)
 end
 
-function var_0_0.isInThemeView(arg_8_0)
-	return arg_8_0._inThemeView
+function PlayerCardAnimatorView:isInThemeView()
+	return self._inThemeView
 end
 
-function var_0_0.onClose(arg_9_0)
+function PlayerCardAnimatorView:onClose()
 	return
 end
 
-return var_0_0
+return PlayerCardAnimatorView

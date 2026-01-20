@@ -1,81 +1,83 @@
-﻿module("modules.logic.versionactivity1_4.act131.controller.Activity131Controller", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act131/controller/Activity131Controller.lua
 
-local var_0_0 = class("Activity131Controller", BaseController)
+module("modules.logic.versionactivity1_4.act131.controller.Activity131Controller", package.seeall)
 
-function var_0_0.openActivity131GameView(arg_1_0, arg_1_1)
-	if arg_1_1 and arg_1_1.episodeId then
-		if not Activity131Model.instance:isEpisodeUnlock(arg_1_1.episodeId) then
+local Activity131Controller = class("Activity131Controller", BaseController)
+
+function Activity131Controller:openActivity131GameView(param)
+	if param and param.episodeId then
+		if not Activity131Model.instance:isEpisodeUnlock(param.episodeId) then
 			GameFacade.showToast(ToastEnum.V1a4_act130EpisodeNotUnlock)
 
 			return
 		else
-			Activity131Model.instance:setCurEpisodeId(arg_1_1.episodeId)
+			Activity131Model.instance:setCurEpisodeId(param.episodeId)
 		end
 	end
 
-	var_0_0.instance:dispatchEvent(Activity131Event.ShowLevelScene, false)
-	ViewMgr.instance:openView(ViewName.Activity131GameView, arg_1_1)
+	Activity131Controller.instance:dispatchEvent(Activity131Event.ShowLevelScene, false)
+	ViewMgr.instance:openView(ViewName.Activity131GameView, param)
 end
 
-function var_0_0.enterActivity131(arg_2_0)
-	local var_2_0 = PlayerPrefsKey.Version1_4_Act131Tips .. "#" .. tostring(VersionActivity1_4Enum.ActivityId.Role6) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
-	local var_2_1 = PlayerPrefsHelper.getNumber(var_2_0, 0) == 1
+function Activity131Controller:enterActivity131()
+	local key = PlayerPrefsKey.Version1_4_Act131Tips .. "#" .. tostring(VersionActivity1_4Enum.ActivityId.Role6) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
+	local hasTiped = PlayerPrefsHelper.getNumber(key, 0) == 1
 
-	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Act131OpenTips) or var_2_1 then
-		arg_2_0:_getActInfoBeforeEnter()
+	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Act131OpenTips) or hasTiped then
+		self:_getActInfoBeforeEnter()
 
 		return
 	end
 
-	local var_2_2 = OpenConfig.instance:getOpenCo(OpenEnum.UnlockFunc.Act131OpenTips).episodeId
-	local var_2_3 = DungeonConfig.instance:getEpisodeCO(var_2_2)
-	local var_2_4 = DungeonController.getEpisodeName(var_2_3)
+	local episodeId = OpenConfig.instance:getOpenCo(OpenEnum.UnlockFunc.Act131OpenTips).episodeId
+	local episodeCo = DungeonConfig.instance:getEpisodeCO(episodeId)
+	local dungeonName = DungeonController.getEpisodeName(episodeCo)
 
 	GameFacade.showMessageBox(MessageBoxIdDefine.Activity130OpenTips, MsgBoxEnum.BoxType.Yes_No, function()
-		PlayerPrefsHelper.setNumber(var_2_0, 1)
-		arg_2_0:_getActInfoBeforeEnter()
-	end, nil, nil, nil, nil, nil, var_2_4)
+		PlayerPrefsHelper.setNumber(key, 1)
+		self:_getActInfoBeforeEnter()
+	end, nil, nil, nil, nil, nil, dungeonName)
 end
 
-function var_0_0._getActInfoBeforeEnter(arg_4_0)
-	Activity131Rpc.instance:sendGet131InfosRequest(VersionActivity1_4Enum.ActivityId.Role6, arg_4_0._onReceiveInfo, arg_4_0)
+function Activity131Controller:_getActInfoBeforeEnter()
+	Activity131Rpc.instance:sendGet131InfosRequest(VersionActivity1_4Enum.ActivityId.Role6, self._onReceiveInfo, self)
 end
 
-function var_0_0._onReceiveInfo(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	arg_5_0:openActivity131LevelView()
+function Activity131Controller:_onReceiveInfo(cmd, resultCode, msg)
+	self:openActivity131LevelView()
 end
 
-function var_0_0.openActivity131LevelView(arg_6_0, arg_6_1)
-	local var_6_0 = ActivityConfig.instance:getActivityCo(VersionActivity1_4Enum.ActivityId.Role6).storyId
+function Activity131Controller:openActivity131LevelView(param)
+	local pvStory = ActivityConfig.instance:getActivityCo(VersionActivity1_4Enum.ActivityId.Role6).storyId
 
-	if var_6_0 > 0 and not StoryModel.instance:isStoryFinished(var_6_0) then
-		StoryController.instance:playStory(var_6_0, nil, function()
-			arg_6_0:_realOpenLevelView(arg_6_1)
+	if pvStory > 0 and not StoryModel.instance:isStoryFinished(pvStory) then
+		StoryController.instance:playStory(pvStory, nil, function()
+			self:_realOpenLevelView(param)
 		end, nil)
 
 		return
 	end
 
-	arg_6_0:_realOpenLevelView(arg_6_1)
+	self:_realOpenLevelView(param)
 end
 
-function var_0_0._realOpenLevelView(arg_8_0, arg_8_1)
-	ViewMgr.instance:openView(ViewName.Activity131LevelView, arg_8_1)
+function Activity131Controller:_realOpenLevelView(param)
+	ViewMgr.instance:openView(ViewName.Activity131LevelView, param)
 end
 
-function var_0_0.openActivity131DialogView(arg_9_0, arg_9_1)
-	ViewMgr.instance:openView(ViewName.Activity131DialogView, arg_9_1)
+function Activity131Controller:openActivity131DialogView(param)
+	ViewMgr.instance:openView(ViewName.Activity131DialogView, param)
 end
 
-function var_0_0.openActivity131TaskView(arg_10_0)
+function Activity131Controller:openActivity131TaskView()
 	ViewMgr.instance:openView(ViewName.Activity131TaskView)
 end
 
-function var_0_0.delayReward(arg_11_0, arg_11_1, arg_11_2)
-	if arg_11_0._act131TaskMO == nil and arg_11_2 then
-		arg_11_0._act131TaskMO = arg_11_2
+function Activity131Controller:delayReward(delayTime, taskMO)
+	if self._act131TaskMO == nil and taskMO then
+		self._act131TaskMO = taskMO
 
-		TaskDispatcher.runDelay(arg_11_0._onPreFinish, arg_11_0, arg_11_1)
+		TaskDispatcher.runDelay(self._onPreFinish, self, delayTime)
 
 		return true
 	end
@@ -83,60 +85,60 @@ function var_0_0.delayReward(arg_11_0, arg_11_1, arg_11_2)
 	return false
 end
 
-function var_0_0._onPreFinish(arg_12_0)
-	local var_12_0 = arg_12_0._act131TaskMO
+function Activity131Controller:_onPreFinish()
+	local act131TaskMO = self._act131TaskMO
 
-	arg_12_0._act131TaskMO = nil
+	self._act131TaskMO = nil
 
-	if var_12_0 and (var_12_0.id == Activity131Enum.TaskMOAllFinishId or var_12_0:alreadyGotReward()) then
-		Activity131TaskListModel.instance:preFinish(var_12_0)
+	if act131TaskMO and (act131TaskMO.id == Activity131Enum.TaskMOAllFinishId or act131TaskMO:alreadyGotReward()) then
+		Activity131TaskListModel.instance:preFinish(act131TaskMO)
 
-		arg_12_0._act131TaskId = var_12_0.id
+		self._act131TaskId = act131TaskMO.id
 
-		TaskDispatcher.runDelay(arg_12_0._onRewardTask, arg_12_0, Activity131Enum.AnimatorTime.TaskRewardMoveUp)
+		TaskDispatcher.runDelay(self._onRewardTask, self, Activity131Enum.AnimatorTime.TaskRewardMoveUp)
 	end
 end
 
-function var_0_0._onRewardTask(arg_13_0)
-	local var_13_0 = arg_13_0._act131TaskId
+function Activity131Controller:_onRewardTask()
+	local act131TaskId = self._act131TaskId
 
-	arg_13_0._act131TaskId = nil
+	self._act131TaskId = nil
 
-	if var_13_0 then
-		if var_13_0 == Activity131Enum.TaskMOAllFinishId then
+	if act131TaskId then
+		if act131TaskId == Activity131Enum.TaskMOAllFinishId then
 			TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.Activity131)
 		else
-			TaskRpc.instance:sendFinishTaskRequest(var_13_0)
+			TaskRpc.instance:sendFinishTaskRequest(act131TaskId)
 		end
 	end
 end
 
-function var_0_0.oneClaimReward(arg_14_0, arg_14_1)
-	local var_14_0 = Activity131TaskListModel.instance:getList()
+function Activity131Controller:oneClaimReward(actId)
+	local list = Activity131TaskListModel.instance:getList()
 
-	for iter_14_0, iter_14_1 in pairs(var_14_0) do
-		if iter_14_1:alreadyGotReward() and iter_14_1.id ~= Activity131Enum.TaskMOAllFinishId then
-			TaskRpc.instance:sendFinishTaskRequest(iter_14_1.id)
+	for _, act131TaskMO in pairs(list) do
+		if act131TaskMO:alreadyGotReward() and act131TaskMO.id ~= Activity131Enum.TaskMOAllFinishId then
+			TaskRpc.instance:sendFinishTaskRequest(act131TaskMO.id)
 		end
 	end
 end
 
-function var_0_0.enterFight(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_1.chapterId
-	local var_15_1 = arg_15_1.id
-	local var_15_2 = arg_15_1.battleId
+function Activity131Controller:enterFight(episodeCfg)
+	local chapterId = episodeCfg.chapterId
+	local episodeId = episodeCfg.id
+	local battleId = episodeCfg.battleId
 
-	if var_15_0 and var_15_1 and var_15_2 then
-		DungeonFightController.instance:enterFightByBattleId(var_15_0, var_15_1, var_15_2)
+	if chapterId and episodeId and battleId then
+		DungeonFightController.instance:enterFightByBattleId(chapterId, episodeId, battleId)
 	else
-		logError("副本关卡表配置错误,%s的chapterId或battleId为空", var_15_1)
+		logError("副本关卡表配置错误,%s的chapterId或battleId为空", episodeId)
 	end
 end
 
-function var_0_0.openLogView(arg_16_0)
+function Activity131Controller:openLogView()
 	ViewMgr.instance:openView(ViewName.Activity131LogView)
 end
 
-var_0_0.instance = var_0_0.New()
+Activity131Controller.instance = Activity131Controller.New()
 
-return var_0_0
+return Activity131Controller

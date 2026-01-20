@@ -1,156 +1,165 @@
-﻿module("modules.logic.room.model.map.RoomWaterReformListModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/map/RoomWaterReformListModel.lua
 
-local var_0_0 = class("RoomWaterReformListModel", ListScrollModel)
+module("modules.logic.room.model.map.RoomWaterReformListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:_clearData()
+local RoomWaterReformListModel = class("RoomWaterReformListModel", ListScrollModel)
+
+function RoomWaterReformListModel:onInit()
+	self:_clearData()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:_clearData()
+function RoomWaterReformListModel:reInit()
+	self:_clearData()
 end
 
-function var_0_0.clear(arg_3_0)
-	arg_3_0:_clearData()
-	var_0_0.super.clear(arg_3_0)
+function RoomWaterReformListModel:clear()
+	self:_clearData()
+	RoomWaterReformListModel.super.clear(self)
 end
 
-function var_0_0._clearData(arg_4_0)
-	if arg_4_0._scrollViews then
-		for iter_4_0, iter_4_1 in ipairs(arg_4_0._scrollViews) do
-			if iter_4_1.setSelectList then
-				iter_4_1:setSelectList()
+function RoomWaterReformListModel:_clearData()
+	if self._scrollViews then
+		for _, view in ipairs(self._scrollViews) do
+			if view.setSelectList then
+				view:setSelectList()
 			end
 		end
 	end
 end
 
-function var_0_0.setShowBlockList(arg_5_0)
-	local var_5_0 = RoomWaterReformModel.instance:getReformMode()
-	local var_5_1 = {}
+function RoomWaterReformListModel:setShowBlockList()
+	local curReformMode = RoomWaterReformModel.instance:getReformMode()
+	local moList = {}
 
-	if var_5_0 == RoomEnum.ReformMode.Water then
-		local var_5_2 = RoomConfig.instance:getWaterReformTypeList()
+	if curReformMode == RoomEnum.ReformMode.Water then
+		local typeList = RoomConfig.instance:getWaterReformTypeList()
 
-		for iter_5_0, iter_5_1 in ipairs(var_5_2) do
-			local var_5_3 = {
-				waterType = iter_5_1,
-				blockId = RoomConfig.instance:getWaterReformTypeBlockId(iter_5_1)
+		for _, waterType in ipairs(typeList) do
+			local mo = {
+				waterType = waterType
 			}
 
-			var_5_1[#var_5_1 + 1] = var_5_3
+			mo.blockId = RoomConfig.instance:getWaterReformTypeBlockId(waterType)
+			moList[#moList + 1] = mo
 		end
-	elseif var_5_0 == RoomEnum.ReformMode.Block then
-		local var_5_4 = {}
-		local var_5_5 = RoomConfig.instance:getBlockColorReformList()
+	elseif curReformMode == RoomEnum.ReformMode.Block then
+		local lockColorList = {}
+		local colorList = RoomConfig.instance:getBlockColorReformList()
 
-		for iter_5_2, iter_5_3 in ipairs(var_5_5) do
-			local var_5_6 = {
-				blockColor = iter_5_3,
-				blockId = RoomConfig.instance:getBlockColorReformBlockId(iter_5_3)
+		for _, blockColor in ipairs(colorList) do
+			local mo = {
+				blockColor = blockColor
 			}
 
-			if RoomWaterReformModel.instance:isUnlockBlockColor(iter_5_3) then
-				var_5_1[#var_5_1 + 1] = var_5_6
+			mo.blockId = RoomConfig.instance:getBlockColorReformBlockId(blockColor)
+
+			local isUnlock = RoomWaterReformModel.instance:isUnlockBlockColor(blockColor)
+
+			if isUnlock then
+				moList[#moList + 1] = mo
 			else
-				var_5_4[#var_5_4 + 1] = var_5_6
+				lockColorList[#lockColorList + 1] = mo
 			end
 		end
 
-		for iter_5_4, iter_5_5 in ipairs(var_5_4) do
-			var_5_1[#var_5_1 + 1] = iter_5_5
+		for _, mo in ipairs(lockColorList) do
+			moList[#moList + 1] = mo
 		end
 	end
 
-	arg_5_0:setList(var_5_1)
+	self:setList(moList)
 end
 
-function var_0_0.setSelectWaterType(arg_6_0, arg_6_1)
-	local var_6_0
-	local var_6_1 = arg_6_0:getList()
+function RoomWaterReformListModel:setSelectWaterType(waterType)
+	local selectMO
+	local moList = self:getList()
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_1) do
-		if iter_6_1.waterType and iter_6_1.waterType == arg_6_1 then
-			var_6_0 = iter_6_1
+	for _, mo in ipairs(moList) do
+		if mo.waterType and mo.waterType == waterType then
+			selectMO = mo
 
 			break
 		end
 	end
 
-	for iter_6_2, iter_6_3 in ipairs(arg_6_0._scrollViews) do
-		iter_6_3:setSelect(var_6_0)
+	for _, view in ipairs(self._scrollViews) do
+		view:setSelect(selectMO)
 	end
 end
 
-function var_0_0.setSelectBlockColor(arg_7_0, arg_7_1)
-	local var_7_0
-	local var_7_1 = arg_7_0:getList()
+function RoomWaterReformListModel:setSelectBlockColor(blockColor)
+	local selectMO
+	local moList = self:getList()
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_1) do
-		if iter_7_1.blockColor and iter_7_1.blockColor == arg_7_1 then
-			var_7_0 = iter_7_1
+	for _, mo in ipairs(moList) do
+		if mo.blockColor and mo.blockColor == blockColor then
+			selectMO = mo
 
 			break
 		end
 	end
 
-	for iter_7_2, iter_7_3 in ipairs(arg_7_0._scrollViews) do
-		iter_7_3:setSelect(var_7_0)
+	for _, view in ipairs(self._scrollViews) do
+		view:setSelect(selectMO)
 	end
 end
 
-function var_0_0.getDefaultSelectWaterType(arg_8_0)
-	if not RoomWaterReformModel.instance:hasSelectWaterArea() then
+function RoomWaterReformListModel:getDefaultSelectWaterType()
+	local hasSelect = RoomWaterReformModel.instance:hasSelectWaterArea()
+
+	if not hasSelect then
 		return
 	end
 
-	local var_8_0
-	local var_8_1 = RoomWaterReformModel.instance:getSelectWaterBlockMoList()
+	local result
+	local selectWaterBlockMoList = RoomWaterReformModel.instance:getSelectWaterBlockMoList()
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_1) do
-		local var_8_2 = iter_8_1:getDefineWaterType()
+	for _, blockMo in ipairs(selectWaterBlockMoList) do
+		local defineWaterType = blockMo:getDefineWaterType()
 
-		if var_8_0 and var_8_0 ~= var_8_2 then
-			var_8_0 = nil
+		if result and result ~= defineWaterType then
+			result = nil
 
 			break
 		end
 
-		var_8_0 = var_8_2
+		result = defineWaterType
 	end
 
-	return var_8_0
+	return result
 end
 
-function var_0_0.getDefaultSelectBlockColor(arg_9_0)
-	if not RoomWaterReformModel.instance:hasSelectedBlock() then
+function RoomWaterReformListModel:getDefaultSelectBlockColor()
+	local hasSelect = RoomWaterReformModel.instance:hasSelectedBlock()
+
+	if not hasSelect then
 		return
 	end
 
-	local var_9_0
-	local var_9_1 = RoomWaterReformModel.instance:getSelectedBlocks()
+	local result
+	local selectedBlocks = RoomWaterReformModel.instance:getSelectedBlocks()
 
-	if var_9_1 then
-		for iter_9_0, iter_9_1 in pairs(var_9_1) do
-			local var_9_2 = RoomMapBlockModel.instance:getFullBlockMOById(iter_9_0)
+	if selectedBlocks then
+		for selectedBlockId, _ in pairs(selectedBlocks) do
+			local blockMO = RoomMapBlockModel.instance:getFullBlockMOById(selectedBlockId)
 
-			if var_9_2 then
-				local var_9_3 = var_9_2:getDefineBlockType()
+			if blockMO then
+				local defineBlockType = blockMO:getDefineBlockType()
 
-				if var_9_0 and var_9_0 ~= var_9_3 then
-					var_9_0 = nil
+				if result and result ~= defineBlockType then
+					result = nil
 
 					break
 				end
 
-				var_9_0 = var_9_3
+				result = defineBlockType
 			end
 		end
 	end
 
-	return var_9_0
+	return result
 end
 
-var_0_0.instance = var_0_0.New()
+RoomWaterReformListModel.instance = RoomWaterReformListModel.New()
 
-return var_0_0
+return RoomWaterReformListModel

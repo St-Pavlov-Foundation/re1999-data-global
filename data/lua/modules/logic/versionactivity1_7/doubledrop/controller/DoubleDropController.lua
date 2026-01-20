@@ -1,36 +1,38 @@
-﻿module("modules.logic.versionactivity1_7.doubledrop.controller.DoubleDropController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_7/doubledrop/controller/DoubleDropController.lua
 
-local var_0_0 = class("DoubleDropController", BaseController)
+module("modules.logic.versionactivity1_7.doubledrop.controller.DoubleDropController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local DoubleDropController = class("DoubleDropController", BaseController)
+
+function DoubleDropController:onInit()
 	return
 end
 
-function var_0_0.addConstEvents(arg_2_0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_2_0.dailyRefresh, arg_2_0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, arg_2_0._checkActivityInfo, arg_2_0)
+function DoubleDropController:addConstEvents()
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self.dailyRefresh, self)
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, self._checkActivityInfo, self)
 end
 
-function var_0_0._checkActivityInfo(arg_3_0, arg_3_1)
-	local var_3_0 = DoubleDropModel.instance:getActId()
+function DoubleDropController:_checkActivityInfo(actId)
+	local doubleDropId = DoubleDropModel.instance:getActId()
 
-	if var_3_0 and not arg_3_1 or arg_3_1 == var_3_0 then
-		if ActivityModel.instance:isActOnLine(var_3_0) then
-			Activity153Rpc.instance:sendGet153InfosRequest(var_3_0)
+	if doubleDropId and not actId or actId == doubleDropId then
+		if ActivityModel.instance:isActOnLine(doubleDropId) then
+			Activity153Rpc.instance:sendGet153InfosRequest(doubleDropId)
 		else
 			ActivityController.instance:dispatchEvent(ActivityEvent.RefreshDoubleDropInfo)
 		end
 	end
 end
 
-function var_0_0.dailyRefresh(arg_4_0)
-	local var_4_0 = DoubleDropModel.instance:getActId()
+function DoubleDropController:dailyRefresh()
+	local doubleDropId = DoubleDropModel.instance:getActId()
 
-	if var_4_0 and ActivityModel.instance:isActOnLine(var_4_0) then
-		Activity153Rpc.instance:sendGet153InfosRequest(var_4_0)
+	if doubleDropId and ActivityModel.instance:isActOnLine(doubleDropId) then
+		Activity153Rpc.instance:sendGet153InfosRequest(doubleDropId)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+DoubleDropController.instance = DoubleDropController.New()
 
-return var_0_0
+return DoubleDropController

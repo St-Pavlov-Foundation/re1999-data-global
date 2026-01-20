@@ -1,357 +1,363 @@
-﻿module("modules.logic.login.view.SimulateLoginView", package.seeall)
+﻿-- chunkname: @modules/logic/login/view/SimulateLoginView.lua
 
-local var_0_0 = class("SimulateLoginView", BaseView)
-local var_0_1 = UnityEngine.Input
-local var_0_2 = UnityEngine.KeyCode
-local var_0_3 = 10
+module("modules.logic.login.view.SimulateLoginView", package.seeall)
 
-local function var_0_4()
-	local var_1_0 = ""
+local SimulateLoginView = class("SimulateLoginView", BaseView)
+local Input = UnityEngine.Input
+local KeyCode = UnityEngine.KeyCode
+local kMaxHistoryCount = 10
+
+local function _randomAccount()
+	local account = ""
 
 	math.randomseed(os.time())
 
-	for iter_1_0 = 1, 6 do
-		local var_1_1 = math.random(0, os.time()) % 62
+	for i = 1, 6 do
+		local n = math.random(0, os.time())
 
-		if var_1_1 < 10 then
-			var_1_1 = tostring(var_1_1)
-		elseif var_1_1 < 36 then
-			var_1_1 = var_1_1 - 10 + 65
-			var_1_1 = string.char(var_1_1)
+		n = n % 62
+
+		if n < 10 then
+			n = tostring(n)
+		elseif n < 36 then
+			n = n - 10 + 65
+			n = string.char(n)
 		else
-			var_1_1 = var_1_1 - 36 + 97
-			var_1_1 = string.char(var_1_1)
+			n = n - 36 + 97
+			n = string.char(n)
 		end
 
-		var_1_0 = var_1_0 .. var_1_1
+		account = account .. n
 	end
 
-	return var_1_0
+	return account
 end
 
-function var_0_0._quickLogin(arg_2_0)
-	local var_2_0 = arg_2_0._inputField:GetText()
+function SimulateLoginView:_quickLogin()
+	local account = self._inputField:GetText()
 
-	if string.nilorempty(var_2_0) then
+	if string.nilorempty(account) then
 		GameFacade.showToast(ToastEnum.SimulateLogin)
 
 		return
 	end
 
-	PlayerPrefsHelper.setString(PlayerPrefsKey.SimulateAccount, var_2_0)
-	arg_2_0:onClickModalMask()
-	FrameTimerController.onDestroyViewMember(arg_2_0, "_loginFrameTimer")
+	PlayerPrefsHelper.setString(PlayerPrefsKey.SimulateAccount, account)
+	self:onClickModalMask()
+	FrameTimerController.onDestroyViewMember(self, "_loginFrameTimer")
 
-	arg_2_0._loginFrameTimer = FrameTimerController.instance:register(arg_2_0._onClickLogin, arg_2_0, 3, 1)
+	self._loginFrameTimer = FrameTimerController.instance:register(self._onClickLogin, self, 3, 1)
 
-	arg_2_0._loginFrameTimer:Start()
+	self._loginFrameTimer:Start()
 end
 
-function var_0_0._onUpdate(arg_3_0)
-	if (var_0_1.GetKey(var_0_2.LeftControl) or var_0_1.GetKey(var_0_2.RightControl)) and var_0_1.GetKeyDown(var_0_2.Return) then
-		arg_3_0:_setLoginAccountInput(var_0_4())
-		arg_3_0:_quickLogin()
+function SimulateLoginView:_onUpdate()
+	local ctrl = Input.GetKey(KeyCode.LeftControl) or Input.GetKey(KeyCode.RightControl)
+
+	if ctrl and Input.GetKeyDown(KeyCode.Return) then
+		self:_setLoginAccountInput(_randomAccount())
+		self:_quickLogin()
 
 		return
 	end
 
-	if var_0_1.GetKeyDown(var_0_2.UpArrow) then
-		arg_3_0:_selectBeforeAccount()
-	elseif var_0_1.GetKeyDown(var_0_2.DownArrow) then
-		arg_3_0:_selectNextAccount()
-	elseif var_0_1.GetKeyDown(var_0_2.KeypadEnter) or var_0_1.GetKeyDown(var_0_2.Return) then
-		arg_3_0:_quickLogin()
+	if Input.GetKeyDown(KeyCode.UpArrow) then
+		self:_selectBeforeAccount()
+	elseif Input.GetKeyDown(KeyCode.DownArrow) then
+		self:_selectNextAccount()
+	elseif Input.GetKeyDown(KeyCode.KeypadEnter) or Input.GetKeyDown(KeyCode.Return) then
+		self:_quickLogin()
 	end
 end
 
-function var_0_0._onClickLogin(arg_4_0)
-	local var_4_0 = ViewMgr.instance:getContainer(ViewName.LoginView)
+function SimulateLoginView:_onClickLogin()
+	local loginViewContainer = ViewMgr.instance:getContainer(ViewName.LoginView)
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_0._views) do
-		if iter_4_1.__cname == "LoginView" then
-			iter_4_1:_onClickLogin()
+	for _, viewObj in ipairs(loginViewContainer._views) do
+		if viewObj.__cname == "LoginView" then
+			viewObj:_onClickLogin()
 
 			break
 		end
 	end
 end
 
-local var_0_5 = "SimulateLoginView_HistoryAccount"
+local kPlayerPrefsKeys = "SimulateLoginView_HistoryAccount"
 
-function var_0_0._saveHistoryAccount(arg_5_0)
-	local var_5_0 = arg_5_0:_getHistoryAccountList()
-	local var_5_1 = arg_5_0._inputField:GetText()
-	local var_5_2 = false
-	local var_5_3 = {}
+function SimulateLoginView:_saveHistoryAccount()
+	local list = self:_getHistoryAccountList()
+	local loginAccount = self._inputField:GetText()
+	local hasSavedLoginAccount = false
+	local sb = {}
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_0) do
-		if iter_5_0 > var_0_3 then
+	for i, v in ipairs(list) do
+		if i > kMaxHistoryCount then
 			break
 		end
 
-		if iter_5_1.account == var_5_1 then
-			table.insert(var_5_3, iter_5_1.account .. "#" .. tostring(os.time()))
+		if v.account == loginAccount then
+			table.insert(sb, v.account .. "#" .. tostring(os.time()))
 
-			var_5_2 = true
+			hasSavedLoginAccount = true
 		else
-			table.insert(var_5_3, iter_5_1.account .. "#" .. tostring(iter_5_1.ts))
+			table.insert(sb, v.account .. "#" .. tostring(v.ts))
 		end
 	end
 
-	if not var_5_2 then
-		if #var_5_3 >= var_0_3 then
-			table.remove(var_5_3)
+	if not hasSavedLoginAccount then
+		if #sb >= kMaxHistoryCount then
+			table.remove(sb)
 		end
 
-		table.insert(var_5_3, 1, var_5_1 .. "#" .. tostring(os.time()))
+		table.insert(sb, 1, loginAccount .. "#" .. tostring(os.time()))
 	end
 
-	local var_5_4 = table.concat(var_5_3, "|")
+	local saveValue = table.concat(sb, "|")
 
-	PlayerPrefsHelper.setString(var_0_5, var_5_4)
+	PlayerPrefsHelper.setString(kPlayerPrefsKeys, saveValue)
 end
 
-function var_0_0._getHistoryAccountPlayerPrefs(arg_6_0)
-	local var_6_0 = {}
-	local var_6_1 = PlayerPrefsHelper.getString(var_0_5, "")
+function SimulateLoginView:_getHistoryAccountPlayerPrefs()
+	local list = {}
+	local str = PlayerPrefsHelper.getString(kPlayerPrefsKeys, "")
 
-	if string.nilorempty(var_6_1) then
-		if not string.nilorempty(arg_6_0._lastAccount) then
-			var_6_0[1] = {
-				account = arg_6_0._lastAccount,
+	if string.nilorempty(str) then
+		if not string.nilorempty(self._lastAccount) then
+			list[1] = {
+				account = self._lastAccount,
 				ts = os.time()
 			}
 		end
 	else
-		local var_6_2 = GameUtil.splitString2(var_6_1)
+		local strList = GameUtil.splitString2(str)
 
-		for iter_6_0, iter_6_1 in ipairs(var_6_2) do
-			table.insert(var_6_0, {
-				account = iter_6_1[1],
-				ts = tonumber(iter_6_1[2])
+		for _, v in ipairs(strList) do
+			table.insert(list, {
+				account = v[1],
+				ts = tonumber(v[2])
 			})
 		end
 	end
 
-	table.sort(var_6_0, function(arg_7_0, arg_7_1)
-		return arg_7_0.ts > arg_7_1.ts
+	table.sort(list, function(a, b)
+		return a.ts > b.ts
 	end)
 
-	local var_6_3 = #var_6_0
+	local len = #list
 
-	for iter_6_2 = var_0_3 + 1, var_6_3 do
-		table.remove(var_6_0)
+	for i = kMaxHistoryCount + 1, len do
+		table.remove(list)
 	end
 
-	return var_6_0
+	return list
 end
 
-function var_0_0._getHistoryAccountList(arg_8_0)
-	if not arg_8_0._historyAccountStrList then
-		arg_8_0._historyAccountStrList = arg_8_0:_getHistoryAccountPlayerPrefs()
+function SimulateLoginView:_getHistoryAccountList()
+	if not self._historyAccountStrList then
+		self._historyAccountStrList = self:_getHistoryAccountPlayerPrefs()
 	end
 
-	return arg_8_0._historyAccountStrList
+	return self._historyAccountStrList
 end
 
-function var_0_0._initHistoryAccountData(arg_9_0)
-	arg_9_0._lastAccount = PlayerPrefsHelper.getString(PlayerPrefsKey.SimulateAccount, "")
-	arg_9_0._curAccountIndex = 0
-	arg_9_0.__firstInited = true
+function SimulateLoginView:_initHistoryAccountData()
+	self._lastAccount = PlayerPrefsHelper.getString(PlayerPrefsKey.SimulateAccount, "")
+	self._curAccountIndex = 0
+	self.__firstInited = true
 end
 
-function var_0_0._initHistoryAccount(arg_10_0)
-	if arg_10_0.__isHistoryAccountInited then
+function SimulateLoginView:_initHistoryAccount()
+	if self.__isHistoryAccountInited then
 		return
 	end
 
-	arg_10_0.__isHistoryAccountInited = true
+	self.__isHistoryAccountInited = true
 
-	arg_10_0:_initHistoryAccountData()
-	arg_10_0:_initHistoryAccountView()
+	self:_initHistoryAccountData()
+	self:_initHistoryAccountView()
 end
 
-function var_0_0._initHistoryAccountView(arg_11_0)
-	local var_11_0 = arg_11_0._inputField.gameObject
-	local var_11_1 = gohelper.create2d(arg_11_0.viewGO, "===History Account===")
-	local var_11_2 = gohelper.create2d(var_11_1)
-	local var_11_3 = var_11_2.transform
-	local var_11_4 = gohelper.clone(gohelper.findChild(var_11_0, "Text"), var_11_2)
-	local var_11_5 = var_11_4.transform
-	local var_11_6 = gohelper.onceAddComponent(var_11_2, gohelper.Type_Image)
-	local var_11_7 = gohelper.findChildText(var_11_4, "")
+function SimulateLoginView:_initHistoryAccountView()
+	local inputFieldGo = self._inputField.gameObject
+	local go = gohelper.create2d(self.viewGO, "===History Account===")
+	local imgGo = gohelper.create2d(go)
+	local imgTrans = imgGo.transform
+	local textGo = gohelper.clone(gohelper.findChild(inputFieldGo, "Text"), imgGo)
+	local textTrans = textGo.transform
+	local img = gohelper.onceAddComponent(imgGo, gohelper.Type_Image)
+	local text = gohelper.findChildText(textGo, "")
 
-	recthelper.setWidth(var_11_3, 500)
-	UIDockingHelper.setDock(UIDockingHelper.Dock.MR_R, var_11_3, var_11_0.transform)
+	recthelper.setWidth(imgTrans, 500)
+	UIDockingHelper.setDock(UIDockingHelper.Dock.MR_R, imgTrans, inputFieldGo.transform)
 
-	var_11_7.richText = true
-	var_11_5.anchorMin = Vector2.New(0, 0)
-	var_11_5.anchorMax = Vector2.New(1, 1)
-	var_11_5.pivot = Vector2.New(0.5, 0.5)
+	text.richText = true
+	textTrans.anchorMin = Vector2.New(0, 0)
+	textTrans.anchorMax = Vector2.New(1, 1)
+	textTrans.pivot = Vector2.New(0.5, 0.5)
 
-	recthelper.setAnchor(var_11_5, 0, 0)
+	recthelper.setAnchor(textTrans, 0, 0)
 
-	var_11_5.sizeDelta = Vector2.New(0, 0)
+	textTrans.sizeDelta = Vector2.New(0, 0)
 
-	ZProj.UGUIHelper.SetColorAlpha(var_11_6, 0.5)
+	ZProj.UGUIHelper.SetColorAlpha(img, 0.5)
 
-	arg_11_0._historyAccountGo = var_11_1
-	arg_11_0._historyAccountText = var_11_7
-	arg_11_0._historyAccountImgTrans = var_11_3
+	self._historyAccountGo = go
+	self._historyAccountText = text
+	self._historyAccountImgTrans = imgTrans
 
-	arg_11_0:_refreshHistoryAccountView()
+	self:_refreshHistoryAccountView()
 end
 
-local var_0_6 = "#00FF00"
+local kGreen = "#00FF00"
 
-function var_0_0._refreshHistoryAccountView(arg_12_0)
-	local var_12_0 = arg_12_0:_getHistoryAccountList()
-	local var_12_1 = {}
+function SimulateLoginView:_refreshHistoryAccountView()
+	local list = self:_getHistoryAccountList()
+	local res = {}
 
-	for iter_12_0, iter_12_1 in ipairs(var_12_0) do
-		local var_12_2 = tostring(iter_12_1.account)
+	for i, v in ipairs(list) do
+		local str = tostring(v.account)
 
-		if iter_12_0 - 1 == arg_12_0._curAccountIndex then
-			var_12_2 = gohelper.getRichColorText(var_12_2, var_0_6)
+		if i - 1 == self._curAccountIndex then
+			str = gohelper.getRichColorText(str, kGreen)
 		end
 
-		table.insert(var_12_1, var_12_2)
+		table.insert(res, str)
 	end
 
-	arg_12_0._historyAccountText.text = table.concat(var_12_1, "\n")
+	self._historyAccountText.text = table.concat(res, "\n")
 
-	recthelper.setHeight(arg_12_0._historyAccountImgTrans, arg_12_0._historyAccountText.preferredHeight)
+	recthelper.setHeight(self._historyAccountImgTrans, self._historyAccountText.preferredHeight)
 end
 
-function var_0_0._selectBeforeAccount(arg_13_0)
-	arg_13_0:_initHistoryAccount()
+function SimulateLoginView:_selectBeforeAccount()
+	self:_initHistoryAccount()
 
-	local var_13_0 = #arg_13_0:_getHistoryAccountList()
-	local var_13_1 = (arg_13_0._curAccountIndex + var_13_0 - 1) % var_13_0
+	local N = #self:_getHistoryAccountList()
+	local index = (self._curAccountIndex + N - 1) % N
 
-	arg_13_0:_onHistoryAccountDropDownChange(var_13_1)
+	self:_onHistoryAccountDropDownChange(index)
 end
 
-function var_0_0._selectNextAccount(arg_14_0)
-	arg_14_0:_initHistoryAccount()
+function SimulateLoginView:_selectNextAccount()
+	self:_initHistoryAccount()
 
-	local var_14_0 = #arg_14_0:_getHistoryAccountList()
-	local var_14_1 = (arg_14_0._curAccountIndex + 1) % var_14_0
+	local N = #self:_getHistoryAccountList()
+	local index = (self._curAccountIndex + 1) % N
 
-	arg_14_0:_onHistoryAccountDropDownChange(var_14_1)
+	self:_onHistoryAccountDropDownChange(index)
 end
 
-function var_0_0._setLoginAccountInput(arg_15_0, arg_15_1)
-	arg_15_0._inputField:SetText(arg_15_1 or "")
+function SimulateLoginView:_setLoginAccountInput(str)
+	self._inputField:SetText(str or "")
 end
 
-function var_0_0._onHistoryAccountDropDownChange(arg_16_0, arg_16_1)
-	if not arg_16_0._historyAccountStrList then
+function SimulateLoginView:_onHistoryAccountDropDownChange(index)
+	if not self._historyAccountStrList then
 		return
 	end
 
-	if arg_16_0.__firstInited then
-		arg_16_1 = 0
-		arg_16_0.__firstInited = false
+	if self.__firstInited then
+		index = 0
+		self.__firstInited = false
 	end
 
-	arg_16_1 = GameUtil.clamp(arg_16_1, 0, #arg_16_0._historyAccountStrList - 1)
+	index = GameUtil.clamp(index, 0, #self._historyAccountStrList - 1)
 
-	if arg_16_0._curAccountIndex == arg_16_1 then
+	if self._curAccountIndex == index then
 		return
 	end
 
-	arg_16_0._curAccountIndex = arg_16_1
+	self._curAccountIndex = index
 
-	local var_16_0 = arg_16_0._historyAccountStrList[arg_16_1 + 1]
+	local info = self._historyAccountStrList[index + 1]
 
-	arg_16_0:_setLoginAccountInput(var_16_0.account)
-	arg_16_0:_refreshHistoryAccountView()
+	self:_setLoginAccountInput(info.account)
+	self:_refreshHistoryAccountView()
 end
 
-function var_0_0.onClose_(arg_17_0)
-	UpdateBeat:Remove(arg_17_0._onUpdate, arg_17_0)
+function SimulateLoginView:onClose_()
+	UpdateBeat:Remove(self._onUpdate, self)
 
-	if arg_17_0._hestoryAccountDropDown then
-		arg_17_0._hestoryAccountDropDown:RemoveOnValueChanged()
+	if self._hestoryAccountDropDown then
+		self._hestoryAccountDropDown:RemoveOnValueChanged()
 	end
 
-	arg_17_0:_saveHistoryAccount()
+	self:_saveHistoryAccount()
 end
 
-function var_0_0.ctor(arg_18_0)
-	arg_18_0._button = nil
-	arg_18_0._inputField = nil
+function SimulateLoginView:ctor()
+	self._button = nil
+	self._inputField = nil
 end
 
-function var_0_0.onInitView(arg_19_0)
-	arg_19_0._button = gohelper.findChildButtonWithAudio(arg_19_0.viewGO, "Button")
-	arg_19_0._inputField = gohelper.findChildTextMeshInputField(arg_19_0.viewGO, "InputField")
-	arg_19_0._btnAgeFit = gohelper.findChildButtonWithAudio(arg_19_0.viewGO, "leftbtn/#btn_agefit")
+function SimulateLoginView:onInitView()
+	self._button = gohelper.findChildButtonWithAudio(self.viewGO, "Button")
+	self._inputField = gohelper.findChildTextMeshInputField(self.viewGO, "InputField")
+	self._btnAgeFit = gohelper.findChildButtonWithAudio(self.viewGO, "leftbtn/#btn_agefit")
 end
 
-function var_0_0.addEvents(arg_20_0)
-	arg_20_0._button:AddClickListener(arg_20_0._onClickButton, arg_20_0)
-	arg_20_0._btnAgeFit:AddClickListener(arg_20_0._onClickAgeFit, arg_20_0)
-	arg_20_0._inputField:AddOnEndEdit(arg_20_0._onEndEdit, arg_20_0)
+function SimulateLoginView:addEvents()
+	self._button:AddClickListener(self._onClickButton, self)
+	self._btnAgeFit:AddClickListener(self._onClickAgeFit, self)
+	self._inputField:AddOnEndEdit(self._onEndEdit, self)
 end
 
-function var_0_0.removeEvents(arg_21_0)
-	arg_21_0._button:RemoveClickListener()
-	arg_21_0._btnAgeFit:RemoveClickListener()
-	arg_21_0._inputField:RemoveOnEndEdit()
+function SimulateLoginView:removeEvents()
+	self._button:RemoveClickListener()
+	self._btnAgeFit:RemoveClickListener()
+	self._inputField:RemoveOnEndEdit()
 end
 
-function var_0_0.onOpen(arg_22_0)
-	UpdateBeat:Add(arg_22_0._onUpdate, arg_22_0)
-	gohelper.addUIClickAudio(arg_22_0._button.gameObject, AudioEnum.UI.UI_Common_Click)
+function SimulateLoginView:onOpen()
+	UpdateBeat:Add(self._onUpdate, self)
+	gohelper.addUIClickAudio(self._button.gameObject, AudioEnum.UI.UI_Common_Click)
 
-	local var_22_0 = PlayerPrefsHelper.getString(PlayerPrefsKey.SimulateAccount)
+	local account = PlayerPrefsHelper.getString(PlayerPrefsKey.SimulateAccount)
 
-	arg_22_0._inputField:SetText(var_22_0)
-	TaskDispatcher.runRepeat(arg_22_0._onTick, arg_22_0, 0.1)
+	self._inputField:SetText(account)
+	TaskDispatcher.runRepeat(self._onTick, self, 0.1)
 
-	local var_22_1 = tostring(SDKMgr.instance:getChannelId()) == "102"
+	local isQQ = tostring(SDKMgr.instance:getChannelId()) == "102"
 
-	gohelper.setActive(arg_22_0._btnAgeFit.gameObject, not var_22_1 and SettingsModel.instance:isZhRegion())
+	gohelper.setActive(self._btnAgeFit.gameObject, not isQQ and SettingsModel.instance:isZhRegion())
 end
 
-function var_0_0.onClose(arg_23_0)
-	arg_23_0:onClose_()
-	TaskDispatcher.cancelTask(arg_23_0._onTick, arg_23_0)
+function SimulateLoginView:onClose()
+	self:onClose_()
+	TaskDispatcher.cancelTask(self._onTick, self)
 end
 
-function var_0_0._onTick(arg_24_0)
+function SimulateLoginView:_onTick()
 	if not ViewMgr.instance:isOpen(ViewName.LoginView) then
 		logNormal("LoginView has close, close SimulateLoginView too")
-		arg_24_0:closeThis()
+		self:closeThis()
 	end
 end
 
-function var_0_0._onClickButton(arg_25_0, arg_25_1)
-	local var_25_0 = arg_25_0._inputField:GetText()
+function SimulateLoginView:_onClickButton(param)
+	local account = self._inputField:GetText()
 
-	if string.nilorempty(var_25_0) then
+	if string.nilorempty(account) then
 		GameFacade.showToast(ToastEnum.SimulateLogin)
 
 		return
 	end
 
-	arg_25_0:closeThis()
-	LoginModel.instance:setChannelParam("", var_25_0, "", "", "")
+	self:closeThis()
+	LoginModel.instance:setChannelParam("", account, "", "", "")
 	LoginController.instance:login({})
 end
 
-function var_0_0.onClickModalMask(arg_26_0)
-	arg_26_0:_onClickButton()
+function SimulateLoginView:onClickModalMask()
+	self:_onClickButton()
 end
 
-function var_0_0._onClickAgeFit(arg_27_0)
+function SimulateLoginView:_onClickAgeFit()
 	ViewMgr.instance:openView(ViewName.SdkFitAgeTipView)
 end
 
-function var_0_0._onEndEdit(arg_28_0, arg_28_1)
-	PlayerPrefsHelper.setString(PlayerPrefsKey.SimulateAccount, arg_28_1)
+function SimulateLoginView:_onEndEdit(text)
+	PlayerPrefsHelper.setString(PlayerPrefsKey.SimulateAccount, text)
 end
 
-return var_0_0
+return SimulateLoginView

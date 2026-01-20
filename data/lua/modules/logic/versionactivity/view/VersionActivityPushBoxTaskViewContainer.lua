@@ -1,25 +1,27 @@
-﻿module("modules.logic.versionactivity.view.VersionActivityPushBoxTaskViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity/view/VersionActivityPushBoxTaskViewContainer.lua
 
-local var_0_0 = class("VersionActivityPushBoxTaskViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity.view.VersionActivityPushBoxTaskViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local VersionActivityPushBoxTaskViewContainer = class("VersionActivityPushBoxTaskViewContainer", BaseViewContainer)
+
+function VersionActivityPushBoxTaskViewContainer:buildViews()
 	return {
 		VersionActivityPushBoxTaskView.New()
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._navigateButtonView = NavigateButtonsView.New({
+function VersionActivityPushBoxTaskViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_2_0._navigateButtonView
+			self._navigateButtonView
 		}
 	end
 end
 
-return var_0_0
+return VersionActivityPushBoxTaskViewContainer

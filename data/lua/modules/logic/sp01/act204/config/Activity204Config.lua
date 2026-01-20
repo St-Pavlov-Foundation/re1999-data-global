@@ -1,8 +1,10 @@
-﻿module("modules.logic.sp01.act204.config.Activity204Config", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/act204/config/Activity204Config.lua
 
-local var_0_0 = class("Activity204Config", BaseConfig)
+module("modules.logic.sp01.act204.config.Activity204Config", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local Activity204Config = class("Activity204Config", BaseConfig)
+
+function Activity204Config:reqConfigNames()
 	return {
 		"activity204_const",
 		"actvity204_stage",
@@ -12,101 +14,101 @@ function var_0_0.reqConfigNames(arg_1_0)
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_2_0, arg_2_1, arg_2_2)
-	local var_2_0 = string.format("_on%sLoad", arg_2_1)
+function Activity204Config:onConfigLoaded(configName, configTable)
+	local funcName = string.format("_on%sLoad", configName)
 
-	if arg_2_0[var_2_0] then
-		arg_2_0[var_2_0](arg_2_0, arg_2_2)
+	if self[funcName] then
+		self[funcName](self, configTable)
 	end
 end
 
-function var_0_0._onactvity204_stageLoad(arg_3_0, arg_3_1)
-	arg_3_0.stageConfig = arg_3_1
+function Activity204Config:_onactvity204_stageLoad(configTable)
+	self.stageConfig = configTable
 end
 
-function var_0_0._onactvity204_milestone_bonusLoad(arg_4_0, arg_4_1)
-	arg_4_0.mileStoneConfig = arg_4_1
+function Activity204Config:_onactvity204_milestone_bonusLoad(configTable)
+	self.mileStoneConfig = configTable
 end
 
-function var_0_0._onactivity204_constLoad(arg_5_0, arg_5_1)
-	arg_5_0.constConfig = arg_5_1
+function Activity204Config:_onactivity204_constLoad(configTable)
+	self.constConfig = configTable
 end
 
-function var_0_0._onactvity204_taskLoad(arg_6_0, arg_6_1)
-	arg_6_0.taskConfig = arg_6_1
+function Activity204Config:_onactvity204_taskLoad(configTable)
+	self.taskConfig = configTable
 end
 
-function var_0_0._onactvity204_voiceLoad(arg_7_0, arg_7_1)
-	arg_7_0.voiceConfig = arg_7_1
+function Activity204Config:_onactvity204_voiceLoad(configTable)
+	self.voiceConfig = configTable
 end
 
-function var_0_0.getStageConfig(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = arg_8_0.stageConfig.configDict[arg_8_1]
+function Activity204Config:getStageConfig(actId, stage)
+	local dict = self.stageConfig.configDict[actId]
 
-	return var_8_0 and var_8_0[arg_8_2]
+	return dict and dict[stage]
 end
 
-function var_0_0.getMileStoneList(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0.mileStoneConfig.configDict[arg_9_1]
-	local var_9_1 = {}
+function Activity204Config:getMileStoneList(actId)
+	local dict = self.mileStoneConfig.configDict[actId]
+	local list = {}
 
-	for iter_9_0, iter_9_1 in pairs(var_9_0) do
-		table.insert(var_9_1, iter_9_1)
+	for k, v in pairs(dict) do
+		table.insert(list, v)
 	end
 
-	table.sort(var_9_1, SortUtil.keyLower("coinNum"))
+	table.sort(list, SortUtil.keyLower("coinNum"))
 
-	return var_9_1
+	return list
 end
 
-function var_0_0.getMileStoneConfig(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = arg_10_0.mileStoneConfig.configDict[arg_10_1]
+function Activity204Config:getMileStoneConfig(actId, rewardId)
+	local dict = self.mileStoneConfig.configDict[actId]
 
-	return var_10_0 and var_10_0[arg_10_2]
+	return dict and dict[rewardId]
 end
 
-function var_0_0.getVoiceConfig(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = {}
+function Activity204Config:getVoiceConfig(type, verifyCallback)
+	local result = {}
 
-	for iter_11_0, iter_11_1 in pairs(arg_11_0.voiceConfig.configList) do
-		if iter_11_1.type == arg_11_1 and (not arg_11_2 or arg_11_2(iter_11_1)) then
-			table.insert(var_11_0, iter_11_1)
+	for _, v in pairs(self.voiceConfig.configList) do
+		if v.type == type and (not verifyCallback or verifyCallback(v)) then
+			table.insert(result, v)
 		end
 	end
 
-	return var_11_0
+	return result
 end
 
-function var_0_0.getTaskConfig(arg_12_0, arg_12_1)
-	return arg_12_0.taskConfig.configDict[arg_12_1]
+function Activity204Config:getTaskConfig(taskId)
+	return self.taskConfig.configDict[taskId]
 end
 
-function var_0_0.getConstNum(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0:getConstStr(arg_13_1)
+function Activity204Config:getConstNum(constId)
+	local constStr = self:getConstStr(constId)
 
-	if string.nilorempty(var_13_0) then
+	if string.nilorempty(constStr) then
 		return 0
 	else
-		return tonumber(var_13_0)
+		return tonumber(constStr)
 	end
 end
 
-function var_0_0.getConstStr(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_0.constConfig.configDict[arg_14_1]
+function Activity204Config:getConstStr(constId)
+	local constCO = self.constConfig.configDict[constId]
 
-	if not var_14_0 then
+	if not constCO then
 		return nil
 	end
 
-	local var_14_1 = var_14_0.value
+	local value = constCO.value
 
-	if not string.nilorempty(var_14_1) then
-		return var_14_1
+	if not string.nilorempty(value) then
+		return value
 	end
 
-	return var_14_0.value2
+	return constCO.value2
 end
 
-var_0_0.instance = var_0_0.New()
+Activity204Config.instance = Activity204Config.New()
 
-return var_0_0
+return Activity204Config

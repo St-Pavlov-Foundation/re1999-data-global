@@ -1,72 +1,78 @@
-﻿module("modules.logic.signin.controller.SignInController", package.seeall)
+﻿-- chunkname: @modules/logic/signin/controller/SignInController.lua
 
-local var_0_0 = class("SignInController", BaseController)
+module("modules.logic.signin.controller.SignInController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._curMonth = 0
+local SignInController = class("SignInController", BaseController)
+
+function SignInController:onInit()
+	self._curMonth = 0
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:stopCheckEnterMainView()
+function SignInController:reInit()
+	self:stopCheckEnterMainView()
 end
 
-function var_0_0.addConstEvents(arg_3_0)
-	MainController.instance:registerCallback(MainEvent.OnFuncUnlockRefresh, arg_3_0._onFuncUnlock, arg_3_0)
-	MainController.instance:registerCallback(MainEvent.OnMainPopupFlowFinish, arg_3_0._onCheckSignIn, arg_3_0)
-	GuideController.instance:registerCallback(GuideEvent.FinishGuideLastStep, arg_3_0._onCheckSignIn, arg_3_0)
+function SignInController:addConstEvents()
+	MainController.instance:registerCallback(MainEvent.OnFuncUnlockRefresh, self._onFuncUnlock, self)
+	MainController.instance:registerCallback(MainEvent.OnMainPopupFlowFinish, self._onCheckSignIn, self)
+	GuideController.instance:registerCallback(GuideEvent.FinishGuideLastStep, self._onCheckSignIn, self)
 end
 
-function var_0_0._onFuncUnlock(arg_4_0)
+function SignInController:_onFuncUnlock()
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.SignIn) then
 		return
 	end
 
-	arg_4_0:_onCheckSignIn()
+	self:_onCheckSignIn()
 end
 
-function var_0_0._onCheckSignIn(arg_5_0, arg_5_1)
-	if GuideController.instance:isGuiding() and arg_5_1 ~= GuideModel.instance:lastForceGuideId() then
-		arg_5_0:stopCheckEnterMainView()
+function SignInController:_onCheckSignIn(guideId)
+	if GuideController.instance:isGuiding() and guideId ~= GuideModel.instance:lastForceGuideId() then
+		self:stopCheckEnterMainView()
 
 		return
 	end
 
-	arg_5_0:stopCheckEnterMainView()
+	self:stopCheckEnterMainView()
 
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.SignIn) then
 		return
 	end
 
-	local var_5_0 = SignInModel.instance:getCurDate()
+	local date = SignInModel.instance:getCurDate()
 
 	if ViewMgr.instance:isOpen(ViewName.SignInView) or ViewMgr.instance:isOpen(ViewName.SignInDetailView) then
-		local var_5_1 = SignInModel.instance:getSignTargetDate()
+		local targetDate = SignInModel.instance:getSignTargetDate()
 
-		if var_5_1[1] ~= tonumber(var_5_0.year) or var_5_1[2] ~= tonumber(var_5_0.month) or var_5_1[3] ~= tonumber(var_5_0.day) then
-			SignInModel.instance:setTargetDate(tonumber(var_5_0.year), tonumber(var_5_0.month), tonumber(var_5_0.day))
+		if targetDate[1] ~= tonumber(date.year) or targetDate[2] ~= tonumber(date.month) or targetDate[3] ~= tonumber(date.day) then
+			SignInModel.instance:setTargetDate(tonumber(date.year), tonumber(date.month), tonumber(date.day), date.wday)
 
-			arg_5_0._curMonth = var_5_0.month
+			self._curMonth = date.month
 
-			arg_5_0:sendGetSignInInfoRequestIfUnlock()
+			self:sendGetSignInInfoRequestIfUnlock()
 		end
 	else
-		TaskDispatcher.runRepeat(arg_5_0._onCheckEnterMainView, arg_5_0, 0.5)
+		TaskDispatcher.runRepeat(self._onCheckEnterMainView, self, 0.5)
 	end
 end
 
-function var_0_0._onCheckEnterMainView(arg_6_0)
-	if GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.MainViewGuideBlock) then
+function SignInController:_onCheckEnterMainView()
+	local mainViewguideBlock = GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.MainViewGuideBlock)
+
+	if mainViewguideBlock then
 		return
 	end
 
-	if not MainController.instance:isInMainView() then
+	local isInMainView = MainController.instance:isInMainView()
+
+	if not isInMainView then
 		return
 	end
 
-	local var_6_0 = SignInModel.instance:getCurDate()
+	local date = SignInModel.instance:getCurDate()
 
-	if SignInModel.instance:isSignDayRewardGet(var_6_0.day) then
-		arg_6_0:stopCheckEnterMainView()
+	if SignInModel.instance:isSignDayRewardGet(date.day) then
+		self:stopCheckEnterMainView()
 
 		return
 	end
@@ -81,76 +87,96 @@ function var_0_0._onCheckEnterMainView(arg_6_0)
 
 	if not ViewMgr.instance:hasOpenFullView() and ViewMgr.instance:isOpen(ViewName.MainView) then
 		SignInModel.instance:setAutoSign(true)
-		arg_6_0:sendGetSignInInfoRequestIfUnlock()
+		self:sendGetSignInInfoRequestIfUnlock()
 
-		local var_6_1 = {}
+		local data = {}
 
-		var_6_1.isBirthday = false
+		data.isBirthday = false
 
-		arg_6_0:openSignInDetailView(var_6_1)
-		arg_6_0:stopCheckEnterMainView()
+		self:openSignInDetailView(data)
+		self:stopCheckEnterMainView()
 
-		arg_6_0._curMonth = var_6_0.month
+		self._curMonth = date.month
 	end
 end
 
-function var_0_0.stopCheckEnterMainView(arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0._onCheckEnterMainView, arg_7_0)
+function SignInController:stopCheckEnterMainView()
+	TaskDispatcher.cancelTask(self._onCheckEnterMainView, self)
 end
 
-function var_0_0.openSignInView(arg_8_0, arg_8_1)
-	local var_8_0 = SignInModel.instance:getCurDate()
+function SignInController:openSignInView(param)
+	local date = SignInModel.instance:getCurDate()
 
-	SignInModel.instance:setTargetDate(tonumber(var_8_0.year), tonumber(var_8_0.month), tonumber(var_8_0.day))
-	ViewMgr.instance:openView(ViewName.SignInView, arg_8_1)
+	SignInModel.instance:setTargetDate(tonumber(date.year), tonumber(date.month), tonumber(date.day), date.wday)
+	ViewMgr.instance:openView(ViewName.SignInView, param)
 end
 
-function var_0_0.openSignInDetailView(arg_9_0, arg_9_1)
-	local var_9_0 = SignInModel.instance:getCurDate()
+function SignInController:openSignInDetailView(param)
+	local date = SignInModel.instance:getCurDate()
 
-	if SignInModel.instance:isSignDayRewardGet(var_9_0.day) then
-		arg_9_0:openSignInView(arg_9_1)
+	if SignInModel.instance:isSignDayRewardGet(date.day) then
+		self:openSignInView(param)
 
 		return
 	end
 
-	local var_9_1 = {
-		isBirthday = arg_9_1.isBirthday,
-		callback = arg_9_1.callback,
-		callbackObj = arg_9_1.callbackObj
-	}
+	local data = {}
 
-	SignInModel.instance:setTargetDate(tonumber(var_9_0.year), tonumber(var_9_0.month), tonumber(var_9_0.day))
-	ViewMgr.instance:openView(ViewName.SignInDetailView, var_9_1)
+	data.isBirthday = param.isBirthday
+	data.callback = param.callback
+	data.callbackObj = param.callbackObj
+
+	SignInModel.instance:setTargetDate(tonumber(date.year), tonumber(date.month), tonumber(date.day), date.wday)
+	ViewMgr.instance:openView(ViewName.SignInDetailView, data)
 end
 
-function var_0_0.setSigninReward(arg_10_0, arg_10_1)
-	if arg_10_0:checkIsBirthdayBlock(arg_10_1) then
-		PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, arg_10_1)
+function SignInController:setSigninReward(co)
+	if self:checkIsBirthdayBlock(co) then
+		PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, co)
 	elseif SignInModel.instance:checkDailyAllowanceIsOpen() then
 		if not SignInModel.instance:checkIsFirstGoldDay() then
-			local var_10_0 = SigninRewardMo.New()
-			local var_10_1 = SignInModel.instance:getDailyAllowanceBonus()
+			local o = SigninRewardMo.New()
+			local goldco = SignInModel.instance:getDailyAllowanceBonus()
 
-			if var_10_1 then
-				local var_10_2 = string.splitToNumber(var_10_1, "#")
+			if goldco then
+				local reward = string.splitToNumber(goldco, "#")
 
-				var_10_0:initValue(var_10_2[1], var_10_2[2], var_10_2[3], nil, true)
-				table.insert(arg_10_1, var_10_0)
+				o:initValue(reward[1], reward[2], reward[3], nil, true)
+				table.insert(co, o)
 			end
 
-			PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, arg_10_1)
+			PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, co)
 		else
-			PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, arg_10_1)
+			PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, co)
 		end
 	else
-		PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, arg_10_1)
+		PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, co)
 	end
 end
 
-function var_0_0.checkIsBirthdayBlock(arg_11_0, arg_11_1)
-	for iter_11_0, iter_11_1 in pairs(arg_11_1) do
-		if iter_11_1 and iter_11_1.materilType == MaterialEnum.MaterialType.SpecialBlock then
+function SignInController:getMonthCardSigninReward(co)
+	if self:checkIsBirthdayBlock(co) then
+		return co
+	elseif SignInModel.instance:checkDailyAllowanceIsOpen() and not SignInModel.instance:checkIsFirstGoldDay() then
+		local o = SigninRewardMo.New()
+		local goldco = SignInModel.instance:getDailyAllowanceBonus()
+
+		if goldco then
+			local reward = string.splitToNumber(goldco, "#")
+
+			o:initValue(reward[1], reward[2], reward[3], nil, true)
+			table.insert(co, o)
+		end
+
+		return co
+	end
+
+	return co
+end
+
+function SignInController:checkIsBirthdayBlock(rewards)
+	for _, co in pairs(rewards) do
+		if co and co.materilType == MaterialEnum.MaterialType.SpecialBlock then
 			return true
 		end
 	end
@@ -158,7 +184,7 @@ function var_0_0.checkIsBirthdayBlock(arg_11_0, arg_11_1)
 	return false
 end
 
-function var_0_0.sendGetSignInInfoRequestIfUnlock(arg_12_0)
+function SignInController:sendGetSignInInfoRequestIfUnlock()
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.SignIn) then
 		return
 	end
@@ -166,6 +192,95 @@ function var_0_0.sendGetSignInInfoRequestIfUnlock(arg_12_0)
 	SignInRpc.instance:sendGetSignInInfoRequest()
 end
 
-var_0_0.instance = var_0_0.New()
+function SignInController:checkShowSigninReward(msg)
+	local signInReward = msg and msg.signInReward
+	local monthReward = msg and msg.monthReward
+	local moList = {}
 
-return var_0_0
+	if monthReward and #monthReward > 0 then
+		moList = self:getMaterialMoList(moList, monthReward, true)
+
+		if signInReward and #signInReward > 0 then
+			moList = self:getMaterialMoList(moList, signInReward, false)
+		end
+
+		moList = self:getMonthCardSigninReward(moList)
+
+		PopupController.instance:addPopupView(PopupEnum.PriorityType.SigninPropView, ViewName.SigninPropView, moList)
+	elseif signInReward and #signInReward > 0 then
+		moList = self:getMaterialMoList(moList, signInReward, false)
+
+		self:setSigninReward(moList)
+	end
+end
+
+function SignInController:openSigninPropView(moList)
+	for index, mo in ipairs(moList) do
+		mo.getApproach = MaterialEnum.GetApproach.MonthCard
+	end
+
+	PopupController.instance:addPopupView(PopupEnum.PriorityType.SigninPropView, ViewName.SigninPropView, moList)
+end
+
+function SignInController:getMaterialMoList(list, rewards, isMonthCard)
+	for _, v in ipairs(rewards) do
+		local uid
+		local o = MaterialDataMO.New()
+
+		if v.materilType == MaterialEnum.MaterialType.PowerPotion then
+			local latestPowerCo = ItemPowerModel.instance:getLatestPowerChange()
+
+			for _, power in pairs(latestPowerCo) do
+				if tonumber(power.itemid) == tonumber(v.materilId) then
+					uid = power.uid
+				end
+			end
+		elseif v.materilType == MaterialEnum.MaterialType.NewInsight then
+			local latestInsightCo = ItemInsightModel.instance:getLatestInsightChange()
+
+			for _, insight in pairs(latestInsightCo) do
+				if tonumber(insight.itemid) == tonumber(v.materilId) then
+					uid = insight.uid
+				end
+			end
+		end
+
+		o:initValue(v.materilType, v.materilId, v.quantity, uid, v.roomBuildingLevel, isMonthCard and MaterialEnum.GetApproach.MonthCard or nil)
+		table.insert(list, o)
+	end
+
+	return list
+end
+
+function SignInController:showPatchpropUseView(messageBoxId, msgBoxType, currencyParam, yesCallback, noCallback, openCallback, yesCallbackObj, noCallbackObj, openCallbackObj, ...)
+	if not ViewMgr.instance:isOpen(ViewName.MessageBoxView) then
+		self._isShowSystemMsgBox = false
+	end
+
+	if not self._isShowSystemMsgBox then
+		local extra = {
+			...
+		}
+		local config = MessageBoxConfig.instance:getMessageBoxCO(messageBoxId)
+		local param = {
+			messageBoxId = messageBoxId,
+			msg = config.content,
+			title = config.title,
+			currencyParam = currencyParam,
+			msgBoxType = msgBoxType,
+			yesCallback = yesCallback,
+			noCallback = noCallback,
+			openCallback = openCallback,
+			yesCallbackObj = yesCallbackObj,
+			noCallbackObj = noCallbackObj,
+			openCallbackObj = openCallbackObj,
+			extra = extra
+		}
+
+		ViewMgr.instance:openView(ViewName.StoreSupplementMonthCardUseView, param)
+	end
+end
+
+SignInController.instance = SignInController.New()
+
+return SignInController

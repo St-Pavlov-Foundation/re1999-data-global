@@ -1,160 +1,169 @@
-﻿module("modules.logic.room.controller.RoomJumpController", package.seeall)
+﻿-- chunkname: @modules/logic/room/controller/RoomJumpController.lua
 
-local var_0_0 = class("RoomJumpController", BaseController)
+module("modules.logic.room.controller.RoomJumpController", package.seeall)
 
-function var_0_0.jumpFormTaskView(arg_1_0, arg_1_1)
-	if string.nilorempty(arg_1_1) then
+local RoomJumpController = class("RoomJumpController", BaseController)
+
+function RoomJumpController:jumpFormTaskView(jumpId)
+	if string.nilorempty(jumpId) then
 		return
 	end
 
-	local var_1_0 = false
-	local var_1_1 = string.splitToNumber(arg_1_1, "#")
+	local isSuccessJump = false
+	local jumpParam = string.splitToNumber(jumpId, "#")
 
-	if var_1_1[1] == JumpEnum.JumpView.RoomView then
+	if jumpParam[1] == JumpEnum.JumpView.RoomView then
 		if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Room then
 			return
 		end
 
-		local var_1_2 = arg_1_0["jumpTo" .. var_1_1[2]]
+		local func = self["jumpTo" .. jumpParam[2]]
 
-		if var_1_2 then
-			var_1_0 = var_1_2(arg_1_0, var_1_1)
+		if func then
+			isSuccessJump = func(self, jumpParam)
 		end
 	end
 
-	if var_1_0 and ViewMgr.instance:isOpen(ViewName.RoomRecordView) then
+	if isSuccessJump and ViewMgr.instance:isOpen(ViewName.RoomRecordView) then
 		ViewMgr.instance:closeView(ViewName.RoomRecordView, false)
 	end
 end
 
-function var_0_0.jumpTo1(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_1[3] or 1
+function RoomJumpController:jumpTo1(jumpParam)
+	local tab = jumpParam[3] or 1
 
-	if var_2_0 == 1 then
+	if tab == 1 then
 		return
 	end
 
 	if ViewMgr.instance:isOpen(ViewName.RoomRecordView) then
-		local var_2_1 = var_2_0 == 2 and RoomRecordEnum.AnimName.Task2Log or RoomRecordEnum.AnimName.Task2HandBook
+		local animName = tab == 2 and RoomRecordEnum.AnimName.Task2Log or RoomRecordEnum.AnimName.Task2HandBook
 
 		RoomController.instance:dispatchEvent(RoomEvent.SwitchRecordView, {
-			animName = var_2_1,
-			view = var_2_0
+			animName = animName,
+			view = tab
 		})
 	else
-		ManufactureController.instance:openRoomRecordView(var_2_0)
+		ManufactureController.instance:openRoomRecordView(tab)
 	end
 end
 
-function var_0_0.jumpTo2(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_1[3] or 1
-	local var_3_1 = ManufactureModel.instance:getCritterBuildingListInOrder()
+function RoomJumpController:jumpTo2(jumpParam)
+	local tab = jumpParam[3] or 1
+	local buildingList = ManufactureModel.instance:getCritterBuildingListInOrder()
 
-	if not var_3_1 or #var_3_1 <= 0 then
-		arg_3_0:showRoomNotBuildingMessageBox()
+	if not buildingList or #buildingList <= 0 then
+		self:showRoomNotBuildingMessageBox()
 
 		return
 	end
 
-	if var_3_0 == 3 then
+	if tab == 3 then
 		if not GuideModel.instance:isGuideFinish(RoomTradeEnum.GuideUnlock.Summon) then
 			GameFacade.showToast(RoomEnum.Toast.RoomTradeLowLevel)
 
 			return
 		end
-	elseif var_3_0 == 4 and ManufactureModel.instance:getTradeLevel() < RoomTradeTaskModel.instance:getOpenCritterIncubateLevel() then
+	elseif tab == 4 and ManufactureModel.instance:getTradeLevel() < RoomTradeTaskModel.instance:getOpenCritterIncubateLevel() then
 		GameFacade.showToast(RoomEnum.Toast.RoomTradeLowLevel)
 
 		return
 	end
 
-	return ManufactureController.instance:openCritterBuildingView(nil, var_3_0)
+	return ManufactureController.instance:openCritterBuildingView(nil, tab)
 end
 
-function var_0_0.jumpTo3(arg_4_0, arg_4_1)
+function RoomJumpController:jumpTo3(jumpParam)
 	return ManufactureController.instance:openOverView()
 end
 
-function var_0_0.jumpTo4(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_1[3] or 1
+function RoomJumpController:jumpTo4(jumpParam)
+	local tab = jumpParam[3] or 1
 
-	return ManufactureController.instance:openRoomTradeView(nil, var_5_0)
+	return ManufactureController.instance:openRoomTradeView(nil, tab)
 end
 
-function var_0_0.jumpTo5(arg_6_0, arg_6_1)
+function RoomJumpController:jumpTo5(jumpParam)
 	return ManufactureController.instance:openRoomBackpackView()
 end
 
-function var_0_0.jumpTo6(arg_7_0, arg_7_1)
-	return arg_7_0:jumpToPlaceBuilding()
+function RoomJumpController:jumpTo6(jumpParam)
+	return self:jumpToPlaceBuilding()
 end
 
-function var_0_0.jumpTo7(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_1[3]
+function RoomJumpController:jumpTo7(jumpParam)
+	local buildingType = jumpParam[3]
 
-	return arg_8_0:jumpToManufactureBuilding(var_8_0)
+	return self:jumpToManufactureBuilding(buildingType)
 end
 
-function var_0_0.jumpTo8(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_1[3]
+function RoomJumpController:jumpTo8(jumpParam)
+	local buildingType = jumpParam[3]
 
-	return arg_9_0:jumpToManufactureBuildingLevelUp(var_9_0)
+	return self:jumpToManufactureBuildingLevelUp(buildingType)
 end
 
-function var_0_0.jumpTo9(arg_10_0, arg_10_1)
+function RoomJumpController:jumpTo9(jumpParam)
 	JumpController.instance:jump(JumpEnum.JumpId.RoomStoreTabFluff)
 end
 
-function var_0_0.jumpTo10(arg_11_0, arg_11_1)
-	if not (ManufactureModel.instance:getTradeLevel() >= ManufactureConfig.instance:getUnlockSystemTradeLevel(RoomTradeEnum.LevelUnlock.TransportSystemOpen)) then
+function RoomJumpController:jumpTo10(jumpParam)
+	local isOpen = ManufactureModel.instance:getTradeLevel() >= ManufactureConfig.instance:getUnlockSystemTradeLevel(RoomTradeEnum.LevelUnlock.TransportSystemOpen)
+
+	if not isOpen then
 		GameFacade.showToast(RoomEnum.Toast.RoomTradeLowLevel)
 
 		return
 	end
 
-	local var_11_0 = arg_11_1[3]
+	local siteType = jumpParam[3]
+	local isHas = RoomTransportController.instance:_findLinkPathSiteType(siteType)
 
-	if not RoomTransportController.instance:_findLinkPathSiteType(var_11_0) then
-		arg_11_0:showRoomNotTransportRoadMessageBox()
+	if not isHas then
+		self:showRoomNotTransportRoadMessageBox()
 
 		return false
 	end
 
-	RoomTransportController.instance:openTransportSiteView(var_11_0)
+	RoomTransportController.instance:openTransportSiteView(siteType)
 
 	return true
 end
 
-function var_0_0.jumpTo11(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_1[3]
+function RoomJumpController:jumpTo11(jumpParam)
+	local buildingId = jumpParam[3]
 
-	return arg_12_0:jumpToManufactureBuilding(nil, var_12_0)
+	return self:jumpToManufactureBuilding(nil, buildingId)
 end
 
-function var_0_0.jumpTo12(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_1[3]
+function RoomJumpController:jumpTo12(jumpParam)
+	local buildingId = jumpParam[3]
 
-	return arg_13_0:jumpToManufactureBuildingLevelUp(nil, var_13_0)
+	return self:jumpToManufactureBuildingLevelUp(nil, buildingId)
 end
 
-function var_0_0.jumpTo13(arg_14_0, arg_14_1)
-	if not (ManufactureModel.instance:getTradeLevel() >= ManufactureConfig.instance:getUnlockSystemTradeLevel(RoomTradeEnum.LevelUnlock.TransportSystemOpen)) then
+function RoomJumpController:jumpTo13(jumpParam)
+	local isOpen = ManufactureModel.instance:getTradeLevel() >= ManufactureConfig.instance:getUnlockSystemTradeLevel(RoomTradeEnum.LevelUnlock.TransportSystemOpen)
+
+	if not isOpen then
 		GameFacade.showToast(RoomEnum.Toast.RoomTradeLowLevel)
 
 		return
 	end
 
-	return arg_14_0:jumpToTransportSiteView()
+	return self:jumpToTransportSiteView()
 end
 
-function var_0_0.jumpToPlaceBuilding(arg_15_0)
+function RoomJumpController:jumpToPlaceBuilding()
 	ManufactureController.instance:jump2PlaceManufactureBuildingView()
 
 	return true
 end
 
-function var_0_0.jumpToTransportSiteView(arg_16_0)
-	if RoomController.instance:isEditMode() then
+function RoomJumpController:jumpToTransportSiteView()
+	local isEditMode = RoomController.instance:isEditMode()
+
+	if isEditMode then
 		GameFacade.showToast(RoomEnum.Toast.TaskAlreadyInEditMode)
 	else
 		if RoomMapBuildingAreaModel.instance:getCount() < 2 then
@@ -163,14 +172,16 @@ function var_0_0.jumpToTransportSiteView(arg_16_0)
 			return false
 		end
 
-		if ViewMgr.instance:isOpen(ViewName.RoomTradeView) then
+		local isOpenTradeView = ViewMgr.instance:isOpen(ViewName.RoomTradeView)
+
+		if isOpenTradeView then
 			RoomTradeController.instance:dispatchEvent(RoomTradeEvent.PlayCloseTVAnim)
 		end
 
-		local var_16_0 = ViewMgr.instance:isOpen(ViewName.RoomBackpackView)
-		local var_16_1 = ViewMgr.instance:isOpen(ViewName.RoomOverView)
+		local isOpenRoomBackpackView = ViewMgr.instance:isOpen(ViewName.RoomBackpackView)
+		local isOpenOverView = ViewMgr.instance:isOpen(ViewName.RoomOverView)
 
-		if var_16_0 or var_16_1 then
+		if isOpenRoomBackpackView or isOpenOverView then
 			AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_state_normal)
 		end
 
@@ -182,88 +193,88 @@ function var_0_0.jumpToTransportSiteView(arg_16_0)
 	return true
 end
 
-function var_0_0.jumpToManufactureBuilding(arg_17_0, arg_17_1, arg_17_2)
-	if arg_17_2 then
-		local var_17_0 = RoomMapBuildingModel.instance:getBuildingMoByBuildingId(arg_17_2)
+function RoomJumpController:jumpToManufactureBuilding(buildingType, buildingId)
+	if buildingId then
+		local buildingMo = RoomMapBuildingModel.instance:getBuildingMoByBuildingId(buildingId)
 
-		if var_17_0 then
-			ManufactureController.instance:openManufactureBuildingViewByBuilding(var_17_0)
+		if buildingMo then
+			ManufactureController.instance:openManufactureBuildingViewByBuilding(buildingMo)
 		else
-			arg_17_0:showRoomNotBuildingMessageBox()
+			self:showRoomNotBuildingMessageBox()
 
 			return false
 		end
 	else
-		local var_17_1, var_17_2 = arg_17_0:isHasBuilding(arg_17_1)
+		local isHas, _type = self:isHasBuilding(buildingType)
 
-		if not var_17_1 then
-			arg_17_0:showRoomNotBuildingMessageBox()
+		if not isHas then
+			self:showRoomNotBuildingMessageBox()
 
 			return false
 		end
 
-		ManufactureController.instance:openManufactureBuildingViewByType(var_17_2)
+		ManufactureController.instance:openManufactureBuildingViewByType(_type)
 	end
 
 	return true
 end
 
-function var_0_0.jumpToManufactureBuildingLevelUp(arg_18_0, arg_18_1, arg_18_2)
-	if arg_18_2 then
-		local var_18_0 = RoomMapBuildingModel.instance:getBuildingMoByBuildingId(arg_18_2)
+function RoomJumpController:jumpToManufactureBuildingLevelUp(buildingType, buildingId)
+	if buildingId then
+		local buildingMo = RoomMapBuildingModel.instance:getBuildingMoByBuildingId(buildingId)
 
-		if var_18_0 then
-			ManufactureController.instance:jumpToManufactureBuildingLevelUpView(var_18_0.buildingUid)
+		if buildingMo then
+			ManufactureController.instance:jumpToManufactureBuildingLevelUpView(buildingMo.buildingUid)
 		else
-			arg_18_0:showRoomNotBuildingMessageBox()
+			self:showRoomNotBuildingMessageBox()
 
 			return false
 		end
 	else
-		local var_18_1, var_18_2 = arg_18_0:isHasBuilding(arg_18_1)
+		local isHas, _type = self:isHasBuilding(buildingType)
 
-		if not var_18_1 then
-			arg_18_0:showRoomNotBuildingMessageBox()
+		if not isHas then
+			self:showRoomNotBuildingMessageBox()
 
 			return false
 		end
 
-		local var_18_3 = RoomMapBuildingModel.instance:getBuildingListByType(var_18_2)
+		local buildingList = RoomMapBuildingModel.instance:getBuildingListByType(_type)
 
-		if var_18_3 and #var_18_3 > 0 then
-			local var_18_4 = var_18_3[1].buildingUid
+		if buildingList and #buildingList > 0 then
+			local buildingUid = buildingList[1].buildingUid
 
-			ManufactureController.instance:jumpToManufactureBuildingLevelUpView(var_18_4)
+			ManufactureController.instance:jumpToManufactureBuildingLevelUpView(buildingUid)
 		end
 	end
 
 	return true
 end
 
-function var_0_0.isHasBuilding(arg_19_0, arg_19_1)
-	if arg_19_1 and arg_19_1 > 0 then
-		local var_19_0 = RoomMapBuildingModel.instance:getBuildingListByType(arg_19_1)
+function RoomJumpController:isHasBuilding(buildingType)
+	if buildingType and buildingType > 0 then
+		local buildingList = RoomMapBuildingModel.instance:getBuildingListByType(buildingType)
 
-		return var_19_0 and #var_19_0 > 0, arg_19_1
+		return buildingList and #buildingList > 0, buildingType
 	end
 
-	for iter_19_0, iter_19_1 in pairs(RoomJumpEnum.ManufactureBuildingType) do
-		local var_19_1 = RoomMapBuildingModel.instance:getBuildingListByType(iter_19_1)
+	for _, _type in pairs(RoomJumpEnum.ManufactureBuildingType) do
+		local buildingList = RoomMapBuildingModel.instance:getBuildingListByType(_type)
 
-		if var_19_1 and #var_19_1 > 0 then
-			return true, iter_19_1
+		if buildingList and #buildingList > 0 then
+			return true, _type
 		end
 	end
 end
 
-function var_0_0.showRoomNotBuildingMessageBox(arg_20_0)
-	GameFacade.showMessageBox(MessageBoxIdDefine.RoomNotBuilding, MsgBoxEnum.BoxType.Yes_No, arg_20_0.jumpToPlaceBuilding)
+function RoomJumpController:showRoomNotBuildingMessageBox()
+	GameFacade.showMessageBox(MessageBoxIdDefine.RoomNotBuilding, MsgBoxEnum.BoxType.Yes_No, self.jumpToPlaceBuilding)
 end
 
-function var_0_0.showRoomNotTransportRoadMessageBox(arg_21_0)
-	GameFacade.showMessageBox(MessageBoxIdDefine.RoomNotTransportRoad, MsgBoxEnum.BoxType.Yes_No, arg_21_0.jumpToTransportSiteView)
+function RoomJumpController:showRoomNotTransportRoadMessageBox()
+	GameFacade.showMessageBox(MessageBoxIdDefine.RoomNotTransportRoad, MsgBoxEnum.BoxType.Yes_No, self.jumpToTransportSiteView)
 end
 
-var_0_0.instance = var_0_0.New()
+RoomJumpController.instance = RoomJumpController.New()
 
-return var_0_0
+return RoomJumpController

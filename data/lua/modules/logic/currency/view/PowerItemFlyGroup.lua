@@ -1,55 +1,59 @@
-﻿module("modules.logic.currency.view.PowerItemFlyGroup", package.seeall)
+﻿-- chunkname: @modules/logic/currency/view/PowerItemFlyGroup.lua
 
-local var_0_0 = class("PowerItemFlyGroup", LuaCompBase)
+module("modules.logic.currency.view.PowerItemFlyGroup", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._itemPrefab = gohelper.findChild(arg_1_1, "item")
+local PowerItemFlyGroup = class("PowerItemFlyGroup", LuaCompBase)
 
-	gohelper.setActive(arg_1_0._itemPrefab, false)
+function PowerItemFlyGroup:init(go)
+	self.go = go
+	self._itemPrefab = gohelper.findChild(go, "item")
 
-	arg_1_0._items = arg_1_0:getUserDataTb_()
+	gohelper.setActive(self._itemPrefab, false)
+
+	self._items = self:getUserDataTb_()
 end
 
-function var_0_0.flyItems(arg_2_0, arg_2_1)
-	TaskDispatcher.cancelTask(arg_2_0._delayPlayAudio, arg_2_0)
+function PowerItemFlyGroup:flyItems(count)
+	TaskDispatcher.cancelTask(self._delayPlayAudio, self)
 
-	if arg_2_1 and arg_2_1 > 0 then
-		gohelper.setActive(arg_2_0.go, true)
+	if count and count > 0 then
+		gohelper.setActive(self.go, true)
 
-		for iter_2_0 = 1, arg_2_1 do
-			arg_2_0:_getCanFlyItem(iter_2_0):fly((iter_2_0 - 1) * 0.13)
+		for i = 1, count do
+			local item = self:_getCanFlyItem(i)
+
+			item:fly((i - 1) * 0.13)
 		end
 
-		TaskDispatcher.runDelay(arg_2_0._delayPlayAudio, arg_2_0, 0.5)
+		TaskDispatcher.runDelay(self._delayPlayAudio, self, 0.5)
 	end
 end
 
-function var_0_0._delayPlayAudio(arg_3_0)
+function PowerItemFlyGroup:_delayPlayAudio()
 	AudioMgr.instance:trigger(AudioEnum3_1.Power.play_ui_tili_candy)
 end
 
-function var_0_0._getCanFlyItem(arg_4_0)
-	for iter_4_0, iter_4_1 in ipairs(arg_4_0._items) do
-		if iter_4_1:isCanfly() then
-			return iter_4_1
+function PowerItemFlyGroup:_getCanFlyItem()
+	for _, item in ipairs(self._items) do
+		if item:isCanfly() then
+			return item
 		end
 	end
 
-	local var_4_0 = gohelper.cloneInPlace(arg_4_0._itemPrefab, #arg_4_0._items + 1)
-	local var_4_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_4_0, PowerItemFlyItem)
+	local go = gohelper.cloneInPlace(self._itemPrefab, #self._items + 1)
+	local item = MonoHelper.addNoUpdateLuaComOnceToGo(go, PowerItemFlyItem)
 
-	table.insert(arg_4_0._items, var_4_1)
+	table.insert(self._items, item)
 
-	return var_4_1
+	return item
 end
 
-function var_0_0.onDestroy(arg_5_0)
-	arg_5_0:cancelTask()
+function PowerItemFlyGroup:onDestroy()
+	self:cancelTask()
 end
 
-function var_0_0.cancelTask(arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0._delayPlayAudio, arg_6_0)
+function PowerItemFlyGroup:cancelTask()
+	TaskDispatcher.cancelTask(self._delayPlayAudio, self)
 end
 
-return var_0_0
+return PowerItemFlyGroup

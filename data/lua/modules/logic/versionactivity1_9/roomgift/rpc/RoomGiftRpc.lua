@@ -1,42 +1,44 @@
-﻿module("modules.logic.versionactivity1_9.roomgift.rpc.RoomGiftRpc", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/roomgift/rpc/RoomGiftRpc.lua
 
-local var_0_0 = class("RoomGiftRpc", BaseRpc)
+module("modules.logic.versionactivity1_9.roomgift.rpc.RoomGiftRpc", package.seeall)
 
-function var_0_0.sendGet159InfosRequest(arg_1_0, arg_1_1)
-	if not arg_1_1 then
+local RoomGiftRpc = class("RoomGiftRpc", BaseRpc)
+
+function RoomGiftRpc:sendGet159InfosRequest(activityId)
+	if not activityId then
 		return
 	end
 
-	local var_1_0 = Activity159Module_pb.Get159InfosRequest()
+	local req = Activity159Module_pb.Get159InfosRequest()
 
-	var_1_0.activityId = arg_1_1
+	req.activityId = activityId
 
-	return arg_1_0:sendMsg(var_1_0)
+	return self:sendMsg(req)
 end
 
-function var_0_0.onReceiveGet159InfosReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 ~= 0 then
+function RoomGiftRpc:onReceiveGet159InfosReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	RoomGiftModel.instance:setActivityInfo(arg_2_2)
+	RoomGiftModel.instance:setActivityInfo(msg)
 	RoomGiftController.instance:dispatchEvent(RoomGiftEvent.UpdateActInfo)
 end
 
-function var_0_0.sendGet159BonusRequest(arg_3_0, arg_3_1)
-	if not arg_3_1 then
+function RoomGiftRpc:sendGet159BonusRequest(activityId)
+	if not activityId then
 		return
 	end
 
-	local var_3_0 = Activity159Module_pb.Get159BonusRequest()
+	local req = Activity159Module_pb.Get159BonusRequest()
 
-	var_3_0.activityId = arg_3_1
+	req.activityId = activityId
 
-	return arg_3_0:sendMsg(var_3_0)
+	return self:sendMsg(req)
 end
 
-function var_0_0.onReceiveGet159BonusReply(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 ~= 0 then
+function RoomGiftRpc:onReceiveGet159BonusReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
@@ -44,6 +46,6 @@ function var_0_0.onReceiveGet159BonusReply(arg_4_0, arg_4_1, arg_4_2)
 	RoomGiftController.instance:dispatchEvent(RoomGiftEvent.GetBonus)
 end
 
-var_0_0.instance = var_0_0.New()
+RoomGiftRpc.instance = RoomGiftRpc.New()
 
-return var_0_0
+return RoomGiftRpc

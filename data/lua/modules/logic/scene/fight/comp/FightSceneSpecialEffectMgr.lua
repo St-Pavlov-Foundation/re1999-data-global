@@ -1,207 +1,209 @@
-﻿module("modules.logic.scene.fight.comp.FightSceneSpecialEffectMgr", package.seeall)
+﻿-- chunkname: @modules/logic/scene/fight/comp/FightSceneSpecialEffectMgr.lua
 
-local var_0_0 = class("FightSceneSpecialEffectMgr", BaseSceneComp)
+module("modules.logic.scene.fight.comp.FightSceneSpecialEffectMgr", package.seeall)
 
-function var_0_0.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
-	FightController.instance:registerCallback(FightEvent.OnInvokeSkill, arg_1_0._onInvokeSkill, arg_1_0)
-	FightController.instance:registerCallback(FightEvent.BeforeDeadEffect, arg_1_0._beforeDeadEffect, arg_1_0)
-	FightController.instance:registerCallback(FightEvent.FightRoundEnd, arg_1_0._onFightRoundEnd, arg_1_0)
-	FightController.instance:registerCallback(FightEvent.OnSkillPlayStart, arg_1_0._onSkillPlayStart, arg_1_0)
-	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, arg_1_0._onSkillPlayFinish, arg_1_0)
-	FightController.instance:registerCallback(FightEvent.BeforeDestroyEntity, arg_1_0._onBeforeDestroyEntity, arg_1_0)
+local FightSceneSpecialEffectMgr = class("FightSceneSpecialEffectMgr", BaseSceneComp)
+
+function FightSceneSpecialEffectMgr:onSceneStart(sceneId, levelId)
+	FightController.instance:registerCallback(FightEvent.OnInvokeSkill, self._onInvokeSkill, self)
+	FightController.instance:registerCallback(FightEvent.BeforeDeadEffect, self._beforeDeadEffect, self)
+	FightController.instance:registerCallback(FightEvent.FightRoundEnd, self._onFightRoundEnd, self)
+	FightController.instance:registerCallback(FightEvent.OnSkillPlayStart, self._onSkillPlayStart, self)
+	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
+	FightController.instance:registerCallback(FightEvent.BeforeDestroyEntity, self._onBeforeDestroyEntity, self)
 end
 
-function var_0_0.addBuff(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0:_detectShiSiHangShiGoodEffect(arg_2_1)
-	arg_2_0:_detectPlayBuffAnimation(arg_2_1, arg_2_2)
-	arg_2_0:_detectPlayCarAnimation(arg_2_1, arg_2_2)
+function FightSceneSpecialEffectMgr:addBuff(tar_entity, buff)
+	self:_detectShiSiHangShiGoodEffect(tar_entity)
+	self:_detectPlayBuffAnimation(tar_entity, buff)
+	self:_detectPlayCarAnimation(tar_entity, buff)
 end
 
-function var_0_0.delBuff(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0:_detectShiSiHangShiGoodEffect(arg_3_1)
+function FightSceneSpecialEffectMgr:delBuff(tar_entity, buff)
+	self:_detectShiSiHangShiGoodEffect(tar_entity)
 
-	if arg_3_1.id == arg_3_0._xia_li_uid and (arg_3_2.buffId == 30172 or arg_3_2.buffId == 30171) then
-		arg_3_0:_releaseXiaLiSpecialEffect()
+	if tar_entity.id == self._xia_li_uid and (buff.buffId == 30172 or buff.buffId == 30171) then
+		self:_releaseXiaLiSpecialEffect()
 	end
 
-	arg_3_0:_detectPlayBuffAnimation(arg_3_1, arg_3_2, true)
+	self:_detectPlayBuffAnimation(tar_entity, buff, true)
 end
 
-function var_0_0._detectPlayBuffAnimation(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	if FightBuffHelper.isDormantBuff(arg_4_2.buffId) then
+function FightSceneSpecialEffectMgr:_detectPlayBuffAnimation(tar_entity, buff_mo, delete_buff)
+	if FightBuffHelper.isDormantBuff(buff_mo.buffId) then
 		if SkillEditorMgr and SkillEditorMgr.instance.inEditMode then
 			-- block empty
 		elseif not FightWorkStepBuff.updateWaitTime then
 			return
 		end
 
-		if not arg_4_0._buff_animation_dic then
-			arg_4_0._buff_animation_dic = {}
+		if not self._buff_animation_dic then
+			self._buff_animation_dic = {}
 		end
 
-		if not arg_4_0._buff_animation_dic[arg_4_1.id] then
-			arg_4_0._buff_animation_dic[arg_4_1.id] = {}
+		if not self._buff_animation_dic[tar_entity.id] then
+			self._buff_animation_dic[tar_entity.id] = {}
 		end
 
-		arg_4_0:_releaseEntityAnimation(arg_4_1.id)
+		self:_releaseEntityAnimation(tar_entity.id)
 
-		local var_4_0 = FightBuffPlayAnimation.New(arg_4_1, arg_4_2, arg_4_3 and "mjzz_return" or "mjzz_sleep")
+		local tar_class = FightBuffPlayAnimation.New(tar_entity, buff_mo, delete_buff and "mjzz_return" or "mjzz_sleep")
 
-		table.insert(arg_4_0._buff_animation_dic[arg_4_1.id], var_4_0)
+		table.insert(self._buff_animation_dic[tar_entity.id], tar_class)
 	end
 end
 
-function var_0_0._onSkillPlayStart(arg_5_0, arg_5_1)
-	if arg_5_1 and arg_5_1.id == arg_5_0._xia_li_uid and arg_5_0._xia_li_skill_id == 30170143 and arg_5_0._xiali_special_effect then
-		arg_5_0._xiali_special_effect:setActive(false)
+function FightSceneSpecialEffectMgr:_onSkillPlayStart(tar_entity)
+	if tar_entity and tar_entity.id == self._xia_li_uid and self._xia_li_skill_id == 30170143 and self._xiali_special_effect then
+		self._xiali_special_effect:setActive(false)
 	end
 end
 
-function var_0_0._onSkillPlayFinish(arg_6_0, arg_6_1)
-	if arg_6_1 and arg_6_1.id == arg_6_0._xia_li_uid and arg_6_0._xiali_special_effect then
-		arg_6_0._xiali_special_effect:setActive(true)
+function FightSceneSpecialEffectMgr:_onSkillPlayFinish(tar_entity)
+	if tar_entity and tar_entity.id == self._xia_li_uid and self._xiali_special_effect then
+		self._xiali_special_effect:setActive(true)
 	end
 end
 
-function var_0_0._onInvokeSkill(arg_7_0, arg_7_1)
-	if arg_7_1.actType == FightEnum.ActType.SKILL then
-		local var_7_0 = FightHelper.getEntity(arg_7_1.fromId)
+function FightSceneSpecialEffectMgr:_onInvokeSkill(stepData)
+	if stepData.actType == FightEnum.ActType.SKILL then
+		local from_entity = FightHelper.getEntity(stepData.fromId)
 
-		if var_7_0 and arg_7_1.fromId == var_7_0.id then
-			if arg_7_1.actId == 30170141 then
-				arg_7_0:_releaseXiaLiSpecialEffect()
+		if from_entity and stepData.fromId == from_entity.id then
+			if stepData.actId == 30170141 then
+				self:_releaseXiaLiSpecialEffect()
 
-				arg_7_0._xiali_special_effect = var_7_0.effect:addHangEffect("buff/xiali_buff_innate1", ModuleEnum.SpineHangPoint.mounthead, nil, nil, {
+				self._xiali_special_effect = from_entity.effect:addHangEffect("buff/xiali_buff_innate1", ModuleEnum.SpineHangPoint.mounthead, nil, nil, {
 					z = 0,
 					x = 0,
 					y = 0
 				})
 
-				arg_7_0._xiali_special_effect:setLocalPos(0, 0, 0)
+				self._xiali_special_effect:setLocalPos(0, 0, 0)
 
-				arg_7_0._xia_li_uid = var_7_0.id
-				arg_7_0._xia_li_skill_id = arg_7_1.actId
+				self._xia_li_uid = from_entity.id
+				self._xia_li_skill_id = stepData.actId
 
-				FightRenderOrderMgr.instance:onAddEffectWrap(var_7_0.id, arg_7_0._xiali_special_effect)
-			elseif arg_7_1.actId == 30170143 then
-				arg_7_0:_releaseXiaLiSpecialEffect()
+				FightRenderOrderMgr.instance:onAddEffectWrap(from_entity.id, self._xiali_special_effect)
+			elseif stepData.actId == 30170143 then
+				self:_releaseXiaLiSpecialEffect()
 
-				arg_7_0._xiali_special_effect = var_7_0.effect:addHangEffect("buff/xiali_buff_innate2", "special4", nil, nil, {
+				self._xiali_special_effect = from_entity.effect:addHangEffect("buff/xiali_buff_innate2", "special4", nil, nil, {
 					z = 0,
 					x = 0,
 					y = 0
 				})
 
-				arg_7_0._xiali_special_effect:setLocalPos(0, 0, 0)
+				self._xiali_special_effect:setLocalPos(0, 0, 0)
 
-				arg_7_0._xia_li_uid = var_7_0.id
-				arg_7_0._xia_li_skill_id = arg_7_1.actId
+				self._xia_li_uid = from_entity.id
+				self._xia_li_skill_id = stepData.actId
 
-				FightRenderOrderMgr.instance:onAddEffectWrap(var_7_0.id, arg_7_0._xiali_special_effect)
+				FightRenderOrderMgr.instance:onAddEffectWrap(from_entity.id, self._xiali_special_effect)
 			end
 		end
 	end
 end
 
-function var_0_0._onFightRoundEnd(arg_8_0)
+function FightSceneSpecialEffectMgr:_onFightRoundEnd()
 	return
 end
 
-function var_0_0.setBuffEffectVisible(arg_9_0, arg_9_1, arg_9_2)
-	if arg_9_1 and arg_9_1.id == arg_9_0._xia_li_uid and arg_9_0._xiali_special_effect then
-		arg_9_0._xiali_special_effect:setActive(arg_9_2)
+function FightSceneSpecialEffectMgr:setBuffEffectVisible(tar_entity, state)
+	if tar_entity and tar_entity.id == self._xia_li_uid and self._xiali_special_effect then
+		self._xiali_special_effect:setActive(state)
 	end
 
-	if arg_9_1 and arg_9_1.id == arg_9_0._shi_si_hang_shi_uid and arg_9_0._shi_si_hang_shi_good_effect then
-		arg_9_0._shi_si_hang_shi_good_effect:setActive(arg_9_2)
+	if tar_entity and tar_entity.id == self._shi_si_hang_shi_uid and self._shi_si_hang_shi_good_effect then
+		self._shi_si_hang_shi_good_effect:setActive(state)
 	end
 end
 
-function var_0_0._releaseXiaLiSpecialEffect(arg_10_0)
-	if arg_10_0._xiali_special_effect then
-		local var_10_0 = FightHelper.getEntity(arg_10_0._xia_li_uid)
+function FightSceneSpecialEffectMgr:_releaseXiaLiSpecialEffect()
+	if self._xiali_special_effect then
+		local tar_entity = FightHelper.getEntity(self._xia_li_uid)
 
-		if var_10_0 then
-			var_10_0.effect:removeEffect(arg_10_0._xiali_special_effect)
+		if tar_entity then
+			tar_entity.effect:removeEffect(self._xiali_special_effect)
 		end
 
-		FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_10_0._xia_li_uid, arg_10_0._xiali_special_effect)
+		FightRenderOrderMgr.instance:onRemoveEffectWrap(self._xia_li_uid, self._xiali_special_effect)
 
-		arg_10_0._xiali_special_effect = nil
-		arg_10_0._xia_li_uid = nil
+		self._xiali_special_effect = nil
+		self._xia_li_uid = nil
 	end
 end
 
-function var_0_0._releaseShiSiHangShiGoodEffect(arg_11_0)
-	if arg_11_0._shi_si_hang_shi_good_effect then
-		local var_11_0 = FightHelper.getEntity(arg_11_0._shi_si_hang_shi_uid)
+function FightSceneSpecialEffectMgr:_releaseShiSiHangShiGoodEffect()
+	if self._shi_si_hang_shi_good_effect then
+		local tar_entity = FightHelper.getEntity(self._shi_si_hang_shi_uid)
 
-		if var_11_0 then
-			var_11_0.effect:removeEffect(arg_11_0._shi_si_hang_shi_good_effect)
+		if tar_entity then
+			tar_entity.effect:removeEffect(self._shi_si_hang_shi_good_effect)
 		end
 
-		FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_11_0._shi_si_hang_shi_uid, arg_11_0._shi_si_hang_shi_good_effect)
+		FightRenderOrderMgr.instance:onRemoveEffectWrap(self._shi_si_hang_shi_uid, self._shi_si_hang_shi_good_effect)
 
-		arg_11_0._shi_si_hang_shi_good_effect = nil
-		arg_11_0._shi_si_hang_shi_uid = nil
+		self._shi_si_hang_shi_good_effect = nil
+		self._shi_si_hang_shi_uid = nil
 	end
 end
 
-function var_0_0._detectShiSiHangShiGoodEffect(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = arg_12_1:getMO()
+function FightSceneSpecialEffectMgr:_detectShiSiHangShiGoodEffect(tar_entity, buff)
+	local entityMO = tar_entity:getMO()
 
-	if var_12_0 and var_12_0.modelId == 3023 then
-		local var_12_1, var_12_2 = HeroConfig.instance:getShowLevel(var_12_0.level)
+	if entityMO and entityMO.modelId == 3023 then
+		local level, rank = HeroConfig.instance:getShowLevel(entityMO.level)
 
-		if var_12_2 < 2 then
+		if rank < 2 then
 			return
 		end
 
-		local var_12_3 = false
-		local var_12_4 = var_12_0:getBuffDic()
+		local haveGoodBuff = false
+		local buffDic = entityMO:getBuffDic()
 
-		for iter_12_0, iter_12_1 in pairs(var_12_4) do
-			local var_12_5 = lua_skill_buff.configDict[iter_12_1.buffId]
-			local var_12_6 = lua_skill_bufftype.configDict[var_12_5.typeId]
+		for _, buffMO in pairs(buffDic) do
+			local buff_config = lua_skill_buff.configDict[buffMO.buffId]
+			local buff_type_config = lua_skill_bufftype.configDict[buff_config.typeId]
 
-			for iter_12_2, iter_12_3 in ipairs(FightEnum.BuffTypeList.GoodBuffList) do
-				if var_12_6.type == iter_12_3 then
-					var_12_3 = true
+			for index, value in ipairs(FightEnum.BuffTypeList.GoodBuffList) do
+				if buff_type_config.type == value then
+					haveGoodBuff = true
 
 					break
 				end
 			end
 
-			if var_12_3 then
+			if haveGoodBuff then
 				break
 			end
 		end
 
-		if var_12_3 then
-			if not arg_12_0._shi_si_hang_shi_good_effect then
-				arg_12_0._shi_si_hang_shi_good_effect = arg_12_1.effect:addHangEffect("buff/shisihangshi_innate", ModuleEnum.SpineHangPoint.mountweapon, nil, nil, {
+		if haveGoodBuff then
+			if not self._shi_si_hang_shi_good_effect then
+				self._shi_si_hang_shi_good_effect = tar_entity.effect:addHangEffect("buff/shisihangshi_innate", ModuleEnum.SpineHangPoint.mountweapon, nil, nil, {
 					z = 0,
 					x = 0,
 					y = 0
 				})
 
-				arg_12_0._shi_si_hang_shi_good_effect:setLocalPos(0, 0, 0)
+				self._shi_si_hang_shi_good_effect:setLocalPos(0, 0, 0)
 
-				arg_12_0._shi_si_hang_shi_uid = arg_12_1.id
+				self._shi_si_hang_shi_uid = tar_entity.id
 
-				FightRenderOrderMgr.instance:onAddEffectWrap(arg_12_1.id, arg_12_0._shi_si_hang_shi_good_effect)
+				FightRenderOrderMgr.instance:onAddEffectWrap(tar_entity.id, self._shi_si_hang_shi_good_effect)
 			end
 		else
-			arg_12_0:_releaseShiSiHangShiGoodEffect()
+			self:_releaseShiSiHangShiGoodEffect()
 		end
 	end
 end
 
-function var_0_0._detectPlayCarAnimation(arg_13_0, arg_13_1, arg_13_2)
-	for iter_13_0 = 1, 10 do
-		if arg_13_2.buffId == 6301310 + iter_13_0 then
-			if arg_13_1.spine:tryPlay("idle_change") then
-				arg_13_1.spine:addAnimEventCallback(arg_13_0._onAnimEvent, arg_13_0, arg_13_1)
+function FightSceneSpecialEffectMgr:_detectPlayCarAnimation(tar_entity, buff)
+	for i = 1, 10 do
+		if buff.buffId == 6301310 + i then
+			if tar_entity.spine:tryPlay("idle_change") then
+				tar_entity.spine:addAnimEventCallback(self._onAnimEvent, self, tar_entity)
 			end
 
 			break
@@ -209,77 +211,77 @@ function var_0_0._detectPlayCarAnimation(arg_13_0, arg_13_1, arg_13_2)
 	end
 end
 
-function var_0_0._onAnimEvent(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4)
-	if arg_14_2 == SpineAnimEvent.ActionComplete and arg_14_1 == "idle_change" then
-		arg_14_4.spine:removeAnimEventCallback(arg_14_0._onAnimEvent, arg_14_0)
-		arg_14_4:resetAnimState()
+function FightSceneSpecialEffectMgr:_onAnimEvent(actionName, eventName, eventArgs, tar_entity)
+	if eventName == SpineAnimEvent.ActionComplete and actionName == "idle_change" then
+		tar_entity.spine:removeAnimEventCallback(self._onAnimEvent, self)
+		tar_entity:resetAnimState()
 	end
 end
 
-function var_0_0._releaseAllEntityAnimation(arg_15_0)
-	if arg_15_0._buff_animation_dic then
-		for iter_15_0, iter_15_1 in pairs(arg_15_0._buff_animation_dic) do
-			arg_15_0:_releaseEntityAnimation(iter_15_0)
+function FightSceneSpecialEffectMgr:_releaseAllEntityAnimation()
+	if self._buff_animation_dic then
+		for entity_id, v in pairs(self._buff_animation_dic) do
+			self:_releaseEntityAnimation(entity_id)
 		end
 	end
 
-	arg_15_0._buff_animation_dic = nil
+	self._buff_animation_dic = nil
 end
 
-function var_0_0._releaseEntityAnimation(arg_16_0, arg_16_1)
-	if arg_16_0._buff_animation_dic and arg_16_0._buff_animation_dic[arg_16_1] then
-		for iter_16_0, iter_16_1 in ipairs(arg_16_0._buff_animation_dic[arg_16_1]) do
-			iter_16_1:releaseSelf()
+function FightSceneSpecialEffectMgr:_releaseEntityAnimation(entity_id)
+	if self._buff_animation_dic and self._buff_animation_dic[entity_id] then
+		for i, v in ipairs(self._buff_animation_dic[entity_id]) do
+			v:releaseSelf()
 		end
 
-		arg_16_0._buff_animation_dic[arg_16_1] = {}
+		self._buff_animation_dic[entity_id] = {}
 	end
 end
 
-function var_0_0._releaseEntitySpineAnimEvent(arg_17_0, arg_17_1)
-	if arg_17_1 and arg_17_1.spine then
-		arg_17_1.spine:removeAnimEventCallback(arg_17_0._onAnimEvent, arg_17_0)
+function FightSceneSpecialEffectMgr:_releaseEntitySpineAnimEvent(tar_entity)
+	if tar_entity and tar_entity.spine then
+		tar_entity.spine:removeAnimEventCallback(self._onAnimEvent, self)
 	end
 end
 
-function var_0_0._beforeDeadEffect(arg_18_0, arg_18_1, arg_18_2)
-	local var_18_0 = arg_18_2 or FightHelper.getEntity(arg_18_1)
+function FightSceneSpecialEffectMgr:_beforeDeadEffect(entity_id, tar_entity)
+	local tar_entity = tar_entity or FightHelper.getEntity(entity_id)
 
-	if var_18_0 then
-		if var_18_0.id == arg_18_0._xia_li_uid then
-			arg_18_0:_releaseXiaLiSpecialEffect()
+	if tar_entity then
+		if tar_entity.id == self._xia_li_uid then
+			self:_releaseXiaLiSpecialEffect()
 		end
 
-		if var_18_0.id == arg_18_0._shi_si_hang_shi_uid then
-			arg_18_0:_releaseShiSiHangShiGoodEffect()
+		if tar_entity.id == self._shi_si_hang_shi_uid then
+			self:_releaseShiSiHangShiGoodEffect()
 		end
 
-		arg_18_0:_releaseEntityAnimation(var_18_0.id)
+		self:_releaseEntityAnimation(tar_entity.id)
 	end
 end
 
-function var_0_0._onBeforeDestroyEntity(arg_19_0, arg_19_1)
-	arg_19_0:_releaseEntitySpineAnimEvent(arg_19_1)
+function FightSceneSpecialEffectMgr:_onBeforeDestroyEntity(tar_entity)
+	self:_releaseEntitySpineAnimEvent(tar_entity)
 end
 
-function var_0_0.clearEffect(arg_20_0, arg_20_1)
-	arg_20_0:_beforeDeadEffect(nil, arg_20_1)
+function FightSceneSpecialEffectMgr:clearEffect(tar_entity)
+	self:_beforeDeadEffect(nil, tar_entity)
 end
 
-function var_0_0.clearAllEffect(arg_21_0)
-	arg_21_0:_releaseXiaLiSpecialEffect()
-	arg_21_0:_releaseShiSiHangShiGoodEffect()
-	arg_21_0:_releaseAllEntityAnimation()
+function FightSceneSpecialEffectMgr:clearAllEffect()
+	self:_releaseXiaLiSpecialEffect()
+	self:_releaseShiSiHangShiGoodEffect()
+	self:_releaseAllEntityAnimation()
 end
 
-function var_0_0.onSceneClose(arg_22_0)
-	FightController.instance:unregisterCallback(FightEvent.OnInvokeSkill, arg_22_0._onInvokeSkill, arg_22_0)
-	FightController.instance:unregisterCallback(FightEvent.BeforeDeadEffect, arg_22_0._beforeDeadEffect, arg_22_0)
-	FightController.instance:unregisterCallback(FightEvent.FightRoundEnd, arg_22_0._onFightRoundEnd, arg_22_0)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayStart, arg_22_0._onSkillPlayStart, arg_22_0)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, arg_22_0._onSkillPlayFinish, arg_22_0)
-	FightController.instance:unregisterCallback(FightEvent.BeforeDestroyEntity, arg_22_0._onBeforeDestroyEntity, arg_22_0)
-	arg_22_0:clearAllEffect()
+function FightSceneSpecialEffectMgr:onSceneClose()
+	FightController.instance:unregisterCallback(FightEvent.OnInvokeSkill, self._onInvokeSkill, self)
+	FightController.instance:unregisterCallback(FightEvent.BeforeDeadEffect, self._beforeDeadEffect, self)
+	FightController.instance:unregisterCallback(FightEvent.FightRoundEnd, self._onFightRoundEnd, self)
+	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayStart, self._onSkillPlayStart, self)
+	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
+	FightController.instance:unregisterCallback(FightEvent.BeforeDestroyEntity, self._onBeforeDestroyEntity, self)
+	self:clearAllEffect()
 end
 
-return var_0_0
+return FightSceneSpecialEffectMgr

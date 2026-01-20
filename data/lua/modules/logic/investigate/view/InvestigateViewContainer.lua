@@ -1,24 +1,26 @@
-﻿module("modules.logic.investigate.view.InvestigateViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/investigate/view/InvestigateViewContainer.lua
 
-local var_0_0 = class("InvestigateViewContainer", BaseViewContainer)
+module("modules.logic.investigate.view.InvestigateViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local InvestigateViewContainer = class("InvestigateViewContainer", BaseViewContainer)
+
+function InvestigateViewContainer:buildViews()
 	return {
 		InvestigateView.New(),
 		TabViewGroup.New(1, "root/#go_topleft")
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	arg_2_0.navigateView = NavigateButtonsView.New({
+function InvestigateViewContainer:buildTabViews(tabContainerId)
+	self.navigateView = NavigateButtonsView.New({
 		true,
 		false,
 		false
 	})
 
 	return {
-		arg_2_0.navigateView
+		self.navigateView
 	}
 end
 
-return var_0_0
+return InvestigateViewContainer

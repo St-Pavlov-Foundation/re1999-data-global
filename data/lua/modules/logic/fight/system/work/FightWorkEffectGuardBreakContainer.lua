@@ -1,17 +1,19 @@
-﻿module("modules.logic.fight.system.work.FightWorkEffectGuardBreakContainer", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkEffectGuardBreakContainer.lua
 
-local var_0_0 = class("FightWorkEffectGuardBreakContainer", FightStepEffectFlow)
+module("modules.logic.fight.system.work.FightWorkEffectGuardBreakContainer", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = {
+local FightWorkEffectGuardBreakContainer = class("FightWorkEffectGuardBreakContainer", FightStepEffectFlow)
+
+function FightWorkEffectGuardBreakContainer:onStart()
+	local parallelEffectType = {
 		[FightEnum.EffectType.GUARDBREAK] = true
 	}
 
-	arg_1_0:playAdjacentParallelEffect(var_1_0, true)
+	self:playAdjacentParallelEffect(parallelEffectType, true)
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkEffectGuardBreakContainer:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkEffectGuardBreakContainer

@@ -1,79 +1,82 @@
-﻿module("modules.logic.versionactivity2_1.lanshoupa.helper.LanShouPaHelper", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_1/lanshoupa/helper/LanShouPaHelper.lua
 
-local var_0_0 = {
-	getLimitTimeStr = function()
-		local var_1_0 = ActivityModel.instance:getActMO(VersionActivity2_1Enum.ActivityId.LanShouPa)
+module("modules.logic.versionactivity2_1.lanshoupa.helper.LanShouPaHelper", package.seeall)
 
-		if not var_1_0 then
-			return ""
-		end
+local LanShouPaHelper = {}
 
-		local var_1_1 = var_1_0:getRealEndTimeStamp() - ServerTime.now()
+function LanShouPaHelper.getLimitTimeStr()
+	local actInfoMo = ActivityModel.instance:getActMO(VersionActivity2_1Enum.ActivityId.LanShouPa)
 
-		if var_1_1 > 0 then
-			return TimeUtil.SecondToActivityTimeFormat(var_1_1)
-		end
-
+	if not actInfoMo then
 		return ""
-	end,
-	isOpenDay = function(arg_2_0)
-		local var_2_0 = VersionActivity2_1Enum.ActivityId.LanShouPa
-		local var_2_1 = ActivityModel.instance:getActMO(var_2_0)
-		local var_2_2 = Activity164Config.instance:getEpisodeCo(var_2_0, arg_2_0)
+	end
 
-		if var_2_1 and var_2_2 then
-			local var_2_3 = var_2_1:getRealStartTimeStamp() + (var_2_2.openDay - 1) * 24 * 60 * 60
-			local var_2_4 = ServerTime.now()
-			local var_2_5 = var_2_2.preEpisode == 0 or Activity164Model.instance:isEpisodeClear(var_2_2.preEpisode)
-			local var_2_6 = math.max(var_2_3 - var_2_4, 0)
+	local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
 
-			if not var_2_5 or var_2_6 > 0 then
-				return false, var_2_6
-			end
-		else
-			if not var_2_2 then
-				logNormal(string.format("can not find v1a3 activity episodeCfg. actId:%s episodeId:%s", var_2_0, arg_2_0))
-			end
+	if offsetSecond > 0 then
+		return TimeUtil.SecondToActivityTimeFormat(offsetSecond)
+	end
 
-			return false, -1
+	return ""
+end
+
+function LanShouPaHelper.isOpenDay(episodeId)
+	local actId = VersionActivity2_1Enum.ActivityId.LanShouPa
+	local actMO = ActivityModel.instance:getActMO(actId)
+	local cfg = Activity164Config.instance:getEpisodeCo(actId, episodeId)
+
+	if actMO and cfg then
+		local openTime = actMO:getRealStartTimeStamp() + (cfg.openDay - 1) * 24 * 60 * 60
+		local serverTimeStamp = ServerTime.now()
+		local preIsClear = cfg.preEpisode == 0 or Activity164Model.instance:isEpisodeClear(cfg.preEpisode)
+		local cdtime = math.max(openTime - serverTimeStamp, 0)
+
+		if not preIsClear or cdtime > 0 then
+			return false, cdtime
+		end
+	else
+		if not cfg then
+			logNormal(string.format("can not find v1a3 activity episodeCfg. actId:%s episodeId:%s", actId, episodeId))
 		end
 
-		return true
-	end
-}
-
-function var_0_0.isOpenChapterDay(arg_3_0)
-	local var_3_0 = var_0_0.getFristEpisodeCoByChapterId(arg_3_0)
-
-	if not var_3_0 then
 		return false, -1
 	end
 
-	return var_0_0.isOpenDay(var_3_0.id)
+	return true
 end
 
-function var_0_0.getFristEpisodeCoByChapterId(arg_4_0)
-	local var_4_0 = VersionActivity2_1Enum.ActivityId.LanShouPa
-	local var_4_1 = Activity164Config.instance:getChapterEpisodeList(var_4_0, arg_4_0)
+function LanShouPaHelper.isOpenChapterDay(chapterId)
+	local episodeCfg = LanShouPaHelper.getFristEpisodeCoByChapterId(chapterId)
 
-	return var_4_1 and var_4_1[1]
+	if not episodeCfg then
+		return false, -1
+	end
+
+	return LanShouPaHelper.isOpenDay(episodeCfg.id)
 end
 
-function var_0_0.showToastByEpsodeId(arg_5_0, arg_5_1)
-	local var_5_0 = VersionActivity2_1Enum.ActivityId.LanShouPa
-	local var_5_1 = Activity164Config.instance:getEpisodeCo(var_5_0, arg_5_0)
+function LanShouPaHelper.getFristEpisodeCoByChapterId(chapterId)
+	local actId = VersionActivity2_1Enum.ActivityId.LanShouPa
+	local episodeCfgList = Activity164Config.instance:getChapterEpisodeList(actId, chapterId)
 
-	if not var_5_1 then
-		logNormal(string.format("can not find v1a3 activity episodeCfg. actId:%s episodeId:%s", VersionActivity2_1Enum.ActivityId.LanShouPa, arg_5_0))
+	return episodeCfgList and episodeCfgList[1]
+end
+
+function LanShouPaHelper.showToastByEpsodeId(episodeId, isChapter)
+	local actId = VersionActivity2_1Enum.ActivityId.LanShouPa
+	local episodeCfg = Activity164Config.instance:getEpisodeCo(actId, episodeId)
+
+	if not episodeCfg then
+		logNormal(string.format("can not find v1a3 activity episodeCfg. actId:%s episodeId:%s", VersionActivity2_1Enum.ActivityId.LanShouPa, episodeId))
 
 		return
 	end
 
-	local var_5_2, var_5_3 = var_0_0.isOpenDay(var_5_1.id)
+	local isOpen, cdTime = LanShouPaHelper.isOpenDay(episodeCfg.id)
 
-	if not var_5_2 and (var_5_1.preEpisode ~= 0 or not Activity164Model.instance:isEpisodeClear(var_5_1.preEpisode)) then
-		local var_5_4 = Activity164Config.instance:getEpisodeCo(var_5_1.activityId, var_5_1.preEpisode)
+	if not isOpen and (episodeCfg.preEpisode ~= 0 or not Activity164Model.instance:isEpisodeClear(episodeCfg.preEpisode)) then
+		local preCfg = Activity164Config.instance:getEpisodeCo(episodeCfg.activityId, episodeCfg.preEpisode)
 	end
 end
 
-return var_0_0
+return LanShouPaHelper

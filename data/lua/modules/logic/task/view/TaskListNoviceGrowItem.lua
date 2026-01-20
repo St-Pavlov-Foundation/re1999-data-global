@@ -1,200 +1,201 @@
-﻿module("modules.logic.task.view.TaskListNoviceGrowItem", package.seeall)
+﻿-- chunkname: @modules/logic/task/view/TaskListNoviceGrowItem.lua
 
-local var_0_0 = class("TaskListNoviceGrowItem", LuaCompBase)
+module("modules.logic.task.view.TaskListNoviceGrowItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4, arg_1_5)
-	arg_1_0.go = arg_1_1
-	arg_1_0._index = arg_1_2
-	arg_1_0._mo = arg_1_3
-	arg_1_0._txttaskdes = gohelper.findChildText(arg_1_0.go, "#txt_taskdes")
-	arg_1_0._txttasktitle = gohelper.findChildText(arg_1_0.go, "#txt_taskdes/#txt_title")
-	arg_1_0._scrollreward = gohelper.findChild(arg_1_0.go, "scroll_reward"):GetComponent(typeof(ZProj.LimitedScrollRect))
-	arg_1_0._gorewards = gohelper.findChild(arg_1_0.go, "scroll_reward/Viewport/#go_rewards")
-	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.go, "scroll_reward/Viewport/#go_rewards/#go_rewarditem")
-	arg_1_0._goblackmask = gohelper.findChild(arg_1_0.go, "#go_blackmask")
-	arg_1_0._goget = gohelper.findChild(arg_1_0.go, "#go_get")
-	arg_1_0._gonotget = gohelper.findChild(arg_1_0.go, "#go_notget")
-	arg_1_0._btnnotfinishbg = gohelper.findChildButtonWithAudio(arg_1_0.go, "#go_notget/#btn_notfinishbg")
-	arg_1_0._btnfinishbg = gohelper.findChildButton(arg_1_0.go, "#go_notget/#btn_finishbg")
-	arg_1_0._simageroleicon = gohelper.findChildSingleImage(arg_1_0.go, "#simage_roleicon")
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.go, "#simage_bg")
-	arg_1_0._goclick = gohelper.findChild(arg_1_0.go, "click")
-	arg_1_0._simageclickmask = gohelper.findChildSingleImage(arg_1_0.go, "click/getmask")
-	arg_1_0._itemAni = arg_1_0.go:GetComponent(typeof(UnityEngine.Animator))
+local TaskListNoviceGrowItem = class("TaskListNoviceGrowItem", LuaCompBase)
 
-	arg_1_0._simagebg:LoadImage(ResUrl.getTaskBg("bg_youdi2"))
-	arg_1_0._simageclickmask:LoadImage(ResUrl.getTaskBg("dieheiyou_020"))
+function TaskListNoviceGrowItem:init(go, index, co, open, parentScrollGO)
+	self.go = go
+	self._index = index
+	self._mo = co
+	self._txttaskdes = gohelper.findChildText(self.go, "#txt_taskdes")
+	self._txttasktitle = gohelper.findChildText(self.go, "#txt_taskdes/#txt_title")
+	self._scrollreward = gohelper.findChild(self.go, "scroll_reward"):GetComponent(typeof(ZProj.LimitedScrollRect))
+	self._gorewards = gohelper.findChild(self.go, "scroll_reward/Viewport/#go_rewards")
+	self._gorewarditem = gohelper.findChild(self.go, "scroll_reward/Viewport/#go_rewards/#go_rewarditem")
+	self._goblackmask = gohelper.findChild(self.go, "#go_blackmask")
+	self._goget = gohelper.findChild(self.go, "#go_get")
+	self._gonotget = gohelper.findChild(self.go, "#go_notget")
+	self._btnnotfinishbg = gohelper.findChildButtonWithAudio(self.go, "#go_notget/#btn_notfinishbg")
+	self._btnfinishbg = gohelper.findChildButton(self.go, "#go_notget/#btn_finishbg")
+	self._simageroleicon = gohelper.findChildSingleImage(self.go, "#simage_roleicon")
+	self._simagebg = gohelper.findChildSingleImage(self.go, "#simage_bg")
+	self._goclick = gohelper.findChild(self.go, "click")
+	self._simageclickmask = gohelper.findChildSingleImage(self.go, "click/getmask")
+	self._itemAni = self.go:GetComponent(typeof(UnityEngine.Animator))
 
-	arg_1_0._rewardItems = {}
+	self._simagebg:LoadImage(ResUrl.getTaskBg("bg_youdi2"))
+	self._simageclickmask:LoadImage(ResUrl.getTaskBg("dieheiyou_020"))
 
-	arg_1_0:addEvents()
-	arg_1_0:_refreshItem()
+	self._rewardItems = {}
 
-	if arg_1_4 then
-		arg_1_0._itemAni:Play(UIAnimationName.Open)
+	self:addEvents()
+	self:_refreshItem()
+
+	if open then
+		self._itemAni:Play(UIAnimationName.Open)
 	else
-		arg_1_0._itemAni:Play(UIAnimationName.Idle)
+		self._itemAni:Play(UIAnimationName.Idle)
 	end
 
-	arg_1_0._scrollreward.parentGameObject = arg_1_5
+	self._scrollreward.parentGameObject = parentScrollGO
 end
 
-function var_0_0.reset(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._index = arg_2_1
-	arg_2_0._mo = arg_2_2
+function TaskListNoviceGrowItem:reset(index, co)
+	self._index = index
+	self._mo = co
 
-	arg_2_0:_refreshItem()
-	arg_2_0._itemAni:Play(UIAnimationName.Idle)
+	self:_refreshItem()
+	self._itemAni:Play(UIAnimationName.Idle)
 end
 
-function var_0_0.addEvents(arg_3_0)
-	arg_3_0._btnnotfinishbg:AddClickListener(arg_3_0._btnnotfinishbgOnClick, arg_3_0)
-	arg_3_0._btnfinishbg:AddClickListener(arg_3_0._btnfinishbgOnClick, arg_3_0)
+function TaskListNoviceGrowItem:addEvents()
+	self._btnnotfinishbg:AddClickListener(self._btnnotfinishbgOnClick, self)
+	self._btnfinishbg:AddClickListener(self._btnfinishbgOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_4_0)
-	arg_4_0._btnnotfinishbg:RemoveClickListener()
-	arg_4_0._btnfinishbg:RemoveClickListener()
+function TaskListNoviceGrowItem:removeEvents()
+	self._btnnotfinishbg:RemoveClickListener()
+	self._btnfinishbg:RemoveClickListener()
 end
 
-function var_0_0._btnnotfinishbgOnClick(arg_5_0)
-	local var_5_0 = arg_5_0._mo.config.jumpId
+function TaskListNoviceGrowItem:_btnnotfinishbgOnClick()
+	local jumpId = self._mo.config.jumpId
 
-	if var_5_0 ~= 0 then
+	if jumpId ~= 0 then
 		TaskController.instance:dispatchEvent(TaskEvent.OnRefreshActItem)
-		GameFacade.jump(var_5_0)
+		GameFacade.jump(jumpId)
 	end
 end
 
-function var_0_0._btnfinishbgOnClick(arg_6_0)
+function TaskListNoviceGrowItem:_btnfinishbgOnClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.Task_UI_TaskItem_moveTop)
-	gohelper.setActive(arg_6_0._goclick, true)
-	arg_6_0._itemAni:Play(UIAnimationName.Close)
+	gohelper.setActive(self._goclick, true)
+	self._itemAni:Play(UIAnimationName.Close)
 	UIBlockMgr.instance:startBlock("taskani")
 
-	local var_6_0 = TaskConfig.instance:gettaskNoviceConfig(arg_6_0._mo.id).activity
-	local var_6_1 = TaskListModel.instance:getTaskList(TaskEnum.TaskType.Novice)
-	local var_6_2 = 0
+	local num = TaskConfig.instance:gettaskNoviceConfig(self._mo.id).activity
+	local list = TaskListModel.instance:getTaskList(TaskEnum.TaskType.Novice)
+	local growCount = 0
 
-	for iter_6_0 = 1, #var_6_1 do
-		if var_6_1[iter_6_0].config.minTypeId == TaskEnum.TaskMinType.GrowBack and var_6_1[iter_6_0].finishCount < var_6_1[iter_6_0].config.maxFinishCount then
-			var_6_2 = var_6_2 + 1
+	for i = 1, #list do
+		if list[i].config.minTypeId == TaskEnum.TaskMinType.GrowBack and list[i].finishCount < list[i].config.maxFinishCount then
+			growCount = growCount + 1
 		end
 	end
 
-	local var_6_3 = {
-		num = var_6_0,
-		taskType = TaskEnum.TaskType.Novice
-	}
+	local param = {}
 
-	var_6_3.force = false
-	var_6_3.growCount = var_6_2
+	param.num = num
+	param.taskType = TaskEnum.TaskType.Novice
+	param.force = false
+	param.growCount = growCount
 
-	TaskController.instance:dispatchEvent(TaskEvent.RefreshActState, var_6_3)
-	TaskDispatcher.runDelay(arg_6_0._onPlayActAniFinished, arg_6_0, 0.76)
+	TaskController.instance:dispatchEvent(TaskEvent.RefreshActState, param)
+	TaskDispatcher.runDelay(self._onPlayActAniFinished, self, 0.76)
 end
 
-function var_0_0._onPlayActAniFinished(arg_7_0)
+function TaskListNoviceGrowItem:_onPlayActAniFinished()
 	UIBlockMgr.instance:endBlock("taskani")
-	TaskRpc.instance:sendFinishTaskRequest(arg_7_0._mo.id)
-	arg_7_0:destroy()
+	TaskRpc.instance:sendFinishTaskRequest(self._mo.id)
+	self:destroy()
 end
 
-function var_0_0.getTaskId(arg_8_0)
-	return arg_8_0._mo.id
+function TaskListNoviceGrowItem:getTaskId()
+	return self._mo.id
 end
 
-function var_0_0.hasFinished(arg_9_0)
-	return arg_9_0._mo.finishCount >= arg_9_0._mo.config.maxFinishCount
+function TaskListNoviceGrowItem:hasFinished()
+	return self._mo.finishCount >= self._mo.config.maxFinishCount
 end
 
-function var_0_0.getTaskMinType(arg_10_0)
+function TaskListNoviceGrowItem:getTaskMinType()
 	return TaskEnum.TaskMinType.GrowBack
 end
 
-function var_0_0._refreshItem(arg_11_0)
-	local var_11_0 = HeroConfig.instance:getHeroCO(tonumber(arg_11_0._mo.config.listenerParam))
+function TaskListNoviceGrowItem:_refreshItem()
+	local roleCo = HeroConfig.instance:getHeroCO(tonumber(self._mo.config.listenerParam))
 
-	arg_11_0._simageroleicon:LoadImage(ResUrl.getHeadIconSmall(var_11_0.skinId))
+	self._simageroleicon:LoadImage(ResUrl.getHeadIconSmall(roleCo.skinId))
 
-	arg_11_0._txttaskdes.text = arg_11_0._mo.config.desc
-	arg_11_0._txttasktitle.text = arg_11_0._mo.config.listenerType == "HeroRank" and luaLang("taskitem_growtask2") or luaLang("taskitem_growtask1")
+	self._txttaskdes.text = self._mo.config.desc
+	self._txttasktitle.text = self._mo.config.listenerType == "HeroRank" and luaLang("taskitem_growtask2") or luaLang("taskitem_growtask1")
 
-	for iter_11_0, iter_11_1 in pairs(arg_11_0._rewardItems) do
-		gohelper.destroy(iter_11_1.itemIcon.go)
-		gohelper.destroy(iter_11_1.parentGo)
-		iter_11_1.itemIcon:onDestroy()
+	for _, v in pairs(self._rewardItems) do
+		gohelper.destroy(v.itemIcon.go)
+		gohelper.destroy(v.parentGo)
+		v.itemIcon:onDestroy()
 	end
 
-	arg_11_0._rewardItems = {}
+	self._rewardItems = {}
 
-	local var_11_1 = string.split(arg_11_0._mo.config.bonus, "|")
+	local rewards = string.split(self._mo.config.bonus, "|")
 
-	arg_11_0._gorewards:GetComponent(typeof(UnityEngine.UI.ContentSizeFitter)).enabled = #var_11_1 > 3
+	self._gorewards:GetComponent(typeof(UnityEngine.UI.ContentSizeFitter)).enabled = #rewards > 3
 
-	for iter_11_2 = 1, #var_11_1 do
-		local var_11_2 = {
-			parentGo = gohelper.cloneInPlace(arg_11_0._gorewarditem)
-		}
+	for i = 1, #rewards do
+		local item = {}
 
-		gohelper.setActive(var_11_2.parentGo, true)
+		item.parentGo = gohelper.cloneInPlace(self._gorewarditem)
 
-		local var_11_3 = string.splitToNumber(var_11_1[iter_11_2], "#")
+		gohelper.setActive(item.parentGo, true)
 
-		var_11_2.itemIcon = IconMgr.instance:getCommonPropItemIcon(var_11_2.parentGo)
+		local itemCo = string.splitToNumber(rewards[i], "#")
 
-		var_11_2.itemIcon:setMOValue(var_11_3[1], var_11_3[2], var_11_3[3], nil, true)
-		var_11_2.itemIcon:isShowCount(var_11_3[1] ~= MaterialEnum.MaterialType.Hero)
-		var_11_2.itemIcon:setCountFontSize(47)
-		var_11_2.itemIcon:showStackableNum2()
-		var_11_2.itemIcon:setHideLvAndBreakFlag(true)
-		var_11_2.itemIcon:hideEquipLvAndBreak(true)
-		table.insert(arg_11_0._rewardItems, var_11_2)
+		item.itemIcon = IconMgr.instance:getCommonPropItemIcon(item.parentGo)
+
+		item.itemIcon:setMOValue(itemCo[1], itemCo[2], itemCo[3], nil, true)
+		item.itemIcon:isShowCount(itemCo[1] ~= MaterialEnum.MaterialType.Hero)
+		item.itemIcon:setCountFontSize(47)
+		item.itemIcon:showStackableNum2()
+		item.itemIcon:setHideLvAndBreakFlag(true)
+		item.itemIcon:hideEquipLvAndBreak(true)
+		table.insert(self._rewardItems, item)
 	end
 
-	if arg_11_0._mo.finishCount >= arg_11_0._mo.config.maxFinishCount then
-		gohelper.setActive(arg_11_0._btnfinishbg.gameObject, false)
-		gohelper.setActive(arg_11_0._btnnotfinishbg.gameObject, false)
-		gohelper.setActive(arg_11_0._goget, true)
-		gohelper.setActive(arg_11_0._gonotget, false)
-		gohelper.setActive(arg_11_0._goblackmask.gameObject, true)
-	elseif arg_11_0._mo.hasFinished then
-		gohelper.setActive(arg_11_0._btnfinishbg.gameObject, true)
-		gohelper.setActive(arg_11_0._btnnotfinishbg.gameObject, false)
-		gohelper.setActive(arg_11_0._goget, false)
-		gohelper.setActive(arg_11_0._gonotget, true)
-		gohelper.setActive(arg_11_0._goblackmask.gameObject, false)
+	if self._mo.finishCount >= self._mo.config.maxFinishCount then
+		gohelper.setActive(self._btnfinishbg.gameObject, false)
+		gohelper.setActive(self._btnnotfinishbg.gameObject, false)
+		gohelper.setActive(self._goget, true)
+		gohelper.setActive(self._gonotget, false)
+		gohelper.setActive(self._goblackmask.gameObject, true)
+	elseif self._mo.hasFinished then
+		gohelper.setActive(self._btnfinishbg.gameObject, true)
+		gohelper.setActive(self._btnnotfinishbg.gameObject, false)
+		gohelper.setActive(self._goget, false)
+		gohelper.setActive(self._gonotget, true)
+		gohelper.setActive(self._goblackmask.gameObject, false)
 	else
-		gohelper.setActive(arg_11_0._btnfinishbg.gameObject, false)
-		gohelper.setActive(arg_11_0._btnnotfinishbg.gameObject, arg_11_0._mo.config.jumpId ~= 0)
-		gohelper.setActive(arg_11_0._goget, false)
-		gohelper.setActive(arg_11_0._gonotget, true)
-		gohelper.setActive(arg_11_0._goblackmask.gameObject, false)
+		gohelper.setActive(self._btnfinishbg.gameObject, false)
+		gohelper.setActive(self._btnnotfinishbg.gameObject, self._mo.config.jumpId ~= 0)
+		gohelper.setActive(self._goget, false)
+		gohelper.setActive(self._gonotget, true)
+		gohelper.setActive(self._goblackmask.gameObject, false)
 	end
 end
 
-function var_0_0.destroy(arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0._onPlayClickFinished, arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0._onPlayActAniFinished, arg_12_0)
+function TaskListNoviceGrowItem:destroy()
+	TaskDispatcher.cancelTask(self._onPlayClickFinished, self)
+	TaskDispatcher.cancelTask(self._onPlayActAniFinished, self)
 
-	if arg_12_0.go then
-		gohelper.destroy(arg_12_0.go)
+	if self.go then
+		gohelper.destroy(self.go)
 
-		arg_12_0.go = nil
+		self.go = nil
 	end
 
-	arg_12_0:removeEvents()
-	arg_12_0._simagebg:UnLoadImage()
-	arg_12_0._simageroleicon:UnLoadImage()
-	arg_12_0._simageclickmask:UnLoadImage()
+	self:removeEvents()
+	self._simagebg:UnLoadImage()
+	self._simageroleicon:UnLoadImage()
+	self._simageclickmask:UnLoadImage()
 
-	for iter_12_0, iter_12_1 in pairs(arg_12_0._rewardItems) do
-		gohelper.destroy(iter_12_1.itemIcon.go)
-		gohelper.destroy(iter_12_1.parentGo)
-		iter_12_1.itemIcon:onDestroy()
+	for _, v in pairs(self._rewardItems) do
+		gohelper.destroy(v.itemIcon.go)
+		gohelper.destroy(v.parentGo)
+		v.itemIcon:onDestroy()
 	end
 
-	arg_12_0._rewardItems = nil
+	self._rewardItems = nil
 end
 
-return var_0_0
+return TaskListNoviceGrowItem

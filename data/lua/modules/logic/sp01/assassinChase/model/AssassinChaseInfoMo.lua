@@ -1,72 +1,82 @@
-﻿module("modules.logic.sp01.assassinChase.model.AssassinChaseInfoMo", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassinChase/model/AssassinChaseInfoMo.lua
 
-local var_0_0 = pureTable("AssassinChaseInfoMo")
+module("modules.logic.sp01.assassinChase.model.AssassinChaseInfoMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	arg_1_0.activityId = arg_1_1
-	arg_1_0.hasChosenDirection = arg_1_2
-	arg_1_0.chosenInfo = arg_1_3
-	arg_1_0.optionDirections = arg_1_4
+local AssassinChaseInfoMo = pureTable("AssassinChaseInfoMo")
 
-	local var_1_0 = AssassinChaseConfig.instance:getConstConfig(AssassinChaseEnum.ConstId.ChangeDirectionTimeLimit)
+function AssassinChaseInfoMo:init(activityId, hasChosenDirection, chosenInfo, optionDirections)
+	self.activityId = activityId
+	self.hasChosenDirection = hasChosenDirection
+	self.chosenInfo = chosenInfo
+	self.optionDirections = optionDirections
 
-	arg_1_0.nextDayChangeOffset = (tonumber(var_1_0.value) or 0) * TimeUtil.OneHourSecond
+	local constConfig = AssassinChaseConfig.instance:getConstConfig(AssassinChaseEnum.ConstId.ChangeDirectionTimeLimit)
+	local limitHours = tonumber(constConfig.value) or 0
+	local nextDayChangeOffset = limitHours * TimeUtil.OneHourSecond
 
-	arg_1_0:refreshTime()
+	self.nextDayChangeOffset = nextDayChangeOffset
+
+	self:refreshTime()
 end
 
-function var_0_0.isSelect(arg_2_0)
-	return arg_2_0.hasChosenDirection and arg_2_0.chosenInfo ~= nil
+function AssassinChaseInfoMo:isSelect()
+	return self.hasChosenDirection and self.chosenInfo ~= nil
 end
 
-function var_0_0.refreshTime(arg_3_0)
-	if arg_3_0:isSelect() then
-		local var_3_0 = arg_3_0.nextDayChangeOffset
-		local var_3_1 = TimeDispatcher.DailyRefreshTime * TimeUtil.OneHourSecond
-		local var_3_2 = arg_3_0.chosenInfo.directionGenTime / TimeUtil.OneSecondMilliSecond
-		local var_3_3 = ServerTime.timeInLocal(var_3_2)
-		local var_3_4 = var_3_3 - var_3_1 + TimeUtil.OneDaySecond + var_3_0
+function AssassinChaseInfoMo:refreshTime()
+	if self:isSelect() then
+		local nextDayChangeOffset = self.nextDayChangeOffset
+		local dailyRefreshTimeOffset = TimeDispatcher.DailyRefreshTime * TimeUtil.OneHourSecond
+		local genTime = self.chosenInfo.directionGenTime / TimeUtil.OneSecondMilliSecond
+		local localGenTime = ServerTime.timeInLocal(genTime)
+		local changeEndTime = localGenTime - dailyRefreshTimeOffset + TimeUtil.OneDaySecond + nextDayChangeOffset
+		local rewardTime = localGenTime + TimeUtil.OneDaySecond
 
-		arg_3_0.rewardTime, arg_3_0.changeEndTime = var_3_3 + TimeUtil.OneDaySecond, var_3_4
+		self.changeEndTime = changeEndTime
+		self.rewardTime = rewardTime
 	end
 end
 
-function var_0_0.canGetBonus(arg_4_0)
-	if not arg_4_0:isSelect() then
+function AssassinChaseInfoMo:canGetBonus()
+	if not self:isSelect() then
 		return false
 	end
 
-	if arg_4_0.rewardTime == nil then
+	if self.rewardTime == nil then
 		return false
 	end
 
-	return ServerTime.now() >= arg_4_0.rewardTime
+	local curTime = ServerTime.now()
+
+	return curTime >= self.rewardTime
 end
 
-function var_0_0.canChangeDirection(arg_5_0)
-	if not arg_5_0:isSelect() then
+function AssassinChaseInfoMo:canChangeDirection()
+	if not self:isSelect() then
 		return false
 	end
 
-	if arg_5_0.changeEndTime == nil then
+	if self.changeEndTime == nil then
 		return false
 	end
 
-	return ServerTime.now() < arg_5_0.changeEndTime
+	local curTime = ServerTime.now()
+
+	return curTime < self.changeEndTime
 end
 
-function var_0_0.getCurState(arg_6_0)
-	local var_6_0
+function AssassinChaseInfoMo:getCurState()
+	local state
 
-	if arg_6_0:isSelect() == false then
-		var_6_0 = AssassinChaseEnum.ViewState.Select
-	elseif arg_6_0.chosenInfo and arg_6_0.chosenInfo.rewardId ~= nil and arg_6_0.chosenInfo.rewardId ~= 0 then
-		var_6_0 = AssassinChaseEnum.ViewState.Result
+	if self:isSelect() == false then
+		state = AssassinChaseEnum.ViewState.Select
+	elseif self.chosenInfo and self.chosenInfo.rewardId ~= nil and self.chosenInfo.rewardId ~= 0 then
+		state = AssassinChaseEnum.ViewState.Result
 	else
-		var_6_0 = AssassinChaseEnum.ViewState.Progress
+		state = AssassinChaseEnum.ViewState.Progress
 	end
 
-	return var_6_0
+	return state
 end
 
-return var_0_0
+return AssassinChaseInfoMo

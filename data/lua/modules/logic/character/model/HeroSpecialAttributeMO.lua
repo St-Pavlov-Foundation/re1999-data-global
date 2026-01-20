@@ -1,15 +1,17 @@
-﻿module("modules.logic.character.model.HeroSpecialAttributeMO", package.seeall)
+﻿-- chunkname: @modules/logic/character/model/HeroSpecialAttributeMO.lua
 
-local var_0_0 = pureTable("HeroSpecialAttributeMO")
+module("modules.logic.character.model.HeroSpecialAttributeMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.revive = arg_1_1.revive
-	arg_1_0.heal = arg_1_1.heal
-	arg_1_0.absorb = arg_1_1.absorb
-	arg_1_0.defenseIgnore = arg_1_1.defenseIgnore
-	arg_1_0.clutch = arg_1_1.clutch
-	arg_1_0.finalAddDmg = arg_1_1.finalAddDmg
-	arg_1_0.finalDropDmg = arg_1_1.finalDropDmg
+local HeroSpecialAttributeMO = pureTable("HeroSpecialAttributeMO")
+
+function HeroSpecialAttributeMO:init(info)
+	self.revive = info.revive
+	self.heal = info.heal
+	self.absorb = info.absorb
+	self.defenseIgnore = info.defenseIgnore
+	self.clutch = info.clutch
+	self.finalAddDmg = info.finalAddDmg
+	self.finalDropDmg = info.finalDropDmg
 end
 
-return var_0_0
+return HeroSpecialAttributeMO

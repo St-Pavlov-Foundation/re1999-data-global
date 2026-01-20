@@ -1,116 +1,118 @@
-﻿module("modules.logic.scene.newbie.NewbieScene", package.seeall)
+﻿-- chunkname: @modules/logic/scene/newbie/NewbieScene.lua
 
-local var_0_0 = class("NewbieScene", BaseScene)
+module("modules.logic.scene.newbie.NewbieScene", package.seeall)
 
-function var_0_0._createAllComps(arg_1_0)
+local NewbieScene = class("NewbieScene", BaseScene)
+
+function NewbieScene:_createAllComps()
 	return
 end
 
-function var_0_0.onClose(arg_2_0)
-	var_0_0.super.onClose(arg_2_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_2_0._onOpenFinish, arg_2_0)
-	TaskDispatcher.cancelTask(arg_2_0._resetScenePos, arg_2_0)
-	arg_2_0:_removeEvents()
+function NewbieScene:onClose()
+	NewbieScene.super.onClose(self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, self._onOpenFinish, self)
+	TaskDispatcher.cancelTask(self._resetScenePos, self)
+	self:_removeEvents()
 end
 
-function var_0_0.onPrepared(arg_3_0)
-	var_0_0.super.onPrepared(arg_3_0)
+function NewbieScene:onPrepared()
+	NewbieScene.super.onPrepared(self)
 
-	if arg_3_0.level then
-		local var_3_0 = arg_3_0.level:getSceneGo()
+	if self.level then
+		local go = self.level:getSceneGo()
 
-		if gohelper.isNil(var_3_0) then
+		if gohelper.isNil(go) then
 			return
 		end
 
-		arg_3_0:_moveScene(0.5)
+		self:_moveScene(0.5)
 
 		if ViewMgr.instance:isOpenFinish(ViewName.StoryView) then
-			arg_3_0:_onOpenFinish(ViewName.StoryView)
+			self:_onOpenFinish(ViewName.StoryView)
 
 			return
 		end
 
-		arg_3_0:_addEvents()
+		self:_addEvents()
 	end
 end
 
-function var_0_0._addEvents(arg_4_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_4_0._onOpenFinish, arg_4_0)
-	MainController.instance:registerCallback(MainEvent.GuideSetDelayTime, arg_4_0._onGuideSetDelayTime, arg_4_0)
+function NewbieScene:_addEvents()
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, self._onOpenFinish, self)
+	MainController.instance:registerCallback(MainEvent.GuideSetDelayTime, self._onGuideSetDelayTime, self)
 end
 
-function var_0_0._removeEvents(arg_5_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_5_0._onOpenFinish, arg_5_0)
-	MainController.instance:unregisterCallback(MainEvent.GuideSetDelayTime, arg_5_0._onGuideSetDelayTime, arg_5_0)
+function NewbieScene:_removeEvents()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, self._onOpenFinish, self)
+	MainController.instance:unregisterCallback(MainEvent.GuideSetDelayTime, self._onGuideSetDelayTime, self)
 end
 
-function var_0_0._onGuideSetDelayTime(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0.level:getSceneGo()
+function NewbieScene:_onGuideSetDelayTime(time)
+	local go = self.level:getSceneGo()
 
-	if gohelper.isNil(var_6_0) then
+	if gohelper.isNil(go) then
 		return
 	end
 
-	arg_6_0:_moveScene(arg_6_1)
-	TaskDispatcher.runDelay(arg_6_0._resetScenePos, arg_6_0, 2)
+	self:_moveScene(time)
+	TaskDispatcher.runDelay(self._resetScenePos, self, 2)
 end
 
-function var_0_0._moveScene(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0.level:getSceneGo()
+function NewbieScene:_moveScene(time)
+	local go = self.level:getSceneGo()
 
-	if gohelper.isNil(var_7_0) then
+	if gohelper.isNil(go) then
 		return
 	end
 
-	transformhelper.setLocalPosXY(var_7_0.transform, 0, 100)
+	transformhelper.setLocalPosXY(go.transform, 0, 100)
 
-	arg_7_0._delayTime = tonumber(arg_7_1)
+	self._delayTime = tonumber(time)
 end
 
-function var_0_0._onOpenFinish(arg_8_0, arg_8_1)
-	if arg_8_1 == ViewName.StoryView and arg_8_0._delayTime then
-		TaskDispatcher.cancelTask(arg_8_0._resetScenePos, arg_8_0)
-		TaskDispatcher.runDelay(arg_8_0._resetScenePos, arg_8_0, arg_8_0._delayTime)
+function NewbieScene:_onOpenFinish(viewName)
+	if viewName == ViewName.StoryView and self._delayTime then
+		TaskDispatcher.cancelTask(self._resetScenePos, self)
+		TaskDispatcher.runDelay(self._resetScenePos, self, self._delayTime)
 
-		arg_8_0._delayTime = nil
+		self._delayTime = nil
 	end
 end
 
-function var_0_0._resetScenePos(arg_9_0)
-	local var_9_0 = arg_9_0.level:getSceneGo()
+function NewbieScene:_resetScenePos()
+	local go = self.level:getSceneGo()
 
-	if gohelper.isNil(var_9_0) then
+	if gohelper.isNil(go) then
 		return
 	end
 
-	transformhelper.setLocalPosXY(var_9_0.transform, 0, 0)
+	transformhelper.setLocalPosXY(go.transform, 0, 0)
 end
 
-function var_0_0.onStart(arg_10_0, arg_10_1, arg_10_2)
+function NewbieScene:onStart(sceneId, levelId)
 	if not DungeonModel.instance:hasPassLevel(10003) then
-		arg_10_0:onPrepared()
+		self:onPrepared()
 	else
-		if not arg_10_0._isAddComps then
-			arg_10_0._isAddComps = true
+		if not self._isAddComps then
+			self._isAddComps = true
 
-			arg_10_0:_addComp("level", NewbieSceneLevelComp)
-			arg_10_0:_addComp("camera", CommonSceneCameraComp)
-			arg_10_0:_addComp("yearAnimation", MainSceneYearAnimationComp)
+			self:_addComp("level", NewbieSceneLevelComp)
+			self:_addComp("camera", CommonSceneCameraComp)
+			self:_addComp("yearAnimation", MainSceneYearAnimationComp)
 
-			for iter_10_0, iter_10_1 in ipairs(arg_10_0._allComps) do
-				if iter_10_1.onInit then
-					iter_10_1:onInit()
+			for _, comp in ipairs(self._allComps) do
+				if comp.onInit then
+					comp:onInit()
 				end
 			end
 
-			arg_10_0.yearAnimation.forcePlayAnimation = true
+			self.yearAnimation.forcePlayAnimation = true
 		end
 
-		arg_10_2 = 10101
+		levelId = 10101
 
-		var_0_0.super.onStart(arg_10_0, arg_10_1, arg_10_2)
+		NewbieScene.super.onStart(self, sceneId, levelId)
 	end
 end
 
-return var_0_0
+return NewbieScene

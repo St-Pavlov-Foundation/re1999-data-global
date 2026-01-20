@@ -1,28 +1,30 @@
-﻿module("modules.logic.fight.controller.replay.FightReplayWorkPlayCard", package.seeall)
+﻿-- chunkname: @modules/logic/fight/controller/replay/FightReplayWorkPlayCard.lua
 
-local var_0_0 = class("FightReplayWorkPlayCard", BaseWork)
+module("modules.logic.fight.controller.replay.FightReplayWorkPlayCard", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.cardOp = arg_1_1
+local FightReplayWorkPlayCard = class("FightReplayWorkPlayCard", BaseWork)
+
+function FightReplayWorkPlayCard:ctor(cardOp)
+	self.cardOp = cardOp
 end
 
-function var_0_0.onStart(arg_2_0)
-	FightController.instance:registerCallback(FightEvent.OnCombineCardEnd, arg_2_0._onCombineCardEnd, arg_2_0)
-	FightController.instance:dispatchEvent(FightEvent.SimulatePlayHandCard, arg_2_0.cardOp.param1, arg_2_0.cardOp.toId, arg_2_0.cardOp.param2, arg_2_0.cardOp.param3)
+function FightReplayWorkPlayCard:onStart()
+	FightController.instance:registerCallback(FightEvent.OnCombineCardEnd, self._onCombineCardEnd, self)
+	FightController.instance:dispatchEvent(FightEvent.SimulatePlayHandCard, self.cardOp.param1, self.cardOp.toId, self.cardOp.param2, self.cardOp.param3)
 end
 
-function var_0_0._onCombineCardEnd(arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.OnCombineCardEnd, arg_3_0._onCombineCardEnd, arg_3_0)
-	TaskDispatcher.runDelay(arg_3_0._delayDone, arg_3_0, 0.01)
+function FightReplayWorkPlayCard:_onCombineCardEnd()
+	FightController.instance:unregisterCallback(FightEvent.OnCombineCardEnd, self._onCombineCardEnd, self)
+	TaskDispatcher.runDelay(self._delayDone, self, 0.01)
 end
 
-function var_0_0._delayDone(arg_4_0)
-	arg_4_0:onDone(true)
+function FightReplayWorkPlayCard:_delayDone()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_5_0)
-	FightController.instance:unregisterCallback(FightEvent.OnCombineCardEnd, arg_5_0._onCombineCardEnd, arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0._delayDone, arg_5_0)
+function FightReplayWorkPlayCard:clearWork()
+	FightController.instance:unregisterCallback(FightEvent.OnCombineCardEnd, self._onCombineCardEnd, self)
+	TaskDispatcher.cancelTask(self._delayDone, self)
 end
 
-return var_0_0
+return FightReplayWorkPlayCard

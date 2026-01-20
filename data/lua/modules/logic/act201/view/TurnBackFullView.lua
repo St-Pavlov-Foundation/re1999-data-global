@@ -1,265 +1,275 @@
-﻿module("modules.logic.act201.view.TurnBackFullView", package.seeall)
+﻿-- chunkname: @modules/logic/act201/view/TurnBackFullView.lua
 
-local var_0_0 = class("TurnBackFullView", BaseView)
+module("modules.logic.act201.view.TurnBackFullView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._simageTitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/Right/#simage_Title")
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Root/Right/#txt_LimitTime")
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "Root/Right/#txt_num")
-	arg_1_0._scrolldes = gohelper.findChildScrollRect(arg_1_0.viewGO, "Root/Right/#scroll_des")
-	arg_1_0._btninvite = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/Right/#btn_invite")
-	arg_1_0._btncopy = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/Right/#btn_copy")
-	arg_1_0._simagebook = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/Left/#simage_book")
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "Root/Left/#txt_title")
-	arg_1_0._simageplayerheadicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/Left/#simage_playerheadicon")
-	arg_1_0._goframenode = gohelper.findChild(arg_1_0.viewGO, "Root/Left/#simage_playerheadicon/#go_framenode")
-	arg_1_0._goplayer1 = gohelper.findChild(arg_1_0.viewGO, "Root/Left/#scroll_playerlist/viweport/content/#go_player1")
-	arg_1_0._goLongClick = gohelper.findChild(arg_1_0.viewGO, "Root/Right/#txt_num/#go_copyLongClick")
-	arg_1_0._btnCopyClick = gohelper.findChildClick(arg_1_0.viewGO, "Root/Right/#txt_num/#go_copyLongClick")
-	arg_1_0._btnreward1 = gohelper.findChildClick(arg_1_0.viewGO, "Root/Right/rewardroot1/#btn_reward")
-	arg_1_0._btnreward2 = gohelper.findChildClick(arg_1_0.viewGO, "Root/Right/rewardroot2/#btn_reward")
+local TurnBackFullView = class("TurnBackFullView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function TurnBackFullView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._simageTitle = gohelper.findChildSingleImage(self.viewGO, "Root/Right/#simage_Title")
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "Root/Right/#txt_LimitTime")
+	self._txtnum = gohelper.findChildText(self.viewGO, "Root/Right/#txt_num")
+	self._scrolldes = gohelper.findChildScrollRect(self.viewGO, "Root/Right/#scroll_des")
+	self._btninvite = gohelper.findChildButtonWithAudio(self.viewGO, "Root/Right/#btn_invite")
+	self._btncopy = gohelper.findChildButtonWithAudio(self.viewGO, "Root/Right/#btn_copy")
+	self._simagebook = gohelper.findChildSingleImage(self.viewGO, "Root/Left/#simage_book")
+	self._txttitle = gohelper.findChildText(self.viewGO, "Root/Left/#txt_title")
+	self._simageplayerheadicon = gohelper.findChildSingleImage(self.viewGO, "Root/Left/#simage_playerheadicon")
+	self._goframenode = gohelper.findChild(self.viewGO, "Root/Left/#simage_playerheadicon/#go_framenode")
+	self._goplayer1 = gohelper.findChild(self.viewGO, "Root/Left/#scroll_playerlist/viweport/content/#go_player1")
+	self._goLongClick = gohelper.findChild(self.viewGO, "Root/Right/#txt_num/#go_copyLongClick")
+	self._btnCopyClick = gohelper.findChildClick(self.viewGO, "Root/Right/#txt_num/#go_copyLongClick")
+	self._btnreward1 = gohelper.findChildClick(self.viewGO, "Root/Right/rewardroot1/#btn_reward")
+	self._btnreward2 = gohelper.findChildClick(self.viewGO, "Root/Right/rewardroot2/#btn_reward")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btninvite:AddClickListener(arg_2_0._btninviteOnClick, arg_2_0)
-	arg_2_0._btncopy:AddClickListener(arg_2_0._btncopyOnClick, arg_2_0)
-	arg_2_0._btnCopyClick:AddClickListener(arg_2_0._btncopyOnClick, arg_2_0)
-	arg_2_0._btnreward1:AddClickListener(arg_2_0._btnrewardOnClick, arg_2_0)
-	arg_2_0._btnreward2:AddClickListener(arg_2_0._btnrewardOnClick, arg_2_0)
-	arg_2_0._btnCopyLongPress:AddLongPressListener(arg_2_0._btncopyOnClick, arg_2_0)
+function TurnBackFullView:addEvents()
+	self._btninvite:AddClickListener(self._btninviteOnClick, self)
+	self._btncopy:AddClickListener(self._btncopyOnClick, self)
+	self._btnCopyClick:AddClickListener(self._btncopyOnClick, self)
+	self._btnreward1:AddClickListener(self._btnrewardOnClick, self)
+	self._btnreward2:AddClickListener(self._btnrewardOnClick, self)
+	self._btnCopyLongPress:AddLongPressListener(self._btncopyOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btninvite:RemoveClickListener()
-	arg_3_0._btncopy:RemoveClickListener()
-	arg_3_0._btnCopyClick:RemoveClickListener()
-	arg_3_0._btnreward1:RemoveClickListener()
-	arg_3_0._btnreward2:RemoveClickListener()
-	arg_3_0._btnCopyLongPress:RemoveLongPressListener()
+function TurnBackFullView:removeEvents()
+	self._btninvite:RemoveClickListener()
+	self._btncopy:RemoveClickListener()
+	self._btnCopyClick:RemoveClickListener()
+	self._btnreward1:RemoveClickListener()
+	self._btnreward2:RemoveClickListener()
+	self._btnCopyLongPress:RemoveLongPressListener()
 end
 
-function var_0_0._btninviteOnClick(arg_4_0)
+function TurnBackFullView:_btninviteOnClick()
 	SDKDataTrackMgr.instance:trackClickEnterActivityButton("海外人拉人H5活动界面", "进入活动")
 
-	local var_4_0 = Activity201Model.instance:getLoginUrl()
+	local url = Activity201Model.instance:getLoginUrl()
 
-	WebViewController.instance:openWebView(var_4_0, false, arg_4_0.OnWebViewBack, arg_4_0)
+	WebViewController.instance:openWebView(url, false, self.OnWebViewBack, self)
 end
 
-function var_0_0._btncopyOnClick(arg_5_0)
-	local var_5_0 = Activity201Model.instance:getInvitationInfo(arg_5_0._actId)
+function TurnBackFullView:_btncopyOnClick()
+	local activityInfo = Activity201Model.instance:getInvitationInfo(self._actId)
 
-	if not var_5_0 then
+	if not activityInfo then
 		return
 	end
 
-	local var_5_1 = var_5_0.inviteCode
+	local inviteCode = activityInfo.inviteCode
 
-	if not var_5_1 then
+	if not inviteCode then
 		return
 	end
 
-	ZProj.UGUIHelper.CopyText(var_5_1)
+	ZProj.UGUIHelper.CopyText(inviteCode)
 	ToastController.instance:showToast(ToastEnum.ClickPlayerId)
 end
 
-function var_0_0._btnrewardOnClick(arg_6_0)
-	local var_6_0 = CurrencyEnum.CurrencyType.FreeDiamondCoupon
+function TurnBackFullView:_btnrewardOnClick()
+	local itemId = CurrencyEnum.CurrencyType.FreeDiamondCoupon
 
-	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.Currency, var_6_0, false, nil, nil)
+	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.Currency, itemId, false, nil, nil)
 end
 
-function var_0_0.OnWebViewBack(arg_7_0, arg_7_1, arg_7_2)
-	if arg_7_1 == WebViewEnum.WebViewCBType.Cb then
-		local var_7_0 = string.split(arg_7_2, "#")
-		local var_7_1 = var_7_0[1]
+function TurnBackFullView:OnWebViewBack(errorType, msg)
+	if errorType == WebViewEnum.WebViewCBType.Cb then
+		local msgParamList = string.split(msg, "#")
+		local eventName = msgParamList[1]
 
-		if var_7_1 == "webClose" then
-			Activity201Controller.instance:getInvitationInfo(arg_7_0._actId)
+		if eventName == "webClose" then
+			Activity201Controller.instance:getInvitationInfo(self._actId)
 			ViewMgr.instance:closeView(ViewName.WebView)
-		elseif var_7_1 == "saveImage" and var_7_0[2] then
-			Base64Util.saveImage(var_7_0[2])
+		elseif eventName == "saveImage" and msgParamList[2] then
+			Base64Util.saveImage(msgParamList[2])
 		end
 	end
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0._friendItemList = {}
-	arg_8_0._loader = MultiAbLoader.New()
-	arg_8_0._btnCopyLongPress = SLFramework.UGUI.UILongPressListener.Get(arg_8_0._goLongClick)
+function TurnBackFullView:_editableInitView()
+	self._friendItemList = {}
+	self._loader = MultiAbLoader.New()
+	self._btnCopyLongPress = SLFramework.UGUI.UILongPressListener.Get(self._goLongClick)
 
-	arg_8_0._btnCopyLongPress:SetLongPressTime({
+	self._btnCopyLongPress:SetLongPressTime({
 		0.5,
 		99999
 	})
-	gohelper.setActive(arg_8_0._goplayer1, false)
+	gohelper.setActive(self._goplayer1, false)
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
+function TurnBackFullView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0:addEventCb(Activity201Controller.instance, Activity201Event.OnGetInfoSuccess, arg_10_0._refreshUI, arg_10_0)
+function TurnBackFullView:onOpen()
+	self:addEventCb(Activity201Controller.instance, Activity201Event.OnGetInfoSuccess, self._refreshUI, self)
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2TurnBackH5.play_ui_rolesopen)
-	arg_10_0:_checkParent()
-	arg_10_0:_refreshData()
+	self:_checkParent()
+	self:_refreshData()
 end
 
-function var_0_0._refreshData(arg_11_0)
-	arg_11_0._actId = arg_11_0.viewParam.actId
+function TurnBackFullView:_refreshData()
+	self._actId = self.viewParam.actId
 
-	Activity201Controller.instance:getInvitationInfo(arg_11_0._actId)
+	Activity201Controller.instance:getInvitationInfo(self._actId)
 end
 
-function var_0_0._checkParent(arg_12_0)
-	local var_12_0 = arg_12_0.viewParam.parent
+function TurnBackFullView:_checkParent()
+	local parentGO = self.viewParam.parent
 
-	if var_12_0 then
-		gohelper.addChild(var_12_0, arg_12_0.viewGO)
+	if parentGO then
+		gohelper.addChild(parentGO, self.viewGO)
 	end
 
-	arg_12_0._actId = arg_12_0.viewParam.actId
+	self._actId = self.viewParam.actId
 end
 
-function var_0_0._refreshUI(arg_13_0)
-	local var_13_0 = Activity201Model.instance:getInvitationInfo(arg_13_0._actId)
-	local var_13_1 = #var_13_0.invitePlayers
+function TurnBackFullView:_refreshUI()
+	local activityInfo = Activity201Model.instance:getInvitationInfo(self._actId)
+	local infoLen = #activityInfo.invitePlayers
 
-	for iter_13_0 = 1, var_13_1 do
-		local var_13_2 = arg_13_0._friendItemList[iter_13_0]
+	for i = 1, infoLen do
+		local item = self._friendItemList[i]
 
-		if not var_13_2 then
-			var_13_2 = arg_13_0:_create_TurnBackFullViewFriendItem(iter_13_0)
-			arg_13_0._friendItemList[iter_13_0] = var_13_2
+		if not item then
+			item = self:_create_TurnBackFullViewFriendItem(i)
+			self._friendItemList[i] = item
 		end
 
-		var_13_2:setActive(true)
-		var_13_2:setData(var_13_0.invitePlayers[iter_13_0])
+		item:setActive(true)
+		item:setData(activityInfo.invitePlayers[i])
 	end
 
-	for iter_13_1 = var_13_1 + 1, math.max(3, #arg_13_0._friendItemList) do
-		local var_13_3 = arg_13_0._friendItemList[iter_13_1]
+	for i = infoLen + 1, math.max(3, #self._friendItemList) do
+		local item = self._friendItemList[i]
 
-		if not var_13_3 then
-			var_13_3 = arg_13_0:_create_TurnBackFullViewFriendItem(iter_13_1)
-			arg_13_0._friendItemList[iter_13_1] = var_13_3
+		if not item then
+			item = self:_create_TurnBackFullViewFriendItem(i)
+			self._friendItemList[i] = item
 		end
 
-		var_13_3:setEmpty()
-		var_13_3:setActive(iter_13_1 <= 3)
+		item:setEmpty()
+		item:setActive(i <= 3)
 	end
 
-	arg_13_0._txtnum.text = var_13_0.inviteCode
+	self._txtnum.text = activityInfo.inviteCode
 
-	arg_13_0:_refreshTime()
+	self:_refreshTime()
 
-	if Activity201Model.instance:isActOpen(arg_13_0._actId) then
-		TaskDispatcher.cancelTask(arg_13_0._refreshTime, arg_13_0)
-		TaskDispatcher.runRepeat(arg_13_0._refreshTime, arg_13_0, 1)
+	if Activity201Model.instance:isActOpen(self._actId) then
+		TaskDispatcher.cancelTask(self._refreshTime, self)
+		TaskDispatcher.runRepeat(self._refreshTime, self, 1)
 	end
 
-	arg_13_0:_refreshPlayerInfo()
+	self:_refreshPlayerInfo()
 end
 
-function var_0_0._refreshTime(arg_14_0)
-	local var_14_0 = ActivityModel.instance:getActMO(arg_14_0._actId):getRealEndTimeStamp()
-	local var_14_1 = ServerTime.now()
+function TurnBackFullView:_refreshTime()
+	local actInfo = ActivityModel.instance:getActMO(self._actId)
+	local endTime = actInfo:getRealEndTimeStamp()
+	local nowTime = ServerTime.now()
 
-	if var_14_0 <= var_14_1 then
-		arg_14_0._txtLimitTime.text = luaLang("ended")
+	if endTime <= nowTime then
+		self._txtLimitTime.text = luaLang("ended")
 
 		return
 	end
 
-	local var_14_2 = TimeUtil.SecondToActivityTimeFormat(var_14_0 - var_14_1)
+	local dataStr = TimeUtil.SecondToActivityTimeFormat(endTime - nowTime)
 
-	arg_14_0._txtLimitTime.text = var_14_2
+	self._txtLimitTime.text = dataStr
 end
 
-function var_0_0._refreshPlayerInfo(arg_15_0)
-	local var_15_0 = PlayerModel.instance:getPlayinfo()
-	local var_15_1 = lua_item.configDict[var_15_0.portrait]
+function TurnBackFullView:_refreshPlayerInfo()
+	local info = PlayerModel.instance:getPlayinfo()
+	local config = lua_item.configDict[info.portrait]
 
-	if not arg_15_0._liveHeadIcon then
-		arg_15_0._liveHeadIcon = IconMgr.instance:getCommonLiveHeadIcon(arg_15_0._simageplayerheadicon)
+	if not self._liveHeadIcon then
+		local commonLiveIcon = IconMgr.instance:getCommonLiveHeadIcon(self._simageplayerheadicon)
+
+		self._liveHeadIcon = commonLiveIcon
 	end
 
-	arg_15_0._liveHeadIcon:setLiveHead(var_15_1.id)
+	self._liveHeadIcon:setLiveHead(config.id)
 
-	arg_15_0._txttitle.text = formatLuaLang("TurnBackFullView_title", var_15_0.name)
+	self._txttitle.text = formatLuaLang("TurnBackFullView_title", info.name)
 
-	local var_15_2 = string.split(var_15_1.effect, "#")
+	local effectArr = string.split(config.effect, "#")
 
-	if #var_15_2 > 1 then
-		if var_15_1.id == tonumber(var_15_2[#var_15_2]) then
-			gohelper.setActive(arg_15_0._goframenode, true)
+	if #effectArr > 1 then
+		if config.id == tonumber(effectArr[#effectArr]) then
+			gohelper.setActive(self._goframenode, true)
 
-			if not arg_15_0.frame then
-				local var_15_3 = "ui/viewres/common/effect/frame.prefab"
+			if not self.frame then
+				local framePath = "ui/viewres/common/effect/frame.prefab"
 
-				arg_15_0._loader:addPath(var_15_3)
-				arg_15_0._loader:startLoad(arg_15_0._onLoadCallback, arg_15_0)
+				self._loader:addPath(framePath)
+				self._loader:startLoad(self._onLoadCallback, self)
 			end
 		end
 	else
-		gohelper.setActive(arg_15_0._goframenode, false)
+		gohelper.setActive(self._goframenode, false)
 	end
 end
 
-function var_0_0._onLoadCallback(arg_16_0)
-	local var_16_0 = arg_16_0._loader:getFirstAssetItem():GetResource()
+function TurnBackFullView:_onLoadCallback()
+	local framePrefab = self._loader:getFirstAssetItem():GetResource()
 
-	gohelper.clone(var_16_0, arg_16_0._goframenode, "frame")
+	gohelper.clone(framePrefab, self._goframenode, "frame")
 
-	arg_16_0.frame = gohelper.findChild(arg_16_0._goframenode, "frame")
-	arg_16_0.frame:GetComponent(gohelper.Type_Image).enabled = false
+	self.frame = gohelper.findChild(self._goframenode, "frame")
 
-	local var_16_1 = 1.41 * (recthelper.getWidth(arg_16_0._simageplayerheadicon.transform) / recthelper.getWidth(arg_16_0.frame.transform))
+	local img = self.frame:GetComponent(gohelper.Type_Image)
 
-	transformhelper.setLocalScale(arg_16_0.frame.transform, var_16_1, var_16_1, 1)
+	img.enabled = false
+
+	local iconwidth = recthelper.getWidth(self._simageplayerheadicon.transform)
+	local framenodewidth = recthelper.getWidth(self.frame.transform)
+	local scale = 1.41 * (iconwidth / framenodewidth)
+
+	transformhelper.setLocalScale(self.frame.transform, scale, scale, 1)
 end
 
-function var_0_0.onClose(arg_17_0)
-	arg_17_0:disposeLoader()
-	arg_17_0:removeEventCb(Activity201Controller.instance, Activity201Event.OnGetInfoSuccess, arg_17_0._refreshUI, arg_17_0)
-	TaskDispatcher.cancelTask(arg_17_0._refreshTime, arg_17_0)
+function TurnBackFullView:onClose()
+	self:disposeLoader()
+	self:removeEventCb(Activity201Controller.instance, Activity201Event.OnGetInfoSuccess, self._refreshUI, self)
+	TaskDispatcher.cancelTask(self._refreshTime, self)
 end
 
-function var_0_0.onDestroyView(arg_18_0)
-	GameUtil.onDestroyViewMemberList(arg_18_0, "_friendItemList")
-	TaskDispatcher.cancelTask(arg_18_0._refreshTime, arg_18_0)
+function TurnBackFullView:onDestroyView()
+	GameUtil.onDestroyViewMemberList(self, "_friendItemList")
+	TaskDispatcher.cancelTask(self._refreshTime, self)
 end
 
-function var_0_0._create_TurnBackFullViewFriendItem(arg_19_0, arg_19_1, arg_19_2)
-	local var_19_0 = TurnBackFullViewFriendItem.New({
-		parent = arg_19_0,
-		baseViewContainer = arg_19_0.viewContainer
+function TurnBackFullView:_create_TurnBackFullViewFriendItem(index, go)
+	local item = TurnBackFullViewFriendItem.New({
+		parent = self,
+		baseViewContainer = self.viewContainer
 	})
 
-	var_19_0:setIndex(arg_19_1)
-	var_19_0:init(arg_19_2 or gohelper.cloneInPlace(arg_19_0._goplayer1))
+	item:setIndex(index)
+	item:init(go or gohelper.cloneInPlace(self._goplayer1))
 
-	return var_19_0
+	return item
 end
 
-function var_0_0.disposeLoader(arg_20_0)
-	if arg_20_0._loader then
-		arg_20_0._loader:dispose()
+function TurnBackFullView:disposeLoader()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_20_0._loader = nil
+		self._loader = nil
 	end
 
-	for iter_20_0, iter_20_1 in ipairs(arg_20_0._friendItemList or {}) do
-		if iter_20_1 then
-			iter_20_1:disposeLoader()
+	for _, item in ipairs(self._friendItemList or {}) do
+		if item then
+			item:disposeLoader()
 		end
 	end
 end
 
-return var_0_0
+return TurnBackFullView

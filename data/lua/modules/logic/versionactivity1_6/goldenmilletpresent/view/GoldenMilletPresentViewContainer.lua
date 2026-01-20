@@ -1,22 +1,26 @@
-﻿module("modules.logic.versionactivity1_6.goldenmilletpresent.view.GoldenMilletPresentViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/goldenmilletpresent/view/GoldenMilletPresentViewContainer.lua
 
-local var_0_0 = class("GoldenMilletPresentViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_6.goldenmilletpresent.view.GoldenMilletPresentViewContainer", package.seeall)
 
-var_0_0.ExclusiveView = {
+local GoldenMilletPresentViewContainer = class("GoldenMilletPresentViewContainer", BaseViewContainer)
+
+GoldenMilletPresentViewContainer.ExclusiveView = {
 	DisplayView = 2,
 	ReceiveView = 1
 }
 
-function var_0_0.buildViews(arg_1_0)
-	arg_1_0.goldenMilletPresentView = GoldenMilletPresentView.New()
+function GoldenMilletPresentViewContainer:buildViews()
+	self.goldenMilletPresentView = GoldenMilletPresentView.New()
 
-	return {
-		arg_1_0.goldenMilletPresentView
+	local views = {
+		self.goldenMilletPresentView
 	}
+
+	return views
 end
 
-function var_0_0.openGoldMilletPresentDisplayView(arg_2_0)
-	arg_2_0.goldenMilletPresentView:switchExclusiveView(true)
+function GoldenMilletPresentViewContainer:openGoldMilletPresentDisplayView()
+	self.goldenMilletPresentView:switchExclusiveView(true)
 end
 
-return var_0_0
+return GoldenMilletPresentViewContainer

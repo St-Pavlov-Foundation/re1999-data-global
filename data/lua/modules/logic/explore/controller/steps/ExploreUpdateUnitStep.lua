@@ -1,51 +1,57 @@
-﻿module("modules.logic.explore.controller.steps.ExploreUpdateUnitStep", package.seeall)
+﻿-- chunkname: @modules/logic/explore/controller/steps/ExploreUpdateUnitStep.lua
 
-local var_0_0 = class("ExploreUpdateUnitStep", ExploreStepBase)
+module("modules.logic.explore.controller.steps.ExploreUpdateUnitStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0._data.interact
+local ExploreUpdateUnitStep = class("ExploreUpdateUnitStep", ExploreStepBase)
 
-	ExploreModel.instance:updateInteractInfo(var_1_0, nil, true)
+function ExploreUpdateUnitStep:onStart()
+	local interact = self._data.interact
 
-	if ExploreHelper.getBit(var_1_0.status, ExploreEnum.InteractIndex.IsEnter) <= 0 then
-		local var_1_1 = {
+	ExploreModel.instance:updateInteractInfo(interact, nil, true)
+
+	if ExploreHelper.getBit(interact.status, ExploreEnum.InteractIndex.IsEnter) <= 0 then
+		local stepData = {
 			stepType = ExploreEnum.StepType.DelUnit,
-			interact = arg_1_0._data.interact
+			interact = self._data.interact
 		}
 
-		ExploreStepController.instance:insertClientStep(var_1_1, 1)
-		arg_1_0:onDone()
+		ExploreStepController.instance:insertClientStep(stepData, 1)
+		self:onDone()
 
 		return
 	end
 
-	local var_1_2 = ExploreController.instance:getMap()
-	local var_1_3 = var_1_2:getUnit(var_1_0.id, true)
+	local map = ExploreController.instance:getMap()
+	local unit = map:getUnit(interact.id, true)
 
-	if var_1_3 then
-		var_1_3:checkShowIcon()
+	if unit then
+		unit:checkShowIcon()
 
-		if (not var_1_3.nodePos or var_1_3.nodePos.x ~= var_1_0.posx or var_1_3.nodePos.y ~= var_1_0.posy) and var_1_2:getNowStatus() == ExploreEnum.MapStatus.Normal then
-			var_1_3:setPosByNode({
-				x = var_1_0.posx,
-				y = var_1_0.posy
-			})
+		if not unit.nodePos or unit.nodePos.x ~= interact.posx or unit.nodePos.y ~= interact.posy then
+			local status = map:getNowStatus()
+
+			if status == ExploreEnum.MapStatus.Normal then
+				unit:setPosByNode({
+					x = interact.posx,
+					y = interact.posy
+				})
+			end
 		end
 
 		if ExploreHeroResetFlow.instance:isReseting() then
-			var_1_3.mo.unitDir = var_1_0.dir
+			unit.mo.unitDir = interact.dir
 
-			var_1_3:updateRotationRoot()
+			unit:updateRotationRoot()
 		end
 	else
-		ExploreController.instance:updateUnit(var_1_0)
+		ExploreController.instance:updateUnit(interact)
 
-		local var_1_4 = var_1_2:getUnit(var_1_0.id)
+		local unit = map:getUnit(interact.id)
 
-		var_1_2:checkUnitNear(var_1_4.nodePos, var_1_4)
+		map:checkUnitNear(unit.nodePos, unit)
 	end
 
-	arg_1_0:onDone()
+	self:onDone()
 end
 
-return var_0_0
+return ExploreUpdateUnitStep

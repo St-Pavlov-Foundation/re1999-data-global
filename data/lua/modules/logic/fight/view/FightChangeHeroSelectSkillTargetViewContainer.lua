@@ -1,11 +1,13 @@
-﻿module("modules.logic.fight.view.FightChangeHeroSelectSkillTargetViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightChangeHeroSelectSkillTargetViewContainer.lua
 
-local var_0_0 = class("FightChangeHeroSelectSkillTargetViewContainer", BaseViewContainer)
+module("modules.logic.fight.view.FightChangeHeroSelectSkillTargetViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local FightChangeHeroSelectSkillTargetViewContainer = class("FightChangeHeroSelectSkillTargetViewContainer", BaseViewContainer)
+
+function FightChangeHeroSelectSkillTargetViewContainer:buildViews()
 	return {
 		FightChangeHeroSelectSkillTargetView.New()
 	}
 end
 
-return var_0_0
+return FightChangeHeroSelectSkillTargetViewContainer

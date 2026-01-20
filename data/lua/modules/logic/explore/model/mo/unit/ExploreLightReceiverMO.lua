@@ -1,13 +1,15 @@
-﻿module("modules.logic.explore.model.mo.unit.ExploreLightReceiverMO", package.seeall)
+﻿-- chunkname: @modules/logic/explore/model/mo/unit/ExploreLightReceiverMO.lua
 
-local var_0_0 = class("ExploreLightReceiverMO", ExploreBaseUnitMO)
+module("modules.logic.explore.model.mo.unit.ExploreLightReceiverMO", package.seeall)
 
-function var_0_0.initTypeData(arg_1_0)
-	arg_1_0.isPhoticDir = tonumber(arg_1_0.specialDatas[1]) == 1
+local ExploreLightReceiverMO = class("ExploreLightReceiverMO", ExploreBaseUnitMO)
+
+function ExploreLightReceiverMO:initTypeData()
+	self.isPhoticDir = tonumber(self.specialDatas[1]) == 1
 end
 
-function var_0_0.getUnitClass(arg_2_0)
+function ExploreLightReceiverMO:getUnitClass()
 	return ExploreLightReceiverUnit
 end
 
-return var_0_0
+return ExploreLightReceiverMO

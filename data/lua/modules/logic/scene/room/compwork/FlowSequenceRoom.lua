@@ -1,33 +1,35 @@
-﻿module("modules.logic.scene.room.compwork.FlowSequenceRoom", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/compwork/FlowSequenceRoom.lua
 
-local var_0_0 = class("FlowSequenceRoom", FlowSequence)
+module("modules.logic.scene.room.compwork.FlowSequenceRoom", package.seeall)
 
-function var_0_0._runNext(arg_1_0)
-	local var_1_0 = arg_1_0._workList[arg_1_0._curIndex + 1]
+local FlowSequenceRoom = class("FlowSequenceRoom", FlowSequence)
 
-	if var_1_0 then
-		if isTypeOf(var_1_0, RoomSceneCommonCompWork) then
-			RoomHelper.logElapse("++++++ " .. var_1_0.__cname .. " " .. var_1_0._comp.__cname, 0.001)
-		elseif isTypeOf(var_1_0, RoomSceneWaitEventCompWork) then
-			RoomHelper.logElapse("++++++ " .. var_1_0.__cname .. " " .. var_1_0._comp.__cname, 0.001)
+function FlowSequenceRoom:_runNext()
+	local work = self._workList[self._curIndex + 1]
+
+	if work then
+		if isTypeOf(work, RoomSceneCommonCompWork) then
+			RoomHelper.logElapse("++++++ " .. work.__cname .. " " .. work._comp.__cname, 0.001)
+		elseif isTypeOf(work, RoomSceneWaitEventCompWork) then
+			RoomHelper.logElapse("++++++ " .. work.__cname .. " " .. work._comp.__cname, 0.001)
 		else
-			RoomHelper.logElapse("++++++ " .. var_1_0.__cname, 0.001)
+			RoomHelper.logElapse("++++++ " .. work.__cname, 0.001)
 		end
 	end
 
-	var_0_0.super._runNext(arg_1_0)
+	FlowSequenceRoom.super._runNext(self)
 end
 
-function var_0_0.onWorkDone(arg_2_0, arg_2_1)
-	if isTypeOf(arg_2_1, RoomSceneCommonCompWork) then
-		RoomHelper.logElapse("-------- " .. arg_2_1.__cname .. " " .. arg_2_1._comp.__cname, 0.001)
-	elseif isTypeOf(arg_2_1, RoomSceneWaitEventCompWork) then
-		RoomHelper.logElapse("-------- " .. arg_2_1.__cname .. " " .. arg_2_1._comp.__cname, 0.001)
+function FlowSequenceRoom:onWorkDone(work)
+	if isTypeOf(work, RoomSceneCommonCompWork) then
+		RoomHelper.logElapse("-------- " .. work.__cname .. " " .. work._comp.__cname, 0.001)
+	elseif isTypeOf(work, RoomSceneWaitEventCompWork) then
+		RoomHelper.logElapse("-------- " .. work.__cname .. " " .. work._comp.__cname, 0.001)
 	else
-		RoomHelper.logElapse("-------- " .. arg_2_1.__cname, 0.001)
+		RoomHelper.logElapse("-------- " .. work.__cname, 0.001)
 	end
 
-	var_0_0.super.onWorkDone(arg_2_0, arg_2_1)
+	FlowSequenceRoom.super.onWorkDone(self, work)
 end
 
-return var_0_0
+return FlowSequenceRoom

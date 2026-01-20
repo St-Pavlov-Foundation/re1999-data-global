@@ -1,207 +1,209 @@
-﻿module("modules.logic.explore.view.ExploreArchivesView", package.seeall)
+﻿-- chunkname: @modules/logic/explore/view/ExploreArchivesView.lua
 
-local var_0_0 = class("ExploreArchivesView", BaseView)
+module("modules.logic.explore.view.ExploreArchivesView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtChapter = gohelper.findChildTextMesh(arg_1_0.viewGO, "title/txt_title/#txt_chapter")
-	arg_1_0._btneasteregg = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_easteregg")
+local ExploreArchivesView = class("ExploreArchivesView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ExploreArchivesView:onInitView()
+	self._txtChapter = gohelper.findChildTextMesh(self.viewGO, "title/txt_title/#txt_chapter")
+	self._btneasteregg = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_easteregg")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0._editableInitView(arg_2_0)
-	arg_2_0._content = gohelper.findChild(arg_2_0.viewGO, "#scroll_list/Viewport/Content")
+function ExploreArchivesView:_editableInitView()
+	self._content = gohelper.findChild(self.viewGO, "#scroll_list/Viewport/Content")
 end
 
-function var_0_0.addEvents(arg_3_0)
-	arg_3_0._btneasteregg:AddClickListener(arg_3_0._onEggClick, arg_3_0)
+function ExploreArchivesView:addEvents()
+	self._btneasteregg:AddClickListener(self._onEggClick, self)
 end
 
-function var_0_0.removeEvents(arg_4_0)
-	arg_4_0._btneasteregg:RemoveClickListener()
+function ExploreArchivesView:removeEvents()
+	self._btneasteregg:RemoveClickListener()
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0._images = {}
+function ExploreArchivesView:onOpen()
+	self._images = {}
 
-	local var_5_0 = arg_5_0.viewParam.id
-	local var_5_1 = ExploreSimpleModel.instance:getChapterMo(var_5_0)
+	local chapterId = self.viewParam.id
+	local chapterMo = ExploreSimpleModel.instance:getChapterMo(chapterId)
 
-	arg_5_0.unLockArchives = var_5_1.archiveIds
+	self.unLockArchives = chapterMo.archiveIds
 
-	gohelper.setActive(arg_5_0._btneasteregg, var_5_1:haveBonusScene())
+	gohelper.setActive(self._btneasteregg, chapterMo:haveBonusScene())
 
-	local var_5_2 = lua_explore_story.configDict[var_5_0]
+	local configs = lua_explore_story.configDict[chapterId]
 
-	if not var_5_2 then
+	if not configs then
 		return
 	end
 
-	local var_5_3 = ExploreSimpleModel.instance:getNewArchives(var_5_0)
-	local var_5_4 = {}
+	local newArchiveIds = ExploreSimpleModel.instance:getNewArchives(chapterId)
+	local newArchiveIdsDict = {}
 
-	for iter_5_0, iter_5_1 in pairs(var_5_3) do
-		var_5_4[iter_5_1] = true
+	for _, v in pairs(newArchiveIds) do
+		newArchiveIdsDict[v] = true
 	end
 
-	arg_5_0._txtChapter.text = DungeonConfig.instance:getChapterCO(var_5_0).name
+	self._txtChapter.text = DungeonConfig.instance:getChapterCO(chapterId).name
 
-	ExploreSimpleModel.instance:markArchive(var_5_0, false)
+	ExploreSimpleModel.instance:markArchive(chapterId, false)
 
-	local var_5_5 = string.format("ui/viewres/explore/explorearchivechapter%d.prefab", var_5_0)
-	local var_5_6 = arg_5_0:getResInst(var_5_5, arg_5_0._content).transform
+	local assetPath = string.format("ui/viewres/explore/explorearchivechapter%d.prefab", chapterId)
+	local go = self:getResInst(assetPath, self._content)
+	local trans = go.transform
 
-	recthelper.setWidth(arg_5_0._content.transform, recthelper.getWidth(var_5_6))
+	recthelper.setWidth(self._content.transform, recthelper.getWidth(trans))
 
-	arg_5_0._unLockAnims = {}
+	self._unLockAnims = {}
 
-	for iter_5_2 = 0, var_5_6.childCount - 1 do
-		local var_5_7 = var_5_6:GetChild(iter_5_2)
-		local var_5_8 = var_5_7.name
-		local var_5_9 = string.match(var_5_8, "^#go_item_(%d+)$")
+	for i = 0, trans.childCount - 1 do
+		local child = trans:GetChild(i)
+		local name = child.name
+		local id = string.match(name, "^#go_item_(%d+)$")
 
-		if var_5_9 then
-			arg_5_0:_initArchiveItem(var_5_7, var_5_2[tonumber(var_5_9)], var_5_4)
+		if id then
+			self:_initArchiveItem(child, configs[tonumber(id)], newArchiveIdsDict)
 		end
 	end
 
-	local var_5_10 = var_5_6:Find("line")
+	local lineTrans = trans:Find("line")
 
-	if var_5_10 then
-		for iter_5_3 = 0, var_5_10.childCount - 1 do
-			local var_5_11 = var_5_10:GetChild(iter_5_3)
-			local var_5_12 = var_5_11.name
-			local var_5_13, var_5_14 = string.match(var_5_12, "^#go_line_(%d+)_(%d+)$")
-			local var_5_15 = false
+	if lineTrans then
+		for i = 0, lineTrans.childCount - 1 do
+			local child = lineTrans:GetChild(i)
+			local name = child.name
+			local id1, id2 = string.match(name, "^#go_line_(%d+)_(%d+)$")
+			local isShow = false
 
-			if var_5_13 and var_5_14 then
-				var_5_15 = arg_5_0.unLockArchives[tonumber(var_5_13)] and arg_5_0.unLockArchives[tonumber(var_5_14)]
+			if id1 and id2 then
+				isShow = self.unLockArchives[tonumber(id1)] and self.unLockArchives[tonumber(id2)]
 			else
-				local var_5_16, var_5_17 = string.match(var_5_12, "^#go_line_gray_(%d+)_(%d+)$")
-
-				var_5_15 = not arg_5_0.unLockArchives[tonumber(var_5_16)] or not arg_5_0.unLockArchives[tonumber(var_5_17)]
+				id1, id2 = string.match(name, "^#go_line_gray_(%d+)_(%d+)$")
+				isShow = not self.unLockArchives[tonumber(id1)] or not self.unLockArchives[tonumber(id2)]
 			end
 
-			gohelper.setActive(var_5_11, var_5_15)
+			gohelper.setActive(child, isShow)
 		end
 	end
 
-	if #arg_5_0._unLockAnims > 0 then
-		TaskDispatcher.runDelay(arg_5_0.beginUnlock, arg_5_0, 1.1)
+	if #self._unLockAnims > 0 then
+		TaskDispatcher.runDelay(self.beginUnlock, self, 1.1)
 	end
 end
 
-function var_0_0._onEggClick(arg_6_0)
+function ExploreArchivesView:_onEggClick()
 	ViewMgr.instance:openView(ViewName.ExploreBonusSceneRecordView, {
-		chapterId = arg_6_0.viewParam.id
+		chapterId = self.viewParam.id
 	})
 end
 
-function var_0_0._initArchiveItem(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	local var_7_0 = arg_7_1.gameObject
-	local var_7_1 = gohelper.getClickWithAudio(var_7_0, AudioEnum.UI.play_ui_feedback_open)
-	local var_7_2 = gohelper.findChildSingleImage(var_7_0, "#simage_icon")
-	local var_7_3 = gohelper.findChildTextMesh(var_7_0, "#txt_name")
-	local var_7_4 = gohelper.findChild(var_7_0, "#go_lock")
-	local var_7_5 = gohelper.findChildSingleImage(var_7_0, "#go_lock/#simage_icon")
-	local var_7_6 = gohelper.findChild(var_7_0, "go_new")
-	local var_7_7 = gohelper.findChild(var_7_0, "#go_lock/lock")
-	local var_7_8 = gohelper.findChild(var_7_0, "#go_lock/cn")
-	local var_7_9 = gohelper.findChild(var_7_0, "#go_lock/en")
-	local var_7_10 = var_7_4:GetComponent(typeof(UnityEngine.Animator))
-	local var_7_11 = arg_7_0.unLockArchives[arg_7_2.id] or false
-	local var_7_12 = arg_7_3[arg_7_2.id] or false
+function ExploreArchivesView:_initArchiveItem(trans, config, newArchiveIdsDict)
+	local go = trans.gameObject
+	local click = gohelper.getClickWithAudio(go, AudioEnum.UI.play_ui_feedback_open)
+	local image = gohelper.findChildSingleImage(go, "#simage_icon")
+	local name = gohelper.findChildTextMesh(go, "#txt_name")
+	local lock = gohelper.findChild(go, "#go_lock")
+	local lock_image = gohelper.findChildSingleImage(go, "#go_lock/#simage_icon")
+	local new = gohelper.findChild(go, "go_new")
+	local lock_1 = gohelper.findChild(go, "#go_lock/lock")
+	local lock_2 = gohelper.findChild(go, "#go_lock/cn")
+	local lock_3 = gohelper.findChild(go, "#go_lock/en")
+	local lock_anim = lock:GetComponent(typeof(UnityEngine.Animator))
+	local isUnlock = self.unLockArchives[config.id] or false
+	local isNew = newArchiveIdsDict[config.id] or false
 
-	gohelper.setActive(var_7_2, var_7_11)
-	gohelper.setActive(var_7_3, var_7_11)
-	gohelper.setActive(var_7_4, not var_7_11)
-	gohelper.setActive(var_7_6, var_7_12)
+	gohelper.setActive(image, isUnlock)
+	gohelper.setActive(name, isUnlock)
+	gohelper.setActive(lock, not isUnlock)
+	gohelper.setActive(new, isNew)
 
-	var_7_3.text = arg_7_2.title
+	name.text = config.title
 
-	var_7_2:LoadImage(ResUrl.getExploreBg("file/" .. arg_7_2.res))
-	var_7_5:LoadImage(ResUrl.getExploreBg("file/" .. arg_7_2.res))
-	table.insert(arg_7_0._images, var_7_2)
-	table.insert(arg_7_0._images, var_7_5)
+	image:LoadImage(ResUrl.getExploreBg("file/" .. config.res))
+	lock_image:LoadImage(ResUrl.getExploreBg("file/" .. config.res))
+	table.insert(self._images, image)
+	table.insert(self._images, lock_image)
 
-	if var_7_11 then
-		arg_7_0._goNew = arg_7_0._goNew or arg_7_0:getUserDataTb_()
-		arg_7_0._goNew[arg_7_2.id] = var_7_6
+	if isUnlock then
+		self._goNew = self._goNew or self:getUserDataTb_()
+		self._goNew[config.id] = new
 
-		arg_7_0:addClickCb(var_7_1, arg_7_0._onItemClick, arg_7_0, arg_7_2.id)
+		self:addClickCb(click, self._onItemClick, self, config.id)
 	end
 
-	if var_7_12 then
-		gohelper.setActive(var_7_4, true)
-		gohelper.setActive(var_7_3, false)
-		gohelper.setActive(var_7_6, false)
-		table.insert(arg_7_0._unLockAnims, {
-			var_7_4,
-			var_7_10,
-			var_7_3,
-			var_7_2,
-			var_7_6,
-			var_7_7,
-			var_7_8,
-			var_7_9
+	if isNew then
+		gohelper.setActive(lock, true)
+		gohelper.setActive(name, false)
+		gohelper.setActive(new, false)
+		table.insert(self._unLockAnims, {
+			lock,
+			lock_anim,
+			name,
+			image,
+			new,
+			lock_1,
+			lock_2,
+			lock_3
 		})
 	end
 end
 
-function var_0_0.beginUnlock(arg_8_0)
-	for iter_8_0, iter_8_1 in pairs(arg_8_0._unLockAnims) do
-		iter_8_1[2]:Play("unlock", 0, 0)
-		gohelper.setActive(iter_8_1[6], false)
-		gohelper.setActive(iter_8_1[7], false)
-		gohelper.setActive(iter_8_1[8], false)
+function ExploreArchivesView:beginUnlock()
+	for _, v in pairs(self._unLockAnims) do
+		v[2]:Play("unlock", 0, 0)
+		gohelper.setActive(v[6], false)
+		gohelper.setActive(v[7], false)
+		gohelper.setActive(v[8], false)
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_unlock)
-	TaskDispatcher.runDelay(arg_8_0.unlockEnd, arg_8_0, 1)
+	TaskDispatcher.runDelay(self.unlockEnd, self, 1)
 end
 
-function var_0_0.unlockEnd(arg_9_0)
-	for iter_9_0, iter_9_1 in pairs(arg_9_0._unLockAnims) do
-		gohelper.setActive(iter_9_1[1], false)
-		gohelper.setActive(iter_9_1[3], true)
-		gohelper.setActive(iter_9_1[4], true)
-		gohelper.setActive(iter_9_1[5], true)
+function ExploreArchivesView:unlockEnd()
+	for _, v in pairs(self._unLockAnims) do
+		gohelper.setActive(v[1], false)
+		gohelper.setActive(v[3], true)
+		gohelper.setActive(v[4], true)
+		gohelper.setActive(v[5], true)
 
-		if not arg_9_0._tweens then
-			arg_9_0._tweens = {}
+		if not self._tweens then
+			self._tweens = {}
 		end
 
-		local var_9_0 = ZProj.TweenHelper.DoFade(iter_9_1[3], 0, 1, 0.5)
+		local tweenId = ZProj.TweenHelper.DoFade(v[3], 0, 1, 0.5)
 
-		table.insert(arg_9_0._tweens, var_9_0)
+		table.insert(self._tweens, tweenId)
 	end
 end
 
-function var_0_0._onItemClick(arg_10_0, arg_10_1)
-	gohelper.setActive(arg_10_0._goNew[arg_10_1], false)
+function ExploreArchivesView:_onItemClick(id)
+	gohelper.setActive(self._goNew[id], false)
 	ViewMgr.instance:openView(ViewName.ExploreArchivesDetailView, {
-		id = arg_10_1,
-		chapterId = arg_10_0.viewParam.id
+		id = id,
+		chapterId = self.viewParam.id
 	})
 end
 
-function var_0_0.onClose(arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0.beginUnlock, arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0.unlockEnd, arg_11_0)
+function ExploreArchivesView:onClose()
+	TaskDispatcher.cancelTask(self.beginUnlock, self)
+	TaskDispatcher.cancelTask(self.unlockEnd, self)
 
-	for iter_11_0, iter_11_1 in pairs(arg_11_0._images) do
-		iter_11_1:UnLoadImage()
+	for _, v in pairs(self._images) do
+		v:UnLoadImage()
 	end
 
-	if arg_11_0._tweens then
-		for iter_11_2, iter_11_3 in pairs(arg_11_0._tweens) do
-			ZProj.TweenHelper.KillById(iter_11_3)
+	if self._tweens then
+		for _, id in pairs(self._tweens) do
+			ZProj.TweenHelper.KillById(id)
 		end
 
-		arg_11_0._tweens = nil
+		self._tweens = nil
 	end
 end
 
-return var_0_0
+return ExploreArchivesView

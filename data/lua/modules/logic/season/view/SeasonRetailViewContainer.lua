@@ -1,59 +1,61 @@
-﻿module("modules.logic.season.view.SeasonRetailViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/season/view/SeasonRetailViewContainer.lua
 
-local var_0_0 = class("SeasonRetailViewContainer", BaseViewContainer)
+module("modules.logic.season.view.SeasonRetailViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local SeasonRetailViewContainer = class("SeasonRetailViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, SeasonRetailView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
+function SeasonRetailViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, SeasonRetailView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_btns"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	arg_2_0._navigateButtonView = NavigateButtonsView.New({
+function SeasonRetailViewContainer:buildTabViews(tabContainerId)
+	self._navigateButtonView = NavigateButtonsView.New({
 		true,
 		true,
 		false
-	}, 100, arg_2_0._closeCallback, arg_2_0._homeCallback, nil, arg_2_0)
+	}, 100, self._closeCallback, self._homeCallback, nil, self)
 
 	return {
-		arg_2_0._navigateButtonView
+		self._navigateButtonView
 	}
 end
 
-function var_0_0._closeCallback(arg_3_0)
-	arg_3_0:closeThis()
+function SeasonRetailViewContainer:_closeCallback()
+	self:closeThis()
 end
 
-function var_0_0._homeCallback(arg_4_0)
-	arg_4_0:closeThis()
+function SeasonRetailViewContainer:_homeCallback()
+	self:closeThis()
 end
 
-function var_0_0.setVisibleInternal(arg_5_0, arg_5_1)
-	if arg_5_1 then
-		arg_5_0:_setVisible(true)
-		arg_5_0:playAnim(UIAnimationName.Open)
+function SeasonRetailViewContainer:setVisibleInternal(isVisible)
+	if isVisible then
+		self:_setVisible(true)
+		self:playAnim(UIAnimationName.Open)
 	elseif ViewMgr.instance:isOpen(ViewName.SeasonMainView) then
-		arg_5_0:playAnim(UIAnimationName.Close)
+		self:playAnim(UIAnimationName.Close)
 	else
-		arg_5_0:_setVisible(false)
+		self:_setVisible(false)
 	end
 end
 
-function var_0_0.playAnim(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	if not arg_6_0._anim and arg_6_0.viewGO then
-		arg_6_0._anim = arg_6_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function SeasonRetailViewContainer:playAnim(aniName, layer, normalizedTime)
+	if not self._anim and self.viewGO then
+		self._anim = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 	end
 
-	if arg_6_0._anim then
-		if arg_6_2 and arg_6_3 then
-			arg_6_0._anim:Play(arg_6_1, arg_6_2, arg_6_3)
+	if self._anim then
+		if layer and normalizedTime then
+			self._anim:Play(aniName, layer, normalizedTime)
 		else
-			arg_6_0._anim:Play(arg_6_1)
+			self._anim:Play(aniName)
 		end
 	end
 end
 
-return var_0_0
+return SeasonRetailViewContainer

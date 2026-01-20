@@ -1,15 +1,17 @@
-﻿module("modules.logic.versionactivity2_2.lopera.view.LoperaGameResultViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/lopera/view/LoperaGameResultViewContainer.lua
 
-local var_0_0 = class("LoperaGameResultViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_2.lopera.view.LoperaGameResultViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local LoperaGameResultViewContainer = class("LoperaGameResultViewContainer", BaseViewContainer)
 
-	arg_1_0._resultView = LoperaGameResultView.New()
+function LoperaGameResultViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, arg_1_0._resultView)
+	self._resultView = LoperaGameResultView.New()
 
-	return var_1_0
+	table.insert(views, self._resultView)
+
+	return views
 end
 
-return var_0_0
+return LoperaGameResultViewContainer

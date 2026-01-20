@@ -1,89 +1,92 @@
-﻿module("modules.logic.player.model.IconTipModel", package.seeall)
+﻿-- chunkname: @modules/logic/player/model/IconTipModel.lua
 
-local var_0_0 = class("IconTipModel", BaseModel)
+module("modules.logic.player.model.IconTipModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._iconslist = {}
+local IconTipModel = class("IconTipModel", BaseModel)
+
+function IconTipModel:onInit()
+	self._iconslist = {}
 end
 
-function var_0_0.setIconList(arg_2_0, arg_2_1)
-	arg_2_0._iconslist = {}
+function IconTipModel:setIconList(id)
+	self._iconslist = {}
 
-	local var_2_0 = ItemModel.instance:getItemList()
-	local var_2_1 = {}
-	local var_2_2 = {}
-	local var_2_3 = {}
+	local itemlist = ItemModel.instance:getItemList()
+	local noShowDict = {}
+	local allUnLockIconMo = {}
+	local strToList = {}
 
-	for iter_2_0, iter_2_1 in pairs(var_2_0) do
-		local var_2_4 = lua_item.configDict[iter_2_1.id]
+	for _, v in pairs(itemlist) do
+		local config = lua_item.configDict[v.id]
 
-		if var_2_4 and var_2_4.subType == ItemEnum.SubType.Portrait and not var_2_1[iter_2_1.id] then
-			local var_2_5 = {
-				id = var_2_4.id,
-				icon = var_2_4.icon,
-				name = var_2_4.name,
-				isused = var_2_4.id == arg_2_1 and 1 or 0,
-				effect = var_2_4.effect
-			}
-			local var_2_6 = var_2_3[var_2_4.effect]
+		if config and config.subType == ItemEnum.SubType.Portrait and not noShowDict[v.id] then
+			local iconMo = {}
 
-			if not var_2_6 then
-				var_2_6 = {}
+			iconMo.id = config.id
+			iconMo.icon = config.icon
+			iconMo.name = config.name
+			iconMo.isused = config.id == id and 1 or 0
+			iconMo.effect = config.effect
 
-				for iter_2_2, iter_2_3 in ipairs(string.split(var_2_4.effect, "#")) do
-					table.insert(var_2_6, tonumber(iter_2_3) or 0)
+			local list = strToList[config.effect]
+
+			if not list then
+				list = {}
+
+				for _, str in ipairs(string.split(config.effect, "#")) do
+					table.insert(list, tonumber(str) or 0)
 				end
 
-				var_2_3[var_2_4.effect] = var_2_6
+				strToList[config.effect] = list
 			end
 
-			local var_2_7 = #var_2_6
+			local switchCount = #list
 
-			if var_2_7 > 0 then
-				local var_2_8 = false
+			if switchCount > 0 then
+				local find = false
 
-				var_2_5.effectPortraitDic = {}
+				iconMo.effectPortraitDic = {}
 
-				for iter_2_4 = var_2_7, 1, -1 do
-					local var_2_9 = var_2_6[iter_2_4]
+				for i = switchCount, 1, -1 do
+					local headId = list[i]
 
-					var_2_5.effectPortraitDic[var_2_9] = true
+					iconMo.effectPortraitDic[headId] = true
 
-					if var_2_8 then
-						var_2_1[var_2_9] = true
-					elseif var_2_9 == var_2_4.id then
-						var_2_8 = true
+					if find then
+						noShowDict[headId] = true
+					elseif headId == config.id then
+						find = true
 					end
 				end
 			end
 
-			var_2_2[var_2_4.id] = var_2_5
+			allUnLockIconMo[config.id] = iconMo
 		end
 	end
 
-	for iter_2_5, iter_2_6 in pairs(var_2_2) do
-		if not var_2_1[iter_2_5] then
-			table.insert(arg_2_0._iconslist, iter_2_6)
+	for id, iconMo in pairs(allUnLockIconMo) do
+		if not noShowDict[id] then
+			table.insert(self._iconslist, iconMo)
 		end
 	end
 
-	arg_2_0:setIconsList()
+	self:setIconsList()
 end
 
-function var_0_0.setSelectIcon(arg_3_0, arg_3_1)
-	arg_3_0._selectIcon = arg_3_1
+function IconTipModel:setSelectIcon(id)
+	self._selectIcon = id
 
-	PlayerController.instance:dispatchEvent(PlayerEvent.SelectPortrait, arg_3_1)
+	PlayerController.instance:dispatchEvent(PlayerEvent.SelectPortrait, id)
 end
 
-function var_0_0.getSelectIcon(arg_4_0)
-	return arg_4_0._selectIcon
+function IconTipModel:getSelectIcon()
+	return self._selectIcon
 end
 
-function var_0_0.setIconsList(arg_5_0)
-	IconListModel.instance:setIconList(arg_5_0._iconslist)
+function IconTipModel:setIconsList()
+	IconListModel.instance:setIconList(self._iconslist)
 end
 
-var_0_0.instance = var_0_0.New()
+IconTipModel.instance = IconTipModel.New()
 
-return var_0_0
+return IconTipModel

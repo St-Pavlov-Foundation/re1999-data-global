@@ -1,28 +1,30 @@
-﻿module("modules.logic.survival.view.shelter.SurvivalMonsterEventSmallNpcItem", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/SurvivalMonsterEventSmallNpcItem.lua
 
-local var_0_0 = class("SurvivalMonsterEventSmallNpcItem", ListScrollCellExtend)
+module("modules.logic.survival.view.shelter.SurvivalMonsterEventSmallNpcItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "#go_empty")
-	arg_1_0._gohas = gohelper.findChild(arg_1_0.viewGO, "#go_has")
-	arg_1_0._simagehero = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_has/#simage_hero")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_click")
+local SurvivalMonsterEventSmallNpcItem = class("SurvivalMonsterEventSmallNpcItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SurvivalMonsterEventSmallNpcItem:onInitView()
+	self._goempty = gohelper.findChild(self.viewGO, "#go_empty")
+	self._gohas = gohelper.findChild(self.viewGO, "#go_has")
+	self._simagehero = gohelper.findChildSingleImage(self.viewGO, "#go_has/#simage_hero")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_click")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+function SurvivalMonsterEventSmallNpcItem:addEvents()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
+function SurvivalMonsterEventSmallNpcItem:removeEvents()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0._btnclickOnClick(arg_4_0)
-	if not arg_4_0._isCanEnter then
+function SurvivalMonsterEventSmallNpcItem:_btnclickOnClick()
+	if not self._isCanEnter then
 		GameFacade.showToast(ToastEnum.SurvivalBossDotSelectNpc)
 
 		return
@@ -31,31 +33,31 @@ function var_0_0._btnclickOnClick(arg_4_0)
 	ViewMgr.instance:openView(ViewName.SurvivalNpcStationView)
 end
 
-function var_0_0.updateItem(arg_5_0, arg_5_1)
-	arg_5_0._npcId = arg_5_1
+function SurvivalMonsterEventSmallNpcItem:updateItem(npcId)
+	self._npcId = npcId
 
-	gohelper.setActive(arg_5_0._goempty, arg_5_1 == nil)
-	gohelper.setActive(arg_5_0._gohas, arg_5_1 ~= nil)
+	gohelper.setActive(self._goempty, npcId == nil)
+	gohelper.setActive(self._gohas, npcId ~= nil)
 
-	if arg_5_0._npcId then
-		local var_5_0 = SurvivalConfig.instance:getNpcConfig(arg_5_0._npcId)
+	if self._npcId then
+		local npcCo = SurvivalConfig.instance:getNpcConfig(self._npcId)
 
-		if var_5_0 then
-			local var_5_1 = ResUrl.getSurvivalNpcIcon(var_5_0.smallIcon)
+		if npcCo then
+			local path = ResUrl.getSurvivalNpcIcon(npcCo.smallIcon)
 
-			arg_5_0._simagehero:LoadImage(var_5_1)
+			self._simagehero:LoadImage(path)
 		end
 	end
 
-	gohelper.setActive(arg_5_0._goempty, arg_5_0._showEmpty)
+	gohelper.setActive(self._goempty, self._showEmpty)
 end
 
-function var_0_0.setIsCanEnterSelect(arg_6_0, arg_6_1)
-	arg_6_0._isCanEnter = arg_6_1
+function SurvivalMonsterEventSmallNpcItem:setIsCanEnterSelect(status)
+	self._isCanEnter = status
 end
 
-function var_0_0.setNeedShowEmpty(arg_7_0, arg_7_1)
-	arg_7_0._showEmpty = arg_7_1
+function SurvivalMonsterEventSmallNpcItem:setNeedShowEmpty(showEmpty)
+	self._showEmpty = showEmpty
 end
 
-return var_0_0
+return SurvivalMonsterEventSmallNpcItem

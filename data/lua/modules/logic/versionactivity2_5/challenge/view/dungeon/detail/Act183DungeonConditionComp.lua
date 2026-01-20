@@ -1,67 +1,69 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.dungeon.detail.Act183DungeonConditionComp", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/dungeon/detail/Act183DungeonConditionComp.lua
 
-local var_0_0 = class("Act183DungeonConditionComp", Act183DungeonBaseComp)
+module("modules.logic.versionactivity2_5.challenge.view.dungeon.detail.Act183DungeonConditionComp", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	var_0_0.super.init(arg_1_0, arg_1_1)
+local Act183DungeonConditionComp = class("Act183DungeonConditionComp", Act183DungeonBaseComp)
 
-	arg_1_0._txtconditionitem = gohelper.findChildText(arg_1_0.go, "#go_conditiondescs/#txt_conditionitem")
-	arg_1_0._imageconditionstar = gohelper.findChildImage(arg_1_0.go, "top/title/#image_conditionstar")
+function Act183DungeonConditionComp:init(go)
+	Act183DungeonConditionComp.super.init(self, go)
 
-	Act183Helper.setEpisodeConditionStar(arg_1_0._imageconditionstar, true)
+	self._txtconditionitem = gohelper.findChildText(self.go, "#go_conditiondescs/#txt_conditionitem")
+	self._imageconditionstar = gohelper.findChildImage(self.go, "top/title/#image_conditionstar")
 
-	arg_1_0._conditionItemTab = arg_1_0:getUserDataTb_()
+	Act183Helper.setEpisodeConditionStar(self._imageconditionstar, true)
+
+	self._conditionItemTab = self:getUserDataTb_()
 end
 
-function var_0_0.addEventListeners(arg_2_0)
+function Act183DungeonConditionComp:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
+function Act183DungeonConditionComp:removeEventListeners()
 	return
 end
 
-function var_0_0.updateInfo(arg_4_0, arg_4_1)
-	var_0_0.super.updateInfo(arg_4_0, arg_4_1)
+function Act183DungeonConditionComp:updateInfo(episodeMo)
+	Act183DungeonConditionComp.super.updateInfo(self, episodeMo)
 
-	arg_4_0._conditionIds = arg_4_0._episodeMo:getConditionIds()
-	arg_4_0._isAllConditionPass = arg_4_0._episodeMo:isAllConditionPass()
+	self._conditionIds = self._episodeMo:getConditionIds()
+	self._isAllConditionPass = self._episodeMo:isAllConditionPass()
 end
 
-function var_0_0.checkIsVisible(arg_5_0)
-	return arg_5_0._conditionIds and #arg_5_0._conditionIds > 0
+function Act183DungeonConditionComp:checkIsVisible()
+	return self._conditionIds and #self._conditionIds > 0
 end
 
-function var_0_0.show(arg_6_0)
-	var_0_0.super.show(arg_6_0)
-	arg_6_0:createObjList(arg_6_0._conditionIds, arg_6_0._conditionItemTab, arg_6_0._txtconditionitem.gameObject, arg_6_0._initConditionItemFunc, arg_6_0._refreshConditionItemFunc, arg_6_0._defaultItemFreeFunc)
-	ZProj.UGUIHelper.SetGrayscale(arg_6_0._imageconditionstar.gameObject, not arg_6_0._isAllConditionPass)
+function Act183DungeonConditionComp:show()
+	Act183DungeonConditionComp.super.show(self)
+	self:createObjList(self._conditionIds, self._conditionItemTab, self._txtconditionitem.gameObject, self._initConditionItemFunc, self._refreshConditionItemFunc, self._defaultItemFreeFunc)
+	ZProj.UGUIHelper.SetGrayscale(self._imageconditionstar.gameObject, not self._isAllConditionPass)
 end
 
-function var_0_0._initConditionItemFunc(arg_7_0, arg_7_1)
-	arg_7_1.txtcondition = gohelper.onceAddComponent(arg_7_1.go, gohelper.Type_TextMesh)
+function Act183DungeonConditionComp:_initConditionItemFunc(goItem)
+	goItem.txtcondition = gohelper.onceAddComponent(goItem.go, gohelper.Type_TextMesh)
 
-	SkillHelper.addHyperLinkClick(arg_7_1.txtcondition)
+	SkillHelper.addHyperLinkClick(goItem.txtcondition)
 
-	arg_7_1.gostar = gohelper.findChild(arg_7_1.go, "star")
+	goItem.gostar = gohelper.findChild(goItem.go, "star")
 end
 
-function var_0_0._refreshConditionItemFunc(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	local var_8_0 = Act183Config.instance:getConditionCo(arg_8_2)
+function Act183DungeonConditionComp:_refreshConditionItemFunc(goItem, conditionId, index)
+	local conditionCo = Act183Config.instance:getConditionCo(conditionId)
 
-	if not var_8_0 then
+	if not conditionCo then
 		return
 	end
 
-	arg_8_1.txtcondition.text = SkillHelper.buildDesc(var_8_0.decs1)
+	goItem.txtcondition.text = SkillHelper.buildDesc(conditionCo.decs1)
 
-	local var_8_1 = arg_8_0._episodeMo:isConditionPass(arg_8_2)
+	local isConditionPass = self._episodeMo:isConditionPass(conditionId)
 
-	gohelper.setActive(arg_8_1.gostar, var_8_1)
+	gohelper.setActive(goItem.gostar, isConditionPass)
 end
 
-function var_0_0.onDestroy(arg_9_0)
-	var_0_0.super.onDestroy(arg_9_0)
+function Act183DungeonConditionComp:onDestroy()
+	Act183DungeonConditionComp.super.onDestroy(self)
 end
 
-return var_0_0
+return Act183DungeonConditionComp

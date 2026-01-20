@@ -1,126 +1,133 @@
-﻿module("modules.ugui.uieffect.UIEffectLoader", package.seeall)
+﻿-- chunkname: @modules/ugui/uieffect/UIEffectLoader.lua
 
-local var_0_0 = class("UIEffectLoader")
+module("modules.ugui.uieffect.UIEffectLoader", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local UIEffectLoader = class("UIEffectLoader")
+
+function UIEffectLoader:ctor()
 	return
 end
 
-local var_0_1 = SLFramework.EffectPhotographerPool.Instance
+local photographerPool = SLFramework.EffectPhotographerPool.Instance
 
-function var_0_0.Init(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	arg_2_0._effectPath = arg_2_1
-	arg_2_0._width = arg_2_2
-	arg_2_0._height = arg_2_3
-	arg_2_0._photographer = var_0_1:Get(arg_2_2, arg_2_3)
-	arg_2_0._refCount = 0
+function UIEffectLoader:Init(effectPath, width, height)
+	self._effectPath = effectPath
+	self._width = width
+	self._height = height
+	self._photographer = photographerPool:Get(width, height)
+	self._refCount = 0
 end
 
-function var_0_0.startLoad(arg_3_0)
-	if arg_3_0._loader then
+function UIEffectLoader:startLoad()
+	if self._loader then
 		return
 	end
 
-	local var_3_0 = arg_3_0._effectPath
-	local var_3_1 = MultiAbLoader.New()
+	local effectPath = self._effectPath
+	local loader = MultiAbLoader.New()
 
-	arg_3_0._loader = var_3_1
+	self._loader = loader
 
-	var_3_1:addPath(var_3_0)
+	loader:addPath(effectPath)
 
-	local var_3_2 = "ui/materials/dynamic/ui_photo_additive.mat"
+	local materialPath = "ui/materials/dynamic/ui_photo_additive.mat"
 
-	var_3_1:addPath(var_3_2)
-	var_3_1:startLoad(function(arg_4_0)
-		if arg_3_0:CheckDispose() then
+	loader:addPath(materialPath)
+	loader:startLoad(function(multiAbLoader)
+		if self:CheckDispose() then
 			return
 		end
 
-		local var_4_0 = var_3_1:getAssetItem(var_3_0):GetResource(var_3_0)
-		local var_4_1 = gohelper.clone(var_4_0, nil, var_3_0)
+		local assetItem = loader:getAssetItem(effectPath)
+		local mainPrefab = assetItem:GetResource(effectPath)
+		local effectGo = gohelper.clone(mainPrefab, nil, effectPath)
 
-		var_4_1:SetActive(false)
-		SLFramework.GameObjectHelper.SetLayer(var_4_1, var_0_1.DefaultEffectLayer, true)
-		var_4_1.transform:SetParent(arg_3_0._photographer.effectRootGo.transform, false)
-		var_4_1:SetActive(true)
+		effectGo:SetActive(false)
+		SLFramework.GameObjectHelper.SetLayer(effectGo, photographerPool.DefaultEffectLayer, true)
+		effectGo.transform:SetParent(self._photographer.effectRootGo.transform, false)
+		effectGo:SetActive(true)
 
-		arg_3_0._effectGo = var_4_1
+		self._effectGo = effectGo
 
-		if arg_3_0._loadcallback ~= nil then
-			arg_3_0._loadcallback(arg_3_0._callbackTarget)
+		if self._loadcallback ~= nil then
+			self._loadcallback(self._callbackTarget)
 		end
 
-		local var_4_2 = var_3_1:getAssetItem(var_3_2):GetResource(var_3_2)
+		assetItem = loader:getAssetItem(materialPath)
 
-		arg_3_0._material = var_4_2
+		local material = assetItem:GetResource(materialPath)
 
-		for iter_4_0, iter_4_1 in ipairs(arg_3_0._rawImageList) do
-			iter_4_1.material = var_4_2
+		self._material = material
+
+		for i, rawImage in ipairs(self._rawImageList) do
+			rawImage.material = material
 		end
 	end)
 end
 
-function var_0_0.GetPhotographer(arg_5_0)
-	arg_5_0._refCount = arg_5_0._refCount + 1
+function UIEffectLoader:GetPhotographer()
+	self._refCount = self._refCount + 1
 
-	return arg_5_0._photographer
+	return self._photographer
 end
 
-function var_0_0.getEffectGo(arg_6_0)
-	return arg_6_0._effectGo
+function UIEffectLoader:getEffectGo()
+	return self._effectGo
 end
 
-function var_0_0.getEffect(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	arg_7_1.texture = arg_7_0:GetPhotographer().renderTexture
+function UIEffectLoader:getEffect(rawImage, loadcallback, callbackTarget)
+	local photographer = self:GetPhotographer()
 
-	if arg_7_0._material then
-		arg_7_1.material = arg_7_0._material
+	rawImage.texture = photographer.renderTexture
+
+	if self._material then
+		rawImage.material = self._material
 
 		return
 	end
 
-	arg_7_0._rawImageList = arg_7_0._rawImageList or {}
+	self._rawImageList = self._rawImageList or {}
 
-	table.insert(arg_7_0._rawImageList, arg_7_1)
+	table.insert(self._rawImageList, rawImage)
 
-	arg_7_0._loadcallback = arg_7_2
-	arg_7_0._callbackTarget = arg_7_3
+	self._loadcallback = loadcallback
+	self._callbackTarget = callbackTarget
 
-	arg_7_0:startLoad()
+	self:startLoad()
 end
 
-function var_0_0.ReduceRef(arg_8_0)
-	arg_8_0._refCount = arg_8_0._refCount - 1
+function UIEffectLoader:ReduceRef()
+	self._refCount = self._refCount - 1
 
-	arg_8_0:CheckDispose()
+	self:CheckDispose()
 end
 
-function var_0_0.CheckDispose(arg_9_0)
-	if arg_9_0._refCount <= 0 then
-		if not arg_9_0._loader then
+function UIEffectLoader:CheckDispose()
+	if self._refCount <= 0 then
+		if not self._loader then
 			return true
 		end
 
-		arg_9_0._loader:dispose()
+		self._loader:dispose()
 
-		arg_9_0._loader = nil
-		arg_9_0._rawImageList = nil
-		arg_9_0._material = nil
+		self._loader = nil
+		self._rawImageList = nil
+		self._material = nil
 
-		var_0_1:Put(arg_9_0._photographer)
+		photographerPool:Put(self._photographer)
 
-		arg_9_0._photographer = nil
+		self._photographer = nil
 
-		if arg_9_0._effectGo then
-			gohelper.destroy(arg_9_0._effectGo)
+		if self._effectGo then
+			gohelper.destroy(self._effectGo)
 
-			arg_9_0._effectGo = nil
+			self._effectGo = nil
 		end
 
-		UIEffectManager.instance:_delEffectLoader(arg_9_0._effectPath, arg_9_0._width, arg_9_0._height)
+		UIEffectManager.instance:_delEffectLoader(self._effectPath, self._width, self._height)
 
 		return true
 	end
 end
 
-return var_0_0
+return UIEffectLoader

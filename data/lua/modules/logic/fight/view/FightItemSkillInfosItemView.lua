@@ -1,82 +1,85 @@
-﻿module("modules.logic.fight.view.FightItemSkillInfosItemView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightItemSkillInfosItemView.lua
 
-local var_0_0 = class("FightItemSkillInfosItemView", FightBaseView)
+module("modules.logic.fight.view.FightItemSkillInfosItemView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.transform = arg_1_0.viewGO.transform
-	arg_1_0.iconImg = gohelper.findChildImage(arg_1_0.viewGO, "#image_icon")
-	arg_1_0.select = gohelper.findChild(arg_1_0.viewGO, "#go_select")
-	arg_1_0.cd = gohelper.findChild(arg_1_0.viewGO, "#go_cd")
-	arg_1_0.cdText = gohelper.findChildText(arg_1_0.viewGO, "#go_cd/#txt_cd")
-	arg_1_0.lock = gohelper.findChild(arg_1_0.viewGO, "#go_lock")
+local FightItemSkillInfosItemView = class("FightItemSkillInfosItemView", FightBaseView)
 
-	gohelper.setActive(arg_1_0.lock, false)
+function FightItemSkillInfosItemView:onInitView()
+	self.transform = self.viewGO.transform
+	self.iconImg = gohelper.findChildImage(self.viewGO, "#image_icon")
+	self.select = gohelper.findChild(self.viewGO, "#go_select")
+	self.cd = gohelper.findChild(self.viewGO, "#go_cd")
+	self.cdText = gohelper.findChildText(self.viewGO, "#go_cd/#txt_cd")
+	self.lock = gohelper.findChild(self.viewGO, "#go_lock")
 
-	arg_1_0.textNum = gohelper.findChildText(arg_1_0.viewGO, "num/#txt_num")
-	arg_1_0.click = gohelper.findChildClick(arg_1_0.viewGO, "#btn_click")
+	gohelper.setActive(self.lock, false)
+
+	self.textNum = gohelper.findChildText(self.viewGO, "num/#txt_num")
+	self.click = gohelper.findChildClick(self.viewGO, "#btn_click")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0.tweenComp = arg_2_0:addComponent(FightTweenComponent)
+function FightItemSkillInfosItemView:addEvents()
+	self.tweenComp = self:addComponent(FightTweenComponent)
 
-	arg_2_0:com_registClick(arg_2_0.click, arg_2_0.onClick)
+	self:com_registClick(self.click, self.onClick)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function FightItemSkillInfosItemView:removeEvents()
 	return
 end
 
-function var_0_0.onClick(arg_4_0)
-	arg_4_0.PARENT_VIEW:onItemClick(arg_4_0.data, arg_4_0.index)
+function FightItemSkillInfosItemView:onClick()
+	self.PARENT_VIEW:onItemClick(self.data, self.index)
 end
 
-function var_0_0.onConstructor(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0.data = arg_5_1
-	arg_5_0.index = arg_5_2
+function FightItemSkillInfosItemView:onConstructor(data, index)
+	self.data = data
+	self.index = index
 end
 
-function var_0_0.onSelect(arg_6_0, arg_6_1)
-	gohelper.setActive(arg_6_0.select, arg_6_1)
+function FightItemSkillInfosItemView:onSelect(isSelected)
+	gohelper.setActive(self.select, isSelected)
 
-	local var_6_0 = 0.35
-	local var_6_1 = EaseType.OutQuart
+	local duration = 0.35
+	local ease = EaseType.OutQuart
 
-	if arg_6_1 then
-		local var_6_2 = arg_6_0.transform.parent.localPosition.normalized
-		local var_6_3 = 0
+	if isSelected then
+		local localPos = self.transform.parent.localPosition
+		local direction = localPos.normalized
+		local offsetX = 0
 
-		if var_6_2.x < 0 then
-			var_6_3 = -20
-		elseif var_6_2.x > 0 then
-			var_6_3 = 20
+		if direction.x < 0 then
+			offsetX = -20
+		elseif direction.x > 0 then
+			offsetX = 20
 		end
 
-		local var_6_4 = 0
+		local offsetY = 0
 
-		if var_6_2.y < 0 then
-			var_6_4 = -20
-		elseif var_6_2.y > 0 then
-			var_6_4 = 20
+		if direction.y < 0 then
+			offsetY = -20
+		elseif direction.y > 0 then
+			offsetY = 20
 		end
 
-		arg_6_0.tweenComp:DOAnchorPos(arg_6_0.transform, var_6_3, var_6_4, var_6_0, nil, nil, nil, var_6_1)
+		self.tweenComp:DOAnchorPos(self.transform, offsetX, offsetY, duration, nil, nil, nil, ease)
 	else
-		arg_6_0.tweenComp:DOAnchorPos(arg_6_0.transform, 0, 0, var_6_0, nil, nil, nil, var_6_1)
+		self.tweenComp:DOAnchorPos(self.transform, 0, 0, duration, nil, nil, nil, ease)
 	end
 end
 
-function var_0_0.onOpen(arg_7_0)
-	local var_7_0 = AssassinConfig.instance:getAssassinItemIcon(arg_7_0.data.itemId)
+function FightItemSkillInfosItemView:onOpen()
+	local icon = AssassinConfig.instance:getAssassinItemIcon(self.data.itemId)
 
-	UISpriteSetMgr.instance:setSp01AssassinSprite(arg_7_0.iconImg, var_7_0 .. "_1")
+	UISpriteSetMgr.instance:setSp01AssassinSprite(self.iconImg, icon .. "_1")
 
-	local var_7_1 = arg_7_0.data.count > 0 and arg_7_0.data.count or string.format("<#dc5640>%d</color>", arg_7_0.data.count)
+	local str = self.data.count > 0 and self.data.count or string.format("<#dc5640>%d</color>", self.data.count)
 
-	arg_7_0.textNum.text = var_7_1
+	self.textNum.text = str
 
-	gohelper.setActive(arg_7_0.cd, arg_7_0.data.cd > 0)
+	gohelper.setActive(self.cd, self.data.cd > 0)
 
-	arg_7_0.cdText.text = arg_7_0.data.cd
+	self.cdText.text = self.data.cd
 end
 
-return var_0_0
+return FightItemSkillInfosItemView

@@ -1,41 +1,43 @@
-﻿module("modules.logic.explore.controller.trigger.ExploreTriggerGuide", package.seeall)
+﻿-- chunkname: @modules/logic/explore/controller/trigger/ExploreTriggerGuide.lua
 
-local var_0_0 = class("ExploreTriggerGuide", ExploreTriggerBase)
+module("modules.logic.explore.controller.trigger.ExploreTriggerGuide", package.seeall)
 
-function var_0_0.handle(arg_1_0, arg_1_1)
-	arg_1_0._guideId = tonumber(arg_1_1)
+local ExploreTriggerGuide = class("ExploreTriggerGuide", ExploreTriggerBase)
 
-	local var_1_0 = GuideModel.instance:getById(arg_1_0._guideId)
+function ExploreTriggerGuide:handle(id)
+	self._guideId = tonumber(id)
 
-	if var_1_0 and var_1_0.isFinish or not var_1_0 then
-		if not var_1_0 then
+	local guideMO = GuideModel.instance:getById(self._guideId)
+
+	if guideMO and guideMO.isFinish or not guideMO then
+		if not guideMO then
 			logError("指引没有接？？？")
 		end
 
-		arg_1_0:onDone(true)
+		self:onDone(true)
 
 		return
 	end
 
-	local var_1_1 = ExploreController.instance:getMap():getHero()
+	local hero = ExploreController.instance:getMap():getHero()
 
-	if var_1_1:isMoving() then
+	if hero:isMoving() then
 		ExploreModel.instance:setHeroControl(false, ExploreEnum.HeroLock.Guide)
-		ExploreController.instance:registerCallback(ExploreEvent.OnHeroMoveEnd, arg_1_0.beginGuide, arg_1_0)
-		var_1_1:stopMoving()
+		ExploreController.instance:registerCallback(ExploreEvent.OnHeroMoveEnd, self.beginGuide, self)
+		hero:stopMoving()
 	else
-		arg_1_0:beginGuide()
+		self:beginGuide()
 	end
 end
 
-function var_0_0.beginGuide(arg_2_0)
+function ExploreTriggerGuide:beginGuide()
 	ExploreModel.instance:setHeroControl(true, ExploreEnum.HeroLock.Guide)
-	ExploreController.instance:dispatchEvent(ExploreEvent.ExploreTriggerGuide, arg_2_0._guideId)
-	arg_2_0:onDone(true)
+	ExploreController.instance:dispatchEvent(ExploreEvent.ExploreTriggerGuide, self._guideId)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.OnHeroMoveEnd, arg_3_0.beginGuide, arg_3_0)
+function ExploreTriggerGuide:clearWork()
+	ExploreController.instance:unregisterCallback(ExploreEvent.OnHeroMoveEnd, self.beginGuide, self)
 end
 
-return var_0_0
+return ExploreTriggerGuide

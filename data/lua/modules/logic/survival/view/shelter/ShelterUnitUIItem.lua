@@ -1,431 +1,444 @@
-﻿module("modules.logic.survival.view.shelter.ShelterUnitUIItem", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/ShelterUnitUIItem.lua
 
-local var_0_0 = class("ShelterUnitUIItem", LuaCompBase)
+module("modules.logic.survival.view.shelter.ShelterUnitUIItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.unitType = arg_1_1.unitType
-	arg_1_0.unitId = arg_1_1.unitId
-	arg_1_0.root1 = arg_1_1.root1
-	arg_1_0.root2 = arg_1_1.root2
-	arg_1_0.bubbleIconName = -1
+local ShelterUnitUIItem = class("ShelterUnitUIItem", LuaCompBase)
+
+function ShelterUnitUIItem:ctor(param)
+	self.unitType = param.unitType
+	self.unitId = param.unitId
+	self.root1 = param.root1
+	self.root2 = param.root2
+	self.bubbleIconName = -1
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
-	arg_2_0.trans = arg_2_1.transform
+function ShelterUnitUIItem:init(go)
+	self.go = go
+	self.trans = go.transform
 
-	transformhelper.setLocalPos(arg_2_0.trans, 9999, 9999, 0)
+	transformhelper.setLocalPos(self.trans, 9999, 9999, 0)
 
-	arg_2_0.rootGO = gohelper.findChild(arg_2_1, "root")
-	arg_2_0.animator = arg_2_0.rootGO:GetComponent(gohelper.Type_Animator)
-	arg_2_0.imagebubble = gohelper.findChildImage(arg_2_0.rootGO, "#image_bubble")
-	arg_2_0.imageicon = gohelper.findChildImage(arg_2_0.rootGO, "#image_icon")
-	arg_2_0.cgImg = gohelper.findChildComponent(arg_2_0.rootGO, "#image_icon", typeof(UnityEngine.CanvasGroup))
-	arg_2_0.goBuildLevelup = gohelper.findChild(arg_2_0.rootGO, "#go_levelUp")
-	arg_2_0.goCanBuild = gohelper.findChild(arg_2_0.rootGO, "#go_canBuild")
-	arg_2_0.goRest = gohelper.findChild(arg_2_0.rootGO, "#go_rest")
-	arg_2_0.goRecruitFinish = gohelper.findChild(arg_2_0.rootGO, "#go_finish")
-	arg_2_0.goBuildInfo = gohelper.findChild(arg_2_0.rootGO, "#go_Info")
-	arg_2_0.animGoBuildInfo = arg_2_0.goBuildInfo:GetComponent(gohelper.Type_Animation)
-	arg_2_0.txtBuildInfo = gohelper.findChildTextMesh(arg_2_0.rootGO, "#go_Info/Info/#txt_Info")
-	arg_2_0.image_level_reputation = gohelper.findChildImage(arg_2_0.rootGO, "#go_Info/Info/#txt_Info/#image_level")
-	arg_2_0.go_reddot_reputation = gohelper.findChild(arg_2_0.rootGO, "#go_Info/Info/#txt_Info/#go_reddot")
-	arg_2_0.goMonster = gohelper.findChild(arg_2_0.rootGO, "monster")
-	arg_2_0.sImageMonsterIcon = gohelper.findChildSingleImage(arg_2_0.rootGO, "monster/#go_monsterHeadIcon")
-	arg_2_0.goMonsterTime = gohelper.findChild(arg_2_0.rootGO, "monster/Time")
-	arg_2_0.txtTime = gohelper.findChildTextMesh(arg_2_0.rootGO, "monster/Time/#txt_LimitTime")
-	arg_2_0.goHero = gohelper.findChild(arg_2_0.rootGO, "hero")
-	arg_2_0.goarrow = gohelper.findChild(arg_2_0.rootGO, "arrow")
-	arg_2_0.goarrowright = gohelper.findChild(arg_2_0.rootGO, "arrow/right")
-	arg_2_0.goarrowtop = gohelper.findChild(arg_2_0.rootGO, "arrow/top")
-	arg_2_0.goarrowleft = gohelper.findChild(arg_2_0.rootGO, "arrow/left")
-	arg_2_0.goarrowbottom = gohelper.findChild(arg_2_0.rootGO, "arrow/bottom")
-	arg_2_0.goRaycast = gohelper.findChild(arg_2_0.rootGO, "goRaycast")
+	self.rootGO = gohelper.findChild(go, "root")
+	self.animator = self.rootGO:GetComponent(gohelper.Type_Animator)
+	self.imagebubble = gohelper.findChildImage(self.rootGO, "#image_bubble")
+	self.imageicon = gohelper.findChildImage(self.rootGO, "#image_icon")
+	self.cgImg = gohelper.findChildComponent(self.rootGO, "#image_icon", typeof(UnityEngine.CanvasGroup))
+	self.goBuildLevelup = gohelper.findChild(self.rootGO, "#go_levelUp")
+	self.goCanBuild = gohelper.findChild(self.rootGO, "#go_canBuild")
+	self.goRest = gohelper.findChild(self.rootGO, "#go_rest")
+	self.goRecruitFinish = gohelper.findChild(self.rootGO, "#go_finish")
+	self.goBuildInfo = gohelper.findChild(self.rootGO, "#go_Info")
+	self.animGoBuildInfo = self.goBuildInfo:GetComponent(gohelper.Type_Animation)
+	self.txtBuildInfo = gohelper.findChildTextMesh(self.rootGO, "#go_Info/Info/#txt_Info")
+	self.image_level_reputation = gohelper.findChildImage(self.rootGO, "#go_Info/Info/#txt_Info/#image_level")
+	self.go_reddot_reputation = gohelper.findChild(self.rootGO, "#go_Info/Info/#txt_Info/#go_reddot")
+	self.goMonster = gohelper.findChild(self.rootGO, "monster")
+	self.sImageMonsterIcon = gohelper.findChildSingleImage(self.rootGO, "monster/#go_monsterHeadIcon")
+	self.goMonsterTime = gohelper.findChild(self.rootGO, "monster/Time")
+	self.txtTime = gohelper.findChildTextMesh(self.rootGO, "monster/Time/#txt_LimitTime")
+	self.goHero = gohelper.findChild(self.rootGO, "hero")
+	self.goarrow = gohelper.findChild(self.rootGO, "arrow")
+	self.goarrowright = gohelper.findChild(self.rootGO, "arrow/right")
+	self.goarrowtop = gohelper.findChild(self.rootGO, "arrow/top")
+	self.goarrowleft = gohelper.findChild(self.rootGO, "arrow/left")
+	self.goarrowbottom = gohelper.findChild(self.rootGO, "arrow/bottom")
+	self.goRaycast = gohelper.findChild(self.rootGO, "goRaycast")
 
-	arg_2_0:initClick()
-	arg_2_0:initFollower()
-	arg_2_0:initBg()
-	arg_2_0:refreshInfo()
-	arg_2_0:refreshReputationRedDot()
+	self:initClick()
+	self:initFollower()
+	self:initBg()
+	self:refreshInfo()
+	self:refreshReputationRedDot()
 end
 
-function var_0_0.onStart(arg_3_0)
-	arg_3_0.go:GetComponent(typeof(SLFramework.LuaMonobehavier)).enabled = false
+function ShelterUnitUIItem:onStart()
+	self.go:GetComponent(typeof(SLFramework.LuaMonobehavier)).enabled = false
 end
 
-function var_0_0.addEventListeners(arg_4_0)
-	arg_4_0:addEventCb(SurvivalController.instance, SurvivalEvent.OnReceiveSurvivalReputationExpReply, arg_4_0.refreshReputation, arg_4_0)
-	arg_4_0:addEventCb(SurvivalController.instance, SurvivalEvent.OnDelayPopupFinishEvent, arg_4_0.onDelayPopupFinishEvent, arg_4_0)
+function ShelterUnitUIItem:addEventListeners()
+	self:addEventCb(SurvivalController.instance, SurvivalEvent.OnReceiveSurvivalReputationExpReply, self.refreshReputation, self)
+	self:addEventCb(SurvivalController.instance, SurvivalEvent.OnDelayPopupFinishEvent, self.onDelayPopupFinishEvent, self)
 end
 
-function var_0_0.initClick(arg_5_0)
-	local var_5_0 = SurvivalEnum.ShelterUnitType.Build == arg_5_0.unitType or SurvivalEnum.ShelterUnitType.Monster == arg_5_0.unitType or SurvivalEnum.ShelterUnitType.Player == arg_5_0.unitType
+function ShelterUnitUIItem:initClick()
+	local needClick = SurvivalEnum.ShelterUnitType.Build == self.unitType or SurvivalEnum.ShelterUnitType.Monster == self.unitType or SurvivalEnum.ShelterUnitType.Player == self.unitType
 
-	gohelper.setActive(arg_5_0.goRaycast, var_5_0)
+	gohelper.setActive(self.goRaycast, needClick)
 
-	if not var_5_0 or arg_5_0.click then
+	if not needClick or self.click then
 		return
 	end
 
-	arg_5_0.click = gohelper.getClick(arg_5_0.go)
+	self.click = gohelper.getClick(self.go)
 
-	arg_5_0.click:AddClickListener(arg_5_0.onClick, arg_5_0)
+	self.click:AddClickListener(self.onClick, self)
 end
 
-function var_0_0.initFollower(arg_6_0)
-	if arg_6_0._uiFollower then
+function ShelterUnitUIItem:initFollower()
+	if self._uiFollower then
 		return
 	end
 
-	local var_6_0 = arg_6_0:getEntity()
+	local entity = self:getEntity()
 
-	if not var_6_0 then
+	if not entity then
 		return
 	end
 
-	local var_6_1 = false
+	local canShowRange = false
 
-	if arg_6_0.unitType == SurvivalEnum.ShelterUnitType.Player then
-		var_6_1 = true
+	if self.unitType == SurvivalEnum.ShelterUnitType.Player then
+		canShowRange = true
 	end
 
-	if not var_6_1 then
-		gohelper.setActive(arg_6_0.goarrow, false)
+	if not canShowRange then
+		gohelper.setActive(self.goarrow, false)
 
-		arg_6_0._uiFollower = gohelper.onceAddComponent(arg_6_0.go, typeof(ZProj.UIFollower))
+		self._uiFollower = gohelper.onceAddComponent(self.go, typeof(ZProj.UIFollower))
 	else
-		gohelper.setActive(arg_6_0.goarrow, true)
+		gohelper.setActive(self.goarrow, true)
 
-		arg_6_0._uiFollower = gohelper.onceAddComponent(arg_6_0.go, typeof(ZProj.UIFollowerInRange))
+		self._uiFollower = gohelper.onceAddComponent(self.go, typeof(ZProj.UIFollowerInRange))
 
-		arg_6_0._uiFollower:SetBoundArrow(arg_6_0.goarrowleft, arg_6_0.goarrowright, arg_6_0.goarrowtop, arg_6_0.goarrowbottom)
+		self._uiFollower:SetBoundArrow(self.goarrowleft, self.goarrowright, self.goarrowtop, self.goarrowbottom)
 
-		local var_6_2 = ViewMgr.instance:getUIRoot().transform
-		local var_6_3 = recthelper.getWidth(var_6_2)
-		local var_6_4 = recthelper.getHeight(var_6_2)
+		local root = ViewMgr.instance:getUIRoot().transform
+		local screenRightX = recthelper.getWidth(root)
+		local screenTopY = recthelper.getHeight(root)
 
-		var_6_4 = var_6_3 / var_6_4 < 1.7777777777777777 and 1080 or var_6_4
+		screenTopY = screenRightX / screenTopY < 1.7777777777777777 and 1080 or screenTopY
 
-		local var_6_5 = var_6_3 / 2
-		local var_6_6 = var_6_4 / 2
+		local halfScreenWidth = screenRightX / 2
+		local halfScreenHeight = screenTopY / 2
 
-		arg_6_0._uiFollower:SetRange(-var_6_5, var_6_5, -var_6_6, var_6_6)
-		arg_6_0._uiFollower:SetArrowCallback(arg_6_0.onArrowCallback, arg_6_0)
+		self._uiFollower:SetRange(-halfScreenWidth, halfScreenWidth, -halfScreenHeight, halfScreenHeight)
+		self._uiFollower:SetArrowCallback(self.onArrowCallback, self)
 	end
 
-	arg_6_0._uiFollower:SetEnable(true)
+	self._uiFollower:SetEnable(true)
 
-	local var_6_7 = CameraMgr.instance:getMainCamera()
-	local var_6_8 = CameraMgr.instance:getUICamera()
-	local var_6_9 = ViewMgr.instance:getUIRoot().transform
-	local var_6_10 = var_6_0:getFolowerTransform()
+	local mainCamera = CameraMgr.instance:getMainCamera()
+	local uiCamera = CameraMgr.instance:getUICamera()
+	local plane = ViewMgr.instance:getUIRoot().transform
+	local transform = entity:getFolowerTransform()
 
-	arg_6_0._uiFollower:Set(var_6_7, var_6_8, var_6_9, var_6_10, 0, 0.4, 0, 0, 0)
+	self._uiFollower:Set(mainCamera, uiCamera, plane, transform, 0, 0.4, 0, 0, 0)
 end
 
-function var_0_0.onArrowCallback(arg_7_0, arg_7_1)
-	if arg_7_0.unitType == SurvivalEnum.ShelterUnitType.Player then
-		if arg_7_1 then
-			arg_7_0:setVisible(true)
+function ShelterUnitUIItem:onArrowCallback(isVisible)
+	if self.unitType == SurvivalEnum.ShelterUnitType.Player then
+		if isVisible then
+			self:setVisible(true)
 		else
-			arg_7_0:refreshPlayerInfo()
+			self:refreshPlayerInfo()
 		end
 	else
-		gohelper.setActive(arg_7_0.imagebubble, not arg_7_1)
+		gohelper.setActive(self.imagebubble, not isVisible)
 	end
 
-	if arg_7_1 then
-		gohelper.addChildPosStay(arg_7_0.root2, arg_7_0.go)
+	if isVisible then
+		gohelper.addChildPosStay(self.root2, self.go)
 	else
-		gohelper.addChildPosStay(arg_7_0.root1, arg_7_0.go)
+		gohelper.addChildPosStay(self.root1, self.go)
 	end
 end
 
-function var_0_0.onClick(arg_8_0)
-	if SurvivalEnum.ShelterUnitType.Player == arg_8_0.unitType then
-		local var_8_0 = arg_8_0:getEntity()
+function ShelterUnitUIItem:onClick()
+	if SurvivalEnum.ShelterUnitType.Player == self.unitType then
+		local entity = self:getEntity()
 
-		if var_8_0 then
-			var_8_0:onClickPlayer()
+		if entity then
+			entity:onClickPlayer()
 		end
 	end
 
-	if SurvivalMapHelper.instance:getSurvivalBubbleComp():isPlayerBubbleIntercept() then
+	local survivalBubbleComp = SurvivalMapHelper.instance:getSurvivalBubbleComp()
+
+	if survivalBubbleComp:isPlayerBubbleIntercept() then
 		return
 	end
 
-	SurvivalMapHelper.instance:gotoUnit(arg_8_0.unitType, arg_8_0.unitId)
+	SurvivalMapHelper.instance:gotoUnit(self.unitType, self.unitId)
 end
 
-local var_0_1 = {
+local unitTypeToBgName = {
 	[SurvivalEnum.ShelterUnitType.Monster] = "survival_map_bubble_red"
 }
 
-function var_0_0.initBg(arg_9_0)
-	local var_9_0 = arg_9_0.unitType
-	local var_9_1 = var_0_1[var_9_0] or "survival_map_bubble_green"
+function ShelterUnitUIItem:initBg()
+	local unitType = self.unitType
+	local bgName = unitTypeToBgName[unitType] or "survival_map_bubble_green"
 
-	UISpriteSetMgr.instance:setSurvivalSprite(arg_9_0.imagebubble, var_9_1)
+	UISpriteSetMgr.instance:setSurvivalSprite(self.imagebubble, bgName)
 end
 
-function var_0_0.refreshInfo(arg_10_0)
-	local var_10_0 = arg_10_0.unitType
+function ShelterUnitUIItem:refreshInfo()
+	local unitType = self.unitType
 
-	if var_10_0 == SurvivalEnum.ShelterUnitType.Player then
-		arg_10_0:refreshPlayerInfo()
-	elseif var_10_0 == SurvivalEnum.ShelterUnitType.Build then
-		arg_10_0:refreshBuildingInfo()
-	elseif var_10_0 == SurvivalEnum.ShelterUnitType.Monster then
-		arg_10_0:refreshMonsterInfo()
-	elseif var_10_0 == SurvivalEnum.ShelterUnitType.Npc then
-		arg_10_0:refreshNpcInfo()
-	end
-end
-
-function var_0_0.refreshNpcInfo(arg_11_0)
-	local var_11_0 = arg_11_0:getEntity()
-
-	if not var_11_0 then
-		return
-	end
-
-	local var_11_1 = not var_11_0:isInPlayerPos()
-
-	if var_11_1 then
-		local var_11_2 = SurvivalMapHelper.instance:getShelterNpcPriorityBehavior(arg_11_0.unitId)
-
-		var_11_1 = var_11_2 and var_11_2.isMark == 1 or false
-	end
-
-	arg_11_0:setVisible(var_11_1)
-	arg_11_0:setBubbleIcon("survival_map_icon_1")
-end
-
-function var_0_0.refreshMonsterInfo(arg_12_0)
-	local var_12_0 = SurvivalShelterModel.instance:getWeekInfo():getMonsterFight()
-
-	if var_12_0.fightCo == nil then
-		arg_12_0:setVisible(false)
-
-		return
-	end
-
-	local var_12_1 = arg_12_0:getEntity()
-
-	if not var_12_1 then
-		return
-	end
-
-	local var_12_2 = not var_12_1:isInPlayerPos()
-
-	arg_12_0:setVisible(var_12_2)
-
-	if not var_12_2 then
-		return
-	end
-
-	gohelper.setActive(arg_12_0.goMonster, true)
-	gohelper.setActive(arg_12_0.goMonsterTime, false)
-
-	local var_12_3 = var_12_0.fightCo.smallheadicon
-
-	if var_12_3 and (arg_12_0._lastSmallIcon == nil or var_12_3 ~= arg_12_0._lastSmallIcon) then
-		arg_12_0.sImageMonsterIcon:LoadImage(ResUrl.monsterHeadIcon(var_12_3))
-
-		arg_12_0._lastSmallIcon = var_12_3
+	if unitType == SurvivalEnum.ShelterUnitType.Player then
+		self:refreshPlayerInfo()
+	elseif unitType == SurvivalEnum.ShelterUnitType.Build then
+		self:refreshBuildingInfo()
+	elseif unitType == SurvivalEnum.ShelterUnitType.Monster then
+		self:refreshMonsterInfo()
+	elseif unitType == SurvivalEnum.ShelterUnitType.Npc then
+		self:refreshNpcInfo()
 	end
 end
 
-function var_0_0.refreshPlayerInfo(arg_13_0)
-	local var_13_0 = arg_13_0:getEntity()
-	local var_13_1 = var_13_0 and var_13_0:isVisible() or false
+function ShelterUnitUIItem:refreshNpcInfo()
+	local entity = self:getEntity()
 
-	arg_13_0:setVisible(not var_13_1)
-	gohelper.setActive(arg_13_0.goHero, true)
-	gohelper.setActive(arg_13_0.imagebubble, false)
-	arg_13_0:setBubbleIcon()
+	if not entity then
+		return
+	end
+
+	local isVisible = not entity:isInPlayerPos()
+
+	if isVisible then
+		local behaviorConfig = SurvivalMapHelper.instance:getShelterNpcPriorityBehavior(self.unitId)
+		local isMark = behaviorConfig and behaviorConfig.isMark == 1 or false
+
+		isVisible = isMark
+	end
+
+	self:setVisible(isVisible)
+	self:setBubbleIcon("survival_map_icon_1")
 end
 
-function var_0_0.refreshBuildingInfo(arg_14_0)
-	local var_14_0 = SurvivalShelterModel.instance:getWeekInfo()
-	local var_14_1 = var_14_0:getBuildingInfo(arg_14_0.unitId)
+function ShelterUnitUIItem:refreshMonsterInfo()
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local masterFight = weekInfo:getMonsterFight()
 
-	if not var_14_1 then
-		arg_14_0:setVisible(false)
-
-		return
-	end
-
-	local var_14_2 = var_14_1:getLevel()
-	local var_14_3 = var_14_1:isBuild()
-
-	if not var_14_3 and not var_14_0:isBuildingUnlock(var_14_1.buildingId, var_14_2 + 1) then
-		arg_14_0:setVisible(false)
+	if masterFight.fightCo == nil then
+		self:setVisible(false)
 
 		return
 	end
 
-	arg_14_0:setVisible(true)
+	local entity = self:getEntity()
 
-	local var_14_4 = var_14_1.baseCo.unName ~= 1
+	if not entity then
+		return
+	end
 
-	gohelper.setActive(arg_14_0.goBuildInfo, var_14_3 and var_14_4)
+	local isVisible = not entity:isInPlayerPos()
 
-	local var_14_5 = var_14_0:isBuildingCanLevup(var_14_1, var_14_2 + 1, false)
+	self:setVisible(isVisible)
 
-	if not var_14_3 then
-		arg_14_0:setBubbleIcon(var_14_5 and "survival_map_bubble_add")
-		gohelper.setActive(arg_14_0.imagebubble, false)
+	if not isVisible then
+		return
+	end
+
+	gohelper.setActive(self.goMonster, true)
+	gohelper.setActive(self.goMonsterTime, false)
+
+	local smallIcon = masterFight.fightCo.smallheadicon
+
+	if smallIcon and (self._lastSmallIcon == nil or smallIcon ~= self._lastSmallIcon) then
+		self.sImageMonsterIcon:LoadImage(ResUrl.monsterHeadIcon(smallIcon))
+
+		self._lastSmallIcon = smallIcon
+	end
+end
+
+function ShelterUnitUIItem:refreshPlayerInfo()
+	local entity = self:getEntity()
+	local isVisible = entity and entity:isVisible() or false
+
+	self:setVisible(not isVisible)
+	gohelper.setActive(self.goHero, true)
+	gohelper.setActive(self.imagebubble, false)
+	self:setBubbleIcon()
+end
+
+function ShelterUnitUIItem:refreshBuildingInfo()
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local buildingInfo = weekInfo:getBuildingInfo(self.unitId)
+
+	if not buildingInfo then
+		self:setVisible(false)
 
 		return
 	end
 
-	if var_14_1.isSingleLevel then
-		arg_14_0.txtBuildInfo.text = var_14_1.baseCo.name
+	local buildingLevel = buildingInfo:getLevel()
+	local hasBuild = buildingInfo:isBuild()
+
+	if not hasBuild then
+		local unlock = weekInfo:isBuildingUnlock(buildingInfo.buildingId, buildingLevel + 1)
+
+		if not unlock then
+			self:setVisible(false)
+
+			return
+		end
+	end
+
+	self:setVisible(true)
+
+	local isShowInfo = buildingInfo.baseCo.unName ~= 1
+
+	gohelper.setActive(self.goBuildInfo, hasBuild and isShowInfo)
+
+	local canLevup = weekInfo:isBuildingCanLevup(buildingInfo, buildingLevel + 1, false)
+
+	if not hasBuild then
+		self:setBubbleIcon(canLevup and "survival_map_bubble_add")
+		gohelper.setActive(self.imagebubble, false)
+
+		return
+	end
+
+	if buildingInfo.isSingleLevel then
+		self.txtBuildInfo.text = buildingInfo.baseCo.name
 	else
-		arg_14_0.txtBuildInfo.text = string.format("%s\n<size=28>Lv.%s</size>", var_14_1.baseCo.name, var_14_2)
+		self.txtBuildInfo.text = string.format("%s\n<size=28>Lv.%s</size>", buildingInfo.baseCo.name, buildingLevel)
 	end
 
-	gohelper.setActive(arg_14_0.goBuildLevelup, var_14_5)
+	gohelper.setActive(self.goBuildLevelup, canLevup)
 
-	if var_14_1:isEqualType(SurvivalEnum.BuildingType.Npc) then
-		arg_14_0:setBubbleIcon("survival_map_icon_20")
+	if buildingInfo:isEqualType(SurvivalEnum.BuildingType.Npc) then
+		self:setBubbleIcon("survival_map_icon_20")
 
-		local var_14_6 = var_14_0:getRecruitInfo()
-		local var_14_7 = var_14_6:isInRecruit()
-		local var_14_8 = var_14_6:isCanSelectNpc()
+		local recruitInfo = weekInfo:getRecruitInfo()
+		local isInRecruit = recruitInfo:isInRecruit()
+		local isCanSelectNpc = recruitInfo:isCanSelectNpc()
 
-		gohelper.setActive(arg_14_0.goRest, var_14_7)
+		gohelper.setActive(self.goRest, isInRecruit)
 
-		local var_14_9 = var_14_7 and 0.6 or 1
+		local alpha = isInRecruit and 0.6 or 1
 
-		arg_14_0.cgImg.alpha = var_14_9
+		self.cgImg.alpha = alpha
 
-		gohelper.setActive(arg_14_0.goRecruitFinish, var_14_8)
-		gohelper.setActive(arg_14_0.goCanBuild, not var_14_7 and not var_14_8)
-		gohelper.setActive(arg_14_0.imagebubble, true)
-
-		return
-	elseif var_14_1:isEqualType(SurvivalEnum.BuildingType.ReputationShop) then
-		local var_14_10 = var_14_1.survivalReputationPropMo.prop.reputationId
-		local var_14_11 = var_14_1.survivalReputationPropMo.prop.reputationLevel
-		local var_14_12 = SurvivalConfig.instance:getBuildReputationIcon(var_14_10, var_14_11)
-
-		arg_14_0:setBubbleIcon(var_14_12)
-		gohelper.setActive(arg_14_0.imagebubble, true)
-		arg_14_0:refreshReputation(false)
+		gohelper.setActive(self.goRecruitFinish, isCanSelectNpc)
+		gohelper.setActive(self.goCanBuild, not isInRecruit and not isCanSelectNpc)
+		gohelper.setActive(self.imagebubble, true)
 
 		return
-	elseif var_14_1:isEqualType(SurvivalEnum.BuildingType.Shop) then
-		arg_14_0:setBubbleIcon("survival_map_icon_15")
-		gohelper.setActive(arg_14_0.imagebubble, true)
+	elseif buildingInfo:isEqualType(SurvivalEnum.BuildingType.ReputationShop) then
+		local reputationId = buildingInfo.survivalReputationPropMo.prop.reputationId
+		local reputationLevel = buildingInfo.survivalReputationPropMo.prop.reputationLevel
+		local path = SurvivalConfig.instance:getBuildReputationIcon(reputationId, reputationLevel)
+
+		self:setBubbleIcon(path)
+		gohelper.setActive(self.imagebubble, true)
+		self:refreshReputation(false)
 
 		return
-	end
+	elseif buildingInfo:isEqualType(SurvivalEnum.BuildingType.Shop) then
+		self:setBubbleIcon("survival_map_icon_15")
+		gohelper.setActive(self.imagebubble, true)
 
-	arg_14_0:setBubbleIcon()
-	gohelper.setActive(arg_14_0.imagebubble, false)
-end
-
-function var_0_0.OnReceiveSurvivalReputationExpReply(arg_15_0)
-	arg_15_0:refreshReputation(true)
-end
-
-function var_0_0.onDelayPopupFinishEvent(arg_16_0)
-	arg_16_0:refreshReputation(true)
-end
-
-function var_0_0.refreshReputation(arg_17_0, arg_17_1)
-	local var_17_0 = SurvivalShelterModel.instance:getWeekInfo():getBuildingInfo(arg_17_0.unitId)
-
-	if not var_17_0 then
 		return
 	end
 
-	local var_17_1 = var_17_0.survivalReputationPropMo
-	local var_17_2 = var_17_0:isEqualType(SurvivalEnum.BuildingType.ReputationShop)
+	self:setBubbleIcon()
+	gohelper.setActive(self.imagebubble, false)
+end
 
-	gohelper.setActive(arg_17_0.image_level_reputation, var_17_2)
+function ShelterUnitUIItem:OnReceiveSurvivalReputationExpReply()
+	self:refreshReputation(true)
+end
 
-	if var_17_2 then
-		local var_17_3 = var_17_1.prop.reputationLevel
-		local var_17_4 = SurvivalShelterModel.instance:getWeekInfo().clientData
-		local var_17_5 = var_17_0.survivalReputationPropMo.survivalShopMo.id
-		local var_17_6 = var_17_4:getReputationShopHUDUILevel(var_17_5)
+function ShelterUnitUIItem:onDelayPopupFinishEvent()
+	self:refreshReputation(true)
+end
 
-		UISpriteSetMgr.instance:setSurvivalSprite(arg_17_0.image_level_reputation, string.format("survival_level_icon_%s", var_17_6))
+function ShelterUnitUIItem:refreshReputation(isCheckChange)
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local buildingInfo = weekInfo:getBuildingInfo(self.unitId)
 
-		if arg_17_1 and var_17_6 < var_17_3 then
-			UISpriteSetMgr.instance:setSurvivalSprite(arg_17_0.image_level_reputation, string.format("survival_level_icon_%s", var_17_3))
-			arg_17_0.animGoBuildInfo:Play()
-			var_17_4:setReputationShopHUDUILevel(var_17_5, var_17_3)
+	if not buildingInfo then
+		return
+	end
+
+	local survivalReputationPropMo = buildingInfo.survivalReputationPropMo
+	local isReputationShop = buildingInfo:isEqualType(SurvivalEnum.BuildingType.ReputationShop)
+
+	gohelper.setActive(self.image_level_reputation, isReputationShop)
+
+	if isReputationShop then
+		local curLevel = survivalReputationPropMo.prop.reputationLevel
+		local weekMo = SurvivalShelterModel.instance:getWeekInfo()
+		local clientData = weekMo.clientData
+		local shopId = buildingInfo.survivalReputationPropMo.survivalShopMo.id
+		local lastLevel = clientData:getReputationShopHUDUILevel(shopId)
+
+		UISpriteSetMgr.instance:setSurvivalSprite(self.image_level_reputation, string.format("survival_level_icon_%s", lastLevel))
+
+		if isCheckChange and lastLevel < curLevel then
+			UISpriteSetMgr.instance:setSurvivalSprite(self.image_level_reputation, string.format("survival_level_icon_%s", curLevel))
+			self.animGoBuildInfo:Play()
+			clientData:setReputationShopHUDUILevel(shopId, curLevel)
 		end
 	end
 end
 
-function var_0_0.refreshReputationRedDot(arg_18_0)
-	local var_18_0 = SurvivalShelterModel.instance:getWeekInfo():getBuildingInfo(arg_18_0.unitId)
+function ShelterUnitUIItem:refreshReputationRedDot()
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local buildingInfo = weekInfo:getBuildingInfo(self.unitId)
 
-	if var_18_0 and var_18_0:isEqualType(SurvivalEnum.BuildingType.ReputationShop) then
-		local var_18_1 = SurvivalConfig.instance:getReputationRedDotType(var_18_0.buildingId)
+	if buildingInfo and buildingInfo:isEqualType(SurvivalEnum.BuildingType.ReputationShop) then
+		local redDotType = SurvivalConfig.instance:getReputationRedDotType(buildingInfo.buildingId)
 
-		RedDotController.instance:addRedDot(arg_18_0.go_reddot_reputation, var_18_1)
+		RedDotController.instance:addRedDot(self.go_reddot_reputation, redDotType)
 	end
 end
 
-function var_0_0.setBubbleIcon(arg_19_0, arg_19_1)
-	if not arg_19_0._isVisible then
+function ShelterUnitUIItem:setBubbleIcon(iconName)
+	if not self._isVisible then
 		return
 	end
 
-	if arg_19_1 == arg_19_0.bubbleIconName then
+	if iconName == self.bubbleIconName then
 		return
 	end
 
-	arg_19_0.bubbleIconName = arg_19_1
+	self.bubbleIconName = iconName
 
-	if not arg_19_1 or string.nilorempty(arg_19_1) then
-		gohelper.setActive(arg_19_0.imageicon, false)
+	if not iconName or string.nilorempty(iconName) then
+		gohelper.setActive(self.imageicon, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_19_0.imageicon, true)
-	UISpriteSetMgr.instance:setSurvivalSprite(arg_19_0.imageicon, arg_19_1, true)
+	gohelper.setActive(self.imageicon, true)
+	UISpriteSetMgr.instance:setSurvivalSprite(self.imageicon, iconName, true)
 end
 
-function var_0_0.setVisible(arg_20_0, arg_20_1)
-	if arg_20_0._isVisible == arg_20_1 then
+function ShelterUnitUIItem:setVisible(visible)
+	if self._isVisible == visible then
 		return
 	end
 
-	arg_20_0._isVisible = arg_20_1
+	self._isVisible = visible
 
-	gohelper.setActive(arg_20_0.rootGO, arg_20_1)
+	gohelper.setActive(self.rootGO, visible)
 end
 
-function var_0_0.getEntity(arg_21_0)
-	return SurvivalMapHelper.instance:getShelterEntity(arg_21_0.unitType, arg_21_0.unitId)
+function ShelterUnitUIItem:getEntity()
+	return SurvivalMapHelper.instance:getShelterEntity(self.unitType, self.unitId)
 end
 
-function var_0_0.dispose(arg_22_0)
-	gohelper.destroy(arg_22_0.go)
+function ShelterUnitUIItem:dispose()
+	gohelper.destroy(self.go)
 end
 
-function var_0_0.playAnim(arg_23_0, arg_23_1)
-	if not arg_23_0._isVisible then
+function ShelterUnitUIItem:playAnim(animName)
+	if not self._isVisible then
 		return
 	end
 
-	arg_23_0.animator:Play(arg_23_1, 0, 0)
+	self.animator:Play(animName, 0, 0)
 end
 
-function var_0_0.onDestroy(arg_24_0)
-	if arg_24_0.click then
-		arg_24_0.click:RemoveClickListener()
+function ShelterUnitUIItem:onDestroy()
+	if self.click then
+		self.click:RemoveClickListener()
 	end
 
-	arg_24_0._lastSmallIcon = nil
+	self._lastSmallIcon = nil
 end
 
-return var_0_0
+return ShelterUnitUIItem

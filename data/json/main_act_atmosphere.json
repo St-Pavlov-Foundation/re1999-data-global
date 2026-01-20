@@ -149,5 +149,30 @@
     "mainThumbnailView": [],
     "isShowfx": false,
     "mainThumbnailViewActBg": false
+  },
+  {
+    "id": 13235,
+    "effectDuration": 0,
+    "mainView": [
+      "#simage_actbg",
+      "left/#go_activity/vx_actbg",
+      "left/#go_activity/star_02",
+      "left/#go_activity/scroll_view/#go_actbg",
+      "left/#go_activity/scroll_view/#go_actbg_eff"
+    ],
+    "mainViewActBtn": [
+      "act_iconbg",
+      "act_iconbg_eff"
+    ],
+    "mainViewActBtnPrefix": "act_",
+    "isShowLogo": true,
+    "isShowActBg": true,
+    "mainThumbnailView": [
+      "#simage_actbg",
+      "#simage_logo",
+      "#vx_actbg"
+    ],
+    "isShowfx": true,
+    "mainThumbnailViewActBg": true
   }
 ]

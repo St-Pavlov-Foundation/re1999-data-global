@@ -1,194 +1,203 @@
-﻿module("modules.logic.dispatch.model.DispatchModel", package.seeall)
+﻿-- chunkname: @modules/logic/dispatch/model/DispatchModel.lua
 
-local var_0_0 = class("DispatchModel", BaseModel)
+module("modules.logic.dispatch.model.DispatchModel", package.seeall)
 
-local function var_0_1(arg_1_0)
-	arg_1_0 = arg_1_0 or {}
+local DispatchModel = class("DispatchModel", BaseModel)
 
-	local var_1_0 = {
-		elementId = arg_1_0.elementId,
-		dispatchId = arg_1_0.dispatchId,
-		endTime = arg_1_0.endTime
+local function getDispatchInfo(serverData)
+	serverData = serverData or {}
+
+	local dispatchInfo = {
+		elementId = serverData.elementId,
+		dispatchId = serverData.dispatchId,
+		endTime = serverData.endTime
 	}
-	local var_1_1 = {}
+	local heroIdList = {}
 
-	if arg_1_0.heroIds then
-		for iter_1_0, iter_1_1 in ipairs(arg_1_0.heroIds) do
-			var_1_1[#var_1_1 + 1] = iter_1_1
+	if serverData.heroIds then
+		for _, heroId in ipairs(serverData.heroIds) do
+			heroIdList[#heroIdList + 1] = heroId
 		end
 	end
 
-	var_1_0.heroIdList = var_1_1
+	dispatchInfo.heroIdList = heroIdList
 
-	return var_1_0
+	return dispatchInfo
 end
 
-function var_0_0.onInit(arg_2_0)
-	arg_2_0.dispatchedHeroDict = {}
-	arg_2_0.needCheckDispatchInfoList = {}
+function DispatchModel:onInit()
+	self.dispatchedHeroDict = {}
+	self.needCheckDispatchInfoList = {}
 end
 
-function var_0_0.reInit(arg_3_0)
-	arg_3_0:onInit()
+function DispatchModel:reInit()
+	self:onInit()
 end
 
-function var_0_0.initDispatchInfos(arg_4_0, arg_4_1)
-	arg_4_0:clear()
+function DispatchModel:initDispatchInfos(serverDispatchInfoList)
+	self:clear()
 
-	if not arg_4_1 then
+	if not serverDispatchInfoList then
 		return
 	end
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
-		local var_4_0 = DispatchInfoMo.New()
-		local var_4_1 = var_0_1(iter_4_1)
+	for _, serverDispatchInfo in ipairs(serverDispatchInfoList) do
+		local dispatchMo = DispatchInfoMo.New()
+		local newDispatchInfo = getDispatchInfo(serverDispatchInfo)
 
-		var_4_0:init(var_4_1)
-		arg_4_0:addAtLast(var_4_0)
+		dispatchMo:init(newDispatchInfo)
+		self:addAtLast(dispatchMo)
 
-		if var_4_0:isRunning() then
-			for iter_4_2, iter_4_3 in ipairs(var_4_0.heroIdList) do
-				arg_4_0.dispatchedHeroDict[iter_4_3] = true
+		local isRunning = dispatchMo:isRunning()
+
+		if isRunning then
+			for _, heroId in ipairs(dispatchMo.heroIdList) do
+				self.dispatchedHeroDict[heroId] = true
 			end
 
-			table.insert(arg_4_0.needCheckDispatchInfoList, var_4_0)
+			table.insert(self.needCheckDispatchInfoList, dispatchMo)
 		end
 	end
 end
 
-function var_0_0.addDispatch(arg_5_0, arg_5_1)
-	if not arg_5_1 then
+function DispatchModel:addDispatch(serverData)
+	if not serverData then
 		return
 	end
 
-	local var_5_0 = var_0_1(arg_5_1)
-	local var_5_1 = var_5_0.elementId
-	local var_5_2 = arg_5_0:getDispatchMo(var_5_1)
+	local dispatchInfo = getDispatchInfo(serverData)
+	local id = dispatchInfo.elementId
+	local dispatchMo = self:getDispatchMo(id)
 
-	if var_5_2 then
-		var_5_2:updateMO(var_5_0)
+	if dispatchMo then
+		dispatchMo:updateMO(dispatchInfo)
 	else
-		var_5_2 = DispatchInfoMo.New()
+		dispatchMo = DispatchInfoMo.New()
 
-		var_5_2:init(var_5_0)
-		arg_5_0:addAtLast(var_5_2)
+		dispatchMo:init(dispatchInfo)
+		self:addAtLast(dispatchMo)
 	end
 
-	if var_5_2:isRunning() then
-		for iter_5_0, iter_5_1 in ipairs(var_5_0.heroIdList) do
-			arg_5_0.dispatchedHeroDict[iter_5_1] = true
+	local isRunning = dispatchMo:isRunning()
+
+	if isRunning then
+		for _, heroId in ipairs(dispatchInfo.heroIdList) do
+			self.dispatchedHeroDict[heroId] = true
 		end
 
-		table.insert(arg_5_0.needCheckDispatchInfoList, var_5_2)
+		table.insert(self.needCheckDispatchInfoList, dispatchMo)
 	end
 
-	local var_5_3 = var_5_0.dispatchId
+	local dispatchId = dispatchInfo.dispatchId
 
-	DispatchController.instance:dispatchEvent(DispatchEvent.AddDispatchInfo, var_5_3)
+	DispatchController.instance:dispatchEvent(DispatchEvent.AddDispatchInfo, dispatchId)
 end
 
-function var_0_0.removeDispatch(arg_6_0, arg_6_1)
-	if not arg_6_1 then
+function DispatchModel:removeDispatch(serverData)
+	if not serverData then
 		return
 	end
 
-	local var_6_0 = arg_6_1.elementId
-	local var_6_1 = arg_6_0:getDispatchMo(var_6_0)
+	local id = serverData.elementId
+	local dispatchMo = self:getDispatchMo(id)
 
-	if var_6_1 then
-		for iter_6_0, iter_6_1 in ipairs(var_6_1.heroIdList) do
-			arg_6_0.dispatchedHeroDict[iter_6_1] = nil
+	if dispatchMo then
+		for _, heroId in ipairs(dispatchMo.heroIdList) do
+			self.dispatchedHeroDict[heroId] = nil
 		end
 
-		tabletool.removeValue(arg_6_0.needCheckDispatchInfoList, var_6_1)
-		arg_6_0:remove(var_6_1)
+		tabletool.removeValue(self.needCheckDispatchInfoList, dispatchMo)
+		self:remove(dispatchMo)
 	end
 
-	local var_6_2 = var_6_1.dispatchId
+	local dispatchId = dispatchMo.dispatchId
 
-	DispatchController.instance:dispatchEvent(DispatchEvent.RemoveDispatchInfo, var_6_2)
+	DispatchController.instance:dispatchEvent(DispatchEvent.RemoveDispatchInfo, dispatchId)
 end
 
-function var_0_0.getDispatchMo(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0
+function DispatchModel:getDispatchMo(elementId, dispatchId)
+	local result
 
-	if not arg_7_1 then
-		return var_7_0
+	if not elementId then
+		return result
 	end
 
-	local var_7_1 = arg_7_0:getById(arg_7_1)
+	local dispatchMo = self:getById(elementId)
 
-	if var_7_1 then
-		local var_7_2 = var_7_1:getDispatchId()
+	if dispatchMo then
+		local getDispatchId = dispatchMo:getDispatchId()
 
-		if not arg_7_2 or arg_7_2 == var_7_2 then
-			var_7_0 = var_7_1
+		if not dispatchId or dispatchId == getDispatchId then
+			result = dispatchMo
 		else
-			logError(string.format("DispatchModel.getDispatchMo error, dispatchId not equal,%s %s", arg_7_2, var_7_2))
+			logError(string.format("DispatchModel.getDispatchMo error, dispatchId not equal,%s %s", dispatchId, getDispatchId))
 		end
 	end
 
-	return var_7_0
+	return result
 end
 
-function var_0_0.getDispatchMoByDispatchId(arg_8_0, arg_8_1)
+function DispatchModel:getDispatchMoByDispatchId(dispatchId)
 	return
 end
 
-function var_0_0.getDispatchStatus(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = arg_9_0:getDispatchMo(arg_9_1, arg_9_2)
-	local var_9_1 = DispatchEnum.DispatchStatus.NotDispatch
+function DispatchModel:getDispatchStatus(elementId, dispatchId)
+	local dispatchMo = self:getDispatchMo(elementId, dispatchId)
+	local dispatchStatus = DispatchEnum.DispatchStatus.NotDispatch
 
-	if var_9_0 then
-		var_9_1 = var_9_0:isFinish() and DispatchEnum.DispatchStatus.Finished or DispatchEnum.DispatchStatus.Dispatching
+	if dispatchMo then
+		local isFinish = dispatchMo:isFinish()
+
+		dispatchStatus = isFinish and DispatchEnum.DispatchStatus.Finished or DispatchEnum.DispatchStatus.Dispatching
 	end
 
-	return var_9_1
+	return dispatchStatus
 end
 
-function var_0_0.getDispatchTime(arg_10_0, arg_10_1)
-	local var_10_0 = string.format("%02d : %02d : %02d", 0, 0, 0)
-	local var_10_1 = DungeonConfig.instance:getElementDispatchId(arg_10_1)
+function DispatchModel:getDispatchTime(elementId)
+	local result = string.format("%02d : %02d : %02d", 0, 0, 0)
+	local dispatchId = DungeonConfig.instance:getElementDispatchId(elementId)
 
-	if arg_10_1 and var_10_1 then
-		local var_10_2 = arg_10_0:getDispatchMo(arg_10_1, var_10_1)
+	if elementId and dispatchId then
+		local dispatchMo = self:getDispatchMo(elementId, dispatchId)
 
-		if var_10_2 then
-			var_10_0 = var_10_2:getRemainTimeStr()
+		if dispatchMo then
+			result = dispatchMo:getRemainTimeStr()
 		end
 	end
 
-	return var_10_0
+	return result
 end
 
-function var_0_0.isDispatched(arg_11_0, arg_11_1)
-	return arg_11_0.dispatchedHeroDict and arg_11_0.dispatchedHeroDict[arg_11_1]
+function DispatchModel:isDispatched(heroId)
+	return self.dispatchedHeroDict and self.dispatchedHeroDict[heroId]
 end
 
-function var_0_0.checkDispatchFinish(arg_12_0)
-	local var_12_0 = arg_12_0.needCheckDispatchInfoList and #arg_12_0.needCheckDispatchInfoList or 0
+function DispatchModel:checkDispatchFinish()
+	local len = self.needCheckDispatchInfoList and #self.needCheckDispatchInfoList or 0
 
-	if var_12_0 <= 0 then
+	if len <= 0 then
 		return
 	end
 
-	local var_12_1 = false
+	local needDispatchEvent = false
 
-	for iter_12_0 = var_12_0, 1, -1 do
-		local var_12_2 = arg_12_0.needCheckDispatchInfoList[iter_12_0]
+	for index = len, 1, -1 do
+		local dispatchMo = self.needCheckDispatchInfoList[index]
+		local isFinish = dispatchMo:isFinish()
 
-		if var_12_2:isFinish() then
-			var_12_1 = true
+		if isFinish then
+			needDispatchEvent = true
 
-			for iter_12_1, iter_12_2 in ipairs(var_12_2.heroIdList) do
-				arg_12_0.dispatchedHeroDict[iter_12_2] = nil
+			for _, heroId in ipairs(dispatchMo.heroIdList) do
+				self.dispatchedHeroDict[heroId] = nil
 			end
 
-			table.remove(arg_12_0.needCheckDispatchInfoList, iter_12_0)
+			table.remove(self.needCheckDispatchInfoList, index)
 		end
 	end
 
-	if var_12_1 then
+	if needDispatchEvent then
 		DispatchController.instance:dispatchEvent(DispatchEvent.OnDispatchFinish)
 		RedDotRpc.instance:sendGetRedDotInfosRequest({
 			RedDotEnum.DotNode.V1a8FactoryMapDispatchFinish
@@ -196,6 +205,6 @@ function var_0_0.checkDispatchFinish(arg_12_0)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+DispatchModel.instance = DispatchModel.New()
 
-return var_0_0
+return DispatchModel

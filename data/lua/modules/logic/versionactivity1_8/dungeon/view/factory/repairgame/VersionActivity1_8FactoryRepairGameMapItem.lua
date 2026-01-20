@@ -1,166 +1,168 @@
-﻿module("modules.logic.versionactivity1_8.dungeon.view.factory.repairgame.VersionActivity1_8FactoryRepairGameMapItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_8/dungeon/view/factory/repairgame/VersionActivity1_8FactoryRepairGameMapItem.lua
 
-local var_0_0 = class("VersionActivity1_8FactoryRepairGameMapItem", LuaCompBase)
+module("modules.logic.versionactivity1_8.dungeon.view.factory.repairgame.VersionActivity1_8FactoryRepairGameMapItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#go_content")
-	arg_1_0._contentTrans = arg_1_0._gocontent.transform
-	arg_1_0._imageBg = gohelper.findChildImage(arg_1_0.viewGO, "#go_content/#image_Bg")
+local VersionActivity1_8FactoryRepairGameMapItem = class("VersionActivity1_8FactoryRepairGameMapItem", LuaCompBase)
 
-	gohelper.setActive(arg_1_0._imageBg, false)
+function VersionActivity1_8FactoryRepairGameMapItem:init(go)
+	self.viewGO = go
+	self._gocontent = gohelper.findChild(self.viewGO, "#go_content")
+	self._contentTrans = self._gocontent.transform
+	self._imageBg = gohelper.findChildImage(self.viewGO, "#go_content/#image_Bg")
 
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "#go_content/#image_icon")
-	arg_1_0._goEffLight = gohelper.findChild(arg_1_0.viewGO, "#go_content/eff_light")
-	arg_1_0._effLightAnimator = arg_1_0._goEffLight:GetComponent(ArmPuzzlePipeEnum.ComponentType.Animator)
-	arg_1_0._imageconn = gohelper.findChildImage(arg_1_0.viewGO, "#go_content/#image_conn")
-	arg_1_0._imageconnTrs = arg_1_0._imageconn.transform
-	arg_1_0._imagenum = gohelper.findChildImage(arg_1_0.viewGO, "#go_content/#image_num")
+	gohelper.setActive(self._imageBg, false)
 
-	arg_1_0:_playAnim(false, nil)
+	self._imageicon = gohelper.findChildImage(self.viewGO, "#go_content/#image_icon")
+	self._goEffLight = gohelper.findChild(self.viewGO, "#go_content/eff_light")
+	self._effLightAnimator = self._goEffLight:GetComponent(ArmPuzzlePipeEnum.ComponentType.Animator)
+	self._imageconn = gohelper.findChildImage(self.viewGO, "#go_content/#image_conn")
+	self._imageconnTrs = self._imageconn.transform
+	self._imagenum = gohelper.findChildImage(self.viewGO, "#go_content/#image_num")
+
+	self:_playAnim(false, nil)
 end
 
-function var_0_0.initItem(arg_2_0, arg_2_1)
-	if not arg_2_1 or arg_2_1.typeId == 0 then
-		gohelper.setActive(arg_2_0._gocontent, false)
+function VersionActivity1_8FactoryRepairGameMapItem:initItem(mo)
+	if not mo or mo.typeId == 0 then
+		gohelper.setActive(self._gocontent, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_2_0._gocontent, true)
+	gohelper.setActive(self._gocontent, true)
 
-	local var_2_0 = Activity157RepairGameModel.instance:isPlaceByXY(arg_2_1.x, arg_2_1.y)
+	local isPlaceItem = Activity157RepairGameModel.instance:isPlaceByXY(mo.x, mo.y)
 
-	if arg_2_1.typeId == ArmPuzzlePipeEnum.type.zhanwei then
-		local var_2_1 = Activity157RepairGameModel.instance:isPlaceSelectXY(arg_2_1.x, arg_2_1.y)
+	if mo.typeId == ArmPuzzlePipeEnum.type.zhanwei then
+		local isSelect = Activity157RepairGameModel.instance:isPlaceSelectXY(mo.x, mo.y)
 
-		arg_2_0:_playAnim(var_2_1, var_2_1 and "turngreen" or "turnred")
+		self:_playAnim(isSelect, isSelect and "turngreen" or "turnred")
 	else
-		arg_2_0:_playAnim(false, nil)
+		self:_playAnim(false, nil)
 	end
 
-	gohelper.setActive(arg_2_0._imageBg, var_2_0 and arg_2_1.typeId ~= ArmPuzzlePipeEnum.type.zhanwei)
+	gohelper.setActive(self._imageBg, isPlaceItem and mo.typeId ~= ArmPuzzlePipeEnum.type.zhanwei)
 
-	local var_2_2, var_2_3 = arg_2_1:getBackgroundRes()
+	local backgroundRes, isUseActSprite = mo:getBackgroundRes()
 
-	if var_2_3 then
-		UISpriteSetMgr.instance:setV1a8FactorySprite(arg_2_0._imageicon, var_2_2, true)
+	if isUseActSprite then
+		UISpriteSetMgr.instance:setV1a8FactorySprite(self._imageicon, backgroundRes, true)
 	else
-		UISpriteSetMgr.instance:setArmPipeSprite(arg_2_0._imageicon, var_2_2, true)
+		UISpriteSetMgr.instance:setArmPipeSprite(self._imageicon, backgroundRes, true)
 	end
 
-	local var_2_4 = ArmPuzzlePipeEnum.resNumIcons[arg_2_1.numIndex]
+	local numPath = ArmPuzzlePipeEnum.resNumIcons[mo.numIndex]
 
-	if arg_2_1:isEntry() then
-		if var_2_4 then
-			UISpriteSetMgr.instance:setArmPipeSprite(arg_2_0._imagenum, var_2_4, true)
+	if mo:isEntry() then
+		if numPath then
+			UISpriteSetMgr.instance:setArmPipeSprite(self._imagenum, numPath, true)
 		end
-	elseif ArmPuzzlePipeEnum.pathConn[arg_2_1.typeId] then
-		local var_2_5, var_2_6 = arg_2_1:getBackgroundRes()
+	elseif ArmPuzzlePipeEnum.pathConn[mo.typeId] then
+		local connRes, isConnUseActSprite = mo:getBackgroundRes()
 
-		if var_2_6 then
-			UISpriteSetMgr.instance:setV1a8FactorySprite(arg_2_0._imageconn, var_2_5, true)
+		if isConnUseActSprite then
+			UISpriteSetMgr.instance:setV1a8FactorySprite(self._imageconn, connRes, true)
 		else
-			UISpriteSetMgr.instance:setArmPipeSprite(arg_2_0._imageconn, var_2_5, true)
+			UISpriteSetMgr.instance:setArmPipeSprite(self._imageconn, connRes, true)
 		end
 	end
 
-	local var_2_7 = (Activity157Enum.entryTypeColor[arg_2_1.typeId] or Activity157Enum.entryColor)[arg_2_1.pathIndex] or Activity157Enum.entryColor[0]
+	local entryColor = Activity157Enum.entryTypeColor[mo.typeId] or Activity157Enum.entryColor
+	local colorStr = entryColor[mo.pathIndex] or Activity157Enum.entryColor[0]
 
-	SLFramework.UGUI.GuiHelper.SetColor(arg_2_0._imagenum, var_2_7)
-	SLFramework.UGUI.GuiHelper.SetColor(arg_2_0._imageicon, var_2_7)
-	gohelper.setActive(arg_2_0._imagenum, arg_2_1:isEntry() and var_2_4 ~= nil)
-	gohelper.setActive(arg_2_0._imageconn, false)
-	arg_2_0:syncRotation(arg_2_1)
+	SLFramework.UGUI.GuiHelper.SetColor(self._imagenum, colorStr)
+	SLFramework.UGUI.GuiHelper.SetColor(self._imageicon, colorStr)
+	gohelper.setActive(self._imagenum, mo:isEntry() and numPath ~= nil)
+	gohelper.setActive(self._imageconn, false)
+	self:syncRotation(mo)
 end
 
-function var_0_0._playAnim(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_0._lastEffActivie ~= arg_3_1 then
-		arg_3_0._lastEffActivie = arg_3_1
+function VersionActivity1_8FactoryRepairGameMapItem:_playAnim(isActive, animName)
+	if self._lastEffActivie ~= isActive then
+		self._lastEffActivie = isActive
 
-		gohelper.setActive(arg_3_0._goEffLight, arg_3_1)
+		gohelper.setActive(self._goEffLight, isActive)
 	end
 
-	if arg_3_1 then
-		if arg_3_2 and arg_3_0._lastEffActivie ~= arg_3_2 then
-			arg_3_0._lastEffActivie = arg_3_2
+	if isActive then
+		if animName and self._lastEffActivie ~= animName then
+			self._lastEffActivie = animName
 
-			arg_3_0._effLightAnimator:Play(arg_3_2)
+			self._effLightAnimator:Play(animName)
 		end
 	else
-		arg_3_0._lastEffAnimName = nil
+		self._lastEffAnimName = nil
 	end
 end
 
-function var_0_0.syncRotation(arg_4_0, arg_4_1)
-	if not arg_4_1 then
+function VersionActivity1_8FactoryRepairGameMapItem:syncRotation(mo)
+	if not mo then
 		return
 	end
 
-	local var_4_0 = arg_4_1:getRotation()
+	local rotation = mo:getRotation()
 
-	transformhelper.setLocalRotation(arg_4_0._contentTrans, 0, 0, var_4_0)
+	transformhelper.setLocalRotation(self._contentTrans, 0, 0, rotation)
 end
 
-function var_0_0.initConnectObj(arg_5_0, arg_5_1)
-	local var_5_0 = false
+function VersionActivity1_8FactoryRepairGameMapItem:initConnectObj(mo)
+	local showConn = false
 
-	if arg_5_1 then
-		if ArmPuzzlePipeEnum.pathConn[arg_5_1.typeId] then
-			var_5_0 = arg_5_1:getConnectValue() ~= 0
-		elseif ArmPuzzlePipeEnum.type.wrong == arg_5_1.typeId then
-			local var_5_1
-			local var_5_2
+	if mo then
+		if ArmPuzzlePipeEnum.pathConn[mo.typeId] then
+			showConn = mo:getConnectValue() ~= 0
+		elseif ArmPuzzlePipeEnum.type.wrong == mo.typeId then
+			local spriteNam, isUseActSprite
 
-			if arg_5_1:getConnectValue() >= 2 then
-				var_5_1, var_5_2 = arg_5_1:getConnectRes()
+			if mo:getConnectValue() >= 2 then
+				spriteNam, isUseActSprite = mo:getConnectRes()
 			else
-				var_5_1, var_5_2 = arg_5_1:getBackgroundRes()
+				spriteNam, isUseActSprite = mo:getBackgroundRes()
 			end
 
-			if var_5_2 then
-				UISpriteSetMgr.instance:setV1a8FactorySprite(arg_5_0._imageicon, var_5_1, true)
+			if isUseActSprite then
+				UISpriteSetMgr.instance:setV1a8FactorySprite(self._imageicon, spriteNam, true)
 			else
-				UISpriteSetMgr.instance:setArmPipeSprite(arg_5_0._imageicon, var_5_1, true)
+				UISpriteSetMgr.instance:setArmPipeSprite(self._imageicon, spriteNam, true)
 			end
 		end
 
-		if var_5_0 then
-			local var_5_3, var_5_4 = arg_5_0:_getConnectParam(arg_5_1)
-			local var_5_5, var_5_6 = ArmPuzzleHelper.getConnectRes(var_5_3, Activity157Enum.res)
+		if showConn then
+			local connTypeId, rotation = self:_getConnectParam(mo)
+			local spriteNam, isUseActSprite = ArmPuzzleHelper.getConnectRes(connTypeId, Activity157Enum.res)
 
-			if var_5_6 then
-				UISpriteSetMgr.instance:setV1a8FactorySprite(arg_5_0._imageconn, var_5_5, true)
+			if isUseActSprite then
+				UISpriteSetMgr.instance:setV1a8FactorySprite(self._imageconn, spriteNam, true)
 			else
-				UISpriteSetMgr.instance:setArmPipeSprite(arg_5_0._imageconn, var_5_5, true)
+				UISpriteSetMgr.instance:setArmPipeSprite(self._imageconn, spriteNam, true)
 			end
 
-			SLFramework.UGUI.GuiHelper.SetColor(arg_5_0._imageconn, Activity157Enum.pathColor[arg_5_1.connectPathIndex] or "#FFFFFF")
-			transformhelper.setLocalRotation(arg_5_0._imageconnTrs, 0, 0, var_5_4)
-		end
-	end
-
-	gohelper.setActive(arg_5_0._imageconn, var_5_0)
-end
-
-function var_0_0._getConnectParam(arg_6_0, arg_6_1)
-	if ArmPuzzlePipeEnum.type.t_shape == arg_6_1.typeId then
-		local var_6_0 = arg_6_1:getConnectValue()
-
-		for iter_6_0, iter_6_1 in pairs(ArmPuzzlePipeEnum.rotate) do
-			if iter_6_1[var_6_0] then
-				local var_6_1 = ArmPuzzleHelper.getRotation(iter_6_0, var_6_0) - arg_6_1:getRotation()
-
-				return iter_6_0, var_6_1
-			end
+			SLFramework.UGUI.GuiHelper.SetColor(self._imageconn, Activity157Enum.pathColor[mo.connectPathIndex] or "#FFFFFF")
+			transformhelper.setLocalRotation(self._imageconnTrs, 0, 0, rotation)
 		end
 	end
 
-	return arg_6_1.typeId, 0
+	gohelper.setActive(self._imageconn, showConn)
 end
 
-function var_0_0.onDestroy(arg_7_0)
+function VersionActivity1_8FactoryRepairGameMapItem:_getConnectParam(mo)
+	if ArmPuzzlePipeEnum.type.t_shape == mo.typeId then
+		local connValue = mo:getConnectValue()
+
+		for typeId, roataDic in pairs(ArmPuzzlePipeEnum.rotate) do
+			if roataDic[connValue] then
+				local rotation = ArmPuzzleHelper.getRotation(typeId, connValue) - mo:getRotation()
+
+				return typeId, rotation
+			end
+		end
+	end
+
+	return mo.typeId, 0
+end
+
+function VersionActivity1_8FactoryRepairGameMapItem:onDestroy()
 	return
 end
 
-return var_0_0
+return VersionActivity1_8FactoryRepairGameMapItem

@@ -1,168 +1,172 @@
-﻿module("modules.logic.fight.view.stress.StressNormalBehavior", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/stress/StressNormalBehavior.lua
 
-local var_0_0 = class("StressNormalBehavior", StressBehaviorBase)
+module("modules.logic.fight.view.stress.StressNormalBehavior", package.seeall)
 
-var_0_0.BehaviourAnimDuration = 1
-var_0_0.Behaviour2AudioId = {
+local StressNormalBehavior = class("StressNormalBehavior", StressBehaviorBase)
+
+StressNormalBehavior.BehaviourAnimDuration = 1
+StressNormalBehavior.Behaviour2AudioId = {
 	[FightEnum.StressBehaviour.Meltdown] = 20211405,
 	[FightEnum.StressBehaviour.Resolute] = 20211404
 }
 
-function var_0_0.initUI(arg_1_0)
-	arg_1_0.stressText = gohelper.findChildText(arg_1_0.instanceGo, "#txt_stress")
-	arg_1_0.goBlue = gohelper.findChild(arg_1_0.instanceGo, "blue")
-	arg_1_0.goRed = gohelper.findChild(arg_1_0.instanceGo, "red")
-	arg_1_0.goBroken = gohelper.findChild(arg_1_0.instanceGo, "broken")
-	arg_1_0.goStaunch = gohelper.findChild(arg_1_0.instanceGo, "staunch")
-	arg_1_0.click = gohelper.findChildClickWithDefaultAudio(arg_1_0.instanceGo, "#go_clickarea")
+function StressNormalBehavior:initUI()
+	self.stressText = gohelper.findChildText(self.instanceGo, "#txt_stress")
+	self.goBlue = gohelper.findChild(self.instanceGo, "blue")
+	self.goRed = gohelper.findChild(self.instanceGo, "red")
+	self.goBroken = gohelper.findChild(self.instanceGo, "broken")
+	self.goStaunch = gohelper.findChild(self.instanceGo, "staunch")
+	self.click = gohelper.findChildClickWithDefaultAudio(self.instanceGo, "#go_clickarea")
 
-	arg_1_0.click:AddClickListener(arg_1_0.onClickStress, arg_1_0)
+	self.click:AddClickListener(self.onClickStress, self)
 
-	arg_1_0.statusDict = {}
-	arg_1_0.statusDict[FightEnum.Status.Positive] = arg_1_0:createStatusItem(arg_1_0.goBlue)
-	arg_1_0.statusDict[FightEnum.Status.Negative] = arg_1_0:createStatusItem(arg_1_0.goRed)
-	arg_1_0.animGoDict = arg_1_0:getUserDataTb_()
-	arg_1_0.animGoDict[FightEnum.StressBehaviour.Meltdown] = arg_1_0.goBroken
-	arg_1_0.animGoDict[FightEnum.StressBehaviour.Resolute] = arg_1_0.goStaunch
+	self.statusDict = {}
+	self.statusDict[FightEnum.Status.Positive] = self:createStatusItem(self.goBlue)
+	self.statusDict[FightEnum.Status.Negative] = self:createStatusItem(self.goRed)
+	self.animGoDict = self:getUserDataTb_()
+	self.animGoDict[FightEnum.StressBehaviour.Meltdown] = self.goBroken
+	self.animGoDict[FightEnum.StressBehaviour.Resolute] = self.goStaunch
 end
 
-function var_0_0.createStatusItem(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_0:getUserDataTb_()
+function StressNormalBehavior:createStatusItem(go)
+	local statusItem = self:getUserDataTb_()
 
-	var_2_0.go = arg_2_1
-	var_2_0.txtStress = gohelper.findChildText(var_2_0.go, "add/#txt_stress")
-	var_2_0.animator = var_2_0.go:GetComponent(gohelper.Type_Animator)
+	statusItem.go = go
+	statusItem.txtStress = gohelper.findChildText(statusItem.go, "add/#txt_stress")
+	statusItem.animator = statusItem.go:GetComponent(gohelper.Type_Animator)
 
-	return var_2_0
+	return statusItem
 end
 
-function var_0_0.onClickStress(arg_3_0)
-	if FightDataHelper.stageMgr:getCurStage() ~= FightStageMgr.StageType.Operate then
+function StressNormalBehavior:onClickStress()
+	local curStage = FightDataHelper.stageMgr:getCurStage()
+
+	if curStage ~= FightStageMgr.StageType.Operate then
 		return
 	end
 
-	local var_3_0 = arg_3_0.entity:getMO()
+	local entityMo = self.entity:getMO()
 
-	if var_3_0.side == FightEnum.EntitySide.MySide then
-		StressTipController.instance:openHeroStressTip(var_3_0:getCO())
+	if entityMo.side == FightEnum.EntitySide.MySide then
+		StressTipController.instance:openHeroStressTip(entityMo:getCO())
 	else
-		StressTipController.instance:openMonsterStressTip(var_3_0:getCO())
+		StressTipController.instance:openMonsterStressTip(entityMo:getCO())
 	end
 end
 
-function var_0_0.refreshUI(arg_4_0)
-	local var_4_0 = arg_4_0:getCurStress()
+function StressNormalBehavior:refreshUI()
+	local curStress = self:getCurStress()
 
-	arg_4_0.stressText.text = var_4_0
+	self.stressText.text = curStress
 
-	arg_4_0:updateStatus()
+	self:updateStatus()
 end
 
-function var_0_0.updateStatus(arg_5_0)
-	arg_5_0:resetGo()
+function StressNormalBehavior:updateStatus()
+	self:resetGo()
 
-	local var_5_0 = arg_5_0:getCurStress()
-	local var_5_1 = FightEnum.MonsterId2StressThresholdDict[arg_5_0.monsterId]
+	local curStress = self:getCurStress()
+	local thresholdDict = FightEnum.MonsterId2StressThresholdDict[self.monsterId]
 
-	arg_5_0.status = FightHelper.getStressStatus(var_5_0, var_5_1)
+	self.status = FightHelper.getStressStatus(curStress, thresholdDict)
 
-	local var_5_2 = arg_5_0.status and arg_5_0.statusDict[arg_5_0.status]
+	local statusItem = self.status and self.statusDict[self.status]
 
-	if var_5_2 then
-		gohelper.setActive(var_5_2.go, true)
+	if statusItem then
+		gohelper.setActive(statusItem.go, true)
 	end
 end
 
-function var_0_0.resetGo(arg_6_0)
-	gohelper.setActive(arg_6_0.goBlue, false)
-	gohelper.setActive(arg_6_0.goRed, false)
-	gohelper.setActive(arg_6_0.goBroken, false)
-	gohelper.setActive(arg_6_0.goStaunch, false)
+function StressNormalBehavior:resetGo()
+	gohelper.setActive(self.goBlue, false)
+	gohelper.setActive(self.goRed, false)
+	gohelper.setActive(self.goBroken, false)
+	gohelper.setActive(self.goStaunch, false)
 end
 
-function var_0_0.onPowerChange(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4)
-	if arg_7_0.playBehaviouring then
+function StressNormalBehavior:onPowerChange(entityId, powerId, oldNum, newNum)
+	if self.playBehaviouring then
 		return
 	end
 
-	if arg_7_0.entityId ~= arg_7_1 then
+	if self.entityId ~= entityId then
 		return
 	end
 
-	if FightEnum.PowerType.Stress ~= arg_7_2 then
+	if FightEnum.PowerType.Stress ~= powerId then
 		return
 	end
 
-	if arg_7_3 == arg_7_4 then
+	if oldNum == newNum then
 		return
 	end
 
-	arg_7_0:refreshUI()
-	arg_7_0:playStressValueChangeAnim()
+	self:refreshUI()
+	self:playStressValueChangeAnim()
 end
 
-function var_0_0.playStressValueChangeAnim(arg_8_0)
-	if arg_8_0.playBehaviouring then
+function StressNormalBehavior:playStressValueChangeAnim()
+	if self.playBehaviouring then
 		return
 	end
 
-	if not arg_8_0.status then
+	if not self.status then
 		return
 	end
 
-	local var_8_0 = arg_8_0.statusDict[arg_8_0.status]
+	local statusItem = self.statusDict[self.status]
 
-	if var_8_0 then
-		var_8_0.animator:Play("up", 0, 0)
+	if statusItem then
+		statusItem.animator:Play("up", 0, 0)
 
-		var_8_0.txtStress.text = arg_8_0:getCurStress()
+		statusItem.txtStress.text = self:getCurStress()
 	else
-		arg_8_0:log(string.format("压力值item为nil。cur status : %s, cur stress : %s", arg_8_0.status, arg_8_0:getCurStress()))
+		self:log(string.format("压力值item为nil。cur status : %s, cur stress : %s", self.status, self:getCurStress()))
 	end
 end
 
-function var_0_0.triggerStressBehaviour(arg_9_0, arg_9_1, arg_9_2)
-	if arg_9_0.entityId ~= arg_9_1 then
+function StressNormalBehavior:triggerStressBehaviour(entityId, behavior)
+	if self.entityId ~= entityId then
 		return
 	end
 
-	if FightEnum.StressBehaviour.Resolute ~= arg_9_2 and FightEnum.StressBehaviour.Meltdown ~= arg_9_2 then
+	if FightEnum.StressBehaviour.Resolute ~= behavior and FightEnum.StressBehaviour.Meltdown ~= behavior then
 		return
 	end
 
-	arg_9_0:resetGo()
+	self:resetGo()
 
-	local var_9_0 = arg_9_0.animGoDict[arg_9_2]
-	local var_9_1 = arg_9_0.Behaviour2AudioId[arg_9_2]
+	local animGo = self.animGoDict[behavior]
+	local audioId = self.Behaviour2AudioId[behavior]
 
-	if not var_9_0 then
-		arg_9_0:log(string.format("没找到对应行为动画节点，behaviour is : %s", arg_9_2))
+	if not animGo then
+		self:log(string.format("没找到对应行为动画节点，behaviour is : %s", behavior))
 
-		var_9_0 = arg_9_0.animGoDict[FightEnum.StressBehaviour.Meltdown]
-		var_9_1 = arg_9_0.Behaviour2AudioId[FightEnum.StressBehaviour.Meltdown]
+		animGo = self.animGoDict[FightEnum.StressBehaviour.Meltdown]
+		audioId = self.Behaviour2AudioId[FightEnum.StressBehaviour.Meltdown]
 	end
 
-	arg_9_0.playBehaviouring = true
+	self.playBehaviouring = true
 
-	gohelper.setActive(var_9_0, true)
-	FightAudioMgr.instance:playAudio(var_9_1)
-	TaskDispatcher.runDelay(arg_9_0.onBehaviourDone, arg_9_0, var_0_0.BehaviourAnimDuration)
+	gohelper.setActive(animGo, true)
+	FightAudioMgr.instance:playAudio(audioId)
+	TaskDispatcher.runDelay(self.onBehaviourDone, self, StressNormalBehavior.BehaviourAnimDuration)
 end
 
-function var_0_0.onBehaviourDone(arg_10_0)
-	arg_10_0.playBehaviouring = false
+function StressNormalBehavior:onBehaviourDone()
+	self.playBehaviouring = false
 
-	arg_10_0:refreshUI()
-	arg_10_0:playStressValueChangeAnim()
+	self:refreshUI()
+	self:playStressValueChangeAnim()
 end
 
-function var_0_0.beforeDestroy(arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0.onBehaviourDone, arg_11_0)
-	arg_11_0.click:RemoveClickListener()
+function StressNormalBehavior:beforeDestroy()
+	TaskDispatcher.cancelTask(self.onBehaviourDone, self)
+	self.click:RemoveClickListener()
 
-	arg_11_0.click = nil
+	self.click = nil
 
-	arg_11_0:__onDispose()
+	self:__onDispose()
 end
 
-return var_0_0
+return StressNormalBehavior

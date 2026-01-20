@@ -1,242 +1,244 @@
-﻿module("modules.logic.store.view.StoreLinkGiftItemComp", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/StoreLinkGiftItemComp.lua
 
-local var_0_0 = class("StoreLinkGiftItemComp", LuaCompBase)
+module("modules.logic.store.view.StoreLinkGiftItemComp", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._go = arg_1_1
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#txt_name")
-	arg_1_0._txteng = gohelper.findChildText(arg_1_0.viewGO, "#txt_name/#txt_eng")
-	arg_1_0._txtremain = gohelper.findChildText(arg_1_0.viewGO, "txt_remain")
-	arg_1_0._txttotal = gohelper.findChildText(arg_1_0.viewGO, "total/txt_total")
-	arg_1_0._txtmaterialNum = gohelper.findChildText(arg_1_0.viewGO, "cost/txt_materialNum")
-	arg_1_0._imagematerial = gohelper.findChildImage(arg_1_0.viewGO, "cost/simage_material")
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "reward/simage_icon")
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "reward/simage_icon")
-	arg_1_0._goimagedesc = gohelper.findChild(arg_1_0.viewGO, "reward/image_dec")
-	arg_1_0._gototal = gohelper.findChild(arg_1_0.viewGO, "total")
-	arg_1_0._rewartTb = arg_1_0:_createRewardTb(gohelper.findChild(arg_1_0.viewGO, "reward/reward1"), 1)
-	arg_1_0._rewart2Tb = arg_1_0:_createRewardTb(gohelper.findChild(arg_1_0.viewGO, "reward/reward2"), 2)
-	arg_1_0._golock = gohelper.findChild(arg_1_0.viewGO, "go_lock")
-	arg_1_0._gocanget = gohelper.findChild(arg_1_0.viewGO, "go_canget")
-	arg_1_0._goreward3 = gohelper.findChild(arg_1_0.viewGO, "reward/reward3")
-	arg_1_0._txtrewardnum3 = gohelper.findChildText(arg_1_0.viewGO, "reward/reward3/normal/num3/txt_num")
+local StoreLinkGiftItemComp = class("StoreLinkGiftItemComp", LuaCompBase)
 
-	arg_1_0:addEventListeners()
+function StoreLinkGiftItemComp:init(go)
+	self._go = go
+	self.viewGO = go
+	self._txtname = gohelper.findChildText(self.viewGO, "#txt_name")
+	self._txteng = gohelper.findChildText(self.viewGO, "#txt_name/#txt_eng")
+	self._txtremain = gohelper.findChildText(self.viewGO, "txt_remain")
+	self._txttotal = gohelper.findChildText(self.viewGO, "total/txt_total")
+	self._txtmaterialNum = gohelper.findChildText(self.viewGO, "cost/txt_materialNum")
+	self._imagematerial = gohelper.findChildImage(self.viewGO, "cost/simage_material")
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "reward/simage_icon")
+	self._imageicon = gohelper.findChildImage(self.viewGO, "reward/simage_icon")
+	self._goimagedesc = gohelper.findChild(self.viewGO, "reward/image_dec")
+	self._gototal = gohelper.findChild(self.viewGO, "total")
+	self._rewartTb = self:_createRewardTb(gohelper.findChild(self.viewGO, "reward/reward1"), 1)
+	self._rewart2Tb = self:_createRewardTb(gohelper.findChild(self.viewGO, "reward/reward2"), 2)
+	self._golock = gohelper.findChild(self.viewGO, "go_lock")
+	self._gocanget = gohelper.findChild(self.viewGO, "go_canget")
+	self._goreward3 = gohelper.findChild(self.viewGO, "reward/reward3")
+	self._txtrewardnum3 = gohelper.findChildText(self.viewGO, "reward/reward3/normal/num3/txt_num")
+
+	self:addEventListeners()
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	if not arg_2_0._isRunAddEventListeners then
-		arg_2_0._isRunAddEventListeners = true
+function StoreLinkGiftItemComp:addEventListeners()
+	if not self._isRunAddEventListeners then
+		self._isRunAddEventListeners = true
 
-		TaskController.instance:registerCallback(TaskEvent.OnFinishTask, arg_2_0._onFinishTask, arg_2_0)
+		TaskController.instance:registerCallback(TaskEvent.OnFinishTask, self._onFinishTask, self)
 	end
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	if arg_3_0._isRunAddEventListeners then
-		arg_3_0._isRunAddEventListeners = false
+function StoreLinkGiftItemComp:removeEventListeners()
+	if self._isRunAddEventListeners then
+		self._isRunAddEventListeners = false
 
-		TaskController.instance:unregisterCallback(TaskEvent.OnFinishTask, arg_3_0._onFinishTask, arg_3_0)
+		TaskController.instance:unregisterCallback(TaskEvent.OnFinishTask, self._onFinishTask, self)
 	end
 end
 
-function var_0_0.onStart(arg_4_0)
+function StoreLinkGiftItemComp:onStart()
 	return
 end
 
-function var_0_0.onDestroy(arg_5_0)
-	if arg_5_0._rewartTb then
-		arg_5_0:_disposeRewardTb(arg_5_0._rewartTb)
+function StoreLinkGiftItemComp:onDestroy()
+	if self._rewartTb then
+		self:_disposeRewardTb(self._rewartTb)
 
-		arg_5_0._rewartTb = nil
+		self._rewartTb = nil
 	end
 
-	if arg_5_0._rewart2Tb then
-		arg_5_0:_disposeRewardTb(arg_5_0._rewart2Tb)
+	if self._rewart2Tb then
+		self:_disposeRewardTb(self._rewart2Tb)
 
-		arg_5_0._rewart2Tb = nil
+		self._rewart2Tb = nil
 	end
 
-	if arg_5_0._simageicon then
-		arg_5_0._simageicon:UnLoadImage()
+	if self._simageicon then
+		self._simageicon:UnLoadImage()
 	end
 
-	arg_5_0:removeEventListeners()
-	arg_5_0:__onDispose()
+	self:removeEventListeners()
+	self:__onDispose()
 end
 
-function var_0_0._onFinishTask(arg_6_0, arg_6_1)
-	if arg_6_0._mo and arg_6_0._mo.config and arg_6_0._mo.config.taskid == arg_6_1 then
-		arg_6_0:onUpdateMO(arg_6_0._mo)
-	end
-end
-
-function var_0_0.onUpdateMO(arg_7_0, arg_7_1)
-	arg_7_0._mo = arg_7_1
-
-	if arg_7_0._mo then
-		arg_7_0._txtname.text = arg_7_0._mo.config.name
-		arg_7_0._txteng.text = arg_7_0._mo.config.nameEn
-
-		arg_7_0:_refreshPrice()
-		arg_7_0:_refreshReward()
+function StoreLinkGiftItemComp:_onFinishTask(taskId)
+	if self._mo and self._mo.config and self._mo.config.taskid == taskId then
+		self:onUpdateMO(self._mo)
 	end
 end
 
-function var_0_0._refreshPrice(arg_8_0)
-	local var_8_0 = arg_8_0._mo
-	local var_8_1 = var_8_0.maxBuyCount
-	local var_8_2 = var_8_1 - var_8_0.buyCount
-	local var_8_3
+function StoreLinkGiftItemComp:onUpdateMO(mo)
+	self._mo = mo
 
-	if var_8_0.isChargeGoods then
-		var_8_3 = StoreConfig.instance:getChargeRemainText(var_8_1, var_8_0.refreshTime, var_8_2, var_8_0.offlineTime)
+	if self._mo then
+		self._txtname.text = self._mo.config.name
+		self._txteng.text = self._mo.config.nameEn
+
+		self:_refreshPrice()
+		self:_refreshReward()
+	end
+end
+
+function StoreLinkGiftItemComp:_refreshPrice()
+	local mo = self._mo
+	local maxBuyCount = mo.maxBuyCount
+	local remain = maxBuyCount - mo.buyCount
+	local content
+
+	if mo.isChargeGoods then
+		content = StoreConfig.instance:getChargeRemainText(maxBuyCount, mo.refreshTime, remain, mo.offlineTime)
 	else
-		var_8_3 = StoreConfig.instance:getRemainText(var_8_1, var_8_0.refreshTime, var_8_2, var_8_0.offlineTime)
+		content = StoreConfig.instance:getRemainText(maxBuyCount, mo.refreshTime, remain, mo.offlineTime)
 	end
 
-	if string.nilorempty(var_8_3) then
-		gohelper.setActive(arg_8_0._txtremain, false)
+	if string.nilorempty(content) then
+		gohelper.setActive(self._txtremain, false)
 	else
-		gohelper.setActive(arg_8_0._txtremain, true)
+		gohelper.setActive(self._txtremain, true)
 
-		arg_8_0._txtremain.text = var_8_3
+		self._txtremain.text = content
 	end
 
-	local var_8_4 = var_8_0.cost
+	local cost = mo.cost
 
-	if string.nilorempty(var_8_4) or var_8_4 == 0 then
-		arg_8_0._txtmaterialNum.text = luaLang("store_free")
+	if string.nilorempty(cost) or cost == 0 then
+		self._txtmaterialNum.text = luaLang("store_free")
 
-		gohelper.setActive(arg_8_0._imagematerial, false)
-	elseif var_8_0.isChargeGoods then
-		arg_8_0._txtmaterialNum.text = StoreModel.instance:getCostPriceFull(var_8_0.id)
+		gohelper.setActive(self._imagematerial, false)
+	elseif mo.isChargeGoods then
+		self._txtmaterialNum.text = StoreModel.instance:getCostPriceFull(mo.id)
 
-		gohelper.setActive(arg_8_0._imagematerial, false)
+		gohelper.setActive(self._imagematerial, false)
 
-		arg_8_0._costQuantity = var_8_4
+		self._costQuantity = cost
 	else
-		local var_8_5 = GameUtil.splitString2(var_8_4, true)
-		local var_8_6 = var_8_5[var_8_0.buyCount + 1] or var_8_5[#var_8_5]
+		local costs = GameUtil.splitString2(cost, true)
+		local costInfo = costs[mo.buyCount + 1] or costs[#costs]
 
-		arg_8_0._costType = var_8_6[1]
-		arg_8_0._costId = var_8_6[2]
-		arg_8_0._costQuantity = var_8_6[3]
+		self._costType = costInfo[1]
+		self._costId = costInfo[2]
+		self._costQuantity = costInfo[3]
 
-		local var_8_7, var_8_8 = ItemModel.instance:getItemConfigAndIcon(arg_8_0._costType, arg_8_0._costId)
+		local costConfig, costIcon = ItemModel.instance:getItemConfigAndIcon(self._costType, self._costId)
 
-		arg_8_0._txtmaterialNum.text = arg_8_0._costQuantity
+		self._txtmaterialNum.text = self._costQuantity
 
-		gohelper.setActive(arg_8_0._imagematerial, true)
+		gohelper.setActive(self._imagematerial, true)
 
-		local var_8_9 = 0
+		local id = 0
 
-		if string.len(arg_8_0._costId) == 1 then
-			var_8_9 = arg_8_0._costType .. "0" .. arg_8_0._costId
+		if string.len(self._costId) == 1 then
+			id = self._costType .. "0" .. self._costId
 		else
-			var_8_9 = arg_8_0._costType .. arg_8_0._costId
+			id = self._costType .. self._costId
 		end
 
-		local var_8_10 = string.format("%s_1", var_8_9)
+		local str = string.format("%s_1", id)
 
-		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_8_0._imagematerial, var_8_10)
+		UISpriteSetMgr.instance:setCurrencyItemSprite(self._imagematerial, str)
 	end
 end
 
-function var_0_0._refreshReward(arg_9_0)
-	local var_9_0 = GameUtil.splitString2(arg_9_0._mo.config.product, true)
-	local var_9_1 = arg_9_0:_getRewardCount(var_9_0)
-	local var_9_2 = StoreConfig.instance:getChargeConditionalConfig(arg_9_0._mo.config.taskid)
-	local var_9_3 = var_9_2 and GameUtil.splitString2(var_9_2.bonus, true)
-	local var_9_4 = arg_9_0:_getRewardCount(var_9_3)
-	local var_9_5 = arg_9_0._mo.goodsId
-	local var_9_6 = arg_9_0._mo.buyCount and arg_9_0._mo.buyCount > 0
-	local var_9_7 = StoreCharageConditionalHelper.isCharageCondition(var_9_5)
-	local var_9_8 = StoreCharageConditionalHelper.isCharageTaskNotFinish(var_9_5)
-	local var_9_9 = var_9_2.bigImg2
-	local var_9_10 = true
+function StoreLinkGiftItemComp:_refreshReward()
+	local bonusList = GameUtil.splitString2(self._mo.config.product, true)
+	local bounsCount = self:_getRewardCount(bonusList)
+	local condCfg = StoreConfig.instance:getChargeConditionalConfig(self._mo.config.taskid)
+	local condBonusList = condCfg and GameUtil.splitString2(condCfg.bonus, true)
+	local condBonusCount = self:_getRewardCount(condBonusList)
+	local goodsId = self._mo.goodsId
+	local isBuy = self._mo.buyCount and self._mo.buyCount > 0
+	local isCond = StoreCharageConditionalHelper.isCharageCondition(goodsId)
+	local isTaskNoFinish = StoreCharageConditionalHelper.isCharageTaskNotFinish(goodsId)
+	local iconName = condCfg.bigImg2
+	local showCondIcon = true
 
-	if not var_9_6 and var_9_7 then
-		var_9_10 = false
-		var_9_9 = arg_9_0._mo.config.bigImg
-	elseif var_9_6 then
-		var_9_9 = var_9_2.bigImg3
+	if not isBuy and isCond then
+		showCondIcon = false
+		iconName = self._mo.config.bigImg
+	elseif isBuy then
+		iconName = condCfg.bigImg3
 	end
 
-	arg_9_0._simageicon:LoadImage(ResUrl.getStorePackageIcon(var_9_9), arg_9_0._onIconLoadFinish, arg_9_0)
-	gohelper.setActive(arg_9_0._rewartTb.go, var_9_10)
-	gohelper.setActive(arg_9_0._rewart2Tb.go, var_9_10)
-	gohelper.setActive(arg_9_0._goimagedesc, var_9_10)
-	gohelper.setActive(arg_9_0._gototal, var_9_10)
-	gohelper.setActive(arg_9_0._goreward3, not var_9_10)
-	gohelper.setActive(arg_9_0._golock, var_9_6 and not var_9_7)
-	gohelper.setActive(arg_9_0._gocanget, var_9_6 and var_9_7 and var_9_8)
+	self._simageicon:LoadImage(ResUrl.getStorePackageIcon(iconName), self._onIconLoadFinish, self)
+	gohelper.setActive(self._rewartTb.go, showCondIcon)
+	gohelper.setActive(self._rewart2Tb.go, showCondIcon)
+	gohelper.setActive(self._goimagedesc, showCondIcon)
+	gohelper.setActive(self._gototal, showCondIcon)
+	gohelper.setActive(self._goreward3, not showCondIcon)
+	gohelper.setActive(self._golock, isBuy and not isCond)
+	gohelper.setActive(self._gocanget, isBuy and isCond and isTaskNoFinish)
 
-	if var_9_10 then
-		arg_9_0._txttotal.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("store_linkgift_totalcount_txt"), var_9_1 + var_9_4)
+	if showCondIcon then
+		self._txttotal.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("store_linkgift_totalcount_txt"), bounsCount + condBonusCount)
 
-		arg_9_0:_setRewardTbNum(arg_9_0._rewartTb, var_9_1)
-		arg_9_0:_setRewardTbNum(arg_9_0._rewart2Tb, var_9_4)
-		arg_9_0:_setRewardTbHasget(arg_9_0._rewartTb, var_9_6)
-		arg_9_0:_setRewardTbHasget(arg_9_0._rewart2Tb, var_9_6 and StoreCharageConditionalHelper.isCharageTaskFinish(var_9_5))
+		self:_setRewardTbNum(self._rewartTb, bounsCount)
+		self:_setRewardTbNum(self._rewart2Tb, condBonusCount)
+		self:_setRewardTbHasget(self._rewartTb, isBuy)
+		self:_setRewardTbHasget(self._rewart2Tb, isBuy and StoreCharageConditionalHelper.isCharageTaskFinish(goodsId))
 	else
-		arg_9_0._txtrewardnum3.text = arg_9_0:_getRewardNumStr(var_9_1 + var_9_4)
+		self._txtrewardnum3.text = self:_getRewardNumStr(bounsCount + condBonusCount)
 	end
 end
 
-function var_0_0._onIconLoadFinish(arg_10_0)
-	arg_10_0._imageicon:SetNativeSize()
+function StoreLinkGiftItemComp:_onIconLoadFinish()
+	self._imageicon:SetNativeSize()
 end
 
-function var_0_0._createRewardTb(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = arg_11_0:getUserDataTb_()
+function StoreLinkGiftItemComp:_createRewardTb(go, iconIndx)
+	local tb = self:getUserDataTb_()
 
-	var_11_0.go = arg_11_1
-	var_11_0.gonormal = gohelper.findChild(arg_11_1, "normal")
-	var_11_0.gohasget = gohelper.findChild(arg_11_1, "hasget")
-	var_11_0.txtnum = gohelper.findChildText(arg_11_1, string.format("normal/num%s/txt_num", arg_11_2))
-	var_11_0.txtnum2 = gohelper.findChildText(arg_11_1, string.format("hasget/num%s/txt_num", arg_11_2))
+	tb.go = go
+	tb.gonormal = gohelper.findChild(go, "normal")
+	tb.gohasget = gohelper.findChild(go, "hasget")
+	tb.txtnum = gohelper.findChildText(go, string.format("normal/num%s/txt_num", iconIndx))
+	tb.txtnum2 = gohelper.findChildText(go, string.format("hasget/num%s/txt_num", iconIndx))
 
-	return var_11_0
+	return tb
 end
 
-function var_0_0._getRewardNumStr(arg_12_0, arg_12_1)
-	return string.format("×<size=32>%s", arg_12_1)
+function StoreLinkGiftItemComp:_getRewardNumStr(num)
+	return string.format("×<size=32>%s", num)
 end
 
-function var_0_0._setRewardTbNum(arg_13_0, arg_13_1, arg_13_2)
-	if arg_13_1 then
-		local var_13_0 = arg_13_0:_getRewardNumStr(arg_13_2)
+function StoreLinkGiftItemComp:_setRewardTbNum(rewardTb, num)
+	if rewardTb then
+		local str = self:_getRewardNumStr(num)
 
-		arg_13_1.txtnum.text = var_13_0
-		arg_13_1.txtnum2.text = var_13_0
+		rewardTb.txtnum.text = str
+		rewardTb.txtnum2.text = str
 	end
 end
 
-function var_0_0._setRewardTbHasget(arg_14_0, arg_14_1, arg_14_2)
-	if arg_14_1 then
-		gohelper.setActive(arg_14_1.gonormal, not arg_14_2)
-		gohelper.setActive(arg_14_1.gohasget, arg_14_2)
+function StoreLinkGiftItemComp:_setRewardTbHasget(rewardTb, isHasget)
+	if rewardTb then
+		gohelper.setActive(rewardTb.gonormal, not isHasget)
+		gohelper.setActive(rewardTb.gohasget, isHasget)
 	end
 end
 
-function var_0_0._disposeRewardTb(arg_15_0, arg_15_1)
+function StoreLinkGiftItemComp:_disposeRewardTb(rewardTb)
 	return
 end
 
-function var_0_0._getRewardCount(arg_16_0, arg_16_1)
-	local var_16_0 = 0
+function StoreLinkGiftItemComp:_getRewardCount(bonusList)
+	local count = 0
 
-	if arg_16_1 and #arg_16_1 > 0 then
-		for iter_16_0, iter_16_1 in ipairs(arg_16_1) do
-			if iter_16_1 and #iter_16_1 >= 2 then
-				var_16_0 = var_16_0 + iter_16_1[3]
+	if bonusList and #bonusList > 0 then
+		for i, bonus in ipairs(bonusList) do
+			if bonus and #bonus >= 2 then
+				count = count + bonus[3]
 			end
 		end
 	end
 
-	return var_16_0
+	return count
 end
 
-return var_0_0
+return StoreLinkGiftItemComp

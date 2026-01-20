@@ -1,326 +1,330 @@
-﻿module("modules.logic.character.view.CharacterTalentLevelUpPreview", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterTalentLevelUpPreview.lua
 
-local var_0_0 = class("CharacterTalentLevelUpPreview", BaseViewExtended)
+module("modules.logic.character.view.CharacterTalentLevelUpPreview", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._scrollup = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_up")
-	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "#scroll_up/Viewport/#go_Content")
-	arg_1_0._gocapacity = gohelper.findChild(arg_1_0.viewGO, "#scroll_up/Viewport/#go_Content/#go_capacity")
+local CharacterTalentLevelUpPreview = class("CharacterTalentLevelUpPreview", BaseViewExtended)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CharacterTalentLevelUpPreview:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._scrollup = gohelper.findChildScrollRect(self.viewGO, "#scroll_up")
+	self._goContent = gohelper.findChild(self.viewGO, "#scroll_up/Viewport/#go_Content")
+	self._gocapacity = gohelper.findChild(self.viewGO, "#scroll_up/Viewport/#go_Content/#go_capacity")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroTalentUp, arg_2_0.onOpen, arg_2_0)
+function CharacterTalentLevelUpPreview:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroTalentUp, self.onOpen, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function CharacterTalentLevelUpPreview:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function CharacterTalentLevelUpPreview:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function CharacterTalentLevelUpPreview:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function CharacterTalentLevelUpPreview:onUpdateParam()
 	return
 end
 
-function var_0_0.onRefreshViewParam(arg_7_0, arg_7_1)
-	arg_7_0.hero_mo_data = arg_7_1
+function CharacterTalentLevelUpPreview:onRefreshViewParam(hero_mo_data)
+	self.hero_mo_data = hero_mo_data
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0.hero_mo_data = arg_8_0.viewParam
-	arg_8_0._scrollup.verticalNormalizedPosition = 1
+function CharacterTalentLevelUpPreview:onOpen()
+	self.hero_mo_data = self.viewParam
+	self._scrollup.verticalNormalizedPosition = 1
 
-	arg_8_0:_bootLogic(arg_8_0.hero_mo_data.talent + 1, arg_8_0.hero_mo_data.talent)
+	self:_bootLogic(self.hero_mo_data.talent + 1, self.hero_mo_data.talent)
 end
 
-function var_0_0._bootLogic(arg_9_0, arg_9_1, arg_9_2)
-	arg_9_0.target_lv = arg_9_1
-	arg_9_0.old_level = arg_9_2
+function CharacterTalentLevelUpPreview:_bootLogic(target_lv, old_level)
+	self.target_lv = target_lv
+	self.old_level = old_level
 
-	local var_9_0 = HeroResonanceConfig.instance:getTalentConfig(arg_9_0.hero_mo_data.heroId, arg_9_2) or {}
-	local var_9_1 = HeroResonanceConfig.instance:getTalentConfig(arg_9_0.hero_mo_data.heroId, arg_9_1)
+	local old_talent_config = HeroResonanceConfig.instance:getTalentConfig(self.hero_mo_data.heroId, old_level) or {}
+	local target_talent_config = HeroResonanceConfig.instance:getTalentConfig(self.hero_mo_data.heroId, target_lv)
 
-	arg_9_0.old_model_config = HeroResonanceConfig.instance:getTalentModelConfig(arg_9_0.hero_mo_data.heroId, arg_9_2) or {}
-	arg_9_0.target_model_config = HeroResonanceConfig.instance:getTalentModelConfig(arg_9_0.hero_mo_data.heroId, arg_9_1)
+	self.old_model_config = HeroResonanceConfig.instance:getTalentModelConfig(self.hero_mo_data.heroId, old_level) or {}
+	self.target_model_config = HeroResonanceConfig.instance:getTalentModelConfig(self.hero_mo_data.heroId, target_lv)
 
-	gohelper.setActive(arg_9_0._goContent, arg_9_0.target_model_config ~= nil)
+	gohelper.setActive(self._goContent, self.target_model_config ~= nil)
 
-	if not arg_9_0.target_model_config then
+	if not self.target_model_config then
 		return
 	end
 
-	local var_9_2 = {}
+	local data_list = {}
 
-	if arg_9_0.target_model_config.allShape ~= arg_9_0.old_model_config.allShape then
-		table.insert(var_9_2, {
+	if self.target_model_config.allShape ~= self.old_model_config.allShape then
+		table.insert(data_list, {
 			up_type = CharacterTalentLevelUpResultView.DebrisType.Chess,
-			value = arg_9_0.target_model_config.allShape
+			value = self.target_model_config.allShape
 		})
 	end
 
-	if var_9_1.exclusive ~= var_9_0.exclusive then
-		local var_9_3 = {}
-		local var_9_4 = {}
-		local var_9_5 = {}
-		local var_9_6 = string.splitToNumber(var_9_0.exclusive, "#") or {}
-		local var_9_7 = string.splitToNumber(var_9_1.exclusive, "#") or {}
+	if target_talent_config.exclusive ~= old_talent_config.exclusive then
+		local gain_tab = {}
+		local target_value_tab = {}
+		local old_value_tab = {}
+		local old_arr = string.splitToNumber(old_talent_config.exclusive, "#") or {}
+		local target_arr = string.splitToNumber(target_talent_config.exclusive, "#") or {}
 
-		for iter_9_0, iter_9_1 in ipairs(var_9_7) do
-			if iter_9_1 ~= var_9_6[iter_9_0] then
-				var_9_3[iter_9_0] = iter_9_1 - (var_9_6[iter_9_0] or 0)
+		for index, value in ipairs(target_arr) do
+			if value ~= old_arr[index] then
+				gain_tab[index] = value - (old_arr[index] or 0)
 			end
 
-			var_9_4[iter_9_0] = iter_9_1
-			var_9_5[iter_9_0] = var_9_6[iter_9_0]
+			target_value_tab[index] = value
+			old_value_tab[index] = old_arr[index]
 		end
 
-		if not string.nilorempty(var_9_1.exclusive) then
-			table.insert(var_9_2, {
-				cube_id = var_9_7[1],
+		if not string.nilorempty(target_talent_config.exclusive) then
+			table.insert(data_list, {
+				cube_id = target_arr[1],
 				up_type = CharacterTalentLevelUpResultView.DebrisType.Exclusive,
-				new_debris = #var_9_6 == 0,
-				value = var_9_3,
-				target_value_tab = var_9_4,
-				old_value_tab = var_9_5
+				new_debris = #old_arr == 0,
+				value = gain_tab,
+				target_value_tab = target_value_tab,
+				old_value_tab = old_value_tab
 			})
 		end
 	end
 
-	for iter_9_2 = 10, 20 do
-		local var_9_8 = "type" .. iter_9_2
-		local var_9_9 = arg_9_0.old_model_config[var_9_8]
-		local var_9_10 = arg_9_0.target_model_config[var_9_8]
+	for i = 10, 20 do
+		local temp_type = "type" .. i
+		local old_value = self.old_model_config[temp_type]
+		local target_value = self.target_model_config[temp_type]
 
-		if var_9_9 ~= var_9_10 and not string.nilorempty(var_9_10) then
-			local var_9_11 = {}
-			local var_9_12 = {}
-			local var_9_13 = {}
-			local var_9_14 = string.splitToNumber(var_9_9, "#") or {}
-			local var_9_15 = string.splitToNumber(var_9_10, "#") or {}
+		if old_value ~= target_value and not string.nilorempty(target_value) then
+			local gain_tab = {}
+			local target_value_tab = {}
+			local old_value_tab = {}
+			local old_arr = string.splitToNumber(old_value, "#") or {}
+			local target_arr = string.splitToNumber(target_value, "#") or {}
 
-			for iter_9_3, iter_9_4 in ipairs(var_9_15) do
-				if iter_9_4 ~= var_9_14[iter_9_3] then
-					var_9_11[iter_9_3] = iter_9_4 - (var_9_14[iter_9_3] or 0)
+			for index, value in ipairs(target_arr) do
+				if value ~= old_arr[index] then
+					gain_tab[index] = value - (old_arr[index] or 0)
 				end
 
-				var_9_12[iter_9_3] = iter_9_4
-				var_9_13[iter_9_3] = var_9_14[iter_9_3]
+				target_value_tab[index] = value
+				old_value_tab[index] = old_arr[index]
 			end
 
-			local var_9_16
+			local up_type
 
-			if var_9_11[1] then
-				if var_9_11[2] then
-					var_9_16 = CharacterTalentLevelUpResultView.DebrisType.DebrisCountAndLevel
+			if gain_tab[1] then
+				if gain_tab[2] then
+					up_type = CharacterTalentLevelUpResultView.DebrisType.DebrisCountAndLevel
 				else
-					var_9_16 = CharacterTalentLevelUpResultView.DebrisType.DebrisCount
+					up_type = CharacterTalentLevelUpResultView.DebrisType.DebrisCount
 				end
-			elseif var_9_11[2] then
-				var_9_16 = CharacterTalentLevelUpResultView.DebrisType.DebrisLevel
+			elseif gain_tab[2] then
+				up_type = CharacterTalentLevelUpResultView.DebrisType.DebrisLevel
 			end
 
-			table.insert(var_9_2, {
-				cube_id = iter_9_2,
-				up_type = var_9_16,
-				new_debris = #var_9_14 == 0,
-				value = var_9_11,
-				target_value_tab = var_9_12,
-				old_value_tab = var_9_13
+			table.insert(data_list, {
+				cube_id = i,
+				up_type = up_type,
+				new_debris = #old_arr == 0,
+				value = gain_tab,
+				target_value_tab = target_value_tab,
+				old_value_tab = old_value_tab
 			})
 		end
 	end
 
-	arg_9_0.obj_list = arg_9_0:getUserDataTb_()
+	self.obj_list = self:getUserDataTb_()
 
-	gohelper.CreateObjList(arg_9_0, arg_9_0._onItemShow, var_9_2, arg_9_0._goContent, arg_9_0._gocapacity)
+	gohelper.CreateObjList(self, self._onItemShow, data_list, self._goContent, self._gocapacity)
 end
 
-function var_0_0._onItemShow(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	arg_10_1.name = arg_10_2.cube_id or "shape"
+function CharacterTalentLevelUpPreview:_onItemShow(obj, data, index)
+	obj.name = data.cube_id or "shape"
 
-	local var_10_0 = arg_10_1.transform
-	local var_10_1 = var_10_0:Find("cellicon/cell_bg/icon"):GetComponent(gohelper.Type_Image)
-	local var_10_2 = var_10_0:Find("cellicon/cell_bg"):GetComponent(gohelper.Type_Image)
-	local var_10_3 = var_10_0:Find("info/go_capacityTip").gameObject
-	local var_10_4 = var_10_0:Find("info/go_numTip").gameObject
-	local var_10_5 = var_10_0:Find("info/attr").gameObject
-	local var_10_6 = var_10_0:Find("info/go_level").gameObject
-	local var_10_7 = var_10_0:Find("info/go_level/value"):GetComponent(gohelper.Type_TextMesh)
-	local var_10_8 = var_10_0:Find("info/go_level/addvalue"):GetComponent(gohelper.Type_TextMesh)
+	local transform = obj.transform
+	local icon = transform:Find("cellicon/cell_bg/icon"):GetComponent(gohelper.Type_Image)
+	local icon_bg = transform:Find("cellicon/cell_bg"):GetComponent(gohelper.Type_Image)
+	local go_capacityTip = transform:Find("info/go_capacityTip").gameObject
+	local go_numTip = transform:Find("info/go_numTip").gameObject
+	local attr = transform:Find("info/attr").gameObject
+	local go_level = transform:Find("info/go_level").gameObject
+	local cube_level = transform:Find("info/go_level/value"):GetComponent(gohelper.Type_TextMesh)
+	local cube_add_level = transform:Find("info/go_level/addvalue"):GetComponent(gohelper.Type_TextMesh)
 
-	gohelper.setActive(var_10_3, arg_10_2.up_type == CharacterTalentLevelUpResultView.DebrisType.Chess)
-	gohelper.setActive(var_10_4, arg_10_2.up_type ~= CharacterTalentLevelUpResultView.DebrisType.Chess and (arg_10_2.new_debris or arg_10_2.up_type == CharacterTalentLevelUpResultView.DebrisType.DebrisCount))
-	gohelper.setActive(var_10_5, arg_10_2.up_type ~= CharacterTalentLevelUpResultView.DebrisType.Chess)
+	gohelper.setActive(go_capacityTip, data.up_type == CharacterTalentLevelUpResultView.DebrisType.Chess)
+	gohelper.setActive(go_numTip, data.up_type ~= CharacterTalentLevelUpResultView.DebrisType.Chess and (data.new_debris or data.up_type == CharacterTalentLevelUpResultView.DebrisType.DebrisCount))
+	gohelper.setActive(attr, data.up_type ~= CharacterTalentLevelUpResultView.DebrisType.Chess)
 
-	if arg_10_2.up_type == CharacterTalentLevelUpResultView.DebrisType.Exclusive then
-		gohelper.setActive(var_10_6, true)
+	if data.up_type == CharacterTalentLevelUpResultView.DebrisType.Exclusive then
+		gohelper.setActive(go_level, true)
 
-		var_10_7.text = "Lv." .. arg_10_2.target_value_tab[2]
-		var_10_8.text = "+" .. arg_10_2.value[2]
-	elseif arg_10_2.up_type == CharacterTalentLevelUpResultView.DebrisType.DebrisLevel then
-		gohelper.setActive(var_10_6, true)
+		cube_level.text = "Lv." .. data.target_value_tab[2]
+		cube_add_level.text = "+" .. data.value[2]
+	elseif data.up_type == CharacterTalentLevelUpResultView.DebrisType.DebrisLevel then
+		gohelper.setActive(go_level, true)
 
-		var_10_7.text = "Lv." .. arg_10_2.target_value_tab[2]
-		var_10_8.text = "+" .. arg_10_2.value[2]
-	elseif arg_10_2.up_type == CharacterTalentLevelUpResultView.DebrisType.DebrisCountAndLevel then
-		gohelper.setActive(var_10_6, true)
+		cube_level.text = "Lv." .. data.target_value_tab[2]
+		cube_add_level.text = "+" .. data.value[2]
+	elseif data.up_type == CharacterTalentLevelUpResultView.DebrisType.DebrisCountAndLevel then
+		gohelper.setActive(go_level, true)
 
-		var_10_7.text = "Lv." .. arg_10_2.target_value_tab[2]
-		var_10_8.text = "+" .. arg_10_2.value[2]
+		cube_level.text = "Lv." .. data.target_value_tab[2]
+		cube_add_level.text = "+" .. data.value[2]
 	else
-		gohelper.setActive(var_10_6, false)
+		gohelper.setActive(go_level, false)
 	end
 
-	if arg_10_2.new_debris then
-		var_10_8.text = ""
+	if data.new_debris then
+		cube_add_level.text = ""
 	end
 
-	if arg_10_2.up_type == CharacterTalentLevelUpResultView.DebrisType.Chess then
-		UISpriteSetMgr.instance:setCharacterTalentSprite(var_10_1, "icon_danao01", true)
+	if data.up_type == CharacterTalentLevelUpResultView.DebrisType.Chess then
+		UISpriteSetMgr.instance:setCharacterTalentSprite(icon, "icon_danao01", true)
 
-		var_10_2.enabled = false
-		var_10_3.transform:Find("name"):GetComponent(gohelper.Type_TextMesh).text = luaLang("talent_capacity_up")
-		var_10_3.transform:Find("value"):GetComponent(gohelper.Type_TextMesh).text = string.gsub(arg_10_0.old_model_config.allShape, ",", luaLang("multiple"))
-		var_10_3.transform:Find("addvalue"):GetComponent(gohelper.Type_TextMesh).text = string.gsub(arg_10_2.value, ",", luaLang("multiple"))
+		icon_bg.enabled = false
+		go_capacityTip.transform:Find("name"):GetComponent(gohelper.Type_TextMesh).text = luaLang("talent_capacity_up")
+		go_capacityTip.transform:Find("value"):GetComponent(gohelper.Type_TextMesh).text = string.gsub(self.old_model_config.allShape, ",", luaLang("multiple"))
+		go_capacityTip.transform:Find("addvalue"):GetComponent(gohelper.Type_TextMesh).text = string.gsub(data.value, ",", luaLang("multiple"))
 
-		local var_10_9 = {}
-		local var_10_10 = HeroResonanceConfig.instance:getTalentModelShapeMaxLevel(arg_10_0.hero_mo_data.heroId)
-		local var_10_11 = HeroResonanceConfig.instance:getCurTalentModelShapeLevel(arg_10_0.hero_mo_data.heroId, arg_10_0.target_lv)
+		local star_data = {}
+		local max_shape_level = HeroResonanceConfig.instance:getTalentModelShapeMaxLevel(self.hero_mo_data.heroId)
+		local target_shape_level = HeroResonanceConfig.instance:getCurTalentModelShapeLevel(self.hero_mo_data.heroId, self.target_lv)
 
-		for iter_10_0 = 1, var_10_10 do
-			var_10_9[iter_10_0] = {}
-			var_10_9[iter_10_0].cur_level = var_10_11
+		for i = 1, max_shape_level do
+			star_data[i] = {}
+			star_data[i].cur_level = target_shape_level
 		end
 	else
-		local var_10_12 = HeroConfig.instance:getTalentCubeAttrConfig(arg_10_2.cube_id, arg_10_2.target_value_tab[2])
+		local target_attr_config = HeroConfig.instance:getTalentCubeAttrConfig(data.cube_id, data.target_value_tab[2])
 
-		if not var_10_12 then
-			logError(arg_10_2.cube_id, arg_10_2.target_value_tab[2])
+		if not target_attr_config then
+			logError(data.cube_id, data.target_value_tab[2])
 		end
 
-		local var_10_13 = {}
+		local star_data = {}
 
-		for iter_10_1 = 1, HeroConfig.instance:getTalentCubeMaxLevel(arg_10_2.cube_id) do
-			var_10_13[iter_10_1] = {}
-			var_10_13[iter_10_1].cur_level = var_10_12.level
+		for i = 1, HeroConfig.instance:getTalentCubeMaxLevel(data.cube_id) do
+			star_data[i] = {}
+			star_data[i].cur_level = target_attr_config.level
 		end
 
-		if arg_10_2.new_debris then
-			var_10_4.transform:Find("name"):GetComponent(gohelper.Type_TextMesh).text = "<color=#975129>" .. luaLang("talent_new_debris") .. "</color>"
-			var_10_4.transform:Find("value"):GetComponent(gohelper.Type_TextMesh).text = ""
-			var_10_4.transform:Find("addvalue"):GetComponent(gohelper.Type_TextMesh).text = ""
-		elseif arg_10_2.up_type == CharacterTalentLevelUpResultView.DebrisType.DebrisCount or arg_10_2.up_type == CharacterTalentLevelUpResultView.DebrisType.DebrisCountAndLevel then
-			var_10_4.transform:Find("name"):GetComponent(gohelper.Type_TextMesh).text = luaLang("talent_cube_count_up")
-			var_10_4.transform:Find("value"):GetComponent(gohelper.Type_TextMesh).text = arg_10_2.target_value_tab[1]
-			var_10_4.transform:Find("addvalue"):GetComponent(gohelper.Type_TextMesh).text = "+" .. arg_10_2.value[1]
+		if data.new_debris then
+			go_numTip.transform:Find("name"):GetComponent(gohelper.Type_TextMesh).text = "<color=#975129>" .. luaLang("talent_new_debris") .. "</color>"
+			go_numTip.transform:Find("value"):GetComponent(gohelper.Type_TextMesh).text = ""
+			go_numTip.transform:Find("addvalue"):GetComponent(gohelper.Type_TextMesh).text = ""
+		elseif data.up_type == CharacterTalentLevelUpResultView.DebrisType.DebrisCount or data.up_type == CharacterTalentLevelUpResultView.DebrisType.DebrisCountAndLevel then
+			go_numTip.transform:Find("name"):GetComponent(gohelper.Type_TextMesh).text = luaLang("talent_cube_count_up")
+			go_numTip.transform:Find("value"):GetComponent(gohelper.Type_TextMesh).text = data.target_value_tab[1]
+			go_numTip.transform:Find("addvalue"):GetComponent(gohelper.Type_TextMesh).text = "+" .. data.value[1]
 		end
 
-		local var_10_14 = {}
+		local attr_target_tab = {}
 
-		arg_10_0.hero_mo_data:getTalentStyleCubeAttr(arg_10_2.cube_id, var_10_14, nil, nil, arg_10_2.target_value_tab[2])
+		self.hero_mo_data:getTalentStyleCubeAttr(data.cube_id, attr_target_tab, nil, nil, data.target_value_tab[2])
 
-		local var_10_15 = {}
+		local attr_old_tab = {}
 
-		if (arg_10_2.up_type == CharacterTalentLevelUpResultView.DebrisType.Exclusive or arg_10_2.up_type == CharacterTalentLevelUpResultView.DebrisType.DebrisCountAndLevel or arg_10_2.up_type == CharacterTalentLevelUpResultView.DebrisType.DebrisLevel) and arg_10_2.old_value_tab[2] then
-			arg_10_0.hero_mo_data:getTalentStyleCubeAttr(arg_10_2.cube_id, var_10_15, nil, nil, arg_10_2.old_value_tab[2] or 0)
+		if (data.up_type == CharacterTalentLevelUpResultView.DebrisType.Exclusive or data.up_type == CharacterTalentLevelUpResultView.DebrisType.DebrisCountAndLevel or data.up_type == CharacterTalentLevelUpResultView.DebrisType.DebrisLevel) and data.old_value_tab[2] then
+			self.hero_mo_data:getTalentStyleCubeAttr(data.cube_id, attr_old_tab, nil, nil, data.old_value_tab[2] or 0)
 		end
 
-		local var_10_16 = {}
-		local var_10_17 = HeroConfig.instance:getTalentCubeAttrConfig(arg_10_2.cube_id, arg_10_2.old_value_tab[2]) or var_10_12
+		local temp_list = {}
+		local old_attr_config = HeroConfig.instance:getTalentCubeAttrConfig(data.cube_id, data.old_value_tab[2])
 
-		for iter_10_2, iter_10_3 in pairs(var_10_14) do
-			local var_10_18 = 0
+		old_attr_config = old_attr_config or target_attr_config
 
-			if var_10_15[iter_10_2] then
-				var_10_18 = iter_10_3 - var_10_15[iter_10_2]
+		for k, v in pairs(attr_target_tab) do
+			local add_value = 0
+
+			if attr_old_tab[k] then
+				add_value = v - attr_old_tab[k]
 			end
 
-			table.insert(var_10_16, {
-				key = iter_10_2,
-				value = iter_10_3,
-				add_value = var_10_18,
-				is_special = var_10_12.calculateType == 1,
-				config = var_10_12,
-				old_attr_config = var_10_17
+			table.insert(temp_list, {
+				key = k,
+				value = v,
+				add_value = add_value,
+				is_special = target_attr_config.calculateType == 1,
+				config = target_attr_config,
+				old_attr_config = old_attr_config
 			})
 		end
 
-		table.sort(var_10_16, function(arg_11_0, arg_11_1)
-			return HeroConfig.instance:getIDByAttrType(arg_11_0.key) < HeroConfig.instance:getIDByAttrType(arg_11_1.key)
+		table.sort(temp_list, function(item1, item2)
+			return HeroConfig.instance:getIDByAttrType(item1.key) < HeroConfig.instance:getIDByAttrType(item2.key)
 		end)
-		gohelper.CreateObjList(arg_10_0, arg_10_0._onShowSingleCubeAttr, var_10_16, var_10_5, var_10_5.transform:Find("go_attrItem").gameObject)
+		gohelper.CreateObjList(self, self._onShowSingleCubeAttr, temp_list, attr, attr.transform:Find("go_attrItem").gameObject)
 
-		var_10_2.enabled = true
+		icon_bg.enabled = true
 
-		local var_10_19 = HeroResonanceConfig.instance:getCubeConfig(arg_10_2.cube_id).icon
+		local sp_name = HeroResonanceConfig.instance:getCubeConfig(data.cube_id).icon
 
-		UISpriteSetMgr.instance:setCharacterTalentSprite(var_10_1, "glow_" .. var_10_19, true)
+		UISpriteSetMgr.instance:setCharacterTalentSprite(icon, "glow_" .. sp_name, true)
 
-		local var_10_20 = string.split(var_10_19, "_")
+		local temp_attr = string.split(sp_name, "_")
 
-		UISpriteSetMgr.instance:setCharacterTalentSprite(var_10_2, "gz_" .. var_10_20[#var_10_20], true)
+		UISpriteSetMgr.instance:setCharacterTalentSprite(icon_bg, "gz_" .. temp_attr[#temp_attr], true)
 	end
 
-	table.insert(arg_10_0.obj_list, var_10_0)
+	table.insert(self.obj_list, transform)
 end
 
-function var_0_0._onDebrisStarItemShow(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	local var_12_0 = arg_12_1.transform
+function CharacterTalentLevelUpPreview:_onDebrisStarItemShow(obj, data, index)
+	local transform = obj.transform
 
-	gohelper.setActive(var_12_0:Find("lighticon").gameObject, arg_12_3 <= arg_12_2.cur_level)
+	gohelper.setActive(transform:Find("lighticon").gameObject, index <= data.cur_level)
 end
 
-function var_0_0._onShowSingleCubeAttr(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	local var_13_0 = arg_13_1.transform
-	local var_13_1 = var_13_0:Find("icon"):GetComponent(gohelper.Type_Image)
-	local var_13_2 = var_13_0:Find("name"):GetComponent(gohelper.Type_TextMesh)
-	local var_13_3 = var_13_0:Find("value"):GetComponent(gohelper.Type_TextMesh)
-	local var_13_4 = var_13_0:Find("addvalue"):GetComponent(gohelper.Type_TextMesh)
-	local var_13_5 = HeroConfig.instance:getHeroAttributeCO(HeroConfig.instance:getIDByAttrType(arg_13_2.key))
+function CharacterTalentLevelUpPreview:_onShowSingleCubeAttr(obj, data, index)
+	local transform = obj.transform
+	local icon = transform:Find("icon"):GetComponent(gohelper.Type_Image)
+	local name = transform:Find("name"):GetComponent(gohelper.Type_TextMesh)
+	local value = transform:Find("value"):GetComponent(gohelper.Type_TextMesh)
+	local addvalue = transform:Find("addvalue"):GetComponent(gohelper.Type_TextMesh)
+	local config = HeroConfig.instance:getHeroAttributeCO(HeroConfig.instance:getIDByAttrType(data.key))
 
-	var_13_2.text = var_13_5.name
+	name.text = config.name
 
-	UISpriteSetMgr.instance:setCommonSprite(var_13_1, "icon_att_" .. var_13_5.id)
+	UISpriteSetMgr.instance:setCommonSprite(icon, "icon_att_" .. config.id)
 
-	local var_13_6 = arg_13_2.add_value
+	local temp_add_value = data.add_value
 
-	if var_13_5.type ~= 1 then
-		arg_13_2.value = arg_13_2.value / 10 .. "%"
-		arg_13_2.add_value = arg_13_2.add_value / 10 .. "%"
-	elseif not arg_13_2.is_special then
-		arg_13_2.value = arg_13_2.config[arg_13_2.key] / 10 .. "%"
-		arg_13_2.add_value = (arg_13_2.config[arg_13_2.key] - arg_13_2.old_attr_config[arg_13_2.key]) / 10 .. "%"
+	if config.type ~= 1 then
+		data.value = data.value / 10 .. "%"
+		data.add_value = data.add_value / 10 .. "%"
+	elseif not data.is_special then
+		data.value = data.config[data.key] / 10 .. "%"
+		data.add_value = (data.config[data.key] - data.old_attr_config[data.key]) / 10 .. "%"
 	else
-		arg_13_2.value = math.floor(arg_13_2.value)
-		arg_13_2.add_value = math.floor(arg_13_2.add_value)
+		data.value = math.floor(data.value)
+		data.add_value = math.floor(data.add_value)
 	end
 
-	var_13_3.text = arg_13_2.value
-	var_13_4.text = var_13_6 == 0 and "" or "+" .. arg_13_2.add_value
+	value.text = data.value
+	addvalue.text = temp_add_value == 0 and "" or "+" .. data.add_value
 end
 
-function var_0_0.onClose(arg_14_0)
+function CharacterTalentLevelUpPreview:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_15_0)
+function CharacterTalentLevelUpPreview:onDestroyView()
 	return
 end
 
-function var_0_0.definePrefabUrl(arg_16_0)
-	arg_16_0:setPrefabUrl("ui/viewres/character/charactertalentup/charactertalentleveluppreview.prefab")
+function CharacterTalentLevelUpPreview:definePrefabUrl()
+	self:setPrefabUrl("ui/viewres/character/charactertalentup/charactertalentleveluppreview.prefab")
 end
 
-return var_0_0
+return CharacterTalentLevelUpPreview

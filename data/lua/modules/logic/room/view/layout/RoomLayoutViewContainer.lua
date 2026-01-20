@@ -1,37 +1,39 @@
-﻿module("modules.logic.room.view.layout.RoomLayoutViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/layout/RoomLayoutViewContainer.lua
 
-local var_0_0 = class("RoomLayoutViewContainer", BaseViewContainer)
+module("modules.logic.room.view.layout.RoomLayoutViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+local RoomLayoutViewContainer = class("RoomLayoutViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "go_normalroot/#scroll_ItemList"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = RoomLayoutItem.prefabUrl
-	var_1_1.cellClass = RoomLayoutItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirH
-	var_1_1.lineCount = 2
-	var_1_1.cellWidth = 690
-	var_1_1.cellHeight = 400
-	var_1_1.cellSpaceH = 0
-	var_1_1.cellSpaceV = 0
-	var_1_1.startSpace = 0
-	arg_1_0._scrollParam = var_1_1
-	arg_1_0._luaScrollView = LuaListScrollView.New(RoomLayoutListModel.instance, var_1_1)
+function RoomLayoutViewContainer:buildViews()
+	local views = {}
+	local scrollParam = ListScrollParam.New()
 
-	table.insert(var_1_0, arg_1_0._luaScrollView)
-	table.insert(var_1_0, RoomLayoutView.New())
+	scrollParam.scrollGOPath = "go_normalroot/#scroll_ItemList"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = RoomLayoutItem.prefabUrl
+	scrollParam.cellClass = RoomLayoutItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirH
+	scrollParam.lineCount = 2
+	scrollParam.cellWidth = 690
+	scrollParam.cellHeight = 400
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 0
+	scrollParam.startSpace = 0
+	self._scrollParam = scrollParam
+	self._luaScrollView = LuaListScrollView.New(RoomLayoutListModel.instance, scrollParam)
+
+	table.insert(views, self._luaScrollView)
+	table.insert(views, RoomLayoutView.New())
 
 	if not RoomController.instance:isVisitMode() then
-		table.insert(var_1_0, TabViewGroup.New(1, "go_navigatebtn"))
+		table.insert(views, TabViewGroup.New(1, "go_navigatebtn"))
 	end
 
-	return var_1_0
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
+function RoomLayoutViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -42,43 +44,43 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	end
 end
 
-function var_0_0.getCsListScroll(arg_3_0)
-	return arg_3_0._luaScrollView:getCsListScroll()
+function RoomLayoutViewContainer:getCsListScroll()
+	return self._luaScrollView:getCsListScroll()
 end
 
-function var_0_0.getListScrollParam(arg_4_0)
-	return arg_4_0._scrollParam
+function RoomLayoutViewContainer:getListScrollParam()
+	return self._scrollParam
 end
 
-function var_0_0.movetoSelect(arg_5_0)
-	local var_5_0 = RoomLayoutListModel.instance
-	local var_5_1 = var_5_0:getSelectMO()
+function RoomLayoutViewContainer:movetoSelect()
+	local tRoomLayoutListModel = RoomLayoutListModel.instance
+	local selectMO = tRoomLayoutListModel:getSelectMO()
 
-	if var_5_1 == nil then
+	if selectMO == nil then
 		return
 	end
 
-	local var_5_2 = var_5_0:getIndex(var_5_1)
+	local selectIndex = tRoomLayoutListModel:getIndex(selectMO)
 
-	if var_5_2 == nil then
+	if selectIndex == nil then
 		return
 	end
 
-	local var_5_3 = arg_5_0._luaScrollView:getCsListScroll()
+	local csListView = self._luaScrollView:getCsListScroll()
 
-	if not var_5_3 then
+	if not csListView then
 		return
 	end
 
-	local var_5_4 = arg_5_0._scrollParam.cellWidth + arg_5_0._scrollParam.cellSpaceH
-	local var_5_5 = arg_5_0._scrollParam.lineCount
-	local var_5_6 = Mathf.Ceil(var_5_2 / var_5_5)
-	local var_5_7 = recthelper.getWidth(var_5_3.transform)
-	local var_5_8 = Mathf.Max(0, var_5_6 - 1) * var_5_4
+	local cellWidth = self._scrollParam.cellWidth + self._scrollParam.cellSpaceH
+	local lineCount = self._scrollParam.lineCount
+	local columnIdx = Mathf.Ceil(selectIndex / lineCount)
+	local width = recthelper.getWidth(csListView.transform)
+	local scrollPixel = Mathf.Max(0, columnIdx - 1) * cellWidth
 
-	var_5_3.HorizontalScrollPixel = Mathf.Max(0, var_5_8)
+	csListView.HorizontalScrollPixel = Mathf.Max(0, scrollPixel)
 
-	var_5_3:UpdateCells(false)
+	csListView:UpdateCells(false)
 end
 
-return var_0_0
+return RoomLayoutViewContainer

@@ -1,10 +1,12 @@
-﻿module("modules.logic.explore.controller.steps.ExploreArchiveStep", package.seeall)
+﻿-- chunkname: @modules/logic/explore/controller/steps/ExploreArchiveStep.lua
 
-local var_0_0 = class("ExploreArchiveStep", ExploreStepBase)
+module("modules.logic.explore.controller.steps.ExploreArchiveStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	ExploreSimpleModel.instance:onGetArchive(arg_1_0._data.archiveId)
-	arg_1_0:onDone()
+local ExploreArchiveStep = class("ExploreArchiveStep", ExploreStepBase)
+
+function ExploreArchiveStep:onStart()
+	ExploreSimpleModel.instance:onGetArchive(self._data.archiveId)
+	self:onDone()
 end
 
-return var_0_0
+return ExploreArchiveStep

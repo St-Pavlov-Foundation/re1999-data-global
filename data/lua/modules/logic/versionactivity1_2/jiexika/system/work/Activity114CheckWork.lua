@@ -1,25 +1,27 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114CheckWork", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/system/work/Activity114CheckWork.lua
 
-local var_0_0 = class("Activity114CheckWork", Activity114OpenViewWork)
+module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114CheckWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_0.context.eventCo
+local Activity114CheckWork = class("Activity114CheckWork", Activity114OpenViewWork)
 
-	if var_1_0.config.isCheckEvent == 1 or var_1_0.config.testId > 0 and Activity114Model.instance.serverData.testEventId <= 0 then
-		arg_1_0._viewName = ViewName.Activity114EventSelectView
+function Activity114CheckWork:onStart(context)
+	local eventCo = self.context.eventCo
 
-		var_0_0.super.onStart(arg_1_0, arg_1_1)
+	if eventCo.config.isCheckEvent == 1 or eventCo.config.testId > 0 and Activity114Model.instance.serverData.testEventId <= 0 then
+		self._viewName = ViewName.Activity114EventSelectView
+
+		Activity114CheckWork.super.onStart(self, context)
 	elseif Activity114Model.instance.serverData.checkEventId > 0 then
-		Activity114Rpc.instance:checkRequest(Activity114Model.instance.id, true, arg_1_0.onCheckDone, arg_1_0)
+		Activity114Rpc.instance:checkRequest(Activity114Model.instance.id, true, self.onCheckDone, self)
 	else
-		arg_1_0.context.result = Activity114Enum.Result.Success
+		self.context.result = Activity114Enum.Result.Success
 
-		arg_1_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0.onCheckDone(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	arg_2_0:onDone(arg_2_2 == 0)
+function Activity114CheckWork:onCheckDone(cmd, resultCode, msg)
+	self:onDone(resultCode == 0)
 end
 
-return var_0_0
+return Activity114CheckWork

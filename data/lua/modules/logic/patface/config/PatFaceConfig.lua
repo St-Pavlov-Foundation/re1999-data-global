@@ -1,116 +1,119 @@
-﻿module("modules.logic.patface.config.PatFaceConfig", package.seeall)
+﻿-- chunkname: @modules/logic/patface/config/PatFaceConfig.lua
 
-local var_0_0 = class("PatFaceConfig", BaseConfig)
+module("modules.logic.patface.config.PatFaceConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._patFaceConfigList = {}
+local PatFaceConfig = class("PatFaceConfig", BaseConfig)
+
+function PatFaceConfig:ctor()
+	self._patFaceConfigList = {}
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function PatFaceConfig:reqConfigNames()
 	return {
 		"pat_face"
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = arg_3_0[string.format("%sConfigLoaded", arg_3_1)]
+function PatFaceConfig:onConfigLoaded(configName, configTable)
+	local funcName = string.format("%sConfigLoaded", configName)
+	local configLoadedFunc = self[funcName]
 
-	if var_3_0 then
-		var_3_0(arg_3_0, arg_3_2)
+	if configLoadedFunc then
+		configLoadedFunc(self, configTable)
 	end
 end
 
-local function var_0_1(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0.order or 0
-	local var_4_1 = arg_4_1.order or 0
+local function patFaceSortFun(a, b)
+	local aOrder = a.order or 0
+	local bOrder = b.order or 0
 
-	if var_4_0 ~= var_4_1 then
-		return var_4_0 < var_4_1
+	if aOrder ~= bOrder then
+		return aOrder < bOrder
 	end
 
-	return arg_4_0.id < arg_4_1.id
+	return a.id < b.id
 end
 
-function var_0_0.pat_faceConfigLoaded(arg_5_0, arg_5_1)
-	local var_5_0 = {}
+function PatFaceConfig:pat_faceConfigLoaded(configTable)
+	local tmpList = {}
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_1.configList) do
-		local var_5_1 = iter_5_1.id
+	for _, cfg in ipairs(configTable.configList) do
+		local id = cfg.id
 
-		var_5_0[#var_5_0 + 1] = {
-			id = var_5_1,
-			order = iter_5_1.patFaceOrder,
-			config = iter_5_1
+		tmpList[#tmpList + 1] = {
+			id = id,
+			order = cfg.patFaceOrder,
+			config = cfg
 		}
 	end
 
-	table.sort(var_5_0, var_0_1)
+	table.sort(tmpList, patFaceSortFun)
 
-	arg_5_0._patFaceConfigList = var_5_0
+	self._patFaceConfigList = tmpList
 end
 
-local function var_0_2(arg_6_0, arg_6_1)
-	local var_6_0
+local function getCfg(id, canNil)
+	local cfg
 
-	if arg_6_0 then
-		var_6_0 = lua_pat_face.configDict[arg_6_0]
+	if id then
+		cfg = lua_pat_face.configDict[id]
 	end
 
-	if not var_6_0 and not arg_6_1 then
-		logError(string.format("PatFaceConfig:getCfg error, cfg is nil, id:%s", arg_6_0))
+	if not cfg and not canNil then
+		logError(string.format("PatFaceConfig:getCfg error, cfg is nil, id:%s", id))
 	end
 
-	return var_6_0
+	return cfg
 end
 
-function var_0_0.getPatFaceActivityId(arg_7_0, arg_7_1)
-	local var_7_0 = 0
-	local var_7_1 = var_0_2(arg_7_1)
+function PatFaceConfig:getPatFaceActivityId(id)
+	local result = 0
+	local cfg = getCfg(id)
 
-	if var_7_1 then
-		var_7_0 = var_7_1.patFaceActivityId
+	if cfg then
+		result = cfg.patFaceActivityId
 	end
 
-	return var_7_0
+	return result
 end
 
-function var_0_0.getPatFaceViewName(arg_8_0, arg_8_1)
-	local var_8_0 = ""
-	local var_8_1 = var_0_2(arg_8_1)
+function PatFaceConfig:getPatFaceViewName(id)
+	local result = ""
+	local cfg = getCfg(id)
 
-	if var_8_1 then
-		var_8_0 = var_8_1.patFaceViewName
+	if cfg then
+		result = cfg.patFaceViewName
 	end
 
-	return var_8_0
+	return result
 end
 
-function var_0_0.getPatFaceStoryId(arg_9_0, arg_9_1)
-	local var_9_0 = 0
-	local var_9_1 = var_0_2(arg_9_1)
+function PatFaceConfig:getPatFaceStoryId(id)
+	local result = 0
+	local cfg = getCfg(id)
 
-	if var_9_1 then
-		var_9_0 = var_9_1.patFaceStoryId
+	if cfg then
+		result = cfg.patFaceStoryId
 	end
 
-	return var_9_0
+	return result
 end
 
-function var_0_0.getPatFaceOrder(arg_10_0, arg_10_1)
-	local var_10_0 = 0
-	local var_10_1 = var_0_2(arg_10_1)
+function PatFaceConfig:getPatFaceOrder(id)
+	local result = 0
+	local cfg = getCfg(id)
 
-	if var_10_1 then
-		var_10_0 = var_10_1.patFaceOrder
+	if cfg then
+		result = cfg.patFaceOrder
 	end
 
-	return var_10_0
+	return result
 end
 
-function var_0_0.getPatFaceConfigList(arg_11_0)
-	return arg_11_0._patFaceConfigList or {}
+function PatFaceConfig:getPatFaceConfigList()
+	return self._patFaceConfigList or {}
 end
 
-var_0_0.instance = var_0_0.New()
+PatFaceConfig.instance = PatFaceConfig.New()
 
-return var_0_0
+return PatFaceConfig

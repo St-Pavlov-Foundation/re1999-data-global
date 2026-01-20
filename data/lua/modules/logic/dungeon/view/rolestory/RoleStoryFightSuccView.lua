@@ -1,545 +1,551 @@
-﻿module("modules.logic.dungeon.view.rolestory.RoleStoryFightSuccView", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/rolestory/RoleStoryFightSuccView.lua
 
-local var_0_0 = class("RoleStoryFightSuccView", BaseView)
+module("modules.logic.dungeon.view.rolestory.RoleStoryFightSuccView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._click = gohelper.getClick(arg_1_0.viewGO)
-	arg_1_0._btnData = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btnData")
-	arg_1_0._simagecharacterbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_characterbg")
-	arg_1_0._simagemaskImage = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_maskImage")
-	arg_1_0._gospine = gohelper.findChild(arg_1_0.viewGO, "spineContainer/spine")
-	arg_1_0._uiSpine = GuiModelAgent.Create(arg_1_0._gospine, true)
-	arg_1_0._txtFbNameEn = gohelper.findChildText(arg_1_0.viewGO, "txtFbNameen")
+local RoleStoryFightSuccView = class("RoleStoryFightSuccView", BaseView)
 
-	arg_1_0._uiSpine:useRT()
+function RoleStoryFightSuccView:onInitView()
+	self._click = gohelper.getClick(self.viewGO)
+	self._btnData = gohelper.findChildButtonWithAudio(self.viewGO, "btnData")
+	self._simagecharacterbg = gohelper.findChildSingleImage(self.viewGO, "#simage_characterbg")
+	self._simagemaskImage = gohelper.findChildSingleImage(self.viewGO, "#simage_maskImage")
+	self._gospine = gohelper.findChild(self.viewGO, "spineContainer/spine")
+	self._uiSpine = GuiModelAgent.Create(self._gospine, true)
+	self._txtFbNameEn = gohelper.findChildText(self.viewGO, "txtFbNameen")
 
-	arg_1_0._txtFbName = gohelper.findChildText(arg_1_0.viewGO, "txtFbName")
-	arg_1_0._txtChapterIndex = gohelper.findChildText(arg_1_0.viewGO, "txtFbName/#go_normaltag/section")
-	arg_1_0._txtEpisodeIndex = gohelper.findChildText(arg_1_0.viewGO, "txtFbName/#go_normaltag/unit")
-	arg_1_0._gonormaltag = gohelper.findChild(arg_1_0.viewGO, "txtFbName/#go_normaltag")
-	arg_1_0._goroletag = gohelper.findChild(arg_1_0.viewGO, "txtFbName/#go_roletag")
-	arg_1_0._txtSayCn = gohelper.findChildText(arg_1_0.viewGO, "txtSayCn")
-	arg_1_0._txtSayEn = gohelper.findChildText(arg_1_0.viewGO, "SayEn/txtSayEn")
-	arg_1_0._gocoverrecordpart = gohelper.findChild(arg_1_0.viewGO, "#go_cover_record_part")
-	arg_1_0._btncoverrecord = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_cover_record_part/#btn_cover_record")
-	arg_1_0._txtcurroundcount = gohelper.findChildText(arg_1_0.viewGO, "#go_cover_record_part/tipbg/container/current/#txt_curroundcount")
-	arg_1_0._txtmaxroundcount = gohelper.findChildText(arg_1_0.viewGO, "#go_cover_record_part/tipbg/container/memory/#txt_maxroundcount")
-	arg_1_0._goCoverLessThan = gohelper.findChild(arg_1_0.viewGO, "#go_cover_record_part/tipbg/container/middle/#go_lessthan")
-	arg_1_0._goCoverMuchThan = gohelper.findChild(arg_1_0.viewGO, "#go_cover_record_part/tipbg/container/middle/#go_muchthan")
-	arg_1_0._goCoverEqual = gohelper.findChild(arg_1_0.viewGO, "#go_cover_record_part/tipbg/container/middle/#go_equal")
-	arg_1_0.txtScore = gohelper.findChildText(arg_1_0.viewGO, "goRoleStorytips/#txt_num")
-	arg_1_0.txtScoreAdd = gohelper.findChildText(arg_1_0.viewGO, "goRoleStorytips/#txt_num/#txt_add")
-	arg_1_0.gofightgoal = gohelper.findChild(arg_1_0.viewGO, "fightgoal")
-	arg_1_0.txtCondition = gohelper.findChildText(arg_1_0.gofightgoal, "condition")
-	arg_1_0.txtWave = gohelper.findChildText(arg_1_0.gofightgoal, "count")
+	self._uiSpine:useRT()
+
+	self._txtFbName = gohelper.findChildText(self.viewGO, "txtFbName")
+	self._txtChapterIndex = gohelper.findChildText(self.viewGO, "txtFbName/#go_normaltag/section")
+	self._txtEpisodeIndex = gohelper.findChildText(self.viewGO, "txtFbName/#go_normaltag/unit")
+	self._gonormaltag = gohelper.findChild(self.viewGO, "txtFbName/#go_normaltag")
+	self._goroletag = gohelper.findChild(self.viewGO, "txtFbName/#go_roletag")
+	self._txtSayCn = gohelper.findChildText(self.viewGO, "txtSayCn")
+	self._txtSayEn = gohelper.findChildText(self.viewGO, "SayEn/txtSayEn")
+	self._gocoverrecordpart = gohelper.findChild(self.viewGO, "#go_cover_record_part")
+	self._btncoverrecord = gohelper.findChildButtonWithAudio(self.viewGO, "#go_cover_record_part/#btn_cover_record")
+	self._txtcurroundcount = gohelper.findChildText(self.viewGO, "#go_cover_record_part/tipbg/container/current/#txt_curroundcount")
+	self._txtmaxroundcount = gohelper.findChildText(self.viewGO, "#go_cover_record_part/tipbg/container/memory/#txt_maxroundcount")
+	self._goCoverLessThan = gohelper.findChild(self.viewGO, "#go_cover_record_part/tipbg/container/middle/#go_lessthan")
+	self._goCoverMuchThan = gohelper.findChild(self.viewGO, "#go_cover_record_part/tipbg/container/middle/#go_muchthan")
+	self._goCoverEqual = gohelper.findChild(self.viewGO, "#go_cover_record_part/tipbg/container/middle/#go_equal")
+	self.txtScore = gohelper.findChildText(self.viewGO, "goRoleStorytips/#txt_num")
+	self.txtScoreAdd = gohelper.findChildText(self.viewGO, "goRoleStorytips/#txt_num/#txt_add")
+	self.gofightgoal = gohelper.findChild(self.viewGO, "fightgoal")
+	self.txtCondition = gohelper.findChildText(self.gofightgoal, "condition")
+	self.txtWave = gohelper.findChildText(self.gofightgoal, "count")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._click:AddClickListener(arg_2_0._onClickClose, arg_2_0)
-	arg_2_0._btnData:AddClickListener(arg_2_0._onClickData, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._btncoverrecord, arg_2_0._onBtnCoverRecordClick, arg_2_0)
-	arg_2_0:addEventCb(DungeonController.instance, DungeonEvent.OnCoverDungeonRecordReply, arg_2_0._onCoverDungeonRecordReply, arg_2_0)
+function RoleStoryFightSuccView:addEvents()
+	self._click:AddClickListener(self._onClickClose, self)
+	self._btnData:AddClickListener(self._onClickData, self)
+	self:addClickCb(self._btncoverrecord, self._onBtnCoverRecordClick, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.OnCoverDungeonRecordReply, self._onCoverDungeonRecordReply, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._click:RemoveClickListener()
-	arg_3_0._btnData:RemoveClickListener()
+function RoleStoryFightSuccView:removeEvents()
+	self._click:RemoveClickListener()
+	self._btnData:RemoveClickListener()
 end
 
-function var_0_0.onOpen(arg_4_0)
-	arg_4_0._canClick = false
-	arg_4_0._animation = arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animation))
+function RoleStoryFightSuccView:onOpen()
+	self._canClick = false
+	self._animation = self.viewGO:GetComponent(typeof(UnityEngine.Animation))
 
-	arg_4_0._animation:Play("fightsucc_in", UnityEngine.PlayMode.StopAll)
-	arg_4_0._animation:PlayQueued("fightsucc_loop", UnityEngine.QueueMode.CompleteOthers, UnityEngine.PlayMode.StopAll)
+	self._animation:Play("fightsucc_in", UnityEngine.PlayMode.StopAll)
+	self._animation:PlayQueued("fightsucc_loop", UnityEngine.QueueMode.CompleteOthers, UnityEngine.PlayMode.StopAll)
 
-	arg_4_0._animEventWrap = arg_4_0.viewGO:GetComponent(typeof(ZProj.AnimationEventWrap))
+	self._animEventWrap = self.viewGO:GetComponent(typeof(ZProj.AnimationEventWrap))
 
 	FightController.instance:checkFightQuitTipViewClose()
-	gohelper.setActive(arg_4_0._bonusItemGo, false)
+	gohelper.setActive(self._bonusItemGo, false)
 
-	arg_4_0._curEpisodeId = DungeonModel.instance.curSendEpisodeId
-	arg_4_0._curChapterId = DungeonModel.instance.curSendChapterId
+	self._curEpisodeId = DungeonModel.instance.curSendEpisodeId
+	self._curChapterId = DungeonModel.instance.curSendChapterId
 
-	local var_4_0 = FightResultModel.instance
-	local var_4_1 = lua_episode.configDict[arg_4_0._curEpisodeId]
-	local var_4_2 = DungeonConfig.instance:getChapterCO(arg_4_0._curChapterId)
+	local fightResultModel = FightResultModel.instance
+	local curEpisodeConfig = lua_episode.configDict[self._curEpisodeId]
+	local curChapterConfig = DungeonConfig.instance:getChapterCO(self._curChapterId)
 
-	arg_4_0._hardMode = var_4_2 and var_4_2.type == DungeonEnum.ChapterType.Hard
+	self._hardMode = curChapterConfig and curChapterConfig.type == DungeonEnum.ChapterType.Hard
 
-	if not var_4_1 or not var_4_1.type then
-		local var_4_3 = DungeonEnum.EpisodeType.Normal
+	local episodeType = curEpisodeConfig and curEpisodeConfig.type or DungeonEnum.EpisodeType.Normal
+
+	self._curEpisodeId = FightResultModel.instance.episodeId
+	self.hadHighRareProp = false
+	self._randomEntityMO = self:_getRandomEntityMO()
+
+	self._simagecharacterbg:LoadImage(ResUrl.getFightQuitResultIcon("bg_renwubeiguang"))
+	self._simagemaskImage:LoadImage(ResUrl.getFightResultcIcon("bg_zhezhao"))
+
+	local chapterCO = lua_chapter.configDict[fightResultModel:getChapterId()]
+	local episodeCO = lua_episode.configDict[fightResultModel:getEpisodeId()]
+	local needShowFbName = chapterCO ~= nil and episodeCO ~= nil
+
+	gohelper.setActive(self._txtFbName.gameObject, needShowFbName)
+	gohelper.setActive(self._txtFbNameEn.gameObject, needShowFbName and GameConfig:GetCurLangType() == LangSettings.zh)
+
+	if needShowFbName then
+		self:_setFbName(episodeCO)
 	end
 
-	arg_4_0._curEpisodeId = FightResultModel.instance.episodeId
-	arg_4_0.hadHighRareProp = false
-	arg_4_0._randomEntityMO = arg_4_0:_getRandomEntityMO()
+	self:_setSpineVoice()
+	NavigateMgr.instance:addEscape(ViewName.RoleStoryFightSuccView, self._onClickClose, self)
 
-	arg_4_0._simagecharacterbg:LoadImage(ResUrl.getFightQuitResultIcon("bg_renwubeiguang"))
-	arg_4_0._simagemaskImage:LoadImage(ResUrl.getFightResultcIcon("bg_zhezhao"))
+	self._canPlayVoice = false
 
-	local var_4_4 = lua_chapter.configDict[var_4_0:getChapterId()]
-	local var_4_5 = lua_episode.configDict[var_4_0:getEpisodeId()]
-	local var_4_6 = var_4_4 ~= nil and var_4_5 ~= nil
-
-	gohelper.setActive(arg_4_0._txtFbName.gameObject, var_4_6)
-	gohelper.setActive(arg_4_0._txtFbNameEn.gameObject, var_4_6 and GameConfig:GetCurLangType() == LangSettings.zh)
-
-	if var_4_6 then
-		arg_4_0:_setFbName(var_4_5)
-	end
-
-	arg_4_0:_setSpineVoice()
-	NavigateMgr.instance:addEscape(ViewName.RoleStoryFightSuccView, arg_4_0._onClickClose, arg_4_0)
-
-	arg_4_0._canPlayVoice = false
-
-	TaskDispatcher.runDelay(arg_4_0._setCanPlayVoice, arg_4_0, 0.9)
+	TaskDispatcher.runDelay(self._setCanPlayVoice, self, 0.9)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_settleaccounts_win)
-	arg_4_0:_checkNewRecord()
-	arg_4_0:_detectCoverRecord()
-	arg_4_0:showWave()
-	arg_4_0:showScore()
+	self:_checkNewRecord()
+	self:_detectCoverRecord()
+	self:showWave()
+	self:showScore()
 end
 
-function var_0_0._showPlatCondition(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
-	if string.nilorempty(arg_5_1) then
-		gohelper.setActive(arg_5_2, false)
+function RoleStoryFightSuccView:_showPlatCondition(platConditionText, go, starImage, targetStarNum)
+	if string.nilorempty(platConditionText) then
+		gohelper.setActive(go, false)
 	else
-		gohelper.setActive(arg_5_2, true)
+		gohelper.setActive(go, true)
 
-		local var_5_0 = tonumber(FightResultModel.instance.star) or 0
+		local resultStar = tonumber(FightResultModel.instance.star) or 0
 
-		if var_5_0 < arg_5_4 then
-			gohelper.findChildText(arg_5_2, "condition").text = gohelper.getRichColorText(arg_5_1, "#6C6C6B")
+		if resultStar < targetStarNum then
+			gohelper.findChildText(go, "condition").text = gohelper.getRichColorText(platConditionText, "#6C6C6B")
 		else
-			gohelper.findChildText(arg_5_2, "condition").text = gohelper.getRichColorText(arg_5_1, "#C4C0BD")
+			gohelper.findChildText(go, "condition").text = gohelper.getRichColorText(platConditionText, "#C4C0BD")
 		end
 
-		local var_5_1 = gohelper.findChildImage(arg_5_2, "star")
-		local var_5_2 = "#87898C"
+		local star = gohelper.findChildImage(go, "star")
+		local starColor = "#87898C"
 
-		if arg_5_4 <= var_5_0 then
-			var_5_2 = arg_5_0._hardMode and "#FF4343" or "#F77040"
+		if targetStarNum <= resultStar then
+			starColor = self._hardMode and "#FF4343" or "#F77040"
 		end
 
-		UISpriteSetMgr.instance:setCommonSprite(var_5_1, arg_5_3, true)
-		SLFramework.UGUI.GuiHelper.SetColor(var_5_1, var_5_2)
+		UISpriteSetMgr.instance:setCommonSprite(star, starImage, true)
+		SLFramework.UGUI.GuiHelper.SetColor(star, starColor)
 	end
 end
 
-function var_0_0.onClose(arg_6_0)
-	arg_6_0._canPlayVoice = false
+function RoleStoryFightSuccView:onClose()
+	self._canPlayVoice = false
 
-	TaskDispatcher.cancelTask(arg_6_0._setCanPlayVoice, arg_6_0)
-	gohelper.setActive(arg_6_0._gospine, false)
+	TaskDispatcher.cancelTask(self._setCanPlayVoice, self)
+	gohelper.setActive(self._gospine, false)
 
-	if FightResultModel.instance.canUpdateDungeonRecord and not arg_6_0._hasSendCoverRecord then
+	if FightResultModel.instance.canUpdateDungeonRecord and not self._hasSendCoverRecord then
 		DungeonRpc.instance:sendCoverDungeonRecordRequest(false)
 	end
 
-	if arg_6_0._popupFlow then
-		arg_6_0._popupFlow:destroy()
+	if self._popupFlow then
+		self._popupFlow:destroy()
 
-		arg_6_0._popupFlow = nil
+		self._popupFlow = nil
 	end
 end
 
-function var_0_0._detectCoverRecord(arg_7_0)
-	gohelper.setActive(arg_7_0._gocoverrecordpart, FightResultModel.instance.canUpdateDungeonRecord or false)
+function RoleStoryFightSuccView:_detectCoverRecord()
+	gohelper.setActive(self._gocoverrecordpart, FightResultModel.instance.canUpdateDungeonRecord or false)
 
 	if FightResultModel.instance.canUpdateDungeonRecord then
-		arg_7_0._txtcurroundcount.text = FightResultModel.instance.newRecordRound or ""
-		arg_7_0._txtmaxroundcount.text = FightResultModel.instance.oldRecordRound or ""
+		self._txtcurroundcount.text = FightResultModel.instance.newRecordRound or ""
+		self._txtmaxroundcount.text = FightResultModel.instance.oldRecordRound or ""
 
-		gohelper.setActive(arg_7_0._goCoverLessThan, FightResultModel.instance.newRecordRound < FightResultModel.instance.oldRecordRound)
-		gohelper.setActive(arg_7_0._goCoverMuchThan, FightResultModel.instance.newRecordRound > FightResultModel.instance.oldRecordRound)
-		gohelper.setActive(arg_7_0._goCoverEqual, FightResultModel.instance.newRecordRound == FightResultModel.instance.oldRecordRound)
+		gohelper.setActive(self._goCoverLessThan, FightResultModel.instance.newRecordRound < FightResultModel.instance.oldRecordRound)
+		gohelper.setActive(self._goCoverMuchThan, FightResultModel.instance.newRecordRound > FightResultModel.instance.oldRecordRound)
+		gohelper.setActive(self._goCoverEqual, FightResultModel.instance.newRecordRound == FightResultModel.instance.oldRecordRound)
 
 		if FightResultModel.instance.newRecordRound >= FightResultModel.instance.oldRecordRound then
-			arg_7_0._txtcurroundcount.color = GameUtil.parseColor("#272525")
+			self._txtcurroundcount.color = GameUtil.parseColor("#272525")
 		else
-			arg_7_0._txtcurroundcount.color = GameUtil.parseColor("#AC5320")
+			self._txtcurroundcount.color = GameUtil.parseColor("#AC5320")
 		end
 	end
 end
 
-function var_0_0._onBtnCoverRecordClick(arg_8_0)
+function RoleStoryFightSuccView:_onBtnCoverRecordClick()
 	DungeonRpc.instance:sendCoverDungeonRecordRequest(true)
 end
 
-function var_0_0._onCoverDungeonRecordReply(arg_9_0, arg_9_1)
-	arg_9_0._hasSendCoverRecord = true
+function RoleStoryFightSuccView:_onCoverDungeonRecordReply(isCover)
+	self._hasSendCoverRecord = true
 
-	gohelper.setActive(arg_9_0._gocoverrecordpart, false)
+	gohelper.setActive(self._gocoverrecordpart, false)
 
-	if arg_9_1 then
+	if isCover then
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_ui_no_requirement)
 		GameFacade.showToast(ToastEnum.FightSuccIsCover)
 	end
 end
 
-function var_0_0._getRandomEntityMO(arg_10_0)
-	local var_10_0 = FightDataHelper.entityMgr:getMyNormalList()
-	local var_10_1 = FightDataHelper.entityMgr:getMySubList()
-	local var_10_2 = FightDataHelper.entityMgr:getMyDeadList()
-	local var_10_3 = {}
+function RoleStoryFightSuccView:_getRandomEntityMO()
+	local mySide1 = FightDataHelper.entityMgr:getMyNormalList()
+	local mySide2 = FightDataHelper.entityMgr:getMySubList()
+	local mySide3 = FightDataHelper.entityMgr:getMyDeadList()
+	local mySideMOList = {}
 
-	tabletool.addValues(var_10_3, var_10_0)
-	tabletool.addValues(var_10_3, var_10_1)
-	tabletool.addValues(var_10_3, var_10_2)
+	tabletool.addValues(mySideMOList, mySide1)
+	tabletool.addValues(mySideMOList, mySide2)
+	tabletool.addValues(mySideMOList, mySide3)
 
-	for iter_10_0 = #var_10_3, 1, -1 do
-		local var_10_4 = var_10_3[iter_10_0]
+	for i = #mySideMOList, 1, -1 do
+		local entityMO = mySideMOList[i]
 
-		if not arg_10_0:_getSkin(var_10_4) then
-			table.remove(var_10_3, iter_10_0)
+		if not self:_getSkin(entityMO) then
+			table.remove(mySideMOList, i)
 		end
 	end
 
-	local var_10_5 = {}
+	local noMonsterMOList = {}
 
-	tabletool.addValues(var_10_5, var_10_3)
+	tabletool.addValues(noMonsterMOList, mySideMOList)
 
-	for iter_10_1 = #var_10_5, 1, -1 do
-		local var_10_6 = var_10_3[iter_10_1]
-		local var_10_7 = FightAudioMgr.instance:_getHeroVoiceCOs(var_10_6.modelId, CharacterEnum.VoiceType.FightResult)
+	for i = #noMonsterMOList, 1, -1 do
+		local entityMO = mySideMOList[i]
+		local voice_list = FightAudioMgr.instance:_getHeroVoiceCOs(entityMO.modelId, CharacterEnum.VoiceType.FightResult)
 
-		if var_10_7 and #var_10_7 > 0 then
-			if var_10_6:isMonster() then
-				table.remove(var_10_5, iter_10_1)
+		if voice_list and #voice_list > 0 then
+			if entityMO:isMonster() then
+				table.remove(noMonsterMOList, i)
 			end
 		else
-			table.remove(var_10_5, iter_10_1)
+			table.remove(noMonsterMOList, i)
 		end
 	end
 
-	if #var_10_5 > 0 then
-		return var_10_5[math.random(#var_10_5)]
-	elseif #var_10_3 > 0 then
-		return var_10_3[math.random(#var_10_3)]
+	if #noMonsterMOList > 0 then
+		return noMonsterMOList[math.random(#noMonsterMOList)]
+	elseif #mySideMOList > 0 then
+		return mySideMOList[math.random(#mySideMOList)]
 	else
 		logError("没有角色")
 	end
 end
 
-function var_0_0._checkNewRecord(arg_11_0)
+function RoleStoryFightSuccView:_checkNewRecord()
 	if FightResultModel.instance.updateDungeonRecord then
 		GameFacade.showToast(ToastEnum.FightNewRecord)
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_ui_no_requirement)
 	elseif OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightReplay) then
-		local var_11_0 = DungeonConfig.instance:getEpisodeCO(arg_11_0._curEpisodeId)
-		local var_11_1 = FightModel.instance:getFightParam()
-		local var_11_2 = var_11_1 and var_11_1.battleId
+		local episodeCO = DungeonConfig.instance:getEpisodeCO(self._curEpisodeId)
+		local fightParam = FightModel.instance:getFightParam()
+		local battleId = fightParam and fightParam.battleId
 
-		if var_11_0 and var_11_2 and var_11_0.firstBattleId == var_11_2 and not HeroGroupBalanceHelper.getIsBalanceMode() then
+		if episodeCO and battleId and episodeCO.firstBattleId == battleId and not HeroGroupBalanceHelper.getIsBalanceMode() then
 			GameFacade.showToast(ToastEnum.CantRecordReplay)
 		end
 	end
 end
 
-function var_0_0._setCanPlayVoice(arg_12_0)
-	arg_12_0._canPlayVoice = true
+function RoleStoryFightSuccView:_setCanPlayVoice()
+	self._canPlayVoice = true
 
-	arg_12_0:_playSpineVoice()
+	self:_playSpineVoice()
 end
 
-function var_0_0._setFbName(arg_13_0, arg_13_1)
-	local var_13_0 = DungeonConfig.instance:getNormalEpisodeId(arg_13_1.id)
-	local var_13_1 = DungeonConfig.instance:getEpisodeCO(var_13_0)
-	local var_13_2 = DungeonConfig.instance:getChapterCO(var_13_1.chapterId)
-	local var_13_3, var_13_4 = DungeonConfig.instance:getChapterIndex(var_13_2.type, var_13_1.chapterId)
-	local var_13_5, var_13_6 = DungeonConfig.instance:getChapterEpisodeIndexWithSP(var_13_1.chapterId, var_13_0)
+function RoleStoryFightSuccView:_setFbName(episodeCO)
+	local normalEpisodeId = DungeonConfig.instance:getNormalEpisodeId(episodeCO.id)
+	local normalEpisodeCO = DungeonConfig.instance:getEpisodeCO(normalEpisodeId)
+	local chapterCO = DungeonConfig.instance:getChapterCO(normalEpisodeCO.chapterId)
+	local chapterIndex, _ = DungeonConfig.instance:getChapterIndex(chapterCO.type, normalEpisodeCO.chapterId)
+	local episodeIndex, _ = DungeonConfig.instance:getChapterEpisodeIndexWithSP(normalEpisodeCO.chapterId, normalEpisodeId)
 
-	if arg_13_1.type == DungeonEnum.EpisodeType.Sp then
-		local var_13_7 = math.floor(arg_13_1.id % 10000 / 100)
+	if episodeCO.type == DungeonEnum.EpisodeType.Sp then
+		local titleIndex = math.floor(episodeCO.id % 10000 / 100)
 
-		var_13_5 = arg_13_1.id % 100
+		episodeIndex = episodeCO.id % 100
 
-		if TeachNoteModel.instance:isTeachNoteEpisode(arg_13_1.id) then
-			arg_13_0._txtChapterIndex.text = var_13_2.chapterIndex .. tostring(var_13_7)
+		if TeachNoteModel.instance:isTeachNoteEpisode(episodeCO.id) then
+			self._txtChapterIndex.text = chapterCO.chapterIndex .. tostring(titleIndex)
 		else
-			arg_13_0._txtChapterIndex.text = "SP" .. tostring(var_13_7)
+			self._txtChapterIndex.text = "SP" .. tostring(titleIndex)
 		end
 	else
-		arg_13_0._txtChapterIndex.text = var_13_2.chapterIndex
+		self._txtChapterIndex.text = chapterCO.chapterIndex
 	end
 
-	arg_13_0._txtFbNameEn.text = arg_13_1.name_En
+	self._txtFbNameEn.text = episodeCO.name_En
 
-	arg_13_0:_setEpisodeName(arg_13_1, var_13_5)
-	arg_13_0:_setTag(arg_13_1)
+	self:_setEpisodeName(episodeCO, episodeIndex)
+	self:_setTag(episodeCO)
 end
 
-function var_0_0._setTag(arg_14_0, arg_14_1)
-	local var_14_0 = lua_const.configDict[ConstEnum.DungeonSuccessType].value
-	local var_14_1 = string.splitToNumber(var_14_0, "#")
-	local var_14_2 = tabletool.indexOf(var_14_1, arg_14_1.type)
+function RoleStoryFightSuccView:_setTag(episodeCO)
+	local typeList = lua_const.configDict[ConstEnum.DungeonSuccessType].value
+	local list = string.splitToNumber(typeList, "#")
+	local visible = tabletool.indexOf(list, episodeCO.type)
 
-	gohelper.setActive(arg_14_0._gonormaltag, var_14_2)
-	gohelper.setActive(arg_14_0._goroletag, not var_14_2)
+	gohelper.setActive(self._gonormaltag, visible)
+	gohelper.setActive(self._goroletag, not visible)
 end
 
-function var_0_0._setEpisodeName(arg_15_0, arg_15_1, arg_15_2)
-	if arg_15_1.type == DungeonEnum.EpisodeType.WeekWalk then
-		local var_15_0 = FightModel.instance:getFightParam().battleId
-		local var_15_1, var_15_2 = WeekWalkModel.instance:getInfo():getNameIndexByBattleId(var_15_0)
+function RoleStoryFightSuccView:_setEpisodeName(episodeCO, episodeIndex)
+	if episodeCO.type == DungeonEnum.EpisodeType.WeekWalk then
+		local fightParam = FightModel.instance:getFightParam()
+		local battleId = fightParam.battleId
+		local info = WeekWalkModel.instance:getInfo()
+		local name, mapIndex = info:getNameIndexByBattleId(battleId)
 
-		if var_15_2 then
-			arg_15_0._txtFbName.text = var_15_1
-			arg_15_0._txtEpisodeIndex.text = var_15_2
+		if mapIndex then
+			self._txtFbName.text = name
+			self._txtEpisodeIndex.text = mapIndex
 
 			return
 		end
-	elseif arg_15_1.type == DungeonEnum.EpisodeType.Season then
-		local var_15_3 = FightModel.instance:getFightParam()
-		local var_15_4, var_15_5, var_15_6 = Activity104Model.instance:getSeasonEpisodeDifficultByBattleId(var_15_3.battleId)
-		local var_15_7 = SeasonConfig.instance:getSeasonEpisodeConfig(var_15_4, var_15_5)
+	elseif episodeCO.type == DungeonEnum.EpisodeType.Season then
+		local fightParam = FightModel.instance:getFightParam()
+		local seasonId, seasonEpisodeId, diffcultId = Activity104Model.instance:getSeasonEpisodeDifficultByBattleId(fightParam.battleId)
+		local seasonEpisodeCo = SeasonConfig.instance:getSeasonEpisodeConfig(seasonId, seasonEpisodeId)
 
-		arg_15_0._txtgrademark.text = var_15_5 == 1 and luaLang("season_permanent_level_score") or luaLang("season_limit_level_score")
-		arg_15_0._txtFbName.text = var_15_7.name
-		arg_15_0._txtEpisodeIndex.text = var_15_5
+		self._txtgrademark.text = seasonEpisodeId == 1 and luaLang("season_permanent_level_score") or luaLang("season_limit_level_score")
+		self._txtFbName.text = seasonEpisodeCo.name
+		self._txtEpisodeIndex.text = seasonEpisodeId
 
 		return
-	elseif arg_15_1.type == DungeonEnum.EpisodeType.Dog then
-		local var_15_8, var_15_9 = Activity109ChessController.instance:getFightSourceEpisode()
+	elseif episodeCO.type == DungeonEnum.EpisodeType.Dog then
+		local actId, actEpisodeId = Activity109ChessController.instance:getFightSourceEpisode()
 
-		if var_15_8 and var_15_9 then
-			local var_15_10 = Activity109Config.instance:getEpisodeCo(var_15_8, var_15_9)
+		if actId and actEpisodeId then
+			local actEpisodeCo = Activity109Config.instance:getEpisodeCo(actId, actEpisodeId)
 
-			if var_15_10 then
-				arg_15_0._txtFbName.text = arg_15_1.name
-				arg_15_0._txtEpisodeIndex.text = var_15_10.id
+			if actEpisodeCo then
+				self._txtFbName.text = episodeCO.name
+				self._txtEpisodeIndex.text = actEpisodeCo.id
 
 				return
 			end
 		end
 	end
 
-	local var_15_11 = DungeonConfig.instance:getVersionActivityBrotherEpisodeByEpisodeCo(arg_15_1)
+	local episodeList = DungeonConfig.instance:getVersionActivityBrotherEpisodeByEpisodeCo(episodeCO)
 
-	if var_15_11 and #var_15_11 > 1 then
-		arg_15_2 = DungeonConfig.instance:getEpisodeLevelIndexByEpisodeId(var_15_11[1].id)
+	if episodeList and #episodeList > 1 then
+		episodeIndex = DungeonConfig.instance:getEpisodeLevelIndexByEpisodeId(episodeList[1].id)
 	end
 
-	local var_15_12 = DungeonConfig.instance:getChapterCO(arg_15_1.chapterId)
+	local chapterConfig = DungeonConfig.instance:getChapterCO(episodeCO.chapterId)
 
-	if var_15_12 then
-		if var_15_12.type == DungeonEnum.ChapterType.Activity1_2DungeonNormal1 or var_15_12.type == DungeonEnum.ChapterType.Activity1_2DungeonNormal2 or var_15_12.type == DungeonEnum.ChapterType.Activity1_2DungeonNormal3 or var_15_12.type == DungeonEnum.ChapterType.Activity1_2DungeonHard then
-			arg_15_2 = VersionActivity1_2DungeonConfig.instance:getEpisodeIndex(arg_15_1.id)
+	if chapterConfig then
+		if chapterConfig.type == DungeonEnum.ChapterType.Activity1_2DungeonNormal1 or chapterConfig.type == DungeonEnum.ChapterType.Activity1_2DungeonNormal2 or chapterConfig.type == DungeonEnum.ChapterType.Activity1_2DungeonNormal3 or chapterConfig.type == DungeonEnum.ChapterType.Activity1_2DungeonHard then
+			episodeIndex = VersionActivity1_2DungeonConfig.instance:getEpisodeIndex(episodeCO.id)
 		end
 
-		if var_15_12.actId == VersionActivity1_3Enum.ActivityId.Dungeon then
-			arg_15_2 = VersionActivity1_3DungeonController.instance:getEpisodeIndex(arg_15_1.id)
+		if chapterConfig.actId == VersionActivity1_3Enum.ActivityId.Dungeon then
+			episodeIndex = VersionActivity1_3DungeonController.instance:getEpisodeIndex(episodeCO.id)
 		end
 	end
 
-	arg_15_0._txtFbName.text = arg_15_1.name
-	arg_15_0._txtEpisodeIndex.text = arg_15_2
+	self._txtFbName.text = episodeCO.name
+	self._txtEpisodeIndex.text = episodeIndex
 end
 
-function var_0_0._getSkin(arg_16_0, arg_16_1)
-	local var_16_0 = FightConfig.instance:getSkinCO(arg_16_1.skin)
-	local var_16_1 = var_16_0 and not string.nilorempty(var_16_0.verticalDrawing)
-	local var_16_2 = var_16_0 and not string.nilorempty(var_16_0.live2d)
+function RoleStoryFightSuccView:_getSkin(mo)
+	local skinCO = FightConfig.instance:getSkinCO(mo.skin)
+	local hasVerticalDrawing = skinCO and not string.nilorempty(skinCO.verticalDrawing)
+	local hasLive2d = skinCO and not string.nilorempty(skinCO.live2d)
 
-	if var_16_1 or var_16_2 then
-		return var_16_0
+	if hasVerticalDrawing or hasLive2d then
+		return skinCO
 	end
 end
 
-function var_0_0._setSpineVoice(arg_17_0)
-	if not arg_17_0._randomEntityMO then
+function RoleStoryFightSuccView:_setSpineVoice()
+	if not self._randomEntityMO then
 		return
 	end
 
-	local var_17_0 = arg_17_0:_getSkin(arg_17_0._randomEntityMO)
+	local skinCO = self:_getSkin(self._randomEntityMO)
 
-	if var_17_0 then
-		arg_17_0._spineLoaded = false
+	if skinCO then
+		self._spineLoaded = false
 
-		arg_17_0._uiSpine:setImgPos(0)
-		arg_17_0._uiSpine:setResPath(var_17_0, function()
-			arg_17_0._spineLoaded = true
+		self._uiSpine:setImgPos(0)
+		self._uiSpine:setResPath(skinCO, function()
+			self._spineLoaded = true
 
-			arg_17_0._uiSpine:setUIMask(true)
-			arg_17_0:_playSpineVoice()
-		end, arg_17_0)
+			self._uiSpine:setUIMask(true)
+			self:_playSpineVoice()
+		end, self)
 
-		local var_17_1, var_17_2 = SkinConfig.instance:getSkinOffset(var_17_0.fightSuccViewOffset)
+		local offsets, isNil = SkinConfig.instance:getSkinOffset(skinCO.fightSuccViewOffset)
 
-		if var_17_2 then
-			var_17_1, _ = SkinConfig.instance:getSkinOffset(var_17_0.characterViewOffset)
-			var_17_1 = SkinConfig.instance:getAfterRelativeOffset(504, var_17_1)
+		if isNil then
+			offsets, _ = SkinConfig.instance:getSkinOffset(skinCO.characterViewOffset)
+			offsets = SkinConfig.instance:getAfterRelativeOffset(504, offsets)
 		end
 
-		local var_17_3 = tonumber(var_17_1[3])
-		local var_17_4 = tonumber(var_17_1[1])
-		local var_17_5 = tonumber(var_17_1[2])
+		local scale = tonumber(offsets[3])
+		local offsetX = tonumber(offsets[1])
+		local offsetY = tonumber(offsets[2])
 
-		recthelper.setAnchor(arg_17_0._gospine.transform, var_17_4, var_17_5)
-		transformhelper.setLocalScale(arg_17_0._gospine.transform, var_17_3, var_17_3, var_17_3)
+		recthelper.setAnchor(self._gospine.transform, offsetX, offsetY)
+		transformhelper.setLocalScale(self._gospine.transform, scale, scale, scale)
 	else
-		gohelper.setActive(arg_17_0._gospine, false)
+		gohelper.setActive(self._gospine, false)
 	end
 end
 
-function var_0_0._playSpineVoice(arg_19_0)
-	if not arg_19_0._canPlayVoice then
+function RoleStoryFightSuccView:_playSpineVoice()
+	if not self._canPlayVoice then
 		return
 	end
 
-	if not arg_19_0._spineLoaded then
+	if not self._spineLoaded then
 		return
 	end
 
-	local var_19_0 = HeroModel.instance:getVoiceConfig(arg_19_0._randomEntityMO.modelId, CharacterEnum.VoiceType.FightResult, nil, arg_19_0._randomEntityMO.skin) or FightAudioMgr.instance:_getHeroVoiceCOs(arg_19_0._randomEntityMO.modelId, CharacterEnum.VoiceType.FightResult, arg_19_0._randomEntityMO.skin)
+	local voiceCOList = HeroModel.instance:getVoiceConfig(self._randomEntityMO.modelId, CharacterEnum.VoiceType.FightResult, nil, self._randomEntityMO.skin)
 
-	if var_19_0 and #var_19_0 > 0 then
-		local var_19_1 = var_19_0[1]
+	voiceCOList = voiceCOList or FightAudioMgr.instance:_getHeroVoiceCOs(self._randomEntityMO.modelId, CharacterEnum.VoiceType.FightResult, self._randomEntityMO.skin)
 
-		arg_19_0._uiSpine:playVoice(var_19_1, nil, arg_19_0._txtSayCn, arg_19_0._txtSayEn)
+	if voiceCOList and #voiceCOList > 0 then
+		local firstVoiceCO = voiceCOList[1]
+
+		self._uiSpine:playVoice(firstVoiceCO, nil, self._txtSayCn, self._txtSayEn)
 	end
 end
 
-function var_0_0._getSayContent(arg_20_0, arg_20_1)
-	local var_20_0 = GameUtil.splitString2(arg_20_1, false, "|", "#")
-	local var_20_1 = ""
+function RoleStoryFightSuccView:_getSayContent(contentStr)
+	local temp = GameUtil.splitString2(contentStr, false, "|", "#")
+	local ans = ""
 
-	for iter_20_0, iter_20_1 in ipairs(var_20_0) do
-		var_20_1 = var_20_1 .. iter_20_1[1]
+	for _, temp2 in ipairs(temp) do
+		ans = ans .. temp2[1]
 	end
 
-	return var_20_1
+	return ans
 end
 
-function var_0_0.onCloseFinish(arg_21_0)
-	arg_21_0._simagecharacterbg:UnLoadImage()
-	arg_21_0._simagemaskImage:UnLoadImage()
+function RoleStoryFightSuccView:onCloseFinish()
+	self._simagecharacterbg:UnLoadImage()
+	self._simagemaskImage:UnLoadImage()
 	FightStatModel.instance:clear()
-	arg_21_0._animEventWrap:RemoveAllEventListener()
+	self._animEventWrap:RemoveAllEventListener()
 
-	if arg_21_0._farmTweenId then
-		ZProj.TweenHelper.KillById(arg_21_0._farmTweenId)
+	if self._farmTweenId then
+		ZProj.TweenHelper.KillById(self._farmTweenId)
 	end
 end
 
-function var_0_0._getHeroIconPath(arg_22_0)
-	if arg_22_0._randomEntityMO then
-		local var_22_0 = FightConfig.instance:getSkinCO(arg_22_0._randomEntityMO.skin)
+function RoleStoryFightSuccView:_getHeroIconPath()
+	if self._randomEntityMO then
+		local skinCO = FightConfig.instance:getSkinCO(self._randomEntityMO.skin)
 
-		if var_22_0 then
-			return ResUrl.getHeadIconLarge(var_22_0.largeIcon)
+		if skinCO then
+			return ResUrl.getHeadIconLarge(skinCO.largeIcon)
 		end
 	end
 end
 
-function var_0_0._onClickClose(arg_23_0)
-	if not arg_23_0._canClick then
+function RoleStoryFightSuccView:_onClickClose()
+	if not self._canClick then
 		return
 	end
 
-	if arg_23_0._uiSpine then
-		arg_23_0._uiSpine:stopVoice()
+	if self._uiSpine then
+		self._uiSpine:stopVoice()
 	end
 
-	arg_23_0:closeThis()
+	self:closeThis()
 
-	local var_23_0 = FightModel.instance:getAfterStory()
+	local storyId = FightModel.instance:getAfterStory()
 
-	if var_23_0 > 0 and not StoryModel.instance:isStoryFinished(var_23_0) then
-		var_0_0._storyId = var_23_0
-		var_0_0._clientFinish = false
-		var_0_0._serverFinish = false
+	if storyId > 0 and not StoryModel.instance:isStoryFinished(storyId) then
+		RoleStoryFightSuccView._storyId = storyId
+		RoleStoryFightSuccView._clientFinish = false
+		RoleStoryFightSuccView._serverFinish = false
 
-		StoryController.instance:registerCallback(StoryEvent.FinishFromServer, var_0_0._finishStoryFromServer)
+		StoryController.instance:registerCallback(StoryEvent.FinishFromServer, RoleStoryFightSuccView._finishStoryFromServer)
 
-		local var_23_1 = {}
+		local param = {}
 
-		var_23_1.mark = true
-		var_23_1.episodeId = DungeonModel.instance.curSendEpisodeId
+		param.mark = true
+		param.episodeId = DungeonModel.instance.curSendEpisodeId
 
-		StoryController.instance:playStory(var_23_0, var_23_1, function()
-			TaskDispatcher.runDelay(var_0_0.onStoryEnd, nil, 3)
+		StoryController.instance:playStory(storyId, param, function()
+			TaskDispatcher.runDelay(RoleStoryFightSuccView.onStoryEnd, nil, 3)
 
-			var_0_0._clientFinish = true
+			RoleStoryFightSuccView._clientFinish = true
 
-			var_0_0.checkStoryEnd()
+			RoleStoryFightSuccView.checkStoryEnd()
 		end)
 
 		return
 	end
 
-	var_0_0.onStoryEnd()
+	RoleStoryFightSuccView.onStoryEnd()
 end
 
-function var_0_0._finishStoryFromServer(arg_25_0)
-	if var_0_0._storyId == arg_25_0 then
-		var_0_0._serverFinish = true
+function RoleStoryFightSuccView._finishStoryFromServer(storyId)
+	if RoleStoryFightSuccView._storyId == storyId then
+		RoleStoryFightSuccView._serverFinish = true
 
-		var_0_0.checkStoryEnd()
+		RoleStoryFightSuccView.checkStoryEnd()
 	end
 end
 
-function var_0_0.checkStoryEnd()
-	if var_0_0._clientFinish and var_0_0._serverFinish then
-		var_0_0.onStoryEnd()
+function RoleStoryFightSuccView.checkStoryEnd()
+	if RoleStoryFightSuccView._clientFinish and RoleStoryFightSuccView._serverFinish then
+		RoleStoryFightSuccView.onStoryEnd()
 	end
 end
 
-function var_0_0.onStoryEnd()
-	var_0_0._storyId = nil
-	var_0_0._clientFinish = false
-	var_0_0._serverFinish = false
+function RoleStoryFightSuccView.onStoryEnd()
+	RoleStoryFightSuccView._storyId = nil
+	RoleStoryFightSuccView._clientFinish = false
+	RoleStoryFightSuccView._serverFinish = false
 
-	TaskDispatcher.cancelTask(var_0_0.onStoryEnd, nil)
-	StoryController.instance:unregisterCallback(StoryEvent.FinishFromServer, var_0_0._finishStoryFromServer)
+	TaskDispatcher.cancelTask(RoleStoryFightSuccView.onStoryEnd, nil)
+	StoryController.instance:unregisterCallback(StoryEvent.FinishFromServer, RoleStoryFightSuccView._finishStoryFromServer)
 	FightController.onResultViewClose()
 end
 
-function var_0_0.checkRecordFarmItem(arg_28_0, arg_28_1)
-	if not arg_28_1 then
+function RoleStoryFightSuccView.checkRecordFarmItem(episodeId, recordFarmItem)
+	if not recordFarmItem then
 		return false
 	end
 
-	if arg_28_1.checkFunc then
-		return arg_28_1.checkFunc(arg_28_1.checkFuncObj)
+	if recordFarmItem.checkFunc then
+		return recordFarmItem.checkFunc(recordFarmItem.checkFuncObj)
 	end
 
-	local var_28_0 = ItemModel.instance:processRPCItemList(FightResultModel.instance:getMaterialDataList())
+	local materialDataList = ItemModel.instance:processRPCItemList(FightResultModel.instance:getMaterialDataList())
 
-	for iter_28_0, iter_28_1 in ipairs(var_28_0) do
-		if iter_28_1.materilType == arg_28_1.type and iter_28_1.materilId == arg_28_1.id then
+	for i, materialData in ipairs(materialDataList) do
+		if materialData.materilType == recordFarmItem.type and materialData.materilId == recordFarmItem.id then
 			return true
 		end
 	end
 
-	if not (arg_28_0 and DungeonConfig.instance:getEpisodeCO(arg_28_0)) then
+	local episodeConfig = episodeId and DungeonConfig.instance:getEpisodeCO(episodeId)
+
+	if not episodeConfig then
 		return false
 	end
 
-	if var_0_0.checkRecordFarmItemByReward(DungeonModel.instance:getEpisodeFirstBonus(arg_28_0), arg_28_1) then
+	if RoleStoryFightSuccView.checkRecordFarmItemByReward(DungeonModel.instance:getEpisodeFirstBonus(episodeId), recordFarmItem) then
 		return true
 	end
 
-	if var_0_0.checkRecordFarmItemByReward(DungeonModel.instance:getEpisodeAdvancedBonus(arg_28_0), arg_28_1) then
+	if RoleStoryFightSuccView.checkRecordFarmItemByReward(DungeonModel.instance:getEpisodeAdvancedBonus(episodeId), recordFarmItem) then
 		return true
 	end
 
-	if var_0_0.checkRecordFarmItemByReward(DungeonModel.instance:getEpisodeBonus(arg_28_0), arg_28_1) then
+	if RoleStoryFightSuccView.checkRecordFarmItemByReward(DungeonModel.instance:getEpisodeBonus(episodeId), recordFarmItem) then
 		return true
 	end
 
-	if var_0_0.checkRecordFarmItemByReward(DungeonModel.instance:getEpisodeRewardList(arg_28_0), arg_28_1) then
+	if RoleStoryFightSuccView.checkRecordFarmItemByReward(DungeonModel.instance:getEpisodeRewardList(episodeId), recordFarmItem) then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.checkRecordFarmItemByReward(arg_29_0, arg_29_1)
-	for iter_29_0, iter_29_1 in ipairs(arg_29_0) do
-		if tonumber(iter_29_1[1]) == arg_29_1.type and tonumber(iter_29_1[2]) == arg_29_1.id then
+function RoleStoryFightSuccView.checkRecordFarmItemByReward(rewardList, recordFarmItem)
+	for i, reward in ipairs(rewardList) do
+		if tonumber(reward[1]) == recordFarmItem.type and tonumber(reward[2]) == recordFarmItem.id then
 			return true
 		end
 	end
@@ -547,45 +553,45 @@ function var_0_0.checkRecordFarmItemByReward(arg_29_0, arg_29_1)
 	return false
 end
 
-function var_0_0._showCharacterGetView(arg_30_0)
+function RoleStoryFightSuccView:_showCharacterGetView()
 	PopupController.instance:setPause("fightsuccess", false)
 
-	arg_30_0._canClick = true
+	self._canClick = true
 end
 
-function var_0_0.showWave(arg_31_0)
-	local var_31_0 = FightModel.instance:getCurWaveId()
-	local var_31_1 = FightModel.instance.maxWave
+function RoleStoryFightSuccView:showWave()
+	local wave = FightModel.instance:getCurWaveId()
+	local maxwave = FightModel.instance.maxWave
 
-	arg_31_0.txtCondition.text = luaLang("dungeon_beat_all")
+	self.txtCondition.text = luaLang("dungeon_beat_all")
 
-	local var_31_2 = FightDataHelper.entityMgr:getEnemyNormalList()
+	local list = FightDataHelper.entityMgr:getEnemyNormalList()
 
-	if var_31_2 and #var_31_2 > 0 then
-		var_31_0 = var_31_0 - 1
+	if list and #list > 0 then
+		wave = wave - 1
 	end
 
-	arg_31_0.txtWave.text = string.format("<color=#E57937>%s</color>/%s", var_31_0, var_31_1)
+	self.txtWave.text = string.format("<color=#E57937>%s</color>/%s", wave, maxwave)
 end
 
-function var_0_0.showScore(arg_32_0)
-	local var_32_0 = RoleStoryModel.instance:getCurActStoryId()
-	local var_32_1 = RoleStoryModel.instance:getById(var_32_0)
-	local var_32_2 = var_32_1 and var_32_1:getScore() or 0
-	local var_32_3 = var_32_1 and var_32_1:getAddScore() or 0
+function RoleStoryFightSuccView:showScore()
+	local storyId = RoleStoryModel.instance:getCurActStoryId()
+	local mo = RoleStoryModel.instance:getById(storyId)
+	local cur = mo and mo:getScore() or 0
+	local add = mo and mo:getAddScore() or 0
 
-	arg_32_0.txtScore.text = var_32_2
-	arg_32_0.txtScoreAdd.text = string.format("(+%s)", var_32_3)
+	self.txtScore.text = cur
+	self.txtScoreAdd.text = string.format("(+%s)", add)
 
-	arg_32_0:_onAllTweenFinish()
+	self:_onAllTweenFinish()
 end
 
-function var_0_0._onAllTweenFinish(arg_33_0)
-	arg_33_0:_showCharacterGetView()
+function RoleStoryFightSuccView:_onAllTweenFinish()
+	self:_showCharacterGetView()
 end
 
-function var_0_0._onClickData(arg_34_0)
+function RoleStoryFightSuccView:_onClickData()
 	ViewMgr.instance:openView(ViewName.FightStatView)
 end
 
-return var_0_0
+return RoleStoryFightSuccView

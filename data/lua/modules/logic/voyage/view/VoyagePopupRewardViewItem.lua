@@ -1,62 +1,64 @@
-﻿module("modules.logic.voyage.view.VoyagePopupRewardViewItem", package.seeall)
+﻿-- chunkname: @modules/logic/voyage/view/VoyagePopupRewardViewItem.lua
 
-local var_0_0 = class("VoyagePopupRewardViewItem", ActivityGiftForTheVoyageItemBase)
+module("modules.logic.voyage.view.VoyagePopupRewardViewItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._imagenum = gohelper.findChildImage(arg_1_0.viewGO, "#image_num")
-	arg_1_0._gonum = gohelper.findChild(arg_1_0.viewGO, "#go_num")
-	arg_1_0._goimgall = gohelper.findChild(arg_1_0.viewGO, "#go_imgall")
-	arg_1_0._txttaskdesc = gohelper.findChildText(arg_1_0.viewGO, "#txt_taskdesc")
-	arg_1_0._scrollRewards = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_Rewards")
-	arg_1_0._goRewards = gohelper.findChild(arg_1_0.viewGO, "#scroll_Rewards/Viewport/#go_Rewards")
+local VoyagePopupRewardViewItem = class("VoyagePopupRewardViewItem", ActivityGiftForTheVoyageItemBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VoyagePopupRewardViewItem:onInitView()
+	self._imagenum = gohelper.findChildImage(self.viewGO, "#image_num")
+	self._gonum = gohelper.findChild(self.viewGO, "#go_num")
+	self._goimgall = gohelper.findChild(self.viewGO, "#go_imgall")
+	self._txttaskdesc = gohelper.findChildText(self.viewGO, "#txt_taskdesc")
+	self._scrollRewards = gohelper.findChildScrollRect(self.viewGO, "#scroll_Rewards")
+	self._goRewards = gohelper.findChild(self.viewGO, "#scroll_Rewards/Viewport/#go_Rewards")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function VoyagePopupRewardViewItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function VoyagePopupRewardViewItem:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._gonumTrans = arg_4_0._gonum.transform
-	arg_4_0._bg = gohelper.findChild(arg_4_0.viewGO, "bg")
+function VoyagePopupRewardViewItem:_editableInitView()
+	self._gonumTrans = self._gonum.transform
+	self._bg = gohelper.findChild(self.viewGO, "bg")
 end
 
-local var_0_1 = 1
+local kIgnoreChildCount = 1
 
-function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0._gonumTrans.childCount
-	local var_5_1 = math.max(arg_5_0._index, var_5_0)
+function VoyagePopupRewardViewItem:onUpdateMO(mo)
+	local childCount = self._gonumTrans.childCount
+	local n = math.max(self._index, childCount)
 
-	for iter_5_0 = 1 + var_0_1, var_5_1 do
-		if var_5_0 <= iter_5_0 - 1 then
+	for i = 1 + kIgnoreChildCount, n do
+		if childCount <= i - 1 then
 			break
 		end
 
-		local var_5_2 = arg_5_0._gonumTrans:GetChild(iter_5_0 - 1)
+		local t = self._gonumTrans:GetChild(i - 1)
 
-		GameUtil.setActive01(var_5_2, arg_5_0._index == iter_5_0 - var_0_1)
+		GameUtil.setActive01(t, self._index == i - kIgnoreChildCount)
 	end
 
-	ZProj.UGUIHelper.SetColorAlpha(arg_5_0._bg:GetComponent(gohelper.Type_Image), arg_5_1.id > 0 and 0.7 or 1)
-	var_0_0.super.onUpdateMO(arg_5_0, arg_5_1)
+	ZProj.UGUIHelper.SetColorAlpha(self._bg:GetComponent(gohelper.Type_Image), mo.id > 0 and 0.7 or 1)
+	VoyagePopupRewardViewItem.super.onUpdateMO(self, mo)
 end
 
-function var_0_0.onRefresh(arg_6_0)
-	local var_6_0 = arg_6_0._mo
+function VoyagePopupRewardViewItem:onRefresh()
+	local mo = self._mo
 
-	arg_6_0._txttaskdesc.text = var_6_0.desc
+	self._txttaskdesc.text = mo.desc
 
-	gohelper.setActive(arg_6_0._goimgall, var_6_0.id == -1)
-	arg_6_0:_refreshRewardList(arg_6_0._goRewards)
+	gohelper.setActive(self._goimgall, mo.id == -1)
+	self:_refreshRewardList(self._goRewards)
 
-	arg_6_0._scrollRewards.horizontalNormalizedPosition = 0
+	self._scrollRewards.horizontalNormalizedPosition = 0
 end
 
-return var_0_0
+return VoyagePopupRewardViewItem

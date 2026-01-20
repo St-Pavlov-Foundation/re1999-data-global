@@ -1,10 +1,12 @@
-﻿module("modules.logic.balanceumbrella.controller.BalanceUmbrellaEvent", package.seeall)
+﻿-- chunkname: @modules/logic/balanceumbrella/controller/BalanceUmbrellaEvent.lua
 
-local var_0_0 = _M
-local var_0_1 = GameUtil.getUniqueTb()
+module("modules.logic.balanceumbrella.controller.BalanceUmbrellaEvent", package.seeall)
 
-var_0_0.ClueUpdate = var_0_1()
-var_0_0.GuideClueViewClose = var_0_1()
-var_0_0.ShowGetEffect = var_0_1()
+local BalanceUmbrellaEvent = _M
+local _get = GameUtil.getUniqueTb()
 
-return var_0_0
+BalanceUmbrellaEvent.ClueUpdate = _get()
+BalanceUmbrellaEvent.GuideClueViewClose = _get()
+BalanceUmbrellaEvent.ShowGetEffect = _get()
+
+return BalanceUmbrellaEvent

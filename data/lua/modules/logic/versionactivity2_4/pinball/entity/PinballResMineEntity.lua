@@ -1,43 +1,45 @@
-﻿module("modules.logic.versionactivity2_4.pinball.entity.PinballResMineEntity", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/pinball/entity/PinballResMineEntity.lua
 
-local var_0_0 = class("PinballResMineEntity", PinballResEntity)
+module("modules.logic.versionactivity2_4.pinball.entity.PinballResMineEntity", package.seeall)
 
-function var_0_0.onHitEnter(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	local var_1_0 = PinballEntityMgr.instance:getEntity(arg_1_1)
+local PinballResMineEntity = class("PinballResMineEntity", PinballResEntity)
 
-	if not var_1_0 then
+function PinballResMineEntity:onHitEnter(hitEntityId, hitX, hitY, hitDir)
+	local hitEntity = PinballEntityMgr.instance:getEntity(hitEntityId)
+
+	if not hitEntity then
 		return
 	end
 
-	if var_1_0:isResType() then
-		var_1_0:doHit(1)
+	if hitEntity:isResType() then
+		hitEntity:doHit(1)
 	end
 end
 
-function var_0_0.onHitCount(arg_2_0, arg_2_1)
-	arg_2_1 = arg_2_1 or 1
-	arg_2_0.totalHitCount = arg_2_0.totalHitCount - arg_2_1
+function PinballResMineEntity:onHitCount(hitNum)
+	hitNum = hitNum or 1
+	self.totalHitCount = self.totalHitCount - hitNum
 
-	if arg_2_0.linkEntity then
-		arg_2_0.linkEntity.totalHitCount = arg_2_0.linkEntity.totalHitCount - arg_2_1
+	if self.linkEntity then
+		self.linkEntity.totalHitCount = self.linkEntity.totalHitCount - hitNum
 	end
 
-	if arg_2_0.totalHitCount <= 0 then
-		PinballModel.instance:addGameRes(arg_2_0.resType, arg_2_0.resNum)
-		PinballEntityMgr.instance:addNumShow(arg_2_0.resNum, arg_2_0.x + arg_2_0.width, arg_2_0.y + arg_2_0.height)
-		PinballEntityMgr.instance:removeEntity(arg_2_0.id)
+	if self.totalHitCount <= 0 then
+		PinballModel.instance:addGameRes(self.resType, self.resNum)
+		PinballEntityMgr.instance:addNumShow(self.resNum, self.x + self.width, self.y + self.height)
+		PinballEntityMgr.instance:removeEntity(self.id)
 	end
 end
 
-function var_0_0.onCreateLinkEntity(arg_3_0, arg_3_1)
-	arg_3_1.totalHitCount = arg_3_0.totalHitCount
+function PinballResMineEntity:onCreateLinkEntity(linkEntity)
+	linkEntity.totalHitCount = self.totalHitCount
 end
 
-function var_0_0.onInitByCo(arg_4_0)
-	local var_4_0 = string.splitToNumber(arg_4_0.spData, "#") or {}
+function PinballResMineEntity:onInitByCo()
+	local arr = string.splitToNumber(self.spData, "#") or {}
 
-	arg_4_0.totalHitCount = var_4_0[1] or 0
-	arg_4_0.resNum = var_4_0[2] or 0
+	self.totalHitCount = arr[1] or 0
+	self.resNum = arr[2] or 0
 end
 
-return var_0_0
+return PinballResMineEntity

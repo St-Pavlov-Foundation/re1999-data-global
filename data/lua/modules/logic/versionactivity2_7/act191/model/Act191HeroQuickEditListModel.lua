@@ -1,63 +1,64 @@
-﻿module("modules.logic.versionactivity2_7.act191.model.Act191HeroQuickEditListModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/act191/model/Act191HeroQuickEditListModel.lua
 
-local var_0_0 = class("Act191HeroQuickEditListModel", ListScrollModel)
+module("modules.logic.versionactivity2_7.act191.model.Act191HeroQuickEditListModel", package.seeall)
 
-function var_0_0.initData(arg_1_0)
-	arg_1_0.moList = {}
-	arg_1_0._index2HeroIdMap = {}
+local Act191HeroQuickEditListModel = class("Act191HeroQuickEditListModel", ListScrollModel)
 
-	local var_1_0 = Activity191Model.instance:getActInfo():getGameInfo()
+function Act191HeroQuickEditListModel:initData()
+	self.moList = {}
+	self._index2HeroIdMap = {}
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_0.warehouseInfo.hero) do
-		local var_1_1 = {
-			heroId = iter_1_1.heroId,
-			star = iter_1_1.star,
-			exp = iter_1_1.exp
-		}
+	local gameInfo = Activity191Model.instance:getActInfo():getGameInfo()
 
-		var_1_1.config = Activity191Config.instance:getRoleCoByNativeId(var_1_1.heroId, var_1_1.star)
+	for _, heroInfo in ipairs(gameInfo.warehouseInfo.hero) do
+		local mo = {}
 
-		local var_1_2 = var_1_0:getBattleHeroInfoInTeam(var_1_1.heroId)
+		mo.heroId = heroInfo.heroId
+		mo.star = heroInfo.star
+		mo.exp = heroInfo.exp
+		mo.config = Activity191Config.instance:getRoleCoByNativeId(mo.heroId, mo.star)
 
-		if var_1_2 then
-			arg_1_0._index2HeroIdMap[var_1_2.index] = var_1_1.heroId
+		local battleHeroInfo = gameInfo:getBattleHeroInfoInTeam(mo.heroId)
+
+		if battleHeroInfo then
+			self._index2HeroIdMap[battleHeroInfo.index] = mo.heroId
 		else
-			local var_1_3 = var_1_0:getSubHeroInfoInTeam(var_1_1.heroId)
+			local subHeroInfo = gameInfo:getSubHeroInfoInTeam(mo.heroId)
 
-			if var_1_3 then
-				arg_1_0._index2HeroIdMap[var_1_3.index + 4] = var_1_1.heroId
+			if subHeroInfo then
+				self._index2HeroIdMap[subHeroInfo.index + 4] = mo.heroId
 			end
 		end
 
-		arg_1_0.moList[#arg_1_0.moList + 1] = var_1_1
+		self.moList[#self.moList + 1] = mo
 	end
 
-	arg_1_0:filterData(nil, Activity191Enum.SortRule.Down)
+	self:filterData(nil, Activity191Enum.SortRule.Down)
 
-	for iter_1_2, iter_1_3 in ipairs(arg_1_0._scrollViews) do
-		iter_1_3:selectCell(1, false)
+	for _, view in ipairs(self._scrollViews) do
+		view:selectCell(1, false)
 	end
 end
 
-function var_0_0.selectHero(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_2 then
-		local var_2_0 = arg_2_0:findEmptyPos()
+function Act191HeroQuickEditListModel:selectHero(heroId, isSelect)
+	if isSelect then
+		local emptyPos = self:findEmptyPos()
 
-		if var_2_0 ~= 0 then
-			arg_2_0._index2HeroIdMap[var_2_0] = arg_2_1
+		if emptyPos ~= 0 then
+			self._index2HeroIdMap[emptyPos] = heroId
 		end
 	else
-		local var_2_1 = arg_2_0:getHeroTeamPos(arg_2_1)
+		local index = self:getHeroTeamPos(heroId)
 
-		arg_2_0._index2HeroIdMap[var_2_1] = nil
+		self._index2HeroIdMap[index] = nil
 	end
 end
 
-function var_0_0.getHeroTeamPos(arg_3_0, arg_3_1)
-	if arg_3_0._index2HeroIdMap then
-		for iter_3_0, iter_3_1 in pairs(arg_3_0._index2HeroIdMap) do
-			if iter_3_1 == arg_3_1 then
-				return iter_3_0
+function Act191HeroQuickEditListModel:getHeroTeamPos(heroId)
+	if self._index2HeroIdMap then
+		for index, id in pairs(self._index2HeroIdMap) do
+			if id == heroId then
+				return index
 			end
 		end
 	end
@@ -65,65 +66,65 @@ function var_0_0.getHeroTeamPos(arg_3_0, arg_3_1)
 	return 0
 end
 
-function var_0_0.findEmptyPos(arg_4_0)
-	for iter_4_0 = 1, 8 do
-		if not arg_4_0._index2HeroIdMap[iter_4_0] then
-			return iter_4_0
+function Act191HeroQuickEditListModel:findEmptyPos()
+	for i = 1, 8 do
+		if not self._index2HeroIdMap[i] then
+			return i
 		end
 	end
 
 	return 0
 end
 
-function var_0_0.filterData(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0
+function Act191HeroQuickEditListModel:filterData(tag, rule)
+	local list
 
-	if arg_5_1 then
-		var_5_0 = {}
+	if tag then
+		list = {}
 
-		for iter_5_0, iter_5_1 in ipairs(arg_5_0.moList) do
-			local var_5_1 = string.split(iter_5_1.config.tag, "#")
+		for _, mo in ipairs(self.moList) do
+			local tagArr = string.split(mo.config.tag, "#")
 
-			if tabletool.indexOf(var_5_1, arg_5_1) then
-				var_5_0[#var_5_0 + 1] = iter_5_1
+			if tabletool.indexOf(tagArr, tag) then
+				list[#list + 1] = mo
 			end
 		end
 	else
-		var_5_0 = tabletool.copy(arg_5_0.moList)
+		list = tabletool.copy(self.moList)
 	end
 
-	table.sort(var_5_0, function(arg_6_0, arg_6_1)
-		local var_6_0 = arg_5_0:getHeroTeamPos(arg_6_0.heroId)
+	table.sort(list, function(a, b)
+		local aPos = self:getHeroTeamPos(a.heroId)
 
-		var_6_0 = var_6_0 == 0 and 999 or var_6_0
+		aPos = aPos == 0 and 999 or aPos
 
-		local var_6_1 = arg_5_0:getHeroTeamPos(arg_6_1.heroId)
+		local bPos = self:getHeroTeamPos(b.heroId)
 
-		var_6_1 = var_6_1 == 0 and 999 or var_6_1
+		bPos = bPos == 0 and 999 or bPos
 
-		if var_6_0 == var_6_1 then
-			if arg_6_0.config.quality == arg_6_1.config.quality then
-				if arg_6_0.config.exLevel == arg_6_1.config.exLevel then
-					return arg_6_0.config.id < arg_6_1.config.id
+		if aPos == bPos then
+			if a.config.quality == b.config.quality then
+				if a.config.exLevel == b.config.exLevel then
+					return a.config.id < b.config.id
 				else
-					return arg_6_0.config.exLevel > arg_6_1.config.exLevel
+					return a.config.exLevel > b.config.exLevel
 				end
-			elseif arg_5_2 == Activity191Enum.SortRule.Down then
-				return arg_6_0.config.quality > arg_6_1.config.quality
+			elseif rule == Activity191Enum.SortRule.Down then
+				return a.config.quality > b.config.quality
 			else
-				return arg_6_0.config.quality < arg_6_1.config.quality
+				return a.config.quality < b.config.quality
 			end
 		else
-			return var_6_0 < var_6_1
+			return aPos < bPos
 		end
 	end)
-	arg_5_0:setList(var_5_0)
+	self:setList(list)
 end
 
-function var_0_0.getHeroIdMap(arg_7_0)
-	return arg_7_0._index2HeroIdMap or {}
+function Act191HeroQuickEditListModel:getHeroIdMap()
+	return self._index2HeroIdMap or {}
 end
 
-var_0_0.instance = var_0_0.New()
+Act191HeroQuickEditListModel.instance = Act191HeroQuickEditListModel.New()
 
-return var_0_0
+return Act191HeroQuickEditListModel

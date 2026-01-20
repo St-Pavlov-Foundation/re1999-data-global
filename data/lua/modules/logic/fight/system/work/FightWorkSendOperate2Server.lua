@@ -1,29 +1,31 @@
-﻿module("modules.logic.fight.system.work.FightWorkSendOperate2Server", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkSendOperate2Server.lua
 
-local var_0_0 = class("FightWorkSendOperate2Server", FightWorkItem)
+module("modules.logic.fight.system.work.FightWorkSendOperate2Server", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
+local FightWorkSendOperate2Server = class("FightWorkSendOperate2Server", FightWorkItem)
+
+function FightWorkSendOperate2Server:onConstructor()
 	return
 end
 
-function var_0_0.onStart(arg_2_0)
+function FightWorkSendOperate2Server:onStart()
 	FightDataHelper.stageMgr:enterFightState(FightStageMgr.FightStateType.SendOperation2Server)
 
-	local var_2_0 = arg_2_0:com_registFlowSequence()
-	local var_2_1 = FightMsgMgr.sendMsg(FightMsgId.RegistCardEndAniFlow)
+	local flow = self:com_registFlowSequence()
+	local cardAniWork = FightMsgMgr.sendMsg(FightMsgId.RegistCardEndAniFlow)
 
-	if var_2_1 then
-		var_2_0:addWork(var_2_1)
+	if cardAniWork then
+		flow:addWork(cardAniWork)
 	end
 
-	var_2_0:registFinishCallback(arg_2_0.onFinish, arg_2_0)
-	arg_2_0:playWorkAndDone(var_2_0)
+	flow:registFinishCallback(self.onFinish, self)
+	self:playWorkAndDone(flow)
 end
 
-function var_0_0.onFinish(arg_3_0)
-	local var_3_0 = FightDataHelper.handCardMgr.handCard
+function FightWorkSendOperate2Server:onFinish()
+	local cards = FightDataHelper.handCardMgr.handCard
 
-	FightDataUtil.coverData(var_3_0, FightLocalDataMgr.instance.handCardMgr:getHandCard())
+	FightDataUtil.coverData(cards, FightLocalDataMgr.instance.handCardMgr:getHandCard())
 	FightController.instance:dispatchEvent(FightEvent.SetBlockCardOperate, false)
 
 	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.DouQuQu) then
@@ -32,7 +34,9 @@ function var_0_0.onFinish(arg_3_0)
 
 	FightRpc.instance:sendBeginRoundRequest(FightDataHelper.operationDataMgr:getOpList())
 
-	if FightModel.instance:getVersion() >= 1 then
+	local version = FightModel.instance:getVersion()
+
+	if version >= 1 then
 		FightController.instance:dispatchEvent(FightEvent.ShowSimulateClientUsedCard)
 
 		return
@@ -42,4 +46,4 @@ function var_0_0.onFinish(arg_3_0)
 	FightController.instance:dispatchEvent(FightEvent.UpdateWaitingArea)
 end
 
-return var_0_0
+return FightWorkSendOperate2Server

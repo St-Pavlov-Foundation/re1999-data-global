@@ -1,192 +1,195 @@
-﻿module("modules.logic.survival.util.SurvivalBagSortHelper", package.seeall)
+﻿-- chunkname: @modules/logic/survival/util/SurvivalBagSortHelper.lua
 
-local var_0_0 = class("SurvivalBagSortHelper")
+module("modules.logic.survival.util.SurvivalBagSortHelper", package.seeall)
 
-function var_0_0.sortByInDict(arg_1_0, arg_1_1, arg_1_2)
-	if arg_1_2[arg_1_0.uid] ~= arg_1_2[arg_1_1.uid] then
-		return arg_1_2[arg_1_1.uid] and true or false
+local SurvivalBagSortHelper = class("SurvivalBagSortHelper")
+
+function SurvivalBagSortHelper.sortByInDict(a, b, dict)
+	if dict[a.uid] ~= dict[b.uid] then
+		return dict[b.uid] and true or false
 	end
 end
 
-function var_0_0.sortByChange(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_0.co and not string.nilorempty(arg_2_0.co.exchange) or false
-	local var_2_1 = arg_2_1.co and not string.nilorempty(arg_2_1.co.exchange) or false
+function SurvivalBagSortHelper.sortByChange(a, b)
+	local exchangeA = a.co and not string.nilorempty(a.co.exchange) or false
+	local exchangeB = b.co and not string.nilorempty(b.co.exchange) or false
 
-	if var_2_0 ~= var_2_1 then
-		return var_2_1
+	if exchangeA ~= exchangeB then
+		return exchangeB
 	end
 end
 
-function var_0_0.sortByMass(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_0.co.mass
-	local var_3_1 = arg_3_1.co.mass
+function SurvivalBagSortHelper.sortByMass(a, b)
+	local massA = a.co.mass
+	local massB = b.co.mass
 
-	if var_3_0 ~= var_3_1 then
-		return var_3_0 < var_3_1
+	if massA ~= massB then
+		return massA < massB
 	end
 end
 
-function var_0_0.sortByWorth(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0.co.worth
-	local var_4_1 = arg_4_1.co.worth
+function SurvivalBagSortHelper.sortByWorth(a, b)
+	local worthA = a.co.worth
+	local worthB = b.co.worth
 
-	if var_4_0 ~= var_4_1 then
-		return var_4_0 < var_4_1
+	if worthA ~= worthB then
+		return worthA < worthB
 	end
 end
 
-function var_0_0.sortByType(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0.co.type
-	local var_5_1 = arg_5_1.co.type
+function SurvivalBagSortHelper.sortByType(a, b)
+	local typeA = a.co.type
+	local typeB = b.co.type
 
-	if var_5_0 ~= var_5_1 then
-		return var_5_0 < var_5_1
+	if typeA ~= typeB then
+		return typeA < typeB
 	end
 end
 
-local var_0_1 = {
+local typeFirst = {
 	[SurvivalEnum.ItemType.Equip] = -3,
 	[SurvivalEnum.ItemType.Material] = -2,
 	[SurvivalEnum.ItemType.Quick] = -1
 }
 
-function var_0_0.sortByCustomType(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0.co.type
-	local var_6_1 = arg_6_1.co.type
+function SurvivalBagSortHelper.sortByCustomType(a, b)
+	local typeA = a.co.type
+	local typeB = b.co.type
 
-	var_6_0 = var_0_1[var_6_0] or var_6_0
-	var_6_1 = var_0_1[var_6_1] or var_6_1
+	typeA = typeFirst[typeA] or typeA
+	typeB = typeFirst[typeB] or typeB
 
-	if var_6_0 ~= var_6_1 then
-		return var_6_1 < var_6_0
+	if typeA ~= typeB then
+		return typeB < typeA
 	end
 end
 
-function var_0_0.sortByRare(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0.co.rare
-	local var_7_1 = arg_7_1.co.rare
+function SurvivalBagSortHelper.sortByRare(a, b)
+	local rareA = a.co.rare
+	local rareB = b.co.rare
 
-	if var_7_0 ~= var_7_1 then
-		return var_7_0 < var_7_1
+	if rareA ~= rareB then
+		return rareA < rareB
 	end
 end
 
-function var_0_0.sortById(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0.co.id
-	local var_8_1 = arg_8_1.co.id
+function SurvivalBagSortHelper.sortById(a, b)
+	local idA = a.co.id
+	local idB = b.co.id
 
-	if var_8_0 ~= var_8_1 then
-		return var_8_0 < var_8_1
+	if idA ~= idB then
+		return idA < idB
 	end
 end
 
-function var_0_0.sortByTime(arg_9_0, arg_9_1)
-	local var_9_0 = tonumber(arg_9_0.uid) or 0
-	local var_9_1 = tonumber(arg_9_1.uid) or 0
+function SurvivalBagSortHelper.sortByTime(a, b)
+	local uidA = tonumber(a.uid) or 0
+	local uidB = tonumber(b.uid) or 0
 
-	if var_9_0 ~= var_9_1 then
-		return var_9_0 < var_9_1
+	if uidA ~= uidB then
+		return uidA < uidB
 	end
 end
 
-function var_0_0.sortByEquipTag(arg_10_0, arg_10_1)
-	if not arg_10_0.equipCo or not arg_10_1.equipCo then
+function SurvivalBagSortHelper.sortByEquipTag(a, b)
+	if not a.equipCo or not b.equipCo then
 		return
 	end
 
-	local var_10_0 = var_0_0.getFirstEquipTag(arg_10_0)
-	local var_10_1 = var_0_0.getFirstEquipTag(arg_10_1)
+	local tagIdA = SurvivalBagSortHelper.getFirstEquipTag(a)
+	local tagIdB = SurvivalBagSortHelper.getFirstEquipTag(b)
 
-	if var_10_0 ~= var_10_1 then
-		return var_10_0 < var_10_1
+	if tagIdA ~= tagIdB then
+		return tagIdA < tagIdB
 	end
 end
 
-function var_0_0.sortByNPCItem(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0:isNPCRecommendItem()
+function SurvivalBagSortHelper.sortByNPCItem(a, b)
+	local aIs = a:isNPCRecommendItem()
+	local bIs = b:isNPCRecommendItem()
 
-	if var_11_0 ~= arg_11_1:isNPCRecommendItem() then
-		return var_11_0
+	if aIs ~= bIs then
+		return aIs
 	end
 end
 
-function var_0_0.getFirstEquipTag(arg_12_0)
-	local var_12_0 = arg_12_0.equipCo.tag
-	local var_12_1 = string.match(var_12_0, "^([0-9]+)")
+function SurvivalBagSortHelper.getFirstEquipTag(itemMo)
+	local tagStr = itemMo.equipCo.tag
+	local tagId = string.match(tagStr, "^([0-9]+)")
 
-	return tonumber(var_12_1) or 0
+	return tonumber(tagId) or 0
 end
 
-function var_0_0.filterItemMo(arg_13_0, arg_13_1)
-	if not arg_13_1 or arg_13_1:isEmpty() then
+function SurvivalBagSortHelper.filterItemMo(filterList, itemMo)
+	if not itemMo or itemMo:isEmpty() then
 		return false
 	end
 
-	if not next(arg_13_0) then
+	if not next(filterList) then
 		return true
 	end
 
-	local var_13_0 = arg_13_1.co.type
+	local type = itemMo.co.type
 
-	for iter_13_0, iter_13_1 in pairs(arg_13_0) do
-		if iter_13_1.type == SurvivalEnum.ItemFilterType.Material and var_13_0 == SurvivalEnum.ItemType.Material then
+	for k, v in pairs(filterList) do
+		if v.type == SurvivalEnum.ItemFilterType.Material and type == SurvivalEnum.ItemType.Material then
 			return true
 		end
 
-		if iter_13_1.type == SurvivalEnum.ItemFilterType.Equip and var_13_0 == SurvivalEnum.ItemType.Equip then
+		if v.type == SurvivalEnum.ItemFilterType.Equip and type == SurvivalEnum.ItemType.Equip then
 			return true
 		end
 
-		if iter_13_1.type == SurvivalEnum.ItemFilterType.Consume and var_13_0 == SurvivalEnum.ItemType.Quick then
-			return true
-		end
-	end
-end
-
-function var_0_0.filterEquipMo(arg_14_0, arg_14_1)
-	if not arg_14_1 or arg_14_1:isEmpty() or not arg_14_1.equipCo then
-		return false
-	end
-
-	if not next(arg_14_0) then
-		return true
-	end
-
-	local var_14_0 = string.splitToNumber(arg_14_1.equipCo.tag, "#") or {}
-
-	for iter_14_0, iter_14_1 in pairs(arg_14_0) do
-		if tabletool.indexOf(var_14_0, iter_14_1.type) then
+		if v.type == SurvivalEnum.ItemFilterType.Consume and type == SurvivalEnum.ItemType.Quick then
 			return true
 		end
 	end
 end
 
-function var_0_0.filterNpc(arg_15_0, arg_15_1)
-	if not arg_15_1 or not arg_15_1.co then
+function SurvivalBagSortHelper.filterEquipMo(filterList, itemMo)
+	if not itemMo or itemMo:isEmpty() or not itemMo.equipCo then
 		return false
 	end
 
-	if not arg_15_0 or not next(arg_15_0) then
+	if not next(filterList) then
 		return true
 	end
 
-	if string.nilorempty(arg_15_1.co.tag) then
+	local tags = string.splitToNumber(itemMo.equipCo.tag, "#") or {}
+
+	for _, v in pairs(filterList) do
+		if tabletool.indexOf(tags, v.type) then
+			return true
+		end
+	end
+end
+
+function SurvivalBagSortHelper.filterNpc(filterList, npcMo)
+	if not npcMo or not npcMo.co then
 		return false
 	end
 
-	local var_15_0 = string.splitToNumber(arg_15_1.co.tag, "#")
-	local var_15_1 = {}
+	if not filterList or not next(filterList) then
+		return true
+	end
 
-	for iter_15_0, iter_15_1 in ipairs(var_15_0) do
-		local var_15_2 = lua_survival_tag.configDict[iter_15_1]
+	if string.nilorempty(npcMo.co.tag) then
+		return false
+	end
 
-		if var_15_2 then
-			var_15_1[var_15_2.tagType] = true
+	local list = string.splitToNumber(npcMo.co.tag, "#")
+	local dict = {}
+
+	for i, v in ipairs(list) do
+		local tagConfig = lua_survival_tag.configDict[v]
+
+		if tagConfig then
+			dict[tagConfig.tagType] = true
 		end
 	end
 
-	for iter_15_2, iter_15_3 in pairs(arg_15_0) do
-		if var_15_1[iter_15_3.type] then
+	for k, v in pairs(filterList) do
+		if dict[v.type] then
 			return true
 		end
 	end
@@ -194,109 +197,107 @@ function var_0_0.filterNpc(arg_15_0, arg_15_1)
 	return false
 end
 
-local var_0_2 = {
+local sortDict = {
 	[SurvivalEnum.ItemSortType.EquipTag] = {
-		var_0_0.sortByEquipTag,
-		var_0_0.sortByRare,
-		var_0_0.sortByWorth,
-		var_0_0.sortByMass,
-		var_0_0.sortByTime,
-		var_0_0.sortById
+		SurvivalBagSortHelper.sortByEquipTag,
+		SurvivalBagSortHelper.sortByRare,
+		SurvivalBagSortHelper.sortByWorth,
+		SurvivalBagSortHelper.sortByMass,
+		SurvivalBagSortHelper.sortByTime,
+		SurvivalBagSortHelper.sortById
 	},
 	[SurvivalEnum.ItemSortType.Type] = {
-		var_0_0.sortByType,
-		var_0_0.sortByEquipTag,
-		var_0_0.sortByRare,
-		var_0_0.sortByWorth,
-		var_0_0.sortByMass,
-		var_0_0.sortByTime,
-		var_0_0.sortById
+		SurvivalBagSortHelper.sortByType,
+		SurvivalBagSortHelper.sortByEquipTag,
+		SurvivalBagSortHelper.sortByRare,
+		SurvivalBagSortHelper.sortByWorth,
+		SurvivalBagSortHelper.sortByMass,
+		SurvivalBagSortHelper.sortByTime,
+		SurvivalBagSortHelper.sortById
 	},
 	[SurvivalEnum.ItemSortType.Worth] = {
-		var_0_0.sortByWorth,
-		var_0_0.sortByRare,
-		var_0_0.sortByType,
-		var_0_0.sortByEquipTag,
-		var_0_0.sortByMass,
-		var_0_0.sortByTime,
-		var_0_0.sortById
+		SurvivalBagSortHelper.sortByWorth,
+		SurvivalBagSortHelper.sortByRare,
+		SurvivalBagSortHelper.sortByType,
+		SurvivalBagSortHelper.sortByEquipTag,
+		SurvivalBagSortHelper.sortByMass,
+		SurvivalBagSortHelper.sortByTime,
+		SurvivalBagSortHelper.sortById
 	},
 	[SurvivalEnum.ItemSortType.Mass] = {
-		var_0_0.sortByMass,
-		var_0_0.sortByRare,
-		var_0_0.sortByType,
-		var_0_0.sortByEquipTag,
-		var_0_0.sortByWorth,
-		var_0_0.sortByTime,
-		var_0_0.sortById
+		SurvivalBagSortHelper.sortByMass,
+		SurvivalBagSortHelper.sortByRare,
+		SurvivalBagSortHelper.sortByType,
+		SurvivalBagSortHelper.sortByEquipTag,
+		SurvivalBagSortHelper.sortByWorth,
+		SurvivalBagSortHelper.sortByTime,
+		SurvivalBagSortHelper.sortById
 	},
 	[SurvivalEnum.ItemSortType.Time] = {
-		var_0_0.sortByTime,
-		var_0_0.sortByType,
-		var_0_0.sortByEquipTag,
-		var_0_0.sortByRare,
-		var_0_0.sortByWorth,
-		var_0_0.sortByMass,
-		var_0_0.sortById
+		SurvivalBagSortHelper.sortByTime,
+		SurvivalBagSortHelper.sortByType,
+		SurvivalBagSortHelper.sortByEquipTag,
+		SurvivalBagSortHelper.sortByRare,
+		SurvivalBagSortHelper.sortByWorth,
+		SurvivalBagSortHelper.sortByMass,
+		SurvivalBagSortHelper.sortById
 	},
 	[SurvivalEnum.ItemSortType.NPC] = {
-		var_0_0.sortByTime,
-		var_0_0.sortById
+		SurvivalBagSortHelper.sortByTime,
+		SurvivalBagSortHelper.sortById
 	},
 	[SurvivalEnum.ItemSortType.Result] = {
-		var_0_0.sortByChange,
-		var_0_0.sortByRare,
-		var_0_0.sortByType,
-		var_0_0.sortById
+		SurvivalBagSortHelper.sortByChange,
+		SurvivalBagSortHelper.sortByRare,
+		SurvivalBagSortHelper.sortByType,
+		SurvivalBagSortHelper.sortById
 	},
 	[SurvivalEnum.ItemSortType.ItemReward] = {
-		var_0_0.sortByRare,
-		var_0_0.sortByCustomType,
-		var_0_0.sortById
+		SurvivalBagSortHelper.sortByRare,
+		SurvivalBagSortHelper.sortByCustomType,
+		SurvivalBagSortHelper.sortById
 	}
 }
-local var_0_3
-local var_0_4
-local var_0_5
+local sortList, isDec, param
 
-function var_0_0.sortItems(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
-	var_0_3 = var_0_2[arg_16_1]
-	var_0_4 = arg_16_2
-	var_0_5 = arg_16_3
+function SurvivalBagSortHelper.sortItems(showList, sortType, dec, exParam)
+	sortList = sortDict[sortType]
+	isDec = dec
+	param = exParam
 
-	if not var_0_3 then
+	if not sortList then
 		return
 	end
 
-	table.sort(arg_16_0, var_0_0.sortFunc)
+	table.sort(showList, SurvivalBagSortHelper.sortFunc)
 
-	var_0_3 = nil
-	var_0_4 = nil
-	var_0_5 = nil
+	sortList = nil
+	isDec = nil
+	param = nil
 end
 
-function var_0_0.sortFunc(arg_17_0, arg_17_1)
-	if var_0_5 and var_0_5.isCheckNPCItem then
-		local var_17_0 = var_0_0.sortByNPCItem(arg_17_0, arg_17_1)
+function SurvivalBagSortHelper.sortFunc(a, b)
+	if param and param.isCheckNPCItem then
+		local result = SurvivalBagSortHelper.sortByNPCItem(a, b)
 
-		if var_17_0 ~= nil then
-			return var_17_0
+		if result ~= nil then
+			return result
 		end
 	end
 
-	for iter_17_0, iter_17_1 in ipairs(var_0_3) do
-		local var_17_1 = iter_17_1(arg_17_0, arg_17_1, var_0_5)
+	for k, func in ipairs(sortList) do
+		local result = func(a, b, param)
 
-		if var_17_1 ~= nil then
-			if var_0_4 then
-				var_17_1 = not var_17_1
+		if result ~= nil then
+			if isDec then
+				result = not result
 			end
 
-			return var_17_1
+			return result
 		end
 	end
 
 	return false
 end
 
-return var_0_0
+return SurvivalBagSortHelper

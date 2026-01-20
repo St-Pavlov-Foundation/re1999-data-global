@@ -1,113 +1,122 @@
-﻿module("modules.logic.guide.controller.GuideInvalidController", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/GuideInvalidController.lua
 
-local var_0_0 = class("GuideInvalidController", BaseController)
-local var_0_1 = "EndFight"
-local var_0_2 = "ActivityEnd"
-local var_0_3 = "InvalidCondition"
-local var_0_4 = "checkFinishGuide"
-local var_0_5 = "checkFinishGuideAndValidAct"
-local var_0_6 = "FinishElement"
-local var_0_7 = "InvalidNotInWindows"
+module("modules.logic.guide.controller.GuideInvalidController", package.seeall)
 
-function var_0_0.addConstEvents(arg_1_0)
-	PlayerController.instance:registerCallback(PlayerEvent.PlayerLevelUp, arg_1_0._checkFinishGuideInMainView, arg_1_0)
-	GuideController.instance:registerCallback(GuideEvent.StartGuide, arg_1_0._onStartGuide, arg_1_0)
-	GuideController.instance:registerCallback(GuideEvent.FinishGuide, arg_1_0._onFinishedGuide, arg_1_0)
-	GameSceneMgr.instance:registerCallback(SceneEventName.EnterSceneFinish, arg_1_0._onEnterOneSceneFinish, arg_1_0)
-	FightController.instance:registerCallback(FightEvent.RespBeginFight, arg_1_0._respBeginFight, arg_1_0)
-	FightController.instance:registerCallback(FightEvent.OnEndFightForGuide, arg_1_0._onEndFight, arg_1_0)
-	ActivityController.instance:registerCallback(ActivityEvent.CheckGuideOnEndActivity, arg_1_0._onActivityEnd, arg_1_0)
+local GuideInvalidController = class("GuideInvalidController", BaseController)
+local InvalidEndFight = "EndFight"
+local InvalidEndActivity = "ActivityEnd"
+local InvalidCondition = "InvalidCondition"
+local checkFinishedGuideCondition = "checkFinishGuide"
+local checkFinishGuideAndValidActCondition = "checkFinishGuideAndValidAct"
+local FinishElement = "FinishElement"
+local InvalidNotInWindows = "InvalidNotInWindows"
+
+function GuideInvalidController:addConstEvents()
+	PlayerController.instance:registerCallback(PlayerEvent.PlayerLevelUp, self._checkFinishGuideInMainView, self)
+	GuideController.instance:registerCallback(GuideEvent.StartGuide, self._onStartGuide, self)
+	GuideController.instance:registerCallback(GuideEvent.FinishGuide, self._onFinishedGuide, self)
+	GameSceneMgr.instance:registerCallback(SceneEventName.EnterSceneFinish, self._onEnterOneSceneFinish, self)
+	FightController.instance:registerCallback(FightEvent.RespBeginFight, self._respBeginFight, self)
+	FightController.instance:registerCallback(FightEvent.OnEndFightForGuide, self._onEndFight, self)
+	ActivityController.instance:registerCallback(ActivityEvent.CheckGuideOnEndActivity, self._onActivityEnd, self)
 end
 
-function var_0_0.isInvalid(arg_2_0, arg_2_1)
-	local var_2_0 = GuideConfig.instance:getGuideCO(arg_2_1)
+function GuideInvalidController:isInvalid(guideId)
+	local guideCO = GuideConfig.instance:getGuideCO(guideId)
 
-	if not var_2_0 or var_2_0.isOnline == 0 then
+	if not guideCO or guideCO.isOnline == 0 then
 		return true
 	end
 
-	local var_2_1 = GuideConfig.instance:getInvalidList(arg_2_1)
-	local var_2_2 = false
+	local invalidList = GuideConfig.instance:getInvalidList(guideId)
+	local isInvalid = false
 
-	if not var_2_1 then
-		return var_2_2
+	if not invalidList then
+		return isInvalid
 	end
 
-	local var_2_3 = GuideModel.instance:getById(arg_2_1)
+	local guideMO = GuideModel.instance:getById(guideId)
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_1) do
-		local var_2_4 = iter_2_1[1]
-		local var_2_5 = iter_2_1[2]
+	for i, paramList in ipairs(invalidList) do
+		local invalidType = paramList[1]
+		local param1 = paramList[2]
 
-		if var_2_4 == "PlayerLv" then
-			var_2_2 = tonumber(var_2_5) <= PlayerModel.instance:getPlayinfo().level
-		elseif var_2_4 == "EpisodeFinish" then
-			local var_2_6 = tonumber(var_2_5)
-			local var_2_7 = DungeonModel.instance:getEpisodeInfo(var_2_6)
-			local var_2_8 = DungeonConfig.instance:getEpisodeCO(var_2_6)
+		if invalidType == "PlayerLv" then
+			local level = tonumber(param1)
 
-			var_2_2 = var_2_7 and var_2_7.star > DungeonEnum.StarType.None
+			isInvalid = level <= PlayerModel.instance:getPlayinfo().level
+		elseif invalidType == "EpisodeFinish" then
+			local configEpisodeId = tonumber(param1)
+			local episodeMO = DungeonModel.instance:getEpisodeInfo(configEpisodeId)
+			local episodeCO = DungeonConfig.instance:getEpisodeCO(configEpisodeId)
 
-			if var_2_2 and var_2_8 then
-				var_2_2 = var_2_8.afterStory <= 0 or var_2_8.afterStory > 0 and StoryModel.instance:isStoryFinished(var_2_8.afterStory)
+			isInvalid = episodeMO and episodeMO.star > DungeonEnum.StarType.None
+
+			if isInvalid and episodeCO then
+				isInvalid = episodeCO.afterStory <= 0 or episodeCO.afterStory > 0 and StoryModel.instance:isStoryFinished(episodeCO.afterStory)
 			end
-		elseif var_2_4 == "FinishTask" then
-			local var_2_9 = tonumber(var_2_5)
-			local var_2_10 = TaskModel.instance:getTaskById(var_2_9)
+		elseif invalidType == "FinishTask" then
+			local taskId = tonumber(param1)
+			local taskMO = TaskModel.instance:getTaskById(taskId)
 
-			var_2_2 = var_2_10 and var_2_10.finishCount > 0
-		elseif var_2_4 == "EnterEpisode" then
-			local var_2_11 = tonumber(var_2_5)
-			local var_2_12 = FightModel.instance:getFightParam()
-			local var_2_13 = var_2_12 and var_2_12.episodeId and var_2_11 and var_2_12.episodeId == var_2_11
+			isInvalid = taskMO and taskMO.finishCount > 0
+		elseif invalidType == "EnterEpisode" then
+			local episodeId = tonumber(param1)
+			local fightParam = FightModel.instance:getFightParam()
+			local episodeMatch = fightParam and fightParam.episodeId and episodeId and fightParam.episodeId == episodeId
 
-			var_2_2 = GameSceneMgr.instance:getCurSceneType() == SceneType.Fight and var_2_13
-		elseif var_2_4 == "ExitEpisode" then
-			var_2_2 = var_2_3 ~= nil and GameSceneMgr.instance:getCurSceneType() ~= SceneType.Fight
-		elseif var_2_4 == var_0_6 then
-			local var_2_14 = tonumber(var_2_5)
+			isInvalid = GameSceneMgr.instance:getCurSceneType() == SceneType.Fight and episodeMatch
+		elseif invalidType == "ExitEpisode" then
+			isInvalid = guideMO ~= nil and GameSceneMgr.instance:getCurSceneType() ~= SceneType.Fight
+		elseif invalidType == FinishElement then
+			local elementId = tonumber(param1)
+			local isFinished = DungeonMapModel.instance:elementIsFinished(elementId)
 
-			var_2_2 = DungeonMapModel.instance:elementIsFinished(var_2_14)
-		elseif var_2_4 == var_0_1 then
-			var_2_2 = var_2_3 ~= nil and arg_2_0._hasEndFight
-		elseif var_2_4 == var_0_3 then
-			var_2_2 = GuideInvalidCondition[var_2_5](arg_2_1, iter_2_1)
-		elseif var_2_4 == var_0_2 then
-			local var_2_15 = tonumber(var_2_5)
+			isInvalid = isFinished
+		elseif invalidType == InvalidEndFight then
+			isInvalid = guideMO ~= nil and self._hasEndFight
+		elseif invalidType == InvalidCondition then
+			local func = GuideInvalidCondition[param1]
 
-			if ActivityModel.instance:getActMO(var_2_15) then
-				local var_2_16 = ActivityHelper.getActivityStatus(var_2_15)
+			isInvalid = func(guideId, paramList)
+		elseif invalidType == InvalidEndActivity then
+			local actId = tonumber(param1)
+			local actMo = ActivityModel.instance:getActMO(actId)
 
-				var_2_2 = var_2_3 ~= nil and var_2_16 == ActivityEnum.ActivityStatus.Expired
+			if actMo then
+				local status = ActivityHelper.getActivityStatus(actId)
+
+				isInvalid = guideMO ~= nil and status == ActivityEnum.ActivityStatus.Expired
 			end
-		elseif var_2_4 == var_0_7 then
-			var_2_2 = not BootNativeUtil.isWindows()
+		elseif invalidType == InvalidNotInWindows then
+			isInvalid = not BootNativeUtil.isWindows()
 		else
-			var_2_2 = false
+			isInvalid = false
 		end
 
-		if var_2_2 then
+		if isInvalid then
 			break
 		end
 	end
 
-	return var_2_2
+	return isInvalid
 end
 
-function var_0_0._checkFinishGuideInMainView(arg_3_0)
+function GuideInvalidController:_checkFinishGuideInMainView()
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Main then
-		arg_3_0:_checkFinishGuide()
+		self:_checkFinishGuide()
 	end
 end
 
-function var_0_0.hasInvalidGuide(arg_4_0)
-	local var_4_0 = GuideConfig.instance:getGuideList()
+function GuideInvalidController:hasInvalidGuide()
+	local coList = GuideConfig.instance:getGuideList()
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_0) do
-		local var_4_1 = iter_4_1.id
-		local var_4_2 = GuideModel.instance:getById(var_4_1)
+	for _, co in ipairs(coList) do
+		local guideId = co.id
+		local guideMO = GuideModel.instance:getById(guideId)
+		local notFinish = guideMO == nil or not guideMO.isFinish
 
-		if (var_4_2 == nil or not var_4_2.isFinish) and arg_4_0:isInvalid(var_4_1) then
+		if notFinish and self:isInvalid(guideId) then
 			return true
 		end
 	end
@@ -115,113 +124,122 @@ function var_0_0.hasInvalidGuide(arg_4_0)
 	return false
 end
 
-function var_0_0.checkInvalid(arg_5_0)
-	arg_5_0:_checkFinishGuide()
+function GuideInvalidController:checkInvalid()
+	self:_checkFinishGuide()
 end
 
-function var_0_0._checkFinishGuide(arg_6_0)
-	local var_6_0 = GuideConfig.instance:getGuideList()
+function GuideInvalidController:_checkFinishGuide()
+	local coList = GuideConfig.instance:getGuideList()
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
-		local var_6_1 = iter_6_1.id
-		local var_6_2 = GuideModel.instance:getById(var_6_1)
+	for _, co in ipairs(coList) do
+		local guideId = co.id
+		local guideMO = GuideModel.instance:getById(guideId)
+		local notFinish = guideMO == nil or not guideMO.isFinish
 
-		if (var_6_2 == nil or not var_6_2.isFinish) and arg_6_0:isInvalid(var_6_1) then
-			GuideController.instance:oneKeyFinishGuide(var_6_1, true)
+		if notFinish and self:isInvalid(guideId) then
+			GuideController.instance:oneKeyFinishGuide(guideId, true)
 		end
 	end
 end
 
-function var_0_0._onStartGuide(arg_7_0, arg_7_1)
-	if not GuideModel.instance:isGMStartGuide(arg_7_1) then
-		local var_7_0 = GuideModel.instance:getById(arg_7_1)
+function GuideInvalidController:_onStartGuide(guideId)
+	if not GuideModel.instance:isGMStartGuide(guideId) then
+		local guideMO = GuideModel.instance:getById(guideId)
+		local notFinish = guideMO == nil or not guideMO.isFinish
 
-		if (var_7_0 == nil or not var_7_0.isFinish) and arg_7_0:isInvalid(arg_7_1) then
-			GuideController.instance:oneKeyFinishGuide(arg_7_1, true)
+		if notFinish and self:isInvalid(guideId) then
+			GuideController.instance:oneKeyFinishGuide(guideId, true)
 		end
 	end
 end
 
-function var_0_0._onFinishedGuide(arg_8_0, arg_8_1)
-	local var_8_0 = GuideModel.instance:getList()
+function GuideInvalidController:_onFinishedGuide(finishedGuideId)
+	local list = GuideModel.instance:getList()
 
-	for iter_8_0 = 1, #var_8_0 do
-		local var_8_1 = var_8_0[iter_8_0]
-		local var_8_2 = var_8_1.id
-		local var_8_3 = var_8_1 == nil or not var_8_1.isFinish
-		local var_8_4 = GuideConfig.instance:getInvalidList(var_8_2)
+	for i = 1, #list do
+		local guideMO = list[i]
+		local guideId = guideMO.id
+		local notFinish = guideMO == nil or not guideMO.isFinish
+		local invalidList = GuideConfig.instance:getInvalidList(guideId)
 
-		if var_8_3 and var_8_4 then
-			for iter_8_1, iter_8_2 in ipairs(var_8_4) do
-				local var_8_5 = iter_8_2[1]
-				local var_8_6 = iter_8_2[2]
+		if notFinish and invalidList then
+			for _, paramList in ipairs(invalidList) do
+				local invalidType = paramList[1]
+				local param = paramList[2]
 
-				if var_8_5 == var_0_3 and (var_8_6 == var_0_4 or var_8_6 == var_0_5) and GuideInvalidCondition[var_8_6](var_8_2, iter_8_2) then
-					GuideController.instance:oneKeyFinishGuide(var_8_2, true)
+				if invalidType == InvalidCondition and (param == checkFinishedGuideCondition or param == checkFinishGuideAndValidActCondition) then
+					local func = GuideInvalidCondition[param]
+					local isInvalid = func(guideId, paramList)
+
+					if isInvalid then
+						GuideController.instance:oneKeyFinishGuide(guideId, true)
+					end
 				end
 			end
 		end
 	end
 end
 
-function var_0_0._onEnterOneSceneFinish(arg_9_0, arg_9_1, arg_9_2)
-	if arg_9_1 == SceneType.Fight then
+function GuideInvalidController:_onEnterOneSceneFinish(curSceneType, curSceneId)
+	if curSceneType == SceneType.Fight then
 		if SkillEditorMgr and SkillEditorMgr.instance.inEditMode then
 			return
 		end
 
-		arg_9_0:_checkFinishGuide()
+		self:_checkFinishGuide()
 
-		arg_9_0._hasEnterBattle = true
+		self._hasEnterBattle = true
 	else
-		if arg_9_0._hasEnterBattle then
-			arg_9_0:_checkFinishGuide()
+		if self._hasEnterBattle then
+			self:_checkFinishGuide()
 		end
 
-		arg_9_0._hasEnterBattle = nil
+		self._hasEnterBattle = nil
 	end
 end
 
-function var_0_0._respBeginFight(arg_10_0)
-	arg_10_0._hasEndFight = false
+function GuideInvalidController:_respBeginFight()
+	self._hasEndFight = false
 end
 
-function var_0_0._onEndFight(arg_11_0)
-	arg_11_0._hasEndFight = true
+function GuideInvalidController:_onEndFight()
+	self._hasEndFight = true
 
-	local var_11_0 = GuideModel.instance:getList()
+	local list = GuideModel.instance:getList()
 
-	for iter_11_0 = 1, #var_11_0 do
-		local var_11_1 = var_11_0[iter_11_0].id
-		local var_11_2 = GuideConfig.instance:getInvalidTypeList(var_11_1)
+	for i = 1, #list do
+		local guideId = list[i].id
+		local invalidTypeList = GuideConfig.instance:getInvalidTypeList(guideId)
 
-		if var_11_2 and tabletool.indexOf(var_11_2, var_0_1) then
-			local var_11_3 = GuideModel.instance:getById(var_11_1)
+		if invalidTypeList and tabletool.indexOf(invalidTypeList, InvalidEndFight) then
+			local guideMO = GuideModel.instance:getById(guideId)
+			local notFinish = guideMO == nil or not guideMO.isFinish
 
-			if (var_11_3 == nil or not var_11_3.isFinish) and arg_11_0:isInvalid(var_11_1) then
-				GuideController.instance:oneKeyFinishGuide(var_11_1, true)
+			if notFinish and self:isInvalid(guideId) then
+				GuideController.instance:oneKeyFinishGuide(guideId, true)
 			end
 		end
 	end
 end
 
-function var_0_0._onActivityEnd(arg_12_0)
-	local var_12_0 = GuideModel.instance:getList()
+function GuideInvalidController:_onActivityEnd()
+	local list = GuideModel.instance:getList()
 
-	for iter_12_0 = 1, #var_12_0 do
-		local var_12_1 = var_12_0[iter_12_0].id
-		local var_12_2 = GuideConfig.instance:getInvalidTypeList(var_12_1)
+	for i = 1, #list do
+		local guideId = list[i].id
+		local invalidTypeList = GuideConfig.instance:getInvalidTypeList(guideId)
 
-		if var_12_2 and tabletool.indexOf(var_12_2, var_0_2) then
-			local var_12_3 = GuideModel.instance:getById(var_12_1)
+		if invalidTypeList and tabletool.indexOf(invalidTypeList, InvalidEndActivity) then
+			local guideMO = GuideModel.instance:getById(guideId)
+			local notFinish = guideMO == nil or not guideMO.isFinish
 
-			if (var_12_3 == nil or not var_12_3.isFinish) and arg_12_0:isInvalid(var_12_1) then
-				GuideController.instance:oneKeyFinishGuide(var_12_1, true)
+			if notFinish and self:isInvalid(guideId) then
+				GuideController.instance:oneKeyFinishGuide(guideId, true)
 			end
 		end
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+GuideInvalidController.instance = GuideInvalidController.New()
 
-return var_0_0
+return GuideInvalidController

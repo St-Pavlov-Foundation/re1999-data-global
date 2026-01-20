@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_battle_dialog", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_battle_dialog.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_battle_dialog", package.seeall)
+
+local lua_battle_dialog = {}
+local fields = {
 	param = 3,
 	icon = 7,
 	canRepeat = 4,
@@ -14,16 +16,16 @@ local var_0_1 = {
 	code = 1,
 	tipsDir = 10
 }
-local var_0_2 = {
+local primaryKey = {
 	"code",
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	text = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_battle_dialog.onLoad(json)
+	lua_battle_dialog.configList, lua_battle_dialog.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_battle_dialog

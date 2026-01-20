@@ -1,95 +1,98 @@
-﻿module("modules.logic.investigate.view.InvestigateOpinionExtendView", package.seeall)
+﻿-- chunkname: @modules/logic/investigate/view/InvestigateOpinionExtendView.lua
 
-local var_0_0 = class("InvestigateOpinionExtendView", BaseView)
+module("modules.logic.investigate.view.InvestigateOpinionExtendView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageunfinishedbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/view/#simage_unfinishedbg")
-	arg_1_0._simagefinishedbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/view/#simage_finishedbg")
-	arg_1_0._simagefullbg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/view/#simage_fullbg2")
-	arg_1_0._simagerole = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/view/#simage_role")
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "root/view/#txt_title")
-	arg_1_0._goOpinion = gohelper.findChild(arg_1_0.viewGO, "root/view/#go_Opinion")
-	arg_1_0._goprogress = gohelper.findChild(arg_1_0.viewGO, "root/view/#go_progress")
-	arg_1_0._goprogresitem = gohelper.findChild(arg_1_0.viewGO, "root/view/#go_progress/#go_progresitem")
-	arg_1_0._scrolldesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/view/#scroll_desc")
-	arg_1_0._txtroledec = gohelper.findChildText(arg_1_0.viewGO, "root/view/#scroll_desc/viewport/content/#txt_roledec")
-	arg_1_0._txtdec = gohelper.findChildText(arg_1_0.viewGO, "root/view/#scroll_desc/viewport/content/#txt_dec")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/view/#btn_close")
-	arg_1_0._btnrolestory = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/view/#btn_rolestory")
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "root/#go_topleft")
+local InvestigateOpinionExtendView = class("InvestigateOpinionExtendView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function InvestigateOpinionExtendView:onInitView()
+	self._simageunfinishedbg = gohelper.findChildSingleImage(self.viewGO, "root/view/#simage_unfinishedbg")
+	self._simagefinishedbg = gohelper.findChildSingleImage(self.viewGO, "root/view/#simage_finishedbg")
+	self._simagefullbg2 = gohelper.findChildSingleImage(self.viewGO, "root/view/#simage_fullbg2")
+	self._simagerole = gohelper.findChildSingleImage(self.viewGO, "root/view/#simage_role")
+	self._txttitle = gohelper.findChildText(self.viewGO, "root/view/#txt_title")
+	self._goOpinion = gohelper.findChild(self.viewGO, "root/view/#go_Opinion")
+	self._goprogress = gohelper.findChild(self.viewGO, "root/view/#go_progress")
+	self._goprogresitem = gohelper.findChild(self.viewGO, "root/view/#go_progress/#go_progresitem")
+	self._scrolldesc = gohelper.findChildScrollRect(self.viewGO, "root/view/#scroll_desc")
+	self._txtroledec = gohelper.findChildText(self.viewGO, "root/view/#scroll_desc/viewport/content/#txt_roledec")
+	self._txtdec = gohelper.findChildText(self.viewGO, "root/view/#scroll_desc/viewport/content/#txt_dec")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "root/view/#btn_close")
+	self._btnrolestory = gohelper.findChildButtonWithAudio(self.viewGO, "root/view/#btn_rolestory")
+	self._gotopleft = gohelper.findChild(self.viewGO, "root/#go_topleft")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnrolestory:AddClickListener(arg_2_0._btnrolestoryOnClick, arg_2_0)
+function InvestigateOpinionExtendView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnrolestory:AddClickListener(self._btnrolestoryOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnrolestory:RemoveClickListener()
+function InvestigateOpinionExtendView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btnrolestory:RemoveClickListener()
 end
 
-function var_0_0._btnrolestoryOnClick(arg_4_0)
-	local var_4_0, var_4_1 = InvestigateOpinionModel.instance:getInfo()
+function InvestigateOpinionExtendView:_btnrolestoryOnClick()
+	local mo, _ = InvestigateOpinionModel.instance:getInfo()
+	local isAllLinked = InvestigateOpinionModel.instance:allOpinionLinked(mo.id)
 
-	if InvestigateOpinionModel.instance:allOpinionLinked(var_4_0.id) then
-		InvestigateController.instance:openInvestigateRoleStoryView(var_4_0.id)
+	if isAllLinked then
+		InvestigateController.instance:openInvestigateRoleStoryView(mo.id)
 	end
 end
 
-function var_0_0._btncloseOnClick(arg_5_0)
-	arg_5_0.viewContainer:switchTab(InvestigateEnum.OpinionTab.Normal)
+function InvestigateOpinionExtendView:_btncloseOnClick()
+	self.viewContainer:switchTab(InvestigateEnum.OpinionTab.Normal)
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._btnAnimator = arg_6_0._btnrolestory.gameObject:GetComponent("Animator")
-	arg_6_0._rootAnimator = ZProj.ProjAnimatorPlayer.Get(arg_6_0.viewGO)
+function InvestigateOpinionExtendView:_editableInitView()
+	self._btnAnimator = self._btnrolestory.gameObject:GetComponent("Animator")
+	self._rootAnimator = ZProj.ProjAnimatorPlayer.Get(self.viewGO)
 
-	local var_6_0 = AudioEnum.VersionActivity2_2Investigate.play_ui_activity_course_open
+	local audioId = AudioEnum.VersionActivity2_2Investigate.play_ui_activity_course_open
 
-	gohelper.addUIClickAudio(arg_6_0._btnclose.gameObject, var_6_0)
+	gohelper.addUIClickAudio(self._btnclose.gameObject, audioId)
 end
 
-function var_0_0.playAnim(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	arg_7_0._rootAnimator:Play(arg_7_1, arg_7_2, arg_7_3)
+function InvestigateOpinionExtendView:playAnim(name, callback, callbackObj)
+	self._rootAnimator:Play(name, callback, callbackObj)
 end
 
-function var_0_0.onTabSwitchOpen(arg_8_0)
-	arg_8_0:addEventCb(InvestigateController.instance, InvestigateEvent.ChangeArrow, arg_8_0._onChangeArrow, arg_8_0)
-	arg_8_0:_onChangeArrow()
+function InvestigateOpinionExtendView:onTabSwitchOpen()
+	self:addEventCb(InvestigateController.instance, InvestigateEvent.ChangeArrow, self._onChangeArrow, self)
+	self:_onChangeArrow()
 end
 
-function var_0_0.onTabSwitchClose(arg_9_0)
-	arg_9_0:removeEventCb(InvestigateController.instance, InvestigateEvent.ChangeArrow, arg_9_0._onChangeArrow, arg_9_0)
+function InvestigateOpinionExtendView:onTabSwitchClose()
+	self:removeEventCb(InvestigateController.instance, InvestigateEvent.ChangeArrow, self._onChangeArrow, self)
 end
 
-function var_0_0._onChangeArrow(arg_10_0)
-	local var_10_0, var_10_1 = InvestigateOpinionModel.instance:getInfo()
-	local var_10_2 = InvestigateOpinionModel.instance:allOpinionLinked(var_10_0.id)
+function InvestigateOpinionExtendView:_onChangeArrow()
+	local mo, _ = InvestigateOpinionModel.instance:getInfo()
+	local isAllLinked = InvestigateOpinionModel.instance:allOpinionLinked(mo.id)
 
-	gohelper.setActive(arg_10_0._btnclose, true)
-	gohelper.setActive(arg_10_0._btnrolestory, var_10_2)
+	gohelper.setActive(self._btnclose, true)
+	gohelper.setActive(self._btnrolestory, isAllLinked)
 
-	if var_10_2 and not InvestigateController.hasOnceActionKey(InvestigateEnum.OnceActionType.StoryBtn, var_10_0.id) then
-		InvestigateController.setOnceActionKey(InvestigateEnum.OnceActionType.StoryBtn, var_10_0.id)
-		arg_10_0._btnAnimator:Play("finish", 0, 0)
+	if isAllLinked and not InvestigateController.hasOnceActionKey(InvestigateEnum.OnceActionType.StoryBtn, mo.id) then
+		InvestigateController.setOnceActionKey(InvestigateEnum.OnceActionType.StoryBtn, mo.id)
+		self._btnAnimator:Play("finish", 0, 0)
 	end
 end
 
-function var_0_0.onOpen(arg_11_0)
-	arg_11_0:_onChangeArrow()
+function InvestigateOpinionExtendView:onOpen()
+	self:_onChangeArrow()
 end
 
-function var_0_0.onClose(arg_12_0)
+function InvestigateOpinionExtendView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_13_0)
+function InvestigateOpinionExtendView:onDestroyView()
 	return
 end
 
-return var_0_0
+return InvestigateOpinionExtendView

@@ -1,78 +1,82 @@
-﻿module("modules.logic.player.view.PlayerChangeBgItem", package.seeall)
+﻿-- chunkname: @modules/logic/player/view/PlayerChangeBgItem.lua
 
-local var_0_0 = class("PlayerChangeBgItem", LuaCompBase)
+module("modules.logic.player.view.PlayerChangeBgItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._bgSelect = gohelper.findChild(arg_1_1, "#go_select")
-	arg_1_0._bgCur = gohelper.findChild(arg_1_1, "#go_cur")
-	arg_1_0._bgLock = gohelper.findChild(arg_1_1, "#go_lock")
-	arg_1_0._btnClick = gohelper.findChildButtonWithAudio(arg_1_1, "#btn_click")
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_1, "#simg_bg")
-	arg_1_0._txtname = gohelper.findChildTextMesh(arg_1_1, "#txt_name")
-	arg_1_0._goreddot = gohelper.findChild(arg_1_1, "#go_reddot")
+local PlayerChangeBgItem = class("PlayerChangeBgItem", LuaCompBase)
+
+function PlayerChangeBgItem:init(go)
+	self._bgSelect = gohelper.findChild(go, "#go_select")
+	self._bgCur = gohelper.findChild(go, "#go_cur")
+	self._bgLock = gohelper.findChild(go, "#go_lock")
+	self._btnClick = gohelper.findChildButtonWithAudio(go, "#btn_click")
+	self._simagebg = gohelper.findChildSingleImage(go, "#simg_bg")
+	self._txtname = gohelper.findChildTextMesh(go, "#txt_name")
+	self._goreddot = gohelper.findChild(go, "#go_reddot")
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._btnClick:AddClickListener(arg_2_0._onSelect, arg_2_0)
-	PlayerController.instance:registerCallback(PlayerEvent.ChangeBgTab, arg_2_0.onBgSelect, arg_2_0)
-	PlayerController.instance:registerCallback(PlayerEvent.ChangePlayerinfo, arg_2_0._updateStatus, arg_2_0)
+function PlayerChangeBgItem:addEventListeners()
+	self._btnClick:AddClickListener(self._onSelect, self)
+	PlayerController.instance:registerCallback(PlayerEvent.ChangeBgTab, self.onBgSelect, self)
+	PlayerController.instance:registerCallback(PlayerEvent.ChangePlayerinfo, self._updateStatus, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btnClick:RemoveClickListener()
-	PlayerController.instance:unregisterCallback(PlayerEvent.ChangeBgTab, arg_3_0.onBgSelect, arg_3_0)
-	PlayerController.instance:unregisterCallback(PlayerEvent.ChangePlayerinfo, arg_3_0._updateStatus, arg_3_0)
+function PlayerChangeBgItem:removeEventListeners()
+	self._btnClick:RemoveClickListener()
+	PlayerController.instance:unregisterCallback(PlayerEvent.ChangeBgTab, self.onBgSelect, self)
+	PlayerController.instance:unregisterCallback(PlayerEvent.ChangePlayerinfo, self._updateStatus, self)
 end
 
-function var_0_0.initMo(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	arg_4_0._mo = arg_4_1
-	arg_4_0._index = arg_4_2
+function PlayerChangeBgItem:initMo(mo, index, nowSelect)
+	self._mo = mo
+	self._index = index
 
-	arg_4_0._simagebg:LoadImage(string.format("singlebg/playerinfo/bg/%s.png", arg_4_1.bg))
+	self._simagebg:LoadImage(string.format("singlebg/playerinfo/bg/%s.png", mo.bg))
 
-	arg_4_0._txtname.text = arg_4_1.name
+	self._txtname.text = mo.name
 
-	arg_4_0:onBgSelect(arg_4_3)
-	arg_4_0:_updateStatus()
+	self:onBgSelect(nowSelect)
+	self:_updateStatus()
 
-	if arg_4_1.item > 0 then
-		RedDotController.instance:addMultiRedDot(arg_4_0._goreddot, {
+	if mo.item > 0 then
+		RedDotController.instance:addMultiRedDot(self._goreddot, {
 			{
 				id = RedDotEnum.DotNode.PlayerChangeBgItemNew,
-				uid = arg_4_1.item
+				uid = mo.item
 			}
 		})
 	end
 end
 
-function var_0_0._updateStatus(arg_5_0)
-	local var_5_0 = true
-	local var_5_1 = PlayerModel.instance:getPlayinfo()
+function PlayerChangeBgItem:_updateStatus()
+	local isUnlock = true
+	local info = PlayerModel.instance:getPlayinfo()
 
-	if arg_5_0._mo.item ~= 0 then
-		var_5_0 = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, arg_5_0._mo.item) > 0
+	if self._mo.item ~= 0 then
+		local quantity = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, self._mo.item)
+
+		isUnlock = quantity > 0
 	end
 
-	gohelper.setActive(arg_5_0._bgLock, not var_5_0)
-	gohelper.setActive(arg_5_0._bgCur, var_5_1.bg == arg_5_0._mo.item)
+	gohelper.setActive(self._bgLock, not isUnlock)
+	gohelper.setActive(self._bgCur, info.bg == self._mo.item)
 end
 
-function var_0_0._onSelect(arg_6_0)
-	local var_6_0 = arg_6_0._mo.item
+function PlayerChangeBgItem:_onSelect()
+	local id = self._mo.item
 
-	if var_6_0 > 0 and RedDotModel.instance:isDotShow(RedDotEnum.DotNode.PlayerChangeBgItemNew, var_6_0) then
-		ItemRpc.instance:sendMarkReadSubType21Request(var_6_0)
+	if id > 0 and RedDotModel.instance:isDotShow(RedDotEnum.DotNode.PlayerChangeBgItemNew, id) then
+		ItemRpc.instance:sendMarkReadSubType21Request(id)
 	end
 
-	PlayerController.instance:dispatchEvent(PlayerEvent.ChangeBgTab, arg_6_0._index)
+	PlayerController.instance:dispatchEvent(PlayerEvent.ChangeBgTab, self._index)
 end
 
-function var_0_0.onBgSelect(arg_7_0, arg_7_1)
-	gohelper.setActive(arg_7_0._bgSelect, arg_7_1 == arg_7_0._index)
+function PlayerChangeBgItem:onBgSelect(index)
+	gohelper.setActive(self._bgSelect, index == self._index)
 end
 
-function var_0_0.onDestroy(arg_8_0)
-	arg_8_0._simagebg:UnLoadImage()
+function PlayerChangeBgItem:onDestroy()
+	self._simagebg:UnLoadImage()
 end
 
-return var_0_0
+return PlayerChangeBgItem

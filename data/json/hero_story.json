@@ -674,5 +674,31 @@
     "mainviewName": "language_10093577",
     "permanentUnlock": "2#24#1",
     "signature": "3037"
+  },
+  {
+    "id": 27,
+    "chapterId": 0,
+    "unlock": "2#24#0",
+    "bonus": "1#180003#1|1#110403#1|1#120011#3|2#3#5000|2#5#10000",
+    "heroName": "language_10005368",
+    "photo": "304102",
+    "cgBg": "304101",
+    "order": 27,
+    "name": "language_10100277",
+    "nameEn": "<size=40>H</size>andover <color=#D2CDBC><size=30>Day</size></color>",
+    "queryVersion": "3.2",
+    "episodeId": 0,
+    "main_pic": "rolestory_img_27",
+    "monster_pic": "",
+    "challengeBonus": "",
+    "activityId": 13227,
+    "activity_pic": "",
+    "cgUnlockEpisodeId": 0,
+    "cgUnlockStoryId": 304106,
+    "cgPos": "771.6#-18.4",
+    "cgScale": "1",
+    "mainviewName": "language_10100277",
+    "permanentUnlock": "2#24#1",
+    "signature": "3041"
   }
 ]

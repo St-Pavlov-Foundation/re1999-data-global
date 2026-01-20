@@ -1,515 +1,535 @@
-﻿module("modules.logic.sp01.assassin2.controller.AssassinStealthGameEntityMgr", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/controller/AssassinStealthGameEntityMgr.lua
 
-local var_0_0 = class("AssassinStealthGameEntityMgr", BaseController)
+module("modules.logic.sp01.assassin2.controller.AssassinStealthGameEntityMgr", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:clearAll()
+local AssassinStealthGameEntityMgr = class("AssassinStealthGameEntityMgr", BaseController)
+
+function AssassinStealthGameEntityMgr:onInit()
+	self:clearAll()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clearAll()
+function AssassinStealthGameEntityMgr:reInit()
+	self:clearAll()
 end
 
-function var_0_0.clearAll(arg_3_0)
-	if arg_3_0._loader then
-		arg_3_0._loader:dispose()
+function AssassinStealthGameEntityMgr:clearAll()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_3_0._loader = nil
+		self._loader = nil
 	end
 
-	arg_3_0._hasLoadedRes = false
+	self._hasLoadedRes = false
 
 	UIBlockMgr.instance:endBlock(AssassinEnum.BlockKey.LoadGameRes)
-	arg_3_0:clearAllEntity(true)
-	arg_3_0:clearMap()
+	self:clearAllEntity(true)
+	self:clearMap()
 end
 
-function var_0_0.clearAllEntity(arg_4_0, arg_4_1)
-	if arg_4_1 then
-		if arg_4_0._heroDict then
-			for iter_4_0, iter_4_1 in pairs(arg_4_0._heroDict) do
-				iter_4_1:destroy()
+function AssassinStealthGameEntityMgr:clearAllEntity(includeHero)
+	if includeHero then
+		if self._heroDict then
+			for _, heroEntity in pairs(self._heroDict) do
+				heroEntity:destroy()
 			end
 		end
 
-		arg_4_0._heroDict = {}
+		self._heroDict = {}
 	end
 
-	if arg_4_0._enemyDict then
-		for iter_4_2, iter_4_3 in pairs(arg_4_0._enemyDict) do
-			iter_4_3:destroy()
+	if self._enemyDict then
+		for _, enemyEntity in pairs(self._enemyDict) do
+			enemyEntity:destroy()
 		end
 	end
 
-	arg_4_0._enemyDict = {}
+	self._enemyDict = {}
 end
 
-function var_0_0.clearMap(arg_5_0)
-	arg_5_0._gridDict = arg_5_0:getUserDataTb_()
-	arg_5_0._horWallDict = arg_5_0:getUserDataTb_()
-	arg_5_0._verWallDict = arg_5_0:getUserDataTb_()
-	arg_5_0._goGridDecors = nil
-	arg_5_0._goEntities = nil
-	arg_5_0._goGridEffs = nil
-	arg_5_0._goInfo = nil
-	arg_5_0._transGridDecors = nil
-	arg_5_0._transEntities = nil
-	arg_5_0._transGridEffs = nil
-	arg_5_0._transInfo = nil
+function AssassinStealthGameEntityMgr:clearMap()
+	self._gridDict = self:getUserDataTb_()
+	self._horWallDict = self:getUserDataTb_()
+	self._verWallDict = self:getUserDataTb_()
+	self._goGridDecors = nil
+	self._goEntities = nil
+	self._goGridEffs = nil
+	self._goInfo = nil
+	self._transGridDecors = nil
+	self._transEntities = nil
+	self._transGridEffs = nil
+	self._transInfo = nil
 end
 
-function var_0_0.onInitBaseMap(arg_6_0, arg_6_1)
-	arg_6_0:clearAll()
-	arg_6_0:_initMap(arg_6_1)
-	arg_6_0:_startLoadRes()
+function AssassinStealthGameEntityMgr:onInitBaseMap(goMap)
+	self:clearAll()
+	self:_initMap(goMap)
+	self:_startLoadRes()
 	UnityEngine.Canvas.ForceUpdateCanvases()
 end
 
-function var_0_0._initMap(arg_7_0, arg_7_1)
-	arg_7_0._gridDict = {}
-	arg_7_0._horWallDict = {}
-	arg_7_0._verWallDict = {}
+function AssassinStealthGameEntityMgr:_initMap(goMap)
+	self._gridDict = {}
+	self._horWallDict = {}
+	self._verWallDict = {}
 
-	local var_7_0 = {}
-	local var_7_1 = {}
-	local var_7_2 = {}
-	local var_7_3 = AssassinConfig.instance:getAssassinConst(AssassinEnum.ConstId.MapSize, true)
+	local allGridList = {}
+	local allHorWallList = {}
+	local allVerWallList = {}
+	local mapSize = AssassinConfig.instance:getAssassinConst(AssassinEnum.ConstId.MapSize, true)
 
-	for iter_7_0 = 1, var_7_3 do
-		local var_7_4 = string.format("%s%s%s", AssassinEnum.StealthConst.VerWallSign, 0, iter_7_0)
+	for y = 1, mapSize do
+		local strLeftVerWallId = string.format("%s%s%s", AssassinEnum.StealthConst.VerWallSign, 0, y)
 
-		var_7_2[#var_7_2 + 1] = tonumber(var_7_4)
+		allVerWallList[#allVerWallList + 1] = tonumber(strLeftVerWallId)
 	end
 
-	for iter_7_1 = 1, var_7_3 do
-		local var_7_5 = string.format("%s%s%s", AssassinEnum.StealthConst.HorWallSign, iter_7_1, 0)
+	for x = 1, mapSize do
+		local strBottomHorWallId = string.format("%s%s%s", AssassinEnum.StealthConst.HorWallSign, x, 0)
 
-		var_7_1[#var_7_1 + 1] = tonumber(var_7_5)
+		allHorWallList[#allHorWallList + 1] = tonumber(strBottomHorWallId)
 
-		for iter_7_2 = 1, var_7_3 do
-			local var_7_6 = string.format("%s%s", iter_7_1, iter_7_2)
-			local var_7_7 = string.format("%s%s%s", AssassinEnum.StealthConst.HorWallSign, iter_7_1, iter_7_2)
-			local var_7_8 = string.format("%s%s%s", AssassinEnum.StealthConst.VerWallSign, iter_7_1, iter_7_2)
+		for y = 1, mapSize do
+			local strGridId = string.format("%s%s", x, y)
+			local strHorWallId = string.format("%s%s%s", AssassinEnum.StealthConst.HorWallSign, x, y)
+			local strVerWallId = string.format("%s%s%s", AssassinEnum.StealthConst.VerWallSign, x, y)
 
-			var_7_0[#var_7_0 + 1] = tonumber(var_7_6)
-			var_7_1[#var_7_1 + 1] = tonumber(var_7_7)
-			var_7_2[#var_7_2 + 1] = tonumber(var_7_8)
+			allGridList[#allGridList + 1] = tonumber(strGridId)
+			allHorWallList[#allHorWallList + 1] = tonumber(strHorWallId)
+			allVerWallList[#allVerWallList + 1] = tonumber(strVerWallId)
 		end
 	end
 
-	local var_7_9 = gohelper.findChild(arg_7_1, "#go_grids")
-	local var_7_10 = gohelper.findChild(arg_7_1, "#go_grids/#go_gridItem")
-	local var_7_11 = gohelper.findChild(arg_7_1, "#go_walls/#go_hor")
-	local var_7_12 = gohelper.findChild(arg_7_1, "#go_walls/#go_hor/#go_horWall")
-	local var_7_13 = gohelper.findChild(arg_7_1, "#go_walls/#go_ver")
-	local var_7_14 = gohelper.findChild(arg_7_1, "#go_walls/#go_ver/#go_verWall")
+	local goGridParent = gohelper.findChild(goMap, "#go_grids")
+	local goGrid = gohelper.findChild(goMap, "#go_grids/#go_gridItem")
+	local goHorParent = gohelper.findChild(goMap, "#go_walls/#go_hor")
+	local goHorWall = gohelper.findChild(goMap, "#go_walls/#go_hor/#go_horWall")
+	local goVerParent = gohelper.findChild(goMap, "#go_walls/#go_ver")
+	local goVerWall = gohelper.findChild(goMap, "#go_walls/#go_ver/#go_verWall")
 
-	arg_7_0._goGridDecors = gohelper.findChild(arg_7_1, "#go_gridDecors")
-	arg_7_0._goEntities = gohelper.findChild(arg_7_1, "#go_entities")
-	arg_7_0._goGridEffs = gohelper.findChild(arg_7_1, "#go_gridEffs")
-	arg_7_0._goInfo = gohelper.findChild(arg_7_1, "#go_infos")
-	arg_7_0._transGridDecors = arg_7_0._goGridDecors.transform
-	arg_7_0._transEntities = arg_7_0._goEntities.transform
-	arg_7_0._transGridEffs = arg_7_0._goGridEffs.transform
-	arg_7_0._transInfo = arg_7_0._goInfo.transform
+	self._goGridDecors = gohelper.findChild(goMap, "#go_gridDecors")
+	self._goEntities = gohelper.findChild(goMap, "#go_entities")
+	self._goGridEffs = gohelper.findChild(goMap, "#go_gridEffs")
+	self._goInfo = gohelper.findChild(goMap, "#go_infos")
+	self._transGridDecors = self._goGridDecors.transform
+	self._transEntities = self._goEntities.transform
+	self._transGridEffs = self._goGridEffs.transform
+	self._transInfo = self._goInfo.transform
 
-	gohelper.CreateObjList(arg_7_0, arg_7_0._onCreateGridItem, var_7_0, var_7_9, var_7_10, AssassinStealthGameGridItem)
-	gohelper.CreateObjList(arg_7_0, arg_7_0._onCreateHorWallItem, var_7_1, var_7_11, var_7_12, AssassinStealthGameWallItem)
-	gohelper.CreateObjList(arg_7_0, arg_7_0._onCreateVerWallItem, var_7_2, var_7_13, var_7_14, AssassinStealthGameWallItem)
+	gohelper.CreateObjList(self, self._onCreateGridItem, allGridList, goGridParent, goGrid, AssassinStealthGameGridItem)
+	gohelper.CreateObjList(self, self._onCreateHorWallItem, allHorWallList, goHorParent, goHorWall, AssassinStealthGameWallItem)
+	gohelper.CreateObjList(self, self._onCreateVerWallItem, allVerWallList, goVerParent, goVerWall, AssassinStealthGameWallItem)
 end
 
-function var_0_0._onCreateGridItem(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	arg_8_1:initData(arg_8_2)
-	arg_8_1:setEffParent(arg_8_0._goGridEffs, arg_8_0._transGridEffs)
+function AssassinStealthGameEntityMgr:_onCreateGridItem(obj, data, _)
+	obj:initData(data)
+	obj:setEffParent(self._goGridEffs, self._transGridEffs)
 
-	arg_8_0._gridDict[arg_8_2] = arg_8_1
+	self._gridDict[data] = obj
 end
 
-function var_0_0._onCreateHorWallItem(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	arg_9_1:initData(arg_9_2, true)
+function AssassinStealthGameEntityMgr:_onCreateHorWallItem(obj, data, _)
+	obj:initData(data, true)
 
-	arg_9_0._horWallDict[arg_9_2] = arg_9_1
+	self._horWallDict[data] = obj
 end
 
-function var_0_0._onCreateVerWallItem(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	arg_10_1:initData(arg_10_2, false)
+function AssassinStealthGameEntityMgr:_onCreateVerWallItem(obj, data, _)
+	obj:initData(data, false)
 
-	arg_10_0._verWallDict[arg_10_2] = arg_10_1
+	self._verWallDict[data] = obj
 end
 
-function var_0_0._startLoadRes(arg_11_0)
-	if arg_11_0._loader then
-		arg_11_0._loader:dispose()
+function AssassinStealthGameEntityMgr:_startLoadRes()
+	if self._loader then
+		self._loader:dispose()
 	end
 
-	arg_11_0._hasLoadedRes = false
-	arg_11_0._loader = MultiAbLoader.New()
+	self._hasLoadedRes = false
+	self._loader = MultiAbLoader.New()
 
 	if string.nilorempty(next(AssassinEnum.StealthRes)) then
-		arg_11_0:_loadResFinished()
+		self:_loadResFinished()
 	else
-		for iter_11_0, iter_11_1 in pairs(AssassinEnum.StealthRes) do
-			arg_11_0._loader:addPath(iter_11_1)
+		for _, path in pairs(AssassinEnum.StealthRes) do
+			self._loader:addPath(path)
 		end
 
 		UIBlockMgr.instance:startBlock(AssassinEnum.BlockKey.LoadGameRes)
-		arg_11_0._loader:startLoad(arg_11_0._loadResFinished, arg_11_0)
+		self._loader:startLoad(self._loadResFinished, self)
 	end
 end
 
-function var_0_0._loadResFinished(arg_12_0)
+function AssassinStealthGameEntityMgr:_loadResFinished()
 	UIBlockMgr.instance:endBlock(AssassinEnum.BlockKey.LoadGameRes)
 
-	arg_12_0._hasLoadedRes = true
+	self._hasLoadedRes = true
 
-	arg_12_0:setupMap()
+	self:setupMap()
 end
 
-function var_0_0.setupMap(arg_13_0)
-	arg_13_0:_setMap()
-	arg_13_0:_initEntities()
+function AssassinStealthGameEntityMgr:setupMap()
+	self:_setMap()
+	self:_initEntities()
 end
 
-function var_0_0._setMap(arg_14_0)
+function AssassinStealthGameEntityMgr:_setMap()
 	UnityEngine.Canvas.ForceUpdateCanvases()
 
-	local var_14_0 = AssassinStealthGameModel.instance:getMapId()
+	local mapId = AssassinStealthGameModel.instance:getMapId()
 
-	for iter_14_0, iter_14_1 in pairs(arg_14_0._gridDict) do
-		iter_14_1:setMap(var_14_0)
+	for _, grid in pairs(self._gridDict) do
+		grid:setMap(mapId)
 	end
 
-	for iter_14_2, iter_14_3 in pairs(arg_14_0._horWallDict) do
-		iter_14_3:setMap(var_14_0)
+	for _, horWall in pairs(self._horWallDict) do
+		horWall:setMap(mapId)
 	end
 
-	for iter_14_4, iter_14_5 in pairs(arg_14_0._verWallDict) do
-		iter_14_5:setMap(var_14_0)
+	for _, verWall in pairs(self._verWallDict) do
+		verWall:setMap(mapId)
 	end
 
-	local var_14_1 = AssassinConfig.instance:getMapStairList(var_14_0)
-	local var_14_2 = gohelper.findChild(arg_14_0._goGridDecors, "#go_stair")
+	local stairList = AssassinConfig.instance:getMapStairList(mapId)
+	local goStair = gohelper.findChild(self._goGridDecors, "#go_stair")
 
-	gohelper.CreateObjList(arg_14_0, arg_14_0._onCreateStairItem, var_14_1, arg_14_0._goGridDecors, var_14_2)
+	gohelper.CreateObjList(self, self._onCreateStairItem, stairList, self._goGridDecors, goStair)
 end
 
-function var_0_0._onCreateStairItem(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	local var_15_0 = arg_15_1.transform
-	local var_15_1 = arg_15_2.gridId
-	local var_15_2 = arg_15_2.dir
-	local var_15_3 = arg_15_0:getGridItem(var_15_1, true)
-	local var_15_4 = var_15_3 and var_15_3:getEntranceNodeTrans(var_15_2)
+function AssassinStealthGameEntityMgr:_onCreateStairItem(obj, data, _)
+	local stairTrans = obj.transform
+	local gridId = data.gridId
+	local dir = data.dir
+	local gridItem = self:getGridItem(gridId, true)
+	local stairNodeTrans = gridItem and gridItem:getEntranceNodeTrans(dir)
 
-	if var_15_4 then
-		var_15_0.pivot = var_15_4.pivot
-		var_15_0.anchorMin = var_15_4.anchorMin
-		var_15_0.anchorMax = var_15_4.anchorMax
+	if stairNodeTrans then
+		stairTrans.pivot = stairNodeTrans.pivot
+		stairTrans.anchorMin = stairNodeTrans.anchorMin
+		stairTrans.anchorMax = stairNodeTrans.anchorMax
 
-		local var_15_5 = var_15_4.rotation
+		local rotation = stairNodeTrans.rotation
 
-		transformhelper.setRotation(var_15_0, var_15_5.x, var_15_5.y, var_15_5.z, var_15_5.w)
+		transformhelper.setRotation(stairTrans, rotation.x, rotation.y, rotation.z, rotation.w)
 
-		local var_15_6 = var_15_4.position
-		local var_15_7 = arg_15_0._transGridDecors:InverseTransformPoint(var_15_6)
+		local worldPos = stairNodeTrans.position
+		local pos = self._transGridDecors:InverseTransformPoint(worldPos)
 
-		transformhelper.setLocalPosXY(var_15_0, var_15_7.x, var_15_7.y)
+		transformhelper.setLocalPosXY(stairTrans, pos.x, pos.y)
 	end
 
-	arg_15_1.name = string.format("%s-%s", var_15_1, var_15_2)
+	obj.name = string.format("%s-%s", gridId, dir)
 end
 
-function var_0_0._initEntities(arg_16_0)
-	arg_16_0:clearAllEntity(true)
+function AssassinStealthGameEntityMgr:_initEntities()
+	self:clearAllEntity(true)
 
-	local var_16_0 = arg_16_0._loader:getAssetItem(AssassinEnum.StealthRes.HeroEntity)
+	local heroAssetItem = self._loader:getAssetItem(AssassinEnum.StealthRes.HeroEntity)
 
-	if var_16_0 then
-		local var_16_1 = AssassinStealthGameModel.instance:getHeroUidList()
+	if heroAssetItem then
+		local heroUidList = AssassinStealthGameModel.instance:getHeroUidList()
 
-		for iter_16_0, iter_16_1 in ipairs(var_16_1) do
-			local var_16_2 = gohelper.clone(var_16_0:GetResource(), arg_16_0._goEntities)
-			local var_16_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_16_2, AssassinStealthGameHeroEntity, iter_16_1)
+		for _, uid in ipairs(heroUidList) do
+			local goHero = gohelper.clone(heroAssetItem:GetResource(), self._goEntities)
+			local heroEntity = MonoHelper.addNoUpdateLuaComOnceToGo(goHero, AssassinStealthGameHeroEntity, uid)
 
-			arg_16_0._heroDict[iter_16_1] = var_16_3
+			self._heroDict[uid] = heroEntity
 		end
 	end
 
-	if arg_16_0._loader:getAssetItem(AssassinEnum.StealthRes.EnemyEntity) then
-		local var_16_4 = AssassinStealthGameModel.instance:getEnemyUidList()
+	local enemyAssetItem = self._loader:getAssetItem(AssassinEnum.StealthRes.EnemyEntity)
 
-		arg_16_0:addEnemyEntityByList(var_16_4)
+	if enemyAssetItem then
+		local enemyUidList = AssassinStealthGameModel.instance:getEnemyUidList()
+
+		self:addEnemyEntityByList(enemyUidList)
 	end
 end
 
-function var_0_0.addEnemyEntityByList(arg_17_0, arg_17_1)
-	local var_17_0 = arg_17_0._loader:getAssetItem(AssassinEnum.StealthRes.EnemyEntity)
+function AssassinStealthGameEntityMgr:addEnemyEntityByList(enemyUidList)
+	local enemyAssetItem = self._loader:getAssetItem(AssassinEnum.StealthRes.EnemyEntity)
 
-	if not var_17_0 then
+	if not enemyAssetItem then
 		logError("AssassinStealthGameEntityMgr:addEnemyEntityByList error, no enemyAssetItem")
 
 		return
 	end
 
-	for iter_17_0, iter_17_1 in ipairs(arg_17_1) do
-		arg_17_0:addEnemyEntity(iter_17_1, var_17_0)
+	for _, enemyUid in ipairs(enemyUidList) do
+		self:addEnemyEntity(enemyUid, enemyAssetItem)
 	end
 end
 
-function var_0_0.addEnemyEntity(arg_18_0, arg_18_1, arg_18_2)
-	if arg_18_0:getEnemyEntity(arg_18_1) then
-		logError(string.format("AssassinStealthGameEntityMgr:addEnemyEntity error, enemy repeated, enemyUid:%s", arg_18_1))
+function AssassinStealthGameEntityMgr:addEnemyEntity(enemyUid, enemyAssetItem)
+	local repeatedEntity = self:getEnemyEntity(enemyUid)
+
+	if repeatedEntity then
+		logError(string.format("AssassinStealthGameEntityMgr:addEnemyEntity error, enemy repeated, enemyUid:%s", enemyUid))
 
 		return
 	end
 
-	arg_18_2 = arg_18_2 or arg_18_0._loader:getAssetItem(AssassinEnum.StealthRes.EnemyEntity)
+	enemyAssetItem = enemyAssetItem or self._loader:getAssetItem(AssassinEnum.StealthRes.EnemyEntity)
 
-	if not arg_18_2 then
+	if not enemyAssetItem then
 		logError("AssassinStealthGameEntityMgr:addEnemyEntity error, no enemyAssetItem")
 
 		return
 	end
 
-	local var_18_0 = gohelper.clone(arg_18_2:GetResource(), arg_18_0._goEntities)
-	local var_18_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_18_0, AssassinStealthGameEnemyEntity, arg_18_1)
+	local goEnemy = gohelper.clone(enemyAssetItem:GetResource(), self._goEntities)
+	local enemyEntity = MonoHelper.addNoUpdateLuaComOnceToGo(goEnemy, AssassinStealthGameEnemyEntity, enemyUid)
 
-	arg_18_0._enemyDict[arg_18_1] = var_18_1
+	self._enemyDict[enemyUid] = enemyEntity
 end
 
-function var_0_0.removeEnemyEntity(arg_19_0, arg_19_1)
-	local var_19_0 = arg_19_0:getEnemyEntity(arg_19_1, true)
+function AssassinStealthGameEntityMgr:removeEnemyEntity(enemyUid)
+	local enemyEntity = self:getEnemyEntity(enemyUid, true)
 
-	if var_19_0 then
-		var_19_0:playRemove()
+	if enemyEntity then
+		enemyEntity:playRemove()
 	end
 
-	arg_19_0._enemyDict[arg_19_1] = nil
+	self._enemyDict[enemyUid] = nil
 end
 
-function var_0_0.changeSkillPropTargetLayer(arg_20_0, arg_20_1)
-	local var_20_0 = false
+function AssassinStealthGameEntityMgr:changeSkillPropTargetLayer(parentTrans)
+	local hasTarget = false
 
-	for iter_20_0, iter_20_1 in pairs(arg_20_0._gridDict) do
-		if AssassinStealthGameHelper.isSelectedHeroCanUseSkillPropToGrid(iter_20_0) then
-			var_20_0 = true
+	for gridId, gridItem in pairs(self._gridDict) do
+		local isCanUseSkillProp2Grid = AssassinStealthGameHelper.isSelectedHeroCanUseSkillPropToGrid(gridId)
 
-			iter_20_1:changeHighlightClickParent(arg_20_1)
+		if isCanUseSkillProp2Grid then
+			hasTarget = true
+
+			gridItem:changeHighlightClickParent(parentTrans)
 		else
-			iter_20_1:changeHighlightClickParent()
+			gridItem:changeHighlightClickParent()
 		end
 	end
 
-	for iter_20_2, iter_20_3 in pairs(arg_20_0._heroDict) do
-		if AssassinStealthGameHelper.isSelectedHeroCanUseSkillPropToHero(iter_20_2) then
-			var_20_0 = true
+	for heroUid, heroEntity in pairs(self._heroDict) do
+		local isCanUseSkillProp2Hero = AssassinStealthGameHelper.isSelectedHeroCanUseSkillPropToHero(heroUid)
 
-			iter_20_3:changeParent(arg_20_1)
+		if isCanUseSkillProp2Hero then
+			hasTarget = true
+
+			heroEntity:changeParent(parentTrans)
 		else
-			iter_20_3:changeParent(arg_20_0._transEntities)
+			heroEntity:changeParent(self._transEntities)
 		end
 	end
 
-	for iter_20_4, iter_20_5 in pairs(arg_20_0._enemyDict) do
-		if AssassinStealthGameHelper.isSelectedHeroCanUseSkillPropToEnemy(iter_20_4) then
-			var_20_0 = true
+	for enemyUid, enemyEntity in pairs(self._enemyDict) do
+		local isCanUseSkillProp2Enemy = AssassinStealthGameHelper.isSelectedHeroCanUseSkillPropToEnemy(enemyUid)
 
-			iter_20_5:changeParent(arg_20_1)
+		if isCanUseSkillProp2Enemy then
+			hasTarget = true
+
+			enemyEntity:changeParent(parentTrans)
 		else
-			iter_20_5:changeParent(arg_20_0._transEntities)
+			enemyEntity:changeParent(self._transEntities)
 		end
 	end
 
-	return var_20_0
+	return hasTarget
 end
 
-function var_0_0.refreshSkillPropTargetPos(arg_21_0)
-	local var_21_0, var_21_1 = AssassinStealthGameModel.instance:getSelectedSkillProp()
+function AssassinStealthGameEntityMgr:refreshSkillPropTargetPos()
+	local selectedSkillPropId, selectedIsSkill = AssassinStealthGameModel.instance:getSelectedSkillProp()
 
-	if not var_21_0 then
+	if not selectedSkillPropId then
 		return
 	end
 
-	local var_21_2 = AssassinConfig.instance:getSkillPropTargetType(var_21_0, var_21_1)
+	local targetType = AssassinConfig.instance:getSkillPropTargetType(selectedSkillPropId, selectedIsSkill)
 
-	if var_21_2 == AssassinEnum.SkillPropTargetType.Grid then
-		for iter_21_0, iter_21_1 in pairs(arg_21_0._gridDict) do
-			if AssassinStealthGameHelper.isSelectedHeroCanUseSkillPropToGrid(iter_21_0) then
-				iter_21_1:refreshHighlightPos()
+	if targetType == AssassinEnum.SkillPropTargetType.Grid then
+		for gridId, gridItem in pairs(self._gridDict) do
+			local isCanUseSkillProp2Grid = AssassinStealthGameHelper.isSelectedHeroCanUseSkillPropToGrid(gridId)
+
+			if isCanUseSkillProp2Grid then
+				gridItem:refreshHighlightPos()
 			end
 		end
 	end
 
-	if var_21_2 == AssassinEnum.SkillPropTargetType.Hero then
-		for iter_21_2, iter_21_3 in pairs(arg_21_0._heroDict) do
-			if AssassinStealthGameHelper.isSelectedHeroCanUseSkillPropToHero(iter_21_2) then
-				iter_21_3:refreshPos()
+	if targetType == AssassinEnum.SkillPropTargetType.Hero then
+		for heroUid, heroEntity in pairs(self._heroDict) do
+			local isCanUseSkillProp2Hero = AssassinStealthGameHelper.isSelectedHeroCanUseSkillPropToHero(heroUid)
+
+			if isCanUseSkillProp2Hero then
+				heroEntity:refreshPos()
 			end
 		end
 	end
 
-	if var_21_2 == AssassinEnum.SkillPropTargetType.Enemy then
-		for iter_21_4, iter_21_5 in pairs(arg_21_0._enemyDict) do
-			if AssassinStealthGameHelper.isSelectedHeroCanUseSkillPropToEnemy(iter_21_4) then
-				iter_21_5:refreshPos()
+	if targetType == AssassinEnum.SkillPropTargetType.Enemy then
+		for enemyUid, enemyEntity in pairs(self._enemyDict) do
+			local isCanUseSkillProp2Enemy = AssassinStealthGameHelper.isSelectedHeroCanUseSkillPropToEnemy(enemyUid)
+
+			if isCanUseSkillProp2Enemy then
+				enemyEntity:refreshPos()
 			end
 		end
 	end
 end
 
-function var_0_0.changeEnemyParent(arg_22_0, arg_22_1, arg_22_2)
-	local var_22_0 = arg_22_0:getEnemyEntity(arg_22_1, true)
+function AssassinStealthGameEntityMgr:changeEnemyParent(enemyUid, parentTrans)
+	local enemyEntity = self:getEnemyEntity(enemyUid, true)
 
-	if not var_22_0 then
+	if not enemyEntity then
 		return
 	end
 
-	var_22_0:changeParent(arg_22_2 or arg_22_0._transEntities)
+	enemyEntity:changeParent(parentTrans or self._transEntities)
 end
 
-function var_0_0.refreshAllGrid(arg_23_0)
-	for iter_23_0, iter_23_1 in pairs(arg_23_0._gridDict) do
-		iter_23_1:refresh()
+function AssassinStealthGameEntityMgr:refreshAllGrid()
+	for _, gridItem in pairs(self._gridDict) do
+		gridItem:refresh()
 	end
 end
 
-function var_0_0.refreshGrid(arg_24_0, arg_24_1, arg_24_2)
-	local var_24_0 = arg_24_0:getGridItem(arg_24_1, true)
+function AssassinStealthGameEntityMgr:refreshGrid(gridId, effectId)
+	local gridItem = self:getGridItem(gridId, true)
 
-	if var_24_0 then
-		var_24_0:refresh(arg_24_2)
+	if gridItem then
+		gridItem:refresh(effectId)
 	end
 end
 
-function var_0_0.refreshAllHeroEntities(arg_25_0)
-	for iter_25_0, iter_25_1 in pairs(arg_25_0._heroDict) do
-		iter_25_1:refresh()
+function AssassinStealthGameEntityMgr:refreshAllHeroEntities()
+	for _, heroEntity in pairs(self._heroDict) do
+		heroEntity:refresh()
 	end
 end
 
-function var_0_0.refreshHeroEntity(arg_26_0, arg_26_1, arg_26_2)
-	local var_26_0 = arg_26_0:getHeroEntity(arg_26_1, true)
+function AssassinStealthGameEntityMgr:refreshHeroEntity(uid, effectId)
+	local entity = self:getHeroEntity(uid, true)
 
-	if var_26_0 then
-		var_26_0:refresh(arg_26_2)
+	if entity then
+		entity:refresh(effectId)
 	end
 end
 
-function var_0_0.refreshAllEnemyEntities(arg_27_0)
-	for iter_27_0, iter_27_1 in pairs(arg_27_0._enemyDict) do
-		iter_27_1:refresh()
+function AssassinStealthGameEntityMgr:refreshAllEnemyEntities()
+	for _, enemyEntity in pairs(self._enemyDict) do
+		enemyEntity:refresh()
 	end
 end
 
-function var_0_0.refreshEnemyEntity(arg_28_0, arg_28_1, arg_28_2)
-	local var_28_0 = arg_28_0:getEnemyEntity(arg_28_1, true)
+function AssassinStealthGameEntityMgr:refreshEnemyEntity(uid, effectId)
+	local entity = self:getEnemyEntity(uid, true)
 
-	if var_28_0 then
-		var_28_0:refresh(arg_28_2)
+	if entity then
+		entity:refresh(effectId)
 	end
 end
 
-function var_0_0.playHeroEff(arg_29_0, arg_29_1, arg_29_2)
-	local var_29_0 = arg_29_0:getHeroEntity(arg_29_1, true)
+function AssassinStealthGameEntityMgr:playHeroEff(heroUid, effectId)
+	local heroEntity = self:getHeroEntity(heroUid, true)
 
-	if not var_29_0 then
+	if not heroEntity then
 		return
 	end
 
-	var_29_0:playEffect(arg_29_2)
+	heroEntity:playEffect(effectId)
 end
 
-function var_0_0.playEnemyEff(arg_30_0, arg_30_1, arg_30_2, arg_30_3, arg_30_4, arg_30_5, arg_30_6)
-	local var_30_0 = arg_30_0:getEnemyEntity(arg_30_1, true)
+function AssassinStealthGameEntityMgr:playEnemyEff(enemyUid, effectId, finishCb, finishCbObj, finishCbParam, blockKey)
+	local enemyEntity = self:getEnemyEntity(enemyUid, true)
 
-	if not var_30_0 then
+	if not enemyEntity then
 		return
 	end
 
-	var_30_0:playEffect(arg_30_2, arg_30_3, arg_30_4, arg_30_5, arg_30_6)
+	enemyEntity:playEffect(effectId, finishCb, finishCbObj, finishCbParam, blockKey)
 end
 
-function var_0_0.playGridScanEff(arg_31_0, arg_31_1, arg_31_2, arg_31_3, arg_31_4)
-	local var_31_0 = arg_31_0:getGridItem(arg_31_1, true)
+function AssassinStealthGameEntityMgr:playGridScanEff(gridId, finishCb, finishCbObj, finishCbParam)
+	local gridItem = self:getGridItem(gridId, true)
+	local isShowGrid = gridItem and gridItem:isShow()
 
-	if not (var_31_0 and var_31_0:isShow()) then
+	if not isShowGrid then
 		return
 	end
 
-	var_31_0:playEffect(AssassinEnum.EffectId.ScanEffectId, arg_31_2, arg_31_3, arg_31_4)
+	gridItem:playEffect(AssassinEnum.EffectId.ScanEffectId, finishCb, finishCbObj, finishCbParam)
 end
 
-function var_0_0.playGridEff(arg_32_0, arg_32_1, arg_32_2)
-	local var_32_0 = arg_32_0:getGridItem(arg_32_1, true)
+function AssassinStealthGameEntityMgr:playGridEff(gridId, effectId)
+	local gridItem = self:getGridItem(gridId, true)
+	local isShowGrid = gridItem and gridItem:isShow()
 
-	if not (var_32_0 and var_32_0:isShow()) then
+	if not isShowGrid then
 		return
 	end
 
-	var_32_0:playEffect(arg_32_2)
+	gridItem:playEffect(effectId)
 end
 
-function var_0_0.getGridItem(arg_33_0, arg_33_1, arg_33_2)
-	local var_33_0 = arg_33_0._gridDict[arg_33_1]
+function AssassinStealthGameEntityMgr:getGridItem(gridId, nilError)
+	local gridItem = self._gridDict[gridId]
 
-	if not arg_33_1 and arg_33_2 then
-		logError(string.format("AssassinStealthGameEntityMgr:getGridItem error, no grid Item, gridId:%s", arg_33_1))
+	if not gridId and nilError then
+		logError(string.format("AssassinStealthGameEntityMgr:getGridItem error, no grid Item, gridId:%s", gridId))
 	end
 
-	return var_33_0
+	return gridItem
 end
 
-function var_0_0.getGridPointGoPosInEntityLayer(arg_34_0, arg_34_1, arg_34_2, arg_34_3)
-	local var_34_0 = Vector2.zero
-	local var_34_1 = arg_34_0:getGridItem(arg_34_1, true)
-	local var_34_2 = var_34_1 and var_34_1:getPointTrans(arg_34_2)
+function AssassinStealthGameEntityMgr:getGridPointGoPosInEntityLayer(gridId, pointIndex, transParent)
+	local pos = Vector2.zero
+	local gridItem = self:getGridItem(gridId, true)
+	local pointTrans = gridItem and gridItem:getPointTrans(pointIndex)
 
-	if var_34_2 then
-		local var_34_3 = var_34_2.position
+	if pointTrans then
+		local worldPos = pointTrans.position
 
-		if not gohelper.isNil(arg_34_3) then
-			var_34_0 = arg_34_3:InverseTransformPoint(var_34_3)
+		if not gohelper.isNil(transParent) then
+			pos = transParent:InverseTransformPoint(worldPos)
 		else
-			var_34_0 = arg_34_0._transEntities:InverseTransformPoint(var_34_3)
+			pos = self._transEntities:InverseTransformPoint(worldPos)
 		end
 	end
 
-	return var_34_0
+	return pos
 end
 
-function var_0_0.getHeroEntity(arg_35_0, arg_35_1, arg_35_2)
-	local var_35_0 = arg_35_0._heroDict[arg_35_1]
+function AssassinStealthGameEntityMgr:getHeroEntity(uid, nilError)
+	local result = self._heroDict[uid]
 
-	if not var_35_0 and arg_35_2 then
-		logError(string.format("AssassinStealthGameEntityMgr:getHeroEntity error, no entity uid:%s", arg_35_1))
+	if not result and nilError then
+		logError(string.format("AssassinStealthGameEntityMgr:getHeroEntity error, no entity uid:%s", uid))
 	end
 
-	return var_35_0
+	return result
 end
 
-function var_0_0.getEnemyEntity(arg_36_0, arg_36_1, arg_36_2)
-	local var_36_0 = arg_36_0._enemyDict[arg_36_1]
+function AssassinStealthGameEntityMgr:getEnemyEntity(uid, nilError)
+	local result = self._enemyDict[uid]
 
-	if not var_36_0 and arg_36_2 then
-		logError(string.format("AssassinStealthGameEntityMgr:getEnemyEntity error, no entity uid:%s", arg_36_1))
+	if not result and nilError then
+		logError(string.format("AssassinStealthGameEntityMgr:getEnemyEntity error, no entity uid:%s", uid))
 	end
 
-	return var_36_0
+	return result
 end
 
-function var_0_0.getEnemyLocalPos(arg_37_0, arg_37_1)
-	local var_37_0 = arg_37_0:getEnemyEntity(arg_37_1, true)
+function AssassinStealthGameEntityMgr:getEnemyLocalPos(enemyUid)
+	local enemyEntity = self:getEnemyEntity(enemyUid, true)
 
-	if not var_37_0 then
+	if not enemyEntity then
 		return
 	end
 
-	return var_37_0:getLocalPos()
+	return enemyEntity:getLocalPos()
 end
 
-function var_0_0.getInfoTrans(arg_38_0)
-	return arg_38_0._transInfo
+function AssassinStealthGameEntityMgr:getInfoTrans()
+	return self._transInfo
 end
 
-var_0_0.instance = var_0_0.New()
+AssassinStealthGameEntityMgr.instance = AssassinStealthGameEntityMgr.New()
 
-return var_0_0
+return AssassinStealthGameEntityMgr

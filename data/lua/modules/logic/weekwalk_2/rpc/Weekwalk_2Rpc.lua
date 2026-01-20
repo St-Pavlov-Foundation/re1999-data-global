@@ -1,211 +1,213 @@
-﻿module("modules.logic.weekwalk_2.rpc.Weekwalk_2Rpc", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk_2/rpc/Weekwalk_2Rpc.lua
 
-local var_0_0 = class("Weekwalk_2Rpc", BaseRpc)
+module("modules.logic.weekwalk_2.rpc.Weekwalk_2Rpc", package.seeall)
 
-function var_0_0.sendWeekwalkVer2GetInfoRequest(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = WeekwalkVer2Module_pb.WeekwalkVer2GetInfoRequest()
+local Weekwalk_2Rpc = class("Weekwalk_2Rpc", BaseRpc)
 
-	return arg_1_0:sendMsg(var_1_0, arg_1_1, arg_1_2)
+function Weekwalk_2Rpc:sendWeekwalkVer2GetInfoRequest(callback, callbackObj)
+	local req = WeekwalkVer2Module_pb.WeekwalkVer2GetInfoRequest()
+
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveWeekwalkVer2GetInfoReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 ~= 0 then
+function Weekwalk_2Rpc:onReceiveWeekwalkVer2GetInfoReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_2_0 = arg_2_2.info
+	local info = msg.info
 
-	WeekWalk_2Model.instance:initInfo(var_2_0)
+	WeekWalk_2Model.instance:initInfo(info)
 	WeekWalk_2Controller.instance:dispatchEvent(WeekWalk_2Event.OnGetInfo)
 	WeekWalk_2Controller.instance:dispatchEvent(WeekWalk_2Event.OnWeekwalkInfoChange)
 end
 
-function var_0_0.sendWeekwalkVer2HeroRecommendRequest(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	local var_3_0 = WeekwalkVer2Module_pb.WeekwalkVer2HeroRecommendRequest()
+function Weekwalk_2Rpc:sendWeekwalkVer2HeroRecommendRequest(elementId, layerId, callback, callbackObj)
+	local req = WeekwalkVer2Module_pb.WeekwalkVer2HeroRecommendRequest()
 
-	var_3_0.elementId = arg_3_1
-	var_3_0.layerId = arg_3_2
+	req.elementId = elementId
+	req.layerId = layerId
 
-	arg_3_0:sendMsg(var_3_0, arg_3_3, arg_3_4)
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveWeekwalkVer2HeroRecommendReply(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 ~= 0 then
+function Weekwalk_2Rpc:onReceiveWeekwalkVer2HeroRecommendReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_4_0 = arg_4_2.racommends
+	local racommends = msg.racommends
 end
 
-function var_0_0.sendWeekwalkVer2ResetLayerRequest(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
-	local var_5_0 = WeekwalkVer2Module_pb.WeekwalkVer2ResetLayerRequest()
+function Weekwalk_2Rpc:sendWeekwalkVer2ResetLayerRequest(layerId, battleId, callback, callbackObj)
+	local req = WeekwalkVer2Module_pb.WeekwalkVer2ResetLayerRequest()
 
-	var_5_0.layerId = arg_5_1
-	var_5_0.battleId = arg_5_2
+	req.layerId = layerId
+	req.battleId = battleId
 
-	arg_5_0:sendMsg(var_5_0, arg_5_3, arg_5_4)
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveWeekwalkVer2ResetLayerReply(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_1 ~= 0 then
+function Weekwalk_2Rpc:onReceiveWeekwalkVer2ResetLayerReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_6_0 = arg_6_2.layerInfo
+	local layerInfo = msg.layerInfo
 
-	WeekWalk_2Model.instance:getInfo():setLayerInfo(var_6_0)
+	WeekWalk_2Model.instance:getInfo():setLayerInfo(layerInfo)
 	WeekWalk_2Controller.instance:dispatchEvent(WeekWalk_2Event.OnWeekwalkResetLayer)
 	WeekWalk_2Controller.instance:dispatchEvent(WeekWalk_2Event.OnWeekwalkInfoChange)
 	GameFacade.showToast(ToastEnum.WeekwalkResetLayer)
 end
 
-function var_0_0.sendWeekwalkVer2ChangeHeroGroupSelectRequest(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4, arg_7_5)
-	local var_7_0 = WeekwalkVer2Module_pb.WeekwalkVer2ChangeHeroGroupSelectRequest()
+function Weekwalk_2Rpc:sendWeekwalkVer2ChangeHeroGroupSelectRequest(layerId, battleId, select, callback, callbackObj)
+	local req = WeekwalkVer2Module_pb.WeekwalkVer2ChangeHeroGroupSelectRequest()
 
-	var_7_0.layerId = arg_7_1
-	var_7_0.battleId = arg_7_2
-	var_7_0.select = arg_7_3
+	req.layerId = layerId
+	req.battleId = battleId
+	req.select = select
 
-	arg_7_0:sendMsg(var_7_0, arg_7_4, arg_7_5)
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveWeekwalkVer2ChangeHeroGroupSelectReply(arg_8_0, arg_8_1, arg_8_2)
-	if arg_8_1 ~= 0 then
+function Weekwalk_2Rpc:onReceiveWeekwalkVer2ChangeHeroGroupSelectReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_8_0 = arg_8_2.layerId
-	local var_8_1 = arg_8_2.battleId
-	local var_8_2 = arg_8_2.select
-	local var_8_3 = WeekWalk_2Model.instance:getBattleInfo(var_8_0, var_8_1)
+	local layerId = msg.layerId
+	local battleId = msg.battleId
+	local select = msg.select
+	local battleInfo = WeekWalk_2Model.instance:getBattleInfo(layerId, battleId)
 
-	if var_8_3 then
-		var_8_3.heroGroupSelect = var_8_2
+	if battleInfo then
+		battleInfo.heroGroupSelect = select
 	end
 end
 
-function var_0_0.sendWeekwalkVer2ChooseSkillRequest(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
-	local var_9_0 = WeekwalkVer2Module_pb.WeekwalkVer2ChooseSkillRequest()
+function Weekwalk_2Rpc:sendWeekwalkVer2ChooseSkillRequest(no, skillIds, callback, callbackObj)
+	local req = WeekwalkVer2Module_pb.WeekwalkVer2ChooseSkillRequest()
 
-	var_9_0.no = arg_9_1
+	req.no = no
 
-	if arg_9_2 then
-		for iter_9_0, iter_9_1 in ipairs(arg_9_2) do
-			table.insert(var_9_0.skillIds, iter_9_1)
+	if skillIds then
+		for i, v in ipairs(skillIds) do
+			table.insert(req.skillIds, v)
 		end
 	end
 
-	arg_9_0:sendMsg(var_9_0, arg_9_3, arg_9_4)
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveWeekwalkVer2ChooseSkillReply(arg_10_0, arg_10_1, arg_10_2)
-	if arg_10_1 ~= 0 then
+function Weekwalk_2Rpc:onReceiveWeekwalkVer2ChooseSkillReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_10_0 = arg_10_2.no
-	local var_10_1 = arg_10_2.skillIds
-	local var_10_2 = WeekWalk_2Model.instance:getInfo()
+	local no = msg.no
+	local skillIds = msg.skillIds
+	local info = WeekWalk_2Model.instance:getInfo()
 
-	if var_10_2 then
-		var_10_2:setHeroGroupSkill(var_10_0, var_10_1)
+	if info then
+		info:setHeroGroupSkill(no, skillIds)
 		WeekWalk_2Controller.instance:dispatchEvent(WeekWalk_2Event.OnBuffSetupReply)
 	end
 end
 
-function var_0_0.sendWeekwalkVer2GetSettleInfoRequest(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = WeekwalkVer2Module_pb.WeekwalkVer2GetSettleInfoRequest()
+function Weekwalk_2Rpc:sendWeekwalkVer2GetSettleInfoRequest(callback, callbackObj)
+	local req = WeekwalkVer2Module_pb.WeekwalkVer2GetSettleInfoRequest()
 
-	arg_11_0:sendMsg(var_11_0, arg_11_1, arg_11_2)
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveWeekwalkVer2GetSettleInfoReply(arg_12_0, arg_12_1, arg_12_2)
-	if arg_12_1 ~= 0 then
+function Weekwalk_2Rpc:onReceiveWeekwalkVer2GetSettleInfoReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_12_0 = arg_12_2.settleInfo
+	local settleInfo = msg.settleInfo
 
-	WeekWalk_2Model.instance:initSettleInfo(var_12_0)
+	WeekWalk_2Model.instance:initSettleInfo(settleInfo)
 	WeekWalk_2Controller.instance:openWeekWalk_2HeartResultView()
 end
 
-function var_0_0.sendWeekwalkVer2MarkPreSettleRequest(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0 = WeekwalkVer2Module_pb.WeekwalkVer2MarkPreSettleRequest()
+function Weekwalk_2Rpc:sendWeekwalkVer2MarkPreSettleRequest(callback, callbackObj)
+	local req = WeekwalkVer2Module_pb.WeekwalkVer2MarkPreSettleRequest()
 
-	arg_13_0:sendMsg(var_13_0, arg_13_1, arg_13_2)
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveWeekwalkVer2MarkPreSettleReply(arg_14_0, arg_14_1, arg_14_2)
-	if arg_14_1 ~= 0 then
+function Weekwalk_2Rpc:onReceiveWeekwalkVer2MarkPreSettleReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 end
 
-function var_0_0.sendWeekwalkVer2MarkPopRuleRequest(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0 = WeekwalkVer2Module_pb.WeekwalkVer2MarkPopRuleRequest()
+function Weekwalk_2Rpc:sendWeekwalkVer2MarkPopRuleRequest(callback, callbackObj)
+	local req = WeekwalkVer2Module_pb.WeekwalkVer2MarkPopRuleRequest()
 
-	arg_15_0:sendMsg(var_15_0, arg_15_1, arg_15_2)
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveWeekwalkVer2MarkPopRuleReply(arg_16_0, arg_16_1, arg_16_2)
-	if arg_16_1 ~= 0 then
+function Weekwalk_2Rpc:onReceiveWeekwalkVer2MarkPopRuleReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 end
 
-function var_0_0.sendWeekwalkVer2MarkShowFinishedRequest(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	local var_17_0 = WeekwalkVer2Module_pb.WeekwalkVer2MarkShowFinishedRequest()
+function Weekwalk_2Rpc:sendWeekwalkVer2MarkShowFinishedRequest(layerId, callback, callbackObj)
+	local req = WeekwalkVer2Module_pb.WeekwalkVer2MarkShowFinishedRequest()
 
-	var_17_0.layerId = arg_17_1
+	req.layerId = layerId
 
-	arg_17_0:sendMsg(var_17_0, arg_17_2, arg_17_3)
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveWeekwalkVer2MarkShowFinishedReply(arg_18_0, arg_18_1, arg_18_2)
-	if arg_18_1 ~= 0 then
+function Weekwalk_2Rpc:onReceiveWeekwalkVer2MarkShowFinishedReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_18_0 = arg_18_2.layerId
+	local layerId = msg.layerId
 end
 
-function var_0_0.onReceiveWeekwalkVer2InfoUpdatePush(arg_19_0, arg_19_1, arg_19_2)
-	if arg_19_1 ~= 0 then
+function Weekwalk_2Rpc:onReceiveWeekwalkVer2InfoUpdatePush(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_19_0 = arg_19_2.info
+	local info = msg.info
 
-	WeekWalk_2Model.instance:updateInfo(var_19_0)
+	WeekWalk_2Model.instance:updateInfo(info)
 	WeekWalk_2Model.instance:clearSettleInfo()
 	WeekWalk_2Controller.instance:dispatchEvent(WeekWalk_2Event.OnWeekwalkInfoUpdate)
 	WeekWalk_2Controller.instance:dispatchEvent(WeekWalk_2Event.OnWeekwalkInfoChange)
 end
 
-function var_0_0.onReceiveWeekwalkVer2SettleInfoUpdatePush(arg_20_0, arg_20_1, arg_20_2)
-	if arg_20_1 ~= 0 then
+function Weekwalk_2Rpc:onReceiveWeekwalkVer2SettleInfoUpdatePush(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_20_0 = arg_20_2.settleInfo
+	local settleInfo = msg.settleInfo
 
-	WeekWalk_2Model.instance:initSettleInfo(var_20_0)
+	WeekWalk_2Model.instance:initSettleInfo(settleInfo)
 end
 
-function var_0_0.onReceiveWeekwalkVer2FightSettlePush(arg_21_0, arg_21_1, arg_21_2)
-	if arg_21_1 ~= 0 then
+function Weekwalk_2Rpc:onReceiveWeekwalkVer2FightSettlePush(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_21_0 = arg_21_2.layerId
-	local var_21_1 = arg_21_2.battleId
-	local var_21_2 = arg_21_2.result
-	local var_21_3 = arg_21_2.cupInfos
+	local layerId = msg.layerId
+	local battleId = msg.battleId
+	local result = msg.result
+	local cupInfos = msg.cupInfos
 
-	WeekWalk_2Model.instance:initFightSettleInfo(var_21_2, var_21_3)
+	WeekWalk_2Model.instance:initFightSettleInfo(result, cupInfos)
 end
 
-var_0_0.instance = var_0_0.New()
+Weekwalk_2Rpc.instance = Weekwalk_2Rpc.New()
 
-return var_0_0
+return Weekwalk_2Rpc

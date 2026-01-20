@@ -1,55 +1,57 @@
-﻿module("modules.logic.sp01.assassin2.outside.view.AssassinStealthGameWallItem", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/outside/view/AssassinStealthGameWallItem.lua
 
-local var_0_0 = class("AssassinStealthGameWallItem", LuaCompBase)
+module("modules.logic.sp01.assassin2.outside.view.AssassinStealthGameWallItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
+local AssassinStealthGameWallItem = class("AssassinStealthGameWallItem", LuaCompBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function AssassinStealthGameWallItem:init(go)
+	self.go = go
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0._editableInitView(arg_2_0)
-	arg_2_0._goimg = gohelper.findChild(arg_2_0.go, "#go_img")
+function AssassinStealthGameWallItem:_editableInitView()
+	self._goimg = gohelper.findChild(self.go, "#go_img")
 
-	arg_2_0:_checkShow()
+	self:_checkShow()
 end
 
-function var_0_0.addEventListeners(arg_3_0)
+function AssassinStealthGameWallItem:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
+function AssassinStealthGameWallItem:removeEventListeners()
 	return
 end
 
-function var_0_0.initData(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0.id = arg_5_1
-	arg_5_0.go.name = arg_5_0.id
-	arg_5_0.isHor = arg_5_2
+function AssassinStealthGameWallItem:initData(wallId, isHor)
+	self.id = wallId
+	self.go.name = self.id
+	self.isHor = isHor
 end
 
-function var_0_0.setMap(arg_6_0, arg_6_1)
-	arg_6_0.mapId = arg_6_1
+function AssassinStealthGameWallItem:setMap(mapId)
+	self.mapId = mapId
 
-	arg_6_0:_checkShow()
+	self:_checkShow()
 end
 
-function var_0_0._checkShow(arg_7_0)
-	local var_7_0 = AssassinConfig.instance:isShowWall(arg_7_0.mapId, arg_7_0.id)
+function AssassinStealthGameWallItem:_checkShow()
+	local isShow = AssassinConfig.instance:isShowWall(self.mapId, self.id)
 
-	if arg_7_0._isShow == var_7_0 then
+	if self._isShow == isShow then
 		return
 	end
 
-	arg_7_0._isShow = var_7_0
+	self._isShow = isShow
 
-	gohelper.setActive(arg_7_0._goimg, arg_7_0._isShow)
+	gohelper.setActive(self._goimg, self._isShow)
 end
 
-function var_0_0.onDestroy(arg_8_0)
+function AssassinStealthGameWallItem:onDestroy()
 	return
 end
 
-return var_0_0
+return AssassinStealthGameWallItem

@@ -1,120 +1,124 @@
-﻿module("modules.logic.versionactivity1_3.buff.view.VersionActivity1_3BuffTipView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/buff/view/VersionActivity1_3BuffTipView.lua
 
-local var_0_0 = class("VersionActivity1_3BuffTipView", BaseView)
+module("modules.logic.versionactivity1_3.buff.view.VersionActivity1_3BuffTipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Close")
-	arg_1_0._simageTipsBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_TipsBG")
-	arg_1_0._simageBuffIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_BuffIcon")
-	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "Root/Info/Scroll View/Viewport/LayoutGroup/#txt_Title")
-	arg_1_0._txtDesc = gohelper.findChildText(arg_1_0.viewGO, "Root/Info/Scroll View/Viewport/LayoutGroup/#txt_Desc")
-	arg_1_0._gounlockcardtip = gohelper.findChild(arg_1_0.viewGO, "Root/Info/Scroll View/Viewport/LayoutGroup/Effect/#go_unlockcardtip")
-	arg_1_0._txtEffectDesc = gohelper.findChildText(arg_1_0.viewGO, "Root/Info/Scroll View/Viewport/LayoutGroup/#txt_EffectDesc")
-	arg_1_0._goLockTips = gohelper.findChild(arg_1_0.viewGO, "Root/Info/#go_LockTips")
-	arg_1_0._txtLockTips = gohelper.findChildText(arg_1_0.viewGO, "Root/Info/#go_LockTips/#txt_LockTips")
-	arg_1_0._btnUnLock = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/Info/#btn_UnLock")
-	arg_1_0._btnlock = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/Info/#btn_lock")
+local VersionActivity1_3BuffTipView = class("VersionActivity1_3BuffTipView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity1_3BuffTipView:onInitView()
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Close")
+	self._simageTipsBG = gohelper.findChildSingleImage(self.viewGO, "Root/#simage_TipsBG")
+	self._simageBuffIcon = gohelper.findChildSingleImage(self.viewGO, "Root/#simage_BuffIcon")
+	self._txtTitle = gohelper.findChildText(self.viewGO, "Root/Info/Scroll View/Viewport/LayoutGroup/#txt_Title")
+	self._txtDesc = gohelper.findChildText(self.viewGO, "Root/Info/Scroll View/Viewport/LayoutGroup/#txt_Desc")
+	self._gounlockcardtip = gohelper.findChild(self.viewGO, "Root/Info/Scroll View/Viewport/LayoutGroup/Effect/#go_unlockcardtip")
+	self._txtEffectDesc = gohelper.findChildText(self.viewGO, "Root/Info/Scroll View/Viewport/LayoutGroup/#txt_EffectDesc")
+	self._goLockTips = gohelper.findChild(self.viewGO, "Root/Info/#go_LockTips")
+	self._txtLockTips = gohelper.findChildText(self.viewGO, "Root/Info/#go_LockTips/#txt_LockTips")
+	self._btnUnLock = gohelper.findChildButtonWithAudio(self.viewGO, "Root/Info/#btn_UnLock")
+	self._btnlock = gohelper.findChildButtonWithAudio(self.viewGO, "Root/Info/#btn_lock")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnClose:AddClickListener(arg_2_0._btnCloseOnClick, arg_2_0)
-	arg_2_0._btnUnLock:AddClickListener(arg_2_0._btnUnLockOnClick, arg_2_0)
-	arg_2_0._btnlock:AddClickListener(arg_2_0._btnlockOnClick, arg_2_0)
+function VersionActivity1_3BuffTipView:addEvents()
+	self._btnClose:AddClickListener(self._btnCloseOnClick, self)
+	self._btnUnLock:AddClickListener(self._btnUnLockOnClick, self)
+	self._btnlock:AddClickListener(self._btnlockOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnClose:RemoveClickListener()
-	arg_3_0._btnUnLock:RemoveClickListener()
-	arg_3_0._btnlock:RemoveClickListener()
+function VersionActivity1_3BuffTipView:removeEvents()
+	self._btnClose:RemoveClickListener()
+	self._btnUnLock:RemoveClickListener()
+	self._btnlock:RemoveClickListener()
 end
 
-function var_0_0._btnlockOnClick(arg_4_0)
+function VersionActivity1_3BuffTipView:_btnlockOnClick()
 	return
 end
 
-function var_0_0._btnCloseOnClick(arg_5_0)
-	arg_5_0:closeThis()
+function VersionActivity1_3BuffTipView:_btnCloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnUnLockOnClick(arg_6_0)
-	Activity126Rpc.instance:sendUnlockBuffRequest(VersionActivity1_3Enum.ActivityId.Act310, arg_6_0._config.id)
+function VersionActivity1_3BuffTipView:_btnUnLockOnClick()
+	Activity126Rpc.instance:sendUnlockBuffRequest(VersionActivity1_3Enum.ActivityId.Act310, self._config.id)
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0._simageclosebtn = gohelper.findChildSingleImage(arg_7_0.viewGO, "#btn_Close")
+function VersionActivity1_3BuffTipView:_editableInitView()
+	self._simageclosebtn = gohelper.findChildSingleImage(self.viewGO, "#btn_Close")
 
-	arg_7_0._simageclosebtn:LoadImage(ResUrl.getJiaLaBoNaIcon("v1a3_role1_igfullmask"))
-	arg_7_0._simageTipsBG:LoadImage(ResUrl.getActivity1_3BuffIcon("v1a3_buffview_tipsbg"))
-	gohelper.setActive(arg_7_0._gounlockcardtip, false)
+	self._simageclosebtn:LoadImage(ResUrl.getJiaLaBoNaIcon("v1a3_role1_igfullmask"))
+	self._simageTipsBG:LoadImage(ResUrl.getActivity1_3BuffIcon("v1a3_buffview_tipsbg"))
+	gohelper.setActive(self._gounlockcardtip, false)
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity1_3.play_ui_molu_seek_open)
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
+function VersionActivity1_3BuffTipView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0._config = arg_9_0.viewParam[1]
-	arg_9_0._isLock = arg_9_0.viewParam[2]
-	arg_9_0._canGet = arg_9_0.viewParam[3]
-	arg_9_0._buffItem = arg_9_0.viewParam[4]
-	arg_9_0._txtTitle.text = arg_9_0._config.name
-	arg_9_0._txtDesc.text = arg_9_0._config.desc
+function VersionActivity1_3BuffTipView:onOpen()
+	self._config = self.viewParam[1]
+	self._isLock = self.viewParam[2]
+	self._canGet = self.viewParam[3]
+	self._buffItem = self.viewParam[4]
+	self._txtTitle.text = self._config.name
+	self._txtDesc.text = self._config.desc
 
-	local var_9_0 = string.format("singlebg/v1a3_bigbufficon_singlebg/%s.png", arg_9_0._config.bigIcon)
+	local icon = string.format("singlebg/v1a3_bigbufficon_singlebg/%s.png", self._config.bigIcon)
 
-	arg_9_0._simageBuffIcon:LoadImage(var_9_0)
+	self._simageBuffIcon:LoadImage(icon)
 
-	arg_9_0._txtEffectDesc.text = ""
+	self._txtEffectDesc.text = ""
 
-	local var_9_1 = arg_9_0._config.skillId
+	local skillId = self._config.skillId
 
-	if arg_9_0._config.dreamlandCard > 0 then
-		var_9_1 = lua_activity126_dreamland_card.configDict[arg_9_0._config.dreamlandCard].skillId
+	if self._config.dreamlandCard > 0 then
+		local dreamlandConfig = lua_activity126_dreamland_card.configDict[self._config.dreamlandCard]
 
-		gohelper.setActive(arg_9_0._gounlockcardtip, true)
+		skillId = dreamlandConfig.skillId
+
+		gohelper.setActive(self._gounlockcardtip, true)
 	end
 
-	if var_9_1 > 0 then
-		local var_9_2 = lua_skill_effect.configDict[var_9_1]
+	if skillId > 0 then
+		local effectConfig = lua_skill_effect.configDict[skillId]
 
-		arg_9_0._txtEffectDesc.text = FightConfig.instance:getSkillEffectDesc("", var_9_2)
+		self._txtEffectDesc.text = FightConfig.instance:getSkillEffectDesc("", effectConfig)
 	end
 
-	gohelper.setActive(arg_9_0._btnlock, false)
-	gohelper.setActive(arg_9_0._btnUnLock, arg_9_0._isLock and arg_9_0._canGet)
+	gohelper.setActive(self._btnlock, false)
+	gohelper.setActive(self._btnUnLock, self._isLock and self._canGet)
 
-	if not arg_9_0._canGet then
-		if arg_9_0._config.taskId > 0 then
-			gohelper.setActive(arg_9_0._btnUnLock, false)
+	if not self._canGet then
+		if self._config.taskId > 0 then
+			gohelper.setActive(self._btnUnLock, false)
 
-			local var_9_3 = lua_activity113_task.configDict[arg_9_0._config.taskId]
+			local taskConfig = lua_activity113_task.configDict[self._config.taskId]
 
-			arg_9_0._txtLockTips.text = formatLuaLang("versionactivity1_3bufftipview_locktips", var_9_3.desc)
+			self._txtLockTips.text = formatLuaLang("versionactivity1_3bufftipview_locktips", taskConfig.desc)
 		else
-			arg_9_0._txtLockTips.text = arg_9_0._buffItem:showLockToast()
+			self._txtLockTips.text = self._buffItem:showLockToast()
 		end
 	end
 
-	gohelper.setActive(arg_9_0._txtLockTips, arg_9_0._isLock and not arg_9_0._canGet)
-	arg_9_0:addEventCb(Activity126Controller.instance, Activity126Event.onUnlockBuffReply, arg_9_0._onUnlockBuffReply, arg_9_0)
+	gohelper.setActive(self._txtLockTips, self._isLock and not self._canGet)
+	self:addEventCb(Activity126Controller.instance, Activity126Event.onUnlockBuffReply, self._onUnlockBuffReply, self)
 end
 
-function var_0_0._onUnlockBuffReply(arg_10_0)
-	arg_10_0:closeThis()
+function VersionActivity1_3BuffTipView:_onUnlockBuffReply()
+	self:closeThis()
 end
 
-function var_0_0.onClose(arg_11_0)
+function VersionActivity1_3BuffTipView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_12_0)
-	arg_12_0._simageclosebtn:UnLoadImage()
-	arg_12_0._simageTipsBG:UnLoadImage()
+function VersionActivity1_3BuffTipView:onDestroyView()
+	self._simageclosebtn:UnLoadImage()
+	self._simageTipsBG:UnLoadImage()
 end
 
-return var_0_0
+return VersionActivity1_3BuffTipView

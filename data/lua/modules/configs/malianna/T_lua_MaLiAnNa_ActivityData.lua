@@ -1,4 +1,6 @@
-﻿return {
+﻿-- chunkname: @modules/configs/malianna/T_lua_MaLiAnNa_ActivityData.lua
+
+return {
 	{
 		id = 1301102,
 		slots = {

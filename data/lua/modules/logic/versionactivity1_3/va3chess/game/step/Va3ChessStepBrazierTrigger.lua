@@ -1,37 +1,39 @@
-﻿module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepBrazierTrigger", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/va3chess/game/step/Va3ChessStepBrazierTrigger.lua
 
-local var_0_0 = class("Va3ChessStepBrazierTrigger", Va3ChessStepBase)
+module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepBrazierTrigger", package.seeall)
 
-function var_0_0.start(arg_1_0)
-	local var_1_0 = arg_1_0.originData.brazierId
-	local var_1_1 = Va3ChessGameController.instance.interacts
-	local var_1_2 = var_1_1 and var_1_1:get(var_1_0)
+local Va3ChessStepBrazierTrigger = class("Va3ChessStepBrazierTrigger", Va3ChessStepBase)
 
-	if var_1_2 then
-		if var_1_2.originData then
-			var_1_2.originData:setBrazierIsLight(true)
+function Va3ChessStepBrazierTrigger:start()
+	local brazierId = self.originData.brazierId
+	local interactMgr = Va3ChessGameController.instance.interacts
+	local interactObj = interactMgr and interactMgr:get(brazierId)
+
+	if interactObj then
+		if interactObj.originData then
+			interactObj.originData:setBrazierIsLight(true)
 		end
 
-		local var_1_3 = var_1_2:getHandler()
+		local handler = interactObj:getHandler()
 
-		if var_1_3 and var_1_3.refreshBrazier then
-			var_1_3:refreshBrazier()
+		if handler and handler.refreshBrazier then
+			handler:refreshBrazier()
 			AudioMgr.instance:trigger(AudioEnum.chess_activity142.LightBrazier)
 		end
 	end
 
-	local var_1_4 = arg_1_0.originData.fireballNum
+	local fireballNum = self.originData.fireballNum
 
-	Va3ChessGameModel.instance:setFireBallCount(var_1_4, true)
-	arg_1_0:finish()
+	Va3ChessGameModel.instance:setFireBallCount(fireballNum, true)
+	self:finish()
 end
 
-function var_0_0.finish(arg_2_0)
-	var_0_0.super.finish(arg_2_0)
+function Va3ChessStepBrazierTrigger:finish()
+	Va3ChessStepBrazierTrigger.super.finish(self)
 end
 
-function var_0_0.dispose(arg_3_0)
-	var_0_0.super.dispose(arg_3_0)
+function Va3ChessStepBrazierTrigger:dispose()
+	Va3ChessStepBrazierTrigger.super.dispose(self)
 end
 
-return var_0_0
+return Va3ChessStepBrazierTrigger

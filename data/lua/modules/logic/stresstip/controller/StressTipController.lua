@@ -1,31 +1,33 @@
-﻿module("modules.logic.stresstip.controller.StressTipController", package.seeall)
+﻿-- chunkname: @modules/logic/stresstip/controller/StressTipController.lua
 
-local var_0_0 = class("StressTipController", BaseController)
+module("modules.logic.stresstip.controller.StressTipController", package.seeall)
 
-function var_0_0.openMonsterStressTip(arg_1_0, arg_1_1, arg_1_2)
+local StressTipController = class("StressTipController", BaseController)
+
+function StressTipController:openMonsterStressTip(monsterCo, clickPosition)
 	ViewMgr.instance:openView(ViewName.StressTipView, {
 		openEnum = StressTipView.OpenEnum.Monster,
-		co = arg_1_1,
-		clickPosition = arg_1_2 or UnityEngine.Input.mousePosition
+		co = monsterCo,
+		clickPosition = clickPosition or UnityEngine.Input.mousePosition
 	})
 end
 
-function var_0_0.openHeroStressTip(arg_2_0, arg_2_1, arg_2_2)
+function StressTipController:openHeroStressTip(heroCo, clickPosition)
 	ViewMgr.instance:openView(ViewName.StressTipView, {
 		openEnum = StressTipView.OpenEnum.Hero,
-		co = arg_2_1,
-		clickPosition = arg_2_2 or UnityEngine.Input.mousePosition
+		co = heroCo,
+		clickPosition = clickPosition or UnityEngine.Input.mousePosition
 	})
 end
 
-function var_0_0.openAct183StressTip(arg_3_0, arg_3_1, arg_3_2)
+function StressTipController:openAct183StressTip(identityIdList, clickPosition)
 	ViewMgr.instance:openView(ViewName.StressTipView, {
 		openEnum = StressTipView.OpenEnum.Act183,
-		identityIdList = arg_3_1,
-		clickPosition = arg_3_2 or UnityEngine.Input.mousePosition
+		identityIdList = identityIdList,
+		clickPosition = clickPosition or UnityEngine.Input.mousePosition
 	})
 end
 
-var_0_0.instance = var_0_0.New()
+StressTipController.instance = StressTipController.New()
 
-return var_0_0
+return StressTipController

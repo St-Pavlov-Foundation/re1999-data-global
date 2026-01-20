@@ -1,27 +1,29 @@
-﻿module("modules.common.work.OpenSceneWork", package.seeall)
+﻿-- chunkname: @modules/common/work/OpenSceneWork.lua
 
-local var_0_0 = class("OpenSceneWork", BaseWork)
+module("modules.common.work.OpenSceneWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4, arg_1_5)
-	arg_1_0.sceneType = arg_1_1
-	arg_1_0.sceneId = arg_1_2
-	arg_1_0.levelId = arg_1_3
-	arg_1_0.forceStarting = arg_1_4
-	arg_1_0.forceSceneType = arg_1_5
+local OpenSceneWork = class("OpenSceneWork", BaseWork)
+
+function OpenSceneWork:ctor(sceneType, sceneId, levelId, forceStarting, forceSceneType)
+	self.sceneType = sceneType
+	self.sceneId = sceneId
+	self.levelId = levelId
+	self.forceStarting = forceStarting
+	self.forceSceneType = forceSceneType
 end
 
-function var_0_0.onStart(arg_2_0)
-	GameSceneMgr.instance:startScene(arg_2_0.sceneType, arg_2_0.sceneId, arg_2_0.levelId, arg_2_0.forceStarting, arg_2_0.forceSceneType)
-	GameSceneMgr.instance:registerCallback(arg_2_0.sceneType, arg_2_0.onSceneLoadDone, arg_2_0)
+function OpenSceneWork:onStart()
+	GameSceneMgr.instance:startScene(self.sceneType, self.sceneId, self.levelId, self.forceStarting, self.forceSceneType)
+	GameSceneMgr.instance:registerCallback(self.sceneType, self.onSceneLoadDone, self)
 end
 
-function var_0_0.onSceneLoadDone(arg_3_0)
-	GameSceneMgr.instance:unregisterCallback(arg_3_0.sceneType, arg_3_0.onSceneLoadDone, arg_3_0)
-	arg_3_0:onDone(true)
+function OpenSceneWork:onSceneLoadDone()
+	GameSceneMgr.instance:unregisterCallback(self.sceneType, self.onSceneLoadDone, self)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	GameSceneMgr.instance:unregisterCallback(arg_4_0.sceneType, arg_4_0.onSceneLoadDone, arg_4_0)
+function OpenSceneWork:clearWork()
+	GameSceneMgr.instance:unregisterCallback(self.sceneType, self.onSceneLoadDone, self)
 end
 
-return var_0_0
+return OpenSceneWork

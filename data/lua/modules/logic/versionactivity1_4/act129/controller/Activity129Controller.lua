@@ -1,19 +1,21 @@
-﻿module("modules.logic.versionactivity1_4.act129.controller.Activity129Controller", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act129/controller/Activity129Controller.lua
 
-local var_0_0 = class("Activity129Controller", BaseController)
+module("modules.logic.versionactivity1_4.act129.controller.Activity129Controller", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local Activity129Controller = class("Activity129Controller", BaseController)
+
+function Activity129Controller:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function Activity129Controller:reInit()
 	return
 end
 
-function var_0_0.initAct(arg_3_0, arg_3_1)
+function Activity129Controller:initAct(actId)
 	return
 end
 
-var_0_0.instance = var_0_0.New()
+Activity129Controller.instance = Activity129Controller.New()
 
-return var_0_0
+return Activity129Controller

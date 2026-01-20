@@ -1,49 +1,53 @@
-﻿module("modules.logic.bossrush.view.V1a4_BossRush_EnemyInfoView", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/view/V1a4_BossRush_EnemyInfoView.lua
 
-local var_0_0 = class("V1a4_BossRush_EnemyInfoView", EnemyInfoView)
+module("modules.logic.bossrush.view.V1a4_BossRush_EnemyInfoView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	var_0_0.super.onInitView(arg_1_0)
+local V1a4_BossRush_EnemyInfoView = class("V1a4_BossRush_EnemyInfoView", EnemyInfoView)
+
+function V1a4_BossRush_EnemyInfoView:onInitView()
+	V1a4_BossRush_EnemyInfoView.super.onInitView(self)
 end
 
-function var_0_0._refreshUI(arg_2_0)
-	if not arg_2_0._battleId then
+function V1a4_BossRush_EnemyInfoView:_refreshUI()
+	if not self._battleId then
 		logError("地方信息界面缺少战斗Id")
 
 		return
 	end
 
-	var_0_0.super._refreshUI(arg_2_0)
+	V1a4_BossRush_EnemyInfoView.super._refreshUI(self)
 end
 
-function var_0_0._getBossId(arg_3_0, arg_3_1)
-	local var_3_0 = FightController.instance:setFightParamByBattleId(arg_3_0._battleId)
-	local var_3_1 = var_3_0 and var_3_0.monsterGroupIds and var_3_0.monsterGroupIds[arg_3_1]
-	local var_3_2 = var_3_1 and lua_monster_group.configDict[var_3_1]
+function V1a4_BossRush_EnemyInfoView:_getBossId(groupIndex)
+	local fightParam = FightController.instance:setFightParamByBattleId(self._battleId)
+	local monsterGroupId = fightParam and fightParam.monsterGroupIds and fightParam.monsterGroupIds[groupIndex]
+	local monsterGroupCO = monsterGroupId and lua_monster_group.configDict[monsterGroupId]
+	local bossId = monsterGroupCO and not string.nilorempty(monsterGroupCO.bossId) and monsterGroupCO.bossId or nil
 
-	return var_3_2 and not string.nilorempty(var_3_2.bossId) and var_3_2.bossId or nil
+	return bossId
 end
 
-function var_0_0.onUpdateParam(arg_4_0)
-	local var_4_0 = arg_4_0.viewParam.bossRushStage
-	local var_4_1 = arg_4_0.viewParam.bossRushLayer
+function V1a4_BossRush_EnemyInfoView:onUpdateParam()
+	local stage, layer = self.viewParam.bossRushStage, self.viewParam.bossRushLayer
 
-	arg_4_0._battleId = BossRushConfig.instance:getDungeonBattleId(var_4_0, var_4_1)
+	self._battleId = BossRushConfig.instance:getDungeonBattleId(stage, layer)
 
-	arg_4_0:_refreshUI()
+	self:_refreshUI()
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickEnemyItem, arg_5_0._refreshInfo, arg_5_0)
-	arg_5_0:onUpdateParam()
+function V1a4_BossRush_EnemyInfoView:onOpen()
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickEnemyItem, self._refreshInfo, self)
+	self:onUpdateParam()
 end
 
-function var_0_0.onClose(arg_6_0)
-	arg_6_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickEnemyItem, arg_6_0._refreshInfo, arg_6_0)
+function V1a4_BossRush_EnemyInfoView:onClose()
+	self:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickEnemyItem, self._refreshInfo, self)
 end
 
-function var_0_0._doUpdateSelectIcon(arg_7_0, arg_7_1)
-	arg_7_0.viewContainer:getBossRushViewRule():refreshUI(arg_7_1)
+function V1a4_BossRush_EnemyInfoView:_doUpdateSelectIcon(battleId)
+	local ruleView = self.viewContainer:getBossRushViewRule()
+
+	ruleView:refreshUI(battleId)
 end
 
-return var_0_0
+return V1a4_BossRush_EnemyInfoView

@@ -1,733 +1,746 @@
-﻿module("modules.logic.sp01.odyssey.view.OdysseyDungeonSceneView", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/view/OdysseyDungeonSceneView.lua
 
-local var_0_0 = class("OdysseyDungeonSceneView", BaseView)
+module("modules.logic.sp01.odyssey.view.OdysseyDungeonSceneView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gofullscreen = gohelper.findChild(arg_1_0.viewGO, "#go_fullscreen")
-	arg_1_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_1_0._gofullscreen)
-	arg_1_0._gomapName = gohelper.findChild(arg_1_0.viewGO, "root/#go_mapName")
-	arg_1_0._gotransitionEffect = gohelper.findChild(arg_1_0.viewGO, "#go_transitionEffect")
+local OdysseyDungeonSceneView = class("OdysseyDungeonSceneView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function OdysseyDungeonSceneView:onInitView()
+	self._gofullscreen = gohelper.findChild(self.viewGO, "#go_fullscreen")
+	self._drag = SLFramework.UGUI.UIDragListener.Get(self._gofullscreen)
+	self._gomapName = gohelper.findChild(self.viewGO, "root/#go_mapName")
+	self._gotransitionEffect = gohelper.findChild(self.viewGO, "#go_transitionEffect")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(OdysseyDungeonController.instance, OdysseyEvent.OnClickElement, arg_2_0.onClickElement, arg_2_0)
-	arg_2_0:addEventCb(OdysseyDungeonController.instance, OdysseyEvent.OnFocusElement, arg_2_0.onFocusElement, arg_2_0)
-	arg_2_0:addEventCb(OdysseyDungeonController.instance, OdysseyEvent.OnFocusMapSelectItem, arg_2_0.onFocusMapSelectItem, arg_2_0)
-	arg_2_0:addEventCb(OdysseyDungeonController.instance, OdysseyEvent.OnMapSelectItemEnter, arg_2_0.onMapSelectItemEnter, arg_2_0)
-	arg_2_0:addEventCb(OdysseyDungeonController.instance, OdysseyEvent.JumpNeedOpenElement, arg_2_0.onJumpNeedOpenElement, arg_2_0)
-	arg_2_0:addEventCb(OdysseyDungeonController.instance, OdysseyEvent.JumpToHeroPos, arg_2_0.onJumpToHeroPos, arg_2_0)
-	arg_2_0:addEventCb(OdysseyDungeonController.instance, OdysseyEvent.OnUpdateElementPush, arg_2_0.refreshMyth, arg_2_0)
-	arg_2_0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_2_0._onScreenResize, arg_2_0)
+function OdysseyDungeonSceneView:addEvents()
+	self:addEventCb(OdysseyDungeonController.instance, OdysseyEvent.OnClickElement, self.onClickElement, self)
+	self:addEventCb(OdysseyDungeonController.instance, OdysseyEvent.OnFocusElement, self.onFocusElement, self)
+	self:addEventCb(OdysseyDungeonController.instance, OdysseyEvent.OnFocusMapSelectItem, self.onFocusMapSelectItem, self)
+	self:addEventCb(OdysseyDungeonController.instance, OdysseyEvent.OnMapSelectItemEnter, self.onMapSelectItemEnter, self)
+	self:addEventCb(OdysseyDungeonController.instance, OdysseyEvent.JumpNeedOpenElement, self.onJumpNeedOpenElement, self)
+	self:addEventCb(OdysseyDungeonController.instance, OdysseyEvent.JumpToHeroPos, self.onJumpToHeroPos, self)
+	self:addEventCb(OdysseyDungeonController.instance, OdysseyEvent.OnUpdateElementPush, self.refreshMyth, self)
+	self:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, self._onScreenResize, self)
 
-	if arg_2_0._drag then
-		arg_2_0._drag:AddDragBeginListener(arg_2_0.onMapDragBegin, arg_2_0)
-		arg_2_0._drag:AddDragEndListener(arg_2_0.onMapDragEnd, arg_2_0)
-		arg_2_0._drag:AddDragListener(arg_2_0.onMapDrag, arg_2_0)
+	if self._drag then
+		self._drag:AddDragBeginListener(self.onMapDragBegin, self)
+		self._drag:AddDragEndListener(self.onMapDragEnd, self)
+		self._drag:AddDragListener(self.onMapDrag, self)
 	end
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(OdysseyDungeonController.instance, OdysseyEvent.OnClickElement, arg_3_0.onClickElement, arg_3_0)
-	arg_3_0:removeEventCb(OdysseyDungeonController.instance, OdysseyEvent.OnFocusElement, arg_3_0.onFocusElement, arg_3_0)
-	arg_3_0:removeEventCb(OdysseyDungeonController.instance, OdysseyEvent.OnFocusMapSelectItem, arg_3_0.onFocusMapSelectItem, arg_3_0)
-	arg_3_0:removeEventCb(OdysseyDungeonController.instance, OdysseyEvent.OnMapSelectItemEnter, arg_3_0.onMapSelectItemEnter, arg_3_0)
-	arg_3_0:removeEventCb(OdysseyDungeonController.instance, OdysseyEvent.JumpNeedOpenElement, arg_3_0.onJumpNeedOpenElement, arg_3_0)
-	arg_3_0:removeEventCb(OdysseyDungeonController.instance, OdysseyEvent.JumpToHeroPos, arg_3_0.onJumpToHeroPos, arg_3_0)
-	arg_3_0:removeEventCb(OdysseyDungeonController.instance, OdysseyEvent.OnUpdateElementPush, arg_3_0.refreshMyth, arg_3_0)
-	arg_3_0:removeEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_3_0._onScreenResize, arg_3_0)
+function OdysseyDungeonSceneView:removeEvents()
+	self:removeEventCb(OdysseyDungeonController.instance, OdysseyEvent.OnClickElement, self.onClickElement, self)
+	self:removeEventCb(OdysseyDungeonController.instance, OdysseyEvent.OnFocusElement, self.onFocusElement, self)
+	self:removeEventCb(OdysseyDungeonController.instance, OdysseyEvent.OnFocusMapSelectItem, self.onFocusMapSelectItem, self)
+	self:removeEventCb(OdysseyDungeonController.instance, OdysseyEvent.OnMapSelectItemEnter, self.onMapSelectItemEnter, self)
+	self:removeEventCb(OdysseyDungeonController.instance, OdysseyEvent.JumpNeedOpenElement, self.onJumpNeedOpenElement, self)
+	self:removeEventCb(OdysseyDungeonController.instance, OdysseyEvent.JumpToHeroPos, self.onJumpToHeroPos, self)
+	self:removeEventCb(OdysseyDungeonController.instance, OdysseyEvent.OnUpdateElementPush, self.refreshMyth, self)
+	self:removeEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, self._onScreenResize, self)
 
-	if arg_3_0._drag then
-		arg_3_0._drag:RemoveDragBeginListener()
-		arg_3_0._drag:RemoveDragListener()
-		arg_3_0._drag:RemoveDragEndListener()
+	if self._drag then
+		self._drag:RemoveDragBeginListener()
+		self._drag:RemoveDragListener()
+		self._drag:RemoveDragEndListener()
 	end
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0.tempScenePos = Vector3()
-	arg_4_0.curScenePos = Vector3()
+function OdysseyDungeonSceneView:_editableInitView()
+	self.tempScenePos = Vector3()
+	self.curScenePos = Vector3()
 
-	arg_4_0:initMapRootNode()
+	self:initMapRootNode()
 
-	arg_4_0.elementRootUrl = "ui/viewres/sp01/odyssey/odysseydungeonelementview.prefab"
-	arg_4_0.sceneCanvasUrl = "ui/viewres/dungeon/chaptermap/chaptermapscenecanvas.prefab"
-	arg_4_0.mapSelectRootUrl = "ui/viewres/sp01/odyssey/odysseydungeonmapselectview.prefab"
-	arg_4_0._animMapName = arg_4_0._gomapName:GetComponent(gohelper.Type_Animator)
+	self.elementRootUrl = "ui/viewres/sp01/odyssey/odysseydungeonelementview.prefab"
+	self.sceneCanvasUrl = "ui/viewres/dungeon/chaptermap/chaptermapscenecanvas.prefab"
+	self.mapSelectRootUrl = "ui/viewres/sp01/odyssey/odysseydungeonmapselectview.prefab"
+	self._animMapName = self._gomapName:GetComponent(gohelper.Type_Animator)
 
-	gohelper.setActive(arg_4_0._gomapName, false)
+	gohelper.setActive(self._gomapName, false)
 end
 
-function var_0_0.initMapRootNode(arg_5_0)
-	arg_5_0.sceneRoot = UnityEngine.GameObject.New(OdysseyEnum.SceneRootName)
+function OdysseyDungeonSceneView:initMapRootNode()
+	self.sceneRoot = UnityEngine.GameObject.New(OdysseyEnum.SceneRootName)
 
-	local var_5_0 = CameraMgr.instance:getMainCameraTrs().parent
-	local var_5_1, var_5_2, var_5_3 = transformhelper.getLocalPos(var_5_0)
+	local mainTrans = CameraMgr.instance:getMainCameraTrs().parent
+	local _, y, _ = transformhelper.getLocalPos(mainTrans)
 
-	transformhelper.setLocalPos(arg_5_0.sceneRoot.transform, 0, var_5_2, 0)
+	transformhelper.setLocalPos(self.sceneRoot.transform, 0, y, 0)
 
-	local var_5_4 = CameraMgr.instance:getSceneRoot()
+	local sceneRoot = CameraMgr.instance:getSceneRoot()
 
-	gohelper.addChild(var_5_4, arg_5_0.sceneRoot)
-	OdysseyDungeonController.instance:dispatchEvent(OdysseyEvent.OnCreateMapRootGoDone, arg_5_0.sceneRoot)
+	gohelper.addChild(sceneRoot, self.sceneRoot)
+	OdysseyDungeonController.instance:dispatchEvent(OdysseyEvent.OnCreateMapRootGoDone, self.sceneRoot)
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
-	arg_6_0:refreshMap()
+function OdysseyDungeonSceneView:onUpdateParam()
+	self:refreshMap()
 end
 
-function var_0_0.onOpen(arg_7_0)
-	MainCameraMgr.instance:addView(arg_7_0.viewName, arg_7_0.initCamera, nil, arg_7_0)
+function OdysseyDungeonSceneView:onOpen()
+	MainCameraMgr.instance:addView(self.viewName, self.initCamera, nil, self)
 
-	arg_7_0.lastMapId = 0
-	arg_7_0.canPlayTransitionEffect = true
+	self.lastMapId = 0
+	self.canPlayTransitionEffect = true
 
 	if OdysseyDungeonModel.instance:getLastElementFightParam() then
-		arg_7_0.canPlayTransitionEffect = false
+		self.canPlayTransitionEffect = false
 	end
 
-	arg_7_0:refreshMap()
+	self:refreshMap()
 end
 
-function var_0_0.initCamera(arg_8_0)
-	local var_8_0 = CameraMgr.instance:getMainCamera()
+function OdysseyDungeonSceneView:initCamera()
+	local camera = CameraMgr.instance:getMainCamera()
 
-	var_8_0.orthographic = true
+	camera.orthographic = true
 
-	local var_8_1 = GameUtil.getAdapterScale()
+	local scale = GameUtil.getAdapterScale()
 
-	var_8_0.orthographicSize = OdysseyEnum.DungeonMapCameraSize * var_8_1
+	camera.orthographicSize = OdysseyEnum.DungeonMapCameraSize * scale
 end
 
-function var_0_0.refreshMapSelectView(arg_9_0)
-	arg_9_0.mapSelectUrl = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.MapSelectUrl).value
-	arg_9_0.lastMapId = 0
+function OdysseyDungeonSceneView:refreshMapSelectView()
+	local mapSelectCo = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.MapSelectUrl)
 
-	arg_9_0:refreshMap()
-	OdysseyStatHelper.instance:sendOdysseyDungeonViewClose(arg_9_0.curMapId, "switch")
+	self.mapSelectUrl = mapSelectCo.value
+	self.lastMapId = 0
+
+	self:refreshMap()
+	OdysseyStatHelper.instance:sendOdysseyDungeonViewClose(self.curMapId, "switch")
 end
 
-function var_0_0.onMapSelectItemEnter(arg_10_0)
-	arg_10_0.lastMapId = 0
+function OdysseyDungeonSceneView:onMapSelectItemEnter()
+	self.lastMapId = 0
 
-	arg_10_0:refreshMap()
+	self:refreshMap()
 
-	local var_10_0 = arg_10_0.viewContainer:getDungeonView()
+	local dungeonView = self.viewContainer:getDungeonView()
 
-	if var_10_0 then
-		var_10_0:setChangeMapUIState(true)
+	if dungeonView then
+		dungeonView:setChangeMapUIState(true)
 	end
 end
 
-function var_0_0.onJumpNeedOpenElement(arg_11_0, arg_11_1)
-	local var_11_0 = OdysseyDungeonModel.instance:getElemenetInMapId(arg_11_1)
+function OdysseyDungeonSceneView:onJumpNeedOpenElement(elementId)
+	local elementInMapId = OdysseyDungeonModel.instance:getElemenetInMapId(elementId)
 
-	if var_11_0 == 0 then
+	if elementInMapId == 0 then
 		return
 	end
 
-	arg_11_0.isInMapSelectState = OdysseyDungeonModel.instance:getIsInMapSelectState()
+	self.isInMapSelectState = OdysseyDungeonModel.instance:getIsInMapSelectState()
 
-	if var_11_0 == arg_11_0.curMapId and not arg_11_0.isInMapSelectState then
-		local var_11_1 = OdysseyConfig.instance:getElementConfig(arg_11_1)
+	if elementInMapId == self.curMapId and not self.isInMapSelectState then
+		local elementConfig = OdysseyConfig.instance:getElementConfig(elementId)
 
-		arg_11_0:focusElementByCo(var_11_1)
+		self:focusElementByCo(elementConfig)
 
-		local var_11_2 = arg_11_0.viewContainer:getDungeonSceneElementsView()
+		local sceneElementsView = self.viewContainer:getDungeonSceneElementsView()
 
-		if var_11_2 then
-			var_11_2:setHeroItemPos(var_11_1)
-			var_11_2:playShowOrHideHeroAnim(true, var_11_1.id)
+		if sceneElementsView then
+			sceneElementsView:setHeroItemPos(elementConfig)
+			sceneElementsView:playShowOrHideHeroAnim(true, elementConfig.id)
 		end
 
 		OdysseyDungeonController.instance:openDungeonInteractView({
-			config = var_11_1
+			config = elementConfig
 		})
 	else
-		OdysseyDungeonModel.instance:setCurMapId(var_11_0)
+		OdysseyDungeonModel.instance:setCurMapId(elementInMapId)
 		OdysseyDungeonModel.instance:setIsMapSelect(false)
-		arg_11_0:onMapSelectItemEnter()
+		self:onMapSelectItemEnter()
 
-		local var_11_3 = arg_11_0.viewContainer:getDungeonView()
+		local dungeonView = self.viewContainer:getDungeonView()
 
-		if var_11_3 then
-			var_11_3:refreshUI()
+		if dungeonView then
+			dungeonView:refreshUI()
 		end
 	end
 end
 
-function var_0_0.onJumpToHeroPos(arg_12_0)
-	local var_12_0 = OdysseyDungeonModel.instance:getCurInElementId()
+function OdysseyDungeonSceneView:onJumpToHeroPos()
+	local curHeroInElementId = OdysseyDungeonModel.instance:getCurInElementId()
 
-	if var_12_0 > 0 then
-		local var_12_1 = OdysseyDungeonModel.instance:getElemenetInMapId(var_12_0)
+	if curHeroInElementId > 0 then
+		local elementInMapId = OdysseyDungeonModel.instance:getElemenetInMapId(curHeroInElementId)
 
-		if arg_12_0.curMapId == var_12_1 then
-			local var_12_2 = OdysseyConfig.instance:getElementConfig(var_12_0)
+		if self.curMapId == elementInMapId then
+			local elementConfig = OdysseyConfig.instance:getElementConfig(curHeroInElementId)
 
-			arg_12_0:focusElementByCo(var_12_2)
-			OdysseyDungeonController.instance:dispatchEvent(OdysseyEvent.PlayElementAnim, var_12_0, OdysseyEnum.ElementAnimName.Tips)
+			self:focusElementByCo(elementConfig)
+			OdysseyDungeonController.instance:dispatchEvent(OdysseyEvent.PlayElementAnim, curHeroInElementId, OdysseyEnum.ElementAnimName.Tips)
 		else
-			arg_12_0.lastMapId = 0
+			self.lastMapId = 0
 
-			OdysseyDungeonModel.instance:setCurMapId(var_12_1)
-			arg_12_0:refreshMap()
+			OdysseyDungeonModel.instance:setCurMapId(elementInMapId)
+			self:refreshMap()
 		end
 	else
-		arg_12_0:setMapPos()
+		self:setMapPos()
 	end
 end
 
-function var_0_0.refreshMap(arg_13_0, arg_13_1)
-	if arg_13_0.canPlayTransitionEffect then
-		gohelper.setActive(arg_13_0._gotransitionEffect, false)
-		gohelper.setActive(arg_13_0._gotransitionEffect, true)
+function OdysseyDungeonSceneView:refreshMap(needTween)
+	if self.canPlayTransitionEffect then
+		gohelper.setActive(self._gotransitionEffect, false)
+		gohelper.setActive(self._gotransitionEffect, true)
 		AudioMgr.instance:trigger(AudioEnum2_9.Odyssey.play_ui_cikexia_link_mist)
 	end
 
-	arg_13_0.isInMapSelectState = OdysseyDungeonModel.instance:getIsInMapSelectState()
-	arg_13_0.needTween = arg_13_1
-	arg_13_0.curMapId = OdysseyDungeonModel.instance:getCurMapId()
+	self.isInMapSelectState = OdysseyDungeonModel.instance:getIsInMapSelectState()
+	self.needTween = needTween
+	self.curMapId = OdysseyDungeonModel.instance:getCurMapId()
 
-	if arg_13_0.curMapId == arg_13_0.lastMapId then
-		if not arg_13_0.mapLoadedDone or not arg_13_0.elementsRootGO or arg_13_0.isInMapSelectState then
+	if self.curMapId == self.lastMapId then
+		if not self.mapLoadedDone or not self.elementsRootGO or self.isInMapSelectState then
 			return
 		end
 
-		arg_13_0:setMapPos()
-		OdysseyDungeonController.instance:dispatchEvent(OdysseyEvent.OnInitElements, arg_13_0.elementsRootGO)
+		self:setMapPos()
+		OdysseyDungeonController.instance:dispatchEvent(OdysseyEvent.OnInitElements, self.elementsRootGO)
 	else
-		arg_13_0.lastMapId = arg_13_0.curMapId
+		self.lastMapId = self.curMapId
 
-		arg_13_0:loadMap()
+		self:loadMap()
 	end
 
-	arg_13_0:setCloseOverrideFunc()
+	self:setCloseOverrideFunc()
 end
 
-function var_0_0.loadMap(arg_14_0)
-	arg_14_0.curMapConfig = OdysseyConfig.instance:getDungeonMapConfig(arg_14_0.curMapId)
-	arg_14_0.mapRes = OdysseyDungeonModel.instance:getMapRes(arg_14_0.curMapId)
-	arg_14_0.mythCo = OdysseyDungeonModel.instance:getMythCoMyMapId(arg_14_0.curMapId)
-	arg_14_0.mythRes = not arg_14_0.isInMapSelectState and arg_14_0.mythCo and arg_14_0.mythCo.unlockMap or nil
+function OdysseyDungeonSceneView:loadMap()
+	self.curMapConfig = OdysseyConfig.instance:getDungeonMapConfig(self.curMapId)
+	self.mapRes = OdysseyDungeonModel.instance:getMapRes(self.curMapId)
+	self.mythCo = OdysseyDungeonModel.instance:getMythCoMyMapId(self.curMapId)
+	self.mythRes = not self.isInMapSelectState and self.mythCo and self.mythCo.unlockMap or nil
 
-	if arg_14_0.mapLoadedDone then
-		arg_14_0.oldMapLoader = arg_14_0.mapLoader
-		arg_14_0.oldSceneGo = arg_14_0.sceneGo
-		arg_14_0.oldMythGo = arg_14_0.mythGo
-		arg_14_0.oldLightGo = arg_14_0.lightGO
-		arg_14_0.mapLoader = nil
+	if self.mapLoadedDone then
+		self.oldMapLoader = self.mapLoader
+		self.oldSceneGo = self.sceneGo
+		self.oldMythGo = self.mythGo
+		self.oldLightGo = self.lightGO
+		self.mapLoader = nil
 	end
 
-	if arg_14_0.mapLoader then
-		arg_14_0.mapLoader:dispose()
+	if self.mapLoader then
+		self.mapLoader:dispose()
 
-		arg_14_0.mapLoader = nil
+		self.mapLoader = nil
 	end
 
-	arg_14_0.mapLoadedDone = false
-	arg_14_0.mapLoader = MultiAbLoader.New()
+	self.mapLoadedDone = false
+	self.mapLoader = MultiAbLoader.New()
 
-	arg_14_0:addLoadRes()
-	arg_14_0.mapLoader:startLoad(arg_14_0.loadSceneFinish, arg_14_0)
+	self:addLoadRes()
+	self.mapLoader:startLoad(self.loadSceneFinish, self)
 end
 
-function var_0_0.addLoadRes(arg_15_0)
-	if arg_15_0.isInMapSelectState then
-		arg_15_0.mapLoader:addPath(ResUrl.getDungeonMapRes(arg_15_0.mapSelectUrl))
-		arg_15_0.mapLoader:addPath(arg_15_0.mapSelectRootUrl)
+function OdysseyDungeonSceneView:addLoadRes()
+	if self.isInMapSelectState then
+		self.mapLoader:addPath(ResUrl.getDungeonMapRes(self.mapSelectUrl))
+		self.mapLoader:addPath(self.mapSelectRootUrl)
 	else
-		arg_15_0.mapLoader:addPath(ResUrl.getDungeonMapRes(arg_15_0.mapRes))
-		arg_15_0.mapLoader:addPath(arg_15_0.elementRootUrl)
+		self.mapLoader:addPath(ResUrl.getDungeonMapRes(self.mapRes))
+		self.mapLoader:addPath(self.elementRootUrl)
 
-		if arg_15_0.mythRes then
-			arg_15_0.mapLoader:addPath(ResUrl.getDungeonMapRes(arg_15_0.mythRes))
+		if self.mythRes then
+			self.mapLoader:addPath(ResUrl.getDungeonMapRes(self.mythRes))
 		end
 	end
 
-	arg_15_0.mapLoader:addPath(OdysseyEnum.DungeonMapLightUrl)
-	arg_15_0.mapLoader:addPath(arg_15_0.sceneCanvasUrl)
+	self.mapLoader:addPath(OdysseyEnum.DungeonMapLightUrl)
+	self.mapLoader:addPath(self.sceneCanvasUrl)
 end
 
-function var_0_0.loadSceneFinish(arg_16_0)
-	arg_16_0.mapLoadedDone = true
+function OdysseyDungeonSceneView:loadSceneFinish()
+	self.mapLoadedDone = true
 
-	arg_16_0:disposeOldMap()
+	self:disposeOldMap()
 
-	local var_16_0 = arg_16_0.isInMapSelectState and ResUrl.getDungeonMapRes(arg_16_0.mapSelectUrl) or ResUrl.getDungeonMapRes(arg_16_0.mapRes)
-	local var_16_1 = arg_16_0.mapLoader:getAssetItem(var_16_0):GetResource(var_16_0)
+	local assetUrl = self.isInMapSelectState and ResUrl.getDungeonMapRes(self.mapSelectUrl) or ResUrl.getDungeonMapRes(self.mapRes)
+	local assetItem = self.mapLoader:getAssetItem(assetUrl)
+	local mainPrefab = assetItem:GetResource(assetUrl)
 
-	arg_16_0.sceneGo = gohelper.clone(var_16_1, arg_16_0.sceneRoot, arg_16_0.curMapId)
-	arg_16_0.sceneTrans = arg_16_0.sceneGo.transform
+	self.sceneGo = gohelper.clone(mainPrefab, self.sceneRoot, self.curMapId)
+	self.sceneTrans = self.sceneGo.transform
 
 	OdysseyDungeonController.instance:dispatchEvent(OdysseyEvent.OnLoadSceneFinish, {
-		mapSceneGo = arg_16_0.sceneGo
+		mapSceneGo = self.sceneGo
 	})
 	OdysseyStatHelper.instance:initSceneStartTime()
-	arg_16_0:initScene()
-	arg_16_0:addMapLight()
-	arg_16_0:addMythRes()
+	self:initScene()
+	self:addMapLight()
+	self:addMythRes()
 
-	if not arg_16_0.isInMapSelectState then
-		arg_16_0:initElements()
-		arg_16_0:setMapPos()
-		arg_16_0:refreshMyth()
+	if not self.isInMapSelectState then
+		self:initElements()
+		self:setMapPos()
+		self:refreshMyth()
 	else
-		arg_16_0:initMapSelect()
+		self:initMapSelect()
 	end
 
-	if arg_16_0.canPlayTransitionEffect then
-		arg_16_0:closeTransitionEffect()
-		TaskDispatcher.runDelay(arg_16_0.showSubTaskShowEffect, arg_16_0, 1)
+	if self.canPlayTransitionEffect then
+		self:closeTransitionEffect()
+		TaskDispatcher.runDelay(self.showSubTaskShowEffect, self, 1)
 	else
-		gohelper.setActive(arg_16_0._gotransitionEffect, false)
+		gohelper.setActive(self._gotransitionEffect, false)
 
-		if not arg_16_0.isInMapSelectState then
-			TaskDispatcher.runDelay(arg_16_0.popupRewardView, arg_16_0, 1)
+		if not self.isInMapSelectState then
+			TaskDispatcher.runDelay(self.popupRewardView, self, 1)
 		end
 
-		arg_16_0:showSubTaskShowEffect()
+		self:showSubTaskShowEffect()
 	end
 
-	arg_16_0.canPlayTransitionEffect = true
+	self.canPlayTransitionEffect = true
 end
 
-function var_0_0._onScreenResize(arg_17_0)
-	if arg_17_0.sceneGo then
-		arg_17_0:initScene()
+function OdysseyDungeonSceneView:_onScreenResize()
+	if self.sceneGo then
+		self:initScene()
 	end
 end
 
-function var_0_0.initScene(arg_18_0)
-	local var_18_0 = gohelper.findChild(arg_18_0.sceneGo, "root/size")
-	local var_18_1 = var_18_0:GetComponentInChildren(typeof(UnityEngine.BoxCollider))
-	local var_18_2, var_18_3, var_18_4 = transformhelper.getLocalScale(var_18_0.transform, 0, 0, 0)
-	local var_18_5
-	local var_18_6 = GameUtil.getAdapterScale()
+function OdysseyDungeonSceneView:initScene()
+	local sizeGo = gohelper.findChild(self.sceneGo, "root/size")
+	local box = sizeGo:GetComponentInChildren(typeof(UnityEngine.BoxCollider))
+	local boxScaleX, boxScaleY, boxScaleZ = transformhelper.getLocalScale(sizeGo.transform, 0, 0, 0)
+	local canvasGo
+	local scale = GameUtil.getAdapterScale()
 
-	if var_18_6 ~= 1 then
-		var_18_5 = ViewMgr.instance:getUILayer(UILayerName.Hud)
+	if scale ~= 1 then
+		canvasGo = ViewMgr.instance:getUILayer(UILayerName.Hud)
 	else
-		var_18_5 = ViewMgr.instance:getUIRoot()
+		canvasGo = ViewMgr.instance:getUIRoot()
 	end
 
-	local var_18_7 = var_18_5.transform:GetWorldCorners()
-	local var_18_8 = CameraMgr.instance:getUICamera()
-	local var_18_9 = var_18_8 and var_18_8.orthographicSize or 5
-	local var_18_10 = OdysseyEnum.DungeonMapCameraSize / var_18_9
-	local var_18_11 = var_18_7[1] * var_18_6 * var_18_10
-	local var_18_12 = var_18_7[3] * var_18_6 * var_18_10
+	local worldcorners = canvasGo.transform:GetWorldCorners()
+	local uiCamera = CameraMgr.instance:getUICamera()
+	local uiCameraSize = uiCamera and uiCamera.orthographicSize or 5
+	local cameraSizeRate = OdysseyEnum.DungeonMapCameraSize / uiCameraSize
+	local posTL = worldcorners[1] * scale * cameraSizeRate
+	local posBR = worldcorners[3] * scale * cameraSizeRate
 
-	arg_18_0.viewWidth = math.abs(var_18_12.x - var_18_11.x)
-	arg_18_0.viewHeight = math.abs(var_18_12.y - var_18_11.y)
-	arg_18_0.mapMinX = var_18_11.x - (var_18_1.size.x * var_18_2 - arg_18_0.viewWidth)
-	arg_18_0.mapMaxX = var_18_11.x
-	arg_18_0.mapMinY = var_18_11.y
-	arg_18_0.mapMaxY = var_18_11.y + (var_18_1.size.y * var_18_3 - arg_18_0.viewHeight)
+	self.viewWidth = math.abs(posBR.x - posTL.x)
+	self.viewHeight = math.abs(posBR.y - posTL.y)
+	self.mapMinX = posTL.x - (box.size.x * boxScaleX - self.viewWidth)
+	self.mapMaxX = posTL.x
+	self.mapMinY = posTL.y
+	self.mapMaxY = posTL.y + (box.size.y * boxScaleY - self.viewHeight)
 end
 
-function var_0_0.setMapPos(arg_19_0)
-	local var_19_0 = OdysseyDungeonModel.instance:getCurInElementId()
-	local var_19_1 = OdysseyDungeonModel.instance:getHeroInMapId()
+function OdysseyDungeonSceneView:setMapPos()
+	local curHeroInElementId = OdysseyDungeonModel.instance:getCurInElementId()
+	local curHeroInMapId = OdysseyDungeonModel.instance:getHeroInMapId()
 
-	if var_19_0 > 0 and arg_19_0.curMapId == var_19_1 then
-		local var_19_2 = OdysseyConfig.instance:getElementConfig(var_19_0)
-		local var_19_3 = string.splitToNumber(var_19_2.pos, "#")
-		local var_19_4 = -(var_19_3[1] * arg_19_0.rootScale) or 0
-		local var_19_5 = -(var_19_3[2] * arg_19_0.rootScale) or 0
+	if curHeroInElementId > 0 and self.curMapId == curHeroInMapId then
+		local elementConfig = OdysseyConfig.instance:getElementConfig(curHeroInElementId)
+		local pos = string.splitToNumber(elementConfig.pos, "#")
+		local elementMapPosX = -(pos[1] * self.rootScale) or 0
+		local elementMapPosY = -(pos[2] * self.rootScale) or 0
 
-		arg_19_0.tempScenePos:Set(var_19_4, var_19_5, 0)
+		self.tempScenePos:Set(elementMapPosX, elementMapPosY, 0)
 	else
-		local var_19_6 = arg_19_0.curMapConfig.initPos
-		local var_19_7 = string.splitToNumber(var_19_6, "#")
+		local pos = self.curMapConfig.initPos
+		local posParam = string.splitToNumber(pos, "#")
 
-		arg_19_0.tempScenePos:Set(var_19_7[1], var_19_7[2], 0)
+		self.tempScenePos:Set(posParam[1], posParam[2], 0)
 	end
 
-	if arg_19_0.needTween then
-		arg_19_0:tweenSetScenePos(arg_19_0.tempScenePos)
+	if self.needTween then
+		self:tweenSetScenePos(self.tempScenePos)
 
-		arg_19_0.needTween = false
+		self.needTween = false
 	else
-		arg_19_0:directSetScenePos(arg_19_0.tempScenePos)
+		self:directSetScenePos(self.tempScenePos)
 	end
 end
 
-function var_0_0.tweenSetScenePos(arg_20_0, arg_20_1)
-	arg_20_0.tweenTargetPosX, arg_20_0.tweenTargetPosY = arg_20_0:getTargetPos(arg_20_1)
-	arg_20_0.tweenStartPosX, arg_20_0.tweenStartPosY = arg_20_0:getTargetPos(arg_20_0.curScenePos)
+function OdysseyDungeonSceneView:tweenSetScenePos(targetPos)
+	self.tweenTargetPosX, self.tweenTargetPosY = self:getTargetPos(targetPos)
+	self.tweenStartPosX, self.tweenStartPosY = self:getTargetPos(self.curScenePos)
 
-	arg_20_0:killTween()
+	self:killTween()
 
-	arg_20_0.tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, DungeonEnum.DefaultTweenMapTime, arg_20_0.tweenFrameCallback, arg_20_0.tweenFinishCallback, arg_20_0)
+	self.tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, DungeonEnum.DefaultTweenMapTime, self.tweenFrameCallback, self.tweenFinishCallback, self)
 
-	arg_20_0:tweenFrameCallback(0)
+	self:tweenFrameCallback(0)
 end
 
-function var_0_0.tweenFrameCallback(arg_21_0, arg_21_1)
-	local var_21_0 = Mathf.Lerp(arg_21_0.tweenStartPosX, arg_21_0.tweenTargetPosX, arg_21_1)
-	local var_21_1 = Mathf.Lerp(arg_21_0.tweenStartPosY, arg_21_0.tweenTargetPosY, arg_21_1)
+function OdysseyDungeonSceneView:tweenFrameCallback(weight)
+	local curPosX = Mathf.Lerp(self.tweenStartPosX, self.tweenTargetPosX, weight)
+	local curPosY = Mathf.Lerp(self.tweenStartPosY, self.tweenTargetPosY, weight)
 
-	arg_21_0.tempScenePos:Set(var_21_0, var_21_1, 0)
-	arg_21_0:directSetScenePos(arg_21_0.tempScenePos)
+	self.tempScenePos:Set(curPosX, curPosY, 0)
+	self:directSetScenePos(self.tempScenePos)
 end
 
-function var_0_0.tweenFinishCallback(arg_22_0)
-	arg_22_0.tempScenePos:Set(arg_22_0.tweenTargetPosX, arg_22_0.tweenTargetPosY, 0)
-	arg_22_0:directSetScenePos(arg_22_0.tempScenePos)
+function OdysseyDungeonSceneView:tweenFinishCallback()
+	self.tempScenePos:Set(self.tweenTargetPosX, self.tweenTargetPosY, 0)
+	self:directSetScenePos(self.tempScenePos)
 end
 
-function var_0_0.directSetScenePos(arg_23_0, arg_23_1)
-	local var_23_0, var_23_1 = arg_23_0:getTargetPos(arg_23_1)
+function OdysseyDungeonSceneView:directSetScenePos(targetPos)
+	local x, y = self:getTargetPos(targetPos)
 
-	arg_23_0.curScenePos:Set(var_23_0, var_23_1, 0)
+	self.curScenePos:Set(x, y, 0)
 
-	if not arg_23_0.sceneTrans or gohelper.isNil(arg_23_0.sceneTrans) then
+	if not self.sceneTrans or gohelper.isNil(self.sceneTrans) then
 		return
 	end
 
-	transformhelper.setLocalPos(arg_23_0.sceneTrans, arg_23_0.curScenePos.x, arg_23_0.curScenePos.y, 0)
+	transformhelper.setLocalPos(self.sceneTrans, self.curScenePos.x, self.curScenePos.y, 0)
 
-	if not arg_23_0.isInMapSelectState then
+	if not self.isInMapSelectState then
 		OdysseyDungeonController.instance:dispatchEvent(OdysseyEvent.OnUpdateElementArrow)
 	end
 end
 
-function var_0_0.getTargetPos(arg_24_0, arg_24_1)
-	local var_24_0 = arg_24_1.x
-	local var_24_1 = arg_24_1.y
+function OdysseyDungeonSceneView:getTargetPos(targetPos)
+	local x, y = targetPos.x, targetPos.y
 
-	if not arg_24_0.mapMinX or not arg_24_0.mapMaxX or not arg_24_0.mapMinY or not arg_24_0.mapMaxY then
-		local var_24_2 = arg_24_0.curMapConfig and arg_24_0.curMapConfig.initPos
-		local var_24_3 = string.splitToNumber(var_24_2, "#")
+	if not self.mapMinX or not self.mapMaxX or not self.mapMinY or not self.mapMaxY then
+		local pos = self.curMapConfig and self.curMapConfig.initPos
+		local posParam = string.splitToNumber(pos, "#")
 
-		var_24_0 = var_24_3[1] or 0
-		var_24_1 = var_24_3[2] or 0
+		x = posParam[1] or 0
+		y = posParam[2] or 0
 	else
-		var_24_0 = Mathf.Clamp(var_24_0, arg_24_0.mapMinX, arg_24_0.mapMaxX)
-		var_24_1 = Mathf.Clamp(var_24_1, arg_24_0.mapMinY, arg_24_0.mapMaxY)
+		x = Mathf.Clamp(x, self.mapMinX, self.mapMaxX)
+		y = Mathf.Clamp(y, self.mapMinY, self.mapMaxY)
 	end
 
-	return var_24_0, var_24_1
+	return x, y
 end
 
-function var_0_0.addMapLight(arg_25_0)
-	local var_25_0 = OdysseyEnum.DungeonMapLightUrl
-	local var_25_1 = arg_25_0.mapLoader:getAssetItem(var_25_0):GetResource(var_25_0)
+function OdysseyDungeonSceneView:addMapLight()
+	local assetUrl = OdysseyEnum.DungeonMapLightUrl
+	local assetItem = self.mapLoader:getAssetItem(assetUrl)
+	local mainPrefab = assetItem:GetResource(assetUrl)
 
-	arg_25_0.lightGO = gohelper.clone(var_25_1, arg_25_0.sceneGo)
+	self.lightGO = gohelper.clone(mainPrefab, self.sceneGo)
 end
 
-function var_0_0.addMythRes(arg_26_0)
-	local var_26_0 = arg_26_0.mythRes and ResUrl.getDungeonMapRes(arg_26_0.mythRes) or nil
+function OdysseyDungeonSceneView:addMythRes()
+	local mythUrl = self.mythRes and ResUrl.getDungeonMapRes(self.mythRes) or nil
 
-	if var_26_0 then
-		local var_26_1 = arg_26_0.mapLoader:getAssetItem(var_26_0):GetResource(var_26_0)
+	if mythUrl then
+		local mythAssetItem = self.mapLoader:getAssetItem(mythUrl)
+		local mythPrefab = mythAssetItem:GetResource(mythUrl)
 
-		arg_26_0.mythGo = gohelper.clone(var_26_1, arg_26_0.sceneGo, "myth" .. arg_26_0.mythCo.id)
+		self.mythGo = gohelper.clone(mythPrefab, self.sceneGo, "myth" .. self.mythCo.id)
 
-		local var_26_2 = string.splitToNumber(arg_26_0.mythCo.pos, "#")
+		local posParam = string.splitToNumber(self.mythCo.pos, "#")
 
-		transformhelper.setLocalPos(arg_26_0.mythGo.transform, var_26_2[1], var_26_2[2], var_26_2[3])
-	end
-end
-
-function var_0_0.refreshMyth(arg_27_0)
-	if arg_27_0.mythGo then
-		local var_27_0 = arg_27_0.mythCo and OdysseyDungeonModel.instance:getElementMo(arg_27_0.mythCo.elementId) or nil
-
-		gohelper.setActive(arg_27_0.mythGo, var_27_0)
+		transformhelper.setLocalPos(self.mythGo.transform, posParam[1], posParam[2], posParam[3])
 	end
 end
 
-function var_0_0.initElements(arg_28_0)
-	local var_28_0 = arg_28_0.mapLoader:getAssetItem(arg_28_0.sceneCanvasUrl):GetResource(arg_28_0.sceneCanvasUrl)
+function OdysseyDungeonSceneView:refreshMyth()
+	if self.mythGo then
+		local mythElementMo = self.mythCo and OdysseyDungeonModel.instance:getElementMo(self.mythCo.elementId) or nil
 
-	arg_28_0.elementCanvasGo = gohelper.clone(var_28_0, arg_28_0.sceneGo, "OdysseyElementsCanvas")
-	arg_28_0.elementCanvasGo:GetComponent("Canvas").worldCamera = CameraMgr.instance:getMainCamera()
-
-	local var_28_1 = arg_28_0.mapLoader:getAssetItem(arg_28_0.elementRootUrl):GetResource(arg_28_0.elementRootUrl)
-
-	arg_28_0.elementsRootGO = gohelper.clone(var_28_1, arg_28_0.elementCanvasGo, "elementsRoot")
-
-	local var_28_2 = gohelper.findChild(arg_28_0.elementsRootGO, "root")
-
-	arg_28_0.rootScale = transformhelper.getLocalScale(var_28_2.transform)
-
-	OdysseyDungeonController.instance:dispatchEvent(OdysseyEvent.OnInitElements, arg_28_0.elementsRootGO)
+		gohelper.setActive(self.mythGo, mythElementMo)
+	end
 end
 
-function var_0_0.initMapSelect(arg_29_0)
-	local var_29_0 = arg_29_0.mapLoader:getAssetItem(arg_29_0.sceneCanvasUrl):GetResource(arg_29_0.sceneCanvasUrl)
+function OdysseyDungeonSceneView:initElements()
+	local canvasAssetItem = self.mapLoader:getAssetItem(self.sceneCanvasUrl)
+	local canvasPrefab = canvasAssetItem:GetResource(self.sceneCanvasUrl)
 
-	arg_29_0.mapSelectCanvasGo = gohelper.clone(var_29_0, arg_29_0.sceneGo, "OdysseyMapSelectCanvas")
-	arg_29_0.mapSelectCanvasGo:GetComponent("Canvas").worldCamera = CameraMgr.instance:getMainCamera()
+	self.elementCanvasGo = gohelper.clone(canvasPrefab, self.sceneGo, "OdysseyElementsCanvas")
+	self.elementCanvasGo:GetComponent("Canvas").worldCamera = CameraMgr.instance:getMainCamera()
 
-	local var_29_1 = arg_29_0.mapLoader:getAssetItem(arg_29_0.mapSelectRootUrl):GetResource(arg_29_0.mapSelectRootUrl)
+	local elementRootAssetItem = self.mapLoader:getAssetItem(self.elementRootUrl)
+	local elementRootPrefab = elementRootAssetItem:GetResource(self.elementRootUrl)
 
-	arg_29_0.mapSelectRootGO = gohelper.clone(var_29_1, arg_29_0.mapSelectCanvasGo, "mapSelectRoot")
+	self.elementsRootGO = gohelper.clone(elementRootPrefab, self.elementCanvasGo, "elementsRoot")
 
-	local var_29_2 = gohelper.findChild(arg_29_0.mapSelectRootGO, "root")
+	local rootGO = gohelper.findChild(self.elementsRootGO, "root")
 
-	arg_29_0.rootScale = transformhelper.getLocalScale(var_29_2.transform)
+	self.rootScale = transformhelper.getLocalScale(rootGO.transform)
 
-	OdysseyDungeonController.instance:dispatchEvent(OdysseyEvent.OnInitMapSelect, arg_29_0.mapSelectRootGO)
+	OdysseyDungeonController.instance:dispatchEvent(OdysseyEvent.OnInitElements, self.elementsRootGO)
 end
 
-function var_0_0.setWholeMapPos(arg_30_0)
-	local var_30_0 = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.MapSelectPos)
-	local var_30_1 = string.splitToNumber(var_30_0.value, "#")
+function OdysseyDungeonSceneView:initMapSelect()
+	local canvasAssetItem = self.mapLoader:getAssetItem(self.sceneCanvasUrl)
+	local canvasPrefab = canvasAssetItem:GetResource(self.sceneCanvasUrl)
 
-	arg_30_0.tempScenePos:Set(var_30_1[1], var_30_1[2], 0)
-	arg_30_0:directSetScenePos(arg_30_0.tempScenePos)
+	self.mapSelectCanvasGo = gohelper.clone(canvasPrefab, self.sceneGo, "OdysseyMapSelectCanvas")
+	self.mapSelectCanvasGo:GetComponent("Canvas").worldCamera = CameraMgr.instance:getMainCamera()
+
+	local mapSelectRootAssetItem = self.mapLoader:getAssetItem(self.mapSelectRootUrl)
+	local mapSelectRootPrefab = mapSelectRootAssetItem:GetResource(self.mapSelectRootUrl)
+
+	self.mapSelectRootGO = gohelper.clone(mapSelectRootPrefab, self.mapSelectCanvasGo, "mapSelectRoot")
+
+	local rootGO = gohelper.findChild(self.mapSelectRootGO, "root")
+
+	self.rootScale = transformhelper.getLocalScale(rootGO.transform)
+
+	OdysseyDungeonController.instance:dispatchEvent(OdysseyEvent.OnInitMapSelect, self.mapSelectRootGO)
 end
 
-function var_0_0.onMapDragBegin(arg_31_0, arg_31_1, arg_31_2)
+function OdysseyDungeonSceneView:setWholeMapPos()
+	local mapSelectPosCo = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.MapSelectPos)
+	local posParam = string.splitToNumber(mapSelectPosCo.value, "#")
+
+	self.tempScenePos:Set(posParam[1], posParam[2], 0)
+	self:directSetScenePos(self.tempScenePos)
+end
+
+function OdysseyDungeonSceneView:onMapDragBegin(param, pointerEventData)
 	OdysseyDungeonModel.instance:setDraggingMapState(true)
 
-	arg_31_0.dragBeginPos = arg_31_0:getDragWorldPos(arg_31_2)
+	self.dragBeginPos = self:getDragWorldPos(pointerEventData)
 
 	AudioMgr.instance:trigger(AudioEnum2_9.Odyssey.play_ui_cikexia_link_drag)
 end
 
-function var_0_0.onMapDrag(arg_32_0, arg_32_1, arg_32_2)
-	if not arg_32_0.dragBeginPos then
+function OdysseyDungeonSceneView:onMapDrag(param, pointerEventData)
+	if not self.dragBeginPos then
 		return
 	end
 
-	local var_32_0 = arg_32_0:getDragWorldPos(arg_32_2)
-	local var_32_1 = var_32_0 - arg_32_0.dragBeginPos
+	local dragPos = self:getDragWorldPos(pointerEventData)
+	local posOffset = dragPos - self.dragBeginPos
 
-	arg_32_0.dragBeginPos = var_32_0
+	self.dragBeginPos = dragPos
 
-	arg_32_0.tempScenePos:Set(arg_32_0.curScenePos.x + var_32_1.x, arg_32_0.curScenePos.y + var_32_1.y)
-	arg_32_0:directSetScenePos(arg_32_0.tempScenePos)
+	self.tempScenePos:Set(self.curScenePos.x + posOffset.x, self.curScenePos.y + posOffset.y)
+	self:directSetScenePos(self.tempScenePos)
 	OdysseyDungeonModel.instance:setDraggingMapState(true)
 end
 
-function var_0_0.onMapDragEnd(arg_33_0, arg_33_1, arg_33_2)
-	arg_33_0.dragBeginPos = nil
+function OdysseyDungeonSceneView:onMapDragEnd(param, pointerEventData)
+	self.dragBeginPos = nil
 
 	OdysseyDungeonModel.instance:setDraggingMapState(false)
 end
 
-function var_0_0.getDragWorldPos(arg_34_0, arg_34_1)
-	local var_34_0 = CameraMgr.instance:getMainCamera()
-	local var_34_1 = arg_34_0._gofullscreen.transform.position
+function OdysseyDungeonSceneView:getDragWorldPos(pointerEventData)
+	local mainCamera = CameraMgr.instance:getMainCamera()
+	local refPos = self._gofullscreen.transform.position
+	local worldPos = SLFramework.UGUI.RectTrHelper.ScreenPosToWorldPos(pointerEventData.position, mainCamera, refPos)
 
-	return (SLFramework.UGUI.RectTrHelper.ScreenPosToWorldPos(arg_34_1.position, var_34_0, var_34_1))
+	return worldPos
 end
 
-function var_0_0.onClickElement(arg_35_0, arg_35_1)
-	if arg_35_1 and arg_35_1.config then
-		arg_35_0:focusElementByComp(arg_35_1)
+function OdysseyDungeonSceneView:onClickElement(elementComp)
+	if elementComp and elementComp.config then
+		self:focusElementByComp(elementComp)
 	end
 end
 
-function var_0_0.focusElementByComp(arg_36_0, arg_36_1)
-	local var_36_0 = arg_36_0.elementsRootGO.transform:InverseTransformPoint(arg_36_1.go.transform.position)
-	local var_36_1 = -var_36_0.x or 0
-	local var_36_2 = -var_36_0.y or 0
+function OdysseyDungeonSceneView:focusElementByComp(elementComp)
+	local elementPos = self.elementsRootGO.transform:InverseTransformPoint(elementComp.go.transform.position)
+	local elementMapPosX = -elementPos.x or 0
+	local elementMapPosY = -elementPos.y or 0
 
-	arg_36_0.tempScenePos:Set(var_36_1, var_36_2, 0)
-	arg_36_0:tweenSetScenePos(arg_36_0.tempScenePos)
+	self.tempScenePos:Set(elementMapPosX, elementMapPosY, 0)
+	self:tweenSetScenePos(self.tempScenePos)
 end
 
-function var_0_0.focusElementByCo(arg_37_0, arg_37_1)
-	local var_37_0 = string.splitToNumber(arg_37_1.pos, "#")
-	local var_37_1 = -(var_37_0[1] * arg_37_0.rootScale) or 0
-	local var_37_2 = -(var_37_0[2] * arg_37_0.rootScale) or 0
+function OdysseyDungeonSceneView:focusElementByCo(elementConfig)
+	local pos = string.splitToNumber(elementConfig.pos, "#")
+	local elementMapPosX = -(pos[1] * self.rootScale) or 0
+	local elementMapPosY = -(pos[2] * self.rootScale) or 0
 
-	arg_37_0.tempScenePos:Set(var_37_1, var_37_2, 0)
-	arg_37_0:tweenSetScenePos(arg_37_0.tempScenePos)
+	self.tempScenePos:Set(elementMapPosX, elementMapPosY, 0)
+	self:tweenSetScenePos(self.tempScenePos)
 end
 
-function var_0_0.onFocusElement(arg_38_0, arg_38_1, arg_38_2)
-	local var_38_0 = arg_38_0.viewContainer:getDungeonSceneElementsView()
+function OdysseyDungeonSceneView:onFocusElement(elementId, force)
+	local sceneElementsView = self.viewContainer:getDungeonSceneElementsView()
 
-	if not var_38_0 then
+	if not sceneElementsView then
 		return
 	end
 
-	local var_38_1 = var_38_0:getElemenetComp(arg_38_1)
+	local elementComp = sceneElementsView:getElemenetComp(elementId)
 
-	if var_38_1 and var_38_1.config then
-		arg_38_0:focusElementByComp(var_38_1)
-	elseif arg_38_2 then
-		local var_38_2 = OdysseyConfig.instance:getElementConfig(arg_38_1)
+	if elementComp and elementComp.config then
+		self:focusElementByComp(elementComp)
+	elseif force then
+		local elementCo = OdysseyConfig.instance:getElementConfig(elementId)
 
-		arg_38_0:focusElementByCo(var_38_2)
+		self:focusElementByCo(elementCo)
 	end
 end
 
-function var_0_0.onFocusMapSelectItem(arg_39_0, arg_39_1, arg_39_2)
-	if arg_39_2 then
-		arg_39_0:tweenSetScenePos(arg_39_1)
+function OdysseyDungeonSceneView:onFocusMapSelectItem(targetPos, needTween)
+	if needTween then
+		self:tweenSetScenePos(targetPos)
 	else
-		arg_39_0:directSetScenePos(arg_39_1)
+		self:directSetScenePos(targetPos)
 	end
 
 	OdysseyDungeonModel.instance:setNeedFocusMainMapSelectItem(false)
 end
 
-function var_0_0.closeTransitionEffect(arg_40_0)
-	TaskDispatcher.runDelay(arg_40_0.hideTransitionEffect, arg_40_0, 1.7)
+function OdysseyDungeonSceneView:closeTransitionEffect()
+	TaskDispatcher.runDelay(self.hideTransitionEffect, self, 1.7)
 end
 
-function var_0_0.hideTransitionEffect(arg_41_0)
-	gohelper.setActive(arg_41_0._gotransitionEffect, false)
-	TaskDispatcher.cancelTask(arg_41_0.hideMapName, arg_41_0)
+function OdysseyDungeonSceneView:hideTransitionEffect()
+	gohelper.setActive(self._gotransitionEffect, false)
+	TaskDispatcher.cancelTask(self.hideMapName, self)
 
-	if not OdysseyDungeonModel.instance:getIsInMapSelectState() then
-		gohelper.setActive(arg_41_0._gomapName, true)
-		arg_41_0._animMapName:Play("open", 0, 0)
-		TaskDispatcher.runDelay(arg_41_0.hideMapName, arg_41_0, 1)
+	local isInMapSelectState = OdysseyDungeonModel.instance:getIsInMapSelectState()
+
+	if not isInMapSelectState then
+		gohelper.setActive(self._gomapName, true)
+		self._animMapName:Play("open", 0, 0)
+		TaskDispatcher.runDelay(self.hideMapName, self, 1)
 	end
 
-	arg_41_0:popupRewardView()
-	arg_41_0:showJumpNeedShowElement()
+	self:popupRewardView()
+	self:showJumpNeedShowElement()
 end
 
-function var_0_0.popupRewardView(arg_42_0)
+function OdysseyDungeonSceneView:popupRewardView()
 	OdysseyDungeonController.instance:popupRewardView()
 	AssassinController.instance:dispatchEvent(AssassinEvent.EnableLibraryToast, true)
 end
 
-function var_0_0.hideMapName(arg_43_0)
-	arg_43_0._animMapName:Play("close", 0, 0)
+function OdysseyDungeonSceneView:hideMapName()
+	self._animMapName:Play("close", 0, 0)
 end
 
-function var_0_0.showJumpNeedShowElement(arg_44_0)
-	local var_44_0 = OdysseyDungeonModel.instance:getJumpNeedOpenElement()
+function OdysseyDungeonSceneView:showJumpNeedShowElement()
+	local jumpNeedOpenElement = OdysseyDungeonModel.instance:getJumpNeedOpenElement()
 
-	if var_44_0 > 0 then
-		local var_44_1 = OdysseyConfig.instance:getElementConfig(var_44_0)
+	if jumpNeedOpenElement > 0 then
+		local jumpNeedOpenElementCo = OdysseyConfig.instance:getElementConfig(jumpNeedOpenElement)
 
-		if var_44_1 and var_44_1.mapId == arg_44_0.curMapId then
+		if jumpNeedOpenElementCo and jumpNeedOpenElementCo.mapId == self.curMapId then
 			OdysseyDungeonController.instance:openDungeonInteractView({
-				config = var_44_1
+				config = jumpNeedOpenElementCo
 			})
 		end
 	end
 end
 
-function var_0_0.showSubTaskShowEffect(arg_45_0)
+function OdysseyDungeonSceneView:showSubTaskShowEffect()
 	OdysseyDungeonController.instance:dispatchEvent(OdysseyEvent.PlaySubTaskShowEffect)
 end
 
-function var_0_0.setCloseOverrideFunc(arg_46_0)
-	arg_46_0.isInMapSelectState = OdysseyDungeonModel.instance:getIsInMapSelectState()
+function OdysseyDungeonSceneView:setCloseOverrideFunc()
+	self.isInMapSelectState = OdysseyDungeonModel.instance:getIsInMapSelectState()
 
-	if arg_46_0.isInMapSelectState then
-		arg_46_0.viewContainer:setOverrideCloseClick(arg_46_0.backToLastMap, arg_46_0)
+	if self.isInMapSelectState then
+		self.viewContainer:setOverrideCloseClick(self.backToLastMap, self)
 	else
-		arg_46_0.viewContainer:setOverrideCloseClick(arg_46_0.closeThis, arg_46_0)
+		self.viewContainer:setOverrideCloseClick(self.closeThis, self)
 	end
 end
 
-function var_0_0.backToLastMap(arg_47_0)
-	arg_47_0.canPlayTransitionEffect = false
+function OdysseyDungeonSceneView:backToLastMap()
+	self.canPlayTransitionEffect = false
 
 	ViewMgr.instance:closeView(ViewName.OdysseyDungeonMapSelectInfoView)
 	OdysseyDungeonModel.instance:setIsMapSelect(false)
 	OdysseyDungeonController.instance:dispatchEvent(OdysseyEvent.OnMapSelectItemEnter)
 end
 
-function var_0_0.killTween(arg_48_0)
-	if arg_48_0.tweenId then
-		ZProj.TweenHelper.KillById(arg_48_0.tweenId)
+function OdysseyDungeonSceneView:killTween()
+	if self.tweenId then
+		ZProj.TweenHelper.KillById(self.tweenId)
 	end
 end
 
-function var_0_0.onClose(arg_49_0)
-	arg_49_0:killTween()
-	arg_49_0:resetCamera()
-	TaskDispatcher.cancelTask(arg_49_0.hideTransitionEffect, arg_49_0)
-	TaskDispatcher.cancelTask(arg_49_0.hideMapName, arg_49_0)
-	TaskDispatcher.cancelTask(arg_49_0.popupRewardView, arg_49_0)
-	TaskDispatcher.cancelTask(arg_49_0.showSubTaskShowEffect, arg_49_0)
+function OdysseyDungeonSceneView:onClose()
+	self:killTween()
+	self:resetCamera()
+	TaskDispatcher.cancelTask(self.hideTransitionEffect, self)
+	TaskDispatcher.cancelTask(self.hideMapName, self)
+	TaskDispatcher.cancelTask(self.popupRewardView, self)
+	TaskDispatcher.cancelTask(self.showSubTaskShowEffect, self)
 	OdysseyDungeonModel.instance:setDraggingMapState(false)
-	OdysseyStatHelper.instance:sendOdysseyDungeonViewClose(arg_49_0.curMapId, "close")
+	OdysseyStatHelper.instance:sendOdysseyDungeonViewClose(self.curMapId, "close")
 end
 
-function var_0_0.resetCamera(arg_50_0)
-	local var_50_0 = CameraMgr.instance:getMainCamera()
+function OdysseyDungeonSceneView:resetCamera()
+	local camera = CameraMgr.instance:getMainCamera()
 
-	var_50_0.orthographicSize = 5
-	var_50_0.orthographic = false
+	camera.orthographicSize = 5
+	camera.orthographic = false
 end
 
-function var_0_0.onDestroyView(arg_51_0)
+function OdysseyDungeonSceneView:onDestroyView()
 	OdysseyDungeonController.instance:dispatchEvent(OdysseyEvent.OnDisposeScene)
-	gohelper.destroy(arg_51_0.sceneRoot)
-	arg_51_0:disposeOldMap()
+	gohelper.destroy(self.sceneRoot)
+	self:disposeOldMap()
 
-	arg_51_0.sceneTrans = nil
+	self.sceneTrans = nil
 
-	if arg_51_0.sceneGo then
-		gohelper.destroy(arg_51_0.sceneGo)
+	if self.sceneGo then
+		gohelper.destroy(self.sceneGo)
 
-		arg_51_0.sceneGo = nil
+		self.sceneGo = nil
 	end
 
-	if arg_51_0.mapLoader then
-		arg_51_0.mapLoader:dispose()
+	if self.mapLoader then
+		self.mapLoader:dispose()
 	end
 end
 
-function var_0_0.disposeOldMap(arg_52_0)
-	if arg_52_0.oldMapLoader then
-		arg_52_0.oldMapLoader:dispose()
+function OdysseyDungeonSceneView:disposeOldMap()
+	if self.oldMapLoader then
+		self.oldMapLoader:dispose()
 
-		arg_52_0.oldMapLoader = nil
+		self.oldMapLoader = nil
 	end
 
-	if arg_52_0.elementCanvasGo then
-		gohelper.destroy(arg_52_0.elementCanvasGo)
+	if self.elementCanvasGo then
+		gohelper.destroy(self.elementCanvasGo)
 
-		arg_52_0.elementCanvasGo = nil
+		self.elementCanvasGo = nil
 	end
 
-	if arg_52_0.elementsRootGO then
-		gohelper.destroy(arg_52_0.elementsRootGO)
+	if self.elementsRootGO then
+		gohelper.destroy(self.elementsRootGO)
 
-		arg_52_0.elementsRootGO = nil
+		self.elementsRootGO = nil
 	end
 
-	if arg_52_0.mapSelectCanvasGo then
-		gohelper.destroy(arg_52_0.mapSelectCanvasGo)
+	if self.mapSelectCanvasGo then
+		gohelper.destroy(self.mapSelectCanvasGo)
 
-		arg_52_0.mapSelectCanvasGo = nil
+		self.mapSelectCanvasGo = nil
 	end
 
-	if arg_52_0.mapSelectRootGO then
-		gohelper.destroy(arg_52_0.mapSelectRootGO)
+	if self.mapSelectRootGO then
+		gohelper.destroy(self.mapSelectRootGO)
 
-		arg_52_0.mapSelectRootGO = nil
+		self.mapSelectRootGO = nil
 	end
 
-	if arg_52_0.oldMythGo then
-		gohelper.destroy(arg_52_0.oldMythGo)
+	if self.oldMythGo then
+		gohelper.destroy(self.oldMythGo)
 
-		arg_52_0.oldMythGo = nil
+		self.oldMythGo = nil
 	end
 
-	if arg_52_0.oldLightGo then
-		gohelper.destroy(arg_52_0.oldLightGo)
+	if self.oldLightGo then
+		gohelper.destroy(self.oldLightGo)
 
-		arg_52_0.oldLightGo = nil
+		self.oldLightGo = nil
 	end
 
-	if arg_52_0.oldSceneGo then
-		gohelper.destroy(arg_52_0.oldSceneGo)
+	if self.oldSceneGo then
+		gohelper.destroy(self.oldSceneGo)
 
-		arg_52_0.oldSceneGo = nil
+		self.oldSceneGo = nil
 	end
 
 	OdysseyDungeonController.instance:dispatchEvent(OdysseyEvent.OnDisposeOldMap)
 end
 
-return var_0_0
+return OdysseyDungeonSceneView

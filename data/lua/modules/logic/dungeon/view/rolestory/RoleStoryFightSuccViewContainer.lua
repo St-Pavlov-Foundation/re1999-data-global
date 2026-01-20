@@ -1,11 +1,13 @@
-﻿module("modules.logic.dungeon.view.rolestory.RoleStoryFightSuccViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/rolestory/RoleStoryFightSuccViewContainer.lua
 
-local var_0_0 = class("RoleStoryFightSuccViewContainer", BaseViewContainer)
+module("modules.logic.dungeon.view.rolestory.RoleStoryFightSuccViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local RoleStoryFightSuccViewContainer = class("RoleStoryFightSuccViewContainer", BaseViewContainer)
+
+function RoleStoryFightSuccViewContainer:buildViews()
 	return {
 		RoleStoryFightSuccView.New()
 	}
 end
 
-return var_0_0
+return RoleStoryFightSuccViewContainer

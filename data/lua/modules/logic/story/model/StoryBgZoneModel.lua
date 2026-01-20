@@ -1,54 +1,58 @@
-﻿module("modules.logic.story.model.StoryBgZoneModel", package.seeall)
+﻿-- chunkname: @modules/logic/story/model/StoryBgZoneModel.lua
 
-local var_0_0 = class("StoryBgZoneModel", BaseModel)
+module("modules.logic.story.model.StoryBgZoneModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._zoneList = {}
+local StoryBgZoneModel = class("StoryBgZoneModel", BaseModel)
+
+function StoryBgZoneModel:onInit()
+	self._zoneList = {}
 end
 
-function var_0_0.setZoneList(arg_2_0, arg_2_1)
-	arg_2_0._zoneList = {}
+function StoryBgZoneModel:setZoneList(infos)
+	self._zoneList = {}
 
-	if arg_2_1 then
-		for iter_2_0, iter_2_1 in ipairs(arg_2_1) do
-			local var_2_0 = StoryBgZoneMo.New()
+	if infos then
+		for _, info in ipairs(infos) do
+			local zoneMo = StoryBgZoneMo.New()
 
-			var_2_0:init(iter_2_1)
-			table.insert(arg_2_0._zoneList, var_2_0)
+			zoneMo:init(info)
+			table.insert(self._zoneList, zoneMo)
 		end
 	end
 
-	arg_2_0:setList(arg_2_0._zoneList)
+	self:setList(self._zoneList)
 end
 
-function var_0_0.getZoneList(arg_3_0)
-	return arg_3_0._zoneList
+function StoryBgZoneModel:getZoneList()
+	return self._zoneList
 end
 
-function var_0_0.getBgZoneByPath(arg_4_0, arg_4_1)
-	local var_4_0 = string.gsub(arg_4_1, "_zone", "")
-	local var_4_1 = string.gsub(var_4_0, ".png", "")
-	local var_4_2 = string.gsub(var_4_1, ".jpg", "") .. "_zone.png"
+function StoryBgZoneModel:getBgZoneByPath(path)
+	local resultName = string.gsub(path, "_zone", "")
 
-	for iter_4_0, iter_4_1 in pairs(arg_4_0._zoneList) do
-		if iter_4_1.path == var_4_2 then
-			return iter_4_1
+	resultName = string.gsub(resultName, ".png", "")
+	resultName = string.gsub(resultName, ".jpg", "")
+	resultName = resultName .. "_zone.png"
+
+	for _, v in pairs(self._zoneList) do
+		if v.path == resultName then
+			return v
 		end
 	end
 
 	return nil
 end
 
-function var_0_0.getRightBgZonePath(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0:getBgZoneByPath(arg_5_1)
+function StoryBgZoneModel:getRightBgZonePath(path)
+	local mo = self:getBgZoneByPath(path)
 
-	if var_5_0 then
-		return var_5_0.path
+	if mo then
+		return mo.path
 	end
 
-	return arg_5_1
+	return path
 end
 
-var_0_0.instance = var_0_0.New()
+StoryBgZoneModel.instance = StoryBgZoneModel.New()
 
-return var_0_0
+return StoryBgZoneModel

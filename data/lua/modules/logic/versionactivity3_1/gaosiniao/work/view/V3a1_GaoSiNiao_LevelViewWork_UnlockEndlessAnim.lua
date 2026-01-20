@@ -1,86 +1,90 @@
-﻿module("modules.logic.versionactivity3_1.gaosiniao.work.view.V3a1_GaoSiNiao_LevelViewWork_UnlockEndlessAnim", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/gaosiniao/work/view/V3a1_GaoSiNiao_LevelViewWork_UnlockEndlessAnim.lua
 
-local var_0_0 = class("V3a1_GaoSiNiao_LevelViewWork_UnlockEndlessAnim", V3a1_GaoSiNiao_LevelViewFlow_WorkBase)
+module("modules.logic.versionactivity3_1.gaosiniao.work.view.V3a1_GaoSiNiao_LevelViewWork_UnlockEndlessAnim", package.seeall)
 
-function var_0_0.s_create(arg_1_0, arg_1_1)
-	local var_1_0 = var_0_0.New()
+local V3a1_GaoSiNiao_LevelViewWork_UnlockEndlessAnim = class("V3a1_GaoSiNiao_LevelViewWork_UnlockEndlessAnim", V3a1_GaoSiNiao_LevelViewFlow_WorkBase)
 
-	if arg_1_0 or arg_1_1 then
-		var_1_0._viewObj = arg_1_0
-		var_1_0._viewContainer = arg_1_1
+function V3a1_GaoSiNiao_LevelViewWork_UnlockEndlessAnim.s_create(viewObj, viewContainer)
+	local res = V3a1_GaoSiNiao_LevelViewWork_UnlockEndlessAnim.New()
+
+	if viewObj or viewContainer then
+		res._viewObj = viewObj
+		res._viewContainer = viewContainer
 	else
-		local var_1_1 = ViewName.V3a1_GaoSiNiao_LevelView
-		local var_1_2 = ViewMgr.instance:getContainer(var_1_1)
+		local kViewName = ViewName.V3a1_GaoSiNiao_LevelView
+		local _viewContainer = ViewMgr.instance:getContainer(kViewName)
 
-		if not var_1_2 then
+		if not _viewContainer then
 			return nil
 		end
 
-		var_1_0._viewContainer = var_1_2
-		var_1_0._viewObj = var_1_2:mainView()
+		res._viewContainer = _viewContainer
+		res._viewObj = _viewContainer:mainView()
 	end
 
-	if not var_1_0._viewObj then
+	if not res._viewObj then
 		return nil
 	end
 
-	return var_1_0
+	return res
 end
 
-function var_0_0.viewObj(arg_2_0)
-	if arg_2_0._viewObj then
-		return arg_2_0._viewObj
+function V3a1_GaoSiNiao_LevelViewWork_UnlockEndlessAnim:viewObj()
+	if self._viewObj then
+		return self._viewObj
 	end
 
-	return var_0_0.super.viewObj(arg_2_0)
+	return V3a1_GaoSiNiao_LevelViewWork_UnlockEndlessAnim.super.viewObj(self)
 end
 
-function var_0_0.baseViewContainer(arg_3_0)
-	if arg_3_0._viewContainer then
-		return arg_3_0._viewContainer
+function V3a1_GaoSiNiao_LevelViewWork_UnlockEndlessAnim:baseViewContainer()
+	if self._viewContainer then
+		return self._viewContainer
 	end
 
-	return var_0_0.super.baseViewContainer(arg_3_0)
+	return V3a1_GaoSiNiao_LevelViewWork_UnlockEndlessAnim.super.baseViewContainer(self)
 end
 
-function var_0_0.onStart(arg_4_0)
-	arg_4_0:clearWork()
+function V3a1_GaoSiNiao_LevelViewWork_UnlockEndlessAnim:onStart()
+	self:clearWork()
 
-	local var_4_0 = arg_4_0:viewObj()
+	local viewObj = self:viewObj()
 
-	if not var_4_0 then
-		arg_4_0:onFail()
+	if not viewObj then
+		self:onFail()
 
 		return
 	end
 
-	if not arg_4_0:isSpEpisodeOpen() then
-		arg_4_0:onSucc()
+	local isSpEpisodeOpen = self:isSpEpisodeOpen()
+
+	if not isSpEpisodeOpen then
+		self:onSucc()
 
 		return
 	end
 
-	if arg_4_0:hasPlayedUnlockedEndless() then
-		var_4_0:playAnim_EndlessIdle()
-		arg_4_0:onSucc()
+	if self:hasPlayedUnlockedEndless() then
+		viewObj:playAnim_EndlessIdle()
+		self:onSucc()
 
 		return
 	end
 
-	var_4_0:playAnim_EndlessUnlock(arg_4_0._onAnimDone, arg_4_0)
+	viewObj:playAnim_EndlessUnlock(self._onAnimDone, self)
 end
 
-function var_0_0._onAnimDone(arg_5_0)
-	arg_5_0:saveHasPlayedUnlockedEndless()
-	arg_5_0:onSucc()
+function V3a1_GaoSiNiao_LevelViewWork_UnlockEndlessAnim:_onAnimDone()
+	self:saveHasPlayedUnlockedEndless()
+	self:onSucc()
 end
 
-function var_0_0.clearWork(arg_6_0)
-	arg_6_0._viewObj = nil
-	arg_6_0._viewContainer = nil
-	arg_6_0._needWaitCount = 0
+function V3a1_GaoSiNiao_LevelViewWork_UnlockEndlessAnim:clearWork()
+	self._viewObj = nil
+	self._viewContainer = nil
+	self._needWaitCount = 0
 
-	var_0_0.super.clearWork(arg_6_0)
+	V3a1_GaoSiNiao_LevelViewWork_UnlockEndlessAnim.super.clearWork(self)
 end
 
-return var_0_0
+return V3a1_GaoSiNiao_LevelViewWork_UnlockEndlessAnim

@@ -1,158 +1,162 @@
-﻿module("modules.logic.equip.model.EquipRefineListModel", package.seeall)
+﻿-- chunkname: @modules/logic/equip/model/EquipRefineListModel.lua
 
-local var_0_0 = class("EquipRefineListModel", ListScrollModel)
+module("modules.logic.equip.model.EquipRefineListModel", package.seeall)
 
-var_0_0.SelectStatusEnum = {
+local EquipRefineListModel = class("EquipRefineListModel", ListScrollModel)
+
+EquipRefineListModel.SelectStatusEnum = {
 	Selected = 2,
 	OutMaxRefineLv = 1,
 	Success = 0
 }
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0.selectedEquipMoList = {}
-	arg_1_0.selectedEquipUidDict = {}
+function EquipRefineListModel:onInit()
+	self.selectedEquipMoList = {}
+	self.selectedEquipUidDict = {}
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0.selectedEquipMoList = {}
-	arg_2_0.selectedEquipUidDict = {}
+function EquipRefineListModel:reInit()
+	self.selectedEquipMoList = {}
+	self.selectedEquipUidDict = {}
 end
 
-function var_0_0.initData(arg_3_0, arg_3_1)
-	arg_3_0.targetEquipMo = arg_3_1
-	arg_3_0.targetEquipRefineLv = arg_3_1.refineLv
+function EquipRefineListModel:initData(equipMo)
+	self.targetEquipMo = equipMo
+	self.targetEquipRefineLv = equipMo.refineLv
 
-	local var_3_0 = arg_3_0.targetEquipMo.config
+	local co = self.targetEquipMo.config
 
-	if not string.nilorempty(var_3_0.useSpRefine) then
-		arg_3_0.useSpRefineList = string.splitToNumber(var_3_0.useSpRefine, "#")
+	if not string.nilorempty(co.useSpRefine) then
+		self.useSpRefineList = string.splitToNumber(co.useSpRefine, "#")
 	end
 
-	arg_3_0.data = {}
+	self.data = {}
 
-	local var_3_1 = EquipModel.instance:getEquips()
+	local equipMoList = EquipModel.instance:getEquips()
 
-	for iter_3_0, iter_3_1 in ipairs(var_3_1) do
-		if arg_3_0:canAddToData(iter_3_1) then
-			table.insert(arg_3_0.data, iter_3_1)
+	for i, equipMo in ipairs(equipMoList) do
+		if self:canAddToData(equipMo) then
+			table.insert(self.data, equipMo)
 		end
 	end
 end
 
-function var_0_0.canAddToData(arg_4_0, arg_4_1)
-	if arg_4_1.equipId == EquipConfig.instance:getEquipUniversalId() then
+function EquipRefineListModel:canAddToData(equipMo)
+	if equipMo.equipId == EquipConfig.instance:getEquipUniversalId() then
 		return true
 	end
 
-	if arg_4_1.equipId == arg_4_0.targetEquipMo.equipId and arg_4_1.uid ~= arg_4_0.targetEquipMo.uid and arg_4_1.config.isExpEquip ~= 1 then
+	if equipMo.equipId == self.targetEquipMo.equipId and equipMo.uid ~= self.targetEquipMo.uid and equipMo.config.isExpEquip ~= 1 then
 		return true
 	end
 
-	if arg_4_0.useSpRefineList and tabletool.indexOf(arg_4_0.useSpRefineList, arg_4_1.equipId) then
+	if self.useSpRefineList and tabletool.indexOf(self.useSpRefineList, equipMo.equipId) then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.sortData(arg_5_0)
-	table.sort(arg_5_0.data, EquipHelper.sortRefineList)
+function EquipRefineListModel:sortData()
+	table.sort(self.data, EquipHelper.sortRefineList)
 end
 
-function var_0_0.refreshData(arg_6_0)
-	arg_6_0:setList(arg_6_0.data)
+function EquipRefineListModel:refreshData()
+	self:setList(self.data)
 end
 
-function var_0_0.getDataCount(arg_7_0)
-	return GameUtil.getTabLen(arg_7_0.data)
+function EquipRefineListModel:getDataCount()
+	return GameUtil.getTabLen(self.data)
 end
 
-function var_0_0.selectEquip(arg_8_0, arg_8_1)
-	if arg_8_0.selectedEquipUidDict[arg_8_1.uid] then
-		return var_0_0.SelectStatusEnum.Selected
+function EquipRefineListModel:selectEquip(equipMo)
+	if self.selectedEquipUidDict[equipMo.uid] then
+		return EquipRefineListModel.SelectStatusEnum.Selected
 	end
 
-	if arg_8_0:getAddRefineLv() + arg_8_0.targetEquipRefineLv >= EquipConfig.instance:getEquipRefineLvMax() then
-		return var_0_0.SelectStatusEnum.OutMaxRefineLv
+	local aimRefineLv = self:getAddRefineLv() + self.targetEquipRefineLv
+
+	if aimRefineLv >= EquipConfig.instance:getEquipRefineLvMax() then
+		return EquipRefineListModel.SelectStatusEnum.OutMaxRefineLv
 	end
 
-	arg_8_0.selectedEquipUidDict[arg_8_1.uid] = true
+	self.selectedEquipUidDict[equipMo.uid] = true
 
-	table.insert(arg_8_0.selectedEquipMoList, arg_8_1)
-	arg_8_0:setSelectedEquipMoList()
+	table.insert(self.selectedEquipMoList, equipMo)
+	self:setSelectedEquipMoList()
 	EquipController.instance:dispatchEvent(EquipEvent.OnRefineSelectedEquipChange)
 
-	return var_0_0.SelectStatusEnum.Success
+	return EquipRefineListModel.SelectStatusEnum.Success
 end
 
-function var_0_0.deselectEquip(arg_9_0, arg_9_1)
-	arg_9_0.selectedEquipUidDict[arg_9_1.uid] = nil
+function EquipRefineListModel:deselectEquip(equipMo)
+	self.selectedEquipUidDict[equipMo.uid] = nil
 
-	local var_9_0 = {}
+	local equipMoList = {}
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0.selectedEquipMoList) do
-		if iter_9_1.uid ~= arg_9_1.uid then
-			table.insert(var_9_0, iter_9_1)
+	for _, tempEquipMo in ipairs(self.selectedEquipMoList) do
+		if tempEquipMo.uid ~= equipMo.uid then
+			table.insert(equipMoList, tempEquipMo)
 		end
 	end
 
-	arg_9_0.selectedEquipMoList = var_9_0
+	self.selectedEquipMoList = equipMoList
 
-	arg_9_0:setSelectedEquipMoList()
+	self:setSelectedEquipMoList()
 	EquipController.instance:dispatchEvent(EquipEvent.OnRefineSelectedEquipChange)
 end
 
-function var_0_0.clearSelectedEquipList(arg_10_0)
-	arg_10_0.selectedEquipMoList = {}
-	arg_10_0.selectedEquipUidDict = {}
+function EquipRefineListModel:clearSelectedEquipList()
+	self.selectedEquipMoList = {}
+	self.selectedEquipUidDict = {}
 
 	EquipRefineSelectedListModel.instance:updateList()
 end
 
-function var_0_0.setSelectedEquipMoList(arg_11_0)
-	EquipRefineSelectedListModel.instance:updateList(arg_11_0.selectedEquipMoList)
+function EquipRefineListModel:setSelectedEquipMoList()
+	EquipRefineSelectedListModel.instance:updateList(self.selectedEquipMoList)
 end
 
-function var_0_0.getSelectedEquipMoList(arg_12_0)
-	return arg_12_0.selectedEquipMoList
+function EquipRefineListModel:getSelectedEquipMoList()
+	return self.selectedEquipMoList
 end
 
-function var_0_0.getSelectedEquipUidList(arg_13_0)
-	local var_13_0 = {}
+function EquipRefineListModel:getSelectedEquipUidList()
+	local equipUidList = {}
 
-	for iter_13_0, iter_13_1 in ipairs(arg_13_0.selectedEquipMoList) do
-		table.insert(var_13_0, iter_13_1.uid)
+	for _, equipMo in ipairs(self.selectedEquipMoList) do
+		table.insert(equipUidList, equipMo.uid)
 	end
 
-	return var_13_0
+	return equipUidList
 end
 
-function var_0_0.getAddRefineLv(arg_14_0)
-	local var_14_0 = 0
+function EquipRefineListModel:getAddRefineLv()
+	local refineLv = 0
 
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0.selectedEquipMoList) do
-		var_14_0 = var_14_0 + iter_14_1.refineLv
+	for _, equipMo in ipairs(self.selectedEquipMoList) do
+		refineLv = refineLv + equipMo.refineLv
 	end
 
-	return var_14_0
+	return refineLv
 end
 
-function var_0_0.isSelected(arg_15_0, arg_15_1)
-	if not arg_15_1 then
+function EquipRefineListModel:isSelected(equipMo)
+	if not equipMo then
 		return false
 	end
 
-	return arg_15_0.selectedEquipUidDict[arg_15_1.uid]
+	return self.selectedEquipUidDict[equipMo.uid]
 end
 
-function var_0_0.clearData(arg_16_0)
-	arg_16_0:clear()
+function EquipRefineListModel:clearData()
+	self:clear()
 
-	arg_16_0.selectedEquipMoList = {}
-	arg_16_0.selectedEquipUidDict = {}
-	arg_16_0.useSpRefineList = nil
+	self.selectedEquipMoList = {}
+	self.selectedEquipUidDict = {}
+	self.useSpRefineList = nil
 end
 
-var_0_0.instance = var_0_0.New()
+EquipRefineListModel.instance = EquipRefineListModel.New()
 
-return var_0_0
+return EquipRefineListModel

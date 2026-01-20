@@ -1,15 +1,17 @@
-﻿module("modules.logic.tips.view.MaterialPackageTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/tips/view/MaterialPackageTipViewContainer.lua
 
-local var_0_0 = class("MaterialPackageTipViewContainer", BaseViewContainer)
+module("modules.logic.tips.view.MaterialPackageTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local MaterialPackageTipViewContainer = class("MaterialPackageTipViewContainer", BaseViewContainer)
+
+function MaterialPackageTipViewContainer:buildViews()
 	return {
 		MaterialTipView.New()
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	arg_2_0:closeThis()
+function MaterialPackageTipViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return MaterialPackageTipViewContainer

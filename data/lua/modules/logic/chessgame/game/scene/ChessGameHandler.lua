@@ -1,65 +1,70 @@
-﻿module("modules.logic.chessgame.game.scene.ChessGameHandler", package.seeall)
+﻿-- chunkname: @modules/logic/chessgame/game/scene/ChessGameHandler.lua
 
-local var_0_0 = class("ChessGameHandler", BaseView)
+module("modules.logic.chessgame.game.scene.ChessGameHandler", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._viewObj = arg_1_1
+local ChessGameHandler = class("ChessGameHandler", BaseView)
+
+function ChessGameHandler:init(viewObj)
+	self._viewObj = viewObj
 end
 
-function var_0_0.drawBaseTile(arg_2_0, arg_2_1, arg_2_2)
-	local var_2_0 = ChessGameModel.instance:getBaseTile(arg_2_1, arg_2_2)
-	local var_2_1 = arg_2_0._viewObj:getBaseTile(arg_2_1, arg_2_2)
+function ChessGameHandler:drawBaseTile(x, y)
+	local tileData = ChessGameModel.instance:getBaseTile(x, y)
+	local tileObj = self._viewObj:getBaseTile(x, y)
 
-	if var_2_0 == ChessGameEnum.TileBaseType.Normal then
-		gohelper.setActive(var_2_1.imageTile.gameObject, true)
-		UISpriteSetMgr.instance:setVa3ChessMapSprite(var_2_1.imageTile, "img_di")
+	if tileData == ChessGameEnum.TileBaseType.Normal then
+		gohelper.setActive(tileObj.imageTile.gameObject, true)
+		UISpriteSetMgr.instance:setVa3ChessMapSprite(tileObj.imageTile, "img_di")
 	else
-		gohelper.setActive(var_2_1.imageTile.gameObject, false)
+		gohelper.setActive(tileObj.imageTile.gameObject, false)
 	end
 end
 
-function var_0_0.sortBaseTile(arg_3_0)
-	local var_3_0 = {}
+function ChessGameHandler.sortBaseTile(baseTiles)
+	local tileSortList = {}
 
-	for iter_3_0, iter_3_1 in pairs(arg_3_0) do
-		for iter_3_2, iter_3_3 in pairs(iter_3_1) do
-			table.insert(var_3_0, iter_3_3)
+	for _, tileList in pairs(baseTiles) do
+		for _, tileObj in pairs(tileList) do
+			table.insert(tileSortList, tileObj)
 		end
 	end
 
-	table.sort(var_3_0, var_0_0.sortTile)
+	table.sort(tileSortList, ChessGameHandler.sortTile)
 
-	for iter_3_4, iter_3_5 in ipairs(var_3_0) do
-		iter_3_5.rect:SetSiblingIndex(iter_3_4)
+	for i, tileObj in ipairs(tileSortList) do
+		tileObj.rect:SetSiblingIndex(i)
 	end
 end
 
-function var_0_0.sortTile(arg_4_0, arg_4_1)
-	return arg_4_0.anchorY > arg_4_1.anchorY
+function ChessGameHandler.sortTile(a, b)
+	return a.anchorY > b.anchorY
 end
 
-function var_0_0.sortInteractObjects(arg_5_0)
-	if not arg_5_0 then
+function ChessGameHandler.sortInteractObjects(avatars)
+	if not avatars then
 		return
 	end
 
-	table.sort(arg_5_0, var_0_0.sortObjects)
+	table.sort(avatars, ChessGameHandler.sortObjects)
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0) do
-		iter_5_1.rect:SetSiblingIndex(iter_5_0)
+	for i, avatar in ipairs(avatars) do
+		avatar.rect:SetSiblingIndex(i)
 	end
 end
 
-function var_0_0.sortObjects(arg_6_0, arg_6_1)
-	if (arg_6_0.anchorY or 9999999) ~= (arg_6_1.anchorY or 9999999) then
-		return arg_6_0.anchorY > arg_6_1.anchorY
+function ChessGameHandler.sortObjects(a, b)
+	local aAnchorY = a.anchorY or 9999999
+	local bAnchorY = b.anchorY or 9999999
+
+	if aAnchorY ~= bAnchorY then
+		return a.anchorY > b.anchorY
 	else
-		return (arg_6_0.order or 0) < (arg_6_1.order or 0)
+		return (a.order or 0) < (b.order or 0)
 	end
 end
 
-function var_0_0.dispose(arg_7_0)
-	arg_7_0._viewObj = nil
+function ChessGameHandler:dispose()
+	self._viewObj = nil
 end
 
-return var_0_0
+return ChessGameHandler

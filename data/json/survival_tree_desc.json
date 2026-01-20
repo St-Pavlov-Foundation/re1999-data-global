@@ -3225,6 +3225,14 @@
   },
   {
     "id": 207020100,
+    "nodeId": 106,
+    "desc": "language_10096237",
+    "icon": 15,
+    "condition": "",
+    "result": "TriggerDialog|31007"
+  },
+  {
+    "id": 207020100,
     "nodeId": 78,
     "desc": "language_10085850",
     "icon": 15,
@@ -3470,14 +3478,6 @@
     "icon": 15,
     "condition": "",
     "result": "SettleState|5"
-  },
-  {
-    "id": 207020103,
-    "nodeId": 106,
-    "desc": "language_10096237",
-    "icon": 15,
-    "condition": "",
-    "result": "TriggerDialog|31007"
   },
   {
     "id": 207020200,
@@ -5733,7 +5733,7 @@
     "desc": "language_10096427",
     "icon": 15,
     "condition": "",
-    "result": "CostGameTime|30"
+    "result": "CostGameTime|60"
   },
   {
     "id": 207030501,
@@ -6139,7 +6139,7 @@
     "id": 207040401,
     "nodeId": 177,
     "desc": "language_10096464",
-    "icon": 6,
+    "icon": 15,
     "condition": "",
     "result": "JumpEvent|4#207040402"
   },
